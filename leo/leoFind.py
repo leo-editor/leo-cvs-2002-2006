@@ -2,6 +2,9 @@
 
 #@+node:0::@file leoFind.py
 #@+body
+#@@language python
+
+
 #@<< Theory of operation >>
 #@+node:1:C=1:<< Theory of operation >>
 #@+body
@@ -235,6 +238,7 @@ class LeoFind:
 	
 		c.find_text = self.find_text.get("1.0","end - 1c") # Remove trailing newline
 		c.change_text = self.change_text.get("1.0","end - 1c") # Remove trailing newline
+
 	#@-body
 	#@-node:4::find.set_ivars
 	#@+node:5:C=4:resetWrap

@@ -2,6 +2,9 @@
 
 #@+node:0::@file leoFindScript.py
 #@+body
+#@@language python
+
+
 #@+at
 #  This file contains functions for non-interactive searching.  You might find these useful while running other scripts.
 

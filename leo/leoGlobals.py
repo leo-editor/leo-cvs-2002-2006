@@ -2,6 +2,9 @@
 
 #@+node:0::@file leoGlobals.py
 #@+body
+#@@language python
+
+
 #@+at
 #  Global constants and variables used throughout Leo2.
 # Most modules should do from leoGlobals import *

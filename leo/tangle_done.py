@@ -2,6 +2,8 @@
 
 #@+node:0::@file tangle_done.py
 #@+body
+#@@language python
+
 # Example tangle_done script
 
 def run(root_list):

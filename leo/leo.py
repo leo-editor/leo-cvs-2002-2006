@@ -2,6 +2,8 @@
 
 #@+node:0::@file leo.py
 #@+body
+#@@language python
+
 # Top level of leo.py
 
 

@@ -2,10 +2,12 @@
 
 #@+node:0::@file leoApp.py
 #@+body
+#@@language python
+
 from leoGlobals import *
 from leoUtils import *
-import leo, leoFind, leoPrefs
-import os, Tkinter
+import leo,leoConfig,leoFind,leoPrefs
+import os, sys, Tkinter
 
 class LeoApp:
 
@@ -21,7 +23,8 @@ class LeoApp:
 		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 		self.numberOfWindows = 0 # Number of opened windows.
 		self.loadDir = None # The directory from which Leo was loaded.
-		self.clipboard = None # A string used to cut, copy and paste trees.
+		self.configDir = None # The directory containing configuration info.
+		self.config = None # The leoConfig instance.
 		self.idle_imported = false # true: we have done an import idle
 		
 		# Global options...
@@ -31,7 +34,6 @@ class LeoApp:
 			self.printDel = false # true: enable prints in __del__ routines
 	
 		# Set by finishCreate...
-		self.prefsFrame = None
 		self.findFrame = None
 		self.pythonFrame = None
 	#@-body
@@ -43,10 +45,10 @@ class LeoApp:
 	def finishCreate(self):
 	
 		
-		#@<< set loaddir >>
-		#@+node:1:C=3:<< set loaddir >>
+		#@<< set loadDir >>
+		#@+node:1:C=3:<< set loadDir >>
 		#@+body
-		# loaddir should be the directory that contains leo.py
+		# loadDir should be the directory that contains leo.py
 		
 		try:
 			self.loadDir = os.path.dirname(leo.__file__)
@@ -61,7 +63,7 @@ class LeoApp:
 		# Trace hasn't been enabled yet.
 		# print `self.loadDir`
 		#@-body
-		#@-node:1:C=3:<< set loaddir >>
+		#@-node:1:C=3:<< set loadDir >>
 
 		
 		#@<< set the default Leo icon >>
@@ -112,14 +114,11 @@ class LeoApp:
 		#@-body
 		#@-node:2::<< set the default Leo icon >>
 
+		self.config = leoConfig.config()
 		
 		# Create the global windows
 		self.findFrame = leoFind.LeoFind()
 		self.findFrame.top.withdraw()
-	
-		self.prefsFrame = leoPrefs.LeoPrefs()
-		self.prefsFrame.top.withdraw()
-
 	#@-body
 	#@-node:2:C=2:app.finishCreate
 	#@+node:3::destroyAllGlobalWindows
@@ -128,9 +127,7 @@ class LeoApp:
 	
 		if self.findFrame:
 			self.findFrame.top.destroy()
-	
-		if self.prefsFrame:
-			self.prefsFrame.top.destroy()
+
 	#@-body
 	#@-node:3::destroyAllGlobalWindows
 	#@+node:4:C=4:app.quit

@@ -2,6 +2,8 @@
 
 #@+node:0::@file leoUndo.py
 #@+body
+#@@language python
+
 # Undo manager for leo.py.
 
 
@@ -31,6 +33,7 @@
 
 optionalIvars = [
 	"parent","back","n","lastChild","sort","select",
+	"oldTree", # 7/5/02: a copy of the old tree.
 	"oldParent","oldBack","oldN",
 	"oldText","newText","oldSel","newSel"]
 
@@ -342,7 +345,7 @@ class undoer:
 			#@<< redo insert cases >>
 			#@+node:3::<< redo insert cases >>
 			#@+body
-			elif type == "Insert Outline" or type == "Paste Node":
+			elif type in ["Import", "Insert Outline", "Paste Node"]:
 			
 				if u.back:
 					u.v.linkAfter(u.back)
@@ -388,11 +391,13 @@ class undoer:
 					u.v.moveToRoot(c.tree.rootVnode) # 5/27/02
 					if parent: # We could assert(parent)
 						parent.moveAfter(u.v)
+				c.initJoinedCloneBit(u.v) # 7/6/02
 				c.selectVnode(u.v)
 				
 			elif type == "Drag":
 			
 				u.v.moveToNthChildOf(u.parent,u.n)
+				c.initJoinedCloneBit(u.v) # 7/6/02
 				c.selectVnode(u.v)
 			#@-body
 			#@-node:4:C=3:<< redo move & drag cases >>
@@ -414,8 +419,25 @@ class undoer:
 			#@-node:5::<< redo promote and demote cases >>
 
 			
+			#@<< redo replace cases >>
+			#@+node:6::<< redo replace cases >>
+			#@+body
+			elif type in ["Extract", "Extract Names", "Extract Section"]:
+				
+				# Same as undo except we interchange u.oldTree and u.v in the call to undoReplace.
+				self.undoReplace(u.oldTree,u.v)
+				u.v,u.oldTree = u.oldTree,u.v
+				
+				v = u.oldTree
+				c.selectVnode(v)
+				v.setBodyStringOrPane(v.bodyString())
+				c.tree.recolor(v)
+			#@-body
+			#@-node:6::<< redo replace cases >>
+
+			
 			#@<< redo sort cases >>
-			#@+node:6::<< redo sort cases >>
+			#@+node:7::<< redo sort cases >>
 			#@+body
 			elif type == "Sort Children":
 			
@@ -427,11 +449,11 @@ class undoer:
 				c.selectVnode(u.v)
 				c.sortSiblings()
 			#@-body
-			#@-node:6::<< redo sort cases >>
+			#@-node:7::<< redo sort cases >>
 
 			
 			#@<< redo typing cases >>
-			#@+node:7::<< redo typing cases >>
+			#@+node:8::<< redo typing cases >>
 			#@+body
 			elif type in [
 				"Typing","Change","Cut","Paste","Delete",
@@ -469,7 +491,7 @@ class undoer:
 				u.v.setHeadStringOrHeadline(u.newText)
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:7::<< redo typing cases >>
+			#@-node:8::<< redo typing cases >>
 
 			else: trace("Unknown case: " + `type`)
 			c.setChanged(true)
@@ -548,7 +570,7 @@ class undoer:
 			#@<< undo insert cases >>
 			#@+node:3::<< undo insert cases >>
 			#@+body
-			elif type == "Insert Outline" or type == "Paste Node":
+			elif type in ["Import", "Insert Outline", "Paste Node"]:
 				
 				c.selectVnode(u.v)
 				c.deleteHeadline()
@@ -574,6 +596,8 @@ class undoer:
 					u.v.moveToRoot(c.tree.rootVnode) # 5/27/02
 					if parent: # We could assert(parent)
 						parent.moveAfter(u.v)
+				
+				c.initJoinedCloneBit(u.v) # 7/6/02
 				c.selectVnode(u.v)
 			#@-body
 			#@-node:4:C=5:<< undo move  & drag cases >>
@@ -600,8 +624,24 @@ class undoer:
 			#@-node:5::<< undo promote and demote cases >>
 
 			
+			#@<< undo replace cases >>
+			#@+node:6::<< undo replace cases >>
+			#@+body
+			elif type in ["Extract", "Extract Names", "Extract Section"]:
+				
+				self.undoReplace(u.v,u.oldTree)
+				u.v,u.oldTree = u.oldTree,u.v
+				
+				v = u.v
+				c.selectVnode(v)
+				v.setBodyStringOrPane(v.bodyString())
+				c.tree.recolor(v)
+			#@-body
+			#@-node:6::<< undo replace cases >>
+
+			
 			#@<< undo sort cases >>
-			#@+node:6::<< undo sort cases >>
+			#@+node:7::<< undo sort cases >>
 			#@+body
 			#@+at
 			#  Sort operations are the hard to undo, because they involve relinking a list of nodes. We pass the work off to 
@@ -618,11 +658,11 @@ class undoer:
 				
 				u.undoSortSiblings()
 			#@-body
-			#@-node:6::<< undo sort cases >>
+			#@-node:7::<< undo sort cases >>
 
 			
 			#@<< undo typing cases >>
-			#@+node:7::<< undo typing cases >>
+			#@+node:8::<< undo typing cases >>
 			#@+body
 			elif type in [
 				"Typing","Change","Cut","Paste","Delete",
@@ -660,7 +700,7 @@ class undoer:
 				u.v.setHeadStringOrHeadline(u.oldText)
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:7::<< undo typing cases >>
+			#@-node:8::<< undo typing cases >>
 
 			else: trace("Unknown case: " + `u.undoType`)
 			c.setChanged(true)
@@ -731,7 +771,55 @@ class undoer:
 		c.endUpdate()
 	#@-body
 	#@-node:3:C=7:undoPromote
-	#@+node:4::undoSortChildren
+	#@+node:4:C=8:undoReplace
+	#@+body
+	#@+at
+	#  This routine implements undo by properly replacing v's tree by the oldv tree.  For redo, just call this routine with these 
+	# two variables interchanged.
+	# 
+	# This routine shows how to implement undo for any kind of operation, no matter how complex.  Just do:
+	# 
+	# 	v_copy = c.copyTree(v)
+	# 	< < make arbitrary changes to v's tree > >
+	# 	c.undoer.setUndoParams("Op Name",v,select=current,oldTree=v_copy)
+	# 
+	# This way is far more elegant than calling v.destroyDependents and v.createDependents.  This is the way it is written in "The 
+	# Book." Yes, entire trees are copied, but in the most general case that is necessary.
+
+	#@-at
+	#@@c
+	
+	def undoReplace (self,v,oldv):
+	
+		assert(v)
+		assert(oldv)
+		u = self ; c = u.commands
+		j = v.joinList
+		copies = []
+	
+		# For each node joined to v, swap in a copy of oldv.
+		while j and j != v:
+			nextj = j.joinList
+			copy = c.copyTree(oldv)
+			copies.append(copy)
+			j.swap_links(copy,j)
+			j = nextj
+	
+		# Swap v and oldv.
+		v.swap_links(oldv,v)
+		v = oldv
+		
+		# Join v to all copies.
+		for copy in copies:
+			v.joinTreeTo(copy)
+			
+		# Restore all clone bits.
+		if v.shouldBeClone():
+			v.setClonedBit()
+		c.initAllCloneBits()
+	#@-body
+	#@-node:4:C=8:undoReplace
+	#@+node:5::undoSortChildren
 	#@+body
 	def undoSortChildren (self):
 	
@@ -748,8 +836,8 @@ class undoer:
 			c.setChanged(true)
 		c.endUpdate()
 	#@-body
-	#@-node:4::undoSortChildren
-	#@+node:5::undoSortSiblings
+	#@-node:5::undoSortChildren
+	#@+node:6::undoSortSiblings
 	#@+body
 	def undoSortSiblings (self):
 		
@@ -767,7 +855,7 @@ class undoer:
 			c.setChanged(true)
 		c.endUpdate()
 	#@-body
-	#@-node:5::undoSortSiblings
+	#@-node:6::undoSortSiblings
 	#@-node:6::Undo helpers
 	#@-others
 #@-body

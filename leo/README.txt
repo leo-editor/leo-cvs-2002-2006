@@ -7,7 +7,7 @@ the Edit Headline command now works properly.
 Double and triple clicking in a headline now selects a word or the entire headline.
 
 2. Drag and drop.  You can now reorganize outlines by dragging nodes around.
-You must drag from a node's headline and release on another node's headline.
+You must drag from a node's icon and release on another node's icon.
 See LeoDocs.leo or Leo's web site for complete details.
 
 3. You can now open .leo files in leo.py by double cliking on .leo files

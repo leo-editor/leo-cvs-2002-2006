@@ -2,6 +2,9 @@
 
 #@+node:0::@file leoCommands.py
 #@+body
+#@@language python
+
+
 #@+at
 #  This class implements the most basic commands.  Subcommanders contain an ivar that points to an instance of this class.
 
@@ -12,12 +15,12 @@ from leoGlobals import *
 from leoUtils import *
 
 # Import the subcommanders.
-import leoAtFile, leoFileCommands, leoImport, leoTangle, leoUndo
+import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
 
 class Commands:
 
 	#@+others
-	#@+node:1::c.__init__
+	#@+node:1:C=1:c.__init__
 	#@+body
 	def __init__(self,frame):
 	
@@ -38,6 +41,8 @@ class Commands:
 		#@+node:1::<< initialize ivars >>
 		#@+body
 		# per-document info...
+		self.openDirectory = None # 7/2/02
+		
 		self.expansionLevel = 0  # The expansion level of this outline.
 		self.changed = false # true if any data has been changed since the last save.
 		self.loading = false # true if we are loading a file: disables c.setChanged()
@@ -51,12 +56,23 @@ class Commands:
 		# For tangle/untangle
 		self.tangle_errrors = 0
 		
-		self.setIvarsFromPrefs()
+		# Global options
+		self.page_width = 132
+		self.tab_width = 4
+		self.tangle_batch_flag = false
+		self.untangle_batch_flag = false
+		# Default Tangle options
+		self.tangle_directory = ""
+		self.use_header_flag = false
+		self.output_doc_flag = false
+		# Default Target Language
+		self.target_language = None # c_language
+		
 		self.setIvarsFromFind()
 		#@-body
 		#@-node:1::<< initialize ivars >>
 	#@-body
-	#@-node:1::c.__init__
+	#@-node:1:C=1:c.__init__
 	#@+node:2::c.__del__
 	#@+body
 	def __del__ (self):
@@ -74,7 +90,7 @@ class Commands:
 
 	#@-body
 	#@-node:3::c.__repr__
-	#@+node:4:C=1:c.destroy
+	#@+node:4:C=2:c.destroy
 	#@+body
 	def destroy (self):
 	
@@ -88,17 +104,21 @@ class Commands:
 		self.importCommands = None
 		self.tangleCommands = None
 	#@-body
-	#@-node:4:C=1:c.destroy
+	#@-node:4:C=2:c.destroy
 	#@+node:5::c.setIvarsFromPrefs
 	#@+body
-	# This should be called whenever we need to use preference:
+	#@+at
+	#  This should be called whenever we need to use preference:
 	# i.e., before reading, writing, tangling, untangling.
+	# 
+	# 7/2/02: We no longer need this now that the Prefs dialog is modal.
+
+	#@-at
+	#@@c
 	
 	def setIvarsFromPrefs (self):
 	
-		c = self ; prefs = app().prefsFrame
-		if prefs:
-			prefs.set_ivars(c)
+		pass
 	#@-body
 	#@-node:5::c.setIvarsFromPrefs
 	#@+node:6::c.setIvarsFromFind
@@ -114,7 +134,7 @@ class Commands:
 
 	#@-body
 	#@-node:6::c.setIvarsFromFind
-	#@+node:7:C=2:Cut & Paste Outlines
+	#@+node:7:C=3:Cut & Paste Outlines
 	#@+node:1::cutOutline
 	#@+body
 	def cutOutline(self):
@@ -134,14 +154,11 @@ class Commands:
 		c.endEditing()
 		c.fileCommands.assignFileIndices()
 		s = c.fileCommands.putLeoOutline()
-		app().clipboard = s
+		# trace(`s`)
+		app().root.clipboard_clear()
+		app().root.clipboard_append(s)
 		# Copying an outline has no undo consequences.
-	
-		# This is not essential for cutting and pasting between apps.
-		if 0:
-			if len(s) > 0:
-				app().root.clipboard_clear()
-				app().root.clipboard_append(s)
+
 	#@-body
 	#@-node:2::copyOutline
 	#@+node:3::pasteOutline
@@ -154,10 +171,15 @@ class Commands:
 	
 	def pasteOutline(self):
 	
-		c = self ; current = c.currentVnode() ; s = app().clipboard
-		if not c.canPasteOutline(s):
-			es("The clipboard is not a valid outline")
-			return
+		c = self ; current = c.currentVnode()
+		
+		try:
+			s = app().root.selection_get(selection="CLIPBOARD")
+		except:
+			s = None # This should never happen.
+	
+		if not s or not c.canPasteOutline(s):
+			return # This should never happen.
 	
 		isLeo = len(s)>=len(prolog_string) and prolog_string==s[0:len(prolog_string)]
 	
@@ -165,7 +187,7 @@ class Commands:
 		if isLeo:
 			v = c.fileCommands.getLeoOutline(s)
 		else:
-			v = c.convertMoreStringsToOutlineAfter(s,current) ## s used to be a stringlist
+			v = c.importCommands.convertMoreStringToOutlineAfter(s,current)
 		if v:
 			c.endEditing()
 			c.beginUpdate()
@@ -186,7 +208,7 @@ class Commands:
 			es("The clipboard is not a valid " + choose(isLeo,"Leo","MORE") + " file")
 	#@-body
 	#@-node:3::pasteOutline
-	#@-node:7:C=2:Cut & Paste Outlines
+	#@-node:7:C=3:Cut & Paste Outlines
 	#@+node:8::Drawing Utilities
 	#@+node:1::beginUpdate
 	#@+body
@@ -236,13 +258,62 @@ class Commands:
 	#@-body
 	#@-node:5::redraw & repaint
 	#@-node:8::Drawing Utilities
-	#@+node:9:C=3:Edit Body Text
-	#@+node:1::convertBlanks
+	#@+node:9:C=4:Edit Body Text
+	#@+node:1:C=5:convertAllBlanks
+	#@+body
+	def convertAllBlanks (self):
+		
+		c = self ; v = current = c.currentVnode()
+		next = v.nodeAfterTree()
+		while v and v != next:
+			if v == current:
+				c.convertBlanks()
+			else:
+				result = [] ; changed = false
+				text = v.t.bodyString
+				lines = string.split(text, '\n')
+				for line in lines:
+					s = optimizeLeadingWhitespace(line,c.tab_width)
+					if s != line: changed = true
+					result.append(s)
+				if changed:
+					result = string.join(result,'\n')
+					v.t.setTnodeText(result)
+			v.setDirty()
+			v = v.threadNext()
+	#@-body
+	#@-node:1:C=5:convertAllBlanks
+	#@+node:2:C=6:convertAllTabs
+	#@+body
+	def convertAllTabs (self):
+	
+		c = self ; v = current = c.currentVnode()
+		next = v.nodeAfterTree()
+		while v and v != next:
+			if v == current:
+				self.convertTabs()
+			else:
+				result = [] ; changed = false
+				text = v.t.bodyString
+				lines = string.split(text, '\n')
+				for line in lines:
+					i,w = skip_leading_ws_with_indent(line,0,c.tab_width)
+					s = computeLeadingWhitespace(w,-abs(c.tab_width)) + line[i:] # use negative width.
+					if s != line: changed = true
+					result.append(s)
+				if changed:
+					result = string.join(result,'\n')
+					v.t.setTnodeText(result)
+			v.setDirty()
+			v = v.threadNext()
+	#@-body
+	#@-node:2:C=6:convertAllTabs
+	#@+node:3:C=7:convertBlanks
 	#@+body
 	def convertBlanks (self):
 	
-		c = self
-		head, lines, tail = self.getBodyLines()
+		c = self ; v = current = c.currentVnode()
+		head, lines, tail = c.getBodyLines()
 		result = [] ; changed = false
 		for line in lines:
 			s = optimizeLeadingWhitespace(line,c.tab_width)
@@ -250,10 +321,29 @@ class Commands:
 			result.append(s)
 		if changed:
 			result = string.join(result,'\n')
-			self.updateBodyPane(head,result,tail,"Convert Blanks")
+			c.updateBodyPane(head,result,tail,"Convert Blanks")
+			setTextSelection(c.body,"1.0","1.0")
 	#@-body
-	#@-node:1::convertBlanks
-	#@+node:2::createLastChildNode
+	#@-node:3:C=7:convertBlanks
+	#@+node:4:C=8:convertTabs
+	#@+body
+	def convertTabs (self):
+	
+		c = self
+		head, lines, tail = self.getBodyLines()
+		result = [] ; changed = false
+		for line in lines:
+			i,w = skip_leading_ws_with_indent(line,0,c.tab_width)
+			s = computeLeadingWhitespace(w,-abs(c.tab_width)) + line[i:] # use negative width.
+			if s != line: changed = true
+			result.append(s)
+		if changed:
+			result = string.join(result,'\n')
+			c.updateBodyPane(head,result,tail,"Convert Tabs")
+			setTextSelection(c.body,"1.0","1.0")
+	#@-body
+	#@-node:4:C=8:convertTabs
+	#@+node:5::createLastChildNode
 	#@+body
 	def createLastChildNode (self,parent,headline,body):
 		
@@ -269,8 +359,8 @@ class Commands:
 		v.setDirty()
 		c.validateOutline()
 	#@-body
-	#@-node:2::createLastChildNode
-	#@+node:3::dedentBody
+	#@-node:5::createLastChildNode
+	#@+node:6::dedentBody
 	#@+body
 	def dedentBody (self):
 	
@@ -279,23 +369,25 @@ class Commands:
 		result = [] ; changed = false
 		for line in lines:
 			i, width = skip_leading_ws_with_indent(line,0,c.tab_width)
-			s = computeLeadingWhitespace(width-c.tab_width,c.tab_width) + line[i:]
+			s = computeLeadingWhitespace(width-abs(c.tab_width),c.tab_width) + line[i:]
 			if s != line: changed = true
 			result.append(s)
 		if changed:
 			result = string.join(result,'\n')
-			self.updateBodyPane(head,result,tail,"Undent")
+			c.updateBodyPane(head,result,tail,"Undent")
 	#@-body
-	#@-node:3::dedentBody
-	#@+node:4::extract
+	#@-node:6::dedentBody
+	#@+node:7::extract (not undoable)
 	#@+body
 	def extract(self):
 	
-		c = self ; v = c.currentVnode()
+		c = self ; current = v = c.currentVnode()
 		head, lines, tail = self.getBodyLines()
 		if not lines: return
 		headline = lines[0] ; del lines[0]
 		junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
+		# Create copy for undo.
+		v_copy = c.copyTree(v)
 		
 		#@<< Set headline for extract >>
 		#@+node:1::<< Set headline for extract >>
@@ -318,22 +410,24 @@ class Commands:
 		if head and len(head) > 0:
 			head = string.rstrip(head)
 		c.beginUpdate()
-		self.createLastChildNode(v,headline,body)
-		self.updateBodyPane(head,None,tail,"Can't Undo")
-		c.undoer.clearUndoState()
+		c.createLastChildNode(v,headline,body)
+		c.updateBodyPane(head,None,tail,"Can't Undo")
+		c.undoer.setUndoParams("Extract",v,select=current,oldTree=v_copy)
 		c.endUpdate()
 	#@-body
-	#@-node:4::extract
-	#@+node:5::extractSection
+	#@-node:7::extract (not undoable)
+	#@+node:8::extractSection (not undoable)
 	#@+body
 	def extractSection(self):
 	
-		c = self ; v = c.currentVnode()
+		c = self ; current = v = c.currentVnode()
 		head, lines, tail = self.getBodyLines()
 		if not lines: return
 		headline = lines[0] ; del lines[0]
 		junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
 		line1 = "\n" + headline
+		# Create copy for undo.
+		v_copy = c.copyTree(v)
 		
 		#@<< Set headline for extractSection >>
 		#@+node:1::<< Set headline for extractSection >>
@@ -358,21 +452,23 @@ class Commands:
 		if head and len(head) > 0:
 			head = string.rstrip(head)
 		c.beginUpdate()
-		self.createLastChildNode(v,headline,body)
-		self.updateBodyPane(head,line1,tail,"Can't Undo")
-		c.undoer.clearUndoState()
+		c.createLastChildNode(v,headline,body)
+		c.updateBodyPane(head,line1,tail,"Can't Undo")
+		c.undoer.setUndoParams("Extract Section",v,select=current,oldTree=v_copy)
 		c.endUpdate()
 	#@-body
-	#@-node:5::extractSection
-	#@+node:6::extractSectionNames
+	#@-node:8::extractSection (not undoable)
+	#@+node:9::extractSectionNames (not undoable)
 	#@+body
 	def extractSectionNames(self):
 	
-		c = self ; v = c.currentVnode()
+		c = self ; current = v = c.currentVnode()
 		head, lines, tail = self.getBodyLines()
 		if not lines: return
 		# Save the selection.
 		i, j = self.getBodySelection()
+		# Create copy for undo.
+		v_copy = c.copyTree(v)
 		c.beginUpdate()
 		for s in lines:
 			
@@ -398,13 +494,14 @@ class Commands:
 		c.selectVnode(v)
 		c.validateOutline()
 		c.endUpdate()
-		c.undoer.clearUndoState()
+		c.undoer.setUndoParams("Extract Names",v,select=current,oldTree=v_copy)
+		#c.undoer.clearUndoState()
 		# Restore the selection.
 		setTextSelection(c.body,i,j)
 		c.body.focus_force()
 	#@-body
-	#@-node:6::extractSectionNames
-	#@+node:7::getBodyLines
+	#@-node:9::extractSectionNames (not undoable)
+	#@+node:10::getBodyLines
 	#@+body
 	def getBodyLines (self):
 		
@@ -422,8 +519,8 @@ class Commands:
 		lines = string.split(lines, '\n')
 		return head, lines, tail
 	#@-body
-	#@-node:7::getBodyLines
-	#@+node:8::getBodySelection
+	#@-node:10::getBodyLines
+	#@+node:11::getBodySelection
 	#@+body
 	def getBodySelection (self):
 	
@@ -433,8 +530,8 @@ class Commands:
 			i,j = j,i
 		return i, j
 	#@-body
-	#@-node:8::getBodySelection
-	#@+node:9::indentBody
+	#@-node:11::getBodySelection
+	#@+node:12::indentBody
 	#@+body
 	def indentBody (self):
 	
@@ -443,15 +540,15 @@ class Commands:
 		result = [] ; changed = false
 		for line in lines:
 			i, width = skip_leading_ws_with_indent(line,0,c.tab_width)
-			s = computeLeadingWhitespace(width+c.tab_width,c.tab_width) + line[i:]
+			s = computeLeadingWhitespace(width+abs(c.tab_width),c.tab_width) + line[i:]
 			if s != line: changed = true
 			result.append(s)
 		if changed:
 			result = string.join(result,'\n')
-			self.updateBodyPane(head,result,tail,"Indent")
+			c.updateBodyPane(head,result,tail,"Indent")
 	#@-body
-	#@-node:9::indentBody
-	#@+node:10::updateBodyPane
+	#@-node:12::indentBody
+	#@+node:13:C=9:updateBodyPane
 	#@+body
 	def updateBodyPane (self,head,middle,tail,undoType):
 		
@@ -488,10 +585,11 @@ class Commands:
 		setTextSelection(c.body,start,end)
 		c.body.see("insert")
 		c.body.focus_force()
+		c.recolor() # 7/5/02
 	#@-body
-	#@-node:10::updateBodyPane
-	#@-node:9:C=3:Edit Body Text
-	#@+node:10:C=4:Enabling Menu Items (Commands)
+	#@-node:13:C=9:updateBodyPane
+	#@-node:9:C=4:Edit Body Text
+	#@+node:10:C=10:Enabling Menu Items (Commands)
 	#@+node:1::canContractAllHeadlines
 	#@+body
 	def canContractAllHeadlines (self):
@@ -610,7 +708,7 @@ class Commands:
 		return false
 	#@-body
 	#@-node:9::canExpandSubheads
-	#@+node:10:C=5:canExtract, canExtractSection & canExtractSectionNames
+	#@+node:10:C=11:canExtract, canExtractSection & canExtractSectionNames
 	#@+body
 	def canExtract (self):
 	
@@ -624,7 +722,7 @@ class Commands:
 	canExtractSection = canExtract
 	canExtractSectionNames = canExtract
 	#@-body
-	#@-node:10:C=5:canExtract, canExtractSection & canExtractSectionNames
+	#@-node:10:C=11:canExtract, canExtractSection & canExtractSectionNames
 	#@+node:11::canGoToNextDirtyHeadline
 	#@+body
 	def canGoToNextDirtyHeadline (self):
@@ -725,21 +823,26 @@ class Commands:
 			return v and v.back()
 	#@-body
 	#@-node:18::canMoveOutlineUp
-	#@+node:19:C=6:canPasteOutline
+	#@+node:19:C=12:canPasteOutline
 	#@+body
 	def canPasteOutline (self,s=None):
 	
 		c = self
-		if s == None: s = app().clipboard
+		if s == None:
+			try:
+				s = app().root.selection_get(selection="CLIPBOARD")
+			except:
+				return false
 	
 		# trace(`s`)
-		if s and len(s) >= len(prolog_string) and s[0:len(prolog_string)] == prolog_string:
+		if len(s) >= len(prolog_string) and s[0:len(prolog_string)] == prolog_string:
 			return true
+		elif len(s) > 0:
+			return c.importCommands.stringIsValidMoreFile(s)
 		else:
-			return false ## not yet.
-			return c.stringsAreValidMoreFile(s)
+			return false
 	#@-body
-	#@-node:19:C=6:canPasteOutline
+	#@-node:19:C=12:canPasteOutline
 	#@+node:20::canPromote
 	#@+body
 	def canPromote (self):
@@ -748,7 +851,7 @@ class Commands:
 		return v and v.hasChildren()
 	#@-body
 	#@-node:20::canPromote
-	#@+node:21:C=7:canRevert
+	#@+node:21:C=13:canRevert
 	#@+body
 	def canRevert (self):
 	
@@ -757,8 +860,8 @@ class Commands:
 		return (c.frame and c.frame.mFileName and
 			len(c.frame.mFileName) > 0 and c.isChanged())
 	#@-body
-	#@-node:21:C=7:canRevert
-	#@+node:22:C=8:canSelectThreadBack
+	#@-node:21:C=13:canRevert
+	#@+node:22:C=14:canSelectThreadBack
 	#@+body
 	def canSelectThreadBack (self):
 	
@@ -766,8 +869,8 @@ class Commands:
 		w = c.frame.top.focus_get()
 		return w == c.canvas and v and v.threadBack()
 	#@-body
-	#@-node:22:C=8:canSelectThreadBack
-	#@+node:23:C=9:canSelectThreadNext
+	#@-node:22:C=14:canSelectThreadBack
+	#@+node:23:C=15:canSelectThreadNext
 	#@+body
 	def canSelectThreadNext (self):
 	
@@ -775,8 +878,8 @@ class Commands:
 		w = c.frame.top.focus_get()
 		return w == c.canvas and v and v.threadNext()
 	#@-body
-	#@-node:23:C=9:canSelectThreadNext
-	#@+node:24:C=10:canSelectVisBack
+	#@-node:23:C=15:canSelectThreadNext
+	#@+node:24:C=16:canSelectVisBack
 	#@+body
 	def canSelectVisBack (self):
 	
@@ -784,8 +887,8 @@ class Commands:
 		w = c.frame.top.focus_get()
 		return w == c.canvas and v and v.visBack()
 	#@-body
-	#@-node:24:C=10:canSelectVisBack
-	#@+node:25:C=11:canSelectVisNext
+	#@-node:24:C=16:canSelectVisBack
+	#@+node:25:C=17:canSelectVisNext
 	#@+body
 	def canSelectVisNext (self):
 	
@@ -793,7 +896,7 @@ class Commands:
 		w = c.frame.top.focus_get()
 		return w == c.canvas and v and v.visNext()
 	#@-body
-	#@-node:25:C=11:canSelectVisNext
+	#@-node:25:C=17:canSelectVisNext
 	#@+node:26::canShiftBodyLeft
 	#@+body
 	def canShiftBodyLeft (self):
@@ -859,7 +962,7 @@ class Commands:
 		return false
 	#@-body
 	#@-node:30::canUnmarkAll
-	#@-node:10:C=4:Enabling Menu Items (Commands)
+	#@-node:10:C=10:Enabling Menu Items (Commands)
 	#@+node:11::Expand & Contract
 	#@+node:1::Commands
 	#@+node:1::contractAllHeadlines
@@ -1211,7 +1314,7 @@ class Commands:
 	#@-node:7::setChanged
 	#@-node:12::Getters & Setters
 	#@+node:13::Insert, Delete & Clone (Commands)
-	#@+node:1:C=12:c.checkMoveWithParentWithWarning
+	#@+node:1:C=18:c.checkMoveWithParentWithWarning
 	#@+body
 	# Returns false if any node of tree is a clone of parent or any of parents ancestors.
 	
@@ -1240,25 +1343,8 @@ class Commands:
 			parent = parent.parent()
 		return true
 	#@-body
-	#@-node:1:C=12:c.checkMoveWithParentWithWarning
-	#@+node:2::clone (Commands)
-	#@+body
-	def clone (self):
-	
-		c = self ; v = c.currentVnode()
-		if not v: return
-		c.beginUpdate()
-		clone = v.clone(v)
-		if clone:
-			clone.setDirty() # essential in Leo2
-			c.setChanged(true)
-			if c.validateOutline():
-				c.selectVnode(clone)
-				c.undoer.setUndoParams("Clone",clone)
-		c.endUpdate() # updates all icons
-	#@-body
-	#@-node:2::clone (Commands)
-	#@+node:3:C=13:c.deleteHeadline
+	#@-node:1:C=18:c.checkMoveWithParentWithWarning
+	#@+node:2:C=19:c.deleteHeadline
 	#@+body
 	# Deletes the current vnode and dependent nodes. Does nothing if the outline would become empty.
 	
@@ -1282,8 +1368,71 @@ class Commands:
 		c.endUpdate()
 		c.validateOutline()
 	#@-body
-	#@-node:3:C=13:c.deleteHeadline
-	#@+node:4::initAllCloneBits
+	#@-node:2:C=19:c.deleteHeadline
+	#@+node:3:C=20:c.insertHeadline
+	#@+body
+	# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
+	
+	def insertHeadline (self,op_name="Insert Outline"):
+	
+		c = self ; current = c.currentVnode()
+		if not current: return
+		c.beginUpdate()
+		if 1: # inside update...
+			if current.hasChildren() and current.isExpanded():
+				v = current.insertAsNthChild(0)
+			else:
+				v = current.insertAfter()
+			c.undoer.setUndoParams(op_name,v,select=current)
+			v.createDependents() # To handle effects of clones.
+			c.selectVnode(v)
+			v.setDirty() # Essential in Leo2.
+			c.setChanged(true)
+		c.endUpdate(false)
+		c.tree.redraw_now()
+		c.editVnode(v)
+	#@-body
+	#@-node:3:C=20:c.insertHeadline
+	#@+node:4::clone (Commands)
+	#@+body
+	def clone (self):
+	
+		c = self ; v = c.currentVnode()
+		if not v: return
+		c.beginUpdate()
+		clone = v.clone(v)
+		if clone:
+			clone.setDirty() # essential in Leo2
+			c.setChanged(true)
+			if c.validateOutline():
+				c.selectVnode(clone)
+				c.undoer.setUndoParams("Clone",clone)
+		c.endUpdate() # updates all icons
+	#@-body
+	#@-node:4::clone (Commands)
+	#@+node:5:C=21:c.copyTree
+	#@+body
+	# This creates a free-floating copy of v's tree for undo.
+	# The copied trees must use different tnodes than the original.
+	
+	def copyTree(self,root):
+	
+		c = self
+		# Create the root vnode.
+		result = v = leoNodes.vnode(c,root.t)
+		# Copy the headline and icon values
+		v.copyNode(root,v)
+		# Copy the rest of tree.
+		v.copyTree(root,v)
+		# Replace all tnodes in v by copies.
+		assert(v.nodeAfterTree() == None)
+		while v:
+			v.t = leoNodes.tnode(0, v.t.bodyString)
+			v = v.threadNext()
+		return result
+	#@-body
+	#@-node:5:C=21:c.copyTree
+	#@+node:6::initAllCloneBits
 	#@+body
 	#@+at
 	#  This function initializes all clone bits in the entire outline's tree.
@@ -1321,32 +1470,48 @@ class Commands:
 			v = v.threadNext()
 		c.endUpdate()
 	#@-body
-	#@-node:4::initAllCloneBits
-	#@+node:5:C=14:c.insertHeadline
+	#@-node:6::initAllCloneBits
+	#@+node:7::initJoinedClonedBits
 	#@+body
-	# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
+	# Initializes all clone bits in the all nodes joined to v.
 	
-	def insertHeadline (self,op_name="Insert Outline"):
+	def initJoinedCloneBits (self,v):
 	
-		c = self ; current = c.currentVnode()
-		if not current: return
+		c = self ; v1 = v
+	
 		c.beginUpdate()
-		if 1: # inside update...
-			if current.hasChildren() and current.isExpanded():
-				v = current.insertAsNthChild(0)
-			else:
-				v = current.insertAfter()
-			c.undoer.setUndoParams(op_name,v,select=current)
-			v.createDependents() # To handle effects of clones.
-			c.selectVnode(v)
-			v.setDirty() # Essential in Leo2.
-			c.setChanged(true)
-		c.endUpdate(false)
-		c.tree.redraw_now()
-		c.editVnode(v)
+		if 1: # update range...
+			
+			#@<< init clone bit for v >>
+			#@+node:1::<< init clone bit for v >>
+			#@+body
+			mark = v.shouldBeClone()
+			if not mark and v.isCloned():
+				v.clearClonedBit()
+			elif mark and not v.isCloned():
+				v.setClonedBit()
+			#@-body
+			#@-node:1::<< init clone bit for v >>
+
+			v = v.getJoinList()
+			while v and v != v1:
+				
+				#@<< init clone bit for v >>
+				#@+node:1::<< init clone bit for v >>
+				#@+body
+				mark = v.shouldBeClone()
+				if not mark and v.isCloned():
+					v.clearClonedBit()
+				elif mark and not v.isCloned():
+					v.setClonedBit()
+				#@-body
+				#@-node:1::<< init clone bit for v >>
+
+				v = v.getJoinList()
+		c.endUpdate()
 	#@-body
-	#@-node:5:C=14:c.insertHeadline
-	#@+node:6::validateOutline
+	#@-node:7::initJoinedClonedBits
+	#@+node:8::validateOutline
 	#@+body
 	# Makes sure all nodes are valid.
 	
@@ -1358,7 +1523,7 @@ class Commands:
 		else:
 			return true
 	#@-body
-	#@-node:6::validateOutline
+	#@-node:8::validateOutline
 	#@-node:13::Insert, Delete & Clone (Commands)
 	#@+node:14::Mark & Unmark
 	#@+node:1::goToNextDirtyHeadline
@@ -1509,8 +1674,8 @@ class Commands:
 	#@-body
 	#@-node:9::unmarkAll
 	#@-node:14::Mark & Unmark
-	#@+node:15:C=15:Moving, Dragging, Promote, Demote, Sort
-	#@+node:1:C=16:c.dragAfter
+	#@+node:15:C=22:Moving, Dragging, Promote, Demote, Sort
+	#@+node:1:C=23:c.dragAfter
 	#@+body
 	def dragAfter(self,v,after):
 	
@@ -1534,8 +1699,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:1:C=16:c.dragAfter
-	#@+node:2:C=17:c.dragToNthChildOf
+	#@-node:1:C=23:c.dragAfter
+	#@+node:2:C=24:c.dragToNthChildOf
 	#@+body
 	def dragToNthChildOf(self,v,parent,n):
 	
@@ -1559,8 +1724,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:2:C=17:c.dragToNthChildOf
-	#@+node:3:C=18:c.sortChildren, sortSiblings
+	#@-node:2:C=24:c.dragToNthChildOf
+	#@+node:3:C=25:c.sortChildren, sortSiblings
 	#@+body
 	def sortChildren(self):
 	
@@ -1616,7 +1781,7 @@ class Commands:
 			c.setChanged(true)
 		c.endUpdate()
 	#@-body
-	#@-node:3:C=18:c.sortChildren, sortSiblings
+	#@-node:3:C=25:c.sortChildren, sortSiblings
 	#@+node:4::demote
 	#@+body
 	def demote(self):
@@ -1630,24 +1795,26 @@ class Commands:
 				return
 			child = child.next()
 		c.beginUpdate()
-		c.mInhibitOnTreeChanged = true
-		c.endEditing()
-		last = None
-		while v.next():
-			child = v.next()
-			child.moveToNthChildOf(v,v.numberOfChildren())
-			last = child # For undo.
-		c.expandVnode(v)
-		c.selectVnode(v)
-		v.setDirty()
-		c.setChanged(true)
-		c.mInhibitOnTreeChanged = false
+		if 1: # update range...
+			c.mInhibitOnTreeChanged = true
+			c.endEditing()
+			last = None
+			while v.next():
+				child = v.next()
+				child.moveToNthChildOf(v,v.numberOfChildren())
+				last = child # For undo.
+			c.expandVnode(v)
+			c.selectVnode(v)
+			v.setDirty()
+			c.setChanged(true)
+			c.mInhibitOnTreeChanged = false
+			c.initAllCloneBits() # 7/6/02
 		c.endUpdate()
 		c.undoer.setUndoParams("Demote",v,lastChild=last)
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
 	#@-node:4::demote
-	#@+node:5:C=19:moveOutlineDown
+	#@+node:5:C=26:moveOutlineDown
 	#@+body
 	#@+at
 	#  Moving down is more tricky than moving up; we can't move v to be a child of itself.  An important optimization:  we don't 
@@ -1700,7 +1867,7 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:5:C=19:moveOutlineDown
+	#@-node:5:C=26:moveOutlineDown
 	#@+node:6::moveOutlineLeft
 	#@+body
 	def moveOutlineLeft(self):
@@ -1753,11 +1920,12 @@ class Commands:
 			v.setDirty()
 			c.selectVnode(v)
 			c.setChanged(true)
+			c.initJoinedCloneBits(v) # 7/6/02
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
 	#@-node:7::moveOutlineRight
-	#@+node:8:C=20:moveOutlineUp
+	#@+node:8:C=27:moveOutlineUp
 	#@+body
 	def moveOutlineUp(self):
 	
@@ -1805,7 +1973,7 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:8:C=20:moveOutlineUp
+	#@-node:8:C=27:moveOutlineUp
 	#@+node:9::promote
 	#@+body
 	def promote(self):
@@ -1830,9 +1998,9 @@ class Commands:
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
 	#@-node:9::promote
-	#@-node:15:C=15:Moving, Dragging, Promote, Demote, Sort
+	#@-node:15:C=22:Moving, Dragging, Promote, Demote, Sort
 	#@+node:16::Selecting & Updating (commands)
-	#@+node:1:C=21:editVnode (calls tree.editLabel)
+	#@+node:1:C=28:editVnode (calls tree.editLabel)
 	#@+body
 	# Selects v: sets the focus to v and edits v.
 	
@@ -1843,7 +2011,7 @@ class Commands:
 			c.selectVnode(v)
 			c.tree.editLabel(v)
 	#@-body
-	#@-node:1:C=21:editVnode (calls tree.editLabel)
+	#@-node:1:C=28:editVnode (calls tree.editLabel)
 	#@+node:2::endEditing (calls tree.endEditLabel)
 	#@+body
 	# Ends the editing in the outline.
@@ -1854,7 +2022,7 @@ class Commands:
 
 	#@-body
 	#@-node:2::endEditing (calls tree.endEditLabel)
-	#@+node:3:C=22:selectThreadBack
+	#@+node:3:C=29:selectThreadBack
 	#@+body
 	def selectThreadBack(self):
 	
@@ -1868,8 +2036,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:3:C=22:selectThreadBack
-	#@+node:4:C=23:selectThreadNext
+	#@-node:3:C=29:selectThreadBack
+	#@+node:4:C=30:selectThreadNext
 	#@+body
 	def selectThreadNext(self):
 	
@@ -1883,8 +2051,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:4:C=23:selectThreadNext
-	#@+node:5:C=24:selectVisBack
+	#@-node:4:C=30:selectThreadNext
+	#@+node:5:C=31:selectVisBack
 	#@+body
 	# This has an up arrow for a control key.
 	
@@ -1900,8 +2068,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:5:C=24:selectVisBack
-	#@+node:6:C=25:selectVisNext
+	#@-node:5:C=31:selectVisBack
+	#@+node:6:C=32:selectVisNext
 	#@+body
 	def selectVisNext(self):
 	
@@ -1915,7 +2083,7 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:6:C=25:selectVisNext
+	#@-node:6:C=32:selectVisNext
 	#@+node:7::c.selectVnode (calls tree.select)
 	#@+body
 	# This is called inside commands to select a new vnode.

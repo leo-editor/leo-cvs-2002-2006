@@ -2,6 +2,8 @@
 
 #@+node:0::@file leoDialog.py
 #@+body
+#@@language python
+
 from leoGlobals import *
 from leoUtils import *
 import string, Tkinter

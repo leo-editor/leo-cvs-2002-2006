@@ -2,6 +2,9 @@
 
 #@+node:0::@file leoCompare.py
 #@+body
+#@@language python
+
+
 #@+at
 #  This file contains compare routines used for testing and I hack away as needed.  To save typing, I usually invoke the go() from 
 # the Python interpreter.

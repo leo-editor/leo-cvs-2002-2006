@@ -2,6 +2,8 @@
 
 #@+node:0::@file leoColor.py
 #@+body
+#@@language python
+
 # Syntax coloring routines for Leo.py
 
 from leoGlobals import *

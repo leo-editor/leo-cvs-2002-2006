@@ -2,6 +2,9 @@
 
 #@+node:0::@file leoTree.py
 #@+body
+#@@language python
+
+
 #@+at
 #  This class implements a tree control similar to Windows explorer.  The draw code is based on code found in Python's IDLE 
 # program.  Thank you Guido van Rossum!
@@ -859,7 +862,7 @@ class leoTree:
 					# For Python: increase auto-indent after colons.
 					language = self.colorizer.scanColorDirectives(v)
 					if language == python_language:
-						width += c.tab_width
+						width += abs(c.tab_width)
 				ws = computeLeadingWhitespace (width,c.tab_width)
 				if ws and len(ws) > 0:
 					c.body.insert("insert", ws)
@@ -869,6 +872,29 @@ class leoTree:
 
 			s = c.body.get("1.0", "end")
 			s = string.rstrip(s)
+		elif ch == '\t' and c.tab_width < 0:
+			
+			#@<< convert leading tab to blanks >>
+			#@+node:2::<< convert leading tab to blanks >>
+			#@+body
+			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
+			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
+				# Get the characters preceeding the tab.
+				prev=c.body.get("insert linestart","insert -1c")
+				# Do nothing if there are non-whitespace in prev:
+				all_ws = true
+				for ch in prev:
+					if ch != ' ' and ch != '\t':
+						all_ws = false
+				if all_ws:
+					w = computeWidth(prev,c.tab_width)
+					w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
+					# print "prev w:" + `w` + ", prev chars:" + `prev`
+					c.body.delete("insert -1c")
+					c.body.insert("insert",' ' * w2)
+			#@-body
+			#@-node:2::<< convert leading tab to blanks >>
+
 		# Update the tnode.
 		if s == None: s = ""
 		c.undoer.setUndoTypingParams(v,undoType,v.bodyString(),s,oldSel,newSel)

@@ -2,6 +2,9 @@
 
 #@+node:0::@file leoAtFile.py
 #@+body
+#@@language python
+
+
 #@+at
 #  Class to read and write @file nodes.
 # 
@@ -14,7 +17,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import leoNodes
+import leoNodes, leoPrefs
 import filecmp, os, os.path, time
 
 class atFile:
@@ -82,11 +85,13 @@ class atFile:
 		
 
 		#@+at
-		#  The directory set by atFile.scanAllDirectives
+		#  Set by atFile.scanAllDirectives
 
 		#@-at
 		#@@c
 		self.default_directory = None
+		self.tab_width = leoPrefs.default_tab_width
+		self.page_width = leoPrefs.default_page_width
 		
 
 		#@+at
@@ -363,17 +368,17 @@ class atFile:
 		bits = 0 ; old_bits = 0 ; val = 0
 		
 		#@<< Set delims to default values >>
-		#@+node:1::<< Set delims to default values >>
+		#@+node:1:C=5:<< Set delims to default values >>
 		#@+body
-		prefs = app().prefsFrame
-		c.page_width = prefs.page_width
-		c.tab_width = prefs.tab_width
-		self.presentLanguage = self.targetLanguage = prefs.target_language
-		self.default_directory = None
+		self.page_width = leoPrefs.default_page_width
+		self.tab_width = leoPrefs.default_tab_width
+		
+		self.presentLanguage = self.targetLanguage = leoPrefs.default_target_language
+		self.default_directory = leoPrefs.default_default_directory
 		
 		delim1, delim2, delim3 = set_delims_from_language(self.presentLanguage)
 		#@-body
-		#@-node:1::<< Set delims to default values >>
+		#@-node:1:C=5:<< Set delims to default values >>
 
 		
 		#@<< Set path from @file node >>
@@ -383,7 +388,7 @@ class atFile:
 		
 		name = v.atFileNodeName()
 		dir = os.path.dirname(name)
-		if len(dir) > 0:
+		if dir and len(dir) > 0:
 			if os.path.exists(dir):
 				self.default_directory = dir
 			else:
@@ -447,14 +452,14 @@ class atFile:
 
 			
 			#@<< Test for @pagewidth and @tabwidth >>
-			#@+node:5::<< Test for @pagewidth and @tabwidth >>
+			#@+node:5:C=6:<< Test for @pagewidth and @tabwidth >>
 			#@+body
 			if self.btest(page_width_bits, bits) and not self.btest(page_width_bits, old_bits):
 				k = dict["page_width"]
 				j = i = k + len("@pagewidth")
 				i, val = skip_long(s,i)
 				if val:
-					c.page_width = val
+					self.page_width = val
 				else:
 					i = skip_to_end_of_line(s,i)
 					self.error("Ignoring " + s[k:i])
@@ -464,12 +469,12 @@ class atFile:
 				j = i = k + len("@tabwidth")
 				i, val = skip_long(s, i)
 				if val:
-					c.tab_width = val
+					self.tab_width = val
 				else:
 					i = skip_to_end_of_line(s,i)
 					self.error("Ignoring " + s[k:i])
 			#@-body
-			#@-node:5::<< Test for @pagewidth and @tabwidth >>
+			#@-node:5:C=6:<< Test for @pagewidth and @tabwidth >>
 
 			old_bits |= bits
 			v = v.parent()
@@ -482,25 +487,29 @@ class atFile:
 			
 			# 6/4/02: Use c.openDirectory as the initial default.
 			dir = c.openDirectory
-			if len(dir) > 0:
+			if dir and len(dir) > 0:
 				if os.path.exists(dir):
 					self.default_directory = dir
 				else:
-					self.error("Invalid open directory: " + `dir`)
+					# self.error("Invalid open directory: " + `dir`)
+					pass
 			
 			dir = c.tangle_directory # Try the directory in the Preferences panel
 			if dir and len(dir) > 0:
 				if os.path.exists(dir):
 					self.default_directory = dir
+				# It is not an error if this is not correct.
 				else:
-					self.error("Invalid Default Tangle Directory: " + `dir`)
+					# self.error("Invalid Default Tangle Directory: " + `dir`)
+					pass
 			
 			dir = c.frame.openDirectory # Try the directory used in the Open command
 			if not self.default_directory and dir and len(dir) > 0:
 				if os.path.exists(dir):
 					self.default_directory = dir
 				else:
-					self.error("Open directory no longer valid: " + `dir`)
+					# self.error("Open directory no longer valid: " + `dir`)
+					pass
 					
 			if not self.default_directory:
 				# 6/4/02: This message will almost never happen.
@@ -573,7 +582,7 @@ class atFile:
 		c = self.commands
 		ws = 0 ; n = len(s)
 		while i < n and ws < width:
-			if   s[i] == '\t': ws += (c.tab_width - (ws % c.tab_width))
+			if   s[i] == '\t': ws += (abs(self.tab_width) - (ws % abs(self.tab_width)))
 			elif s[i] == ' ':  ws += 1
 			else: break
 			i += 1
@@ -725,7 +734,7 @@ class atFile:
 			self.readError("cloned nodes have different topologies")
 	#@-body
 	#@-node:2::joinTrees
-	#@+node:3:C=5:atFile.read
+	#@+node:3:C=7:atFile.read
 	#@+body
 	#@+at
 	#  This is the entry point to the read code.  The root vnode should be an @file node.  If doErrorRecoveryFlag is false we are 
@@ -933,7 +942,7 @@ class atFile:
 		# esDiffTime("read: exit", t1)
 		return self.errors == 0
 	#@-body
-	#@-node:3:C=5:atFile.read
+	#@-node:3:C=7:atFile.read
 	#@+node:4::readAll (Leo2)
 	#@+body
 	#@+at
@@ -1211,7 +1220,7 @@ class atFile:
 				# Set lineIndent to the total indentation on the line.
 				lineIndent = 0 ; i = 0
 				while i < len(s):
-					if s[i] == '\t': lineIndent += (c.tab_width - (lineIndent % c.tab_width))
+					if s[i] == '\t': lineIndent += (abs(self.tab_width) - (lineIndent % abs(self.tab_width)))
 					elif s[i] == ' ': lineIndent += 1
 					else: break
 					i += 1
@@ -1364,7 +1373,7 @@ class atFile:
 				
 				#@<< scan @+node >>
 				#@+node:6::start sentinels
-				#@+node:5:C=6:<< scan @+node >>
+				#@+node:5:C=8:<< scan @+node >>
 				#@+body
 				assert(match(s,i,"+node:"))
 				i += 6
@@ -1479,7 +1488,7 @@ class atFile:
 					if len(s) == 1: # don't discard newline
 						continue
 				#@-body
-				#@-node:5:C=6:<< scan @+node >>
+				#@-node:5:C=8:<< scan @+node >>
 				#@-node:6::start sentinels
 
 			elif kind == atFile.startOthers:
@@ -1600,7 +1609,7 @@ class atFile:
 	#@-node:7::scanText
 	#@-node:5::Reading
 	#@+node:6::Writing
-	#@+node:1:C=7:os, onl, etc.
+	#@+node:1:C=9:os, onl, etc.
 	#@+body
 	def oblank(self):
 		self.os(' ')
@@ -1622,7 +1631,7 @@ class atFile:
 	def otabs(self,n):
 		self.os('\t' * n)
 	#@-body
-	#@-node:1:C=7:os, onl, etc.
+	#@-node:1:C=9:os, onl, etc.
 	#@+node:2::putBody
 	#@+body
 	#@+at
@@ -1680,7 +1689,7 @@ class atFile:
 		self.putSentinel("@-body")
 	#@-body
 	#@-node:3::putBodyPart (removes trailing lines)
-	#@+node:4:C=8:putCodePart & allies
+	#@+node:4:C=10:putCodePart & allies
 	#@+body
 	#@+at
 	#  This method expands a code part, terminated by any at-directive except at-others.  It expands references and at-others and 
@@ -1704,7 +1713,7 @@ class atFile:
 			#@-at
 			#@@c
 			
-			j,delta = skip_leading_ws_with_indent(s,i,c.tab_width)
+			j,delta = skip_leading_ws_with_indent(s,i,self.tab_width)
 			kind1 = self.directiveKind(s,i)
 			kind2 = self.directiveKind(s,j)
 			if kind1 == atFile.othersDirective or kind2 == atFile.othersDirective:
@@ -1877,7 +1886,7 @@ class atFile:
 				"\n\treferenced from: " + v.headString())
 	#@-body
 	#@-node:7::putRef
-	#@-node:4:C=8:putCodePart & allies
+	#@-node:4:C=10:putCodePart & allies
 	#@+node:5::putDirective  (handles @delims)
 	#@+body
 	# This method outputs s, a directive or reference, in a sentinel.
@@ -1950,7 +1959,7 @@ class atFile:
 		return j
 	#@-body
 	#@-node:6::putDoc
-	#@+node:7:C=9:putDocPart
+	#@+node:7:C=11:putDocPart
 	#@+body
 	# Puts a comment part in comments.
 	
@@ -1994,7 +2003,7 @@ class atFile:
 					break
 				# Split the line before the current word if needed.
 				lineLen = i - line
-				if line == word or leading + lineLen < c.page_width:
+				if line == word or leading + lineLen < self.page_width:
 					word = i # Advance to the next word.
 				else:
 					# Write the line before the current word and insert a newline.
@@ -2018,7 +2027,7 @@ class atFile:
 			self.os(self.endSentinelComment)
 			self.onl() # Note: no trailing whitespace.
 	#@-body
-	#@-node:7:C=9:putDocPart
+	#@-node:7:C=11:putDocPart
 	#@+node:8::putIndent
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
@@ -2026,14 +2035,15 @@ class atFile:
 	def putIndent(self,n):
 	
 		c = self.commands
-		if c.tab_width > 1:
-			self.otabs  (n / c.tab_width)
-			self.oblanks(n % c.tab_width)
+		w = abs(self.tab_width)
+		if w > 1:
+			self.otabs  (n / w)
+			self.oblanks(n % w)
 		else:
 			self.oblanks(n)
 	#@-body
 	#@-node:8::putIndent
-	#@+node:9:C=10:atFile.write
+	#@+node:9:C=12:atFile.write
 	#@+body
 	#@+at
 	#  This is the entry point to the write code.  root should be an @file vnode. We set the orphan and dirty flags if there are 
@@ -2171,7 +2181,7 @@ class atFile:
 			#@-body
 			#@-node:4::<< Replace the target with the temp file if different >>
 	#@-body
-	#@-node:9:C=10:atFile.write
+	#@-node:9:C=12:atFile.write
 	#@+node:10::writeAll
 	#@+body
 	#@+at

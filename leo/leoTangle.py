@@ -2,6 +2,8 @@
 
 #@+node:0::@file leoTangle.py
 #@+body
+#@@language python
+
 # Tangle and Untangle.
 
 from leoGlobals import *
@@ -397,7 +399,7 @@ class tangleCommands:
 		c = self.commands
 		
 		#@<< init directive ivars >>
-		#@+node:3::<< init directive ivars >>
+		#@+node:3:C=2:<< init directive ivars >>
 		#@+body
 		if 0: # not used in this version of Leo
 			self.allow_rich_text = default_allow_rich_text
@@ -428,7 +430,7 @@ class tangleCommands:
 		# Set only from directives.
 		self.print_bits = verbose_bits
 		#@-body
-		#@-node:3::<< init directive ivars >>
+		#@-node:3:C=2:<< init directive ivars >>
 	#@-body
 	#@-node:2:C=1:tangle.init_ivars & init_directive_ivars
 	#@+node:3::top level
@@ -438,7 +440,7 @@ class tangleCommands:
 
 	#@-at
 	#@-body
-	#@+node:1:C=2:cleanup
+	#@+node:1:C=3:cleanup
 	#@+body
 	# This code is called from tangleTree and untangleTree.
 	
@@ -471,7 +473,7 @@ class tangleCommands:
 		self.root_list = []
 		self.def_stack = []
 	#@-body
-	#@-node:1:C=2:cleanup
+	#@-node:1:C=3:cleanup
 	#@+node:2::initTangleCommand
 	#@+body
 	def initTangleCommand (self):
@@ -508,7 +510,7 @@ class tangleCommands:
 		es("Tangle complete")
 	#@-body
 	#@-node:4::tangle
-	#@+node:5:C=3:tangleAll
+	#@+node:5:C=4:tangleAll
 	#@+body
 	def tangleAll(self):
 	
@@ -530,8 +532,8 @@ class tangleCommands:
 		else:
 			es("Tangle complete")
 	#@-body
-	#@-node:5:C=3:tangleAll
-	#@+node:6:C=4:tangleMarked
+	#@-node:5:C=4:tangleAll
+	#@+node:6:C=5:tangleMarked
 	#@+body
 	def tangleMarked(self):
 	
@@ -560,7 +562,7 @@ class tangleCommands:
 		else:
 			es("Tangle complete")
 	#@-body
-	#@-node:6:C=4:tangleMarked
+	#@-node:6:C=5:tangleMarked
 	#@+node:7::tanglePass1
 	#@+body
 	#@+at
@@ -613,7 +615,7 @@ class tangleCommands:
 			self.put_all_roots() # pass 2 top level function.
 	#@-body
 	#@-node:8::tanglePass2
-	#@+node:9:C=5:tangleTree (calls cleanup)
+	#@+node:9:C=6:tangleTree (calls cleanup)
 	#@+body
 	#@+at
 	#  This funtion tangles all nodes in the tree whose root is v. It reports on its results if report_flag is true.
@@ -654,7 +656,7 @@ class tangleCommands:
 			es("----- The outline contains no roots")
 		return any_root_flag
 	#@-body
-	#@-node:9:C=5:tangleTree (calls cleanup)
+	#@-node:9:C=6:tangleTree (calls cleanup)
 	#@+node:10::untangle
 	#@+body
 	def untangle(self):
@@ -897,7 +899,7 @@ class tangleCommands:
 	#@-node:14::untangleTree
 	#@-node:3::top level
 	#@+node:4::tangle
-	#@+node:1:C=6:Pass 1
+	#@+node:1:C=7:Pass 1
 	#@+node:1::handle_newline
 	#@+body
 	#@+at
@@ -1202,7 +1204,7 @@ class tangleCommands:
 		return i,code
 	#@-body
 	#@-node:3::skip_code
-	#@+node:4:C=7:skip_doc
+	#@+node:4:C=8:skip_doc
 	#@+body
 	def skip_doc(self,s,i):
 	
@@ -1232,7 +1234,7 @@ class tangleCommands:
 		# trace(doc)
 		return i, doc
 	#@-body
-	#@-node:4:C=7:skip_doc
+	#@-node:4:C=8:skip_doc
 	#@+node:5::skip_headline
 	#@+body
 	#@+at
@@ -1258,7 +1260,7 @@ class tangleCommands:
 			self.header_name = s[j:end]
 	#@-body
 	#@-node:5::skip_headline
-	#@-node:1:C=6:Pass 1
+	#@-node:1:C=7:Pass 1
 	#@+node:2::Pass 2
 	#@+node:1::oblank, oblanks, os, otab, otabs
 	#@+body
@@ -1284,7 +1286,7 @@ class tangleCommands:
 			self.output_file.write('\t' * n)
 	#@-body
 	#@-node:1::oblank, oblanks, os, otab, otabs
-	#@+node:2:C=8:tangle.put_all_roots
+	#@+node:2:C=9:tangle.put_all_roots
 	#@+body
 	#@+at
 	#  This is the top level method of the second pass. It creates a separate C file for each @root directive in the outline. As 
@@ -1355,7 +1357,7 @@ class tangleCommands:
 				#@-body
 				#@-node:2::<< Erase the temporary file >>
 	#@-body
-	#@-node:2:C=8:tangle.put_all_roots
+	#@-node:2:C=9:tangle.put_all_roots
 	#@+node:3::put_code
 	#@+body
 	#@+at
@@ -1495,9 +1497,9 @@ class tangleCommands:
 				if use_single_comment:
 					# New code: 5/31/00
 					self.os(self.single_comment_string) ; self.otab()
-					line_width =(single_w / self.tab_width + 1) * self.tab_width
+					line_width =(single_w / abs(self.tab_width) + 1) * abs(self.tab_width)
 				else:
-					line_width = self.tab_width
+					line_width = abs(self.tab_width)
 					self.onl() ; self.otab()
 				self.put_leading_ws(self.tangle_indent)
 				line_width += max(0,self.tangle_indent)
@@ -1517,7 +1519,7 @@ class tangleCommands:
 					while is_ws_or_nl(s,i):
 						ch = s[i]
 						if ch == '\t':
-							pad = self.tab_width - (line_width % self.tab_width)
+							pad = abs(self.tab_width) - (line_width % abs(self.tab_width))
 							line_width += pad
 							if line_width < width: self.otab()
 							i += 1
@@ -1531,10 +1533,10 @@ class tangleCommands:
 							if use_single_comment:
 								# New code: 5/31/00
 								self.os(self.single_comment_string) ; self.otab()
-								line_width = (single_w / self.tab_width + 1) * self.tab_width
+								line_width = (single_w / abs(self.tab_width) + 1) * abs(self.tab_width)
 							else:
 								self.otab()
-								line_width = self.tab_width
+								line_width = abs(self.tab_width)
 							i = skip_nl(s,i)
 							words = 0
 							self.put_leading_ws(self.tangle_indent)
@@ -1572,7 +1574,7 @@ class tangleCommands:
 						line_width += word_width
 					else:
 						self.onl() ; self.otab()
-						line_width = self.tab_width
+						line_width = abs(self.tab_width)
 						if use_single_comment:
 							self.os(self.single_comment_string) ; self.oblank()
 							line_width += len(self.single_comment_string)+ 1
@@ -1598,11 +1600,12 @@ class tangleCommands:
 	def put_leading_ws(self,indent):
 	
 		# trace("tab_width:" + `self.tab_width` + ", indent:" + `indent`)
+		w = abs(self.tab_width)
 	
-		if self.tab_width > 1:
+		if w > 1:
 			# Output tabs if possible.
-			self.otabs  (indent / self.tab_width)
-			self.oblanks(indent % self.tab_width)
+			self.otabs  (indent / w)
+			self.oblanks(indent % w)
 		else:
 			self.oblanks(indent)
 
@@ -1712,7 +1715,7 @@ class tangleCommands:
 		if (j < len(s) and self.print_bits != silent_bits and
 			((self.use_noweb_flag and s[j] != '<') or
 			(self.use_cweb_flag and s[j] != '@'))):
-			self.tangle_indent += self.tab_width
+			self.tangle_indent += abs(self.tab_width)
 		#@-body
 		#@-node:1::<< Calculate the new value of tangle_indent >>
 
@@ -2069,7 +2072,7 @@ class tangleCommands:
 	#@-body
 	#@-node:7::st_lookup
 	#@-node:5::tst
-	#@+node:6:C=9:ust
+	#@+node:6:C=10:ust
 	#@+node:1::ust_dump
 	#@+body
 	def ust_dump (self):
@@ -2174,8 +2177,8 @@ class tangleCommands:
 					break # One warning per section is enough.
 	#@-body
 	#@-node:4::ust_warn_about_orphans
-	#@-node:6:C=9:ust
-	#@+node:7:C=10:untangle
+	#@-node:6:C=10:ust
+	#@+node:7:C=11:untangle
 	#@+node:1::compare_comments
 	#@+body
 	#@+at
@@ -2199,7 +2202,7 @@ class tangleCommands:
 			if self.comment and self.comment_end:
 				
 				#@<< Check both parts for @ comment conventions >>
-				#@+node:1:C=11:<< Check both parts for @ comment conventions >>
+				#@+node:1:C=12:<< Check both parts for @ comment conventions >>
 				#@+body
 				#@+at
 				#  This code is used in forgiving_compare()and in compare_comments().
@@ -2236,7 +2239,7 @@ class tangleCommands:
 						continue
 
 				#@-body
-				#@-node:1:C=11:<< Check both parts for @ comment conventions >>
+				#@-node:1:C=12:<< Check both parts for @ comment conventions >>
 
 			if p1 >= len(s1) or p2 >= len(s2):
 				break
@@ -2333,7 +2336,7 @@ class tangleCommands:
 			if self.comment and self.comment_end:
 				
 				#@<< Check both parts for @ comment conventions >>
-				#@+node:2:C=11:<< Check both parts for @ comment conventions >>
+				#@+node:2:C=12:<< Check both parts for @ comment conventions >>
 				#@+body
 				#@+at
 				#  This code is used in forgiving_compare()and in compare_comments().
@@ -2370,7 +2373,7 @@ class tangleCommands:
 						continue
 
 				#@-body
-				#@-node:2:C=11:<< Check both parts for @ comment conventions >>
+				#@-node:2:C=12:<< Check both parts for @ comment conventions >>
 
 			ch1 = s1[p1]
 			if ch1 == '\r' or ch1 == '\n':
@@ -2452,14 +2455,14 @@ class tangleCommands:
 				else:
 					
 					#@<< Compare single characters >>
-					#@+node:1:C=12:<< Compare single characters >>
+					#@+node:1:C=13:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=12:<< Compare single characters >>
+					#@-node:1:C=13:<< Compare single characters >>
 				#@-body
 				#@-node:6::<< Compare possible strings >>
 
@@ -2495,14 +2498,14 @@ class tangleCommands:
 				else:
 					
 					#@<< compare single characters >>
-					#@+node:1:C=12:<< Compare single characters >>
+					#@+node:1:C=13:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=12:<< Compare single characters >>
+					#@-node:1:C=13:<< Compare single characters >>
 
 
 				#@-body
@@ -2600,14 +2603,14 @@ class tangleCommands:
 				else:
 					
 					#@<< Compare single characters >>
-					#@+node:1:C=12:<< Compare single characters >>
+					#@+node:1:C=13:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=12:<< Compare single characters >>
+					#@-node:1:C=13:<< Compare single characters >>
 				#@-body
 				#@-node:8::<< Compare comments or single characters >>
 
@@ -2798,7 +2801,7 @@ class tangleCommands:
 						if is_nl(s,j):
 							break
 						elif not is_ws(s[j]):
-							indent += self.tab_width ; break
+							indent += abs(self.tab_width) ; break
 						j -= 1
 					# copy the section reference to the _present_ section,
 					# but only if this is the first part of the section.
@@ -3017,8 +3020,8 @@ class tangleCommands:
 		c.endUpdate()
 	#@-body
 	#@-node:7::update_current_vnode
-	#@-node:7:C=10:untangle
-	#@+node:8:C=13:utility methods
+	#@-node:7:C=11:untangle
+	#@+node:8:C=14:utility methods
 	#@+body
 	#@+at
 	#  These utilities deal with tangle ivars, so they should be methods.
@@ -3511,7 +3514,7 @@ class tangleCommands:
 		return name
 	#@-body
 	#@-node:17::standardize_name
-	#@+node:18:C=14:tangle.scanAllDirectives
+	#@+node:18:C=15:tangle.scanAllDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all its ancestors looking for directives.  If found,the corresponding globals are set for 
@@ -3702,8 +3705,8 @@ class tangleCommands:
 
 		# trace(`self.tangle_directory`)
 	#@-body
-	#@-node:18:C=14:tangle.scanAllDirectives
-	#@+node:19:C=15:token_type
+	#@-node:18:C=15:tangle.scanAllDirectives
+	#@+node:19:C=16:token_type
 	#@+body
 	#@+at
 	#  This method returns a code indicating the apparent kind of token at the position i. The caller must determine whether 
@@ -3779,8 +3782,8 @@ class tangleCommands:
 		# trace(`kind` + ":" + `get_line(s,i)`)
 		return kind, end
 	#@-body
-	#@-node:19:C=15:token_type
-	#@-node:8:C=13:utility methods
+	#@-node:19:C=16:token_type
+	#@-node:8:C=14:utility methods
 	#@-others
 	
 	#@-body

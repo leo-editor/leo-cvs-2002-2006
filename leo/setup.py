@@ -2,6 +2,9 @@
 
 #@+node:0::@file setup.py
 #@+body
+#@@language python
+
+
 #@+at
 #  Script for creating and installing distributions of leo.py using Python's distutils package.  setup.py is the conventional name 
 # for such scripts.

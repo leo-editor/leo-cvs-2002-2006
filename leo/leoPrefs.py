@@ -2,13 +2,17 @@
 
 #@+node:0::@file leoPrefs.py
 #@+body
+#@@language python
+
 from leoGlobals import *
 from leoUtils import *
 import string, Tkinter
 
-# Private constants
+# Public constants used for defaults when leoConfig.txt can not be read.
 default_page_width = 132
 default_tab_width = 4
+default_target_language = python_language
+default_default_directory = None
 
 ivars = [
 	"tangle_batch_flag", "untangle_batch_flag",
@@ -21,7 +25,7 @@ class LeoPrefs:
 	#@+others
 	#@+node:1:C=1:prefs.__init__
 	#@+body
-	def __init__ (self):
+	def __init__ (self,c):
 	
 		Tk = Tkinter
 		
@@ -31,8 +35,8 @@ class LeoPrefs:
 		# These ivars have the same names as the corresponding ivars in commands class.
 		
 		# Global options
-		self.page_width = 132
-		self.tab_width = 4
+		self.page_width = default_page_width
+		self.tab_width = default_tab_width
 		self.tangle_batch_flag = 0
 		self.untangle_batch_flag = 0
 		
@@ -48,13 +52,14 @@ class LeoPrefs:
 		self.output_doc_var = Tk.IntVar()
 		
 		# Default Target Language
-		self.target_language = python_language
+		self.target_language = default_target_language
 		self.lang_var = Tk.IntVar()
 		#@-body
 		#@-node:1::<< Set ivars >>
 
 		self.top = top = Tk.Toplevel()
-		self.top.title("Leo Preferences")
+		head,tail = os.path.split(c.frame.title)
+		self.top.title("Prefs for " + tail)
 		top.resizable(0,0) # neither height or width is resizable.
 		
 		#@<< Create the Global Options frame >>
@@ -164,21 +169,61 @@ class LeoPrefs:
 		#@-body
 		#@-node:4::<< Create the Target Language frame >>
 
+		
+		#@<< Create the Ok, Cancel & Revert buttons >>
+		#@+node:5::<< Create the Ok, Cancel & Revert buttons >>
+		#@+body
+		buttons = Tk.Frame(top,bd="2",relief="groove")
+		buttons.pack(expand=1,fill="x")
+		
+		okButton = Tk.Button(buttons,text="OK",width=7,command=self.onOK)
+		cancelButton = Tk.Button(buttons,text="Cancel",width=7,command=self.onCancel)
+		revertButton = Tk.Button(buttons,text="Revert",width=7,command=self.onRevert)
+		
+		okButton.pack(side="left",pady=7,expand=1)
+		cancelButton.pack(side="left",pady=7,expand=0)
+		revertButton.pack(side="left",pady=7,expand=1)
+		#@-body
+		#@-node:5::<< Create the Ok, Cancel & Revert buttons >>
+
 		self.top.protocol("WM_DELETE_WINDOW", self.OnClosePrefsFrame)
+		self.init(c)
 		# es("Prefs.__init__")
 	#@-body
 	#@-node:1:C=1:prefs.__init__
 	#@+node:2:C=2:prefs.init
 	#@+body
+	# Initializes prefs ivars and widgets from c's ivars.
+	
 	def init(self,c):
 	
-		# trace(`self.target_language`)
+		self.commands = c
+		#trace(`c.tab_width`)
+	
 		for var in ivars:
 			exec("self.%s = c.%s" % (var,var))
-			
+	
+		
+		#@<< remember values for revert >>
+		#@+node:1::<< remember values for revert >>
+		#@+body
+		# Global options
+		self.revert_tangle_batch_flag = c.tangle_batch_flag
+		self.revert_untangle_batch_flag = c.untangle_batch_flag
+		self.revert_page_width = c.page_width
+		self.revert_tab_width = c.tab_width
+		# Default Tangle Options
+		self.revert_tangle_directory = c.tangle_directory
+		self.revert_output_doc_flag = c.output_doc_flag
+		self.revert_use_header_flag = c.use_header_flag
+		# Default Target Language
+		self.revert_target_language = c.target_language
+		#@-body
+		#@-node:1::<< remember values for revert >>
+
 		
 		#@<< set widgets >>
-		#@+node:1::<< set widgets >>
+		#@+node:2::<< set widgets >>
 		#@+body
 		# Global options
 		self.tangle_batch_var.set(c.tangle_batch_flag)
@@ -195,16 +240,18 @@ class LeoPrefs:
 		# Default Target Language
 		self.lang_var.set(c.target_language)
 		#@-body
-		#@-node:1::<< set widgets >>
+		#@-node:2::<< set widgets >>
 
 		# print "init" ; print self.print_ivars()
 	#@-body
 	#@-node:2:C=2:prefs.init
-	#@+node:3:C=3:prefs.set_ivars & idle_set_ivars & print_ivars
+	#@+node:3::Event handlers
+	#@+node:1:C=3:prefs.set_ivars & idle_set_ivars & print_ivars
 	#@+body
-	def set_ivars (self,c=None):
+	# These event handlers get executed when the user types in the prefs panel.
 	
-		if c == None: c = top()
+	def set_ivars (self,c):
+	
 		
 		#@<< update ivars >>
 		#@+node:1::<< update ivars >>
@@ -212,13 +259,17 @@ class LeoPrefs:
 		# Global options
 		w = self.pageWidthText.get("1.0","end")
 		w = string.strip(w)
-		try: self.page_width = int(w)
-		except: self.page_width = default_page_width
+		try:
+			self.page_width = int(w)
+		except:
+			self.page_width = default_page_width
 			
 		w = self.tabWidthText.get("1.0","end")
 		w = string.strip(w)
-		try: self.tab_width = int(w)
-		except: self.tab_width = default_tab_width
+		try:
+			self.tab_width = int(w)
+		except:
+			self.tab_width = default_tab_width
 		
 		self.tangle_batch_flag = self.tangle_batch_var.get()
 		self.untangle_batch_flag = self.untangle_batch_var.get()
@@ -226,6 +277,7 @@ class LeoPrefs:
 		# Default Tangle options
 		dir = self.tangleDirectoryText.get("1.0","end")
 		self.tangle_directory = string.strip(dir)
+		
 		self.use_header_flag = self.use_header_var.get()
 		self.output_doc_flag = self.output_doc_var.get()
 		
@@ -236,6 +288,7 @@ class LeoPrefs:
 
 		for var in ivars:
 			exec("c.%s = self.%s" % (var,var))
+		c.frame.setTabWidth(c.tab_width)
 		# print "set_ivars" ; print self.print_ivars()
 	
 	def idle_set_ivars (self, event=None):
@@ -250,9 +303,11 @@ class LeoPrefs:
 		for var in ivars:
 			exec("print self.%s, '%s'" % (var,var))
 	#@-body
-	#@-node:3:C=3:prefs.set_ivars & idle_set_ivars & print_ivars
-	#@+node:4:C=4:set_lang
+	#@-node:1:C=3:prefs.set_ivars & idle_set_ivars & print_ivars
+	#@+node:2:C=4:set_lang
 	#@+body
+	# This event handler gets executed when the user choose a new default language.
+	
 	def set_lang (self):
 		
 		c = top() ; v = c.currentVnode()
@@ -261,14 +316,73 @@ class LeoPrefs:
 		c.tree.recolor(v)
 		# print "set_lang" ; print self.print_ivars()
 	#@-body
-	#@-node:4:C=4:set_lang
-	#@+node:5::OnClosePrefsFrame
+	#@-node:2:C=4:set_lang
+	#@+node:3:C=5:OnClosePrefsFrame
 	#@+body
 	def OnClosePrefsFrame(self):
 	
-		self.top.withdraw() # Just hide the window.
+		# trace()
+		app().config.setConfigIvars(self.commands)
+		app().config.update()
+		self.top.destroy()
 	#@-body
-	#@-node:5::OnClosePrefsFrame
+	#@-node:3:C=5:OnClosePrefsFrame
+	#@+node:4::onOK, onCancel, onRevert
+	#@+body
+	def onOK (self):
+		app().config.setConfigIvars(self.commands)
+		app().config.update()
+		self.top.destroy()
+		
+	def onCancel (self):
+		c = self.commands
+		
+		#@<< restore options >>
+		#@+node:1::<< restore options >>
+		#@+body
+		# Global options
+		c.tangle_batch_flag = self.revert_tangle_batch_flag
+		c.untangle_batch_flag = self.revert_untangle_batch_flag
+		c.page_width = self.revert_page_width
+		c.tab_width = self.revert_tab_width
+		# Default Tangle Options
+		c.tangle_directory = self.revert_tangle_directory
+		c.output_doc_flag = self.revert_output_doc_flag
+		c.use_header_flag = self.revert_use_header_flag
+		# Default Target Language
+		c.target_language = self.revert_target_language
+		#@-body
+		#@-node:1::<< restore options >>
+
+		self.init(c)
+		self.set_ivars(c)
+		self.top.destroy()
+	
+	def onRevert (self):
+		c = self.commands
+		
+		#@<< restore options >>
+		#@+node:1::<< restore options >>
+		#@+body
+		# Global options
+		c.tangle_batch_flag = self.revert_tangle_batch_flag
+		c.untangle_batch_flag = self.revert_untangle_batch_flag
+		c.page_width = self.revert_page_width
+		c.tab_width = self.revert_tab_width
+		# Default Tangle Options
+		c.tangle_directory = self.revert_tangle_directory
+		c.output_doc_flag = self.revert_output_doc_flag
+		c.use_header_flag = self.revert_use_header_flag
+		# Default Target Language
+		c.target_language = self.revert_target_language
+		#@-body
+		#@-node:1::<< restore options >>
+
+		self.init(c)
+		self.set_ivars(c)
+	#@-body
+	#@-node:4::onOK, onCancel, onRevert
+	#@-node:3::Event handlers
 	#@-others
 #@-body
 #@-node:0::@file leoPrefs.py

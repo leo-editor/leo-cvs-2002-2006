@@ -2,6 +2,9 @@
 
 #@+node:0::@file openLeo.py
 #@+body
+#@@language python
+
+
 #@+at
 #  This tiny script is intended to be called from go.bat to open LeoPy.leo.  You could change the file name to be any file you 
 # work on a lot...

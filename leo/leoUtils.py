@@ -2,6 +2,8 @@
 
 #@+node:0::@file leoUtils.py
 #@+body
+#@@language python
+
 # Global utility functions
 
 from leoGlobals import *
@@ -124,7 +126,29 @@ def btest(b1, b2):
 	return (b1 & b2) != 0
 #@-body
 #@-node:3::btest
-#@+node:4::create_temp_name
+#@+node:4::center_dialog
+#@+body
+# Center the dialog on the screen.
+
+def center_dialog(top):
+
+	top.update_idletasks() # Required to get proper info.
+
+	# Get the information about top and the screen.
+	sw = top.winfo_screenwidth()
+	sh = top.winfo_screenheight()
+	g = top.geometry() # g = "WidthxHeight+XOffset+YOffset"
+	dim,x,y = string.split(g,'+')
+	w,h = string.split(dim,'x')
+	w,h,x,y = int(w),int(h),int(x),int(y)
+	
+	# Set the new window coordinates, leaving w and h unchanged.
+	x = (sw - w)/2
+	y = (sh - h)/2
+	top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+#@-body
+#@-node:4::center_dialog
+#@+node:5::create_temp_name
 #@+body
 # Returns a temporary file name.
 
@@ -135,8 +159,8 @@ def create_temp_name ():
 	# trace(`temp`)
 	return temp
 #@-body
-#@-node:4::create_temp_name
-#@+node:5::Dumping, Tracing & Sherlock
+#@-node:5::create_temp_name
+#@+node:6::Dumping, Tracing & Sherlock
 #@+node:1::dump
 #@+body
 def dump(s):
@@ -269,12 +293,16 @@ def init_trace(args):
 		if arg[0] in string.letters: prefix = '+'
 		else: prefix = arg[0] ; arg = arg[1:]
 		
-		if prefix == '?': print "trace list:", `t`
+		if prefix == '?':
+			print "trace list:", `t`
 		elif prefix == '+' and not arg in t:
-			t.append(string.lower(arg)) ; print "enabling:", arg
+			t.append(string.lower(arg))
+			# print "enabling:", arg
 		elif prefix == '-' and arg in t:
-			t.remove(string.lower(arg)) ; print "disabling:", arg
-		else: print "ignoring:", prefix + arg
+			t.remove(string.lower(arg))
+			# print "disabling:", arg
+		else:
+			print "ignoring:", prefix + arg
 #@-body
 #@-node:2::init_trace
 #@+node:3::trace
@@ -307,8 +335,8 @@ def trace (s1=None,s2=None):
 #@-body
 #@-node:3::trace
 #@-node:4:C=3:Sherlock...
-#@-node:5::Dumping, Tracing & Sherlock
-#@+node:6::ensure_extension
+#@-node:6::Dumping, Tracing & Sherlock
+#@+node:7::ensure_extension
 #@+body
 def ensure_extension (name, ext):
 
@@ -320,8 +348,8 @@ def ensure_extension (name, ext):
 	else:
 		return file + ext
 #@-body
-#@-node:6::ensure_extension
-#@+node:7:C=4:findReference
+#@-node:7::ensure_extension
+#@+node:8:C=4:findReference
 #@+body
 #@+at
 #  We search the descendents of v looking for the definition node matching name.
@@ -341,8 +369,8 @@ def findReference(name,root):
 	return None
 
 #@-body
-#@-node:7:C=4:findReference
-#@+node:8:C=5:Leading & trailing whitespace...
+#@-node:8:C=4:findReference
+#@+node:9:C=5:Leading & trailing whitespace...
 #@+node:1::computeLeadingWhitespace
 #@+body
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
@@ -355,11 +383,26 @@ def computeLeadingWhitespace (width, tab_width):
 		tabs   = width / tab_width
 		blanks = width % tab_width
 		return ('\t' * tabs) + (' ' * blanks)
-	else:
+	else: # 7/3/02: negative tab width always gets converted to blanks.
 		return (' ' * width)
 #@-body
 #@-node:1::computeLeadingWhitespace
-#@+node:2::optimizeLeadingWhitespace
+#@+node:2::computeWidth
+#@+body
+# Returns the width of s, assuming s starts a line, with indicated tab_width.
+
+def computeWidth (s, tab_width):
+		
+	w = 0
+	for ch in s:
+		if ch == '\t':
+			w += (abs(tab_width) - (w % abs(tab_width)))
+		else:
+			w += 1
+	return w
+#@-body
+#@-node:2::computeWidth
+#@+node:3::optimizeLeadingWhitespace
 #@+body
 # Optimize leading whitespace in s with the given tab_width.
 
@@ -369,8 +412,8 @@ def optimizeLeadingWhitespace (line,tab_width):
 	s = computeLeadingWhitespace(width,tab_width) + line[i:]
 	return s
 #@-body
-#@-node:2::optimizeLeadingWhitespace
-#@+node:3::removeLeadingWhitespace
+#@-node:3::optimizeLeadingWhitespace
+#@+node:4::removeLeadingWhitespace
 #@+body
 # Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
 
@@ -383,14 +426,14 @@ def removeLeadingWhitespace (s,first_ws,tab_width):
 		elif ch == ' ':
 			j += 1 ; ws += 1
 		elif ch == '\t':
-			j += 1 ; ws += (tab_width - (ws % tab_width))
+			j += 1 ; ws += (abs(tab_width) - (ws % abs(tab_width)))
 		else: break
 	if j > 0:
 		s = s[j:]
 	return s
 #@-body
-#@-node:3::removeLeadingWhitespace
-#@+node:4::removeTrailingWs
+#@-node:4::removeLeadingWhitespace
+#@+node:5::removeTrailingWs
 #@+body
 # Warning: string.rstrip also removes newlines!
 
@@ -402,8 +445,8 @@ def removeTrailingWs(s):
 	return s[:j+1]
 
 #@-body
-#@-node:4::removeTrailingWs
-#@+node:5::skip_leading_ws
+#@-node:5::removeTrailingWs
+#@+node:6::skip_leading_ws
 #@+body
 # Skips leading up to width leading whitespace.
 
@@ -416,14 +459,14 @@ def skip_leading_ws(s,i,ws,tab_width):
 			count += 1
 			i += 1
 		elif ch == '\t':
-			count += (tab_width - (count % tab_width))
+			count += (abs(tab_width) - (count % abs(tab_width)))
 			i += 1
 		else: break
 
 	return i
 #@-body
-#@-node:5::skip_leading_ws
-#@+node:6::skip_leading_ws_with_indent
+#@-node:6::skip_leading_ws
+#@+node:7::skip_leading_ws_with_indent
 #@+body
 #@+at
 #  Skips leading whitespace and returns (i, indent), where i points after the whitespace and indent is the width of the 
@@ -441,15 +484,15 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 			count += 1
 			i += 1
 		elif ch == '\t':
-			count += (tab_width - (count % tab_width))
+			count += (abs(tab_width) - (count % abs(tab_width)))
 			i += 1
 		else: break
 
 	return i, count
 #@-body
-#@-node:6::skip_leading_ws_with_indent
-#@-node:8:C=5:Leading & trailing whitespace...
-#@+node:9::List utilities...
+#@-node:7::skip_leading_ws_with_indent
+#@-node:9:C=5:Leading & trailing whitespace...
+#@+node:10::List utilities...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -482,8 +525,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:9::List utilities...
-#@+node:10::Menu utlities...
+#@-node:10::List utilities...
+#@+node:11::Menu utlities...
 #@+node:1::enableMenu & disableMenu & setMenuLabel
 #@+body
 def enableMenu (menu,name,val):
@@ -500,8 +543,8 @@ def setMenuLabel (menu,name,label):
 	menu.entryconfig(name,label=label)
 #@-body
 #@-node:1::enableMenu & disableMenu & setMenuLabel
-#@-node:10::Menu utlities...
-#@+node:11::scanError
+#@-node:11::Menu utlities...
+#@+node:12::scanError
 #@+body
 #@+at
 #  It seems dubious to bump the Tangle error count here.  OTOH, it really doesn't hurt.
@@ -518,8 +561,8 @@ def scanError(s):
 
 	es(s)
 #@-body
-#@-node:11::scanError
-#@+node:12::Scanners: calling scanError
+#@-node:12::scanError
+#@+node:13::Scanners: calling scanError
 #@+body
 #@+at
 #  These scanners all call scanError() directly or indirectly, so they will call es() if they find an error.  scanError() also 
@@ -773,8 +816,8 @@ def skip_typedef(s,i):
 	return i
 #@-body
 #@-node:12::skip_typedef
-#@-node:12::Scanners: calling scanError
-#@+node:13::Scanners: no error messages
+#@-node:13::Scanners: calling scanError
+#@+node:14::Scanners: no error messages
 #@+node:1::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
@@ -1113,8 +1156,17 @@ def skip_ws_and_nl(s,i):
 	return i
 #@-body
 #@-node:20::skip_ws, skip_ws_and_nl
-#@-node:13::Scanners: no error messages
-#@+node:14:C=7:sortSequence
+#@-node:14::Scanners: no error messages
+#@+node:15::shortFileName
+#@+body
+def shortFileName (fileName):
+	
+	fileName = os.path.normpath(fileName)
+	head,tail = os.path.split(fileName)
+	return tail
+#@-body
+#@-node:15::shortFileName
+#@+node:16:C=7:sortSequence
 #@+body
 #@+at
 #  sequence is a sequence of items, each of which is a sequence containing at least n elements.
@@ -1149,8 +1201,8 @@ def sortSequence (sequence, n):
 #@-at
 #@@c
 #@-body
-#@-node:14:C=7:sortSequence
-#@+node:15::Timing
+#@-node:16:C=7:sortSequence
+#@+node:17::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1165,8 +1217,8 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:15::Timing
-#@+node:16:C=8:Tk.Text selection
+#@-node:17::Timing
+#@+node:18:C=8:Tk.Text selection (utils)
 #@+node:1::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
@@ -1215,8 +1267,8 @@ def setTextSelection (t,start,end):
 	t.mark_set("insert",end)
 #@-body
 #@-node:3:C=9:setTextSelection
-#@-node:16:C=8:Tk.Text selection
-#@+node:17::update_file_if_changed
+#@-node:18:C=8:Tk.Text selection (utils)
+#@+node:19::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace file_name with temp_name. Otherwise, we just delete 
@@ -1248,7 +1300,7 @@ def update_file_if_changed(file_name,temp_name):
 		except:
 			es("Rename failed: no file created! (file may be read-only)")
 #@-body
-#@-node:17::update_file_if_changed
+#@-node:19::update_file_if_changed
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py

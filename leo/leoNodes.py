@@ -2,6 +2,9 @@
 
 #@+node:0::@file leoNodes.py
 #@+body
+#@@language python
+
+
 #@<< About the vnode and tnode classes >>
 #@+node:1::<< About the vnode and tnode classes >>
 #@+body
@@ -1305,7 +1308,7 @@ class vnode:
 		return self # We no longer need dvnodes: vnodes contain all needed info.
 	#@-body
 	#@-node:2::doDelete
-	#@+node:3::insertAfter
+	#@+node:3:C=7:insertAfter
 	#@+body
 	def insertAfter (self, t = None):
 	
@@ -1318,7 +1321,7 @@ class vnode:
 		v.linkAfter(self)
 		return v
 	#@-body
-	#@-node:3::insertAfter
+	#@-node:3:C=7:insertAfter
 	#@+node:4::insertAsLastChild
 	#@+body
 	def insertAsLastChild (self,t = None):
@@ -1347,7 +1350,7 @@ class vnode:
 		return v
 	#@-body
 	#@-node:5::insertAsNthChild
-	#@+node:6:C=7:moveAfter
+	#@+node:6:C=8:moveAfter
 	#@+body
 	# Used by scripts
 	
@@ -1366,8 +1369,8 @@ class vnode:
 		if not a.parent() and not a.back():
 			c.tree.rootVnode = a
 	#@-body
-	#@-node:6:C=7:moveAfter
-	#@+node:7:C=8:moveToRoot
+	#@-node:6:C=8:moveAfter
+	#@+node:7:C=9:moveToRoot
 	#@+body
 	def moveToRoot (self, oldRoot = None):
 	
@@ -1380,8 +1383,8 @@ class vnode:
 		v.linkAsRoot(oldRoot)
 		v.createDependents()
 	#@-body
-	#@-node:7:C=8:moveToRoot
-	#@+node:8:C=9:moveToNthChildOf
+	#@-node:7:C=9:moveToRoot
+	#@+node:8:C=10:moveToNthChildOf
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1400,7 +1403,7 @@ class vnode:
 		if not p.parent() and not p.back():
 			c.tree.rootVnode = p
 	#@-body
-	#@-node:8:C=9:moveToNthChildOf
+	#@-node:8:C=10:moveToNthChildOf
 	#@+node:9::restoreOutlineFromDVnodes (test)
 	#@+body
 	# Restores (relinks) the dv tree in the position described by back and parent.
@@ -1416,9 +1419,45 @@ class vnode:
 		return dv
 	#@-body
 	#@-node:9::restoreOutlineFromDVnodes (test)
+	#@+node:10:C=11:swap_links
+	#@+body
+	# 7/5/02: New for undo.
+	# On entry, linked is linked into a tree and unlinked is not.
+	# On exit,  unlinked is linked into a tree and linked is not.
+	
+	# Warning: caller is responsible for hanling join links properly.
+	
+	def swap_links (self,unlinked,linked):
+	
+		assert(unlinked and linked)
+		assert(unlinked.mParent == None)
+		assert(unlinked.mBack == None)
+		assert(unlinked.mNext == None)
+		assert(unlinked.joinList == None)
+		#print "swap_links:unlinked.last,linked.last",`unlinked.lastChild()`,`linked.lastChild()`
+	
+		# Copy links to unlinked.
+		unlinked.mParent = linked.mParent
+		unlinked.mBack = linked.mBack
+		unlinked.mNext = linked.mNext
+		# Caller is responsible for handling join links.
+		unlinked.joinList = None 
+		
+		# Change links to linked from other nodes.
+		if linked.mParent and linked.mParent.mFirstChild == linked:
+			linked.mParent.mFirstChild = unlinked
+		if linked.mBack:
+			linked.mBack.mNext = unlinked
+		if linked.mNext:
+			linked.mNext.mBack = unlinked
+			
+		# Clear links in linked.
+		linked.mParent = linked.mBack = linked.mNext = linked.joinList = None
+	#@-body
+	#@-node:10:C=11:swap_links
 	#@-node:1::Entry Points (vnode)
 	#@+node:2::Public helper functions
-	#@+node:1::copyTree
+	#@+node:1:C=12:v.copyTree
 	#@+body
 	#@+at
 	#  This method copies all subtrees of oldRoot to the subtrees of newRoot.  The caller is responsible for copying the headline 
@@ -1452,7 +1491,7 @@ class vnode:
 			new_v = new_v.next()
 		assert(new_v == None)
 	#@-body
-	#@-node:1::copyTree
+	#@-node:1:C=12:v.copyTree
 	#@+node:2::joinTreeTo
 	#@+body
 	#@+at
@@ -1622,14 +1661,14 @@ class vnode:
 		assert(child2 == None)
 	#@-body
 	#@-node:2::copyCloneBitsTo
-	#@+node:3::copyNode
+	#@+node:3:C=13:v.copyNode
 	#@+body
 	def copyNode (self, old_node, new_node):
 	
 		new_node.mHeadString = old_node.mHeadString
 		new_node.iconVal = old_node.iconVal
 	#@-body
-	#@-node:3::copyNode
+	#@-node:3:C=13:v.copyNode
 	#@+node:4::createDependents (bug fix: 4/22/01)
 	#@+body
 	# This method creates all nodes that depend on the receiver.
@@ -1804,7 +1843,7 @@ class vnode:
 				v.mNext.mBack = v
 	#@-body
 	#@-node:12::linkAsNthChild
-	#@+node:13:C=10:linkAsRoot
+	#@+node:13:C=14:linkAsRoot
 	#@+body
 	#@+at
 	#  Bug fix: 5/27/02.  We link in the rest of the tree only when oldRoot != None.  Otherwise, we are calling this routine from 
@@ -1828,7 +1867,7 @@ class vnode:
 		tree.rootVnode = v
 
 	#@-body
-	#@-node:13:C=10:linkAsRoot
+	#@-node:13:C=14:linkAsRoot
 	#@+node:14::unlink
 	#@+body
 	def unlink (self):

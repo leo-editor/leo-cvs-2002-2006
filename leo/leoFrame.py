@@ -2,9 +2,11 @@
 
 #@+node:0::@file leoFrame.py
 #@+body
+#@@language python
+
 from leoGlobals import *
 from leoUtils import *
-import leoDialog, leoNodes
+import leoDialog, leoNodes, leoPrefs
 import Tkinter, tkFileDialog, tkFont
 
 # Needed for menu commands
@@ -44,6 +46,7 @@ class LeoFrame:
 		self.es_newlines = 0 # newline count for this log stream
 		
 		# Created below
+		self.commands = None
 		self.log = None
 		self.body = None
 		self.tree = None
@@ -61,6 +64,7 @@ class LeoFrame:
 		self.redrawCount = 0
 		self.activeFrame = None
 		self.draggedItem = None
+		self.recentFiles = [] # List of recent files
 		#@-body
 		#@-node:1::<< set the LeoFrame ivars >>
 
@@ -97,9 +101,8 @@ class LeoFrame:
 		else:
 			font = tkFont.Font(family="Courier",size=12)
 		
-		tabw = font.measure("    ")
 		self.body = body = Tk.Text(split1Pane2,name='body',bd=2,bg="white",relief="flat",
-			setgrid=1,font=font,tabs=tabw,wrap="word",selectbackground="Gray80")
+			setgrid=1,font=font,wrap="word",selectbackground="Gray80")
 		bodyBar = Tk.Scrollbar(split1Pane2,name='bodyBar')
 		body['yscrollcommand'] = bodyBar.set
 		bodyBar['command'] = body.yview
@@ -133,6 +136,7 @@ class LeoFrame:
 		self.commands = c = leoCommands.Commands(self)
 		self.tree = leoTree.leoTree(self.commands, self.canvas)
 		c.tree = self.tree
+		self.setTabWidth(c.tab_width)
 		
 		#@<< create the first tree node >>
 		#@+node:3::<< create the first tree node >>
@@ -206,7 +210,22 @@ class LeoFrame:
 		self.top = None
 	#@-body
 	#@-node:4:C=3:frame.destroy
-	#@+node:5:C=4:createMenuBar
+	#@+node:5:C=4:frame.setTabWidth
+	#@+body
+	def setTabWidth (self, w):
+		
+		# EKR 2/28/02: made code size platform dependent.
+		if sys.platform=="win32": # Windows
+			font = tkFont.Font(family="Courier",size=9)
+		else:
+			font = tkFont.Font(family="Courier",size=12)
+			
+		# print "frame.setTabWidth:" + `w`
+		tabw = font.measure(" " * abs(w)) # 7/2/02
+		self.body.configure(tabs=tabw)
+	#@-body
+	#@-node:5:C=4:frame.setTabWidth
+	#@+node:6:C=5:createMenuBar
 	#@+body
 	def createMenuBar(self, top):
 	
@@ -232,8 +251,7 @@ class LeoFrame:
 		fileMenu.add_command(label="Save",accelerator="Ctrl+S", command=self.OnSave)
 		fileMenu.add_command(label="Save As",accelerator="Shift+Ctrl+S", command=self.OnSaveAs)
 		fileMenu.add_command(label="Save To",command=self.OnSaveTo)
-		fileMenu.add_command(label="Revert To Saved",command=self.OnRevert) # ,state="disabled") #
-		fileMenu.add_separator()
+		fileMenu.add_command(label="Revert To Saved",command=self.OnRevert)
 		
 
 		#@+at
@@ -250,8 +268,25 @@ class LeoFrame:
 		#@-node:1::<< create the top-level file entries >>
 
 		
+		#@<< create the recent files submenu >>
+		#@+node:2:C=6:<< create the recent files submenu >>
+		#@+body
+		recentFilesMenu = self.recentFilesMenu = Tk.Menu(fileMenu,tearoff=0)
+		fileMenu.add_cascade(label="Recent Files...", menu=recentFilesMenu)
+		
+		self.recentFiles = app().config.getRecentFiles()
+		
+		for i in xrange(len(self.recentFiles)):
+			name = self.recentFiles[i]
+			exec("recentFilesMenu.add_command(label=name,command=self.OnOpenRecentFile" + `i` + ")")
+
+		#@-body
+		#@-node:2:C=6:<< create the recent files submenu >>
+
+		fileMenu.add_separator()
+		
 		#@<< create the read/write submenu >>
-		#@+node:2::<< create the read/write submenu >>
+		#@+node:3::<< create the read/write submenu >>
 		#@+body
 		readWriteMenu = Tk.Menu(fileMenu,tearoff=0)
 		fileMenu.add_cascade(label="Read/Write...", menu=readWriteMenu)
@@ -261,11 +296,11 @@ class LeoFrame:
 		readWriteMenu.add_command(label="Write Outline Only",command=self.OnWriteOutlineOnly)
 		readWriteMenu.add_command(label="Write @file Nodes",command=self.OnWriteAtFileNodes)
 		#@-body
-		#@-node:2::<< create the read/write submenu >>
+		#@-node:3::<< create the read/write submenu >>
 
 		
 		#@<< create the tangle submenu >>
-		#@+node:3::<< create the tangle submenu >>
+		#@+node:4::<< create the tangle submenu >>
 		#@+body
 		tangleMenu = Tk.Menu(fileMenu,tearoff=0)
 		fileMenu.add_cascade(label="Tangle...", menu=tangleMenu)
@@ -280,11 +315,11 @@ class LeoFrame:
 			accelerator="Shift+Ctrl+T",
 			command=self.OnTangle)
 		#@-body
-		#@-node:3::<< create the tangle submenu >>
+		#@-node:4::<< create the tangle submenu >>
 
 		
 		#@<< create the untangle submenu >>
-		#@+node:4::<< create the untangle submenu >>
+		#@+node:5::<< create the untangle submenu >>
 		#@+body
 		untangleMenu = Tk.Menu(fileMenu,tearoff=0)
 		fileMenu.add_cascade(label="Untangle...", menu=untangleMenu)
@@ -296,11 +331,11 @@ class LeoFrame:
 		untangleMenu.add_command(label="Untangle",
 			accelerator="Shift+Ctrl+U",command=self.OnUntangle)
 		#@-body
-		#@-node:4::<< create the untangle submenu >>
+		#@-node:5::<< create the untangle submenu >>
 
 		
 		#@<< create the import submenu >>
-		#@+node:5::<< create the import submenu >>
+		#@+node:6::<< create the import submenu >>
 		#@+body
 		importMenu = Tk.Menu(fileMenu,tearoff=0)
 		fileMenu.add_cascade(label="Import/Export...", menu=importMenu)
@@ -326,7 +361,7 @@ class LeoFrame:
 		importMenu.add_command(label="Remove Sentinels",
 			command=self.OnRemoveSentinels)
 		#@-body
-		#@-node:5::<< create the import submenu >>
+		#@-node:6::<< create the import submenu >>
 
 		fileMenu.add_separator()
 		fileMenu.add_command(label="Exit", command=self.OnQuit)
@@ -371,8 +406,16 @@ class LeoFrame:
 			accelerator="Shift+Ctrl+N",command=self.OnExtractNames)
 		editBodyMenu.add_command(label="Extract",
 			accelerator="Shift+Ctrl+D",command=self.OnExtract)
+		editBodyMenu.add_separator()
+			
+		editBodyMenu.add_command(label="Convert All Blanks",
+			command=self.OnConvertAllBlanks)
+		editBodyMenu.add_command(label="Convert All Tabs",
+			command=self.OnConvertAllTabs)
 		editBodyMenu.add_command(label="Convert Blanks",
 			accelerator="Shift+Ctrl+B",command=self.OnConvertBlanks)
+		editBodyMenu.add_command(label="Convert Tabs",
+			accelerator="Shift+Ctrl+J",command=self.OnConvertTabs)
 		editBodyMenu.add_separator()
 		
 		editBodyMenu.add_command(label="Indent",
@@ -406,9 +449,9 @@ class LeoFrame:
 		#@-body
 		#@-node:2::<< create the find submenu >>
 
-		editMenu.add_command(label="Font Panel",
+		editMenu.add_command(label="Set Font...",
 			accelerator="Shift+Alt+T",command=self.OnFontPanel,state="disabled") #
-		editMenu.add_command(label="Syntax Coloring...",
+		editMenu.add_command(label="Set Colors...",
 			accelerator="Shift+Alt+S",command=self.OnSyntaxColoring,state="disabled") #
 		
 		label = choose(c.tree.colorizer.showInvisibles,"Hide Invisibles","Show Invisibles")
@@ -577,7 +620,7 @@ class LeoFrame:
 		windowMenu.add_command(label="Cascade",
 			command=self.OnCascade)
 		windowMenu.add_command(label="Minimize All",
-			command=self.OnMinimizeAll,state="disabled") #
+			command=self.OnMinimizeAll)
 		windowMenu.add_separator()
 		
 		windowMenu.add_command(label="Open Python Window",
@@ -598,8 +641,8 @@ class LeoFrame:
 
 		top.config(menu=menu) # Display the menu.
 	#@-body
-	#@-node:5:C=4:createMenuBar
-	#@+node:6:C=5:createAccelerators
+	#@-node:6:C=5:createMenuBar
+	#@+node:7:C=7:createAccelerators
 	#@+body
 	#@+at
 	#  The accelerator entry specified when creating a menu item just creates text.  The actual correspondance between keys and 
@@ -676,7 +719,7 @@ class LeoFrame:
 			("G", self.OnFindPrevious),
 			# H unused
 			# I reserved
-			# J reserved
+			("J", self.OnConvertTabs),
 			# K unused
 			# L unused
 			("M", self.OnTangleMarked),
@@ -780,8 +823,8 @@ class LeoFrame:
 			print_bindings("body",self.body)
 			print_bindings("canvas",self.canvas)
 	#@-body
-	#@-node:6:C=5:createAccelerators
-	#@+node:7::getFocus
+	#@-node:7:C=7:createAccelerators
+	#@+node:8::getFocus
 	#@+body
 	# Returns the frame that has focus, or body if None.
 	
@@ -793,16 +836,16 @@ class LeoFrame:
 		else:
 			return self.body
 	#@-body
-	#@-node:7::getFocus
-	#@+node:8::notYet
+	#@-node:8::getFocus
+	#@+node:9::notYet
 	#@+body
 	def notYet(self,name):
 	
 		es(name + " not ready yet")
 
 	#@-body
-	#@-node:8::notYet
-	#@+node:9:C=6:frame.put, putnl
+	#@-node:9::notYet
+	#@+node:10:C=8:frame.put, putnl
 	#@+body
 	# All output to the log stream eventually comes here.
 	
@@ -826,17 +869,17 @@ class LeoFrame:
 			print "Null log"
 			print
 	#@-body
-	#@-node:9:C=6:frame.put, putnl
-	#@+node:10::resizePanesToRatio
+	#@-node:10:C=8:frame.put, putnl
+	#@+node:11::resizePanesToRatio
 	#@+body
 	def resizePanesToRatio(self,ratio):
 	
 		self.divideSplitter(self.splitVerticalFlag, 0.5)
 
 	#@-body
-	#@-node:10::resizePanesToRatio
-	#@+node:11::Event handlers
-	#@+node:1:C=7:frame.OnCloseLeoEvent
+	#@-node:11::resizePanesToRatio
+	#@+node:12::Event handlers
+	#@+node:1:C=9:frame.OnCloseLeoEvent
 	#@+body
 	# Called from quit logic and when user closes the window.
 	# Returns true if the close happened.
@@ -872,7 +915,7 @@ class LeoFrame:
 						initialfile = self.mFileName,
 						title="Save",
 						filetypes=[("Leo files", "*.leo")],
-						defaultextension="leo")
+						defaultextension=".leo")
 						
 					if not self.mFileName:
 						veto = true
@@ -905,20 +948,17 @@ class LeoFrame:
 			app().quit()
 		return true
 	#@-body
-	#@-node:1:C=7:frame.OnCloseLeoEvent
-	#@+node:2:C=8:OnActivateLeoEvent
+	#@-node:1:C=9:frame.OnCloseLeoEvent
+	#@+node:2:C=10:OnActivateLeoEvent
 	#@+body
 	def OnActivateLeoEvent(self,event=None):
 	
 		c = self.commands
 		app().log = self
-		# 2/9/02: It is very important to handle Default Tangle Directory properly!
-		prefs = app().prefsFrame
-		if prefs:
-			prefs.init(c)
+
 	#@-body
-	#@-node:2:C=8:OnActivateLeoEvent
-	#@+node:3:C=9:OnActivateBody & OnBodyDoubleClick
+	#@-node:2:C=10:OnActivateLeoEvent
+	#@+node:3:C=11:OnActivateBody & OnBodyDoubleClick
 	#@+body
 	def OnActivateBody (self,event=None):
 	
@@ -933,7 +973,7 @@ class LeoFrame:
 		setTextSelection(self.body,start,end)
 		return "break" # Inhibit all further event processing.
 	#@-body
-	#@-node:3:C=9:OnActivateBody & OnBodyDoubleClick
+	#@-node:3:C=11:OnActivateBody & OnBodyDoubleClick
 	#@+node:4::OnActivateLog
 	#@+body
 	def OnActivateLog (self,event=None):
@@ -951,8 +991,8 @@ class LeoFrame:
 		self.tree.canvas.focus_set()
 	#@-body
 	#@-node:5::OnActivateTree
-	#@-node:11::Event handlers
-	#@+node:12:C=10:Menu enablers (Frame)
+	#@-node:12::Event handlers
+	#@+node:13:C=12:Menu enablers (Frame)
 	#@+node:1::OnMenuClick (enables and disables all menu items)
 	#@+body
 	# This is the Tk "postcommand" callback.  It should update all menu items.
@@ -1050,8 +1090,8 @@ class LeoFrame:
 		enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
 	#@-body
 	#@-node:5::updateOutlineMenu
-	#@-node:12:C=10:Menu enablers (Frame)
-	#@+node:13:C=11:Menu Command Handlers
+	#@-node:13:C=12:Menu enablers (Frame)
+	#@+node:14:C=13:Menu Command Handlers
 	#@+node:1::File Menu
 	#@+node:1::top level
 	#@+node:1::OnNew
@@ -1072,7 +1112,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnNew
-	#@+node:2:C=12:frame.OnOpen
+	#@+node:2:C=14:frame.OnOpen
 	#@+body
 	def OnOpen(self,event=None):
 	
@@ -1101,7 +1141,7 @@ class LeoFrame:
 		fileName = tkFileDialog.askopenfilename(
 			title="Open",
 			filetypes=[("Leo files", "*.leo"), ("All files", "*")],
-			defaultextension="leo")
+			defaultextension=".leo")
 	
 		if fileName and len(fileName) > 0:
 			ok, frame = self.OpenWithFileName(fileName)
@@ -1112,8 +1152,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2:C=12:frame.OnOpen
-	#@+node:3:C=13:frame.OpenWithFileName
+	#@-node:2:C=14:frame.OnOpen
+	#@+node:3:C=15:frame.OpenWithFileName
 	#@+body
 	def OpenWithFileName(self, fileName):
 	
@@ -1141,20 +1181,51 @@ class LeoFrame:
 				
 		fileName = oldFileName # Use the idiosyncratic file name.
 	
-		file = open(fileName,'r')
-		if file:
-			frame = LeoFrame(fileName)
-			frame.top.deiconify()
-			frame.top.lift()
-			app().root.update() # Force a screen redraw immediately.
-			frame.commands.fileCommands.open(file,fileName) # closes file.
-			frame.openDirectory=os.path.dirname(fileName)
-			return true, frame
-		else:
-			es("can not open:" + fileName)
+		try:
+			file = open(fileName,'r')
+			if file:
+				frame = LeoFrame(fileName)
+				frame.top.deiconify()
+				frame.top.lift()
+				app().root.update() # Force a screen redraw immediately.
+				frame.commands.fileCommands.open(file,fileName) # closes file.
+				frame.openDirectory=os.path.dirname(fileName)
+				
+				#@<< make fileName the most recent file of frame >>
+				#@+node:1:C=16:<< make fileName the most recent file of frame >>
+				#@+body
+				# Update the recent files list in all windows.
+				normFileName = os.path.normcase(fileName)
+				
+				for frame in app().windowList:
+					if normFileName in frame.recentFiles:
+						frame.recentFiles.remove(normFileName)
+					frame.recentFiles.insert(0,normFileName)
+					
+					# Delete all elements of frame.recentFilesMenu.
+					frame.recentFilesMenu.delete(0,len(frame.recentFiles))
+					
+					# Recreate frame.recentFilesMenu.
+					i = 0
+					for name in frame.recentFiles:
+						exec("frame.recentFilesMenu.add_command(label=name,command=frame.OnOpenRecentFile" + `i` + ")")
+						i += 1
+					
+				# Update the config file.
+				app().config.setRecentFiles(frame.recentFiles)
+				app().config.update()
+				#@-body
+				#@-node:1:C=16:<< make fileName the most recent file of frame >>
+
+				return true, frame
+			else:
+				es("can not open" + fileName)
+				return false, None
+		except:
+			es("can not open" + fileName)
 			return false, None
 	#@-body
-	#@-node:3:C=13:frame.OpenWithFileName
+	#@-node:3:C=15:frame.OpenWithFileName
 	#@+node:4::OnClose
 	#@+body
 	# Called when File-Close command is chosen.
@@ -1165,7 +1236,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:4::OnClose
-	#@+node:5:C=14:OnSave
+	#@+node:5:C=17:OnSave
 	#@+body
 	def OnSave(self,event=None):
 	
@@ -1174,27 +1245,29 @@ class LeoFrame:
 		# Make sure we never pass None to the ctor.
 		if not self.mFileName:
 			self.title = ""
+			self.mFileName = ""
 	
 		if self.mFileName != "":
 			c.fileCommands.save(self.mFileName)
 			c.setChanged(false)
 			return "break" # inhibit further command processing
 	
-		self.mFileName = tkFileDialog.asksaveasfilename(
+		fileName = tkFileDialog.asksaveasfilename(
 			initialfile = self.mFileName,
 			title="Save",
 			filetypes=[("Leo files", "*.leo")],
-			defaultextension="leo")
+			defaultextension=".leo")
 	
-		if len(self.mFileName) > 0:
-			self.mFileName = ensure_extension(self.mFileName, ".leo")
+		if len(fileName) > 0:
+			# 7/2/02: don't change mFileName until the dialog has suceeded.
+			self.mFileName = ensure_extension(fileName, ".leo")
 			self.title = self.mFileName
 			self.top.title(self.mFileName)
 			c.fileCommands.save(self.mFileName)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:5:C=14:OnSave
-	#@+node:6::OnSaveAs
+	#@-node:5:C=17:OnSave
+	#@+node:6:C=18:OnSaveAs
 	#@+body
 	def OnSaveAs(self,event=None):
 	
@@ -1202,21 +1275,23 @@ class LeoFrame:
 		if not self.mFileName:
 			self.title = ""
 			
-		self.mFileName = tkFileDialog.asksaveasfilename(
+		fileName = tkFileDialog.asksaveasfilename(
 			initialfile = self.mFileName,
 			title="Save As",
 			filetypes=[("Leo files", "*.leo")],
-			defaultextension="leo")
+			defaultextension=".leo")
 	
-		if len(self.mFileName) > 0:
-			self.mFileName = ensure_extension(self.mFileName, ".leo")
+		if len(fileName) > 0:
+			# 7/2/02: don't change mFileName until the dialog has suceeded.
+			self.mFileName = ensure_extension(fileName, ".leo")
 			self.title = self.mFileName
 			self.top.title(self.mFileName)
 			self.commands.fileCommands.saveAs(self.mFileName)
+	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6::OnSaveAs
-	#@+node:7::OnSaveTo
+	#@-node:6:C=18:OnSaveAs
+	#@+node:7:C=19:OnSaveTo
 	#@+body
 	def OnSaveTo(self,event=None):
 	
@@ -1229,15 +1304,15 @@ class LeoFrame:
 			initialfile = self.mFileName,
 			title="Save To",
 			filetypes=[("Leo files", "*.leo")],
-			defaultextension="leo")
+			defaultextension=".leo")
 	
 		if len(fileName) > 0:
 			fileName = ensure_extension(fileName, ".leo")
 			self.commands.fileCommands.saveTo(fileName)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7::OnSaveTo
-	#@+node:8:C=15:OnRevert (rewrite)
+	#@-node:7:C=19:OnSaveTo
+	#@+node:8:C=20:OnRevert
 	#@+body
 	def OnRevert(self,event=None):
 	
@@ -1267,8 +1342,8 @@ class LeoFrame:
 			self.mFileName = fileName
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:8:C=15:OnRevert (rewrite)
-	#@+node:9:C=16:frame.OnQuit
+	#@-node:8:C=20:OnRevert
+	#@+node:9:C=21:frame.OnQuit
 	#@+body
 	def OnQuit(self,event=None):
 	
@@ -1282,17 +1357,54 @@ class LeoFrame:
 		app().quitting -= 1 # If we get here the quit has been disabled.
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:9:C=16:frame.OnQuit
+	#@-node:9:C=21:frame.OnQuit
 	#@-node:1::top level
-	#@+node:2::Read/Write submenu
-	#@+node:1:C=17:fileCommands.OnReadOutlineOnly
+	#@+node:2:C=22:Recent Files submenu
+	#@+node:1::OnOpenRecentFile1...OnOpenFileN
+	#@+body
+	def OnOpenRecentFile0(self): return self.OnOpenFileN(0)
+	def OnOpenRecentFile1(self): return self.OnOpenFileN(1)
+	def OnOpenRecentFile2(self): return self.OnOpenFileN(2)
+	def OnOpenRecentFile3(self): return self.OnOpenFileN(3)
+	def OnOpenRecentFile4(self): return self.OnOpenFileN(4)
+	def OnOpenRecentFile5(self): return self.OnOpenFileN(5)
+	def OnOpenRecentFile6(self): return self.OnOpenFileN(6)
+	def OnOpenRecentFile7(self): return self.OnOpenFileN(7)
+	def OnOpenRecentFile8(self): return self.OnOpenFileN(8)
+	def OnOpenRecentFile9(self): return self.OnOpenFileN(9)
+	
+	def OnOpenFileN(self,n):
+		
+		if n < len(self.recentFiles):
+			fileName = self.recentFiles[n]
+			ok, frame = self.OpenWithFileName(fileName)
+	
+		return "break" # inhibit further command processing
+	#@-body
+	#@-node:1::OnOpenRecentFile1...OnOpenFileN
+	#@+node:2::OnOpenRecentFile
+	#@+body
+	def OnOpenRecentFile(self,fileName):
+		
+		# Update the submenu.
+		# trace(`fileName`)
+	
+		# Create a new frame before deleting this frame.
+		ok, frame = self.OpenWithFileName(fileName)
+	
+		return "break" # inhibit further command processing
+	#@-body
+	#@-node:2::OnOpenRecentFile
+	#@-node:2:C=22:Recent Files submenu
+	#@+node:3::Read/Write submenu
+	#@+node:1:C=23:fileCommands.OnReadOutlineOnly
 	#@+body
 	def OnReadOutlineOnly (self,event=None):
 	
 		fileName = tkFileDialog.askopenfilename(
 			title="Read Outline Only",
 			filetypes=[("Leo files", "*.leo"), ("All files", "*")],
-			defaultextension="leo")
+			defaultextension=".leo")
 	
 		if not fileName or len(fileName) == 0:
 			return "break" # inhibit further command processing
@@ -1308,7 +1420,7 @@ class LeoFrame:
 			es("can not open:" + fileName)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=17:fileCommands.OnReadOutlineOnly
+	#@-node:1:C=23:fileCommands.OnReadOutlineOnly
 	#@+node:2::OnReadAtFileNodes
 	#@+body
 	def OnReadAtFileNodes (self,event=None):
@@ -1343,8 +1455,8 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:4::OnWriteAtFileNodes
-	#@-node:2::Read/Write submenu
-	#@+node:3::Tangle submenu
+	#@-node:3::Read/Write submenu
+	#@+node:4::Tangle submenu
 	#@+node:1::OnTangleAll
 	#@+body
 	def OnTangleAll(self,event=None):
@@ -1369,8 +1481,8 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:3::OnTangle
-	#@-node:3::Tangle submenu
-	#@+node:4::Untangle submenu
+	#@-node:4::Tangle submenu
+	#@+node:5::Untangle submenu
 	#@+node:1::OnUntangleAll
 	#@+body
 	def OnUntangleAll(self,event=None):
@@ -1401,8 +1513,8 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:3::OnUntangle
-	#@-node:4::Untangle submenu
-	#@+node:5:C=18:Import&Export submenu
+	#@-node:5::Untangle submenu
+	#@+node:6:C=24:Import&Export submenu
 	#@+node:1::OnFlattenOutline
 	#@+body
 	def OnFlattenOutline (self,event=None):
@@ -1411,7 +1523,7 @@ class LeoFrame:
 	
 		fileName = tkFileDialog.asksaveasfilename(
 			title="Flatten Outline",filetypes=filetypes,
-			initialfile="flat.txt",defaultextension="txt")
+			initialfile="flat.txt",defaultextension=".txt")
 	
 		if fileName and len(fileName) > 0:
 			c = self.commands
@@ -1433,20 +1545,13 @@ class LeoFrame:
 			("Java files","*.java"),
 			("Pascal files","*.pas"),
 			("Python files","*.py") ]
-	
-		d = leoDialog.leoDialog()
-		answer = d.askOkCancel("Proceed?",
-			"Import to @file is not undoable." +
-			"\nProceed?")
-	
-		if answer=="ok":
-			fileName = tkFileDialog.askopenfilename(
-				title="Import To @file",filetypes=types)
-			if fileName and len(fileName) > 0:
-				c = self.commands
-				paths = [fileName] # alas, askopenfilename returns only a single name.
-				c.importCommands.importFilesCommand (paths,"@file")
-				c.undoer.clearUndoState()
+				
+		fileName = tkFileDialog.askopenfilename(
+			title="Import To @file",filetypes=types)
+		if fileName and len(fileName) > 0:
+			c = self.commands
+			paths = [fileName] # alas, askopenfilename returns only a single name.
+			c.importCommands.importFilesCommand (paths,"@file")
 	
 		return "break" # inhibit further command processing
 	#@-body
@@ -1464,20 +1569,13 @@ class LeoFrame:
 			("Java files","*.java"),
 			("Pascal files","*.pas"),
 			("Python files","*.py") ]
-			
-		d = leoDialog.leoDialog()
-		answer = d.askOkCancel("Proceed?",
-			"Import to @root is not undoable." +
-			"\nProceed?")
 	
-		if answer=="ok":
-			fileName = tkFileDialog.askopenfilename(
-				title="Import To @root",filetypes=types)
-			if fileName and len(fileName) > 0:
-				c = self.commands
-				paths = [fileName] # alas, askopenfilename returns only a single name.
-				c.importCommands.importFilesCommand (paths,"@root")
-				c.undoer.clearUndoState()
+		fileName = tkFileDialog.askopenfilename(
+			title="Import To @root",filetypes=types)
+		if fileName and len(fileName) > 0:
+			c = self.commands
+			paths = [fileName] # alas, askopenfilename returns only a single name.
+			c.importCommands.importFilesCommand (paths,"@root")
 	
 		return "break" # inhibit further command processing
 	#@-body
@@ -1490,21 +1588,14 @@ class LeoFrame:
 			("CWEB files", "*.w"),
 			("Text files", "*.txt"),
 			("All files", "*")]
-			
-		d = leoDialog.leoDialog()
-		answer = d.askOkCancel("Proceed?",
-			"Import CWEB files is not undoable." +
-			"\nProceed?")
-		
-		if answer=="ok":
-			fileName = tkFileDialog.askopenfilename(
-				title="Import CWEB Files",filetypes=filetypes,
-				defaultextension="w")
-			if fileName and len(fileName) > 0:
-				c = self.commands
-				paths = [fileName] # alas, askopenfilename returns only a single name.
-				c.importCommands.importWebCommand(paths,"cweb")
-				c.undoer.clearUndoState()
+	
+		fileName = tkFileDialog.askopenfilename(
+			title="Import CWEB Files",filetypes=filetypes,
+			defaultextension=".w")
+		if fileName and len(fileName) > 0:
+			c = self.commands
+			paths = [fileName] # alas, askopenfilename returns only a single name.
+			c.importCommands.importWebCommand(paths,"cweb")
 		
 		return "break" # inhibit further command processing
 	#@-body
@@ -1514,22 +1605,15 @@ class LeoFrame:
 	def OnImportFlattenedOutline (self,event=None):
 		
 		types = [("Text files","*.txt"), ("All files","*")]
-		
-		d = leoDialog.leoDialog()
-		answer = d.askOkCancel("Proceed?",
-			"Import Flattened Outline is not undoable." +
-			"\nProceed?")
-		
-		if answer=="ok":
-			fileName = tkFileDialog.askopenfilename(
-				title="Import MORE Text",
-				filetypes=types,
-				defaultextension="py")
-			if fileName and len(fileName) > 0:
-				c = self.commands
-				paths = [fileName] # alas, askopenfilename returns only a single name.
-				c.importCommands.importFlattenedOutline(paths)
-				c.undoer.clearUndoState()
+			
+		fileName = tkFileDialog.askopenfilename(
+			title="Import MORE Text",
+			filetypes=types,
+			defaultextension=".py")
+		if fileName and len(fileName) > 0:
+			c = self.commands
+			paths = [fileName] # alas, askopenfilename returns only a single name.
+			c.importCommands.importFlattenedOutline(paths)
 			
 		return "break" # inhibit further command processing
 	#@-body
@@ -1542,21 +1626,14 @@ class LeoFrame:
 			("Noweb files", "*.nw"),
 			("Text files", "*.txt"),
 			("All files", "*")]
-			
-		d = leoDialog.leoDialog()
-		answer = d.askOkCancel("Proceed?",
-			"Import Noweb files is not undoable." +
-			"\nProceed?")
-		
-		if answer=="ok":
-			fileName = tkFileDialog.askopenfilename(
-				title="Import Noweb Files",filetypes=filetypes,
-				defaultextension="nw")
-			if fileName and len(fileName) > 0:
-				c = self.commands
-				paths = [fileName] # alas, askopenfilename returns only a single name.
-				c.importCommands.importWebCommand(paths,"noweb")
-				c.undoer.clearUndoState()
+	
+		fileName = tkFileDialog.askopenfilename(
+			title="Import Noweb Files",filetypes=filetypes,
+			defaultextension=".nw")
+		if fileName and len(fileName) > 0:
+			c = self.commands
+			paths = [fileName] # alas, askopenfilename returns only a single name.
+			c.importCommands.importWebCommand(paths,"noweb")
 		
 		return "break" # inhibit further command processing
 	#@-body
@@ -1572,7 +1649,7 @@ class LeoFrame:
 	
 		fileName = tkFileDialog.asksaveasfilename(
 			title="Outline To CWEB",filetypes=filetypes,
-			initialfile="cweb.w",defaultextension="w")
+			initialfile="cweb.w",defaultextension=".w")
 	
 		if fileName and len(fileName) > 0:
 			c = self.commands
@@ -1592,7 +1669,7 @@ class LeoFrame:
 	
 		fileName = tkFileDialog.asksaveasfilename(
 			title="Outline To Noweb",filetypes=filetypes,
-			initialfile=self.outlineToNowebDefaultFileName,defaultextension="nw")
+			initialfile=self.outlineToNowebDefaultFileName,defaultextension=".nw")
 	
 		if fileName and len(fileName) > 0:
 			c = self.commands
@@ -1627,7 +1704,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:9::OnRemoveSentinels
-	#@-node:5:C=18:Import&Export submenu
+	#@-node:6:C=24:Import&Export submenu
 	#@-node:1::File Menu
 	#@+node:2::Edit Menu (change to handle log pane too)
 	#@+node:1::Edit top level
@@ -1647,7 +1724,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:2::OnRedo
-	#@+node:3:C=19:frame.OnCut, OnCutFrom Menu
+	#@+node:3:C=25:frame.OnCut, OnCutFrom Menu
 	#@+body
 	def OnCut (self,event=None):
 	
@@ -1656,8 +1733,9 @@ class LeoFrame:
 		self.commands.tree.onBodyWillChange(v,"Cut")
 		
 		# Copy the selection to the internal clipboard.
-		app().clipboard = getSelectedText(self.body)
-		# trace(`app().clipboard`)
+		if 0: # no longer needed.
+			app().clipboard = getSelectedText(self.body)
+			# trace(`app().clipboard`)
 		return # Allow the actual cut!
 	
 	def OnCutFromMenu (self,event=None):
@@ -1665,26 +1743,27 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Cut"))
 	#@-body
-	#@-node:3:C=19:frame.OnCut, OnCutFrom Menu
-	#@+node:4:C=20:frame.OnCopy, OnCopyFromMenu
+	#@-node:3:C=25:frame.OnCut, OnCutFrom Menu
+	#@+node:4:C=26:frame.OnCopy, OnCopyFromMenu
 	#@+body
 	def OnCopy (self,event=None):
 	
 		# Copy never changes dirty bits or syntax coloring.
 		
 		# Copy the selection to the internal clipboard.
-		app().clipboard = getSelectedText(self.body)
-		# trace(`app().clipboard`)
+		if 0: # no longer needed.
+			app().clipboard = getSelectedText(self.body)
+			# trace(`app().clipboard`)
 		return # Allow the actual copy!
 		
 	def OnCopyFromMenu (self,event=None):
 	
-		# trace()
+		trace()
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Copy"))
 	#@-body
-	#@-node:4:C=20:frame.OnCopy, OnCopyFromMenu
-	#@+node:5:C=21:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@-node:4:C=26:frame.OnCopy, OnCopyFromMenu
+	#@+node:5:C=27:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+body
 	def OnPaste (self,event=None):
 	
@@ -1704,8 +1783,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Paste"))
 	#@-body
-	#@-node:5:C=21:frame.OnPaste, OnPasteNode, OnPasteFromMenu
-	#@+node:6:C=22:OnDelete
+	#@-node:5:C=27:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@+node:6:C=28:OnDelete
 	#@+body
 	def OnDelete(self,event=None):
 	
@@ -1716,15 +1795,15 @@ class LeoFrame:
 			c.tree.onBodyChanged(v,"Delete")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=22:OnDelete
-	#@+node:7:C=23:OnSelectAll
+	#@-node:6:C=28:OnDelete
+	#@+node:7:C=29:OnSelectAll
 	#@+body
 	def OnSelectAll(self,event=None):
 	
 		setTextSelection(self.body,"1.0","end")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7:C=23:OnSelectAll
+	#@-node:7:C=29:OnSelectAll
 	#@+node:8::OnEditHeadline
 	#@+body
 	def OnEditHeadline(self,event=None):
@@ -1776,7 +1855,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:10::OnSyntaxColoring (rewrite)
-	#@+node:11:C=24:OnViewAllCharacters
+	#@+node:11:C=30:OnViewAllCharacters
 	#@+body
 	def OnViewAllCharacters (self, event=None):
 	
@@ -1792,67 +1871,89 @@ class LeoFrame:
 		c.tree.recolor_now(v)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:11:C=24:OnViewAllCharacters
-	#@+node:12::OnPreferences
+	#@-node:11:C=30:OnViewAllCharacters
+	#@+node:12:C=31:OnPreferences
 	#@+body
 	def OnPreferences(self,event=None):
+		
+		c = self.commands
+		prefs = leoPrefs.LeoPrefs(c) ; top = prefs.top
+		center_dialog(top)
+		top.grab_set() # Make the dialog a modal dialog.
+		top.focus_force() # Get all keystrokes.
+		app().root.wait_window(top)
 	
-		frame = app().prefsFrame
-		frame.top.deiconify()
-		frame.top.lift()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:12::OnPreferences
+	#@-node:12:C=31:OnPreferences
 	#@-node:1::Edit top level
 	#@+node:2::Edit Body submenu
-	#@+node:1::OnConvertBlanks
+	#@+node:1::OnConvertBlanks & OnConvertAllBlanks
 	#@+body
 	def OnConvertBlanks(self,event=None):
 	
 		self.commands.convertBlanks()
 		return "break" # inhibit further command processing
+		
+	def OnConvertAllBlanks(self,event=None):
+	
+		self.commands.convertAllBlanks()
+		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1::OnConvertBlanks
-	#@+node:2::OnDedent
+	#@-node:1::OnConvertBlanks & OnConvertAllBlanks
+	#@+node:2::OnConvertTabs & OnConvertAllTabs
+	#@+body
+	def OnConvertTabs(self,event=None):
+	
+		self.commands.convertTabs()
+		return "break" # inhibit further command processing
+		
+	def OnConvertAllTabs(self,event=None):
+	
+		self.commands.convertAllTabs()
+		return "break" # inhibit further command processing
+	#@-body
+	#@-node:2::OnConvertTabs & OnConvertAllTabs
+	#@+node:3::OnDedent
 	#@+body
 	def OnDedent (self,event=None):
 	
 		self.commands.dedentBody()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2::OnDedent
-	#@+node:3::OnExtract
+	#@-node:3::OnDedent
+	#@+node:4::OnExtract
 	#@+body
 	def OnExtract(self,event=None):
 	
 		self.commands.extract()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:3::OnExtract
-	#@+node:4::OnExtractNames
+	#@-node:4::OnExtract
+	#@+node:5::OnExtractNames
 	#@+body
 	def OnExtractNames(self,event=None):
 	
 		self.commands.extractSectionNames()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:4::OnExtractNames
-	#@+node:5::OnExtractSection
+	#@-node:5::OnExtractNames
+	#@+node:6::OnExtractSection
 	#@+body
 	def OnExtractSection(self,event=None):
 	
 		self.commands.extractSection()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:5::OnExtractSection
-	#@+node:6::OnIndent
+	#@-node:6::OnExtractSection
+	#@+node:7::OnIndent
 	#@+body
 	def OnIndent(self,event=None):
 	
 		self.commands.indentBody()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6::OnIndent
+	#@-node:7::OnIndent
 	#@-node:2::Edit Body submenu
 	#@+node:3::Find submenu (frame methods)
 	#@+node:1::OnFindPanel
@@ -2107,14 +2208,14 @@ class LeoFrame:
 	#@-node:17::OnExpandToLevel9
 	#@-node:2::Expand/Contract
 	#@+node:3::Move/Select
-	#@+node:1:C=25:OnMoveDownwn
+	#@+node:1:C=32:OnMoveDownwn
 	#@+body
 	def OnMoveDown(self,event=None):
 	
 		self.commands.moveOutlineDown()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=25:OnMoveDownwn
+	#@-node:1:C=32:OnMoveDownwn
 	#@+node:2::OnMoveLeft
 	#@+body
 	def OnMoveLeft(self,event=None):
@@ -2247,7 +2348,7 @@ class LeoFrame:
 	#@-node:7::OnGoToNextChanged
 	#@-node:4::Mark/Goto
 	#@-node:3::Outline Menu
-	#@+node:4::Window Menu (complete excet Recent Windows)
+	#@+node:4::Window Menu
 	#@+node:1::OnEqualSizedPanes
 	#@+body
 	def OnEqualSizedPanes(self,event=None):
@@ -2256,7 +2357,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnEqualSizedPanes
-	#@+node:2:C=26:OnToggleActivePane
+	#@+node:2:C=33:OnToggleActivePane
 	#@+body
 	def OnToggleActivePane (self,event=None):
 	
@@ -2267,7 +2368,7 @@ class LeoFrame:
 			self.body.focus_force()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2:C=26:OnToggleActivePane
+	#@-node:2:C=33:OnToggleActivePane
 	#@+node:3::OnToggleSplitDirection
 	#@+body
 	def OnToggleSplitDirection(self,event=None):
@@ -2281,30 +2382,35 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:3::OnToggleSplitDirection
-	#@+node:4::OnCascade
+	#@+node:4:C=34:OnCascade
 	#@+body
 	def OnCascade(self,event=None):
-	
-		self.notYet("Cascade")
+		
+		c = self ; x,y,delta = 10,10,10
+		for frame in app().windowList:
+			top = frame.top
+			# Compute w,h
+			top.update_idletasks() # Required to get proper info.
+			g = top.geometry() # g = "WidthxHeight+XOffset+YOffset"
+			dim,junkx,junky = string.split(g,'+')
+			w,h = string.split(dim,'x')
+			w,h = int(w),int(h)
+			# Set new x,y and old w,h
+			frame.top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+			# Compute the new offsets.
+			x += 30 ; y += 30
+			if x > 200:
+				x = 10 + delta ; y = 40 + delta
+				delta += 10
+		
 		return "break" # inhibit further command processing
-	
-		p = wxPoint(10,10)
-		list = app().windowList
-		for frame in list:
-			frame.Move(p)
-			p.x += 30
-			p.y += 30
-			if p.x > 200:
-				p.x = 10
-				p.y = 40
-		return "break" # inhibit further command processing
+
 	#@-body
-	#@-node:4::OnCascade
+	#@-node:4:C=34:OnCascade
 	#@+node:5::OnMinimizeAll
 	#@+body
 	def OnMinimizeAll(self,event=None):
 	
-		self.minimize(app().prefsFrame)
 		self.minimize(app().findFrame)
 		self.minimize(app().pythonFrame)
 		for frame in app().windowList:
@@ -2317,7 +2423,7 @@ class LeoFrame:
 			frame.top.iconify()
 	#@-body
 	#@-node:5::OnMinimizeAll
-	#@+node:6:C=27:OnOpenPythonWindow
+	#@+node:6:C=35:OnOpenPythonWindow
 	#@+body
 	def OnOpenPythonWindow(self,event=None):
 	
@@ -2335,18 +2441,10 @@ class LeoFrame:
 			es("Please add \Python2x\Tools\idle to sys.paths")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=27:OnOpenPythonWindow
-	#@+node:7::OnRecentWindows (to do)
-	#@+body
-	def OnRecentWindows(self,event=None):
-	
-		self.notYet("Recent Windows")
-		return "break" # inhibit further command processing
-	#@-body
-	#@-node:7::OnRecentWindows (to do)
-	#@-node:4::Window Menu (complete excet Recent Windows)
+	#@-node:6:C=35:OnOpenPythonWindow
+	#@-node:4::Window Menu
 	#@+node:5::Help Menu
-	#@+node:1:C=28:OnAbout (version number)
+	#@+node:1:C=36:OnAbout (version number)
 	#@+body
 	def OnAbout(self,event=None):
 	
@@ -2363,7 +2461,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=28:OnAbout (version number)
+	#@-node:1:C=36:OnAbout (version number)
 	#@+node:2::OnLeoDocumentation
 	#@+body
 	def OnLeoDocumentation (self,event=None):
@@ -2378,8 +2476,8 @@ class LeoFrame:
 	#@-body
 	#@-node:2::OnLeoDocumentation
 	#@-node:5::Help Menu
-	#@-node:13:C=11:Menu Command Handlers
-	#@+node:14::Splitter stuff
+	#@-node:14:C=13:Menu Command Handlers
+	#@+node:15::Splitter stuff
 	#@+node:1::createSplitter
 	#@+body
 	# Create a splitter window and panes into which the caller packs widgets.
@@ -2510,7 +2608,7 @@ class LeoFrame:
 		pass
 	#@-body
 	#@-node:5::onDropSplitterBar, onDropHSplitBar, onDropVSplitBar
-	#@-node:14::Splitter stuff
+	#@-node:15::Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

@@ -2,11 +2,13 @@
 
 #@+node:0::@file leoFileCommands.py
 #@+body
+#@@language python
+
 from leoGlobals import *
 from leoUtils import *
 
 import leoNodes
-import os,os.path,time
+import os,os.path,time,traceback
 
 class BadLeoFile:
 	def __init__(self, message):
@@ -268,11 +270,11 @@ class fileCommands:
 			return self.xmlUnescape(self.fileBuffer[i:j])
 	#@-body
 	#@-node:4::getEscapedString
-	#@+node:5::getFindPanelSettings
+	#@+node:5:C=1:getFindPanelSettings
 	#@+body
 	def getFindPanelSettings (self):
 	
-		c = self.commands
+		c = self.commands ; config = app().config
 		
 		#@<< Set defaults of all flags >>
 		#@+node:1::<< Set defaults of all flags >>
@@ -310,10 +312,13 @@ class fileCommands:
 		self.getTag("</change_string>")
 		#
 		self.getTag("</find_panel_settings>")
+		
+		# Override .leo file's preferences if settings are in leoConfig.txt.
+		config.setCommandsFindIvars(c)
 		# Update the settings immediately.
 		app().findFrame.init(c)
 	#@-body
-	#@-node:5::getFindPanelSettings
+	#@-node:5:C=1:getFindPanelSettings
 	#@+node:6::getGlobals
 	#@+body
 	def getGlobals (self):
@@ -396,6 +401,7 @@ class fileCommands:
 			#@-node:1::<< Create join lists of all vnodes >>
 
 		except BadLeoFile, message: # All other exceptions are Leo bugs
+			# traceback.print_exc()
 			alert(self.mFileName + " is not a valid Leo file: " + `message`)
 			ok = false
 		# Leo2: read all @file nodes and reset orphan bits.
@@ -478,12 +484,12 @@ class fileCommands:
 		return top, left, height, width
 	#@-body
 	#@-node:10::getPosition
-	#@+node:11:C=1:fileCommands.getPrefs
+	#@+node:11:C=2:getPrefs
 	#@+body
 	def getPrefs (self):
 	
-		c = self.commands
-		prefs = app().prefsFrame
+		c = self.commands ; config = app().config
+		
 		self.getTag("<preferences")
 		while 1:
 			if self.matchTag("allow_rich_text="):
@@ -554,9 +560,11 @@ class fileCommands:
 				self.getTag("</TSyntaxMemo_options>")
 			else: break
 		self.getTag("</preferences>")
-		prefs.init(c)
+		
+		# Override .leo file's preferences if settings are in leoConfig.txt.
+		config.setCommandsIvars(c)
 	#@-body
-	#@-node:11:C=1:fileCommands.getPrefs
+	#@-node:11:C=2:getPrefs
 	#@+node:12::getSize
 	#@+body
 	def getSize (self):
@@ -747,7 +755,7 @@ class fileCommands:
 		c.atFileCommands.readAll(c.currentVnode(), true) # partialFlag
 	#@-body
 	#@-node:5::readAtFileNodes
-	#@+node:6:C=2:fileCommands.readOutlineOnly
+	#@+node:6:C=3:fileCommands.readOutlineOnly
 	#@+body
 	def readOutlineOnly (self,file,fileName):
 	
@@ -757,7 +765,7 @@ class fileCommands:
 		self.fileIndex = 0
 		
 		#@<< Set the default directory >>
-		#@+node:1:C=3:<< Set the default directory >>
+		#@+node:1:C=4:<< Set the default directory >>
 		#@+body
 		#@+at
 		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
@@ -770,7 +778,7 @@ class fileCommands:
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@-body
-		#@-node:1:C=3:<< Set the default directory >>
+		#@-node:1:C=4:<< Set the default directory >>
 
 		c.beginUpdate()
 		ok, ratio = self.getLeoFile(self.frame, false) # readAtFileNodes
@@ -787,8 +795,8 @@ class fileCommands:
 		self.fileBuffer = ""
 		return ok
 	#@-body
-	#@-node:6:C=2:fileCommands.readOutlineOnly
-	#@+node:7:C=4:fileCommands.open
+	#@-node:6:C=3:fileCommands.readOutlineOnly
+	#@+node:7:C=5:fileCommands.open
 	#@+body
 	def open(self,file,fileName):
 	
@@ -797,10 +805,9 @@ class fileCommands:
 		# t = getTime()
 		self.fileBuffer = file.read() ; file.close()
 		self.fileIndex = 0
-		# esDiffTime("open:read all", t)
 		
 		#@<< Set the default directory >>
-		#@+node:1:C=3:<< Set the default directory >>
+		#@+node:1:C=4:<< Set the default directory >>
 		#@+body
 		#@+at
 		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
@@ -813,8 +820,9 @@ class fileCommands:
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@-body
-		#@-node:1:C=3:<< Set the default directory >>
+		#@-node:1:C=4:<< Set the default directory >>
 
+		# esDiffTime("open:read all", t)
 		es("reading: " + fileName)
 		c.beginUpdate()
 		if 1: # inside update...
@@ -833,7 +841,7 @@ class fileCommands:
 		# esDiffTime("open: exit",t)
 		return ok
 	#@-body
-	#@-node:7:C=4:fileCommands.open
+	#@-node:7:C=5:fileCommands.open
 	#@+node:8::xmlUnescape
 	#@+body
 	def xmlUnescape(self,s):
@@ -962,6 +970,13 @@ class fileCommands:
 	def put_dquoted_bool (self,b):
 		if b: self.put('"1"')
 		else: self.put('"0"')
+		
+	def put_find_flag (self,a,b):
+		config = app().config
+		if config.getFindPref(b) != None:
+			config.setFindPref(b,`a`)
+		else:
+			self.put_flag(a,b)
 			
 	def put_flag (self,a,b):
 		if a:
@@ -999,37 +1014,49 @@ class fileCommands:
 			self.put(self.xmlEscape(s))
 	#@-body
 	#@-node:3::putEscapedString
-	#@+node:4::putFindSettings
+	#@+node:4:C=6:putFindSettings
 	#@+body
 	def putFindSettings (self):
 	
-		c = self.commands
+		c = self.commands ; config = app().config
 		c.setIvarsFromFind()
+		config.setConfigFindIvars(c)
+	
 		self.put("<find_panel_settings")
-		self.put_flag(c.batch_flag,"batch")
-		self.put_flag(c.wrap_flag,"wrap")
-		self.put_flag(c.whole_word_flag,"whole_word")
-		self.put_flag(c.ignore_case_flag,"ignore_case")
-		self.put_flag(c.pattern_match_flag,"pattern_match")
-		self.put_flag(c.search_headline_flag,"search_headline")
-		self.put_flag(c.search_body_flag,"search_body")
-		self.put_flag(c.suboutline_only_flag,"suboutline_only")
-		self.put_flag(c.mark_changes_flag,"mark_changes")
-		self.put_flag(c.mark_finds_flag,"mark_finds")
-		self.put_flag(c.reverse_flag,"reverse")
+		self.put_find_flag(c.batch_flag,"batch")
+		self.put_find_flag(c.ignore_case_flag,"ignore_case")
+		self.put_find_flag(c.mark_changes_flag,"mark_changes")
+		self.put_find_flag(c.mark_finds_flag,"mark_finds")
+		self.put_find_flag(c.pattern_match_flag,"pattern_match")
+		self.put_find_flag(c.reverse_flag,"reverse")
+		self.put_find_flag(c.search_headline_flag,"search_headline")
+		self.put_find_flag(c.search_body_flag,"search_body")
+		self.put_find_flag(c.suboutline_only_flag,"suboutline_only")
+		self.put_find_flag(c.whole_word_flag,"whole_word")
+		self.put_find_flag(c.wrap_flag,"wrap")
 		self.put(">") ; self.put_nl()
 		#
-		self.put_tab()
-		self.put("<find_string>") ; self.putEscapedString(c.find_text)
-		self.put("</find_string>") ; self.put_nl()
+		if config.getFindPref("find_string"):
+			config.setFindPref("find_string",c.find_text)
+			self.put_tab()
+			self.put("<find_string></find_string>") ; self.put_nl()
+		else:
+			self.put_tab()
+			self.put("<find_string>") ; self.putEscapedString(c.find_text)
+			self.put("</find_string>") ; self.put_nl()
 		#
-		self.put_tab()
-		self.put("<change_string>") ; self.putEscapedString(c.change_text)
-		self.put("</change_string>") ; self.put_nl()
+		if config.getFindPref("change_string"):
+			config.setFindPref("change_string",c.change_text)
+			self.put_tab()
+			self.put("<change_string></change_string>") ; self.put_nl()
+		else:
+			self.put_tab()
+			self.put("<change_string>") ; self.putEscapedString(c.change_text)
+			self.put("</change_string>") ; self.put_nl()
 		#
 		self.put("</find_panel_settings>") ; self.put_nl()
 	#@-body
-	#@-node:4::putFindSettings
+	#@-node:4:C=6:putFindSettings
 	#@+node:5::putGlobals
 	#@+body
 	def putGlobals (self):
@@ -1117,65 +1144,91 @@ class fileCommands:
 		return s
 	#@-body
 	#@-node:7::putLeoOutline (to clipboard)
-	#@+node:8::putPrefs
+	#@+node:8:C=7:putPrefs
 	#@+body
 	def putPrefs (self):
 	
-		c = self.commands
+		c = self.commands ; config = app().config
 		c.setIvarsFromPrefs()
+	
 		self.put("<preferences")
 		self.put(" allow_rich_text=") ; self.put_dquoted_bool(0) # no longer used
-		self.put(" tab_width=") ; self.put_in_dquotes(`c.tab_width`)
-		self.put(" page_width=") ; self.put_in_dquotes(`c.page_width`)
-		self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
-		self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
-		# New in version 0.10
-		self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
+		
+		#@<< put prefs that may exist in leoConfig.txt >>
+		#@+node:1::<< put prefs that may exist in leoConfig.txt >>
+		#@+body
+		# tab width
+		if config.getPref("tab_width") != None:
+			config.setPref("tab_width",`c.tab_width`)
+		else:
+			self.put(" tab_width=") ; self.put_in_dquotes(`c.tab_width`)
+		# page width
+		if config.getPref("page_width") != None:
+			config.setPref("page_width",`c.page_width`)
+		else:
+			self.put(" page_width=") ; self.put_in_dquotes(`c.page_width`)
+		# run tangle_done.py
+		if config.getPref("run_tangle_done.py") != None:
+			config.setPref("run_tangle_done.py",`c.tangle_batch_flag`)
+		else:
+			self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
+		# run untangle_done.py
+		if config.getPref("run_untangle_done.py") != None:
+			config.setPref("run_untangle_done.py",`c.untangle_batch_flag`)
+		else:
+			self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
+		# output document chunks: New in version 0.10
+		if config.getPref("output_doc_chunks") != None:
+			config.setPref("output_doc_chunks",`c.output_doc_flag`)
+		else:
+			self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
 		# New in version 0.15
 		
-		#@<< put syntax coloring prefs >>
-		#@+node:1::<< put syntax coloring prefs >>
+		#@<< put language prefs >>
+		#@+node:1::<< put language prefs >>
 		#@+body
-		languageNameDict = {
-			c_language: "C", cweb_language: "CWEB",
-			html_language: "HTML", java_language: "Java",
-			pascal_language: "Pascal", perl_language: "Perl",
-			perlpod_language: "PerlPod", plain_text_language: "Plain",
-			python_language: "Python" }
+		dict = config.languageNameDict
 		
-		if c.target_language and languageNameDict.has_key(c.target_language):
-			self.put(" defaultTargetLanguage=")
-			self.put_in_dquotes(languageNameDict[c.target_language])
+		if c.target_language and dict.has_key(c.target_language):
+			language = dict[c.target_language]
 		else:
-			self.put(" defaultTargetLanguage=") ; self.put_in_dquotes("Plain")
+			language = "Plain"
+		
+		if config.getPref("default_target_language") != None:
+			config.setPref("default_target_language",language)
+		else:
+			self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
 		#@-body
-		#@-node:1::<< put syntax coloring prefs >>
+		#@-node:1::<< put language prefs >>
 
-		# New in version 0.18
-		self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
-		if 0: # USE_CWEB: Removed in version 0.19
-			self.put(" noweb_flag=") ; self.put_dquoted_bool(c.use_noweb_flag)
-			self.put(" extended_noweb_flag=") ; self.put_dquoted_bool(c.extended_noweb_flag)
+		# tangle outputs header: New in version 0.18
+		if config.getPref("tangle_outputs_header") != None:
+			config.setPref("tangle_outputs_header",`c.use_header_flag`)
+		else:
+			self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
+		
 		self.put(">") ; self.put_nl()
-		#
-		self.put_tab()
 		# New in version 0.16
 		
 		#@<< put default directory >>
 		#@+node:2::<< put default directory >>
 		#@+body
-		if len(c.tangle_directory) > 0:
+		if config.getPref("default_tangle_directory"):
+			config.setPref("default_tangle_directory",c.tangle_directory)
+		elif len(c.tangle_directory) > 0:
+			self.put_tab()
 			self.put("<defaultDirectory>")
 			self.putEscapedString(c.tangle_directory)
 			self.put("</defaultDirectory>")
+			self.put_nl()
 		#@-body
 		#@-node:2::<< put default directory >>
+		#@-body
+		#@-node:1::<< put prefs that may exist in leoConfig.txt >>
 
-		self.put_nl()
-		#
 		self.put("</preferences>") ; self.put_nl()
 	#@-body
-	#@-node:8::putPrefs
+	#@-node:8:C=7:putPrefs
 	#@+node:9::putProlog
 	#@+body
 	def putProlog (self):
@@ -1347,7 +1400,7 @@ class fileCommands:
 			self.compactFileIndices() # 1/14/02: always recompute file indices
 			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
-				es("saved: " + fileName)
+				es("saved: " + shortFileName(fileName))
 		c.endUpdate()
 	#@-body
 	#@-node:5::save
@@ -1362,7 +1415,7 @@ class fileCommands:
 			self.compactFileIndices()
 			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
-				es("saved: " + fileName)
+				es("saved: " + shortFileName(fileName))
 		c.endUpdate()
 	#@-body
 	#@-node:6::saveAs
@@ -1376,7 +1429,7 @@ class fileCommands:
 			c.endEditing()# Set the current headline text.
 			self.compactFileIndices()
 			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
-				es("saved: " + fileName)
+				es("saved: " + shortFileName(fileName))
 		c.endUpdate()
 	#@-body
 	#@-node:7::saveTo
@@ -1414,7 +1467,7 @@ class fileCommands:
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
 	#@-body
 	#@-node:10::writeOutlineOnly
-	#@+node:11:C=5:write_LEO_file
+	#@+node:11:C=8:write_LEO_file
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
@@ -1462,6 +1515,7 @@ class fileCommands:
 
 			return false
 		try:
+			app().config.update()
 			self.putProlog()
 			self.putHeader()
 			self.putGlobals()
@@ -1472,6 +1526,7 @@ class fileCommands:
 			self.putPostlog()
 			# raise BadLeoFile # testing
 		except:
+			# traceback.print_exc() 
 			if self.outputFile:
 				self.outputFile.close()
 				self.outputFile = None
@@ -1540,7 +1595,7 @@ class fileCommands:
 
 			return false
 	#@-body
-	#@-node:11:C=5:write_LEO_file
+	#@-node:11:C=8:write_LEO_file
 	#@-node:3::Writing
 	#@-others
 #@-body
