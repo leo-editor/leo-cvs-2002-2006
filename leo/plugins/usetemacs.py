@@ -56,7 +56,7 @@ new_keystrokes = {}
 #@nonl
 #@-node:mork.20041013092542.2:<< globals >>
 #@nl
-__version__ = '.52'
+__version__ = '.53'
 #@<<version history>>
 #@+node:mork.20041101132349:<<version history>>
 #@+at 
@@ -95,6 +95,7 @@ __version__ = '.52'
 # 
 # .51
 # .52 EKR: Minor style changes.
+# .53 EKR: Use __name__ in .plugin_signon
 #@-at
 #@nonl
 #@-node:mork.20041101132349:<<version history>>
@@ -564,7 +565,7 @@ if temacs and Tk:
         #@-node:ekr.20041106100326.2:<< override createBindings and onBodyKey >>
         #@nl
         loadConfig()
-        g.plugin_signon( 'usetemacs' )
+        g.plugin_signon(__name__)
         leoPlugins.registerHandler( ('start2' , 'open2', "new") , addMenu )
 #@nonl
 #@-node:mork.20041013092542.1:@thin usetemacs.py
