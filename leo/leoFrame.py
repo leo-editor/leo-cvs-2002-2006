@@ -2144,6 +2144,9 @@ class LeoFrame:
 	def OnFindPanel(self,event=None):
 	
 		find = app().findFrame
+		# 15-SEP-2002 DTHEIN: withdraw() added to force findFrame to top after 
+		#                     opening multiple Leo files.
+		find.top.withdraw() 
 		find.top.deiconify()
 		find.find_text.focus_set()
 		find.commands = self
