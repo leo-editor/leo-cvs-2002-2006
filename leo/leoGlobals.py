@@ -3083,6 +3083,54 @@ def toEncodedString (s,encoding,reportErrors=false):
 	return s
 #@-body
 #@-node:3::toUnicode & toEncodedString
+#@+node:4::getpreferredencoding from 2.3a2
+#@+body
+if sys.platform in ('win32', 'darwin', 'mac'):
+	
+	#@<< define getpreferredencoding using _locale >>
+	#@+node:1::<< define getpreferredencoding using _locale >>
+	#@+body
+	# On Win32, this will return the ANSI code page
+	# On the Mac, it should return the system encoding;
+	# it might return "ascii" instead.
+	
+	def getpreferredencoding(do_setlocale = True):
+	    """Return the charset that the user is likely using."""
+	    import _locale
+	    return _locale._getdefaultlocale()[1]
+	#@-body
+	#@-node:1::<< define getpreferredencoding using _locale >>
+
+else:
+	
+	#@<< define getpreferredencoding for *nix >>
+	#@+node:2::<< define getpreferredencoding for *nix >>
+	#@+body
+	# On Unix, if CODESET is available, use that.
+	try:
+	    CODESET
+	except NameError:
+	    # Fall back to parsing environment variables :-(
+	    def getpreferredencoding(do_setlocale = True):
+	        """Return the charset that the user is likely using,
+	        by looking at environment variables."""
+	        return getdefaultlocale()[1]
+	else:
+	    def getpreferredencoding(do_setlocale = True):
+	        """Return the charset that the user is likely using,
+	        according to the system configuration."""
+	        if do_setlocale:
+	            oldloc = setlocale(LC_CTYPE)
+	            setlocale(LC_CTYPE, "")
+	            result = nl_langinfo(CODESET)
+	            setlocale(LC_CTYPE, oldloc)
+	            return result
+	        else:
+	            return nl_langinfo(CODESET)
+	#@-body
+	#@-node:2::<< define getpreferredencoding for *nix >>
+#@-body
+#@-node:4::getpreferredencoding from 2.3a2
 #@-node:12::Unicode utils...
 #@-others
 #@-body

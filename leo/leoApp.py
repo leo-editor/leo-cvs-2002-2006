@@ -220,41 +220,26 @@ class LeoApp:
 		#@-body
 		#@-node:3::<< set the default Leo icon >>
 
-		
-		#@<< set leoId from leoId.txt, creating it if it does not exist >>
-		#@+node:5::<< set leoId from leoId.txt, creating it if it does not exist >>
-		#@+body
-		if 0:
-			# See if leoId.txt exists in the loadDir.
-			dir = app().loadDir
-			
-			# Prompt for a user id.
-			message = (
-				"leoId.txt not found\n" +
-				"Please enter an id that identifies you uniquely\n" +
-				"Your cvs login name is a good choice")
-			d = leoDialog.leoDialog()
-			result = d.askId("Create leoId.txt?", message)
-			if result != None:
-				id = result
-				# write leoId.txt using id.
-			else:
-				message2 = (
-					"Using \"unknown\" as the identifier for all nodes.\n" +
-					"Please create leoId.txt as soon as possible")
-				d.askOk("Using default id for nodes",message2)
-		#@-body
-		#@-node:5::<< set leoId from leoId.txt, creating it if it does not exist >>
-
 		self.config = leoConfig.config()
+		self.setLeoID()
 		self.nodeIndices = leoNodes.nodeIndices()
 		
 		#@<< set app.tkEncoding >>
 		#@+node:4::<< set app.tkEncoding >>
 		#@+body
+		#@+at
+		#  According to Martin v. Löwis, getdefaultlocale() is broken, and 
+		# cannot be fixed. The workaround is to copy the 
+		# getpreferredencoding() function from locale.py in Python 2.3a2.  
+		# This function is now in leoGlobals.py.
+
+		#@-at
+		#@@c 
+
 		for (encoding,src) in (
 			(self.config.tkEncoding,"config"),
-			(locale.getdefaultlocale()[1],"locale"),
+			#(locale.getdefaultlocale()[1],"locale"),
+			(getpreferredencoding(),"local"),
 			(sys.getdefaultencoding(),"sys"),
 			("utf-8","default")):
 		
@@ -262,11 +247,14 @@ class LeoApp:
 				self.tkEncoding = encoding
 				# print self.tkEncoding,src
 				break
+			elif encoding and len(encoding) > 0:
+				print "ignoring invalid " + src + " encoding: ", encoding
+		
 		
 		#@-body
 		#@-node:4::<< set app.tkEncoding >>
 
-		
+	
 		# Create the global windows
 		self.findFrame = leoFind.LeoFind()
 		self.findFrame.top.withdraw()
@@ -295,7 +283,102 @@ class LeoApp:
 	
 	#@-body
 	#@-node:4::app.get/setRealMenuName & setRealMenuNamesFromTable
-	#@+node:5::app.handleOpenTempFiles
+	#@+node:5::app.setLeoID
+	#@+body
+	def setLeoID (self):
+		
+		if not self.use_gnx:
+			return # Used only in 4.x.
+			
+		tag = ".leoID.txt"
+		loadDir = app().loadDir
+		configDir = app().config.configDir
+		
+		#@<< return if we can set self.leoID from sys.leoID >>
+		#@+node:1::<< return if we can set self.leoID from sys.leoID>>
+		#@+body
+		# This would be set by in Python's sitecustomize.py file.
+		try:
+			self.leoID = sys.leoID
+			es("leoID = " + self.leoID, color="blue")
+			return
+		except:
+			self.leoID = None
+		#@-body
+		#@-node:1::<< return if we can set self.leoID from sys.leoID>>
+
+		
+		#@<< return if we can set self.leoID from "leoID.txt" >>
+		#@+node:2::<< return if we can set self.leoID from "leoID.txt" >>
+		#@+body
+		for dir in (configDir,loadDir):
+			try:
+				fn = os.path.join(dir, tag)
+				f = open(fn,'r')
+				if f:
+					s = f.readline()
+					f.close()
+					if s and len(s) > 0:
+						self.leoID = s
+						es("leoID = " + self.leoID, color="blue")
+						return
+					else:
+						es("empty " + tag + " in " + dir, color = "red")
+			except: self.leoID = None
+				
+		if configDir == loadDir:
+			es(tag + " not found in " + loadDir, color="red")
+		else:
+			es(tag + " not found in " + configDir + " or " + loadDir, color="red")
+		
+		#@-body
+		#@-node:2::<< return if we can set self.leoID from "leoID.txt" >>
+
+		
+		#@<< put up a dialog requiring a valid id >>
+		#@+node:3::<< put up a dialog requiring a valid id >>
+		#@+body
+		message = (
+			"leoID.txt not found\n\n" +
+			"Please enter an id that identifies you uniquely.\n" +
+			"Your cvs login name is a good choice.\n" +
+			"Your id must contain only letters and numbers.")
+		
+		d = leoDialog.leoDialog()
+		self.leoID = d.askLeoID("Enter unique id", message)
+		
+		es("leoID = " + `self.leoID`, color="blue")
+		
+		#@-body
+		#@-node:3::<< put up a dialog requiring a valid id >>
+
+		
+		#@<< attempt to create leoID.txt >>
+		#@+node:4::<< attempt to create leoID.txt >>
+		#@+body
+		for dir in (configDir,loadDir):
+			try:
+				# Look in configDir first.
+				fn = os.path.join(dir, tag)
+				f = open(fn,'w')
+				if f:
+					f.write(self.leoID)
+					f.close()
+					es("created leoID.txt in " + dir, color="red")
+					return
+			except: pass
+			
+		if configDir == loadDir:
+			es("can not create leoID.txt in " + loadDir, color="red")
+		else:
+			es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
+		
+		
+		#@-body
+		#@-node:4::<< attempt to create leoID.txt >>
+	#@-body
+	#@-node:5::app.setLeoID
+	#@+node:6::app.handleOpenTempFiles
 	#@+body
 	#@+at
 	#  Try to remove temp files created with the Open With command.  This may 
@@ -317,8 +400,8 @@ class LeoApp:
 				except:
 					print "can not delete temp file:", path
 	#@-body
-	#@-node:5::app.handleOpenTempFiles
-	#@+node:6::app.quit
+	#@-node:6::app.handleOpenTempFiles
+	#@+node:7::app.quit
 	#@+body
 	def quit(self):
 	
@@ -333,8 +416,8 @@ class LeoApp:
 		else: # closes Python window.
 			self.root.quit()
 	#@-body
-	#@-node:6::app.quit
-	#@+node:7::app.writeWaitingLog
+	#@-node:7::app.quit
+	#@+node:8::app.writeWaitingLog
 	#@+body
 	def writeWaitingLog (self):
 	
@@ -344,7 +427,7 @@ class LeoApp:
 			self.logWaiting = []
 	
 	#@-body
-	#@-node:7::app.writeWaitingLog
+	#@-node:8::app.writeWaitingLog
 	#@-others
 #@-body
 #@-node:0::@file leoApp.py
