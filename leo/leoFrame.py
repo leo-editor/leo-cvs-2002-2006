@@ -2118,13 +2118,11 @@ class LeoFrame:
 				s = body.get(start,end)
 				s = s.strip()
 				
-		# Otherwise, the script is v's body text if v is an @pythonscript node.
+		# 11/20/02: Otherwise, the script is v's entire body text.
 		if s == None or len(s) == 0:
-			if 0: # Do nothing.  Make sure the user _sees_ the script to be executed.
-				h = v.headString()
-				if match_word(h,0,"@pythonscript"):
-					s = v.bodyString()
-				
+			s = body.get("1.0","end")
+			s = s.strip()
+	
 		# trace(`s`)
 		if s and len(s) > 0:
 			s += '\n' # Make sure we end the script properly.
