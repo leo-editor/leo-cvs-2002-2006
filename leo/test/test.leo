@@ -20,7 +20,8 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="ekr.20040715105834" a="TV"><vh>Fun...</vh>
+<v t="ekr.20040312021734"><vh>Scripts</vh>
+<v t="ekr.20040715105834"><vh>Fun...</vh>
 <v t="EKR.20040626212434"><vh>Drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
 <v t="EKR.20040626212434.2"><vh>Lines &amp; arcs</vh></v>
@@ -28,7 +29,7 @@
 <v t="EKR.20040627150213"><vh>Complex functions</vh></v>
 </v>
 <v t="ekr.20040714055306"><vh>elispToPy</vh>
-<v t="ekr.20040715133744"><vh>To do</vh></v>
+<v t="ekr.20040715133744" a="M"><vh>To do</vh></v>
 <v t="ekr.20040713123617.1"><vh>e2pyScript</vh>
 <v t="ekr.20040713200238"><vh>Ref</vh>
 <v t="ekr.20040713131315" a="M"><vh>To do</vh>
@@ -152,7 +153,7 @@
 <v t="ekr.20040714074445"><vh>&lt;&lt; insert nl and ws tokens &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20040713131350" a="E"><vh>-input-</vh>
+<v t="ekr.20040713131350"><vh>-input-</vh>
 <v t="ekr.20040715071555"><vh>igrep-read-file-name</vh></v>
 </v>
 <v t="ekr.20040713132127.1"><vh>igrep.el</vh>
@@ -226,19 +227,19 @@
 <v t="ekr.20040713132127.69"><vh>unnamed data</vh></v>
 </v>
 </v>
-<v t="ekr.20040713130853.8" tnodeList="ekr.20040713130853.8,ekr.20040715093804,ekr.20040715073230,ekr.20040715082059,ekr.20040714095247,ekr.20040713150037,ekr.20040713150037.1,ekr.20040714170021,ekr.20040713150712,ekr.20040713173923,ekr.20040713174349,ekr.20040713180208,ekr.20040713164604,ekr.20040715080216,ekr.20040715080738,ekr.20040715081031,ekr.20040715080738.1,ekr.20040713144036,ekr.20040713144036.1,ekr.20040714061625,ekr.20040714061625.1,ekr.20040714061625.2,ekr.20040715090957,ekr.20040713152809,ekr.20040713193437,ekr.20040713161629.1,ekr.20040713152318,ekr.20040713151556.1,ekr.20040713160302,ekr.20040714060941,ekr.20040714053807.1,ekr.20040714054620.1,ekr.20040713150314.1,ekr.20040713144926,ekr.20040713154118,ekr.20040713211010,ekr.20040714082939,ekr.20040714155341,ekr.20040714154314,ekr.20040714091940.1,ekr.20040714222507,ekr.20040715081425,ekr.20040715075914,ekr.20040714072448,ekr.20040715090957.2,ekr.20040715071350,ekr.20040715125453,ekr.20040715120001,ekr.20040715120001.1,ekr.20040715120001.2,ekr.20040715093122,ekr.20040715120001.3,ekr.20040715121456,ekr.20040715091409,ekr.20040715120001.4,ekr.20040715120001.5,ekr.20040715084435,ekr.20040715120001.7,ekr.20040715120001.8,ekr.20040715090957.1,ekr.20040715075845,ekr.20040715120001.9"><vh>@file ../src/elisp2py.py</vh>
+<v t="ekr.20040713130853.8"><vh>@file ../src/elisp2py.py</vh>
 <v t="ekr.20040715093804"><vh>Utility functions</vh>
 <v t="ekr.20040715073230"><vh>isList &amp; isToken</vh></v>
 <v t="ekr.20040715082059"><vh>printHeading</vh></v>
 <v t="ekr.20040714095247"><vh>parseTreeToString</vh></v>
 </v>
 <v t="ekr.20040713150037"><vh>class tok</vh>
-<v t="ekr.20040713150037.1" a="E"><vh>tok.__init__</vh></v>
+<v t="ekr.20040713150037.1"><vh>tok.__init__</vh></v>
 <v t="ekr.20040714170021"><vh>tok.isParseTok</vh></v>
 <v t="ekr.20040713150712"><vh>tok.copy</vh></v>
 <v t="ekr.20040713173923"><vh>tok.match</vh></v>
 <v t="ekr.20040713174349"><vh>tok.dump</vh></v>
-<v t="ekr.20040713180208" a="E"><vh>tok.toString &amp; allies</vh>
+<v t="ekr.20040713180208"><vh>tok.toString &amp; allies</vh>
 <v t="ekr.20040713164604"><vh>tok.wsToString</vh></v>
 </v>
 </v>
@@ -256,7 +257,7 @@
 </v>
 <v t="ekr.20040713152809"><vh>Utils</vh>
 <v t="ekr.20040713193437"><vh>deleteTokens</vh></v>
-<v t="ekr.20040713161629.1" a="E"><vh>dump</vh></v>
+<v t="ekr.20040713161629.1"><vh>dump</vh></v>
 <v t="ekr.20040713152318"><vh>error &amp; warning</vh></v>
 <v t="ekr.20040713151556.1"><vh>findMatchingBracket</vh></v>
 <v t="ekr.20040713160302"><vh>findTokens</vh></v>
@@ -273,7 +274,7 @@
 <v t="ekr.20040714155341"><vh>parse</vh>
 <v t="ekr.20040714154314"><vh>&lt;&lt; give error message about mismatched parens &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040714091940.1" a="E"><vh>block</vh></v>
+<v t="ekr.20040714091940.1"><vh>block</vh></v>
 </v>
 <v t="ekr.20040714222507"><vh>Code gen</vh>
 <v t="ekr.20040715081425"><vh>dumpCodeList</vh></v>
@@ -281,7 +282,7 @@
 <v t="ekr.20040714072448"><vh>removeBlankLines</vh></v>
 </v>
 <v t="ekr.20040715090957.2"><vh>gen_xxx</vh>
-<v t="ekr.20040715071350" a="E"><vh>gen</vh></v>
+<v t="ekr.20040715071350"><vh>gen</vh></v>
 <v t="ekr.20040715125453"><vh>gen_computed_function</vh></v>
 <v t="ekr.20040715120001"><vh>gen_cond</vh></v>
 <v t="ekr.20040715120001.1"><vh>gen_defconst</vh></v>
@@ -292,18 +293,17 @@
 <v t="ekr.20040715091409"><vh>gen_function</vh></v>
 <v t="ekr.20040715120001.4"><vh>gen_if</vh></v>
 <v t="ekr.20040715120001.5"><vh>gen_let, gen_let_star</vh></v>
-<v t="ekr.20040715084435" a="EM"><vh>gen_list</vh></v>
+<v t="ekr.20040715084435" a="M"><vh>gen_list</vh></v>
 <v t="ekr.20040715120001.7"><vh>gen_prog, gen_prog1, gen_progn</vh></v>
-<v t="ekr.20040715120001.8" a="E"><vh>gen_set &amp; gen_setq</vh></v>
+<v t="ekr.20040715120001.8"><vh>gen_set &amp; gen_setq</vh></v>
 <v t="ekr.20040715090957.1"><vh>gen_statement</vh></v>
 <v t="ekr.20040715075845"><vh>gen_token</vh></v>
-<v t="ekr.20040715120001.9" a="E"><vh>gen_unless, gen_when, gen_while</vh></v>
+<v t="ekr.20040715120001.9"><vh>gen_unless, gen_when, gen_while</vh></v>
 </v>
 </v>
 </v>
 </v>
 </v>
-<v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
 <v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
 <v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
@@ -630,7 +630,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
@@ -941,7 +941,13 @@
 </v>
 <v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
-<v t="ekr.20040712101813"><vh>@test checkCode</vh></v>
+<v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
+<v t="EKR.20040612095237"><vh>@test checkPythonCode (bad syntax)</vh>
+<v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
+</v>
+<v t="ekr.20040715154319" a="M"><vh>@test checkPythonCode (bad tabnanny)</vh>
+<v t="EKR.20040610194209.1" a="M"><vh>TabNanny data (bad)</vh></v>
+</v>
 </v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
 <v t="ekr.20040712101754.214"><vh>Outline tests (Sometimes fails)</vh>
@@ -1028,7 +1034,6 @@
 <v t="ekr.20040707071542.1"><vh>Do all @tests</vh></v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20040715105926"><vh>To do:</vh>
 <v t="EKR.20040608095146"><vh>Perfect import stuff...</vh>
 <v t="EKR.20040504083716.44"><vh>perfect import unit tests</vh>
 <v t="EKR.20040504083716.45"><vh>@   file test_sentinels.py</vh>
@@ -1083,11 +1088,6 @@
 <v t="EKR.20040504153320"><vh>&lt;&lt; compute sourcetime and targettime &gt;&gt;</vh></v>
 <v t="EKR.20040504153320.1"><vh>&lt;&lt; compute operation &gt;&gt;</vh></v>
 </v>
-</v>
-</v>
-<v t="EKR.20040612095237" a="E"><vh>Tests of new commands</vh>
-<v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
-<v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
 </v>
 </v>
 </vnodes>
@@ -2017,14 +2017,14 @@ About a year ago I found the website at www.literateprogamming.com and was immed
 I never did try CWEB or NOWEB though, because on the literate programming site I read about a tool named “Leo” that combined outlines with Literate Programming techniques. Since I’ve always found outlining tools very useful I downloaded and tried this. I found that using this tool completely changed my programming practice and brought out all of the power inherent in the original Literate Programming idea as I understood it.</t>
 <t tx="EKR.20040610192622.1">import string
 
-string.join(a,b]
-</t>
+string.join(a,b] # A syntax error</t>
 <t tx="EKR.20040610194209.1">@tabwidth 4
 
 # Tabnanny _only_ checks errors involving tabs.
 # It does _not_ check other indentation errors.
 # It does _not_ check syntax.
 
+if 1: # Essential, so we don't create a syntax error.
     a = 5
 	b = 6 #Contains tab.
     c = 3</t>
@@ -2058,7 +2058,19 @@ print ; print '-' * 20</t>
 <t tx="EKR.20040612095237">@ignore # Suppress Check Python Code warnings.
 
 @language python
-@tabwidth -4</t>
+@tabwidth -4
+
+import leoGlobals as g
+import unittest
+
+c = g.top()
+
+c.checkPythonCode(unittest=True)
+
+result = g.app.unitTestDict.get("checkPythonCode")
+
+assert result=="error", "checkPythonCode returns: %s" % result
+</t>
 <t tx="EKR.20040612150543"># Test
 @others
 # Last</t>
@@ -5957,7 +5969,10 @@ void vnode::OnPasteNode(wxCommandEvent&amp; WXUNUSED(event))\n\
     print "speedTest done:"
     print "elapsed time:", time2-time1
     print "time/pass:", (time2-time1)/passes</t>
-<t tx="ekr.20040713130853.8">import leoGlobals as g
+<t tx="ekr.20040713130853.8">@language python
+@tabwidth -4
+
+import leoGlobals as g
 import string
 
 tabWidth = 4 # how many blanks in a tab.
@@ -8961,7 +8976,6 @@ def isToken (object):
     e.indent -= 1</t>
 <t tx="ekr.20040715093804"></t>
 <t tx="ekr.20040715105834"></t>
-<t tx="ekr.20040715105926"></t>
 <t tx="ekr.20040715120001">def gen_cond (self,t,args):
     
     e = self
@@ -9071,10 +9085,25 @@ def gen_while(self,args):
 
     for arg in args:
         e.gen(arg)</t>
-<t tx="ekr.20040715133744">@killcolor
+<t tx="ekr.20040715133744">@language plain
 
 Complete the code generators.  This involves handling all the special cases.
 
 Maybe someday.  For now, I can't bear to waste any more time on this project.</t>
+<t tx="ekr.20040715154319">@ignore # Suppress Check Python Code warnings.
+
+@language python
+@tabwidth -4
+
+import leoGlobals as g
+import unittest
+
+c = g.top()
+
+c.checkPythonCode(unittest=True)
+
+result = g.app.unitTestDict.get("checkPythonCode")
+
+assert result=="error", "checkPythonCode returns: %s" % result</t>
 </tnodes>
 </leo_file>

@@ -329,6 +329,25 @@ def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
         return None
 
 #@-node:ekr.20031218072017.1390:scanAtTabwidthDirective
+#@+node:ekr.20040715155607:scanForAtIgnore
+def scanForAtIgnore(c,p):
+    
+    """Scan position p and its ancestors looking for @ignore directives."""
+    
+    language = c.target_language
+
+    if c is None or g.top() is None:
+        return False # For unit tests.
+
+    for p in p.self_and_parents_iter():
+        s = p.bodyString()
+        d = g.get_directives_dict(s)
+        if d.has_key("ignore"):
+            return True
+
+    return False
+#@nonl
+#@-node:ekr.20040715155607:scanForAtIgnore
 #@+node:ekr.20040712084911.1:scanForAtLanguage
 def scanForAtLanguage(c,p):
     
@@ -336,23 +355,17 @@ def scanForAtLanguage(c,p):
 
     Returns the language found, or c.target_language."""
     
-    language = c.target_language
 
-    if c is None or g.top() is None:
-        return language # For unit tests.
+    if c and p:
+        for p in p.self_and_parents_iter():
+            s = p.bodyString()
+            d = g.get_directives_dict(s)
+            if d.has_key("language"):
+                k = d["language"]
+                language,delim1,delim2,delim3 = g.set_language(s,k)
+                return language # Continue looking for @ignore
 
-    found = False
-    for p in p.self_and_parents_iter():
-        s = p.bodyString()
-        d = g.get_directives_dict(s)
-        if d.has_key("ignore"):
-            return None
-        elif not found and d.has_key("language"):
-            k = d["language"]
-            language,delim1,delim2,delim3 = g.set_language(s,k)
-            found = True # Continue looking for @ignore
-
-    return language
+    return c.target_language
 #@nonl
 #@-node:ekr.20040712084911.1:scanForAtLanguage
 #@+node:ekr.20031218072017.1391:scanDirectives (utils)
