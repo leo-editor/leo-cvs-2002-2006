@@ -56,7 +56,7 @@ class tkinterGui(leoGui.leoGui):
 	
 		try:
 			version = gui.root.getvar("tk_patchLevel")
-			if CheckVersion(version,"8.4.3"):
+			if CheckVersion(version,"8.4.3") and sys.platform == "win32": # 12/2/03
 				# tk 8.4.3 or greater: load a 16 by 16 icon.
 				path = os_path_join(app.loadDir,"..","Icons")
 				if os_path_exists(path):
@@ -72,7 +72,7 @@ class tkinterGui(leoGui.leoGui):
 			import traceback ; traceback.print_exc()
 	#@nonl
 	#@-node:setDefaultIcon
-	#@+node:getDefaultConfigFont
+	#@+node:tkGui.getDefaultConfigFont
 	def getDefaultConfigFont(self,config):
 		
 		"""Get the default font from a new text widget."""
@@ -83,7 +83,7 @@ class tkinterGui(leoGui.leoGui):
 		config.defaultFont = font
 		config.defaultFontFamily = font.cget("family")
 	#@nonl
-	#@-node:getDefaultConfigFont
+	#@-node:tkGui.getDefaultConfigFont
 	#@+node:createGlobalWindows
 	def createGlobalWindows (self):
 		
@@ -338,8 +338,7 @@ class tkinterGui(leoGui.leoGui):
 		
 		try:
 			font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
-			#print family_name,family,size,slant,weight
-			#print "actual_name:",font.cget("family")
+			# if app.trace: trace(font)
 			return font
 		except:
 			es("exception setting font from " + `family_name`)
