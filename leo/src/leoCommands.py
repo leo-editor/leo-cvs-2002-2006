@@ -2374,7 +2374,8 @@ class baseCommands:
 		nodes = 0 ; errors = 0
 		while v:
 			nodes += 1
-			if hasattr(v,"tnodeList") and not v.isAnyAtFileNode():
+			# 12/13/03: Empty tnodeLists are not errors.
+			if hasattr(v,"tnodeList") and len(v.tnodeList) > 0 and not v.isAnyAtFileNode():
 				s = "deleting tnodeList for " + `v`
 				print s ; es(s,color="blue")
 				delattr(v,"tnodeList")
