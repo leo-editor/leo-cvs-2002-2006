@@ -3954,7 +3954,7 @@ class tangleCommands:
 				
 				k = dict["encoding"]
 				j = len("@encoding")
-				i = skip_to_end_of_line(s,i)
+				i = skip_to_end_of_line(s,k) # 4/4/03
 				e = s[k+j:i].strip()
 				# trace("encoding:",e)
 			
