@@ -235,23 +235,30 @@ class baseTnode:
 	#@+node:t.__init__
 	# All params have defaults, so t = tnode() is valid.
 	
-	def __init__ (self,index=0,bodyString=None,headString=None):
+	def __init__ (self,bodyString=None,headString=None):
 	
-		self.statusBits = 0 # status bits
-		self.selectionStart = 0 # The start of the selected body text.
-		self.selectionLength = 0 # The length of the selected body text.
+		self.cloneIndex = 0 # or Pre-3.12 files.  Zero for @file nodes
+		self.fileIndex = None # The immutable file index for this tnode.
 		self.insertSpot = None # Location of previous insert point.
+		self.joinList = [] # New in 3.12: vnodes on the same joinlist are updated together.
 		self.scrollBarSpot = None # Previous value of scrollbar position.
-		# For Pre-3.12 files.  These must always exist.
-		self.fileIndex = index # The immutable file index for self tnode.
-		self.cloneIndex = 0 # Zero for @file nodes
-		# New in 3.12
-		self.joinList = [] # vnodes on the same joinlist are updated together.
-		
-		self.headString = toUnicode(headString,app.tkEncoding) # 9/28/03
-		self.bodyString = toUnicode(bodyString,app.tkEncoding) # 9/28/03
+		self.selectionLength = 0 # The length of the selected body text.
+		self.selectionStart = 0 # The start of the selected body text.
+		self.statusBits = 0 # status bits
+	
+		# Convert everything to unicode...
+		self.headString = toUnicode(headString,app.tkEncoding)
+		self.bodyString = toUnicode(bodyString,app.tkEncoding)
 	#@nonl
 	#@-node:t.__init__
+	#@+node:t.__repr__ & t.__str__
+	def __repr__ (self):
+		
+		return "<tnode %d>" % (id(self))
+			
+	__str__ = __repr__
+	#@nonl
+	#@-node:t.__repr__ & t.__str__
 	#@+node:t.extraAttributes & setExtraAttributes
 	def extraAttributes (self):
 	
@@ -417,11 +424,11 @@ class baseVnode:
 		# Structure links
 		self.mParent = self.mFirstChild = self.mNext = self.mBack = None
 		
-		# The following are used by the tree class.
-		# Eventually they should be injected into vnodes by the tkingerGui class.
+		# The icon index. -1 forces an update of icon.
+		self.iconVal = -1 
 		
-		self.iconVal = -1 # The icon index.  -1 forces an update of icon.
-		self.iconx, self.icony = 0,0 # Coords of icon so icon can be redrawn separately.
+		if 0: # Injected by the leoTkinterTree class.
+			self.iconx, self.icony = 0,0 # Coords of icon so icon can be redrawn separately.
 		#@nonl
 		#@-node:<< initialize vnode data members >>
 		#@nl
@@ -436,167 +443,6 @@ class baseVnode:
 			
 	__str__ = __repr__
 	#@-node:v.__repr__ & v.__str__
-	#@+node:v.Callbacks (handles event hooks)(to be eliminated)
-	#@+at 
-	#@nonl
-	# These callbacks are vnode methods so we can pass the vnode back to the 
-	# tree class.
-	#@-at
-	#@-node:v.Callbacks (handles event hooks)(to be eliminated)
-	#@+node:OnBoxClick
-	# Called when the box is clicked.
-	
-	def OnBoxClick(self,event=None):
-	
-		try:
-			v = self ; c = v.commands
-			if not doHook("boxclick1",c=c,v=v,event=event):
-				self.commands.frame.OnBoxClick(v)
-			doHook("boxclick2",c=c,v=v,event=event)
-		except:
-			es_event_exception("boxclick")
-	#@nonl
-	#@-node:OnBoxClick
-	#@+node:OnDrag
-	def OnDrag(self,event=None):
-		
-		# trace()
-		
-		try:
-			v = self ; c = v.commands
-			if c.frame.dragging():
-				if not doHook("dragging1",c=c,v=v,event=event):
-					c.frame.OnDrag(v,event)
-				doHook("dragging2",c=c,v=v,event=event)
-			else:
-				if not doHook("drag1",c=c,v=v,event=event):
-					c.frame.OnDrag(v,event)
-				doHook("drag2",c=c,v=v,event=event)
-		except:
-			es_event_exception("drag")
-	#@nonl
-	#@-node:OnDrag
-	#@+node:v.OnEndDrag
-	def OnEndDrag(self,event=None):
-		
-		"""Vnode end-drag handler."""
-		
-		# trace()
-	
-		try:
-			v = self ; c = v.commands
-			# 7/10/03: Always call frame.OnEndDrag, regardless of state.
-			if not doHook("enddrag1",c=c,v=v,event=event):
-				c.frame.OnEndDrag(v,event)
-			doHook("enddrag2",c=c,v=v,event=event)
-		except:
-			es_event_exception("enddrag")
-	#@nonl
-	#@-node:v.OnEndDrag
-	#@+node:v.OnHeadlineClick & OnHeadlineRightClick
-	def OnHeadlineClick(self,event=None):
-		try:
-			v = self ; c = v.commands
-			if not doHook("headclick1",c=c,v=v,event=event):
-				c.frame.OnActivateHeadline(v)
-			doHook("headclick2",c=c,v=v,event=event)
-		except:
-			es_event_exception("headclick")
-		
-	def OnHeadlineRightClick(self,event=None):
-		try:
-			v = self ; c = v.commands
-			if not doHook("headrclick1",c=c,v=v,event=event):
-				c.frame.OnActivateHeadline(v)
-				c.frame.OnPopup(self,event)
-			doHook("headrclick2",c=c,v=v,event=event)
-		except:
-			es_event_exception("headrclick")
-	#@nonl
-	#@-node:v.OnHeadlineClick & OnHeadlineRightClick
-	#@+node:OnHeadlineKey
-	def OnHeadlineKey (self,event=None):
-	
-		try:
-			v = self ; c = v.commands
-			if not doHook("headkey1",c=c,v=v,event=event):
-				c.frame.OnHeadlineKey(v,event)
-			doHook("headkey2",c=c,v=v,event=event)
-		except:
-			es_event_exception("headkey")
-	#@nonl
-	#@-node:OnHeadlineKey
-	#@+node:OnHyperLinkControlClick
-	def OnHyperLinkControlClick (self,event):
-	
-		try:
-			v = self ; c = v.commands
-			if not doHook("hypercclick1",c=c,v=v,event=event):
-				c.beginUpdate()
-				c.selectVnode(v)
-				c.endUpdate()
-				c.body.mark_set("insert","1.0")
-			doHook("hypercclick2",c=c,v=v,event=event)
-		except:
-			es_event_exception("hypercclick")
-	#@nonl
-	#@-node:OnHyperLinkControlClick
-	#@+node:OnHyperLinkEnter
-	def OnHyperLinkEnter (self,event=None):
-	
-		try:
-			v = self ; c = v.commands
-			if not doHook("hyperenter1",c=c,v=v,event=event):
-				if 0: # This works, and isn't very useful.
-					c.body.tag_config(v.tagName,background="green")
-			doHook("hyperenter2",c=c,v=v,event=event)
-		except:
-			es_event_exception("hyperenter")
-	#@nonl
-	#@-node:OnHyperLinkEnter
-	#@+node:OnHyperLinkLeave
-	def OnHyperLinkLeave (self,event=None):
-	
-		try:
-			v = self ; c = v.commands
-			if not doHook("hyperleave1",c=c,v=v,event=event):
-				if 0: # This works, and isn't very useful.
-					c.body.tag_config(v.tagName,background="white")
-			doHook("hyperleave2",c=c,v=v,event=event)
-		except:
-			es_event_exception("hyperleave")
-	#@nonl
-	#@-node:OnHyperLinkLeave
-	#@+node:OnIconClick & OnIconRightClick
-	def OnIconClick(self,event=None):
-		try:
-			v = self ; c = v.commands
-			if not doHook("iconclick1",c=c,v=v,event=event):
-				c.frame.OnIconClick(v,event)
-			doHook("iconclick2",c=c,v=v,event=event)
-		except:
-			es_event_exception("iconclick")
-		
-	def OnIconRightClick(self,event=None):
-		try:
-			v = self ; c = v.commands
-			if not doHook("iconrclick1",c=c,v=v,event=event):
-				c.frame.OnIconRightClick(v,event)
-			doHook("iconrclick2",c=c,v=v,event=event)
-		except:
-			es_event_exception("iconrclick")
-	#@-node:OnIconClick & OnIconRightClick
-	#@+node:OnIconDoubleClick
-	def OnIconDoubleClick(self,event=None):
-	
-		try:
-			v = self ; c = v.commands
-			if not doHook("icondclick1",c=c,v=v,event=event):
-				c.frame.OnIconDoubleClick(v,event)
-			doHook("icondclick2",c=c,v=v,event=event)
-		except:
-			es_event_exception("icondclick")
-	#@-node:OnIconDoubleClick
 	#@+node:afterHeadlineMatch
 	# 12/03/02: We now handle @file options here.
 	
@@ -1072,8 +918,8 @@ class baseVnode:
 		s = toUnicode(s,encoding)
 		if v == c.currentVnode():
 			# This code destoys all tags, so we must recolor.
-			c.frame.body.delete("1.0","end")
-			c.frame.body.insert("1.0",s) # Replace the body text with s.
+			c.frame.bodyCtrl.delete("1.0","end")
+			c.frame.bodyCtrl.insert("1.0",s) # Replace the body text with s.
 			c.recolor()
 			
 		# Keep the body text in the tnode up-to-date.
@@ -2131,7 +1977,7 @@ class nodeIndices:
 	def __init__ (self):
 		
 		"""ctor for nodeIndices class"""
-		
+	
 		self.userId = app.leoID # 5/1/03: This never changes.
 		self.defaultId = app.leoID # This probably will change.
 		self.lastIndex = None
@@ -2185,15 +2031,26 @@ class nodeIndices:
 		return d
 	#@nonl
 	#@-node:getNewIndex
+	#@+node:isGnx
+	def isGnx (self,gnx):
+		try:
+			id,t,n = gnx
+			return t != None
+		except:
+			return false
+	#@nonl
+	#@-node:isGnx
 	#@+node:scanGnx
 	def scanGnx (self,s,i):
 		
 		"""Create a gnx from its string representation"""
+		
+		if type(s) != type("s"):
+			return None,None,None
+			
+		s = s.strip()
 	
-		if len(s) > 0 and s[-1] == '\n':
-			s = s[:-1]
-	
-		id,t,n=None,None,None
+		id,t,n = None,None,None
 		i,id = skip_to_char(s,i,'.')
 		if match(s,i,'.'):
 			i,t = skip_to_char(s,i+1,'.')
@@ -2206,9 +2063,8 @@ class nodeIndices:
 		if n:
 			try: n = int(n)
 			except: pass
-		d = (id,t,n)
 	
-		return d
+		return id,t,n
 	#@nonl
 	#@-node:scanGnx
 	#@+node:setTimeString
@@ -2217,8 +2073,7 @@ class nodeIndices:
 		"""Set the timestamp string to be used by getNewIndex until further notice"""
 	
 		self.timeString = time.strftime(
-			"%m%d%y%H%M%S",  # compact timestamp is best
-			time.localtime())
+			"%m%d%y%H%M%S", time.localtime()) # compact timestamp is best
 	#@nonl
 	#@-node:setTimeString
 	#@+node:toString
@@ -2231,7 +2086,7 @@ class nodeIndices:
 		if removeDefaultId and id == self.defaultId:
 			id = ""
 	
-		if n == None:
+		if not n: # None or ""
 			return "%s.%s" % (id,t)
 		else:
 			return "%s.%s.%d" % (id,t,n)
