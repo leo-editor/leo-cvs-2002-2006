@@ -292,7 +292,7 @@ class baseTnode (object):
         try: d ["unknownAttributes"] = t.unknownAttributes
         except: pass
         
-        if 0: # These neve change, so no need to save/restore them.
+        if 0: # These never change, so no need to save/restore them.
             # In fact, it would be wrong to undo changes made to them!
             d ["cloneIndex"]  = t.cloneIndex
             d ["fileIndex"]  = t.fileIndex
