@@ -4841,7 +4841,7 @@
 <v t="edream.110203160744.1402" a=""><vh>update_section</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.2412" a="M"><vh>To do: 4.1</vh>
+<v t="edream.110203160744.2412" a="MV"><vh>To do: 4.1</vh>
 <v t="edream.110203160744.2416"><vh>After 4.1 alpha 1</vh>
 <v t="edream.110203163105" a="M"><vh>Fix Extract commands</vh></v>
 <v t="edream.110203163105.1" a="M"><vh>Don't autosave if nothing has changed</vh></v>
@@ -4947,7 +4947,7 @@
 <v t="edream.110203160744.2415"><vh>Revise mod_spelling.py to use the new c.body methods</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
+<v t="edream.110203160744.2458"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt;</vh></v>
@@ -7185,7 +7185,7 @@
 <v t="edream.110203160744.1592" a=""><vh>f.promptForSave</vh>
 <v t="edream.110203160744.1593" a=""><vh>&lt;&lt; Put up a file save dialog to set mFileName &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.1885" a=""><vh>f.version &amp; signon stuff</vh></v>
+<v t="edream.110203160744.1885" a="M"><vh>f.version &amp; signon stuff</vh></v>
 </v>
 <v t="edream.110203160744.2261"><vh>Configuration</vh>
 <v t="edream.110203160744.2262"><vh>f.configureBar</vh></v>
@@ -40498,8 +40498,8 @@ getStringFromDict = getFromDict
 </t>
 <t tx="edream.110203160744.2412">@nocolor
 
-Release 4.1 alpha 1
-	- Add new files to cvs.</t>
+Change .leo files to -ko mode.
+Remove instances of bodyCtrl from non-gui code (undo, etc)</t>
 <t tx="edream.110203160744.2415"></t>
 <t tx="edream.110203160744.2416"></t>
 <t tx="edream.110203160744.2417">- Create esp, es_warning, es_error.
