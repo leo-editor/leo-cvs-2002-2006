@@ -8,6 +8,8 @@
 #@@language python
 #@@tabwidth -4
 
+#@<< mod_spelling imports >>
+#@+node:ekr.20040809111112:<< mod_spelling imports >>
 import leoGlobals as g
 import leoPlugins
 
@@ -16,7 +18,16 @@ import leoTkinterFind
 try: import Tkinter as Tk
 except ImportError: Tk = None
 
-import ConfigParser,os,popen2,re,sys,traceback
+import ConfigParser
+import os
+import popen2
+import re
+import string
+import sys
+import traceback
+#@nonl
+#@-node:ekr.20040809111112:<< mod_spelling imports >>
+#@nl
 
 if Tk and not g.app.unitTesting: # Register the handlers...
 
@@ -26,6 +37,8 @@ if Tk and not g.app.unitTesting: # Register the handlers...
     def createSpellMenu(tag,keywords):
         
         """Create the Check Spelling menu item in the Edit menu."""
+        
+        if g.app.unitTesting: return
         
         c = keywords.get("c")
     
@@ -40,11 +53,14 @@ if Tk and not g.app.unitTesting: # Register the handlers...
     def onSelect (tag,keywords):
         
         """A new vnode has just been selected.  Update the Spell Check window."""
+        
+        global spellFrame
+        
+        if g.app.unitTesting: return
     
         c = keywords.get("c")
         v = keywords.get("new_v")
-        global spellFrame
-        
+    
         if g.top() and c and c.currentVnode():
             if c.currentVnode() != spellFrame.v:
                 # print "onSelect",tag,`c.currentVnode()`,`spellFrame.v`
@@ -59,6 +75,8 @@ if Tk and not g.app.unitTesting: # Register the handlers...
         """Update the Spell Check window after any command that might change text."""
     
         global spellFrame
+        
+        if g.app.unitTesting: return
         
         if g.top() and g.top().currentVnode():
             
@@ -143,6 +161,7 @@ if Tk and not g.app.unitTesting: # Register the handlers...
                 self.input = self.output = None
             
             if self.input:
+                # g.trace(self.input)
                 self.attached = self.input.readline()
             else:
                 self.attached = None

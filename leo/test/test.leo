@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="5950" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
-	<global_window_position top="71" left="279" height="864" width="913"/>
+	<global_window_position top="45" left="364" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2430,8 +2430,8 @@ children = u.findChildrenOf(p)
 for child in children: print child.headString()
 
 print "subtree", '-' * 20
-descendents = u.findSubnodesOf(p)
-for descendent in descendents: print descendent.headString()</t>
+descendants = u.findSubnodesOf(p)
+for descendant in descendants: print descendant.headString()</t>
 <t tx="ekr.20040708205841">@language python
 @tabwidth -4</t>
 <t tx="ekr.20040708210442"></t>
@@ -2932,7 +2932,7 @@ Single paragraph, hanging indentation, short lines, extraneous indentation, and 
 
 # DTHEIN 2004.01.11: Added test case data
 
-Mutliple long lined paragraphs.  Cursor should move to next paragraph after formatting a paragraph.</t>
+Multiple long lined paragraphs.  Cursor should move to next paragraph after formatting a paragraph.</t>
 <t tx="ekr.20040712101754.88">Americans live in the most severe weather-prone country on Earth. Each year, Americans cope with an average of 10,000 thunderstorms, 2,500 floods, 1,000 tornadoes, as well as an average of 6 deadly hurricanes. Potentially deadly weather impacts every American. Communities can now rely on the National Weather Service’s StormReady program to help them guard against the ravages of Mother Nature.
 
 Some 90% of all presidentially declared disasters are weather related, leading to around 500 deaths per year and nearly $14 billion in damage. StormReady, a program started in 1999 in Tulsa, OK, helps arm America's communities with the communication and safety skills needed to save lives and property– before and during the event. StormReady helps community leaders and emergency managers strengthen local safety programs.
@@ -3213,7 +3213,7 @@ This is plain text.
 More plain text.
 
 /* A block comment
-ths continues */
+continues */
 
 More plain text.</t>
 <t tx="ekr.20040712101754.118">import leoGlobals as g
@@ -3443,7 +3443,7 @@ assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 "strings" should not be colorized.
 It should be colored in \LaTeX mode.
 The following are not keywords in latex mode: if, else, etc.
-Noweb section referencs are _valid_ in cweb comments!
+Noweb section references are _valid_ in cweb comments!
 &lt;&lt; section ref &gt;&gt;
 &lt;&lt; missing ref &gt;&gt;
 @c
@@ -5655,7 +5655,7 @@ gIvars = [] # List of ivars to be converted to self.ivar
             return i
         else: i += 1
     return -1</t>
-<t tx="ekr.20040713130853.30"># We scan for a '{' at the top level that is preceeded by ')'
+<t tx="ekr.20040713130853.30"># We scan for a '{' at the top level that is preceded by ')'
 # @code and &lt; &lt; x &gt; &gt; = have been replaced by @c
 def mungeAllFunctions(codeList):
 
@@ -5868,7 +5868,7 @@ def handlePossibleFunctionHeader(codeList, i, prevSemi, firstOpen):
                         i = start
         else: i += 1
     return body</t>
-<t tx="ekr.20040713130853.37"># Do _not_ remove type names when preceeded by new.
+<t tx="ekr.20040713130853.37"># Do _not_ remove type names when preceded by new.
 
 def removeTypeNames(body):
 
@@ -7701,7 +7701,7 @@ def escaped(s,i):
 <t tx="ekr.20040713150856.29">def is_nl(s,i):
 
     return i &lt; len(s) and (s[i] == '\n' or s[i] == '\r')</t>
-<t tx="ekr.20040713150856.30"># We no longer require that the directive appear befor any @c directive or section definition.
+<t tx="ekr.20040713150856.30"># We no longer require that the directive appear before any @c directive or section definition.
 
 def is_special(s,i,directive):
 
@@ -7786,7 +7786,7 @@ def match(s,i,pattern):
         else: break
     return i
 </t>
-<t tx="ekr.20040713150856.39">@ These methods skip to the next newline, regardless of whether the newline may be preceeded by a backslash. Consequently, they should be used only when we know that we are not in a preprocessor directive or string.
+<t tx="ekr.20040713150856.39">@ These methods skip to the next newline, regardless of whether the newline may be preceded by a backslash. Consequently, they should be used only when we know that we are not in a preprocessor directive or string.
 @c
 
 def skip_line (s,i):
@@ -8247,7 +8247,7 @@ else:
         if topLevel: token = tok('TREE','TREE',parseTree)
         else:        token = parseTree
         tokens[i:j+1] = [token]
-        # We are replacing everyting by a _single_ token.
+        # We are replacing everything by a _single_ token.
         i = i + 1 
             
     return tokens</t>
@@ -9236,7 +9236,7 @@ if suite:
     fn = str(g.shortFileName(self.path))
     
     return "Run unitTest function in %s plugin if it exists" % fn</t>
-<t tx="ekr.20040802065214"># Make sure that changing this headline marks descendent @thin nodes dirty.
+<t tx="ekr.20040802065214"># Make sure that changing this headline marks descendant @thin nodes dirty.
 
 import leoGlobals as g
 
@@ -9252,7 +9252,7 @@ try:
     child.clearDirty()
     assert not child.isDirty(), "clearing dirty failed"
     p.setHeadString("changed")
-    assert child.isDirty(), "setting descendent @thin nodes dirty failed."
+    assert child.isDirty(), "setting descendant @thin nodes dirty failed."
 finally:
     p.setHeadString(h)
     child.setHeadString("bogus")

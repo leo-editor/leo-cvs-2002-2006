@@ -42,6 +42,8 @@ WshShell.SendKeys("%Fe");   WScript.Sleep(1300);  #^Q
 #@-node:EKR.20040607073134.1:@url http://wingide.com/
 #@-node:EKR.20040607073134:Download and study wingide
 #@+node:EKR.20040430163619:To do: 4.2
+#@+node:ekr.20040810110025:Complete all plugins
+#@-node:ekr.20040810110025:Complete all plugins
 #@+node:EKR.20040422132037:Linux bugs 3
 @nocolor
 #@nonl
@@ -3316,7 +3318,7 @@ def readEndNode (self,s,i,middle=False):
             old = at.t.getBody()
         else:
             old = None
-        if old:
+        if old and not g.app.unitTesting:
             if at.perfectImportRoot:
                 << bump at.correctedLines and tell about the correction >>
                 p.setMarked()
@@ -3400,7 +3402,7 @@ def setTnodeText (self,s,encoding="utf-8"):
     self.bodyString = s
 #@nonl
 #@-node:ekr.20031218072017.1485:setTnodeText
-#@+node:ekr.20031218072017.1319:(Key handlers) 
+#@+node:ekr.20031218072017.1319:(Key handlers)
 @ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
 #@+node:ekr.20031218072017.1320:body key handlers
 @ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
@@ -3847,7 +3849,7 @@ elif changed:
 #@nonl
 #@-node:ekr.20040803072955.97:<< update the screen >>
 #@-node:ekr.20040803072955.91:idle_head_key
-#@-node:ekr.20031218072017.1319:(Key handlers) 
+#@-node:ekr.20031218072017.1319:(Key handlers)
 #@-node:ekr.20040720075446:(Handle trailing_body_newlines option)
 #@-node:ekr.20040718050922:(Implement write_strips_blank_lines and trailing_body_newlines options)
 #@+node:EKR.20040424151321:(Status line experiments) TO DO: create status line class

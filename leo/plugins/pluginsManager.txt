@@ -10,7 +10,6 @@
 #@+others
 #@+node:ekr.20040722122459.4:Commands &  directives
 # Allows plugins to add their own directives.
-    # tested with 4.2
     add_directives.py 
     
 # Automatically executes Save commands every so often.
@@ -22,12 +21,10 @@
 #@-node:ekr.20040722122459.4:Commands &  directives
 #@+node:ekr.20040722122459:Debugging & testing
 # Traces all keystrokes.
-
-	# trace_keys.py
+    # trace_keys.py
     
 # A plugin to test Leo's shutdown logic.
-
-	# quit_leo.py
+    # quit_leo.py
 #@nonl
 #@-node:ekr.20040722122459:Debugging & testing
 #@+node:ekr.20040722122459.3:Enhance the body pane
@@ -40,48 +37,32 @@
     
 # Allows coloring of wiki-style markup.
     # NOTE: requires add_directives.py plugin.
-    # tested with 4.2
     color_markup.py
 
 # Allows images within body panes.
-    # tested with 4.2
     image.py
-    
-# Checks spelling while you type.
 
-    # Is this the latest version??
-    # mod_spelling.py
-    
 # newButtons.py
     
 # Allows right clicks in the body pane.
-    # tested with 4.2
     rClick.py
 #@nonl
 #@-node:ekr.20040722122459.3:Enhance the body pane
 #@+node:ekr.20040722122459.2:Enhance the icon or status areas
 # Creates Hoist and De-Hoist buttons.
-    # tested with 4.2
-	hoist.py
+    hoist.py
 
 # Adds "run Script" and "scriptButton" buttons to the icon area.
     # Highly recommended for all Python programmers.
-    # tested with 4.2
     mod_scripting.py
     
 # Automatically add nodes for common tasks.
     # newButtons.py
 
 # Creates "Recent" and "Marks" popups in the icon area.
-    # tested with 4.2
     nodenavigator.py
-
-# Adds nav buttons to icon area:
-    # Superceded by nodenavigator.py
-    # nav_buttons.py
     
 # Creates a search box and a "go" button in the icon area.
-    # tested with 4.2
     searchbox.py
 
 # Creates row-column indicators in the status area.
@@ -90,8 +71,7 @@
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040722121404:Experimental plugins
 # PRE_ALPHA QUALITY: MAY BE DANGEROUS
-
-	# __wx_gui.py
+    # __wx_gui.py
     
 # The original inspirations for mod_scripting.py 
     # dyna_menu.py
@@ -100,26 +80,25 @@
     # editAttributes.py
     
 # New from Bernhard Mulder
-	# mod_http.py
+    # mod_http.py
     
 # schedule commands for later execution."""
     # scheduler.py
     
 # An plugin to create an Emacs-like status line.
-# Not ready yet: probably interferes with auto-completion
+    # Not ready yet: probably interferes with auto-completion
     # status_line.py
     
 # New from Paul Paterson.
     # I'm not sure what the status of this is.
-	# wordcompleter.py
+    # wordcompleter.py
 #@nonl
 #@-node:ekr.20040722121404:Experimental plugins
 #@+node:ekr.20040722134535.1:External editors & Open With
 # Opens a windows shell.
-	# open_shell.py
+    # open_shell.py
 
 # Creates the Open With menu.
-    # tested with 4.2
     open_with.py
     
 # Launches (starts) a file with the name of the headline on double-clicking it.
@@ -145,7 +124,6 @@
     # french_fm.py
 
 # Creates the plugins menu.
-    # tested with 4.2
     plugins_menu.py
     
 # Creates a scripts menu.
@@ -158,27 +136,40 @@
 
 # A plugin to create output files from restructured text.
     # Double-click @rst nodes to process the restructured text.
-	# ** requires docutils: http://docutils.sourceforge.net/
-	# ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
+    # ** requires docutils: http://docutils.sourceforge.net/
+    # ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
     # See also, rst3.py
-    # tested with 4.2
-	rst2.py
+    rst2.py
 #@nonl
 #@-node:ekr.20040722140829:New kinds of nodes
 #@+node:ekr.20040722121404.1:Other plugins
 # Adds #line directives in perl and perlpod programs.
-	# lineNumbers.py
+    # lineNumbers.py
     
 #
-	# niceNosent.py
+    # niceNosent.py
 
 #
-	# scheduler.py
+    # scheduler.py
     
 #
-	# fastgotonode.py
+    # fastgotonode.py
 #@nonl
 #@-node:ekr.20040722121404.1:Other plugins
+#@+node:ekr.20040810065413:Spell checking
+# Both these plugins check spelling.
+    # Both share the same code base.
+    # Both use mod_spelling.ini and mod_spelling.txt.
+
+# Older, slower, can be used with all versions of Python.
+    # It's unclear whether this works with Leo 4.2
+    # mod_spelling.py
+    
+# Newer, faster.  Requires aspell.pyd configured for Python and aspell.
+# Present version of aspell.py works only with Python 2.3.
+    # spellpyx.py
+#@nonl
+#@-node:ekr.20040810065413:Spell checking
 #@-others
 #@nonl
 #@-node:edream.120603093808:@thin pluginsManager.txt

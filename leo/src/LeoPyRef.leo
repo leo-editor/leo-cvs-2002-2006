@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5214" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5215" clone_windows="0"/>
 <globals body_outline_ratio="0.50499445061">
-	<global_window_position top="19" left="206" height="901" width="1002"/>
+	<global_window_position top="13" left="251" height="901" width="1002"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -29,6 +29,7 @@
 marks="ekr.20031218072017.1863,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="EKR.20040430163619" a="TV"><vh>To do: 4.2</vh>
+<v t="ekr.20040810110025"><vh>Complete all plugins</vh></v>
 <v t="EKR.20040422132037"><vh>Linux bugs 3</vh>
 <v t="EKR.20040422132037.5"><vh>Backspace problems on Linux</vh>
 <v t="EKR.20040422132037.6"><vh>Dave Hein: fix</vh></v>
@@ -47,7 +48,7 @@ marks="ekr.20031218072017.1863,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
 <v t="ekr.20040629121554.1"><vh>getSignOnLine</vh></v>
-<v t="ekr.20040629121554.2" a="M"><vh>initVersion</vh></v>
+<v t="ekr.20040629121554.2"><vh>initVersion</vh></v>
 <v t="ekr.20040629121554.3"><vh>signOnWithVersion</vh></v>
 </v>
 <v t="ekr.20031218072017.2415"><vh> Scripts</vh>
@@ -66,7 +67,7 @@ marks="ekr.20031218072017.1863,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 marks="ekr.20031218072017.2114,"><vh>@thin leoAtFile.py </vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
 <v t="ekr.20031218072017.2810"
-marks="ekr.20040629121554.2,ekr.20031218072017.2865,"><vh>@thin leoCommands.py</vh></v>
+marks="ekr.20031218072017.2865,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.3001"><vh>@thin leoConfig.py</vh></v>
 <v t="ekr.20031218072017.3018"
 marks="ekr.20031218072017.1863,"><vh>@thin leoFileCommands.py</vh></v>
@@ -99,8 +100,7 @@ marks="ekr.20031218072017.1863,"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 <v t="ekr.20031218072017.4122"><vh>@thin leoTkinterPrefs.py</vh></v>
-<v t="ekr.20040803072955"
-expanded="ekr.20040803072955.80,"><vh>@thin leoTkinterTree.py</vh></v>
+<v t="ekr.20040803072955"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 </v>
 </vnodes>
@@ -386,11 +386,11 @@ Guenther.</t>
     return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"</t>
 <t tx="ekr.20040629121554.1">def getSignOnLine (self):
     c = self
-    return "Leo 4.2 beta 3, build %s, August 5, 2004" % c.getBuildNumber()
+    return "Leo 4.2 beta 3, build %s, August 10, 2004" % c.getBuildNumber()
 </t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.150 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.151 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -403,5 +403,6 @@ Guenther.</t>
     g.es(signon)
     g.es("Python %d.%d.%d, Tk %s, %s" % (n1,n2,n3,tkLevel,sys.platform))
     g.enl()</t>
+<t tx="ekr.20040810110025"></t>
 </tnodes>
 </leo_file>

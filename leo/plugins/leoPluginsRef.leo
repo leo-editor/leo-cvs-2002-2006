@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2290" clone_windows="0"/>
-<globals body_outline_ratio="0.505971769815">
-	<global_window_position top="10" left="380" height="921" width="869"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2398" clone_windows="0"/>
+<globals body_outline_ratio="0.464712269273">
+	<global_window_position top="12" left="368" height="921" width="869"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -123,7 +123,6 @@
 </v>
 <v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
 <v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
-<v t="edream.110203113231.758"><vh>@thin nav_buttons.py</vh></v>
 <v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
 <v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
 <v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
@@ -151,11 +150,6 @@
 <v t="edream.110403140857.7"><vh>Release notes</vh></v>
 </v>
 <v t="edream.110403140857.8" a="M"><vh>@thin color_markup.py</vh></v>
-</v>
-<v t="edream.110203113231.930"><vh>Spell Checking</vh>
-<v t="edream.110203113231.932" tnodeList="edream.110203113231.932"><vh>@asis mod_spelling.ini</vh></v>
-<v t="edream.110203113231.931"><vh>@asis mod_spelling.txt</vh></v>
-<v t="edream.110203113231.933"><vh>@thin mod_spelling.py</vh></v>
 </v>
 </v>
 <v t="ekr.20040722134535"><vh>Experimental plugins</vh>
@@ -410,8 +404,8 @@
 <v t="EKR.20040609091913.2"><vh>Crash</vh></v>
 </v>
 <v t="edream.110203113231.982"><vh>Plugin manager (demo)</vh>
-<v t="edream.110203113231.984" tnodeList="edream.110203113231.984,edream.110203113231.985,edream.110203113231.986,edream.110203113231.987,edream.110203113231.988,edream.110203113231.989,edream.110203113231.990,edream.110203113231.991,edream.110203113231.992,edream.110203113231.993"><vh>@thin leopm_client.py</vh></v>
-<v t="edream.110203113231.994" tnodeList="edream.110203113231.994,edream.110203113231.995,edream.110203113231.995,edream.110203113231.996,edream.110203113231.997,edream.110203113231.998,edream.110203113231.999,edream.110203113231.1000,edream.110203113231.1001"><vh>@thin leopm_server.py</vh></v>
+<v t="edream.110203113231.984"><vh>@thin leopm_client.py</vh></v>
+<v t="edream.110203113231.994"><vh>@thin leopm_server.py</vh></v>
 <v t="edream.110203113231.983"><vh>Notes by Paul Paterson</vh></v>
 </v>
 <v t="ekr.20040717133342"><vh>Shadow files plugin</vh></v>
@@ -538,14 +532,145 @@
 <v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
 </v>
 </v>
+<v t="edream.110203113231.930"><vh>Spell Checking</vh>
+<v t="ekr.20040809165421"><vh>Read me or suffer</vh></v>
+<v t="edream.110203113231.932"><vh>@thin mod_spelling.ini</vh></v>
+<v t="edream.110203113231.933"><vh>@thin mod_spelling.py</vh></v>
+<v t="ekr.20040809151600"><vh>spellpyx</vh>
+<v t="ekr.20040809165421.1"><vh>Installing this plugin</vh></v>
+<v t="ekr.20040809151600.4"><vh>Notes: e</vh></v>
+<v t="ekr.20040809151600.1" tnodeList="ekr.20040809151600.1,ekr.20040809151600.3,ekr.20040809151600.6,ekr.20040809151600.7,ekr.20040809151600.8,ekr.20040809151600.9,ekr.20040809151600.10,ekr.20040809151600.11,ekr.20040809151600.12,ekr.20040809151600.13,ekr.20040809151600.14,ekr.20040809151600.15,ekr.20040809151600.16,ekr.20040809151600.17,ekr.20040809151600.18,ekr.20040809151600.19,ekr.20040809151600.20,ekr.20040809151600.21,ekr.20040809151600.22,ekr.20040809151600.23,ekr.20040809151600.24,ekr.20040809151600.25,ekr.20040809151600.26,ekr.20040809151600.27,ekr.20040809151600.28,ekr.20040809151600.29,ekr.20040809151600.30,ekr.20040809151600.31,ekr.20040809151600.32,ekr.20040809151600.33,ekr.20040809151600.34,ekr.20040809151600.35,ekr.20040809151600.36,ekr.20040809151600.37,ekr.20040809151600.38,ekr.20040809151600.39,ekr.20040809151600.40,ekr.20040809151600.41,ekr.20040809151600.42,ekr.20040809151600.43,ekr.20040809151600.44,ekr.20040809151600.45,ekr.20040809151600.46,ekr.20040809151600.47,ekr.20040809151600.48,ekr.20040809151600.49"><vh>@file spellpyx.py</vh>
+<v t="ekr.20040809151600.3"><vh>&lt;&lt; spellpx imports &gt;&gt;</vh></v>
+<v t="ekr.20040809151600.6"><vh>Functions</vh>
+<v t="ekr.20040809151600.7"><vh>createSpellMenu</vh></v>
+<v t="ekr.20040809151600.8"><vh>onSelect</vh></v>
+<v t="ekr.20040809151600.9"><vh>onCommand</vh></v>
 </v>
-<v t="EKR.20040517090508" a="MTV"><vh>Enable plugins by changing pluginsManager.txt</vh>
-<v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
+<v t="ekr.20040809151600.10"><vh>class Aspell</vh>
+<v t="ekr.20040809151600.11"><vh>Birth &amp; death</vh>
+<v t="ekr.20040809151600.12"><vh>__init__</vh></v>
+<v t="ekr.20040809151600.13"><vh>getAspellDirectory</vh></v>
+</v>
+<v t="ekr.20040809151600.14"><vh>processWord</vh></v>
+<v t="ekr.20040809151600.15"><vh>updateDictionary</vh></v>
+</v>
+<v t="ekr.20040809151600.16"><vh>class spellDialog (leoTkinterFind)</vh>
+<v t="ekr.20040809151600.17"><vh>Birth &amp; death</vh>
+<v t="ekr.20040809151600.18"><vh>spellDialog.__init__</vh>
+<v t="ekr.20040809151600.19"><vh>&lt;&lt; set self.dictionary &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040809151600.20"><vh>getLocalDictionary</vh></v>
+<v t="ekr.20040809151600.21"><vh>getLocalLanguageCode</vh></v>
+<v t="ekr.20040809151600.22"><vh>readLocalDictionary</vh></v>
+<v t="ekr.20040809151600.23"><vh>destroySelf</vh></v>
+</v>
+<v t="ekr.20040809151600.24"><vh>createFrame</vh>
+<v t="ekr.20040809151600.25"><vh>&lt;&lt; Create the text and suggestion panes &gt;&gt;</vh></v>
+<v t="ekr.20040809151600.26"><vh>&lt;&lt; Create the spelling buttons &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040809151600.27"><vh>Buttons</vh>
+<v t="ekr.20040809151600.28"><vh>onAddButton</vh></v>
+<v t="ekr.20040809151600.29"><vh>onIgnoreButton</vh></v>
+<v t="ekr.20040809151600.30"><vh>onChangeButton &amp; onChangeThenFindButton</vh></v>
+<v t="ekr.20040809151600.31"><vh>onFindButton</vh></v>
+<v t="ekr.20040809151600.32"><vh>onHideButton</vh></v>
+<v t="ekr.20040809151600.33"><vh>onRedoButton &amp; onUndoButton</vh></v>
+</v>
+<v t="ekr.20040809151600.34"><vh>Commands</vh>
+<v t="ekr.20040809151600.35"><vh>add</vh></v>
+<v t="ekr.20040809151600.36"><vh>change</vh></v>
+<v t="ekr.20040809151600.37"><vh>checkSpelling</vh></v>
+<v t="ekr.20040809151600.38"><vh>find</vh></v>
+<v t="ekr.20040809151600.39"><vh>ignore</vh></v>
+</v>
+<v t="ekr.20040809151600.40"><vh>Helpers</vh>
+<v t="ekr.20040809151600.41"><vh>fillbox</vh></v>
+<v t="ekr.20040809151600.42"><vh>findNextMisspelledWord</vh>
+<v t="ekr.20040809151600.43"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040809151600.44"><vh>findNextWord</vh></v>
+<v t="ekr.20040809151600.45"><vh>getSuggestion</vh></v>
+<v t="ekr.20040809151600.46"><vh>onMap</vh></v>
+<v t="ekr.20040809151600.47"><vh>onSelectListBox</vh></v>
+<v t="ekr.20040809151600.48"><vh>update</vh></v>
+<v t="ekr.20040809151600.49"><vh>updateButtons</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040809151600.52"><vh>aspell-1.1</vh>
+<v t="ekr.20040809160744"><vh>Notes: e</vh></v>
+<v t="ekr.20040809161108"><vh>Notes: Gary Bishop</vh></v>
+<v t="ekr.20040809151600.53"><vh>@ file aspell.pyx</vh>
+<v t="ekr.20040809160744.1"><vh>spell_checker.__init__</vh></v>
+<v t="ekr.20040809160744.2"><vh>check</vh></v>
+<v t="ekr.20040809160744.3"><vh>suggest</vh></v>
+<v t="ekr.20040809160744.4"><vh>store_replacement</vh></v>
+<v t="ekr.20040809160744.5"><vh>add_to_session</vh></v>
+<v t="ekr.20040809160744.6"><vh>add_to_personal</vh></v>
+</v>
+<v t="ekr.20040809151600.54"><vh>@ file setup.py</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="EKR.20040517090508" a="EM"><vh>Enable plugins by changing pluginsManager.txt</vh>
+<v t="edream.120603093808" a="ETV"><vh>@thin pluginsManager.txt</vh></v>
 </v>
 <v t="ekr.20040725171859"><vh>To do...</vh>
+<v t="ekr.20040809110900"><vh>Tested</vh></v>
+<v t="ekr.20040809110900.1"><vh>To be tested</vh></v>
 <v t="ekr.20040722115324"><vh>To do: a configurable pretty printer plugin</vh></v>
-<v t="ekr.20040722122834"><vh>To do: reinstall spelling plugin</vh></v>
-<v t="ekr.20040722134333.1"><vh>To do: install latest xemacs</vh></v>
+<v t="ekr.20040722134333.1" a="M"><vh>To do: install latest xemacs</vh></v>
+<v t="ekr.20040809071339"><vh>Fix bugs</vh>
+<v t="ekr.20040809071339.1"><vh>nodenavagator problems</vh>
+<v t="ekr.20040809071339.2"><vh>Report</vh></v>
+<v t="ekr.20040809071339.3"><vh>(Limit size of c.visitedList and marks list in nodenavagator)</vh>
+<v t="ekr.20040108091136"><vh>updateRecent</vh></v>
+</v>
+</v>
+<v t="ekr.20040809105722"><vh>searchbox bug</vh></v>
+<v t="ekr.20040809105722.1"><vh>rst bug</vh></v>
+<v t="ekr.20040809071339.53"><vh>RsT plugin should say where files get written</vh></v>
+<v t="ekr.20040809071339.7"><vh>(Fix problems with nmarks plugin)</vh></v>
+<v t="ekr.20040809071339.9"><vh>Install calltips plugin</vh>
+<v t="ekr.20040809071339.10"><vh>Request</vh></v>
+<v t="ekr.20040809071339.11"><vh>CallTips.py</vh>
+<v t="ekr.20040809071339.12"><vh>class CallTips</vh>
+<v t="ekr.20040809071339.13"><vh>__init__</vh></v>
+<v t="ekr.20040809071339.14"><vh>close</vh></v>
+<v t="ekr.20040809071339.15"><vh>_make_tk_calltip_window</vh></v>
+<v t="ekr.20040809071339.16"><vh>_remove_calltip_window</vh></v>
+<v t="ekr.20040809071339.17"><vh>paren_open_event</vh></v>
+<v t="ekr.20040809071339.18"><vh>paren_close_event</vh></v>
+<v t="ekr.20040809071339.19"><vh>check_calltip_cancel_event</vh></v>
+<v t="ekr.20040809071339.20"><vh>calltip_cancel_event</vh></v>
+<v t="ekr.20040809071339.21"><vh>get_name_at_cursor</vh></v>
+<v t="ekr.20040809071339.22"><vh>fetch_tip</vh></v>
+<v t="ekr.20040809071339.23"><vh>get_entity</vh></v>
+</v>
+<v t="ekr.20040809071339.24"><vh>_find_constructor</vh></v>
+<v t="ekr.20040809071339.25"><vh>get_arg_text</vh></v>
+<v t="ekr.20040809071339.26"><vh>t1</vh></v>
+</v>
+<v t="ekr.20040809071339.27"><vh>CallTipWindow.py</vh>
+<v t="ekr.20040809071339.28"><vh>class CallTip</vh>
+<v t="ekr.20040809071339.29"><vh>__init__</vh></v>
+<v t="ekr.20040809071339.30"><vh>showtip</vh>
+<v t="ekr.20040809071339.31"><vh>&lt;&lt; remove the border &gt;&gt;</vh></v>
+<v t="ekr.20040809071339.32"><vh>&lt;&lt; Mac-specific code &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040809071339.33"><vh>hidetip</vh></v>
+</v>
+<v t="ekr.20040809071339.34"><vh>class container (test code)</vh>
+<v t="ekr.20040809071339.35"><vh>__init__</vh></v>
+<v t="ekr.20040809071339.36"><vh>calltip_show</vh></v>
+<v t="ekr.20040809071339.37"><vh>calltip_hide</vh></v>
+</v>
+<v t="ekr.20040809071339.38"><vh>main</vh></v>
+</v>
+</v>
+<v t="ekr.20040809071339.4"><vh>Don't specify font in buttons on the Mac</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -1050,11 +1175,11 @@ a monitored list or mapping (but only one level deep).
 @others
 </t>
 <t tx="bwmulder.20040601212737.1">class passthrough(object):
-	"""
-	Instances of this class are used to disable monitoring.
-	The values are just passed through.
-	"""
-	@others
+    """
+    Instances of this class are used to disable monitoring.
+    The values are just passed through.
+    """
+    @others
 
 </t>
 <t tx="bwmulder.20040601212737.2">def __init__(self, private_attributename):
@@ -1068,29 +1193,29 @@ a monitored list or mapping (but only one level deep).
 </t>
 <t tx="bwmulder.20040601212737.5">   
 class scalar_monitor(object):
-	"""
+    """
    Monitor a scalar attribute.
    A scalar attribute is an attribute whose values do not have internal structure.
    Used for Integers and references.
-	"""
-	@others
+    """
+    @others
 </t>
 <t tx="bwmulder.20040601212737.6">def __init__(self, external_attributename, monitor_object):
-	self.external_attributename = external_attributename
-	self.private_attributename = '__' + external_attributename
-	self.monitor_object = monitor_object
+    self.external_attributename = external_attributename
+    self.private_attributename = '__' + external_attributename
+    self.monitor_object = monitor_object
 </t>
 <t tx="bwmulder.20040601212737.7">def __set__( self, instance, value):
-	private_attributename = self.private_attributename
-	external_attributename = self.external_attributename
-	try:
-		oldvalue = getattr(instance, private_attributename)
-	except AttributeError:
-		self.monitor_object.scalar_set(instance, private_attributename, external_attributename)
-	else:
-		if oldvalue != value:
-			self.monitor_object.scalar_modify(instance, private_attributename, external_attributename, oldvalue)
-	setattr(instance, private_attributename, value)
+    private_attributename = self.private_attributename
+    external_attributename = self.external_attributename
+    try:
+        oldvalue = getattr(instance, private_attributename)
+    except AttributeError:
+        self.monitor_object.scalar_set(instance, private_attributename, external_attributename)
+    else:
+        if oldvalue != value:
+            self.monitor_object.scalar_modify(instance, private_attributename, external_attributename, oldvalue)
+    setattr(instance, private_attributename, value)
 
 </t>
 <t tx="bwmulder.20040601212737.8">def __get__(self, instance, owner):
@@ -1098,34 +1223,34 @@ class scalar_monitor(object):
 
 </t>
 <t tx="bwmulder.20040601212737.9">class list_monitor(list):
-	"""
-	Monitor changes to a list.
-	
-	Calls a "monitor_object" whenever changes are made to a list.
-	
-	You can use this class whenever you want to track changes to a list.
-	"""
-	@others
+    """
+    Monitor changes to a list.
+    
+    Calls a "monitor_object" whenever changes are made to a list.
+    
+    You can use this class whenever you want to track changes to a list.
+    """
+    @others
 </t>
 <t tx="bwmulder.20040601212737.10">def set_monitor_object(self, monitor_object):
-	"""
-	All changes to this list will trigger calls to monitor_object methods
-	"""
-	self.monitor_object = monitor_object
+    """
+    All changes to this list will trigger calls to monitor_object methods
+    """
+    self.monitor_object = monitor_object
 
 </t>
 <t tx="bwmulder.20040601212737.11">def __setitem__( self, key, value):
-	"""
-	Intercept the l[key]=value operations.
-	Also covers slice assignment.
-	"""
-	try:
-		oldvalue = self.__getitem__(key)
-	except KeyError:
-		self.monitor_object.list_create(self, key)
-	else:
-		self.monitor_object.list_set(self, key, oldvalue)
-	list.__setitem__(self, key, value)
+    """
+    Intercept the l[key]=value operations.
+    Also covers slice assignment.
+    """
+    try:
+        oldvalue = self.__getitem__(key)
+    except KeyError:
+        self.monitor_object.list_create(self, key)
+    else:
+        self.monitor_object.list_set(self, key, oldvalue)
+    list.__setitem__(self, key, value)
 </t>
 <t tx="bwmulder.20040601212737.12">def __delitem__( self, key):
    oldvalue = list.__getitem__(self, key)
@@ -1139,35 +1264,35 @@ class scalar_monitor(object):
 
 </t>
 <t tx="bwmulder.20040601212737.14">class list_monitor_in_instance(object):
-	"""
-	Monitor instance attributes which contain a list as a value.
+    """
+    Monitor instance attributes which contain a list as a value.
 
-	Assignments to this attributes, which must be lists, are replaced by instances of 'list_monitor'.
+    Assignments to this attributes, which must be lists, are replaced by instances of 'list_monitor'.
    """
-	@others
+    @others
 </t>
 <t tx="bwmulder.20040601212737.15">def __init__(self, external_attributename, monitor_object):
-	self.external_attributename = external_attributename
-	self.internal_attributename = '__' + external_attributename
-	self.monitor_object = monitor_object
+    self.external_attributename = external_attributename
+    self.internal_attributename = '__' + external_attributename
+    self.monitor_object = monitor_object
 </t>
 <t tx="bwmulder.20040601212737.16">def __set__(self, instance, value):
-	"""Intercept assignments to the external attribute"""
-	assert isinstance(value, type([]))
-	if isinstance(value, list_monitor):
-		newvalue = value
-		# if the value is already a list monitor, assume that this value
-		# is already monitored. Do not create a new value.
-	else:
-		newvalue = list_monitor(value, self.monitor_object)
-	internal_attributename = self.internal_attributename
-	try:
-		oldvalue = getattr(instance, internal_attributename)
-	except AttributeError:
-		self.monitor_object.list_assignment_new(instance, internal_attributename)
-	else:
-		self.monitor_object.list_assignment_replace(instance, internal_attributename, oldvalue)
-	setattr(instance, self.internal_attributename, newvalue)
+    """Intercept assignments to the external attribute"""
+    assert isinstance(value, type([]))
+    if isinstance(value, list_monitor):
+        newvalue = value
+        # if the value is already a list monitor, assume that this value
+        # is already monitored. Do not create a new value.
+    else:
+        newvalue = list_monitor(value, self.monitor_object)
+    internal_attributename = self.internal_attributename
+    try:
+        oldvalue = getattr(instance, internal_attributename)
+    except AttributeError:
+        self.monitor_object.list_assignment_new(instance, internal_attributename)
+    else:
+        self.monitor_object.list_assignment_replace(instance, internal_attributename, oldvalue)
+    setattr(instance, self.internal_attributename, newvalue)
 
 </t>
 <t tx="bwmulder.20040601212737.17">def __get__(self, instance, owner):
@@ -1178,27 +1303,27 @@ class scalar_monitor(object):
 
 </t>
 <t tx="bwmulder.20040601212737.18">class monitor:
-	"""
+    """
    Monitor changes to (new style) classes.
 
    To use:
       1. 
-			a) Call monitor_scalar(klass, external_attributename, internal_attributename)
-         			for each scalar attribute you want to monitor.
+            a) Call monitor_scalar(klass, external_attributename, internal_attributename)
+                    for each scalar attribute you want to monitor.
 
-				A scalar attribute is an attribute without internal structure (int and reference).
+                A scalar attribute is an attribute without internal structure (int and reference).
 
- 				The normal Python comparison operation (=) is used to check if a new value is stored
-				in an instance attribute.
-				
-			b) Call monitor_list(klass, external_attributename, internal_attributename) for each
-			   list attribute you want to monitor.
-				
-		   c) Call monitor_dict(klass, external_attributename, internal_attributename) for each
-			   dict attribute you want to monitor.
+                The normal Python comparison operation (=) is used to check if a new value is stored
+                in an instance attribute.
+                
+            b) Call monitor_list(klass, external_attributename, internal_attributename) for each
+               list attribute you want to monitor.
+                
+           c) Call monitor_dict(klass, external_attributename, internal_attributename) for each
+               dict attribute you want to monitor.
          
       2. 
-		    Call enable / disable to enable / disable monitoring.
+            Call enable / disable to enable / disable monitoring.
 
    This is an abstract class.
    
@@ -1210,7 +1335,7 @@ class scalar_monitor(object):
       Assumes that instance attributes are used consistently with certain types.
       
    """
-	@others
+    @others
 </t>
 <t tx="bwmulder.20040601212737.19">def __init__(self):
    self.monitored_scalar_attributes = []
@@ -1242,26 +1367,26 @@ class scalar_monitor(object):
       (klass, external_attributename))
 </t>
 <t tx="bwmulder.20040601212737.22">def enable(self):
-	for l, klass in ((self.monitored_scalar_attributes, scalar_monitor),
-			 (self.monitored_list_attributes, list_monitor_in_instance),
-			 (self.monitored_dict_attributes, dict_monitor_in_instance)):
-		self.enable_category(l, klass)
-		
-	self.enable_put_in_removed_functions()
-	
+    for l, klass in ((self.monitored_scalar_attributes, scalar_monitor),
+             (self.monitored_list_attributes, list_monitor_in_instance),
+             (self.monitored_dict_attributes, dict_monitor_in_instance)):
+        self.enable_category(l, klass)
+        
+    self.enable_put_in_removed_functions()
+    
 
 </t>
 <t tx="bwmulder.20040601212737.23">def disable(self):
-	"""
-	Disable monitoring (temporarily).
-	"""
-	for l, klass in ((self.monitored_scalar_attributes, scalar_monitor),
-					 (self.monitored_list_attributes, list_monitor_in_instance),
-					 (self.monitored_dict_attributes, dict_monitor_in_instance)):
-		self.disable_category(l, klass)
-	
-	self.remove_overrides_in_list_and_dict_monitor()
-	
+    """
+    Disable monitoring (temporarily).
+    """
+    for l, klass in ((self.monitored_scalar_attributes, scalar_monitor),
+                     (self.monitored_list_attributes, list_monitor_in_instance),
+                     (self.monitored_dict_attributes, dict_monitor_in_instance)):
+        self.disable_category(l, klass)
+    
+    self.remove_overrides_in_list_and_dict_monitor()
+    
 </t>
 <t tx="bwmulder.20040601212737.24">def scalar_set(self, instance, private_attributename, external_attributename):
    raise notImplementedError
@@ -1288,118 +1413,118 @@ Delayed activation of the monitor mechanism is probably useful.
 
 Not clear of switching off and on is useful, though.</t>
 <t tx="bwmulder.20040601222230">class basic_undomechanism(monitor):
-	"""
-	This class provides the basic operations for undoable operations.
-	
-	Records a list of changes which it will undone or redone one by one.
-	
-	The granularity of the undo / redo operations is determined by calls to
-	the 'mark' procedure. Only immediately after the 'mark' call can undo be called.
-	Redo can only be called after calling undo.
-	
-	'rollback' is a special case of undo: it is not redoable. The envisioned usage of
-	this facility is in error recovery: if a command does not go through, you can call
-	this command to undo all your changes (and leave the application in a consistent state).
-	
-	Use the monitor_scalar, monitor_list_attribute_in_class and monitor_dict_attribute_in_class
-	methods to make assignment to instance variables undoable.
-	
-	Call 'enable' to activate the undo mechanism, 'disable' to temporarily
-	stop the undo mechanism from collecting information about changes.
-	
-	The individual changes are bundled into "_commands'. The boundaries of
-	these _commands are marked by a call to the procedure "mark".
-	
-	The procedure 'reset' can be called externally to erase all undo information.
-	
-	Individual lists and dictionaries can also be monitored for change with the
-	list_monitor and dict_monitor classes.
-	
-	Possible optimizations later: special handling for string attributes.
-	"""
-	@others</t>
+    """
+    This class provides the basic operations for undoable operations.
+    
+    Records a list of changes which it will undone or redone one by one.
+    
+    The granularity of the undo / redo operations is determined by calls to
+    the 'mark' procedure. Only immediately after the 'mark' call can undo be called.
+    Redo can only be called after calling undo.
+    
+    'rollback' is a special case of undo: it is not redoable. The envisioned usage of
+    this facility is in error recovery: if a command does not go through, you can call
+    this command to undo all your changes (and leave the application in a consistent state).
+    
+    Use the monitor_scalar, monitor_list_attribute_in_class and monitor_dict_attribute_in_class
+    methods to make assignment to instance variables undoable.
+    
+    Call 'enable' to activate the undo mechanism, 'disable' to temporarily
+    stop the undo mechanism from collecting information about changes.
+    
+    The individual changes are bundled into "_commands'. The boundaries of
+    these _commands are marked by a call to the procedure "mark".
+    
+    The procedure 'reset' can be called externally to erase all undo information.
+    
+    Individual lists and dictionaries can also be monitored for change with the
+    list_monitor and dict_monitor classes.
+    
+    Possible optimizations later: special handling for string attributes.
+    """
+    @others</t>
 <t tx="bwmulder.20040601222230.1">def __init__(self):
-	monitor.__init__(self)
-	self.reset()
-	</t>
+    monitor.__init__(self)
+    self.reset()
+    </t>
 <t tx="bwmulder.20040601222230.2"></t>
 <t tx="bwmulder.20040601222230.3">def scalar_set(self, instance, private_attributename, external_attributename):
    self._steps.append((self.scalar_set_undo, (instance, private_attributename)))
-	
+    
 
 </t>
 <t tx="bwmulder.20040601222230.4">def scalar_set_undo(self, instance, private_attributename):
-	"""Undo the changes done by the assignment of an instance"""
-	newvalue = getattr(instance, private_attributename)
-	delattr(instance, private_attributename)
-	return self.scalar_set_redo, (instance, private_attributename, newvalue)
+    """Undo the changes done by the assignment of an instance"""
+    newvalue = getattr(instance, private_attributename)
+    delattr(instance, private_attributename)
+    return self.scalar_set_redo, (instance, private_attributename, newvalue)
 </t>
 <t tx="bwmulder.20040601222230.5">def scalar_set_redo(self, instance, private_attributename, newvalue):
-	setattr(instance, private_attributename, newvalue)
-	return self.scalar_set_undo, (instance, private_attributename)
+    setattr(instance, private_attributename, newvalue)
+    return self.scalar_set_undo, (instance, private_attributename)
 </t>
 <t tx="bwmulder.20040601222230.6">def scalar_modify(self, instance, private_attributename, external_attributename, oldvalue):
   self._steps.append((self.scalar_modify_undo, (instance, private_attributename, oldvalue)))
 </t>
 <t tx="bwmulder.20040601222431">def scalar_modify_undo(self, instance, private_attributename, oldvalue):
-	new_value = getattr(instance, private_attributename)
-	setattr(instance, private_attributename, oldvalue)
-	return self.scalar_modify_undo, (instance, private_attributename, new_value)</t>
+    new_value = getattr(instance, private_attributename)
+    setattr(instance, private_attributename, oldvalue)
+    return self.scalar_modify_undo, (instance, private_attributename, new_value)</t>
 <t tx="bwmulder.20040601222649">def run_commands(self, steps):
-	"""
-	Run the undo / redo _steps.
-	Returns the list of steps to redo / undo the steps just made.
-	"""
-	steps.reverse()
-	return [func(*args) for func, args in steps]
+    """
+    Run the undo / redo _steps.
+    Returns the list of steps to redo / undo the steps just made.
+    """
+    steps.reverse()
+    return [func(*args) for func, args in steps]
 </t>
 <t tx="bwmulder.20040601224447"></t>
 <t tx="bwmulder.20040601224447.2">def mark(self):
-	"""
-	The current commmand ends.
-	"""
-	if self._steps:
-		self._commands[self._index+1:] = [self._steps, None]
-		self._index += 1
-		self._steps = []</t>
+    """
+    The current commmand ends.
+    """
+    if self._steps:
+        self._commands[self._index+1:] = [self._steps, None]
+        self._index += 1
+        self._steps = []</t>
 <t tx="bwmulder.20040601224447.3">def undo(self):
-	assert self.canUndo()
-	self._commands[self._index] = self.run_commands(self._commands[self._index])
-	self._index -= 1
-	
+    assert self.canUndo()
+    self._commands[self._index] = self.run_commands(self._commands[self._index])
+    self._index -= 1
+    
 </t>
 <t tx="bwmulder.20040601224447.4">def redo(self):
-	assert self.canRedo()
-	self._commands[self._index+1] = self.run_commands(self._commands[self._index+1])
-	self._index += 1</t>
+    assert self.canRedo()
+    self._commands[self._index+1] = self.run_commands(self._commands[self._index+1])
+    self._index += 1</t>
 <t tx="bwmulder.20040601224447.5">def canUndo(self):
-	return self._commands[self._index] is not None and len(self._steps) == 0</t>
+    return self._commands[self._index] is not None and len(self._steps) == 0</t>
 <t tx="bwmulder.20040601224447.6">def canRedo(self):
-	return self._commands[self._index+1] is not None and len(self._steps) == 0</t>
+    return self._commands[self._index+1] is not None and len(self._steps) == 0</t>
 <t tx="bwmulder.20040602075341"></t>
 <t tx="bwmulder.20040602075341.1">def list_create(self, array, key):
-	self._steps.append((self.list_create_undo, (array, key)))
+    self._steps.append((self.list_create_undo, (array, key)))
 
 </t>
 <t tx="bwmulder.20040602084701.1"></t>
 <t tx="bwmulder.20040602084701.2">def list_create_undo(self, array, key):
-	value = list.__getitem__(array, key)
-	list.__delitem__(array, key)
-	return self.list_create_redo, (array, key, value)
+    value = list.__getitem__(array, key)
+    list.__delitem__(array, key)
+    return self.list_create_redo, (array, key, value)
 
 </t>
 <t tx="bwmulder.20040602084701.3">def list_create_redo(self, array, key, value):
-	list.__setitem__(array, key, value)
-	return self.list_create_undo, (array, key)</t>
+    list.__setitem__(array, key, value)
+    return self.list_create_undo, (array, key)</t>
 <t tx="bwmulder.20040602084701.4"></t>
 <t tx="bwmulder.20040602085955">def list_set(self, array, key, oldvalue):
-	self._steps.append((self.list_set_undo, (array, key, oldvalue)))
+    self._steps.append((self.list_set_undo, (array, key, oldvalue)))
 
 </t>
 <t tx="bwmulder.20040602085955.1">def list_set_undo(self, array, key, value):
-	oldvalue = list.__getitem__(array, key)
-	list.__setitem__(array, key, value)
-	return self.list_set_undo, (array, key, oldvalue)
+    oldvalue = list.__getitem__(array, key)
+    list.__setitem__(array, key, value)
+    return self.list_set_undo, (array, key, oldvalue)
 </t>
 <t tx="bwmulder.20040602085955.2"></t>
 <t tx="bwmulder.20040602085955.3">def list_del(self, array, key, oldvalue):
@@ -1407,64 +1532,64 @@ Not clear of switching off and on is useful, though.</t>
    
 </t>
 <t tx="bwmulder.20040602085955.4">def list_del_undo(self, array, key, oldvalue):
-	if type(key) == type(1):
-		list.__setitem__(array, slice(key, key), [oldvalue])
-	else:
-		list.__setitem__(array, key, oldvalue)
-	return self.list_del_redo, (array, key, oldvalue)
+    if type(key) == type(1):
+        list.__setitem__(array, slice(key, key), [oldvalue])
+    else:
+        list.__setitem__(array, key, oldvalue)
+    return self.list_del_redo, (array, key, oldvalue)
 </t>
 <t tx="bwmulder.20040602085955.5">def list_del_redo(self, array, key, oldvalue):
-	oldvalue = list.__getitem__(array, key)
-	list.__delitem__(array, key)
-	return self.list_del_undo, (array, key, oldvalue)
+    oldvalue = list.__getitem__(array, key)
+    list.__delitem__(array, key)
+    return self.list_del_undo, (array, key, oldvalue)
 </t>
 <t tx="bwmulder.20040602151709"></t>
 <t tx="bwmulder.20040602152051">def list_append(self, array):
-	self._steps.append((self.list_append_undo, (array,)))
-	
+    self._steps.append((self.list_append_undo, (array,)))
+    
 
 
 </t>
 <t tx="bwmulder.20040602152051.1">def list_append_undo(self, array):
-	oldvalue = list.pop(array)
-	return self.list_append_redo, (array, oldvalue)
+    oldvalue = list.pop(array)
+    return self.list_append_redo, (array, oldvalue)
 </t>
 <t tx="bwmulder.20040602152051.2">def list_append_redo(self, array, oldvalue):
-	list.append(array, oldvalue)
-	return self.list_append_undo, (array,)</t>
+    list.append(array, oldvalue)
+    return self.list_append_undo, (array,)</t>
 <t tx="bwmulder.20040602152548">def pop(self):
-	oldvalue = list.pop(self)
-	self.monitor_object.list_pop(self, oldvalue)
+    oldvalue = list.pop(self)
+    self.monitor_object.list_pop(self, oldvalue)
 </t>
 <t tx="bwmulder.20040602152548.1"></t>
 <t tx="bwmulder.20040602152548.2">def list_pop(self, array, oldvalue):
-	self._steps.append((self.list_append_redo, (array, oldvalue)))
+    self._steps.append((self.list_append_redo, (array, oldvalue)))
 </t>
 <t tx="bwmulder.20040602153618">class dict_monitor(dict):
-	"""
-	Overwrite dictionaries so that we can monitor them.
-	"""
-	@others
+    """
+    Overwrite dictionaries so that we can monitor them.
+    """
+    @others
 </t>
 <t tx="bwmulder.20040602153642">def set_monitor_object(self, monitor_object):
-	"""
-	All changes to this dictionary will trigger calls to monitor_object methods
-	"""
-	self.monitor_object = monitor_object
+    """
+    All changes to this dictionary will trigger calls to monitor_object methods
+    """
+    self.monitor_object = monitor_object
 
 </t>
 <t tx="bwmulder.20040602153723">def __setitem__( self, key, value):
-	"""
-	Intercept the l[key]=value operations.
-	Also covers slice assignment.
-	"""
-	try:
-		oldvalue = self.__getitem__(key)
-	except KeyError:
-		self.monitor_object.dict_create(self, key, value)
-	else:
-		self.monitor_object.dict_set(self, key, oldvalue)
-	dict.__setitem__(self, key, value)
+    """
+    Intercept the l[key]=value operations.
+    Also covers slice assignment.
+    """
+    try:
+        oldvalue = self.__getitem__(key)
+    except KeyError:
+        self.monitor_object.dict_create(self, key, value)
+    else:
+        self.monitor_object.dict_set(self, key, oldvalue)
+    dict.__setitem__(self, key, value)
 </t>
 <t tx="bwmulder.20040602153835">def __delitem__( self, key):
    oldvalue = dict.__getitem__(self, key)
@@ -1472,35 +1597,35 @@ Not clear of switching off and on is useful, though.</t>
    dict.__delitem__(self, key)
 </t>
 <t tx="bwmulder.20040602154259">class dict_monitor_in_instance(object):
-	"""
-	Monitor instance attributes which contain a list as a value.
+    """
+    Monitor instance attributes which contain a list as a value.
 
-	Assignments to this attributes, which must be lists, are replaced by instances of 'list_monitor'.
+    Assignments to this attributes, which must be lists, are replaced by instances of 'list_monitor'.
    """
-	@others
+    @others
 </t>
 <t tx="bwmulder.20040602154259.1">def __init__(self, external_attributename, monitor_object):
-	self.external_attributename = external_attributename
-	self.internal_attributename = '__' + external_attributename
-	self.monitor_object = monitor_object
+    self.external_attributename = external_attributename
+    self.internal_attributename = '__' + external_attributename
+    self.monitor_object = monitor_object
 </t>
 <t tx="bwmulder.20040602154259.2">def __set__(self, instance, value):
-	"""Intercept assignments to the external attribute"""
-	assert isinstance(value, type({}))
-	if isinstance(value, dict_monitor):
-		newvalue = value
-		# if the value is already a dict_monitor,
-		# assume that the value is already monitored.
-	else:
-		newvalue = dict_monitor(value, self.monitor_object)
-	internal_attributename = self.internal_attributename
-	try:
-		oldvalue = getattr(instance, internal_attributename)
-	except AttributeError:
-		self.monitor_object.list_assignment_new(instance, internal_attributename)
-	else:
-		self.monitor_object.list_assignment_replace(instance, internal_attributename, oldvalue)
-	setattr(instance, self.internal_attributename, newvalue)
+    """Intercept assignments to the external attribute"""
+    assert isinstance(value, type({}))
+    if isinstance(value, dict_monitor):
+        newvalue = value
+        # if the value is already a dict_monitor,
+        # assume that the value is already monitored.
+    else:
+        newvalue = dict_monitor(value, self.monitor_object)
+    internal_attributename = self.internal_attributename
+    try:
+        oldvalue = getattr(instance, internal_attributename)
+    except AttributeError:
+        self.monitor_object.list_assignment_new(instance, internal_attributename)
+    else:
+        self.monitor_object.list_assignment_replace(instance, internal_attributename, oldvalue)
+    setattr(instance, self.internal_attributename, newvalue)
 </t>
 <t tx="bwmulder.20040602154259.3">def __get__(self, instance, owner):
    try:
@@ -1513,18 +1638,18 @@ Not clear of switching off and on is useful, though.</t>
    for klass, external_attributename in l:
       setattr(klass, external_attributename, monitor_class(
          external_attributename, self.monitor_object))
-	</t>
+    </t>
 <t tx="bwmulder.20040602161525">def disable_category(self, l, monitor_class):
    for klass, external_attributename in l:
       setattr(klass, external_attributename, passthrough (internal_attributename))
-	
+    
 </t>
 <t tx="bwmulder.20040602164627">def enable_put_in_removed_functions(self):
-	"""
-	Reinstate the functions which were removed from list_monitor and dict_monitor.
-	"""
-	for klass, attribute, function in self.removed_functions:
-		setattr(klass, attribute, function)
+    """
+    Reinstate the functions which were removed from list_monitor and dict_monitor.
+    """
+    for klass, attribute, function in self.removed_functions:
+        setattr(klass, attribute, function)
 </t>
 <t tx="bwmulder.20040602165344"></t>
 <t tx="bwmulder.20040602165402">def monitor_dict_attribute_in_class(self, klass, external_attributename):
@@ -1543,28 +1668,28 @@ Not clear of switching off and on is useful, though.</t>
 <t tx="bwmulder.20040602171032"></t>
 <t tx="bwmulder.20040602171032.1"></t>
 <t tx="bwmulder.20040602171032.2">def dict_create(self, dictionary, key, value):
-	self._steps.append((self.dict_create_undo, (dictionary, key)))
+    self._steps.append((self.dict_create_undo, (dictionary, key)))
 
 </t>
 <t tx="bwmulder.20040602171032.3">def dict_create_undo(self, dictionary, key):
-	value = dict.__getitem__(dictionary, key)
-	dict.__delitem__(dictionary, key)
-	return self.dict_create_redo, (dictionary, key, value)
+    value = dict.__getitem__(dictionary, key)
+    dict.__delitem__(dictionary, key)
+    return self.dict_create_redo, (dictionary, key, value)
 
 </t>
 <t tx="bwmulder.20040602171032.4">def dict_create_redo(self, dictionary, key, value):
-	dict.__setitem__(dictionary, key, value)
-	return self.dict_create_undo, (dictionary, key,)
+    dict.__setitem__(dictionary, key, value)
+    return self.dict_create_undo, (dictionary, key,)
 </t>
 <t tx="bwmulder.20040602171032.5"></t>
 <t tx="bwmulder.20040602171032.6">def dict_set(self, dictionary, key, oldvalue):
-	self._steps.append((self.dict_set_undo, (dictionary, key, oldvalue)))
+    self._steps.append((self.dict_set_undo, (dictionary, key, oldvalue)))
 
 </t>
 <t tx="bwmulder.20040602171032.7">def dict_set_undo(self, dictionary, key, value):
-	oldvalue = dict.__getitem__(dictionary, key)
-	dict.__setitem__(dictionary, key, value)
-	return self.dict_set_undo, (dictionary, key, oldvalue)
+    oldvalue = dict.__getitem__(dictionary, key)
+    dict.__setitem__(dictionary, key, value)
+    return self.dict_set_undo, (dictionary, key, oldvalue)
 </t>
 <t tx="bwmulder.20040602171032.8"></t>
 <t tx="bwmulder.20040602171032.9">def dict_del(self, dictionary, key, oldvalue):
@@ -1572,32 +1697,32 @@ Not clear of switching off and on is useful, though.</t>
    
 </t>
 <t tx="bwmulder.20040602171032.10">def dict_del_undo(self, dictionary, key, oldvalue ):
-	dict.__setitem__(dictionary, key, oldvalue)
-	return self.dict_del_redo, (dictionary, key, oldvalue)
+    dict.__setitem__(dictionary, key, oldvalue)
+    return self.dict_del_redo, (dictionary, key, oldvalue)
 </t>
 <t tx="bwmulder.20040602171032.11">def dict_del_redo(self, dictionary, key, oldvalue ):
-	oldvalue = dict.__getitem__(dictionary, key)
-	dict.__delitem__(dictionary, key)
-	return self.dict_del_undo, (dictionary, key, oldvalue)
+    oldvalue = dict.__getitem__(dictionary, key)
+    dict.__delitem__(dictionary, key)
+    return self.dict_del_undo, (dictionary, key, oldvalue)
 </t>
 <t tx="bwmulder.20040602171606">def reset(self):
-	self._steps = []
-	self._commands = [None, None]
-	self._index = 0
-	
+    self._steps = []
+    self._commands = [None, None]
+    self._index = 0
+    
 
 
 </t>
 <t tx="bwmulder.20040602175523">def list_assignment_replace(self, instance, attributename, oldvalue):
-	self._steps.append((self.list_assignment_replace_undo, (instance, attributename, oldvalue)))</t>
+    self._steps.append((self.list_assignment_replace_undo, (instance, attributename, oldvalue)))</t>
 <t tx="bwmulder.20040602175523.1">def list_assignment_replace_undo(self, instance, attributename, oldvalue):
-	newvalue = getattr(instance, attributename)
-	setattr(instance, attributename, oldvalue)
-	return self.list_assignment_replace_redo, (instance, attributename, newvalue)</t>
+    newvalue = getattr(instance, attributename)
+    setattr(instance, attributename, oldvalue)
+    return self.list_assignment_replace_redo, (instance, attributename, newvalue)</t>
 <t tx="bwmulder.20040602175740">def list_assignment_replace_redo(self, instance, attributename, newvalue):
-	oldvalue = getattr(instance, attributename)
-	setattr(instance, attributename, newvalue)
-	return self.list_assignment_replace_undo, (instance, attributename, oldvalue)
+    oldvalue = getattr(instance, attributename)
+    setattr(instance, attributename, newvalue)
+    return self.list_assignment_replace_undo, (instance, attributename, oldvalue)
 </t>
 <t tx="bwmulder.20040602175801"># Dictionary monitors are are really handled like
 # list monitors.
@@ -1610,14 +1735,14 @@ dict_assignment_replace      = list_assignment_replace
 dict_assignment_replace_undo = list_assignment_replace_undo
 dict_assignment_replace_redo = list_assignment_replace_redo</t>
 <t tx="bwmulder.20040602183806">def list_assignment_new(self, instance, attributename):
-	self._steps.append((self.list_assignment_new_undo, (instance, attributename)))</t>
+    self._steps.append((self.list_assignment_new_undo, (instance, attributename)))</t>
 <t tx="bwmulder.20040602183814">def list_assignment_new_undo(self, instance, attributename):
-	newvalue = getattr(instance, attributename)
-	delattr(instance, attributename)
-	return self.list_assignment_new_redo, (instance, attributename, newvalue)</t>
+    newvalue = getattr(instance, attributename)
+    delattr(instance, attributename)
+    return self.list_assignment_new_redo, (instance, attributename, newvalue)</t>
 <t tx="bwmulder.20040602183911">def list_assignment_new_redo(self, instance, attributename, newvalue):
-	setattr(instance, attributename, newvalue)
-	return self.list_assignment_new_undo, (instance, attributename)
+    setattr(instance, attributename, newvalue)
+    return self.list_assignment_new_undo, (instance, attributename)
 </t>
 <t tx="bwmulder.20040602221559">@others</t>
 <t tx="bwmulder.20040602223236">from basic_undo import monitor, basic_undomechanism, list_monitor, dict_monitor
@@ -1625,450 +1750,450 @@ import unittest
 from test import test_support
 </t>
 <t tx="bwmulder.20040602223236.1">class tracer(monitor):
-	"""
-	Simple class which can be used to trace all calls made from a monitor.
-	
-	The output format could be improved, but this is only for testing.
-	"""
-	@others
+    """
+    Simple class which can be used to trace all calls made from a monitor.
+    
+    The output format could be improved, but this is only for testing.
+    """
+    @others
 
 </t>
 <t tx="bwmulder.20040602223236.2">def __getattr__(self, attributename):
-	self.attributename = attributename
-	return self.catchall</t>
+    self.attributename = attributename
+    return self.catchall</t>
 <t tx="bwmulder.20040602223906">def catchall(self, *args, **kwrds):
-	print "Tracer:", self.attributename, ":", args, kwds</t>
+    print "Tracer:", self.attributename, ":", args, kwds</t>
 <t tx="bwmulder.20040602224231">class delegator(object):
-	"""
-	Simple class to print all arguments passed to a monitor.
-	Allows you to watch the undoer in action...
-	"""
-	@others</t>
+    """
+    Simple class to print all arguments passed to a monitor.
+    Allows you to watch the undoer in action...
+    """
+    @others</t>
 <t tx="bwmulder.20040602224332">def __getattr__(self, attributename):
-	self.attributename = attributename
-	return self.catchall</t>
+    self.attributename = attributename
+    return self.catchall</t>
 <t tx="bwmulder.20040602224413">def __init__(self):
-	self.undoer = basic_undomechanism()
-	self.undoer.monitor_object = self
-	
+    self.undoer = basic_undomechanism()
+    self.undoer.monitor_object = self
+    
 </t>
 <t tx="bwmulder.20040602225640">class basic_scalar_test_class(object):
-	"""Simple class for the basic_scalar_test"""
-	pass
+    """Simple class for the basic_scalar_test"""
+    pass
 
 class basic_scalar_test(unittest.TestCase):
-	@others</t>
+    @others</t>
 <t tx="bwmulder.20040602230124">def test_scalar_basic(self):
-	"""
-	Some basic testing for the scalar undoer.
-	"""
-	if undo_tracing:
-		self.m = m = delegator()
-	else:
-		self.m = m = basic_undomechanism()
-	m.monitor_scalar(basic_scalar_test_class, "x")
-	m.enable()
-	# command 1
-	c = basic_scalar_test_class()
-	c.x = "First value"
-	m.mark()
-	# command 2	
-	c.x = "second value"
-	m.mark()
-	# command 3
-	c.x = "third value"
-	m.mark()
-	# command 4
-	# Check that the second assignment can be undone
-	assert c.x == "third value", c.x
-	m.undo()
-	# command 2
-	assert c.x == "second value"
-	m.undo()
-	# command 1
-	assert c.x == "First value", c.x
-	m.undo()
-	assert not hasattr(c, "x")
+    """
+    Some basic testing for the scalar undoer.
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    m.monitor_scalar(basic_scalar_test_class, "x")
+    m.enable()
+    # command 1
+    c = basic_scalar_test_class()
+    c.x = "First value"
+    m.mark()
+    # command 2	
+    c.x = "second value"
+    m.mark()
+    # command 3
+    c.x = "third value"
+    m.mark()
+    # command 4
+    # Check that the second assignment can be undone
+    assert c.x == "third value", c.x
+    m.undo()
+    # command 2
+    assert c.x == "second value"
+    m.undo()
+    # command 1
+    assert c.x == "First value", c.x
+    m.undo()
+    assert not hasattr(c, "x")
 </t>
 <t tx="bwmulder.20040602230426">def test_main():
     test_support.run_unittest(
-		basic_scalar_test,
-		basic_list_test,					
-		basic_dict_test,	 
+        basic_scalar_test,
+        basic_list_test,					
+        basic_dict_test,	 
                   )
 
 if __name__ == '__main__':
     test_main()
 </t>
 <t tx="bwmulder.20040602231914">def catchall(self, *args, **kwrds):
-	print "delegator:", self.attributename, ":", args, kwrds
-	getattr(self.undoer, self.attributename) (*args, **kwrds)
+    print "delegator:", self.attributename, ":", args, kwrds
+    getattr(self.undoer, self.attributename) (*args, **kwrds)
 </t>
 <t tx="bwmulder.20040602231934">def enable_category(self, l, monitor_class):
    for klass, external_attributename, internal_attributename in l:
       setattr(klass, external_attributename, monitor_class(
          external_attributename, internal_attributename, self))
-	
+    
 </t>
 <t tx="bwmulder.20040602232337">undo_tracing = False</t>
 <t tx="bwmulder.20040603081718">def remove_overrides_in_list_and_dict_monitor(self):
-	"""
-	Deletes all function definitions in list_monitor and dict_monitor.
-	The net effect of this is that instances of these classes should
-	behave like regular lists and dictionaries.
-	"""	
-	import inspect
-	for klass in (list_monitor, dict_monitor):
-		for attribute in dir(klass):
-			try:
-				entity = getattr(klass, attribute)
-			except AttributeError:
-				pass
-			else:
-				if inspect.isfunction(entity):
-					delattr(klass, attribute)
-					self.removed_functions.append(klass, attribute, entity)</t>
+    """
+    Deletes all function definitions in list_monitor and dict_monitor.
+    The net effect of this is that instances of these classes should
+    behave like regular lists and dictionaries.
+    """	
+    import inspect
+    for klass in (list_monitor, dict_monitor):
+        for attribute in dir(klass):
+            try:
+                entity = getattr(klass, attribute)
+            except AttributeError:
+                pass
+            else:
+                if inspect.isfunction(entity):
+                    delattr(klass, attribute)
+                    self.removed_functions.append(klass, attribute, entity)</t>
 <t tx="bwmulder.20040603211921"></t>
 <t tx="bwmulder.20040603212552">def commands(self):
-	return len(self._commands) - 2</t>
+    return len(self._commands) - 2</t>
 <t tx="bwmulder.20040603212612">def commands_to_undo(self):
-	return self._index</t>
+    return self._index</t>
 <t tx="bwmulder.20040603212713">def commands_to_redo(self):
-	return self.commands() - self._index</t>
+    return self.commands() - self._index</t>
 <t tx="bwmulder.20040603212934">def rollback(self):
-	self.run_commands(self._steps)
+    self.run_commands(self._steps)
 </t>
 <t tx="bwmulder.20040604165011">def steps_stored(self):
-	"""
-	Return the total number of steps stored in the undoer.
-	"""
-	result = 0
-	for command in self._commands[1:-1]:
-		result += len(command)
-	return result</t>
+    """
+    Return the total number of steps stored in the undoer.
+    """
+    result = 0
+    for command in self._commands[1:-1]:
+        result += len(command)
+    return result</t>
 <t tx="bwmulder.20040604184443">def test_linked_list(self):
-	"""
-	Shows that the basic undo mechanism can be used to undo the construction of a linked list.
-	"""
-	if undo_tracing:
-		self.m = m = delegator()
-	else:
-		self.m = m = basic_undomechanism()
+    """
+    Shows that the basic undo mechanism can be used to undo the construction of a linked list.
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
 
-	# Create a linked list and check that the link operations can be undone.
-	class root_class(object):
-		pass
-		
-	class x(object):
-		def __init__(self, name, next=None):
-			self.name = name
-			self.next = next
-	
-	def p(root):
-		result = []
-		r = root.root
-		while r:
-			result.append(r.name)
-			r = r.next
-		return result
-			
-	undoer = basic_undomechanism()
-	
-	m.monitor_scalar(root_class, "root")
-	m.monitor_scalar(x, "name")
-	m.monitor_scalar(x, "next")
-	m.enable()
-	
-	root = root_class()
-	root.root = x("first")
-	root.root.next = x("second")
-	m.mark()
-	root.root.next.next = x("third")
-	root.root.next.next.next = x("fourth")
-	m.mark()
-	assert p(root) == ["first", "second", "third", "fourth"]
-	m.undo()
-	assert  p(root) == ["first", "second"]
-	m.redo()
-	assert p(root) ==["first", "second", "third", "fourth"]
-	
-	# now try a few things with dictionaries.
-	m.monitor_dict_attribute_in_class(root_class, "d")
-	m.enable()
-	root.d = {}
-	m.mark()
-	root.d = {'Some dict': 1}
-	m.mark()
-	root.d[1] = 2
-	assert root.d == {'Some dict': 1, 1: 2}, root.d
-	m.mark()
-	m.undo()
-	assert root.d == {'Some dict': 1}, root.d
-	m.undo()
-	assert root.d == {}, root.d
-	
-	
-	</t>
+    # Create a linked list and check that the link operations can be undone.
+    class root_class(object):
+        pass
+        
+    class x(object):
+        def __init__(self, name, next=None):
+            self.name = name
+            self.next = next
+    
+    def p(root):
+        result = []
+        r = root.root
+        while r:
+            result.append(r.name)
+            r = r.next
+        return result
+            
+    undoer = basic_undomechanism()
+    
+    m.monitor_scalar(root_class, "root")
+    m.monitor_scalar(x, "name")
+    m.monitor_scalar(x, "next")
+    m.enable()
+    
+    root = root_class()
+    root.root = x("first")
+    root.root.next = x("second")
+    m.mark()
+    root.root.next.next = x("third")
+    root.root.next.next.next = x("fourth")
+    m.mark()
+    assert p(root) == ["first", "second", "third", "fourth"]
+    m.undo()
+    assert  p(root) == ["first", "second"]
+    m.redo()
+    assert p(root) ==["first", "second", "third", "fourth"]
+    
+    # now try a few things with dictionaries.
+    m.monitor_dict_attribute_in_class(root_class, "d")
+    m.enable()
+    root.d = {}
+    m.mark()
+    root.d = {'Some dict': 1}
+    m.mark()
+    root.d[1] = 2
+    assert root.d == {'Some dict': 1, 1: 2}, root.d
+    m.mark()
+    m.undo()
+    assert root.d == {'Some dict': 1}, root.d
+    m.undo()
+    assert root.d == {}, root.d
+    
+    
+    </t>
 <t tx="bwmulder.20040605104941">class basic_list_test_class(object):
-	"""Simple class to test the list undoer"""
-	pass
+    """Simple class to test the list undoer"""
+    pass
 
 class basic_list_test(unittest.TestCase):
-	"""
-	Test the basic operations of the list class
-	"""
-	@others
-		
+    """
+    Test the basic operations of the list class
+    """
+    @others
+        
 </t>
 <t tx="bwmulder.20040605105746">def test_lists_basic(self):
-	"""
-	Some basic testing for the list undoer.
-	
-	"""
-	if undo_tracing:
-		self.m = m = delegator()
-	else:
-		self.m = m = basic_undomechanism()
-	m.monitor_list_attribute_in_class(basic_list_test_class, "a")
-	m.enable()
-	c = basic_list_test_class()
-	c.a = [1, 2, 3]
-	c.a = c.a
-	m.mark()
-	assert m.commands_to_undo() == 1, m.commands_to_undo()
-	assert m.commands_to_redo() == 0, m.commands_to_redo()
-	c.a.append(5)
-	m.mark()
-	assert m.commands_to_undo() == 2, m.commands_to_undo()
-	assert m.commands_to_redo() == 0, m.commands_to_redo()
-	assert c.a == [1, 2, 3, 5], c.a
-	m.undo()
-	assert m.commands_to_undo() == 1, m.commands_to_undo()
-	assert m.commands_to_redo() == 1, m.commands_to_redo()
-	assert c.a == [1, 2, 3], c.a
-	m.redo()
-	assert m.commands_to_undo() == 2, m.commands_to_undo()
-	assert m.commands_to_redo() == 0, m.commands_to_redo()
-	assert c.a == [1, 2, 3, 5], c.a
-	m.undo()
-	assert m.commands_to_undo() == 1, m.commands_to_undo()
-	assert m.commands_to_redo() == 1, m.commands_to_redo()
-	m.undo()
-	assert m.commands_to_undo() == 0, m.commands_to_undo()
-	assert m.commands_to_redo() == 2, m.commands_to_redo()
-	assert not hasattr(c, "a"), "A should not exist here"
-	assert m.steps_stored() == 3, m.steps_stored()
-	m.redo()
-	m.redo()
-	assert c.a == [1, 2, 3, 5], c.a
-	del c.a[2]
-	assert c.a == [1, 2, 5], c.a # 1
-	m.mark()
-	m.undo()
-	assert c.a == [1, 2, 3, 5], c.a # 2
-	m.redo()
-	assert c.a == [1, 2, 5], c.a # 3
-	x = c.a.pop()
-	m.mark()
-	assert c.a == [1, 2]
-	m.undo()
-	assert c.a == [1, 2, 5]
+    """
+    Some basic testing for the list undoer.
+    
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    m.monitor_list_attribute_in_class(basic_list_test_class, "a")
+    m.enable()
+    c = basic_list_test_class()
+    c.a = [1, 2, 3]
+    c.a = c.a
+    m.mark()
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    c.a.append(5)
+    m.mark()
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == [1, 2, 3, 5], c.a
+    m.undo()
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    assert c.a == [1, 2, 3], c.a
+    m.redo()
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == [1, 2, 3, 5], c.a
+    m.undo()
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    m.undo()
+    assert m.commands_to_undo() == 0, m.commands_to_undo()
+    assert m.commands_to_redo() == 2, m.commands_to_redo()
+    assert not hasattr(c, "a"), "A should not exist here"
+    assert m.steps_stored() == 3, m.steps_stored()
+    m.redo()
+    m.redo()
+    assert c.a == [1, 2, 3, 5], c.a
+    del c.a[2]
+    assert c.a == [1, 2, 5], c.a # 1
+    m.mark()
+    m.undo()
+    assert c.a == [1, 2, 3, 5], c.a # 2
+    m.redo()
+    assert c.a == [1, 2, 5], c.a # 3
+    x = c.a.pop()
+    m.mark()
+    assert c.a == [1, 2]
+    m.undo()
+    assert c.a == [1, 2, 5]
 
-	
+    
 
-	
+    
 
 
 </t>
 <t tx="bwmulder.20040605174728">def test_lists_replace(self):
-	"""
-	
-	Test that list assignment works for an instance attribute that is put under the
-	undo mechanism.
-	
-	"""
-	if undo_tracing:
-		self.m = m = delegator()
-	else:
-		self.m = m = basic_undomechanism()
-	c = basic_list_test_class()
-	m.monitor_list_attribute_in_class(basic_list_test_class, "a")
-	m.enable()
-	c.a = [1, 2, 3]
-	m.mark()
-	m.undo()
-	assert not hasattr(c,"a")
-	m.redo()
-	c.a.append(4)
-	c.a.append(5)
-	assert c.a == [1, 2, 3, 4, 5]
-	m.mark()
-	m.undo()
-	assert c.a == [1, 2, 3]
-	m.redo()
-	assert c.a == [1, 2, 3, 4, 5]
-	b = list_monitor(('a', 'b', 'c'), m)
-	m.enable()
-	b.append('d')
-	assert b == ['a', 'b', 'c', 'd']
-	m.mark()
-	m.undo()
-	assert b == ['a', 'b', 'c']
-	m.redo()
-	assert b == ['a', 'b', 'c', 'd']
-	
-	
+    """
+    
+    Test that list assignment works for an instance attribute that is put under the
+    undo mechanism.
+    
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    c = basic_list_test_class()
+    m.monitor_list_attribute_in_class(basic_list_test_class, "a")
+    m.enable()
+    c.a = [1, 2, 3]
+    m.mark()
+    m.undo()
+    assert not hasattr(c,"a")
+    m.redo()
+    c.a.append(4)
+    c.a.append(5)
+    assert c.a == [1, 2, 3, 4, 5]
+    m.mark()
+    m.undo()
+    assert c.a == [1, 2, 3]
+    m.redo()
+    assert c.a == [1, 2, 3, 4, 5]
+    b = list_monitor(('a', 'b', 'c'), m)
+    m.enable()
+    b.append('d')
+    assert b == ['a', 'b', 'c', 'd']
+    m.mark()
+    m.undo()
+    assert b == ['a', 'b', 'c']
+    m.redo()
+    assert b == ['a', 'b', 'c', 'd']
+    
+    
 </t>
 <t tx="bwmulder.20040605180204">class basic_dict_test_class(object):
-	"""Simple class to test the list undoer"""
-	pass
+    """Simple class to test the list undoer"""
+    pass
 
 class basic_dict_test(unittest.TestCase):
-	"""
-	Test the basic operations of the list class
-	"""
-	@others
-		
+    """
+    Test the basic operations of the list class
+    """
+    @others
+        
 
 </t>
 <t tx="bwmulder.20040605180225">def test_dicts_basic(self):
-	"""
-	Some basic testing for the dict undoer.
-	
-	"""
-	trace_commands = False
-	if undo_tracing:
-		self.m = m = delegator()
-	else:
-		self.m = m = basic_undomechanism()
-	m.monitor_dict_attribute_in_class(basic_dict_test_class, "a")
-	m.enable()
-	c = basic_dict_test_class()
-	c.a = {1:1, 2:2, 3:3}
-	c.a = c.a
-	m.mark()
-	if trace_commands:  print; m.print_commands(1)
-	assert m.commands_to_undo() == 1, m.commands_to_undo()
-	assert m.commands_to_redo() == 0, m.commands_to_redo()
-	c.a[5] = 5
-	m.mark()
-	if trace_commands: m.print_commands(2)
-	assert m.commands_to_undo() == 2, m.commands_to_undo()
-	assert m.commands_to_redo() == 0, m.commands_to_redo()
-	assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 1
-	m.undo()
-	if trace_commands: m.print_commands(3)
-	assert m.commands_to_undo() == 1, m.commands_to_undo()
-	assert m.commands_to_redo() == 1, m.commands_to_redo()
-	assert c.a == {1:1, 2:2, 3:3}, c.a # 2
-	m.redo()
-	if trace_commands: m.print_commands(4)
-	assert m.commands_to_undo() == 2, m.commands_to_undo()
-	assert m.commands_to_redo() == 0, m.commands_to_redo()
-	assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 3
-	m.undo()
-	if trace_commands: m.print_commands(5)
-	assert m.commands_to_undo() == 1, m.commands_to_undo()
-	assert m.commands_to_redo() == 1, m.commands_to_redo()
-	assert c.a == {1:1, 2:2, 3:3}, c.a # 4
-	m.undo()
-	if trace_commands: m.print_commands(6)
-	assert m.commands_to_undo() == 0, m.commands_to_undo()
-	assert m.commands_to_redo() == 2, m.commands_to_redo()
-	assert not hasattr(c, "a"), "A should not exist here"
-	assert m.steps_stored() == 3, m.steps_stored()
-	m.redo()
-	if trace_commands: m.print_commands(7)
-	assert c.a == {1:1, 2:2, 3:3}, c.a # 5
-	m.redo()
-	if trace_commands: m.print_commands(8)
-	assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 6
-	del c.a[5]
-	assert c.a == {1:1, 2:2, 3:3}, c.a # 7
-	m.mark()
-	if trace_commands: m.print_commands(9)
-	m.undo()
-	if trace_commands: m.print_commands(10)
-	assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 8
-	m.redo()
-	if trace_commands: m.print_commands(11)
-	assert c.a == {1:1, 2:2, 3:3}, c.a # 9
-	del c.a[2]
-	m.mark()
-	if trace_commands: m.print_commands(12)
-	assert c.a == {1:1, 3:3}, c.a # 10
-	m.undo()
-	if trace_commands: m.print_commands(13)
-	assert c.a == {1:1, 2:2, 3:3}, c.a # 11
+    """
+    Some basic testing for the dict undoer.
+    
+    """
+    trace_commands = False
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    m.monitor_dict_attribute_in_class(basic_dict_test_class, "a")
+    m.enable()
+    c = basic_dict_test_class()
+    c.a = {1:1, 2:2, 3:3}
+    c.a = c.a
+    m.mark()
+    if trace_commands:  print; m.print_commands(1)
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    c.a[5] = 5
+    m.mark()
+    if trace_commands: m.print_commands(2)
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 1
+    m.undo()
+    if trace_commands: m.print_commands(3)
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 2
+    m.redo()
+    if trace_commands: m.print_commands(4)
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 3
+    m.undo()
+    if trace_commands: m.print_commands(5)
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 4
+    m.undo()
+    if trace_commands: m.print_commands(6)
+    assert m.commands_to_undo() == 0, m.commands_to_undo()
+    assert m.commands_to_redo() == 2, m.commands_to_redo()
+    assert not hasattr(c, "a"), "A should not exist here"
+    assert m.steps_stored() == 3, m.steps_stored()
+    m.redo()
+    if trace_commands: m.print_commands(7)
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 5
+    m.redo()
+    if trace_commands: m.print_commands(8)
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 6
+    del c.a[5]
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 7
+    m.mark()
+    if trace_commands: m.print_commands(9)
+    m.undo()
+    if trace_commands: m.print_commands(10)
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 8
+    m.redo()
+    if trace_commands: m.print_commands(11)
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 9
+    del c.a[2]
+    m.mark()
+    if trace_commands: m.print_commands(12)
+    assert c.a == {1:1, 3:3}, c.a # 10
+    m.undo()
+    if trace_commands: m.print_commands(13)
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 11
 
 
 
-	
+    
 
 </t>
 <t tx="bwmulder.20040605180245">def test_dicts_replace(self):
-	"""
-	
-	Test that dict assignment works for an instance attribute that is put under the
-	undo mechanism.
-	
-	"""
-	if undo_tracing:
-		self.m = m = delegator()
-	else:
-		self.m = m = basic_undomechanism()
-	c = basic_dict_test_class()
-	m.monitor_dict_attribute_in_class(basic_dict_test_class, "a")
-	m.enable()
-	c.a = {1:1, 2:2, 3:3}
-	m.mark()
-	m.undo()
-	assert not hasattr(c,"a")
-	m.redo()
-	c.a[4] = 4
-	c.a[5] = 5
-	assert c.a == {1:1, 2:2, 3:3, 4:4, 5:5}, c.a # 1
-	m.mark()
-	m.undo()
-	assert c.a == {1:1, 2:2, 3:3}, c.a # 2
-	m.redo()
-	assert c.a ==  {1:1, 2:2, 3:3, 4:4, 5:5}, c.a # 3
-	b = dict_monitor({'a':'a', 'b':'b', 'c':'c'}, m)
-	m.enable()
-	b['d'] = 'd'
-	assert b == {'a':'a', 'b':'b', 'c':'c', 'd':'d'}, b # 4
-	m.mark()
-	m.undo()
-	assert b == {'a':'a', 'b':'b', 'c':'c'}, b # 5
-	m.redo()
-	assert b == {'a':'a', 'b':'b', 'c':'c', 'd':'d'}, b # 6
-	
-	</t>
+    """
+    
+    Test that dict assignment works for an instance attribute that is put under the
+    undo mechanism.
+    
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    c = basic_dict_test_class()
+    m.monitor_dict_attribute_in_class(basic_dict_test_class, "a")
+    m.enable()
+    c.a = {1:1, 2:2, 3:3}
+    m.mark()
+    m.undo()
+    assert not hasattr(c,"a")
+    m.redo()
+    c.a[4] = 4
+    c.a[5] = 5
+    assert c.a == {1:1, 2:2, 3:3, 4:4, 5:5}, c.a # 1
+    m.mark()
+    m.undo()
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 2
+    m.redo()
+    assert c.a ==  {1:1, 2:2, 3:3, 4:4, 5:5}, c.a # 3
+    b = dict_monitor({'a':'a', 'b':'b', 'c':'c'}, m)
+    m.enable()
+    b['d'] = 'd'
+    assert b == {'a':'a', 'b':'b', 'c':'c', 'd':'d'}, b # 4
+    m.mark()
+    m.undo()
+    assert b == {'a':'a', 'b':'b', 'c':'c'}, b # 5
+    m.redo()
+    assert b == {'a':'a', 'b':'b', 'c':'c', 'd':'d'}, b # 6
+    
+    </t>
 <t tx="bwmulder.20040605220919">def print_commands(self, comment):
-	"""
-	rint a readable list of all commands
-	"""
-	print "===== Commands: %s ========" % comment
-	i = 0
-	while i &lt; len(self._commands):
-		print "Command", i
-		steps = self._commands[i]
-		if steps:
-			for step in steps:
-				function, args = step
-				print "  ",function.__name__, args
-		if i == self._index:
-			print "---------------------"
-		i += 1
-	print "========================"
+    """
+    rint a readable list of all commands
+    """
+    print "===== Commands: %s ========" % comment
+    i = 0
+    while i &lt; len(self._commands):
+        print "Command", i
+        steps = self._commands[i]
+        if steps:
+            for step in steps:
+                function, args = step
+                print "  ",function.__name__, args
+        if i == self._index:
+            print "---------------------"
+        i += 1
+    print "========================"
 </t>
 <t tx="bwmulder.20040605231305">def __init__(self, value, monitor):
-	list.__init__(self, value)
-	self.set_monitor_object(monitor)
+    list.__init__(self, value)
+    self.set_monitor_object(monitor)
 </t>
 <t tx="bwmulder.20040605231401">def __init__(self, value, monitor):
-	dict.__init__(self, value)
-	self.set_monitor_object(monitor)
+    dict.__init__(self, value)
+    self.set_monitor_object(monitor)
 </t>
 <t tx="edream.110203113231.233">@ To do:
     
@@ -2604,19 +2729,6 @@ interval = 20</t>
 <t tx="edream.110203113231.729"></t>
 <t tx="edream.110203113231.872"></t>
 <t tx="edream.110203113231.930"></t>
-<t tx="edream.110203113231.931">colour
-colourful
-coloured
-</t>
-<t tx="edream.110203113231.932"># Configuration file for mod_spelling plugin.
-
-[main]
-
-aspell_dir=c:\aspell\bin\aspell.exe
-
-local_leo_dictionary=c:\prog\leoCVS\leo\plugins\mod_spelling.txt
-
-local_language_code=en</t>
 <t tx="edream.110203113231.982">@ignore</t>
 <t tx="edream.110203113231.983">@nocolor
 
@@ -2660,8 +2772,6 @@ Advantages of this (XMLRPC) approach,
 Some kind of 'submit plugin' option would be interesting, but suddenly security issues start to loom!
 
 Do you think this is worth pursuing?</t>
-<t tx="edream.110203113231.984"></t>
-<t tx="edream.110203113231.994"></t>
 <t tx="edream.110403140857"></t>
 <t tx="edream.110403140857.1"></t>
 <t tx="edream.110403140857.2">@
@@ -3135,6 +3245,23 @@ top.title("Download progress")
 self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
 scale.pack()
 top.lift()</t>
+<t tx="ekr.20040108091136">def updateRecent(self,tag,keywords):
+
+    """Add all entries to the recent nodes list."""
+
+    c = keywords.get("c")
+
+    # Clear old recent menu
+    menu = self.recentMenus.get(c)
+    if not menu: return
+    menu = menu["menu"]
+    menu.delete(0,"end")
+
+    for p in c.visitedList:
+        if p.exists(c):
+            def callback(event=None,self=self,c=c,p=p):
+                self.select(c,p)
+            menu.add_command(label=p.headString(),command=callback)</t>
 <t tx="ekr.20040205071616">"""
 mnplugins.py
 
@@ -6904,12 +7031,1459 @@ file extension to determine if C or python type annotations are
 used. Maybe this information can be centralized.
 </t>
 <t tx="ekr.20040722115324"></t>
-<t tx="ekr.20040722122834"></t>
 <t tx="ekr.20040722134333.1"></t>
 <t tx="ekr.20040722134535"></t>
 <t tx="ekr.20040722135402"></t>
 <t tx="ekr.20040722135402.1"></t>
 <t tx="ekr.20040722141148"></t>
 <t tx="ekr.20040725171859"></t>
+<t tx="ekr.20040809071339"></t>
+<t tx="ekr.20040809071339.1"></t>
+<t tx="ekr.20040809071339.2">@killcolor
+
+RE: 4.2 beta 3 on cvs: nodenavagator  
+2004-08-05 17:08
+
+had the latest nodenavigator,
+I broke my rule to verify
+strange things still happen after a reboot.
+that refreshes the memory if nothing else.
+its a win thing.
+NN is reliable appearing on the toolbar.
+but I added this print in addMark:
+. print 'nn addmark'
+. return # This should never happen.
+it never happens, about 10 times
+while loading leoPyRef.leo
+maybe it was trying to gather the marks
+while the leo is loading?
+the common denom may be the size of the leo,
+the number of marks. maybe put that on idle or
+register the handler from a later hook.
+maybe defer addmark if in start or something.
+but it would have to happen at least once.
+not a pretty picture when you think about it.
+could be no problem too.</t>
+<t tx="ekr.20040809071339.3">@killcolor
+
+one more thing, limit to n recent is needed.
+
+updateRecent
+. for p in c.visitedList[:25]: #keep most recent
+...
+also label=p.headString()[:40] to avoid oversize menu
+
+n marks gets more difficult if there are too many
+do you cull alphabetically, by create date?
+
+addMark
+. menu.add_command(label=name[:40],
+...
+. self.markLists[c] = marks[:-25] #keep last appended
+is one simple way.
+</t>
+<t tx="ekr.20040809071339.4"></t>
+<t tx="ekr.20040809071339.7"># Doesn't become active until a node is marked.
+# Node isn't necessarily visible in outine pane when selected.</t>
+<t tx="ekr.20040809071339.9"></t>
+<t tx="ekr.20040809071339.10">@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2460535
+By: nobody
+
+See CallTipWindow.py in IDLE 1.0.2
+
+Fairly simple implementation - uses a new toplevel window without a border.
+
+Read the comments in the code for potential drawbacks on some platforms.
+
+Regards, Myles.</t>
+<t tx="ekr.20040809071339.11">"""CallTips.py - An IDLE Extension to Jog Your Memory
+
+Call Tips are floating windows which display function, class, and method
+parameter and docstring information when you type an opening parenthesis, and
+which disappear when you type a closing parenthesis.
+
+Future plans include extending the functionality to include class attributes.
+
+"""
+
+import sys
+import string
+import types
+
+import CallTipWindow
+
+import __main__
+
+@others
+</t>
+<t tx="ekr.20040809071339.12">class CallTips:
+    menudefs = [ ]
+    
+@others
+
+</t>
+<t tx="ekr.20040809071339.13">def __init__(self, editwin=None):
+
+    if editwin == None:  # subprocess and test
+        self.editwin = None
+        return
+
+    self.editwin = editwin
+    self.text = editwin.text
+    self.calltip = None
+    self._make_calltip_window = self._make_tk_calltip_window</t>
+<t tx="ekr.20040809071339.14">def close(self):
+
+    self._make_calltip_window = None
+</t>
+<t tx="ekr.20040809071339.15">def _make_tk_calltip_window(self):
+    
+    # See __init__ for usage
+    return CallTipWindow.CallTip(self.text)</t>
+<t tx="ekr.20040809071339.16">def _remove_calltip_window(self):
+
+    if self.calltip:
+        self.calltip.hidetip()
+        self.calltip = None</t>
+<t tx="ekr.20040809071339.17">def paren_open_event(self, event):
+
+    self._remove_calltip_window()
+    name = self.get_name_at_cursor()
+    arg_text = self.fetch_tip(name)
+    if arg_text:
+        self.calltip_start = self.text.index("insert")
+        self.calltip = self._make_calltip_window()
+        self.calltip.showtip(arg_text)
+    return "" #so the event is handled normally.</t>
+<t tx="ekr.20040809071339.18">def paren_close_event(self, event):
+
+    # Now just hides, but later we should check if other
+    # paren'd expressions remain open.
+    self._remove_calltip_window()
+
+    return "" #so the event is handled normally.
+</t>
+<t tx="ekr.20040809071339.19">def check_calltip_cancel_event(self, event):
+
+    if self.calltip:
+        # If we have moved before the start of the calltip,
+        # or off the calltip line, then cancel the tip.
+        # (Later need to be smarter about multi-line, etc)
+        if self.text.compare("insert", "&lt;=", self.calltip_start) or \
+           self.text.compare("insert", "&gt;", self.calltip_start
+                             + " lineend"):
+            self._remove_calltip_window()
+
+    return "" #so the event is handled normally.
+</t>
+<t tx="ekr.20040809071339.20">def calltip_cancel_event(self, event):
+
+    self._remove_calltip_window()
+
+    return "" #so the event is handled normally.
+</t>
+<t tx="ekr.20040809071339.21">__IDCHARS = "._" + string.ascii_letters + string.digits
+
+def get_name_at_cursor(self):
+    idchars = self.__IDCHARS
+    str = self.text.get("insert linestart", "insert")
+    i = len(str)
+    while i and str[i-1] in idchars:
+        i -= 1
+    return str[i:]
+</t>
+<t tx="ekr.20040809071339.22">def fetch_tip(self, name):
+
+    """Return the argument list and docstring of a function or class
+
+    If there is a Python subprocess, get the calltip there.  Otherwise,
+    either fetch_tip() is running in the subprocess itself or it was called
+    in an IDLE EditorWindow before any script had been run.
+
+    The subprocess environment is that of the most recently run script.  If
+    two unrelated modules are being edited some calltips in the current
+    module may be inoperative if the module was not the last to run.
+
+    """
+    try:
+        rpcclt = self.editwin.flist.pyshell.interp.rpcclt
+    except:
+        rpcclt = None
+    if rpcclt:
+        return rpcclt.remotecall("exec", "get_the_calltip",
+                                 (name,), {})
+    else:
+        entity = self.get_entity(name)
+        return get_arg_text(entity)</t>
+<t tx="ekr.20040809071339.23">def get_entity(self, name):
+
+    "Lookup name in a namespace spanning sys.modules and __main.dict__"
+    if name:
+        namespace = sys.modules.copy()
+        namespace.update(__main__.__dict__)
+        try:
+            return eval(name, namespace)
+        except:
+            return None</t>
+<t tx="ekr.20040809071339.24">def _find_constructor(class_ob):
+    
+    # Given a class object, return a function object used for the
+    # constructor (ie, __init__() ) or None if we can't find one.
+    
+    try:
+        return class_ob.__init__.im_func
+    except AttributeError:
+        for base in class_ob.__bases__:
+            rc = _find_constructor(base)
+            if rc is not None: return rc
+    return None
+
+</t>
+<t tx="ekr.20040809071339.25">def get_arg_text(ob):
+    "Get a string describing the arguments for the given object"
+    argText = ""
+    if ob is not None:
+        argOffset = 0
+        if type(ob)==types.ClassType:
+            # Look for the highest __init__ in the class chain.
+            fob = _find_constructor(ob)
+            if fob is None:
+                fob = lambda: None
+            else:
+                argOffset = 1
+        elif type(ob)==types.MethodType:
+            # bit of a hack for methods - turn it into a function
+            # but we drop the "self" param.
+            fob = ob.im_func
+            argOffset = 1
+        else:
+            fob = ob
+        # Try and build one for Python defined functions
+        if type(fob) in [types.FunctionType, types.LambdaType]:
+            try:
+                realArgs = fob.func_code.co_varnames[argOffset:fob.func_code.co_argcount]
+                defaults = fob.func_defaults or []
+                defaults = list(map(lambda name: "=%s" % name, defaults))
+                defaults = [""] * (len(realArgs)-len(defaults)) + defaults
+                items = map(lambda arg, dflt: arg+dflt, realArgs, defaults)
+                if fob.func_code.co_flags &amp; 0x4:
+                    items.append("...")
+                if fob.func_code.co_flags &amp; 0x8:
+                    items.append("***")
+                argText = ", ".join(items)
+                argText = "(%s)" % argText
+            except:
+                pass
+        # See if we can use the docstring
+        doc = getattr(ob, "__doc__", "")
+        if doc:
+            doc = doc.lstrip()
+            pos = doc.find("\n")
+            if pos &lt; 0 or pos &gt; 70:
+                pos = 70
+            if argText:
+                argText += "\n"
+            argText += doc[:pos]
+    return argText
+</t>
+<t tx="ekr.20040809071339.26">#################################################
+#
+# Test code
+#
+if __name__=='__main__':
+
+    def t1(): "()"
+    def t2(a, b=None): "(a, b=None)"
+    def t3(a, *args): "(a, ...)"
+    def t4(*args): "(...)"
+    def t5(a, *args): "(a, ...)"
+    def t6(a, b=None, *args, **kw): "(a, b=None, ..., ***)"
+
+    class TC:
+        "(a=None, ...)"
+        def __init__(self, a=None, *b): "(a=None, ...)"
+        def t1(self): "()"
+        def t2(self, a, b=None): "(a, b=None)"
+        def t3(self, a, *args): "(a, ...)"
+        def t4(self, *args): "(...)"
+        def t5(self, a, *args): "(a, ...)"
+        def t6(self, a, b=None, *args, **kw): "(a, b=None, ..., ***)"
+
+    def test(tests):
+        ct = CallTips()
+        failed=[]
+        for t in tests:
+            expected = t.__doc__ + "\n" + t.__doc__
+            name = t.__name__
+            arg_text = ct.fetch_tip(name)
+            if arg_text != expected:
+                failed.append(t)
+                print "%s - expected %s, but got %s" % (t, expected,
+                                                        get_arg_text(entity))
+        print "%d of %d tests failed" % (len(failed), len(tests))
+
+    tc = TC()
+    tests = (t1, t2, t3, t4, t5, t6,
+             TC, tc.t1, tc.t2, tc.t3, tc.t4, tc.t5, tc.t6)
+
+    test(tests)
+</t>
+<t tx="ekr.20040809071339.27">"""A CallTip window class for Tkinter/IDLE.
+
+After ToolTip.py, which uses ideas gleaned from PySol
+Used by the CallTips IDLE extension.
+
+"""
+
+import Tkinter as Tk
+import leoGlobals as g
+
+@others
+
+if 1:
+    main()</t>
+<t tx="ekr.20040809071339.28">class CallTip:
+
+@others
+</t>
+<t tx="ekr.20040809071339.29">def __init__(self,widget):
+
+    self.widget = widget
+    self.tipwindow = None
+    self.id = None
+    self.x = self.y = 0</t>
+<t tx="ekr.20040809071339.30">def showtip (self,text):
+
+    """ Display text in calltip window"""
+
+    if self.tipwindow or not text: return
+
+    # truncate overly long calltip
+    if len(text) &gt;= 79: text = text[:75] + ' ...'
+    self.text = text
+
+    self.widget.see("insert")
+    x,y,cx,cy = self.widget.bbox("insert")
+    x = x + self.widget.winfo_rootx() + 2
+    y = y + cy + self.widget.winfo_rooty()
+    self.tipwindow = tw = Tk.Toplevel(self.widget)
+
+    &lt;&lt; remove the border &gt;&gt;
+    tw.wm_geometry("+%d+%d" % (x, y))
+    &lt;&lt; Mac-specific code &gt;&gt;
+
+    label = Tk.Label(tw,text=text, justify="left",
+        background="#ffffe0",relief="solid",borderwidth=1,
+        font=self.widget['font'])
+
+    label.pack()</t>
+<t tx="ekr.20040809071339.31">@
+The following command has two effects:
+- It removes the calltip window border (good)
+- Causes (at least on Linux) the calltip to show as a top level window,
+  burning through any other window dragged over it.
+  Also, shows on all viewports!
+@c
+
+tw.wm_overrideredirect(1)</t>
+<t tx="ekr.20040809071339.32">@
+This command is only needed and available on Tk &gt;= 8.4.0 for OSX.
+Without it, call tips intrude on the typing process by grabbing the focus.
+@c
+
+try:
+    tw.tk.call("::tk::unsupported::MacWindowStyle",
+        "style",tw._w,"help","noActivates")
+except Tk.TclError:
+    pass</t>
+<t tx="ekr.20040809071339.33">def hidetip(self):
+
+    tw = self.tipwindow
+    self.tipwindow = None
+    if tw:
+        tw.destroy()</t>
+<t tx="ekr.20040809071339.34">class container: # Conceptually an editor_window
+
+@others</t>
+<t tx="ekr.20040809071339.35">def __init__(self):
+
+    root = Tk.Tk()
+    text = self.text = Tk.Text(root)
+    text.pack(side="left", fill="both", expand=1)
+    text.insert("insert","string.split")
+    root.update()
+    self.calltip = CallTip(text)
+
+    text.event_add(g.virtual_event_name("calltip-show"),"(")
+    text.event_add(g.virtual_event_name("calltip-hide"),")")
+
+    text.bind(g.virtual_event_name("calltip-show"),self.calltip_show)
+    text.bind(g.virtual_event_name("calltip-hide"),self.calltip_hide)
+
+    text.focus_set()
+    root.mainloop()</t>
+<t tx="ekr.20040809071339.36">def calltip_show(self, event):
+
+    self.calltip.showtip("Hello world")</t>
+<t tx="ekr.20040809071339.37">def calltip_hide(self, event):
+
+    self.calltip.hidetip()</t>
+<t tx="ekr.20040809071339.38">def main():
+
+    # Test code
+    c=container()</t>
+<t tx="ekr.20040809071339.53"></t>
+<t tx="ekr.20040809105722">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2629405
+By: nobody
+
+searchbox has a similar problem, reported before with fix. 
+search, open new leo, go back to first 
+hit go it searches in the new leo.</t>
+<t tx="ekr.20040809105722.1">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2629405
+By: nobody
+
+double clicking the @rst in leoDoc.leo
+Leo's HTML Users Guide (Created using the rst2 plugin)
+failed and took down some plugins too.
+&lt;string&gt;:51: (ERROR/3) Unknown target name: "front Matter".
+&lt;string&gt;:51: (ERROR/3) Unknown target name: "front Matter".
+list.index(x): x not in list
+Exiting due to error.  Use "--traceback" to diagnose.
+Please report errors to &lt;docutils-users@lists.sf.net&gt;.
+Include "--traceback" output, Docutils version (0.3.2),
+Python version (2.3.3), your OS type &amp; version, and the
+command line used.
+exception in app.hookFunction
+[...]
+  File "c:\c\leo\tempLeo42\leo\plugins\rst2.py", line 149, in onIconDoubleClick
+    output = pub.publish()
+  File "C:\C\PY\PYTHON233\Lib\site-packages\docutils\core.py", line 222, in
+publish
+    sys.exit(1)
+SystemExit: 1
+other @rst generated html works fine.
+have both recent versions docutils and silvercity
+also the print in the rst2 plugin describing
+the conversions it makes are lost to the console. should be g.es() to the log
+window.</t>
+<t tx="ekr.20040809110900">add_directives.py
+color_markup.py
+image.py
+rClick.py
+hoist.py
+mod_scripting.py
+mod_spelling.py ** Does not work **
+nodenavigator.py
+open_with.py
+plugins_menu.py
+quit_leo.py
+rowcol.py
+rst2.py
+searchbox.py
+spellpyx.py
+trace_keys.py
+vim.py</t>
+<t tx="ekr.20040809110900.1">arrows.py
+
+# FIXME: Thread doesn't shut down properly.  Causes unit tests to fail.
+autocompleter.py ***
+
+french_fm.py
+mod_autosave.py
+mod_tempfname.py
+mod_timestamp.py
+newButtons.py
+niceNosent.py
+open_shell.py
+scripts_menu.py
+startfile.py
+word_export.py
+
+# others...
+rst.py
+lineNumbers.py
+scheduler.py
+fastgotonode.py</t>
+<t tx="ekr.20040809151600"></t>
+<t tx="ekr.20040809151600.1">@first # -*- coding: utf-8 -*-
+
+"""Spell Checker Plugin.
+
+- Perfoms spell checking on nodes within a Leo document.
+- Uses aspell.exe to do the checking and suggest alternatives.
+
+Written by Paul Paterson and 'e'.
+"""
+
+@language python
+@tabwidth -4
+
+visibleInitially = True # True: open spell dialog initially.
+
+# Specify the path to the top-level Aspell directory.
+# This directory should contain aspell.pyd.
+# Change this path in setup.py if you recompile the pyd.
+aspell_dir = r'c:/Aspell'
+
+&lt;&lt; spellpx imports &gt;&gt;
+
+if Tk and aspell and not g.app.unitTesting:
+
+    # print "spellpy loaded",aspell
+
+    @others
+
+    if g.app.gui is None:
+        g.app.createTkGui(__file__)
+
+    if g.app.gui.guiName() == "tkinter":
+        spellFrame = spellDialog(aspell)
+        if not visibleInitially: spellFrame.top.withdraw()
+        g.app.globalWindows.append(spellFrame)
+        leoPlugins.registerHandler("create-optional-menus", createSpellMenu)
+        leoPlugins.registerHandler("command2", onCommand) 
+        leoPlugins.registerHandler(
+                ("bodyclick2","bodydclick2","bodyrclick2","bodykey2","select2"),onSelect)
+        
+        __version__ = "0.5"
+            # 0.4: EKR: Use the new leoTkinterFind class.
+            # 0.4.1: e: Use Pyrex wrapper and aspell.pyd.
+                # No longer uses pipes: much faster and more reliable.
+                # Uses the existing mod_spelling.ini and txt local word list.
+            # 0.5: EKR: Various minor mods, including support for unit testing.
+        g.plugin_signon(__name__)</t>
+<t tx="ekr.20040809151600.3">import leoGlobals as g
+import leoPlugins
+import leoTkinterFind
+
+try:
+    import Tkinter as Tk
+except ImportError:
+    Tk = None
+    s = "Can not import Tk"
+    print s ; g.es(s,color="blue")
+
+aspell = g.importFromPath("aspell",aspell_dir,verbose=False)
+if not aspell:
+    s = "Can not import aspell from %s" % aspell_dir
+    print s ; g.es(s,color="blue")
+    
+import ConfigParser
+import os
+import re
+import string
+import sys
+import traceback</t>
+<t tx="ekr.20040809151600.4">@killcolor
+
+there is pyrex 9.3 and v1.1 of aspell.pyx just released.
+the 1.1 version doesn't have a precompiled aspell.pyd
+the 1.0 pyd from the author didn't load well for me.
+
+I'm drawing the line at pyrex9.2 aspell-15 aspell.pyx1.1 py2.3
+since I just got done checking it all out!
+
+What I did:
+
+- Ripped out the mod_spelling pipe code.
+- Left in everything else.
+- Increased the font size overall.
+- Added self.body.bodyCtrl.see(start)
+- Converted true/false to True/False.
+
+To do next:
+
+- Explore letting aspell.pyx do the update of local as well.
+    This would remove the dependence on the exe for update.
+- Add learn word mode which will automatically change words that have been
+  marked always fix or something like that.
+
+Links:
+
+&lt;http://aspell.net&gt;
+&lt;http://aspell.net/win32/&gt;
+get the dll's and headers if you will compile your own.
+
+A Pyrex wrapper for the aspell api.
+&lt;http://prdownloads.sourceforge.net/uncpythontools/aspell-1.0.zip?download&gt;
+&lt;http://sourceforge.net/project/showfiles.php?group_id=82407&gt;
+
+if you want to compile it get
+&lt;http://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/&gt;
+works with the latest pyrex and mingw gcc .
+you can just copy the python*.dll and *aspell.dll
+to mingw/lib now instead of the grueling lib building steps. &lt;http://www.mingw.org&gt;
+
+http://sourceforge.net/forum/forum.php?thread_id=1107275&amp;forum_id=10226
+
+
+s04710p04:59:01
+the suplied pyd in aspell pyx 1.0 wouldn't load for me py2.3
+I finally got compiled on mingw by updateing to the latest g++
+and binutils and msys and pyrex not sure what the hangup was
+you dont have to build the python lib anymore with gcc &gt;3?
+
+there is a bit of dloading and dir moving and setup.py editing
+and create a distutils.cfg put in the distutils dir for mingw
+this should be alot cleaner than the pipe trick uded by pauls spellcheck
+cvrt to newstyle, make sure it all still works
+would be nice to default back to pipes if aspell cant be imported
+should get that part going first.
+string not defined... am I working from an older copy of mod_spell?
+alot of stuff reading/updateing the local dict, all of it good
+riped out the pipe and its use in a few place.
+commented out a bunch of open and close pipe
+errors if you check spelling then close instead of hide the popup
+
+also my select color on the body is less than ideal
+probably alot of other people too since its Leo defaults mostly
+and not easy to change. its confused by several similar settings
+and aparently grey80 in leo src itself.
+and the listbox is not resizable? wtf!
+u04711a08:49:18 why no learn word button? guess its add or ignore.
+fixed, if you close the spell window with the upper right close button
+when you try to reopen it gives a nasty traceback. just hide now.
+
+wonder if could quickly add an @language keywords if its in the node
+or only check comments and strings if in a code node
+seems to ignore dotted words sometimes and words bounded by puncts.
+
+removed the create string duplicating what the pipe version did
+only to have the next function reparse and turn back into list!
+
+addword still works. maybe have to add this to the pyrex wrap
+so you don't need to know the path to the executable.
+that may make it more nix/mac compatible
+
+fixes some outstanding anomalies since pyrex or before
+lets assume all problems are post the pyrex version.
+post answers or questions,
+&lt;http://sourceforge.net/forum/forum.php?thread_id=1107275&amp;forum_id=10226&gt;
+
+upped the fonts in the label &amp; listbox &amp; buttons
+the default size of buttons and text is never good
+plugins should always set the font to make this easier.
+this is going to be resolution and taste dependent
+should be an ini setting... next version maybe
+
+
+Restart aspell so that it re-reads its dictionary if you add words.
+due to the dict being init in the pyrex, not sure how to do this
+apparently add is to local dict and this is checked separately
+not sure why the restart was needed, seems to work after add as is.
+
+"doesn't" isn't highlighted because selector stops at \'
+this makes a whole range of misspellings harder to fix.
+aspell has soundslike mode, may want single word lookup
+ or does it use soundslike to find suggestions?
+
+fixed scroll if the select is not in visible window
+ happens too often
+
+to fix:
+fix weird focus bounce forcing you to make it side by side w/leo
+
+fix body highlight color lighter while window active.
+
+change to default is node only, node subnode via checkbox
+the searchbox too should stop at the subnode if not found
+at least the speller is easy enough to restart from anywhere
+needs a backto last word found in addition to undo/redo
+
+something highlighted, then look it up when startup.
+
+verify can override the default location of the dicts in the pyrex
+in-case people (most) wont compile their own or forget to change it
+it should be read from the ini? its already there?
+expect it to be relitive location to the exe?
+
+cutback on the traceback if no dict found
+
+is anyone on nix/mac using this plugin already?</t>
+<t tx="ekr.20040809151600.6"></t>
+<t tx="ekr.20040809151600.7">def createSpellMenu(tag, keywords):
+
+    """Create the Check Spelling menu item in the Edit menu."""
+    
+    if g.app.unitTesting: return
+    
+    c = keywords.get("c")
+
+    table = (
+        ("-", None, None),
+        ("Check Spelling", "Alt+Shift+A", spellFrame.checkSpelling))
+
+    c.frame.menu.createMenuItemsFromTable("Edit", table)</t>
+<t tx="ekr.20040809151600.8">def onSelect(tag, keywords):
+    
+    """A new vnode has just been selected.  Update the Spell Check window."""
+    
+    if g.app.unitTesting: return
+
+    c = keywords.get("c")
+    v = keywords.get("new_v")
+    global spellFrame
+    
+    if g.top() and c and c.currentVnode():
+        if c.currentVnode() != spellFrame.v:
+            # print "onSelect",tag,`c.currentVnode()`,`spellFrame.v`
+            spellFrame.update(show= False, fill= True)
+        else:
+            spellFrame.updateButtons()</t>
+<t tx="ekr.20040809151600.9">def onCommand(tag, keywords):
+    """Update the Spell Check window after any command that might change text."""
+
+    global spellFrame
+    
+    if g.app.unitTesting: return
+    
+    if g.top() and g.top().currentVnode():
+        
+        # print "onCommand", tag
+        spellFrame.update(show= False, fill= False)</t>
+<t tx="ekr.20040809151600.10">class Aspell:
+    """A wrapper class for Aspell spell checker"""
+    
+    @others
+</t>
+<t tx="ekr.20040809151600.11"></t>
+<t tx="ekr.20040809151600.12">def __init__(self,aspell,local_dictionary_file,local_language_code):
+    
+    """Ctor for the Aspell class."""
+
+    self.sc = aspell.spell_checker(prefix= aspell_dir)
+    
+    self.aspell_exe_loc = self.getAspellDirectory()
+    self.local_language_code = local_language_code
+    
+    if local_dictionary_file:
+        self.local_dictionary_file = local_dictionary_file
+        self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]
+    else:
+        print "failed to set aspell.local_dictionary"
+        self.local.dictionary_file = None
+        self.local_dictionary = None</t>
+<t tx="ekr.20040809151600.13">def getAspellDirectory(self):
+
+    """Get the directory containing aspell.exe from mod_spelling.ini"""
+
+    try:
+        fileName = os.path.join(
+                g.app.loadDir, "../", "plugins", "mod_spelling.ini")
+        config = ConfigParser.ConfigParser()
+        config.read(fileName)
+        return config.get("main", "aspell_dir")
+    except:
+        g.es_exception()
+        return None</t>
+<t tx="ekr.20040809151600.14">def processWord(self, word):
+    """Pass a word to aspell and return the list of alternatives.
+    OK: 
+    * 
+    Suggestions: 
+    &amp; «original» «count» «offset»: «miss», «miss», ... 
+    None: 
+    # «original» «offset» 
+    simplifyed to not create the string then make a list from it    
+    """
+    
+    # print "processWord",`word`
+    #ret = "*\n"
+    retl = None
+
+    if not self.sc.check(word):
+        retl = self.sc.suggest(word)
+        #if not retl:
+        #    ret = "&amp; %s %d 0: %s\n"%(word, len(retl), ','.join(retl))
+
+    # print "processWord ret", `retl`  #`ret`
+    #the pipe was returning a coma delimited string
+
+    #why make a string then reprocess to strip it back out?
+    #if ret == "*\n": return None
+    return retl #self.listAlternates(ret)  </t>
+<t tx="ekr.20040809151600.15">def updateDictionary(self):
+
+    """Update the aspell dictionary from a list of words.
+    
+    Return True if the dictionary was update correctly."""
+
+    try:
+        # Create master list
+        basename = os.path.splitext(self.local_dictionary)[0]
+        cmd = (
+            "%s --lang=%s create master %s.wl &lt; %s.txt" %
+            (self.aspell_exe_loc, self.local_language_code, basename,basename))
+        os.popen(cmd)
+        return True
+
+    except Exception, err:
+        g.es("Unable to update local aspell dictionary: %s" % err)
+        print err
+        add_dicts = ""
+        return False</t>
+<t tx="ekr.20040809151600.16">class spellDialog(leoTkinterFind.leoTkinterFind):
+
+    """A class to create and manage Leo's Spell Check dialog."""
+    
+    @others</t>
+<t tx="ekr.20040809151600.17"></t>
+<t tx="ekr.20040809151600.18">def __init__(self,aspell):
+    """Ctor for the Leo Spelling dialog."""
+
+    # Call the base ctor to create the dialog.
+    leoTkinterFind.leoTkinterFind.__init__(self,
+        "Leo Spell Checking", resizeable= False)
+
+    self.local_dictionary_file = self.getLocalDictionary()
+    self.local_language_code = self.getLocalLanguageCode("en")
+    self.aspell = Aspell(aspell,self.local_dictionary_file,self.local_language_code)
+    &lt;&lt; set self.dictionary &gt;&gt;
+    
+    self.fillbox([])
+    
+    # State variables.
+    self.currentWord = None
+    self.suggestions = []
+    self.c = None
+    self.v = None
+    self.body = None
+    self.workCtrl = Tk.Text(None) # A text widget for scanning.
+
+    self.listBox.bind("&lt;Double-Button-1&gt;",self.onChangeThenFindButton)
+    self.listBox.bind("&lt;Button-1&gt;",self.onSelectListBox)
+    self.listBox.bind("&lt;Map&gt;",self.onMap)</t>
+<t tx="ekr.20040809151600.19">if self.local_dictionary_file:
+
+    self.dictionary = self.readLocalDictionary(self.local_dictionary_file)
+    if self.dictionary:
+        g.es("Aspell local dictionary: %s" % \
+            g.shortFileName(self.local_dictionary_file), color="blue")
+        if 0:
+            keys = self.dictionary.keys()
+            keys.sort()
+            print "local dict:", keys
+    else:
+        self.dictionary = {}
+        self.local_dictionary_file = None
+else:
+    self.dictionary = {}</t>
+<t tx="ekr.20040809151600.20">def getLocalDictionary(self):
+    
+    """Get the dictionaries containing words not in the standard dictionary from mod_spelling.ini"""
+
+    try:
+        fileName = os.path.join(g.app.loadDir,"../","plugins","mod_spelling.ini")
+        config = ConfigParser.ConfigParser()
+        config.read(fileName)
+        return config.get("main","local_leo_dictionary",None)
+    except:
+        g.es_exception()
+        return None</t>
+<t tx="ekr.20040809151600.21">def getLocalLanguageCode(self, defaultLanguageCode):
+    """Get the dictionaries containing words not in the standard dictionary from mod_spelling.ini"""
+
+    try:
+        fileName = os.path.join(g.app.loadDir,"../","plugins","mod_spelling.ini")
+        config = ConfigParser.ConfigParser()
+        config.read(fileName)
+        return config.get("main", "local_language_code", defaultLanguageCode)
+    except:
+        g.es_exception()
+        return defaultLanguageCode</t>
+<t tx="ekr.20040809151600.22">def readLocalDictionary(self, local_dictionary):
+    """Read the dictionary of words which we use as a local dictionary
+    
+    Although Aspell itself has the functionality to handle this kind of things
+    we duplicate it here so that we can also use it for the "ignore" functionality
+    and so that in future a Python only solution could be developed."""
+
+    try:
+        f = open(local_dictionary,"r")
+    except IOError:
+        g.es("Unable to open local dictionary '%s' - using a blank one instead" % local_dictionary)
+        return None
+    
+    try:
+        # Create the dictionary - there are better ways to do this
+        # in later Python's but we stick with this method for compatibility
+        dct = {}
+        for word in f.readlines():
+            dct[word.strip().lower()] = 0
+    finally:
+        f.close()
+
+    return dct</t>
+<t tx="ekr.20040809151600.23">def destroySelf (self):
+    
+    self.top.destroy() # 11/7/03</t>
+<t tx="ekr.20040809151600.24">def createFrame(self):
+    """Create the Spelling dialog."""
+    
+    # Create the find panel...
+    outer = Tk.Frame(self.frame, relief= "groove", bd= 2)
+    outer.pack({'padx':2, 'pady':2, 'expand':1, 'fill':'both', })
+    
+    &lt;&lt; Create the text and suggestion panes &gt;&gt;
+    &lt;&lt; Create the spelling buttons &gt;&gt;
+
+    #fix if the user hits exit button, don't want to destroy forever
+    self.frame.master.protocol("WM_CLOSE", self.onHideButton)
+    self.frame.master.protocol("WM_DELETE_WINDOW", self.onHideButton)
+</t>
+<t tx="ekr.20040809151600.25">f = outer
+
+f2 = Tk.Frame(f)
+f2.pack({'expand':1, 'fill':'x', })
+self.wordLabel = Tk.Label(f2, text="Suggestions for:")
+self.wordLabel.pack({'side':'left', })
+self.wordLabel.configure(font=('verdana', 10, 'bold'))
+
+fpane = Tk.Frame(f, bd= 2)
+fpane.pack({'side':'top', 'expand':1, 'fill':'x', })
+
+self.listBox = Tk.Listbox(fpane, height= 16, width= 20, selectmode= "single")
+self.listBox.pack({'side':'left', 'expand':1, 'fill':'both', })
+
+self.listBox.configure(font=('verdana', 11, 'normal'))
+
+listBoxBar = Tk.Scrollbar(fpane, name= 'listBoxBar')
+
+for bar,txt in ((listBoxBar, self.listBox),):
+    txt['yscrollcommand'] = bar.set
+    bar['command'] = txt.yview
+    bar.pack({'side':'right', 'fill':'y', })
+</t>
+<t tx="ekr.20040809151600.26"># Create the button panes
+buttons1  = Tk.Frame(outer,bd=1)
+buttons1.pack ({'anchor':'n', 'expand':1, 'fill':'x', })
+
+buttons2  = Tk.Frame(outer,bd=1)
+buttons2.pack ({'anchor':'n', 'expand':1, 'fill':'none', })
+
+buttonList = []
+for text,command in (
+    ("Find",self.onFindButton),
+    ("Change",self.onChangeButton),
+    ("Change, Find",self.onChangeThenFindButton),
+    ("Add",self.onAddButton)):
+    font = ('verdana', 9, 'normal')
+    width = max(6,len(text)-1)
+    b=Tk.Button(
+        buttons1, font= font, width= width, text= text, command= command)
+    b.pack({'side':'left', 'fill':'none', 'expand':1, })
+
+    buttonList.append(b)
+        
+for text,command in (
+    ("Undo",self.onUndoButton),
+    ("Redo",self.onRedoButton),
+    ("Ignore",self.onIgnoreButton),
+    ("Hide",self.onHideButton)):
+    font = ('verdana', 9, 'normal')
+    width = max(6,len(text)-1)
+    b=Tk.Button(
+        buttons2, font= font, width= width, text= text, command= command)
+    b.pack({'side':'left', 'fill':'none', 'expand':0, })
+    buttonList.append(b)
+
+# We need these to enable or disable buttons.
+(self.findButton, self.changeButton,
+ self.changeFindButton, self.addButton, 
+ self.undoButton, self.redoButton,
+ self.ignoreButton, self.hideButton) = buttonList</t>
+<t tx="ekr.20040809151600.27"></t>
+<t tx="ekr.20040809151600.28">def onAddButton(self):
+    """Handle a click in the Add button in the Check Spelling dialog."""
+
+    self.add()
+    #self.closePipes()
+
+</t>
+<t tx="ekr.20040809151600.29">def onIgnoreButton(self):
+    """Handle a click in the Ignore button in the Check Spelling dialog."""
+
+    self.ignore()
+    #self.closePipes()</t>
+<t tx="ekr.20040809151600.30">def onChangeButton(self):
+    """Handle a click in the Change button in the Check Spelling dialog."""
+
+    self.change()
+    #self.closePipes()
+    self.updateButtons()
+    
+# Event needed for double-click event.
+def onChangeThenFindButton(self,event=None): 
+    """Handle a click in the "Change, Find" button in the Check Spelling dialog."""
+
+    if self.change():
+        self.find()
+    #self.closePipes()
+    self.updateButtons()</t>
+<t tx="ekr.20040809151600.31">def onFindButton(self):
+    """Handle a click in the Find button in the Check Spelling dialog."""
+
+    self.find()
+    self.updateButtons()
+    #self.closePipes()</t>
+<t tx="ekr.20040809151600.32">def onHideButton(self):
+    """Handle a click in the Hide button in the Check Spelling dialog."""
+
+    #self.closePipes()
+    self.top.withdraw()
+</t>
+<t tx="ekr.20040809151600.33">def onRedoButton(self):
+    """Handle a click in the Redo button in the Check Spelling dialog."""
+
+    self.c.undoer.redo() # Not a command, so command hook doesn't fire.
+    self.update(show= False, fill= False)
+    self.c.frame.body.bodyCtrl.focus_force()
+    
+def onUndoButton(self):
+    """Handle a click in the Undo button in the Check Spelling dialog."""
+
+    self.c.undoer.undo() # Not a command, so command hook doesn't fire.
+    self.update(show= False, fill= False)
+    self.c.frame.body.bodyCtrl.focus_force()</t>
+<t tx="ekr.20040809151600.34"></t>
+<t tx="ekr.20040809151600.35">def add(self):
+    """Add the selected suggestion to the dictionary."""
+    
+    if not self.local_dictionary_file:
+        return
+    
+    try:
+        f = None
+        try:
+            # Rewrite the dictionary in alphabetical order.
+            f = open(self.local_dictionary_file, "r")
+            words = f.readlines()
+            f.close()
+            words = [word.strip() for word in words]
+            words.append(self.currentWord)
+            words.sort()
+            f = open(self.local_dictionary_file, "w")
+            for word in words:
+                f.write("%s\n" % word)
+            f.flush()
+            f.close()
+            g.es("Adding ", color= "blue", newline= False) 
+            g.es('%s' % self.currentWord)
+        except IOError:
+            g.es("Can not add %s to dictionary" % self.currentWord, color="red")
+    finally:
+        if f: f.close()
+        
+    self.dictionary[self.currentWord.lower()] = 0
+    
+    # Restart aspell so that it re-reads its dictionary.
+    #why? since we are checking local words ourself anyway
+    #self.aspell.closePipes()
+    #self.aspell.openPipes()
+    
+    self.onFindButton()</t>
+<t tx="ekr.20040809151600.36">def change(self):
+    """Make the selected change to the text"""
+
+    c = self.c ; v = self.v ; body = self.body ; t = body.bodyCtrl
+    
+    selection = self.getSuggestion()
+    if selection:
+        start,end = oldSel = g.app.gui.getTextSelection(t)
+        if start:
+            if t.compare(start, "&gt;", end):
+                start,end = end,start
+            t.delete(start,end)
+            t.insert(start,selection)
+            g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
+            newSel = g.app.gui.getTextSelection(t)
+
+            # update node, undo status, dirty flag, changed mark &amp; recolor
+            c.beginUpdate()
+            c.frame.body.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
+            c.endUpdate(True)
+            t.focus_set()
+            return True
+
+    # The focus must never leave the body pane.
+    t.focus_set()
+    return False</t>
+<t tx="ekr.20040809151600.37">def checkSpelling(self,event=None):
+    """Open the Check Spelling dialog."""
+
+    self.top.deiconify()
+    self.top.lift()
+    self.update(show= True, fill= False)</t>
+<t tx="ekr.20040809151600.38">def find(self):
+    """Find the next unknown word."""
+    
+    # Reload the work pane from the present node.
+    s = self.body.bodyCtrl.get("1.0", "end").rstrip()
+    self.workCtrl.delete("1.0", "end")
+    self.workCtrl.insert("end", s)
+    
+    # Reset the insertion point of the work widget.
+    ins = self.body.bodyCtrl.index("insert")
+    self.workCtrl.mark_set("insert", ins)
+
+    alts, word = self.findNextMisspelledWord()
+    self.currentWord = word # Need to remember this for 'add' and 'ignore'
+    
+    if alts:
+        self.fillbox(alts, word)
+        self.body.bodyCtrl.focus_set()
+                    
+        # Copy the working selection range to the body pane
+        start, end = g.app.gui.getTextSelection(self.workCtrl)
+        g.app.gui.setTextSelection(self.body.bodyCtrl, start, end)
+        #fix selection getting hidden in not visable section of body
+        self.body.bodyCtrl.see(start)
+    else:
+        g.es("no more misspellings")
+        self.fillbox([])</t>
+<t tx="ekr.20040809151600.39">def ignore(self):
+    """Ignore the incorrect word for the duration of this spell check session."""
+    
+    g.es("Ignoring ", color= "blue", newline= False)
+    g.es('%s' % self.currentWord)
+
+    self.dictionary[self.currentWord.lower()] = 0
+    self.onFindButton()</t>
+<t tx="ekr.20040809151600.40"></t>
+<t tx="ekr.20040809151600.41">def fillbox(self, alts, word=None):
+    """Update the suggestions listbox in the Check Spelling dialog."""
+    
+    self.suggestions = alts
+    
+    if not word:
+        word = ""
+
+    self.wordLabel.configure(text= "Suggestions for: " + word)
+    self.listBox.delete(0, "end")
+
+    for i in xrange(len(self.suggestions)):
+        self.listBox.insert(i, self.suggestions[i])
+    
+    # This doesn't show up because we don't have focus.
+    if len(self.suggestions):
+        self.listBox.select_set(1) 
+
+</t>
+<t tx="ekr.20040809151600.42">def findNextMisspelledWord(self):
+    """Find the next unknown word."""
+    
+    aspell = self.aspell ; alts = None ; word = None
+    c = self.c ; v = self.v
+    try:
+        #aspell.openPipes()
+        try:
+            while 1:
+                v, word = self.findNextWord(v) 
+                if not v or not word:
+                    alts = None
+                    break
+                &lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;
+                alts = aspell.processWord(word)
+                if alts:
+                    self.v = v
+                    c.beginUpdate()
+                    c.frame.tree.expandAllAncestors(v)
+                    c.selectVnode(v)
+                    c.endUpdate()
+                    break
+        except:
+            g.es_exception()
+    finally:
+        #aspell.closePipes()
+        return alts, word</t>
+<t tx="ekr.20040809151600.43">@ We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the cost of checking aspell is higher than the cost of checking our local dictionary. For small local dictionaries this is probably not True and this code could easily be located after the aspell call
+@c
+
+if self.dictionary.has_key(word.lower()):
+    
+    # print "Ignored", word
+    continue
+    
+# print "Didn't ignore '%s'" % word</t>
+<t tx="ekr.20040809151600.44">def findNextWord(self, v):
+    """Scan for the next word, leaving the result in the work widget"""
+
+    t = self.workCtrl
+    word_start = string.letters + '_'
+    t.mark_set("insert", "insert wordend + 1c")
+    while 1:
+        # print `t.index("insert")`, `t.index("end-1c")`
+        if t.compare("insert","&gt;=", "end - 1c"):
+            v = v.threadNext()
+            if not v: return None,None
+            t.delete("1.0", "end")
+            t.insert("end", v.bodyString())
+            t.mark_set("insert", "1.0")
+        elif t.compare("insert","&gt;=", "insert lineend - 1c"):
+            t.mark_set("insert", "insert lineend + 1line")
+        else:
+            ch = t.get("insert")
+            if ch in word_start:
+                word = t.get("insert wordstart", "insert wordend")
+                g.app.gui.setTextSelection(
+                            t, "insert wordstart", "insert wordend")
+                # print "findNextWord:",`word`
+                return v, word
+            elif ch:
+                t.mark_set("insert", "insert + 1c")</t>
+<t tx="ekr.20040809151600.45">def getSuggestion(self):
+    """Return the selected suggestion from the listBox."""
+    
+    # Work around an old Python bug.  Convert strings to ints.
+    items = self.listBox.curselection()
+    try:
+        items = map(int, items)
+    except ValueError: pass
+
+    if items:
+        n = items[0]
+        suggestion = self.suggestions[n]
+        return suggestion
+    else:
+        return None</t>
+<t tx="ekr.20040809151600.46">def onMap (self, event=None):
+    """Respond to a Tk &lt;Map&gt; event."""
+    
+    self.update(show= False, fill= False)</t>
+<t tx="ekr.20040809151600.47">def onSelectListBox(self, event=None):
+    """Respond to a click in the selection listBox."""
+    
+    self.updateButtons()
+    self.body.bodyCtrl.focus_set()
+</t>
+<t tx="ekr.20040809151600.48">def update(self, show= True, fill= False):
+    """Update the Spell Check dialog."""
+    
+    # print "update(show=%d,fill=%d)" % (show,fill)
+    
+    # Always assume that the user has changed text.
+    self.c = c = g.top()
+    self.v = c.currentVnode()
+    self.body = c.frame.body
+    if fill:
+        self.fillbox([])
+    self.updateButtons()
+    if show:
+        self.top.deiconify()
+        # Don't interfere with Edit Headline commands.
+        self.body.bodyCtrl.focus_set()
+</t>
+<t tx="ekr.20040809151600.49">def updateButtons(self):
+    """Enable or disable buttons in the Check Spelling dialog."""
+    
+    start,end = g.app.gui.getTextSelection(self.body.bodyCtrl)
+    state = g.choose(self.suggestions and start,"normal", "disabled")
+    
+    self.changeButton.configure(state= state)
+    self.changeFindButton.configure(state= state)
+
+    state = g.choose(self.c.undoer.canRedo(), "normal", "disabled")
+    self.redoButton.configure(state= state)
+    
+    state = g.choose(self.c.undoer.canUndo(), "normal", "disabled")
+    self.undoButton.configure(state= state)
+    
+    state = g.choose(self.local_dictionary_file, "normal", "disabled")
+    self.addButton.configure(state= state)
+
+    self.ignoreButton.configure(state= "normal")</t>
+<t tx="ekr.20040809151600.52"></t>
+<t tx="ekr.20040809151600.53">"""A Pyrex wrapper for the aspell api."""
+
+cdef extern from "aspell.h":
+  ctypedef struct AspellConfig
+  AspellConfig* new_aspell_config()
+  void delete_aspell_config(AspellConfig*)
+  int aspell_config_replace(AspellConfig*, char*, char*)
+  ctypedef struct AspellCanHaveError
+  AspellCanHaveError* new_aspell_speller(AspellConfig*)
+  #ctypedef struct AspellManager
+  unsigned int aspell_error_number(AspellCanHaveError*)
+  char* aspell_error_message(AspellCanHaveError*)
+  ctypedef struct AspellSpeller
+  AspellSpeller* to_aspell_speller(AspellCanHaveError*)
+  int aspell_speller_check(AspellSpeller*, char*, int)
+  ctypedef struct AspellWordList
+  AspellWordList* aspell_speller_suggest(AspellSpeller*, char*, int)
+  ctypedef struct AspellStringEnumeration
+  AspellStringEnumeration * aspell_word_list_elements(AspellWordList*)
+  char* aspell_string_enumeration_next(AspellStringEnumeration*)
+  int aspell_speller_store_replacement(AspellSpeller*, char*, int, char*, int)
+  int aspell_speller_add_to_session(AspellSpeller*, char*, int)
+  int aspell_speller_add_to_personal(AspellSpeller*, char*, int)
+  int aspell_speller_error(AspellSpeller*)
+  char* aspell_speller_error_message(AspellSpeller*)
+  int aspell_speller_save_all_word_lists(AspellSpeller*)
+
+class Error(Exception):
+  pass
+
+cdef class spell_checker:
+  '''A simple wrapper for the Aspell API'''
+  cdef AspellConfig* config
+  cdef AspellSpeller* checker
+  
+  @others</t>
+<t tx="ekr.20040809151600.54">@language python
+@tabwidth -4
+
+from distutils.core import setup, Extension
+from Pyrex.Distutils import build_ext
+import os
+
+if os.name == 'nt':
+  #c:/Program Files/Aspell
+  aspell_home = './aspell-dev-0-50-3-3'
+  libraries = ['aspell-15']
+  include_dirs = [aspell_home+'/include']
+  library_dirs = [aspell_home+'/lib']
+else:
+  raise RuntimeError, 'you need to modify setup.py to work with %s' % os.name
+
+ext = Extension('aspell', ['aspell.pyx' ],
+                libraries = libraries,
+                include_dirs = include_dirs,
+                library_dirs = library_dirs,
+                )
+                
+setup(name="aspell", version="1.1",
+      ext_modules = [ext],
+      cmdclass = {'build_ext': build_ext}
+)</t>
+<t tx="ekr.20040809160744">@killcolor
+
+You also need from aspell the include and lib dev packages
+if on windows the dlls and a sutible dictionary
+
+included here for redistribution as a convience only
+unmodifyed except for path to the include &amp; lib path
+
+A Pyrex wrapper for the aspell api.
+
+&lt;http://prdownloads.sourceforge.net/uncpythontools/aspell-1.0.zip?download&gt;
+&lt;http://sourceforge.net/project/showfiles.php?group_id=82407&gt;</t>
+<t tx="ekr.20040809160744.1">def __init__(self, lang="en_US", prefix="c:/Program Files/Aspell", **kwargs):
+
+    self.config = new_aspell_config()
+    aspell_config_replace(self.config, "prefix", prefix)
+    aspell_config_replace(self.config, "lang", lang)
+    for key,value in kwargs.items():
+      aspell_config_replace(self.config, key, value)
+    cdef AspellCanHaveError* possible_err
+    possible_err = new_aspell_speller(self.config)
+    if aspell_error_number(possible_err) != 0:
+      msg = aspell_error_message(possible_err)
+      raise Error, msg
+    else:
+      self.checker = to_aspell_speller(possible_err)</t>
+<t tx="ekr.20040809160744.2">def check(self, word):
+    '''Return 0 if word is misspelled, 1 otherwise.'''
+    return aspell_speller_check(self.checker, word, len(word))</t>
+<t tx="ekr.20040809160744.3">def suggest(self, word):
+    '''Return a list of suggested replacements for a misspelled word.'''
+    cdef AspellWordList* suggestions
+    # I need a cast here to stop the C compiler from complaining about const mismatch
+    suggestions = &lt;AspellWordList*&gt;aspell_speller_suggest(self.checker, word, len(word))
+    cdef AspellStringEnumeration* elements
+    elements = aspell_word_list_elements(suggestions)
+    result = []
+    cdef char* suggestion
+    while 1:
+      # this cast is the hush the C compiler which knows this function is const char*
+      suggestion = &lt;char*&gt;aspell_string_enumeration_next(elements)
+      if suggestion == NULL:
+        break
+      result.append(suggestion)
+    return result</t>
+<t tx="ekr.20040809160744.4">def store_replacement(self, wrongword, rightword):
+    '''Tell Aspell about the correction so it can learn about your mistakes.'''
+    return aspell_speller_store_replacement(self.checker, wrongword, len(wrongword),
+                                            rightword, len(rightword))</t>
+<t tx="ekr.20040809160744.5">def add_to_session(self, word):
+    '''Tell Aspell to allow word for this session.'''
+    return aspell_speller_add_to_session(self.checker, word, len(word))
+
+</t>
+<t tx="ekr.20040809160744.6">def add_to_personal(self, word):
+    '''Tell Aspell to allow word permanently.'''
+    r = aspell_speller_add_to_personal(self.checker, word, len(word))
+    aspell_speller_save_all_word_lists(self.checker)
+    return r</t>
+<t tx="ekr.20040809161108">@killcolor
+
+Pyrex is ****SO**** great! I wrote this in about 1 hour from the
+Aspell doc. I spent most of that hour figuring out that I needed to
+set the Aspell "prefix" to get it to work!
+
+Intended usage is:
+
+1) create a spell_checker object for each document.
+
+2) check a word by calling the check method
+
+3) if you get 0 back indicating a misspelling, use the suggest method
+   to get a list of possible correct spellings.
+   
+4) tell aspell about the correct choice so it can learn from your
+   errors using the store_replacement method
+   
+5) add words to either the session dictionary or to your personal
+   dictionary using the add_to_session or add_to_personal methods.
+
+import aspell
+sc = aspell.spell_checker()
+word = 'flarg'
+if not sc.check(word):
+  print word, 'is incorrect'
+  print 'suggestions include:', sc.suggest(word)
+
+To get this to build and work on Windows I downloaded the Windows
+version of aspell from http://aspell.net/win32/. I got the Full
+Installer, a dictionary, and the libraries for MS VisualC++ as
+separate downloads. I let the first two go to their default locations
+and I unpacked the zip file for the last into the C:\Program
+Files\Aspell top directory. Then I copied the aspell-15.dll from
+C:\Program Files\Aspell\bin to a folder on my path.
+
+You will also, of course, need Pyrex from
+http://www.cosc.canterbury.ac.nz/~greg/python/Pyrex/.
+
+With the above completed the standard 'python setup.py install' should
+build and install the extension.
+
+I believe this should work on Linux with trivial modification.
+
+This software is free for anyone to use for any purpose. If you or your
+lawyer are stupid enough to believe that I have any liability for this
+code then do not use it.
+
+23 May 2004
+Gary Bishop</t>
+<t tx="ekr.20040809165421">@killcolor
+
+spellpyx.py is the new spell checker.  It is much faster, but requires Python 2.3 and a recent version of Aspell.
+
+spellpyx.py use the file aspell.pyd.  You can use files aspell.pyx and setup.py to recreate aspell.pyd.  To generate these files, change @(blank)file to @file.
+
+mod_spelling.py is the older spell checker.  It is slower, but will work with all versions of Python and most recent versions of Aspell.  Warning: you must _remove_ aspell.pyd if you are going to use mod_spelling.py.  I have not been able to get mod_spelling.py to work with Leo 4.2.
+
+Both spelling plugins use the files mod_spelling.ini and mod_spelling.txt.  mod_spelling.ini contains a few configuration settings.
+
+mod_spelling.txt is the local ditionary.  It would be quite dangerous to refer to this file in an @asis node here: only the plugin code should typically change this file.  You may, of course, edit mod_spelling.txt yourself: just make sure that Leo isn't running when you do this.</t>
+<t tx="ekr.20040809165421.1">- Set aspell_dir to the top-level Aspell directory.
+- Copy aspell.pyd to this directory
+
+** python pyd compiled dlls are python version specific.</t>
 </tnodes>
 </leo_file>
