@@ -342,7 +342,7 @@ class leoTkinterTree (leoFrame.leoTree):
         # N.B. These vnode methods are entitled to know about details of the leoTkinterTree class.
         
         #@+others
-        #@+node:ekr.20040803072955.23:onHyperLinkControlClick
+        #@+node:ekr.20040803072955.23:OnHyperLinkControlClick
         def OnHyperLinkControlClick (self,event):
             
             """Callback injected into position class."""
@@ -352,7 +352,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 if not g.doHook("hypercclick1",c=c,p=p,event=event):
                     # New in recycled nodes code:
                     # Call self.redraw to inhibit calls to setLabelState.
-                    self.redraw()
+                    c.frame.tree.redraw()
                     c.beginUpdate()
                     c.selectVnode(p)
                     c.endUpdate()
@@ -363,7 +363,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 
         onHyperLinkControlClick = OnHyperLinkControlClick
         #@nonl
-        #@-node:ekr.20040803072955.23:onHyperLinkControlClick
+        #@-node:ekr.20040803072955.23:OnHyperLinkControlClick
         #@+node:ekr.20040803072955.24:onHyperLinkEnter
         def OnHyperLinkEnter (self,event=None):
             
