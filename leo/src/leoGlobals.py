@@ -792,9 +792,8 @@ def es_error (s,color=None):
 
     if color is None and g.app.config: # May not exist during initialization.
         color = g.app.config.getColor(None,"log_error_color")
-        g.es(s,color=color)
-    else:
-        g.es(s)
+
+    g.es(s,color=color)
 #@nonl
 #@-node:ekr.20031218072017.3110:es_error
 #@+node:ekr.20031218072017.3111:es_event_exception
@@ -815,7 +814,7 @@ def es_event_exception (eventName,full=False):
         traceback.print_exc()
 #@nonl
 #@-node:ekr.20031218072017.3111:es_event_exception
-#@+node:ekr.20031218072017.3112:es_exception
+#@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
     
     typ,val,tb = sys.exc_info()
@@ -838,7 +837,78 @@ def es_exception (full=True,c=None,color="red"):
 
     return fileName,n
 #@nonl
-#@-node:ekr.20031218072017.3112:es_exception
+#@+node:ekr.20031218072017.1474:es, enl, ecnl
+def ecnl():
+    g.ecnls(1)
+
+def ecnls(n):
+    log = app.log
+    if log and not log.isNull:
+        while log.newlines < n:
+            g.enl()
+
+def enl():
+    log = app.log
+    if log and not log.isNull:
+        log.newlines += 1
+        log.putnl()
+
+def es(s,*args,**keys):
+    if app.killed:
+        return
+    newline = keys.get("newline",True)
+    color = keys.get("color",None)
+    if color == 'suppress': return # New in 4.3.
+    if type(s) != type("") and type(s) != type(u""): # 1/20/03
+        s = repr(s)
+    for arg in args:
+        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
+            arg = repr(arg)
+        s = s + ", " + arg
+    if app.batchMode:
+        if app.log:
+            app.log.put(s)
+    else:
+        log = app.log
+        if log and not log.isNull:
+            # print 'g.es',s
+            log.put(s,color=color)
+            for ch in s:
+                if ch == '\n': log.newlines += 1
+                else: log.newlines = 0
+            if newline:
+                g.ecnl() # only valid here
+        elif newline:
+            app.logWaiting.append((s+'\n',color),)
+            # print s
+        else:
+            app.logWaiting.append((s,color),)
+            # print s,
+#@nonl
+#@-node:ekr.20031218072017.1474:es, enl, ecnl
+#@+node:ekr.20050220030850:test_g_es_exception
+def test_g_es_exception():
+
+    try:
+        import sys
+        # Catch the output of g.es_exception.
+        # We catch the AssertionError, so nothing gets written to stderr.
+        sys.stdout = fo = g.fileLikeObject()
+        try: # Create an exception to catch.
+            assert False, 'Assert False in test_g_es_exception'
+        except AssertionError:
+            g.es_exception(color='suppress')
+            result = fo.get()
+            s1 = 'Traceback (most recent call last):'
+            s2 = 'AssertionError: Assert False in test_g_es_exception'
+            assert result.find(s1) > -1, 'No traceback line: %s' % repr(result)
+            assert result.find(s2) > -1, 'No AssertionError line: %s' % repr(result)
+    finally:
+        # Not needed unless we execute this script as selected text.
+        sys.stdout = sys.__stdout__
+#@nonl
+#@-node:ekr.20050220030850:test_g_es_exception
+#@-node:ekr.20031218072017.3112:es_exception & test
 #@+node:ekr.20040731204831:getLastTracebackFileAndLineNumber
 def getLastTracebackFileAndLineNumber():
     
@@ -2162,6 +2232,7 @@ def es(s,*args,**keys):
         return
     newline = keys.get("newline",True)
     color = keys.get("color",None)
+    if color == 'suppress': return # New in 4.3.
     if type(s) != type("") and type(s) != type(u""): # 1/20/03
         s = repr(s)
     for arg in args:
@@ -2443,7 +2514,7 @@ def toUnicodeFileEncoding(path,encoding):
 #@nonl
 #@-node:ekr.20031218072017.2160:toUnicodeFileEncoding
 #@-node:ekr.20031218072017.2145:os.path wrappers (leoGlobals.py)
-#@+node:ekr.20031218072017.3151:Scanning...
+#@+node:ekr.20031218072017.3151:Scanning... (leoGlobals.py)
 #@+node:ekr.20031218072017.3152:g.scanAtFileOptions (used in 3.x read code)
 def scanAtFileOptions (h,err_flag=False):
     
@@ -3223,7 +3294,7 @@ def joinLines (aList):
     return ''.join(aList)
 #@nonl
 #@-node:ekr.20031218072017.3195:splitLines & joinLines
-#@-node:ekr.20031218072017.3151:Scanning...
+#@-node:ekr.20031218072017.3151:Scanning... (leoGlobals.py)
 #@+node:ekr.20040327103735.2:Script Tools (leoGlobals.py)
 #@+node:ekr.20031218072017.2418:g.initScriptFind (set up dialog)
 def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
