@@ -443,7 +443,7 @@ class leoFrame:
 	#@nonl
 	#@-node:setInitialWindowGeometry
 	#@+node:setTopGeometry
-	def setTopGeometry (self,geom):
+	def setTopGeometry (self,w,h,x,y,adjustSize=true):
 		
 		self.oops()
 	#@nonl

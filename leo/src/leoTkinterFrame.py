@@ -159,12 +159,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		frame.tree     = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
 		frame.log      = leoTkinterLog(frame,self.split2Pane2)
 		frame.body     = leoTkinterBody(frame,self.split1Pane2)
+		
+		# Yes, this an "official" ivar: this is a kludge.
 		frame.bodyCtrl = frame.body.bodyCtrl
 		
-		# Configure.
+		# Configure.  N.B. There may be Tk bugs here that make the order significant!
 		frame.setTabWidth(c.tab_width)
 		frame.tree.setTreeColorsFromConfig()
 		self.reconfigurePanes()
+		self.body.setFontFromConfig()
 		
 		# Create the status line.
 		self.createStatusLine()
@@ -732,13 +735,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		w = config.getIntWindowPref("initial_window_width")
 		x = config.getIntWindowPref("initial_window_left")
 		y = config.getIntWindowPref("initial_window_top")
-		# print h,w,x,y
-		
-		if h == None or h < 5: h = 5
-		if w == None or w < 5: w = 10
-		y = max(y,0) ; x = max(x,0)
 	
-		self.top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+		self.setTopGeometry(w,h,x,y)
 	#@nonl
 	#@-node:setInitialWindowGeometry
 	#@+node:setTabWidth
@@ -773,6 +771,30 @@ class leoTkinterFrame (leoFrame.leoFrame):
 				self.bodyCtrl.configure(wrap="none")
 				self.bodyXBar.pack(side="bottom",fill="x")
 	#@-node:setWrap
+	#@+node:setTopGeometry
+	def setTopGeometry(self,w,h,x,y,adjustSize=true):
+		
+		# Put the top-left corner on the screen.
+		x = max(10,x) ; y = max(10,y)
+		
+		if adjustSize:
+			top = self.top
+			sw = top.winfo_screenwidth()
+			sh = top.winfo_screenheight()
+	
+			# Adjust the size so the whole window fits on the screen.
+			w = min(sw-10,w)
+			h = min(sh-10,h)
+	
+			# Adjust position so the whole window fits on the screen.
+			if x + w > sw: x = 10
+			if y + h > sh: y = 10
+		
+		geom = "%dx%d%+d%+d" % (w,h,x,y)
+		
+		self.top.geometry(geom)
+	#@nonl
+	#@-node:setTopGeometry
 	#@+node:reconfigurePanes (use config bar_width)
 	def reconfigurePanes (self):
 		
@@ -1053,15 +1075,17 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		x,y,delta = 10,10,10
 		for frame in app.windowList:
 			top = frame.top
+	
 			# Compute w,h
 			top.update_idletasks() # Required to get proper info.
 			geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
 			dim,junkx,junky = string.split(geom,'+')
 			w,h = string.split(dim,'x')
 			w,h = int(w),int(h)
+	
 			# Set new x,y and old w,h
-			geom = "%dx%d%+d%+d" % (w,h,x,y)
-			frame.setTopGeometry(geom) # frame.top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+			frame.setTopGeometry(w,h,x,y,adjustSize=false)
+	
 			# Compute the new offsets.
 			x += 30 ; y += 30
 			if x > 200:
@@ -1216,9 +1240,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 	def setTitle (self,title):
 		return self.top.title(title)
-	
-	def setTopGeometry(self,geom):
-		self.top.geometry(geom)
 		
 	def get_window_info(self):
 		return app.gui.get_window_info(self.top)
@@ -1234,7 +1255,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 	def update (self):
 		self.top.update()
-	#@nonl
 	#@-node:Tk bindings...
 	#@-others
 #@nonl
@@ -1254,7 +1274,6 @@ class leoTkinterBody (leoFrame.leoBody):
 		leoFrame.leoBody.__init__(self,frame,parentFrame)
 	
 		self.bodyCtrl = self.createControl(frame,parentFrame)
-		self.setFontFromConfig()
 	
 		self.colorizer = leoColor.colorizer(self.c)
 	#@nonl

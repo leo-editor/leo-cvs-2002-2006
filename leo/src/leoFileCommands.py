@@ -408,7 +408,7 @@ class baseFileCommands:
 			app.findFrame.init(c)
 	#@nonl
 	#@-node:getFindPanelSettings
-	#@+node:getGlobals (changed for 4.0)
+	#@+node:getGlobals
 	def getGlobals (self):
 	
 		if self.getOpenTag("<globals"):
@@ -419,12 +419,8 @@ class baseFileCommands:
 	
 		self.getTag("<global_window_position")
 		y,x,h,w = self.getPosition() ; self.getTag("/>")
-		# print ("y,x,h,w:" + `y` + "," + `x` + "," + `h` + "," + `w`)
-		
-		# Bug fix: 7/15/02: use max, not min!!!
-		y = max(y,0) ; x = max(x,0)
-		geom = "%dx%d%+d%+d" % (w,h,x,y)
-		self.frame.setTopGeometry(geom)
+		self.frame.setTopGeometry(w,h,x,y)
+	
 		# 7/15/02: Redraw the window before writing into it.
 		self.frame.deiconify()
 		self.frame.lift()
@@ -436,7 +432,7 @@ class baseFileCommands:
 	
 		self.getTag("</globals>")
 	#@nonl
-	#@-node:getGlobals (changed for 4.0)
+	#@-node:getGlobals
 	#@+node:getLeoFile (calls setAllJoinLinks, initAllCloneBits)
 	# The caller should enclose this in begin/endUpdate.
 	

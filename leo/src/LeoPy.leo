@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3986" clone_windows="0"/>
-<globals body_outline_ratio="0.41954022988505746">
+<globals body_outline_ratio="0.49655172413793103">
 	<global_window_position top="20" left="357" height="870" width="839"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -12,8 +12,9 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203160744"><vh> Diary</vh>
-<v t="edream.120103054230"><vh>December 2003</vh>
+<v t="edream.110203160744" a="E"><vh> Diary</vh>
+<v t="edream.120103054230" a="E"><vh>December 2003</vh>
+<v t="edream.120403062934" a="V"><vh>12/04</vh></v>
 <v t="edream.120303101759"><vh>12/03</vh>
 <v t="edream.120303153525"><vh>Replaced c.OpenWithFileName by global openWithFileName</vh></v>
 <v t="edream.120303110224"><vh>Fixed dangerous bug in Convert Blanks command</vh></v>
@@ -3505,19 +3506,33 @@
 <v t="edream.110203160744.1399"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="edream.110203160744.220" a=""><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
 </v>
+<v t="edream.120403033313"><vh>config</vh>
 <v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
-<v t="edream.120203132019"><vh>app.tkinterGui</vh>
+</v>
+<v t="edream.120403033313.1"><vh>frame</vh>
+<v t="edream.110203160744.1880" a=""><vh>f.finishCreate</vh>
+<v t="edream.110203160744.1881"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
+<v t="edream.110203160744.1882"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
+<v t="edream.110203160744.1883"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1884"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.120403033313.2"><vh>body</vh>
 <v t="edream.110203160744.2286" a=""><vh>tkBody. __init__</vh></v>
 <v t="edream.110203160744.2289" a="M"><vh>tkBody.setFontFromConfig</vh></v>
 <v t="edream.111003102135" a=""><vh>Configuration (Tk spelling)</vh></v>
+</v>
+<v t="edream.120203132019"><vh>gui</vh>
 <v t="edream.110203160744.3686" a=""><vh>tkGui.getDefaultConfigFont</vh></v>
 <v t="edream.110203160744.3695" a=""><vh>tkGui.getFontFromParams</vh></v>
-<v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
+<v t="edream.110203160744.1846" a=""><vh>newLeoCommanderAndFrame (gui-independent)</vh>
+<v t="edream.110203160744.1847"><vh>&lt;&lt; compute the window title &gt;&gt;</vh></v>
+</v>
 </v>
 <v t="edream.110203160744.1706" a=""><vh>openWithFileName</vh></v>
 </v>
 </v>
-<v t="edream.120303103648"><vh>Make sure Leo doesn't put windows off the screen</vh></v>
 <v t="edream.120303100236"><vh>(Fixed Replace Blanks command)</vh>
 <v t="edream.112103153646.3" a=""><vh>getSelectionLines</vh></v>
 <v t="edream.110203160744.2010" a=""><vh>Edit Body Text</vh>
@@ -3556,7 +3571,7 @@
 <v t="edream.110203160744.2023"><vh>updateBodyPane (handles undo)</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.2458" a="E"><vh>Code</vh>
+<v t="edream.110203160744.2458"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -4671,7 +4686,7 @@
 <v t="edream.110203160744.2434" a=""><vh>getFindPanelSettings</vh>
 <v t="edream.110203160744.1818"><vh>&lt;&lt; Set defaults of all flags &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.2969"><vh>getGlobals (changed for 4.0)</vh></v>
+<v t="edream.110203160744.2969" a=""><vh>getGlobals</vh></v>
 <v t="edream.110203160744.1547" a=""><vh>getLeoFile (calls setAllJoinLinks, initAllCloneBits)</vh>
 <v t="edream.110203160744.1548"><vh>&lt;&lt; warn on read-only files &gt;&gt;</vh></v>
 <v t="edream.110203160744.1549"><vh>&lt;&lt; scan all the xml elements &gt;&gt;</vh></v>
@@ -6037,7 +6052,7 @@
 <v t="edream.111203090040.1"><vh>printIvars</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3547" a="E"><vh>Gui Tkinter classes</vh>
+<v t="edream.110203160744.3547"><vh>Gui Tkinter classes</vh>
 <v t="edream.110203160744.3594" tnodeList="edream.110203160744.3594,edream.110203160744.3595,edream.110203160744.3596,edream.110203160744.3597,edream.110203160744.3598,edream.110203160744.2160,edream.110203160744.2161,edream.110203160744.3599,edream.110203160744.3600,edream.110203160744.3601,edream.110203160744.3602,edream.111203184327,edream.110203160744.2133,edream.110203160744.2134,edream.110203160744.3603,edream.110203160744.3604,edream.110203160744.3605,edream.110203160744.3606"><vh>@file leoTkinterColorPanels.py</vh>
 <v t="edream.110203160744.3595"><vh>&lt;&lt; define gui-dependent color panel data &gt;&gt;</vh></v>
 <v t="edream.110203160744.3596"><vh>class leoTkinterColorNamePanel</vh>
@@ -6204,7 +6219,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.3681" a="E" tnodeList="edream.110203160744.3681,edream.110203160744.2260,edream.110203160744.1693,edream.110203160744.1694,edream.110203160744.1875,edream.110203160744.1876,edream.110203160744.1880,edream.110203160744.1881,edream.110203160744.1882,edream.110203160744.1883,edream.110203160744.1884,edream.110203160744.2270,edream.110203160744.2271,edream.110203160744.2272,edream.110203160744.1523,edream.110203160744.2273,edream.110203160744.2274,edream.110203160744.2276,edream.110203160744.2277,edream.110203160744.1525,edream.110203160744.1526,edream.110203160744.1527,edream.110203160744.1528,edream.110203160744.1529,edream.110203160744.1530,edream.110203160744.1531,edream.110203160744.1532,edream.110203160744.1533,edream.110203160744.1534,edream.110203160744.1535,edream.110203160744.1877,edream.110203160744.1878,edream.110203160744.1591,edream.110203160744.1879,edream.120203154134,edream.110203160744.2262,edream.110203160744.2263,edream.110203160744.2264,edream.110203160744.1629,edream.110203160744.2265,edream.110203160744.1520,edream.110203160744.2267,edream.110203160744.1683,edream.110203160744.1684,edream.110203160744.1685,edream.110203160744.1686,edream.110203160744.1687,edream.110203160744.1688,edream.110203160744.1689,edream.110203160744.1690,edream.110203160744.1691,edream.110203160744.1697,edream.110203160744.1147,edream.110203160744.1148,edream.110203160744.1149,edream.111303101154,edream.111103193348.1,edream.111303101634,edream.110203160744.1256,edream.110203160744.1253,edream.110203160744.1258,edream.110203160744.1257,edream.110203160744.1255,edream.110203160744.1270,edream.110203160744.1271,edream.110203160744.1272,edream.110203160744.736,edream.110203160744.1850,edream.110203160744.2284,edream.110203160744.2286,edream.110203160744.2287,edream.110203160744.2288,edream.110203160744.2289,edream.110203160744.1301,edream.110203160744.1302,edream.110203160744.1303,edream.110203160744.1304,edream.110203160744.1305,edream.110203160744.1306,edream.110203160744.1307,edream.110203160744.1308,edream.110203160744.1309,edream.110203160744.1310,edream.110203160744.1311,edream.110203160744.1312,edream.110203160744.3710,edream.111003083003,edream.111003083003.1,edream.111003075626,edream.111003102135,edream.110203160744.2297,edream.110203160744.2305,edream.110203160744.2306,edream.111103092404,edream.111103053839,edream.110203160744.2308,edream.110203160744.2309,edream.110203160744.2310,edream.110203160744.2312,edream.110203160744.333,edream.111103063445,edream.110203160744.2317,edream.111103082046,edream.111003102120,edream.111103084151.1,edream.110203160744.2314,edream.110203160744.2315,edream.110203160744.2316,edream.110203160744.2319,edream.110203160744.2320,edream.110203160744.2299,edream.110203160744.2300,edream.111103093034,edream.110203160744.2148,edream.110203160744.2301,edream.110203160744.2302,edream.110203160744.2303,edream.111103085737.2,edream.111103065437,edream.111103070349,edream.110203160744.2304,edream.110203160744.2321,edream.110203160744.2332,edream.110203160744.2333,edream.110203160744.2334,edream.110203160744.2335,edream.110203160744.2336,edream.110203160744.2337,edream.110203160744.2338,edream.110203160744.1455,edream.110203160744.2339"><vh>@file leoTkinterFrame.py</vh>
+<v t="edream.110203160744.3681" tnodeList="edream.110203160744.3681,edream.110203160744.2260,edream.110203160744.1693,edream.110203160744.1694,edream.110203160744.1875,edream.110203160744.1876,edream.110203160744.1880,edream.110203160744.1881,edream.110203160744.1882,edream.110203160744.1883,edream.110203160744.1884,edream.110203160744.2270,edream.110203160744.2271,edream.110203160744.2272,edream.110203160744.1523,edream.110203160744.2273,edream.110203160744.2274,edream.110203160744.2276,edream.110203160744.2277,edream.110203160744.1525,edream.110203160744.1526,edream.110203160744.1527,edream.110203160744.1528,edream.110203160744.1529,edream.110203160744.1530,edream.110203160744.1531,edream.110203160744.1532,edream.110203160744.1533,edream.110203160744.1534,edream.110203160744.1535,edream.110203160744.1877,edream.110203160744.1878,edream.110203160744.1591,edream.110203160744.1879,edream.120203154134,edream.110203160744.2262,edream.110203160744.2263,edream.110203160744.2264,edream.110203160744.1629,edream.110203160744.2265,edream.110203160744.1520,edream.120403060759,edream.110203160744.2267,edream.110203160744.1683,edream.110203160744.1684,edream.110203160744.1685,edream.110203160744.1686,edream.110203160744.1687,edream.110203160744.1688,edream.110203160744.1689,edream.110203160744.1690,edream.110203160744.1691,edream.110203160744.1697,edream.110203160744.1147,edream.110203160744.1148,edream.110203160744.1149,edream.111303101154,edream.111103193348.1,edream.111303101634,edream.110203160744.1256,edream.110203160744.1253,edream.110203160744.1258,edream.110203160744.1257,edream.110203160744.1255,edream.110203160744.1270,edream.110203160744.1271,edream.110203160744.1272,edream.110203160744.736,edream.110203160744.1850,edream.110203160744.2284,edream.110203160744.2286,edream.110203160744.2287,edream.110203160744.2288,edream.110203160744.2289,edream.110203160744.1301,edream.110203160744.1302,edream.110203160744.1303,edream.110203160744.1304,edream.110203160744.1305,edream.110203160744.1306,edream.110203160744.1307,edream.110203160744.1308,edream.110203160744.1309,edream.110203160744.1310,edream.110203160744.1311,edream.110203160744.1312,edream.110203160744.3710,edream.111003083003,edream.111003083003.1,edream.111003075626,edream.111003102135,edream.110203160744.2297,edream.110203160744.2305,edream.110203160744.2306,edream.111103092404,edream.111103053839,edream.110203160744.2308,edream.110203160744.2309,edream.110203160744.2310,edream.110203160744.2312,edream.110203160744.333,edream.111103063445,edream.110203160744.2317,edream.111103082046,edream.111003102120,edream.111103084151.1,edream.110203160744.2314,edream.110203160744.2315,edream.110203160744.2316,edream.110203160744.2319,edream.110203160744.2320,edream.110203160744.2299,edream.110203160744.2300,edream.111103093034,edream.110203160744.2148,edream.110203160744.2301,edream.110203160744.2302,edream.110203160744.2303,edream.111103085737.2,edream.111103065437,edream.111103070349,edream.110203160744.2304,edream.110203160744.2321,edream.110203160744.2332,edream.110203160744.2333,edream.110203160744.2334,edream.110203160744.2335,edream.110203160744.2336,edream.110203160744.2337,edream.110203160744.2338,edream.110203160744.1455,edream.110203160744.2339"><vh>@file leoTkinterFrame.py</vh>
 <v t="edream.110203160744.2260"><vh>class leoTkinterFrame</vh>
 <v t="edream.110203160744.1874"><vh> frame.Birth &amp; Death</vh>
 <v t="edream.110203160744.1693" a=""><vh>f.__init__</vh>
@@ -6213,7 +6228,7 @@
 <v t="edream.110203160744.1875"><vh>f.__repr__</vh></v>
 <v t="edream.111603114117"><vh>Creating the frame</vh>
 <v t="edream.110203160744.1876"><vh>f.createCanvas</vh></v>
-<v t="edream.110203160744.1880"><vh>f.finishCreate</vh>
+<v t="edream.110203160744.1880" a=""><vh>f.finishCreate</vh>
 <v t="edream.110203160744.1881"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
 <v t="edream.110203160744.1882"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
 <v t="edream.110203160744.1883"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
@@ -6261,6 +6276,7 @@
 <v t="edream.110203160744.1629" a=""><vh>setInitialWindowGeometry</vh></v>
 <v t="edream.110203160744.2265" a=""><vh>setTabWidth</vh></v>
 <v t="edream.110203160744.1520" a=""><vh>setWrap</vh></v>
+<v t="edream.120403060759" a=""><vh>setTopGeometry</vh></v>
 <v t="edream.110203160744.2267"><vh>reconfigurePanes (use config bar_width)</vh></v>
 </v>
 <v t="edream.110203160744.1682"><vh>Event handlers (Frame)</vh>
@@ -6304,9 +6320,9 @@
 <v t="edream.110203160744.736" a=""><vh>Scrolling callbacks (frame)</vh></v>
 <v t="edream.110203160744.1850"><vh>Tk bindings...</vh></v>
 </v>
-<v t="edream.110203160744.2284" a="E"><vh>class leoTkinterBody</vh>
-<v t="edream.110203160744.2285" a="E"><vh> Birth &amp; death</vh>
-<v t="edream.110203160744.2286" a="V"><vh>tkBody. __init__</vh></v>
+<v t="edream.110203160744.2284"><vh>class leoTkinterBody</vh>
+<v t="edream.110203160744.2285"><vh> Birth &amp; death</vh>
+<v t="edream.110203160744.2286" a=""><vh>tkBody. __init__</vh></v>
 <v t="edream.110203160744.2287"><vh>tkBody.createBindings</vh></v>
 <v t="edream.110203160744.2288"><vh>tkBody.createControl</vh></v>
 </v>
@@ -6740,6 +6756,12 @@
 </v>
 </v>
 </v>
+</v>
+<v t="edream.120303103648"><vh>(Made sure Leo doesn't put windows off the screen)</vh>
+<v t="edream.120403060637"><vh>Report</vh></v>
+<v t="edream.110203160744.2969" a=""><vh>getGlobals</vh></v>
+<v t="edream.110203160744.1629" a=""><vh>setInitialWindowGeometry</vh></v>
+<v t="edream.120403060759" a=""><vh>setTopGeometry</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -22352,15 +22374,17 @@ def toggleSplitDirection(self):
 	x,y,delta = 10,10,10
 	for frame in app.windowList:
 		top = frame.top
+
 		# Compute w,h
 		top.update_idletasks() # Required to get proper info.
 		geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
 		dim,junkx,junky = string.split(geom,'+')
 		w,h = string.split(dim,'x')
 		w,h = int(w),int(h)
+
 		# Set new x,y and old w,h
-		geom = "%dx%d%+d%+d" % (w,h,x,y)
-		frame.setTopGeometry(geom) # frame.top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+		frame.setTopGeometry(w,h,x,y,adjustSize=false)
+
 		# Compute the new offsets.
 		x += 30 ; y += 30
 		if x &gt; 200:
@@ -28009,13 +28033,8 @@ from leoGlobals import * ; print `app().loadDir`</t>
 	w = config.getIntWindowPref("initial_window_width")
 	x = config.getIntWindowPref("initial_window_left")
 	y = config.getIntWindowPref("initial_window_top")
-	# print h,w,x,y
-	
-	if h == None or h &lt; 5: h = 5
-	if w == None or w &lt; 5: w = 10
-	y = max(y,0) ; x = max(x,0)
 
-	self.top.geometry("%dx%d%+d%+d" % (w,h,x,y))</t>
+	self.setTopGeometry(w,h,x,y)</t>
 <t tx="edream.110203160744.1630">@ To do:
 	
 For users:
@@ -30969,9 +30988,6 @@ def getTitle (self):
 	
 def setTitle (self,title):
 	return self.top.title(title)
-
-def setTopGeometry(self,geom):
-	self.top.geometry(geom)
 	
 def get_window_info(self):
 	return app.gui.get_window_info(self.top)
@@ -30986,7 +31002,8 @@ def lift (self):
 	self.top.lift()
 	
 def update (self):
-	self.top.update()</t>
+	self.top.update()
+</t>
 <t tx="edream.110203160744.1851"></t>
 <t tx="edream.110203160744.1852">@ To do:
 	
@@ -31467,12 +31484,15 @@ frame.canvas   = self.createCanvas(self.split2Pane1)
 frame.tree     = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
 frame.log      = leoTkinterLog(frame,self.split2Pane2)
 frame.body     = leoTkinterBody(frame,self.split1Pane2)
+
+# Yes, this an "official" ivar: this is a kludge.
 frame.bodyCtrl = frame.body.bodyCtrl
 
-# Configure.
+# Configure.  N.B. There may be Tk bugs here that make the order significant!
 frame.setTabWidth(c.tab_width)
 frame.tree.setTreeColorsFromConfig()
 self.reconfigurePanes()
+self.body.setFontFromConfig()
 
 # Create the status line.
 self.createStatusLine()
@@ -36171,7 +36191,6 @@ def onDragSplitterBar (self, event, verticalFlag):
 	leoFrame.leoBody.__init__(self,frame,parentFrame)
 
 	self.bodyCtrl = self.createControl(frame,parentFrame)
-	self.setFontFromConfig()
 
 	self.colorizer = leoColor.colorizer(self.c)</t>
 <t tx="edream.110203160744.2287">def createBindings (self,frame):
@@ -45886,12 +45905,8 @@ def getCloneWindows (self):
 
 	self.getTag("&lt;global_window_position")
 	y,x,h,w = self.getPosition() ; self.getTag("/&gt;")
-	# print ("y,x,h,w:" + `y` + "," + `x` + "," + `h` + "," + `w`)
-	
-	# Bug fix: 7/15/02: use max, not min!!!
-	y = max(y,0) ; x = max(x,0)
-	geom = "%dx%d%+d%+d" % (w,h,x,y)
-	self.frame.setTopGeometry(geom)
+	self.frame.setTopGeometry(w,h,x,y)
+
 	# 7/15/02: Redraw the window before writing into it.
 	self.frame.deiconify()
 	self.frame.lift()
@@ -59475,7 +59490,7 @@ def deleteRange (self,index1,index2):
 	
 def setTitle (self,title):
 	self.title = title</t>
-<t tx="edream.112103094744">def setTopGeometry (self,geom):
+<t tx="edream.112103094744">def setTopGeometry (self,w,h,x,y,adjustSize=true):
 	
 	self.oops()</t>
 <t tx="edream.112103094829">def bringToFront (self):
@@ -60588,7 +60603,15 @@ print "\\n",`getOutputNewline("\n")`</t>
 <t tx="edream.120303100236"># Set defaults differently for undent/dedent than for the convert tab/blanks commands.</t>
 <t tx="edream.120303101759"></t>
 <t tx="edream.120303101759.1"></t>
-<t tx="edream.120303103648">@nocolor
+<t tx="edream.120303103648"></t>
+<t tx="edream.120303110224">getBodyLines must set head = tail = None when lines is expanded to include everything.
+
+This probably affects several other commands.</t>
+<t tx="edream.120303153525"></t>
+<t tx="edream.120403033313"></t>
+<t tx="edream.120403033313.1"></t>
+<t tx="edream.120403033313.2"></t>
+<t tx="edream.120403060637">@nocolor
 
 By: bkc ( Brad Clements ) 
  RE: positioning issues   
@@ -60598,9 +60621,27 @@ By: bkc ( Brad Clements )
 
 So, if you want to remember and restore position please be sure to validate the restored position for the current display, and if anything is out of bounds, put the window in a sensible location and size.
 </t>
-<t tx="edream.120303110224">getBodyLines must set head = tail = None when lines is expanded to include everything.
+<t tx="edream.120403060759">def setTopGeometry(self,w,h,x,y,adjustSize=true):
+	
+	# Put the top-left corner on the screen.
+	x = max(10,x) ; y = max(10,y)
+	
+	if adjustSize:
+		top = self.top
+		sw = top.winfo_screenwidth()
+		sh = top.winfo_screenheight()
 
-This probably affects several other commands.</t>
-<t tx="edream.120303153525"></t>
+		# Adjust the size so the whole window fits on the screen.
+		w = min(sw-10,w)
+		h = min(sh-10,h)
+
+		# Adjust position so the whole window fits on the screen.
+		if x + w &gt; sw: x = 10
+		if y + h &gt; sh: y = 10
+	
+	geom = "%dx%d%+d%+d" % (w,h,x,y)
+	
+	self.top.geometry(geom)</t>
+<t tx="edream.120403062934"></t>
 </tnodes>
 </leo_file>
