@@ -344,14 +344,20 @@ class tnode:
 	#@+body
 	# This sets the text in the tnode from the given string.
 	
-	def setTnodeText (self, s):
+	def setTnodeText (self,s):
 		
+		old_s = s
 		if type(s) == types.UnicodeType: # 8/9/02
 			xml_encoding = app().config.xml_version_string
 			s = s.encode(xml_encoding)
+	
+		if len(old_s) != len(s):
+			trace("old_s != s")
 			
 		assert(type(s)==types.StringType)
 		self.bodyString = s
+	
+	
 	#@-body
 	#@-node:2::setTnodeText
 	#@+node:3::setSelection

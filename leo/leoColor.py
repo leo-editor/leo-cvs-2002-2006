@@ -681,16 +681,31 @@ class colorizer:
 	#@-body
 	#@-node:3::OnHyperLinkLeave
 	#@-node:2::color.callbacks...
-	#@+node:3::colorize
+	#@+node:3::colorize & recolor_range
 	#@+body
+	# The main colorizer entry point.
+	
 	def colorize(self,v,body,incremental=false):
 	
 		if self.enabled:
 			self.incremental=incremental
 			flag,language = self.updateSyntaxColorer(v)
 			self.colorizeAnyLanguage(v,body,language,flag)
+			
+	# Called from incremental undo code.
+	# Colorizes the lines between the leading and trailing lines.
+			
+	def recolor_range(self,v,body,leading,trailing):
+		
+		if self.enabled:
+			self.incremental=true
+			flag,language = self.updateSyntaxColorer(v)
+			self.colorizeAnyLanguage(
+				v,body,language,flag,
+				leading=leading,trailing=trailing)
+	
 	#@-body
-	#@-node:3::colorize
+	#@-node:3::colorize & recolor_range
 	#@+node:4::colorizeAnyLanguage & allies
 	#@+body
 	#@+at
@@ -700,7 +715,7 @@ class colorizer:
 	#@-at
 	#@@c
 
-	def colorizeAnyLanguage (self,v,body,language,flag):
+	def colorizeAnyLanguage (self,v,body,language,flag,leading=None,trailing=None):
 		
 		try:
 			if 0:
@@ -861,47 +876,55 @@ class colorizer:
 					self.lines = []
 					return
 				
-				
-				#@<< compute leading, middle & trailing lines >>
-				#@+node:1::<< compute leading, middle & trailing  lines >>
-				#@+body
-				#@+at
-				#  The leading lines are the leading matching lines.  The 
-				# trailing lines are the trailing matching lines.  The middle 
-				# lines are all other new lines.  We will color at least all 
-				# the middle lines.  There may be no middle lines if we delete lines.
-
-				#@-at
-				#@@c
-
-				min_len = min(old_len,new_len)
-				
-				i = 0
-				while i < min_len:
-					if old_lines[i] != new_lines[i]:
-						break
-					i += 1
-				leading_lines = i
-				
-				if leading_lines == new_len:
-					# All lines match, and we must color _everything_.
-					# (several routine delete, then insert the text again,
-					# deleting all tags in the process).
-					# print "recolor all"
-					leading_lines = trailing_lines = 0
+				if leading and trailing:
+					# print "leading,trailing:",`leading`,`trailing`
+					leading_lines = leading
+					trailing_lines = trailing
 				else:
+					
+					#@<< compute leading, middle & trailing lines >>
+					#@+node:1::<< compute leading, middle & trailing  lines >>
+					#@+body
+					#@+at
+					#  The leading lines are the leading matching lines.  The 
+					# trailing lines are the trailing matching lines.  The 
+					# middle lines are all other new lines.  We will color at 
+					# least all the middle lines.  There may be no middle 
+					# lines if we delete lines.
+
+					#@-at
+					#@@c
+
+					min_len = min(old_len,new_len)
+					
 					i = 0
-					while i < min_len - leading_lines:
-						if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+					while i < min_len:
+						if old_lines[i] != new_lines[i]:
 							break
 						i += 1
-					trailing_lines = i
+					leading_lines = i
+					
+					if leading_lines == new_len:
+						# All lines match, and we must color _everything_.
+						# (several routine delete, then insert the text again,
+						# deleting all tags in the process).
+						# print "recolor all"
+						leading_lines = trailing_lines = 0
+					else:
+						i = 0
+						while i < min_len - leading_lines:
+							if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+								break
+							i += 1
+						trailing_lines = i
+					
+					#@-body
+					#@-node:1::<< compute leading, middle & trailing  lines >>
+
 					
 				middle_lines = new_len - leading_lines - trailing_lines
 				# print "middle lines", middle_lines
-				#@-body
-				#@-node:1::<< compute leading, middle & trailing  lines >>
-
+				
 				
 				#@<< initialize new states >>
 				#@+node:2::<< initialize new states >>

@@ -526,7 +526,7 @@ class leoTree:
 		return last
 	#@-body
 	#@-node:14::lastVisible
-	#@+node:15::tree.recolor & recolor_now
+	#@+node:15::tree.recolor, recolor_now, recolor_range
 	#@+body
 	def recolor(self,v,incremental=0):
 	
@@ -541,8 +541,13 @@ class leoTree:
 	
 		body = self.commands.frame.body
 		self.colorizer.colorize(v,body,incremental)
+		
+	def recolor_range(self,v,leading,trailing):
+	
+		body = self.commands.frame.body
+		self.colorizer.recolor_range(v,body,leading,trailing)
 	#@-body
-	#@-node:15::tree.recolor & recolor_now
+	#@-node:15::tree.recolor, recolor_now, recolor_range
 	#@+node:16::tree.redraw , force_redraw, redraw_now
 	#@+body
 	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
@@ -752,45 +757,85 @@ class leoTree:
 
 	# Called by command handlers that have already changed the text.
 	def onBodyChanged (self,v,undoType):
-	
 		c = self.commands
 		if not v: v = c.currentVnode()
-		oldSel = c.body.index("insert")
-		# trace(`oldSel`)
+		oldSel = c.body.index("insert") # trace(`oldSel`)
 		self.idle_body_key(v,oldSel,undoType)
 		
 	# Called by command handlers that change the text just before idle time.
 	def onBodyWillChange (self,v,undoType):
-	
 		c = self.commands
 		if not v: v = c.currentVnode()
-		oldSel = c.body.index("insert")
-		# trace(`oldSel`)
+		oldSel = c.body.index("insert") # trace(`oldSel`)
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,undoType)
 	
 	# Bound to any key press..
 	def OnBodyKey (self,event):
-	
-		c = self.commands
-		v = c.currentVnode() ; ch = event.char 
-		oldSel = c.body.index("insert")
-		# trace(`oldSel`)
-		# if event: print "sym,code:",event.keysym,event.keycode
+		c = self.commands ; v = c.currentVnode() ; ch = event.char
+		oldSel = c.body.index("insert") # trace(`oldSel`)
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
 	
 	# Does the real work of updating the body pane.
 	def idle_body_key (self,v,oldSel,undoType,ch=None):
 	
 		c = self.commands
-		if not c or not v or v != c.currentVnode(): return "break"
-		if 0: # prints on control-alt keys
-			trace(`ch` + ":" + `c.body.get("1.0", "end")`)
-			trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
-		# Ignore characters that don't change the body text.
+		if not c or not v or v != c.currentVnode():
+			return "break"
+		body = v.bodyString()
 		s = c.body.get("1.0", "end")
+		# Do nothing for control characters...
+		if (ch == None or len(ch) == 0):
+			if s == body:
+				# trace("s==body")
+				return "break"
+			if body == s[:-1]:
+				# trace("body == s[:-1]")
+				return "break"
+		# If the only change is the newline, the newline must be real.
 		
-		#@<< Make sure that the body text is valid in the encoding >>
-		#@+node:3::<< Make sure that the body text is valid in the encoding >>
+		#@<< set removeTrailing >>
+		#@+node:1::<< set removeTrailing >>
+		#@+body
+		#@+at
+		#  Tk will add a newline only if:
+		# 1. A real change has been made to the Tk.Text widget, and
+		# 2. the change did _not_ result in the widget already containing a newline.
+		# 
+		# It's not possible to tell, given the information available, what Tk 
+		# has actually done. We need only make a reasonable guess here.   
+		# setUndoTypingParams stores the number of trailing newlines in each 
+		# undo bead, so whatever we do here can be faithfully undone and redone.
+
+		#@-at
+		#@@c
+		new = s ; old = body
+		
+		if len(new) == 0 or new[-1] != '\n':
+			# There is no newline to remove.  Probably will never happen.
+			# trace("false: no newline to remove")
+			removeTrailing = false
+		elif len(old) == 0:
+			# Ambigous case.  Assume the newline is real.
+			# trace("false: empty old")
+			removeTrailing = false
+		elif old == new[:-1]:
+			# A single trailing character has been added.
+			# trace("false: only changed trailing.)
+			removeTrailing = false
+		else:
+			# The text didn't have a newline, and now it does.
+			# Moveover, some other change has been made to the text,
+			# So at worst we have misreprented the user's intentions slightly.
+			# trace("true")
+			removeTrailing = true
+		
+		
+		#@-body
+		#@-node:1::<< set removeTrailing >>
+
+		
+		#@<< Make sure s is valid in the encoding >>
+		#@+node:4::<< Make sure s is valid in the encoding >>
 		#@+body
 		xml_encoding = app().config.xml_version_string
 		
@@ -810,24 +855,26 @@ class leoTree:
 			return "break"
 		
 		#@-body
-		#@-node:3::<< Make sure that the body text is valid in the encoding >>
+		#@-node:4::<< Make sure s is valid in the encoding >>
 
-		if len(s) > 0 and s[-1]=='\n': s = s[:-1]
-		body = v.bodyString()
+		
+		#@<< Make sure body is valid in the encoding >>
+		#@+node:5::<< Make sure body is valid in the encoding >>
+		#@+body
 		if type(body) == types.UnicodeType:
+		
 			# vnode strings are encoded using the xml_encoding.
 			body = body.encode(xml_encoding) # result is a string.
-			
-		if s == body: return "break"
 		
+		#@-body
+		#@-node:5::<< Make sure body is valid in the encoding >>
+
 		# trace(`ch`)
-		# trace(`ch` + ":" + `s`)
-		# trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
 		newSel = c.body.index("insert")
 		if ch == '\r' or ch == '\n':
 			
 			#@<< Do auto indent >>
-			#@+node:1::<< Do Auto indent >>
+			#@+node:2::<< Do Auto indent >>
 			#@+body
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
 			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
@@ -845,15 +892,12 @@ class leoTree:
 					c.body.insert("insert", ws)
 			
 			#@-body
-			#@-node:1::<< Do Auto indent >>
+			#@-node:2::<< Do Auto indent >>
 
-			s = c.body.get("1.0", "end")
-			if 0: # 10/9/02: Preserve trailing whitespace for @rawfile.
-				s = string.rstrip(s)
 		elif ch == '\t' and c.tab_width < 0:
 			
 			#@<< convert leading tab to blanks >>
-			#@+node:2::<< convert leading tab to blanks >>
+			#@+node:3::<< convert leading tab to blanks >>
 			#@+body
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
 			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
@@ -871,10 +915,12 @@ class leoTree:
 					c.body.delete("insert -1c")
 					c.body.insert("insert",' ' * w2)
 			#@-body
-			#@-node:2::<< convert leading tab to blanks >>
+			#@-node:3::<< convert leading tab to blanks >>
 
-		# Update the tnode.
+		s = c.body.get("1.0", "end")
 		if s == None: s = ""
+		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+			s = s[:-1]
 		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel)
 		v.t.bodyString = s
 		v.t.insertSpot = c.body.index("insert") # 9/1/02
@@ -896,6 +942,7 @@ class leoTree:
 			redraw_flag = true
 		c.endUpdate(redraw_flag) # redraw only if necessary
 		return "break"
+	
 	#@-body
 	#@-node:4::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
 	#@+node:5::tree.OnContinueDrag
@@ -1410,7 +1457,11 @@ class leoTree:
 		# Delete only if necessary: this may reduce flicker slightly.
 		if old_body != s:
 			body.delete("1.0","end")
-			body.insert("1.0", s)
+			body.insert("1.0",s)
+			# Make sure what we get is what we expect.
+			s2 = body.get("1.0","end")
+			if s == s2[:-1]:
+				body.delete("end-1c")
 	
 		# We must do a full recoloring: we may be changing context!
 		self.recolor_now(v)
@@ -1438,6 +1489,8 @@ class leoTree:
 		self.scanForTabWidth(v) # 9/13/02
 		# Set focus.
 		self.commands.body.focus_set()
+	
+	
 	#@-body
 	#@-node:5::tree.select
 	#@+node:6::tree.set...LabelState
