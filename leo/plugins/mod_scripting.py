@@ -116,8 +116,8 @@ def init ():
 
         if ok:
             # Note: call onCreate _after_ reading the .leo file.
-            # leoPlugins.registerHandler(('open2','new'),onCreate)
-            leoPlugins.registerHandler('onCreate',onCreate)
+            # That is, the 'after-create-leo-frame' hook is too early!
+            leoPlugins.registerHandler(('new','open2'),onCreate)
             g.plugin_signon(__name__)
         
     return ok
@@ -126,14 +126,13 @@ def init ():
 #@+node:EKR.20040613215415.2:onCreate
 def onCreate (tag, keys):
 
-    """Add scripting buttons to the icon bar."""
+    """Handle the onCreate event in the mod_scripting plugin."""
+    
+    c = keys.get('new_c')
 
-    c = keys.get('c')
     if c:
         sc = scriptingController(c)
-
-        # Call createAllButtons _after_ reading the .leo file.
-        leoPlugins.registerHandler(('open2','new'),sc.createAllButtons)
+        sc.createAllButtons()
 #@nonl
 #@-node:EKR.20040613215415.2:onCreate
 #@+node:ekr.20050302082838.1:class scriptingController
@@ -146,31 +145,30 @@ class scriptingController:
         self.c = c
         self.d = {}
         self.buttons = 0
+        self.scanned = False
     #@nonl
     #@-node:ekr.20050302082838.2: ctor
-    #@+node:ekr.20050303074340:createAllButtons
-    def createAllButtons (self,tag,keywords):
-        
-        '''Scan for @button, @script and @plugin nodes.'''
-        
-        if g.app.unitTesting:
-            return
+    #@+node:ekr.20050308105005:createAllButtons
+    def createAllButtons (self):
+    
+        global atButtonNodes,atPluginNodes,atScriptNodes
         
         c = self.c
-        self.createStandardButtons()
-        
-        global atButtonNodes
-        if atButtonNodes:
-            self.createDynamicButtons()
     
-        # Scan for @plugin and @script nodes.
-        for p in c.allNodes_iter():
-            if p.headString().startswith("@plugin"):
-                self.loadPlugin(p)
-            elif p.headString().startswith("@script"):
-                self.executeScriptNode(p)
+        if not self.scanned: # Not really needed, but can't hurt.
+            self.scanned = True
+            self.createStandardButtons()
+    
+            # scan for user-defined nodes.
+            for p in c.allNodes_iter():
+                if atButtonNodes and p.headString().startswith("@button"):
+                    self.createDynamicButton(p)
+                if atPluginNodes and p.headString().startswith("@plugin"):
+                    self.loadPlugin(p)
+                if atScriptNodes and p.headString().startswith("@script"):
+                    self.executeScriptNode(p)
     #@nonl
-    #@-node:ekr.20050303074340:createAllButtons
+    #@-node:ekr.20050308105005:createAllButtons
     #@+node:ekr.20041001184024:createDynamicButton
     def createDynamicButton (self,p):
         
@@ -223,21 +221,12 @@ class scriptingController:
         b.bind('<Enter>', mouseEnterCallback)
         b.bind('<Leave>', mouseLeaveCallback)
     #@-node:ekr.20041001184024:createDynamicButton
-    #@+node:ekr.20041001184020:createDynamicButtons
-    def createDynamicButtons (self):
-        
-        c = self.c
-        for p in c.allNodes_iter():
-            if p.headString().startswith("@button"):
-                self.createDynamicButton(p)
-    #@nonl
-    #@-node:ekr.20041001184020:createDynamicButtons
     #@+node:ekr.20041001183818:createStandardButtons
     def createStandardButtons(self):
-        
-        c = self.c ; p = c.currentPosition()
+    
+        c = self.c ; p = c.currentPosition() ; h = p.headString()
         script = p.bodyString()
-        
+    
         #@    << define execCommand >>
         #@+node:EKR.20040618091543.1:<< define execCommand >>
         def execCommand (event=None):
@@ -249,8 +238,7 @@ class scriptingController:
         #@nl
         #@    << define addScriptButtonCommand >>
         #@+node:EKR.20040618091543.2:<< define addScriptButtonCommand >>
-        def addScriptButtonCommand (event=None): # ,c=c,p=p,script=script):
-            # Unbound vars defined in enclosing code: self.
+        def addScriptButtonCommand (event=None,self=self):
             # Create permanent bindings for callbacks.
             c = self.c ; p = c.currentPosition()
             self.buttons += 1
@@ -314,14 +302,16 @@ class scriptingController:
             b.bind('<3>',deleteButtonCallback)
             b.bind('<Enter>', mouseEnterCallback)
             b.bind('<Leave>', mouseLeaveCallback)
+        #@nonl
         #@-node:EKR.20040618091543.2:<< define addScriptButtonCommand >>
         #@nl
         
-        for key,text,statusLine,command,bg in (
-            ("execButton","run Script","Run script: %s" % c.currentPosition().headString(),
-                execCommand,'MistyRose1'),
-            ("addScriptButton","script Button","Add script button",
-                addScriptButtonCommand,"#ffffcc")
+        runStatusLine = 'Run script: %s' % h
+        makeStatusLine = 'Make script button for: %s' % h
+        
+        for key,text,command,statusLine,bg in (
+            ("execButton","run Script",execCommand,runStatusLine,'MistyRose1'),
+            ("addScriptButton","script Button",addScriptButtonCommand,makeStatusLine,"#ffffcc")
         ):
             #@        << define callbacks for standard buttons >>
             #@+node:EKR.20040614000551:<< define callbacks for standard buttons >>
@@ -330,7 +320,7 @@ class scriptingController:
                 
             def mouseEnterCallback(event=None,self=self,statusLine=statusLine):
                 self.mouseEnter(statusLine)
-                
+            
             def mouseLeaveCallback(event=None,self=self):
                 self.mouseLeave()
             #@nonl
