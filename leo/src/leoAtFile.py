@@ -127,6 +127,7 @@ class atFile:
         at = self
         
         at.c = c
+        at.debug = False
         at.fileCommands = c.fileCommands
         at.testing = True # True: enable additional checks.
     
@@ -501,7 +502,7 @@ class atFile:
         firstLines,read_new,isThinDerivedFile = at.scanHeader(theFile,fileName)
     
         if read_new:
-            lastLines = at.scanText4(theFile,root)
+            lastLines = at.scanText4(theFile,fileName,root)
         else:
             lastLines = at.scanText3(theFile,root,[],at.endLeo)
             
@@ -1358,8 +1359,10 @@ class atFile:
         at = self ; v = at.root.v ; c = at.c ; indices = g.app.nodeIndices
         last = at.lastThinNode ; lastIndex = last.t.fileIndex
         gnx = indices.scanGnx(gnxString,0)
-        #g.trace("last",last,last.t.fileIndex)
-        #g.trace("args",indices.areEqual(gnx,last.t.fileIndex),gnxString,headline)
+        
+        if 0:
+            g.trace("last",last,last.t.fileIndex)
+            g.trace("args",indices.areEqual(gnx,last.t.fileIndex),gnxString,headline)
         
         # See if there is already a child with the proper index.
         child = at.lastThinNode.firstChild()
@@ -1394,7 +1397,7 @@ class atFile:
             child = leoNodes.vnode(c,t)
             t.vnodeList.append(child)
             child.linkAsNthChild(parent,parent.numberOfChildren())
-            # g.trace("creating node",child,gnx)
+            # g.trace('creating last child %s\nof parent%s\n' % (child,parent))
     
         return child
     #@nonl
@@ -1435,7 +1438,7 @@ class atFile:
     #@nonl
     #@-node:ekr.20041005105605.73:findChild4
     #@+node:ekr.20041005105605.74:scanText4 & allies
-    def scanText4 (self,theFile,p,verbose=False):
+    def scanText4 (self,theFile,fileName,p,verbose=False):
         
         """Scan a 4.x derived file non-recursively."""
     
@@ -1473,8 +1476,7 @@ class atFile:
             s = at.readLine(theFile)
             if len(s) == 0: break
             kind = at.sentinelKind4(s)
-            if verbose:
-                g.trace(at.sentinelName(kind),s.strip())
+            # g.trace(at.sentinelName(kind),s.strip())
             if kind == at.noSentinel:
                 i = 0
             else:
@@ -3464,6 +3466,8 @@ class atFile:
             at.putSentinel("@" + name)
             
         if inBetween:
+            # Bug fix: reverse the +middle sentinels, not the -middle sentinels.
+            inBetween.reverse()
             for p2 in inBetween:
                 at.putOpenNodeSentinel(p2,middle=True)
             
@@ -3818,7 +3822,7 @@ class atFile:
             at.putSentinel("@+middle:" + s)
         else:
             at.putSentinel("@+node:" + s)
-        
+    
         if not at.thinFile:
             # Append the n'th tnode to the root's tnode list.
             at.root.v.t.tnodeList.append(p.v.t)
