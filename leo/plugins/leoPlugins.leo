@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1429" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1432" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="81" left="426" height="856" width="709"/>
+	<global_window_position top="45" left="494" height="856" width="709"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203113231" a="V"><vh>Diary</vh>
+<v t="edream.110203113231"><vh>Diary</vh>
 <v t="edream.120603100522"><vh>12/6/03 Removed compile-time enable/disable code</vh></v>
 <v t="edream.112103192146"><vh>11/21</vh>
 <v t="edream.112303075625"><vh>Added wxVersion to signon</vh></v>
@@ -1500,7 +1500,11 @@
 </v>
 </v>
 </v>
-<v t="edream.120603093808" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" a="V" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120703082844" a="E" tnodeList="edream.120703082844,edream.120703082844.1,edream.120703082844.2"><vh>@file mod_updown.py</vh>
+<v t="edream.120703082844.1"><vh>0nStart2</vh></v>
+<v t="edream.120703082844.2"><vh>OnBodyKey</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203113231">@nocolor</t>
@@ -15440,7 +15444,86 @@ open_with.py
 color_markup.py
 image.py
 nav_buttons.py
-plugins_menu.py</t>
+plugins_menu.py
+# mod_updown.py</t>
 <t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
+<t tx="edream.120703082844">@language python
+
+"""
+Up Down, show the body as a continum space, the user can go up or down, and will automatically jump from one node to the next.
+"""
+
+@
+04/12/03 File Created. RodrigoB.
+05/12/03 Leo4.1 support. RodrigoB.
+06/12/03 Changing to line based. Upload. RodrigoB.
+@c
+
+__version__ = "0.0.3"
+
+from leoPlugins import *
+from leoGlobals import *
+
+last_key = None # global var for this module.
+
+try:    import Tkinter
+except: Tkinter = None
+
+if Tkinter and app.gui.guiName() == "tkinter":
+
+    @others
+
+	# Register the handlers...
+	registerHandler("start2", OnStart2) #  install the plugin hooks
+
+	plugin_signon(__name__)
+</t>
+<t tx="edream.120703082844.1">def OnStart2(tag, keywords):
+
+	"""."""
+	
+	trace("updown started")
+	
+	c = keywords['c']
+	c.frame.body.bodyCtrl.bind("&lt;Key&gt;", OnBodyKey, '+') # append an extra binding.</t>
+<t tx="edream.120703082844.2">def OnBodyKey(event):
+	"""."""
+	tracing = true
+	c = top() ; global last_key
+	text = c.frame.body.bodyCtrl
+	v = c.currentVnode()
+	keycode = event.keycode
+	if 0:
+		if tracing: # for debugging.
+			# trace("event %s %s" % (event, dir(event))) 
+			trace("ch %s %s %s" % (event.char, event.keycode, event.num))
+	if keycode in [33, 98, 99]: # up, page up
+		keycode = "up"
+	elif keycode in [34, 104, 105]: # down, page down
+		keycode = "down"        
+			 
+	if last_key == keycode:
+		if keycode == "up":
+			new = v.threadBack()
+			if tracing: trace("Going up")
+		elif keycode == "down":
+			new = v.threadNext()
+			if tracing: trace("Going down")
+		else:
+			new = None	
+		if new:
+			c.selectVnode(new) # on Leo4 it will automatically show the selected node.
+		last_key = None
+		return
+	
+	insert_line = int(text.index("insert").split('.')[0])
+	last_line   = int(text.index("end").split('.')[0]) - 1
+
+	if insert_line == 1 and keycode == "up":
+		last_key = keycode
+	elif insert_line == last_line and keycode == "down":
+		last_key = keycode
+	else:
+		last_key = None</t>
 </tnodes>
 </leo_file>
