@@ -19,7 +19,7 @@
 </v>
 <v t="ekr.20041226081019"><vh>@button check spelling...</vh></v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
-<v t="edream.110203163054.7" a="TV"><vh>Acknowledgements</vh></v>
+<v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
 <v t="ekr.20050124153126.1"><vh>Leo is revolutionary</vh></v>
 <v t="ekr.20050124153126.2"><vh>Leo is a showcase Python/Tkinter application</vh></v>
@@ -1002,7 +1002,7 @@
 <v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="edream.110203163054.320"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="edream.110203163054.321" a="E"><vh>Using plugins and hooks</vh>
+<v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
 <v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.323"><vh>New plugin architecture</vh>
 <v t="edream.110203163054.324"><vh>@file plugins/mod_open_with.py</vh>
@@ -2243,7 +2243,7 @@
 <v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="edream.110203163054.320"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="edream.110203163054.321" a="E"><vh>Using plugins and hooks</vh>
+<v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
 <v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.323"><vh>New plugin architecture</vh>
 <v t="edream.110203163054.324"><vh>@file plugins/mod_open_with.py</vh>
@@ -2384,7 +2384,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414161647" a="TV"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414172212"><vh>@rst frontMatter.html</vh>
 <v t="ekr.20040414172218.2"><vh>Preface</vh>
 <v t="ekr.20040414172336"><vh>@rst</vh></v>
@@ -3097,7 +3097,7 @@ This code was contributed by David McNab, david@rebirthing.co.nz.</t>
 The Mark command will unmark the selected headline if it is already marked.</t>
 <t tx="EKR.20040524104904.44">There are a number of ways to move and reorganize headlines.
 
-The Move Up, Move Down, Move Left and Move Right commands move the currently selected outline.  The Promote command makes all the children of a headline siblings of the headline.  The Demote command makes all the siblings of a headline children of the headline.
+The Move Up, Move Down, Move Left and Move Right commands move the currently selected outline.  The Promote command makes all the children of a headline siblings of the headline.  The Demote command makes all following siblings of a headline children of the headline.
 
 You can cut and paste any part of a tree.  If a headline contains selected text, the cut, copy, clear or paste operation affects only the selected text. Otherwise, the cut, copy, clear or paste operations acts on the node and all nodes contained by it.  For example, you can move a headline by cutting it, selecting another location in the outline and pasting the headline in the new location.
 
@@ -3164,6 +3164,7 @@ Important note 2: This chapter discusses only the @file directive.
 
 -- Appendix 1 to this chapter tells how to use the new @rawfile directive.
 -- Appendix 2 to this chapter tells how to use the older @root directive.
+-- Appendix 3 to this chapter tells how to use the older @thin directive.
 
 This is the most important chapter because it describes everything you need to know to write programs with Leo. Unless otherwise mentioned, this chapter applies to all versions of Leo.  Newcomers to Leo should read Introducing Leo before reading further.
 
