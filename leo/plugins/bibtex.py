@@ -1,5 +1,5 @@
-#@+leo-ver=4-thin
-#@+node:ekr.20050217091823:@thin bibtex.py
+#@+leo-ver=4
+#@+node:@file /home/timo/leo/plugins/bibtex.py
 """Manage BibTeX files with Leo.
 
 Create a bibliographic database by putting '@bibtex filename' in a headline.
@@ -23,18 +23,15 @@ into a @bibtex tree.
 
 
 #@<< about this plugin >>
-#@+node:ekr.20050217091823.1:<<about this plugin >>
+#@+node:<<about this plugin >>
 #@+at 
 #@nonl
 # This plugin can be used to manage BibTeX files with Leo.
 # 
-# Create a bibliographic database by putting '@bibtex filename' in a headline. 
-# Entries are added as nodes, with '@entrytype key' as the headline, and the 
-# contents of the entry in body text. The plugin will automatically insert a 
-# template for the entry in the body pane when a new entry is created (hooked 
-# to pressing enter when typing the headline text). The templates are defined 
-# in dictionary 'templates' in the <<globals>> section, by default containing 
-# all required fields for every entry.
+# Create a bibliographic database by putting '@bibtex filename' in a headline. Entries are added as nodes, with '@entrytype key' 
+# as the headline, and the contents of the entry in body text. The plugin will automatically insert a template for the entry in 
+# the body pane when a new entry is created (hooked to pressing enter when typing the headline text). The templates are defined in 
+# dictionary 'templates' in the <<globals>> section, by default containing all required fields for every entry.
 # 
 # The file is written by double-clicking the node. Thus the following outline:
 # 
@@ -79,82 +76,108 @@ into a @bibtex tree.
 # nodes --- if the headline doesn't start with '@', the headline and body text
 # are ignored, but the child nodes are parsed as usual.
 # 
-# BibTeX files can be imported by creating an empty node with '@bibtex 
-# filename'
-# in the headline. Double-clicking it will read the file 'filename' and parse 
-# it
-# into a @bibtex tree. No syntax checking is made, 'filename' is expected to 
-# be a valid BibTeX file.
-# 
+# BibTeX files can be imported by creating an empty node with '@bibtex filename'
+# in the headline. Double-clicking it will read the file 'filename' and parse it
+# into a @bibtex tree. No syntax checking is made, 'filename' is expected to be a valid BibTeX file.
 #@-at
-#@nonl
-#@-node:ekr.20050217091823.1:<<about this plugin >>
+#@-node:<<about this plugin >>
 #@nl
-__version__ = "0.3" # Set version for the plugin handler.
+__version__ = "0.4" # Set version for the plugin handler.
 #@<< change log >>
-#@+node:ekr.20050217091823.2:<<change log>>
+#@+node:<<change log>>
 #@+at 
-#@nonl
-# Change log:
 # 
-# 0.1 @bibtex nodes introduced, writing the contents in a BibTeX format.
-#     Timo Honkasalo 2005/02/13
-# 0.2 Importing BibTeX files added.
-#     Timo Honkasalo 2005/02/14
-# 0.3 Automatic inserting of templates when new entries are created.
-#     Timo Honkasalo 2005/02/15
+# Change log
+# ==========
+# 
+# 0.1
+# ---
+# 
+# - @bibtex nodes introduced, writing the contents in a BibTeX format.
+#   Timo Honkasalo 2005/02/13
+# 
+# 0.2
+# ---
+# 
+# - Importing BibTeX files added.
+#   Timo Honkasalo 2005/02/14
+# 
+# 0.3
+# ---
+# 
+# - Automatic inserting of templates when new entries are created.
+#   Timo Honkasalo 2005/02/15
+# 
+# 0.4
+# ---
+# 
+# - Some changes in writeTreeAsBibTex (better format), added entrytypes in globals.
+# - Greatly simplified and enhanced the performance of readBibTexFileIntoTree.
+# - Fixed parsing of files in readBibTexFileIntoTree: they are now split at '\n@' (whitespace stripped) instead of '@', so that 
+# fields may contain '@' (like a 'mailto' field most likely would).
+# - Changed <<write template>> to move cursor to the entry point of first field (16 columns right).
+# - Bugfix: templates now include commas after each field
+#   Timo Honkasalo 2005/03/02
 #@-at
-#@-node:ekr.20050217091823.2:<<change log>>
+#@nonl
+#@-node:<<change log>>
 #@nl
 #@<< imports >>
-#@+node:ekr.20050217091823.3:<<imports>>
+#@+node:<<imports>>
 import leoGlobals as g
 import leoPlugins
 
 import os
 #@nonl
-#@-node:ekr.20050217091823.3:<<imports>>
+#@-node:<<imports>>
 #@nl
 #@<< globals >>
-#@+node:ekr.20050217091823.4:<<globals>>
-templates = {'@article':'author = {}\ntitle = {}\njournal = {}\nyear =',
-             '@book':'author = {}\ntitle = {}\npublisher = {}\nyear =',
-             '@booklet':'title = {}',
-             '@conference':'author = {}\ntitle = {}\nbooktitle = {}\nyear =',
-             '@inbook':'author = {}\ntitle = {}\nchapter = {}\npublisher = {}\nyear =',
-             '@incollection':'author = {}\ntitle = {}\nbooktitle = {}\npublisher = {}\nyear =',
-             '@inproceedings':'author = {}\ntitle = {}\nbooktitle = {}\nyear =',
-             '@manual':'title = {}',
-             '@mastersthesis':'author = {}\ntitle = {}\nschool = {}\nyear =',
+#@+node:<<globals>>
+templates = {'@article':'author       = {},\ntitle        = {},\njournal      = {},\nyear         = ',
+             '@book':'author       = {},\ntitle        = {},\npublisher    = {},\nyear         = ',
+             '@booklet':'title        = {}',
+             '@conference':'author       = {},\ntitle        = {},\nbooktitle    = {},\nyear         = ',
+             '@inbook':'author       = {},\ntitle        = {},\nchapter      = {},\npublisher    = {},\nyear         = ',
+             '@incollection':'author       = {},\ntitle        = {},\nbooktitle    = {},\npublisher    = {},\nyear         = ',
+             '@inproceedings':'author       = {},\ntitle        = {},\nbooktitle    = {},\nyear         = ',
+             '@manual':'title        = {},',
+             '@mastersthesis':'author       = {},\ntitle        = {},\nschool       = {},\nyear         = ',
              '@misc':'',
-             '@phdthesis':'author = {}\ntitle = {}\nschool = {}\nyear =',
-             '@proceedings':'title = {}\nyear =',
-             '@techreport':'author = {}\ntitle = {}\ninstitution = {}\nyear =',
-             '@unpublished':'author = {}\ntitle = {}\nnote = {}'
+             '@phdthesis':'author       = {},\ntitle        = {},\nschool       = {},\nyear         = ',
+             '@proceedings':'title        = {},\nyear         = ',
+             '@techreport':'author       = {},\ntitle        = {},\ninstitution  = {},\nyear         = ',
+             '@unpublished':'author       = {},\ntitle        = {},\nnote         = {}'
              }
+             
+entrytypes = templates.keys()
+entrytypes.append('@string') 
 #@nonl
-#@-node:ekr.20050217091823.4:<<globals>>
+#@-node:<<globals>>
 #@nl
 #@<< to do >>
-#@+node:ekr.20050217091823.5:<<to do>>
+#@+node:<<to do>>
 #@+at 
 #@nonl
 # To do list (in approximate order of importance):
 # 
-# - Translating between non-ascii characters and LaTeX code when 
-# reading/writing
+# - Translating between non-ascii characters and LaTeX code when reading/writing
 # - Checking for duplicate keys
+# - Checking for missing commas when writing the file
 # - Customisable config file (for defining the templates)
+# - Easy access to the tree as a Python object for scripting (maybe Pybliographer)
 # - Import/write in BibTeXml format
 # - Sorting by chosen fields
 # - Import/write in other bibliographic formats
 # - Expanding strings
+# - Syntax checking
+# - Syntax highligting
+# 
 #@-at
-#@-node:ekr.20050217091823.5:<<to do>>
+#@-node:<<to do>>
 #@nl
 
 #@+others
-#@+node:ekr.20050217091823.6:onIconDoubleClick
+#@+node:onIconDoubleClick
 #
 # this does not check for proper filename syntax.
 # path is the current dir, or the place @folder points to
@@ -173,18 +196,18 @@ def onIconDoubleClick(tag,keywords):
         fname = h[8:]
         if v.hasChildren():
             #@            << write bibtex file >>
-            #@+node:ekr.20050217091823.8:<< write bibtex file >>
+            #@+node:<< write bibtex file >>
             bibFile = file(fname,'w')
             writeTreeAsBibTex(bibFile, v, c)
             
             bibFile.close()
             g.es('written: '+str(fname))
             #@nonl
-            #@-node:ekr.20050217091823.8:<< write bibtex file >>
+            #@-node:<< write bibtex file >>
             #@nl
         else:
             #@            << read bibtex file >>
-            #@+node:ekr.20050217091823.7:<< read bibtex file >>
+            #@+node:<< read bibtex file >>
             g.es('reading: ' + str(fname))
             try: 
                 bibFile = file(fname,'r')
@@ -194,12 +217,12 @@ def onIconDoubleClick(tag,keywords):
             readBibTexFileIntoTree(bibFile, c)
             
             bibFile.close()
-            #@-node:ekr.20050217091823.7:<< read bibtex file >>
+            #@-node:<< read bibtex file >>
             #@nl
        
                
-#@-node:ekr.20050217091823.6:onIconDoubleClick
-#@+node:ekr.20050217091823.9:onHeadKey
+#@-node:onIconDoubleClick
+#@+node:onHeadKey
 def onHeadKey(tag,keywords):
     """Write template for the entry in body pane.
     
@@ -214,35 +237,38 @@ def onHeadKey(tag,keywords):
         for p in v.parents_iter():
             if p.headString()[:8] == '@bibtex ':
                 #@                << write template >>
-                #@+node:ekr.20050217091823.10:<< write template >>
+                #@+node:<< write template >>
                 v.setBodyStringOrPane(templates[h[:h.find(' ')]])
+                c.frame.body.setInsertionPoint('1.16')
                 return
                 #@nonl
-                #@-node:ekr.20050217091823.10:<< write template >>
+                #@-node:<< write template >>
                 #@nl
                 
        
 #@nonl
-#@-node:ekr.20050217091823.9:onHeadKey
-#@+node:ekr.20050217091823.11:writeTreeAsBibTex
+#@-node:onHeadKey
+#@+node:writeTreeAsBibTex
 def writeTreeAsBibTex(bibFile, vnode, c):
-    'Write the tree under vnode to the file bibFile'
+    """Write the tree under vnode to the file bibFile"""
+    
     # body text of @bibtex node is ignored
     dict = g.scanDirectives(c,p=vnode)
     encoding = dict.get("encoding",None)
     if encoding == None:
         encoding = g.app.config.default_derived_file_encoding
     
-    toplevel = vnode.level()
-    stopHere = vnode.nodeAfterTree()
-    v = vnode.threadNext()
     strings = ''
     entries = ''
-    # repeat for all nodes in this tree
-    while v != stopHere:
+    # iterate over nodes in this tree
+    for v in vnode.subtree_iter():    
         h = v.headString()
         h = g.toEncodedString(h,encoding,reportErrors=True)
-        if h[0]=='@':
+        if h.lower() == '@string':
+            typestring = '@string'
+        else:
+            typestring = h[:h.find(' ')].lower()
+        if typestring in entrytypes:
             s = v.bodyString()
             s = g.toEncodedString(s,encoding,reportErrors=True)
             if h == '@string': # store string declarations in strings
@@ -250,46 +276,48 @@ def writeTreeAsBibTex(bibFile, vnode, c):
                     if i and (not i.isspace()):
                          strings = strings + '@string{' + i + '}\n'
             else:  # store other stuff in entries  
-                entries = entries + h[:h.find(' ')] + '{' + h[h.find(' ')+1:]+  ',\n' + s + '}\n\n'
-        v = v.threadNext()
+                entries = entries + typestring + '{' + h[h.find(' ')+1:]+  ',\n' + s + '}\n\n'
     if strings:
         bibFile.write(strings + '\n\n')
     bibFile.write(entries)  
-#@nonl
-#@-node:ekr.20050217091823.11:writeTreeAsBibTex
-#@+node:ekr.20050217091823.12:readBibTexFileIntoTree
+#@-node:writeTreeAsBibTex
+#@+node:readBibTexFileIntoTree
 def readBibTexFileIntoTree(bibFile, c):
     """Read BibTeX file and parse it into @bibtex tree
     
-    The file is split at '@'s and each section is divided into headline ('@string' in strings and '@entrytype key' in others) and body text (without outmost braces). These are stored in biblist, which is a list of tuples ('headline','body text') for each entry, all the strings in the first element. For each element of biblist, a vnode is created and headline and body text put into place."""
-    
-    entrylist = []
+    The file is split at '\n@' and each section is divided into headline
+    ('@string' in strings and '@entrytype key' in others) and body text
+    (without outmost braces). These are stored in biblist, which is a list
+    of tuples ('headline', 'body text') for each entry, all the strings in
+    the first element. For each element of biblist, a vnode is created and
+    headline and body text put into place."""
+    entrylist = biblist = []
     strings = ''
-    biblist = []
-    for i in bibFile.read().split('@')[1:]:
-        if i[:6] == 'string':
+    rawstring = '\n'
+    # read 'bibFile' by lines, strip leading whitespace and store as one 
+    # string into 'rawstring'. Split 'rawstring' at '\n@' get a list of entries.
+    for i in [o.lstrip() for o in bibFile.readlines()]:
+        rawstring = rawstring + i
+    for i in rawstring.split('\n@')[1:]:
+        if i[:6] == 'string': # store all @string declarations into 'strings'
             strings = strings + i[7:].strip()[:-1] + '\n'
-        else: 
-            entrylist.append(('@' + i[:i.find(',')].replace('{',' ').replace('(',' ').replace('\n',''),i[i.find(',')+1:].rstrip().lstrip('\n')[:-1]))
+        else: # store all alse into 'entrylist'
+            entrylist.append(('@' + i[:i.find(',')].replace('{',' ').replace('(',
+            ' ').replace('\n',''), i[i.find(',')+1:].rstrip().lstrip('\n')[:-1]))
     if strings:
-        biblist.append(('@string',strings)) 
-    biblist = biblist+entrylist
-    if biblist:
-        c.doCommand(c.insertHeadline,'')
-        c.doCommand(c.moveOutlineRight,'')
-        v=c.currentPosition()
-        v.setHeadStringOrHeadline(str(biblist[0][0]))
-        v.setBodyStringOrPane(str(biblist[0][1]))
-        for i in biblist[1:]:
-            c.doCommand(c.insertHeadline,'')
-            v=c.currentPosition()
-            v.setHeadStringOrHeadline(str(i[0]))
-            v.setBodyStringOrPane(str(i[1]))
-        
+        biblist.append(('@string', strings)) 
+    biblist = biblist + entrylist
+    p = c.currentPosition()
+    for i in biblist:
+        v = p.insertAsLastChild()
+        v.setHeadStringOrHeadline(str(i[0]))
+        v.setBodyStringOrPane(str(i[1]))
+          
 
 
 
-#@-node:ekr.20050217091823.12:readBibTexFileIntoTree
+
+#@-node:readBibTexFileIntoTree
 #@-others
 
 if not g.app.unitTesting:
@@ -299,5 +327,5 @@ if not g.app.unitTesting:
     leoPlugins.registerHandler("headkey2",onHeadKey)
     g.plugin_signon(__name__)
 #@nonl
-#@-node:ekr.20050217091823:@thin bibtex.py
+#@-node:@file /home/timo/leo/plugins/bibtex.py
 #@-leo
