@@ -884,7 +884,10 @@ class atFile:
 		t1 = getTime()
 		c = self.commands
 		root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
-		self.targetFileName = root.atFileNodeName()
+		if root.isAtFileNode():
+			self.targetFileName = root.atFileNodeName()
+		else:
+			self.targetFileName = root.atRawFileNodeName()
 		self.root = root
 		self.raw = false
 		self.errors = self.structureErrors = 0
@@ -1146,7 +1149,7 @@ class atFile:
 		while v and v != after:
 			if v.isAtIgnoreNode():
 				v = v.nodeAfterTree()
-			elif v.isAtFileNode():
+			elif v.isAtFileNode() or v.isAtRawFileNode():
 				anyRead = true
 				if partialFlag:
 					# We are forcing the read.
@@ -1759,6 +1762,10 @@ class atFile:
 					
 					if fileName[:5] == "@file":
 						fileName = string.strip(fileName[5:])
+						if fileName != self.targetFileName:
+							self.readError("File name in @node sentinel does not match file's name")
+					elif fileName[:8] == "@rawfile":
+						fileName = string.strip(fileName[8:])
 						if fileName != self.targetFileName:
 							self.readError("File name in @node sentinel does not match file's name")
 					else:
@@ -2936,14 +2943,65 @@ class atFile:
 			ok = self.openWriteFile(root)
 			if not ok: return
 			next = root.nodeAfterTree()
+			
+			#@<< write root's tree >>
+			#@+node:1::<< write root's tree >>
+			#@+body
+			next = root.nodeAfterTree()
+			self.updateCloneIndices(root, next)
+			
+			
+			#@<< put all @first lines in root >>
+			#@+node:1::<< put all @first lines in root >>
+			#@+body
+			#@+at
+			#  Write any @first lines.  These lines are also converted to 
+			# @verbatim lines, so the read logic simply ignores lines 
+			# preceding the @+leo sentinel.
+
+			#@-at
+			#@@c
+
+			s = root.t.bodyString
+			tag = "@first"
+			i = 0
+			while match(s,i,tag):
+				i += len(tag)
+				i = skip_ws(s,i)
+				j = i
+				i = skip_to_end_of_line(s,i)
+				# 21-SEP-2002 DTHEIN: write @first line, whether empty or not
+				line = s[j:i]
+				self.os(line) ; self.onl()
+				i = skip_nl(s,i)
+			#@-body
+			#@-node:1::<< put all @first lines in root >>
+
+			self.putOpenLeoSentinel("@+leo")
+			
+			#@<< put optional @comment sentinel lines >>
+			#@+node:2::<< put optional @comment sentinel lines >>
+			#@+body
+			s2 = app().config.output_initial_comment
+			if s2:
+				lines = string.split(s2,"\\n")
+				for line in lines:
+					line = string.replace(line,"@date",time.asctime())
+					if len(line)> 0:
+						self.putSentinel("@comment " + line)
+			
+			#@-body
+			#@-node:2::<< put optional @comment sentinel lines >>
+
+			
 			v = root
 			while v and v != next:
 				
 				#@<< Write v's node >>
-				#@+node:1::<< Write v's node >>
+				#@+node:3::<< Write v's node >>
 				#@+body
 				self.putOpenNodeSentinel(v)
-				
+					
 				s = v.bodyString()
 				if s and len(s) > 0:
 					self.putSentinel("@+body")
@@ -2952,14 +3010,47 @@ class atFile:
 						self.onl()
 					self.outputFile.write(s)
 					self.putSentinel("@-body")
-				
-				self.putOpenNodeSentinel(v)
-				
+					
+				self.putCloseNodeSentinel(v)
 				
 				#@-body
-				#@-node:1::<< Write v's node >>
+				#@-node:3::<< Write v's node >>
 
 				v = v.threadNext()
+			
+			self.putSentinel("@-leo")
+			
+			#@<< put all @last lines in root >>
+			#@+node:4::<< put all @last lines in root >>
+			#@+body
+			#@+at
+			#  Write any @last lines.  These lines are also converted to 
+			# @verbatim lines, so the read logic simply ignores lines 
+			# following the @-leo sentinel.
+
+			#@-at
+			#@@c
+
+			tag = "@last"
+			lines = string.split(root.t.bodyString,'\n')
+			n = len(lines) ; j = k = n - 1
+			# Don't write an empty last line.
+			if j >= 0 and len(lines[j])==0:
+				j = k = n - 2
+			# Scan backwards for @last directives.
+			while j >= 0:
+				line = lines[j]
+				if match(line,0,tag): j -= 1
+				else: break
+			# Write the @last lines.
+			for line in lines[j+1:k+1]:
+				i = len(tag) ; i = skip_ws(line,i)
+				self.os(line[i:]) ; self.onl()
+			#@-body
+			#@-node:4::<< put all @last lines in root >>
+			#@-body
+			#@-node:1::<< write root's tree >>
+
 			self.closeWriteFile()
 			self.replaceTargetFileIfDifferent()
 			root.clearOrphan() ; root.clearDirty()
