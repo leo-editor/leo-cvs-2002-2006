@@ -28,8 +28,6 @@ Pmw = g.importExtension("Pmw")
 #@-node:ekr.20041221070525:<< imports >>
 #@nl
 
-### Pmw = False #### testing.
-
 #@+others
 #@+node:ekr.20031218072017.3940:class leoTkinterFrame
 class leoTkinterFrame (leoFrame.leoFrame):

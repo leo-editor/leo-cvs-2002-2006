@@ -3,13 +3,6 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20041126102902:(Handle blanks better in imports)
-@
-
-- Add tab_width keyword arg to import command.
-- Convert tabs to blanks if tab width < 0.
-#@nonl
-#@-node:ekr.20041126102902:(Handle blanks better in imports)
 #@+node:ekr.20041214132052:Mac issues
 #@+node:ekr.20041214132052.1:Mac packages
 @killcolor
@@ -57,328 +50,7 @@ Günther
 #@-node:ekr.20041130125213.1:(Create Mac package for Leo)
 #@-node:ekr.20041214132052:Mac issues
 #@+node:EKR.20040609091327:To do: 4.3
-#@+node:ekr.20041018195347:Docs
-#@+node:ekr.20041018195347.1:Improve MacOS Docs
-I just succeeded at installing Leo under os x (10.2.8) by folliwing  
-your instructions with modification.  It would be nice to get the  
-modification added to your page for others. I actually found the mods  
-by doing a search for help after following the present instructions  
-failed. The step that is missing (as clearly as I can see) is step 3  
-(using the Package Manager) in the following that comes from
-
-http://coding.derkeiler.com/Archive/Python/comp.lang.python/2003-12/ 
-3431.html
-
-> What I did that worked on Jaguar:
->  - Installed MacPython 2.3 for Jaguar using the binary installer from:
->  <http://homepages.cwi.nl/~jack/macpython/macpython-osx.html>
->  - Installed Tcl/Tk 8.4.4 using the binary installer from
->  <http://www.maths.mq.edu.au/~steffen/tcltk/TclTkAqua/>
->  - Used Package Manager (in /Applications/MacPython) to install  
-> _tkinter
->  (and also readlines and some other useful stuff)
->
-[x]
-   - type "rehash" in a terminal
-   - type pythonw to start Python and then test Tkinter with the  
-following:
->
-> import Tkinter
->  root = Tkinter.Tk()
->
->
-> should bring up a window.
-
-(It was also nice to have a test included so you could see that  
-everything was installed properly.)
-
-I also edited the leo file that is part of the leo distribution so it  
-read:
-
-pythonw /usr/local/lib/leo/src/leo.pyw "$1"
-
-That way I can just type "leo" to start leo rather than doing
-
-/usr/local/bin/pythonw leo.pyw
-
-Finally, when leo is run for the first time, it creates a window that  
-is centered on the screen asking for an ID. The screen happened to  
-appear under existing terminal windows and I didn't see it there and  
-thought something was wrong with leo on my system. After I found it  
-(accidentally) and entered a user name, all went as advertised.
-
-Seeing the leo project in python is inspiring.  Thanks for making this  
-available.
-
-/c
-#@nonl
-#@-node:ekr.20041018195347.1:Improve MacOS Docs
-#@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-@nocolor
-#@nonl
-#@+node:ekr.20040226094105.1:halw
-
-https://sourceforge.net/forum/message.php?msg_id=2437859
-By: halw
-
-David,
-
-I agree that your solution is best -- the problem is it doesn't work. 
-
-If you look at the original post you'll note that the mouse wheel works fine
-in all other Leo panes (which are native text panes, not a custom canvas).
-
-In fact, a stock RH9 system does set up X as those pages indicate. The problem
-is elsewhere, perhaps Tk or Tkinter.
-
-If Edward doesn't want to ship a workaround, that's fine. It should, IMO, make
-it into the FAQ, though.
-
---Hal
-
-#@-node:ekr.20040226094105.1:halw
-#@+node:ekr.20040226094105.2:djsg
-https://sourceforge.net/forum/message.php?msg_id=2435622
-By: djsg
-
-Tk is complying with the behavior of XFree86, and not hiding that behavior. 
-
-Documentation for XFree86 4.2.0 -- documentation for a 4.4 development version
-matches it, so 4.3.0 ought to match it also:
-
-http://www.xfree86.org/4.2.0/mouse7.html
-
-An example of configuration for XFree86 3.3.2.
-
-First, the URL: 
-
-http://www.genius-europe.com/service/faq/tuxmouse.htm
-
-o save their bandwidth, the example follows: 
-
-
-All mices with scroll wheel or stick
-
-XFree86 >= 3.3.2 (or other XServer with wheel to mouse button support)
-The mouse must be setup in XF86Config to send the mouse buttons 4 and 5 for
-wheel actions.
-Edit /etc/XF86Config with your favorite editor
-Add the following line to the "Pointer" section.
-
-ZAxisMapping 4 5
-
-Make sure your Protocol is set to either "IMPS/2" for a PS/2 mouse
-or for serial mice set it to "IntelliMouse" or "Auto".
-Example for PS/2 wheel mouse:
-
-Section "Pointer"
-Protocol "IMPS/2"
-Device "/dev/psaux"
-SampleRate 60
-BaudRate 1200
-ZAxisMapping 4 5
-Buttons 3
-EndSection
-
-After XWindows is started run :
-imwheel -k
-
-
-#@-node:ekr.20040226094105.2:djsg
-#@+node:ekr.20040226094105.3:The actual workaround
-
-https://sourceforge.net/forum/message.php?msg_id=2433628
-By: halw
-
-Okay, I have a workaround that works for me with my existing Tk version. My
-Tkinter skills are weak, but I don't think this will hurt anything else :)
-
-Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
-events, but maps to buttons 4 (up) & 5 (down).
-
-Add to if clause 
-# Handle mouse wheel in the outline pane.
-if sys.platform == "linux2": # This crashes tcl83.dll
-..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-..def mapWheel(e):
-    if e.num == 4:
-    ..e.delta = 120
-    ..return frame.OnMouseWheel(e)
-    elif e.num == 5:
-    ..e.delta = -120
-    ..return frame.OnMouseWheel(e)
-..canvas.bind("<ButtonPress>", mapWheel, add=1)
-#@nonl
-#@-node:ekr.20040226094105.3:The actual workaround
-#@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-#@-node:ekr.20041018195347:Docs
-#@+node:ekr.20041130125500:To do misc
-#@+node:ekr.20041130103128:(killcolor also kills autoindenting )
-By: Roger Erens - rogererens
-@
-2004-11-25 09:14
-On leo4.2, winXP, my default language is Python and smart_auto_indent=0. 
-Normally, after ending a line with a colon, the next line gets indented by 1 tab, also in comment-sections. 
-When using an @killcolor directive in a node, the line following one that ends with a colon starts at column zero. 
-I think it is unreasonable for @killcolor to interfere with indenting.
-#@-node:ekr.20041130103128:(killcolor also kills autoindenting )
-#@+node:ekr.20041130123243:(Add clear undo command)
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2859273
-e
-
-theres a config option to clear undo on save.
-can that be a menu choice as well? 
-clear undo now.
-enable clear undo on save.
-moot as it will be with the new config options
-and any undo changes on the table.
-maybe there is a single point to involke clear 
-undo that could be run from a button?
-
-with py2.3 after allot of small edits on an open leo after a few hours gc can
-hit unexpectedly and last several minutes
-and return at any time lasting several more minutes.
-I think its gc related because the memory use and disk grinding demanding I
-free up memory or kill python.
-
-I have no idea if undo is the cause,
- just guessing.
-using cvs of last week. I just updated, 
-will let you know if it happens again.
-(new error reporting jump to error is great)
-
-usually I don't edit in the same process that long.
-I have run scripts from leo that run 6, 12 
-or 24 hours no problem. 
-maybe I can turn on some internals reporting and
-get some feedback on whats going on from python if it happens again. 
-or run the gc script before and after.
-
- win98 128meg w/maxmem memory defrager that works well.
-but I go from 50% free to 10% when this starts happening.
-I haven't noticed this problem yet in py2.4, and it is peppier,
-but don't use py2.4 enough. it doesn't happen every day.
-I reboot at least once a day for various reasons.
-so it isn't that either. 
-you do need to reboot and or exit python once it starts.
-this was never an issue with py2.2 and Leo 4.1 or less with only 64 megs.
-I don't really have any other long running python processes to compare to Leo. 
-can't say what it is.
-Aha, progress. 
-this started sometime early in 4.2 or late 4.1
-but I can still be persuaded something in my 
-local system is to blame, some install or dll update. or script, psyco or plugin
-related.
-
-nonwithstanding, I should be taking better advantage Moore's law in my CPU and
-memory.
-I only notice this when I'm running the same leo over a few hours of constant
-editing and running scrips.
-and when I exit python and restart leo everything returns to normal.
-more a supporting anomaly report 
-than a bug report or feature request.
-#@nonl
-#@-node:ekr.20041130123243:(Add clear undo command)
-#@+node:ekr.20041201072431:(Can hoist cause a hang?)
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2876473
-
-I'm using 4.2 final, build 1.173, on Linux, and experience intermittent lockups
-exactly as described here.
-
-I've turned off almost all plugins, except for mod_tempfname, nodenavigator,
-plugin_manager, and plugins_menu. It seems that I never experience the lockups
-if I disable the hoist plugin, but that I do sometimes experience the lockups
-if I enable hoist. Maybe a quick review of hoist might be in order to see if
-anything looks suspicious. I believe hoist uses an idle handler, which I vaguely
-feel might be able to lead to lockups of this sort.
-
-Anyway, I'm not sure about this, but it is kind of frustrating to have leo lock
-up totally, so hopefully this small data tidbit will help flush out this bug.
-#@nonl
-#@-node:ekr.20041201072431:(Can hoist cause a hang?)
-#@+node:ekr.20041201084142:It is possible to change individual headlines directly
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2877106
-
-By: Paul Paterson - paulpaterson
-RE: Can I color the headline text ?  
-2004-12-01 08:01
-
-The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
- 
-Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
- 
-Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
- 
-Between the two of them there should be enough information to help you achieve what you want. 
- 
-It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
-#@nonl
-#@-node:ekr.20041201084142:It is possible to change individual headlines directly
-#@+node:ekr.20041211022140:Specify key binding  in @button
-@killcolor
-
-- Specify the binding in the headline:  @button(alt-shift-9)
-- Change createDynamicButton in the script plugin to honor the binding.
-#@nonl
-#@-node:ekr.20041211022140:Specify key binding  in @button
-#@+node:ekr.20041214135556:How to use Tile
-@nocolor
-https://sourceforge.net/forum/message.php?msg_id=2882718
-By: nobody
-
-if anyone is interested here is some code that Tilefied my Leo instance, its
-does some patching in the LeoGui program.
-
-@color
-
-def createRootWindow(self):
-
-    """Create a hidden Tk root window."""
-    #import Tix
-    self.root = root = Tk.Tk()
-    root.tk.call( 'package', 'require', 'tile' )
-    #root.tk.call( 'namespace', 'import', '-force', 'ttk::*' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::scrollbar' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::label' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::entry' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::menu' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::button' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::frame' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::menubutton' )
-    root.tk.call( 'tile::setTheme', 'clam' )
-    #self.root = root = Tix.Tk()
-    root.title("Leo Main Window")
-    root.withdraw()
-    
-    self.setDefaultIcon()
-    self.getDefaultConfigFont(g.app.config)
-    self.createGlobalWindows()
-
-    return root
-#@nonl
-#@-node:ekr.20041214135556:How to use Tile
-#@+node:ekr.20041126102946:(Use pyclbr to parse Python imports)
-#@-node:ekr.20041126102946:(Use pyclbr to parse Python imports)
-#@-node:ekr.20041130125500:To do misc
-#@+node:ekr.20041120153700:Cleanup 2
-#@+node:ekr.20041120153700.1:Change g.app.gui to c.frame.gui
-In:
-
-- frame creation logic
-- gui code itself
-- leoTkinterDialog code.
-#@nonl
-#@-node:ekr.20041120153700.1:Change g.app.gui to c.frame.gui
-#@+node:ekr.20041123100100.1:Remove Preferences, Set Colors, Set Font commands
-#@-node:ekr.20041123100100.1:Remove Preferences, Set Colors, Set Font commands
-#@-node:ekr.20041120153700:Cleanup 2
-#@+node:ekr.20041006110656:First (completion) 3
+#@+node:ekr.20040919101448:Major (Must do)
 #@+node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
 I would like to store unknown
 attributes as a simple string. The reason, is because I am using an unknown
@@ -407,227 +79,8 @@ Regards
 Martin
 #@-node:ekr.20041004091238:example file
 #@-node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
-#@+node:ekr.20041004193600:Add safeguards on @button and @script
-#@+node:ekr.20041004193600.1:Paul's first posting
-@killcolor
-http://sourceforge.net/forum/message.php?msg_id=2788477
-By: paulpaterson
-
-Perhaps some minor bridling ...
-
-What about managing the security of scripts using some algorithm like this,
-
-1. When Leo scans for @buttons, @scripts etc it makes a list of scripts
-2. For each script ...
-3.   Calculate a secure hash of the script contents
-4.   Consult central repository to see if hash is recognized
-5.   If hash recognized
-6.     Accept it
-7.   Else
-8.     Force user to acknowledge the script or disable it
-
-The cental repository could be a file in your Leo directory which stores "approved"
-hashes.
-
-Clicking on a @buttons, @script node and selecting "Approve script" would add
-the hash to the repository. Selecting "Disable script" would remove it. There
-could also be a menu item to bring up a window of approved/not approved script
-nodes so that you could centrally manage them.
-
-
-Additional housekeeping on the list of hashes is possible but probably isn't
-required since the size is small and there shouldn't be any collisions. If required
-you could just blow away the file and then re-enable all scripts.
-
-Using this approach, no new script would be able to run without being enabled
-by the user. There is still the possibility that another plugin or script could
-disable the security mechanism or tamper with the repository but with Leo's
-architecture a plugin could already do anything anyway so this isn't an additional
-hole.
-
-It would protect from 
-
-@script
-import os
-os.system("del *.*")
-
-being submitted to an OS project!
-#@nonl
-#@-node:ekr.20041004193600.1:Paul's first posting
-#@+node:ekr.20041005075955:Pault's second posting
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2789123
-By: paulpaterson
-
-I'm not an expert but from the Python docs this looks like the way to do it,
-
-> import sha
-> s = sha.sha("hello there")
-> s.hexdigest()
-'6e71b3cac15d32fe2d36c270887df9479c25c640'
-
-> s = sha.sha("hello there hacked")
-'a42837bba84c53cabd52a98f3671809d475c707f'
-
-It looks like the md5 module offers a similar function but uses less bits.
-
-From what I understand the hexdigest should be different for any change in the
-text. Also no two strings should give the same hash (although I seem to recall
-that someone found a collision recently).
-#@-node:ekr.20041005075955:Pault's second posting
-#@+node:ekr.20041003115036:Add --noscripting command-line option
-This will disable @button, @script, etc.
-#@nonl
-#@-node:ekr.20041003115036:Add --noscripting command-line option
-#@-node:ekr.20041004193600:Add safeguards on @button and @script
-#@+node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-Also add corresponding commands.
-#@nonl
-#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-#@+node:ekr.20040317184631:Design
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2477913
-By: edream
-
-A better design for user icons
-
-Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
-to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
-than a list of tuples.  Each of these "subsidiary" dictionaries could have the
-following keys:
-
-"type"
-
-"file", "icon" or "url".  At present my prototype code uses "file" to specify
-the location of an icon.
-
-"where":
-
-"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
-where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
-means before the plus/minus box.  "beforeIcon" means before the standard icon.
-
-"height":
-
-the height of the icon to use when calculating the line height.  Default: get
-from the icon itself, if possible.
-
-"width":
-
-the width of the icon to use when calculating where to put the following element.
-Default: get from the icon, if possible.
-
-"xoffset"
-
-Leo draws the icon at x + xoffset, where x is determined by the where param
-above.  Default 0.
-
-"xpad"
-
-The amount of extra space following the icon.  Default 0.
-
-"yoffset"
-
-Leo draws the icon at y + yoffset.  Default 0.
-
-"ypad"
-
-The amount of extra vertical space to add to the line height.  Default 0.
-
-These offset and pad values are integer pixel values and may be positive or
-negative.
-
-"lineHeight"  NOT USED.
-
-Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-
-Edward
-
-P.S.  Other gui's might not be able to support all these options.  That's ok.
-The drawing code in gui plugins should degrade gracefully.
-
-EKR
-#@nonl
-#@-node:ekr.20040317184631:Design
-#@+node:ekr.20040317184631.2:Changes
-@nocolor
-
-"lineHeight"
-
-This key won't be used.
-
-t.unknownAttributes["lineYOffset"] 
-
-An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
-#@nonl
-#@-node:ekr.20040317184631.2:Changes
-#@+node:ekr.20040317184631.1:To do
-@nocolor
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-#@nonl
-#@-node:ekr.20040317184631.1:To do
-#@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv,toString=False):
-    
-    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
-    
-    result = []
-    attrDict = torv.unknownAttributes
-    if type(attrDict) != type({}):
-        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
-        return
-
-    for key in attrDict.keys():
-        try:
-            val = attrDict[key]
-            s = pickle.dumps(val,bin=True)
-            attr = ' %s="%s"' % (key,binascii.hexlify(s))
-            self.put(attr)
-
-        except pickle.PicklingError:
-            # New in 4.2 beta 1: keep going after error.
-            g.es("ignoring non-pickleable attribute %s in %s" % (
-                key,torv),color="blue")
-#@nonl
-#@-node:EKR.20040526202501:putUnknownAttributes
-#@-node:EKR.20040602153716:(Finish drawUserIcons)
-#@-node:ekr.20041006110656:First (completion) 3
-#@+node:ekr.20040919101448:Major (Must do) 4
+#@+node:ekr.20041126102946:(Use pyclbr to parse Python imports)
+#@-node:ekr.20041126102946:(Use pyclbr to parse Python imports)
 #@+node:ekr.20040919182750.1:Support for CVS
 #@+node:ekr.20040916122326:Check Import command
 - Ignore position of blank lines wrt sentinels.
@@ -2194,6 +1647,13 @@ def putCodeLine (self,s,i):
 #@-node:ekr.20031218072017.2134:putCodeLine
 #@-node:ekr.20040720075446.1:(write_strips_blank_lines option)
 #@-node:ekr.20040930075920:Whitespace options
+#@+node:ekr.20041126102902:(Handle blanks better in imports)
+@
+
+- Add tab_width keyword arg to import command.
+- Convert tabs to blanks if tab width < 0.
+#@nonl
+#@-node:ekr.20041126102902:(Handle blanks better in imports)
 #@-node:ekr.20040919182750.1:Support for CVS
 #@+node:ekr.20040916122326.1:Revise Undo...
 #@+node:ekr.20041011092930:Fix undo bug
@@ -2980,8 +2440,382 @@ I personally prefer the wiki way [[name of section]].
 
 @setlink-tag [[ ]] 
 #@-node:ekr.20031218072017.805:Allow other section delims besides << and >>
-#@-node:ekr.20040919101448:Major (Must do) 4
-#@+node:ekr.20041001182730:Easy 6
+#@+node:EKR.20040628085831:@import, @shadow
+#@+node:ekr.20040718033104:@shadow
+#@-node:ekr.20040718033104:@shadow
+#@+node:ekr.20040718032616:@import
+#@-node:ekr.20040718032616:@import
+#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@-node:EKR.20040628085831:@import, @shadow
+#@-node:ekr.20040919101448:Major (Must do)
+#@+node:ekr.20041001182730:Easy
+#@+node:ekr.20041018195347:Docs
+#@+node:ekr.20041018195347.1:Improve MacOS Docs
+I just succeeded at installing Leo under os x (10.2.8) by folliwing  
+your instructions with modification.  It would be nice to get the  
+modification added to your page for others. I actually found the mods  
+by doing a search for help after following the present instructions  
+failed. The step that is missing (as clearly as I can see) is step 3  
+(using the Package Manager) in the following that comes from
+
+http://coding.derkeiler.com/Archive/Python/comp.lang.python/2003-12/ 
+3431.html
+
+> What I did that worked on Jaguar:
+>  - Installed MacPython 2.3 for Jaguar using the binary installer from:
+>  <http://homepages.cwi.nl/~jack/macpython/macpython-osx.html>
+>  - Installed Tcl/Tk 8.4.4 using the binary installer from
+>  <http://www.maths.mq.edu.au/~steffen/tcltk/TclTkAqua/>
+>  - Used Package Manager (in /Applications/MacPython) to install  
+> _tkinter
+>  (and also readlines and some other useful stuff)
+>
+[x]
+   - type "rehash" in a terminal
+   - type pythonw to start Python and then test Tkinter with the  
+following:
+>
+> import Tkinter
+>  root = Tkinter.Tk()
+>
+>
+> should bring up a window.
+
+(It was also nice to have a test included so you could see that  
+everything was installed properly.)
+
+I also edited the leo file that is part of the leo distribution so it  
+read:
+
+pythonw /usr/local/lib/leo/src/leo.pyw "$1"
+
+That way I can just type "leo" to start leo rather than doing
+
+/usr/local/bin/pythonw leo.pyw
+
+Finally, when leo is run for the first time, it creates a window that  
+is centered on the screen asking for an ID. The screen happened to  
+appear under existing terminal windows and I didn't see it there and  
+thought something was wrong with leo on my system. After I found it  
+(accidentally) and entered a user name, all went as advertised.
+
+Seeing the leo project in python is inspiring.  Thanks for making this  
+available.
+
+/c
+#@nonl
+#@-node:ekr.20041018195347.1:Improve MacOS Docs
+#@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
+@nocolor
+#@nonl
+#@+node:ekr.20040226094105.1:halw
+
+https://sourceforge.net/forum/message.php?msg_id=2437859
+By: halw
+
+David,
+
+I agree that your solution is best -- the problem is it doesn't work. 
+
+If you look at the original post you'll note that the mouse wheel works fine
+in all other Leo panes (which are native text panes, not a custom canvas).
+
+In fact, a stock RH9 system does set up X as those pages indicate. The problem
+is elsewhere, perhaps Tk or Tkinter.
+
+If Edward doesn't want to ship a workaround, that's fine. It should, IMO, make
+it into the FAQ, though.
+
+--Hal
+
+#@-node:ekr.20040226094105.1:halw
+#@+node:ekr.20040226094105.2:djsg
+https://sourceforge.net/forum/message.php?msg_id=2435622
+By: djsg
+
+Tk is complying with the behavior of XFree86, and not hiding that behavior. 
+
+Documentation for XFree86 4.2.0 -- documentation for a 4.4 development version
+matches it, so 4.3.0 ought to match it also:
+
+http://www.xfree86.org/4.2.0/mouse7.html
+
+An example of configuration for XFree86 3.3.2.
+
+First, the URL: 
+
+http://www.genius-europe.com/service/faq/tuxmouse.htm
+
+o save their bandwidth, the example follows: 
+
+
+All mices with scroll wheel or stick
+
+XFree86 >= 3.3.2 (or other XServer with wheel to mouse button support)
+The mouse must be setup in XF86Config to send the mouse buttons 4 and 5 for
+wheel actions.
+Edit /etc/XF86Config with your favorite editor
+Add the following line to the "Pointer" section.
+
+ZAxisMapping 4 5
+
+Make sure your Protocol is set to either "IMPS/2" for a PS/2 mouse
+or for serial mice set it to "IntelliMouse" or "Auto".
+Example for PS/2 wheel mouse:
+
+Section "Pointer"
+Protocol "IMPS/2"
+Device "/dev/psaux"
+SampleRate 60
+BaudRate 1200
+ZAxisMapping 4 5
+Buttons 3
+EndSection
+
+After XWindows is started run :
+imwheel -k
+
+
+#@-node:ekr.20040226094105.2:djsg
+#@+node:ekr.20040226094105.3:The actual workaround
+
+https://sourceforge.net/forum/message.php?msg_id=2433628
+By: halw
+
+Okay, I have a workaround that works for me with my existing Tk version. My
+Tkinter skills are weak, but I don't think this will hurt anything else :)
+
+Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
+events, but maps to buttons 4 (up) & 5 (down).
+
+Add to if clause 
+# Handle mouse wheel in the outline pane.
+if sys.platform == "linux2": # This crashes tcl83.dll
+..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+..def mapWheel(e):
+    if e.num == 4:
+    ..e.delta = 120
+    ..return frame.OnMouseWheel(e)
+    elif e.num == 5:
+    ..e.delta = -120
+    ..return frame.OnMouseWheel(e)
+..canvas.bind("<ButtonPress>", mapWheel, add=1)
+#@nonl
+#@-node:ekr.20040226094105.3:The actual workaround
+#@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
+#@-node:ekr.20041018195347:Docs
+#@+node:ekr.20041004193600:Add safeguards on @button and @script
+#@+node:ekr.20041004193600.1:Paul's first posting
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=2788477
+By: paulpaterson
+
+Perhaps some minor bridling ...
+
+What about managing the security of scripts using some algorithm like this,
+
+1. When Leo scans for @buttons, @scripts etc it makes a list of scripts
+2. For each script ...
+3.   Calculate a secure hash of the script contents
+4.   Consult central repository to see if hash is recognized
+5.   If hash recognized
+6.     Accept it
+7.   Else
+8.     Force user to acknowledge the script or disable it
+
+The cental repository could be a file in your Leo directory which stores "approved"
+hashes.
+
+Clicking on a @buttons, @script node and selecting "Approve script" would add
+the hash to the repository. Selecting "Disable script" would remove it. There
+could also be a menu item to bring up a window of approved/not approved script
+nodes so that you could centrally manage them.
+
+
+Additional housekeeping on the list of hashes is possible but probably isn't
+required since the size is small and there shouldn't be any collisions. If required
+you could just blow away the file and then re-enable all scripts.
+
+Using this approach, no new script would be able to run without being enabled
+by the user. There is still the possibility that another plugin or script could
+disable the security mechanism or tamper with the repository but with Leo's
+architecture a plugin could already do anything anyway so this isn't an additional
+hole.
+
+It would protect from 
+
+@script
+import os
+os.system("del *.*")
+
+being submitted to an OS project!
+#@nonl
+#@-node:ekr.20041004193600.1:Paul's first posting
+#@+node:ekr.20041005075955:Pault's second posting
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2789123
+By: paulpaterson
+
+I'm not an expert but from the Python docs this looks like the way to do it,
+
+> import sha
+> s = sha.sha("hello there")
+> s.hexdigest()
+'6e71b3cac15d32fe2d36c270887df9479c25c640'
+
+> s = sha.sha("hello there hacked")
+'a42837bba84c53cabd52a98f3671809d475c707f'
+
+It looks like the md5 module offers a similar function but uses less bits.
+
+From what I understand the hexdigest should be different for any change in the
+text. Also no two strings should give the same hash (although I seem to recall
+that someone found a collision recently).
+#@-node:ekr.20041005075955:Pault's second posting
+#@+node:ekr.20041003115036:Add --noscripting command-line option
+This will disable @button, @script, etc.
+#@nonl
+#@-node:ekr.20041003115036:Add --noscripting command-line option
+#@-node:ekr.20041004193600:Add safeguards on @button and @script
+#@+node:ekr.20041123100100.1:Remove Preferences, Set Colors, Set Font commands
+#@-node:ekr.20041123100100.1:Remove Preferences, Set Colors, Set Font commands
+#@+node:ekr.20041130103128:(killcolor also kills autoindenting )
+By: Roger Erens - rogererens
+@
+2004-11-25 09:14
+On leo4.2, winXP, my default language is Python and smart_auto_indent=0. 
+Normally, after ending a line with a colon, the next line gets indented by 1 tab, also in comment-sections. 
+When using an @killcolor directive in a node, the line following one that ends with a colon starts at column zero. 
+I think it is unreasonable for @killcolor to interfere with indenting.
+#@-node:ekr.20041130103128:(killcolor also kills autoindenting )
+#@+node:ekr.20041130123243:(Add clear undo command)
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2859273
+e
+
+theres a config option to clear undo on save.
+can that be a menu choice as well? 
+clear undo now.
+enable clear undo on save.
+moot as it will be with the new config options
+and any undo changes on the table.
+maybe there is a single point to involke clear 
+undo that could be run from a button?
+
+with py2.3 after allot of small edits on an open leo after a few hours gc can
+hit unexpectedly and last several minutes
+and return at any time lasting several more minutes.
+I think its gc related because the memory use and disk grinding demanding I
+free up memory or kill python.
+
+I have no idea if undo is the cause,
+ just guessing.
+using cvs of last week. I just updated, 
+will let you know if it happens again.
+(new error reporting jump to error is great)
+
+usually I don't edit in the same process that long.
+I have run scripts from leo that run 6, 12 
+or 24 hours no problem. 
+maybe I can turn on some internals reporting and
+get some feedback on whats going on from python if it happens again. 
+or run the gc script before and after.
+
+ win98 128meg w/maxmem memory defrager that works well.
+but I go from 50% free to 10% when this starts happening.
+I haven't noticed this problem yet in py2.4, and it is peppier,
+but don't use py2.4 enough. it doesn't happen every day.
+I reboot at least once a day for various reasons.
+so it isn't that either. 
+you do need to reboot and or exit python once it starts.
+this was never an issue with py2.2 and Leo 4.1 or less with only 64 megs.
+I don't really have any other long running python processes to compare to Leo. 
+can't say what it is.
+Aha, progress. 
+this started sometime early in 4.2 or late 4.1
+but I can still be persuaded something in my 
+local system is to blame, some install or dll update. or script, psyco or plugin
+related.
+
+nonwithstanding, I should be taking better advantage Moore's law in my CPU and
+memory.
+I only notice this when I'm running the same leo over a few hours of constant
+editing and running scrips.
+and when I exit python and restart leo everything returns to normal.
+more a supporting anomaly report 
+than a bug report or feature request.
+#@nonl
+#@-node:ekr.20041130123243:(Add clear undo command)
+#@+node:ekr.20041201072431:(Can hoist plugin cause a hang?)
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2876473
+
+I'm using 4.2 final, build 1.173, on Linux, and experience intermittent lockups
+exactly as described here.
+
+I've turned off almost all plugins, except for mod_tempfname, nodenavigator,
+plugin_manager, and plugins_menu. It seems that I never experience the lockups
+if I disable the hoist plugin, but that I do sometimes experience the lockups
+if I enable hoist. Maybe a quick review of hoist might be in order to see if
+anything looks suspicious. I believe hoist uses an idle handler, which I vaguely
+feel might be able to lead to lockups of this sort.
+
+Anyway, I'm not sure about this, but it is kind of frustrating to have leo lock
+up totally, so hopefully this small data tidbit will help flush out this bug.
+#@nonl
+#@-node:ekr.20041201072431:(Can hoist plugin cause a hang?)
+#@+node:ekr.20041201084142:It is possible to change individual headlines color directly
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2877106
+
+By: Paul Paterson - paulpaterson
+RE: Can I color the headline text ?  
+2004-12-01 08:01
+
+The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
+ 
+Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
+ 
+Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
+ 
+Between the two of them there should be enough information to help you achieve what you want. 
+ 
+It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
+#@nonl
+#@-node:ekr.20041201084142:It is possible to change individual headlines color directly
+#@+node:ekr.20041211022140:Specify key binding  in @button
+@killcolor
+
+- Specify the binding in the headline:  @button(alt-shift-9)
+- Change createDynamicButton in the script plugin to honor the binding.
+#@nonl
+#@-node:ekr.20041211022140:Specify key binding  in @button
+#@+node:ekr.20041219162724:Add dialog to insert recent directories
+http://sourceforge.net/forum/message.php?msg_id=2903742
+By: nobody
+
+In the multifile plugin there is an option to insert a directory string.  I
+use it alot for the @path directive.  What happens is that when executed a FileDialog
+opens up and the user selects the directory he wants to use as a directory string.
+When chosen the directory string is inserted into the text editor.
+
+The good of this:
+1. It makes using path simpler, you dont have to type out the directory path
+yourself, just use the tkFileDialog to select it and have Leo insert the string.
+For long directories this saves a lot of typing.
+
+simple, short and quite helpful.  Thoughts? :)
+
+-----------
+
+Time to create a directory class??
+
+#@-node:ekr.20041219162724:Add dialog to insert recent directories
 #@+node:ekr.20041022091645.1:Find Next Clone command
 #@-node:ekr.20041022091645.1:Find Next Clone command
 #@+node:ekr.20031218072017.833:Use @file extension by default if no @language
@@ -3116,21 +2950,21 @@ c:\aspell is hardcoded in the plugin.
 
 #@-node:ekr.20041005083816:Use g.bunch to encapsulate plugins options
 #@-node:ekr.20041115100150:Improve plugins style guide
-#@-node:ekr.20041001182730:Easy 6
+#@-node:ekr.20041001182730:Easy
 #@+node:ekr.20041022081937.1:Others (Maybe)
+#@+node:ekr.20041120153700.1:Change g.app.gui to c.frame.gui
+In:
+
+- frame creation logic
+- gui code itself
+- leoTkinterDialog code.
+#@nonl
+#@-node:ekr.20041120153700.1:Change g.app.gui to c.frame.gui
 #@+node:ekr.20031218072017.736:Use xml parser to read .leo files
 http://www.reportlab.com
 
 import xml.sax
 #@-node:ekr.20031218072017.736:Use xml parser to read .leo files
-#@+node:EKR.20040628085831:@import, @shadow
-#@+node:ekr.20040718033104:@shadow
-#@-node:ekr.20040718033104:@shadow
-#@+node:ekr.20040718032616:@import
-#@-node:ekr.20040718032616:@import
-#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040628085831:@import, @shadow
 #@+node:ekr.20040217153407:User customizeable tangling and untangling
 #@+node:ekr.20031218072017.803:@template directive?
 #@-node:ekr.20031218072017.803:@template directive?
@@ -7977,7 +7811,7 @@ def open(self,theFile,fileName,readAtFileNodesFlag=True):
     self.topPosition = None
     c.beginUpdate()
     ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag)
-    frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
+    frame.resizePanesToRatio(ratio,frame.secondary_ratio)
     if 0: # 1/30/04: this is useless.
         if self.topPosition: 
             c.setTopVnode(self.topPosition)

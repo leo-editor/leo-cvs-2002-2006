@@ -35,7 +35,6 @@ if g.app.use_psyco:
     try: from psyco.classes import *
     except ImportError: pass
 
-# import leoTkinterTree
 import leoFrame
 import leoNodes
 import Tkinter as Tk
@@ -168,7 +167,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.5:Most recent changes
     #@-node:ekr.20040803072955.2:  Notes
-    #@+node:ekr.20040803072955.15: Birth...
+    #@+node:ekr.20040803072955.15: Birth... (tkTree)
     #@+node:ekr.20040803072955.16:__init__
     def __init__(self,c,frame,canvas):
         
@@ -271,7 +270,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.freeUserIcons = []
     #@nonl
     #@-node:ekr.20040803072955.16:__init__
-    #@+node:ekr.20040803072955.20:createPermanentBindings
+    #@+node:ekr.20040803072955.20:tkTree.createPermanentBindings
     def createPermanentBindings (self):
         
         canvas = self.canvas
@@ -302,7 +301,7 @@ class leoTkinterTree (leoFrame.leoTree):
             # newText() attaches these bindings to all headlines.
             self.textBindings = t.bindtags()
     #@nonl
-    #@-node:ekr.20040803072955.20:createPermanentBindings
+    #@-node:ekr.20040803072955.20:tkTree.createPermanentBindings
     #@+node:ekr.20040803072955.21:injectCallbacks
     def injectCallbacks(self):
         
@@ -377,7 +376,7 @@ class leoTkinterTree (leoFrame.leoTree):
             g.funcToMethod(f,leoNodes.position)
     #@nonl
     #@-node:ekr.20040803072955.21:injectCallbacks
-    #@-node:ekr.20040803072955.15: Birth...
+    #@-node:ekr.20040803072955.15: Birth... (tkTree)
     #@+node:ekr.20040803072955.6:Allocation...
     #@+node:ekr.20040803072955.7:newBox
     def newBox (self,p,x,y,image):

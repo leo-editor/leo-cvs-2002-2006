@@ -1275,7 +1275,7 @@ class baseFileCommands:
         self.topPosition = None
         c.beginUpdate()
         ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag)
-        frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
+        frame.resizePanesToRatio(ratio,frame.secondary_ratio)
         if 0: # 1/30/04: this is useless.
             if self.topPosition: 
                 c.setTopVnode(self.topPosition)

@@ -5589,7 +5589,7 @@ def moveToParent (self):
 Improved status_line.py in leoPlugins.leo
 #@nonl
 #@-node:ekr.20041002160323:What I did
-#@+node:ekr.20031218072017.3941: frame.Birth & Death
+#@+node:ekr.20031218072017.3941:Birth & Death (tkFrame)
 #@+node:ekr.20031218072017.1801:f.__init__
 def __init__(self,title,gui):
 
@@ -5607,7 +5607,8 @@ self.top = None
 self.tree = None
 self.f1 = self.f2 = None
 self.log = None  ; self.logBar = None
-self.body = None ; self.bodyCtrl = None ; self.bodyBar = None ; self.bodyXBar = None
+self.body = None ; self.bodyCtrl = None
+self.bodyBar = None ; self.bodyXBar = None
 self.canvas = None ; self.treeBar = None
 self.splitter1 = self.splitter2 = None
 self.icon = None
@@ -5617,6 +5618,8 @@ self.statusFrame = None
 self.statusText = None 
 self.statusLabel = None 
 self.findPanel = None
+
+self.componentsDict = {}
 
 # Used by event handlers...
 self.redrawCount = 0
@@ -5631,15 +5634,55 @@ def __repr__ (self):
 
     return "<leoTkinterFrame: %s>" % self.title
 #@-node:ekr.20031218072017.3942:f.__repr__
+#@+node:ekr.20041221122440:f.component
+def component (self,name):
+    
+    return self.componentsDict.get(name)
+#@nonl
+#@-node:ekr.20041221122440:f.component
 #@+node:ekr.20031218072017.3943:Creating the frame
-#@+node:ekr.20031218072017.3944:f.createCanvas
+#@+node:ekr.20031218072017.3944:f.createCanvas & helpers
 def createCanvas (self,parentFrame):
     
-    frame = self ; c = frame.c
+    c = self.c
     
     scrolls = c.config.getBool('outline_pane_scrolls_horizontally')
     scrolls = g.choose(scrolls,1,0)
+    
+    if Pmw:
+        canvas = self.createPmwTreeCanvas(parentFrame,scrolls)
+    else:
+        canvas = self.createTkTreeCanvas(parentFrame,scrolls)
+        
+    self.canvas = canvas
 
+    return canvas
+#@nonl
+#@+node:ekr.20041221071131:createPmwTreeCanvas
+def createPmwTreeCanvas (self,parentFrame,hScrollMode):
+    
+    hscrollmode = g.choose(hScrollMode,'dynamic','none')
+    
+    self.scrolledCanvas = scrolledCanvas = Pmw.ScrolledCanvas(
+        parentFrame,
+        hscrollmode=hscrollmode,
+        vscrollmode='dynamic')
+
+    scrolledCanvas.pack(side='top',expand=1,fill="both")
+
+    self.treeBar = scrolledCanvas.component('vertscrollbar')
+    
+    canvas = scrolledCanvas.component('canvas')
+    canvas.configure(background='white')
+    
+    return canvas
+#@nonl
+#@-node:ekr.20041221071131:createPmwTreeCanvas
+#@+node:ekr.20041221071131.1:createTkTreeCanvas
+def createTkTreeCanvas (self,parentFrame,scrolls):
+    
+    frame = self ; c = frame.c
+    
     canvas = Tk.Canvas(parentFrame,name="canvas",
         bd=0,bg="white",relief="flat")
 
@@ -5672,7 +5715,7 @@ def createCanvas (self,parentFrame):
     
     # g.print_bindings("canvas",canvas)
     return canvas
-#@nonl
+    
 #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
 import threading
 import time
@@ -5715,13 +5758,33 @@ else: # Use plain click.
     canvas.bind_all( '<ButtonRelease-3>', off)
 #@nonl
 #@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
-#@-node:ekr.20031218072017.3944:f.createCanvas
+#@-node:ekr.20041221071131.1:createTkTreeCanvas
+#@-node:ekr.20031218072017.3944:f.createCanvas & helpers
+#@+node:ekr.20041221075743:onPmwResizeSplitter1/2
+def onPmwResizeSplitter1 (self,sizes):
+    
+    if not self.initing:
+        n1,n2 = sizes
+        n1,n2 = float(n1),float(n2)
+        self.ratio = n1/(n1+n2)
+        # g.trace(self.ratio)
+    
+def onPmwResizeSplitter2 (self,sizes):
+
+	if not self.initing:
+        n1,n2 = sizes
+        n1,n2 = float(n1),float(n2)
+        self.secondary_ratio = n1/(n1+n2)
+        # g.trace(self.secondary_ratio)
+#@nonl
+#@-node:ekr.20041221075743:onPmwResizeSplitter1/2
 #@+node:ekr.20031218072017.2176:f.finishCreate
 def finishCreate (self,c):
     
     frame = self ; frame.c = c ; gui = g.app.gui
     
     # This must be done after creating the commander.
+    self.initing = True # To supress onPmwResize until resizePanesToRatio gets called.
     self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
 
     << create the toplevel frame >>
@@ -5766,7 +5829,7 @@ self.outerFrame = outerFrame = Tk.Frame(top)
 self.outerFrame.pack(expand=1,fill="both")
 
 self.createIconBar()
-<< create both splitters >>
+self.createLeoSplitters(outerFrame)
 
 # Create the canvas, tree, log and body.
 frame.canvas   = self.createCanvas(self.split2Pane1)
@@ -5777,31 +5840,13 @@ frame.body     = leoTkinterBody(frame,self.split1Pane2)
 # Yes, this an "official" ivar: this is a kludge.
 frame.bodyCtrl = frame.body.bodyCtrl
 
-# Configure.  N.B. There may be Tk bugs here that make the order significant!
+# Configure.
 frame.setTabWidth(c.tab_width)
 frame.tree.setColorFromConfig()
 self.reconfigurePanes()
 self.body.setFontFromConfig()
 self.body.setColorFromConfig()
-
-if 0: # No longer done automatically.
-
-    # Create the status line.
-    self.createStatusLine()
-    self.putStatusLine("Welcome to Leo")
 #@nonl
-#@+node:ekr.20031218072017.2179:<< create both splitters >>
-# Splitter 1 is the main splitter containing splitter2 and the body pane.
-f1,bar1,split1Pane1,split1Pane2 = self.createLeoSplitter(outerFrame, self.splitVerticalFlag)
-self.f1,self.bar1 = f1,bar1
-self.split1Pane1,self.split1Pane2 = split1Pane1,split1Pane2
-
-# Splitter 2 is the secondary splitter containing the tree and log panes.
-f2,bar2,split2Pane1,split2Pane2 = self.createLeoSplitter(split1Pane1, not self.splitVerticalFlag)
-self.f2,self.bar2 = f2,bar2
-self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
-#@nonl
-#@-node:ekr.20031218072017.2179:<< create both splitters >>
 #@-node:ekr.20031218072017.2178:<< create all the subframes >>
 #@+node:ekr.20031218072017.2180:<< create the first tree node >>
 t = leoNodes.tnode()
@@ -5825,35 +5870,76 @@ c.endUpdate(False)
 2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
 
 Only the general-purpose divideAnySplitter routine doesn't know about these invariants.  So most of this code is specialized for Leo's window.  OTOH, creating a single splitter window would be much easier than this code.
-#@+node:ekr.20031218072017.3946:resizePanesToRatio
-def resizePanesToRatio(self,ratio,secondary_ratio):
-
-    self.divideLeoSplitter(self.splitVerticalFlag, ratio)
-    self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
-    # g.trace(ratio)
-#@-node:ekr.20031218072017.3946:resizePanesToRatio
-#@+node:ekr.20031218072017.3947:bindBar
-def bindBar (self, bar, verticalFlag):
+#@+node:ekr.20041221123325:createLeoSplitters & helpers
+def createLeoSplitters (self,parentFrame):
     
-    if verticalFlag == self.splitVerticalFlag:
-        bar.bind("<B1-Motion>", self.onDragMainSplitBar)
+    if Pmw:
+        # Create splitter1 and its components.
+        splitter1 = self.createLeoPmwSplitter(parentFrame,self.splitVerticalFlag,'splitter1')
+        self.componentsDict['splitter1'] = splitter1
 
+        self.split1Pane1 = splitter2Frame = splitter1.add('splitter2Frame',min=50,size=300)
+
+        self.split1Pane2 = splitter1.add('body',min=50,size=300)
+        self.componentsDict['body'] = self.split1Pane2
+        
+        # Create splitter2 and its components.
+        splitter2 = self.createLeoPmwSplitter(splitter2Frame,not self.splitVerticalFlag,'splitter2')
+        self.componentsDict['splitter2'] = splitter2
+    
+        self.split2Pane1 = splitter2.add('outline',min=50,size=300)
+        self.componentsDict['outline'] = self.split2Pane1
+
+        self.split2Pane2 = splitter2.add('log',min=50,size=50)
+        self.componentsDict['log'] = self.split2Pane2
+
+        # Add convenience items.
+        self.componentsDict['bar1'] = self.bar1 = splitter1.component('separator-1')
+        self.componentsDict['bar2'] = self.bar2 = splitter2.component('separator-1')
+        
+        # Set the colors of the separator and handle.
+        # This must be done after the dynamic frames have been added.
+        for splitter in (splitter1,splitter2):
+            bar = splitter.component('separator-1')
+            bar.configure(background='LightSteelBlue2')
+            handle = splitter.component('handle-1')
+            handle.configure(background='SteelBlue2')
     else:
-        bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
-#@-node:ekr.20031218072017.3947:bindBar
-#@+node:ekr.20031218072017.3948:createLeoSplitter
-# 5/20/03: Removed the ancient kludge for forcing the height & width of f.
-# The code in leoFileCommands.getGlobals now works!
+        # Splitter 1 is the main splitter containing splitter2 and the body pane.
+        f1,bar1,split1Pane1,split1Pane2 = self.createLeoTkSplitter(parentFrame, self.splitVerticalFlag)
+        self.f1,self.bar1 = f1,bar1
+        self.split1Pane1,self.split1Pane2 = split1Pane1,split1Pane2
+        
+        # Splitter 2 is the secondary splitter containing the tree and log panes.
+        f2,bar2,split2Pane1,split2Pane2 = self.createLeoTkSplitter(split1Pane1, not self.splitVerticalFlag)
+        self.f2,self.bar2 = f2,bar2
+        self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
+#@nonl
+#@+node:ekr.20041221073427:createLeoPmwSplitter
+def createLeoPmwSplitter (self,parent,verticalFlag,name):
+    
+    orient = g.choose(verticalFlag,'vertical','horizontal')
+    command = g.choose(name=='splitter1',
+        self.onPmwResizeSplitter1,self.onPmwResizeSplitter2)
 
-def createLeoSplitter (self, parent, verticalFlag):
-    
-    """Create a splitter window and panes into which the caller packs widgets.
-    
-    Returns (f, bar, pane1, pane2) """
-    
+    panedFrame = Pmw.PanedWidget(parent,
+        orient=orient,
+        separatorthickness = 6, # default is 2
+        handlesize = 8, # default is 8
+        command = command)
+
+    panedFrame.pack(expand = 1, fill='both')
+
+    return panedFrame
+#@nonl
+#@-node:ekr.20041221073427:createLeoPmwSplitter
+#@+node:ekr.20041221073427.1:createLeoTkSplitter
+def createLeoTkSplitter (self,parent,verticalFlag):
+
     # Create the frames.
     f = Tk.Frame(parent,bd=0,relief="flat")
     f.pack(expand=1,fill="both",pady=1)
+    
     pane1 = Tk.Frame(f)
     pane2 = Tk.Frame(f)
     bar =   Tk.Frame(f,bd=2,relief="raised",bg="LightSteelBlue2")
@@ -5864,8 +5950,52 @@ def createLeoSplitter (self, parent, verticalFlag):
     self.placeSplitter(bar,pane1,pane2,verticalFlag)
 
     return f, bar, pane1, pane2
+#@-node:ekr.20041221073427.1:createLeoTkSplitter
+#@-node:ekr.20041221123325:createLeoSplitters & helpers
+#@+node:ekr.20041221195402:Pmw only...
+#@+node:ekr.20031218072017.3946:resizePanesToRatio
+def resizePanesToRatio(self,ratio,ratio2):
+    
+    if Pmw:
+        self.ratio = ratio
+        self.secondary_ratio = ratio2
+        self.initing = True
+        # g.trace(self.splitVerticalFlag,ratio,ratio2)
+        splitter1 = self.componentsDict.get('splitter1')
+        splitter2 = self.componentsDict.get('splitter2')
+
+        if self.splitVerticalFlag:
+            # Use ratio to set splitter2 height.
+            size = ratio * float(splitter1.winfo_height())
+            splitter1.configurepane('splitter2Frame',size=int(size))
+            # Use ratio2 to set outline width.
+            size = ratio2 * float(splitter2.winfo_width())
+            splitter2.configurepane('outline',size=int(size))
+        else:
+            # Use ratio to set splitter2 width.
+            size = ratio * float(splitter1.winfo_width())
+            splitter1.configurepane('splitter2Frame',size=int(size))
+            # Use ratio2 to set outline height.
+            size = ratio2 * float(splitter2.winfo_height())
+            splitter2.configurepane('outline',size=int(size))
+
+        # Wait until idle time to clear self.initing.
+        def callback(event=None):
+            self.initing = False
+        self.outerFrame.after_idle(callback)
 #@nonl
-#@-node:ekr.20031218072017.3948:createLeoSplitter
+#@-node:ekr.20031218072017.3946:resizePanesToRatio
+#@-node:ekr.20041221195402:Pmw only...
+#@+node:ekr.20041221185246:Tk only...
+#@+node:ekr.20031218072017.3947:bindBar
+def bindBar (self, bar, verticalFlag):
+
+    if verticalFlag == self.splitVerticalFlag:
+        bar.bind("<B1-Motion>", self.onDragMainSplitBar)
+
+    else:
+        bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
+#@-node:ekr.20031218072017.3947:bindBar
 #@+node:ekr.20031218072017.3949:divideAnySplitter
 # This is the general-purpose placer for splitters.
 # It is the only general-purpose splitter code in Leo.
@@ -5945,6 +6075,9 @@ def onDragSplitterBar (self, event, verticalFlag):
 #@+node:ekr.20031218072017.3952:placeSplitter
 def placeSplitter (self,bar,pane1,pane2,verticalFlag):
 
+    if Pmw:
+        return
+
     if verticalFlag:
         # Panes arranged vertically; horizontal splitter bar
         pane1.place(relx=0.5, rely =   0, anchor="n", relwidth=1.0, relheight=0.5)
@@ -5959,6 +6092,7 @@ def placeSplitter (self,bar,pane1,pane2,verticalFlag):
         bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 #@nonl
 #@-node:ekr.20031218072017.3952:placeSplitter
+#@-node:ekr.20041221185246:Tk only...
 #@-node:ekr.20031218072017.3945:Creating the splitter
 #@+node:ekr.20031218072017.3953:Creating the icon area
 #@+node:ekr.20031218072017.3954:createIconBar
@@ -6280,7 +6414,7 @@ def destroySelf (self):
 #@nonl
 #@-node:ekr.20031218072017.1974:destroySelf
 #@-node:ekr.20031218072017.3964:Destroying the frame
-#@-node:ekr.20031218072017.3941: frame.Birth & Death
+#@-node:ekr.20031218072017.3941:Birth & Death (tkFrame)
 #@+node:ekr.20031218072017.3960:Creating the status area
 
 
@@ -16537,6 +16671,441 @@ Traceback (most recent call last):
 TclError: invalid filename "."
 #@-node:ekr.20041216060139:Traceback
 #@-node:ekr.20041214073833.1:(Removed g.os_path_norm and g.os_path_normabs)
+#@+node:ekr.20041128172446:(added a 3rd party extension mechanism)
+#@+node:ekr.20041219065925:Notes
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2871977
+
+- (done) created g.app.extensionsDir
+
+- (done) created g.importModule and g.importExtension.
+
+Now you can put Pmw into the extensions directory and have Leo easily import it from there.
+
+Doing so gives you a way to add Pmw easily and any other 3rd party libs Leo ever needs.
+#@nonl
+#@-node:ekr.20041219065925:Notes
+#@+node:ekr.20041219095213:import wrappers
+@ Warning:
+
+These functions use imp.load_module, and that is equivalent to reload!
+
+Calling any of these functions to reload Leo files will crash Leo!
+#@+node:ekr.20041219095213.1:g.importModule
+def importModule (moduleName,verbose=False):
+
+    '''Try to import a module as Python's import command does.
+
+    moduleName is the module's name, without file extension.'''
+    
+    try:
+        theFile = None ; module = None
+        import imp
+        try:
+            data = imp.find_module(moduleName) # This can open the file.
+            theFile,pathname,description = data
+            module = imp.load_module(moduleName,theFile,pathname,description)
+        except ImportError:
+            if verbose and not module:
+                s = "can not import %s" % moduleName
+                print s ; g.es(s,color="blue")
+        except:
+            g.es("unexpected exception in g.import",color='blue')
+            g.es_exception()
+    finally:
+        if theFile: theFile.close()
+    return module
+#@nonl
+#@-node:ekr.20041219095213.1:g.importModule
+#@+node:ekr.20041219071407:g.importExtension
+def importExtension (moduleName,verbose=False):
+
+    '''Try to import a module.  If that fails,
+    try to import the module from Leo's extensions directory.
+
+    moduleName is the module's name, without file extension.'''
+    
+    module = g.importModule(moduleName,verbose=False)
+
+    if not module:
+        module = g.importFromPath(moduleName,g.app.extensionsDir,verbose=False)
+
+    if verbose and not module:
+        s = "can not import extension %s" % moduleName
+        print s ; g.es(s,color="blue")
+
+    return module
+#@nonl
+#@-node:ekr.20041219071407:g.importExtension
+#@+node:ekr.20031218072017.2278:g.importFromPath
+def importFromPath (name,path,verbose=False):
+
+    try:
+        theFile = None ; data = None ; result = None
+        import imp
+        try:
+            fn = g.shortFileName(name)
+            mod_name,ext = g.os_path_splitext(fn)
+            path = g.os_path_normpath(path)
+            if g.CheckVersion(sys.version,"2.3"):
+                path = g.toEncodedString(path,app.tkEncoding)
+            else:
+                path = str(path) # May throw exception.
+            try:
+                data = imp.find_module(mod_name,[path]) # This can open the file.
+            except ImportError:
+                if verbose:
+                    s = "Can not import %s from %s" % (mod_name,path)
+                    print s ; g.es(s,color="blue")
+            if data:
+                theFile,pathname,description = data
+                try:
+                    result = imp.load_module(mod_name,theFile,pathname,description)
+                except ImportError:
+                    g.es_exception()
+        except:
+            g.es_exception()
+
+    # Put no return statements before here!
+    finally: 
+        if theFile: theFile.close()
+
+    return result
+#@nonl
+#@-node:ekr.20031218072017.2278:g.importFromPath
+#@-node:ekr.20041219095213:import wrappers
+#@+node:ekr.20031218072017.1934:run & allies
+def run(fileName=None,*args,**keywords):
+    
+    """Initialize and run Leo"""
+    
+    if not isValidPython(): return
+    << import leoGlobals and leoApp >>
+    << compute directories >>
+    script = getBatchScript() # Do early so we can compute verbose next.
+    verbose = script is None
+    g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
+    << import leoNodes and leoConfig >>
+    g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
+    g.app.config = leoConfig.config()
+    fileName = completeFileName(fileName)
+    reportDirectories(verbose)
+    g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.
+    g.app.setEncoding()
+    if script:
+        createNullGuiWithScript(script)
+        fileName = None
+    # Load plugins. Plugins may create g.app.gui.
+    g.doHook("start1")
+    if g.app.killed: return # Support for g.app.forceShutdown.
+    # Create the default gui if needed.
+    if g.app.gui == None:
+        g.app.createTkGui() # Creates global windows.
+    # Initialize tracing and statistics.
+    g.init_sherlock(args)
+    g.clear_stats()
+    << start psycho >>
+    # Create the main frame.  Show it and all queued messages.
+    c,frame = createFrame(fileName)
+    if not frame: return
+    if g.app.disableSave:
+        g.es("disabling save commands",color="red")
+    g.app.writeWaitingLog()
+    p = c.currentPosition()
+    g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
+    g.enableIdleTimeHook()
+    frame.tree.redraw()
+    frame.body.setFocus()
+    g.app.initing = False # "idle" hooks may now call g.app.forceShutdown.
+    g.app.gui.runMainLoop()
+#@nonl
+#@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+# Import leoGlobals, but do NOT set g.
+try:
+    import leoGlobals
+except ImportError:
+    print "Error importing leoGlobals.py"
+
+# Create the application object.
+try:
+    import leoApp
+    leoGlobals.app = leoApp.LeoApp()
+except ImportError:
+    print "Error importing leoApp.py"
+    
+# NOW we can set g.
+g = leoGlobals
+assert(g.app)
+#@nonl
+#@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+#@+node:ekr.20041219072416:<< compute directories >>
+g.app.loadDir = computeLoadDir()
+    # Depends on g.app.tkEncoding: uses utf-8 for now.
+
+g.app.homeDir = computeHomeDir()
+
+g.app.extensionsDir = g.os_path_abspath(
+    g.os_path_join(g.app.loadDir,'..','extensions'))
+
+g.app.globalConfigDir = computeGlobalConfigDir()
+#@nonl
+#@-node:ekr.20041219072416:<< compute directories >>
+#@+node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+try:
+    import leoNodes
+except ImportError:
+     print "Error importing leoNodes.py"
+
+try:
+    import leoConfig
+except ImportError:
+    print "Error importing leoConfig.py"
+#@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+#@+node:ekr.20040411081633:<< start psycho >>
+if g.app.use_psyco:
+    try:
+        import psyco
+        if 0:
+            theFile = r"c:\prog\test\psycoLog.txt"
+            g.es("psyco now logging to",theFile,color="blue")
+            psyco.log(theFile)
+            psyco.profile()
+        psyco.full()
+        g.es("psyco now running",color="blue")
+    except ImportError:
+        pass
+    except:
+        print "unexpected exception importing psyco"
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040411081633:<< start psycho >>
+#@+node:ekr.20031218072017.1936:isValidPython
+def isValidPython():
+
+    message = """\
+Leo requires Python 2.2.1 or higher.
+You may download Python from http://python.org/download/
+"""
+    try:
+        # This will fail if True/False are not defined.
+        import leoGlobals as g
+    except ImportError:
+        print "isValidPython: can not import leoGlobals"
+        return 0
+    except:
+        print "isValidPytyhon: unexpected exception: import leoGlobals.py as g"
+        import traceback ; traceback.print_exc()
+        return 0
+    try:
+        ok = g.CheckVersion(sys.version, "2.2.1")
+        if not ok:
+            print message
+            g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
+        return ok
+    except:
+        print "isValidPython: unexpected exception: g.CheckVersion"
+        import traceback ; traceback.print_exc()
+        return 0
+#@nonl
+#@-node:ekr.20031218072017.1936:isValidPython
+#@+node:ekr.20041124083125:completeFileName (leo.py)
+def completeFileName (fileName):
+    
+    import leoGlobals as g
+    
+    if not fileName:
+        return None
+        
+    # This does not depend on config settings.
+    fileName = g.os_path_join(os.getcwd(),fileName)
+
+    head,ext = g.os_path_splitext(fileName)
+    if not ext:
+        fileName = fileName + ".leo"
+
+    return fileName
+#@nonl
+#@-node:ekr.20041124083125:completeFileName (leo.py)
+#@+node:ekr.20041117155521:computeGlobalConfigDir
+def computeGlobalConfigDir():
+    
+    import leoGlobals as g
+    
+    encoding = startupEncoding()
+
+    try:
+        theDir = sys.leo_config_directory
+    except AttributeError:
+        theDir = g.os_path_join(g.app.loadDir,"..","config")
+        
+    if theDir:
+        theDir = g.os_path_abspath(theDir)
+        
+    if (
+        not theDir or
+        not g.os_path_exists(theDir,encoding) or
+        not g.os_path_isdir(theDir,encoding)
+    ):
+        theDir = None
+    
+    return theDir
+#@nonl
+#@-node:ekr.20041117155521:computeGlobalConfigDir
+#@+node:ekr.20041117151301:computeHomeDir
+def computeHomeDir():
+    
+    """Returns the user's home directory."""
+    
+    import leoGlobals as g
+
+    encoding = startupEncoding()
+    dotDir = g.os_path_abspath('./',encoding)
+    home = os.getenv('HOME',default=dotDir)
+    home = g.os_path_abspath(home,encoding)
+    
+    if (
+        not home or
+        not g.os_path_exists(home,encoding) or
+        not g.os_path_isdir(home,encoding)
+    ):
+        home = None
+
+    return home
+#@nonl
+#@-node:ekr.20041117151301:computeHomeDir
+#@+node:ekr.20031218072017.1937:computeLoadDir
+def computeLoadDir():
+    
+    """Returns the directory containing leo.py."""
+    
+    import leoGlobals as g
+
+    try:
+        import leo
+        encoding = startupEncoding()
+        path = g.os_path_abspath(leo.__file__,encoding)
+        if path:
+            loadDir = g.os_path_dirname(path,encoding)
+        else: loadDir = None
+            
+        if (
+            not loadDir or
+            not g.os_path_exists(loadDir,encoding) or
+            not g.os_path_isdir(loadDir,encoding)
+        ):
+            loadDir = os.getcwd()
+            print "Using emergency loadDir:",repr(loadDir)
+        
+        loadDir = g.os_path_abspath(loadDir,encoding)
+        # g.es("load dir: %s" % (loadDir),color="blue")
+        return loadDir
+    except:
+        print "Exception getting load directory"
+        import traceback ; traceback.print_exc()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.1937:computeLoadDir
+#@+node:ekr.20041117151301.1:startupEncoding
+def startupEncoding ():
+    
+    import leoGlobals as g
+    import sys
+    
+    if sys.platform=="win32": # "mbcs" exists only on Windows.
+        encoding = "mbcs"
+    elif sys.platform=="dawwin":
+        encoding = "utf-8"
+    else:
+        encoding = g.app.tkEncoding
+        
+    return encoding
+#@nonl
+#@-node:ekr.20041117151301.1:startupEncoding
+#@+node:ekr.20031218072017.1624:createFrame (leo.py)
+def createFrame (fileName):
+    
+    """Create a LeoFrame during Leo's startup process."""
+    
+    import leoGlobals as g
+    
+    # g.trace(g.app.tkEncoding,fileName)
+
+    # Try to create a frame for the file.
+    if fileName:
+        if g.os_path_exists(fileName):
+            ok, frame = g.openWithFileName(fileName,None)
+            if ok:
+                return frame.c,frame
+    
+    # Create a new frame & indicate it is the startup window.
+    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
+    frame.setInitialWindowGeometry()
+    frame.startupWindow = True
+    
+    # Report the failure to open the file.
+    if fileName:
+        g.es("File not found: " + fileName)
+
+    return c,frame
+#@-node:ekr.20031218072017.1624:createFrame (leo.py)
+#@+node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+def createNullGuiWithScript (script):
+    
+    import leoGlobals as g
+    import leoGui
+    
+    g.app.batchMode = True
+    g.app.gui = leoGui.nullGui("nullGui")
+    if not g.app.root:
+        g.app.root = g.app.gui.createRootWindow()
+    g.app.gui.finishCreate()
+    g.app.gui.setScript(script)
+#@-node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+#@+node:ekr.20031218072017.1939:getBatchScript
+def getBatchScript ():
+    
+    import leoGlobals as g
+    
+    name = None ; i = 1 # Skip the dummy first arg.
+    while i + 1 < len(sys.argv):
+        arg = sys.argv[i].strip().lower()
+        if arg in ("--script","-script"):
+            name = sys.argv[i+1].strip() ; break
+        i += 1
+
+    if not name:
+        return None
+    name = g.os_path_join(g.app.loadDir,name)
+    try:
+        f = None
+        try:
+            f = open(name,'r')
+            script = f.read()
+            # g.trace("script",script)
+        except IOError:
+            g.es("can not open script file: " + name, color="red")
+            script = None
+    finally:
+        if f: f.close()
+        return script
+#@nonl
+#@-node:ekr.20031218072017.1939:getBatchScript
+#@+node:ekr.20041130093254:reportDirectories
+def reportDirectories(verbose):
+    
+    import leoGlobals as g
+   
+    if verbose:
+        for kind,dir in (
+            ("global config",g.app.globalConfigDir),
+            ("home",g.app.homeDir),
+        ):
+            g.es("%s dir: %s" % (kind,dir),color="blue")
+#@nonl
+#@-node:ekr.20041130093254:reportDirectories
+#@-node:ekr.20031218072017.1934:run & allies
+#@-node:ekr.20041128172446:(added a 3rd party extension mechanism)
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl
