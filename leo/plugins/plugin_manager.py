@@ -7,14 +7,13 @@ A plugin to manage Leo's Plugins:
 - Shows plugin details.
 - Checks for conflicting hook handlers.
 - Checks for and updates plugins from the web.
-
-This plugin does not work with Python 2.2.x because it imports Sets.
 """
 
-__version__ = "0.8"
+__version__ = "0.9"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
+__plugin_group__ = "Core"
 
 #@<< version history >>
 #@+node:pap.20041006184225.2:<< version history >>
@@ -48,10 +47,25 @@ __plugin_requires__ = ["plugin_menu"]
 # work everywhere.
 #     - Added better import tests, and message when import fails.
 #     - Added an init method, although a simple raise would also work.
-# 0.8 EKR
+# 0.8 EKR:
 #     - Well, that was easy.  Put sets.py from Python 2.4 in extensions 
 # folder.
 #     - Use g.importExtension rather than import to get sets module.
+# 0.9 Paul Paterson:
+#     - Remove the "not referenced" status. All plugins are not active or 
+# inactive.
+#     - Changed the list view to have the status at the end of the line
+#     - Changed format of list view to be fixed font so that it looks cleaner
+#     - Also changed format of conflict list view
+#     - If a file contains "__not_a_plugin__ = True" then it will be omitted 
+# from the list
+#     - Now looks for and reports the __plugin_group__ in the view and list
+#     - Can now filter the plugins by their __plugin__group__
+#     - Set __plugin_group__ to "Core"
+#     - Renamed active/inactive to on/off as this works better with the groups
+#     - Added version history display to plugin view
+# 
+# 
 #@-at
 #@-node:pap.20041006184225.2:<< version history >>
 #@nl
@@ -140,6 +154,21 @@ class InvalidCollection(Exception):
 class InvalidManager(Exception):
     """The enable manager is invalid"""
 #@-node:pap.20041006193459:Error Classes
+#@+node:pap.20050305144720:inColumns
+
+def inColumns(data, columnwidths):
+    """Return the items of data with the specified column widths
+    
+    The list of widths should be one less than the list of data, eg
+        inColumns((10,20,30), (5,5))
+    """
+    format = ""
+    for col in columnwidths:
+        format += "%%-%ds" % col
+    format += "%s"
+    #
+    return format % data
+#@-node:pap.20050305144720:inColumns
 #@+node:pap.20041009140132:UI
 #@+node:pap.20041008224318:class PluginView
 class PluginView(Tk.Frame):
@@ -182,6 +211,14 @@ class PluginView(Tk.Frame):
         
         self.status.pack(side="top", fill="x", expand=0)
         #@-node:pap.20041008231028:Status
+        #@+node:pap.20050305151106:Group
+        self.group = Pmw.EntryField(self.top,
+                labelpos = 'w',
+                label_text = 'Group:',
+        )
+        
+        self.group.pack(side="top", fill="x", expand=0)
+        #@-node:pap.20050305151106:Group
         #@+node:pap.20041008230728.1:Filename
         self.filename = Pmw.EntryField(self.top,
                 labelpos = 'w',
@@ -218,8 +255,18 @@ class PluginView(Tk.Frame):
             self.priority.pack(side="top", fill="x", expand=0)
         #@nonl
         #@-node:pap.20041009135426.1:Priority
-        #@+node:pap.20041008231028.1:Description
-        self.description = Pmw.ScrolledText(self.top,
+        #@+node:pap.20041008231028.1:Description & Versions
+        self.text_panel = Pmw.NoteBook(self.top)
+        self.text_panel.pack(side="top", fill='both', expand=1, padx=5, pady=5)
+        
+        description_panel = self.text_panel.add('Description')
+        version_panel = remote_list_page = self.text_panel.add('Version History')
+        
+        #@<< Description >>
+        #@+node:pap.20050305170921:<< Description >>
+        #@@c
+        
+        self.description = Pmw.ScrolledText(description_panel,
                 # borderframe = 1,
                 labelpos = 'n',
                 label_text='Plugin Description',
@@ -234,7 +281,30 @@ class PluginView(Tk.Frame):
                 text_pady = 4,
         )
         self.description.pack(side="top", fill='both', expand=1)
-        #@-node:pap.20041008231028.1:Description
+        #@-node:pap.20050305170921:<< Description >>
+        #@nl
+        #@<< Version History >>
+        #@+node:pap.20050305170921.1:<< Version History >>
+        
+        self.version_history = Pmw.ScrolledText(version_panel,
+                # borderframe = 1,
+                labelpos = 'n',
+                label_text='Plugin History',
+                columnheader = 0,
+                rowheader = 0,
+                rowcolumnheader = 0,
+                usehullsize = 1,
+                hull_width = 300,
+                hull_height = 300,
+                text_wrap='word',
+                text_padx = 4,
+                text_pady = 4,
+        )
+        self.version_history.pack(side="top", fill='both', expand=1)
+        #@-node:pap.20050305170921.1:<< Version History >>
+        #@nl
+        #@nonl
+        #@-node:pap.20041008231028.1:Description & Versions
         #@+node:pap.20041008231028.2:Commands
         self.commands = Pmw.ScrolledListBox(self.bottom,
                 labelpos='n',
@@ -275,13 +345,13 @@ class PluginView(Tk.Frame):
         
         if USE_PRIORITY:
             Pmw.alignlabels([
-                self.name, self.version, self.status,
+                self.name, self.version, self.status, self.group,
                 self.filename, self.has_ini, self.has_toplevel,
                 self.priority, 
             ])
         else:
              Pmw.alignlabels([
-                self.name, self.version, self.status,
+                self.name, self.version, self.status, self.group,
                 self.filename, self.has_ini, self.has_toplevel,
             ])
     #@nonl
@@ -291,6 +361,7 @@ class PluginView(Tk.Frame):
         """Show a plugin"""
         self.name.setentry(plugin.name)
         self.version.setentry(plugin.version)
+        self.group.setentry(plugin.group)
         self.filename.setentry(g.os_path_abspath(plugin.filename)) # EKR
         self.status.setentry(plugin.enabled)
         self.has_ini.setentry(
@@ -300,6 +371,7 @@ class PluginView(Tk.Frame):
         if USE_PRIORITY:
             self.priority.setentry(plugin.priority)
         self.description.settext(plugin.description.strip())
+        self.version_history.settext(plugin.versions.strip())
         self.commands.setlist(plugin.commands)
         self.handlers.setlist(plugin.handlers)
         self.requires.setlist(plugin.requires)
@@ -313,6 +385,7 @@ class PluginList(Tk.Frame):
     
     filter_options = []
     title = "List"
+    secondtitle = "Groups"
     
     #@    @+others
     #@+node:pap.20041008225226.1:__init__
@@ -331,6 +404,8 @@ class PluginList(Tk.Frame):
                 hull_height = 200,
         )
         
+        self.box.component("listbox").configure(font=("Courier", 8))
+        
         self.filter = Pmw.OptionMenu(self,
                 labelpos = 'w',
                 label_text = '%s:' % self.title,
@@ -340,6 +415,19 @@ class PluginList(Tk.Frame):
         )    
         
         self.filter.pack(side="top")
+    
+        self.secondfilter = Pmw.OptionMenu(self,
+                labelpos = 'w',
+                label_text = '%s:' % self.secondtitle,
+                items = ["All"],
+                menubutton_width = 16,
+                command=self.populateList,
+        )    
+    
+        Pmw.alignlabels([self.filter, self.secondfilter])
+                
+        self.secondfilter.pack(side="top")
+    
         self.box.pack(side="bottom", fill='both', expand=1)    
         
         self.plugin_view = plugin_view
@@ -372,8 +460,9 @@ class PluginList(Tk.Frame):
         if not self.plugins:
             self.box.setlist([])
             return
-        if filter is None:
-            filter = self.filter.getcurselection()
+        #if filter is None:
+        filter = self.filter.getcurselection()
+        secondfilter = self.secondfilter.getcurselection()
         #
         # Get old selection so that we can restore it    
         current_text = self.box.getcurselection()
@@ -385,7 +474,8 @@ class PluginList(Tk.Frame):
                                     for name in self.plugins])
         self.listitems = [self.plugins[name].asString() 
                             for name in self.plugins.sortedNames()
-                            if filter in ("All", self.plugins[name].enabled)]
+                            if filter in ("All", self.plugins[name].enabled) 
+                            and secondfilter in ("All", self.plugins[name].group)]
         self.box.setlist(self.listitems)    
         #
         if current_text:
@@ -407,8 +497,14 @@ class PluginList(Tk.Frame):
         else:
             return self.local_dict[sels[0]]
     #@-node:pap.20041008233733:getSelectedPlugin
+    #@+node:pap.20050305160811:setSecondFilterList
+    def setSecondFilterList(self, list_items):
+        """Set the items to use in the second filter list"""
+        self.secondfilter.setitems(list_items)
+    #@-node:pap.20050305160811:setSecondFilterList
     #@-others
     
+
 
 
 #@-node:pap.20041008225226:class PluginList
@@ -417,7 +513,7 @@ class LocalPluginList(PluginList):
     """A list showing plugins based on the local file system"""
     
     title = "Locally Installed Plugins"
-    filter_options = ['All', 'Active', 'Inactive', 'Not referenced']
+    filter_options = ['All', 'On', 'Off']
 #@nonl
 #@-node:pap.20041009013256:class LocalPluginList
 #@+node:pap.20041009013556:class RemotePluginList
@@ -481,6 +577,8 @@ class ManagerDialog:
         self.plugin_list.pack(side="top", fill='both', expand=1)
         self.remote_plugin_list = RemotePluginList(remote_list_page, self.plugin_view, None)
         self.remote_plugin_list.pack(side="top", fill='both', expand=1)
+        
+        self.plugin_list.setSecondFilterList(["All"] + self.local.getGroups())
         #@nonl
         #@-node:pap.20041006223915:<< create PluginList >>
         #@nl
@@ -618,7 +716,8 @@ class ManagerDialog:
                 #@nl
         self.messagebar.resetmessages('busy')        
         self.remote.setEnabledStateFrom(self.local)
-        self.remote_plugin_list.populateList()     
+        self.remote_plugin_list.populateList()   
+        self.remote_plugin_list.setSecondFilterList(["All"] + self.remote.getGroups()) 
     #@nonl
     #@-node:pap.20041006224216:checkUpdates
     #@+node:pap.20041009020000.1:installPlugin
@@ -669,7 +768,7 @@ class ManagerDialog:
             dialog = ListReportDialog(
                 'Potential Conflicts for %s' % plugin.name,
                 'Conflicts',
-                ["%s - %s" % (item[1], item[0]) for item in conflicts],
+                [inColumns(item, [30]) for item in conflicts],
                 400)
     #@nonl
     #@-node:pap.20041009025708:checkConflicts
@@ -706,6 +805,7 @@ class ListReportDialog:
         #@nl
         filter_options = self.getFilterOptions(list_data)
         self.list_data = list_data
+        self.list_data.sort()
         #@    << create the ScrolledListBox >>
         #@+node:pap.20041009234256:<< create the ScrolledListBox >>
         self.box = Pmw.ScrolledListBox(frame,
@@ -719,6 +819,8 @@ class ListReportDialog:
         )
         
         self.box.pack(side="bottom", fill='both', expand=1)    
+        
+        self.box.component("listbox").configure(font=("Courier", 10))
         #@nonl
         #@-node:pap.20041009234256:<< create the ScrolledListBox >>
         #@nl
@@ -744,9 +846,10 @@ class ListReportDialog:
     #@+node:pap.20041009234850:getFilterOptions
     def getFilterOptions(self, list_data):
         """Return a list of filter items"""
+        splitter = re.compile("\s{3,}")
         names = sets.Set()
         for item in list_data:
-            names.add(item.split(" - ")[0].strip())
+            names.add(splitter.split(item)[1].strip())
         name_list = list(names)
         name_list.sort()
         return ["All"] + name_list
@@ -762,7 +865,7 @@ class ListReportDialog:
             current_index = self.list_data.index(current_text[0])
     
         listitems = [item for item in self.list_data
-            if item.startswith("%s -" % filter) or filter == "All"]
+            if item.endswith("   %s" % filter) or filter == "All"]
     
         self.box.setlist(listitems)    
     
@@ -782,6 +885,12 @@ class Plugin:
     """Represents a single plugin instance"""
     
     #@    @+others
+    #@+node:pap.20050305141939:Class Properties
+    
+    max_name_width = 30
+    max_group_width = 10
+    #@nonl
+    #@-node:pap.20050305141939:Class Properties
     #@+node:pap.20041006185727.1:__init__
     
     def __init__(self):
@@ -800,6 +909,8 @@ class Plugin:
         self.priority = None
         self.has_toplevel = False
         self.requires = []
+        self.group = None
+        self.versions = ''
         
     #@nonl
     #@-node:pap.20041006185727.1:__init__
@@ -853,8 +964,9 @@ class Plugin:
         """
         # The following line tried to detect plugins by looking 
         # for self.hasImport(text, "leoPlugins") - now we assume all .py are plugins
-        self.is_plugin = True 
+        self.is_plugin = not self.hasPattern(text, '__not_a_plugin__\s*=\s*True(?!")')
         self.version = self.getPattern(text, r'__version__\s*=\s*[\'"](.*?)[\'"]', "-")
+        self.group = self.getPattern(text, r'__plugin_group__\s*=\s*[\'"](.*?)[\'"]', "-")
         # Allow both single and double triple-quoted strings.
         match1 = self.getMatch(text, r'"""(.*?)"""')
         match2 = self.getMatch(text, r"'''(.*?)'''")
@@ -885,6 +997,7 @@ class Plugin:
         if USE_PRIORITY:
             self.priority = self.getPattern(text, r'__plugin_priority__\s*=\s*(.*?)$', "-")
         self.has_toplevel = self.hasPattern(text, "def topLevelMenu")
+        self.getVersionHistory(text)
     #@nonl
     #@-node:pap.20041006194759:getDetails
     #@+node:pap.20041006200000:hasPattern
@@ -945,9 +1058,10 @@ class Plugin:
     
         if not detail:
             if self.version <> "-":
-                return "%(enabled)s - %(name)s (v%(version)s)" % self.__dict__
+                body = "%(name)s (v%(version)s)" % self.__dict__
             else:
-                return "%(enabled)s - %(name)s" % self.__dict__                        
+                body = "%(name)s" % self.__dict__                        
+            return inColumns((body, self.group, self.enabled), [self.max_name_width, self.max_group_width])
         else:
             return (
                 "Name: %(name)s\n"
@@ -983,6 +1097,30 @@ class Plugin:
                 "Unable to write plugin file '%s': %s" % (filename, err))
     #@nonl
     #@-node:pap.20041009023004:writeTo
+    #@+node:pap.20050305165333:getVersionHistory
+    def getVersionHistory(self, text):
+        """Try to extract the version history of this plugin
+        
+        This is all guesswork! We look for a Leo node called "Version history"
+        or one called "Change log". If we find it then we assume that the contents
+        are the version history.
+        
+        This only works if the plugin was developed in Leo as a @thin file.
+        
+        """
+        #if self.group == "Core":
+        #    import pdb; pdb.set_trace()
+        extractor =r'.*\+node\S+?\<\< %s \>\>.*?\#\@\+at(.*)\#\@\-at.*\-node.*?\<\< %s \>\>.*'
+        for name in ("version history", "change log"):
+            searcher = re.compile(extractor % (name, name), re.DOTALL+re.M)
+            match = searcher.match(text)
+            if match:
+                version_text = match.groups()[0]
+                self.versions = version_text.replace("#", "")
+                return
+        
+    #@nonl
+    #@-node:pap.20050305165333:getVersionHistory
     #@+node:pap.20041009225149:getRequiredModules
     def getRequiredModules(self, plugin_collection):
         """Determine which modules are also required by this plugin
@@ -1202,24 +1340,21 @@ class PluginCollection(dict):
         """Set the enabled state of each plugin using the enabler object"""
         for name in self:
             if name in enabler.actives:
-                self[name].enabled = "Active"
-            elif name in enabler.inactives:
-                self[name].enabled = "Inactive" 
+                self[name].enabled = "On"
             else:
-                self[name].enabled = "Not referenced"
-    #@nonl
+                self[name].enabled = "Off" 
     #@-node:pap.20041008220723:setEnabledStateFrom
     #@+node:pap.20041008233947:enablePlugin
     def enablePlugin(self, plugin, enabler):
         """Enable a plugin"""
-        plugin.enabled = "Active"
+        plugin.enabled = "On"
         enabler.updateState(plugin)
     #@nonl
     #@-node:pap.20041008233947:enablePlugin
     #@+node:pap.20041008234033:disablePlugin
     def disablePlugin(self, plugin, enabler):
         """Enable a plugin"""
-        plugin.enabled = "Inactive"
+        plugin.enabled = "Off"
         enabler.updateState(plugin)
     #@nonl
     #@-node:pap.20041008234033:disablePlugin
@@ -1238,6 +1373,14 @@ class PluginCollection(dict):
             
     #@nonl
     #@-node:pap.20041009025708.1:getConflicts
+    #@+node:pap.20050305161126:getGroups
+    def getGroups(self):
+        """Return a list of the Plugin group names"""
+        groups = list(sets.Set([plugin.group for plugin in self.values()]))
+        groups.sort()
+        return groups
+    #@nonl
+    #@-node:pap.20050305161126:getGroups
     #@-others
 #@-node:pap.20041006190628:class PluginCollection
 #@+node:pap.20041006190817:class LocalPluginCollection
@@ -1386,8 +1529,8 @@ class EnableManager:
         if 1: # Put the first match in the starts dict.
             starts = {}
             for kind,iter in (
-                ('active',find_active.finditer(text)),
-                ('inactive',find_inactive.finditer(text)),
+                ('on',find_active.finditer(text)),
+                ('off',find_inactive.finditer(text)),
             ):
                 for match in iter:
                     name = match.groups()[0]
@@ -1399,10 +1542,10 @@ class EnableManager:
                             kind=kind,name=name,start=start,match=match)
                         
             self.actives = dict(
-                [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='active'])
+                [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='on'])
                 
             self.inactives = dict(
-                [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='inactive'])
+                [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='off'])
                 
             if 0: # debugging.
                 starts2 = [(bunch.start,bunch.name,bunch.kind) for bunch in starts.values()]
@@ -1433,7 +1576,7 @@ class EnableManager:
     def updateState(self, plugin):
         """Update the state for the given plugin"""
         # Get the filename for the new entry
-        if plugin.enabled == "Active":
+        if plugin.enabled == "On":
             newentry = "%s.py" % plugin.name
         else:
             newentry = "#%s.py" % plugin.name 

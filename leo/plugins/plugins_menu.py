@@ -72,15 +72,66 @@ __version__ = "1.5"
 #       This _really_ should be done, but it will have to wait.
 #       As a workaround, plugins_manager.py now has an init method and reports 
 # its own import problems.
+# 1.6 Paul Paterson:
+#     - Add support for plugin groups. Each group gets its own sub menu now
+#     - Set __plugin_group__ to "Core"
 #@-at
-#@nonl
 #@-node:ekr.20050101100033:<< version history >>
 #@nl
 
 __plugin_name__ = "Plugins Menu"
 __plugin_priority__ = -100
+__plugin_group__ = "Core"
 
 #@+others
+#@+node:pap.20050305152751:class PluginDatabase
+class _PluginDatabase:
+    """Stores information on Plugins"""
+    
+    #@    @+others
+    #@+node:pap.20050305152751.1:__init__
+    def __init__(self):
+        """Initialize"""
+        self.plugins_by_group = {}
+        self.groups_by_plugin = {}
+        self.menus = {}
+    #@nonl
+    #@-node:pap.20050305152751.1:__init__
+    #@+node:pap.20050305152751.2:addPlugin
+    def addPlugin(self, item, group):
+        """Add a plugin"""
+        self.plugins_by_group.setdefault(group, []).append(item)
+        self.groups_by_plugin[item] = group
+    #@nonl
+    #@-node:pap.20050305152751.2:addPlugin
+    #@+node:pap.20050305152751.3:getGroups
+    def getGroups(self):
+        """Return a list of groups"""
+        groups = self.plugins_by_group.keys()
+        groups.sort()
+        return groups
+    #@nonl
+    #@-node:pap.20050305152751.3:getGroups
+    #@+node:pap.20050305153716:setMenu
+    def setMenu(self, name, menu):
+        """Store the menu for this group"""
+        self.menus[name] = menu
+    #@nonl
+    #@-node:pap.20050305153716:setMenu
+    #@+node:pap.20050305153716.1:getMenu
+    def getMenu(self, item):
+        """Get the menu for a particular item"""
+        try:
+            return self.menus[item.group]
+        except KeyError:
+            return self.menus["Default"]
+    #@nonl
+    #@-node:pap.20050305153716.1:getMenu
+    #@-others
+    
+PluginDatabase = _PluginDatabase()
+#@nonl
+#@-node:pap.20050305152751:class PluginDatabase
 #@+node:EKR.20040517080555.3:class Plugin
 class PlugIn:
 
@@ -99,6 +150,10 @@ class PlugIn:
         try:
             self.mod = __import__(g.os_path_splitext(g.os_path_basename(filename))[0])
             if not self.mod: return
+            #
+            self.group = getattr(self.mod, "__plugin_group__", None)
+            if self.group:
+                PluginDatabase.addPlugin(self, self.group)
             # g.trace('Plugin',self.mod)
             try:
                 self.name = self.mod.__plugin_name__
@@ -397,6 +452,15 @@ def createPluginsMenu (tag,keywords):
             #@-node:pap.20041009133925:<< sort items >>
             #@nl
             c.pluginsMenu = pluginMenu = c.frame.menu.createNewMenu("&Plugins")
+            PluginDatabase.setMenu("Default", pluginMenu)
+            #@            << Add group menus >>
+            #@+node:pap.20050305152223:<< Add group menus >>
+            #@@c
+            
+            for group_name in PluginDatabase.getGroups():
+                PluginDatabase.setMenu(group_name, c.frame.menu.createNewMenu(group_name, "&Plugins"))
+            #@-node:pap.20050305152223:<< Add group menus >>
+            #@nl
             #@            << add items to the plugins menu >>
             #@+node:EKR.20040517080555.24:<< add items to the plugins menu >>
             for name,p in items:
@@ -412,9 +476,19 @@ def createPluginsMenu (tag,keywords):
                         else:
                             p.about()
                     table = ((p.name, None, callback),)
-                    c.frame.menu.createMenuEntries(pluginMenu, table)
+                    c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p), table)
                 elif p.hasconfig or p.othercmds:
-                    m = c.frame.menu.createNewMenu(p.name, "&Plugins")
+                    #@        << Get menu location >>
+                    #@+node:pap.20050305153147:<< Get menu location >>
+                    #@@c
+                    
+                    if p.group:
+                        menu_location = p.group
+                    else:
+                        menu_location = "&Plugins"
+                    #@-node:pap.20050305153147:<< Get menu location >>
+                    #@nl
+                    m = c.frame.menu.createNewMenu(p.name, menu_location)
                     table = [("About...", None, p.about)]
                     if p.hasconfig:
                         table.append(("Properties...", None, p.properties))
@@ -426,7 +500,7 @@ def createPluginsMenu (tag,keywords):
                     c.frame.menu.createMenuEntries(m, table)
                 else:
                     table = ((p.name, None, p.about),)
-                    c.frame.menu.createMenuEntries(pluginMenu, table)
+                    c.frame.menu.createMenuEntries(PluginDatabase.getMenu(p), table)
             #@nonl
             #@-node:EKR.20040517080555.24:<< add items to the plugins menu >>
             #@nl
