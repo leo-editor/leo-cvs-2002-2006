@@ -2547,9 +2547,37 @@ class position:
 	#@-body
 	#@-node:1::<< about the position class >>
 
+	
+	#@<< about copying and memory allocation >>
+	#@+node:2::<< about copying and memory allocation >>
+	#@+body
+	#@+at
+	#   For compatibility with old scripts and traversal code within Leo, the 
+	# default versions of the traversal methods _must_ leave all self objects 
+	# unchanged.  Failure to follow this principle would result in chaos.
+	# 
+	# The copies of self have brief lifetimes.  I estimate that a full 
+	# traversal of LeoPy.leo will create a few thousand bytes of garbage that 
+	# is immediately available for collection.  This will _probably_ have no 
+	# effect on Leo's performance.
+	# 
+	# The "safe" traversal routines are implemented using moveToX routines.  
+	# These moveToX routines could be used in key parts of Leo's code to 
+	# improve performance:
+	# 
+	# - In the read/write code.
+	# - In the the find/change code.
+	# 
+
+	#@-at
+	#@-body
+	#@-node:2::<< about copying and memory allocation >>
+
+	
+	copies = 0
 
 	#@+others
-	#@+node:2::position.__init__
+	#@+node:3::p.__init__
 	#@+body
 	#@+at
 	#   vnodes have two new fields:
@@ -2572,17 +2600,48 @@ class position:
 		self.v = v
 		self.parents = parents
 	#@-body
-	#@-node:2::position.__init__
-	#@+node:3::copy
+	#@-node:3::p.__init__
+	#@+node:4::p.__cmp__
+	#@+body
+	def __cmp__(self,other):
+			
+		trace(`self` + "," + `other`)
+		
+		p1 = self ; p2 = other
+		
+		if p1.link:
+			p1 = p1.copy().push() # Allow no side effects.
+	
+		if p2.link:
+			p2 = p2.copy().push() # Allow no side effects.
+	
+		parents1 = p1.parents
+		parents2 = p2.parents
+	
+		if len(parents1) != len(parents2):
+			return 1 # not equal
+		
+		i = 0
+		while i < len(parents1):
+			if parents1[i] != parents2[i]:
+				return 1 # not equal
+	
+		return 0 # equal
+	
+	#@-body
+	#@-node:4::p.__cmp__
+	#@+node:5::copy
 	#@+body
 	def copy (self):
 		
 		"""Return a copy of a position"""
 		
+		position.copies += 1
+		
 		return position(self.v,self.parents[:])
 	#@-body
-	#@-node:3::copy
-	#@+node:4::Moving within bags
+	#@-node:5::copy
+	#@+node:6::Moving within bags
 	#@+body
 	#@+at
 	#  The push and pop methods move within a bag, altering a position in 
@@ -2590,31 +2649,35 @@ class position:
 
 	#@-at
 	#@-body
-	#@+node:1::push
+	#@+node:1::linkV & targetV
 	#@+body
-	def push (self,v):
+	def linkV (self):
 		
-		"""Move from a link node to its target node"""
+		"""Return self.v,  the link node's v if self a target node."""
 		
-		p = self
+		if p.v.links:
+			v = p.parents[-1].v
+		else:
+			v = p.v
 		
-		if debug_positions: # debugging.
-	
-			# v is a link node.
-			assert(v.link)
+		assert(not p.v.links)
+		return p.v
 			
-			# v actually points at a target node.
-			target = v.link
-			assert(target.links)
+			
+	def targetV (self):
 		
-			# Target nodes are never link nodes.
-			assert(not target.link)
+		"""Return self.v, or self.target.v if self is a link node."""
+		
+		if p.v.link:
+			v = p.v.link
+		else:
+			v = p.v
+			
+		assert(not v.link)
+		return v
 	
-		p.parents.append(p.v)
-		p.v = v
-		return p
 	#@-body
-	#@-node:1::push
+	#@-node:1::linkV & targetV
 	#@+node:2::pop
 	#@+body
 	def pop (self):
@@ -2646,291 +2709,549 @@ class position:
 		return p
 	#@-body
 	#@-node:2::pop
-	#@-node:4::Moving within bags
-	#@+node:5::Links
+	#@+node:3::push
+	#@+body
+	def push (self,v):
+		
+		"""Move from a link node to its target node"""
+		
+		p = self
+		
+		if debug_positions: # debugging.
+	
+			# v is a link node.
+			assert(v.link)
+			
+			# v actually points at a target node.
+			target = v.link
+			assert(target.links)
+		
+			# Target nodes are never link nodes.
+			assert(not target.link)
+	
+		p.parents.append(p.v)
+		p.v = v
+		return p
+	#@-body
+	#@-node:3::push
+	#@-node:6::Moving within bags
+	#@+node:7::Getters (preserve position of self)
 	#@+body
 	#@+at
-	#  The following may be called with a position anywhere inside or outside 
-	# a bag.
+	#  These routines cleverly preserve self's position without having to copy self.
+	# 
+	# Exception: p.isVisible and p.level call copy() in order to examine 
+	# parent positions.
 
 	#@-at
+	#@-body
+	#@+node:1::p.bodyString
+	#@-node:1::p.bodyString
+	#@+node:2::p.childIndex
+	#@+body
+	def childIndex (self):
+	
+		# This _is_ well defined.
+		return self.linkV().childIndex()
+	#@-body
+	#@-node:2::p.childIndex
+	#@+node:3::p.currentVnode
+	#@-node:3::p.currentVnode
+	#@+node:4::p.exists
+	#@-node:4::p.exists
+	#@+node:5::p.findRoot
+	#@-node:5::p.findRoot
+	#@+node:6::p.hasBack
+	#@+body
+	def hasBack (self):
+		
+		"""Return true if self has a previous sibling position"""
+	
+		return self.linkV().back() != None
+	#@-body
+	#@-node:6::p.hasBack
+	#@+node:7::p.hasChildren
+	#@+body
+	def hasChildren (self):
+	
+		return self.targetV().hasChildren()
+	#@-body
+	#@-node:7::p.hasChildren
+	#@+node:8::p.hasNext
+	#@+body
+	def hasNext (self):
+		
+		"""Return true if self has a next sibling position"""
+	
+		return self.linkV().next() != None
+	#@-body
+	#@-node:8::p.hasNext
+	#@+node:9::p.hasParent
+	#@+body
+	def hasParent (self):
+		
+		"""Return true if self has a parent position"""
+	
+		return self.linkV().parent() != None
+	
+	#@-body
+	#@-node:9::p.hasParent
+	#@+node:10::p.headString & p.cleanHeadString
+	#@-node:10::p.headString & p.cleanHeadString
+	#@+node:11::p.isExpanded
+	#@+body
+	def isExpanded (self):
+		
+		"""Return true self's position is expanded"""
+	
+		return self.linkV().isExpanded()
+	
+	#@-body
+	#@-node:11::p.isExpanded
+	#@+node:12::p.isValid
+	#@+body
+	def isValid (self):
+		
+		"""Return true if self is a non-empty position"""
+		
+		return self.v != None
+	#@-body
+	#@-node:12::p.isValid
+	#@+node:13::p.isVisible
+	#@+body
+	def isVisible (self):
+		
+		"""Returns true if all of self's parent positions are expanded"""
+		
+		if 0: # Calls copy.
+			p = self.copy()
+			p.moveToParent()
+			while v.isValid():
+				p.moveToParent()
+				if v.isValid() and not p.isExpanded():
+					return false
+			return true
+	
+		else: # Does not call copy.
+			p = self ; v = p.v
+			while 1:
+				v = v.parent()
+				if not v and p.links:
+					p = p.parents[-1]
+					v = p.v.parent()
+				if not v:
+					return true
+				if not v.isExpanded():
+					return false
+	#@-body
+	#@-node:13::p.isVisible
+	#@+node:14::p.level
+	#@+body
+	def level (self):
+		
+		"""Return self's level.
+		
+		Top-level positions have level 0, their children have level 1, and so on.
+		"""
+		
+		if 0: # Calls copy.
+			p = self.copy()
+			level = -1
+			while p.isValid():
+				level += 1
+				p.moveToParent()
+			return level
+	
+		else: # Does not call copy.
+			p = self ; v = p.v ; level = -1
+			while v:
+				level += 1
+				v = v.parent()
+				if not v and p.links:
+					p = p.parents[-1]
+					v = p.v.parent()
+	
+			return level
+	
+	#@-body
+	#@-node:14::p.level
+	#@+node:15::p.numberOfChildren
+	#@+body
+	def numberOfChildren (self):
+		
+		"""Return the number of self's children."""
+	
+		return self.targetV().numberOfChildren()
+	#@-body
+	#@-node:15::p.numberOfChildren
+	#@-node:7::Getters (preserve position of self)
+	#@+node:8::Traversal routines (preserve position of self)
+	#@+body
+	# These routines preserve self's position.
 	#@-body
 	#@+node:1::p.back
 	#@+body
 	def back (self):
 		
-		"""Return the position of the previous sibling, or None"""
-	
-		p = self
-	
-		if p.v.links:
-			p.pop()
-	
-		# We are not in an target.
-		assert(not p.v.links)
-	
-		back = p.v.back()
-		if back:
-			p = p.copy()
-			p.v = back
-			return p
-		else:
-			return None
+		"""Return the position of self's previous sibling, or None"""
+		
+		return self.copy().moveToBack()
 	#@-body
 	#@-node:1::p.back
-	#@+node:2::p.next
-	#@+body
-	def next (self):
-		
-		"""Return the position of the next sibling, or None"""
-		
-		p = self
-		if p.v.links:
-			p.pop()
-	
-		# We are not in an target.
-		assert(not p.v.links)
-	
-		next = p.v.next()
-		if next:
-			p = p.copy()
-			p.v = next
-			return p
-		else:
-			return None
-	#@-body
-	#@-node:2::p.next
-	#@+node:3::p.parent
-	#@+body
-	def parent (self):
-		
-		"""Return the position to the parent, or None"""
-		
-		p = self
-	
-		if p.v.links:
-			p.pop()
-	
-		# We are not in an target.
-		assert(not p.v.links)
-		
-		parent = p.v.parent()
-		if parent:
-			p = p.copy()
-			p.v = parent
-			return p
-		else:
-			return None
-	#@-body
-	#@-node:3::p.parent
-	#@+node:4::p.firstChild
+	#@+node:2::p.firstChild
 	#@+body
 	def firstChild (self):
 		
-		"""Return the position of the first child, or None"""
+		"""Return the position of self's first child, or None."""
 		
-		p = self
+		return self.copy().moveToFirstChild()
 	
-		if p.v.link:
-			p.push() 
-	
-		# We are not in a link node.
-		assert(not p.v.link)
-		
-		firstChild = p.v.firstChild()
-		if firstChild:
-			p = p.copy()
-			p.v = firstChild
-			return p
-		else:
-			return None
 	#@-body
-	#@-node:4::p.firstChild
-	#@-node:5::Links
-	#@+node:6::Getters
-	#@+node:1::p.isExpanded
+	#@-node:2::p.firstChild
+	#@+node:3::p.lastChild
 	#@+body
-	def isExpanded (self):
-		
-		"""Return true if a position's vnode is expanded"""
-		
-		if p.v.links:
-			p = p.pop()
-			
-		return p.v.isExpanded()
-	#@-body
-	#@-node:1::p.isExpanded
-	#@+node:2::p.isVisible
-	#@+body
-	def isVisible (self):
-		
-		"""Returns true if all parent positions are expanded"""
-		
-		p = self
+	# childIndex and nthChild are zero-based.
 	
-		p = self.parent()
-		while p:
-			if not p.isExpanded():
-				return false
-			p = p.parent()
-		return true
-	#@-body
-	#@-node:2::p.isVisible
-	#@+node:3::p.level
-	#@+body
-	def level (self):
+	def lastChild (self, n):
 		
-		"""Return the indentation of the receiving position
+		"""Return the position of self's last child, or None."""
 		
-		Top-level positioins have level 0, their children have level 1, and so on.
-		"""
-	
-		level = 0
-		parent = self.parent()
-	
-		while parent:
-			level += 1
-			parent = parent.parent()
-	
-		return level
-	#@-body
-	#@-node:3::p.level
-	#@-node:6::Getters
-	#@+node:7::Traversals
-	#@+body
-	#@+at
-	#  The code for these routines is really the same as  the code for the 
-	# corresponding vnode methods.
-	# 
-	# In fact, the only difference between these routines and the 
-	# corresponding vnode routines is the _value_ of self.  Therefore, we 
-	# could use exactly the same code, and assign p.next = v.next, etc. in the 
-	# ctor !
-	# 
-	# I have chosen to do this in the interests of clarity:  this code uses p 
-	# = self; the vnode code uses v = self.
-	# 
-	# Also, p.nodeAfterTree is a bit more efficient than v.nodeAfterTree; that 
-	# might be important because p.back, p.next, p.parent and p.firstChild are 
-	# slower than the corresponding vnode methods.
-
-	#@-at
-	#@-body
-	#@+node:1::p.threadBack
-	#@+body
-	def threadBack (self):
-		
-		"""Returns the threadBack position"""
-	
-		p = self
-		
-		back = p.back()
-		if back:
-			lastChild = back.lastChild()
-			if lastChild:
-				return lastChild.lastNode()
-			else:
-				return back
-		else:
-			return p.parent()
+		return self.copy().moveToLastChild(n)
 	
 	#@-body
-	#@-node:1::p.threadBack
-	#@+node:2::p.threadNext
-	#@+body
-	def threadNext (self):
-		
-		"""Returns the threadNext position"""
-	
-		p = self
-		
-		firstChild = p.firstChild()
-		if firstChild:
-			return firstChild
-			
-		next = p.next()
-		if next:
-			return next
-		
-		p = p.parent()
-		while p:
-			next = p.next()
-			if next:
-				return next
-			p = p.parent()
-	
-		return None
-	
-	#@-body
-	#@-node:2::p.threadNext
-	#@+node:3::p.visBack
-	#@+body
-	def visBack (self):
-		
-		"""Returns the visBack position"""
-		
-		p = self
-	
-		p = p.threadBack()
-		while p and not p.isVisible():
-			p = p.threadBack()
-		return p
-	#@-body
-	#@-node:3::p.visBack
-	#@+node:4::p.visNext
-	#@+body
-	def visNext (self):
-		
-		"""Returns the visBack position"""
-	
-		p = self
-	
-		p = p.threadNext()
-		while p and not p.isVisible():
-			p = p.threadNext()
-		return p
-	#@-body
-	#@-node:4::p.visNext
-	#@+node:5::p.nodeAfterTree
-	#@+body
-	def nodeAfterTree (self):
-		
-		"""Returns the position following the tree whose root position is given"""
-		
-		p = self
-		
-		# This is a bit more efficient code than the corresponding vnode code.
-	
-		while 1:
-			next = p.next()
-			if next:
-				return next
-	
-			p = p.parent()
-			if not p:
-				return None
-	#@-body
-	#@-node:5::p.nodeAfterTree
-	#@+node:6::p.lastNode
+	#@-node:3::p.lastChild
+	#@+node:4::p.lastNode
 	#@+body
 	def lastNode (self):
 		
-		"""Return the last position of the receiving position"""
+		"""Return the position of the last node of self's tree."""
+		
+		return self.copy().moveToLastNode()
+	#@-body
+	#@-node:4::p.lastNode
+	#@+node:5::p.next
+	#@+body
+	def next (self):
+		
+		"""Return the position of self's next sibling, or None"""
+		
+		return self.copy().moveToNext()
 	
+	#@-body
+	#@-node:5::p.next
+	#@+node:6::p.nodeAfterTree
+	#@+body
+	def nodeAfterTree (self):
+		
+		"""Return the position following self's tree, or None."""
+		
+		return self.copy().moveToNodeAfterTree()
+	
+	#@-body
+	#@-node:6::p.nodeAfterTree
+	#@+node:7::p.nthChild
+	#@+body
+	# childIndex and nthChild are zero-based.
+	
+	def nthChild (self, n):
+		
+		"""Return the position of self's first child, or None."""
+		
+		return self.copy().moveToNthChild(n)
+	
+	#@-body
+	#@-node:7::p.nthChild
+	#@+node:8::p.parent
+	#@+body
+	def parent (self):
+		
+		"""Return the position of self's parent, or None."""
+		
+		return self.copy().moveToParent()
+	
+	#@-body
+	#@-node:8::p.parent
+	#@+node:9::p.threadBack
+	#@+body
+	def threadBack (self):
+		
+		"""Returns the position preceeding self in threading order, or None."""
+	
+		return self.copy().moveToThreadBack()
+	
+	#@-body
+	#@-node:9::p.threadBack
+	#@+node:10::p.threadNext
+	#@+body
+	def threadNext (self):
+		
+		"""Returns the position following self in threading order, or None."""
+		
+		return self.copy().moveToThreadNext()
+	#@-body
+	#@-node:10::p.threadNext
+	#@+node:11::p.visBack
+	#@+body
+	def visBack (self):
+		
+		"""Returns the visible position preceeding self, or None"""
+		
+		return self.copy().moveToVisBack()
+	
+	#@-body
+	#@-node:11::p.visBack
+	#@+node:12::p.visNext
+	#@+body
+	def visNext (self):
+		
+		"""Returns the visible position following self, or None"""
+		
+		return self.copy().moveToVisNext()
+	#@-body
+	#@-node:12::p.visNext
+	#@-node:8::Traversal routines (preserve position of self)
+	#@+node:9::Move routines (change position of self)
+	#@+body
+	# These routines change self's position to a new position.
+	#@-body
+	#@+node:1::p.finishMove
+	#@+body
+	def finishMove (self):
+	
+		"""Complete a move by returning None if the move did not succeed"""
+	
+		p = self
+	
+		if p.v:
+			# The move succeeded.
+			return p
+		else:
+			# The move failed: delete the parents array immediately.
+			p.parents = []
+			return None
+	
+	#@-body
+	#@-node:1::p.finishMove
+	#@+node:2::p.moveToBack
+	#@+body
+	def moveToBack (self):
+		
+		"""Move self to the position of its previous sibling.
+		
+		Return self or None if there is no such position"""
+		
+		p = self()
+		if p.v.links:
+			p.pop()
+	
+		assert(not p.v.links)
+	
+		p.v = p.v.back()
+		return p.finishMove()
+	#@-body
+	#@-node:2::p.moveToBack
+	#@+node:3::p.moveToFirstChild
+	#@+body
+	def moveToFirstChild (self):
+	
+		"""Move self to it's first child's position.
+		
+		Return self or None if there is no such position"""
+	
+		p = self
+		if p.v.link:
+			p.push()
+	
+		assert(not p.v.link)
+	
+		p.v = p.v.firstChild()
+		return p.finishMove()
+	
+	#@-body
+	#@-node:3::p.moveToFirstChild
+	#@+node:4::p.moveToLastChild
+	#@+body
+	def moveToLastChild (self):
+		
+		p = self
+		p.moveTofirstChild()
+	
+		while p.isValid() and p.hasNext():
+			p.moveToNext()
+	
+		return p.finishMove() # Returns None if p does not exist.
+	#@-body
+	#@-node:4::p.moveToLastChild
+	#@+node:5::p.moveToLastNode
+	#@+body
+	def moveToLastNode (self):
+		
+		"""Move self to the position of the last node of self's tree.
+		
+		Return self or None if there is no such position"""
+		
 		p = self
 		level = p.level()
 		result = None
 	
-		while p:
+		while 1:
 			result = p
-			p = p.threadNext()
-			if not p or p.level() <= level:
+			p.moveToThreadNext()
+			if not p.isValid() or p.level() <= level:
 				break
 	
 		return result
 	#@-body
-	#@-node:6::p.lastNode
-	#@-node:7::Traversals
+	#@-node:5::p.moveToLastNode
+	#@+node:6::p.moveToNext
+	#@+body
+	def movBack (self):
+		
+		"""Move self to the position of its next sibling, if possible.
+		
+		Set p.v = None if there is no such position."""
+	
+		p = self
+		if p.v.links:
+			p.pop()
+	
+		assert(not p.v.links)
+	
+		p.v = p.v.next()
+		return p.finishMove()
+	
+	
+	#@-body
+	#@-node:6::p.moveToNext
+	#@+node:7::p.moveToNodeAfterTree
+	#@+body
+	def moveToNodeAfterTree (self):
+		
+		"""Move self to the position of node after self's tree.
+		
+		Return self or None if there is no such position"""
+		
+		p = self
+	
+		while p.isValid():
+			if p.hasNext():
+				return p.moveToNext()
+			p.moveToParent()
+	
+		return None
+	
+	#@-body
+	#@-node:7::p.moveToNodeAfterTree
+	#@+node:8::p.moveToNthChild
+	#@+body
+	# childIndex and nthChild are zero-based.
+	
+	def moveToNthChild (self, n):
+	
+		p = self
+		p.moveToFirstChild()
+	
+		while p.isValid() and n > 0:
+			n -= 1
+			p.moveToNext()
+			
+		return p.finishMove() # Returns None if p does not exist.
+	#@-body
+	#@-node:8::p.moveToNthChild
+	#@+node:9::p.moveToParent
+	#@+body
+	def moveToParent (self):
+		
+		"""Move self to it's parent position.
+		
+		Return self or None if there is no such position"""
+	
+		p = self
+		if p.v.links:
+			p.pop()
+			
+		assert(not p.links)
+	
+		p.v = p.v.parent()
+		return p.finishMove()
+	#@-body
+	#@-node:9::p.moveToParent
+	#@+node:10::p.moveToThreadBack
+	#@+body
+	def moveToThreadBack (self):
+		
+		"""Returns the position preceeding self in threading order, or None."""
+	
+		p = self
+	
+		if p.hasBack():
+			p.moveToBack()
+			if p.hasChildren():
+				p.moveToLastChild()
+				p.moveToLastNode()
+			assert(p.exists)
+			return p
+		else:
+			return p.moveToParent() # May return None.
+	#@-body
+	#@-node:10::p.moveToThreadBack
+	#@+node:11::p.moveToThreadNext
+	#@+body
+	def moveToThreadNext (self):
+		
+		p = self
+	
+		if p.hasChildren():
+			return p.moveToFirstChild()
+	
+		if p.hasNext():
+			return p.moveToNext()
+	
+		p.moveToParent()
+		while p.isValid():
+			if p.hasNext():
+				return p.moveToNext()
+			p.moveToParent()
+	
+		return None # p.finishMove() has already been called.
+	
+	#@-body
+	#@-node:11::p.moveToThreadNext
+	#@+node:12::p.moveToVisBack
+	#@+body
+	def moveToVisBack (self):
+		
+		"""Move self to the position of the previous visible node.
+		
+		Return self or None if there is no such position"""
+	
+		p = self
+		p.moveToThreadBack()
+	
+		while p.isValid() and not p.isVisible():
+			p.moveToThreadBack()
+			
+		return p.finishMove() # Returns None if not p.isValid()
+	#@-body
+	#@-node:12::p.moveToVisBack
+	#@+node:13::p.moveToVisNext
+	#@+body
+	def moveToVisNext (self):
+		
+		"""Move self to the position of the next visible node.
+		
+		Return self or None if there is no such position"""
+		
+		p = self
+		p.moveToThreadNext()
+		
+		while p.isValid() and not p.isVisible():
+			p.moveToThreadNext()
+	
+		return p.finishMove() # Returns None if not p.isValid()
+	#@-body
+	#@-node:13::p.moveToVisNext
+	#@-node:9::Move routines (change position of self)
 	#@-others
 
 

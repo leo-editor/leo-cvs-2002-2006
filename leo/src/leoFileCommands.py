@@ -447,6 +447,7 @@ class fileCommands:
 		ok = true
 		try:
 			c.tree.initing = true # inhibit endEditLabel from marking the file changed.
+			## import time ; start = time.clock()
 			
 			#@<< scan all the xml elements >>
 			#@+node:2::<< scan all the xml elements >>
@@ -470,6 +471,7 @@ class fileCommands:
 			#@-body
 			#@-node:2::<< scan all the xml elements >>
 
+			## print "read time" + "%6.3f" % (time.clock()-start)
 		except BadLeoFile, message:
 			
 			#@<< raise an alert >>
