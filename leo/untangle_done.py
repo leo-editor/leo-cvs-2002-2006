@@ -1,6 +1,8 @@
+#! /usr/bin/env python
 #@+leo
 #@+node:0::@file untangle_done.py
 #@+body
+#@@first
 #@@language python
 
 # Example untangle_done script

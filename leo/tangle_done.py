@@ -1,6 +1,8 @@
+#! /usr/bin/env python
 #@+leo
 #@+node:0::@file tangle_done.py
 #@+body
+#@@first
 #@@language python
 
 # Example tangle_done.py file.
