@@ -2086,8 +2086,12 @@ class position (object):
         if not c or not v: return
     
         s = g.toUnicode(s,encoding)
-        if p == c.currentPosition():
-            # 7/23/04: Revert to previous code, but force an empty selection.
+        current = c.currentPosition()
+        # 1/22/05: Major change: the previous test was: 'if p == current:'
+        # This worked because commands work on the presently selected node.
+        # But setRecentFiles may change a _clone_ of the selected node!
+        if current and p.v.t==current.v.t:
+            # Revert to previous code, but force an empty selection.
             c.frame.body.setSelectionAreas(s,None,None)
             c.frame.body.setTextSelection(None)
             # This code destoys all tags, so we must recolor.
