@@ -7764,18 +7764,18 @@
 <v t="T4520" a="E"><vh>(Spell Checking)</vh>
 <v t="T4521"><vh>@silentfile ../plugins/mod_spelling.txt</vh></v>
 <v t="T4522"><vh>@file ../plugins/mod_spelling.ini</vh></v>
-<v t="T4523" a="E"><vh>@file ../plugins/mod_spelling.py</vh>
+<v t="T4523" a="EV"><vh>@file ../plugins/mod_spelling.py</vh>
 <v t="T4524"><vh>Functions</vh>
 <v t="T4525"><vh>createSpellMenu</vh></v>
 <v t="T4526"><vh>onSelect</vh></v>
 <v t="T4527"><vh>onCommand</vh></v>
 </v>
-<v t="T4528" a="E"><vh>class Aspell</vh>
-<v t="T4529" a="E"><vh>Birth &amp; death</vh>
+<v t="T4528"><vh>class Aspell</vh>
+<v t="T4529"><vh>Birth &amp; death</vh>
 <v t="T4530"><vh>__init__</vh></v>
 <v t="T4531"><vh>getAspellDirectory</vh></v>
 </v>
-<v t="T4532" a="EV"><vh>openPipes</vh>
+<v t="T4532"><vh>openPipes</vh>
 <v t="T4533"><vh>&lt;&lt; Ensure local dictionary is present &gt;&gt;</vh></v>
 </v>
 <v t="T4534"><vh>closePipes</vh></v>
@@ -7783,7 +7783,7 @@
 <v t="T4536"><vh>processWord</vh></v>
 <v t="T4537"><vh>updateDictionary</vh></v>
 </v>
-<v t="T4538" a="E"><vh>class spellDialog</vh>
+<v t="T4538"><vh>class spellDialog</vh>
 <v t="T4539"><vh>Birth &amp; death</vh>
 <v t="T4540"><vh>spell.__init__</vh>
 <v t="T4541"><vh>&lt;&lt; set self.dictionary &gt;&gt;</vh></v>
@@ -7804,13 +7804,13 @@
 <v t="T4553"><vh>onRedoButton &amp; onUndoButton</vh></v>
 </v>
 <v t="T4554" a="E"><vh>Commands</vh>
-<v t="T4555"><vh>ignore</vh></v>
-<v t="T4556"><vh>add</vh></v>
-<v t="T4557"><vh>change</vh></v>
-<v t="T4558"><vh>checkSpelling</vh></v>
-<v t="T4559"><vh>find</vh></v>
+<v t="T4555"><vh>add</vh></v>
+<v t="T4556"><vh>change</vh></v>
+<v t="T4557"><vh>checkSpelling</vh></v>
+<v t="T4558"><vh>find</vh></v>
+<v t="T4559"><vh>ignore</vh></v>
 </v>
-<v t="T4560" a="E"><vh>Helpers</vh>
+<v t="T4560"><vh>Helpers</vh>
 <v t="T4561"><vh>closePipes</vh></v>
 <v t="T4562"><vh>fillbox</vh></v>
 <v t="T4563"><vh>findNextMisspelledWord</vh>
@@ -59190,9 +59190,10 @@ error character were replaced by a marker (say: ?\xa0?, where a0 is its hex
 number of the character), then it could be debugged fairly easily.
 </t>
 <t tx="T4520">To do:
+	- Use two rows for buttons.
 	- allow non-English dictionaries.
 	- close pipes on shutdown?
-	- There seems to be a problem with adding __init__ to the local dictionary.</t>
+	- Is there a newline problem with the dictionary?</t>
 <t tx="T4521">colour
 colourful
 coloured
@@ -59608,32 +59609,27 @@ def onUndoButton (self):
 	self.c.undoer.undo() # Not a command, so command hook doesn't fire.
 	self.update(show=false,fill=false)</t>
 <t tx="T4554"></t>
-<t tx="T4555">def ignore (self):
-	
-	"""Ignore the incorrect word for the duration of this spell check session."""
-	
-	es("Ignoring word '%s'" % self.currentword)
-	self.dictionary[self.currentword.lower()] = 0
-	self.onFindButton()</t>
-<t tx="T4556">def add (self):
+<t tx="T4555">def add (self):
 	
 	if not self.local_dictionary_file:
 		return
 	
 	"""Add the selected suggestion to the dictionary."""
 	
-	es("Adding '%s'" % self.currentword,color="blue")
+	es("Adding ",color="blue",newline=false) ; es('%s' % self.currentword)
 	
 	try:
 		f = open(self.local_dictionary_file,"a")
 	except IOError:
-		es("Unable to open dictionary for writing")
+		es("Unable to open dictionary for writing",color="red")
+		f = None
 		return
 	
-	try:	
-		f.write("%s\n" % self.currentword)
-	finally:
-		f.close()
+	if f:
+		try:	
+			f.write("%s\n" % self.currentword)
+		finally:
+			f.close()
 		
 	self.dictionary[self.currentword.lower()] = 0
 	
@@ -59641,9 +59637,8 @@ def onUndoButton (self):
 	self.aspell.closePipes()
 	self.aspell.openPipes()
 	
-	self.onFindButton()
-</t>
-<t tx="T4557">def change(self):
+	self.onFindButton()</t>
+<t tx="T4556">def change(self):
 	
 	"""Make the selected change to the text"""
 
@@ -59669,13 +59664,13 @@ def onUndoButton (self):
 	# The focus must never leave the body pane.
 	t.focus_set()
 	return false</t>
-<t tx="T4558">def checkSpelling (self,event=None):
+<t tx="T4557">def checkSpelling (self,event=None):
 	
 	"""Open the Check Spelling dialog."""
 
 	self.top.deiconify()
 	self.update(show=true,fill=false)</t>
-<t tx="T4559">def find(self):
+<t tx="T4558">def find(self):
 	
 	"""Find the next unknown word."""
 	
@@ -59701,6 +59696,13 @@ def onUndoButton (self):
 	else:
 		es("no more misspellings")
 		self.fillbox([])</t>
+<t tx="T4559">def ignore (self):
+	
+	"""Ignore the incorrect word for the duration of this spell check session."""
+	
+	es("Ignoring ",color="blue",newline=false) ; es('%s' % self.currentword)
+	self.dictionary[self.currentword.lower()] = 0
+	self.onFindButton()</t>
 <t tx="T4560"></t>
 <t tx="T4561">def closePipes(self):
 	
