@@ -88,6 +88,7 @@ class LeoFrame:
 		
 		# Previous row and column shown in the status area.
 		self.lastStatusRow = self.lastStatusCol = 0
+		self.tab_width = 0 # The tab width in effect in this pane.
 		#@-body
 		#@-node:1::<< set the LeoFrame ivars >>
 
@@ -321,7 +322,9 @@ class LeoFrame:
 		#@-node:4::<< create the log pane >>
 
 		self.reconfigurePanes()
+		
 		self.createStatusLine()
+		self.putStatusLine("Welcome to Leo")
 	#@-body
 	#@-node:5::createLeoFrame
 	#@-node:1::Birth & Death
@@ -488,6 +491,7 @@ class LeoFrame:
 			tabw = font.measure(" " * abs(w)) # 7/2/02
 			# tablist = `tabw` + ' ' + `2*tabw`
 			self.body.configure(tabs=tabw)
+			self.tab_width = w
 			# print "frame.setTabWidth:" + `w` + "," + `tabw`
 		except:
 			es_exception()
@@ -771,6 +775,8 @@ class LeoFrame:
 	#@+node:1::createIconBar
 	#@+body
 	def createIconBar (self):
+		
+		"""Create an empty icon bar in the packer's present position"""
 	
 		if not self.iconFrame:
 			self.iconFrame = Tk.Frame(self.outerFrame,height="5m",bd=2,relief="groove")
@@ -781,34 +787,38 @@ class LeoFrame:
 	#@+body
 	def hideIconBar (self):
 		
+		"""Hide the icon bar by unpacking it.
+		
+		A later call to showIconBar will repack it in a new location."""
+		
 		if self.iconFrame:
 			self.iconFrame.pack_forget()
-			
-			if 0:
-				# Remove all references to images.
-				try:
-					app().iconImageRefs = []
-				except:
-					pass
+	
 	#@-body
 	#@-node:2::hideIconBar
 	#@+node:3::clearIconBar
 	#@+body
 	def clearIconBar(self):
 		
+		"""Destroy all the widgets in the icon bar"""
+		
 		a = app() ; f = self.iconFrame
-		if f:
-			for slave in f.pack_slaves():
-				slave.destroy()
-			f.configure(height="5m") # The default height.
-			a.iconWidgetCount = 0
-			a. iconImageRefs = []
+		if not f: return
+		
+		for slave in f.pack_slaves():
+			slave.destroy()
+	
+		f.configure(height="5m") # The default height.
+		a.iconWidgetCount = 0
+		a. iconImageRefs = []
 	
 	#@-body
 	#@-node:3::clearIconBar
 	#@+node:4::showIconBar
 	#@+body
 	def showIconBar(self):
+		
+		"""Show the icon bar by repacking it"""
 	
 		self.iconFrame.pack(fill="x",pady=2)
 	#@-body
@@ -816,6 +826,10 @@ class LeoFrame:
 	#@+node:5::addIconButton
 	#@+body
 	def addIconButton(self,text=None,picture=None,command=None):
+		
+		"""Add a button containing text or a picture to the icon bar.
+		
+		Pictures take precedence over text"""
 		
 		a = app() ; f = self.iconFrame
 		if not picture and not text: return
@@ -845,6 +859,7 @@ class LeoFrame:
 					refs = a.iconImageRefs
 				except:
 					refs = a.iconImageRefs = []
+			
 				refs.append(photo)
 			
 				b = Tk.Button(f,image=photo,relief="raised",command=command)
@@ -4790,6 +4805,9 @@ class LeoFrame:
 	#@-node:8::placeSplitter
 	#@-node:10::Splitter stuff
 	#@+node:11::Status line: convenience routines
+	#@+body
+	#@@tabwidth 4
+	#@-body
 	#@+node:1::createStatusLine
 	#@+body
 	def createStatusLine (self):
@@ -4834,6 +4852,8 @@ class LeoFrame:
 	def putStatusLine (self,s,color=None):
 		
 		t = self.statusText ; tags = self.statusColorTags
+		if not t: return
+	
 		t.configure(state="normal")
 		
 		if "black" not in self.logColorTags:
@@ -4860,17 +4880,20 @@ class LeoFrame:
 	
 	def updateStatusRowCol (self):
 		
-		body = self.body ; lab = self.statusLabel
+		c = self.commands ; body = self.body ; lab = self.statusLabel
 	
 		index = body.index("insert")
 		row,col = getindex(body,index)
-		
+		if col > 0:
+			s = body.get("%d.0" % (row),index)
+			col = computeWidth (s,self.tab_width)
+	
 		if row != self.lastStatusRow or col != self.lastStatusCol:
 			s = "row %d, col %d " % (row,col)
 			lab.configure(text=s)
-			# trace(`index`)
 			self.lastStatusRow = row
 			self.lastStatusCol = col
+	
 	#@-body
 	#@-node:4::updateStatusRowCol()
 	#@-node:11::Status line: convenience routines
