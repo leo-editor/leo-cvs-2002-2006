@@ -696,7 +696,7 @@ class baseUndoer:
     #@nonl
     #@-node:EKR.20040606195417.1:u.saveNode
     #@+node:EKR.20040606195417.2:u.saveNodeAndChildren
-    def saveTree (self,p):
+    def saveNodeAndChildren (self,p):
         
         """Create all info needed for a node and all its immediate children."""
     
