@@ -13,7 +13,10 @@
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203113231"><vh>Diary</vh>
-<v t="edream.111903105454"><vh>11/19 Moved all "protected" @others inside "if tkinter" statement</vh></v>
+<v t="edream.111903190444"><vh>11/19</vh>
+<v t="edream.111903190444.1"><vh>Fixed reorg bugs in plugin_menu and spelli checking plugins</vh></v>
+<v t="edream.111903105454"><vh>Moved all "protected" @others inside "if tkinter" statement</vh></v>
+</v>
 <v t="edream.111803100856"><vh>11/18 Added new version of rst plugin from Timo Honkasalo</vh></v>
 <v t="edream.111603130528"><vh>11/17</vh></v>
 <v t="edream.110703035301"><vh>11/7</vh></v>
@@ -551,7 +554,7 @@
 </v>
 <v t="edream.110803170600"><vh>Count pages</vh></v>
 </v>
-<v t="edream.110203113231.233" a="E"><vh>wxPython plugin (alpha quality)</vh>
+<v t="edream.110203113231.233"><vh>wxPython plugin (alpha quality)</vh>
 <v t="edream.110203113231.234"><vh> Diary</vh>
 <v t="edream.111503110300"><vh>11/15/03  Leo becomes usuable (!)</vh></v>
 <v t="edream.111403093253"><vh>11/13 &amp; 11/14</vh></v>
@@ -614,7 +617,7 @@
 <v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
 <v t="edream.111303202917.1"><vh>Syntax coloring REMOVED: now in base body class</vh></v>
 </v>
-<v t="edream.110203113231.302" a="V" tnodeList="edream.110203113231.302,edream.110203113231.303,edream.110203113231.259,edream.110203113231.305,edream.110203113231.307,edream.110203113231.308,edream.110203113231.309,edream.110203113231.310,edream.110203113231.311,edream.110203113231.312,edream.111303085447.1,edream.110203113231.317,edream.110203113231.314,edream.110203113231.315,edream.110203113231.316,edream.110203113231.322,edream.110203113231.323,edream.110203113231.324,edream.110203113231.325,edream.110203113231.326,edream.110203113231.327,edream.110203113231.328,edream.111403104835,edream.111303092328,edream.111303092328.1,edream.111303092328.2,edream.111303092328.3,edream.111303092328.4,edream.111303092328.5,edream.110203113231.333,edream.110203113231.320,edream.111403151611,edream.110203113231.343,edream.110203113231.344,edream.110203113231.336,edream.110203113231.337,edream.110203113231.319,edream.110203113231.340,edream.110203113231.341,edream.110203113231.342,edream.111303093843,edream.111303093843.1,edream.111303093953.2,edream.111303093953.3,edream.111303093953.4,edream.111303093953.5,edream.111303093953.6,edream.111303093953.7,edream.111303093953.9,edream.111303093953.10,edream.111303093953.12,edream.111303093953.13,edream.111303093953.14,edream.111303093953.15,edream.111303093953.16,edream.111303093953.18,edream.111303093953.19,edream.111303093953.20,edream.111303093953.21,edream.111303093953.22,edream.111303093953.23,edream.111303093953.25,edream.110203113231.346,edream.110203113231.347,edream.110203113231.348,edream.110203113231.539,edream.110203113231.541,edream.110203113231.542,edream.110203113231.543,edream.111403082513,edream.111303205611,edream.111303205611.1,edream.111303205611.2,edream.111303205611.3,edream.111303205611.4,edream.110203113231.544,edream.110203113231.545,edream.111303204025.1,edream.111303204025.2,edream.111303204025.3,edream.111303204025.4,edream.111303204025.5,edream.111403080609,edream.110203113231.548,edream.110203113231.549,edream.111303171218,edream.111603222048,edream.111303171218.1,edream.111303171238,edream.111303171238.1,edream.111303171238.2,edream.111303171238.3,edream.111303171238.4,edream.110203113231.552,edream.110203113231.275,edream.111303201144.6,edream.111303201144.7,edream.110203113231.349,edream.110203113231.266,edream.110203113231.351,edream.110203113231.260,edream.110203113231.261,edream.110203113231.265,edream.110203113231.264,edream.111403141810,edream.111503105816,edream.111303141147,edream.111503213533,edream.110203113231.269,edream.110203113231.270,edream.110203113231.273,edream.110203113231.379,edream.110203113231.380,edream.110203113231.381,edream.111303135410,edream.111303101257,edream.111303101257.1,edream.111303100039.6,edream.111303100039.8,edream.111303100039.9,edream.111303100039.10,edream.111303100039.11,edream.111303101709,edream.111303100039.12,edream.111703103908.2,edream.111703103908.3,edream.111703103908.4,edream.110203113231.384,edream.110203113231.553,edream.110203113231.554,edream.110203113231.555,edream.110203113231.556,edream.110203113231.557,edream.110203113231.558,edream.110203113231.559,edream.111303095242,edream.111303095242.3,edream.111303111942.1,edream.111303103141,edream.111303121150,edream.111303103141.1,edream.111303103141.2,edream.111303103141.3,edream.111303103141.4,edream.111303111942,edream.111303110018,edream.111303103457.2,edream.111603112846.1,edream.111303103254,edream.111303095242.6,edream.111303163727.2,edream.111303163727.1,edream.111303163727.3,edream.110203113231.598,edream.110203113231.599,edream.110203113231.600,edream.110203113231.601,edream.110203113231.602,edream.110203113231.603,edream.110203113231.605,edream.110203113231.606,edream.110203113231.607,edream.110203113231.608,edream.110203113231.609,edream.110203113231.610,edream.110203113231.611,edream.110203113231.612,edream.110203113231.613,edream.110203113231.614,edream.110203113231.615,edream.110203113231.616,edream.110203113231.617,edream.111603213219,edream.111603213219.1,edream.111603213329,edream.111603221005,edream.111403090242,edream.111403090242.1,edream.111403093559,edream.111403093559.1,edream.110203113231.295,edream.110203113231.296,edream.110203113231.298,edream.110203113231.299,edream.110203113231.300,edream.111603221343.1,edream.111603221343.3,edream.111603221343.4,edream.111603221343.5,edream.111603221343.6,edream.111603221343.7,edream.110203113231.280,edream.110203113231.281,edream.110203113231.283,edream.110203113231.284,edream.110203113231.286,edream.110203113231.287,edream.110203113231.288,edream.110203113231.289,edream.110203113231.290,edream.110203113231.291,edream.110203113231.292,edream.110203113231.293,edream.111503093140,edream.111503094014,edream.111503094322,edream.111503094014.1,edream.110203113231.561,edream.110203113231.563,edream.111503074302,edream.110203113231.564,edream.111503085739,edream.111503085739.1,edream.111403151611.1,edream.111503213733,edream.111503211508,edream.111403135745,edream.111503091617,edream.111503093522,edream.111503204508,edream.110203113231.588,edream.110203113231.589,edream.110203113231.590,edream.110203113231.591,edream.110203113231.592,edream.110203113231.593,edream.110203113231.594,edream.111503133933.2,edream.111503133933.3,edream.110203113231.595,edream.110203113231.596,edream.110203113231.597,edream.110203113231.304"><vh>@file __wx_gui.py</vh>
+<v t="edream.110203113231.302" tnodeList="edream.110203113231.302,edream.110203113231.303,edream.110203113231.259,edream.110203113231.305,edream.110203113231.307,edream.110203113231.308,edream.110203113231.309,edream.110203113231.310,edream.110203113231.311,edream.110203113231.312,edream.111303085447.1,edream.110203113231.317,edream.110203113231.314,edream.110203113231.315,edream.110203113231.316,edream.110203113231.322,edream.110203113231.323,edream.110203113231.324,edream.110203113231.325,edream.110203113231.326,edream.110203113231.327,edream.110203113231.328,edream.111403104835,edream.111303092328,edream.111303092328.1,edream.111303092328.2,edream.111303092328.3,edream.111303092328.4,edream.111303092328.5,edream.110203113231.333,edream.110203113231.320,edream.111403151611,edream.110203113231.343,edream.110203113231.344,edream.110203113231.336,edream.110203113231.337,edream.110203113231.319,edream.110203113231.340,edream.110203113231.341,edream.110203113231.342,edream.111303093843,edream.111303093843.1,edream.111303093953.2,edream.111303093953.3,edream.111303093953.4,edream.111303093953.5,edream.111303093953.6,edream.111303093953.7,edream.111303093953.9,edream.111303093953.10,edream.111303093953.12,edream.111303093953.13,edream.111303093953.14,edream.111303093953.15,edream.111303093953.16,edream.111303093953.18,edream.111303093953.19,edream.111303093953.20,edream.111303093953.21,edream.111303093953.22,edream.111303093953.23,edream.111303093953.25,edream.110203113231.346,edream.110203113231.347,edream.110203113231.348,edream.110203113231.539,edream.110203113231.541,edream.110203113231.542,edream.110203113231.543,edream.111403082513,edream.111303205611,edream.111303205611.1,edream.111303205611.2,edream.111303205611.3,edream.111303205611.4,edream.110203113231.544,edream.110203113231.545,edream.111303204025.1,edream.111303204025.2,edream.111303204025.3,edream.111303204025.4,edream.111303204025.5,edream.111403080609,edream.110203113231.548,edream.110203113231.549,edream.111303171218,edream.111603222048,edream.111303171218.1,edream.111303171238,edream.111303171238.1,edream.111303171238.2,edream.111303171238.3,edream.111303171238.4,edream.110203113231.552,edream.110203113231.275,edream.111303201144.6,edream.111303201144.7,edream.110203113231.349,edream.110203113231.266,edream.110203113231.351,edream.110203113231.260,edream.110203113231.261,edream.110203113231.265,edream.110203113231.264,edream.111403141810,edream.111503105816,edream.111303141147,edream.111503213533,edream.110203113231.269,edream.110203113231.270,edream.110203113231.273,edream.110203113231.379,edream.110203113231.380,edream.110203113231.381,edream.111303135410,edream.111303101257,edream.111303101257.1,edream.111303100039.6,edream.111303100039.8,edream.111303100039.9,edream.111303100039.10,edream.111303100039.11,edream.111303101709,edream.111303100039.12,edream.111703103908.2,edream.111703103908.3,edream.111703103908.4,edream.110203113231.384,edream.110203113231.553,edream.110203113231.554,edream.110203113231.555,edream.110203113231.556,edream.110203113231.557,edream.110203113231.558,edream.110203113231.559,edream.111303095242,edream.111303095242.3,edream.111303111942.1,edream.111303103141,edream.111303121150,edream.111303103141.1,edream.111303103141.2,edream.111303103141.3,edream.111303103141.4,edream.111303111942,edream.111303110018,edream.111303103457.2,edream.111603112846.1,edream.111303103254,edream.111303095242.6,edream.111303163727.2,edream.111303163727.1,edream.111303163727.3,edream.110203113231.598,edream.110203113231.599,edream.110203113231.600,edream.110203113231.601,edream.110203113231.602,edream.110203113231.603,edream.110203113231.605,edream.110203113231.606,edream.110203113231.607,edream.110203113231.608,edream.110203113231.609,edream.110203113231.610,edream.110203113231.611,edream.110203113231.612,edream.110203113231.613,edream.110203113231.614,edream.110203113231.615,edream.110203113231.616,edream.110203113231.617,edream.111603213219,edream.111603213219.1,edream.111603213329,edream.111603221005,edream.111403090242,edream.111403090242.1,edream.111403093559,edream.111403093559.1,edream.110203113231.295,edream.110203113231.296,edream.110203113231.298,edream.110203113231.299,edream.110203113231.300,edream.111603221343.1,edream.111603221343.3,edream.111603221343.4,edream.111603221343.5,edream.111603221343.6,edream.111603221343.7,edream.110203113231.280,edream.110203113231.281,edream.110203113231.283,edream.110203113231.284,edream.110203113231.286,edream.110203113231.287,edream.110203113231.288,edream.110203113231.289,edream.110203113231.290,edream.110203113231.291,edream.110203113231.292,edream.110203113231.293,edream.111503093140,edream.111503094014,edream.111503094322,edream.111503094014.1,edream.110203113231.561,edream.110203113231.563,edream.111503074302,edream.110203113231.564,edream.111503085739,edream.111503085739.1,edream.111403151611.1,edream.111503213733,edream.111503211508,edream.111403135745,edream.111503091617,edream.111503093522,edream.111503204508,edream.110203113231.588,edream.110203113231.589,edream.110203113231.590,edream.110203113231.591,edream.110203113231.592,edream.110203113231.593,edream.110203113231.594,edream.111503133933.2,edream.111503133933.3,edream.110203113231.595,edream.110203113231.596,edream.110203113231.597,edream.110203113231.304"><vh>@file __wx_gui.py</vh>
 <v t="edream.110203113231.259"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
 <v t="edream.110203113231.303"><vh>&lt;&lt; imports for wx plugin &gt;&gt;</vh></v>
 <v t="edream.110203113231.304"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
@@ -951,7 +954,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110203113231.618" a="V"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -9011,7 +9014,7 @@ for item in self.mod.__dict__.keys():
 	if item.startswith("cmd_"):
 		self.othercmds[item[4:]] = self.mod.__dict__[item]
 </t>
-<t tx="edream.110203113231.839">def about(self, arg):
+<t tx="edream.110203113231.839">def about(self,event=None):
 	
 	"""Put up an "about" dialog for this plugin"""
 
@@ -9045,13 +9048,13 @@ self.plugin = plugin
 # This list is used by writeConfiguration to write all settings.
 self.entries = []
 </t>
-<t tx="edream.110203113231.844">root = app().root
+<t tx="edream.110203113231.844">root = app.root
 
 &lt;&lt; Create the top level and the main frame &gt;&gt;
 &lt;&lt; Create widgets for each section and option &gt;&gt;
 &lt;&lt; Create Ok, Cancel and Apply buttons &gt;&gt;
 
-center_dialog(top) # Do this after packing.
+app.gui.center_dialog(top) # Do this after packing.
 top.grab_set() # Make the dialog a modal dialog.
 top.focus_force() # Get all keystrokes.
 root.wait_window(top)</t>
@@ -9131,7 +9134,7 @@ def onOk(self):
 
 	root = app().root
 	self.top = top = Tk.Toplevel(root)
-	attachLeoIcon(self.top)
+	app.gui.attachLeoIcon(self.top)
 	top.title("About " + name)
 	top.resizable(0,0) # neither height or width is resizable.
 	
@@ -9140,7 +9143,7 @@ def onOk(self):
 	&lt;&lt; Create the contents of the about box &gt;&gt;
 	&lt;&lt; Create the close button &gt;&gt;
 	
-	center_dialog(top) # Do this after packing.
+	app.gui.center_dialog(top) # Do this after packing.
 	top.grab_set() # Make the dialog a modal dialog.
 	top.focus_force() # Get all keystrokes.
 	root.wait_window(top)</t>
@@ -9379,6 +9382,9 @@ from leoGlobals import *
 import glob,os
 
 @others
+
+# EKR:  I don't like the scripts menu now.
+# The new Execute Script command seems much safer and more convenient.
 
 if 0: # Register the handlers...
 	registerHandler("create-optional-menus",createScriptsMenu)
@@ -10262,7 +10268,7 @@ if Tkinter and 0: # Register the handlers...
 		("-",None,None),
 		("Check Spelling","Alt+Shift+A",spellFrame.checkSpelling))
 
-	c.frame.createMenuItemsFromTable("Edit",table)</t>
+	c.frame.menu.createMenuItemsFromTable("Edit",table)</t>
 <t tx="edream.110203113231.936">def onSelect (tag,keywords):
 	
 	"""A new vnode has just been selected.  Update the Spell Check window."""
@@ -10684,22 +10690,22 @@ def onUndoButton (self):
 	
 	"""Make the selected change to the text"""
 
-	c = self.c ; v = self.v ; t = self.body.bodyCtrl
+	c = self.c ; v = self.v ; body = self.body ; t = body.bodyCtrl
 	
 	selection = self.getSuggestion()
 	if selection:
-		start,end = oldSel = getTextSelection(t)
+		start,end = oldSel = app.gui.getTextSelection(t)
 		if start:
 			if t.compare(start, "&gt;", end):
 				start,end = end,start
 			t.delete(start,end)
 			t.insert(start,selection)
-			setTextSelection(t,start,start + "+%dc" % (len(selection)))
-			newSel = getTextSelection(t)
+			app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
+			newSel = app.gui.getTextSelection(t)
 
 			# update node, undo status, dirty flag, changed mark &amp; recolor
 			c.beginUpdate()
-			c.frame.tree.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
+			c.frame.body.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
 			c.endUpdate(true)
 			t.focus_set()
 			return true
@@ -10735,8 +10741,8 @@ def onUndoButton (self):
 		self.body.bodyCtrl.focus_set()
 					
 		# Copy the working selection range to the body pane
-		start,end = getTextSelection(self.workCtrl)
-		setTextSelection(self.body.bodyCtrl,start,end)
+		start,end = app.gui.getTextSelection(self.workCtrl)
+		app.gui.setTextSelection(self.body.bodyCtrl,start,end)
 	else:
 		es("no more misspellings")
 		self.fillbox([])</t>
@@ -10826,7 +10832,7 @@ if self.dictionary.has_key(word.lower()):
 			ch = t.get("insert")
 			if ch in word_start:
 				word = t.get("insert wordstart","insert wordend")
-				setTextSelection(t,"insert wordstart","insert wordend")
+				app.gui.setTextSelection(t,"insert wordstart","insert wordend")
 				# print "findNextWord:",`word`
 				return v,word
 			elif ch:
@@ -10885,7 +10891,7 @@ if self.dictionary.has_key(word.lower()):
 	
 	"""Enable or disable buttons in the Check Spelling dialog."""
 	
-	start,end = getTextSelection(self.body.bodyCtrl)
+	start,end = app.gui.getTextSelection(self.body.bodyCtrl)
 	state = choose(self.suggestions and start,"normal","disabled")
 	
 	self.changeButton.configure(state=state)
@@ -11593,7 +11599,7 @@ body.bodyCtrl.insert(start, leftTag)
 # we need to review where the selection now ends
 start,end = body.bodyCtrl.tag_ranges("sel")
 body.bodyCtrl.insert(end, rightTag)
-setTextSelection(body.bodyCtrl, start + "-" + `len(leftTag)`  + "c",
+app.gui.setTextSelection(body.bodyCtrl, start + "-" + `len(leftTag)`  + "c",
 						 end + "+" + `len(rightTag)` + "c")
 newSel = body.getTextSelection()
 c.frame.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
@@ -11611,7 +11617,7 @@ else:
 	body.bodyCtrl.insert("insert", leftTag)
 	body.bodyCtrl.insert("insert", rightTag)
 	newPos = "%s+%dc" % (oldSel[0],len(leftTag))
-setTextSelection(body, newPos, newPos)
+body.setTextSelection(newPos, newPos)
 newSel = body.getTextSelection()
 c.frame.onBodyChanged(v,"Typing",oldSel=oldSel,newSel=newSel)
 </t>
@@ -15254,5 +15260,7 @@ def underline(h,level):
 	return str*max(len(h),4)+'\n'</t>
 <t tx="edream.111803100856"></t>
 <t tx="edream.111903105454"></t>
+<t tx="edream.111903190444"></t>
+<t tx="edream.111903190444.1"></t>
 </tnodes>
 </leo_file>
