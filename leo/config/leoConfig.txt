@@ -203,7 +203,8 @@ headline_text_editing_background_color = white
 headline_text_editing_selection_foreground_color = white
 
 [recent files]
-file1 = C:\prog\leoCVS\leo\test\test.leo
+file2 = C:\prog\leoCVS\leo\test\test.leo
+file1 = C:/prog/leoCVS/leo/plugins/leoPlugins.leo
 file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
 
 [find/change options]
