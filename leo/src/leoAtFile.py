@@ -3827,7 +3827,11 @@ class atFile:
     
         if not at.thinFile:
             # Append the n'th tnode to the root's tnode list.
-            at.root.v.t.tnodeList.append(p.v.t)
+            # It may not exist when executing scripts.
+            try: 
+                at.root.v.t.tnodeList.append(p.v.t)
+            except AttributeError:
+                pass # Do nothing.  We are creating a script.
     #@nonl
     #@-node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
     #@+node:ekr.20041005105605.194:putSentinel (applies cweb hack) 4.x
