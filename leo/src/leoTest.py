@@ -541,7 +541,7 @@ class testUtils:
         nodeIndices.setTimestamp()
         for p in input.self_and_subtree_iter():
             try:
-                id,time,n = p.v.t.fileIndex
+                theId,time,n = p.v.t.fileIndex
             except TypeError:
                 p.v.t.fileIndex = nodeIndices.getNewIndex()
     
@@ -646,7 +646,6 @@ def runAtFileTest(c,p):
     assert(g.match(h1,0,"@@"))
     assert(g.match(h2,0,"output"))
     expected = child2.bodyString()
-    input = p.bodyString()
 
     # Compute the type from child1's headline.
     j = g.skip_c_id(h1,2)
@@ -1410,6 +1409,8 @@ class importExportTestCase(unittest.TestCase):
 def runPerfectImportTest(c,p,
     testing=False,verbose=False,
     ignoreSentinelsInCompare=False):
+        
+    __pychecker__ = '--no-shadowbuiltin' # input is a builtin.
 
     # The contents of the "-input" and "-input-after" nodes define the changes.
 

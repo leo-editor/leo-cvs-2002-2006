@@ -725,7 +725,7 @@ class baseLeoImportCommands:
         
         for p2 in root.self_and_subtree_iter():
             try: # Will fail for None or any pre 4.1 file index.
-                id,time,n = p2.v.t.fileIndex
+                theId,time,n = p2.v.t.fileIndex
             except TypeError:
                 p2.v.t.fileIndex = nodeIndices.getNewIndex()
         #@nonl
@@ -1782,9 +1782,9 @@ class baseLeoImportCommands:
         # Get the following id.
         i = g.skip_ws(s,i)
         j = self.skipElispId(s,i)
-        id = prefix + s[i:j]
+        theId = prefix + s[i:j]
     
-        self.createHeadline(v,body,id)
+        self.createHeadline(v,body,theId)
     #@-node:ekr.20031218072017.3268:createElispFunction
     #@+node:ekr.20031218072017.3269:createElispDataNode
     def createElispDataNode (self,v,s):
@@ -1804,11 +1804,11 @@ class baseLeoImportCommands:
         if g.match(s,i,"("):
             i = g.skip_ws(s,i+1)
         j = self.skipElispId(s,i)
-        id = s[i:j]
-        if not id:
-            id = "unnamed data"
+        theId = s[i:j]
+        if not theId:
+            theId = "unnamed data"
     
-        self.createHeadline(v,data,id)
+        self.createHeadline(v,data,theId)
     #@nonl
     #@-node:ekr.20031218072017.3269:createElispDataNode
     #@-node:ekr.20031218072017.3265:scanElispText & allies

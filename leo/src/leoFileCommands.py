@@ -87,7 +87,7 @@ class baseFileCommands:
         """Convert Tnnn to nnn, leaving gnx's unchanged."""
     
         # index might be Tnnn, nnn, or gnx.
-        id,time,n = g.app.nodeIndices.scanGnx(index,0)
+        theId,time,n = g.app.nodeIndices.scanGnx(index,0)
         if time == None: # A pre-4.1 file index.
             if index[0] == "T":
                 index = index[1:]
@@ -882,7 +882,7 @@ class baseFileCommands:
                 
         if g.app.use_gnx:
             # index might be Tnnn, nnn, or gnx.
-            id,time,n = g.app.nodeIndices.scanGnx(index,0)
+            theId,time,n = g.app.nodeIndices.scanGnx(index,0)
             if time == None: # A pre-4.1 file index.
                 if index[0] == "T":
                     index = index[1:]
@@ -1204,7 +1204,7 @@ class baseFileCommands:
                 g.es("newTnode: unexpected index type:",type(index),index,color="red")
             
             # Convert any pre-4.1 index to a gnx.
-            id,time,n = gnx = g.app.nodeIndices.scanGnx(index,0)
+            theId,time,n = gnx = g.app.nodeIndices.scanGnx(index,0)
             if time != None:
                 t.setFileIndex(gnx)
     
@@ -1331,7 +1331,7 @@ class baseFileCommands:
             
             for p in c.allNodes_iter():
                 try: # Will fail for None or any pre 4.1 file index.
-                    id,time,n = p.v.t.fileIndex
+                    theId,time,n = p.v.t.fileIndex
                 except TypeError:
                     # Don't convert to string until the actual write.
                     p.v.t.fileIndex = nodeIndices.getNewIndex()
@@ -1769,7 +1769,7 @@ class baseFileCommands:
             if g.app.use_gnx:
                 for t in tnodeList:
                     try: # Will fail for None or any pre 4.1 file index.
-                        id,time,n = t.fileIndex
+                        theId,time,n = t.fileIndex
                     except:
                         g.trace("assigning gnx for ",v,t)
                         gnx = nodeIndices.getNewIndex()

@@ -6075,23 +6075,23 @@ def newBox (self,p,x,y,image):
     canvas = self.canvas ; tag = "plusBox" # 9/5/04: was plugBox.
 
     if self.freeBoxes:
-        id = self.freeBoxes.pop(0)
-        canvas.coords(id,x,y)
-        canvas.itemconfigure(id,image=image)
+        theId = self.freeBoxes.pop(0)
+        canvas.coords(theId,x,y)
+        canvas.itemconfigure(theId,image=image)
     else:
-        id = canvas.create_image(x,y,image=image,tag=tag)
+        theId = canvas.create_image(x,y,image=image,tag=tag)
         
     if self.trace and self.verbose:
-        g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),align=-20)
+        g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),align=-20)
 
-    assert(id not in self.visibleBoxes)
-    self.visibleBoxes.append(id)
+    assert(theId not in self.visibleBoxes)
+    self.visibleBoxes.append(theId)
 
-    assert(not self.ids.get(id))
+    assert(not self.ids.get(theId))
     assert(p)
-    self.ids[id] = p
+    self.ids[theId] = p
 
-    return id
+    return theId
 #@nonl
 #@-node:ekr.20040803072955.7:newBox
 #@+node:ekr.20040803072955.37:drawClickBox
@@ -6101,7 +6101,7 @@ def drawClickBox (self,p,y):
     
     # Define a slighly larger rect to catch clicks.
     if self.expanded_click_area:
-        id = self.newClickBox(p,0,y,1000,y+h-2)
+        theId = self.newClickBox(p,0,y,1000,y+h-2)
         
         if 0: # A major change to the user interface.
             << change the appearance of headlines >>
@@ -6755,7 +6755,7 @@ nodeIndices.setTimestamp()
 
 for p2 in root.self_and_subtree_iter():
     try: # Will fail for None or any pre 4.1 file index.
-        id,time,n = p2.v.t.fileIndex
+        theId,time,n = p2.v.t.fileIndex
     except TypeError:
         p2.v.t.fileIndex = nodeIndices.getNewIndex()
 #@nonl

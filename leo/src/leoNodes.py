@@ -1339,17 +1339,17 @@ class nodeIndices (object):
         """Return the id to be used by default in all gnx's"""
         return self.defaultId
         
-    def setDefaultId (self,id):
+    def setDefaultId (self,theId):
         
         """Set the id to be used by default in all gnx's"""
-        self.defaultId = id
+        self.defaultId = theId
     #@-node:ekr.20031218072017.1994:get/setDefaultId
     #@+node:ekr.20031218072017.1995:getNewIndex
     def getNewIndex (self):
         
         """Create a new gnx using self.timeString and self.lastIndex"""
         
-        id = self.userId # Bug fix 5/1/03: always use the user's id for new ids!
+        theId = self.userId # Bug fix 5/1/03: always use the user's id for new ids!
         t = self.timeString
         assert(t)
         n = None
@@ -1358,11 +1358,11 @@ class nodeIndices (object):
         last = self.lastIndex
         if last:
             lastId,lastTime,lastN = last
-            if id==lastId and t==lastTime:
+            if theId==lastId and t==lastTime:
                 if lastN == None: n = 1
                 else: n = lastN + 1
     
-        d = (id,t,n)
+        d = (theId,t,n)
         self.lastIndex = d
         # g.trace(d)
         return d
@@ -1371,7 +1371,7 @@ class nodeIndices (object):
     #@+node:ekr.20031218072017.1996:isGnx
     def isGnx (self,gnx):
         try:
-            id,t,n = gnx
+            theId,t,n = gnx
             return t != None
         except:
             return False
@@ -1388,21 +1388,21 @@ class nodeIndices (object):
             
         s = s.strip()
     
-        id,t,n = None,None,None
-        i,id = g.skip_to_char(s,i,'.')
+        theId,t,n = None,None,None
+        i,theId = g.skip_to_char(s,i,'.')
         if g.match(s,i,'.'):
             i,t = g.skip_to_char(s,i+1,'.')
             if g.match(s,i,'.'):
                 i,n = g.skip_to_char(s,i+1,'.')
         # Use self.defaultId for missing id entries.
-        if id == None or len(id) == 0:
-            id = self.defaultId
+        if theId == None or len(theId) == 0:
+            theId = self.defaultId
         # Convert n to int.
         if n:
             try: n = int(n)
             except: pass
     
-        return id,t,n
+        return theId,t,n
     #@nonl
     #@-node:ekr.20031218072017.1997:scanGnx
     #@+node:ekr.20031218072017.1998:setTimeStamp
@@ -1420,15 +1420,15 @@ class nodeIndices (object):
         
         """Convert a gnx (a tuple) to its string representation"""
     
-        id,t,n = index
+        theId,t,n = index
     
-        if removeDefaultId and id == self.defaultId:
-            id = ""
+        if removeDefaultId and theId == self.defaultId:
+            theId = ""
     
         if not n: # None or ""
-            return "%s.%s" % (id,t)
+            return "%s.%s" % (theId,t)
         else:
-            return "%s.%s.%d" % (id,t,n)
+            return "%s.%s.%d" % (theId,t,n)
     #@nonl
     #@-node:ekr.20031218072017.1999:toString
     #@-others
