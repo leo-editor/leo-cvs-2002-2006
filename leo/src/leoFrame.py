@@ -3165,6 +3165,7 @@ class baseLeoFrame:
 		if self.fontPanel:
 			# trace()
 			self.fontPanel.top.deiconify()
+			self.fontPanel.top.lift()
 		else:
 			self.fontPanel = fp =  leoFontPanel.leoFontPanel(self.commands)
 			fp.run()
@@ -3178,6 +3179,7 @@ class baseLeoFrame:
 		if self.colorPanel:
 			# trace()
 			self.colorPanel.top.deiconify()
+			self.colorPanel.top.lift()
 		else:
 			self.colorPanel = cp = leoColor.leoColorPanel(self.commands)
 			cp.run()
@@ -3212,6 +3214,7 @@ class baseLeoFrame:
 		if self.prefsPanel:
 			# trace()
 			self.prefsPanel.top.deiconify()
+			self.prefsPanel.top.lift()
 		else:
 			self.prefsPanel = prefs = leoPrefs.LeoPrefs(c)
 			top = prefs.top
@@ -3482,6 +3485,7 @@ class baseLeoFrame:
 		#                     opening multiple Leo files.
 		find.top.withdraw()
 		find.top.deiconify()
+		find.top.lift()
 		
 		t = find.find_text
 		t.focus_set()
@@ -4067,6 +4071,7 @@ class baseLeoFrame:
 		
 		if cp:
 			cp.top.deiconify()
+			cp.top.lift()
 		else:
 			cmp = leoCompare.leoCompare(c)
 			self.comparePanel = cp =  leoCompare.leoComparePanel(c,cmp)

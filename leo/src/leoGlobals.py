@@ -3474,21 +3474,23 @@ def isValidEncoding (encoding):
 #@+body
 def reportBadChars (s,encoding):
 	
+	errors = 0
 	if type(s) == type(u""):
 		for ch in s:
-			try:
-				ch.encode(encoding,"strict")
-			except:
-				# import traceback ; traceback.print_stack()
-				es("can't convert " + ch + " to " + encoding)
+			try: ch.encode(encoding,"strict")
+			except: errors += 1
+		if errors:
+			# import traceback ; traceback.print_stack()
+			es("%d errors converting %s to %s" % 
+				(errors, s.encode(encoding,"replace"),encoding))
 
 	elif type(s) == type(""):
 		for ch in s:
-			try:
-				unicode(ch,encoding,"strict")
-			except:
-				es("can't convert " + repr(ch) + " from " + encoding + " to unicode")
-
+			try: unicode(ch,encoding,"strict")
+			except: errors += 1
+		if errors:
+			es("%d errors converting %s from %s to unicode" % 
+				(errors, s.encode(encoding,"replace"),encoding))
 #@-body
 #@-node:2::reportBadChars
 #@+node:3::toUnicode & toEncodedString
