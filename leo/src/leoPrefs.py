@@ -306,15 +306,16 @@ class baseLeoPrefs:
 	#@nonl
 	#@-node:prefs.set_ivars & idle_set_ivars & print_ivars
 	#@+node:set_lang
-	# This event handler gets executed when the user choose a new default language.
+	# This event handler gets executed when the user chooses a new default language.
 	
 	def set_lang (self):
 		
-		c = top() ; v = c.currentVnode()
+		c = self.commands
+		v = c.currentVnode()
 		language = self.lang_var.get()
 		c.target_language = self.target_language = language
 		c.frame.recolor(v)
-		# print "set_lang",language
+		# trace(language)
 	#@nonl
 	#@-node:set_lang
 	#@+node:prefs.onOK, onCancel, onRevert
