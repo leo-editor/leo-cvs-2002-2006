@@ -107,6 +107,8 @@ class leoTkinterTree (leoFrame.leoTree):
         self._editPosition = None
         self.lineyoffset = 0 # y offset for this headline.
         self.disableRedraw = False # True: reschedule a redraw for later.
+        self.lastClickFrameId = None # id of last entered clickBox.
+        self.lastColoredText = None # last colored text widget.
         
         # Set self.font and self.fontName.
         self.setFontFromConfig()
@@ -579,30 +581,22 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
     def drawBox (self,p,x,y):
         
-        tree = self
+        tree = self ; canvas = self.canvas
         y += 7 # draw the box at x, y+7
-        h = self.line_height
         
         if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
     
             iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
             image = self.getIconImage(iconname)
-            id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
-            
-            if 1: # New in 4.2.  Create a frame to catch all clicks.
-                id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-                color = ""
-                self.canvas.itemconfig(id4,fill=color,outline=color)
-                self.canvas.lower(id4)
-                id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-                self.tagBindings.append((id,id3,"<1>"),)
+            box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
         
-            id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-            id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
+            id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
+            id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
+    
+            self.tagBindings.append((box_id,id1,"<1>"),)
+            self.tagBindings.append((box_id,id2,"<Double-1>"),)
             
-            # Remember the bindings so deleteBindings can delete them.
-            self.tagBindings.append((id,id1,"<1>"),)
-            self.tagBindings.append((id,id2,"<Double-1>"),)
+            return box_id
     #@nonl
     #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
     #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
@@ -640,7 +634,7 @@ class leoTkinterTree (leoFrame.leoTree):
             # Get the image.
             imagename = "box%02d.GIF" % val
             image = self.getIconImage(imagename)
-            id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+            id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image,tag="iconBox")
             self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
         
             id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
@@ -690,7 +684,10 @@ class leoTkinterTree (leoFrame.leoTree):
         h,w = self.drawUserIcons(p,"beforeBox",x,y)
         xw = w # The extra indentation before the icon box.
         if p.hasChildren():
-            self.drawBox(p,x+w,y)
+            box_id = self.drawBox(p,x+w,y)
+        else:
+            box_id = None
+    
         w += box_width # even if box isn't drawn.
     
         h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
@@ -702,12 +699,15 @@ class leoTkinterTree (leoFrame.leoTree):
         h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
         h = max(h,h2) ; w += w2
     
-        h2 = self.drawText(p,x+w,y)
+        expand_x = x+w # save this for later.
+        h2 = self.drawText(p,x+w,y,box_id)
         h = max(h,h2)
         w += self.widthInPixels(p.headString())
     
         h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
         h = max(h,h2)
+        
+        self.drawClickFrame(p,y)
     
         return h,xw
     #@nonl
@@ -718,7 +718,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.allocatedNodes += 1
     
         if p.hasChildren():
-            self.drawBox(p,x,y)
+            box_id = self.drawBox(p,x,y)
         w = box_width # Even if the box isn't drawn.
     
         h2,w2 = self.drawIcon(p,x+w,y)
@@ -730,20 +730,21 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040318090335:force_draw_node (old)
     #@-node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
     #@+node:ekr.20031218072017.1005:drawText (bind)
-    def drawText(self,p,x,y):
+    def drawText(self,p,x,y,box_id=None):
         
         """draw text for v at nominal coordinates x,y."""
     
         tree = self ; c = self.c ; v = p.v
+        h = self.line_height
         x += text_indent
         
         data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
         if data is not None: return data
     
-        t = Tk.Text(self.canvas,
+        self.lastText = t = Tk.Text(self.canvas,
             font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
     
-        # New in 4.2: entries a pairs (p,t) indexed by v.
+        # New in 4.2: entries are pairs (p,t) indexed by v.
         # Remember which text widget belongs to v.
         d = self.edit_text_dict
         val = d.get(v,[])
@@ -768,23 +769,62 @@ class leoTkinterTree (leoFrame.leoTree):
         #@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
         #@nl
     
-        # Use vnode or postion callbacks.
-        id1 = t.bind("<1>",p.OnHeadlineClick)
-        id2 = t.bind("<3>",p.OnHeadlineRightClick)
+        if 1: # use bind here, else use bind_tag in drawTopTree.
+            # Use vnode or postion callbacks.
+            id1 = t.bind("<1>",p.OnHeadlineClick)
+            id2 = t.bind("<3>",p.OnHeadlineRightClick)
+            id3 = t.bind("<Key>", p.OnHeadlineKey)
+            id4 = t.bind("<Control-t>",self.OnControlT)
+                # 10/16/02: Stamp out the erroneous control-t binding.
+            # Remember the bindings so deleteBindings can delete them.
+            self.bindings.append((t,id1,"<1>"),)
+            self.bindings.append((t,id2,"<3>"),)
+            self.bindings.append((t,id3,"<Key>"),)
+            self.bindings.append((t,id4,"<Control-t>"),)
         
-        if 0: # 6/15/02: Bill Drissel objects to this binding.
-            t.bind("<Double-1>", p.OnBoxClick)
-        id3 = t.bind("<Key>", p.OnHeadlineKey)
-        id4 = t.bind("<Control-t>",self.OnControlT)
-            # 10/16/02: Stamp out the erroneous control-t binding.
+        #@    << highlight text widget on enter events >>
+        #@+node:ekr.20040709194954:<< highlight text widget on enter events >>
+        if 0: # Define a rect to colorize.
+        
+            color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+            self.canvas.itemconfig(color_rect,fill="",outline="")
+        
+            def enterRect(event,id=color_rect):
+                if self.lastClickFrameId:
+                    self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+                self.lastClickFrameId = id
+                color = "LightSteelBlue1"
+                self.canvas.itemconfig(id,fill=color,outline=color)
             
-        # Remember the bindings so deleteBindings can delete them.
-        self.bindings.append((t,id1,"<1>"),)
-        self.bindings.append((t,id2,"<3>"),)
-        self.bindings.append((t,id3,"<Key>"),)
-        self.bindings.append((t,id4,"<Control-t>"),)
-    
-        id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
+            bind_enter = t.bind( '<Enter>', enterRect, '+' )
+            self.bindings.append((t,bind_enter,"<Enter>"),)
+            
+        if 1: # Colorize only the headline.
+        
+            def enterRect(event,p=p,t=t):
+                t2 = self.lastColoredText
+                if t2:
+                    if 1: # deunderline
+                        t2.tag_delete('underline')
+                    else: # color
+                        t2.configure(background="white")
+                if p == self.editPosition():
+                    self.lastColoredText = None
+                else:
+                    self.lastColoredText = t
+                    if 1: # underline
+                        t.tag_add('underline','1.0', 'end')
+                        t.tag_configure('underline',underline = True)
+                    else: #color
+                        t.configure(background="LightSteelBlue1")
+            
+            bind_enter = t.bind( '<Enter>', enterRect, '+' )
+            self.bindings.append((t,bind_enter,"<Enter>"),)
+        #@nonl
+        #@-node:ekr.20040709194954:<< highlight text widget on enter events >>
+        #@nl
+            
+        id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
         self.canvas.tag_lower(id)
         
         # This doesn't work: must call update_idletasks first, and that's hard here.
@@ -793,12 +833,12 @@ class leoTkinterTree (leoFrame.leoTree):
         return self.line_height
     #@nonl
     #@-node:ekr.20031218072017.1005:drawText (bind)
-    #@+node:ekr.20031218072017.2029:drawTopTree
+    #@+node:ekr.20031218072017.2029:drawTopTree (tag_bind)
     def drawTopTree (self):
         
         """Draws the top-level tree, taking into account the hoist state."""
         
-        c = self.c
+        c = self.c ; canvas = self.canvas
         
         if 0:
             try: self.redrawCount += 1
@@ -806,14 +846,56 @@ class leoTkinterTree (leoFrame.leoTree):
             g.trace(self.redrawCount)
         # import traceback ; traceback.print_stack()
         
+        self.lastClickFrameId = None # id of last entered clickBox.
+        self.lastColoredText = None # last colored text widget.
+        
         if c.hoistStack:
             p,junk = c.hoistStack[-1]
             self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
         else:
             self.drawTree(c.rootPosition(),root_left,root_top,0,0)
             
+        canvas.lower("lines")
+        canvas.lower("colorBox")
+        canvas.lift("clickBox")
+        canvas.lift("iconBox")
         
-    #@-node:ekr.20031218072017.2029:drawTopTree
+        if 0:
+            #@        << define callbacks >>
+            #@+node:ekr.20040710060809:<< define callbacks >>
+            def onHeadlineClickCallback(tree=self):
+                
+                g.trace()
+                c = tree.c
+                p = c.currentPosition()
+                p.onHeadlineClick()
+                
+            def onHeadlineRightClickCallback(tree=self):
+                
+                g.trace()
+                c = tree.c
+                p = c.currentPosition()
+                p.OnHeadlineRightClick()
+                
+            def onHeadlineKeyCallback(tree=self):
+                
+                g.trace()
+                c = tree.c
+                p = c.currentPosition()
+                p.OnHeadlineKey()
+                
+                
+            #@nonl
+            #@-node:ekr.20040710060809:<< define callbacks >>
+            #@nl
+            # Use vnode or postion callbacks.
+            canvas.tag_bind("textBox","<1>",onHeadlineClickCallback)
+            canvas.tag_bind("textBox","<3>",onHeadlineRightClickCallback)
+            canvas.tag_bind("textBox","<Key>", onHeadlineKeyCallback)
+            canvas.tag_bind("textBox","<Control-t>",self.OnControlT)
+                # Stamp out erroneous control-t binding.
+    #@nonl
+    #@-node:ekr.20031218072017.2029:drawTopTree (tag_bind)
     #@+node:ekr.20031218072017.1008:drawTree
     def drawTree(self,p,x,y,h,level,hoistFlag=False):
     
@@ -847,7 +929,7 @@ class leoTkinterTree (leoFrame.leoTree):
             fill="gray50", # stipple="gray50"
             tag="lines")
         
-        self.canvas.tag_lower(id)
+        # self.canvas.tag_lower(id)
         #@nonl
         #@-node:ekr.20031218072017.1009:<< draw vertical line >>
         #@nl
@@ -981,6 +1063,54 @@ class leoTkinterTree (leoFrame.leoTree):
             return False
     #@nonl
     #@-node:ekr.20031218072017.1010:inVisibleArea & inExpandedVisibleArea
+    #@+node:ekr.20040710050236:tree.drawClickFrame
+    def drawClickFrame (self,p,y):
+        
+        h = self.line_height ;  defaultColor = ""
+        
+        # Define a slighly larger rect to catch clicks.
+    
+        click_rect = self.canvas.create_rectangle(0,y,1000,y+h-3,tag="clickBox")
+        self.canvas.itemconfig(click_rect,fill=defaultColor,outline=defaultColor)
+        
+        id_click = self.canvas.tag_bind(click_rect, "<1>", p.OnBoxClick)
+        self.tagBindings.append((click_rect,id_click,"<1>"),)
+        
+        if 1: # A major change to the user interface.
+            
+            # Define a slighly smaller rect to colorize.
+            color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+            self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
+            
+            # Color the click box or the headline
+            def enterRect(event,id=color_rect,p=p,t=self.lastText):
+                if 1: # Color or underline the headline
+                    t2 = self.lastColoredText
+                    if t2: # decolor the old headline.
+                        if 1: # deunderline
+                            t2.tag_delete('underline')
+                        else: # decolor
+                            t2.configure(background="white")
+                    if t and p != self.editPosition():
+                        if 1: # underline
+                            t.tag_add('underline','1.0','end')
+                            t.tag_configure('underline',underline=True)
+                        else: # color
+                            t.configure(background="LightSteelBlue1")
+                        self.lastColoredText = t
+                    else: self.lastColoredText = None
+                else: # Color the click box.
+                    if self.lastClickFrameId:
+                        self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
+                    self.lastClickFrameId = id
+                    color = "LightSteelBlue1"
+                    self.canvas.itemconfig(id,fill=color,outline=color)
+        
+            bind_id = self.canvas.tag_bind(click_rect, "<Enter>", enterRect) # , '+')
+            self.tagBindings.append((click_rect,bind_id,"<Enter>"),)
+        
+    #@nonl
+    #@-node:ekr.20040710050236:tree.drawClickFrame
     #@+node:ekr.20031218072017.4147:tree.getIconImage
     def getIconImage (self, name):
     
@@ -991,7 +1121,7 @@ class leoTkinterTree (leoFrame.leoTree):
         try:
             fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
             fullname = g.os_path_normpath(fullname)
-            image = Tk.PhotoImage(master=self.canvas, file=fullname)
+            image = Tk.PhotoImage(master=self.canvas,file=fullname)
             self.iconimages[name] = image
             return image
         except:
@@ -1000,16 +1130,6 @@ class leoTkinterTree (leoFrame.leoTree):
             return None
     #@nonl
     #@-node:ekr.20031218072017.4147:tree.getIconImage
-    #@+node:ekr.20040322122232:tree.scrollTo
-    def scrollTo (self,p):
-        
-        def scrollToCallback(event=None,self=self,p=p):
-            g.trace(event,self,p)
-            self.idle_scrollTo(p)
-        
-        self.canvas.after_idle(scrollToCallback)
-    #@nonl
-    #@-node:ekr.20040322122232:tree.scrollTo
     #@+node:ekr.20031218072017.1018:tree.idle_scrollTo
     def idle_scrollTo(self,p=None):
     
@@ -1079,6 +1199,16 @@ class leoTkinterTree (leoFrame.leoTree):
         return n
     #@nonl
     #@-node:ekr.20031218072017.4148:tree.numberOfVisibleNodes
+    #@+node:ekr.20040322122232:tree.scrollTo
+    def scrollTo (self,p):
+        
+        def scrollToCallback(event=None,self=self,p=p):
+            g.trace(event,self,p)
+            self.idle_scrollTo(p)
+        
+        self.canvas.after_idle(scrollToCallback)
+    #@nonl
+    #@-node:ekr.20040322122232:tree.scrollTo
     #@+node:ekr.20031218072017.4149:tree.yoffset
     #@+at 
     #@nonl
@@ -1306,6 +1436,8 @@ class leoTkinterTree (leoFrame.leoTree):
                 canvas_x = canvas.canvasx(x)
                 canvas_y = canvas.canvasy(y)
                 id = self.canvas.find_closest(canvas_x,canvas_y)
+                # id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+                
             
             # OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
             if self.drag_id: # This gets cleared by OnEndDrag()
@@ -1392,6 +1524,8 @@ class leoTkinterTree (leoFrame.leoTree):
             canvas_y = canvas.canvasy(y)
             
             id = self.canvas.find_closest(canvas_x,canvas_y)
+            # id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+            
             vdrag = self.findVnodeWithIconId(id)
             childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
             #@nonl
@@ -1591,6 +1725,7 @@ class leoTkinterTree (leoFrame.leoTree):
             canvas_x = canvas.canvasx(event.x)
             canvas_y = canvas.canvasy(event.y)
             id = canvas.find_closest(canvas_x,canvas_y)
+            # id = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
             if id != None:
                 try: id = id[0]
                 except: pass
