@@ -1733,7 +1733,8 @@ class atFile:
 				if len(self.endSentinelComment) == 0:
 					headline = string.strip(s[i:-1])
 				else:
-					k = string.find(s,self.endSentinelComment,i)
+					# 10/24/02: search from the right, not the left.
+					k = string.rfind(s,self.endSentinelComment,i)
 					headline = string.strip(s[i:k]) # works if k == -1
 					
 				# 10/23/02: The cweb hack: undouble @ signs if the opening comment delim ends in '@'.
