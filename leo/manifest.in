@@ -1,3 +1,5 @@
+# The manifest template: specifies all files to be included in the distribution.
+
 include leo_license.txt
 include LeoPy.leo
 include LeoDocs.leo
@@ -10,7 +12,7 @@ include openLeo.py
 include tangle_done.py
 include untangle_done.py
 include __init__.py
-include README.TXT
+include README.txt
 include Icons/*.*
 include leo.rc
 include leo.res

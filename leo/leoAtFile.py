@@ -2690,7 +2690,7 @@ class atFile:
 	def rawWrite(self,root):
 	
 		# trace(`root`)
-		c = self.commands
+		c = self.commands ; self.root = root
 		self.errors = 0
 		c.endEditing() # Capture the current headline.
 		self.targetFileName = root.atRawFileNodeName()
@@ -2708,22 +2708,23 @@ class atFile:
 				traceback.print_exc()
 				valid = false
 			
-			try:
-				fn = root.atRawFileNodeName()
-				self.shortFileName = fn # name to use in status messages.
-				self.targetFileName = os.path.join(self.default_directory,fn)
-				self.targetFileName = os.path.normpath(self.targetFileName)
-				path = os.path.dirname(self.targetFileName)
-				if path and len(path) > 0:
-					valid = os.path.exists(path)
-					if not valid:
-						self.writeError("path does not exist: " + path)
-				else:
+			if valid:
+				try:
+					fn = root.atRawFileNodeName()
+					self.shortFileName = fn # name to use in status messages.
+					self.targetFileName = os.path.join(self.default_directory,fn)
+					self.targetFileName = os.path.normpath(self.targetFileName)
+					path = os.path.dirname(self.targetFileName)
+					if path and len(path) > 0:
+						valid = os.path.exists(path)
+						if not valid:
+							self.writeError("path does not exist: " + path)
+					else:
+						valid = false
+				except:
+					es("exception creating path:" + fn)
+					traceback.print_exc()
 					valid = false
-			except:
-				es("exception creating path:" + fn)
-				traceback.print_exc()
-				valid = false
 			
 			if valid:
 				if os.path.exists(self.targetFileName):
@@ -2760,10 +2761,12 @@ class atFile:
 				#@<< Write v's headline if it starts with @@ >>
 				#@+node:2::<< Write v's headline if it starts with @@ >>
 				#@+body
-				h = v.headString()
-				if match(h,0,"@@"):
-					s = string.strip(h[2:])
-					self.outputFile.write(s + '\n')
+				s = v.headString()
+				if match(s,0,"@@"):
+					s = s[2:]
+					if s and len(s) > 0:
+						self.outputFile.write(s)
+				
 				#@-body
 				#@-node:2::<< Write v's headline if it starts with @@ >>
 
@@ -2771,8 +2774,9 @@ class atFile:
 				#@<< Write v's body >>
 				#@+node:3::<< Write v's body >>
 				#@+body
-				s = string.strip(v.bodyString())
-				self.outputFile.write(s + '\n')
+				s = v.bodyString()
+				if s and len(s) > 0:
+					self.outputFile.write(s)
 				#@-body
 				#@-node:3::<< Write v's body >>
 

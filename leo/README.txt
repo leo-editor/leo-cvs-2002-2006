@@ -1,4 +1,3 @@
-
 Important note: See INSTALL.TXT for installation instructions.
 
 
@@ -194,5 +193,3 @@ The version fixes two bugs that happen rarely and can cause loss of data when th
   so you may have to convert escaped text to something that your tools can understand.
 
 Edward K. Ream
-
-

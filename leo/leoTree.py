@@ -850,7 +850,8 @@ class leoTree:
 			#@-node:1::<< Do Auto indent >>
 
 			s = c.body.get("1.0", "end")
-			s = string.rstrip(s)
+			if 0: # 10/9/02: Preserve trailing whitespace for @rawfile.
+				s = string.rstrip(s)
 		elif ch == '\t' and c.tab_width < 0:
 			
 			#@<< convert leading tab to blanks >>
