@@ -4101,7 +4101,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			# Only whitespace before the @others or ref.
 			at.leadingWs = s[i:j] # Remember the leading whitespace, including its spelling.
 		else:
-			at.os(s[i:j]) ; at.onl() # 10/21/03
+			at.os(s[i:j]) ; at.onl_sent() # 10/21/03
 			at.indent += delta # Align the @nonl with the following line.
 			at.putSentinel("@nonl")
 			at.indent -= delta # Let the caller set at.indent permanently.
@@ -4489,7 +4489,7 @@ class baseNewDerivedFile(oldDerivedFile):
 					
 				# Put an @nonl sentinel if s does not end in a newline.
 				if s and s[-1] != '\n':
-					at.onl() ; at.putSentinel("@nonl")
+					at.onl_sent() ; at.putSentinel("@nonl")
 				
 				at.putCloseNodeSentinel(v)
 				#@-node:<< Write v's node >>
@@ -4541,18 +4541,18 @@ class baseNewDerivedFile(oldDerivedFile):
 		""" Generate the body enclosed in sentinel lines."""
 	
 		at = self ; s = v.bodyString()
-	
+		
 		v.setVisited() # Mark the node for the orphans check.
 		if not s: return
 	
 		inCode = true
 		
-		# Make _sure_ all lines end in a newline.
+		# Make _sure_ all lines end in a newline (11/20/03: except in nosentinel mode).
 		# If we add a trailing newline, we'll generate an @nonl sentinel below.
 		trailingNewlineFlag = s and s[-1] == '\n'
-		if not trailingNewlineFlag:
+		if at.sentinels and not trailingNewlineFlag:
 			s = s + '\n'
-		
+	
 		at.putOpenNodeSentinel(v)
 		i = 0
 		while i < len(s):
@@ -4600,7 +4600,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			i = next_i
 		if not inCode:
 			at.putEndDocLine()
-		if not trailingNewlineFlag:
+		if at.sentinels and not trailingNewlineFlag:
 			at.putSentinel("@nonl")
 		at.putCloseNodeSentinel(v)
 	#@nonl
@@ -4687,7 +4687,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		if not at.raw:
 			at.putIndent(at.indent)
 		line = s[i:j]
-		# trace(`line`)
 		at.os(line)
 	#@nonl
 	#@-node:putCodeLine
@@ -4746,19 +4745,21 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@+node:putAfterLastRef
 	def putAfterLastRef (self,s,start,delta):
 		
-		"""Handle whatever follows the ref."""
+		"""Handle whatever follows the last ref of a line."""
 		
 		at = self
 		
 		j = skip_ws(s,start)
 		
 		if j < len(s) and s[j] != '\n':
-			end = skip_to_end_of_line(s,start)
-			after = s[start:end]
+			end = skip_line(s,start)
+			after = s[start:end] # Ends with a newline only if the line did.
 			# Temporarily readjust delta to make @afterref look better.
 			at.indent += delta
 			at.putSentinel("@afterref")
-			at.os(after) ; at.onl()
+			at.os(after)
+			if at.sentinels and after and after[-1] != '\n':
+				at.onl() # Add a newline if the line didn't end with one.
 			at.indent -= delta
 		else:
 			# Temporarily readjust delta to make @nl look better.
@@ -4770,7 +4771,7 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@+node:putAfterMiddleef
 	def putAfterMiddleRef (self,s,start,end,delta):
 		
-		"""Handle whatever follows the ref."""
+		"""Handle whatever follows a ref that is not the last ref of a line."""
 		
 		at = self
 		
@@ -4778,7 +4779,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			after = s[start:end]
 			at.indent += delta
 			at.putSentinel("@afterref")
-			at.os(after) ; at.onl()
+			at.os(after) ; at.onl_sent() # Not a real newline.
 			at.putSentinel("@nonl")
 			at.indent -= delta
 	#@nonl
@@ -5025,6 +5026,10 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 	def onl(self):
 		self.os(self.output_newline)
+		
+	def onl_sent(self):
+		if self.sentinels:
+			self.onl()
 		
 	def os (self,s):
 		if s and self.outputFile:
