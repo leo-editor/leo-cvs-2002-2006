@@ -796,14 +796,14 @@ class leoTree:
 		xml_encoding = app().config.xml_version_string
 		if type(s) == types.UnicodeType:
 			try:
-				print `xml_encoding`
+				# print `xml_encoding`
 				# Tk always uses utf-8 encoding.
-				print `s`,"tk"
+				# print `s`,"tk"
 				s = s.encode("utf-8") # result is a string.
-				print `s`,"utf-8"
+				# print `s`,"utf-8"
 				s = s.decode(xml_encoding) # result is unicode.
 				s = s.encode(xml_encoding) # result is a string.
-				print `s`,`xml_encoding`
+				# print `s`,`xml_encoding`
 			except: traceback.print_exc()
 	
 		if len(s) > 0 and s[-1]=='\n': s = s[:-1]
