@@ -5499,37 +5499,42 @@ class configSettings:
         self.defaultLogFontSize  = g.app.config.defaultLogFontSize
         self.defaultTreeFontSize = g.app.config.defaultTreeFontSize
         
-        for ivar in g.app.config.encodingIvarsDict.keys():
-            if ivar != '_hash':
-                self.initEncoding(ivar)
+        for key in g.app.config.encodingIvarsDict.keys():
+            if key != '_hash':
+                self.initEncoding(key)
             
-        for ivar in g.app.config.ivarsDict.keys():
-            if ivar != '_hash':
-                self.initIvar(ivar)
+        for key in g.app.config.ivarsDict.keys():
+            if key != '_hash':
+                self.initIvar(key)
     #@nonl
     #@+node:ekr.20041118104240:initIvar
-    def initIvar(self,ivarName):
+    def initIvar(self,key):
         
-        munge = g.app.config.canonicalizeSettingName
+        c = self.c
+        
+        # N.B. The key is munged.
+        bunch = g.app.config.ivarsDict.get(key)
+        ivarName = bunch.ivar
+        val = g.app.config.get(c,ivarName,kind=None) # kind is ignored anyway.
     
-        bunch = g.app.config.ivarsDict.get(munge(ivarName))
-        ivar = bunch.ivar ; val = bunch.val
-    
-        # g.trace(self.c.hash(),bunch.toString())
-    
-        setattr(self,ivar,val)
+        if val or not hasattr(self,ivarName):
+            # g.trace('c.configSettings',c.shortFileName(),ivarName,val)
+            setattr(self,ivarName,val)
     #@nonl
     #@-node:ekr.20041118104240:initIvar
     #@+node:ekr.20041118104414:initEncoding
-    def initEncoding (self,encodingName):
+    def initEncoding (self,key):
         
-        munge = g.app.config.canonicalizeSettingName
+        c = self.c
+        
+        # N.B. The key is munged.
+        bunch = g.app.config.encodingIvarsDict.get(key)
+        encodingName = bunch.ivar
+        encoding = g.app.config.get(c,encodingName,kind='string')
     
-        bunch = g.app.config.encodingIvarsDict.get(munge(encodingName))
-        ivar = bunch.ivar ; encoding = bunch.encoding
-    
-        # g.trace(bunch.toString())
-        setattr(self,ivar,encoding)
+        if encoding or not hasattr(self,encodingName):
+            # g.trace('c.configSettings',c.shortFileName(),encodingName,encoding)
+            setattr(self,encodingName,encoding)
     
         if encoding and not g.isValidEncoding(encoding):
             g.es("bad %s: %s" % (encodingName,encoding))

@@ -425,7 +425,8 @@ class parserBaseClass:
     
         # N.B.  We can't use c here: it may be destroyed!
         d[key] = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
-        # g.trace(d.get(key).toString())
+        
+        # g.trace('parserBaseClass',g.shortFileName(c.mFileName),key,val)
     #@nonl
     #@-node:ekr.20041120094940.9:set (parseBaseClass)
     #@+node:ekr.20041227071423:setShortcut (ParserBaseClass)
@@ -557,28 +558,18 @@ class baseConfig:
     encodingIvarsDict = {'_hash':'encodingIvarsDict'}
     
     encodingIvarsData = (
-        ("default_derived_file_encoding","unicode-encoding","utf-8"),
-        ("new_leo_file_encoding","unicode-encoding","UTF-8"),
+        ("default_derived_file_encoding","string","utf-8"),
+        ("new_leo_file_encoding","string","UTF-8"),
             # Upper case for compatibility with previous versions.
-        ("tkEncoding","unicode-encoding",None),
+        ("tkEncoding","string",None),
             # Defaults to None so it doesn't override better defaults.
     )
     #@nonl
     #@-node:ekr.20041118062709:define encodingIvarsDict
     #@+node:ekr.20041117072055:ivarsDict
-    # Each of these settings sets the ivar with the same name.
+    # Each of these settings sets the corresponding ivar.
+    # Also, the c.configSettings settins class inits the corresponding commander ivar.
     ivarsDict = {'_hash':'ivarsDict'}
-    
-    if 0: # From c.__init__
-        # Global options
-        c.tangle_batch_flag = False
-        c.untangle_batch_flag = False
-        # Default Tangle options
-        c.tangle_directory = ""
-        c.use_header_flag = False
-        c.output_doc_flag = False
-        # Default Target Language
-        c.target_language = "python" # Required if leoConfig.txt does not exist.
     
     ivarsData = (
         ("at_root_bodies_start_in_doc_mode","bool",True),
@@ -597,8 +588,8 @@ class baseConfig:
         ("stylesheet","string",None),
         ("tab_width","int",-4),
         ("trailing_body_newlines","string","asis"),
-        ("use_plugins","bool",False),
-            # Should never be True here!
+        ("use_plugins","bool",True),
+            # New in 4.3: use_plugins = True by default.
         # use_pysco can not be set by 4.3:  config processing happens too late.
             # ("use_psyco","bool",False),
         ("undo_granularity","string","word"),
@@ -675,16 +666,15 @@ class baseConfig:
         
         '''Init g.app.config encoding ivars during initialization.'''
         
+        # N.B. The key is munged.
         bunch = self.encodingIvarsDict.get(key)
         encoding = bunch.encoding
         ivar = bunch.ivar
-    
-        if ivar:
-            # g.trace(ivar,encoding)
-            setattr(self,ivar,encoding)
-    
+        # g.trace('g.app.config',ivar,encoding)
+        setattr(self,ivar,encoding)
+     
         if encoding and not g.isValidEncoding(encoding):
-            g.es("bad %s: %s" % (ivar,encoding))
+            g.es("g.app.config: bad encoding: %s: %s" % (ivar,encoding))
     #@nonl
     #@-node:ekr.20041117065611.1:initEncoding
     #@+node:ekr.20041117065611:initIvar
@@ -696,11 +686,12 @@ class baseConfig:
         
         Such initing must be done in setIvarsFromSettings.'''
         
+        # N.B. The key is munged.
         bunch = self.ivarsDict.get(key)
         ivar = bunch.ivar # The actual name of the ivar.
         val = bunch.val
     
-        # g.trace(ivar,val)
+        # g.trace('g.app.config',ivar,key,val)
         setattr(self,ivar,val)
     #@nonl
     #@-node:ekr.20041117065611:initIvar
@@ -774,7 +765,7 @@ class baseConfig:
         return c.nullPosition()
     #@nonl
     #@-node:ekr.20041123092357:config.findSettingsPosition
-    #@+node:ekr.20041117083141:get & allies
+    #@+node:ekr.20041117083141:get & allies (g.app.config)
     def get (self,c,setting,kind):
         
         """Get the setting and make sure its type matches the expected type."""
@@ -785,14 +776,14 @@ class baseConfig:
             if d:
                 val,found = self.getValFromDict(d,setting,kind,found)
                 if val is not None:
-                    # g.trace(c.hash(),setting,val)
+                    # g.trace(c.shortFileName(),setting,val)
                     return val
                     
         for d in self.localOptionsList:
             val,found = self.getValFromDict(d,setting,kind,found)
             if val is not None:
                 kind = d.get('_hash','<no hash>')
-                #  g.trace(kind,setting,val)
+                # g.trace(kind,setting,val)
                 return val
     
         for d in self.dictList:
@@ -804,7 +795,7 @@ class baseConfig:
                     
         if 0: # Good for debugging leoSettings.leo.  This is NOT an error.
             # Don't warn if None was specified.
-            if not found and self.inited:
+            if not found:
                 g.trace("Not found:",setting)
     
         return None
@@ -814,7 +805,7 @@ class baseConfig:
     
         bunch = d.get(self.munge(setting))
         if bunch:
-            # g.trace(setting,requestedType,data)
+            # g.trace(setting,requestedType,bunch.toString())
             found = True ; val = bunch.val
             if val not in (u'None',u'none','None','none','',None):
                 # g.trace(setting,val)
@@ -824,7 +815,7 @@ class baseConfig:
         return None,found
     #@nonl
     #@-node:ekr.20041121143823:getValFromDict
-    #@-node:ekr.20041117083141:get & allies
+    #@-node:ekr.20041117083141:get & allies (g.app.config)
     #@+node:ekr.20041117081009.3:getBool
     def getBool (self,c,setting):
         
