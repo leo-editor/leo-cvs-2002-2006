@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1422" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1429" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="41" left="372" height="856" width="795"/>
+	<global_window_position top="81" left="426" height="856" width="709"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -959,7 +959,17 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.618" a="E"><vh>Plugins &amp; scripts</vh>
+<v t="edream.120203141341"><vh>(Scripts to debug font problem)</vh>
+<v t="edream.120203141341.1" tnodeList="edream.120203141341.1"><vh>Show font</vh></v>
+<v t="edream.120203140328.1" tnodeList="edream.120203140328.1,edream.120203140328.2"><vh>Show settings</vh>
+<v t="edream.120203140328.2"><vh>getFontSettings</vh></v>
+</v>
+<v t="edream.120203141927" tnodeList="edream.120203141927"><vh>Print default font</vh></v>
+</v>
+<v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
+<v t="edream.120103084310.1"><vh>Report</vh></v>
+</v>
+<v t="edream.110203113231.618" a="V"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -1204,6 +1214,10 @@
 </v>
 </v>
 <v t="edream.110203113231.790"><vh>External editors &amp; Open With</vh>
+<v t="edream.120303095057.1" tnodeList="edream.120303095057.1,edream.120303095910,edream.120303095910.1"><vh>@file mod_tempfname.py</vh>
+<v t="edream.120303095910"><vh>onStart</vh></v>
+<v t="edream.120303095910.1"><vh>openWithTempFilePath</vh></v>
+</v>
 <v t="edream.110203113231.791" tnodeList="edream.110203113231.791,edream.110203113231.792,edream.110203113231.793,edream.110203113231.794,edream.110203113231.795,edream.110203113231.796"><vh>@file open_with.py</vh>
 <v t="edream.110203113231.792"><vh>on_idle</vh>
 <v t="edream.110203113231.793"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
@@ -1214,10 +1228,10 @@
 <v t="edream.110203113231.796"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.797" tnodeList="edream.110203113231.797"><vh>@file xemacs.py</vh></v>
 <v t="edream.110203113231.799" tnodeList="edream.110203113231.799,edream.110203113231.800"><vh>@file vim.py</vh>
 <v t="edream.110203113231.800"><vh>open_in_vim</vh></v>
 </v>
+<v t="edream.110203113231.797" tnodeList="edream.110203113231.797"><vh>@file xemacs.py</vh></v>
 <v t="edream.110203113231.803"><vh>Word export</vh>
 <v t="edream.110203113231.804" tnodeList="edream.110203113231.804,edream.110203113231.805,edream.110203113231.806,edream.110203113231.807,edream.110203113231.808,edream.110203113231.809"><vh>@file word_export.py</vh>
 <v t="edream.110203113231.805"><vh>getConfiguration</vh></v>
@@ -1257,8 +1271,8 @@
 <v t="edream.110203113231.830"><vh>onOpen</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.831" a="E"><vh>Menus</vh>
-<v t="edream.110203113231.832" a="E"><vh> Plugins menu</vh>
+<v t="edream.110203113231.831"><vh>Menus</vh>
+<v t="edream.110203113231.832"><vh> Plugins menu</vh>
 <v t="edream.110203113231.833" tnodeList="edream.110203113231.833,edream.110203113231.834,edream.110203113231.835,edream.110203113231.836,edream.110203113231.837,edream.110203113231.838,edream.110203113231.839,edream.110203113231.840,edream.110203113231.841,edream.110203113231.842,edream.110203113231.843,edream.110203113231.844,edream.110203113231.845,edream.110203113231.846,edream.110203113231.847,edream.110203113231.848,edream.110203113231.849,edream.110203113231.850,edream.110203113231.851,edream.110203113231.852,edream.110203113231.853,edream.110203113231.854,edream.110203113231.855"><vh>@file plugins_menu.py</vh>
 <v t="edream.110203113231.834"><vh>class Plugin</vh>
 <v t="edream.110203113231.835"><vh>__init__</vh>
@@ -1269,10 +1283,10 @@
 <v t="edream.110203113231.839"><vh>about</vh></v>
 <v t="edream.110203113231.840"><vh>properties</vh></v>
 </v>
-<v t="edream.110203113231.841" a="E"><vh>class PropertiesWindow</vh>
-<v t="edream.110203113231.842" a="E"><vh>__init__</vh>
+<v t="edream.110203113231.841"><vh>class PropertiesWindow</vh>
+<v t="edream.110203113231.842"><vh>__init__</vh>
 <v t="edream.110203113231.843"><vh>&lt;&lt; initialize all ivars &gt;&gt;</vh></v>
-<v t="edream.110203113231.844" a="E"><vh>&lt;&lt; create the frame from the configuration data &gt;&gt;</vh>
+<v t="edream.110203113231.844"><vh>&lt;&lt; create the frame from the configuration data &gt;&gt;</vh>
 <v t="edream.110203113231.845"><vh>&lt;&lt; Create the top level and the main frame &gt;&gt;</vh></v>
 <v t="edream.110203113231.846"><vh>&lt;&lt; Create widgets for each section and option &gt;&gt;</vh></v>
 <v t="edream.110203113231.847"><vh>&lt;&lt; Create Ok, Cancel and Apply buttons &gt;&gt;</vh></v>
@@ -1281,7 +1295,7 @@
 <v t="edream.110203113231.848"><vh>Event Handlers</vh></v>
 <v t="edream.110203113231.849"><vh>writeConfiguration</vh></v>
 </v>
-<v t="edream.110203113231.850" a="E"><vh>class PluginAbout</vh>
+<v t="edream.110203113231.850"><vh>class PluginAbout</vh>
 <v t="edream.110203113231.851"><vh>__init__</vh>
 <v t="edream.110203113231.852"><vh>&lt;&lt; Create the contents of the about box &gt;&gt;</vh></v>
 <v t="edream.110203113231.853"><vh>&lt;&lt; Create the close button &gt;&gt;</vh></v>
@@ -1291,7 +1305,7 @@
 <v t="edream.110203113231.855"><vh>&lt;&lt; add items to the plugins menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.856" a="EV" tnodeList="edream.110203113231.856,edream.110203113231.857,edream.110203113231.858,edream.110203113231.859,edream.110203113231.860,edream.110203113231.861,edream.110203113231.862"><vh>@file pluginsTest.py</vh>
+<v t="edream.110203113231.856" tnodeList="edream.110203113231.856,edream.110203113231.857,edream.110203113231.858,edream.110203113231.859,edream.110203113231.860,edream.110203113231.861,edream.110203113231.862"><vh>@file pluginsTest.py</vh>
 <v t="edream.110203113231.857"><vh>applyConfiguration</vh></v>
 <v t="edream.110203113231.858"><vh>cmd_fn1/2/3</vh></v>
 <v t="edream.110203113231.859"><vh>onSelect</vh>
@@ -1484,9 +1498,6 @@
 </v>
 </v>
 </v>
-</v>
-<v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
-<v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -8351,15 +8362,17 @@ from leoGlobals import *
 path = r"c:\Program Files\XEmacs\XEmacs-21.4.13\i586-pc-win32\xemacs.exe"
 
 def open_in_emacs (tag,keywords):
-	if top():
-		top().frame.OnOpenWith(("os.spawnl", path , None),) # 6/27/03: add comma.
+	top() and top().openWith(("os.spawnl",path,None),)
 
 if 0: # Register the handlers...
-	registerHandler("iconclick2", open_in_emacs)
-	if 0: # This edits _everything_ in xemacs.  That's a bit much for my taste.
+
+	if 1: # Edit when double-clicking a node's icon.
+		registerHandler("iconclick2", open_in_emacs)
+	else: # Edit when selecting any node. That's a bit much for my taste.
 		registerHandler("select2", open_in_emacs)
 	
-	__version__ = "1.2" # Set version for the plugin handler.
+	__version__ = "1.3" # Set version for the plugin handler.
+
 	plugin_signon(__name__)</t>
 <t tx="edream.110203113231.799">"""vim handler"""
 
@@ -15327,7 +15340,6 @@ can handle plug-in development at this stage.  :-)
 is set so that *only* the plugins directory is in the path. This means
 that no import of standard modules will work in plugins.
 
-
 In plugins_menu: createPluginsMenu
 
 replace:
@@ -15340,5 +15352,108 @@ path = os.path.join(app().loadDir,"..","plugins")
 newpath = old_path; newpath.append(path)
 sys.path = newpath
 </t>
+<t tx="edream.120203140328.1">from leoGlobals import *
+import tkFont
+
+@others
+
+c = top()
+
+# Body pane.
+fn = c.frame.body.cget("font")
+font = tkFont.Font(font=fn)
+name,size,slant,weight = getFontSettings(font)
+print "body:",fn,name,size,slant,weight
+
+if 0:
+
+	# Log pane.
+	fn = c.frame.log.getFontConfig()
+	font = tkFont.Font(font=fn)
+	name,size,slant,weight = getFontSettings(font)
+	es("log:" + name + "," + `size` + "," + slant + "," + weight)
+	
+	# Tree pane.
+	font = c.frame.tree.getFont()
+	name,size,slant,weight = getFontSettings(font)
+	es("head:" + name + "," + `size` + "," + slant + "," + weight)</t>
+<t tx="edream.120203140328.2">def getFontSettings (font):
+
+	name   = font.cget("family")
+	size   = font.cget("size")
+	slant  = font.cget("slant")
+	weight = font.cget("weight")
+
+	return name, size, slant, weight</t>
+<t tx="edream.120203141341"></t>
+<t tx="edream.120203141341.1">from leoGlobals import *
+config = app.config
+
+font = config.getFontFromParams(
+		"body_text_font_family", "body_text_font_size",
+		"body_text_font_slant",  "body_text_font_weight",
+		tag = "body")
+		
+print font
+
+c = top() ; body = c.frame.body.bodyCtrl
+
+print body
+
+# body.configure(font=font)</t>
+<t tx="edream.120203141927">from leoGlobals import *
+
+font = app.config.defaultFont
+
+print font.cget("family"), font.cget("weight")</t>
+<t tx="edream.120303095057.1">@language python
+
+"""Replace Commands.openWithTempFilePath so Leo opens temporary files
+in "username_Leo" subdirectory and omits the "LeoTemp" prefix.
+
+For general use, this code should be considerably more robust about
+creating the Leo subdirectory and signaling errors, but it is just a
+quick hack that works for me on my machines."""
+
+from leoPlugins import *
+from leoGlobals import *
+
+import leoCommands
+import getpass,os,tempfile
+
+if 0: # Register the handlers...
+
+	@others
+
+	registerHandler("start2", onStart)
+
+	__version__ = "1.3"
+	plugin_signon(__name__)</t>
+<t tx="edream.120303095910">def onStart (tag,keywords):
+
+	# trace("replacing openWithTempFilePath")
+
+	funcToMethod(openWithTempFilePath,leoCommands.Commands,"openWithTempFilePath")
+</t>
+<t tx="edream.120303095910.1">def openWithTempFilePath (self,v,ext):
+
+	"""Return the path to the temp file corresponding to v and ext.
+
+	Replaces the Commands method."""    
+
+	try:
+		leoTempDir = getpass.getuser() + "_" + "Leo"
+	except:
+		leoTempDir = "LeoTemp"
+		es("Could not retrieve your user name.")
+		es("Temporary files will be stored in: %s" % leoTempDir)
+
+	td = os.path.join(os.path.abspath(tempfile.gettempdir()), leoTempDir)
+	if not os.path.exists(td):
+		os.mkdir(td)
+
+	name = sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+	path = os.path.join(td,name)
+	return path</t>
 </tnodes>
 </leo_file>
