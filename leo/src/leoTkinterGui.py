@@ -190,11 +190,20 @@ class tkinterGui(leoGui.leoGui):
     
         """Create and run an Tkinter open file dialog ."""
         
-        # askopenfilenames only exists in Python 2.3 or later
+        # askopenfilenames only exists in Python 2.3 or later.
+        # Not only that, askopenfilenames apparently doesn't work with Tk versions earlier than 8.4.
+        
+        # if multiple and g.CheckVersion(sys.version,"2.3") and g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4"):
         if multiple and g.CheckVersion(sys.version,"2.3"):
-            files = tkFileDialog.askopenfilenames(
-                title=title, filetypes=filetypes)
-            return list(files)
+            try:
+                files = tkFileDialog.askopenfilenames(
+                    title=title, filetypes=filetypes)
+                return list(files)
+            except:
+                # Work around an apparent Linux bug in askopenfilenames.
+                file = tkFileDialog.askopenfilename(
+                    title=title, filetypes=filetypes)
+                return [file]
         else:
             file = tkFileDialog.askopenfilename(
                 title=title, filetypes=filetypes)
