@@ -112,6 +112,7 @@ def run(fileName=None,*args,**keywords):
 	g.app.writeWaitingLog()
 	v = c.currentVnode()
 	g.doHook("start2",c=c,v=v,fileName=fileName)
+	g.enableIdleTimeHook()
 	frame.tree.redraw()
 	frame.body.setFocus()
 	g.app.initing = false # "idle" hooks may now call g.app.forceShutdown.
