@@ -52,6 +52,8 @@ def getCommands():
 def topCommands():
 	import leoGlobals
 	return leoGlobals.top()
+	
+topCommand = topCommands
 #@-body
 #@-node:2::Functions for scripts
 #@+node:3::go
