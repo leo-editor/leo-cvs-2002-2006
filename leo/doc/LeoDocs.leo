@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2934" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="64" left="365" height="836" width="833"/>
+	<global_window_position top="64" left="365" height="836" width="829"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -83,12 +83,18 @@
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="edream.110603185805" a="V"><vh>4.1 beta 2</vh>
+<v t="edream.110603185805" a="V"><vh>4.1 beta 3</vh>
+<v t="edream.110603190234.1"><vh>Code-level features</vh>
+<v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
+<v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
+<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
+</v>
 <v t="edream.110603190404"><vh>Fixed bugs</vh>
 <v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bug</vh></v>
 <v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
 <v t="edream.110603190322.11"><vh>Fixed first node-only find bug</vh></v>
 <v t="edream.110603190322.3"><vh>Fixed bug in idle_body_key</vh></v>
+<v t="edream.111803060643"><vh>Fixed LaTeX syntax coloring bug</vh></v>
 </v>
 <v t="edream.110603192009"><vh>Improved format of .leo files</vh>
 <v t="edream.110603190322.9"><vh>Leo now ignores unknown prefs and find prefs</vh></v>
@@ -98,26 +104,32 @@
 <v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
 <v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
 <v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
-<v t="edream.110603190322.6"><vh>Added script search/change</vh></v>
+<v t="edream.111803060152" a="E"><vh>Added script-based find/change commands</vh>
+<v t="edream.110603190322.6" a=""><vh> Script Find and Script Change</vh>
+<v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
+</v>
 <v t="edream.110303182253.3"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
+<v t="edream.111803062437"><vh>Shift commands now shift single line if no selection</vh></v>
 </v>
 <v t="edream.110303182719"><vh>New config settings</vh></v>
-<v t="edream.110603190234.1"><vh>New scripts &amp; code-level features</vh>
-<v t="edream.110603190322.2"><vh>Create initScriptFind</vh></v>
-<v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
-<v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
-<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
-</v>
 </v>
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
-<v t="edream.110603185805" a=""><vh>4.1 beta 2</vh>
+<v t="edream.110603185805" a=""><vh>4.1 beta 3</vh>
+<v t="edream.110603190234.1"><vh>Code-level features</vh>
+<v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
+<v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
+<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
+</v>
 <v t="edream.110603190404"><vh>Fixed bugs</vh>
 <v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bug</vh></v>
 <v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
 <v t="edream.110603190322.11"><vh>Fixed first node-only find bug</vh></v>
 <v t="edream.110603190322.3"><vh>Fixed bug in idle_body_key</vh></v>
+<v t="edream.111803060643"><vh>Fixed LaTeX syntax coloring bug</vh></v>
 </v>
 <v t="edream.110603192009"><vh>Improved format of .leo files</vh>
 <v t="edream.110603190322.9"><vh>Leo now ignores unknown prefs and find prefs</vh></v>
@@ -127,16 +139,16 @@
 <v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
 <v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
 <v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
-<v t="edream.110603190322.6"><vh>Added script search/change</vh></v>
+<v t="edream.111803060152"><vh>Added script-based find/change commands</vh>
+<v t="edream.110603190322.6" a=""><vh> Script Find and Script Change</vh>
+<v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
+</v>
 <v t="edream.110303182253.3"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
+<v t="edream.111803062437"><vh>Shift commands now shift single line if no selection</vh></v>
 </v>
 <v t="edream.110303182719"><vh>New config settings</vh></v>
-<v t="edream.110603190234.1"><vh>New scripts &amp; code-level features</vh>
-<v t="edream.110603190322.2"><vh>Create initScriptFind</vh></v>
-<v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
-<v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
-<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
-</v>
 </v>
 <v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
@@ -1135,6 +1147,10 @@
 <v t="edream.110203163054.832"><vh>Converting leading blanks and tabs in body text</vh></v>
 <v t="edream.110203163054.833"><vh>Executing Python scripts in body text</vh></v>
 <v t="edream.110203163054.834"><vh>Finding and changing text</vh>
+<v t="edream.110603190322.6" a=""><vh> Script Find and Script Change</vh>
+<v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
 <v t="edream.110203163054.835"><vh>Batch</vh></v>
 <v t="edream.110203163054.836"><vh>Ignore Case</vh></v>
 <v t="edream.110203163054.837"><vh>Mark Changes</vh></v>
@@ -24120,20 +24136,21 @@ Still to do:
 
 The use_gnx setting in leoConfig.txt determines whether uses gnx's (cvs friendly) or ints.  No version of Leo before 4.1 can read .leo files containing gnx.   Only gnx's are immutable.  Leo recomputes all non-gnx indices from scratch whenever writing a .leo file. It is possible to convert between 3.x and 4.1 file formats by changing the use_gnx setting.
 </t>
-<t tx="edream.110603185805">Leo 4.1 beta 2                   November 9, 2003
+<t tx="edream.110603185805">Leo 4.1 beta 3                   November 18, 2003
 
-This is the second official release of the reorganized 4.1 code base.
+This is the third official release of the reorganized 4.1 code base. The code appears solid, and has not been widely tested. Please use caution when using this code. Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
 
-Beta 2 fixes a startup problem with Linux: "mbcs" is not a valid encoding.
+- Beta 3 fixes a LaTeX coloring bug. Beta 3 also completes the reorg, making _many_ changes to the code.
 
-The code appears solid, and has not been widely tested.  Please use caution when using this code.
+The __wx_gui.py plugin is mostly functional except for gui-dependent commands like Toggle-Split Direction.
+WARNING: treat the this plugin with _extreme_ caution until further notice. The possibility exists that bugs in the code could cause body text to be cleared improperly when changing nodes.
 
-N.B. By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.  Please read the following carefully if that concerns you.
+- Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
 
 Highlights of 4.1:
 -----------------
 * Leo 4.1 includes several new commands:
-  - script-based find/change commands: very powerful and flexible.
+  - Script-based find/change commands: a major new feature
   - Hoist &amp; DeHoist commands for viewing parts of an outline.
   - Check Outline command finds user clone mistakes.
 * New configuration settings:
@@ -24154,37 +24171,28 @@ Highlights of 4.1:
 
 This reorg affects almost all plugins.  Considerably more work and testing will be done before 4.1 final.
 
-The __wx_gui.py plugin is uses the newly reoganized code.  At present it is only partly functional.</t>
+The __wx_gui.py plugin is uses the newly reoganized code.  It is functional except for gui-dependent commands like Toggle-Split Direction.  WARNING: treat the this plugin with _extreme_ caution until further notice.  The possibility exists that bugs in the code could cause body text to be cleared improperly when changing nodes.</t>
 <t tx="edream.110603190234.1"></t>
-<t tx="edream.110603190322.2">A useful little utility to set up script-find/change.</t>
 <t tx="edream.110603190322.3">This involved fixing a bug in idle_body_key so that the oldText param is honored if present.</t>
-<t tx="edream.110603190322.6">Yes, we really do need script-based find/change.  The reason is that the find panel (and the associated find commands) is really the only good place to allow the user to do an interactive search.  Without this feature, all interactive find/change scripts would have to duplicate all the work of the find/change commands.
+<t tx="edream.110603190322.6">@nocolor
 
-Still to do: help scripts do undo.
+New in 4.1: Leo is now the ultimate platform for finding and changing text.
 
-Conventions enforced by Leo:
+Leo's find panel now contains the Script Search radio button and the Script
+Change checkbox. When the Script Search radio button is selected Leo treats the
+contents of the Search Text as a _script_ to execute whenever any kind of Find
+command is executed. Similarly, when the Script Change checkbox is selected Leo
+treats the context of the Change Text as a script to execute whenever any kind
+of Change command is executed. See below for just how this works.
 
-- The app.searchDict ivar can be used for communication between find &amp; change scripts.
-- app.searchDict["type"] contains either "find", "change", "findAll" or "changeAll".
-- The Find All command executes the find script only once unless the script sets
-  app.searchDict["Continue"] = True  (similarly for the change all command.
-- The Find Then Change command executes the find command followed by the change command.
-- The Change Script command supports undo if app.searchDict has the following entry after the script executes:
-	{ "v" : v, "oldText" : oldText, "newText" : s }
-	A "keys" key is an optional keyword dict to be passed to setUndoParams.
-
-Leo actually doesn't do much:
-
-- Leo doesn't clear app.searchDict.
-	- However, a _script_ can
-		a) init itself and
-		b) bring up the find window (Eureka!)
-- The find script is repsonsible for traversing the tree.
-- The find script is responsible for highlighting the found text
-  or otherwise indicating to the change script what the found text was.
-  For example, the re find script can set app.searchDict["m"] to the match object.
-- The find script must communicate with the change script.  Leo does nothing.
-- The change script must change the text, usually by using v.setBodyStringOrPane.</t>
+For more than 30 years I have been disgusted with tools like regular
+expressions. Calling re powerful is a joke; it's way too complex and way too
+wimpy. Script-based find-change is infinitely more powerful. In effect, Leo's
+Find/Change panel becomes a new platform for running scripts interactively. Leo
+now has all the find/change capability of pattern matching languages like
+Snobol and Icon, just by using the capabilities of the plain Python language.
+Moreover, Leo can deliver these capabilities interactively or not depending
+which buttons you push in Leo's Find/Change panel.</t>
 <t tx="edream.110603190322.8">Undoing Change All cleared the body pane.
 
 The fix was simple: call setUndoParams instead of setUndoTypingParams in batchChange.</t>
@@ -24221,5 +24229,75 @@ while v and v != after:
 pages = ((nodes * 10) + lines) / 50
 print "nodes,lines,pages",nodes,lines,pages
 es("nodes,lines,pages",nodes,lines,pages)</t>
+<t tx="edream.111803060152"></t>
+<t tx="edream.111803060152.1">Here is how it works: the find script is responsible for traversing the tree
+and for highlighting the found text or otherwise indicating to the change
+script what the found text was. Leo dedicates a Python dict called
+app.searchDict for communication between the search script and the change
+script.
+
+The change script is responsible for changing the text and (optionally)
+handling undo. Typically, the change script will compute the new value of body
+text and call v.setBodyStringOrPane(newText) to make that change permanent. The
+change script can handle undo simply by calling
+c.frame.onBodyChanged(v,"Change",oldText=oldText).
+
+Some details:
+
+- When executing script-based Find All or Change All commands, Leo executes the
+find or change scripts repeatedly only if app.searchDict.get("continue")
+evaluates to True. Otherwise these scripts are only executed once. 
+
+- Leo sets app.searchDict["type"] to "find", "change", "findAll" or "changeAll"
+to indicate the kind of command being executed.
+
+- Scripts may use all other entries in app.searchDict as they please.
+
+- Most find/change scripts will ignore settings in the Find Panel like "whole
+word", "pattern match", and "reverse". However, these settings are available to
+the scripts via ivars such as c.whole_word_flag, etc. if desired.
+
+- Yes, we really do need script-based find/change. Indeed, the user needs the
+find panel and Leo's find/change commands to control script-based searches
+interactively. Rather than forcing find/change scripts to implement their own
+interactive controls, it is so much easier to use what Leo already has.</t>
+<t tx="edream.111803060152.2">@nocolor
+
+Some ideas for using scripts:
+	
+1. Either the find and change scripts may use Python's re module.  For
+example, the find script could set app.searchDict["m"] to the match object
+returned by re's match method.  The change script would then compute the
+result, change the text and set the undo info as usual.
+
+2. There is no reason to confine find/change scripts to operate on data only
+within a Leo outline. These scripts could as easily traverse your file system
+as the Leo outline. But notice: scripts could pull data from the file system
+into the outline so that you can see the effects of changes as the scripts
+operate. Again, this can all happen interactively if you like.
+
+3. It's convenient to defined an initScriptFind utility very similar to the
+makeColorSuite utility, used like this:
+
+@color
+# Initialize Leo's find panel using the named children of this node.
+from leoGlobals import *
+initScriptFind("Find script","Change script")
+# Start searching at the top.
+top().selectVnode(c.rootVnode())
+@nocolor
+
+Put the search script in a child node called "Find script" (no quotes), put
+the change script in a child node called "Change script", execute this
+script and the following happens:
+
+- The body text of "Find script" node gets put in the find text of Leo's Find/Change dialog.
+- The body text of "Change script" node gets put in the find text of Leo's Find/Change dialog.
+- The Script Find radio buttons gets selected, as does the Script Change checkbox.
+- The root of the outline becomes the selected node.
+
+Presto!  Leo is ready for a script search.</t>
+<t tx="edream.111803060643"></t>
+<t tx="edream.111803062437"></t>
 </tnodes>
 </leo_file>

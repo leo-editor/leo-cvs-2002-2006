@@ -8,6 +8,47 @@ from leoGlobals import *
 import leoColor
 import os,string,sys,time
 
+#@<< About handling events >>
+#@+node:<< About handling events >>
+#@+at 
+#@nonl
+# Leo must handle events or commands that change the text in the outline or 
+# body panes.  It is surprisingly difficult to ensure that headline and body 
+# text corresponds to the vnode and tnode corresponding to presently selected 
+# outline, and vice versa. For example, when the user selects a new headline 
+# in the outline pane, we must ensure that 1) the vnode and tnode of the 
+# previously selected node have up-to-date information and 2) the body pane is 
+# loaded from the correct data in the corresponding tnode.
+# 
+# Early versions of Leo attempted to satisfy these conditions when the user 
+# switched outline nodes.  Such attempts never worked well; there were too 
+# many special cases.  Later versions of Leo, including leo.py, use a much 
+# more direct approach.  The event handlers make sure that the vnode and tnode 
+# corresponding to the presently selected node are always kept up-to-date.  In 
+# particular, every keystroke in the body pane causes the presently selected 
+# tnode to be updated immediately.  There is no longer any need for the 
+# c.synchVnode method.  (That method still exists for compatibility with old 
+# scripts.)
+# 
+# The leoTree class contains all the event handlers for the tree pane, and the 
+# leoBody class contains the event handlers for the body pane.  The actual 
+# work is done in the idle_head_key and idle_body_key methods.  These routines 
+# are surprisingly complex; they must handle all the tasks mentioned above, as 
+# well as others. The idle_head_key and idle_body_key methods should not be 
+# called outside their respective classes.  However, sometimes code in the 
+# Commands must simulate an event.  That is, the code needs to indicate that 
+# headline or body text has changed so that the screen may be redrawn 
+# properly.   The leoBody class defines the following simplified event 
+# handlers: onBodyChanged, onBodyWillChange and onBodyKey. Similarly, the 
+# leoTree class defines onHeadChanged and onHeadlineKey.  Commanders and 
+# subcommanders call these event handlers to indicate that a command has 
+# changed, or will change, the headline or body text.  Calling event handlers 
+# rather than c.beginUpdate and c.endUpdate ensures that the outline pane is 
+# redrawn only when needed.
+#@-at
+#@-node:<< About handling events >>
+#@nl
+
 #@+others
 #@+node:class leoBody
 class leoBody:

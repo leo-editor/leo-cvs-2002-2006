@@ -582,7 +582,8 @@ class leoFileTestCase(unittest.TestCase):
 		assert(os.path.exists(fileName))
 		ok, frame = openWithFileName(fileName,c)
 		assert(ok)
-		self.c = frame.commands
+		self.c = frame.c
+	#@nonl
 	#@-node:setUp
 	#@+node:tearDown
 	def tearDown (self):

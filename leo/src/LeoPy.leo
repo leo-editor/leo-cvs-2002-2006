@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3875" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="224" height="872" width="965"/>
+	<global_window_position top="6" left="286" height="872" width="965"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -326,7 +326,10 @@
 </v>
 <v t="edream.110203160744.189"><vh>Annoucnements</vh>
 <v t="edream.110203160744.190"><vh>Download statistics</vh></v>
-<v t="edream.110203160744.191"><vh>Quote of the month</vh></v>
+<v t="edream.110203160744.191"><vh>Quotes of the month</vh>
+<v t="edream.111803082704"><vh>November 2003</vh></v>
+<v t="edream.111803072614"><vh>October 2003</vh></v>
+</v>
 <v t="edream.110203160744.192"><vh>FAQ for comp.prog.literate</vh></v>
 <v t="edream.110203160744.193"><vh>3.x announcements</vh>
 <v t="edream.110203160744.194"><vh>ANN to comp.lang.python: ANN: Leo 3.3 outlining editor</vh></v>
@@ -344,7 +347,7 @@
 <v t="edream.110203160744.206"><vh>ANN: Leo 3.12 outlining editor</vh></v>
 <v t="edream.110203160744.207"><vh>ANN: Leo 3.12 outlining editor (c.l.py)</vh></v>
 </v>
-<v t="edream.110703091849"><vh>ANN: Leo 4.1 beta 1 An outlining editor</vh></v>
+<v t="edream.110703091849" a="M"><vh>ANN: Leo 4.1 beta 3 An outlining editor</vh></v>
 <v t="edream.110203160744.209"><vh>4.0.x announcements</vh>
 <v t="edream.110203160744.208"><vh>ANN: Leo 4.0.4: An outlining editor</vh></v>
 <v t="edream.110203160744.214"><vh>ANN: Leo 4.0 final: An outlining editor</vh></v>
@@ -823,6 +826,7 @@
 <v t="edream.110203160744.445"><vh>Clear Recent Files command?</vh></v>
 </v>
 <v t="edream.110203160744.512"><vh>Use xml parser to read .leo files</vh></v>
+<v t="edream.111803083424"><vh>Leo &amp; data bases</vh></v>
 </v>
 <v t="edream.110203160744.513"><vh>2. Other improvements</vh>
 <v t="edream.110203160744.514"><vh>Support @file-thin-thick-wait-now-old-new</vh></v>
@@ -929,15 +933,11 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538" a="MV"><vh>To do: 4.1 beta 3</vh>
-<v t="edream.111403200430"><vh>line ending problem</vh></v>
-<v t="edream.111303073523.3"><vh>Reorg</vh>
-<v t="edream.111303074519"><vh>Docs</vh></v>
-<v t="edream.111003073016"><vh>Reorg bug (Rodrigo)</vh></v>
-<v t="edream.111303073523.4"><vh>Tests</vh></v>
-<v t="edream.111303073523.5"><vh>Later or never</vh></v>
-</v>
+<v t="edream.110403112538"><vh>To do: 4.1 beta 4</vh>
 <v t="edream.110903124134"><vh>First</vh>
+<v t="edream.111803100627"><vh>(Fix problems with @file)</vh>
+<v t="edream.111803100627.1"><vh>Reports</vh></v>
+</v>
 <v t="edream.110203160744.2358"><vh>(Support Unicode file &amp; directory names)</vh>
 <v t="edream.110203160744.2359"><vh>Test of fn_join</vh></v>
 <v t="edream.110203160744.1479" a=""><vh>Unicode utils...</vh>
@@ -1021,8 +1021,31 @@
 <v t="edream.110203160744.2440"><vh>Automatic select &amp; Paste bug</vh></v>
 </v>
 <v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
+<v t="edream.111303073523.4"><vh>UnitTests</vh></v>
+<v t="edream.110203160744.3805"><vh>(Fix copy/paste bug involving clones)</vh>
+<v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
+<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
+<v t="edream.110203160744.1555" a=""><vh>getTnode</vh>
+<v t="edream.110203160744.1556"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
+<v t="edream.110203160744.1557"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
+<v t="edream.110203160744.1558"><vh>&lt;&lt; handle unknown attributes &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1560" a=""><vh>getVnode</vh>
+<v t="edream.110203160744.1561"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
+<v t="edream.110203160744.1562"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2060" a=""><vh>createVnode</vh>
+<v t="edream.110203160744.2061"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1551" a=""><vh>finishPaste</vh>
+<v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 <v t="edream.110203160744.2421"><vh>Fix bugs</vh>
+<v t="edream.111803084214"><vh>Undo problem</vh></v>
+<v t="edream.111403200430"><vh>line ending problem</vh></v>
+<v t="edream.111003073016"><vh>Reorg bug (Rodrigo)</vh></v>
 <v t="edream.110403185937"><vh>Important file problems 3</vh>
 <v t="edream.110203160744.2441"><vh>Continuation problem</vh></v>
 <v t="edream.110203160744.2446"><vh>Extract bugs</vh>
@@ -1049,6 +1072,8 @@
 <v t="edream.110203160744.2457"><vh>Scroll improvement</vh></v>
 </v>
 <v t="edream.111303073523.6"><vh>Should mouse up cancel a drag?</vh></v>
+<v t="edream.111603175355"><vh>Crash in colorizer</vh></v>
+<v t="edream.111003111536"><vh>Investigate No tnode list</vh></v>
 </v>
 <v t="edream.110903125318"><vh>Later</vh>
 <v t="edream.110703095827.1"><vh>Improvements</vh>
@@ -1064,30 +1089,9 @@
 <v t="edream.110703041224.1"><vh>*** Review all of plugin code</vh></v>
 <v t="edream.110203160744.2419"><vh>Improve how plugins are loaded</vh></v>
 </v>
-</v>
-<v t="edream.110203160744.3805"><vh>(Make sure that finishPaste nodes never have join lists)</vh>
-<v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
-<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
-<v t="edream.110203160744.1555" a=""><vh>getTnode</vh>
-<v t="edream.110203160744.1556"><vh>&lt;&lt; handle read from file &gt;&gt;</vh></v>
-<v t="edream.110203160744.1557"><vh>&lt;&lt; handle read from clipboard &gt;&gt;</vh></v>
-<v t="edream.110203160744.1558"><vh>&lt;&lt; handle unknown attributes &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1560" a=""><vh>getVnode</vh>
-<v t="edream.110203160744.1561"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
-<v t="edream.110203160744.1562"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2060" a=""><vh>createVnode</vh>
-<v t="edream.110203160744.2061"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1551" a=""><vh>finishPaste</vh>
-<v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
+<v t="edream.111303073523.5"><vh>Reorg stuff</vh></v>
 </v>
 </v>
-<v t="edream.111003111536"><vh>Investigate No tnode list</vh></v>
-<v t="edream.111603175355"><vh>Crash in colorizer</vh></v>
-</v>
-<v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt; (revise)</vh></v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
 <v t="edream.110203160744.603"><vh>(Translation problems)</vh>
@@ -3117,6 +3121,8 @@
 </v>
 <v t="edream.110903123936.1"><vh>beta 2 projects</vh>
 <v t="edream.110203160744.421"><vh>(Script find/change commands &amp; Selected Text option)</vh></v>
+</v>
+<v t="edream.111803052025"><vh>beta 3 projects</vh>
 <v t="edream.110703162408"><vh>(Fixed LaTeX colorizer bug)</vh>
 <v t="edream.110203160744.223" a=""><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
 <v t="edream.110203160744.224"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
@@ -3195,8 +3201,16 @@
 <v t="edream.110203160744.1610" a=""><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
 </v>
 </v>
-<v t="edream.111203025347"><vh>(Recent files menu regression)</vh></v>
-<v t="edream.111003092718"><vh>(*Removed bodyCtrl from all core code)</vh></v>
+<v t="edream.111303185607.1"><vh>(Clear Recent Files wx problems)</vh>
+<v t="edream.110203160744.1111" a=""><vh>createRecentFilesMenuItems (leoMenu)</vh></v>
+<v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
+<v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
+<v t="edream.110203160744.1109"><vh>openRecentFile</vh>
+<v t="edream.110203160744.1110"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
+</v>
+</v>
 <v t="edream.111203143619.1"><vh>(Created base classes for all panels)</vh>
 <v t="edream.111203075809"><vh>(new prefs classes)</vh>
 <v t="edream.110203160744.1177" a=""><vh>preferences</vh></v>
@@ -3211,23 +3225,16 @@
 <v t="edream.110203160744.1259" a=""><vh>openCompareWindow</vh></v>
 </v>
 </v>
-<v t="edream.111303185607.1"><vh>(Clear Recent Files wx problems)</vh>
-<v t="edream.110203160744.1111" a=""><vh>createRecentFilesMenuItems (leoMenu)</vh></v>
-<v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
-<v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
-<v t="edream.110203160744.1109"><vh>openRecentFile</vh>
-<v t="edream.110203160744.1110"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
+<v t="edream.111203025347"><vh>(Recent files menu regression)</vh></v>
+<v t="edream.111003092718"><vh>(Removed bodyCtrl from all core code)</vh></v>
 </v>
 </v>
 </v>
-</v>
-</v>
-<v t="edream.110203160744.2458"><vh>Code</vh>
+<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
-<v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt; (revise)</vh></v>
+<v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
+<v t="edream.111803052025.1" a=""><vh>&lt;&lt; About handling events &gt;&gt;</vh></v>
 <v t="edream.110203160744.2462" a=""><vh>&lt;&lt; About Tangle and Untangle &gt;&gt;</vh></v>
 <v t="edream.110203160744.2463" a=""><vh>&lt;&lt; About the vnode and tnode classes &gt;&gt;</vh></v>
 <v t="edream.110203160744.2464" a=""><vh>&lt;&lt; How Leo implements unlimited undo &gt;&gt;</vh></v>
@@ -3405,7 +3412,7 @@
 <v t="edream.110203160744.2497"><vh>tangleLeoConfigDotLeo</vh></v>
 </v>
 <v t="edream.110203160744.2498" tnodeList="edream.110203160744.2498,edream.110203160744.2500,edream.110203160744.2501,edream.110203160744.2502,edream.110203160744.2503,edream.110203160744.2499"><vh>@file ../setup.py</vh>
-<v t="edream.110203160744.2499" a=""><vh>&lt;&lt; setup info for setup.py &gt;&gt; UPDATE BY HAND</vh></v>
+<v t="edream.110203160744.2499" a=""><vh>&lt;&lt; setup info for setup.py &gt;&gt; UPDATE BY HAND (no spaces)</vh></v>
 <v t="edream.110203160744.2500"><vh>printReminders</vh></v>
 <v t="edream.110203160744.2501"><vh>generateModules</vh></v>
 <v t="edream.110203160744.2502" a=""><vh>replacePatterns</vh></v>
@@ -3423,7 +3430,7 @@
 </v>
 <v t="edream.110203160744.2608"><vh> Version stuff (update this for every release)</vh>
 <v t="edream.110203160744.1885" a=""><vh> version &amp; signon stuff</vh></v>
-<v t="edream.110203160744.2499" a=""><vh>&lt;&lt; setup info for setup.py &gt;&gt; UPDATE BY HAND</vh></v>
+<v t="edream.110203160744.2499" a=""><vh>&lt;&lt; setup info for setup.py &gt;&gt; UPDATE BY HAND (no spaces)</vh></v>
 <v t="edream.110203160744.2491" a=""><vh>@silentfile ../doc/PKG-INFO.TXT</vh></v>
 <v t="edream.110203160744.2492" a=""><vh>@silentfile ../doc/README.TXT</vh></v>
 <v t="edream.110203160744.2609"><vh>Previous readme files</vh>
@@ -5385,7 +5392,8 @@
 <v t="edream.110203160744.2192"><vh>fontPanel.__init__</vh></v>
 <v t="edream.111203092853"><vh>Must be overridden in subclasses</vh></v>
 </v>
-<v t="edream.110203160744.3540" tnodeList="edream.110203160744.3540,edream.110203160744.2278,edream.110203160744.2280,edream.111003091448,edream.111603115116,edream.110203160744.3541,edream.110903190535,edream.111603110756.2,edream.110203160744.2268,edream.111603110756,edream.110203160744.1592,edream.110203160744.1593,edream.110203160744.1357,edream.110203160744.1358,edream.110203160744.2323,edream.110203160744.2324,edream.110203160744.2325,edream.110203160744.2326,edream.110203160744.2327,edream.110203160744.2328,edream.110203160744.2329,edream.110203160744.2330,edream.110203160744.2331,edream.110203160744.3546,edream.111603161937,edream.111603161937.2,edream.111603161937.3,edream.111603121021,edream.111603120940.1,edream.111603115116.5,edream.111603115820.1,edream.111603120940,edream.110203160744.3705,edream.110203160744.3706,edream.111603115820,edream.111603173312,edream.111603161937.4"><vh>@file leoFrame.py</vh>
+<v t="edream.110203160744.3540" tnodeList="edream.110203160744.3540,edream.111803052025.1,edream.110203160744.2278,edream.110203160744.2280,edream.111003091448,edream.111603115116,edream.110203160744.3541,edream.110903190535,edream.111603110756.2,edream.110203160744.2268,edream.111603110756,edream.110203160744.1592,edream.110203160744.1593,edream.110203160744.1357,edream.110203160744.1358,edream.110203160744.2323,edream.110203160744.2324,edream.110203160744.2325,edream.110203160744.2326,edream.110203160744.2327,edream.110203160744.2328,edream.110203160744.2329,edream.110203160744.2330,edream.110203160744.2331,edream.110203160744.3546,edream.111603161937,edream.111603161937.2,edream.111603161937.3,edream.111603121021,edream.111603120940.1,edream.111603115116.5,edream.111603115820.1,edream.111603120940,edream.110203160744.3705,edream.110203160744.3706,edream.111603115820,edream.111603173312,edream.111603161937.4"><vh>@file leoFrame.py</vh>
+<v t="edream.111803052025.1" a=""><vh>&lt;&lt; About handling events &gt;&gt;</vh></v>
 <v t="edream.110203160744.2278"><vh>class leoBody</vh>
 <v t="edream.110203160744.2280"><vh>leoBody.__init__</vh></v>
 <v t="edream.111003091448"><vh>Must be overriden in subclasses</vh></v>
@@ -5501,7 +5509,7 @@
 <v t="edream.110903210256"><vh>Gui-independent menu routines</vh>
 <v t="edream.110203160744.2640"><vh>get/setRealMenuName &amp; setRealMenuNamesFromTable (MOVED to leoMenu class)</vh></v>
 <v t="edream.110203160744.3041"><vh>canonicalizeMenuName &amp; cononicalizeTranslatedMenuName</vh></v>
-<v t="edream.110203160744.1052"><vh>canonicalizeShortcut</vh>
+<v t="edream.110203160744.1052" a=""><vh>canonicalizeShortcut</vh>
 <v t="edream.110203160744.1053"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
 <v t="edream.110203160744.1054"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
 <v t="edream.110203160744.1055"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
@@ -6044,7 +6052,7 @@
 </v>
 <v t="edream.110203160744.3700" tnodeList="edream.110203160744.3700,edream.110203160744.3701,edream.110203160744.2461,edream.110203160744.3702,edream.110203160744.755,edream.110203160744.1726,edream.110203160744.1727,edream.110203160744.1728,edream.110203160744.1729,edream.110203160744.1730,edream.110203160744.1731,edream.110203160744.1732,edream.110203160744.1733,edream.110203160744.1734,edream.110203160744.1735,edream.110203160744.1736,edream.110203160744.1737,edream.110203160744.1738,edream.110203160744.1739,edream.110203160744.750,edream.110203160744.751,edream.110203160744.752,edream.110203160744.753,edream.110203160744.754,edream.110203160744.3704,edream.110203160744.738,edream.110203160744.739,edream.110203160744.740,edream.110203160744.741,edream.110203160744.742,edream.110203160744.743,edream.110203160744.744,edream.110203160744.745,edream.110403082224,edream.110203160744.746,edream.110203160744.747,edream.110203160744.748,edream.110203160744.3708,edream.110203160744.3712,edream.110203160744.756,edream.110203160744.3713,edream.110203160744.3714,edream.110203160744.3711,edream.110203160744.3707,edream.110203160744.3709,edream.110203160744.1740,edream.110203160744.1741,edream.110203160744.1742,edream.110203160744.1743,edream.110203160744.1692,edream.110203160744.1744,edream.110203160744.1745,edream.110203160744.1746,edream.110203160744.1747,edream.110203160744.1748,edream.110203160744.1749,edream.110203160744.1750,edream.110203160744.1751,edream.110203160744.1313,edream.110203160744.1314,edream.110203160744.1315,edream.110203160744.1316,edream.110203160744.1317,edream.110203160744.1318,edream.110203160744.1319,edream.110203160744.1320,edream.110203160744.1321,edream.110203160744.1752,edream.110203160744.1753,edream.110203160744.1754,edream.110203160744.1755,edream.110203160744.1756,edream.110203160744.1757,edream.110203160744.1673,edream.110203160744.1674,edream.110203160744.1675,edream.110203160744.1676,edream.110203160744.1677,edream.110203160744.1678,edream.110203160744.1679,edream.110203160744.765,edream.110203160744.766,edream.110203160744.3716,edream.110203160744.768,edream.110203160744.767,edream.110203160744.769,edream.110203160744.1698,edream.110203160744.1699,edream.110203160744.1700,edream.110203160744.1701,edream.110203160744.757,edream.110203160744.758,edream.110203160744.759,edream.110203160744.760,edream.110203160744.761,edream.110203160744.762,edream.110203160744.763,edream.110203160744.1702,edream.110203160744.1703,edream.110203160744.1704,edream.110203160744.1705,edream.110203160744.879"><vh>@file leoTkinterTree.py</vh>
 <v t="edream.110203160744.3701"><vh>&lt;&lt; about the tree classes &gt;&gt;</vh></v>
-<v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt; (revise)</vh></v>
+<v t="edream.110203160744.2461" a="M"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
 <v t="edream.110203160744.3702"><vh>&lt;&lt; drawing constants &gt;&gt;</vh></v>
 <v t="edream.110203160744.1725"><vh>tree.Birth &amp; death</vh>
 <v t="edream.110203160744.755" a=""><vh>tree.__init__</vh></v>
@@ -6272,6 +6280,18 @@
 </v>
 </v>
 </v>
+</v>
+</v>
+<v t="edream.111803102929"><vh>(Changes for MacOs/Darwin Marc-Antoine Parent)</vh>
+<v t="edream.111803101946"><vh>Report</vh></v>
+<v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
+<v t="edream.110203160744.1052" a=""><vh>canonicalizeShortcut</vh>
+<v t="edream.110203160744.1053"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
+<v t="edream.110203160744.1054"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
+<v t="edream.110203160744.1055"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1056"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
+<v t="edream.110203160744.1057"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -6796,19 +6816,11 @@ What I did earlier:
 @nocolor</t>
 <t tx="edream.110203160744.189">@pagewidth 70</t>
 <t tx="edream.110203160744.190">Leo 4.0 leo-4.0.zip 382
-Leo 3.12 leosetup.exe 931
+Leo 3.12 leosetup.exe 953
 Leo leo-3.12.zip 592
 Leo leo-3.11.zip 102
 Leo leo-3.10.zip 1193</t>
-<t tx="edream.110203160744.191">I've written documentation in WordPerfert, Ventura, Word, PageMaker, and
-FrameMaker and even though they create wonderfully looking and useful
-documents, they've never been able to do what I've been looking for. HTML,
-compiled help files, and later PDF came closer, but still not there. I think
-I've found it in LEO, a way to make a "living" document. A document built out
-of discrete parts that can be re-organized on the fly to meet the needs of a
-varying audience...Being a convert for less than a day I've still got a lot to
-learn, but just the possibility of keeping system maintenance scripts in the IT
-manual is mind boggling.  -- David Nichols dnichols@amci.com</t>
+<t tx="edream.110203160744.191"></t>
 <t tx="edream.110203160744.192">Proper FAQ entry for Leo
 
 Almost everything in the present FAQ for Leo is incorrect.
@@ -19994,6 +20006,7 @@ def canonicalizeShortcut (self,shortcut):
 	if shortcut == None or len(shortcut) == 0:
 		return None,None
 	s = shortcut.strip().lower()
+	has_cmd   = s.find("cmd") &gt;= 0     or s.find("command") &gt;= 0 # 11/18/03
 	has_alt   = s.find("alt") &gt;= 0
 	has_ctrl  = s.find("control") &gt;= 0 or s.find("ctrl") &gt;= 0
 	has_shift = s.find("shift") &gt;= 0   or s.find("shft") &gt;= 0
@@ -20109,11 +20122,14 @@ if last == None or len(last) == 0:
 	return None,None</t>
 <t tx="edream.110203160744.1057">bind_head = menu_head = ""
 
+if has_cmd: # 11/18/03
+	bind_head = bind_head + "Command-"
+	menu_head = menu_head + "Command+"
+
 if has_shift:
 	menu_head = "Shift+"
 	if len(last) &gt; 1 or (len(last)==1 and last[0] not in string.ascii_letters):
 		bind_head = "Shift-"
-	# else: print "no shift: last:", `last`
 
 if has_alt:
 	bind_head = bind_head + "Alt-"
@@ -26668,11 +26684,14 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 	try:
 		import leo
 		path = os.path.abspath(leo.__file__)
-		# 11/07/03: "mbcs" exists only on Windows.
-		if sys.platform=="win32":
+
+		if sys.platform=="win32": # "mbcs" exists only on Windows.
 			path = toUnicode(path,"mbcs")
+		elif sys.platform=="dawwin":
+			path = toUnicode(path,"utf-8")
 		else:
 			path = toUnicode(path,app.tkEncoding)
+
 		if path:
 			loadDir = os.path.dirname(path)
 		else:
@@ -26681,7 +26700,8 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 			loadDir = os.path.abspath(os.getcwd())
 			print "Using emergency loadDir:",`loadDir`
 
-		loadDir = toUnicode(loadDir,app.tkEncoding) # 10/20/03
+		encoding = choose(sys.platform=="dawwin","utf-8",app.tkEncoding) # 11/18/03
+		loadDir = toUnicode(loadDir,encoding) # 10/20/03
 		return loadDir
 	except:
 		print "Exception getting load directory"
@@ -31002,7 +31022,7 @@ c.endUpdate(false)</t>
 
 def getSignOnLine (self):
 	c = self
-	return "Leo 4.1 beta 2, build %s, November 8, 2003" % c.getBuildNumber()
+	return "Leo 4.1 beta 3, build %s, November 18, 2003" % c.getBuildNumber()
 	
 def initVersion (self):
 	c = self
@@ -37654,7 +37674,7 @@ Inserting or deleting nodes can cause the clone bits of all joined nodes to chan
 
 Leo's XML file format does not contain join lists. This makes it easy to change a Leo file "by hand." If join lists were a part of the file, as they are in the Mac version of Leo, corrupting a join list would corrupt the entire file. It is easy to recreate the join lists when reading a file using a dedicated field in the tnode.  This field is the head of a list of all vnodes that points to the tnode. After reading all nodes, Leo creates this list with one pass through the vnodes.  Leo then converts each list to a circular list with one additional pass through the tnodes.
 </t>
-<t tx="edream.110203160744.2461">@ Leo must redraw the outline pane when commands are executed and as the result of mouse and keyboard events.  The main challenges are eliminating flicker and handling events properly.  These topics are interrelated.
+<t tx="edream.110203160744.2461">@ Leo must redraw the outline pane when commands are executed and as the result of mouse and keyboard events.  The main challenges are eliminating flicker and handling events properly.
 
 Eliminating flicker.  Leo must update the outline pane with minimum flicker.  Various versions of Leo have approached this problem in different ways.  The drawing code in leo.py is robust, flexible, relatively simple and should work in almost any conceivable environment.
 
@@ -37662,12 +37682,7 @@ Leo assumes that all code that changes the outline pane will be enclosed in matc
 
 In leo.py, code may call c.endUpdate(flag) instead of c.endUpdate().  Leo redraws the screen only if flag is true.  This allows code to suppress redrawing entirely when needed.  For example, study the idle_body_key event handler to see how Leo conditionally redraws the outline pane.
 
-The leoTree class redraws all icons automatically when c.redraw() is called.  This is a major simplification compared to previous versions of Leo.  The entire machinery of drawing icons in the vnode class has been eliminated.  The v.computeIcon method tells what the icon should be.  The v.iconVal ivar that tells what the present icon is. The event handler simply compares these two values and sets redraw_flag if they don't match.
-
-Handling events. Besides redrawing the screen, Leo must handle events or commands that change the text in the outline or body panes.  It is surprisingly difficult to ensure that headline and body text corresponds to the vnode and tnode corresponding to presently selected outline, and vice versa. For example, when the user selects a new headline in the outline pane, we must ensure that 1) the vnode and tnode of the previously selected node have up-to-date information and 2) the body pane is loaded from the correct data in the corresponding tnode.  Early versions of Leo attempted to satisfy these conditions when the user switched outline nodes.  Such attempts never worked well; there were too many special cases.  Later versions of Leo, including leo.py, use a much more direct approach.  The event handlers make sure that the vnode and tnode corresponding to the presently selected node are always kept up-to-date.  In particular, every keystroke in the body pane causes the presently selected tnode to be updated immediately.  There is no longer any need for the c.synchVnode method, though that method still exists for compatibility with old scripts.
-
-The leoTree class contains all the event handlers for the body and outline panes.  The actual work is done in the idle_head_key and idle_body_key methods.  These routines are surprisingly complex; they must handle all the tasks mentioned above, as well as others. The idle_head_key and idle_body_key methods should not be called outside the leoTree class.  However, it often happens that code that handles user commands must simulate an event.  That is, the code needs to indicate that headline or body text has changed so that the screen may be redrawn properly.   The leoTree class defines the following simplified event handlers: onBodyChanged, onBodyWillChange, onBodyKey, onHeadChanged and onHeadlineKey.  Commanders and subcommanders call these event handlers to indicate that a command has changed, or will change, the headline or body text.  Calling event handlers rather than c.beginUpdate and c.endUpdate ensures that the outline pane is redrawn only when needed.
-</t>
+The leoTree class redraws all icons automatically when c.redraw() is called.  This is a major simplification compared to previous versions of Leo.  The entire machinery of drawing icons in the vnode class has been eliminated.  The v.computeIcon method tells what the icon should be.  The v.iconVal ivar that tells what the present icon is. The event handler simply compares these two values and sets redraw_flag if they don't match.</t>
 <t tx="edream.110203160744.2462">@ The Tangle command translates the selected @root tree into one or more well-formatted C source files. The outline should contain directives, sections references and section definitions, as described in Chapter 4. The Untangle command is essentially the reverse of the Tangle command. The Tangle command creates a derived file from an @root tree; the Untangle command incorporates changes made to derived files back into the @root tree.
 
 The Tangle command operates in two passes. The first pass discovers the complete definitions of all sections and places these definitions in a symbol table. The first pass also makes a list of root sections. Definitions can appear in any order, so we must scan the entire input file to know whether any particular definition has been completed.
@@ -38136,7 +38151,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="edream.110203160744.2491">Metadata-Version: 1.0
 Name: leo
-Version: 4.1 beta 2
+Version: 4.1-beta-3
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -38162,13 +38177,17 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 beta 2                   November 9, 2003
+Leo 4.1 beta 3                   November 18, 2003
 
-This is the second official release of the reorganized 4.1 code base.  Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
+This is the third official release of the reorganized 4.1 code base.
 
 The code appears solid, and has not been widely tested.  Please use caution when using this code.
 
 N.B. By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.  Please read the following carefully if that concerns you.
+
+Beta 3 completes the reorg, making _many_ changes to the code.  Also fixes a LaTeX coloring bug.
+
+Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
 
 Highlights of 4.1:
 -----------------
@@ -38271,7 +38290,7 @@ def setup():
 	
 	if c == None:
 		c = top()
-		flag,frame = c.frame.OpenWithFileName(name)
+		flag,frame = c.OpenWithFileName(name)
 		if not flag:
 			print "can not open ",name
 			return
@@ -38280,7 +38299,7 @@ def setup():
 	print "Tangling ", name
 	app.setLog(oldtop.frame.log) # Keep sending messages to the original frame.
 	c.tangleCommands.tangleAll()
-	c.frame.OnClose()
+	c.close()
 	app.setLog(oldtop.frame.log)</t>
 <t tx="edream.110203160744.2498">@first #! /usr/bin/env python
 @language python
@@ -38313,7 +38332,7 @@ setup (
 if sys.argv[1] == "sdist":
 	print "setup complete"</t>
 <t tx="edream.110203160744.2499">name="leo",
-version="4.1 beta 2",
+version="4.1-beta-3",
 author="Edward K. Ream",
 author_email="edream@tds.net",
 url="http://personalpages.tds.net/~edream/front.html",
@@ -52849,6 +52868,8 @@ from leoGlobals import *
 import leoColor
 import os,string,sys,time
 
+&lt;&lt; About handling events &gt;&gt;
+
 @others</t>
 <t tx="edream.110203160744.3541">class leoFrame:
 	
@@ -55036,7 +55057,7 @@ import leoFrame
 import Tkinter,tkFont
 import os,string,types
 
-&lt;&lt; about drawing and events &gt;&gt;
+&lt;&lt; about drawing &gt;&gt;
 &lt;&lt; drawing constants &gt;&gt;
 
 class leoTkinterTree (leoFrame.leoTree):
@@ -55710,7 +55731,33 @@ class leoNodeError(Exception):
 
 finishPaste must create _new_ tnodes for all indices.  But notice, new_tnodes already warns if there are "overlap" problems, and this rarely if ever happens.  So maybe the code isn't buggy?  Or maybe the bug only happens very rarely???
 
-At any rate, is it crucial that all possibilities of a bug be stamped out completely.  But how to reassign a tnode once vnodes point to it?  It's a little tricky.</t>
+At any rate, is it crucial that all possibilities of a bug be stamped out completely.  But how to reassign a tnode once vnodes point to it?  It's a little tricky.
+
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2285457
+By: billp9619
+
+Assume a node with two child clones representing the same T node.
+
+If I paste this somewhere else in the outline the clones are maintained as clones
+...except they now associate with a new T node.
+
+This makes sense since the clipboard might not be from the current outline and
+there would be the possibility of pasting a clone into itself, etc.
+
+PROBLEM/BUG?: The pasted clones do not get a red symbol identifying them as
+clones. If I save and reload the outline then the red clone symbols appear.
+This is the behavior of both 4.0.3 and 4.1.
+
+ENHANCEMENT/IDEA: How to keep original clones after paste.
+Why not add a command to "cut and paste to end" command that would copy AND
+paste a selected node in one step ... to the end of the outline..retaining original
+T node references of clones? The the user could then drag this somewhere else.
+
+regards,
+
+bill p
+</t>
 <t tx="edream.110203160744.3806"></t>
 <t tx="edream.110203160744.3807"></t>
 <t tx="edream.110203160744.3808"></t>
@@ -55824,25 +55871,16 @@ elif undoType == "De-Hoist":
 - The selection is not set properly afterwards.</t>
 <t tx="edream.110403112538">@nocolor
 
-- Upload to cvs
-	** Warn that tk event handling is flakey
-
-- Color panel still adds u'name' when changing name.
-
-Document the changes:
-	- *Dont* want redirection.
-	- *Do want explicit code.
-	- ** Warn that tk event handling is flakey
-
 - Convert doc sections to doc strings.
 - Create os.path wrappers.
+- Color panel still adds u'name' when changing name.
 
-Tests:
-	- Create regression tests
-		- For all commands.
-			- Especially import/export read/write commands.
-			- Especially batch find/change commands
-		- For all plugins.</t>
+Regression tests:
+	- For all commands.
+		- Especially import/export read/write commands.
+		- Especially batch find/change commands
+	- For all plugins.
+	- Disable dialogs (make them return immediately) for regression testing.</t>
 <t tx="edream.110403150047">def OnCheckOutline (self):
 	
 	self.c.checkOutline()</t>
@@ -56037,16 +56075,19 @@ Leo will execute a "default change script" when the Script Change checkbox is ch
 <t tx="edream.110703040104"></t>
 <t tx="edream.110703040104.1"></t>
 <t tx="edream.110703041224.1"></t>
-<t tx="edream.110703091849">Leo 4.1 beta 1 is now available at: http://sourceforge.net/projects/leo/
+<t tx="edream.110703091849">Leo 4.1 beta 3 is now available at: http://sourceforge.net/projects/leo/
 
-This is the first official release of the reorganized 4.1 code base.  The code appears solid, and has not been widely tested.  Please use caution when using this code.
+This is the third official release of the reorganized 4.1 code base.  The code appears solid, and has not been widely tested.  Please use caution when using this code.
 
-N.B. By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.  Please read the following carefully.
+N.B. By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
+
+Beta 3 completes the reorg, making _many_ changes to the code.  Also fixes a LaTeX coloring bug.
+
+Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
 
 Highlights of 4.1 beta 1:
 ------------------------
-
-* Leo 4.1 includes several new commands:
+* New commands:
   - script-based find/change commands: very powerful and flexible.
   - Hoist &amp; DeHoist commands for viewing parts of an outline.
   - Check Outline command finds user clone mistakes.
@@ -56062,6 +56103,19 @@ Highlights of 4.1 beta 1:
     This framework takes full advantage of outlines to organize tests.
   - app.forceShutdown now works when called from plugins.
 - Fixed several long-standing bugs.  More fixes are coming.
+
+Quotes of the month
+-------------------
+I like Leo more the more I use it...It's an unexpected pleasure to
+see my (linearly written) code outlined in Leo. I can't wait to use
+Leo to start a new project, going from outline to code...Thanks again
+for providing the computing community with such a fine piece of
+software. -- Jim Shapiro, Ph.D.
+
+If you think you have used all possible programmer's editors, but
+have not yet tried Leo, you are wrong...I rate Leo as a "must have"
+for Python programmers. The code makes for a good read.
+-- John Tobler  http://weblogs.asp.net/Jtobler/
 
 What is Leo?
 ------------
@@ -56085,7 +56139,7 @@ CVS:      http://sourceforge.net/cvs/?group_id=3458
 Wiki:     http://leo.hd1.org/
 
 Edward K. Ream
-November 7, 2003</t>
+November 18, 2003</t>
 <t tx="edream.110703095626"></t>
 <t tx="edream.110703095827.1"></t>
 <t tx="edream.110703151909"></t>
@@ -56248,8 +56302,7 @@ nodes,lines,pages, 379, 44606, 967</t>
 	assert(os.path.exists(fileName))
 	ok, frame = openWithFileName(fileName,c)
 	assert(ok)
-	self.c = frame.commands
-</t>
+	self.c = frame.c</t>
 <t tx="edream.110903065210.5">def tearDown (self):
 
 	"""Close the .leo file if it was not already open."""
@@ -57473,19 +57526,15 @@ def runAskYesNoCancelDialog(self,title,
 
 - Eliminated Focus routines in leoGlobals.py (now in app.gui class).</t>
 <t tx="edream.111303073523.2"></t>
-<t tx="edream.111303073523.3"></t>
 <t tx="edream.111303073523.4">
-- Run pychecker.
 - Changes to the find classes affect the spell dialog.
-- Unit tests: test all redirection routines in frame and frame.body
+
 - Unit tests: how can we test each command???
 - Unit tests: run snippets of code (like the About Leo Dialog) without crashing.</t>
 <t tx="edream.111303073523.5">- Create leoKeys classes (too big a project to start now).
 
 - Generalize the undoRedoTyping routine so it uses Python instead of all those Tk calls.</t>
 <t tx="edream.111303073523.6"></t>
-<t tx="edream.111303074519">- Revise "Overview of code" section.
-	- New names, "official" ivars, etc.</t>
 <t tx="edream.111303082442">def firstIndex (self):
 
 	self.oops()
@@ -58093,5 +58142,176 @@ IndexError: list index out of range
 <t tx="edream.111703100357"></t>
 <t tx="edream.111703101935"></t>
 <t tx="edream.111703102222"></t>
+<t tx="edream.111803052025"></t>
+<t tx="edream.111803052025.1">@ Leo must handle events or commands that change the text in the outline or body panes.  It is surprisingly difficult to ensure that headline and body text corresponds to the vnode and tnode corresponding to presently selected outline, and vice versa. For example, when the user selects a new headline in the outline pane, we must ensure that 1) the vnode and tnode of the previously selected node have up-to-date information and 2) the body pane is loaded from the correct data in the corresponding tnode.
+
+Early versions of Leo attempted to satisfy these conditions when the user switched outline nodes.  Such attempts never worked well; there were too many special cases.  Later versions of Leo, including leo.py, use a much more direct approach.  The event handlers make sure that the vnode and tnode corresponding to the presently selected node are always kept up-to-date.  In particular, every keystroke in the body pane causes the presently selected tnode to be updated immediately.  There is no longer any need for the c.synchVnode method.  (That method still exists for compatibility with old scripts.)
+
+The leoTree class contains all the event handlers for the tree pane, and the leoBody class contains the event handlers for the body pane.  The actual work is done in the idle_head_key and idle_body_key methods.  These routines are surprisingly complex; they must handle all the tasks mentioned above, as well as others. The idle_head_key and idle_body_key methods should not be called outside their respective classes.  However, sometimes code in the Commands must simulate an event.  That is, the code needs to indicate that headline or body text has changed so that the screen may be redrawn properly.   The leoBody class defines the following simplified event handlers: onBodyChanged, onBodyWillChange and onBodyKey. Similarly, the leoTree class defines onHeadChanged and onHeadlineKey.  Commanders and subcommanders call these event handlers to indicate that a command has changed, or will change, the headline or body text.  Calling event handlers rather than c.beginUpdate and c.endUpdate ensures that the outline pane is redrawn only when needed.
+</t>
+<t tx="edream.111803072614">I've written documentation in WordPerfert, Ventura, Word, PageMaker, and
+FrameMaker and even though they create wonderfully looking and useful
+documents, they've never been able to do what I've been looking for. HTML,
+compiled help files, and later PDF came closer, but still not there. I think
+I've found it in LEO, a way to make a "living" document. A document built out
+of discrete parts that can be re-organized on the fly to meet the needs of a
+varying audience...Being a convert for less than a day I've still got a lot to
+learn, but just the possibility of keeping system maintenance scripts in the IT
+manual is mind boggling.  -- David Nichols dnichols@amci.com</t>
+<t tx="edream.111803082704">I like Leo more the more I use it...It's an unexpected pleasure to
+see my (linearly written) code outlined in Leo. I can't wait to use
+Leo to start a new project, going from outline to code...Thanks again
+for providing the computing community with such a fine piece of
+software. -- Jim Shapiro, Ph.D.
+
+If you think you have used all possible programmer's editors, but
+have not yet tried Leo, you are wrong...I rate Leo as a "must have"
+for Python programmers. The code makes for a good read.
+-- John Tobler  http://weblogs.asp.net/Jtobler/
+</t>
+<t tx="edream.111803083424">From: "Scott Chapman" &lt;scott_list@mischko.com&gt;
+To: &lt;edreamleo@charter.net&gt;
+Sent: Monday, November 10, 2003 11:05 AM
+Subject: Enhancement request: Make Leo deal with a database
+
+It would be Way Cool if Leo could deal with psycopg or other DataBase 
+API compliant implementations and fetch and store database records.
+
+Details of what I'd like to see:
+
+I'm working on Python source code. I want Leo to pull a source code file 
+from a database record built something like this:
+
+filename: text
+updated: datetimestamp
+code: text
+
+Leo would insert a new record, not update an existing one, each time a 
+Save was done, with a more current time stamp.  
+
+When a File Open was requested (i.e. a node on a existing Leo outline 
+was being pulled from a database), Leo would fetch the most recent 
+time-stamped version only.
+
+I use this same technique for my wiki pages.  It's very easy to 
+implement in SQL and works great.
+
+Leo would also need the ability to save the same file to a regular 
+python source code file on disk at a specific location, so you'd have 
+to be able to put more than one save/load directive in a given node.
+
+This would provide a nice version history and could lead to other Useful 
+Things in Leo.
+
+Scott</t>
+<t tx="edream.111803084214">Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2288596
+By: billp9619
+
+Problem with change from the find panel with  "Search Headline Text" and "Entire
+Outline" then clicking "Change All".
+
+A susequent "Undo Change All" from menu erases the heading text of changed headlines.
+
+Leo Log Window...
+Leo 4.1 beta 2, build  1.5 , November 8, 2003
+Python 2.2.1, Tk 8.3.2
+</t>
+<t tx="edream.111803100627"></t>
+<t tx="edream.111803100627.1">Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2279930
+By: nobody
+
+Yes I saw the FAQ. I'm not clear on the purpose of the PHP code sample using
+the heredoc command. The code does not seem to apply to my situation. I don't
+need to change the comment delimiter. I need the ?&gt; tag to end the PHP code.
+
+Another thing I've noticed. After saving the Leo file a few times:
+@last ?&gt;
+becomes
+@last
+
+Also I see Leo indicate the derived file has changed while Leo opens my work
+file.
+
+--------------------
+
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2280308
+By: goodsound
+
+I've just noticed that the problem with Leo occurs after I've edited the derived
+file with a text editor.
+During the load I see:
+
+File encoding: UTF-8
+reading: E:\webpages\ano\test1.leo
+reading: @file class.trows.php
+reading: @file class.tbrowse.php
+reading: @file Jgen.php
+changed: @file Jgen.php
+Text encoding = cp1252
+
+If the external editor is changing the text encoding could that be to source
+of the problem with Leo?
+
+--Harry
+
+</t>
+<t tx="edream.111803101946">From: "Marc-Antoine Parent" &lt;maparent@acm.org&gt;
+To: "Edward K.Ream" &lt;edreamleo@charter.net&gt;
+Sent: Thursday, November 13, 2003 2:42 PM
+Subject: Mac OS
+
+&gt; Hello!
+&gt; I updated my copy of Leo.
+&gt; Two notes:
+&gt; in leo.py line 108,
+&gt;                 path = toUnicode(path,"mbcs") # 10/20/03
+&gt; kills the mac (unknown encoding. It seems we get paths as UTF-8, but 
+&gt; where diacritics are separated from their base letter... ugly! You 
+&gt; could change that with unicodedata.normalize('NFC',thePathAsUnicode), 
+&gt; but that requires Python2.3, an is probably not necessary. Just use 
+&gt; utf-8 if the platform is 'darwin'.
+&gt; 
+&gt; And, as I said before, this would allow us to have a command modifier:
+&gt; 
+&gt; *** leoTkinterFrame.py.~1.5.~   Fri Nov  7 09:48:43 2003
+&gt; --- leoTkinterFrame.py  Thu Nov 13 14:47:20 2003
+&gt; ***************
+&gt; *** 913,918 ****
+&gt; --- 913,919 ----
+&gt;                  if shortcut == None or len(shortcut) == 0:
+&gt;                          return None,None
+&gt;                  s = shortcut.strip().lower()
+&gt; +               has_cmd   = s.find("cmd") &gt;= 0    or s.find("command") &gt;= 0
+&gt;                  has_alt   = s.find("alt") &gt;= 0
+&gt;                  has_ctrl  = s.find("control") &gt;= 0 or s.find("ctrl") &gt;= 0
+&gt;                  has_shift = s.find("shift") &gt;= 0   or s.find("shft") &gt;= 0
+&gt; ***************
+&gt; *** 1045,1051 ****
+&gt;                  #@      &lt;&lt; synthesize the shortcuts from the information &gt;&gt;
+&gt;                  #@+node:&lt;&lt; synthesize the shortcuts from the information &gt;&gt;
+&gt;                  bind_head = menu_head = ""
+&gt; !
+&gt;                  if has_shift:
+&gt;                          menu_head = "Shift+"
+&gt;                          if len(last) &gt; 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+&gt; --- 1046,1056 ----
+&gt;                  #@      &lt;&lt; synthesize the shortcuts from the 
+&gt; information &gt;&gt;
+&gt;                  #@+node:&lt;&lt; synthesize the shortcuts from the 
+&gt; information &gt;&gt;
+&gt;                  bind_head = menu_head = ""
+&gt; !
+&gt; !               if has_cmd:
+&gt; !                       bind_head = bind_head + "Command-"
+&gt; !                       menu_head = menu_head + "Command+"
+&gt; !
+&gt;                  if has_shift:
+&gt;                          menu_head = "Shift+"
+&gt;                          if len(last) &gt; 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+</t>
+<t tx="edream.111803102929"></t>
 </tnodes>
 </leo_file>

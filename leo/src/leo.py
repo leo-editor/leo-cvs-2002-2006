@@ -105,11 +105,14 @@ def computeLoadDir():
 	try:
 		import leo
 		path = os.path.abspath(leo.__file__)
-		# 11/07/03: "mbcs" exists only on Windows.
-		if sys.platform=="win32":
+
+		if sys.platform=="win32": # "mbcs" exists only on Windows.
 			path = toUnicode(path,"mbcs")
+		elif sys.platform=="dawwin":
+			path = toUnicode(path,"utf-8")
 		else:
 			path = toUnicode(path,app.tkEncoding)
+
 		if path:
 			loadDir = os.path.dirname(path)
 		else:
@@ -118,7 +121,8 @@ def computeLoadDir():
 			loadDir = os.path.abspath(os.getcwd())
 			print "Using emergency loadDir:",`loadDir`
 
-		loadDir = toUnicode(loadDir,app.tkEncoding) # 10/20/03
+		encoding = choose(sys.platform=="dawwin","utf-8",app.tkEncoding) # 11/18/03
+		loadDir = toUnicode(loadDir,encoding) # 10/20/03
 		return loadDir
 	except:
 		print "Exception getting load directory"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2169" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2171" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="107" left="128" height="728" width="960"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -12,8 +12,8 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203161858"><vh>Distribution checklist</vh>
-<v t="edream.110203161858.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+<v t="edream.110203161858" a="E"><vh>Distribution checklist</vh>
+<v t="edream.110203161858.1" a="V"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
 <v t="edream.110203161858.2"><vh>Notes</vh>
 <v t="edream.110203161858.3"><vh>Quote from Alex Martelli</vh></v>
@@ -2686,10 +2686,14 @@
 <v t="edream.110203161858.2156"><vh>run outline tests</vh></v>
 </v>
 </v>
+<v t="edream.111803061611"><vh>4.1 beta 3 test</vh>
 <v t="edream.110903121744"><vh>Latex colorizer</vh></v>
-<v t="edream.111103045130"><vh>Undo typing test</vh></v>
 <v t="edream.111103091713"><vh>Test of match brackets</vh></v>
-<v t="edream.111303082913" a="V"><vh>Redirect script output</vh></v>
+<v t="edream.111303082913"><vh>Redirect script output</vh></v>
+</v>
+<v t="edream.111803061704"><vh>Distribution checklist for 4.1 beta 3</vh>
+<v t="edream.111803061704.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203161858">@color
@@ -34152,7 +34156,6 @@ runner.run(suite)</t>
 <t tx="edream.110903121744">@language latex
 
 Test \% test.</t>
-<t tx="edream.111103045130"></t>
 <t tx="edream.111103091713">def abc(self)
 
 {
@@ -34163,5 +34166,12 @@ Test \% test.</t>
 <t tx="edream.111303082913">from leoGlobals import *
 print app.config.redirect_execute_script_output_to_log_pane
 </t>
+<t tx="edream.111803061611"></t>
+<t tx="edream.111803061704">@color
+
+Announcements
+	- Announce to comp.lang.python
+	- Announce to comp.programming.literate</t>
+<t tx="edream.111803061704.1"></t>
 </tnodes>
 </leo_file>

@@ -24,13 +24,13 @@ import leoFrame
 import Tkinter,tkFont
 import os,string,types
 
-#@<< about drawing and events >>
-#@+node:<< About drawing and events >> (revise)
+#@<< about drawing >>
+#@+node:<< About drawing >>
 #@+at 
 #@nonl
 # Leo must redraw the outline pane when commands are executed and as the 
 # result of mouse and keyboard events.  The main challenges are eliminating 
-# flicker and handling events properly.  These topics are interrelated.
+# flicker and handling events properly.
 # 
 # Eliminating flicker.  Leo must update the outline pane with minimum 
 # flicker.  Various versions of Leo have approached this problem in different 
@@ -54,40 +54,9 @@ import os,string,types
 # eliminated.  The v.computeIcon method tells what the icon should be.  The 
 # v.iconVal ivar that tells what the present icon is. The event handler simply 
 # compares these two values and sets redraw_flag if they don't match.
-# 
-# Handling events. Besides redrawing the screen, Leo must handle events or 
-# commands that change the text in the outline or body panes.  It is 
-# surprisingly difficult to ensure that headline and body text corresponds to 
-# the vnode and tnode corresponding to presently selected outline, and vice 
-# versa. For example, when the user selects a new headline in the outline 
-# pane, we must ensure that 1) the vnode and tnode of the previously selected 
-# node have up-to-date information and 2) the body pane is loaded from the 
-# correct data in the corresponding tnode.  Early versions of Leo attempted to 
-# satisfy these conditions when the user switched outline nodes.  Such 
-# attempts never worked well; there were too many special cases.  Later 
-# versions of Leo, including leo.py, use a much more direct approach.  The 
-# event handlers make sure that the vnode and tnode corresponding to the 
-# presently selected node are always kept up-to-date.  In particular, every 
-# keystroke in the body pane causes the presently selected tnode to be updated 
-# immediately.  There is no longer any need for the c.synchVnode method, 
-# though that method still exists for compatibility with old scripts.
-# 
-# The leoTree class contains all the event handlers for the body and outline 
-# panes.  The actual work is done in the idle_head_key and idle_body_key 
-# methods.  These routines are surprisingly complex; they must handle all the 
-# tasks mentioned above, as well as others. The idle_head_key and 
-# idle_body_key methods should not be called outside the leoTree class.  
-# However, it often happens that code that handles user commands must simulate 
-# an event.  That is, the code needs to indicate that headline or body text 
-# has changed so that the screen may be redrawn properly.   The leoTree class 
-# defines the following simplified event handlers: onBodyChanged, 
-# onBodyWillChange, onBodyKey, onHeadChanged and onHeadlineKey.  Commanders 
-# and subcommanders call these event handlers to indicate that a command has 
-# changed, or will change, the headline or body text.  Calling event handlers 
-# rather than c.beginUpdate and c.endUpdate ensures that the outline pane is 
-# redrawn only when needed.
 #@-at
-#@-node:<< About drawing and events >> (revise)
+#@nonl
+#@-node:<< About drawing >>
 #@nl
 #@<< drawing constants >>
 #@+node:<< drawing constants >>
