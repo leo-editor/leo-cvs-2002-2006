@@ -3754,6 +3754,17 @@ class baseCommands:
 	Repaint = redraw
 	#@nonl
 	#@-node:redraw & repaint
+	#@+node:canClone (new for hoist)
+	def canClone (self):
+	
+		c = self
+		
+		if c.hoistStack:
+			return c.currentVnode() != c.hoistStack[-1]
+		else:
+			return true
+	#@nonl
+	#@-node:canClone (new for hoist)
 	#@+node:canContractAllHeadlines
 	def canContractAllHeadlines (self):
 	
