@@ -563,6 +563,7 @@ class colorizer:
 		self.incremental = false
 		self.lines = []
 		self.states = []
+		self.last_language = "unknown"
 		
 		#@<< ivars for communication between colorAllDirectives and its allies >>
 		#@+node:1::<< ivars for communication between colorAllDirectives and its allies >>
@@ -823,7 +824,7 @@ class colorizer:
 			#@-body
 			#@-node:1::<< initialize ivars & tags >>
 
-			if self.incremental:
+			if self.incremental and self.last_language==language:
 				
 				#@<< incrementally color the text >>
 				#@+node:2::<< incrementally color the text >>
@@ -985,7 +986,9 @@ class colorizer:
 				for s in lines:
 					state = self.colorizeLine(s,n,state)
 					n += 1		
+			self.last_language = language
 		except:
+			self.last_language = "unknown"
 			es_exception()
 	#@-body
 	#@+node:3::colorizeLine & allies
