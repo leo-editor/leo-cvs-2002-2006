@@ -2363,7 +2363,7 @@ class leoImportCommands:
 			mode = choose(mode=="platform",'w','wb')
 			file = open(fileName,mode)
 			while v and v != after:
-				head = v.moreHead(firstLevel)
+				head = v.moreHead(firstLevel,useVerticalBar=true)
 				head = toEncodedString(head,self.encoding,reportErrors=true)
 				file.write(head + nl)
 				v = v.threadNext()

@@ -822,7 +822,7 @@ class vnode:
 	#@+body
 	# Returns the headline string in MORE format.
 	
-	def moreHead (self, firstLevel):
+	def moreHead (self, firstLevel,useVerticalBar=false):
 	
 		v = self
 		level = self.level() - firstLevel
