@@ -2790,7 +2790,7 @@
 </v>
 <v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
-<v t="dthein.20040108213304" a="E"><vh>reformatParagraphsTests</vh>
+<v t="dthein.20040108213304" a="V"><vh>reformatParagraphsTests</vh>
 <v t="dthein.20040108213304.1"><vh>testNoTrailingNewline</vh>
 <v t="dthein.20040108213304.2"><vh>before</vh></v>
 <v t="dthein.20040108213304.3"><vh>after</vh></v>
@@ -2835,7 +2835,7 @@
 <v t="dthein.20040108213304.5"><vh>before</vh></v>
 <v t="dthein.20040108213304.6"><vh>after</vh></v>
 </v>
-<v t="dthein.20040108220819" a="E"><vh>testMultiParagraphWithList</vh>
+<v t="dthein.20040108220819"><vh>testMultiParagraphWithList</vh>
 <v t="dthein.20040108220819.1"><vh>before</vh></v>
 <v t="dthein.20040108220819.2"><vh>after</vh></v>
 </v>
@@ -2843,7 +2843,7 @@
 <v t="dthein.20040110062310.1"><vh>before</vh></v>
 <v t="dthein.20040110062310.2"><vh>after</vh></v>
 </v>
-<v t="dthein.20040121204705" a="EV"><vh>testWithLeadingWSOnEmptyLines</vh>
+<v t="dthein.20040121204705"><vh>testWithLeadingWSOnEmptyLines</vh>
 <v t="dthein.20040121204705.1"><vh>before</vh></v>
 <v t="dthein.20040121204705.2"><vh>after</vh></v>
 </v>
@@ -2980,7 +2980,7 @@ suite = leoTest.makeReformatParagraphSuite()
 result = unittest.TestResult()
 runner = unittest.TextTestRunner()
 runner.run(suite)
-		
+
 </t>
 <t tx="dthein.20040108213304.1">@language plain
 @pagewidth 40
@@ -3277,18 +3277,20 @@ paragraph.
 This paragraph ends the test.  It is the "final"
 paragraph.
 </t>
-<t tx="dthein.20040121204705.2">The two biggest problems with Leo are:
-
-   1. The editor sucks. I'd like to use either JEdit, emacs, or vim, or
-      somehow hook in the editor of my choice. 
-   
-   2. It is easy to get CVS conflicts in the Leo file (the file that
-      holds the collection of vnodes and tnodes) that are very difficult
-      to resolve. Part of this is because the Leo file is an XML file
-      and the CVS diff doesn't grox xml, just text lines. And part of
-      this is because developers can make conflicting changes in the
-      structure of the vnodes.
-</t>
+<t tx="dthein.20040121204705.2">This paragraph leads of this test. It is
+the "lead" paragraph.
+  
+  1. This is item number 1. It is the
+     first item in the list.
+  
+  2. This is item number 2. It is the
+     second item in the list.
+  
+  3. This is item number 3. It is the
+     third item in the list.
+  
+This paragraph ends the test. It is the
+"final" paragraph.</t>
 <t tx="edream.110203161858">@color
 
 # **** Run this from test.leo ****
