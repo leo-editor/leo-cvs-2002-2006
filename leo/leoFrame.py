@@ -2473,7 +2473,7 @@ class LeoFrame:
 		tkMessageBox.showinfo("About Leo",
 		# Don't use triple-quoted strings or continued strings here.
 		# Doing so would add unwanted leading tabs.
-		" leo.py 3.4, August 11, 2002\n\n" +
+		" leo.py 3.5 b1, August 13, 2002\n\n" +
 	
 		"Copyright 1999-2002 by\n" +
 		"Edward K. Ream, edream@tds.net\n" +
