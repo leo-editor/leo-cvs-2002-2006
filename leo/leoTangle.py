@@ -3017,7 +3017,7 @@ class tangleCommands:
 			self.comment2 = "(*" ; self.comment2_end = "*)"
 		if self.language == "latex": # 3/10/03: Joo-won Jung
 			self.string1 = self.string2 = None # This is debatable.
-
+		
 		#@-body
 		#@-node:1::<< set the private global matching vars >>
 
