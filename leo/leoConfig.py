@@ -157,9 +157,9 @@ class config:
 		self.remove_sentinels_extension = ".txt"
 		self.save_clears_undo_buffer = false
 		self.stylesheet = None
-		self.use_relative_node_indices = 1
+		self.use_relative_node_indices = 1 # Not used.  Will disappear.
 		self.use_configureLeo_dot_py = 0 # Should _never_ be 1 (!!)
-		self.write_clone_indices = 0
+		self.write_clone_indices = 0 # Should be 0 for writes to CVS. Will disappear in 4.0.
 		self.xml_version_string = "UTF-8"
 			# Must be upper case for compatibility with older versions of Leo.
 		#@-body

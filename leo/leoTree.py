@@ -110,7 +110,17 @@ line_height = 17 + 2 # To be replaced by Font height
 class leoTree:
 
 	#@+others
-	#@+node:3::tree.__init__
+	#@+node:3::Birth & death
+	#@+node:1::tree.__del__
+	#@+body
+	def __del__ (self):
+	
+		# Can't trace while destroying.
+		# print "tree.__del__"
+		pass
+	#@-body
+	#@-node:1::tree.__del__
+	#@+node:2::tree.__init__
 	#@+body
 	def __init__(self,commands,canvas):
 	
@@ -146,17 +156,8 @@ class leoTree:
 		# Context menu
 		self.popupMenu = None
 	#@-body
-	#@-node:3::tree.__init__
-	#@+node:4::tree.__del__
-	#@+body
-	def __del__ (self):
-	
-		# Can't trace while destroying.
-		# print "tree.__del__"
-		pass
-	#@-body
-	#@-node:4::tree.__del__
-	#@+node:5::tree.destroy
+	#@-node:2::tree.__init__
+	#@+node:3::tree.destroy
 	#@+body
 	def destroy (self):
 	
@@ -184,78 +185,9 @@ class leoTree:
 		self.rootVnode = None
 		self.topVnode = None
 	#@-body
-	#@-node:5::tree.destroy
-	#@+node:6::tree.expandAllAncestors
-	#@+body
-	def expandAllAncestors (self,v):
-	
-		redraw_flag = false
-		p = v.parent()
-		while p:
-			if not p.isExpanded():
-				p.expand()
-				redraw_flag = true
-			p = p.parent()
-		return redraw_flag
-	#@-body
-	#@-node:6::tree.expandAllAncestors
-	#@+node:7::tree.findVnodeWithIconId
-	#@+body
-	def findVnodeWithIconId (self,id):
-	
-		v = self.rootVnode
-		while v:
-			if v.icon_id == id or (v.icon_id,) == id:
-				return v
-			else: v = v.visNext()
-			
-		return None
-	#@-body
-	#@-node:7::tree.findVnodeWithIconId
-	#@+node:8::tree.getFont,setFont,setFontFromConfig
-	#@+body
-	def getFont (self):
-	
-		return self.font
-			
-	# Called by leoFontPanel.
-	def setFont (self, font=None, fontName=None):
-		
-		if fontName:
-			self.fontName = fontName
-			self.font = tkFont.Font(font=fontName)
-		else:
-			self.fontName = None
-			self.font = font
-			
-		self.setLineHeight(self.font)
-		
-	# Called by ctor and when config params are reloaded.
-	def setFontFromConfig (self):
-	
-		font = app().config.getFontFromParams(
-			"headline_text_font_family", "headline_text_font_size",
-			"headline_text_font_slant",  "headline_text_font_weight")
-	
-		self.setFont(font)
-	#@-body
-	#@-node:8::tree.getFont,setFont,setFontFromConfig
-	#@+node:9::setLineHeight
-	#@+body
-	def setLineHeight (self,font):
-		
-		try:
-			metrics = font.metrics()
-			linespace = metrics ["linespace"]
-			self.line_height = linespace + 5 # Same as before for the default font on Windows.
-			# print `metrics`
-		except:
-			self.line_height = line_height # was 17 + 2
-			es("exception setting outline line height")
-			es_exception()
-	#@-body
-	#@-node:9::setLineHeight
-	#@+node:10::Drawing
+	#@-node:3::tree.destroy
+	#@-node:3::Birth & death
+	#@+node:4::Drawing
 	#@+node:1::About drawing and updating
 	#@+body
 	#@+at
@@ -313,67 +245,7 @@ class leoTree:
 		self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
 	#@-body
 	#@-node:3::drawBox
-	#@+node:4::tree.drawIcon
-	#@+body
-	# Draws icon for v at x,y
-	
-	def drawIcon(self,v,x,y):
-	
-		v.iconx, v.icony = x,y
-	
-		y += 2 # draw icon at y + 2
-	
-		# Always recompute icon.
-		val = v.iconVal = v.computeIcon()
-		assert(0 <= val <= 15)
-		
-		# Compute the image name
-		imagename = os.path.join("Icons", "box")
-		if val < 10: imagename += "0"
-		imagename += `val`
-	
-		# Get the image
-		image = self.getIconImage(imagename + ".GIF")
-		id = self.canvas.create_image(x,y,anchor="nw",image=image)
-		if 1: # 6/15/02: this reference is now cleared in v.__del__
-			v.icon_id = id
-		self.canvas.tag_bind(id, "<1>", v.OnIconClick)
-		self.canvas.tag_bind(id, "<Double-1>", v.OnBoxClick)
-	
-		return 0 # dummy icon height
-	#@-body
-	#@-node:4::tree.drawIcon
-	#@+node:5::drawTree
-	#@+body
-	def drawTree(self,v,x,y,h,level):
-	
-		yfirst = ylast = y
-		if level==0: yfirst += 10
-		while v:
-			# trace(`x` + ", " + `y` + ", " + `v`)
-			h = self.drawNode(v,x,y)
-			y += h ; ylast = y
-			if v.isExpanded() and v.firstChild():
-				y = self.drawTree(v.firstChild(),x+child_indent,y,h,level+1)
-			v = v.next()
-		
-		#@<< draw vertical line >>
-		#@+node:1::<< draw vertical line >>
-		#@+body
-		id = self.canvas.create_line(
-			x, yfirst-hline_y+4,
-			x, ylast+hline_y-h,
-			fill="gray50", # stipple="gray50"
-			tag="lines")
-		
-		self.canvas.tag_lower(id)
-		#@-body
-		#@-node:1::<< draw vertical line >>
-
-		return y
-	#@-body
-	#@-node:5::drawTree
-	#@+node:6::drawNode
+	#@+node:4::drawNode
 	#@+body
 	def drawNode(self,v,x,y):
 	
@@ -384,8 +256,8 @@ class leoTree:
 		text_height = self.drawText(v,x+box_width+icon_width,y)
 		return max(icon_height, text_height)
 	#@-body
-	#@-node:6::drawNode
-	#@+node:7::drawText
+	#@-node:4::drawNode
+	#@+node:5::drawText
 	#@+body
 	# draws text for v at x,y
 	
@@ -422,8 +294,38 @@ class leoTree:
 	
 		return self.line_height
 	#@-body
-	#@-node:7::drawText
-	#@+node:8::endUpdate
+	#@-node:5::drawText
+	#@+node:6::drawTree
+	#@+body
+	def drawTree(self,v,x,y,h,level):
+	
+		yfirst = ylast = y
+		if level==0: yfirst += 10
+		while v:
+			# trace(`x` + ", " + `y` + ", " + `v`)
+			h = self.drawNode(v,x,y)
+			y += h ; ylast = y
+			if v.isExpanded() and v.firstChild():
+				y = self.drawTree(v.firstChild(),x+child_indent,y,h,level+1)
+			v = v.next()
+		
+		#@<< draw vertical line >>
+		#@+node:1::<< draw vertical line >>
+		#@+body
+		id = self.canvas.create_line(
+			x, yfirst-hline_y+4,
+			x, ylast+hline_y-h,
+			fill="gray50", # stipple="gray50"
+			tag="lines")
+		
+		self.canvas.tag_lower(id)
+		#@-body
+		#@-node:1::<< draw vertical line >>
+
+		return y
+	#@-body
+	#@-node:6::drawTree
+	#@+node:7::endUpdate
 	#@+body
 	def endUpdate (self, flag=true):
 	
@@ -432,8 +334,147 @@ class leoTree:
 		if flag and self.updateCount == 0:
 			self.redraw()
 	#@-body
-	#@-node:8::endUpdate
-	#@+node:9::tree.getIconImage
+	#@-node:7::endUpdate
+	#@+node:8::headWidth
+	#@+body
+	#@+at
+	#  Returns the proper width of the entry widget for the headline. This has 
+	# been a problem.
+
+	#@-at
+	#@@c
+
+	def headWidth(self,v):
+	
+		return max(10,5 + len(v.headString()))
+	#@-body
+	#@-node:8::headWidth
+	#@+node:9::hideAllChildren
+	#@+body
+	def hideAllChildren(self,v):
+	
+		child = v.firstChild()
+		while child:
+			self.hideTree(child)
+			child = child.next()
+	#@-body
+	#@-node:9::hideAllChildren
+	#@+node:10::hideNode (no longer used)
+	#@+body
+	def hideNode(self,v):
+	
+		self.canvas.delete(v.box_id)
+		self.canvas.delete(v.icon_id)
+		self.canvas.delete(v.edit_text)
+		self.canvas.delete(v.edit_text_id)
+		v.box_id = v.icon_id = None
+		v.edit_text = v.edit_text_id = None
+	#@-body
+	#@-node:10::hideNode (no longer used)
+	#@+node:11::hideTree (no longer used)
+	#@+body
+	def hideTree(self,v):
+	
+		last = v.lastNode()
+		while v:
+			self.hideNode(v)
+			if v == last: break
+			v = v.threadNext()
+	#@-body
+	#@-node:11::hideTree (no longer used)
+	#@+node:12::lastVisible
+	#@+body
+	# Returns the last visible node of the screen.
+	
+	def lastVisible (self):
+	
+		v = self.rootVnode
+		while v:
+			last = v
+			if v.firstChild():
+				if v.isExpanded():
+					v = v.firstChild()
+				else:
+					v = v.nodeAfterTree()
+			else:
+				v = v.threadNext()
+		return last
+	#@-body
+	#@-node:12::lastVisible
+	#@+node:13::setLineHeight
+	#@+body
+	def setLineHeight (self,font):
+		
+		try:
+			metrics = font.metrics()
+			linespace = metrics ["linespace"]
+			self.line_height = linespace + 5 # Same as before for the default font on Windows.
+			# print `metrics`
+		except:
+			self.line_height = line_height # was 17 + 2
+			es("exception setting outline line height")
+			es_exception()
+	#@-body
+	#@-node:13::setLineHeight
+	#@+node:14::tree.drawIcon
+	#@+body
+	# Draws icon for v at x,y
+	
+	def drawIcon(self,v,x,y):
+	
+		v.iconx, v.icony = x,y
+	
+		y += 2 # draw icon at y + 2
+	
+		# Always recompute icon.
+		val = v.iconVal = v.computeIcon()
+		assert(0 <= val <= 15)
+		
+		# Compute the image name
+		imagename = os.path.join("Icons", "box")
+		if val < 10: imagename += "0"
+		imagename += `val`
+	
+		# Get the image
+		image = self.getIconImage(imagename + ".GIF")
+		id = self.canvas.create_image(x,y,anchor="nw",image=image)
+		if 1: # 6/15/02: this reference is now cleared in v.__del__
+			v.icon_id = id
+		self.canvas.tag_bind(id, "<1>", v.OnIconClick)
+		self.canvas.tag_bind(id, "<Double-1>", v.OnBoxClick)
+	
+		return 0 # dummy icon height
+	#@-body
+	#@-node:14::tree.drawIcon
+	#@+node:15::tree.getFont,setFont,setFontFromConfig
+	#@+body
+	def getFont (self):
+	
+		return self.font
+			
+	# Called by leoFontPanel.
+	def setFont (self, font=None, fontName=None):
+		
+		if fontName:
+			self.fontName = fontName
+			self.font = tkFont.Font(font=fontName)
+		else:
+			self.fontName = None
+			self.font = font
+			
+		self.setLineHeight(self.font)
+		
+	# Called by ctor and when config params are reloaded.
+	def setFontFromConfig (self):
+	
+		font = app().config.getFontFromParams(
+			"headline_text_font_family", "headline_text_font_size",
+			"headline_text_font_slant",  "headline_text_font_weight")
+	
+		self.setFont(font)
+	#@-body
+	#@-node:15::tree.getFont,setFont,setFontFromConfig
+	#@+node:16::tree.getIconImage
 	#@+body
 	def getIconImage (self, name):
 	
@@ -459,74 +500,58 @@ class leoTree:
 			es_exception()
 			return None
 	#@-body
-	#@-node:9::tree.getIconImage
-	#@+node:10::headWidth
+	#@-node:16::tree.getIconImage
+	#@+node:17::tree.idle_scrollTo
 	#@+body
 	#@+at
-	#  Returns the proper width of the entry widget for the headline. This has 
-	# been a problem.
+	#  This scrolls the canvas so that v is in view.  This is done at idle 
+	# time after a redraw so that treeBar.get() will return proper values.  
+	# Earlier versions of this routine were called _before_ a redraw so that 
+	# the calls to yoffset() were required.  We could use v.icony instead, and 
+	# that might be better.
+	# 
+	# Another approach would be to add a "draw" flat to the drawing routines 
+	# so that they just compute a height if the draw flag is false.  However, 
+	# that would complicate the drawing logic quite a bit.
 
 	#@-at
 	#@@c
 
-	def headWidth(self,v):
+	def idle_scrollTo(self,v=None):
 	
-		return max(10,5 + len(v.headString()))
+		if v == None:
+			v = self.currentVnode
+		last = self.lastVisible()
+		h1 = self.yoffset(v)
+		h2 = self.yoffset(last)
+		# Compute the fraction to scroll, minus a smidge so the first line will be entirely visible.
+		if h2 > 0.1:
+			frac = float(h1)/float(h2)
+		else:
+			frac = 0.0 # probably any value would work here.
+		frac = min(frac,1.0)
+		frac = max(frac,0.0)
+		
+		# Do nothing if the line is already in view
+		frame = self.commands.frame
+		lo, hi = frame.treeBar.get()
+		if frac < lo or frac > hi:
+			# print "h1, h2, frac, hi, lo:", h1, h2, frac, hi, lo
+			self.canvas.yview("moveto", frac)
 	#@-body
-	#@-node:10::headWidth
-	#@+node:11::hideAllChildren
+	#@-node:17::tree.idle_scrollTo
+	#@+node:18::tree.numberOfVisibleNodes
 	#@+body
-	def hideAllChildren(self,v):
-	
-		child = v.firstChild()
-		while child:
-			self.hideTree(child)
-			child = child.next()
-	#@-body
-	#@-node:11::hideAllChildren
-	#@+node:12::hideNode (no longer used)
-	#@+body
-	def hideNode(self,v):
-	
-		self.canvas.delete(v.box_id)
-		self.canvas.delete(v.icon_id)
-		self.canvas.delete(v.edit_text)
-		self.canvas.delete(v.edit_text_id)
-		v.box_id = v.icon_id = None
-		v.edit_text = v.edit_text_id = None
-	#@-body
-	#@-node:12::hideNode (no longer used)
-	#@+node:13::hideTree (no longer used)
-	#@+body
-	def hideTree(self,v):
-	
-		last = v.lastNode()
+	def numberOfVisibleNodes(self):
+		
+		n = 0 ; v = self.rootVnode
 		while v:
-			self.hideNode(v)
-			if v == last: break
-			v = v.threadNext()
+			n += 1
+			v = v.visNext()
+		return n
 	#@-body
-	#@-node:13::hideTree (no longer used)
-	#@+node:14::lastVisible
-	#@+body
-	# Returns the last visible node of the screen.
-	
-	def lastVisible (self):
-	
-		v = self.rootVnode
-		while v:
-			last = v
-			if v.firstChild():
-				if v.isExpanded():
-					v = v.firstChild()
-				else:
-					v = v.nodeAfterTree()
-			else:
-				v = v.threadNext()
-		return last
-	#@-body
-	#@-node:14::lastVisible
-	#@+node:15::tree.recolor, recolor_now, recolor_range
+	#@-node:18::tree.numberOfVisibleNodes
+	#@+node:19::tree.recolor, recolor_now, recolor_range
 	#@+body
 	def recolor(self,v,incremental=0):
 	
@@ -547,8 +572,8 @@ class leoTree:
 		body = self.commands.frame.body
 		self.colorizer.recolor_range(v,body,leading,trailing)
 	#@-body
-	#@-node:15::tree.recolor, recolor_now, recolor_range
-	#@+node:16::tree.redraw , force_redraw, redraw_now
+	#@-node:19::tree.recolor, recolor_now, recolor_range
+	#@+node:20::tree.redraw , force_redraw, redraw_now
 	#@+body
 	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
 	# This _is_ useful when a flag is passed to c.endUpdate.
@@ -592,47 +617,8 @@ class leoTree:
 			# Schedule a scrolling operation after the scrollbar is redrawn
 			self.canvas.after_idle(self.idle_scrollTo)
 	#@-body
-	#@-node:16::tree.redraw , force_redraw, redraw_now
-	#@+node:17::tree.idle_scrollTo
-	#@+body
-	#@+at
-	#  This scrolls the canvas so that v is in view.  This is done at idle 
-	# time after a redraw so that treeBar.get() will return proper values.  
-	# Earlier versions of this routine were called _before_ a redraw so that 
-	# the calls to yoffset() were required.  We could use v.icony instead, and 
-	# that might be better.
-	# 
-	# Another approach would be to add a "draw" flat to the drawing routines 
-	# so that they just compute a height if the draw flag is false.  However, 
-	# that would complicate the drawing logic quite a bit.
-
-	#@-at
-	#@@c
-
-	def idle_scrollTo(self,v=None):
-	
-		if v == None:
-			v = self.currentVnode
-		last = self.lastVisible()
-		h1 = self.yoffset(v)
-		h2 = self.yoffset(last)
-		# Compute the fraction to scroll, minus a smidge so the first line will be entirely visible.
-		if h2 > 0.1:
-			frac = float(h1)/float(h2)
-		else:
-			frac = 0.0 # probably any value would work here.
-		frac = min(frac,1.0)
-		frac = max(frac,0.0)
-		
-		# Do nothing if the line is already in view
-		frame = self.commands.frame
-		lo, hi = frame.treeBar.get()
-		if frac < lo or frac > hi:
-			# print "h1, h2, frac, hi, lo:", h1, h2, frac, hi, lo
-			self.canvas.yview("moveto", frac)
-	#@-body
-	#@-node:17::tree.idle_scrollTo
-	#@+node:18::tree.yoffset
+	#@-node:20::tree.redraw , force_redraw, redraw_now
+	#@+node:21::tree.yoffset
 	#@+body
 	#@+at
 	#  We can't just return icony because the tree hasn't been redrawn yet.  
@@ -668,20 +654,9 @@ class leoTree:
 			v = v.next()
 		return h, false
 	#@-body
-	#@-node:18::tree.yoffset
-	#@+node:19::tree.numberOfVisibleNodes
-	#@+body
-	def numberOfVisibleNodes(self):
-		
-		n = 0 ; v = self.rootVnode
-		while v:
-			n += 1
-			v = v.visNext()
-		return n
-	#@-body
-	#@-node:19::tree.numberOfVisibleNodes
-	#@-node:10::Drawing
-	#@+node:11::Event handers
+	#@-node:21::tree.yoffset
+	#@-node:4::Drawing
+	#@+node:5::Event handers
 	#@+node:1::OnActivate
 	#@+body
 	def OnActivate (self,v):
@@ -734,7 +709,20 @@ class leoTree:
 		self.active = false
 	#@-body
 	#@-node:3::OnDeactivate
-	#@+node:4::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
+	#@+node:4::tree.findVnodeWithIconId
+	#@+body
+	def findVnodeWithIconId (self,id):
+	
+		v = self.rootVnode
+		while v:
+			if v.icon_id == id or (v.icon_id,) == id:
+				return v
+			else: v = v.visNext()
+			
+		return None
+	#@-body
+	#@-node:4::tree.findVnodeWithIconId
+	#@+node:5::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
 	#@+body
 	#@+at
 	#  The <Key> event generates the event before the body text is changed(!), 
@@ -878,12 +866,14 @@ class leoTree:
 		if ch == '\r' or ch == '\n':
 			
 			#@<< Do auto indent >>
-			#@+node:2::<< Do Auto indent >>
+			#@+node:2::<< Do auto indent >> (David McNab)
 			#@+body
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
 			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
+			
 				# Get the previous line.
 				s=c.body.get("insert linestart - 1 lines","insert linestart -1c")
+			
 				# Add the leading whitespace to the present line.
 				junk,width = skip_leading_ws_with_indent(s,0,c.tab_width)
 				if s and len(s) > 0 and s[-1]==':':
@@ -891,12 +881,26 @@ class leoTree:
 					language = self.colorizer.scanColorDirectives(v)
 					if language == "python":
 						width += abs(c.tab_width)
+				if app().config.getBoolWindowPref("smart_auto_indent"):
+					# Added Nov 18 by David McNab, david@rebirthing.co.nz
+					# Determine if prev line has unclosed parens/brackets/braces
+					brackets = [width]
+					tabex = 0
+					for i in range(0, len(s)):
+						if s[i] == '\t':
+							tabex += c.tab_width - 1
+						if s[i] in '([{':
+							brackets.append(i+tabex + 1)
+						elif s[i] in '}])' and len(brackets) > 1:
+							brackets.pop()
+					width = brackets.pop()
+					# end patch by David McNab
 				ws = computeLeadingWhitespace (width,c.tab_width)
 				if ws and len(ws) > 0:
 					c.body.insert("insert", ws)
-			
+					removeTrailing = false # bug fix: 11/18
 			#@-body
-			#@-node:2::<< Do Auto indent >>
+			#@-node:2::<< Do auto indent >> (David McNab)
 
 		elif ch == '\t' and c.tab_width < 0:
 			
@@ -949,8 +953,8 @@ class leoTree:
 		handleLeoHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
 		return "break"
 	#@-body
-	#@-node:4::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
-	#@+node:5::tree.OnContinueDrag
+	#@-node:5::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
+	#@+node:6::tree.OnContinueDrag
 	#@+body
 	def OnContinueDrag(self,v,event):
 		
@@ -1028,8 +1032,8 @@ class leoTree:
 			#@-body
 			#@-node:2::<< scroll the canvas as needed >>
 	#@-body
-	#@-node:5::tree.OnContinueDrag
-	#@+node:6::tree.OnCtontrolT
+	#@-node:6::tree.OnContinueDrag
+	#@+node:7::tree.OnCtontrolT
 	#@+body
 	# This works around an apparent Tk bug.
 	
@@ -1038,8 +1042,8 @@ class leoTree:
 		# If we don't inhibit further processing the Tx.Text widget switches characters!
 		return "break"
 	#@-body
-	#@-node:6::tree.OnCtontrolT
-	#@+node:7::tree.OnDrag
+	#@-node:7::tree.OnCtontrolT
+	#@+node:8::tree.OnDrag
 	#@+body
 	# This precomputes numberOfVisibleNodes(), a significant optimization.
 	# We also indicate where findVnodeWithIconId() should start looking for tree id's.
@@ -1052,8 +1056,8 @@ class leoTree:
 			self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
 			self.OnContinueDrag(v,event)
 	#@-body
-	#@-node:7::tree.OnDrag
-	#@+node:8::tree.OnEndDrag
+	#@-node:8::tree.OnDrag
+	#@+node:9::tree.OnEndDrag
 	#@+body
 	def OnEndDrag(self,v,event):
 		
@@ -1094,8 +1098,8 @@ class leoTree:
 			canvas.tag_unbind(self.drag_id , "<Any-ButtonRelease-1>")
 			self.drag_id = None
 	#@-body
-	#@-node:8::tree.OnEndDrag
-	#@+node:9::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
+	#@-node:9::tree.OnEndDrag
+	#@+node:10::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
 	#@+body
 	#@+at
 	#  The <Key> event generates the event before the headline text is 
@@ -1211,8 +1215,8 @@ class leoTree:
 		handleLeoHook("headkey2",c=c,v=v,ch=ch)
 		return "break"
 	#@-body
-	#@-node:9::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
-	#@+node:10::tree.OnIconClick
+	#@-node:10::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
+	#@+node:11::tree.OnIconClick
 	#@+body
 	def OnIconClick (self,v,event):
 	
@@ -1233,8 +1237,8 @@ class leoTree:
 	
 		self.select(v)
 	#@-body
-	#@-node:10::tree.OnIconClick
-	#@+node:11::tree.OnPopup
+	#@-node:11::tree.OnIconClick
+	#@+node:12::tree.OnPopup
 	#@+body
 	# 20-SEP-2002 DTHEIN:
 	# On Linux we must do something special to make the popup menu
@@ -1348,25 +1352,10 @@ class leoTree:
 	def OnPopupFocusLost(self,event=None):
 		self.popupMenu.unpost()
 	#@-body
-	#@-node:11::tree.OnPopup
-	#@-node:11::Event handers
-	#@+node:12::Selecting & editing (tree)
-	#@+node:1::dimEditLabel, undimEditLabel
-	#@+body
-	# Convenience methods so the caller doesn't have to know the present edit node.
-	
-	def dimEditLabel (self):
-	
-		v = self.currentVnode
-		self.setDisabledLabelState(v)
-	
-	def undimEditLabel (self):
-	
-		v = self.currentVnode
-		self.setSelectedLabelState(v)
-	#@-body
-	#@-node:1::dimEditLabel, undimEditLabel
-	#@+node:2::abortEditLabelCommand
+	#@-node:12::tree.OnPopup
+	#@-node:5::Event handers
+	#@+node:6::Selecting & editing (tree)
+	#@+node:1::abortEditLabelCommand
 	#@+body
 	def abortEditLabelCommand (self):
 		
@@ -1383,7 +1372,22 @@ class leoTree:
 			if v and v.joinList:
 				self.redraw_now() # force a redraw of joined headlines.
 	#@-body
-	#@-node:2::abortEditLabelCommand
+	#@-node:1::abortEditLabelCommand
+	#@+node:2::dimEditLabel, undimEditLabel
+	#@+body
+	# Convenience methods so the caller doesn't have to know the present edit node.
+	
+	def dimEditLabel (self):
+	
+		v = self.currentVnode
+		self.setDisabledLabelState(v)
+	
+	def undimEditLabel (self):
+	
+		v = self.currentVnode
+		self.setSelectedLabelState(v)
+	#@-body
+	#@-node:2::dimEditLabel, undimEditLabel
 	#@+node:3::editLabel
 	#@+body
 	# Start editing v.edit_text
@@ -1432,7 +1436,56 @@ class leoTree:
 		self.commands.body.focus_force() # 10/14/02
 	#@-body
 	#@-node:4::endEditLabel & endEditLabelCommand
-	#@+node:5::tree.select
+	#@+node:5::tree.expandAllAncestors
+	#@+body
+	def expandAllAncestors (self,v):
+	
+		redraw_flag = false
+		p = v.parent()
+		while p:
+			if not p.isExpanded():
+				p.expand()
+				redraw_flag = true
+			p = p.parent()
+		return redraw_flag
+	#@-body
+	#@-node:5::tree.expandAllAncestors
+	#@+node:6::tree.scanForTabWidth
+	#@+body
+	# Similar to code in scanAllDirectives.
+	
+	def scanForTabWidth (self, v):
+		
+		c = self.commands ; w = c.tab_width
+	
+		while v:
+			s = v.t.bodyString
+			dict = get_directives_dict(s)
+			
+			#@<< set w and break on @tabwidth >>
+			#@+node:1::<< set w and break on @tabwidth >>
+			#@+body
+			if dict.has_key("tabwidth"):
+			
+				k = dict["tabwidth"]
+				i = k + len("@tabwidth")
+				i, val = skip_long(s, i)
+				if val != None and val != 0:
+					w = val
+					break
+				else:
+					if 0: # silently ignore this.
+						i = skip_to_end_of_line(s,i)
+						es("Ignoring " + s[k:i])
+			#@-body
+			#@-node:1::<< set w and break on @tabwidth >>
+
+			v = v.parent()
+	
+		c.frame.setTabWidth(w)
+	#@-body
+	#@-node:6::tree.scanForTabWidth
+	#@+node:7::tree.select
 	#@+body
 	#@+at
 	#  Warning: do not try to "optimize" this be returning if v==tree.currentVnode.
@@ -1508,8 +1561,8 @@ class leoTree:
 		if doSelectHook:
 			handleLeoHook("select2",c=c,old_v=old_v)
 	#@-body
-	#@-node:5::tree.select
-	#@+node:6::tree.set...LabelState
+	#@-node:7::tree.select
+	#@+node:8::tree.set...LabelState
 	#@+body
 	def setNormalLabelState (self,v): # selected, editing
 		if v and v.edit_text:
@@ -1592,43 +1645,8 @@ class leoTree:
 			#@-body
 			#@-node:3::<< set unselected headline colors >>
 	#@-body
-	#@-node:6::tree.set...LabelState
-	#@+node:7::tree.scanForTabWidth
-	#@+body
-	# Similar to code in scanAllDirectives.
-	
-	def scanForTabWidth (self, v):
-		
-		c = self.commands ; w = c.tab_width
-	
-		while v:
-			s = v.t.bodyString
-			dict = get_directives_dict(s)
-			
-			#@<< set w and break on @tabwidth >>
-			#@+node:1::<< set w and break on @tabwidth >>
-			#@+body
-			if dict.has_key("tabwidth"):
-			
-				k = dict["tabwidth"]
-				i = k + len("@tabwidth")
-				i, val = skip_long(s, i)
-				if val != None and val != 0:
-					w = val
-					break
-				else:
-					if 0: # silently ignore this.
-						i = skip_to_end_of_line(s,i)
-						es("Ignoring " + s[k:i])
-			#@-body
-			#@-node:1::<< set w and break on @tabwidth >>
-
-			v = v.parent()
-	
-		c.frame.setTabWidth(w)
-	#@-body
-	#@-node:7::tree.scanForTabWidth
-	#@-node:12::Selecting & editing (tree)
+	#@-node:8::tree.set...LabelState
+	#@-node:6::Selecting & editing (tree)
 	#@-others
 #@-body
 #@-node:0::@file leoTree.py

@@ -20,9 +20,9 @@
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
-<v t="T10" a="V"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
+<v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
@@ -30,8 +30,8 @@
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
-<v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
+<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T18" a="V"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
@@ -122,7 +122,7 @@ output_newline = nl
 #
 #	Please specify nl when uploading files to Leo's CVS site.
 
-create_nonexistent_directories = 0
+create_nonexistent_directories = 1
 #	1: Leo attempts to create directories if they do not exist.
 #	0: Leo never attempts to create directories
 #	This option applies to directories specified in filenames in
@@ -171,7 +171,7 @@ stylesheet =
 #	Note 2: Please set this field empty when uploading to CVS.
 #	Note 3: This field must be empty for compatibility with older versions of Leo.
 
-use_configureLeo_dot_py = 1
+use_configureLeo_dot_py = 0
 
 #	1: Leo calls code "hooks" in configureLeo.py.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
@@ -712,7 +712,11 @@ body_text_font_slant = roman
 #	The Tk -slant setting: roman or italic.  Default is roman.
 
 body_text_font_weight = normal
-#	The Tk -weight setting: normal or bold.  Default is normal.</t>
+#	The Tk -weight setting: normal or bold.  Default is normal.
+
+smart_auto_indent = 1
+#	1: auto-indent aligns with open ({[ brackets
+#	0: auto-indent increases indentation by one tab for Python only.</t>
 <t tx="T19">@c
 
 outline_pane_scrolls_horizontally = 0
