@@ -2,11 +2,9 @@
 #@+node:ekr.20031218072017.3897:@thin leoTkinterFind.py
 import leoGlobals as g
 import leoFind
+
 import leoTkinterDialog
-import string
-import sys
 import Tkinter as Tk
-import types
 
 class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 

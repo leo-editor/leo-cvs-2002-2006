@@ -15,10 +15,10 @@ import leoTkinterMenu
 import leoTkinterTree
 import Tkinter as Tk
 import tkFont
+
 import os
 import string
 import sys
-import time
 
 #@+others
 #@+node:ekr.20031218072017.3940:class leoTkinterFrame

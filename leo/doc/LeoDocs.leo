@@ -5,9 +5,9 @@
 	<global_window_position top="43" left="218" height="836" width="973"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences defaultTargetLanguage="Python" node_only="0" output_doc_chunks="1" page_width="132" tab_width="4" tangle_bat="0" untangle_bat="0" use_header_flag="1">
+<preferences>
 </preferences>
-<find_panel_settings search_body="1" whole_word="1">
+<find_panel_settings>
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
@@ -68,7 +68,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -81,8 +81,9 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="EKR.20040628095213" a="ETV"><vh>4.2 beta 1</vh>
+<v t="EKR.20040628095213" a="E"><vh>4.2 beta 1</vh>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
+<v t="ekr.20040629164557"><vh>New coding conventions in 4.2</vh></v>
 <v t="EKR.20040628100535"><vh>Fixed bugs</vh>
 <v t="EKR.20040628095213.3"><vh>Made "end1" and "ilde"events work again</vh></v>
 <v t="EKR.20040628095213.23"><vh>Put drawing hooks back in</vh></v>
@@ -148,6 +149,7 @@
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="EKR.20040628095213"><vh>4.2 beta 1</vh>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
+<v t="ekr.20040629164557"><vh>New coding conventions in 4.2</vh></v>
 <v t="EKR.20040628100535"><vh>Fixed bugs</vh>
 <v t="EKR.20040628095213.3"><vh>Made "end1" and "ilde"events work again</vh></v>
 <v t="EKR.20040628095213.23"><vh>Put drawing hooks back in</vh></v>
@@ -1247,7 +1249,7 @@
 <v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
 <v t="EKR.20040524105100"><vh>@file-thin leoLeaps.txt</vh></v>
 </v>
-<v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414161647" a="ETV"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
 <v t="ekr.20040414163815"><vh>Table of Contents</vh>
 <v t="ekr.20040414163815.1"><vh>@rst</vh></v>
@@ -1271,79 +1273,79 @@
 <v t="ekr.20040414174439.1"><vh>@rst</vh></v>
 </v>
 </v>
-<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
+<v t="ekr.20040403171740" a="E"><vh>@rst scripting.html</vh>
 <v t="ekr.20040403183229"><vh>Overview</vh>
-<v t="ekr.20040403183229.1"><vh>@rst</vh></v>
+<v t="ekr.20040403183229.1" a="E"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403175011"><vh>g.top(): the commander of the top window</vh>
-<v t="ekr.20040403175011.1"><vh>@rst</vh></v>
+<v t="ekr.20040403175011.1" a="E"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.3"><vh>g.es(): write to the log pane</vh>
-<v t="ekr.20040403175257"><vh>@rst</vh></v>
+<v t="ekr.20040403175257" a="E"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403175157.1"><vh>app.windowList: the list of all open frames</vh>
-<v t="ekr.20040403175157.2"><vh>@rst</vh></v>
+<v t="ekr.20040403175157.2" a="E"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.6"><vh>Getting and setting headline and body text</vh>
-<v t="ekr.20040403180217"><vh>@rst</vh></v>
+<v t="ekr.20040403180217" a="E"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.9"><vh>Traversing outlines</vh>
+<v t="ekr.20040403173920.9" a="E"><vh>Traversing outlines</vh>
 <v t="ekr.20040403183934"><vh>@rst</vh>
 <v t="ekr.20040403173920.10"><vh>c.allNodes_iter</vh>
-<v t="ekr.20040403185643"><vh>@rst</vh></v>
+<v t="ekr.20040403185643" a="E"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.13"><vh>p.children_iter</vh>
-<v t="ekr.20040403185803"><vh>@rst</vh></v>
+<v t="ekr.20040403185803" a="E"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.14"><vh>p.parents_iter and p.self_and_parents_iter</vh>
-<v t="ekr.20040403185803.1"><vh>@rst</vh></v>
+<v t="ekr.20040403185803.1" a="E"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.15"><vh>p.siblings_iter and p.following_siblings_iter</vh>
-<v t="ekr.20040403185803.2"><vh>@rst</vh></v>
+<v t="ekr.20040403185803.2" a="E"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.16"><vh>p.subtree_iter and p.self_and_subtree_iter</vh>
-<v t="ekr.20040403185803.3"><vh>@rst</vh></v>
+<v t="ekr.20040403185803.3" a="E"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20040403173920.17"><vh>Updating the screen</vh>
-<v t="ekr.20040403183934.1"><vh>@rst</vh></v>
+<v t="ekr.20040403173920.17" a="E"><vh>Updating the screen</vh>
+<v t="ekr.20040403183934.1" a="E"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.18"><vh>Invoking commands from scripts</vh>
-<v t="ekr.20040403183934.2"><vh>@rst</vh></v>
+<v t="ekr.20040403183934.2" a="E"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.19"><vh>Getting and setting preferences</vh>
-<v t="ekr.20040403183934.3"><vh>@rst</vh></v>
+<v t="ekr.20040403183934.3" a="E"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.21"><vh>Functions for finding and changing text from scripts</vh>
 <v t="ekr.20040403184306.1"><vh>@rst</vh>
 <v t="ekr.20040403191729"><vh>g.findAll</vh>
-<v t="ekr.20040403173920.22"><vh>@rst</vh></v>
+<v t="ekr.20040403173920.22" a="E"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403191729.1"><vh>g.reFindall</vh>
-<v t="ekr.20040403173920.23"><vh>@rst</vh></v>
+<v t="ekr.20040403191729.1" a="E"><vh>g.reFindall</vh>
+<v t="ekr.20040403173920.23" a="E"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20040403173920.24"><vh>Running Leo in batch mode</vh>
-<v t="ekr.20040403184306.2"><vh>@rst</vh></v>
+<v t="ekr.20040403173920.24" a="E"><vh>Running Leo in batch mode</vh>
+<v t="ekr.20040403184306.2" a="E"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.25"><vh>Functions defined in leoGlobals.py</vh>
-<v t="ekr.20040403184306.3"><vh>@rst</vh></v>
+<v t="ekr.20040403173920.25" a="E"><vh>Functions defined in leoGlobals.py</vh>
+<v t="ekr.20040403184306.3" a="E"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.5"><vh>Redirecting output from scripts</vh>
-<v t="ekr.20040403183718"><vh>@rst</vh></v>
+<v t="ekr.20040403173920.5" a="E"><vh>Redirecting output from scripts</vh>
+<v t="ekr.20040403183718" a="E"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.26"><vh>Summary of the vnode and position classes</vh>
-<v t="ekr.20040403184306.4"><vh>@rst</vh>
-<v t="ekr.20040411151245"><vh>Iterators</vh>
-<v t="ekr.20040411151245.1"><vh>@rst</vh></v>
+<v t="ekr.20040403173920.26" a="E"><vh>Summary of the vnode and position classes</vh>
+<v t="ekr.20040403184306.4" a="E"><vh>@rst</vh>
+<v t="ekr.20040411151245" a="E"><vh>Iterators</vh>
+<v t="ekr.20040411151245.1" a="E"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.27"><vh>Getters</vh>
-<v t="ekr.20040403192653"><vh>@rst</vh></v>
+<v t="ekr.20040403173920.27" a="E"><vh>Getters</vh>
+<v t="ekr.20040403192653" a="E"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.28"><vh>Setters</vh>
-<v t="ekr.20040403192653.1"><vh>@rst</vh></v>
+<v t="ekr.20040403173920.28" a="E"><vh>Setters</vh>
+<v t="ekr.20040403192653.1" a="E"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
@@ -1580,7 +1582,7 @@ At present only the u.saveTree method exists.  Coming soon, u.saveNode, u.saveNo
 <t tx="EKR.20040601102808">See the to-do list in LeoPy.leo for a list of known bugs in this version.
 
 None of these bugs is serious:  I consider this version to be suitable for day-to-day work.</t>
-<t tx="EKR.20040628095213">Leo 4.2 beta 1           July 1, 2004
+<t tx="EKR.20040628095213">Leo 4.2 beta 1           June 30, 2004
 
 Beta 1 completes all fundamental work in the 4.2 code base. All essential code
 is complete. Dozens of bugs have been fixed since the Alpha 3 release about a
@@ -8142,7 +8144,6 @@ Leo's source code is a collection of classes, along with utility functions in le
 .. code-block:: Python
 
     import leoGlobals as g
-    from leoGlobals import true,false
 
 After these imports you may call function x in leoGlobals with g.x()
 
@@ -8190,8 +8191,8 @@ leoGlobal.py defines 6 convenience methods for redirecting stdout and stderr.
     g.redirectStdout() # Redirect stdout to the current log pane.
     g.restoreStderr()  # Restores stderr so it prints to the console window.
     g.restoreStdout()  # Restores stdout so it prints to the console window.
-    g.stdErrIsRedirected() # Returns true if the stderr stream is redirected to the log pane.
-    g.stdOutIsRedirected() # Returns true if the stdout stream is redirected to the log pane.
+    g.stdErrIsRedirected() # Returns True if the stderr stream is redirected to the log pane.
+    g.stdOutIsRedirected() # Returns True if the stdout stream is redirected to the log pane.
 
 Calls need _not_ be paired. Redundant calls are ignored and the last call made
 controls where output for each stream goes.
@@ -8227,7 +8228,7 @@ Note: you must execute Leo in a console window to see non-redirected output from
 Iterators are defined only by the position class;
 vnodes can not have iterators because vnodes may appear in multiple places in an outline.
 
-All iterators take an optional copy keyword argument.  You should use copy=true if your script actually alters the position returned by the iterator, say by calling p.moveToThreadNext().</t>
+All iterators take an optional copy keyword argument.  You should use copy=True if your script actually alters the position returned by the iterator, say by calling p.moveToThreadNext().</t>
 <t tx="ekr.20040403183934.1">@ignore
 @wrap
 
@@ -8235,7 +8236,7 @@ Leo's commands use c.beginUpdate() and c.endUpdate() to reduce flicker.
 c.beginUpdate suppresses all drawing in the outline pane until the matching c.endUpdate is seen.
 These methods can be nested; each c.beginUpdate() must have a corresponding c.endUpdate.
 
-c.endUpdate takes an optional parameter.  If this parameter is false, no redrawing is done.  This can sometimes be useful; inner code can tell other code whether redrawing is actually required.
+c.endUpdate takes an optional parameter.  If this parameter is False, no redrawing is done.  This can sometimes be useful; inner code can tell other code whether redrawing is actually required.
 
 c.redraw() forces an update of the entire screen.
 c.endUpdate() calls c.redraw() as needed.
@@ -8243,7 +8244,6 @@ c.endUpdate() calls c.redraw() as needed.
 .. code-block:: Python
 
     import leoGlobals as g
-    from leoGlobals import true,false
     c = g.top()
 
     # Force a screen redraw
@@ -8257,7 +8257,7 @@ c.endUpdate() calls c.redraw() as needed.
     # Typical way to conditionally redraw the screen:
     c.beginUpdate()
     ...code sets flag if the screen needs redrawing.
-    flag = true
+    flag = True
     c.endUpdate(flag)s
     </t>
 <t tx="ekr.20040403183934.2">@ignore
@@ -8537,7 +8537,7 @@ Returning bools representing property bits.
 .. code-block:: Python
 
     p.hasChildren()
-    p.isAncestorOf(v2) # true if v2 is a child, grandchild, etc. of p.
+    p.isAncestorOf(v2) # True if v2 is a child, grandchild, etc. of p.
     p.isCloned()
     p.isDirty()
     p.isExpanded()
@@ -8768,5 +8768,15 @@ My brother, David Speed Ream, tested Leo and made many useful suggestions.
 Rebecca, James and Linda make it all worthwhile.
 It was during a conversation with Rebecca that I realized that MORE could be used as a prototype for Leo.
 That was a crucial first step.</t>
+<t tx="ekr.20040629164557">- By default, leoConfig.leo and leoConfig.txt specify that Leo will indent using
+spaces instead of tabs.
+
+- The preferred way to import leoGlobals is:
+
+import leoGlobals as g
+
+To access any symbol x in leoGlobals, the code uses g.x.
+
+- leoGlobals no longer defines true and false.  Code should use True and False instead.</t>
 </tnodes>
 </leo_file>
