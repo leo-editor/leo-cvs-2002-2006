@@ -631,13 +631,12 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"
 marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
-<v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
-<v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
+<v t="ekr.20040716144017" a="E"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1" a="M"><vh>-input</vh></v>
 <v t="ekr.20040716081019" a="M"><vh>-input-after</vh></v>
@@ -665,7 +664,7 @@ marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040716141621.6" a="M"><vh>-j_lines</vh></v>
 <v t="ekr.20040716141621.7" a="M"><vh>-result</vh></v>
 </v>
-<v t="ekr.20040716142121"><vh>@test replace across sentinel blocks: Succeeds ONLY when ignoring sentinels</vh>
+<v t="ekr.20040716142121" a="E"><vh>@test replace across sentinel blocks: Succeeds ONLY when ignoring sentinels</vh>
 <v t="ekr.20040716142423" a="M"><vh>-input</vh>
 <v t="ekr.20040716142423.1" a="M"><vh>Node 1</vh></v>
 <v t="ekr.20040716142423.2" a="M"><vh>Node 2</vh></v>
@@ -681,6 +680,7 @@ marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040716142121.7" a="M"><vh>-result</vh></v>
 </v>
 </v>
+<v t="ekr.20040712101754.7" a="E"><vh>Import/Export tests</vh>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
 <v t="ekr.20040712101754.10"><vh>importTests</vh>
@@ -1096,7 +1096,7 @@ marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040716140617.1" a="M"><vh>runPerfectImportTest</vh></v>
 </v>
 </v>
-<v t="ekr.20040716062608" a="TV"><vh>Perfect Import Script</vh></v>
+<v t="ekr.20040716062608" a="ETV"><vh>Perfect Import Script</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -8676,7 +8676,7 @@ name2 = g.os_path_join(path,"SimpleHTTPServer.py")
 names = [name1]
 
 c.importCommands.importFilesCommand (names,"@file",
-    perfectImport=True,testing=False,verbose=False)</t>
+    perfectImport=True,testing=False,verbose=True)</t>
 <t tx="ekr.20040716071029.6"># See the node called "About the Perfect Import tests" in leoTests.py for details.
 
 @ignore # Suppress Check Python Code warnings.
