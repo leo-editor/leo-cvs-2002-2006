@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4210" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4249" clone_windows="0"/>
 <globals body_outline_ratio="0.427922814983">
 	<global_window_position top="35" left="370" height="881" width="861"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -12,10 +12,6 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="ekr.20040414082422"><vh>Distribution checklist</vh>
-<v t="ekr.20040414082422.1" tnodeList="ekr.20040414082422.1"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
-<v t="ekr.20040414082422.2"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
-</v>
 <v t="ekr.20040303080938"><vh>Diary</vh>
 <v t="ekr.20040315210314"><vh>March 2004</vh>
 <v t="ekr.20040315210314.1"><vh>3/15: Created stubs for Find Commands tests</vh></v>
@@ -526,71 +522,131 @@
 <v t="EKR.20040504153320.1"><vh>&lt;&lt; compute operation &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="EKR.20040506111209"><vh>Import tests</vh></v>
-<v t="EKR.20040516153720"><vh>pydot stuff</vh>
-<v t="EKR.20040517170949"><vh>pydot docs</vh>
-<v t="EKR.20040517170949.1"><vh>Cluster(Graph)</vh></v>
-<v t="EKR.20040517170949.2"><vh>Common</vh></v>
-<v t="EKR.20040517170949.3"><vh>Dot(Graph)</vh>
-<v t="EKR.20040517174641"><vh>create and create_xxx</vh></v>
-<v t="EKR.20040517174641.1"><vh>write and write_xxx</vh></v>
+<v t="EKR.20040523112430"><vh>Cloning headlines</vh>
+<v t="EKR.20040523112430.1"><vh>read me</vh>
+<v t="EKR.20040523112430.2" a="E"><vh>b</vh>
+<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
-<v t="EKR.20040517170949.4"><vh>Edge</vh></v>
-<v t="EKR.20040517170949.5"><vh>Error</vh></v>
-<v t="EKR.20040517170949.6"><vh>Graph(Common)</vh>
-<v t="EKR.20040517172508"><vh>Graph.__init__</vh></v>
-<v t="EKR.20040517172508.1"><vh>add_edge</vh></v>
-<v t="EKR.20040517172508.2"><vh>add_node</vh></v>
-<v t="EKR.20040517172508.3"><vh>add_subgraph</vh></v>
-<v t="EKR.20040517172508.4"><vh>getters...</vh></v>
-<v t="EKR.20040517172508.5"><vh>setters...</vh></v>
-<v t="EKR.20040517172508.6"><vh>toString</vh></v>
-</v>
-<v t="EKR.20040517170949.7"><vh>Node(Common)</vh>
-<v t="EKR.20040517172750"><vh>Node.__init__</vh></v>
-<v t="EKR.20040517172750.1"><vh>get_name</vh></v>
-<v t="EKR.20040517172750.2"><vh>set, set_x and set_name</vh></v>
-<v t="EKR.20040517172813"><vh>toString</vh></v>
-</v>
-<v t="EKR.20040517170949.8"><vh>Subgraph(Graph)</vh></v>
-<v t="EKR.20040517172508.7"><vh>Functions</vh>
-<v t="EKR.20040517173032"><vh>find_graphviz</vh></v>
-<v t="EKR.20040517173032.1"><vh>graph_from_adjacency_matrix</vh></v>
-<v t="EKR.20040517173032.2"><vh>graph_from_edges</vh></v>
-<v t="EKR.20040517173032.3"><vh>graph_from_incidence_matrix</vh></v>
+<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
 </v>
-<v t="EKR.20040516160721"><vh>@url http://www.research.att.com/sw/tools/graphviz/refs.html</vh></v>
-<v t="EKR.20040516154602"><vh>@url http://dkbza.org/pydot/pydot.html</vh></v>
-<v t="EKR.20040516154602.1"><vh>test</vh></v>
-<v t="EKR.20040517165217"><vh>Create a graphviz file (original)</vh>
-<v t="EKR.20040517165217.2"><vh>rPrint</vh></v>
-<v t="EKR.20040517165217.3"><vh>newLineize</vh></v>
-<v t="EKR.20040517165217.4"><vh>graphvizString</vh></v>
+<v t="EKR.20040523112430.6"><vh>g</vh></v>
 </v>
-<v t="EKR.20040517170949.9"><vh>Write an outline using Graphviz</vh>
-<v t="EKR.20040517173845"><vh>&lt;&lt; code &gt;&gt;</vh>
-<v t="EKR.20040517173845.1"><vh>addLeoNodesToGraph</vh></v>
-<v t="EKR.20040517203240"><vh>tnode/vnodeLabel</vh></v>
-<v t="EKR.20040517182928"><vh>tnode/vnodeRepr</vh></v>
+<v t="EKR.20040523112430.7"><vh>a</vh>
+<v t="EKR.20040523112430.2"><vh>b</vh>
+<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
-<v t="EKR.20040517170949.10"><vh>Root</vh>
-<v t="EKR.20040517202636"><vh>clone</vh>
-<v t="EKR.20040517170949.11"><vh>Child1</vh>
-<v t="EKR.20040517182235"><vh>GrandChild</vh></v>
-</v>
-<v t="EKR.20040517175449"><vh>Child2</vh></v>
-</v>
-<v t="EKR.20040517202636"><vh>clone</vh>
-<v t="EKR.20040517170949.11"><vh>Child1</vh>
-<v t="EKR.20040517182235"><vh>GrandChild</vh></v>
-</v>
-<v t="EKR.20040517175449"><vh>Child2</vh></v>
+<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
 </v>
+<v t="EKR.20040523112430.2"><vh>b</vh>
+<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
 </v>
-<v t="EKR.20040517110857" a="ETV"><vh>Distribution checklist for 4.2 a2</vh></v>
+<v t="EKR.20040523112430.6"><vh>g</vh></v>
+</v>
+<v t="EKR.20040523112430.7"><vh>a</vh>
+<v t="EKR.20040523112430.2"><vh>b</vh>
+<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523112430.2"><vh>b</vh>
+<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523112430.6"><vh>g</vh></v>
+</v>
+<v t="EKR.20040523112430.8"><vh>f</vh></v>
+</v>
+<v t="EKR.20040523110004" a="TV"><vh>Cloning headlines</vh>
+<v t="EKR.20040523110004.1"><vh>read me</vh>
+<v t="EKR.20040523110004.2"><vh>b</vh>
+<v t="EKR.20040523110004.3"><vh>c</vh>
+<v t="EKR.20040523110004.4"><vh>d</vh></v>
+<v t="EKR.20040523110004.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523110004.3"><vh>c</vh>
+<v t="EKR.20040523110004.4"><vh>d</vh></v>
+<v t="EKR.20040523110004.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523110004.6"><vh>g</vh></v>
+</v>
+<v t="EKR.20040523110004.7"><vh>a</vh>
+<v t="EKR.20040523110004.2"><vh>b</vh>
+<v t="EKR.20040523110004.3"><vh>c</vh>
+<v t="EKR.20040523110004.4"><vh>d</vh></v>
+<v t="EKR.20040523110004.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523110004.3"><vh>c</vh>
+<v t="EKR.20040523110004.4"><vh>d</vh></v>
+<v t="EKR.20040523110004.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523110004.2"><vh>b</vh>
+<v t="EKR.20040523110004.3"><vh>c</vh>
+<v t="EKR.20040523110004.4"><vh>d</vh></v>
+<v t="EKR.20040523110004.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523110004.3"><vh>c</vh>
+<v t="EKR.20040523110004.4"><vh>d</vh></v>
+<v t="EKR.20040523110004.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523110004.6"><vh>g</vh></v>
+</v>
+<v t="EKR.20040523110004.7"><vh>a</vh>
+<v t="EKR.20040523110004.2"><vh>b</vh>
+<v t="EKR.20040523110004.3"><vh>c</vh>
+<v t="EKR.20040523110004.4"><vh>d</vh></v>
+<v t="EKR.20040523110004.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523110004.3"><vh>c</vh>
+<v t="EKR.20040523110004.4"><vh>d</vh></v>
+<v t="EKR.20040523110004.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523110004.2"><vh>b</vh>
+<v t="EKR.20040523110004.3"><vh>c</vh>
+<v t="EKR.20040523110004.4"><vh>d</vh></v>
+<v t="EKR.20040523110004.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523110004.3"><vh>c</vh>
+<v t="EKR.20040523110004.4"><vh>d</vh></v>
+<v t="EKR.20040523110004.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523110004.6"><vh>g</vh></v>
+</v>
+<v t="EKR.20040523110004.8"><vh>f</vh></v>
+</v>
+<v t="EKR.20040520104329" a="E"><vh>@file-thin c:\prog\test\thinCloneTest.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1753,28 +1809,6 @@ if sourcetime:
 		operation = push
 elif targettime:
 	operation = pull</t>
-<t tx="EKR.20040506111209">@tabwidth -4</t>
-<t tx="EKR.20040516153720"></t>
-<t tx="EKR.20040516154602"></t>
-<t tx="EKR.20040516154602.1">import leoGlobals as g
-from leoGlobals import true,false
-
-import pydot
-import os
-
-if 0:
-	dict = pydot.find_graphviz()
-	for s in dict.keys():
-		print "%6s" % s, dict[s]
-
-edges=[(1,2), (1,3), (1,4), (3,4)] 
-graph=pydot.graph_from_edges(edges,directed=true)
-
-graph.write_jpeg(r'c:\prog\test\graph_from_edges_dot.jpg',prog='dot')
-
-graph.write_jpeg(r'c:\prog\test\graph_from_edges_neato.jpg', prog='neato')
-</t>
-<t tx="EKR.20040516160721"></t>
 <t tx="EKR.20040517074600.8">from leoGlobals import *
 import leoTest
 
@@ -1849,533 +1883,24 @@ if 0:
 font = g.app.config.defaultFont
 
 print font.cget("family"), font.cget("weight")</t>
-<t tx="EKR.20040517110857">@nocolor
-
-Create Release on SourceForge
-
-Uploads
-    - Upload leodocs.zip
-	- Upload leosetup.exe
-	- Upload leo-x-y.zip
-
-Announcements
-	- Announce to Leo's SourceForce site.</t>
-<t tx="EKR.20040517165217">import leoGlobals as g
-from leoGlobals import true,false
-import pydot
-import re
-
-@others
-
-c = g.top() ; v = c.rootVnode()
-
-s = []
-while v:
-	s.append(graphvizString(v))
-	v = v.next()
-s = ''.join(s)
-
-# Look for an @encoding directive.
-dict = g.scanDirectives(c,c.rootVnode())
-encoding = dict.get("encoding",None)
-if encoding is None:
-	encoding = g.app.config.default_derived_file_encoding
-
-if 0: # testing
-	print s
-else:
-	f = open(r'c:\prog\test\dotOutput','w')
-	f.write('digraph foo {\n')
-	f.write(g.toEncodedString(s,encoding))
-	f.write('}\n')
-	f.close()</t>
-<t tx="EKR.20040517165217.2">def rPrint(node,level):
-
-	indent = "%*s" % (4*level,"")
-	print indent + str(node.headString())
-	child = node.firstChild()
-	while(child):
-		rPrint(child,level+1)
-		child = child.next()</t>
-<t tx="EKR.20040517165217.3">def newLineize(s):
-
-	return re.sub('"',"'",re.sub(r"\s", r"\n", s))</t>
-<t tx="EKR.20040517165217.4">def graphvizString(node):
-
-	result = []
-	child = node.firstChild()
-	while child:
-		result.append('"%s" -&gt; "%s";\n%s' % (
-			newLineize(node.headString()),
-			newLineize(child.headString()),
-			graphvizString(child)))
-		child = child.next()
-	return ''.join(result)</t>
-<t tx="EKR.20040517170949">@nocolor</t>
-<t tx="EKR.20040517170949.1">class Cluster(Graph) 
- 
-Methods:
-
-__init__(self, graph_name='subG', suppress_disconnected=False, **attrs)
-
-graph_name: the cluster's name (the string 'cluster' will be always prepended)
-
-suppress_disconnected: defaults to false, which will remove from the cluster any disconnected nodes.
-
-Attributes:
-
-attributes = ['pencolor', 'bgcolor', 'labeljust', 'labelloc', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'lp', 'style', 'target', 'color', 'peripheries', 'fillcolor']
-
-Attributes can be set through the dynamically generated methods:
- 
- set_[attribute name], i.e. set_color, set_fontname
- 
-or using the instance's attributes:
- 
- Cluster.[attribute name], i.e.
-        cluster_instance.color, cluster_instance.fontname</t>
-<t tx="EKR.20040517170949.2">class Common 
-    Common information to several classes.
- 
-Should not be directly used, several classes are derived from this one.
-  
-char_range(self, a, b)
-Generate a list containing a range of characters.
- 
-is_ID(self, s)
-Checks whether a string is an dot language ID.
-
-Data:
-
-chars_ID = None
-parent_graph = None 
-
-
- 
-</t>
-<t tx="EKR.20040517170949.3">class Dot(Graph) 
-    A container for handling a dot language file.
- 
-This class implements methods to write and process a dot language file.
-  
---------------------------------------------------------------------------------
-Methods defined here:
-
-__init__(self, **args)
-
-
-
-
-
---------------------------------------------------------------------------------
-Data and other attributes defined here:
-
-formats = ['ps', 'ps2', 'hpgl', 'pcl', 'mif', 'pic', 'gd', 'gd2', 'gif', 'jpg', 'jpeg', 'png', 'wbmp', 'ismap', 'imap', 'cmap', 'vrml', 'vtx', 'mp', 'fig', ...]
-progs = None</t>
-<t tx="EKR.20040517170949.4">class Edge(__builtin__.object, Common) 
-    A graph edge.
- 
-This class represents a graph's edge with all its attributes.
- 
-edge(src, dst, attribute=value, ...)
- 
-src: source node's name
-dst: destination node's name
- 
-All the attributes defined in the Graphviz dot language should be supported.
- 
-Attributes can be set through the dynamically generated methods:
- 
- set_[attribute name], i.e. set_label, set_fontname
- 
-or using the instance's attributes:
- 
- Edge.[attribute name], i.e. edge_instance.label, edge_instance.fontname
-
-
---------------------------------------------------------------------------------
-Methods defined here:
-
-__eq__(self, edge)
-Compare two edges.
- 
-If the parent graph is directed, arcs linking
-node A to B are considered equal and A-&gt;B != B-&gt;A
- 
-If the parent graph is undirected, any edge
-connecting two nodes is equal to any other
-edge connecting the same nodes, A-&gt;B == B-&gt;A
-
-__init__(self, src, dst, **attrs)
-
-get_destination(self)
-Get the edge's destination node name.
-
-get_source(self)
-Get the edges source node name.
-
-parse_node_ref(self, node_str)
-
-set(self, name, value)
-Set an attribute value by name.
- 
-Given an attribute 'name' it will set its value to 'value'.
-There's always the possibility of using the methods:
-        set_'name'(value)
-which are defined for all the existing attributes.
-to_string(self)
-Returns a string representation of the edge in dot language.
-
---------------------------------------------------------------------------------
-Data and other attributes defined here:
-
-__dict__ = &lt;dictproxy object&gt;
-dictionary for instance variables (if defined)
-__weakref__ = &lt;attribute '__weakref__' of 'Edge' objects&gt;
-list of weak references to the object (if defined)
-attributes = ['style', 'target', 'pos', 'layer', 'tooltip', 'color', 'showboxes', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'comment', 'lp', 'arrowhead', 'arrowsize', 'arrowtail', 'constraint', 'decorate', 'dir', ...]</t>
-<t tx="EKR.20040517170949.5">class Error(exceptions.Exception) 
-    General error handling class.
-  
-Methods defined here:
-
-__init__(self, value)
-__str__(self)</t>
-<t tx="EKR.20040517170949.6">class Graph(__builtin__.object, Common) 
-    Class representing a graph in Graphviz's dot language.
- 
-This class implements the methods to work on a representation
-of a graph in Graphviz's dot language.
- 
-
-
-
-
---------------------------------------------------------------------------------
-Data and other attributes defined here:
-
-__dict__ = &lt;dictproxy object&gt;
-dictionary for instance variables (if defined)
-
-__weakref__ = &lt;attribute '__weakref__' of 'Graph' objects&gt;
-list of weak references to the object (if defined)
-
-attributes = ['Damping', 'bb', 'center', 'clusterrank', 'compound', 'concentrate', 'defaultdist', 'dim', 'fontpath', 'epsilon', 'layers', 'layersep', 'margin', 'maxiter', 'mclimit', 'mindist', 'pack', 'packmode', 'model', 'page', ...]</t>
-<t tx="EKR.20040517170949.7">class Node(__builtin__.object, Common) 
-    A graph node.
- 
-This class represents a graph's node with all its attributes.
- 
-
-Data and attributes:
-
-__dict__ = &lt;dictproxy object&gt;
-dictionary for instance variables (if defined)
-
-__weakref__ = &lt;attribute '__weakref__' of 'Node' objects&gt;
-list of weak references to the object (if defined)
-
-attributes = ['showboxes', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'comment', 'root', 'toplabel', 'vertices', 'width', 'z', 'bottomlabel', 'distortion', 'fixedsize', 'group', 'height', 'orientation', 'pin', 'rects', ...]</t>
-<t tx="EKR.20040517170949.8">class Subgraph(Graph) 
-
-Methods:
-
-__init__(self, graph_name='subG', suppress_disconnected=False, **attrs)
-
-graph_name: the subgraph's name
-
-suppress_disconnected:
-        defaults to false, which will remove from the subgraph any disconnected nodes.
-
-Attributes:
-
-attributes = ['Damping', 'bb', 'center', 'clusterrank', 'compound', 'concentrate', 'defaultdist', 'dim', 'fontpath', 'epsilon', 'layers', 'layersep', 'margin', 'maxiter', 'mclimit', 'mindist', 'pack', 'packmode', 'model', 'page', ...]
-
-Attributes can be set through the dynamically generated methods:
- 
- set_[attribute name], i.e. set_size, set_fontname
- 
-or using the instance's attributes:
- 
- Subgraph.[attribute name], i.e.
-        subgraph_instance.label, subgraph_instance.fontname</t>
-<t tx="EKR.20040517170949.9">import leoGlobals as g
-from leoGlobals import true,false
-import os,pydot,string
-
-c = g.top() ; p = c.currentPosition()
-
-&lt;&lt; code &gt;&gt;
-	
-graph = pydot.Dot(simplify=true,ordering="out")
-root = g.findNodeInTree(p,"Root")
-addLeoNodesToGraph(root,graph,top=true)
-graph.write_jpeg(r'c:\prog\test\pydotOut.jpg',prog='dot')</t>
-<t tx="EKR.20040517170949.10"></t>
-<t tx="EKR.20040517170949.11"></t>
-<t tx="EKR.20040517172508">__init__(self, graph_name='G', type='digraph', strict=False, suppress_disconnected=False, simplify=False, **attrs)
-
- 
-graph_name: the graph's name
-
-type: 'graph' or 'digraph'
-
-suppress_disconnected:
-	defaults to False, which will remove from the graph any disconnected nodes.
-
-simplify:
-	if True it will avoid displaying equal edges, i.e. only one edge between two nodes. removing the duplicated ones.
-        
-All the attributes defined in the Graphviz dot language should be supported.
- 
-Attributes can be set through the dynamically generated methods:
- 
-set_[attribute name], i.e. set_size, set_fontname
- 
-or using the instance's attributes:
- 
- Graph.[attribute name], i.e. graph_instance.label, graph_instance.fontname</t>
-<t tx="EKR.20040517172508.1">add_edge(self, graph_edge)
-
-Adds an edge object to the graph.</t>
-<t tx="EKR.20040517172508.2">add_node(self, graph_node)
-
-Adds a node object to the graph.</t>
-<t tx="EKR.20040517172508.3">add_subgraph(self, sgraph)
-
-Adds an edge object to the graph.
-</t>
-<t tx="EKR.20040517172508.4">get(self, name)
-Get an attribute value by name.
-
-get_'name'() is defined for all attributes.
-
-get_edge(self, src, dst)
-Retrieved an edge from the graph.
-Returns a list, a single Edge, or None
-
-get_edge_list(self)
-Returns the list of Edge instances composing the graph.
-
-get_name(self)
-Get the graph's name.
-
-get_node(self, name)
-Given a node's name the corresponding Node instance will be returned.
-Returns a list, a single Node or None.
- 
-get_node_list(self)
-Returns the list of Node instances composing the graph.
-
-get_simplify(self)
-Get whether to simplify or not.
-
-get_strict(self, val)
-Get graph's 'strict' mode (True, False).
-This option is only valid for top level graphs.
-
-get_subgraph(self, name)
-Given a subgraph's name the corresponding Subgraph instance will be returned.
-Returns a list of Subgraphs, a single Subgraph or None.
-
-get_subgraph_list(self)
-Returns the list of Subgraph instances in the graph.
-
-get_suppress_disconnected(val)
-Get if suppress disconnected is set.
-
-get_type(self)
-Get the graph's type, 'graph' or 'digraph'.</t>
-<t tx="EKR.20040517172508.5">set(self, name, value)
-Set an attribute value by name.
- 
-set_'name'(value) are defined for all the existing attributes.
-
-set_graph_parent(self, parent)
-Sets a graph and its elements to point the the parent.
-Any subgraph added to a parent graph receives a reference to the parent to access some common data.
-
-set_name(self, graph_name)
-Set the graph's name.
-
-set_simplify(self, simplify)
-Set whether to simplify or not.
- If True it will avoid displaying equal edges.
-
-set_strict(self, val)
-Set graph to 'strict' mode.
-This option is only valid for top level graphs.
-
-set_suppress_disconnected(val)
-Suppress disconnected nodes in the output graph.
- 
-set_type(self, graph_type)
-Set the graph's type, 'graph' or 'digraph'.
-
-</t>
-<t tx="EKR.20040517172508.6">to_string(self, indent='')
-Returns a string representation of the graph in dot language.</t>
-<t tx="EKR.20040517172508.7"></t>
-<t tx="EKR.20040517172750">node(name, attribute=value, ...)
- 
-name: node's name
- 
-All the attributes defined in the Graphviz dot language should be supported.
-  
-__init__(self, name, **attrs)
-</t>
-<t tx="EKR.20040517172750.1">get_name(self)
-Get the node's name.</t>
-<t tx="EKR.20040517172750.2">set(self, name, value)
-Set an attribute value by name.
- 
-Given an attribute 'name' it will set its value to 'value'.
-
-set_'name'(value) is defined for all the existing attributes.
-
-set_name(self, node_name)
-Set the node's name.</t>
-<t tx="EKR.20040517172813">to_string(self)
-Returns a string representation of the node in dot language.</t>
-<t tx="EKR.20040517173032">find_graphviz()
-
-Locate Graphviz's executables in the system.
- 
-Attempts  to locate  graphviz's  executables in a Unix system.
-It will look for 'dot', 'twopi' and 'neato' in all the directories
-specified in the PATH environment variable.
-It will return a dictionary containing the program names as keys
-and their paths as values.</t>
-<t tx="EKR.20040517173032.1">graph_from_adjacency_matrix(matrix, node_prefix='', directed=False)
-
-Creates a basic graph out of an adjacency matrix.
- 
-The matrix has to be a list of rows of values
-representing an adjacency matrix.
-The values can be anything: bool, int, float, as long
-as they can evaluate to True or False.</t>
-<t tx="EKR.20040517173032.2">graph_from_edges(edge_list, node_prefix='', directed=False)
-
-Creates a basic graph out of an edge list.
- 
-The edge list has to be a list of tuples representing the nodes connected by the edge.
-
-The values can be anything: bool, int, float, str.
- 
-If the graph is undirected by default, it is only
-calculated from one of the symmetric halves of the matrix.
-</t>
-<t tx="EKR.20040517173032.3">graph_from_incidence_matrix(matrix, node_prefix='', directed=False)
-
-Creates a basic graph out of an incidence matrix.
- 
-The matrix has to be a list of rows of values
-representing an incidence matrix.
-The values can be anything: bool, int, float, as long
-as they can evaluate to True or False.</t>
-<t tx="EKR.20040517173845">@others</t>
-<t tx="EKR.20040517173845.1">def addLeoNodesToGraph(p,graph,top=false):
-
-	# Create p's vnode.
-	thisNode = pydot.Node(name=vnodeRepr(p.v),label=vnodeLabel(p.v))
-	graph.add_node(thisNode)
-	
-	if p.hasChildren():
-		child = p.firstChild()
-		childNode = addLeoNodesToGraph(child,graph)
-		graph.add_node(childNode)
-		edge2 = pydot.Edge(tnodeRepr(p.v.t),vnodeRepr(child.v))
-		graph.add_edge(edge2)
-		
-		while child.hasNext():
-			next = child.next()
-			edge = pydot.Edge(vnodeRepr(child.v),vnodeRepr(next.v),dir="both")
-			nextNode = addLeoNodesToGraph(next,graph)
-			graph.add_node(nextNode)
-			graph.add_edge(edge)
-			child = next
-			
-	tnode = pydot.Node(name=tnodeRepr(p.v.t),shape="box",label=tnodeLabel(p.v.t))
-	edge1 = pydot.Edge(vnodeRepr(p.v),tnodeRepr(p.v.t),arrowhead="none")
-	graph.add_edge(edge1)
-	graph.add_node(tnode)
-	
-	if 0: # Confusing.
-		if not top and p.v._parent:
-			edge = pydot.Edge(vnodeRepr(p.v),vnodeRepr(p.v._parent),
-				style="dotted",arrowhead="onormal")
-			graph.add_edge(edge)
-
-	if 0: # Marginally useful.
-		for v in p.v.t.vnodeList:
-			edge = pydot.Edge(tnodeRepr(p.v.t),vnodeRepr(v),
-				style="dotted",arrowhead="onormal")
-			graph.add_edge(edge)
-
-	return thisNode</t>
-<t tx="EKR.20040517174641">create(self, prog='dot', format='ps')
-Creates and returns a Postscript representation of the graph.
- 
-create will write the graph to a temporary dot file and process
-it with the program given by 'prog' (which defaults to 'twopi'),
-reading the Postscript output and returning it as a string is the
-operation is successful.
-On failure None is returned.
- 
-There's also the preferred possibility of using:
- 
-        create_'format'(prog='program')
-        
-which are automatically defined for all the supported formats.
-
-[create_ps(), create_gif(), create_dia(), ...]</t>
-<t tx="EKR.20040517174641.1">write(self, path, prog='dot', format='raw')
-Writes a graph to a file.
- 
-Given a filename 'path' it will open/create and truncate
-such file and write on it a representation of the graph
-defined by the dot object and in the format specified by
-'format'.
-
-The format 'raw' is used to dump the string representation
-of the Dot object, without further processing.
-
-The output can be processed by any of graphviz tools, defined
-in 'prog', which defaults to 'dot'
-
-Returns True or False according to the success of the write operation.
- 
-There's also the preferred possibility of using:
- 
-        write_'format'(path, prog='program')
-        
-which are automatically defined for all the supported formats.
-[write_ps(), write_gif(), write_dia(), ...]</t>
-<t tx="EKR.20040517175449"></t>
-<t tx="EKR.20040517182235"></t>
-<t tx="EKR.20040517182928">def dotId(s):
-	
-	"""Convert s to a C id"""
-
-	s2 = [ch for ch in s if ch in (string.letters + string.digits + '_')]
-	return string.join(s2,'')
-
-def tnodeRepr(t):
-
-	return "t_%d" % id(t)
-	
-def vnodeRepr(v):
-	
-	return "v_%d_%s" % (id(v),dotId(v.headString()))</t>
-<t tx="EKR.20040517202636"></t>
-<t tx="EKR.20040517203240">def tnodeLabel(t):
-	
-	return "t %d [%d]" % (id(t),len(t.vnodeList))
-	
-def vnodeLabel(v):
-	
-	return "v %d %s" % (id(v),v.t.headString)
-</t>
+<t tx="EKR.20040523110004"></t>
+<t tx="EKR.20040523110004.1"></t>
+<t tx="EKR.20040523110004.2"></t>
+<t tx="EKR.20040523110004.3"></t>
+<t tx="EKR.20040523110004.4"></t>
+<t tx="EKR.20040523110004.5"></t>
+<t tx="EKR.20040523110004.6"></t>
+<t tx="EKR.20040523110004.7"></t>
+<t tx="EKR.20040523110004.8"></t>
+<t tx="EKR.20040523112430"></t>
+<t tx="EKR.20040523112430.1"></t>
+<t tx="EKR.20040523112430.2"></t>
+<t tx="EKR.20040523112430.3"></t>
+<t tx="EKR.20040523112430.4"></t>
+<t tx="EKR.20040523112430.5"></t>
+<t tx="EKR.20040523112430.6"></t>
+<t tx="EKR.20040523112430.7"></t>
+<t tx="EKR.20040523112430.8"></t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -4387,280 +3912,6 @@ else:
 <t tx="ekr.20040409142028.1"></t>
 <t tx="ekr.20040409142108"></t>
 <t tx="ekr.20040409142108.1"></t>
-<t tx="ekr.20040414082422">@color
-
-# **** Run this from test.leo ****
-
-# Run pychecker from idle.
-if 1:
-	import pychecker.checker
-	import leo
-@nocolor
-Documentation
-	- Update readme.txt
-	- Update LeoDocs.leo
-	** Update version number on web site.
-Version numbers
-	- Update version number in Help menu.
-	- Update version number in setup.py (@ignore'd!!)
-	** Make sure the top-level directory has no spaces in its name.
-@color
-
-if 1: # Save all files and tangle leoConfig.leo
-	from leoGlobals import importFromPath
-	preSetup = importFromPath("preSetup","c:\prog\leoCvs\leo")
-	preSetup.setup()
-
-if 1: # Replace config settings and create .zip file.
-	import os
-	os.system(r"c:\python22\python c:\prog\leoCvs\leo\setup.py sdist --formats=zip")
-
-@nocolor
-Create and test leosetup.exe.
-	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
-	- Test created leosetup.exe file.
-	- test the files created in c:\program files\leo
-
-@color
-# **** Scan all folders &amp; files before uploading.
-@nocolor
-
-Create Release on SourceForge
-
-Uploads
-    - Upload leodocs.zip
-	- Upload leosetup.exe
-	- Upload leo-x-y.zip
-	- Upload sbook.chm if it has been changed.
-Announcements
-	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
-	- Announce to Leo's SourceForce site.
-	- Announce to comp.lang.python
-	- Announce to comp.programming.literate
-	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
-<t tx="ekr.20040414082422.1"># Sample defaults file for PyChecker 0.8.13
-# This file should be called:  .pycheckrc
-# It should be placed in your home directory (value of $HOME).
-# If $HOME is not set, it will look in the current directory.
-
-# file = c:/prog/leoCVS/leo/src/leo.py
-
-# bool: warnings for Doc Strings
-noDocModule = 0
-noDocClass = 0
-noDocFunc = 0
-
-# bool: when checking if class data members (attributes) are set
-#       check all members or __init__() only
-onlyCheckInitForMembers = 0
-
-# bool: warn when all module variables are not used (including private vars)
-allVariablesUsed = 0
-
-# bool: produce warnings for each occurrence of a warning for global (xxx)
-reportAllGlobals = 0
-
-# bool: warn when private module variables are not used (_var)
-privateVariableUsed = 1
-
-# bool: warn when imports are not used
-importUsed = 1
-
-# bool: warn when import and from ... import are used for same module
-mixImport = 0 # EKR
-
-# bool: warn when imports are not used in __init__.py
-packageImportUsed = 1
-
-# bool: warn when a module reimports another module (import &amp; from/import)
-moduleImportErrors = 0 # EKR
-
-# bool: warn when modules import themselves
-reimportSelf = 0 # EKR
-
-# bool: warn when local variables are not used
-localVariablesUsed = 1
-
-# bool:  assume a, b, and c are used in this case:  a, b, c = func()
-unusedLocalTuple = 0
-
-# bool:  warn when class attributes (data members) are unused
-membersUsed = 0
-
-# bool: warn when Subclass.__init__ is not called in a subclass
-baseClassInitted = 1
-
-# bool: warn when Subclass needs to override methods that only throw exceptions
-abstractClasses = 1
-
-# bool: warn when __init__ is defined in a subclass
-initDefinedInSubclass = 0
-
-# bool: warn when __init__ returns None
-returnNoneFromInit = 1
-
-# bool: warn when code is not reachable
-unreachableCode = 0
-
-# bool: warn when a constant is used in a conditional statement (if '':)
-constantConditions = 1
-
-# bool: warn when 1 is used in a conditional statement, (if 1: while 1: etc)
-constant1 = 0
-
-# bool: warn when iterating over a string in a for loop
-stringIteration = 1
-
-# bool: warn when setting a variable to different types
-inconsistentTypes = 0
-
-# bool: warn when setting a tuple of variables to a non-sequence (a, b = None)
-unpackNonSequence = 1
-
-# bool: warn when setting a tuple of variables to the wrong length (a, b = 1,)
-unpackLength = 1
-
-# bool: warn when using strings exceptions or 
-#       other classes not derived from Exception to raise/catch exceptions
-badExceptions = 1
-
-# bool: warn when statements appear to have no effect
-noEffect = 1
-
-# bool: warn when using (expr % 1), it has no effect on integers and strings
-modulo1 = 1
-
-# bool: warn if using (expr is const-literal), 
-# doesn't always work on integers and strings
-isLiteral = 0 # EKR
-
-# bool: warn when using a deprecated module or function
-deprecated = 1
-
-# bool: warn when the class attribute does not exist
-classAttrExists = 1
-
-# bool: warn when calling an attribute not a method
-callingAttribute = 0
-
-# bool: warn when using named arguments: func(a=1, b=2), where def func(a, b):
-#       def func2(a, b, **kw): doesn't generate a warning
-namedArgs = 0 # EKR
-
-# str: name of 'self' parameter
-methodArgName = 'self'
-
-# list of str: names of first parameter to classmethods
-## classmethodArgNames = ['cls', 'klass']
-
-# bool: warn when method/function arguments are unused
-argumentsUsed = 1
-
-# bool: ignore if self is unused in methods
-ignoreSelfUnused = 0
-
-# bool: warn if functions/classes/methods names are redefined in same scope
-redefiningFunction = 1
-
-# bool:  check if an overriden method has the same signature
-#	 as base class method (__init__() methods are not checked)
-checkOverridenMethods = 1
-
-# bool:  check if a special (reserved) method has the correct signature
-#	 and is known (these are methods that begin and end with __
-## checkSpecialMethods = 1
-
-# int: warnings for code complexity, max value before generating a warning
-maxLines = 2000
-maxBranches = 500
-maxReturns = 100
-maxArgs = 100
-maxLocals = 250
-maxReferences = 500
-
-# bool:  ignore all warnings from standard library components
-#	 (this includes anything under the standard library, eg, site-packages)
-ignoreStandardLibrary = 1 # EKR
-
-# list of strings: ignore unused locals/arguments if name is one of
-unusedNames = [
-	'_', 'empty', 'unused', 'dummy', 'event', 'commander',
-	'c', 'i', 'j', 'k', 's',
-	'tag', 'args', 'keys', 'keywords']
-
-# list of strings: ignore warnings generated from these modules
-blacklist = [
-	'leoGlobals',
-	'leoConfig',
-	'leoFrame', 'leoMenu', 'leoGui', # Base classes have lots of unused params.
-	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
-
-# list of strings: ignore global variables not used if name is one of
-variablesToIgnore = [ '__all__', '__version__', '__copyright__', ]
-
-# bool: print the PyChecker parse of modules, classes, etc.
-printParse = 0
-
-# bool: turn debugging of PyChecker on
-debug = 0
-
-# bool: check that attributes of objects exist
-checkObjectAttrs = 1
-
-# bool: various warnings about incorrect usage of __slots__
-slots = 1
-
-# bool: check if __slots__ is empty
-emptySlots = 1
-
-# bool: check for using properties in classic classes
-classicProperties = 1
-
-# bool: check for integer division (may be problem between Python versions)
-intDivide = 1
-
-# bool: check if local variables shadow a global variable with same name
-shadows = 0 # EKR
-
-# bool: check if input() is used, which is a security problem, use raw_input()
-usesInput = 1
-
-# bool: check if using a constant string to getattr()/setattr()
-# Doesn't exist.
-## constAttr = 1
-
-# bool: check for using +variable, since it is almost always has no effect
-unaryPositive = 1
-
-# bool: check for modifying a parameter with a default value
-#       (value must be: list, dict, instance)
-#       modifying the value may have undesirable/unexpected side-effects
-modifyDefaultValue = 1
-
-# bool: check if the exec statement is used (possible security problem)
-usesExec = 0
-
-# bool: check consistent return values
-checkReturnValues = 1
-
-# bool: check if using implict and explicit return values
-checkImplicitReturns = 1
-
-# dict: suppress warnings, key is module.class.method or module.function
-#	value is a string of command line arguments (can omit -- for long args)
-#       { 'module1': 'no-namedargs maxlines=0',
-#	  'module2.my_func': 'argsused',
-#	  'module3.my_class': 'no-initreturn', }
-if 1:
-	suppressions = {}
-else: # Doesn't work
-	suppressions = {
-		'leoFrame' : 'argumentsUsed=0',
-		'leoGui' : 'argumentsUsed=0' }
-
-# dict: suppress warnings where keys can be regular expressions
-suppressionRegexs = {}</t>
-<t tx="ekr.20040414082422.2"></t>
 <t tx="ekr.20040414082806"></t>
 <t tx="ekr.20040419105536">@ignore
 @language perl

@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.2576:@file-thin ../dist/postSetup.py
+#@+node:EKR.20040519082027.29:@file-thin postSetup.py
 #@@first
 
 """ Postprocess after executing setup.py """
@@ -9,7 +9,7 @@ import leoGlobals as g
 from leoGlobals import true,false
 
 #@+others
-#@+node:EKR.20040517111317.1:replacePatterns
+#@+node:EKR.20040519082027.30:replacePatterns
 def replacePatterns (file,pats):
 
 	try:
@@ -36,8 +36,8 @@ def replacePatterns (file,pats):
 	except:
 		import traceback ; traceback.print_exc()
 		sys.exit()
-#@-node:EKR.20040517111317.1:replacePatterns
-#@+node:EKR.20040517111317.2:unsetDefaultParams
+#@-node:EKR.20040519082027.30:replacePatterns
+#@+node:EKR.20040519082027.31:unsetDefaultParams
 def unsetDefaultParams():
 	
 	print "unsetDefaultParams"
@@ -47,7 +47,7 @@ def unsetDefaultParams():
 	replacePatterns(g.os_path_join("config","leoConfig.leo"),pats)
 	replacePatterns(g.os_path_join("config","leoConfig.txt"),pats)
 #@nonl
-#@-node:EKR.20040517111317.2:unsetDefaultParams
+#@-node:EKR.20040519082027.31:unsetDefaultParams
 #@-others
 
 def setup():
@@ -55,5 +55,5 @@ def setup():
 		unsetDefaultParams()
 	print "postSetup complete"
 #@nonl
-#@-node:ekr.20031218072017.2576:@file-thin ../dist/postSetup.py
+#@-node:EKR.20040519082027.29:@file-thin postSetup.py
 #@-leo

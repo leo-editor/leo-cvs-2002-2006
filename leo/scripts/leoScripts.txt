@@ -2274,97 +2274,568 @@ else:
 print "total,visible",total,visible
 #@nonl
 #@-node:EKR.20040502195524.32:Count total, visible nodes
-#@+node:EKR.20040502195524.25:Create a graphviz file (original)
-# Warning: changes by EKR have not been properly tested!
+#@+node:EKR.20040518104556:Create diagrams using Graphviz and pydot
+#@+node:EKR.20040518104556.1:pydot notes by EKR
+#@@nocolor
+
+- I have found it easiest to create pydot objects rather than creating Graphviz strings.  It's the natural way, IMO.
+
+- The pydot documentation is poor.  When you cut through the blah-blah-blah all that is really going on is that you use ctors to create pydot objects.  Typically you specify attributes in the ctors, but there are also getters and setters (various silly redundant flavors) to do this.
+
+- It took me awhile to get the difference between names and labels.  Names are essentially object identifiers, and they are restricted to what are basically C identifiers.  Labels are what are shown in nodes.  The default label is the node's name.   It's a bit strange to use strings instead of Python object references, but it's no big deal.
+
+- The documentation for Graphviz is weak.  Very few examples.  It took me a long time to realize that by default Graphviz lays out nodes and edges independently of the order in which they were created.  The ordering="out" argument to the Dot ctor overrides some parts of the layout algorithm so that nodes are laid out in roughly the definition order.  If you want to place nodes yourself, you can specify their exact position.  This would be feasible to do in a script and I haven't done that yet.
+
+In short, Graphviz and pydot are very impressive tools.  The documentation could be improved, but once one gets the hang of things it is fairly easy to get real work done.
+#@nonl
+#@-node:EKR.20040518104556.1:pydot notes by EKR
+#@+node:EKR.20040518104556.2:pydot docs
+#@@nocolor
+#@nonl
+#@+node:EKR.20040518104556.3:General note about attributes
+The original documentation repeats endlessly the same info about attributes.
+
+Attributes can be set in several ways:
+
+set("attributeName")
+
+set_[attribute name], i.e. set_color, set_fontname
+
+object.attributeName = val
+
+Similarly, you can get attribute values with corresponding getters.
+#@nonl
+#@-node:EKR.20040518104556.3:General note about attributes
+#@+node:EKR.20040518104556.4:Cluster(Graph)
+class Cluster(Graph) 
+ 
+Methods:
+
+__init__(self, graph_name='subG', suppress_disconnected=False, **attrs)
+
+graph_name:
+	the cluster's name (the string 'cluster' will be always prepended)
+
+suppress_disconnected:
+	False: remove from the cluster any disconnected nodes.
+
+
+Attributes:
+
+attributes = ['pencolor', 'bgcolor', 'labeljust', 'labelloc', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'lp', 'style', 'target', 'color', 'peripheries', 'fillcolor']
+#@nonl
+#@-node:EKR.20040518104556.4:Cluster(Graph)
+#@+node:EKR.20040518104556.5:Common
+class Common 
+    Common information to several classes.
+ 
+Should not be directly used, several classes are derived from this one.
+  
+char_range(self, a, b)
+Generate a list containing a range of characters.
+ 
+is_ID(self, s)
+Checks whether a string is an dot language ID.
+
+Data:
+
+chars_ID = None
+parent_graph = None 
+
+
+ 
+#@-node:EKR.20040518104556.5:Common
+#@+node:EKR.20040518104556.6:Dot(Graph)
+class Dot(Graph) 
+    A container for handling a dot language file.
+ 
+This class implements methods to write and process a dot language file.
+
+  
+Methods defined here:
+
+__init__(self, **args)
+
+
+Attributes:
+
+formats = ['ps', 'ps2', 'hpgl', 'pcl', 'mif', 'pic', 'gd', 'gd2', 'gif', 'jpg', 'jpeg', 'png', 'wbmp', 'ismap', 'imap', 'cmap', 'vrml', 'vtx', 'mp', 'fig', ...]
+progs = None
+#@nonl
+#@+node:EKR.20040518104556.7:create and create_xxx
+create(self, prog='dot', format='ps')
+Creates and returns a Postscript representation of the graph.
+ 
+create will write the graph to a temporary dot file and process
+it with the program given by 'prog' (which defaults to 'twopi'),
+reading the Postscript output and returning it as a string is the
+operation is successful.
+On failure None is returned.
+ 
+There's also the preferred possibility of using:
+ 
+        create_'format'(prog='program')
+        
+which are automatically defined for all the supported formats.
+
+[create_ps(), create_gif(), create_dia(), ...]
+#@nonl
+#@-node:EKR.20040518104556.7:create and create_xxx
+#@+node:EKR.20040518104556.8:write and write_xxx
+write(self, path, prog='dot', format='raw')
+Writes a graph to a file.
+ 
+Given a filename 'path' it will open/create and truncate
+such file and write on it a representation of the graph
+defined by the dot object and in the format specified by
+'format'.
+
+The format 'raw' is used to dump the string representation
+of the Dot object, without further processing.
+
+The output can be processed by any of graphviz tools, defined
+in 'prog', which defaults to 'dot'
+
+Returns True or False according to the success of the write operation.
+ 
+There's also the preferred possibility of using:
+ 
+        write_'format'(path, prog='program')
+        
+which are automatically defined for all the supported formats.
+[write_ps(), write_gif(), write_dia(), ...]
+#@nonl
+#@-node:EKR.20040518104556.8:write and write_xxx
+#@-node:EKR.20040518104556.6:Dot(Graph)
+#@+node:EKR.20040518104556.9:Edge
+class Edge(__builtin__.object, Common) 
+    A graph edge.
+ 
+This class represents a graph's edge with all its attributes.
+ 
+edge(src, dst, attribute=value, ...)
+ 
+src: source node's name
+dst: destination node's name
+ 
+
+--------------------------------------------------------------------------------
+Methods defined here:
+
+__eq__(self, edge)
+Compare two edges.
+ 
+If the parent graph is directed, arcs linking
+node A to B are considered equal and A->B != B->A
+ 
+If the parent graph is undirected, any edge
+connecting two nodes is equal to any other
+edge connecting the same nodes, A->B == B->A
+
+__init__(self, src, dst, **attrs)
+
+get_destination(self)
+Get the edge's destination node name.
+
+get_source(self)
+Get the edges source node name.
+
+parse_node_ref(self, node_str)
+
+set(self, name, value)
+Set an attribute value by name.
+ 
+Given an attribute 'name' it will set its value to 'value'.
+There's always the possibility of using the methods:
+        set_'name'(value)
+which are defined for all the existing attributes.
+to_string(self)
+Returns a string representation of the edge in dot language.
+
+--------------------------------------------------------------------------------
+Data and other attributes defined here:
+
+__dict__ = <dictproxy object>
+dictionary for instance variables (if defined)
+__weakref__ = <attribute '__weakref__' of 'Edge' objects>
+list of weak references to the object (if defined)
+attributes = ['style', 'target', 'pos', 'layer', 'tooltip', 'color', 'showboxes', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'comment', 'lp', 'arrowhead', 'arrowsize', 'arrowtail', 'constraint', 'decorate', 'dir', ...]
+#@nonl
+#@-node:EKR.20040518104556.9:Edge
+#@+node:EKR.20040518104556.10:Error
+class Error(exceptions.Exception) 
+    General error handling class.
+  
+Methods defined here:
+
+__init__(self, value)
+__str__(self)
+#@nonl
+#@-node:EKR.20040518104556.10:Error
+#@+node:EKR.20040518104556.11:Graph(Common)
+class Graph(__builtin__.object, Common) 
+    Class representing a graph in Graphviz's dot language.
+ 
+This class implements the methods to work on a representation
+of a graph in Graphviz's dot language.
+ 
+
+Data and other attributes:
+
+__dict__ = <dictproxy object>
+dictionary for instance variables (if defined)
+
+__weakref__ = <attribute '__weakref__' of 'Graph' objects>
+list of weak references to the object (if defined)
+
+attributes = ['Damping', 'bb', 'center', 'clusterrank', 'compound', 'concentrate', 'defaultdist', 'dim', 'fontpath', 'epsilon', 'layers', 'layersep', 'margin', 'maxiter', 'mclimit', 'mindist', 'pack', 'packmode', 'model', 'page', ...]
+#@nonl
+#@+node:EKR.20040518104556.12:Graph.__init__
+__init__(self, graph_name='G', type='digraph', strict=False, suppress_disconnected=False, simplify=False, **attrs)
+
+ 
+graph_name: the graph's name
+
+type: 'graph' or 'digraph'
+
+suppress_disconnected:
+	defaults to False, which will remove from the graph any disconnected nodes.
+
+simplify:
+	if True it will avoid displaying equal edges, i.e. only one edge between two nodes. removing the duplicated ones.
+        
+All the attributes defined in the Graphviz dot language should be supported.
+ 
+Attributes can be set through the dynamically generated methods:
+ 
+set_[attribute name], i.e. set_size, set_fontname
+ 
+or using the instance's attributes:
+ 
+ Graph.[attribute name], i.e. graph_instance.label, graph_instance.fontname
+#@nonl
+#@-node:EKR.20040518104556.12:Graph.__init__
+#@+node:EKR.20040518104556.13:add_edge
+add_edge(self, graph_edge)
+
+Adds an edge object to the graph.
+#@nonl
+#@-node:EKR.20040518104556.13:add_edge
+#@+node:EKR.20040518104556.14:add_node
+add_node(self, graph_node)
+
+Adds a node object to the graph.
+#@nonl
+#@-node:EKR.20040518104556.14:add_node
+#@+node:EKR.20040518104556.15:add_subgraph
+add_subgraph(self, sgraph)
+
+Adds an edge object to the graph.
+#@-node:EKR.20040518104556.15:add_subgraph
+#@+node:EKR.20040518104556.16:getters...
+get(self, name)
+Get an attribute value by name.
+
+get_'name'() is defined for all attributes.
+
+get_edge(self, src, dst)
+Retrieved an edge from the graph.
+Returns a list, a single Edge, or None
+
+get_edge_list(self)
+Returns the list of Edge instances composing the graph.
+
+get_name(self)
+Get the graph's name.
+
+get_node(self, name)
+Given a node's name the corresponding Node instance will be returned.
+Returns a list, a single Node or None.
+ 
+get_node_list(self)
+Returns the list of Node instances composing the graph.
+
+get_simplify(self)
+Get whether to simplify or not.
+
+get_strict(self, val)
+Get graph's 'strict' mode (True, False).
+This option is only valid for top level graphs.
+
+get_subgraph(self, name)
+Given a subgraph's name the corresponding Subgraph instance will be returned.
+Returns a list of Subgraphs, a single Subgraph or None.
+
+get_subgraph_list(self)
+Returns the list of Subgraph instances in the graph.
+
+get_suppress_disconnected(val)
+Get if suppress disconnected is set.
+
+get_type(self)
+Get the graph's type, 'graph' or 'digraph'.
+#@nonl
+#@-node:EKR.20040518104556.16:getters...
+#@+node:EKR.20040518104556.17:setters...
+set(self, name, value)
+Set an attribute value by name.
+ 
+set_'name'(value) are defined for all the existing attributes.
+
+set_graph_parent(self, parent)
+Sets a graph and its elements to point the the parent.
+Any subgraph added to a parent graph receives a reference to the parent to access some common data.
+
+set_name(self, graph_name)
+Set the graph's name.
+
+set_simplify(self, simplify)
+Set whether to simplify or not.
+ If True it will avoid displaying equal edges.
+
+set_strict(self, val)
+Set graph to 'strict' mode.
+This option is only valid for top level graphs.
+
+set_suppress_disconnected(val)
+Suppress disconnected nodes in the output graph.
+ 
+set_type(self, graph_type)
+Set the graph's type, 'graph' or 'digraph'.
+
+#@-node:EKR.20040518104556.17:setters...
+#@+node:EKR.20040518104556.18:toString
+to_string(self, indent='')
+Returns a string representation of the graph in dot language.
+#@nonl
+#@-node:EKR.20040518104556.18:toString
+#@-node:EKR.20040518104556.11:Graph(Common)
+#@+node:EKR.20040518104556.19:Node(Common)
+class Node(__builtin__.object, Common) 
+    A graph node.
+ 
+This class represents a graph's node with all its attributes.
+ 
+
+Data and attributes:
+
+__dict__ = <dictproxy object>
+dictionary for instance variables (if defined)
+
+__weakref__ = <attribute '__weakref__' of 'Node' objects>
+list of weak references to the object (if defined)
+
+attributes = ['showboxes', 'URL', 'fontcolor', 'fontsize', 'label', 'fontname', 'comment', 'root', 'toplabel', 'vertices', 'width', 'z', 'bottomlabel', 'distortion', 'fixedsize', 'group', 'height', 'orientation', 'pin', 'rects', ...]
+#@nonl
+#@+node:EKR.20040518104556.20:Node.__init__
+node(name, attribute=value, ...)
+ 
+name: node's name
+ 
+All the attributes defined in the Graphviz dot language should be supported.
+  
+__init__(self, name, **attrs)
+#@-node:EKR.20040518104556.20:Node.__init__
+#@+node:EKR.20040518104556.21:get_name
+get_name(self)
+Get the node's name.
+#@nonl
+#@-node:EKR.20040518104556.21:get_name
+#@+node:EKR.20040518104556.22:set, set_x and set_name
+set(self, name, value)
+Set an attribute value by name.
+ 
+Given an attribute 'name' it will set its value to 'value'.
+
+set_'name'(value) is defined for all the existing attributes.
+
+set_name(self, node_name)
+Set the node's name.
+#@nonl
+#@-node:EKR.20040518104556.22:set, set_x and set_name
+#@+node:EKR.20040518104556.23:toString
+to_string(self)
+Returns a string representation of the node in dot language.
+#@nonl
+#@-node:EKR.20040518104556.23:toString
+#@-node:EKR.20040518104556.19:Node(Common)
+#@+node:EKR.20040518104556.24:Subgraph(Graph)
+class Subgraph(Graph) 
+
+Methods:
+
+__init__(self, graph_name='subG', suppress_disconnected=False, **attrs)
+
+graph_name:
+	the subgraph's name
+
+suppress_disconnected:
+	False: removes from the subgraph any disconnected nodes.
+
+Attributes:
+
+attributes = ['Damping', 'bb', 'center', 'clusterrank', 'compound', 'concentrate', 'defaultdist', 'dim', 'fontpath', 'epsilon', 'layers', 'layersep', 'margin', 'maxiter', 'mclimit', 'mindist', 'pack', 'packmode', 'model', 'page', ...]
+#@nonl
+#@-node:EKR.20040518104556.24:Subgraph(Graph)
+#@+node:EKR.20040518104556.25:Functions
+#@+node:EKR.20040518104556.26:find_graphviz
+find_graphviz()
+
+Locate Graphviz's executables in the system.
+ 
+Attempts  to locate  graphviz's  executables in a Unix system.
+It will look for 'dot', 'twopi' and 'neato' in all the directories
+specified in the PATH environment variable.
+It will return a dictionary containing the program names as keys
+and their paths as values.
+#@nonl
+#@-node:EKR.20040518104556.26:find_graphviz
+#@+node:EKR.20040518104556.27:graph_from_adjacency_matrix
+graph_from_adjacency_matrix(matrix, node_prefix='', directed=False)
+
+Creates a basic graph out of an adjacency matrix.
+ 
+The matrix has to be a list of rows of values
+representing an adjacency matrix.
+The values can be anything: bool, int, float, as long
+as they can evaluate to True or False.
+#@nonl
+#@-node:EKR.20040518104556.27:graph_from_adjacency_matrix
+#@+node:EKR.20040518104556.28:graph_from_edges
+graph_from_edges(edge_list, node_prefix='', directed=False)
+
+Creates a basic graph out of an edge list.
+ 
+The edge list has to be a list of tuples representing the nodes connected by the edge.
+
+The values can be anything: bool, int, float, str.
+ 
+If the graph is undirected by default, it is only
+calculated from one of the symmetric halves of the matrix.
+#@-node:EKR.20040518104556.28:graph_from_edges
+#@+node:EKR.20040518104556.29:graph_from_incidence_matrix
+graph_from_incidence_matrix(matrix, node_prefix='', directed=False)
+
+Creates a basic graph out of an incidence matrix.
+ 
+The matrix has to be a list of rows of values
+representing an incidence matrix.
+The values can be anything: bool, int, float, as long
+as they can evaluate to True or False.
+#@nonl
+#@-node:EKR.20040518104556.29:graph_from_incidence_matrix
+#@-node:EKR.20040518104556.25:Functions
+#@-node:EKR.20040518104556.2:pydot docs
+#@+node:EKR.20040518104556.30:@url http://www.research.att.com/sw/tools/graphviz/refs.html
+#@-node:EKR.20040518104556.30:@url http://www.research.att.com/sw/tools/graphviz/refs.html
+#@+node:EKR.20040518104556.31:@url http://dkbza.org/pydot/pydot.html
+#@-node:EKR.20040518104556.31:@url http://dkbza.org/pydot/pydot.html
+#@+node:EKR.20040518104556.33:Write an outline using Graphviz
 import leoGlobals as g
 from leoGlobals import true,false
+import string
 
-import re
+try: import pydot
+except:
+	s = "pydot must be installed"
+	print s ; es(s,color="red")
+	pydot = None
 
-#@<< about this script >>
-#@+node:EKR.20040502195524.26:<<about this script>>
-#@+at
-# 
-# http://sourceforge.net/forum/message.php?msg_id=2337165
-# 
-# This script creates a graphviz .DOT file from a Leo outline. The output is 
-# in
-# /tmp/leo.dot. You then need to run "dot" (part of the graphviz package) on 
-# the
-# .dot file to produce a graph in whatever format you want (JPEG, PNG, 
-# Postscript,
-# etc).
-# 
-# It's really simple and it doesn't seem to work on leodocs.leo because of 
-# some
-# unicode issues. But anyway, here it is, maybe someone can improve on it.
-# 
-# This code is hereby released as public domain - do whatever you want with 
-# it,
-# but hopefully, improve it and post it back here :-)
-#@-at
+#@<< code >>
+#@+node:EKR.20040518104556.34:<< code >>
+#@+others
+#@+node:EKR.20040518104556.35:addLeoNodesToGraph
+def addLeoNodesToGraph(p,graph,top=false):
+
+	# Create p's vnode.
+	thisNode = pydot.Node(name=vnodeRepr(p.v),label=vnodeLabel(p.v))
+	graph.add_node(thisNode)
+	
+	if p.hasChildren():
+		child = p.firstChild()
+		childNode = addLeoNodesToGraph(child,graph)
+		graph.add_node(childNode)
+		edge2 = pydot.Edge(tnodeRepr(p.v.t),vnodeRepr(child.v))
+		graph.add_edge(edge2)
+		
+		while child.hasNext():
+			next = child.next()
+			edge = pydot.Edge(vnodeRepr(child.v),vnodeRepr(next.v),dir="both")
+			nextNode = addLeoNodesToGraph(next,graph)
+			graph.add_node(nextNode)
+			graph.add_edge(edge)
+			child = next
+			
+	tnode = pydot.Node(name=tnodeRepr(p.v.t),shape="box",label=tnodeLabel(p.v.t))
+	edge1 = pydot.Edge(vnodeRepr(p.v),tnodeRepr(p.v.t),arrowhead="none")
+	graph.add_edge(edge1)
+	graph.add_node(tnode)
+	
+	if 0: # Confusing.
+		if not top and p.v._parent:
+			edge = pydot.Edge(vnodeRepr(p.v),vnodeRepr(p.v._parent),
+				style="dotted",arrowhead="onormal")
+			graph.add_edge(edge)
+
+	if 0: # Marginally useful.
+		for v in p.v.t.vnodeList:
+			edge = pydot.Edge(tnodeRepr(p.v.t),vnodeRepr(v),
+				style="dotted",arrowhead="onormal")
+			graph.add_edge(edge)
+
+	return thisNode
 #@nonl
-#@-node:EKR.20040502195524.26:<<about this script>>
+#@-node:EKR.20040518104556.35:addLeoNodesToGraph
+#@+node:EKR.20040518104556.36:tnode/vnodeLabel
+def tnodeLabel(t):
+	
+	return "t %d [%d]" % (id(t),len(t.vnodeList))
+	
+def vnodeLabel(v):
+	
+	return "v %d %s" % (id(v),v.t.headString)
+#@-node:EKR.20040518104556.36:tnode/vnodeLabel
+#@+node:EKR.20040518104556.37:tnode/vnodeRepr
+def dotId(s):
+	
+	"""Convert s to a C id"""
+
+	s2 = [ch for ch in s if ch in (string.letters + string.digits + '_')]
+	return string.join(s2,'')
+
+def tnodeRepr(t):
+
+	return "t_%d" % id(t)
+	
+def vnodeRepr(v):
+	
+	return "v_%d_%s" % (id(v),dotId(v.headString()))
+#@nonl
+#@-node:EKR.20040518104556.37:tnode/vnodeRepr
+#@-others
+#@nonl
+#@-node:EKR.20040518104556.34:<< code >>
 #@nl
 
-#@+others
-#@+node:EKR.20040502195524.27:rPrint
-def rPrint(node,level):
-
-	indent = "%*s" % (4*level,"")
-	print indent + str(node.headString())
-	child = node.firstChild()
-	while(child):
-		rPrint(child,level+1)
-		child = child.next()
+if pydot:
+	c = g.top() ; p = c.currentPosition()
+	graph = pydot.Dot(simplify=true,ordering="out")
+	root = g.findNodeInTree(p,"Root")
+	addLeoNodesToGraph(root,graph,top=true)
+	graph.write_jpeg(r'c:\prog\test\pydotOut.jpg',prog='dot')
 #@nonl
-#@-node:EKR.20040502195524.27:rPrint
-#@+node:EKR.20040502195524.28:newLineize
-def newLineize(s):
-
-	return re.sub('"',"'",re.sub(r"\s", r"\n", s))
-#@nonl
-#@-node:EKR.20040502195524.28:newLineize
-#@+node:EKR.20040502195524.29:graphvizString
-def graphvizString(node):
-
-	result = []
-	child = node.firstChild()
-	while child:
-		result.append('"%s" -> "%s";\n%s' % (
-			newLineize(node.headString()),
-			newLineize(child.headString()),
-			graphvizString(child)))
-		child = child.next()
-	return ''.join(result)
-#@nonl
-#@-node:EKR.20040502195524.29:graphvizString
-#@-others
-
-c = g.top() ; v = c.rootVnode()
-
-s = []
-while v:
-	s.append(graphvizString(v))
-	v = v.next()
-s = ''.join(s)
-
-# Look for an @encoding directive.
-dict = g.scanDirectives(c,c.rootVnode())
-encoding = dict.get("encoding",None)
-if encoding is None:
-	encoding = g.app.config.default_derived_file_encoding
-
-if 0: # testing
-	print s
-else:
-	gvFile = open('/tmp/leo.dot','w')
-	gvFile.write('digraph foo {\n')
-	gvFile.write(g.toEncodedString(s,encoding))
-	gvFile.write('}\n')
-	gvFile.close()
-#@nonl
-#@-node:EKR.20040502195524.25:Create a graphviz file (original)
+#@+node:EKR.20040518104556.38:Root
+#@+node:EKR.20040518104556.39:clone
+#@+node:EKR.20040518104556.40:Child1
+#@+node:EKR.20040518104556.41:GrandChild
+#@-node:EKR.20040518104556.41:GrandChild
+#@-node:EKR.20040518104556.40:Child1
+#@+node:EKR.20040518104556.42:Child2
+#@-node:EKR.20040518104556.42:Child2
+#@-node:EKR.20040518104556.39:clone
+#@-node:EKR.20040518104556.38:Root
+#@-node:EKR.20040518104556.33:Write an outline using Graphviz
+#@-node:EKR.20040518104556:Create diagrams using Graphviz and pydot
 #@+node:EKR.20040502195524.33:Find script to change OnX to x in body (didn't quite work :-)
 # Script to change OnXXX to xxx in all body text.
 if 0:
@@ -2445,39 +2916,6 @@ dir = "c:\prog\leoCvs\leo"
 print ; findDosFile("*",dir)
 #@nonl
 #@-node:EKR.20040502195213.7:findDosFile
-#@+node:EKR.20040517143706:Linux install script
-#@@first
-
-"""
-A simple script to install Leo on Linux.
-
-Contributed by David McNab <david@rebirthing.co.nz>
-"""
-
-import commands,os,sys # commands module is for Unix only.
-
-# We must be root to use this script.
-if os.getuid() != 0:
-	print "You need to run this install script as root"
-	sys.exit(1)
-
-# Create /usr/lib/leo and copy all files there.
-print "***** Installing Leo to /usr/lib/leo..."
-commands.getoutput("mkdir -p /usr/lib/leo")
-commands.getoutput("cp -rp * /usr/lib/leo")
-
-# Create user's 'leo' command script into /usr/bin/leo
-print "***** Creating Leo startup script -> /usr/bin/leo"
-fd = open("/usr/bin/leo", "w")
-fd.write("""#!/usr/bin/python
-import commands,sys
-files = " ".join(sys.argv[1:])
-print commands.getoutput("python /usr/lib/leo/leo.py %s" % files)
-""")
-fd.close()
-commands.getoutput("chmod 755 /usr/bin/leo")
-print "***** Leo installed successfully - type 'leo filename.leo' to use it."
-#@-node:EKR.20040517143706:Linux install script
 #@+node:EKR.20040502195213:Get statistics using dis module
 # routines to gather static statistics about opcodes based on dis module.
 import leoGlobals as g
@@ -2619,6 +3057,39 @@ def print_stats (stats):
 #@-others
 #@nonl
 #@-node:EKR.20040502195213:Get statistics using dis module
+#@+node:EKR.20040517143706:Linux install script
+#@@first
+
+"""
+A simple script to install Leo on Linux.
+
+Contributed by David McNab <david@rebirthing.co.nz>
+"""
+
+import commands,os,sys # commands module is for Unix only.
+
+# We must be root to use this script.
+if os.getuid() != 0:
+	print "You need to run this install script as root"
+	sys.exit(1)
+
+# Create /usr/lib/leo and copy all files there.
+print "***** Installing Leo to /usr/lib/leo..."
+commands.getoutput("mkdir -p /usr/lib/leo")
+commands.getoutput("cp -rp * /usr/lib/leo")
+
+# Create user's 'leo' command script into /usr/bin/leo
+print "***** Creating Leo startup script -> /usr/bin/leo"
+fd = open("/usr/bin/leo", "w")
+fd.write("""#!/usr/bin/python
+import commands,sys
+files = " ".join(sys.argv[1:])
+print commands.getoutput("python /usr/lib/leo/leo.py %s" % files)
+""")
+fd.close()
+commands.getoutput("chmod 755 /usr/bin/leo")
+print "***** Leo installed successfully - type 'leo filename.leo' to use it."
+#@-node:EKR.20040517143706:Linux install script
 #@+node:EKR.20040502195524.17:Script to find and replace all functions in leoGlobals.py
 import leoGlobals as g
 from leoGlobals import true,false

@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.2567:@file-thin ../dist/preSetup.py
+#@+node:EKR.20040519082027.20:@file-thin preSetup.py
 #@@first
 
 """ Preprocess before executing setup.py. """
@@ -9,7 +9,7 @@ import leoGlobals as g
 from leoGlobals import true,false
 
 #@+others
-#@+node:EKR.20040517111254.1:saveAllLeoFiles
+#@+node:EKR.20040519082027.21:saveAllLeoFiles
 def saveAllLeoFiles():
 	
 	for frame in g.app.windowList:
@@ -20,8 +20,8 @@ def saveAllLeoFiles():
 			print "saving ",name
 			c.save()
 #@nonl
-#@-node:EKR.20040517111254.1:saveAllLeoFiles
-#@+node:EKR.20040517111254.2:tangleLeoConfigDotLeo
+#@-node:EKR.20040519082027.21:saveAllLeoFiles
+#@+node:EKR.20040519082027.22:tangleLeoConfigDotLeo
 def tangleLeoConfigDotLeo():
 
 	c = None
@@ -46,7 +46,7 @@ def tangleLeoConfigDotLeo():
 	c.close()
 	g.app.setLog(oldtop.frame.log)
 #@nonl
-#@-node:EKR.20040517111254.2:tangleLeoConfigDotLeo
+#@-node:EKR.20040519082027.22:tangleLeoConfigDotLeo
 #@-others
 
 def setup():
@@ -54,5 +54,5 @@ def setup():
 	tangleLeoConfigDotLeo()
 	print "preSetup complete"
 #@nonl
-#@-node:ekr.20031218072017.2567:@file-thin ../dist/preSetup.py
+#@-node:EKR.20040519082027.20:@file-thin preSetup.py
 #@-leo

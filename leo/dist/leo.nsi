@@ -1,6 +1,6 @@
-#@+leo-ver=4-thin
-#@+node:EKR.20040502190716:@file-thin ../dist/leo.nsi
-#@@comment ;
+;@+leo-ver=4-thin
+;@+node:EKR.20040519083717:@file-thin leo.nsi
+;@@comment ;
 
 ; NSIS Script for Leo
 ; Version 1.0 of this script by Joe Orr, donated to public domain.
@@ -12,15 +12,15 @@
 ;
 ; NOTE: this .NSI script is designed for NSIS v1.8+
 
-#@<< installer settings >>
-#@+node:EKR.20040502190716.1:<< installer settings >>
+;@<< installer settings >>
+;@+node:EKR.20040519083717.1:<< installer settings >>
 # [Installer Attributes]
 Name "Leo"
 OutFile "leosetup.exe"
 Caption "Leo Installer"
 
-#@<< Additional Installer Settings >>
-#@+node:EKR.20040502190716.5:<< Additional Installer Settings >>
+;@<< Additional Installer Settings >>
+;@+node:EKR.20040519083717.2:<< Additional Installer Settings >>
 # You may not need to change these for your own app...
 
 ShowInstDetails show
@@ -31,44 +31,44 @@ SetCompress auto
 SetDatablockOptimize on
 SetOverwrite ifnewer
 WindowIcon off
-#@nonl
-#@-node:EKR.20040502190716.5:<< Additional Installer Settings >>
-#@nl
-#@<< icons used by the installer >>
-#@+node:EKR.20040502190716.2:<< icons used by the installer >>
+;@nonl
+;@-node:EKR.20040519083717.2:<< Additional Installer Settings >>
+;@nl
+;@<< icons used by the installer >>
+;@+node:EKR.20040519083717.3:<< icons used by the installer >>
 Icon c:\prog\leoCVS\leo\Icons\leo_inst.ico
 EnabledBitmap c:\prog\leoCVS\leo\Icons\leo_on.bmp
 DisabledBitmap c:\prog\leoCVS\leo\Icons\leo_off.bmp
-#@nonl
-#@-node:EKR.20040502190716.2:<< icons used by the installer >>
-#@nl
-#@<< the user license >>
-#@+node:EKR.20040502190716.4:<< the user license >>
+;@nonl
+;@-node:EKR.20040519083717.3:<< icons used by the installer >>
+;@nl
+;@<< the user license >>
+;@+node:EKR.20040519083717.4:<< the user license >>
 LicenseText "You must agree to this license before installing."
 LicenseData c:\prog\leoCVS\leo\doc\LICENSE.TXT
-#@nonl
-#@-node:EKR.20040502190716.4:<< the user license >>
-#@nl
-#@<< the installation dir >>
-#@+node:EKR.20040502190716.3:<< the installation dir >>
+;@nonl
+;@-node:EKR.20040519083717.4:<< the user license >>
+;@nl
+;@<< the installation dir >>
+;@+node:EKR.20040519083717.5:<< the installation dir >>
 InstallDir "$PROGRAMFILES\Leo"
 InstallDirRegKey HKEY_LOCAL_MACHINE "SOFTWARE\EKR\leo" ""
 DirShow show # (make this hide to not let the user change it)
 DirText "Select the directory to install Leo in:"
-#@nonl
-#@-node:EKR.20040502190716.3:<< the installation dir >>
-#@nl
+;@nonl
+;@-node:EKR.20040519083717.5:<< the installation dir >>
+;@nl
 
 ComponentText "This will install Leo on your computer. Select which optional components you would also like to install."
-#@nonl
-#@-node:EKR.20040502190716.1:<< installer settings >>
-#@nl
-#@<< required files section >>
-#@+node:EKR.20040502190716.6:<< required files section >>
+;@nonl
+;@-node:EKR.20040519083717.1:<< installer settings >>
+;@nl
+;@<< required files section >>
+;@+node:EKR.20040519083717.6:<< required files section >>
 Section "Leo" ; (default, required section)
 
-  #@  << check to see whether Python is installed >>
-  #@+node:EKR.20040502190716.7:<< check to see whether Python is installed >>
+  ;@  << check to see whether Python is installed >>
+  ;@+node:EKR.20040519083717.7:<< check to see whether Python is installed >>
   # I sure hope there is a better way to do this, but other techniques don't seem to work.
   
   # Supposedly the Python installer creates the following registry entry
@@ -119,16 +119,18 @@ Section "Leo" ; (default, required section)
     RMDir "$INSTDIR"
   
     Quit
-  #@nonl
-  #@-node:EKR.20040502190716.7:<< check to see whether Python is installed >>
-  #@nl
+  ;@nonl
+  ;@-node:EKR.20040519083717.7:<< check to see whether Python is installed >>
+  ;@nl
 
 ok:
   # List all files to included in installer	
   
   SetOutPath $INSTDIR
   File c:\prog\leoCVS\leo\__init__.py
-
+  File c:\prog\leoCVS\leo\install
+  File c:\prog\leoCVS\leo\manifest.in
+  File c:\prog\leoCVS\leo\uninstall
   
   CreateShortCut "$INSTDIR\Shortcut to leo.py.lnk" "$INSTDIR\src\leo.py" "" "$INSTDIR\src\leo.py" 0
 
@@ -137,13 +139,11 @@ ok:
   File c:\prog\leoCVS\leo\config\leoConfig.txt
   
   SetOutPath $INSTDIR\dist
+  File c:\prog\leoCVS\leo\dist\leoDist.leo
   File c:\prog\leoCVS\leo\dist\leo.nsi
-  File c:\prog\leoCVS\leo\dist\install
-  File c:\prog\leoCVS\leo\dist\manifest.in
   File c:\prog\leoCVS\leo\dist\preSetup.py
-  File c:\prog\leoCVS\leo\dist\setup.py
+  File c:\prog\leoCVS\leo\dist\createLeoDist.py
   File c:\prog\leoCVS\leo\dist\postSetup.py
-  File c:\prog\leoCVS\leo\dist\uninstall
  
   SetOutPath $INSTDIR\doc
   File c:\prog\leoCVS\leo\doc\LeoDocs.leo
@@ -181,11 +181,11 @@ ok:
   SetOutPath $INSTDIR\tools
 
 SectionEnd ; end of default section
-#@nonl
-#@-node:EKR.20040502190716.6:<< required files section >>
-#@nl
-#@<< optional files section >>
-#@+node:EKR.20040502190716.8:<< optional files section>>
+;@nonl
+;@-node:EKR.20040519083717.6:<< required files section >>
+;@nl
+;@<< optional files section >>
+;@+node:EKR.20040519083717.8:<< optional files section>>
 # optional sections
 
 Section "Start Menu Shortcuts"
@@ -197,11 +197,11 @@ SectionEnd
 Section "Desktop Shortcut"
   CreateShortCut "$DESKTOP\Leo.lnk" "$8" '"$INSTDIR\src\leo.py"' "$INSTDIR\Icons\LeoApp.ico" 0
 SectionEnd
-#@nonl
-#@-node:EKR.20040502190716.8:<< optional files section>>
-#@nl
-#@<< file association >>
-#@+node:EKR.20040502190716.9:<< file association >>
+;@nonl
+;@-node:EKR.20040519083717.8:<< optional files section>>
+;@nl
+;@<< file association >>
+;@+node:EKR.20040519083717.9:<< file association >>
 Section ".leo File Association"
   SectionIn 1
   SectionIn 2
@@ -221,11 +221,11 @@ Label1:
   WriteRegStr HKCR "LeoFile\shell\open\command" "" '$8 "$INSTDIR\src\leo.py" %1'  
 
 SectionEnd
-#@nonl
-#@-node:EKR.20040502190716.9:<< file association >>
-#@nl
-#@<< post install section >>
-#@+node:EKR.20040502190716.10:<< post install section >>
+;@nonl
+;@-node:EKR.20040519083717.9:<< file association >>
+;@nl
+;@<< post install section >>
+;@+node:EKR.20040519083717.10:<< post install section >>
 Section "-post" # (post install section, happens last after any optional sections)
 
   # add any commands that need to happen after any optional sections here
@@ -237,11 +237,11 @@ Section "-post" # (post install section, happens last after any optional section
   WriteUninstaller "$INSTDIR\uninst.exe"
 
 SectionEnd ; end of -post section
-#@nonl
-#@-node:EKR.20040502190716.10:<< post install section >>
-#@nl
-#@<< uninstall section >>
-#@+node:EKR.20040502190716.11:<< uninstall section >>
+;@nonl
+;@-node:EKR.20040519083717.10:<< post install section >>
+;@nl
+;@<< uninstall section >>
+;@+node:EKR.20040519083717.11:<< uninstall section >>
 # [ begin uninstall settings/section ]
 UninstallText "This will uninstall Leo from your system"
 UninstallCaption "Uninstall Leo"
@@ -252,8 +252,8 @@ Section Uninstall
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\EKR\leo"
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\leo"
 
-#@<< remove file association >>
-#@+node:EKR.20040502190716.12:<< remove file association >>
+;@<< remove file association >>
+;@+node:EKR.20040519083717.12:<< remove file association >>
   ReadRegStr $1 HKCR ".leo" ""
   StrCmp $1 "LeoFile" 0 NoOwn ; only do this if we own it
 	ReadRegStr $1 HKCR ".leo" "backup_val"
@@ -264,17 +264,19 @@ DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Unins
 	  WriteRegStr HKCR ".leo" "" $1
 	  DeleteRegValue HKCR ".leo" "backup_val"
   NoOwn:
-#@nonl
-#@-node:EKR.20040502190716.12:<< remove file association >>
-#@nl
-#@<< remove program folder >>
-#@+node:EKR.20040502190716.13:<< remove program folder >>
+;@nonl
+;@-node:EKR.20040519083717.12:<< remove file association >>
+;@nl
+;@<< remove program folder >>
+;@+node:EKR.20040519083717.13:<< remove program folder >>
 MessageBox MB_YESNO|MB_ICONQUESTION \
 			 "Delete all files in Leo Program folder?" \
 			 IDNO NoDelete  
 
   Delete "$INSTDIR\config\*.*" ; config dir
   RMDir "$INSTDIR\config"
+  Delete "$INSTDIR\dist\*.*" ; dist dir
+  RMDir "$INSTDIR\dist"
   Delete "$INSTDIR\doc\*.*" ; doc dir
   RMDir "$INSTDIR\doc"
   Delete "$INSTDIR\examples\*.*" ; src dir
@@ -301,26 +303,26 @@ MessageBox MB_YESNO|MB_ICONQUESTION \
   RMDir "$INSTDIR"
 
 NoDelete:
-#@nonl
-#@-node:EKR.20040502190716.13:<< remove program folder >>
-#@nl
-#@<< remove shortcuts >>
-#@+node:EKR.20040502190716.14:<< remove shortcuts >>
+;@nonl
+;@-node:EKR.20040519083717.13:<< remove program folder >>
+;@nl
+;@<< remove shortcuts >>
+;@+node:EKR.20040519083717.14:<< remove shortcuts >>
 Delete "$SMPROGRAMS\Leo\*.*"
 Delete "$DESKTOP\Leo.lnk"
-#@nonl
-#@-node:EKR.20040502190716.14:<< remove shortcuts >>
-#@nl
+;@nonl
+;@-node:EKR.20040519083717.14:<< remove shortcuts >>
+;@nl
 
 ; remove directories used.
 RMDir "$SMPROGRAMS\Leo"
 
 SectionEnd ; end of uninstall section
-#@nonl
-#@-node:EKR.20040502190716.11:<< uninstall section >>
-#@nl
+;@nonl
+;@-node:EKR.20040519083717.11:<< uninstall section >>
+;@nl
 
 ; eof
-#@nonl
-#@-node:EKR.20040502190716:@file-thin ../dist/leo.nsi
-#@-leo
+;@nonl
+;@-node:EKR.20040519083717:@file-thin leo.nsi
+;@-leo
