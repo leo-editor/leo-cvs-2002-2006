@@ -57,7 +57,7 @@ import sys
 #@nonl
 #@-node:ekr.20050101090207.10:<< imports >>
 #@nl
-__version__ = "1.7"
+__version__ = "1.8"
 #@<< version history >>
 #@+node:ekr.20050101100033:<< version history >>
 #@+at
@@ -72,12 +72,17 @@ __version__ = "1.7"
 #       This _really_ should be done, but it will have to wait.
 #       As a workaround, plugins_manager.py now has an init method and reports 
 # its own import problems.
+# 
 # 1.6 Paul Paterson:
 #     - Add support for plugin groups. Each group gets its own sub menu now
 #     - Set __plugin_group__ to "Core"
 # 1.7 EKR:
 #     - Set default version in Plugin.__init__ so plugins without version 
 # still appear in plugin menu.
+# 
+# 1.8 Paul Paterson:
+#     - Changed the names in the plugin menu to remove at_, mod_ and 
+# capitalized
 #@-at
 #@nonl
 #@-node:ekr.20050101100033:<< version history >>
@@ -160,9 +165,10 @@ class PlugIn:
                 PluginDatabase.addPlugin(self, self.group)
             # g.trace('Plugin',self.mod)
             try:
-                self.name = self.mod.__plugin_name__
+                name = self.mod.__plugin_name__
             except AttributeError:
-                self.name = self.mod.__name__
+                name = self.mod.__name__
+            self.name = self.getNiceName(name)
             try:
                 self.priority = self.mod.__plugin_priority__
             except AttributeError:
@@ -244,6 +250,23 @@ class PlugIn:
         PluginAbout(self.name, self.version, self.doc)
     #@nonl
     #@-node:EKR.20040517080555.8:about
+    #@+node:pap.20050317183526:getNiceName
+    def getNiceName(self, name):
+        """Return a nice version of the plugin name
+        
+        Historically some plugins had "at_" and "mod_" prefixes to their
+        name which makes the name look a little ugly in the lists. There is
+        no real reason why the majority of users need to know the underlying
+        name so here we create a nice readable version.
+        
+        """
+        lname = name.lower()
+        if lname.startswith("at_"):
+            name = name[3:]
+        elif lname.startswith("mod_"):
+            name = name[4:]
+        return name.capitalize()
+    #@-node:pap.20050317183526:getNiceName
     #@+node:EKR.20040517080555.9:properties
     def properties(self, event=None):
         
