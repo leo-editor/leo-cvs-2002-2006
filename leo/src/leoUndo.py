@@ -37,7 +37,7 @@
 import leoGlobals as g
 from leoGlobals import true,false
 
-import string,types
+import string
 
 #@+others
 #@+node:ekr.20031218072017.3605:class undoer
@@ -208,8 +208,8 @@ class baseUndoer:
 	
 		try:
 			g.funcToMethod(func,undoer)
-			assert(hasattr,u,func.__name__)
-		except AttributeError, AssertionError:
+			assert(hasattr(u,func.__name__))
+		except (AttributeError, AssertionError):
 			s = "Bad %s handler for %s: %s" % (kind,undoName,repr(func))
 			g.trace(s) ; g.es(s, color="red")
 			return
@@ -218,7 +218,7 @@ class baseUndoer:
 			if verbose:
 				print "%s registered as %s handler for %s" % (func.__name__,kind,undoName)
 		except KeyError:
-			s = "Bad key passed to register%sHandler %s %s" % (undoName,repr(func))
+			s = "Bad key: $s for %s: %s" % (kind,undoName,repr(func))
 			g.trace(s) ; g.es(s, color="red")
 	#@nonl
 	#@-node:EKR.20040526094429:registerUndoHandlers & registerHandler
@@ -854,7 +854,7 @@ class baseUndoer:
 		
 		u = self ; c = u.c
 	
-		u.p = self.undoReplace(u.p,u.oldTree,u.newTree,u.newText)
+		u.p = self.undoReplace(u.p,u.oldTree,u.newTree)
 		c.selectVnode(u.p) # Does full recolor.
 		if u.newSel:
 			c.frame.body.setTextSelection(u.newSel)
@@ -1247,7 +1247,7 @@ class baseUndoer:
 	#@-at
 	#@@c
 	
-	def undoReplace (self,p,new_data,old_data,text):
+	def undoReplace (self,p,new_data,old_data):
 	
 		"""Replace p.v and its subtree using old_data during undo."""
 	
@@ -1276,7 +1276,7 @@ class baseUndoer:
 		
 		u = self ; c = u.c
 	
-		u.p = self.undoReplace(u.p,u.newTree,u.oldTree,u.oldText)
+		u.p = self.undoReplace(u.p,u.newTree,u.oldTree)
 		c.selectVnode(u.p) # Does full recolor.
 		if u.oldSel:
 			c.frame.body.setTextSelection(u.oldSel)
