@@ -5,7 +5,7 @@
 # To do: Use config params for window height, width and bar color, relief and width.
 
 
-#@@language python
+#@@language python 
 
 from leoGlobals import *
 from leoUtils import *

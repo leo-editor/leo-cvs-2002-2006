@@ -2972,7 +2972,7 @@
 </v>
 </v>
 </v>
-<v t="T1413" a="V"><vh>Code</vh>
+<v t="T1413" a="E"><vh>Code</vh>
 <v t="T1414"><vh> Overview of code</vh></v>
 <v t="T1415"><vh> Scripts &amp; Batch Files (Change version in setup.py)</vh>
 <v t="T1416"><vh> Batch Files &amp; other @root trees</vh>
@@ -3782,7 +3782,7 @@
 <v t="T1785"><vh>showSettings</vh></v>
 <v t="T1786"><vh>update</vh></v>
 </v>
-<v t="T1787"><vh>@file leoFrame.py</vh>
+<v t="T1787" a="V"><vh>@file leoFrame.py</vh>
 <v t="T833" a="C"><vh>frame.__init__</vh>
 <v t="T834" a="C"><vh>&lt;&lt; set the LeoFrame ivars &gt;&gt;</vh></v>
 <v t="T835"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
@@ -28329,7 +28329,7 @@ def update (self,event=None):
 	c.redraw()</t>
 <t tx="T1787"># To do: Use config params for window height, width and bar color, relief and width.
 
-@language python
+@language python 
 
 from leoGlobals import *
 from leoUtils import *
