@@ -13,8 +13,8 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1"><vh>Diary</vh>
-<v><vh>Nov 2002</vh>
-<v><vh>11/4</vh>
+<v a="E"><vh>Nov 2002</vh>
+<v a="E"><vh>11/4</vh>
 <v t="T2"><vh>Generalized how commands are called</vh></v>
 <v t="T3"><vh>Added general-purpose hook handling</vh></v>
 <v><vh>Use original leading whitespace when reformatting paragraphs</vh></v>
@@ -4421,7 +4421,7 @@
 <v t="T1961"><vh>onKillLeoEvent</vh></v>
 <v t="T1962"><vh>profile</vh></v>
 </v>
-<v t="T1963"><vh>@file leoApp.py</vh>
+<v t="T1963" a="E"><vh>@file leoApp.py</vh>
 <v t="T1274" a="C"><vh>app.__init__</vh></v>
 <v t="T1964"><vh>app.destroyAllGlobalWindows</vh></v>
 <v t="T1325" a="C"><vh>app.finishCreate</vh>
@@ -6303,7 +6303,7 @@
 </v>
 </v>
 </v>
-<v t="T2559" a="E"><vh>@file leoCustomize.py</vh></v>
+<v t="T2559" a="EV"><vh>@file leoCustomize.py</vh></v>
 <v t="T2560" a="M"><vh>(Open with)</vh>
 <v t="T2561"><vh>Notes</vh>
 <v t="T2562"><vh>(done) Open the temp file with the correct extension</vh></v>
@@ -6342,14 +6342,14 @@
 <v t="T1206" a="C"><vh>&lt;&lt; set the icon image &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2578" a="E"><vh>(generalized commands calling</vh>
+<v t="T2578"><vh>(generalized commands calling</vh>
 <v t="T2210" a="C"><vh>doCommand</vh></v>
 <v t="T918" a="C"><vh>createMenuEntries</vh>
 <v t="T919"><vh>&lt;&lt; get menu and bind shortcuts &gt;&gt;</vh></v>
 </v>
-<v t="T1442" a="CE"><vh>Menu Command Handlers</vh>
-<v t="T1443" a="EM"><vh>File Menu</vh>
-<v t="T1444" a="E"><vh>top level</vh>
+<v t="T1442" a="C"><vh>Menu Command Handlers</vh>
+<v t="T1443" a="M"><vh>File Menu</vh>
+<v t="T1444"><vh>top level</vh>
 <v t="T1204" a="C"><vh>OnNew</vh></v>
 <v t="T1336" a="C"><vh>frame.OnOpen</vh>
 <v t="T1337"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
@@ -6374,7 +6374,7 @@
 <v t="T1454"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1455" a="E"><vh>Read/Write submenu</vh>
+<v t="T1455"><vh>Read/Write submenu</vh>
 <v t="T1335" a="C"><vh>fileCommands.OnReadOutlineOnly</vh></v>
 <v t="T1456"><vh>OnReadAtFileNodes</vh></v>
 <v t="T1457"><vh>OnWriteOutlineOnly</vh></v>
@@ -6403,8 +6403,8 @@
 <v t="T1477"><vh>OnWeave</vh></v>
 </v>
 </v>
-<v t="T1478" a="EM"><vh>Edit Menu (change to handle log pane too)</vh>
-<v t="T1479" a="E"><vh>Edit top level</vh>
+<v t="T1478" a="M"><vh>Edit Menu (change to handle log pane too)</vh>
+<v t="T1479"><vh>Edit top level</vh>
 <v t="T1480"><vh>OnUndo</vh></v>
 <v t="T1481"><vh>OnRedo</vh></v>
 <v t="T1482" a="C"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
@@ -6418,7 +6418,7 @@
 <v t="T832" a="C"><vh>OnViewAllCharacters</vh></v>
 <v t="T980" a="C"><vh>OnPreferences</vh></v>
 </v>
-<v t="T1486" a="E"><vh>Edit Body submenu</vh>
+<v t="T1486"><vh>Edit Body submenu</vh>
 <v t="T1487"><vh>OnConvertBlanks &amp; OnConvertAllBlanks</vh></v>
 <v t="T1488"><vh>OnConvertTabs &amp; OnConvertAllTabs</vh></v>
 <v t="T1489"><vh>OnDedent</vh></v>
@@ -6431,10 +6431,10 @@
 <v t="T1495"><vh>OnIndent</vh></v>
 <v t="T1496" a="C"><vh>OnInsertGraphicFile</vh></v>
 </v>
-<v t="T764" a="CE"><vh>Edit Headline submenu</vh>
+<v t="T764" a="C"><vh>Edit Headline submenu</vh>
 <v t="T765"><vh>OnEditHeadline</vh></v>
 <v t="T766"><vh>OnEndEditHeadline</vh></v>
-<v t="T767" a="V"><vh>OnAbortEditHeadline</vh></v>
+<v t="T767"><vh>OnAbortEditHeadline</vh></v>
 </v>
 <v t="T1497"><vh>Find submenu (frame methods)</vh>
 <v t="T1498"><vh>OnFindPanel</vh></v>
@@ -35474,24 +35474,26 @@ if has_ctrl:
 	
 bind_shortcut = "&lt;" + bind_head + bind_last + "&gt;"
 menu_shortcut = menu_head + menu_last</t>
-<t tx="T2210"># Executes the given command, invoking hooks and catching exceptions.
-# Command handlers no longer need to return "break"
+<t tx="T2210">@ Executes the given command, invoking hooks and catching exceptions.
+Command handlers no longer need to return "break".  Yippee!
+
+The code assumes that customizeLeo("command1") has completely handled the command if customizeLeo("command1") returns false.  This provides a very simple mechanism for overriding commands.
+@c
 
 def doCommand (self,command,label,event=None):
 	
 	# trace()
 	app().commandName = label
-	handleLeoHook("command1")
-
-	try:
-		command(event)
-	except:
-		es("exception executing command")
-		es_exception()
-
-	handleLeoHook("command2")
-	return "break" # Inhibit all other handlers.
-</t>
+	flag = handleLeoHook("command1")
+	if flag == None or flag != false:
+		try:
+			command(event)
+		except:
+			es("exception executing command")
+			es_exception()
+	
+		handleLeoHook("command2")
+	return "break" # Inhibit all other handlers.</t>
 <t tx="T2211"># Returns the frame that has focus, or body if None.
 
 def getFocus(self):
@@ -35597,7 +35599,8 @@ def handleLeoHook(tag):
 	try:
 		import leoCustomize
 		try:
-			leoCustomize.customizeLeo(tag)
+			flag = leoCustomize.customizeLeo(tag)
+			return flag # Give the command1 hook a chance to override the command.
 		except:
 			es("exception executing leoCustomize.customizeLeo("+tag+")")
 			es_exception()
@@ -35607,6 +35610,8 @@ def handleLeoHook(tag):
 		a.hookSyntaxError = true # Suppress further calls.
 	except:
 		pass # Not an error.
+
+	return true # The command1 hook has not overridden the command.
 </t>
 <t tx="T2221">def print_stack():
 
@@ -39964,17 +39969,27 @@ def getTime():
 def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()</t>
-<t tx="T2559">@ Leo attempts to call the customizeLeo hook at various times during execution.  The tag field indicates the type of hook.  Leo catches exceptions, including syntax errors in this code, so if is safe to change this file at will.
+<t tx="T2559">@ignore
+
+@ Leo attempts to call the customizeLeo hook at various times during execution.  The tag field indicates the type of hook.  Leo catches exceptions, including syntax errors in this code, so if is safe to change this file at will.
 
 tag="start1": called just after app().finishCreate successfully returns, so the app() function will return the properly initialized leoApp object, but no Leo window exists yet.
 
 tag="start2": called just after the first Leo window has been created.  app().windowList contains the list of all leoFrame objects.  leoGlobals.top() will return the commander of the topmost window.
 
 tag="end1": called at the start of app.quit().
+
+tag="command1": called before the start of every command.
+
+Note1: app().commandName contains the "official" command name (the name used in leoConfig.txt) when tag is "command1" or "command2"
+
+Note2: if the customizeLeo("command1") returns false, frame.doCommand will assume that this file has performed the command itself and will _not_ try to execute the command!  Note that None is not considered false, so simply returning from this routine will _not_ override any commands.
+
+tag="command2": called after each command executes.
 @c
 def customizeLeo(tag):
 
-	from leoGlobals import app, choose
+	from leoGlobals import app, choose, false
 	if 1: # production hooks.
 		pass
 	else: # testing
@@ -39988,6 +40003,9 @@ def customizeLeo(tag):
 			print `app().doesNotExist` # Test of exception handling.
 		if tag == "command1":
 			print "start", app().commandName
+			if app().commandName=="equalsizedpanes":
+				print "over-riding Equal Sized Panes"
+				return false
 		if tag == "command2":
 			print "end  ", app().commandName</t>
 <t tx="T2560">@ignore</t>

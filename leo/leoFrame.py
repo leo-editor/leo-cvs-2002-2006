@@ -893,24 +893,31 @@ class LeoFrame:
 	#@-node:8::createMenuEntries
 	#@+node:9::doCommand
 	#@+body
-	# Executes the given command, invoking hooks and catching exceptions.
-	# Command handlers no longer need to return "break"
-	
+	#@+at
+	#  Executes the given command, invoking hooks and catching exceptions.
+	# Command handlers no longer need to return "break".  Yippee!
+	# 
+	# The code assumes that customizeLeo("command1") has completely handled 
+	# the command if customizeLeo("command1") returns false.  This provides a 
+	# very simple mechanism for overriding commands.
+
+	#@-at
+	#@@c
+
 	def doCommand (self,command,label,event=None):
 		
 		# trace()
 		app().commandName = label
-		handleLeoHook("command1")
-	
-		try:
-			command(event)
-		except:
-			es("exception executing command")
-			es_exception()
-	
-		handleLeoHook("command2")
+		flag = handleLeoHook("command1")
+		if flag == None or flag != false:
+			try:
+				command(event)
+			except:
+				es("exception executing command")
+				es_exception()
+		
+			handleLeoHook("command2")
 		return "break" # Inhibit all other handlers.
-	
 	#@-body
 	#@-node:9::doCommand
 	#@+node:10::initialRatios

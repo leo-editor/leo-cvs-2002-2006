@@ -155,7 +155,8 @@ def handleLeoHook(tag):
 	try:
 		import leoCustomize
 		try:
-			leoCustomize.customizeLeo(tag)
+			flag = leoCustomize.customizeLeo(tag)
+			return flag # Give the command1 hook a chance to override the command.
 		except:
 			es("exception executing leoCustomize.customizeLeo("+tag+")")
 			es_exception()
@@ -165,6 +166,8 @@ def handleLeoHook(tag):
 		a.hookSyntaxError = true # Suppress further calls.
 	except:
 		pass # Not an error.
+
+	return true # The command1 hook has not overridden the command.
 
 #@-body
 #@-node:6::handleLeoHook
