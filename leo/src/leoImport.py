@@ -150,7 +150,7 @@ class baseLeoImportCommands:
                 v = self.createOutline(fileName,current)
                 if v: # createOutline may fail.
                     if perfectImport and treeType == "@file": # Can't correct @root trees.
-                        self.perfectImport(fileName,v,testing=testing,verbose=verbose)
+                        self.perfectImport(fileName,v,testing=testing,verbose=verbose,verify=False)
                     else:
                         g.es("imported " + fileName,color="blue")
                     v.contract()
