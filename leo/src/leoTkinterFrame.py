@@ -1069,8 +1069,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 #@-node:ekr.20031218072017.3959:<< create a picture >>
                 #@nl
             elif text:
-                w = min(6,len(text))
-                b = Tk.Button(f,text=text,width=w,relief="groove",bd=2,command=command)
+                
+                b = Tk.Button(f,text=text,relief="groove",bd=2,command=command)
+                if sys.platform != 'darwin':
+                    width = max(6,len(text))
+                    b.configure(width=width)
                 b.pack(side="left", fill="y")
                 return b
                 
