@@ -876,6 +876,16 @@ class baseVnode:
 		body = self.t.bodyString + s
 		self.setBodyStringOrPane(body,encoding)
 	#@-node:appendStringToBody
+	#@+node:scriptSetBodyString
+	def scriptSetBodyString (self,s,encoding="utf-8"):
+		
+		"""Update the body string for the receiver.
+		
+		Should be called only from scripts: does NOT update body text."""
+	
+		self.t.bodyString = toUnicode(s,encoding)
+	#@nonl
+	#@-node:scriptSetBodyString
 	#@+node:setBodyStringOrPane & setBodyTextOrPane
 	def setBodyStringOrPane (self,s,encoding="utf-8"):
 	
