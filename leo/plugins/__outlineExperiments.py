@@ -113,7 +113,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         assert(not self.ids.get(id))
         assert(p)
-        self.ids[id] = p.copy()  ####### Enough??????
+        self.ids[id] = p.copy()
     
         return id
     #@nonl
@@ -419,8 +419,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
     
         if self.useBindtags: # Create a dummy widget to hold all bindings.
-            t = Tk.Text() # This _must_ be a Text widget.
-            if 1: # This doesn't seem to matter.
+            t = Tk.Text(canvas) # This _must_ be a Text widget attached to the canvas!
+            if 1: # Either way works properly.
                 t.bind("<Button-1>", self.onHeadlineClick)
                 t.bind("<Button-3>", self.onHeadlineRightClick)
                 t.bind("<Key>",      self.onHeadlineKey)
@@ -608,7 +608,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
         return repr(t)[-9:-1].lower()
     #@nonl
     #@-node:ekr.20040724161900:textAddr
-    #@+node:ekr.20040726071801.1:traceIds
+    #@+node:ekr.20040726071801.1:traceIds (Not used)
+    # Verbose tracing is much more useful than this because we can see the recent past.
+    
     def traceIds (self,full=False):
         
         tree = self
@@ -637,7 +639,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
                             if val and val == value:
                                 print "%3d" % key,val.headString()  
     #@nonl
-    #@-node:ekr.20040726071801.1:traceIds
+    #@-node:ekr.20040726071801.1:traceIds (Not used)
     #@-node:ekr.20040726071801:Debugging...
     #@+node:ekr.20040723101121.2:Drawing...
     #@+node:ekr.20040723101121.4:drawBox
@@ -1405,8 +1407,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         canvas = self.canvas
         x,y = event.x,event.y
-        x = canvas.canvasx(x) ### 7/28/04
-        y = canvas.canvasy(y) ### 7/28/04
+        # 7/28/04: Not doing this translation was the real bug.
+        x = canvas.canvasx(x) 
+        y = canvas.canvasy(y)
         item = canvas.find_overlapping(x,y,x,y)
         if not item: return None
     
