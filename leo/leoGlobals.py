@@ -816,7 +816,15 @@ def oldDump(s):
 	return out
 #@-body
 #@-node:3::dump
-#@+node:4::es_exception
+#@+node:4::es_error
+#@+body
+def es_error (s):
+
+	color = app().config.getWindowPref("log_error_color")
+	es(s,color=color)
+#@-body
+#@-node:4::es_error
+#@+node:5::es_exception
 #@+body
 def es_exception (full=false):
 
@@ -827,11 +835,11 @@ def es_exception (full=false):
 	else:
 		errList = traceback.format_exception_only(typ,val)
 	for i in errList:
-		es(i)
+		es_error(i)
 	traceback.print_exc()
 #@-body
-#@-node:4::es_exception
-#@+node:5::es_event_exception
+#@-node:5::es_exception
+#@+node:6::es_event_exception
 #@+body
 def es_event_exception (eventName,full=false):
 
@@ -846,8 +854,8 @@ def es_event_exception (eventName,full=false):
 		es(i)
 	traceback.print_exc()
 #@-body
-#@-node:5::es_event_exception
-#@+node:6::get_line & get_line_after
+#@-node:6::es_event_exception
+#@+node:7::get_line & get_line_after
 #@+body
 # Very useful for tracing.
 
@@ -871,8 +879,8 @@ def get_line_after (s,i):
 	return nl + s[i:k]
 
 #@-body
-#@-node:6::get_line & get_line_after
-#@+node:7::file/module/plugin_date
+#@-node:7::get_line & get_line_after
+#@+node:8::file/module/plugin_date
 #@+body
 def module_date (mod,format=None):
 	file = os.path.join(app().loadDir,mod.__file__)
@@ -896,8 +904,8 @@ def file_date (file,format=None):
 	return ""
 
 #@-body
-#@-node:7::file/module/plugin_date
-#@+node:8::printBindings
+#@-node:8::file/module/plugin_date
+#@+node:9::printBindings
 #@+body
 def print_bindings (name,window):
 
@@ -907,8 +915,8 @@ def print_bindings (name,window):
 	for b in bindings:
 		print b
 #@-body
-#@-node:8::printBindings
-#@+node:9::printGlobals
+#@-node:9::printBindings
+#@+node:10::printGlobals
 #@+body
 def printGlobals(message=None):
 	
@@ -923,8 +931,8 @@ def printGlobals(message=None):
 	for glob in globs:
 		print glob
 #@-body
-#@-node:9::printGlobals
-#@+node:10::printLeoModules
+#@-node:10::printGlobals
+#@+node:11::printLeoModules
 #@+body
 def printLeoModules(message=None):
 	
@@ -943,8 +951,8 @@ def printLeoModules(message=None):
 		print m,
 	print
 #@-body
-#@-node:10::printLeoModules
-#@+node:11::Sherlock...
+#@-node:11::printLeoModules
+#@+node:12::Sherlock...
 #@+body
 #@+at
 #  Starting with this release, you will see trace statements throughout the 
@@ -1113,8 +1121,8 @@ def trace_tag (name, *args):
 
 #@-body
 #@-node:5::trace_tag
-#@-node:11::Sherlock...
-#@+node:12::Statistics
+#@-node:12::Sherlock...
+#@+node:13::Statistics
 #@+node:1::clear_stats
 #@+body
 def clear_stats():
@@ -1167,8 +1175,8 @@ def tick (name=None):
 
 #@-body
 #@-node:3::tick
-#@-node:12::Statistics
-#@+node:13::Timing
+#@-node:13::Statistics
+#@+node:14::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1183,7 +1191,7 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:13::Timing
+#@-node:14::Timing
 #@-node:5::Dumping, Timing, Tracing & Sherlock
 #@+node:6::Files & Directories...
 #@+node:1::create_temp_name
@@ -1711,6 +1719,7 @@ def enl():
 
 def es(s,*args,**keys):
 	newline = keys.get("newline",true)
+	color = keys.get("color",None)
 	if type(s) != type("") and type(s) != type(u""): # 1/20/03
 		s = repr(s)
 	for arg in args:
@@ -1719,7 +1728,7 @@ def es(s,*args,**keys):
 		s = s + ", " + arg
 	a = app() ; log = a.log
 	if log:
-		log.put(s)
+		log.put(s,color=color)
 		# 6/2/02: This logic will fail if log is None.
 		for ch in s:
 			if ch == '\n': log.es_newlines += 1

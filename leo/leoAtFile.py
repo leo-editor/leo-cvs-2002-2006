@@ -202,7 +202,6 @@ class atFile:
 		# The encoding used to convert from unicode to a byte stream.
 		self.encoding = app().config.default_derived_file_encoding
 		
-		self.use_gnx  = false # true: enable scans of derived files using gnxs.
 		self.using_gnx = false # true: present derived file uses gnxs.
 		#@-body
 		#@-node:1::<< init atFile ivars >>
@@ -899,7 +898,7 @@ class atFile:
 	#@+body
 	def error(self,message):
 	
-		es(message)
+		es_error(message)
 		self.errors += 1
 	#@-body
 	#@-node:3::error
@@ -909,7 +908,7 @@ class atFile:
 	
 		# This is useful now that we don't print the actual messages.
 		if self.errors == 0:
-			es("----- error reading @file " + self.targetFileName)
+			es_error("----- error reading @file " + self.targetFileName)
 			self.error(message) # 9/10/02: we must increment self.errors!
 	
 		if 0: # CVS conflicts create too many messages.
@@ -978,7 +977,7 @@ class atFile:
 	def writeError(self,message):
 	
 		if self.errors == 0:
-			es("errors writing: " + self.targetFileName)
+			es_error("errors writing: " + self.targetFileName)
 		self.error(message)
 		self.root.setOrphan()
 		self.root.setDirty()
@@ -1115,7 +1114,7 @@ class atFile:
 		
 		firstLines = self.scanHeader(file)
 		if self.using_gnx:
-			if self.use_gnx:
+			if app().use_gnx:
 				es("reading gnx not ready yet: " + self.targetFileName)
 				# lastLines = self.scanGnxText(file,v)
 			else:
@@ -1188,7 +1187,7 @@ class atFile:
 			
 			firstLines = self.scanHeader(file)
 			if self.using_gnx:
-				if self.use_gnx:
+				if app().use_gnx:
 					es("reading gnx not ready yet: " + self.targetFileName)
 					# lastLines = self.scanGnxText(file,v)
 				else:

@@ -987,7 +987,8 @@ class leoTree:
 		v.t.insertSpot = c.body.index("insert") # 9/1/02
 		# Recolor the body.
 		self.scanForTabWidth(v) # 9/13/02
-		self.recolor_now(v,incremental=true)
+		incremental = undoType not in ("Cut","Paste") # 3/9/03
+		self.recolor_now(v,incremental=incremental)
 		# Update dirty bits and changed bit.
 		if not c.changed:
 			c.setChanged(true) 

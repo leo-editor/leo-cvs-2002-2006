@@ -1678,19 +1678,19 @@ class fileCommands:
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
 		c=self.commands ; config = app().config
-		
+	
 		if not outlineOnlyFlag:
 			try:
 				# Leo2: write all @file nodes and set orphan bits.
 				at = c.atFileCommands
 				at.writeAll(c.rootVnode(), false) # forceFlag
 			except:
-				es("exception writing derived files")
+				es_error("exception writing derived files")
 				es_exception()
 				return false
 				
 		if self.read_only:
-			es("read only: " + fileName)
+			es_error("read only: " + fileName)
 			return false
 	
 		try:

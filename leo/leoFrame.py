@@ -44,6 +44,12 @@ class LeoFrame:
 		# Set title and fileName
 		if title:
 			self.mFileName = title
+			# Adjust title
+			path,fn = os.path.split(title)
+			if path and len(path) > 0:
+				title = fn + " in " + path
+			else:
+				title = fn
 		else:
 			title = "untitled"
 			n = app().numberOfWindows
@@ -88,6 +94,9 @@ class LeoFrame:
 		self.draggedItem = None
 		self.recentFiles = [] # List of recent files
 		self.controlKeyIsDown = false # For control-drags
+		
+		# Colors of log pane.
+		self.logColorTags = [] # list of color names used as tags.
 		#@-body
 		#@-node:1::<< set the LeoFrame ivars >>
 
@@ -99,8 +108,8 @@ class LeoFrame:
 		if sys.platform=="win32":
 			self.hwnd = top.frame()
 			# trace("__init__", "frame.__init__: self.hwnd:" + `self.hwnd`)
+	
 		top.title(title)
-		
 		top.minsize(30,10) # In grid units. This doesn't work as I expect.
 		
 		c = None # Make sure we don't mess with c yet.
@@ -132,7 +141,8 @@ class LeoFrame:
 		app().log = self # the LeoFrame containing the log
 		app().windowList.append(self)
 		# Sign on.
-		es("Leo Log Window...")
+		color = app().config.getWindowPref("log_error_color")
+		es("Leo Log Window...",color=color)
 		n1,n2,n3,junk,junk=sys.version_info
 		ver1 = "Python %d.%d.%d" % (n1,n2,n3)
 		ver2 = ", Tk " + self.top.getvar("tk_patchLevel")
@@ -4443,10 +4453,21 @@ class LeoFrame:
 	#@+body
 	# All output to the log stream eventually comes here.
 	
-	def put (self,s):
+	def put (self,s,color=None):
 		if app().quitting > 0: return
 		if self.log:
-			self.log.insert("end",s)
+			if color:
+				if color not in self.logColorTags:
+					self.logColorTags.append(color)
+					self.log.tag_config(color,foreground=color)
+				self.log.insert("end",s)
+				self.log.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+				if "black" not in self.logColorTags:
+					self.logColorTags.append("black")
+					self.log.tag_config("black",foreground="black")
+				self.log.tag_add("black","end")
+			else:
+				self.log.insert("end",s)
 			self.log.see("end")
 			self.log.update_idletasks()
 		else:

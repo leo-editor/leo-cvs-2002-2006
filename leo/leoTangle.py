@@ -664,9 +664,9 @@ class tangleCommands:
 			v = v.next()
 	
 		if not has_roots:
-			es("----- The outline contains no roots")
+			self.warning("----- The outline contains no roots")
 		elif self.errors > 0 and not self.path_warning_given:
-			es("----- Tangle halted because of errors")
+			self.warning("----- Tangle halted because of errors")
 		else:
 			es("Tangle complete")
 	#@-body
@@ -694,9 +694,9 @@ class tangleCommands:
 			else: v = v.threadNext()
 	
 		if not any_marked:
-			es("----- The outline contains no marked roots")
+			self.warning("----- The outline contains no marked roots")
 		elif self.errors > 0 and not self.path_warning_given:
-			es("----- Tangle halted because of errors")
+			self.warning("----- Tangle halted because of errors")
 		else:
 			es("Tangle complete")
 	#@-body
@@ -730,7 +730,7 @@ class tangleCommands:
 			self.skip_body(v)
 			v = v.threadNext()
 			if self.errors >= max_errors:
-				es("----- Halting Tangle: too many errors")
+				self.warning("----- Halting Tangle: too many errors")
 				break
 	
 		if self.tangling:
@@ -747,9 +747,9 @@ class tangleCommands:
 		self.v = None # self.v is not valid in pass 2.
 	
 		if self.errors > 0:
-			es("----- No file written because of errors")
+			self.warning("----- No file written because of errors")
 		elif self.root_list == None:
-			es("----- The outline contains no roots")
+			self.warning("----- The outline contains no roots")
 		else:
 			self.put_all_roots() # pass 2 top level function.
 	#@-body
@@ -794,7 +794,7 @@ class tangleCommands:
 	
 		if self.tangling and report_flag and not any_root_flag:
 			# This is done by Untangle if we are untangling.
-			es("----- The outline contains no roots")
+			self.warning("----- The outline contains no roots")
 		return any_root_flag
 	#@-body
 	#@-node:9::tangleTree (calls cleanup)
@@ -827,9 +827,9 @@ class tangleCommands:
 		c.endUpdate()
 		
 		if not has_roots:
-			es("----- The outline contains no roots")
+			self.warning("----- The outline contains no roots")
 		elif self.errors > 0:
-			es("----- Untangle command halted because of errors")
+			self.warning("----- Untangle command halted because of errors")
 		else:
 			es("Untangle complete")
 	#@-body
@@ -853,9 +853,9 @@ class tangleCommands:
 		c.endUpdate()
 	
 		if not marked_flag:
-			es("----- The outline contains no marked roots")
+			self.warning("----- The outline contains no marked roots")
 		elif self.errors > 0:
-			es("----- Untangle command halted because of errors")
+			self.warning("----- Untangle command halted because of errors")
 		else:
 			es("Untangle complete")
 	#@-body
@@ -1039,9 +1039,9 @@ class tangleCommands:
 				v = v.threadNext()
 		if report_flag:
 			if not any_root_flag:
-				es("----- The outline contains no roots")
+				self.warning("----- The outline contains no roots")
 			elif self.errors > 0:
-				es("----- Untangle command halted because of errors")
+				self.warning("----- Untangle command halted because of errors")
 		return any_root_flag
 	#@-body
 	#@-node:14::untangleTree
@@ -3388,7 +3388,7 @@ class tangleCommands:
 	#@+body
 	def error (self,s):
 		self.errors += 1
-		es(s)
+		es_error(s)
 		
 	def pathError (self,s):
 		if not self.path_warning_given:
@@ -3396,7 +3396,7 @@ class tangleCommands:
 			self.error(s)
 		
 	def warning (self,s):
-		es(s)
+		es_error(s)
 	
 	#@-body
 	#@-node:3::error, pathError, warning

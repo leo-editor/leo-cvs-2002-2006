@@ -38,6 +38,7 @@ class LeoApp:
 		self.trace_list = [] # "Sherlock" argument list for tracing().
 		self.tkEncoding = "utf-8" # Set by finishCreate
 		self.unicodeErrorGiven = false # true: suppres unicode tracebacks.
+		self.use_gnx = false # true: enable 4.x code.
 		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 	
 		if 0: # app() is not accessible during shutdown!

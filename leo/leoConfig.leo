@@ -16,7 +16,7 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -33,7 +33,7 @@
 <v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
-<v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
+<v t="T20" a="V"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
 <v t="T23"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
@@ -805,7 +805,11 @@ look_for_control_drag_on_mouse_down = 1
 
 outline_pane_scrolls_horizontally = 0
 #	0/1: 1: Use horizontal scrollbar in outline pane.</t>
-<t tx="T20">log_pane_wraps = 0
+<t tx="T20">log_error_color = red
+# Color for error messages written to the log window.
+# Must be a valid Tk color name.
+
+log_pane_wraps = 0
 #	0/1: Wrap body text if 1.
 
 log_text_foreground_color =
