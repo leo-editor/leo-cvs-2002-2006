@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3128" clone_windows="0"/>
-<globals body_outline_ratio="0.489224137931">
-	<global_window_position top="10" left="234" height="925" width="974"/>
+<globals body_outline_ratio="0.5">
+	<global_window_position top="13" left="215" height="925" width="974"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -85,7 +85,7 @@
 <v t="ekr.20041021120118"><vh>@thin pretty_print.py</vh></v>
 <v t="mork.20041022090036.1"><vh>@thin templates.py</vh></v>
 <v t="ekr.20041215103252"><vh>datenodes</vh>
-<v t="gfunch.20041207100416" a="E"><vh>@thin datenodes.py</vh></v>
+<v t="gfunch.20041207100416"><vh>@thin datenodes.py</vh></v>
 <v t="gfunch.20041209063345.1"><vh>@thin datenodes.ini</vh></v>
 </v>
 <v t="edream.110203113231.722"><vh>mod_autosave</vh>
@@ -115,15 +115,16 @@
 </v>
 <v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
 <v t="ekr.20041030092835"><vh>v138 highlights</vh></v>
-<v t="ekr.20041030091736.1"><vh> dyna plugins 138</vh>
+<v t="ekr.20041030091736.1" a="E"><vh> dyna plugins 138</vh>
 <v t="ekr.20041030091736.2"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
-<v t="ekr.20041030091736.3"><vh>@thin dyna_menu.py</vh></v>
-<v t="ekr.20041030091736.75"><vh>@thin exSButton.py</vh></v>
+<v t="ekr.20041030091736.3" a="E"
+expanded="ekr.20041030091736.5,ekr.20041030091736.50,ekr.20041030091736.70,"><vh>@thin dyna_menu.py</vh></v>
+<v t="ekr.20041030091736.75" a="E"><vh>@thin exSButton.py</vh></v>
 <v t="ekr.20041030091736.79"><vh>@thin dynacommon.py</vh></v>
 <v t="ekr.20041030091736.105"><vh>@thin dyna.txt</vh></v>
 </v>
 </v>
-<v t="ekr.20040722135402.1"><vh>Enhancing the body pane</vh>
+<v t="ekr.20040722135402.1" a="E"><vh>Enhancing the body pane</vh>
 <v t="EKR.20040517080517.1"><vh>@thin arrows.py</vh></v>
 <v t="edream.110203113231.753"><vh>@thin image.py</vh></v>
 <v t="ekr.20040422072343"><vh>@thin rClick.py</vh></v>
@@ -172,20 +173,22 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
 <v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
 <v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
-<v t="ekr.20041002162608"><vh>Status Line</vh>
+<v t="ekr.20041002162608"><vh>Status Line (Experimental)</vh>
 <v t="ekr.20041002162608.1"><vh>Tk Notes</vh>
 <v t="ekr.20041002163806"><vh>*** How to use Tk bindtags</vh></v>
 <v t="ekr.20041002162608.2"><vh>Delay body display so alt+arrow keys aren't slowed (threaded colorizer?)</vh></v>
 <v t="ekr.20041002162608.6"><vh>How to detect changes in text</vh></v>
 </v>
 <v t="ekr.20041027065222"><vh>To do</vh></v>
-<v t="ekr.20040201060959"><vh>@thin status_line.py</vh></v>
+<v t="ekr.20040201060959" a="E"
+expanded="ekr.20041002154511.2,ekr.20041026101757,ekr.20041026122011,"><vh>@thin status_line.py</vh></v>
 </v>
 </v>
 <v t="ekr.20040915073259"><vh>Enhancing windows</vh>
 <v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
-<v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
+<v t="mork.20041022155742.1"
+expanded="mork.20041022160305,"><vh>@thin nodebar.py</vh></v>
 <v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
 <v t="ekr.20040915073637"><vh>@thin TabbedLog.py</vh></v>
 <v t="ekr.20040915075530"><vh>@thin UASearch.py</vh></v>
@@ -422,19 +425,18 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="pap.20041006184225"><vh>@thin plugin_manager.py</vh></v>
 </v>
 <v t="ekr.20041001210557"><vh>Scripting</vh>
-<v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
+<v t="EKR.20040613213623"
+expanded="EKR.20040618091629,ekr.20041001183818,EKR.20040618091543.2,"><vh>@thin mod_scripting.py</vh></v>
 </v>
 <v t="edream.110203113231.930"><vh>Spell Checking</vh>
 <v t="ekr.20040809165421"><vh>Read me or suffer</vh></v>
 <v t="edream.110203113231.932"><vh>@thin mod_spelling.ini</vh></v>
-<v t="ekr.20041009165858" a="E"><vh>@thin spellpyx.ini</vh></v>
-<v t="edream.110203113231.933"
-expanded="edream.110203113231.938,edream.110203113231.939,"><vh>@thin mod_spelling.py</vh></v>
+<v t="ekr.20041009165858"><vh>@thin spellpyx.ini</vh></v>
+<v t="edream.110203113231.933"><vh>@thin mod_spelling.py</vh></v>
 <v t="ekr.20040809151600"><vh>spellpyx</vh>
 <v t="ekr.20040809165421.1"><vh>Installing this plugin</vh></v>
 <v t="ekr.20040809151600.4"><vh>Notes: e</vh></v>
-<v t="ekr.20040809151600.1"
-expanded="ekr.20040809151600.10,ekr.20040809151600.11,"><vh>@thin spellpyx.py</vh></v>
+<v t="ekr.20040809151600.1"><vh>@thin spellpyx.py</vh></v>
 <v t="ekr.20040809151600.52"><vh>aspell-1.1</vh>
 <v t="ekr.20040809160744"><vh>Notes: e</vh></v>
 <v t="ekr.20040809161108"><vh>Notes: Gary Bishop</vh></v>
@@ -464,7 +466,7 @@ expanded="ekr.20040809151600.10,ekr.20040809151600.11,"><vh>@thin spellpyx.py</v
 </v>
 <v t="ekr.20041113110210"><vh>@button spellpyx</vh></v>
 </v>
-<v t="ekr.20040929104807" a="TV"><vh>4.3  plugins (in progress)</vh>
+<v t="ekr.20040929104807"><vh>4.3  plugins (in progress)</vh>
 <v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
 <v t="bwmulder.20041017125718"><vh>@thin mod_shadow.py</vh></v>
 <v t="rogererens.20041013082304"><vh>@thin UNL.py</vh></v>
@@ -653,13 +655,14 @@ expanded="ekr.20040809151600.10,ekr.20040809151600.11,"><vh>@thin spellpyx.py</v
 <v t="ekr.20040918165144.8"><vh>Maybe:  add translation feature to g.es</vh></v>
 <v t="ekr.20040918165144.9"><vh>Write script to find args to g.es()</vh></v>
 <v t="ekr.20040918165144.10"><vh>New atFile organization (user tangle/untangle)</vh></v>
-<v t="ekr.20040918165350"><vh>Create status line class</vh></v>
 </v>
 <v t="ekr.20040918165427.4"><vh>Autocompletion dictionary files</vh></v>
 <v t="ekr.20040918165427.5"><vh>Leo to docbook xml plugin: Leo2AsciiDoc</vh></v>
-<v t="ekr.20040918165427.6" a="E"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
+<v t="ekr.20040918165427.6"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
 </v>
+<v t="ktenney.20041211072654.1" a="TV"
+expanded="ktenney.20041211072654.7,"><vh>@thin at_view.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040517075715"></t>
@@ -7561,7 +7564,6 @@ Each can be done relatively easily: one week or less</t>
 <t tx="ekr.20040918165144.8"></t>
 <t tx="ekr.20040918165144.9"></t>
 <t tx="ekr.20040918165144.10"></t>
-<t tx="ekr.20040918165350"></t>
 <t tx="ekr.20040918165427"></t>
 <t tx="ekr.20040918165427.4">@nocolor
 
