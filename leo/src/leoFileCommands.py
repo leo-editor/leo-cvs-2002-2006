@@ -1911,13 +1911,23 @@ class baseFileCommands:
         #@-node:ekr.20031218072017.1866:<< Write the head text >>
         #@nl
     
-        # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
+        if not self.usingClipboard:
+            #@        << issue informational messages >>
+            #@+node:ekr.20040702085529:<< issue informational messages >>
+            if p.isAtThinFileNode and p.isOrphan():
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+            
+            if 0: # For testing.
+                if p.isAtIgnoreNode():
+                     for p2 in p.self_and_subtree_iter():
+                            if p2.isAtThinFileNode():
+                                g.es("Writing @ignore'd: %s" % p2.headString(),color="blue")
+            #@nonl
+            #@-node:ekr.20040702085529:<< issue informational messages >>
+            #@nl
+    
+       # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
         if p.hasChildren():
-            if isThin and forceWrite:
-                if isIgnore:
-                    g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
-                else:
-                    g.es("Writing erroneous: %s" % p.headString(),color="blue")
             if forceWrite or self.usingClipboard:
                 fc.put_nl()
                 # This optimization eliminates all "recursive" copies.
