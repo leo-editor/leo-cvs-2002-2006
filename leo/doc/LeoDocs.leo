@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="11734" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="52" left="210" height="860" width="988"/>
+	<global_window_position top="13" left="34" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -20,7 +20,7 @@
 <v t="ekr.20041226081019"><vh>@button check spelling...</vh></v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
-<v t="edream.110203163054.8" a="TV"><vh>What people are saying about Leo</vh>
+<v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
 <v t="edream.110203163054.15"><vh> Open Software award nominations</vh></v>
 <v t="edream.110203163054.14"><vh> Speed Ream's slashdot article (Why Leo is interesting)</vh></v>
 <v t="edream.110203163054.16"><vh>Alex Abacus</vh></v>
@@ -1230,7 +1230,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1258,7 +1258,49 @@
 <v t="EKR.20040524104904.22"><vh>System requirements</vh></v>
 <v t="EKR.20040524104904.23"><vh>How to install leo.py on Windows</vh></v>
 <v t="EKR.20040524104904.24"><vh>How to associate leo.py with .leo files on Windows</vh></v>
-<v t="EKR.20040524104904.25"><vh>Quick start</vh></v>
+<v t="EKR.20040524104904.25"><vh>Quick start</vh>
+<v t="EKR.20040524104904.50"><vh>Overview</vh></v>
+<v t="EKR.20040524104904.51"><vh>Sections and section references</vh></v>
+<v t="EKR.20040524104904.52"><vh>Organizing @file trees.</vh>
+<v t="EKR.20040524104904.53"><vh>Examples</vh>
+<v t="EKR.20040524104904.54"><vh>@file f.c</vh>
+<v t="EKR.20040524104904.55"><vh>&lt;&lt; constants &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.56"><vh>&lt;&lt; declarations &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.57"><vh>function 1</vh></v>
+<v t="EKR.20040524104904.58"><vh>function 2</vh></v>
+</v>
+<v t="EKR.20040524104904.59"><vh>@file classX.py</vh>
+<v t="EKR.20040524104904.60"><vh>&lt;&lt; imports for classX &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.61"><vh>Getters</vh>
+<v t="EKR.20040524104904.62"><vh>getter 1</vh></v>
+<v t="EKR.20040524104904.63"><vh>getter 2</vh></v>
+</v>
+<v t="EKR.20040524104904.64"><vh>Setters</vh>
+<v t="EKR.20040524104904.65"><vh>setter 1</vh></v>
+<v t="EKR.20040524104904.66"><vh>setter 2</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.67"><vh>@file mainClass.py</vh>
+<v t="EKR.20040524104904.68"><vh>&lt;&lt;mainClass imports &gt;&gt;</vh></v>
+<v t="EKR.20040524104904.69"><vh>&lt;&lt;class mainClass&gt;&gt;</vh>
+<v t="EKR.20040524104904.70"><vh>method 1</vh></v>
+<v t="EKR.20040524104904.71"><vh>method 2</vh></v>
+</v>
+<v t="EKR.20040524104904.72"><vh>&lt;&lt;class helperClass&gt;&gt;</vh>
+<v t="EKR.20040524104904.73"><vh>method 1</vh></v>
+<v t="EKR.20040524104904.74"><vh>method 2</vh></v>
+</v>
+</v>
+<v t="EKR.20040524104904.75"><vh>@file bad</vh>
+<v t="EKR.20040524104904.76"><vh>Methods</vh>
+<v t="EKR.20040524104904.77"><vh>&lt;&lt; section 1 &gt;&gt;</vh>
+<v t="EKR.20040524104904.78"><vh>A</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
 </v>
 <v t="EKR.20040524104904.26"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
 <v t="EKR.20040524104904.27"><vh>Cloning headlines</vh>
@@ -2511,11 +2553,12 @@ This introduction has only sketched Leo's capabilities.  Chapter 3 shows how to 
 <t tx="EKR.20040524104904.20">There is a trick that makes it very easy to develop Leo using Leo itself. The
 trick is to create a workflow that separates editing from testing.
 
-Putting test code in LeoPy.leo would waste a lot of time. To run tests I would
-have to exit Leo and reload LeoPy. A much quicker way is to put all test code
-in a test.leo file. So to change and test code, just do the following:
+Putting test code in LeoPy.leo (Leo's main source code file) would waste a lot
+of time. To run tests I would have to exit Leo and reload LeoPy. A much quicker
+way is to put all test code in test.leo (Leo's main test file in the test
+directory. So to change and test code, just do the following:
 
-1. Save LeoPy.leo but do NOT exit Leo. 
+1. Save LeoPy.leo but do NOT exit Leo.
 
 2. Quit the copy of Leo running test.leo, then reload test.leo.
 
@@ -2563,7 +2606,7 @@ Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
 See "How to install Leo on MacOS Panther (10.3)" for installation instructions for MacOs X.  Leo will not run on MacOs 9.</t>
 <t tx="EKR.20040524104904.23">@nocolor
 
-leo.py requires Python 2.1 and tcl/tk 8.3 or above.
+leo.py requires Python 2.1 and tcl/tk 8.3 or above.  Most versions of Python come with tcl/tk already installed.
 
 	Download Python from http://python.org/ 
 	Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
@@ -2601,8 +2644,8 @@ Press the new button to open the "New Action" window.
 In the Action field type Open.
 In the "Action used to perform action" type _one_ of the following lines:
 
-[python install dir]\pythonw.exe   [leo install dir]\leo.py %1
-[python install dir]\python.exe -i [leo install dir]\leo.py %1
+[python install dir]\pythonw.exe   [leo install dir]\leo.py "%1"
+[python install dir]\python.exe -i [leo install dir]\leo.py "%1"
 
 The first  line opens Leo files with no console window.
 The second line opens Leo files with a console window and leaves the window open after Leo exits.
@@ -2610,17 +2653,13 @@ The second line opens Leo files with a console window and leaves the window open
 You should now be able to double click on a leo file in explorer with leo.py.</t>
 <t tx="EKR.20040524104904.25">@nocolor
 
-Quick start
-
 This is the minimum you need to use Leo effectively.
 
-1. Write body text using the noweb languages. See Using noweb, CWEB and Directives.
+- Specify source files (derived files) using @file or @thin nodes.  The @file or @thin node is the so-called root node of the file.  Leo will save the derived file automatically when you save the Leo outline.
 
-2. Create source files (derived files) using the Tangle command. Only @root directives under the currently selected headline are tangled by the Tangle command. Warning: The Tangle command will overwrite files specified in @root directives if they exist.
+- Put the contents of derived files in the body text in the root node and the descendents of the root node.  The body text of these nodes may use the noweb markup language.
 
-3. Use the Untangle command to propagate changes made to derived files back into the outline Untangle is useful only for making small syntactic changes. Don't attempt to change the structure of an outline by modifying derived files; it won't work.
-
-4. Many command key abbreviations are specified in the Syntax Coloring panel.
+For more details, see the children of this node.  These are clones of parts of Chapter 4.
 
 See the Appendices for a concise summary of information about Leo.</t>
 <t tx="EKR.20040524104904.26">@nocolor
@@ -2671,7 +2710,7 @@ The following features are mostly derived from the Tk Text widget.  Some default
 
 Clicking mouse button 1 positions the insertion cursor just before the character underneath the mouse cursor, sets the input focus to this widget, and clears any selection in the widget. Dragging with mouse button 1 strokes out a selection between the insertion cursor and the character under the mouse. 
 
-Double-clicking with mouse button 1 selects the word under the mouse and positions the insertion cursor at the beginning of the word.
+Double-clicking with mouse button 1 selects the word under the mouse and positions the insertion cursor at the end of the word.
 
 The ends of the selection can be adjusted by dragging with mouse button 1 while the Shift key is down; this will adjust the end of the selection that was nearest to the mouse cursor when button 1 was pressed. 
 
@@ -2683,7 +2722,7 @@ If the mouse is dragged out of the body pane while button 1 is pressed, the entr
 
 The Left and Right (arrow) keys move the insertion cursor one character to the left or right; they also clear any selection in the text. If Left or Right is typed with the Shift key down, then the insertion cursor moves and the selection is extended to include the new character. Control-Left and Control-Right move the insertion cursor by words, and Control-Shift-Left and Control-Shift-Right move the insertion cursor by words and also extend the selection.
 
-The Up and Down (arrow) keys move the insertion cursor one line up or down and clear any selection in the text. If Up or Right is typed with the Shift key down, then the insertion cursor moves and the selection is extended to include the new character. Control-Up and Control-Down move the insertion cursor by paragraphs (groups of lines separated by blank lines), and Control-Shift-Up and Control-Shift-Down move the insertion cursor by paragraphs and also extend the selection. Control-p and Control-n behave the same as Up and Down, respectively. 
+The Up and Down (arrow) keys move the insertion cursor one line up or down and clear any selection in the text. If Up or Right is typed with the Shift key down, then the insertion cursor moves and the selection is extended to include the new character. Control-Up and Control-Down move the insertion cursor by paragraphs (groups of lines separated by blank lines), and Control-Shift-Up and Control-Shift-Down move the insertion cursor by paragraphs and also extend the selection. Control-p and Control-n behave the same as Up and Down, respectively. Note: by default, Leo binds Control-p and control-n to commands.
 
 The Next(Page Down) and Prior(Page Up) keys move the insertion cursor forward or backwards by one screenful and clear any selection in the text. If the Shift key is held down while Next or Prior is typed, then the selection is extended to include the new character.
 
@@ -2755,9 +2794,7 @@ Url's should contain no spaces: use %20 to indicate spaces.
 You may use any type of url that your browser supports: http,mailto,ftp,file,etc.
 </t>
 <t tx="EKR.20040524104904.47">You can change the relative sizes of the outline and body panes by dragging the splitter bar.  The Equal Sized Panes command resizes the panes so that each fills half of the main window.</t>
-<t tx="EKR.20040524104904.48">The outline pane supports one level of undo.
-
-The body pane supports unlimited undo.  However, you can not undo an operation affecting body text after selecting a new headline.  You can undo or redo the last operation involving the outline itself.  You can not undo operations affecting headline text.</t>
+<t tx="EKR.20040524104904.48">Leo supports unlimited undo for all typing and all commands.</t>
 <t tx="EKR.20040524104904.49">@nocolor
 @ignore
 @language python</t>
@@ -2862,7 +2899,13 @@ terminates the previous code section and indicates that the preceding code secti
 
 - Each named node must descend from the node that refers to it.
 
-- The @ignore directive is not valid in @file trees.
+- The @ignore directive is not valid in @file trees, except in the root node.
+
+Note: the @ignore directive has several uses:
+
+- In the root node of an @file tree, @ignore prevents Leo from writing the derived file.
+- In @root trees (covered in Appendix 2 to Chapter 4) @ignore excludes the @ignore tree from the derived file.
+- Outside of @file and @root trees, @ignore can be used by scripts.
 
 A node that is not referenced is called an _orphan node_.  If an @file tree contains an orphan node or @ignore node, Leo issues a warning and does not write the derived file when saving an outline. Leo saves all the information in the @file tree in the .leo file, so nothing is lost; Leo will recreate the @file tree from the .leo file when reading the outline the next time.
 
@@ -3012,7 +3055,9 @@ causes the comment delimiter to be "REM " (Note the trailing space).</t>
 
 The @delims directive changes the comment strings used to mark sentinel lines. This directive is often used to place Javascript text inside XML or HTML files.
 
-The @delims directive contains one or two delimiters, separated by whitespace. If only one delim is present it delimits single-line comments. If two delims are present they delimit block comments. The @delims directive can not be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels. The @delims directive inserts @@delims sentinels into the derived file. The new delimiter strings continue in effect until the next @@delims sentinel in the derived file or the end of the derived file.
+The @delims directive contains one or two delimiters, separated by whitespace. If only one delim is present it delimits single-line comments. If two delims are present they delimit block comments. The @delims directive can not be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels.
+
+The @delims directive inserts @@delims sentinels into the derived file. The new delimiter strings continue in effect until the next @@delims sentinel in the derived file or the end of the derived file.
 
 Note: Leo can not revert to previous delimiters automatically; you must change back to previous delimiters using another @delims directive. For example:
 
@@ -6571,7 +6616,9 @@ At present only the u.saveTree method exists.  Coming soon, u.saveNode, u.saveNo
 <t tx="EKR.20040601102808">See the to-do list in LeoPy.leo for a list of known bugs in this version.
 
 None of these bugs is serious:  I consider this version to be suitable for day-to-day work.</t>
-<t tx="EKR.20040608091134">The @all directive is valid only in @thin trees.  This directive is similar to @others, but it is less restrictive: it dumps _all_ nodes to the derived file, including @ignore nodes and nodes that in an @others tree would be considered to be orphan nodes.
+<t tx="EKR.20040608091134">The @all directive is valid only in @thin trees.  (See Appendix 3 to Chapter 4)
+
+This directive is similar to @others, but it is less restrictive: it dumps _all_ nodes to the derived file, including @ignore nodes and nodes that in an @others tree would be considered to be orphan nodes.
 
 The @all directive is required for files such as @thin leoProjects.txt in LeoPy.leo.  leoProjects.txt contains so-called project nodes.  It doesn't have an meaning as a program file:  it is simply a collection of unrelated data.  @others would not work at all: it would complain about lots of orphan nodes.</t>
 <t tx="EKR.20040608091134.1">In most respects @file-thin (or equivalently, @thin) works just like @file as far as writing code is concerned.  In fact, you can convert from @file to @thin simply by opening an outline, changing @file to @thin, and saving the outline.

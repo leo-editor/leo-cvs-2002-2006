@@ -27,6 +27,7 @@ mod_scripting.py
 
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
+UNL.py
 plugin_manager.py
 
 # test: second mention of rowcol should have no effect.
