@@ -4,6 +4,8 @@
 
 from leoGlobals import *
 
+#@+others
+#@+node:class leoMenu
 class leoMenu:
 	
 	"""The base class for all Leo menus."""
@@ -1155,6 +1157,20 @@ class leoMenu:
 	#@nonl
 	#@-node:7 Routines with new spellings
 	#@-others
+#@nonl
+#@-node:class leoMenu
+#@+node:class nullMenu
+class nullMenu(leoMenu):
+	
+	"""A null menu class for testing and batch execution."""
+
+	def oops (self):
+
+		trace("leoMenu", callerName(2))
+		pass
+#@nonl
+#@-node:class nullMenu
+#@-others
 #@nonl
 #@-node:@file leoMenu.py
 #@-leo
