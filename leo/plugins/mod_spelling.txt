@@ -13,6 +13,7 @@ COMMENT1
 CVS
 CWEB
 C_EXTENSION
+CashRegister
 CheckVersion
 ClassType
 ConfigParser
@@ -75,6 +76,7 @@ MouseWheel
 Mulvany
 NannyNag
 NewHeadline
+NoNodeEditors
 OLDconvert
 OLDfilter
 OLDsearch
@@ -138,6 +140,7 @@ Unindent
 Unmark
 ValueError
 WXUNUSED
+Winkler
 Word97
 WordPerfert
 XAlways
@@ -235,6 +238,7 @@ aType
 aTypeSpec
 aaa
 abc
+accel
 actionscript
 activestate
 ada_language
@@ -253,6 +257,7 @@ allStatements
 all_tnodes_iter
 all_vnodes_iter
 allow_clone_drags
+aren`t
 arg
 args
 args2
@@ -287,6 +292,7 @@ beforeIcon
 before_v
 beginUpdate
 binascii
+bind_shortcut
 bindtags
 bitmap_name
 blockquote
@@ -314,6 +320,7 @@ bz2
 c2py
 c_language
 callerName
+can`t
 cantredo
 cantundo
 caseName
@@ -474,6 +481,9 @@ doctests
 docutils
 doesn
 drawBox
+drawIcon
+drawText
+drawTree
 dtors
 dumpCodeList
 dx
@@ -713,6 +723,7 @@ importTests
 in_headline
 incompletions
 indices
+initMarked
 inline
 inodes
 input_ins
@@ -839,6 +850,9 @@ linenumber
 lines1
 lines2
 linkAfter
+linkX
+linux1
+linux2
 list1
 listToString
 loadDir
@@ -893,6 +907,7 @@ mbcs
 memq
 menu1
 menuName
+menu_shortcut
 menubar
 mincolor
 minibuffer
@@ -1057,6 +1072,7 @@ pluginsManager
 plugins_menu
 plusMinus
 popup
+porv
 pos
 positions1
 positions2
@@ -1114,6 +1130,7 @@ rc4
 reFindall
 reFlags
 reST
+readAll
 readDirective
 readEndNode
 readLinesClass
@@ -1216,6 +1233,7 @@ setDirty
 setHeadString
 setInsertPoint
 setLog
+setMarked
 setRevertVars
 setTabWidth
 setTimestamp
@@ -1231,6 +1249,7 @@ set_lang
 set_language
 set_trace
 setq
+sharedNodes
 shortDescription
 shortFileName
 showInvisibles
@@ -1269,6 +1288,7 @@ sn
 someScan
 some_proc
 someclass
+soooo
 sortSequence
 sourcedir
 sourcefilename
@@ -1431,6 +1451,7 @@ unmarking
 unselect1
 unselect2
 unselecting
+updateCount
 url
 url1
 url2
@@ -1478,6 +1499,7 @@ wildcard
 win32
 windowList
 windowMenu
+won`t
 word2
 word_export
 workflow

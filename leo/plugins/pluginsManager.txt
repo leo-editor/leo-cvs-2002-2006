@@ -27,13 +27,20 @@
 #@+node:ekr.20040722122459.4:Commands &  directives
 # Allows plugins to add their own directives.
     # Required by the syntax check unit test.
-    add_directives.py 
+    add_directives.py
     
+# FileAction nodes specify scripts to be run when Leo writes dirty @file, @thin etc. nodes
+    # FileActions.py
+
 # Automatically executes Save commands every so often.
     # mod_autosave.py
     
 # Timestamp all save operations to show when they occur.
     # mod_timestamp.py
+    
+# Uses Python's urllib module to download files and import them into Leo.
+    # requires the TabbedLog plugin,
+     URLloader.py
 #@nonl
 #@-node:ekr.20040722122459.4:Commands &  directives
 #@+node:ekr.20040722122459:Debugging & testing
@@ -86,6 +93,22 @@
     # rowcol.py
 #@nonl
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
+#@+node:ekr.20040915073259.3:Enhance windows
+# Maximizes all new windows. (Windows platform only).
+    # maximizeNewWindows.py
+
+# Turns the log into a tabbed component.  Other plugins may add tabs.
+    # tabbedLog.py
+    
+# A plugin for searching unknownAttributes (uA's).
+    # Requires tabbedLog.py plugin.
+    # UASearch.py
+    
+# Left mouse click scrolls down; right mouse click scrolls up.
+    # This does not work well with expanded_click_area = 1
+    # UniversalScrolling.py
+#@nonl
+#@-node:ekr.20040915073259.3:Enhance windows
 #@+node:ekr.20040722121404:Experimental plugins
 # PRE_ALPHA QUALITY: MAY BE DANGEROUS
     # __wx_gui.py
@@ -172,6 +195,9 @@
 #@nonl
 #@-node:ekr.20040722135618:Menus & translations
 #@+node:ekr.20040722140829:New kinds of nodes
+# Executes commands in @produce nodes.
+    # at_produce.py
+
 # The predecessor to rst2.py
     # rst.py
 

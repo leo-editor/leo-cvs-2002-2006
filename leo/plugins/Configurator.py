@@ -1,5 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040609213754:@thin Configurator.py
+
+
 #@@language python
 #@@tabwidth -4
 
