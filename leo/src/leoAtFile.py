@@ -2931,7 +2931,7 @@ class baseOldDerivedFile:
 			self.onl() # Note: no trailing whitespace.
 	#@nonl
 	#@-node:putDocPart (3.x)
-	#@+node:putCodePart & allies
+	#@+node:putCodePart & allies (3.x)
 	def putCodePart(self,s,i,v):
 	
 		"""Expands a code part, terminated by any at-directive except at-others.
@@ -3067,7 +3067,7 @@ class baseOldDerivedFile:
 		# Raw code parts can only end at the end of body text.
 		self.raw = false
 		return i
-	#@-node:putCodePart & allies
+	#@-node:putCodePart & allies (3.x)
 	#@+node:inAtOthers
 	def inAtOthers(self,v):
 	
@@ -4691,8 +4691,30 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.os(line)
 	#@nonl
 	#@-node:putCodeLine
-	#@+node:putRefLine
+	#@+node:putRefLine (new) & allies
 	def putRefLine(self,s,i,n1,n2,v):
+		
+		"""Put a line containing one or more references."""
+		
+		at = self
+		
+		# Compute delta only once.
+		delta = self.putRefAt(s,i,n1,n2,v,delta=None)
+		
+		while 1:
+			i = n2 + 2
+			hasRef,n1,n2 = at.findSectionName(s,i)
+			if hasRef:
+				self.putAfterMiddleRef(s,i,n1,delta)
+				self.putRefAt(s,n1,n1,n2,v,delta)
+			else:
+				break
+		
+		self.putAfterLastRef(s,i,delta)
+	#@nonl
+	#@-node:putRefLine (new) & allies
+	#@+node:PutRefAt
+	def putRefAt (self,s,i,n1,n2,v,delta):
 		
 		"""Put a reference at s[n1:n2+2] from v."""
 		
@@ -4706,8 +4728,10 @@ class baseNewDerivedFile(oldDerivedFile):
 			return
 		
 		# Expand the ref.
-		j,delta = skip_leading_ws_with_indent(s,i,at.tab_width)
+		if not delta:
+			junk,delta = skip_leading_ws_with_indent(s,i,at.tab_width)
 		at.putLeadInSentinel(s,i,n1,delta)
+	
 		at.indent += delta
 		if at.leadingWs:
 			at.putSentinel("@" + at.leadingWs + name)
@@ -4716,20 +4740,49 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.putBody(ref)
 		at.indent -= delta
 		
-		# Handle whatever follows the ref.
-		j = skip_ws(s,n2+2)
+		return delta
+	#@nonl
+	#@-node:PutRefAt
+	#@+node:putAfterLastRef
+	def putAfterLastRef (self,s,start,delta):
+		
+		"""Handle whatever follows the ref."""
+		
+		at = self
+		
+		j = skip_ws(s,start)
+		
 		if j < len(s) and s[j] != '\n':
-			i = skip_to_end_of_line(s,i)
-			after = s[n2+2:i]
+			end = skip_to_end_of_line(s,start)
+			after = s[start:end]
+			# Temporarily readjust delta to make @afterref look better.
+			at.indent += delta
 			at.putSentinel("@afterref")
 			at.os(after) ; at.onl()
+			at.indent -= delta
 		else:
 			# Temporarily readjust delta to make @nl look better.
 			at.indent += delta
 			at.putSentinel("@nl")
 			at.indent -= delta
 	#@nonl
-	#@-node:putRefLine
+	#@-node:putAfterLastRef
+	#@+node:putAfterMiddleef
+	def putAfterMiddleRef (self,s,start,end,delta):
+		
+		"""Handle whatever follows the ref."""
+		
+		at = self
+		
+		if start < end:
+			after = s[start:end]
+			at.indent += delta
+			at.putSentinel("@afterref")
+			at.os(after) ; at.onl()
+			at.putSentinel("@nonl")
+			at.indent -= delta
+	#@nonl
+	#@-node:putAfterMiddleef
 	#@+node:putBlankDocLine
 	def putBlankDocLine (self):
 		
