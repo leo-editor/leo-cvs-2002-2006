@@ -2593,27 +2593,25 @@ class LeoFrame:
 			#@<< open idle in Linux >>
 			#@+node:1::<< open idle in Linux >>
 			#@+body
-			# 07-SEP-2002 DHEIN: Open Python window under linux
+			# 09-SEP-2002 DHEIN: Open Python window under linux
 			
 			try:
-				from idlelib import IdleConf
+				pathToLeo = os.path.join(app().loadDir,"leo.py")
+				sys.argv = [pathToLeo]
+				from idlelib import idle
+				if app().idle_imported:
+					reload(idle)
+				app().idle_imported = true
 			except:
-				es("idlelib could not be imported.")
-				es("Probably IDLE is not installed.")
-				es("Run Tools/idle/setup.py to build idlelib.")
-				return "break" # inhibit further command processing.
-			
-			idle_dir = os.path.dirname(IdleConf.__file__)
-			IdleConf.load(idle_dir)
-			
-			# defer importing Pyshell until IdleConf is loaded
-			from idlelib import PyShell
-			pathToLeo = os.path.join(app().loadDir,"leo.py")
-			# first arg is required but ignored by PyShell.main()
-			# "-d" means debug
-			# "-t" means title
-			sys.argv = ["leo","-d","-t", pathToLeo, pathToLeo]
-			PyShell.main()
+				try:
+					es("idlelib could not be imported.")
+					es("Probably IDLE is not installed.")
+					es("Run Tools/idle/setup.py to build idlelib.")
+					es("Can not import idle")
+					import traceback
+					traceback.print_exc() # This can fail!!
+				except: pass
+
 			#@-body
 			#@-node:1::<< open idle in Linux >>
 
