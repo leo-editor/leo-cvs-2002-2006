@@ -1937,9 +1937,10 @@ if 0:
 else:
 	u.registerUndoHandlers("Bletch",undoBletch,redoBletch)
 	
-	u.setUndoParams("Bletch",p)
-	u.undo()
-	u.redo()</t>
+# "Execute" the Bletch command :-)  The Edit command should contain "Undo Bletch"
+u.setUndoParams("Bletch",p)
+
+# Selecting "Undo Bletch" will enable "Redo Bletch", etc.</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
