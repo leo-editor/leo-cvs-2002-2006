@@ -2614,7 +2614,7 @@ class LeoFrame:
 				elif match(s,i,end):
 					if level == 0: return n
 					else: level -= 1
-			n += 1
+			n += delta # bug fix: 1/30/02
 		return n
 	#@-body
 	#@-node:9::skipToMatchingSentinel

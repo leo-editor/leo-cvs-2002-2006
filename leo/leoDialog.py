@@ -176,7 +176,7 @@ class leoDialog:
 		top.title(title)
 		top.resizable(0,0) # neither height or width is resizable.
 		frame = Tk.Frame(top)
-		self.top.bind("<Key>", self.OnOkCancelKey)
+		self.top.bind("<Key>", self.OnOkCancelNumberKey) # 1/30/03
 		frame.pack(padx=6,pady=4)
 		label = Tk.Label(frame,text=message)
 		label.pack(pady=10,side="left")
@@ -291,7 +291,25 @@ class leoDialog:
 		self.top.destroy() # terminates wait_window
 	#@-body
 	#@-node:1::cancelButton, noButton, okButton, yesButton
-	#@+node:2::OnOkCancelKey, OnYesNoKey, OnYesNoCancelKey
+	#@+node:2::okNumberButton, cancelNumberButton
+	#@+body
+	def okNumberButton(self):
+	
+		s = self.number_text.get("1.0","end")
+		s = s.strip() # 1/30/03
+		try:
+			self.number=int(s)
+		except:
+			es("invalid line number:" + s)
+			self.number=-1
+		self.top.destroy() # terminates wait_window
+		
+	def cancelButton(self):
+		self.number=-1
+		self.top.destroy() # terminates wait_window
+	#@-body
+	#@-node:2::okNumberButton, cancelNumberButton
+	#@+node:3::On...Key
 	#@+body
 	def OnOkCancelKey(self,event):
 		ch=string.lower(event.char)
@@ -314,9 +332,16 @@ class leoDialog:
 		elif ch=='n': self.noButton()
 		elif ch=='y': self.yesButton()
 		return "break"
+		
+	def OnOkCancelNumberKey(self,event):
+		ch=string.lower(event.char)
+		if ch=='\n' or ch=='\r': self.okNumberButton() # The default
+		elif ch=='c': self.cancelButton()
+		elif ch=='o': self.okNumberButton()
+		return "break"
 	#@-body
-	#@-node:2::OnOkCancelKey, OnYesNoKey, OnYesNoCancelKey
-	#@+node:3::setArrowCursor, setDefaultCursor
+	#@-node:3::On...Key
+	#@+node:4::setArrowCursor, setDefaultCursor
 	#@+body
 	def setArrowCursor (self,event=None):
 		
@@ -328,26 +353,11 @@ class leoDialog:
 		if self.text:
 			self.text.configure(cursor="xterm")
 	#@-body
-	#@-node:3::setArrowCursor, setDefaultCursor
-	#@+node:4::okNumberButton, cancelNumberButton
-	#@+body
-	def okNumberButton(self):
-	
-		t = self.number_text.get("1.0","end")
-		try:
-			self.number=int(t)
-		except:
-			es("invalid line number:" + t)
-			self.number=-1
-		self.top.destroy() # terminates wait_window
-		
-	def cancelButton(self):
-		self.number=-1
-		self.top.destroy() # terminates wait_window
-	#@-body
-	#@-node:4::okNumberButton, cancelNumberButton
+	#@-node:4::setArrowCursor, setDefaultCursor
 	#@-node:9::Event handlers & command handlers
 	#@-others
+
+
 #@-body
 #@-node:0::@file leoDialog.py
 #@-leo
