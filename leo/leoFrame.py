@@ -7,12 +7,11 @@
 #@@language python 
 
 from leoGlobals import *
-import leoColor,leoCompare,leoDialog,leoFontPanel,leoNodes,leoPrefs
-import os,string,sys,traceback,Tkinter,tkFileDialog,tkFont
+import leoColor,leoCommands,leoCompare,leoDialog,leoFontPanel,leoNodes,leoPrefs,leoTree
+import os,string,sys,Tkinter,tkFileDialog,tkFont
 
 # Needed for menu commands
-import leoCommands, leoNodes, leoTree
-import os, sys, traceback
+
 
 class LeoFrame:
 
@@ -3321,6 +3320,7 @@ class LeoFrame:
 				cursor="xterm" + " " + fg + " " + bg
 				try: body.configure(cursor=cursor)
 				except:
+					import traceback
 					traceback.print_exc()
 	#@-body
 	#@-node:4::f.setBodyFontFromConfig

@@ -6,7 +6,7 @@
 
 #@@language python
 
-import exceptions,os,string,sys,time,types,Tkinter,traceback
+import exceptions,os,string,sys,time,types,Tkinter
 
 
 #@<< define general constants >>
@@ -658,6 +658,7 @@ def oldDump(s):
 #@+body
 def es_exception (full=false):
 
+	import traceback
 	typ,val,tb = sys.exc_info()
 	if full:
 		errList = traceback.format_exception(typ,val,tb)

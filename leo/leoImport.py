@@ -4,7 +4,6 @@
 #@@language python
 
 from leoGlobals import *
-import traceback
 
 # Synonyms
 indent_refs = true ; dont_indent_refs = false
@@ -23,7 +22,7 @@ indent_refs = true ; dont_indent_refs = false
 
 def importFiles (dir, type = None, kind = "@file"):
 	
-	import os,traceback
+	import os
 
 	# Check the params.
 	if kind != "@file" and kind != "@root":

@@ -6,7 +6,7 @@
 # Tangle and Untangle.
 
 from leoGlobals import *
-import os,string,traceback
+import os,string
 
 
 #@<< about Tangle and Untangle >>

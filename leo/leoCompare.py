@@ -6,7 +6,7 @@
 # The code for Leo's Compare Panel and the compare class.
 
 from leoGlobals import *
-import difflib,filecmp,os,string,traceback
+import difflib,filecmp,os,string
 import Tkinter,tkFileDialog
 
 # We try to interfere with scripts as little as possible.

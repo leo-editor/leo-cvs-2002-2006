@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2609" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2608" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="9" left="137" height="26" width="84"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1"><vh>Diary</vh>
+<v t="T1" a="V"><vh>Diary</vh>
 <v><vh>Nov 2002</vh>
 <v><vh>11/6</vh>
 <v t="T2"><vh>Fixed a major bug in top()</vh>
@@ -1090,6 +1090,7 @@
 </v>
 <v><vh>3.9</vh>
 <v><vh>Document hooks</vh></v>
+<v><vh>remove traceback??</vh></v>
 <v><vh>Improve Open With</vh></v>
 <v t="T625" a="M"><vh>Incremental syntax coloring</vh></v>
 <v><vh>Easy</vh>
@@ -4446,15 +4447,16 @@
 <v t="T1848"><vh>undentBody</vh></v>
 </v>
 </v>
-<v t="T1849"><vh>(reformatParagraph)</vh>
-<v t="T1850"><vh>test</vh></v>
+<v t="T1849"><vh>(reducing name polution)</vh></v>
+<v t="T1850"><vh>(reformatParagraph)</vh>
+<v t="T1851"><vh>test</vh></v>
 <v><vh>Utilities...</vh>
 <v t="T706" a="C"><vh>computeWidth</vh></v>
 <v t="T707" a="C"><vh>get_leading_ws</vh></v>
-<v t="T1851" a="C"><vh>skip_non_ws</vh></v>
-<v t="T1852" a="C"><vh>wrap_lines</vh>
-<v t="T1853"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
-<v t="T1854"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
+<v t="T1852" a="C"><vh>skip_non_ws</vh></v>
+<v t="T1853" a="C"><vh>wrap_lines</vh>
+<v t="T1854"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
+<v t="T1855"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="T735" a="C"><vh>getBodyLines</vh></v>
@@ -4462,14 +4464,14 @@
 <v t="T738" a="C"><vh>reformatParagraph</vh>
 <v t="T739"><vh>&lt;&lt; Set the new insert at the start of the next paragraph &gt;&gt;</vh></v>
 </v>
-<v t="T1855" a="C"><vh>scanDirectives (utils)</vh>
-<v t="T1856"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
-<v t="T1857"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T1858"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T1859"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T1860"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
+<v t="T1856" a="C"><vh>scanDirectives (utils)</vh>
+<v t="T1857"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
+<v t="T1858"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T1859"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T1860"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T1861"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
 </v>
-<v t="T1861"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T1862"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>(scanDirectives utility)</vh>
@@ -4500,53 +4502,53 @@
 <v t="T738" a="C"><vh>reformatParagraph</vh>
 <v t="T739"><vh>&lt;&lt; Set the new insert at the start of the next paragraph &gt;&gt;</vh></v>
 </v>
-<v t="T1855" a="C"><vh>scanDirectives (utils)</vh>
-<v t="T1856"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
-<v t="T1857"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T1858"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T1859"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T1860"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
+<v t="T1856" a="C"><vh>scanDirectives (utils)</vh>
+<v t="T1857"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
+<v t="T1858"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T1859"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T1860"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T1861"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
 </v>
-<v t="T1861"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
-</v>
-</v>
+<v t="T1862"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1862"><vh>(Open with)</vh>
-<v t="T1863"><vh>Notes</vh>
+</v>
+</v>
+<v t="T1863"><vh>(Open with)</vh>
+<v t="T1864"><vh>Notes</vh>
 <v><vh>Where should temp files be placed?</vh></v>
-<v t="T1864"><vh>latest note</vh></v>
-<v t="T1865"><vh>(done) Open the temp file with the correct extension</vh></v>
-<v t="T1866"><vh>Open with menu, plus text command</vh></v>
-<v t="T1867"><vh>Command line params</vh></v>
-<v t="T1868"><vh>DDE</vh></v>
-<v t="T1869"><vh>Environment vars</vh></v>
-<v t="T1870"><vh>Create temp file</vh></v>
-<v t="T1871"><vh>Check temp file for mods</vh></v>
-<v t="T1872"><vh>Console-based option</vh></v>
-<v t="T1873"><vh>How zope does it</vh></v>
+<v t="T1865"><vh>latest note</vh></v>
+<v t="T1866"><vh>(done) Open the temp file with the correct extension</vh></v>
+<v t="T1867"><vh>Open with menu, plus text command</vh></v>
+<v t="T1868"><vh>Command line params</vh></v>
+<v t="T1869"><vh>DDE</vh></v>
+<v t="T1870"><vh>Environment vars</vh></v>
+<v t="T1871"><vh>Create temp file</vh></v>
+<v t="T1872"><vh>Check temp file for mods</vh></v>
+<v t="T1873"><vh>Console-based option</vh></v>
+<v t="T1874"><vh>How zope does it</vh></v>
 </v>
-<v t="T1874"><vh>Prog notes</vh>
-<v t="T1875"><vh>os.system</vh></v>
-<v t="T1876"><vh>os.startfile</vh></v>
-<v t="T1877"><vh>os.spawn...</vh></v>
+<v t="T1875"><vh>Prog notes</vh>
+<v t="T1876"><vh>os.system</vh></v>
+<v t="T1877"><vh>os.startfile</vh></v>
+<v t="T1878"><vh>os.spawn...</vh></v>
 </v>
 <v t="T1285" a="C"><vh>app.__init__</vh>
 <v t="T482" a="C"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T1286"><vh>&lt;&lt; define global data structures &gt;&gt;</vh></v>
 </v>
-<v t="T1878" a="C"><vh>app.handleOpenTempFiles</vh></v>
+<v t="T1879" a="C"><vh>app.handleOpenTempFiles</vh></v>
 <v t="T1457" a="C"><vh>frame.OnOpenWith</vh>
 <v t="T1458"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
 <v t="T1459"><vh>&lt;&lt; open a temp file f with extension ext &gt;&gt;</vh></v>
 <v t="T1460" a="M"><vh>&lt;&lt; open f in the external editor &gt;&gt;</vh></v>
 </v>
-<v t="T1879"><vh>Open With test</vh>
-<v t="T1880"><vh>A c file?</vh></v>
+<v t="T1880"><vh>Open With test</vh>
+<v t="T1881"><vh>A c file?</vh></v>
 </v>
 </v>
-<v t="T1881"><vh>(Incremental Syntax Coloring)</vh>
-<v t="T1882"><vh>design</vh></v>
+<v t="T1882"><vh>(Incremental Syntax Coloring)</vh>
+<v t="T1883"><vh>design</vh></v>
 <v t="T500" a="C"><vh>colorizeAnyLanguage &amp; allies</vh>
 <v t="T501"><vh>&lt;&lt; initialize ivars, tags, dispatching tables &gt;&gt;</vh>
 <v t="T502"><vh>&lt;&lt; remove tags &gt;&gt;</vh></v>
@@ -4583,8 +4585,7 @@
 <v t="T528"><vh>doAtKeyword</vh></v>
 </v>
 </v>
-<v t="T1883"><vh>(reducing name polution)</vh></v>
-<v t="T1884" a="V"><vh>Code</vh>
+<v t="T1884"><vh>Code</vh>
 <v t="T1885"><vh>  Overview of code</vh></v>
 <v t="T1886"><vh> Batch Files</vh>
 <v t="T1887"><vh>@silentfile bdist.bat</vh></v>
@@ -4805,7 +4806,7 @@
 <v t="T1341"><vh>&lt;&lt; set v834 if version is 8.3.4 or greater &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1878" a="C"><vh>app.handleOpenTempFiles</vh></v>
+<v t="T1879" a="C"><vh>app.handleOpenTempFiles</vh></v>
 <v t="T911" a="C"><vh>app.quit</vh></v>
 <v t="T1797" a="C"><vh>app.realMenuName</vh></v>
 <v t="T2020"><vh>app.testDialogs</vh></v>
@@ -5827,22 +5828,22 @@
 <v t="T1001" a="C"><vh>set_delims_from_string</vh></v>
 <v t="T499" a="C"><vh>set_language</vh></v>
 </v>
-<v t="T1855" a="C"><vh>scanDirectives (utils)</vh>
-<v t="T1856"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
-<v t="T1857"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
-<v t="T1858"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
-<v t="T1859"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T1860"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
+<v t="T1856" a="C"><vh>scanDirectives (utils)</vh>
+<v t="T1857"><vh>&lt;&lt; Set local vars &gt;&gt;</vh></v>
+<v t="T1858"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="T1859"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="T1860"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T1861"><vh>&lt;&lt; compute path from s[k:] &gt;&gt;</vh></v>
 </v>
-<v t="T1861"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="T1862"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
 </v>
 <v t="T1283" a="C"><vh>findReference</vh></v>
 </v>
 <v t="T2276"><vh>enableMenu &amp; disableMenu &amp; setMenuLabel</vh></v>
 <v t="T2277"><vh>sortSequence</vh></v>
-<v t="T1852" a="C"><vh>wrap_lines</vh>
-<v t="T1853"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
-<v t="T1854"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
+<v t="T1853" a="C"><vh>wrap_lines</vh>
+<v t="T1854"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
+<v t="T1855"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>Dumping, Timing, Tracing &amp; Sherlock</vh>
@@ -5917,7 +5918,7 @@
 <v t="T2322"><vh>skip_long</vh></v>
 <v t="T2323"><vh>skip_matching_delims</vh></v>
 <v t="T2324"><vh>skip_nl</vh></v>
-<v t="T1851" a="C"><vh>skip_non_ws</vh></v>
+<v t="T1852" a="C"><vh>skip_non_ws</vh></v>
 <v t="T2325"><vh>skip_pascal_braces</vh></v>
 <v t="T2326"><vh>skip_ws, skip_ws_and_nl</vh></v>
 </v>
@@ -6691,7 +6692,6 @@
 <v t="T2608"><vh>undoSortSiblings</vh></v>
 </v>
 </v>
-<v t="T2609" a="E"><vh>@file leoUtils.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -15564,7 +15564,7 @@ def showSuccess(self,pos,newpos):
 	c = self.commands ; v = c.currentVnode() ; colorizer = c.tree.colorizer
 	colorizer.showInvisibles = choose(colorizer.showInvisibles,0,1)
 	# It is much easier to change the menu name here than in the menu updater.
-	menu = c.frame.editMenu
+	menu = c.frame.menus.get("Edit")
 	if colorizer.showInvisibles:
 		setMenuLabel(menu,"Show Invisibles","Hide Invisibles")
 	else:
@@ -23292,6 +23292,7 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 		return false
 except:
 	print "exception getting version"
+	import traceback
 	traceback.print_exc()
 </t>
 <t tx="T1339"># loadDir should be the directory that contains leo.py
@@ -23313,6 +23314,7 @@ except:
 	bitmap = Tkinter.BitmapImage(bitmap_name)
 except:
 	print "exception creating bitmap"
+	import traceback
 	traceback.print_exc()
 
 try:
@@ -23321,6 +23323,7 @@ try:
 	&lt;&lt; set v834 if version is 8.3.4 or greater &gt;&gt;
 except:
 	print "exception getting version"
+	import traceback
 	traceback.print_exc()
 	v834 = None # 6/18/02
 	
@@ -23333,7 +23336,7 @@ if v834:
 	except:
 		if 0: # Let's ignore this for now until I understand the issues better.
 			es("exception setting bitmap")
-			traceback.print_exc()</t>
+			es_exception()</t>
 <t tx="T1341"># 04-SEP-2002 DHEIN: simplify version check
 # 04-SEP-2002 Stephen P. Schaefer: make sure v834 is set
 v834 = CheckVersion(version, "8.3.4")
@@ -25725,7 +25728,7 @@ def hasSelection (self):
 		enableMenu(menu,"Copy",c.canCut()) # delete
 		enableMenu(menu,"Paste",c.canPaste())
 	if 0: # Always on for now.
-		menu = self.findMenu
+		menu = self.menus.get("Find...")
 		enableMenu(menu,"Find Next",c.canFind())
 		flag = c.canReplace()
 		enableMenu(menu,"Replace",flag)
@@ -25843,6 +25846,7 @@ def hasSelection (self):
 			cursor="xterm" + " " + fg + " " + bg
 			try: body.configure(cursor=cursor)
 			except:
+				import traceback
 				traceback.print_exc()</t>
 <t tx="T1584">def setLogFontFromConfig (self):
 
@@ -28984,6 +28988,7 @@ The print statement sends output to the console window; your scripts may use the
 All scripts are executed in the current context, that is, simply by executing exec(s), where s is the script.  Your script can alter context as it sees fit.</t>
 <t tx="T1778">def es_exception (full=false):
 
+	import traceback
 	typ,val,tb = sys.exc_info()
 	if full:
 		errList = traceback.format_exception(typ,val,tb)
@@ -29792,8 +29797,30 @@ def undentBody (self,s):
 		line = removeLeadingWhitespace(line,undent,c.tab_width)
 		result += line
 	return result</t>
-<t tx="T1849">@ignore</t>
-<t tx="T1850">@nocolor
+<t tx="T1849">@ What I did:
+	
+- Changed g to geom or glob.
+- Removed print_stack.
+- Moved alert, handleLeoHook &amp; unloadAll to leoUtils.
+- Moved all leoUtils routines into leoGlobals.py.
+- Removed all instances of "from leoUtils import *"
+- Removed "script functions" from leo.py: getCommands, topCommands, topCommand.
+	These are no longer used anywhere in the code.
+- Made the prolog_xxx constants ivars of leoApp.
+- Made language_delims_dict and language_extension_dict ivars of leoApp.
+
+I have decided to leave the present scheme pretty much in place,
+except to move the variables in leoGlobals.py to leoApp.py.
+
+This will allow us to say the following:
+	
+1. any function f() is defined in leoGlobals.py.
+2. any variable v not of the form x.f is a local variable.
+
+
+</t>
+<t tx="T1850">@ignore</t>
+<t tx="T1851">@nocolor
 @pagewidth 40
 
 An @rawfile tree is a tree whose root headline starts with
@@ -29821,13 +29848,13 @@ There are several difference between @rawfile and @silentfile trees:
   3. This is an exxxxxxxxxxxxxxxxxxxxxxxxtrrrrrrrrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeemlylong
      word.
 And it too has a hanging indentation.</t>
-<t tx="T1851">def skip_non_ws (s,i):
+<t tx="T1852">def skip_non_ws (s,i):
 
 	n = len(s)
 	while i &lt; n and not is_ws(s[i]):
 		i += 1
 	return i</t>
-<t tx="T1852">@ Returns a list of lines, consisting of the input lines wrapped to the given pageWidth.
+<t tx="T1853">@ Returns a list of lines, consisting of the input lines wrapped to the given pageWidth.
 
 Important note: this routine need not deal with leading whitespace.  Instead, the caller should simply reduce pageWidth by the width of leading whitespace wanted, then add that whitespace to the lines returned here.
 
@@ -29868,13 +29895,13 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 		result.append(line)
 	# trace(`result`)
 	return result</t>
-<t tx="T1853">if len(line) == 0:
+<t tx="T1854">if len(line) == 0:
 	# Just add the word to the start of the line.
 	line = word
 else:
 	# Add the word, preceeded by a blank.
 	line = string.join((line,' ',word),'')</t>
-<t tx="T1854"># End the previous line.
+<t tx="T1855"># End the previous line.
 if len(line) &gt; 0:
 	result.append(line)
 	outputLineWidth = pageWidth # DTHEIN 3-NOV-2002: width for remaining lines
@@ -29888,7 +29915,7 @@ if len(line) &gt;= pageWidth:
 	outputLineWidth = pageWidth # DTHEIN 3-NOV-2002: width for remaining lines
 	line = ""
 </t>
-<t tx="T1855">@ A general-purpose routine that scans v and its ancestors for directives.  It returns a dict containing the settings in effect as the result of the @comment, @language, @pagewidth, @path and @tabwidth directives.  This code does not check on the existence of paths, and issues no error messages.
+<t tx="T1856">@ A general-purpose routine that scans v and its ancestors for directives.  It returns a dict containing the settings in effect as the result of the @comment, @language, @pagewidth, @path and @tabwidth directives.  This code does not check on the existence of paths, and issues no error messages.
 
 Perhaps this routine should be the basis of atFile.scanAllDirectives and tangle.scanAllDirectives, but I am loath to make any further to these two already-infamous routines.  Also, this code does not check for @color and @nocolor directives: leoColor.useSyntaxColoring does that.
 @c
@@ -29914,7 +29941,7 @@ def scanDirectives(c,v=None):
 		"path"      : path,
 		"tabwidth"  : tab_width }
 </t>
-<t tx="T1856">loadDir = app().loadDir
+<t tx="T1857">loadDir = app().loadDir
 
 page_width = c.page_width
 tab_width  = c.tab_width
@@ -29922,7 +29949,7 @@ language = c.target_language
 delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 path = None
 </t>
-<t tx="T1857"># @language and @comment may coexist in @file trees.
+<t tx="T1858"># @language and @comment may coexist in @file trees.
 # For this to be effective the @comment directive should follow the @language directive.
 
 if not old.has_key("comment") and dict.has_key("comment"):
@@ -29933,21 +29960,21 @@ if not old.has_key("language") and dict.has_key("language"):
 	k = dict["language"]
 	issue_error_flag = false # DTHEIN 3-NOV-2002: define var before function call
 	language, delim1, delim2, delim3 = set_language(s,k,issue_error_flag)</t>
-<t tx="T1858">if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+<t tx="T1859">if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
 
 	k = dict["pagewidth"]
 	j = i = k + len("@pagewidth")
 	i, val = skip_long(s,i)
 	if val != None and val &gt; 0:
 		page_width = val</t>
-<t tx="T1859">if not path and not old.has_key("path") and dict.has_key("path"):
+<t tx="T1860">if not path and not old.has_key("path") and dict.has_key("path"):
 
 	k = dict["path"]
 	&lt;&lt; compute path from s[k:] &gt;&gt;
 	if path and len(path) &gt; 0:
 		base = getBaseDirectory() # returns "" on error.
 		path = os.path.join(base,path)</t>
-<t tx="T1860">j = i = k + len("@path")
+<t tx="T1861">j = i = k + len("@path")
 i = skip_to_end_of_line(s,i)
 path = string.strip(s[j:i])
 
@@ -29959,15 +29986,15 @@ if len(path) &gt; 2 and (
 
 path = string.strip(path)
 path = os.path.join(loadDir,path)</t>
-<t tx="T1861">if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+<t tx="T1862">if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 
 	k = dict["tabwidth"]
 	j = i = k + len("@tabwidth")
 	i, val = skip_long(s, i)
 	if val != None and val != 0:
 		tab_width = val</t>
-<t tx="T1862">@ignore</t>
-<t tx="T1863">@nocolor
+<t tx="T1863">@ignore</t>
+<t tx="T1864">@nocolor
 
 Notes:
 
@@ -29985,7 +30012,7 @@ _ xedit_ext =
 	xedit_py = path
 	exdit_line_py = command line
 	xedit_w = path</t>
-<t tx="T1864">Read and respond to this message at: 
+<t tx="T1865">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=1743592
 By: nobody
 
@@ -30021,7 +30048,7 @@ it works just fine. (EDITOR is set to  "c:\windows\editors\editplus\editplus.exe
 ???
 --Rich
 </t>
-<t tx="T1865">By: derwisch ( Johannes Hüsing ) 
+<t tx="T1866">By: derwisch ( Johannes Hüsing ) 
  RE: Time to design "Open With" command   
 2002-10-30 16:39
 
@@ -30029,7 +30056,7 @@ it works just fine. (EDITOR is set to  "c:\windows\editors\editplus\editplus.exe
 For Emacs, it would be nice if the node were opened in the correct mode. Normally the mode is communicated via file extension. Thus, a python node would be saved as a temporary file whose name ends in *.py. I presume other editors work similarly. Is the choice of an appropriate extension feasible? 
  
 </t>
-<t tx="T1866">Read and respond to this message at: 
+<t tx="T1867">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=1738904
 By: riotnrrrd
 
@@ -30049,7 +30076,7 @@ like when it's sent to the printer spooler or a mail transport agent. Then just
 the body text of a node, or even just a selection of it, could be operated on,
 and just needed to be piped out to an external program.
 </t>
-<t tx="T1867">By: jmgilligan ( Jonathan M. Gilligan ) 
+<t tx="T1868">By: jmgilligan ( Jonathan M. Gilligan ) 
  RE: Time to design "Open With" command   
 2002-11-01 08:54  
 For opening in a third-party editor, the command used to invoke the editor should allow replaceable command-line parameters so the editor can be told to jump to a particular line in the file. 
@@ -30058,13 +30085,13 @@ e.g., several other applications I use invoke the editor with '%f' for the file 
 
 Getting leo to generate a "line number" is not completely trivial. It would require some (possibly complicated) plumbing inside leo to keep track of what line in the output file corresponds to a headline in the tree or the current cursor position in the body window, but it would be invaluable for the user.  
 </t>
-<t tx="T1868">For some Windows applications (e.g., msdev), it's better to invoke them via
+<t tx="T1869">For some Windows applications (e.g., msdev), it's better to invoke them via
 DDE rather than the command line. DDE allows multiple invocations to use the
 same process rather than starting a new process for each file opened.
 
 It would be nice, under Windows, to allow the user to specify a DDE command for an Open With... action.
 </t>
-<t tx="T1869">I don't know if this is consistent with what you are
+<t tx="T1870">I don't know if this is consistent with what you are
 envisioning, but here is the method that most Unix/Linux
 applications use to define external editors that they
 fork: they use user defined environment variables.
@@ -30097,14 +30124,14 @@ of Leo, the @file name may be passed.
 
 _BruceR
 </t>
-<t tx="T1870">&gt; You'd only need to make sure you create the /tmp file with an
+<t tx="T1871">&gt; You'd only need to make sure you create the /tmp file with an
 &gt; extension matching the @language directive - so if the view pane is
 &gt; displaying Perl code (say), you'd create a file like
 &gt; /tmp/leo_0145385.pl.
 
 * When user navigates to a node, Leo creates a file /tmp/Leo_3847582397.ext (or c:\windows\temp\Leo_9874987397.ext), where 'ext' is the appropriate file extension to signal the editor. For example, when editing chunks of C, the extension would be .c, or .pl for perl code etc 
 </t>
-<t tx="T1871">* If editor is external, then Leo can keep track of writes to the temporary file. Whenever the editor writes out to the temp file, Leo can pick this up and update the node within the .leo file accordingly. That way, if the user navigates to another Leo node, then Leo will keep track of all files which are open in the external editor, and absorb changes automatically.
+<t tx="T1872">* If editor is external, then Leo can keep track of writes to the temporary file. Whenever the editor writes out to the temp file, Leo can pick this up and update the node within the .leo file accordingly. That way, if the user navigates to another Leo node, then Leo will keep track of all files which are open in the external editor, and absorb changes automatically.
 
 &gt; Also, it should be easy for you to create a temporary file from
 &gt; just the edit pane contents, and sit there noticing each time the file
@@ -30117,10 +30144,10 @@ _BruceR
 &gt; It would be unwise to wait for an external editor task to terminate -
 &gt; this would kill flexibility, because people wouldn't be able to load
 &gt; viewpane contents into an existing editor instance.</t>
-<t tx="T1872">* OPTIONAL - User can opt for editor to be console-based. Very handy for Linux, where all the decent editors have a console mode available.
+<t tx="T1873">* OPTIONAL - User can opt for editor to be console-based. Very handy for Linux, where all the decent editors have a console mode available.
 
 If console-mode is specified, then Leo opens up a console in the view pane and runs the editor in the console within that pane.</t>
-<t tx="T1873">With external editor installed, there is a component on the Zope server and a component on the client (windows, linux, etc).
+<t tx="T1874">With external editor installed, there is a component on the Zope server and a component on the client (windows, linux, etc).
 
 When the user selects the 'edit' link, Zope sends the document to the web browser as a ".zope" file.
 
@@ -30140,14 +30167,14 @@ would let you put a hook on the file to call some code when the file is updated.
 
 -Rob
 </t>
-<t tx="T1874">@nocolor</t>
-<t tx="T1875">system(command)
+<t tx="T1875">@nocolor</t>
+<t tx="T1876">system(command)
 
 Execute the command (a string) in a subshell. This is implemented by calling the Standard C function system(), and has the same limitations. Changes to posix.environ, sys.stdin, etc. are not reflected in the environment of the executed command.
 
 The return value is the exit status of the process encoded in the format specified for wait(), except on Windows 95 and 98, where it is always 0. Note that POSIX does not specify the meaning of the return value of the C system() function, so the return value of the Python function is system-dependent. Availability: Unix, Windows. 
 </t>
-<t tx="T1876">startfile(path) 
+<t tx="T1877">startfile(path) 
 
 Start a file with its associated application. This acts like double-clicking the file in Windows Explorer, or giving the file name as an argument to the start command from the interactive command shell: the file is opened with whatever application (if any) its extension is associated.
 
@@ -30156,7 +30183,7 @@ startfile() returns as soon as the associated application is launched. There is 
 Use the os.path.normpath() function to ensure that the path is properly encoded for Win32. Availability: Windows. New in version 2.0.
 
 </t>
-<t tx="T1877">spawnl(mode, path, ...) 
+<t tx="T1878">spawnl(mode, path, ...) 
 spawnle(mode, path, ..., env) 
 spawnlp(mode, file, ...) 
 spawnlpe(mode, file, ..., env) 
@@ -30185,7 +30212,7 @@ L = ['cp', 'index.html', '/dev/null']
 os.spawnvpe(os.P_WAIT, 'cp', L, os.environ)
 
 Availability: Unix, Windows. spawnlp(), spawnlpe(), spawnvp() and spawnvpe() are not available on Windows. New in version 1.6. </t>
-<t tx="T1878">@ Try to remove temp files created with the Open With command.  This may fail if the files are still open.
+<t tx="T1879">@ Try to remove temp files created with the Open With command.  This may fail if the files are still open.
 
 We can't use es here because the log stream no longer exists.
 @c 
@@ -30200,12 +30227,12 @@ def handleOpenTempFiles (self):
 			except:
 				print "can not delete temp file:", path
 </t>
-<t tx="T1879">@language c
+<t tx="T1880">@language c
 
 </t>
-<t tx="T1880">This is a c file.</t>
-<t tx="T1881">@ignore</t>
-<t tx="T1882">@
+<t tx="T1881">This is a c file.</t>
+<t tx="T1882">@ignore</t>
+<t tx="T1883">@
 
 - Each line has a starting state.
 - We colorize all changed lines, and all following lines until the new state matches the old state.
@@ -30215,28 +30242,6 @@ def handleOpenTempFiles (self):
 - How do we synchonized state information before colorizing?
 
 A simple way:  Compare leading lines and trailing lines of old and new text.  All other lines (the middle lines) must be colorized.</t>
-<t tx="T1883">@ What I did:
-	
-- Changed g to geom or glob.
-- Removed print_stack.
-- Moved alert, handleLeoHook &amp; unloadAll to leoUtils.
-- Moved all leoUtils routines into leoGlobals.py.
-- Removed all instances of "from leoUtils import *"
-- Removed "script functions" from leo.py: getCommands, topCommands, topCommand.
-	These are no longer used anywhere in the code.
-- Made the prolog_xxx constants ivars of leoApp.
-- Made language_delims_dict and language_extension_dict ivars of leoApp.
-
-I have decided to leave the present scheme pretty much in place,
-except to move the variables in leoGlobals.py to leoApp.py.
-
-This will allow us to say the following:
-	
-1. any function f() is defined in leoGlobals.py.
-2. any variable v not of the form x.f is a local variable.
-
-
-</t>
 <t tx="T1884">@language python
 
 @ This section contains all the source code of leo.py.
@@ -32098,7 +32103,7 @@ def stringToList(string):
 	return string.join(list,"")</t>
 <t tx="T1983"># routines to gather static statistics about opcodes based on dis module.
 
-import compiler,dis,os,string,sys,types,traceback
+import compiler,dis,os,string,sys,types
 
 @others</t>
 <t tx="T1984">def go():
@@ -32122,6 +32127,7 @@ import compiler,dis,os,string,sys,types,traceback
 			a = eval(m)
 			any(a,stats)
 		except:
+			import traceback
 			traceback.print_exc()
 			print "----- no matching class in", `m`
 			
@@ -32663,7 +32669,7 @@ def run(root_list):
 
 def importFiles (dir, type = None, kind = "@file"):
 	
-	import os,traceback
+	import os
 
 	# Check the params.
 	if kind != "@file" and kind != "@root":
@@ -32756,7 +32762,7 @@ def go(*args):
 
 from leoGlobals import *
 import leo,leoConfig,leoDialog,leoFind
-import os,sys,Tkinter,traceback
+import os,sys,Tkinter
 
 class LeoApp:
 	@others</t>
@@ -32781,7 +32787,7 @@ This code uses readline() to get each line rather than reading the entire file i
 
 from leoGlobals import *
 import leoColor,leoNodes
-import filecmp,os,os.path,time,traceback
+import filecmp,os,os.path,time
 
 class atFile:
 	&lt;&lt; atFile constants &gt;&gt;
@@ -33091,7 +33097,7 @@ root.setBodyStringOrPane(s)</t>
 # Syntax coloring routines for Leo.py
 
 from leoGlobals import *
-import string,Tkinter,tkColorChooser,traceback
+import string,Tkinter,tkColorChooser
 
 &lt;&lt; define colorizer constants &gt;&gt;
 &lt;&lt; define colorizer keywords &gt;&gt;
@@ -33933,7 +33939,7 @@ def selectVnodeWithEditing(self,v,editFlag):
 # The code for Leo's Compare Panel and the compare class.
 
 from leoGlobals import *
-import difflib,filecmp,os,string,traceback
+import difflib,filecmp,os,string
 import Tkinter,tkFileDialog
 
 # We try to interfere with scripts as little as possible.
@@ -34586,7 +34592,7 @@ def onCompareFiles (self):
 <t tx="T2158">@language python
 
 from leoGlobals import *
-import ConfigParser,exceptions,os,string,sys,tkFont,traceback
+import ConfigParser,exceptions,os,string,sys,tkFont
 
 class config:
 	&lt;&lt; define defaultsDict &gt;&gt;
@@ -34965,7 +34971,7 @@ if 0:
 <t tx="T2176">@language python
 
 from leoGlobals import *
-import string,Tkinter,traceback
+import string,Tkinter
 
 class leoDialog:
 	@others</t>
@@ -35132,7 +35138,7 @@ def setDefaultCursor (self,event=None):
 
 from leoGlobals import *
 import leoDialog,leoNodes
-import os,os.path,time,traceback
+import os,os.path,time
 
 @ The list of language names that are written differently from the names in language_delims_dict in leoGlobals.py.  This is needed for compatibility with the borland version of Leo.
 
@@ -35772,7 +35778,7 @@ class LeoFind:
 <t tx="T2236">@language python
 
 from leoGlobals import *
-import exceptions,sys,string,Tkinter,tkFont,traceback
+import exceptions,sys,string,Tkinter,tkFont
 
 class leoFontPanel:
 	@others</t>
@@ -36130,12 +36136,11 @@ def update (self,event=None):
 @language python 
 
 from leoGlobals import *
-import leoColor,leoCompare,leoDialog,leoFontPanel,leoNodes,leoPrefs
-import os,string,sys,traceback,Tkinter,tkFileDialog,tkFont
+import leoColor,leoCommands,leoCompare,leoDialog,leoFontPanel,leoNodes,leoPrefs,leoTree
+import os,string,sys,Tkinter,tkFileDialog,tkFont
 
 # Needed for menu commands
-import leoCommands, leoNodes, leoTree
-import os, sys, traceback
+
 
 class LeoFrame:
 	@others</t>
@@ -36352,7 +36357,7 @@ def getFocus(self):
 
 @language python
 
-import exceptions,os,string,sys,time,types,Tkinter,traceback
+import exceptions,os,string,sys,time,types,Tkinter
 
 &lt;&lt; define general constants &gt;&gt;
 
@@ -37171,7 +37176,6 @@ def CheckVersion( version, againstVersion, condition="&gt;=", stringCompare="0.0
 <t tx="T2328">@language python
 
 from leoGlobals import *
-import traceback
 
 # Synonyms
 indent_refs = true ; dont_indent_refs = false
@@ -39171,7 +39175,7 @@ class LeoPrefs:
 # Tangle and Untangle.
 
 from leoGlobals import *
-import os,string,traceback
+import os,string
 
 &lt;&lt; about Tangle and Untangle &gt;&gt;
 &lt;&lt; constants &amp; synonyms &gt;&gt;
@@ -40500,7 +40504,7 @@ The tree class knows about vnodes.  The vnode class could be split into a base c
 
 from leoGlobals import *
 import leoColor
-import os,string,Tkinter,tkFont,traceback,types
+import os,string,Tkinter,tkFont,types
 
 &lt;&lt; about drawing and events &gt;&gt;
 &lt;&lt; drawing constants &gt;&gt;
@@ -40720,9 +40724,5 @@ def clearIvars (self):
 		parent.setDirty()
 		c.setChanged(true)
 	c.endUpdate()</t>
-<t tx="T2609">@language python
-
-# leoGlobals.py.
-# No longer used:  all utilities are now in leoGlobals.py.</t>
 </tnodes>
 </leo_file>

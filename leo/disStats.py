@@ -3,7 +3,7 @@
 #@+body
 # routines to gather static statistics about opcodes based on dis module.
 
-import compiler,dis,os,string,sys,types,traceback
+import compiler,dis,os,string,sys,types
 
 
 #@+others
@@ -30,6 +30,7 @@ def go():
 			a = eval(m)
 			any(a,stats)
 		except:
+			import traceback
 			traceback.print_exc()
 			print "----- no matching class in", `m`
 			

@@ -4,7 +4,7 @@
 #@@language python
 
 from leoGlobals import *
-import ConfigParser,exceptions,os,string,sys,tkFont,traceback
+import ConfigParser,exceptions,os,string,sys,tkFont
 
 class config:
 	

@@ -19,7 +19,7 @@
 
 from leoGlobals import *
 import leoColor
-import os,string,Tkinter,tkFont,traceback,types
+import os,string,Tkinter,tkFont,types
 
 
 #@<< about drawing and events >>

@@ -5,7 +5,7 @@
 
 from leoGlobals import *
 import leo,leoConfig,leoDialog,leoFind
-import os,sys,Tkinter,traceback
+import os,sys,Tkinter
 
 class LeoApp:
 
@@ -140,6 +140,7 @@ class LeoApp:
 				return false
 		except:
 			print "exception getting version"
+			import traceback
 			traceback.print_exc()
 		
 		#@-body
@@ -175,6 +176,7 @@ class LeoApp:
 			bitmap = Tkinter.BitmapImage(bitmap_name)
 		except:
 			print "exception creating bitmap"
+			import traceback
 			traceback.print_exc()
 		
 		try:
@@ -193,6 +195,7 @@ class LeoApp:
 
 		except:
 			print "exception getting version"
+			import traceback
 			traceback.print_exc()
 			v834 = None # 6/18/02
 			
@@ -205,7 +208,7 @@ class LeoApp:
 			except:
 				if 0: # Let's ignore this for now until I understand the issues better.
 					es("exception setting bitmap")
-					traceback.print_exc()
+					es_exception()
 		#@-body
 		#@-node:3::<< set the default Leo icon >>
 

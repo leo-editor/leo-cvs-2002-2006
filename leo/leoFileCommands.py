@@ -5,7 +5,7 @@
 
 from leoGlobals import *
 import leoDialog,leoNodes
-import os,os.path,time,traceback
+import os,os.path,time
 
 
 #@+at

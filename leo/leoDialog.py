@@ -4,7 +4,7 @@
 #@@language python
 
 from leoGlobals import *
-import string,Tkinter,traceback
+import string,Tkinter
 
 class leoDialog:
 

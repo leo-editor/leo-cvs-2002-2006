@@ -24,7 +24,7 @@
 
 from leoGlobals import *
 import leoColor,leoNodes
-import filecmp,os,os.path,time,traceback
+import filecmp,os,os.path,time
 
 class atFile:
 	
