@@ -1101,11 +1101,12 @@ class configClass:
         frame.log.enable(False)
         g.app.setLog(frame.log,"openWithFileName")
         g.app.lockLog()
-        frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
+        ok = frame.c.fileCommands.open(
+            theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
         g.app.unlockLog()
         frame.openDirectory = g.os_path_dirname(path)
         g.app.gui = oldGui
-        return c
+        return ok and c
     #@nonl
     #@-node:ekr.20041117085625:openSettingsFile
     #@+node:ekr.20041120064303:config.readSettingsFiles
