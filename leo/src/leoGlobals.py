@@ -745,7 +745,7 @@ def callerName (n=1):
         g.es_exception()
         return "<no caller name>"
 #@-node:ekr.20031218072017.3107:callerName
-#@+node:ekr.20041105091148:g.pdb
+#@+node:ekr.20041105091148:g.pdb & test
 def pdb ():
     
     """Fall into pdb."""
@@ -753,17 +753,39 @@ def pdb ():
     import pdb # Required: we have just defined pdb as a function!
 
     pdb.set_trace()
-
+#@nonl
+#@+node:ekr.20050221092824:test_g_pdb
 def test_g_pdb():
     
-    # Note: not a valid unit test.
-    # It would succeed even if the import statment above were removed.
+    import sys
     
+    # Not a good unit test; it probably will never fail.
     def aFunction(): pass
-    
     assert type(g.pdb)==type(aFunction), 'wrong type for g.pdb: %' % type(g.pdb)
+    
+    class myStdout:
+        def write(self,s):
+            pass # ; g.es('From pdb:',s)
+        
+    class myStdin:
+        def readline (self):
+            return 'c' # Return 'c' (continue) for all requests for input.
+            
+    def restore():
+        sys.stdout,sys.stdin = sys.__stdout__,sys.__stdin__
+     
+    try:
+        sys.stdin = myStdin() # Essential
+        sys.stdout=myStdout() # Optional
+        g.pdb()
+        restore()
+        # assert False,'test of reraising'
+    except Exception:
+        restore()
+        raise
 #@nonl
-#@-node:ekr.20041105091148:g.pdb
+#@-node:ekr.20050221092824:test_g_pdb
+#@-node:ekr.20041105091148:g.pdb & test
 #@+node:ekr.20031218072017.3108:Dumps
 #@+node:ekr.20031218072017.3109:dump
 def dump(s):
