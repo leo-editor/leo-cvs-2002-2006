@@ -1432,10 +1432,10 @@
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
 <v t="ekr.20041125145818.1" a="EM"><vh>Pmw dialog</vh>
-<v t="ekr.20041127231319" a="ETV"><vh>To do</vh></v>
+<v t="ekr.20041127231319" a="E"><vh>To do</vh></v>
 <v t="ekr.20041128225703"><vh>Notes</vh></v>
-<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
-<v t="ekr.20041126110158" a="E"><vh> ctor</vh>
+<v t="ekr.20041126110057"><vh>class settingsController</vh>
+<v t="ekr.20041126110158"><vh> ctor</vh>
 <v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
 <v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
 <v t="ekr.20041128225055"><vh>&lt;&lt; create paneFrame2, a second paned widget &gt;&gt;</vh></v>
@@ -1443,12 +1443,13 @@
 <v t="ekr.20041127132947"><vh>&lt;&lt; put setterCanvas in paneFrame's setter pane&gt;&gt;</vh></v>
 <v t="ekr.20041126133120"><vh>&lt;&lt; put a Text widget in the comment pane &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041126153101.1"><vh>createSettingsTree</vh>
-<v t="ekr.20041127055009.1"><vh>&lt;&lt; create a node p for  kind &amp; root2 &gt;&gt;</vh>
-<v t="ekr.20041127081146"><vh>&lt;&lt; inject ivars into p.v &gt;&gt;</vh></v>
+<v t="ekr.20041128225703.1"><vh>center</vh></v>
+<v t="ekr.20041126153101.1" a="E"><vh>createSettingsTree</vh>
+<v t="ekr.20041127055009.1" a="E"><vh>&lt;&lt; create a node p for  kind &amp; root2 &gt;&gt;</vh>
+<v t="ekr.20041127081146"><vh>&lt;&lt; add entry for p to filesInfoDict &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20041127112925" a="M"><vh>createWidgets &amp; allies</vh>
+<v t="ekr.20041127112925"><vh>createWidgets &amp; allies</vh>
 <v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
 <v t="ekr.20041127134208.1"><vh>createBool</vh></v>
 <v t="ekr.20041127134208.2"><vh>createColor</vh>
@@ -1469,23 +1470,28 @@
 <v t="ekr.20041127134613.1"><vh>createString</vh></v>
 <v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
 </v>
-<v t="ekr.20041128042051" a="M"><vh>value handlers &amp; callbacks...</vh>
-<v t="ekr.20041128042051.1"><vh>initValue</vh></v>
-<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
-<v t="ekr.20041128082112"><vh>revert</vh></v>
-<v t="ekr.20041128081018"><vh>printChangedVars</vh></v>
-<v t="ekr.20041128081018.1"><vh>writeChangedVars</vh></v>
-</v>
-<v t="ekr.20041128225703.1"><vh>center</vh></v>
 <v t="ekr.20041128230425"><vh>get_window_info</vh></v>
 <v t="ekr.20041126124710"><vh>handleTreeClick</vh></v>
-<v t="ekr.20041127112806"><vh>printWidgets</vh></v>
 <v t="ekr.20041127144346"><vh>onPaneResize</vh></v>
+<v t="ekr.20041127112806"><vh>printWidgets</vh></v>
 <v t="ekr.20041127090307"><vh>rootNodeComments</vh></v>
 <v t="ekr.20041126142253.1"><vh>settingsPosition</vh></v>
 <v t="ekr.20041127092231"><vh>updateComments</vh></v>
-<v t="ekr.20041127155541"><vh>updateSetterLabel</vh></v>
 <v t="ekr.20041126153101"><vh>updateSetter</vh></v>
+<v t="ekr.20041127155541"><vh>updateSetterLabel</vh></v>
+<v t="ekr.20041128042051"><vh>value handlers &amp; callbacks...</vh>
+<v t="ekr.20041129095748" a="E"><vh>findSettingsRoot</vh></v>
+<v t="ekr.20041128042051.1"><vh>initValue</vh></v>
+<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
+<v t="ekr.20041128081018"><vh>printChangedVars</vh></v>
+<v t="ekr.20041128082112"><vh>revert</vh></v>
+<v t="ekr.20041129095748.1"><vh>writeChangedList</vh>
+<v t="ekr.20041129112522"><vh>&lt;&lt; dump all the dicts in filesInfoDict &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041128081018.1"><vh>writeChangedVars</vh></v>
+<v t="ekr.20041129113117"><vh>writeChangesToFile</vh></v>
+<v t="ekr.20041129113302"><vh>writeOneChangeToFile &amp; allies</vh></v>
+</v>
 </v>
 <v t="ekr.20041125163105.21"><vh>class settingsTree (leoTkinterTree)</vh>
 <v t="ekr.20041125163105.22"><vh>ctor</vh></v>
@@ -1536,6 +1542,19 @@
 <v t="ekr.20041127103503.18"><vh>doType</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20041128042051" a="E"><vh>value handlers &amp; callbacks...</vh>
+<v t="ekr.20041129095748" a="E"><vh>findSettingsRoot</vh></v>
+<v t="ekr.20041128042051.1"><vh>initValue</vh></v>
+<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
+<v t="ekr.20041128081018"><vh>printChangedVars</vh></v>
+<v t="ekr.20041128082112"><vh>revert</vh></v>
+<v t="ekr.20041129095748.1"><vh>writeChangedList</vh>
+<v t="ekr.20041129112522"><vh>&lt;&lt; dump all the dicts in filesInfoDict &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041128081018.1"><vh>writeChangedVars</vh></v>
+<v t="ekr.20041129113117"><vh>writeChangesToFile</vh></v>
+<v t="ekr.20041129113302" a="TV"><vh>writeOneChangeToFile &amp; allies</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2157,7 +2176,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2288,7 +2307,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -12562,16 +12581,19 @@ for fileName in fileNames:
     
     self.c = c
     self.p = None # Used to revert settings.
-    title = "Settings for %s" % g.shortFileName(c.fileName())
 
-    self._settingsPosition = p = self.createSettingsTree()
     self.colorSettingDict = {} # Contains entries for all changed colors.
     self.initValueDict = {} # Initial value of settings in present pane.
     self.fileValueDict = {} # Values of settings written to file.
+    self.filesInfoDict = {} # Info about all settings file in the settings outline.
+        # Keys are positions, values are dicts giving info for a setting file.
     self.modal = False
-    self.parser = parserClass(c,p,self)
     self.setterLabel = None
     self.suppressComments = None # position for which to suppress comments.
+    self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
+
+    self._settingsPosition = p = self.createSettingsTree()
+    self.parser = parserClass(c,p,self)
 
     &lt;&lt; create the dialog d &gt;&gt;
     &lt;&lt; create paneFrame, a paned widget &gt;&gt;
@@ -12728,7 +12750,7 @@ text.configure(background=background,borderwidth=0)</t>
     
     """Create a tree of vnodes representing all settings."""
     
-    createSummaryNode = False # Dithering whether to do this.
+    createSummaryNode = True # Dithering whether to do this.
     createEmptyNodes = False
 
     c = self.c ; config = g.app.config
@@ -12747,8 +12769,7 @@ text.configure(background=background,borderwidth=0)</t>
         if root2 or createEmptyNodes:
             &lt;&lt; create a node p for kind &amp; root2 &gt;&gt;
     root_p.expand()
-    return root_p
-</t>
+    return root_p</t>
 <t tx="ekr.20041127055009.1">if not root_p:
     t = leoNodes.tnode()
     root_v = leoNodes.vnode(c,t) # Using c2 --&gt; oops: nullTree.
@@ -12758,21 +12779,25 @@ text.configure(background=background,borderwidth=0)</t>
         root_p.scriptSetBodyString(self.rootNodeComments())
         p = root_p.insertAsLastChild()
     else:
-        p = root_p
+        p = root_p.copy()
 else:
     p = last_p.insertAfter()
 
 if root2:
     root2.copyTreeFromSelfTo(p)  # replace p by root2.
-&lt;&lt; inject ivars into p.v &gt;&gt;
+
+&lt;&lt; add entry for p to filesInfoDict &gt;&gt;
+
 path2 = g.choose(otherFileFlag,path,g.shortFileName(path))
 p.initHeadString("%s settings: %s" % (kind,path2))
 last_p = p</t>
-<t tx="ekr.20041127081146"># These won't create unknownAttributes because this tree never gets written.
-v = p.v
-v.settingsCommander = c2
-v.settingsPath = path
-v.settingsAreLocal = not otherFileFlag</t>
+<t tx="ekr.20041127081146">self.filesInfoDict[p] = {
+    'c': c2,
+    'changes': [],
+    'p': p.copy(),
+    'path': path,
+    'isLocal':  not otherFileFlag,
+}</t>
 <t tx="ekr.20041127083322">def setSelectColors (self,textWidget): 
     
     fg = c.config.getColor("headline_text_selected_foreground_color")
@@ -13234,6 +13259,21 @@ self.setterLabel = sc.component('label')
 <t tx="ekr.20041127231319">@
 @killcolor
 
+* Figure out why findSettingsRoot doesn't work if no summary node.
+
+* Use p.v rather than p as keys in filesInfoDict.
+
+- Write about new pattern of putting script in test.leo
+
+1. (done) Replace injected ivars with filesInfoDict.
+    - (done) Associate nodes with commanders and (open?) files.
+
+2. Actually write settings to the proper @settings tree.
+    - Use filesInfoDict to open file and find its settings tree.
+    - Find the proper node and update.
+        - writeSettingToHead(setting,kind,val,p)
+        - writeSettingToBody(setting,kind,val,p)
+
 - Create self.es, self.es_exception, self.error.
 
 - Finish font stuff.
@@ -13241,15 +13281,6 @@ self.setterLabel = sc.component('label')
 - Support new buttons:
     - Refresh recreates and redraws dialog's outline.
     - Check button checks for duplicate shortcuts, bad settings, etc.
-
-- Replace injected ivars with filesInfoDict.
-    - Associate nodes with commanders and (open?) files.
-
-- Actually write settings to the proper @settings tree.
-    - Use filesInfoDict to open file and find its settings tree.
-    - Find the proper node and update.
-        - writeSettingToHead(setting,kind,val,p)
-        - writeSettingToBody(setting,kind,val,p)
 
 - (last) Move code into Leo's core.</t>
 <t tx="ekr.20041128042051">@ These keep track of the original and changed values of all items in the present setter pane.</t>
@@ -13316,17 +13347,17 @@ b.pack(side="left")</t>
             print "%10s -&gt; %10s %s" % (str(val),str(newVal),name)</t>
 <t tx="ekr.20041128081018.1">def writeChangedVars (self):
 
+    changedList = []
     fDict = self.fileValueDict
     iDict = self.initValueDict
     munge = g.app.config.munge
     
     for key in iDict.keys():
-        
+
         iData = iDict.get(key)
         ip,iname,ikind,ival,getValueCallback = iData
-        
         newVal = getValueCallback()
-    
+
         fData = fDict.get(key)
         if fData:
             fp,fname,fkind,fval,junk = fData
@@ -13338,8 +13369,11 @@ b.pack(side="left")</t>
 
         if changed:
             # print "write","key","ival",ival,"fval",fval
-            print "write  %10s -&gt; %10s %s" % (str(oldVal),str(newVal),iname)
-            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback</t>
+            # print "write  %10s -&gt; %10s %s" % (str(oldVal),str(newVal),iname)
+            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
+            changedList.append((ip,iname,ikind,oldVal,newVal),)
+            
+    self.writeChangedList(changedList,"write")</t>
 <t tx="ekr.20041128082112">def revert (self):
     
     """Restores written vars to initial value and re-inits all widgets."""
@@ -13347,6 +13381,8 @@ b.pack(side="left")</t>
     iDict = self.initValueDict
     fDict = self.fileValueDict
     munge = g.app.config.munge
+    
+    changedList = []
     
     for key in fDict.keys():
         
@@ -13361,10 +13397,12 @@ b.pack(side="left")</t>
         # print "revert",key,"ival",ival,"fval",fval
         
         if ival != fval:
-            print "revert %10s -&gt; %10s %s" % (str(fval),str(ival),fname)
+            # print "revert %10s -&gt; %10s %s" % (str(fval),str(ival),fname)
             self.fileValueDict [munge(iname)] = ip,iname,ikind,ival,getValueCallback
+            changedList.append((ip,iname,ikind,fval,ival),)
 
     self.updateSetter(self.p,updateDicts=False)
+    self.writeChangedList(changedList,"revert")
     </t>
 <t tx="ekr.20041128225055">splitter2 = self.panes.get('splitter2')
 
@@ -13432,5 +13470,66 @@ def get_window_info (self):
     w,h,x,y = int(w),int(h),int(x),int(y)
     
     return w,h,x,y</t>
+<t tx="ekr.20041129095748">def findSettingsRoot (self,p):
+    
+    first_p = p.copy()
+    
+    # Get the list of root positions.
+    roots = self.filesInfoDict.keys()
+
+    for p in p.self_and_parents_iter():
+        for root in roots:
+            if p == root:
+                # g.trace("root of %s is %s" % (first_p.headString(),p.headString()))
+                return root # Used as key.  Must NOT return a copy.
+                
+    g.trace("Can't happen: %s has no root node" % (first_p.headString()))
+    return None</t>
+<t tx="ekr.20041129095748.1">def writeChangedList (self,changedList,tag):
+    
+    if not changedList: return
+    
+    filesInfoDict = self.filesInfoDict
+    if 0:
+        &lt;&lt; dump all the dicts in filesInfoDict &gt;&gt;
+
+    # Accumulate the changes for each file in a 'changes' list for each root.
+    for data in changedList:
+        p,name,kind,oldVal,newVal = data
+        # print "%6s %10s -&gt; %10s %s" % (tag,str(oldVal),str(newVal),name)
+        root = self.findSettingsRoot(p)
+        d = filesInfoDict.get(root)
+        changes = d.get('changes')
+        changes.append(data)
+        d['changes'] = changes
+
+    for root in filesInfoDict.keys():
+        d = filesInfoDict.get(root)
+        changes = d.get('changes')
+        if changes:
+            self.writeChangesToFile(changes,d.get('path'))
+        d['changes'] = []</t>
+<t tx="ekr.20041129112522">for key in filesInfoDict.keys():
+    print ; print
+    print "key",key
+    g.printDict(filesInfoDict.get(key))
+print ; print</t>
+<t tx="ekr.20041129113117">def writeChangesToFile (self,changes,path):
+
+    print "writing to file",g.shortFilename(path)
+    
+    # Open the file
+    theFile = None
+    
+    # Write the individual changes.
+    for data in changes:
+        self.writeOneChangeToFile(data,theFile)
+
+    # Close the file.</t>
+<t tx="ekr.20041129113302">def writeOneChangeToFile (self,data,theFile):
+    
+    # To do: write to headline or body string, depending on 'kind'
+    p,name,kind,oldVal,newVal = data
+    print newVal,name</t>
 </tnodes>
 </leo_file>
