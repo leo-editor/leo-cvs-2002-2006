@@ -258,8 +258,6 @@ class LeoFind:
 	#@+node:4::find.set_ivars
 	#@+body
 	def set_ivars (self,c):
-		
-		# print "find.set_ivars"
 	
 		for var in ivars:
 			exec("c.%s_flag = self.%s_flag.get()" % (var,var))

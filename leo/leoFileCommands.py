@@ -391,6 +391,7 @@ class fileCommands:
 				elif self.matchTag("mark_changes="): c.mark_changes_flag = self.getDqBool()
 				elif self.matchTag("mark_finds="): c.mark_finds_flag = self.getDqBool()
 				elif self.matchTag("reverse="): c.reverse_flag = self.getDqBool()
+				elif self.matchTag("node_only="): c.node_only_flag = self.getDqBool()
 				else: break
 			self.getTag(">")
 			#
@@ -1213,6 +1214,7 @@ class fileCommands:
 			self.put_flag(c.suboutline_only_flag,"suboutline_only")
 			self.put_flag(c.whole_word_flag,"whole_word")
 			self.put_flag(c.wrap_flag,"wrap")
+			self.put_flag(c.node_only_flag,"node_only")
 		
 		self.put(">") ; self.put_nl()
 		

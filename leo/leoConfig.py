@@ -4,6 +4,7 @@
 #@@language python
 
 from leoGlobals import *
+import leoFind
 import ConfigParser,exceptions,os,string,sys,tkFont
 
 class config:
@@ -388,53 +389,20 @@ class config:
 	
 	def setCommandsFindIvars (self,c):
 	
-		# print "setCommandsFindIvars"
 		config = self
-		
-		#@<< set find ivars >>
-		#@+node:1::<< set find ivars >>
-		#@+body
-		val = config.getBoolFindPref("batch")
-		if val: c.batch_flag = val
-		
-		val = config.getBoolFindPref("wrap")
-		if val: c.wrap_flag = val
-		
-		val = config.getBoolFindPref("whole_word")
-		if val: c.whole_word_flag = val
-		
-		val = config.getBoolFindPref("ignore_case")
-		if val: c.ignore_case_flag = val
-		
-		val = config.getBoolFindPref("pattern_match")
-		if val: c.pattern_match_flag = val
-		
-		val = config.getBoolFindPref("search_headline")
-		if val: c.search_headline_flag = val
-		
-		val = config.getBoolFindPref("search_body")
-		if val: c.search_body_flag = val
-		
-		val = config.getBoolFindPref("suboutline_only")
-		if val: c.suboutline_only_flag = val
-		
-		val = config.getBoolFindPref("mark_changes")
-		if val: c.mark_changes_flag = val
-		
-		val = config.getBoolFindPref("mark_finds")
-		if val: c.mark_finds_flag = val
-		
-		val = config.getBoolFindPref("reverse")
-		if val: c.reverse_flag = val
-		
+	
+		for s in leoFind.ivars:
+			# This exec is safe because leoFind.ivars does not depend on leoConfig.txt.
+			val = config.getBoolFindPref(s)
+			if val: 
+				exec("c."+s+"_flag = val")
+				
 		val = config.getStringFindPref("change_string")
 		if val: c.change_text = val
 		
 		val = config.getStringFindPref("find_string")
 		if val: c.find_text = val
-		#@-body
-		#@-node:1::<< set find ivars >>
-
+	
 		app().findFrame.init(c)
 	#@-body
 	#@-node:11::setCommandsFindIvars
@@ -500,24 +468,14 @@ class config:
 	# Sets config ivars from c.
 	
 	def setConfigFindIvars (self,c):
-		
-		# print "setConfigFindIvars"
 	
-		self.setFindPref("batch",`c.batch_flag`)
-		self.setFindPref("ignore_case",`c.ignore_case_flag`)
-		self.setFindPref("mark_changes",`c.mark_changes_flag`)
-		self.setFindPref("mark_finds",`c.mark_finds_flag`)
-		self.setFindPref("pattern_match",`c.pattern_match_flag`)
-		self.setFindPref("reverse",`c.reverse_flag`)
-		self.setFindPref("search_body",`c.search_body_flag`)
-		self.setFindPref("search_headline",`c.search_headline_flag`)
-		self.setFindPref("suboutline_only",`c.suboutline_only_flag`)
-		self.setFindPref("wrap",`c.wrap_flag`)
-		self.setFindPref("whole_word",`c.whole_word_flag`)
-		
+		for s in leoFind.ivars:
+			# This exec is safe because leoFind.ivars does not depend on leoConfig.txt.
+			exec("val=str(c."+s+"_flag)")
+			self.setFindPref(s,val)
+	
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
-	
 	#@-body
 	#@-node:13::setConfigFindIvars
 	#@+node:14::setConfigIvars
@@ -669,13 +627,11 @@ class config:
 			#@<< print options >>
 			#@+node:3::<< print options >>
 			#@+body
-			# print `self.recentFiles`
 			if 0:
 				print "\n\ncolorsDict:\n\n" + `self.colorsDict`
 				print "\n\ncompareDict:\n\n"+ `self.compareDict`
-				print "\n\nfindDict:\n\n"   + `self.findDict` 
+				print "\n\nfindDict:\n\n"   + `self.findDict`
 				print "\n\nprefsDict:\n\n"  + `self.prefsDict`
-			if 0:
 				print "\n\nwindowDict:\n\n" + `self.windowDict`
 			if 0:
 				print "\n\nkeysDict:\n\n"

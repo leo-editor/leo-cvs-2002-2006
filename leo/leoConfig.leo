@@ -19,10 +19,10 @@
 <v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
-<v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T7" a="V"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
+<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
-<v t="T10" a="V"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
+<v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
@@ -319,7 +319,8 @@ search_body = 1
 search_headline = 0
 suboutline_only = 0
 whole_word = 1
-wrap = 0</t>
+wrap = 0
+node_only = 0</t>
 <t tx="T8">@ Keyboard shortcuts for menu commands.
 
 A shortcut specification has the form:
