@@ -2053,7 +2053,7 @@ def plugin_signon(module_name,verbose=False):
     
     exec("import %s ; m = %s" % (module_name,module_name))
     
-    if verbose:
+    if verbose: # or g.app.unitTesting:
         g.es("...%s.py v%s: %s" % (
             m.__name__, m.__version__, g.plugin_date(m)))
 
@@ -4255,7 +4255,7 @@ def cantImport (moduleName,pluginName=None,verbose=True):
     # g.trace(verbose,moduleName,repr(pluginName))
     # if not pluginName: g.printStack()
     
-    if verbose:
+    if verbose and not g.app.unitTesting:
         s = "Can not import %s" % moduleName
         if pluginName: s += " from plugin %s" % pluginName
         print s ; g.es(s,color="blue")
