@@ -962,60 +962,72 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@-node:abortEditLabelCommand
 	#@+node:frame.OnCut, OnCutFrom Menu
 	def OnCut (self,event=None):
+		
+		"""The handler for the virtual Cut event."""
 	
 		frame = self ; c = frame.c ; v = c.currentVnode()
 		
+		# This is probably being subverted by Tk.
+		if app.gui.win32clipboard:
+			data = frame.body.getSelectedText()
+			if data:
+				app.gui.replaceClipboardWith(data)
+	
 		# Activate the body key handler by hand.
 		frame.body.forceFullRecolor()
 		frame.body.onBodyWillChange(v,"Cut")
 	
 	def OnCutFromMenu (self):
 		
-		frame = self ; c = frame.c ; v = c.currentVnode()
-	
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Cut"))
-		
-		# Make sure the event sticks.
-		frame.body.forceFullRecolor()
-		frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
-	#@nonl
+	
+		if 0: # Make sure the event sticks.
+			frame = self ; c = frame.c ; v = c.currentVnode()
+			frame.body.forceFullRecolor()
+			frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+	
+	
+	
+	
 	#@-node:frame.OnCut, OnCutFrom Menu
 	#@+node:frame.OnCopy, OnCopyFromMenu
 	def OnCopy (self,event=None):
+		
+		frame = self
 	
+		if app.gui.win32clipboard:
+			data = frame.body.getSelectedText()
+			if data:
+				app.gui.replaceClipboardWith(data)
+			
 		# Copy never changes dirty bits or syntax coloring.
-		pass
 		
 	def OnCopyFromMenu (self):
 	
-		frame = self ; c = frame.c
-	
+		frame = self
 		w = frame.getFocus()
 		w.event_generate(virtual_event_name("Copy"))
-	#@nonl
+	
 	#@-node:frame.OnCopy, OnCopyFromMenu
 	#@+node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	def OnPaste (self,event=None):
-	
 		
 		frame = self ; c = frame.c ; v = c.currentVnode()
-		
+	
 		# Activate the body key handler by hand.
 		frame.body.forceFullRecolor()
 		frame.body.onBodyWillChange(v,"Paste")
 		
 	def OnPasteFromMenu (self):
-		
-		frame = self ; c = frame.c ; v = c.currentVnode()
 	
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Paste"))
 		
-		# Make sure the event sticks.
-		frame.body.forceFullRecolor()
-		frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
-	#@nonl
+		if 0: # Make sure the event sticks.
+			frame = self ; c = frame.c ; v = c.currentVnode()
+			frame.body.forceFullRecolor()
+			frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 	#@-node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+node:endEditLabelCommand
 	def endEditLabelCommand (self):
