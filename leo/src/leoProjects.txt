@@ -19,7 +19,7 @@
 #@@tabwidth -4
 
 #@+all
-#@+node:ekr.20031218072017.1319:(Key handlers)
+#@+node:ekr.20031218072017.1319:(Key handlers) 
 @ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
 #@+node:ekr.20031218072017.1320:body key handlers
 @ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
@@ -354,41 +354,17 @@ def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
 #@nonl
 #@-node:ekr.20031218072017.1331:onBodyWillChange
 #@-node:ekr.20031218072017.1320:body key handlers
-#@+node:ekr.20031218072017.1332:headline key handlers (tree)
-@ The <Key> event generates the event before the headline text is changed(!), so we register an idle-event handler to do the work later.
-@c
-
-@others
-#@nonl
-#@+node:ekr.20031218072017.1333:onHeadChanged
-def onHeadChanged (self,p):
-    
-    """Handle a change to headline text."""
-    
-    self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
-
-#@-node:ekr.20031218072017.1333:onHeadChanged
-#@+node:ekr.20031218072017.1334:OnHeadlineKey
-def OnHeadlineKey (self,p,event):
-    
-    """Handle a key event in a headline."""
-
-    ch = event.char
-    self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
-
-
-#@-node:ekr.20031218072017.1334:OnHeadlineKey
-#@+node:ekr.20031218072017.1335:idle_head_key
+#@+node:ekr.20040803072955.91:idle_head_key
 def idle_head_key (self,p,ch=None):
     
     """Update headline text at idle time."""
     
-    c = self.c ; v = p.v
+    c = self.c
 
-    if not p or not p.edit_text() or p != c.currentPosition():
+    if not p or p != c.currentPosition():
         return "break"
         
-    edit_text = p.edit_text()
+    edit_text = self.edit_text(p)
     index = edit_text.index("insert")
 
     if g.doHook("headkey1",c=c,p=p,ch=ch):
@@ -402,28 +378,27 @@ def idle_head_key (self,p,ch=None):
     changed = s != head
     if changed:
         c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-        << update v and all nodes joined to v >>
+        << update p >>
     if done or changed:
-        << reconfigure v and all nodes joined to v >>
+        << reconfigure p and all nodes joined to p >>
         << update the screen >>
 
     g.doHook("headkey2",c=c,p=p,ch=ch)
     return "break"
 #@nonl
-#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
+#@+node:ekr.20040803072955.92:<< set head to vnode text >>
 head = p.headString()
 if head == None:
     head = u""
 head = g.toUnicode(head,"utf-8")
 #@nonl
-#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
-#@+node:EKR.20040614075003:<< set the widget text to head >>
-edit_text.delete("1.0","end")
-edit_text.insert("end",head)
+#@-node:ekr.20040803072955.92:<< set head to vnode text >>
+#@+node:ekr.20040803072955.93:<< set the widget text to head >>
+self.setText(edit_text,head,tag="idle_head_key")
 edit_text.mark_set("insert",index)
 #@nonl
-#@-node:EKR.20040614075003:<< set the widget text to head >>
-#@+node:ekr.20031218072017.1336:<< set s to the widget text >>
+#@-node:ekr.20040803072955.93:<< set the widget text to head >>
+#@+node:ekr.20040803072955.94:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
 
 # Don't truncate if the user is hitting return.
@@ -451,256 +426,256 @@ if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
     s = s.replace('\n','')
     s = s.replace('\r','')
 #@nonl
-#@-node:ekr.20031218072017.1336:<< set s to the widget text >>
-#@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
+#@-node:ekr.20040803072955.94:<< set s to the widget text >>
+#@+node:ekr.20040803072955.95:<< update p >>
 c.beginUpdate()
 if 1: # update...
     # Update changed bit.
     if not c.changed:
         c.setChanged(True)
     # Update all dirty bits.
-    if not p.isDirty():
-        p.setDirty()
-    # Update v.
-    v.initHeadString(s)
-    edit_text.delete("1.0","end")
-    edit_text.insert("end",s)
+    # Bug fix 8/2/04: must call p.setDirty even if p is dirty!
+    p.setDirty()
+    # Update p.
+    p.initHeadString(s)
+    self.setText(edit_text,s,tag="idle_head_key2")
     edit_text.mark_set("insert",index)
 c.endUpdate(False) # do not redraw now.
 #@nonl
-#@-node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
-#@+node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
-# Reconfigure v's headline.
+#@-node:ekr.20040803072955.95:<< update p >>
+#@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
+# Reconfigure p's headline.
 if done:
     self.setDisabledLabelState(p)
 
-edit_text.configure(width=self.headWidth(v))
+edit_text.configure(width=self.headWidth(p))
 #@nonl
-#@-node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
-#@+node:ekr.20031218072017.1340:<< update the screen >>
+#@-node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
+#@+node:ekr.20040803072955.97:<< update the screen >>
 if done:
+    # g.trace("done")
     c.beginUpdate()
     self.endEditLabel()
     c.endUpdate()
 
 elif changed:
-    # Update v immediately.  Joined nodes are redrawn later by endEditLabel.
+    # g.trace("changed")
+    # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
     # Redrawing the whole screen now messes up the cursor in the headline.
     self.drawIcon(p) # just redraw the icon.
 #@nonl
-#@-node:ekr.20031218072017.1340:<< update the screen >>
-#@-node:ekr.20031218072017.1335:idle_head_key
-#@-node:ekr.20031218072017.1332:headline key handlers (tree)
-#@-node:ekr.20031218072017.1319:(Key handlers)
+#@-node:ekr.20040803072955.97:<< update the screen >>
+#@-node:ekr.20040803072955.91:idle_head_key
+#@-node:ekr.20031218072017.1319:(Key handlers) 
 #@+node:ekr.20031218072017.1341:(scanAllDirectives, scanDirectives, related utils)
 @ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
 #@nonl
-#@+node:ekr.20031218072017.1342:atFile.scanAllDirectives (calls writeError on errors)
-@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node v, no @color or @nocolor directives are examined in any ancestor of v.
+#@+node:ekr.20031218072017.2387:old_df.scanAllDirectives
+@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node p, no @color or @nocolor directives are examined in any ancestor of p.
 
-This code is similar to Commands::scanAllDirectives, but it has been modified for use by the atFile class.
+This code is similar to Commands.scanAllDirectives, but it has been modified for use by the atFile class.
 @c
 
-def scanAllDirectives(self,v):
-	
-	"""Scan vnode v and v's ancestors looking for directives,
-	setting corresponding atFile ivars.
-	"""
+def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
+    
+    """Scan position p and p's ancestors looking for directives,
+    setting corresponding atFile ivars.
+    """
 
-	c = self.commands
-	<< Set ivars >>
-	<< Set path from @file node >>
-	old = {}
-	while v:
-		s = v.t.bodyString
-		dict = get_directives_dict(s)
-		<< Test for @path >>
-		<< Test for @encoding >>
-		<< Test for @comment and @language >>
-		<< Test for @header and @noheader >>
-		<< Test for @lineending >>
-		<< Test for @pagewidth >>
-		<< Test for @tabwidth >>
-		old.update(dict)
-		v = v.parent()
-	<< Set current directory >>
-	<< Set comment Strings from delims >>
+    c = self.c
+    << Set ivars >>
+    << Set path from @file node >>
+    old = {}
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        dict = g.get_directives_dict(s)
+        << Test for @path >>
+        << Test for @encoding >>
+        << Test for @comment and @language >>
+        << Test for @header and @noheader >>
+        << Test for @lineending >>
+        << Test for @pagewidth >>
+        << Test for @tabwidth >>
+        old.update(dict)
+    << Set current directory >>
+    if not importing and not reading:
+        # 5/19/04: don't override comment delims when reading!
+        << Set comment strings from delims >>
 #@nonl
-#@+node:ekr.20031218072017.1343:<< Set ivars >>
-self.page_width = self.commands.page_width
-self.tab_width  = self.commands.tab_width
+#@+node:ekr.20031218072017.2388:<< Set ivars >>
+self.page_width = self.c.page_width
+self.tab_width  = self.c.tab_width
 
 self.default_directory = None # 8/2: will be set later.
 
-delim1, delim2, delim3 = set_delims_from_language(c.target_language)
+delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
 self.language = c.target_language
 
-self.encoding = app().config.default_derived_file_encoding
-self.output_newline = getOutputNewline() # 4/24/03: initialize from config settings.
+self.encoding = g.app.config.default_derived_file_encoding
+self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config settings.
 #@nonl
-#@-node:ekr.20031218072017.1343:<< Set ivars >>
-#@+node:ekr.20031218072017.1344:<< Set path from @file node >>
+#@-node:ekr.20031218072017.2388:<< Set ivars >>
+#@+node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 # An absolute path in an @file node over-rides everything else.
 # A relative path gets appended to the relative path by the open logic.
 
-# Bug fix: 10/16/02
-if v.isAtFileNode():
-	name = v.atFileNodeName()
-elif v.isAtRawFileNode():
-	name = v.atRawFileNodeName()
-elif v.isAtNoSentinelsFileNode():
-	name = v.atNoSentinelsFileNodeName()
-else:
-	name = ""
+name = p.anyAtFileNodeName() # 4/28/04
 
-dir = choose(name,os.path.dirname(name),None)
-if dir and len(dir) > 0 and os.path.isabs(dir):
-	if os.path.exists(dir):
-		self.default_directory = dir
-	else: # 9/25/02
-		self.default_directory = makeAllNonExistentDirectories(dir)
-		if not self.default_directory:
-			self.error("Directory \"" + dir + "\" does not exist")
-			
-#@-node:ekr.20031218072017.1344:<< Set path from @file node >>
-#@+node:ekr.20031218072017.1345:<< Test for @comment and @language >>
+dir = g.choose(name,g.os_path_dirname(name),None)
+
+if dir and len(dir) > 0 and g.os_path_isabs(dir):
+    if g.os_path_exists(dir):
+        self.default_directory = dir
+    else: # 9/25/02
+        self.default_directory = g.makeAllNonExistentDirectories(dir)
+        if not self.default_directory:
+            self.error("Directory \"" + dir + "\" does not exist")
+#@nonl
+#@-node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+#@+node:ekr.20031218072017.2390:<< Test for @comment and @language >>
 # 10/17/02: @language and @comment may coexist in @file trees.
 # For this to be effective the @comment directive should follow the @language directive.
 
 if not old.has_key("comment") and dict.has_key("comment"):
-	k = dict["comment"]
-	# 11/14/02: Similar to fix below.
-	delim1, delim2, delim3 = set_delims_from_string(s[k:])
+    k = dict["comment"]
+    # 11/14/02: Similar to fix below.
+    delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
 
 # Reversion fix: 12/06/02: We must use elif here, not if.
 elif not old.has_key("language") and dict.has_key("language"):
-	k = dict["language"]
-	# 11/14/02: Fix bug reported by J.M.Gilligan.
-	self.language,delim1,delim2,delim3 = set_language(s,k)
+    k = dict["language"]
+    # 11/14/02: Fix bug reported by J.M.Gilligan.
+    self.language,delim1,delim2,delim3 = g.set_language(s,k)
 #@nonl
-#@-node:ekr.20031218072017.1345:<< Test for @comment and @language >>
-#@+node:ekr.20031218072017.1346:<< Test for @encoding >>
+#@-node:ekr.20031218072017.2390:<< Test for @comment and @language >>
+#@+node:ekr.20031218072017.2391:<< Test for @encoding >>
 if not old.has_key("encoding") and dict.has_key("encoding"):
-	
-	e = scanAtEncodingDirective(s,dict)
-	if e:
-		self.encoding = e
+    
+    e = g.scanAtEncodingDirective(s,dict)
+    if e:
+        self.encoding = e
 #@nonl
-#@-node:ekr.20031218072017.1346:<< Test for @encoding >>
-#@+node:ekr.20031218072017.1347:<< Test for @header and @noheader >>
+#@-node:ekr.20031218072017.2391:<< Test for @encoding >>
+#@+node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
 # EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
 if dict.has_key("header") and dict.has_key("noheader"):
-	es("conflicting @header and @noheader directives")
+    g.es("conflicting @header and @noheader directives")
 #@nonl
-#@-node:ekr.20031218072017.1347:<< Test for @header and @noheader >>
-#@+node:ekr.20031218072017.1348:<< Test for @lineending >>
+#@-node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
+#@+node:ekr.20031218072017.2393:<< Test for @lineending >>
 if not old.has_key("lineending") and dict.has_key("lineending"):
-	
-	lineending = scanAtLineendingDirective(s,dict)
-	if lineending:
-		self.output_newline = lineending
-#@-node:ekr.20031218072017.1348:<< Test for @lineending >>
-#@+node:ekr.20031218072017.1349:<< Test for @path >>
+    
+    lineending = g.scanAtLineendingDirective(s,dict)
+    if lineending:
+        self.output_newline = lineending
+#@-node:ekr.20031218072017.2393:<< Test for @lineending >>
+#@+node:ekr.20031218072017.2394:<< Test for @path >>
 # We set the current director to a path so future writes will go to that directory.
-
-loadDir = app().loadDir
 
 if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
 
-	k = dict["path"]
-	<< compute relative path from s[k:] >>
-	if path and len(path) > 0:
-		base = getBaseDirectory() # returns "" on error.
-		path = os.path.join(base,path)
-		if os.path.isabs(path):
-			<< handle absolute path >>
-		else:
-			self.error("ignoring bad @path: " + path)
-	else:
-		self.error("ignoring empty @path")
+    k = dict["path"]
+    << compute relative path from s[k:] >>
+    if path and len(path) > 0:
+        base = g.getBaseDirectory() # returns "" on error.
+        path = g.os_path_join(base,path)
+        if g.os_path_isabs(path):
+            << handle absolute path >>
+        else:
+            self.error("ignoring bad @path: " + path)
+    else:
+        self.error("ignoring empty @path")
 #@nonl
-#@+node:ekr.20031218072017.1350:<< compute relative path from s[k:] >>
+#@+node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
 j = i = k + len("@path")
-i = skip_to_end_of_line(s,i)
+i = g.skip_to_end_of_line(s,i)
 path = string.strip(s[j:i])
 
 # Remove leading and trailing delims if they exist.
 if len(path) > 2 and (
-	(path[0]=='<' and path[-1] == '>') or
-	(path[0]=='"' and path[-1] == '"') ):
-	path = path[1:-1]
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
 path = path.strip()
 
 if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
-	path = os.path.join(loadDir,path)
+    path = g.os_path_join(g.app.loadDir,path)
 #@nonl
-#@-node:ekr.20031218072017.1350:<< compute relative path from s[k:] >>
-#@+node:ekr.20031218072017.1351:<< handle absolute path >>
+#@-node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
+#@+node:ekr.20031218072017.2396:<< handle absolute path >>
 # path is an absolute path.
 
-if os.path.exists(path):
-	self.default_directory = path
+if g.os_path_exists(path):
+    self.default_directory = path
 else: # 9/25/02
-	self.default_directory = makeAllNonExistentDirectories(path)
-	if not self.default_directory:
-		self.error("invalid @path: " + path)
-#@-node:ekr.20031218072017.1351:<< handle absolute path >>
-#@-node:ekr.20031218072017.1349:<< Test for @path >>
-#@+node:ekr.20031218072017.1352:<< Test for @pagewidth >>
+    self.default_directory = g.makeAllNonExistentDirectories(path)
+    if not self.default_directory:
+        self.error("invalid @path: " + path)
+#@-node:ekr.20031218072017.2396:<< handle absolute path >>
+#@-node:ekr.20031218072017.2394:<< Test for @path >>
+#@+node:ekr.20031218072017.2397:<< Test for @pagewidth >>
 if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
-	
-	w = scanAtPagewidthDirective(s,dict,issue_error_flag=True)
-	if w and w > 0:
-		self.page_width = w
+    
+    w = g.scanAtPagewidthDirective(s,dict,issue_error_flag=True)
+    if w and w > 0:
+        self.page_width = w
 #@nonl
-#@-node:ekr.20031218072017.1352:<< Test for @pagewidth >>
-#@+node:ekr.20031218072017.1353:<< Test for @tabwidth >>
+#@-node:ekr.20031218072017.2397:<< Test for @pagewidth >>
+#@+node:ekr.20031218072017.2398:<< Test for @tabwidth >>
 if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
-	
-	w = scanAtTabwidthDirective(s,dict,issue_error_flag=True)
-	if w and w != 0:
-		self.tab_width = w
+    
+    w = g.scanAtTabwidthDirective(s,dict,issue_error_flag=True)
+    if w and w != 0:
+        self.tab_width = w
 
-#@-node:ekr.20031218072017.1353:<< Test for @tabwidth >>
-#@+node:ekr.20031218072017.1354:<< Set current directory >>
+#@-node:ekr.20031218072017.2398:<< Test for @tabwidth >>
+#@+node:ekr.20031218072017.2399:<< Set current directory >>
 # This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 
 if c.frame and not self.default_directory:
-	base = getBaseDirectory() # returns "" on error.
-	for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-		if dir and len(dir) > 0:
-			dir = os.path.join(base,dir)
-			if os.path.isabs(dir): # Errors may result in relative or invalid path.
-				if os.path.exists(dir):
-					self.default_directory = dir ; break
-				else: # 9/25/02
-					self.default_directory = makeAllNonExistentDirectories(dir)
+    base = g.getBaseDirectory() # returns "" on error.
+    for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if dir and len(dir) > 0:
+            dir = g.os_path_join(base,dir)
+            if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(dir):
+                    self.default_directory = dir ; break
+                else: # 9/25/02
+                    self.default_directory = g.makeAllNonExistentDirectories(dir)
 
-if not self.default_directory:
-	# This should never happen: c.openDirectory should be a good last resort.
-	self.error("No absolute directory specified anywhere.")
-	self.default_directory = ""
-#@nonl
-#@-node:ekr.20031218072017.1354:<< Set current directory >>
-#@+node:ekr.20031218072017.1355:<< Set comment Strings from delims >>
+if not self.default_directory and not scripting and not importing:
+    # This should never happen: c.openDirectory should be a good last resort.
+    g.trace()
+    self.error("No absolute directory specified anywhere.")
+    self.default_directory = ""
+#@-node:ekr.20031218072017.2399:<< Set current directory >>
+#@+node:ekr.20031218072017.2400:<< Set comment strings from delims >>
+if scripting:
+    # Force Python language.
+    delim1,delim2,delim3 = g.set_delims_from_language("python")
+    self.language = "python"
+    
 # Use single-line comments if we have a choice.
 # 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
+
 if delim1:
-	self.startSentinelComment = delim1
-	self.endSentinelComment = "" # Must not be None.
+    self.startSentinelComment = delim1
+    self.endSentinelComment = "" # Must not be None.
 elif delim2 and delim3:
-	self.startSentinelComment = delim2
-	self.endSentinelComment = delim3
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
 else: # Emergency!
-	# assert(0)
-	es("Unknown language: using Python comment delimiters")
-	es("c.target_language:"+`c.target_language`)
-	es("delim1,delim2,delim3:" + `delim1`+":"+`delim2`+":"+`delim3`)
-	self.startSentinelComment = "#" # This should never happen!
-	self.endSentinelComment = ""
+    # assert(0)
+    g.es("Unknown language: using Python comment delimiters")
+    g.es("c.target_language:",c.target_language)
+    g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
+    self.startSentinelComment = "#" # This should never happen!
+    self.endSentinelComment = ""
+    
+# g.trace(repr(self.startSentinelComment),repr(self.endSentinelComment))
 #@nonl
-#@-node:ekr.20031218072017.1355:<< Set comment Strings from delims >>
-#@-node:ekr.20031218072017.1342:atFile.scanAllDirectives (calls writeError on errors)
+#@-node:ekr.20031218072017.2400:<< Set comment strings from delims >>
+#@-node:ekr.20031218072017.2387:old_df.scanAllDirectives
 #@+node:ekr.20031218072017.1356:tangle.init_ivars & init_directive_ivars
 # Called by __init__
 
@@ -1678,1438 +1653,6 @@ ref line 2
 #@-node:ekr.20031218072017.1406:@root c:\prog\test\tangleTest.txt
 #@-node:ekr.20031218072017.1401:Tests
 #@-node:ekr.20031218072017.1341:(scanAllDirectives, scanDirectives, related utils)
-#@+node:ekr.20031218072017.984:Unfinished projects
-#@+node:ekr.20031218072017.985:(Button class)
-@ignore
-@color
-#@nonl
-#@+node:ekr.20031218072017.986:Notes to Edward
-@nocolor
-
-I have a base window class that I use for all my TK stuff which handles, especially, focus issues between windows.  I have not looked at ButtonQ to see to what extent it depends upon WindowQ, the base class.
-
-Anyway, this might be usefull as-is.  If not, let me know.
-#@nonl
-#@-node:ekr.20031218072017.986:Notes to Edward
-#@+node:ekr.20031218072017.987:@file ButtonQ.py
-@ Setup a button so it is handled with a keyboard shortcut like MSWindows tools.  See if there is an ampersand in the string.  If so, we want to underline that character and make that character a hot key for this button.
-@c
-
-from Tkinter import *
-from string import *
-
-def ButtonQ (master, **kw):
-	b = ButtonQ_ (master, kw)
-	return b.button
-
-class ButtonQ_ (Button):
-@others
-
-## test
-"""
-from tkMessageBox import *
-def buttonqcommand ():
-	showinfo ("Title", "Button was pushed")
-
-root = Tk ()
-frame = Frame (root)
-b = ButtonQ (frame, text = "&Push Me", command = buttonqcommand)
-b.grid ()
-frame.grid (pady = 15)
-"""
-#@+node:ekr.20031218072017.988:__init__
-def __init__(self, master, kw = {}):
-
-	<< get inputs to this method >>
-	<< see if there is an ampersand in the string. >>
-	<< make the button with the correct text >>
-	<< bind the button >>
-
-	# make the button available to the caller
-	self.button = b
-#@nonl
-#@+node:ekr.20031218072017.989:<< get inputs to this method >>
-_master = master
-_text = kw['text']
-_command = kw['command']
-#@-node:ekr.20031218072017.989:<< get inputs to this method >>
-#@+node:ekr.20031218072017.990:<< see if there is an ampersand in the string. >>
-length = len (_text)
-index = 0
-text3 = _text
-
-# Show there is no hot key yet
-IsHot = 0
-HotKey = None
-
-while index < length:
-	if _text [index] == '&':
-		<< handle an ampersand >>
-	index = += 1
-#@nonl
-#@+node:ekr.20031218072017.991:<< handle an ampersand >>
-# if the word ends in an ampersand, we ignore it, and there is no hot key
-if index == length - 1:
-	break
-
-# we have found a good hot key.  Remove the ampersand.
-text1 = _text [0 : index]
-text2 = _text [(index + 1) : 10000]
-text3 = text1 + text2
-IsHot = 1
-HotKey = _text [index + 1]
-break
-#@nonl
-#@-node:ekr.20031218072017.991:<< handle an ampersand >>
-#@-node:ekr.20031218072017.990:<< see if there is an ampersand in the string. >>
-#@+node:ekr.20031218072017.992:<< make the button with the correct text >>
-if IsHot:
-	kw['text'] = text3
-	kw['underline'] = index
-
-b = Button (master, kw)
-#@-node:ekr.20031218072017.992:<< make the button with the correct text >>
-#@+node:ekr.20031218072017.993:<< bind the button >>
-@ If there is a hot key, bind it to the window that owns the button.
-Use the alt of both the lower case and upper case of the letter.
-@c
-
-if IsHot:
-	HotKey = lower(HotKey)
-	self.HotKey = HotKey
-	s = angleBrackets("Alt-" + HotKey + s)
-	_master.master.bind (s, self.callback)
-
-	HotKey = upper(HotKey)
-	s = angleBrackets("Alt-" + HotKey + s)
-	_master.master.bind (s, self.callback)
-
-
-#@-node:ekr.20031218072017.993:<< bind the button >>
-#@-node:ekr.20031218072017.988:__init__
-#@+node:ekr.20031218072017.994:callback
-# The hot key has been hit.  Call the button's command.
-
-def callback (self, event):
-
-	self.button.invoke ()
-#@-node:ekr.20031218072017.994:callback
-#@-node:ekr.20031218072017.987:@file ButtonQ.py
-#@-node:ekr.20031218072017.985:(Button class)
-#@+node:ekr.20031218072017.995:(Incremental update of screen)
-@ignore
-@nocolor
-
-To enable incremental allocation of Tk widgets during redraws, set self.allocateOnlyVisibleNodes = True in tree.__init__.
-
-To do:
-	
-- We might switch to a line-oriented scheme.
-	- This might simplify the code and make the code more useful to users.
-	- Conceivably this scheme might eliminate the need for the auto-scroll in the redraw code,
-	and that might make a single-pass redraw scheme possible.
-
-- The last line isn't always completely visible: this is clearly a bug.
-
-@color
-#@nonl
-#@+node:ekr.20031218072017.996:From Frame class
-#@+node:ekr.20031218072017.997:<< create the tree canvas >>
-scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
-scrolls = choose(scrolls,1,0)
-
-self.canvas = canvas = Tk.Canvas(split2Pane1,name="canvas",
-	bd=0,bg="white",relief="flat")
-	
-self.setTreeColorsFromConfig()
-
-self.treeBar = treeBar = Tk.Scrollbar(split2Pane1,name="treeBar")
-
-# Bind mouse wheel event to canvas
-if sys.platform != "win32": # Works on 98, crashes on XP.
-	self.canvas.bind("<MouseWheel>", self.OnMouseWheel)
-	
-canvas['yscrollcommand'] = self.setCallback
-treeBar['command']     = self.yviewCallback
-
-treeBar.pack(side="right", fill="y")
-if scrolls: 
-	treeXBar = Tk.Scrollbar( 
-		split2Pane1,name='treeXBar',orient="horizontal") 
-	canvas['xscrollcommand'] = treeXBar.set 
-	treeXBar['command'] = canvas.xview 
-	treeXBar.pack(side="bottom", fill="x")
-
-canvas.pack(expand=1,fill="both")
-#@nonl
-#@-node:ekr.20031218072017.997:<< create the tree canvas >>
-#@+node:ekr.20031218072017.998:Scrolling callbacks (frame)
-def setCallback (self,*args,**keys):
-    
-    """Callback to adjust the scrollbar.
-    
-    Args is a tuple of two floats describing the fraction of the visible area."""
-
-    # g.trace(self.tree.redrawCount,args)
-
-    apply(self.treeBar.set,args,keys)
-
-    if self.tree.allocateOnlyVisibleNodes:
-        self.tree.setVisibleArea(args)
-        
-def yviewCallback (self,*args,**keys):
-    
-    """Tell the canvas to scroll"""
-    
-    # g.trace(vyiewCallback",args,keys)
-
-    if self.tree.allocateOnlyVisibleNodes:
-        self.tree.allocateNodesBeforeScrolling(args)
-
-    apply(self.canvas.yview,args,keys)
-#@nonl
-#@-node:ekr.20031218072017.998:Scrolling callbacks (frame)
-#@-node:ekr.20031218072017.996:From Frame class
-#@+node:ekr.20031218072017.999:From Tree class
-#@+node:ekr.20031218072017.1000:drawBox (tag_bind)
-def drawBox (self,p,x,y):
-    
-    tree = self ; canvas = self.canvas
-    y += 7 # draw the box at x, y+7
-    
-    if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
-
-        iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
-        image = self.getIconImage(iconname)
-        box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
-    
-        id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
-        id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
-
-        self.tagBindings.append((box_id,id1,"<1>"),)
-        self.tagBindings.append((box_id,id2,"<Double-1>"),)
-        
-        return box_id
-#@nonl
-#@-node:ekr.20031218072017.1000:drawBox (tag_bind)
-#@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
-def drawIcon(self,p,x=None,y=None):
-    
-    """Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
-
-    tree = self ; v = p.v # Make sure the bindings refer to the _present_ position.
-
-    << compute x,y and iconVal >>
-
-    if not g.doHook("draw-outline-icon",tree=tree,p=p,v=v,x=x,y=y):
-
-        # Get the image.
-        imagename = "box%02d.GIF" % val
-        image = self.getIconImage(imagename)
-        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image,tag="iconBox")
-        self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
-    
-        id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
-        id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
-        id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
-        
-        # Remember the bindings so deleteBindings can delete them.
-        self.tagBindings.append((id,id1,"<1>"),)
-        self.tagBindings.append((id,id2,"<Double-1>"),)
-        self.tagBindings.append((id,id3,"<3>"),)
-    
-    return 0,icon_width # dummy icon height,width
-#@nonl
-#@+node:EKR.20040602150338:<< compute x,y and iconVal >>
-
-if x is None and y is None:
-    try:
-        x,y = v.iconx, v.icony
-    except:
-        # Inject the ivars.
-        x,y = v.iconx, v.icony = 0,0
-else:
-    # Inject the ivars.
-    v.iconx, v.icony = x,y
-
-y += 2 # draw icon at y + 2
-
-# Always recompute v.iconVal.
-# This is an important drawing optimization.
-val = v.iconVal = v.computeIcon()
-assert(0 <= val <= 15)
-#@nonl
-#@-node:EKR.20040602150338:<< compute x,y and iconVal >>
-#@-node:ekr.20031218072017.1002:drawIcon (tag_bind)
-#@+node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
-def drawNode(self,p,x,y):
-
-    """Draw horizontal line from vertical line to icon"""
-    
-    tree = self ; v = p.v
-    
-    data = g.doHook("draw-outline-node",tree=tree,p=p,v=v,x=x,y=y)
-    if data is not None: return data
-    
-    # g.trace(p)
-    if 1:
-        self.lineyoffset = 0
-    else:
-        if hasattr(p.v.t,"unknownAttributes"):
-            self.lineyoffset = p.v.t.unknownAttributes.get("lineYOffset",0)
-        else:
-            self.lineyoffset = 0
-        
-    self.canvas.create_line(x,y+7+self.lineyoffset,
-        x+box_width,y+7+self.lineyoffset,
-        tag="lines",fill="gray50") # stipple="gray25")
-
-    if self.inVisibleArea(y):
-        return self.force_draw_node(p,x,y)
-    else:
-        return self.line_height,0
-#@nonl
-#@+node:ekr.20040317171729:force_draw_node (new)
-def force_draw_node(self,p,x,y):
-
-    self.allocatedNodes += 1
-    h,w = self.drawUserIcons(p,"beforeBox",x,y)
-    xw = w # The extra indentation before the icon box.
-    if p.hasChildren():
-        box_id = self.drawBox(p,x+w,y)
-    else:
-        box_id = None
-
-    w += box_width # even if box isn't drawn.
-
-    h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
-    h = max(h,h2) ; w += w2 ; xw += w2
-
-    h2,w2 = self.drawIcon(p,x+w,y)
-    h = max(h,h2) ; w += w2
-
-    h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
-    h = max(h,h2) ; w += w2
-
-    expand_x = x+w # save this for later.
-    h2 = self.drawText(p,x+w,y,box_id)
-    h = max(h,h2)
-    w += self.widthInPixels(p.headString())
-
-    h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
-    h = max(h,h2)
-    
-    self.drawClickFrame(p,y)
-
-    return h,xw
-#@nonl
-#@-node:ekr.20040317171729:force_draw_node (new)
-#@+node:ekr.20040318090335:force_draw_node (old)
-def force_draw_nodeOLD(self,p,x,y):
-
-    self.allocatedNodes += 1
-
-    if p.hasChildren():
-        box_id = self.drawBox(p,x,y)
-    w = box_width # Even if the box isn't drawn.
-
-    h2,w2 = self.drawIcon(p,x+w,y)
-    w += w2
-
-    h = self.drawText(p,x+w,y)
-    
-    return h,0
-#@-node:ekr.20040318090335:force_draw_node (old)
-#@-node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
-#@+node:ekr.20031218072017.1005:drawText (bind)
-def drawText(self,p,x,y,box_id=None):
-    
-    """draw text for v at nominal coordinates x,y."""
-
-    tree = self ; c = self.c ; v = p.v
-    h = self.line_height
-    x += text_indent
-    
-    data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
-    if data is not None: return data
-
-    self.lastText = t = Tk.Text(self.canvas,
-        font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
-
-    # New in 4.2: entries are pairs (p,t) indexed by v.
-    # Remember which text widget belongs to v.
-    d = self.edit_text_dict
-    val = d.get(v,[])
-    val.append((p,t),)
-    d[v] = val
-    # g.trace("entry",d[p.v])
-
-    # Remember the widget so deleteBindings can delete it.
-    self.widgets.append(t) # Fixes a _huge_ memory leak.
-
-    t.insert("end", v.headString())
-    << configure the text depending on state >>
-
-    if 1: # use bind here, else use bind_tag in drawTopTree.
-        # Use vnode or postion callbacks.
-        id1 = t.bind("<1>",p.OnHeadlineClick)
-        id2 = t.bind("<3>",p.OnHeadlineRightClick)
-        id3 = t.bind("<Key>", p.OnHeadlineKey)
-        id4 = t.bind("<Control-t>",self.OnControlT)
-            # 10/16/02: Stamp out the erroneous control-t binding.
-        # Remember the bindings so deleteBindings can delete them.
-        self.bindings.append((t,id1,"<1>"),)
-        self.bindings.append((t,id2,"<3>"),)
-        self.bindings.append((t,id3,"<Key>"),)
-        self.bindings.append((t,id4,"<Control-t>"),)
-    
-    if 0: # I like underlining only when the cursor is outside the text widget.
-        << highlight text widget on enter events >>
-        
-    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
-    self.canvas.tag_lower(id)
-    
-    # This doesn't work: must call update_idletasks first, and that's hard here.
-    # g.trace(t,t.winfo_height(),t.winfo_width())
-    
-    return self.line_height
-#@nonl
-#@+node:ekr.20031218072017.1006:<< configure the text depending on state >>
-if p and p == c.currentPosition():
-    if p == self.editPosition():
-        self.setNormalLabelState(p)
-    else:
-        self.setDisabledLabelState(p) # selected, disabled
-else:
-    self.setUnselectedLabelState(p) # unselected
-#@nonl
-#@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
-#@+node:ekr.20040709194954:<< highlight text widget on enter events >>
-if 0: # Define a rect to colorize.
-
-    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
-    self.canvas.itemconfig(color_rect,fill="",outline="")
-
-    def enterRect(event,id=color_rect):
-        if self.lastClickFrameId:
-            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
-        self.lastClickFrameId = id
-        color = "LightSteelBlue1"
-        self.canvas.itemconfig(id,fill=color,outline=color)
-    
-    bind_enter = t.bind( '<Enter>', enterRect, '+' )
-    self.bindings.append((t,bind_enter,"<Enter>"),)
-    
-if 1: # Colorize only the headline.
-
-    def enterRect(event,p=p,t=t):
-        t2 = self.lastColoredText
-        if t2:
-            if 1: # deunderline
-                t2.tag_delete('underline')
-            else: # color
-                t2.configure(background="white")
-        if p == self.editPosition():
-            self.lastColoredText = None
-        else:
-            self.lastColoredText = t
-            if 1: # underline
-                t.tag_add('underline','1.0', 'end')
-                t.tag_configure('underline',underline = True)
-            else: #color
-                t.configure(background="LightSteelBlue1")
-    
-    bind_enter = t.bind( '<Enter>', enterRect, '+' )
-    self.bindings.append((t,bind_enter,"<Enter>"),)
-#@nonl
-#@-node:ekr.20040709194954:<< highlight text widget on enter events >>
-#@-node:ekr.20031218072017.1005:drawText (bind)
-#@+node:ekr.20031218072017.1008:drawTree
-def drawTree(self,p,x,y,h,level,hoistFlag=False):
-
-    tree = self ; v = p.v
-    yfirst = ylast = y
-    if level==0: yfirst += 10
-    w = 0
-    
-    # We must make copies for drawText and drawBox and drawIcon,
-    # So making copies here actually reduces the total number of copies.
-    ### This will change for incremental redraw.
-    p = p.copy()
-    
-    data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
-    if data is not None: return data
-    
-    while p: # Do not use iterator.
-        h,w = self.drawNode(p,x,y)
-        y += h ; ylast = y
-        if p.isExpanded() and p.hasFirstChild():
-            # Must make an additional copy here by calling firstChild.
-            y,w2 = self.drawTree(p.firstChild(),x+child_indent+w,y,h,level+1)
-            x += w2 ; w += w2
-        if hoistFlag: break
-        else:         p = p.next()
-    << draw vertical line >>
-    return y,w
-#@nonl
-#@+node:ekr.20031218072017.1009:<< draw vertical line >>
-id = self.canvas.create_line(
-    x, yfirst-hline_y,
-    x, ylast+hline_y-h,
-    fill="gray50", # stipple="gray50"
-    tag="lines")
-
-# self.canvas.tag_lower(id)
-#@nonl
-#@-node:ekr.20031218072017.1009:<< draw vertical line >>
-#@-node:ekr.20031218072017.1008:drawTree
-#@+node:ekr.20031218072017.1010:inVisibleArea & inExpandedVisibleArea
-def inVisibleArea (self,y1):
-    
-    if self.allocateOnlyVisibleNodes:
-        if self.visibleArea:
-            vis1,vis2 = self.visibleArea
-            y2 = y1 + self.line_height
-            return y2 >= vis1 and y1 <= vis2
-        else: return False
-    else:
-        return True # This forces all nodes to be allocated on all redraws.
-        
-def inExpandedVisibleArea (self,y1):
-    
-    if self.expandedVisibleArea:
-        vis1,vis2 = self.expandedVisibleArea
-        y2 = y1 + self.line_height
-        return y2 >= vis1 and y1 <= vis2
-    else:
-        return False
-#@nonl
-#@-node:ekr.20031218072017.1010:inVisibleArea & inExpandedVisibleArea
-#@+node:ekr.20031218072017.1011:Updating routines (tree)...
-#@+node:ekr.20031218072017.1012:tree.redraw
-# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
-# This _is_ useful when a flag is passed to c.endUpdate.
-
-def redraw (self,event=None):
-    
-    # g.trace(self.updateCount,self.redrawScheduled)
-    
-    if self.updateCount == 0 and not self.redrawScheduled:
-        self.redrawScheduled = True
-        self.canvas.after_idle(self.idle_redraw)
-#@nonl
-#@-node:ekr.20031218072017.1012:tree.redraw
-#@+node:ekr.20040106095546:tkTree.redrawAfterException
-@ This is called only from doCommand.  The implicit assumption is that doCommand itself is not contained in a beginUpdate/endUpdate pair.
-@c
-
-def redrawAfterException (self):
-    
-    """Make sure drawing is enabled following an exception."""
-        
-    if not self.redrawScheduled:
-        self.redrawScheduled = True
-        self.canvas.after_idle(self.idle_redraw)
-        self.updateCount = 0 # would not work if we are in a beginUpdate/endUpdate pair.
-#@nonl
-#@-node:ekr.20040106095546:tkTree.redrawAfterException
-#@+node:ekr.20031218072017.1013:force_redraw
-# Schedules a redraw even if inside beginUpdate/endUpdate
-def force_redraw (self):
-    
-    # g.trace(self.redrawScheduled)
-    # import traceback ; traceback.print_stack()
-
-    if not self.redrawScheduled:
-        self.redrawScheduled = True
-        self.canvas.after_idle(self.idle_redraw)
-#@nonl
-#@-node:ekr.20031218072017.1013:force_redraw
-#@+node:ekr.20031218072017.1014:redraw_now
-# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
-
-def redraw_now (self,scroll=True):
-    
-    # g.trace()
-    
-    # Bug fix: 4/24/04: cancel any pending redraw "by hand".
-    # Make _sure_ that no other redraws take place after this.
-    self.disableRedraw = True
-    self.canvas.update_idletasks()
-    self.disableRedraw = False
-        
-    # Now do the actual redraw.
-    self.idle_redraw(scroll=scroll)
-#@nonl
-#@-node:ekr.20031218072017.1014:redraw_now
-#@+node:ekr.20031218072017.1015:idle_redraw
-def idle_redraw (self,scroll=True):
-    
-    c = self.c ; frame = c.frame
-
-    self.redrawScheduled = False # Always do this here.
-
-    << return if disabled, or quitting or dragging >>
-
-    # g.print_bindings("canvas",self.canvas)
-
-    self.expandAllAncestors(c.currentPosition())
-
-    oldcursor = self.canvas['cursor']
-    self.canvas['cursor'] = "watch"
-
-    if not g.doHook("redraw-entire-outline",c=self.c):
-        self.allocatedNodes = 0
-        << Erase and redraw the entire tree >>
-        if self.trace:
-            self.redrawCount += 1
-            print "idle_redraw allocated:",self.redrawCount,self.allocatedNodes
-    g.doHook("after-redraw-outline",c=self.c)
-
-    self.canvas['cursor'] = oldcursor
-    
-    # g.collectGarbage()
-    g.printGc()
-    # import gc ; print len(gc.get_referents(frame))
-    # g.printGcRefs(verbose=False)
-    # g.trace("positions",g.app.positions)
-#@+node:ekr.20040324090957:<< return if disabled, or quitting or dragging >>
-if self.disableRedraw:
-    # We have been called as the result of an update_idletasks in the log pane.
-    # Don't do anything now.
-    return
-
-if frame not in g.app.windowList or g.app.quitting:
-    # g.trace("no frame")
-    return
-
-if self.drag_p:
-    # g.trace("dragging",self.drag_p)
-    return
-#@-node:ekr.20040324090957:<< return if disabled, or quitting or dragging >>
-#@+node:ekr.20040324090957.1:<< Erase and redraw the entire tree >>
-# Delete all widgets.
-c.setTopVnode(None)
-self.deleteBindings()
-self.canvas.delete("all")
-self.deleteWidgets()
-
-# Redraw the tree.
-self.setVisibleAreaToFullCanvas()
-self.drawTopTree()
-
-# Set up the scroll region after the tree has been redrawn.
-x0, y0, x1, y1 = self.canvas.bbox("all")
-self.canvas.configure(scrollregion=(0, 0, x1, y1))
-
-# Do a scrolling operation after the scrollbar is redrawn
-if scroll:
-    self.canvas.after_idle(self.idle_scrollTo)
-
-#@-node:ekr.20040324090957.1:<< Erase and redraw the entire tree >>
-#@-node:ekr.20031218072017.1015:idle_redraw
-#@+node:ekr.20031218072017.1016:idle_second_redraw
-def idle_second_redraw (self):
-    
-    c = self.c
-    
-    g.trace()
-        
-    # Erase and redraw the entire tree the SECOND time.
-    # This ensures that all visible nodes are allocated.
-    c.setTopVnode(None)
-    args = self.canvas.yview()
-    self.setVisibleArea(args)
-    self.deleteBindings()
-    self.canvas.delete("all")
-    self.drawTopTree()
-    
-    if self.trace:
-        print "idle_second_redraw allocated:",self.redrawCount, self.allocatedNodes
-#@nonl
-#@-node:ekr.20031218072017.1016:idle_second_redraw
-#@-node:ekr.20031218072017.1011:Updating routines (tree)...
-#@+node:ekr.20031218072017.1017:tree.__init__
-def __init__(self,c,frame,canvas):
-    
-    # Init the base class.
-    leoFrame.leoTree.__init__(self,frame)
-
-    # Objects associated with this tree.
-    self.canvas = canvas
-
-    # Miscellaneous info.
-    self.iconimages = {} # Image cache set by getIconImage().
-    self.active = False # True if tree is active
-    self._editPosition = None # returned by leoTree.editPosition()
-    self.lineyoffset = 0 # y offset for this headline.
-    self.disableRedraw = False # True: reschedule a redraw for later.
-    self.lastClickFrameId = None # id of last entered clickBox.
-    self.lastColoredText = None # last colored text widget.
-    
-    # Set self.font and self.fontName.
-    self.setFontFromConfig()
-    
-    # Recycling bindings.
-    self.bindings = [] # List of bindings to be unbound when redrawing.
-    self.tagBindings = [] # List of tag bindings to be unbound when redrawing.
-    self.icon_id_dict = {} # New in 3.12: keys are icon id's, values are vnodes.
-    self.widgets = [] # Widgets that must be destroyed when redrawing.
-    
-    # Drag and drop
-    self.drag_p = None
-    self.controlDrag = False # True: control was down when drag started.
-    self.drag_id = None # To reset bindings after drag
-    
-    # 20-SEP-2002 DTHEIN: keep track of popup menu so we can handle
-    #                     behavior better on Linux
-    # Context menu
-    self.popupMenu = None
-    
-    # Incremental redraws:
-    self.allocateOnlyVisibleNodes = False # True: enable incremental redraws.
-    self.trace = False # True enabling of various traces.
-    self.prevMoveToFrac = None
-    self.visibleArea = None
-    self.expandedVisibleArea = None
-    
-    self.allocatedNodes = 0 # A crucial statistic.
-        # Incremental drawing allocates visible nodes at most twice.
-        # Non-incremetal drawing allocates all visible nodes once.
-        
-    if self.allocateOnlyVisibleNodes:
-        self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw)
-    
-    if not leoTkinterTree.callbacksInjected: # Class var.
-        leoTkinterTree.callbacksInjected = True
-        self.injectCallbacks()
-#@nonl
-#@-node:ekr.20031218072017.1017:tree.__init__
-#@+node:ekr.20031218072017.1018:tree.idle_scrollTo
-def idle_scrollTo(self,p=None):
-
-    """Scrolls the canvas so that v is in view.
-    
-    This is done at idle time after a redraw so that treeBar.get() will return proper values."""
-
-    c = self.c ; frame = c.frame
-    if not p: p = self.c.currentPosition()
-    if not p: p = self.c.rootPosition() # 4/8/04.
-    try:
-        last = p.lastVisible()
-        nextToLast = last.visBack()
-        h1 = self.yoffset(p)
-        h2 = self.yoffset(last)
-        << compute approximate line height >>
-        << Compute the fractions to scroll down/up >>
-        if frac <= lo:
-            if self.prevMoveToFrac != frac:
-                self.prevMoveToFrac = frac
-                self.canvas.yview("moveto",frac)
-        elif frac2 + (hi - lo) >= hi:
-            if self.prevMoveToFrac != frac2:
-                self.prevMoveToFrac = frac2
-                self.canvas.yview("moveto",frac2)
-
-        if self.allocateOnlyVisibleNodes:
-            self.canvas.after_idle(self.idle_second_redraw)
-            
-        c.setTopVnode(p) # 1/30/04: remember a pseudo "top" node.
-        # print "%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi)
-    except:
-        g.es_exception()
-#@nonl
-#@+node:ekr.20040314092716:<< compute approximate line height >>
-if nextToLast: # 2/2/03: compute approximate line height.
-    lineHeight = h2 - self.yoffset(nextToLast)
-else:
-    lineHeight = 20 # A reasonable default.
-#@nonl
-#@-node:ekr.20040314092716:<< compute approximate line height >>
-#@+node:ekr.20040314092716.1:<< Compute the fractions to scroll down/up >>
-data = frame.treeBar.get()
-try: lo, hi = data
-except: lo,hi = 0.0,1.0
-if h2 > 0.1:
-    frac = float(h1)/float(h2) # For scrolling down.
-    frac2 = float(h1+lineHeight/2)/float(h2) # For scrolling up.
-    frac2 = frac2 - (hi - lo)
-else:
-    frac = frac2 = 0.0 # probably any value would work here.
-    
-frac =  max(min(frac,1.0),0.0)
-frac2 = max(min(frac2,1.0),0.0)
-#@nonl
-#@-node:ekr.20040314092716.1:<< Compute the fractions to scroll down/up >>
-#@-node:ekr.20031218072017.1018:tree.idle_scrollTo
-#@+node:ekr.20031218072017.1019:tree.select
-# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
-
-def select (self,p,updateBeadList=True):
-
-    if not p: return
-    
-    << define vars and stop editing >>
-    
-    # g.trace(p)
-    # g.printGc()
-
-    if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
-        << unselect the old node >>
-
-    g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
-    
-    if not g.doHook("select1",c=c,new_v=p,old_v=old_p):
-        << select the new node >>
-        if p and p != old_p: # 3/26/03: Suppress duplicate call.
-            try: # may fail during initialization
-                self.idle_scrollTo(p)
-            except: pass
-        << update c.beadList or c.beadPointer >>
-        << update c.visitedList >>
-
-    << set the current node >>
-    
-    g.doHook("select2",c=c,new_v=p,old_v=old_p)
-    g.doHook("select3",c=c,new_v=p,old_v=old_p)
-    
-    # g.printGc()
-#@nonl
-#@+node:ekr.20031218072017.1020:<< define vars and stop editing >>
-c = self.c
-frame = c.frame ; body = frame.bodyCtrl
-
-old_p = c.currentPosition()
-
-# Unselect any previous selected but unedited label.
-self.endEditLabel()
-self.setUnselectedLabelState(old_p)
-#@nonl
-#@-node:ekr.20031218072017.1020:<< define vars and stop editing >>
-#@+node:ekr.20031218072017.1021:<< unselect the old node >> (changed in 4.2)
-# Remember the position of the scrollbar before making any changes.
-yview=body.yview()
-insertSpot = c.frame.body.getInsertionPoint()
-
-if old_p and old_p != p:
-    # g.trace("different node")
-    self.endEditLabel()
-    self.setUnselectedLabelState(old_p)
-
-if old_p and old_p.edit_text():
-    old_p.v.t.scrollBarSpot = yview
-    old_p.v.t.insertSpot = insertSpot
-#@nonl
-#@-node:ekr.20031218072017.1021:<< unselect the old node >> (changed in 4.2)
-#@+node:ekr.20031218072017.1022:<< select the new node >>
-frame.setWrap(p)
-
-# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
-s = g.toUnicode(p.v.t.bodyString,"utf-8")
-body.delete("1.0","end")
-body.insert("1.0",s)
-
-# We must do a full recoloring: we may be changing context!
-self.frame.body.recolor_now(p)
-
-if p.v and p.v.t.scrollBarSpot != None:
-    first,last = p.v.t.scrollBarSpot
-    body.yview("moveto",first)
-
-if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
-    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
-    c.frame.bodyCtrl.see(p.v.t.insertSpot)
-else:
-    c.frame.bodyCtrl.mark_set("insert","1.0")
-#@nonl
-#@-node:ekr.20031218072017.1022:<< select the new node >>
-#@+node:ekr.20031218072017.1023:<< update c.beadList or c.beadPointer >>
-if updateBeadList:
-    
-    if c.beadPointer > -1:
-        present_p = c.beadList[c.beadPointer]
-    else:
-        present_p = c.nullPosition()
-    
-    if p != present_p:
-        # Replace the tail of c.beadList by c and make c the present node.
-        # print "updating c.beadList"
-        c.beadPointer += 1
-        c.beadList[c.beadPointer:] = []
-        c.beadList.append(p)
-        
-    # g.trace(c.beadPointer,p,present_p)
-#@nonl
-#@-node:ekr.20031218072017.1023:<< update c.beadList or c.beadPointer >>
-#@+node:ekr.20031218072017.1024:<< update c.visitedList >>
-# Make p the most recently visited position on the list.
-if p in c.visitedList:
-    c.visitedList.remove(p)
-
-c.visitedList.insert(0,p.copy())
-#@nonl
-#@-node:ekr.20031218072017.1024:<< update c.visitedList >>
-#@+node:ekr.20031218072017.1025:<< set the current node >>
-self.c.setCurrentPosition(p)
-self.setSelectedLabelState(p)
-self.frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
-g.app.gui.set_focus(c,c.frame.bodyCtrl)
-#@nonl
-#@-node:ekr.20031218072017.1025:<< set the current node >>
-#@-node:ekr.20031218072017.1019:tree.select
-#@-node:ekr.20031218072017.999:From Tree class
-#@+node:ekr.20031218072017.1026:Used only for incremental redraws
-#@+node:ekr.20031218072017.1027:allocateNodes
-def allocateNodes(self,where,lines):
-    
-    """Allocate Tk widgets in nodes that will become visible as the result of an upcoming scroll"""
-    
-    assert(where in ("above","below"))
-
-    # print "allocateNodes: %d lines %s visible area" % (lines,where)
-    
-    # Expand the visible area: a little extra delta is safer.
-    delta = lines * (self.line_height + 4)
-    y1,y2 = self.visibleArea
-
-    if where == "below":
-        y2 += delta
-    else:
-        y1 = max(0.0,y1-delta)
-
-    self.expandedVisibleArea=y1,y2
-    # print "expandedArea:   %5.1f %5.1f" % (y1,y2)
-    
-    # Allocate all nodes in expanded visible area.
-    self.updatedNodeCount = 0
-    self.updateTree(self.c.rootPosition(),root_left,root_top,0,0)
-    # if self.updatedNodeCount: print "updatedNodeCount:", self.updatedNodeCount
-#@-node:ekr.20031218072017.1027:allocateNodes
-#@+node:ekr.20031218072017.1028:allocateNodesBeforeScrolling
-def allocateNodesBeforeScrolling (self, args):
-    
-    """Calculate the nodes that will become visible as the result of an upcoming scroll.
-
-    args is the tuple passed to the Tk.Canvas.yview method"""
-
-    if not self.allocateOnlyVisibleNodes: return
-
-    # print "allocateNodesBeforeScrolling:",self.redrawCount,args
-
-    assert(self.visibleArea)
-    assert(len(args)==2 or len(args)==3)
-    kind = args[0] ; n = args[1]
-    lines = 2 # Update by 2 lines to account for rounding.
-    if len(args) == 2:
-        assert(kind=="moveto")
-        frac1,frac2 = args
-        if float(n) != frac1:
-            where = g.choose(n<frac1,"above","below")
-            self.allocateNodes(where=where,lines=lines)
-    else:
-        assert(kind=="scroll")
-        linesPerPage = self.canvas.winfo_height()/self.line_height + 2
-        n = int(n) ; assert(abs(n)==1)
-        where = g.choose(n == 1,"below","above")
-        lines = g.choose(args[2] == "pages",linesPerPage,lines)
-        self.allocateNodes(where=where,lines=lines)
-#@nonl
-#@-node:ekr.20031218072017.1028:allocateNodesBeforeScrolling
-#@+node:ekr.20031218072017.1029:setVisibleArea
-def setVisibleArea (self,args):
-
-    r1,r2 = args
-    r1,r2 = float(r1),float(r2)
-    # print "scroll ratios:",r1,r2
-
-    try:
-        s = self.canvas.cget("scrollregion")
-        x1,y1,x2,y2 = g.scanf(s,"%d %d %d %d")
-        x1,y1,x2,y2 = int(x1),int(y1),int(x2),int(y2)
-    except:
-        self.visibleArea = None
-        return
-        
-    scroll_h = y2-y1
-    # print "height of scrollregion:", scroll_h
-
-    vy1 = y1 + (scroll_h*r1)
-    vy2 = y1 + (scroll_h*r2)
-    self.visibleArea = vy1,vy2
-    # print "setVisibleArea: %5.1f %5.1f" % (vy1,vy2)
-#@-node:ekr.20031218072017.1029:setVisibleArea
-#@+node:ekr.20031218072017.1030:setVisibleAreaToFullCanvas
-def setVisibleAreaToFullCanvas(self):
-    
-    if self.visibleArea:
-        y1,y2 = self.visibleArea
-        y2 = max(y2,y1 + self.canvas.winfo_height())
-        self.visibleArea = y1,y2
-#@nonl
-#@-node:ekr.20031218072017.1030:setVisibleAreaToFullCanvas
-#@+node:ekr.20031218072017.1031:tree.updateTree
-def updateTree (self,v,x,y,h,level):
-
-    yfirst = ylast = y
-    if level==0: yfirst += 10
-    while v:
-        # g.trace(x,y,v)
-        h = self.updateNode(v,x,y)
-        y += h ; ylast = y
-        if v.isExpanded() and v.firstChild():
-            y = self.updateTree(v.firstChild(),x+child_indent,y,h,level+1)
-        v = v.next()
-    return y
-#@-node:ekr.20031218072017.1031:tree.updateTree
-#@-node:ekr.20031218072017.1026:Used only for incremental redraws
-#@-node:ekr.20031218072017.995:(Incremental update of screen)
-#@+node:ekr.20031218072017.1032:(Syntax coloring a la jEdit) (do not delete)
-@ To do:
-
-- ** Use a general purpose XML parser to parse the jEdit mode files.
-- ** Do incremental syntax coloring
-	- Create lines table.
-	- Initialize lines table when select new node.
-- Use strings for states.
-- Define colorizeLine method.
-- Create self.state ivar
-- Use a keyword lead-in table.
-	- Use this for latex keywords and Leo keywords.
-	- Add ignore-case ivar.
-- Define @language xml.
-- Defined syntax coloring for all jEdit token types:
-	KEYWORD1,KEYWORD2,KEYWORD3,LABEL,LITERAL1,LITERAL2,MARKUP,OPERATOR
-	Where do Leo keywords fit in?
-
-#@+node:ekr.20031218072017.1033:Ideas for dynamic code
-@ignore
-
-@ The following gives the general idea.
-
-The self.known_languages dict contains all the data structures for a particular language.  This dict is created dynamically.  Each entry is a tuple of other info:
-	"c"      : (dict1,...,dictM,list1,...,listN,etc.),
-	"python" : (dict1,...,dictM,list1,...,listN,etc.),
-These tuples, i.e., all the data structures, are created by the initialization routine.
-
-@c
-data = self.known_languages.get(self.language)
-if not data:
-	# Create all the data structures for the language.
-	data = parse_xml_file(self.language) 
-	if data: self.known_languages[language] = data
-if data:
-	self.dict1,...,self.listN=data
-
-# The subsidiary data structures will be created from the xml files.
-# The exact data structures used depends on the format of the xml files.
-
-self.reserved_words1 = {} # Main language keywords: reserved words.
-self.reserved_words2 = {} # Functions etc. to be colored separately.
-self.keyword_chars1 = {} # Characters that appear as the first character of a keyword.
-self.keyword_chars2 = {} # Characters that appear as second or following characters of a keyword.
-self.string_start1,self.string.start2 # Opening characters of strings.
-
-# The code might scan for keywords as follows:
-n = len(s)
-if i < n and self.keywords1.get(s[i]):
-	j = i ; i += 1
-	while i < n and self.keywords2.get(s[i]):
-		i += 1
-	word = s[j:i]
-	if self.reserved_words1.get(word):
-		# colorize the reserved word
-	elif self.reserved_words2.get(word):
-		# colorize the reserved word
-#@-node:ekr.20031218072017.1033:Ideas for dynamic code
-#@+node:ekr.20031218072017.1034:New data structures
-special_keywords_dict = {
-	'\\' : (latex_keywords_dict,"keyword"),
-	'@' :  (leo_keywords_dict,"leoKeword") }
-	
-if << ch is alphabetic >>:
-	word = scan_c_word(s,i)
-	kind = keywords_dict.get(word)
-	if kind:
-		<< colorize word using kind >>
-else:
-	data = special_keywords_dict.get(ch)
-	if data:
-		dict,kind = data
-		word = scan_c_word(s,i+1)
-		key = d.get(word)
-		if key:
-			<< colorize ch and word using kind >>
-#@nonl
-#@-node:ekr.20031218072017.1034:New data structures
-#@+node:ekr.20031218072017.1049:jEdit docs
-@nocolor
-
-#@+node:ekr.20031218072017.1050:The Preamble and MODE tag
-Each mode definition must begin with the following: 
-
-<?xml version="1.0"?>
-<!DOCTYPE MODE SYSTEM "xmode.dtd"> 
-
-Each mode definition must also contain exactly one MODE tag. All other tags (PROPS, RULES) must be placed inside the MODE tag. The MODE tag does not have any defined attributes. Here is an example: 
-
-<MODE>
-    ... mode definition goes here ...
-</MODE> 
-#@-node:ekr.20031218072017.1050:The Preamble and MODE tag
-#@+node:ekr.20031218072017.1051:The PROPS Tag (Leo could ignore these)
-The PROPS tag and the PROPERTY tags inside it are used to define mode-specific properties. Each PROPERTY tag must have a NAME attribute set to the property's name, and a VALUE attribute with the property's value. 
-
-All buffer-local properties listed in the section called "Buffer-Local Properties" may be given values in edit modes. In addition, the following mode properties have no buffer-local equivalent: 
-
-commentEnd - the comment end string, used by the Range Comment command. 
-
-commentStart - the comment start string, used by the Range Comment command. 
-
-lineComment - the line comment string, used by the Line Comment command. 
-
-doubleBracketIndent - If a line matches the indentPrevLine regular expression and the next line contains an opening bracket, a level of indent will not be added to the next line, unless this property is set to "True". For example, with this property set to "False", Java code will be indented like so: 
-
-while(objects.hasMoreElements())
-{
-        ((Drawable)objects.nextElement()).draw();
-} 
-
-On the other hand, settings this property to "True" will give the following result: 
-
-while(objects.hasMoreElements())
-        {
-                ((Drawable)objects.nextElement()).draw();
-        } 
-
-indentCloseBrackets - A list of characters (usually brackets) that subtract indent from the current line. For example, in Java mode this property is set to "}".
-
-indentOpenBrackets - A list of characters (usually brackets) that add indent to the next line. For example, in Java mode this property is set to "{".
-
-indentPrevLine - When indenting a line, jEdit checks if the previous line matches the regular expression stored in this property. If it does, a level of indent is added. For example, in Java mode this regular expression matches language constructs such as "if", "else", "while", etc.
-
-Here is the complete <PROPS> tag for Java mode: 
-
-<PROPS>
-    <PROPERTY NAME="indentOpenBrackets" VALUE="{" />
-    <PROPERTY NAME="indentCloseBrackets" VALUE="}" />
-    <PROPERTY NAME="indentPrevLine" VALUE="\s*(((if|while)
-        \s*\(|else|case|default)[^;]*|for\s*\(.*)" />
-    <PROPERTY NAME="doubleBracketIndent" VALUE="false" />
-    <PROPERTY NAME="commentStart" VALUE="/*" />
-    <PROPERTY NAME="commentEnd" VALUE="*/" />
-    <PROPERTY NAME="blockComment" VALUE="//" />
-    <PROPERTY NAME="wordBreakChars" VALUE=",+-=<>/?^&*" />
-</PROPS> 
-#@-node:ekr.20031218072017.1051:The PROPS Tag (Leo could ignore these)
-#@+node:ekr.20031218072017.1052:The RULES Tag
-RULES tags must be placed inside the MODE tag. Each RULES tag defines a ruleset.
-
-A ruleset consists of a number of parser rules, with each parser rule specifying how to highlight a specific syntax token. There must be at least one ruleset in each edit mode. There can also be more than one, with different rulesets being used to highlight different parts of a buffer (for example, in HTML mode, one rule set highlights HTML tags, and another highlights inline JavaScript). For information about using more than one ruleset, see the section called "The SPAN Rule". 
-
-The RULES tag supports the following attributes, all of which are optional: 
-
-SET - the name of this ruleset. All rulesets other than the first must have a name. 
-
-HIGHLIGHT_DIGITS - if set to TRUE, digits (0-9, as well as hexadecimal literals prefixed with "0x") will be highlighted with the DIGIT token type. Default is FALSE. 
-
-IGNORE_CASE - if set to FALSE, matches will be case sensitive. Otherwise, case will not matter. Default is TRUE. 
-
-DEFAULT - the token type for text which doesn't match any specific rule. Default is NULL. See the section called "Token Types" for a list of token types. 
-
-Here is an example RULES tag: 
-
-<RULES IGNORE_CASE="FALSE" HIGHLIGHT_DIGITS="TRUE">
-    ... parser rules go here ...
-</RULES> 
-
-Rule Ordering Requirements
-
-You might encounter this very common pitfall when writing your own modes. 
-
-Since jEdit checks buffer text against parser rules in the order they appear in the ruleset, more specific rules must be placed before generalized ones, otherwise the generalized rules will catch everything. 
-
-This is best demonstrated with an example. The following is incorrect rule ordering: 
-
-<SPAN TYPE="MARKUP">
-    <BEGIN>[</BEGIN>
-    <END>]</END>
-</SPAN>
-
-<SPAN TYPE="KEYWORD1">
-    <BEGIN>[!</BEGIN>
-    <END>]</END>
-</SPAN> 
-
-If you write the above in a rule set, any occurrence of "[" (even things like "[!DEFINE", etc) will be highlighted using the first rule, because it will be the first to match. This is most likely not the intended behavior. 
-
-The problem can be solved by placing the more specific rule before the general one: 
-
-<SPAN TYPE="KEYWORD1">
-    <BEGIN>[!</BEGIN>
-    <END>]</END>
-</SPAN>
-
-<SPAN TYPE="MARKUP">
-    <BEGIN>[</BEGIN>
-    <END>]</END>
-</SPAN> 
-
-Now, if the buffer contains the text "[!SPECIAL]", the rules will be checked in order, and the first rule will be the first to match. However, if you write "[FOO]", it will be highlighted using the second rule, which is exactly what you would expect. 
-
-Per-Ruleset Properties
-
-The PROPS tag (described in the section called "The PROPS Tag") can also be placed inside the RULES tag to define ruleset-specific properties. Only the following properties can be set on a per-ruleset basis: 
-
-commentEnd - the comment end string. 
-
-commentStart - the comment start string. 
-
-lineComment - the line comment string. 
-
-These properties are used by the commenting commands to implement context-sensitive comments; see the section called "Commenting Out Code". 
-
-The TERMINATE Rule
-
-The TERMINATE rule specifies that parsing should stop after the specified number of characters have been read from a line. The number of characters to terminate after should be specified with the AT_CHAR attribute. Here is an example: 
-
-<TERMINATE AT_CHAR="1" /> 
-
-This rule is used in Patch mode, for example, because only the first character of each line affects highlighting. 
-
-The SPAN Rule
-
-The SPAN rule highlights text between a start and end string. The start and end strings are specified inside child elements of the SPAN tag. The following attributes are supported: 
-
-TYPE - The token type to highlight the span with. See the section called "Token Types" for a list of token types
-
-AT_LINE_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a line
-
-EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be highlighted, only the text between them will
-
-NO_LINE_BREAK - If set to TRUE, the span will be highlighted with the INVALID token type if it spans more than one line
-
-NO_WORD_BREAK - If set to TRUE, the span will be highlighted with the INVALID token type if it includes whitespace
-
-DELEGATE - text inside the span will be highlighted with the specified ruleset. To delegate to a ruleset defined in the current mode, just specify its name. To delegate to a ruleset defined in another mode, specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset in a mode is called "MAIN".
-
-Here is a SPAN that highlights Java string literals, which cannot include line breaks: 
-
-<SPAN TYPE="LITERAL1" NO_LINE_BREAK="TRUE">
-   <BEGIN>"</BEGIN>
-   <END>"</END>
-</SPAN> 
-
-Here is a SPAN that highlights Java documentation comments by delegating to the "JAVADOC" ruleset defined elsewhere in the current mode: 
-
-<SPAN TYPE="COMMENT2" DELEGATE="JAVADOC">
-   <BEGIN>/**</BEGIN>
-   <END>*/</END>
-</SPAN> 
-
-Here is a SPAN that highlights HTML cascading stylesheets inside <STYLE> tags by delegating to the main ruleset in the CSS edit mode: 
-
-<SPAN TYPE="MARKUP" DELEGATE="css::MAIN">
-   <BEGIN>&lt;style&gt;</BEGIN>
-   <END>&lt;/style&gt;</END>
-</SPAN> 
-
-Tip
-The <END> tag is optional. If it is not specified, any occurrence of the start string will cause the remainder of the buffer to be highlighted with this rule. 
-
-This can be very useful when combined with delegation. 
-
-The EOL_SPAN Rule
-An EOL_SPAN is similar to a SPAN except that highlighting stops at the end of the line, not after the end sequence is found. The text to match is specified between the opening and closing EOL_SPAN tags. The following attributes are supported: 
-
-TYPE - The token type to highlight the span with. See the section called "Token Types" for a list of token types
-
-AT_LINE_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a line
-
-EXCLUDE_MATCH - If set to TRUE, the start sequence will not be highlighted, only the text after it will
-
-Here is an EOL_SPAN that highlights C++ comments: 
-
-<EOL_SPAN TYPE="COMMENT1">//</EOL_SPAN> 
-
-The MARK_PREVIOUS Rule
-The MARK_PREVIOUS rule highlights from the end of the previous syntax token to the matched text. The text to match is specified between opening and closing MARK_PREVIOUS tags. The following attributes are supported: 
-
-TYPE - The token type to highlight the text with. See the section called "Token Types" for a list of token types
-
-AT_LINE_START - If set to TRUE, the text will only be highlighted if it occurs at the beginning of the line
-
-EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text before it will
-
-Here is a rule that highlights labels in Java mode (for example, "XXX:"): 
-
-<MARK_PREVIOUS AT_LINE_START="TRUE"
-    EXCLUDE_MATCH="TRUE">:</MARK_PREVIOUS> 
-
-The MARK_FOLLOWING Rule
-The MARK_FOLLOWING rule highlights from the start of the match to the next syntax token. The text to match is specified between opening and closing MARK_FOLLOWING tags. The following attributes are supported: 
-
-TYPE - The token type to highlight the text with. See the section called "Token Types" for a list of token types
-
-AT_LINE_START - If set to TRUE, the text will only be highlighted if the start sequence occurs at the beginning of a line
-
-EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text after it will
-
-Here is a rule that highlights variables in Unix shell scripts ("$CLASSPATH", "$IFS", etc): 
-
-<MARK_FOLLOWING TYPE="KEYWORD2">$</MARK_FOLLOWING> 
-
-The SEQ Rule
-The SEQ rule highlights fixed sequences of text. The text to highlight is specified between opening and closing SEQ tags. The following attributes are supported: 
-
-TYPE - the token type to highlight the sequence with. See the section called "Token Types" for a list of token types
-
-AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line
-
-The following rules highlight a few Java operators: 
-
-<SEQ TYPE="OPERATOR">+</SEQ>
-<SEQ TYPE="OPERATOR">-</SEQ>
-<SEQ TYPE="OPERATOR">*</SEQ>
-<SEQ TYPE="OPERATOR">/</SEQ> 
-
-The KEYWORDS Rule
-
-There can only be one KEYWORDS tag per ruleset. The KEYWORDS rule defines keywords to highlight. Keywords are similar to SEQs, except that SEQs match anywhere in the text, whereas keywords only match whole words. 
-
-The KEYWORDS tag does not define any attributes. 
-
-Each child element of the KEYWORDS tag should be named after the desired token type, with the keyword text between the start and end tags. For example, the following rule highlights the most common Java keywords: 
-
-<KEYWORDS IGNORE_CASE="FALSE">
-   <KEYWORD1>if</KEYWORD1>
-   <KEYWORD1>else</KEYWORD1>
-   <KEYWORD3>int</KEYWORD3>
-   <KEYWORD3>void</KEYWORD3>
-</KEYWORDS> 
-
-Token Types
-
-Parser rules can highlight tokens using any of the following token types: 
-
-NULL - no special highlighting is performed on tokens of type NULL 
-
-COMMENT1 
-
-COMMENT2 
-
-FUNCTION 
-
-INVALID - tokens of this type are automatically added if a NO_WORD_BREAK or NO_LINE_BREAK SPAN spans more than one word or line, respectively. 
-
-KEYWORD1 
-
-KEYWORD2 
-
-KEYWORD3 
-
-LABEL 
-
-LITERAL1 
-
-LITERAL2 
-
-MARKUP 
-
-OPERATOR 
-#@-node:ekr.20031218072017.1052:The RULES Tag
-#@-node:ekr.20031218072017.1049:jEdit docs
-#@-node:ekr.20031218072017.1032:(Syntax coloring a la jEdit) (do not delete)
-#@+node:ekr.20031218072017.1658:(Using xml parser)
-import leoGlobals
-import os,leoNodes
-from xml.sax import saxutils, make_parser
-from xml.sax.xmlreader import InputSource
-
-path = os.path.join(app().loadDir,"../","test","test2.leo")
-path = os.path.join(app().loadDir,"LeoPy.leo")
-path = os.path.normpath(path)
-
-verbose = False
-tnodes = vnodes = 0
-
-def clean(s): return toEncodedString(s,"ascii")
-
-class trace_parse(saxutils.XMLGenerator):
-@others
-	
-try:
-	f = None
-	try:
-		print path
-		if 1:
-			source = f = open(path)
-		else: # not needed, and it works.
-			source = InputSource(path)
-			source.setEncoding(app().tkEncoding) # Not needed.
-		parser = make_parser()
-		h = trace_parse()
-		parser.setContentHandler(h)
-		parser.parse(source)
-		print "vnodes,tnodes:",`vnodes`,`tnodes`
-	except: g.es_exception()
-finally:
-	if f: f.close()
-#@nonl
-#@+node:ekr.20031218072017.1659:characters
-def characters(self,content):
-
-	content = content.replace('\r','')
-
-	if verbose and content.strip():
-		print clean(content)
-#@-node:ekr.20031218072017.1659:characters
-#@+node:ekr.20031218072017.1660:endDocument
-def endDocument(self):
-	trace()
-
-
-#@-node:ekr.20031218072017.1660:endDocument
-#@+node:ekr.20031218072017.1661:endElement
-def endElement(self,name):
-	if verbose: print '</' + clean(name).strip() + '>'
-#@-node:ekr.20031218072017.1661:endElement
-#@+node:ekr.20031218072017.1662:other methods
-def ignorableWhitespace(self):
-	trace()
-
-def processingInstruction (self,target,data):
-	trace()
-
-def skippedEntity(self,name):
-	trace(name)
-
-def startElementNS(self,name,qname,attrs):
-	trace(name)
-
-def endElementNS(self,name,qname):
-	trace(name)
-#@-node:ekr.20031218072017.1662:other methods
-#@+node:ekr.20031218072017.1663:startDocument
-def startDocument(self):
-
-	if verbose:
-		print ; print ; print '*' * 30 + " dump " + '*' * 30 ; print
-	trace()
-#@-node:ekr.20031218072017.1663:startDocument
-#@+node:ekr.20031218072017.1664:startElement
-def startElement(self,name,atts):
-	global vnodes,tnodes
-	if verbose: print '<' + clean(name).strip() + '>',
-	if name == "v":
-		vnodes += 1
-		v = leoNodes.vnode(top(),leoNodes.tnode())
-	elif name == "t":
-		tnodes += 1
-		t = leoNodes.tnode()
-#@nonl
-#@-node:ekr.20031218072017.1664:startElement
-#@-node:ekr.20031218072017.1658:(Using xml parser)
-#@-node:ekr.20031218072017.984:Unfinished projects
 #@+node:ekr.20040706080316:Projects: 4.2 b3
 #@+node:ekr.20040705194708:(Cleaned up recognition of @file nodes)
 #@+node:ekr.20031218072017.3152:g.scanAtFileOptions (used in 3.x read code)
@@ -4263,99 +2806,6 @@ def OnActivateBody (self,event=None):
 http://sourceforge.net/forum/message.php?msg_id=2649750
 #@nonl
 #@+node:ekr.20040709151825:Changed find_closest to find_overlapping
-#@+node:ekr.20031218072017.2343:<< continue dragging >>
-# g.trace(p)
-assert(p == self.drag_p)
-
-canvas = self.canvas
-frame = self.c.frame
-
-if event:
-    x,y = event.x,event.y
-else:
-    x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
-    if x == -1 or y == -1: return # Stop the scrolling if we go outside the entire window.
-
-if 0: # no longer used.
-    canvas_x = canvas.canvasx(x)
-    canvas_y = canvas.canvasy(y)
-    id = self.canvas.find_closest(canvas_x,canvas_y)
-    # id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
-    
-
-# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
-if self.drag_id: # This gets cleared by OnEndDrag()
-    << scroll the canvas as needed >>
-#@nonl
-#@+node:ekr.20031218072017.2344:<< scroll the canvas as needed >>
-# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
-h = canvas.winfo_height()
-if y < 0 or y > h:
-    lo, hi = frame.treeBar.get()
-    n = self.savedNumberOfVisibleNodes
-    line_frac = 1.0 / float(n)
-    frac = g.choose(y < 0, lo - line_frac, lo + line_frac)
-    frac = min(frac,1.0)
-    frac = max(frac,0.0)
-    # g.es("lo,hi,frac:",lo,hi,frac)
-    canvas.yview("moveto", frac)
-    
-    # Queue up another event to keep scrolling while the cursor is outside the canvas.
-    lo, hi = frame.treeBar.get()
-    if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
-        canvas.after_idle(self.OnContinueDrag,p,None) # Don't propagate the event.
-#@nonl
-#@-node:ekr.20031218072017.2344:<< scroll the canvas as needed >>
-#@-node:ekr.20031218072017.2343:<< continue dragging >>
-#@+node:ekr.20031218072017.1778:<< set vdrag, childFlag >>
-x,y = event.x,event.y
-canvas_x = canvas.canvasx(x)
-canvas_y = canvas.canvasy(y)
-
-id = self.canvas.find_closest(canvas_x,canvas_y)
-# id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
-
-vdrag = self.findVnodeWithIconId(id)
-childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
-#@nonl
-#@-node:ekr.20031218072017.1778:<< set vdrag, childFlag >>
-#@+node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
-def OnIconClick (self,p,event):
-    
-    # g.trace(p)
-    
-    p = p.copy() # Make sure callbacks use the _present_ position.
-
-    tree = self ; canvas = tree.canvas
-    if event:
-        canvas_x = canvas.canvasx(event.x)
-        canvas_y = canvas.canvasy(event.y)
-        id = canvas.find_closest(canvas_x,canvas_y)
-        # id = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
-        if id != None:
-            try: id = id[0]
-            except: pass
-            self.drag_p = p
-            self.drag_id = id
-            
-            # Create the bindings.
-            id4 = canvas.tag_bind(id,"<B1-Motion>", p.OnDrag)
-            id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", p.OnEndDrag)
-            
-            # Remember the bindings so deleteBindings can delete them.
-            self.tagBindings.append((id,id4,"<B1-Motion>"),)
-            self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
-    tree.select(p)
-    g.app.findFrame.handleUserClick(p) # 4/3/04
-    return "break" # disable expanded box handling.
-    
-def OnIconRightClick (self,p,event):
-
-    self.select(p)
-    g.app.findFrame.handleUserClick(p) # 4/3/04
-    return "break" # disable expanded box handling.
-#@nonl
-#@-node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
 #@-node:ekr.20040709151825:Changed find_closest to find_overlapping
 #@+node:ekr.20031218072017.3944:f.createCanvas
 def createCanvas (self,parentFrame):
@@ -4440,484 +2890,8 @@ else: # Use plain click.
 #@nonl
 #@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
 #@-node:ekr.20031218072017.3944:f.createCanvas
-#@+node:ekr.20031218072017.1000:drawBox (tag_bind)
-def drawBox (self,p,x,y):
-    
-    tree = self ; canvas = self.canvas
-    y += 7 # draw the box at x, y+7
-    
-    if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
-
-        iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
-        image = self.getIconImage(iconname)
-        box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
-    
-        id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
-        id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
-
-        self.tagBindings.append((box_id,id1,"<1>"),)
-        self.tagBindings.append((box_id,id2,"<Double-1>"),)
-        
-        return box_id
-#@nonl
-#@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@-node:ekr.20040709080432:(Scroll the tree pane on Shift left/right click)
 #@+node:ekr.20040709144318.1:(Underline tree nodes when entered)
-#@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
-def drawIcon(self,p,x=None,y=None):
-    
-    """Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
-
-    tree = self ; v = p.v # Make sure the bindings refer to the _present_ position.
-
-    << compute x,y and iconVal >>
-
-    if not g.doHook("draw-outline-icon",tree=tree,p=p,v=v,x=x,y=y):
-
-        # Get the image.
-        imagename = "box%02d.GIF" % val
-        image = self.getIconImage(imagename)
-        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image,tag="iconBox")
-        self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
-    
-        id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
-        id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
-        id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
-        
-        # Remember the bindings so deleteBindings can delete them.
-        self.tagBindings.append((id,id1,"<1>"),)
-        self.tagBindings.append((id,id2,"<Double-1>"),)
-        self.tagBindings.append((id,id3,"<3>"),)
-    
-    return 0,icon_width # dummy icon height,width
-#@nonl
-#@+node:EKR.20040602150338:<< compute x,y and iconVal >>
-
-if x is None and y is None:
-    try:
-        x,y = v.iconx, v.icony
-    except:
-        # Inject the ivars.
-        x,y = v.iconx, v.icony = 0,0
-else:
-    # Inject the ivars.
-    v.iconx, v.icony = x,y
-
-y += 2 # draw icon at y + 2
-
-# Always recompute v.iconVal.
-# This is an important drawing optimization.
-val = v.iconVal = v.computeIcon()
-assert(0 <= val <= 15)
-#@nonl
-#@-node:EKR.20040602150338:<< compute x,y and iconVal >>
-#@-node:ekr.20031218072017.1002:drawIcon (tag_bind)
-#@+node:ekr.20031218072017.4162:tree.set...LabelState
-def setNormalLabelState (self,p): # selected, editing
-
-    # g.trace(p)
-    if p and p.edit_text():
-        << set editing headline colors >>
-        p.edit_text().tag_remove("sel","1.0","end")
-        p.edit_text().tag_add("sel","1.0","end")
-        g.app.gui.set_focus(self.c,p.edit_text())
-
-def setDisabledLabelState (self,p): # selected, disabled
-
-    # g.trace(p,g.callerName(2),g.callerName(3))
-    if p and p.edit_text():
-        << set selected, disabled headline colors >>
-
-def setSelectedLabelState (self,p): # selected, not editing
-
-    # g.trace(p)
-    self.setDisabledLabelState(p)
-
-def setUnselectedLabelState (self,p): # not selected.
-
-    # g.trace(p)
-    if p and p.edit_text():
-        << set unselected headline colors >>
-#@+node:ekr.20031218072017.4163:<< set editing headline colors >>
-config = g.app.config
-fg   = config.getWindowPref("headline_text_editing_foreground_color")
-bg   = config.getWindowPref("headline_text_editing_background_color")
-selfg = config.getWindowPref("headline_text_editing_selection_foreground_color")
-selbg = config.getWindowPref("headline_text_editing_selection_background_color")
-
-if not fg or not bg:
-    fg,bg = "black","white"
-
-try:
-    if selfg and selbg:
-        p.edit_text().configure(
-            selectforeground=selfg,selectbackground=selbg,
-            state="normal",highlightthickness=1,fg=fg,bg=bg)
-    else:
-        p.edit_text().configure(
-            state="normal",highlightthickness=1,fg=fg,bg=bg)
-except:
-    g.es_exception()
-#@nonl
-#@-node:ekr.20031218072017.4163:<< set editing headline colors >>
-#@+node:ekr.20031218072017.4164:<< set selected, disabled headline colors >>
-config = g.app.config
-fg = config.getWindowPref("headline_text_selected_foreground_color")
-bg = config.getWindowPref("headline_text_selected_background_color")
-
-if not fg or not bg:
-    fg,bg = "black","gray80"
-
-try:
-    p.edit_text().configure(
-        state="disabled",highlightthickness=0,fg=fg,bg=bg)
-except:
-    g.es_exception()
-#@nonl
-#@-node:ekr.20031218072017.4164:<< set selected, disabled headline colors >>
-#@+node:ekr.20031218072017.4165:<< set unselected headline colors >>
-config = g.app.config
-fg = config.getWindowPref("headline_text_unselected_foreground_color")
-bg = config.getWindowPref("headline_text_unselected_background_color")
-
-if not fg or not bg:
-    fg,bg = "black","white"
-
-try:
-    p.edit_text().configure(
-        state="disabled",highlightthickness=0,fg=fg,bg=bg)
-except:
-    g.es_exception()
-#@nonl
-#@-node:ekr.20031218072017.4165:<< set unselected headline colors >>
-#@-node:ekr.20031218072017.4162:tree.set...LabelState
-#@+node:ekr.20031218072017.2029:drawTopTree (tag_bind)
-def drawTopTree (self):
-    
-    """Draws the top-level tree, taking into account the hoist state."""
-    
-    c = self.c ; canvas = self.canvas
-    
-    if 0:
-        try: self.redrawCount += 1
-        except: self.radrawCount = 1
-        g.trace(self.redrawCount)
-    # import traceback ; traceback.print_stack()
-    
-    self.lastClickFrameId = None # id of last entered clickBox.
-    self.lastColoredText = None # last colored text widget.
-    
-    if c.hoistStack:
-        p,junk = c.hoistStack[-1]
-        self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
-    else:
-        self.drawTree(c.rootPosition(),root_left,root_top,0,0)
-        
-    canvas.lower("lines")
-    canvas.lower("colorBox")
-    canvas.lift("clickBox")
-    canvas.lift("iconBox")
-    
-    if 0:
-        << define callbacks >>
-        # Use vnode or postion callbacks.
-        canvas.tag_bind("textBox","<1>",onHeadlineClickCallback)
-        canvas.tag_bind("textBox","<3>",onHeadlineRightClickCallback)
-        canvas.tag_bind("textBox","<Key>", onHeadlineKeyCallback)
-        canvas.tag_bind("textBox","<Control-t>",self.OnControlT)
-            # Stamp out erroneous control-t binding.
-#@nonl
-#@+node:ekr.20040710060809:<< define callbacks >>
-def onHeadlineClickCallback(tree=self):
-    
-    g.trace()
-    c = tree.c
-    p = c.currentPosition()
-    p.onHeadlineClick()
-    
-def onHeadlineRightClickCallback(tree=self):
-    
-    g.trace()
-    c = tree.c
-    p = c.currentPosition()
-    p.OnHeadlineRightClick()
-    
-def onHeadlineKeyCallback(tree=self):
-    
-    g.trace()
-    c = tree.c
-    p = c.currentPosition()
-    p.OnHeadlineKey()
-    
-    
-#@nonl
-#@-node:ekr.20040710060809:<< define callbacks >>
-#@-node:ekr.20031218072017.2029:drawTopTree (tag_bind)
-#@+node:ekr.20031218072017.1008:drawTree
-def drawTree(self,p,x,y,h,level,hoistFlag=False):
-
-    tree = self ; v = p.v
-    yfirst = ylast = y
-    if level==0: yfirst += 10
-    w = 0
-    
-    # We must make copies for drawText and drawBox and drawIcon,
-    # So making copies here actually reduces the total number of copies.
-    ### This will change for incremental redraw.
-    p = p.copy()
-    
-    data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
-    if data is not None: return data
-    
-    while p: # Do not use iterator.
-        h,w = self.drawNode(p,x,y)
-        y += h ; ylast = y
-        if p.isExpanded() and p.hasFirstChild():
-            # Must make an additional copy here by calling firstChild.
-            y,w2 = self.drawTree(p.firstChild(),x+child_indent+w,y,h,level+1)
-            x += w2 ; w += w2
-        if hoistFlag: break
-        else:         p = p.next()
-    << draw vertical line >>
-    return y,w
-#@nonl
-#@+node:ekr.20031218072017.1009:<< draw vertical line >>
-id = self.canvas.create_line(
-    x, yfirst-hline_y,
-    x, ylast+hline_y-h,
-    fill="gray50", # stipple="gray50"
-    tag="lines")
-
-# self.canvas.tag_lower(id)
-#@nonl
-#@-node:ekr.20031218072017.1009:<< draw vertical line >>
-#@-node:ekr.20031218072017.1008:drawTree
-#@+node:ekr.20031218072017.4147:tree.getIconImage
-def getIconImage (self, name):
-
-    # Return the image from the cache if possible.
-    if self.iconimages.has_key(name):
-        return self.iconimages[name]
-        
-    try:
-        fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
-        fullname = g.os_path_normpath(fullname)
-        image = Tk.PhotoImage(master=self.canvas,file=fullname)
-        self.iconimages[name] = image
-        return image
-    except:
-        g.es("Exception loading: " + fullname)
-        g.es_exception()
-        return None
-#@nonl
-#@-node:ekr.20031218072017.4147:tree.getIconImage
-#@+node:ekr.20031218072017.1005:drawText (bind)
-def drawText(self,p,x,y,box_id=None):
-    
-    """draw text for v at nominal coordinates x,y."""
-
-    tree = self ; c = self.c ; v = p.v
-    h = self.line_height
-    x += text_indent
-    
-    data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
-    if data is not None: return data
-
-    self.lastText = t = Tk.Text(self.canvas,
-        font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
-
-    # New in 4.2: entries are pairs (p,t) indexed by v.
-    # Remember which text widget belongs to v.
-    d = self.edit_text_dict
-    val = d.get(v,[])
-    val.append((p,t),)
-    d[v] = val
-    # g.trace("entry",d[p.v])
-
-    # Remember the widget so deleteBindings can delete it.
-    self.widgets.append(t) # Fixes a _huge_ memory leak.
-
-    t.insert("end", v.headString())
-    << configure the text depending on state >>
-
-    if 1: # use bind here, else use bind_tag in drawTopTree.
-        # Use vnode or postion callbacks.
-        id1 = t.bind("<1>",p.OnHeadlineClick)
-        id2 = t.bind("<3>",p.OnHeadlineRightClick)
-        id3 = t.bind("<Key>", p.OnHeadlineKey)
-        id4 = t.bind("<Control-t>",self.OnControlT)
-            # 10/16/02: Stamp out the erroneous control-t binding.
-        # Remember the bindings so deleteBindings can delete them.
-        self.bindings.append((t,id1,"<1>"),)
-        self.bindings.append((t,id2,"<3>"),)
-        self.bindings.append((t,id3,"<Key>"),)
-        self.bindings.append((t,id4,"<Control-t>"),)
-    
-    if 0: # I like underlining only when the cursor is outside the text widget.
-        << highlight text widget on enter events >>
-        
-    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
-    self.canvas.tag_lower(id)
-    
-    # This doesn't work: must call update_idletasks first, and that's hard here.
-    # g.trace(t,t.winfo_height(),t.winfo_width())
-    
-    return self.line_height
-#@nonl
-#@+node:ekr.20031218072017.1006:<< configure the text depending on state >>
-if p and p == c.currentPosition():
-    if p == self.editPosition():
-        self.setNormalLabelState(p)
-    else:
-        self.setDisabledLabelState(p) # selected, disabled
-else:
-    self.setUnselectedLabelState(p) # unselected
-#@nonl
-#@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
-#@+node:ekr.20040709194954:<< highlight text widget on enter events >>
-if 0: # Define a rect to colorize.
-
-    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
-    self.canvas.itemconfig(color_rect,fill="",outline="")
-
-    def enterRect(event,id=color_rect):
-        if self.lastClickFrameId:
-            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
-        self.lastClickFrameId = id
-        color = "LightSteelBlue1"
-        self.canvas.itemconfig(id,fill=color,outline=color)
-    
-    bind_enter = t.bind( '<Enter>', enterRect, '+' )
-    self.bindings.append((t,bind_enter,"<Enter>"),)
-    
-if 1: # Colorize only the headline.
-
-    def enterRect(event,p=p,t=t):
-        t2 = self.lastColoredText
-        if t2:
-            if 1: # deunderline
-                t2.tag_delete('underline')
-            else: # color
-                t2.configure(background="white")
-        if p == self.editPosition():
-            self.lastColoredText = None
-        else:
-            self.lastColoredText = t
-            if 1: # underline
-                t.tag_add('underline','1.0', 'end')
-                t.tag_configure('underline',underline = True)
-            else: #color
-                t.configure(background="LightSteelBlue1")
-    
-    bind_enter = t.bind( '<Enter>', enterRect, '+' )
-    self.bindings.append((t,bind_enter,"<Enter>"),)
-#@nonl
-#@-node:ekr.20040709194954:<< highlight text widget on enter events >>
-#@-node:ekr.20031218072017.1005:drawText (bind)
-#@+node:ekr.20031218072017.1000:drawBox (tag_bind)
-def drawBox (self,p,x,y):
-    
-    tree = self ; canvas = self.canvas
-    y += 7 # draw the box at x, y+7
-    
-    if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
-
-        iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
-        image = self.getIconImage(iconname)
-        box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
-    
-        id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
-        id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
-
-        self.tagBindings.append((box_id,id1,"<1>"),)
-        self.tagBindings.append((box_id,id2,"<Double-1>"),)
-        
-        return box_id
-#@nonl
-#@-node:ekr.20031218072017.1000:drawBox (tag_bind)
-#@+node:ekr.20040317171729:force_draw_node (new)
-def force_draw_node(self,p,x,y):
-
-    self.allocatedNodes += 1
-    h,w = self.drawUserIcons(p,"beforeBox",x,y)
-    xw = w # The extra indentation before the icon box.
-    if p.hasChildren():
-        box_id = self.drawBox(p,x+w,y)
-    else:
-        box_id = None
-
-    w += box_width # even if box isn't drawn.
-
-    h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
-    h = max(h,h2) ; w += w2 ; xw += w2
-
-    h2,w2 = self.drawIcon(p,x+w,y)
-    h = max(h,h2) ; w += w2
-
-    h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
-    h = max(h,h2) ; w += w2
-
-    expand_x = x+w # save this for later.
-    h2 = self.drawText(p,x+w,y,box_id)
-    h = max(h,h2)
-    w += self.widthInPixels(p.headString())
-
-    h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
-    h = max(h,h2)
-    
-    self.drawClickFrame(p,y)
-
-    return h,xw
-#@nonl
-#@-node:ekr.20040317171729:force_draw_node (new)
-#@+node:ekr.20040710050236:tree.drawClickFrame
-def drawClickFrame (self,p,y):
-    
-    h = self.line_height ;  defaultColor = ""
-    
-    # Define a slighly larger rect to catch clicks.
-
-    click_rect = self.canvas.create_rectangle(0,y,1000,y+h-3,tag="clickBox")
-    self.canvas.itemconfig(click_rect,fill=defaultColor,outline=defaultColor)
-    
-    id_click = self.canvas.tag_bind(click_rect, "<1>", p.OnBoxClick)
-    self.tagBindings.append((click_rect,id_click,"<1>"),)
-    
-    if 0: # A major change to the user interface.
-        
-        # Define a slighly smaller rect to colorize.
-        color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
-        self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
-        
-        # Color the click box or the headline
-        def enterRect(event,id=color_rect,p=p,t=self.lastText):
-            if 1: # Color or underline the headline
-                t2 = self.lastColoredText
-                if t2: # decolor the old headline.
-                    if 1: # deunderline
-                        t2.tag_delete('underline')
-                    else: # decolor
-                        t2.configure(background="white")
-                if t and p != self.editPosition():
-                    if 1: # underline
-                        t.tag_add('underline','1.0','end')
-                        t.tag_configure('underline',underline=True)
-                    else: # color
-                        t.configure(background="LightSteelBlue1")
-                    self.lastColoredText = t
-                else: self.lastColoredText = None
-            else: # Color the click box.
-                if self.lastClickFrameId:
-                    self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
-                self.lastClickFrameId = id
-                color = "LightSteelBlue1"
-                self.canvas.itemconfig(id,fill=color,outline=color)
-    
-        bind_id = self.canvas.tag_bind(click_rect, "<Enter>", enterRect) # , '+')
-        self.tagBindings.append((click_rect,bind_id,"<Enter>"),)
-    
-#@nonl
-#@-node:ekr.20040710050236:tree.drawClickFrame
 #@-node:ekr.20040709144318.1:(Underline tree nodes when entered)
 #@+node:ekr.20040709064521:(Allowed multiple files in import dialogs)
 #@+node:ekr.20040709101338:Report
@@ -11860,33 +9834,6 @@ p.edit_text now just returns tree.edit_text.
 I did this to avoid messing with edit_text in the outlines plugin.
 #@nonl
 #@-node:ekr.20040725043937.1:Notes
-#@+node:ekr.20040306220230.1:p.edit_text
-def edit_text (self):
-    
-    # New in 4.3 beta 3: let the tree classes do all the work.
-    
-    p = self ; c = p.c
-    
-    return c.frame.tree.edit_text(p)
-#@nonl
-#@-node:ekr.20040306220230.1:p.edit_text
-#@+node:ekr.20040725044521.1:tree.edit_text
-def edit_text (self,p):
-    
-    c = self.c
-    
-    if c:
-        # New in 4.2: the dictionary is a list of pairs(p,v)
-        pairs = self.getEditTextDict(p.v)
-        for p2,t2 in pairs:
-            if p.equal(p2):
-                # g.trace("found",t2)
-                return t2
-        return None
-    else:
-        return None
-#@nonl
-#@-node:ekr.20040725044521.1:tree.edit_text
 #@-node:ekr.20040725043937:(Simplified edit_text)
 #@+node:ekr.20040723050246:(Fixed big performance bug in the read code)
 #@+node:ekr.20040730090103:Notes: 
@@ -13157,7 +11104,1541 @@ def getLastTracebackLineNumber():
 #@-node:ekr.20040731204831:getLastTracebackLineNumber
 #@-node:ekr.20031218072017.3112:es_exception
 #@-node:ekr.20040630214448.1:(Improved how es_exception gets line number of errors)
+#@+node:ekr.20040802063546:(Fixed MAJOR bug: changing headline now marks subnodes dirty)
+#@+node:ekr.20040802064903.2:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=2692347
+
++headline
+++@thin a
+++@thin b
+
+I changed the headline, then saved the leo. apparently
+the @thins in the subnode weren't marked dirty.
+on next open I got a bunch of
+getLeoFile: can not find tnode: gnx = leo4u.20040614190317
+...
+click on the @thin was empty, then it became a subnode of itself.
+all without the leo marked as modifyed!
+
+is the bug is that headline changes don't mark subnodes dirty?
+I know edits in parent bodys now do, 
+even if nothing should change in the @thin or @file.
+now I see why.
+
+in the @thin
+#@verbatim
+#@+node:leo4u.20040730175028.1:@thin a.py
+
+in the leo
+<v t="leo4u.20040511113712"
+marks="leo4u.20040728143234.3,leo4u.20040728143234.4,leo4u.20040728143234.5,"
+expanded="leo4u.20040614190317,leo4u.20040728160724,leo4u.20040728143234,leo4u.2
+0040728143234.2,"><vh>@thin a.py</vh></v>
+
+from cvs the other day.
+Leo 4.2 beta 2, build  1.141 , July 5, 2004
+Python 2.3.3, Tk 8.4.3, win32
+#@nonl
+#@-node:ekr.20040802064903.2:Report
+#@+node:ekr.20040303163330:p.setDirty
+# Ensures that all ancestor and descentent @file nodes are marked dirty.
+# It is much safer to do it this way.
+
+def setDirty (self,setDescendentsDirty=True):
+
+    p = self ; c = p.c
+    
+    # g.trace(g.app.count) ; g.app.count += 1
+
+    c.beginUpdate()
+    if 1: # update...
+        changed = False
+        if not p.v.t.isDirty():
+            p.v.t.setDirty()
+            changed = True
+        # N.B. This must be called even if p.v is already dirty.
+        # Typing can change the @ignore state!
+        if p.setAllAncestorAtFileNodesDirty(setDescendentsDirty):
+            changed = True
+    c.endUpdate(changed)
+
+    return changed
+#@nonl
+#@-node:ekr.20040303163330:p.setDirty
+#@-node:ekr.20040802063546:(Fixed MAJOR bug: changing headline now marks subnodes dirty)
+#@+node:ekr.20040801054717:(Ignore @all nodes in Go To Line Number command)
+#@+node:ekr.20031218072017.2864:goToLineNumber & allies
+def goToLineNumber (self,root=None,lines=None,n=None):
+
+    c = self ; p = c.currentPosition() ; root1 = root
+    if root is None:
+        << set root to the nearest ancestor @file node >>
+    if lines is None:
+        << read the file into lines >>
+    if n is None:
+        << get n, the line number, from a dialog >>
+    if n==1:
+        p = root ; n2 = 1 ; found = True
+    elif n >= len(lines):
+        p = root ; found = False
+        n2 = p.bodyString().count('\n')
+    elif root.isAtAsisFileNode():
+        << count outline lines, setting p,n2,found >>
+    else:
+        vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
+        found = True
+        if not vnodeName:
+            g.es("error handling: " + root.headString())
+            return
+        << set p to the node given by vnodeName and gnx or childIndex or n >>
+    << select p and make it visible >>
+    << put the cursor on line n2 of the body text >>
+#@nonl
+#@+node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
+fileName = None
+for p in p.self_and_parents_iter():
+    fileName = p.anyAtFileNodeName()
+    if fileName: break
+
+# New in 4.2: Search the entire tree for joined nodes.
+if not fileName:
+    p1 = c.currentPosition()
+    for p in c.all_positions_iter():
+        if p.v.t == p1.v.t and p != p1:
+            # Found a joined position.
+            for p in p.self_and_parents_iter():
+                fileName = p.anyAtFileNodeName()
+                # New in 4.2 b3: ignore @all nodes.
+                if fileName and not p.isAtAllNode(): break
+        if fileName: break
+    
+if fileName:
+    root = p.copy()
+else:
+    g.es("Go to line number: ancestor must be @file node", color="blue")
+    return
+#@nonl
+#@-node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
+#@+node:ekr.20031218072017.2866:<< read the file into lines >>
+# 1/26/03: calculate the full path.
+d = g.scanDirectives(c)
+path = d.get("path")
+
+fileName = g.os_path_join(path,fileName)
+
+try:
+    file=open(fileName)
+    lines = file.readlines()
+    file.close()
+except:
+    g.es("not found: " + fileName)
+    return
+#@nonl
+#@-node:ekr.20031218072017.2866:<< read the file into lines >>
+#@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
+n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
+if n == -1:
+    return
+#@nonl
+#@-node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
+#@+node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
+p = lastv = root
+prev = 0 ; found = False
+
+for p in p.self_and_subtree_iter():
+    lastv = p.copy()
+    s = p.bodyString()
+    lines = s.count('\n')
+    if len(s) > 0 and s[-1] != '\n':
+        lines += 1
+    # print lines,prev,p
+    if prev + lines >= n:
+        found = True ; break
+    prev += lines
+
+p = lastv
+n2 = max(1,n-prev)
+#@nonl
+#@-node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
+#@+node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and gnx or childIndex or n >>
+if gnx:
+    << 4.2: get node from gnx >>
+elif childIndex == -1:
+    << 4.x: scan for the node using tnodeList and n >>
+else:
+    << 3.x: scan for the node with the given childIndex >>
+#@nonl
+#@+node:EKR.20040609110138:<< 4.2: get node from gnx >>
+found = False
+gnx = g.app.nodeIndices.scanGnx(gnx,0)
+
+# g.trace(vnodeName)
+# g.trace(gnx)
+
+for p in root.self_and_subtree_iter():
+    if p.matchHeadline(vnodeName):
+        # g.trace(p.v.t.fileIndex)
+        if p.v.t.fileIndex == gnx:
+            found = True ; break
+
+if not found:
+    g.es("not found: " + vnodeName, color="red")
+    return
+#@nonl
+#@-node:EKR.20040609110138:<< 4.2: get node from gnx >>
+#@+node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
+# This is about the best that can be done without replicating the entire atFile write logic.
+
+ok = True
+
+if not hasattr(root.v.t,"tnodeList"):
+    s = "no child index for " + root.headString()
+    print s ; g.es(s, color="red")
+    ok = False
+
+if ok:
+    tnodeList = root.v.t.tnodeList
+    << set tnodeIndex to the number of +node sentinels before line n >>
+    tnodeIndex = max(0,tnodeIndex)
+    << set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = False >>
+            
+if not ok:
+    # Fall back to the old logic.
+    << set p to the first node whose headline matches vnodeName >>
+#@nonl
+#@+node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
+tnodeIndex = -1 # Don't count the @file node.
+scanned = 0 # count of lines scanned.
+
+for s in lines:
+    if scanned >= n:
+        break
+    i = g.skip_ws(s,0)
+    if g.match(s,i,delim):
+        i += len(delim)
+        if g.match(s,i,"+node"):
+            # g.trace(tnodeIndex,s.rstrip())
+            tnodeIndex += 1
+    scanned += 1
+#@nonl
+#@-node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
+#@+node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+@ We use the tnodeList to find a _tnode_ corresponding to the proper node, so the user will for sure be editing the proper text, even if several nodes happen to have the same headline.  This is really all that we need.
+
+However, this code has no good way of distinguishing between different cloned vnodes in the file: they all have the same tnode.  So this code just picks p = t.vnodeList[0] and leaves it at that.
+
+The only way to do better is to scan the outline, replicating the write logic to determine which vnode created the given line.  That's way too difficult, and it would create an unwanted dependency in this code.
+@c
+
+# g.trace("tnodeIndex",tnodeIndex)
+if tnodeIndex < len(tnodeList):
+    t = tnodeList[tnodeIndex]
+    # Find the first vnode whose tnode is t.
+    found = False
+    for p in root.self_and_subtree_iter():
+        if p.v.t == t:
+            found = True ; break
+    if not found:
+        s = "tnode not found for " + vnodeName
+        print s ; g.es(s, color="red") ; ok = False
+    elif p.headString().strip() != vnodeName:
+        if 0: # Apparently this error doesn't prevent a later scan for working properly.
+            s = "Mismatched vnodeName\nExpecting: %s\n got: %s" % (p.headString(),vnodeName)
+            print s ; g.es(s, color="red")
+        ok = False
+else:
+    if root1 is None: # Kludge: disable this message when called by goToScriptLineNumber.
+        s = "Invalid computed tnodeIndex: %d" % tnodeIndex
+        print s ; g.es(s, color = "red")
+    ok = False
+#@nonl
+#@-node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+#@+node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
+found = False
+for p in root.self_and_subtree_iter():
+    if p.matchHeadline(vnodeName):
+        found = True ; break
+
+if not found:
+    s = "not found: " + vnodeName
+    print s ; g.es(s, color="red")
+    return
+#@nonl
+#@-node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
+#@-node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
+#@+node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
+found = False
+for p in root.self_and_subtree_iter():
+    if p.matchHeadline(vnodeName):
+        if childIndex <= 0 or p.childIndex() + 1 == childIndex:
+            found = True ; break
+
+if not found:
+    g.es("not found: " + vnodeName, color="red")
+    return
+#@nonl
+#@-node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
+#@-node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and gnx or childIndex or n >>
+#@+node:ekr.20031218072017.2875:<< select p and make it visible >>
+c.beginUpdate()
+c.frame.tree.expandAllAncestors(p)
+c.selectVnode(p)
+c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2875:<< select p and make it visible >>
+#@+node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
+if found:
+    c.frame.body.setInsertPointToStartOfLine(n2-1)
+else:
+    c.frame.body.setInsertionPointToEnd()
+    g.es("%d lines" % len(lines), color="blue")
+
+c.frame.body.makeInsertPointVisible()
+#@nonl
+#@-node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
+#@+node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
+@ We count "real" lines in the derived files, ignoring all sentinels that do not arise from source lines.  When the indicated line is found, we scan backwards for an @+body line, get the vnode's name from that line and set p to the indicated vnode.  This will fail if vnode names have been changed, and that can't be helped.
+
+Returns (vnodeName,offset)
+
+vnodeName: the name found in the previous @+body sentinel.
+offset: the offset within p of the desired line.
+@c
+
+def convertLineToVnodeNameIndexLine (self,lines,n,root):
+    
+    """Convert a line number n to a vnode name, (child index or gnx) and line number."""
+    
+    c = self ; at = c.atFileCommands
+    childIndex = 0 ; gnx = None ; newDerivedFile = False
+    thinFile = root.isAtThinFileNode()
+    << set delim, leoLine from the @+leo line >>
+    if not delim:
+        g.es("bad @+leo sentinel")
+        return None,None,None,None,None
+    << scan back to @+node, setting offset,nodeSentinelLine >>
+    if nodeSentinelLine == -1:
+        # The line precedes the first @+node sentinel
+        # g.trace("before first line")
+        return root.headString(),0,gnx,1,delim # 10/13/03
+    s = lines[nodeSentinelLine]
+    # g.trace(s)
+    << set vnodeName and (childIndex or gnx) from s >>
+    # g.trace("childIndex,offset",childIndex,offset,vnodeName)
+    return vnodeName,childIndex,gnx,offset,delim
+#@+node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
+# Find the @+leo line.
+tag = "@+leo"
+i = 0 
+while i < len(lines) and lines[i].find(tag)==-1:
+    i += 1
+leoLine = i # Index of the line containing the leo sentinel
+
+if leoLine < len(lines):
+    s = lines[leoLine]
+    valid,newDerivedFile,start,end = at.parseLeoSentinel(s)
+    if valid: delim = start + '@'
+    else:     delim = None
+else:
+    delim = None
+#@-node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
+#@+node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
+offset = 0 # This is essentially the Tk line number.
+nodeSentinelLine = -1
+line = n - 1
+while line >= 0:
+    s = lines[line]
+    # g.trace(s)
+    i = g.skip_ws(s,0)
+    if g.match(s,i,delim):
+        << handle delim while scanning backward >>
+    else:
+        offset += 1 # Assume the line is real.  A dubious assumption.
+    line -= 1
+#@nonl
+#@+node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
+if line == n:
+    g.es("line "+str(n)+" is a sentinel line")
+i += len(delim)
+
+if g.match(s,i,"-node"):
+    # The end of a nested section.
+    line = self.skipToMatchingNodeSentinel(lines,line,delim)
+elif g.match(s,i,"+node"):
+    nodeSentinelLine = line
+    break
+elif g.match(s,i,"<<") or g.match(s,i,"@first"):
+    offset += 1 # Count these as a "real" lines.
+#@nonl
+#@-node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
+#@-node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
+#@+node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
+if newDerivedFile:
+    i = 0
+    if thinFile:
+        # gnx is lies between the first and second ':':
+        i = s.find(':',i)
+        if i > 0:
+            i += 1
+            j = s.find(':',i)
+            if j > 0:
+                gnx = s[i:j]
+            else: i = len(s)
+        else: i = len(s)
+    # vnode name is everything following the first or second':'
+    # childIndex is -1 as a flag for later code.
+    i = s.find(':',i)
+    if i > -1: vnodeName = s[i+1:].strip()
+    else: vnodeName = None
+    childIndex = -1
+else:
+    # vnode name is everything following the third ':'
+    i = 0 ; colons = 0
+    while i < len(s) and colons < 3:
+        if s[i] == ':':
+            colons += 1
+            if colons == 1 and i+1 < len(s) and s[i+1] in string.digits:
+                junk,childIndex = g.skip_long(s,i+1)
+        i += 1
+    vnodeName = s[i:].strip()
+    
+# g.trace("gnx",gnx,"vnodeName:",vnodeName)
+if not vnodeName:
+    vnodeName = None
+    g.es("bad @+node sentinel")
+#@nonl
+#@-node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
+#@-node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
+#@+node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
+def skipToMatchingNodeSentinel (self,lines,n,delim):
+    
+    s = lines[n]
+    i = g.skip_ws(s,0)
+    assert(g.match(s,i,delim))
+    i += len(delim)
+    if g.match(s,i,"+node"):
+        start="+node" ; end="-node" ; delta=1
+    else:
+        assert(g.match(s,i,"-node"))
+        start="-node" ; end="+node" ; delta=-1
+    # Scan to matching @+-node delim.
+    n += delta ; level = 0
+    while 0 <= n < len(lines):
+        s = lines[n] ; i = g.skip_ws(s,0)
+        if g.match(s,i,delim):
+            i += len(delim)
+            if g.match(s,i,start):
+                level += 1
+            elif g.match(s,i,end):
+                if level == 0: break
+                else: level -= 1
+        n += delta
+        
+    # g.trace(n)
+    return n
+#@nonl
+#@-node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
+#@-node:ekr.20031218072017.2864:goToLineNumber & allies
+#@+node:ekr.20040802082208:Test...These exist in leoProjects.txt: we should not go there
+#@+node:ekr.20031218072017.1319:(Key handlers) 
+@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
+#@+node:ekr.20031218072017.1320:body key handlers
+@ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
+
+1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if so.  This is the clean and safe way.
+
+2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
+@c
+
+@others
+#@nonl
+#@+node:ekr.20031218072017.1321:idle_body_key
+def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Update the body pane at idle time."""
+
+    # g.trace(ch,ord(ch))
+    c = self.c
+    if not c: return "break"
+    if not p: return "break"
+    if p != c.currentPosition(): return "break"
+
+    if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+    body = p.bodyString()
+    if not newSel:
+        newSel = c.frame.body.getTextSelection()
+    if oldText != None:
+        s = oldText
+    else:
+        s = c.frame.body.getAllText()
+    << return if nothing has changed >>
+    << set removeTrailing >>
+    if ch in ('\t','\n','\r',chr(8)):
+        d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+        tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+        if ch in ('\n','\r'):
+            << Do auto indent >>
+        elif ch == '\t' and tab_width < 0:
+            << convert tab to blanks >>
+        elif ch in (chr(8)) and tab_width < 0:
+            << handle backspace with negative tab_width >>
+    << set s to widget text, removing trailing newlines if necessary >>
+    if undoType: # 11/6/03: set oldText properly when oldText param exists.
+        if not oldText: oldText = body
+        newText = s
+        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+    p.v.setTnodeText(s)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed:
+        c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return "break"
+#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
+# 6/22/03: Make sure we handle delete key properly.
+if ch not in ('\n','\r',chr(8)):
+
+    if s == body:
+        return "break"
+
+    # Do nothing for control characters.
+    if (ch == None or len(ch) == 0) and body == s[:-1]:
+        return "break"
+#@nonl
+#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
+#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = s ; old = body
+
+if len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
+#@nonl
+#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
+#@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+# Do nothing if we are in @nocolor mode or if we are executing a Change command.
+if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+    # Get the previous line.
+    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s[-1]==':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if g.app.config.getBoolWindowPref("smart_auto_indent"):
+        # Added Nov 18 by David McNab, david@rebirthing.co.nz
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width]
+        tabex = 0
+        for i in range(0, len(s)):
+            if s[i] == '\t':
+                tabex += tab_width - 1
+            if s[i] in '([{':
+                brackets.append(i+tabex + 1)
+            elif s[i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+        # end patch by David McNab
+    ws = g.computeLeadingWhitespace (width,tab_width)
+    if ws and len(ws) > 0:
+        c.frame.bodyCtrl.insert("insert", ws)
+        removeTrailing = False # bug fix: 11/18
+#@nonl
+#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+#@+node:ekr.20031218072017.1325:<< convert tab to blanks >>
+# Do nothing if we are executing a Change command.
+if undoType != "Change":
+    
+    # Get the characters preceeding the tab.
+    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+    
+    if 1: # 6/26/03: Convert tab no matter where it is.
+
+        w = g.computeWidth(prev,tab_width)
+        w2 = (abs(tab_width) - (w % abs(tab_width)))
+        # g.trace("prev w:",w,"prev chars:",prev)
+        c.frame.bodyCtrl.delete("insert -1c")
+        c.frame.bodyCtrl.insert("insert",' ' * w2)
+    
+    else: # Convert only leading tabs.
+    
+        # Get the characters preceeding the tab.
+        prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+
+        # Do nothing if there are non-whitespace in prev:
+        all_ws = True
+        for ch in prev:
+            if ch != ' ' and ch != '\t':
+                all_ws = False
+        if all_ws:
+            w = g.computeWidth(prev,tab_width)
+            w2 = (abs(tab_width) - (w % abs(tab_width)))
+            # g.trace("prev w:",w,"prev chars:",prev)
+            c.frame.bodyCtrl.delete("insert -1c")
+            c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20031218072017.1325:<< convert tab to blanks >>
+#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+# Get the preceeding characters.
+prev   =c.frame.bodyCtrl.get("insert linestart","insert")
+allPrev=c.frame.bodyCtrl.get("1.0","insert")
+n = len(allPrev)
+try:
+    oldAllPrev = body[:n]
+    assert(allPrev==oldAllPrev)
+    deletedChar = body[n:n+1]
+except (IndexError,AssertionError):
+    deletedChar = None
+
+if deletedChar in (u' ',' '):
+    n = len(prev) ; w = abs(tab_width)
+    n2 = n % w # Delete up to n2 - 1 spaces.
+    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
+        count = 0
+        while n2 > 0:
+            n2 -= 1
+            ch = prev[n-count-1]
+            # g.trace(count,repr(ch))
+            if ch in (u' ',' '): count += 1
+            else: break
+        # g.trace(count,(n%w))
+        if count > 0:
+            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+#@nonl
+#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+s = c.frame.body.getAllText()
+if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+    s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # print "no real change"
+    return "break"
+#@nonl
+#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+#@+node:ekr.20031218072017.1327:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20031218072017.1327:<< recolor the body >>
+#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+redraw_flag = False
+
+c.beginUpdate()
+
+# Update dirty bits.
+if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+    redraw_flag = True
+    
+# Update icons.
+val = p.computeIcon()
+
+# 7/8/04: During unit tests the node may not have been drawn,
+# So p.v.iconVal may not exist yet.
+if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+    p.v.iconVal = val
+    redraw_flag = True
+
+c.endUpdate(redraw_flag) # redraw only if necessary
+#@nonl
+#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+#@-node:ekr.20031218072017.1321:idle_body_key
+#@+node:ekr.20031218072017.1329:onBodyChanged (called from core)
+# Called by command handlers that have already changed the text.
+
+def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Handle a change to the body pane."""
+    
+    c = self.c
+    if not p:
+        p = c.currentPosition()
+
+    if not oldSel:
+        oldSel = c.frame.body.getTextSelection()
+
+    self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
+#@nonl
+#@-node:ekr.20031218072017.1329:onBodyChanged (called from core)
+#@+node:ekr.20031218072017.1330:onBodyKey
+def onBodyKey (self,event):
+    
+    """Handle any key press event in the body pane."""
+
+    c = self.c ; ch = event.char 
+    oldSel = c.frame.body.getTextSelection()
+    
+    p = c.currentPosition()
+
+    # g.trace(repr(ch))
+
+    if 0: # won't work when menu keys are bound.
+        self.handleStatusLineKey(event)
+        
+    # g.trace(p)
+        
+    # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
+
+#@+node:ekr.20040105223536:handleStatusLineKey
+def handleStatusLineKey (self,event):
+    
+    c = self.c ; frame = c.frame
+    ch = event.char ; keysym = event.keysym
+    keycode = event.keycode ; state = event.state
+
+    if 1: # ch and len(ch)>0:
+        << trace the key event >>
+
+    try:
+        status = self.keyStatus
+    except:
+        status = [] ; frame.clearStatusLine()
+    
+    for sym,name in (
+        ("Alt_L","Alt"),("Alt_R","Alt"),
+        ("Control_L","Control"),("Control_R","Control"),
+        ("Escape","Esc"),
+        ("Shift_L","Shift"), ("Shift_R","Shift")):
+        if keysym == sym:
+            if name not in status:
+                status.append(name)
+                frame.putStatusLine(name + ' ')
+            break
+    else:
+        status = [] ; frame.clearStatusLine()
+
+    self.keyStatus = status
+#@nonl
+#@+node:ekr.20040105223536.1:<< trace the key event >>
+try:    self.keyCount += 1
+except: self.keyCount  = 1
+
+printable = g.choose(ch == keysym and state < 4,"printable","")
+
+print "%4d %s %d %s %x %s" % (
+    self.keyCount,repr(ch),keycode,keysym,state,printable)
+#@nonl
+#@-node:ekr.20040105223536.1:<< trace the key event >>
+#@-node:ekr.20040105223536:handleStatusLineKey
+#@-node:ekr.20031218072017.1330:onBodyKey
+#@+node:ekr.20031218072017.1331:onBodyWillChange
+# Called by command handlers that change the text just before idle time.
+
+def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
+    
+    """Queue the body changed idle handler."""
+    
+    c = self.c
+
+    if not oldSel:
+        oldSel = c.frame.body.getTextSelection()
+
+    if not p:
+        p = c.currentPosition()
+
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1331:onBodyWillChange
+#@-node:ekr.20031218072017.1320:body key handlers
+#@+node:ekr.20040803072955.91:idle_head_key
+def idle_head_key (self,p,ch=None):
+    
+    """Update headline text at idle time."""
+    
+    c = self.c
+
+    if not p or p != c.currentPosition():
+        return "break"
+        
+    edit_text = self.edit_text(p)
+    index = edit_text.index("insert")
+
+    if g.doHook("headkey1",c=c,p=p,ch=ch):
+        return "break" # The hook claims to have handled the event.
+        
+    << set head to vnode text >>
+    done = ch in ('\r','\n')
+    if done:
+        << set the widget text to head >>
+    << set s to the widget text >>
+    changed = s != head
+    if changed:
+        c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
+        << update p >>
+    if done or changed:
+        << reconfigure p and all nodes joined to p >>
+        << update the screen >>
+
+    g.doHook("headkey2",c=c,p=p,ch=ch)
+    return "break"
+#@nonl
+#@+node:ekr.20040803072955.92:<< set head to vnode text >>
+head = p.headString()
+if head == None:
+    head = u""
+head = g.toUnicode(head,"utf-8")
+#@nonl
+#@-node:ekr.20040803072955.92:<< set head to vnode text >>
+#@+node:ekr.20040803072955.93:<< set the widget text to head >>
+self.setText(edit_text,head,tag="idle_head_key")
+edit_text.mark_set("insert",index)
+#@nonl
+#@-node:ekr.20040803072955.93:<< set the widget text to head >>
+#@+node:ekr.20040803072955.94:<< set s to the widget text >>
+s = edit_text.get("1.0","end")
+
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
+    # Another kludge: remove one or two trailing newlines before warning of truncation.
+    if s and s[-1] == '\n': s = s[:-1]
+    if s and s[-1] == '\n': s = s[:-1]
+    i = s.find('\n')
+    if i > -1:
+        # g.trace(i,len(s),repr(s))
+        g.es("Truncating headline to one line",color="blue")
+        s = s[:i]
+    if len(s) > 250:
+        g.es("Truncating headline to 250 characters",color="blue")
+        s = s[:250]
+
+s = g.toUnicode(s,g.app.tkEncoding)
+
+if not s:
+    s = u""
+    
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+    s = s.replace('\n','')
+    s = s.replace('\r','')
+#@nonl
+#@-node:ekr.20040803072955.94:<< set s to the widget text >>
+#@+node:ekr.20040803072955.95:<< update p >>
+c.beginUpdate()
+if 1: # update...
+    # Update changed bit.
+    if not c.changed:
+        c.setChanged(True)
+    # Update all dirty bits.
+    # Bug fix 8/2/04: must call p.setDirty even if p is dirty!
+    p.setDirty()
+    # Update p.
+    p.initHeadString(s)
+    self.setText(edit_text,s,tag="idle_head_key2")
+    edit_text.mark_set("insert",index)
+c.endUpdate(False) # do not redraw now.
+#@nonl
+#@-node:ekr.20040803072955.95:<< update p >>
+#@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
+# Reconfigure p's headline.
+if done:
+    self.setDisabledLabelState(p)
+
+edit_text.configure(width=self.headWidth(p))
+#@nonl
+#@-node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
+#@+node:ekr.20040803072955.97:<< update the screen >>
+if done:
+    # g.trace("done")
+    c.beginUpdate()
+    self.endEditLabel()
+    c.endUpdate()
+
+elif changed:
+    # g.trace("changed")
+    # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Redrawing the whole screen now messes up the cursor in the headline.
+    self.drawIcon(p) # just redraw the icon.
+#@nonl
+#@-node:ekr.20040803072955.97:<< update the screen >>
+#@-node:ekr.20040803072955.91:idle_head_key
+#@-node:ekr.20031218072017.1319:(Key handlers) 
+#@-node:ekr.20040802082208:Test...These exist in leoProjects.txt: we should not go there
+#@-node:ekr.20040801054717:(Ignore @all nodes in Go To Line Number command)
+#@+node:ekr.20040802100054:Integrated new outline code into core
+@killcolor
+
+- Copied the code from the leoPlugins.leo.
+- Removed all clones in project section to the old code.
+#@nonl
+#@-node:ekr.20040802100054:Integrated new outline code into core
 #@-node:ekr.20040706080316:Projects: 4.2 b3
+#@+node:ekr.20031218072017.984:Unfinished projects
+#@+node:ekr.20031218072017.985:(Button class)
+@ignore
+@color
+#@nonl
+#@+node:ekr.20031218072017.986:Notes to Edward
+@nocolor
+
+I have a base window class that I use for all my TK stuff which handles, especially, focus issues between windows.  I have not looked at ButtonQ to see to what extent it depends upon WindowQ, the base class.
+
+Anyway, this might be usefull as-is.  If not, let me know.
+#@nonl
+#@-node:ekr.20031218072017.986:Notes to Edward
+#@+node:ekr.20031218072017.987:@file ButtonQ.py
+@ Setup a button so it is handled with a keyboard shortcut like MSWindows tools.  See if there is an ampersand in the string.  If so, we want to underline that character and make that character a hot key for this button.
+@c
+
+from Tkinter import *
+from string import *
+
+def ButtonQ (master, **kw):
+	b = ButtonQ_ (master, kw)
+	return b.button
+
+class ButtonQ_ (Button):
+@others
+
+## test
+"""
+from tkMessageBox import *
+def buttonqcommand ():
+	showinfo ("Title", "Button was pushed")
+
+root = Tk ()
+frame = Frame (root)
+b = ButtonQ (frame, text = "&Push Me", command = buttonqcommand)
+b.grid ()
+frame.grid (pady = 15)
+"""
+#@+node:ekr.20031218072017.988:__init__
+def __init__(self, master, kw = {}):
+
+	<< get inputs to this method >>
+	<< see if there is an ampersand in the string. >>
+	<< make the button with the correct text >>
+	<< bind the button >>
+
+	# make the button available to the caller
+	self.button = b
+#@nonl
+#@+node:ekr.20031218072017.989:<< get inputs to this method >>
+_master = master
+_text = kw['text']
+_command = kw['command']
+#@-node:ekr.20031218072017.989:<< get inputs to this method >>
+#@+node:ekr.20031218072017.990:<< see if there is an ampersand in the string. >>
+length = len (_text)
+index = 0
+text3 = _text
+
+# Show there is no hot key yet
+IsHot = 0
+HotKey = None
+
+while index < length:
+	if _text [index] == '&':
+		<< handle an ampersand >>
+	index = += 1
+#@nonl
+#@+node:ekr.20031218072017.991:<< handle an ampersand >>
+# if the word ends in an ampersand, we ignore it, and there is no hot key
+if index == length - 1:
+	break
+
+# we have found a good hot key.  Remove the ampersand.
+text1 = _text [0 : index]
+text2 = _text [(index + 1) : 10000]
+text3 = text1 + text2
+IsHot = 1
+HotKey = _text [index + 1]
+break
+#@nonl
+#@-node:ekr.20031218072017.991:<< handle an ampersand >>
+#@-node:ekr.20031218072017.990:<< see if there is an ampersand in the string. >>
+#@+node:ekr.20031218072017.992:<< make the button with the correct text >>
+if IsHot:
+	kw['text'] = text3
+	kw['underline'] = index
+
+b = Button (master, kw)
+#@-node:ekr.20031218072017.992:<< make the button with the correct text >>
+#@+node:ekr.20031218072017.993:<< bind the button >>
+@ If there is a hot key, bind it to the window that owns the button.
+Use the alt of both the lower case and upper case of the letter.
+@c
+
+if IsHot:
+	HotKey = lower(HotKey)
+	self.HotKey = HotKey
+	s = angleBrackets("Alt-" + HotKey + s)
+	_master.master.bind (s, self.callback)
+
+	HotKey = upper(HotKey)
+	s = angleBrackets("Alt-" + HotKey + s)
+	_master.master.bind (s, self.callback)
+
+
+#@-node:ekr.20031218072017.993:<< bind the button >>
+#@-node:ekr.20031218072017.988:__init__
+#@+node:ekr.20031218072017.994:callback
+# The hot key has been hit.  Call the button's command.
+
+def callback (self, event):
+
+	self.button.invoke ()
+#@-node:ekr.20031218072017.994:callback
+#@-node:ekr.20031218072017.987:@file ButtonQ.py
+#@-node:ekr.20031218072017.985:(Button class)
+#@+node:ekr.20031218072017.995:(Incremental update of screen)
+@ignore
+@nocolor
+
+To enable incremental allocation of Tk widgets during redraws, set self.allocateOnlyVisibleNodes = True in tree.__init__.
+
+To do:
+	
+- We might switch to a line-oriented scheme.
+	- This might simplify the code and make the code more useful to users.
+	- Conceivably this scheme might eliminate the need for the auto-scroll in the redraw code,
+	and that might make a single-pass redraw scheme possible.
+
+- The last line isn't always completely visible: this is clearly a bug.
+
+@color
+#@nonl
+#@+node:ekr.20031218072017.996:From Frame class
+#@+node:ekr.20031218072017.997:<< create the tree canvas >>
+scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
+scrolls = choose(scrolls,1,0)
+
+self.canvas = canvas = Tk.Canvas(split2Pane1,name="canvas",
+	bd=0,bg="white",relief="flat")
+	
+self.setTreeColorsFromConfig()
+
+self.treeBar = treeBar = Tk.Scrollbar(split2Pane1,name="treeBar")
+
+# Bind mouse wheel event to canvas
+if sys.platform != "win32": # Works on 98, crashes on XP.
+	self.canvas.bind("<MouseWheel>", self.OnMouseWheel)
+	
+canvas['yscrollcommand'] = self.setCallback
+treeBar['command']     = self.yviewCallback
+
+treeBar.pack(side="right", fill="y")
+if scrolls: 
+	treeXBar = Tk.Scrollbar( 
+		split2Pane1,name='treeXBar',orient="horizontal") 
+	canvas['xscrollcommand'] = treeXBar.set 
+	treeXBar['command'] = canvas.xview 
+	treeXBar.pack(side="bottom", fill="x")
+
+canvas.pack(expand=1,fill="both")
+#@nonl
+#@-node:ekr.20031218072017.997:<< create the tree canvas >>
+#@+node:ekr.20031218072017.998:Scrolling callbacks (frame)
+def setCallback (self,*args,**keys):
+    
+    """Callback to adjust the scrollbar.
+    
+    Args is a tuple of two floats describing the fraction of the visible area."""
+
+    # g.trace(self.tree.redrawCount,args)
+
+    apply(self.treeBar.set,args,keys)
+
+    if self.tree.allocateOnlyVisibleNodes:
+        self.tree.setVisibleArea(args)
+        
+def yviewCallback (self,*args,**keys):
+    
+    """Tell the canvas to scroll"""
+    
+    # g.trace(vyiewCallback",args,keys)
+
+    if self.tree.allocateOnlyVisibleNodes:
+        self.tree.allocateNodesBeforeScrolling(args)
+
+    apply(self.canvas.yview,args,keys)
+#@nonl
+#@-node:ekr.20031218072017.998:Scrolling callbacks (frame)
+#@-node:ekr.20031218072017.996:From Frame class
+#@-node:ekr.20031218072017.995:(Incremental update of screen)
+#@+node:ekr.20031218072017.1032:(Syntax coloring a la jEdit) (do not delete)
+@ To do:
+
+- ** Use a general purpose XML parser to parse the jEdit mode files.
+- ** Do incremental syntax coloring
+	- Create lines table.
+	- Initialize lines table when select new node.
+- Use strings for states.
+- Define colorizeLine method.
+- Create self.state ivar
+- Use a keyword lead-in table.
+	- Use this for latex keywords and Leo keywords.
+	- Add ignore-case ivar.
+- Define @language xml.
+- Defined syntax coloring for all jEdit token types:
+	KEYWORD1,KEYWORD2,KEYWORD3,LABEL,LITERAL1,LITERAL2,MARKUP,OPERATOR
+	Where do Leo keywords fit in?
+
+#@+node:ekr.20031218072017.1033:Ideas for dynamic code
+@ignore
+
+@ The following gives the general idea.
+
+The self.known_languages dict contains all the data structures for a particular language.  This dict is created dynamically.  Each entry is a tuple of other info:
+	"c"      : (dict1,...,dictM,list1,...,listN,etc.),
+	"python" : (dict1,...,dictM,list1,...,listN,etc.),
+These tuples, i.e., all the data structures, are created by the initialization routine.
+
+@c
+data = self.known_languages.get(self.language)
+if not data:
+	# Create all the data structures for the language.
+	data = parse_xml_file(self.language) 
+	if data: self.known_languages[language] = data
+if data:
+	self.dict1,...,self.listN=data
+
+# The subsidiary data structures will be created from the xml files.
+# The exact data structures used depends on the format of the xml files.
+
+self.reserved_words1 = {} # Main language keywords: reserved words.
+self.reserved_words2 = {} # Functions etc. to be colored separately.
+self.keyword_chars1 = {} # Characters that appear as the first character of a keyword.
+self.keyword_chars2 = {} # Characters that appear as second or following characters of a keyword.
+self.string_start1,self.string.start2 # Opening characters of strings.
+
+# The code might scan for keywords as follows:
+n = len(s)
+if i < n and self.keywords1.get(s[i]):
+	j = i ; i += 1
+	while i < n and self.keywords2.get(s[i]):
+		i += 1
+	word = s[j:i]
+	if self.reserved_words1.get(word):
+		# colorize the reserved word
+	elif self.reserved_words2.get(word):
+		# colorize the reserved word
+#@-node:ekr.20031218072017.1033:Ideas for dynamic code
+#@+node:ekr.20031218072017.1034:New data structures
+special_keywords_dict = {
+	'\\' : (latex_keywords_dict,"keyword"),
+	'@' :  (leo_keywords_dict,"leoKeword") }
+	
+if << ch is alphabetic >>:
+	word = scan_c_word(s,i)
+	kind = keywords_dict.get(word)
+	if kind:
+		<< colorize word using kind >>
+else:
+	data = special_keywords_dict.get(ch)
+	if data:
+		dict,kind = data
+		word = scan_c_word(s,i+1)
+		key = d.get(word)
+		if key:
+			<< colorize ch and word using kind >>
+#@nonl
+#@-node:ekr.20031218072017.1034:New data structures
+#@+node:ekr.20031218072017.1049:jEdit docs
+@nocolor
+
+#@+node:ekr.20031218072017.1050:The Preamble and MODE tag
+Each mode definition must begin with the following: 
+
+<?xml version="1.0"?>
+<!DOCTYPE MODE SYSTEM "xmode.dtd"> 
+
+Each mode definition must also contain exactly one MODE tag. All other tags (PROPS, RULES) must be placed inside the MODE tag. The MODE tag does not have any defined attributes. Here is an example: 
+
+<MODE>
+    ... mode definition goes here ...
+</MODE> 
+#@-node:ekr.20031218072017.1050:The Preamble and MODE tag
+#@+node:ekr.20031218072017.1051:The PROPS Tag (Leo could ignore these)
+The PROPS tag and the PROPERTY tags inside it are used to define mode-specific properties. Each PROPERTY tag must have a NAME attribute set to the property's name, and a VALUE attribute with the property's value. 
+
+All buffer-local properties listed in the section called "Buffer-Local Properties" may be given values in edit modes. In addition, the following mode properties have no buffer-local equivalent: 
+
+commentEnd - the comment end string, used by the Range Comment command. 
+
+commentStart - the comment start string, used by the Range Comment command. 
+
+lineComment - the line comment string, used by the Line Comment command. 
+
+doubleBracketIndent - If a line matches the indentPrevLine regular expression and the next line contains an opening bracket, a level of indent will not be added to the next line, unless this property is set to "True". For example, with this property set to "False", Java code will be indented like so: 
+
+while(objects.hasMoreElements())
+{
+        ((Drawable)objects.nextElement()).draw();
+} 
+
+On the other hand, settings this property to "True" will give the following result: 
+
+while(objects.hasMoreElements())
+        {
+                ((Drawable)objects.nextElement()).draw();
+        } 
+
+indentCloseBrackets - A list of characters (usually brackets) that subtract indent from the current line. For example, in Java mode this property is set to "}".
+
+indentOpenBrackets - A list of characters (usually brackets) that add indent to the next line. For example, in Java mode this property is set to "{".
+
+indentPrevLine - When indenting a line, jEdit checks if the previous line matches the regular expression stored in this property. If it does, a level of indent is added. For example, in Java mode this regular expression matches language constructs such as "if", "else", "while", etc.
+
+Here is the complete <PROPS> tag for Java mode: 
+
+<PROPS>
+    <PROPERTY NAME="indentOpenBrackets" VALUE="{" />
+    <PROPERTY NAME="indentCloseBrackets" VALUE="}" />
+    <PROPERTY NAME="indentPrevLine" VALUE="\s*(((if|while)
+        \s*\(|else|case|default)[^;]*|for\s*\(.*)" />
+    <PROPERTY NAME="doubleBracketIndent" VALUE="false" />
+    <PROPERTY NAME="commentStart" VALUE="/*" />
+    <PROPERTY NAME="commentEnd" VALUE="*/" />
+    <PROPERTY NAME="blockComment" VALUE="//" />
+    <PROPERTY NAME="wordBreakChars" VALUE=",+-=<>/?^&*" />
+</PROPS> 
+#@-node:ekr.20031218072017.1051:The PROPS Tag (Leo could ignore these)
+#@+node:ekr.20031218072017.1052:The RULES Tag
+RULES tags must be placed inside the MODE tag. Each RULES tag defines a ruleset.
+
+A ruleset consists of a number of parser rules, with each parser rule specifying how to highlight a specific syntax token. There must be at least one ruleset in each edit mode. There can also be more than one, with different rulesets being used to highlight different parts of a buffer (for example, in HTML mode, one rule set highlights HTML tags, and another highlights inline JavaScript). For information about using more than one ruleset, see the section called "The SPAN Rule". 
+
+The RULES tag supports the following attributes, all of which are optional: 
+
+SET - the name of this ruleset. All rulesets other than the first must have a name. 
+
+HIGHLIGHT_DIGITS - if set to TRUE, digits (0-9, as well as hexadecimal literals prefixed with "0x") will be highlighted with the DIGIT token type. Default is FALSE. 
+
+IGNORE_CASE - if set to FALSE, matches will be case sensitive. Otherwise, case will not matter. Default is TRUE. 
+
+DEFAULT - the token type for text which doesn't match any specific rule. Default is NULL. See the section called "Token Types" for a list of token types. 
+
+Here is an example RULES tag: 
+
+<RULES IGNORE_CASE="FALSE" HIGHLIGHT_DIGITS="TRUE">
+    ... parser rules go here ...
+</RULES> 
+
+Rule Ordering Requirements
+
+You might encounter this very common pitfall when writing your own modes. 
+
+Since jEdit checks buffer text against parser rules in the order they appear in the ruleset, more specific rules must be placed before generalized ones, otherwise the generalized rules will catch everything. 
+
+This is best demonstrated with an example. The following is incorrect rule ordering: 
+
+<SPAN TYPE="MARKUP">
+    <BEGIN>[</BEGIN>
+    <END>]</END>
+</SPAN>
+
+<SPAN TYPE="KEYWORD1">
+    <BEGIN>[!</BEGIN>
+    <END>]</END>
+</SPAN> 
+
+If you write the above in a rule set, any occurrence of "[" (even things like "[!DEFINE", etc) will be highlighted using the first rule, because it will be the first to match. This is most likely not the intended behavior. 
+
+The problem can be solved by placing the more specific rule before the general one: 
+
+<SPAN TYPE="KEYWORD1">
+    <BEGIN>[!</BEGIN>
+    <END>]</END>
+</SPAN>
+
+<SPAN TYPE="MARKUP">
+    <BEGIN>[</BEGIN>
+    <END>]</END>
+</SPAN> 
+
+Now, if the buffer contains the text "[!SPECIAL]", the rules will be checked in order, and the first rule will be the first to match. However, if you write "[FOO]", it will be highlighted using the second rule, which is exactly what you would expect. 
+
+Per-Ruleset Properties
+
+The PROPS tag (described in the section called "The PROPS Tag") can also be placed inside the RULES tag to define ruleset-specific properties. Only the following properties can be set on a per-ruleset basis: 
+
+commentEnd - the comment end string. 
+
+commentStart - the comment start string. 
+
+lineComment - the line comment string. 
+
+These properties are used by the commenting commands to implement context-sensitive comments; see the section called "Commenting Out Code". 
+
+The TERMINATE Rule
+
+The TERMINATE rule specifies that parsing should stop after the specified number of characters have been read from a line. The number of characters to terminate after should be specified with the AT_CHAR attribute. Here is an example: 
+
+<TERMINATE AT_CHAR="1" /> 
+
+This rule is used in Patch mode, for example, because only the first character of each line affects highlighting. 
+
+The SPAN Rule
+
+The SPAN rule highlights text between a start and end string. The start and end strings are specified inside child elements of the SPAN tag. The following attributes are supported: 
+
+TYPE - The token type to highlight the span with. See the section called "Token Types" for a list of token types
+
+AT_LINE_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a line
+
+EXCLUDE_MATCH - If set to TRUE, the start and end sequences will not be highlighted, only the text between them will
+
+NO_LINE_BREAK - If set to TRUE, the span will be highlighted with the INVALID token type if it spans more than one line
+
+NO_WORD_BREAK - If set to TRUE, the span will be highlighted with the INVALID token type if it includes whitespace
+
+DELEGATE - text inside the span will be highlighted with the specified ruleset. To delegate to a ruleset defined in the current mode, just specify its name. To delegate to a ruleset defined in another mode, specify a name of the form mode::ruleset. Note that the first (unnamed) ruleset in a mode is called "MAIN".
+
+Here is a SPAN that highlights Java string literals, which cannot include line breaks: 
+
+<SPAN TYPE="LITERAL1" NO_LINE_BREAK="TRUE">
+   <BEGIN>"</BEGIN>
+   <END>"</END>
+</SPAN> 
+
+Here is a SPAN that highlights Java documentation comments by delegating to the "JAVADOC" ruleset defined elsewhere in the current mode: 
+
+<SPAN TYPE="COMMENT2" DELEGATE="JAVADOC">
+   <BEGIN>/**</BEGIN>
+   <END>*/</END>
+</SPAN> 
+
+Here is a SPAN that highlights HTML cascading stylesheets inside <STYLE> tags by delegating to the main ruleset in the CSS edit mode: 
+
+<SPAN TYPE="MARKUP" DELEGATE="css::MAIN">
+   <BEGIN>&lt;style&gt;</BEGIN>
+   <END>&lt;/style&gt;</END>
+</SPAN> 
+
+Tip
+The <END> tag is optional. If it is not specified, any occurrence of the start string will cause the remainder of the buffer to be highlighted with this rule. 
+
+This can be very useful when combined with delegation. 
+
+The EOL_SPAN Rule
+An EOL_SPAN is similar to a SPAN except that highlighting stops at the end of the line, not after the end sequence is found. The text to match is specified between the opening and closing EOL_SPAN tags. The following attributes are supported: 
+
+TYPE - The token type to highlight the span with. See the section called "Token Types" for a list of token types
+
+AT_LINE_START - If set to TRUE, the span will only be highlighted if the start sequence occurs at the beginning of a line
+
+EXCLUDE_MATCH - If set to TRUE, the start sequence will not be highlighted, only the text after it will
+
+Here is an EOL_SPAN that highlights C++ comments: 
+
+<EOL_SPAN TYPE="COMMENT1">//</EOL_SPAN> 
+
+The MARK_PREVIOUS Rule
+The MARK_PREVIOUS rule highlights from the end of the previous syntax token to the matched text. The text to match is specified between opening and closing MARK_PREVIOUS tags. The following attributes are supported: 
+
+TYPE - The token type to highlight the text with. See the section called "Token Types" for a list of token types
+
+AT_LINE_START - If set to TRUE, the text will only be highlighted if it occurs at the beginning of the line
+
+EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text before it will
+
+Here is a rule that highlights labels in Java mode (for example, "XXX:"): 
+
+<MARK_PREVIOUS AT_LINE_START="TRUE"
+    EXCLUDE_MATCH="TRUE">:</MARK_PREVIOUS> 
+
+The MARK_FOLLOWING Rule
+The MARK_FOLLOWING rule highlights from the start of the match to the next syntax token. The text to match is specified between opening and closing MARK_FOLLOWING tags. The following attributes are supported: 
+
+TYPE - The token type to highlight the text with. See the section called "Token Types" for a list of token types
+
+AT_LINE_START - If set to TRUE, the text will only be highlighted if the start sequence occurs at the beginning of a line
+
+EXCLUDE_MATCH - If set to TRUE, the match will not be highlighted, only the text after it will
+
+Here is a rule that highlights variables in Unix shell scripts ("$CLASSPATH", "$IFS", etc): 
+
+<MARK_FOLLOWING TYPE="KEYWORD2">$</MARK_FOLLOWING> 
+
+The SEQ Rule
+The SEQ rule highlights fixed sequences of text. The text to highlight is specified between opening and closing SEQ tags. The following attributes are supported: 
+
+TYPE - the token type to highlight the sequence with. See the section called "Token Types" for a list of token types
+
+AT_LINE_START - If set to TRUE, the sequence will only be highlighted if it occurs at the beginning of a line
+
+The following rules highlight a few Java operators: 
+
+<SEQ TYPE="OPERATOR">+</SEQ>
+<SEQ TYPE="OPERATOR">-</SEQ>
+<SEQ TYPE="OPERATOR">*</SEQ>
+<SEQ TYPE="OPERATOR">/</SEQ> 
+
+The KEYWORDS Rule
+
+There can only be one KEYWORDS tag per ruleset. The KEYWORDS rule defines keywords to highlight. Keywords are similar to SEQs, except that SEQs match anywhere in the text, whereas keywords only match whole words. 
+
+The KEYWORDS tag does not define any attributes. 
+
+Each child element of the KEYWORDS tag should be named after the desired token type, with the keyword text between the start and end tags. For example, the following rule highlights the most common Java keywords: 
+
+<KEYWORDS IGNORE_CASE="FALSE">
+   <KEYWORD1>if</KEYWORD1>
+   <KEYWORD1>else</KEYWORD1>
+   <KEYWORD3>int</KEYWORD3>
+   <KEYWORD3>void</KEYWORD3>
+</KEYWORDS> 
+
+Token Types
+
+Parser rules can highlight tokens using any of the following token types: 
+
+NULL - no special highlighting is performed on tokens of type NULL 
+
+COMMENT1 
+
+COMMENT2 
+
+FUNCTION 
+
+INVALID - tokens of this type are automatically added if a NO_WORD_BREAK or NO_LINE_BREAK SPAN spans more than one word or line, respectively. 
+
+KEYWORD1 
+
+KEYWORD2 
+
+KEYWORD3 
+
+LABEL 
+
+LITERAL1 
+
+LITERAL2 
+
+MARKUP 
+
+OPERATOR 
+#@-node:ekr.20031218072017.1052:The RULES Tag
+#@-node:ekr.20031218072017.1049:jEdit docs
+#@-node:ekr.20031218072017.1032:(Syntax coloring a la jEdit) (do not delete)
+#@+node:ekr.20031218072017.1658:(Using xml parser)
+import leoGlobals
+import os,leoNodes
+from xml.sax import saxutils, make_parser
+from xml.sax.xmlreader import InputSource
+
+path = os.path.join(app().loadDir,"../","test","test2.leo")
+path = os.path.join(app().loadDir,"LeoPy.leo")
+path = os.path.normpath(path)
+
+verbose = False
+tnodes = vnodes = 0
+
+def clean(s): return toEncodedString(s,"ascii")
+
+class trace_parse(saxutils.XMLGenerator):
+@others
+	
+try:
+	f = None
+	try:
+		print path
+		if 1:
+			source = f = open(path)
+		else: # not needed, and it works.
+			source = InputSource(path)
+			source.setEncoding(app().tkEncoding) # Not needed.
+		parser = make_parser()
+		h = trace_parse()
+		parser.setContentHandler(h)
+		parser.parse(source)
+		print "vnodes,tnodes:",`vnodes`,`tnodes`
+	except: g.es_exception()
+finally:
+	if f: f.close()
+#@nonl
+#@+node:ekr.20031218072017.1659:characters
+def characters(self,content):
+
+	content = content.replace('\r','')
+
+	if verbose and content.strip():
+		print clean(content)
+#@-node:ekr.20031218072017.1659:characters
+#@+node:ekr.20031218072017.1660:endDocument
+def endDocument(self):
+	trace()
+
+
+#@-node:ekr.20031218072017.1660:endDocument
+#@+node:ekr.20031218072017.1661:endElement
+def endElement(self,name):
+	if verbose: print '</' + clean(name).strip() + '>'
+#@-node:ekr.20031218072017.1661:endElement
+#@+node:ekr.20031218072017.1662:other methods
+def ignorableWhitespace(self):
+	trace()
+
+def processingInstruction (self,target,data):
+	trace()
+
+def skippedEntity(self,name):
+	trace(name)
+
+def startElementNS(self,name,qname,attrs):
+	trace(name)
+
+def endElementNS(self,name,qname):
+	trace(name)
+#@-node:ekr.20031218072017.1662:other methods
+#@+node:ekr.20031218072017.1663:startDocument
+def startDocument(self):
+
+	if verbose:
+		print ; print ; print '*' * 30 + " dump " + '*' * 30 ; print
+	trace()
+#@-node:ekr.20031218072017.1663:startDocument
+#@+node:ekr.20031218072017.1664:startElement
+def startElement(self,name,atts):
+	global vnodes,tnodes
+	if verbose: print '<' + clean(name).strip() + '>',
+	if name == "v":
+		vnodes += 1
+		v = leoNodes.vnode(top(),leoNodes.tnode())
+	elif name == "t":
+		tnodes += 1
+		t = leoNodes.tnode()
+#@nonl
+#@-node:ekr.20031218072017.1664:startElement
+#@-node:ekr.20031218072017.1658:(Using xml parser)
+#@-node:ekr.20031218072017.984:Unfinished projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt
