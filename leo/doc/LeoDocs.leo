@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="12849" clone_windows="0"/>
 <globals body_outline_ratio="0.398837209302">
-	<global_window_position top="50" left="79" height="680" width="843"/>
+	<global_window_position top="90" left="80" height="680" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -51,7 +51,7 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
 <v t="ekr.20050126100405"><vh>4.3-a2</vh>
 <v t="ekr.20050130112336"><vh>Still to do</vh>
 <v t="ekr.20050130112336.1"><vh>Improve how Leo handles recent files</vh></v>
@@ -61,8 +61,8 @@
 </v>
 </v>
 <v t="ekr.20050122090311"><vh>4.3-a1</vh>
-<v t="ekr.20050123112834" a="E"><vh>Defining features of 4.3</vh>
-<v t="ekr.20050123110009" a="E"><vh>@settings trees and leoSettings.leo</vh>
+<v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
+<v t="ekr.20050123110009"><vh>@settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
 </v>
@@ -167,8 +167,8 @@
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="ekr.20050122090311"><vh>4.3-a1</vh>
-<v t="ekr.20050123112834" a="E"><vh>Defining features of 4.3</vh>
-<v t="ekr.20050123110009" a="E"><vh>@settings trees and leoSettings.leo</vh>
+<v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
+<v t="ekr.20050123110009"><vh>@settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
 </v>
@@ -1416,7 +1416,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1650,7 +1650,7 @@
 <v t="EKR.20040524104904.121"><vh>Using the initScriptFind script</vh></v>
 <v t="EKR.20040524104904.122"><vh>Ideas for using scripts</vh></v>
 </v>
-<v t="EKR.20040524104904.123"><vh>Batch</vh></v>
+<v t="EKR.20040524104904.123"><vh>Show Context</vh></v>
 <v t="EKR.20040524104904.124"><vh>Ignore Case</vh></v>
 <v t="EKR.20040524104904.125"><vh>Mark Changes</vh></v>
 <v t="EKR.20040524104904.126"><vh>Mark Matches</vh></v>
@@ -2084,14 +2084,14 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050" a="E"><vh>FAQ</vh>
-<v t="edream.110203163054.1051" a="E"><vh>Learning about Leo</vh>
+<v t="edream.110203163054.1050"><vh>FAQ</vh>
+<v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
 <v t="edream.110203163054.1054"><vh>Why should I use clones?</vh></v>
 <v t="edream.110203163054.1055"><vh>Which should I use: @root trees or @file trees?</vh></v>
 <v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
-<v t="ekr.20050203102830" a="TV"><vh>Why is &lt;&lt; whatever &gt;&gt; better than using a method?</vh></v>
+<v t="ekr.20050203102830"><vh>Why is &lt;&lt; whatever &gt;&gt; better than using a method?</vh></v>
 </v>
 <v t="edream.110203163054.1056"><vh>Unicode and special characters</vh>
 <v t="edream.110203163054.1057"><vh>Some characters in derived files look funny. What can I do?</vh></v>
@@ -2227,7 +2227,7 @@
 <v t="edream.110203163054.1108"><vh>How can I create a template .leo file?</vh></v>
 <v t="ekr.20040908100113"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
 </v>
-<v t="ekr.20041013100216" a="E"><vh>Tips and techniques</vh>
+<v t="ekr.20041013100216"><vh>Tips and techniques</vh>
 <v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
 <v t="ekr.20041013100216.1"><vh>Using Chapters &amp; multiple editors</vh></v>
 <v t="ekr.20050129065451"><vh>How can I display graphics in Leo?</vh></v>
@@ -3842,8 +3842,7 @@ within a Leo outline. These scripts could as easily traverse your file system
 as the Leo outline. But notice: scripts could pull data from the file system
 into the outline so that you can see the effects of changes as the scripts
 operate. Again, this can all happen interactively if you like.</t>
-<t tx="EKR.20040524104904.123">When checked, the Find and Change commands proceed without stopping.  Output is sent to the log window regarding the progress of the command.
-</t>
+<t tx="EKR.20040524104904.123">When checked, the Find and Change commands show additional context information when printing matches.</t>
 <t tx="EKR.20040524104904.124">When checked, the Find and Change commands ignore the case of alphabetic characters when determining matches.
 </t>
 <t tx="EKR.20040524104904.125">When checked, the Change command marks all headlines whose headline or body text are changed by the command.
