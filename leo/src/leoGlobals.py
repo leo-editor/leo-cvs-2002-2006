@@ -1891,7 +1891,7 @@ def utils_rename(src,dst,mode=None,verbose=True):
     except Exception:
         if verbose:
             g.es('Exception renaming %s to %s' % (src,dst),color='red')
-            g.es_exception()
+            g.es_exception(full=False)
         return False
 #@nonl
 #@+node:ekr.20050107085710.1:test_g_utils_rename
@@ -4615,31 +4615,69 @@ class fileLikeObject:
     """Define a file-like object for redirecting writes to a string.
     
     The caller is responsible for handling newlines correctly."""
-
+    
+    #@    @+others
+    #@+node:ekr.20050404151753: ctor
     def __init__(self,fromString=None):
+    
         # New in 4.2.1: allow the file to be inited from string s.
-        if fromString: self.list = g.splitLines(fromString) # Must preserve newlines!
-        else: self.list = []
+        if fromString:
+            self.list = g.splitLines(fromString) # Must preserve newlines!
+        else:
+            self.list = []
+    
         self.ptr = 0
-
-    def clear (self):   self.list = []
-
-    def close (self): pass
-    def flush (self): pass
-
+        
+    # In CStringIO the buffer is read-only if the initial value (fromString) is non-empty.
+    #@nonl
+    #@-node:ekr.20050404151753: ctor
+    #@+node:ekr.20050404151753.1:clear
+    def clear (self):
+        
+        self.list = []
+    
+    
+    #@-node:ekr.20050404151753.1:clear
+    #@+node:ekr.20050404151753.2:close
+    def close (self):
+        
+        pass
+        
+        # The StringIo version free's the memory buffer.
+    #@nonl
+    #@-node:ekr.20050404151753.2:close
+    #@+node:ekr.20050404151753.3:flush
+    def flush (self):
+        
+        pass
+    #@nonl
+    #@-node:ekr.20050404151753.3:flush
+    #@+node:ekr.20050404151753.4:get & getvalue
     def get (self):
+    
         return ''.join(self.list)
         
+    getvalue = get # for compatibility with StringIo
+    #@-node:ekr.20050404151753.4:get & getvalue
+    #@+node:ekr.20050404151753.5:readline
     def readline(self): # New for read-from-string (readOpenFile).
+    
         if self.ptr < len(self.list):
             line = self.list[self.ptr]
             # g.trace(repr(line))
             self.ptr += 1
             return line
-        else: return ""
-
+        else:
+            return ''
+    #@nonl
+    #@-node:ekr.20050404151753.5:readline
+    #@+node:ekr.20050404151753.6:write
     def write (self,s):
-        if s: self.list.append(s)
+        
+        if s:
+            self.list.append(s)
+    #@-node:ekr.20050404151753.6:write
+    #@-others
 #@nonl
 #@-node:ekr.20040331083824.1:g.fileLikeObject
 #@+node:ekr.20031218072017.3126:g.funcToMethod
