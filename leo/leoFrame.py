@@ -9,7 +9,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import leoColor,leoDialog,leoFontPanel,leoNodes, leoPrefs
+import leoColor, leoCompare, leoDialog, leoFontPanel, leoNodes, leoPrefs
 import traceback,Tkinter, tkFileDialog, tkFont
 
 # Needed for menu commands
@@ -39,10 +39,11 @@ class LeoFrame:
 			self.mFileName = ""
 		
 		# These are set the first time a panel is opened.
-		# The panel remains open (perhaps hidden) until shutdown.
+		# The panel remains open (perhaps hidden) until this frame is closed.
 		self.colorPanel = None 
 		self.fontPanel = None 
 		self.prefsPanel = None
+		self.comparePanel = None
 			
 		self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
 		self.title=title # Title of window, not including dirty mark
@@ -594,6 +595,8 @@ class LeoFrame:
 			command=self.OnMinimizeAll)
 		windowMenu.add_separator()
 		
+		windowMenu.add_command(label="Open Compare Window",
+			command=self.OnOpenCompareWindow)
 		windowMenu.add_command(label="Open Python Window",
 			accelerator="Alt+P",command=self.OnOpenPythonWindow)
 		#@-body
@@ -909,12 +912,15 @@ class LeoFrame:
 		app().log = None # no log until we reactive a window.
 		# Destroy all windows attached to this windows.
 		# This code will be executed if we haven't explicitly closed the windows.
-		if self.prefsPanel:
-			self.prefsPanel.top.destroy()
-		if self.fontPanel:
-			self.fontPanel.top.destroy()
+		if self.comparePanel:
+			self.comparePanel.top.destroy()
 		if self.colorPanel:
 			self.colorPanel.top.destroy()
+		if self.fontPanel:
+			self.fontPanel.top.destroy()
+		if self.prefsPanel:
+			self.prefsPanel.top.destroy()
+	
 		if self in app().windowList:
 			app().windowList.remove(self)
 			self.destroy() # force the window to go away now.
@@ -2405,7 +2411,24 @@ class LeoFrame:
 			frame.top.iconify()
 	#@-body
 	#@-node:5::OnMinimizeAll
-	#@+node:6:C=40:OnOpenPythonWindow
+	#@+node:6:C=40:OnOpenCompareWindow
+	#@+body
+	def OnOpenCompareWindow (self):
+		
+		c = self.commands
+		cp = self.comparePanel
+		
+		if cp:
+			cp.top.deiconify()
+		else:
+			cmp = leoCompare.leoCompare(c)
+			self.comparePanel = cp =  leoCompare.leoComparePanel(c,cmp)
+			cp.run()
+	
+		return "break" # inhibit further command processing
+	#@-body
+	#@-node:6:C=40:OnOpenCompareWindow
+	#@+node:7:C=41:OnOpenPythonWindow
 	#@+body
 	def OnOpenPythonWindow(self,event=None):
 	
@@ -2422,12 +2445,13 @@ class LeoFrame:
 			es("Can not import idle")
 			es("Please add \Python2x\Tools\idle to sys.paths")
 			traceback.print_exc()
+	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=40:OnOpenPythonWindow
+	#@-node:7:C=41:OnOpenPythonWindow
 	#@-node:4::Window Menu
 	#@+node:5::Help Menu
-	#@+node:1:C=41:OnAbout (version number)
+	#@+node:1:C=42:OnAbout (version number)
 	#@+body
 	def OnAbout(self,event=None):
 	
@@ -2444,7 +2468,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=41:OnAbout (version number)
+	#@-node:1:C=42:OnAbout (version number)
 	#@+node:2::OnLeoDocumentation
 	#@+body
 	def OnLeoDocumentation (self,event=None):
@@ -2460,7 +2484,7 @@ class LeoFrame:
 	#@-node:2::OnLeoDocumentation
 	#@-node:5::Help Menu
 	#@-node:14:C=15:Menu Command Handlers
-	#@+node:15:C=42:Splitter stuff
+	#@+node:15:C=43:Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -2483,7 +2507,7 @@ class LeoFrame:
 			bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
 	#@-body
 	#@-node:1::bindBar
-	#@+node:2:C=43:configureBar
+	#@+node:2:C=44:configureBar
 	#@+body
 	def configureBar (self, bar, verticalFlag):
 		
@@ -2514,8 +2538,8 @@ class LeoFrame:
 				# Panes arranged horizontally; vertical splitter bar
 				bar.configure(width=7,cursor="sb_h_double_arrow")
 	#@-body
-	#@-node:2:C=43:configureBar
-	#@+node:3:C=44:createBothLeoSplitters (use config.body_font,etc)
+	#@-node:2:C=44:configureBar
+	#@+node:3:C=45:createBothLeoSplitters (use config.body_font,etc)
 	#@+body
 	def createBothLeoSplitters (self,top):
 	
@@ -2603,7 +2627,7 @@ class LeoFrame:
 		# Give the log and body panes the proper borders.
 		self.reconfigurePanes()
 	#@-body
-	#@-node:3:C=44:createBothLeoSplitters (use config.body_font,etc)
+	#@-node:3:C=45:createBothLeoSplitters (use config.body_font,etc)
 	#@+node:4::createLeoSplitter (use config params)
 	#@+body
 	# Create a splitter window and panes into which the caller packs widgets.
@@ -2738,7 +2762,7 @@ class LeoFrame:
 		self.log.configure(bd=border)
 	#@-body
 	#@-node:9::reconfigurePanes (use config bar_width)
-	#@-node:15:C=42:Splitter stuff
+	#@-node:15:C=43:Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

@@ -33,7 +33,7 @@ class LeoApp:
 		if 0: # app() is not accessible during shutdown!
 			self.printDel = false # true: enable prints in __del__ routines
 	
-		# Set by finishCreate...
+		# Global panels.  Destroyed when Leo ends.
 		self.findFrame = None
 		self.pythonFrame = None
 	#@-body
@@ -159,7 +159,6 @@ class LeoApp:
 	
 		if self.findFrame:
 			self.findFrame.top.destroy()
-
 	#@-body
 	#@-node:3::destroyAllGlobalWindows
 	#@+node:4:C=4:app.quit
