@@ -293,7 +293,10 @@ class atFile:
 			i += len(self.startSentinelComment)
 		else:
 			return atFile.noSentinel
-		# Do not skip whitespace here!
+		if 0: # Do not skip whitespace here!
+			pass
+		else: # 7/8/02: we must allow whitespace here to support the REM hack.
+			i = skip_ws(s,i) 
 		if match(s,i,"@<<"): return atFile.startRef
 		if match(s,i,"@@"): return atFile.startDirective
 		if not match(s,i,'@'): return atFile.noSentinel
@@ -339,6 +342,8 @@ class atFile:
 		i = skip_ws(s,i)
 		assert(match(s,i,self.startSentinelComment))
 		i += len(self.startSentinelComment)
+		# 7/8/02: Support for REM hack
+		i = skip_ws(s,i)
 		assert(i < len(s) and s[i] == '@')
 		return i + 1
 	#@-body
