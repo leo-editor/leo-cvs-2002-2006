@@ -894,7 +894,7 @@ class baseVnode (object):
 	#@nonl
 	#@-node:v.linkAsNthChild
 	#@+node:v.linkAsRoot
-	def linkAsRoot(self, oldRoot = None):
+	def linkAsRoot (self,oldRoot):
 		
 		"""Link a vnode as the root node and set the root _position_."""
 	
@@ -915,7 +915,7 @@ class baseVnode (object):
 	#@nonl
 	#@-node:v.linkAsRoot
 	#@+node:v.moveToRoot
-	def moveToRoot (self, oldRoot = None):
+	def moveToRoot (self,oldRoot=None):
 	
 		"""Moves the receiver to the root position"""
 	
@@ -2931,9 +2931,9 @@ class position (object):
 		if p.v in p.v.t.vnodeList:
 			p.v.t.vnodeList.remove(p.v)
 			assert(p.v not in p.v.t.vnodeList)
-			g.trace("deleted",p.v,p.vnodeListIds())
+			# g.trace("deleted",p.v,p.vnodeListIds())
 		else:
-			g.trace("not in vnodeList",p.v,p.vnodeListIds())
+			# g.trace("not in vnodeList",p.v,p.vnodeListIds())
 			pass
 	
 		if len(p.v.t.vnodeList) == 0:
@@ -3047,7 +3047,7 @@ class position (object):
 	#@nonl
 	#@-node:p.linkAsNthChild
 	#@+node:p.linkAsRoot
-	def linkAsRoot(self,oldRoot=None):
+	def linkAsRoot (self,oldRoot):
 		
 		"""Link self as the root node."""
 		
