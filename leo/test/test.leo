@@ -862,6 +862,23 @@
 <v t="ekr.20041124144944"><vh>print sys.path</vh></v>
 <v t="ekr.20041126035448"><vh>Script to import a file</vh></v>
 <v t="ekr.20041225104159.1"><vh>Create stand-alone settings dialog</vh></v>
+<v t="ekr.20041229163210" a="M"><vh>dyna htmlize</vh>
+<v t="ekr.20041229164609"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20041229163210.2"><vh>&lt;&lt; init globals &gt;&gt;</vh></v>
+<v t="ekr.20041229170824"><vh>stripSentinels</vh></v>
+<v t="ekr.20041229165956"><vh>sanitize</vh></v>
+<v t="ekr.20041229163210.3"><vh>class Parser</vh>
+<v t="ekr.20041229163210.4"><vh>__init__</vh></v>
+<v t="ekr.20041229163210.5"><vh>format</vh></v>
+<v t="ekr.20041229163210.6"><vh>__call__</vh></v>
+</v>
+<v t="ekr.20041229164609.2"><vh>htmlize</vh>
+<v t="ekr.20041229163210.7"><vh>&lt;&lt; colorize with silvercity &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20041228135008"><vh>HTML to Browser</vh>
+<v t="ekr.20041228140714"><vh>&lt;&lt; alternate code doesn't work well for me &gt;&gt;</vh></v>
+</v>
 </v>
 <v t="ekr.20041001211817"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
@@ -872,7 +889,7 @@
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
@@ -1376,7 +1393,7 @@
 <v t="ekr.20040715154319"><vh>@test checkPythonCode (bad tabnanny)</vh>
 <v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
 </v>
-<v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
+<v t="ekr.20040712101813"><vh>@xx test checkAllPythonCode</vh></v>
 </v>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
 <v t="ekr.20040712101754.261"><vh>Plugins tests</vh>
@@ -1400,31 +1417,14 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
-<v t="ekr.20041228135008"><vh>HTML to Browser</vh>
-<v t="ekr.20041228140714"><vh>&lt;&lt; alternate code doesn't work well for me &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041229163210" a="M"><vh>dyna htmlize</vh>
-<v t="ekr.20041229164609"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20041229163210.2"><vh>&lt;&lt; init globals &gt;&gt;</vh></v>
-<v t="ekr.20041229170824"><vh>stripSentinels</vh></v>
-<v t="ekr.20041229165956"><vh>sanitize</vh></v>
-<v t="ekr.20041229163210.3"><vh>class Parser</vh>
-<v t="ekr.20041229163210.4"><vh>__init__</vh></v>
-<v t="ekr.20041229163210.5"><vh>format</vh></v>
-<v t="ekr.20041229163210.6"><vh>__call__</vh></v>
-</v>
-<v t="ekr.20041229164609.2"><vh>htmlize</vh>
-<v t="ekr.20041229163210.7"><vh>&lt;&lt; colorize with silvercity &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20041225051328" a="E"><vh>Tests of at_view plugin</vh>
+<v t="ekr.20041225051328"><vh>Tests of at_view plugin</vh>
 <v t="ekr.20041225051328.1"><vh>@clip</vh></v>
-<v t="ekr.20041231105348" a="E"><vh>Test of @strip</vh>
-<v t="ekr.20041231105200.2" a="TV"><vh>@strip atStripTest.txt</vh></v>
-</v>
-<v t="ekr.20041225051328.2" a="E"><vh>@file c:/prog/test/atStripTest.txt</vh>
+<v t="ekr.20041231105348"><vh>Test of @strip</vh>
+<v t="ekr.20041225051328.2"><vh>@file c:/prog/test/atStripTest.txt</vh>
 <v t="ekr.20041231105200"><vh>Node 1</vh></v>
 <v t="ekr.20041231105200.1"><vh>Node 2</vh></v>
+<v t="ekr.20041231105200.2"><vh>@strip</vh></v>
+</v>
 </v>
 <v t="ekr.20041225051445"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
 </v>
@@ -5445,13 +5445,12 @@ else:
     # Warning: at present the before and after text is unprotected:
     # Running Pretty Print on these nodes will negate the value of the test.
     temp = u.findNodeInTree(p,"tempNode")
+    temp.setBodyStringOrPane("")
     before = u.findNodeInTree(p,"before")
     after = u.findNodeInTree(p,"after")
     temp.scriptSetBodyString(before.bodyString())
     c.prettyPrintPythonCode(p=temp,dump=dump)
-    if not dump:
-        assert temp.bodyString() == after.bodyString()
-    temp.setBodyStringOrPane("")</t>
+    assert temp.bodyString() == after.bodyString(),"Pretty Print Test failed"</t>
 <t tx="ekr.20040713071919">@ This is    a test of stuff.in doc parts.
 
          I wonder           what will happen.
@@ -5476,7 +5475,30 @@ class eggs:
     """ A typical doc string """
     
     @others</t>
-<t tx="ekr.20040713123617"></t>
+<t tx="ekr.20040713123617">@This is a test of stuff.in doc parts.
+
+         I wonder what will happen.
+@c 
+
+def spam (self):
+
+    """ This is a ' triple'   quoted string:
+        It should remain untouched."""
+    
+    if a==3:
+        print "Ä á Û"
+        
+    ''' Another ' triple'   quoted string:
+        It should remain untouched.'''
+        
+    "yet another\
+    multi-line string"
+        
+class eggs:
+    
+    """ A typical doc string """
+    
+    @others </t>
 <t tx="ekr.20040713123617.1">@language python
 @tabwidth -4
 
@@ -10821,14 +10843,14 @@ if spellpyx:
     if spellFrame:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\test\test.leo</t>
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
+C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
