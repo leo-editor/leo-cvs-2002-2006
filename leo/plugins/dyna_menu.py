@@ -1,11 +1,14 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20050328091022.2:@thin dyna_menu.py
+#@+node:ekr.20050328091952.2:@thin dyna_menu.py
 #be sure and add dyna_menu.py to pluginsManager.txt
 #you don't need to enable dynacommon.py in pluginsManager.txt
 #you do need dynacommon.py in the plugins directory 
 #and edit the paths in dynacommon.py to suit your system.
 #as time goes by, this part will become smarter and require less editing.
+# see dyna_menu.ini for other options you can set, even while Leo is running.
+
 #for py2.2 you have to enable from __future in initilize
+#
 
 """this plugin creates a dyna menu of macro items.
  Alt+y the dyna menu accelerator key.   
@@ -15,7 +18,8 @@
  they work as well from the dynatester node or dynabutton, insuring
  when they are included in the plugin, minimal time is lost debugging.
 
- add exS will re-install exS button on the toolbar.
+ add exS may re-install exS button on the toolbar.
+ set doc and hit DQ3 with nothing selected to see docstring of all macros.
  
 
 do post a bug report or feature request
@@ -27,22 +31,22 @@ or sourceforge forum:
 temporary latest version page.
 http://rclick.netfirms.com/dyna_menu.py.html
 
-sorry no proper changelog, expect constant maintance and additions
+expect constant maintance and additions
 
 still todo
-dyna.ini, now that we have a start on plugin management. 
-but we need an ini editor that can handle multiple sections.
-htmlize will have color options and various macros have needs too.
-remove more bare Exception
-standardize redirection & eliminate duplication
-bribe someone to test it on mac and nix and give some feedback
-on windows remove the dos command window flash with pyw in htmlize
+remove more bare Exception.
+bribe someone to test it on mac and nix and give some feedback.
+on windows remove the dos command window flash with pyw in htmlize 
 """   
-__version__ = '0.0138'  #t04A26p02:57
-#@<< initilize >>
-#@+node:ekr.20050328091022.3:<< initilize >>
+__version__ = '0.0139c'  #m05328a03:50
+__plugin_requires__ = ["dynacommon"]
+#probably mention it elsewhere, some macros do need some non standard modules
+#fallbacks or from later python versions in some cases
 
-#from __future__ import generators  # + enumerate for less than py2.3
+#@<< initilize >>
+#@+node:ekr.20050328091952.3:<< initilize >>
+
+from __future__ import generators  # + enumerate for less than py2.3
 #@+at
 # from future has to be first...
 # but to check py version you have to import sys
@@ -50,6 +54,7 @@ __version__ = '0.0138'  #t04A26p02:57
 #@-at
 #@@c
 import sys
+import ConfigParser
 try:
     enumerate([])
     #print 'have enumerate'
@@ -59,8 +64,7 @@ except NameError:  #?
 
 import leoGlobals as g
 
-try: import Tkinter as Tk
-except: Tk = None
+Tk   = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 
 #at this point in Leo, code from plugins isn't importable. later it is.
 #replace w/importfromfile
@@ -68,7 +72,7 @@ except: Tk = None
 
 k = g.os_path_split(g.app.loadDir)[0]
 #this should fix the slashes and lower cases' it on win9x
-k = g.os_path_norm(g.os_path_abspath(g.os_path_join(k, "plugins")))
+k = g.os_path_normpath(g.os_path_abspath(g.os_path_join(k, "plugins")))
 
 #path being unicode can affect less than py2.3
 if sys.version_info[:2] < (2, 3):
@@ -84,11 +88,13 @@ del k
 try: 
     #import dynacommon as dy
     from dynacommon import *  #should use importfile?
+    dynacom = True
 except ImportError: 
+    dynacom = None
     #no gui maybe print better here? should guard the error too?
     g.es('you have to copy dynacommon.py to plugins')
 
-"""t04511p12:30:22  
+"""
  to disable the timestamp thing, comment out this line below:
    ...registerHandler("save1", timestamp) 
 
@@ -112,138 +118,6 @@ for refrence, dynabutton and exS were other plugins from the URL below.
  you have to change the macro accordingly from print x to g.es(x) 
  can't be helped. various macro's solve their own output problems.
  
- another anomaly, 
- for the menu you left click, on the button you right click.
- I thought about changing the button to a menu.
- I thought about not changing to a menu.
- usually I forget to think about it.
- 
-
- some sample macros included. look over and see if they 
- might do something useful or can be modified to do so.
- most of them print to log or the text transformed
- or paste over selected text 
-  if the print/paste/doc item in the menu is toggled.
- if no text is selected, most will attempt to use the current body text.
- in a few cases the body text is filtered to comment out
-  @directives. @other and namedsection nodes will be included
-  see makatemp, tim1crunch, calls to fixbody get all the body.
-  if you just want the current node, use selectall.
-
- Clip_dtef      shows how to insert into clipboard
-                proof of concept called on every save to print time
-
- clipappend append selected to Clipboard
-
- c2py    the fantastic c2py script. translates c/c++ into python.
- 	    works as well on java and javascript snippits or even python
-     though be aware it ruthlessly removes braces so d = {} becomes d =
-     you'll still have to make it more pythonic but it does alot.
-    c2py doesn't generate an undo event so there is no turning back.
-    might be a good idea to change smaller bits of code at a time.
-    might be wise to have a copy of the node in the origioinal language.
-    before anything there is an ok/cancel button that pops up 
-    to give you a chance to quit without change.
-    c2py will tabify and change in place the tree and its subnodes.
-    prior to c2py and import into Leo a good indent will help.
-    be sure to attribute any snipits of code you convert and use.
-    I doubt c2py author intends this utility to make plaguisim easy.
-
- DQ3             adds text from the copybuffer around the text
-                 if you have ( or other pair
-                 then the matching pair will end the text
-                 see the __doc__ and source for complete info.
-
- dyna_backslash  transforms paths from & to several forms
-        like change forward slash to backslash, c:\temp to file:///c|temp
-
- dupe       duplicates the selected text. 
-            good for those one line copies when something
-            else is in the copy buffer. select to paste first.
-
- del first n char  does delete the first char.
-
- dumpbody     the standard hex dump of selected text or body
-
- geturls    extract urls from selected text, uniqued, sorted.
- 
- everycase  take the selected word or sentance and output 
-            in a variety of case. and to AND and And aND etc
-
- flipper         toggle selected recognized text, like True to False
-
- regexTX   turn a list of space or coma seperated words into a dict
-           primarialy for Tk config and pack statements refactoring
-
- makatemp    run selected text or body thru reindent script
-             then call pychecker and optionally pylint on the file.
-             note: pychecker & pylint will import and therfore execute.
-
- pycheck2  doesn't import or compile the file first, like tim1crunch
-            can be concidered safe to examine untrusted code.
-            its in the pychecker dist, you have to install it by hand.
-            
- tim_one_crunch  an old program posted on a forum by tim one,
-                to report single use variables. good for debugging
-
-
- linenumber  print out selected text or body as Leo sees it
-             adding linenumbers or using an int in the copy buffer
-             to show a few lines before and after the target.
-
- sfdots add or remove dots from code posted on sourceforge forum
-
- swaper          swaps the selected text with copybuffer contents
-
- wraper uses textwrapper included in python 2.3
-        wrap paragraph to the length of the first line.
-
- restoreSTD sometimes it seems the redirect to log gets confused
-           this seems to only happen with callevaluator which
-          isnt in the plugin by default unless I forgot to remove it.
-T
- htmlize  curent node + subnodes. no selected text for now
-  produce file currently c:\windows\temp\python.html, you edit this.
-  colorized html of language python nodes 
-  @language css html perl c  other sent to silvercity if installed.
-  silvercity may not fully support java yet, please recomend something.
-  
-  du_test-str calls leoTest for @test and @suite nodes for unittests
-   otherwise runs doctest on the node and subnodes, a few quirks
-   did solve the temp file creation avoidance 
-   so no mymod.py, pyc pyo will litter the current dir!
-   properly redirects unittest output from @test now!
-
-  pydent, takes a node w/ w/o dots runs thru syntax check twice
-       evaluator and reindent and creates an import to @file
-       replace evaluator with Leo's prettyprint if no evaluator
-
-  disa  dissasembles the selected text code or node & subnodes.
-
-  nflatten  recursive list of headlines in a node and its subnodes.
-
-  fileinfo  grab the filename from selected text, copybuffer or @file
-        show the attributes, size create and mod date time
-
-still to solve the evaluator code, whaere is it?
- maybe will default to Leo's new pretty printer if ImportError
- and when you run it the stdout to log is confused. not sure why.
- running macro restoreStd fixes it.
- 
- there are other macros in the macrostore node,
- and the macros node of dynaclickbutton.
- you can copy or clone any which way you want to include the 
- items you require to appear in the dyna menu or dynabutton rclick.
-
-
-todo, single _doc__ output for any macro clicked on while doc is toggled
-possibly toggle error reporting, which is turned on full in dynabutton.
-add unit testing to the dynatester idea so plugin can be unittested
-each macro have a few go/nogo tests at minimum.
-although doctest would be preferred in most cases ,
-and unittest can do doctests since 2.3
-maybe I can understand how to do that without writeing a file to import.
-
 
 with the dyna plugin loaded you can do things in your scripts like:
     
@@ -271,17 +145,11 @@ that do something specific and not depending on global magic helps.
 its also easier to test single well defined functions.
 
 
-
-this version >.0420 breaks with 4.1 in a few places
-related to positions and scripting support.
-you can still grab the .032 version which works with Leo4.1
-lightly tested with py2.2 or Leo4.2a1,2,3,4 b1 from cvs
-
-v.0420+
-tested in Leo 4.2 Beta3+  and Python 2.3.3 win9x
+lightly tested with py2.2 or Leo4.3a3,4+ from cvs
+tested Python 2.3, 2.4.1 win9x
 
 should not be a problem anywhere else.
-but don't quote me on that.
+but don't quote me on that. make a bug report.
 
 for a productivity boost on windows,
 http://www.geoshell.com replacement explorer shell
@@ -294,12 +162,54 @@ based on the Netscape user.js and chrome.css and adds themes.
 
 e
 """
-
-#@-node:ekr.20050328091022.3:<< initilize >>
+#@nonl
+#@-node:ekr.20050328091952.3:<< initilize >>
+#@nl
+#@<< version history >>
+#@+node:ekr.20050328091952.4:<< version history >>
+#@+at
+# 0.0138 few changes since forum post
+# 
+# 0.0139 e
+#   - updates re Leo4.3 normpath and c for a few dialogs
+#   - some config options for htmlize and du_test
+#   - htmlize
+#    - code folding: still in process
+#    - improvements suggested by EKR & Bill P. not fully implimented
+#       change fonts to css as an option  no
+#       add a plain or RST output option  no
+#       hey I could use that myself quite  bit!
+#       did add option to stripnodesents, and stripdirectives & stripcomments 
+# now works
+#  - use subprocess if available when calling external pychecker & pylint
+#  - made justPychecker an option not to print source after checking
+#   - if you dont want to run pylint you have to edit the source.
+#   - pylint is more configurable and doesn't fail on import errors now
+#   - highly recomended. see dyna.txt for rc file and URLs'
+#   - added a few more flippers from the plugin_menu
+#     - for Leodebug, justPychecker and verbosity for @test and doctest
+#   - added back a macro uses dynaplay to comment out a python selected text
+#     many people asked for this, should get comment for whatever language is 
+# active.
+#     Leo can do this natively now but dyna can also put arbitrary text if you 
+# like.
+#   - cmd_flip_onoff_c_gotoline
+#   - htmlze
+#     -   switch on plain or rst, force @others and send to for docutils
+#        and there if there are subnodes of @language preprocess them
+#        somehow and this gets recursive and complicated...
+#     -  option on src-highlite or silvercity for the remaining languages
+#   + fix evaluator to select between Leo perttyprint, evaluator and
+#   + /UTIL/DLL/astyle.exe?--pad=oper --style=kr %N for  c,java & python +?
+# -a,b, leapahead to fix htmlize for plain and @rst as simple as possible
+#@-at
+#@nonl
+#@-node:ekr.20050328091952.4:<< version history >>
 #@nl
 NDebug = True and False
+dynaMvar = None
 #@+others
-#@+node:ekr.20050328091022.4:macros
+#@+node:ekr.20050328091952.5:macros
 #@+at
 # 
 # in theses macro nodes, copy or clone the macros
@@ -324,8 +234,32 @@ NDebug = True and False
 # that only works becase all parsing is done before calling
 # 
 #@-at
-#@+node:ekr.20050328091022.5:info macros
-#@+node:ekr.20050328091022.6:Graphviz node
+#@+node:ekr.20050328091952.6:info macros
+#@+node:ekr.20050328091952.7: Clip_dtef
+
+def dynaB_Clip_dtef(c, ret= 'cp'): #doesnt use c, clip, print, return
+    """add time text to the clipboard
+    ret='cpr' decide if to add to clipboard, print or return time text
+
+
+    """
+    try:
+        #custom datetime format
+        import binaryfun as bf
+        dt = bf.dtef()
+    except ImportError:
+        import time
+        #or whatever, Leo can insert time in body or headline
+        #Leoconfigformat = '%m/%d/%Y %H:%M.%S'
+        #dt = time.strftime(Leoconfigformat) 
+        dt = c.getTime(body=True)
+
+    if 'p' in ret: g.es('%s%s '%(EOLN, dt,) )
+    if 'c' in ret: g.app.gui.replaceClipboardWith(dt)
+    #ret = r necessary, if dont specify it clips & prints by default
+    if 'r' in ret: return dt  
+#@-node:ekr.20050328091952.7: Clip_dtef
+#@+node:ekr.20050328091952.8:Graphviz node
 
 def dynaB_Graphviznode(c= None):
     """take the EKR Graphviz pydot demo
@@ -389,9 +323,9 @@ def dynaB_Graphviznode(c= None):
          p = c.currentVnode()
 
     #@    << code >>
-    #@+node:ekr.20050328091022.7:<< code >>
+    #@+node:ekr.20050328091952.9:<< code >>
     #@+others
-    #@+node:ekr.20050328091022.8:addLeoNodesToGraph
+    #@+node:ekr.20050328091952.10:addLeoNodesToGraph
     
     def addLeoNodesToGraph(p, graph, top= False):
         """
@@ -482,8 +416,8 @@ def dynaB_Graphviznode(c= None):
     
         return thisNode
     #@nonl
-    #@-node:ekr.20050328091022.8:addLeoNodesToGraph
-    #@+node:ekr.20050328091022.9:tnode/vnodeLabel
+    #@-node:ekr.20050328091952.10:addLeoNodesToGraph
+    #@+node:ekr.20050328091952.11:tnode/vnodeLabel
     
     def tnodeLabel(t):
     
@@ -497,8 +431,8 @@ def dynaB_Graphviznode(c= None):
     def vnodeLabel(v):
         
         return "v %d %s" % (id(v),v.t.headString)
-    #@-node:ekr.20050328091022.9:tnode/vnodeLabel
-    #@+node:ekr.20050328091022.10:tnode/vnodeRepr
+    #@-node:ekr.20050328091952.11:tnode/vnodeLabel
+    #@+node:ekr.20050328091952.12:tnode/vnodeRepr
     
     def dotId(s):
         """Convert s to a C id"""
@@ -514,10 +448,10 @@ def dynaB_Graphviznode(c= None):
         
         return "v_%d_%s" % (id(v),dotId(v.headString()))
     
-    #@-node:ekr.20050328091022.10:tnode/vnodeRepr
+    #@-node:ekr.20050328091952.12:tnode/vnodeRepr
     #@-others
     #@nonl
-    #@-node:ekr.20050328091022.7:<< code >>
+    #@-node:ekr.20050328091952.9:<< code >>
     #@nl
         
     graph = pydot.Dot(simplify= True, ordering= "out")
@@ -534,32 +468,8 @@ def dynaB_Graphviznode(c= None):
 if __name__ != 'dyna_menu':
     dynaB_Graphviznode(c= None)
 #@nonl
-#@-node:ekr.20050328091022.6:Graphviz node
-#@+node:ekr.20050328091022.11: Clip_dtef
-
-def dynaB_Clip_dtef(c, ret= 'cp'): #doesnt use c, clip, print, return
-    """add time text to the clipboard
-    ret='cpr' decide if to add to clipboard, print or return time text
-
-
-    """
-    try:
-        #custom datetime format
-        import binaryfun as bf
-        dt = bf.dtef()
-    except ImportError:
-        import time
-        #or whatever, Leo can insert time in body or headline
-        Leoconfigformat = '%m/%d/%Y %H:%M.%S'
-        dt = time.strftime(Leoconfigformat) 
-
-
-    if 'p' in ret: g.es('\n%s '%(dt,) )
-    if 'c' in ret: g.app.gui.replaceClipboardWith(dt)
-    #ret = r necessary, if dont specify it clips & prints by default
-    if 'r' in ret: return dt  
-#@-node:ekr.20050328091022.11: Clip_dtef
-#@+node:ekr.20050328091022.12:linenumber
+#@-node:ekr.20050328091952.8:Graphviz node
+#@+node:ekr.20050328091952.13:linenumber
 
 def dynaB_linenumber(c):
     """show selected text or body as Leo sees it, 
@@ -588,7 +498,7 @@ def dynaB_linenumber(c):
     blank lines can be suspect too as they might have an odd number
     of spaces. show invisibles or run that section thru reindent.
     #@    << more debugging tips >>
-    #@+node:ekr.20050328091022.13:<< more debugging tips >>
+    #@+node:ekr.20050328091952.14:<< more debugging tips >>
     #@@nocolor
     pass, often needed if you comment out the only live statements
      in a try/except or if/else block
@@ -708,7 +618,7 @@ def dynaB_linenumber(c):
     execute script strips the @directives. derived files comment them.
     I think exscript now includes directives in Leo4.2, Yha! I think.
     #@nonl
-    #@-node:ekr.20050328091022.13:<< more debugging tips >>
+    #@-node:ekr.20050328091952.14:<< more debugging tips >>
     #@nl
 
     further enhancement, keep track of last section ref node
@@ -763,8 +673,8 @@ def dynaB_linenumber(c):
         g.es('%s'%(x,))
     g.es('There are %s lines in ? nodes'%(
             len(datalines),), color= 'turquoise4')
-#@-node:ekr.20050328091022.12:linenumber
-#@+node:ekr.20050328091022.14:nflatten
+#@-node:ekr.20050328091952.13:linenumber
+#@+node:ekr.20050328091952.15:nflatten
 
 def dynaB_nflatten(c= None):
     """like flatten but in macro so can
@@ -786,23 +696,42 @@ def dynaB_nflatten(c= None):
     uses dynacommon deangle, commafy 
     an ini setting could select just @nodes or just @file
     another could leave off the node counts and totals
+    
+    silly to create a newline connected string of rendered ints
+    then splitlines and int on the split string! 
+    better just return list of tupple?
+    will make no sense to anyone except if they've seen previous version
+    but is a major simplification, 
+    why it happened in the first place, is surely a mystry.
+    there may be a marginal tradeoff of computation for size of list
+    and in a recursive function this might matter, we'll see how it goes.
+    next will have to resolve why the total of all nodes != filesize
+    not even counting @thin etc
     """    
     import leoGlobals as g
     if c is None:
         c = g.top()
+
+    tbytes = 0
     oline = _nflatten(c, index= 1, sx= [])
     g.es("headString, +nodes, bytes")
-    for s in oline.splitlines():
+    for st in oline:
         try:
-            i, h, sz, nz = s.split(',')
+            i, hs, sz, nz = st
             g.es("%s%s, +%d, %s"%(
-                (' '*int(i)), h, int(nz), 
-                      g.choose(int(sz)<1024,
-                       '%s'%int(sz), '%sk'% commafy(int(sz))) ),
+                (' '*i), hs, nz, 
+                      g.choose(sz<1024,
+                       '%s'%sz, '%sk'% commafy(sz, '.')) ),
                      color= dycolors.gFuchsia)
+            tbytes += sz
         except Exception:
-            g.es(" EROR", s, color= dycolors.gError)
-            
+            g.es(" ", s, dynaerrline(), color= dycolors.gError)  #
+
+    if len(oline) > 1:
+        g.es(" =%s"%(
+            g.choose(tbytes<1024,'%s'%tbytes, '%sk'% commafy(tbytes, '.')),
+            ), color= dycolors.gFuchsia)
+        
 
 def _nflatten(c= None, current= None, indent= 0, index= 0, sx= None):
     """may be trying to combine too many things
@@ -810,14 +739,14 @@ def _nflatten(c= None, current= None, indent= 0, index= 0, sx= None):
     """
     if current is None:
         current = c.currentPosition()
-        t = "%d, %s, %d, %d"%(indent, deangle(current.headString()[:50]),
+        t = (indent, deangle(current.headString()[:50]),
             len(current.bodyString()), len(list(current.children_iter())) )
         #g.es(t, color="purple")
         sx.append(t)
         indent += 2
 
     for p in current.children_iter():
-        t = "%d, %s, %d, %d"%( indent, deangle(p.headString()[:50]),
+        t = ( indent, deangle(p.headString()[:50]),
             len(p.bodyString()), len(list(p.children_iter()))  )
         #g.es(t)
         sx.append(t)
@@ -825,14 +754,16 @@ def _nflatten(c= None, current= None, indent= 0, index= 0, sx= None):
             _nflatten(c, p, indent +2, index -1, sx)
             continue
 
-    return '\n'.join(sx)
+    return sx
 
+#need dynatester to supply missing color definitions to doctest
 #dynaB_nflatten()
-#@-node:ekr.20050328091022.14:nflatten
-#@+node:ekr.20050328091022.15:fileinfo
+#@nonl
+#@-node:ekr.20050328091952.15:nflatten
+#@+node:ekr.20050328091952.16:fileinfo
 
 #@+others
-#@+node:ekr.20050328091022.16:print perms
+#@+node:ekr.20050328091952.17:print perms
 
 def perms(name):
     """
@@ -854,7 +785,7 @@ def perms(name):
                 perms = perms + "-"
     return perms
  
-#@-node:ekr.20050328091022.16:print perms
+#@-node:ekr.20050328091952.17:print perms
 #@-others
 
 def dynaB_fileinfo(c= None, fname= None):
@@ -882,7 +813,7 @@ def dynaB_fileinfo(c= None, fname= None):
 
     def normit(fn): 
         #seems redundant till you get a weird join it fixes
-        return g.os_path_norm(fn)
+        return fn  #g.os_path_norm()
 
     if fname is None:
         fname = c.frame.body.getSelectedText()
@@ -960,10 +891,10 @@ def dynaB_fileinfo(c= None, fname= None):
 if __name__ != 'dyna_menu':
     dynaB_fileinfo()
 #@nonl
-#@-node:ekr.20050328091022.15:fileinfo
-#@-node:ekr.20050328091022.5:info macros
-#@+node:ekr.20050328091022.17:text macros
-#@+node:ekr.20050328091022.18:+dyna_backslash
+#@-node:ekr.20050328091952.16:fileinfo
+#@-node:ekr.20050328091952.6:info macros
+#@+node:ekr.20050328091952.18:text macros
+#@+node:ekr.20050328091952.19:+dyna_backslash
 
 def dynaM_backslash(c):
     """create a file monicur out of a path for IE or NS4
@@ -1055,8 +986,8 @@ if __name__ != 'dyna_menu':
         #need way to get something into the copy buffer 
         genteststr.tstlst = testbs()
         testmacro = 'dynaM_backslash'
-#@-node:ekr.20050328091022.18:+dyna_backslash
-#@+node:ekr.20050328091022.19:geturls
+#@-node:ekr.20050328091952.19:+dyna_backslash
+#@+node:ekr.20050328091952.20:geturls
 
 def dynaM_geturls(c):
     '''extract all urls from selected text. included som extra text.
@@ -1198,8 +1129,8 @@ target=_blank href="http://docs.geoshell.com/R4/GeoXWM">documentation</A>]
         genteststr.tstlst = testbs()
         testmacro = 'dynaM_geturls'
 #@nonl
-#@-node:ekr.20050328091022.19:geturls
-#@+node:ekr.20050328091022.20:swaper
+#@-node:ekr.20050328091952.20:geturls
+#@+node:ekr.20050328091952.21:swaper
 
 def dynaM_swaper(c):
     '''swap selected and copybuffer. a common task is to cut
@@ -1224,8 +1155,8 @@ def dynaM_swaper(c):
 
     if sx:        
         dynaput(c, sx)
-#@-node:ekr.20050328091022.20:swaper
-#@+node:ekr.20050328091022.21:flipper
+#@-node:ekr.20050328091952.21:swaper
+#@+node:ekr.20050328091952.22:flipper
 
 def dynaM_flipper(c):
     '''flip selected True to False, 1 to 0 or vice versa
@@ -1264,8 +1195,8 @@ def dynaM_flipper(c):
     if sx:        
         dynaput(c, sx)
 #@nonl
-#@-node:ekr.20050328091022.21:flipper
-#@+node:ekr.20050328091022.22:dupe
+#@-node:ekr.20050328091952.22:flipper
+#@+node:ekr.20050328091952.23:dupe
 
 def dynaM_dupe(c):
     '''very often I want to copy a line or 2, but I only realize
@@ -1293,8 +1224,8 @@ def dynaM_dupe(c):
 
     dynaput(c, sx)
 #@nonl
-#@-node:ekr.20050328091022.22:dupe
-#@+node:ekr.20050328091022.23:clipappend
+#@-node:ekr.20050328091952.23:dupe
+#@+node:ekr.20050328091952.24:clipappend
 
 def dynaM_clipappend(c):
     '''append selected to Clipboard
@@ -1305,8 +1236,8 @@ def dynaM_clipappend(c):
     Clip = g.app.gui.getTextFromClipboard()
     Clip += newSel
     g.app.gui.replaceClipboardWith(Clip)
-#@-node:ekr.20050328091022.23:clipappend
-#@+node:ekr.20050328091022.24:everycase
+#@-node:ekr.20050328091952.24:clipappend
+#@+node:ekr.20050328091952.25:everycase
 
 def dynaM_everycase(c):
     '''take the word or sentance and output in every case
@@ -1324,15 +1255,15 @@ def dynaM_everycase(c):
     for x in [
         s.upper(), '  ',
         s.lower(), '  ',
-        s.capitalize(), '\n',
+        s.capitalize(), EOLN,
         
         s.swapcase(), '  ',
         s.title(), '  ',
-        s.title().swapcase(), '\n',
+        s.title().swapcase(), EOLN,
 
         "'%s'"%s, '  ',
         "(%s)"%s, '  ',
-        "('%s')"%s.lower(), '\n',
+        "('%s')"%s.lower(), EOLN,
          ]:
         sx.append(x)
 
@@ -1340,8 +1271,8 @@ def dynaM_everycase(c):
     
     if sx:        
         dynaput(c, sx)
-#@-node:ekr.20050328091022.24:everycase
-#@+node:ekr.20050328091022.25:dyna_regexTk
+#@-node:ekr.20050328091952.25:everycase
+#@+node:ekr.20050328091952.26:dyna_regexTk
 
 def dynaM_regexTk(c):
     '''changing Tk pack options to dict's
@@ -1356,6 +1287,8 @@ def dynaM_regexTk(c):
 
 reWhitespace = re.compile( r'[,\s\n]+', re.MULTILINE )
 fields = reWhitespace.split( line )
+
+partially convert to EOLN, need to setup more tests first
     
     '''
     newSel = dynaput(c, [])
@@ -1375,8 +1308,8 @@ fields = reWhitespace.split( line )
         if x in '\'"':
             continue
 
-        if x in ' ,\n':
-            sx.append('\n')
+        if x in [' ', ',', EOLN]: #may fail in py2.2 w/\r\n
+            sx.append(EOLN)
             continue
 
         if x in '=:':
@@ -1400,7 +1333,7 @@ fields = reWhitespace.split( line )
         if not x: 
             continue
 
-        if x in ' ,\n': 
+        if x in [' ', ',', EOLN]: 
             sx.append(", ")
             continue
 
@@ -1459,8 +1392,8 @@ if __name__ != 'dyna_menu':
 
         genteststr.tstlst = testbs()
         testmacro = 'dynaM_regexTk'
-#@-node:ekr.20050328091022.25:dyna_regexTk
-#@+node:ekr.20050328091022.26:wraper
+#@-node:ekr.20050328091952.26:dyna_regexTk
+#@+node:ekr.20050328091952.27:wraper
 
 def dynaM_wraper(c):
     '''wrap selected to the len of the first line
@@ -1505,8 +1438,8 @@ def dynaM_wraper(c):
     g.es( "len= %d lines= %d len firstline= %d words= %d"%(
         len(data), len(datalines), width, len(data.split())) )
 #@nonl
-#@-node:ekr.20050328091022.26:wraper
-#@+node:ekr.20050328091022.27:+rsortnumb
+#@-node:ekr.20050328091952.27:wraper
+#@+node:ekr.20050328091952.28:+rsortnumb
 
 def dynaM_rsortnumb(c):
     """caller to dyna_sortnumb(c, d= 1 )
@@ -1515,8 +1448,8 @@ def dynaM_rsortnumb(c):
     dynaM_sortnumb.direction = 1
     dynaM_sortnumb(c)
 
-#@-node:ekr.20050328091022.27:+rsortnumb
-#@+node:ekr.20050328091022.28:+sortnumb
+#@-node:ekr.20050328091952.28:+rsortnumb
+#@+node:ekr.20050328091952.29:+sortnumb
 
 def dynaM_sortnumb(c):
     """do a numeric aware sort, add field selection later
@@ -1556,7 +1489,7 @@ def dynaM_sortnumb(c):
     if 1 == len(data.splitlines(True)):
         sx = [x + splitchar for x in data.split(splitchar)]
     else: 
-        multiline = '\n'
+        multiline = EOLN
         sx = data.splitlines() #True
         
         
@@ -1617,13 +1550,58 @@ def compnum(x, y ):
 
 #
 #@nonl
-#@-node:ekr.20050328091022.28:+sortnumb
-#@-node:ekr.20050328091022.17:text macros
-#@+node:ekr.20050328091022.29:codeing macros
-#@+node:ekr.20050328091022.30:pydent
+#@-node:ekr.20050328091952.29:+sortnumb
+#@+node:ekr.20050328091952.30:del_last_char
+
+def dynaM_del_last_char(c):
+    """like del first char in the line except
+    delete the last char in all the selected lines
+
+    """
+    newSel = dynaput(c, [])
+    if not newSel: return
+    
+    try:
+        newSel = str(newSel)
+    except (UnicodeEncodeError, Exception):
+        g.es_exception(full= False)
+
+
+    sx = []
+    for x in newSel.splitlines():
+        sx.append(x[:-1] + EOLN )
+
+    dynaput(c, sx)
+#@-node:ekr.20050328091952.30:del_last_char
+#@+node:ekr.20050328091952.31:call_dynaplay
+
+def dynaM_dynaplay(c):
+    """first cut attempt to get playback of commands into buffer
+    currently whatever is in the copy buffer or '#'
+    also unless set to paste it won't look like its working
+    might change when leo has python instead of Tk indexes
+    """    
+    #dynaplay(c, ['#', '%%C,[home]', '%%C,[down]', '%%C,[repeat]' )
+    #dynaplay(c, ['#', '%%C,[home]', '%%C,[down]4', '%%C,[repeat]3'] )
+
+    #could get the Leo single char comment from whichever @language
+    stext = g.app.gui.getTextFromClipboard()
+    if not stext: stext = '#'
+    dynaplayer(c, [stext, '%%C,[home]', '%%C,[down]',] )  #works
+    
+    #here it gets tricky changing print x, y, z or print x + y #
+    #in find/change it would also be difficult
+    #this one needs work, end not implimented
+    #also not tested with single line selection
+    #would need to go outside the selection to do this
+    #dynaplay(c, ['g.es(', '%%C,[end]', ' )', '%%C,[home]', '%%C,[down]',] )
+#@-node:ekr.20050328091952.31:call_dynaplay
+#@-node:ekr.20050328091952.18:text macros
+#@+node:ekr.20050328091952.32:codeing macros
+#@+node:ekr.20050328091952.33:pydent
 
 #@<< checkFileSyntax >>
-#@+node:ekr.20050328091022.31:<< checkFileSyntax >>
+#@+node:ekr.20050328091952.34:<< checkFileSyntax >>
 #from leoTest params opposit from there
 def checkFileSyntax(s, fileName= 'Script'):
     """too hard to get the traceback exact in full= False
@@ -1654,7 +1632,7 @@ def checkFileSyntax(s, fileName= 'Script'):
 
     return False
 #@nonl
-#@-node:ekr.20050328091022.31:<< checkFileSyntax >>
+#@-node:ekr.20050328091952.34:<< checkFileSyntax >>
 #@nl
 
 #us pydent descriptive? more like pyimportwithindent
@@ -1736,8 +1714,8 @@ do I need a pause or update between the selectall and an action?
 #need an if exS because this gets run from doctest
 #dynaS_pydent(None)
 
-#@-node:ekr.20050328091022.30:pydent
-#@+node:ekr.20050328091022.32:disa
+#@-node:ekr.20050328091952.33:pydent
+#@+node:ekr.20050328091952.35:disa
 
 def dynaS_pydisa(c= None, dopt={}):
     """produce a dissasembly into python bytecodes
@@ -1763,8 +1741,7 @@ def dynaS_pydisa(c= None, dopt={}):
     if not newSel or len(newSel) == 0:
         return
 
-    #should fixbody stripping sentinals per a sentstrip=True?
-    newSel = sentstrip(newSel)
+    newSel = stripSentinels(newSel)
 
     g.es('dissasembly of: '+ p.headString()[:50])
     g.es(newSel, color= 'MediumOrchid4')
@@ -1780,13 +1757,8 @@ def dynaS_pydisa(c= None, dopt={}):
     sys.stdout = sys.__stdout__
 
     g.es(s.replace('   ', ' '), color= 'sienna3')
-
-
-
-#dynaS_pydisa()
-#@nonl
-#@-node:ekr.20050328091022.32:disa
-#@+node:ekr.20050328091022.33:changeleoGlobal
+#@-node:ekr.20050328091952.35:disa
+#@+node:ekr.20050328091952.36:changeleoGlobal
 
 def dynaS_changeleoGlobal(c):
     '''converted to dyna to work on the current node
@@ -1831,7 +1803,7 @@ should skip directive lines incase is a path same as word in globals
     import string
 
     #@    @+others
-    #@+node:ekr.20050328091022.34:getgnames
+    #@+node:ekr.20050328091952.37:getgnames
     
     
     import leoGlobals as g
@@ -1860,8 +1832,8 @@ should skip directive lines incase is a path same as word in globals
         for name in getgnames():
                 g.es(name)
     #@nonl
-    #@-node:ekr.20050328091022.34:getgnames
-    #@+node:ekr.20050328091022.35:subtree_iter
+    #@-node:ekr.20050328091952.37:getgnames
+    #@+node:ekr.20050328091952.38:subtree_iter
     
     #@verbatim
     #@+node:EKR.20040528151551.2:self_subtree_iter`from 4.2 branch
@@ -1876,8 +1848,8 @@ should skip directive lines incase is a path same as word in globals
                 child = child.next()
                 
     dynaself_and_subtree_iter = dynasubtree_iter
-    #@-node:ekr.20050328091022.35:subtree_iter
-    #@+node:ekr.20050328091022.36:moveToNext
+    #@-node:ekr.20050328091952.38:subtree_iter
+    #@+node:ekr.20050328091952.39:moveToNext
     
     def dynamoveToNext(p):
         
@@ -1887,8 +1859,8 @@ should skip directive lines incase is a path same as word in globals
         p = p and p.next()
         
         return p
-    #@-node:ekr.20050328091022.36:moveToNext
-    #@+node:ekr.20050328091022.37:prependNamesInTree
+    #@-node:ekr.20050328091952.39:moveToNext
+    #@+node:ekr.20050328091952.40:prependNamesInTree
     
     def prependNamesInTree(p, nameList, prefix, replace= False):
         
@@ -1909,7 +1881,7 @@ should skip directive lines incase is a path same as word in globals
                     i = 0 ; n = len(name)
                     while 1:
                         #@                    << look for name followed by '(' >>
-                        #@+node:ekr.20050328091022.38:<< look for name followed by '(' >>
+                        #@+node:ekr.20050328091952.41:<< look for name followed by '(' >>
                         i = s.find(name, i)
                         if i == -1:
                             break
@@ -1937,7 +1909,7 @@ should skip directive lines incase is a path same as word in globals
                                         printFlag = True
                                         # print p.headString()
                                     g.es(g.get_line(s,i-n))
-                        #@-node:ekr.20050328091022.38:<< look for name followed by '(' >>
+                        #@-node:ekr.20050328091952.41:<< look for name followed by '(' >>
                         #@nl
     
                 #assume s is the word, wont catch app() anymore?
@@ -1947,14 +1919,14 @@ should skip directive lines incase is a path same as word in globals
                 if count and replace:
                     if 1:
                         #@                    << print before and after >>
-                        #@+node:ekr.20050328091022.39:<< print before and after >>
+                        #@+node:ekr.20050328091952.42:<< print before and after >>
                         g.es("-"*10,count, p.headString())
                         g.es("before...")
                         g.es(p.bodyString())
                         #g.es("-"*10, "after...")
                         #g.es(s)
                         #@nonl
-                        #@-node:ekr.20050328091022.39:<< print before and after >>
+                        #@-node:ekr.20050328091952.42:<< print before and after >>
                         #@nl
                     p.setBodyStringOrPane(s)
                     p.setDirty()
@@ -1963,7 +1935,7 @@ should skip directive lines incase is a path same as word in globals
         c.endUpdate()
         return total
     #@nonl
-    #@-node:ekr.20050328091022.37:prependNamesInTree
+    #@-node:ekr.20050328091952.40:prependNamesInTree
     #@-others
 
     c = g.top()
@@ -1984,7 +1956,7 @@ should skip directive lines incase is a path same as word in globals
 
 
     #g.alert(mess)  #g.app.gui
-    ans = runAskYesNoCancelDialog("changeleoGlobal", 
+    ans = runAskYesNoCancelDialog(c,"changeleoGlobal", 
             message= mess, yesMessage= 'ok')
 
     if 'ok' != ans: g.es('changeleoGlobal cancled'); return
@@ -2014,8 +1986,8 @@ should skip directive lines incase is a path same as word in globals
     #g.es('click outside node to see changes') #fixed in v4.2b3
     c.redraw()
 
-#@-node:ekr.20050328091022.33:changeleoGlobal
-#@+node:ekr.20050328091022.40:c2py
+#@-node:ekr.20050328091952.36:changeleoGlobal
+#@+node:ekr.20050328091952.43:c2py
 
 def dynaS_c2py(c):
     """call the fantastic first cut c2py script
@@ -2131,7 +2103,7 @@ def convertCurrentTree():
      and there is no undo
      """
     #g.alert(mess)  #g.app.gui
-    ans = runAskYesNoCancelDialog("c2py",
+    ans = runAskYesNoCancelDialog(c, "c2py",
                  message= mess, yesMessage= 'ok')
 
     if 'ok' != ans: g.es('c2py cancled'); return
@@ -2157,8 +2129,8 @@ def convertCurrentTree():
     #out, err = runcmd(cmd)
     #g.es('click outside node to see changes') #fixed in v4.2b3
     c.redraw()  #update nor redraw seems to work
-#@-node:ekr.20050328091022.40:c2py
-#@+node:ekr.20050328091022.41:+dynaHexdump
+#@-node:ekr.20050328091952.43:c2py
+#@+node:ekr.20050328091952.44:+dynaHexdump
 
 def dynaS_dump_body(c, ret= 'p'):
     """yadayada call hexdump, on selected text or body
@@ -2210,8 +2182,8 @@ def dynaHexdump(src, length=8):
         result.append("%04X   %-*s   %s  % 3dd" % (N, length * 3, hexa, s, N) )
         N += length
     return '\n'.join(result)
-#@-node:ekr.20050328091022.41:+dynaHexdump
-#@+node:ekr.20050328091022.42:_sfdots
+#@-node:ekr.20050328091952.44:+dynaHexdump
+#@+node:ekr.20050328091952.45:_sfdots
 
 def dynaS_sfdots(c, nodotreturn= False, stripsentinals= True):
     """w04310p3:22 process code from sourceforge forum
@@ -2293,7 +2265,7 @@ allow from/to of intrepreter >>> ... for doctest prep
         repchar=' '
     
     if stripsentinals:
-        data = sentstrip(data)
+        data = stripSentinels(data, stripnodesents=0 )
 
     #4,3
     lines = ('4,4\n' + str(data.expandtabs(4))).splitlines(True)
@@ -2350,8 +2322,8 @@ allow from/to of intrepreter >>> ... for doctest prep
     #reindent or evaluator would help too. before the dots obiously
     dynaput(c, sx)    
     
-#@-node:ekr.20050328091022.42:_sfdots
-#@+node:ekr.20050328091022.43:+call_evaluator
+#@-node:ekr.20050328091952.45:_sfdots
+#@+node:ekr.20050328091952.46:+call_evaluator
 
 def dynaS_evaluator(c):
     """calc_util.py and its unit tests and rClickclass 
@@ -2426,8 +2398,8 @@ def dynaS_evaluator(c):
 
 #
 #@nonl
-#@-node:ekr.20050328091022.43:+call_evaluator
-#@+node:ekr.20050328091022.44:makatemp
+#@-node:ekr.20050328091952.46:+call_evaluator
+#@+node:ekr.20050328091952.47:makatemp
 
 def dynaS_makatemp(c):
     '''create a file and lightly test it.
@@ -2492,9 +2464,14 @@ def dynaS_makatemp(c):
   ***************
   all paths below are woefully hardwired, you must edit them all.
   you may have to download pychecker and or pylint and install it too.
+  
+should   we insert # -*- coding: utf8 -*-
+ at the top of the file? or cp1252 or mbswhatever if on windows
+ should getscript have that option?
+ and dyna does this in several places, need to cosolidate them into one place
     '''
     #1no print, reindent to create tmp then pychecker on that tmp
-    justPyChecker = 0
+    justPyChecker = g.app.dynaMvar.justPyChecker
 
 
     newSel = dynaput(c, [])
@@ -2593,7 +2570,7 @@ def dynaS_makatemp(c):
 
     g.es('writeing tmpname', tmpname )
     fo = file(tmpname,'w')
-    fo.writelines(data + "\n#e\n")
+    fo.writelines(data + "%s#e%s"%(EOLN, EOLN, ))
     fo.close()
     
     if doreindent:
@@ -2659,8 +2636,8 @@ Tk = Tkinter
         genteststr.tstlst = lst
         testmacro = 'dynaM_makatemp'
 #@nonl
-#@-node:ekr.20050328091022.44:makatemp
-#@+node:ekr.20050328091022.45:pycheck2
+#@-node:ekr.20050328091952.47:makatemp
+#@+node:ekr.20050328091952.48:pycheck2
 
 def dynaS_pycheck2(c):
     '''this takes a long time 
@@ -2700,7 +2677,7 @@ import cPickler; print cPickle.__doc__
   but after a few runs it came back, going to have to del the t
     '''
     #1no print, reindent to create tmp then pychecker on that tmp
-    justPyChecker = 1
+    justPyChecker = g.app.dynaMvar.justPyChecker
     CACHE_FILE = '/temp/t'  #defined in pychecker2.main
 
     newSel = dynaput(c, [])
@@ -2720,13 +2697,14 @@ import cPickler; print cPickle.__doc__
 
     g.es('writeing tmpname', tmpname )
     fo = file(tmpname,'w')
-    fo.writelines(data + "\n#e\n")
+    fo.writelines(data + "%s#e%s"%(EOLN, EOLN, ))
     fo.close()
     
-    g.es('running reindent', py + reindent + tmpname )
-    out, err = runcmd(py + reindent + tmpname)
-    for x in (out + err).splitlines():
-        g.es(x)
+    if not justPyChecker:
+        g.es('running reindent', py + reindent + tmpname )
+        out, err = runcmd(py + reindent + tmpname)
+        for x in (out + err).splitlines():
+            g.es(x)
 
     #see if this works, dyna_menu. didnt, maybe g.dyna_menu., lg.?
     #pristine enviorment?
@@ -2747,8 +2725,9 @@ import cPickler; print cPickle.__doc__
     
 
     g.es('done ', color='blue' ) 
-#@-node:ekr.20050328091022.45:pycheck2
-#@+node:ekr.20050328091022.46:tim_one_crunch
+#@nonl
+#@-node:ekr.20050328091952.48:pycheck2
+#@+node:ekr.20050328091952.49:tim_one_crunch
 
 def dynaS_tim_one_crunch(c):
     '''
@@ -2792,7 +2771,7 @@ def dynaS_tim_one_crunch(c):
     This is much dumber than the other approaches on the table, but has the clear advantage that it's written <wink>, and catches things like "bound but never used" (including-- and this is a mixed blessing! --functions & classes defined but not referenced in their file). 
         '''
     #1no print, reindent to create tmp then checker on that tmp
-    justPyChecker = 0
+    justPyChecker = g.app.dynaMvar.justPyChecker
 
 
     newSel = dynaput(c, [])
@@ -2807,13 +2786,14 @@ def dynaS_tim_one_crunch(c):
 
     g.es('writeing tmpname', tmpname )
     fo = file(tmpname,'w')
-    fo.writelines(data + "\n#e\n")
+    fo.writelines(data + "%s#e%s"%(EOLN, EOLN, ))
     fo.close()
     
-    g.es('running reindent', py + reindent + tmpname )
-    out, err = runcmd(py + reindent + tmpname)
-    for x in (out + err).splitlines():
-        g.es(x)
+    if not justPyChecker:
+        g.es('running reindent', py + reindent + tmpname )
+        out, err = runcmd(py + reindent + tmpname)
+        for x in (out + err).splitlines():
+            g.es(x)
 
     o = file(tmpname)
     so = StringIO.StringIO(o.read())
@@ -2835,7 +2815,7 @@ def dynaS_tim_one_crunch(c):
 
 #
 #@nonl
-#@+node:ekr.20050328091022.47:Bugfixcrunch
+#@+node:ekr.20050328091952.50:Bugfixcrunch
 
 def Bugfixcrunch(getline):
     """u04523p12:01:20  madifying use of globals with 
@@ -3021,7 +3001,7 @@ def Bugfixcrunch(getline):
 
     #del regex, keyword
     #@    << bfcrunch >>
-    #@+node:ekr.20050328091022.48:<< bfcrunch >>
+    #@+node:ekr.20050328091952.51:<< bfcrunch >>
     
     def bfcrunch(getline, filename='???.py' ):
         # for speed, give local names to compiled regexps
@@ -3158,16 +3138,16 @@ def Bugfixcrunch(getline):
                         line=where[1],
                         level=CAUTION )
     
-    #@-node:ekr.20050328091022.48:<< bfcrunch >>
+    #@-node:ekr.20050328091952.51:<< bfcrunch >>
     #@nl
 
     bfcrunch(getline, filename= 'exS')
 
-#@-node:ekr.20050328091022.47:Bugfixcrunch
-#@-node:ekr.20050328091022.46:tim_one_crunch
-#@-node:ekr.20050328091022.29:codeing macros
-#@+node:ekr.20050328091022.49:pre/post macros
-#@+node:ekr.20050328091022.50:+DQ3
+#@-node:ekr.20050328091952.50:Bugfixcrunch
+#@-node:ekr.20050328091952.49:tim_one_crunch
+#@-node:ekr.20050328091952.32:codeing macros
+#@+node:ekr.20050328091952.52:pre/post macros
+#@+node:ekr.20050328091952.53:+DQ3
 
 def dynaZ_DQ3(c):
     """enclose the selected txt in  whatever is in the copy buffer 
@@ -3207,8 +3187,8 @@ def dynaZ_DQ3(c):
     #get cute and use a reverse dict if repchar in .values()
     revdict = dict([[v, k] for k, v in repdict.items()])
 
-    #add some specialized sourounders,
-    repdict.update({'try':'except', 'if':'else', })
+    #add some specialized sourounders, need to add to choice menu in putmenu
+    repdict.update({'try':'except', 'if':'else', '>>>':'...',})
     
     #could also use a method if # or //, then put at front of every line
 
@@ -3227,18 +3207,21 @@ def dynaZ_DQ3(c):
     #   these will messup because they dont try to follow proper indent
     #  for language another than python obviously you would need more
     if repchar == 'try':
-        sx.append('\n%s:\n    %s%s Exception:\ng.es_exception("eme", full= True)'%(
+        sx.append('\n%s:\n    %s %s Exception:\ng.es_exception("eme", full= True)'%(
                 repchar, data, rep2char))
     elif repchar == 'if':
         sx.append('\n%s 1 == 1:\n    %s%s:\npass'%(
                 repchar, data, rep2char))
+    elif repchar == '>>>':
+        sx.append('\n    """\n    %s\n    %s %s\n    """\n'%(
+                repchar, rep2char, data ))
     else:
         sx.append('%s%s%s'%(repchar, data, rep2char))
         
     if not newSel: g.es(''.join(sx) ) #life is too short
     else: dynaput(c, sx)
-#@-node:ekr.20050328091022.50:+DQ3
-#@+node:ekr.20050328091022.51:du_test-str
+#@-node:ekr.20050328091952.53:+DQ3
+#@+node:ekr.20050328091952.54:du_test-str
 """ if you runthis script on itself it can get infinate on you.
 not anymore, but if you do get some recursion in your script,
   if you have a console hit ^C once. save your work often.
@@ -3254,6 +3237,13 @@ not anymore, but if you do get some recursion in your script,
  there are a few examples in dynacommon, sanitizte_ , ??
 
  fixed problem for py2.4, master removed from doctest __all__ 
+verbosity= fails if leoTest 4.3a1 or earlier
+
+can an option be the first time you click on a dyna item
+it becomes a button. 
+du_test, delfirstchar often you can't stop at just once.
+
+0 passed and 0 failed. shoud report even if verbosity 0
 """
 #@+at
 # 
@@ -3273,7 +3263,7 @@ not anymore, but if you do get some recursion in your script,
 import leoGlobals as g
 
 #@<< Classes >>
-#@+node:ekr.20050328091022.52:<< Classes >>
+#@+node:ekr.20050328091952.55:<< Classes >>
 import os, sys, time
 
 import StringIO
@@ -3298,20 +3288,20 @@ else: win_version += ' py<21'
 #@verbatim
 #@suite unittestfromdoctest needs py2.3
 
-import unittest
-class _t_(unittest.TestCase):
-    def runTest(self):
-        pass
 try:
     g.app._t
 except Exception:
+    import unittest
+    class _t_(unittest.TestCase):
+        def runTest(self):
+            pass
     _t = _t_()
     g.app._t = _t  #allow you to use _t in your script
     del _t
     #del unittest?
 
 #@+others
-#@+node:ekr.20050328091022.53:ExitError
+#@+node:ekr.20050328091952.56:ExitError
 class ExitError(Exception):
     """
     this is a cleaner way to exit a script
@@ -3325,8 +3315,8 @@ class ExitError(Exception):
 
     def __str__(self):
         return `self.value`
-#@-node:ekr.20050328091022.53:ExitError
-#@+node:ekr.20050328091022.54:importCode
+#@-node:ekr.20050328091952.56:ExitError
+#@+node:ekr.20050328091952.57:importCode
 """aspncookbook/82234
 Importing a dynamically generated module
 by Anders Hammarquist
@@ -3373,8 +3363,22 @@ def importCode(code, name, add_to_sys_modules= 0):
             del(sys.modules[name])
     
         modl = imp.new_module(name )  #was module
-    
-        exec code + '\n' in modl.__dict__
+
+        #problem if run du_test now on new Leo4.3 scripts w/o c,g,p defined
+        #shoulden't matter if its other than c,g,p then still errors?
+        #might not even be necessary. had a script that was a getscript on itself
+        try:
+            exec code + '\n' in modl.__dict__ #du_test
+        except AttributeError, e:
+            g.es('%s\npossibly no doc string defined?'%(e,))
+            g.g.es_exception(full= True)
+
+        except NameError:
+            c = g.top(); p = c.currentPosition()
+            d = {'c':c, 'p':p, 'g':g}
+            g.es('*** defining c,g & p ***')
+            modl.__dict__.update(d)
+            exec code + '\n' in modl.__dict__ #du_test w/c,g,p
 
         if add_to_sys_modules:
             sys.modules[name ] = modl
@@ -3409,10 +3413,10 @@ _t = _t_()
 
 #
 #@nonl
-#@-node:ekr.20050328091022.54:importCode
+#@-node:ekr.20050328091952.57:importCode
 #@-others
 #@nonl
-#@-node:ekr.20050328091022.52:<< Classes >>
+#@-node:ekr.20050328091952.55:<< Classes >>
 #@nl
 
 def dynaZ_du_test(c= None):
@@ -3437,11 +3441,15 @@ def dynaZ_du_test(c= None):
     is redirecting the unittest error to log properly. 
     try append -v to argv, no luck.
     need setting for verbose in leoTest instead of hardwired call
-    verbose=False
+    dyna_menu.ini verbosity=0/1/2
 
     must be in leoText. run w/console python -i open to see
     need version 2.3. convert a doctest into a unittest if use leoTest
-    du_test doesnt create temp files and doesnt require @file
+    du_test doesn't create temp files and doesn't require @file
+seems I have developed a superstition about reload of sys and unittest. 
+but dammed if @test nodes stoped redirecting, so reloads are back in again!
+put all 3 back but one or the other might be enough. subject closed again.
+flip verbose now flips 0 to 1, 1 to 2 and 2 to 0, default starts out at 0
 
     """
     import doctest
@@ -3482,13 +3490,13 @@ def dynaZ_du_test(c= None):
 
     reload(sys)
     #print sys.argv
-    if not '-v' in sys.argv:
-        sys.argv.append('-v')
-        g.es(sys.argv)
+    #if not '-v' in sys.argv:
+    #    sys.argv.append('-v')
+    #    g.es(sys.argv)
 
     #@    << n_redirect >>
-    #@+middle:ekr.20050328091022.55:guts
-    #@+node:ekr.20050328091022.56:<< n_redirect >>
+    #@+middle:ekr.20050328091952.58:guts
+    #@+node:ekr.20050328091952.59:<< n_redirect >>
     #when run on @test print goes to console
     #this simple redirect isnt working
     #might need to set stdout/err more forcefully
@@ -3531,8 +3539,8 @@ def dynaZ_du_test(c= None):
         #os.dup2(1, sys.__stderr__.fileno())
         os.dup2(f.fileno, sys.__stderr__.fileno())
         #os.dup2(f.fileno(), sys.stderr.fileno())
-    #@-node:ekr.20050328091022.56:<< n_redirect >>
-    #@-middle:ekr.20050328091022.55:guts
+    #@-node:ekr.20050328091952.59:<< n_redirect >>
+    #@-middle:ekr.20050328091952.58:guts
     #@afterref
   #a bad named section is ignored when run
     #import/reload after redirect fixes redirect to log from unittest
@@ -3543,29 +3551,19 @@ def dynaZ_du_test(c= None):
     reload(leoTest)
     
 
-    if p.headString().startswith('@test '):
-        leoTest.doTests(all= False)  #,verbose= config.du_test_verbose
+    if p.headString().startswith('@test ') or\
+         p.headString().startswith('@suite '):
+        leoTest.doTests(all= False,
+         verbosity= g.app.dynaMvar.du_test_verbose) #
 
-    elif p.headString().startswith('@suite '):
-        #@        << TestSuite >>
-        #@+middle:ekr.20050328091022.55:guts
-        #@+node:ekr.20050328091022.57:<< TestSuite >>
-        suite = unittest.makeSuite(unittest.TestCase)
-        leoTest.makeTestSuite (c, p)
-        g.app.scriptDict['suite'] = suite
-        leoTest.doTests(all= False)
-        #@nonl
-        #@-node:ekr.20050328091022.57:<< TestSuite >>
-        #@-middle:ekr.20050328091022.55:guts
-        #@nl
     else:
         #@        << DocTest >>
-        #@+middle:ekr.20050328091022.55:guts
-        #@+node:ekr.20050328091022.58:<< DocTest >>
+        #@+middle:ekr.20050328091952.58:guts
+        #@+node:ekr.20050328091952.60:<< DocTest >>
         
         tmpimp = tmp = 'mymod' #name for the mock module
         
-        g.es('mock writeing ', tmpimp)  #
+        #g.es('mock writeing ', tmpimp)  #
         fo = None
         
         try:
@@ -3602,7 +3600,7 @@ def dynaZ_du_test(c= None):
             if mod:
                 #need to tell it to ignore testing class t_
         
-                doctest.testmod(mod, verbose= 1,
+                doctest.testmod(mod, verbose= g.app.dynaMvar.du_test_verbose,
                      report= 1, globs=None, isprivate= doctest.is_private)
                 #doctest.master.summarize()
                 try:
@@ -3618,13 +3616,13 @@ def dynaZ_du_test(c= None):
         
         if fo: fo.close() 
         #@nonl
-        #@-node:ekr.20050328091022.58:<< DocTest >>
-        #@-middle:ekr.20050328091022.55:guts
+        #@-node:ekr.20050328091952.60:<< DocTest >>
+        #@-middle:ekr.20050328091952.58:guts
         #@nl
 
     #@    << f_redirect >>
-    #@+middle:ekr.20050328091022.55:guts
-    #@+node:ekr.20050328091022.59:<< f_redirect >>
+    #@+middle:ekr.20050328091952.58:guts
+    #@+node:ekr.20050328091952.61:<< f_redirect >>
     #code below may cause problem if not run 
     #if except traps further up
     #needs its own try/finally
@@ -3658,10 +3656,10 @@ def dynaZ_du_test(c= None):
     
     if use_Leo_redirect != 1:
         for x in (oo + oe).splitlines():
-            g.es('%r'%x, color= 'chocolate')
+            g.es('%s'%x, color= 'chocolate')
     #@nonl
-    #@-node:ekr.20050328091022.59:<< f_redirect >>
-    #@-middle:ekr.20050328091022.55:guts
+    #@-node:ekr.20050328091952.61:<< f_redirect >>
+    #@-middle:ekr.20050328091952.58:guts
     #@nl
 
     g.es('nonews is goodnews%s'%(g.choose(pyO[0] == 'O', ' +-O', ''),),
@@ -3674,18 +3672,10 @@ def dynaZ_du_test(c= None):
     #bad color here causes too much traceback
     #c.frame.statusText.configure(background="AntiqueWhite2")
 
-
-#setup while testing as scriptButton
-if __name__ !=  'dyna_menu':
-    try:
-        dynaZ_du_test()
-    except Exception:
-        g.es_exception()
-#@nonl
-#@+node:ekr.20050328091022.55:guts
-#@-node:ekr.20050328091022.55:guts
-#@-node:ekr.20050328091022.51:du_test-str
-#@+node:ekr.20050328091022.60: htmlize
+#@+node:ekr.20050328091952.58:guts
+#@-node:ekr.20050328091952.58:guts
+#@-node:ekr.20050328091952.54:du_test-str
+#@+node:ekr.20050328091952.62: htmlize
 
 def dynaZ_htmlize(c= None):
     """htmlize a script, popup webbrowser to show.
@@ -3696,12 +3686,13 @@ def dynaZ_htmlize(c= None):
     you must edit in browser & filename, 
        explorer c:\WINDOWS\TEMP\python.html
        or use %tmp%/htmlfile.html defined in dynacommon
-
+    #@    <<more doc>>
+    #@+node:ekr.20050328091952.63:<<more doc>>
     you can tweek the title in the format and sanitize_ method
     edit in your favorite style bits there too.
     copy silver_city.css where the filename will be
-
-	uses psyco if available.
+    
+    uses psyco if available.
     
     script should be python, free from most syntax errors 
     but accepts other languages 
@@ -3709,31 +3700,84 @@ def dynaZ_htmlize(c= None):
     for now call another parser, silvercity if it exists.
     sends @language css html perl c java and others to silvercity
     (not fully tested in all languages for all syntax)
-
+    
     you can choose to colorize Names, Operators and Numbers seperately
     or not at all by editing the htmlize macro hopts dictionary. 
     Note: filesize larger if all 3 different than Text color.
-
+    
     needs Leo4.2 but is easily revertable.
-
+    
     could add linenumber and code metrics options.
-
+    
     can make it capable of reading writing a file as well?
     wonder can I open browser and send it virtual html like in js?
     might mod for class & span instead of pre & font
-
+    
     have to have path set for getScript to work. 
     in new leo it will traceback if not saved once?
     added some traps for empty script. 
     meaningfull errors messages can't really be determiate
     w/o some novice/expert clue from the system. 
     have a few depandancies on dyna otherwise could be scriptButton
-    might use python webbrowser.
-
-http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
+    use python webbrowser.
+    add experimental code folding on def & class for python only
+     works in IE5 and firefox1 and shouldent affect others much
+     might just be an extra header above def and class
+     eventually will option it invisable for printing and copy&paste
+     enable/disable in the htmlize options bunch as with other options
+     and there would be an ini option available too in the great beyond.
+    its cutting the def/class name and not enclosing the body of it
+    
+    this guy took it to the next level, like the idea of color themes.
+    http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
+    
+    more advanced stripSentinals suggested by EKR.
+    getconfig for ini options in hopts
+    need another option to looklikeLeo
+    show directives but not commented out, 
+    others w/o excess space, verbatim as it is etc
+    then can almost use extract named section to recreate nodes
+    
+    if showdefaults, it doesn't take into account
+    the override factor in the defaults in hopts
+    complicated by Properties dialog not being able to handle them all
+    need to have more than one ini seletable as well
+    for various class or color schemes or some other way to select them
+    which css to embed. maybe get it from parsing a parent node or ???
+    
+    seems to be taking little longer to popup browser in py2.4.1, not always.
+    if not python should check for silvercity, then one of the others
+    maybe need option default colorizer, otherwise there is too much guessing.
+    if neither then output as text. as it is now, temfile is written first
+    and only output as text if it is not one of silvercity languages
+    the others have more or less languages supported. a config nightmare.
+    check is @file and offer to produce file.xyz.html
+    check is @rst and if option dorst then send plain to docutils?
+    add option css/font and if css 
+    then eliminate dups is mandatory, css triples filesize.
+    
+    option   silvercity or src-hilite for other than plain or rst or @rst
+    sent plain or rst to docutils if if available 
+      else pre/pre w/wraping and headlines made of any node healines
+    
+    there should be an @language rst to help with REST syntax 
+    possibly this would be a major pain just because.
+    idea for further study though. @rst for now good enough
+    and should not interfere with any rst* plugin
+    #@nonl
+    #@-node:ekr.20050328091952.63:<<more doc>>
+    #@nl
+    
+    wonder still about how to solve encoding?
+    rst/plain option not fully realized
+    source-highlite still wants to make verbose to stderr?
+    finish implementing EOLN and check in plain per body
+    for new directives of wrap and lineending and language
+    will any of this output survive various encoding
+    will it validate as error free html?
     """
     #@    << initilize >>
-    #@+node:ekr.20050328091022.61:<< initilize >>
+    #@+node:ekr.20050328091952.64:<< initilize >>
     import os, sys
     import leoGlobals as g
     
@@ -3747,18 +3791,23 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
     #doesnt help the silvercity branch
     
     base_class = object #is object in py2.2
-    try:
-        # If available use the psyco optimizing
-        import psyco.classes
-        if sys.version_info[:2] >= (2, 3):
-            base_class = psyco.classes.psyobj
-    except ImportError:
-        pass 
+    if 1:
+        try:
+            # If available use the psyco optimizing
+            #might psyco be enabled elsewhere and still work in here?
+            import psyco.classes
+            if sys.version_info[:2] >= (2, 3):
+                base_class = psyco.classes.psyobj
+        except ImportError:
+            pass 
     
+    #this well could be version dependant
     _KEYWORD = token.NT_OFFSET + 1
     _TEXT    = token.NT_OFFSET + 2
     
-    
+    #is this going to have to be optionale too?
+    #began the process, all attribs are htmlize_token_whatever
+    #but is not as easy because the actual attributes don't match _colors
     _colors = {
         token.NUMBER:     '#483D8B', #black/darkslateblue
         token.OP:         '#000080', #black/navy
@@ -3768,10 +3817,11 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
         token.ERRORTOKEN: '#FF8080', #redred bare null does it
         _KEYWORD:         '#0066ff', #blue
         _TEXT:            '#000000', #black /is text fg color too
-        '_LeoDir':        '#228B22', #directive, forest comment
-        '_LeoSen':        '#BC8F8F', #sentinal, tan fade comment
+        '_leodir':        '#228B22', #directive, forest comment
+        '_leosen':        '#BC8F8F', #sentinal, tan fade comment
         'bg':             '#FFFAFA', #snow
     }
+    
     #@+at
     # m04726p05:10:02
     # m04726p10:20:11 posted to sf with a few minor slipups
@@ -3835,22 +3885,22 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
     # have to see if there is a way around that. start minimized?
     # without starting from a pif that specifys that really cant go there.
     # wonder if that happened in mod_spelling? another reason to like spellpyx
-    # 
-    # 
+    # m05314a09:22 finishing up configurables for 4.3 beta maybe
+    # where does the time go?
     #@-at
-    #@-node:ekr.20050328091022.61:<< initilize >>
+    #@nonl
+    #@-node:ekr.20050328091952.64:<< initilize >>
     #@nl
 
-
     #@    @+others
-    #@+node:ekr.20050328091022.62:class Parser
+    #@+node:ekr.20050328091952.65:class Parser
     
     class Parser(base_class):
         """ prep the source for any language
             parse and Send colored python source.
         """
         #@	@+others
-        #@+node:ekr.20050328091022.63:__init__
+        #@+node:ekr.20050328091952.66:__init__
         
         def __init__(self, raw):
             """ Store the source text.
@@ -3871,16 +3921,18 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
                 cmtdelim = sdict.get('delims', ['#'])
                 cmtdelim = cmtdelim[0] or cmtdelim[1]
             
+            self.posspan = 0 #keep pos for collapse links on def & class
+            self.spancnt = 0
+            
             self.fnd = re.compile(r"%s@\s*@+."%(cmtdelim,) )
         
             #g.es('using delim=', cmtdelim)
             
-            if hopts['stripsentinals']: 
-                #have to add option to strip all comments as well
-                self.raw = sentstrip(self.raw)
+            #if hopts['stripsentinals']: almost always do something
+            self.raw = stripSentinels(self.raw, **hopts)
         
-        #@-node:ekr.20050328091022.63:__init__
-        #@+node:ekr.20050328091022.64:format
+        #@-node:ekr.20050328091952.66:__init__
+        #@+node:ekr.20050328091952.67:format
         
         def format(self, formatter, form):
             """ Parse and send the colored source.
@@ -3890,7 +3942,7 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
             self.lines = [0, 0]
             pos = 0
             while 1:
-                pos = self.raw.find('\n', pos) + 1
+                pos = self.raw.find(EOLN, pos) + 1
                 if not pos: break
                 self.lines.append(pos)
             self.lines.append(len(self.raw))
@@ -3898,26 +3950,10 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
         
             self.pos = 0
             text = cStringIO.StringIO(self.raw)
-            sys.stdout.write('<html><head><title>')
-            sys.stdout.write('%s </title>\n'%(sanitize_(titl), ))
         
-            #here would be a good spot for @noindent directive but skip a line
-            #
-            sys.stdout.write("""<STYLE TYPE="text/css"><!--
-        pre, H1 {color:%s; FONT-SIZE: 80%%; FONT-WEIGHT: bold; }
-        Text {background:%s;}
-        --></STYLE>
-        <SCRIPT LANGUAGE="JavaScript">
-        <!-- //
-        //-->
-        </SCRIPT>"""%(
-               _colors[_TEXT], _colors['bg'])) #was both #cc9999
+            #use of \n not sure if will follow users lineending, but it should
+            #anywhere htmlize adds it should use EOLN
         
-            sys.stdout.write('</head><body text="%s" bgColor="%s">'%(
-                _colors[_TEXT], _colors['bg']))
-            sys.stdout.write('<H3># %s</H3>\n'%(titl,))
-            sys.stdout.write('<pre>')  # style
-            sys.stdout.write('<font face="Lucida,Courier New">')
             # parse the source and write it
             try:
                 tokenize.tokenize(text.readline, self)
@@ -3926,17 +3962,15 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
                 line = ex[1][0]
                 print "<h3>ERROR: %s</h3>%s" % (
                     msg, self.raw[self.lines[line]:])
-            sys.stdout.write('</font></pre>')
-            sys.stdout.write('</body"></html>')
-        #@nonl
-        #@-node:ekr.20050328091022.64:format
-        #@+node:ekr.20050328091022.65:__call__
+        #@-node:ekr.20050328091952.67:format
+        #@+node:ekr.20050328091952.68:__call__
         
         def __call__(self, toktype, toktext, (srow,scol), (erow,ecol), line):
             """ Token handler.
             """
             if 0: print "type", toktype, token.tok_name[toktype], "text",\
                     toktext, "start", srow,scol, "end", erow,ecol, "<br>"
+        
         
             # calculate new positions
             oldpos = self.pos
@@ -3948,6 +3982,11 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
                 print
                 return
         
+            if hopts['codefold']: 
+                if self.posspan >= self.pos:
+                    dospan = False
+                else: dospan = True
+        
             style = ''
             if toktype == tokenize.COMMENT:
                 #setrip comment a little more complicated than sentinals
@@ -3956,12 +3995,12 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
                 
                 if toktext.lstrip().startswith('#@'):
                     
-                    if hopts['stripsentinals']: return  #do in __init__
+                    #if hopts['stripsentinals']: return  #do in __init__
                         
                     if self.fnd.findall(toktext):
-                        toktype = '_LeoDir'
+                        toktype = '_leodir'
                     else:
-                        toktype = '_LeoSen'
+                        toktype = '_leosen'
         
             # send the original whitespace, if needed
             if newpos > oldpos:
@@ -3979,7 +4018,20 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
             elif toktype == token.NAME and keyword.iskeyword(toktext):
                 toktype = _KEYWORD
         
+                if hopts['codefold'] and toktext in ['def', 'class',]:
+                    dospan = True
+                    self.posspan = self.pos
+                    self.spancnt += 1
+                    tag = '%s%s'%(cgi.escape(toktext), self.spancnt,)
+                    sys.stdout.write("""\
+        <a onclick="toggle(%s)" onmouseover="this.style.color='red'" onmouseout="this.style.color='black'">
+        <h5>%s<img src="rarrow.gif" width="14" height="14"></h5></a>
+        <span ID=%s Style=Display:''>
+        """%(tag, tag, tag,  # None, none turns it off by default
+            )) #need a 2pass to do this right, or look 1ahead to def/class name
         
+        
+            #this could be a decorator if run on py2.4 code from <py2.4
             if toktype == token.ERRORTOKEN:
                 style = ' style="border: solid 1.5pt #FF0000;"'
         
@@ -3996,19 +4048,50 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
             sys.stdout.write(cgi.escape(toktext))
             if dofont: sys.stdout.write('</font>')
         
-        #@-node:ekr.20050328091022.65:__call__
+            if hopts['codefold']: 
+                #this is going to need allot more work to be reliable
+                if dospan: #set when out of the def or class
+                    self.posspan = 0
+                    sys.stdout.write('</span>')
+        #@nonl
+        #@-node:ekr.20050328091952.68:__call__
         #@-others
-    #@-node:ekr.20050328091022.62:class Parser
+    #@-node:ekr.20050328091952.65:class Parser
     #@-others
 
     if c is None: c = g.top()
     p = c.currentPosition() 
+    silvercity = err = None
     
     #to remind, really need to get keywords from Leo for some languages
     #then could handle odd languages better w/same parser
     #c.frame.body.colorizer.python_keywords.append("as")
-
-
+    #@    <<hopts>>
+    #@+node:ekr.20050328091952.69:<<hopts>>
+    #dyna would have read the ini already into a global Bunch
+    #that will be one of the options for htmlize
+    #its probably still possible to screwup the ini and dyna won't import
+    
+    #need to use a getter in Bynch so nonesistant ivar returns None?
+    #possibly could set it with a get and default if doesn't exist property?
+    
+    if not hasattr(g.app.dynaMvar, 'htmlize_filename') or\
+             g.app.dynaMvar.htmlize_filename == 'default':
+        filename = sys.modules['dyna_menu'].htmlfile
+    else:
+        #and don't blame me or Leo if you make this a URI and get burned...
+        filename = g.app.dynaMvar.htmlize_filename
+    
+    if not hasattr(g.app.dynaMvar, 'htmlize_timestring') or\
+            g.app.dynaMvar.htmlize_timestring == 'default':
+        timestring = sys.modules['dyna_menu'].dynaB_Clip_dtef(None, ret= 'r')
+    elif g.app.dynaMvar.htmlize_timestring == 'leodefault':
+        timestring = c.getTime(body=True)
+    
+    else:
+        #effectively a string because I'm not planning on using eval
+        timestring = g.app.dynaMvar.htmlize_timestring
+    
     #decide which options to apply
     #strip sentinals, comments, syntaxcheck for only python?
     #then create alternate reality for c, c++, other language
@@ -4017,142 +4100,521 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
     #set True for noNUMBER, noOP or noNAME 
     #to disable seperate colors for that entity.
     # the more colors the bigger the output html
+    #have to switch to lowerrunoncase names, ini is not case sensitive for items
+    #could make another run thru to use the proper cased attributes but life is too short
+    #or make it a caseinsensitive Bunch subclass
+    #why isnt this a Bunch already?
     hopts = {
-      'stripcomments':False, #would strip sentinals too now
-      'stripsentinals':True,  #strips directives too now
+      'codefold':False, #experimental, can be more confusing
+      'stripcomments':False, #still to do
+      'stripsentinals':True,   #you can have directives if no sentinals.
+      'stripnodesents': False, # False: leave node sentinels.
       'stripdirectives':False,
       #no color key, that item defaults to text color
-      'noNUMBER':False,
-      'noOP':False,
-      'noNAME':True,  
-      'filename':sys.modules['dyna_menu'].htmlfile,  #in dynacommon
-      'timestring': sys.modules['dyna_menu'].dynaB_Clip_dtef(None, ret= 'r'),
-       #path to silvercity css file
+      'nonumber':False,
+      'noop':False,
+      'noname':True,  
+      'filename': filename,  #in dynacommon or ini
+      'timestring': timestring,
+       #path to silvercity css file, that might be too hard to debug.
     }
-    #setting up to read from ini file directly
-    #if it doesnt exist, create it else update from it?
+    
+    #syncup ini with default hopts
+    for k,v in hopts.items():
+        if k in ['filename', 'timestring', ]: continue
+        #g.trace(k, v)
+        if not hasattr(g.app.dynaMvar, 'htmlize_'+k.lower()): continue
+        #g.trace('has :', getattr(g.app.dynaMvar, 'htmlize_'+k.lower()))
+        #these should already be verified T/F
+        hopts[k] = getattr(g.app.dynaMvar, 'htmlize_'+k.lower())
+    
     #much as I hate to admit it, the colors will have to be changable
     #and color might be different for each language
     #should allow external css or settable style options same way
-
+    #the Properties dialog only can handle a dozzen options on a large screen
+    
     #I know there is a way to do this inside the _color dict
     #it would involve setting hopts before calling initilize
-    if hopts['noNUMBER']: del _colors[token.NUMBER]
-    if hopts['noOP']:     del _colors[token.OP]
-    if hopts['noNAME']:  del _colors[token.NAME]
-    filename = hopts['filename']
-
+    if hopts['nonumber']: del _colors[token.NUMBER]
+    if hopts['noop']:     del _colors[token.OP]
+    if hopts['noname']:  del _colors[token.NAME]
+    #@nonl
+    #@-node:ekr.20050328091952.69:<<hopts>>
+    #@nl
     lang = g.scanForAtLanguage(c, p)
+
+    #str only fails is there is no current encoding.
+    #was erroniously thinking it always fails on Unicode.
     lang = str(lang).lower()
     titl = "%s Leo %s script %s"%(
             p.headString()[:75], lang, hopts['timestring'])
 
     #think this trips an assert if you pass a vnode    
+    #redundant if @rst or plain and fails if the first node is empty
+    #will have to redesign this flow
     source = g.getScript(c, p)  #.strip()
 
-    #if no path set getScript will return empty script, bug?
+    #if no path set getScript will return empty script, bug <4.3a4
     #must get text other way and do another type of htmlize
+
+    _sysstdsav = sys.__stdout__
+    #@    <<header plain footer>>
+    #@+node:ekr.20050328091952.70:<<header plain footer>>
+    def outheader():
+        sx = []
+        #this will have to get actual encoding but its a start
+        meta = ['<meta http-equiv="Content-Type" content="text/html; charset=utf-8">']
+        #append anyo ther meta required
+        sx.append('<html><head>%s%s<title>'%(EOLN, EOLN.join(meta),))
+        sx.append('%s </title>%s'%(sanitize_(titl), EOLN))
+    
+        #here would be a good spot for @noindent directive but skip a line
+        #or build the string in the outermost indentation
+        sx.append("""<STYLE TYPE="text/css"><!--
+    pre, H1 {color:%s; FONT-SIZE: 80%%; FONT-WEIGHT: bold; }
+    Text {background:%s;}
+    --></STYLE>
+    <SCRIPT LANGUAGE="JavaScript"><!-- 
+    //Serenity Right Mouse Click Customisation
+    function toggle(e) 
+    {  
+    if (e.style.display == "none") 
+    	{
+    	e.style.display = "";
+    	 } 
+    else 
+    	{     
+    	e.style.display = "none";  
+    	}
+    }
+    //--></SCRIPT>"""%(
+           _colors[_TEXT], _colors['bg'])) #was both #cc9999
+    
+        sx.append('</head><body text="%s" bgColor="%s">'%(
+            _colors[_TEXT], _colors['bg']))
+        sx.append('<H3># %s</H3>%s'%(titl, EOLN,))
+        sx.append('<pre>')  # style
+        sx.append('<font face="Lucida,Courier New">')
+    
+        return EOLN.join(sx)
         
+    def plainout(src):
+        g.es('bad or no hiliter language or option')
+        return '%s%s%s'%(EOLN, src, EOLN)
+    
+    def outfooter():
+        sx = []
+        sx.append('</font></pre>')
+        sx.append('</body></html>')
+        return EOLN.join(sx)
+    #@-node:ekr.20050328091952.70:<<header plain footer>>
+    #@nl
     try:
         if not source: raise ValueError
 
-        g.es('output', lang, p.headString())
-        pars = Parser(source)
-    
         # write colorized version to "python.html"/filename
-        sys.stdout = open(filename, 'wb')  # wt, wb, w
+        sys.stdout = open(hopts['filename'], 'wb')  # wt, wb, w
 
-        if lang == 'python':
-            pars.format(None, None)
-        else:
-            #@            << silvercity >>
-            #@+node:ekr.20050328091022.66:<< silvercity >>
-            #@+at
-            # have to do a multitute of things for this to work
-            # sc cant read script so have to write tmpfile
-            # can view or redirect and use our viewer caller
-            # 
-            # default colors in silvercity.css need to be matched to Leo
-            #@-at
-            #@@c
+        #fix dups when get silversity to do fragments
+        #sys.stdout.write(outheader())
+
+        #you cant have get both @lang python and @rst
+        #but subnodes of @lang might be syntax colored later somehow
+        #possibly will have to capture stdout and make a function
+        #and sentinals as comments can be wacky if @language changes
+        
+
+        g.es('output', p.headString())
+
+        if lang in ['plain', 'rst', None, '',] or \
+              c.currentPosition().headString().strip()[:4] == '@rst':
+            g.es('rst or %s , wait...'% lang)
+            sys.stdout.write(outheader())
+            #@            << plain or rst >>
+            #@+node:ekr.20050328091952.71:<< plain or rst >>
             
-            if lang in [  #leo may not have all of these yet
-                   'csharp', 'c', 'c++', 'cpp', # (C and C++)
-                    'css', # (Cascading Style Sheets)
-                  'htm', 'html', # HTML/PHP w/ JavaScript, VBScript, Python
-                    'plain', #null (No styling)
-                    'perlpod', 'perl', # (Perl)
-                    #'python', # (Python)
-                    'ruby', # (Ruby)
-                    'smart_python', # (Python with styled strings)
-                    'sql', # (SQL)
-                    'xml', # (XML)
-                    'xslt', # (XSLT)
-                    'yaml', # (YAML)
-                    #basic & java? missing. might send java as c?
-                    'elisp', 'php', 'java', 'rapidq', 'actionscript', 'css',
-                ]:
-                if lang in ['htm', 'html', 'php', 'java', 'rapidq',
-                                'actionscript', 'css', ]: lang = 'html'
-                elif lang in ['c', 'c++', 'cpp']: lang = 'cpp'
-                elif lang in ['perlpod', 'perl',]: lang = 'perl'
-                elif lang in ['elisp',]: lang = 'perl'
-                if lang == 'plain' or lang == None: lang = 'null'
+            #do a linear node crawl, 
+            # htmlize @language nodes
+            # append docutils or plain text wrapped output
+            #can you want plain or rst and also not stripsentinals?
+            #might have to add option or flipper to not follow subnodes
+            #thats the theory anyway...  FIXME
             
+            #codeblock and latex not supported much yet
+            #don't want to reimpliment rst2 either
+            #individual bodys are not getting enough <Br>
             
-                #should be try
-                #silvercity wont complain if it isnt the right extension
-                g.es('writeing tmpname', tmpfile )
-                fo = file(tmpfile, 'w')
-                fo.writelines(pars.raw + "\n")
-                fo.close()
-                
-                cmd = g.os_path_join(pypath, 'Scripts', 'source2html.py')
-            
-                #dont want it to create the file, send to stdout
-                #" --view %N  %N.html"
-                # --css=file copy silver_city.css where the filename will be
-                # source2html.py --list-generators
-                params = ' --generator=%s --title=%s --css=silver_city.css %s'%(
-                   lang, sanitize_(titl), tmpfile,)  
-            
-                if not g.os_path_exists(cmd):
-                    g.es('cant find source2html install silvercity')
-                    print 'cant find source2html from silvercity'
-            
-                else:
-            
-                    g.es('running silvercity \n', py + cmd + params )
-                    out, err = runcmd(py + cmd + params )
-                    for x in (out + err).splitlines():
-                        print x
+            try:
+                import docutils
+            except:
+                docutils = None
             else:
-                print '<i>not a known htmlize supported language</i>'
-                #might have to do a sequential dump of nodes, or @rst?
-                #is title and first headline set the same for all options?
-                print '<Pre>'    
-                print pars.raw
-                print '</Pre>'
+                #have to investigate custom config files
+                #please evolve faster docutils.
+                import docutils.parsers.rst
+                from docutils.core import Publisher
+                from docutils.io import StringOutput, StringInput
+                pub = Publisher()
+                #still depends on silvercity installed
+                #@    << define code-block >>
+                #@+node:ekr.20050328091952.72:<< define code-block >>
+                def code_block(name,arguments,options,content,lineno,content_offset,block_text,state,state_machine):
+                    
+                    """Create a code-block directive for docutils.
+                    lifted from rst2 and attempt to use 
+                    in either src-hilite or silvercity while @language plain
+                    or provide own generator if neither active
+                    """
+                    
+                    # See http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/252170
+                    language = arguments[0]
+                    module = getattr(SilverCity,language)
+                
+                    generator = getattr(module,language+"HTMLGenerator")
+                    io = StringIO.StringIO()
+                    generator().generate_html(io, EOLN.join(content))
+                    html = '<div class="code-block">\n%s\n</div>\n'%io.getvalue()
+                    raw = docutils.nodes.raw('',html, format='html') #(self, rawsource='', text='', *children, **attributes):
+                    return [raw]
+                    
+                # These are documented at http://docutils.sourceforge.net/spec/howto/rst-directives.html.
+                code_block.arguments = (
+                    1, # Number of required arguments.
+                    0, # Number of optional arguments.
+                    0) # True if final argument may contain whitespace.
+                
+                # A mapping from option name to conversion function.
+                code_block.options = {
+                    'language' :
+                    docutils.parsers.rst.directives.unchanged # Return the text argument, unchanged
+                }
+                
+                code_block.content = 1 # True if content is allowed.
+                 
+                # Register the directive with docutils.
+                docutils.parsers.rst.directives.register_directive('code-block',code_block)
+                #@nonl
+                #@-node:ekr.20050328091952.72:<< define code-block >>
+                #@nl
+             
+            current = c.currentPosition()
+            def outheadline(cur, ):
+                hl = g.choose(cur.headString().startswith('@rst'), 5, 4)
+                return '<H%d>%s</H%d>%s'%(hl, cur.headString(), hl, EOLN )
             
-            #@-node:ekr.20050328091022.66:<< silvercity >>
+            sys.stdout.write(outheadline(current))
+            
+            for psib in current.self_and_subtree_iter():
+                sys.stdout.write(outheadline(psib))
+                s = psib.bodyString()
+                #.. code-block:: Python
+            #@verbatim
+                #@ignore
+            
+                #here let docutils have the body, but what about
+                #previous Rest commands that might still be active?
+                #dynawrap defaults textwrap or will do Leo wrap
+                #have to fixit do it returns rather than prints though
+                #also check for @language & few others and highlight
+                #so will have to functionalize the highliters eventually
+                #also might want some nodes line numbered, 
+                #using docutils css on some nodes and on other elements 
+                #H3 maybe should include a class=
+                #subnodes should be indented? that could cause Rest errors
+                
+                # This code snipet has been taken from code in rst2
+                #snipped from code contributed by Paul Paterson 2002-12-05.
+                if docutils and s.strip():
+                    pub.source = StringInput(source=s)
+            
+                    # need to set output so doesn't generate
+                    #its own footers and headers on every other block
+                    #nowhere does it mention other options! 
+                    #docutils docs heal thyself.
+                    writer='html' ; enc="utf-8"
+                    #standalone, pep, python
+                    pub.set_reader('standalone', None, 'restructuredtext')
+            
+                    pub.destination = StringOutput(pub.settings, encoding=enc)
+                    pub.set_writer(writer)
+            
+                    
+                    try:
+                        output = pub.publish(argv=['']) #--traceback
+                    except Exception:
+                        #docutils puts errors to stderr, not redirected
+                        g.es('ERRORS Found in rstText', psib.headString())
+                        output = s
+                else:
+                    #output = s.replace(' ', '&nbsp').replace('\n', '<Br>\n')
+                    output = s
+            
+                #till I get more docutil aware
+                output = output.replace('<body>','').replace('<html>','')
+                output = output.replace('</body>','').replace('</html>','')
+                sys.stdout.write(output)
+            #@-node:ekr.20050328091952.71:<< plain or rst >>
             #@nl
-    
+
+        elif lang == 'python':
+            #this may no longer be advantagouus 
+            #for every option to do first. and in the same order
+            sys.stdout.write(outheader())
+            pars = Parser(source)
+            pars.format(None, None)
+
+        else:
+            g.es('hilite %s , wait...'% lang)
+            #should decide somehow if can do the language
+            #before commiting to a colorizer
+            #plain should always be the fallback instead of first
+            #this will get some reflow analisis
+
+            #@            << restripper >>
+            #@+node:ekr.20050328091952.73:<< restripper >>
+            #source1 = stripSentinels(source, 1,0,1,1)
+            #this may not be optimal either if language overlap
+            #dissallowing strip* for now, later may preprocess
+            #problem is delimiters in mixed @language...
+            
+            #source = stripSentinels(source, 1,0,0,0) 
+            #& fix delims that are also sentinals? but how?
+            #for now this is just as broken as before. just less noise
+            #might have to find another option than getScript
+            #skipping it altogether
+            
+            
+            #q&d restripper of delimited sentinals.
+            #a fix in stripSentinals is possibly but still problematic.
+            #if you have mixed lang this can still fail
+            #mixed languages in html of javascript css are not uncommom
+            #just strip all single line comments start w[1:2]@[+-@] for a few langs
+            #sorry if I missed your favorite
+            #will determine how to add back stripnodesents option a different way
+            #and or improvestripSentinals for mixed @language
+            sx = []
+            badsent = ('//@', '#@', '/*@', ';@', )
+            
+            for x in source.splitlines(True):
+                #can this be faster than not x and not x: append instead of continue?
+                if x[0:2] in badsent or x[0:3] in badsent: continue
+                sx.append(x)
+            source = ''.join(sx)
+            #@nonl
+            #@-node:ekr.20050328091952.73:<< restripper >>
+            #@nl
+
+            if hasattr(g.app.dynaMvar, 'htmlize_hiliter') and\
+                g.app.dynaMvar.htmlize_hiliter and\
+                  g.app.dynaMvar.htmlize_hiliter != 'silvercity' :
+                sys.stdout.write(outheader())
+                #@                << src-highlite >>
+                #@+node:ekr.20050328091952.74:<< src-highlite >>
+                #@+at
+                # does better job on java than silvercity and has more 
+                # languages
+                # what no elisp in a gnu language?
+                # 
+                # need to get the css option without the bloated size
+                # which might mean a post processing step.
+                # why can't I inject font color default on the command line?
+                # 
+                # sourceforge.net/sourceforge/gnuwin32/src-highlite-1.11-bin.zip 
+                # win32
+                # other systems will have to build or find their own
+                # 
+                # source-highlight -s cpp -f html $*
+                # source-highlight -s java -f html $*
+                # java, javascript, cpp, prolog, perl, php3, python, ruby, 
+                # flex, changelog, lua, caml, sml, log)
+                #        keyword blue b ;      for language keywords
+                #        type darkgreen ;      for basic types
+                #        string red ;          for strings and chars
+                #        comment brown i ;     for comments
+                #        number purple ;       for literal numbers
+                #        preproc darkblue b ;  for preproc directives (e.g. 
+                # #include, import)
+                #        symbol darkred ;      for simbols (e.g. <, >, +)
+                #        function black b;     for function calls and 
+                # declarations
+                #        cbracket red;         for block brackets (e.g. {, })
+                # much nicer than silvercity and it does more langs
+                # have to play w/the tags.j2h file for colors
+                # not sure about the css option yet from htmlize but the file 
+                # will be huge!
+                # 
+                # 
+                # ? -f html  --doc --tags-file="c:\UTIL\DLL\xtags.j2h" %N
+                # -v source-highlight 1.11 Trying with... tags.j2h 
+                # c:/progra~1/Src-Highlite/share/source-highlight/tags.j2h 
+                # C:\UTIL/share/source-highlight/tags.j2h No tags.j2h file, 
+                # using defaults ...
+                # damm,. what ugly default colors source-highlite has
+                # putting tags in $HOME and why don't they check there?
+                # 
+                # java and javascript are not equilevent
+                # there is no jscript or javascript in Leo yet.
+                # its turning into more and more of a rats nest.
+                # 
+                #@-at
+                #@@c
+                
+                if lang in [  #leo may not have all of these yet
+                       'csharp', 'c', 'c++', 'cpp',
+                        'css', 
+                      'htm', 'html', #
+                        'perlpod', 'perl', 
+                        'ruby',
+                        'sql',
+                        'xml',
+                        'xslt',
+                        'yaml',
+                        'elisp', 'php', 'java', 'rapidq', 'actionscript', 'css',
+                    ]:
+                    if lang in ['htm', 'html', 
+                                    'actionscript', 'css', ]: lang = 'sml'
+                
+                    elif lang in ['java', 'rapidq',]: lang = 'javascript'
+                    elif lang in ['jscript', 'javascript',]: lang = 'javascript'
+                    elif lang in ['c', 'c++', 'cpp']: lang = 'cpp'
+                    elif lang in ['php', ]: lang = 'php3'
+                    elif lang in ['perlpod', 'perl',]: lang = 'perl'
+                    elif lang in ['elisp',]: lang = 'perl'
+                
+                
+                    #should be try
+                    # wont complain if it isnt the right extension
+                    g.es('writeing tmpname', tmpfile )
+                    fo = file(tmpfile, 'w')
+                    fo.writelines(source + EOLN)
+                    fo.close()
+                    
+                    #little foggy here, options for src-hilite might be different
+                    #than any other unknown and so should use hiliter options
+                    #but I have no other hiliter in mind yet, so punting.
+                    cmd = g.app.dynaMvar.htmlize_hiliter
+                
+                    #dont want it to create the file, send to stdout
+                    #
+                    #
+                    #have to account for quoted path with space in them and no comma?
+                    params = cmd.split(',')
+                
+                    if len(params) < 2:  #must be source_hilite
+                        params = ' -s %s -f html -T %s %s --tags-file=%s --no-doc -i %s'%(
+                           lang, sanitize_(titl),
+                           g.choose(g.app.dynaMvar.du_test_verbose != 0, '-v', ' '), #!''
+                            g.os_path_join(g.app.homeDir,'tags.j2h'),
+                            tmpfile,)  
+                    else:
+                        #not the best way to handle shell commands, but ok YMMV.
+                        params = ' '.join(params[1:])
+                
+                    g.es('running %s \n'% g.app.dynaMvar.htmlize_hiliter, cmd + params )
+                    out, err = runcmd(cmd + params )
+                
+                else:
+                    print plainout(source)
+                #@-node:ekr.20050328091952.74:<< src-highlite >>
+                #@nl
+
+            elif hasattr(g.app.dynaMvar, 'htmlize_hiliter') and\
+                  g.app.dynaMvar.htmlize_hiliter == 'silvercity':
+                #@                << silvercity >>
+                #@+node:ekr.20050328091952.75:<< silvercity >>
+                #@+at
+                # have to do a multitute of things for this to work
+                # sc cant read script so have to write tmpfile
+                # can view or redirect and use our viewer caller
+                # 
+                # default colors in silvercity.css need to be matched to Leo
+                #@-at
+                #@@c
+                
+                if lang in [  #leo may not have all of these yet
+                       'csharp', 'c', 'c++', 'cpp', # (C and C++)
+                        'css', # (Cascading Style Sheets)
+                      'htm', 'html', # HTML/PHP w/ JavaScript, VBScript, Python
+                        'perlpod', 'perl', # (Perl)
+                        #'python', # (Python)
+                        'ruby', # (Ruby)
+                        'smart_python', # (Python with styled strings)
+                        'sql', # (SQL)
+                        'xml', # (XML)
+                        'xslt', # (XSLT)
+                        'yaml', # (YAML)
+                        #basic & java? missing. might send java as c?
+                        'elisp', 'php', 'java', 'rapidq', 'actionscript', 'css',
+                    ]:
+                    if lang in ['htm', 'html', 'php', 'java', 'rapidq',
+                                    'actionscript', 'css', ]: lang = 'html'
+                    elif lang in ['c', 'c++', 'cpp']: lang = 'cpp'
+                    elif lang in ['perlpod', 'perl',]: lang = 'perl'
+                    elif lang in ['elisp',]: lang = 'perl'
+                
+                
+                    #dont want it to create the file, send to stdin
+                    #should btry
+                    # won't complain if it isn't the right extension
+                    g.es('writeing tmpname', tmpfile )
+                    fo = file(tmpfile, 'w')
+                    fo.writelines(source + "%s"%EOLN)
+                    fo.close()
+                    
+                    cmd = g.os_path_join(pypath, 'Scripts', 'source2html.py')
+                
+                    #dont want it to create the file, send to stdout
+                    #" --view %N  %N.html"
+                    # --css=file copy silver_city.css where the filename will be
+                    # source2html.py --list-generators
+                    params = ' --generator=%s --title=%s --css=silver_city.css %s'%(
+                       lang, sanitize_(titl), tmpfile,)  
+                
+                    if not g.os_path_exists(cmd):
+                        g.es('cant find source2html install silvercity')
+                        print 'cant find source2html from silvercity'
+                
+                    else:
+                
+                        g.es('running silvercity \n', py + cmd + params )
+                        out, err = runcmd(py + cmd + params )
+                        silvercity = 'FIXME'
+                else:
+                    print plainout(source)
+                
+                #@-node:ekr.20050328091952.75:<< silvercity >>
+                #@nl
+
+            else:
+                sys.stdout.write(outheader())
+                out = plainout(source)
+        
+            if out:
+                for x in out.splitlines():
+                        print x
+            if err and g.app.dynaMvar.du_test_verbose: 
+                g.es(' ** '.join(err.splitlines()), color='tomato')
+
         #getmetrics(source)
-        #tack on fileinfo
+        #tack on fileinfo as a comment
+        #generate linkable index of keywords
+
+        if silvercity is None: #fix when can get it to do fragments
+            sys.stdout.write(outfooter())
     
         sys.stdout.close()
-        sys.stdout = sys.__stdout__ #missing from org cgi.
+        sys.stdout = _sysstdsav #missing from org cgi.
     
-        # load HTML page into browser
+        # load HTML page into browser, py2.2?
         if 0: 
             #might want this if to use other than default browser
             if os.name == "nt":
-                os.system(r'explorer %s'%filename)
+                os.system(r'explorer %s'%hopts['filename'])
             else:
-                os.system("netscape %s &"%filename)
+                os.system("netscape %s &"%hopts['filename'])
         elif 1:
             import webbrowser
-            webbrowser.open(filename, new= 1) #
+            webbrowser.open(hopts['filename'], new= 1) #
 
     except ValueError:
         g.es('no @path set, unsupported lang or empty script', 
@@ -4163,11 +4625,10 @@ http://bellsouthpwp.net/m/e/mefjr75 /python/PySourceColor.py
         g.es('htmlize malfunction?', color= 'tomato')
         g.es_exception(full= True)
 
-
-#dynaZ_htmlize()  #uncomment to run standalone test
+    sys.stdout = _sysstdsav #twice is nice
 #@nonl
-#@-node:ekr.20050328091022.60: htmlize
-#@+node:ekr.20050328091022.67:restoreStd
+#@-node:ekr.20050328091952.62: htmlize
+#@+node:ekr.20050328091952.76:restoreStd
 
 def dynaZ_restoreStd(c):
     """every now and again run this if prints are blocked"""
@@ -4185,8 +4646,8 @@ if __name__ != 'dyna_menu':
     except NameError:  
         dynaZ_restoreStd(0)
 #@nonl
-#@-node:ekr.20050328091022.67:restoreStd
-#@+node:ekr.20050328091022.68:+del first n char
+#@-node:ekr.20050328091952.76:restoreStd
+#@+node:ekr.20050328091952.77:del first n char
 
 def dynaZ_del_first_char(c):
     """del first char in the line
@@ -4197,6 +4658,8 @@ def dynaZ_del_first_char(c):
     might use that to comment out a section of code
     always remembering to have something selected & copyed could get to be a pain
     decided best to have that in another macro, using dynaplayer
+    could defl 2 at a time, but make one at a time changes 
+    so you could undo one if you only want one. usually its 4 for me anyway.
 
     """
     newSel = dynaput(c, [])
@@ -4210,13 +4673,277 @@ def dynaZ_del_first_char(c):
 
     sx = []
     for x in newSel.splitlines():
-        sx.append(x[1:] + '\n' )
+        sx.append(x[1:] + EOLN )
 
     dynaput(c, sx)
-#@-node:ekr.20050328091022.68:+del first n char
-#@-node:ekr.20050328091022.49:pre/post macros
-#@-node:ekr.20050328091022.4:macros
-#@+node:ekr.20050328091022.69:load_menu
+#@-node:ekr.20050328091952.77:del first n char
+#@-node:ekr.20050328091952.52:pre/post macros
+#@-node:ekr.20050328091952.5:macros
+#@+node:ekr.20050328091952.78:config
+#for the plugin manager using the ini
+#verbose set 0 in the ini but sometimes not untill flip it
+#needed getint in config
+#some of these should be dyna menu items anyway in case no plugin_menu
+#calling them prototypes for now. so many switches so little time
+#maybe can have some to flip styles & colors for htmlize
+#@+node:ekr.20050328091952.79:cmd_flipverbose
+
+def cmd_flip_du_test_verbose(): 
+    """for @test nodes
+    requires change in leoTest, (added Leo4.3a2 no objections)
+    you still get traceback on syntax and other errors with just dots ==1
+     ==2 is verbosity in unittest @test and @suite. slightly different
+     either 1 or 2 is verbose for doctest and 0 is nothing except errors reported
+    
+    validating config options hasn't been implimented yet either
+    can I call a more general flipper for other vars too?
+    can there be a cascade of flip vars in plugin_menu?
+    """
+    g.app.dynaMvar.du_test_verbose += 1
+    # is 1 or 0? True or False not sure 2.2 even has this option too?
+    #this, like debug,  should increment in a connected range 0..3
+    g.app.dynaMvar.du_test_verbose = g.choose(
+        g.app.dynaMvar.du_test_verbose >= 3, 0, g.app.dynaMvar.du_test_verbose)
+    g.es('now is', g.app.dynaMvar.du_test_verbose)
+#@nonl
+#@-node:ekr.20050328091952.79:cmd_flipverbose
+#@+node:ekr.20050328091952.80:cmd_flipLeo_debug
+
+def cmd_flip_Leo_debug(): 
+    """0,1,2,3 for Leo debug switch
+    careful, 3 istarts pdb which has some unpredictable results
+    maybe it should start rpdb or the debugger of your choice
+    and in a seperate thread and in its own window.
+    """
+    g.app.debugSwitch += 1
+    g.app.debugSwitch = g.choose(
+        g.app.debugSwitch >= 4, 0, g.app.debugSwitch)
+
+    g.es('debugSwitch now is', g.app.debugSwitch)
+    if g.app.debugSwitch >= 2: g.es('pdb is now active on errors', color='tomato')
+#@nonl
+#@-node:ekr.20050328091952.80:cmd_flipLeo_debug
+#@+node:ekr.20050328091952.81:cmd_flipjustPyChecker
+
+def cmd_flip_justPyChecker(): 
+    """for tim1crunch makeatemp and pychecker2
+    1 is don't print source after running the check
+    """
+    g.app.dynaMvar.justPyChecker = g.choose(
+        g.app.dynaMvar.justPyChecker != 0, 0, 1)
+    g.es('now is', g.app.dynaMvar.justPyChecker)
+#@nonl
+#@-node:ekr.20050328091952.81:cmd_flipjustPyChecker
+#@+node:ekr.20050328091952.82:flip_onoff_c_gotoline
+def cmd_flip_onoff_c_gotoline(): 
+    """this totally violates the goto feature in executeScript
+    presently broken if called from selected text.
+      unselects the text and goes to the line in the full script.
+    broken if error happens in another module
+    and you are working in a subnode from a scriptButton
+    you probably don't want to goto the top of the script.
+      you might not even want or need to see the error
+      by then its all too painful what the problem is
+      the traceback is just a reminder it isn't fixed yet.
+    this solves the one thing. 
+
+    no one wants to see the error wrongly reported ever.
+    the other thing is a problem with exec and python and tracebacks.
+    compiling the script first would get you a better filename than <SCRIPT>
+    but showing exec and leoCommands as part of the problem isn't helpful,
+    to old and new alike. grin and bear it I guess.
+    
+    subsequent calls turn goto back on or off
+    
+    and why do I need to know Leo knows this:  
+     'No ancestor @file node: using script line numbers'
+    when gotolinenumber from Edit menu? (no problem if flipped off)
+
+    no idea if c.goToLineNumber called from other scripts 
+    or parts of Leo or other leos' will be adversely impacted if off.
+    
+    of course a config setting or option to turn off goto,
+    option to turn off show error in context, would be better.
+    for those vanishingly fewer and fewer times when they are wrong.
+    mean time, take no prisoners. this works today.
+    """
+
+    import leoGlobals as g
+    c = g.top()
+    atribs = cmd_flip_onoff_c_gotoline
+
+    if hasattr(atribs, 'flip'):
+        atribs.flip = not atribs.flip
+    else:
+        atribs.gotolinesave = c.goToLineNumber
+        atribs.flip = True
+
+    if atribs.flip:
+        def dummygotoline(n, *a, **k):
+            'goto is fliped off'
+            pass
+        c.goToLineNumber = dummygotoline
+        g.es('turning off goToLineNumber', color= 'purple')
+    else:
+        c.goToLineNumber = atribs.gotolinesave
+        g.es('turning on goToLineNumber', color= 'purple')
+
+#@-node:ekr.20050328091952.82:flip_onoff_c_gotoline
+#@+node:ekr.20050328091952.83:cmd_SetAsDefault
+
+def cmd_SetAsDefault(): 
+    """
+    set default would be harder, 
+    no interest in maintaing seperate defaults.
+    """
+    #g.alert('no ini, check back in 5 minutes')
+    #getConfiguration(rw= 'w') #force write
+    g.es('no change at this time')
+    
+#@-node:ekr.20050328091952.83:cmd_SetAsDefault
+#@+node:ekr.20050328091952.84:cmd_ShowDefaults
+
+def cmd_ShowDefault(): 
+    """
+    no interest in maintaing seperate defaults.
+    no need to show all the defaults actually, just user configurables
+    shoud show hopts also and make a function so can have the intersection
+    with the ini overriding hardwired default values. maybe next time.
+    """
+    g.es(g.app.dynaMvar)
+#@-node:ekr.20050328091952.84:cmd_ShowDefaults
+#@+node:ekr.20050328091952.85:applyConfiguration
+
+def applyConfiguration(config):
+    """plugin menu calls this after ini edit 
+    and on first menu creation or first dyna click if I can swing it.
+    
+    True/False config saves as string? seems to work ok though
+    also if non existant will be error, have to trap
+    so default written in plugin can override if no attribute
+    or attribute contains nonsense or whole ini or section doesn't exist.
+    this addhockism has to go, 
+    the ini format is 20 years old an im winging it here again.
+    is it lowercasing items but not section names? what about values?
+    seems to preserve case now, but decided better if dumenu doesn't
+    this way lies maddness to debug otherwise. not everyone is a coder.
+
+    another way to look at it is:
+        if you don't want no errors, don't make any mistakes.
+    all required options are hardwired defaulted 
+    and should be ok if ini is wrong or missing
+    
+    """
+    if not config: return
+    badini = ''
+    dyna = g.app.dynaMvar
+
+    #2nd time thru it may be set some other way
+    dyna.htmlize_filename = 'default'
+
+    #should warn if no section header found?
+    items = config.items('main') + config.items('htmlize')
+    #g.es(items)
+
+    for x in items:
+        xl = x[0].lower()
+        if xl == 'verbosity':
+            dyna.du_test_verbose = x[1]
+
+        if xl == 'justpychecker':
+            dyna.justPyChecker = x[1]
+
+
+        if xl == 'hiliter':
+            dyna.htmlize_hiliter = x[1]
+        if xl == 'filename':
+            dyna.htmlize_filename = x[1]
+
+
+    lx = """\
+         timestring
+        codefold stripcomments stripsentinals
+        stripnodesents stripdirectives 
+        noNAME noOP noNUMBER
+
+        token_NUMBER      token_OP
+        token_STRING      token_COMMENT
+        token_NAME        token_ERRORTOKEN
+        token_KEYWORD     token_TEXT
+        token_LeoDir      token_LeoSen
+        token_bg""".replace('\n',' ').split()
+
+    #g.es(lx)
+    for xini in [xl.strip().lower() for xl in lx]:
+        x = 'bad'
+
+        try:
+            #this actually needs another step to be caseinsensitive
+            #but well leave it to FIXME later as above was done
+            x = config.get('htmlize', xini).lower()
+
+        except (ConfigParser.NoOptionError, ConfigParser.NoSectionError, Exception):
+            #g.trace('not found', xini, x)
+            badini += '.'
+            continue
+
+        #no attribute or sometimes default means let dyna handle it
+        if not x or x == 'bad': 
+            #g.trace('not xImped', xini, x)
+            badini += '.'
+            continue
+
+        #getboolean might work for these few
+        elif ('%s'%(x, )).strip().lower() in ('true', '1', 'on', 'n', 't'):
+            xval = True
+        elif ('%s'%(x, )).strip().lower() in ('false', '0', 'off', 'f', ''): 
+            xval = False
+
+        elif xini.startswith('token_') or\
+             xini in ('timestring', ): 
+            #maybe validate is proper hex and has # or good color name
+            #or whatever the user wants the user gets in this case
+            xval = x
+
+        else: 
+            #g.trace('not Imped', xini, x)
+            badini += '.'
+            continue
+
+        setattr(dyna, 'htmlize_'+xini, xval)
+
+    
+    #might want to write the unnamed options commented out?
+    #g.es(config.items('htmlize'))
+
+    #is NDEBUGMSG a global?
+    #g.es('current dyna configized w/%s defaulted values'% len(badini))
+    #cmd_ShowDefault()
+#@nonl
+#@-node:ekr.20050328091952.85:applyConfiguration
+#@+node:ekr.20050328091952.86:getConfiguration
+def getConfiguration(): 
+    """Return the config object
+    should this look in homeDir first then plugins?   
+    check __file__ works in py2.2 and under test.leo of plugin 
+
+Default values can be specified by passing them into the ConfigParser constructor as a dictionary. Additional defaults may be passed into the get() method which will override all others. 
+
+
+
+    """ 
+
+    #if ini doesn't exist, should we create it?
+
+    fileName = g.os_path_join(g.app.loadDir,"..","plugins",
+            g.os_path_split(__file__)[1][:-3]+".ini") 
+    #g.trace(fileName)
+    config = ConfigParser.ConfigParser() 
+    config.read(fileName) 
+    return config 
+#@-node:ekr.20050328091952.86:getConfiguration
+#@-node:ekr.20050328091952.78:config
+#@+node:ekr.20050328091952.87:load_menu
 
 #no user code besides cascade names tuple
 
@@ -4233,10 +4960,18 @@ def load_menu(tag, keywords ):
         dynaMvar = g.app.dynaMvar = init_dyna(c)
         #problem, do I try again later or fail?
         if NDebug:
-            g.es('load_ dynaMvar is None')
+            g.es('load_ dynaMvar was None')
+        
+        #this will have been set before 2nd leo can be opened
+        #set to default even if no ini can be read and not used otherwise
+        #all dyna_menus share the same state, read/save the same ini
+        #and I have not done anything with @settings but plan to soon
+        #maybe pospone ini read further, till first time dyna is clicked?
+        if not hasattr(g.app.dynaMvar, 'htmlize_filename'):
+            applyConfiguration(getConfiguration())
 
     #@    << togprpa >>
-    #@+node:ekr.20050328091022.70:<< togprpa >>
+    #@+node:ekr.20050328091952.88:<< togprpa >>
     def togprpa(cf= cf, *a):
         """called from the menu to set status and Flag
     
@@ -4257,7 +4992,7 @@ def load_menu(tag, keywords ):
     
         return doprpa
     #@nonl
-    #@-node:ekr.20050328091022.70:<< togprpa >>
+    #@-node:ekr.20050328091952.88:<< togprpa >>
     #@nl
     casnamtup = (
         'infos', #B  htmlize, restoreST, clipdtef, linenumber
@@ -4280,11 +5015,15 @@ def load_menu(tag, keywords ):
 
     #you change the macro order you assume full responsinility
     #know B_clipdtef is the first one add B_linenumber now
-    table.append(
-        (lst[-2][6:], None, lambda c= c, f= globals()[lst[-2]]: f(c) ))
+    #this could be fragile if you use less macros than are standard
+    try:
+        table.append(
+            (lst[-4][6:], None, lambda c= c, f= globals()[lst[-4]]: f(c) ))
+    except Exception:
+        pass
 
     #@    << add items >>
-    #@+node:ekr.20050328091022.71:<< add items >>
+    #@+node:ekr.20050328091952.89:<< add items >>
     #there better be at least one macro in lst and one cas entry
     a = 0
     ch = dynaMvar.dynadeflst[0][4]
@@ -4294,7 +5033,7 @@ def load_menu(tag, keywords ):
     
     #the way Leo menu add works is 
     #A. similar to Tk, B. incomprehensable C. it just "works"
-    #and why is submenu text  smaller? and how cant I change it.
+    #and why is submenu text  smaller? and how can't I change it.
     #submenus seem to get sorted? forced to the top at some point.
     
     #add items till the 5th char changes, then get next subname
@@ -4322,11 +5061,11 @@ def load_menu(tag, keywords ):
             (s[6:], None, lambda c= c, f= globals()[s]: f(c) ))
     
     
-    #@-node:ekr.20050328091022.71:<< add items >>
+    #@-node:ekr.20050328091952.89:<< add items >>
     #@nl
 
     #@    << .add_exSb >>
-    #@+node:ekr.20050328091022.72:<< .add_exSb >>
+    #@+node:ekr.20050328091952.90:<< .add_exSb >>
     #exS in its own plugin, can I trust this to work? can you? 
     #would have to look into hasattr(sys.modules, 'exSButton') & import
     #is it because e is initilized after d?
@@ -4348,7 +5087,7 @@ def load_menu(tag, keywords ):
     table.append(("add exSButton", None,  #^E or is it shifted too?
                    ecall) )
     #@nonl
-    #@-node:ekr.20050328091022.72:<< .add_exSb >>
+    #@-node:ekr.20050328091952.90:<< .add_exSb >>
     #@nl
     #nu.add_separator()  #gets out of synch w/table here
     table.append(('-', None, None))
@@ -4367,23 +5106,62 @@ def load_menu(tag, keywords ):
             variable = dynaMvar.dynapasteFlag,
             command= togprpa(cf= cf) )
     #@    << show clip >>
-    #@+node:ekr.20050328091022.73:<< show clip >>
+    #@+node:ekr.20050328091952.91:<< show clip >>
     #show whats in the clipboard, replace clipboard with left side of pair
     #this isnt dynamically updated each menu invocation in plugin
     #nu.add_command(label= "Clip=%r"%(
     #            g.app.gui.getTextFromClipboard()[:6],), )
     
     dynai = Tk.Menu(None, tearoff= 0, takefocus= 0 )
-    for x in  '\' Sq, " Dq, \'\'\' Sq3, """ Dq3, : file, | !file, \\\\ Dbs, ( ), { }, [  ], try /ex, if /else '.split(', '):
+    for x in  '\' Sq, " Dq, \'\'\' Sq3, """ Dq3, : file, | !file, \\\\ Dbs, ( ), { }, [  ], try /ex, if /else, >>> /...'.split(', '):
             dynai.add_command(label= x, 
               command= lambda x= x, f= g.app.gui.replaceClipboardWith: 
               f(x.split()[0]) ) 
     
     nu.add_cascade(menu= dynai, label= 'choice' )
     #@nonl
-    #@-node:ekr.20050328091022.73:<< show clip >>
+    #@-node:ekr.20050328091952.91:<< show clip >>
     #@nl
-#@-node:ekr.20050328091022.69:load_menu
+#@nonl
+#@-node:ekr.20050328091952.87:load_menu
+#@+node:ekr.20050328091952.92:init
+def init():
+    """this is one less than one too many ok's.
+    various macros will fail with out some various non standard modules.
+    but they trap ImportError and fall back if possible.
+
+    """
+    ok = Tk and dynacom and not g.app.unitTesting
+
+    if ok:
+        if g.app.gui is None:
+            g.app.createTkGui(__file__ )
+    
+        ok = g.app.gui.guiName() == "tkinter"
+    
+        if ok:
+            import leoPlugins
+    
+            if NDebug:
+                g.es("dyna_menu", color="gold2")
+    
+            leoPlugins.registerHandler("create-optional-menus", load_menu)
+    
+            #stealing code from timestamp plugin
+            # lp.registerHandler("command1", timestamp)
+            #isnt there a finer grained control than command1?
+            #seems like this would slow things down conciderable
+            #probably because wanted to catch tangle too
+            # save1 should be less overhead
+            leoPlugins.registerHandler("save1", timestamp)
+            
+    
+            #plugin_signon reloads the plugin, can forgo that
+            #g.plugin_signon(__name__)  # + __version__
+
+    return ok
+#@nonl
+#@-node:ekr.20050328091952.92:init
 #@-others
 
 #you can use a macro in other ways
@@ -4403,41 +5181,9 @@ def timestamp(tag=None, keywords=None):
         g.es('at node:' + (c.currentVnode().headString().strip())[:128])
 
 
-if Tk:
-    if g.app.gui is None:
-        g.app.createTkGui(__file__)
 
-    if g.app.gui and g.app.gui.guiName() == "tkinter":
-        import leoPlugins
-        dynaMvar = None
-
-        if NDebug:
-            g.es("dyna_menu", color="gold2")
-
-        #w/o create-optional-menus is called from dynacaller
-        # menu is created after last standard leo menu , Help
-        #after-create-leo-frame is called after create-optional-menus
-        #start1 and new may or may not be called on new
-        #everything is a quandry before it works
-
-        leoPlugins.registerHandler("create-optional-menus", load_menu)
-        
-        
-        #stealing code from timestamp plugin
-        # lp.registerHandler("command1", timestamp)
-        #isnt there a finer grained control than command1?
-        #seems like this would slow things down conciderable
-        #probably because wanted to catch tangle too
-        # save1 should be less overhead
-        leoPlugins.registerHandler("save1", timestamp)
-        
-
-        #plugin_signon reloads the plugin, can forgo that
-        #g.plugin_signon(__name__)  # + __version__
-        #__name__.__doc__ = ""
 
 #@@language python
 #@@color
-#@nonl
-#@-node:ekr.20050328091022.2:@thin dyna_menu.py
+#@-node:ekr.20050328091952.2:@thin dyna_menu.py
 #@-leo

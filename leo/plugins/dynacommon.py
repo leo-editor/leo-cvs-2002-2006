@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20050328091022.78:@thin dynacommon.py
+#@+node:ekr.20050328091952.93:@thin dynacommon.py
 """not needed in pluginManager.txt
 generate this file to exist in the Leo plugins directory.
 you have to edit in your correct paths. < set filenames > section 
@@ -42,11 +42,13 @@ try:
 except ImportError:
     import StringIO
 
-__version__ = '0.0138'  #t04A26p02:57
-#@+others
-#@+node:ekr.20050328091022.79:others
 
-#@+node:ekr.20050328091022.80:_caller_symbols
+__version__ = '0.0139c'  #m05328a03:50
+__not_a_plugin__ = True
+#@+others
+#@+node:ekr.20050328091952.94:others
+
+#@+node:ekr.20050328091952.95:_caller_symbols
 def _caller_symbols():
     """aspncookbook/52278
     Print an expression and its value, 
@@ -60,140 +62,12 @@ def _caller_symbols():
     except StandardError:
         t = sys.exc_info()[2].tb_frame
         return (t.f_back.f_back.f_globals, t.f_back.f_back.f_locals)
-#@-node:ekr.20050328091022.80:_caller_symbols
-#@+node:ekr.20050328091022.81:DDList
-"""Tkinter Drag'n'drop list John Fouhy
-Last update: 2004/07/06, Version: 1.0, Category: User 
-A Tkinter listbox which supports drag'n'drop reordering of the list.
-"""
-
-class DDList(Tk.Listbox ):
-    """ A Tkinter listbox with drag'n'drop reordering of entries. """
-
-    def __init__(self, master, ** kw ):
-
-        kw['selectmode'] = Tk.SINGLE
-
-        Tk.Listbox.__init__(self, master, kw )
-
-        self.bind('<Button-1>', self.setCurrent )
-        self.bind('<B1-Motion>', self.shiftSelection )
-
-        self.curIndex = None
-
-    def setCurrent(self, event ):
-        self.curIndex = self.nearest(event.y )
-
-    def shiftSelection(self, event ):
-        i = self.nearest(event.y )
-
-        if i < self.curIndex:
-            x = self.get(i )
-            self.delete(i )
-            self.insert(i + 1, x )
-            self.curIndex = i
-
-        elif i > self.curIndex:
-            x = self.get(i )
-            self.delete(i )
-            self.insert(i - 1, x )
-            self.curIndex = i
-
-
-if __name__ == '__main__':
-
-    tk = Tk.Tk()
-    length = 10
-    dd = DDList(tk, height = length )
-    dd.pack()
-
-    for i in xrange(length ):
-        dd.insert('end', str(i ))
-
-    def show():
-        for x in dd.get(0, 'end'):
-            print x,
-        print
-        tk.after(2000, show )
-
-    tk.after(2000, show )
-    tk.mainloop()
-
-    #
-
-#
-#@-node:ekr.20050328091022.81:DDList
-#@+node:ekr.20050328091022.82:ScrolledMenu
-
-class ScrolledMenu(Tk.Toplevel):
-    def __init__(self, command=None):
-        self.command = command
-        Tk.Toplevel.__init__(self)
-        self.withdraw()
-        self.overrideredirect(1)
-        self.listbox = DDList(self, name= 'lb')
-        scroll = Tk.Scrollbar(self, orient='v', command=self.listbox.yview)
-        self.listbox.configure(yscrollcommand=scroll.set)
-        self.listbox.pack({'fill':'both', 'expand':1, 'side':'left', })
-        scroll.pack({'fill':'y', 'side':'right', })
-        self.bind('<ButtonPress-1>', self._press)
-        self.bind('<ButtonPress>', self._close)
-        self.bind('<KeyPress-Escape>', self._close)
-        self.listbox.bind('<ButtonRelease-1>', self._select)
-        self.up = 0
-
-    def popup(self, onto):
-        x = onto.winfo_rootx()
-        y = onto.winfo_rooty() + onto.winfo_height()
-        self.geometry('+%d+%d' % (x,y))
-        self.deiconify()
-        self.up = 1
-        self.grab_set_global()
-
-    def _close(self, event=None):
-        self.grab_release()
-        self.withdraw()
-        self.up = 0
-
-    def _select(self, event):
-        self.update() # let the listbox change its selection
-        self._close()
-        index = self.listbox.curselection()
-        value = self.listbox.get(index)[0]
-        if self.command is not None:
-            self.command(value)
-
-    def _press(self, event):
-        x,y = self.winfo_pointerxy()
-        window = self.winfo_containing(x,y)
-        if window is None or window.winfo_toplevel() != self:
-            self._close()
-            
-
-class _Test(Tk.Tk):
-    def __init__(self):
-        Tk.__init__(self)
-        self.sm = ScrolledMenu(self.result)
-        apply(self.sm.listbox.insert, (0,)+tuple(string.lowercase))
-        self.b= Button(self, text='Test', command=self.popup)
-        self.b.pack()
-
-    def result(self, value):
-        print 'selected:', value
-
-    def popup(self):
-        self.sm.popup(self.b)
-
-#if __name__ != 'exSButton':
-#    mw = _Test()
-#    mw.mainloop()
-#@nonl
-#@-node:ekr.20050328091022.82:ScrolledMenu
-#@-node:ekr.20050328091022.79:others
-#@+node:ekr.20050328091022.83:functs w/doctest
+#@-node:ekr.20050328091952.95:_caller_symbols
+#@-node:ekr.20050328091952.94:others
+#@+node:ekr.20050328091952.96:functs w/doctest
 
 #@+others
-#@+node:ekr.20050328091022.84:deangle
+#@+node:ekr.20050328091952.97:deangle
 def deangle(s, repl=  '+'):
     """
     use repl so output can be pasted w/o appearing as named nodes to leo
@@ -210,8 +84,8 @@ def deangle(s, repl=  '+'):
         return '<%s%s'%(repl, s[1:])
     return s
 #@nonl
-#@-node:ekr.20050328091022.84:deangle
-#@+node:ekr.20050328091022.85:commafy
+#@-node:ekr.20050328091952.97:deangle
+#@+node:ekr.20050328091952.98:commafy
 def commafy(val, sep= ','):
     """Bengt , added sep
     mod to use leading seperator if . maybe
@@ -229,20 +103,147 @@ def commafy(val, sep= ','):
     while val: val, rest = val[:-3], '%s%s%s'%(val[-3:], sep, rest)
     return '%s%s%s' %(sign, rest[:-1], dec)
 #@nonl
-#@-node:ekr.20050328091022.85:commafy
-#@+node:ekr.20050328091022.86:sentstrip
+#@-node:ekr.20050328091952.98:commafy
+#@+node:ekr.20050328091952.99:stripSentinels
+def stripSentinels(s, stripsentinals=1,
+           stripcomments=0, stripnodesents=1, stripdirectives=1, **ignored):
+    r""" r for doctest, ignored so can pass **hopts from htmlize
 
-def sentstrip(s):
-    """strip sentinals from the script script passed
-     need to add strip all comments as well
+    Strip sentinal lines from s. from EKR for test.leo htmlize.
+    called by htmlize, disa and sfdots. 
+
+    rewritten to save a few microseconds?, (in case anyone is still on a 486)
+      lstrip instead of strip, no excess strip.
+      save users newlines and join with '' instead of /n
+      break out early if not a comment and stripping everything anyway.
+      added raw/end_raw in addition to verbatium
+
+    and not create a superfluous lines list. wherever it is found.
+    OTOH, splitlines in the forloop still creates a list, so is a style point I guess.
+    
+    is startswith Unicode safe? is slice? slice over *with next up.
+
+  #@  << the essential doctesting >>
+  #@+node:ekr.20050328091952.100:<< the essential doctesting >>
+  >>> s = '#@+leo=4\n#@+node:sent\nhay\n#@nonl\n#@-node: chk \n#@verbatim\n@deco\n#@  @others\n#cmt'
+  >>> stripSentinels(s,0,0,0,0)
+  '#@+leo=4\n#@+sent\nhay\n#@nonl\n#@- chk \n#@verbatim\n@deco\n#@  @others\n#cmt'
+  >>> stripSentinels(s,1,0,1,1)
+  'hay\n@deco\n#cmt'
+  >>> stripSentinels(s)
+  'hay\n@deco\n#cmt'
+  >>> stripSentinels(s,1,0,0,1)
+  '#@+sent\nhay\n#@- chk \n@deco\n#cmt'
+  >>> stripSentinels(s,1,0,1,0)
+  'hay\n#@verbatim\n@deco\n#@  @others\n#cmt'
+  >>> stripSentinels(s,1,1,1,1)
+  'hay\n@deco\n'
+  >>> stripSentinels(s,1,1,1,0)
+  'hay\n#@verbatim\n@deco\n#@  @others\n'
+  >>> stripSentinels(s,1,1,0,0)
+  '#@+sent\nhay\n#@- chk \n#@verbatim\n@deco\n#@  @others\n'
+  >>> stripSentinels('')
+  ''
+  >>> stripSentinels('\n##\n')
+  '\n##\n'
+  >>> o = {'stripcomments':0, 'stripsentinals':0, 'stripnodesents':0, 'stripdirectives':0, 'invalidarg':3} 
+  >>> stripSentinels(s, **o)
+  '#@+leo=4\n#@+sent\nhay\n#@nonl\n#@- chk \n#@verbatim\n@deco\n#@  @others\n#cmt'
+  >>> #this should be fixed to allow commented decorators that look like sentinals
+  >>> stripSentinels(u'\r#@verb\r#cmt')
+  u'\r#cmt'
+  >>> stripSentinels('#@@raw\nbetween raw\n#@@end_raw\n', 1,0,1,1)
+  'between raw\n'
+  >>> stripSentinels('#@@raw\nbetween raw\n#@@end_raw\n', 1,0,1,0)
+  '#@@raw\nbetween raw\n#@@end_raw\n'
+  >>> #
+  
+  #@-node:ekr.20050328091952.100:<< the essential doctesting >>
+  #@nl
+  not every possible corner case.
+
+    should also have option to strip only comments other than sentinals
+    should have option not to mangle node sentinals.
+    
+    possiblity of a python decorator comment out is very high
+    to be sure, will later have to either do this all in the parser
+    or get smarter about what is a directive and allow everything else
+    no matter the strip setting. or label/warn about the conflict.
+    if in <py2.4 deco is a syntax error in the parser, thats fixable.
+    and if Leo adds user configurable leadin chars will have to hack it in.
+
+  Leo write logic adds verbatim, like right here.
+#@verbatim
+    #@@c looks strange without coresponding #@+at
+
+    first file opening and last closing node sentinals could probably be eliminated
+    the @others and named section & nodesents should be enough.
+    skip namedsection,
     """
-    l = []
-    for x in s.splitlines():
-        if x.lstrip().startswith('#@'): continue
-        l.append(x)
-    return '\n'.join(l)
-#@-node:ekr.20050328091022.86:sentstrip
-#@+node:ekr.20050328091022.87:sanitize_
+    import leoGlobals as g
+    result = []
+    verbatim = 0
+    tag1 = '#@+node:'
+    tag2 = '#@-node:'
+    n = len(tag1)
+    
+    for line in s.splitlines(True):
+        s = line.lstrip()
+        #we'll assume no one would use verbatim\n#@@end_raw!
+        if verbatim > 0 and not s.startswith('#@@end_raw'):
+            if verbatim == 1: verbatim = 0
+            result.append(line)
+            continue
+
+        elif verbatim > 0 and s.startswith('#@@end_raw'):
+            verbatim = 0
+            if not stripdirectives:
+                result.append(line)
+
+        elif s.startswith('#@verbatim') or s.startswith('#@@raw'):
+            verbatim = g.choose(s.startswith('#@verbatim'), 1, 2)
+            if not stripdirectives:
+                result.append(line)
+
+        elif not s.startswith('#@') and (not stripcomments and s.startswith('#')): 
+            result.append(line)
+            continue
+
+        #need a regex here could be #@[ \t]@VALIDDIRECIVE 
+        #\t unlikely to work in startswith, fix if you care about tabs
+        #otherwise could strip valid comments, but whould a real Leo user do that?
+        elif s.startswith('#@@') or s.startswith('#@ ') or\
+             s.startswith('#@\t')  or s.startswith('#@<<'):
+
+            #skip namedsection, could opt this in
+            if stripsentinals and s.find('<<') != -1: continue
+            if not stripdirectives:
+                result.append(line)
+
+        elif s.startswith(tag1):
+            if not stripnodesents:
+                i = line.find(tag1)
+                result.append(line[:i] + '#@+' + line[i+n:])
+
+        elif s.startswith(tag2):
+            if not stripnodesents:
+                i = line.find(tag2)
+                result.append(line[:i] + '#@-' + line[i+n:]) #.strip() happy
+
+        elif stripsentinals and s.startswith('#@'):
+            continue
+
+        elif stripcomments and s.startswith('#'):
+            continue
+
+        else: #could this possibly be sentinals?
+            #print s
+            result.append(line)
+
+    return ''.join(result)  #user might have other ideas about \n
+#@nonl
+#@-node:ekr.20050328091952.99:stripSentinels
+#@+node:ekr.20050328091952.101:sanitize_
 
 def sanitize_(s):
     """ Leo's sanitize_filename is too aggressive and too lax
@@ -251,7 +252,7 @@ def sanitize_(s):
     strips most characters, space and replaces with underscore, len<128
     the doctest is in a subnode to allow syntax highlighting
     #@    << chk sanitize >>
-    #@+node:ekr.20050328091022.88:<< chk sanitize >>
+    #@+node:ekr.20050328091952.102:<< chk sanitize >>
     the best of both worlds, doctest with syntax highlighting!
     >>> sanitize_("|\\ /!@=#$%,^&?:;.\\"'<>`~*+")
     '_____________'
@@ -260,7 +261,7 @@ def sanitize_(s):
     >>> #one comment line required when use subnode this way 
     >>> #to avoid doctest seeing node sentinals. don't ask...
     #@nonl
-    #@-node:ekr.20050328091022.88:<< chk sanitize >>
+    #@-node:ekr.20050328091952.102:<< chk sanitize >>
     #@nl
     """
     if not s: return
@@ -274,11 +275,13 @@ def sanitize_(s):
     #should test for unicode before str()
     return res.sub('_', str(s.strip())).replace('__','_')[:128]
 #@nonl
-#@-node:ekr.20050328091022.87:sanitize_
-#@+node:ekr.20050328091022.89:leotmp
+#@-node:ekr.20050328091952.101:sanitize_
+#@+node:ekr.20050328091952.103:leotmp
 def leotmp(name = None, tmp= None):
     """ attempt to divine the user tmp dir add to input name
     later prepend leoID unless no leoID flag or something
+    print os.path.realpath(tempfile.tempdir) simpler?
+
     """
     #factor out later into combined find @home thing + leoID
     for x in ['tmp', 'temp', 'home']:
@@ -297,7 +300,7 @@ def leotmp(name = None, tmp= None):
         return tmp
     return g.os_path_join(tmp, name)
 
-#@-node:ekr.20050328091022.89:leotmp
+#@-node:ekr.20050328091952.103:leotmp
 #@-others
 #@+at
 # others not required except to enable du_test for all these subnodes
@@ -306,11 +309,10 @@ def leotmp(name = None, tmp= None):
 # comafy, sanitize_ actually more usefull in site-packages/myutils.py
 # but I script and run nearly everything in Leo anyway.
 # 
-# '7 tests in 5 items.'
-# '7 passed and 0 failed.'
+# 23 passed and 0 failed.
 #@-at
-#@-node:ekr.20050328091022.83:functs w/doctest
-#@+node:ekr.20050328091022.90:dynastuff
+#@-node:ekr.20050328091952.96:functs w/doctest
+#@+node:ekr.20050328091952.104:dynastuff
 
 
 #@+at
@@ -324,7 +326,12 @@ def leotmp(name = None, tmp= None):
 # 
 # 
 #@-at
-#@+node:ekr.20050328091022.91:fixbody
+#@+node:ekr.20050328091952.105:fixbody
+#ripe for consolidation. executeScript & getScript changed since this
+#stripSentinals better than adhockduplications in 3 functions here
+#they will stop working eventually. and better unicode support is mandatory
+#too much str() on the body, need a loop on ord() or encode or something
+
 
 def scriptbody(c, p):
     """AttributeError: vnode instance has no attribute 'copy'
@@ -507,29 +514,29 @@ def fixbody(data, c= g.top()):
 
     return data
 #@nonl
-#@-node:ekr.20050328091022.91:fixbody
-#@+node:ekr.20050328091022.92:AskYesNo
+#@-node:ekr.20050328091952.105:fixbody
+#@+node:ekr.20050328091952.106:AskYesNo
 
 #file leoTkinterGui.py
 #import tkFont,Tkinter,tkFileDialog leoTkinterDialog
 #class tkinterGui(leoGui.leoGui):
 #when it works add some way to up the damm fonts!
 
-def runAskYesNoCancelDialog(title,
+def runAskYesNoCancelDialog(c,title,
     message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
     """Create and run an askYesNoCancel dialog ."""
     import leoTkinterDialog
-    d = leoTkinterDialog.tkinterAskYesNoCancel(
+    d = leoTkinterDialog.tkinterAskYesNoCancel(c,
         title,message,yesMessage,noMessage,defaultButton)
     #d.configure(font=(("Lucida", "Console"), 12)) #nfg
 #AttributeError: tkinterAskYesNoCancel instance has no attribute 'configure'
     #d.buttonsFrame.configure(font=(("Lucida", "Console"), 12)) #nfg
     #tryed buttonsFrame, frame, top, root...
 
-    return d.run(modal=true)
+    return d.run(modal=True)
 #@nonl
-#@-node:ekr.20050328091022.92:AskYesNo
-#@+node:ekr.20050328091022.93:dynaBunch
+#@-node:ekr.20050328091952.106:AskYesNo
+#@+node:ekr.20050328091952.107:dynaBunch
 import operator
 
 def init_dyna(c, *a, **k):
@@ -543,6 +550,9 @@ def init_dyna(c, *a, **k):
         dynapasteFlag = Tk.StringVar(),
         #getsubnodes different in button & menu, lst is a list of macros
         dynadeflst = dyna_getsubnodes(c,  globs= caller_globals),
+        du_test_verbose = 0, #0or1 just dots in @test from du_test
+        justPyChecker =  1, #show source after running pychecker & pylint
+                            
         )
     
     #print to start, paste over selection later
@@ -613,8 +623,8 @@ class dynaBunch(object):
 
     def save(self, outfile):"""
 #@nonl
-#@-node:ekr.20050328091022.93:dynaBunch
-#@+node:ekr.20050328091022.94:names and colors
+#@-node:ekr.20050328091952.107:dynaBunch
+#@+node:ekr.20050328091952.108:names and colors
 #Leo log Tk names & HTML names and colors
 dycolors = dynaBunch( 
     gAqua = 'aquamarine3',
@@ -653,10 +663,11 @@ dycolors = dynaBunch(
     hYellow = '#FFFF00',
     )
 #print dycolors.gYellow
-#@-node:ekr.20050328091022.94:names and colors
-#@+node:ekr.20050328091022.95:dynaerrout
+#@-node:ekr.20050328091952.108:names and colors
+#@+node:ekr.20050328091952.109:quiet warnings
 
 #quiet warnings from pychecker and tim1 about regex
+#this should be part of init rather than module level.
 
 import warnings
 
@@ -676,31 +687,28 @@ C:\C\PY\PYTHON233\lib\regsub.py:15: DeprecationWarning: the regsub module is dep
 recated; please use re.sub()
   DeprecationWarning)'''
 
+#@-node:ekr.20050328091952.109:quiet warnings
+#@+node:ekr.20050328091952.110:dynaerrout
 #maybe can turn on full exception reporting 
 #rather than rolling my own
 # es_event_exception (eventName,full=false):
-#excepthook() like displayhook?
-# __displayhook__ = displayhook(...)
-#        displayhook(object) -> None
-#   __excepthook__ = excepthook(...)
-#        excepthook(exctype, value, traceback) -> None
 
-#    # dynaM_tim_one_crunch 909 1071
-#    print 'co_name=', sys._getframe(1).f_code.co_name
-#    print 'lineno=', sys._getframe(1).f_lineno  #
-#sys._getframe().f_code.co_name returns ? while in exscript
-#make a method of something so can use it to find the linenumber in macro
-#possibly even jump directly to the source on error in dynatester
-#lt = classmethod(doDefault) self = frame.f_locals['self'] 
-#  import sys  g.es('lineno= ' + sys._getframe().f_lineno )
+def what_line_am_i_on():
+    #from the snippits collection
+    import sys
+    try:
+        raise "Hack"
+    except:
+        return sys.exc_info()[2].tb_frame.f_back.f_lineno
 
+#    g.es('lineno= ' + what_line_am_i_on() )
 
 def dynaerrout(err, msg):
     """from fuzzy cmd
-    Leo often masks the errors 
-    making debuggin of this kind of script more painful than not
+    previous Leo masked the errors 
+    making debuggin of some scripts more painful than not.
+    often enough you don't want to gotoline number either.
     """
-    
     from traceback import print_exc
 
     g.es(msg, color= dycolors.gError)
@@ -708,11 +716,35 @@ def dynaerrout(err, msg):
     print_exc(file= f)
     a = f.getvalue().splitlines()
     for line in a:
-        #g.app.goToLineNumber(int(newSel))
+        #c.goToLineNumber(n=int(newSel))
         g.es(line, color= dycolors.gError)
 #@nonl
-#@-node:ekr.20050328091022.95:dynaerrout
-#@+node:ekr.20050328091022.96:getsubnodes
+#@-node:ekr.20050328091952.110:dynaerrout
+#@+node:ekr.20050328091952.111:dynaerrline
+
+def dynaerrline():
+    """for debuggin, return just the error string on one line
+    call in an except after an error.
+
+    >>> try:
+    ...    a = 1 / 0
+    ... except Exception:
+    ...    print dynaerrreturn()[:49]
+    ZeroDivisionError integer division or modulo by z
+    """
+    import sys
+    exctype, value, tb = sys.exc_info()
+
+    if type(exctype) == type(''):
+        exc_type_name = exctype
+    else: exc_type_name = exctype.__name__
+
+    el = ['%s = %s .'%(k, repr(v)) for k, v in vars(exctype).items()]
+
+    return '%s %s %s '%(exc_type_name, value, el)
+
+#@-node:ekr.20050328091952.111:dynaerrline
+#@+node:ekr.20050328091952.112:getsubnodes
 
 #code to operate dynamenu, no user code
 
@@ -754,8 +786,8 @@ def dyna_getsubnodes(c, globs= {}):
     #es('dynamenu macros %s'%(lst,) )
     return lst
 #@nonl
-#@-node:ekr.20050328091022.96:getsubnodes
-#@+node:ekr.20050328091022.97:captureStd
+#@-node:ekr.20050328091952.112:getsubnodes
+#@+node:ekr.20050328091952.113:captureStd
 class captureStd(object):
     """the typical redirect stdout
     add stderr and stdin later
@@ -772,6 +804,9 @@ class captureStd(object):
     ...     if a is not None:
     ...             sys.stdout.write("%r\n" % (a,))
     ...
+    
+    only used in evaluator, why not in du_test
+    or if it doens't work there why does it work in evaluator w/calc_util?
         """
     def captureStdout(self):
         sys.stdout = StringIO.StringIO()
@@ -780,98 +815,64 @@ class captureStd(object):
         captured = sys.stdout.getvalue()
         sys.stdout = sys.__stdout__
         return captured
-#@nonl
-#@-node:ekr.20050328091022.97:captureStd
-#@+node:ekr.20050328091022.98:runcmd
+#@-node:ekr.20050328091952.113:captureStd
+#@+node:ekr.20050328091952.114:runcmd
 
-#runcmd(cmds) & forklike(*cmds)
-def fixupCmdStr(cmd, args):#_ignoredindoctests
-    """fromc.l.py,
-    needswork
-  os.system('program %s' % filename)
-  will not work as expected if `filename` contains
-  spaces or shell-metacharacters.
-        If you need more fine-grained control look at os.spawn*.
-        return spawnvp(P_WAIT, cmd, (cmd,) + args)
-
-    >>> fixupCmdStr('echo', ("whatever",))
-    \'echo "whatever"\'
-    >>> fixupCmdStr('$!echo', ("what ever",))
-    \'$!echo "what ever"\'
-    """
-    import re
-    escape = lambda s:'"%s"' % re.sub(r'\"$!', r'\\\1', s ) #FIXME
-    return " ".join([cmd ] + map(escape, args ))
-
-
-def runcmd(cmds):
-    """for win9x this works better than other popen for me.
+def runcmd(cmdlst):
+    """cmdlst is either a list or string for subprocess
+    think is string for popen
+    
+    for win9x this works better than other popen for me.
     on *nix you can import commands or something else popen5 maybe
     this does wait and leo is inactive so if there is a chance
     the process will infinate loop, better use a spawner
     you get the return output outerr stdout stderr
+
+    use subprocess if available and not on pythonw till that bug fixed
+    see forums for usage and download from effbot.org if <py2.4
+    
+    py2.2 think prints 1 as True
+    >>> 'pythonw.exe'[-5:].upper() == 'W.EXE'
+    True
+    
+    mostly used to run checkers on py file in site-packages
+    or wherever you set the defaults
+    if Leo or temacs core gets an executeFile we will use that if it works
+    shell=True still fails for me on win9x so fork still up in the air.
+    and so a flash if no console
+    and a title change on the console if already open to the last command
+    seems to be a subprocess bug
     """
-    import os
-    child_stdin, child_stdout, child_stderr = os.popen3(cmds)
+    import os, sys
+
+    try: import subprocess
+    except ImportError:
+        #not going to concider name collision if you have an older
+        #python with one of the previous incarnations of subprocess
+        subprocess = None
+
+    #think only windows pythonw fails stdout/stderr duplication
+    if sys.executable[-5:].upper() == 'W.EXE': subprocess = None
+
+    if not subprocess:    
+        child_stdin, child_stdout, child_stderr = os.popen3(cmdlst)
+        outstd = child_stdout.read()
+        outerr = child_stderr.read()
+    else:
+        ps = subprocess.Popen(cmdlst, #cwd=fdir,
+            universal_newlines=True,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            )
     
-    output = child_stdout.read()
-    outerr = child_stderr.read()
+        (outstd, outerr) = ps.communicate()
+        ret = ps.wait()  #need to handle return code if not subprocess
+
     
-    return output, outerr
+    return outstd, outerr
     
-    
-def forklike(*cmds):
-    """still experimenting
-     on *nix you can commands or fork or this 
-    this does not wait and leo is active 
-    but it appears to reuse the same console if there is one
-    not sure what happens if use leo.pyw
-
-    returns the pid I guess its meaningless on windows?
-
-cmds
-('C:\\c\\py\\Python233\\python.exe -tOO ', 'C:\\c\\py\\Python233\\lib\\site-packages\\tmptest.py')
-
-params, para
-['C:\\c\\py\\Python233\\python.exe', '-tOO'] ['-tOO', 'C:\\c\\py\\Python233\\lib\\site-packages\\tmptest.py']
-says needs string only
-startfile( g.os_path_normpath(path) ) 
-
-times( ) Return a 5-tuple of floating point numbers indicating accumulated (processor or other) times, in seconds. The items are: user time, system time, children's user time, children's system time, and elapsed real time since a fixed point in the past, in that order. 
-(2868845789.5628495, 0.0, 0.0, 0.0, 0.0)
-
-tryed startfile
-WindowsError: [Errno 2] The system cannot find the file specified: 'C:\\c\\py\\Python233\\python.exe -tOO C:\\c\\py\\Python233\\lib\\site-packages\\tmptest.py'
-    """
-    import os
-
-    #all the good ones are *nix only
-    # from spawnl got traceback return spawnv(mode, file, args)
-
-    params = cmds[0].split()
-    para = ''
-    if len(params) > 1:
-        para = params[1:] + list(cmds[1:])
-        # g.os_path_normpath(path) 
-
-    #print os.times()
-    print cmds
-    print params, para
-
-
-    cmd = params[0]
-    #cmd = 'c:/Command.com' #c:/windows/system32/cmd.exe 
-
-    #s = ' '.join(['%s'%x.replace('\\\\', '\\') for x in para])
-    #print s
-    #output = os.startfile(s)  #cant handle command w/params?
-
-    output = os.spawnl(os.P_NOWAIT, cmd, *para )
-    
-    return output
 #@nonl
-#@-node:ekr.20050328091022.98:runcmd
-#@+node:ekr.20050328091022.99:dynadoc
+#@-node:ekr.20050328091952.114:runcmd
+#@+node:ekr.20050328091952.115:dynadoc
 
 def dynadoc(c, sub= 'all' , globs= {}):
     """read dynadeflst and createdoc for them
@@ -982,9 +983,9 @@ def dynadoc(c, sub= 'all' , globs= {}):
     #g.es(text.docroutine(f, x))
     
 #@nonl
-#@-node:ekr.20050328091022.99:dynadoc
-#@-node:ekr.20050328091022.90:dynastuff
-#@+node:ekr.20050328091022.100:dynaput
+#@-node:ekr.20050328091952.115:dynadoc
+#@-node:ekr.20050328091952.104:dynastuff
+#@+node:ekr.20050328091952.116:dynaput
 
 def dynaput(c, slst):
     """return the text selection or put it if slst is not None
@@ -1051,7 +1052,7 @@ def dynaput(c, slst):
 
             elif 'paste' == cg.dynapasteFlag.get() and \
                     Tx.hasTextSelection():
-                g.es('overwrite\n', str(Tx.getTextRange(Tst, Ten)) )
+                #g.es('overwrite\n', str(Tx.getTextRange(Tst, Ten)) )
 
                 v = c.currentVnode() #should this be positions in 4.2?
         
@@ -1073,10 +1074,10 @@ def dynaput(c, slst):
                          cg.dynapasteFlag.get() )
 
     else: g.es("no text selected", color= 'orangered' )
-#@-node:ekr.20050328091022.100:dynaput
-#@+node:ekr.20050328091022.101:dynaplay
+#@-node:ekr.20050328091952.116:dynaput
+#@+node:ekr.20050328091952.117:dynaplayer
 
-def dynaplay(c, splst):
+def dynaplayer(c, splst):
     """playback commands from a list into the selected or body text
     inventing a new little language isnt a trivial endevor
     should do some research to find out if I can steal one
@@ -1090,7 +1091,10 @@ def dynaplay(c, splst):
     need to set insert point so repete works, independant of paste mode?
     tricky, first time thru insert can be outside of selection
     and commands can try to insert outside of selection
-    undo doesnt change insertpoint
+    undo doesn't change insertpoint
+    I can think of a better way to do this now, have a commands class with
+    its own parser up(), dn() etc rather than inline switch if/else style.
+    would be nice to operate on the text widget directly rather than on the string
 
     """
     if not splst: return
@@ -1123,41 +1127,48 @@ def dynaplay(c, splst):
 
     sx = data.splitlines(True)
     sx[0:0] = ' ' #make it base1
-
-    for x in splst:
-        if x.startswith('%%C,'): #command
-            comd = x[4:].lower()
-            if comd == '[down]':
-                ip += 1.0
-
-            elif comd == '[up]':
-                ip -= 1.0
-
-            elif comd == '[home]':
-                ip = float("%d.%d"%(g_row(ip), 0 ))
-
-            elif comd == '[end]':
-                ip = float("%d.%d"%(g_row(ip), len(sx[g_row(ip)]) ))
-
-        else: #must be an insert something
-            try:
-                b = sx[g_row(ip)][:g_col(ip)]
-                m = x
-                a = sx[g_row(ip)][g_col(ip):]
-    
-                sx[g_row(ip)] = '%s%s%s'%(b,m,a)
-                ip = "%d.%d"%(g_row(ip), len(x) + g_col(ip) )
-                ip = float(ip)
-                c.frame.body.setInsertionPoint(ip)
-            except IndexError, err:
-                g.es('command outside selection', err)
-
-        g.es('ip=%r, x=%r'%(ip, x))
+    for ix in xrange(len(sx)):  #sx[:]
+        #@        << splst >>
+        #@+node:ekr.20050328091952.118:<< splst >>
+        for x in splst:
+            if x.startswith('%%C,'): #command
+                comd = x[4:].lower()
+                if comd == '[down]':
+                    ip += 1.0
+        
+                elif comd == '[up]':
+                    ip -= 1.0
+        
+                elif comd == '[home]':
+                    ip = float("%d.%d"%(g_row(ip), 0 ))
+        
+                elif comd == '[end]':
+                    ip = float("%d.%d"%(g_row(ip), len(sx[g_row(ip)]) ))
+        
+            else: #must be an insert something
+                try:
+                    b = sx[g_row(ip)][:g_col(ip)]
+                    m = x
+                    a = sx[g_row(ip)][g_col(ip):]
+        
+                    sx[g_row(ip)] = '%s%s%s'%(b,m,a)
+                    ip = "%d.%d"%(g_row(ip), len(x) + g_col(ip) )
+                    ip = float(ip)
+                    c.frame.body.setInsertionPoint(ip)
+                except IndexError, err:
+                    g.es('command outside selection', err)
+        
+            #g.es('ip=%r, x=%r'%(ip, x))
+        #@nonl
+        #@-node:ekr.20050328091952.118:<< splst >>
+        #@nl
 
     dynaput(c, sx[1:])
     c.frame.body.setInsertionPoint(ip)
-#@-node:ekr.20050328091022.101:dynaplay
-#@+node:ekr.20050328091022.102:python -O
+    c.frame.body.see('insert')
+#@nonl
+#@-node:ekr.20050328091952.117:dynaplayer
+#@+node:ekr.20050328091952.119:python -O
 #make part of a larger basic python sanity check
 import leoGlobals as g
 
@@ -1171,7 +1182,7 @@ try:
     g.es('assert disabled, use g.app._t.assert_()',
         color= 'tomato')
 
-    #how to tell if also -OO? 
+    #how to tell if also -OO? __debug__? prob only -O
     #if hasattr(x,"__doc__") and x.__doc__:
     #if not hasattr(dynaB_Clip_dtef, '__doc__'):  #
     #if not len(dynaB_Clip_dtef.__doc__):
@@ -1201,12 +1212,12 @@ except AssertionError:
     pass
 del x
 #@nonl
-#@-node:ekr.20050328091022.102:python -O
+#@-node:ekr.20050328091952.119:python -O
 #@-others
 
 #depandance on sanitize_ and leoID
 #@<< set filenames >>
-#@+node:ekr.20050328091022.103:<< set filenames >>
+#@+node:ekr.20050328091952.120:<< set filenames >>
 #note, these changes are at the time the button or menu is created
 #to effect these changes you have to 
 #write the plugin and start a new python and leo. maybe reload
@@ -1280,7 +1291,7 @@ tname = sanitize_('tmptest' + Id )+ '.py'
 #windos may set TEMP and TMP by default, case insensitive.
 #tmpfile = g.os_path_join(os.environ['tmp'],'tmptest.py')
 
-tmpfile = g.os_path_join(pypath, 'lib/site-packages', tname)
+tmpfile = g.os_path_join(pypath, 'Lib/site-packages', tname)
 #
 tname = sanitize_('python' + Id )+ '.html'
 htmlfile = g.os_path_join(
@@ -1304,9 +1315,12 @@ if sys.platform[:3] == 'win':
 #should check is valid and have access and create if doesn't exist...
 #may have to defer the creat w/properties so is created on first use
 #leoID doesnt exist when dyna imports common and shouldent import * either
-#@-node:ekr.20050328091022.103:<< set filenames >>
+
+#should calculate from @lineending,  does python handle conversion?
+EOLN = '\n'  #have to try and use this everywhere
+#@-node:ekr.20050328091952.120:<< set filenames >>
 #@nl
 #
 #@nonl
-#@-node:ekr.20050328091022.78:@thin dynacommon.py
+#@-node:ekr.20050328091952.93:@thin dynacommon.py
 #@-leo
