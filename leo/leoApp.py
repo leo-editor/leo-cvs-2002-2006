@@ -140,8 +140,9 @@ class LeoApp:
 				else:
 					top.wm_iconbitmap(bitmap)
 			except:
-				es("exception setting bitmap")
-				traceback.print_exc()
+				if 0: # Let's ignore this for now until I understand the issues better.
+					es("exception setting bitmap")
+					traceback.print_exc()
 		#@-body
 		#@-node:3::<< set the default Leo icon >>
 
