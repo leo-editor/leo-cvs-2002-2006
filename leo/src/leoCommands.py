@@ -5554,14 +5554,17 @@ class configSettings:
     def setRecentFiles (self,files):
         
         c = self.c
-    
-        # Remember the files.
-        self.recentFiles = files
+        
+        # Append the files to the global list.
+        g.app.config.appendToRecentFiles(files)
         
         # Do nothing if there is no @settings tree or no @recent-files node.
         p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if not p:
-            # g.trace("no @recent-files node")
+        if p:
+            pass
+            # g.trace("updating @recent-files for ",c.mFileName)
+        else:
+            # g.trace("no @recent-files node for ",c.mFileName)
             return
     
         # Update the @recent-files entry, leaving c's changed status untouched.
