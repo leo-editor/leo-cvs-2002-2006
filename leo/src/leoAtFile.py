@@ -2511,20 +2511,21 @@ class baseOldDerivedFile:
 			#@-node:<< write then entire @file tree >> (3.x)
 			#@nl
 			self.closeWriteFile()
-			#@		<< warn about @ignored and orphans >>
-			#@+node:<< Warn about @ignored and orphans  >>
-			# 10/26/02: Always warn, even when language=="cweb"
-			
-			next = root.nodeAfterTree()
-			v = root
-			while v and v != next:
-				if not v.isVisited():
-					self.writeError("Orphan node:  " + v.headString())
-				if v.isAtIgnoreNode():
-					self.writeError("@ignore node: " + v.headString())
-				v = v.threadNext()
-			#@-node:<< Warn about @ignored and orphans  >>
-			#@nl
+			if not nosentinels:
+				#@			<< warn about @ignored and orphans >>
+				#@+node:<< Warn about @ignored and orphans  >>
+				# 10/26/02: Always warn, even when language=="cweb"
+				
+				next = root.nodeAfterTree()
+				v = root
+				while v and v != next:
+					if not v.isVisited():
+						self.writeError("Orphan node:  " + v.headString())
+					if v.isAtIgnoreNode():
+						self.writeError("@ignore node: " + v.headString())
+					v = v.threadNext()
+				#@-node:<< Warn about @ignored and orphans  >>
+				#@nl
 			#@		<< finish writing >>
 			#@+node:<< finish writing >>
 			#@+at 
@@ -4377,20 +4378,21 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@nl
 			if not scriptFile:
 				at.closeWriteFile()
-				#@			<< warn about @ignored and orphans >>
-				#@+node:<< Warn about @ignored and orphans  >>
-				# 10/26/02: Always warn, even when language=="cweb"
-				
-				next = root.nodeAfterTree()
-				v = root
-				while v and v != next:
-					if not v.isVisited():
-						at.writeError("Orphan node:  " + v.headString())
-					if v.isAtIgnoreNode():
-						at.writeError("@ignore node: " + v.headString())
-					v = v.threadNext()
-				#@-node:<< Warn about @ignored and orphans  >>
-				#@nl
+				if not nosentinels:
+					#@				<< warn about @ignored and orphans >>
+					#@+node:<< Warn about @ignored and orphans  >>
+					# 10/26/02: Always warn, even when language=="cweb"
+					
+					next = root.nodeAfterTree()
+					v = root
+					while v and v != next:
+						if not v.isVisited():
+							at.writeError("Orphan node:  " + v.headString())
+						if v.isAtIgnoreNode():
+							at.writeError("@ignore node: " + v.headString())
+						v = v.threadNext()
+					#@-node:<< Warn about @ignored and orphans  >>
+					#@nl
 				#@			<< finish writing >>
 				#@+node:<< finish writing >>
 				#@+at 
