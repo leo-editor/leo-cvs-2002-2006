@@ -4133,69 +4133,35 @@ class baseNewDerivedFile(oldDerivedFile):
         start = at.startSentinelComment
         s = ''.join(at.docOut)
         
-        if 0: # new code.
-            #@        << new code >>
-            #@+node:ekr.20031218072017.1754:<< new code >>
-            if end:
-                # Remove opening block delim.
-                if g.match(s,0,start):
-                    s = s[len(start):]
-                else:
-                    at.readError("Missing open block comment")
-                    g.trace(s)
-                    return
-                    
-                # Remove trailing newline.
-                if s[-1] == '\n':
-                    s = s[:-1]
-            
-                # Remove closing block delim.
-                if s[-len(end):] == end:
-                    s = s[:-len(end)]
-                else:
-                    at.readError("Missing close block comment")
-                    return
-            
-            at.out.append(s) # The tag has already been removed.
-            at.docOut = []
-            #@nonl
-            #@-node:ekr.20031218072017.1754:<< new code >>
-            #@nl
+        # Remove the @doc or @space.  We'll add it back at the end.
+        if g.match(s,0,tag):
+            s = s[len(tag):]
         else:
-            #@        << old code >>
-            #@+node:ekr.20031218072017.1755:<< old code >>
-            # Remove the @doc or @space.  We'll add it back at the end.
-            if g.match(s,0,tag):
-                s = s[len(tag):]
+            at.readError("Missing start of doc part")
+            return
+    
+        if end:
+            # 9/3/04: Remove leading newline.
+            if s[0] == '\n': s = s[1:]
+            # Remove opening block delim.
+            if g.match(s,0,start):
+                s = s[len(start):]
             else:
-                at.readError("Missing start of doc part")
+                at.readError("Missing open block comment")
+                g.trace(s)
                 return
-            
-            if end:
-                # Remove opening block delim.
-                if g.match(s,0,start):
-                    s = s[len(start):]
-                else:
-                    at.readError("Missing open block comment")
-                    g.trace(s)
-                    return
-                    
-                # Remove trailing newline.
-                if s[-1] == '\n':
-                    s = s[:-1]
-            
-                # Remove closing block delim.
-                if s[-len(end):] == end:
-                    s = s[:-len(end)]
-                else:
-                    at.readError("Missing close block comment")
-                    return
-            
-            at.out.append(tag + s)
-            at.docOut = []
-            #@nonl
-            #@-node:ekr.20031218072017.1755:<< old code >>
-            #@nl
+            # Remove trailing newline.
+            if s[-1] == '\n': s = s[:-1]
+            # Remove closing block delim.
+            if s[-len(end):] == end:
+                s = s[:-len(end)]
+            else:
+                at.readError("Missing close block comment")
+                return
+    
+        at.out.append(tag + s)
+        at.docOut = []
+        
     #@nonl
     #@-node:ekr.20031218072017.1753:readLastDocLine
     #@-node:ekr.20031218072017.2770:end sentinels
