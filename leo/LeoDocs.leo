@@ -44,7 +44,7 @@
 <v t="T27"><vh>Kent Tenney</vh></v>
 <v t="T28"><vh>Jim Vickroy</vh></v>
 </v>
-<v t="T29" a="E"><vh>Release Notes</vh>
+<v t="T29"><vh>Release Notes</vh>
 <v t="T30"><vh>Warnings</vh></v>
 <v t="T31"><vh>Installation notes</vh>
 <v t="T32" a="C"><vh>System requirements</vh></v>
@@ -57,7 +57,7 @@
 <v t="T37" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="E"><vh>Latest version</vh>
-<v t="T38" a="EV"><vh>leo.py 3.6</vh>
+<v t="T38" a="E"><vh>leo.py 3.6</vh>
 <v t="T39"><vh>Known bug: problems with Python window</vh></v>
 <v><vh>Bug fixes</vh>
 <v><vh>Fixed problems with opening and writing leoConfig.txt on Linux</vh></v>
@@ -427,7 +427,7 @@
 </v>
 </v>
 </v>
-<v t="T303"><vh>Users Guide</vh>
+<v t="T303" a="E"><vh>Users Guide</vh>
 <v t="T304"><vh>An overview of Leo</vh></v>
 <v t="T305"><vh>Front material</vh>
 <v t="T306"><vh>Title Page &amp; Summary</vh></v>
@@ -520,7 +520,7 @@
 <v t="T336"><vh>Resizing panes</vh></v>
 <v t="T337"><vh>Undoing operations</vh></v>
 </v>
-<v t="T338"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T338" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
 <v t="T339" a="M"><vh>Overview</vh></v>
 <v t="T340" a="M"><vh>Sections and section references</vh></v>
 <v t="T341"><vh>Organizing @file trees.</vh>
@@ -562,12 +562,12 @@
 </v>
 </v>
 </v>
-<v t="T358"><vh>More about directives</vh>
+<v t="T358" a="E"><vh>More about directives</vh>
 <v t="T359"><vh>@CWEB and @noweb specify the source language</vh></v>
 <v t="T360"><vh>@color and @nocolor control syntax coloring</vh></v>
 <v t="T361"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
 <v t="T362"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
-<v t="T363"><vh>@first directive allows preliminary lines in @file trees</vh></v>
+<v t="T363" a="V"><vh>@first and @last directives allow leading and trailing lines in @file trees</vh></v>
 <v t="T364"><vh>@language specifying the target language</vh></v>
 <v t="T365" a="M"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
 </v>
@@ -4797,7 +4797,13 @@ The body text of @file foo.perl might be:
 @first directives are recognized only at the start of the body text of @file nodes. No text may precede @first directives. More than one @first directive may exist, like this:
 
 	@first #! /usr/bin/env python
-	@first # more comments.</t>
+	@first # more comments.
+
+Similarly, @last directives are recognized only at the end of body text of @file nodes.  No text may follow @last directives.  More than one @last directive may exist.  For example, here is how a PHP file might be set up:
+
+	@first &lt;?php
+	...
+	@last ?&gt;</t>
 <t tx="T364">@nocolor
 The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle commands. This directive over-rides the default specified in the Preferences panel. The form of this directive is:
 @color
