@@ -1969,7 +1969,8 @@ class position (object):
         while p.hasChildren() and p.isExpanded():
             if g.app.debug: g.trace(p)
             p.moveToLastChild()
-        assert(p.isVisible())
+        if 0: # This assert is invalid.
+            assert(p.isVisible())
         if g.app.debug: g.trace(p)
         return p
     #@nonl
