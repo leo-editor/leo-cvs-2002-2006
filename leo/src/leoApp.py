@@ -220,8 +220,9 @@ class LeoApp:
         g.app.root = g.app.gui.createRootWindow()
         g.app.gui.finishCreate()
         
-        if fileName:
-            print "Tk gui created in", g.shortFileName(fileName)
+        if 0:
+            if fileName:
+                print "Tk gui created in", g.shortFileName(fileName)
     #@nonl
     #@-node:ekr.20031218072017.2610:app.createTkGui
     #@+node:ekr.20031218072017.2612:app.destroyAllOpenWithFiles
