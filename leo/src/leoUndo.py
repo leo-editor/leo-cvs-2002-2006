@@ -121,6 +121,7 @@ class baseUndoer:
             "Move Up":            u.redoMoveNode,
             "Paste":              u.redoTyping,
             "Paste Node":         u.redoInsertNodes,
+            "Pretty Print":       u.redoChangeAll,
             "Promote":            u.redoPromote,
             "Read @file Nodes":   u.redoReplaceNodes,
             "Reformat Paragraph": u.redoTyping,
@@ -164,6 +165,7 @@ class baseUndoer:
             "Move Up":            u.undoMoveNode,
             "Paste":              u.undoTyping,
             "Paste Node":         u.undoInsertNodes,
+            "Pretty Print":       u.undoChangeAll,
             "Promote":            u.undoPromote,
             "Read @file Nodes":   u.undoReplaceNodes,
             "Reformat Paragraph": u.undoTyping,
@@ -775,7 +777,7 @@ class baseUndoer:
             d = u.getBead(u.bead+1)
             assert(d)
             # g.trace(u.undoType,u.p,u.newText)
-            if u.undoType == "Change All":
+            if u.undoType in ("Change All","Pretty Print"):
                 c.selectVnode(u.p)
                 break
             elif u.undoType == "Change":
@@ -1011,7 +1013,7 @@ class baseUndoer:
             d = u.getBead(u.bead)
             assert(d)
             # g.trace(u.undoType,u.p,u.oldText)
-            if u.undoType == "Change All":
+            if u.undoType in ("Change All","Pretty Print"):
                 c.selectVnode(u.p)
                 break
             elif u.undoType == "Change":
@@ -1021,7 +1023,7 @@ class baseUndoer:
             elif u.undoType == "Change Headline":
                 u.p.initHeadString(u.oldText)
                 count += 1
-            else: assert(False)
+            else: assert False, "bad undo type:" % u.undoType
     
         g.es("undo %d instances" % count)
     #@nonl
