@@ -260,7 +260,6 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not c: return "break"
     if not p: return "break"
     if p != c.currentPosition(): return "break"
-    v = p.v # used only to get p.iconVal.
 
     if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -465,8 +464,11 @@ if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
     
 # Update icons.
 val = p.computeIcon()
-if val != v.iconVal:
-    v.iconVal = val
+
+# 7/8/04: During unit tests the node may not have been drawn,
+# So p.v.iconVal may not exist yet.
+if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+    p.v.iconVal = val
     redraw_flag = True
 
 c.endUpdate(redraw_flag) # redraw only if necessary
@@ -530,7 +532,6 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not c: return "break"
     if not p: return "break"
     if p != c.currentPosition(): return "break"
-    v = p.v # used only to get p.iconVal.
 
     if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -735,8 +736,11 @@ if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
     
 # Update icons.
 val = p.computeIcon()
-if val != v.iconVal:
-    v.iconVal = val
+
+# 7/8/04: During unit tests the node may not have been drawn,
+# So p.v.iconVal may not exist yet.
+if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+    p.v.iconVal = val
     redraw_flag = True
 
 c.endUpdate(redraw_flag) # redraw only if necessary
@@ -1318,20 +1322,21 @@ else:
 #@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
 #@-node:ekr.20031218072017.1723:createMenuEntries
 #@+node:ekr.20031218072017.1005:drawText (bind)
-def drawText(self,p,x,y):
+def drawText(self,p,x,y,box_id=None):
     
     """draw text for v at nominal coordinates x,y."""
 
     tree = self ; c = self.c ; v = p.v
+    h = self.line_height
     x += text_indent
     
     data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
     if data is not None: return data
 
-    t = Tk.Text(self.canvas,
+    self.lastText = t = Tk.Text(self.canvas,
         font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 
-    # New in 4.2: entries a pairs (p,t) indexed by v.
+    # New in 4.2: entries are pairs (p,t) indexed by v.
     # Remember which text widget belongs to v.
     d = self.edit_text_dict
     val = d.get(v,[])
@@ -1345,23 +1350,22 @@ def drawText(self,p,x,y):
     t.insert("end", v.headString())
     << configure the text depending on state >>
 
-    # Use vnode or postion callbacks.
-    id1 = t.bind("<1>",p.OnHeadlineClick)
-    id2 = t.bind("<3>",p.OnHeadlineRightClick)
+    if 1: # use bind here, else use bind_tag in drawTopTree.
+        # Use vnode or postion callbacks.
+        id1 = t.bind("<1>",p.OnHeadlineClick)
+        id2 = t.bind("<3>",p.OnHeadlineRightClick)
+        id3 = t.bind("<Key>", p.OnHeadlineKey)
+        id4 = t.bind("<Control-t>",self.OnControlT)
+            # 10/16/02: Stamp out the erroneous control-t binding.
+        # Remember the bindings so deleteBindings can delete them.
+        self.bindings.append((t,id1,"<1>"),)
+        self.bindings.append((t,id2,"<3>"),)
+        self.bindings.append((t,id3,"<Key>"),)
+        self.bindings.append((t,id4,"<Control-t>"),)
     
-    if 0: # 6/15/02: Bill Drissel objects to this binding.
-        t.bind("<Double-1>", p.OnBoxClick)
-    id3 = t.bind("<Key>", p.OnHeadlineKey)
-    id4 = t.bind("<Control-t>",self.OnControlT)
-        # 10/16/02: Stamp out the erroneous control-t binding.
+    << highlight text widget on enter events >>
         
-    # Remember the bindings so deleteBindings can delete them.
-    self.bindings.append((t,id1,"<1>"),)
-    self.bindings.append((t,id2,"<3>"),)
-    self.bindings.append((t,id3,"<Key>"),)
-    self.bindings.append((t,id4,"<Control-t>"),)
-
-    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
+    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
     
     # This doesn't work: must call update_idletasks first, and that's hard here.
@@ -1379,6 +1383,45 @@ else:
     self.setUnselectedLabelState(p) # unselected
 #@nonl
 #@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
+#@+node:ekr.20040709194954:<< highlight text widget on enter events >>
+if 0: # Define a rect to colorize.
+
+    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+    self.canvas.itemconfig(color_rect,fill="",outline="")
+
+    def enterRect(event,id=color_rect):
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+    
+if 1: # Colorize only the headline.
+
+    def enterRect(event,p=p,t=t):
+        t2 = self.lastColoredText
+        if t2:
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # color
+                t2.configure(background="white")
+        if p == self.editPosition():
+            self.lastColoredText = None
+        else:
+            self.lastColoredText = t
+            if 1: # underline
+                t.tag_add('underline','1.0', 'end')
+                t.tag_configure('underline',underline = True)
+            else: #color
+                t.configure(background="LightSteelBlue1")
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040709194954:<< highlight text widget on enter events >>
 #@-node:ekr.20031218072017.1005:drawText (bind)
 #@+node:ekr.20031218072017.2177:<< create the toplevel frame >>
 frame.top = top = Tk.Toplevel()
@@ -2763,30 +2806,22 @@ def yviewCallback (self,*args,**keys):
 #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 def drawBox (self,p,x,y):
     
-    tree = self
+    tree = self ; canvas = self.canvas
     y += 7 # draw the box at x, y+7
-    h = self.line_height
     
     if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 
         iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
         image = self.getIconImage(iconname)
-        id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
-        
-        if 1: # New in 4.2.  Create a frame to catch all clicks.
-            id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-            color = ""
-            self.canvas.itemconfig(id4,fill=color,outline=color)
-            self.canvas.lower(id4)
-            id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-            self.tagBindings.append((id,id3,"<1>"),)
+        box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
     
-        id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
+        id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
+        id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
+
+        self.tagBindings.append((box_id,id1,"<1>"),)
+        self.tagBindings.append((box_id,id2,"<Double-1>"),)
         
-        # Remember the bindings so deleteBindings can delete them.
-        self.tagBindings.append((id,id1,"<1>"),)
-        self.tagBindings.append((id,id2,"<Double-1>"),)
+        return box_id
 #@nonl
 #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
@@ -2803,7 +2838,7 @@ def drawIcon(self,p,x=None,y=None):
         # Get the image.
         imagename = "box%02d.GIF" % val
         image = self.getIconImage(imagename)
-        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image,tag="iconBox")
         self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
     
         id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
@@ -2873,7 +2908,10 @@ def force_draw_node(self,p,x,y):
     h,w = self.drawUserIcons(p,"beforeBox",x,y)
     xw = w # The extra indentation before the icon box.
     if p.hasChildren():
-        self.drawBox(p,x+w,y)
+        box_id = self.drawBox(p,x+w,y)
+    else:
+        box_id = None
+
     w += box_width # even if box isn't drawn.
 
     h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
@@ -2885,12 +2923,15 @@ def force_draw_node(self,p,x,y):
     h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
     h = max(h,h2) ; w += w2
 
-    h2 = self.drawText(p,x+w,y)
+    expand_x = x+w # save this for later.
+    h2 = self.drawText(p,x+w,y,box_id)
     h = max(h,h2)
     w += self.widthInPixels(p.headString())
 
     h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
     h = max(h,h2)
+    
+    self.drawClickFrame(p,y)
 
     return h,xw
 #@nonl
@@ -2901,7 +2942,7 @@ def force_draw_nodeOLD(self,p,x,y):
     self.allocatedNodes += 1
 
     if p.hasChildren():
-        self.drawBox(p,x,y)
+        box_id = self.drawBox(p,x,y)
     w = box_width # Even if the box isn't drawn.
 
     h2,w2 = self.drawIcon(p,x+w,y)
@@ -2913,20 +2954,21 @@ def force_draw_nodeOLD(self,p,x,y):
 #@-node:ekr.20040318090335:force_draw_node (old)
 #@-node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
 #@+node:ekr.20031218072017.1005:drawText (bind)
-def drawText(self,p,x,y):
+def drawText(self,p,x,y,box_id=None):
     
     """draw text for v at nominal coordinates x,y."""
 
     tree = self ; c = self.c ; v = p.v
+    h = self.line_height
     x += text_indent
     
     data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
     if data is not None: return data
 
-    t = Tk.Text(self.canvas,
+    self.lastText = t = Tk.Text(self.canvas,
         font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 
-    # New in 4.2: entries a pairs (p,t) indexed by v.
+    # New in 4.2: entries are pairs (p,t) indexed by v.
     # Remember which text widget belongs to v.
     d = self.edit_text_dict
     val = d.get(v,[])
@@ -2940,23 +2982,22 @@ def drawText(self,p,x,y):
     t.insert("end", v.headString())
     << configure the text depending on state >>
 
-    # Use vnode or postion callbacks.
-    id1 = t.bind("<1>",p.OnHeadlineClick)
-    id2 = t.bind("<3>",p.OnHeadlineRightClick)
+    if 1: # use bind here, else use bind_tag in drawTopTree.
+        # Use vnode or postion callbacks.
+        id1 = t.bind("<1>",p.OnHeadlineClick)
+        id2 = t.bind("<3>",p.OnHeadlineRightClick)
+        id3 = t.bind("<Key>", p.OnHeadlineKey)
+        id4 = t.bind("<Control-t>",self.OnControlT)
+            # 10/16/02: Stamp out the erroneous control-t binding.
+        # Remember the bindings so deleteBindings can delete them.
+        self.bindings.append((t,id1,"<1>"),)
+        self.bindings.append((t,id2,"<3>"),)
+        self.bindings.append((t,id3,"<Key>"),)
+        self.bindings.append((t,id4,"<Control-t>"),)
     
-    if 0: # 6/15/02: Bill Drissel objects to this binding.
-        t.bind("<Double-1>", p.OnBoxClick)
-    id3 = t.bind("<Key>", p.OnHeadlineKey)
-    id4 = t.bind("<Control-t>",self.OnControlT)
-        # 10/16/02: Stamp out the erroneous control-t binding.
+    << highlight text widget on enter events >>
         
-    # Remember the bindings so deleteBindings can delete them.
-    self.bindings.append((t,id1,"<1>"),)
-    self.bindings.append((t,id2,"<3>"),)
-    self.bindings.append((t,id3,"<Key>"),)
-    self.bindings.append((t,id4,"<Control-t>"),)
-
-    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
+    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
     
     # This doesn't work: must call update_idletasks first, and that's hard here.
@@ -2974,6 +3015,45 @@ else:
     self.setUnselectedLabelState(p) # unselected
 #@nonl
 #@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
+#@+node:ekr.20040709194954:<< highlight text widget on enter events >>
+if 0: # Define a rect to colorize.
+
+    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+    self.canvas.itemconfig(color_rect,fill="",outline="")
+
+    def enterRect(event,id=color_rect):
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+    
+if 1: # Colorize only the headline.
+
+    def enterRect(event,p=p,t=t):
+        t2 = self.lastColoredText
+        if t2:
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # color
+                t2.configure(background="white")
+        if p == self.editPosition():
+            self.lastColoredText = None
+        else:
+            self.lastColoredText = t
+            if 1: # underline
+                t.tag_add('underline','1.0', 'end')
+                t.tag_configure('underline',underline = True)
+            else: #color
+                t.configure(background="LightSteelBlue1")
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040709194954:<< highlight text widget on enter events >>
 #@-node:ekr.20031218072017.1005:drawText (bind)
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=False):
@@ -3010,7 +3090,7 @@ id = self.canvas.create_line(
     fill="gray50", # stipple="gray50"
     tag="lines")
 
-self.canvas.tag_lower(id)
+# self.canvas.tag_lower(id)
 #@nonl
 #@-node:ekr.20031218072017.1009:<< draw vertical line >>
 #@-node:ekr.20031218072017.1008:drawTree
@@ -3195,6 +3275,8 @@ def __init__(self,c,frame,canvas):
     self._editPosition = None
     self.lineyoffset = 0 # y offset for this headline.
     self.disableRedraw = False # True: reschedule a redraw for later.
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
     
     # Set self.font and self.fontName.
     self.setFontFromConfig()
@@ -4284,30 +4366,22 @@ The draw_box
 #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 def drawBox (self,p,x,y):
     
-    tree = self
+    tree = self ; canvas = self.canvas
     y += 7 # draw the box at x, y+7
-    h = self.line_height
     
     if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 
         iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
         image = self.getIconImage(iconname)
-        id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
-        
-        if 1: # New in 4.2.  Create a frame to catch all clicks.
-            id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-            color = ""
-            self.canvas.itemconfig(id4,fill=color,outline=color)
-            self.canvas.lower(id4)
-            id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-            self.tagBindings.append((id,id3,"<1>"),)
+        box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
     
-        id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
+        id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
+        id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
+
+        self.tagBindings.append((box_id,id1,"<1>"),)
+        self.tagBindings.append((box_id,id2,"<Double-1>"),)
         
-        # Remember the bindings so deleteBindings can delete them.
-        self.tagBindings.append((id,id1,"<1>"),)
-        self.tagBindings.append((id,id2,"<Double-1>"),)
+        return box_id
 #@nonl
 #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
@@ -4324,7 +4398,7 @@ def drawIcon(self,p,x=None,y=None):
         # Get the image.
         imagename = "box%02d.GIF" % val
         image = self.getIconImage(imagename)
-        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image,tag="iconBox")
         self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
     
         id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
@@ -4677,6 +4751,8 @@ if 0: # no longer used.
     canvas_x = canvas.canvasx(x)
     canvas_y = canvas.canvasy(y)
     id = self.canvas.find_closest(canvas_x,canvas_y)
+    # id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+    
 
 # OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
 if self.drag_id: # This gets cleared by OnEndDrag()
@@ -4790,6 +4866,8 @@ canvas_x = canvas.canvasx(x)
 canvas_y = canvas.canvasy(y)
 
 id = self.canvas.find_closest(canvas_x,canvas_y)
+# id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+
 vdrag = self.findVnodeWithIconId(id)
 childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
 #@nonl
@@ -4945,6 +5023,7 @@ def OnIconClick (self,p,event):
         canvas_x = canvas.canvasx(event.x)
         canvas_y = canvas.canvasy(event.y)
         id = canvas.find_closest(canvas_x,canvas_y)
+        # id = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
         if id != None:
             try: id = id[0]
             except: pass
@@ -7709,12 +7788,12 @@ def vnodeListIds (self):
     return [id(v) for v in p.v.t.vnodeList]
 #@nonl
 #@-node:ekr.20040310153624:p.dump & p.vnodeListIds
-#@+node:ekr.20031218072017.2029:drawTopTree
+#@+node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 def drawTopTree (self):
     
     """Draws the top-level tree, taking into account the hoist state."""
     
-    c = self.c
+    c = self.c ; canvas = self.canvas
     
     if 0:
         try: self.redrawCount += 1
@@ -7722,14 +7801,55 @@ def drawTopTree (self):
         g.trace(self.redrawCount)
     # import traceback ; traceback.print_stack()
     
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
+    
     if c.hoistStack:
         p,junk = c.hoistStack[-1]
         self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
     else:
         self.drawTree(c.rootPosition(),root_left,root_top,0,0)
         
+    canvas.lower("lines")
+    canvas.lower("colorBox")
+    canvas.lift("clickBox")
+    canvas.lift("iconBox")
     
-#@-node:ekr.20031218072017.2029:drawTopTree
+    if 0:
+        << define callbacks >>
+        # Use vnode or postion callbacks.
+        canvas.tag_bind("textBox","<1>",onHeadlineClickCallback)
+        canvas.tag_bind("textBox","<3>",onHeadlineRightClickCallback)
+        canvas.tag_bind("textBox","<Key>", onHeadlineKeyCallback)
+        canvas.tag_bind("textBox","<Control-t>",self.OnControlT)
+            # Stamp out erroneous control-t binding.
+#@nonl
+#@+node:ekr.20040710060809:<< define callbacks >>
+def onHeadlineClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.onHeadlineClick()
+    
+def onHeadlineRightClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineRightClick()
+    
+def onHeadlineKeyCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineKey()
+    
+    
+#@nonl
+#@-node:ekr.20040710060809:<< define callbacks >>
+#@-node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=False):
 
@@ -7765,25 +7885,26 @@ id = self.canvas.create_line(
     fill="gray50", # stipple="gray50"
     tag="lines")
 
-self.canvas.tag_lower(id)
+# self.canvas.tag_lower(id)
 #@nonl
 #@-node:ekr.20031218072017.1009:<< draw vertical line >>
 #@-node:ekr.20031218072017.1008:drawTree
 #@+node:ekr.20031218072017.1005:drawText (bind)
-def drawText(self,p,x,y):
+def drawText(self,p,x,y,box_id=None):
     
     """draw text for v at nominal coordinates x,y."""
 
     tree = self ; c = self.c ; v = p.v
+    h = self.line_height
     x += text_indent
     
     data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
     if data is not None: return data
 
-    t = Tk.Text(self.canvas,
+    self.lastText = t = Tk.Text(self.canvas,
         font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 
-    # New in 4.2: entries a pairs (p,t) indexed by v.
+    # New in 4.2: entries are pairs (p,t) indexed by v.
     # Remember which text widget belongs to v.
     d = self.edit_text_dict
     val = d.get(v,[])
@@ -7797,23 +7918,22 @@ def drawText(self,p,x,y):
     t.insert("end", v.headString())
     << configure the text depending on state >>
 
-    # Use vnode or postion callbacks.
-    id1 = t.bind("<1>",p.OnHeadlineClick)
-    id2 = t.bind("<3>",p.OnHeadlineRightClick)
+    if 1: # use bind here, else use bind_tag in drawTopTree.
+        # Use vnode or postion callbacks.
+        id1 = t.bind("<1>",p.OnHeadlineClick)
+        id2 = t.bind("<3>",p.OnHeadlineRightClick)
+        id3 = t.bind("<Key>", p.OnHeadlineKey)
+        id4 = t.bind("<Control-t>",self.OnControlT)
+            # 10/16/02: Stamp out the erroneous control-t binding.
+        # Remember the bindings so deleteBindings can delete them.
+        self.bindings.append((t,id1,"<1>"),)
+        self.bindings.append((t,id2,"<3>"),)
+        self.bindings.append((t,id3,"<Key>"),)
+        self.bindings.append((t,id4,"<Control-t>"),)
     
-    if 0: # 6/15/02: Bill Drissel objects to this binding.
-        t.bind("<Double-1>", p.OnBoxClick)
-    id3 = t.bind("<Key>", p.OnHeadlineKey)
-    id4 = t.bind("<Control-t>",self.OnControlT)
-        # 10/16/02: Stamp out the erroneous control-t binding.
+    << highlight text widget on enter events >>
         
-    # Remember the bindings so deleteBindings can delete them.
-    self.bindings.append((t,id1,"<1>"),)
-    self.bindings.append((t,id2,"<3>"),)
-    self.bindings.append((t,id3,"<Key>"),)
-    self.bindings.append((t,id4,"<Control-t>"),)
-
-    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
+    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
     
     # This doesn't work: must call update_idletasks first, and that's hard here.
@@ -7831,6 +7951,45 @@ else:
     self.setUnselectedLabelState(p) # unselected
 #@nonl
 #@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
+#@+node:ekr.20040709194954:<< highlight text widget on enter events >>
+if 0: # Define a rect to colorize.
+
+    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+    self.canvas.itemconfig(color_rect,fill="",outline="")
+
+    def enterRect(event,id=color_rect):
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+    
+if 1: # Colorize only the headline.
+
+    def enterRect(event,p=p,t=t):
+        t2 = self.lastColoredText
+        if t2:
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # color
+                t2.configure(background="white")
+        if p == self.editPosition():
+            self.lastColoredText = None
+        else:
+            self.lastColoredText = t
+            if 1: # underline
+                t.tag_add('underline','1.0', 'end')
+                t.tag_configure('underline',underline = True)
+            else: #color
+                t.configure(background="LightSteelBlue1")
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040709194954:<< highlight text widget on enter events >>
 #@-node:ekr.20031218072017.1005:drawText (bind)
 #@+node:ekr.20040117170612:p.__getattr__  ON:  must be ON if use_plugins
 if 1: # Good for compatibility, bad for finding conversion problems.
@@ -7989,12 +8148,12 @@ While I was at it, I improved the code as follows:
 
 @color
 #@nonl
-#@+node:ekr.20031218072017.2029:drawTopTree
+#@+node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 def drawTopTree (self):
     
     """Draws the top-level tree, taking into account the hoist state."""
     
-    c = self.c
+    c = self.c ; canvas = self.canvas
     
     if 0:
         try: self.redrawCount += 1
@@ -8002,14 +8161,55 @@ def drawTopTree (self):
         g.trace(self.redrawCount)
     # import traceback ; traceback.print_stack()
     
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
+    
     if c.hoistStack:
         p,junk = c.hoistStack[-1]
         self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
     else:
         self.drawTree(c.rootPosition(),root_left,root_top,0,0)
         
+    canvas.lower("lines")
+    canvas.lower("colorBox")
+    canvas.lift("clickBox")
+    canvas.lift("iconBox")
     
-#@-node:ekr.20031218072017.2029:drawTopTree
+    if 0:
+        << define callbacks >>
+        # Use vnode or postion callbacks.
+        canvas.tag_bind("textBox","<1>",onHeadlineClickCallback)
+        canvas.tag_bind("textBox","<3>",onHeadlineRightClickCallback)
+        canvas.tag_bind("textBox","<Key>", onHeadlineKeyCallback)
+        canvas.tag_bind("textBox","<Control-t>",self.OnControlT)
+            # Stamp out erroneous control-t binding.
+#@nonl
+#@+node:ekr.20040710060809:<< define callbacks >>
+def onHeadlineClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.onHeadlineClick()
+    
+def onHeadlineRightClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineRightClick()
+    
+def onHeadlineKeyCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineKey()
+    
+    
+#@nonl
+#@-node:ekr.20040710060809:<< define callbacks >>
+#@-node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=False):
 
@@ -8045,7 +8245,7 @@ id = self.canvas.create_line(
     fill="gray50", # stipple="gray50"
     tag="lines")
 
-self.canvas.tag_lower(id)
+# self.canvas.tag_lower(id)
 #@nonl
 #@-node:ekr.20031218072017.1009:<< draw vertical line >>
 #@-node:ekr.20031218072017.1008:drawTree
@@ -8278,12 +8478,14 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode
 #@nonl
 #@-node:ekr.20040313150633:<< remove unused tnodeList >>
 #@+node:ekr.20040323155951:<< do full tests >>
-if count % 100 == 0:
-    g.es('.',newline=False)
-if count % 2000 == 0:
-    g.enl()
+if not unittest:
+    if count % 100 == 0:
+        g.es('.',newline=False)
+    if count % 2000 == 0:
+        g.enl()
 
 @others
+#@nonl
 #@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
 threadBack = p.threadBack()
 threadNext = p.threadNext()
@@ -8609,12 +8811,14 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode
 #@nonl
 #@-node:ekr.20040313150633:<< remove unused tnodeList >>
 #@+node:ekr.20040323155951:<< do full tests >>
-if count % 100 == 0:
-    g.es('.',newline=False)
-if count % 2000 == 0:
-    g.enl()
+if not unittest:
+    if count % 100 == 0:
+        g.es('.',newline=False)
+    if count % 2000 == 0:
+        g.enl()
 
 @others
+#@nonl
 #@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
 threadBack = p.threadBack()
 threadNext = p.threadNext()
@@ -9159,7 +9363,7 @@ def doDelete (self,newPosition):
 #@+node:ekr.20040303175026.3:p.insertAfter
 def insertAfter (self,t=None):
 
-    """Inserts a new vnode after self.
+    """Inserts a new position after self.
     
     Returns the newly created position."""
     
@@ -9243,33 +9447,24 @@ def clone (self,back):
     return p2
 #@nonl
 #@-node:ekr.20040303175026.8:p.clone
-#@+node:ekr.20040303175026.9:p.copyTreeWithNewTnodes: used by unit tests TO DO
-if 0: # Not yet.
+#@+node:ekr.20040303175026.9:p.copyTreeAfter, copyTreeTo
+# This is used by unit tests.
 
-    def copyTreeWithNewTnodes (self):
-        
-        """Return a copy of self with all new tnodes"""
-        
-        c = self.c
-        
-        # Create the root node.
-        old_v = self
-        new_v = vnode(c,tnode())
-        new_v.t.headString = old_v.t.headString
-        new_v.t.bodyString = old_v.t.bodyString
-        
-        # Recursively create all descendents.
-        old_child = old_v.firstChild() ; n = 0
-        while old_child:
-            new_child = old_child.copyTreeWithNewTnodes()
-            new_child.linkAsNthChild (new_v, n)
-            n += 1
-            old_child = old_child.next()
-            
-        # Return the root of the new tree.
-        return new_v
+def copyTreeAfter(self):
+    p = self
+    p2 = p.insertAfter()
+    p.copyTreeFromSelfTo(p2)
+    return p2
+    
+def copyTreeFromSelfTo(self,p2):
+    p = self
+    p2.v.t.headString = p.headString()
+    p2.v.t.bodyString = p.bodyString()
+    for child in p.children_iter(copy=True):
+        child2 = p2.insertAsLastChild()
+        child.copyTreeFromSelfTo(child2)
 #@nonl
-#@-node:ekr.20040303175026.9:p.copyTreeWithNewTnodes: used by unit tests TO DO
+#@-node:ekr.20040303175026.9:p.copyTreeAfter, copyTreeTo
 #@+node:ekr.20040303175026.10:p.moveAfter
 def moveAfter (self,a):
 
@@ -9804,7 +9999,10 @@ def force_draw_node(self,p,x,y):
     h,w = self.drawUserIcons(p,"beforeBox",x,y)
     xw = w # The extra indentation before the icon box.
     if p.hasChildren():
-        self.drawBox(p,x+w,y)
+        box_id = self.drawBox(p,x+w,y)
+    else:
+        box_id = None
+
     w += box_width # even if box isn't drawn.
 
     h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
@@ -9816,12 +10014,15 @@ def force_draw_node(self,p,x,y):
     h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
     h = max(h,h2) ; w += w2
 
-    h2 = self.drawText(p,x+w,y)
+    expand_x = x+w # save this for later.
+    h2 = self.drawText(p,x+w,y,box_id)
     h = max(h,h2)
     w += self.widthInPixels(p.headString())
 
     h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
     h = max(h,h2)
+    
+    self.drawClickFrame(p,y)
 
     return h,xw
 #@nonl
@@ -9832,7 +10033,7 @@ def force_draw_nodeOLD(self,p,x,y):
     self.allocatedNodes += 1
 
     if p.hasChildren():
-        self.drawBox(p,x,y)
+        box_id = self.drawBox(p,x,y)
     w = box_width # Even if the box isn't drawn.
 
     h2,w2 = self.drawIcon(p,x+w,y)
@@ -9844,20 +10045,21 @@ def force_draw_nodeOLD(self,p,x,y):
 #@-node:ekr.20040318090335:force_draw_node (old)
 #@-node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
 #@+node:ekr.20031218072017.1005:drawText (bind)
-def drawText(self,p,x,y):
+def drawText(self,p,x,y,box_id=None):
     
     """draw text for v at nominal coordinates x,y."""
 
     tree = self ; c = self.c ; v = p.v
+    h = self.line_height
     x += text_indent
     
     data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
     if data is not None: return data
 
-    t = Tk.Text(self.canvas,
+    self.lastText = t = Tk.Text(self.canvas,
         font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 
-    # New in 4.2: entries a pairs (p,t) indexed by v.
+    # New in 4.2: entries are pairs (p,t) indexed by v.
     # Remember which text widget belongs to v.
     d = self.edit_text_dict
     val = d.get(v,[])
@@ -9871,23 +10073,22 @@ def drawText(self,p,x,y):
     t.insert("end", v.headString())
     << configure the text depending on state >>
 
-    # Use vnode or postion callbacks.
-    id1 = t.bind("<1>",p.OnHeadlineClick)
-    id2 = t.bind("<3>",p.OnHeadlineRightClick)
+    if 1: # use bind here, else use bind_tag in drawTopTree.
+        # Use vnode or postion callbacks.
+        id1 = t.bind("<1>",p.OnHeadlineClick)
+        id2 = t.bind("<3>",p.OnHeadlineRightClick)
+        id3 = t.bind("<Key>", p.OnHeadlineKey)
+        id4 = t.bind("<Control-t>",self.OnControlT)
+            # 10/16/02: Stamp out the erroneous control-t binding.
+        # Remember the bindings so deleteBindings can delete them.
+        self.bindings.append((t,id1,"<1>"),)
+        self.bindings.append((t,id2,"<3>"),)
+        self.bindings.append((t,id3,"<Key>"),)
+        self.bindings.append((t,id4,"<Control-t>"),)
     
-    if 0: # 6/15/02: Bill Drissel objects to this binding.
-        t.bind("<Double-1>", p.OnBoxClick)
-    id3 = t.bind("<Key>", p.OnHeadlineKey)
-    id4 = t.bind("<Control-t>",self.OnControlT)
-        # 10/16/02: Stamp out the erroneous control-t binding.
+    << highlight text widget on enter events >>
         
-    # Remember the bindings so deleteBindings can delete them.
-    self.bindings.append((t,id1,"<1>"),)
-    self.bindings.append((t,id2,"<3>"),)
-    self.bindings.append((t,id3,"<Key>"),)
-    self.bindings.append((t,id4,"<Control-t>"),)
-
-    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
+    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
     
     # This doesn't work: must call update_idletasks first, and that's hard here.
@@ -9905,6 +10106,45 @@ else:
     self.setUnselectedLabelState(p) # unselected
 #@nonl
 #@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
+#@+node:ekr.20040709194954:<< highlight text widget on enter events >>
+if 0: # Define a rect to colorize.
+
+    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+    self.canvas.itemconfig(color_rect,fill="",outline="")
+
+    def enterRect(event,id=color_rect):
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+    
+if 1: # Colorize only the headline.
+
+    def enterRect(event,p=p,t=t):
+        t2 = self.lastColoredText
+        if t2:
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # color
+                t2.configure(background="white")
+        if p == self.editPosition():
+            self.lastColoredText = None
+        else:
+            self.lastColoredText = t
+            if 1: # underline
+                t.tag_add('underline','1.0', 'end')
+                t.tag_configure('underline',underline = True)
+            else: #color
+                t.configure(background="LightSteelBlue1")
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040709194954:<< highlight text widget on enter events >>
 #@-node:ekr.20031218072017.1005:drawText (bind)
 #@+node:ekr.20031218072017.4161:tree.expandAllAncestors
 def expandAllAncestors (self,p):
@@ -11363,7 +11603,7 @@ id = self.canvas.create_line(
     fill="gray50", # stipple="gray50"
     tag="lines")
 
-self.canvas.tag_lower(id)
+# self.canvas.tag_lower(id)
 #@nonl
 #@-node:ekr.20031218072017.1009:<< draw vertical line >>
 #@-node:ekr.20031218072017.1008:drawTree
@@ -12301,7 +12541,7 @@ id = self.canvas.create_line(
     fill="gray50", # stipple="gray50"
     tag="lines")
 
-self.canvas.tag_lower(id)
+# self.canvas.tag_lower(id)
 #@nonl
 #@-node:ekr.20031218072017.1009:<< draw vertical line >>
 #@-node:ekr.20031218072017.1008:drawTree
@@ -14292,12 +14532,14 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode
 #@nonl
 #@-node:ekr.20040313150633:<< remove unused tnodeList >>
 #@+node:ekr.20040323155951:<< do full tests >>
-if count % 100 == 0:
-    g.es('.',newline=False)
-if count % 2000 == 0:
-    g.enl()
+if not unittest:
+    if count % 100 == 0:
+        g.es('.',newline=False)
+    if count % 2000 == 0:
+        g.enl()
 
 @others
+#@nonl
 #@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
 threadBack = p.threadBack()
 threadNext = p.threadNext()
@@ -15044,30 +15286,22 @@ Therefore, the Commands class never needs to worry about extra calls to tree.red
 #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 def drawBox (self,p,x,y):
     
-    tree = self
+    tree = self ; canvas = self.canvas
     y += 7 # draw the box at x, y+7
-    h = self.line_height
     
     if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 
         iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
         image = self.getIconImage(iconname)
-        id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
-        
-        if 1: # New in 4.2.  Create a frame to catch all clicks.
-            id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-            color = ""
-            self.canvas.itemconfig(id4,fill=color,outline=color)
-            self.canvas.lower(id4)
-            id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-            self.tagBindings.append((id,id3,"<1>"),)
+        box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
     
-        id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
+        id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
+        id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
+
+        self.tagBindings.append((box_id,id1,"<1>"),)
+        self.tagBindings.append((box_id,id2,"<Double-1>"),)
         
-        # Remember the bindings so deleteBindings can delete them.
-        self.tagBindings.append((id,id1,"<1>"),)
-        self.tagBindings.append((id,id2,"<Double-1>"),)
+        return box_id
 #@nonl
 #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
@@ -15084,7 +15318,7 @@ def drawIcon(self,p,x=None,y=None):
         # Get the image.
         imagename = "box%02d.GIF" % val
         image = self.getIconImage(imagename)
-        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image,tag="iconBox")
         self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
     
         id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
@@ -15154,7 +15388,10 @@ def force_draw_node(self,p,x,y):
     h,w = self.drawUserIcons(p,"beforeBox",x,y)
     xw = w # The extra indentation before the icon box.
     if p.hasChildren():
-        self.drawBox(p,x+w,y)
+        box_id = self.drawBox(p,x+w,y)
+    else:
+        box_id = None
+
     w += box_width # even if box isn't drawn.
 
     h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
@@ -15166,12 +15403,15 @@ def force_draw_node(self,p,x,y):
     h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
     h = max(h,h2) ; w += w2
 
-    h2 = self.drawText(p,x+w,y)
+    expand_x = x+w # save this for later.
+    h2 = self.drawText(p,x+w,y,box_id)
     h = max(h,h2)
     w += self.widthInPixels(p.headString())
 
     h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
     h = max(h,h2)
+    
+    self.drawClickFrame(p,y)
 
     return h,xw
 #@nonl
@@ -15182,7 +15422,7 @@ def force_draw_nodeOLD(self,p,x,y):
     self.allocatedNodes += 1
 
     if p.hasChildren():
-        self.drawBox(p,x,y)
+        box_id = self.drawBox(p,x,y)
     w = box_width # Even if the box isn't drawn.
 
     h2,w2 = self.drawIcon(p,x+w,y)
@@ -15194,20 +15434,21 @@ def force_draw_nodeOLD(self,p,x,y):
 #@-node:ekr.20040318090335:force_draw_node (old)
 #@-node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
 #@+node:ekr.20031218072017.1005:drawText (bind)
-def drawText(self,p,x,y):
+def drawText(self,p,x,y,box_id=None):
     
     """draw text for v at nominal coordinates x,y."""
 
     tree = self ; c = self.c ; v = p.v
+    h = self.line_height
     x += text_indent
     
     data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
     if data is not None: return data
 
-    t = Tk.Text(self.canvas,
+    self.lastText = t = Tk.Text(self.canvas,
         font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 
-    # New in 4.2: entries a pairs (p,t) indexed by v.
+    # New in 4.2: entries are pairs (p,t) indexed by v.
     # Remember which text widget belongs to v.
     d = self.edit_text_dict
     val = d.get(v,[])
@@ -15221,23 +15462,22 @@ def drawText(self,p,x,y):
     t.insert("end", v.headString())
     << configure the text depending on state >>
 
-    # Use vnode or postion callbacks.
-    id1 = t.bind("<1>",p.OnHeadlineClick)
-    id2 = t.bind("<3>",p.OnHeadlineRightClick)
+    if 1: # use bind here, else use bind_tag in drawTopTree.
+        # Use vnode or postion callbacks.
+        id1 = t.bind("<1>",p.OnHeadlineClick)
+        id2 = t.bind("<3>",p.OnHeadlineRightClick)
+        id3 = t.bind("<Key>", p.OnHeadlineKey)
+        id4 = t.bind("<Control-t>",self.OnControlT)
+            # 10/16/02: Stamp out the erroneous control-t binding.
+        # Remember the bindings so deleteBindings can delete them.
+        self.bindings.append((t,id1,"<1>"),)
+        self.bindings.append((t,id2,"<3>"),)
+        self.bindings.append((t,id3,"<Key>"),)
+        self.bindings.append((t,id4,"<Control-t>"),)
     
-    if 0: # 6/15/02: Bill Drissel objects to this binding.
-        t.bind("<Double-1>", p.OnBoxClick)
-    id3 = t.bind("<Key>", p.OnHeadlineKey)
-    id4 = t.bind("<Control-t>",self.OnControlT)
-        # 10/16/02: Stamp out the erroneous control-t binding.
+    << highlight text widget on enter events >>
         
-    # Remember the bindings so deleteBindings can delete them.
-    self.bindings.append((t,id1,"<1>"),)
-    self.bindings.append((t,id2,"<3>"),)
-    self.bindings.append((t,id3,"<Key>"),)
-    self.bindings.append((t,id4,"<Control-t>"),)
-
-    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
+    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
     
     # This doesn't work: must call update_idletasks first, and that's hard here.
@@ -15255,13 +15495,52 @@ else:
     self.setUnselectedLabelState(p) # unselected
 #@nonl
 #@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
+#@+node:ekr.20040709194954:<< highlight text widget on enter events >>
+if 0: # Define a rect to colorize.
+
+    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+    self.canvas.itemconfig(color_rect,fill="",outline="")
+
+    def enterRect(event,id=color_rect):
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+    
+if 1: # Colorize only the headline.
+
+    def enterRect(event,p=p,t=t):
+        t2 = self.lastColoredText
+        if t2:
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # color
+                t2.configure(background="white")
+        if p == self.editPosition():
+            self.lastColoredText = None
+        else:
+            self.lastColoredText = t
+            if 1: # underline
+                t.tag_add('underline','1.0', 'end')
+                t.tag_configure('underline',underline = True)
+            else: #color
+                t.configure(background="LightSteelBlue1")
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040709194954:<< highlight text widget on enter events >>
 #@-node:ekr.20031218072017.1005:drawText (bind)
-#@+node:ekr.20031218072017.2029:drawTopTree
+#@+node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 def drawTopTree (self):
     
     """Draws the top-level tree, taking into account the hoist state."""
     
-    c = self.c
+    c = self.c ; canvas = self.canvas
     
     if 0:
         try: self.redrawCount += 1
@@ -15269,14 +15548,55 @@ def drawTopTree (self):
         g.trace(self.redrawCount)
     # import traceback ; traceback.print_stack()
     
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
+    
     if c.hoistStack:
         p,junk = c.hoistStack[-1]
         self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
     else:
         self.drawTree(c.rootPosition(),root_left,root_top,0,0)
         
+    canvas.lower("lines")
+    canvas.lower("colorBox")
+    canvas.lift("clickBox")
+    canvas.lift("iconBox")
     
-#@-node:ekr.20031218072017.2029:drawTopTree
+    if 0:
+        << define callbacks >>
+        # Use vnode or postion callbacks.
+        canvas.tag_bind("textBox","<1>",onHeadlineClickCallback)
+        canvas.tag_bind("textBox","<3>",onHeadlineRightClickCallback)
+        canvas.tag_bind("textBox","<Key>", onHeadlineKeyCallback)
+        canvas.tag_bind("textBox","<Control-t>",self.OnControlT)
+            # Stamp out erroneous control-t binding.
+#@nonl
+#@+node:ekr.20040710060809:<< define callbacks >>
+def onHeadlineClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.onHeadlineClick()
+    
+def onHeadlineRightClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineRightClick()
+    
+def onHeadlineKeyCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineKey()
+    
+    
+#@nonl
+#@-node:ekr.20040710060809:<< define callbacks >>
+#@-node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=False):
 
@@ -15312,7 +15632,7 @@ id = self.canvas.create_line(
     fill="gray50", # stipple="gray50"
     tag="lines")
 
-self.canvas.tag_lower(id)
+# self.canvas.tag_lower(id)
 #@nonl
 #@-node:ekr.20031218072017.1009:<< draw vertical line >>
 #@-node:ekr.20031218072017.1008:drawTree
@@ -15439,6 +15759,54 @@ def inExpandedVisibleArea (self,y1):
         return False
 #@nonl
 #@-node:ekr.20031218072017.1010:inVisibleArea & inExpandedVisibleArea
+#@+node:ekr.20040710050236:tree.drawClickFrame
+def drawClickFrame (self,p,y):
+    
+    h = self.line_height ;  defaultColor = ""
+    
+    # Define a slighly larger rect to catch clicks.
+
+    click_rect = self.canvas.create_rectangle(0,y,1000,y+h-3,tag="clickBox")
+    self.canvas.itemconfig(click_rect,fill=defaultColor,outline=defaultColor)
+    
+    id_click = self.canvas.tag_bind(click_rect, "<1>", p.OnBoxClick)
+    self.tagBindings.append((click_rect,id_click,"<1>"),)
+    
+    if 1: # A major change to the user interface.
+        
+        # Define a slighly smaller rect to colorize.
+        color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+        self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
+        
+        # Color the click box or the headline
+        def enterRect(event,id=color_rect,p=p,t=self.lastText):
+            if 1: # Color or underline the headline
+                t2 = self.lastColoredText
+                if t2: # decolor the old headline.
+                    if 1: # deunderline
+                        t2.tag_delete('underline')
+                    else: # decolor
+                        t2.configure(background="white")
+                if t and p != self.editPosition():
+                    if 1: # underline
+                        t.tag_add('underline','1.0','end')
+                        t.tag_configure('underline',underline=True)
+                    else: # color
+                        t.configure(background="LightSteelBlue1")
+                    self.lastColoredText = t
+                else: self.lastColoredText = None
+            else: # Color the click box.
+                if self.lastClickFrameId:
+                    self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
+                self.lastClickFrameId = id
+                color = "LightSteelBlue1"
+                self.canvas.itemconfig(id,fill=color,outline=color)
+    
+        bind_id = self.canvas.tag_bind(click_rect, "<Enter>", enterRect) # , '+')
+        self.tagBindings.append((click_rect,bind_id,"<Enter>"),)
+    
+#@nonl
+#@-node:ekr.20040710050236:tree.drawClickFrame
 #@+node:ekr.20031218072017.4147:tree.getIconImage
 def getIconImage (self, name):
 
@@ -15449,7 +15817,7 @@ def getIconImage (self, name):
     try:
         fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
         fullname = g.os_path_normpath(fullname)
-        image = Tk.PhotoImage(master=self.canvas, file=fullname)
+        image = Tk.PhotoImage(master=self.canvas,file=fullname)
         self.iconimages[name] = image
         return image
     except:
@@ -15458,16 +15826,6 @@ def getIconImage (self, name):
         return None
 #@nonl
 #@-node:ekr.20031218072017.4147:tree.getIconImage
-#@+node:ekr.20040322122232:tree.scrollTo
-def scrollTo (self,p):
-    
-    def scrollToCallback(event=None,self=self,p=p):
-        g.trace(event,self,p)
-        self.idle_scrollTo(p)
-    
-    self.canvas.after_idle(scrollToCallback)
-#@nonl
-#@-node:ekr.20040322122232:tree.scrollTo
 #@+node:ekr.20031218072017.1018:tree.idle_scrollTo
 def idle_scrollTo(self,p=None):
 
@@ -15535,6 +15893,16 @@ def numberOfVisibleNodes(self):
     return n
 #@nonl
 #@-node:ekr.20031218072017.4148:tree.numberOfVisibleNodes
+#@+node:ekr.20040322122232:tree.scrollTo
+def scrollTo (self,p):
+    
+    def scrollToCallback(event=None,self=self,p=p):
+        g.trace(event,self,p)
+        self.idle_scrollTo(p)
+    
+    self.canvas.after_idle(scrollToCallback)
+#@nonl
+#@-node:ekr.20040322122232:tree.scrollTo
 #@+node:ekr.20031218072017.4149:tree.yoffset
 @ We can't just return icony because the tree hasn't been redrawn yet.  For the same reason we can't rely on any TK canvas methods here.
 @c
@@ -16493,6 +16861,8 @@ def __init__(self,c,frame,canvas):
     self._editPosition = None
     self.lineyoffset = 0 # y offset for this headline.
     self.disableRedraw = False # True: reschedule a redraw for later.
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
     
     # Set self.font and self.fontName.
     self.setFontFromConfig()
@@ -16549,12 +16919,12 @@ def get_window_info (self,top):
     return w,h,x,y
 #@nonl
 #@-node:ekr.20031218072017.4061:get_window_info
-#@+node:ekr.20031218072017.2029:drawTopTree
+#@+node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 def drawTopTree (self):
     
     """Draws the top-level tree, taking into account the hoist state."""
     
-    c = self.c
+    c = self.c ; canvas = self.canvas
     
     if 0:
         try: self.redrawCount += 1
@@ -16562,14 +16932,55 @@ def drawTopTree (self):
         g.trace(self.redrawCount)
     # import traceback ; traceback.print_stack()
     
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
+    
     if c.hoistStack:
         p,junk = c.hoistStack[-1]
         self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
     else:
         self.drawTree(c.rootPosition(),root_left,root_top,0,0)
         
+    canvas.lower("lines")
+    canvas.lower("colorBox")
+    canvas.lift("clickBox")
+    canvas.lift("iconBox")
     
-#@-node:ekr.20031218072017.2029:drawTopTree
+    if 0:
+        << define callbacks >>
+        # Use vnode or postion callbacks.
+        canvas.tag_bind("textBox","<1>",onHeadlineClickCallback)
+        canvas.tag_bind("textBox","<3>",onHeadlineRightClickCallback)
+        canvas.tag_bind("textBox","<Key>", onHeadlineKeyCallback)
+        canvas.tag_bind("textBox","<Control-t>",self.OnControlT)
+            # Stamp out erroneous control-t binding.
+#@nonl
+#@+node:ekr.20040710060809:<< define callbacks >>
+def onHeadlineClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.onHeadlineClick()
+    
+def onHeadlineRightClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineRightClick()
+    
+def onHeadlineKeyCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineKey()
+    
+    
+#@nonl
+#@-node:ekr.20040710060809:<< define callbacks >>
+#@-node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 #@+node:ekr.20031218072017.1553:getLeoFile
 # The caller should enclose this in begin/endUpdate.
 
@@ -18098,6 +18509,8 @@ def __init__(self,c,frame,canvas):
     self._editPosition = None
     self.lineyoffset = 0 # y offset for this headline.
     self.disableRedraw = False # True: reschedule a redraw for later.
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
     
     # Set self.font and self.fontName.
     self.setFontFromConfig()
@@ -18422,20 +18835,21 @@ def edit_text (self):
 #@nonl
 #@-node:ekr.20040306220230.1:p.edit_text
 #@+node:ekr.20031218072017.1005:drawText (bind)
-def drawText(self,p,x,y):
+def drawText(self,p,x,y,box_id=None):
     
     """draw text for v at nominal coordinates x,y."""
 
     tree = self ; c = self.c ; v = p.v
+    h = self.line_height
     x += text_indent
     
     data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
     if data is not None: return data
 
-    t = Tk.Text(self.canvas,
+    self.lastText = t = Tk.Text(self.canvas,
         font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 
-    # New in 4.2: entries a pairs (p,t) indexed by v.
+    # New in 4.2: entries are pairs (p,t) indexed by v.
     # Remember which text widget belongs to v.
     d = self.edit_text_dict
     val = d.get(v,[])
@@ -18449,23 +18863,22 @@ def drawText(self,p,x,y):
     t.insert("end", v.headString())
     << configure the text depending on state >>
 
-    # Use vnode or postion callbacks.
-    id1 = t.bind("<1>",p.OnHeadlineClick)
-    id2 = t.bind("<3>",p.OnHeadlineRightClick)
+    if 1: # use bind here, else use bind_tag in drawTopTree.
+        # Use vnode or postion callbacks.
+        id1 = t.bind("<1>",p.OnHeadlineClick)
+        id2 = t.bind("<3>",p.OnHeadlineRightClick)
+        id3 = t.bind("<Key>", p.OnHeadlineKey)
+        id4 = t.bind("<Control-t>",self.OnControlT)
+            # 10/16/02: Stamp out the erroneous control-t binding.
+        # Remember the bindings so deleteBindings can delete them.
+        self.bindings.append((t,id1,"<1>"),)
+        self.bindings.append((t,id2,"<3>"),)
+        self.bindings.append((t,id3,"<Key>"),)
+        self.bindings.append((t,id4,"<Control-t>"),)
     
-    if 0: # 6/15/02: Bill Drissel objects to this binding.
-        t.bind("<Double-1>", p.OnBoxClick)
-    id3 = t.bind("<Key>", p.OnHeadlineKey)
-    id4 = t.bind("<Control-t>",self.OnControlT)
-        # 10/16/02: Stamp out the erroneous control-t binding.
+    << highlight text widget on enter events >>
         
-    # Remember the bindings so deleteBindings can delete them.
-    self.bindings.append((t,id1,"<1>"),)
-    self.bindings.append((t,id2,"<3>"),)
-    self.bindings.append((t,id3,"<Key>"),)
-    self.bindings.append((t,id4,"<Control-t>"),)
-
-    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
+    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
     
     # This doesn't work: must call update_idletasks first, and that's hard here.
@@ -18483,6 +18896,45 @@ else:
     self.setUnselectedLabelState(p) # unselected
 #@nonl
 #@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
+#@+node:ekr.20040709194954:<< highlight text widget on enter events >>
+if 0: # Define a rect to colorize.
+
+    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+    self.canvas.itemconfig(color_rect,fill="",outline="")
+
+    def enterRect(event,id=color_rect):
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+    
+if 1: # Colorize only the headline.
+
+    def enterRect(event,p=p,t=t):
+        t2 = self.lastColoredText
+        if t2:
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # color
+                t2.configure(background="white")
+        if p == self.editPosition():
+            self.lastColoredText = None
+        else:
+            self.lastColoredText = t
+            if 1: # underline
+                t.tag_add('underline','1.0', 'end')
+                t.tag_configure('underline',underline = True)
+            else: #color
+                t.configure(background="LightSteelBlue1")
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040709194954:<< highlight text widget on enter events >>
 #@-node:ekr.20031218072017.1005:drawText (bind)
 #@+node:ekr.20031218072017.3716:Getters/Setters (tree)
 def dragging(self):
@@ -18630,30 +19082,22 @@ Therefore, the Commands class never needs to worry about extra calls to tree.red
 #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 def drawBox (self,p,x,y):
     
-    tree = self
+    tree = self ; canvas = self.canvas
     y += 7 # draw the box at x, y+7
-    h = self.line_height
     
     if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 
         iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
         image = self.getIconImage(iconname)
-        id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
-        
-        if 1: # New in 4.2.  Create a frame to catch all clicks.
-            id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-            color = ""
-            self.canvas.itemconfig(id4,fill=color,outline=color)
-            self.canvas.lower(id4)
-            id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-            self.tagBindings.append((id,id3,"<1>"),)
+        box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
     
-        id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
+        id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
+        id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
+
+        self.tagBindings.append((box_id,id1,"<1>"),)
+        self.tagBindings.append((box_id,id2,"<Double-1>"),)
         
-        # Remember the bindings so deleteBindings can delete them.
-        self.tagBindings.append((id,id1,"<1>"),)
-        self.tagBindings.append((id,id2,"<Double-1>"),)
+        return box_id
 #@nonl
 #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
@@ -18670,7 +19114,7 @@ def drawIcon(self,p,x=None,y=None):
         # Get the image.
         imagename = "box%02d.GIF" % val
         image = self.getIconImage(imagename)
-        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image,tag="iconBox")
         self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
     
         id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
@@ -18740,7 +19184,10 @@ def force_draw_node(self,p,x,y):
     h,w = self.drawUserIcons(p,"beforeBox",x,y)
     xw = w # The extra indentation before the icon box.
     if p.hasChildren():
-        self.drawBox(p,x+w,y)
+        box_id = self.drawBox(p,x+w,y)
+    else:
+        box_id = None
+
     w += box_width # even if box isn't drawn.
 
     h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
@@ -18752,12 +19199,15 @@ def force_draw_node(self,p,x,y):
     h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
     h = max(h,h2) ; w += w2
 
-    h2 = self.drawText(p,x+w,y)
+    expand_x = x+w # save this for later.
+    h2 = self.drawText(p,x+w,y,box_id)
     h = max(h,h2)
     w += self.widthInPixels(p.headString())
 
     h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
     h = max(h,h2)
+    
+    self.drawClickFrame(p,y)
 
     return h,xw
 #@nonl
@@ -18768,7 +19218,7 @@ def force_draw_nodeOLD(self,p,x,y):
     self.allocatedNodes += 1
 
     if p.hasChildren():
-        self.drawBox(p,x,y)
+        box_id = self.drawBox(p,x,y)
     w = box_width # Even if the box isn't drawn.
 
     h2,w2 = self.drawIcon(p,x+w,y)
@@ -18780,20 +19230,21 @@ def force_draw_nodeOLD(self,p,x,y):
 #@-node:ekr.20040318090335:force_draw_node (old)
 #@-node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
 #@+node:ekr.20031218072017.1005:drawText (bind)
-def drawText(self,p,x,y):
+def drawText(self,p,x,y,box_id=None):
     
     """draw text for v at nominal coordinates x,y."""
 
     tree = self ; c = self.c ; v = p.v
+    h = self.line_height
     x += text_indent
     
     data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
     if data is not None: return data
 
-    t = Tk.Text(self.canvas,
+    self.lastText = t = Tk.Text(self.canvas,
         font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 
-    # New in 4.2: entries a pairs (p,t) indexed by v.
+    # New in 4.2: entries are pairs (p,t) indexed by v.
     # Remember which text widget belongs to v.
     d = self.edit_text_dict
     val = d.get(v,[])
@@ -18807,23 +19258,22 @@ def drawText(self,p,x,y):
     t.insert("end", v.headString())
     << configure the text depending on state >>
 
-    # Use vnode or postion callbacks.
-    id1 = t.bind("<1>",p.OnHeadlineClick)
-    id2 = t.bind("<3>",p.OnHeadlineRightClick)
+    if 1: # use bind here, else use bind_tag in drawTopTree.
+        # Use vnode or postion callbacks.
+        id1 = t.bind("<1>",p.OnHeadlineClick)
+        id2 = t.bind("<3>",p.OnHeadlineRightClick)
+        id3 = t.bind("<Key>", p.OnHeadlineKey)
+        id4 = t.bind("<Control-t>",self.OnControlT)
+            # 10/16/02: Stamp out the erroneous control-t binding.
+        # Remember the bindings so deleteBindings can delete them.
+        self.bindings.append((t,id1,"<1>"),)
+        self.bindings.append((t,id2,"<3>"),)
+        self.bindings.append((t,id3,"<Key>"),)
+        self.bindings.append((t,id4,"<Control-t>"),)
     
-    if 0: # 6/15/02: Bill Drissel objects to this binding.
-        t.bind("<Double-1>", p.OnBoxClick)
-    id3 = t.bind("<Key>", p.OnHeadlineKey)
-    id4 = t.bind("<Control-t>",self.OnControlT)
-        # 10/16/02: Stamp out the erroneous control-t binding.
+    << highlight text widget on enter events >>
         
-    # Remember the bindings so deleteBindings can delete them.
-    self.bindings.append((t,id1,"<1>"),)
-    self.bindings.append((t,id2,"<3>"),)
-    self.bindings.append((t,id3,"<Key>"),)
-    self.bindings.append((t,id4,"<Control-t>"),)
-
-    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
+    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
     
     # This doesn't work: must call update_idletasks first, and that's hard here.
@@ -18841,13 +19291,52 @@ else:
     self.setUnselectedLabelState(p) # unselected
 #@nonl
 #@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
+#@+node:ekr.20040709194954:<< highlight text widget on enter events >>
+if 0: # Define a rect to colorize.
+
+    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+    self.canvas.itemconfig(color_rect,fill="",outline="")
+
+    def enterRect(event,id=color_rect):
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+    
+if 1: # Colorize only the headline.
+
+    def enterRect(event,p=p,t=t):
+        t2 = self.lastColoredText
+        if t2:
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # color
+                t2.configure(background="white")
+        if p == self.editPosition():
+            self.lastColoredText = None
+        else:
+            self.lastColoredText = t
+            if 1: # underline
+                t.tag_add('underline','1.0', 'end')
+                t.tag_configure('underline',underline = True)
+            else: #color
+                t.configure(background="LightSteelBlue1")
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040709194954:<< highlight text widget on enter events >>
 #@-node:ekr.20031218072017.1005:drawText (bind)
-#@+node:ekr.20031218072017.2029:drawTopTree
+#@+node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 def drawTopTree (self):
     
     """Draws the top-level tree, taking into account the hoist state."""
     
-    c = self.c
+    c = self.c ; canvas = self.canvas
     
     if 0:
         try: self.redrawCount += 1
@@ -18855,14 +19344,55 @@ def drawTopTree (self):
         g.trace(self.redrawCount)
     # import traceback ; traceback.print_stack()
     
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
+    
     if c.hoistStack:
         p,junk = c.hoistStack[-1]
         self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
     else:
         self.drawTree(c.rootPosition(),root_left,root_top,0,0)
         
+    canvas.lower("lines")
+    canvas.lower("colorBox")
+    canvas.lift("clickBox")
+    canvas.lift("iconBox")
     
-#@-node:ekr.20031218072017.2029:drawTopTree
+    if 0:
+        << define callbacks >>
+        # Use vnode or postion callbacks.
+        canvas.tag_bind("textBox","<1>",onHeadlineClickCallback)
+        canvas.tag_bind("textBox","<3>",onHeadlineRightClickCallback)
+        canvas.tag_bind("textBox","<Key>", onHeadlineKeyCallback)
+        canvas.tag_bind("textBox","<Control-t>",self.OnControlT)
+            # Stamp out erroneous control-t binding.
+#@nonl
+#@+node:ekr.20040710060809:<< define callbacks >>
+def onHeadlineClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.onHeadlineClick()
+    
+def onHeadlineRightClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineRightClick()
+    
+def onHeadlineKeyCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineKey()
+    
+    
+#@nonl
+#@-node:ekr.20040710060809:<< define callbacks >>
+#@-node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=False):
 
@@ -18898,7 +19428,7 @@ id = self.canvas.create_line(
     fill="gray50", # stipple="gray50"
     tag="lines")
 
-self.canvas.tag_lower(id)
+# self.canvas.tag_lower(id)
 #@nonl
 #@-node:ekr.20031218072017.1009:<< draw vertical line >>
 #@-node:ekr.20031218072017.1008:drawTree
@@ -19025,6 +19555,54 @@ def inExpandedVisibleArea (self,y1):
         return False
 #@nonl
 #@-node:ekr.20031218072017.1010:inVisibleArea & inExpandedVisibleArea
+#@+node:ekr.20040710050236:tree.drawClickFrame
+def drawClickFrame (self,p,y):
+    
+    h = self.line_height ;  defaultColor = ""
+    
+    # Define a slighly larger rect to catch clicks.
+
+    click_rect = self.canvas.create_rectangle(0,y,1000,y+h-3,tag="clickBox")
+    self.canvas.itemconfig(click_rect,fill=defaultColor,outline=defaultColor)
+    
+    id_click = self.canvas.tag_bind(click_rect, "<1>", p.OnBoxClick)
+    self.tagBindings.append((click_rect,id_click,"<1>"),)
+    
+    if 1: # A major change to the user interface.
+        
+        # Define a slighly smaller rect to colorize.
+        color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+        self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
+        
+        # Color the click box or the headline
+        def enterRect(event,id=color_rect,p=p,t=self.lastText):
+            if 1: # Color or underline the headline
+                t2 = self.lastColoredText
+                if t2: # decolor the old headline.
+                    if 1: # deunderline
+                        t2.tag_delete('underline')
+                    else: # decolor
+                        t2.configure(background="white")
+                if t and p != self.editPosition():
+                    if 1: # underline
+                        t.tag_add('underline','1.0','end')
+                        t.tag_configure('underline',underline=True)
+                    else: # color
+                        t.configure(background="LightSteelBlue1")
+                    self.lastColoredText = t
+                else: self.lastColoredText = None
+            else: # Color the click box.
+                if self.lastClickFrameId:
+                    self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
+                self.lastClickFrameId = id
+                color = "LightSteelBlue1"
+                self.canvas.itemconfig(id,fill=color,outline=color)
+    
+        bind_id = self.canvas.tag_bind(click_rect, "<Enter>", enterRect) # , '+')
+        self.tagBindings.append((click_rect,bind_id,"<Enter>"),)
+    
+#@nonl
+#@-node:ekr.20040710050236:tree.drawClickFrame
 #@+node:ekr.20031218072017.4147:tree.getIconImage
 def getIconImage (self, name):
 
@@ -19035,7 +19613,7 @@ def getIconImage (self, name):
     try:
         fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
         fullname = g.os_path_normpath(fullname)
-        image = Tk.PhotoImage(master=self.canvas, file=fullname)
+        image = Tk.PhotoImage(master=self.canvas,file=fullname)
         self.iconimages[name] = image
         return image
     except:
@@ -19044,16 +19622,6 @@ def getIconImage (self, name):
         return None
 #@nonl
 #@-node:ekr.20031218072017.4147:tree.getIconImage
-#@+node:ekr.20040322122232:tree.scrollTo
-def scrollTo (self,p):
-    
-    def scrollToCallback(event=None,self=self,p=p):
-        g.trace(event,self,p)
-        self.idle_scrollTo(p)
-    
-    self.canvas.after_idle(scrollToCallback)
-#@nonl
-#@-node:ekr.20040322122232:tree.scrollTo
 #@+node:ekr.20031218072017.1018:tree.idle_scrollTo
 def idle_scrollTo(self,p=None):
 
@@ -19121,6 +19689,16 @@ def numberOfVisibleNodes(self):
     return n
 #@nonl
 #@-node:ekr.20031218072017.4148:tree.numberOfVisibleNodes
+#@+node:ekr.20040322122232:tree.scrollTo
+def scrollTo (self,p):
+    
+    def scrollToCallback(event=None,self=self,p=p):
+        g.trace(event,self,p)
+        self.idle_scrollTo(p)
+    
+    self.canvas.after_idle(scrollToCallback)
+#@nonl
+#@-node:ekr.20040322122232:tree.scrollTo
 #@+node:ekr.20031218072017.4149:tree.yoffset
 @ We can't just return icony because the tree hasn't been redrawn yet.  For the same reason we can't rely on any TK canvas methods here.
 @c
@@ -20108,12 +20686,12 @@ def hoist(self):
         c.frame.putStatusLine("Hoist: " + p.headString())
 #@nonl
 #@-node:ekr.20031218072017.2028:Hoist & dehoist & enablers
-#@+node:ekr.20031218072017.2029:drawTopTree
+#@+node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 def drawTopTree (self):
     
     """Draws the top-level tree, taking into account the hoist state."""
     
-    c = self.c
+    c = self.c ; canvas = self.canvas
     
     if 0:
         try: self.redrawCount += 1
@@ -20121,14 +20699,55 @@ def drawTopTree (self):
         g.trace(self.redrawCount)
     # import traceback ; traceback.print_stack()
     
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
+    
     if c.hoistStack:
         p,junk = c.hoistStack[-1]
         self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
     else:
         self.drawTree(c.rootPosition(),root_left,root_top,0,0)
         
+    canvas.lower("lines")
+    canvas.lower("colorBox")
+    canvas.lift("clickBox")
+    canvas.lift("iconBox")
     
-#@-node:ekr.20031218072017.2029:drawTopTree
+    if 0:
+        << define callbacks >>
+        # Use vnode or postion callbacks.
+        canvas.tag_bind("textBox","<1>",onHeadlineClickCallback)
+        canvas.tag_bind("textBox","<3>",onHeadlineRightClickCallback)
+        canvas.tag_bind("textBox","<Key>", onHeadlineKeyCallback)
+        canvas.tag_bind("textBox","<Control-t>",self.OnControlT)
+            # Stamp out erroneous control-t binding.
+#@nonl
+#@+node:ekr.20040710060809:<< define callbacks >>
+def onHeadlineClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.onHeadlineClick()
+    
+def onHeadlineRightClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineRightClick()
+    
+def onHeadlineKeyCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineKey()
+    
+    
+#@nonl
+#@-node:ekr.20040710060809:<< define callbacks >>
+#@-node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 #@-node:ekr.20040331074940:(Fixed bug in hoist)
 #@-node:ekr.20040331080343:3/31
 #@-node:ekr.20040403104315:March 2004
@@ -20416,6 +21035,7 @@ def OnIconClick (self,p,event):
         canvas_x = canvas.canvasx(event.x)
         canvas_y = canvas.canvasy(event.y)
         id = canvas.find_closest(canvas_x,canvas_y)
+        # id = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
         if id != None:
             try: id = id[0]
             except: pass
@@ -20443,30 +21063,22 @@ def OnIconRightClick (self,p,event):
 #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 def drawBox (self,p,x,y):
     
-    tree = self
+    tree = self ; canvas = self.canvas
     y += 7 # draw the box at x, y+7
-    h = self.line_height
     
     if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 
         iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
         image = self.getIconImage(iconname)
-        id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
-        
-        if 1: # New in 4.2.  Create a frame to catch all clicks.
-            id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-            color = ""
-            self.canvas.itemconfig(id4,fill=color,outline=color)
-            self.canvas.lower(id4)
-            id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-            self.tagBindings.append((id,id3,"<1>"),)
+        box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
     
-        id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
+        id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
+        id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
+
+        self.tagBindings.append((box_id,id1,"<1>"),)
+        self.tagBindings.append((box_id,id2,"<Double-1>"),)
         
-        # Remember the bindings so deleteBindings can delete them.
-        self.tagBindings.append((id,id1,"<1>"),)
-        self.tagBindings.append((id,id2,"<Double-1>"),)
+        return box_id
 #@nonl
 #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
@@ -20483,7 +21095,7 @@ def drawIcon(self,p,x=None,y=None):
         # Get the image.
         imagename = "box%02d.GIF" % val
         image = self.getIconImage(imagename)
-        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image,tag="iconBox")
         self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
     
         id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
@@ -21231,12 +21843,14 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode
 #@nonl
 #@-node:ekr.20040313150633:<< remove unused tnodeList >>
 #@+node:ekr.20040323155951:<< do full tests >>
-if count % 100 == 0:
-    g.es('.',newline=False)
-if count % 2000 == 0:
-    g.enl()
+if not unittest:
+    if count % 100 == 0:
+        g.es('.',newline=False)
+    if count % 2000 == 0:
+        g.enl()
 
 @others
+#@nonl
 #@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
 threadBack = p.threadBack()
 threadNext = p.threadNext()
@@ -26020,6 +26634,7 @@ def OnIconClick (self,p,event):
         canvas_x = canvas.canvasx(event.x)
         canvas_y = canvas.canvasy(event.y)
         id = canvas.find_closest(canvas_x,canvas_y)
+        # id = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
         if id != None:
             try: id = id[0]
             except: pass
@@ -31064,12 +31679,14 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode
 #@nonl
 #@-node:ekr.20040313150633:<< remove unused tnodeList >>
 #@+node:ekr.20040323155951:<< do full tests >>
-if count % 100 == 0:
-    g.es('.',newline=False)
-if count % 2000 == 0:
-    g.enl()
+if not unittest:
+    if count % 100 == 0:
+        g.es('.',newline=False)
+    if count % 2000 == 0:
+        g.enl()
 
 @others
+#@nonl
 #@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
 threadBack = p.threadBack()
 threadNext = p.threadNext()
@@ -31292,7 +31909,6 @@ def swapLinks (self,v2): # not used.
 #@-node:ekr.20040629162300.2:May 2004
 #@-node:EKR.20040601083927:In 4.2 a3
 #@+node:EKR.20040610102329:In 4.2 b1
-#@+node:ekr.20040629162758:June 2004
 #@+node:EKR.20040612121907:6/04
 #@+node:ekr.20040330092305.1:(Made "end1" and "ilde"events work again)
 @nocolor
@@ -31783,30 +32399,22 @@ Therefore, the Commands class never needs to worry about extra calls to tree.red
 #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 def drawBox (self,p,x,y):
     
-    tree = self
+    tree = self ; canvas = self.canvas
     y += 7 # draw the box at x, y+7
-    h = self.line_height
     
     if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 
         iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
         image = self.getIconImage(iconname)
-        id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
-        
-        if 1: # New in 4.2.  Create a frame to catch all clicks.
-            id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-            color = ""
-            self.canvas.itemconfig(id4,fill=color,outline=color)
-            self.canvas.lower(id4)
-            id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-            self.tagBindings.append((id,id3,"<1>"),)
+        box_id = canvas.create_image(x,y+self.lineyoffset,image=image)
     
-        id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
+        id1 = canvas.tag_bind(box_id, "<1>", p.OnBoxClick)
+        id2 = canvas.tag_bind(box_id, "<Double-1>", lambda x2: None)
+
+        self.tagBindings.append((box_id,id1,"<1>"),)
+        self.tagBindings.append((box_id,id2,"<Double-1>"),)
         
-        # Remember the bindings so deleteBindings can delete them.
-        self.tagBindings.append((id,id1,"<1>"),)
-        self.tagBindings.append((id,id2,"<Double-1>"),)
+        return box_id
 #@nonl
 #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
@@ -31823,7 +32431,7 @@ def drawIcon(self,p,x=None,y=None):
         # Get the image.
         imagename = "box%02d.GIF" % val
         image = self.getIconImage(imagename)
-        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+        id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image,tag="iconBox")
         self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
     
         id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
@@ -31893,7 +32501,10 @@ def force_draw_node(self,p,x,y):
     h,w = self.drawUserIcons(p,"beforeBox",x,y)
     xw = w # The extra indentation before the icon box.
     if p.hasChildren():
-        self.drawBox(p,x+w,y)
+        box_id = self.drawBox(p,x+w,y)
+    else:
+        box_id = None
+
     w += box_width # even if box isn't drawn.
 
     h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
@@ -31905,12 +32516,15 @@ def force_draw_node(self,p,x,y):
     h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
     h = max(h,h2) ; w += w2
 
-    h2 = self.drawText(p,x+w,y)
+    expand_x = x+w # save this for later.
+    h2 = self.drawText(p,x+w,y,box_id)
     h = max(h,h2)
     w += self.widthInPixels(p.headString())
 
     h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
     h = max(h,h2)
+    
+    self.drawClickFrame(p,y)
 
     return h,xw
 #@nonl
@@ -31921,7 +32535,7 @@ def force_draw_nodeOLD(self,p,x,y):
     self.allocatedNodes += 1
 
     if p.hasChildren():
-        self.drawBox(p,x,y)
+        box_id = self.drawBox(p,x,y)
     w = box_width # Even if the box isn't drawn.
 
     h2,w2 = self.drawIcon(p,x+w,y)
@@ -31933,20 +32547,21 @@ def force_draw_nodeOLD(self,p,x,y):
 #@-node:ekr.20040318090335:force_draw_node (old)
 #@-node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
 #@+node:ekr.20031218072017.1005:drawText (bind)
-def drawText(self,p,x,y):
+def drawText(self,p,x,y,box_id=None):
     
     """draw text for v at nominal coordinates x,y."""
 
     tree = self ; c = self.c ; v = p.v
+    h = self.line_height
     x += text_indent
     
     data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
     if data is not None: return data
 
-    t = Tk.Text(self.canvas,
+    self.lastText = t = Tk.Text(self.canvas,
         font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 
-    # New in 4.2: entries a pairs (p,t) indexed by v.
+    # New in 4.2: entries are pairs (p,t) indexed by v.
     # Remember which text widget belongs to v.
     d = self.edit_text_dict
     val = d.get(v,[])
@@ -31960,23 +32575,22 @@ def drawText(self,p,x,y):
     t.insert("end", v.headString())
     << configure the text depending on state >>
 
-    # Use vnode or postion callbacks.
-    id1 = t.bind("<1>",p.OnHeadlineClick)
-    id2 = t.bind("<3>",p.OnHeadlineRightClick)
+    if 1: # use bind here, else use bind_tag in drawTopTree.
+        # Use vnode or postion callbacks.
+        id1 = t.bind("<1>",p.OnHeadlineClick)
+        id2 = t.bind("<3>",p.OnHeadlineRightClick)
+        id3 = t.bind("<Key>", p.OnHeadlineKey)
+        id4 = t.bind("<Control-t>",self.OnControlT)
+            # 10/16/02: Stamp out the erroneous control-t binding.
+        # Remember the bindings so deleteBindings can delete them.
+        self.bindings.append((t,id1,"<1>"),)
+        self.bindings.append((t,id2,"<3>"),)
+        self.bindings.append((t,id3,"<Key>"),)
+        self.bindings.append((t,id4,"<Control-t>"),)
     
-    if 0: # 6/15/02: Bill Drissel objects to this binding.
-        t.bind("<Double-1>", p.OnBoxClick)
-    id3 = t.bind("<Key>", p.OnHeadlineKey)
-    id4 = t.bind("<Control-t>",self.OnControlT)
-        # 10/16/02: Stamp out the erroneous control-t binding.
+    << highlight text widget on enter events >>
         
-    # Remember the bindings so deleteBindings can delete them.
-    self.bindings.append((t,id1,"<1>"),)
-    self.bindings.append((t,id2,"<3>"),)
-    self.bindings.append((t,id3,"<Key>"),)
-    self.bindings.append((t,id4,"<Control-t>"),)
-
-    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
+    id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
     self.canvas.tag_lower(id)
     
     # This doesn't work: must call update_idletasks first, and that's hard here.
@@ -31994,13 +32608,52 @@ else:
     self.setUnselectedLabelState(p) # unselected
 #@nonl
 #@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
+#@+node:ekr.20040709194954:<< highlight text widget on enter events >>
+if 0: # Define a rect to colorize.
+
+    color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+    self.canvas.itemconfig(color_rect,fill="",outline="")
+
+    def enterRect(event,id=color_rect):
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+    
+if 1: # Colorize only the headline.
+
+    def enterRect(event,p=p,t=t):
+        t2 = self.lastColoredText
+        if t2:
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # color
+                t2.configure(background="white")
+        if p == self.editPosition():
+            self.lastColoredText = None
+        else:
+            self.lastColoredText = t
+            if 1: # underline
+                t.tag_add('underline','1.0', 'end')
+                t.tag_configure('underline',underline = True)
+            else: #color
+                t.configure(background="LightSteelBlue1")
+    
+    bind_enter = t.bind( '<Enter>', enterRect, '+' )
+    self.bindings.append((t,bind_enter,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040709194954:<< highlight text widget on enter events >>
 #@-node:ekr.20031218072017.1005:drawText (bind)
-#@+node:ekr.20031218072017.2029:drawTopTree
+#@+node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 def drawTopTree (self):
     
     """Draws the top-level tree, taking into account the hoist state."""
     
-    c = self.c
+    c = self.c ; canvas = self.canvas
     
     if 0:
         try: self.redrawCount += 1
@@ -32008,14 +32661,55 @@ def drawTopTree (self):
         g.trace(self.redrawCount)
     # import traceback ; traceback.print_stack()
     
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
+    
     if c.hoistStack:
         p,junk = c.hoistStack[-1]
         self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
     else:
         self.drawTree(c.rootPosition(),root_left,root_top,0,0)
         
+    canvas.lower("lines")
+    canvas.lower("colorBox")
+    canvas.lift("clickBox")
+    canvas.lift("iconBox")
     
-#@-node:ekr.20031218072017.2029:drawTopTree
+    if 0:
+        << define callbacks >>
+        # Use vnode or postion callbacks.
+        canvas.tag_bind("textBox","<1>",onHeadlineClickCallback)
+        canvas.tag_bind("textBox","<3>",onHeadlineRightClickCallback)
+        canvas.tag_bind("textBox","<Key>", onHeadlineKeyCallback)
+        canvas.tag_bind("textBox","<Control-t>",self.OnControlT)
+            # Stamp out erroneous control-t binding.
+#@nonl
+#@+node:ekr.20040710060809:<< define callbacks >>
+def onHeadlineClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.onHeadlineClick()
+    
+def onHeadlineRightClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineRightClick()
+    
+def onHeadlineKeyCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineKey()
+    
+    
+#@nonl
+#@-node:ekr.20040710060809:<< define callbacks >>
+#@-node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=False):
 
@@ -32051,7 +32745,7 @@ id = self.canvas.create_line(
     fill="gray50", # stipple="gray50"
     tag="lines")
 
-self.canvas.tag_lower(id)
+# self.canvas.tag_lower(id)
 #@nonl
 #@-node:ekr.20031218072017.1009:<< draw vertical line >>
 #@-node:ekr.20031218072017.1008:drawTree
@@ -32178,6 +32872,54 @@ def inExpandedVisibleArea (self,y1):
         return False
 #@nonl
 #@-node:ekr.20031218072017.1010:inVisibleArea & inExpandedVisibleArea
+#@+node:ekr.20040710050236:tree.drawClickFrame
+def drawClickFrame (self,p,y):
+    
+    h = self.line_height ;  defaultColor = ""
+    
+    # Define a slighly larger rect to catch clicks.
+
+    click_rect = self.canvas.create_rectangle(0,y,1000,y+h-3,tag="clickBox")
+    self.canvas.itemconfig(click_rect,fill=defaultColor,outline=defaultColor)
+    
+    id_click = self.canvas.tag_bind(click_rect, "<1>", p.OnBoxClick)
+    self.tagBindings.append((click_rect,id_click,"<1>"),)
+    
+    if 1: # A major change to the user interface.
+        
+        # Define a slighly smaller rect to colorize.
+        color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+        self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
+        
+        # Color the click box or the headline
+        def enterRect(event,id=color_rect,p=p,t=self.lastText):
+            if 1: # Color or underline the headline
+                t2 = self.lastColoredText
+                if t2: # decolor the old headline.
+                    if 1: # deunderline
+                        t2.tag_delete('underline')
+                    else: # decolor
+                        t2.configure(background="white")
+                if t and p != self.editPosition():
+                    if 1: # underline
+                        t.tag_add('underline','1.0','end')
+                        t.tag_configure('underline',underline=True)
+                    else: # color
+                        t.configure(background="LightSteelBlue1")
+                    self.lastColoredText = t
+                else: self.lastColoredText = None
+            else: # Color the click box.
+                if self.lastClickFrameId:
+                    self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
+                self.lastClickFrameId = id
+                color = "LightSteelBlue1"
+                self.canvas.itemconfig(id,fill=color,outline=color)
+    
+        bind_id = self.canvas.tag_bind(click_rect, "<Enter>", enterRect) # , '+')
+        self.tagBindings.append((click_rect,bind_id,"<Enter>"),)
+    
+#@nonl
+#@-node:ekr.20040710050236:tree.drawClickFrame
 #@+node:ekr.20031218072017.4147:tree.getIconImage
 def getIconImage (self, name):
 
@@ -32188,7 +32930,7 @@ def getIconImage (self, name):
     try:
         fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
         fullname = g.os_path_normpath(fullname)
-        image = Tk.PhotoImage(master=self.canvas, file=fullname)
+        image = Tk.PhotoImage(master=self.canvas,file=fullname)
         self.iconimages[name] = image
         return image
     except:
@@ -32197,16 +32939,6 @@ def getIconImage (self, name):
         return None
 #@nonl
 #@-node:ekr.20031218072017.4147:tree.getIconImage
-#@+node:ekr.20040322122232:tree.scrollTo
-def scrollTo (self,p):
-    
-    def scrollToCallback(event=None,self=self,p=p):
-        g.trace(event,self,p)
-        self.idle_scrollTo(p)
-    
-    self.canvas.after_idle(scrollToCallback)
-#@nonl
-#@-node:ekr.20040322122232:tree.scrollTo
 #@+node:ekr.20031218072017.1018:tree.idle_scrollTo
 def idle_scrollTo(self,p=None):
 
@@ -32274,6 +33006,16 @@ def numberOfVisibleNodes(self):
     return n
 #@nonl
 #@-node:ekr.20031218072017.4148:tree.numberOfVisibleNodes
+#@+node:ekr.20040322122232:tree.scrollTo
+def scrollTo (self,p):
+    
+    def scrollToCallback(event=None,self=self,p=p):
+        g.trace(event,self,p)
+        self.idle_scrollTo(p)
+    
+    self.canvas.after_idle(scrollToCallback)
+#@nonl
+#@-node:ekr.20040322122232:tree.scrollTo
 #@+node:ekr.20031218072017.4149:tree.yoffset
 @ We can't just return icony because the tree hasn't been redrawn yet.  For the same reason we can't rely on any TK canvas methods here.
 @c
@@ -34408,7 +35150,6 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not c: return "break"
     if not p: return "break"
     if p != c.currentPosition(): return "break"
-    v = p.v # used only to get p.iconVal.
 
     if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -34613,8 +35354,11 @@ if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
     
 # Update icons.
 val = p.computeIcon()
-if val != v.iconVal:
-    v.iconVal = val
+
+# 7/8/04: During unit tests the node may not have been drawn,
+# So p.v.iconVal may not exist yet.
+if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+    p.v.iconVal = val
     redraw_flag = True
 
 c.endUpdate(redraw_flag) # redraw only if necessary
@@ -34784,24 +35528,26 @@ valid = n > 0
 #@-node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
 #@-node:ekr.20031218072017.2633:top_df.scanHeader
 #@+node:ekr.20031218072017.3300:removeSentinelsCommand
-def removeSentinelsCommand (self,fileName):
+def removeSentinelsCommand (self,paths):
 
     self.setEncoding()
-    path, self.fileName = g.os_path_split(fileName) # path/fileName
-    << Read file into s >>
-    << set delims from the header line >>
-    # g.trace("line: '%s', start: '%s', end: '%s'" % (line_delim,start_delim,end_delim))
-    s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
-    ext = g.app.config.remove_sentinels_extension
-    if ext == None or len(ext) == 0:
-        ext = ".txt"
-    if ext[0] == '.':
-        newFileName = g.os_path_join(path,fileName+ext)
-    else:
-        head,ext2 = g.os_path_splitext(fileName) 
-        newFileName = g.os_path_join(path,head+ext+ext2)
-    # g.trace(repr(s))
-    << Write s into newFileName >>
+
+    for fileName in paths:
+        path, self.fileName = g.os_path_split(fileName) # path/fileName
+        << Read file into s >>
+        << set delims from the header line >>
+        # g.trace("line: '%s', start: '%s', end: '%s'" % (line_delim,start_delim,end_delim))
+        s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
+        ext = g.app.config.remove_sentinels_extension
+        if ext == None or len(ext) == 0:
+            ext = ".txt"
+        if ext[0] == '.':
+            newFileName = g.os_path_join(path,fileName+ext)
+        else:
+            head,ext2 = g.os_path_splitext(fileName) 
+            newFileName = g.os_path_join(path,head+ext+ext2)
+        # g.trace(repr(s))
+        << Write s into newFileName >>
 #@nonl
 #@+node:ekr.20031218072017.3301:<< Read file into s >>
 try:
@@ -34943,19 +35689,23 @@ The solution is to disable this message in these routine when importing.
 #@nonl
 #@-node:EKR.20040605173101:What I did
 #@+node:ekr.20031218072017.1810:importDerivedFiles
-def importDerivedFiles (self,parent,fileName):
+def importDerivedFiles (self,parent,paths):
     
     c = self.c ; at = c.atFileCommands
     current = c.currentVnode()
     
     c.beginUpdate()
-    v = parent.insertAfter()
-    v.initHeadString("Imported @file " + fileName)
-    c.undoer.setUndoParams("Import",v,select=current)
-    at.read(v,importFileName=fileName)
-    c.selectVnode(v)
-    v.expand()
+    
+    for fileName in paths:
+        v = parent.insertAfter()
+        v.initHeadString("Imported @file " + fileName)
+        c.undoer.setUndoParams("Import",v,select=current)
+        at.read(v,importFileName=fileName)
+        c.selectVnode(v)
+        v.expand()
+
     c.endUpdate()
+#@nonl
 #@-node:ekr.20031218072017.1810:importDerivedFiles
 #@+node:ekr.20031218072017.2387:old_df.scanAllDirectives
 @ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node p, no @color or @nocolor directives are examined in any ancestor of p.
@@ -35644,12 +36394,12 @@ def changeAll(self):
     self.restore(data)
 #@nonl
 #@-node:ekr.20031218072017.3069:changeAll
-#@+node:ekr.20031218072017.2029:drawTopTree
+#@+node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 def drawTopTree (self):
     
     """Draws the top-level tree, taking into account the hoist state."""
     
-    c = self.c
+    c = self.c ; canvas = self.canvas
     
     if 0:
         try: self.redrawCount += 1
@@ -35657,14 +36407,55 @@ def drawTopTree (self):
         g.trace(self.redrawCount)
     # import traceback ; traceback.print_stack()
     
+    self.lastClickFrameId = None # id of last entered clickBox.
+    self.lastColoredText = None # last colored text widget.
+    
     if c.hoistStack:
         p,junk = c.hoistStack[-1]
         self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
     else:
         self.drawTree(c.rootPosition(),root_left,root_top,0,0)
         
+    canvas.lower("lines")
+    canvas.lower("colorBox")
+    canvas.lift("clickBox")
+    canvas.lift("iconBox")
     
-#@-node:ekr.20031218072017.2029:drawTopTree
+    if 0:
+        << define callbacks >>
+        # Use vnode or postion callbacks.
+        canvas.tag_bind("textBox","<1>",onHeadlineClickCallback)
+        canvas.tag_bind("textBox","<3>",onHeadlineRightClickCallback)
+        canvas.tag_bind("textBox","<Key>", onHeadlineKeyCallback)
+        canvas.tag_bind("textBox","<Control-t>",self.OnControlT)
+            # Stamp out erroneous control-t binding.
+#@nonl
+#@+node:ekr.20040710060809:<< define callbacks >>
+def onHeadlineClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.onHeadlineClick()
+    
+def onHeadlineRightClickCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineRightClick()
+    
+def onHeadlineKeyCallback(tree=self):
+    
+    g.trace()
+    c = tree.c
+    p = c.currentPosition()
+    p.OnHeadlineKey()
+    
+    
+#@nonl
+#@-node:ekr.20040710060809:<< define callbacks >>
+#@-node:ekr.20031218072017.2029:drawTopTree (tag_bind)
 #@-node:EKR.20040605181231:(Made sure change all doesn't keep redrawing the screen)
 #@+node:EKR.20040606191836:Added 3 files to distribution lists
 doc\leoUsersGuide.txt
@@ -35940,6 +36731,8 @@ if 0: # no longer used.
     canvas_x = canvas.canvasx(x)
     canvas_y = canvas.canvasy(y)
     id = self.canvas.find_closest(canvas_x,canvas_y)
+    # id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+    
 
 # OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
 if self.drag_id: # This gets cleared by OnEndDrag()
@@ -36053,6 +36846,8 @@ canvas_x = canvas.canvasx(x)
 canvas_y = canvas.canvasy(y)
 
 id = self.canvas.find_closest(canvas_x,canvas_y)
+# id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+
 vdrag = self.findVnodeWithIconId(id)
 childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
 #@nonl
@@ -38175,6 +38970,8 @@ if 0: # no longer used.
     canvas_x = canvas.canvasx(x)
     canvas_y = canvas.canvasy(y)
     id = self.canvas.find_closest(canvas_x,canvas_y)
+    # id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+    
 
 # OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
 if self.drag_id: # This gets cleared by OnEndDrag()
@@ -38288,6 +39085,8 @@ canvas_x = canvas.canvasx(x)
 canvas_y = canvas.canvasy(y)
 
 id = self.canvas.find_closest(canvas_x,canvas_y)
+# id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+
 vdrag = self.findVnodeWithIconId(id)
 childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
 #@nonl
@@ -38485,7 +39284,6 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not c: return "break"
     if not p: return "break"
     if p != c.currentPosition(): return "break"
-    v = p.v # used only to get p.iconVal.
 
     if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -38690,8 +39488,11 @@ if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
     
 # Update icons.
 val = p.computeIcon()
-if val != v.iconVal:
-    v.iconVal = val
+
+# 7/8/04: During unit tests the node may not have been drawn,
+# So p.v.iconVal may not exist yet.
+if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+    p.v.iconVal = val
     redraw_flag = True
 
 c.endUpdate(redraw_flag) # redraw only if necessary
@@ -41400,6 +42201,8 @@ if 0: # no longer used.
     canvas_x = canvas.canvasx(x)
     canvas_y = canvas.canvasy(y)
     id = self.canvas.find_closest(canvas_x,canvas_y)
+    # id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+    
 
 # OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
 if self.drag_id: # This gets cleared by OnEndDrag()
@@ -41513,6 +42316,8 @@ canvas_x = canvas.canvasx(x)
 canvas_y = canvas.canvasy(y)
 
 id = self.canvas.find_closest(canvas_x,canvas_y)
+# id = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+
 vdrag = self.findVnodeWithIconId(id)
 childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
 #@nonl
@@ -45747,7 +46552,6 @@ if not old.has_key("wrap") and not old.has_key("nowrap"):
 #@-node:ekr.20031218072017.1391:scanDirectives (utils)
 #@-node:ekr.20031218072017.1380:Directive utils...
 #@-node:EKR.20040623101617.4:(Handled inner @language and @comment properly)
-#@-node:ekr.20040629162758:June 2004
 #@-node:EKR.20040610102329:In 4.2 b1
 #@+node:ekr.20040701065235:in 4.2 b2
 #@+node:EKR.20040614151841.2:(More changes to read/write logic) New in 4.2 Beta 2
@@ -47201,7 +48005,6 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not c: return "break"
     if not p: return "break"
     if p != c.currentPosition(): return "break"
-    v = p.v # used only to get p.iconVal.
 
     if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -47406,8 +48209,11 @@ if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
     
 # Update icons.
 val = p.computeIcon()
-if val != v.iconVal:
-    v.iconVal = val
+
+# 7/8/04: During unit tests the node may not have been drawn,
+# So p.v.iconVal may not exist yet.
+if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+    p.v.iconVal = val
     redraw_flag = True
 
 c.endUpdate(redraw_flag) # redraw only if necessary
@@ -48817,6 +49623,361 @@ if backupName and g.os_path_exists(backupName):
 #@-node:ekr.20031218072017.3048:<< delete backup file >>
 #@-node:ekr.20031218072017.3046:write_Leo_file
 #@-node:ekr.20040705071418:(Made sure the user is given a chance to save read-only files)
+#@+node:ekr.20040709085421:(Added p.copyTreeAfter, copyTreeTo)
+#@+node:ekr.20040303175026.9:p.copyTreeAfter, copyTreeTo
+# This is used by unit tests.
+
+def copyTreeAfter(self):
+    p = self
+    p2 = p.insertAfter()
+    p.copyTreeFromSelfTo(p2)
+    return p2
+    
+def copyTreeFromSelfTo(self,p2):
+    p = self
+    p2.v.t.headString = p.headString()
+    p2.v.t.bodyString = p.bodyString()
+    for child in p.children_iter(copy=True):
+        child2 = p2.insertAsLastChild()
+        child.copyTreeFromSelfTo(child2)
+#@nonl
+#@-node:ekr.20040303175026.9:p.copyTreeAfter, copyTreeTo
+#@-node:ekr.20040709085421:(Added p.copyTreeAfter, copyTreeTo)
+#@+node:ekr.20040707144444:(Improved unit testing)
+#@+node:ekr.20040707150139:What I did
+@killcolor
+
+- g.getScript implicitly assumed that p == c.currentPosition.
+  I removed that assumption.
+
+- The scriptButton callback in the scripting.py plugin no longer calls c.executeScript.
+  It's simpler and easier to call exec directly.
+
+- Improved c.checkOutline:
+    - Added full keyword arg.
+    - Print more if verbose is on.
+#@nonl
+#@-node:ekr.20040707150139:What I did
+#@+node:EKR.20040614071102.1:g.getScript
+def getScript (c,p):
+
+    if not p: p = c.currentPosition()
+    old_body = p.bodyString()
+    
+    try:
+        script = None
+        # 7/7/04: Allow p not to be the present position.
+        if p == c.currentPosition():
+            if c.frame.body.hasTextSelection():
+                # Temporarily replace v's body text with just the selected text.
+                s = c.frame.body.getSelectedText()
+                p.v.setTnodeText(s)
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+    
+        if s.strip():
+            g.app.scriptDict["script1"]=s
+            df = c.atFileCommands.new_df
+            df.scanAllDirectives(p,scripting=True)
+            # Force Python comment delims.
+            df.startSentinelComment = "#"
+            df.endSentinelComment = None
+            if 1: # new code: using generalized string-write logic.
+                df.write(p.copy(),nosentinels=False,toString=True)
+                script = df.stringOutput
+            else: # old code: works
+                # Write the "derived file" into fo.
+                fo = g.fileLikeObject()
+                # nosentinels=False makes it much easier to find the proper line.
+                df.write(p.copy(),nosentinels=False,scriptFile=fo) 
+                script = fo.get()
+            assert(p)
+            g.app.scriptDict["script2"]=script
+            error = len(script) == 0
+    except:
+        s = "unexpected exception"
+        print s ; g.es(s)
+        g.es_exception()
+        script = None
+
+    p.v.setTnodeText(old_body)
+    return script
+#@nonl
+#@-node:EKR.20040614071102.1:g.getScript
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p)
+    << redirect output >>
+    if script:
+        script = script.strip()
+    if script:
+        script += '\n' # Make sure we end the script properly.
+        try:
+            exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            << unredirect output >>
+            g.es("exception executing script")
+            n = g.es_exception(full=False,c=c)
+            if n is not None:
+                << dump the lines of script near the error >>
+                if p and not script1:
+                    c.goToScriptLineNumber(p,script,n)
+            c.frame.tree.redrawAfterException()
+    elif not error:
+        << unredirect output >>
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
+lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    s = "line %d: %s" % (n,lines[n-1])
+    print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@+node:ekr.20031218072017.2072:c.checkOutline
+def checkOutline (self,verbose=True,unittest=False,full=True):
+    
+    """Report any possible clone errors in the outline.
+    
+    Remove any unused tnodeLists."""
+    
+    c = self ; count = 1 ; errors = 0
+    if full and not unittest:
+        g.es("all tests enabled: this may take awhile",color="blue")
+
+    p = c.rootPosition()
+    << assert equivalence of lastVisible methods >>
+    for p in c.allNodes_iter():
+        try:
+            count += 1
+            << remove unused tnodeList >>
+            if full: # Unit tests usually set this false.
+                << do full tests >>
+        except AssertionError,message:
+            errors += 1
+            << give test failed message >>
+    if verbose or not unittest:
+        << print summary message >>
+    return errors
+#@nonl
+#@+node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+if 0:
+    g.app.debug = True
+
+    p1 = p.oldLastVisible()
+    p2 = p.lastVisible()
+    
+    if p1 != p2:
+        print "oldLastVisible",p1
+        print "   lastVisible",p2
+    
+    assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
+    assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
+    
+    g.app.debug = False
+#@nonl
+#@-node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+#@+node:ekr.20040313150633:<< remove unused tnodeList >>
+# Empty tnodeLists are not errors.
+v = p.v
+
+# New in 4.2: tnode list is in tnode.
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode():
+    if 0:
+        s = "deleting tnodeList for " + repr(v)
+        print ; print s ; g.es(s,color="blue")
+    delattr(v.t,"tnodeList")
+#@nonl
+#@-node:ekr.20040313150633:<< remove unused tnodeList >>
+#@+node:ekr.20040323155951:<< do full tests >>
+if not unittest:
+    if count % 100 == 0:
+        g.es('.',newline=False)
+    if count % 2000 == 0:
+        g.enl()
+
+@others
+#@nonl
+#@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+threadBack = p.threadBack()
+threadNext = p.threadNext()
+
+if threadBack:
+    assert p == threadBack.threadNext(), "p==threadBack.threadNext"
+
+if threadNext:
+    assert p == threadNext.threadBack(), "p==threadNext.threadBack"
+#@nonl
+#@-node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+#@+node:ekr.20040314035615.1:assert consistency of next and back links
+back = p.back()
+next = p.next()
+
+if back:
+    assert p == back.next(), "p==back.next"
+        
+if next:
+    assert p == next.back(), "p==next.back"
+#@nonl
+#@-node:ekr.20040314035615.1:assert consistency of next and back links
+#@+node:ekr.20040314035615.2:assert consistency of parent and child links
+if p.hasParent():
+    n = p.childIndex()
+    assert p == p.parent().moveToNthChild(n), "p==parent.moveToNthChild"
+    
+for child in p.children_iter():
+    assert p == child.parent(), "p==child.parent"
+
+if p.hasNext():
+    assert p.next().parent() == p.parent(), "next.parent==parent"
+    
+if p.hasBack():
+    assert p.back().parent() == p.parent(), "back.parent==parent"
+#@nonl
+#@-node:ekr.20040314035615.2:assert consistency of parent and child links
+#@+node:ekr.20040323155951.1:assert consistency of directParents and parent
+if p.hasParent():
+    t = p.parent().v.t
+    for v in p.directParents():
+        try:
+            assert v.t == t
+        except:
+            print "p",p
+            print "p.directParents",p.directParents()
+            print "v",v
+            print "v.t",v.t
+            print "t = p.parent().v.t",t
+            raise AssertionError,"v.t == t"
+#@-node:ekr.20040323155951.1:assert consistency of directParents and parent
+#@+node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+if p.isCloned():
+    parents = p.v.t.vnodeList
+    for child in p.children_iter():
+        vparents = child.directParents()
+        assert len(parents) == len(vparents), "len(parents) == len(vparents)"
+        for parent in parents:
+            assert parent in vparents, "parent in vparents"
+        for parent in vparents:
+            assert parent in parents, "parent in parents"
+#@nonl
+#@-node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+#@+node:ekr.20040323162707:assert that clones actually share subtrees
+if p.isCloned() and p.hasChildren():
+    childv = p.firstChild().v
+    assert childv == p.v.t._firstChild, "childv == p.v.t._firstChild"
+    assert id(childv) == id(p.v.t._firstChild), "id(childv) == id(p.v.t._firstChild)"
+    for v in p.v.t.vnodeList:
+        assert v.t._firstChild == childv, "v.t._firstChild == childv"
+        assert id(v.t._firstChild) == id(childv), "id(v.t._firstChild) == id(childv)"
+#@nonl
+#@-node:ekr.20040323162707:assert that clones actually share subtrees
+#@+node:ekr.20040314043623:assert consistency of vnodeList
+vnodeList = p.v.t.vnodeList
+    
+for v in vnodeList:
+    
+    try:
+        assert v.t == p.v.t
+    except AssertionError:
+        print "p",p
+        print "v",v
+        print "p.v",p.v
+        print "v.t",v.t
+        print "p.v.t",p.v.t
+        raise AssertionError, "v.t == p.v.t"
+
+    if p.v.isCloned():
+        assert v.isCloned(), "v.isCloned"
+        assert len(vnodeList) > 1, "len(vnodeList) > 1"
+    else:
+        assert not v.isCloned(), "not v.isCloned"
+        assert len(vnodeList) == 1, "len(vnodeList) == 1"
+#@nonl
+#@-node:ekr.20040314043623:assert consistency of vnodeList
+#@-node:ekr.20040323155951:<< do full tests >>
+#@+node:ekr.20040314043900:<<print summary message >>
+if full:
+    print
+    g.enl()
+
+s = "%d nodes checked, %d errors" % (count,errors)
+if errors or verbose:
+    print s ; g.es(s,color="red")
+elif verbose:
+    g.es(s,color="green")
+#@nonl
+#@-node:ekr.20040314043900:<<print summary message >>
+#@+node:ekr.20040314044652:<< give test failed message >>
+s = "test failed: %s %s" % (message,repr(p))
+print s ; print
+g.es(s,color="red")
+#@nonl
+#@-node:ekr.20040314044652:<< give test failed message >>
+#@-node:ekr.20031218072017.2072:c.checkOutline
+#@-node:ekr.20040707144444:(Improved unit testing)
+#@+node:ekr.20040709065122:(Added 3 .css files to cvs and distribution)
+@killcolor
+
+- Added to manifest.in:
+    
+include doc/default.css
+include doc/leo_rst.css
+include doc/silver_city.css
+
+- Added to leo.nsi:
+
+File c:\prog\leoCVS\leo\doc\default.css
+File c:\prog\leoCVS\leo\doc\leo_rst.css
+File c:\prog\leoCVS\leo\doc\silver_city.css
+
+- Uploaded leo-stylesheets.zip to plugins package at SourceForge.
+#@nonl
+#@-node:ekr.20040709065122:(Added 3 .css files to cvs and distribution)
 #@-node:ekr.20040706080316:in 4.2 b3
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
