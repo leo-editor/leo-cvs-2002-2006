@@ -949,14 +949,18 @@ class baseFileCommands:
         attr,val = self.getUnknownTag()
         if not attr:
             return None,None
-        
         try:
-            bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
-            val2 = pickle.loads(bin)
-            return attr,val2
-    
-        except (TypeError,pickle.UnpicklingError,ImportError):
+            binString = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
+        except TypeError:
             # Assume that Leo 4.1 wrote the attribute.
+            # g.trace('4.1 val:',val2)
+            return attr,val
+        try:
+            # No change needed to support protocols.
+            val2 = pickle.loads(binString)
+            # g.trace('v.3 val:',val2)
+            return attr,val2
+        except (pickle.UnpicklingError,ImportError):
             return attr,val
     #@nonl
     #@-node:EKR.20040526204036.1:getUnknownAttribute
@@ -1742,10 +1746,14 @@ class baseFileCommands:
         for key in attrDict.keys():
             try:
                 val = attrDict[key]
-                s = pickle.dumps(val,bin=True)
+                try:
+                    # Protocol argument is new in Python 2.3
+                    # Use protocol 1 for compatibility with bin.
+                    s = pickle.dumps(val,protocol=1)
+                except TypeError:
+                    s = pickle.dumps(val,bin=True)
                 attr = ' %s="%s"' % (key,binascii.hexlify(s))
                 self.put(attr)
-    
             except pickle.PicklingError:
                 # New in 4.2 beta 1: keep going after error.
                 g.es("ignoring non-pickleable attribute %s in %s" % (
