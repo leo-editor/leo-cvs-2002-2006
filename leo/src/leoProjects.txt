@@ -13147,7 +13147,7 @@ def utils_rename(src,dst,mode=None,verbose=True):
     except Exception:
         if verbose:
             g.es('Exception renaming %s to %s' % (src,dst),color='red')
-            g.es_exception()
+            g.es_exception(full=False)
         return False
 #@nonl
 #@+node:ekr.20050104123726.1:<< about os.rename >>
@@ -13221,35 +13221,38 @@ def utils_stat (fileName):
 def write_Leo_file(self,fileName,outlineOnlyFlag):
 
     c = self.c
-
     self.assignFileIndices()
     if not outlineOnlyFlag:
         << write all @file nodes >>
     << return if the .leo file is read-only >>
     try:
+        theActualFile = None
         << create backup file >>
         self.mFileName = fileName
-        << create the output file >>
+        self.outputFile = cStringIO.StringIO() # or g.fileLikeObject()
+        theActualFile = open(fileName, 'wb')
         << put the .leo file >>
-    except:
-        << report the exception >>
-        << erase filename and rename backupName to fileName >>
-        return False
-    if self.outputFile:
-        << close the output file >>
+        theActualFile.write(self.outputFile.getvalue())
+        theActualFile.close()
+        self.outputFile = None
         << delete backup file >>
         return True
-    else: # This probably will never happen because errors should raise exceptions.
-        << erase filename and rename backupName to fileName >>
+    except Exception:
+        g.es("exception writing: " + fileName)
+        g.es_exception(full=False)
+        if theActualFile: theActualFile.close()
+        self.outputFile = None
+        << delete fileName >>
+        << rename backupName to fileName >>
         return False
-        
+
 write_LEO_file = write_Leo_file # For compatibility with old plugins.
 #@nonl
 #@+node:ekr.20040324080359:<< write all @file nodes >>
 try:
     # Write all @file nodes and set orphan bits.
     c.atFileCommands.writeAll()
-except:
+except Exception:
     g.es_error("exception writing derived files")
     g.es_exception()
     return False
@@ -13283,30 +13286,6 @@ else:
     backupName = None
 #@nonl
 #@-node:ekr.20031218072017.3047:<< create backup file >>
-#@+node:ekr.20040324080359.2:<< create the output file >>
-self.outputFile = open(fileName, 'wb') # 9/18/02
-if not self.outputFile:
-    g.es("can not open " + fileName)
-    << delete backup file >>
-    return False
-#@nonl
-#@+node:ekr.20031218072017.3048:<< delete backup file >>
-if backupName and g.os_path_exists(backupName):
-    try:
-        os.remove(backupName)
-    except OSError:
-        if self.read_only:
-            g.es("read only",color="red")
-        else:
-            g.es("exception deleting backup file:" + backupName)
-            g.es_exception()
-        return False
-    except:
-        g.es("exception deleting backup file:" + backupName)
-        g.es_exception()
-        return False
-#@-node:ekr.20031218072017.3048:<< delete backup file >>
-#@-node:ekr.20040324080359.2:<< create the output file >>
 #@+node:ekr.20040324080819.1:<< put the .leo file >>
 self.putProlog()
 self.putHeader()
@@ -13321,58 +13300,22 @@ self.putTnodes()
 self.putPostlog()
 #@nonl
 #@-node:ekr.20040324080819.1:<< put the .leo file >>
-#@+node:ekr.20040324080819.2:<< report the exception >>
-g.es("exception writing: " + fileName)
-g.es_exception() 
-if self.outputFile:
-    try:
-        self.outputFile.close()
-        self.outputFile = None
-    except:
-        g.es("exception closing: " + fileName)
-        g.es_exception()
-#@nonl
-#@-node:ekr.20040324080819.2:<< report the exception >>
-#@+node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
-g.es("error writing " + fileName)
-
+#@+node:ekr.20050405103712:<< delete fileName >>
 if fileName and g.os_path_exists(fileName):
-    try:
-        os.remove(fileName)
-    except OSError:
-        if self.read_only:
-            g.es("read only",color="red")
-        else:
-            g.es("exception deleting: " + fileName)
-            g.es_exception()
-    except:
-        g.es("exception deleting: " + fileName)
-        g.es_exception()
-        
+    self.deleteFileWithMessage(fileName,'')
+#@-node:ekr.20050405103712:<< delete fileName >>
+#@+node:ekr.20050405103712.1:<< rename backupName to fileName >>
 if backupName:
     g.es("restoring " + fileName + " from " + backupName)
-    try:
-        g.utils_rename(backupName, fileName)
-    except OSError:
-        if self.read_only:
-            g.es("read only",color="red")
-        else:
-            g.es("exception renaming " + backupName + " to " + fileName)
-            g.es_exception()
-    except:
-        g.es("exception renaming " + backupName + " to " + fileName)
-        g.es_exception()
+    g.utils_rename(backupName,fileName)
 #@nonl
-#@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
-#@+node:ekr.20040324080819.3:<< close the output file >>
-try:
-    self.outputFile.close()
-    self.outputFile = None
-except:
-    g.es("exception closing: " + fileName)
-    g.es_exception()
+#@-node:ekr.20050405103712.1:<< rename backupName to fileName >>
+#@+node:ekr.20031218072017.3048:<< delete backup file >>
+if backupName and g.os_path_exists(backupName):
+
+    self.deleteFileWithMessage(backupName,'backup')
 #@nonl
-#@-node:ekr.20040324080819.3:<< close the output file >>
+#@-node:ekr.20031218072017.3048:<< delete backup file >>
 #@-node:ekr.20031218072017.3046:write_Leo_file
 #@+node:ekr.20041005105605.212:replaceTargetFileIfDifferent
 def replaceTargetFileIfDifferent (self):
@@ -14733,11 +14676,12 @@ def openSettingsFile (self,path):
     frame.log.enable(False)
     g.app.setLog(frame.log,"openWithFileName")
     g.app.lockLog()
-    frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
+    ok = frame.c.fileCommands.open(
+        theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
     g.app.unlockLog()
     frame.openDirectory = g.os_path_dirname(path)
     g.app.gui = oldGui
-    return c
+    return ok and c
 #@nonl
 #@-node:ekr.20041117085625:openSettingsFile
 #@+node:ekr.20041120064303:config.readSettingsFiles
@@ -14895,7 +14839,7 @@ def run(fileName=None,*args,**keywords):
     
     if not isValidPython(): return
     << import leoGlobals and leoApp >>
-    << compute directories >>
+    g.computeStandardDirectories()
     script = getBatchScript() # Do early so we can compute verbose next.
     verbose = script is None
     g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
@@ -14953,21 +14897,6 @@ g = leoGlobals
 assert(g.app)
 #@nonl
 #@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
-#@+node:ekr.20041219072416:<< compute directories >>
-g.app.loadDir = computeLoadDir()
-    # Depends on g.app.tkEncoding: uses utf-8 for now.
-
-g.app.homeDir = computeHomeDir()
-
-g.app.extensionsDir = g.os_path_abspath(
-    g.os_path_join(g.app.loadDir,'..','extensions'))
-
-g.app.globalConfigDir = computeGlobalConfigDir()
-
-g.app.testDir = g.os_path_abspath(
-    g.os_path_join(g.app.loadDir,'..','test'))
-#@nonl
-#@-node:ekr.20041219072416:<< compute directories >>
 #@+node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
 try:
     import leoNodes
@@ -15046,113 +14975,6 @@ def completeFileName (fileName):
     return fileName
 #@nonl
 #@-node:ekr.20041124083125:completeFileName (leo.py)
-#@+node:ekr.20050304072744:compute directories...
-#@+node:ekr.20041117155521:computeGlobalConfigDir
-def computeGlobalConfigDir():
-    
-    # None of these suppresses warning about sys.leo_config_directory
-    # __pychecker__ = '--no-objattrs --no-modulo1 --no-moddefvalue'
-    
-    import leoGlobals as g
-    
-    encoding = startupEncoding()
-
-    try:
-        theDir = sys.leo_config_directory
-    except AttributeError:
-        theDir = g.os_path_join(g.app.loadDir,"..","config")
-        
-    if theDir:
-        theDir = g.os_path_abspath(theDir)
-        
-    if (
-        not theDir or
-        not g.os_path_exists(theDir,encoding) or
-        not g.os_path_isdir(theDir,encoding)
-    ):
-        theDir = None
-    
-    return theDir
-#@nonl
-#@-node:ekr.20041117155521:computeGlobalConfigDir
-#@+node:ekr.20041117151301:computeHomeDir
-def computeHomeDir():
-    
-    """Returns the user's home directory."""
-    
-    import leoGlobals as g
-
-    encoding = startupEncoding()
-    # dotDir = g.os_path_abspath('./',encoding)
-    home = os.getenv('HOME',default=None)
-
-    if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
-	    # Get the indirect reference to the true home.
-	    home = os.getenv(home[1:-1],default=None)
-
-    if home:
-        # N.B. This returns the _working_ directory if home is None!
-        # This was the source of the 4.3 .leoID.txt problems.
-        home = g.os_path_abspath(home,encoding)
-        if (
-            not g.os_path_exists(home,encoding) or
-            not g.os_path_isdir(home,encoding)
-        ):
-            home = None
-
-    # g.trace(home)
-    return home
-#@nonl
-#@-node:ekr.20041117151301:computeHomeDir
-#@+node:ekr.20031218072017.1937:computeLoadDir
-def computeLoadDir():
-    
-    """Returns the directory containing leo.py."""
-    
-    import leoGlobals as g
-
-    try:
-        import leo
-        encoding = startupEncoding()
-        path = g.os_path_abspath(leo.__file__,encoding)
-        if path:
-            loadDir = g.os_path_dirname(path,encoding)
-        else: loadDir = None
-            
-        if (
-            not loadDir or
-            not g.os_path_exists(loadDir,encoding) or
-            not g.os_path_isdir(loadDir,encoding)
-        ):
-            loadDir = os.getcwd()
-            print "Using emergency loadDir:",repr(loadDir)
-        
-        loadDir = g.os_path_abspath(loadDir,encoding)
-        # g.es("load dir: %s" % (loadDir),color="blue")
-        return loadDir
-    except:
-        print "Exception getting load directory"
-        import traceback ; traceback.print_exc()
-        return None
-#@nonl
-#@-node:ekr.20031218072017.1937:computeLoadDir
-#@-node:ekr.20050304072744:compute directories...
-#@+node:ekr.20041117151301.1:startupEncoding
-def startupEncoding ():
-    
-    import leoGlobals as g
-    import sys
-    
-    if sys.platform=="win32": # "mbcs" exists only on Windows.
-        encoding = "mbcs"
-    elif sys.platform=="dawwin":
-        encoding = "utf-8"
-    else:
-        encoding = g.app.tkEncoding
-        
-    return encoding
-#@nonl
-#@-node:ekr.20041117151301.1:startupEncoding
 #@+node:ekr.20031218072017.1624:createFrame (leo.py)
 def createFrame (fileName):
     
@@ -15286,7 +15108,8 @@ def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
     try:
         << scan all the xml elements >>
     except BadLeoFile, message:
-        << raise an alert >>
+        if not silent:
+            << raise an alert >>
         ok = False
 
     c.frame.tree.redraw_now(scroll=False)
@@ -17259,11 +17082,12 @@ def openSettingsFile (self,path):
     frame.log.enable(False)
     g.app.setLog(frame.log,"openWithFileName")
     g.app.lockLog()
-    frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
+    ok = frame.c.fileCommands.open(
+        theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
     g.app.unlockLog()
     frame.openDirectory = g.os_path_dirname(path)
     g.app.gui = oldGui
-    return c
+    return ok and c
 #@nonl
 #@-node:ekr.20041117085625:openSettingsFile
 #@+node:ekr.20041120064303:config.readSettingsFiles
@@ -21169,32 +20993,69 @@ class fileLikeObject:
     """Define a file-like object for redirecting writes to a string.
     
     The caller is responsible for handling newlines correctly."""
-
-    def __init__(self,fromString=None):
-        # New in 4.2.1: allow the file to be inited from string s.
-        if fromString: self.list = g.splitLines(fromString) # Must preserve newlines!
-        else: self.list = []
-        self.ptr = 0
-
-    def clear (self):   self.list = []
-
-    def close (self): pass
-    def flush (self): pass
-
-    def get (self):
-        return ''.join(self.list)
-        
-    def readline(self): # New for read-from-string (readOpenFile).
-        if self.ptr < len(self.list):
-            line = self.list[self.ptr]
-            # g.trace(repr(line))
-            self.ptr += 1
-            return line
-        else: return ""
-
-    def write (self,s):
-        if s: self.list.append(s)
+    
+    @others
 #@nonl
+#@+node:ekr.20050404151753: ctor
+def __init__(self,fromString=None):
+
+    # New in 4.2.1: allow the file to be inited from string s.
+    if fromString:
+        self.list = g.splitLines(fromString) # Must preserve newlines!
+    else:
+        self.list = []
+
+    self.ptr = 0
+    
+# In CStringIO the buffer is read-only if the initial value (fromString) is non-empty.
+#@nonl
+#@-node:ekr.20050404151753: ctor
+#@+node:ekr.20050404151753.1:clear
+def clear (self):
+    
+    self.list = []
+
+
+#@-node:ekr.20050404151753.1:clear
+#@+node:ekr.20050404151753.2:close
+def close (self):
+    
+    pass
+    
+    # The StringIo version free's the memory buffer.
+#@nonl
+#@-node:ekr.20050404151753.2:close
+#@+node:ekr.20050404151753.3:flush
+def flush (self):
+    
+    pass
+#@nonl
+#@-node:ekr.20050404151753.3:flush
+#@+node:ekr.20050404151753.4:get & getvalue
+def get (self):
+
+    return ''.join(self.list)
+    
+getvalue = get # for compatibility with StringIo
+#@-node:ekr.20050404151753.4:get & getvalue
+#@+node:ekr.20050404151753.5:readline
+def readline(self): # New for read-from-string (readOpenFile).
+
+    if self.ptr < len(self.list):
+        line = self.list[self.ptr]
+        # g.trace(repr(line))
+        self.ptr += 1
+        return line
+    else:
+        return ''
+#@nonl
+#@-node:ekr.20050404151753.5:readline
+#@+node:ekr.20050404151753.6:write
+def write (self,s):
+    
+    if s:
+        self.list.append(s)
+#@-node:ekr.20050404151753.6:write
 #@-node:ekr.20040331083824.1:g.fileLikeObject
 #@-node:ekr.20041004095703:(Added support for readFromString to fileLikeObject)
 #@+node:ekr.20041024090552:(Bernhard Mulder: Added support for Ada)
@@ -24042,7 +23903,7 @@ def run(fileName=None,*args,**keywords):
     
     if not isValidPython(): return
     << import leoGlobals and leoApp >>
-    << compute directories >>
+    g.computeStandardDirectories()
     script = getBatchScript() # Do early so we can compute verbose next.
     verbose = script is None
     g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
@@ -24100,21 +23961,6 @@ g = leoGlobals
 assert(g.app)
 #@nonl
 #@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
-#@+node:ekr.20041219072416:<< compute directories >>
-g.app.loadDir = computeLoadDir()
-    # Depends on g.app.tkEncoding: uses utf-8 for now.
-
-g.app.homeDir = computeHomeDir()
-
-g.app.extensionsDir = g.os_path_abspath(
-    g.os_path_join(g.app.loadDir,'..','extensions'))
-
-g.app.globalConfigDir = computeGlobalConfigDir()
-
-g.app.testDir = g.os_path_abspath(
-    g.os_path_join(g.app.loadDir,'..','test'))
-#@nonl
-#@-node:ekr.20041219072416:<< compute directories >>
 #@+node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
 try:
     import leoNodes
@@ -24193,113 +24039,6 @@ def completeFileName (fileName):
     return fileName
 #@nonl
 #@-node:ekr.20041124083125:completeFileName (leo.py)
-#@+node:ekr.20050304072744:compute directories...
-#@+node:ekr.20041117155521:computeGlobalConfigDir
-def computeGlobalConfigDir():
-    
-    # None of these suppresses warning about sys.leo_config_directory
-    # __pychecker__ = '--no-objattrs --no-modulo1 --no-moddefvalue'
-    
-    import leoGlobals as g
-    
-    encoding = startupEncoding()
-
-    try:
-        theDir = sys.leo_config_directory
-    except AttributeError:
-        theDir = g.os_path_join(g.app.loadDir,"..","config")
-        
-    if theDir:
-        theDir = g.os_path_abspath(theDir)
-        
-    if (
-        not theDir or
-        not g.os_path_exists(theDir,encoding) or
-        not g.os_path_isdir(theDir,encoding)
-    ):
-        theDir = None
-    
-    return theDir
-#@nonl
-#@-node:ekr.20041117155521:computeGlobalConfigDir
-#@+node:ekr.20041117151301:computeHomeDir
-def computeHomeDir():
-    
-    """Returns the user's home directory."""
-    
-    import leoGlobals as g
-
-    encoding = startupEncoding()
-    # dotDir = g.os_path_abspath('./',encoding)
-    home = os.getenv('HOME',default=None)
-
-    if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
-	    # Get the indirect reference to the true home.
-	    home = os.getenv(home[1:-1],default=None)
-
-    if home:
-        # N.B. This returns the _working_ directory if home is None!
-        # This was the source of the 4.3 .leoID.txt problems.
-        home = g.os_path_abspath(home,encoding)
-        if (
-            not g.os_path_exists(home,encoding) or
-            not g.os_path_isdir(home,encoding)
-        ):
-            home = None
-
-    # g.trace(home)
-    return home
-#@nonl
-#@-node:ekr.20041117151301:computeHomeDir
-#@+node:ekr.20031218072017.1937:computeLoadDir
-def computeLoadDir():
-    
-    """Returns the directory containing leo.py."""
-    
-    import leoGlobals as g
-
-    try:
-        import leo
-        encoding = startupEncoding()
-        path = g.os_path_abspath(leo.__file__,encoding)
-        if path:
-            loadDir = g.os_path_dirname(path,encoding)
-        else: loadDir = None
-            
-        if (
-            not loadDir or
-            not g.os_path_exists(loadDir,encoding) or
-            not g.os_path_isdir(loadDir,encoding)
-        ):
-            loadDir = os.getcwd()
-            print "Using emergency loadDir:",repr(loadDir)
-        
-        loadDir = g.os_path_abspath(loadDir,encoding)
-        # g.es("load dir: %s" % (loadDir),color="blue")
-        return loadDir
-    except:
-        print "Exception getting load directory"
-        import traceback ; traceback.print_exc()
-        return None
-#@nonl
-#@-node:ekr.20031218072017.1937:computeLoadDir
-#@-node:ekr.20050304072744:compute directories...
-#@+node:ekr.20041117151301.1:startupEncoding
-def startupEncoding ():
-    
-    import leoGlobals as g
-    import sys
-    
-    if sys.platform=="win32": # "mbcs" exists only on Windows.
-        encoding = "mbcs"
-    elif sys.platform=="dawwin":
-        encoding = "utf-8"
-    else:
-        encoding = g.app.tkEncoding
-        
-    return encoding
-#@nonl
-#@-node:ekr.20041117151301.1:startupEncoding
 #@+node:ekr.20031218072017.1624:createFrame (leo.py)
 def createFrame (fileName):
     
@@ -24435,7 +24174,7 @@ def computeHomeDir():
     
     import leoGlobals as g
 
-    encoding = startupEncoding()
+    encoding = g.startupEncoding()
     # dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=None)
 
@@ -27323,21 +27062,6 @@ much of PMW has inconsistent use of tabs and spaces in indentation in various fi
 #@nonl
 #@-node:ekr.20050127090442:Fixed indentation problems in leoTkinterFind.py
 #@+node:ekr.20050127091201:(Changed Help menu & related code to handle leoSettings.leo instead of leoConfig.leo)
-#@+node:ekr.20041219072416:<< compute directories >>
-g.app.loadDir = computeLoadDir()
-    # Depends on g.app.tkEncoding: uses utf-8 for now.
-
-g.app.homeDir = computeHomeDir()
-
-g.app.extensionsDir = g.os_path_abspath(
-    g.os_path_join(g.app.loadDir,'..','extensions'))
-
-g.app.globalConfigDir = computeGlobalConfigDir()
-
-g.app.testDir = g.os_path_abspath(
-    g.os_path_join(g.app.loadDir,'..','test'))
-#@nonl
-#@-node:ekr.20041219072416:<< compute directories >>
 #@+node:ekr.20031218072017.2943:leoConfig
 def leoConfig (self):
 
@@ -27743,7 +27467,8 @@ def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
     try:
         << scan all the xml elements >>
     except BadLeoFile, message:
-        << raise an alert >>
+        if not silent:
+            << raise an alert >>
         ok = False
 
     c.frame.tree.redraw_now(scroll=False)
@@ -31380,6 +31105,7 @@ def getBead (self,n):
     self.clearIvars()
     u.p = d["v"]
     u.undoType = d["undoType"]
+    u.kind = d['kind'] # For new undo scheme.
 
     for ivar in u.optionalIvars:
         val = d.get(ivar,None)
@@ -31406,6 +31132,7 @@ def makeBeadDict (self,keywords=None):
 
     u = self ; d = {}
     d["undoType"]=u.undoType
+    d['kind']=u.undoType # For the new undo scheme.
     d["v"]=u.p
 
     # Only enter significant entries into the dictionary.
@@ -35108,7 +34835,7 @@ for theDir in (homeDir,globalConfigDir,loadDir):
 #@nonl
 #@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
 #@-node:ekr.20031218072017.1978:app.setLeoID
-#@+node:ekr.20050304072744:compute directories...
+#@+node:ekr.20050304072744:Compute directories... (leoGlobals)
 #@+node:ekr.20041117155521:computeGlobalConfigDir
 def computeGlobalConfigDir():
     
@@ -35117,7 +34844,7 @@ def computeGlobalConfigDir():
     
     import leoGlobals as g
     
-    encoding = startupEncoding()
+    encoding = g.startupEncoding()
 
     try:
         theDir = sys.leo_config_directory
@@ -35144,7 +34871,7 @@ def computeHomeDir():
     
     import leoGlobals as g
 
-    encoding = startupEncoding()
+    encoding = g.startupEncoding()
     # dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=None)
 
@@ -35175,7 +34902,7 @@ def computeLoadDir():
 
     try:
         import leo
-        encoding = startupEncoding()
+        encoding = g.startupEncoding()
         path = g.os_path_abspath(leo.__file__,encoding)
         if path:
             loadDir = g.os_path_dirname(path,encoding)
@@ -35198,7 +34925,42 @@ def computeLoadDir():
         return None
 #@nonl
 #@-node:ekr.20031218072017.1937:computeLoadDir
-#@-node:ekr.20050304072744:compute directories...
+#@+node:ekr.20050328133444:computeStandardDirectories
+def computeStandardDirectories():
+    
+    '''Set g.app.loadDir, g.app.homeDir and g.app.globalConfigDir.'''
+    
+    g.app.loadDir = g.computeLoadDir()
+        # Depends on g.app.tkEncoding: uses utf-8 for now.
+    
+    g.app.homeDir = g.computeHomeDir()
+    
+    g.app.extensionsDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','extensions'))
+    
+    g.app.globalConfigDir = g.computeGlobalConfigDir()
+    
+    g.app.testDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','test'))
+#@nonl
+#@-node:ekr.20050328133444:computeStandardDirectories
+#@+node:ekr.20041117151301.1:startupEncoding
+def startupEncoding ():
+    
+    import leoGlobals as g
+    import sys
+    
+    if sys.platform=="win32": # "mbcs" exists only on Windows.
+        encoding = "mbcs"
+    elif sys.platform=="dawwin":
+        encoding = "utf-8"
+    else:
+        encoding = g.app.tkEncoding
+        
+    return encoding
+#@nonl
+#@-node:ekr.20041117151301.1:startupEncoding
+#@-node:ekr.20050304072744:Compute directories... (leoGlobals)
 #@-node:ekr.20050304072744.1:(Further problems specifying .leoID.txt)
 #@+node:ekr.20050308021443:(Fixed crasher in atFile read logic when mod_labels plugin not enabled!)
 #@+node:ekr.20050308021443.1:Report
@@ -37017,7 +36779,7 @@ def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
 #@-node:ekr.20050228200421:Revised scripting chapter (on web and in LeoDocs.leo) to use predefined g, c, p
 #@-node:ekr.20050225155947:Docs
 #@-node:ekr.20050225104239:4.3 a4 projects
-#@+node:ekr.20050316083031:4.3 b1 projects
+#@+node:ekr.20050316083031:4.3 a5 projects
 #@+node:ekr.20050316083031.1:Bugs...
 #@+node:ekr.20050315082746:(Made sure NameErrors are reported with tracebacks in scripts)
 #@+node:ekr.20050315082746.1:Report
@@ -37484,7 +37246,7 @@ def computeHomeDir():
     
     import leoGlobals as g
 
-    encoding = startupEncoding()
+    encoding = g.startupEncoding()
     # dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=None)
 
@@ -37598,10 +37360,1055 @@ for theDir in (homeDir,globalConfigDir,loadDir):
 #@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
 #@-node:ekr.20031218072017.1978:app.setLeoID
 #@-node:ekr.20050317153857:(Finally! fixed .leoID problem!)
+#@+node:ekr.20050328070924:(Investigated problem with LeoPluginsRef.leo)
+#@+node:ekr.20050404103202:Report
+@killcolor
+
+The problem is that newButtons must use @nosent, so any changes to newButtons must be accompanied by a change to LeoPluginsRef.py.  There is nothing more that needs to be done.
+#@nonl
+#@-node:ekr.20050404103202:Report
+#@+node:ekr.20050404103202.1:Log message
+Warning: updating changed text in @file-noref newButtons.py
+----- error reading @file: newButtons.py
+bad tnodeList index: 14, <vnode 22734128:'@file-noref newButtons.py'>
+
+#@-node:ekr.20050404103202.1:Log message
+#@+node:ekr.20050202052911.2:Documentation of tnodeLists & potential problems
+#@+node:ekr.20050225075604:The basic design
+@killcolor
+
+The essential point is that tnodeLists are a _substitute_ for gnx's. They are
+used only for @file trees, not @thin trees.
+
+Writing: When writing an @file putOpenNodeSentinel does:
+
+    at.root.v.t.tnodeList.append(p.v.t)
+
+So the tnodeList is a list of tnodes for the nodes in the order in which they
+were written. 
+
+Reading: When reading an @file tree, findChild4 does:
+
+    t = at.root.v.t.tnodeList[at.tnodeListIndex]
+    v = t.vnodeList[0] # Get any vnode joined to t.
+
+That is, findChild4 finds a vnode given the next tnode in the tnodeList.
+
+This assumes that the tnodeList (stored in the .leo file) matches the structure
+of the thin derived file, which is ok in a single-user environment only.
+#@nonl
+#@-node:ekr.20050225075604:The basic design
+#@+node:ekr.20041005105605.73:findChild4
+def findChild4 (self,headline):
+    
+    """Return the next tnode in at.root.t.tnodeList."""
+    
+    # Note: tnodeLists are used _only_ when reading @file (not @thin) nodes.
+    # tnodeLists compensate (a hack) for not having gnx's in derived files! 
+
+    at = self ; v = at.root.v
+
+    if not hasattr(v.t,"tnodeList"):
+        at.readError("no tnodeList for " + repr(v))
+        g.es("Write the @file node or use the Import Derived File command")
+        g.trace("no tnodeList for ",v)
+        return None
+        
+    if at.tnodeListIndex >= len(v.t.tnodeList):
+        at.readError("bad tnodeList index: %d, %s" % (at.tnodeListIndex,repr(v)))
+        g.trace("bad tnodeList index",at.tnodeListIndex,len(v.t.tnodeList),v)
+        return None
+        
+    t = v.t.tnodeList[at.tnodeListIndex]
+    assert(t)
+    at.tnodeListIndex += 1
+
+    # Get any vnode joined to t.
+    try:
+        v = t.vnodeList[0]
+    except:
+        at.readError("No vnodeList for tnode: %s" % repr(t))
+        g.trace(at.tnodeListIndex)
+        return None
+        
+    # Don't check the headline.  It simply causes problems.
+    t.setVisited() # Supress warning about unvisited node.
+    return t
+#@nonl
+#@-node:ekr.20041005105605.73:findChild4
+#@+node:ekr.20041005105605.144:write
+# This is the entry point to the write code.  root should be an @file vnode.
+
+def write(self,root,nosentinels=False,thinFile=False,scriptWrite=False,toString=False):
+    
+    """Write a 4.x derived file."""
+    
+    at = self ; c = at.c
+    c.endEditing() # Capture the current headline.
+    << set at.targetFileName >>
+    at.initWriteIvars(root,at.targetFileName,
+        nosentinels=nosentinels,thinFile=thinFile,
+        scriptWrite=scriptWrite,toString=toString)
+    if not at.openFileForWriting(root,at.targetFileName,toString):
+        return
+
+    try:
+        at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
+        if toString:
+            at.closeWriteFile()
+            # Major bug: failure to clear this wipes out headlines!
+            # Minor bug: sometimes this causes slight problems...
+            at.root.v.t.tnodeList = [] 
+        else:
+            at.closeWriteFile()
+            << set dirty and orphan bits on error >>
+    except:
+        if toString:
+            at.exception("exception preprocessing script")
+            at.root.v.t.tnodeList = []
+        else:
+            at.writeException() # Sets dirty and orphan bits.
+#@+node:ekr.20041005105605.145:<< set at.targetFileName >>
+if toString:
+    at.targetFileName = "<string-file>"
+elif nosentinels:
+    at.targetFileName = root.atNoSentFileNodeName()
+elif thinFile:
+    at.targetFileName = root.atThinFileNodeName()
+else:
+    at.targetFileName = root.atFileNodeName()
+#@nonl
+#@-node:ekr.20041005105605.145:<< set at.targetFileName >>
+#@+node:ekr.20041005105605.146:<< set dirty and orphan bits on error >>
+# Setting the orphan and dirty flags tells Leo to write the tree..
+
+if at.errors > 0 or at.root.isOrphan():
+    root.setOrphan()
+    root.setDirty() # Make _sure_ we try to rewrite this file.
+    os.remove(at.outputFileName) # Delete the temp file.
+    g.es("Not written: " + at.outputFileName)
+else:
+    root.clearOrphan()
+    root.clearDirty()
+    at.replaceTargetFileIfDifferent()
+#@nonl
+#@-node:ekr.20041005105605.146:<< set dirty and orphan bits on error >>
+#@-node:ekr.20041005105605.144:write
+#@+node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
+def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
+    
+    """Write @+node sentinel for p."""
+    
+    at = self
+
+    if not inAtAll and p.isAtFileNode() and p != at.root:
+        at.writeError("@file not valid in: " + p.headString())
+        return
+        
+    # g.trace(at.thinFile,p)
+        
+    s = at.nodeSentinelText(p)
+    
+    if middle:
+        at.putSentinel("@+middle:" + s)
+    else:
+        at.putSentinel("@+node:" + s)
+
+    if not at.thinFile:
+        # Append the n'th tnode to the root's tnode list.
+        # It may not exist when executing scripts.
+        try: 
+            at.root.v.t.tnodeList.append(p.v.t)
+        except AttributeError:
+            pass # Do nothing.  We are creating a script.
+#@nonl
+#@-node:ekr.20041005105605.193:putOpenNodeSentinel (sets tnodeList) 4.x
+#@-node:ekr.20050202052911.2:Documentation of tnodeLists & potential problems
+#@-node:ekr.20050328070924:(Investigated problem with LeoPluginsRef.leo)
 #@-node:ekr.20050316083031.1:Bugs...
 #@+node:ekr.20050316083031.2:Features...
+#@+node:ekr.20050328133058.1:(Created stand-alone leoGlobals.py module)
+#@+node:ekr.20050329031925:What I did
+@killcolor
+
+- Moved computeGlobalConfigDir, computeHomeDir, computeLoadDir and startupEncoding from leo.py to leoGlobals.py.
+
+- Created g.computeStandardDirectories and used it in leo.py.
+
+- Created g.createStandAloneApp using the above functions.  This function was based on the 'Standalone Operation' classed in the plugin_manager plugin.  g.createStandAloneApp doesn't actually use any of these classes because the nullGui class is basically a clumsier version of the BlackHole class.
+
+- Added a do-nothing attachLeoIcon method to nullGui class to suppress a warning.  As I said, the nullGui class is not as elegant as Paul's BlackHole class.
+
+- Added <<importLeoGlobals>> button to newButtons plugin.  This creates a node named
+  << define importLeoGlobals >> whose body text defines an importLeoGlobals function.
+
+The idea is that importing leoGlobals from a stand-alone plugin is a bit tricky.  The importLeoGlobals handles these details.  Note that we don't want to define importLeoGlobals in a node included by @others, because this function must be available to the code in the << imports >> section.  So we use a named section and reference it in before referencing the << imports >> section.  See the plugin_manager plugin for an example.
+
+- Changed the plugin_manager plugin as follows:
+    - Used the newButtons plugin to add an << define importLeoGlobals >> section.
+    - Simplified the import logic using importLeoGlobals function.
+    - Commented out the Standalone Operation classes.
+    - Called g.createStandAloneApp in the '__name__ == "__main__"' code.
+
+The new code passes all unit tests.  It's not too surprising that g.createStandAloneApp works in the plugin_manager plugin because all the new code was based on the old plugin_manager code.  Still, I believe the new code will be generally useful.
+#@nonl
+#@-node:ekr.20050329031925:What I did
+#@+node:ekr.20031218072017.1934:run & allies
+def run(fileName=None,*args,**keywords):
+    
+    """Initialize and run Leo"""
+    
+    if not isValidPython(): return
+    << import leoGlobals and leoApp >>
+    g.computeStandardDirectories()
+    script = getBatchScript() # Do early so we can compute verbose next.
+    verbose = script is None
+    g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
+    << import leoNodes and leoConfig >>
+    g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
+    g.app.config = leoConfig.configClass()
+    fileName = completeFileName(fileName)
+    reportDirectories(verbose)
+    g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.
+    g.app.setEncoding()
+    if script:
+        createNullGuiWithScript(script)
+        fileName = None
+    # Load plugins. Plugins may create g.app.gui.
+    g.doHook("start1")
+    if g.app.killed: return # Support for g.app.forceShutdown.
+    # Create the default gui if needed.
+    if g.app.gui == None:
+        g.app.createTkGui() # Creates global windows.
+    # Initialize tracing and statistics.
+    g.init_sherlock(args)
+    g.clear_stats()
+    << start psycho >>
+    # New in 4.3: clear g.app.initing _before_ creating the frame.
+    g.app.initing = False # "idle" hooks may now call g.app.forceShutdown.
+    # Create the main frame.  Show it and all queued messages.
+    c,frame = createFrame(fileName)
+    if not frame: return
+    if g.app.disableSave:
+        g.es("disabling save commands",color="red")
+    g.app.writeWaitingLog()
+    p = c.currentPosition()
+    g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
+    g.enableIdleTimeHook()
+    frame.tree.redraw()
+    frame.body.setFocus()
+    g.app.gui.runMainLoop()
+#@nonl
+#@+node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+# Import leoGlobals, but do NOT set g.
+try:
+    import leoGlobals
+except ImportError:
+    print "Error importing leoGlobals.py"
+
+# Create the application object.
+try:
+    import leoApp
+    leoGlobals.app = leoApp.LeoApp()
+except ImportError:
+    print "Error importing leoApp.py"
+    
+# NOW we can set g.
+g = leoGlobals
+assert(g.app)
+#@nonl
+#@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
+#@+node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+try:
+    import leoNodes
+except ImportError:
+    print "Error importing leoNodes.py"
+    import traceback ; traceback.print_exc()
+try:
+    import leoConfig
+except ImportError:
+    print "Error importing leoConfig.py"
+    import traceback ; traceback.print_exc()
+#@nonl
+#@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
+#@+node:ekr.20040411081633:<< start psycho >>
+if g.app and g.app.use_psyco:
+    try:
+        import psyco
+        if 0:
+            theFile = r"c:\prog\test\psycoLog.txt"
+            g.es("psyco now logging to",theFile,color="blue")
+            psyco.log(theFile)
+            psyco.profile()
+        psyco.full()
+        g.es("psyco now running",color="blue")
+    except ImportError:
+        pass
+    except:
+        print "unexpected exception importing psyco"
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040411081633:<< start psycho >>
+#@+node:ekr.20031218072017.1936:isValidPython
+def isValidPython():
+
+    message = """\
+Leo requires Python 2.2.1 or higher.
+You may download Python from http://python.org/download/
+"""
+    try:
+        # This will fail if True/False are not defined.
+        import leoGlobals as g
+    except ImportError:
+        print "isValidPython: can not import leoGlobals"
+        return 0
+    except:
+        print "isValidPytyhon: unexpected exception: import leoGlobals.py as g"
+        import traceback ; traceback.print_exc()
+        return 0
+    try:
+        ok = g.CheckVersion(sys.version, "2.2.1")
+        if not ok:
+            print message
+            g.app.gui.runAskOkDialog(None,"Python version error",message=message,text="Exit")
+        return ok
+    except:
+        print "isValidPython: unexpected exception: g.CheckVersion"
+        import traceback ; traceback.print_exc()
+        return 0
+#@nonl
+#@-node:ekr.20031218072017.1936:isValidPython
+#@+node:ekr.20041124083125:completeFileName (leo.py)
+def completeFileName (fileName):
+    
+    import leoGlobals as g
+    
+    if not fileName:
+        return None
+        
+    # This does not depend on config settings.
+    fileName = g.os_path_join(os.getcwd(),fileName)
+
+    head,ext = g.os_path_splitext(fileName)
+    if not ext:
+        fileName = fileName + ".leo"
+
+    return fileName
+#@nonl
+#@-node:ekr.20041124083125:completeFileName (leo.py)
+#@+node:ekr.20031218072017.1624:createFrame (leo.py)
+def createFrame (fileName):
+    
+    """Create a LeoFrame during Leo's startup process."""
+    
+    import leoGlobals as g
+
+    # Try to create a frame for the file.
+    if fileName:
+        if g.os_path_exists(fileName):
+            ok, frame = g.openWithFileName(fileName,None)
+            if ok:
+                return frame.c,frame
+    
+    # Create a _new_ frame & indicate it is the startup window.
+    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
+    frame.setInitialWindowGeometry()
+    frame.startupWindow = True
+    # 3/2/05: Call the 'new' hook for compatibility with plugins.
+    g.doHook("new",old_c=None,c=c,new_c=c)
+
+    # Report the failure to open the file.
+    if fileName:
+        g.es("File not found: " + fileName)
+
+    return c,frame
+#@-node:ekr.20031218072017.1624:createFrame (leo.py)
+#@+node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+def createNullGuiWithScript (script):
+    
+    import leoGlobals as g
+    import leoGui
+    
+    g.app.batchMode = True
+    g.app.gui = leoGui.nullGui("nullGui")
+    if not g.app.root:
+        g.app.root = g.app.gui.createRootWindow()
+    g.app.gui.finishCreate()
+    g.app.gui.setScript(script)
+#@-node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+#@+node:ekr.20031218072017.1939:getBatchScript
+def getBatchScript ():
+    
+    import leoGlobals as g
+    
+    name = None ; i = 1 # Skip the dummy first arg.
+    while i + 1 < len(sys.argv):
+        arg = sys.argv[i].strip().lower()
+        if arg in ("--script","-script"):
+            name = sys.argv[i+1].strip() ; break
+        i += 1
+
+    if not name:
+        return None
+    name = g.os_path_join(g.app.loadDir,name)
+    try:
+        f = None
+        try:
+            f = open(name,'r')
+            script = f.read()
+            # g.trace("script",script)
+        except IOError:
+            g.es("can not open script file: " + name, color="red")
+            script = None
+    finally:
+        if f: f.close()
+        return script
+#@nonl
+#@-node:ekr.20031218072017.1939:getBatchScript
+#@+node:ekr.20041130093254:reportDirectories
+def reportDirectories(verbose):
+    
+    import leoGlobals as g
+   
+    if verbose:
+        for kind,theDir in (
+            ("global config",g.app.globalConfigDir),
+            ("home",g.app.homeDir),
+        ):
+            g.es("%s dir: %s" % (kind,theDir),color="blue")
+#@nonl
+#@-node:ekr.20041130093254:reportDirectories
+#@-node:ekr.20031218072017.1934:run & allies
+#@+node:ekr.20050328133058:g.createStandAloneApp
+def createStandAloneApp(pluginName=''):
+    
+    '''Create a version of the g.app object for 'stand-alone' plugins.'''
+    
+    if not g.app:
+        Tk = g.importExtension('Tkinter',pluginName=pluginName,verbose=True)
+        if Tk:
+            import leoApp, leoGui
+            g.app = leoApp.LeoApp()
+            g.app.root = Tk.Tk()
+            g.app.gui = leoGui.nullGui('<stand-alone app gui>')
+            g.computeStandardDirectories()
+    return g.app
+#@nonl
+#@-node:ekr.20050328133058:g.createStandAloneApp
+#@+node:ekr.20050304072744:Compute directories... (leoGlobals)
+#@+node:ekr.20041117155521:computeGlobalConfigDir
+def computeGlobalConfigDir():
+    
+    # None of these suppresses warning about sys.leo_config_directory
+    # __pychecker__ = '--no-objattrs --no-modulo1 --no-moddefvalue'
+    
+    import leoGlobals as g
+    
+    encoding = g.startupEncoding()
+
+    try:
+        theDir = sys.leo_config_directory
+    except AttributeError:
+        theDir = g.os_path_join(g.app.loadDir,"..","config")
+        
+    if theDir:
+        theDir = g.os_path_abspath(theDir)
+        
+    if (
+        not theDir or
+        not g.os_path_exists(theDir,encoding) or
+        not g.os_path_isdir(theDir,encoding)
+    ):
+        theDir = None
+    
+    return theDir
+#@nonl
+#@-node:ekr.20041117155521:computeGlobalConfigDir
+#@+node:ekr.20041117151301:computeHomeDir
+def computeHomeDir():
+    
+    """Returns the user's home directory."""
+    
+    import leoGlobals as g
+
+    encoding = g.startupEncoding()
+    # dotDir = g.os_path_abspath('./',encoding)
+    home = os.getenv('HOME',default=None)
+
+    if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
+	    # Get the indirect reference to the true home.
+	    home = os.getenv(home[1:-1],default=None)
+
+    if home:
+        # N.B. This returns the _working_ directory if home is None!
+        # This was the source of the 4.3 .leoID.txt problems.
+        home = g.os_path_abspath(home,encoding)
+        if (
+            not g.os_path_exists(home,encoding) or
+            not g.os_path_isdir(home,encoding)
+        ):
+            home = None
+
+    # g.trace(home)
+    return home
+#@nonl
+#@-node:ekr.20041117151301:computeHomeDir
+#@+node:ekr.20031218072017.1937:computeLoadDir
+def computeLoadDir():
+    
+    """Returns the directory containing leo.py."""
+    
+    import leoGlobals as g
+
+    try:
+        import leo
+        encoding = g.startupEncoding()
+        path = g.os_path_abspath(leo.__file__,encoding)
+        if path:
+            loadDir = g.os_path_dirname(path,encoding)
+        else: loadDir = None
+            
+        if (
+            not loadDir or
+            not g.os_path_exists(loadDir,encoding) or
+            not g.os_path_isdir(loadDir,encoding)
+        ):
+            loadDir = os.getcwd()
+            print "Using emergency loadDir:",repr(loadDir)
+        
+        loadDir = g.os_path_abspath(loadDir,encoding)
+        # g.es("load dir: %s" % (loadDir),color="blue")
+        return loadDir
+    except:
+        print "Exception getting load directory"
+        import traceback ; traceback.print_exc()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.1937:computeLoadDir
+#@+node:ekr.20050328133444:computeStandardDirectories
+def computeStandardDirectories():
+    
+    '''Set g.app.loadDir, g.app.homeDir and g.app.globalConfigDir.'''
+    
+    g.app.loadDir = g.computeLoadDir()
+        # Depends on g.app.tkEncoding: uses utf-8 for now.
+    
+    g.app.homeDir = g.computeHomeDir()
+    
+    g.app.extensionsDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','extensions'))
+    
+    g.app.globalConfigDir = g.computeGlobalConfigDir()
+    
+    g.app.testDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','test'))
+#@nonl
+#@-node:ekr.20050328133444:computeStandardDirectories
+#@+node:ekr.20041117151301.1:startupEncoding
+def startupEncoding ():
+    
+    import leoGlobals as g
+    import sys
+    
+    if sys.platform=="win32": # "mbcs" exists only on Windows.
+        encoding = "mbcs"
+    elif sys.platform=="dawwin":
+        encoding = "utf-8"
+    else:
+        encoding = g.app.tkEncoding
+        
+    return encoding
+#@nonl
+#@-node:ekr.20041117151301.1:startupEncoding
+#@-node:ekr.20050304072744:Compute directories... (leoGlobals)
+#@-node:ekr.20050328133058.1:(Created stand-alone leoGlobals.py module)
+#@+node:ekr.20050329055521:(Ignore problems opening settings file for chapters plugin)
+#@+node:ekr.20050329061015:What I did
+@killcolor
+
+- config.openSettingsFile returns None if there is a read error.
+- leoFileCommand.open gives no BadLeoFile message if silent is True.
+#@nonl
+#@-node:ekr.20050329061015:What I did
+#@+node:ekr.20041117093246:Scanning @settings
+#@+node:ekr.20041117085625:openSettingsFile
+def openSettingsFile (self,path):
+    
+    try:
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
+        theFile = open(path,'rb')
+    except IOError:
+        g.es("can not open: " + path, color="blue")
+        return None
+        
+    # Similar to g.openWithFileName except it uses a null gui.
+    # Changing g.app.gui here is a major hack.
+    oldGui = g.app.gui
+    g.app.gui = leoGui.nullGui("nullGui")
+    c,frame = g.app.gui.newLeoCommanderAndFrame(path,updateRecentFiles=False)
+    frame.log.enable(False)
+    g.app.setLog(frame.log,"openWithFileName")
+    g.app.lockLog()
+    ok = frame.c.fileCommands.open(
+        theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
+    g.app.unlockLog()
+    frame.openDirectory = g.os_path_dirname(path)
+    g.app.gui = oldGui
+    return ok and c
+#@nonl
+#@-node:ekr.20041117085625:openSettingsFile
+#@+node:ekr.20041120064303:config.readSettingsFiles
+def readSettingsFiles (self,fileName,verbose=True):
+    
+    munge = self.munge ; seen = []
+    
+    # Init settings from leoSettings.leo files.
+    for path,setOptionsFlag in (
+        (self.globalConfigFile,False),
+        (self.homeFile,False),
+        (fileName,True),
+    ):
+        if path and path.lower() not in seen:
+            seen.append(path.lower())
+            if verbose:
+                s = 'reading settings in %s' % path
+                print s ; g.es(s)
+            c = self.openSettingsFile(path)
+            if c:
+                d = self.readSettings(c)
+                # g.trace(c)
+                if d:
+                    theHash = c.hash()
+                    d['_hash'] = theHash
+                    # g.trace('*****',hash)
+                    if setOptionsFlag:
+                        self.localOptionsDict[theHash] = d
+                        << update recent files from d >>
+                    else:
+                        self.localOptionsList.insert(0,d)
+                else:
+                    g.es("No @settings tree in %s" % (g.shortFileName(path)),color="red")
+                g.app.destroyWindow(c.frame)
+
+    self.inited = True
+    self.setIvarsFromSettings(None)
+#@nonl
+#@+node:ekr.20041201081440:<< update recent files from d >>
+for key in d.keys():
+    if munge(key) == "recentfiles":
+        # Entries were created by parserBaseClass.set.
+        bunch = d.get(key)
+        files = bunch.val
+        files = [theFile.strip() for theFile in files]
+        if 0:
+            print "config.readSettingsFiles.  recent files..."
+            for theFile in files:
+                print theFile
+        self.appendToRecentFiles(files)
+#@nonl
+#@-node:ekr.20041201081440:<< update recent files from d >>
+#@-node:ekr.20041120064303:config.readSettingsFiles
+#@+node:ekr.20041117083857.1:readSettings
+# Called to read all leoSettings.leo files.
+# Also called when opening an .leo file to read @settings tree.
+
+def readSettings (self,c):
+    
+    """Read settings from a file that may contain an @settings tree."""
+    
+    # g.trace(c.mFileName)
+    
+    # Create a settings dict for c for set()
+    if c and self.localOptionsDict.get(c.hash()) is None:
+        self.localOptionsDict[c.hash()] = {}
+
+    parser = settingsTreeParser(c)
+    d = parser.traverse()
+
+    return d
+#@nonl
+#@-node:ekr.20041117083857.1:readSettings
+#@-node:ekr.20041117093246:Scanning @settings
+#@-node:ekr.20050329055521:(Ignore problems opening settings file for chapters plugin)
 #@-node:ekr.20050316083031.2:Features...
-#@-node:ekr.20050316083031:4.3 b1 projects
+#@+node:ekr.20050212040628:(Improved write logic)
+Or better yet, use CStringIO?
+#@nonl
+#@+node:ekr.20050405111218:What I did
+@killcolor
+
+- Simplified write_Leo_file using new leoFileCommand.deleteFileWithMessage and g.utils_rename.
+
+- Eliminated outputList var.
+    - The code that writes to a clipboard sets self.outputFile to g.fileLikeObject.
+
+- Speeded up put routine: it always writes to self.outputFile.
+
+- self.outputFile is now a cStringIo object.  However, the heart of the put routine is:
+
+    s = g.toEncodedString(s,self.leo_file_encoding,reportErrors=True)
+    self.outputFile.write(s)
+
+and it appears that the call to g.toEncodedString is the limiting factor.
+#@nonl
+#@-node:ekr.20050405111218:What I did
+#@+node:ekr.20050405105804:From leoGlobals
+#@+node:ekr.20040331083824.1:g.fileLikeObject
+# Note: we could use StringIo for this.
+
+class fileLikeObject:
+
+    """Define a file-like object for redirecting writes to a string.
+    
+    The caller is responsible for handling newlines correctly."""
+    
+    @others
+#@nonl
+#@+node:ekr.20050404151753: ctor
+def __init__(self,fromString=None):
+
+    # New in 4.2.1: allow the file to be inited from string s.
+    if fromString:
+        self.list = g.splitLines(fromString) # Must preserve newlines!
+    else:
+        self.list = []
+
+    self.ptr = 0
+    
+# In CStringIO the buffer is read-only if the initial value (fromString) is non-empty.
+#@nonl
+#@-node:ekr.20050404151753: ctor
+#@+node:ekr.20050404151753.1:clear
+def clear (self):
+    
+    self.list = []
+
+
+#@-node:ekr.20050404151753.1:clear
+#@+node:ekr.20050404151753.2:close
+def close (self):
+    
+    pass
+    
+    # The StringIo version free's the memory buffer.
+#@nonl
+#@-node:ekr.20050404151753.2:close
+#@+node:ekr.20050404151753.3:flush
+def flush (self):
+    
+    pass
+#@nonl
+#@-node:ekr.20050404151753.3:flush
+#@+node:ekr.20050404151753.4:get & getvalue
+def get (self):
+
+    return ''.join(self.list)
+    
+getvalue = get # for compatibility with StringIo
+#@-node:ekr.20050404151753.4:get & getvalue
+#@+node:ekr.20050404151753.5:readline
+def readline(self): # New for read-from-string (readOpenFile).
+
+    if self.ptr < len(self.list):
+        line = self.list[self.ptr]
+        # g.trace(repr(line))
+        self.ptr += 1
+        return line
+    else:
+        return ''
+#@nonl
+#@-node:ekr.20050404151753.5:readline
+#@+node:ekr.20050404151753.6:write
+def write (self,s):
+    
+    if s:
+        self.list.append(s)
+#@-node:ekr.20050404151753.6:write
+#@-node:ekr.20040331083824.1:g.fileLikeObject
+#@+node:ekr.20031218072017.1263:g.utils_rename & test
+<< about os.rename >>
+
+def utils_rename(src,dst,mode=None,verbose=True):
+
+    '''Platform independent rename.'''
+    
+    head,tail=g.os_path_split(dst)
+    if head and len(head) > 0:
+        g.makeAllNonExistentDirectories(head)
+        
+    if g.os_path_exists(dst):
+        if not g.utils_remove(dst):
+            return False
+        
+    try:
+        if 1: # Use rename in all cases.
+            os.rename(src,dst)
+            if mode:
+                g.utils_chmod(dst,mode,verbose)
+            return True
+        else:
+            # This isn't a great solution: distutils.file_util may not exist.
+            if sys.platform=="win32":
+                os.rename(src,dst)
+            else:
+                from distutils.file_util import move_file
+                move_file(src,dst)
+            if mode:
+                g.utils_chmod(dst,mode,verbose)
+            return True
+
+    except Exception:
+        if verbose:
+            g.es('Exception renaming %s to %s' % (src,dst),color='red')
+            g.es_exception(full=False)
+        return False
+#@nonl
+#@+node:ekr.20050104123726.1:<< about os.rename >>
+@ Here is the Python 2.4 documentation for rename (same as Python 2.3)
+
+Rename the file or directory src to dst.  If dst is a directory, OSError will be raised.
+
+On Unix, if dst exists and is a file, it will be removed silently if the user
+has permission. The operation may fail on some Unix flavors if src and dst are
+on different filesystems. If successful, the renaming will be an atomic
+operation (this is a POSIX requirement).
+
+On Windows, if dst already exists, OSError will be raised even if it is a file;
+there may be no way to implement an atomic rename when dst names an existing
+file.
+#@nonl
+#@-node:ekr.20050104123726.1:<< about os.rename >>
+#@+node:ekr.20050107085710.1:test_g_utils_rename
+def test_g_utils_rename(**keys):
+
+    __pychecker__ = '--no-reimport '
+    import os
+    exists = g.os_path_exists
+    
+    path = g.os_path_join(g.app.testDir,'xyzzy')
+    if exists(path):
+        os.remove(path)
+        
+    assert not exists(path)
+    assert not g.utils_remove(path,verbose=False)
+    
+    f = file(path,'w')
+    f.write('test')
+    f.close()
+    
+    assert exists(path)
+    assert g.utils_remove(path,verbose=True)
+    assert not exists(path)
+#@nonl
+#@-node:ekr.20050107085710.1:test_g_utils_rename
+#@-node:ekr.20031218072017.1263:g.utils_rename & test
+#@+node:ekr.20050208093800:toEncodedString
+def toEncodedString (s,encoding,reportErrors=False):
+
+    if type(s) == type(u""):
+        try:
+            s = s.encode(encoding,"strict")
+        except UnicodeError:
+            if reportErrors:
+                g.reportBadChars(s,encoding)
+            s = s.encode(encoding,"replace")
+    return s
+#@nonl
+#@-node:ekr.20050208093800:toEncodedString
+#@-node:ekr.20050405105804:From leoGlobals
+#@+node:ekr.20050404152720:From leoFileCommands
+#@+node:ekr.20031218072017.3046:write_Leo_file
+def write_Leo_file(self,fileName,outlineOnlyFlag):
+
+    c = self.c
+    self.assignFileIndices()
+    if not outlineOnlyFlag:
+        << write all @file nodes >>
+    << return if the .leo file is read-only >>
+    try:
+        theActualFile = None
+        << create backup file >>
+        self.mFileName = fileName
+        self.outputFile = cStringIO.StringIO() # or g.fileLikeObject()
+        theActualFile = open(fileName, 'wb')
+        << put the .leo file >>
+        theActualFile.write(self.outputFile.getvalue())
+        theActualFile.close()
+        self.outputFile = None
+        << delete backup file >>
+        return True
+    except Exception:
+        g.es("exception writing: " + fileName)
+        g.es_exception(full=False)
+        if theActualFile: theActualFile.close()
+        self.outputFile = None
+        << delete fileName >>
+        << rename backupName to fileName >>
+        return False
+
+write_LEO_file = write_Leo_file # For compatibility with old plugins.
+#@nonl
+#@+node:ekr.20040324080359:<< write all @file nodes >>
+try:
+    # Write all @file nodes and set orphan bits.
+    c.atFileCommands.writeAll()
+except Exception:
+    g.es_error("exception writing derived files")
+    g.es_exception()
+    return False
+#@nonl
+#@-node:ekr.20040324080359:<< write all @file nodes >>
+#@+node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+# self.read_only is not valid for Save As and Save To commands.
+
+if g.os_path_exists(fileName):
+    try:
+        if not os.access(fileName,os.W_OK):
+            g.es("can not create: read only: " + fileName,color="red")
+            return False
+    except:
+        pass # os.access() may not exist on all platforms.
+#@nonl
+#@-node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+#@+node:ekr.20031218072017.3047:<< create backup file >>
+# rename fileName to fileName.bak if fileName exists.
+if g.os_path_exists(fileName):
+    backupName = g.os_path_join(g.app.loadDir,fileName)
+    backupName = fileName + ".bak"
+    if g.os_path_exists(backupName):
+        g.utils_remove(backupName)
+    ok = g.utils_rename(fileName,backupName)
+    if not ok:
+        if self.read_only:
+            g.es("read only",color="red")
+        return False
+else:
+    backupName = None
+#@nonl
+#@-node:ekr.20031218072017.3047:<< create backup file >>
+#@+node:ekr.20040324080819.1:<< put the .leo file >>
+self.putProlog()
+self.putHeader()
+self.putGlobals()
+self.putPrefs()
+self.putFindSettings()
+#start = g.getTime()
+self.putVnodes()
+#start = g.printDiffTime("vnodes ",start)
+self.putTnodes()
+#start = g.printDiffTime("tnodes ",start)
+self.putPostlog()
+#@nonl
+#@-node:ekr.20040324080819.1:<< put the .leo file >>
+#@+node:ekr.20050405103712:<< delete fileName >>
+if fileName and g.os_path_exists(fileName):
+    self.deleteFileWithMessage(fileName,'')
+#@-node:ekr.20050405103712:<< delete fileName >>
+#@+node:ekr.20050405103712.1:<< rename backupName to fileName >>
+if backupName:
+    g.es("restoring " + fileName + " from " + backupName)
+    g.utils_rename(backupName,fileName)
+#@nonl
+#@-node:ekr.20050405103712.1:<< rename backupName to fileName >>
+#@+node:ekr.20031218072017.3048:<< delete backup file >>
+if backupName and g.os_path_exists(backupName):
+
+    self.deleteFileWithMessage(backupName,'backup')
+#@nonl
+#@-node:ekr.20031218072017.3048:<< delete backup file >>
+#@-node:ekr.20031218072017.3046:write_Leo_file
+#@+node:ekr.20031218072017.1470:put (basic)(leoFileCommands)
+def put (self,s):
+    '''
+    Put string s to self.outputFile.
+    All output eventually comes here.
+    '''
+    # Improved code: self.outputFile (a cStringIO object) always exists.
+    if s:
+        s = g.toEncodedString(s,self.leo_file_encoding,reportErrors=True)
+        self.outputFile.write(s)
+
+def put_dquote (self):
+    self.put('"')
+        
+def put_dquoted_bool (self,b):
+    if b: self.put('"1"')
+    else: self.put('"0"')
+        
+def put_flag (self,a,b):
+    if a:
+        self.put(" ") ; self.put(b) ; self.put('="1"')
+        
+def put_in_dquotes (self,a):
+    self.put('"')
+    if a: self.put(a) # will always be True if we use backquotes.
+    else: self.put('0')
+    self.put('"')
+
+def put_nl (self):
+    self.put("\n")
+    
+def put_tab (self):
+    self.put("\t")
+    
+def put_tabs (self,n):
+    while n > 0:
+        self.put("\t")
+        n -= 1
+#@nonl
+#@-node:ekr.20031218072017.1470:put (basic)(leoFileCommands)
+#@+node:ekr.20031218072017.1573:putLeoOutline (to clipboard)
+# Writes a Leo outline to s in a format suitable for pasting to the clipboard.
+
+def putLeoOutline (self):
+
+    self.outputFile = g.fileLikeObject()
+    self.usingClipboard = True
+    self.assignFileIndices() # 6/11/03: Must do this for 3.x code.
+    self.putProlog()
+    self.putClipboardHeader()
+    self.putVnodes()
+    self.putTnodes()
+    self.putPostlog()
+    s = self.outputFile.getvalue()
+    self.outputFile = None
+    self.usingClipboard = False
+    return s
+#@nonl
+#@-node:ekr.20031218072017.1573:putLeoOutline (to clipboard)
+#@+node:ekr.20050404190914.2:deleteFileWithMessage
+def deleteFileWithMessage(self,fileName,kind):
+
+    try:
+        os.remove(fileName)
+
+    except Exception:
+        if self.read_only:
+            g.es("read only",color="red")
+        g.es("exception deleting backup file:" + fileName)
+        g.es_exception(full=False)
+        return False
+#@nonl
+#@+node:ekr.20050404212949:test_atFile_deleteFileWithMessage
+def test_atFile_deleteFileWithMessage(self):
+    
+    g.trace()
+    return
+    
+    fc=c.fileCommands # Self is a dummy argument.
+    fc.deleteFileWithMessage('xyzzy','test')
+    
+if 0: # one-time test of es statements.
+    fileName = 'fileName' ; kind = 'kind'
+    g.es("read only",color="red")
+    g.es("exception deleting %s file: %s" % (fileName,kind))
+    g.es("exception deleting backup file:" + fileName)
+#@nonl
+#@-node:ekr.20050404212949:test_atFile_deleteFileWithMessage
+#@-node:ekr.20050404190914.2:deleteFileWithMessage
+#@-node:ekr.20050404152720:From leoFileCommands
+#@-node:ekr.20050212040628:(Improved write logic)
+#@-node:ekr.20050316083031:4.3 a5 projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt
