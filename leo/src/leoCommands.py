@@ -679,6 +679,7 @@ class baseCommands:
         c.recentFiles = []
         f.menu.createRecentFilesMenuItems()
         c.updateRecentFiles(c.mFileName)
+        c.config.setRecentFiles(c.recentFiles)
     #@nonl
     #@-node:ekr.20031218072017.2080:clearRecentFiles
     #@+node:ekr.20031218072017.2081:openRecentFile
@@ -725,15 +726,16 @@ class baseCommands:
         
         # Update the recent files list in all windows.
         if fileName:
-            absFileName = g.os_path_abspath(fileName)
+            compareFileName = g.os_path_normpath(g.os_path_abspath(fileName))
             # g.trace(fileName)
             for frame in g.app.windowList:
                 c = frame.c
                 # Remove all versions of the file name.
                 for name in c.recentFiles:
-                    if absFileName == g.os_path_abspath(name):
+                    if compareFileName == g.os_path_normpath(g.os_path_abspath(name)):
                         c.recentFiles.remove(name)
                 c.recentFiles.insert(0,fileName)
+                g.trace(fileName)
                 # Recreate the Recent Files menu.
                 frame.menu.createRecentFilesMenuItems()
         else:
@@ -5611,17 +5613,16 @@ class configSettings:
         
         # Do nothing if there is no @settings tree or no @recent-files node.
         p = g.app.config.findSettingsPosition(c,"@recent-files")
-        if p:
-            pass
-            # g.trace("updating @recent-files for ",c.mFileName)
-        else:
+        if not p:
             # g.trace("no @recent-files node for ",c.mFileName)
             return
+    
+        # g.trace("updating @recent-files for ",c.mFileName)
     
         # Update the @recent-files entry, leaving c's changed status untouched.
         changed = c.isChanged()
         body = '\n'.join(files)
-        p.setBodyStringOrPane (body,encoding=g.app.tkEncoding)
+        p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
         c.setChanged(changed)
     #@nonl
     #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
