@@ -1893,7 +1893,7 @@ class baseCommands:
 		c.beginUpdate()
 		if 1: # update range...
 			c.createLastChildNode(v,headline,newBody)
-			g.trace(v)
+			# g.trace(v)
 			undoType = None # Set undo params later.
 			c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=false)
 			newText = body.getAllText()
