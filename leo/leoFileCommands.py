@@ -5,9 +5,24 @@
 
 from leoGlobals import *
 from leoUtils import *
-
 import leoDialog,leoNodes
 import os,os.path,time,traceback
+
+
+#@+at
+#  The list of language names that are written differently from the names in 
+# language_delims_dict in leoGlobals.py.  This is needed for compatibility 
+# with the borland version of Leo.
+# 
+# We convert from names in xml_language_names to names in language_delims_dict 
+# by converting the name to lowercase and by removing slashes.
+
+#@-at
+#@@c
+
+xml_language_names = (
+	"CWEB","C","HTML","Java","LaTeX",
+	"Pascal","PerlPod","Perl","Plain","Python","tcl/tk")
 
 class BadLeoFile:
 	def __init__(self, message):
@@ -224,8 +239,20 @@ class fileCommands:
 	def matchTag (self,tag):
 		self.skipWsAndNl() # guarantees at least one more character.
 		i = self.fileIndex
-		# if string.find(self.fileBuffer,tag,i,i+len(tag)) == i:
 		if tag == self.fileBuffer[i:i+len(tag)]:
+			self.fileIndex += len(tag)
+			return true
+		else:
+			return false
+	
+	def matchTagWordIgnoringCase (self,tag):
+		self.skipWsAndNl() # guarantees at least one more character.
+		i = self.fileIndex
+		tag = string.lower(tag)
+		j = skip_c_id(self.fileBuffer,i)
+		word = self.fileBuffer[i:j]
+		word = string.lower(word)
+		if tag == word:
 			self.fileIndex += len(tag)
 			return true
 		else:
@@ -552,41 +579,22 @@ class fileCommands:
 				self.getDquote()
 				
 				#@<< check for syntax coloring prefs >>
-				#@+node:1::<< check for syntax coloring prefs >>
+				#@+node:1::<< check for syntax coloring prefs >> (getPrefs)
 				#@+body
 				# Must match longer tags before short prefixes.
-				language = c_language # default
 				
-				if self.matchTag("CWEB"):
-					language = cweb_language ; self.getDquote();
-				elif self.matchTag("C"):
-					language = c_language ; self.getDquote()
-				elif self.matchTag("HTML"):
-					language = html_language ; self.getDquote()
-				elif self.matchTag("Java"):
-					language = java_language ; self.getDquote()
-				elif self.matchTag("LaTeX"):
-					language = latex_language ; self.getDquote()
-				elif self.matchTag("Pascal"):
-					language = pascal_language ; self.getDquote()
-				elif self.matchTag("PerlPod"):
-					language = perlpod_language ; self.getDquote()
-				elif self.matchTag("Perl"):
-					language = perl_language ; self.getDquote()
-				elif self.matchTag("Plain"):
-					language = plain_text_language ; self.getDquote()
-				elif self.matchTag("Python"):
-					language = python_language ; self.getDquote()
-				elif self.matchTag("tcl/tk"):
-					language = tcltk_language ; self.getDquote()
-				elif self.matchTag("php"): # 08-SEP-2002 DTHEIN
-					language = php_language ; self.getDquote()
-					
-				# print(`language`)
+				language = "c" # default
+				
+				for name in language_delims_dict.keys():
+					if self.matchTagWordIgnoringCase(name):
+						s = string.lower(name)
+						language = string.replace(name,"/","")
+						self.getDquote()
+						break
 				
 				c.target_language = language
 				#@-body
-				#@-node:1::<< check for syntax coloring prefs >>
+				#@-node:1::<< check for syntax coloring prefs >> (getPrefs)
 
 			elif self.matchTag("use_header_flag="):
 				self.getDquote() ; c.use_header_flag = self.getBool() ; self.getDquote()
@@ -1232,14 +1240,14 @@ class fileCommands:
 		
 		
 		#@<< put prefs that may exist in leoConfig.txt >>
-		#@+node:1::<< put prefs that may exist in leoConfig.txt >>
+		#@+node:1::<< put prefs that may exist in leoConfig.txt >> (putPrefs)
 		#@+body
-		dict = config.languageNameDict
-		
-		if c.target_language and dict.has_key(c.target_language):
-			language = dict[c.target_language]
-		else:
-			language = "Plain"
+		language = c.target_language
+		for name in xml_language_names:
+			s = string.lower(name)
+			s = string.replace(s,"/","")
+			if s == language:
+				language = name ; break
 		
 		if config.configsExist and not config.read_only: # 8/6/02
 			pass # config.update has already been called.
@@ -1250,7 +1258,7 @@ class fileCommands:
 			self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
 			self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
 			self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
-			self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
+			self.put(" defaultTargetLanguage=") ; self.put(language)
 		
 		self.put(">") ; self.put_nl()
 		# New in version 0.16
@@ -1269,7 +1277,7 @@ class fileCommands:
 		#@-body
 		#@-node:1::<< put default directory >>
 		#@-body
-		#@-node:1::<< put prefs that may exist in leoConfig.txt >>
+		#@-node:1::<< put prefs that may exist in leoConfig.txt >> (putPrefs)
 
 		
 		self.put("</preferences>") ; self.put_nl()

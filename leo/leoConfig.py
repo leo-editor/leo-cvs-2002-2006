@@ -308,22 +308,8 @@ class config:
 		self.configFileName = os.path.join(self.configDir,"leoConfig.txt")
 		
 		#@<< initialize constant ivars >>
-		#@+node:1::<< initialize constant ivars >>
+		#@+node:1::<< initialize constant ivars >> (leoConfig)
 		#@+body
-		# Language names.
-		self.languageNameDict = {
-			c_language: "C",
-			cweb_language: "CWEB",
-			html_language: "HTML",
-			java_language: "Java",
-			pascal_language: "Pascal",
-			perl_language: "Perl",
-			perlpod_language: "PerlPod",
-			plain_text_language: "Plain",
-			python_language: "Python",
-			tcltk_language: "tcl/tk",
-			php_language: "php" } # 08-SEP-2002 DTHEIN
-		
 		# Names of sections.
 		self.configSection = "config options"
 		self.compareSection = "compare options"
@@ -333,8 +319,9 @@ class config:
 		self.recentFilesSection = "recent files"
 		self.colorsSection = "syntax coloring options"
 		self.windowSection = "window options"
+		
 		#@-body
-		#@-node:1::<< initialize constant ivars >>
+		#@-node:1::<< initialize constant ivars >> (leoConfig)
 
 	
 		# Initialize settings in each section.
@@ -865,15 +852,20 @@ class config:
 		val = config.getPref("find_string")
 		if val: c.tangle_directory = val
 		
-		c.target_language = python_language # default
+		c.target_language = "python" # default
 		val = config.getPref("default_target_language")
 		if val:
 			try:
 				val = string.lower(val)
-				for language,name in self.languageNameDict.items():
-					# print `language`, `name`
-					if string.lower(name) == val:
-						c.target_language = language
+				if 1: # new
+					val = string.replace(val,"/","")
+					if language_delims_dict.get(val):
+						c.target_language = val
+				else: #old
+					for language,name in self.languageNameDict.items():
+						# print `language`, `name`
+						if string.lower(name) == val:
+							c.target_language = language
 			except: pass
 		#@-body
 		#@-node:1::<< set prefs ivars >>
@@ -910,10 +902,16 @@ class config:
 	
 	def setConfigIvars (self,c):
 		
-		if c.target_language and c.target_language in self.languageNameDict.keys():
-			language = self.languageNameDict[c.target_language]
-		else:
-			language = "Plain"
+		if 1: # new 
+			if c.target_language and language_delims_dict.get(c.target_language):
+				language = c.target_language
+			else:
+				language = "plain"
+		else: # old ???? what does this do ???????
+			if c.target_language and c.target_language in self.languageNameDict.keys():
+				language = self.languageNameDict[c.target_language]
+			else:
+				language = "Plain"
 	
 		self.setPref("default_tangle_directory",c.tangle_directory)
 		self.setPref("default_target_language",language)
@@ -938,7 +936,6 @@ class config:
 		
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
-	
 	#@-body
 	#@-node:18::setConfigIvars
 	#@+node:19::update (config)

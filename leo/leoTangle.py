@@ -533,7 +533,7 @@ class tangleCommands:
 		self.end_comment_string = delim3
 		
 		# Abbreviations for self.language
-		self.use_cweb_flag = self.language == cweb_language
+		self.use_cweb_flag = self.language == "cweb"
 		self.use_noweb_flag = not self.use_cweb_flag
 		
 		# Set only from directives.
@@ -882,7 +882,7 @@ class tangleCommands:
 		#@<< return if @silent or unknown language >>
 		#@+node:1::<< return if @silent or unknown language >>
 		#@+body
-		if self.language == unknown_language:
+		if self.language == "unknown":
 			es("**Unknown language for " + path)
 			return
 		
@@ -2418,7 +2418,7 @@ class tangleCommands:
 		tot_len = 0
 		if self.comment: tot_len += len(self.comment)
 		if self.comment_end: tot_len += len(self.comment_end)
-		CWEB_flag = (self.language == c_language and not self.use_noweb_flag)
+		CWEB_flag = (self.language == "c" and not self.use_noweb_flag)
 		
 		p1, p2 = 0, 0
 		while p1 < len(s1) and p2 < len(s2):
@@ -2562,7 +2562,7 @@ class tangleCommands:
 		if self.comment: tot_len += len(self.comment)
 		if self.comment_end: tot_len += len(self.comment_end)
 		
-		CWEB_flag = (self.language == c_language and not self.use_noweb_flag)
+		CWEB_flag = (self.language == "c" and not self.use_noweb_flag)
 		#@-body
 		#@-node:1::<< Define forgiving_compare vars >>
 
@@ -2648,7 +2648,7 @@ class tangleCommands:
 				
 				if (match(s1,p1,self.string1) or match(s1,p1,self.string2)) and s1[p1] == s2[p2]:
 				
-					if self.language == pascal_language:
+					if self.language == "pascal":
 						
 						#@<< Compare Pascal strings >>
 						#@+node:3::<< Compare Pascal strings >>
@@ -2713,7 +2713,7 @@ class tangleCommands:
 				#@<< Compare possible preprocessor directives >>
 				#@+node:5::<< Compare possible preprocessor directives >>
 				#@+body
-				if self.language == c_language:
+				if self.language == "c":
 					
 					#@<< compare preprocessor directives >>
 					#@+node:2::<< Compare preprocessor directives >>
@@ -2950,10 +2950,10 @@ class tangleCommands:
 		self.verbatim = None
 		
 		# Set special cases.
-		if self.language == plain_text_language:
+		if self.language == "plain":
 			self.string1 = self.string2 = None # This is debatable.
 			self.line_comment = None
-		if self.language == pascal_language:
+		if self.language == "pascal":
 			self.comment2 = "(*" ; self.comment2_end = "*)"
 		#@-body
 		#@-node:1::<< set the private global matching vars >>
@@ -3131,7 +3131,7 @@ class tangleCommands:
 				#@+node:6::<< copy a string >>
 				#@+body
 				j = i
-				if self.language == pascal_language:
+				if self.language == "pascal":
 					i = skip_pascal_string(s,i)
 				else:
 					i = skip_string(s,i)
@@ -3844,7 +3844,7 @@ class tangleCommands:
 					self.start_comment_string = delim2
 					self.end_comment_string = delim3
 					# @comment effectively disables Untangle.
-					self.language = unknown_language
+					self.language = "unknown"
 				else:
 					if issue_error_flag:
 						es("ignoring: " + s[i:])

@@ -63,7 +63,6 @@ leoKeywords = (
 #@<< c keywords >>
 #@+node:2::<< c keywords >>
 #@+body
-	
 c_keywords = (
 	# C keywords
 	"auto","break","case","char","continue",
@@ -674,7 +673,7 @@ class colorizer:
 		#@+body
 		# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
 		
-		if language == plain_text_language: # 9/12/02
+		if language == "plain": # 9/12/02
 			delim1,delim2,delim3 = None,None,None
 		elif self.comment_string: # 8/11/02
 			delim1,delim2,delim3 = set_delims_from_string(self.comment_string)
@@ -686,28 +685,33 @@ class colorizer:
 		block_comment_start = delim2
 		block_comment_end = delim3
 		
-		has_string = language != plain_text_language
+		has_string = language != "plain"
+		has_pp_directives = language in ["c","cweb"]
+		is_cweb = language == "cweb"
+		is_latex = language == "latex"
+		is_php = language == "php"
+		is_python = language == "python"
 		
 		# 08-SEP-2002 DTHEIN: added "php"
 		languages = ["c","cweb","html","java","latex", "pascal","perl","perlpod","python","tcltk","php"]
 		
 		keywords = []
-		if language==cweb_language:
+		if language=="cweb":
 			for i in c_keywords:
 				keywords.append(i)
 			for i in cweb_keywords:
 				keywords.append(i)
 		else:
 			for name in languages:
-				exec("if language==%s_language: keywords=%s_keywords" % (name,name))
+				exec("if language==name: keywords=%s_keywords" % name)
 		
 		if 1: # 7/8/02: Color plain text unless we are under the control of @nocolor.
 			state = choose(flag,normalState,nocolorState)
 		else: # Stupid: no coloring at all in plain text.
-			state = choose(language==plain_text_language,nocolorState,normalState)
+			state = choose(language=="plain",nocolorState,normalState)
 		
-		lb = choose(language==cweb_language,"@<","<<")
-		rb = choose(language==cweb_language,"@>",">>")
+		lb = choose(language=="cweb","@<","<<")
+		rb = choose(language=="cweb","@>",">>")
 		#@-body
 		#@-node:2::<< configure language-specific settings >> (colorizer)
 
@@ -754,7 +758,7 @@ class colorizer:
 					#@+node:3::Multiline State Handlers
 					#@+node:1::<< continue doc part >>
 					#@+body
-					if language == cweb_language:
+					if is_cweb:
 						
 						#@<< handle cweb doc part >>
 						#@+node:1::<< handle cweb doc part >>
@@ -828,7 +832,7 @@ class colorizer:
 					else:
 						word = ""
 					
-					if word == "@color" and language != plain_text_language:
+					if word == "@color" and language != "plain":
 						# End of the nocolor part.
 						body.tag_add("leoKeyword", index(n,0), index(n,j))
 						i = j ; state = normalState
@@ -904,7 +908,7 @@ class colorizer:
 					#@<< handle string >>
 					#@+node:4::<< handle string >>
 					#@+body
-					if language == python_language:
+					if is_python:
 						j, state = self.skip_python_string(s,i)
 						body.tag_add("string", index(n,i), index(n,j))
 						i = j
@@ -912,6 +916,7 @@ class colorizer:
 						j, state = self.skip_string(s,i)
 						body.tag_add("string", index(n,i), index(n,j))
 						i = j
+					
 					#@-body
 					#@-node:4::<< handle string >>
 
@@ -936,7 +941,7 @@ class colorizer:
 					#@-body
 					#@-node:5::<< start block comment >>
 
-				elif ch == '#' and language in [c_language,cweb_language]:
+				elif ch == '#' and has_pp_directives:
 					
 					#@<< handle C preprocessor line >>
 					#@+node:7::<< handle C preprocessor line >>
@@ -946,7 +951,7 @@ class colorizer:
 					#@-body
 					#@-node:7::<< handle C preprocessor line >>
 
-				elif match(s,i,lb) or (language==cweb_language and match(s,i,"@(")):
+				elif match(s,i,lb) or (language=="cweb" and match(s,i,"@(")):
 					
 					#@<< handle possible section ref or def >>
 					#@+node:8::<< handle possible section ref or def >>
@@ -960,11 +965,11 @@ class colorizer:
 					if j == -1:
 						i += 2
 					else:
-						if language != cweb_language:
-							searchName = body.get(index(n,i),   index(n,j+k)) # includes brackets
+						if not is_cweb:
+							searchName = body.get(index(n,i), index(n,j+k)) # includes brackets
 							ref = findReference(searchName,v)
 						
-						if language == cweb_language:
+						if is_cweb:
 							body.tag_add("cwebName", index(n,i+2), index(n,j))
 						elif ref:
 							body.tag_add("link", index(n,i+2), index(n,j))
@@ -1002,7 +1007,7 @@ class colorizer:
 					#@+node:9::<< handle possible @keyword >>
 					#@+body
 					word = None
-					if language == cweb_language:
+					if is_cweb:
 						
 						#@<< Handle all cweb control codes >>
 						#@+node:1::<< Handle all cweb control codes >>
@@ -1040,7 +1045,7 @@ class colorizer:
 							word = "" # can't be a Leo keyword, even if it looks like it.
 						
 						# 7/8/02: don't color doc parts in plain text.
-						if language != plain_text_language and (word == "@" or word == "@doc"):
+						if language != "plain" and (word == "@" or word == "@doc"):
 							# at-space starts doc part
 							body.tag_add("leoKeyword", index(n,i), index(n,j))
 							# Everything on the line is in the doc part.
@@ -1060,12 +1065,12 @@ class colorizer:
 					#@-body
 					#@-node:9::<< handle possible @keyword >>
 
-				elif ch in string.letters or ch == '_' or (ch == '\\' and language == latex_language):
+				elif ch in string.letters or ch == '_' or (ch == '\\' and is_latex):
 					
 					#@<< handle possible keyword >>
 					#@+node:10::<< handle possible  keyword >>
 					#@+body
-					if language == latex_language and match(s,i,"\\"):
+					if is_latex and match(s,i,"\\"):
 						j = self.skip_id(s,i+1)
 					else:
 						j = self.skip_id(s,i)
@@ -1073,7 +1078,7 @@ class colorizer:
 					word = s[i:j]
 					if word in keywords:
 						body.tag_add("keyword", index(n,i), index(n,j))
-					elif language == php_language:
+					elif is_php:
 						if word in php_paren_keywords and match(s,j,"()"):
 							body.tag_add("keyword", index(n,i), index(n,j+2))
 							j += 2
@@ -1081,7 +1086,7 @@ class colorizer:
 					#@-body
 					#@-node:10::<< handle possible  keyword >>
 
-				elif language == php_language and (match(s,i,"<") or match(s,i,"?")):
+				elif is_php and (match(s,i,"<") or match(s,i,"?")):
 					
 					#@<< handle special php keywords >>
 					#@+node:11::<< handle special php keywords >>

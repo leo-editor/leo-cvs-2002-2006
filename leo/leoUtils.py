@@ -10,42 +10,23 @@ import os, string, sys, time, types, Tkinter, traceback
 
 
 #@+others
-#@+node:1::@language and @comment directives
+#@+node:1::@language and @comment directives (leoUtils)
 #@+node:1::set_delims_from_language
 #@+body
 # Returns a tuple (single,start,end) of comment delims
 
 def set_delims_from_language(language):
 	
-	# trace(`language`)
+	val = language_delims_dict.get(language)
+	if val:
+		delim1,delim2,delim3 = set_delims_from_string(val)
+		if delim2 and not delim3:
+			return None,delim1,delim2
+		else: # 0,1 or 3 params.
+			return delim1,delim2,delim3
+	else:
+		return None, None, None # Indicate that no change should be made
 
-	for lang, val in [ (cweb_language, "// /* */"),
-		(c_language, "// /* */"),
-		(java_language, "/* */"), # 7/31/02: force block comments to handle java's lousy comment style.
-		(fortran_language, "C"),
-		(fortran90_language, "!"),
-		(html_language, "<!-- -->"),
-		(latex_language,"%"),
-		(pascal_language, "// { }"),
-		(perl_language, "#"),
-		(perlpod_language, "# __=pod__ __=cut__"), # 9/25/02: The perlpod hack.
-		(plain_text_language, "#"), # 7/8/02: we have to pick something.
-		(shell_language, "#"),
-		(python_language, "#"),
-		(tcltk_language, "#"), # 7/18/02
-		(php_language, "//") ]:  #DTHEIN
-		if lang == language:
-			# trace(`val`)
-			delim1,delim2,delim3 = set_delims_from_string(val)
-			# 8/1/02: fix the "delims botch".
-			# Exactly 2 params delimit block params.
-			# This greatly simplifies the logic in the callers.
-			if delim2 and not delim3:
-				return None,delim1,delim2
-			else: # 0,1 or 3 params.
-				return delim1,delim2,delim3
-
-	return None, None, None # Indicate that no change should be made
 #@-body
 #@-node:1::set_delims_from_language
 #@+node:2::set_delims_from_string
@@ -76,11 +57,6 @@ def set_delims_from_string(s):
 		if j == i: break
 		delims[count] = s[j:i]
 		count += 1
-		
-	# Restore defaults if nothing specified
-	if 0: # 8/1/02: no longer uses hard-code "default"
-		if not delims[0]:
-			delims[0], delims[1], delims[2] = "//", "/*", "*/"
 
 	# 7/8/02: The "REM hack": replace underscores by blanks.
 	# 9/25/02: The "perlpod hack": replace double underscores by newlines.
@@ -110,44 +86,21 @@ def set_language(s,i,issue_errors_flag):
 	assert(match_word(s,i,tag))
 	i += len(tag) ; i = skip_ws(s, i)
 	# Get the argument.
-	j = i
-	i = skip_c_id(s,i)
+	j = i ; i = skip_c_id(s,i)
 	# Allow tcl/tk.
 	arg = string.lower(s[j:i])
-	if len(arg) > 0:
-		for name, language in [
-			("ada", ada_language),
-			("c", c_language),
-			("c++", c_language),
-			("cweb", cweb_language),
-			# ("default", default_language),
-			("fortran", fortran_language),
-			("fortran90", fortran90_language),
-			("html", html_language),
-			("java", java_language),
-			("latex", latex_language),
-			("lisp", lisp_language),
-			("objective-c", c_language),
-			("pascal", pascal_language),
-			("perl", perl_language),
-			("perlpod", perlpod_language),
-			("plain", plain_text_language), # 7/8/02
-			("python", python_language),
-			("shell", shell_language),
-			("tcl", tcltk_language), # 7/18/02.  Note: this also matches tcl/tk.
-			("php", php_language) ]: # 08-SEP-2002 DTHEIN
-		
-			if arg == name:
-				delim1, delim2, delim3 = set_delims_from_language(language)
-				return language, delim1, delim2, delim3
-
+	if language_delims_dict.get(arg):
+		language = arg
+		delim1, delim2, delim3 = set_delims_from_language(language)
+		return language, delim1, delim2, delim3
+	
 	if issue_errors_flag:
 		es("ignoring: " + get_line(s,i))
 
 	return None, None, None, None,
 #@-body
 #@-node:3::set_language
-#@-node:1::@language and @comment directives
+#@-node:1::@language and @comment directives (leoUtils)
 #@+node:2::angleBrackets & virtual_event_name
 #@+body
 # Returns < < s > >

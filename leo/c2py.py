@@ -316,7 +316,8 @@ def speedTest(passes):
 def leo1to2():
 
 	import leo
-	c=leo.top()
+	import leoGlobals
+	c=leoGlobals.top()
 	v=c.currentVnode()
 	convertLeo1to2(v,c)
 
@@ -404,7 +405,8 @@ def convertCodeList1to2(list):
 def convertCurrentTree():
 
 	import leo
-	c=leo.top()
+	import leoGlobals
+	c=leoGlobals.top()
 	v = c.currentVnode()
 	c2py.convertLeoTree(v,c)
 #@-body

@@ -66,7 +66,7 @@ class Commands:
 		self.use_header_flag = false
 		self.output_doc_flag = false
 		# Default Target Language
-		self.target_language = python_language # 8/11/02: Required if leoConfig.txt does not exist.
+		self.target_language = "python" # 8/11/02: Required if leoConfig.txt does not exist.
 		
 		self.setIvarsFromFind()
 		#@-body

@@ -1473,7 +1473,7 @@ class leoImportCommands:
 						if self.treeType == "@file":
 							parent.appendStringToBody("@others\n")
 						else:
-							cweb = c.target_language == cweb_language
+							cweb = c.target_language == "cweb"
 							lb = choose(cweb,"@<","<<")
 							rb = choose(cweb,"@>",">>")
 							parent.appendStringToBody(

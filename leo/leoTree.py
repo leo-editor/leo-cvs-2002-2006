@@ -841,7 +841,7 @@ class leoTree:
 				if s and len(s) > 0 and s[-1]==':':
 					# For Python: increase auto-indent after colons.
 					language = self.colorizer.scanColorDirectives(v)
-					if language == python_language:
+					if language == "python":
 						width += abs(c.tab_width)
 				ws = computeLeadingWhitespace (width,c.tab_width)
 				if ws and len(ws) > 0:

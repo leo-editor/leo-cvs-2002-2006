@@ -10,7 +10,7 @@ import string, Tkinter
 # Public constants used for defaults when leoConfig.txt can not be read.
 default_page_width = 132
 default_tab_width = 4
-default_target_language = python_language
+default_target_language = "python"
 default_default_directory = None
 
 ivars = [
@@ -52,7 +52,7 @@ class LeoPrefs:
 		
 		# Default Target Language
 		self.target_language = default_target_language
-		self.lang_var = Tk.IntVar()
+		self.lang_var = Tk.StringVar()
 		#@-body
 		#@-node:1::<< Set ivars >>
 
@@ -145,9 +145,9 @@ class LeoPrefs:
 		
 		# Left column of radio buttons.
 		left_data = [
-			("C/C++",c_language), ("CWEB", cweb_language),
-			("HTML", html_language), ("Java", java_language),
-			("LaTeX", latex_language), ("Pascal", pascal_language) ]
+			("C/C++","c"), ("CWEB", "cweb"),
+			("HTML", "html"), ("Java", "java"),
+			("LaTeX", "latex"), ("Pascal", "pascal") ]
 		
 		for text,value in left_data:
 			button = Tk.Radiobutton(lt,anchor="w",text=text,
@@ -155,10 +155,11 @@ class LeoPrefs:
 			button.pack(fill="x") 
 			
 		# Right column of radio buttons.
-		right_data = [ ("Perl", perl_language), ("Perl+POD", perlpod_language),
-			("Plain Text", plain_text_language), ("Python", python_language),
-			("tcl/tk", tcltk_language),
-			("PHP", php_language) ] # 08-SEP-2002 DTHEIN
+		right_data = [
+			("Perl", "perl"), ("Perl+POD", "perlpod"),
+			("PHP", "php"),
+			("Plain Text", "plain"), ("Python", "python"),
+			("tcl/tk", "tcltk") ]
 			
 		for text,value in right_data:
 			button = Tk.Radiobutton(rt,anchor="w",text=text,
@@ -218,7 +219,7 @@ class LeoPrefs:
 		self.revert_use_header_flag = c.use_header_flag
 		# Default Target Language
 		if c.target_language == None: # 7/29/02
-			c.target_language = python_language
+			c.target_language = "python"
 		self.revert_target_language = c.target_language
 		#@-body
 		#@-node:1::<< remember values for revert >>
@@ -241,7 +242,7 @@ class LeoPrefs:
 		self.use_header_var.set(c.use_header_flag)
 		# Default Target Language
 		if c.target_language == None:
-			c.target_language = python_language # 7/29/02
+			c.target_language = "python" # 7/29/02
 		self.lang_var.set(c.target_language)
 		#@-body
 		#@-node:2::<< set widgets >>
@@ -318,7 +319,7 @@ class LeoPrefs:
 		language = self.lang_var.get()
 		c.target_language = self.target_language = language
 		c.tree.recolor(v)
-		# print "set_lang" ; print self.print_ivars()
+		# print "set_lang",`language`
 	#@-body
 	#@-node:2::set_lang
 	#@+node:3::OnClosePrefsFrame

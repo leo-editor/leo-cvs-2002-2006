@@ -29,27 +29,24 @@ prolog_version_string1 = "UTF-8" # for leo.py 2.x
 prolog_version_string2 = "ISO-8859-1" # for leo.py 3.x
 prolog_postfix_string = "?>"
 
-# These are set by the @langauge directive.
-# Used by Tangle, Untangle and syntax coloring.
-ada_language =		 1
-c_language =		 2  # C, C++ or objective C.
-cweb_language =		 3  # CWEB syntax coloring
-cobol_language =	 4  # literate cobol??
-fortran_language =	 5  # Comments start with C
-fortran90_language =	 6  # Comments start with !
-html_language =		 7
-java_language =		 8
-latex_language =	 9
-lisp_language =		10
-pascal_language =	11
-plain_text_language =	12
-perl_language =		13  # just ##
-perlpod_language =	14  # ## and =pod and =cut
-python_language =	15
-shell_language =	16  # shell scripts
-tcltk_language =	17
-unknown_language =	18  # Set when @comment is seen.
-php_language = 19 # 08-SEP-2002 DTHEIN
+# Internally, lower case is used for all language names.
+language_delims_dict = {
+	"c" : "// /* */", # C, C++ or objective C.
+	"cweb" : "@q @>", 
+	"fortran" : "C",
+	"fortran90" : "!",
+	"html" : "<!-- -->",
+	"java" : "/* */",
+	"latex" : "%",
+	"pascal" : "// { }",
+	"perl" : "#",
+	"perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+	"php" : "//",
+	"plain" : "#", # We must pick something.
+	"python" : "#",
+	"shell" : "#",  # shell scripts
+	"tcltk" : "#",
+	"unknown" : "#" } # Set when @comment is seen.
 #@-body
 #@-node:1::<< define global constants >>
 
