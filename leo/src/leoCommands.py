@@ -1757,17 +1757,19 @@ class baseCommands:
 	#@+node:ekr.20031218072017.1824:dedentBody
 	def dedentBody (self):
 		
-		c = self
+		c = self ; p = c.currentPosition()
 		
 		if g.app.batchMode:
 			c.notValidInBatchMode("Unindent")
 			return
 	
+		d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+		tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		result = [] ; changed = false
 		for line in lines:
-			i, width = g.skip_leading_ws_with_indent(line,0,c.tab_width)
-			s = g.computeLeadingWhitespace(width-abs(c.tab_width),c.tab_width) + line[i:]
+			i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+			s = g.computeLeadingWhitespace(width-abs(tab_width),tab_width) + line[i:]
 			if s != line: changed = true
 			result.append(s)
 	
@@ -2107,17 +2109,19 @@ class baseCommands:
 	#@+node:ekr.20031218072017.1830:indentBody
 	def indentBody (self):
 	
-		c = self
+		c = self ; p = c.currentPosition()
 		
 		if g.app.batchMode:
 			c.notValidInBatchMode("Indent")
 			return
 	
+		d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+		tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		result = [] ; changed = false
 		for line in lines:
-			i, width = g.skip_leading_ws_with_indent(line,0,c.tab_width)
-			s = g.computeLeadingWhitespace(width+abs(c.tab_width),c.tab_width) + line[i:]
+			i, width = g.skip_leading_ws_with_indent(line,0,tab_width)
+			s = g.computeLeadingWhitespace(width+abs(tab_width),tab_width) + line[i:]
 			if s != line: changed = true
 			result.append(s)
 		if changed:
