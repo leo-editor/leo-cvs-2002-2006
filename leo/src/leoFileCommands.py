@@ -939,6 +939,7 @@ class baseFileCommands:
 			top = self.convertStackToPosition(self.topVnodeStack)
 			if top:
 				c.setTopPosition(top)
+			#@nonl
 			#@-node:<< set current and top positions >>
 			#@nl
 	
@@ -1855,15 +1856,11 @@ class baseFileCommands:
 			self.putGlobals()
 			self.putPrefs()
 			self.putFindSettings()
-			
-			start = g.getTime()
-			
+			#start = g.getTime()
 			self.putVnodes()
-			start = g.printDiffTime("vnodes ",start)
-			
+			#start = g.printDiffTime("vnodes ",start)
 			self.putTnodes()
-			start = g.printDiffTime("tnodes ",start)
-			
+			#start = g.printDiffTime("tnodes ",start)
 			self.putPostlog()
 			#@nonl
 			#@-node:<< put the .leo file >>
