@@ -1094,7 +1094,7 @@ class LeoFrame:
 			("&Go To Line Number","Alt+G",self.OnGoToLineNumber),
 			("&Execute Script","Alt+Shift+E",self.OnExecuteScript),
 			("Set Fon&t...","Shift+Alt+T",self.OnFontPanel),
-			("Set &Colors...","Shift+Alt+S",self.OnColorPanel),
+			("Set &Colors...","Shift+Alt+C",self.OnColorPanel),
 			(label,"Alt+V",self.OnViewAllCharacters),
 			("-",None,None),
 			("Prefere&nces","Ctrl+Y",self.OnPreferences))
