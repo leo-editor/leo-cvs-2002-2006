@@ -2,7 +2,8 @@
 #@+node:@file leoConfig.py
 #@@language python
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
 import ConfigParser,exceptions,os,string,sys
 
@@ -17,9 +18,9 @@ class baseConfig:
 	#@-at
 	#@@c
 	
-	defaultBodyFontSize = choose(sys.platform=="win32",9,12)
-	defaultLogFontSize  = choose(sys.platform=="win32",8,12)
-	defaultTreeFontSize = choose(sys.platform=="win32",9,12)
+	defaultBodyFontSize = g.choose(sys.platform=="win32",9,12)
+	defaultLogFontSize  = g.choose(sys.platform=="win32",8,12)
+	defaultTreeFontSize = g.choose(sys.platform=="win32",9,12)
 	
 	defaultsDict = {
 		# compare options...
@@ -81,11 +82,11 @@ class baseConfig:
 		try:
 			self.configDir = sys.leo_config_directory
 		except:
-			self.configDir = os_path_join(app.loadDir,"..","config")
+			self.configDir = g.os_path_join(g.app.loadDir,"..","config")
 	
-		self.configFileName = os_path_join(self.configDir,"leoConfig.txt")
+		self.configFileName = g.os_path_join(self.configDir,"leoConfig.txt")
 	
-		self.configsExist = false # True when we successfully open leoConfig.txt.
+		self.configsExist = false # true when we successfully open leoConfig.txt.
 		
 		# These are now set in gui.getDefaultConfigFont
 		self.defaultFont = None
@@ -149,6 +150,7 @@ class baseConfig:
 		self.stylesheet = None
 		self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
 		self.use_plugins = false # Should never be true here!
+		self.undo_granularity = "word" # "char","word","line","node"
 		self.write_old_format_derived_files = false # Use new format if leoConfig.txt does not exist.
 		#@nonl
 		#@-node:<< initialize ivars that may be set by config options >>
@@ -178,7 +180,7 @@ class baseConfig:
 			val = None
 		elif val == None:
 			val = self.defaultsDict.get(name)
-			val = toUnicode(val,self.config_encoding) # 10/31/03
+			val = g.toUnicode(val,self.config_encoding) # 10/31/03
 		return val
 	
 	def getIntFromDict (self,name,dict):
@@ -314,9 +316,9 @@ class baseConfig:
 		weight = self.getWindowPref(weight)
 		if weight in (None,""): weight = "normal"
 		
-		# if app.trace: trace(tag,family,size,slant,weight)
+		# if g.app.trace: g.trace(tag,family,size,slant,weight)
 		
-		return app.gui.getFontFromParams(family,size,slant,weight)
+		return g.app.gui.getFontFromParams(family,size,slant,weight)
 	#@nonl
 	#@-node:config.getFontFromParams
 	#@+node:getShortcut (config)
@@ -357,17 +359,17 @@ class baseConfig:
 	
 	def setCommandsFindIvars (self,c):
 		
-		if app.gui.guiName() != "tkinter":
+		if g.app.gui.guiName() != "tkinter":
 			return
 	
-		config = self ; findFrame = app.findFrame
+		config = self ; findFrame = g.app.findFrame
 	
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for s in findFrame.intKeys:
 			val = config.getBoolFindPref(s)
 			if val != None: # 10/2/03
 				setattr(c,s+"_flag",val)
-				# trace(s+"_flag",val)
+				# g.trace(s+"_flag",val)
 				
 		val = config.getStringFindPref("change_string")
 		if val: c.change_text = val
@@ -375,7 +377,7 @@ class baseConfig:
 		val = config.getStringFindPref("find_string")
 		if val: c.find_text = val
 	
-		app.findFrame.init(c)
+		g.app.findFrame.init(c)
 	#@nonl
 	#@-node:setCommandsFindIvars
 	#@+node:setCommandsIvars
@@ -416,7 +418,7 @@ class baseConfig:
 			try:
 				val = string.lower(val)
 				val = string.replace(val,"/","")
-				if app.language_delims_dict.get(val):
+				if g.app.language_delims_dict.get(val):
 					c.target_language = val
 				
 			except: pass
@@ -430,13 +432,13 @@ class baseConfig:
 		
 		"""Set the config ivars from the commander."""
 		
-		findFrame = app.findFrame
+		findFrame = g.app.findFrame
 	
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for s in findFrame.intKeys: # These _are_ gui-independent.
 			val = getattr(c,s+"_flag")
 			self.setFindPref(s,val)
-			# trace(s,val)
+			# g.trace(s,val)
 		
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
@@ -447,7 +449,7 @@ class baseConfig:
 	
 	def setConfigIvars (self,c):
 		
-		if c.target_language and app.language_delims_dict.get(c.target_language):
+		if c.target_language and g.app.language_delims_dict.get(c.target_language):
 			language = c.target_language
 		else:
 			language = "plain"
@@ -514,10 +516,10 @@ class baseConfig:
 			encoding = self.initConfigParam(
 				"config_encoding",self.config_encoding)
 				
-			if isValidEncoding(encoding):
+			if g.isValidEncoding(encoding):
 				self.config_encoding = encoding
 			else:
-				es("bad config_encoding: " + encoding)
+				g.es("bad config_encoding: " + encoding)
 				
 			self.create_nonexistent_directories = self.initBooleanConfigParam(
 				"create_nonexistent_directories",self.create_nonexistent_directories)
@@ -525,10 +527,10 @@ class baseConfig:
 			encoding = self.initConfigParam(
 				"default_derived_file_encoding",self.default_derived_file_encoding)
 			
-			if isValidEncoding(encoding):
+			if g.isValidEncoding(encoding):
 				self.default_derived_file_encoding = encoding
 			else:
-				es("bad default_derived_file_encoding: " + encoding)
+				g.es("bad default_derived_file_encoding: " + encoding)
 				
 			self.load_derived_files_immediately = self.initBooleanConfigParam(
 				"load_derived_files_immediately",self.load_derived_files_immediately)
@@ -537,10 +539,10 @@ class baseConfig:
 				"new_leo_file_encoding",
 				self.new_leo_file_encoding)
 			
-			if isValidEncoding(encoding):
+			if g.isValidEncoding(encoding):
 				self.new_leo_file_encoding = encoding
 			else:
-				es("bad new_leo_file_encoding: " + encoding)
+				g.es("bad new_leo_file_encoding: " + encoding)
 			
 			self.output_initial_comment = self.initConfigParam(
 				"output_initial_comment",self.output_initial_comment)
@@ -571,19 +573,22 @@ class baseConfig:
 				"tk_encoding",self.tkEncoding)
 				
 			if encoding and len(encoding) > 0: # May be None.
-				if isValidEncoding(encoding):
+				if g.isValidEncoding(encoding):
 					self.tkEncoding = encoding
 				else:
-					es("bad tk_encoding: " + encoding)
+					g.es("bad tk_encoding: " + encoding)
 					
-			# trace("config.self.tkEncoding",self.tkEncoding)
+			# g.trace("config.self.tkEncoding",self.tkEncoding)
 			
-			app.use_gnx = self.initBooleanConfigParam(
-				"use_gnx",app.use_gnx)
-			# trace("app.use_gnx",app.use_gnx)
+			g.app.use_gnx = self.initBooleanConfigParam(
+				"use_gnx",g.app.use_gnx)
+			# g.trace("g.app.use_gnx",g.app.use_gnx)
 				
 			self.use_plugins = self.initBooleanConfigParam(
 				"use_plugins",self.use_plugins)
+				
+			self.undo_granularity = self.initConfigParam(
+				"undo_granularity",self.undo_granularity)
 				
 			self.write_old_format_derived_files = self.initBooleanConfigParam(
 				"write_old_format_derived_files",self.write_old_format_derived_files)
@@ -599,7 +604,7 @@ class baseConfig:
 				try:
 					for i in xrange(10):
 						f = config.get(section,"file" + `i`,raw=1)
-						f = toUnicode(f,"utf-8") # 10/31/03
+						f = g.toUnicode(f,"utf-8") # 10/31/03
 						self.recentFiles.append(f)
 				except: pass
 			#@nonl
@@ -610,7 +615,7 @@ class baseConfig:
 					try:
 						for opt in config.options(section):
 							val = config.get(section,opt,raw=1)
-							val = toUnicode(val,self.config_encoding) # 10/31/03
+							val = g.toUnicode(val,self.config_encoding) # 10/31/03
 							dict[string.lower(opt)]= val
 					except: pass
 			#@		<< create rawKeysDict without ampersands >>
@@ -633,13 +638,13 @@ class baseConfig:
 			find = self.findDict.get("find_string")
 			if find:
 				# Leo always writes utf-8 encoding, but users may not.
-				find = toUnicode(find,"utf-8")
+				find = g.toUnicode(find,"utf-8")
 				self.findDict["find_string"] = find
 			
 			change = self.findDict.get("change_string")
 			if change:
 				# Leo always writes utf-8 encoding, but users may not.
-				change = toUnicode(change,"utf-8")
+				change = g.toUnicode(change,"utf-8")
 				self.findDict["change_string"] = change
 			#@-node:<< convert find/change options to unicode >>
 			#@nl
@@ -667,8 +672,8 @@ class baseConfig:
 		except IOError:
 			pass
 		except:
-			es("Exception opening " + self.configFileName)
-			es_exception()
+			g.es("Exception opening " + self.configFileName)
+			g.es_exception()
 			pass
 		self.config = None
 	#@-node:open
@@ -682,7 +687,7 @@ class baseConfig:
 		if self.read_only:
 			# print "Read only config file"
 			return
-		if not os_path_exists(self.configFileName):
+		if not g.os_path_exists(self.configFileName):
 			# print "No config file"
 			return
 		
@@ -690,7 +695,7 @@ class baseConfig:
 		self.config = config
 		try:
 			# 9/1/02: apparently Linux requires w+ and XP requires w.
-			mode = choose(sys.platform=="win32","wb","wb+")
+			mode = g.choose(sys.platform=="win32","wb","wb+")
 			cf = open(self.configFileName,mode)
 			config.readfp(cf)
 			#@		<< write recent files section >>
@@ -698,7 +703,7 @@ class baseConfig:
 			section = self.recentFilesSection
 			files = self.recentFiles
 			
-			section = toEncodedString(section,"utf-8") # 10/31/03
+			section = g.toEncodedString(section,"utf-8") # 10/31/03
 			
 			if config.has_section(section):
 				config.remove_section(section)
@@ -708,7 +713,7 @@ class baseConfig:
 				config.set(section,"recentFiles",files)
 			else: # easier to read in the config file.
 				for i in xrange(len(files)):
-					f = toEncodedString(files[i],self.config_encoding) # 10/31/03
+					f = g.toEncodedString(files[i],self.config_encoding) # 10/31/03
 					config.set(section, "file"+`i`, f)
 			#@nonl
 			#@-node:<< write recent files section >>
@@ -720,15 +725,15 @@ class baseConfig:
 			cf.flush()
 			cf.close()
 		except:
-			es("exception writing: " + self.configFileName)
-			es_exception()
+			g.es("exception writing: " + self.configFileName)
+			g.es_exception()
 		self.config = None
 	#@nonl
 	#@-node:update (config)
 	#@+node:update_section
 	def update_section (self,config,section,dict):
 		
-		section = toEncodedString(section,self.config_encoding) # 10/31/03
+		section = g.toEncodedString(section,self.config_encoding) # 10/31/03
 	
 		if config.has_section(section):
 			config.remove_section(section)
@@ -738,8 +743,8 @@ class baseConfig:
 		keys.sort() # Not effective.
 		for name in keys:
 			val = dict [name]
-			val  = toEncodedString(val,self.config_encoding)
-			name = toEncodedString(name,self.config_encoding) # 10/31/03
+			val  = g.toEncodedString(val,self.config_encoding)
+			name = g.toEncodedString(name,self.config_encoding) # 10/31/03
 			config.set(section,name,val)
 	#@nonl
 	#@-node:update_section

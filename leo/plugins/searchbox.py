@@ -27,6 +27,8 @@ Still to do:
 #@-node:<< doc string >>
 #@nl
 
+#@@language python
+
 __version__ = "0.3"
 
 from leoPlugins import *

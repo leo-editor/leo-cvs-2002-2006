@@ -2,7 +2,8 @@
 #@+node:@file leoTkinterDialog.py
 #@@language python
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 import string,Tkinter
 
 Tk = Tkinter
@@ -25,7 +26,7 @@ class leoTkinterDialog:
 		self.buttonsFrame = None # Frame to hold typical dialog buttons.
 		self.defaultButtonCommand = None  # Command to call when user closes the window by clicking the close box.
 		self.frame = None # The outermost frame.
-		self.root = None # app.root
+		self.root = None # g.app.root
 		self.top = None # The toplevel Tk widget.
 		self.focus_widget = None # The widget to get the first focus.
 	#@nonl
@@ -65,7 +66,7 @@ class leoTkinterDialog:
 		
 		"""Center any leoTkinterDialog."""
 		
-		app.gui.center_dialog(self.top)
+		g.app.gui.center_dialog(self.top)
 	#@-node:center
 	#@+node:createButtons
 	def createButtons (self,buttons):
@@ -85,7 +86,7 @@ class leoTkinterDialog:
 			isDefault = d.get("default",false)
 			underline = d.get("underline",0)
 			command = d.get("command",None)
-			bd = choose(isDefault,4,2)
+			bd = g.choose(isDefault,4,2)
 	
 			b = Tk.Button(f,width=6,text=text,bd=bd,underline=underline,command=command)
 			b.pack(side="left",padx=5,pady=10)
@@ -110,7 +111,7 @@ class leoTkinterDialog:
 		
 		"""Create the Tk.Toplevel widget for a leoTkinterDialog."""
 		
-		self.root = app.root
+		self.root = g.app.root
 	
 		self.top = Tk.Toplevel(self.root)
 		self.top.title(self.title)
@@ -123,7 +124,7 @@ class leoTkinterDialog:
 		
 		# Do this at idle time.
 		def callback(top=self.top):
-			app.gui.attachLeoIcon(top)
+			g.app.gui.attachLeoIcon(top)
 		
 		self.top.after_idle(callback)
 	#@nonl
@@ -197,12 +198,12 @@ class tkinterAboutLeo (leoTkinterDialog):
 		text.pack(pady=10)
 		
 		try:
-			bitmap_name = os_path_join(app.loadDir,"..","Icons","Leoapp.GIF") # 5/12/03
+			bitmap_name = g.os_path_join(g.app.loadDir,"..","Icons","Leoapp.GIF") # 5/12/03
 			image = Tkinter.PhotoImage(file=bitmap_name)
 			text.image_create("1.0",image=image,padx=10)
 		except:
-			es("exception getting icon")
-			es_exception()
+			g.es("exception getting icon")
+			g.es_exception()
 	
 		text.insert("end",version,"version")
 		text.insert("end",copyright,"copyright")
@@ -236,7 +237,7 @@ class tkinterAboutLeo (leoTkinterDialog):
 			import webbrowser
 			webbrowser.open("mailto:" + self.email)
 		except:
-			es("not found: " + self.email)
+			g.es("not found: " + self.email)
 	#@nonl
 	#@-node:tkinterAboutLeo.onAboutLeoEmail
 	#@+node:tkinterAboutLeo.onAboutLeoUrl
@@ -248,7 +249,7 @@ class tkinterAboutLeo (leoTkinterDialog):
 			import webbrowser
 			webbrowser.open(self.url)
 		except:
-			es("not found: " + self.url)
+			g.es("not found: " + self.url)
 	#@nonl
 	#@-node:tkinterAboutLeo.onAboutLeoUrl
 	#@+node:tkinterAboutLeo: setArrowCursor, setDefaultCursor
@@ -332,7 +333,7 @@ class tkinterAskLeoID (leoTkinterDialog):
 		if len(s) < 3:  # Require at least 3 characters in an id.
 			return
 	
-		self.answer = app.leoID = s
+		self.answer = g.app.leoID = s
 		self.top.destroy() # terminates wait_window
 	#@nonl
 	#@-node:tkinterAskLeoID.onButton

@@ -6,6 +6,7 @@
 """Entry point for Leo in Python."""
 
 #@@language python
+
 #@<< Import pychecker >>
 #@+node:<< Import pychecker >>
 #@+at 
@@ -34,8 +35,9 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 #@-node:<< Import pychecker >>
 #@nl
 
-from leoGlobals import *
-import leoApp,leoConfig,leoGui,leoNodes
+# Warning: do not import any Leo modules here!
+# Doing so would make g.app invalid in the imported files.
+
 import os,string,sys
 
 #@+others
@@ -45,12 +47,16 @@ def run(fileName=None,*args,**keywords):
 	"""Initialize and run Leo"""
 	
 	if not isValidPython(): return
-	# Create the application object.
+	# Import leoGlobals, but do NOT set g.
 	import leoGlobals
-	leoGlobals.gApp = leoApp.LeoApp()
-	app.loadDir = computeLoadDir() # Depends on app.tkEncoding: uses utf-8 for now.
-	app.config = leoConfig.config()
-	app.setEncoding() # 10/20/03: do this earlier
+	from leoGlobals import true,false
+	# Create the application object.
+	import leoApp ; leoGlobals.app = leoApp.LeoApp()
+	g = leoGlobals ; assert(g.app) # NOW we can set g.
+	g.app.loadDir = computeLoadDir() # Depends on g.app.tkEncoding: uses utf-8 for now.
+	import leoConfig
+	g.app.config = leoConfig.config()
+	g.app.setEncoding() # 10/20/03: do this earlier
 	script = getBatchScript()
 	if script:
 		createNullGuiWithScript(script)
@@ -58,45 +64,53 @@ def run(fileName=None,*args,**keywords):
 	else:
 		#@		<< print encoding info >>
 		#@+node:<< print encoding info >>
-		es("leoConfig.txt encoding: " + app.config.config_encoding, color="blue")
-		es("Text encoding: " + app.tkEncoding, color="blue")
+		g.es("leoConfig.txt encoding: " + g.app.config.config_encoding, color="blue")
+		
+		if 0: # This is just confusing for users.
+			g.es("Text encoding: " + g.app.tkEncoding, color="blue")
 		#@nonl
 		#@-node:<< print encoding info >>
 		#@nl
-	# Load plugins. Plugins may create app.gui.
-	doHook("start1")
-	if app.killed: return # Support for app.forceShutdown.
+	# Load plugins. Plugins may create g.app.gui.
+	g.doHook("start1")
+	if g.app.killed: return # Support for g.app.forceShutdown.
 	# Create the default gui if needed.
-	if app.gui == None:
-		app.createTkGui()
-	if app.use_gnx:
-		if not app.leoID: app.setLeoID() # Forces the user to set app.leoID.
-		app.nodeIndices = leoNodes.nodeIndices()
+	if g.app.gui == None:
+		g.app.createTkGui()
+	if g.app.use_gnx:
+		if not g.app.leoID: g.app.setLeoID() # Forces the user to set g.app.leoID.
+		import leoNodes
+		g.app.nodeIndices = leoNodes.nodeIndices()
 	# Initialize tracing and statistics.
-	init_sherlock(args)
-	clear_stats()
+	g.init_sherlock(args)
+	g.clear_stats()
 	# Create the main frame.  Show it and all queued messages.
 	c,frame = createFrame(fileName)
 	if not frame: return
-	app.writeWaitingLog()
+	if g.app.disableSave:
+		g.es("disabling save commands",color="red")
+	g.app.writeWaitingLog()
 	v = c.currentVnode()
-	doHook("start2",c=c,v=v,fileName=fileName)
+	g.doHook("start2",c=c,v=v,fileName=fileName)
 	frame.tree.redraw()
 	frame.body.setFocus()
-	app.initing = false # "idle" hooks may now call app.forceShutdown.
-	app.gui.runMainLoop()
+	g.app.initing = false # "idle" hooks may now call g.app.forceShutdown.
+	g.app.gui.runMainLoop()
 #@nonl
 #@-node:run & allies
 #@+node:isValidPython
 def isValidPython():
+	
+	import leoGlobals as g
+	from leoGlobals import true,false
 	
 	message = """
 Leo requires Python 2.1 or higher.
 You may download Python 2.1 and Python 2.2 from http://python.org/download/
 """
 	try:
-		if not CheckVersion(sys.version, "2.1"):
-			app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
+		if not g.CheckVersion(sys.version, "2.1"):
+			g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
 			return false
 		else:
 			return true
@@ -111,29 +125,32 @@ def computeLoadDir():
 	
 	"""Returns the directory containing leo.py."""
 	
-	# trace(app.tkEncoding)
+	import leoGlobals as g
+	from leoGlobals import true,false
+	
+	# g.trace(g.app.tkEncoding)
 	
 	try:
 		import leo
-		path = os_path_abspath(leo.__file__)
+		path = g.os_path_abspath(leo.__file__)
 
 		if sys.platform=="win32": # "mbcs" exists only on Windows.
-			path = toUnicode(path,"mbcs")
+			path = g.toUnicode(path,"mbcs")
 		elif sys.platform=="dawwin":
-			path = toUnicode(path,"utf-8")
+			path = g.toUnicode(path,"utf-8")
 		else:
-			path = toUnicode(path,app.tkEncoding)
+			path = g.toUnicode(path,g.app.tkEncoding)
 
 		if path:
-			loadDir = os_path_dirname(path)
+			loadDir = g.os_path_dirname(path)
 		else:
 			loadDir = None
 		if not loadDir:
-			loadDir = os_path_abspath(os.getcwd())
+			loadDir = g.os_path_abspath(os.getcwd())
 			print "Using emergency loadDir:",`loadDir`
 
-		encoding = choose(sys.platform=="dawwin","utf-8",app.tkEncoding) # 11/18/03
-		loadDir = toUnicode(loadDir,encoding) # 10/20/03
+		encoding = g.choose(sys.platform=="dawwin","utf-8",g.app.tkEncoding) # 11/18/03
+		loadDir = g.toUnicode(loadDir,encoding) # 10/20/03
 		return loadDir
 	except:
 		print "Exception getting load directory"
@@ -146,39 +163,48 @@ def createFrame (fileName):
 	
 	"""Create a LeoFrame during Leo's startup process."""
 	
-	# trace(app.tkEncoding,fileName)
+	import leoGlobals as g
+	from leoGlobals import true,false
+	
+	# g.trace(g.app.tkEncoding,fileName)
 	
 	# Try to create a frame for the file.
 	if fileName:
-		fileName = os_path_join(os.getcwd(),fileName)
-		fileName = os_path_normpath(fileName)
-		if os_path_exists(fileName):
-			ok, frame = openWithFileName(fileName,None)
+		fileName = g.os_path_join(os.getcwd(),fileName)
+		fileName = g.os_path_normpath(fileName)
+		if g.os_path_exists(fileName):
+			ok, frame = g.openWithFileName(fileName,None)
 			if ok:
 				return frame.c,frame
 	
 	# Create a new frame & indicate it is the startup window.
-	c,frame = app.gui.newLeoCommanderAndFrame(fileName=None)
+	c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
 	frame.setInitialWindowGeometry()
 	frame.startupWindow = true
 	
 	# Report the failure to open the file.
 	if fileName:
-		es("File not found: " + fileName)
+		g.es("File not found: " + fileName)
 
 	return c,frame
 #@-node:createFrame (leo.py)
 #@+node:createNullGuiWithScript (leo.py)
 def createNullGuiWithScript (script):
 	
-	app.batchMode = true
-	app.gui = leoGui.nullGui("nullGui")
-	app.root = app.gui.createRootWindow()
-	app.gui.finishCreate()
-	app.gui.setScript(script)
+	import leoGlobals as g
+	from leoGlobals import true,false
+	
+	g.app.batchMode = true
+	g.app.gui = leoGui.nullGui("nullGui")
+	g.app.root = g.app.gui.createRootWindow()
+	g.app.gui.finishCreate()
+	g.app.gui.setScript(script)
 #@-node:createNullGuiWithScript (leo.py)
 #@+node:getBatchScript
 def getBatchScript ():
+	
+	import leoGlobals as g
+	from leoGlobals import true,false
 	
 	name = None ; i = 1 # Skip the dummy first arg.
 	while i + 1 < len(sys.argv):
@@ -188,15 +214,15 @@ def getBatchScript ():
 		i += 1
 
 	if not name: return None	
-	name = os_path_join(app.loadDir,name)
+	name = g.os_path_join(g.app.loadDir,name)
 	try:
 		f = None
 		try:
 			f = open(name,'r')
 			script = f.read()
-			# trace("script",script)
+			# g.trace("script",script)
 		except IOError:
-			es("can not open script file: " + name, color="red")
+			g.es("can not open script file: " + name, color="red")
 			script = None
 	finally:
 		if f: f.close()

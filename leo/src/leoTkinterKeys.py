@@ -2,7 +2,8 @@
 #@+node:@file leoTkinterKeys.py
 """Tkinter keystroke handling for Leo."""
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 #@nonl
 #@-node:@file leoTkinterKeys.py
 #@-leo

@@ -2,6 +2,8 @@
 #@+node:@file add_directives.py
 """Support new @direcives"""
 
+#@@language python
+
 from leoPlugins import *
 from leoGlobals import *
 

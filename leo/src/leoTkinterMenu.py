@@ -2,7 +2,8 @@
 #@+node:@file leoTkinterMenu.py
 """Tkinter menu handling for Leo."""
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
 import leoMenu
 import Tkinter
@@ -135,7 +136,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 	
 	def createOpenWithMenuFromTable (self,table):
 	
-		app.openWithTable = table # Override any previous table.
+		g.app.openWithTable = table # Override any previous table.
 		# Delete the previous entry.
 		parent = self.getMenu("File")
 		label = self.getRealMenuName("Open &With...")
@@ -159,7 +160,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 			if len(triple) == 3: # 6/22/03
 				shortcut_table.append(triple)
 			else:
-				es("createOpenWithMenuFromTable: invalid data",color="red")
+				g.es("createOpenWithMenuFromTable: invalid data",color="red")
 				return
 				
 		# for i in shortcut_table: print i
@@ -197,7 +198,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 				menu.entryconfig(realName,state="disabled")
 			except:
 				print "disableMenu menu,name:",menu,name
-				es_exception()
+				g.es_exception()
 				pass
 	#@-node:disableMenu
 	#@+node:enableMenu
@@ -205,7 +206,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 	
 	def enableMenu (self,menu,name,val):
 		
-		state = choose(val,"normal","disabled")
+		state = g.choose(val,"normal","disabled")
 		try:
 			menu.entryconfig(name,state=state)
 		except:
@@ -215,7 +216,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 				menu.entryconfig(realName,state=state)
 			except:
 				print "enableMenu menu,name,val:",menu,name,val
-				es_exception()
+				g.es_exception()
 				pass
 	#@nonl
 	#@-node:enableMenu
@@ -236,7 +237,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 				menu.entryconfig(realName,label=label,underline=underline)
 		except:
 			print "setMenuLabel menu,name,label:",menu,name,label
-			es_exception()
+			g.es_exception()
 			pass
 	#@nonl
 	#@-node:setMenuLabel

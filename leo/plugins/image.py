@@ -2,6 +2,8 @@
 #@+node:@file image.py
 """Handle images in body text"""
 
+#@@language python
+
 from leoPlugins import *
 from leoGlobals import *
 try:
@@ -23,7 +25,7 @@ if Tkinter: # Register the handlers...
 			#@		<< Select Image >>
 			#@+node:<< Select Image >>
 			# Display the image file in the text pane, if you can find the file
-			a = app()
+			a = app
 			c = keywords.get("c")
 			body = c.frame.body
 			
@@ -51,7 +53,7 @@ if Tkinter: # Register the handlers...
 	#@+node:onUnselect
 	def onUnselect (tag,keywords):
 	
-		a = app()
+		a = app
 		old_v = keywords.get("old_v")
 		if old_v:
 			h = old_v.headString()
@@ -59,7 +61,7 @@ if Tkinter: # Register the handlers...
 				#@			<< Unselect Image >>
 				#@+node:<< Unselect Image >>
 				# Erase image if it was previously displayed
-				a = app() ; c = keywords.get("c")
+				a = app ; c = keywords.get("c")
 				
 				if a.gsimage:
 					try:

@@ -2,7 +2,9 @@
 #@+node:@file leoTkinterPrefs.py
 #@@language python
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
+
 import leoPrefs
 import string,Tkinter
 Tk = Tkinter
@@ -29,10 +31,10 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		
 		"""Create the tkinter Prefs panel."""
 	
-		c = self.c ; gui = app.gui
+		c = self.c ; gui = g.app.gui
 		self.top = top = Tk.Toplevel()
 		c.frame.prefsPanel = self
-		head,tail = os_path_split(c.frame.title)
+		head,tail = g.os_path_split(c.frame.title)
 		self.top.title("Prefs for " + tail)
 		
 		# Create the outer frame
@@ -188,7 +190,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		c = self.c
 	
 		# Global options
-		self.replace_tabs_var.set(choose(c.tab_width<0,1,0))
+		self.replace_tabs_var.set(g.choose(c.tab_width<0,1,0))
 		self.tangle_batch_var.set(c.tangle_batch_flag)
 		self.untangle_batch_var.set(c.untangle_batch_flag)
 		self.pageWidthText.delete("1.0","end")
@@ -232,8 +234,8 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 	#@+node:onOK, onCancel, onRevert
 	def onOK (self):
 		"""Handle a click in the OK button in the tkinter Prefs panel."""
-		app.config.setConfigIvars(self.c)
-		app.config.update()
+		g.app.config.setConfigIvars(self.c)
+		g.app.config.update()
 		self.hide()
 	
 	def onCancel (self):
@@ -304,7 +306,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		
 		"""Handle any change in the tkinter Prefs panel."""
 		
-		c = top() ; v = c.currentVnode()
+		c = g.top() ; v = c.currentVnode()
 		self.top.after_idle(self.set_ivars,c)
 		c.frame.body.recolor(v)
 		# print self.print_ivars()
@@ -320,7 +322,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		language = self.lang_var.get()
 		c.target_language = self.target_language = language
 		c.frame.body.recolor(v)
-		# trace(language)
+		# g.trace(language)
 	#@nonl
 	#@-node:set_lang
 	#@-others

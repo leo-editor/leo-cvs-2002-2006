@@ -8,9 +8,10 @@
 This class and its subclasses hides the details of which gui is actually being used.
 Leo's core calls this class to allocate all gui objects.
 
-Plugins may define their own gui classes by setting app.gui."""
+Plugins may define their own gui classes by setting g.app.gui."""
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
 import leoFrame # for null gui.
 
@@ -79,7 +80,7 @@ class leoGui:
 	#@+node: leoGui.__init__
 	def __init__ (self,guiName):
 		
-		# trace("leoGui",guiName)
+		# g.trace("leoGui",guiName)
 		
 		self.leoIcon = None
 		self.mGuiName = guiName
@@ -100,20 +101,20 @@ class leoGui:
 		#@+node:<< compute the window title >>
 		# Set the window title and fileName
 		if fileName:
-			title = computeWindowTitle(fileName)
+			title = g.computeWindowTitle(fileName)
 		else:
 			s = "untitled"
-			n = app.numberOfWindows
+			n = g.app.numberOfWindows
 			if n > 0:
 				s += `n`
-			title = computeWindowTitle(s)
-			app.numberOfWindows = n+1
+			title = g.computeWindowTitle(s)
+			g.app.numberOfWindows = n+1
 		
 		#@-node:<< compute the window title >>
 		#@nl
 	
 		# Create an unfinished frame to pass to the commanders.
-		frame = app.gui.createLeoFrame(title)
+		frame = g.app.gui.createLeoFrame(title)
 		
 		# Create the commander and its subcommanders.
 		c = leoCommands.Commands(frame,fileName)
@@ -126,7 +127,7 @@ class leoGui:
 		
 		c.updateRecentFiles(fileName) # 12/01/03
 		
-		doHook("after-create-leo-frame",c=c)
+		g.doHook("after-create-leo-frame",c=c)
 		return c,frame
 	#@nonl
 	#@-node:newLeoCommanderAndFrame (gui-independent)
@@ -187,7 +188,7 @@ class leoGui:
 		self.oops()
 		
 	def runAskLeoIDDialog(self):
-		"""Create and run a dialog to get app.LeoID."""
+		"""Create and run a dialog to get g.app.LeoID."""
 		self.oops()
 	
 	def runAskOkDialog(self,title,message=None,text="Ok"):
@@ -348,7 +349,7 @@ class leoGui:
 	#@+node:oops
 	def oops (self):
 		
-		print "leoGui oops", callerName(2), "should be overridden in subclass"
+		print "leoGui oops", g.callerName(2), "should be overridden in subclass"
 	#@nonl
 	#@-node:oops
 	#@-others
@@ -373,7 +374,7 @@ class nullGui(leoGui):
 	
 		def __getattr__(self,attr):
 	
-			trace("nullGui",attr)
+			g.trace("nullGui",attr)
 			return nullObject()
 	#@nonl
 	#@-node: nullGui.__getattr__
@@ -403,10 +404,10 @@ class nullGui(leoGui):
 		
 		if self.script:
 			frame = self.lastFrame
-			app.log = frame.log
-			# es("Start of batch script...\n")
+			g.app.log = frame.log
+			# g.es("Start of batch script...\n")
 			self.lastFrame.c.executeScript(script=self.script)
-			# es("\nEnd of batch script")
+			# g.es("\nEnd of batch script")
 		
 		# Getting here will terminate Leo.
 	#@nonl
@@ -418,7 +419,7 @@ class nullGui(leoGui):
 		
 		It is NOT an error to use this method."""
 		
-		trace("nullGui",callerName(2))
+		g.trace("nullGui",g.callerName(2))
 		pass
 	#@nonl
 	#@-node:oops
@@ -442,17 +443,17 @@ class unitTestGui(leoGui):
 	def __init__ (self,dict,trace=false):
 		
 		self.dict = dict
-		self.oldGui = app.gui
+		self.oldGui = g.app.gui
 		self.trace=trace
 		
 		# Init the base class
 		leoGui.__init__ (self,"unitTestGui")
 	
-		app.gui = self
+		g.app.gui = self
 		
 	def destroySelf (self):
 		
-		app.gui = self.oldGui
+		g.app.gui = self.oldGui
 	#@nonl
 	#@-node: test.gui.__init__& destroySelf
 	#@+node:dialogs (unitTestGui)
@@ -490,7 +491,7 @@ class unitTestGui(leoGui):
 	#@+node:oops
 	def oops(self):
 		
-		trace("unitTestGui",callerName(2))
+		g.trace("unitTestGui",g.callerName(2))
 		
 		if 0: # Fail the unit test.
 			assert 0,"call to undefined method in unitTestMethod class"

@@ -2,6 +2,8 @@
 #@+node:@file nav_buttons.py
 """Adds navigation buttons to icon bar"""
 
+#@@language python
+
 from leoPlugins import *
 from leoGlobals import *
 from leoTkinterDialog import tkinterListBoxDialog
@@ -102,11 +104,11 @@ if Tkinter: # Register the handlers...
 		#@+node:createImage
 		def createImage (self,path):
 			
-			path = os.path.join(app().loadDir,path)
+			path = os.path.join(app.loadDir,path)
 			path = os.path.normpath(path)
 			
 			try:
-				image = Tkinter.PhotoImage(master=app().root,file=path)
+				image = Tkinter.PhotoImage(master=app.root,file=path)
 			except:
 				es("can not load icon: " + shortFileName(path))
 				image = None

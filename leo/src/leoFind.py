@@ -2,7 +2,8 @@
 #@+node:@file leoFind.py
 #@@language python
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
 #@<< Theory of operation of find/change >>
 #@+node:<< Theory of operation of find/change >>
@@ -28,7 +29,7 @@ from leoGlobals import *
 # 
 # 2. The Find and Change commands must not change the state of the outline or 
 # body pane during execution. That would cause severe flashing and slow down 
-# the commands a great deal. In particular, c.selectVnode and c.editVnode 
+# the commands a great deal. In particular, c.selectVnode and c.editPosition 
 # methods must not be called while looking for matches.
 # 
 # 3. When incremental Find or Change commands succeed they must leave the Leo 
@@ -250,7 +251,7 @@ class leoFind:
 	
 	def setup_button(self):
 	
-		self.c = c = app.log.c ; self.v = c.currentVnode()
+		self.c = c = g.app.log.c ; self.v = c.currentVnode()
 		assert(c)
 		c.bringToFront()
 		if 0: # We _must_ retain the editing status for incremental searches!
@@ -285,14 +286,14 @@ class leoFind:
 	
 	def batchChange (self,pos1,pos2,count):
 	
-		c = self.c ; v = self.v ; st = self.s_text ; gui = app.gui
+		c = self.c ; v = self.v ; st = self.s_text ; gui = g.app.gui
 		# Replace the selection with c.change_text
 		if gui.compareIndices(st,pos1, ">", pos2):
 			pos1,pos2=pos2,pos1
 		gui.replaceSelectionRangeWithText(st,pos1,pos2,c.change_text)
 		s = gui.getAllText(st)
 		# Update the selection.
-		insert=choose(c.reverse_flag,pos1,pos1+'+'+`len(c.change_text)`+'c')
+		insert=g.choose(c.reverse_flag,pos1,pos1+'+'+`len(c.change_text)`+'c')
 		gui.setSelectionRange(st,insert,insert)
 		gui.setInsertPoint(st,insert)
 		# Update the node
@@ -325,7 +326,7 @@ class leoFind:
 				if count == 1:
 					c.undoer.setUndoParams("Change All",v) # Tag the start of the Change all.
 			
-				# 11/5/03: Changed setUndoTypingParams to setUndoParams (avoids incremental undo).
+				# 11/5/03: use setUndoParams to avoid incremental undo.
 				c.undoer.setUndoParams("Change",v,
 					oldText=v.bodyString(), newText=s,
 					oldSel=sel, newSel=sel)
@@ -352,7 +353,7 @@ class leoFind:
 	#@+node:changeAll
 	def changeAll(self):
 	
-		c = self.c ; st = self.s_text ; gui = app.gui
+		c = self.c ; st = self.s_text ; gui = g.app.gui
 		if not self.checkArgs():
 			return
 		self.initInHeadline()
@@ -376,7 +377,7 @@ class leoFind:
 		if count > 0:
 			# A change was made.  Tag the end of the Change All command.
 			c.undoer.setUndoParams("Change All",v)
-		es("changed: " + `count`)
+		g.es("changed: " + `count`)
 		self.restore(data)
 	#@nonl
 	#@-node:changeAll
@@ -386,16 +387,16 @@ class leoFind:
 	
 	def changeSelection(self):
 	
-		c = self.c ; v = self.v ; gui = app.gui
-		# trace(`self.in_headline`)
-		t = choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
+		c = self.c ; v = self.v ; gui = g.app.gui
+		# g.trace(`self.in_headline`)
+		t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
 		oldSel = sel = gui.getTextSelection(t)
 		if sel and len(sel) == 2:
 			start,end = sel
 			if start == end:
 				sel = None
 		if not sel or len(sel) != 2:
-			es("No text selected")
+			g.es("No text selected")
 			return false
 	
 		# Replace the selection in _both_ controls.
@@ -435,7 +436,7 @@ class leoFind:
 	#@+node:doChange...Script
 	def doChangeScript (self):
 	
-		app.searchDict["type"] = "change"
+		g.app.searchDict["type"] = "change"
 		self.runChangeScript()
 	
 	def doChangeAllScript (self):
@@ -444,10 +445,10 @@ class leoFind:
 	
 		N.B. Only this code is executed."""
 	
-		app.searchDict["type"] = "changeAll"
+		g.app.searchDict["type"] = "changeAll"
 		while 1:
 			self.runChangeScript()
-			if not app.searchDict.get("continue"):
+			if not g.app.searchDict.get("continue"):
 				break
 	
 	def runChangeScript (self):
@@ -457,15 +458,15 @@ class leoFind:
 			assert(c.script_change_flag) # 2/1/04
 			exec c.change_text in {} # Use {} to get a pristine environment.
 		except:
-			es("exception executing change script")
-			es_exception(full=false)
-			app.searchDict["continue"] = false # 2/1/04
+			g.es("exception executing change script")
+			g.es_exception(full=false)
+			g.app.searchDict["continue"] = false # 2/1/04
 	#@nonl
 	#@-node:doChange...Script
 	#@+node:doFind...Script
 	def doFindScript (self):
 	
-		app.searchDict["type"] = "find"
+		g.app.searchDict["type"] = "find"
 		self.runFindScript()
 	
 	def doFindAllScript (self):
@@ -474,10 +475,10 @@ class leoFind:
 	
 		N.B. Only this code is executed."""
 	
-		app.searchDict["type"] = "findAll"
+		g.app.searchDict["type"] = "findAll"
 		while 1:
 			self.runFindScript()
-			if not app.searchDict.get("continue"):
+			if not g.app.searchDict.get("continue"):
 				break
 	
 	def runFindScript (self):
@@ -486,14 +487,14 @@ class leoFind:
 		try:
 			exec c.find_text in {} # Use {} to get a pristine environment.
 		except:
-			es("exception executing find script")
-			es_exception(full=false)
-			app.searchDict["continue"] = false # 2/1/04
+			g.es("exception executing find script")
+			g.es_exception(full=false)
+			g.app.searchDict["continue"] = false # 2/1/04
 	#@-node:doFind...Script
 	#@+node:findAll
 	def findAll(self):
 	
-		c = self.c ; t = self.s_text ; gui = app.gui
+		c = self.c ; t = self.s_text ; gui = g.app.gui
 		if not self.checkArgs():
 			return
 		self.initInHeadline()
@@ -509,7 +510,7 @@ class leoFind:
 				self.printLine(line,allFlag=true)
 			else: break
 		c.endUpdate()
-		es("found: " + `count`)
+		g.es("found: " + `count`)
 		self.restore(data)
 	#@nonl
 	#@-node:findAll
@@ -535,9 +536,9 @@ class leoFind:
 			self.showSuccess(pos,newpos)
 		else:
 			if self.wrapping:
-				es("end of wrapped search")
+				g.es("end of wrapped search")
 			else:
-				es("not found: " + "'" + c.find_text + "'")
+				g.es("not found: " + "'" + c.find_text + "'")
 			self.restore(data)
 	#@nonl
 	#@-node:findNext
@@ -586,23 +587,23 @@ class leoFind:
 	
 		c.whole_word_flag, c.ignore_case_flag, and c.pattern_match_flag control the search."""
 	
-		c = self.c ; v = self.v ; t = self.s_text ; gui = app.gui
+		c = self.c ; v = self.v ; t = self.s_text ; gui = g.app.gui
 		assert(c and t and v)
 		if c.selection_only_flag: # 11/9/03
 			index,stopindex = self.selStart, self.selEnd
-			# trace(index,stopindex,v)
+			# g.trace(index,stopindex,v)
 			if index == stopindex:
 				return None, None
 		else:
 			index = gui.getInsertPoint(t)
-			stopindex = choose(c.reverse_flag,gui.firstIndex(),gui.lastIndex())
+			stopindex = g.choose(c.reverse_flag,gui.firstIndex(),gui.lastIndex())
 		while 1:
 			try:
 				pos = self.gui_search(t,c.find_text,index,
 					stopindex=stopindex,backwards=c.reverse_flag,
 					regexp=c.pattern_match_flag,nocase=c.ignore_case_flag)
 			except:
-				es_exception(full=false)
+				g.es_exception(full=false)
 				self.errors += 1
 				return None, None
 			if not pos:
@@ -610,7 +611,7 @@ class leoFind:
 			if c.find_text == '\n':
 				# 2/3/04: A hack.  Time to get rid of gui indices!
 				newpos = gui.moveIndexToNextLine(t,pos)
-				# trace(pos,t.index(newpos))
+				# g.trace(pos,t.index(newpos))
 			else:
 				newpos = gui.moveIndexForward(t,pos,len(c.find_text))
 			if newpos is None:
@@ -636,7 +637,7 @@ class leoFind:
 			if self.wrapping and self.wrapPos and self.wrapVnode and self.v == self.wrapVnode:
 			
 				if c.reverse_flag and gui.compareIndices(t,pos, "<", self.wrapPos):
-					# trace("wrap done")
+					# g.trace("wrap done")
 					return None, None
 			
 				if not c.reverse_flag and gui.compareIndices(t,newpos, ">", self.wrapPos):
@@ -645,7 +646,7 @@ class leoFind:
 			#@-node:<< return if we are passed the wrap point >>
 			#@nl
 			if c.whole_word_flag:
-				index = t.index(choose(c.reverse_flag,pos,newpos))
+				index = t.index(g.choose(c.reverse_flag,pos,newpos))
 				#@			<< continue if not whole word match >>
 				#@+node:<< continue if not whole word match >>
 				# Set pos to None if word characters preceed or follow the selection.
@@ -654,18 +655,18 @@ class leoFind:
 				last   = gui.getCharBeforeIndex(t,newpos)
 				after  = gui.getCharAtIndex    (t,newpos)
 				
-				#trace("before,first",before,first,is_c_id(before),is_c_id(first))
-				#trace("after,last",  after,last,  is_c_id(after), is_c_id(last))
+				#g.trace("before,first",before,first,g.is_c_id(before),g.is_c_id(first))
+				#g.trace("after,last",  after,last,  g.is_c_id(after), g.is_c_id(last))
 				
-				if is_c_id(before) and is_c_id(first):
+				if g.is_c_id(before) and g.is_c_id(first):
 					continue
 				
-				if is_c_id(after) and is_c_id(last):
+				if g.is_c_id(after) and g.is_c_id(last):
 					continue
 				#@nonl
 				#@-node:<< continue if not whole word match >>
 				#@nl
-			#trace("found:",pos,newpos,v)
+			#g.trace("found:",pos,newpos,v)
 			gui.setTextSelection(t,pos,newpos)
 			return pos, newpos
 	#@nonl
@@ -676,7 +677,7 @@ class leoFind:
 	def selectNextVnode(self):
 	
 		c = self.c ; v = self.v
-		# trace(`v`)
+		# g.trace(`v`)
 	
 		if c.selection_only_flag:
 			return None
@@ -694,13 +695,11 @@ class leoFind:
 			# just switch to body pane.
 			self.in_headline = false
 			self.initNextText()
-			# trace(`v`)
+			# g.trace(`v`)
 			return v
 	
-		if c.reverse_flag:
-			v = v.threadBack()
-		else:
-			v = v.threadNext()
+		if c.reverse_flag: v = v.threadBack()
+		else:              v = v.threadNext()
 	
 		# Wrap if needed.
 		if not v and self.wrapping and not c.suboutline_only_flag:
@@ -713,13 +712,13 @@ class leoFind:
 	
 		# End wrapped searches.
 		if self.wrapping and v and v == self.wrapVnode:
-			# trace("ending wrapped search")
+			# g.trace("ending wrapped search")
 			v = None ; self.resetWrap()
 	
 		# End suboutline only searches.
 		if (c.suboutline_only_flag and self.onlyVnode and v and
 			(v == self.onlyVnode or not self.onlyVnode.isAncestorOf(v))):
-			# trace("end outline-only")
+			# g.trace("end outline-only")
 			v = None ; self.onlyVnode = None
 	
 		self.v = v # used in initNextText().
@@ -735,10 +734,10 @@ class leoFind:
 		c = self.c
 		val = true
 		if not c.search_headline_flag and not c.search_body_flag:
-			es("not searching headline or body")
+			g.es("not searching headline or body")
 			val = false
 		if len(c.find_text) == 0:
-			es("empty find patttern")
+			g.es("empty find patttern")
 			val = false
 		return val
 	#@nonl
@@ -774,14 +773,14 @@ class leoFind:
 	def initBatchText(self):
 		v = self.v
 		self.wrapping = false # Only interactive commands allow wrapping.
-		s = choose(self.in_headline,v.headString(), v.bodyString())
+		s = g.choose(self.in_headline,v.headString(), v.bodyString())
 		return self.init_s_text(s)
 	
 	# Call this routine when moving to the next node when a search fails.
 	# Same as above except we don't reset wrapping flag.
 	def initNextText(self):
 		v = self.v
-		s = choose(self.in_headline,v.headString(), v.bodyString())
+		s = g.choose(self.in_headline,v.headString(), v.bodyString())
 		return self.init_s_text(s)
 	#@nonl
 	#@-node:initBatchText & initNextText
@@ -795,7 +794,7 @@ class leoFind:
 	
 		if c.search_headline_flag and c.search_body_flag:
 			# Do not change this line without careful thought and extensive testing!
-			self.in_headline = (v == c.frame.tree.editVnode())
+			self.in_headline = (v == c.frame.tree.editPosition())
 		else:
 			self.in_headline = c.search_headline_flag
 	#@nonl
@@ -805,11 +804,11 @@ class leoFind:
 	
 	def initInteractiveCommands(self):
 	
-		c = self.c ; v = self.v ; gui = app.gui
+		c = self.c ; v = self.v ; gui = g.app.gui
 	
 		self.errors = 0
 		if self.in_headline:
-			c.frame.tree.setEditVnode(v)
+			c.frame.tree.setEditPosition(v)
 			t = v.edit_text()
 			sel = None
 		else:
@@ -837,16 +836,16 @@ class leoFind:
 		context = c.batch_flag # "batch" now indicates context
 	
 		if allFlag and both and context:
-			es(`self.v`)
-			type = choose(self.in_headline,"head: ","body: ")
-			es(type + line)
+			g.es(`self.v`)
+			type = g.choose(self.in_headline,"head: ","body: ")
+			g.es(type + line)
 		elif allFlag and context and not self.v.isVisited():
 			# We only need to print the context once.
-			es(`self.v`)
-			es(line)
+			g.es(`self.v`)
+			g.es(line)
 			self.v.setVisited()
 		else:
-			es(line)
+			g.es(line)
 	#@nonl
 	#@-node:printLine
 	#@+node:restore
@@ -854,7 +853,7 @@ class leoFind:
 	
 	def restore (self,data):
 	
-		c = self.c ; gui = app.gui
+		c = self.c ; gui = g.app.gui
 		in_headline,v,t,insert,start,end = data
 	
 		# Don't try to reedit headline.
@@ -874,8 +873,8 @@ class leoFind:
 	#@+node:save
 	def save (self):
 	
-		c = self.c ; v = self.v ; gui = app.gui
-		t = choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
+		c = self.c ; v = self.v ; gui = g.app.gui
+		t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
 		insert = gui.getInsertPoint(t)
 		sel = gui.getSelectionRange(t)
 		if len(sel) == 2:
@@ -893,7 +892,7 @@ class leoFind:
 		Returns self.dummy_vnode, v.edit_text() or c.frame.bodyCtrl with
 		"insert" and "sel" points set properly."""
 	
-		c = self.c ; v = self.v ; gui = app.gui
+		c = self.c ; v = self.v ; gui = g.app.gui
 	
 		c.beginUpdate()
 		if 1: # range of update...
@@ -901,16 +900,16 @@ class leoFind:
 			c.frame.tree.redraw_now() # Redraw now so selections are not destroyed.
 			# Select the found vnode again after redraw.
 			if self.in_headline:
-				c.editVnode(v)
+				c.editPosition(v)
 				c.frame.tree.setNormalLabelState(v)
 				assert(v.edit_text())
 			else:
 				c.selectVnode(v)
 		c.endUpdate(false) # Do not draw again!
 	
-		t = choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
-		# trace(`self.in_headline` + "," + `t`)
-		insert = choose(c.reverse_flag,pos,newpos)
+		t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
+		# g.trace(`self.in_headline` + "," + `t`)
+		insert = g.choose(c.reverse_flag,pos,newpos)
 		gui.setInsertPoint(t,insert)
 		gui.setSelectionRange(t,pos,newpos)
 		if not self.in_headline:
@@ -931,7 +930,7 @@ class leoFind:
 	
 	def oops(self):
 		print ("leoFind oops:",
-			callerName(2),
+			g.callerName(2),
 			"should be overridden in subclass")
 	#@-node:Must be overridden in subclasses
 	#@-others

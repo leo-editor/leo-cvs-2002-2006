@@ -2,6 +2,8 @@
 #@+node:@file plugins_menu.py
 """Create a Plugins menu"""
 
+#@@language python
+
 # Written by Paul A. Paterson.  Revised by Edward K. Ream.
 
 ## To do: add Revert button to each dialog.
@@ -239,7 +241,7 @@ if Tkinter: # Register the handlers...
 			version and description of a plugin.
 			"""
 		
-			root = app().root
+			root = app.root
 			self.top = top = Tk.Toplevel(root)
 			app.gui.attachLeoIcon(self.top)
 			top.title("About " + name)
@@ -286,7 +288,7 @@ if Tkinter: # Register the handlers...
 		c = keywords.get("c")
 		old_path = sys.path[:] # Make a _copy_ of the path.
 	
-		path = os.path.join(app().loadDir,"..","plugins")
+		path = os.path.join(app.loadDir,"..","plugins")
 		sys.path = path
 		
 		if os.path.exists(path):

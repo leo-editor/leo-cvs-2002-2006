@@ -4,7 +4,9 @@
 
 """Leo's base compare class."""
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
+
 import leoCompare
 import Tkinter,tkFileDialog
 
@@ -70,7 +72,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 	
 	def finishCreate (self):
 	
-		config = app.config
+		config = g.app.config
 		
 		# File names.
 		for i,option in (
@@ -85,7 +87,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 				e.insert(0,name)
 				
 		name = config.getComparePref("output_file")
-		b = choose(name and len(name) > 0,1,0)
+		b = g.choose(name and len(name) > 0,1,0)
 		self.useOutputFileVar.set(b)
 	
 		# File options.
@@ -103,7 +105,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 	
 		ext = config.getComparePref("limit_directory_search_extension")
 		b = ext and len(ext) > 0
-		b = choose(b and b != 0,1,0)
+		b = g.choose(b and b != 0,1,0)
 		self.limitToExtensionVar.set(b)
 		if b:
 			e = self.extensionEntry
@@ -129,7 +131,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		
 		n = config.getIntComparePref("limit_count")
 		b = n and n > 0
-		b = choose(b and b != 0,1,0)
+		b = g.choose(b and b != 0,1,0)
 		self.stopAfterMismatchVar.set(b)
 		if b:
 			e = self.countEntry
@@ -161,8 +163,8 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 	#@+node:createFrame
 	def createFrame (self):
 	
-		gui = app.gui
-		self.top = top = Tk.Toplevel(app.root)
+		gui = g.app.gui
+		self.top = top = Tk.Toplevel(g.app.root)
 		top.title("Leo Compare files and directories")
 		top.protocol("WM_DELETE_WINDOW", self.onClose)
 	
@@ -393,7 +395,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 			
 		if fileName and len(fileName) > 0:
 			# The dialog also warns about this, so this may never happen.
-			if not os_path_exists(fileName):
+			if not g.os_path_exists(fileName):
 				self.show("not found: " + fileName)
 				fileName = None
 		else: fileName = None
@@ -459,7 +461,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		
 		v = self.printMatchesVar.get()
 		b = self.printButtons[1]
-		state = choose(v,"normal","disabled")
+		state = g.choose(v,"normal","disabled")
 		b.configure(state=state)
 	#@nonl
 	#@-node:onPrintMatchedLines

@@ -2,9 +2,11 @@
 #@+node:@file leoFileCommands.py
 #@@language python
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
+
 import leoNodes
-import os,time
+import os,string,time
 
 #@+at 
 #@nonl
@@ -34,7 +36,7 @@ class baseFileCommands:
 	#@+node:leoFileCommands._init_
 	def __init__(self,c):
 	
-		# trace("__init__", "fileCommands.__init__")
+		# g.trace("__init__", "fileCommands.__init__")
 		self.c = c
 		self.frame = c.frame
 		self.initIvars()
@@ -44,10 +46,10 @@ class baseFileCommands:
 		# General
 		self.maxTnodeIndex = 0
 		self.numberOfTnodes = 0
-		self.topVnode = None
+		self.topPosition = None
 		self.mFileName = ""
 		self.fileDate = -1
-		self.leo_file_encoding = app.config.new_leo_file_encoding
+		self.leo_file_encoding = g.app.config.new_leo_file_encoding
 		# For reading
 		self.fileFormatNumber = 0
 		self.ratio = 0.5
@@ -57,7 +59,9 @@ class baseFileCommands:
 		self.outputFile = None # File for normal writing
 		self.outputList = None # List of strings for pasting
 		self.openDirectory = None
+		self.topVnode = None
 		self.usingClipboard = false
+		self.currentPosition = None
 		# New in 3.12
 		self.copiedTree = None
 		self.tnodesDict = {}
@@ -69,7 +73,7 @@ class baseFileCommands:
 		"""Convert Tnnn to nnn, leaving gnx's unchanged."""
 	
 		# index might be Tnnn, nnn, or gnx.
-		id,time,n = app.nodeIndices.scanGnx(index,0)
+		id,time,n = g.app.nodeIndices.scanGnx(index,0)
 		if time == None: # A pre-4.1 file index.
 			if index[0] == "T":
 				index = index[1:]
@@ -77,10 +81,10 @@ class baseFileCommands:
 		return index
 	#@nonl
 	#@-node:canonicalTnodeIndex
-	#@+node:createVnode
-	def createVnode(self,parent,back,tref,headline,attrDict):
+	#@+node:createVnode (changed for 4.2)
+	def createVnode (self,parent,back,tref,headline,attrDict):
 		
-		# trace(`headline` + ", parent:" + `parent` + ", back:" + `back`)
+		# g.trace(headline)
 		v = None ; c = self.c
 		# Shared tnodes are placed in the file even if empty.
 		if tref == -1:
@@ -88,8 +92,7 @@ class baseFileCommands:
 		else:
 			tref = self.canonicalTnodeIndex(tref)
 			t = self.tnodesDict.get(tref)
-			if not t:
-				t = self.newTnode(tref)
+			if not t: t = self.newTnode(tref)
 		if back: # create v after back.
 			v = back.insertAfter(t)
 		elif parent: # create v as the parent's first child.
@@ -97,32 +100,38 @@ class baseFileCommands:
 		else: # create a root vnode
 			v = leoNodes.vnode(c,t)
 			v.moveToRoot()
-			c.frame.tree.setRootVnode(v)
+	
+		if v not in v.t.vnodeList:
+			v.t.vnodeList.append(v) # New in 4.2.
+	
+		skip = len(v.t.vnodeList) > 1
+	
 		v.initHeadString(headline,encoding=self.leo_file_encoding)
 		#@	<< handle unknown vnode attributes >>
 		#@+node:<< handle unknown vnode attributes >>
 		keys = attrDict.keys()
 		if keys:
-			v.unknownAttributes = attrDict
+			p.v.unknownAttributes = attrDict
+		
 			if 0: # For debugging.
-				s = "unknown attributes for " + v.headString()
-				print s ; es(s, color = "blue")
+				s = "unknown attributes for " + p.headString()
+				print s ; g.es(s,color="blue")
 				for key in keys:
 					s = "%s = %s" % (key,attrDict.get(key))
-					print s ; es(s)
+					print s ; g.es(s)
 		#@nonl
 		#@-node:<< handle unknown vnode attributes >>
 		#@nl
-		return v
+		# if skip: print "clone: ",v
+		return v,skip
 	#@nonl
-	#@-node:createVnode
+	#@-node:createVnode (changed for 4.2)
 	#@+node:finishPaste
 	# This method finishes pasting the outline from the clipboard.
 	def finishPaste(self):
 	
 		c = self.c
-		current = c.currentVnode()
-		after = current.nodeAfterTree()
+		current = c.currentPosition()
 		c.beginUpdate()
 		#@	<< reassign tnode indices and clear all clone links >>
 		#@+node:<< reassign tnode indices and clear all clone links >>
@@ -135,22 +144,17 @@ class baseFileCommands:
 		#@-at
 		#@@c
 		
-		v = current
-		v.clearVisitedInTree()
-		after = v.nodeAfterTree()
+		current.clearVisitedInTree()
 		
-		while v and v != after:
-			if not v.t.isVisited():
-				v.t.setVisited()
+		for p in current.self_and_subtree_iter():
+			t = p.v.t
+			if not t.isVisited():
+				t.setVisited()
 				self.maxTnodeIndex += 1
-				v.t.setFileIndex(self.maxTnodeIndex)
-				# trace(v,self.maxTnodeIndex)
-			v = v.threadNext()
+				t.setFileIndex(self.maxTnodeIndex)
 		#@nonl
 		#@-node:<< reassign tnode indices and clear all clone links >>
 		#@nl
-		self.setAllJoinLinks(root=current) # 12/8/03
-		c.initAllCloneBits() # 12/8/03
 		c.selectVnode(current)
 		c.endUpdate()
 		return current
@@ -273,7 +277,7 @@ class baseFileCommands:
 			raise BadLeoFile("unknown tag not followed by '='")
 		self.fileIndex += 1
 		val = self.getDqString()
-		trace(tag,val)
+		g.trace(tag,val)
 		return tag,val
 		
 	#@nonl
@@ -300,7 +304,7 @@ class baseFileCommands:
 		self.skipWsAndNl() # guarantees at least one more character.
 		i = self.fileIndex
 		tag = string.lower(tag)
-		j = skip_c_id(self.fileBuffer,i)
+		j = g.skip_c_id(self.fileBuffer,i)
 		word = self.fileBuffer[i:j]
 		word = string.lower(word)
 		if tag == word:
@@ -362,15 +366,15 @@ class baseFileCommands:
 	#@+node:getFindPanelSettings
 	def getFindPanelSettings (self):
 	
-		c = self.c ; config = app.config ; findFrame = app.findFrame
+		c = self.c ; config = g.app.config ; findFrame = g.app.findFrame
 		#@	<< Set defaults of all flags >>
 		#@+node:<< Set defaults of all flags >>
-		if app.gui.guiName() == "tkinter":
+		if g.app.gui.guiName() == "tkinter":
 		
 			for var in findFrame.intKeys:
 				attr = "%s_flag" % (var)
 				setattr(c,attr,false)
-				# trace(attr)
+				# g.trace(attr)
 		#@-node:<< Set defaults of all flags >>
 		#@nl
 		if not self.getOpenTag("<find_panel_settings"):
@@ -406,8 +410,8 @@ class baseFileCommands:
 		# Override .leo file's preferences if settings are in leoConfig.txt.
 		config.setCommandsFindIvars(c)
 		# Update the settings immediately.
-		if app.gui.guiName() == "tkinter":
-			app.findFrame.init(c)
+		if g.app.gui.guiName() == "tkinter":
+			g.app.findFrame.init(c)
 	#@nonl
 	#@-node:getFindPanelSettings
 	#@+node:getGlobals
@@ -435,7 +439,7 @@ class baseFileCommands:
 		self.getTag("</globals>")
 	#@nonl
 	#@-node:getGlobals
-	#@+node:getLeoFile (calls setAllJoinLinks, initAllCloneBits)
+	#@+node:getLeoFile
 	# The caller should enclose this in begin/endUpdate.
 	
 	def getLeoFile (self,fileName,atFileNodesFlag=true):
@@ -448,18 +452,17 @@ class baseFileCommands:
 			self.read_only = false
 			self.read_only = not os.access(fileName,os.W_OK)
 			if self.read_only:
-				es("read only: " + fileName,color="red")
+				g.es("read only: " + fileName,color="red")
 		except:
 			if 0: # testing only: access may not exist on all platforms.
-				es("exception getting file access")
-				es_exception()
+				g.es("exception getting file access")
+				g.es_exception()
 		#@nonl
 		#@-node:<< warn on read-only files >>
 		#@nl
 		self.mFileName = c.mFileName
 		self.tnodesDict = {}
 		ok = true
-		c.frame.tree.setIniting(true) # Disable changes in endEditLabel
 		c.loading = true # disable c.changed
 		try:
 			#@		<< scan all the xml elements >>
@@ -474,7 +477,7 @@ class baseFileCommands:
 			
 			# Causes window to appear.
 			c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio) 
-			es("reading: " + fileName)
+			g.es("reading: " + fileName)
 			
 			self.getVnodes()
 			self.getTnodes()
@@ -488,26 +491,28 @@ class baseFileCommands:
 			#@+node:<< raise an alert >>
 			# All other exceptions are Leo bugs.
 			
-			es_exception()
-			alert(self.mFileName + " is not a valid Leo file: " + `message`)
+			g.es_exception()
+			g.alert(self.mFileName + " is not a valid Leo file: " + `message`)
 			#@nonl
 			#@-node:<< raise an alert >>
 			#@nl
 			ok = false
-		self.setAllJoinLinks() # 9/23/03: Must do this before reading @file nodes.
-		c.initAllCloneBits() # 9/23/03
+			
+		c.frame.tree.redraw_now()
+		
 		if ok and atFileNodesFlag:
 			c.atFileCommands.readAll(c.rootVnode(),partialFlag=false)
-		if not c.frame.tree.currentVnode():
-			c.frame.tree.setCurrentVnode(c.rootVnode())
-		c.selectVnode(c.frame.tree.currentVnode()) # load body pane
-		c.frame.tree.setIniting(false) # Enable changes in endEditLabel
+	
+		if not c.currentPosition():
+			c.setCurrentPosition(c.rootPosition())
+	
+		c.selectVnode(c.currentPosition()) # load body pane
 		c.loading = false # reenable c.changed
 		c.setChanged(c.changed) # Refresh the changed marker.
 		self.tnodesDict = {}
 		return ok, self.ratio
 	#@nonl
-	#@-node:getLeoFile (calls setAllJoinLinks, initAllCloneBits)
+	#@-node:getLeoFile
 	#@+node:getLeoHeader
 	def getLeoHeader (self):
 	
@@ -525,7 +530,7 @@ class baseFileCommands:
 				self.getDquote() ; self.numberOfTnodes = self.getLong() ; self.getDquote()
 			elif self.matchTag("max_tnode_index="):
 				self.getDquote() ; self.maxTnodeIndex = self.getLong() ; self.getDquote()
-				# trace("max_tnode_index:",self.maxTnodeIndex)
+				# g.trace("max_tnode_index:",self.maxTnodeIndex)
 			elif self.matchTag("clone_windows="):
 				self.getDquote() ; self.getLong() ; self.getDquote() # no longer used.
 			else:
@@ -581,7 +586,7 @@ class baseFileCommands:
 	#@+node:getPrefs
 	def getPrefs (self):
 	
-		c = self.c ; config = app.config
+		c = self.c ; config = g.app.config
 		
 		if self.getOpenTag("<preferences"):
 			return
@@ -619,8 +624,8 @@ class baseFileCommands:
 				# New in version 0.16.
 				c.tangle_directory = self.getEscapedString()
 				self.getTag("</defaultDirectory>")
-				if not os_path_exists(c.tangle_directory):
-					es("default tangle directory not found:" + c.tangle_directory)
+				if not g.os_path_exists(c.tangle_directory):
+					g.es("default tangle directory not found:" + c.tangle_directory)
 			elif self.matchTag("<TSyntaxMemo_options>"):
 				self.getEscapedString() # ignored
 				self.getTag("</TSyntaxMemo_options>")
@@ -636,7 +641,7 @@ class baseFileCommands:
 	def getTargetLanguage (self):
 		
 		# Must match longer tags before short prefixes.
-		for name in app.language_delims_dict.keys():
+		for name in g.app.language_delims_dict.keys():
 			if self.matchTagWordIgnoringCase(name):
 				language = name.replace("/","")
 				# self.getDquote()
@@ -671,22 +676,21 @@ class baseFileCommands:
 				index = self.getDqString()
 			elif self.matchTag("rtf=\"1\""): pass # ignored
 			elif self.matchTag("rtf=\"0\""): pass # ignored
-			elif self.matchTag(">"):
-				break
+			elif self.matchTag(">"):         break
 			else: # New for 4.0: allow unknown attributes.
 				attr,val = self.getUnknownTag()
 				attrDict[attr] = val
 				
-		if app.use_gnx:
+		if g.app.use_gnx:
 			# index might be Tnnn, nnn, or gnx.
-			id,time,n = app.nodeIndices.scanGnx(index,0)
+			id,time,n = g.app.nodeIndices.scanGnx(index,0)
 			if time == None: # A pre-4.1 file index.
 				if index[0] == "T":
 					index = index[1:]
 	
 		index = self.canonicalTnodeIndex(index)
 		t = self.tnodesDict.get(index)
-		# trace(t)
+		# g.trace(t)
 		#@	<< handle unknown attributes >>
 		#@+node:<< handle unknown attributes >>
 		keys = attrDict.keys()
@@ -694,10 +698,10 @@ class baseFileCommands:
 			t.unknownAttributes = attrDict
 			if 0: # For debugging.
 				s = "unknown attributes for tnode"
-				print s ; es(s, color = "blue")
+				print s ; g.es(s, color = "blue")
 				for key in keys:
 					s = "%s = %s" % (key,attrDict.get(key))
-					print s ; es(s)
+					print s ; g.es(s)
 		#@nonl
 		#@-node:<< handle unknown attributes >>
 		#@nl
@@ -708,7 +712,7 @@ class baseFileCommands:
 				if t:
 					s = self.getEscapedString()
 					t.setTnodeText(s,encoding=self.leo_file_encoding)
-					# trace(`index`,`len(s)`)
+					# g.trace(index,len(s))
 				#@nonl
 				#@-node:<< handle read from clipboard >>
 				#@nl
@@ -721,7 +725,7 @@ class baseFileCommands:
 				#@-node:<< handle read from file >>
 				#@nl
 		else:
-			es("no tnode with index: " + `index` + ".  The text will be discarded")
+			g.es("no tnode with index: " + `index` + ".  The text will be discarded")
 		self.getTag("</t>")
 	#@nonl
 	#@-node:getTnode
@@ -734,15 +738,15 @@ class baseFileCommands:
 			
 		while self.matchTag("<t"):
 			self.getTnode()
+	
 		self.getTag("</tnodes>")
 	#@-node:getTnodes
-	#@+node:getVnode
-	def getVnode (self,parent,back):
+	#@+node:getVnode changed for 4.2)
+	def getVnode (self,parent,back,skip):
 	
-		# trace("parent:" + `parent` + ", back:" + `back`)
-		c = self.c
+		c = self.c ; v = None
 		setCurrent = setExpanded = setMarked = setOrphan = setTop = false
-		tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {}
+		tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
 		# we have already matched <v.
 		while 1:
 			if self.matchTag("a=\""):
@@ -758,6 +762,7 @@ class baseFileCommands:
 					elif self.matchChar('T'): setTop = true
 					elif self.matchChar('V'): setCurrent = true
 					else: break
+				
 				self.getDquote()
 				#@nonl
 				#@-node:<< Handle vnode attribute bits  >>
@@ -778,40 +783,38 @@ class baseFileCommands:
 		# Headlines are optional.
 		if self.matchTag("<vh>"):
 			headline = self.getEscapedString() ; self.getTag("</vh>")
-		# Link v into the outline using parent and back.
-		v = self.createVnode(parent,back,tref,headline,attrDict)
-		if tnodeList:
-			v.tnodeList = tnodeList # New for 4.0
-			# trace("%4d" % len(tnodeList),v)
-		#@	<< Set the remembered status bits >>
-		#@+node:<< Set the remembered status bits >>
-		if setCurrent:
-			c.frame.tree.setCurrentVnode(v)
 		
-		if setExpanded:
-			v.initExpandedBit()
+		# g.trace("skip:",skip," parent:",parent," back:",back,"headline:",headline)
 		
-		if setMarked:
-			v.setMarked()
-		
-		if setOrphan:
-			v.setOrphan()
-		
-		if setTop:
-			self.topVnode = v # 1/30/04
-		#@nonl
-		#@-node:<< Set the remembered status bits >>
-		#@nl
+		if not skip:
+			v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+			if tnodeList:
+				v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
+				# g.trace("%4d" % len(tnodeList),v)
+			#@		<< Set the remembered status bits >>
+			#@+node:<< Set the remembered status bits >>
+			# We can't set the current position in here!
+			# if setCurrent:
+			#	c.setCurrentPosition(p)
+			
+			if setExpanded: v.initExpandedBit()
+			if setMarked:   v.setMarked()
+			if setOrphan:   v.setOrphan()
+			if setTop:      self.topVnode = v
+			#@nonl
+			#@-node:<< Set the remembered status bits >>
+			#@nl
+	
 		# Recursively create all nested nodes.
 		parent = v ; back = None
 		while self.matchTag("<v"):
-			back = self.getVnode(parent,back)
+			back = self.getVnode(parent,back,skip)
 		# End this vnode.
 		self.getTag("</v>")
 		return v
 	#@nonl
-	#@-node:getVnode
-	#@+node:getTnodeList (4.0)
+	#@-node:getVnode changed for 4.2)
+	#@+node:getTnodeList (4.0,4.2)
 	def getTnodeList (self,s):
 	
 		"""Parse a list of tnode indices in string s."""
@@ -827,31 +830,42 @@ class baseFileCommands:
 			t = fc.tnodesDict.get(index)
 			if not t:
 				# Not an error: create a new tnode and put it in fc.tnodesDict.
-				# trace("not allocated: %s" % index)
+				# g.trace("not allocated: %s" % index)
 				t = self.newTnode(index)
 			tnodeList.append(t)
 			
+		# if tnodeList: g.trace(len(tnodeList))
 		return tnodeList
-	#@nonl
-	#@-node:getTnodeList (4.0)
+	#@-node:getTnodeList (4.0,4.2)
 	#@+node:getVnodes
 	def getVnodes (self):
 	
 		c = self.c
-		if  self.usingClipboard:
-			# Paste after the current vnode.
-			back = c.currentVnode() ; parent = back.parent()
-		else:
-			back = None ; parent = None
 	
 		if self.getOpenTag("<vnodes>"):
 			return
+			
+		if self.usingClipboard:
+			oldRoot = c.rootPosition()
+			oldCurrent = c.currentPosition()
 	
+		back = parent = None # This routine _must_ work on vnodes!
 		while self.matchTag("<v"):
-			back = self.getVnode(parent,back)
+			back = self.getVnode(parent,back,skip=false)
+	
+		if self.usingClipboard:
+			# Link in the pasted nodes after the current position.
+			newRoot = c.rootPosition()
+			c.setRootPosition(oldRoot)
+			newRoot.v.linkAfter(oldCurrent.v)
+			newCurrent = oldCurrent.copy()
+			newCurrent.v = newRoot.v
+			c.setCurrentPosition(newCurrent)
+			
+		if self.topVnode:
+			pass ## TO DO: create topPosition by searching for topVnode.
 	
 		self.getTag("</vnodes>")
-	#@nonl
 	#@-node:getVnodes
 	#@+node:getXmlStylesheetTag
 	def getXmlStylesheetTag (self):
@@ -875,15 +889,15 @@ class baseFileCommands:
 	
 	def getXmlVersionTag (self):
 	
-		self.getTag(app.prolog_prefix_string)
+		self.getTag(g.app.prolog_prefix_string)
 		encoding = self.getDqString()
-		self.getTag(app.prolog_postfix_string)
+		self.getTag(g.app.prolog_postfix_string)
 	
-		if isValidEncoding(encoding):
+		if g.isValidEncoding(encoding):
 			self.leo_file_encoding = encoding
-			es("File encoding: " + encoding, color="blue")
+			g.es("File encoding: " + encoding, color="blue")
 		else:
-			es("invalid encoding in .leo file: " + encoding, color="red")
+			g.es("invalid encoding in .leo file: " + encoding, color="red")
 	#@-node:getXmlVersionTag
 	#@+node:skipWs
 	def skipWs (self):
@@ -917,7 +931,7 @@ class baseFileCommands:
 	def newTnode(self,index):
 	
 		if self.tnodesDict.has_key(index):
-			es("bad tnode index: " + `index` + ". Using empty text.")
+			g.es("bad tnode index: " + `index` + ". Using empty text.")
 			return leoNodes.tnode()
 		else:
 			# Create the tnode.  Use the _original_ index as the key in tnodesDict.
@@ -925,10 +939,10 @@ class baseFileCommands:
 			self.tnodesDict[index] = t
 		
 			if type(index) not in (type(""),type(u"")):
-				es("newTnode: unexpected index type:"+`type(index)`+`index`,color="red")
+				g.es("newTnode: unexpected index type:"+`type(index)`+`index`,color="red")
 			
 			# Convert any pre-4.1 index to a gnx.
-			id,time,n = gnx = app.nodeIndices.scanGnx(index,0)
+			id,time,n = gnx = g.app.nodeIndices.scanGnx(index,0)
 			if time != None:
 				t.setFileIndex(gnx)
 	
@@ -940,8 +954,6 @@ class baseFileCommands:
 	
 		c = self.c ; current = c.currentVnode()
 		c.atFileCommands.readAll(current,partialFlag=true)
-		self.setAllJoinLinks(current) # 5/3/03
-		c.initAllCloneBits() # 5/3/03
 		c.redraw() # 4/4/03
 		
 		# 7/8/03: force an update of the body pane.
@@ -967,7 +979,7 @@ class baseFileCommands:
 		#@-at
 		#@@c
 		
-		dir = os_path_dirname(fileName)
+		dir = g.os_path_dirname(fileName)
 		
 		if len(dir) > 0:
 			c.openDirectory = dir
@@ -982,8 +994,8 @@ class baseFileCommands:
 		c.frame.resizePanesToRatio(ratio,secondary_ratio)
 		if 0: # 1/30/04: this is useless.
 			# This should be done after the pane size has been set.
-			if self.topVnode:
-				c.frame.tree.setTopVnode(self.topVnode)
+			if self.topPosition:
+				c.frame.tree.setTopPosition(self.topPosition)
 				c.redraw()
 		# delete the file buffer
 		self.fileBuffer = ""
@@ -1008,47 +1020,26 @@ class baseFileCommands:
 		#@-at
 		#@@c
 		
-		dir = os_path_dirname(fileName)
+		dir = g.os_path_dirname(fileName)
 		
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@nonl
 		#@-node:<< Set the default directory >> in fileCommands.readOutlineOnly
 		#@nl
-		self.topVnode = None
+		self.topPosition = None
 		c.beginUpdate()
 		ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=true)
 		frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
 		if 0: # 1/30/04: this is useless.
-			if self.topVnode: 
-				c.frame.tree.setTopVnode(self.topVnode)
+			if self.topPosition: 
+				c.setTopVnode(self.topPosition)
 		c.endUpdate()
 		# delete the file buffer
 		self.fileBuffer = ""
 		return ok
 	#@nonl
 	#@-node:fileCommands.open
-	#@+node:fileCommands.setAllJoinLinks
-	def setAllJoinLinks (self,root=None):
-		
-		"""Update all join links in the tree"""
-	
-		if root: # Only update the subtree.
-			v = root # 6/3/03
-			after = root.nodeAfterTree()
-			while v and v != after:
-				if v not in v.t.joinList:
-					v.t.joinList.append(v)
-				v = v.threadNext()
-		else: # Update everything.
-			v = self.c.rootVnode()
-			while v:
-				# trace(v,v.t)
-				if v not in v.t.joinList:
-					v.t.joinList.append(v)
-				v = v.threadNext()
-	#@nonl
-	#@-node:fileCommands.setAllJoinLinks
 	#@+node:xmlUnescape
 	def xmlUnescape(self,s):
 	
@@ -1065,25 +1056,21 @@ class baseFileCommands:
 		
 		"""Assign a file index to all tnodes"""
 		
-		c = self.c ; nodeIndices = app.nodeIndices
-		root = c.rootVnode() # 4.1: Always assign all indices.
-		nodeIndices.setTimestamp() # This call is fairly expensive.
-		
-		# trace(app.use_gnx,root)
+		c = self.c ; nodeIndices = g.app.nodeIndices
 	
-		if app.use_gnx:
+		nodeIndices.setTimestamp() # This call is fairly expensive.
+	
+		if g.app.use_gnx:
 			#@		<< assign missing gnx's, converting ints to gnx's >>
 			#@+node:<< assign missing gnx's, converting ints to gnx's >>
 			# Always assign an (immutable) index, even if the tnode is empty.
 			
-			v = root
-			while v:
+			for p in c.allNodes_iter():
 				try: # Will fail for None or any pre 4.1 file index.
-					id,time,n = v.t.fileIndex
-				except:
+					id,time,n = p.v.t.fileIndex
+				except TypeError:
 					# Don't convert to string until the actual write.
-					v.t.fileIndex = nodeIndices.getNewIndex()
-				v = v.threadNext()
+					p.v.t.fileIndex = nodeIndices.getNewIndex()
 			#@nonl
 			#@-node:<< assign missing gnx's, converting ints to gnx's >>
 			#@nl
@@ -1091,22 +1078,23 @@ class baseFileCommands:
 			#@		<< reassign all tnode indices >>
 			#@+node:<< reassign all tnode indices >>
 			# Clear out all indices.
-			v = root
-			while v:
-				v.t.fileIndex = None
-				v = v.threadNext()
+			for p in c.allNodes_iter():
+				p.v.t.fileIndex = None
 				
 			# Recreate integer indices.
 			self.maxTnodeIndex = 0
-			v = root
-			while v:
-				if v.t.fileIndex == None:
+			
+			for p in c.allNodes_iter():
+				if p.v.t.fileIndex == None:
 					self.maxTnodeIndex += 1
-					v.t.fileIndex = self.maxTnodeIndex
-				v = v.threadNext()
+					p.v.t.fileIndex = self.maxTnodeIndex
 			#@nonl
 			#@-node:<< reassign all tnode indices >>
 			#@nl
+			
+		if 0: # debugging:
+			for p in c.allNodes_iter():
+				g.trace(p.v.t.fileIndex)
 	
 	# Indices are now immutable, so there is no longer any difference between these two routines.
 	compactFileIndices = assignFileIndices
@@ -1117,7 +1105,7 @@ class baseFileCommands:
 	def put (self,s):
 		if s and len(s) > 0:
 			if self.outputFile:
-				s = toEncodedString(s,self.leo_file_encoding,reportErrors=true)
+				s = g.toEncodedString(s,self.leo_file_encoding,reportErrors=true)
 				self.outputFile.write(s)
 			elif self.outputList != None: # Write to a list.
 				self.outputList.append(s) # 1/8/04: avoid using string concatenation here!
@@ -1153,22 +1141,16 @@ class baseFileCommands:
 	#@+node:putClipboardHeader
 	def putClipboardHeader (self):
 	
-		tnodes = 0
+		c = self.c ; tnodes = 0
 		#@	<< count the number of tnodes >>
 		#@+node:<< count the number of tnodes >>
-		c = self.c
 		c.clearAllVisited()
 		
-		# Count the vnode and tnodes.
-		v = c.currentVnode()
-		after = v.nodeAfterTree()
-		while v and v != after:
-			t = v.t
-			# if t and not t.isVisited() and (t.hasBody() or len(v.t.joinList) > 0):
+		for p in c.currentPosition().self_and_subtree_iter():
+			t = p.v.t
 			if t and not t.isVisited():
 				t.setVisited()
 				tnodes += 1
-			v = v.threadNext()
 		#@nonl
 		#@-node:<< count the number of tnodes >>
 		#@nl
@@ -1191,7 +1173,7 @@ class baseFileCommands:
 	#@+node:putFindSettings
 	def putFindSettings (self):
 	
-		c = self.c ; config = app.config
+		c = self.c ; config = g.app.config
 	
 		self.put("<find_panel_settings")
 		
@@ -1322,7 +1304,7 @@ class baseFileCommands:
 	#@+node:putPrefs
 	def putPrefs (self):
 	
-		c = self.c ; config = app.config
+		c = self.c ; config = g.app.config
 	
 		self.put("<preferences")
 		
@@ -1375,14 +1357,14 @@ class baseFileCommands:
 	#@+node:putProlog
 	def putProlog (self):
 	
-		c = self.c ; config = app.config
+		c = self.c ; config = g.app.config
 	
 		#@	<< Put the <?xml...?> line >>
 		#@+node:<< Put the <?xml...?> line >>
 		# 1/22/03: use self.leo_file_encoding encoding.
-		self.put(app.prolog_prefix_string)
+		self.put(g.app.prolog_prefix_string)
 		self.put_dquote() ; self.put(self.leo_file_encoding) ; self.put_dquote()
-		self.put(app.prolog_postfix_string) ; self.put_nl()
+		self.put(g.app.prolog_postfix_string) ; self.put_nl()
 		#@nonl
 		#@-node:<< Put the <?xml...?> line >>
 		#@nl
@@ -1410,8 +1392,9 @@ class baseFileCommands:
 	
 		self.put("<t")
 		self.put(" tx=")
-		if app.use_gnx:
-			gnx = app.nodeIndices.toString(t.fileIndex)
+	
+		if g.app.use_gnx:
+			gnx = g.app.nodeIndices.toString(t.fileIndex)
 			self.put_in_dquotes(gnx)
 		else:
 			self.put_in_dquotes("T" + `t.fileIndex`)
@@ -1425,76 +1408,81 @@ class baseFileCommands:
 				val = attrDict[key]
 				attr = ' %s="%s"' % (key,self.xmlEscape(val))
 				self.put(attr)
-				if 0: # For debugging.
+				if 1: # For debugging.
 					s = "putting unknown tnode attribute"
-					print s ;  es(s, color="red")
-					print attr, es(attr)
+					print s ;  g.es(s, color="red")
+					print attr, g.es(attr)
 			#@nonl
 			#@-node:<< put unknown tnode attributes >>
 			#@nl
 		self.put(">")
 	
+		# g.trace(t)
 		if t.bodyString:
 			self.putEscapedString(t.bodyString)
 	
 		self.put("</t>") ; self.put_nl()
 	#@nonl
 	#@-node:putTnode
-	#@+node:putTnodeList (4.0)
+	#@+node:putTnodeList (4.0,4.2)
 	def putTnodeList (self,v):
 		
-		"""Put the optional tnodeList attribute of a vnode."""
+		"""Put the tnodeList attribute of a tnode."""
+		
+		# g.trace(v)
 		
 		# Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
 	
-		fc = self ; nodeIndices = app.nodeIndices
-		if v.tnodeList:
-			# trace("%4d" % len(v.tnodeList),v)
+		fc = self ; nodeIndices = g.app.nodeIndices
+		tnodeList = v.t.tnodeList
+		if tnodeList:
+			# g.trace("%4d" % len(tnodeList),v)
 			fc.put(" tnodeList=") ; fc.put_dquote()
-			if app.use_gnx:
-				for t in v.tnodeList:
+			if g.app.use_gnx:
+				for t in tnodeList:
 					try: # Will fail for None or any pre 4.1 file index.
 						id,time,n = t.fileIndex
 					except:
-						trace("assigning gnx for ",v,t)
+						g.trace("assigning gnx for ",v,t)
 						gnx = nodeIndices.getNewIndex()
-						t.setFileIndex(gnx) # Don't convert to string until the actual write.
-				s = ','.join([nodeIndices.toString(t.fileIndex) for t in v.tnodeList])
+						v.t.setFileIndex(gnx) # Don't convert to string until the actual write.
+				s = ','.join([nodeIndices.toString(t.fileIndex) for t in tnodeList])
 			else:
-				s = ','.join([str(t.fileIndex) for t in v.tnodeList])
-			# trace(s)
+				s = ','.join([str(t.fileIndex) for t in tnodeList])
 			fc.put(s) ; fc.put_dquote()
 	#@nonl
-	#@-node:putTnodeList (4.0)
+	#@-node:putTnodeList (4.0,4.2)
 	#@+node:putTnodes
 	def putTnodes (self):
 		
 		"""Puts all tnodes as required for copy or save commands"""
 	
 		c = self.c
-		if self.usingClipboard: # write the current tree.
-			v = c.currentVnode() ; after = v.nodeAfterTree()
-		else: # write everything
-			v = c.rootVnode() ; after = None
 	
 		self.put("<tnodes>") ; self.put_nl()
 		#@	<< write only those tnodes that were referenced >>
 		#@+node:<< write only those tnodes that were referenced >>
 		# Populate tnodes
 		tnodes = {}
-		while v and v != after:
-			index = v.t.fileIndex
-			if index > 0 and not tnodes.has_key(index):
-				tnodes[index] = v.t
-			v = v.threadNext()
+		
+		if self.usingClipboard: # write the current tree.
+			root = c.currentPosition()
+		else: # write everything
+			root = c.rootPosition()
+		
+		for p in c.allNodes_iter():
+			index = p.v.t.fileIndex
+			assert(index)
+			tnodes[index] = p.v.t
 		
 		# Put all tnodes in index order.
 		keys = tnodes.keys() ; keys.sort()
 		for index in keys:
-			t = tnodes[index]
+			t = tnodes.get(index)
 			assert(t)
 			# Write only those tnodes whose vnodes were written.
-			if t.isVisited(): self.putTnode(t)
+			if t.isVisited():
+				self.putTnode(t)
 		#@nonl
 		#@-node:<< write only those tnodes that were referenced >>
 		#@nl
@@ -1502,52 +1490,59 @@ class baseFileCommands:
 	#@nonl
 	#@-node:putTnodes
 	#@+node:putVnode (3.x and 4.x)
-	def putVnode (self,v,topVnode):
+	def putVnode (self,p):
 	
 		"""Write a <v> element corresponding to a vnode."""
 	
-		fc = self ; c = fc.c
+		fc = self ; c = fc.c ; v = p.v
+	
 		fc.put("<v")
 		#@	<< Put tnode index >>
 		#@+node:<< Put tnode index >>
 		if v.t.fileIndex:
-			if app.use_gnx:
-				gnx = app.nodeIndices.toString(v.t.fileIndex)
+			if g.app.use_gnx:
+				gnx = g.app.nodeIndices.toString(v.t.fileIndex)
 				fc.put(" t=") ; fc.put_in_dquotes(gnx)
 			else:
-				fc.put(" t=") ; fc.put_in_dquotes("T" + `v.t.fileIndex`)
+				fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
+				
+			# g.trace(v.t)
 			v.t.setVisited() # Indicate we wrote the body text.
 		else:
-			trace(v.t.fileIndex,v)
-			es("error writing file(bad v.t.fileIndex)!")
-			es("try using the Save To command")
+			g.trace(v.t.fileIndex,v)
+			g.es("error writing file(bad v.t.fileIndex)!")
+			g.es("try using the Save To command")
 		#@nonl
 		#@-node:<< Put tnode index >>
 		#@nl
 		#@	<< Put attribute bits >>
 		#@+node:<< Put attribute bits >>
-		current = c.currentVnode()
 		if (
-			v.isExpanded() or
-			v.isMarked() or
-			v == current or
-			v == topVnode
+			p.isExpanded() or
+			p.isMarked() or
+			p == self.currentPosition or
+			p == self.topPosition
 		):
 			fc.put(" a=") ; fc.put_dquote()
-			if v.isExpanded(): fc.put("E")
-			if v.isMarked():   fc.put("M")
-			if v.isOrphan():   fc.put("O")
-			if v == topVnode:  fc.put("T")
-			if v == current:   fc.put("V")
+			if p.isExpanded():   fc.put("E")
+			if p.isMarked():     fc.put("M")
+			if p.isOrphan():     fc.put("O")
+			if p == self.topPosition:     fc.put("T")
+			if p == self.currentPosition: fc.put("V")
 			fc.put_dquote()
 		#@nonl
 		#@-node:<< Put attribute bits >>
 		#@nl
-		# 12/13/03 Write tnodeList only for @file nodes.
-		if hasattr(v,"tnodeList") and len(v.tnodeList) > 0 and v.isAnyAtFileNode():
+		#@	<< Put tnodeList and unKnownAttributes >>
+		#@+node:<< Put tnodeList and unKnownAttributes >>
+		# Write tnodeList only for @file nodes.
+		# New in 4.2: tnode list is in tnode.
+		
+		if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 			fc.putTnodeList(v) # New in 4.0
+		
 		if hasattr(v,"unknownAttributes"): # New in 4.0
-			#@		<< put unknown vnode attributes >>
+			#@	<< put unknown vnode attributes >>
 			#@+node:<< put unknown vnode attributes >>
 			attrDict = v.unknownAttributes
 			keys = attrDict.keys()
@@ -1557,28 +1552,33 @@ class baseFileCommands:
 				self.put(attr)
 				if 0: # For debugging.
 					s = "putting unknown attribute for " + v.headString()
-					print s ;  es(s, color="red")
-					print attr, es(attr)
+					print s ;  g.es(s, color="red")
+					print attr, g.es(attr)
 			#@nonl
 			#@-node:<< put unknown vnode attributes >>
 			#@nl
+		#@nonl
+		#@-node:<< Put tnodeList and unKnownAttributes >>
+		#@nl
 		fc.put(">")
-		#@	<< write the head text >>
-		#@+node:<< write the head text >>
-		headString = v.headString()
+		#@	<< Write the head text >>
+		#@+node:<< Write the head text >>
+		headString = p.headString()
+		
 		if len(headString) > 0:
 			fc.put("<vh>")
 			fc.putEscapedString(headString)
 			fc.put("</vh>")
 		#@nonl
-		#@-node:<< write the head text >>
+		#@-node:<< Write the head text >>
 		#@nl
-		child = v.firstChild()
-		if child:
-			fc.put_nl()
-			while child:
-				fc.putVnode(child,topVnode)
-				child = child.next()
+	
+		if 1: # if not p.isAtThinFileNode(): # New in 4.2: don't write child nodes of @file-thin trees.
+			if p.hasChildren():
+				fc.put_nl()
+				for child in p.children_iter():
+					fc.putVnode(child)
+	
 		fc.put("</v>") ; fc.put_nl()
 	#@nonl
 	#@-node:putVnode (3.x and 4.x)
@@ -1591,18 +1591,22 @@ class baseFileCommands:
 		c.clearAllVisited()
 	
 		self.put("<vnodes>") ; self.put_nl()
+	
+		# Make only one copy for all calls.
+		self.currentPosition = c.currentPosition() 
+		self.topPosition = c.nullPosition()
+		
+		# g.trace(g.app.copies) ; g.app.copies = 0
+	
 		if self.usingClipboard:
-			self.putVnode(
-				c.currentVnode(), # Write only current tree.
-				None) # Don't write top vnode status bit.
-		else: 
-			v = c.rootVnode()
-			top = c.frame.tree.topVnode()
-			while v:
-				self.putVnode(
-					v,   # Write the next top-level node.
-					top) # Write the top-vnode status bit.
-				v = v.next()
+			self.putVnode(c.currentPosition()) # Write only current tree.
+		else:
+			root = c.rootPosition()
+			for p in root.self_and_siblings_iter():
+				self.putVnode(p) # Write the next top-level node.
+				
+		# g.trace(g.app.copies) ; g.app.copies = 0
+	
 		self.put("</vnodes>") ; self.put_nl()
 	#@nonl
 	#@-node:putVnodes
@@ -1611,19 +1615,19 @@ class baseFileCommands:
 	
 		c = self.c ; v = c.currentVnode()
 	
-		if not doHook("save1",c=c,v=v,fileName=fileName):
+		if not g.doHook("save1",c=c,v=v,fileName=fileName):
 			c.beginUpdate()
 			c.endEditing()# Set the current headline text.
 			self.compactFileIndices()
 			self.setDefaultDirectoryForNewFiles(fileName)
-			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
+			if self.write_Leo_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
-				es("saved: " + shortFileName(fileName))
-				if app.config.save_clears_undo_buffer:
-					es("clearing undo")
+				g.es("saved: " + g.shortFileName(fileName))
+				if g.app.config.save_clears_undo_buffer:
+					g.es("clearing undo")
 					c.undoer.clearUndoState()
 			c.endUpdate()
-		doHook("save2",c=c,v=v,fileName=fileName)
+		g.doHook("save2",c=c,v=v,fileName=fileName)
 	#@nonl
 	#@-node:save
 	#@+node:saveAs
@@ -1631,31 +1635,31 @@ class baseFileCommands:
 	
 		c = self.c ; v = c.currentVnode()
 	
-		if not doHook("save1",c=c,v=v,fileName=fileName):
+		if not g.doHook("save1",c=c,v=v,fileName=fileName):
 			c.beginUpdate()
 			c.endEditing() # Set the current headline text.
 			self.compactFileIndices()
 			self.setDefaultDirectoryForNewFiles(fileName)
-			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
+			if self.write_Leo_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
-				es("saved: " + shortFileName(fileName))
+				g.es("saved: " + g.shortFileName(fileName))
 			c.endUpdate()
-		doHook("save2",c=c,v=v,fileName=fileName)
+		g.doHook("save2",c=c,v=v,fileName=fileName)
 	#@-node:saveAs
 	#@+node:saveTo
 	def saveTo (self,fileName):
 	
 		c = self.c ; v = c.currentVnode()
 	
-		if not doHook("save1",c=c,v=v,fileName=fileName):
+		if not g.doHook("save1",c=c,v=v,fileName=fileName):
 			c.beginUpdate()
 			c.endEditing()# Set the current headline text.
 			self.compactFileIndices()
 			self.setDefaultDirectoryForNewFiles(fileName)
-			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
-				es("saved: " + shortFileName(fileName))
+			if self.write_Leo_file(fileName,false): # outlineOnlyFlag
+				g.es("saved: " + g.shortFileName(fileName))
 			c.endUpdate()
-		doHook("save2",c=c,v=v,fileName=fileName)
+		g.doHook("save2",c=c,v=v,fileName=fileName)
 	#@-node:saveTo
 	#@+node:setDefaultDirectoryForNewFiles
 	def setDefaultDirectoryForNewFiles (self,fileName):
@@ -1665,213 +1669,250 @@ class baseFileCommands:
 		c = self.c
 	
 		if not c.openDirectory or len(c.openDirectory) == 0:
-			dir = os_path_dirname(fileName)
+			dir = g.os_path_dirname(fileName)
 	
-			if len(dir) > 0 and os_path_isabs(dir) and os_path_exists(dir):
+			if len(dir) > 0 and g.os_path_isabs(dir) and g.os_path_exists(dir):
 				c.openDirectory = dir
 	#@nonl
 	#@-node:setDefaultDirectoryForNewFiles
-	#@+node:write_LEO_file
-	def write_LEO_file(self,fileName,outlineOnlyFlag):
+	#@+node:write_Leo_file
+	def write_Leo_file(self,fileName,outlineOnlyFlag):
 	
-		c = self.c ; config = app.config
+		c = self.c ; config = g.app.config
 	
+		start = g.getTime()
 		if not outlineOnlyFlag:
+			#@		<< write all @file nodes >>
+			#@+node:<< write all @file nodes >>
 			try:
 				# Leo2: write all @file nodes and set orphan bits.
 				at = c.atFileCommands
 				at.writeAll()
 			except:
-				es_error("exception writing derived files")
-				es_exception()
+				g.es_error("exception writing derived files")
+				g.es_exception()
 				return false
-				
-		# 1/29/03: self.read_only is not valid for Save As and Save To commands.
-		if os_path_exists(fileName):
+			#@nonl
+			#@-node:<< write all @file nodes >>
+			#@nl
+		#@	<< return if the .leo file is read-only >>
+		#@+node:<< return if the .leo file is read-only >>
+		# self.read_only is not valid for Save As and Save To commands.
+		
+		if g.os_path_exists(fileName):
 			try:
 				if not os.access(fileName,os.W_OK):
 					self.writeError("can not create: read only: " + self.targetFileName)
 					return false
 			except:
 				pass # os.access() may not exist on all platforms.
-	
+		#@nonl
+		#@-node:<< return if the .leo file is read-only >>
+		#@nl
 		try:
 			#@		<< create backup file >>
-			#@+node:<< create backup file >> in write_LEO_file
+			#@+node:<< create backup file >>
 			# rename fileName to fileName.bak if fileName exists.
-			if os_path_exists(fileName):
+			if g.os_path_exists(fileName):
 				try:
-					backupName = os_path_join(app.loadDir,fileName)
+					backupName = g.os_path_join(g.app.loadDir,fileName)
 					backupName = fileName + ".bak"
-					if os_path_exists(backupName):
+					if g.os_path_exists(backupName):
 						os.unlink(backupName)
 					# os.rename(fileName,backupName)
-					utils_rename(fileName,backupName)
+					g.utils_rename(fileName,backupName)
 				except OSError:
 					if self.read_only:
-						es("read only",color="red")
+						g.es("read only",color="red")
 					else:
-						es("exception creating backup file: " + backupName)
-						es_exception()
+						g.es("exception creating backup file: " + backupName)
+						g.es_exception()
 					return false
 				except:
-					es("exception creating backup file: " + backupName)
-					es_exception()
+					g.es("exception creating backup file: " + backupName)
+					g.es_exception()
 					backupName = None
 					return false
 			else:
 				backupName = None
 			#@nonl
-			#@-node:<< create backup file >> in write_LEO_file
+			#@-node:<< create backup file >>
 			#@nl
 			self.mFileName = fileName
+			#@		<< create the output file >>
+			#@+node:<< create the output file >>
 			self.outputFile = open(fileName, 'wb') # 9/18/02
 			if not self.outputFile:
-				es("can not open " + fileName)
-				#@			<< delete backup file >>
+				g.es("can not open " + fileName)
+				#@	<< delete backup file >>
 				#@+node:<< delete backup file >>
-				if backupName and os_path_exists(backupName):
+				if backupName and g.os_path_exists(backupName):
 					try:
 						os.unlink(backupName)
 					except OSError:
 						if self.read_only:
-							es("read only",color="red")
+							g.es("read only",color="red")
 						else:
-							es("exception deleting backup file:" + backupName)
-							es_exception()
+							g.es("exception deleting backup file:" + backupName)
+							g.es_exception()
 						return false
 					except:
-						es("exception deleting backup file:" + backupName)
-						es_exception()
+						g.es("exception deleting backup file:" + backupName)
+						g.es_exception()
 						return false
 				#@-node:<< delete backup file >>
 				#@nl
 				return false
-			
-			# 8/6/02: Update leoConfig.txt completely here.
+			#@nonl
+			#@-node:<< create the output file >>
+			#@nl
+			# g.printDiffTime("1",start)
+			#@		<< update leoConfig.txt >>
+			#@+node:<< update leoConfig.txt >>
 			c.setIvarsFromFind()
 			config.setConfigFindIvars(c)
 			c.setIvarsFromPrefs()
 			config.setCommandsIvars(c)
 			config.update()
-			
+			#@nonl
+			#@-node:<< update leoConfig.txt >>
+			#@nl
+			#@		<< put the .leo file >>
+			#@+node:<< put the .leo file >>
+			#start = g.printDiffTime("2a",start)
 			self.putProlog()
 			self.putHeader()
 			self.putGlobals()
 			self.putPrefs()
 			self.putFindSettings()
+			#start = g.printDiffTime("2b",start)
 			self.putVnodes()
+			#start = g.printDiffTime("2c",start)
 			self.putTnodes()
+			#start = g.printDiffTime("2d",start)
 			self.putPostlog()
-			# raise BadLeoFile # testing
+			#@nonl
+			#@-node:<< put the .leo file >>
+			#@nl
+			# start = g.printDiffTime("2",start)
 		except:
-			es("exception writing: " + fileName)
-			es_exception() 
+			#@		<< report the exception >>
+			#@+node:<< report the exception >>
+			g.es("exception writing: " + fileName)
+			g.es_exception() 
 			if self.outputFile:
 				try:
 					self.outputFile.close()
 					self.outputFile = None
 				except:
-					es("exception closing: " + fileName)
-					es_exception()
+					g.es("exception closing: " + fileName)
+					g.es_exception()
+			#@nonl
+			#@-node:<< report the exception >>
+			#@nl
 			#@		<< erase filename and rename backupName to fileName >>
 			#@+node:<< erase filename and rename backupName to fileName >>
-			es("error writing " + fileName)
+			g.es("error writing " + fileName)
 			
-			if fileName and os_path_exists(fileName):
+			if fileName and g.os_path_exists(fileName):
 				try:
 					os.unlink(fileName)
 				except OSError:
 					if self.read_only:
-						es("read only",color="red")
+						g.es("read only",color="red")
 					else:
-						es("exception deleting: " + fileName)
-						es_exception()
+						g.es("exception deleting: " + fileName)
+						g.es_exception()
 				except:
-					es("exception deleting: " + fileName)
-					es_exception()
+					g.es("exception deleting: " + fileName)
+					g.es_exception()
 					
 			if backupName:
-				es("restoring " + fileName + " from " + backupName)
+				g.es("restoring " + fileName + " from " + backupName)
 				try:
-					utils_rename(backupName, fileName)
+					g.utils_rename(backupName, fileName)
 				except OSError:
 					if self.read_only:
-						es("read only",color="red")
+						g.es("read only",color="red")
 					else:
-						es("exception renaming " + backupName + " to " + fileName)
-						es_exception()
+						g.es("exception renaming " + backupName + " to " + fileName)
+						g.es_exception()
 				except:
-					es("exception renaming " + backupName + " to " + fileName)
-					es_exception()
+					g.es("exception renaming " + backupName + " to " + fileName)
+					g.es_exception()
 			#@nonl
 			#@-node:<< erase filename and rename backupName to fileName >>
 			#@nl
 			return false
-	
 		if self.outputFile:
+			#@		<< close the output file >>
+			#@+node:<< close the output file >>
 			try:
 				self.outputFile.close()
 				self.outputFile = None
 			except:
-				es("exception closing: " + fileName)
-				es_exception()
+				g.es("exception closing: " + fileName)
+				g.es_exception()
+			#@nonl
+			#@-node:<< close the output file >>
+			#@nl
 			#@		<< delete backup file >>
 			#@+node:<< delete backup file >>
-			if backupName and os_path_exists(backupName):
+			if backupName and g.os_path_exists(backupName):
 				try:
 					os.unlink(backupName)
 				except OSError:
 					if self.read_only:
-						es("read only",color="red")
+						g.es("read only",color="red")
 					else:
-						es("exception deleting backup file:" + backupName)
-						es_exception()
+						g.es("exception deleting backup file:" + backupName)
+						g.es_exception()
 					return false
 				except:
-					es("exception deleting backup file:" + backupName)
-					es_exception()
+					g.es("exception deleting backup file:" + backupName)
+					g.es_exception()
 					return false
 			#@-node:<< delete backup file >>
 			#@nl
+			start = g.printDiffTime("3",start)
 			return true
 		else: # This probably will never happen because errors should raise exceptions.
 			#@		<< erase filename and rename backupName to fileName >>
 			#@+node:<< erase filename and rename backupName to fileName >>
-			es("error writing " + fileName)
+			g.es("error writing " + fileName)
 			
-			if fileName and os_path_exists(fileName):
+			if fileName and g.os_path_exists(fileName):
 				try:
 					os.unlink(fileName)
 				except OSError:
 					if self.read_only:
-						es("read only",color="red")
+						g.es("read only",color="red")
 					else:
-						es("exception deleting: " + fileName)
-						es_exception()
+						g.es("exception deleting: " + fileName)
+						g.es_exception()
 				except:
-					es("exception deleting: " + fileName)
-					es_exception()
+					g.es("exception deleting: " + fileName)
+					g.es_exception()
 					
 			if backupName:
-				es("restoring " + fileName + " from " + backupName)
+				g.es("restoring " + fileName + " from " + backupName)
 				try:
-					utils_rename(backupName, fileName)
+					g.utils_rename(backupName, fileName)
 				except OSError:
 					if self.read_only:
-						es("read only",color="red")
+						g.es("read only",color="red")
 					else:
-						es("exception renaming " + backupName + " to " + fileName)
-						es_exception()
+						g.es("exception renaming " + backupName + " to " + fileName)
+						g.es_exception()
 				except:
-					es("exception renaming " + backupName + " to " + fileName)
-					es_exception()
+					g.es("exception renaming " + backupName + " to " + fileName)
+					g.es_exception()
 			#@nonl
 			#@-node:<< erase filename and rename backupName to fileName >>
 			#@nl
 			return false
 	#@nonl
-	#@-node:write_LEO_file
+	#@-node:write_Leo_file
 	#@+node:writeAtFileNodes
 	def writeAtFileNodes (self):
 		
@@ -1880,7 +1921,7 @@ class baseFileCommands:
 		changedFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=true)
 		assert(changedFiles != None)
 		if changedFiles:
-			es("auto-saving outline",color="blue")
+			g.es("auto-saving outline",color="blue")
 			c.save() # Must be done to set or clear tnodeList.
 	#@nonl
 	#@-node:writeAtFileNodes
@@ -1893,7 +1934,7 @@ class baseFileCommands:
 	
 		changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
 		if changedFiles:
-			es("auto-saving outline",color="blue")
+			g.es("auto-saving outline",color="blue")
 			c.save() # Must be done to set or clear tnodeList.
 	#@nonl
 	#@-node:writeDirtyAtFileNodes
@@ -1907,7 +1948,7 @@ class baseFileCommands:
 			changedFiles = at.writeMissing(v)
 			assert(changedFiles != None)
 			if changedFiles:
-				es("auto-saving outline",color="blue")
+				g.es("auto-saving outline",color="blue")
 				c.save() # Must be done to set or clear tnodeList.
 	#@nonl
 	#@-node:writeMissingAtFileNodes
@@ -1917,7 +1958,7 @@ class baseFileCommands:
 		c = self.c
 		c.endEditing()
 		self.compactFileIndices()
-		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
+		self.write_Leo_file(self.mFileName,true) # outlineOnlyFlag
 	#@nonl
 	#@-node:writeOutlineOnly
 	#@+node:xmlEscape

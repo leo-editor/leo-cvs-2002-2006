@@ -2,7 +2,8 @@
 #@+node:@file leoKeys.py
 """Gui-independent keystroke handling for Leo."""
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 #@nonl
 #@-node:@file leoKeys.py
 #@-leo

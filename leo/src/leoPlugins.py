@@ -15,12 +15,13 @@ After startup:
 - The first non-None return is sent back to Leo.
 """
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
 handlers = {}
 
 def doPlugins(tag,keywords):
-	if app.killed:
+	if g.app.killed:
 		return
 	if tag == "start1":
 		loadHandlers()
@@ -33,11 +34,11 @@ def loadHandlers(loadAllFlag=false):
 	"""Load all enabled plugins from the plugins directory"""
 	import glob,os
 	
-	plugins_path = os_path_join(app.loadDir,"..","plugins")
-	manager_path = os_path_join(plugins_path,"pluginsManager.txt")
+	plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
+	manager_path = g.os_path_join(plugins_path,"pluginsManager.txt")
 	
-	files = glob.glob(os_path_join(plugins_path,"*.py"))
-	files = [os_path_abspath(file) for file in files]
+	files = glob.glob(g.os_path_join(plugins_path,"*.py"))
+	files = [g.os_path_abspath(file) for file in files]
 
 	if loadAllFlag:
 		files.sort()
@@ -45,7 +46,7 @@ def loadHandlers(loadAllFlag=false):
 	else:
 		#@		<< set enabled_files from pluginsManager.txt >>
 		#@+node:<< set enabled_files from pluginsManager.txt >>
-		if not os_path_exists(manager_path):
+		if not g.os_path_exists(manager_path):
 			return
 		
 		enabled_files = []
@@ -54,29 +55,29 @@ def loadHandlers(loadAllFlag=false):
 			lines = file.readlines()
 			for s in lines:
 				s = s.strip()
-				if s and not match(s,0,"#"):
-					enabled_files.append(os_path_join(plugins_path,s))
+				if s and not g.match(s,0,"#"):
+					enabled_files.append(g.os_path_join(plugins_path,s))
 			file.close()
 		except:
-			es("Can not open: " + manager_path)
+			g.es("Can not open: " + manager_path)
 			import leoTest ; leoTest.fail()
 			return
 		#@nonl
 		#@-node:<< set enabled_files from pluginsManager.txt >>
 		#@nl
-		enabled_files = [os_path_abspath(file) for file in enabled_files]
+		enabled_files = [g.os_path_abspath(file) for file in enabled_files]
 	
 	# Load plugins in the order they appear in the enabled_files list.
-	app.loadedPlugins = []
+	g.app.loadedPlugins = []
 	if files and enabled_files:
 		for file in enabled_files:
 			if file in files:
-				file = toUnicode(file,app.tkEncoding)
-				importFromPath(file,plugins_path)
-	if app.loadedPlugins and not loadAllFlag:
-		es("%d plugins loaded" % (len(app.loadedPlugins)), color="blue")
+				file = g.toUnicode(file,g.app.tkEncoding)
+				g.importFromPath(file,plugins_path)
+	if g.app.loadedPlugins and not loadAllFlag:
+		g.es("%d plugins loaded" % (len(g.app.loadedPlugins)), color="blue")
 		if 0:
-			for name in app.loadedPlugins:
+			for name in g.app.loadedPlugins:
 				print name
 #@nonl
 #@-node:loadHandlers
@@ -128,7 +129,7 @@ def registerOneHandler(tag,fn):
 	try:
 		existing.append(fn)
 	except AttributeError:
-		es("*** Two exclusive handlers for '%s'" % tag)
+		g.es("*** Two exclusive handlers for '%s'" % tag)
 #@-node:registerHandler
 #@+node:registerExclusiveHandler
 def registerExclusiveHandler(tags, fn):
@@ -150,7 +151,7 @@ def registerOneExclusiveHandler(tag, fn):
 	global handlers
 	
 	if handlers.has_key(tag):
-		es("*** Two exclusive handlers for '%s'" % tag)
+		g.es("*** Two exclusive handlers for '%s'" % tag)
 	else:
 		handlers[tag] = (fn,)
 #@-node:registerExclusiveHandler

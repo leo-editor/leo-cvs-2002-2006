@@ -2,7 +2,10 @@
 #@+node:@file leoMenu.py
 """Gui-independent menu handling for Leo."""
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
+
+import string,sys
 
 #@+others
 #@+node:class leoMenu
@@ -95,7 +98,7 @@ class leoMenu:
 		except:
 			show = false
 		
-		label = choose(show,"Hide In&visibles","Show In&visibles")
+		label = g.choose(show,"Hide In&visibles","Show In&visibles")
 			
 		self.editMenuTop2Table = (
 			("&Go To Line Number","Alt+G",c.goToLineNumber),
@@ -195,7 +198,7 @@ class leoMenu:
 		#@<< define fileMenuTop3MenuTable >>
 		#@+node:<< define fileMenuTop3MenuTable >>
 		self.fileMenuTop3MenuTable = (
-			("E&xit","Ctrl-Q",app.onQuit),)
+			("E&xit","Ctrl-Q",g.app.onQuit),)
 		#@nonl
 		#@-node:<< define fileMenuTop3MenuTable >>
 		#@nl
@@ -341,7 +344,7 @@ class leoMenu:
 	#@+node:oops
 	def oops (self):
 	
-		print "leoMenu oops:", callerName(2), "should be overridden in subclass"
+		print "leoMenu oops:", g.callerName(2), "should be overridden in subclass"
 	#@nonl
 	#@-node:oops
 	#@+node:updateAllMenus
@@ -351,12 +354,13 @@ class leoMenu:
 		
 		Updates (enables or disables) all menu items."""
 		
-		# A horrible kludge: set app.log to cover for a possibly missing activate event.
-		app.setLog(self.frame.log,"updateAllMenus")
+		# A horrible kludge: set g.app.log to cover for a possibly missing activate event.
+		g.app.setLog(self.frame.log,"updateAllMenus")
 		
 		# Allow the user first crack at updating menus.
 		c = self.c ; v = c.currentVnode()
-		if not doHook("menu2",c=c,v=v):
+	
+		if not g.doHook("menu2",c=c,v=v):
 			self.updateFileMenu()
 			self.updateEditMenu()
 			self.updateOutlineMenu()
@@ -372,16 +376,16 @@ class leoMenu:
 			enable = frame.menu.enableMenu
 			menu = frame.menu.getMenu("File")
 			enable(menu,"Revert To Saved", c.canRevert())
-			enable(menu,"Open With...", app.hasOpenWithMenu)
+			enable(menu,"Open With...", g.app.hasOpenWithMenu)
 		except:
-			es("exception updating File menu")
-			es_exception()
+			g.es("exception updating File menu")
+			g.es_exception()
 	#@nonl
 	#@-node:updateFileMenu
 	#@+node:updateEditMenu
 	def updateEditMenu (self):
 	
-		c = self.c ; frame = c.frame ; gui = app.gui
+		c = self.c ; frame = c.frame ; gui = g.app.gui
 		if not c: return
 		try:
 			# Top level Edit menu...
@@ -419,15 +423,25 @@ class leoMenu:
 			enable(menu,"Extract",c.canExtract())
 			enable(menu,"Match Brackets",c.canFindMatchingBracket())
 		except:
-			es("exception updating Edit menu")
-			es_exception()
+			g.es("exception updating Edit menu")
+			g.es_exception()
 	#@nonl
 	#@-node:updateEditMenu
 	#@+node:updateOutlineMenu
 	def updateOutlineMenu (self):
 	
-		c = self.c ; frame = c.frame ; v = c.currentVnode()
+		c = self.c ; frame = c.frame
 		if not c: return
+	
+		p = c.currentPosition()
+		hasParent = p.hasParent()
+		hasBack = p.hasBack()
+		hasNext = p.hasNext()
+		hasChildren = p.hasChildren()
+		isExpanded = p.isExpanded()
+		isCloned = p.isCloned()
+		isMarked = p.isMarked()
+	
 		try:
 			enable = frame.menu.enableMenu
 			#@		<< enable top level outline menu >>
@@ -446,8 +460,6 @@ class leoMenu:
 			#@		<< enable expand/contract submenu >>
 			#@+node:<< enable expand/Contract submenu >>
 			menu = frame.menu.getMenu("Expand/Contract...")
-			hasChildren = v.hasChildren()
-			isExpanded = v.isExpanded()
 			enable(menu,"Contract Parent",c.canContractParent())
 			enable(menu,"Contract Node",hasChildren and isExpanded)
 			enable(menu,"Expand Node",hasChildren and not isExpanded)
@@ -478,32 +490,34 @@ class leoMenu:
 			enable(menu,"Go Forward",c.beadPointer + 1 < len(c.beadList))
 			enable(menu,"Go To Prev Visible",c.canSelectVisBack())
 			enable(menu,"Go To Next Visible",c.canSelectVisNext())
-			enable(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
-			enable(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
-			enable(menu,"Go To Next Clone",v.isCloned())
+			if 0: # These are too slow.
+				enable(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
+				enable(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
+			enable(menu,"Go To Next Clone",isCloned)
 			enable(menu,"Go To Prev Node",c.canSelectThreadBack())
 			enable(menu,"Go To Next Node",c.canSelectThreadNext())
-			enable(menu,"Go To Parent",v.parent() != None)
-			enable(menu,"Go To Prev Sibling",v.back() != None)
-			enable(menu,"Go To Next Sibling",v.next() != None)
+			enable(menu,"Go To Parent",hasParent)
+			enable(menu,"Go To Prev Sibling",hasBack)
+			enable(menu,"Go To Next Sibling",hasNext)
 			#@nonl
 			#@-node:<< enable go to submenu >>
 			#@nl
 			#@		<< enable mark submenu >>
 			#@+node:<< enable mark submenu >>
 			menu = frame.menu.getMenu("Mark/Unmark...")
-			label = choose(v and v.isMarked(),"Unmark","Mark")
+			label = g.choose(isMarked,"Unmark","Mark")
 			frame.menu.setMenuLabel(menu,0,label)
-			enable(menu,"Mark Subheads",(v and v.hasChildren()))
-			enable(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
-			enable(menu,"Mark Changed Roots",c.canMarkChangedRoots())
-			enable(menu,"Mark Clones",v.isCloned())
+			enable(menu,"Mark Subheads",hasChildren)
+			if 0: # These are too slow.
+				enable(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
+				enable(menu,"Mark Changed Roots",c.canMarkChangedRoots())
+			enable(menu,"Mark Clones",isCloned)
 			#@nonl
 			#@-node:<< enable mark submenu >>
 			#@nl
 		except:
-			es("exception updating Outline menu")
-			es_exception()
+			g.es("exception updating Outline menu")
+			g.es_exception()
 	#@nonl
 	#@-node:updateOutlineMenu
 	#@+node:hasSelection
@@ -526,12 +540,12 @@ class leoMenu:
 	def getRealMenuName (self,menuName):
 	
 		cmn = self.canonicalizeTranslatedMenuName(menuName)
-		return app.realMenuNameDict.get(cmn,menuName)
+		return g.app.realMenuNameDict.get(cmn,menuName)
 		
 	def setRealMenuName (self,untrans,trans):
 	
 		cmn = self.canonicalizeTranslatedMenuName(untrans)
-		app.realMenuNameDict[cmn] = trans
+		g.app.realMenuNameDict[cmn] = trans
 	
 	def setRealMenuNamesFromTable (self,table):
 	
@@ -539,8 +553,8 @@ class leoMenu:
 			for untrans,trans in table:
 				self.setRealMenuName(untrans,trans)
 		except:
-			es("exception in setRealMenuNamesFromTable")
-			es_exception()
+			g.es("exception in setRealMenuNamesFromTable")
+			g.es_exception()
 	#@nonl
 	#@-node:get/setRealMenuName & setRealMenuNamesFromTable
 	#@+node:canonicalizeMenuName & cononicalizeTranslatedMenuName
@@ -600,13 +614,13 @@ class leoMenu:
 		
 		fields = string.split(s2,"+")
 		if fields == None or len(fields) == 0:
-			if not app.menuWarningsGiven:
+			if not g.app.menuWarningsGiven:
 				print "bad shortcut specifier:", s
 			return None,None
 		
 		last = fields[-1]
 		if last == None or len(last) == 0:
-			if not app.menuWarningsGiven:
+			if not g.app.menuWarningsGiven:
 				print "bad shortcut specifier:", s
 			return None,None
 		#@nonl
@@ -775,7 +789,7 @@ class leoMenu:
 				#@nl
 				#@			<< set accel to the shortcut for name >>
 				#@+node:<< set accel to the shortcut for name >>
-				config = app.config
+				config = g.app.config
 				rawKey,accel2 = config.getShortcut(name)
 				
 				# 7/19/03: Make sure "None" overrides the default shortcut.
@@ -826,7 +840,7 @@ class leoMenu:
 				
 				if 0: # trace
 					if realLabel.lower().startswith("sort"):
-						trace(label,realLabel,rawKey,bind_shortcut)
+						g.trace(label,realLabel,rawKey,bind_shortcut)
 				
 				if not menu_shortcut:
 					menu_shortcut = ""
@@ -844,8 +858,8 @@ class leoMenu:
 					#@				<< handle bind_shorcut >>
 					#@+node:<< handle bind_shorcut >>
 					if bind_shortcut in self.menuShortcuts:
-						if not app.menuWarningsGiven:
-							es("duplicate shortcut:", accel, bind_shortcut, label,color="red")
+						if not g.app.menuWarningsGiven:
+							g.es("duplicate shortcut:", accel, bind_shortcut, label,color="red")
 							print "duplicate shortcut:", accel, bind_shortcut, label
 					else:
 						self.menuShortcuts.append(bind_shortcut)
@@ -853,11 +867,11 @@ class leoMenu:
 							self.frame.body.bind(bind_shortcut,callback)
 							self.bind(bind_shortcut,callback)
 						except: # could be a user error
-							if not app.menuWarningsGiven:
+							if not g.app.menuWarningsGiven:
 								print "exception binding menu shortcut..."
 								print bind_shortcut
-								es_exception()
-								app.menuWarningsGive = true
+								g.es_exception()
+								g.app.menuWarningsGive = true
 					#@nonl
 					#@-node:<< handle bind_shorcut >>
 					#@nl
@@ -870,15 +884,15 @@ class leoMenu:
 			menu = self.getMenu(menuName)
 			if menu == None:
 				print "menu does not exist: ", menuName
-				es("menu does not exist: " + `menuName`)
+				g.es("menu does not exist: " + `menuName`)
 				return
 			self.createMenuEntries(menu,table,openWith)
 		except:
 			print "exception creating items for ", menuName," menu"
-			es("exception creating items for " + `menuName` + " menu")
-			es_exception()
+			g.es("exception creating items for " + `menuName` + " menu")
+			g.es_exception()
 			
-		app.menuWarningsGiven = true
+		g.app.menuWarningsGiven = true
 	#@nonl
 	#@-node:createMenuItemsFromTable
 	#@+node:createMenusFromTables
@@ -895,7 +909,7 @@ class leoMenu:
 		#@<< create the recent files submenu >>
 		#@+node:<< create the recent files submenu >>
 		self.createNewMenu("Recent &Files...","File")
-		c.recentFiles = app.config.getRecentFiles()
+		c.recentFiles = g.app.config.getRecentFiles()
 		
 		if 0: # Not needed, and causes problems in wxWindows...
 			self.createRecentFilesMenuItems()
@@ -1024,7 +1038,7 @@ class leoMenu:
 		#@nonl
 		#@-node:<< create the outline menu >>
 		#@nl
-		doHook("create-optional-menus",c=c)
+		g.doHook("create-optional-menus",c=c)
 		#@	<< create the window menu >>
 		#@+node:<< create the window menu >>
 		windowMenu = self.createNewMenu("&Window")
@@ -1056,12 +1070,12 @@ class leoMenu:
 			
 			if 0: # 11/13/03: Allow parent to be None.
 				if parent == None:
-					es("unknown parent menu: " + parentName)
+					g.es("unknown parent menu: " + parentName)
 					return None
 	
 			menu = self.getMenu(menuName)
 			if menu:
-				es("menu already exists: " + menuName,color="red")
+				g.es("menu already exists: " + menuName,color="red")
 			else:
 				menu = self.new_menu(parent,tearoff=0)
 				self.setMenu(menuName,menu)
@@ -1078,8 +1092,8 @@ class leoMenu:
 					self.add_cascade(parent,label=label,menu=menu,underline=amp_index)
 				return menu
 		except:
-			es("exception creating " + menuName + " menu")
-			es_exception()
+			g.es("exception creating " + menuName + " menu")
+			g.es_exception()
 			return None
 	#@nonl
 	#@-node:createNewMenu
@@ -1103,7 +1117,7 @@ class leoMenu:
 		for name in c.recentFiles:
 			def callback (event=None,c=c,name=name): # 12/9/03
 				c.openRecentFile(name)
-			label = "%d %s" % (i-2,computeWindowTitle(name))
+			label = "%d %s" % (i-2,g.computeWindowTitle(name))
 			self.add_command(recentFilesMenu,label=label,command=callback,underline=0)
 			i += 1
 	#@nonl
@@ -1117,10 +1131,10 @@ class leoMenu:
 				self.destroy(menu)
 				self.destroyMenu(menuName)
 			else:
-				es("can't delete menu: " + menuName)
+				g.es("can't delete menu: " + menuName)
 		except:
-			es("exception deleting " + menuName + " menu")
-			es_exception()
+			g.es("exception deleting " + menuName + " menu")
+			g.es_exception()
 	#@nonl
 	#@-node:deleteMenu
 	#@+node:deleteMenuItem
@@ -1134,10 +1148,10 @@ class leoMenu:
 				realItemName = self.getRealMenuName(itemName)
 				self.delete(menu,realItemName)
 			else:
-				es("menu not found: " + menuName)
+				g.es("menu not found: " + menuName)
 		except:
-			es("exception deleting " + itemName + " from " + menuName + " menu")
-			es_exception()
+			g.es("exception deleting " + itemName + " from " + menuName + " menu")
+			g.es_exception()
 	#@nonl
 	#@-node:deleteMenuItem
 	#@+node:getMenu, setMenu, destroyMenu
@@ -1219,7 +1233,7 @@ class nullMenu(leoMenu):
 
 	def oops (self):
 
-		trace("leoMenu", callerName(2))
+		g.trace("leoMenu", g.callerName(2))
 		pass
 #@nonl
 #@-node:class nullMenu

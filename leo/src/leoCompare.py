@@ -4,7 +4,8 @@
 
 """Leo's base compare class."""
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
 import difflib,filecmp,os,string
 
@@ -120,10 +121,10 @@ class baseLeoCompare:
 	def compare_directories (self,path1,path2):
 		
 		# Ignore everything except the directory name.
-		dir1 = os_path_dirname(path1)
-		dir2 = os_path_dirname(path2)
-		dir1 = os_path_normpath(dir1)
-		dir2 = os_path_normpath(dir2)
+		dir1 = g.os_path_dirname(path1)
+		dir2 = g.os_path_dirname(path2)
+		dir1 = g.os_path_normpath(dir1)
+		dir2 = g.os_path_normpath(dir2)
 		
 		if dir1 == dir2:
 			self.show("Directory names are identical.\nPlease pick distinct directories.")
@@ -150,14 +151,14 @@ class baseLeoCompare:
 		files1 = []
 		files2 = []
 		for f in list1:
-			junk, ext = os_path_splitext(f)
+			junk, ext = g.os_path_splitext(f)
 			if self.limitToExtension:
 				if ext == self.limitToExtension:
 					files1.append(f)
 			else:
 				files1.append(f)
 		for f in list2:
-			junk, ext = os_path_splitext(f)
+			junk, ext = g.os_path_splitext(f)
 			if self.limitToExtension:
 				if ext == self.limitToExtension:
 					files2.append(f)
@@ -167,17 +168,17 @@ class baseLeoCompare:
 		# Compare the files and set the yes, no and fail lists.
 		yes = [] ; no = [] ; fail = []
 		for f1 in files1:
-			head,f2 = os_path_split(f1)
+			head,f2 = g.os_path_split(f1)
 			if f2 in files2:
 				try:
-					name1 = os_path_join(dir1,f1)
-					name2 = os_path_join(dir2,f2)
+					name1 = g.os_path_join(dir1,f1)
+					name2 = g.os_path_join(dir2,f2)
 					val = filecmp.cmp(name1,name2,0)
 					if val: yes.append(f1)
 					else:    no.append(f1)
 				except:
 					self.show("exception in filecmp.cmp")
-					es_exception()
+					g.es_exception()
 					fail.append(f1)
 			else:
 				fail.append(f1)
@@ -210,12 +211,12 @@ class baseLeoCompare:
 			if self.outputFileName:
 				self.openOutputFile()
 			ok = self.outputFileName == None or self.outputFile
-			ok = choose(ok and ok != 0,1,0)
+			ok = g.choose(ok and ok != 0,1,0)
 			if f1 and f2 and ok: # Don't compare if there is an error opening the output file.
 				self.compare_open_files(f1,f2,name1,name2)
 		except:
 			self.show("exception comparing files")
-			es_exception()
+			g.es_exception()
 		try:
 			if f1: f1.close()
 			if f2: f2.close()
@@ -223,7 +224,7 @@ class baseLeoCompare:
 				self.outputFile.close() ; self.outputFile = None
 		except:
 			self.show("exception closing files")
-			es_exception()
+			g.es_exception()
 	#@nonl
 	#@-node:compare_files (entry)
 	#@+node:compare_lines
@@ -234,8 +235,8 @@ class baseLeoCompare:
 			s2 = string.lstrip(s2)
 	
 		if self.ignoreInteriorWhitespace:
-			k1 = skip_ws(s1,0)
-			k2 = skip_ws(s2,0)
+			k1 = g.skip_ws(s1,0)
+			k2 = g.skip_ws(s2,0)
 			ws1 = s1[:k1]
 			ws2 = s2[:k2]
 			tail1 = s1[k1:]
@@ -265,8 +266,8 @@ class baseLeoCompare:
 		#@+node:<< handle opening lines >>
 		if self.ignoreSentinelLines:
 			
-			s1 = readlineForceUnixNewline(f1) ; lines1 += 1
-			s2 = readlineForceUnixNewline(f2) ; lines2 += 1
+			s1 = g.readlineForceUnixNewline(f1) ; lines1 += 1
+			s2 = g.readlineForceUnixNewline(f2) ; lines2 += 1
 			# Note: isLeoHeader may return None.
 			sentinelComment1 = self.isLeoHeader(s1)
 			sentinelComment2 = self.isLeoHeader(s2)
@@ -275,21 +276,21 @@ class baseLeoCompare:
 				
 		if self.ignoreFirstLine1:
 			if s1 == None:
-				readlineForceUnixNewline(f1) ; lines1 += 1
+				g.readlineForceUnixNewline(f1) ; lines1 += 1
 			s1 = None
 		
 		if self.ignoreFirstLine2:
 			if s2 == None:
-				readlineForceUnixNewline(f2) ; lines2 += 1
+				g.readlineForceUnixNewline(f2) ; lines2 += 1
 			s2 = None
 		#@nonl
 		#@-node:<< handle opening lines >>
 		#@nl
 		while 1:
 			if s1 == None:
-				s1 = readlineForceUnixNewline(f1) ; lines1 += 1
+				s1 = g.readlineForceUnixNewline(f1) ; lines1 += 1
 			if s2 == None:
-				s2 = readlineForceUnixNewline(f2) ; lines2 += 1
+				s2 = g.readlineForceUnixNewline(f2) ; lines2 += 1
 			#@		<< ignore blank lines and/or sentinels >>
 			#@+node:<< ignore blank lines and/or sentinels >>
 			# Completely empty strings denotes end-of-file.
@@ -419,7 +420,7 @@ class baseLeoCompare:
 		trailingLines = 0
 		while 1:
 			if not s:
-				s = readlineForceUnixNewline(f)
+				s = g.readlineForceUnixNewline(f)
 			if len(s) == 0: break
 			trailingLines += 1
 			if self.printTrailingMismatches and printTrailing:
@@ -446,15 +447,15 @@ class baseLeoCompare:
 		tag = "@+leo"
 		j = string.find(s,tag)
 		if j > 0:
-			i = skip_ws(s,0)
+			i = g.skip_ws(s,0)
 			if i < j: return s[i:j]
 			else: return None
 		else: return None
 			
 	def isSentinel (self,s,sentinelComment):
 	
-		i = skip_ws(s,0)
-		return match(s,i,sentinelComment)
+		i = g.skip_ws(s,0)
+		return g.match(s,i,sentinelComment)
 	#@nonl
 	#@-node:isLeoHeader & isSentinel
 	#@+node:openOutputFile (compare)
@@ -462,14 +463,14 @@ class baseLeoCompare:
 		
 		if self.outputFileName == None:
 			return
-		dir,name = os_path_split(self.outputFileName)
+		dir,name = g.os_path_split(self.outputFileName)
 		if len(dir) == 0:
 			self.show("empty output directory")
 			return
 		if len(name) == 0:
 			self.show("empty output file name")
 			return
-		if not os_path_exists(dir):
+		if not g.os_path_exists(dir):
 			self.show("output directory not found: " + dir)
 		else:
 			try:
@@ -482,7 +483,7 @@ class baseLeoCompare:
 			except:
 				self.outputFile = None
 				self.show("exception opening output file")
-				es_exception()
+				g.es_exception()
 	#@nonl
 	#@-node:openOutputFile (compare)
 	#@+node:show
@@ -492,7 +493,7 @@ class baseLeoCompare:
 		if self.outputFile:
 			self.outputFile.write(s + '\n')
 		elif self.c:
-			es(s)
+			g.es(s)
 		else:
 			print s
 			print

@@ -1,6 +1,7 @@
 #@+leo-ver=4
 #@+node:@file leoTkinterColorPanels.py
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
 import leoColorPanel
 import string,Tkinter,tkColorChooser
@@ -107,8 +108,8 @@ class leoTkinterColorNamePanel:
 				items = map(int, items)
 				color = box.get(items[0])
 			except:
-				es("unexpected exception")
-				es_exception()
+				g.es("unexpected exception")
+				g.es_exception()
 	
 		if not color:
 			color = self.color
@@ -122,9 +123,9 @@ class leoTkinterColorNamePanel:
 		assert(color==self.color)
 		self.revertColor = color
 		
-		Tk = Tkinter ; gui = app.gui
+		Tk = Tkinter ; gui = g.app.gui
 	
-		self.top = top = Tk.Toplevel(app.root)
+		self.top = top = Tk.Toplevel(g.app.root)
 		top.title("Color names for " + '"' + name + '"')
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
 	
@@ -209,7 +210,7 @@ class leoTkinterColorNamePanel:
 	#@+node:select
 	def select (self,color):
 	
-		# trace(color)
+		# g.trace(color)
 	
 		# The name should be on the list!
 		box = self.box
@@ -221,7 +222,7 @@ class leoTkinterColorNamePanel:
 				box.see(i)
 				return
 	
-		# trace("not found:" + `color`)
+		# g.trace("not found:" + `color`)
 	#@nonl
 	#@-node:select
 	#@-others
@@ -258,9 +259,9 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 	#@+node:createFrame (color panel)
 	def createFrame (self):
 		
-		c = self.c ; config = app.config ; gui = app.gui
+		c = self.c ; config = g.app.config ; gui = g.app.gui
 		
-		self.top = top = Tk.Toplevel(app.root)
+		self.top = top = Tk.Toplevel(g.app.root)
 		top.title("Syntax colors for " + c.frame.shortFileName()) # DS, 10/28/03
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
 		gui.attachLeoIcon(top)
@@ -274,7 +275,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 		for name,option_name,default_color in self.colorPanelData:
 			# Get the color.
 			option_color = config.getColorsPref(option_name)
-			color = choose(option_color,option_color,default_color)
+			color = g.choose(option_color,option_color,default_color)
 			# Create the row.
 			f = Tk.Frame(outer,bd=2)
 			f.pack()
@@ -323,7 +324,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 	def showColorPicker (self,name):
 		
 		option_name = self.option_names[name]
-		color = app.config.getColorsPref(option_name)
+		color = g.app.config.getColorsPref(option_name)
 		rgb,val = tkColorChooser.askcolor(color=color)
 		if val != None:
 			self.update(name,val)
@@ -341,7 +342,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 	#@+node:colorPanel.onOk, onCancel, onRevert
 	def onOk (self):
 		# Update the revert colors
-		config = app.config
+		config = g.app.config
 		for name in self.changed_options:
 			option_name = self.option_names[name]
 			self.revertColors[option_name] = config.getColorsPref(option_name)
@@ -361,7 +362,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 			self.top.destroy()
 		
 	def onRevert (self):
-		config = app.config
+		config = g.app.config
 		for name in self.changed_options:
 			option_name = self.option_names[name]
 			old_val = self.revertColors[option_name]
@@ -379,8 +380,8 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 	#@+node:update
 	def update (self,name,val):
 		
-		config = app.config
-		# es(str(name) + " = " + str(val))
+		config = g.app.config
+		# g.es(str(name) + " = " + str(val))
 		
 		# Put the new color in the button.
 		b = self.buttons[name]

@@ -19,7 +19,9 @@
 #@-node:<< about the tree classes >>
 #@nl
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
+
 import leoFrame
 import Tkinter,tkFont
 import os,string,types
@@ -63,12 +65,13 @@ import os,string,types
 box_padding = 5 # extra padding between box and icon
 box_width = 9 + box_padding
 icon_width = 20
+icon_padding = 2
 text_indent = 4 # extra padding between icon and tex
 child_indent = 28 # was 20
 hline_y = 7 # Vertical offset of horizontal line
 root_left = 7 + box_width
 root_top = 2
-hiding = true # True if we don't reallocate items
+hiding = true # true if we don't reallocate items
 line_height = 17 + 2 # To be replaced by Font height
 #@nonl
 #@-node:<< drawing constants >>
@@ -93,6 +96,9 @@ class leoTkinterTree (leoFrame.leoTree):
 		# Miscellaneous info.
 		self.iconimages = {} # Image cache set by getIconImage().
 		self.active = false # true if tree is active
+		self._editPosition = None
+		self.lineyoffset = 0 # y offset for this headline.
+		self.disableRedraw = false # True: reschedule a redraw for later.
 		
 		# Set self.font and self.fontName.
 		self.setFontFromConfig()
@@ -104,7 +110,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		self.widgets = [] # Widgets that must be destroyed when redrawing.
 		
 		# Drag and drop
-		self.drag_v = None
+		self.drag_p = None
 		self.controlDrag = false # true: control was down when drag started.
 		self.drag_id = None # To reset bindings after drag
 		
@@ -137,20 +143,25 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		"""Delete all tree bindings and all references to tree widgets."""
 		
-		# print "deleteBindings: %d, %d" % (len(self.tagBindings),len(self.bindings))
+		# g.trace(len(self.tagBindings),len(self.bindings))
 	
 		count = 0
 		# Unbind all the tag bindings.
-		for id,id2,binding in self.tagBindings:
-			self.canvas.tag_unbind(id,binding,id2)
-			count += 1
-		self.tagBindings = []
-		# Unbind all the text bindings.
-		for t,id,binding in self.bindings:
-			t.unbind(binding,id)
-			count += 1
-		self.bindings = []
-		# print("bindings freed:"+`count`)
+		if 0:  # testing.
+			self.tagBindings = []
+			self.bindings = []
+		else:
+			for id,id2,binding in self.tagBindings:
+				self.canvas.tag_unbind(id,binding,id2)
+				count += 1
+			self.tagBindings = []
+			# Unbind all the text bindings.
+			for t,id,binding in self.bindings:
+				t.unbind(binding,id)
+				count += 1
+			self.bindings = []
+	
+			# g.trace("bindings freed:",count)
 	#@nonl
 	#@-node:tree.deleteBindings
 	#@+node:tree.deleteWidgets
@@ -160,13 +171,18 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		"""Delete all widgets in the canvas"""
 		
+		# g.trace(len(self.widgets))
+		
 		self.icon_id_dict = {} # Delete all references to icons.
 		self.edit_text_dict = {} # Delete all references to Tk.Edit widgets.
 			
 		# Fixes a _huge_ memory leak.
 		for w in self.widgets:
 			w.destroy() 
+	
 		self.widgets = []
+		
+		# g.trace("done")
 	#@nonl
 	#@-node:tree.deleteWidgets
 	#@+node:tree.injectCallbacks (class method)
@@ -184,179 +200,175 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		def OnBoxClick(self,event=None):
 			
-			"""Callback injected into vnode class."""
+			"""Callback injected into vnode or position class."""
 		
-			# trace()
 			try:
-				v = self ; c = v.c
-				if not doHook("boxclick1",c=c,v=v,event=event):
-					c.frame.tree.OnBoxClick(v)
-				doHook("boxclick2",c=c,v=v,event=event)
+				p = self ; c = p.c
+				if not g.doHook("boxclick1",c=c,v=p,event=event):
+					c.frame.tree.OnBoxClick(p)
+				g.doHook("boxclick2",c=c,v=p,event=event)
 			except:
-				es_event_exception("boxclick")
+				g.es_event_exception("boxclick")
 		#@nonl
 		#@-node:OnBoxClick
 		#@+node:OnDrag
 		def OnDrag(self,event=None):
 			
-			"""Callback injected into vnode class."""
+			"""Callback injected into vnode or position class."""
 		
-			# trace()
 			try:
 				v = self ; c = v.c
 				if c.frame.tree.dragging():
-					if not doHook("dragging1",c=c,v=v,event=event):
+					if not g.doHook("dragging1",c=c,v=v,event=event):
 						c.frame.tree.OnDrag(v,event)
-					doHook("dragging2",c=c,v=v,event=event)
+					g.doHook("dragging2",c=c,v=v,event=event)
 				else:
-					if not doHook("drag1",c=c,v=v,event=event):
+					if not g.doHook("drag1",c=c,v=v,event=event):
 						c.frame.tree.OnDrag(v,event)
-					doHook("drag2",c=c,v=v,event=event)
+					g.doHook("drag2",c=c,v=v,event=event)
 			except:
-				es_event_exception("drag")
+				g.es_event_exception("drag")
 		#@nonl
 		#@-node:OnDrag
 		#@+node:OnEndDrag
 		def OnEndDrag(self,event=None):
 			
-			"""Callback injected into vnode class."""
+			"""Callback injected into vnode or position class."""
 			
-			# trace()
+			# g.trace()
 		
 			try:
 				v = self ; c = v.c
 				# 7/10/03: Always call frame.OnEndDrag, regardless of state.
-				if not doHook("enddrag1",c=c,v=v,event=event):
+				if not g.doHook("enddrag1",c=c,v=v,event=event):
 					c.frame.tree.OnEndDrag(v,event)
-				doHook("enddrag2",c=c,v=v,event=event)
+				g.doHook("enddrag2",c=c,v=v,event=event)
 			except:
-				es_event_exception("enddrag")
+				g.es_event_exception("enddrag")
 		#@nonl
 		#@-node:OnEndDrag
 		#@+node:OnHeadlineClick & OnHeadlineRightClick
 		def OnHeadlineClick(self,event=None):
-			"""Callback injected into vnode class."""
-			#trace()
+			"""Callback injected into vnode or position class."""
 			try:
 				v = self ; c = v.c
-				if not doHook("headclick1",c=c,v=v,event=event):
+				if not g.doHook("headclick1",c=c,v=v,event=event):
 					c.frame.tree.OnActivate(v)
-				doHook("headclick2",c=c,v=v,event=event)
+				g.doHook("headclick2",c=c,v=v,event=event)
 			except:
-				es_event_exception("headclick")
+				g.es_event_exception("headclick")
 			
 		def OnHeadlineRightClick(self,event=None):
-			"""Callback injected into vnode class."""
-			#trace()
+			"""Callback injected into vnode or position class."""
+			#g.trace()
 			try:
 				v = self ; c = v.c
-				if not doHook("headrclick1",c=c,v=v,event=event):
+				if not g.doHook("headrclick1",c=c,v=v,event=event):
 					c.frame.tree.OnActivate(v)
 					c.frame.tree.OnPopup(self,event)
-				doHook("headrclick2",c=c,v=v,event=event)
+				g.doHook("headrclick2",c=c,v=v,event=event)
 			except:
-				es_event_exception("headrclick")
-		#@nonl
+				g.es_event_exception("headrclick")
 		#@-node:OnHeadlineClick & OnHeadlineRightClick
 		#@+node:OnHyperLinkControlClick
 		def OnHyperLinkControlClick (self,event):
 			
-			"""Callback injected into vnode class."""
+			"""Callback injected into vnode or position class."""
 		
-			# trace()
+			# g.trace()
 			try:
 				v = self ; c = v.c
-				if not doHook("hypercclick1",c=c,v=v,event=event):
+				if not g.doHook("hypercclick1",c=c,v=v,event=event):
 					c.beginUpdate()
 					c.selectVnode(v)
 					c.endUpdate()
 					c.frame.bodyCtrl.mark_set("insert","1.0")
-				doHook("hypercclick2",c=c,v=v,event=event)
+				g.doHook("hypercclick2",c=c,v=v,event=event)
 			except:
-				es_event_exception("hypercclick")
+				g.es_event_exception("hypercclick")
 		#@nonl
 		#@-node:OnHyperLinkControlClick
 		#@+node:OnHeadlineKey
 		def OnHeadlineKey (self,event=None):
 		
-			"""Callback injected into vnode class."""
+			"""Callback injected into vnode or position class."""
 		
 			try:
 				v = self ; c = v.c
-				if not doHook("headkey1",c=c,v=v,event=event):
+				if not g.doHook("headkey1",c=c,v=v,event=event):
 					c.frame.tree.OnHeadlineKey(v,event)
-				doHook("headkey2",c=c,v=v,event=event)
+				g.doHook("headkey2",c=c,v=v,event=event)
 			except:
-				es_event_exception("headkey")
+				g.es_event_exception("headkey")
 		#@nonl
 		#@-node:OnHeadlineKey
 		#@+node:OnHyperLinkEnter
 		def OnHyperLinkEnter (self,event=None):
 			
-			"""Callback injected into vnode class."""
+			"""Callback injected into vnode or position class."""
 		
 			try:
 				v = self ; c = v.c
-				if not doHook("hyperenter1",c=c,v=v,event=event):
+				if not g.doHook("hyperenter1",c=c,v=v,event=event):
 					if 0: # This works, and isn't very useful.
 						c.frame.bodyCtrl.tag_config(v.tagName,background="green")
-				doHook("hyperenter2",c=c,v=v,event=event)
+				g.doHook("hyperenter2",c=c,v=v,event=event)
 			except:
-				es_event_exception("hyperenter")
+				g.es_event_exception("hyperenter")
 		#@nonl
 		#@-node:OnHyperLinkEnter
 		#@+node:OnHyperLinkLeave
 		def OnHyperLinkLeave (self,event=None):
 			
-			"""Callback injected into vnode class."""
+			"""Callback injected into vnode or position class."""
 		
 			try:
 				v = self ; c = v.c
-				if not doHook("hyperleave1",c=c,v=v,event=event):
+				if not g.doHook("hyperleave1",c=c,v=v,event=event):
 					if 0: # This works, and isn't very useful.
 						c.frame.bodyCtrl.tag_config(v.tagName,background="white")
-				doHook("hyperleave2",c=c,v=v,event=event)
+				g.doHook("hyperleave2",c=c,v=v,event=event)
 			except:
-				es_event_exception("hyperleave")
+				g.es_event_exception("hyperleave")
 		#@nonl
 		#@-node:OnHyperLinkLeave
 		#@+node:OnIconClick & OnIconRightClick
 		def OnIconClick(self,event=None):
 			
-			"""Callback injected into vnode class."""
+			"""Callback injected into vnode or position class."""
 		
 			try:
 				v = self ; c = v.c
-				if not doHook("iconclick1",c=c,v=v,event=event):
+				if not g.doHook("iconclick1",c=c,v=v,event=event):
 					c.frame.tree.OnIconClick(v,event)
-				doHook("iconclick2",c=c,v=v,event=event)
+				g.doHook("iconclick2",c=c,v=v,event=event)
 			except:
-				es_event_exception("iconclick")
+				g.es_event_exception("iconclick")
 			
 		def OnIconRightClick(self,event=None):
 			
-			"""Callback injected into vnode class."""
+			"""Callback injected into vnode or position class."""
 		
 			try:
 				v = self ; c = v.c
-				if not doHook("iconrclick1",c=c,v=v,event=event):
+				if not g.doHook("iconrclick1",c=c,v=v,event=event):
 					c.frame.tree.OnIconRightClick(v,event)
-				doHook("iconrclick2",c=c,v=v,event=event)
+				g.doHook("iconrclick2",c=c,v=v,event=event)
 			except:
-				es_event_exception("iconrclick")
+				g.es_event_exception("iconrclick")
 		#@-node:OnIconClick & OnIconRightClick
 		#@+node:OnIconDoubleClick
 		def OnIconDoubleClick(self,event=None):
 			
-			"""Callback injected into vnode class."""
+			"""Callback injected into vnode or position class."""
 		
 			try:
 				v = self ; c = v.c
-				if not doHook("icondclick1",c=c,v=v,event=event):
+				if not g.doHook("icondclick1",c=c,v=v,event=event):
 					c.frame.tree.OnIconDoubleClick(self)
-				doHook("icondclick2",c=c,v=v,event=event)
+				g.doHook("icondclick2",c=c,v=v,event=event)
 			except:
-				es_event_exception("icondclick")
+				g.es_event_exception("icondclick")
 		#@-node:OnIconDoubleClick
 		#@-others
 		#@nonl
@@ -368,9 +380,8 @@ class leoTkinterTree (leoFrame.leoTree):
 			OnHeadlineClick,OnHeadlineRightClick,OnHeadlineKey,
 			OnHyperLinkControlClick,OnHyperLinkEnter,OnHyperLinkLeave,
 			OnIconClick,OnIconDoubleClick,OnIconRightClick):
-	
-			# trace(f)
-			funcToMethod(f,leoNodes.vnode)
+			
+			g.funcToMethod(f,leoNodes.position)
 	#@nonl
 	#@-node:tree.injectCallbacks (class method)
 	#@+node:redraw
@@ -379,7 +390,7 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 	def redraw (self,event=None):
 		
-		# trace()
+		# g.trace()
 		
 		if self.updateCount == 0 and not self.redrawScheduled:
 			self.redrawScheduled = true
@@ -407,63 +418,84 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@+node:force_redraw
 	# Schedules a redraw even if inside beginUpdate/endUpdate
 	def force_redraw (self):
+		
+		# g.trace()
+		# import traceback ; traceback.print_stack()
 	
 		if not self.redrawScheduled:
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
-	#@nonl
 	#@-node:force_redraw
 	#@+node:redraw_now
 	# Redraws immediately: used by Find so a redraw doesn't mess up selections.
 	# It is up to the caller to ensure that no other redraws are pending.
 	
 	def redraw_now (self):
+		
+		# g.trace()
 	
 		self.idle_redraw()
-	#@nonl
 	#@-node:redraw_now
 	#@+node:idle_redraw
 	def idle_redraw (self):
 		
-		self.redrawScheduled = false # 7/10/03: Always do this here.
+		c = self.c ; frame = c.frame
+	
+		self.redrawScheduled = false # Always do this here.
+	
+		#@	<< return if disabled, or quitting or dragging >>
+		#@+node:<< return if disabled, or quitting or dragging >>
+		if self.disableRedraw:
+			# We have been called as the result of an update_idletasks in the log pane.
+			# Don't do anything now.
+			return
 		
-		if 0: # This can be called as the result of update_idletasks, so the count need not be 0.
-			trace(self.updateCount)
-	
-		frame = self.c.frame
-		if frame not in app.windowList or app.quitting:
-			# trace("no frame")
+		if frame not in g.app.windowList or g.app.quitting:
+			# g.trace("no frame")
 			return
-			
-		if self.drag_v:
-			# trace("dragging",self.drag_v)
+		
+		if self.drag_p:
+			# g.trace("dragging",self.drag_p)
 			return
+		#@-node:<< return if disabled, or quitting or dragging >>
+		#@nl
 	
-		# trace(frame)
-		# print_bindings("canvas",self.canvas)
+		# g.print_bindings("canvas",self.canvas)
 	
-		self.expandAllAncestors(self.currentVnode())
+		self.expandAllAncestors(c.currentPosition())
+	
 		oldcursor = self.canvas['cursor']
 		self.canvas['cursor'] = "watch"
-		self.allocatedNodes = 0
-		if not doHook("redraw-entire-outline",c=self.c):
-			# Erase and redraw the entire tree.
-			self.setTopVnode(None)
+	
+		if not g.doHook("redraw-entire-outline",c=self.c):
+			self.allocatedNodes = 0
+			#@		<< Erase and redraw the entire tree >>
+			#@+node:<< Erase and redraw the entire tree >>
+			# Delete all widgets.
+			c.setTopVnode(None)
 			self.deleteBindings()
 			self.canvas.delete("all")
 			self.deleteWidgets()
+			
+			# Redraw the tree.
 			self.setVisibleAreaToFullCanvas()
 			self.drawTopTree()
+			
 			# Set up the scroll region after the tree has been redrawn.
 			x0, y0, x1, y1 = self.canvas.bbox("all")
 			self.canvas.configure(scrollregion=(0, 0, x1, y1))
+			
+			# g.printGc()
+			
 			# Do a scrolling operation after the scrollbar is redrawn
-			# printGc()
 			self.canvas.after_idle(self.idle_scrollTo)
+			#@nonl
+			#@-node:<< Erase and redraw the entire tree >>
+			#@nl
 			if self.trace:
 				self.redrawCount += 1
-				print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
-			doHook("after_redraw-outline",c=self.c)
+				print "idle_redraw allocated:",self.redrawCount,self.allocatedNodes
+		g.doHook("after-redraw-outline",c=self.c)
 	
 		self.canvas['cursor'] = oldcursor
 	#@nonl
@@ -471,11 +503,13 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@+node:idle_second_redraw
 	def idle_second_redraw (self):
 		
-		# trace()
+		c = self.c
+		
+		g.trace()
 			
 		# Erase and redraw the entire tree the SECOND time.
 		# This ensures that all visible nodes are allocated.
-		self.setTopVnode(None)
+		c.setTopVnode(None)
 		args = self.canvas.yview()
 		self.setVisibleArea(args)
 		self.deleteBindings()
@@ -516,32 +550,19 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@-at
 	#@-node:About drawing and updating
 	#@+node:drawBox (tag_bind)
-	def drawBox (self,v,x,y):
-		
+	def drawBox (self,p,x,y):
+	
+		# Make sure the bindings refer to the _present_ position.
+		p = p.copy()
+	
 		y += 7 # draw the box at x, y+7
 	
 		tree = self
-		iconname = choose(v.isExpanded(),"minusnode.gif", "plusnode.gif")
+		iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
 		image = self.getIconImage(iconname)
-		id = self.canvas.create_image(x,y,image=image)
-		
-		if 1: # use vnode callbacks
-			id1 = self.canvas.tag_bind(id, "<1>", v.OnBoxClick)
-		else:
-			#@		<< define onBoxClickCallback >>
-			#@+node:<< define onBoxClickCallback >>
-			def onBoxClickCallback(event,tree=tree,v=v):
-				try:
-					c = v.c
-					if not doHook("boxclick1",c=c,v=v,event=event):
-						tree.OnBoxClick(v)
-					doHook("boxclick2",c=c,v=v,event=event)
-				except:
-					es_event_exception("boxclick")
-			#@nonl
-			#@-node:<< define onBoxClickCallback >>
-			#@nl
-			id1 = self.canvas.tag_bind(id, "<1>", onBoxClickCallback)
+		id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
+	
+		id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
 		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
 		
 		# Remember the bindings so deleteBindings can delete them.
@@ -550,12 +571,15 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@nonl
 	#@-node:drawBox (tag_bind)
 	#@+node:drawIcon (tag_bind)
-	def drawIcon(self,v,x=None,y=None):
+	def drawIcon(self,p,x=None,y=None):
 		
-		"""Draws icon for v at x,y, or at v.iconx,v.icony if x,y = None,None"""
+		"""Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
 	
 		tree = self
 		
+		# Make sure the bindings refer to the _present_ position.
+		p = p.copy() ; v = p.v
+	
 		if x is None and y is None:
 			try:
 				x,y = v.iconx, v.icony
@@ -579,88 +603,103 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		# Get the image
 		image = self.getIconImage(imagename + ".GIF")
-		id = self.canvas.create_image(x,y,anchor="nw",image=image)
-		self.icon_id_dict[id] = v # Remember which vnode belongs to the icon.
-		
-		if 1: # use vnode callbacks.
-			id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
-			id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
-			id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick)
-		else:
-			#@		<< define icon click callbacks >>
-			#@+node:<< define icon click callbacks >>
-			def onIconClickCallback(event,tree=tree,v=v):
-				try:
-					c = v.c
-					if not doHook("iconclick1",c=c,v=v,event=event):
-						tree.OnIconClick(v,event)
-					doHook("iconclick2",c=c,v=v,event=event)
-				except:
-					es_event_exception("iconclick")
-					
-			def onIconDoubleClickCallback(event,tree=tree,v=v):
-				try:
-					c = v.c
-					if not doHook("icondclick1",c=c,v=v,event=event):
-						tree.OnIconDoubleClick(self)
-					doHook("icondclick2",c=c,v=v,event=event)
-				except:
-					es_event_exception("icondclick")
-				
-			def onIconRightClickCallback(event,tree=tree,v=v):
-				try:
-					c = v.c
-					if not doHook("iconrclick1",c=c,v=v,event=event):
-						tree.OnIconRightClick(v,event)
-					doHook("iconrclick2",c=c,v=v,event=event)
-				except:
-					es_event_exception("iconrclick")
-			#@-node:<< define icon click callbacks >>
-			#@nl
-			id1 = self.canvas.tag_bind(id,"<1>",onIconClickCallback)
-			id2 = self.canvas.tag_bind(id,"<Double-1>",onIconDoubleClickCallback)
-			id3 = self.canvas.tag_bind(id,"<3>",onIconRightClickCallback)
+		id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+		self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
+	
+		id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
+		id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
 		
 		# Remember the bindings so deleteBindings can delete them.
 		self.tagBindings.append((id,id1,"<1>"),)
 		self.tagBindings.append((id,id2,"<Double-1>"),)
 		self.tagBindings.append((id,id3,"<3>"),)
 	
-		return 0 # dummy icon height
+		return 0,icon_width # dummy icon height,width
 	#@nonl
 	#@-node:drawIcon (tag_bind)
-	#@+node:drawNode & force_draw_node
-	def drawNode(self,v,x,y):
+	#@+node:drawNode & force_draw_node (good trace)
+	def drawNode(self,p,x,y):
 	
 		"""Draw horizontal line from vertical line to icon"""
-	
-		self.canvas.create_line(x, y+7, x+box_width, y+7,tag="lines",fill="gray50") # stipple="gray25")
+		
+		if 1:
+			self.lineyoffset = 0
+		else:
+			if hasattr(p.v.t,"unknownAttributes"):
+				self.lineyoffset = p.v.t.unknownAttributes.get("lineYOffset",0)
+			else:
+				self.lineyoffset = 0
+			
+		self.canvas.create_line(x,y+7+self.lineyoffset,
+			x+box_width,y+7+self.lineyoffset,
+			tag="lines",fill="gray50") # stipple="gray25")
 	
 		if self.inVisibleArea(y):
-			return self.force_draw_node(v,x,y)
+			return self.force_draw_node(p,x,y)
 		else:
-			return self.line_height
-		
-	def force_draw_node(self,v,x,y):
+			return self.line_height,0
+	#@nonl
+	#@-node:drawNode & force_draw_node (good trace)
+	#@+node:force_draw_node (new)
+	def force_draw_node(self,p,x,y):
 	
 		self.allocatedNodes += 1
-		if v.firstChild():
-			self.drawBox(v,x,y)
-		icon_height = self.drawIcon(v,x+box_width,y)
-		text_height = self.drawText(v,x+box_width+icon_width,y)
-		return max(icon_height, text_height)
-	#@nonl
-	#@-node:drawNode & force_draw_node
-	#@+node:drawText (bind)
-	# draws text for v at x,y
+		h,w = self.drawUserIcons(p,"beforeBox",x,y)
+		xw = w # The extra indentation before the icon box.
+		if p.hasChildren():
+			self.drawBox(p,x+w,y)
+		w += box_width # even if box isn't drawn.
 	
-	def drawText(self,v,x,y):
+		h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
+		h = max(h,h2) ; w += w2 ; xw += w2
+	
+		h2,w2 = self.drawIcon(p,x+w,y)
+		h = max(h,h2) ; w += w2
+	
+		h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
+		h = max(h,h2) ; w += w2
+	
+		h2 = self.drawText(p,x+w,y)
+		h = max(h,h2)
+		w += self.widthInPixels(p.headString())
+	
+		h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
+		h = max(h,h2)
+	
+		return h,xw
+	#@nonl
+	#@-node:force_draw_node (new)
+	#@+node:force_draw_node (old)
+	def force_draw_nodeOLD(self,p,x,y):
+	
+		self.allocatedNodes += 1
+	
+		if p.hasChildren():
+			self.drawBox(p,x,y)
+		w = box_width # Even if the box isn't drawn.
+	
+		h2,w2 = self.drawIcon(p,x+w,y)
+		w += w2
+	
+		h = self.drawText(p,x+w,y)
 		
+		return h,0
+	#@-node:force_draw_node (old)
+	#@+node:drawText (bind)
+	def drawText(self,p,x,y):
+		
+		"""draw text for v at nominal coordinates x,y."""
+	
 		tree = self
 		x += text_indent
 	
+		p = p.copy() # must remain constant for callbacks.
+		v = p.v
+	
 		t = Tkinter.Text(self.canvas,
 			font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
+	
 		self.edit_text_dict[v] = t # Remember which text widget belongs to v.
 		
 		# Remember the widget so deleteBindings can delete it.
@@ -669,49 +708,27 @@ class leoTkinterTree (leoFrame.leoTree):
 		t.insert("end", v.headString())
 		#@	<< configure the text depending on state >>
 		#@+node:<< configure the text depending on state >>
-		if v == self.currentVnode():
-			if v == self.editVnode():
-				self.setNormalLabelState(v)
+		current = self.c.currentPosition()
+		# g.trace(p,current)
+		
+		if p and v and p.v == current.v: # To avoid unselecting when a node changes level.
+			if p == self.editPosition():
+				self.setNormalLabelState(p)
 			else:
-				self.setDisabledLabelState(v) # selected, disabled
+				self.setDisabledLabelState(p) # selected, disabled
 		else:
-			self.setUnselectedLabelState(v) # unselected
+			self.setUnselectedLabelState(p) # unselected
 		#@nonl
 		#@-node:<< configure the text depending on state >>
 		#@nl
 	
-		if 1: # Use vnode callbacks.
-			id1 = t.bind("<1>",v.OnHeadlineClick)
-			id2 = t.bind("<3>",v.OnHeadlineRightClick)
-		else:
-			#@		<< define the headline click callbacks >>
-			#@+node:<< define the headline click callbacks >>
-			def onHeadlineClickCallback(event,tree=tree,v=v):
-				try:
-					c = v.c
-					if not doHook("headclick1",c=c,v=v,event=event):
-						tree.OnActivate(v)
-					doHook("headclick2",c=c,v=v,event=event)
-				except:
-					es_event_exception("headclick")
-				
-			def onHeadlineRightClickCallback(event,tree=tree,v=v):
-				try:
-					c = v.c
-					if not doHook("headrclick1",c=c,v=v,event=event):
-						tree.OnActivate(v)
-						tree.OnPopup(v,event)
-					doHook("headrclick2",c=c,v=v,event=event)
-				except:
-					es_event_exception("headrclick")
-			#@nonl
-			#@-node:<< define the headline click callbacks >>
-			#@nl
-			id1 = t.bind("<1>",onHeadlineClickCallback)
-			id2 = t.bind("<3>",onHeadlineRightClickCallback)
+		# Use vnode or postion callbacks.
+		id1 = t.bind("<1>",p.OnHeadlineClick)
+		id2 = t.bind("<3>",p.OnHeadlineRightClick)
+		
 		if 0: # 6/15/02: Bill Drissel objects to this binding.
-			t.bind("<Double-1>", v.OnBoxClick)
-		id3 = t.bind("<Key>", v.OnHeadlineKey)
+			t.bind("<Double-1>", p.OnBoxClick)
+		id3 = t.bind("<Key>", p.OnHeadlineKey)
 		id4 = t.bind("<Control-t>",self.OnControlT)
 			# 10/16/02: Stamp out the erroneous control-t binding.
 			
@@ -721,9 +738,12 @@ class leoTkinterTree (leoFrame.leoTree):
 		self.bindings.append((t,id3,"<Key>"),)
 		self.bindings.append((t,id4,"<Control-t>"),)
 	
-		id = self.canvas.create_window(x,y,anchor="nw",window=t)
+		id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
 		self.canvas.tag_lower(id)
-	
+		
+		# This doesn't work: must call update_idletasks first, and that's hard here.
+		# g.trace(t,t.winfo_height(),t.winfo_width())
+		
 		return self.line_height
 	#@nonl
 	#@-node:drawText (bind)
@@ -735,31 +755,38 @@ class leoTkinterTree (leoFrame.leoTree):
 		c = self.c
 		
 		if c.hoistStack:
-			v = c.hoistStack[-1]
-			self.drawTree(v,root_left,root_top,0,0,hoistFlag=true)
+			p,junk = c.hoistStack[-1]
+			self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
 		else:
-			self.drawTree(self.rootVnode(),root_left,root_top,0,0)
+			self.drawTree(c.rootPosition(),root_left,root_top,0,0)
+			
+		g.trace(g.app.copies) ; g.app.copies = 0
+		# import traceback ; traceback.print_stack()
 	#@nonl
 	#@-node:drawTopTree
 	#@+node:drawTree
-	def drawTree(self,v,x,y,h,level,hoistFlag=false):
+	def drawTree(self,p,x,y,h,level,hoistFlag=false):
 		
+		# g.trace(p)
 		yfirst = ylast = y
 		if level==0: yfirst += 10
-		while v:
-			# trace(`x` + ", " + `y` + ", " + `v`)
-			h = self.drawNode(v,x,y)
+		w = 0
+	
+		p = p.copy()
+		while p: # Do not use an iterator
+			# g.trace(x,y,p)
+			h,w = self.drawNode(p,x,y)
 			y += h ; ylast = y
-			if v.isExpanded() and v.firstChild():
-				y = self.drawTree(v.firstChild(),x+child_indent,y,h,level+1)
-			if hoistFlag:
-				v = None
-			else:
-				v = v.next()
+			if p.isExpanded() and p.hasFirstChild():
+				y,w2 = self.drawTree(p.firstChild(),x+child_indent+w,y,h,level+1)
+				x += w2 ; w += w2
+			if hoistFlag: break
+			else:         p.moveToNext()
+	
 		#@	<< draw vertical line >>
 		#@+node:<< draw vertical line >>
 		id = self.canvas.create_line(
-			x, yfirst-hline_y+4,
+			x, yfirst-hline_y,
 			x, ylast+hline_y-h,
 			fill="gray50", # stipple="gray50"
 			tag="lines")
@@ -768,9 +795,113 @@ class leoTkinterTree (leoFrame.leoTree):
 		#@nonl
 		#@-node:<< draw vertical line >>
 		#@nl
-		return y
+		return y,w
 	#@nonl
 	#@-node:drawTree
+	#@+node:drawUserIcon
+	def drawUserIcon (self,where,x,y,dict):
+		
+		h,w = 0,0
+	
+		if where != dict.get("where","beforeHeadline"):
+			return h,w
+			
+		# g.trace(where,x,y,dict)
+		
+		#@	<< set offsets and pads >>
+		#@+node:<< set offsets and pads >>
+		xoffset = dict.get("xoffset")
+		try:    xoffset = int(xoffset)
+		except: xoffset = 0
+		
+		yoffset = dict.get("yoffset")
+		try:    yoffset = int(yoffset)
+		except: yoffset = 0
+		
+		xpad = dict.get("xpad")
+		try:    xpad = int(xpad)
+		except: xpad = 0
+		
+		ypad = dict.get("ypad")
+		try:    ypad = int(ypad)
+		except: ypad = 0
+		#@nonl
+		#@-node:<< set offsets and pads >>
+		#@nl
+		type = dict.get("type")
+		if type == "icon":
+			s = dict.get("icon")
+			#@		<< draw the icon in string s >>
+			#@+node:<< draw the icon in string s >>
+			pass
+			#@nonl
+			#@-node:<< draw the icon in string s >>
+			#@nl
+		elif type == "file":
+			file = dict.get("file")
+			#@		<< draw the icon at file >>
+			#@+node:<< draw the icon at file >>
+			try:
+				image = self.iconimages[file]
+				# Get the image from the cache if possible.
+			except KeyError:
+				try:
+					fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
+					fullname = g.os_path_normpath(fullname)
+					image = Tkinter.PhotoImage(master=self.canvas,file=fullname)
+					self.iconimages[fullname] = image
+				except:
+					#g.es("Exception loading: " + fullname)
+					#g.es_exception()
+					image = None
+					
+			if image:
+				id = self.canvas.create_image(x+xoffset,y+yoffset,anchor="nw",image=image)
+				self.canvas.lift(id)
+				h = image.height() + yoffset + ypad
+				w = image.width()  + xoffset + xpad
+			#@nonl
+			#@-node:<< draw the icon at file >>
+			#@nl
+		elif type == "url":
+			url = dict.get("url")
+			#@		<< draw the icon at url >>
+			#@+node:<< draw the icon at url >>
+			pass
+			#@nonl
+			#@-node:<< draw the icon at url >>
+			#@nl
+			
+		# Allow user to specify height, width explicitly.
+		h = dict.get("height",h)
+		w = dict.get("width",w)
+	
+		return h,w
+	#@nonl
+	#@-node:drawUserIcon
+	#@+node:drawUserIcons
+	def drawUserIcons(self,p,where,x,y):
+		
+		"""Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
+		
+		h,w = 0,0 ; t = p.v.t
+		
+		if not hasattr(t,"unknownAttributes"):
+			return h,w
+		
+		iconsList = t.unknownAttributes.get("icons")
+		# g.trace(iconsList)
+		
+		try:
+			for dict in iconsList:
+				h2,w2 = self.drawUserIcon(where,x+w,y,dict)
+				h = max(h,h2) ; w += w2
+		except:
+			g.es_exception()
+	
+		return h,w
+	#@nonl
+	#@-node:drawUserIcons
 	#@+node:inVisibleArea & inExpandedVisibleArea
 	def inVisibleArea (self,y1):
 		
@@ -793,24 +924,6 @@ class leoTkinterTree (leoFrame.leoTree):
 			return false
 	#@nonl
 	#@-node:inVisibleArea & inExpandedVisibleArea
-	#@+node:lastVisible
-	# Returns the last visible node of the screen.
-	
-	def lastVisible (self):
-	
-		v = self.rootVnode()
-		while v:
-			last = v
-			if v.firstChild():
-				if v.isExpanded():
-					v = v.firstChild()
-				else:
-					v = v.nodeAfterTree()
-			else:
-				v = v.threadNext()
-		return last
-	#@nonl
-	#@-node:lastVisible
 	#@+node:tree.getIconImage
 	def getIconImage (self, name):
 	
@@ -819,71 +932,92 @@ class leoTkinterTree (leoFrame.leoTree):
 			return self.iconimages[name]
 			
 		try:
-			fullname = os_path_join(app.loadDir,"..","Icons",name)
-			fullname = os_path_normpath(fullname)
+			fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
+			fullname = g.os_path_normpath(fullname)
 			image = Tkinter.PhotoImage(master=self.canvas, file=fullname)
 			self.iconimages[name] = image
 			return image
 		except:
-			es("Exception loading: " + fullname)
-			es_exception()
+			g.es("Exception loading: " + fullname)
+			g.es_exception()
 			return None
 	#@nonl
 	#@-node:tree.getIconImage
+	#@+node:tree.scrollTo
+	def scrollTo (self,p):
+		
+		def scrollToCallback(event=None,self=self,p=p):
+			g.trace(event,self,p)
+			self.idle_scrollTo(p)
+		
+		self.canvas.after_idle(scrollToCallback)
+	#@nonl
+	#@-node:tree.scrollTo
 	#@+node:tree.idle_scrollTo
-	def idle_scrollTo(self,v=None):
+	def idle_scrollTo(self,p=None):
 	
 		"""Scrolls the canvas so that v is in view.
 		
 		This is done at idle time after a redraw so that treeBar.get() will return proper values."""
 	
-		frame = self.c.frame
-		last = self.lastVisible()
-		nextToLast = last.visBack()
-		# print 'v,last',`v`,`last`
-		if v == None:
-			v = self.currentVnode()
-		h1 = self.yoffset(v)
-		h2 = self.yoffset(last)
-		if nextToLast: # 2/2/03: compute approximate line height.
-			lineHeight = h2 - self.yoffset(nextToLast)
-		else:
-			lineHeight = 20 # A reasonable default.
-		# Compute the fractions to scroll down/up.
-		lo, hi = frame.treeBar.get()
-		if h2 > 0.1:
-			frac = float(h1)/float(h2) # For scrolling down.
-			frac2 = float(h1+lineHeight/2)/float(h2) # For scrolling up.
-			frac2 = frac2 - (hi - lo)
-		else:
-			frac = frac2 = 0.0 # probably any value would work here.
-		# 2/2/03: new logic for scrolling up.
-		frac =  max(min(frac,1.0),0.0)
-		frac2 = max(min(frac2,1.0),0.0)
-	
-		if frac <= lo:
-			if self.prevMoveToFrac != frac:
-				self.prevMoveToFrac = frac
-				self.canvas.yview("moveto",frac)
-		elif frac2 + (hi - lo) >= hi:
-			if self.prevMoveToFrac != frac2:
-				self.prevMoveToFrac = frac2
-				self.canvas.yview("moveto",frac2)
+		c = self.c ; frame = c.frame
+		if not p: p = self.c.currentPosition()
+		try:
+			last = p.lastVisible()
+			nextToLast = last.visBack()
+			h1 = self.yoffset(p)
+			h2 = self.yoffset(last)
+			#@		<< compute approximate line height >>
+			#@+node:<< compute approximate line height >>
+			if nextToLast: # 2/2/03: compute approximate line height.
+				lineHeight = h2 - self.yoffset(nextToLast)
+			else:
+				lineHeight = 20 # A reasonable default.
+			#@nonl
+			#@-node:<< compute approximate line height >>
+			#@nl
+			#@		<< Compute the fractions to scroll down/up >>
+			#@+node:<< Compute the fractions to scroll down/up >>
+			data = frame.treeBar.get()
+			try: lo, hi = data
+			except: lo,hi = 0.0,1.0
+			if h2 > 0.1:
+				frac = float(h1)/float(h2) # For scrolling down.
+				frac2 = float(h1+lineHeight/2)/float(h2) # For scrolling up.
+				frac2 = frac2 - (hi - lo)
+			else:
+				frac = frac2 = 0.0 # probably any value would work here.
 				
-		if self.allocateOnlyVisibleNodes:
-			self.canvas.after_idle(self.idle_second_redraw)
-			
-		self.setTopVnode(v) # 1/30/04: remember a pseudo "top" node.
+			frac =  max(min(frac,1.0),0.0)
+			frac2 = max(min(frac2,1.0),0.0)
+			#@nonl
+			#@-node:<< Compute the fractions to scroll down/up >>
+			#@nl
+			if frac <= lo:
+				if self.prevMoveToFrac != frac:
+					self.prevMoveToFrac = frac
+					self.canvas.yview("moveto",frac)
+			elif frac2 + (hi - lo) >= hi:
+				if self.prevMoveToFrac != frac2:
+					self.prevMoveToFrac = frac2
+					self.canvas.yview("moveto",frac2)
 	
-		# print "%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi)
+			if self.allocateOnlyVisibleNodes:
+				self.canvas.after_idle(self.idle_second_redraw)
+				
+			c.setTopVnode(p) # 1/30/04: remember a pseudo "top" node.
+			# print "%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi)
+		except:
+			g.es_exception()
+	#@nonl
 	#@-node:tree.idle_scrollTo
 	#@+node:tree.numberOfVisibleNodes
 	def numberOfVisibleNodes(self):
 		
-		n = 0 ; v = self.rootVnode()
-		while v:
+		n = 0 ; p = self.c.rootPosition()
+		while p:
 			n += 1
-			v = v.visNext()
+			p.moveToVisNext()
 		return n
 	#@nonl
 	#@-node:tree.numberOfVisibleNodes
@@ -898,7 +1032,7 @@ class leoTkinterTree (leoFrame.leoTree):
 	def yoffset(self, v1):
 	
 		# if not v1.isVisible(): print "yoffset not visible:", `v1`
-		root = self.rootVnode()
+		root = self.c.rootPosition()
 		h, flag = self.yoffsetTree(root,v1)
 		# flag can be false during initialization.
 		# if not flag: print "yoffset fails:", h, `v1`
@@ -906,20 +1040,20 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 	# Returns the visible height of the tree and all sibling trees, stopping at v1
 	
-	def yoffsetTree(self,v,v1):
+	def yoffsetTree(self,p,porv1):
 	
 		h = 0
-		while v:
-			# print "yoffsetTree:", `v`
-			if v == v1:
+		for p in p.siblings_iter():
+			# print "yoffsetTree:", p
+			if p == porv1:
 				return h, true
 			h += self.line_height
-			child = v.firstChild()
-			if v.isExpanded() and child:
-				h2, flag = self.yoffsetTree(child,v1)
+			if p.isExpanded() and p.hasChildren():
+				child = p.firstChild()
+				h2, flag = self.yoffsetTree(child,porv1)
 				h += h2
 				if flag: return h, true
-			v = v.next()
+		
 		return h, false
 	#@nonl
 	#@-node:tree.yoffset
@@ -943,22 +1077,32 @@ class leoTkinterTree (leoFrame.leoTree):
 	# Called by ctor and when config params are reloaded.
 	def setFontFromConfig (self):
 	
-		font = app.config.getFontFromParams(
+		font = g.app.config.getFontFromParams(
 			"headline_text_font_family", "headline_text_font_size",
 			"headline_text_font_slant",  "headline_text_font_weight",
-			app.config.defaultTreeFontSize)
+			g.app.config.defaultTreeFontSize)
 	
 		self.setFont(font)
 	#@nonl
 	#@-node:tree.getFont,setFont,setFontFromConfig
-	#@+node:headWidth
+	#@+node:headWidth & widthInPixels
 	def headWidth(self,v):
 	
 		"""Returns the proper width of the entry widget for the headline."""
 	
 		return max(10,5 + len(v.headString()))
+		
+	def widthInPixels(self,s):
+	
+		s = g.toEncodedString(s,g.app.tkEncoding)
+		
+		width = self.font.measure(s)
+		
+		# g.trace(width,s)
+		
+		return width
 	#@nonl
-	#@-node:headWidth
+	#@-node:headWidth & widthInPixels
 	#@+node:setLineHeight
 	def setLineHeight (self,font):
 		
@@ -969,14 +1113,14 @@ class leoTkinterTree (leoFrame.leoTree):
 			# print metrics
 		except:
 			self.line_height = line_height # was 17 + 2
-			es("exception setting outline line height")
-			es_exception()
+			g.es("exception setting outline line height")
+			g.es_exception()
 	#@nonl
 	#@-node:setLineHeight
 	#@+node:setTreeColorsFromConfig
 	def setTreeColorsFromConfig (self):
 	
-		bg = app.config.getWindowPref("outline_pane_background_color")
+		bg = g.app.config.getWindowPref("outline_pane_background_color")
 		if bg:
 			try: self.canvas.configure(bg=bg)
 			except: pass
@@ -989,25 +1133,25 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@-at
 	#@-node:Event handers (tree)
 	#@+node:OnActivate
-	def OnActivate (self,v,event=None):
+	def OnActivate (self,p,event=None):
 	
 		try:
-			c = self.c
+			c = self.c ; gui = g.app.gui
 			#@		<< activate this window >>
 			#@+node:<< activate this window >>
-			c = self.c ; gui = app.gui
+			current = c.currentPosition()
 			
-			if v == self.currentVnode():
+			if p == current:
 				if self.active:
-					self.editLabel(v)
+					self.editLabel(p)
 				else:
 					self.undimEditLabel()
 					gui.set_focus(c,self.canvas) # Essential for proper editing.
 			else:
-				self.select(v)
-				if v.t.insertSpot != None: # 9/1/02
-					c.frame.bodyCtrl.mark_set("insert",v.t.insertSpot)
-					c.frame.bodyCtrl.see(v.t.insertSpot)
+				self.select(p)
+				if p.v.t.insertSpot != None: # 9/1/02
+					c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+					c.frame.bodyCtrl.see(p.v.t.insertSpot)
 				else:
 					c.frame.bodyCtrl.mark_set("insert","1.0")
 				gui.set_focus(c,c.frame.bodyCtrl)
@@ -1017,24 +1161,24 @@ class leoTkinterTree (leoFrame.leoTree):
 			#@-node:<< activate this window >>
 			#@nl
 		except:
-			es_event_exception("activate tree")
+			g.es_event_exception("activate tree")
 	#@nonl
 	#@-node:OnActivate
 	#@+node:OnBoxClick
 	# Called on click in box and double-click in headline.
 	
-	def OnBoxClick (self,v):
+	def OnBoxClick (self,p):
+		
+		# g.trace(p)
 	
 		# Note: "boxclick" hooks handled by vnode callback routine.
-		c = self.c ; gui = app.gui
+		c = self.c ; gui = g.app.gui
 	
-		if v.isExpanded():
-			v.contract()
-		else:
-			v.expand()
+		if p.isExpanded(): p.contract()
+		else:              p.expand()
 	
 		self.active = true
-		self.select(v)
+		self.select(p)
 		gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
 		self.redraw()
 	#@nonl
@@ -1045,17 +1189,17 @@ class leoTkinterTree (leoFrame.leoTree):
 		"""Deactivate the tree pane, dimming any headline being edited."""
 	
 		tree = self ; c = self.c
-		focus = app.gui.get_focus(c.frame)
+		focus = g.app.gui.get_focus(c.frame)
 	
 		# Bug fix: 7/13/03: Only do this as needed.
 		# Doing this on every click would interfere with the double-clicking.
 		if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
 			try:
-				# trace(focus)
+				# g.trace(focus)
 				tree.endEditLabel()
 				tree.dimEditLabel()
 			except:
-				es_event_exception("deactivate tree")
+				g.es_event_exception("deactivate tree")
 	#@nonl
 	#@-node:tree.OnDeactivate (caused double-click problem)
 	#@+node:tree.findVnodeWithIconId
@@ -1068,13 +1212,13 @@ class leoTkinterTree (leoFrame.leoTree):
 			return self.icon_id_dict.get(id)
 	#@-node:tree.findVnodeWithIconId
 	#@+node:tree.OnContinueDrag
-	def OnContinueDrag(self,v,event):
+	def OnContinueDrag(self,p,event):
 	
 		try:
 			#@		<< continue dragging >>
 			#@+node:<< continue dragging >>
-			# trace(`v`)
-			assert(v == self.drag_v)
+			# g.trace(p)
+			assert(p == self.drag_p)
 			
 			canvas = self.canvas
 			frame = self.c.frame
@@ -1100,16 +1244,16 @@ class leoTkinterTree (leoFrame.leoTree):
 					lo, hi = frame.treeBar.get()
 					n = self.savedNumberOfVisibleNodes
 					line_frac = 1.0 / float(n)
-					frac = choose(y < 0, lo - line_frac, lo + line_frac)
+					frac = g.choose(y < 0, lo - line_frac, lo + line_frac)
 					frac = min(frac,1.0)
 					frac = max(frac,0.0)
-					# es("lo,hi,frac:" + `lo` + " " + `hi` + " " + `frac`)
+					# g.es("lo,hi,frac:" + `lo` + " " + `hi` + " " + `frac`)
 					canvas.yview("moveto", frac)
 					
 					# Queue up another event to keep scrolling while the cursor is outside the canvas.
 					lo, hi = frame.treeBar.get()
 					if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
-						canvas.after_idle(self.OnContinueDrag,v,None) # Don't propagate the event.
+						canvas.after_idle(self.OnContinueDrag,p,None) # Don't propagate the event.
 				#@nonl
 				#@-node:<< scroll the canvas as needed >>
 				#@nl
@@ -1117,7 +1261,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			#@-node:<< continue dragging >>
 			#@nl
 		except:
-			es_event_exception("continue drag")
+			g.es_event_exception("continue drag")
 	#@nonl
 	#@-node:tree.OnContinueDrag
 	#@+node:tree.OnCtontrolT
@@ -1133,19 +1277,18 @@ class leoTkinterTree (leoFrame.leoTree):
 	# This precomputes numberOfVisibleNodes(), a significant optimization.
 	# We also indicate where findVnodeWithIconId() should start looking for tree id's.
 	
-	def OnDrag(self,v,event):
+	def OnDrag(self,p,event):
 	
 		# Note: "drag" hooks handled by vnode callback routine.
-		# trace(event)
-		
-		c = self.c
-		assert(v == self.drag_v)
+	
+		c = self.c ; v = p.v
+		assert(p == self.drag_p)
 	
 		if not event:
 			return
 	
 		if not self.dragging():
-			windowPref = app.config.getBoolWindowPref
+			windowPref = g.app.config.getBoolWindowPref
 			# Only do this once: greatly speeds drags.
 			self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
 			self.setDragging(true)
@@ -1154,28 +1297,28 @@ class leoTkinterTree (leoFrame.leoTree):
 				if windowPref("look_for_control_drag_on_mouse_down"):
 					if windowPref("enable_drag_messages"):
 						if self.controlDrag:
-							es("dragged node will be cloned")
+							g.es("dragged node will be cloned")
 						else:
-							es("dragged node will be moved")
+							g.es("dragged node will be moved")
 			else: self.controlDrag = false
 			self.canvas['cursor'] = "hand2" # "center_ptr"
 	
-		self.OnContinueDrag(v,event)
+		self.OnContinueDrag(p,event)
 	#@nonl
 	#@-node:tree.OnDrag
 	#@+node:tree.OnEndDrag
-	def OnEndDrag(self,v,event):
+	def OnEndDrag(self,p,event):
 		
 		"""Tree end-of-drag handler called from vnode event handler."""
 		
-		# trace(v)
+		v = p.v
 		
 		# 7/10/03: Make sure we are still dragging.
-		if not self.drag_v:
+		if not self.drag_p:
 			return
 	
-		assert(v == self.drag_v)
-		c = self.c ; canvas = self.canvas ; config = app.config
+		assert(p == self.drag_p)
+		c = self.c ; canvas = self.canvas ; config = g.app.config
 	
 		if event:
 			#@		<< set vdrag, childFlag >>
@@ -1194,35 +1337,33 @@ class leoTkinterTree (leoFrame.leoTree):
 				if not config.getBoolWindowPref("look_for_control_drag_on_mouse_down"):
 					self.controlDrag = c.frame.controlKeyIsDown
 	
-			if vdrag and vdrag != v and ( # 12/6/03
-				vdrag not in v.t.joinList or v.childIndex() != vdrag.childIndex()):
-	
+			if vdrag and vdrag != p:
 				if self.controlDrag: # Clone v and move the clone.
 					if childFlag:
-						c.dragCloneToNthChildOf(v,vdrag,0)
+						c.dragCloneToNthChildOf(p,vdrag,0)
 					else:
-						c.dragCloneAfter(v,vdrag)
-				else: # Just drag v.
+						c.dragCloneAfter(p,vdrag)
+				else: # Just drag p.
 					if childFlag:
-						c.dragToNthChildOf(v,vdrag,0)
+						c.dragToNthChildOf(p,vdrag,0)
 					else:
-						c.dragAfter(v,vdrag)
+						c.dragAfter(p,vdrag)
 			else:
-				if v and self.dragging():
-					pass # es("not dragged: " + v.headString())
+				if p and self.dragging():
+					pass # g.es("not dragged: " + v.headString())
 				if 0: # Don't undo the scrolling we just did!
-					self.idle_scrollTo(v)
+					self.idle_scrollTo(p)
 		
 		# 1216/02: Reset the old cursor by brute force.
 		self.canvas['cursor'] = "arrow"
 	
 		if self.drag_id:
-			canvas.tag_unbind(self.drag_id , "<B1-Motion>")
-			canvas.tag_unbind(self.drag_id , "<Any-ButtonRelease-1>")
+			canvas.tag_unbind(self.drag_id,"<B1-Motion>")
+			canvas.tag_unbind(self.drag_id,"<Any-ButtonRelease-1>")
 			self.drag_id = None
 			
 		self.setDragging(false)
-		self.drag_v = None
+		self.drag_p = None
 	#@nonl
 	#@-node:tree.OnEndDrag
 	#@+node:headline key handlers (tree)
@@ -1235,43 +1376,45 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 	#@+others
 	#@+node:onHeadChanged
-	def onHeadChanged (self,v):
+	def onHeadChanged (self,p):
 		
 		"""Handle a change to headline text."""
 	
-		self.c.frame.bodyCtrl.after_idle(self.idle_head_key,v)
+		self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
 	#@nonl
 	#@-node:onHeadChanged
 	#@+node:OnHeadlineKey
-	def OnHeadlineKey (self,v,event):
+	def OnHeadlineKey (self,p,event):
 		
 		"""Handle a key event in a headline."""
 	
 		ch = event.char
-		self.c.frame.bodyCtrl.after_idle(self.idle_head_key,v,ch)
+		self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
 	
 	#@-node:OnHeadlineKey
 	#@+node:idle_head_key
-	def idle_head_key (self,v,ch=None):
+	def idle_head_key (self,p,ch=None):
 		
 		"""Update headline text at idle time."""
 	
-		c = self.c
-		if not v or not v.edit_text() or v != c.currentVnode():
+		c = self.c ; v = p.v
+	
+		if not v or not v.edit_text() or p != c.currentPosition():
 			return "break"
-		if doHook("headkey1",c=c,v=v,ch=ch):
+	
+		if g.doHook("headkey1",c=c,v=v,ch=ch):
 			return "break" # The hook claims to have handled the event.
 	
 		#@	<< set s to the widget text >>
 		#@+node:<< set s to the widget text >>
 		s = v.edit_text().get("1.0","end")
-		s = toUnicode(s,app.tkEncoding) # 2/25/03
+		s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
 		
 		if not s:
 			s = u""
 		s = s.replace('\n','')
 		s = s.replace('\r','')
-		# trace(`s`)
+		# g.trace(`s`)
 		#@-node:<< set s to the widget text >>
 		#@nl
 		#@	<< set head to vnode text >>
@@ -1279,7 +1422,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		head = v.headString()
 		if head == None:
 			head = u""
-		head = toUnicode(head,"utf-8")
+		head = g.toUnicode(head,"utf-8")
 		#@-node:<< set head to vnode text >>
 		#@nl
 		changed = s != head
@@ -1287,34 +1430,23 @@ class leoTkinterTree (leoFrame.leoTree):
 		if not changed and not done:
 			return "break"
 		if changed:
-			c.undoer.setUndoParams("Change Headline",v,newText=s,oldText=head)
+			c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
 		index = v.edit_text().index("insert")
 		if changed:
 			#@		<< update v and all nodes joined to v >>
 			#@+node:<< update v and all nodes joined to v >>
 			c.beginUpdate()
-			
-			# Update changed bit.
-			if not c.changed:
-				c.setChanged(true)
-			
-			# Update all dirty bits.
-			v.setDirty()
-			
-			# Update v.
-			v.initHeadString(s)
-			v.edit_text().delete("1.0","end")
-			v.edit_text().insert("end",s)
-			v.edit_text().mark_set("insert",index)
-			
-			# Update all joined nodes.
-			for v2 in v.t.joinList:
-				if v2 != v:
-					v2.initHeadString(s)
-					if v2.edit_text(): # v2 may not be visible
-						v2.edit_text().delete("1.0","end")
-						v2.edit_text().insert("end",s)
-			
+			if 1: # update...
+				# Update changed bit.
+				if not c.changed:
+					c.setChanged(true)
+				# Update all dirty bits.
+				p.setDirty()
+				# Update v.
+				v.initHeadString(s)
+				v.edit_text().delete("1.0","end")
+				v.edit_text().insert("end",s)
+				v.edit_text().mark_set("insert",index)
 			c.endUpdate(false) # do not redraw now.
 			#@nonl
 			#@-node:<< update v and all nodes joined to v >>
@@ -1323,15 +1455,9 @@ class leoTkinterTree (leoFrame.leoTree):
 		#@+node:<< reconfigure v and all nodes joined to v >>
 		# Reconfigure v's headline.
 		if done:
-			self.setDisabledLabelState(v)
+			self.setDisabledLabelState(p)
 		
 		v.edit_text().configure(width=self.headWidth(v))
-		
-		# Reconfigure all joined headlines.
-		for v2 in v.t.joinList:
-			if v2 != v:
-				if v2.edit_text(): # v2 may not be visible
-					v2.edit_text().configure(width=self.headWidth(v2))
 		#@nonl
 		#@-node:<< reconfigure v and all nodes joined to v >>
 		#@nl
@@ -1345,12 +1471,12 @@ class leoTkinterTree (leoFrame.leoTree):
 		elif changed:
 			# update v immediately.  Joined nodes are redrawn later by endEditLabel.
 			# Redrawing the whole screen now messes up the cursor in the headline.
-			self.drawIcon(v) # just redraw the icon.
+			self.drawIcon(p) # just redraw the icon.
 		#@nonl
 		#@-node:<< update the screen >>
 		#@nl
 	
-		doHook("headkey2",c=c,v=v,ch=ch)
+		g.doHook("headkey2",c=c,v=v,ch=ch)
 		return "break"
 	#@nonl
 	#@-node:idle_head_key
@@ -1358,7 +1484,9 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@nonl
 	#@-node:headline key handlers (tree)
 	#@+node:tree.OnIconClick & OnIconRightClick
-	def OnIconClick (self,v,event):
+	def OnIconClick (self,p,event):
+		
+		p = p.copy() # Make sure callbacks use the _present_ position.
 	
 		tree = self ; canvas = tree.canvas
 		if event:
@@ -1368,54 +1496,25 @@ class leoTkinterTree (leoFrame.leoTree):
 			if id != None:
 				try: id = id[0]
 				except: pass
-				self.drag_v = v
+				self.drag_p = p
 				self.drag_id = id
-				if 1: # Use vnode callbacks.
-					id4 = canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
-					id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", v.OnEndDrag)
-				else:
-					#@				<< define drag callbacks >>
-					#@+node:<< define drag callbacks >>
-					def onDragCallback(event,tree=tree,v=v):
-						try:
-							c = v.c
-							if tree.dragging():
-								if not doHook("dragging1",c=c,v=v,event=event):
-									tree.OnDrag(v,event)
-								doHook("dragging2",c=c,v=v,event=event)
-							else:
-								if not doHook("drag1",c=c,v=v,event=event):
-									tree.OnDrag(v,event)
-								doHook("drag2",c=c,v=v,event=event)
-						except:
-							es_event_exception("drag")
-							
-					def onEndDragCallback(event,tree=tree,v=v):
-						try:
-							c = v.c
-							if not doHook("enddrag1",c=c,v=v,event=event):
-								tree.OnEndDrag(v,event)
-							doHook("enddrag2",c=c,v=v,event=event)
-						except:
-							es_event_exception("enddrag")
-							
-							
-					#@-node:<< define drag callbacks >>
-					#@nl
-					id4 = canvas.tag_bind(id,"<B1-Motion>", onDragCallback)
-					id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", onEndDragCallback)
+				
+				# Create the bindings.
+				id4 = canvas.tag_bind(id,"<B1-Motion>", p.OnDrag)
+				id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", p.OnEndDrag)
+				
 				# Remember the bindings so deleteBindings can delete them.
 				self.tagBindings.append((id,id4,"<B1-Motion>"),)
 				self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
-		tree.select(v)
+		tree.select(p)
 		
-	def OnIconRightClick (self,v,event):
+	def OnIconRightClick (self,p,event):
 	
-		self.select(v)
+		self.select(p)
 	#@nonl
 	#@-node:tree.OnIconClick & OnIconRightClick
 	#@+node:tree.OnPopup & allies
-	def OnPopup (self,v,event):
+	def OnPopup (self,p,event):
 		
 		"""Handle right-clicks in the outline."""
 		
@@ -1423,11 +1522,11 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		if event != None:
 			c = self.c
-			if not doHook("create-popup-menu",c=c,v=v,event=event):
+			if not g.doHook("create-popup-menu",c=c,v=v,event=event):
 				self.createPopupMenu(event)
-			if not doHook("enable-popup-menu-items",c=c,v=v,event=event):
+			if not g.doHook("enable-popup-menu-items",c=c,v=v,event=event):
 				self.enablePopupMenuItems(v,event)
-			if not doHook("show-popup-menu",c=c,v=v,event=event):
+			if not g.doHook("show-popup-menu",c=c,v=v,event=event):
 				self.showPopupMenu(event)
 	
 		return "break"
@@ -1466,11 +1565,11 @@ class leoTkinterTree (leoFrame.leoTree):
 			self.popupMenu.destroy()
 			self.popupMenu = None
 		
-		self.popupMenu = menu = Tkinter.Menu(app.root, tearoff=0)
+		self.popupMenu = menu = Tkinter.Menu(g.app.root, tearoff=0)
 		
 		# Add the Open With entries if they exist.
-		if app.openWithTable:
-			frame.menu.createMenuEntries(menu,app.openWithTable,openWith=1)
+		if g.app.openWithTable:
+			frame.menu.createMenuEntries(menu,g.app.openWithTable,openWith=1)
 			table = (("-",None,None),)
 			frame.menu.createMenuEntries(menu,table)
 			
@@ -1514,28 +1613,29 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		#@	<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
 		#@+node:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
-		isAtFile = false ; isAtRoot = false
-		v2 = v ; next = v.nodeAfterTree()
+		isAtFile = false
+		isAtRoot = false
 		
-		while (not isAtFile or not isAtRoot) and v2 != None and v2 != next:
-			if (
-				v2.isAtFileNode() or
-				v.isAtRawFileNode() or
-				v.isAtSilentFileNode() or
-				v.isAtNoSentinelsFileNode()):
+		for v2 in v.self_and_subtree_iter():
+			if isAtFile and isAtRoot:
+				break
+			if (v2.isAtFileNode() or
+				v2.isAtRawFileNode() or
+				v2.isAtSilentFileNode() or
+				v2.isAtNoSentinelsFileNode()
+			):
 				isAtFile = true
-		
-			isRoot, junk = is_special(v2.bodyString(),0,"@root")
+				
+			isRoot,junk = g.is_special(v2.bodyString(),0,"@root")
 			if isRoot:
 				isAtRoot = true
-			v2 = v2.threadNext()
 		#@nonl
 		#@-node:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
 		#@nl
-		isAtFile = choose(isAtFile,1,0)
-		isAtRoot = choose(isAtRoot,1,0)
+		isAtFile = g.choose(isAtFile,1,0)
+		isAtRoot = g.choose(isAtRoot,1,0)
 		canContract = v.parent() != None
-		canContract = choose(canContract,1,0)
+		canContract = g.choose(canContract,1,0)
 		
 		enable = self.frame.menu.enableMenu
 		
@@ -1557,7 +1657,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		"""Show a popup menu."""
 		
-		c = self.c ; menu = self.popupMenu ; gui = app.gui
+		c = self.c ; menu = self.popupMenu ; gui = g.app.gui
 	
 		if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
 			menu.bind("<FocusOut>",self.OnPopupFocusLost)
@@ -1592,7 +1692,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		# Allocate all nodes in expanded visible area.
 		self.updatedNodeCount = 0
-		self.updateTree(self.rootVnode(),root_left,root_top,0,0)
+		self.updateTree(self.c.rootPosition(),root_left,root_top,0,0)
 		# if self.updatedNodeCount: print "updatedNodeCount:", self.updatedNodeCount
 	#@-node:allocateNodes
 	#@+node:allocateNodesBeforeScrolling
@@ -1614,14 +1714,14 @@ class leoTkinterTree (leoFrame.leoTree):
 			assert(kind=="moveto")
 			frac1,frac2 = args
 			if float(n) != frac1:
-				where = choose(n<frac1,"above","below")
+				where = g.choose(n<frac1,"above","below")
 				self.allocateNodes(where=where,lines=lines)
 		else:
 			assert(kind=="scroll")
 			linesPerPage = self.canvas.winfo_height()/self.line_height + 2
 			n = int(n) ; assert(abs(n)==1)
-			where = choose(n == 1,"below","above")
-			lines = choose(args[2] == "pages",linesPerPage,lines)
+			where = g.choose(n == 1,"below","above")
+			lines = g.choose(args[2] == "pages",linesPerPage,lines)
 			self.allocateNodes(where=where,lines=lines)
 	#@nonl
 	#@-node:allocateNodesBeforeScrolling
@@ -1658,7 +1758,7 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		try:
 			s = self.canvas.cget("scrollregion")
-			x1,y1,x2,y2 = scanf(s,"%d %d %d %d")
+			x1,y1,x2,y2 = g.scanf(s,"%d %d %d %d")
 			x1,y1,x2,y2 = int(x1),int(y1),int(x2),int(y2)
 		except:
 			self.visibleArea = None
@@ -1678,7 +1778,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		yfirst = ylast = y
 		if level==0: yfirst += 10
 		while v:
-			# trace(`x` + ", " + `y` + ", " + `v`)
+			# g.trace(`x` + ", " + `y` + ", " + `v`)
 			h = self.updateNode(v,x,y)
 			y += h ; ylast = y
 			if v.isExpanded() and v.firstChild():
@@ -1691,31 +1791,33 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 	def dimEditLabel (self):
 	
-		v = self.currentVnode()
-		self.setDisabledLabelState(v)
+		p = self.c.currentPosition()
+		self.setDisabledLabelState(p)
 	
 	def undimEditLabel (self):
 	
-		v = self.currentVnode()
-		self.setSelectedLabelState(v)
+		p = self.c.currentPosition()
+		self.setSelectedLabelState(p)
 	#@nonl
 	#@-node:dimEditLabel, undimEditLabel
 	#@+node:editLabel
-	def editLabel (self, v):
+	def editLabel (self,p):
 		
 		"""Start editing v.edit_text."""
+		
+		# g.trace(p)
 	
-		# End any previous editing
-		if self.editVnode() and v != self.editVnode():
+		if self.editPosition() and p != self.editPosition():
 			self.endEditLabel()
 			self.frame.revertHeadline = None
 			
-		self.setEditVnode(v)
+		self.setEditPosition(p)
 	
 		# Start editing
-		if v and v.edit_text():
-			self.setNormalLabelState(v)
-			self.frame.revertHeadline = v.headString()
+		if p and p.v.edit_text():
+			self.setNormalLabelState(p)
+			self.frame.revertHeadline = p.headString()
+			self.setEditPosition(p)
 	#@nonl
 	#@-node:editLabel
 	#@+node:endEditLabel
@@ -1723,50 +1825,59 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		"""End editing for self.editText."""
 	
-		c = self.c ; v = self.editVnode() ; gui = app.gui
+		c = self.c ; gui = g.app.gui
+		
+		p = self.editPosition()
 	
-		if v and v.edit_text():
-			self.setUnselectedLabelState(v)
-			self.setEditVnode(None)
-		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-			self.force_redraw() # force a redraw of joined and ancestor headlines.
+		if p and p.v.edit_text():
+			self.setUnselectedLabelState(p)
+			self.setEditPosition(None)
+	
+			# force a redraw of joined and ancestor headlines.
+			self.force_redraw() 
+	
 		gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02
 	#@nonl
 	#@-node:endEditLabel
 	#@+node:tree.expandAllAncestors
-	def expandAllAncestors (self,v):
-	
+	def expandAllAncestors (self,p):
+		
 		redraw_flag = false
-		p = v.parent()
-		while p:
+	
+		for p in p.parents_iter():
 			if not p.isExpanded():
 				p.expand()
 				redraw_flag = true
-			p = p.parent()
+	
 		return redraw_flag
-	#@nonl
+	
 	#@-node:tree.expandAllAncestors
 	#@+node:tree.select
 	# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
 	
-	def select (self,v,updateBeadList=true):
+	def select (self,p,updateBeadList=true):
 	
+		if not p: return
+		
 		#@	<< define vars and stop editing >>
 		#@+node:<< define vars and stop editing >>
-		c = self.c ; frame = c.frame ; body = frame.bodyCtrl
-		old_v = c.currentVnode()
+		c = self.c
+		frame = c.frame ; body = frame.bodyCtrl
+		
+		old_p = c.currentPosition()
 		
 		# Unselect any previous selected but unedited label.
 		self.endEditLabel()
-		old = self.currentVnode()
-		self.setUnselectedLabelState(old)
+		self.setUnselectedLabelState(old_p)
 		#@nonl
 		#@-node:<< define vars and stop editing >>
 		#@nl
+		
+		# g.trace(p)
 	
-		if not doHook("unselect1",c=c,new_v=v,old_v=old_v):
+		if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
 			#@		<< unselect the old node >>
-			#@+node:<< unselect the old node >>
+			#@+node:<< unselect the old node >> (changed in 4.2)
 			# Remember the position of the scrollbar before making any changes.
 			yview=body.yview()
 			insertSpot = c.frame.body.getInsertionPoint()
@@ -1774,97 +1885,105 @@ class leoTkinterTree (leoFrame.leoTree):
 			# Remember the old body text
 			old_body = body.get("1.0","end")
 			
-			if old and old != v and old.edit_text():
-				old.t.scrollBarSpot = yview
-				old.t.insertSpot = insertSpot
-			#@-node:<< unselect the old node >>
+			# New in 4.1: Because of shared vnodes,
+			# we can't use an equality test between old and new here.
+			# Thus, we must ALWAYS unselect the previous node.
+			
+			if old_p and old_p.v.edit_text():
+				old_p.v.t.scrollBarSpot = yview
+				old_p.v.t.insertSpot = insertSpot
+			#@nonl
+			#@-node:<< unselect the old node >> (changed in 4.2)
 			#@nl
 		else: old_body = u""
 	
-		doHook("unselect2",c=c,new_v=v,old_v=old_v)
+		g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
 		
-		if not doHook("select1",c=c,new_v=v,old_v=old_v):
+		if not g.doHook("select1",c=c,new_v=p,old_v=old_p):
 			#@		<< select the new node >>
 			#@+node:<< select the new node >>
-			frame.setWrap(v)
+			frame.setWrap(p)
 			
 			# Delete only if necessary: this may reduce flicker slightly.
-			s = v.t.bodyString
-			s = toUnicode(s,"utf-8")
-			old_body = toUnicode(old_body,"utf-8")
+			s = p.v.t.bodyString
+			s = g.toUnicode(s,"utf-8")
+			old_body = g.toUnicode(old_body,"utf-8")
 			if old_body != s:
 				body.delete("1.0","end")
 				body.insert("1.0",s)
-			
+				
 			# We must do a full recoloring: we may be changing context!
-			self.frame.body.recolor_now(v)
+			self.frame.body.recolor_now(p)
 			
-			if v and v.t.scrollBarSpot != None:
-				first,last = v.t.scrollBarSpot
+			if p.v and p.v.t.scrollBarSpot != None:
+				first,last = p.v.t.scrollBarSpot
 				body.yview("moveto",first)
 			
-			if v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
-				c.frame.bodyCtrl.mark_set("insert",v.t.insertSpot)
-				c.frame.bodyCtrl.see(v.t.insertSpot)
+			if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+				c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+				c.frame.bodyCtrl.see(p.v.t.insertSpot)
 			else:
 				c.frame.bodyCtrl.mark_set("insert","1.0")
 			#@nonl
 			#@-node:<< select the new node >>
 			#@nl
-			if v and v != old_v: # 3/26/03: Suppress duplicate call.
+			if p and p != old_p: # 3/26/03: Suppress duplicate call.
 				try: # may fail during initialization
-					self.idle_scrollTo(v)
+					self.idle_scrollTo(p)
 				except: pass
 			#@		<< update c.beadList or c.beadPointer >>
 			#@+node:<< update c.beadList or c.beadPointer >>
 			if updateBeadList:
 				
 				if c.beadPointer > -1:
-					present_v = c.beadList[c.beadPointer]
+					present_p = c.beadList[c.beadPointer]
 				else:
-					present_v = None
+					present_p = c.nullPosition()
 				
-				if v != present_v:
+				if p != present_p:
 					# Replace the tail of c.beadList by c and make c the present node.
 					# print "updating c.beadList"
 					c.beadPointer += 1
 					c.beadList[c.beadPointer:] = []
-					c.beadList.append(v)
+					c.beadList.append(p)
 					
-				# trace(c.beadPointer,v,present_v)
-			
+				# g.trace(c.beadPointer,p,present_p)
+			#@nonl
 			#@-node:<< update c.beadList or c.beadPointer >>
 			#@nl
 			#@		<< update c.visitedList >>
 			#@+node:<< update c.visitedList >>
-			# Make v the most recently visited node on the list.
-			if v in c.visitedList:
-				c.visitedList.remove(v)
-				
-			c.visitedList.insert(0,v)
+			# Make p the most recently visited position on the list.
+			if p in c.visitedList:
+				c.visitedList.remove(p)
+			
+			c.visitedList.insert(0,p)
 			#@nonl
 			#@-node:<< update c.visitedList >>
 			#@nl
 	
 		#@	<< set the current node and redraw >>
 		#@+node:<< set the current node and redraw >>
-		self.setCurrentVnode(v)
-		self.setSelectedLabelState(v)
-		self.frame.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
-		app.gui.set_focus(c,c.frame.bodyCtrl)
+		self.c.setCurrentPosition(p)
+		self.setSelectedLabelState(p)
+		self.frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+		g.app.gui.set_focus(c,c.frame.bodyCtrl)
 		#@nonl
 		#@-node:<< set the current node and redraw >>
 		#@nl
-		doHook("select2",c=c,new_v=v,old_v=old_v)
-		doHook("select3",c=c,new_v=v,old_v=old_v)
+		
+		g.doHook("select2",c=c,new_v=p,old_v=old_p)
+		g.doHook("select3",c=c,new_v=p,old_v=old_p)
+	#@nonl
 	#@-node:tree.select
 	#@+node:tree.set...LabelState
-	def setNormalLabelState (self,v): # selected, editing
+	def setNormalLabelState (self,p): # selected, editing
 	
-		if v and v.edit_text():
+		#g.trace(p)
+		if p.v and p.v.edit_text():
 			#@		<< set editing headline colors >>
 			#@+node:<< set editing headline colors >>
-			config = app.config
+			config = g.app.config
 			fg   = config.getWindowPref("headline_text_editing_foreground_color")
 			bg   = config.getWindowPref("headline_text_editing_background_color")
 			selfg = config.getWindowPref("headline_text_editing_selection_foreground_color")
@@ -1875,26 +1994,28 @@ class leoTkinterTree (leoFrame.leoTree):
 				
 			try:
 				if selfg and selbg:
-					v.edit_text().configure(
+					p.v.edit_text().configure(
 						selectforeground=selfg,selectbackground=selbg,
 						state="normal",highlightthickness=1,fg=fg,bg=bg)
 				else:
-					v.edit_text().configure(
+					p.v.edit_text().configure(
 						state="normal",highlightthickness=1,fg=fg,bg=bg)
 			except:
-				es_exception()
+				g.es_exception()
 			#@nonl
 			#@-node:<< set editing headline colors >>
 			#@nl
-			v.edit_text().tag_remove("sel","1.0","end")
-			v.edit_text().tag_add("sel","1.0","end")
-			app.gui.set_focus(self.c,v.edit_text())
+			p.v.edit_text().tag_remove("sel","1.0","end")
+			p.v.edit_text().tag_add("sel","1.0","end")
+			g.app.gui.set_focus(self.c,p.v.edit_text())
 	
-	def setDisabledLabelState (self,v): # selected, disabled
-		if v and v.edit_text():
+	def setDisabledLabelState (self,p): # selected, disabled
+	
+		#g.trace(p)
+		if p.v and p.v.edit_text():
 			#@		<< set selected, disabled headline colors >>
 			#@+node:<< set selected, disabled headline colors >>
-			config = app.config
+			config = g.app.config
 			fg = config.getWindowPref("headline_text_selected_foreground_color")
 			bg = config.getWindowPref("headline_text_selected_background_color")
 			
@@ -1902,22 +2023,26 @@ class leoTkinterTree (leoFrame.leoTree):
 				fg,bg = "black","gray80"
 			
 			try:
-				v.edit_text().configure(
+				p.v.edit_text().configure(
 					state="disabled",highlightthickness=0,fg=fg,bg=bg)
 			except:
-				es_exception()
+				g.es_exception()
 			#@nonl
 			#@-node:<< set selected, disabled headline colors >>
 			#@nl
 	
-	def setSelectedLabelState (self,v): # selected, not editing
-		self.setDisabledLabelState(v)
+	def setSelectedLabelState (self,p): # selected, not editing
 	
-	def setUnselectedLabelState (self,v): # not selected.
-		if v and v.edit_text():
+		#g.trace(p)
+		self.setDisabledLabelState(p)
+	
+	def setUnselectedLabelState (self,p): # not selected.
+	
+		#g.trace(p)
+		if p and p.v.edit_text():
 			#@		<< set unselected headline colors >>
 			#@+node:<< set unselected headline colors >>
-			config = app.config
+			config = g.app.config
 			fg = config.getWindowPref("headline_text_unselected_foreground_color")
 			bg = config.getWindowPref("headline_text_unselected_background_color")
 			
@@ -1925,10 +2050,10 @@ class leoTkinterTree (leoFrame.leoTree):
 				fg,bg = "black","white"
 			
 			try:
-				v.edit_text().configure(
+				p.v.edit_text().configure(
 					state="disabled",highlightthickness=0,fg=fg,bg=bg)
 			except:
-				es_exception()
+				g.es_exception()
 			#@nonl
 			#@-node:<< set unselected headline colors >>
 			#@nl
@@ -1945,7 +2070,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		# Find the coordinates of the cursor and set the new height.
 		# There may be roundoff errors because character postions may not match exactly.
 		ins =  body.index("insert")
-		lines,char = scanf(ins,"%d.%d")
+		lines,char = g.scanf(ins,"%d.%d")
 		x,y,junk,textH = body.bbox("insert")
 		bodyW,bodyH = body.winfo_width(),body.winfo_height()
 		junk,maxy,junk,junk = body.bbox("@%d,%d" % (bodyW,bodyH))
@@ -1964,9 +2089,9 @@ class leoTkinterTree (leoFrame.leoTree):
 			x = newx + width + 1
 		result = body.index("@%d,%d" % (x,y))
 		body.mark_set("insert",result)
-		# trace("entry:  %s.%s" % (lines,char))
-		# trace("result:",result)
-		# trace("insert:",body.index("insert"))
+		# g.trace("entry:  %s.%s" % (lines,char))
+		# g.trace("result:",result)
+		# g.trace("insert:",body.index("insert"))
 		return "break" # Inhibit further bindings.
 	#@nonl
 	#@-node:tree.moveUpDown

@@ -7,7 +7,9 @@
 
 #@@language python
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
+
 import leoColor,leoFrame,leoNodes
 import leoTkinterMenu,leoTkinterTree
 import Tkinter,tkFont
@@ -66,10 +68,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:f.createCanvas
 	def createCanvas (self,parentFrame):
 		
-		frame = self ; config = app.config ; Tk = Tkinter
+		frame = self ; config = g.app.config ; Tk = Tkinter
 		
 		scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
-		scrolls = choose(scrolls,1,0)
+		scrolls = g.choose(scrolls,1,0)
 	
 		canvas = Tk.Canvas(parentFrame,name="canvas",
 			bd=0,bg="white",relief="flat")
@@ -99,7 +101,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		if sys.platform == "linux2": # This crashes tcl83.dll
 			canvas.bind("<MouseWheel>", frame.OnMouseWheel)
 		
-		# print_bindings("canvas",canvas)
+		# g.print_bindings("canvas",canvas)
 		return canvas
 	#@nonl
 	#@-node:f.createCanvas
@@ -107,7 +109,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	def finishCreate (self,c):
 		
 		frame = self ; frame.c = c
-		Tk = Tkinter ; gui = app.gui
+		Tk = Tkinter ; gui = g.app.gui
 	
 		#@	<< create the toplevel frame >>
 		#@+node:<< create the toplevel frame >>
@@ -176,28 +178,29 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		#@+node:<< create the first tree node >>
 		t = leoNodes.tnode()
 		v = leoNodes.vnode(c,t)
+		p = leoNodes.position(v,[])
 		v.initHeadString("NewHeadline")
-		v.moveToRoot()
 		
+		p.moveToRoot()
 		c.beginUpdate()
-		c.selectVnode(v)
+		c.selectVnode(p)
 		c.redraw()
 		c.frame.getFocus()
-		c.editVnode(v)
+		c.editPosition(p)
 		c.endUpdate(false)
-		#@nonl
 		#@-node:<< create the first tree node >>
 		#@nl
 	
 		self.menu = leoTkinterMenu.leoTkinterMenu(frame)
 	
 		v = c.currentVnode()
-		if not doHook("menu1",c=c,v=v):
+	
+		if not g.doHook("menu1",c=c,v=v):
 			frame.menu.createMenuBar(self)
 	
-		app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
+		g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
 	
-		app.windowList.append(frame)
+		g.app.windowList.append(frame)
 		
 		c.initVersion()
 		c.signOnWithVersion()
@@ -225,7 +228,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	
 		self.divideLeoSplitter(self.splitVerticalFlag, ratio)
 		self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
-		# trace(`ratio`)
+		# g.trace(`ratio`)
 	#@-node:resizePanesToRatio
 	#@+node:bindBar
 	def bindBar (self, bar, verticalFlag):
@@ -335,7 +338,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		if offset > wMax - 2: offset = wMax - 2
 		# Redraw the splitter as the drag is occuring.
 		frac = float(offset) / wMax
-		# trace(`frac`)
+		# g.trace(`frac`)
 		self.divideLeoSplitter(verticalFlag, frac)
 	#@nonl
 	#@-node:onDrag...
@@ -350,7 +353,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		else:
 			# Panes arranged horizontally; vertical splitter bar
 			# adj gives tree pane more room when tiling vertically.
-			adj = choose(verticalFlag != self.splitVerticalFlag,0.65,0.5)
+			adj = g.choose(verticalFlag != self.splitVerticalFlag,0.65,0.5)
 			pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=adj)
 			pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
 			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
@@ -388,8 +391,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			slave.destroy()
 	
 		f.configure(height="5m") # The default height.
-		app.iconWidgetCount = 0
-		app.iconImageRefs = []
+		g.app.iconWidgetCount = 0
+		g.app.iconImageRefs = []
 	#@-node:clearIconBar
 	#@+node:showIconBar
 	def showIconBar(self):
@@ -411,10 +414,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	
 		# First define n.	
 		try:
-			app.iconWidgetCount += 1
-			n = app.iconWidgetCount
+			g.app.iconWidgetCount += 1
+			n = g.app.iconWidgetCount
 		except:
-			n = app.iconWidgetCount = 1
+			n = g.app.iconWidgetCount = 1
 	
 		if not command:
 			def command(n=n):
@@ -426,15 +429,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			try:
 				if imagefile:
 					# Create the image.  Throws an exception if file not found
-					imagefile = os_path_join(app.loadDir,imagefile)
-					imagefile = os_path_normpath(imagefile)
-					image = Tkinter.PhotoImage(master=app.root,file=imagefile)
+					imagefile = g.os_path_join(g.app.loadDir,imagefile)
+					imagefile = g.os_path_normpath(imagefile)
+					image = Tkinter.PhotoImage(master=g.app.root,file=imagefile)
 					
 					# Must keep a reference to the image!
 					try:
-						refs = app.iconImageRefs
+						refs = g.app.iconImageRefs
 					except:
-						refs = app.iconImageRefs = []
+						refs = g.app.iconImageRefs = []
 				
 					refs.append((imagefile,image),)
 				
@@ -446,7 +449,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 				return b
 				
 			except:
-				es_exception()
+				g.es_exception()
 				return None
 			#@nonl
 			#@-node:<< create a picture >>
@@ -526,11 +529,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	def updateStatusRowCol (self):
 		
 		c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
-		gui = app.gui
+		gui = g.app.gui
 		if not lab: return
 		
 		# New for Python 2.3: may be called during shutdown.
-		if app.killed:
+		if g.app.killed:
 			return
 	
 		if 0: # New code
@@ -546,8 +549,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 				s = c.frame.body.getRange(index1,index2)
 			else:
 				s = body.get("%d.0" % (row),index)
-			s = toUnicode(s,app.tkEncoding) # 9/28/03
-			col = computeWidth (s,self.tab_width)
+			s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
+			col = g.computeWidth (s,self.tab_width)
 	
 		if row != self.lastStatusRow or col != self.lastStatusCol:
 			s = "line %d, col %d " % (row,col)
@@ -573,20 +576,18 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		# Using a dict here is essential for adequate speed.
 		vList = [] ; tDict = {}
 		
-		v = c.rootVnode()
-		while v:
-			vList.append(v)
-			if v.t:
-				key = id(v.t)
+		for p in c.allNodes_iter():
+			vList.append(p.v)
+			if p.v.t:
+				key = id(p.v.t)
 				if not tDict.has_key(key):
-					tDict[key] = v.t
-			v = v.threadNext()
-			
+					tDict[key] = p.v.t
+		
 		for key in tDict.keys():
-			clearAllIvars(tDict[key])
+			g.clearAllIvars(tDict[key])
 		
 		for v in vList:
-			clearAllIvars(v)
+			g.clearAllIvars(v)
 		
 		vList = [] ; tDict = {} # Remove these references immediately.
 		#@nonl
@@ -594,20 +595,20 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		#@nl
 	
 		# Destroy all ivars in subclasses.
-		clearAllIvars(c.atFileCommands)
-		clearAllIvars(c.fileCommands)
-		clearAllIvars(c.importCommands)
-		clearAllIvars(c.tangleCommands)
-		clearAllIvars(c.undoer)
-		clearAllIvars(c)
-		clearAllIvars(body.colorizer)
-		clearAllIvars(body)
-		clearAllIvars(tree)
-		clearAllIvars(tree)
+		g.clearAllIvars(c.atFileCommands)
+		g.clearAllIvars(c.fileCommands)
+		g.clearAllIvars(c.importCommands)
+		g.clearAllIvars(c.tangleCommands)
+		g.clearAllIvars(c.undoer)
+		g.clearAllIvars(c)
+		g.clearAllIvars(body.colorizer)
+		g.clearAllIvars(body)
+		g.clearAllIvars(tree)
+		g.clearAllIvars(tree)
 	
 		# This must be done last.
 		frame.destroyAllPanels()
-		clearAllIvars(frame)
+		g.clearAllIvars(frame)
 	#@nonl
 	#@-node:destroyAllObjects
 	#@+node:destroyAllPanels
@@ -632,7 +633,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		top = self.top # Remember this: we are about to destroy all of our ivars!
 	
-		if app.windowList:
+		if g.app.windowList:
 			self.destroyAllObjects()
 	
 		top.destroy()
@@ -650,7 +651,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:configureBar
 	def configureBar (self, bar, verticalFlag):
 		
-		config = app.config
+		config = g.app.config
 	
 		# Get configuration settings.
 		w = config.getWindowPref("split_bar_width")
@@ -668,8 +669,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 				# Panes arranged horizontally; vertical splitter bar
 				bar.configure(relief=relief,width=w,bg=color,cursor="sb_h_double_arrow")
 		except: # Could be a user error. Use all defaults
-			es("exception in user configuration for splitbar")
-			es_exception()
+			g.es("exception in user configuration for splitbar")
+			g.es_exception()
 			if verticalFlag:
 				# Panes arranged vertically; horizontal splitter bar
 				bar.configure(height=7,cursor="sb_v_double_arrow")
@@ -681,7 +682,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:configureBarsFromConfig
 	def configureBarsFromConfig (self):
 		
-		config = app.config
+		config = g.app.config
 	
 		w = config.getWindowPref("split_bar_width")
 		if not w or w < 1: w = 7
@@ -701,8 +702,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			bar1.configure(relief=relief,height=w,bg=color)
 			bar2.configure(relief=relief,width=w,bg=color)
 		except: # Could be a user error.
-			es("exception in user configuration for splitbar")
-			es_exception()
+			g.es("exception in user configuration for splitbar")
+			g.es_exception()
 	#@nonl
 	#@-node:configureBarsFromConfig
 	#@+node:reconfigureFromConfig
@@ -732,7 +733,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		"""Set the position and size of the frame to config params."""
 		
-		config = app.config
+		config = g.app.config
 	
 		h = config.getIntWindowPref("initial_window_height")
 		w = config.getIntWindowPref("initial_window_width")
@@ -749,22 +750,22 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		try: # This can fail when called from scripts
 			# Use the present font for computations.
 			font = self.bodyCtrl.cget("font")
-			root = app.root # 4/3/03: must specify root so idle window will work properly.
+			root = g.app.root # 4/3/03: must specify root so idle window will work properly.
 			font = tkFont.Font(root=root,font=font)
 			tabw = font.measure(" " * abs(w)) # 7/2/02
 			# tablist = `tabw` + ' ' + `2*tabw`
 			self.bodyCtrl.configure(tabs=tabw)
 			self.tab_width = w
-			# trace(w,tabw)
+			# g.trace(w,tabw)
 		except:
-			es_exception()
+			g.es_exception()
 			pass
 	#@-node:setTabWidth
 	#@+node:setWrap
-	def setWrap (self,v):
+	def setWrap (self,p):
 		
 		c = self.c
-		dict = scanDirectives(c,v)
+		dict = g.scanDirectives(c,p)
 		if dict != None:
 			# 8/30/03: Add scroll bars if we aren't wrapping.
 			wrap = dict.get("wrap")
@@ -802,15 +803,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:reconfigurePanes (use config bar_width)
 	def reconfigurePanes (self):
 		
-		border = app.config.getIntWindowPref('additional_body_text_border')
+		border = g.app.config.getIntWindowPref('additional_body_text_border')
 		if border == None: border = 0
 		
 		# The body pane needs a _much_ bigger border when tiling horizontally.
-		border = choose(self.splitVerticalFlag,2+border,6+border)
+		border = g.choose(self.splitVerticalFlag,2+border,6+border)
 		self.bodyCtrl.configure(bd=border)
 		
 		# The log pane needs a slightly bigger border when tiling vertically.
-		border = choose(self.splitVerticalFlag,4,2) 
+		border = g.choose(self.splitVerticalFlag,4,2) 
 		self.log.configureBorder(border)
 	#@nonl
 	#@-node:reconfigurePanes (use config bar_width)
@@ -820,7 +821,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	
 	def OnCloseLeoEvent(self):
 	
-		app.closeLeoWindow(self)
+		g.app.closeLeoWindow(self)
 	#@nonl
 	#@-node:frame.OnCloseLeoEvent
 	#@+node:frame.OnControlKeyUp/Down
@@ -849,62 +850,62 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	def OnActivateBody (self,event=None):
 	
 		try:
-			frame = self ; c = frame.c ; gui = app.gui
-			app.setLog(frame.log,"OnActivateBody")
+			frame = self ; c = frame.c ; gui = g.app.gui
+			g.app.setLog(frame.log,"OnActivateBody")
 			self.tree.OnDeactivate()
 			gui.set_focus(c,frame.body.bodyCtrl) # Reference to bodyCtrl is allowable in an event handler.
 		except:
-			es_event_exception("activate body")
+			g.es_event_exception("activate body")
 	#@nonl
 	#@-node:OnActivateBody
 	#@+node:OnActivateLeoEvent, OnDeactivateLeoEvent
 	def OnActivateLeoEvent(self,event=None):
 	
 		try:
-			app.setLog(self.log,"OnActivateLeoEvent")
+			g.app.setLog(self.log,"OnActivateLeoEvent")
 		except:
-			es_event_exception("activate Leo")
+			g.es_event_exception("activate Leo")
 	
 	def OnDeactivateLeoEvent(self,event=None):
 		
 		if 0: # This causes problems on the Mac.
 			try:
-				app.setLog(None,"OnDeactivateLeoEvent")
+				g.app.setLog(None,"OnDeactivateLeoEvent")
 			except:
-				es_event_exception("deactivate Leo")
+				g.es_event_exception("deactivate Leo")
 	#@nonl
 	#@-node:OnActivateLeoEvent, OnDeactivateLeoEvent
 	#@+node:OnActivateTree
 	def OnActivateTree (self,event=None):
 	
 		try:
-			frame = self ; c = frame.c ; gui = app.gui
-			app.setLog(frame.log,"OnActivateTree")
+			frame = self ; c = frame.c ; gui = g.app.gui
+			g.app.setLog(frame.log,"OnActivateTree")
 			self.tree.undimEditLabel()
 			gui.set_focus(c, frame.bodyCtrl)
 		except:
-			es_event_exception("activate tree")
+			g.es_event_exception("activate tree")
 	#@-node:OnActivateTree
 	#@+node:OnBodyClick, OnBodyRClick (Events)
 	def OnBodyClick (self,event=None):
 	
 		try:
 			c = self.c ; v = c.currentVnode()
-			if not doHook("bodyclick1",c=c,v=v,event=event):
+			if not g.doHook("bodyclick1",c=c,v=v,event=event):
 				self.OnActivateBody(event=event)
-			doHook("bodyclick2",c=c,v=v,event=event)
+			g.doHook("bodyclick2",c=c,v=v,event=event)
 		except:
-			es_event_exception("bodyclick")
+			g.es_event_exception("bodyclick")
 	
 	def OnBodyRClick(self,event=None):
 		
 		try:
 			c = self.c ; v = c.currentVnode()
-			if not doHook("bodyrclick1",c=c,v=v,event=event):
+			if not g.doHook("bodyrclick1",c=c,v=v,event=event):
 				pass # By default Leo does nothing.
-			doHook("bodyrclick2",c=c,v=v,event=event)
+			g.doHook("bodyrclick2",c=c,v=v,event=event)
 		except:
-			es_event_exception("iconrclick")
+			g.es_event_exception("iconrclick")
 	#@nonl
 	#@-node:OnBodyClick, OnBodyRClick (Events)
 	#@+node:OnBodyDoubleClick (Events)
@@ -912,16 +913,16 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	
 		try:
 			c = self.c ; v = c.currentVnode()
-			if not doHook("bodydclick1",c=c,v=v,event=event):
+			if not g.doHook("bodydclick1",c=c,v=v,event=event):
 				if event: # 8/4/02: prevent wandering insertion point.
 					index = "@%d,%d" % (event.x, event.y) # Find where we clicked
 				body = self.bodyCtrl
 				start = body.index(index + " wordstart")
 				end = body.index(index + " wordend")
 				self.body.setTextSelection(start,end)
-			doHook("bodydclick1",c=c,v=v,event=event)
+			g.doHook("bodydclick2",c=c,v=v,event=event)
 		except:
-			es_event_exception("bodydclick")
+			g.es_event_exception("bodydclick")
 	
 		return "break" # Inhibit all further event processing.
 	#@nonl
@@ -932,7 +933,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	
 	def OnMouseWheel(self, event=None):
 		
-		trace()
+		g.trace()
 	
 		try:
 			if event.delta < 1:
@@ -940,7 +941,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			else:
 				self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
 		except:
-			es_event_exception("scroll wheel")
+			g.es_event_exception("scroll wheel")
 	
 		return "break"
 	#@nonl
@@ -950,18 +951,18 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		frame = self ; c = frame.c ; v = c.currentVnode() ; tree = frame.tree
 		
-		if app.batchMode:
+		if g.app.batchMode:
 			c.notValidInBatchMode("Abort Edit Headline")
 			return
 	
-		if self.revertHeadline and v.edit_text() and v == tree.editVnode():
+		if self.revertHeadline and v.edit_text() and v == tree.editPosition():
 		
 			v.edit_text().delete("1.0","end")
 			v.edit_text().insert("end",self.revertHeadline)
 			tree.idle_head_key(v) # Must be done immediately.
 			tree.revertHeadline = None
 			tree.select(v)
-			if v and len(v.t.joinList) > 0:
+			if v and len(v.t.vnodeList) > 0:
 				tree.force_redraw() # force a redraw of joined headlines.
 	#@nonl
 	#@-node:abortEditLabelCommand
@@ -973,10 +974,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		frame = self ; c = frame.c ; v = c.currentVnode()
 		
 		# This is probably being subverted by Tk.
-		if app.gui.win32clipboard:
+		if g.app.gui.win32clipboard:
 			data = frame.body.getSelectedText()
 			if data:
-				app.gui.replaceClipboardWith(data)
+				g.app.gui.replaceClipboardWith(data)
 	
 		# Activate the body key handler by hand.
 		frame.body.forceFullRecolor()
@@ -985,7 +986,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	def OnCutFromMenu (self):
 		
 		w = self.getFocus()
-		w.event_generate(virtual_event_name("Cut"))
+		w.event_generate(g.virtual_event_name("Cut"))
 		
 		frame = self ; c = frame.c ; v = c.currentVnode()
 	
@@ -1001,10 +1002,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		frame = self
 	
-		if app.gui.win32clipboard:
+		if g.app.gui.win32clipboard:
 			data = frame.body.getSelectedText()
 			if data:
-				app.gui.replaceClipboardWith(data)
+				g.app.gui.replaceClipboardWith(data)
 			
 		# Copy never changes dirty bits or syntax coloring.
 		
@@ -1012,7 +1013,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	
 		frame = self
 		w = frame.getFocus()
-		w.event_generate(virtual_event_name("Copy"))
+		w.event_generate(g.virtual_event_name("Copy"))
 	
 	#@-node:frame.OnCopy, OnCopyFromMenu
 	#@+node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
@@ -1029,7 +1030,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		frame = self ; c = frame.c ; v = c.currentVnode()
 	
 		w = self.getFocus()
-		w.event_generate(virtual_event_name("Paste"))
+		w.event_generate(g.virtual_event_name("Paste"))
 		
 		if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
 			frame.tree.onHeadChanged(v)
@@ -1038,15 +1039,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:endEditLabelCommand
 	def endEditLabelCommand (self):
 	
-		frame = self ; c = frame.c ; tree = frame.tree ; gui = app.gui
+		frame = self ; c = frame.c ; tree = frame.tree ; gui = g.app.gui
 		
-		if app.batchMode:
+		if g.app.batchMode:
 			c.notValidInBatchMode("End Edit Headline")
 			return
 		
-		v = frame.tree.editVnode()
+		v = frame.tree.editPosition()
 	
-		# trace(v)
+		# g.trace(v)
 		if v and v.edit_text():
 			tree.select(v)
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
@@ -1061,12 +1062,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		frame = self ; c = frame.c ; v = c.currentVnode()
 		h = v.headString() # Remember the old value.
 		
-		if app.batchMode:
+		if g.app.batchMode:
 			c.notValidInBatchMode("Insert Headline Time")
 			return
 	
 		if v.edit_text():
-			sel1,sel2 = app.gui.getTextSelection(v.edit_text())
+			sel1,sel2 = g.app.gui.getTextSelection(v.edit_text())
 			if sel1 and sel2 and sel1 != sel2: # 7/7/03
 				v.edit_text().delete(sel1,sel2)
 			v.edit_text().insert("insert",c.getTime(body=false))
@@ -1074,13 +1075,13 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	
 		# A kludge to get around not knowing whether we are editing or not.
 		if h.strip() == v.headString().strip():
-			es("Edit headline to append date/time")
+			g.es("Edit headline to append date/time")
 	#@nonl
 	#@-node:insertHeadlineTime
 	#@+node:toggleActivePane
 	def toggleActivePane(self):
 		
-		c = self.c ; gui = app.gui
+		c = self.c ; gui = g.app.gui
 		if gui.get_focus(self) == self.bodyCtrl:
 			gui.set_focus(c,self.canvas)
 		else:
@@ -1091,7 +1092,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	def cascade(self):
 	
 		x,y,delta = 10,10,10
-		for frame in app.windowList:
+		for frame in g.app.windowList:
 			top = frame.top
 	
 			# Compute w,h
@@ -1126,9 +1127,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:minimizeAll
 	def minimizeAll(self):
 	
-		self.minimize(app.findFrame)
-		self.minimize(app.pythonFrame)
-		for frame in app.windowList:
+		self.minimize(g.app.findFrame)
+		self.minimize(g.app.pythonFrame)
+		for frame in g.app.windowList:
 			self.minimize(frame)
 		
 	def minimize(self, frame):
@@ -1147,8 +1148,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		split2Pane1,split2Pane2 = self.split2Pane1,self.split2Pane2
 		# Switch directions.
 		verticalFlag = self.splitVerticalFlag = not self.splitVerticalFlag
-		orientation = choose(verticalFlag,"vertical","horizontal")
-		app.config.setWindowPref("initial_splitter_orientation",orientation)
+		orientation = g.choose(verticalFlag,"vertical","horizontal")
+		g.app.config.setWindowPref("initial_splitter_orientation",orientation)
 		# Reconfigure the bars.
 		bar1.place_forget()
 		bar2.place_forget()
@@ -1167,12 +1168,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:leoHelp
 	def leoHelp (self):
 		
-		file = os_path_join(app.loadDir,"..","doc","sbooks.chm")
+		file = g.os_path_join(g.app.loadDir,"..","doc","sbooks.chm")
 	
-		if os_path_exists(file):
+		if g.os_path_exists(file):
 			os.startfile(file)
 		else:	
-			answer = app.gui.runAskYesNoDialog(
+			answer = g.app.gui.runAskYesNoDialog(
 				"Download Tutorial?",
 				"Download tutorial (sbooks.chm) from SourceForge?")
 	
@@ -1189,17 +1190,17 @@ class leoTkinterFrame (leoFrame.leoFrame):
 					else:
 						url = "http://prdownloads.sourceforge.net/leo/sbooks.chm?download"
 						import webbrowser
-						os.chdir(app.loadDir)
+						os.chdir(g.app.loadDir)
 						webbrowser.open_new(url)
 				except:
-					es("exception dowloading sbooks.chm")
-					es_exception()
+					g.es("exception dowloading sbooks.chm")
+					g.es_exception()
 	#@nonl
 	#@-node:leoHelp
 	#@+node:showProgressBar
 	def showProgressBar (self,count,size,total):
 	
-		# trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
+		# g.trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
 		if self.scale == None:
 			#@		<< create the scale widget >>
 			#@+node:<< create the scale widget >>
@@ -1223,7 +1224,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		Args is a tuple of two floats describing the fraction of the visible area."""
 	
-		# if self.tree.trace: print "setCallback:",self.tree.redrawCount,`args`
+		# g.trace(self.tree.redrawCount,args)
 	
 		apply(self.treeBar.set,args,keys)
 	
@@ -1234,14 +1235,13 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		"""Tell the canvas to scroll"""
 		
-		# if self.tree.trace: print "vyiewCallback",`args`,`keys`
+		# g.trace(vyiewCallback",args,keys)
 	
 		if self.tree.allocateOnlyVisibleNodes:
 			self.tree.allocateNodesBeforeScrolling(args)
 	
 		apply(self.canvas.yview,args,keys)
-		
-		
+	#@nonl
 	#@-node:Scrolling callbacks (frame)
 	#@+node:Tk bindings...
 	def getFocus(self):
@@ -1260,7 +1260,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		return self.top.title(title)
 		
 	def get_window_info(self):
-		return app.gui.get_window_info(self.top)
+		return g.app.gui.get_window_info(self.top)
 		
 	def iconify(self):
 		self.top.iconify()
@@ -1286,7 +1286,7 @@ class leoTkinterBody (leoFrame.leoBody):
 	#@+node:tkBody. __init__
 	def __init__ (self,frame,parentFrame):
 		
-		# trace("leoTkinterBody")
+		# g.trace("leoTkinterBody")
 		
 		# Call the base class constructor.
 		leoFrame.leoBody.__init__(self,frame,parentFrame)
@@ -1308,19 +1308,19 @@ class leoTkinterBody (leoFrame.leoBody):
 		t.bind("<Key>", frame.body.onBodyKey)
 	
 		# Gui-dependent commands...
-		t.bind(virtual_event_name("Cut"), frame.OnCut)
-		t.bind(virtual_event_name("Copy"), frame.OnCopy)
-		t.bind(virtual_event_name("Paste"), frame.OnPaste)
+		t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+		t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+		t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
 	#@nonl
 	#@-node:tkBody.createBindings
 	#@+node:tkBody.createControl
 	def createControl (self,frame,parentFrame):
 		
-		config = app.config
+		config = g.app.config
 	
 		# A light selectbackground value is needed to make syntax coloring look good.
 		wrap = config.getBoolWindowPref('body_pane_wraps')
-		wrap = choose(wrap,"word","none")
+		wrap = g.choose(wrap,"word","none")
 		
 		# Setgrid=1 cause severe problems with the font panel.
 		body = Tk.Text(parentFrame,name='body',
@@ -1354,15 +1354,15 @@ class leoTkinterBody (leoFrame.leoBody):
 	#@+node:tkBody.setFontFromConfig
 	def setFontFromConfig (self):
 	
-		config = app.config ; body = self.bodyCtrl
+		config = g.app.config ; body = self.bodyCtrl
 		
 		font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
 			"body_text_font_slant",  "body_text_font_weight",
 			config.defaultBodyFontSize, tag = "body")
 	
-		if app.trace:
-			trace(body.cget("font"),font.cget("family"),font.cget("weight"))
+		if g.app.trace:
+			g.trace(body.cget("font"),font.cget("family"),font.cget("weight"))
 	
 		body.configure(font=font)
 		
@@ -1370,22 +1370,22 @@ class leoTkinterBody (leoFrame.leoBody):
 		if bg:
 			try: body.configure(bg=bg)
 			except:
-				es("exception setting body background color")
-				es_exception()
+				g.es("exception setting body background color")
+				g.es_exception()
 		
 		fg = config.getWindowPref("body_text_foreground_color")
 		if fg:
 			try: body.configure(fg=fg)
 			except:
-				es("exception setting body foreground color")
-				es_exception()
+				g.es("exception setting body foreground color")
+				g.es_exception()
 	
 		bg = config.getWindowPref("body_insertion_cursor_color")
 		if bg:
 			try: body.configure(insertbackground=bg)
 			except:
-				es("exception setting insertion cursor color")
-				es_exception()
+				g.es("exception setting insertion cursor color")
+				g.es_exception()
 			
 		if sys.platform != "win32": # Maybe a Windows bug.
 			fg = config.getWindowPref("body_cursor_foreground_color")
@@ -1420,18 +1420,20 @@ class leoTkinterBody (leoFrame.leoBody):
 	
 	#@+others
 	#@+node:idle_body_key
-	def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+	def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
 		
 		"""Update the body pane at idle time."""
 	
-		# trace(ch,ord(ch))
-	
+		# g.trace(ch,ord(ch))
 		c = self.c
-		if not c or not v or v != c.currentVnode():
-			return "break"
-		if doHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType):
+		if not c: return "break"
+		if not p: return "break"
+		if p != c.currentPosition(): return "break"
+		v = p.v # used only to get p.iconVal.
+	
+		if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
 			return "break" # The hook claims to have handled the event.
-		body = v.bodyString()
+		body = p.bodyString()
 		if not newSel:
 			newSel = c.frame.body.getTextSelection()
 		if oldText != None:
@@ -1475,24 +1477,24 @@ class leoTkinterBody (leoFrame.leoBody):
 		
 		if len(new) == 0 or new[-1] != '\n':
 			# There is no newline to remove.  Probably will never happen.
-			# trace("false: no newline to remove")
+			# g.trace("false: no newline to remove")
 			removeTrailing = false
 		elif len(old) == 0:
 			# Ambigous case.
-			# trace("false: empty old")
+			# g.trace("false: empty old")
 			removeTrailing = ch != '\n' # false
 		elif old == new[:-1]:
 			# A single trailing character has been added.
-			# trace("false: only changed trailing.")
+			# g.trace("false: only changed trailing.")
 			removeTrailing = false
 		else:
 			# The text didn't have a newline, and now it does.
 			# Moveover, some other change has been made to the text,
 			# So at worst we have misreprented the user's intentions slightly.
-			# trace("true")
+			# g.trace("true")
 			removeTrailing = true
 			
-		# trace(ch,removeTrailing)
+		# g.trace(ch,removeTrailing)
 		
 		
 		#@-node:<< set removeTrailing >>
@@ -1501,16 +1503,16 @@ class leoTkinterBody (leoFrame.leoBody):
 			#@		<< Do auto indent >>
 			#@+node:<< Do auto indent >> (David McNab)
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
-			if self.frame.body.colorizer.useSyntaxColoring(v) and undoType != "Change":
+			if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
 				# Get the previous line.
 				s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
 				# Add the leading whitespace to the present line.
-				junk,width = skip_leading_ws_with_indent(s,0,c.tab_width)
+				junk,width = g.skip_leading_ws_with_indent(s,0,c.tab_width)
 				if s and len(s) > 0 and s[-1]==':':
 					# For Python: increase auto-indent after colons.
-					if self.colorizer.scanColorDirectives(v) == "python":
+					if self.colorizer.scanColorDirectives(p) == "python":
 						width += abs(c.tab_width)
-				if app.config.getBoolWindowPref("smart_auto_indent"):
+				if g.app.config.getBoolWindowPref("smart_auto_indent"):
 					# Added Nov 18 by David McNab, david@rebirthing.co.nz
 					# Determine if prev line has unclosed parens/brackets/braces
 					brackets = [width]
@@ -1524,7 +1526,7 @@ class leoTkinterBody (leoFrame.leoBody):
 							brackets.pop()
 					width = brackets.pop()
 					# end patch by David McNab
-				ws = computeLeadingWhitespace (width,c.tab_width)
+				ws = g.computeLeadingWhitespace (width,c.tab_width)
 				if ws and len(ws) > 0:
 					c.frame.bodyCtrl.insert("insert", ws)
 					removeTrailing = false # bug fix: 11/18
@@ -1542,9 +1544,9 @@ class leoTkinterBody (leoFrame.leoBody):
 				
 				if 1: # 6/26/03: Convert tab no matter where it is.
 			
-					w = computeWidth(prev,c.tab_width)
+					w = g.computeWidth(prev,c.tab_width)
 					w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
-					# trace("prev w:",w,"prev chars:",prev)
+					# g.trace("prev w:",w,"prev chars:",prev)
 					c.frame.bodyCtrl.delete("insert -1c")
 					c.frame.bodyCtrl.insert("insert",' ' * w2)
 				
@@ -1559,9 +1561,9 @@ class leoTkinterBody (leoFrame.leoBody):
 						if ch != ' ' and ch != '\t':
 							all_ws = false
 					if all_ws:
-						w = computeWidth(prev,c.tab_width)
+						w = g.computeWidth(prev,c.tab_width)
 						w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
-						# trace("prev w:",w,"prev chars:",prev)
+						# g.trace("prev w:",w,"prev chars:",prev)
 						c.frame.bodyCtrl.delete("insert -1c")
 						c.frame.bodyCtrl.insert("insert",' ' * w2)
 			#@nonl
@@ -1578,15 +1580,15 @@ class leoTkinterBody (leoFrame.leoBody):
 		if undoType: # 11/6/03: set oldText properly when oldText param exists.
 			if not oldText: oldText = body
 			newText = s
-			c.undoer.setUndoTypingParams(v,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
-		v.t.setTnodeText(s)
-		v.t.insertSpot = c.frame.body.getInsertionPoint()
+			c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+		p.v.setTnodeText(s)
+		p.v.t.insertSpot = c.frame.body.getInsertionPoint()
 		#@	<< recolor the body >>
 		#@+node:<< recolor the body >>
-		self.frame.scanForTabWidth(v)
+		self.frame.scanForTabWidth(p)
 		
 		incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
-		self.frame.body.recolor_now(v,incremental=incremental)
+		self.frame.body.recolor_now(p,incremental=incremental)
 		
 		self.forceFullRecolorFlag = false
 		#@nonl
@@ -1601,11 +1603,11 @@ class leoTkinterBody (leoFrame.leoBody):
 		c.beginUpdate()
 		
 		# Update dirty bits.
-		if not v.isDirty() and v.setDirty(): # Sets all cloned and @file dirty bits
+		if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
 			redraw_flag = true
 			
 		# Update icons.
-		val = v.computeIcon()
+		val = p.computeIcon()
 		if val != v.iconVal:
 			v.iconVal = val
 			redraw_flag = true
@@ -1614,42 +1616,47 @@ class leoTkinterBody (leoFrame.leoBody):
 		#@nonl
 		#@-node:<< redraw the screen if necessary >>
 		#@nl
-		doHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
+		g.doHook("bodykey2",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
 		return "break"
 	#@nonl
 	#@-node:idle_body_key
 	#@+node:onBodyChanged (called from core)
 	# Called by command handlers that have already changed the text.
 	
-	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+	def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
 		
 		"""Handle a change to the body pane."""
 		
 		c = self.c
-		if not v:
-			v = c.currentVnode()
+		if not p:
+			p = c.currentPosition()
 	
 		if not oldSel:
 			oldSel = c.frame.body.getTextSelection()
 	
-		self.idle_body_key(v,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
+		self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
+	#@nonl
 	#@-node:onBodyChanged (called from core)
 	#@+node:onBodyKey
 	def onBodyKey (self,event):
 		
 		"""Handle any key press event in the body pane."""
 	
-		c = self.c ; v = c.currentVnode()
-		ch = event.char 
+		c = self.c ; ch = event.char 
 		oldSel = c.frame.body.getTextSelection()
 		
-		# trace(repr(ch))
-					
+		p = c.currentPosition()
+	
+		# g.trace(repr(ch))
+	
 		if 0: # won't work when menu keys are bound.
 			self.handleStatusLineKey(event)
 			
+		# g.trace(p)
+			
 		# We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
-		self.c.frame.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
+		self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
+	
 	#@-node:onBodyKey
 	#@+node:handleStatusLineKey
 	def handleStatusLineKey (self,event):
@@ -1664,7 +1671,7 @@ class leoTkinterBody (leoFrame.leoBody):
 			try:    self.keyCount += 1
 			except: self.keyCount  = 1
 			
-			printable = choose(ch == keysym and state < 4,"printable","")
+			printable = g.choose(ch == keysym and state < 4,"printable","")
 			
 			print "%4d %s %d %s %x %s" % (
 				self.keyCount,repr(ch),keycode,keysym,state,printable)
@@ -1696,18 +1703,20 @@ class leoTkinterBody (leoFrame.leoBody):
 	#@+node:onBodyWillChange
 	# Called by command handlers that change the text just before idle time.
 	
-	def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
+	def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
 		
 		"""Queue the body changed idle handler."""
 		
 		c = self.c
-		if not v: v = c.currentVnode()
+	
 		if not oldSel:
 			oldSel = c.frame.body.getTextSelection()
-			
-		#trace()
-		self.c.frame.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
 	
+		if not p:
+			p = c.currentPosition()
+	
+		self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
+	#@nonl
 	#@-node:onBodyWillChange
 	#@-others
 	#@nonl
@@ -1773,15 +1782,15 @@ class leoTkinterBody (leoFrame.leoBody):
 		
 		val = self.bodyCtrl.cget(*args,**keys)
 		
-		if app.trace:
-			trace(val,args,keys)
+		if g.app.trace:
+			g.trace(val,args,keys)
 	
 		return val
 		
 	def configure (self,*args,**keys):
 		
-		if app.trace:
-			trace(args,keys)
+		if g.app.trace:
+			g.trace(args,keys)
 		
 		return self.bodyCtrl.configure(*args,**keys)
 	#@nonl
@@ -1869,12 +1878,12 @@ class leoTkinterBody (leoFrame.leoBody):
 	def getCharAtInsertPoint (self):
 		
 		s = self.bodyCtrl.get("insert")
-		return toUnicode(s,app.tkEncoding)
+		return g.toUnicode(s,g.app.tkEncoding)
 	
 	def getCharBeforeInsertPoint (self):
 	
 		s = self.bodyCtrl.get("insert -1c")
-		return toUnicode(s,app.tkEncoding)
+		return g.toUnicode(s,g.app.tkEncoding)
 	#@nonl
 	#@-node:getCharAtInsertPoint & getCharBeforeInsertPoint
 	#@+node:makeInsertPointVisible
@@ -1921,7 +1930,7 @@ class leoTkinterBody (leoFrame.leoBody):
 			if s is None:
 				return u""
 			else:
-				return toUnicode(s,app.tkEncoding)
+				return g.toUnicode(s,g.app.tkEncoding)
 		else:
 			return None
 	#@nonl
@@ -1954,7 +1963,7 @@ class leoTkinterBody (leoFrame.leoBody):
 	#@+node:selectAllText
 	def selectAllText (self):
 		
-		app.gui.setTextSelection(self.bodyCtrl,"1.0","end")
+		g.app.gui.setTextSelection(self.bodyCtrl,"1.0","end")
 	#@-node:selectAllText
 	#@+node:setTextSelection
 	def setTextSelection (self,i,j=None):
@@ -1965,7 +1974,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		elif len(i) == 2:
 			i,j = i
 	
-		app.gui.setTextSelection(self.bodyCtrl,i,j)
+		g.app.gui.setTextSelection(self.bodyCtrl,i,j)
 	#@nonl
 	#@-node:setTextSelection
 	#@+node:delete...
@@ -1999,7 +2008,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		if s is None:
 			return u""
 		else:
-			return toUnicode(s,app.tkEncoding)
+			return g.toUnicode(s,g.app.tkEncoding)
 	#@nonl
 	#@-node:getAllText
 	#@+node:getCharAtIndex
@@ -2011,7 +2020,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		if s is None:
 			return u""
 		else:
-			return toUnicode(s,app.tkEncoding)
+			return g.toUnicode(s,g.app.tkEncoding)
 	#@nonl
 	#@-node:getCharAtIndex
 	#@+node:getInsertLines
@@ -2031,9 +2040,9 @@ class leoTkinterBody (leoFrame.leoBody):
 		ins    = t.get("insert linestart","insert lineend + 1c")
 		after  = t.get("insert lineend + 1c","end")
 	
-		before = toUnicode(before,app.tkEncoding)
-		ins    = toUnicode(ins,   app.tkEncoding)
-		after  = toUnicode(after ,app.tkEncoding)
+		before = g.toUnicode(before,g.app.tkEncoding)
+		ins    = g.toUnicode(ins,   g.app.tkEncoding)
+		after  = g.toUnicode(after ,g.app.tkEncoding)
 	
 		return before,ins,after
 	#@nonl
@@ -2049,7 +2058,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		after is the text after the selected text
 		(or the text after the insert point if no selection)"""
 		
-		trace()
+		g.trace()
 		t = self.bodyCtrl
 		
 		sel_index = t.getTextSelection()
@@ -2063,9 +2072,9 @@ class leoTkinterBody (leoFrame.leoBody):
 		before = t.get("1.0",i)
 		after  = t.get(j,"end")
 		
-		before = toUnicode(before,app.tkEncoding)
-		sel    = toUnicode(sel,   app.tkEncoding)
-		after  = toUnicode(after ,app.tkEncoding)
+		before = g.toUnicode(before,g.app.tkEncoding)
+		sel    = g.toUnicode(sel,   g.app.tkEncoding)
+		after  = g.toUnicode(after ,g.app.tkEncoding)
 		return before,sel,after
 	#@nonl
 	#@-node:getSelectionAreas
@@ -2094,11 +2103,11 @@ class leoTkinterBody (leoFrame.leoBody):
 		i,j = sel_index
 		i = t.index(i + "linestart")
 		j = t.index(j + "lineend") # 10/24/03: -1c  # 11/4/03: no -1c.
-		before = toUnicode(t.get("1.0",i),app.tkEncoding)
-		sel    = toUnicode(t.get(i,j),    app.tkEncoding)
-		after  = toUnicode(t.get(j,"end-1c"),app.tkEncoding)
+		before = g.toUnicode(t.get("1.0",i),g.app.tkEncoding)
+		sel    = g.toUnicode(t.get(i,j),    g.app.tkEncoding)
+		after  = g.toUnicode(t.get(j,"end-1c"),g.app.tkEncoding)
 		
-		# trace(i,j)
+		# g.trace(i,j)
 		return before,sel,after
 	#@nonl
 	#@-node:getSelectionLines (tkBody)
@@ -2133,7 +2142,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		"""Replace the body text by before + sel + after and
 		set the selection so that the sel text is selected."""
 	
-		t = self.bodyCtrl ; gui = app.gui
+		t = self.bodyCtrl ; gui = g.app.gui
 		t.delete("1.0","end")
 	
 		if before: t.insert("1.0",before)
@@ -2149,7 +2158,7 @@ class leoTkinterBody (leoFrame.leoBody):
 			t.insert("end",after)
 	
 		gui.setTextSelection(t,sel_start,sel_end)
-		# trace(sel_start,sel_end)
+		# g.trace(sel_start,sel_end)
 		
 		return t.index(sel_start), t.index(sel_end)
 	#@nonl
@@ -2196,7 +2205,7 @@ class leoTkinterLog (leoFrame.leoLog):
 	#@+node:tkLog.__init__
 	def __init__ (self,frame,parentFrame):
 		
-		# trace("leoTkinterLog")
+		# g.trace("leoTkinterLog")
 		
 		# Call the base class constructor.
 		leoFrame.leoLog.__init__(self,frame,parentFrame)
@@ -2219,10 +2228,10 @@ class leoTkinterLog (leoFrame.leoLog):
 	#@+node:tkLog.createControl
 	def createControl (self,parentFrame):
 		
-		config = app.config
+		config = g.app.config
 		
 		wrap = config.getBoolWindowPref('log_pane_wraps')
-		wrap = choose(wrap,"word","none")
+		wrap = g.choose(wrap,"word","none")
 	
 		log = Tk.Text(parentFrame,name="log",
 			setgrid=0,wrap=wrap,bd=2,bg="white",relief="flat")
@@ -2249,34 +2258,34 @@ class leoTkinterLog (leoFrame.leoLog):
 	def getFontConfig (self):
 	
 		font = self.logCtrl.cget("font")
-		# trace(font)
+		# g.trace(font)
 		return font
 	#@nonl
 	#@-node:tkLog.getFontConfig
 	#@+node:tkLog.hasFocus
 	def hasFocus (self):
 		
-		return app.gui.get_focus(self.frame) == self.logCtrl
+		return g.app.gui.get_focus(self.frame) == self.logCtrl
 	#@nonl
 	#@-node:tkLog.hasFocus
 	#@+node:tkLog.onActivateLog
 	def onActivateLog (self,event=None):
 	
 		try:
-			app.setLog(self,"OnActivateLog")
+			g.app.setLog(self,"OnActivateLog")
 			self.frame.tree.OnDeactivate()
 		except:
-			es_event_exception("activate log")
+			g.es_event_exception("activate log")
 	#@nonl
 	#@-node:tkLog.onActivateLog
 	#@+node:tkLog.put & putnl
 	# All output to the log stream eventually comes here.
 	
 	def put (self,s,color=None):
-		if app.quitting: return
+		if g.app.quitting: return
 		if self.logCtrl:
 			if type(s) == type(u""): # 3/18/03
-				s = toEncodedString(s,app.tkEncoding)
+				s = g.toEncodedString(s,g.app.tkEncoding)
 			if color:
 				if color not in self.colorTags:
 					self.colorTags.append(color)
@@ -2290,22 +2299,26 @@ class leoTkinterLog (leoFrame.leoLog):
 			else:
 				self.logCtrl.insert("end",s)
 			self.logCtrl.see("end")
+			self.frame.tree.disableRedraw = true
 			self.logCtrl.update_idletasks()
+			self.frame.tree.disableRedraw = false
 		else:
-			app.logWaiting.append((s,color),) # 2/25/03
+			g.app.logWaiting.append((s,color),) # 2/25/03
 			print "Null tkinter log"
 			if type(s) == type(u""): # 3/18/03
-				s = toEncodedString(s,"ascii")
+				s = g.toEncodedString(s,"ascii")
 			print s
 	
 	def putnl (self):
-		if app.quitting: return
+		if g.app.quitting: return
 		if self.logCtrl:
 			self.logCtrl.insert("end",'\n')
 			self.logCtrl.see("end")
+			self.frame.tree.disableRedraw = true
 			self.logCtrl.update_idletasks()
+			self.frame.tree.disableRedraw = false
 		else:
-			app.logWaiting.append(('\n',"black"),) # 6/28/03
+			g.app.logWaiting.append(('\n',"black"),) # 6/28/03
 			print "Null tkinter log"
 			print
 	#@nonl
@@ -2313,7 +2326,7 @@ class leoTkinterLog (leoFrame.leoLog):
 	#@+node:tkLog.setFontFromConfig
 	def setFontFromConfig (self):
 	
-		logCtrl = self.logCtrl ; config = app.config
+		logCtrl = self.logCtrl ; config = g.app.config
 	
 		font = config.getFontFromParams(
 			"log_text_font_family", "log_text_font_size",

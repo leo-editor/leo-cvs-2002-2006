@@ -6,7 +6,9 @@ Adds a node navigator to the toolbar. The navigator allows quick
 access to marked nodes. You can either go to the marked node or hoist
 the marked node.
 
-""" 
+"""
+
+#@@language python
 
 __name__ = "Node Navigator"
 __version__ = "0.3" 

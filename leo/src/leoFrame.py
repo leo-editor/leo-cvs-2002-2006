@@ -4,8 +4,10 @@
 
 These classes should be overridden to create frames for a particular gui."""
 
-from leoGlobals import *
-import leoColor,leoMenu,leoUndo
+import leoGlobals as g
+from leoGlobals import true,false
+
+import leoColor,leoMenu,leoNodes,leoUndo
 import os,string,sys,time
 
 #@<< About handling events >>
@@ -74,7 +76,7 @@ class leoBody:
 	#@+node:oops
 	def oops (self):
 		
-		trace("leoBody oops:", callerName(2), "should be overridden in subclass")
+		g.trace("leoBody oops:", g.callerName(2), "should be overridden in subclass")
 	#@nonl
 	#@-node:oops
 	#@+node:leoBody.setFontFromConfig
@@ -325,24 +327,24 @@ class leoBody:
 		
 		return self.colorizer
 	
-	def recolor_now(self,v,incremental=false):
+	def recolor_now(self,p,incremental=false):
 	
-		self.colorizer.colorize(v,incremental)
+		self.colorizer.colorize(p.copy(),incremental)
 	
-	def recolor_range(self,v,leading,trailing):
+	def recolor_range(self,p,leading,trailing):
 		
-		self.colorizer.recolor_range(v,leading,trailing)
+		self.colorizer.recolor_range(p.copy(),leading,trailing)
 	
-	def recolor(self,v,incremental=false):
+	def recolor(self,p,incremental=false):
 		
 		if 0: # Do immediately
-			self.colorizer.colorize(v,incremental)
+			self.colorizer.colorize(p.copy(),incremental)
 		else: # Do at idle time
-			self.colorizer.schedule(v,incremental)
+			self.colorizer.schedule(p.copy(),incremental)
 		
-	def updateSyntaxColorer(self,v):
+	def updateSyntaxColorer(self,p):
 		
-		return self.colorizer.updateSyntaxColorer(v)
+		return self.colorizer.updateSyntaxColorer(p.copy())
 	#@nonl
 	#@-node:Coloring 
 	#@-others
@@ -373,9 +375,9 @@ class leoFrame:
 		# Gui-independent data
 		self.es_newlines = 0 # newline count for this log stream
 		self.openDirectory = ""
-		self.saved=false # True if ever saved
+		self.saved=false # true if ever saved
 		self.splitVerticalFlag,self.ratio, self.secondary_ratio = self.initialRatios()
-		self.startupWindow=false # True if initially opened window
+		self.startupWindow=false # true if initially opened window
 		self.stylesheet = None # The contents of <?xml-stylesheet...?> line.
 	
 		# Colors of log pane.
@@ -465,7 +467,7 @@ class leoFrame:
 	#@+node:initialRatios
 	def initialRatios (self):
 	
-		config = app.config
+		config = g.app.config
 	
 		s = config.getWindowPref("initial_splitter_orientation")
 		verticalFlag = s == None or (s != "h" and s != "horizontal")
@@ -492,13 +494,13 @@ class leoFrame:
 		
 	def shortFileName (self):
 	
-		return shortFileName(self.c.mFileName)
+		return g.shortFileName(self.c.mFileName)
 	#@nonl
 	#@-node:longFileName & shortFileName
 	#@+node:oops
 	def oops(self):
 		
-		print "leoFrame oops:", callerName(2), "should be overridden in subclass"
+		print "leoFrame oops:", g.callerName(2), "should be overridden in subclass"
 	#@-node:oops
 	#@+node:promptForSave
 	def promptForSave (self):
@@ -508,10 +510,10 @@ class leoFrame:
 		Return true if the user vetos the quit or save operation."""
 		
 		c = self.c
-		name = choose(c.mFileName,c.mFileName,self.title)
-		type = choose(app.quitting, "quitting?", "closing?")
+		name = g.choose(c.mFileName,c.mFileName,self.title)
+		type = g.choose(g.app.quitting, "quitting?", "closing?")
 	
-		answer = app.gui.runAskYesNoCancelDialog(
+		answer = g.app.gui.runAskYesNoCancelDialog(
 			"Confirm",
 			'Save changes to %s before %s' % (name,type))
 			
@@ -528,7 +530,7 @@ class leoFrame:
 				if not c.mFileName:
 					c.mFileName = ""
 				
-				c.mFileName = app.gui.runSaveFileDialog(
+				c.mFileName = g.app.gui.runSaveFileDialog(
 					initialfile = c.mFileName,
 					title="Save",
 					filetypes=[("Leo files", "*.leo")],
@@ -547,25 +549,24 @@ class leoFrame:
 	#@+node:scanForTabWidth
 	# Similar to code in scanAllDirectives.
 	
-	def scanForTabWidth (self, v):
+	def scanForTabWidth (self,p):
 		
 		c = self.c ; w = c.tab_width
-	
-		while v:
-			s = v.t.bodyString
-			dict = get_directives_dict(s)
+		
+		for p in p.self_and_parents_iter():
+			s = p.v.t.bodyString
+			dict = g.get_directives_dict(s)
 			#@		<< set w and break on @tabwidth >>
 			#@+node:<< set w and break on @tabwidth >>
 			if dict.has_key("tabwidth"):
 				
-				val = scanAtTabwidthDirective(s,dict,issue_error_flag=false)
+				val = g.scanAtTabwidthDirective(s,dict,issue_error_flag=false)
 				if val and val != 0:
 					w = val
 					break
 			#@nonl
 			#@-node:<< set w and break on @tabwidth >>
 			#@nl
-			v = v.parent()
 	
 		c.frame.setTabWidth(w)
 	#@nonl
@@ -619,7 +620,7 @@ class leoLog:
 	#@+node:leoLog.oops
 	def oops (self):
 		
-		print "leoLog oops:", callerName(2), "should be overridden in subclass"
+		print "leoLog oops:", g.callerName(2), "should be overridden in subclass"
 	#@nonl
 	#@-node:leoLog.oops
 	#@+node:leoLog.setFontFromConfig
@@ -632,9 +633,9 @@ class leoLog:
 	def onActivateLog (self,event=None):
 	
 		try:
-			app.setLog(self,"OnActivateLog")
+			g.app.setLog(self,"OnActivateLog")
 		except:
-			es_event_exception("activate log")
+			g.es_event_exception("activate log")
 	#@nonl
 	#@-node:leoLog.onActivateLog
 	#@+node:leoLog.put & putnl
@@ -663,17 +664,14 @@ class leoTree:
 	def __init__ (self,frame):
 		
 		self.frame = frame
-		self.c = frame.c
-		
+		self.c = c = frame.c
+	
 		self.edit_text_dict = {} # New in 3.12: keys vnodes, values are edit_text (Tk.Text widgets)
 		
 		# "public" ivars: correspond to setters & getters.
-		self.mCurrentVnode = None
-		self.mDragging = false
-		self.mEditVnode = None
-		self.mRootVnode = None
-		self.mTopVnode = None
-		
+		self._dragging = false
+		self._editPosition = None
+	
 		# Controlling redraws
 		self.updateCount = 0 # self.redraw does nothing unless this is zero.
 		self.redrawCount = 0 # For traces
@@ -739,7 +737,7 @@ class leoTree:
 	
 	#@-node:Scrolling
 	#@+node:Selecting
-	def select(self,v,updateBeadList=true):
+	def select(self,p,updateBeadList=true):
 		
 		self.oops()
 	#@nonl
@@ -765,50 +763,27 @@ class leoTree:
 			self.redraw()
 	#@nonl
 	#@-node:endUpdate
-	#@+node:Getters
-	def currentVnode(self):
-		return self.mCurrentVnode
-		
+	#@+node:Getters/Setters (tree)
 	def dragging(self):
-		return self.mDragging
-		
+		return self._dragging
+	
 	def getEditTextDict(self,v):
 		return self.edit_text_dict.get(v)
 		
-	def editVnode(self):
-		return self.mEditVnode
-	
-	def rootVnode(self):
-		return self.mRootVnode
-	
-	def topVnode(self):
-		return self.mTopVnode
-	#@nonl
-	#@-node:Getters
-	#@+node:Setters
-	def setCurrentVnode(self,v):
-		self.mCurrentVnode = v
+	def editPosition(self):
+		return self._editPosition
 		
 	def setDragging(self,flag):
-		self.mDragging = flag
-		
-	def setEditVnode(self,v):
-		self.mEditVnode = v
+		self._dragging = flag
 	
-	def setRootVnode(self,v):
-		self.mRootVnode = v
-		
-	def setIniting(self,flag):
-		pass # No longer used
-		
-	def setTopVnode(self,v):
-		self.mTopVnode = v
+	def setEditPosition(self,p):
+		self._editPosition = p
 	#@nonl
-	#@-node:Setters
+	#@-node:Getters/Setters (tree)
 	#@+node:oops
 	def oops(self):
 		
-		print "leoTree oops:", callerName(2), "should be overridden in subclass"
+		print "leoTree oops:", g.callerName(2), "should be overridden in subclass"
 	#@nonl
 	#@-node:oops
 	#@+node:tree.OnIconDoubleClick (@url)
@@ -818,8 +793,8 @@ class leoTree:
 	
 		c = self.c
 		s = v.headString().strip()
-		if match_word(s,0,"@url"):
-			if not doHook("@url1",c=c,v=v):
+		if g.match_word(s,0,"@url"):
+			if not g.doHook("@url1",c=c,v=v):
 				url = s[4:].strip()
 				#@			<< stop the url after any whitespace >>
 				#@+node:<< stop the url after any whitespace  >>
@@ -829,15 +804,15 @@ class leoTree:
 				i = url.find(' ')
 				if i > -1:
 					if 0: # No need for a warning.  Assume everything else is a comment.
-						es("ignoring characters after space in url:"+url[i:])
-						es("use %20 instead of spaces")
+						g.es("ignoring characters after space in url:"+url[i:])
+						g.es("use %20 instead of spaces")
 					url = url[:i]
 				#@-node:<< stop the url after any whitespace  >>
 				#@nl
 				#@			<< check the url; return if bad >>
 				#@+node:<< check the url; return if bad >>
 				if not url or len(url) == 0:
-					es("no url following @url")
+					g.es("no url following @url")
 					return
 					
 				#@+at 
@@ -860,7 +835,7 @@ class leoTree:
 				if not re.match('^([a-z]{3,}:)',url):
 					url = 'http://' + url
 				if not re.match(urlPattern,url):
-					es("invalid url: "+url)
+					g.es("invalid url: "+url)
 					return
 				#@-node:<< check the url; return if bad >>
 				#@nl
@@ -877,22 +852,22 @@ class leoTree:
 				
 				try:
 					import os
-					os.chdir(app.loadDir)
+					os.chdir(g.app.loadDir)
 				
-					if match(url,0,"file:") and url[-4:]==".leo":
-						ok,frame = openWithFileName(url[5:],c)
+					if g.match(url,0,"file:") and url[-4:]==".leo":
+						ok,frame = g.openWithFileName(url[5:],c)
 						if ok:
 							frame.bringToFront()
 					else:
 						import webbrowser
 						webbrowser.open(url)
 				except:
-					es("exception opening " + url)
-					es_exception()
+					g.es("exception opening " + url)
+					g.es_exception()
 				
 				#@-node:<< pass the url to the web browser >>
 				#@nl
-			doHook("@url2",c=c,v=v)
+			g.doHook("@url2",c=c,v=v)
 	#@nonl
 	#@-node:tree.OnIconDoubleClick (@url)
 	#@+node:tree.enableDrawingAfterException
@@ -922,7 +897,7 @@ class nullBody (leoBody):
 	#@+node:findStartOfLine
 	def findStartOfLine (self,lineNumber):
 		
-		lines = splitLines(self.s)
+		lines = g.splitLines(self.s)
 		i = 0 ; index = 0
 		for line in lines:
 			if i == lineNumber: break
@@ -1029,7 +1004,7 @@ class nullBody (leoBody):
 	#@+node:Idle time...
 	def scheduleIdleTimeRoutine (self,function,*args,**keys):
 	
-		trace()
+		g.trace()
 	#@nonl
 	#@-node:Idle time...
 	#@+node:Indices
@@ -1044,13 +1019,13 @@ class nullBody (leoBody):
 		
 		# Probably not used.
 		n = self.findStartOfLine(row)
-		trace(n + column)
+		g.trace(n + column)
 		return n + column
 		
 	def convertIndexToRowColumn (self,index):
 		
 		# Probably not used.
-		trace(index)
+		g.trace(index)
 		return index
 		
 	def getImageIndex (self,image):
@@ -1095,11 +1070,11 @@ class nullBody (leoBody):
 		
 	def getSelectedText (self):
 		i,j = self.selection
-		trace(self.s[i:j])
+		g.trace(self.s[i:j])
 		return self.s[i:j]
 		
 	def getTextSelection (self):
-		trace(self.selection)
+		g.trace(self.selection)
 		return self.selection
 		
 	def hasTextSelection (self):
@@ -1148,19 +1123,19 @@ class nullBody (leoBody):
 	#@-node:delete...
 	#@+node:get...
 	def getAllText (self):
-		return toUnicode(self.s,app.tkEncoding)
+		return g.toUnicode(self.s,g.app.tkEncoding)
 		
 	def getCharAtIndex (self,index):
 		
 		try:
 			s = self.s[index]
-			return toUnicode(s,app.tkEncoding)
+			return g.toUnicode(s,g.app.tkEncoding)
 		except: return None
 		
 	def getTextRange (self,index1,index2):
 	
 		s = self.s[index1:index2]
-		return toUnicode(s,app.tkEncoding)
+		return g.toUnicode(s,g.app.tkEncoding)
 	#@nonl
 	#@-node:get...
 	#@+node:getInsertLines
@@ -1183,9 +1158,9 @@ class nullBody (leoBody):
 		ins    = self.s[n1:n2+1] # 12/18/03: was sel(!)
 		after  = self.s[n2+1:]
 	
-		before = toUnicode(before,app.tkEncoding)
-		ins    = toUnicode(ins,   app.tkEncoding)
-		after  = toUnicode(after ,app.tkEncoding)
+		before = g.toUnicode(before,g.app.tkEncoding)
+		ins    = g.toUnicode(ins,   g.app.tkEncoding)
+		after  = g.toUnicode(after ,g.app.tkEncoding)
 	
 		return before,ins,after
 	
@@ -1210,9 +1185,9 @@ class nullBody (leoBody):
 		sel    = self.s[n1:n2+1]
 		after  = self.s[n2+1:]
 		
-		before = toUnicode(before,app.tkEncoding)
-		sel    = toUnicode(sel,   app.tkEncoding)
-		after  = toUnicode(after ,app.tkEncoding)
+		before = g.toUnicode(before,g.app.tkEncoding)
+		sel    = g.toUnicode(sel,   g.app.tkEncoding)
+		after  = g.toUnicode(after ,g.app.tkEncoding)
 		return before,sel,after
 	#@nonl
 	#@-node:getSelectionAreas
@@ -1240,11 +1215,11 @@ class nullBody (leoBody):
 		sel    = self.s[n1:n2] # 12/8/03 was n2+1
 		after  = self.s[n2+1:]
 	
-		before = toUnicode(before,app.tkEncoding)
-		sel    = toUnicode(sel,   app.tkEncoding)
-		after  = toUnicode(after ,app.tkEncoding)
+		before = g.toUnicode(before,g.app.tkEncoding)
+		sel    = g.toUnicode(sel,   g.app.tkEncoding)
+		after  = g.toUnicode(after ,g.app.tkEncoding)
 		
-		trace(n1,n2)
+		g.trace(n1,n2)
 		return before,sel,after
 	#@-node:getSelectionLines (nullBody)
 	#@+node:Insert...
@@ -1298,7 +1273,7 @@ class nullBody (leoBody):
 	#@+node:oops
 	def oops(self):
 	
-		trace("nullBody:", callerName(2))
+		g.trace("nullBody:", g.callerName(2))
 		pass
 	#@nonl
 	#@-node:oops
@@ -1319,7 +1294,7 @@ class nullFrame (leoFrame):
 	if 0: # This causes no end of problems.
 		
 		def __getattr__(self,attr):
-			trace("nullFrame",attr)
+			g.trace("nullFrame",attr)
 			return nullObject()
 
 	def finishCreate(self,c):
@@ -1334,7 +1309,7 @@ class nullFrame (leoFrame):
 		c.undoer = leoUndo.nullUndoer(c)
 		
 	def oops(self):
-		# trace("nullFrame:", callerName(2))
+		# g.trace("nullFrame:", g.callerName(2))
 		pass # This is NOT an error.
 #@nonl
 #@-node:class nullFrame
@@ -1346,19 +1321,19 @@ class nullLog (leoLog):
 		leoLog.__init__(self,frame,parentFrame) # Init the base class.
 		
 		if 0: # No longer needed: use base enable/disable methods.
-			if app.batchMode:
-				if app.log: self.enabled = app.log.enabled
-				else:       self.enabled = true
-				app.log = self
+			if g.app.batchMode:
+				if g.app.log: self.enabled = g.app.log.enabled
+				else:         self.enabled = true
+				g.app.log = self
 			else:
 				self.enabled = true
-		# trace("nullLog",self.enabled)
+		# g.trace("nullLog",self.enabled)
 		
 	def createControl (self,parentFrame):
 		pass
 		
 	def oops(self):
-		trace("nullLog:", callerName(2))
+		g.trace("nullLog:", g.callerName(2))
 		
 	def put (self,s,color=None):
 		if self.enabled:
@@ -1390,7 +1365,7 @@ class nullTree (leoTree):
 	def oops(self):
 			
 		# It is not an error to call this routine...
-		trace("nullTree:", callerName(2))
+		g.trace("nullTree:", g.callerName(2))
 		pass
 	#@nonl
 	#@-node:oops
@@ -1444,10 +1419,11 @@ class nullTree (leoTree):
 	#@nonl
 	#@-node:getFont & setFont
 	#@+node:select
-	def select(self,v,updateBeadList=true):
+	def select(self,p,updateBeadList=true):
 		
-		self.setCurrentVnode(v)
-		self.frame.scanForTabWidth(v)
+		self.c.setCurrentPosition(p)
+	
+		self.frame.scanForTabWidth(p)
 	#@nonl
 	#@-node:select
 	#@-others

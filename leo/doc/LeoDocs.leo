@@ -74,15 +74,7 @@
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
 <v t="edream.110203163054.50"><vh>How to install leo.py on Linux</vh></v>
 <v t="edream.110203163054.51"><vh>How to install leo.py on Windows</vh></v>
-<v t="edream.110203163054.52"><vh>How to install leo.py on MacOS X Jaguar</vh>
-<v t="edream.110203163054.53"><vh>From Joe Grace 2/17/03</vh></v>
-<v t="edream.110203163054.54"><vh>From Bruce Bolden 1</vh></v>
-<v t="edream.110203163054.55"><vh>From Bruce Bolden 2</vh></v>
-</v>
-<v t="edream.110203163054.56"><vh>How to install leo.py on MacOS X Jaguar &amp; Aqua</vh>
-<v t="edream.110203163054.57"><vh>Installing Leo under Aqua</vh></v>
-<v t="edream.110203163054.58"><vh>Making .leo documents open with Leo</vh></v>
-</v>
+<v t="ekr.20040219100738"><vh>How to install Leo on MacOS Panther (10.3)</vh></v>
 <v t="edream.110203163054.59"><vh>How to install the Borland version of Leo on Windows</vh></v>
 <v t="edream.110203163054.60"><vh>How to associate leo.py with .leo files on Windows</vh></v>
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
@@ -4253,13 +4245,13 @@ Choice 2: Use one or move "Read @file Nodes" commands to update the outline from
 
 New in version 4.1:  The first time you start Leo, Leo will ask you for a unique identifier.  If you are using cvs, use your cvs login name.  Otherwise your initials will do.
 
-Leo stores this identifier in leoID.txt, so you can change this identifier at any time by chaning leoID.txt.</t>
+Leo stores this identifier in leoID.txt, so you can change this identifier at any time by changing leoID.txt.</t>
 <t tx="edream.110203163054.49">leo.py is Leo2 written in Python and Tk.  It should work on any platform that supports Python 2.2 or later and Tk 8.3 or later.
 
 Download Python from http://python.org/
 Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
 
-The section called "How to Install Leo on MacOS X" contains special instructions for the Mac.  Leo will not run on MacOs 9.</t>
+See "How to install Leo on MacOS Panther (10.3)" for installation instructions for MacOs X.  Leo will not run on MacOs 9.</t>
 <t tx="edream.110203163054.50">@nocolor
 
 leo.py requires Python 2.1 and tcl/tk 8.3 or above.
@@ -4311,163 +4303,6 @@ cd c:\prog\LeoCVS\leo
 c:\python22\python c:\prog\LeoCVS\leo\leo.py %1
 
 This opens the file specified by the first argument (%1).</t>
-<t tx="edream.110203163054.52">The following nodes discuss installing leo.py on MaxOS X Jaguar.
-
-Apparently the process is getting easier and easier.</t>
-<t tx="edream.110203163054.53">Leo on MaxOS Jaguar
-
-Fortunately, this has gotten much easier this year (2003).  I did it recently
-and here's what I remember.
-
-You will need:
-
-  the latest Leo2.py (I used Leo 3.10 (ignore "leo(Macintosh)")
-        http://prdownloads.sourceforge.net/leo/leo-3.10.zip?download
-
-  the latest TclTkAqua (I used 8.4.1)
-        http://sourceforge.net/project/showfiles.php?group_id=10894&amp;release_id=117868
-
-  the latest X11 beta from Apple (I used Public Beta v0.2.1)
-        http://www.apple.com/downloads/macosx/apple/x11formacosx.html
-
-
-Install X11 to get an OS X native X11 window server, the TclTkAqua to get the
-Tcl and Tk toolkits (which run on X11) to support Leo's GUI, and install Leo.
-
-Once these are installed, treat leo as a typical UNIX installation running with
-an X11 server (unrelated to OS X).  leo never needs to know that it's running
-on OS X (thanks to Apple releasing their aqua native X11 server!).
-
-To run it, make sure to run the X11 server first.  Then run leo from the command
-line (as usual).  If the X11 server isn't running, leo won't have a way to display
-windows or GUI.
-
-Good luck!</t>
-<t tx="edream.110203163054.54">Bruce M. Bolden, bruceb@cs.uidaho.edu, is using Leo on MaxOS X.  Here is his description of how to get Leo working there:
-
-I installed: 
-- Latest OS X Developer tools
-- latest (as of about two weeks ago) tk/tcl
-         MacOSXTk8.4a4-2.tar.gz
-- the machopython distribution
-http://prdownloads.sourceforge.net/wxpython/MachoPython-2.2.1.dmg
-
-For OS X 10.1, I followed the directions at:
-    http://tony.lownds.com/macosx/tkinter.html
-
-That worked fine for 10.1, but didn't work for 10.2.  It
-took awhile to find a Python distribution that worked
-correctly with tk/tcl.
-
-I was just getting into Leo about a week before 10.2 was released and thought about---what if it breaks....  10.2 broke it, but I was able to find a solution as described above.</t>
-<t tx="edream.110203163054.55">I just finished building tk successfully!  The magic step was the execution of the command
-
-cp ../generic/prolog.ps to ../library/prolog.ps
-
-AFTER 
-
-cd ../../tk/macosx
-
-in the instructions on "Steps to build Tcl/Tk 8.4.0 on MacOS X":
-
-http://mini.net/tcl/4052
-
-I found this solution while looking at the tcl-mac mailing list archive.  The earlier (current?) tar ball on SourceForge did not have the file prolog.ps in the library directory:
-
-http://sourceforge.net/mailarchive/forum.php?thread_id=1060496&amp;forum_id=3853
-
-Copy and Paste seem to work just fine now in Leo!  This was my original question for you.
-
-I also noticed that someone else built everything on OS X 10.2 (Jaguar), but they did it under X.  Since, the new version of Tk appears to support the OS X interface quite well, I'm not going to bother installing X (for now).
-
-So, Leo works two different ways on OS X 10.2.</t>
-<t tx="edream.110203163054.56">Installing Leo under MacOS X 10.2
-=================================
-
-MacOS X 10.2 comes with a built-in python interpreter, but unfortunately the
-built in interpreter has no support for Tkinter (the library Leo uses to
-display its graphics), so if you try to run Leo using the built-in python you
-will get an error message saying that Tkinter cannot be imported.
-
-This document describes the steps you must take to get Leo to run under MacOS X.
-
-There are two ways of running Leo under Mac OS X. Leo can either be run
-natively in its own Aqua window or it can be run under an X11 server. Native
-running is usually more elegant, since it gives Leo the standard Mac OS look
-and feel. Running it under X11 might be a good option if you aldready use a lot
-of X11 programs. This document only describes the installation procedure for
-Aqua.
-
-See the children of this node for details.</t>
-<t tx="edream.110203163054.57">1. Install the TclTkAqua package.
-
-   Download and install the file ``TclTkAqua-8.4.1-Jaguar.dmg`` from
-   http://sourceforge.net/project/showfiles.php?group_id=10894&amp;release_id=117868.
-   
-   Note that you probably do not want to install the 8.4.2 version. The TclTk
-   project uses odd numbers for stable versions and even numbers for unstable
-   development releases.
-   
-   There is also a *BI* version of TclTkAqua. *BI* stands for *Batteries
-   Included*. This distrubiton includes many of the commonly used extensions
-   to Tk, in addition to Tk itself. It is not needed for running Leo.
-   
-2. Install the Python interpreter
-
-   A python interpreter compiled to run with AquaTk is available at
-   https://sourceforge.net/project/showfiles.php?group_id=10718.
-   Download the file::
-   
-       MacPython-OSX-2.3a2-2.dmg?download
-	   
-   or any newer version of the interpreter and install it.
-   
-   At least some versions of this installer has a bug that appears when you try
-   to install it on a system with a single disk. The installer will erroneously
-   report that the program cannot be installed on the disk. To fix the problem
-   just *Go Back* and press *Continue* again. You will then be able to continue
-   the installation.
-   
-3. Download and install the source code version of Leo from Leo's project page.
-
-4. Rename the ``leo.py`` file to ``leo.pyw``. 
-
-   This tells MacPython that ``leo.pyw`` is a GUI script that should run in its
-   own GUI window.
-   
-You should now be able to run Leo by double clicking on the ``leo.pyw`` file. You
-can create an alias of the file in some convenient location to have easy access
-to the program.
-
-To run Leo from the command line, type:
-
-    /usr/local/bin/pythonw leo.pyw
-	
-This should start Leo. (``pythonw`` is a small wrapper script that is needed to
-work around a bug in AquaTk which prevents windows from being brought to
-front).</t>
-<t tx="edream.110203163054.58">To get .leo documents to open with Leo, you must first create an AppleScript that
-can launch Leo. Start up the script editor and enter the following text::
-
-  on open filelist
-    repeat with i in filelist
-      do shell script "/usr/local/bin/pythonw /Src/Leo/leo.pyw " &amp; POSIX path of i &amp; " &gt; /dev/null 2&gt;&amp;1 &amp;"
-    end repeat
-  end open
-  
-  on run
-    do shell script "/usr/local/bin/pythonw /Src/Leo/leo.pyw &gt; /dev/null 2&gt;&amp;1 &amp;"
-  end run
-
-You should replace ``/Src/Leo/leo.pyw`` with the path to wherever you have
-installed Leo.
-
-Save this script as *Application* at some suitable location. Name it "Leo" or
-something similar. You can now launch Leo by double-clicking the script icon.
-You can also open Leo files by dropping them on the script icon.
-
-Double click any ``.leo`` file. In the dialog box that appears select *Choose
-Application...* and choose the script application you just created.</t>
 <t tx="edream.110203163054.59">The Icons folder contains two Icons, called LeoApp and LeoDoc, that represent the Leo application and Leo documents respectively.
 
 In Windows, to associate LeoDoc with .leo files, open the Setting:Folder Options:File Type panel, create an entry for .leo files.  Then choose Change Icon and select the LeoDoc icon.  Associate leo.py as the application to open .leo files.</t>
@@ -24963,7 +24798,7 @@ This changes the comment symbol to " ' " apostrophe... making comments parseable
 by a BASIC (or other language.)</t>
 <t tx="ekr.20040201120903">Adds a status line to the bottom of Leo windows.</t>
 <t tx="ekr.20040203084228">The Change All command was looping when the find pattern was '\n'.</t>
-<t tx="ekr.20040216151748">Leo 4.1 Final              February 18, 2004
+<t tx="ekr.20040216151748">Leo 4.1 Final              February 20, 2004
 
 Leo 4.1 Final is the culmination of four months of work. No significant bugs
 have been reported since 4.1 rc4. Several people have contributed nifty plugins
@@ -25038,5 +24873,12 @@ To make myself perfectly clear: Python has absolutely no right to complain
 about comment lines that do not have the form:
 
 # -*- coding: &lt;encoding&gt; -*-</t>
+<t tx="ekr.20040219100738">Leo works reliably only on MacOS X 10.3 (Panther).
+
+For complete installation instructions see:
+
+http://www.teti.ch/share/leo.php
+
+Many thanks to Gaspard Bucher for these instructions.</t>
 </tnodes>
 </leo_file>

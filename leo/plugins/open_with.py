@@ -2,6 +2,8 @@
 #@+node:@file open_with.py
 """Create menu for Open With command and handle the resulting commands"""
 
+#@@language python
+
 from leoPlugins import *
 from leoGlobals import *
 
@@ -20,7 +22,7 @@ if Tkinter: # Register the handlers...
 	def on_idle (tag,keywords):
 	
 		import os
-		a = app()
+		a = app
 		for dict in a.openWithFiles:
 			path = dict.get("path")
 			c = dict.get("c")
@@ -133,7 +135,7 @@ if Tkinter: # Register the handlers...
 
 	if app.gui.guiName() == "tkinter":
 
-		app().hasOpenWithMenu = true
+		app.hasOpenWithMenu = true
 		registerHandler("idle", on_idle)
 		registerHandler(("start2","open2","command2"), create_open_with_menu)
 	

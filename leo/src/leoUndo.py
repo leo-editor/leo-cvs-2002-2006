@@ -53,9 +53,10 @@ optionalIvars = (
 #@-node:<< Define optional ivars >>
 #@nl
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
-import types
+import string,types
 
 #@+others
 #@+node:class undoer
@@ -85,14 +86,14 @@ class baseUndoer:
 		u.undoMenuLabel = "Can't Undo"
 		u.realRedoMenuLabel = "Can't Redo"
 		u.realUndoMenuLabel = "Can't Undo"
-		u.undoing = false # True if executing an Undo command.
-		u.redoing = false # True if executing a Redo command.
+		u.undoing = false # true if executing an Undo command.
+		u.redoing = false # true if executing a Redo command.
 	#@nonl
 	#@-node:undo.__init__ & clearIvars
 	#@+node:clearIvars
 	def clearIvars (self):
 		
-		self.v = None # The node being operated upon for undo and redo.
+		self.p = None # The position/node being operated upon for undo and redo.
 		for ivar in optionalIvars:
 			setattr(self,ivar,None)
 	#@nonl
@@ -110,6 +111,7 @@ class baseUndoer:
 		u.beads = [] # List of undo nodes.
 		u.bead = -1 # Index of the present bead: -1:len(beads)
 		u.clearIvars()
+	#@nonl
 	#@-node:clearUndoState
 	#@+node:canRedo & canUndo
 	# Translation does not affect these routines.
@@ -140,9 +142,9 @@ class baseUndoer:
 		if n < 0 or n >= len(u.beads):
 			return None
 		d = u.beads[n]
-		# trace(`n` + ":" + `len(u.beads)` + ":" + `d`)
+		# g.trace(n,len(u.beads),d)
 		self.clearIvars()
-		u.v = d["v"]
+		u.p = d["v"]
 		u.undoType = d["undoType"]
 	
 		for ivar in optionalIvars:
@@ -155,9 +157,9 @@ class baseUndoer:
 				old_d = u.beads[n-1]
 				# The user will lose data if these asserts fail.
 				assert(old_d["undoType"] == "Typing")
-				assert(old_d["v"] == u.v)
+				assert(old_d["v"] == u.p)
 				u.oldText = old_d["newText"]
-				# trace(`u.oldText`)
+				# g.trace(`u.oldText`)
 		return d
 		
 	def peekBead (self,n):
@@ -166,14 +168,14 @@ class baseUndoer:
 		if n < 0 or n >= len(u.beads):
 			return None
 		d = u.beads[n]
-		# trace(`n` + ":" + `len(u.beads)` + ":" + `d`)
+		# g.trace(n,len(u.beads),d)
 		return d
 	
 	def setBead (self,n,keywords=None):
 	
 		u = self ; d = {}
 		d["undoType"]=u.undoType
-		d["v"]=u.v
+		d["v"]=u.p
 		# Only enter significant entries into the dictionary.
 		# This is an important space optimization for typing.
 		for ivar in optionalIvars:
@@ -189,10 +191,10 @@ class baseUndoer:
 		if not u.new_undo:
 			if u.undoType == "Typing" and n > 0:
 				old_d = u.beads[n-1]
-				if old_d["undoType"] == "Typing" and old_d["v"] == u.v:
+				if old_d["undoType"] == "Typing" and old_d["v"] == u.p:
 					del d["oldText"] # We can recreate this entry from old_d["newText"]
-					# trace(`u.oldText`)
-		# trace(`d`)
+					# g.trace(`u.oldText`)
+		# g.trace(d)
 		return d
 	#@-node:getBead, peekBead, setBead
 	#@+node:redoMenuName, undoMenuName
@@ -221,7 +223,7 @@ class baseUndoer:
 			# Update menu using old name.
 			realLabel = frame.menu.getRealMenuName(name)
 			if realLabel == name:
-				underline=choose(match(name,0,"Can't"),-1,0)
+				underline=g.choose(g.match(name,0,"Can't"),-1,0)
 			else:
 				underline = realLabel.find("&")
 			realLabel = realLabel.replace("&","")
@@ -237,7 +239,7 @@ class baseUndoer:
 			# Update menu using old name.
 			realLabel = frame.menu.getRealMenuName(name)
 			if realLabel == name:
-				underline=choose(match(name,0,"Can't"),-1,0)
+				underline=g.choose(g.match(name,0,"Can't"),-1,0)
 			else:
 				underline = realLabel.find("&")
 			realLabel = realLabel.replace("&","")
@@ -256,9 +258,9 @@ class baseUndoer:
 	#@-at
 	#@@c
 	
-	def setUndoParams (self,undo_type,v,**keywords):
+	def setUndoParams (self,undo_type,p,**keywords):
 		
-		# trace(undo_type,v,keywords)
+		# g.trace(undo_type,p,keywords)
 	
 		u = self
 		if u.redoing or u.undoing: return None
@@ -271,19 +273,18 @@ class baseUndoer:
 		# Set the type: set the menu labels later.
 		u.undoType = undo_type
 		# Calculate the standard derived information.
-		u.v = v
-		u.parent = v.parent()
-		u.back = v.back()
-		u.n = v.childIndex()
+		u.p = p.copy()
+		u.parent = p.parent()
+		u.back = p.back()
+		u.n = p.childIndex()
 		# Push params on undo stack, clearing all forward entries.
 		u.bead += 1
 		d = u.setBead(u.bead,keywords)
 		u.beads[u.bead:] = [d]
-		# trace(`u.bead` + ":" + `len(u.beads)` + ":" + `keywords`)
+		# g.trace(len(u.beads),u.bead,keywords)
 		# Recalculate the menu labels.
 		u.setUndoTypes()
 		return d
-	#@nonl
 	#@-node:setUndoParams
 	#@+node:setUndoTypingParams
 	#@+at 
@@ -296,26 +297,40 @@ class baseUndoer:
 	#@-at
 	#@@c
 	
-	def setUndoTypingParams (self,v,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+	def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
 		
-		# trace(undo_type,v,"old:",oldText,"new:",newText)
-	
+		# g.trace(undo_type,p,"old:",oldText,"new:",newText)
 		u = self ; c = u.c
-		if u.redoing or u.undoing: return None
+		#@	<< return if there is nothing to do >>
+		#@+node:<< return if there is nothing to do >>
+		if u.redoing or u.undoing:
+			return None
+		
 		if undo_type == None:
 			return None
+		
 		if undo_type == "Can't Undo":
 			u.clearUndoState()
 			return None
+		
 		if oldText == newText:
-			# trace("no change")
+			# g.trace("no change")
 			return None
+		#@nonl
+		#@-node:<< return if there is nothing to do >>
+		#@nl
+		#@	<< init the undo params >>
+		#@+node:<< init the undo params >>
 		# Clear all optional params.
 		for ivar in optionalIvars:
 			setattr(u,ivar,None)
+		
 		# Set the params.
 		u.undoType = undo_type
-		u.v = v
+		u.p = p
+		#@nonl
+		#@-node:<< init the undo params >>
+		#@nl
 		#@	<< compute leading, middle & trailing  lines >>
 		#@+node:<< compute leading, middle & trailing  lines >>
 		#@+at 
@@ -373,7 +388,7 @@ class baseUndoer:
 			i -= 1
 		
 		if u.debug_print:
-			trace()
+			g.trace()
 			print "lead,trail",leading,trailing
 			print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
 			print "new mid,nls:",len(new_middle_lines),new_newlines,newText
@@ -427,25 +442,39 @@ class baseUndoer:
 		#@nonl
 		#@-node:<< save undo text info >>
 		#@nl
-		u.oldSel = oldSel ; u.newSel = newSel
-		# 11/13/02: Remember the scrolling position.
+		#@	<< save the selection and scrolling position >>
+		#@+node:<< save the selection and scrolling position >>
+		#Remember the selection.
+		u.oldSel = oldSel
+		u.newSel = newSel
+		
+		# Remember the scrolling position.
 		if oldYview:
 			u.yview = oldYview
 		else:
 			u.yview = c.frame.body.getYScrollPosition()
+		#@-node:<< save the selection and scrolling position >>
+		#@nl
+		#@	<< adjust the undo stack, clearing all forward entries >>
+		#@+node:<< adjust the undo stack, clearing all forward entries >>
 		# Push params on undo stack, clearing all forward entries.
 		u.bead += 1
 		d = u.setBead(u.bead)
 		u.beads[u.bead:] = [d]
-		# trace(`u.bead` + ":" + `len(u.beads)`)
+		
+		# g.trace(len(u.beads), u.bead)
+		#@nonl
+		#@-node:<< adjust the undo stack, clearing all forward entries >>
+		#@nl
 		u.setUndoTypes() # Recalculate the menu labels.
 		return d
+	#@nonl
 	#@-node:setUndoTypingParams
 	#@+node:setUndoTypes
 	def setUndoTypes (self):
 		
 		u = self
-		# trace(`u.bead` + ":" + `len(u.beads)`)
+		# g.trace(u.bead,len(u.beads))
 	
 		# Set the undo type and undo menu label.
 		d = u.peekBead(u.bead)
@@ -460,42 +489,34 @@ class baseUndoer:
 			u.setRedoType(d["undoType"])
 		else:
 			u.setRedoType("Can't Redo")
-	
-	
-	
+	#@nonl
 	#@-node:setUndoTypes
 	#@+node:u.redo
 	def redo (self):
-		
-		# clear_stats() ; stat()
+	
 		u = self ; c = u.c
 		if not u.canRedo(): return
 		if not u.getBead(u.bead+1): return
-		current = c.currentVnode()
+		current = c.currentPosition()
 		if not current: return
-		# trace(`u.bead+1` + ":" + `len(u.beads)` + ":" + `u.peekBead(u.bead+1)`)
-		u.redoing = true
-		redrawFlag = true
-		c.beginUpdate()
+		# g.trace(u.bead+1,len(u.beads),u.peekBead(u.bead+1))
+		u.redoing = true ; redrawFlag = true
 		redoType = u.undoType # Use the type of the next bead.
 		updateSetChangedFlag = true
+		c.beginUpdate()
 		if 1: # range...
 			#@		<< redo clone cases >>
 			#@+node:<< redo clone cases >>
 			if redoType in ("Clone Node","Drag & Clone"):
-			
+				
 				if u.back:
-					u.v.linkAfter(u.back)
+					u.p.linkAfter(u.back)
 				elif u.parent:
-					u.v.linkAsNthChild(u.parent,0)
+					u.p.linkAsNthChild(u.parent,0)
 				else:
-					u.v.linkAsRoot()
+					u.p.linkAsRoot()
 			
-				shared = u.findSharedVnode(u.v)
-				if shared: u.v.joinTreeTo(shared)
-				u.v.createDependents()
-				c.initAllCloneBits()
-				c.selectVnode(u.v)
+				c.selectVnode(p)
 			#@nonl
 			#@-node:<< redo clone cases >>
 			#@nl
@@ -503,13 +524,13 @@ class baseUndoer:
 			#@+node:<< redo hoist cases >>
 			elif redoType == "Hoist":
 				
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.hoist()
 				updateSetChangedFlag = false
 				
 			elif redoType == "De-Hoist":
 				
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.dehoist()
 				updateSetChangedFlag = false
 			#@nonl
@@ -520,17 +541,13 @@ class baseUndoer:
 			elif redoType in ["Import","Insert Node","Paste Node"]:
 			
 				if u.back:
-					u.v.linkAfter(u.back)
+					u.p.linkAfter(u.back)
 				elif u.parent:
-					u.v.linkAsNthChild(u.parent,0)
+					u.p.linkAsNthChild(u.parent,0)
 				else:
-					u.v.linkAsRoot()
+					u.p.linkAsRoot()
 			
-				shared = u.findSharedVnode(u.v)
-				if shared: u.v.joinTreeTo(shared)
-				u.v.createDependents()
-				c.initAllCloneBits()
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 			#@nonl
 			#@-node:<< redo insert cases >>
 			#@nl
@@ -538,7 +555,7 @@ class baseUndoer:
 			#@+node:<< redo delete cases >>
 			elif redoType == "Delete Node" or redoType == "Cut Node":
 			
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.deleteOutline()
 			#@nonl
 			#@-node:<< redo delete cases >>
@@ -547,24 +564,24 @@ class baseUndoer:
 			#@+node:<< redo move & drag cases >>
 			elif redoType in ["Drag","Move Down","Move Left","Move Right","Move Up"]:
 			
+				# g.trace(u.p)
 				if u.parent:
-					u.v.moveToNthChildOf(u.parent,u.n)
+					u.p.moveToNthChildOf(u.parent,u.n)
 				elif u.back:
-					u.v.moveAfter(u.back)
+					u.p.moveAfter(u.back)
 				else:
-					# 3/16/02: Moving up is the only case that can do this.
-					parent = u.v.parent()
-					u.v.moveToRoot(c.rootVnode()) # 5/27/02
-					if parent: # We could assert(parent)
-						parent.moveAfter(u.v)
-				c.initJoinedCloneBits(u.v) # 7/6/02
-				c.selectVnode(u.v)
+					# Moving up is the only case that can do this.
+					assert(u.p.hasParent)
+					parent = u.p.getParent()
+					u.p.moveToRoot(c.rootPostion())
+					parent.moveAfter(u.p)
+			
+				c.selectVnode(u.p)
 				
 			elif redoType == "Drag":
 			
-				u.v.moveToNthChildOf(u.parent,u.n)
-				c.initJoinedCloneBits(u.v) # 7/6/02
-				c.selectVnode(u.v)
+				u.p.moveToNthChildOf(u.parent,u.n)
+				c.selectVnode(u.p)
 			#@nonl
 			#@-node:<< redo move & drag cases >>
 			#@nl
@@ -572,12 +589,12 @@ class baseUndoer:
 			#@+node:<< redo promote and demote cases >>
 			elif redoType == "Demote":
 			
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.demote()
 				
 			elif redoType == "Promote":
 			
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.promote()
 			#@nonl
 			#@-node:<< redo promote and demote cases >>
@@ -589,8 +606,8 @@ class baseUndoer:
 				"Extract","Extract Names","Extract Section",
 				"Read @file Nodes"):
 			
-				u.v = self.undoReplace(u.v,u.oldTree,u.newTree,u.newText)
-				c.selectVnode(u.v) # Does full recolor.
+				u.p = self.undoReplace(u.p,u.oldTree,u.newTree,u.newText)
+				c.selectVnode(u.p) # Does full recolor.
 				if u.newSel:
 					c.frame.body.setTextSelection(u.newSel)
 				redrawFlag = redoType in ("Extract","Extract Names","Extract Section","Read @file Nodes")
@@ -601,19 +618,20 @@ class baseUndoer:
 			#@+node:<< redo sort cases >>
 			elif redoType == "Sort Children":
 			
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.sortChildren()
 			
 			elif redoType == "Sort Siblings":
 			
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.sortSiblings()
 				
 			elif redoType == "Sort Top Level":
 				
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.sortTopLevel()
-				u.v = None # don't mark u.v dirty
+				u.p = None # don't mark u.p dirty
+			#@nonl
 			#@-node:<< redo sort cases >>
 			#@nl
 			#@		<< redo typing cases >>
@@ -622,15 +640,15 @@ class baseUndoer:
 				"Change","Convert Blanks","Convert Tabs","Cut",
 				"Delete","Indent","Paste","Reformat Paragraph","Undent"):
 			
-				# trace(redoType,u.v)
+				# g.trace(redoType,u.p)
 				# selectVnode causes recoloring, so avoid if possible.
-				if current != u.v:
-					c.selectVnode(u.v)
+				if current != u.p:
+					c.selectVnode(u.p)
 				elif redoType in ("Cut","Paste"):
 					c.frame.body.forceFullRecolor()
 			
 				self.undoRedoText(
-					u.v,u.leading,u.trailing,
+					u.p,u.leading,u.trailing,
 					u.newMiddleLines,u.oldMiddleLines,
 					u.newNewlines,u.oldNewlines,
 					tag="redo",undoType=redoType)
@@ -639,7 +657,7 @@ class baseUndoer:
 					c.frame.body.setTextSelection(u.newSel)
 				if u.yview:
 					c.frame.body.setYScrollPosition(u.yview)
-				redrawFlag = (current != u.v)
+				redrawFlag = (current != u.p)
 					
 			elif redoType == "Change All":
 			
@@ -649,40 +667,36 @@ class baseUndoer:
 					d = u.getBead(u.bead+1)
 					assert(d)
 					redoType = u.undoType
-					# trace(redoType,u.v,u.newText)
+					# g.trace(redoType,u.p,u.newText)
 					if redoType == "Change All":
-						c.selectVnode(u.v)
+						c.selectVnode(u.p)
 						break
 					elif redoType == "Change":
-						u.v.t.setTnodeText(u.newText)
-						u.v.setDirty()
+						u.p.v.setTnodeText(u.newText)
+						u.p.setDirty()
 						count += 1
 					elif redoType == "Change Headline":
-						u.v.initHeadString(u.newText)
+						u.p.initHeadString(u.newText)
 						count += 1
 					else: assert(false)
-				es("redo %d instances" % count)
+				g.es("redo %d instances" % count)
 			
 			elif redoType == "Change Headline":
 				
-				# trace(redoType,u.v,u.newText)
-				u.v.setHeadStringOrHeadline(u.newText)
-				# Update all joined headlines.
-				for v2 in u.v.t.joinList:
-					if v2 != u.v:
-						v2.setHeadString(u.newText)
-				c.selectVnode(u.v)
+				# g.trace(redoType,u.p,u.newText)
+				u.p.setHeadStringOrHeadline(u.newText)
+				c.selectVnode(u.p)
+			#@nonl
 			#@-node:<< redo typing cases >>
 			#@nl
-			else: trace("Unknown case: " + `redoType`)
+			else: g.trace("Unknown case: ",redoType)
 			if updateSetChangedFlag:
 				c.setChanged(true)
-				if u.v: u.v.setDirty()
+				if u.p: u.p.setDirty()
 		c.endUpdate(redrawFlag) # 11/08/02
 		u.redoing = false
 		u.bead += 1
 		u.setUndoTypes()
-		# print_stats()
 	#@nonl
 	#@-node:u.redo
 	#@+node:u.undo
@@ -690,33 +704,32 @@ class baseUndoer:
 	
 		"""This function and its allies undo the operation described by the undo parmaters."""
 		
-		# clear_stats() ; # stat()
 		u = self ; c = u.c
 		if not u.canUndo(): return
 		if not u.getBead(u.bead): return
-		current = c.currentVnode()
+		current = c.currentPosition()
 		if not current: return
-		# trace(`u.bead` + ":" + `len(u.beads)` + ":" + `u.peekBead(u.bead)`)
+		# g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
 		c.endEditing()# Make sure we capture the headline for a redo.
 		u.undoing = true
-		c.beginUpdate()
 		undoType = u.undoType
 		redrawFlag = true
 		updateSetChangedFlag = true
-		if 1: # range...
+		c.beginUpdate()
+		if 1: # update...
 			#@		<< undo clone cases >>
 			#@+node:<< undo clone cases >>
 			# We can immediately delete the clone because clone() can recreate it using only v.
 			
 			if undoType == "Clone Node":
 				
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.deleteOutline()
 				c.selectVnode(u.back)
 			
 			elif undoType == "Drag & Clone":
 				
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.deleteOutline()
 				c.selectVnode(u.oldV)
 			#@nonl
@@ -726,25 +739,22 @@ class baseUndoer:
 			#@+node:<< undo delete cases >>
 			#@+at 
 			#@nonl
-			# Deleting a clone is _not_ the same as undoing a clone: the clone 
-			# may have been moved, so there is no necessary relationship 
-			# between the two nodes.
+			# Deleting a clone is _not_ the same as undoing a clone:
+			# the clone may have been moved, so there is no necessary 
+			# relationship between the two nodes.
 			#@-at
 			#@@c
 			
 			elif undoType == "Delete Node" or undoType == "Cut Node":
 				
 				if u.back:
-					u.v.linkAfter(u.back)
+					u.p.linkAfter(u.back)
 				elif u.parent:
-					u.v.linkAsNthChild(u.parent,0)
+					u.p.linkAsNthChild(u.parent,0)
 				else:
-					u.v.linkAsRoot()
-				shared = u.findSharedVnode(u.v)
-				if shared: u.v.joinTreeTo(shared)
-				u.v.createDependents()
-				c.initAllCloneBits()
-				c.selectVnode(u.v)
+					u.p.linkAsRoot()
+			
+				c.selectVnode(u.p)
 			#@nonl
 			#@-node:<< undo delete cases >>
 			#@nl
@@ -752,13 +762,13 @@ class baseUndoer:
 			#@+node:<< undo hoist cases >>
 			elif undoType == "Hoist":
 				
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.dehoist()
 				updateSetChangedFlag = false
 			
 			elif undoType == "De-Hoist":
 				
-				c.selectVnode(u.v)
+				c.selectVnode(u.p)
 				c.hoist()
 				updateSetChangedFlag = false
 			#@-node:<< undo hoist cases >>
@@ -767,10 +777,11 @@ class baseUndoer:
 			#@+node:<< undo insert cases >>
 			elif undoType in ["Import","Insert Node","Paste Node"]:
 				
-				c.selectVnode(u.v)
+				# g.trace(u.p)
+				c.selectVnode(u.p)
 				c.deleteOutline()
 				if u.select:
-					# trace("Insert/Paste:" + `u.select`)
+					# g.trace("Insert/Paste:",u.select)
 					c.selectVnode(u.select)
 			#@nonl
 			#@-node:<< undo insert cases >>
@@ -779,19 +790,20 @@ class baseUndoer:
 			#@+node:<< undo move  & drag cases >>
 			elif undoType in ["Drag", "Move Down","Move Left","Move Right","Move Up"]:
 			
+				# g.trace("oldParent",u.oldParent)
 				if u.oldParent:
-					u.v.moveToNthChildOf(u.oldParent,u.oldN)
+					u.p.moveToNthChildOf(u.oldParent,u.oldN)
 				elif u.oldBack:
-					u.v.moveAfter(u.oldBack)
+					u.p.moveAfter(u.oldBack)
 				else:
-					# 3/16/02: Moving up is the only case that can do this.
-					parent = u.v.parent()
-					u.v.moveToRoot(c.rootVnode())
-					if parent: # We could assert(parent)
-						parent.moveAfter(u.v)
-				
-				c.initJoinedCloneBits(u.v) # 7/6/02
-				c.selectVnode(u.v)
+					# Moving up is the only case that can do this.
+					assert(u.p.hasParent())
+					parent = u.p.getParent()
+					u.p.moveToRoot(c.rootPosition())
+					parent.moveAfter(u.p)
+			
+				c.selectVnode(u.p)
+			#@nonl
 			#@-node:<< undo move  & drag cases >>
 			#@nl
 			#@		<< undo promote and demote cases >>
@@ -821,8 +833,8 @@ class baseUndoer:
 				"Extract","Extract Names","Extract Section",
 				"Read @file Nodes"):
 			
-				u.v = self.undoReplace(u.v,u.newTree,u.oldTree,u.oldText)
-				c.selectVnode(u.v) # Does full recolor.
+				u.p = self.undoReplace(u.p,u.newTree,u.oldTree,u.oldText)
+				c.selectVnode(u.p) # Does full recolor.
 				if u.oldSel:
 					c.frame.body.setTextSelection(u.oldSel)
 				redrawFlag = true
@@ -850,7 +862,7 @@ class baseUndoer:
 			elif undoType == "Sort Top Level":
 				
 				u.undoSortTopLevel()
-				u.v = None # don't mark u.v dirty
+				u.p = None # don't mark u.p dirty
 			#@nonl
 			#@-node:<< undo sort cases >>
 			#@nl
@@ -873,15 +885,15 @@ class baseUndoer:
 				"Change","Convert Blanks","Convert Tabs","Cut",
 				"Delete","Indent","Paste","Reformat Paragraph","Undent"):
 			
-				# trace(`undoType` + ":" + `u.v`)
+				# g.trace(undoType,u.p)
 				# selectVnode causes recoloring, so don't do this unless needed.
-				if current != u.v:
-					c.selectVnode(u.v)
+				if current != u.p:
+					c.selectVnode(u.p)
 				elif undoType in ("Cut","Paste"):
 					c.frame.body.forceFullRecolor()
 			
 				self.undoRedoText(
-					u.v,u.leading,u.trailing,
+					u.p,u.leading,u.trailing,
 					u.oldMiddleLines,u.newMiddleLines,
 					u.oldNewlines,u.newNewlines,
 					tag="undo",undoType=undoType)
@@ -889,7 +901,7 @@ class baseUndoer:
 					c.frame.body.setTextSelection(u.oldSel)
 				if u.yview:
 					c.frame.body.setYScrollPosition(u.yview)
-				redrawFlag = (current != u.v)
+				redrawFlag = (current != u.p)
 					
 			elif undoType == "Change All":
 			
@@ -899,56 +911,51 @@ class baseUndoer:
 					d = u.getBead(u.bead)
 					assert(d)
 					undoType = u.undoType
-					# trace(undoType,u.v,u.oldText)
+					# g.trace(undoType,u.p,u.oldText)
 					if undoType == "Change All":
-						c.selectVnode(u.v)
+						c.selectVnode(u.p)
 						break
 					elif undoType == "Change":
-						u.v.t.setTnodeText(u.oldText)
+						u.p.setTnodeText(u.oldText)  # p.setTnodeText
 						count += 1
-						u.v.setDirty()
+						u.p.setDirty()
 					elif undoType == "Change Headline":
-						u.v.initHeadString(u.oldText)
+						u.p.initHeadString(u.oldText)  # p.initHeadString
 						count += 1
 					else: assert(false)
-				es("undo %d instances" % count)
+				g.es("undo %d instances" % count)
 					
 			elif undoType == "Change Headline":
 				
-				# trace(`u.oldText`)
-				u.v.setHeadStringOrHeadline(u.oldText)
-				# 9/24/02: update all joined headlines.
-				for v2 in u.v.t.joinList:
-					if v2 != u.v:
-						v2.setHeadString(u.oldText)
-				c.selectVnode(u.v)
+				# g.trace(u.oldText)
+				u.p.setHeadStringOrHeadline(u.oldText)
+				c.selectVnode(u.p)
 			#@nonl
 			#@-node:<< undo typing cases >>
 			#@nl
-			else: trace("Unknown case: " + `u.undoType`)
+			else: g.trace("Unknown case: ",u.undoType)
 			if updateSetChangedFlag:
 				c.setChanged(true)
-				if u.v: u.v.setDirty()
+				if u.p: u.p.setDirty()
 		c.endUpdate(redrawFlag) # 11/9/02
 		u.undoing = false
 		u.bead -= 1
 		u.setUndoTypes()
-		# print_stats()
+		# g.print_stats()
 	#@-node:u.undo
 	#@+node:u.saveTree, restoreExtraAttributes
-	def saveTree (self,v):
+	def saveTree (self,p):
 		
-		tree = v.copyTree()
+		tree = None ## no longer used??
 		headlines = []
 		bodies = []
 		extraAttributes = []
-		after = v.nodeAfterTree()
-		while v and v != after:
-			headlines.append(v.headString())
-			bodies.append(v.bodyString())
-			data = v.extraAttributes(), v.t.extraAttributes()
+		for p in p.self_and_subtree_iter(copy=true):
+			headlines.append(p.headString())
+			bodies.append(p.bodyString())
+			data = p.v.extraAttributes(), p.v.t.extraAttributes()
 			extraAttributes.append(data)
-			v = v.threadNext()
+	
 		return tree, headlines, bodies, extraAttributes
 	
 	def restoreExtraAttributes (self,v,extraAttributes):
@@ -958,60 +965,51 @@ class baseUndoer:
 		v.t.setExtraAttributes(t_extraAttributes)
 	#@nonl
 	#@-node:u.saveTree, restoreExtraAttributes
-	#@+node:findSharedVnode
-	def findSharedVnode (self,target):
-	
-		u = self ; c = u.c ; v = c.rootVnode()
-		while v:
-			if v != target and v.t == target.t:
-				return v
-			v = v.threadNext()
-		return None
-	#@nonl
-	#@-node:findSharedVnode
 	#@+node:undoDemote
 	# undoes the previous demote operation.
 	def undoDemote (self):
-	
+		
 		u = self ; c = u.c
-		ins = v = u.v
+		p   = u.p.copy()
+		ins = u.p.copy()
 		last = u.lastChild
-		child = v.firstChild()
-		assert(child)
+		assert(p.hasFirstChild)
+		child = p.firstChild()
 		c.beginUpdate()
-		# 3/19/03: do not undemote children up to last.
-		if last:
-			while child and child != last:
-				child = child.next()
-			if child:
-				child = child.next()
-		while child:
-			next = child.next()
-			child.moveAfter(ins)
-			ins = child
-			child = next
-		c.selectVnode(v)
+		if 1: # update...
+			# Do not undemote children up to last.
+			# Do not use an iterator here.
+			if last:
+				while child and child != last:
+					child = child.next()
+				if child:
+					child = child.next()
+			while child:
+				next = child.next()
+				child.moveAfter(ins)
+				ins = child
+				child = next
+			c.selectVnode(p)
 		c.endUpdate()
 	#@nonl
 	#@-node:undoDemote
 	#@+node:undoPromote
 	# Undoes the previous promote operation.
 	def undoPromote (self):
-	
-		u = self ; c = u.c
-		v = v1 = u.v
-		assert(v1)
+		
+		u = self ; c = u.c ; p = u.p
+		next = p.next()
 		last = u.lastChild
-		next = v.next()
 		assert(next)
 		c.beginUpdate()
-		while next:
-			v = next
-			next = v.next()
-			n = v1.numberOfChildren()
-			v.moveToNthChildOf(v1,n)
-			if v == last: break
-		c.selectVnode(v1)
+		if 1: # update...
+			while next: # don't use an iterator here.
+				p2 = next
+				next = p2.next()
+				n = p.numberOfChildren()
+				p2.moveToNthChildOf(p,n)
+				if p2 == last: break
+			c.selectVnode(p)
 		c.endUpdate()
 	#@nonl
 	#@-node:undoPromote
@@ -1022,21 +1020,21 @@ class baseUndoer:
 	# complex.  Just do:
 	# 
 	# 	v_copy = c.undoer.saveTree(v)
-	# 	...make arbitrary changes to v's tree.
-	# 	c.undoer.setUndoParams("Op Name",v,select=current,oldTree=v_copy)
+	# 	...make arbitrary changes to p's tree.
+	# 	c.undoer.setUndoParams("Op Name",p,select=current,oldTree=v_copy)
 	#@-at
 	#@@c
 	
-	def undoReplace (self,v,new_data,old_data,text):
+	def undoReplace (self,p,new_data,old_data,text):
 	
 		"""Replace new_v with old_v during undo."""
 	
-		u = self
+		u = self ; c = u.c
 		if 0:
-			trace(u.undoType)
-			trace("u.bead",u.bead, type(u.peekBead(u.bead)))
-			trace("new_data:",type(new_data))
-			trace("old_data:",type(old_data))
+			g.trace(u.undoType)
+			g.trace("u.bead",u.bead, type(u.peekBead(u.bead)))
+			g.trace("new_data:",type(new_data))
+			g.trace("old_data:",type(old_data))
 	
 		assert(type(new_data)==type((),) or type(old_data)==type((),))
 	
@@ -1045,57 +1043,30 @@ class baseUndoer:
 		try:
 			new_v, new_headlines, new_bodies, new_attributes = new_data
 		except:
-			new_data = u.saveTree(v)
+			new_data = u.saveTree(p)
 			new_v, new_headlines, new_bodies, new_attributes = new_data
 			# Put the new data in the bead.
 			d = u.beads[u.bead]
 			d["newTree"] = new_data
 			u.beads[u.bead] = d
-			# Another kludge to satisfy assert(new_v in joinList) below.
-			new_v = v
 			
 		# The previous code should already have created this data.
 		old_v, old_headlines, old_bodies, old_attributes = old_data
 		assert(new_bodies != None)
 		assert(old_bodies != None)
 	
-		u = self ; c = u.c
-		joinList = new_v.t.joinList[:]
-		result = None
-		for v in joinList:
-			copy = old_v.copyTree()
-			if not result: result = copy
-			# Remember how to link the new node.
-			parent = v.parent()
-			prev = v.back()
-			next = v.next()
-			n = v.childIndex()
-			# Unlink the old tree.
-			v.unjoinTree()
-			v.unlink()
-			# Link in the new tree.
-			if parent: copy.linkAsNthChild(parent,n)
-			elif prev: copy.linkAfter(prev)
-			else:      copy.linkAsRoot(oldRoot=next)
-			copy.addTreeToJoinLists()
-			assert(copy in copy.t.joinList)
-	
-		if not result:
-			result = old_v
+		result = old_v
 	
 		# Restore all headlines and bodies from the saved lists.
-		v = result; after = result.nodeAfterTree()
-		encoding = app.tkEncoding
+		encoding = g.app.tkEncoding
 		i = 0
-		while v and v != after:
-			v.initHeadString(old_headlines[i],encoding)
-			v.t.setTnodeText(old_bodies[i],encoding)
-			u.restoreExtraAttributes(v,old_attributes[i])
-			v = v.threadNext()
+		for p in result.self_and_subtree_iter():
+			p.initHeadString(old_headlines[i],encoding)
+			p.setTnodeText(old_bodies[i],encoding)
+			u.restoreExtraAttributes(p,old_attributes[i])
 			i += 1
 	
 		result.setBodyStringOrPane(result.bodyString())
-		c.initAllCloneBits()
 		return result
 	#@nonl
 	#@-node:undoReplace
@@ -1103,7 +1074,7 @@ class baseUndoer:
 	# Handle text undo and redo.
 	# The terminology is for undo: converts _new_ text into _old_ text.
 	
-	def undoRedoText (self,v,
+	def undoRedoText (self,p,
 		leading,trailing, # Number of matching leading & trailing lines.
 		oldMidLines,newMidLines, # Lists of unmatched lines.
 		oldNewlines,newNewlines, # Number of trailing newlines.
@@ -1111,7 +1082,8 @@ class baseUndoer:
 		undoType=None):
 	
 		u = self ; c = u.c
-		assert(v == c.currentVnode())
+		assert(p == c.currentPosition())
+		v = p.v
 	
 		#@	<< Incrementally update the Tk.Text widget >>
 		#@+node:<< Incrementally update the Tk.Text widget >>
@@ -1149,7 +1121,7 @@ class baseUndoer:
 		#@+node:<< Compute the result using v's body text >>
 		# Recreate the text using the present body text.
 		body = v.bodyString()
-		body = toUnicode(body,"utf-8")
+		body = g.toUnicode(body,"utf-8")
 		body_lines = body.split('\n')
 		s = []
 		if leading > 0:
@@ -1172,10 +1144,10 @@ class baseUndoer:
 		#@nonl
 		#@-node:<< Compute the result using v's body text >>
 		#@nl
-		#trace(`v`)
-		#trace("old:"+`v.bodyString()`)
-		v.t.setTnodeText(result)
-		#trace("new:"+`v.bodyString()`)
+		# g.trace(v)
+		# g.trace("old:",v.bodyString())
+		v.setTnodeText(result)
+		# g.trace("new:",v.bodyString())
 		#@	<< Get textResult from the Tk.Text widget >>
 		#@+node:<< Get textResult from the Tk.Text widget >>
 		textResult = c.frame.body.getAllText()
@@ -1189,37 +1161,38 @@ class baseUndoer:
 		#@nl
 		if textResult == result:
 			if undoType in ("Cut","Paste"):
-				# trace("non-incremental undo")
-				c.frame.body.recolor(v,incremental=false)
+				# g.trace("non-incremental undo")
+				c.frame.body.recolor(p,incremental=false)
 			else:
-				# trace("incremental undo:",leading,trailing)
-				c.frame.body.recolor_range(v,leading,trailing)
+				# g.trace("incremental undo:",leading,trailing)
+				c.frame.body.recolor_range(p,leading,trailing)
 		else: # 11/19/02: # Rewrite the pane and do a full recolor.
 			if u.debug_print:
 				#@			<< print mismatch trace >>
 				#@+node:<< print mismatch trace >>
 				print "undo mismatch"
-				print "expected:",`result`
-				print "actual  :",`textResult`
+				print "expected:",result
+				print "actual  :",textResult
+				#@nonl
 				#@-node:<< print mismatch trace >>
 				#@nl
-			# trace("non-incremental undo")
-			v.setBodyStringOrPane(result)
+			# g.trace("non-incremental undo")
+			p.setBodyStringOrPane(result)
 	#@nonl
 	#@-node:undoRedoText
 	#@+node:undoSortChildren
 	def undoSortChildren (self):
 	
-		u = self ; c = u.c ; v = u.v
-		assert(v)
+		u = self ; c = u.c ; p = u.p
+		assert(p)
 		c.beginUpdate()
 		if 1: # inside update...
 			c.endEditing()
 			index = 0
 			for child in u.sort:
-				child.moveToNthChildOf(v,index)
+				child.moveToNthChildOf(p,index)
 				index += 1
-			v.setDirty()
+			p.setDirty()
 			c.setChanged(true)
 		c.endUpdate()
 	#@nonl
@@ -1227,9 +1200,9 @@ class baseUndoer:
 	#@+node:undoSortSiblings
 	def undoSortSiblings (self):
 		
-		u = self ; c = u.c ; v = u.v
-		parent = v.parent()
-		assert(v and parent)
+		u = self ; c = u.c ; p = u.p
+		parent = p.parent()
+		assert(p and parent)
 		c.beginUpdate()
 		if 1: # inside update...
 			c.endEditing()
@@ -1246,7 +1219,7 @@ class baseUndoer:
 	def undoSortTopLevel (self):
 		
 		u = self ; c = u.c
-		root = c.rootVnode()
+		root = c.rootPosition()
 		
 		c.beginUpdate()
 		c.endEditing()

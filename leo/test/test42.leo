@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2828" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2833" clone_windows="0"/>
 <globals body_outline_ratio="0.54966887417218546">
-	<global_window_position top="67" left="327" height="755" width="891"/>
+	<global_window_position top="62" left="275" height="755" width="891"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -20,7 +20,7 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.1,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040315202250,ekr.20040315202314,ekr.20040315202314.1,ekr.20040315202347,ekr.20040315202718,ekr.20040315202718.1,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
+<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.1,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040315202250,ekr.20040315202314,ekr.20040315202314.1,ekr.20040315202347,ekr.20040315202718,ekr.20040315202718.1,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040323163413,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040323163643,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
 <v t="ekr.20040303062846.1"><vh>&lt;&lt; to do &gt;&gt;</vh></v>
 <v t="ekr.20040303062846.3"><vh> class testUtils</vh>
 <v t="ekr.20040303062846.4"><vh>compareOutlines</vh></v>
@@ -105,6 +105,7 @@
 <v t="ekr.20040303063118"><vh>class positionTestCase</vh>
 <v t="ekr.20040303063118.4"><vh>setUp</vh></v>
 <v t="ekr.20040309105731"><vh>testComparisons</vh></v>
+<v t="ekr.20040323163413"><vh>testThatClonesShareSubtrees</vh></v>
 <v t="ekr.20040312101853"><vh>Consistency tests...</vh>
 <v t="ekr.20040309101454.15"><vh>testConsistencyOfAllNodesThreadNext</vh></v>
 <v t="ekr.20040309101454.17"><vh>testConsistencyOfFirstChildAndChildrenIter</vh></v>
@@ -113,6 +114,7 @@
 <v t="ekr.20040309101454.16"><vh>testConsistencyOfParentAndParentsIter</vh></v>
 <v t="ekr.20040309101454.14"><vh>testConsistencyOfParentChild</vh></v>
 <v t="ekr.20040303064020.7"><vh>testConsistencyOfThreadBackNext</vh></v>
+<v t="ekr.20040323163643" a="M"><vh>testConsistencyOfVnodeListAndParents</vh></v>
 <v t="ekr.20040303091606"><vh>testHasNextBack</vh></v>
 <v t="ekr.20040303092153"><vh>testHasParentChild</vh></v>
 <v t="ekr.20040303092153.1"><vh>testHasThreadNextBack</vh></v>
@@ -193,7 +195,7 @@
 <v t="ekr.20040301191933.2"><vh>e</vh></v>
 <v t="ekr.20040302092753.4"><vh>z</vh></v>
 </v>
-<v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
+<v t="ekr.20040303063549.1" a="E"><vh>tempNode</vh></v>
 <v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
 <v t="ekr.20040303063549.46"><vh>Actionscript</vh></v>
 <v t="ekr.20040303063549.47"><vh>C</vh></v>
@@ -362,20 +364,30 @@
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010" a="M"><vh>Run all tests except files tests</vh></v>
 </v>
-<v t="ekr.20040311111734" a="M" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
+<v t="ekr.20040311111734" a="MV" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
 <v t="ekr.20040311111734.1"><vh>&lt;&lt; node one &gt;&gt;</vh></v>
 <v t="ekr.20040311111734.2"><vh>node a</vh></v>
 <v t="ekr.20040311111734.3"><vh>node b</vh></v>
 </v>
+<v t="ekr.20040323113659"><vh>Clone test 1</vh>
+<v t="ekr.20040323113659.1"><vh>Clone1</vh>
+<v t="ekr.20040323113659.2"><vh>child-of-clone-1</vh></v>
+<v t="ekr.20040323113659.3"><vh>child-of-clone2</vh></v>
+</v>
+<v t="ekr.20040323113659.1"><vh>Clone1</vh>
+<v t="ekr.20040323113659.2"><vh>child-of-clone-1</vh></v>
+<v t="ekr.20040323113659.3"><vh>child-of-clone2</vh></v>
+</v>
+</v>
 <v t="ekr.20040303071432"><vh>Mini tests, scripts &amp; experiments</vh>
-<v t="ekr.20040309091917"><vh>To do</vh></v>
 <v t="ekr.20040312101720"><vh>Experiments</vh>
 <v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
 <v t="ekr.20040323075614"><vh>Test of using an iterator inside a list comprehension</vh></v>
 <v t="ekr.20040323080317"><vh>Test of using c.allNodes_iter to create a list of all positions</vh></v>
+<v t="ekr.20040323082119"><vh>Creating a list of distinct vnodes</vh></v>
 </v>
 <v t="ekr.20040312101720.1"><vh>Mini tests</vh>
-<v t="ekr.20040309111054"><vh>Print iterations: do not delete</vh>
+<v t="ekr.20040309111054" a="M"><vh>Print iterations: do not delete</vh>
 <v t="ekr.20040309111102"><vh>Clone test data</vh>
 <v t="ekr.20040309111102.1"><vh>aa</vh></v>
 <v t="ekr.20040309111102.2"><vh>a</vh>
@@ -434,19 +446,23 @@
 <v t="ekr.20040315025315.3"><vh>moreBody</vh></v>
 </v>
 </v>
-<v t="ekr.20040318102920"><vh>test of parents iter</vh>
-<v t="ekr.20040318102920.1" a="E"><vh>parent</vh>
+<v t="ekr.20040318102920"><vh>test of consistency between parents iter and v.parents</vh>
+<v t="ekr.20040318102920.1"><vh>parent</vh>
 <v t="ekr.20040318102920.2"><vh>actual test</vh></v>
 </v>
-<v t="ekr.20040318102920.1" a="E"><vh>parent</vh>
+<v t="ekr.20040318102920.1"><vh>parent</vh>
 <v t="ekr.20040318102920.2"><vh>actual test</vh></v>
 </v>
 </v>
+<v t="ekr.20040323085406"><vh>test of isAnyAtFileNode</vh></v>
+<v t="ekr.20040323090541"><vh>Check consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040323085933"><vh>test of findAllPotentiallyDirtyNodes</vh></v>
+<v t="ekr.20040323162303"><vh>Check that cloned nodes actually share subtrees</vh></v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
 <v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
-<v t="ekr.20040318091620" a="E"><vh>Clear all unknown attributes</vh></v>
+<v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
 <v t="ekr.20040319111213"><vh>FilterHoise script</vh>
 <v t="ekr.20040319111213.1"><vh>description</vh></v>
 <v t="ekr.20040319142708"><vh>filter</vh></v>
@@ -460,7 +476,7 @@
 <v t="ekr.20040322120331"><vh>script to print tnodeList's</vh></v>
 </v>
 </v>
-<v t="ekr.20040321091021" a="EV" tnodeList="ekr.20040321091021,ekr.20040322081749.1,ekr.20040322081749,ekr.20040322081749"><vh>@file-thin c:\prog\test\at-file-thin-test.txt</vh></v>
+<v t="ekr.20040321091021" a="E"><vh>@file-thin c:\prog\test\at-file-thin-test.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20040126105605"></t>
@@ -2625,16 +2641,6 @@ runner.run(mainSuite)</t>
 		assert(
 			(threadNext and p.hasThreadNext()) or
 			(not threadNext and not p.hasThreadNext()))</t>
-<t tx="ekr.20040309091917">@nocolor
-
-- Test read logic: test created tree against already existing tree.
-
-- Test isExpanded.
-- For related Commands methods.
-- Menu enablers
-- Test new p and v routines.
-- Test undo/redo for all commands.
-</t>
 <t tx="ekr.20040309095121"></t>
 <t tx="ekr.20040309101454">@
 	
@@ -2643,7 +2649,9 @@ runner.run(mainSuite)</t>
 - Test new p and v routines.
 - Test undo/redo for all commands.
 - (done by hand) batch mode.
-	Have script create a file, fail if the file does not exist.</t>
+	Have script create a file, fail if the file does not exist.
+	
+- Test read logic: test created tree against already existing tree.</t>
 <t tx="ekr.20040309101454.13">def testConsistencyOfLevel (self):
 	
 	"""Test consistency of p.level."""
@@ -2764,31 +2772,27 @@ position = leoNodes.position
 
 @others
 
-assert(g.sharedNodes)
-if g.sharedNodes:
-	current = pos = c.currentPosition()
-else: # no longer used.
-	current = c.currentVnode()
-	pos = position(current,[]) # default position.
-
+current = pos = c.currentPosition()
 child1 = current.firstChild()
 child2 = child1.firstChild()
 
-if 1:
+if 0:
 	print '-'*10, "parents"
-	for porv in child2.parents_iter(): print porv
-if 1:
+	for p in child2.parents_iter(): print p
+if 0:
 	print '-'*10, "subtree"
-	for porv in pos.subtree_iter(): print porv
-if 1:
+	for p in pos.subtree_iter(): print p
+if 0:
 	print '-'*10, "children"
-	for porv in child1.children_iter(): print porv
-if 1:
+	for p in child1.children_iter(): print p
+if 0:
 	print '-'*10, "siblings"
-	for porv in pos.siblings_iter(): print porv
+	for p in pos.siblings_iter(): print p
 if 1:
 	print '-'*10, "all nodes"
-	for porv in pos.allNodes_iter(): print porv</t>
+	for p in pos.allNodes_iter():
+		print p.isCloned(),p
+</t>
 <t tx="ekr.20040309111102"></t>
 <t tx="ekr.20040309111102.1"></t>
 <t tx="ekr.20040309111102.2"></t>
@@ -2803,8 +2807,7 @@ if 1:
 <t tx="ekr.20040309111232"></t>
 <t tx="ekr.20040310145919">import leoGlobals as g
 c = g.top()
-c.frame.body.colorizer.python_keywords.append("as")
-</t>
+c.frame.body.colorizer.python_keywords.append("as")</t>
 <t tx="ekr.20040311090054">import leoGlobals as g
 import leoNodes
 
@@ -2817,7 +2820,7 @@ for p in root.allNodes_iter():
 
 # Test of Leo 42 derived files.
 
-changed2
+changed3
 
 &lt;&lt; node one &gt;&gt;
 
@@ -3043,21 +3046,50 @@ for p in c.allNodes_iter():
 		delattr(p.v.t,"unknownAttributes")
 			
 c.redraw()</t>
-<t tx="ekr.20040318102920"></t>
+<t tx="ekr.20040318102920"># The actual test is in a child node.</t>
 <t tx="ekr.20040318102920.1"></t>
 <t tx="ekr.20040318102920.2">import leoGlobals as g
+from leoGlobals import true,false
 c = g.top()
 
-p = c.currentPosition()
-p1 = p
 print '-'*20
-g.trace(p1)
-assert(p1 is p)
-for p in p.self_and_parents_iter():
-	g.trace(p)
-	assert(p is not p1)
-g.trace(p1)
-d</t>
+
+count = 0 ; ok = true
+for p in c.allNodes_iter():
+# for p in [c.currentPosition()]:
+	count += 1
+	if 0: # Check all ancestors.  This is tricky and doesn't work yet.
+		parents1 = [parent.v for parent in p.parents_iter()]
+		parents2 = []
+		parent2 = p.v.directParents()
+		while parent2:
+			v = parent2[0]
+			parents2.append(v)
+			parent2 = v.directParents()
+	else:
+		if p.v._parent: parents1 = p.v._parent.t.vnodeList
+		else:           parents1 = []
+		parents2 = p.v.directParents()
+	
+	if len(parents1) != len(parents2):
+		print "length mismatch",p,p.v._parent
+		ok = false
+	for parent in parents1:
+		if parent not in parents2:
+			print "not in parent2",p,parent
+			ok = false
+	for parent in parents2:
+		if parent not in parents1:
+			print "not in parents1",p,parent
+			ok = false
+	if not ok:
+		print "parents1"
+		for parent in parents1: print parent
+		print "parents2"
+		for parent in parents2: print parent
+		break
+	
+print "%d vnodes checked" % count</t>
 <t tx="ekr.20040319111213">from leoPlugins import *
 from leoGlobals import *
 from leoNodes import *
@@ -3280,5 +3312,125 @@ if 0:
 	for p in positions1:
 		print p
 print "done"</t>
+<t tx="ekr.20040323082119">import leoGlobals as g
+from leoGlobals import true,false
+c = g.top()
+
+print '-'*20
+
+positions = [p.copy() for p in c.allNodes_iter()]
+
+tnodes = {} ; vnodes = []
+for p in c.allNodes_iter():
+	t = p.v.t
+	if tnodes.get(t) is None:
+		tnodes[t]=t
+		vnodes.append(p.v)
+		
+print len(positions),len(vnodes)
+
+for v in vnodes:
+	print v</t>
+<t tx="ekr.20040323085406">import leoGlobals as g
+from leoGlobals import true,false
+c = g.top()
+
+print '-'*20
+
+for p in c.allNodes_iter():
+	if p.isAnyAtFileNode():
+		print p
+		
+print "done"</t>
+<t tx="ekr.20040323085933">import leoGlobals as g
+from leoGlobals import true,false
+c = g.top()
+
+print '-'*20
+
+for p in c.allNodes_iter():
+	if p.isDirty():
+		vnodes = p.findAllPotentiallyDirtyNodes()
+		print '-'*5, p
+		for v in vnodes:
+			print v
+
+print "done"</t>
+<t tx="ekr.20040323090541">import leoGlobals as g
+from leoGlobals import true,false
+c = g.top()
+
+print '-'*20
+ok = true ; count = 0
+for p in c.allNodes_iter():
+	if p.isCloned():
+		count += 1
+		parents = p.v.t.vnodeList
+		for child in p.children_iter():
+			vparents = child.v.directParents()
+			if len(parents) != len(vparents):
+					print "length mismatch",p,child,
+					ok = false
+			for parent in parents:
+				if parent not in vparents:
+					print "not in vparents",p,child
+					ok = false
+			for parent in vparents:
+				if parent not in parents:
+					print "not in parents",p,child
+					ok = false
+			if not ok:
+				print "parents"
+				for parent in parents: print parent
+				print "vparents"
+				for parent in vparents: print parent
+				break
+		if not ok: break
+	if not ok: break
+s = "checked %d cloned positions" % count
+print s ; g.es(s)
+</t>
+<t tx="ekr.20040323113659"></t>
+<t tx="ekr.20040323113659.1"></t>
+<t tx="ekr.20040323113659.2"></t>
+<t tx="ekr.20040323113659.3"></t>
+<t tx="ekr.20040323162303">import leoGlobals as g
+from leoGlobals import true,false
+c = g.top()
+
+for p in c.allNodes_iter():
+	if p.isCloned() and p.hasChildren():
+		childv = p.firstChild().v
+		assert(childv == p.v.t._firstChild)
+		assert(id(childv) == id(p.v.t._firstChild))
+		for v in p.v.t.vnodeList:
+			assert(v.t._firstChild == childv)
+			assert(id(v.t._firstChild) == id(childv))
+			
+print "done"</t>
+<t tx="ekr.20040323163413">def testThatClonesShareSubtrees (self):
+	
+	"""Test that cloned nodes actually share subtrees."""
+
+	for p in self.root.allNodes_iter():
+		if p.isCloned() and p.hasChildren():
+			childv = p.firstChild().v
+			assert(childv == p.v.t._firstChild)
+			assert(id(childv) == id(p.v.t._firstChild))
+			for v in p.v.t.vnodeList:
+				assert(v.t._firstChild == childv)
+				assert(id(v.t._firstChild) == id(childv))</t>
+<t tx="ekr.20040323163643">def testConsistencyOfVnodeListAndParents (self):
+
+	for p in self.root.allNodes_iter():
+		if p.isCloned():
+			parents = p.v.t.vnodeList
+			for child in p.children_iter():
+				vparents = child.v.directParents()
+				assert(len(parents) == len(vparents))
+				for parent in parents:
+					assert(parent in vparents)
+				for parent in vparents:
+					assert(parent in parents)</t>
 </tnodes>
 </leo_file>

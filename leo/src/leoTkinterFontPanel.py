@@ -2,7 +2,9 @@
 #@+node:@file leoTkinterFontPanel.py
 #@@language python
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
+
 import leoFontPanel
 import Tkinter,tkFont
 import sys,string
@@ -39,8 +41,8 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 	#@+node:createFrame
 	def createFrame (self):
 	
-		c = self.c ; gui = app.gui
-		self.top = top = Tk.Toplevel(app.root)
+		c = self.c ; gui = g.app.gui
+		self.top = top = Tk.Toplevel(g.app.root)
 		gui.attachLeoIcon(top)
 	
 		top.title("Fonts for " + c.frame.shortFileName()) # DS, 10/28/03
@@ -209,7 +211,7 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 				box.select_set(i)
 				box.see(i)
 				self.last_selected_font = font
-				# trace(name)
+				# g.trace(name)
 				return
 	
 		# print "not found:" + name
@@ -251,7 +253,7 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		
 		#@	<< update the configuration settings >>
 		#@+node:<< update the configuration settings >>
-		set = app.config.setWindowPref
+		set = g.app.config.setWindowPref
 		
 		fn = c.frame.body.cget("font")
 		font = tkFont.Font(font=fn)
@@ -334,8 +336,8 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 				items = map(int, items)
 				family = box.get(items[0])
 			except:
-				es("unexpected exception")
-				es_exception()
+				g.es("unexpected exception")
+				g.es_exception()
 				font = self.getImpliedFont()
 		# At this point we either have family or font.
 		assert(font or family)
@@ -347,9 +349,9 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		bold = self.boldVar.get()
 		ital = self.italVar.get()
 		size = self.sizeVar.get()
-		# trace(`size`)
-		slant=choose(ital,"italic","roman")
-		weight=choose(bold,"bold","normal")
+		# g.trace(`size`)
+		slant=g.choose(ital,"italic","roman")
+		weight=g.choose(bold,"bold","normal")
 		# Compute the font from all the settings.
 		font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
 		self.selectFont(font)
@@ -418,8 +420,8 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		except: pass
 	
 		self.sizeVar.set(size)
-		self.boldVar.set(choose(weight=="bold",1,0))
-		self.italVar.set(choose(slant=="italic",1,0))
+		self.boldVar.set(g.choose(weight=="bold",1,0))
+		self.italVar.set(g.choose(slant=="italic",1,0))
 		
 		e = self.size_entry
 		e.delete(0,"end")
@@ -434,21 +436,21 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		"""Write all font settings to the log panel."""
 	
 		c = self.c
-		es("---------------")
+		g.es("---------------")
 		# Body pane.
 		fn = c.frame.body.cget("font")
 		font = tkFont.Font(font=fn)
 		name,size,slant,weight = self.getFontSettings(font)
-		es("body font:" + name + "," + `size` + "," + slant + "," + weight)
+		g.es("body font:" + name + "," + `size` + "," + slant + "," + weight)
 		# Log pane.
 		fn = c.frame.log.getFontConfig()
 		font = tkFont.Font(font=fn)
 		name,size,slant,weight = self.getFontSettings(font)
-		es("log font:" + name + "," + `size` + "," + slant + "," + weight)
+		g.es("log font:" + name + "," + `size` + "," + slant + "," + weight)
 		# Tree pane.
 		font = c.frame.tree.getFont()
 		name,size,slant,weight = self.getFontSettings(font)
-		es("headline font:" + name + "," + `size` + "," + slant + "," + weight)
+		g.es("headline font:" + name + "," + `size` + "," + slant + "," + weight)
 	#@nonl
 	#@-node:showSettings
 	#@+node:update
@@ -472,7 +474,7 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		treeChecked = self.treeVar.get()
 	
 		if not bodyChecked and not logChecked and not treeChecked:
-			es("no pane selected")
+			g.es("no pane selected")
 			return
 		
 	
@@ -480,13 +482,13 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		c.beginUpdate()
 		#@	<< set the fonts in all panes >>
 		#@+node:<< set the fonts in all panes >>
-		font = choose(bodyChecked,activeFont,self.revertBodyFont)
+		font = g.choose(bodyChecked,activeFont,self.revertBodyFont)
 		c.frame.body.configure(font=font)
 		
-		font = choose(logChecked,activeFont,self.revertLogFont)
+		font = g.choose(logChecked,activeFont,self.revertLogFont)
 		c.frame.log.configureFont(font)
 		
-		font = choose(treeChecked,activeFont,self.revertTreeFont)
+		font = g.choose(treeChecked,activeFont,self.revertTreeFont)
 		c.frame.tree.setFont(font=font)
 		#@nonl
 		#@-node:<< set the fonts in all panes >>

@@ -1,6 +1,8 @@
 #@+leo-ver=4
 #@+node:@file rowcol.py
-"""Add row/column indicators to the toolbar.""" 
+"""Add row/column indicators to the toolbar."""
+
+#@@language python
 
 __name__ = "Row/Column indicators"
 __version__ = "0.1" 

@@ -1,6 +1,7 @@
 #@+leo-ver=4
 #@+node:@file leoColorPanel.py
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
 class leoColorPanel:
 	
@@ -36,7 +37,7 @@ class leoColorPanel:
 	
 		self.revertColors = {}
 		
-		config = app.config
+		config = g.app.config
 		for name,option_name,default_color in self.colorPanelData:
 			self.revertColors[option_name] = config.getColorsPref(option_name)
 	#@nonl
@@ -46,7 +47,7 @@ class leoColorPanel:
 		self.oops()
 	
 	def oops(self):
-		print "leoColorPanel oops:", callerName(2), "should be overridden in subclass"
+		print "leoColorPanel oops:", g.callerName(2), "should be overridden in subclass"
 	#@nonl
 	#@-node:Must be overridden in subclasses
 	#@-others

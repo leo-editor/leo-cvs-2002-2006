@@ -24,7 +24,7 @@ def getConfiguration():
 	
 	"""Called when the user presses the "Apply" button on the Properties form"""
 
-	fileName = os.path.join(app().loadDir,"../","plugins","word_export.ini")
+	fileName = os.path.join(app.loadDir,"../","plugins","word_export.ini")
 	config = ConfigParser.ConfigParser()
 	config.read(fileName)
 	return config
@@ -70,10 +70,10 @@ def writeNodeAndTree(word, header_style, level, maxlevel=3, usesections=1, secti
 	if vnode is None:
 		vnode = top().currentVnode()
 	#
-	dict = scanDirectives(c,v=vnode)
+	dict = scanDirectives(c,p=vnode)
 	encoding = dict.get("encoding",None)
 	if encoding == None:
-		encoding = app().config.default_derived_file_encoding
+		encoding = app.config.default_derived_file_encoding
 	# 
 	s = vnode.bodyString()
 	s = toEncodedString(s,encoding,reportErrors=true)

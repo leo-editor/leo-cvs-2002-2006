@@ -2,6 +2,8 @@
 #@+node:@file color_markup.py
 """Handle coloring for markup in doc parts and Python triple-double-quoted strings"""
 
+#@@language python
+
 from leoPlugins import *
 from leoGlobals import *
 
@@ -33,7 +35,7 @@ if Tkinter: # Register the handlers...
 		c.frame.body.tag_configure("http",underline=1) # EKR: 11/4/03
 		c.frame.body.tag_configure("https",underline=1) # EKR: 11/4/03
 		# trace()
-		dict = scanDirectives(c,v=v) # v arg is essential.
+		dict = scanDirectives(c,p=v) # v arg is essential.
 		pluginsList = dict.get("pluginsList")
 		
 		if pluginsList:
@@ -58,7 +60,7 @@ if Tkinter: # Register the handlers...
 		global colorCount ; colorCount += 1
 		
 		c = colorer.c
-		dict = scanDirectives(c,v=v) # v arg is essential.
+		dict = scanDirectives(c,p=v) # v arg is essential.
 		pluginsList = dict.get("pluginsList")
 		
 		if pluginsList:
@@ -106,7 +108,7 @@ if Tkinter: # Register the handlers...
 				if tag =="picture":
 					colorer.tag("elide",n1,n2+len(delim2)) # Elide everything.
 					filename = s[n1+len(delim1):n2]
-					filename = os.path.join(app().loadDir,filename)
+					filename = os.path.join(app.loadDir,filename)
 					filename = os.path.normpath(filename)
 					inserted += insertWikiPicture(colorer,filename,n2+len(delim2))
 				elif tag == "color":
@@ -189,7 +191,7 @@ if Tkinter: # Register the handlers...
 	
 		try:
 			# Create the image
-			photo = Tkinter.PhotoImage(master=app().root, file=filename)
+			photo = Tkinter.PhotoImage(master=app.root, file=filename)
 			image = colorer.body.bodyCtrl.image_create(colorer.index(i),image=photo,padx=0)
 			
 			# Keep references so images stay on the canvas.

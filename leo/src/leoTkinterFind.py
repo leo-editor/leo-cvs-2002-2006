@@ -1,6 +1,7 @@
 #@+leo-ver=4
 #@+node:@file leoTkinterFind.py
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
 import leoFind, leoTkinterDialog
 import string,sys,Tkinter,types
@@ -185,9 +186,9 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for key in self.intKeys:
 			val = getattr(c, key + "_flag")
-			val = choose(val,1,0) # 2/1/04: work around major Tk problem.
+			val = g.choose(val,1,0) # 2/1/04: work around major Tk problem.
 			self.dict[key].set(val)
-			# trace(key,`val`)
+			# g.trace(key,`val`)
 	
 		#@	<< set find/change widgets >>
 		#@+node:<< set find/change widgets >>
@@ -235,24 +236,24 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		for key in self.intKeys:
 			val = self.dict[key].get()
 			setattr(c, key + "_flag", val)
-			# trace(key,val)
+			# g.trace(key,val)
 	
 		# Set ivars from radio buttons. 10/2/01: convert these to 1 or 0.
 		find_type = self.dict["radio-find-type"].get()
-		c.pattern_match_flag = choose(find_type == "pattern-search",1,0)
-		c.script_search_flag = choose(find_type == "script-search",1,0)
+		c.pattern_match_flag = g.choose(find_type == "pattern-search",1,0)
+		c.script_search_flag = g.choose(find_type == "script-search",1,0)
 	
 		search_scope = self.dict["radio-search-scope"].get()
-		c.suboutline_only_flag = choose(search_scope == "suboutline-only",1,0)
-		c.node_only_flag       = choose(search_scope == "node-only",1,0)
-		c.selection_only_flag  = choose(search_scope == "selection-only",1,0) # 11/9/03
+		c.suboutline_only_flag = g.choose(search_scope == "suboutline-only",1,0)
+		c.node_only_flag       = g.choose(search_scope == "node-only",1,0)
+		c.selection_only_flag  = g.choose(search_scope == "selection-only",1,0) # 11/9/03
 	
 		s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
-		s = toUnicode(s,app.tkEncoding) # 2/25/03
+		s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
 		c.find_text = s
 	
 		s = self.change_text.get("1.0","end - 1c") # Remove trailing newline
-		s = toUnicode(s,app.tkEncoding) # 2/25/03
+		s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
 		c.change_text = s
 	#@nonl
 	#@-node:find.set_ivars
@@ -267,7 +268,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		
 		"""Bring the tkinter Find Panel to the front."""
 		
-		c = top() ; t = self.find_text ; gui = app.gui
+		c = g.top() ; t = self.find_text ; gui = g.app.gui
 		        
 		self.top.withdraw() # Helps bring the window to the front.
 		self.top.deiconify()
@@ -285,7 +286,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		c = self.c ; t = self.s_text	
 		t.delete("1.0","end")
 		t.insert("end",s)
-		t.mark_set("insert",choose(c.reverse_flag,"end","1.0"))
+		t.mark_set("insert",g.choose(c.reverse_flag,"end","1.0"))
 		return t
 	#@-node:Tkinter wrappers (leoTkinterFind)
 	#@-others

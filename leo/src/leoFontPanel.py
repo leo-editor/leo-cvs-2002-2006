@@ -2,7 +2,9 @@
 #@+node:@file leoFontPanel.py
 #@@language python
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
+
 import sys,string
 	
 class leoFontPanel:
@@ -27,7 +29,7 @@ class leoFontPanel:
 	def oops(self):
 	
 		print ("leoTkinterFontPanel oops:",
-			callerName(2),
+			g.callerName(2),
 			"should be overridden in subclass")
 	#@nonl
 	#@-node:Must be overridden in subclasses

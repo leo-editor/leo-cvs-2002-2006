@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoTest.py
+#@+node:@file ..\src\leoTest.py
 """
 
 Unit tests for Leo.
@@ -8,7 +8,22 @@ Run the unit tests in test.leo using the Execute Script command.
 
 """
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
+
+#@<< to do >>
+#@+node:<< to do >>
+#@+at
+# 
+# - Have log classes increment a count.
+# 	Can be used to ensure that messages did or did not occcur.
+# 
+# - Have the nullGui create a nullUndoer by default
+# 	But allow the possibility of leaving the full undoer in place.
+#@-at
+#@nonl
+#@-node:<< to do >>
+#@nl
 
 import leoColor,leoCommands,leoFrame,leoGui,leoNodes,leoTkinterGui
 
@@ -45,14 +60,14 @@ class testUtils:
 	
 		ok = ok and v1 == after1 and v2 == after2
 		if not ok:
-			trace(v1,v2)
+			g.trace(v1,v2)
 		return ok
 	#@nonl
 	#@-node:compareOutlines
-	#@+node:findChildrenOf & findSubnodesOf
+	#@+node:findChildrenOf & findSubnodesOf (revise)
 	def findChildrenOf (self,headline):
 		
-		u = self ; c = top() ; v = c.currentVnode()
+		u = self ; c = g.top() ; v = c.currentVnode()
 		root = u.findRootNode(v)
 		parent = u.findNodeInTree(root,headline)
 		v = parent.firstChild()
@@ -64,7 +79,7 @@ class testUtils:
 	
 	def findSubnodesOf (self,headline):
 		
-		u = self ; c = top() ; v = c.currentVnode()
+		u = self ; c = g.top() ; v = c.currentVnode()
 		root = u.findRootNode(v)
 		parent = u.findNodeInTree(root,headline)
 		v = parent.firstChild()
@@ -74,58 +89,53 @@ class testUtils:
 			vList.append(v)
 			v = v.threadNext()
 		return vList
-	#@nonl
-	#@-node:findChildrenOf & findSubnodesOf
+	#@-node:findChildrenOf & findSubnodesOf (revise)
 	#@+node:findNodeInRootTree, findNodeInTree, findNodeAnywhere
-	def findRootNode (self,v):
+	def findRootNode (self,p):
 	
 		"""Return the root of v's tree."""
-		while v and v.parent():
-			v = v.parent()
-		return v
-		
-	def findNodeInTree(self,v,headline):
+	
+		while p and p.hasParent():
+			p.moveToParent()
+		return p
+	
+	def findNodeInTree(self,p,headline):
 	
 		"""Search for a node in v's tree matching the given headline."""
-		if not headline: return None # This is valid.
-		after = v.nodeAfterTree()
-		while v and v != after:
-			if v.headString().strip() == headline.strip():
-				return v
-			v = v.threadNext()
-		return None
+		
+		c = p.c
+		for p in p.subtree_iter():
+			if p.headString().strip() == headline.strip():
+				return p
+		return c.nullPosition()
 	
 	def findNodeAnywhere(self,c,headline):
 		
-		if not headline: return None # This is valid.
-		v = c.rootVnode()
-		while v:
-			if v.headString().strip() == headline.strip():
-				return v
-			v = v.threadNext()
-		return None
+		for p in c.allNodes_iter():
+			if p.headString().strip() == headline.strip():
+				return p.copy()
+		return c.nullPosition()
 	#@nonl
 	#@-node:findNodeInRootTree, findNodeInTree, findNodeAnywhere
 	#@+node:numberOfNodesInOutline, numberOfClonesInOutline
-	def numberOfNodesInOutline (self,root):
+	def numberOfNodesInOutline (self):
 		
 		"""Returns the total number of nodes in an outline"""
 		
-		n = 0 ; v = root
-		while v:
-			n +=1
-			v = v.threadNext()
+		c = g.top() ; n = 0
+		for p in c.allNodes_iter():
+			n += 1
 		return n
 		
-	def numberOfClonesInOutline (self,root):
+	def numberOfClonesInOutline (self):
 		
 		"""Returns the number of cloned nodes in an outline"""
 	
-		n = 0 ; v = root
-		while v:
+		c = g.top() ; n = 0
+		for p in c.allNodes_iter():
 			if v.isCloned():
 				n += 1
-			v = v.threadNext()
+		return n
 	#@nonl
 	#@-node:numberOfNodesInOutline, numberOfClonesInOutline
 	#@+node:replaceOutline
@@ -135,19 +145,13 @@ class testUtils:
 		
 		"""Replace outline1 by a copy of outline 2 if not equal."""
 		
-		trace()
+		g.trace()
 		
 		copy = outline2.copyTreeWithNewTnodes()
 		copy.linkAfter(outline1)
 		outline1.doDelete(newVnode=copy)
-	#@-node:replaceOutline
-	#@+node:validateOutline TODO
-	def validateOutline (self,root):
-		
-		"""Checks an outline for consistency"""
-		pass
 	#@nonl
-	#@-node:validateOutline TODO
+	#@-node:replaceOutline
 	#@-others
 #@nonl
 #@-node: class testUtils
@@ -156,135 +160,15 @@ def fail ():
 	
 	"""Mark a unit test as having failed."""
 	
-	app.unitTestDict["fail"] = callerName(2)
+	g.app.unitTestDict["fail"] = callerName(2)
 #@nonl
 #@-node: fail
-#@+node:Node tests...
-import leoNodes
-
-class leoNodeError(Exception):
-	pass
-	
-#@nonl
-#@-node:Node tests...
-#@+node:class cloneTests
-class cloneTests(unittest.TestCase):
-	
-	"""tests of cloning and inserts and deletes involving clones"""
-	
-	#@	@+others
-	#@+node:testCone
-	def testCone(self):
-		pass
-	#@-node:testCone
-	#@+node:testMoveIntoClone
-	def testMoveIntoClone(self):
-		pass
-	#@-node:testMoveIntoClone
-	#@+node:testMoveOutOfClone
-	def testMoveOutOfClone(self):
-		pass
-	#@-node:testMoveOutOfClone
-	#@+node:testInsertInsideClone
-	def testInsertInsideClone(self):
-		pass
-	#@-node:testInsertInsideClone
-	#@+node:testDeleteInsideClone
-	def testDeleteInsideClone(self):
-		pass
-	#@-node:testDeleteInsideClone
-	#@+node:testInsertInsideClone
-	def testInsertInsideClone(self):
-		pass
-		
-	#@-node:testInsertInsideClone
-	#@+node:testDeleteInsideClone
-	def testDeleteInsideClone(self):
-		pass
-	#@-node:testDeleteInsideClone
-	#@-others
-#@nonl
-#@-node:class cloneTests
-#@+node:class moveTests
-class moveTests(unittest.TestCase):
-	
-	"""test that moves work properly, especially when clones are involved"""
-	
-	pass # no tests yet.
-#@-node:class moveTests
-#@+node:class nodeSanityTests
-class nodeSanityTests(unittest.TestCase):
-
-	"""Tests that links, joinLists and related getters are consistent"""
-	
-	#@	@+others
-	#@+node:testNextBackLinks
-	def testNextBackLinks(self):
-		
-		"""Sanity checks for v.mNext and v.mBack"""
-		pass
-	#@-node:testNextBackLinks
-	#@+node:testParentChildLinks
-	def testParentChildLinks(self):
-		
-		"""Sanity checks for v.mParent and v.mFirstChild"""
-		pass
-	#@-node:testParentChildLinks
-	#@+node:testJoinLists
-	def testJoinLists(self):
-		
-		"""Sanity checks for join lists"""
-		pass
-	#@nonl
-	#@-node:testJoinLists
-	#@+node:testThreadNextBack
-	def testThreadNextBack(self):
-		
-		"""Sanity checks for v.threadNext() and v.threadBack()"""
-		pass
-	#@-node:testThreadNextBack
-	#@+node:testNextBack
-	def testNextBack(self):
-		
-		"""Sanity checks for v.vext() and v.vack()"""
-		pass
-	#@-node:testNextBack
-	#@+node:testVisNextBack
-	def testVisNextBack(self):
-		
-		"""Sanity checks for v.visNext() and v.visBack()"""
-		pass
-	#@-node:testVisNextBack
-	#@+node:testFirstChildParent
-	def testFirstChildParent(self):
-		
-		"""Sanity checks for v.firstChild() and v.parent()"""
-		pass
-	#@-node:testFirstChildParent
-	#@-others
-#@nonl
-#@-node:class nodeSanityTests
-#@+node:class statusBitsChecks
-class statusBitsChecks(unittest.TestCase):
-	
-	"""Tests that status bits are handled properly"""
-	
-	#@	@+others
-	#@+node:testDirtyBits
-	def testDirtyBits(self):
-		
-		"""Test that dirty bits are set, especially in anscestor nodes and cloned nodes"""
-		pass
-	#@-node:testDirtyBits
-	#@-others
-#@nonl
-#@-node:class statusBitsChecks
 #@+node: makeColorSuite
 def makeColorSuite(testParentHeadline,tempHeadline):
 	
 	"""Create a colorizer test for every descendant of testParentHeadline.."""
 	
-	u = testUtils() ; c = top() ; v = c.currentVnode()
+	u = testUtils() ; c = g.top() ; v = c.currentVnode()
 	root = u.findRootNode(v)
 	temp_v = u.findNodeInTree(root,tempHeadline)
 	vList = u.findSubnodesOf(testParentHeadline)
@@ -296,7 +180,6 @@ def makeColorSuite(testParentHeadline,tempHeadline):
 		suite.addTest(test)
 
 	return suite
-#@nonl
 #@-node: makeColorSuite
 #@+node:class colorTestCase
 class colorTestCase(unittest.TestCase):
@@ -328,19 +211,19 @@ class colorTestCase(unittest.TestCase):
 	#@+node:setUp
 	def setUp(self,*args,**keys):
 	
-		# trace(args,keys)
+		# g.trace(args,keys)
 	
 		# Initialize the text in the temp node.
 		text = self.v.bodyString()
 		self.c.selectVnode(self.temp_v)
-		self.temp_v.t.setTnodeText(text,app.tkEncoding)
+		self.temp_v.setTnodeText(text,g.app.tkEncoding)
 		self.c.frame.body.setSelectionAreas(None,text,None)
 	#@nonl
 	#@-node:setUp
 	#@+node:tearDown
 	def tearDown (self):
 		
-		self.temp_v.t.setTnodeText("",app.tkEncoding)
+		self.temp_v.setTnodeText("",g.app.tkEncoding)
 		self.c.selectVnode(self.old_v)
 	#@nonl
 	#@-node:tearDown
@@ -358,7 +241,7 @@ def makeEditBodySuite(testParentHeadline,tempHeadline):
 	
 	"""Create an Edit Body test for every descendant of testParentHeadline.."""
 	
-	u = testUtils() ; c = top() ; v = c.currentVnode()
+	u = testUtils() ; c = g.top() ; v = c.currentVnode()
 	root = u.findRootNode(v)
 	temp_v = u.findNodeInTree(root,tempHeadline)
 	vList = u.findChildrenOf(testParentHeadline)
@@ -377,7 +260,6 @@ def makeEditBodySuite(testParentHeadline,tempHeadline):
 			print 'missing "before" or "after" for', v.headString()
 
 	return suite
-#@nonl
 #@-node: makeEditBodySuite
 #@+node:class editBodyTestCase
 class editBodyTestCase(unittest.TestCase):
@@ -420,8 +302,8 @@ class editBodyTestCase(unittest.TestCase):
 	
 		if new_text != ref_text:
 			print ; print "test failed", commandName
-			trace("new",new_text)
-			trace("ref",ref_text)
+			g.trace("new",new_text)
+			g.trace("ref",ref_text)
 			
 		assert(new_text == ref_text)
 		
@@ -438,8 +320,8 @@ class editBodyTestCase(unittest.TestCase):
 	
 			if new_text != ref_text:
 				print ; print "test failed", commandName
-				trace("new",new_text)
-				trace("ref",ref_text)
+				g.trace("new",new_text)
+				g.trace("ref",ref_text)
 			
 			assert(new_text == ref_text)
 			
@@ -452,7 +334,7 @@ class editBodyTestCase(unittest.TestCase):
 		
 		c = self.c ; temp_v = self.temp_v
 		
-		temp_v.t.setTnodeText("",app.tkEncoding)
+		temp_v.setTnodeText("",g.app.tkEncoding)
 		temp_v.clearDirty()
 		
 		if not self.wasChanged:
@@ -478,23 +360,25 @@ class editBodyTestCase(unittest.TestCase):
 	
 		text = self.before.bodyString()
 		
-		temp_v.t.setTnodeText(text,app.tkEncoding)
+		temp_v.setTnodeText(text,g.app.tkEncoding)
 		c.selectVnode(self.temp_v)
 		
 		t = c.frame.body.bodyCtrl
 		if self.sel:
-			s = self.sel.bodyString()
+			s = str(self.sel.bodyString()) # Can't be unicode.
 			lines = s.split('\n')
-			app.gui.setTextSelection(t,lines[0],lines[1])
+			g.app.gui.setTextSelection(t,lines[0],lines[1])
 	
 		if self.ins:
-			s = self.ins.bodyString()
+			s = str(self.ins.bodyString()) # Can't be unicode.
 			lines = s.split('\n')
-			app.gui.setInsertPoint(t,lines[0])
+			g.trace(lines)
+			g.app.gui.setInsertPoint(t,lines[0])
 			
 		if not self.sel and not self.ins:
-			app.gui.setInsertPoint(t,"1.0")
-			app.gui.setTextSelection(t,"1.0","1.0")
+			g.app.gui.setInsertPoint(t,"1.0")
+			g.app.gui.setTextSelection(t,"1.0","1.0")
+	#@nonl
 	#@-node:setUp
 	#@+node:runTest
 	def runTest(self):
@@ -505,6 +389,753 @@ class editBodyTestCase(unittest.TestCase):
 	#@-others
 #@nonl
 #@-node:class editBodyTestCase
+#@+node: makeFindCommandSuite
+def makeFindCommandSuite(arg=None,all=true,verbose=false):
+	
+	return unittest.makeSuite(findCommandTestCase,'test')
+#@nonl
+#@-node: makeFindCommandSuite
+#@+node:class findCommandTestCase
+class findCommandTestCase(unittest.TestCase):
+	
+	"""Unit tests for Leo's find commands."""
+	
+	#@	@+others
+	#@+node:setUp
+	def setUp(self,*args,**keys):
+		
+		import leoGlobals as g
+		
+		u = testUtils()
+		
+		self.c = c = g.top()
+	
+		self.verbose = true
+		
+		self.root = c.rootPosition()
+		
+		self.find_p = u.findNodeAnywhere(c,"findTests")
+		
+		assert(self.find_p)
+		
+		c.selectPosition(self.find_p)
+	#@-node:setUp
+	#@+node:testFindCommand
+	def testFindCommand (self):
+		
+		g.trace(self.find_p)
+	#@nonl
+	#@-node:testFindCommand
+	#@+node:testFindWordCommand
+	def testFindWordCommand (self):
+		
+		pass
+	#@nonl
+	#@-node:testFindWordCommand
+	#@+node:testFindIgnoreCaseCommand
+	def testFindIgnoreCaseCommand (self):
+		
+		pass
+	#@nonl
+	#@-node:testFindIgnoreCaseCommand
+	#@-others
+#@nonl
+#@-node:class findCommandTestCase
+#@+node:makeImportExportSuite
+def makeImportExportSuite(testParentHeadline,tempHeadline):
+	
+	"""Create an Import/Export test for every descendant of testParentHeadline.."""
+	
+	u = testUtils() ; c = g.top() ; v = c.currentVnode()
+	root = u.findRootNode(v)
+	temp_v = u.findNodeInTree(root,tempHeadline)
+	vList = u.findChildrenOf(testParentHeadline)
+
+	# Create the suite and add all test cases.
+	suite = unittest.makeSuite(unittest.TestCase)
+	for v in vList:
+		dialog = u.findNodeInTree(v,"dialog")
+		test = importExportTestCase(c,v,dialog,temp_v)
+		suite.addTest(test)
+
+	return suite
+#@-node:makeImportExportSuite
+#@+node:class importExportTestCase
+class importExportTestCase(unittest.TestCase):
+	
+	"""Data-driven unit tests for Leo's edit body commands."""
+	
+	#@	@+others
+	#@+node:__init__
+	def __init__ (self,c,v,dialog,temp_v):
+		
+		# Init the base class.
+		unittest.TestCase.__init__(self)
+		
+		self.c = c
+		self.dialog = dialog
+		self.v = v
+		self.temp_v = temp_v
+		
+		self.gui = None
+		self.wasChanged = c.changed
+		self.fileName = ""
+	
+		self.old_v = c.currentVnode()
+	
+	#@-node:__init__
+	#@+node:importExport
+	def importExport (self):
+		
+		c = self.c ; v = self.v
+		
+		g.app.unitTestDict = {}
+	
+		commandName = v.headString()
+		command = getattr(c,commandName) # Will fail if command does not exist.
+		command()
+	
+		failedMethod = g.app.unitTestDict.get("fail")
+		self.failIf(failedMethod,failedMethod)
+	#@nonl
+	#@-node:importExport
+	#@+node:runTest
+	def runTest(self):
+		
+		# """Import Export Test Case"""
+	
+		self.importExport()
+	#@nonl
+	#@-node:runTest
+	#@+node:setUp
+	def setUp(self,*args,**keys):
+		
+		c = self.c ; temp_v = self.temp_v ; d = self.dialog
+		
+		temp_v.setTnodeText('',g.app.tkEncoding)
+	
+		# Create a node under temp_v.
+		child = temp_v.insertAsLastChild()
+		assert(child)
+		child.setHeadString("import test: " + self.v.headString())
+		c.selectVnode(child)
+	
+		assert(d)
+		s = d.bodyString()
+		lines = s.split('\n')
+		name = lines[0]
+		val = lines[1]
+		self.fileName = val
+		dict = {name: val}
+		self.gui = leoGui.unitTestGui(dict,trace=false)
+		
+		
+	#@nonl
+	#@-node:setUp
+	#@+node:shortDescription
+	def shortDescription (self):
+		
+		try:
+			return "ImportExportTestCase: %s %s" % (self.v.headString(),self.fileName)
+		except:
+			return "ImportExportTestCase"
+	#@nonl
+	#@-node:shortDescription
+	#@+node:tearDown
+	def tearDown (self):
+		
+		c = self.c ; temp_v = self.temp_v
+		
+		if self.gui:
+			self.gui.destroySelf()
+			self.gui = None
+		
+		temp_v.setTnodeText("",g.app.tkEncoding)
+		temp_v.clearDirty()
+		
+		if not self.wasChanged:
+			c.setChanged (false)
+			
+		if 1: # Delete all children of temp node.
+			while temp_v.firstChild():
+				temp_v.firstChild().doDelete(temp_v)
+	
+		c.selectVnode(self.old_v)
+	#@nonl
+	#@-node:tearDown
+	#@-others
+#@nonl
+#@-node:class importExportTestCase
+#@+node:makeTestLeoFilesSuite
+def makeTestLeoFilesSuite(testParentHeadline,unused=None):
+	
+	"""Create a .leo file test for every descendant of testParentHeadline.."""
+	
+	u = testUtils() ; c = g.top()
+	
+	vList = u.findChildrenOf(testParentHeadline)
+
+	# Create the suite and add all test cases.
+	suite = unittest.makeSuite(unittest.TestCase)
+	for v in vList:
+		test = leoFileTestCase(c,v.headString().strip())
+		suite.addTest(test)
+
+	return suite
+
+#@-node:makeTestLeoFilesSuite
+#@+node:class leoFileTestCase
+class leoFileTestCase(unittest.TestCase):
+	
+	"""Data-driven unit tests to test .leo files."""
+	
+	#@	@+others
+	#@+node:__init__
+	def __init__ (self,c,fileName):
+		
+		# Init the base class.
+		unittest.TestCase.__init__(self)
+	
+		self.old_c = c
+		self.c = None # set by setUp.
+		self.fileName = fileName
+		self.gui = None # set by setUp
+		self.openFrames = g.app.windowList[:]
+	#@nonl
+	#@-node:__init__
+	#@+node:runTest
+	def runTest(self):
+		
+		"""Run the Check Outline command."""
+	
+		errors = self.c.checkOutline(verbose=false,unittest=true)
+		assert(errors == 0)
+	#@nonl
+	#@-node:runTest
+	#@+node:setUp
+	def setUp(self):
+	
+		"""Open the .leo file."""
+		
+	
+		c = self.old_c ; fileName = self.fileName
+		assert(g.os_path_exists(fileName))
+		
+		self.oldGui = g.app.gui
+		# g.app.gui = leoGui.nullGui("nullGui")
+	
+		ok, frame = g.openWithFileName(fileName,c,enableLog=false)
+		assert(ok)
+		self.c = frame.c
+	#@nonl
+	#@-node:setUp
+	#@+node:tearDown
+	def tearDown (self):
+	
+		"""Close the .leo file if it was not already open."""
+	
+		frame = self.c.frame
+		if frame not in self.openFrames:
+			g.app.closeLeoWindow(frame)
+	
+		g.app.gui = self.oldGui
+	#@nonl
+	#@-node:tearDown
+	#@-others
+#@nonl
+#@-node:class leoFileTestCase
+#@+node: makeOutlineSuite
+def makeOutlineSuite(testParentHeadline,unused=None):
+	
+	"""Create an outline test for every descendant of testParentHeadline.."""
+	
+	u = testUtils() ; c = g.top() ; v = c.currentVnode()
+	
+	vList = u.findChildrenOf(testParentHeadline)
+
+	# Create the suite and add all test cases.
+	suite = unittest.makeSuite(unittest.TestCase)
+	for v in vList:
+		before = u.findNodeInTree(v,"before")
+		after  = u.findNodeInTree(v,"after")
+		ref    = u.findNodeInTree(v,"ref")
+		if before and after and ref:
+			test = outlineTestCase(c,v,before,after,ref)
+			suite.addTest(test)
+
+	return suite
+#@-node: makeOutlineSuite
+#@+node:class outlineTestCase
+class outlineTestCase(unittest.TestCase):
+	
+	"""Data-driven unit tests for Leo's outline commands."""
+	
+	#@	@+others
+	#@+node:__init__
+	def __init__ (self,c,parent,before,after,ref):
+		
+		# Init the base class.
+		unittest.TestCase.__init__(self)
+	
+		self.c = c
+		self.parent = parent
+		self.before = before
+		self.after = after
+		self.ref    = ref
+		
+		self.old_v = c.currentVnode()
+		
+		self.u = testUtils()
+	#@nonl
+	#@-node:__init__
+	#@+node:outlineCommand
+	def outlineCommand (self):
+		
+		c = self.c ; u = self.u ; tree = c.frame.tree
+		
+		move = u.findNodeInTree(self.before,"move")
+		assert(move)
+		
+		c.selectVnode(move)
+		
+		commandName = self.parent.headString()
+		command = getattr(c,commandName)
+		command()
+	
+		assert(u.compareOutlines(self.before,self.after))
+		c.undoer.undo()
+		assert(u.compareOutlines(self.before,self.ref))
+		c.undoer.redo()
+		assert(u.compareOutlines(self.before,self.after))
+		c.undoer.undo()
+		assert(u.compareOutlines(self.before,self.ref))
+	#@nonl
+	#@-node:outlineCommand
+	#@+node:runTest
+	def runTest(self):
+	
+		self.outlineCommand()
+	#@nonl
+	#@-node:runTest
+	#@+node:setUp
+	def setUp(self,*args,**keys):
+	
+		assert(self.before)
+		assert(self.after)
+		assert(self.ref)
+		assert(self.u.compareOutlines(self.before,self.ref))
+		
+		# Batch mode bugs: meaning of move may depend on visibility.
+		self.parent.parent().expand()
+		self.parent.expand()
+		self.before.expand()
+		self.after.expand()
+	#@nonl
+	#@-node:setUp
+	#@+node:tearDown
+	def tearDown (self):
+	
+		c = self.c ; u = self.u
+	
+		if not u.compareOutlines(self.before,self.ref):
+			u.replaceOutline(c,self.before,self.ref)
+	
+		self.before.contract()
+		self.after.contract()
+		self.parent.contract()
+		self.parent.parent().contract()
+	
+		self.c.selectVnode(self.old_v)
+	#@nonl
+	#@-node:tearDown
+	#@+node: makePluginsSuite
+	def makePluginsSuite(verbose=false,*args,**keys):
+		
+		"""Create an plugins test for every .py file in the plugins directory."""
+		
+		plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
+		
+		files = glob.glob(g.os_path_join(plugins_path,"*.py"))
+		files = [g.os_path_abspath(file) for file in files]
+		files.sort()
+	
+		# Create the suite and add all test cases.
+		suite = unittest.makeSuite(unittest.TestCase)
+		
+		for file in files:
+			test = pluginTestCase(file,verbose)
+			suite.addTest(test)
+	
+		return suite
+	#@-node: makePluginsSuite
+	#@-others
+#@nonl
+#@-node:class outlineTestCase
+#@+node:class pluginTestCase
+class pluginTestCase(unittest.TestCase):
+	
+	"""Unit tests for one Leo plugin."""
+	
+	#@	@+others
+	#@+node:__init__
+	def __init__ (self,fileName,verbose):
+		
+		# Init the base class.
+		unittest.TestCase.__init__(self)
+	
+		self.fileName = fileName
+		self.oldGui = None
+		self.verbose = verbose
+	#@nonl
+	#@-node:__init__
+	#@+node:pluginTest
+	def pluginTest (self):
+		
+		# Duplicate the import logic in leoPlugins.py.
+		
+		fileName = g.toUnicode(self.fileName,g.app.tkEncoding)
+		path = g.os_path_join(g.app.loadDir,"..","plugins")
+		
+		if self.verbose:
+			g.trace(str(shortFileName(fileName)))
+	
+		module = importFromPath(fileName,path)
+		assert(module)
+		
+		# Run any unit tests in the module itself.
+		if hasattr(module,"unitTest"):
+			
+			if self.verbose:
+				g.trace("Executing unitTest in %s..." % str(shortFileName(fileName)))
+	
+			module.unitTest()
+	#@nonl
+	#@-node:pluginTest
+	#@+node:runTest
+	def runTest(self):
+	
+		self.pluginTest()
+	#@nonl
+	#@-node:runTest
+	#@+node:setUp
+	def setUp(self,*args,**keys):
+	
+		self.oldGui = g.app.gui
+		# g.app.gui = leoTkinterGui.tkinterGui()
+	#@nonl
+	#@-node:setUp
+	#@+node:shortDescription
+	def shortDescription (self):
+		
+		return "pluginTestCase: " + self.fileName
+	#@nonl
+	#@-node:shortDescription
+	#@+node:tearDown
+	def tearDown (self):
+	
+		g.app.gui = self.oldGui
+	#@nonl
+	#@-node:tearDown
+	#@-others
+#@nonl
+#@-node:class pluginTestCase
+#@+node: makePositionSuite
+def makePositionSuite(arg=None,all=true,verbose=false):
+	
+	if all: # Include everything.
+	
+		suite = unittest.makeSuite(positionTestCase,'test')
+		
+	else: # Include listed testss.
+
+		names = (
+			"testFullTraverse",
+			"testParentChildLinks",
+			"testNextBack",
+			"testVnodeList",
+			"testThreadBackNext",
+			"testParentChildLevel")
+		
+		suite = unittest.makeSuite(unittest.TestCase)
+		for name in names:
+			suite.addTest(positionTestCase(name))
+
+	return suite
+#@nonl
+#@-node: makePositionSuite
+#@+node:class positionTestCase
+class positionTestCase(unittest.TestCase):
+	
+	"""Unit tests for Leo's position class."""
+	
+	#@	@+others
+	#@+node:setUp
+	def setUp(self,*args,**keys):
+		
+		import leoGlobals as g
+		
+		self.c = c = g.top()
+	
+		self.verbose = true
+		
+		self.root = c.rootPosition()
+	#@nonl
+	#@-node:setUp
+	#@+node:testComparisons
+	def testComparisons (self):
+		
+		p = self.root
+		assert(p == p.copy())
+		assert(p != p.threadNext())
+	#@nonl
+	#@-node:testComparisons
+	#@+node:testThatClonesShareSubtrees
+	def testThatClonesShareSubtrees (self):
+		
+		"""Test that cloned nodes actually share subtrees."""
+	
+		for p in self.root.allNodes_iter():
+			if p.isCloned() and p.hasChildren():
+				childv = p.firstChild().v
+				assert(childv == p.v.t._firstChild)
+				assert(id(childv) == id(p.v.t._firstChild))
+				for v in p.v.t.vnodeList:
+					assert(v.t._firstChild == childv)
+					assert(id(v.t._firstChild) == id(childv))
+	#@nonl
+	#@-node:testThatClonesShareSubtrees
+	#@+node:testConsistencyOfAllNodesThreadNext
+	def testConsistencyOfAllNodesThreadNextWithCopy(self):
+		self.doConsistencyOfAllNodesThreadNext(true)
+		
+	def testConsistencyOfAllNodesThreadNext(self):
+		self.doConsistencyOfAllNodesThreadNext(false)
+	
+	def doConsistencyOfAllNodesThreadNext (self,copy):
+		
+		"""Test consistency of p.moveToThreadNext and p.allNodes_iter."""
+	
+		root = self.c.rootPosition()
+		p2 = root.copy()
+	
+		for p in root.allNodes_iter(copy=copy):
+	
+			if p != p2: print p,p2
+			assert(p==p2)
+			p2.moveToThreadNext()
+			
+		if p2: print p2
+		assert(not p2)
+	#@-node:testConsistencyOfAllNodesThreadNext
+	#@+node:testConsistencyOfFirstChildAndChildrenIter
+	def testConsistencyOfFirstChildAndChildrenIterWithCopy(self):
+		self.doConsistencyOfFirstChildAndChildrenIter(true)
+		
+	def testConsistencyOfFirstChildAndChildrenIter(self):
+		self.doConsistencyOfFirstChildAndChildrenIter(false)
+	
+	def doConsistencyOfFirstChildAndChildrenIter (self,copy):
+		
+		"""Test consistency of p.moveToFirstChild/Next and p.children_iter."""
+	
+		root = self.c.rootPosition()
+	
+		for p in root.allNodes_iter(copy=copy):
+			
+			p2 = p.firstChild()
+			for p3 in p.children_iter(copy=copy):
+				
+				if p3 != p2: print p3,p2
+				assert(p3==p2)
+				p2.moveToNext()
+	
+		if p2: print p2
+		assert(not p2)
+	#@nonl
+	#@-node:testConsistencyOfFirstChildAndChildrenIter
+	#@+node:testConsistencyOfLevel
+	def testConsistencyOfLevel (self):
+		
+		"""Test consistency of p.level."""
+	
+		for p in self.root.allNodes_iter():
+			
+			if p.hasParent():
+				assert(p.parent().level() == p.level() - 1)
+		
+			if p.hasChildren():
+				assert(p.firstChild().level() == p.level() + 1)
+				
+			if p.hasNext():
+				assert(p.next().level() == p.level())
+		
+			if p.hasBack():
+				assert(p.back().level() == p.level())
+	#@-node:testConsistencyOfLevel
+	#@+node:testConsistencyOfNextBack
+	def testConsistencyOfNextBack (self):
+		
+		"""Test consistency of p.next and p.back."""
+	
+		for p in self.root.allNodes_iter():
+			
+			back = p.back()
+			next = p.next()
+			if back: assert(back.getNext() == p)
+			if next: assert(next.getBack() == p)
+	#@nonl
+	#@-node:testConsistencyOfNextBack
+	#@+node:testConsistencyOfParentAndParentsIter
+	def testConsistencyOfParentAndParentsIterWithCopy(self):
+		self.doConsistencyOfParentAndParentsIter(true)
+		
+	def testConsistencyOfParentAndParentsIter(self):
+		self.doConsistencyOfParentAndParentsIter(false)
+	
+	def doConsistencyOfParentAndParentsIter (self,copy):
+		
+		"""Test consistency of p.parent and p.parents_iter."""
+	
+		root = self.c.rootPosition()
+	
+		for p in root.allNodes_iter():
+			
+			p2 = p.parent()
+			for p3 in p.parents_iter(copy=copy):
+				
+				if p3 != p2: print p3,p2
+				assert(p3==p2)
+				p2.moveToParent()
+		
+			if p2: print p2
+			assert(not p2)
+	#@nonl
+	#@-node:testConsistencyOfParentAndParentsIter
+	#@+node:testConsistencyOfParentChild
+	def testConsistencyOfParentChild (self):
+		
+		"""Test consistency of p.parent, p.next, p.back and p.firstChild."""
+		
+		root = self.c.rootPosition()
+	
+		for p in root.allNodes_iter():
+			
+			if p.hasParent():
+				n = p.childIndex()
+				assert(p == p.parent().moveToNthChild(n))
+				
+			for child in p.children_iter():
+				assert(p == child.parent())
+		
+			if p.hasNext():
+				assert(p.next().parent() == p.parent())
+				
+			if p.hasBack():
+				assert(p.back().parent() == p.parent())
+	#@nonl
+	#@-node:testConsistencyOfParentChild
+	#@+node:testConsistencyOfThreadBackNext
+	def testConsistencyOfThreadBackNext (self):
+	
+		for p in self.root.allNodes_iter():
+	
+			threadBack = p.threadBack()
+			threadNext = p.threadNext()
+	
+			if threadBack:
+				assert(p == threadBack.getThreadNext())
+		
+			if threadNext:
+				assert(p == threadNext.getThreadBack())
+	#@nonl
+	#@-node:testConsistencyOfThreadBackNext
+	#@+node:testConsistencyOfVnodeListAndParents
+	def testConsistencyOfVnodeListAndParents (self):
+	
+		for p in self.root.allNodes_iter():
+			if p.isCloned():
+				parents = p.v.t.vnodeList
+				for child in p.children_iter():
+					vparents = child.v.directParents()
+					assert(len(parents) == len(vparents))
+					for parent in parents:
+						assert(parent in vparents)
+					for parent in vparents:
+						assert(parent in parents)
+	#@nonl
+	#@-node:testConsistencyOfVnodeListAndParents
+	#@+node:testHasNextBack
+	def testHasNextBack (self):
+		
+		for p in self.root.allNodes_iter():
+	
+			back = p.back()
+			next = p.next()
+	
+			assert(
+				(back and p.hasBack()) or
+				(not back and not p.hasBack()))
+					
+			assert(
+				(next and p.hasNext()) or
+				(not next and not p.hasNext()))
+	#@nonl
+	#@-node:testHasNextBack
+	#@+node:testHasParentChild
+	def testHasParentChild (self):
+		
+		for p in self.root.allNodes_iter():
+	
+			child = p.firstChild()
+			parent = p.parent()
+	
+			assert(
+				(child and p.hasFirstChild()) or
+				(not child and not p.hasFirstChild()))
+					
+			assert(
+				(parent and p.hasParent()) or
+				(not parent and not p.hasParent()))
+	#@nonl
+	#@-node:testHasParentChild
+	#@+node:testHasThreadNextBack
+	def testHasThreadNextBack(self):
+	
+		for p in self.root.allNodes_iter():
+	
+			threadBack = p.getThreadBack()
+			threadNext = p.getThreadNext()
+	
+			assert(
+				(threadBack and p.hasThreadBack()) or
+				(not threadBack and not p.hasThreadBack()))
+					
+			assert(
+				(threadNext and p.hasThreadNext()) or
+				(not threadNext and not p.hasThreadNext()))
+	#@nonl
+	#@-node:testHasThreadNextBack
+	#@+node:testVnodeList
+	def testVnodeList (self):
+		
+		for p in self.root.allNodes_iter():
+	
+			vnodeList = p.v.t.vnodeList
+		
+			for v in vnodeList:
+	
+				assert(v.t == p.v.t)
+				if p.v.isCloned():
+					assert(v.isCloned())
+					assert(len(vnodeList) > 1)
+				else:
+					assert(not v.isCloned())
+					assert(len(vnodeList) == 1)
+	#@nonl
+	#@-node:testVnodeList
+	#@-others
+#@nonl
+#@-node:class positionTestCase
 #@+node:Reformat Paragraph tests
 # DTHEIN 2004.01.11: Added unit tests for reformatParagraph
 #@nonl
@@ -550,7 +1181,7 @@ class reformatParagraphTestCase(unittest.TestCase):
 	def setUp(self):
 	
 		self.u = testUtils()
-		self.c = top()
+		self.c = g.top()
 		self.current_v = self.c.currentVnode()
 		self.old_v = self.c.currentVnode()
 		root = self.u.findRootNode(self.current_v)
@@ -562,6 +1193,7 @@ class reformatParagraphTestCase(unittest.TestCase):
 		self.case_v = None
 		self.wasChanged = self.c.changed
 		
+	
 	
 	#@-node:setUp
 	#@+node:tearDown
@@ -575,7 +1207,7 @@ class reformatParagraphTestCase(unittest.TestCase):
 		
 		# clear the temp node and mark it unchanged
 		#
-		temp_v.t.setTnodeText("",app.tkEncoding)
+		temp_v.setTnodeText("",g.app.tkEncoding)
 		temp_v.clearDirty()
 		
 		if not self.wasChanged:
@@ -840,7 +1472,7 @@ class reformatParagraphTestCase(unittest.TestCase):
 		# Copy the test case node text to the temp node
 		#
 		text = self.case_v.bodyString()
-		temp_v.t.setTnodeText(text,app.tkEncoding)
+		temp_v.setTnodeText(text,g.app.tkEncoding)
 		
 		# create the child node that holds the text
 		#
@@ -850,7 +1482,7 @@ class reformatParagraphTestCase(unittest.TestCase):
 		# copy the before text to the temp text
 		#
 		text = self.before_v.bodyString()
-		self.tempChild_v.t.setTnodeText(text,app.tkEncoding)
+		self.tempChild_v.setTnodeText(text,g.app.tkEncoding)
 		
 		# make the temp child node current, and put the
 		# cursor at the beginning
@@ -858,8 +1490,8 @@ class reformatParagraphTestCase(unittest.TestCase):
 		c.selectVnode(self.tempChild_v)
 		c.frame.body.setInsertPointToStartOfLine( 0 )
 		c.frame.body.setTextSelection(None,None)
-		#app.gui.setInsertPoint(t,"1.0")
-		#app.gui.setTextSelection(t,"1.0","1.0")
+		#g.app.gui.setInsertPoint(t,"1.0")
+		#g.app.gui.setTextSelection(t,"1.0","1.0")
 	#@-node:copyBeforeToTemp
 	#@+node:getCaseDataNodes
 	# DTHEIN 2004.01.11: Added method
@@ -876,7 +1508,7 @@ class reformatParagraphTestCase(unittest.TestCase):
 		# local variables for class fields, for ease
 		# of reading and ease of typeing.
 		#	
-		c = self.c ; body = c.frame.body.bodyCtrl ; gui = app.gui
+		c = self.c ; body = c.frame.body.bodyCtrl ; gui = g.app.gui
 		tab_width = c.frame.tab_width
 	
 		# Get the Tkinter row col position of the insert cursor
@@ -888,413 +1520,14 @@ class reformatParagraphTestCase(unittest.TestCase):
 		#
 		if col > 0:
 			s = body.get("%d.0" % (row),index)
-			s = toUnicode(s,app.tkEncoding)
-			col = computeWidth(s,tab_width)
+			s = g.toUnicode(s,g.app.tkEncoding)
+			col = g.computeWidth(s,tab_width)
 	
 		return (row,col)
 	#@-node:getRowCol
 	#@-others
 #@nonl
 #@-node:class reformatParagraphTestCase
-#@+node:makeImportExportSuite
-def makeImportExportSuite(testParentHeadline,tempHeadline):
-	
-	"""Create an Import/Export test for every descendant of testParentHeadline.."""
-	
-	u = testUtils() ; c = top() ; v = c.currentVnode()
-	root = u.findRootNode(v)
-	temp_v = u.findNodeInTree(root,tempHeadline)
-	vList = u.findChildrenOf(testParentHeadline)
-
-	# Create the suite and add all test cases.
-	suite = unittest.makeSuite(unittest.TestCase)
-	for v in vList:
-		dialog = u.findNodeInTree(v,"dialog")
-		test = importExportTestCase(c,v,dialog,temp_v)
-		suite.addTest(test)
-
-	return suite
-#@nonl
-#@-node:makeImportExportSuite
-#@+node:class importExportTestCase
-class importExportTestCase(unittest.TestCase):
-	
-	"""Data-driven unit tests for Leo's edit body commands."""
-	
-	#@	@+others
-	#@+node:__init__
-	def __init__ (self,c,v,dialog,temp_v):
-		
-		# Init the base class.
-		unittest.TestCase.__init__(self)
-		
-		self.c = c
-		self.dialog = dialog
-		self.v = v
-		self.temp_v = temp_v
-		
-		self.gui = None
-		self.wasChanged = c.changed
-		self.fileName = ""
-	
-		self.old_v = c.currentVnode()
-	
-	#@-node:__init__
-	#@+node:importExport
-	def importExport (self):
-		
-		c = self.c ; v = self.v
-		
-		app.unitTestDict = {}
-	
-		commandName = v.headString()
-		command = getattr(c,commandName) # Will fail if command does not exist.
-		command()
-	
-		failedMethod = app.unitTestDict.get("fail")
-		self.failIf(failedMethod,failedMethod)
-	#@nonl
-	#@-node:importExport
-	#@+node:runTest
-	def runTest(self):
-		
-		# """Import Export Test Case"""
-	
-		self.importExport()
-	#@nonl
-	#@-node:runTest
-	#@+node:setUp
-	def setUp(self,*args,**keys):
-		
-		c = self.c ; temp_v = self.temp_v ; d = self.dialog
-		
-		temp_v.t.setTnodeText('',app.tkEncoding)
-	
-		# Create a node under temp_v.
-		child = temp_v.insertAsLastChild()
-		assert(child)
-		child.setHeadString("import test: " + self.v.headString())
-		c.selectVnode(child)
-	
-		assert(d)
-		s = d.bodyString()
-		lines = s.split('\n')
-		name = lines[0]
-		val = lines[1]
-		self.fileName = val
-		dict = {name: val}
-		self.gui = leoGui.unitTestGui(dict,trace=false)
-		
-		
-	#@nonl
-	#@-node:setUp
-	#@+node:shortDescription
-	def shortDescription (self):
-		
-		try:
-			return "ImportExportTestCase: %s %s" % (self.v.headString(),self.fileName)
-		except:
-			return "ImportExportTestCase"
-	#@nonl
-	#@-node:shortDescription
-	#@+node:tearDown
-	def tearDown (self):
-		
-		c = self.c ; temp_v = self.temp_v
-		
-		if self.gui:
-			self.gui.destroySelf()
-			self.gui = None
-		
-		temp_v.t.setTnodeText("",app.tkEncoding)
-		temp_v.clearDirty()
-		
-		if not self.wasChanged:
-			c.setChanged (false)
-			
-		if 1: # Delete all children of temp node.
-			while temp_v.firstChild():
-				temp_v.firstChild().doDelete(temp_v)
-	
-		c.selectVnode(self.old_v)
-	#@nonl
-	#@-node:tearDown
-	#@-others
-#@nonl
-#@-node:class importExportTestCase
-#@+node:makeTestLeoFilesSuite
-def makeTestLeoFilesSuite(testParentHeadline,unused=None):
-	
-	"""Create a .leo file test for every descendant of testParentHeadline.."""
-	
-	u = testUtils() ; c = top()
-	
-	vList = u.findChildrenOf(testParentHeadline)
-
-	# Create the suite and add all test cases.
-	suite = unittest.makeSuite(unittest.TestCase)
-	for v in vList:
-		test = leoFileTestCase(c,v.headString().strip())
-		suite.addTest(test)
-
-	return suite
-#@-node:makeTestLeoFilesSuite
-#@+node:class leoFileTestCase
-class leoFileTestCase(unittest.TestCase):
-	
-	"""Data-driven unit tests to test .leo files."""
-	
-	#@	@+others
-	#@+node:__init__
-	def __init__ (self,c,fileName):
-		
-		# Init the base class.
-		unittest.TestCase.__init__(self)
-	
-		self.old_c = c
-		self.c = None # set by setUp.
-		self.fileName = fileName
-		self.gui = None # set by setUp
-		self.openFrames = app.windowList[:]
-	#@nonl
-	#@-node:__init__
-	#@+node:runTest
-	def runTest(self):
-		
-		"""Run the Check Outline command."""
-	
-		errors = self.c.checkOutline()
-		assert(errors == 0)
-	#@nonl
-	#@-node:runTest
-	#@+node:setUp
-	def setUp(self):
-	
-		"""Open the .leo file."""
-		
-	
-		c = self.old_c ; fileName = self.fileName
-		assert(os_path_exists(fileName))
-		
-		self.oldGui = app.gui
-		# app.gui = leoGui.nullGui("nullGui")
-	
-		ok, frame = openWithFileName(fileName,c,enableLog=false)
-		assert(ok)
-		self.c = frame.c
-	#@nonl
-	#@-node:setUp
-	#@+node:tearDown
-	def tearDown (self):
-	
-		"""Close the .leo file if it was not already open."""
-	
-		frame = self.c.frame
-		if frame not in self.openFrames:
-			app.closeLeoWindow(frame)
-	
-		app.gui = self.oldGui
-	#@nonl
-	#@-node:tearDown
-	#@-others
-#@nonl
-#@-node:class leoFileTestCase
-#@+node: makeOutlineSuite
-def makeOutlineSuite(testParentHeadline,unused=None):
-	
-	"""Create an outline test for every descendant of testParentHeadline.."""
-	
-	u = testUtils() ; c = top() ; v = c.currentVnode()
-	
-	vList = u.findChildrenOf(testParentHeadline)
-
-	# Create the suite and add all test cases.
-	suite = unittest.makeSuite(unittest.TestCase)
-	for v in vList:
-		before = u.findNodeInTree(v,"before")
-		after  = u.findNodeInTree(v,"after")
-		ref    = u.findNodeInTree(v,"ref")
-		if before and after and ref:
-			test = outlineTestCase(c,v,before,after,ref)
-			suite.addTest(test)
-
-	return suite
-#@-node: makeOutlineSuite
-#@+node:class outlineTestCase
-class outlineTestCase(unittest.TestCase):
-	
-	"""Data-driven unit tests for Leo's outline commands."""
-	
-	#@	@+others
-	#@+node:__init__
-	def __init__ (self,c,parent,before,after,ref):
-		
-		# Init the base class.
-		unittest.TestCase.__init__(self)
-	
-		self.c = c
-		self.parent = parent
-		self.before = before
-		self.after = after
-		self.ref    = ref
-		
-		self.old_v = c.currentVnode()
-		
-		self.u = testUtils()
-	#@nonl
-	#@-node:__init__
-	#@+node:outlineCommand
-	def outlineCommand (self):
-		
-		c = self.c ; u = self.u ; tree = c.frame.tree
-		
-		move = u.findNodeInTree(self.before,"move")
-		assert(move)
-		
-		c.selectVnode(move)
-		
-		commandName = self.parent.headString()
-		command = getattr(c,commandName)
-		command()
-	
-		assert(u.compareOutlines(self.before,self.after))
-		c.undoer.undo()
-		assert(u.compareOutlines(self.before,self.ref))
-		c.undoer.redo()
-		assert(u.compareOutlines(self.before,self.after))
-		c.undoer.undo()
-		assert(u.compareOutlines(self.before,self.ref))
-	#@nonl
-	#@-node:outlineCommand
-	#@+node:runTest
-	def runTest(self):
-	
-		self.outlineCommand()
-	#@nonl
-	#@-node:runTest
-	#@+node:setUp
-	def setUp(self,*args,**keys):
-	
-		assert(self.before)
-		assert(self.after)
-		assert(self.ref)
-		assert(self.u.compareOutlines(self.before,self.ref))
-		
-		# Batch mode bugs: meaning of move may depend on visibility.
-		self.parent.parent().expand()
-		self.parent.expand()
-		self.before.expand()
-		self.after.expand()
-	#@nonl
-	#@-node:setUp
-	#@+node:tearDown
-	def tearDown (self):
-	
-		c = self.c ; u = self.u
-	
-		if not u.compareOutlines(self.before,self.ref):
-			u.replaceOutline(c,self.before,self.ref)
-	
-		self.before.contract()
-		self.after.contract()
-		self.parent.contract()
-		self.parent.parent().contract()
-	
-		self.c.selectVnode(self.old_v)
-	#@nonl
-	#@-node:tearDown
-	#@+node: makePluginsSuite
-	def makePluginsSuite(verbose=false,*args,**keys):
-		
-		"""Create an plugins test for every .py file in the plugins directory."""
-		
-		plugins_path = os_path_join(app.loadDir,"..","plugins")
-		
-		files = glob.glob(os_path_join(plugins_path,"*.py"))
-		files = [os_path_abspath(file) for file in files]
-		files.sort()
-	
-		# Create the suite and add all test cases.
-		suite = unittest.makeSuite(unittest.TestCase)
-		
-		for file in files:
-			test = pluginTestCase(file,verbose)
-			suite.addTest(test)
-	
-		return suite
-	#@-node: makePluginsSuite
-	#@+node:class pluginTestCase
-	class pluginTestCase(unittest.TestCase):
-		
-		"""Unit tests for one Leo plugin."""
-		
-		#@	@+others
-		#@-others
-	#@nonl
-	#@-node:class pluginTestCase
-	#@+node:__init__
-	def __init__ (self,fileName,verbose):
-		
-		# Init the base class.
-		unittest.TestCase.__init__(self)
-	
-		self.fileName = fileName
-		self.oldGui = None
-		self.verbose = verbose
-	#@nonl
-	#@-node:__init__
-	#@+node:pluginTest
-	def pluginTest (self):
-		
-		# Duplicate the import logic in leoPlugins.py.
-		
-		fileName = toUnicode(self.fileName,app.tkEncoding)
-		path = os_path_join(app.loadDir,"..","plugins")
-		
-		if self.verbose:
-			trace(str(shortFileName(fileName)))
-	
-		module = importFromPath(fileName,path)
-		assert(module)
-		
-		# Run any unit tests in the module itself.
-		if hasattr(module,"unitTest"):
-			
-			if self.verbose:
-				trace("Executing unitTest in %s..." % str(shortFileName(fileName)))
-	
-			module.unitTest()
-	#@nonl
-	#@-node:pluginTest
-	#@+node:runTest
-	def runTest(self):
-	
-		self.pluginTest()
-	#@nonl
-	#@-node:runTest
-	#@+node:setUp
-	def setUp(self,*args,**keys):
-	
-		self.oldGui = app.gui
-		# app.gui = leoTkinterGui.tkinterGui()
-	#@nonl
-	#@-node:setUp
-	#@+node:shortDescription
-	def shortDescription (self):
-		
-		return "pluginTestCase: " + self.fileName
-	#@nonl
-	#@-node:shortDescription
-	#@+node:tearDown
-	def tearDown (self):
-	
-		app.gui = self.oldGui
-	#@nonl
-	#@-node:tearDown
-	#@-others
-#@nonl
-#@-node:class outlineTestCase
 #@-others
-#@nonl
-#@-node:@file leoTest.py
+#@-node:@file ..\src\leoTest.py
 #@-leo

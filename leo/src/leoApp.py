@@ -5,9 +5,9 @@
 
 #@@language python
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
-import leoTkinterGui # Tk is the default gui.
 import os,sys
 
 class LeoApp:
@@ -22,18 +22,22 @@ class LeoApp:
 	
 		# These ivars are the global vars of this program.
 		self.afterHandler = None
-		self.batchMode = false # True: run in batch mode.
+		self.batchMode = false # true: run in batch mode.
 		self.commandName = None # The name of the command being executed.
 		self.config = None # The leoConfig instance.
+		self.copies = 0 # Number of calls to position.copy
+		self.debug = false # True: enable extra debugging tests (not used at present).
+			# WARNING: this could greatly slow things down.
+		self.disableSave = false
 		self.globalWindows = []
 		self.gui = None # The gui class.
-		self.hasOpenWithMenu = false # True: open with plugin has been loaded.
+		self.hasOpenWithMenu = false # true: open with plugin has been loaded.
 		self.hookError = false # true: suppress further calls to hooks.
 		self.hookFunction = None # Application wide hook function.
 		self.idle_imported = false # true: we have done an import idle
 		self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
 		self.idleTimeHook = false # true: the global idleTimeHookHandler will reshedule itself.
-		self.initing = true # True: we are initiing the app.
+		self.initing = true # true: we are initiing the app.
 		self.killed = false # true: we are about to destroy the root window.
 		self.leoID = None # The id part of gnx's.
 		self.loadDir = None # The directory from which Leo was loaded.
@@ -47,17 +51,17 @@ class LeoApp:
 		self.openWithFiles = [] # List of data used by Open With command.
 		self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
 		self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
-		self.quitting = false # True if quitting.  Locks out some events.
+		self.quitting = false # true if quitting.  Locks out some events.
 		self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
 		self.root = None # The hidden main window. Set later.
 		self.searchDict = {} # For communication between find/change scripts.
 		self.scriptDict = {} # For communication between Execute Script command and scripts.
-		self.trace = false # True: enable debugging traces.
+		self.trace = false # true: enable debugging traces.
 		self.trace_list = [] # "Sherlock" argument list for tracing().
 		self.tkEncoding = "utf-8"
 		self.unicodeErrorGiven = true # true: suppres unicode tracebacks.
 		self.unitTestDict = {} # For communication between unit tests and code.
-		self.use_gnx = true # True: generate gnx's instead of tnode indices.
+		self.use_gnx = true # true: generate gnx's instead of tnode indices.
 		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 	
 		# Global panels.  Destroyed when Leo ends.
@@ -137,28 +141,28 @@ class LeoApp:
 		
 		Return false if the user veto's the close."""
 		
-		app = self ; c = frame.c
+		c = frame.c
 	
 		if c.changed:
 			veto = frame.promptForSave()
 			# print "veto",veto
 			if veto: return false
 	
-		app.setLog(None) # no log until we reactive a window.
+		g.app.setLog(None) # no log until we reactive a window.
 		
-		doHook("close-frame",c=c) # This may remove frame from the window list.
+		g.doHook("close-frame",c=c) # This may remove frame from the window list.
 		
-		if frame in app.windowList:
-			app.destroyWindow(frame)
+		if frame in g.app.windowList:
+			g.app.destroyWindow(frame)
 		
-		if app.windowList:
+		if g.app.windowList:
 			# Pick a window to activate so we can set the log.
-			w = app.windowList[0]
+			w = g.app.windowList[0]
 			w.deiconify()
 			w.lift()
-			app.setLog(w.log)
+			g.app.setLog(w.log)
 		else:
-			app.finishQuit()
+			g.app.finishQuit()
 	
 		return true # The window has been closed.
 	#@-node:app.closeLeoWindow
@@ -167,13 +171,14 @@ class LeoApp:
 		
 		"""A convenience routines for plugins to create the default Tk gui class."""
 		
-		app = self
-		app.gui = leoTkinterGui.tkinterGui()
-		app.root = app.gui.createRootWindow()
-		app.gui.finishCreate()
+		import leoTkinterGui # Do this import after app module is fully imported.
+	
+		g.app.gui = leoTkinterGui.tkinterGui()
+		g.app.root = g.app.gui.createRootWindow()
+		g.app.gui.finishCreate()
 		
 		if fileName:
-			print "Tk gui created in", shortFileName(fileName)
+			print "Tk gui created in", g.shortFileName(fileName)
 	#@nonl
 	#@-node:app.createTkGui
 	#@+node:app.destroyAllGlobalWindows
@@ -187,7 +192,7 @@ class LeoApp:
 		self.findFrame = None
 		self.pythonFrame = None
 			
-		doHook("destroy-all-global-windows")
+		g.doHook("destroy-all-global-windows")
 	#@-node:app.destroyAllGlobalWindows
 	#@+node:app.destroyAllOpenWithFiles
 	def destroyAllOpenWithFiles (self):
@@ -196,15 +201,13 @@ class LeoApp:
 		
 		This may fail if the files are still open."""
 		
-		# We can't use es here because the log stream no longer exists.
-	
-		app = self
+		# We can't use g.es here because the log stream no longer exists.
 	
 		for dict in self.openWithFiles[:]: # 7/10/03.
-			app.destroyOpenWithFileWithDict(dict)
+			g.app.destroyOpenWithFileWithDict(dict)
 			
 		# Delete the list so the gc can recycle Leo windows!
-		app.openWithFiles = []
+		g.app.openWithFiles = []
 	#@nonl
 	#@-node:app.destroyAllOpenWithFiles
 	#@+node:app.destroyOpenWithFilesForFrame
@@ -212,41 +215,35 @@ class LeoApp:
 		
 		"""Close all "Open With" files associated with frame"""
 		
-		app = self
-		
 		# Make a copy of the list: it may change in the loop.
-		openWithFiles = app.openWithFiles
+		openWithFiles = g.app.openWithFiles
 	
 		for dict in openWithFiles[:]: # 6/30/03
 			c = dict.get("c")
 			if c.frame == frame:
-				app.destroyOpenWithFileWithDict(dict)
+				g.app.destroyOpenWithFileWithDict(dict)
 	#@-node:app.destroyOpenWithFilesForFrame
 	#@+node:app.destroyOpenWithFileWithDict
 	def destroyOpenWithFileWithDict (self,dict):
 		
-		app = self
-		
 		path = dict.get("path")
-		if path and os_path_exists(path):
+		if path and g.os_path_exists(path):
 			try:
 				os.remove(path)
-				print "deleting temp file:", shortFileName(path)
+				print "deleting temp file:", g.shortFileName(path)
 			except:
 				print "can not delete temp file:", path
 				
 		# Remove dict from the list so the gc can recycle the Leo window!
-		app.openWithFiles.remove(dict)
+		g.app.openWithFiles.remove(dict)
 	#@nonl
 	#@-node:app.destroyOpenWithFileWithDict
 	#@+node:app.destroyWindow
 	def destroyWindow (self,frame):
-		
-		app = self
 			
-		app.destroyOpenWithFilesForFrame(frame)
+		g.app.destroyOpenWithFilesForFrame(frame)
 	
-		app.windowList.remove(frame)
+		g.app.windowList.remove(frame)
 	
 		# force the window to go away now.
 		frame.destroySelf() 
@@ -259,18 +256,18 @@ class LeoApp:
 		
 		if self.afterHandler != None:
 			# print "finishQuit: cancelling",self.afterHandler
-			if app.gui.guiName() == "tkinter":
+			if g.app.gui.guiName() == "tkinter":
 				self.root.after_cancel(self.afterHandler)
 			self.afterHandler = None
 	
 		# Wait until everything is quiet before really quitting.
-		doHook("end1")
+		g.doHook("end1")
 	
 		self.destroyAllGlobalWindows()
 		
 		self.destroyAllOpenWithFiles()
 		
-		app.gui.destroySelf()
+		g.app.gui.destroySelf()
 	#@-node:app.finishQuit
 	#@+node:app.forceShutdown
 	def forceShutdown (self):
@@ -291,16 +288,14 @@ class LeoApp:
 	#@+node:app.onQuit
 	def onQuit (self):
 		
-		app = self
+		g.app.quitting = true
 		
-		app.quitting = true
-		
-		while app.windowList:
-			w = app.windowList[0]
-			if not app.closeLeoWindow(w):
+		while g.app.windowList:
+			w = g.app.windowList[0]
+			if not g.app.closeLeoWindow(w):
 				break
 	
-		app.quitting = false # If we get here the quit has been disabled.
+		g.app.quitting = false # If we get here the quit has been disabled.
 	
 	
 	#@-node:app.onQuit
@@ -308,49 +303,49 @@ class LeoApp:
 	#@+at 
 	#@nonl
 	# According to Martin v. Löwis, getdefaultlocale() is broken, and cannot 
-	# be fixed. The workaround is to copy the getpreferredencoding() function 
-	# from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
+	# be fixed. The workaround is to copy the g.getpreferredencoding() 
+	# function from locale.py in Python 2.3a2.  This function is now in 
+	# leoGlobals.py.
 	#@-at
 	#@@c
 	
 	def setEncoding (self):
 		
-		"""Set app.tkEncoding."""
+		"""Set g.app.tkEncoding."""
 	
 		for (encoding,src) in (
 			(self.config.tkEncoding,"config"),
 			#(locale.getdefaultlocale()[1],"locale"),
-			(getpreferredencoding(),"locale"),
+			(g.getpreferredencoding(),"locale"),
 			(sys.getdefaultencoding(),"sys"),
 			("utf-8","default")):
 		
-			if isValidEncoding (encoding): # 3/22/03
+			if g.isValidEncoding (encoding): # 3/22/03
 				self.tkEncoding = encoding
-				# trace(self.tkEncoding,src)
+				# g.trace(self.tkEncoding,src)
 				break
 			elif encoding and len(encoding) > 0:
-				trace("ignoring invalid " + src + " encoding: " + `encoding`)
+				g.trace("ignoring invalid " + src + " encoding: " + `encoding`)
 				
-		color = choose(self.tkEncoding=="ascii","red","blue")
+		color = g.choose(self.tkEncoding=="ascii","red","blue")
 	#@nonl
 	#@-node:app.setEncoding
 	#@+node:app.setLeoID
 	def setLeoID (self):
-		
-		app = self
+	
 		tag = ".leoID.txt"
-		loadDir = app.loadDir
-		configDir = app.config.configDir
+		loadDir = g.app.loadDir
+		configDir = g.app.config.configDir
 		#@	<< return if we can set self.leoID from sys.leoID >>
 		#@+node:<< return if we can set self.leoID from sys.leoID>>
 		# This would be set by in Python's sitecustomize.py file.
 		try:
-			app.leoID = sys.leoID
-			if not app.batchMode:
-				es("leoID = " + app.leoID, color="orange")
+			g.app.leoID = sys.leoID
+			if not g.app.batchMode:
+				g.es("leoID = " + g.app.leoID, color="orange")
 			return
 		except:
-			app.leoID = None
+			g.app.leoID = None
 		#@nonl
 		#@-node:<< return if we can set self.leoID from sys.leoID>>
 		#@nl
@@ -358,33 +353,33 @@ class LeoApp:
 		#@+node:<< return if we can set self.leoID from "leoID.txt" >>
 		for dir in (configDir,loadDir):
 			try:
-				fn = os_path_join(dir, tag)
+				fn = g.os_path_join(dir, tag)
 				f = open(fn,'r')
 				if f:
 					s = f.readline()
 					f.close()
 					if s and len(s) > 0:
-						app.leoID = s
-						es("leoID = " + app.leoID, color="red")
+						g.app.leoID = s
+						g.es("leoID = " + g.app.leoID, color="red")
 						return
 					else:
-						es("empty " + tag + " in " + dir, color = "red")
+						g.es("empty " + tag + " in " + dir, color = "red")
 			except:
-				app.leoID = None
+				g.app.leoID = None
 		
 		if configDir == loadDir:
-			es(tag + " not found in " + loadDir, color="red")
+			g.es(tag + " not found in " + loadDir, color="red")
 		else:
-			es(tag + " not found in " + configDir + " or " + loadDir, color="red")
+			g.es(tag + " not found in " + configDir + " or " + loadDir, color="red")
 		
 		#@-node:<< return if we can set self.leoID from "leoID.txt" >>
 		#@nl
 		#@	<< put up a dialog requiring a valid id >>
 		#@+node:<< put up a dialog requiring a valid id >>
-		app.gui.runAskLeoIDDialog() # New in 4.1: get an id for gnx's.  Plugins may set app.leoID.
-		trace(app.leoID)
+		g.app.gui.runAskLeoIDDialog() # New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
+		g.trace(g.app.leoID)
 		
-		es("leoID = " + `app.leoID`, color="blue")
+		g.es("leoID = " + `g.app.leoID`, color="blue")
 		#@nonl
 		#@-node:<< put up a dialog requiring a valid id >>
 		#@nl
@@ -393,19 +388,19 @@ class LeoApp:
 		for dir in (configDir,loadDir):
 			try:
 				# Look in configDir first.
-				fn = os_path_join(dir, tag)
+				fn = g.os_path_join(dir, tag)
 				f = open(fn,'w')
 				if f:
-					f.write(app.leoID)
+					f.write(g.app.leoID)
 					f.close()
-					es("created leoID.txt in " + dir, color="red")
+					g.es("created leoID.txt in " + dir, color="red")
 					return
 			except: pass
 			
 		if configDir == loadDir:
-			es("can not create leoID.txt in " + loadDir, color="red")
+			g.es("can not create leoID.txt in " + loadDir, color="red")
 		else:
-			es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
+			g.es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
 		
 		#@-node:<< attempt to create leoID.txt >>
 		#@nl
@@ -433,7 +428,7 @@ class LeoApp:
 	
 		if self.log:
 			for s,color in self.logWaiting:
-				es(s,color=color,newline=0) # The caller must write the newlines.
+				g.es(s,color=color,newline=0) # The caller must write the newlines.
 			self.logWaiting = []
 	#@-node:app.writeWaitingLog
 	#@-others

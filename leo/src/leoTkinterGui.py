@@ -5,12 +5,16 @@
 
 """Leo's Tkinter Gui module."""
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
+
 import leoGui
 import leoTkinterColorPanels,leoTkinterComparePanel,leoTkinterDialog
 import leoTkinterFind,leoTkinterFontPanel,leoTkinterFrame
 import leoTkinterPrefs
 import tkFont,Tkinter,tkFileDialog
+
+import string,sys
 
 Tk = Tkinter
 
@@ -35,7 +39,7 @@ class tkinterGui(leoGui.leoGui):
 					import win32clipboard
 					self.win32clipboard = win32clipboard
 				except:
-					es_exception()
+					g.es_exception()
 	#@nonl
 	#@-node: tkinterGui.__init__
 	#@+node:createRootWindow & allies
@@ -48,7 +52,7 @@ class tkinterGui(leoGui.leoGui):
 		root.withdraw()
 		
 		self.setDefaultIcon()
-		self.getDefaultConfigFont(app.config)
+		self.getDefaultConfigFont(g.app.config)
 		self.createGlobalWindows()
 	
 		return root
@@ -65,17 +69,17 @@ class tkinterGui(leoGui.leoGui):
 	
 		try:
 			version = gui.root.getvar("tk_patchLevel")
-			if CheckVersion(version,"8.4.3") and sys.platform == "win32": # 12/2/03
+			if g.CheckVersion(version,"8.4.3") and sys.platform == "win32": # 12/2/03
 				# tk 8.4.3 or greater: load a 16 by 16 icon.
-				path = os_path_join(app.loadDir,"..","Icons")
-				if os_path_exists(path):
-					file = os_path_join(path,"LeoApp16.ico")
-					if os_path_exists(path):
+				path = g.os_path_join(g.app.loadDir,"..","Icons")
+				if g.os_path_exists(path):
+					file = g.os_path_join(path,"LeoApp16.ico")
+					if g.os_path_exists(path):
 						self.bitmap = Tkinter.BitmapImage(file)
 					else:
-						es("LeoApp16.ico not in Icons directory", color="red")
+						g.es("LeoApp16.ico not in Icons directory", color="red")
 				else:
-					es("Icons directory not found: "+path, color="red")
+					g.es("Icons directory not found: "+path, color="red")
 		except:
 			print "exception setting bitmap"
 			import traceback ; traceback.print_exc()
@@ -98,8 +102,8 @@ class tkinterGui(leoGui.leoGui):
 		
 		"""Create the global windows for the application."""
 	
-		app.findFrame = app.gui.createFindPanel()
-		app.globalWindows.append(app.findFrame)
+		g.app.findFrame = g.app.gui.createFindPanel()
+		g.app.globalWindows.append(g.app.findFrame)
 	#@nonl
 	#@-node:createGlobalWindows
 	#@+node:destroySelf
@@ -139,7 +143,7 @@ class tkinterGui(leoGui.leoGui):
 	
 		"""Run tkinter's main loop."""
 	
-		# trace("tkinterGui")
+		# g.trace("tkinterGui")
 		self.root.mainloop()
 	#@nonl
 	#@-node:runMainLoop
@@ -150,7 +154,7 @@ class tkinterGui(leoGui.leoGui):
 		return d.run(modal=false)
 		
 	def runAskLeoIDDialog(self):
-		"""Create and run a dialog to get app.LeoID."""
+		"""Create and run a dialog to get g.app.LeoID."""
 		d = leoTkinterDialog.tkinterAskLeoID()
 		return d.run(modal=true)
 	
@@ -232,7 +236,7 @@ class tkinterGui(leoGui.leoGui):
 	#@+node:replaceClipboardWith
 	def replaceClipboardWith (self,s):
 		
-		wcb = app.gui.win32clipboard
+		wcb = g.app.gui.win32clipboard
 	
 		if wcb:
 			try:
@@ -241,7 +245,7 @@ class tkinterGui(leoGui.leoGui):
 				wcb.SetClipboardText(s)
 				wcb.CloseClipboard()
 			except:
-				es_exception()
+				g.es_exception()
 		else:
 			self.root.clipboard_clear()
 			self.root.clipboard_append(s)
@@ -250,20 +254,20 @@ class tkinterGui(leoGui.leoGui):
 	#@+node:getTextFromClipboard
 	def getTextFromClipboard (self):
 		
-		wcb = app.gui.win32clipboard
+		wcb = g.app.gui.win32clipboard
 		
 		if wcb:
 			try:
 				wcb.OpenClipboard(0)
 				data = wcb.GetClipboardData()
 				wcb.CloseClipboard()
-				# trace(data)
+				# g.trace(data)
 				return data
 			except TypeError:
-				# trace(None)
+				# g.trace(None)
 				return None
 			except:
-				es_exception()
+				g.es_exception()
 				return None
 		else:
 			try:
@@ -364,7 +368,7 @@ class tkinterGui(leoGui.leoGui):
 		
 		"""Set the focus of the widget in the given commander if it needs to be changed."""
 		
-		# trace(c)
+		# g.trace(c)
 		
 		if widget:
 			widget.focus_set()
@@ -383,14 +387,14 @@ class tkinterGui(leoGui.leoGui):
 		
 		try:
 			font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
-			# if app.trace: trace(font)
+			# if g.app.trace: g.trace(font)
 			return font
 		except:
-			es("exception setting font from " + `family_name`)
-			es("family,size,slant,weight:"+
+			g.es("exception setting font from " + `family_name`)
+			g.es("family,size,slant,weight:"+
 				`family`+':'+`size`+':'+`slant`+':'+`weight`)
-			# es_exception() # 12/15/03: This just confuses people.
-			return app.config.defaultFont
+			# g.es_exception() # 12/15/03: This just confuses people.
+			return g.app.config.defaultFont
 	#@nonl
 	#@-node:tkGui.getFontFromParams
 	#@+node:attachLeoIcon & createLeoIcon
@@ -434,8 +438,8 @@ class tkinterGui(leoGui.leoGui):
 				w.bind("<Visibility>",visibilityCallback)
 				if not self.leoIcon:
 					# Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
-					icon_file_name = os_path_join(app.loadDir,'..','Icons','LeoWin.gif')
-					icon_file_name = os_path_normpath(icon_file_name)
+					icon_file_name = g.os_path_join(g.app.loadDir,'..','Icons','LeoWin.gif')
+					icon_file_name = g.os_path_normpath(icon_file_name)
 					icon_image = Image.open(icon_file_name)
 					if 1: # Doesn't resize.
 						self.leoIcon = self.createLeoIcon(icon_image)
@@ -484,7 +488,7 @@ class tkinterGui(leoGui.leoGui):
 	#@+node:setIdleTimeHook
 	def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
 		
-		# trace(idleTimeHookHandler)
+		# g.trace(idleTimeHookHandler)
 		if self.root:
 			self.root.after_idle(idleTimeHookHandler,*args,**keys)
 			
@@ -493,7 +497,7 @@ class tkinterGui(leoGui.leoGui):
 	def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
 		
 		if self.root:
-			app.root.after(app.idleTimeDelay,idleTimeHookHandler)
+			g.app.root.after(g.app.idleTimeDelay,idleTimeHookHandler)
 	#@nonl
 	#@-node:setIdleTimeHookAfterDelay
 	#@+node:firstIndex
@@ -518,13 +522,13 @@ class tkinterGui(leoGui.leoGui):
 	
 		newpos = t.index("%s+%dc" % (index,n))
 		
-		return choose(t.compare(newpos,"==","end"),None,newpos)
+		return g.choose(t.compare(newpos,"==","end"),None,newpos)
 		
 	def moveIndexToNextLine(self,t,index):
 	
 		newpos = t.index("%s linestart + 1lines" % (index))
 		
-		return choose(t.compare(newpos,"==","end"),None,newpos)
+		return g.choose(t.compare(newpos,"==","end"),None,newpos)
 	#@nonl
 	#@-node:moveIndexForward & moveIndexToNextLine
 	#@+node:compareIndices
@@ -578,13 +582,13 @@ class tkinterGui(leoGui.leoGui):
 	#@+node:setSelectionRange
 	def setSelectionRange(self,t,n1,n2):
 	
-		return app.gui.setTextSelection(t,n1,n2)
+		return g.app.gui.setTextSelection(t,n1,n2)
 	#@nonl
 	#@-node:setSelectionRange
 	#@+node:setSelectionRangeWithLength
 	def setSelectionRangeWithLength(self,t,start,length):
 		
-		return app.gui.setTextSelection(t,start,start + "+" + `length` + "c")
+		return g.app.gui.setTextSelection(t,start,start + "+" + `length` + "c")
 	#@-node:setSelectionRangeWithLength
 	#@+node:setTextSelection
 	def setTextSelection (self,t,start,end):
@@ -612,7 +616,7 @@ class tkinterGui(leoGui.leoGui):
 		if s is None:
 			return u""
 		else:
-			return toUnicode(s,app.tkEncoding)
+			return g.toUnicode(s,g.app.tkEncoding)
 	#@nonl
 	#@-node:getAllText
 	#@+node:getCharAfterIndex
@@ -622,13 +626,13 @@ class tkinterGui(leoGui.leoGui):
 			return None
 		else:
 			ch = t.get(index + "+1c")
-			return toUnicode(ch,app.tkEncoding)
+			return g.toUnicode(ch,g.app.tkEncoding)
 	#@nonl
 	#@-node:getCharAfterIndex
 	#@+node:getCharAtIndex
 	def getCharAtIndex (self,t,index):
 		ch = t.get(index)
-		return toUnicode(ch,app.tkEncoding)
+		return g.toUnicode(ch,g.app.tkEncoding)
 	#@nonl
 	#@-node:getCharAtIndex
 	#@+node:getCharBeforeIndex
@@ -639,14 +643,14 @@ class tkinterGui(leoGui.leoGui):
 			return None
 		else:
 			ch = t.get(index + "-1c")
-			return toUnicode(ch,app.tkEncoding)
+			return g.toUnicode(ch,g.app.tkEncoding)
 	#@nonl
 	#@-node:getCharBeforeIndex
 	#@+node:getLineContainingIndex
 	def getLineContainingIndex (self,t,index):
 	
 		line = t.get(index + " linestart", index + " lineend")
-		return toUnicode(line,app.tkEncoding)
+		return g.toUnicode(line,g.app.tkEncoding)
 	#@nonl
 	#@-node:getLineContainingIndex
 	#@+node:replaceSelectionRangeWithText (leoTkinterGui)

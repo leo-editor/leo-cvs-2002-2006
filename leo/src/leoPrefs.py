@@ -2,7 +2,9 @@
 #@+node:@file leoPrefs.py
 #@@language python
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
+
 import string
 	
 class leoPrefs:
@@ -46,7 +48,7 @@ class leoPrefs:
 		self.target_language = self.default_target_language
 	
 		self.init(c)
-		# es("Prefs.__init__")
+		# g.es("Prefs.__init__")
 	#@nonl
 	#@-node:prefs.__init__
 	#@+node:prefs.init
@@ -55,12 +57,12 @@ class leoPrefs:
 	def init(self,c):
 	
 		self.c = c
-		#trace(`c.tab_width`)
+		#g.trace(`c.tab_width`)
 	
 		for var in self.ivars:
 			val = getattr(c,var)
 			setattr(self,var,val)
-			# trace(val,var)
+			# g.trace(val,var)
 	
 		#@	<< remember values for revert >>
 		#@+node:<< remember values for revert >>
@@ -110,7 +112,7 @@ class leoPrefs:
 		
 	def oops(self):
 		print ("leoPrefs oops:",
-			callerName(2),
+			g.callerName(2),
 			"should be overridden in subclass")
 	#@nonl
 	#@-node:Must be overridden in subclasses
@@ -120,7 +122,7 @@ class leoPrefs:
 		"""Debugging routine for Prefs panel."""
 		
 		for var in self.ivars:
-			trace(var, getattr(self,var))
+			g.trace(var, getattr(self,var))
 	#@nonl
 	#@-node:printIvars
 	#@-others
