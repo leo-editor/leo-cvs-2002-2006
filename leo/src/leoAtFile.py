@@ -16,7 +16,6 @@ if g.app.config.use_psyco:
     
 import leoColor
 import leoNodes
-import filecmp
 import os
 import string
 import time
@@ -427,9 +426,11 @@ class baseAtFile:
                             if p.v.isDirty():
                                 p.setAllAncestorAtFileNodesDirty()
                         else:
+                            p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+                            
+                        if not thinFile or (thinFile and p.v.isDirty()):
                             g.es("changed: " + p.headString(),color="blue")
                             p.setMarked()
-                            p.setBodyStringOrPane(s) # Sets v and v.c dirty.
                 #@nonl
                 #@-node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
                 #@nl
@@ -2789,7 +2790,6 @@ class baseOldDerivedFile:
         
         self.fileChangedFlag = False
         if g.os_path_exists(self.targetFileName):
-            # if filecmp.cmp(self.outputFileName,self.targetFileName):
             if self.compareFilesIgnoringLineEndings(
                 self.outputFileName,self.targetFileName):
                 #@            << delete the output file >>
@@ -4052,8 +4052,8 @@ class baseNewDerivedFile(oldDerivedFile):
                 old = None
             if old:
                 g.es("Warning: updating cloned text",color="blue")
-                g.es("old...\n%s\n" % old)
-                g.es("new...\n%s\n" % s)
+                #g.es("old...\n%s\n" % old)
+                #g.es("new...\n%s\n" % s)
                 at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
                 at.c.setChanged(True)
             at.t.tempBodyString = s
