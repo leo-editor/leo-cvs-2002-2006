@@ -33,16 +33,14 @@ import leoPlugins
 import leoImport
 import leoCommands
 
-import Tkinter
-
-import tkFileDialog
+tkFileDialog = g.importExtension('tkFileDialog',pluginName=__name__,verbose=True)
 
 import os
-
+#@nonl
 #@-node:ekr.20050301083306.2:<< imports >>
 #@nl
 
-__version__ = '1.4'
+__version__ = '1.5'
 #@<< version history >>
 #@+node:ekr.20050301083306.3:<< version history >>
 #@@killcolor
@@ -60,6 +58,9 @@ __version__ = '1.4'
 #     - Used g.os_path functions to support Unicode properly.
 #     - Added '@first # -*- coding: utf-8 -*-' to suppress deprecation 
 # warning.
+# 1.5 EKR:
+#     - use g.importExtension to import tkFileDialog.
+#     - Redraw the screen only once (in readDir instead of importDir).
 #@-at
 #@nonl
 #@-node:ekr.20050301083306.3:<< version history >>
@@ -116,7 +117,7 @@ class controller:
             
         # fr - Modifier pour adapter à votre environnement
         # en - Change it to select the starting browsing directory
-        startdir = "/home/"
+        c = self.c ; startdir = "/home/"
         
         if language == 'french':
             titledialog = "Choisir le répertoire..."
@@ -128,10 +129,12 @@ class controller:
         
         if dirName and len(dirName) > 0:
             g.es(dirName)
-            compteurglobal = 0 ; compteur = 0
-            compteur, compteurglobal = self.importDir(dirName,compteur,compteurglobal)
+            c.beginUpdate() # EKR: doing this here saves lots of time.
+            compteur, compteurglobal = self.importDir(dirName,compteur=0,compteurglobal=0)
+            c.endUpdate(False)
+            c.selectVnode(c.currentVnode())
+            c.frame.tree.redraw_now()
             self.esfm("\n")
-            
             if language == 'french':
                 g.es(str(compteurglobal)+" fichiers traités.")
             else:
@@ -141,14 +144,16 @@ class controller:
     def esfm (self,chaine,**keys):
     
         """ Pour imprimer une chaîne de caractères sans retour à la ligne """
+        
+        if 1: # No longer needed so much now that we don't redraw as much.
     
-        color = keys.get('color')
-    
-        if g.app.log:
-            g.app.log.put(chaine,color=color)
-        else:
-            g.app.logWaiting.append((chaine,color),) # 2/16/03
-            print chaine,
+            color = keys.get('color')
+        
+            if g.app.log:
+                g.app.log.put(chaine,color=color)
+            else:
+                g.app.logWaiting.append((chaine,color),)
+                print chaine,
     #@nonl
     #@-node:ekr.20050301083306.9:esfm
     #@+node:ekr.20050301083306.10:importDir
@@ -166,7 +171,6 @@ class controller:
         head,tail = g.os_path_split(dir)
         c = self.c ; v = c.currentVnode()
         try:
-            c.beginUpdate()
             #ici, on liste le contenu du répertoire
             body=""
             #@        << listdir >>
@@ -178,7 +182,6 @@ class controller:
                     if compteur == 25:
                         self.esfm("\n")
                         compteur = 0
-                        
                     # mettre ici le code de création des noeuds
                     path = g.os_path_join(dir,f)
                     # est-ce un fichier ?
@@ -206,8 +209,6 @@ class controller:
                 for d in dossiers:
                     compteur,compteurglobal = self.importDir(d,compteur,compteurglobal)
             c.setChanged(True)
-            c.endUpdate(False)
-            c.frame.tree.redraw_now()
             #sélectionne le noeud parent
             c.selectVnode(v)
         except:
