@@ -1269,13 +1269,23 @@ class atFile:
 		#@+body
 		# This code will typically only be executed for HTML files.
 		
-		if 0: ## must be rewritten
-			if not single:
-				# Remove the ending block delimiter.
-				delim = list('\n' + self.endSentinelComment + '\n')
-				if out[-len(delim):] == delim:
-					# Rewrite the stream.
-					out = out[:-len(delim)]
+		if not single:
+		
+			delim = self.endSentinelComment
+			n = len(delim)
+			
+			# Remove delim and possible a leading newline.
+			s = string.join(out,"")
+			s = string.rstrip(s)
+			if s[-n:] == delim:
+				s = s[:-n]
+			if s[-1] == '\n':
+				s = s[:-1]
+				
+			# Rewrite out in place.
+			del out[:]
+			out.append(s)
+		
 		#@-body
 		#@-node:6::<< Remove a closing block delim from out >>
 	#@-body
