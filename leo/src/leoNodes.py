@@ -223,7 +223,7 @@ import string,time,types
 
 #@+others
 #@+node:class tnode
-class baseTnode:
+class baseTnode (object):
 	"""The base class of the tnode class."""
 	#@	<< tnode constants >>
 	#@+node:<< tnode constants >>
@@ -370,7 +370,7 @@ class tnode (baseTnode):
 #@nonl
 #@-node:class tnode
 #@+node:class vnode
-class baseVnode:
+class baseVnode (object):
 	"""The base class of the vnode class."""
 	#@	<< vnode constants >>
 	#@+node:<< vnode constants >>
@@ -462,6 +462,28 @@ class baseVnode:
 		else: return ""
 	#@nonl
 	#@-node:afterHeadlineMatch
+	#@+node:anyAtFileNodeName
+	def anyAtFileNodeName (self):
+		
+		"""Return the file name following an @file node or an empty string."""
+		
+		# New in 4.2: do the fastest possible tests.
+		h = self.headString()
+	
+		if g.match(h,0,"@file"):
+			return self.afterHeadlineMatch("@file")
+		elif g.match(h,0,"@nosentinelsfile"):
+			return self.afterHeadlineMatch("@nosentinelsfile")
+		elif g.match(h,0,"@rawfile"):
+			return self.afterHeadlineMatch("@rawfile")
+		elif g.match(h,0,"@silentfile"):
+			return self.afterHeadlineMatch("@silentfile")
+		elif g.match(h,0,"@thinfile"):
+			return self.afterHeadlineMatch("@thinfile")
+		else:
+			return ""
+			
+	#@-node:anyAtFileNodeName
 	#@+node:at...FileNodeName
 	#@+at 
 	#@nonl
@@ -491,6 +513,18 @@ class baseVnode:
 		return self.nodeName("@thinfile")
 	#@nonl
 	#@-node:at...FileNodeName
+	#@+node:isAnyAtFileNode
+	def isAnyAtFileNode (self):
+		
+		"""Return true if v is any kind of @file or related node."""
+		
+		# This routine should be as fast as possible.
+		# It is called once for every vnode when writing a file.
+	
+		h = self.headString()
+		return h and h[0] == '@' and self.anyAtFileNodeName()
+	#@nonl
+	#@-node:isAnyAtFileNode
 	#@+node:isAt...FileNode
 	def isAtFileNode (self):
 		return g.choose(self.atFileNodeName(),true,false)
@@ -508,31 +542,6 @@ class baseVnode:
 		return g.choose(self.atThinFileNodeName(),true,false)
 	#@nonl
 	#@-node:isAt...FileNode
-	#@+node:isAnyAtFileNode & anyAtFileNodeName
-	def anyAtFileNodeName (self):
-		
-		"""Return the file name following an @file node or an empty string."""
-		
-		# New in 4.2: do the fastest possible tests.
-		h = self.headString()
-	
-		if g.match(h,0,"@file"):
-			return self.afterHeadlineMatch("@file")
-		elif g.match(h,0,"@nosentinelsfile"):
-			return self.afterHeadlineMatch("@nosentinelsfile")
-		elif g.match(h,0,"@rawfile"):
-			return self.afterHeadlineMatch("@rawfile")
-		elif g.match(h,0,"@silentfile"):
-			return self.afterHeadlineMatch("@silentfile")
-		elif g.match(h,0,"@thinfile"):
-			return self.afterHeadlineMatch("@thinfile")
-		else:
-			return ""
-			
-	def isAnyAtFileNode (self):
-		return g.choose(self.anyAtFileNodeName(),true,false)
-	#@nonl
-	#@-node:isAnyAtFileNode & anyAtFileNodeName
 	#@+node:isAtIgnoreNode
 	def isAtIgnoreNode (self):
 	
@@ -590,26 +599,21 @@ class baseVnode:
 		return self._next
 	#@nonl
 	#@-node:v.next
-	#@+node:hasChildren & hasFirstChild (new in 4.2 for compatibility with positions)
-	def hasChildren (self):
+	#@+node:v.childIndex
+	def childIndex(self):
 		
 		v = self
-		return v.firstChild()
 	
-	hasFirstChild = hasChildren
-	#@nonl
-	#@-node:hasChildren & hasFirstChild (new in 4.2 for compatibility with positions)
-	#@+node:numberOfChildren (n)
-	def numberOfChildren (self):
+		if not v._back:
+			return 0
 	
-		n = 0
-		child = self.firstChild()
-		while child:
+		n = 0 ; v = v._back
+		while v:
 			n += 1
-			child = child.next()
+			v = v._back
 		return n
 	#@nonl
-	#@-node:numberOfChildren (n)
+	#@-node:v.childIndex
 	#@+node:v.firstChild (changed for 4.2)
 	def firstChild (self):
 		
@@ -622,6 +626,15 @@ class baseVnode:
 		return self.firstChild() != None
 	#@nonl
 	#@-node:v.hasChildren
+	#@+node:v.hasChildren & hasFirstChild
+	def hasChildren (self):
+		
+		v = self
+		return v.firstChild()
+	
+	hasFirstChild = hasChildren
+	#@nonl
+	#@-node:v.hasChildren & hasFirstChild
 	#@+node:v.lastChild
 	def lastChild (self):
 	
@@ -644,6 +657,17 @@ class baseVnode:
 		return child
 	#@nonl
 	#@-node:v.nthChild
+	#@+node:v.numberOfChildren (n)
+	def numberOfChildren (self):
+	
+		n = 0
+		child = self.firstChild()
+		while child:
+			n += 1
+			child = child.next()
+		return n
+	#@nonl
+	#@-node:v.numberOfChildren (n)
 	#@+node:v.isCloned (4.2)
 	def isCloned (self):
 		
@@ -732,14 +756,23 @@ class baseVnode:
 		return self.c.currentVnode()
 	#@nonl
 	#@-node:v.currentVnode (and c.currentPosition 4.2)
-	#@+node:v.edit_text
+	#@+node:v.edit_text TO BE DELETED
 	def edit_text (self):
 	
-		v = self
-	
-		return self.c.frame.tree.getEditTextDict(v)
+		v = self ; c = v.c ; p = c.currentPosition()
+		
+		g.trace("ooooops")
+		#import traceback ; traceback.print_stack()
+		
+		pairs = self.c.frame.tree.getEditTextDict(v)
+		for p2,t2 in pairs:
+			if p.equal(p2):
+				# g.trace("found",t2)
+				return t2
+				
+		return None
 	#@nonl
-	#@-node:v.edit_text
+	#@-node:v.edit_text TO BE DELETED
 	#@+node:v.findRoot (4.2)
 	def findRoot (self):
 		
@@ -1192,12 +1225,11 @@ class baseVnode:
 class vnode (baseVnode):
 	"""A class that implements vnodes."""
 	pass
-#@nonl
 #@-node:class vnode
 #@+node:class nodeIndices
 # Indices are Python dicts containing 'id','loc','time' and 'n' keys.
 
-class nodeIndices:
+class nodeIndices (object):
 	
 	"""A class to implement global node indices (gnx's)."""
 	
@@ -1324,12 +1356,11 @@ class nodeIndices:
 	#@nonl
 	#@-node:toString
 	#@-others
-#@nonl
 #@-node:class nodeIndices
 #@+node:class position
 # Warning: this code implies substantial changes to code that uses them, both core and scripts.
 
-class position:
+class position (object):
 	
 	"""A class representing a position in a traversal of a tree containing shared tnodes."""
 
@@ -1394,15 +1425,16 @@ class position:
 		# Note: __getattr__ implements p.t.
 	#@nonl
 	#@-node:p.__init__
-	#@+node:p.__cmp__ MUCH slower than p.equal (!!)
+	#@+node:p.__cmp__
 	def __cmp__(self,p2):
 	
-		"""Return true if two postions are equivalent."""
+		"""Return 0 if two postions are equivalent."""
+	
+		# Use p.equal if speed is crucial.
 		
-		# The speed of this routine is critical!
 		p1 = self
 		
-		if p2 is None:
+		if p2 is None: # Allow tests like "p == None"
 			if p1.v: return 1 # not equal
 			else:    return 0 # equal
 	
@@ -1418,18 +1450,20 @@ class position:
 	
 		return 0 # equal
 	#@nonl
-	#@-node:p.__cmp__ MUCH slower than p.equal (!!)
+	#@-node:p.__cmp__
 	#@+node:p.equal
 	def equal(self,p2):
 	
-		"""Return true if two postions are equivalent."""
+		"""Return true if two postions are equivalent.
 		
-		# The speed of this routine is critical!
+		Use this method when the speed comparisons is crucial
+		
+		N.B. Unlike __cmp__, p2 must not be None."""
 	
 		p1 = self
 	
 		# Check entire stack quickly.
-		# The stack contains vnodes, so this is not a recursive call.
+		# The stack contains vnodes, so this does not call p.__cmp__.
 		return (
 			p1.v == p2.v and
 			p1.stack == p2.stack and
@@ -1565,7 +1599,18 @@ class position:
 	#@+node:p.edit_text
 	def edit_text (self):
 		
-		return self.v.edit_text()
+		p = self
+		
+		if self.c:
+			# New in 4.2: the dictionary is a list of pairs(p,v)
+			pairs = self.c.frame.tree.getEditTextDict(p.v)
+			for p2,t2 in pairs:
+				if p.equal(p2):
+					# g.trace("found",t2)
+					return t2
+			return None
+		else:
+			return None
 	#@nonl
 	#@-node:p.edit_text
 	#@+node:p.directParents
@@ -1573,20 +1618,12 @@ class position:
 		
 		return self.v.directParents()
 	#@-node:p.directParents
-	#@+node:p.hasChildren
-	def hasChildren(self):
-		
-		p = self
-		# g.trace(p,p.v)
-		return p.v and p.v.t and p.v.t._firstChild
-	#@nonl
-	#@-node:p.hasChildren
 	#@+node:p.childIndex
 	def childIndex(self):
 		
-		# This is time-critical code!
-		
 		p = self ; v = p.v
+		
+		# This is time-critical code!
 		
 		# 3/25/04: Much faster code:
 		if not v or not v._back:
@@ -1596,9 +1633,18 @@ class position:
 		while v:
 			n += 1
 			v = v._back
+	
 		return n
 	#@nonl
 	#@-node:p.childIndex
+	#@+node:p.hasChildren
+	def hasChildren(self):
+		
+		p = self
+		# g.trace(p,p.v)
+		return p.v and p.v.t and p.v.t._firstChild
+	#@nonl
+	#@-node:p.hasChildren
 	#@+node:p.numberOfChildren
 	def numberOfChildren (self):
 		
@@ -1968,25 +2014,6 @@ class position:
 			p.v.t.clearVisited()
 	#@nonl
 	#@-node:clearAllVisitedInTree TO POSITION
-	#@+node:p.Dirty bits (contains script)
-	if 0:
-		import leoGlobals as g
-		c = g.top()
-		p = c.currentPosition()
-		vnodeList = p.v.t.vnodeList
-		#for v in vnodeList:
-		#	print v
-		
-		ancestors = vnodeList[:]
-		for v in vnodeList:
-			parent = v._parent
-			if parent not in ancestors:
-				ancestors.append(parent)
-				
-		for a in ancestors:
-			print a
-	#@nonl
-	#@-node:p.Dirty bits (contains script)
 	#@+node:p.clearDirty
 	def clearDirty (self):
 	
@@ -2029,7 +2056,7 @@ class position:
 	#@nonl
 	#@-node:findAllPotentiallyDirtyNodes
 	#@+node:p.setAllAncestorAtFileNodesDirty
-	def setAllAncestorAtFileNodesDirty (self,verbose=false):
+	def setAllAncestorAtFileNodesDirty (self):
 	
 		p = self ; c = p.c
 		changed = false
@@ -2037,15 +2064,11 @@ class position:
 		# Calculate all nodes that are joined to v or parents of such nodes.
 		nodes = p.findAllPotentiallyDirtyNodes()
 		
-		if verbose:
-			g.trace(nodes)
-		
 		c.beginUpdate()
 		if 1: # update...
 			for v in nodes:
-				if verbose:
-					g.trace(v.isAnyAtFileNode(),v.t.isDirty(),v)
-				if v.isAnyAtFileNode() and not v.t.isDirty():
+				# g.trace(v.isAnyAtFileNode(),v.t.isDirty(),v)
+				if not v.t.isDirty() and v.isAnyAtFileNode():
 					changed = true
 					v.t.setDirty() # Do not call v.setDirty here!
 		c.endUpdate(changed)
@@ -3108,7 +3131,6 @@ class position:
 	#@nonl
 	#@-node:p.unlink
 	#@-others
-#@nonl
 #@-node:class position
 #@-others
 #@nonl
