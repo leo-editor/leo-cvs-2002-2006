@@ -1525,7 +1525,6 @@ class baseCommands:
 		if app.batchMode:
 			c.notValidInBatchMode("Convert All Blanks")
 			return
-	
 		next = v.nodeAfterTree()
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
@@ -1535,26 +1534,22 @@ class baseCommands:
 		oldSel = body.getTextSelection()
 		count = 0
 		while v and v != next:
-			vChanged = false
 			if v == current:
 				if c.convertBlanks(setUndoParams=false):
-					count += 1
+					count += 1 ; v.setDirty()
 			else:
-				result = [] ; changed = false
+				changed = false ; result = []
 				text = v.t.bodyString
 				assert(isUnicode(text))
 				lines = string.split(text, '\n')
 				for line in lines:
 					s = optimizeLeadingWhitespace(line,tabWidth)
-					if s != line:
-						changed = true
-						if not vChanged:
-							count += 1 ; vChanged = true
+					if s != line: changed = true
 					result.append(s)
 				if changed:
+					count += 1 ; v.setDirty()
 					result = string.join(result,'\n')
 					v.t.setTnodeText(result)
-			v.setDirty()
 			v = v.threadNext()
 		if count > 0:
 			newText = body.getAllText()
@@ -1564,6 +1559,7 @@ class baseCommands:
 				oldText=oldText,newText=newText,
 				oldSel=oldSel,newSel=newSel)
 		es("blanks converted to tabs in %d nodes" % count)
+	#@nonl
 	#@-node:convertAllBlanks
 	#@+node:convertAllTabs
 	def convertAllTabs (self):
@@ -1573,7 +1569,6 @@ class baseCommands:
 		if app.batchMode:
 			c.notValidInBatchMode("Convert All Tabs")
 			return
-	
 		next = v.nodeAfterTree()
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
@@ -1583,10 +1578,9 @@ class baseCommands:
 		oldSel = body.getTextSelection()
 		count = 0
 		while v and v != next:
-			vChanged = false
 			if v == current:
 				if self.convertTabs(setUndoParams=false):
-					count += 1
+					count += 1 ; v.setDirty()
 			else:
 				result = [] ; changed = false
 				text = v.t.bodyString
@@ -1595,15 +1589,12 @@ class baseCommands:
 				for line in lines:
 					i,w = skip_leading_ws_with_indent(line,0,tabWidth)
 					s = computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
-					if s != line:
-						changed = true
-						if not vChanged:
-							count += 1 ; vChanged = true
+					if s != line: changed = true
 					result.append(s)
 				if changed:
+					count += 1 ; v.setDirty()
 					result = string.join(result,'\n')
 					v.t.setTnodeText(result)
-			v.setDirty()
 			v = v.threadNext()
 		if count > 0:
 			newText = body.getAllText()
