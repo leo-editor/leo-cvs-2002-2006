@@ -359,24 +359,29 @@ class baseFileCommands:
             raise BadLeoFile("expecting" + tag)
     #@-node:EKR.20040526204706.9:getTag
     #@+node:EKR.20040526204036.1:getUnknownAttribute
-    def getUnknownAttribute(self):
+    def getUnknownAttribute(self,nodeType):
+        
+        """Parse an unknown attribute in a <v> or <t> element."""
         
         import binascii
         import pickle
         
         # New in 4.2.  The unknown tag has been pickled and hexlify'd.
         attr,val = self.getUnknownTag()
-        
-        # g.trace(attr,val)
+        if not attr:
+            return None,None
         
         try:
             bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
             val2 = pickle.loads(bin)
-        except (TypeError,pickle.UnpicklingError,ImportError):
-            # The unknownAtrribute was written before 4.2.
-            val2 = val
+            return attr,val2
     
-        return attr,val2
+        except (TypeError,pickle.UnpicklingError,ImportError):
+            # Ignore the attribute:
+            g.es("Ignoring mal-formaed %s attribute: %s" % (nodeType,attr),color="blue")
+            return None,None
+    
+       
     #@nonl
     #@-node:EKR.20040526204036.1:getUnknownAttribute
     #@+node:EKR.20040526204036:getUnknownTag
@@ -816,8 +821,8 @@ class baseFileCommands:
             elif self.matchTag(">"):         break
             else: # New for 4.0: allow unknown attributes.
                 # New in 4.2: allow pickle'd and hexlify'ed values.
-                attr,val = self.getUnknownAttribute()
-                attrDict[attr] = val
+                attr,val = self.getUnknownAttribute("tnode")
+                if attr: attrDict[attr] = val
                 
         if g.app.use_gnx:
             # index might be Tnnn, nnn, or gnx.
@@ -900,8 +905,8 @@ class baseFileCommands:
                 break
             else: # New for 4.0: allow unknown attributes.
                 # New in 4.2: allow pickle'd and hexlify'ed values.
-                attr,val = self.getUnknownAttribute()
-                attrDict[attr] = val
+                attr,val = self.getUnknownAttribute("vnode")
+                if attr: attrDict[attr] = val
         # Headlines are optional.
         if self.matchTag("<vh>"):
             headline = self.getEscapedString() ; self.getTag("</vh>")
@@ -1652,29 +1657,26 @@ class baseFileCommands:
     #@+node:EKR.20040526202501:putUnknownAttributes
     def putUnknownAttributes (self,torv):
         
+        """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
+    
         import binascii,pickle
         
         attrDict = torv.unknownAttributes
         if type(attrDict) != type({}):
             g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
             return
-            
-        attrs = []
-        for key in attrDict.keys():
-            val = attrDict[key]
-            try:
-                s = pickle.dumps(val,bin=True)
-            except pickle.PicklingError:
-                g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
-                g.es(key,val)
-                return
-            attr = ' %s="%s"' % (key,binascii.hexlify(s))
-            if 0: # This is not general enough
-                attr = ' %s="%s"' % (key,self.xmlEscape(val))
-            attrs.append(attr)
     
-        for attr in attrs:
-            self.put(attr)
+        for key in attrDict.keys():
+            try:
+                val = attrDict[key]
+                s = pickle.dumps(val,bin=True)
+                attr = ' %s="%s"' % (key,binascii.hexlify(s))
+                self.put(attr)
+    
+            except pickle.PicklingError:
+                # New in 4.2 beta 1: keep going after error.
+                g.es("ignoring non-pickleable attribute %s in %s" % (
+                    key,torv),color="blue")
     #@nonl
     #@-node:EKR.20040526202501:putUnknownAttributes
     #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
@@ -1756,8 +1758,16 @@ class baseFileCommands:
     
         # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
         if p.hasChildren():
-            if isThin and p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
+            if isThin:
+                if p.isOrphan():
+                    g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
+                else:
+                    #@                << write unknownAttributes for all descendent tnodes >>
+                    #@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
+                    pass
+                    #@nonl
+                    #@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
+                    #@nl
             if not isThin or p.isOrphan() or self.usingClipboard:
                 fc.put_nl()
                 # This optimization eliminates all "recursive" copies.
