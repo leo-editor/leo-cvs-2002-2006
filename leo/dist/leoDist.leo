@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="938" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="994" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
-	<global_window_position top="77" left="312" height="833" width="953"/>
+	<global_window_position top="53" left="255" height="833" width="953"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -98,21 +98,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050117045633"><vh>No longer used</vh>
-<v t="ekr.20050118092706.12"><vh>&lt;&lt; delete previously installed files &gt;&gt;</vh></v>
-<v t="ekr.20050117045032"><vh>&lt;&lt; distutils info &gt;&gt;</vh></v>
-<v t="ekr.20050117040242"><vh>&lt;&lt; create contents of createLeoDist.py &gt;&gt;</vh></v>
-<v t="ekr.20050117043941"><vh>&lt;&lt; create temp createLeoDist.py &gt;&gt;</vh></v>
-<v t="ekr.20050117030709"><vh>&lt;&lt; old preSetup code &gt;&gt;</vh></v>
-<v t="EKR.20040519082027.29"><vh>postSetup.py</vh>
-<v t="EKR.20040519082027.30"><vh>replacePatterns</vh></v>
-<v t="EKR.20040519082027.31"><vh>unsetDefaultParams</vh></v>
-</v>
-<v t="EKR.20040519082027.20"><vh>preSetup.py</vh>
-<v t="EKR.20040519082027.21"><vh>saveAllLeoFiles</vh></v>
-<v t="EKR.20040519082027.22"><vh>tangleLeoConfigDotLeo</vh></v>
-</v>
-</v>
 <v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
 <v t="ekr.20040629173419.1" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file .pycheckrc</vh>
 <v t="ekr.20040701193853"><vh>blacklist</vh></v>
@@ -127,69 +112,56 @@
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 <v t="ekr.20040809102948"><vh>Wrong warnings: not suppressed</vh></v>
 </v>
-<v t="ekr.20050116150710"><vh>(Fix distribution problems)</vh>
-<v t="ekr.20050116150710.59"><vh>@url http://nsis.sourceforge.net</vh></v>
-<v t="ekr.20050116150710.57"><vh>Notes</vh>
-<v t="ekr.20050116150710.58"><vh>Rebuilding the installer</vh>
-<v t="ekr.20050116150710.60"><vh>&lt;&lt; custom defines &gt;&gt;</vh></v>
-</v>
-</v>
+<v t="ekr.20050119113603"><vh>Leo 4.2 installer</vh>
 <v t="ekr.20050117030411"><vh>What I did</vh></v>
-<v t="ekr.20050118100239"><vh>Discuss with David</vh></v>
-<v t="ekr.20050116151024"><vh>To do</vh>
-<v t="ekr.20050117031116"><vh>Make sure nsi scripts are in synch with manifest</vh></v>
-<v t="ekr.20050116150710.90"><vh>Handle installation with Python 2.4 installed for Current User only</vh></v>
+<v t="ekr.20050119113603.1"><vh>@silentfile ../manifest-4-2.in</vh></v>
+<v t="ekr.20050119113603.2"><vh>Keeping 4.2 installer/uninstallers in synch</vh>
+<v t="ekr.20050119113603.3"><vh>config files</vh>
+<v t="ekr.20050119113603.4"><vh>&lt;&lt; install config files &gt;&gt;</vh></v>
+<v t="ekr.20050119113603.5"><vh>&lt;&lt; uninstall config files &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050119113603.6"><vh>dist files</vh>
+<v t="ekr.20050119113603.7"><vh>&lt;&lt; install dist files &gt;&gt;</vh></v>
+<v t="ekr.20050119113603.8"><vh>&lt;&lt; uninstall dist files &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050119113603.9"><vh>doc files</vh>
+<v t="ekr.20050119113603.10"><vh>&lt;&lt; install doc files &gt;&gt;</vh></v>
+<v t="ekr.20050119113603.11"><vh>&lt;&lt; uninstall doc files &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050119113603.12"><vh>icons</vh>
+<v t="ekr.20050119113603.13"><vh>&lt;&lt; install icons &gt;&gt;</vh></v>
+<v t="ekr.20050119113603.14"><vh>&lt;&lt; uninstall icons &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050119113603.15"><vh>plugins</vh>
+<v t="ekr.20050119113603.16"><vh>&lt;&lt; install plugins &gt;&gt;</vh></v>
+<v t="ekr.20050119113603.17"><vh>&lt;&lt; uninstall plugins &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050119113603.18"><vh>scripts</vh>
+<v t="ekr.20050119113603.19"><vh>&lt;&lt; install scripts &gt;&gt;</vh></v>
+<v t="ekr.20050119113603.20"><vh>&lt;&lt; uninstall scripts &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050119113603.21"><vh>src files</vh>
+<v t="ekr.20050119113603.22"><vh>&lt;&lt; install src files &gt;&gt;</vh></v>
+<v t="ekr.20050119113603.23"><vh>&lt;&lt; uninstall src files &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050119113603.24"><vh>test files</vh>
+<v t="ekr.20050119113603.25"><vh>&lt;&lt; install test files &gt;&gt;</vh></v>
+<v t="ekr.20050119113603.26"><vh>&lt;&lt; uninstall test files &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050119113603.27"><vh>top-level</vh>
+<v t="ekr.20050119113603.28"><vh>&lt;&lt; install top-level files &gt;&gt;</vh></v>
+<v t="ekr.20050119113603.29"><vh>&lt;&lt; uninistall top-level files &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050116150710.89"><vh>FIXMEs in new installer</vh>
-<v t="ekr.20050116150710.65"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
-<v t="ekr.20050116150710.67"><vh>&lt;&lt; Function .onInit &gt;&gt;</vh>
-<v t="ekr.20050116150710.68"><vh>&lt;&lt; .onInit documentation &gt;&gt;</vh></v>
-<v t="ekr.20050116150710.69"><vh>&lt;&lt; Try for format used by the NSIS installer &gt;&gt;</vh></v>
-<v t="ekr.20050116150710.70"><vh>&lt;&lt; Try for format used by the MSI installer of Python 2.4-release &gt;&gt;</vh>
-<v t="ekr.20050116150710.71" a="M"><vh>&lt;&lt; Try for format used for Python available to all users &gt;&gt;</vh></v>
-<v t="ekr.20050116150710.72" a="M"><vh>&lt;&lt; Try for format used for Python available to current users &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050116150710.73"><vh>&lt;&lt; delete previously installed files &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050116150710.75"><vh>&lt;&lt; Section "Start Menu Shortcuts"  &gt;&gt;</vh></v>
-<v t="ekr.20050116150710.77"><vh>&lt;&lt; Section ".leo File Association" &gt;&gt;</vh></v>
-<v t="ekr.20050116150710.83"><vh>&lt;&lt; Section Uninstall &gt;&gt;</vh>
-<v t="ekr.20050116150710.84"><vh>&lt;&lt; Uninstall section from Version 1.0 Leo Installer &gt;&gt;</vh>
-<v t="ekr.20050116150710.85"><vh>&lt;&lt; remove program folder &gt;&gt;</vh></v>
-<v t="ekr.20050116150710.86"><vh>&lt;&lt; remove file association &gt;&gt;</vh></v>
-<v t="ekr.20050116150710.87"><vh>&lt;&lt; remove shortcuts &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20050118113452"><vh>Leo 4.2 installers</vh>
-<v t="EKR.20040519083717"><vh>leo.nsi (OLD--Do not change) 4.2 files, doesn't work with Python 2.4)</vh>
-<v t="EKR.20040519083717.1"><vh>&lt;&lt; installer settings &gt;&gt;</vh>
-<v t="EKR.20040519083717.2"><vh>&lt;&lt; Additional Installer Settings &gt;&gt;</vh></v>
-<v t="EKR.20040519083717.3"><vh>&lt;&lt; icons used by the installer &gt;&gt;</vh></v>
-<v t="EKR.20040519083717.4"><vh>&lt;&lt; the user license &gt;&gt;</vh></v>
-<v t="EKR.20040519083717.5"><vh>&lt;&lt; the installation dir &gt;&gt;</vh></v>
-</v>
-<v t="EKR.20040519083717.6"><vh>&lt;&lt; required files section &gt;&gt;</vh>
-<v t="EKR.20040519083717.7"><vh>&lt;&lt; check to see whether Python is installed &gt;&gt;</vh></v>
-</v>
-<v t="EKR.20040519083717.8"><vh>&lt;&lt; optional files section&gt;&gt;</vh></v>
-<v t="EKR.20040519083717.9"><vh>&lt;&lt; file association &gt;&gt;</vh></v>
-<v t="EKR.20040519083717.10"><vh>&lt;&lt; post install section &gt;&gt;</vh></v>
-<v t="EKR.20040519083717.11"><vh>&lt;&lt; uninstall section &gt;&gt;</vh>
-<v t="EKR.20040519083717.12"><vh>&lt;&lt; remove file association &gt;&gt;</vh></v>
-<v t="EKR.20040519083717.13"><vh>&lt;&lt; remove program folder &gt;&gt;</vh></v>
-<v t="EKR.20040519083717.14"><vh>&lt;&lt; remove shortcuts &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20050118092622"
-marks="ekr.20050118092622.3,ekr.20050118092622.5,ekr.20050118092622.6,ekr.20050118092622.10,ekr.20050118092622.11,ekr.20050118092622.22,"><vh>@thin leo-4-2.nsi</vh></v>
+<v t="ekr.20050119113603.30"
+marks="ekr.20050119113603.41,ekr.20050119113603.42,ekr.20050119113603.53,"
+expanded="ekr.20050119113603.53,"><vh>@thin leo-4-2.nsi</vh></v>
 </v>
 <v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
-<v t="ekr.20050118110807"><vh>Understanding uninstall issues</vh></v>
 <v t="ekr.20050118094209"><vh>What I did</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
+<v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050118104149"><vh>config files</vh>
 <v t="ekr.20050118104149.1"><vh>&lt;&lt; install config files &gt;&gt;</vh></v>
 <v t="ekr.20050118104149.2"><vh>&lt;&lt; uninstall config files &gt;&gt;</vh></v>
@@ -233,11 +205,12 @@ marks="ekr.20050118092622.3,ekr.20050118092622.5,ekr.20050118092622.6,ekr.200501
 </v>
 <v t="ekr.20050118092706"
 marks="ekr.20050118092706.3,ekr.20050118092706.5,ekr.20050118092706.6,ekr.20050118092706.10,ekr.20050118092706.11,ekr.20050118092706.13,ekr.20050118092706.22,"
-expanded="ekr.20050118092706.1,"><vh>@thin leo-4-3.nsi</vh></v>
+expanded="ekr.20050118092706.1,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="ekr.20050118113631" a="MTV"><vh>Main distribution script</vh>
-<v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt; (no spaces in file names)</vh></v>
-<v t="ekr.20050117032444" a="M"><vh>Create zip file</vh>
+<v t="ekr.20050118113631"><vh>Main distribution script</vh>
+<v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
+<v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
+<v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
 <v t="ekr.20050118080857"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 <v t="ekr.20050118083936.1"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050118082301"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -247,7 +220,13 @@ expanded="ekr.20050118092706.1,"><vh>@thin leo-4-3.nsi</vh></v>
 <v t="ekr.20050117032444.3"><vh>&lt;&lt; remove temp createLeoDist.py &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="ekr.20050116151024" a="E"><vh>To do</vh>
+<v t="ekr.20050119191232"><vh>Announce 4.2.1 beta 1 to SF, comp.lang.python, etc.</vh></v>
+<v t="ekr.20050117031116"><vh>Make sure nsi scripts are in synch with manifest</vh></v>
+<v t="ekr.20050116150710.90" a="TV"><vh>Handle installation with Python 2.4 installed for Current User only</vh></v>
 <v t="ekr.20050118125236" a="M"><vh>To do:  write a script to make sure .nsi and main install scripts create the same files</vh></v>
+<v t="ekr.20050119191034"><vh>To do:  create manifest.in from manifest-nn.in</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040519080201.1">@color
@@ -509,52 +488,8 @@ else: # Doesn't work
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519080201.3"></t>
-<t tx="EKR.20040519082027.20">@first #! /usr/bin/env python
-
-""" Preprocess before executing setup.py. """
-
-import leoGlobals as g
-
-@others
-
-def setup():
-    saveAllLeoFiles()
-    tangleLeoConfigDotLeo()
-    print "preSetup complete"</t>
-<t tx="EKR.20040519082027.21">def saveAllLeoFiles():
-    
-    for frame in g.app.windowList:
-        c = frame.c
-        name = c.mFileName
-        if name == "": name = "untitled"
-        if c.changed:
-            print "saving ",name
-            c.save()</t>
-<t tx="EKR.20040519082027.22">def tangleLeoConfigDotLeo():
-
-    c = None
-    name = g.os_path_join("config","leoConfig.leo")
-    oldtop = g.top()
-    for frame in g.app.windowList:
-        if frame.c.mFileName == name :
-            c = frame.c
-            break
-    
-    if c == None:
-        c = g.top()
-        flag,frame = g.openWithFileName(name,c)
-        if not flag:
-            print "can not open ",name
-            return
-        c = frame.c
-            
-    print "Tangling ", name
-    g.app.setLog(oldtop.frame.log) # Keep sending messages to the original frame.
-    c.tangleCommands.tangleAll()
-    c.close()
-    g.app.setLog(oldtop.frame.log)</t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4.3-alpha-1",
+version="4.3-alpha-1", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -580,310 +515,9 @@ languages, unlimited Undo/Redo, an integrated Python shell(IDLE) window,
 and many user options including user-definable colors and fonts and user-
 definable shortcuts for all menu commands.
  """</t>
-<t tx="EKR.20040519082027.29">@first #! /usr/bin/env python
-
-""" Postprocess after executing setup.py """
-
-import leoGlobals as g
-
-@others
-
-def setup():
-    if 1: # Use this only for final distributions.
-        unsetDefaultParams()
-    print "postSetup complete"</t>
-<t tx="EKR.20040519082027.30">def replacePatterns (file,pats):
-
-    try:
-        path = os.getcwd()
-        name  = g.os_path_join(path,file)
-        f = open(name)
-    except:
-        print "*****", file, "not found"
-        return
-    try:
-        data = f.read()
-        f.close()
-        changed = False
-        for pat1,pat2 in pats:
-            newdata = data.replace(pat1,pat2)
-            if data != newdata:
-                changed = True
-                data = newdata
-                print file,"replaced",pat1,"by",pat2
-        if changed:
-            f = open(name,"w")
-            f.write(data)
-            f.close()
-    except:
-        import traceback ; traceback.print_exc()
-        sys.exit()
-</t>
-<t tx="EKR.20040519082027.31">def unsetDefaultParams():
-    
-    print "unsetDefaultParams"
-    
-    pats = (("use_plugins = 0","use_plugins = 1"),)
-
-    replacePatterns(g.os_path_join("config","leoConfig.leo"),pats)
-    replacePatterns(g.os_path_join("config","leoConfig.txt"),pats)</t>
 <t tx="EKR.20040519082027.32">@color
 @lineending nl
 @language shell</t>
-<t tx="EKR.20040519083717">@comment ;
-
-; NSIS Script for Leo
-; Version 1.0 of this script by Joe Orr, donated to public domain.
-;
-; How to create an installer for Leo using this script:
-;	1. Install NSIS (from http://www.nullsoft.com)
-;	2. Put the leo.nsi file in the directory containing the Leo program files.
-;	3. Right-click on the leo.nsi file and choose "Compile"
-;
-; NOTE: this .NSI script is designed for NSIS v1.8+
-
-&lt;&lt; installer settings &gt;&gt;
-&lt;&lt; required files section &gt;&gt;
-&lt;&lt; optional files section &gt;&gt;
-&lt;&lt; file association &gt;&gt;
-&lt;&lt; post install section &gt;&gt;
-&lt;&lt; uninstall section &gt;&gt;
-
-; eof</t>
-<t tx="EKR.20040519083717.1"># [Installer Attributes]
-Name "Leo"
-OutFile "leosetup.exe"
-Caption "Leo Installer"
-
-&lt;&lt; Additional Installer Settings &gt;&gt;
-&lt;&lt; icons used by the installer &gt;&gt;
-&lt;&lt; the user license &gt;&gt;
-&lt;&lt; the installation dir &gt;&gt;
-
-ComponentText "This will install Leo on your computer. Select which optional components you would also like to install."</t>
-<t tx="EKR.20040519083717.2"># You may not need to change these for your own app...
-
-ShowInstDetails show
-AutoCloseWindow false
-SilentInstall normal
-CRCCheck on
-SetCompress auto
-SetDatablockOptimize on
-SetOverwrite ifnewer
-WindowIcon off</t>
-<t tx="EKR.20040519083717.3">Icon c:\prog\leoCVS\leo\Icons\leo_inst.ico
-EnabledBitmap c:\prog\leoCVS\leo\Icons\leo_on.bmp
-DisabledBitmap c:\prog\leoCVS\leo\Icons\leo_off.bmp</t>
-<t tx="EKR.20040519083717.4">LicenseText "You must agree to this license before installing."
-LicenseData c:\prog\leoCVS\leo\doc\LICENSE.TXT</t>
-<t tx="EKR.20040519083717.5">InstallDir "$PROGRAMFILES\Leo"
-InstallDirRegKey HKEY_LOCAL_MACHINE "SOFTWARE\EKR\leo" ""
-DirShow show # (make this hide to not let the user change it)
-DirText "Select the directory to install Leo in:"</t>
-<t tx="EKR.20040519083717.6">Section "Leo" ; (default, required section)
-
-  &lt;&lt; check to see whether Python is installed &gt;&gt;
-
-ok:
-  # List all files to included in installer	
-  
-  SetOutPath $INSTDIR
-  File c:\prog\leoCVS\leo\__init__.py
-  File c:\prog\leoCVS\leo\install
-  File c:\prog\leoCVS\leo\manifest.in
-  File c:\prog\leoCVS\leo\uninstall
-  
-  CreateShortCut "$INSTDIR\Shortcut to leo.py.lnk" "$INSTDIR\src\leo.py" "" "$INSTDIR\src\leo.py" 0
-
-  SetOutPath $INSTDIR\config
-  File c:\prog\leoCVS\leo\config\leoConfig.leo
-  File c:\prog\leoCVS\leo\config\leoConfig.txt
-  
-  SetOutPath $INSTDIR\dist
-  File c:\prog\leoCVS\leo\dist\leoDist.leo
-  File c:\prog\leoCVS\leo\dist\leo.nsi
-  File c:\prog\leoCVS\leo\dist\preSetup.py
-  File c:\prog\leoCVS\leo\dist\createLeoDist.py
-  File c:\prog\leoCVS\leo\dist\postSetup.py
-
-  SetOutPath $INSTDIR\doc
- 
-  File c:\prog\leoCVS\leo\doc\LeoDocs.leo
-  File c:\prog\leoCVS\leo\doc\leoDiary.txt
-  File c:\prog\leoCVS\leo\doc\leoNotes.txt
-  File c:\prog\leoCVS\leo\doc\leoToDo.txt
-
-  File c:\prog\leoCVS\leo\doc\README.TXT
-  File c:\prog\leoCVS\leo\doc\INSTALL.TXT
-  File c:\prog\leoCVS\leo\doc\PKG-INFO.TXT
-  File c:\prog\leoCVS\leo\doc\LICENSE.TXT
- 
-  File c:\prog\leoCVS\leo\doc\default.css
-  File c:\prog\leoCVS\leo\doc\leo_rst.css
-  File c:\prog\leoCVS\leo\doc\silver_city.css
-  
-  SetOutPath $INSTDIR\Icons
-  File c:\prog\leoCVS\leo\Icons\*.*
-  
-  SetOutPath $INSTDIR\examples
-
-  SetOutPath $INSTDIR\plugins
-  File c:\prog\leoCVS\leo\plugins\leoPlugins.leo
-  File c:\prog\leoCVS\leo\plugins\*.py
-  File c:\prog\leoCVS\leo\plugins\*.ini
-  File c:\prog\leoCVS\leo\plugins\*.txt
-  File c:\prog\leoCVS\leo\plugins\aspell.pyd
-  
-  SetOutPath $INSTDIR\scripts
-  File c:\prog\leoCVS\leo\scripts\leoScripts.txt
-  File c:\prog\leoCVS\leo\scripts\*.py
-  
-  SetOutPath $INSTDIR\src
-  File c:\prog\leoCVS\leo\src\LeoPy.leo
-  File c:\prog\leoCVS\leo\src\leo*.py
-  File c:\prog\leoCVS\leo\src\leoProjects.txt
-  File c:\prog\leoCVS\leo\src\oldLeoProjects.leo
-  
-  SetOutPath $INSTDIR\test
-  File c:\prog\leoCVS\leo\test\test.leo
- 
-  SetOutPath $INSTDIR\tools
-
-SectionEnd ; end of default section</t>
-<t tx="EKR.20040519083717.7"># I sure hope there is a better way to do this, but other techniques don't seem to work.
-
-# Supposedly the Python installer creates the following registry entry
-# HKEY_LOCAL_MACHINE\Software\Python\PythonCore\CurrentVersion
-# and then we can read find the Python folder location via
-# HKEY_LOCAL_MACHINE\Software\Python\PythonCore\{versionno}. 
-# Unfortunately, at the time of this writing, the Python installer is NOT writing the first entry. There is no way to know what the current versionno is.
-# Hence, the following hack.
-
-# Get pythonw.exe path from registry... except it isn't there, nor is it an environment variable... thanks guys!
-# We'll have to get it in a roundabout way
-ReadRegStr $9 HKEY_LOCAL_MACHINE "SOFTWARE\Classes\Python.NoConFile\shell\open\command" ""
-
-# cut 8 characters from back of the open command
-StrCpy $8 $9 -8
-
-IfFileExists $8 ok tryagain
-
-tryagain:
-# ok, that  didn't work, but since the Python installer doesn't seem to be consistent, we'll try again
-# cut 3 characters from back of the open command
-StrCpy $8 $9 -3
-
-IfFileExists $8 ok ng
-
-ng:
-  MessageBox MB_OK "Python is not installed on this system. $\nPlease install Python first. $\n$\nClick OK to cancel installation."
-
-  Quit</t>
-<t tx="EKR.20040519083717.8"># optional sections
-
-Section "Start Menu Shortcuts"
-  CreateDirectory "$SMPROGRAMS\Leo"
-  CreateShortCut "$SMPROGRAMS\Leo\Uninstall.lnk" "$INSTDIR\uninst.exe" "" "$INSTDIR\uninst.exe" 0
-  CreateShortCut "$SMPROGRAMS\Leo\Leo.lnk" "$8" '"$INSTDIR\src\leo.py"' "$INSTDIR\Icons\LeoApp.ico" 0  
-SectionEnd
-
-Section "Desktop Shortcut"
-  CreateShortCut "$DESKTOP\Leo.lnk" "$8" '"$INSTDIR\src\leo.py"' "$INSTDIR\Icons\LeoApp.ico" 0
-SectionEnd</t>
-<t tx="EKR.20040519083717.9">Section ".leo File Association"
-  SectionIn 1
-  SectionIn 2
-  SectionIn 3
-
-  # back up old value of .leo in case some other program was using it
-  ReadRegStr $1 HKCR ".leo" ""
-  StrCmp $1 "" Label1
-  StrCmp $1 "LeoFile" Label1
-  WriteRegStr HKCR ".leo" "backup_val" $1
- 
-Label1:
-  WriteRegStr HKCR ".leo" "" "LeoFile"
-  WriteRegStr HKCR "LeoFile" "" "Leo File"
-  WriteRegStr HKCR "LeoFile\shell" "" "open"
-  WriteRegStr HKCR "LeoFile\DefaultIcon" "" $INSTDIR\Icons\LeoDoc.ico,0 
-  WriteRegStr HKCR "LeoFile\shell\open\command" "" '$8 "$INSTDIR\src\leo.py" "%1"'  
-
-SectionEnd</t>
-<t tx="EKR.20040519083717.10">Section "-post" # (post install section, happens last after any optional sections)
-
-  # add any commands that need to happen after any optional sections here
-  WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\EKR\leo" "" "$INSTDIR"
-  WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\leo" "DisplayName" "Leo (remove only)"
-  WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\leo" "UninstallString" '"$INSTDIR\uninst.exe"'
-
-  # write out uninstaller
-  WriteUninstaller "$INSTDIR\uninst.exe"
-
-SectionEnd ; end of -post section</t>
-<t tx="EKR.20040519083717.11"># [ begin uninstall settings/section ]
-UninstallText "This will uninstall Leo from your system"
-UninstallCaption "Uninstall Leo"
-UninstallIcon c:\prog\leoCVS\leo\Icons\uninst.ico
-
-Section Uninstall
-
-DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\EKR\leo"
-DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\leo"
-
-&lt;&lt; remove file association &gt;&gt;
-&lt;&lt; remove program folder &gt;&gt;
-&lt;&lt; remove shortcuts &gt;&gt;
-
-; remove directories used.
-RMDir "$SMPROGRAMS\Leo"
-
-SectionEnd ; end of uninstall section</t>
-<t tx="EKR.20040519083717.12">  ReadRegStr $1 HKCR ".leo" ""
-  StrCmp $1 "LeoFile" 0 NoOwn ; only do this if we own it
-    ReadRegStr $1 HKCR ".leo" "backup_val"
-    StrCmp $1 "" 0 RestoreBackup ; if backup == "" then delete the whole key
-      DeleteRegKey HKCR ".leo"
-    Goto NoOwn
-    RestoreBackup:
-      WriteRegStr HKCR ".leo" "" $1
-      DeleteRegValue HKCR ".leo" "backup_val"
-  NoOwn:</t>
-<t tx="EKR.20040519083717.13">MessageBox MB_YESNO|MB_ICONQUESTION \
-             "Delete all files in Leo Program folder?" \
-             IDNO NoDelete  
-
-  Delete "$INSTDIR\config\*.*" ; config dir
-  RMDir "$INSTDIR\config"
-  Delete "$INSTDIR\dist\*.*" ; dist dir
-  RMDir "$INSTDIR\dist"
-  Delete "$INSTDIR\doc\*.*" ; doc dir
-  RMDir "$INSTDIR\doc"
-  Delete "$INSTDIR\examples\*.*" ; src dir
-  RMDir "$INSTDIR\examples"
-  Delete "$INSTDIR\Icons\*.*" ; Icons dir
-  RMDir "$INSTDIR\Icons"
-  Delete "$INSTDIR\plugins\*.*" ; plugins dir
-  RMDir "$INSTDIR\plugins"
-  Delete "$INSTDIR\scripts\install\*.*" ; scripts\install dir
-  RMDir "$INSTDIR\scripts\install"
-  Delete "$INSTDIR\scripts\other\*.*" ; scripts\other dir
-  RMDir "$INSTDIR\scripts\other"
-  Delete "$INSTDIR\scripts\tangle\*.*" ; scripts\tangle dir
-  RMDir "$INSTDIR\scripts\tangle"
-  Delete "$INSTDIR\scripts\*.*" ; scripts dir
-  RMDir "$INSTDIR\scripts"
-  Delete "$INSTDIR\src\*.*" ; src dir
-  RMDir "$INSTDIR\src"
-  Delete "$INSTDIR\test\*.*" ; test dir
-  RMDir "$INSTDIR\test"
-  Delete "$INSTDIR\tools\*.*" ; tools dir
-  RMDir "$INSTDIR\tools"
-  Delete "$INSTDIR\*.*" ; Leo directory
-  RMDir "$INSTDIR"
-
-NoDelete:</t>
-<t tx="EKR.20040519083717.14">Delete "$SMPROGRAMS\Leo\*.*"
-Delete "$DESKTOP\Leo.lnk"</t>
 <t tx="EKR.20040519090846">@nocolor</t>
 <t tx="EKR.20040519090846.1">Leo is Open Software and is distributed under the terms of the Python License. The gist of the license is that Leo is absolutely free, even for commercial use (including resale). There is no GNU-like "copyleft" restriction. The Open Source Initiative board has voted to certify the Python license as Open Source. This license is compatible with the GPL.
 
@@ -1069,10 +703,10 @@ include config/leoSettings.leo
 
 # New in Leo 4.3:
 # 1. createLeoDist.py is distributed in dist directory.
-#   - The distribution script temporarily copies createLeoDist.py to the leo directory.
+#    The distribution script temporarily copies createLeoDist.py to the leo directory.
 # 2. Distribute leoDist.leo, not leoDistRef.leo.
-# 3. .pycheckrc is created and distributed in dist directory.
-#   (The user should move it to the home directory if he/she wants to use it.)
+# 3. .pycheckrc is distributed in dist directory.
+#    Move it to the home directory if you want to use it.
 
 include dist/createLeoDist.py
 include dist/leo-4-2.nsi
@@ -1080,18 +714,18 @@ include dist/leo-4-3.nsi
 include dist/leoDist.leo
 include dist/.pycheckrc
 
-# New in Leo 4.3: the preSetup/Postsetup files are not used.
-# include dist/preSetup.py
-# include dist/postSetup.py
+include doc/LeoDiary.leo
+include doc/LeoDiary.txt
 
 include doc/LeoDocs.leo
-include doc/LeoDiary.leo
 include doc/leoNotes.txt
 include doc/leoToDo.txt
+
 include doc/README.TXT
 include doc/INSTALL.TXT
 include doc/PKG-INFO.TXT
 include doc/LICENSE.TXT
+
 include doc/default.css
 include doc/leo_rst.css
 include doc/silver_city.css
@@ -1100,21 +734,20 @@ include extensions/__init__.py
 
 include Icons/*.*
 
-include plugins/*.*
-exclude plugins/leoPluginsRef.leo
-exclude plugins/*.pyc
 include plugins/aspell.pyd
+include plugins/leoPlugins.leo
+include plugins/*.ini
+include plugins/*.txt
+include plugins/*.py
 
-include src/LeoPy.leo
-# Exclude LeoPyRef.leo.
+include scripts/leoScripts.txt
+include scripts/*.py
+
 include src/__init__.py
+include src/LeoPy.leo
 include src/leo*.py
 include src/leoProjects.txt
 include src/oldLeoProjects.leo
-
-include scripts/leoScripts.txt
-include scripts/tangle_done.py
-include scripts/untangle_done.py
 
 include test/__init__.py
 include test/test.leo</t>
@@ -3681,382 +3314,6 @@ Leo: Literate Editor with Outlines
 Leo: http://webpages.charter.net/edreamleo/front.html
 --------------------------------------------------------------------
 </t>
-<t tx="ekr.20050116150710"></t>
-<t tx="ekr.20050116150710.57">@doc
-This installer works with the www.python.org distribution of Python 2.3.4 on Windows XP SP2. 
-
-It works with the www.python.org distribution of Python 2.4-final on Windows XP SP2. 
-
-The www.python.org distribution of Python 2.4-final is a MSI installer, and asks whether to install for All Users or the Current User. The difference between these is the location of Registry entries for the Python interpreter, for icons, for file associations. As such, the Leo installer must handle these separately. Logic for detecting both kinds of installation of Python is in this Leo installer. 
-
-Leo 4.2 itself is not ready to handle operation for multi-user environments with individual folders for plug-ins and data; it provides the same settings for all users. As such, this revision of the Leo installer follows the lead of the Version 1.0 Leo installer, and installs things "incorrectly" for computers that are shared by multiple users. </t>
-<t tx="ekr.20050116150710.58">@doc
-This NSI file was built and tested with Version 2.03 of NSIS. 
-
-The NSI file for the installer must go in the \dist folder of the Leo source code to be included. 
-
-Before compiling it, see the &lt;&lt; custom defines &gt;&gt; for the line that defines the symbol INSTALL_IF_PYTHON_FOR_CURRENT_USER. Comment that line out unless you wish to try installing with Python 2.4 installed for the Current User only. 
-</t>
-<t tx="ekr.20050116150710.59"></t>
-<t tx="ekr.20050116150710.60">@comment ;
-
-; hand-created defines
-; used for Windows Registry links to uninstaller
-
-!define PRODUCT_NAME_LOWER_CASE "leo"
-
-!define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME_LOWER_CASE}"
-
-; On Windows NT-derived operating systems, Python.org installer for Python 2.4 
-; can be installed for all users or current user only.
-; define the following symbol to install if Python is installed only for current user. 
-; !define INSTALL_IF_PYTHON_FOR_CURRENT_USER
-
-!define STRING_PYTHON_NOT_FOUND "Python is not installed on this system. $\nPlease install Python first. $\n$\nClick OK to cancel installation and remove installation Files."
-
-!define STRING_PYTHON_CURRENT_USER_FOUND "Python is installed for the current user only. $\n$\n${PRODUCT_NAME} does not support use with Python so configured. $\n$\nClick OK to cancel installation and remove installation Files."</t>
-<t tx="ekr.20050116150710.65">; settings taken from Version 1.0 of NSIS Script for Leo
-Caption "Leo Installer"
-AutoCloseWindow false 
-SilentInstall normal
-CRCCheck on ; FIXME shouldn't this be CRCCheck force ? Why give user option of using corrupted installer?
-SetCompress auto ; FIXME this is disabled for solid compression, which comes with BZip2 and LZMA compression
-SetDatablockOptimize on
-; SetOverwrite ifnewer
-WindowIcon off
-
-; settings from HM NIS Edit Wizard
-Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetupNSIS203.exe"
-LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
-InstallDir "$PROGRAMFILES\Leo"
-Icon "..\Icons\leo_inst.ico"
-; Version 1.0 of NSIS Script for Leo comes with its own uninstall icon
-; UninstallIcon "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
-DirText "Setup will install $(^Name) in the following folder.$\r$\n$\r$\nTo install in a different folder, click Browse and select another folder."
-LicenseText "If you accept all the terms of the agreement, choose I Agree to continue. You must accept the agreement to install $(^Name)."
-LicenseData "..\doc\License.txt"
-ShowInstDetails show
-ShowUnInstDetails show</t>
-<t tx="ekr.20050116150710.67">; .onInit -- find Pythonw.exe, set PythonExecutable with string value
-; of its fully qualified path.
-; code taken from the "Leo" Section of Leo Installer Version 1.0
-;
-Function .onInit
-    &lt;&lt; .onInit documentation &gt;&gt;
-    &lt;&lt; Try for format used by the NSIS installer &gt;&gt;
-    &lt;&lt; Try for format used by the MSI installer of Python 2.4-release &gt;&gt;
-oops:
-    MessageBox MB_OK "$StrNoUsablePythonFound"
-    &lt;&lt; Delete previously installed files &gt;&gt;
-    Quit
-ok:
-     MessageBox MB_OK "Found Python executable at '$8'"
-     StrCpy $PythonExecutable $8
-FunctionEnd</t>
-<t tx="ekr.20050116150710.68">  # I sure hope there is a better way to do this, but other techniques don't seem to work.
-
-  # Supposedly the Python installer creates the following registry entry
-  # HKEY_LOCAL_MACHINE\Software\Python\PythonCore\CurrentVersion
-  # and then we can read find the Python folder location via
-  # HKEY_LOCAL_MACHINE\Software\Python\PythonCore\{versionno}.
-  # Alas, at the time of this writing, the Python installer is NOT writing the first entry.
-  # There is no way to know what the current versionno is.
-  # Hence, the following hack.
-
-  # Get pythonw.exe path from registry... except it isn't there, nor is it an environment variable... thanks guys!
-  # We'll have to get it in a roundabout way
-  ReadRegStr $9 HKEY_LOCAL_MACHINE "SOFTWARE\Classes\Python.NoConFile\shell\open\command" ""
-
-  # the NSIS installer for Python 2.3 leaves the registry entry in the following format:
-  # C:\Python23\pythonw.exe[SP]"%1%"[SP]%*
-  # the MSI installer for python.org's Python 2.4 release leaves the registry entry in the following format:
-  # "C:\Python24\pythonw.exe"[SP]"%1%"[SP]%*
-  # where [SP] represents an ASCII space character.</t>
-<t tx="ekr.20050116150710.69"># Try for the format used by the NSIS installer
-# cut 8 characters from back of the open command
-StrCpy $8 $9 -8
-
-
-IfFileExists $8 ok tryagain
-
-tryagain:
-# ok, that  didn't work, but since the Python installer doesn't seem to be consistent, we'll try again
-# cut 3 characters from back of the open command
-StrCpy $8 $9 -3
-
-# that didn't work. check for the registry entry left by MSI Python 2.4 installers
-# from www.python.org and www.activestate.com
-
-IfFileExists $8 ok tryMSIformat</t>
-<t tx="ekr.20050116150710.70">&lt;&lt; Try for format used for Python available to all users &gt;&gt;
-&lt;&lt; Try for format used for Python available to current users &gt;&gt;</t>
-<t tx="ekr.20050116150710.71">tryMSIformat:
-# is the first character a "
-StrCpy $8 $9 1
-StrCmp $8 '"' foundQuote tryMSIformatCurrentUser
-
-foundQuote:
-# OK. Strip off the " at the start as well as the 9 characters at the end
-StrCpy $8 $9 -9 1
-
-# MessageBox MB_OK "3: Searching for Pythonw.exe -- is it '$8' ? "
-
-IfFileExists $8 ok tryMSIformatCurrentUser</t>
-<t tx="ekr.20050116150710.72">tryMSIformatCurrentUser:
-ReadRegStr $9 HKEY_CURRENT_USER "SOFTWARE\Classes\Python.NoConFile\shell\open\command" ""
-
-# repeating the logic of tryMSIformat:
-# is the first character a "
-StrCpy $8 $9 1
-StrCmp $8 '"' foundQuoteCurrentUser oops
-
-foundQuoteCurrentUser:
-# OK. Strip off the " at the start as well as the 9 characters at the end
-StrCpy $8 $9 -9 1
-
-!ifdef INSTALL_IF_PYTHON_FOR_CURRENT_USER
-  StrCpy $StrNoUsablePythonFound "${STRING_PYTHON_NOT_FOUND}"
-  IfFileExists $8 ok oops
-!else
-  IfFileExists $8 usePythonCUFoundMessage usePythonNotFoundMessage
-  usePythonCUFoundMessage:
-  StrCpy $StrNoUsablePythonFound "${STRING_PYTHON_CURRENT_USER_FOUND}"
-  goto oops
-  usePythonNotFoundMessage:
-  StrCpy $StrNoUsablePythonFound "${STRING_PYTHON_NOT_FOUND}"
-  goto oops
-!endif</t>
-<t tx="ekr.20050116150710.73">; FIXME the folloeing Deletes and RMDirs should be removed, should they not? 
-; It appears to me that the design of the Version 1.0 installer would allow for the following sequence of events:
-; 1. User uninstalls Leo, tells it to not delete the installed files;
-; 2. User starts Version 1.0 installer for Leo;
-; 3. User cancels installation;
-; 4. Version 1.0 installer deletes the files user desired to keep in step 1
-
-Delete "$INSTDIR\config\*.*" ; config dir
-RMDir "$INSTDIR\config"
-Delete "$INSTDIR\doc\*.*" ; doc dir
-RMDir "$INSTDIR\doc"
-Delete "$INSTDIR\examples\*.*" ; src dir
-RMDir "$INSTDIR\examples"
-Delete "$INSTDIR\Icons\*.*" ; Icons dir
-RMDir "$INSTDIR\Icons"
-Delete "$INSTDIR\plugins\*.*" ; plugins dir
-RMDir "$INSTDIR\plugins"
-Delete "$INSTDIR\scripts\*.*" ; scripts dir
-RMDir "$INSTDIR\scripts"
-Delete "$INSTDIR\src\*.*" ; src dir
-RMDir "$INSTDIR\src"
-Delete "$INSTDIR\test\*.*" ; test dir
-RMDir "$INSTDIR\test"
-Delete "$INSTDIR\tools\*.*" ; tools dir
-RMDir "$INSTDIR\tools"
-Delete "$INSTDIR\*.*" ; Leo directory
-RMDir "$INSTDIR"</t>
-<t tx="ekr.20050116150710.75">; FIXME $SMPROGRAMS depends on the value of SetShellVarContext. Since that defaults to 'current'
-; that means that this installer will make Leo available for the current user only.
-; Unless I am grossly mistaken this is a needless hindrance, and a Bad Thing since
-; security concerns are such that it would be best to not run Leo with the Administrator privileges
-; of the account used to install the software.
-;
-; Sure enough, the Start Menu Shortcuts and Desktop Shortcut work for the installer account only. 
-;
-; Question is -- do we want Leo always available for any log-in on this computer?
-;
-; My guesses:
-; Ideally, Uninstall.lnk should appear only for the current user, and the uninstaller should refuse to run
-; if run by a user who lacks Admin privileges on Windows NT and its descendants
-;
-; How will Windows XP Home deal with that? 
-;
-Section "Start Menu Shortcuts" SEC02
-  CreateDirectory "$SMPROGRAMS\Leo"
-  CreateShortCut "$SMPROGRAMS\Leo\Uninstall.lnk" "$INSTDIR\uninst.exe" "" "$INSTDIR\uninst.exe" 0
-; In Version 1.0 installer, was
-; CreateShortCut "$SMPROGRAMS\Leo\Leo.lnk" "$PythonExecutable" '"$INSTDIR\src\leo.py"' "$INSTDIR\Icons\LeoApp.ico" 0
-  CreateShortCut "$SMPROGRAMS\Leo\Leo.lnk" '"$PythonExecutable"' '"$INSTDIR\src\leo.py"' "$INSTDIR\Icons\LeoApp.ico" 0
-SectionEnd</t>
-<t tx="ekr.20050116150710.77">Section ".leo File Association"
-  SectionIn 1
-  SectionIn 2
-  SectionIn 3
-
-  # back up old value of .leo in case some other program was using it
-  ReadRegStr $1 HKCR ".leo" ""
-  StrCmp $1 "" Label1
-  StrCmp $1 "LeoFile" Label1
-  WriteRegStr HKCR ".leo" "backup_val" $1
-
-Label1:
-  WriteRegStr HKCR ".leo" "" "LeoFile"
-  WriteRegStr HKCR "LeoFile" "" "Leo File"
-  WriteRegStr HKCR "LeoFile\shell" "" "open"
-; FIXME In Version 1.0 installer, the .ico reference was
-;  WriteRegStr HKCR "LeoFile\DefaultIcon" "" $INSTDIR\Icons\LeoDoc.ico,0
-; which does not work under Windows XP Professional SP2.
-; what was the ",0" for? Will Leo work without it? 
-  WriteRegStr HKCR "LeoFile\DefaultIcon" "" $INSTDIR\Icons\LeoDoc.ico
-  WriteRegStr HKCR "LeoFile\shell\open\command" "" '"$PythonExecutable" "$INSTDIR\src\leo.py" %1'
-
-SectionEnd</t>
-<t tx="ekr.20050116150710.83">; FIXME incorporate design of Version 1.0 Uninstall section in Version 2.0 section
-&lt;&lt; Uninstall section from Version 1.0 Leo Installer&gt;&gt;
-
-; Uninstall section as generated by HM NE, with hand-edits
-;
-Section Uninstall
-; Hand-edit
-  DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\EKR\leo"
-; End Hand-edit
-
-; From Version 1.0 Installer
-; Remove File Association
-  ReadRegStr $1 HKCR ".leo" ""
-  StrCmp $1 "LeoFile" 0 NoOwn ; only do this if we own it
-	ReadRegStr $1 HKCR ".leo" "backup_val"
-	StrCmp $1 "" 0 RestoreBackup ; if backup == "" then delete the whole key
-	  DeleteRegKey HKCR ".leo"
-	Goto NoOwn
-	RestoreBackup:
-	  WriteRegStr HKCR ".leo" "" $1
-	  DeleteRegValue HKCR ".leo" "backup_val"
-  NoOwn:
-  MessageBox MB_YESNO|MB_ICONQUESTION \
-			 "Delete all files in Leo Program folder?" \
-			 IDNO NoDelete
-
-; FIXME End Hand-edit
-
-; FIXME Compare the following with the list from Version 1 Leo Installer
-; The following list does not include src\*.pyc files, for example
-; 
-  Delete "$INSTDIR\uninst.exe"
-  Delete "$INSTDIR\src\oldLeoProjects.leo"
-  Delete "$INSTDIR\src\leoProjects.txt"
-  Delete "$INSTDIR\src\leo*.py"
-; Hand-edit to add compiled source
-  Delete "$INSTDIR\src\leo*.pyc"
-  Delete "$INSTDIR\src\LeoPy.leo"
-  Delete "$INSTDIR\scripts\*.py"
-; Hand-edit to add compiled scripts
-  Delete "$INSTDIR\scripts\*.pyc"
-  Delete "$INSTDIR\scripts\leoScripts.txt"
-  Delete "$INSTDIR\plugins\aspell.pyd"
-  Delete "$INSTDIR\plugins\*.txt"
-  Delete "$INSTDIR\plugins\*.ini"
-  Delete "$INSTDIR\plugins\*.py"
-; Hand-edit to add compiled plugins
-  Delete "$INSTDIR\plugins\*.pyc"
-  Delete "$INSTDIR\plugins\leoPlugins.leo"
-  Delete "$INSTDIR\icons\*.*"
-  Delete "$INSTDIR\doc\silver_city.css"
-  Delete "$INSTDIR\doc\leo_rst.css"
-  Delete "$INSTDIR\doc\default.css"
-  Delete "$INSTDIR\doc\License.txt"
-  Delete "$INSTDIR\doc\Install.txt"
-  Delete "$INSTDIR\doc\Pkg-info.txt"
-  Delete "$INSTDIR\doc\Readme.txt"
-  Delete "$INSTDIR\doc\leoToDo.txt"
-  Delete "$INSTDIR\doc\LeoDocs.leo"
-  Delete "$INSTDIR\doc\leoNotes.txt"
-  Delete "$INSTDIR\doc\leoDiary.txt"
-  Delete "$INSTDIR\createLeoDist.py"
-  Delete "$INSTDIR\dist\postSetup.py"
-  Delete "$INSTDIR\dist\leoDist.leo"
-  Delete "$INSTDIR\dist\leo.nsi"
-  Delete "$INSTDIR\dist\preSetup.py"
-  Delete "$INSTDIR\config\leoConfig.txt"
-  Delete "$INSTDIR\config\leoConfig.leo"
-  Delete "$INSTDIR\uninstall"
-  Delete "$INSTDIR\manifest.in"
-  Delete "$INSTDIR\install"
-  Delete "$INSTDIR\__init__.py"
-
-  RMDir "$INSTDIR\src"
-  RMDir "$INSTDIR\scripts"
-  RMDir "$INSTDIR\plugins"
-  RMDir "$INSTDIR\icons"
-  RMDir "$INSTDIR\doc"
-  RMDir "$INSTDIR\dist"
-  RMDir "$INSTDIR\config"
-  RMDir "$INSTDIR"
-NoDelete:
-  Delete "$SMPROGRAMS\Leo\Uninstall.lnk"
-
-  RMDir "$SMPROGRAMS\Leo"
-
-  DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
-; Hand-edit
-;  SetAutoClose true
-  SetAutoClose false
-SectionEnd</t>
-<t tx="ekr.20050116150710.84">;# [ begin uninstall settings/section ]
-;UninstallText "This will uninstall Leo from your system"
-;UninstallCaption "Uninstall Leo"
-;UninstallIcon c:\prog\leoCVS\leo\Icons\uninst.ico
-;
-;Section Uninstall
-;
-;DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\EKR\leo"
-;DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\leo"
-;
-&lt;&lt; remove file association &gt;&gt;
-&lt;&lt; remove program folder &gt;&gt;
-&lt;&lt; remove shortcuts &gt;&gt;
-;
-; remove directories used.
-;RMDir "$SMPROGRAMS\Leo"
-;
-;SectionEnd ; end of uninstall section
-</t>
-<t tx="ekr.20050116150710.85">;MessageBox MB_YESNO|MB_ICONQUESTION \
-;			 "Delete all files in Leo Program folder?" \
-;			 IDNO NoDelete  
-;
-;  Delete "$INSTDIR\config\*.*" ; config dir
-;  RMDir "$INSTDIR\config"
-;  Delete "$INSTDIR\dist\*.*" ; dist dir
-;  RMDir "$INSTDIR\dist"
-;  Delete "$INSTDIR\doc\*.*" ; doc dir
-;  RMDir "$INSTDIR\doc"
-;  Delete "$INSTDIR\examples\*.*" ; src dir
-;  RMDir "$INSTDIR\examples"
-;  Delete "$INSTDIR\Icons\*.*" ; Icons dir
-;  RMDir "$INSTDIR\Icons"
-;  Delete "$INSTDIR\plugins\*.*" ; plugins dir
-;  RMDir "$INSTDIR\plugins"
-;  Delete "$INSTDIR\scripts\install\*.*" ; scripts\install dir
-;  RMDir "$INSTDIR\scripts\install"
-;  Delete "$INSTDIR\scripts\other\*.*" ; scripts\other dir
-;  RMDir "$INSTDIR\scripts\other"
-;  Delete "$INSTDIR\scripts\tangle\*.*" ; scripts\tangle dir
-;  RMDir "$INSTDIR\scripts\tangle"
-;  Delete "$INSTDIR\scripts\*.*" ; scripts dir
-;  RMDir "$INSTDIR\scripts"
-;  Delete "$INSTDIR\src\*.*" ; src dir
-;  RMDir "$INSTDIR\src"
-;  Delete "$INSTDIR\test\*.*" ; test dir
-;  RMDir "$INSTDIR\test"
-;  Delete "$INSTDIR\tools\*.*" ; tools dir
-;  RMDir "$INSTDIR\tools"
-;  Delete "$INSTDIR\*.*" ; Leo directory
-;  RMDir "$INSTDIR"
-;
-;NoDelete:</t>
-<t tx="ekr.20050116150710.86">;  ReadRegStr $1 HKCR ".leo" ""
-;  StrCmp $1 "LeoFile" 0 NoOwn ; only do this if we own it
-;	ReadRegStr $1 HKCR ".leo" "backup_val"
-;	StrCmp $1 "" 0 RestoreBackup ; if backup == "" then delete the whole key
-;	  DeleteRegKey HKCR ".leo"
-;	Goto NoOwn
-;	RestoreBackup:
-;	  WriteRegStr HKCR ".leo" "" $1
-;	  DeleteRegValue HKCR ".leo" "backup_val"
-;  NoOwn:</t>
-<t tx="ekr.20050116150710.87">;Delete "$SMPROGRAMS\Leo\*.*"
-;Delete "$DESKTOP\Leo.lnk"</t>
-<t tx="ekr.20050116150710.89">@comment ;</t>
 <t tx="ekr.20050116150710.90"></t>
 <t tx="ekr.20050116151024">@nocolor</t>
 <t tx="ekr.20050117030411">@killcolor
@@ -4080,13 +3337,6 @@ Changed manifest.in as follows:
         - This is NOT a full solution!
     - Added dist/leo-4-2.nsi and dist/leo-4-3.nsi
     - Removed include dist/leo.nsi</t>
-<t tx="ekr.20050117030709">import leoGlobals as g
-import os
-
-# os.chdir(r"c:\prog\leoCvs\leo")
-os.chdir(g.os_path_join(g.app.loadDir,".."))
-preSetup = g.importFromPath("preSetup","c:\prog\leoCvs\leo\dist")
-preSetup.setup()</t>
 <t tx="ekr.20050117031116"></t>
 <t tx="ekr.20050117032444"># Main distribution script.  Creates leo-nn.zip using createLeoDist.py
 
@@ -4149,63 +3399,6 @@ os.remove(dstFile)</t>
 command = '%s %s sdist --force-manifest --formats=zip' % (sys.executable,dstFile)
 print command
 os.system(command)</t>
-<t tx="ekr.20050117040242">s = '''#! /usr/bin/env python
-import distutils.core
-import os,sys
-
-modules = []
-distutils.core.setup (
-    name        = '%(name)s',
-    version     = '%(version)s',
-    author      = '%(author)s',
-    author_email= '%(author_email)s',
-    url         = '%(url)s',
-    py_modules  =  %(modules)s,
-    description = '%(description)s',
-    license     = '%(license)s',
-    platforms   = %(platforms)s,
-    long_description = """%(long_description)s"""
-)
-print "createLeoDist.py complete"
-'''
-
-fileContents = s % d
-if 0:
-    print '-' * 40
-    print fileContents</t>
-<t tx="ekr.20050117043941">f = file(dstFile,'w')
-f.write(fileContents)
-f.close()</t>
-<t tx="ekr.20050117045032">longDescription = '''Leo is a powerful programming and scripting environment, outliner, literate
-programming tool, data organizer and project manager. Cloned nodes make possible
-multiple views of a project within a single Leo outline.
-
-Leo is written in 100% pure Python and works on any platform that supports
-Python 2.2 or above and the Tk toolkit. This version of Leo was developed with
-Python 2.3.3 and Tk 8.4.3.
-
-Download Python from http://python.org/
-Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
-
-Leo features a multi-window outlining editor with powerful outline commands,
-support for the noweb markup language, syntax colorizing for many common
-languages, unlimited Undo/Redo, an integrated Python shell(IDLE) window,
-and many user options including user-definable colors and fonts and user-
-definable shortcuts for all menu commands.'''
-
-d = {
-    'name':           'leo',
-    'version':        '4.3-a1',
-    'author':         'Edward K. Ream',
-    'author_email':   'edreamleo@charter.net',
-    'url':            'http://webpages.charter.net/edreamleo/front.html',
-    'description':    'Leo: Literate Editor with Outlines',
-    'modules':        '[]',
-    'license':        'Python',
-    'platforms':      '["Windows, Linux, Macintosh"]',
-    'long_description': longDescription,
-}</t>
-<t tx="ekr.20050117045633"></t>
 <t tx="ekr.20050118080857">@
 
 This is the script that I use to create 'official' distributions of Leo. It
@@ -4246,33 +3439,6 @@ This allows us to distribute .pycheckrc somewhere, even if it isn't in correct p
   
 - This script temporarily copies createLeoDist.py from the dist folder to the leo folder.
 </t>
-<t tx="ekr.20050118092706.12">; FIXME the following Deletes and RMDirs should be removed, should they not? 
-; It appears to me that the design of the Version 1.0 installer would allow for the following sequence of events:
-; 1. User uninstalls Leo, tells it to not delete the installed files;
-; 2. User starts Version 1.0 installer for Leo;
-; 3. User cancels installation;
-; 4. Version 1.0 installer deletes the files user desired to keep in step 1
-
-Delete "$INSTDIR\config\*.*" ; config dir
-RMDir "$INSTDIR\config"
-Delete "$INSTDIR\doc\*.*" ; doc dir
-RMDir "$INSTDIR\doc"
-Delete "$INSTDIR\examples\*.*" ; src dir
-RMDir "$INSTDIR\examples"
-Delete "$INSTDIR\Icons\*.*" ; Icons dir
-RMDir "$INSTDIR\Icons"
-Delete "$INSTDIR\plugins\*.*" ; plugins dir
-RMDir "$INSTDIR\plugins"
-Delete "$INSTDIR\scripts\*.*" ; scripts dir
-RMDir "$INSTDIR\scripts"
-Delete "$INSTDIR\src\*.*" ; src dir
-RMDir "$INSTDIR\src"
-Delete "$INSTDIR\test\*.*" ; test dir
-RMDir "$INSTDIR\test"
-Delete "$INSTDIR\tools\*.*" ; tools dir
-RMDir "$INSTDIR\tools"
-Delete "$INSTDIR\*.*" ; Leo directory
-RMDir "$INSTDIR"</t>
 <t tx="ekr.20050118094209">@killcolor
 
 - Removed &lt; &lt; delete previously installed files &gt; &gt; section from .onInit
@@ -4289,10 +3455,6 @@ RMDir "$INSTDIR"</t>
 - Added __init__.py to extensions, src and test folders.
 - Added Delete "$DESKTOP\Leo.lnk" to uninstaller script.</t>
 <t tx="ekr.20050118095021"></t>
-<t tx="ekr.20050118100239">@killcolor
-
-- Removed &lt;&lt; Uninstall section from Version 1.0 Leo Installer &gt;&gt;
-  This was nothing but comments anyway.</t>
 <t tx="ekr.20050118103207">@comment ;</t>
 <t tx="ekr.20050118103207.1">File "..\__init__.py"
 File "..\install"
@@ -4314,7 +3476,8 @@ Delete "$INSTDIR\uninstall"
 </t>
 <t tx="ekr.20050118104149"></t>
 <t tx="ekr.20050118104149.1">File "..\config\leoSettings.leo"</t>
-<t tx="ekr.20050118104149.2">Delete "$INSTDIR\config\leoSettings.leo"</t>
+<t tx="ekr.20050118104149.2">Delete "$INSTDIR\config\leoSettings.leo"
+Delete "$INSTDIR\config\.leoID.txt"</t>
 <t tx="ekr.20050118104149.3"></t>
 <t tx="ekr.20050118104149.4">; Do not remove leo-4.2.nsi: leoDist.leo must have it.
 
@@ -4404,18 +3567,7 @@ File "..\scripts\*.py"</t>
 
 Delete "$INSTDIR\scripts\*.py"
 Delete "$INSTDIR\scripts\*.pyc"</t>
-<t tx="ekr.20050118110807">@killcolor
-
-The folloeing Deletes and RMDirs should be removed, should they not? 
-
-It appears to me that the design of the Version 1.0 installer would allow for the following sequence of events:
-
-1. User uninstalls Leo, tells it to not delete the installed files;
-2. User starts Version 1.0 installer for Leo;
-3. User cancels installation;
-4. Version 1.0 installer deletes the files user desired to keep in step 1.</t>
-<t tx="ekr.20050118113452"></t>
-<t tx="ekr.20050118113631"># ***** This script uses createLeoDist.py *****</t>
+<t tx="ekr.20050118113631"></t>
 <t tx="ekr.20050118122404">File "..\extensions\__init__.py"</t>
 <t tx="ekr.20050118122404.1">File "..\test\__init__.py"
 File "..\test\test.leo"</t>
@@ -4426,5 +3578,183 @@ File "..\test\test.leo"</t>
 Delete "$INSTDIR\test\test.leo"</t>
 <t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-alpha 1"</t>
 <t tx="ekr.20050118125236"></t>
+<t tx="ekr.20050119113603"></t>
+<t tx="ekr.20050119113603.1"># The manifest template: specifies all files to be included in the distribution.
+
+# Note: these are glob patterns.
+# There seems to be a bug in distutils: ../ doesn't get handled properly.
+# manifest.in must be in the current directory.
+
+include __init__.py
+include manifest.in
+include MANIFEST
+include install
+include uninstall
+exclude createLeoDist.py
+
+include config/leoConfig.leo
+include config/leoConfig.txt
+
+# New in Leo 4.2.1:
+# 1. createLeoDist.py is distributed in dist directory.
+#   - The distribution script temporarily copies createLeoDist.py to the leo directory.
+# 2. Distribute leoDist.leo, not leoDistRef.leo.
+# 3. .pycheckrc is created and distributed in dist directory.
+#   (The user should move it to the home directory if he/she wants to use it.)
+
+include dist/createLeoDist.py
+include dist/leo-4-2.nsi
+include dist/leoDist.leo
+include dist/.pycheckrc
+
+include doc/LeoDiary.leo
+include doc/LeoDocs.leo
+include doc/leoNotes.txt
+include doc/leoToDo.txt
+
+include doc/README.TXT
+include doc/INSTALL.TXT
+include doc/PKG-INFO.TXT
+include doc/LICENSE.TXT
+
+include doc/default.css
+include doc/leo_rst.css
+include doc/silver_city.css
+
+include Icons/*.*
+
+include plugins/aspell.pyd
+include plugins/leoPlugins.leo
+include plugins/*.ini
+include plugins/*.txt
+include plugins/*.py
+
+include scripts/leoScripts.txt
+include scripts/*.py
+
+include src/__init__.py
+include src/LeoPy.leo
+include src/leo*.py
+include src/leoProjects.txt
+include src/oldLeoProjects.leo
+
+include test/__init__.py
+include test/test.leo</t>
+<t tx="ekr.20050119113603.2">@comment ;</t>
+<t tx="ekr.20050119113603.3"></t>
+<t tx="ekr.20050119113603.4">File "..\config\leoConfig.leo"
+File "..\config\leoConfig.txt"</t>
+<t tx="ekr.20050119113603.5">Delete "$INSTDIR\config\leoConfig.txt"
+Delete "$INSTDIR\config\leoConfig.leo"
+Delete "$INSTDIR\config\.leoID.txt"</t>
+<t tx="ekr.20050119113603.6"></t>
+<t tx="ekr.20050119113603.7">File "createLeoDist.py"
+File "leoDist.leo"
+File "leo-4-2.nsi"
+File ".pycheckrc"</t>
+<t tx="ekr.20050119113603.8">Delete "$INSTDIR\dist\createLeoDist.py"
+Delete "$INSTDIR\dist\leoDist.leo"
+Delete "$INSTDIR\dist\leo-4-2.nsi"
+Delete "$INSTDIR\dist\.pycheckrc"</t>
+<t tx="ekr.20050119113603.9"></t>
+<t tx="ekr.20050119113603.10">File "..\doc\leoDiary.leo"
+File "..\doc\LeoDocs.leo"
+
+File "..\doc\leoNotes.txt"
+File "..\doc\leoToDo.txt"
+
+File "..\doc\Readme.txt"
+File "..\doc\Pkg-info.txt"
+File "..\doc\Install.txt"
+File "..\doc\License.txt"
+
+File "..\doc\default.css"
+File "..\doc\leo_rst.css"
+File "..\doc\silver_city.css"</t>
+<t tx="ekr.20050119113603.11">Delete "$INSTDIR\doc\leoDiary.leo"
+Delete "$INSTDIR\doc\LeoDocs.leo"
+
+Delete "$INSTDIR\doc\leoNotes.txt"
+Delete "$INSTDIR\doc\leoToDo.txt"
+
+Delete "$INSTDIR\doc\License.txt"
+Delete "$INSTDIR\doc\Install.txt"
+Delete "$INSTDIR\doc\Pkg-info.txt"
+Delete "$INSTDIR\doc\Readme.txt"
+
+Delete "$INSTDIR\doc\silver_city.css"
+Delete "$INSTDIR\doc\leo_rst.css"
+Delete "$INSTDIR\doc\default.css"
+</t>
+<t tx="ekr.20050119113603.12"></t>
+<t tx="ekr.20050119113603.13">File "..\Icons\*.*"</t>
+<t tx="ekr.20050119113603.14">Delete "$INSTDIR\icons\*.*"</t>
+<t tx="ekr.20050119113603.15"></t>
+<t tx="ekr.20050119113603.16">File "..\plugins\aspell.pyd"
+File "..\plugins\leoPlugins.leo"
+
+File "..\plugins\*.ini"
+File "..\plugins\*.txt"
+
+File "..\plugins\*.py"
+</t>
+<t tx="ekr.20050119113603.17">Delete "$INSTDIR\plugins\aspell.pyd"
+Delete "$INSTDIR\plugins\leoPlugins.leo"
+
+Delete "$INSTDIR\plugins\*.ini"
+Delete "$INSTDIR\plugins\*.txt"
+
+Delete "$INSTDIR\plugins\*.py"
+Delete "$INSTDIR\plugins\*.pyc"
+</t>
+<t tx="ekr.20050119113603.18"></t>
+<t tx="ekr.20050119113603.19">File "..\scripts\leoScripts.txt"
+
+File "..\scripts\*.py"</t>
+<t tx="ekr.20050119113603.20">Delete "$INSTDIR\scripts\leoScripts.txt"
+
+Delete "$INSTDIR\scripts\*.py"
+Delete "$INSTDIR\scripts\*.pyc"</t>
+<t tx="ekr.20050119113603.21"></t>
+<t tx="ekr.20050119113603.22">File "..\src\oldLeoProjects.leo"
+File "..\src\leoProjects.txt"
+
+File "..\src\LeoPy.leo"
+
+File "..\src\leo*.py"
+
+</t>
+<t tx="ekr.20050119113603.23">Delete "$INSTDIR\src\oldLeoProjects.leo"
+Delete "$INSTDIR\src\leoProjects.txt"
+
+Delete "$INSTDIR\src\LeoPy.leo"
+
+Delete "$INSTDIR\src\leo*.py"
+Delete "$INSTDIR\src\leo*.pyc"</t>
+<t tx="ekr.20050119113603.24"></t>
+<t tx="ekr.20050119113603.25">File "..\test\__init__.py"
+
+File "..\test\test.leo"</t>
+<t tx="ekr.20050119113603.26">Delete "$INSTDIR\test\__init__.py"
+
+Delete "$INSTDIR\test\test.leo"</t>
+<t tx="ekr.20050119113603.27"></t>
+<t tx="ekr.20050119113603.28">File "..\__init__.py"
+
+File "..\install"
+File "..\manifest.in"
+File "..\MANIFEST"
+File "..\uninstall"</t>
+<t tx="ekr.20050119113603.29">Delete "$INSTDIR\__init__.py"
+
+Delete "$INSTDIR\install"
+Delete "$INSTDIR\manifest.in"
+Delete "$INSTDIR\MANIFEST"
+Delete "$INSTDIR\uninstall"
+
+Delete "$INSTDIR\uninst.exe"
+</t>
+<t tx="ekr.20050119191034"></t>
+<t tx="ekr.20050119191232"></t>
 </tnodes>
 </leo_file>

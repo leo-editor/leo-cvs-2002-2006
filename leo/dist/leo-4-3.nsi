@@ -451,25 +451,32 @@ FunctionEnd
 
 Section Uninstall
   DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\EKR\leo"
-
-; Remove File Association (from v1.0 Installer)
+  ;@  << remove file association >>
+  ;@+node:ekr.20050119082907:<< remove file association >>
+  ; From v1.0 Installer.
   ReadRegStr $1 HKCR ".leo" ""
-  StrCmp $1 "LeoFile" 0 NoOwn ; only do this if we own it
-	ReadRegStr $1 HKCR ".leo" "backup_val"
-	StrCmp $1 "" 0 RestoreBackup ; if backup == "" then delete the whole key
-	  DeleteRegKey HKCR ".leo"
-	Goto NoOwn
-	RestoreBackup:
-	  WriteRegStr HKCR ".leo" "" $1
-	  DeleteRegValue HKCR ".leo" "backup_val"
+  StrCmp $1 "LeoFile" 0 NoOwn ; only do this if we own it.
+  
+  ReadRegStr $1 HKCR ".leo" "backup_val"
+  StrCmp $1 "" 0 RestoreBackup ; if backup == "" then delete the whole key
+    DeleteRegKey HKCR ".leo"
+  Goto NoOwn
+  
+  RestoreBackup:
+    WriteRegStr HKCR ".leo" "" $1
+    DeleteRegValue HKCR ".leo" "backup_val"
+    
   NoOwn:
   MessageBox MB_YESNO|MB_ICONQUESTION \
-			 "Delete all files in Leo Program folder?" \
-			 IDNO NoDelete
-
+  		 "Delete all files in Leo Program folder?" \
+  		 IDNO NoDelete
+  ;@nonl
+  ;@-node:ekr.20050119082907:<< remove file association >>
+  ;@nl
   ;@  << uninstall config files >>
   ;@+node:ekr.20050118104149.2:<< uninstall config files >>
   Delete "$INSTDIR\config\leoSettings.leo"
+  Delete "$INSTDIR\config\.leoID.txt"
   ;@nonl
   ;@-node:ekr.20050118104149.2:<< uninstall config files >>
   ;@nl
@@ -557,16 +564,6 @@ Section Uninstall
   ;@nonl
   ;@-node:ekr.20050118122740.3:<< uninstall test files >>
   ;@nl
-  ; Delete sub-folders...
-  RMDir "$INSTDIR\config"
-  RMDir "$INSTDIR\dist"
-  RMDir "$INSTDIR\doc"
-  RMDir "$INSTDIR\extensions"
-  RMDir "$INSTDIR\icons"
-  RMDir "$INSTDIR\src"
-  RMDir "$INSTDIR\scripts"
-  RMDir "$INSTDIR\plugins"
-  RMDir "$INSTDIR\test"
   ;@  << uninstall top-level files >>
   ;@+node:ekr.20050118103447.1:<< uninstall top-level files >>
   ; Gets created automatically by installer.
@@ -582,8 +579,24 @@ Section Uninstall
   
   ;@-node:ekr.20050118103447.1:<< uninstall top-level files >>
   ;@nl
+  ;@  << delete folders >>
+  ;@+node:ekr.20050119082907.1:<< delete folders >>
+  ; First, delete sub-folders...
+  RMDir "$INSTDIR\config"
+  RMDir "$INSTDIR\dist"
+  RMDir "$INSTDIR\doc"
+  RMDir "$INSTDIR\extensions"
+  RMDir "$INSTDIR\icons"
+  RMDir "$INSTDIR\src"
+  RMDir "$INSTDIR\scripts"
+  RMDir "$INSTDIR\plugins"
+  RMDir "$INSTDIR\test"
+  
   ; Delete top-level folder.
   RMDir "$INSTDIR"
+  ;@nonl
+  ;@-node:ekr.20050119082907.1:<< delete folders >>
+  ;@nl
 
 NoDelete:
   Delete "$SMPROGRAMS\Leo\Uninstall.lnk"
