@@ -1313,7 +1313,7 @@ class LeoFrame:
 				
 				# Kludge: disable the shortcuts for cut, copy, paste.
 				# This has already been bound in leoFrame.__init__
-				if 0: # bug fix: 3/11/02.  Suggested by Joo-won Jung
+				if 1: # bug fix: 3/11/02.  No. This code must be enabled.
 					if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
 						bind_shortcut = None
 				#@-body
