@@ -272,6 +272,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.generation = 0
         self.dragging = False
         self.prevPositions = 0
+        self.expanded_click_area = g.app.config.getBoolWindowPref("expanded_click_area")
         
         self.createPermanentBindings()
         self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
@@ -301,16 +302,17 @@ class leoTkinterTree (leoFrame.leoTree):
     def createPermanentBindings (self):
         
         canvas = self.canvas
-        
-        canvas.tag_bind('clickBox','<Button-1>',   self.onClickBoxClick)
+    
+        if self.expanded_click_area:
+            canvas.tag_bind('clickBox','<Button-1>', self.onClickBoxClick)
+        else:
+            canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
     
         canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
         canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
         canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
         canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
         canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
-        
-        canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
     
         if self.useBindtags: # Create a dummy widget to hold all bindings.
             t = Tk.Text(canvas) # This _must_ be a Text widget attached to the canvas!
@@ -407,7 +409,7 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.7:newBox
     def newBox (self,p,x,y,image):
         
-        canvas = self.canvas ; tag = "plugBox"
+        canvas = self.canvas ; tag = "plusBox" # 9/5/04: was plugBox.
     
         if self.freeBoxes:
             id = self.freeBoxes.pop(0)
@@ -791,45 +793,46 @@ class leoTkinterTree (leoFrame.leoTree):
         canvas = self.canvas ; h = self.line_height
         
         # Define a slighly larger rect to catch clicks.
-        id = self.newClickBox(p,0,y,1000,y+h-2)
-        
-        if 0: # A major change to the user interface.
-            #@        << change the appearance of headlines >>
-            #@+node:ekr.20040803072955.38:<< change the appearance of headlines >>
+        if self.expanded_click_area:
+            id = self.newClickBox(p,0,y,1000,y+h-2)
             
-            # Define a slighly smaller rect to colorize.
-            color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
-            self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
-            
-            # Color the click box or the headline
-            def enterRect(event,id=color_rect,p=p,t=self.lastText):
-                if 1: # Color or underline the headline
-                    t2 = self.lastColoredText
-                    if t2: # decolor the old headline.
-                        if 1: # deunderline
-                            t2.tag_delete('underline')
-                        else: # decolor
-                            t2.configure(background="white")
-                    if t and p != self.editPosition():
-                        if 1: # underline
-                            t.tag_add('underline','1.0','end')
-                            t.tag_configure('underline',underline=True)
-                        else: # color
-                            t.configure(background="LightSteelBlue1")
-                        self.lastColoredText = t
-                    else: self.lastColoredText = None
-                else: # Color the click box.
-                    if self.lastClickFrameId:
-                        self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
-                    self.lastClickFrameId = id
-                    color = "LightSteelBlue1"
-                    self.canvas.itemconfig(id,fill=color,outline=color)
-            
-            bind_id = self.canvas.tag_bind(click_rect, "<Enter>", enterRect) # , '+')
-            self.tagBindings.append((click_rect,bind_id,"<Enter>"),)
-            #@nonl
-            #@-node:ekr.20040803072955.38:<< change the appearance of headlines >>
-            #@nl
+            if 0: # A major change to the user interface.
+                #@            << change the appearance of headlines >>
+                #@+node:ekr.20040803072955.38:<< change the appearance of headlines >>
+                
+                # Define a slighly smaller rect to colorize.
+                color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+                self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
+                
+                # Color the click box or the headline
+                def enterRect(event,id=color_rect,p=p,t=self.lastText):
+                    if 1: # Color or underline the headline
+                        t2 = self.lastColoredText
+                        if t2: # decolor the old headline.
+                            if 1: # deunderline
+                                t2.tag_delete('underline')
+                            else: # decolor
+                                t2.configure(background="white")
+                        if t and p != self.editPosition():
+                            if 1: # underline
+                                t.tag_add('underline','1.0','end')
+                                t.tag_configure('underline',underline=True)
+                            else: # color
+                                t.configure(background="LightSteelBlue1")
+                            self.lastColoredText = t
+                        else: self.lastColoredText = None
+                    else: # Color the click box.
+                        if self.lastClickFrameId:
+                            self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
+                        self.lastClickFrameId = id
+                        color = "LightSteelBlue1"
+                        self.canvas.itemconfig(id,fill=color,outline=color)
+                
+                bind_id = self.canvas.tag_bind(click_rect, "<Enter>", enterRect) # , '+')
+                self.tagBindings.append((click_rect,bind_id,"<Enter>"),)
+                #@nonl
+                #@-node:ekr.20040803072955.38:<< change the appearance of headlines >>
+                #@nl
     #@nonl
     #@-node:ekr.20040803072955.37:drawClickBox
     #@+node:ekr.20040803072955.39:drawIcon
@@ -1159,7 +1162,7 @@ class leoTkinterTree (leoFrame.leoTree):
         canvas.lower("lines")  # Lowest.
         canvas.lift("textBox") # Not the Tk.Text widget: it should be low.
         canvas.lift("userIcon")
-        canvas.lift("plusBox") 
+        canvas.lift("plusBox")
         canvas.lift("clickBox")
         canvas.lift("iconBox") # Higest.
     
@@ -1539,6 +1542,7 @@ class leoTkinterTree (leoFrame.leoTree):
         # 7/28/04: Not doing this translation was the real bug.
         x = canvas.canvasx(x) 
         y = canvas.canvasy(y)
+        if self.trace: g.trace(x,y)
         item = canvas.find_overlapping(x,y,x,y)
         if not item: return None
     

@@ -28,9 +28,9 @@
 <v t="edream.110203150636.4"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="edream.110203150636.5"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.6"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="edream.110203150636.7" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="edream.110203150636.7"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="edream.110203150636.8"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
-<v t="edream.110203150636.9" a="TV"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
+<v t="edream.110203150636.9"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="edream.110203150636.10"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.11"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.12"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
@@ -38,9 +38,9 @@
 </v>
 <v t="edream.110203150636.14"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.15"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="edream.110203150636.16"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="edream.110203150636.16" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="edream.110203150636.17"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="edream.110203150636.18"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="edream.110203150636.18" a="TV"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="edream.110203150636.19"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="edream.110203150636.20"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="edream.110203150636.21"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -683,6 +683,10 @@ smart_auto_indent = 0
 enable_drag_messages = 0
 # 1: Tell whether drags will move nodes or clone nodes.
 # 0: Don't issue such messages.
+
+expanded_click_area = 1
+# 1: Click near a node expands or contracts the node.
+# 0: Only clicks in a node's plus/minus box expands or contracts the node.
 
 headline_text_unselected_foreground_color = black
 headline_text_unselected_background_color = white
