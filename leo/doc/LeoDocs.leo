@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="13080" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="13081" clone_windows="0"/>
 <globals body_outline_ratio="0.53452685422">
-	<global_window_position top="37" left="203" height="782" width="931"/>
+	<global_window_position top="79" left="259" height="782" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -39,7 +39,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -50,8 +50,8 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
-<v t="ekr.20050126100405"><vh>4.3-a2</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="ekr.20050126100405" a="TV"><vh>4.3-a2</vh>
 <v t="ekr.20050130112336.1"><vh>To do: Improve how Leo handles recent files</vh></v>
 <v t="ekr.20050209141626.3"><vh>Bugs fixed...</vh>
 <v t="ekr.20050209141626.4"><vh>Fixed very old bug in Undo Insert Node </vh></v>
@@ -74,6 +74,8 @@
 <v t="ekr.20050209141626.113"><vh>Leo now prints unicode characters properly in the log pane</vh></v>
 <v t="ekr.20050209141626.114"><vh>Fixed various problems with opening files with Unicode filenames</vh></v>
 <v t="ekr.20050211095754"><vh>Fixed bug reading encoding field in derived files</vh></v>
+<v t="ekr.20050212054743"><vh>Allow indented code blocks to be run using Execute Script command</vh></v>
+<v t="ekr.20050212144116"><vh>Fixed problems found by pychecker</vh></v>
 </v>
 <v t="ekr.20050209141626.150"><vh>New features...</vh>
 <v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
@@ -84,7 +86,7 @@
 <v t="ekr.20050209141626.193"><vh>Added leoPlugins.leo to Help menu</vh></v>
 <v t="ekr.20050209141626.194"><vh>Script buttons can request to be removed</vh></v>
 <v t="ekr.20050209141626.195"><vh>Improved documentation in several nodes in leoSettings.leo</vh></v>
-<v t="ekr.20050209141626.196"><vh>Predefined c,g &amp; p in scripts and unit tests</vh></v>
+<v t="ekr.20050209141626.196"><vh>Predefined c,g &amp; p in scripts, unit tests &amp; test routines</vh></v>
 <v t="ekr.20050209141626.198"><vh>Changed name of Preferences command to Settings</vh></v>
 </v>
 </v>
@@ -217,6 +219,8 @@
 <v t="ekr.20050209141626.113"><vh>Leo now prints unicode characters properly in the log pane</vh></v>
 <v t="ekr.20050209141626.114"><vh>Fixed various problems with opening files with Unicode filenames</vh></v>
 <v t="ekr.20050211095754"><vh>Fixed bug reading encoding field in derived files</vh></v>
+<v t="ekr.20050212054743"><vh>Allow indented code blocks to be run using Execute Script command</vh></v>
+<v t="ekr.20050212144116"><vh>Fixed problems found by pychecker</vh></v>
 </v>
 <v t="ekr.20050209141626.150"><vh>New features...</vh>
 <v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
@@ -227,7 +231,7 @@
 <v t="ekr.20050209141626.193"><vh>Added leoPlugins.leo to Help menu</vh></v>
 <v t="ekr.20050209141626.194"><vh>Script buttons can request to be removed</vh></v>
 <v t="ekr.20050209141626.195"><vh>Improved documentation in several nodes in leoSettings.leo</vh></v>
-<v t="ekr.20050209141626.196"><vh>Predefined c,g &amp; p in scripts and unit tests</vh></v>
+<v t="ekr.20050209141626.196"><vh>Predefined c,g &amp; p in scripts, unit tests &amp; test routines</vh></v>
 <v t="ekr.20050209141626.198"><vh>Changed name of Preferences command to Settings</vh></v>
 </v>
 </v>
@@ -5274,6 +5278,7 @@ plugins.
 tag argument                                                       keys in keywords
 (hook name)               overrides        when called           dictionary argument
 ---------                 ---------        -----------           -------------------
+"after-create-leo-frame"     no        after creating any frame  c
 "after-redraw-outline"       no        end of tree.redraw        c (note 6)
 "clear-mark"                 no        when mark is set          c,p,v
 "close-frame"                no        in app.closeLeoWindow     c
@@ -16387,7 +16392,7 @@ massage the data to my heart's content as I learn more about it and
 decide to use it in different ways for different purposes.  It's the 
 difference between the pick axe and the steam shovel for me.
 </t>
-<t tx="ekr.20050126100405">Leo 4.3 alpha 2                 February 11, 2005
+<t tx="ekr.20050126100405">Leo 4.3 alpha 2                 February 12, 2005
 
 Leo 4.3 is the culmination of more than four months of work. This alpha 2
 release corrects various bugs and distribution problems.
@@ -16710,5 +16715,29 @@ if at.output_newline == 'crlf':
     return script.replace("\r\n","\n")
 else:
     return script</t>
+<t tx="ekr.20050212054743">At present, such indented blocks may not contain Leo directives or section references.  This will be fixed in 4.3a3.</t>
+<t tx="ekr.20050212144116">1. (fixed) C:\prog\leoCVS\leo\src\leoCommands.py:4539: No global (loadDir) found
+    # Would cause leoSettings.leo in Window menu to crash.
+    
+2. (fixed) C:\prog\leoCVS\leo\src\leoGlobals.py:3426: No global (local) found
+    
+    # Local --&gt; locale
+    # Might cause getpreferredencoding to fail on *nix.
+    
+3. (fixed) C:\prog\leoCVS\leo\src\leoGlobals.py:4152: No global (testing) found
+    # Should be self.testing.
+    
+4. (fixed) mu problems:
+    - Changed x to self.x:
+        - C:\prog\leoCVS\leo\src\leoGlobals.py:3795: No global (removeSentinelsFromLines) found
+        - C:\prog\leoCVS\leo\src\leoGlobals.py:3838: No global (getSentinelsFromLines) found
+    - Changed self.x to g.x:
+        C:\prog\leoCVS\leo\src\leoGlobals.py:3854: No class attribute (comment_delims_from_extension) found
+    - pull_source has been renamed, I don not know to what.
+        C:\prog\leoCVS\leo\src\leoGlobals.py:4170: Object (mu) has no attribute (pull_source)
+        (commented out the code that contains this)
+        
+5. (removed code) from &lt;&lt; create a node p for  kind &amp; root2 &gt;&gt;
+    - last_p is None at first, so last_p.insertAfter does not make sense.</t>
 </tnodes>
 </leo_file>

@@ -4,6 +4,8 @@
 
 #@+all
 #@+node:ekr.20050126101301:4.3 a3...
+#@+node:ekr.20050212040628:First: Always use a file-like object for writing!!
+#@-node:ekr.20050212040628:First: Always use a file-like object for writing!!
 #@+node:ekr.20050209094854:First: Remove unreferenced clone nodes when reading thin derived files
 RE: bizarre data loss: no big deal
 
@@ -105,6 +107,13 @@ I have to do some more testings for the other plugins.
 #@-node:ekr.20041231102453.1:Move emacs commands into core
 #@-node:ekr.20050207063254:Plugins...
 #@+node:ekr.20050207063254.1:New features
+#@+node:ekr.20050211173540:Finish changes to c.executeScript & at.write
+At present g.executeScript does not call at.write if the script came from a selection.
+
+In fact, at.write assumes the 'root' node is c.currentPosition(). This must
+change if selections are to support Leo directives and section references.
+#@nonl
+#@-node:ekr.20050211173540:Finish changes to c.executeScript & at.write
 #@+node:ekr.20050128081550:(Implement undo for Paste Retaing clones)
 #@+node:ekr.20050207062841:Report
 @killcolor
@@ -280,6 +289,8 @@ def pasteOutlineRetainingClones (self):
             c.undoer.clearUndoState()
             g.es('Undo stack cleared',color='red')
             return val
+        else:
+            return None
 #@nonl
 #@-node:EKR.20040610130943:pasteOutlineRetainingClones
 #@-node:ekr.20031218072017.1548:Cut & Paste Outlines

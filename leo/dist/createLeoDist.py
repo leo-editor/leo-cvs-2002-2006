@@ -27,7 +27,7 @@ distutils.core.setup (
     #@    << setup info for createLeoDist.py >>
     #@+node:EKR.20040519082027.28:<< setup info for createLeoDist.py >>
     name="leo",
-    version="4.3-alpha-1", # No spaces here!
+    version="4.3-alpha-2", # No spaces here!
     author="Edward K. Ream",
     author_email="edreamleo@charter.net",
     url="http://webpages.charter.net/edreamleo/front.html",

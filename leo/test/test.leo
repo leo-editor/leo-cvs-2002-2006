@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6604" clone_windows="0"/>
 <globals body_outline_ratio="0.440677966102">
-	<global_window_position top="48" left="264" height="708" width="914"/>
+	<global_window_position top="35" left="123" height="708" width="1035"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -542,11 +542,11 @@
 <v t="ekr.20050119220832"><vh>@url file:.\..\leo\doc\LeoDocs.leo#Users Guide--&gt;Chapter 8: Customizing Leo</vh></v>
 <v t="ekr.20050203085849"><vh>test local settings (c.redirect_execute_script_output_to_log_pane)</vh></v>
 </v>
-<v t="ekr.20041126132604" a="TV"><vh>Prototypes</vh>
+<v t="ekr.20041126132604"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
 <v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041220172118" a="E"><vh>Resolve CVS Conflicts command</vh>
+<v t="ekr.20041220172118"><vh>Resolve CVS Conflicts command</vh>
 <v t="ekr.20041220172118.1"><vh>Cvs markers &amp; file names</vh></v>
 <v t="ekr.20041220172118.2"><vh>Conflicts not involving sentinels</vh></v>
 <v t="ekr.20041220173231"><vh>Conflicts involving sentinels</vh></v>
@@ -970,7 +970,7 @@
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 <v t="ekr.20050210180937"><vh>@button jython</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1046,7 +1046,7 @@
 </v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
-<v t="ekr.20050106080304" a="E"><vh>@suite run all test routines</vh>
+<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
 <v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
 <v t="ekr.20050106094854.1"><vh>__init__</vh></v>
@@ -1065,7 +1065,7 @@
 <v t="ekr.20050106080318.3"><vh> fail</vh></v>
 <v t="ekr.20050106080318.4"><vh>setUp</vh></v>
 <v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
-<v t="ekr.20050106080318.6" a="M"><vh>runTest</vh></v>
+<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
 <v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
 </v>
 <v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
@@ -1575,9 +1575,9 @@
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
 <v t="ekr.20050210180034"><vh>jython script</vh></v>
-<v t="ekr.20050211121701" a="E"><vh>Develop &amp; test g.removeExtraLws</vh>
+<v t="ekr.20050211121701"><vh>Develop &amp; test g.removeExtraLws</vh>
 <v t="ekr.20050211121701.1"><vh>g.removeExtraLws</vh></v>
-<v t="ekr.20050211121701.2" a="E"><vh>test_g_removeExtraLws</vh></v>
+<v t="ekr.20050211121701.2"><vh>test_g_removeExtraLws</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -10897,12 +10897,7 @@ if not spellpyx or not spellFrame:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">/Users/edream/leoCVS/leo/plugins/leoPlugins.leo
-/Users/edream/leoCVS/leo/config/leoSettings.leo
-/Users/edream/leoCVS/leo/test/test.leo
-/Users/edream/leoCVS/leo/doc/LeoDocs.leo
-C:\prog\leoCVS\leo\test\test.leo
-/Users/edream/leoCVS/leo/src/LeoPy.leo</t>
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys

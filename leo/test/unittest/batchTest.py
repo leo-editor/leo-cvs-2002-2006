@@ -9,7 +9,7 @@ import leoGlobals as g
 
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","createdFile.txt")
 
-if 1:
+if 0:
     print "creating", path
 
 f = None

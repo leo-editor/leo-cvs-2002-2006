@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="994" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1001" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
-	<global_window_position top="23" left="64" height="833" width="953"/>
+	<global_window_position top="59" left="54" height="833" width="953"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -17,6 +18,7 @@
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
 <v t="ekr.20050124083006"><vh>ANN: Leo 4.3-a1</vh></v>
+<v t="ekr.20050212054125"><vh>ANN: Leo 4.3-a2</vh></v>
 <v t="EKR.20040519091259.5"><vh>FAQ for comp.prog.literate</vh></v>
 <v t="EKR.20040519091259.30"><vh>Previous announcements</vh>
 <v t="ekr.20040922074043"><vh>ANN: Leo 4.2 final: An outlining editor</vh></v>
@@ -100,10 +102,17 @@
 </v>
 </v>
 <v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
+<v t="ekr.20050212143754"><vh>*** Mods to pychecker in python23/site-packages ***</vh>
+<v t="ekr.20050212143754.1"><vh>What I did</vh></v>
+<v t="ekr.20050212143754.2" a="E"><vh>CodeChecks.py (modified)</vh>
+<v t="ekr.20050212143754.3"><vh>_checkGlobal (modified)</vh></v>
+<v t="ekr.20050212143754.4"><vh>_checkModuleAttribute (modified)</vh></v>
+</v>
+</v>
 <v t="ekr.20040629173419.1" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file .pycheckrc</vh>
-<v t="ekr.20040701193853"><vh>blacklist</vh></v>
+<v t="ekr.20040701193853" a="E"><vh>blacklist</vh></v>
 <v t="ekr.20040701193853.1"><vh>defaults</vh></v>
-<v t="ekr.20040701193853.2"><vh>max...</vh></v>
+<v t="ekr.20040701193853.2" a="E"><vh>max...</vh></v>
 <v t="ekr.20040701193853.3" a="M"><vh>suppressions</vh></v>
 <v t="ekr.20040701193853.4"><vh>unusedNames</vh></v>
 <v t="ekr.20040701193853.5"><vh>variablesToIgnore</vh></v>
@@ -111,7 +120,6 @@
 <v t="ekr.20040701160830"><vh>@url http://pychecker.sourceforge.net/</vh></v>
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
-<v t="ekr.20040809102948"><vh>Wrong warnings: not suppressed</vh></v>
 </v>
 <v t="ekr.20050119113603"><vh>Leo 4.2 installer</vh>
 <v t="ekr.20050117030411"><vh>What I did</vh></v>
@@ -157,7 +165,7 @@
 <v t="ekr.20050119113603.30"
 marks="ekr.20050119113603.41,ekr.20050119113603.42,ekr.20050119113603.53,"><vh>@thin leo-4-2.nsi</vh></v>
 </v>
-<v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118095021" a="TV"><vh>Leo 4.3 installer</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118094209"><vh>What I did</vh></v>
@@ -207,7 +215,7 @@ marks="ekr.20050119113603.41,ekr.20050119113603.42,ekr.20050119113603.53,"><vh>@
 <v t="ekr.20050118092706"
 marks="ekr.20050118092706.3,ekr.20050118092706.5,ekr.20050118092706.6,ekr.20050118092706.10,ekr.20050118092706.11,ekr.20050118092706.13,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="ekr.20050118113631" a="TV"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -235,6 +243,7 @@ marks="ekr.20050118092706.3,ekr.20050118092706.5,ekr.20050118092706.6,ekr.200501
 Documentation
 	- Update readme.txt
 	- Update LeoDocs.leo
+    - Update Announcement.
 	
 Version numbers
 	- Update version number in Help menu.
@@ -488,7 +497,7 @@ else: # Doesn't work
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519080201.3"></t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4.3-alpha-1", # No spaces here!
+version="4.3-alpha-2", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -585,49 +594,56 @@ You may specify options using the configuration file called leoConfig.txt.  You 
 Installing leo.py on MacOs
 --------------------------
 
-Bruce M. Bolden, bruceb@cs.uidaho.edu, is using Leo on MaxOS X.  Here is his description of how to get Leo working there:
+Leo works reliably only on MacOS X 10.3 (Panther).
 
-I installed: 
-- Latest OS X Developer tools
-- latest (as of about two weeks ago) tk/tcl
-		 MacOSXTk8.4a4-2.tar.gz
-- the machopython distribution
-http://prdownloads.sourceforge.net/wxpython/MachoPython-2.2.1.dmg
+To run Leo on Macintosh OS X 10.3:
 
-For OS X 10.1, I followed the directions at:
-	http://tony.lownds.com/macosx/tkinter.html
+1) Download and install "MacPython 2.3 for Panther addons".
 
-That worked fine for 10.1, but didn't work for 10.2.  It
-took awhile to find a Python distribution that worked
-correctly with tk/tcl.
+Python is already included in OS X 10.3 so only the addons are necessary
 
-I was just getting into Leo about a week before 10.2 was released and thought about---what if it breaks....10.2 broke it, but I was able to find a solution as described above.
+	http://www.cwi.nl/~jack/macpython.html
 
-More re MacOS from Bruce Bolden
--------------------------------
+2) Download and install TclTkAqua.
 
-I just finished building tk successfully!  The magic step was the execution of the command
+	http://tcltkaqua.sourceforge.net/
 
-cp ../generic/prolog.ps to ../library/prolog.ps
+3) Run the PackageManager found in /Applications/MacPython-2.3 and  
+install "_tkinter-2.3-binary" by clicking on the package in the list  
+and clicking the [Install:] button with "Install dependencies" checked
 
-AFTER 
+4) Download Leo (platform independent source.zip).
 
-cd ../../tk/macosx
+	http://leo.sourceforge.net/
 
-in the instructions on "Steps to build Tcl/Tk 8.4.0 on MacOS X":
+5) Unzip the contents into a directory by double-clicking the  
+downloaded file.
 
-http://mini.net/tcl/4052
+6) Control-click on /path_to_unzipped_dir/leo/src/leo.py and open with  
+PythonLauncher.
 
-I found this solution while looking at the tcl-mac mailing list archive.  The earlier (current?) tar ball on SourceForge did not have the file prolog.ps in the library directory:
+7) It is a good idea to set PythonLauncher as the default program to  
+open python scripts by clicking on "leo.py", choosing Get Info from the  
+Finder's File menu, and selecting "PythonLauncher" as the default  
+program to "Open With:"
 
-http://sourceforge.net/mailarchive/forum.php?thread_id=1060496&amp;forum_id=3853
+By clicking the "Change All..." button, all python scripts will be  
+opened with PythonLauncher.
 
-Copy and Paste seem to work just fine now in Leo!  This was my original question for you.
+8) Download and install Pmw.
 
-I also noticed that someone else built everything on OS X 10.2 (Jaguar), but they did it under X.  Since, the new version of Tk appears to support the OS X interface quite well, I'm not going to bother installing X (for now).
+    http://pmw.sourceforge.net/
 
-So, Leo works two different ways on OS X 10.2.
-</t>
+Pmw must be installed in order to use the Settings panel.
+
+Drag the downloaded gzip file into
+ 
+/System/Library/Frameworks/Python.framework/Versions/2.3/lib/python2.3/site-packages
+
+Double click on it to unzip and untar the file into a folder to make it
+available to Python
+
+Thanks to Randall Voth for these instructions.</t>
 <t tx="EKR.20040519090846.7">
 Using shell scripts and batch files to make using Leo easier
 ------------------------------------------------------------
@@ -646,7 +662,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.3-alpha-1
+Version: 4.3-alpha-2
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -665,44 +681,50 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.3-alpha-1      January 24, 2005
+<t tx="EKR.20040519090846.9">Leo 4.3 alpha 2 is now available at http://sourceforge.net/projects/leo/
 
-Leo 4.3-alpha-1 is now available at http://sourceforge.net/projects/leo/ Leo 4.3
-is the culmination of more than four months of work. 
+Leo 4.3 is the culmination of more than five months of work. In spite
+of its alpha status, I recommend Leo 4.3a1 over any 4.2 release.
 
-The major defining features of Leo 4.3:
+This alpha 2 release corrects various bugs and distribution problems.
+It also adds these new features:
 
-1. Leo now stores options in @settings trees, that is, outlines whose headline
-is '@settings'. When opening a .leo file, Leo looks for @settings trees not only
-in the outline being opened but also in various leoSettings.leo files.
+- Adds 'word', 'line' and 'node' undo granularities.
+- Predefines 'c','g', and 'p' in scripts and unit tests.
+- Added support for top-level init functions in plugins.
+- Buttons can remove themselves when their scripts fail.
 
-The key design goal of @settings trees was that Leo's user options must be
-infinitely flexible. That goal has been accomplished. Indeed, users can create
-arbitrarily complex user options with @settings trees. Leo settings outlines
-are, in fact, infinitely more flexible and powerful than any scheme based on
-flat text.  Readers of Python's configParser shootout take note!
+The defining features of Leo 4.3:
+---------------------------------
+1. Leo now stores options in @settings trees, that is, outlines whose
+headline is '@settings'. When opening a .leo file, Leo looks for
+@settings trees not only in the outline being opened but also in
+various leoSettings.leo files.
 
-2. The Preferences command temporarily replaces the outline pane with an outline
-showing all the @settings trees in effect. The Preferences command also replaces
-the body pane with a "settings pane". This settings pane allows you to change
-the settings selected in the outline pane using standard gui widgets. The
-settings pane is dynamically created from nodes in the settings tree; it is as
-extensible as the @settings tree itself.
+Users can create arbitrarily complex user options with @settings
+trees. Leo settings outlines are, in fact, infinitely more flexible
+and powerful than any scheme based on flat text. Readers of Python's
+configParser shootout take note.
 
-3. Leo's read/write code in leoAtFile.py has been rewritten to support user-
-defined tangling and untangling.  This is a major cleanup of Leo's core.
+2. The Preferences command temporarily replaces the outline pane with
+an outline showing all the @settings trees in effect. The Preferences
+command also replaces the body pane with a "settings pane". This
+settings pane allows you to change the settings selected in the
+outline pane using standard gui widgets.
 
-4. Leo now boasts a wonderful new Plugins Manager plugin. This plugin enables
-and disables plugins automatically. You never have to mess with
-pluginsManager.txt again! This plugin also tells you everything you need to know
-about each plugin. Finally, this plugin also lets you download plugins from
-Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
+3. Leo's read/write code in leoAtFile.py has been rewritten to support
+user-defined tangling and untangling. This is a major cleanup of
+Leo's core.
 
-5. You can install third-party extensions in Leo's extensions directory. Leo
-will attempt to import such extensions from the extensions directory if normal
-imports fail.
+4. Leo now boasts an excellent Plugins Manager plugin. This plugin
+enables and disables plugins automatically and tells you everything
+you need to know about each plugin. This plugin also lets you download
+plugins from Leo's cvs site.
 
-As usual, version 4.3 contains many other improvements and bug fixes.</t>
+5. You can install third-party extensions in Leo's extensions
+directory. Leo will attempt to import such extensions from the
+extensions directory when normal imports fail. The distribution contains
+Python Mega Widgets in the extensions directory.</t>
 <t tx="EKR.20040519090846.10"># The manifest template: specifies all files to be included in the distribution.
 
 # Note: these are glob patterns.
@@ -2983,7 +3005,7 @@ no-varlist=
 no-version</t>
 <t tx="ekr.20040701193853"># list of strings: ignore warnings generated from these modules
 blacklist = [
-	## 'leoConfig', # Pychecker has lots of problems with this file...
+	# 'leoConfig', # Pychecker has lots of problems with this file...
 	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK',\
 ]
 </t>
@@ -3130,14 +3152,13 @@ suppressions = {
         'leoFrame' : '--no-argsused',
         'leoMenu'  : '--no-argsused',
         'leoGui'   : '--no-argsused',
-    # leo.py must do strange things with imports.
-        # 'leo' : '--no-import --no-reimportself --no-reimport ',  # --no-miximport
+
     # A bad warning about lastVnode.  BOTH MUST BE SPECIFIED
         #'leoImport.baseLeoImportCommands.convertMoreStringsToOutlineAfter' : '--no-objattrs', 
         #'leoImport.leoImportCommands.convertMoreStringsToOutlineAfter'     : '--no-objattrs',
 }
 
-# dict: suppress warnings where keys can be regular expressions
+# dict: suppress warnings where keys can be regular expressions.
 suppressionRegexs = {}</t>
 <t tx="ekr.20040701193853.4"># Ignore unused locals/arguments if name is one of the following:
 
@@ -3153,13 +3174,6 @@ variablesToIgnore = [
     '__all__', '__version__', '__copyright__',
     '__revision__', # Suppress an warning about a library module.
 ]</t>
-<t tx="ekr.20040809102948">(wrong) C:\prog\leoCVS\leo\src\leoTkinterTree.py:1930: Using method (dragging) as an attribute (not invoked)
-
-(wrong) c:\prog\LeoCVS\leo\src\leoImport.py:59: No module attribute (fail) found
-(wrong) c:\prog\LeoCVS\leo\src\leoImport.py:290: No module attribute (fail) found
-(wrong) c:\prog\LeoCVS\leo\src\leoImport.py:823: No module attribute (fail) found
-(wrong) c:\prog\LeoCVS\leo\src\leoImport.py:868: No module attribute (fail) found
-(wrong) c:\prog\LeoCVS\leo\src\leoImport.py:2591: No module attribute (fail) found</t>
 <t tx="ekr.20040810104041">Leo 4.2 Beta 3 is now available at http://sourceforge.net/projects/leo/
 
 This version of Leo is feature complete. Leo's core code has been
@@ -3471,7 +3485,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-3-a1.exe"
+OutFile "LeoSetup-4-3-a2.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3619,7 +3633,7 @@ File "..\test\test.leo"</t>
 <t tx="ekr.20050118122740.2"></t>
 <t tx="ekr.20050118122740.3">Delete "$INSTDIR\test\__init__.py"
 Delete "$INSTDIR\test\test.leo"</t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-alpha-1"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-alpha-2"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119113603"></t>
 <t tx="ekr.20050119113603.1"># The manifest template: specifies all files to be included in the distribution.
@@ -3912,6 +3926,153 @@ Edward K. Ream   email:  edreamleo@charter.net
 Leo: Literate Editor with Outlines
 Leo: http://webpages.charter.net/edreamleo/front.html
 --------------------------------------------------------------------
+</t>
+<t tx="ekr.20050212054125">Leo 4.3 alpha 2 is now available at http://sourceforge.net/projects/leo/
+
+Leo 4.3 is the culmination of more than five months of work. In spite
+of its alpha status, I recommend Leo 4.3a1 over any 4.2 release.
+
+This alpha 2 release corrects various bugs and distribution problems.
+It also adds these new features:
+
+- Adds 'word', 'line' and 'node' undo granularities.
+- Predefines 'c','g', and 'p' in scripts and unit tests.
+- Added support for top-level init functions in plugins.
+- Buttons can remove themselves when their scripts fail.
+
+The defining features of Leo 4.3:
+---------------------------------
+1. Leo now stores options in @settings trees, that is, outlines whose
+headline is '@settings'. When opening a .leo file, Leo looks for
+@settings trees not only in the outline being opened but also in
+various leoSettings.leo files.
+
+Users can create arbitrarily complex user options with @settings
+trees. Leo settings outlines are, in fact, infinitely more flexible
+and powerful than any scheme based on flat text. Readers of Python's
+configParser shootout take note.
+
+2. The Preferences command temporarily replaces the outline pane with
+an outline showing all the @settings trees in effect. The Preferences
+command also replaces the body pane with a "settings pane". This
+settings pane allows you to change the settings selected in the
+outline pane using standard gui widgets.
+
+3. Leo's read/write code in leoAtFile.py has been rewritten to support
+user-defined tangling and untangling. This is a major cleanup of
+Leo's core.
+
+4. Leo now boasts an excellent Plugins Manager plugin. This plugin
+enables and disables plugins automatically and tells you everything
+you need to know about each plugin. This plugin also lets you download
+plugins from Leo's cvs site.
+
+5. You can install third-party extensions in Leo's extensions
+directory. Leo will attempt to import such extensions from the
+extensions directory when normal imports fail. The distribution contains
+Python Mega Widgets in the extensions directory.
+
+What people are saying about Leo
+--------------------------------
+"When first I opened Leo, it was out of curiosity. But having used
+it...I'll never go back. They'll have to pry Leo out of my cold, dead
+fingers! Seriously, it should be renamed 'Crack Cocaine' because it's
+that addictive. I'm ready to start a 12-Step group."
+-- Travers A. Hough
+
+"I feel addicted to programming again...in fact [Leo] has resurrected
+a dead project of mine :) The Outline has proven most liberating in
+terms of testing ideas out." -- Anon
+
+"I have been absolutely seduced by Leo over the past few days. I tell
+you, I can not put it down. I feel like a kid with a shiny new
+bike...I'm already bursting with new ways I'd like to use the tool in
+the future." -- Lyn Adams Headley
+
+Thanks for the great work--I love Leo!!! -- Josef Dalcolmo
+
+Leo has simplified updating and creating new scripts and .bats keeping
+similar information in the same place. there is almost an addictive
+withdrawal effect when I can complete an operation in so much less
+time with Leo &amp; python than I had become used to. -- Anon
+
+More quotes at: http://webpages.charter.net/edreamleo/testimonials.html
+
+What makes Leo special?
+-----------------------
+- Leo's outlines add a new dimension to programming.
+- Leo shows you your code and data the way _you_ want to see them.
+- Leo extends, completes and simplifies literate programming.
+- Leo's script buttons bring scripts to data. 
+
+What is Leo?
+------------
+- A programmer's editor, an outlining editor and a flexible browser.
+- A literate programming tool, compatible with noweb and CWEB.
+- A data organizer and project manager. Leo provides multiple views
+   of projects within a single outline.
+- Fully scriptable using Python. Leo saves its files in XML format.
+- Portable. leo.py is 100% pure Python.
+- Open Software, distributed under the Python License.
+
+Leo requires Python 2.2.1 or above and tcl/tk 8.4 or above.
+Leo works on Linux, Windows and MacOs X.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
+Wiki:     http://leo.hd1.org/
+
+Edward K. Ream
+January 25, 2005
+--------------------------------------------------------------------
+Edward K. Ream   email:  edreamleo@charter.net
+Leo: Literate Editor with Outlines
+Leo: http://webpages.charter.net/edreamleo/front.html
+--------------------------------------------------------------------
+</t>
+<t tx="ekr.20050212143754"></t>
+<t tx="ekr.20050212143754.1">@killcolor
+
+I solved two problems by brute force:
+
+1. Suppressed warnings for non-existent pre-defined vars in test routines.
+2. Suppressed warnings about the following supposedly non-existent vars: 'leo_config_directory','CODESET','mtime'</t>
+<t tx="ekr.20050212143754.2">@color</t>
+<t tx="ekr.20050212143754.3">def _checkGlobal(operand, module, func, code, err, main = 0) :
+    if not _hasGlobal(operand, module, func, main) :
+        
+        # EKR: suppress warnings for pre-defined vars in test routines.
+        if str(func).startswith('test_') and str(operand) in ('g','c','p'):
+            # print 'ekr',str(func),repr(operand)
+            return
+
+        code.addWarning(err % operand)
+        if not cfg().reportAllGlobals :
+            func.function.func_globals[operand] = operand</t>
+<t tx="ekr.20050212143754.4">def _checkModuleAttribute(attr, module, code, ref) :
+    
+    # EKR: This is the only way I know of getting rid of these!
+    if str(attr) in ('leo_config_directory','CODESET','mtime'): return
+    
+    try:
+        if attr not in module.modules[ref].attributes and not utils.endswith(ref, '.' + attr) :
+            code.addWarning(msgs.INVALID_MODULE_ATTR % attr)
+    except (KeyError, TypeError):
+        # if ref isn't found, or ref isn't even hashable, we don't care
+        # we may not know, or ref could be something funky [e for e].method()
+        pass
+
+    try:
+        _checkClassAttribute(attr, module.classes[ref], code)
+    except (KeyError, TypeError):
+        # if ref isn't found, or ref isn't even hashable, we don't care
+        # we may not know, or ref could be something funky [e for e].method()
+        pass
 </t>
 </tnodes>
 </leo_file>

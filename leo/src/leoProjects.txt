@@ -1292,29 +1292,29 @@ def get_directives_dict(s,root=None):
     Returns a dict containing pointers to the start of each directive"""
 
     if root: root_node = root[0]
-    dict = {}
+    theDict = {}
     i = 0 ; n = len(s)
     while i < n:
         if s[i] == '@' and i+1 < n:
-            << set dict for @ directives >>
+            << set theDict for @ directives >>
         elif root and g.match(s,i,"<<"):
-            << set dict["root"] for noweb * chunks >>
+            << set theDict["root"] for noweb * chunks >>
         i = g.skip_line(s,i)
-    return dict
+    return theDict
 #@nonl
-#@+node:ekr.20031218072017.1261:<< set dict for @ directives >>
+#@+node:ekr.20031218072017.1261:<< set theDict for @ directives >>
 j = g.skip_c_id(s,i+1)
 word = s[i+1:j]
 if word in g.globalDirectiveList:
-    if dict.has_key(word):
+    if theDict.has_key(word):
         # Ignore second value.
         pass
         # g.es("Warning: conflicting values for %s" % (word), color="blue")
     else:
-        dict [word] = i
+        theDict [word] = i
 #@nonl
-#@-node:ekr.20031218072017.1261:<< set dict for @ directives >>
-#@+node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+#@-node:ekr.20031218072017.1261:<< set theDict for @ directives >>
+#@+node:ekr.20031218072017.1262:<< set theDict["root"] for noweb * chunks >>
 @ The following looks for chunk definitions of the form < < * > > =. If found, we take this to be equivalent to @root filename if the headline has the form @root filename.
 @c
 
@@ -1325,11 +1325,11 @@ if i < n and s[i] == '*' :
         # < < * > > = implies that @root should appear in the headline.
         i += 3
         if root_node:
-            dict["root"]=0 # value not immportant
+            theDict["root"]=0 # value not immportant
         else:
             g.es(g.angleBrackets("*") + "= requires @root in the headline")
 #@nonl
-#@-node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+#@-node:ekr.20031218072017.1262:<< set theDict["root"] for noweb * chunks >>
 #@-node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
 #@+node:ekr.20031218072017.1386:getOutputNewline
 def getOutputNewline (c=None,name=None):
@@ -1356,14 +1356,14 @@ def getOutputNewline (c=None,name=None):
 #@nonl
 #@-node:ekr.20031218072017.1386:getOutputNewline
 #@+node:ekr.20031218072017.1387:scanAtEncodingDirective
-def scanAtEncodingDirective(s,dict):
+def scanAtEncodingDirective(s,theDict):
     
-    """Scan the @encoding directive at s[dict["encoding"]:].
+    """Scan the @encoding directive at s[theDict["encoding"]:].
 
     Returns the encoding name or None if the encoding name is invalid.
     """
 
-    k = dict["encoding"]
+    k = theDict["encoding"]
     i = g.skip_to_end_of_line(s,k)
     j = len("@encoding")
     encoding = s[k+j:i].strip()
@@ -1376,14 +1376,14 @@ def scanAtEncodingDirective(s,dict):
 #@nonl
 #@-node:ekr.20031218072017.1387:scanAtEncodingDirective
 #@+node:ekr.20031218072017.1388:scanAtLineendingDirective
-def scanAtLineendingDirective(s,dict):
+def scanAtLineendingDirective(s,theDict):
     
-    """Scan the @lineending directive at s[dict["lineending"]:].
+    """Scan the @lineending directive at s[theDict["lineending"]:].
 
     Returns the actual lineending or None if the name of the lineending is invalid.
     """
 
-    k = dict["lineending"]
+    k = theDict["lineending"]
     i = g.skip_to_end_of_line(s,k)
     j = len("@lineending")
     j = g.skip_ws(s,j)
@@ -1399,14 +1399,14 @@ def scanAtLineendingDirective(s,dict):
 #@nonl
 #@-node:ekr.20031218072017.1388:scanAtLineendingDirective
 #@+node:ekr.20031218072017.1389:scanAtPagewidthDirective
-def scanAtPagewidthDirective(s,dict,issue_error_flag=False):
+def scanAtPagewidthDirective(s,theDict,issue_error_flag=False):
     
-    """Scan the @pagewidth directive at s[dict["pagewidth"]:].
+    """Scan the @pagewidth directive at s[theDict["pagewidth"]:].
 
     Returns the value of the width or None if the width is invalid.
     """
     
-    k = dict["pagewidth"]
+    k = theDict["pagewidth"]
     j = i = k + len("@pagewidth")
     i, val = g.skip_long(s,i)
     if val != None and val > 0:
@@ -1419,14 +1419,14 @@ def scanAtPagewidthDirective(s,dict,issue_error_flag=False):
         return None
 #@-node:ekr.20031218072017.1389:scanAtPagewidthDirective
 #@+node:ekr.20031218072017.1390:scanAtTabwidthDirective
-def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
+def scanAtTabwidthDirective(s,theDict,issue_error_flag=False):
     
-    """Scan the @tabwidth directive at s[dict["tabwidth"]:].
+    """Scan the @tabwidth directive at s[theDict["tabwidth"]:].
 
     Returns the value of the width or None if the width is invalid.
     """
     
-    k = dict["tabwidth"]
+    k = theDict["tabwidth"]
     i = k + len("@tabwidth")
     i, val = g.skip_long(s, i)
     if val != None and val != 0:
@@ -1513,7 +1513,7 @@ def scanDirectives(c,p=None):
     pluginsList = [] # 5/17/03: a list of items for use by plugins.
     for p in p.self_and_parents_iter():
         s = p.v.t.bodyString
-        dict = g.get_directives_dict(s)
+        theDict = g.get_directives_dict(s)
         << Test for @comment and @language >>
         << Test for @encoding >>
         << Test for @lineending >>
@@ -1522,8 +1522,8 @@ def scanDirectives(c,p=None):
         << Test for @tabwidth >>
         << Test for @wrap and @nowrap >>
         g.doHook("scan-directives",c=c,p=p,v=p,s=s,
-            old_dict=old,dict=dict,pluginsList=pluginsList)
-        old.update(dict)
+            old_dict=old,dict=theDict,pluginsList=pluginsList)
+        old.update(theDict)
 
     if path == None: path = g.getBaseDirectory(c=c)
 
@@ -1556,41 +1556,41 @@ wrap = c.config.getBool("body_pane_wraps")
 if old.has_key("comment") or old.has_key("language"):
     pass
 
-elif dict.has_key("comment"):
-    k = dict["comment"]
+elif theDict.has_key("comment"):
+    k = theDict["comment"]
     delim1,delim2,delim3 = g.set_delims_from_string(s[k:])
 
-elif dict.has_key("language"):
-    k = dict["language"]
+elif theDict.has_key("language"):
+    k = theDict["language"]
     language,delim1,delim2,delim3 = g.set_language(s,k)
 #@nonl
 #@-node:ekr.20031218072017.1393:<< Test for @comment and @language >>
 #@+node:ekr.20031218072017.1394:<< Test for @encoding >>
-if not old.has_key("encoding") and dict.has_key("encoding"):
+if not old.has_key("encoding") and theDict.has_key("encoding"):
     
-    e = g.scanAtEncodingDirective(s,dict)
+    e = g.scanAtEncodingDirective(s,theDict)
     if e:
         encoding = e
 #@-node:ekr.20031218072017.1394:<< Test for @encoding >>
 #@+node:ekr.20031218072017.1395:<< Test for @lineending >>
-if not old.has_key("lineending") and dict.has_key("lineending"):
+if not old.has_key("lineending") and theDict.has_key("lineending"):
     
-    e = g.scanAtLineendingDirective(s,dict)
+    e = g.scanAtLineendingDirective(s,theDict)
     if e:
         lineending = e
 #@-node:ekr.20031218072017.1395:<< Test for @lineending >>
 #@+node:ekr.20031218072017.1396:<< Test for @pagewidth >>
-if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
     
-    w = g.scanAtPagewidthDirective(s,dict)
+    w = g.scanAtPagewidthDirective(s,theDict)
     if w and w > 0:
         page_width = w
 #@nonl
 #@-node:ekr.20031218072017.1396:<< Test for @pagewidth >>
 #@+node:ekr.20031218072017.1397:<< Test for @path >>
-if not path and not old.has_key("path") and dict.has_key("path"):
+if not path and not old.has_key("path") and theDict.has_key("path"):
 
-    k = dict["path"]
+    k = theDict["path"]
     << compute relative path from s[k:] >>
     if path and len(path) > 0:
         base = g.getBaseDirectory(c=c) # returns "" on error.
@@ -1615,9 +1615,9 @@ if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
 #@-node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
 #@-node:ekr.20031218072017.1397:<< Test for @path >>
 #@+node:ekr.20031218072017.1399:<< Test for @tabwidth >>
-if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
     
-    w = g.scanAtTabwidthDirective(s,dict)
+    w = g.scanAtTabwidthDirective(s,theDict)
     if w and w != 0:
         tab_width = w
 #@nonl
@@ -1625,9 +1625,9 @@ if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 #@+node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
 if not old.has_key("wrap") and not old.has_key("nowrap"):
     
-    if dict.has_key("wrap"):
+    if theDict.has_key("wrap"):
         wrap = True
-    elif dict.has_key("nowrap"):
+    elif theDict.has_key("nowrap"):
         wrap = False
 #@nonl
 #@-node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
@@ -1694,7 +1694,8 @@ if 0: # Set to 1 for lint-like testing.
         import pychecker.checker
         # This works.  We may want to set options here...
         # from pychecker import Config 
-        print ; print "Warning: pychecker.checker running..." ; print
+        # print pychecker
+        print ; print "Warning (in leo.py): pychecker.checker running..." ; print
     except:
         print ; print 'Can not import pychecker' ; print
 #@nonl
@@ -2449,6 +2450,8 @@ def pasteOutlineRetainingClones (self):
             c.undoer.clearUndoState()
             g.es('Undo stack cleared',color='red')
             return val
+        else:
+            return None
 #@nonl
 #@-node:EKR.20040610130943:pasteOutlineRetainingClones
 #@+node:ekr.20031218072017.1551:pasteOutline
@@ -3915,7 +3918,7 @@ def scanDirectives(c,p=None):
     pluginsList = [] # 5/17/03: a list of items for use by plugins.
     for p in p.self_and_parents_iter():
         s = p.v.t.bodyString
-        dict = g.get_directives_dict(s)
+        theDict = g.get_directives_dict(s)
         << Test for @comment and @language >>
         << Test for @encoding >>
         << Test for @lineending >>
@@ -3924,8 +3927,8 @@ def scanDirectives(c,p=None):
         << Test for @tabwidth >>
         << Test for @wrap and @nowrap >>
         g.doHook("scan-directives",c=c,p=p,v=p,s=s,
-            old_dict=old,dict=dict,pluginsList=pluginsList)
-        old.update(dict)
+            old_dict=old,dict=theDict,pluginsList=pluginsList)
+        old.update(theDict)
 
     if path == None: path = g.getBaseDirectory(c=c)
 
@@ -3958,41 +3961,41 @@ wrap = c.config.getBool("body_pane_wraps")
 if old.has_key("comment") or old.has_key("language"):
     pass
 
-elif dict.has_key("comment"):
-    k = dict["comment"]
+elif theDict.has_key("comment"):
+    k = theDict["comment"]
     delim1,delim2,delim3 = g.set_delims_from_string(s[k:])
 
-elif dict.has_key("language"):
-    k = dict["language"]
+elif theDict.has_key("language"):
+    k = theDict["language"]
     language,delim1,delim2,delim3 = g.set_language(s,k)
 #@nonl
 #@-node:ekr.20031218072017.1393:<< Test for @comment and @language >>
 #@+node:ekr.20031218072017.1394:<< Test for @encoding >>
-if not old.has_key("encoding") and dict.has_key("encoding"):
+if not old.has_key("encoding") and theDict.has_key("encoding"):
     
-    e = g.scanAtEncodingDirective(s,dict)
+    e = g.scanAtEncodingDirective(s,theDict)
     if e:
         encoding = e
 #@-node:ekr.20031218072017.1394:<< Test for @encoding >>
 #@+node:ekr.20031218072017.1395:<< Test for @lineending >>
-if not old.has_key("lineending") and dict.has_key("lineending"):
+if not old.has_key("lineending") and theDict.has_key("lineending"):
     
-    e = g.scanAtLineendingDirective(s,dict)
+    e = g.scanAtLineendingDirective(s,theDict)
     if e:
         lineending = e
 #@-node:ekr.20031218072017.1395:<< Test for @lineending >>
 #@+node:ekr.20031218072017.1396:<< Test for @pagewidth >>
-if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
     
-    w = g.scanAtPagewidthDirective(s,dict)
+    w = g.scanAtPagewidthDirective(s,theDict)
     if w and w > 0:
         page_width = w
 #@nonl
 #@-node:ekr.20031218072017.1396:<< Test for @pagewidth >>
 #@+node:ekr.20031218072017.1397:<< Test for @path >>
-if not path and not old.has_key("path") and dict.has_key("path"):
+if not path and not old.has_key("path") and theDict.has_key("path"):
 
-    k = dict["path"]
+    k = theDict["path"]
     << compute relative path from s[k:] >>
     if path and len(path) > 0:
         base = g.getBaseDirectory(c=c) # returns "" on error.
@@ -4017,9 +4020,9 @@ if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
 #@-node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
 #@-node:ekr.20031218072017.1397:<< Test for @path >>
 #@+node:ekr.20031218072017.1399:<< Test for @tabwidth >>
-if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
     
-    w = g.scanAtTabwidthDirective(s,dict)
+    w = g.scanAtTabwidthDirective(s,theDict)
     if w and w != 0:
         tab_width = w
 #@nonl
@@ -4027,9 +4030,9 @@ if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 #@+node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
 if not old.has_key("wrap") and not old.has_key("nowrap"):
     
-    if dict.has_key("wrap"):
+    if theDict.has_key("wrap"):
         wrap = True
-    elif dict.has_key("nowrap"):
+    elif theDict.has_key("nowrap"):
         wrap = False
 #@nonl
 #@-node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
@@ -8183,7 +8186,6 @@ def test_parseLeoSentinel (self):
         assert isThinDerivedFile, 'not thin'
         assert end == '', 'invalid end: %s' % repr(end)
         assert at.encoding == 'utf-8', 'bad encoding: %s' % repr(at.encoding)
-#@nonl
 #@-node:ekr.20050211111552:test_parseLeoSentinel
 #@-node:ekr.20041005105605.120:parseLeoSentinel
 #@+node:ekr.20041005105605.127:readError
@@ -9960,6 +9962,7 @@ file.
 #@+node:ekr.20050107085710:test_atFile_rename
 def test_atFile_rename (self):
 
+    __pychecker__ = '--no-reimport'
     import os
     at = c.atFileCommands
 
@@ -10004,6 +10007,7 @@ def remove (self,fileName,verbose=True):
 #@+node:ekr.20050107090156:test_atFile_remove
 def test_atFile_remove(self,**keys):
     
+    __pychecker__ = '--no-reimport'
     import os
     at = c.atFileCommands
     exists = g.os_path_exists
@@ -11035,8 +11039,6 @@ def rawPrint (self,s):
 #@+node:ekr.20041012082437.3:redirect
 def redirect (self,stdout=1):
 
-    import sys
-
     if g.app.batchMode:
         # Redirection is futile in batch mode.
         return
@@ -11050,8 +11052,6 @@ def redirect (self,stdout=1):
 #@-node:ekr.20041012082437.3:redirect
 #@+node:ekr.20041012082437.4:undirect
 def undirect (self,stdout=1):
-
-    import sys
 
     if self.old:
         if stdout:
@@ -11437,7 +11437,7 @@ def getScript (c,p,useSelectedText=True,script=None):
     p.v.setTnodeText(old_body)
     
     # g.trace(repr(c.atFileCommands.output_newline))
-    if c.atFileCommands.output_newline == 'crlf':
+    if c.atFileCommands.output_newline == '\r\n':
         return script.replace("\r\n","\n") # 1/11/05
     else:
         return script
@@ -11446,18 +11446,13 @@ def getScript (c,p,useSelectedText=True,script=None):
 def test_g_getScript_strips_returns():
 
     old_output_newline = c.atFileCommands.output_newline
-    c.atFileCommands.output_newline = 'crlf'
+    c.atFileCommands.output_newline = '\r\n'
     script = g.getScript(c,p)
     c.atFileCommands.output_newline = old_output_newline
     
     assert script.find('\r\n') == -1
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_returns
-#@+node:ekr.20050211120242.1:test_g_getScript_strips_lws
-def test_g_getScript_strips_lws():
-    pass # Not ready yet.
-#@nonl
-#@-node:ekr.20050211120242.1:test_g_getScript_strips_lws
 #@-node:EKR.20040614071102.1:g.getScript & tests
 #@-node:ekr.20041013101851:(Use entire script when executing script buttons)
 #@+node:ekr.20041004094706:(Fixed error reporting in executeScript when the error happens outside the script)
@@ -11689,7 +11684,7 @@ def es_exception (full=True,c=None,color="red"):
             print line
             
     if g.app.debugSwitch > 1:
-        import pdb ; pdb.set_trace()
+        pdb.set_trace()
 
     return fileName,n
 #@nonl
@@ -12192,7 +12187,7 @@ def getScript (c,p,useSelectedText=True,script=None):
     p.v.setTnodeText(old_body)
     
     # g.trace(repr(c.atFileCommands.output_newline))
-    if c.atFileCommands.output_newline == 'crlf':
+    if c.atFileCommands.output_newline == '\r\n':
         return script.replace("\r\n","\n") # 1/11/05
     else:
         return script
@@ -12201,18 +12196,13 @@ def getScript (c,p,useSelectedText=True,script=None):
 def test_g_getScript_strips_returns():
 
     old_output_newline = c.atFileCommands.output_newline
-    c.atFileCommands.output_newline = 'crlf'
+    c.atFileCommands.output_newline = '\r\n'
     script = g.getScript(c,p)
     c.atFileCommands.output_newline = old_output_newline
     
     assert script.find('\r\n') == -1
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_returns
-#@+node:ekr.20050211120242.1:test_g_getScript_strips_lws
-def test_g_getScript_strips_lws():
-    pass # Not ready yet.
-#@nonl
-#@-node:ekr.20050211120242.1:test_g_getScript_strips_lws
 #@-node:EKR.20040614071102.1:g.getScript & tests
 #@+node:ekr.20041005105605.15:initWriteIvars
 def initWriteIvars(self,root,targetFileName,
@@ -12710,7 +12700,8 @@ if 0: # Set to 1 for lint-like testing.
         import pychecker.checker
         # This works.  We may want to set options here...
         # from pychecker import Config 
-        print ; print "Warning: pychecker.checker running..." ; print
+        # print pychecker
+        print ; print "Warning (in leo.py): pychecker.checker running..." ; print
     except:
         print ; print 'Can not import pychecker' ; print
 #@nonl
@@ -12910,7 +12901,6 @@ def update_file_if_changed(file_name,temp_name):
     Otherwise, we just delete temp_name. Both files should be closed."""
 
     if g.os_path_exists(file_name):
-        import filecmp
         if filecmp.cmp(temp_name, file_name):
             kind = 'unchanged'
             ok = g.utils_remove(temp_name)
@@ -12944,6 +12934,7 @@ def utils_remove (fileName,verbose=True):
 #@+node:ekr.20050107084901:test_utils_remove
 def test_utils_remove():
 
+    __pychecker__ = '--no-reimport'
     import os
     exists = g.os_path_exists
     
@@ -13019,6 +13010,7 @@ file.
 #@+node:ekr.20050107085710.1:test_utils_rename
 def test_utils_rename(**keys):
 
+    __pychecker__ = '--no-reimport '
     import os
     exists = g.os_path_exists
     
@@ -13362,6 +13354,7 @@ file.
 #@+node:ekr.20050107085710:test_atFile_rename
 def test_atFile_rename (self):
 
+    __pychecker__ = '--no-reimport'
     import os
     at = c.atFileCommands
 
@@ -13406,6 +13399,7 @@ def remove (self,fileName,verbose=True):
 #@+node:ekr.20050107090156:test_atFile_remove
 def test_atFile_remove(self,**keys):
     
+    __pychecker__ = '--no-reimport'
     import os
     at = c.atFileCommands
     exists = g.os_path_exists
@@ -14204,6 +14198,10 @@ def set_focus(self,widget,later=False,tag=''):
             # It may be re-enabled later, but that doesn't matter.
             self.wantedWidget = None
             g.app.wantedCommander = None
+    else:
+        # Cancel any previous request.
+        self.wantedWidget = None
+        g.app.wantedCommander = None
 #@nonl
 #@-node:ekr.20050120092028.1:set_focus (tkFrame)
 #@-node:ekr.20050120083053:Delayed Focus (tkFrame)
@@ -14418,7 +14416,8 @@ if 0: # Set to 1 for lint-like testing.
         import pychecker.checker
         # This works.  We may want to set options here...
         # from pychecker import Config 
-        print ; print "Warning: pychecker.checker running..." ; print
+        # print pychecker
+        print ; print "Warning (in leo.py): pychecker.checker running..." ; print
     except:
         print ; print 'Can not import pychecker' ; print
 #@nonl
@@ -14851,8 +14850,8 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
-    list = app.windowList
-    for frame in list:
+    theList = app.windowList
+    for frame in theList:
         if munge(fileName) == munge(frame.c.mFileName):
             frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
@@ -15232,8 +15231,8 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
-    list = app.windowList
-    for frame in list:
+    theList = app.windowList
+    for frame in theList:
         if munge(fileName) == munge(frame.c.mFileName):
             frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
@@ -15282,7 +15281,7 @@ def run(fileName=None,*args,**keywords):
     g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
     << import leoNodes and leoConfig >>
     g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
-    g.app.config = leoConfig.config()
+    g.app.config = leoConfig.configClass()
     fileName = completeFileName(fileName)
     reportDirectories(verbose)
     g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.
@@ -15940,7 +15939,7 @@ def scanDirectives(c,p=None):
     pluginsList = [] # 5/17/03: a list of items for use by plugins.
     for p in p.self_and_parents_iter():
         s = p.v.t.bodyString
-        dict = g.get_directives_dict(s)
+        theDict = g.get_directives_dict(s)
         << Test for @comment and @language >>
         << Test for @encoding >>
         << Test for @lineending >>
@@ -15949,8 +15948,8 @@ def scanDirectives(c,p=None):
         << Test for @tabwidth >>
         << Test for @wrap and @nowrap >>
         g.doHook("scan-directives",c=c,p=p,v=p,s=s,
-            old_dict=old,dict=dict,pluginsList=pluginsList)
-        old.update(dict)
+            old_dict=old,dict=theDict,pluginsList=pluginsList)
+        old.update(theDict)
 
     if path == None: path = g.getBaseDirectory(c=c)
 
@@ -15983,41 +15982,41 @@ wrap = c.config.getBool("body_pane_wraps")
 if old.has_key("comment") or old.has_key("language"):
     pass
 
-elif dict.has_key("comment"):
-    k = dict["comment"]
+elif theDict.has_key("comment"):
+    k = theDict["comment"]
     delim1,delim2,delim3 = g.set_delims_from_string(s[k:])
 
-elif dict.has_key("language"):
-    k = dict["language"]
+elif theDict.has_key("language"):
+    k = theDict["language"]
     language,delim1,delim2,delim3 = g.set_language(s,k)
 #@nonl
 #@-node:ekr.20031218072017.1393:<< Test for @comment and @language >>
 #@+node:ekr.20031218072017.1394:<< Test for @encoding >>
-if not old.has_key("encoding") and dict.has_key("encoding"):
+if not old.has_key("encoding") and theDict.has_key("encoding"):
     
-    e = g.scanAtEncodingDirective(s,dict)
+    e = g.scanAtEncodingDirective(s,theDict)
     if e:
         encoding = e
 #@-node:ekr.20031218072017.1394:<< Test for @encoding >>
 #@+node:ekr.20031218072017.1395:<< Test for @lineending >>
-if not old.has_key("lineending") and dict.has_key("lineending"):
+if not old.has_key("lineending") and theDict.has_key("lineending"):
     
-    e = g.scanAtLineendingDirective(s,dict)
+    e = g.scanAtLineendingDirective(s,theDict)
     if e:
         lineending = e
 #@-node:ekr.20031218072017.1395:<< Test for @lineending >>
 #@+node:ekr.20031218072017.1396:<< Test for @pagewidth >>
-if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
     
-    w = g.scanAtPagewidthDirective(s,dict)
+    w = g.scanAtPagewidthDirective(s,theDict)
     if w and w > 0:
         page_width = w
 #@nonl
 #@-node:ekr.20031218072017.1396:<< Test for @pagewidth >>
 #@+node:ekr.20031218072017.1397:<< Test for @path >>
-if not path and not old.has_key("path") and dict.has_key("path"):
+if not path and not old.has_key("path") and theDict.has_key("path"):
 
-    k = dict["path"]
+    k = theDict["path"]
     << compute relative path from s[k:] >>
     if path and len(path) > 0:
         base = g.getBaseDirectory(c=c) # returns "" on error.
@@ -16042,9 +16041,9 @@ if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
 #@-node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
 #@-node:ekr.20031218072017.1397:<< Test for @path >>
 #@+node:ekr.20031218072017.1399:<< Test for @tabwidth >>
-if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
     
-    w = g.scanAtTabwidthDirective(s,dict)
+    w = g.scanAtTabwidthDirective(s,theDict)
     if w and w != 0:
         tab_width = w
 #@nonl
@@ -16052,9 +16051,9 @@ if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 #@+node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
 if not old.has_key("wrap") and not old.has_key("nowrap"):
     
-    if dict.has_key("wrap"):
+    if theDict.has_key("wrap"):
         wrap = True
-    elif dict.has_key("nowrap"):
+    elif theDict.has_key("nowrap"):
         wrap = False
 #@nonl
 #@-node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
@@ -17317,8 +17316,8 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
-    list = app.windowList
-    for frame in list:
+    theList = app.windowList
+    for frame in theList:
         if munge(fileName) == munge(frame.c.mFileName):
             frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
@@ -18404,8 +18403,6 @@ You can read/write the named attributes you just created, add others, del some o
     if point.squared > threshold:
         point.isok = True
 @c
-
-import operator
 
 class Bunch (object):
     
@@ -20653,7 +20650,7 @@ def canonicalizeTranslatedMenuName (self,name):
             newname = newname+ch
     return newname
 #@-node:ekr.20031218072017.3783:canonicalizeMenuName & cononicalizeTranslatedMenuName
-#@+node:ekr.20041122094813:<<  baseConfig data >>
+#@+node:ekr.20041122094813:<<  class data >>
 @others
     
 # List of dictionaries to search.  Order not too important.
@@ -20773,7 +20770,7 @@ ivarsData = (
 )
 #@nonl
 #@-node:ekr.20041117072055:ivarsDict
-#@-node:ekr.20041122094813:<<  baseConfig data >>
+#@-node:ekr.20041122094813:<<  class data >>
 #@+node:ekr.20041118104831.1:class configSettings
 class configSettings:
     
@@ -21093,85 +21090,6 @@ self.recentFiles = [] # List of recent files
 #@-node:ekr.20041228053248:Diary
 #@+node:ekr.20050121062047:(Added scrollbars to settings outline pane)
 #@+node:ekr.20041225073207:When replacing body & tree panes...
-#@+node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
-body = c.frame.component('body')
-packer = body.getPacker()
-unpacker = body.getUnpacker()
-
-# The new frame must be a child of splitter1Frame.
-parentFrame = c.frame.component('splitter1Frame').getFrame()
-self.top = interior = Tk.Frame(parentFrame,background=commonBackground)
-
-c.frame.componentClass(c,'settingDialogFrame',interior,self,packer,unpacker)
-c.frame.replaceBodyPaneWithComponent('settingDialogFrame')
-#@nonl
-#@-node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
-#@+node:ekr.20041225074713:<< add buttons and label to interior >>
-# Put the label on the same line as the buttons.
-labelButtonFrame = Tk.Frame(interior,background=commonBackground)
-labelButtonFrame.pack(side='top',expand=0,fill='x',pady=4)
-buttonFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
-buttonFrame.pack(side='left',padx=10)
-labelFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
-labelFrame.pack(side='left')
-self.setterLabel = label = Tk.Label(labelFrame,anchor='w',background=commonBackground)
-label.pack(side='right')
-
-w = 6
-for name in self.buttonNames:
-    w = max(w,len(name))
-
-for name in self.buttonNames:
-
-    def buttonCallback(name=name):
-        self.onAnyButton(name)
-
-    b = Tk.Button(buttonFrame,text=name,command=buttonCallback,width=w)
-    b.pack(side='left',padx=4)
-#@nonl
-#@-node:ekr.20041225074713:<< add buttons and label to interior >>
-#@+node:ekr.20041225073207.1:<< add setterCanvas to interior>>
-self.sc = sc = Pmw.ScrolledCanvas(interior,
-    hscrollmode='dynamic',vscrollmode='dynamic',
-    canvas_background = commonBackground,
-    borderframe=1,
-    # A fixed size here works best.
-    # Pmw does not handle the changes to the canvas very well.
-    usehullsize = 1,
-    hull_height = 400,
-    hull_width = 800,
-)
-
-sc.pack(side='top',expand=1,fill="both")
-#@nonl
-#@-node:ekr.20041225073207.1:<< add setterCanvas to interior>>
-#@+node:ekr.20041225090725:<< replace tree pane with settings tree >>
-tree = c.frame.component('tree')
-
-# The new frame must be a child of splitter2Frame.
-splitter2Frame = c.frame.component('splitter2Frame').getFrame()
-
-# Create a Pmw scrolled canvas.
-scrolledTreeCanvas = Pmw.ScrolledCanvas(splitter2Frame,
-    hscrollmode='none',borderframe=3)
-
-treeCanvas = scrolledTreeCanvas.component('canvas')
-treeCanvas.configure(background='white')
-
-# Set canvas.name ivar for chapters.py plugin.
-# This must be a tab number.  The number '1' should work well enough.
-treeCanvas.name = '1'
-
-# Create the settingsTree component.
-c.frame.componentClass(c,'settingsTree',scrolledTreeCanvas,self,
-    tree.getPacker(),tree.getUnpacker())
-
-c.frame.replaceTreePaneWithComponent('settingsTree')
-
-self.tree = settingsTree(c,c.frame,treeCanvas,self)
-self.tree.setColorFromConfig()
-#@nonl
-#@-node:ekr.20041225090725:<< replace tree pane with settings tree >>
 #@-node:ekr.20041225073207:When replacing body & tree panes...
 #@-node:ekr.20050121062047:(Added scrollbars to settings outline pane)
 #@+node:ekr.20050121094515:(Improved appearance of settings panel)
@@ -21191,1000 +21109,6 @@ This is _far_ better than using two separate scrollers.
 It's surprisingly hard to pick a good color. Neither 'white' nor dark colors look good.
 #@nonl
 #@-node:ekr.20050121094515.1:What I did
-#@+node:ekr.20041225063637.13: ctor
-def __init__ (self,c,replaceBody=True):
-    
-    if not Pmw:
-        s = 'Setting dialog requires Pmw: see http://pmw.sourceforge.net'
-        print s ; g.es(s,color='blue')
-        return
-
-    << init ivars >>
-    << define Tk color names>>
-
-    self._settingsPosition = p = self.createSettingsTree()
-    self.parser = settingsDialogParserClass(c,p,self)
-
-    << set background color for widgets >>
-    c.disableCommandsMessage = 'All commands disabled while settings dialog is open'
-    if self.replaceBody:
-        << replace the body pane with the outer dialog frame >>
-        << replace tree pane with settings tree >>
-        << add buttons and label to interior >>
-        << add setterCanvas to interior >>
-        self.log = g.app.log
-        self.tree.redraw_now() # To allocate widgets.
-        self.tree.select(p)
-    else:
-        << create the dialog d >>
-        << create paneFrame, a paned widget >>
-        << create paneFrame2, a second paned widget >>
-        << create outline and log panes in paneFrame2 >>
-        << put setterCanvas in paneFrame's setter pane>>
-        << put a Text widget in the comment pane >>
-        self.log = self.logClass(self.logText)
-        self.tree.redraw_now() # To allocate widgets.
-        self.tree.select(p)
-        self.center()
-        if self.modal: d.activate()
-#@nonl
-#@+node:ekr.20050123194330:<< init ivars >>
-self._settingsPosition = None
-self.alterComments = None # position for which to alter comments.
-self.alteredCommentsString = None
-self.c = c
-self.buttonNames = ('OK', 'Cancel','Apply','Revert')
-self.colorSettingDict = {} # Contains entries for all changed colors.
-self.commentWidget = None
-self.commonBackground = None
-self.dialog = None
-self.initValueDict = {} # Initial value of settings in present pane.
-self.fileValueDict = {} # Values of settings written to file.
-self.filesInfoDict = {} # Info about all settings file in the settings outline.
-    # Keys are positions, values are dicts giving info for a setting file.
-self.fontRefs = {} # A dict to retain references to fonts.
-self.modal = False
-self.old_p = c.currentPosition()
-self.old_root = c.rootPosition()
-self.p = None # Used to revert settings.
-self.panes = {}
-self.parser = None
-self.replaceBody = replaceBody
-self.sc = None
-self.setterLabel = None
-self.suppressComments = None # position for which to suppress comments.
-self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
-self.top = None
-self.tree = None
-#@nonl
-#@-node:ekr.20050123194330:<< init ivars >>
-#@+node:ekr.20050129111522:<< define Tk color names >>
-self.colorNamesList = (
-    "gray60", "gray70", "gray80", "gray85", "gray90", "gray95",
-    "snow1", "snow2", "snow3", "snow4", "seashell1", "seashell2",
-    "seashell3", "seashell4", "AntiqueWhite1", "AntiqueWhite2", "AntiqueWhite3",
-    "AntiqueWhite4", "bisque1", "bisque2", "bisque3", "bisque4", "PeachPuff1",
-    "PeachPuff2", "PeachPuff3", "PeachPuff4", "NavajoWhite1", "NavajoWhite2",
-    "NavajoWhite3", "NavajoWhite4", "LemonChiffon1", "LemonChiffon2",
-    "LemonChiffon3", "LemonChiffon4", "cornsilk1", "cornsilk2", "cornsilk3",
-    "cornsilk4", "ivory1", "ivory2", "ivory3", "ivory4", "honeydew1", "honeydew2",
-    "honeydew3", "honeydew4", "LavenderBlush1", "LavenderBlush2",
-    "LavenderBlush3", "LavenderBlush4", "MistyRose1", "MistyRose2",
-    "MistyRose3", "MistyRose4", "azure1", "azure2", "azure3", "azure4",
-    "SlateBlue1", "SlateBlue2", "SlateBlue3", "SlateBlue4", "RoyalBlue1",
-    "RoyalBlue2", "RoyalBlue3", "RoyalBlue4", "blue1", "blue2", "blue3", "blue4",
-    "DodgerBlue1", "DodgerBlue2", "DodgerBlue3", "DodgerBlue4", "SteelBlue1",
-    "SteelBlue2", "SteelBlue3", "SteelBlue4", "DeepSkyBlue1", "DeepSkyBlue2",
-    "DeepSkyBlue3", "DeepSkyBlue4", "SkyBlue1", "SkyBlue2", "SkyBlue3",
-    "SkyBlue4", "LightSkyBlue1", "LightSkyBlue2", "LightSkyBlue3",
-    "LightSkyBlue4", "SlateGray1", "SlateGray2", "SlateGray3", "SlateGray4",
-    "LightSteelBlue1", "LightSteelBlue2", "LightSteelBlue3",
-    "LightSteelBlue4", "LightBlue1", "LightBlue2", "LightBlue3",
-    "LightBlue4", "LightCyan1", "LightCyan2", "LightCyan3", "LightCyan4",
-    "PaleTurquoise1", "PaleTurquoise2", "PaleTurquoise3", "PaleTurquoise4",
-    "CadetBlue1", "CadetBlue2", "CadetBlue3", "CadetBlue4", "turquoise1",
-    "turquoise2", "turquoise3", "turquoise4", "cyan1", "cyan2", "cyan3", "cyan4",
-    "DarkSlateGray1", "DarkSlateGray2", "DarkSlateGray3",
-    "DarkSlateGray4", "aquamarine1", "aquamarine2", "aquamarine3",
-    "aquamarine4", "DarkSeaGreen1", "DarkSeaGreen2", "DarkSeaGreen3",
-    "DarkSeaGreen4", "SeaGreen1", "SeaGreen2", "SeaGreen3", "SeaGreen4",
-    "PaleGreen1", "PaleGreen2", "PaleGreen3", "PaleGreen4", "SpringGreen1",
-    "SpringGreen2", "SpringGreen3", "SpringGreen4", "green1", "green2",
-    "green3", "green4", "chartreuse1", "chartreuse2", "chartreuse3",
-    "chartreuse4", "OliveDrab1", "OliveDrab2", "OliveDrab3", "OliveDrab4",
-    "DarkOliveGreen1", "DarkOliveGreen2", "DarkOliveGreen3",
-    "DarkOliveGreen4", "khaki1", "khaki2", "khaki3", "khaki4",
-    "LightGoldenrod1", "LightGoldenrod2", "LightGoldenrod3",
-    "LightGoldenrod4", "LightYellow1", "LightYellow2", "LightYellow3",
-    "LightYellow4", "yellow1", "yellow2", "yellow3", "yellow4", "gold1", "gold2",
-    "gold3", "gold4", "goldenrod1", "goldenrod2", "goldenrod3", "goldenrod4",
-    "DarkGoldenrod1", "DarkGoldenrod2", "DarkGoldenrod3", "DarkGoldenrod4",
-    "RosyBrown1", "RosyBrown2", "RosyBrown3", "RosyBrown4", "IndianRed1",
-    "IndianRed2", "IndianRed3", "IndianRed4", "sienna1", "sienna2", "sienna3",
-    "sienna4", "burlywood1", "burlywood2", "burlywood3", "burlywood4", "wheat1",
-    "wheat2", "wheat3", "wheat4", "tan1", "tan2", "tan3", "tan4", "chocolate1",
-    "chocolate2", "chocolate3", "chocolate4", "firebrick1", "firebrick2",
-    "firebrick3", "firebrick4", "brown1", "brown2", "brown3", "brown4", "salmon1",
-    "salmon2", "salmon3", "salmon4", "LightSalmon1", "LightSalmon2",
-    "LightSalmon3", "LightSalmon4", "orange1", "orange2", "orange3", "orange4",
-    "DarkOrange1", "DarkOrange2", "DarkOrange3", "DarkOrange4", "coral1",
-    "coral2", "coral3", "coral4", "tomato1", "tomato2", "tomato3", "tomato4",
-    "OrangeRed1", "OrangeRed2", "OrangeRed3", "OrangeRed4", "red1", "red2", "red3",
-    "red4", "DeepPink1", "DeepPink2", "DeepPink3", "DeepPink4", "HotPink1",
-    "HotPink2", "HotPink3", "HotPink4", "pink1", "pink2", "pink3", "pink4",
-    "LightPink1", "LightPink2", "LightPink3", "LightPink4", "PaleVioletRed1",
-    "PaleVioletRed2", "PaleVioletRed3", "PaleVioletRed4", "maroon1",
-    "maroon2", "maroon3", "maroon4", "VioletRed1", "VioletRed2", "VioletRed3",
-    "VioletRed4", "magenta1", "magenta2", "magenta3", "magenta4", "orchid1",
-    "orchid2", "orchid3", "orchid4", "plum1", "plum2", "plum3", "plum4",
-    "MediumOrchid1", "MediumOrchid2", "MediumOrchid3", "MediumOrchid4",
-    "DarkOrchid1", "DarkOrchid2", "DarkOrchid3", "DarkOrchid4", "purple1",
-    "purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
-    "MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
-    "thistle4" )
-#@nonl
-#@-node:ekr.20050129111522:<< define Tk color names >>
-#@+node:ekr.20050121105232:<< set background color for widgets >>
-if 0:
-    # Get the color from the background color of the body text widget.
-    commonBackground = c.frame.body.bodyCtrl.cget('background')
-    
-else:
-    # 'LightSteelBlue1' # too blue.
-    # 'gray80' # too dark.
-    # 'gray90' # Possible: very light.
-    # '#f2fdff' # Same as log window.  Too cute.
-    
-    commonBackground = 'gray90'
-    
-self.commonBackground = commonBackground
-#@nonl
-#@-node:ekr.20050121105232:<< set background color for widgets >>
-#@+node:ekr.20041225073207:When replacing body & tree panes...
-#@+node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
-body = c.frame.component('body')
-packer = body.getPacker()
-unpacker = body.getUnpacker()
-
-# The new frame must be a child of splitter1Frame.
-parentFrame = c.frame.component('splitter1Frame').getFrame()
-self.top = interior = Tk.Frame(parentFrame,background=commonBackground)
-
-c.frame.componentClass(c,'settingDialogFrame',interior,self,packer,unpacker)
-c.frame.replaceBodyPaneWithComponent('settingDialogFrame')
-#@nonl
-#@-node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
-#@+node:ekr.20041225074713:<< add buttons and label to interior >>
-# Put the label on the same line as the buttons.
-labelButtonFrame = Tk.Frame(interior,background=commonBackground)
-labelButtonFrame.pack(side='top',expand=0,fill='x',pady=4)
-buttonFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
-buttonFrame.pack(side='left',padx=10)
-labelFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
-labelFrame.pack(side='left')
-self.setterLabel = label = Tk.Label(labelFrame,anchor='w',background=commonBackground)
-label.pack(side='right')
-
-w = 6
-for name in self.buttonNames:
-    w = max(w,len(name))
-
-for name in self.buttonNames:
-
-    def buttonCallback(name=name):
-        self.onAnyButton(name)
-
-    b = Tk.Button(buttonFrame,text=name,command=buttonCallback,width=w)
-    b.pack(side='left',padx=4)
-#@nonl
-#@-node:ekr.20041225074713:<< add buttons and label to interior >>
-#@+node:ekr.20041225073207.1:<< add setterCanvas to interior>>
-self.sc = sc = Pmw.ScrolledCanvas(interior,
-    hscrollmode='dynamic',vscrollmode='dynamic',
-    canvas_background = commonBackground,
-    borderframe=1,
-    # A fixed size here works best.
-    # Pmw does not handle the changes to the canvas very well.
-    usehullsize = 1,
-    hull_height = 400,
-    hull_width = 800,
-)
-
-sc.pack(side='top',expand=1,fill="both")
-#@nonl
-#@-node:ekr.20041225073207.1:<< add setterCanvas to interior>>
-#@+node:ekr.20041225090725:<< replace tree pane with settings tree >>
-tree = c.frame.component('tree')
-
-# The new frame must be a child of splitter2Frame.
-splitter2Frame = c.frame.component('splitter2Frame').getFrame()
-
-# Create a Pmw scrolled canvas.
-scrolledTreeCanvas = Pmw.ScrolledCanvas(splitter2Frame,
-    hscrollmode='none',borderframe=3)
-
-treeCanvas = scrolledTreeCanvas.component('canvas')
-treeCanvas.configure(background='white')
-
-# Set canvas.name ivar for chapters.py plugin.
-# This must be a tab number.  The number '1' should work well enough.
-treeCanvas.name = '1'
-
-# Create the settingsTree component.
-c.frame.componentClass(c,'settingsTree',scrolledTreeCanvas,self,
-    tree.getPacker(),tree.getUnpacker())
-
-c.frame.replaceTreePaneWithComponent('settingsTree')
-
-self.tree = settingsTree(c,c.frame,treeCanvas,self)
-self.tree.setColorFromConfig()
-#@nonl
-#@-node:ekr.20041225090725:<< replace tree pane with settings tree >>
-#@-node:ekr.20041225073207:When replacing body & tree panes...
-#@+node:ekr.20041225073207.3:When using separate dialog...
-#@+node:ekr.20041225063637.14:<< create the dialog d >>
-self.dialog = d = Pmw.Dialog(
-    c.frame.top,
-    title=title,
-    buttons=self.buttonNames,
-    # It's too upsetting to have a dialog go away on a return key.
-    # defaultbutton = 'OK',
-    command = self.onAnyButton
-)
-
-self.top = hull = d.component('hull')
-hull.minsize(800,800)
-
-interior = d.interior()
-
-if 0: # Do immediately
-    g.app.gui.attachLeoIcon(hull)
-else: # Do at idle time.
-    def setIcont(top=hull):
-        g.app.gui.attachLeoIcon(top)
-    hull.after_idle(setIcont)
-#@nonl
-#@-node:ekr.20041225063637.14:<< create the dialog d >>
-#@+node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
-self.paneFrame = paneFrame = Pmw.PanedWidget(interior,
-    separatorthickness = 4, # default is 2
-    handlesize = 8, # default is 8
-    command = self.onPaneResize
-)
-paneFrame.pack(expand = 1, fill='both')
-
-for name,minsize,size,label,isSetterLabel in (
-    ("splitter2",50,300,None,False),
-    ("setter",50,300,"",False),
-    ("comments",50,200,None,False),
-):
-    self.panes[name] = pane = paneFrame.add(name,min=minsize,size=size)
-    if label is not None:
-        label = label = Tk.Label(pane,text=label,background=commonBackground)
-        label.pack(side = 'top', expand = 0)
-        if isSetterLabel:
-            self.setterLabel = label
-
-# Set the colors of the separator and handle.
-for i in (1,2):
-    bar = paneFrame.component('separator-%d' % i)
-    bar.configure(background='LightSteelBlue2')
-    handle = paneFrame.component('handle-%d' % i)
-    handle.configure(background='SteelBlue2')
-
-# g.printDict(self.panes)
-#@nonl
-#@-node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
-#@+node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
-splitter2 = self.panes.get('splitter2')
-
-self.paneFrame2 = paneFrame2 = Pmw.PanedWidget(splitter2,
-    separatorthickness = 4, # default is 2
-    handlesize = 8, # default is 8
-    orient='horizontal',
-    command = self.onPaneResize
-)
-paneFrame2.pack(expand = 1, fill='both')
-
-for name,minsize,size, in (
-    ('outline',50,500),
-    ('log',50,300),
-):
-    self.panes[name] = pane = paneFrame2.add(name,min=minsize,size=size)
-    
-# Set the colors of the separator and handle.
-i = 1
-bar = paneFrame2.component('separator-%d' % i)
-bar.configure(background='LightSteelBlue2')
-handle = paneFrame2.component('handle-%d' % i)
-handle.configure(background='SteelBlue2')
-#@nonl
-#@-node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
-#@+node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
-outline = self.panes.get('outline')
-
-# Create the widget.
-self.scrolledTreeCanvas = scrolledTreeCanvas = Pmw.ScrolledCanvas(outline,
-    hscrollmode='none',borderframe=3)
-    
-# Configure the canvas component.
-scrolledTreeCanvas.pack(side='top',expand=1,fill="both")
-
-treeCanvas = scrolledTreeCanvas.component('canvas')
-treeCanvas.configure(background='white')
-
-# Create the tree.
-self.tree = tree = settingsTree(c,c.frame,treeCanvas,self)
-
-logPane = self.panes.get('log')
-self.logText = logText = Tk.Text(logPane)
-logText.pack(expand=1,fill="both")
-#@nonl
-#@-node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
-#@+node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
-# Create the widget in the 'setter' pane.
-setter = self.panes.get('setter')
-
-self.sc = sc = Pmw.ScrolledCanvas(setter,
-    hscrollmode='none',vscrollmode='dynamic',
-    labelpos = 'n',label_text = '')
-    
-sc.pack(side='top',expand=1,fill="both")
-
-setterCanvas = sc.component('canvas')
-self.setterLabel = sc.component('label')
-
-# setterCanvas.configure(background='LightSteelBlue1')
-#@nonl
-#@-node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
-#@+node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
-commentFrame = self.paneFrame.pane('comments')
-
-self.commentWidget = commentWidget = Pmw.ScrolledText(commentFrame)
-commentWidget.pack(expand=1,fill="both")
-
-self.commentText = text = commentWidget.component('text')
-
-background = commentFrame.cget('background')
-text.configure(background=background,borderwidth=0)
-#@nonl
-#@-node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
-#@-node:ekr.20041225073207.3:When using separate dialog...
-#@-node:ekr.20041225063637.13: ctor
-#@+node:ekr.20050121131613:createComents
-def createComments (self,parent,p):
-    
-    bg = self.commonBackground
-
-    s = p.bodyString().strip()
-    if not s:
-        return
-    
-    f = Tk.Frame(parent,background=bg) # No need to pack.
-    
-    if 0: # atoi problem.
-        group = Pmw.Group(f,tag_text='comments',hull_background = bg)
-        group.pack(side='left',padx=6,pady=6)
-        label = Tkinter.Label(group.interior(),text=s)
-        label.pack(padx=2,pady=2,expand=1,fill='both')
-    else:
-        scrolled_text = Pmw.ScrolledText(f,
-            labelpos = 'ew',label_text='comments',
-            hull_background=bg,
-            hull_bd=2,hull_relief='groove',
-            hull_padx=6,hull_pady=6,
-            text_background=bg,
-            text_padx=6,text_pady=6,
-            text_bd=2,text_relief='sunken',
-            label_background=bg,
-            text_height=5,text_width=80)
-        scrolled_text.pack(side='left',pady=6,padx=6,expand=1,fill='x')
-        t = scrolled_text.component('text')
-        t.insert('end',s)
-        t.configure(state='disabled')
-        hull=scrolled_text.component('hull')
-        
-
-    item = self.sc.create_window(10-2,self.h,anchor='w',window=f)
-    # bbox=hull.bbox() ; print bbox # (0,0,0,0)
-    
-    self.h += 70
-#@nonl
-#@-node:ekr.20050121131613:createComents
-#@+node:ekr.20041225063637.25:createWidgets & helpers
-def createWidgets (self,widgets,parent,p):
-    
-    munge = g.app.config.munge
-
-    << define creatorDispatchDict >>
-    
-    # self.printWidgets(widgets)
-    
-    self.h = 0 # Offset from top of pane for first widget.
-    self.createSpacerFrame(parent,size=15)
-    
-    self.createComments(parent,p)
-            
-    for data in widgets:
-        p,kind,name,vals = data
-        if kind.startswith('ints'):
-            self.createInts(parent,p,kind,name,vals)
-        if kind.startswith('strings'):
-            self.createStrings(parent,p,kind,name,vals)
-        else:
-            f = creatorDispatchDict.get(munge(kind))
-            if f is not None:
-                try:
-                    f(parent,p,kind,name,vals)
-                except TypeError:
-                    g.es_exception()
-                    g.trace("***No handler***",kind)
-#@nonl
-#@+node:ekr.20041225063637.26:<< define creatorDispatchDict >>
-creatorDispatchDict = {
-    'bool':         self.createBool,
-    'color':        self.createColor,
-    'directory':    self.createDirectory,
-    'font':         self.createFont,
-    'int':          self.createInt,
-    'ints':         self.createInts,
-    'float':        self.createFloat,
-    'path':         self.createPath,
-    'ratio':        self.createRatio,
-    'recentfiles':  self.createRecentFiles,
-    'shortcut':     self.createShortcut,
-    'shortcuts':    self.createShortcuts,
-    'string':       self.createString,
-    'strings':      self.createStrings,
-}
-#@nonl
-#@-node:ekr.20041225063637.26:<< define creatorDispatchDict >>
-#@+node:ekr.20041225063637.27:createBool
-def createBool (self,parent,p,kind,name,val):
-    
-    val = g.choose(val.lower()=='true',1,0)
-
-    # Inits the checkbutton widget. 
-    var = Tk.IntVar()
-    var.set(val)
-
-    def boolCallback():
-        val2 = g.choose(var.get(),True,False)
-        # g.trace(name,val2)
-        return val2
-    
-    val = g.choose(val,True,False)
-    self.initValue(p,name,kind,val,boolCallback)
-
-    box = Tk.Checkbutton(parent,text=name,variable=var,background=self.commonBackground)
-
-    self.sc.create_window(10,self.h,anchor='w',window=box)
-    self.h += 30
-#@nonl
-#@-node:ekr.20041225063637.27:createBool
-#@+node:ekr.20041225063637.28:createColor
-def createColor (self,parent,p,kind,name,val):
-    
-    munge = g.app.config.munge
-    noColor = "<no color>"
-    colorNamesList = list(self.colorNamesList)
-    
-    f = Tk.Frame(parent,background=self.commonBackground) # No need to pack.
-    << munge val and add val to colorNamesList >>
-    << create optionMenu and callback >>
-    << create picker button and callback >>
-    Tk.Label(f,text=name,background=self.commonBackground).pack(side='left')
-    
-    self.colorSettingDict [munge(name)] = val
-
-    def getColorCallback ():
-        return self.colorSettingDict.get(munge(name))
-
-    self.initValue(p,name,kind,val,getColorCallback)
-
-    self.sc.create_window(15,self.h+8,anchor='w',window=f)
-    self.h += 30
-#@nonl
-#@+node:ekr.20041225063637.29:<< munge val and add val to colorNamesList >>
-if val in ("None",None): val = noColor
-val = str(val) # Get rid of unicode.
-
-if noColor in colorNamesList:
-    colorNamesList.remove(val)
-if val is not noColor and val not in colorNamesList:
-     colorNamesList.append(val)
-colorNamesList.sort()
-colorNamesList.insert(0,noColor)
-
-initVal = val
-if val is noColor: val = None
-#@nonl
-#@-node:ekr.20041225063637.29:<< munge val and add val to colorNamesList >>
-#@+node:ekr.20041225063637.30:<< create optionMenu and callback >>
-colorBox = Pmw.ComboBox(f,scrolledlist_items=colorNamesList)
-colorBox.selectitem(initVal)
-colorBox.pack(side="left",padx=2)
-
-color = g.choose(val is None,f.cget('background'),val)
-colorSample = Tk.Button(f,width=8,background=color)
-colorSample.pack(side='left',padx=2)
-
-def colorCallback (newName):
-    # g.trace(repr(newName))
-    if not newName or newName.lower() in ('none','<none>','<no color>'):
-        self.colorSettingDict[munge(name)] = None
-        color = f.cget('background')
-        colorSample.configure(background=color)
-    else:
-        try:
-            colorSample.configure(background=newName)
-            self.colorSettingDict[munge(name)] = g.choose(newName is noColor,None,newName)
-        except: pass # Ignore invalid names.
-
-colorBox.configure(selectioncommand=colorCallback)
-#@nonl
-#@-node:ekr.20041225063637.30:<< create optionMenu and callback >>
-#@+node:ekr.20041225063637.31:<< create picker button and callback >>
-def pickerCallback (color=val):
-
-    rgb,val = tkColorChooser.askcolor(parent=parent,color=color)
-    if rgb or val:
-        # g.trace(rgb,val)
-        self.colorSettingDict[munge(name)] = val
-        colorSample.configure(background=val,activebackground=val,text=val)
-
-b = Tk.Button(f,text="Color Picker...",command=pickerCallback,background=self.commonBackground)
-b.pack(side="left")
-#@nonl
-#@-node:ekr.20041225063637.31:<< create picker button and callback >>
-#@-node:ekr.20041225063637.28:createColor
-#@+node:ekr.20050121131613:createComents
-def createComments (self,parent,p):
-    
-    bg = self.commonBackground
-
-    s = p.bodyString().strip()
-    if not s:
-        return
-    
-    f = Tk.Frame(parent,background=bg) # No need to pack.
-    
-    if 0: # atoi problem.
-        group = Pmw.Group(f,tag_text='comments',hull_background = bg)
-        group.pack(side='left',padx=6,pady=6)
-        label = Tkinter.Label(group.interior(),text=s)
-        label.pack(padx=2,pady=2,expand=1,fill='both')
-    else:
-        scrolled_text = Pmw.ScrolledText(f,
-            labelpos = 'ew',label_text='comments',
-            hull_background=bg,
-            hull_bd=2,hull_relief='groove',
-            hull_padx=6,hull_pady=6,
-            text_background=bg,
-            text_padx=6,text_pady=6,
-            text_bd=2,text_relief='sunken',
-            label_background=bg,
-            text_height=5,text_width=80)
-        scrolled_text.pack(side='left',pady=6,padx=6,expand=1,fill='x')
-        t = scrolled_text.component('text')
-        t.insert('end',s)
-        t.configure(state='disabled')
-        hull=scrolled_text.component('hull')
-        
-
-    item = self.sc.create_window(10-2,self.h,anchor='w',window=f)
-    # bbox=hull.bbox() ; print bbox # (0,0,0,0)
-    
-    self.h += 70
-#@nonl
-#@-node:ekr.20050121131613:createComents
-#@+node:ekr.20041225063637.32:createDirectory
-def createDirectory (self,parent,p,kind,name,val):
-    
-    self.createString(parent,p,kind,name,val)
-#@nonl
-#@-node:ekr.20041225063637.32:createDirectory
-#@+node:ekr.20041225063637.33:createFloat
-def createFloat (self,parent,p,kind,name,val):
-    
-    bg = self.commonBackground
-
-    # Inits the entry widget.
-    var = Tk.StringVar()
-    var.set(val)
-
-    f = Tk.Frame(parent,background=bg)
-    Tk.Entry(f,textvariable=var,background=bg).pack(side='left')
-    Tk.Label(f,text=name,background=self.bg).pack(side='left')
-    
-    def floatCallback():
-        val2 = var.get()
-        # g.trace(name,val2)
-        try:
-            float(val2)
-            return val2
-        except TypeError:
-            g.trace("bad val:",val2)
-            return val
-            
-    self.initValue(p,name,kind,val,floatCallback)
-    
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30
-#@nonl
-#@-node:ekr.20041225063637.33:createFloat
-#@+node:ekr.20041225063637.34:createFont
-def createFont (self,parent,p,kind,fontName,val):
-    
-    """Create a font picker.  val is a dict containing the specified values."""
-    bg = self.commonBackground
-    d = val ; widgets = {}
-    munge = g.app.config.munge
-    f = Tk.Frame(parent,background=bg) # No need to pack.
-    self.alterComments = p.copy()
-    self.alteredCommentsString = d.get('comments')
-    << create the family combo box >>
-    << create the size entry >>
-    << create the weight combo box >>
-    << create the slant combo box >>
-    Tk.Label(f,text=fontName,background=bg).pack(side='left')
-    << define fontCallback >>
-
-    familyBox.configure(selectioncommand=fontCallback)
-    slantBox.configure(selectioncommand=fontCallback)
-    weightBox.configure(selectioncommand=fontCallback)
-
-    self.initValue(p,munge(fontName),'font',d,fontCallback)
-
-    self.sc.create_window(15,self.h,anchor='w',window = f)
-    self.h += 30
-#@nonl
-#@+node:ekr.20041225063637.35:<< create the family combo box >>
-names = tkFont.families()
-names = list(names)
-names.sort()
-names.insert(0,'<None>')
-
-data = d.get('family')
-initialitem = 0
-if data:
-    name2,val = data
-    if val and val in names:
-        initialitem = names.index(val)
-
-familyBox = Pmw.ComboBox(f,
-    labelpos="we",label_text='Family:',
-    label_background=bg,
-    arrowbutton_background=bg,
-    scrolledlist_items=names)
-
-familyBox.selectitem(initialitem)
-familyBox.pack(side="left",padx=2)
-#@nonl
-#@-node:ekr.20041225063637.35:<< create the family combo box >>
-#@+node:ekr.20041225063637.36:<< create the size entry >>
-Tk.Label(f,text="Size:",background=bg).pack(side="left")
-
-sizeEntry = Tk.Entry(f,width=4)
-sizeEntry.pack(side="left")
-
-data = d.get('size')
-if data:
-    kind,val = data
-    if val not in (None,'None','none'):
-        try:
-            n = int(val)
-            sizeEntry.insert('end',val)
-        except ValueError:
-            s = "invalid size: %s" % val
-            print s ; self.es(s,color="blue")
-#@nonl
-#@-node:ekr.20041225063637.36:<< create the size entry >>
-#@+node:ekr.20041225063637.37:<< create the weight combo box >>
-initialitem = 0
-values = ['<None>','normal','bold']
-data = d.get('weight')
-if data:
-    kind,val = data
-    if val in values:
-        initialitem = values.index(val)
-
-weightBox = Pmw.ComboBox(f,
-    labelpos="we",label_text="Weight:",
-    label_background=bg,
-    arrowbutton_background=bg,
-    scrolledlist_items=values)
-
-weightBox.selectitem(initialitem)
-weightBox.pack(side="left",padx=2)
-#@nonl
-#@-node:ekr.20041225063637.37:<< create the weight combo box >>
-#@+node:ekr.20041225063637.39:<< define fontCallback >>
-def fontCallback(*args,**keys):
-    
-    d2 = d.copy() # The update logic must compare distinct dicts.
-    
-    for box,key in (
-        (familyBox, 'family'),
-        (None,      'size'),
-        (slantBox,  'slant'),
-        (weightBox, 'weight'),
-    ):
-        if box: val = box.get()
-        else:   val = sizeEntry.get().strip()
-        if not val or  val.lower() in ('none','<none>',): val = None
-
-        data = d.get(key)
-        name,oldval = data
-        d2[key] = name,val
-    
-    return d2
-#@nonl
-#@-node:ekr.20041225063637.39:<< define fontCallback >>
-#@+node:ekr.20041225063637.38:<< create the slant combo box>>
-initialitem = 0
-values=['<None>','roman','italic']
-data = d.get('slant')
-if data:
-    kind,val = data
-    if val in values:
-        initialitem = values.index(val)
-
-slantBox = Pmw.ComboBox(f,
-    labelpos="we",label_text="Slant:",
-    label_background=bg,
-    arrowbutton_background=bg,
-    scrolledlist_items=values)
-
-slantBox.selectitem(initialitem)
-slantBox.pack(side="left",padx=2)
-#@nonl
-#@-node:ekr.20041225063637.38:<< create the slant combo box>>
-#@-node:ekr.20041225063637.34:createFont
-#@+node:ekr.20041225063637.40:createInt
-def createInt (self,parent,p,kind,name,val):
-    
-    bg = self.commonBackground
-
-    # Inits the entry widget.
-    var = Tk.StringVar()
-    var.set(val)
-
-    f = Tk.Frame(parent)
-    Tk.Entry(f,textvariable=var).pack(side='left')
-    Tk.Label(f,text=name,background=bg).pack(side='left')
-
-    def intCallback():
-        val2 = var.get()
-        # g.trace(name,val2)
-        try:
-            int(val2)
-            return val2
-        except TypeError:
-            g.trace("bad val:",val2)
-            return val
-    
-    self.initValue(p,name,kind,val,intCallback)
-    
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30
-#@nonl
-#@-node:ekr.20041225063637.40:createInt
-#@+node:ekr.20041225063637.41:createInts
-def createInts (self,parent,p,kind,name,val):
-    
-    # g.trace(repr(kind),repr(name),val)
-    
-    bg = self.commonBackground
-    
-    i = kind.find('[')
-    j = kind.find(']')
-    if not (-1 < i < j):
-        return
-    
-    items = kind[i+1:j].split(',')
-    items.sort()
-    items.insert(0,'<none>')
-    
-    if val in items:
-        initialitem = items.index(val)
-    else:
-        initialitem = 0
-        
-    f = Tk.Frame(parent)
-
-    intsBox = Pmw.ComboBox(f,
-        labelpos="ew",label_text=name,
-        label_background=bg,
-        scrolledlist_items=items)
-
-    intsBox.selectitem(initialitem)
-    intsBox.pack(side="left",padx=2)
-    
-    def intsCallback():
-        val2 = intsBox.get()
-        try:
-            int(val2)
-            return val2
-        except TypeError:
-            g.trace("bad val:",val2)
-            return val
-
-    self.initValue(p,name,kind,val,intsCallback)
-
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30
-#@nonl
-#@-node:ekr.20041225063637.41:createInts
-#@+node:ekr.20041225063637.42:createPath
-def createPath (self,parent,p,kind,name,val):
-    
-    self.createString(parent,p,kind,name,val)
-#@nonl
-#@-node:ekr.20041225063637.42:createPath
-#@+node:ekr.20041225063637.43:createRatio
-def createRatio (self,parent,p,kind,name,val):
-    
-    bg = self.commonBackground
-    
-    # Inits the entry widget.
-    var = Tk.StringVar()
-    var.set(val)
-
-    f = Tk.Frame(parent)
-    Tk.Entry(f,textvariable=var).pack(side='left')
-    Tk.Label(f,text=name,background=bg).pack(side='left')
-    
-    def ratioCallback():
-        val2 = var.get()
-        # g.trace(name,val2)
-        try:
-            float(val2)
-            return g.choose(0.0 <= val2 <= 1.0,val2,val)
-        except TypeError:
-            g.trace("bad val:",val2)
-            return val
-            
-    self.initValue(p,name,kind,val,ratioCallback)
-    
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30
-#@nonl
-#@-node:ekr.20041225063637.43:createRatio
-#@+node:ekr.20041225063637.44:createRecentFiles
-def createRecentFiles (self,parent,p,kind,name,vals):
-    
-    bg = self.commonBackground
-    
-    s = p.bodyString()
-    lines = g.splitLines(s)
-    
-    f = Tk.Frame(parent)
-    
-    recentFilesBox = Pmw.ComboBox(f,
-        labelpos="ew",label_text='recent files',
-        label_background = bg,
-        scrolledlist_items=lines)
-
-    if lines:
-        recentFilesBox.selectitem(0)
-    recentFilesBox.pack(side="left")
-    
-    # Increase the width of the entry field.
-    entryfield = recentFilesBox.component('entryfield')
-    entry = entryfield.component('entry')
-    entry.configure(width=70)
-
-    def recentFilesCallback():
-        files = recentFilesBox.get(0,'end')
-        files = [theFile.strip() for theFile in files if theFile.strip()]
-        return files
-
-    self.initValue(p,name,kind,vals,recentFilesCallback)
-
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30
-                
-    self.suppressComments = p.copy()
-#@nonl
-#@-node:ekr.20041225063637.44:createRecentFiles
-#@+node:ekr.20041225063637.45:createShortcut
-def createShortcut (self,parent,p,kind,name,val):
-    
-    g.trace(name,val)
-    
-    if name:
-        self.createString(parent,p,kind,name,val)
-#@nonl
-#@-node:ekr.20041225063637.45:createShortcut
-#@+node:ekr.20041225063637.46:createShortcuts
-def createShortcuts (self,parent,p,kind,name,vals):
-    
-    s = p.bodyString()
-    lines = g.splitLines(s)
-    
-    for line in lines:
-        if not g.match(line.strip(),0,'#'):
-            name,val = self.parser.parseShortcutLine(line)
-            if name:
-                self.createString(parent,p,kind,name,val)
-
-    self.suppressComments = p.copy()
-#@nonl
-#@-node:ekr.20041225063637.46:createShortcuts
-#@+node:ekr.20041225063637.47:createSpacerFrame
-def createSpacerFrame (self,parent,size=10):
-    
-    f = Tk.Frame(parent)
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += size
-#@nonl
-#@-node:ekr.20041225063637.47:createSpacerFrame
-#@+node:ekr.20041225063637.48:createString
-def createString (self,parent,p,kind,name,val):
-    
-    bg = self.commonBackground
-
-    if val in (None,'None'): val = ""
-    
-    # Inits the Entry widget.
-    var = Tk.StringVar()
-    var.set(val)
-    
-    f = Tk.Frame(parent) # No need to pack.
-    Tk.Entry(f,textvariable=var,width=40).pack(side='left')
-    Tk.Label(f,text=name,background=bg).pack(side='left')
-    
-    def stringCallback():
-        val = var.get()
-        # g.trace(name,val)
-        return val
-
-    self.initValue(p,name,kind,val,stringCallback)
-    
-    self.sc.create_window(15,self.h,anchor='w',window=f)
-    self.h += 30
-#@nonl
-#@-node:ekr.20041225063637.48:createString
-#@+node:ekr.20041225063637.49:createStrings
-def createStrings (self,parent,p,kind,name,val):
-    
-    bg = self.commonBackground
-    
-    # g.trace(repr(kind),repr(name),val)
-    i = kind.find('[')
-    j = kind.find(']')
-    if not (-1 < i < j):
-        return
-    
-    items = kind[i+1:j].split(',')
-    items.sort()
-    items.insert(0,'<none>')
-    if val in items:
-        initialitem = items.index(val)
-    else:
-        initialitem = 0
-        
-    f = Tk.Frame(parent,background=bg)
-
-    stringsBox = Pmw.ComboBox(f,
-        labelpos="ew",label_text=name,
-        label_background = bg,
-        scrolledlist_items=items)
-
-    stringsBox.selectitem(initialitem)
-    stringsBox.pack(side="left",padx=2)
-    
-    def stringsCallback():
-        return stringsBox.get()
-
-    self.initValue(p,name,kind,val,stringsCallback)
-
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30
-#@nonl
-#@-node:ekr.20041225063637.49:createStrings
-#@-node:ekr.20041225063637.25:createWidgets & helpers
 #@-node:ekr.20050121094515:(Improved appearance of settings panel)
 #@+node:ekr.20050122104754:(Clear Recent Files now updates @recent_files node properly)
 #@+node:ekr.20050122104857:To do: implement 'Undo Clear Recent Files'
@@ -22202,9 +21126,9 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-C:\prog\leoCVS\leo\test\test.leo
-c:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\Documents and Settings\Ed\My Documents\ekr.leo
+c:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
 C:\prog\leoCVS\leo\config\leoSettings.leo
 c:\prog\leoCVS\leo\doc\LeoDocs.leo
@@ -22562,366 +21486,6 @@ def doCommand (self,command,label,event=None):
     return "break" # Inhibit all other handlers.
 #@nonl
 #@-node:ekr.20031218072017.2817: doCommand
-#@+node:ekr.20041225063637.13: ctor
-def __init__ (self,c,replaceBody=True):
-    
-    if not Pmw:
-        s = 'Setting dialog requires Pmw: see http://pmw.sourceforge.net'
-        print s ; g.es(s,color='blue')
-        return
-
-    << init ivars >>
-    << define Tk color names>>
-
-    self._settingsPosition = p = self.createSettingsTree()
-    self.parser = settingsDialogParserClass(c,p,self)
-
-    << set background color for widgets >>
-    c.disableCommandsMessage = 'All commands disabled while settings dialog is open'
-    if self.replaceBody:
-        << replace the body pane with the outer dialog frame >>
-        << replace tree pane with settings tree >>
-        << add buttons and label to interior >>
-        << add setterCanvas to interior >>
-        self.log = g.app.log
-        self.tree.redraw_now() # To allocate widgets.
-        self.tree.select(p)
-    else:
-        << create the dialog d >>
-        << create paneFrame, a paned widget >>
-        << create paneFrame2, a second paned widget >>
-        << create outline and log panes in paneFrame2 >>
-        << put setterCanvas in paneFrame's setter pane>>
-        << put a Text widget in the comment pane >>
-        self.log = self.logClass(self.logText)
-        self.tree.redraw_now() # To allocate widgets.
-        self.tree.select(p)
-        self.center()
-        if self.modal: d.activate()
-#@nonl
-#@+node:ekr.20050123194330:<< init ivars >>
-self._settingsPosition = None
-self.alterComments = None # position for which to alter comments.
-self.alteredCommentsString = None
-self.c = c
-self.buttonNames = ('OK', 'Cancel','Apply','Revert')
-self.colorSettingDict = {} # Contains entries for all changed colors.
-self.commentWidget = None
-self.commonBackground = None
-self.dialog = None
-self.initValueDict = {} # Initial value of settings in present pane.
-self.fileValueDict = {} # Values of settings written to file.
-self.filesInfoDict = {} # Info about all settings file in the settings outline.
-    # Keys are positions, values are dicts giving info for a setting file.
-self.fontRefs = {} # A dict to retain references to fonts.
-self.modal = False
-self.old_p = c.currentPosition()
-self.old_root = c.rootPosition()
-self.p = None # Used to revert settings.
-self.panes = {}
-self.parser = None
-self.replaceBody = replaceBody
-self.sc = None
-self.setterLabel = None
-self.suppressComments = None # position for which to suppress comments.
-self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
-self.top = None
-self.tree = None
-#@nonl
-#@-node:ekr.20050123194330:<< init ivars >>
-#@+node:ekr.20050129111522:<< define Tk color names >>
-self.colorNamesList = (
-    "gray60", "gray70", "gray80", "gray85", "gray90", "gray95",
-    "snow1", "snow2", "snow3", "snow4", "seashell1", "seashell2",
-    "seashell3", "seashell4", "AntiqueWhite1", "AntiqueWhite2", "AntiqueWhite3",
-    "AntiqueWhite4", "bisque1", "bisque2", "bisque3", "bisque4", "PeachPuff1",
-    "PeachPuff2", "PeachPuff3", "PeachPuff4", "NavajoWhite1", "NavajoWhite2",
-    "NavajoWhite3", "NavajoWhite4", "LemonChiffon1", "LemonChiffon2",
-    "LemonChiffon3", "LemonChiffon4", "cornsilk1", "cornsilk2", "cornsilk3",
-    "cornsilk4", "ivory1", "ivory2", "ivory3", "ivory4", "honeydew1", "honeydew2",
-    "honeydew3", "honeydew4", "LavenderBlush1", "LavenderBlush2",
-    "LavenderBlush3", "LavenderBlush4", "MistyRose1", "MistyRose2",
-    "MistyRose3", "MistyRose4", "azure1", "azure2", "azure3", "azure4",
-    "SlateBlue1", "SlateBlue2", "SlateBlue3", "SlateBlue4", "RoyalBlue1",
-    "RoyalBlue2", "RoyalBlue3", "RoyalBlue4", "blue1", "blue2", "blue3", "blue4",
-    "DodgerBlue1", "DodgerBlue2", "DodgerBlue3", "DodgerBlue4", "SteelBlue1",
-    "SteelBlue2", "SteelBlue3", "SteelBlue4", "DeepSkyBlue1", "DeepSkyBlue2",
-    "DeepSkyBlue3", "DeepSkyBlue4", "SkyBlue1", "SkyBlue2", "SkyBlue3",
-    "SkyBlue4", "LightSkyBlue1", "LightSkyBlue2", "LightSkyBlue3",
-    "LightSkyBlue4", "SlateGray1", "SlateGray2", "SlateGray3", "SlateGray4",
-    "LightSteelBlue1", "LightSteelBlue2", "LightSteelBlue3",
-    "LightSteelBlue4", "LightBlue1", "LightBlue2", "LightBlue3",
-    "LightBlue4", "LightCyan1", "LightCyan2", "LightCyan3", "LightCyan4",
-    "PaleTurquoise1", "PaleTurquoise2", "PaleTurquoise3", "PaleTurquoise4",
-    "CadetBlue1", "CadetBlue2", "CadetBlue3", "CadetBlue4", "turquoise1",
-    "turquoise2", "turquoise3", "turquoise4", "cyan1", "cyan2", "cyan3", "cyan4",
-    "DarkSlateGray1", "DarkSlateGray2", "DarkSlateGray3",
-    "DarkSlateGray4", "aquamarine1", "aquamarine2", "aquamarine3",
-    "aquamarine4", "DarkSeaGreen1", "DarkSeaGreen2", "DarkSeaGreen3",
-    "DarkSeaGreen4", "SeaGreen1", "SeaGreen2", "SeaGreen3", "SeaGreen4",
-    "PaleGreen1", "PaleGreen2", "PaleGreen3", "PaleGreen4", "SpringGreen1",
-    "SpringGreen2", "SpringGreen3", "SpringGreen4", "green1", "green2",
-    "green3", "green4", "chartreuse1", "chartreuse2", "chartreuse3",
-    "chartreuse4", "OliveDrab1", "OliveDrab2", "OliveDrab3", "OliveDrab4",
-    "DarkOliveGreen1", "DarkOliveGreen2", "DarkOliveGreen3",
-    "DarkOliveGreen4", "khaki1", "khaki2", "khaki3", "khaki4",
-    "LightGoldenrod1", "LightGoldenrod2", "LightGoldenrod3",
-    "LightGoldenrod4", "LightYellow1", "LightYellow2", "LightYellow3",
-    "LightYellow4", "yellow1", "yellow2", "yellow3", "yellow4", "gold1", "gold2",
-    "gold3", "gold4", "goldenrod1", "goldenrod2", "goldenrod3", "goldenrod4",
-    "DarkGoldenrod1", "DarkGoldenrod2", "DarkGoldenrod3", "DarkGoldenrod4",
-    "RosyBrown1", "RosyBrown2", "RosyBrown3", "RosyBrown4", "IndianRed1",
-    "IndianRed2", "IndianRed3", "IndianRed4", "sienna1", "sienna2", "sienna3",
-    "sienna4", "burlywood1", "burlywood2", "burlywood3", "burlywood4", "wheat1",
-    "wheat2", "wheat3", "wheat4", "tan1", "tan2", "tan3", "tan4", "chocolate1",
-    "chocolate2", "chocolate3", "chocolate4", "firebrick1", "firebrick2",
-    "firebrick3", "firebrick4", "brown1", "brown2", "brown3", "brown4", "salmon1",
-    "salmon2", "salmon3", "salmon4", "LightSalmon1", "LightSalmon2",
-    "LightSalmon3", "LightSalmon4", "orange1", "orange2", "orange3", "orange4",
-    "DarkOrange1", "DarkOrange2", "DarkOrange3", "DarkOrange4", "coral1",
-    "coral2", "coral3", "coral4", "tomato1", "tomato2", "tomato3", "tomato4",
-    "OrangeRed1", "OrangeRed2", "OrangeRed3", "OrangeRed4", "red1", "red2", "red3",
-    "red4", "DeepPink1", "DeepPink2", "DeepPink3", "DeepPink4", "HotPink1",
-    "HotPink2", "HotPink3", "HotPink4", "pink1", "pink2", "pink3", "pink4",
-    "LightPink1", "LightPink2", "LightPink3", "LightPink4", "PaleVioletRed1",
-    "PaleVioletRed2", "PaleVioletRed3", "PaleVioletRed4", "maroon1",
-    "maroon2", "maroon3", "maroon4", "VioletRed1", "VioletRed2", "VioletRed3",
-    "VioletRed4", "magenta1", "magenta2", "magenta3", "magenta4", "orchid1",
-    "orchid2", "orchid3", "orchid4", "plum1", "plum2", "plum3", "plum4",
-    "MediumOrchid1", "MediumOrchid2", "MediumOrchid3", "MediumOrchid4",
-    "DarkOrchid1", "DarkOrchid2", "DarkOrchid3", "DarkOrchid4", "purple1",
-    "purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
-    "MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
-    "thistle4" )
-#@nonl
-#@-node:ekr.20050129111522:<< define Tk color names >>
-#@+node:ekr.20050121105232:<< set background color for widgets >>
-if 0:
-    # Get the color from the background color of the body text widget.
-    commonBackground = c.frame.body.bodyCtrl.cget('background')
-    
-else:
-    # 'LightSteelBlue1' # too blue.
-    # 'gray80' # too dark.
-    # 'gray90' # Possible: very light.
-    # '#f2fdff' # Same as log window.  Too cute.
-    
-    commonBackground = 'gray90'
-    
-self.commonBackground = commonBackground
-#@nonl
-#@-node:ekr.20050121105232:<< set background color for widgets >>
-#@+node:ekr.20041225073207:When replacing body & tree panes...
-#@+node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
-body = c.frame.component('body')
-packer = body.getPacker()
-unpacker = body.getUnpacker()
-
-# The new frame must be a child of splitter1Frame.
-parentFrame = c.frame.component('splitter1Frame').getFrame()
-self.top = interior = Tk.Frame(parentFrame,background=commonBackground)
-
-c.frame.componentClass(c,'settingDialogFrame',interior,self,packer,unpacker)
-c.frame.replaceBodyPaneWithComponent('settingDialogFrame')
-#@nonl
-#@-node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
-#@+node:ekr.20041225074713:<< add buttons and label to interior >>
-# Put the label on the same line as the buttons.
-labelButtonFrame = Tk.Frame(interior,background=commonBackground)
-labelButtonFrame.pack(side='top',expand=0,fill='x',pady=4)
-buttonFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
-buttonFrame.pack(side='left',padx=10)
-labelFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
-labelFrame.pack(side='left')
-self.setterLabel = label = Tk.Label(labelFrame,anchor='w',background=commonBackground)
-label.pack(side='right')
-
-w = 6
-for name in self.buttonNames:
-    w = max(w,len(name))
-
-for name in self.buttonNames:
-
-    def buttonCallback(name=name):
-        self.onAnyButton(name)
-
-    b = Tk.Button(buttonFrame,text=name,command=buttonCallback,width=w)
-    b.pack(side='left',padx=4)
-#@nonl
-#@-node:ekr.20041225074713:<< add buttons and label to interior >>
-#@+node:ekr.20041225073207.1:<< add setterCanvas to interior>>
-self.sc = sc = Pmw.ScrolledCanvas(interior,
-    hscrollmode='dynamic',vscrollmode='dynamic',
-    canvas_background = commonBackground,
-    borderframe=1,
-    # A fixed size here works best.
-    # Pmw does not handle the changes to the canvas very well.
-    usehullsize = 1,
-    hull_height = 400,
-    hull_width = 800,
-)
-
-sc.pack(side='top',expand=1,fill="both")
-#@nonl
-#@-node:ekr.20041225073207.1:<< add setterCanvas to interior>>
-#@+node:ekr.20041225090725:<< replace tree pane with settings tree >>
-tree = c.frame.component('tree')
-
-# The new frame must be a child of splitter2Frame.
-splitter2Frame = c.frame.component('splitter2Frame').getFrame()
-
-# Create a Pmw scrolled canvas.
-scrolledTreeCanvas = Pmw.ScrolledCanvas(splitter2Frame,
-    hscrollmode='none',borderframe=3)
-
-treeCanvas = scrolledTreeCanvas.component('canvas')
-treeCanvas.configure(background='white')
-
-# Set canvas.name ivar for chapters.py plugin.
-# This must be a tab number.  The number '1' should work well enough.
-treeCanvas.name = '1'
-
-# Create the settingsTree component.
-c.frame.componentClass(c,'settingsTree',scrolledTreeCanvas,self,
-    tree.getPacker(),tree.getUnpacker())
-
-c.frame.replaceTreePaneWithComponent('settingsTree')
-
-self.tree = settingsTree(c,c.frame,treeCanvas,self)
-self.tree.setColorFromConfig()
-#@nonl
-#@-node:ekr.20041225090725:<< replace tree pane with settings tree >>
-#@-node:ekr.20041225073207:When replacing body & tree panes...
-#@+node:ekr.20041225073207.3:When using separate dialog...
-#@+node:ekr.20041225063637.14:<< create the dialog d >>
-self.dialog = d = Pmw.Dialog(
-    c.frame.top,
-    title=title,
-    buttons=self.buttonNames,
-    # It's too upsetting to have a dialog go away on a return key.
-    # defaultbutton = 'OK',
-    command = self.onAnyButton
-)
-
-self.top = hull = d.component('hull')
-hull.minsize(800,800)
-
-interior = d.interior()
-
-if 0: # Do immediately
-    g.app.gui.attachLeoIcon(hull)
-else: # Do at idle time.
-    def setIcont(top=hull):
-        g.app.gui.attachLeoIcon(top)
-    hull.after_idle(setIcont)
-#@nonl
-#@-node:ekr.20041225063637.14:<< create the dialog d >>
-#@+node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
-self.paneFrame = paneFrame = Pmw.PanedWidget(interior,
-    separatorthickness = 4, # default is 2
-    handlesize = 8, # default is 8
-    command = self.onPaneResize
-)
-paneFrame.pack(expand = 1, fill='both')
-
-for name,minsize,size,label,isSetterLabel in (
-    ("splitter2",50,300,None,False),
-    ("setter",50,300,"",False),
-    ("comments",50,200,None,False),
-):
-    self.panes[name] = pane = paneFrame.add(name,min=minsize,size=size)
-    if label is not None:
-        label = label = Tk.Label(pane,text=label,background=commonBackground)
-        label.pack(side = 'top', expand = 0)
-        if isSetterLabel:
-            self.setterLabel = label
-
-# Set the colors of the separator and handle.
-for i in (1,2):
-    bar = paneFrame.component('separator-%d' % i)
-    bar.configure(background='LightSteelBlue2')
-    handle = paneFrame.component('handle-%d' % i)
-    handle.configure(background='SteelBlue2')
-
-# g.printDict(self.panes)
-#@nonl
-#@-node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
-#@+node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
-splitter2 = self.panes.get('splitter2')
-
-self.paneFrame2 = paneFrame2 = Pmw.PanedWidget(splitter2,
-    separatorthickness = 4, # default is 2
-    handlesize = 8, # default is 8
-    orient='horizontal',
-    command = self.onPaneResize
-)
-paneFrame2.pack(expand = 1, fill='both')
-
-for name,minsize,size, in (
-    ('outline',50,500),
-    ('log',50,300),
-):
-    self.panes[name] = pane = paneFrame2.add(name,min=minsize,size=size)
-    
-# Set the colors of the separator and handle.
-i = 1
-bar = paneFrame2.component('separator-%d' % i)
-bar.configure(background='LightSteelBlue2')
-handle = paneFrame2.component('handle-%d' % i)
-handle.configure(background='SteelBlue2')
-#@nonl
-#@-node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
-#@+node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
-outline = self.panes.get('outline')
-
-# Create the widget.
-self.scrolledTreeCanvas = scrolledTreeCanvas = Pmw.ScrolledCanvas(outline,
-    hscrollmode='none',borderframe=3)
-    
-# Configure the canvas component.
-scrolledTreeCanvas.pack(side='top',expand=1,fill="both")
-
-treeCanvas = scrolledTreeCanvas.component('canvas')
-treeCanvas.configure(background='white')
-
-# Create the tree.
-self.tree = tree = settingsTree(c,c.frame,treeCanvas,self)
-
-logPane = self.panes.get('log')
-self.logText = logText = Tk.Text(logPane)
-logText.pack(expand=1,fill="both")
-#@nonl
-#@-node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
-#@+node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
-# Create the widget in the 'setter' pane.
-setter = self.panes.get('setter')
-
-self.sc = sc = Pmw.ScrolledCanvas(setter,
-    hscrollmode='none',vscrollmode='dynamic',
-    labelpos = 'n',label_text = '')
-    
-sc.pack(side='top',expand=1,fill="both")
-
-setterCanvas = sc.component('canvas')
-self.setterLabel = sc.component('label')
-
-# setterCanvas.configure(background='LightSteelBlue1')
-#@nonl
-#@-node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
-#@+node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
-commentFrame = self.paneFrame.pane('comments')
-
-self.commentWidget = commentWidget = Pmw.ScrolledText(commentFrame)
-commentWidget.pack(expand=1,fill="both")
-
-self.commentText = text = commentWidget.component('text')
-
-background = commentFrame.cget('background')
-text.configure(background=background,borderwidth=0)
-#@nonl
-#@-node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
-#@-node:ekr.20041225073207.3:When using separate dialog...
-#@-node:ekr.20041225063637.13: ctor
 #@+node:ekr.20041225063637.51:onAnyButton
 def onAnyButton(self,name):
     
@@ -23375,6 +21939,10 @@ def __init__(self,c,resizeable=False,title=None):
 
     << create the tkinter intVars >>
     
+    # These are created later.
+    self.find_ctrl = None
+    self.change_ctrl = None 
+    
     self.createTopFrame() # Create the outer tkinter dialog frame.
     self.createFrame()
     self.init(c) # New in 4.3: init only once.
@@ -23749,7 +22317,7 @@ def es_exception (full=True,c=None,color="red"):
             print line
             
     if g.app.debugSwitch > 1:
-        import pdb ; pdb.set_trace()
+        pdb.set_trace()
 
     return fileName,n
 #@nonl
@@ -24541,7 +23109,7 @@ def es_exception (full=True,c=None,color="red"):
             print line
             
     if g.app.debugSwitch > 1:
-        import pdb ; pdb.set_trace()
+        pdb.set_trace()
 
     return fileName,n
 #@nonl
@@ -24684,7 +23252,7 @@ def getScript (c,p,useSelectedText=True,script=None):
     p.v.setTnodeText(old_body)
     
     # g.trace(repr(c.atFileCommands.output_newline))
-    if c.atFileCommands.output_newline == 'crlf':
+    if c.atFileCommands.output_newline == '\r\n':
         return script.replace("\r\n","\n") # 1/11/05
     else:
         return script
@@ -24693,18 +23261,13 @@ def getScript (c,p,useSelectedText=True,script=None):
 def test_g_getScript_strips_returns():
 
     old_output_newline = c.atFileCommands.output_newline
-    c.atFileCommands.output_newline = 'crlf'
+    c.atFileCommands.output_newline = '\r\n'
     script = g.getScript(c,p)
     c.atFileCommands.output_newline = old_output_newline
     
     assert script.find('\r\n') == -1
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_returns
-#@+node:ekr.20050211120242.1:test_g_getScript_strips_lws
-def test_g_getScript_strips_lws():
-    pass # Not ready yet.
-#@nonl
-#@-node:ekr.20050211120242.1:test_g_getScript_strips_lws
 #@-node:EKR.20040614071102.1:g.getScript & tests
 #@+node:EKR.20040612232221:goToScriptLineNumber
 def goToScriptLineNumber (self,root,script,n):
@@ -25769,7 +24332,7 @@ def run(fileName=None,*args,**keywords):
     g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
     << import leoNodes and leoConfig >>
     g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
-    g.app.config = leoConfig.config()
+    g.app.config = leoConfig.configClass()
     fileName = completeFileName(fileName)
     reportDirectories(verbose)
     g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.
@@ -26195,6 +24758,9 @@ Fixed bug in how iconBar was created that resulted in rowcol plugin working impr
 #@+node:ekr.20031218072017.1318:g.plugin_signon
 def plugin_signon(module_name,verbose=False):
     
+    # The things we do to keep pychecker happy... 
+    m = g.Bunch(__name__='',__version__='')
+    
     exec("import %s ; m = %s" % (module_name,module_name))
     
     if verbose: # or g.app.unitTesting:
@@ -26445,29 +25011,29 @@ def get_directives_dict(s,root=None):
     Returns a dict containing pointers to the start of each directive"""
 
     if root: root_node = root[0]
-    dict = {}
+    theDict = {}
     i = 0 ; n = len(s)
     while i < n:
         if s[i] == '@' and i+1 < n:
-            << set dict for @ directives >>
+            << set theDict for @ directives >>
         elif root and g.match(s,i,"<<"):
-            << set dict["root"] for noweb * chunks >>
+            << set theDict["root"] for noweb * chunks >>
         i = g.skip_line(s,i)
-    return dict
+    return theDict
 #@nonl
-#@+node:ekr.20031218072017.1261:<< set dict for @ directives >>
+#@+node:ekr.20031218072017.1261:<< set theDict for @ directives >>
 j = g.skip_c_id(s,i+1)
 word = s[i+1:j]
 if word in g.globalDirectiveList:
-    if dict.has_key(word):
+    if theDict.has_key(word):
         # Ignore second value.
         pass
         # g.es("Warning: conflicting values for %s" % (word), color="blue")
     else:
-        dict [word] = i
+        theDict [word] = i
 #@nonl
-#@-node:ekr.20031218072017.1261:<< set dict for @ directives >>
-#@+node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+#@-node:ekr.20031218072017.1261:<< set theDict for @ directives >>
+#@+node:ekr.20031218072017.1262:<< set theDict["root"] for noweb * chunks >>
 @ The following looks for chunk definitions of the form < < * > > =. If found, we take this to be equivalent to @root filename if the headline has the form @root filename.
 @c
 
@@ -26478,11 +25044,11 @@ if i < n and s[i] == '*' :
         # < < * > > = implies that @root should appear in the headline.
         i += 3
         if root_node:
-            dict["root"]=0 # value not immportant
+            theDict["root"]=0 # value not immportant
         else:
             g.es(g.angleBrackets("*") + "= requires @root in the headline")
 #@nonl
-#@-node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+#@-node:ekr.20031218072017.1262:<< set theDict["root"] for noweb * chunks >>
 #@-node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
 #@+node:ekr.20031218072017.1386:getOutputNewline
 def getOutputNewline (c=None,name=None):
@@ -26509,14 +25075,14 @@ def getOutputNewline (c=None,name=None):
 #@nonl
 #@-node:ekr.20031218072017.1386:getOutputNewline
 #@+node:ekr.20031218072017.1387:scanAtEncodingDirective
-def scanAtEncodingDirective(s,dict):
+def scanAtEncodingDirective(s,theDict):
     
-    """Scan the @encoding directive at s[dict["encoding"]:].
+    """Scan the @encoding directive at s[theDict["encoding"]:].
 
     Returns the encoding name or None if the encoding name is invalid.
     """
 
-    k = dict["encoding"]
+    k = theDict["encoding"]
     i = g.skip_to_end_of_line(s,k)
     j = len("@encoding")
     encoding = s[k+j:i].strip()
@@ -26529,14 +25095,14 @@ def scanAtEncodingDirective(s,dict):
 #@nonl
 #@-node:ekr.20031218072017.1387:scanAtEncodingDirective
 #@+node:ekr.20031218072017.1388:scanAtLineendingDirective
-def scanAtLineendingDirective(s,dict):
+def scanAtLineendingDirective(s,theDict):
     
-    """Scan the @lineending directive at s[dict["lineending"]:].
+    """Scan the @lineending directive at s[theDict["lineending"]:].
 
     Returns the actual lineending or None if the name of the lineending is invalid.
     """
 
-    k = dict["lineending"]
+    k = theDict["lineending"]
     i = g.skip_to_end_of_line(s,k)
     j = len("@lineending")
     j = g.skip_ws(s,j)
@@ -26552,14 +25118,14 @@ def scanAtLineendingDirective(s,dict):
 #@nonl
 #@-node:ekr.20031218072017.1388:scanAtLineendingDirective
 #@+node:ekr.20031218072017.1389:scanAtPagewidthDirective
-def scanAtPagewidthDirective(s,dict,issue_error_flag=False):
+def scanAtPagewidthDirective(s,theDict,issue_error_flag=False):
     
-    """Scan the @pagewidth directive at s[dict["pagewidth"]:].
+    """Scan the @pagewidth directive at s[theDict["pagewidth"]:].
 
     Returns the value of the width or None if the width is invalid.
     """
     
-    k = dict["pagewidth"]
+    k = theDict["pagewidth"]
     j = i = k + len("@pagewidth")
     i, val = g.skip_long(s,i)
     if val != None and val > 0:
@@ -26572,14 +25138,14 @@ def scanAtPagewidthDirective(s,dict,issue_error_flag=False):
         return None
 #@-node:ekr.20031218072017.1389:scanAtPagewidthDirective
 #@+node:ekr.20031218072017.1390:scanAtTabwidthDirective
-def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
+def scanAtTabwidthDirective(s,theDict,issue_error_flag=False):
     
-    """Scan the @tabwidth directive at s[dict["tabwidth"]:].
+    """Scan the @tabwidth directive at s[theDict["tabwidth"]:].
 
     Returns the value of the width or None if the width is invalid.
     """
     
-    k = dict["tabwidth"]
+    k = theDict["tabwidth"]
     i = k + len("@tabwidth")
     i, val = g.skip_long(s, i)
     if val != None and val != 0:
@@ -26666,7 +25232,7 @@ def scanDirectives(c,p=None):
     pluginsList = [] # 5/17/03: a list of items for use by plugins.
     for p in p.self_and_parents_iter():
         s = p.v.t.bodyString
-        dict = g.get_directives_dict(s)
+        theDict = g.get_directives_dict(s)
         << Test for @comment and @language >>
         << Test for @encoding >>
         << Test for @lineending >>
@@ -26675,8 +25241,8 @@ def scanDirectives(c,p=None):
         << Test for @tabwidth >>
         << Test for @wrap and @nowrap >>
         g.doHook("scan-directives",c=c,p=p,v=p,s=s,
-            old_dict=old,dict=dict,pluginsList=pluginsList)
-        old.update(dict)
+            old_dict=old,dict=theDict,pluginsList=pluginsList)
+        old.update(theDict)
 
     if path == None: path = g.getBaseDirectory(c=c)
 
@@ -26709,41 +25275,41 @@ wrap = c.config.getBool("body_pane_wraps")
 if old.has_key("comment") or old.has_key("language"):
     pass
 
-elif dict.has_key("comment"):
-    k = dict["comment"]
+elif theDict.has_key("comment"):
+    k = theDict["comment"]
     delim1,delim2,delim3 = g.set_delims_from_string(s[k:])
 
-elif dict.has_key("language"):
-    k = dict["language"]
+elif theDict.has_key("language"):
+    k = theDict["language"]
     language,delim1,delim2,delim3 = g.set_language(s,k)
 #@nonl
 #@-node:ekr.20031218072017.1393:<< Test for @comment and @language >>
 #@+node:ekr.20031218072017.1394:<< Test for @encoding >>
-if not old.has_key("encoding") and dict.has_key("encoding"):
+if not old.has_key("encoding") and theDict.has_key("encoding"):
     
-    e = g.scanAtEncodingDirective(s,dict)
+    e = g.scanAtEncodingDirective(s,theDict)
     if e:
         encoding = e
 #@-node:ekr.20031218072017.1394:<< Test for @encoding >>
 #@+node:ekr.20031218072017.1395:<< Test for @lineending >>
-if not old.has_key("lineending") and dict.has_key("lineending"):
+if not old.has_key("lineending") and theDict.has_key("lineending"):
     
-    e = g.scanAtLineendingDirective(s,dict)
+    e = g.scanAtLineendingDirective(s,theDict)
     if e:
         lineending = e
 #@-node:ekr.20031218072017.1395:<< Test for @lineending >>
 #@+node:ekr.20031218072017.1396:<< Test for @pagewidth >>
-if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
     
-    w = g.scanAtPagewidthDirective(s,dict)
+    w = g.scanAtPagewidthDirective(s,theDict)
     if w and w > 0:
         page_width = w
 #@nonl
 #@-node:ekr.20031218072017.1396:<< Test for @pagewidth >>
 #@+node:ekr.20031218072017.1397:<< Test for @path >>
-if not path and not old.has_key("path") and dict.has_key("path"):
+if not path and not old.has_key("path") and theDict.has_key("path"):
 
-    k = dict["path"]
+    k = theDict["path"]
     << compute relative path from s[k:] >>
     if path and len(path) > 0:
         base = g.getBaseDirectory(c=c) # returns "" on error.
@@ -26768,9 +25334,9 @@ if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
 #@-node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
 #@-node:ekr.20031218072017.1397:<< Test for @path >>
 #@+node:ekr.20031218072017.1399:<< Test for @tabwidth >>
-if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
     
-    w = g.scanAtTabwidthDirective(s,dict)
+    w = g.scanAtTabwidthDirective(s,theDict)
     if w and w != 0:
         tab_width = w
 #@nonl
@@ -26778,9 +25344,9 @@ if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 #@+node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
 if not old.has_key("wrap") and not old.has_key("nowrap"):
     
-    if dict.has_key("wrap"):
+    if theDict.has_key("wrap"):
         wrap = True
-    elif dict.has_key("nowrap"):
+    elif theDict.has_key("nowrap"):
         wrap = False
 #@nonl
 #@-node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
@@ -26846,7 +25412,7 @@ followed by one of: (same as above, except no minus sign or comma).
 @c
 
 urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
-import re
+
 # 4/21/03: Add http:// if required.
 if not re.match('^([a-z]{3,}:)',url):
     url = 'http://' + url
@@ -26897,8 +25463,8 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
-    list = app.windowList
-    for frame in list:
+    theList = app.windowList
+    for frame in theList:
         if munge(fileName) == munge(frame.c.mFileName):
             frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
@@ -28452,8 +27018,8 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
-    list = app.windowList
-    for frame in list:
+    theList = app.windowList
+    for frame in theList:
         if munge(fileName) == munge(frame.c.mFileName):
             frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
@@ -28521,6 +27087,7 @@ def leoConfig (self):
     c = self
     name = 'leoSettings.leo'
     homeDir = g.app.homeDir
+    loadDir = g.app.loadDir
     configDir = g.app.globalConfigDir
 
     # Look in configDir first.
@@ -28687,8 +27254,8 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
-    list = app.windowList
-    for frame in list:
+    theList = app.windowList
+    for frame in theList:
         if munge(fileName) == munge(frame.c.mFileName):
             frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
@@ -29319,7 +27886,7 @@ Added some very simple unit tests to make sure the basics will never break
 again so easily.
 #@nonl
 #@-node:ekr.20050203084346:Notes
-#@+node:ekr.20041122094813:<<  baseConfig data >>
+#@+node:ekr.20041122094813:<<  class data >>
 @others
     
 # List of dictionaries to search.  Order not too important.
@@ -29439,7 +28006,7 @@ ivarsData = (
 )
 #@nonl
 #@-node:ekr.20041117072055:ivarsDict
-#@-node:ekr.20041122094813:<<  baseConfig data >>
+#@-node:ekr.20041122094813:<<  class data >>
 #@+node:ekr.20041117083141:get & allies (g.app.config)
 def get (self,c,setting,kind):
     
@@ -29633,8 +28200,6 @@ def rawPrint (self,s):
 #@+node:ekr.20041012082437.3:redirect
 def redirect (self,stdout=1):
 
-    import sys
-
     if g.app.batchMode:
         # Redirection is futile in batch mode.
         return
@@ -29648,8 +28213,6 @@ def redirect (self,stdout=1):
 #@-node:ekr.20041012082437.3:redirect
 #@+node:ekr.20041012082437.4:undirect
 def undirect (self,stdout=1):
-
-    import sys
 
     if self.old:
         if stdout:
@@ -29918,8 +28481,6 @@ def rawPrint (self,s):
 #@+node:ekr.20041012082437.3:redirect
 def redirect (self,stdout=1):
 
-    import sys
-
     if g.app.batchMode:
         # Redirection is futile in batch mode.
         return
@@ -29933,8 +28494,6 @@ def redirect (self,stdout=1):
 #@-node:ekr.20041012082437.3:redirect
 #@+node:ekr.20041012082437.4:undirect
 def undirect (self,stdout=1):
-
-    import sys
 
     if self.old:
         if stdout:
@@ -30077,7 +28636,7 @@ followed by one of: (same as above, except no minus sign or comma).
 @c
 
 urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
-import re
+
 # 4/21/03: Add http:// if required.
 if not re.match('^([a-z]{3,}:)',url):
     url = 'http://' + url
@@ -30417,6 +28976,10 @@ def set_focus(self,widget,later=False,tag=''):
             # It may be re-enabled later, but that doesn't matter.
             self.wantedWidget = None
             g.app.wantedCommander = None
+    else:
+        # Cancel any previous request.
+        self.wantedWidget = None
+        g.app.wantedCommander = None
 #@nonl
 #@-node:ekr.20050120092028.1:set_focus (tkFrame)
 #@-node:ekr.20050206120754.1:(Fixed bug: Focus shifted from body to headline
@@ -30879,17 +29442,22 @@ def test_failure_with_ascii_encodings():
 #@-node:ekr.20050208112123:test_failure_with_ascii_encodings
 #@-node:ekr.20031218072017.1502:toUnicode & toEncodedString (and tests)
 #@+node:ekr.20031218072017.1503:getpreferredencoding from 2.3a2
+# Suppress warning about redefining getpreferredencoding
+__pychecker__ = '--no-reuseattr'
+
 try:
     # Use Python's version of getpreferredencoding if it exists.
     # It is new in Python 2.3.
     import locale
     getpreferredencoding = locale.getpreferredencoding
-except:
+except Exception:
     # Use code copied from locale.py in Python 2.3alpha2.
     if sys.platform in ('win32', 'darwin', 'mac'):
         << define getpreferredencoding using _locale >>
     else:
         << define getpreferredencoding for *nix >>
+        
+__pychecker__ = '--reuseattr'
 #@+node:ekr.20031218072017.1504:<< define getpreferredencoding using _locale >>
 # On Win32, this will return the ANSI code page
 # On the Mac, it should return the system encoding;
@@ -30906,8 +29474,11 @@ def getpreferredencoding(do_setlocale = True):
 #@-node:ekr.20031218072017.1504:<< define getpreferredencoding using _locale >>
 #@+node:ekr.20031218072017.1505:<< define getpreferredencoding for *nix >>
 # On Unix, if CODESET is available, use that.
+
+__pychecker__ = '--no-noeffect' # Note: this is at the top level!
+
 try:
-    local.CODESET
+    locale.CODESET # Bug fix, 2/12/05
 except NameError:
     # Fall back to parsing environment variables :-(
     def getpreferredencoding(do_setlocale = True):
@@ -31172,8 +29743,8 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
-    list = app.windowList
-    for frame in list:
+    theList = app.windowList
+    for frame in theList:
         if munge(fileName) == munge(frame.c.mFileName):
             frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
@@ -31862,6 +30433,8 @@ def widget_wants_focus(self,c,widget,tag=''):
     
     if c:
         c.frame.widgetWantsFocus(widget,True,tag=tag)
+        
+widgetWantsFocus = widget_wants_focus
 #@nonl
 #@-node:ekr.20050210082320:widget_wants_focus (tk.gui)
 #@+node:ekr.20050120083053:Delayed Focus (tkFrame)
@@ -31951,6 +30524,10 @@ def set_focus(self,widget,later=False,tag=''):
             # It may be re-enabled later, but that doesn't matter.
             self.wantedWidget = None
             g.app.wantedCommander = None
+    else:
+        # Cancel any previous request.
+        self.wantedWidget = None
+        g.app.wantedCommander = None
 #@nonl
 #@-node:ekr.20050120092028.1:set_focus (tkFrame)
 #@-node:ekr.20050120083053:Delayed Focus (tkFrame)
@@ -32002,7 +30579,7 @@ def getScript (c,p,useSelectedText=True,script=None):
     p.v.setTnodeText(old_body)
     
     # g.trace(repr(c.atFileCommands.output_newline))
-    if c.atFileCommands.output_newline == 'crlf':
+    if c.atFileCommands.output_newline == '\r\n':
         return script.replace("\r\n","\n") # 1/11/05
     else:
         return script
@@ -32011,18 +30588,13 @@ def getScript (c,p,useSelectedText=True,script=None):
 def test_g_getScript_strips_returns():
 
     old_output_newline = c.atFileCommands.output_newline
-    c.atFileCommands.output_newline = 'crlf'
+    c.atFileCommands.output_newline = '\r\n'
     script = g.getScript(c,p)
     c.atFileCommands.output_newline = old_output_newline
     
     assert script.find('\r\n') == -1
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_returns
-#@+node:ekr.20050211120242.1:test_g_getScript_strips_lws
-def test_g_getScript_strips_lws():
-    pass # Not ready yet.
-#@nonl
-#@-node:ekr.20050211120242.1:test_g_getScript_strips_lws
 #@-node:EKR.20040614071102.1:g.getScript & tests
 #@-node:ekr.20050211095957:(Fixed newline bug in g.getScript)
 #@+node:ekr.20050211111552.1:(Fixed bug involving encoding field in derived files)
@@ -32146,10 +30718,44 @@ def test_parseLeoSentinel (self):
         assert isThinDerivedFile, 'not thin'
         assert end == '', 'invalid end: %s' % repr(end)
         assert at.encoding == 'utf-8', 'bad encoding: %s' % repr(at.encoding)
-#@nonl
 #@-node:ekr.20050211111552:test_parseLeoSentinel
 #@-node:ekr.20041005105605.120:parseLeoSentinel
 #@-node:ekr.20050211111552.1:(Fixed bug involving encoding field in derived files)
+#@+node:ekr.20050212144125:Fixed problems found by pychecker
+# Bugs fixed 2/12/05
+1. (fixed) C:\prog\leoCVS\leo\src\leoCommands.py:4539: No global (loadDir) found
+    # Would cause leoSettings.leo in Window menu to crash.
+    
+2. (fixed) C:\prog\leoCVS\leo\src\leoGlobals.py:3426: No global (local) found
+    
+    # Local --> locale
+    # Might cause getpreferredencoding to fail on *nix.
+    
+3. (fixed) C:\prog\leoCVS\leo\src\leoGlobals.py:4152: No global (testing) found
+    # Should be self.testing.
+    
+4. (fixed) mu problems:
+    - Changed x to self.x:
+        - C:\prog\leoCVS\leo\src\leoGlobals.py:3795: No global (removeSentinelsFromLines) found
+        - C:\prog\leoCVS\leo\src\leoGlobals.py:3838: No global (getSentinelsFromLines) found
+    - Changed self.x to g.x:
+        C:\prog\leoCVS\leo\src\leoGlobals.py:3854: No class attribute (comment_delims_from_extension) found
+    - pull_source has been renamed, I don not know to what.
+        C:\prog\leoCVS\leo\src\leoGlobals.py:4170: Object (mu) has no attribute (pull_source)
+        (commented out the code that contains this)
+        
+5. (removed code) from << create a node p for  kind & root2 >>
+    - last_p is None at first, so last_p.insertAfter does not make sense.
+#@nonl
+#@-node:ekr.20050212144125:Fixed problems found by pychecker
+#@+node:ekr.20050212155600:Rewrote ctor of settingsController to eliminate pychecker warnings
+@killcolor
+
+Apparantly pychecker was confused by the complexity of the code in settingsController.__init__.
+
+Created replaceBodyWithDialog and createStandAloneDialog helpers, and this eliminated the warnings(!)
+#@nonl
+#@-node:ekr.20050212155600:Rewrote ctor of settingsController to eliminate pychecker warnings
 #@-node:ekr.20050125203059.1:Bugs
 #@+node:ekr.20050125203059.2:New features...
 #@+node:ekr.20050125170349:(Added new undo granularities & undo_granularity setting)
@@ -32817,7 +31423,7 @@ line granularity: adjust the top bead if the typing is on the same line.
 node granularity: adjust the top bead if the typing is anywhere on the same node.
 @c
 
-granularity = self.granularity
+granularity = u.granularity
 
 old_d = u.peekBead(u.bead)
 old_p = old_d and old_d.get('v')
@@ -32936,6 +31542,8 @@ def recognizeStartOfTypingWord (self,
 
     if 0: # Problems with punctuation within words.
         return new_ch in word_chars and not old_ch in word_chars
+        
+    else: return False # Keeps Pychecker happy.
 #@nonl
 #@-node:ekr.20050126081529:recognizeStartOfTypingWord
 #@-node:ekr.20031218072017.1490:setUndoTypingParams & recognizeStartOfTypingWord
@@ -33414,7 +32022,7 @@ def getScript (c,p,useSelectedText=True,script=None):
     p.v.setTnodeText(old_body)
     
     # g.trace(repr(c.atFileCommands.output_newline))
-    if c.atFileCommands.output_newline == 'crlf':
+    if c.atFileCommands.output_newline == '\r\n':
         return script.replace("\r\n","\n") # 1/11/05
     else:
         return script
@@ -33423,18 +32031,13 @@ def getScript (c,p,useSelectedText=True,script=None):
 def test_g_getScript_strips_returns():
 
     old_output_newline = c.atFileCommands.output_newline
-    c.atFileCommands.output_newline = 'crlf'
+    c.atFileCommands.output_newline = '\r\n'
     script = g.getScript(c,p)
     c.atFileCommands.output_newline = old_output_newline
     
     assert script.find('\r\n') == -1
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_returns
-#@+node:ekr.20050211120242.1:test_g_getScript_strips_lws
-def test_g_getScript_strips_lws():
-    pass # Not ready yet.
-#@nonl
-#@-node:ekr.20050211120242.1:test_g_getScript_strips_lws
 #@-node:EKR.20040614071102.1:g.getScript & tests
 #@+node:ekr.20050211120242.2:g.removeExtraLws & tests
 def removeExtraLws (s,tab_width):

@@ -38,49 +38,56 @@ You may specify options using the configuration file called leoConfig.txt.  You 
 Installing leo.py on MacOs
 --------------------------
 
-Bruce M. Bolden, bruceb@cs.uidaho.edu, is using Leo on MaxOS X.  Here is his description of how to get Leo working there:
+Leo works reliably only on MacOS X 10.3 (Panther).
 
-I installed: 
-- Latest OS X Developer tools
-- latest (as of about two weeks ago) tk/tcl
-		 MacOSXTk8.4a4-2.tar.gz
-- the machopython distribution
-http://prdownloads.sourceforge.net/wxpython/MachoPython-2.2.1.dmg
+To run Leo on Macintosh OS X 10.3:
 
-For OS X 10.1, I followed the directions at:
-	http://tony.lownds.com/macosx/tkinter.html
+1) Download and install "MacPython 2.3 for Panther addons".
 
-That worked fine for 10.1, but didn't work for 10.2.  It
-took awhile to find a Python distribution that worked
-correctly with tk/tcl.
+Python is already included in OS X 10.3 so only the addons are necessary
 
-I was just getting into Leo about a week before 10.2 was released and thought about---what if it breaks....10.2 broke it, but I was able to find a solution as described above.
+	http://www.cwi.nl/~jack/macpython.html
 
-More re MacOS from Bruce Bolden
--------------------------------
+2) Download and install TclTkAqua.
 
-I just finished building tk successfully!  The magic step was the execution of the command
+	http://tcltkaqua.sourceforge.net/
 
-cp ../generic/prolog.ps to ../library/prolog.ps
+3) Run the PackageManager found in /Applications/MacPython-2.3 and  
+install "_tkinter-2.3-binary" by clicking on the package in the list  
+and clicking the [Install:] button with "Install dependencies" checked
 
-AFTER 
+4) Download Leo (platform independent source.zip).
 
-cd ../../tk/macosx
+	http://leo.sourceforge.net/
 
-in the instructions on "Steps to build Tcl/Tk 8.4.0 on MacOS X":
+5) Unzip the contents into a directory by double-clicking the  
+downloaded file.
 
-http://mini.net/tcl/4052
+6) Control-click on /path_to_unzipped_dir/leo/src/leo.py and open with  
+PythonLauncher.
 
-I found this solution while looking at the tcl-mac mailing list archive.  The earlier (current?) tar ball on SourceForge did not have the file prolog.ps in the library directory:
+7) It is a good idea to set PythonLauncher as the default program to  
+open python scripts by clicking on "leo.py", choosing Get Info from the  
+Finder's File menu, and selecting "PythonLauncher" as the default  
+program to "Open With:"
 
-http://sourceforge.net/mailarchive/forum.php?thread_id=1060496&forum_id=3853
+By clicking the "Change All..." button, all python scripts will be  
+opened with PythonLauncher.
 
-Copy and Paste seem to work just fine now in Leo!  This was my original question for you.
+8) Download and install Pmw.
 
-I also noticed that someone else built everything on OS X 10.2 (Jaguar), but they did it under X.  Since, the new version of Tk appears to support the OS X interface quite well, I'm not going to bother installing X (for now).
+    http://pmw.sourceforge.net/
 
-So, Leo works two different ways on OS X 10.2.
+Pmw must be installed in order to use the Settings panel.
 
+Drag the downloaded gzip file into
+ 
+/System/Library/Frameworks/Python.framework/Versions/2.3/lib/python2.3/site-packages
+
+Double click on it to unzip and untar the file into a folder to make it
+available to Python
+
+Thanks to Randall Voth for these instructions.
 Using shell scripts and batch files to make using Leo easier
 ------------------------------------------------------------
 

@@ -19,11 +19,12 @@
 
 # Icon area: order is important.
 mod_scripting.py
-#hoist.py
+hoist.py
 
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
 #spellpyx.py
+#nodenavigator.py
 plugin_manager.py
 
 UNL.py
