@@ -2508,15 +2508,31 @@ class baseLeoFrame:
 				return
 			#@		<< set v to the node given by vnodeName and childIndex >>
 			#@+node:<< set v to the node given by vnodeName and childIndex >>
+			#@+at 
+			#@nonl
+			# New for 4.0:  childIndex will be -1.
+			# 
+			# What we should do in that case is to use the tnodeList to get 
+			# the proper node.
+			# This will require a new line-counting pass that counts @+body 
+			# sentinels.
+			# The present code just takes the first node that matches, and 
+			# that isn't correct.
+			#@-at
+			#@@c
+			
+			if childIndex == -1 and not hasattr(root,"tnodeList"):
+				es("not child index for " + root.headString(), color="red")
+			
 			after = root.nodeAfterTree()
 			while v and v != after:
 				if v.matchHeadline(vnodeName):
-					if childIndex == 0 or v.childIndex() + 1 == childIndex:
+					if childIndex <= 0 or v.childIndex() + 1 == childIndex:
 						break
 				v = v.threadNext()
 			
 			if not v or v == after:
-				es("not found: %s" % vnodeName )
+				es("not found: " + vnodeName, color="red")
 				return
 			#@nonl
 			#@-node:<< set v to the node given by vnodeName and childIndex >>
@@ -2563,7 +2579,7 @@ class baseLeoFrame:
 		
 		"""Convert a line number n to a vnode name, child index and line number."""
 		
-		childIndex = 0
+		childIndex = 0 ; newDerivedFile = false
 		#@	<< set delim, leoLine from the @+leo line >>
 		#@+node:<< set delim, leoLine from the @+leo line >>
 		# Find the @+leo line.
@@ -2580,6 +2596,7 @@ class baseLeoFrame:
 			s = lines[leoLine]
 			i = skip_ws(s,0)
 			j = s.find(tag)
+			newDerivedFile = match(s,j,"@+leo-ver=4")
 			delim = s[i:j]
 			if len(delim)==0:
 				delim=None
@@ -2632,26 +2649,28 @@ class baseLeoFrame:
 		# trace(s)
 		#@	<< set vnodeName and childIndex from s >>
 		#@+node:<< set vnodeName and childIndex from s >>
-		# vnode name is everything following the third ':'
-		
-		# trace("last body:"+`s`)
-		vnodeName = None
-		i = 0 ; colons = 0
-		while i < len(s) and colons < 3:
-			if s[i] == ':':
-				colons += 1
-				if colons == 1 and i+1 < len(s) and s[i+1] in string.digits:
-					junk,childIndex = skip_long(s,i+1)
-			i += 1
-		
-		vnodeName = s[i:].strip()
-		# trace("vnodeName:"+`vnodeName`)
-		
-		if len(vnodeName) == 0:
-			vnodeName = None
+		if newDerivedFile:
+			# vnode name is everything following the first ':'
+			# childIndex is -1 as a flag for later code.
+			i = s.find(':')
+			if i > -1: vnodeName = s[i+1:].strip()
+			else: vnodeName = None
+			childIndex = -1
+		else:
+			# vnode name is everything following the third ':'
+			i = 0 ; colons = 0
+			while i < len(s) and colons < 3:
+				if s[i] == ':':
+					colons += 1
+					if colons == 1 and i+1 < len(s) and s[i+1] in string.digits:
+						junk,childIndex = skip_long(s,i+1)
+				i += 1
+			vnodeName = s[i:].strip()
+			
+		# trace("vnodeName:",vnodeName)
 		if not vnodeName:
+			vnodeName = None
 			es("bad @+node sentinel")
-		#@nonl
 		#@-node:<< set vnodeName and childIndex from s >>
 		#@nl
 		# trace("childIndex,offset",childIndex,offset,vnodeName)
