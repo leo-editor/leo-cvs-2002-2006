@@ -25,6 +25,24 @@ handlers = {}
 loadedModules = {} # Keys are module names, values are modules.
 
 #@+others
+#@+node:ekr.20050102094729:callTagHandler
+def callTagHandler (handler,tag,keywords):
+    
+    if tag == 'idle':
+        # Make sure all commanders exist.
+        for key in ('c','old_c','new_c'):
+            c = keywords.get(key)
+            if c:
+                try:
+                    if c.frame not in g.app.windowList:
+                        return None # c has (or will be) destroyed.
+                except AttributeError:
+                    # c has been destroyed: c.frame ivar does not exist.
+                    return None
+
+    return handler(tag,keywords)
+#@nonl
+#@-node:ekr.20050102094729:callTagHandler
 #@+node:ekr.20041001161108:doPlugins
 def doPlugins(tag,keywords):
     if g.app.killed:
@@ -119,31 +137,29 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
 #@+node:ekr.20031218072017.3442:doHandlersForTag
 def doHandlersForTag (tag,keywords):
     
-    """Execute all handlers for a given tag, in alphabetical order"""
+    """Execute all handlers for a given tag, in alphabetical order.
+    
+    All exceptions are caught by the caller, doHook."""
 
     global handlers
-    
-    # g.trace(g.app.killed)
-    
+
     if g.app.killed:
         return None
 
     if handlers.has_key(tag):
         handle_fns = handlers[tag]
         handle_fns.sort()
-        for handle_fn in handle_fns:
-            ret = handle_fn(tag,keywords)
-            if ret is not None:
-                return ret
+        for handler in handle_fns:
+            return callTagHandler(handler,tag,keywords)
 
     if handlers.has_key("all"):
         handle_fns = handlers["all"]
         handle_fns.sort()
-        for handle_fn in handle_fns:
-            ret = handle_fn(tag,keywords)
-            if ret is not None:
-                return ret
+        for handler in handle_fns:
+            return callTagHandler(handler,tag,keywords)
+
     return None
+#@nonl
 #@-node:ekr.20031218072017.3442:doHandlersForTag
 #@+node:ekr.20041001160216:isLoaded
 def isLoaded (name):
