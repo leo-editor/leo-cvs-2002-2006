@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="11563" clone_windows="0"/>
 <globals body_outline_ratio="0.452928870293">
-	<global_window_position top="30" left="149" height="860" width="985"/>
+	<global_window_position top="30" left="149" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2017,7 +2017,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="TV"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414161647" a="E"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
 <v t="ekr.20040414163815"><vh>Table of Contents</vh>
 <v t="ekr.20040414163815.1"><vh>@rst</vh></v>
@@ -2041,8 +2041,8 @@
 <v t="ekr.20040414174439.1"><vh>@rst</vh></v>
 </v>
 </v>
-<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
-<v t="ekr.20040403183229"><vh>Overview</vh>
+<v t="ekr.20040403171740" a="E"><vh>@rst scripting.html</vh>
+<v t="ekr.20040403183229" a="E"><vh>Overview</vh>
 <v t="ekr.20040403183229.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403175011"><vh>g.top(): the commander of the top window</vh>
@@ -2104,24 +2104,24 @@
 <v t="ekr.20040403173920.25"><vh>Functions defined in leoGlobals.py</vh>
 <v t="ekr.20040403184306.3"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.5"><vh>Redirecting output from scripts</vh>
+<v t="ekr.20040403173920.5" a="E"><vh>Redirecting output from scripts</vh>
 <v t="ekr.20040403183718"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.26"><vh>Summary of the vnode and position classes</vh>
-<v t="ekr.20040403184306.4"><vh>@rst</vh>
+<v t="ekr.20040403173920.26" a="E"><vh>Summary of the vnode and position classes</vh>
+<v t="ekr.20040403184306.4" a="E"><vh>@rst</vh>
 <v t="ekr.20040411151245"><vh>Iterators</vh>
 <v t="ekr.20040411151245.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.27"><vh>Getters</vh>
 <v t="ekr.20040403192653"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.28"><vh>Setters</vh>
+<v t="ekr.20040403173920.28" a="E"><vh>Setters</vh>
 <v t="ekr.20040403192653.1"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20040906100201"><vh>Unit testing with @test and @suite</vh>
-<v t="ekr.20040906100201.1"><vh>@rst</vh></v>
+<v t="ekr.20040906100201" a="E"><vh>Unit testing with @test and @suite</vh>
+<v t="ekr.20040906100201.1" a="TV"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
@@ -14787,12 +14787,7 @@ Many commands use this bits for tree traversal, so these bits do not persist.
 
     c.clearAllVisited() # Clears all visited bits in c's tree.
     p.clearVisited()
-    p.setVisited()
-
------------------
-
-|prev| |leo| |next|
-</t>
+    p.setVisited()</t>
 <t tx="ekr.20040411074926">There is a trick that makes it very easy to develop Leo using Leo itself.  The trick is to create a workflow that separates editing from testing.
 
 Putting test code in LeoPy.leo would waste a lot of time.  To run tests you would have to exit Leo and reload LeoPy. A much quicker way is to put all test code in a test.leo file.  So to change and test code, do the following:
@@ -15291,7 +15286,6 @@ doesn't matter. I recommend putting lengthy shared code in leoTest.py.</t>
 <t tx="ekr.20040906100201"></t>
 <t tx="ekr.20040906100201.1">@ignore
 @wrap
-@nocolor
 
 New in 4.2:  Leo now makes it trivial to convert ordinary scripts to unit tests.  You put script for an individual unit test in a node whose headline starts with @test.  Similarly, nodes whose headlines start with @suite denote a script that when executed will create and run a suite of unit tests.  This is a big step forward.  See test.leo for complete examples.
 
@@ -15314,7 +15308,7 @@ The difference between @test and @suite is:
 - Leo creates a unit test from script in an @test node by creating an instance of generalTestCase, a subclass of unittest.TestCase.
 - The script in an @suite node creates the test suite.
 
-@suite nodes allow us to create "legacy" unit tests simply. For example, rather than rewriting all the reformatParagraph unit tests to use @test nodes, I simply wrote an @suite node with the following body.
+An @suite nodes allows us to create "legacy" unit tests simply. For example, rather than rewriting all the reformatParagraph unit tests to use @test nodes, I simply wrote an @suite node with the following body.
 
 .. code-block:: Python
 
@@ -15327,6 +15321,11 @@ Notes:
     
 - @test nodes dramatically simplifies the test code. There is no need for explicit unit testing classes and methods. Nor is there any need for setUp and tearDown methods; scripts can use try/finally instead.
 - leoTest.doTests performs its own kind of setUp/tearDown code. It ensures that the script being executed is the presently selected node. This makes it trivial for a test script to find its own data: the script can just look in a sibling or descendent node. There is hardly any need for testUtils.findNodeAnywhere. leoTest.doTests also saves and restores the "changed" state of test.leo.
-- Test scripts can't use @others if descendent nodes hold data. In practice this doesn't matter. I recommend putting lengthy shared code in leoTest.py.</t>
+- Test scripts can't use @others if descendent nodes hold data. In practice this doesn't matter. I recommend putting lengthy shared code in leoTest.py.
+
+-----------------
+
+|prev| |leo| |next|
+</t>
 </tnodes>
 </leo_file>
