@@ -1,18 +1,481 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3128" clone_windows="0"/>
-<globals body_outline_ratio="0.571120689655">
-	<global_window_position top="8" left="230" height="928" width="974"/>
+<globals body_outline_ratio="0.489224137931">
+	<global_window_position top="10" left="234" height="925" width="974"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences>
-</preferences>
-<find_panel_settings>
-	<find_string></find_string>
-	<change_string></change_string>
-</find_panel_settings>
+<preferences/>
+<find_panel_settings/>
 <vnodes>
 <v t="edream.110203113231"><vh>@thin pluginsNotes.txt</vh></v>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
+<v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
+<v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
+</v>
+<v t="ekr.20040919094459"><vh> PLEASE follow this style guide</vh>
+<v t="ekr.20041114102139"><vh>Notes</vh>
+<v t="ekr.20041114103913"><vh>About comments in the style guide</vh></v>
+<v t="ekr.20041114102139.1"><vh>About the root node</vh></v>
+<v t="ekr.20041114103913.1"><vh>About defining functions in separate nodes</vh></v>
+<v t="ekr.20041114102139.2"><vh>About the &lt;&lt; imports &gt;&gt; section</vh></v>
+<v t="ekr.20041114103913.2"><vh>About accessing commanders</vh></v>
+</v>
+<v t="ekr.20040919081244"><vh>@thin style_guide.py</vh></v>
+</v>
+<v t="edream.110203113231.667"><vh>Commands &amp; directives</vh>
+<v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
+<v t="edream.110203113231.669"><vh>@thin import_cisco_config.py</vh></v>
+<v t="edream.110203113231.677"><vh> Example of an imported config</vh>
+<v t="edream.110203113231.678"><vh>plain configuration</vh></v>
+<v t="edream.110203113231.679"><vh>cisco config: C:/Davide/Leo/CVS Version/example_conf.txt</vh>
+<v t="edream.110203113231.680"><vh>&lt;&lt;access-list&gt;&gt;</vh></v>
+<v t="edream.110203113231.681"><vh>&lt;&lt;boot&gt;&gt;</vh></v>
+<v t="edream.110203113231.682"><vh>&lt;&lt;controller&gt;&gt;</vh>
+<v t="edream.110203113231.683"><vh>controller E1 5/0/0</vh></v>
+<v t="edream.110203113231.684"><vh>controller E1 5/0/1</vh></v>
+<v t="edream.110203113231.685"><vh>controller SONET 1/0/0</vh></v>
+</v>
+<v t="edream.110203113231.686"><vh>&lt;&lt;interface&gt;&gt;</vh>
+<v t="edream.110203113231.687"><vh>interface Async1</vh></v>
+<v t="edream.110203113231.688"><vh>interface Dialer0</vh></v>
+<v t="edream.110203113231.689"><vh>interface FastEthernet0/0/0</vh></v>
+<v t="edream.110203113231.690"><vh>interface FastEthernet0/0/1</vh></v>
+<v t="edream.110203113231.691"><vh>interface FastEthernet0/0/1.1</vh></v>
+<v t="edream.110203113231.692"><vh>interface FastEthernet0/0/1.2</vh></v>
+<v t="edream.110203113231.693"><vh>interface FastEthernet0/0/1.3</vh></v>
+<v t="edream.110203113231.694"><vh>interface FastEthernet0/0/1.5</vh></v>
+<v t="edream.110203113231.695"><vh>interface FastEthernet0/0/1.50</vh></v>
+<v t="edream.110203113231.696"><vh>interface Loopback0</vh></v>
+<v t="edream.110203113231.697"><vh>interface POS4/1/0</vh></v>
+<v t="edream.110203113231.698"><vh>interface Serial5/0/0:1</vh></v>
+<v t="edream.110203113231.699"><vh>interface Serial5/0/0:2</vh></v>
+<v t="edream.110203113231.700"><vh>interface Serial5/0/1:0</vh></v>
+<v t="edream.110203113231.701"><vh>interface Serial5/1/0</vh></v>
+<v t="edream.110203113231.702"><vh>interface Serial5/1/1</vh></v>
+</v>
+<v t="edream.110203113231.703"><vh>&lt;&lt;ip community-list&gt;&gt;</vh></v>
+<v t="edream.110203113231.704"><vh>&lt;&lt;ip route&gt;&gt;</vh></v>
+<v t="edream.110203113231.705"><vh>&lt;&lt;line&gt;&gt;</vh>
+<v t="edream.110203113231.706"><vh>line aux 0</vh></v>
+<v t="edream.110203113231.707"><vh>line vty 0 4</vh></v>
+</v>
+<v t="edream.110203113231.708"><vh>&lt;&lt;logging&gt;&gt;</vh></v>
+<v t="edream.110203113231.709"><vh>&lt;&lt;ntp&gt;&gt;</vh></v>
+<v t="edream.110203113231.710"><vh>&lt;&lt;route-map&gt;&gt;</vh>
+<v t="edream.110203113231.711"><vh>route-map only permit 2</vh></v>
+<v t="edream.110203113231.712"><vh>route-map only1 permit 10</vh></v>
+<v t="edream.110203113231.713"><vh>route-map only3 permit 10</vh></v>
+<v t="edream.110203113231.714"><vh>route-map tag_com permit 10</vh></v>
+<v t="edream.110203113231.715"><vh>route-map tag_com permit 20</vh></v>
+</v>
+<v t="edream.110203113231.716"><vh>&lt;&lt;router&gt;&gt;</vh>
+<v t="edream.110203113231.717"><vh>router bgp 65001</vh></v>
+<v t="edream.110203113231.718"><vh>router ospf 1</vh></v>
+</v>
+<v t="edream.110203113231.719"><vh>&lt;&lt;service&gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.741"><vh>@thin add_directives.py</vh></v>
+<v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
+<v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
+<v t="edream.110203113231.727"><vh>@thin mod_timestamp.py</vh></v>
+<v t="edream.110203113231.720"><vh>@thin outline_export.py</vh></v>
+<v t="ekr.20041021120118"><vh>@thin pretty_print.py</vh></v>
+<v t="mork.20041022090036.1"><vh>@thin templates.py</vh></v>
+<v t="ekr.20041215103252"><vh>datenodes</vh>
+<v t="gfunch.20041207100416" a="E"><vh>@thin datenodes.py</vh></v>
+<v t="gfunch.20041209063345.1"><vh>@thin datenodes.ini</vh></v>
+</v>
+<v t="edream.110203113231.722"><vh>mod_autosave</vh>
+<v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
+<v t="edream.110203113231.724"><vh>@thin mod_autosave.py</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.729"><vh>Debugging &amp;  testing</vh>
+<v t="edream.110203113231.730"><vh>@thin dump_globals.py</vh></v>
+<v t="edream.110203113231.732"><vh>@thin enable_gc.py</vh></v>
+<v t="edream.110203113231.734"><vh>@thin quit_leo.py</vh></v>
+<v t="edream.110203113231.735"><vh>@thin trace_gc.py</vh></v>
+<v t="edream.110203113231.736"><vh>@thin trace_keys.py</vh></v>
+<v t="edream.110203113231.738"><vh>@thin trace_tags.py</vh></v>
+<v t="ekr.20040205071616"><vh>mnplugins.py</vh>
+<v t="ekr.20040205071616.1"><vh>mnstamp</vh></v>
+<v t="ekr.20040205071616.2"><vh>mnOKstamp</vh></v>
+<v t="ekr.20040205071616.3"><vh>onStart</vh></v>
+<v t="ekr.20040205071616.4"><vh>setHeadOK</vh></v>
+<v t="ekr.20040205071616.5"><vh>insertBodystamp</vh></v>
+<v t="ekr.20040205071616.6"><vh>is_subnodesOK</vh></v>
+<v t="ekr.20040205071616.7"><vh>onRclick</vh></v>
+<v t="ekr.20040205071616.8"><vh>insertOKcmd</vh></v>
+<v t="ekr.20040205071616.9"><vh>insertUser</vh></v>
+<v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
+</v>
+</v>
+<v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
+<v t="ekr.20041030092835"><vh>v138 highlights</vh></v>
+<v t="ekr.20041030091736.1"><vh> dyna plugins 138</vh>
+<v t="ekr.20041030091736.2"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
+<v t="ekr.20041030091736.3"><vh>@thin dyna_menu.py</vh></v>
+<v t="ekr.20041030091736.75"><vh>@thin exSButton.py</vh></v>
+<v t="ekr.20041030091736.79"><vh>@thin dynacommon.py</vh></v>
+<v t="ekr.20041030091736.105"><vh>@thin dyna.txt</vh></v>
+</v>
+</v>
+<v t="ekr.20040722135402.1"><vh>Enhancing the body pane</vh>
+<v t="EKR.20040517080517.1"><vh>@thin arrows.py</vh></v>
+<v t="edream.110203113231.753"><vh>@thin image.py</vh></v>
+<v t="ekr.20040422072343"><vh>@thin rClick.py</vh></v>
+<v t="EKR.20040605181725"><vh>Autocompleter</vh>
+<v t="EKR.20040605181725.1"><vh>Configuration</vh>
+<v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
+<v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
+</v>
+<v t="ekr.20041017043622"
+marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@thin autocompleter.py</vh></v>
+</v>
+<v t="edream.110403140857"><vh>color_markup.py (requires add-directives plugin)</vh>
+<v t="edream.110403140857.1"><vh>Plugin documentation</vh>
+<v t="edream.110403140857.2"><vh>Installation</vh></v>
+<v t="edream.110403140857.3"><vh>Use</vh>
+<v t="edream.110403140857.4"><vh>Supported markups</vh></v>
+<v t="edream.110403140857.5"><vh>Example</vh>
+<v t="edream.110403140857.6"><vh>a subnode</vh></v>
+</v>
+</v>
+<v t="edream.110403140857.7"><vh>Release notes</vh></v>
+</v>
+<v t="edream.110403140857.8"><vh>@thin color_markup.py</vh></v>
+</v>
+<v t="edream.110203113231.925"><vh>@thin script_io_to_body.py</vh></v>
+</v>
+<v t="ekr.20040722135402"><vh>Enhancing the icon and status areas</vh>
+<v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
+<v t="EKR.20040517075915" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.8,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.11,EKR.20040517075915.12,EKR.20040517075915.13"><vh>@file-noref newButtons.py</vh>
+<v t="EKR.20040517075915.1"><vh>Helper classes</vh>
+<v t="EKR.20040517075915.2"><vh>class FlatOptionMenu</vh></v>
+<v t="EKR.20040517075915.3"><vh>class Node</vh></v>
+<v t="EKR.20040517075915.4"><vh>class NodeAdder</vh></v>
+<v t="EKR.20040517075915.5"><vh>class Helper</vh></v>
+</v>
+<v t="EKR.20040517075915.6"><vh>Modifiable classes to add buttons</vh>
+<v t="EKR.20040517075915.7"><vh>body text used by AddTestModule &amp; AddTestClass</vh></v>
+<v t="EKR.20040517075915.8"><vh>class AddTestModule</vh></v>
+<v t="EKR.20040517075915.9"><vh>class AddTestClass</vh></v>
+<v t="EKR.20040517075915.10"><vh>class AddTestMethod</vh></v>
+<v t="EKR.20040517075915.11"><vh>class AddClass</vh></v>
+<v t="EKR.20040517075915.12"><vh>class AddClassMethod</vh></v>
+</v>
+<v t="EKR.20040517075915.13"><vh>main code</vh></v>
+</v>
+<v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
+<v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
+<v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
+<v t="ekr.20041002162608"><vh>Status Line</vh>
+<v t="ekr.20041002162608.1"><vh>Tk Notes</vh>
+<v t="ekr.20041002163806"><vh>*** How to use Tk bindtags</vh></v>
+<v t="ekr.20041002162608.2"><vh>Delay body display so alt+arrow keys aren't slowed (threaded colorizer?)</vh></v>
+<v t="ekr.20041002162608.6"><vh>How to detect changes in text</vh></v>
+</v>
+<v t="ekr.20041027065222"><vh>To do</vh></v>
+<v t="ekr.20040201060959"><vh>@thin status_line.py</vh></v>
+</v>
+</v>
+<v t="ekr.20040915073259"><vh>Enhancing windows</vh>
+<v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
+<v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
+<v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
+<v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
+<v t="ekr.20040915073637"><vh>@thin TabbedLog.py</vh></v>
+<v t="ekr.20040915075530"><vh>@thin UASearch.py</vh></v>
+<v t="ekr.20040831122004"><vh>@thin UniversalScrolling.py</vh></v>
+<v t="ekr.20040831115238"><vh>@thin URLloader.py</vh></v>
+</v>
+<v t="ekr.20040722141148"><vh>Example code</vh>
+<v t="edream.110203113231.916"><vh>@thin __overrideClasses.py</vh></v>
+<v t="edream.110203113231.919"><vh>@thin override_commands.py</vh></v>
+<v t="edream.110203113231.921"><vh>@thin redefine_put.py</vh></v>
+</v>
+<v t="ekr.20040722134535"><vh>Experimental/unfinished plugins</vh>
+<v t="ekr.20040722142445"><vh>@thin editAttributes.py</vh></v>
+<v t="ekr.20040916084945"><vh>@thin macros.py</vh></v>
+<v t="ekr.20040828122150"><vh>@thin pie_menus.py</vh></v>
+<v t="ekr.20040331153923"><vh>@thin scheduler.py</vh></v>
+<v t="EKR.20040517080250"><vh>http plugin</vh>
+<v t="EKR.20040517080250.49"><vh>@thin mod_http.ini</vh></v>
+<v t="EKR.20040517080250.1"><vh>@thin mod_http.py</vh></v>
+</v>
+<v t="ekr.20040331071919"><vh>Leo to AsciiDoc</vh>
+<v t="ekr.20040331071919.1"><vh>Leo 2 AsciiDoc Developers Guide</vh>
+<v t="ekr.20040331071919.2"><vh>About this document</vh>
+<v t="ekr.20040331071919.3"><vh>License</vh>
+<v t="ekr.20040331071919.4"><vh>License document</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.5"><vh>Version, Requirements</vh></v>
+<v t="ekr.20040331071919.6"><vh>The General Approach</vh>
+<v t="ekr.20040331071919.7"><vh>Markup Added</vh></v>
+</v>
+<v t="ekr.20040331071919.8"><vh>&lt;&lt; The Code &gt;&gt;</vh>
+<v t="ekr.20040331071919.9"><vh>&lt;&lt; Key Functions &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.10"><vh>&lt;&lt; Declarations and Utilities &gt;&gt;</vh>
+<v t="ekr.20040331071919.11"><vh>&lt;&lt; The Code -- Declarations and Utilities &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331071919.12"><vh>&lt;&lt; Write the outline tree as AsciiDoc file &gt;&gt;</vh>
+<v t="ekr.20040331071919.13"><vh>&lt;&lt; Write a node &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.14"><vh>Other programs</vh></v>
+<v t="ekr.20040331071919.15"><vh>&lt;&lt;Appendix: AsciiDoc &gt;&gt;</vh>
+<v t="ekr.20040331071919.16"><vh>&lt;&lt; Configuration file &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.17"><vh>&lt;&lt; Patches &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331071919.18"><vh>&lt;&lt;Appendix: DocBook&gt;&gt;</vh>
+<v t="ekr.20040331071919.19"><vh>&lt;&lt; Tool Chain &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.20"><vh>&lt;&lt; Make File &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.21"><vh>&lt;&lt; Style Sheets &gt;&gt;</vh>
+<v t="ekr.20040331071919.22"><vh>&lt;&lt; General &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.23"><vh>&lt;&lt; Customize &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.24"><vh>&lt;&lt; HTML: One File &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.25"><vh>&lt;&lt; HTML: Individual Pages &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.26"><vh>&lt;&lt; HTML: base css style sheet &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.27"><vh>&lt;&lt; HTML: css style sheet &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.28"><vh>&lt;&lt; HTML: common &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.29"><vh>&lt;&lt; PDF &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.30"><vh>&lt;&lt;Appendix: XEmacs Text Editor&gt;&gt;</vh>
+<v t="ekr.20040331071919.31"><vh>&lt;&lt; Open_With Plugin &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.32"><vh>&lt;&lt; Open_Tree Plugin &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.33"><vh>&lt;&lt; Filename modification &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.34"><vh>&lt;&lt; Kill Temporary Buffers &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.35"><vh>&lt;&lt; MMM-mode &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.36"><vh>&lt;&lt; Insert indexterm &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.37"><vh>&lt;&lt; Indent Leo comments &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.38"><vh>Leo 2 AsciiDoc Users Guide</vh>
+<v t="ekr.20040331071919.2"><vh>About this document</vh>
+<v t="ekr.20040331071919.3"><vh>License</vh>
+<v t="ekr.20040331071919.4"><vh>License document</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.39"><vh>Installation</vh></v>
+<v t="ekr.20040331071919.40"><vh>Operation</vh>
+<v t="ekr.20040331071919.41"><vh>Directives</vh>
+<v t="ekr.20040331071919.42"><vh>Configuration</vh></v>
+</v>
+<v t="ekr.20040331071919.43"><vh>Markup</vh>
+<v t="ekr.20040331071919.44"><vh>Standard AsciiDoc Markup</vh>
+<v t="ekr.20040331071919.45"><vh>Headings</vh></v>
+<v t="ekr.20040331071919.46"><vh>Lists</vh></v>
+<v t="ekr.20040331071919.47"><vh>URLs</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="EKR.20040609091913"><vh>Plugin generalizing marks (mulder)</vh>
+<v t="EKR.20040609091913.1"><vh>@url http://home.pacbell.net/bwmulder/python/Leo/mod_label.leo</vh></v>
+<v t="EKR.20040609091913.2"><vh>Crash</vh></v>
+</v>
+<v t="ekr.20040717133342"><vh>Shadow files plugin</vh></v>
+<v t="edream.110203113231.233"><vh>wxPython plugin (pre-alpha quality)</vh>
+<v t="edream.110203113231.234"><vh> Diary</vh>
+<v t="edream.111503110300"><vh>11/15/03  Leo becomes usuable (!)</vh></v>
+<v t="edream.111403093253"><vh>11/13 &amp; 11/14</vh></v>
+<v t="edream.110203113231.235"><vh>10/26 Code works with reorganized core</vh></v>
+<v t="edream.110203113231.236"><vh>10/13/03: Added icons (Windows only)</vh></v>
+<v t="edream.110203113231.237"><vh>10/12/03: Houston, we have ignition</vh></v>
+<v t="edream.110203113231.238"><vh>10/11/03: converted code using c2py, then hand converted code</vh></v>
+</v>
+<v t="edream.111403093253.1"><vh>Projects</vh>
+<v t="edream.110203113231.243"><vh>invoke c2py</vh></v>
+<v t="edream.111503111146"><vh>Finished or mostly finished</vh>
+<v t="edream.111303205442"><vh>(colorizing) (demo only)</vh>
+<v t="edream.111303204025"><vh>Indices</vh>
+<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
+<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
+<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
+<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
+<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
+<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
+</v>
+<v t="edream.111303204517"><vh>Color tags (hacks for styles)</vh>
+<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
+<v t="edream.111303205611"><vh>tag_add</vh></v>
+<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
+<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
+<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
+<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.111503111350"><vh>Unfinished</vh>
+<v t="edream.111303184347"><vh>(delete_range) doesn't work</vh>
+<v t="edream.111303103141.3"><vh>delete_range</vh></v>
+</v>
+<v t="edream.111303100039"><vh>Gui-dependent commands (to do)</vh>
+<v t="edream.111303100039.1"><vh>Edit Menu...</vh>
+<v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
+<v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
+<v t="edream.111303100039.6"><vh>insertHeadlineTime</vh></v>
+</v>
+<v t="edream.111303100039.7"><vh>Window Menu</vh>
+<v t="edream.111303100039.8"><vh>cascade</vh></v>
+<v t="edream.111303100039.9"><vh>equalSizedPanes</vh></v>
+<v t="edream.111303100039.10"><vh>hideLogWindow</vh></v>
+<v t="edream.111303100039.11"><vh>minimizeAll</vh></v>
+<v t="edream.111303101709"><vh>toggleActivePane</vh></v>
+<v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
+</v>
+<v t="edream.111703103908"><vh>Help Menu...</vh>
+<v t="edream.111703103908.2"><vh>leoHelp</vh>
+<v t="edream.111703103908.3"><vh>showProgressBar</vh>
+<v t="edream.111703103908.4"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.242"><vh>Unused code</vh>
+<v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
+<v t="edream.111303202917.1"><vh>Syntax coloring REMOVED: now in base body class</vh></v>
+</v>
+<v t="edream.110203113231.302"><vh>@thin __wx_gui.py</vh></v>
+</v>
+</v>
+<v t="EKR.20040517075715"><vh>External editors &amp; Open With</vh>
+<v t="EKR.20040517075715.1"><vh>@thin mod_tempfname.py</vh></v>
+<v t="EKR.20040517080049.4"><vh>@thin open_shell.py</vh></v>
+<v t="EKR.20040517075715.4"><vh>@thin open_with.py</vh></v>
+<v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
+<v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
+<v t="EKR.20040517075715.13"><vh>Word export</vh>
+<v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
+<v t="EKR.20040517075715.20" tnodeList="EKR.20040517075715.20"><vh>@file-nosent word_export.ini</vh></v>
+</v>
+</v>
+<v t="EKR.20040517080049"><vh>Files</vh>
+<v t="EKR.20040517080049.1"><vh>@thin empty_leo_file.py</vh></v>
+<v t="ekr.20040419105219"><vh>@thin lineNumbers.py</vh></v>
+<v t="ekr.20040331151007"><vh>@thin niceNosent.py</vh></v>
+</v>
+<v t="EKR.20040517080555"><vh>Menus &amp; translations</vh>
+<v t="ekr.20041019072632"><vh>Chinese:  Must use @file due to problems with cvs</vh>
+<v t="ekr.20040828105233" tnodeList="ekr.20040828105233,ekr.20040828105233.1,ekr.20040828105233.2,ekr.20040828105233.3,ekr.20040828105233.4,ekr.20040828105233.5,ekr.20040828105233.6,ekr.20040828105233.7"><vh>@file chinese_menu.py</vh>
+<v t="ekr.20040828105233.1"><vh>onMenu</vh>
+<v t="ekr.20040828105233.2"><vh>file menu</vh></v>
+<v t="ekr.20040828105233.3"><vh>edit menu</vh></v>
+<v t="ekr.20040828105233.4"><vh>outline menu</vh></v>
+<v t="ekr.20040828105233.5"><vh>plugins menu</vh></v>
+<v t="ekr.20040828105233.6"><vh>window menu</vh></v>
+<v t="ekr.20040828105233.7"><vh>help menu</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040517080202.3"><vh>@thin french_fm.py</vh></v>
+<v t="EKR.20040517080555.36"><vh>@thin scripts_menu.py</vh></v>
+</v>
+<v t="edream.110203113231.872"><vh>New kinds of nodes</vh>
+<v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
+<v t="edream.110203113231.873"><vh>@thin at_folder.py</vh></v>
+<v t="edream.110203113231.876"><vh>@thin read_only_nodes.py</vh></v>
+<v t="edream.111803100242"><vh>@thin rst.py</vh></v>
+<v t="ekr.20040828103325"><vh>@thin startfile.py</vh></v>
+<v t="ekr.20040408161258"><vh>rst2 plugin</vh>
+<v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
+<v t="ekr.20040408192158.1"><vh>@rst ../doc/rstplugin.html</vh>
+<v t="ekr.20040408192158.2"><vh>Overview</vh>
+<v t="ekr.20040408192158.3"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040408192158.4"><vh>Formatting</vh>
+<v t="ekr.20040408192158.5"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040409051841"><vh>Embedding documentation in @file trees</vh>
+<v t="ekr.20040409051841.1"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040408192158.6"><vh>The code-block directive</vh>
+<v t="ekr.20040408192158.7"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040408192158.8"><vh>Cascading style sheets</vh>
+<v t="ekr.20040408192158.9"><vh>@rst</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
+</v>
+<v t="ekr.20040915085351"><vh>@thin at_produce.py</vh></v>
+</v>
+<v t="ekr.20041009112303"><vh>Plugins manager &amp; menu</vh>
+<v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
+<v t="EKR.20040517080555.2"><vh>@thin plugins_menu.py</vh></v>
+<v t="EKR.20040517080555.25"><vh>@thin pluginsTest.py</vh></v>
+<v t="EKR.20040517080555.32"><vh>Notes re plugins menu</vh>
+<v t="EKR.20040517080555.33"><vh> Changes made by E.K.Ream</vh></v>
+<v t="EKR.20040517080555.34"><vh> Design</vh></v>
+<v t="EKR.20040517080555.35"><vh> Initial suggestion from Paul Paterson</vh></v>
+</v>
+</v>
+<v t="pap.20041006184225"><vh>@thin plugin_manager.py</vh></v>
+</v>
+<v t="ekr.20041001210557"><vh>Scripting</vh>
+<v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
+</v>
+<v t="edream.110203113231.930"><vh>Spell Checking</vh>
+<v t="ekr.20040809165421"><vh>Read me or suffer</vh></v>
+<v t="edream.110203113231.932"><vh>@thin mod_spelling.ini</vh></v>
+<v t="ekr.20041009165858" a="E"><vh>@thin spellpyx.ini</vh></v>
+<v t="edream.110203113231.933"
+expanded="edream.110203113231.938,edream.110203113231.939,"><vh>@thin mod_spelling.py</vh></v>
+<v t="ekr.20040809151600"><vh>spellpyx</vh>
+<v t="ekr.20040809165421.1"><vh>Installing this plugin</vh></v>
+<v t="ekr.20040809151600.4"><vh>Notes: e</vh></v>
+<v t="ekr.20040809151600.1"
+expanded="ekr.20040809151600.10,ekr.20040809151600.11,"><vh>@thin spellpyx.py</vh></v>
+<v t="ekr.20040809151600.52"><vh>aspell-1.1</vh>
+<v t="ekr.20040809160744"><vh>Notes: e</vh></v>
+<v t="ekr.20040809161108"><vh>Notes: Gary Bishop</vh></v>
+<v t="ekr.20040809151600.53"><vh>@ file aspell.pyx</vh>
+<v t="ekr.20040809160744.1"><vh>spell_checker.__init__</vh></v>
+<v t="ekr.20040809160744.2"><vh>check</vh></v>
+<v t="ekr.20040809160744.3"><vh>suggest</vh></v>
+<v t="ekr.20040809160744.4"><vh>store_replacement</vh></v>
+<v t="ekr.20040809160744.5"><vh>add_to_session</vh></v>
+<v t="ekr.20040809160744.6"><vh>add_to_personal</vh></v>
+</v>
+<v t="ekr.20040809151600.54"><vh>@ file setup.py</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040809110900"><vh>Tested (All these work in 4.2)</vh></v>
+</v>
+<v t="ekr.20041211035618"><vh>Scripts &amp; script buttons</vh>
+<v t="ekr.20041103052443"><vh>Script to find and replace all functions in leoGlobals.py</vh>
+<v t="ekr.20041103052443.1"><vh>findFunctionsInTree</vh></v>
+<v t="ekr.20041103052443.2"><vh>findDefs</vh></v>
+<v t="ekr.20041103052443.3"><vh>prependNamesInTree</vh>
+<v t="ekr.20041103052443.4"><vh>&lt;&lt; look for name followed by '(' &gt;&gt;</vh></v>
+<v t="ekr.20041103052443.5"><vh>&lt;&lt; print before and after &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041103052443.6"><vh>&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041113110210"><vh>@button spellpyx</vh></v>
+</v>
+<v t="ekr.20040929104807" a="TV"><vh>4.3  plugins (in progress)</vh>
+<v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
+<v t="bwmulder.20041017125718"><vh>@thin mod_shadow.py</vh></v>
+<v t="rogererens.20041013082304"><vh>@thin UNL.py</vh></v>
+<v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
+<v t="ekr.20041110104350"><vh>table plugin: requires tktable</vh>
+<v t="ekr.20041017035937"><vh>@thin table.py</vh></v>
+</v>
+<v t="ekr.20041107165824"><vh>temacs &amp; usetemacs</vh>
+<v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
+<v t="mork.20041030164547"><vh>@thin temacs.py</vh></v>
+</v>
 <v t="ekr.20040918165427"><vh>To do in 4.3</vh>
 <v t="ekr.20040918165144"><vh>4.3 Prototypes as plugins</vh>
 <v t="EKR.20040611044600"><vh>Mulder undo</vh>
@@ -182,7 +645,6 @@
 <v t="bwmulder.20040602230426"><vh>test_main</vh></v>
 </v>
 </v>
-<v t="ekr.20040918165144.1"><vh>Draw config dialog</vh></v>
 <v t="ekr.20040918165144.2"><vh>Parse jEdit description files</vh></v>
 <v t="ekr.20040918165144.3"><vh>Convert to Python indices</vh></v>
 <v t="ekr.20040918165144.4"><vh>Convert to new Undo</vh></v>
@@ -195,483 +657,8 @@
 </v>
 <v t="ekr.20040918165427.4"><vh>Autocompletion dictionary files</vh></v>
 <v t="ekr.20040918165427.5"><vh>Leo to docbook xml plugin: Leo2AsciiDoc</vh></v>
-<v t="ekr.20040918165427.6"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
+<v t="ekr.20040918165427.6" a="E"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins</vh>
-<v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
-<v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
-</v>
-<v t="ekr.20040919094459"><vh> PLEASE follow this style guide</vh>
-<v t="ekr.20040919081244"><vh>@thin style_guide.py</vh></v>
-</v>
-<v t="edream.110203113231.667"><vh>Commands &amp; directives</vh>
-<v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
-<v t="edream.110203113231.669"><vh>@thin import_cisco_config.py</vh></v>
-<v t="edream.110203113231.677"><vh> Example of an imported config</vh>
-<v t="edream.110203113231.678"><vh>plain configuration</vh></v>
-<v t="edream.110203113231.679"><vh>cisco config: C:/Davide/Leo/CVS Version/example_conf.txt</vh>
-<v t="edream.110203113231.680"><vh>&lt;&lt;access-list&gt;&gt;</vh></v>
-<v t="edream.110203113231.681"><vh>&lt;&lt;boot&gt;&gt;</vh></v>
-<v t="edream.110203113231.682"><vh>&lt;&lt;controller&gt;&gt;</vh>
-<v t="edream.110203113231.683"><vh>controller E1 5/0/0</vh></v>
-<v t="edream.110203113231.684"><vh>controller E1 5/0/1</vh></v>
-<v t="edream.110203113231.685"><vh>controller SONET 1/0/0</vh></v>
-</v>
-<v t="edream.110203113231.686"><vh>&lt;&lt;interface&gt;&gt;</vh>
-<v t="edream.110203113231.687"><vh>interface Async1</vh></v>
-<v t="edream.110203113231.688"><vh>interface Dialer0</vh></v>
-<v t="edream.110203113231.689"><vh>interface FastEthernet0/0/0</vh></v>
-<v t="edream.110203113231.690"><vh>interface FastEthernet0/0/1</vh></v>
-<v t="edream.110203113231.691"><vh>interface FastEthernet0/0/1.1</vh></v>
-<v t="edream.110203113231.692"><vh>interface FastEthernet0/0/1.2</vh></v>
-<v t="edream.110203113231.693"><vh>interface FastEthernet0/0/1.3</vh></v>
-<v t="edream.110203113231.694"><vh>interface FastEthernet0/0/1.5</vh></v>
-<v t="edream.110203113231.695"><vh>interface FastEthernet0/0/1.50</vh></v>
-<v t="edream.110203113231.696"><vh>interface Loopback0</vh></v>
-<v t="edream.110203113231.697"><vh>interface POS4/1/0</vh></v>
-<v t="edream.110203113231.698"><vh>interface Serial5/0/0:1</vh></v>
-<v t="edream.110203113231.699"><vh>interface Serial5/0/0:2</vh></v>
-<v t="edream.110203113231.700"><vh>interface Serial5/0/1:0</vh></v>
-<v t="edream.110203113231.701"><vh>interface Serial5/1/0</vh></v>
-<v t="edream.110203113231.702"><vh>interface Serial5/1/1</vh></v>
-</v>
-<v t="edream.110203113231.703"><vh>&lt;&lt;ip community-list&gt;&gt;</vh></v>
-<v t="edream.110203113231.704"><vh>&lt;&lt;ip route&gt;&gt;</vh></v>
-<v t="edream.110203113231.705"><vh>&lt;&lt;line&gt;&gt;</vh>
-<v t="edream.110203113231.706"><vh>line aux 0</vh></v>
-<v t="edream.110203113231.707"><vh>line vty 0 4</vh></v>
-</v>
-<v t="edream.110203113231.708"><vh>&lt;&lt;logging&gt;&gt;</vh></v>
-<v t="edream.110203113231.709"><vh>&lt;&lt;ntp&gt;&gt;</vh></v>
-<v t="edream.110203113231.710"><vh>&lt;&lt;route-map&gt;&gt;</vh>
-<v t="edream.110203113231.711"><vh>route-map only permit 2</vh></v>
-<v t="edream.110203113231.712"><vh>route-map only1 permit 10</vh></v>
-<v t="edream.110203113231.713"><vh>route-map only3 permit 10</vh></v>
-<v t="edream.110203113231.714"><vh>route-map tag_com permit 10</vh></v>
-<v t="edream.110203113231.715"><vh>route-map tag_com permit 20</vh></v>
-</v>
-<v t="edream.110203113231.716"><vh>&lt;&lt;router&gt;&gt;</vh>
-<v t="edream.110203113231.717"><vh>router bgp 65001</vh></v>
-<v t="edream.110203113231.718"><vh>router ospf 1</vh></v>
-</v>
-<v t="edream.110203113231.719"><vh>&lt;&lt;service&gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.741"><vh>@thin add_directives.py</vh></v>
-<v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
-<v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
-<v t="edream.110203113231.727"><vh>@thin mod_timestamp.py</vh></v>
-<v t="edream.110203113231.720"><vh>@thin outline_export.py</vh></v>
-<v t="ekr.20041021120118"><vh>@thin pretty_print.py</vh></v>
-<v t="mork.20041022090036.1"
-expanded="ekr.20041109175757,ekr.20041109165734,"><vh>@thin templates.py</vh></v>
-<v t="edream.110203113231.722"><vh>mod_autosave</vh>
-<v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
-<v t="edream.110203113231.724"><vh>@thin mod_autosave.py</vh></v>
-</v>
-</v>
-<v t="edream.110203113231.729"><vh>Debugging &amp;  testing</vh>
-<v t="edream.110203113231.730"><vh>@thin dump_globals.py</vh></v>
-<v t="edream.110203113231.732"><vh>@thin enable_gc.py</vh></v>
-<v t="edream.110203113231.734"><vh>@thin quit_leo.py</vh></v>
-<v t="edream.110203113231.735"><vh>@thin trace_gc.py</vh></v>
-<v t="edream.110203113231.736"><vh>@thin trace_keys.py</vh></v>
-<v t="edream.110203113231.738"><vh>@thin trace_tags.py</vh></v>
-<v t="ekr.20040205071616"><vh>mnplugins.py</vh>
-<v t="ekr.20040205071616.1"><vh>mnstamp</vh></v>
-<v t="ekr.20040205071616.2"><vh>mnOKstamp</vh></v>
-<v t="ekr.20040205071616.3"><vh>onStart</vh></v>
-<v t="ekr.20040205071616.4"><vh>setHeadOK</vh></v>
-<v t="ekr.20040205071616.5"><vh>insertBodystamp</vh></v>
-<v t="ekr.20040205071616.6"><vh>is_subnodesOK</vh></v>
-<v t="ekr.20040205071616.7"><vh>onRclick</vh></v>
-<v t="ekr.20040205071616.8"><vh>insertOKcmd</vh></v>
-<v t="ekr.20040205071616.9"><vh>insertUser</vh></v>
-<v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
-</v>
-</v>
-<v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
-<v t="ekr.20041030092835"><vh>v138 highlights</vh></v>
-<v t="ekr.20041030091736.1"><vh> dyna plugins 138</vh>
-<v t="ekr.20041030091736.2"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
-<v t="ekr.20041030091736.3"><vh>@thin dyna_menu.py</vh></v>
-<v t="ekr.20041030091736.75"><vh>@thin exSButton.py</vh></v>
-<v t="ekr.20041030091736.79"><vh>@thin dynacommon.py</vh></v>
-<v t="ekr.20041030091736.105"><vh>@thin dyna.txt</vh></v>
-</v>
-</v>
-<v t="ekr.20040722135402.1"><vh>Enhancing the body pane</vh>
-<v t="EKR.20040517080517.1"><vh>@thin arrows.py</vh></v>
-<v t="edream.110203113231.753"><vh>@thin image.py</vh></v>
-<v t="ekr.20040422072343"><vh>@thin rClick.py</vh></v>
-<v t="EKR.20040605181725"><vh>Autocompleter</vh>
-<v t="EKR.20040605181725.1"><vh>Configuration</vh>
-<v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
-<v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
-</v>
-<v t="ekr.20041017043622"
-marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@thin autocompleter.py</vh></v>
-</v>
-<v t="edream.110403140857"><vh>color_markup.py (requires add-directives plugin)</vh>
-<v t="edream.110403140857.1"><vh>Plugin documentation</vh>
-<v t="edream.110403140857.2"><vh>Installation</vh></v>
-<v t="edream.110403140857.3"><vh>Use</vh>
-<v t="edream.110403140857.4"><vh>Supported markups</vh></v>
-<v t="edream.110403140857.5"><vh>Example</vh>
-<v t="edream.110403140857.6"><vh>a subnode</vh></v>
-</v>
-</v>
-<v t="edream.110403140857.7"><vh>Release notes</vh></v>
-</v>
-<v t="edream.110403140857.8"><vh>@thin color_markup.py</vh></v>
-</v>
-<v t="edream.110203113231.925"><vh>@thin script_io_to_body.py</vh></v>
-</v>
-<v t="ekr.20040722135402"><vh>Enhancing the icon and status areas</vh>
-<v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
-<v t="EKR.20040517075915" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.8,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.11,EKR.20040517075915.12,EKR.20040517075915.13"><vh>@file-noref newButtons.py</vh>
-<v t="EKR.20040517075915.1"><vh>Helper classes</vh>
-<v t="EKR.20040517075915.2"><vh>class FlatOptionMenu</vh></v>
-<v t="EKR.20040517075915.3"><vh>class Node</vh></v>
-<v t="EKR.20040517075915.4"><vh>class NodeAdder</vh></v>
-<v t="EKR.20040517075915.5"><vh>class Helper</vh></v>
-</v>
-<v t="EKR.20040517075915.6"><vh>Modifiable classes to add buttons</vh>
-<v t="EKR.20040517075915.7"><vh>body text used by AddTestModule &amp; AddTestClass</vh></v>
-<v t="EKR.20040517075915.8"><vh>class AddTestModule</vh></v>
-<v t="EKR.20040517075915.9"><vh>class AddTestClass</vh></v>
-<v t="EKR.20040517075915.10"><vh>class AddTestMethod</vh></v>
-<v t="EKR.20040517075915.11"><vh>class AddClass</vh></v>
-<v t="EKR.20040517075915.12"><vh>class AddClassMethod</vh></v>
-</v>
-<v t="EKR.20040517075915.13"><vh>main code</vh></v>
-</v>
-<v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
-<v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
-<v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
-<v t="ekr.20041002162608"><vh>Status Line</vh>
-<v t="ekr.20041002162608.1"><vh>Tk Notes</vh>
-<v t="ekr.20041002163806"><vh>*** How to use Tk bindtags</vh></v>
-<v t="ekr.20041002162608.2"><vh>Delay body display so alt+arrow keys aren't slowed (threaded colorizer?)</vh></v>
-<v t="ekr.20041002162608.6"><vh>How to detect changes in text</vh></v>
-</v>
-<v t="ekr.20041027065222"><vh>To do</vh></v>
-<v t="ekr.20040201060959"><vh>@thin status_line.py</vh></v>
-</v>
-</v>
-<v t="ekr.20040915073259"><vh>Enhancing windows</vh>
-<v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
-<v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
-<v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
-<v t="ekr.20040915073637"><vh>@thin TabbedLog.py</vh></v>
-<v t="ekr.20040915075530"><vh>@thin UASearch.py</vh></v>
-<v t="ekr.20040831122004"><vh>@thin UniversalScrolling.py</vh></v>
-<v t="ekr.20040831115238"><vh>@thin URLloader.py</vh></v>
-</v>
-<v t="ekr.20040722141148"><vh>Example code</vh>
-<v t="ekr.20040919081244"><vh>@thin style_guide.py</vh></v>
-<v t="edream.110203113231.916"><vh>@thin __overrideClasses.py</vh></v>
-<v t="edream.110203113231.919"><vh>@thin override_commands.py</vh></v>
-<v t="edream.110203113231.921"><vh>@thin redefine_put.py</vh></v>
-</v>
-<v t="ekr.20040722134535"><vh>Experimental/unfinished plugins</vh>
-<v t="EKR.20040609213754"><vh>@thin Configurator.py</vh></v>
-<v t="ekr.20040722142445"><vh>@thin editAttributes.py</vh></v>
-<v t="ekr.20040916084945"><vh>@thin macros.py</vh></v>
-<v t="ekr.20040828122150"><vh>@thin pie_menus.py</vh></v>
-<v t="ekr.20040331153923"><vh>@thin scheduler.py</vh></v>
-<v t="EKR.20040517080250"><vh>http plugin</vh>
-<v t="EKR.20040517080250.49"><vh>@thin mod_http.ini</vh></v>
-<v t="EKR.20040517080250.1"><vh>@thin mod_http.py</vh></v>
-</v>
-<v t="ekr.20040331071919"><vh>Leo to AsciiDoc</vh>
-<v t="ekr.20040331071919.1"><vh>Leo 2 AsciiDoc Developers Guide</vh>
-<v t="ekr.20040331071919.2"><vh>About this document</vh>
-<v t="ekr.20040331071919.3"><vh>License</vh>
-<v t="ekr.20040331071919.4"><vh>License document</vh></v>
-</v>
-</v>
-<v t="ekr.20040331071919.5"><vh>Version, Requirements</vh></v>
-<v t="ekr.20040331071919.6"><vh>The General Approach</vh>
-<v t="ekr.20040331071919.7"><vh>Markup Added</vh></v>
-</v>
-<v t="ekr.20040331071919.8"><vh>&lt;&lt; The Code &gt;&gt;</vh>
-<v t="ekr.20040331071919.9"><vh>&lt;&lt; Key Functions &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.10"><vh>&lt;&lt; Declarations and Utilities &gt;&gt;</vh>
-<v t="ekr.20040331071919.11"><vh>&lt;&lt; The Code -- Declarations and Utilities &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040331071919.12"><vh>&lt;&lt; Write the outline tree as AsciiDoc file &gt;&gt;</vh>
-<v t="ekr.20040331071919.13"><vh>&lt;&lt; Write a node &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040331071919.14"><vh>Other programs</vh></v>
-<v t="ekr.20040331071919.15"><vh>&lt;&lt;Appendix: AsciiDoc &gt;&gt;</vh>
-<v t="ekr.20040331071919.16"><vh>&lt;&lt; Configuration file &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.17"><vh>&lt;&lt; Patches &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040331071919.18"><vh>&lt;&lt;Appendix: DocBook&gt;&gt;</vh>
-<v t="ekr.20040331071919.19"><vh>&lt;&lt; Tool Chain &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.20"><vh>&lt;&lt; Make File &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.21"><vh>&lt;&lt; Style Sheets &gt;&gt;</vh>
-<v t="ekr.20040331071919.22"><vh>&lt;&lt; General &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.23"><vh>&lt;&lt; Customize &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.24"><vh>&lt;&lt; HTML: One File &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.25"><vh>&lt;&lt; HTML: Individual Pages &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.26"><vh>&lt;&lt; HTML: base css style sheet &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.27"><vh>&lt;&lt; HTML: css style sheet &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.28"><vh>&lt;&lt; HTML: common &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.29"><vh>&lt;&lt; PDF &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040331071919.30"><vh>&lt;&lt;Appendix: XEmacs Text Editor&gt;&gt;</vh>
-<v t="ekr.20040331071919.31"><vh>&lt;&lt; Open_With Plugin &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.32"><vh>&lt;&lt; Open_Tree Plugin &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.33"><vh>&lt;&lt; Filename modification &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.34"><vh>&lt;&lt; Kill Temporary Buffers &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.35"><vh>&lt;&lt; MMM-mode &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.36"><vh>&lt;&lt; Insert indexterm &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.37"><vh>&lt;&lt; Indent Leo comments &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040331071919.38"><vh>Leo 2 AsciiDoc Users Guide</vh>
-<v t="ekr.20040331071919.2"><vh>About this document</vh>
-<v t="ekr.20040331071919.3"><vh>License</vh>
-<v t="ekr.20040331071919.4"><vh>License document</vh></v>
-</v>
-</v>
-<v t="ekr.20040331071919.39"><vh>Installation</vh></v>
-<v t="ekr.20040331071919.40"><vh>Operation</vh>
-<v t="ekr.20040331071919.41"><vh>Directives</vh>
-<v t="ekr.20040331071919.42"><vh>Configuration</vh></v>
-</v>
-<v t="ekr.20040331071919.43"><vh>Markup</vh>
-<v t="ekr.20040331071919.44"><vh>Standard AsciiDoc Markup</vh>
-<v t="ekr.20040331071919.45"><vh>Headings</vh></v>
-<v t="ekr.20040331071919.46"><vh>Lists</vh></v>
-<v t="ekr.20040331071919.47"><vh>URLs</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="EKR.20040609091913"><vh>Plugin generalizing marks (mulder)</vh>
-<v t="EKR.20040609091913.1"><vh>@url http://home.pacbell.net/bwmulder/python/Leo/mod_label.leo</vh></v>
-<v t="EKR.20040609091913.2"><vh>Crash</vh></v>
-</v>
-<v t="edream.110203113231.982"><vh>Plugin manager (demo)</vh>
-<v t="edream.110203113231.984"><vh>@thin leopm_client.py</vh></v>
-<v t="edream.110203113231.994"><vh>@thin leopm_server.py</vh></v>
-<v t="edream.110203113231.983"><vh>Notes by Paul Paterson</vh></v>
-</v>
-<v t="ekr.20040717133342"><vh>Shadow files plugin</vh></v>
-<v t="edream.110203113231.233"><vh>wxPython plugin (pre-alpha quality)</vh>
-<v t="edream.110203113231.234"><vh> Diary</vh>
-<v t="edream.111503110300"><vh>11/15/03  Leo becomes usuable (!)</vh></v>
-<v t="edream.111403093253"><vh>11/13 &amp; 11/14</vh></v>
-<v t="edream.110203113231.235"><vh>10/26 Code works with reorganized core</vh></v>
-<v t="edream.110203113231.236"><vh>10/13/03: Added icons (Windows only)</vh></v>
-<v t="edream.110203113231.237"><vh>10/12/03: Houston, we have ignition</vh></v>
-<v t="edream.110203113231.238"><vh>10/11/03: converted code using c2py, then hand converted code</vh></v>
-</v>
-<v t="edream.111403093253.1"><vh>Projects</vh>
-<v t="edream.110203113231.243"><vh>invoke c2py</vh></v>
-<v t="edream.111503111146"><vh>Finished or mostly finished</vh>
-<v t="edream.111303205442"><vh>(colorizing) (demo only)</vh>
-<v t="edream.111303204025"><vh>Indices</vh>
-<v t="edream.111303204025.1"><vh>adjustIndex</vh></v>
-<v t="edream.111303204025.2"><vh>compareIndices</vh></v>
-<v t="edream.111303204025.3"><vh>convertRowColumnToIndex</vh></v>
-<v t="edream.111303204025.4"><vh>convertIndexToRowColumn</vh></v>
-<v t="edream.111303204025.5"><vh>getImageIndex</vh></v>
-<v t="edream.111403080609"><vh>maxWxIndex (internal use)</vh></v>
-</v>
-<v t="edream.111303204517"><vh>Color tags (hacks for styles)</vh>
-<v t="edream.111403082513"><vh>tkColorToWxColor (internal use)</vh></v>
-<v t="edream.111303205611"><vh>tag_add</vh></v>
-<v t="edream.111303205611.1"><vh>tag_bind</vh></v>
-<v t="edream.111303205611.2"><vh>tag_configure (hack for wxStyles)</vh></v>
-<v t="edream.111303205611.3"><vh>tag_delete</vh></v>
-<v t="edream.111303205611.4"><vh>tag_remove</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.111503111350"><vh>Unfinished</vh>
-<v t="edream.111303184347"><vh>(delete_range) doesn't work</vh>
-<v t="edream.111303103141.3"><vh>delete_range</vh></v>
-</v>
-<v t="edream.111303100039"><vh>Gui-dependent commands (to do)</vh>
-<v t="edream.111303100039.1"><vh>Edit Menu...</vh>
-<v t="edream.111303101257"><vh>abortEditLabelCommand</vh></v>
-<v t="edream.111303101257.1"><vh>endEditLabelCommand</vh></v>
-<v t="edream.111303100039.6"><vh>insertHeadlineTime</vh></v>
-</v>
-<v t="edream.111303100039.7"><vh>Window Menu</vh>
-<v t="edream.111303100039.8"><vh>cascade</vh></v>
-<v t="edream.111303100039.9"><vh>equalSizedPanes</vh></v>
-<v t="edream.111303100039.10"><vh>hideLogWindow</vh></v>
-<v t="edream.111303100039.11"><vh>minimizeAll</vh></v>
-<v t="edream.111303101709"><vh>toggleActivePane</vh></v>
-<v t="edream.111303100039.12"><vh>toggleSplitDirection</vh></v>
-</v>
-<v t="edream.111703103908"><vh>Help Menu...</vh>
-<v t="edream.111703103908.2"><vh>leoHelp</vh>
-<v t="edream.111703103908.3"><vh>showProgressBar</vh>
-<v t="edream.111703103908.4"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="edream.110203113231.242"><vh>Unused code</vh>
-<v t="edream.110203113231.257"><vh>updateJoinedHeadlines</vh></v>
-<v t="edream.111303202917.1"><vh>Syntax coloring REMOVED: now in base body class</vh></v>
-</v>
-<v t="edream.110203113231.302"><vh>@thin __wx_gui.py</vh></v>
-</v>
-</v>
-<v t="EKR.20040517075715"><vh>External editors &amp; Open With</vh>
-<v t="EKR.20040517075715.1"><vh>@thin mod_tempfname.py</vh></v>
-<v t="EKR.20040517080049.4"><vh>@thin open_shell.py</vh></v>
-<v t="EKR.20040517075715.4"><vh>@thin open_with.py</vh></v>
-<v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
-<v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
-<v t="EKR.20040517075715.13"><vh>Word export</vh>
-<v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
-<v t="EKR.20040517075715.20" tnodeList="EKR.20040517075715.20"><vh>@file-nosent word_export.ini</vh></v>
-</v>
-<v t="ekr.20041107165824"><vh>temacs &amp; usetemacs</vh>
-<v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
-<v t="mork.20041030164547"><vh>@thin temacs.py</vh></v>
-</v>
-</v>
-<v t="EKR.20040517080049"><vh>Files</vh>
-<v t="EKR.20040517080049.1"><vh>@thin empty_leo_file.py</vh></v>
-<v t="ekr.20040419105219"><vh>@thin lineNumbers.py</vh></v>
-<v t="ekr.20040331151007"><vh>@thin niceNosent.py</vh></v>
-</v>
-<v t="EKR.20040517080555"><vh>Menus &amp; translations</vh>
-<v t="ekr.20041019072632"><vh>Chinese:  Must use @file due to problems with cvs</vh>
-<v t="ekr.20040828105233" tnodeList="ekr.20040828105233,ekr.20040828105233.1,ekr.20040828105233.2,ekr.20040828105233.3,ekr.20040828105233.4,ekr.20040828105233.5,ekr.20040828105233.6,ekr.20040828105233.7"><vh>@file chinese_menu.py</vh>
-<v t="ekr.20040828105233.1"><vh>onMenu</vh>
-<v t="ekr.20040828105233.2"><vh>file menu</vh></v>
-<v t="ekr.20040828105233.3"><vh>edit menu</vh></v>
-<v t="ekr.20040828105233.4"><vh>outline menu</vh></v>
-<v t="ekr.20040828105233.5"><vh>plugins menu</vh></v>
-<v t="ekr.20040828105233.6"><vh>window menu</vh></v>
-<v t="ekr.20040828105233.7"><vh>help menu</vh></v>
-</v>
-</v>
-</v>
-<v t="EKR.20040517080202.3"><vh>@thin french_fm.py</vh></v>
-<v t="EKR.20040517080555.36"><vh>@thin scripts_menu.py</vh></v>
-</v>
-<v t="edream.110203113231.872"><vh>New kinds of nodes</vh>
-<v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
-<v t="edream.110203113231.873"><vh>@thin at_folder.py</vh></v>
-<v t="edream.110203113231.876"><vh>@thin read_only_nodes.py</vh></v>
-<v t="edream.111803100242"><vh>@thin rst.py</vh></v>
-<v t="ekr.20040828103325"><vh>@thin startfile.py</vh></v>
-<v t="ekr.20040408161258"><vh>rst2 plugin</vh>
-<v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
-<v t="ekr.20040408192158.1"><vh>@rst ../doc/rstplugin.html</vh>
-<v t="ekr.20040408192158.2"><vh>Overview</vh>
-<v t="ekr.20040408192158.3"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040408192158.4"><vh>Formatting</vh>
-<v t="ekr.20040408192158.5"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040409051841"><vh>Embedding documentation in @file trees</vh>
-<v t="ekr.20040409051841.1"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040408192158.6"><vh>The code-block directive</vh>
-<v t="ekr.20040408192158.7"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040408192158.8"><vh>Cascading style sheets</vh>
-<v t="ekr.20040408192158.9"><vh>@rst</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
-</v>
-<v t="ekr.20040915085351"><vh>@thin at_produce.py</vh></v>
-</v>
-<v t="ekr.20041009112303"><vh>Plugins manager &amp; menu</vh>
-<v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
-<v t="EKR.20040517080555.2"><vh>@thin plugins_menu.py</vh></v>
-<v t="EKR.20040517080555.25"><vh>@thin pluginsTest.py</vh></v>
-<v t="EKR.20040517080555.32"><vh>Notes re plugins menu</vh>
-<v t="EKR.20040517080555.33"><vh> Changes made by E.K.Ream</vh></v>
-<v t="EKR.20040517080555.34"><vh> Design</vh></v>
-<v t="EKR.20040517080555.35"><vh> Initial suggestion from Paul Paterson</vh></v>
-</v>
-</v>
-<v t="ekr.20041010104051"><vh>(Changes)</vh>
-<v t="pap.20041006194759"><vh>getDetails</vh></v>
-<v t="pap.20041008224625"><vh>showPlugin</vh></v>
-<v t="pap.20041006212131"><vh>getName</vh></v>
-<v t="pap.20041006215108.1"><vh>ManagerDialog._init__</vh>
-<v t="ekr.20041010110321"><vh>&lt;&lt; create top level window &gt;&gt;</vh></v>
-<v t="ekr.20041010110321.1"><vh>&lt;&lt; create frames &gt;&gt;</vh></v>
-<v t="pap.20041006223915.1"><vh>&lt;&lt; create pluginView &gt;&gt;</vh></v>
-<v t="pap.20041006223915"><vh>&lt;&lt; create PluginList &gt;&gt;</vh></v>
-<v t="pap.20041006223915.2"><vh>&lt;&lt; create local buttons &gt;&gt;</vh></v>
-<v t="pap.20041009020000"><vh>&lt;&lt; create remote buttons &gt;&gt;</vh></v>
-<v t="pap.20041006224808"><vh>&lt;&lt; create message bar &gt;&gt;</vh></v>
-</v>
-<v t="pap.20041009233937.1"><vh>ListReportDialog.__init__</vh>
-<v t="ekr.20041010111700"><vh>&lt;&lt; create the top level frames &gt;&gt;</vh></v>
-<v t="pap.20041009234256"><vh>&lt;&lt; create the ScrolledListBox &gt;&gt;</vh></v>
-<v t="pap.20041009234256.1"><vh>&lt;&lt; create the OptionMenu &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="pap.20041006184225"><vh>@thin plugin_manager.py</vh></v>
-</v>
-<v t="ekr.20041001210557"><vh>Scripting</vh>
-<v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
-</v>
-<v t="edream.110203113231.930"><vh>Spell Checking</vh>
-<v t="ekr.20040809165421"><vh>Read me or suffer</vh></v>
-<v t="edream.110203113231.932"><vh>@thin mod_spelling.ini</vh></v>
-<v t="ekr.20041009165858"><vh>@thin spellpyx.ini</vh></v>
-<v t="edream.110203113231.933"><vh>@thin mod_spelling.py</vh></v>
-<v t="ekr.20040809151600"><vh>spellpyx</vh>
-<v t="ekr.20040809165421.1"><vh>Installing this plugin</vh></v>
-<v t="ekr.20040809151600.4"><vh>Notes: e</vh></v>
-<v t="ekr.20040809151600.1"><vh>@thin spellpyx.py</vh></v>
-<v t="ekr.20040809151600.52"><vh>aspell-1.1</vh>
-<v t="ekr.20040809160744"><vh>Notes: e</vh></v>
-<v t="ekr.20040809161108"><vh>Notes: Gary Bishop</vh></v>
-<v t="ekr.20040809151600.53"><vh>@ file aspell.pyx</vh>
-<v t="ekr.20040809160744.1"><vh>spell_checker.__init__</vh></v>
-<v t="ekr.20040809160744.2"><vh>check</vh></v>
-<v t="ekr.20040809160744.3"><vh>suggest</vh></v>
-<v t="ekr.20040809160744.4"><vh>store_replacement</vh></v>
-<v t="ekr.20040809160744.5"><vh>add_to_session</vh></v>
-<v t="ekr.20040809160744.6"><vh>add_to_personal</vh></v>
-</v>
-<v t="ekr.20040809151600.54"><vh>@ file setup.py</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040809110900"><vh>Tested (All these work in 4.2)</vh></v>
-</v>
-<v t="ekr.20041103052443"><vh>Script to find and replace all functions in leoGlobals.py</vh>
-<v t="ekr.20041103052443.1"><vh>findFunctionsInTree</vh></v>
-<v t="ekr.20041103052443.2"><vh>findDefs</vh></v>
-<v t="ekr.20041103052443.3"><vh>prependNamesInTree</vh>
-<v t="ekr.20041103052443.4"><vh>&lt;&lt; look for name followed by '(' &gt;&gt;</vh></v>
-<v t="ekr.20041103052443.5"><vh>&lt;&lt; print before and after &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041103052443.6"><vh>&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040929104807" a="E"><vh>4.3  plugins (in progress)</vh>
-<v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
-<v t="ekr.20041017035937"><vh>@thin table.py</vh></v>
-<v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
-<v t="mork.20040926105355.1" a="TV"><vh>@thin chapters.py</vh></v>
-<v t="bwmulder.20041017125718" a="M"><vh>@thin mod_shadow.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1074,6 +1061,10 @@ Ok, here's what it does
 <t tx="EKR.20040517090508">@nocolor
 
 Leo enables only those plugins whose filenames appear in PluginsManager.txt.
+
+Leo loads enabled plugins in the order in which they appear in PluginsManager.txt.
+
+Using plugin_manager plugin is the recommended way of changing this file.
 
 @color</t>
 <t tx="EKR.20040605181725"></t>
@@ -2257,7 +2248,8 @@ doHook catches all exceptions and disables further calls to plugins.
 @c
 
 @language python
-@tabwidth -4</t>
+@tabwidth -4
+@pagewidth 80</t>
 <t tx="edream.110203113231.667"></t>
 <t tx="edream.110203113231.668"></t>
 <t tx="edream.110203113231.677">@ignore
@@ -2739,51 +2731,6 @@ interval = 20</t>
 <t tx="edream.110203113231.729"></t>
 <t tx="edream.110203113231.872"></t>
 <t tx="edream.110203113231.930"></t>
-<t tx="edream.110203113231.982">@ignore</t>
-<t tx="edream.110203113231.983">@nocolor
-
-Attached is some proof-of-concept code for a Leo Plugin manager.
-
-To try it out ... (warning: it will write files to your c:\temp directory)
-
-1. Start 'leopm_server.py' ... Should display a message saying "Listening on 8001"
-2. Start 'leopm_client.py' ... Should bring up an ugly Tkinter window
-
-How it works:
-
-1. The client attaches to the remote server (via XMLRPC) 
-2. Client asks for a list of plug-ins
-3. Server responds
-4. Client asks for details of files required + version for each plugin
-5. Client checks local plugin directory to see if these files are there and if they are the right version.
-6. Client displays list of available + installed plugins
-7. User selects plugin and clicks 'Install'
-8. Client requests files from server
-9. Server sends back files
-10. Client installs files in local directory (currently c:\temp)
-
-In the current code, the client side is functional - the server side is
-actually dummy methods just returning the right kind of data. There's no
-point doing anything clever there until the client functionality is
-fully fleshed out. Although it is all running locally in the demo there
-aren't any code changes required to run remotely.
-
-It is all pretty primitive, but I think the functionality maps quite
-closely with jEdit. Tidying the Tkinter interface and fleshing out the
-server side shouldn't take too long and then it could be wrapped as a
-plugin itself.
-
-Advantages of this (XMLRPC) approach,
-
-- can go over HTTP port
-- client and server are nicely decoupled (server needn't be in Python if the web host doesn't support it)
-- client/server stuff is so transparent (look at the server implementation!) compared to other approaches.
-
-Some kind of 'submit plugin' option would be interesting, but suddenly security issues start to loom!
-
-Do you think this is worth pursuing?</t>
-<t tx="edream.110203113231.984"></t>
-<t tx="edream.110203113231.994"></t>
 <t tx="edream.110403140857"></t>
 <t tx="edream.110403140857.1"></t>
 <t tx="edream.110403140857.2">@
@@ -7606,7 +7553,6 @@ g.plugin_signon(__name__)</t>
 <t tx="ekr.20040918165144">@
 Each can be done without impacting other code.
 Each can be done relatively easily: one week or less</t>
-<t tx="ekr.20040918165144.1"></t>
 <t tx="ekr.20040918165144.2"></t>
 <t tx="ekr.20040918165144.3"></t>
 <t tx="ekr.20040918165144.4"></t>
@@ -7680,7 +7626,9 @@ That web site is produced from a Leo outline.
     Michael Dawson</t>
 <t tx="ekr.20040918165427.6"></t>
 <t tx="ekr.20040919094459"></t>
-<t tx="ekr.20040929104807"></t>
+<t tx="ekr.20040929104807">@language python
+@tabwidth -4
+@pagewidth 80</t>
 <t tx="ekr.20041001210557"></t>
 <t tx="ekr.20041002162608"></t>
 <t tx="ekr.20041002162608.1">@killcolor</t>
@@ -7757,26 +7705,6 @@ easy to use, and quite elegant for the coding I've done.
 
 Brian Theado</t>
 <t tx="ekr.20041009112303"></t>
-<t tx="ekr.20041010104051"></t>
-<t tx="ekr.20041010110321">root = g.app.root
-self.top = top = Tk.Toplevel(root)
-g.app.gui.attachLeoIcon(self.top)
-top.title("Plugin Manager")</t>
-<t tx="ekr.20041010110321.1">self.frame = frame = Tk.Frame(top)
-frame.pack(side="top", fill='both', expand=1, padx=5, pady=5)   
-
-self.upper = Tk.Frame(frame)
-self.upper.pack(side="top", fill='both', expand=1, padx=5, pady=5)
- 
-self.lower = Tk.Frame(frame)
-self.lower.pack(side="top", fill='x', expand=0, padx=5)</t>
-<t tx="ekr.20041010111700">root = g.app.root
-self.top = top = Tk.Toplevel(root)
-g.app.gui.attachLeoIcon(self.top)
-top.title(title)
-
-self.frame = frame = Tk.Frame(top)
-frame.pack(side="top", fill='both', expand=1, padx=5, pady=5)</t>
 <t tx="ekr.20041019072632"></t>
 <t tx="ekr.20041027065222">** Incremental find.
 
@@ -8135,155 +8063,73 @@ print s</t>
 'windows',
 'wrap_lines')</t>
 <t tx="ekr.20041107165824"></t>
-<t tx="pap.20041006194759">def getDetails(self, text):
-    """Get the details of the plugin
-    
-    We look for
-        __version__
-        hooks
-        config
-        commands
-        
-    """
-    self.is_plugin = self.hasImport(text, "leoPlugins") 
-    self.version = self.getPattern(text, r'__version__\s*=\s*"(.*?)"', "-")
-    # Bug fix: 11/9/04: allow both single and double triple-quoted strings.
-    pat1 = self.getPattern(text, r'"""(.*?)"""',"")
-    pat2 = self.getPattern(text, r"'''(.*?)'''","")
-    self.description = pat1 or pat2 or "Unknown"
-    self.commands = sets.Set(self.getPatterns(text, "def cmd_(\w*?)\("))
-    self.handlers = sets.Set(self.getPatterns(text, r'registerHandler\("(.*?)"'))
-    if 1: # Just look for the matching .ini file.
-        ini_file_name = g.os_path_join(
-            g.app.loadDir,"..","plugins",self.getName(self.filename)+".ini")
-        ini_file_name = g.os_path_abspath(ini_file_name)
-        self.has_config = g.os_path_exists(ini_file_name)
-        # g.trace(self.has_config,ini_file_name)
-    else:
-        self.has_config = self.hasImport(text, "ConfigParser") 
-    self.hash = sha.sha(text).hexdigest()
-    self.can_read = True
-    self.priority = self.getPattern(text, r'__plugin_priority__\s*=\s*(.*?)$', "-")
-    self.has_toplevel = self.hasPattern(text, "def topLevelMenu") 
-</t>
-<t tx="pap.20041006212131">def getName(self, location):
+<t tx="ekr.20041110104350"></t>
+<t tx="ekr.20041113110210">import leoGlobals as g
+import leoPlugins
 
-    """Determine the plugin name from the location"""
-    
-    # return os.path.split(os.path.splitext(location)[0])[1]
-    head,ext = g.os_path_splitext(location)
-    path,name = g.os_path_split(head)
-    return name</t>
-<t tx="pap.20041006215108.1">def __init__(self):
-    """Initialise the dialog"""
-    
-    &lt;&lt; create top level window &gt;&gt;
-    self.initLocalCollection()
-    &lt;&lt; create frames &gt;&gt;
-    &lt;&lt; create pluginView &gt;&gt;
-    &lt;&lt; create PluginList &gt;&gt;
-    &lt;&lt; create local buttons &gt;&gt;
-    &lt;&lt; create remote buttons &gt;&gt;
-    &lt;&lt; create message bar &gt;&gt;
-    self.plugin_list.populateList("All")
-    
-    top.grab_set() # Make the dialog a modal dialog.
-    top.focus_force() # Get all keystrokes.
-    root.wait_window(top)</t>
-<t tx="pap.20041006223915">self.notebook = notebook = Pmw.NoteBook(self.upper)
-notebook.pack(side="left", fill='both', expand=1, padx=5, pady=5)
+def createMenu():
+    import spellpyx
+    keys = {"c":g.top()}
+    spellpyx.createSpellMenu("tag",keys)
 
-self.local_list_page = local_list_page = notebook.add('Installed Plugins')
-self.remote_list_page = remote_list_page = notebook.add('CVS Plugins')
-notebook.tab('Installed Plugins').focus_set()
-#notebook.setnaturalsize()
+def check():
+    import spellpyx
+    spellpyx.spellFrame.checkSpelling()
 
-self.plugin_list = LocalPluginList(local_list_page, self.plugin_view, self.local)
-self.plugin_list.pack(side="top", fill='both', expand=1)
-self.remote_plugin_list = RemotePluginList(remote_list_page, self.plugin_view, None)
-self.remote_plugin_list.pack(side="top", fill='both', expand=1)</t>
-<t tx="pap.20041006223915.1">self.plugin_view = PluginView(self.upper)
-self.plugin_view.pack(side="right", fill='both', expand=1, padx=5, pady=5)</t>
-<t tx="pap.20041006223915.2">self.buttonBox = Pmw.ButtonBox(
-    self.local_list_page,
-    labelpos = 'nw',
-    frame_borderwidth = 2,
-    frame_relief = 'groove')
+if leoPlugins.isLoaded("spellpyx"):
+    check()
+else:
+    result = leoPlugins.loadOnePlugin("spellpyx",verbose = True)
+    if result is not None:
+        createMenu()
+        check()</t>
+<t tx="ekr.20041114102139">@nocolor
 
-# Add some buttons to the ButtonBox.
-self.buttonBox.add('Enable', command = self.enablePlugin)
-self.buttonBox.add('Disable', command = self.disablePlugin)
-#self.buttonBox.add('Check for Updates', command = self.checkUpdates)
-self.buttonBox.add('Check Conflicts', command = self.checkConflicts)
+The @thin style_guide.py node and its decendents form a style guide for plugins.
+Please see the descendants of this node for further explanation.</t>
+<t tx="ekr.20041114102139.1">- Several plugins show the docstring, so please take care to do a good job of
+describing what the plugin does and how to use it.
 
-self.buttonBox.pack(side="top", padx=5)</t>
-<t tx="pap.20041006224808">self.messagebar = Pmw.MessageBar(self.lower,
-        entry_width = 40,
-        entry_relief='groove',
-        labelpos = 'w',
-        label_text = 'Status:')
+- Please put the following immediately following the plugin's docstring.
 
-self.messagebar.pack(side="top", fill='x', expand=1, padx=5, pady=1)
-</t>
-<t tx="pap.20041008224625">def showPlugin(self, plugin):
-    """Show a plugin"""
-    self.name.setentry(plugin.name)
-    self.version.setentry(plugin.version)
-    self.filename.setentry(g.os_path_abspath(plugin.filename)) # EKR
-    self.status.setentry(plugin.enabled)
-    self.has_ini.setentry(
-        g.choose(plugin.has_config,"Yes","No"))
-    self.has_toplevel.setentry(
-        g.choose(plugin.has_toplevel,"Yes","No"))
-    self.priority.setentry(plugin.priority)
-    self.description.settext(plugin.description.strip())
-    self.commands.setlist(plugin.commands)
-    self.handlers.setlist(plugin.handlers)
-    self.requires.setlist(plugin.requires)</t>
-<t tx="pap.20041009020000">self.buttonBox = Pmw.ButtonBox(
-    self.remote_list_page,
-    labelpos = 'nw',
-    frame_borderwidth = 2,
-    frame_relief = 'groove')
+    @language python
+    @tabwidth -4
 
-# Add some buttons to the ButtonBox.
-self.buttonBox.add('Install', command = self.installPlugin)
-self.buttonBox.add('View', command = self.viewPlugin)
-self.buttonBox.add('Check for Updates', command = self.checkUpdates)
+- There is no need to use sections if they are empty.
 
-self.buttonBox.pack(side="top", padx=5)</t>
-<t tx="pap.20041009233937.1">def __init__(self, title, name, list_data, width=300):
-    """Initialize the dialog"""
-    
-    &lt;&lt; create the top level frames &gt;&gt;
-    filter_options = self.getFilterOptions(list_data)
-    self.list_data = list_data
-    &lt;&lt; create the ScrolledListBox &gt;&gt;
-    &lt;&lt; create the OptionMenu &gt;&gt;
-        
-    top.grab_set() # Make the dialog a modal dialog.
-    top.focus_force() # Get all keystrokes.
-    root.wait_window(top)
-</t>
-<t tx="pap.20041009234256">self.box = Pmw.ScrolledListBox(frame,
-        labelpos='nw',
-        label_text=name,
-        listbox_height = 6,
-        usehullsize = 1,
-        hull_width = width,
-        hull_height = 200,
-        items = list_data,
-)
+- The code should test whether modules have been imported only if those modules
+may not be available on all platforms.
 
-self.box.pack(side="bottom", fill='both', expand=1)    </t>
-<t tx="pap.20041009234256.1">self.filter = Pmw.OptionMenu(frame,
-        labelpos = 'w',
-        label_text = 'Filter:',
-        items = filter_options,
-        menubutton_width = 16,
-        command=self.populateList,
-)    
+- Use following three lines only if your plugin uses a gui.
 
-self.filter.pack(side="top")</t>
+    if g.app.gui is None: 
+        g.app.createTkGui(__file__)
+    if g.app.gui.guiName() == "tkinter":
+        ...
+
+- Please use g.plugin_signon as shown, not leoPlugins.signon.</t>
+<t tx="ekr.20041114102139.2">Please use the general format as shown in &lt;&lt; imports &gt;&gt;.  In partular:
+
+- Please do _not_ assume that modules like Tkinter, Pmw, etc. are always available.  Use the code as shown.
+
+- Good Python style is to put each import on a separate line.
+
+- Please abbreviate Tkinter as Tk.  Please do NOT abbreviate Pmw or leoPlugins.
+
+- Please do NOT use either of the following kinds of imports.
+    from m import *
+    from m import x,y,z
+
+- Do not import leoNodes unless your plugin creates nodes directly.</t>
+<t tx="ekr.20041114103913">Most of the comments in the style guide are comments _about_ the style guide.
+You would replace these comments with your own, or eliminate them entirely in
+your plugin.</t>
+<t tx="ekr.20041114103913.1">PLEASE define each function or method in a separate node! To make this work,
+just put @others in the root of your plugin as shown. Note that @others may be
+nested, as shown in class myClass.</t>
+<t tx="ekr.20041114103913.2">It is almost always a bad idea to use g.top() to get the commander of the presently selected frame.
+Instead, use the onCreate function and class myClass as shown to create a class that binds self.c.</t>
+<t tx="ekr.20041211035618"></t>
+<t tx="ekr.20041215103252"></t>
 </tnodes>
 </leo_file>
