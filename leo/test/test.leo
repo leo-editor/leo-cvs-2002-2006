@@ -556,7 +556,7 @@ this should wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc dd
 this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
 <t tx="T63">@ignore</t>
 <t tx="T64"></t>
-<t tx="T65">a b leoDialogs leoFind leoAtFile modal end
+<t tx="T65">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
 line tooo changed 9</t>
 <t tx="T66">this is another test.
 

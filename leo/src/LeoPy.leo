@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4569" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4570" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="69" left="457" height="73" width="108"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -7744,7 +7744,7 @@
 <v t="T4509" a="M"><vh>Allow all core classes to be overridden</vh></v>
 <v t="T4510"><vh>Put the setup stuff in the dist folder where they belong</vh></v>
 <v t="T4511"><vh>Review all uses of lambda</vh></v>
-<v t="T4512" a="E"><vh>bugs</vh>
+<v t="T4512"><vh>bugs</vh>
 <v t="T4513" a="M"><vh>Undo doesn't restore cursor or selection</vh>
 <v t="T2806" a="C"><vh>Cut/Copy/Paste body text</vh>
 <v t="T2807"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
@@ -7764,18 +7764,18 @@
 <v t="T4520" a="E"><vh>(Spell Checking)</vh>
 <v t="T4521"><vh>@silentfile ../plugins/mod_spelling.txt</vh></v>
 <v t="T4522"><vh>@file ../plugins/mod_spelling.ini</vh></v>
-<v t="T4523" a="EV"><vh>@file ../plugins/mod_spelling.py</vh>
+<v t="T4523" a="E"><vh>@file ../plugins/mod_spelling.py</vh>
 <v t="T4524"><vh>Functions</vh>
 <v t="T4525"><vh>createSpellMenu</vh></v>
 <v t="T4526"><vh>onSelect</vh></v>
 <v t="T4527"><vh>onCommand</vh></v>
 </v>
-<v t="T4528"><vh>class Aspell</vh>
-<v t="T4529"><vh>Birth &amp; death</vh>
+<v t="T4528" a="E"><vh>class Aspell</vh>
+<v t="T4529" a="E"><vh>Birth &amp; death</vh>
 <v t="T4530"><vh>__init__</vh></v>
 <v t="T4531"><vh>getAspellDirectory</vh></v>
 </v>
-<v t="T4532"><vh>openPipes</vh>
+<v t="T4532" a="EV"><vh>openPipes</vh>
 <v t="T4533"><vh>&lt;&lt; Ensure local dictionary is present &gt;&gt;</vh></v>
 </v>
 <v t="T4534"><vh>closePipes</vh></v>
@@ -7783,9 +7783,9 @@
 <v t="T4536"><vh>processWord</vh></v>
 <v t="T4537"><vh>updateDictionary</vh></v>
 </v>
-<v t="T4538"><vh>class spellDialog</vh>
+<v t="T4538" a="E"><vh>class spellDialog</vh>
 <v t="T4539"><vh>Birth &amp; death</vh>
-<v t="T4540" a="E"><vh>spell.__init__</vh>
+<v t="T4540"><vh>spell.__init__</vh>
 <v t="T4541"><vh>&lt;&lt; set self.dictionary &gt;&gt;</vh></v>
 </v>
 <v t="T4542"><vh>getLocalDictionary</vh></v>
@@ -7803,24 +7803,25 @@
 <v t="T4552"><vh>onHideButton</vh></v>
 <v t="T4553"><vh>onRedoButton &amp; onUndoButton</vh></v>
 </v>
-<v t="T4554"><vh>Commands</vh>
-<v t="T4555"><vh>add</vh></v>
-<v t="T4556"><vh>ignore</vh></v>
+<v t="T4554" a="E"><vh>Commands</vh>
+<v t="T4555"><vh>ignore</vh></v>
+<v t="T4556"><vh>add</vh></v>
 <v t="T4557"><vh>change</vh></v>
 <v t="T4558"><vh>checkSpelling</vh></v>
 <v t="T4559"><vh>find</vh></v>
 </v>
-<v t="T4560"><vh>Helpers</vh>
-<v t="T4561"><vh>fillbox</vh></v>
-<v t="T4562" a="E"><vh>findNextMisspelledWord</vh>
-<v t="T4563"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
+<v t="T4560" a="E"><vh>Helpers</vh>
+<v t="T4561"><vh>closePipes</vh></v>
+<v t="T4562"><vh>fillbox</vh></v>
+<v t="T4563"><vh>findNextMisspelledWord</vh>
+<v t="T4564"><vh>&lt;&lt; Skip word if ignored or in local dictionary &gt;&gt;</vh></v>
 </v>
-<v t="T4564"><vh>findNextWord</vh></v>
-<v t="T4565"><vh>getSuggestion</vh></v>
-<v t="T4566"><vh>onMap</vh></v>
-<v t="T4567"><vh>onSelectListBox</vh></v>
-<v t="T4568"><vh>update</vh></v>
-<v t="T4569"><vh>updateButtons</vh></v>
+<v t="T4565"><vh>findNextWord</vh></v>
+<v t="T4566"><vh>getSuggestion</vh></v>
+<v t="T4567"><vh>onMap</vh></v>
+<v t="T4568"><vh>onSelectListBox</vh></v>
+<v t="T4569"><vh>update</vh></v>
+<v t="T4570"><vh>updateButtons</vh></v>
 </v>
 </v>
 </v>
@@ -59189,14 +59190,12 @@ error character were replaced by a marker (say: ?\xa0?, where a0 is its hex
 number of the character), then it could be debugged fairly easily.
 </t>
 <t tx="T4520">To do:
-	- doc strings.
-	- allow non-english dictionaries.</t>
+	- allow non-English dictionaries.
+	- close pipes on shutdown?
+	- There seems to be a problem with adding __init__ to the local dictionary.</t>
 <t tx="T4521">colour
 colourful
 coloured
-
-
-
 </t>
 <t tx="T4522"># Configuration file for mod_spelling plugin.
 
@@ -59206,8 +59205,7 @@ aspell_dir=c:\aspell\bin\aspell.exe
 
 local_leo_dictionary=c:\prog\leoCVS\leo\plugins\mod_spelling.txt
 
-local_language_code=en
-</t>
+local_language_code=en</t>
 <t tx="T4523">"""Spell Checker Plugin
 
 - Perfoms spell checking on nodes within a Leo document.
@@ -59291,7 +59289,12 @@ if 1: # Register the handlers...
 	self.local_language_code = local_language_code
 	
 	if local_dictionary_file:
-		self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]</t>
+		self.local_dictionary_file = local_dictionary_file
+		self.local_dictionary = "%s.wl" % os.path.splitext(local_dictionary_file)[0]
+	else:
+		print "failed to set aspell.local_dictionary"
+		self.local.dictionary_file = None
+		self.local_dictionary = None</t>
 <t tx="T4531">def getAspellDirectory(self):
 	
 	"""Get the directory containing aspell.exe from mod_spelling.ini"""
@@ -59310,25 +59313,33 @@ if 1: # Register the handlers...
 	
 	"""Open the pipes to aspell.exe"""
 	
-	if not self.input and not self.output:
-		&lt;&lt; Ensure local dictionary is present &gt;&gt;
-		cmd = "%s pipe %s" % (self.aspell_exe_loc, add_dicts)
-		# print "openPipes: command = " + cmd
+	if self.input or self.output:
+		return
+	
+	&lt;&lt; Ensure local dictionary is present &gt;&gt;
+	cmd = "%s pipe %s" % (self.aspell_exe_loc, add_dicts)
+	if not self.local_dictionary:
+		print "openPipes: command = " + cmd
+	
+	try:
+		self.input, self.output = popen2.popen2(cmd)
+	except:
+		print "exception opening pipe"
+		self.input = self.output = None
+	
+	if self.input:
+		self.attached = self.input.readline()
+	else:
+		self.attached = None
 		
-		try:
-			self.input, self.output = popen2.popen2(cmd)
-		except:
-			self.input = self.output = None
-		
-		if self.input:
-			self.attached = self.input.readline()
-		else:
-			self.attached = None
-			
-		if self.attached and not self.signonGiven:
-			self.signonGiven = true
+	if not self.signonGiven:
+		self.signonGiven = true
+		if self.attached:
 			print self.attached
-			es(self.attached,color="blue")</t>
+			es(self.attached,color="blue")
+		else:
+			print "can not open aspell"
+			es("can not open aspell",color="red")</t>
 <t tx="T4533">add_dicts = ""
 
 if self.local_dictionary:
@@ -59341,7 +59352,7 @@ if self.local_dictionary:
 	
 	"""Close the pipes to aspell.exe"""
 	
-	# print "closePipes"
+	# if self.input or self.output: print "closePipes"
 	
 	if self.input:
 		self.input.close()
@@ -59364,7 +59375,9 @@ if self.local_dictionary:
 
 	"""Pass a word to aspell and return the list of alternatives."""
 	
-	assert(self.attached is not None)
+	if not self.attached:
+		return None
+
 	# print "processWord",`word`,`self.output`
 	
 	self.output.write("%s\n" % word)
@@ -59437,6 +59450,7 @@ if self.local_dictionary:
 			keys.sort()
 			print "local dict:", keys
 	else:
+		self.dictionary = {}
 		self.local_dictionary_file = None
 else:
 	self.dictionary = {}</t>
@@ -59540,6 +59554,7 @@ for text,command in (
 	"""Handle a click in the Add button in the Check Spelling dialog."""
 
 	self.add()
+	self.closePipes()
 
 </t>
 <t tx="T4549">def onIgnoreButton (self):
@@ -59547,13 +59562,13 @@ for text,command in (
 	"""Handle a click in the Ignore button in the Check Spelling dialog."""
 
 	self.ignore()
-
-</t>
+	self.closePipes()</t>
 <t tx="T4550">def onChangeButton (self):
 	
 	"""Handle a click in the Change button in the Check Spelling dialog."""
 
 	self.change()
+	self.closePipes()
 	self.updateButtons()
 	
 # Event needed for double-click event.
@@ -59563,18 +59578,22 @@ def onChangeThenFindButton (self,event=None):
 
 	if self.change():
 		self.find()
+	self.closePipes()
 	self.updateButtons()</t>
 <t tx="T4551">def onFindButton (self):
 	
 	"""Handle a click in the Find button in the Check Spelling dialog."""
 
 	self.find()
-	self.updateButtons()</t>
+	self.updateButtons()
+	self.closePipes()</t>
 <t tx="T4552">def onHideButton (self):
 	
 	"""Handle a click in the Hide button in the Check Spelling dialog."""
 
-	self.top.withdraw()</t>
+	self.closePipes()
+	self.top.withdraw()
+</t>
 <t tx="T4553">def onRedoButton (self):
 	
 	"""Handle a click in the Redo button in the Check Spelling dialog."""
@@ -59589,14 +59608,21 @@ def onUndoButton (self):
 	self.c.undoer.undo() # Not a command, so command hook doesn't fire.
 	self.update(show=false,fill=false)</t>
 <t tx="T4554"></t>
-<t tx="T4555">def add (self):
+<t tx="T4555">def ignore (self):
 	
-	if not local_dictionary_file:
+	"""Ignore the incorrect word for the duration of this spell check session."""
+	
+	es("Ignoring word '%s'" % self.currentword)
+	self.dictionary[self.currentword.lower()] = 0
+	self.onFindButton()</t>
+<t tx="T4556">def add (self):
+	
+	if not self.local_dictionary_file:
 		return
 	
 	"""Add the selected suggestion to the dictionary."""
 	
-	es("Adding word '%s' to dictionary" % self.currentword)
+	es("Adding '%s'" % self.currentword,color="blue")
 	
 	try:
 		f = open(self.local_dictionary_file,"a")
@@ -59615,14 +59641,8 @@ def onUndoButton (self):
 	self.aspell.closePipes()
 	self.aspell.openPipes()
 	
-	self.onFindButton()</t>
-<t tx="T4556">def ignore (self):
-	
-	"""Ignore the incorrect word for the duration of this spell check session."""
-	
-	es("Ignoring word '%s'" % self.currentword)
-	self.dictionary[self.currentword.lower()] = 0
-	self.onFindButton()</t>
+	self.onFindButton()
+</t>
 <t tx="T4557">def change(self):
 	
 	"""Make the selected change to the text"""
@@ -59682,7 +59702,10 @@ def onUndoButton (self):
 		es("no more misspellings")
 		self.fillbox([])</t>
 <t tx="T4560"></t>
-<t tx="T4561">def fillbox(self,alts,word=None):
+<t tx="T4561">def closePipes(self):
+	
+	self.aspell.closePipes()</t>
+<t tx="T4562">def fillbox(self,alts,word=None):
 
 	"""Update the suggestions listbox in the Check Spelling dialog."""
 	
@@ -59699,7 +59722,7 @@ def onUndoButton (self):
 	
 	if len(self.suggestions):
 		self.listBox.select_set(1) # This doesn't show up because we don't have focus.</t>
-<t tx="T4562">def findNextMisspelledWord(self):
+<t tx="T4563">def findNextMisspelledWord(self):
 	
 	"""Find the next unknown word."""
 	
@@ -59722,9 +59745,9 @@ def onUndoButton (self):
 		except:
 			es_exception()
 	finally:
-		self.aspell.closePipes()
+		aspell.closePipes()
 		return alts, word</t>
-<t tx="T4563">@ We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the cost of checking aspell is higher than the cost of checking our local dictionary. For small local dictionaries this is probably not true and this code could easily be located after the aspell call
+<t tx="T4564">@ We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the cost of checking aspell is higher than the cost of checking our local dictionary. For small local dictionaries this is probably not true and this code could easily be located after the aspell call
 @c
 
 if self.dictionary.has_key(word.lower()):
@@ -59733,7 +59756,7 @@ if self.dictionary.has_key(word.lower()):
 	continue
 	
 # print "Didn't ignore '%s'" % word</t>
-<t tx="T4564">def findNextWord (self,v):
+<t tx="T4565">def findNextWord (self,v):
 	
 	"""Scan for the next word, leaving the result in the work widget"""
 
@@ -59759,7 +59782,7 @@ if self.dictionary.has_key(word.lower()):
 				return v,word
 			elif ch:
 				t.mark_set("insert","insert + 1c")</t>
-<t tx="T4565">def getSuggestion (self):
+<t tx="T4566">def getSuggestion (self):
 	
 	"""Return the selected suggestion from the listBox."""
 	
@@ -59775,19 +59798,19 @@ if self.dictionary.has_key(word.lower()):
 		return suggestion
 	else:
 		return None</t>
-<t tx="T4566">def onMap (self,event=None):
+<t tx="T4567">def onMap (self,event=None):
 	
 	"""Respond to a Tk &lt;Map&gt; event."""
 	
 	self.update(show=false,fill=false)</t>
-<t tx="T4567">def onSelectListBox (self,event=None):
+<t tx="T4568">def onSelectListBox (self,event=None):
 	
 	"""Respond to a click in the selection listBox."""
 	
 	self.updateButtons()
 	self.body.focus_set()
 </t>
-<t tx="T4568">def update (self,show=true,fill=false):
+<t tx="T4569">def update (self,show=true,fill=false):
 	
 	"""Update the Spell Check dialog."""
 	
@@ -59809,7 +59832,7 @@ if self.dictionary.has_key(word.lower()):
 	if not self.aspell.signonGiven:
 		self.aspell.openPipes()
 		self.aspell.closePipes()</t>
-<t tx="T4569">def updateButtons (self):
+<t tx="T4570">def updateButtons (self):
 	
 	"""Enable or disable buttons in the Check Spelling dialog."""
 	
