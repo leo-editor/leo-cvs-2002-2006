@@ -114,6 +114,8 @@ def leoOpen(fileName=None,*args):
 		frame = frame1
 	init_sherlock(args)
 	issueHookWarning()
+	# Write any queued output generated before a log existed.
+	app.writeWaitingLog() # 2/16/03
 	c = frame.commands ; v = c.currentVnode() # 2/8/03
 	handleLeoHook("start2",c=c,v=v,fileName=fileName)
 	root.mainloop()
@@ -157,6 +159,8 @@ def run(*args):
 	frame.startupWindow = true
 	init_sherlock(args)
 	issueHookWarning()
+	# Write any queued output generated before a log existed.
+	app.writeWaitingLog() # 2/16/03
 	handleLeoHook("start2")
 	root.mainloop()
 #@-body

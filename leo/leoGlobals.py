@@ -598,7 +598,7 @@ def enableMenu (menu,name,val):
 			realName = realName.replace("&","")
 			menu.entryconfig(realName,state=state)
 		except:
-			print "setMenuLabel menu,name,val:",menu,name,val
+			print "enableMenu menu,name,val:",menu,name,val
 			es_exception()
 			pass
 
@@ -611,13 +611,20 @@ def disableMenu (menu,name):
 			realName = realName.replace("&","")
 			menu.entryconfig(realName,state="disabled")
 		except:
-			print "setMenuLabel menu,name:",menu,name
+			print "disableMenu menu,name:",menu,name
 			es_exception()
 			pass
 
 def setMenuLabel (menu,name,label,underline=-1):
 	try:
-		menu.entryconfig(name,label=label,underline=underline)
+		if type(name) == type(0):
+			# "name" is actually an index into the menu.
+			menu.entryconfig(name,label=label,underline=underline)
+		else:
+			# Bug fix: 2/16/03: use translated name.
+			realName = app().getRealMenuName(name)
+			realName = realName.replace("&","")
+			menu.entryconfig(realName,label=label,underline=underline)
 	except:
 		print "setMenuLabel menu,name,label:",menu,name,label
 		es_exception()
@@ -1469,9 +1476,9 @@ def idleTimeHookHandler(*args):
 # We look for a hook routine in three places:
 # 1. top().hookFunction
 # 2. app().hookFunction
-# 3. customizeLeo.customizeLeo()
-# We set app().hookError on all exceptions.  Scripts that reset 
-# app().hookError to try again.
+# 3. leoPlugins.doPlugins()
+# We set app().hookError on all exceptions.  Scripts may reset app().hookError 
+# to try again.
 
 #@-at
 #@@c
@@ -1480,41 +1487,30 @@ def handleLeoHook(tag,**keywords):
 
 	a = app() ; c = top() # c may be None during startup.
 	
-	if not a.config.use_customizeLeo_dot_py:
-		return None # not enabled.
-
-	if a.hookError:
+	if not a.config.use_plugins:
+		return None
+	elif a.hookError:
 		return None
 	elif c and c.hookFunction:
 		try:
-			title = c.frame.top.title()
 			return c.hookFunction(tag,keywords)
 		except:
-			es("exception in hook function for " + title)
+			es("exception in c.hookFunction for " + c.frame.top.title())
 	elif a.hookFunction:
 		try:
 			return a.hookFunction(tag,keywords)
 		except:
 			es("exception in app().hookFunction")
 	else:
+		import leoPlugins
 		try:
-			from customizeLeo import customizeLeo
-			try:
-				a.hookFunction = customizeLeo
-				return customizeLeo(tag,keywords)
-			except:
-				a.hookFunction = None
-				es("exception in customizeLeo.py")
-		except exceptions.ImportError:
-			# print "import customizeLeo failed"
-			# Import failed.  This is not an error.
-			a.hookError = true # Supress this function.
-			a.idleTimeHook = false # Supress idle-time hook
-			return None
+			a.hookFunction = leoPlugins.doPlugins
+			return a.hookFunction(tag,keywords)
 		except:
-			es("error error in customizeLeo.py")
+			a.hookFunction = None
+			es("exception in plugin")
 
-	# Handle all exceptions except import failure.
+	# Handle all exceptions.
 	es_exception()
 	a.hookError = true # Supress this function.
 	a.idleTimeHook = false # Supress idle-time hook
@@ -1535,13 +1531,10 @@ def handleLeoHook(tag,**keywords):
 
 def issueHookWarning ():
 
-	if not app().config.use_customizeLeo_dot_py:
-		try:
-			from customizeLeo import customizeLeo
-			es("customizeLeo.py not loaded:")
-			es("use_customizeLeo_dot_py = 0")
-		except:
-			pass # customizeLeo.py not found: no warning needed.
+	if 0: # No longer useful.
+		if not app().config.use_plugins:
+			es("plugin not loaded:")
+			es("use_plugins = 0")
 #@-body
 #@-node:3::issueHookWarning
 #@-node:6::Hooks
@@ -1631,7 +1624,7 @@ def es(s,*args,**keys):
 		if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
 			arg = repr(arg)
 		s = s + ", " + arg
-	log = app().log
+	a = app() ; log = a.log
 	if log:
 		log.put(s)
 		# 6/2/02: This logic will fail if log is None.
@@ -1641,8 +1634,10 @@ def es(s,*args,**keys):
 		if newline:
 			ecnl() # only valid here
 	elif newline:
+		a.logWaiting.append((s+'\n'),) # 2/16/03
 		print s
 	else:
+		a.logWaiting.append((s),) # 2/16/03
 		print s,
 #@-body
 #@-node:3::es, enl, ecnl

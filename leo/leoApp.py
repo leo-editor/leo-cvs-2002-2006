@@ -26,6 +26,7 @@ class LeoApp:
 		self.idleTimeHook = false # true: the global idleTimeHookHandler will reshedule itself.
 		self.loadDir = None # The directory from which Leo was loaded.
 		self.log = None # The LeoFrame containing the present log.
+		self.logWaiting = [] # List of messages waiting to go to a log.
 		self.menuWarningsGiven = false # true: supress warnings in menu code.
 		self.numberOfWindows = 0 # Number of opened windows.
 		self.openWithFiles = [] # List of data used by Open With command.
@@ -225,7 +226,28 @@ class LeoApp:
 		return true # all went well.
 	#@-body
 	#@-node:3::app.finishCreate
-	#@+node:4::app.handleOpenTempFiles
+	#@+node:4::app.get/setRealMenuName & setRealMenuNamesFromTable
+	#@+body
+	# Returns the translation of a menu name or an item name.
+	
+	def getRealMenuName (self,menuName):
+		
+		cmn = canonicalizeMenuName(menuName)
+		return self.realMenuNameDict.get(cmn,menuName)
+		
+	def setRealMenuName (self,untrans,trans):
+		
+		cmn = canonicalizeMenuName(untrans)
+		self.realMenuNameDict[cmn] = trans
+	
+	def setRealMenuNamesFromTable (self,table):
+	
+		for untrans,trans in table:
+			self.setRealMenuName(untrans,trans)
+	
+	#@-body
+	#@-node:4::app.get/setRealMenuName & setRealMenuNamesFromTable
+	#@+node:5::app.handleOpenTempFiles
 	#@+body
 	#@+at
 	#  Try to remove temp files created with the Open With command.  This may 
@@ -247,8 +269,8 @@ class LeoApp:
 				except:
 					print "can not delete temp file:", path
 	#@-body
-	#@-node:4::app.handleOpenTempFiles
-	#@+node:5::app.quit
+	#@-node:5::app.handleOpenTempFiles
+	#@+node:6::app.quit
 	#@+body
 	def quit(self):
 	
@@ -263,28 +285,18 @@ class LeoApp:
 		else: # closes Python window.
 			self.root.quit()
 	#@-body
-	#@-node:5::app.quit
-	#@+node:6::app.get/setRealMenuName & setRealMenuNamesFromTable
+	#@-node:6::app.quit
+	#@+node:7::app.writeWaitingLog
 	#@+body
-	# Returns the translation of a menu name or an item name.
+	def writeWaitingLog (self):
 	
-	def getRealMenuName (self,menuName):
-		
-		cmn = canonicalizeMenuName(menuName)
-		return self.realMenuNameDict.get(cmn,menuName)
-		
-	def setRealMenuName (self,untrans,trans):
-		
-		cmn = canonicalizeMenuName(untrans)
-		self.realMenuNameDict[cmn] = trans
-	
-	def setRealMenuNamesFromTable (self,table):
-	
-		for untrans,trans in table:
-			self.setRealMenuName(untrans,trans)
+		if self.log:
+			for s in self.logWaiting:
+				es(s,newline=0) # The caller must write the newlines.
+			self.logWaiting = []
 	
 	#@-body
-	#@-node:6::app.get/setRealMenuName & setRealMenuNamesFromTable
+	#@-node:7::app.writeWaitingLog
 	#@-others
 #@-body
 #@-node:0::@file leoApp.py
