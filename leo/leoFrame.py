@@ -52,17 +52,7 @@ class LeoFrame:
 		self.openDirectory = ""
 		self.es_newlines = 0 # newline count for this log stream
 		
-		config = app().config
-		s = config.getWindowPref("initial_splitter_orientation")
-		self.splitVerticalFlag = s == None or (s != "h" and s != "horizontal")
-		if self.splitVerticalFlag:
-			r = config.getFloatWindowPref("initial_vertical_ratio")
-			if r == None or r < 0.0 or r > 1.0: r = 0.5
-		else:
-			r = config.getFloatWindowPref("initial_horizontal_ratio")
-			if r == None or r < 0.0 or r > 1.0: r = 0.3
-		# print `r`
-		self.ratio = r
+		self.splitVerticalFlag,self.ratio,self.secondary_ratio = self.initialRatios()
 		
 		# Created below
 		self.commands = None
@@ -823,7 +813,30 @@ class LeoFrame:
 			print_bindings("canvas",self.canvas)
 	#@-body
 	#@-node:7:C=8:createAccelerators
-	#@+node:8::getFocus
+	#@+node:8:C=9:initialRatios
+	#@+body
+	def initialRatios (self):
+	
+		config = app().config
+		s = config.getWindowPref("initial_splitter_orientation")
+		verticalFlag = s == None or (s != "h" and s != "horizontal")
+	
+		if verticalFlag:
+			r = config.getFloatWindowPref("initial_vertical_ratio")
+			if r == None or r < 0.0 or r > 1.0: r = 0.5
+			r2 = config.getFloatWindowPref("initial_vertical_secondary_ratio")
+			if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
+		else:
+			r = config.getFloatWindowPref("initial_horizontal_ratio")
+			if r == None or r < 0.0 or r > 1.0: r = 0.3
+			r2 = config.getFloatWindowPref("initial_horizontal_secondary_ratio")
+			if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
+	
+		# print (`r`,`r2`)
+		return verticalFlag,r,r2
+	#@-body
+	#@-node:8:C=9:initialRatios
+	#@+node:9::getFocus
 	#@+body
 	# Returns the frame that has focus, or body if None.
 	
@@ -835,16 +848,16 @@ class LeoFrame:
 		else:
 			return self.body
 	#@-body
-	#@-node:8::getFocus
-	#@+node:9::notYet
+	#@-node:9::getFocus
+	#@+node:10::notYet
 	#@+body
 	def notYet(self,name):
 	
 		es(name + " not ready yet")
 
 	#@-body
-	#@-node:9::notYet
-	#@+node:10:C=9:frame.put, putnl
+	#@-node:10::notYet
+	#@+node:11:C=10:frame.put, putnl
 	#@+body
 	# All output to the log stream eventually comes here.
 	
@@ -868,18 +881,19 @@ class LeoFrame:
 			print "Null log"
 			print
 	#@-body
-	#@-node:10:C=9:frame.put, putnl
-	#@+node:11:C=10:resizePanesToRatio
+	#@-node:11:C=10:frame.put, putnl
+	#@+node:12:C=11:resizePanesToRatio
 	#@+body
-	def resizePanesToRatio(self,ratio):
+	def resizePanesToRatio(self,ratio,secondary_ratio):
 	
 		self.divideLeoSplitter(self.splitVerticalFlag, ratio)
+		self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
 		# trace(`ratio`)
 
 	#@-body
-	#@-node:11:C=10:resizePanesToRatio
-	#@+node:12:C=11:Event handlers
-	#@+node:1:C=12:frame.OnCloseLeoEvent
+	#@-node:12:C=11:resizePanesToRatio
+	#@+node:13:C=12:Event handlers
+	#@+node:1:C=13:frame.OnCloseLeoEvent
 	#@+body
 	# Called from quit logic and when user closes the window.
 	# Returns true if the close happened.
@@ -959,8 +973,8 @@ class LeoFrame:
 			app().quit()
 		return true
 	#@-body
-	#@-node:1:C=12:frame.OnCloseLeoEvent
-	#@+node:2:C=13:OnActivateBody & OnBodyDoubleClick
+	#@-node:1:C=13:frame.OnCloseLeoEvent
+	#@+node:2:C=14:OnActivateBody & OnBodyDoubleClick
 	#@+body
 	def OnActivateBody (self,event=None):
 	
@@ -977,8 +991,8 @@ class LeoFrame:
 		setTextSelection(self.body,start,end)
 		return "break" # Inhibit all further event processing.
 	#@-body
-	#@-node:2:C=13:OnActivateBody & OnBodyDoubleClick
-	#@+node:3:C=14:OnActivateLeoEvent
+	#@-node:2:C=14:OnActivateBody & OnBodyDoubleClick
+	#@+node:3:C=15:OnActivateLeoEvent
 	#@+body
 	def OnActivateLeoEvent(self,event=None):
 	
@@ -986,7 +1000,7 @@ class LeoFrame:
 		app().log = self
 
 	#@-body
-	#@-node:3:C=14:OnActivateLeoEvent
+	#@-node:3:C=15:OnActivateLeoEvent
 	#@+node:4::OnActivateLog
 	#@+body
 	def OnActivateLog (self,event=None):
@@ -1004,7 +1018,7 @@ class LeoFrame:
 		self.tree.canvas.focus_set()
 	#@-body
 	#@-node:5::OnActivateTree
-	#@+node:6:C=15:OnMouseWheel (Tomaz Ficko)
+	#@+node:6:C=16:OnMouseWheel (Tomaz Ficko)
 	#@+body
 	# Contributed by Tomaz Ficko.  This works on some systems.
 	# On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
@@ -1016,7 +1030,7 @@ class LeoFrame:
 		else:
 			self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
 	#@-body
-	#@-node:6:C=15:OnMouseWheel (Tomaz Ficko)
+	#@-node:6:C=16:OnMouseWheel (Tomaz Ficko)
 	#@+node:7::OnRoll
 	#@+body
 	def OnRoll (self,event):
@@ -1024,8 +1038,8 @@ class LeoFrame:
 		print "OnRoll"
 	#@-body
 	#@-node:7::OnRoll
-	#@-node:12:C=11:Event handlers
-	#@+node:13:C=16:Menu enablers (Frame)
+	#@-node:13:C=12:Event handlers
+	#@+node:14:C=17:Menu enablers (Frame)
 	#@+node:1::OnMenuClick (enables and disables all menu items)
 	#@+body
 	# This is the Tk "postcommand" callback.  It should update all menu items.
@@ -1129,11 +1143,11 @@ class LeoFrame:
 		enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
 	#@-body
 	#@-node:5::updateOutlineMenu
-	#@-node:13:C=16:Menu enablers (Frame)
-	#@+node:14:C=17:Menu Command Handlers
+	#@-node:14:C=17:Menu enablers (Frame)
+	#@+node:15:C=18:Menu Command Handlers
 	#@+node:1::File Menu
 	#@+node:1::top level
-	#@+node:1:C=18:OnNew
+	#@+node:1:C=19:OnNew
 	#@+body
 	def OnNew (self,event=None):
 	
@@ -1154,7 +1168,7 @@ class LeoFrame:
 		top.geometry(g)
 		top.deiconify()
 		top.lift()
-		frame.resizePanesToRatio(self.ratio) # Resize the _new_ frame.
+		frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
 		c = frame.commands # Use the commander of the _new_ frame.
 		c.beginUpdate()
 		if 1: # within update
@@ -1168,8 +1182,8 @@ class LeoFrame:
 		frame.body.focus_set()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=18:OnNew
-	#@+node:2:C=19:frame.OnOpen
+	#@-node:1:C=19:OnNew
+	#@+node:2:C=20:frame.OnOpen
 	#@+body
 	def OnOpen(self,event=None):
 	
@@ -1209,8 +1223,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2:C=19:frame.OnOpen
-	#@+node:3:C=20:frame.OnOpenWith
+	#@-node:2:C=20:frame.OnOpen
+	#@+node:3:C=21:frame.OnOpenWith
 	#@+body
 	#@+at
 	#  To do:
@@ -1242,8 +1256,8 @@ class LeoFrame:
 		if 0:
 			os.startfile(f)
 	#@-body
-	#@-node:3:C=20:frame.OnOpenWith
-	#@+node:4:C=21:frame.OpenWithFileName
+	#@-node:3:C=21:frame.OnOpenWith
+	#@+node:4:C=22:frame.OpenWithFileName
 	#@+body
 	def OpenWithFileName(self, fileName):
 	
@@ -1278,7 +1292,7 @@ class LeoFrame:
 				frame.openDirectory=os.path.dirname(fileName)
 				
 				#@<< make fileName the most recent file of frame >>
-				#@+node:1:C=22:<< make fileName the most recent file of frame >>
+				#@+node:1:C=23:<< make fileName the most recent file of frame >>
 				#@+body
 				# Update the recent files list in all windows.
 				normFileName = os.path.normcase(fileName)
@@ -1307,7 +1321,7 @@ class LeoFrame:
 				app().config.setRecentFiles(frame.recentFiles)
 				app().config.update()
 				#@-body
-				#@-node:1:C=22:<< make fileName the most recent file of frame >>
+				#@-node:1:C=23:<< make fileName the most recent file of frame >>
 
 				return true, frame
 			else:
@@ -1318,7 +1332,7 @@ class LeoFrame:
 			traceback.print_exc()
 			return false, None
 	#@-body
-	#@-node:4:C=21:frame.OpenWithFileName
+	#@-node:4:C=22:frame.OpenWithFileName
 	#@+node:5::OnClose
 	#@+body
 	# Called when File-Close command is chosen.
@@ -1329,7 +1343,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:5::OnClose
-	#@+node:6:C=23:OnSave
+	#@+node:6:C=24:OnSave
 	#@+body
 	def OnSave(self,event=None):
 	
@@ -1360,8 +1374,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=23:OnSave
-	#@+node:7:C=24:OnSaveAs
+	#@-node:6:C=24:OnSave
+	#@+node:7:C=25:OnSaveAs
 	#@+body
 	def OnSaveAs(self,event=None):
 	
@@ -1384,8 +1398,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7:C=24:OnSaveAs
-	#@+node:8:C=25:OnSaveTo
+	#@-node:7:C=25:OnSaveAs
+	#@+node:8:C=26:OnSaveTo
 	#@+body
 	def OnSaveTo(self,event=None):
 	
@@ -1405,8 +1419,8 @@ class LeoFrame:
 			self.commands.fileCommands.saveTo(fileName)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:8:C=25:OnSaveTo
-	#@+node:9:C=26:OnRevert
+	#@-node:8:C=26:OnSaveTo
+	#@+node:9:C=27:OnRevert
 	#@+body
 	def OnRevert(self,event=None):
 	
@@ -1436,8 +1450,8 @@ class LeoFrame:
 			self.mFileName = fileName
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:9:C=26:OnRevert
-	#@+node:10:C=27:frame.OnQuit
+	#@-node:9:C=27:OnRevert
+	#@+node:10:C=28:frame.OnQuit
 	#@+body
 	def OnQuit(self,event=None):
 	
@@ -1451,9 +1465,9 @@ class LeoFrame:
 		app().quitting -= 1 # If we get here the quit has been disabled.
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:10:C=27:frame.OnQuit
+	#@-node:10:C=28:frame.OnQuit
 	#@-node:1::top level
-	#@+node:2:C=28:Recent Files submenu
+	#@+node:2:C=29:Recent Files submenu
 	#@+node:1::OnOpenFileN
 	#@+body
 	def OnOpenRecentFile(self,n):
@@ -1465,9 +1479,9 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnOpenFileN
-	#@-node:2:C=28:Recent Files submenu
+	#@-node:2:C=29:Recent Files submenu
 	#@+node:3::Read/Write submenu
-	#@+node:1:C=29:fileCommands.OnReadOutlineOnly
+	#@+node:1:C=30:fileCommands.OnReadOutlineOnly
 	#@+body
 	def OnReadOutlineOnly (self,event=None):
 	
@@ -1490,7 +1504,7 @@ class LeoFrame:
 			es("can not open:" + fileName)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=29:fileCommands.OnReadOutlineOnly
+	#@-node:1:C=30:fileCommands.OnReadOutlineOnly
 	#@+node:2::OnReadAtFileNodes
 	#@+body
 	def OnReadAtFileNodes (self,event=None):
@@ -1794,7 +1808,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:2::OnRedo
-	#@+node:3:C=30:frame.OnCut, OnCutFrom Menu
+	#@+node:3:C=31:frame.OnCut, OnCutFrom Menu
 	#@+body
 	def OnCut (self,event=None):
 	
@@ -1813,8 +1827,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Cut"))
 	#@-body
-	#@-node:3:C=30:frame.OnCut, OnCutFrom Menu
-	#@+node:4:C=31:frame.OnCopy, OnCopyFromMenu
+	#@-node:3:C=31:frame.OnCut, OnCutFrom Menu
+	#@+node:4:C=32:frame.OnCopy, OnCopyFromMenu
 	#@+body
 	def OnCopy (self,event=None):
 	
@@ -1832,8 +1846,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Copy"))
 	#@-body
-	#@-node:4:C=31:frame.OnCopy, OnCopyFromMenu
-	#@+node:5:C=32:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@-node:4:C=32:frame.OnCopy, OnCopyFromMenu
+	#@+node:5:C=33:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+body
 	def OnPaste (self,event=None):
 	
@@ -1853,8 +1867,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Paste"))
 	#@-body
-	#@-node:5:C=32:frame.OnPaste, OnPasteNode, OnPasteFromMenu
-	#@+node:6:C=33:OnDelete
+	#@-node:5:C=33:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@+node:6:C=34:OnDelete
 	#@+body
 	def OnDelete(self,event=None):
 	
@@ -1865,15 +1879,15 @@ class LeoFrame:
 			c.tree.onBodyChanged(v,"Delete")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=33:OnDelete
-	#@+node:7:C=34:OnSelectAll
+	#@-node:6:C=34:OnDelete
+	#@+node:7:C=35:OnSelectAll
 	#@+body
 	def OnSelectAll(self,event=None):
 	
 		setTextSelection(self.body,"1.0","end")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7:C=34:OnSelectAll
+	#@-node:7:C=35:OnSelectAll
 	#@+node:8::OnEditHeadline
 	#@+body
 	def OnEditHeadline(self,event=None):
@@ -1883,7 +1897,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:8::OnEditHeadline
-	#@+node:9:C=35:OnFontPanel
+	#@+node:9:C=36:OnFontPanel
 	#@+body
 	def OnFontPanel(self,event=None):
 	
@@ -1896,8 +1910,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:9:C=35:OnFontPanel
-	#@+node:10:C=36:OnColorPanel
+	#@-node:9:C=36:OnFontPanel
+	#@+node:10:C=37:OnColorPanel
 	#@+body
 	def OnColorPanel(self,event=None):
 		
@@ -1911,8 +1925,8 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 
 	#@-body
-	#@-node:10:C=36:OnColorPanel
-	#@+node:11:C=37:OnViewAllCharacters
+	#@-node:10:C=37:OnColorPanel
+	#@+node:11:C=38:OnViewAllCharacters
 	#@+body
 	def OnViewAllCharacters (self, event=None):
 	
@@ -1928,8 +1942,8 @@ class LeoFrame:
 		c.tree.recolor_now(v)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:11:C=37:OnViewAllCharacters
-	#@+node:12:C=38:OnPreferences
+	#@-node:11:C=38:OnViewAllCharacters
+	#@+node:12:C=39:OnPreferences
 	#@+body
 	def OnPreferences(self,event=None):
 		
@@ -1949,7 +1963,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:12:C=38:OnPreferences
+	#@-node:12:C=39:OnPreferences
 	#@-node:1::Edit top level
 	#@+node:2::Edit Body submenu
 	#@+node:1::OnConvertBlanks & OnConvertAllBlanks
@@ -2010,7 +2024,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:6::OnExtractSection
-	#@+node:7:C=39:OnFindMatchingBracket
+	#@+node:7:C=40:OnFindMatchingBracket
 	#@+body
 	def OnFindMatchingBracket (self,event=None):
 		
@@ -2074,7 +2088,7 @@ class LeoFrame:
 	# Test  ((x)(unmatched
 	#@-body
 	#@-node:1::findMatchingBracket
-	#@-node:7:C=39:OnFindMatchingBracket
+	#@-node:7:C=40:OnFindMatchingBracket
 	#@+node:8::OnIndent
 	#@+body
 	def OnIndent(self,event=None):
@@ -2083,7 +2097,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:8::OnIndent
-	#@+node:9:C=40:OnInsertGraphicFile
+	#@+node:9:C=41:OnInsertGraphicFile
 	#@+body
 	def OnInsertGraphicFile(self,event=None):
 		
@@ -2122,7 +2136,7 @@ class LeoFrame:
 				
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:9:C=40:OnInsertGraphicFile
+	#@-node:9:C=41:OnInsertGraphicFile
 	#@-node:2::Edit Body submenu
 	#@+node:3::Find submenu (frame methods)
 	#@+node:1::OnFindPanel
@@ -2377,14 +2391,14 @@ class LeoFrame:
 	#@-node:17::OnExpandToLevel9
 	#@-node:2::Expand/Contract
 	#@+node:3::Move/Select
-	#@+node:1:C=41:OnMoveDownwn
+	#@+node:1:C=42:OnMoveDownwn
 	#@+body
 	def OnMoveDown(self,event=None):
 	
 		self.commands.moveOutlineDown()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=41:OnMoveDownwn
+	#@-node:1:C=42:OnMoveDownwn
 	#@+node:2::OnMoveLeft
 	#@+body
 	def OnMoveLeft(self,event=None):
@@ -2522,11 +2536,13 @@ class LeoFrame:
 	#@+body
 	def OnEqualSizedPanes(self,event=None):
 	
-		self.resizePanesToRatio(0.5)
+		frame = self
+		frame.resizePanesToRatio(0.5,frame.secondary_ratio)
+	
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnEqualSizedPanes
-	#@+node:2:C=42:OnToggleActivePane
+	#@+node:2:C=43:OnToggleActivePane
 	#@+body
 	def OnToggleActivePane (self,event=None):
 	
@@ -2537,8 +2553,8 @@ class LeoFrame:
 			self.body.focus_force()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2:C=42:OnToggleActivePane
-	#@+node:3:C=43:OnToggleSplitDirection
+	#@-node:2:C=43:OnToggleActivePane
+	#@+node:3:C=44:OnToggleSplitDirection
 	#@+body
 	# The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
 	
@@ -2563,12 +2579,12 @@ class LeoFrame:
 		# Adjust the log and body panes to give more room around the bars.
 		self.reconfigurePanes()
 		# Redraw with an appropriate ratio.
-		ratio = choose(verticalFlag,0.5,0.3)
-		self.resizePanesToRatio(ratio)
+		vflag,ratio,secondary_ratio = frame.initialRatios()
+		self.resizePanesToRatio(ratio,secondary_ratio)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:3:C=43:OnToggleSplitDirection
-	#@+node:4:C=44:OnCascade
+	#@-node:3:C=44:OnToggleSplitDirection
+	#@+node:4:C=45:OnCascade
 	#@+body
 	def OnCascade(self,event=None):
 		
@@ -2592,7 +2608,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 
 	#@-body
-	#@-node:4:C=44:OnCascade
+	#@-node:4:C=45:OnCascade
 	#@+node:5::OnMinimizeAll
 	#@+body
 	def OnMinimizeAll(self,event=None):
@@ -2609,7 +2625,7 @@ class LeoFrame:
 			frame.top.iconify()
 	#@-body
 	#@-node:5::OnMinimizeAll
-	#@+node:6:C=45:OnHideLogWindow
+	#@+node:6:C=46:OnHideLogWindow
 	#@+body
 	def OnHideLogWindow (self):
 		
@@ -2617,8 +2633,8 @@ class LeoFrame:
 	
 		frame.divideLeoSplitter2(0.99, not frame.splitVerticalFlag)
 	#@-body
-	#@-node:6:C=45:OnHideLogWindow
-	#@+node:7:C=46:OnOpenCompareWindow
+	#@-node:6:C=46:OnHideLogWindow
+	#@+node:7:C=47:OnOpenCompareWindow
 	#@+body
 	def OnOpenCompareWindow (self):
 		
@@ -2634,8 +2650,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7:C=46:OnOpenCompareWindow
-	#@+node:8:C=47:OnOpenPythonWindow (Dave Hein)
+	#@-node:7:C=47:OnOpenCompareWindow
+	#@+node:8:C=48:OnOpenPythonWindow (Dave Hein)
 	#@+body
 	def OnOpenPythonWindow(self,event=None):
 	
@@ -2722,10 +2738,10 @@ class LeoFrame:
 		shell.begin()
 	#@-body
 	#@-node:3::leoPyShellMain
-	#@-node:8:C=47:OnOpenPythonWindow (Dave Hein)
+	#@-node:8:C=48:OnOpenPythonWindow (Dave Hein)
 	#@-node:4::Window Menu
 	#@+node:5::Help Menu
-	#@+node:1:C=48:OnAbout (version number)
+	#@+node:1:C=49:OnAbout (version number)
 	#@+body
 	def OnAbout(self,event=None):
 		
@@ -2752,7 +2768,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=48:OnAbout (version number)
+	#@-node:1:C=49:OnAbout (version number)
 	#@+node:2::OnLeoDocumentation
 	#@+body
 	def OnLeoDocumentation (self,event=None):
@@ -2839,7 +2855,7 @@ class LeoFrame:
 	#@-body
 	#@-node:1::showProgressBar
 	#@-node:4::OnLeoHelp
-	#@+node:5:C=49:OnLeoTutorial (version number)
+	#@+node:5:C=50:OnLeoTutorial (version number)
 	#@+body
 	def OnLeoTutorial (self,event=None):
 		
@@ -2855,10 +2871,10 @@ class LeoFrame:
 		
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:5:C=49:OnLeoTutorial (version number)
+	#@-node:5:C=50:OnLeoTutorial (version number)
 	#@-node:5::Help Menu
-	#@-node:14:C=17:Menu Command Handlers
-	#@+node:15:C=50:Splitter stuff
+	#@-node:15:C=18:Menu Command Handlers
+	#@+node:16:C=51:Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -2881,7 +2897,7 @@ class LeoFrame:
 			bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
 	#@-body
 	#@-node:1::bindBar
-	#@+node:2:C=51:configureBar
+	#@+node:2:C=52:configureBar
 	#@+body
 	def configureBar (self, bar, verticalFlag):
 		
@@ -2912,8 +2928,8 @@ class LeoFrame:
 				# Panes arranged horizontally; vertical splitter bar
 				bar.configure(width=7,cursor="sb_h_double_arrow")
 	#@-body
-	#@-node:2:C=51:configureBar
-	#@+node:3:C=52:createBothLeoSplitters (use config.body_font,etc)
+	#@-node:2:C=52:configureBar
+	#@+node:3:C=53:createBothLeoSplitters (use config.body_font,etc)
 	#@+body
 	def createBothLeoSplitters (self,top):
 	
@@ -2929,7 +2945,7 @@ class LeoFrame:
 		self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
 		
 		#@<< create the body pane >>
-		#@+node:1:C=53:<< create the body pane >>
+		#@+node:1:C=54:<< create the body pane >>
 		#@+body
 		# A light selectbackground value is needed to make syntax coloring look good.
 		wrap = config.getBoolWindowPref('body_pane_wraps')
@@ -2962,7 +2978,7 @@ class LeoFrame:
 			
 		body.pack(expand=1, fill="both")
 		#@-body
-		#@-node:1:C=53:<< create the body pane >>
+		#@-node:1:C=54:<< create the body pane >>
 
 		
 		#@<< create the tree pane >>
@@ -3035,7 +3051,7 @@ class LeoFrame:
 		# Give the log and body panes the proper borders.
 		self.reconfigurePanes()
 	#@-body
-	#@-node:3:C=52:createBothLeoSplitters (use config.body_font,etc)
+	#@-node:3:C=53:createBothLeoSplitters (use config.body_font,etc)
 	#@+node:4::createLeoSplitter (use config params)
 	#@+body
 	# Create a splitter window and panes into which the caller packs widgets.
@@ -3086,6 +3102,7 @@ class LeoFrame:
 			self.ratio = frac # Ratio of body pane to tree pane.
 		else:
 			self.divideLeoSplitter2(frac,verticalFlag)
+			self.secondary_ratio = frac # Ratio of tree pane to log pane.
 	
 	# Divides the main splitter.
 	def divideLeoSplitter1 (self, frac, verticalFlag): 
@@ -3170,7 +3187,7 @@ class LeoFrame:
 		self.log.configure(bd=border)
 	#@-body
 	#@-node:9::reconfigurePanes (use config bar_width)
-	#@-node:15:C=50:Splitter stuff
+	#@-node:16:C=51:Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

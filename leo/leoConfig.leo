@@ -2,12 +2,12 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="16" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="-2" left="148" height="20" width="77"/>
+	<global_window_position top="0" left="148" height="20" width="77"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
+<preferences allow_rich_text="0">
 </preferences>
-<find_panel_settings search_body="1" whole_word="1">
+<find_panel_settings>
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
@@ -15,18 +15,18 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
 <v t="T8"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T9"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T10"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T10" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T11"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
-<v t="T15"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
+<v t="T15" a="V"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
 </v>
 </v>
@@ -396,23 +396,45 @@ initial_window_top = 10
 <t tx="T15">@c
 
 initial_splitter_orientation = v
+
+#	Defines the primary splitter orientation.
+#	The primary panes are the body pane and the secondary pane.
+#	The secondary pane contains the outline and log panes.
+
 #	valid values: h or horizontal or v or vertical.
 #	(Actually, anything but h or horizontal is considered vertical.)
 #	vertical: body pane below outline and log panes.
 #	horizontal: body pane to left of outline and log panes.
-#	Note This is _not_ saved in .leo files, but the body/outline ratio _is_ saved.
+
+#	Note: this is _not_ saved in .leo files, but the body/outline ratio _is_ saved.
 #	This will lead to confusing results when this file is read only:
 #	1. Changes to orientation caused by Toggle Split Direction are not changed, but
 #	2. Changes to body/outline ratio _are_ changed.
 
 initial_vertical_ratio = 0.5
-#	tree pane/body pane size when spitting pane vertically.
+#	The ratio of tree pane size to body pane size when splitting primary panes vertically.
 #	Applies only to new windows. Overridden by ratio in .leo files.
 #	Valid values: 0.0 to 1.0.
 
 initial_horizontal_ratio = 0.3
-#	tree pane/body pane size when spitting pane horizontally.
+#	The ratio of tree pane size to body pane size when
+#	splitting primary panes horizontally.
+
 #	Applies only to new windows. Overridden by ratio in .leo files.
+#	Valid values: 0.0 to 1.0.
+
+initial_horizontal_secondary_ratio = 0.5
+#	The ratio of outline pane size to log pane size when
+#	splitting the primary panes horizontally.
+
+#	Applies to all newly opened windows.
+#	Valid values: 0.0 to 1.0.
+
+initial_vertical_secondary_ratio = 0.7
+#	The ratio of tree pane size to body pane size when
+#	splitting the primary panes vertically.
+
+#	Applies to all newly opened windows.
 #	Valid values: 0.0 to 1.0.</t>
 <t tx="T16">@ Leo should save these to .leo files, and it doesn't.
 @c

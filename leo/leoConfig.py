@@ -112,8 +112,10 @@ class config:
 		"log_text_font_size" )
 	
 	floatWindowNames = (
+		"initial_horizontal_ratio",
+		"initial_horizontal_secondary_ratio",
 		"initial_vertical_ratio",
-		"initial_horizontal_ratio" )
+		"initial_vertical_secondary_ratio")
 		
 	stringWindowNames = (
 		"body_text_font_family",
@@ -237,6 +239,8 @@ class config:
 		"initial_splitter_orientation" : "vertical",
 		"initial_vertical_ratio" : 0.5,
 		"initial_horizontal_ratio" : 0.3,
+		"initial_horizontal_secondary_ratio" : 0.5,
+		"initial_vertical_secondary_ratio" : 0.7,
 		"outline_pane_scrolls_horizontally" : 0,
 		"split_bar_color" : "LightSteelBlue2",
 		"split_bar_relief" : "groove",

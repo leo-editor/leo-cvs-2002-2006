@@ -396,7 +396,7 @@ class fileCommands:
 			self.getGlobals()
 			self.getPrefs()
 			self.getFindPanelSettings()
-			c.frame.resizePanesToRatio(self.ratio) # Causes window to appear.
+			c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio) # Causes window to appear.
 			es("reading: " + fileName)
 			self.getVnodes()
 			self.getTnodes()
@@ -853,7 +853,8 @@ class fileCommands:
 		c.endUpdate()
 		c.frame.top.deiconify()
 		c.setChanged(false)
-		c.frame.resizePanesToRatio(ratio)
+		vflag,junk,secondary_ratio = self.frame.initialRatios()
+		c.frame.resizePanesToRatio(ratio,secondary_ratio)
 		# This should be done after the pane size has been set.
 		if 0: # This can not be done at present.
 			if self.topVnode:
