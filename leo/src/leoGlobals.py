@@ -1157,13 +1157,15 @@ def listToString(aList,tag=None):
         return s
 #@nonl
 #@-node:ekr.20041126060136:print_list & listToString
-#@+node:ekr.20041122153823:print_stack
+#@+node:ekr.20041122153823:print_stack (printStack)
 def print_stack():
     
     import traceback
     traceback.print_stack()
+    
+printStack = print_stack
 #@nonl
-#@-node:ekr.20041122153823:print_stack
+#@-node:ekr.20041122153823:print_stack (printStack)
 #@+node:ekr.20031218072017.3129:Sherlock... (trace)
 #@+at 
 #@nonl
@@ -1869,24 +1871,6 @@ def idleTimeHookHandler(*args,**keys):
         g.app.afterHandler = None
 #@-node:EKR.20040602125018.2:idleTimeHookHandler
 #@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
-#@+node:ekr.20040917061619:g.cantImport
-def cantImport (s,moduleName=""):
-    
-    """Print a "Can't Import" message and return None."""
-    
-    if moduleName and moduleName in g.app.failedPlugins:
-        return
-    
-    if moduleName:
-        message = "Can not import %s from plugin %s" % (s,moduleName)
-        g.app.failedPlugins.append(moduleName)
-    else:
-        message = "Can not import %s from unnamed plugin" % s
-
-    g.es(message,color="blue")
-    return None
-#@nonl
-#@-node:ekr.20040917061619:g.cantImport
 #@+node:ekr.20031218072017.1596:g.doHook
 #@+at 
 #@nonl
@@ -1908,42 +1892,41 @@ def doHook(tag,*args,**keywords):
     
     if g.app.killed or g.app.hookError or (g.app.gui and g.app.gui.isNullGui):
         return None
-    
-    # New in 4.2.  We call the idle-time handlers for all open windows.
-    c = keywords.get("c")
-    
-    if 0: # Don't use trace here!
-        if tag != "idle":
-            print "doHook",tag,c
+        
+    if args:
+        # A minor error in Leo's core.
+        print "***ignoring args param.  tag = %s" % tag
 
     if not g.app.config.use_plugins:
         if tag == "start1":
-            g.es("Plugins disabled: use_plugins is 0",color="blue")
+            s = "Plugins disabled: use_plugins is 0"
+            print s ; g.es(s,color="blue")
         return None
-    elif c and c.hookFunction:
-        try:
-            return c.hookFunction(tag,keywords)
-        except:
-            g.es("exception in c.hookFunction for " + c.frame.getTitle())
-    elif g.app.hookFunction:
-        try:
-            return g.app.hookFunction(tag,keywords)
-        except:
-            g.es("exception in app.hookFunction")
-    else:
-        import leoPlugins
-        try:
-            g.app.hookFunction = leoPlugins.doPlugins
-            return app.hookFunction(tag,keywords)
-        except:
-            g.app.hookFunction = None
-            g.es("exception in plugin")
 
-    # Handle all exceptions.
-    g.es_exception()
-    g.app.hookError = True # Supress this function.
-    g.app.idleTimeHook = False # Supress idle-time hook
-    return None # No return value
+    # New in 4.2.  We call the idle-time handlers for all open windows.
+    c = keywords.get("c")
+            
+    # Get the hook handler function.  Usually this is doPlugins.
+    f = (c and c.hookFunction) or g.app.hookFunction
+    if not f:
+        import leoPlugins
+        g.app.hookFunction = f = leoPlugins.doPlugins
+
+    if 0: # Don't use trace here!
+        if 1:
+            old_c = keywords.get('old_c')
+            if old_c: print 'doHook %24s %s' % (tag,old_c.shortFileName())
+        else:
+            if tag != "idle": print 'doHook %24s old_c: %s' % (tag,c and c.shortFileName())
+        
+    try:
+        # Pass the hook to the hook handler.
+        return f(tag,keywords)
+    except Exception:
+        g.es_exception()
+        g.app.hookError = True # Supress this function.
+        g.app.idleTimeHook = False # Supress idle-time hook
+        return None # No return value
 #@nonl
 #@-node:ekr.20031218072017.1596:g.doHook
 #@+node:ekr.20031218072017.1318:g.plugin_signon
@@ -4144,8 +4127,24 @@ def getScript (c,p,useSelectedText=True):
 # 
 # Calling any of these functions to reload Leo files will crash Leo!
 #@-at
+#@+node:ekr.20040917061619:g.cantImport
+def cantImport (moduleName,pluginName=None,verbose=True):
+    
+    """Print a "Can't Import" message and return None."""
+
+    # g.trace(verbose,moduleName,repr(pluginName))
+    # if not pluginName: g.printStack()
+    
+    if verbose:
+        s = "Can not import %s" % moduleName
+        if pluginName: s += " from plugin %s" % pluginName
+        print s ; g.es(s,color="blue")
+
+    return None
+#@nonl
+#@-node:ekr.20040917061619:g.cantImport
 #@+node:ekr.20041219095213.1:g.importModule
-def importModule (moduleName,verbose=False):
+def importModule (moduleName,pluginName=None,verbose=False):
 
     '''Try to import a module as Python's import command does.
 
@@ -4159,39 +4158,39 @@ def importModule (moduleName,verbose=False):
             theFile,pathname,description = data
             module = imp.load_module(moduleName,theFile,pathname,description)
         except ImportError:
-            if verbose and not module:
-                s = "can not import %s" % moduleName
-                print s ; g.es(s,color="blue")
+            g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
         except:
             g.es("unexpected exception in g.import",color='blue')
             g.es_exception()
     finally:
         if theFile: theFile.close()
+
     return module
 #@nonl
 #@-node:ekr.20041219095213.1:g.importModule
 #@+node:ekr.20041219071407:g.importExtension
-def importExtension (moduleName,verbose=False):
+def importExtension (moduleName,pluginName=None,verbose=False):
 
     '''Try to import a module.  If that fails,
     try to import the module from Leo's extensions directory.
 
     moduleName is the module's name, without file extension.'''
     
-    module = g.importModule(moduleName,verbose=False)
+    # g.trace(verbose,moduleName,pluginName)
+    
+    module = g.importModule(moduleName,pluginName=pluginName,verbose=False)
 
     if not module:
-        module = g.importFromPath(moduleName,g.app.extensionsDir,verbose=False)
-
-    if verbose and not module:
-        s = "can not import extension %s" % moduleName
-        print s ; g.es(s,color="blue")
+        module = g.importFromPath(moduleName,g.app.extensionsDir,
+            pluginName=pluginName,verbose=verbose)
 
     return module
 #@nonl
 #@-node:ekr.20041219071407:g.importExtension
 #@+node:ekr.20031218072017.2278:g.importFromPath
-def importFromPath (name,path,verbose=False):
+def importFromPath (name,path,pluginName=None,verbose=False):
+    
+    # g.trace(verbose,name,pluginName)
 
     try:
         theFile = None ; data = None ; result = None
@@ -4207,9 +4206,7 @@ def importFromPath (name,path,verbose=False):
             try:
                 data = imp.find_module(mod_name,[path]) # This can open the file.
             except ImportError:
-                if verbose:
-                    s = "Can not import %s from %s" % (mod_name,path)
-                    print s ; g.es(s,color="blue")
+                pass
             if data:
                 theFile,pathname,description = data
                 try:
@@ -4222,9 +4219,10 @@ def importFromPath (name,path,verbose=False):
     # Put no return statements before here!
     finally: 
         if theFile: theFile.close()
-
+        
+    if not result:
+        g.cantImport(mod_name,pluginName=pluginName,verbose=verbose)
     return result
-#@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath
 #@-node:ekr.20041219095213:import wrappers
 #@+node:ekr.20040629162023:readLines class and generator
