@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6458" clone_windows="0"/>
-<globals body_outline_ratio="0.503636363636">
-	<global_window_position top="120" left="207" height="662" width="814"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6470" clone_windows="0"/>
+<globals body_outline_ratio="0.5">
+	<global_window_position top="63" left="267" height="804" width="909"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -439,7 +439,7 @@
 </v>
 </v>
 <v t="ekr.20041126132604"><vh>Prototypes</vh>
-<v t="ekr.20041125145818.1" a="E"><vh>Settings dialog</vh>
+<v t="ekr.20041125145818.1"><vh>Settings dialog</vh>
 <v t="ekr.20041213074603"><vh>Settings dialog To do</vh>
 <v t="ekr.20041220102317"><vh>Support for generalized widget settings?</vh></v>
 <v t="ekr.20041213115848"><vh>Later or never ...</vh>
@@ -450,7 +450,7 @@
 </v>
 </v>
 <v t="ekr.20041213090929"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
+<v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041216085206"><vh>class logClass</vh>
 <v t="ekr.20041216085206.1"><vh>&lt;&lt; put s to w &gt;&gt;</vh></v>
 </v>
@@ -469,10 +469,10 @@
 </v>
 <v t="ekr.20041127090307"><vh>rootNodeComments</vh></v>
 </v>
-<v t="ekr.20041127112925" a="E"><vh>createWidgets &amp; helpers</vh>
+<v t="ekr.20041127112925"><vh>createWidgets &amp; helpers</vh>
 <v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
 <v t="ekr.20041127134208.1"><vh>createBool</vh></v>
-<v t="ekr.20041127134208.2" a="E"><vh>createColor</vh>
+<v t="ekr.20041127134208.2"><vh>createColor</vh>
 <v t="ekr.20041128062141"><vh>&lt;&lt; munge val and add val to colorNamesList &gt;&gt;</vh></v>
 <v t="ekr.20041128062902"><vh>&lt;&lt; create optionMenu and callback &gt;&gt;</vh></v>
 <v t="ekr.20041128062902.1"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
@@ -1451,11 +1451,59 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
-<v t="ekr.20041220172118" a="TV"><vh>Resolve CVS Conflicts command</vh>
+<v t="ekr.20041220172118"><vh>Resolve CVS Conflicts command</vh>
 <v t="ekr.20041220172118.1"><vh>Cvs markers &amp; file names</vh></v>
-<v t="ekr.20041220172118.2" a="E"><vh>Conflicts not involving sentinels</vh></v>
+<v t="ekr.20041220172118.2"><vh>Conflicts not involving sentinels</vh></v>
 <v t="ekr.20041220173231"><vh>Conflicts involving sentinels</vh></v>
 <v t="ekr.20041220173748"><vh>Design notes</vh></v>
+</v>
+<v t="ekr.20041222060224"><vh>Tests of component</vh>
+<v t="ekr.20041224104337"><vh>packing &amp; unpacking...</vh>
+<v t="ekr.20041224082127"><vh>iconBar...</vh>
+<v t="ekr.20041224082127.1"><vh>unpack iconBar</vh></v>
+<v t="ekr.20041224082127.2"><vh>pack iconBar</vh></v>
+</v>
+<v t="ekr.20041224081744"><vh>statusLine...</vh>
+<v t="ekr.20041224081744.1"><vh>unpack statusLine</vh></v>
+<v t="ekr.20041224081744.2"><vh>pack statusLine</vh></v>
+</v>
+<v t="ekr.20041224081744.3"><vh>splitter1...</vh>
+<v t="ekr.20041222060224.1"><vh>unpack splitter1</vh></v>
+<v t="ekr.20041222060224.2"><vh>pack splitter1</vh></v>
+</v>
+<v t="ekr.20041224081744.4"><vh>body...</vh>
+<v t="ekr.20041223154332"><vh>unpack body</vh></v>
+<v t="ekr.20041223154332.1"><vh>pack body</vh></v>
+</v>
+<v t="ekr.20041224081829"><vh>log...</vh>
+<v t="ekr.20041223162846"><vh>unpack log</vh></v>
+<v t="ekr.20041223162754"><vh>pack log</vh></v>
+</v>
+<v t="ekr.20041224081829.1"><vh>tree...</vh>
+<v t="ekr.20041223162846.1"><vh>unpack tree</vh></v>
+<v t="ekr.20041223162754.1"><vh>pack tree</vh></v>
+</v>
+<v t="ekr.20041224081833"><vh>hull...</vh>
+<v t="ekr.20041224081833.1"><vh>unpack hull (wipes out icon area!)</vh></v>
+<v t="ekr.20041224081833.2"><vh>pack hull</vh></v>
+</v>
+</v>
+<v t="ekr.20041224095444"><vh>Replacing &amp; restoring</vh>
+<v t="ekr.20041224104031"><vh>Body...</vh>
+<v t="ekr.20041224104031.1"><vh>Replace body</vh></v>
+<v t="ekr.20041224104031.2"><vh>Restore original body</vh></v>
+</v>
+<v t="ekr.20041224115905"><vh>Icon bar</vh>
+<v t="ekr.20041224104416"><vh>Replace icon bar</vh></v>
+<v t="ekr.20041224115905.1"><vh>Restore icon bar</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20041223124541"><vh>Trace components</vh></v>
+<v t="ekr.20041225051328" a="E"><vh>Tests of at_view plugin</vh>
+<v t="ekr.20041225051328.1"><vh>@clip</vh></v>
+<v t="ekr.20041225051328.2"><vh>@strip c:/prog/test/atSignTest.txt</vh></v>
+<v t="ekr.20041225051445" a="TV"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -10848,12 +10896,12 @@ else:
         check()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
 C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
@@ -12451,10 +12499,10 @@ for key,val in valid_settings:
 for key,val in valid_settings:
     d = {key:val}
     try:
-        if 0: # The new prefered way, using 'extended call syntax'
-            # This appears to work with Python 2.2.2.
+        if 1: # The preferred way, using the 'extended call syntax'.
+            # This was introduced in Python 2.0.
             t.configure(**d)
-        else: # Deprecated since Python 2.3.  Use this until I am sure **d syntax works everywhere.
+        else: # The Python 1.x way.  Deprecated since Python 2.3.
             apply(t.configure,[],d)
     except Tk.TclError:
         s = "Tk exception setting '%s' to %s" % (key,repr(val))
@@ -12592,5 +12640,173 @@ def eggs():
 - Maybe the atFile read logic could detect a conflict?
     - Only after detecting a fileName.1.nnn file.
     - Only if 'repair_cvs_conflict' option is set.</t>
+<t tx="ekr.20041222060224"># Make repack a script button before unpacking.
+
+# The "packers" for the 'body', 'log' and 'tree' components are actually placers, so packing twice does _not_ duplicate those components.</t>
+<t tx="ekr.20041222060224.1">import leoGlobals as g
+c = g.top()
+
+c.frame.unpackComponent('splitter1')</t>
+<t tx="ekr.20041222060224.2">import leoGlobals as g
+c = g.top()
+
+c.frame.packComponent('splitter1')</t>
+<t tx="ekr.20041223124541">import leoGlobals as g
+c = g.top()
+
+print g.dictToString(c.frame.componentsDict,tag='components')</t>
+<t tx="ekr.20041223154332">import leoGlobals as g
+c = g.top()
+
+c.frame.unpackComponent('body')</t>
+<t tx="ekr.20041223154332.1">import leoGlobals as g
+c = g.top()
+
+c.frame.packComponent('body')</t>
+<t tx="ekr.20041223162754">import leoGlobals as g
+c = g.top()
+
+c.frame.packComponent('log')</t>
+<t tx="ekr.20041223162754.1">import leoGlobals as g
+c = g.top()
+
+c.frame.packComponent('tree')</t>
+<t tx="ekr.20041223162846">import leoGlobals as g
+c = g.top()
+
+c.frame.unpackComponent('log')</t>
+<t tx="ekr.20041223162846.1">import leoGlobals as g
+c = g.top()
+
+c.frame.unpackComponent('tree')</t>
+<t tx="ekr.20041224081744"></t>
+<t tx="ekr.20041224081744.1">import leoGlobals as g
+c = g.top()
+
+c.frame.unpackComponent('statusLine')</t>
+<t tx="ekr.20041224081744.2">import leoGlobals as g
+c = g.top()
+
+c.frame.packComponent('statusLine')</t>
+<t tx="ekr.20041224081744.3"></t>
+<t tx="ekr.20041224081744.4"></t>
+<t tx="ekr.20041224081829"></t>
+<t tx="ekr.20041224081829.1"></t>
+<t tx="ekr.20041224081833"></t>
+<t tx="ekr.20041224081833.1">import leoGlobals as g
+c = g.top()
+
+c.frame.unpackComponent('hull')</t>
+<t tx="ekr.20041224081833.2">import leoGlobals as g
+c = g.top()
+
+c.frame.packComponent('hull')</t>
+<t tx="ekr.20041224082127"></t>
+<t tx="ekr.20041224082127.1">import leoGlobals as g
+c = g.top()
+
+c.frame.unpackComponent('iconBar')</t>
+<t tx="ekr.20041224082127.2">import leoGlobals as g
+c = g.top()
+
+c.frame.unpackComponent('splitter1')
+c.frame.unpackComponent('statusLine')
+
+c.frame.packComponent('iconBar')
+c.frame.packComponent('splitter1')
+c.frame.packComponent('statusLine')</t>
+<t tx="ekr.20041224095444"></t>
+<t tx="ekr.20041224104031"></t>
+<t tx="ekr.20041224104031.1">import leoGlobals as g
+import Tkinter as Tk
+import leoTkinterFrame
+c = g.top()
+
+componentClass = leoTkinterFrame.componentClass
+
+body = c.frame.component('body')
+packer = body.getPacker()
+unpacker = body.getUnpacker()
+
+# The new parent's frame must be splitter1Frame.
+parentFrame = c.frame.component('splitter1Frame').getFrame()
+f = Tk.Frame(parentFrame,background='red')
+
+componentClass(c,'new body',f,None,packer,unpacker)
+c.frame.replaceBodyPaneWithComponent('new body')</t>
+<t tx="ekr.20041224104031.2">import leoGlobals as g
+c = g.top()
+
+c.frame.replaceBodyPaneWithComponent('body')</t>
+<t tx="ekr.20041224104337"></t>
+<t tx="ekr.20041224104416">import leoGlobals as g
+import leoTkinterFrame
+componentClass = leoTkinterFrame.componentClass
+c = g.top()
+
+c.frame.unpackComponent('iconBar')
+c.frame.unpackComponent('splitter1')
+c.frame.unpackComponent('statusLine')
+
+class newIconBar (leoTkinterFrame.iconBarClass):
+    def clear(self):
+        leoTkinterFrame.iconBarClass.clear(self)
+        g.trace('newIconBar')
+
+hull = c.frame.component('hull').getFrame()
+newIconBar = newIconBar(c,hull)
+
+newIconBarComponent = componentClass(c,'newIconBar',hull,newIconBar,newIconBar.pack,newIconBar.unpack)
+c.frame.iconBarComponentName = 'newIconBar'
+c.frame.iconBar = newIconBarComponent
+c.frame.clearIconBar()
+
+c.frame.packComponent('newIconBar')
+c.frame.packComponent('splitter1')
+c.frame.packComponent('statusLine')</t>
+<t tx="ekr.20041224115905"></t>
+<t tx="ekr.20041224115905.1">import leoGlobals as g
+c = g.top()
+
+c.frame.unpackComponent('newIconBar')
+c.frame.unpackComponent('splitter1')
+c.frame.unpackComponent('statusLine')
+
+c.frame.iconBarComponentName = 'iconBar'
+
+c.frame.packComponent('iconBar')
+c.frame.packComponent('splitter1')
+c.frame.packComponent('statusLine')</t>
+<t tx="ekr.20041225051328">@language python</t>
+<t tx="ekr.20041225051328.1">with all sentinels removed.
+(To do: don't strip sentinel comments from lines following @verbatim.)
+_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+with all sentinels removed.
+(To do: don't strip sentinel comments from lines following @verbatim.)
+_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+atSignTest.txt
+_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+A plugin that supports @view, @strip and @clip nodes.
+
+Selecting a node whose headline contains @view, @strip or @clip does the following:
+
+@view &lt;path-to-file&gt;
+
+Places the contents of the file in the body pane
+
+@strip &lt;path-to-file&gt;
+
+Places the contents of the file in the body pane, with all sentinels removed.
+(To do: don't strip sentinel comments from lines following @verbatim.)
+
+@clip
+
+Places the contents of the clipboard in the body pane.
+_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+(does not properly handler @verbatim sentinels at this time.)
+_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
+</t>
+<t tx="ekr.20041225051328.2"></t>
+<t tx="ekr.20041225051445"></t>
 </tnodes>
 </leo_file>
