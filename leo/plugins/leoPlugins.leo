@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1783" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1800" clone_windows="0"/>
 <globals body_outline_ratio="0.42888165038">
 	<global_window_position top="14" left="269" height="921" width="951"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1882,7 +1882,7 @@
 <v t="ekr.20040331072607.7"><vh>onIdle</vh></v>
 </v>
 </v>
-<v t="ekr.20040331080749" tnodeList="ekr.20040331080749,ekr.20040331080749.3,ekr.20040331080749.4,ekr.20040331080749.5,ekr.20040401060550,ekr.20040331080749.6,ekr.20040331080749.9,ekr.20040331091659,ekr.20040331091659.1"><vh>@file rClick.py</vh>
+<v t="ekr.20040331080749"><vh>rClick.py</vh>
 <v t="ekr.20040331080749.3"><vh>rc_help</vh></v>
 <v t="ekr.20040331080749.4"><vh>rc_dbody</vh></v>
 <v t="ekr.20040331080749.5"><vh>rc_nl</vh></v>
@@ -1924,7 +1924,7 @@
 <v t="ekr.20040331153923.13"><vh>addScheduleMenu</vh></v>
 </v>
 </v>
-<v t="ekr.20040408161258" a="E"><vh>rst2 plugin</vh>
+<v t="ekr.20040408161258"><vh>rst2 plugin</vh>
 <v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
 <v t="ekr.20040408192158.1"><vh>@rst ../doc/rstplugin.html</vh>
 <v t="ekr.20040408192158.2"><vh>Overview</vh>
@@ -1961,9 +1961,32 @@
 <v t="ekr.20040331071319.8"><vh>underline</vh></v>
 </v>
 </v>
-<v t="ekr.20040419105219" a="ETV" tnodeList="ekr.20040419105219,ekr.20040419105219.1,ekr.20040419105219.2"><vh>@file lineNumbers.py</vh>
+<v t="ekr.20040419105219" tnodeList="ekr.20040419105219,ekr.20040419105219.1,ekr.20040419105219.2"><vh>@file lineNumbers.py</vh>
 <v t="ekr.20040419105219.1"><vh>writing derived files</vh></v>
 <v t="ekr.20040419105219.2"><vh>reading derived files</vh></v>
+</v>
+<v t="ekr.20040422072343" a="TV" tnodeList="ekr.20040422072343,ekr.20040422081253,ekr.20040422072343.1,ekr.20040422072343.2,ekr.20040422072343.3,ekr.20040422072343.4,ekr.20040422072343.5,ekr.20040422072343.6,ekr.20040422072343.7,ekr.20040422072343.8,ekr.20040422073911,ekr.20040422072343.13,ekr.20040422072343.14,ekr.20040422072343.15,ekr.20040422072343.16,ekr.20040422072343.10,ekr.20040422072343.11,ekr.20040422072343.12"><vh>@file rClick.py</vh>
+<v t="ekr.20040422081253"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20040422072343.1"><vh>rc_help</vh></v>
+<v t="ekr.20040422072343.2"><vh>rc_dbody</vh></v>
+<v t="ekr.20040422072343.3"><vh>rc_nl</vh></v>
+<v t="ekr.20040422072343.4"><vh>rc_selectAll</vh></v>
+<v t="ekr.20040422072343.5"><vh>rClickbinder</vh></v>
+<v t="ekr.20040422072343.6"><vh>rClicker</vh>
+<v t="ekr.20040422072343.7"><vh>&lt;&lt; define commandList for body &gt;&gt;</vh></v>
+<v t="ekr.20040422072343.8"><vh>&lt;&lt; add entries for context sensitive commands in body &gt;&gt;</vh>
+<v t="ekr.20040422073911"><vh>&lt;&lt; get text and word from the body text &gt;&gt;</vh></v>
+<v t="ekr.20040422072343.13"><vh>&lt;&lt; add entry for open url &gt;&gt;</vh></v>
+<v t="ekr.20040422072343.14"><vh>&lt;&lt; add entry for jump to section &gt;&gt;</vh></v>
+<v t="ekr.20040422072343.15"><vh>&lt;&lt; add epydoc help &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040422072343.16"><vh>&lt;&lt; define commandList for log pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040422072343.9"><vh>Utils for context sensitive commands</vh>
+<v t="ekr.20040422072343.10"><vh>crop</vh></v>
+<v t="ekr.20040422072343.11"><vh>getword</vh></v>
+<v t="ekr.20040422072343.12"><vh>getdoc</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -23354,5 +23377,289 @@ def skipLineNumberDirective(self, s, i):
 
 g.funcToMethod(skipLineNumberDirective,
 	leoAtFile.newDerivedFile,"readNormalLine")</t>
+<t tx="ekr.20040422072343">"""Create a context menu when right-clicking in the body pane."""
+
+# Send bug reports to
+# http://sourceforge.net/forum/forum.php?thread_id=980723&amp;forum_id=10228
+
+&lt;&lt; version history &gt;&gt;
+
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+try:    import Tkinter as Tk
+except: Tk = None
+import sys, re
+
+@others
+
+__version__ = "0.5"
+
+if Tk:
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
+
+	if g.app.gui.guiName() == "tkinter":
+		leoPlugins.registerHandler("after-create-leo-frame",rClickbinder)
+		leoPlugins.registerHandler("bodyrclick1",rClicker)
+		g.plugin_signon(__name__)</t>
+<t tx="ekr.20040422072343.1">def rc_help():
+	
+	"""Highlight txt then rclick for python help() builtin."""
+
+	c = g.top()
+	
+	if c.frame.body.hasTextSelection():
+
+		newSel = c.frame.body.getSelectedText()
+
+		# EKR: nothing bad happens if the status line does not exist.
+		c.frame.clearStatusLine()
+		c.frame.putStatusLine(' Help for '+newSel) 
+	
+		# Redirect stdout to a "file like object".
+		sys.stdout = fo = g.fileLikeObject()
+	
+		# Python's builtin help function writes to stdout.
+		help(str(newSel))
+		
+		# Restore original stdout.
+		sys.stdout = sys.__stdout__
+
+		# Print what was written to fo.
+		s = fo.get() ; g.es(s) ; print s</t>
+<t tx="ekr.20040422072343.2">def rc_dbody():
+
+	c = g.top() ; p = c.currentPosition()
+
+	if c.frame.body.hasTextSelection():
+
+		c.frame.body.deleteTextSelection()
+		c.frame.body.onBodyWillChange(v,"Delete")</t>
+<t tx="ekr.20040422072343.3">def rc_nl():
+	
+	"""Insert a newline at the current curser position."""
+
+	c = g.top()
+
+	c.frame.body.insertAtInsertPoint('\n')
+	c.frame.body.onBodyWillChange(c.currentPosition(),"Typing")</t>
+<t tx="ekr.20040422072343.4">def rc_selectAll():
+	
+	"""Select the entire log pane."""
+
+	c = g.top()
+	
+	g.app.gui.setTextSelection(c.frame.log.logCtrl,"1.0","end")</t>
+<t tx="ekr.20040422072343.5">def rClickbinder(tag,keywords):
+
+	c = g.top() # c may be None during startup.
+	
+	if c:
+		c.frame.log.logCtrl.bind  ('&lt;Button-3&gt;',c.frame.OnBodyRClick)
+		# c.frame.body.bodyCtrl.bind('&lt;Button-3&gt;',c.frame.OnBodyRClick)</t>
+<t tx="ekr.20040422072343.6"># EKR: it is not necessary to catch exceptions or to return "break".
+
+def rClicker(tag,keywords):
+	
+	c = g.top() #c = keywords.get("c")  #"commands"
+	e = keywords.get("event")
+	if not c or not e: return
+
+	e.widget.focus()
+
+	if e.widget._name == 'body':
+		&lt;&lt; define commandList for body &gt;&gt;
+		&lt;&lt; add entries for context sensitive commands in body &gt;&gt;
+	else:
+		&lt;&lt; define commandList for log pane &gt;&gt;
+				
+	rmenu = Tk.Menu(None,tearoff=0,takefocus=0)
+	for (txt,cmd) in commandList:
+		if txt == '-':
+			rmenu.add_separator()
+		else:
+			rmenu.add_command(label=txt,command=cmd)
+
+	rmenu.tk_popup(e.x_root-23,e.y_root+13)</t>
+<t tx="ekr.20040422072343.7">commandList = [
+	#('-||-|-||-',None),   #
+	#('U',c.undoer.undo),  #no c.undoer
+	#('R',undoer.redo),
+	# ('-',None),
+	('Cut', c.frame.OnCutFromMenu), 
+	('Copy',c.frame.OnCopyFromMenu),
+	('Paste', c.frame.OnPasteFromMenu),
+	('Delete',rc_dbody),
+	('-',None),
+	('SelectAll',c.frame.body.selectAllText),
+	('Indent',c.indentBody),
+	('Dedent',c.dedentBody),  
+	('Find Bracket',c.findMatchingBracket),
+	('Insert newline', rc_nl),
+	
+	# this option seems not working, at least in win32
+	# replaced with context-sensitive "pydoc help"  --Maxim Krikun
+	# ('Help(txt)',rc_help),   #how to highlight 'txt' in the menu?
+	
+	('Execute Script',c.executeScript)
+	# ('-||-|-||-',None),   # 1st &amp; last needed because of freaky sticky finger
+	]</t>
+<t tx="ekr.20040422072343.8">@ Context-sensitive rclick commands.
+
+On right-click get the selected text, or the whole line containing cursor if no selection.
+Scan this text for certain regexp pattern. For each occurrence of a pattern add a command,
+which name and action depend on the text matched.
+
+Example below extracts URL's from the text and puts "Open URL:..." th menu.
+
+@c
+
+&lt;&lt; get text and word from the body text &gt;&gt;
+
+if 0:
+	g.es("selected text: "+text)
+	g.es("selected word: "+repr(word))
+
+contextCommands=[]
+
+&lt;&lt; add entry for open url &gt;&gt;
+&lt;&lt; add entry for jump to section &gt;&gt;
+if word:
+	&lt;&lt; add epydoc help &gt;&gt;
+
+if contextCommands:
+	commandList.append(("-",None))
+	commandList.extend(contextCommands)</t>
+<t tx="ekr.20040422072343.9"></t>
+<t tx="ekr.20040422072343.10">def crop(s,n=20,end="..."):
+
+	"""return a part of string s, no more than n characters; optionally add ... at the end"""
+	
+	if len(s)&lt;=n:
+		return s
+	else:
+		return s[:n]+end # EKR</t>
+<t tx="ekr.20040422072343.11">def getword(s,pos):
+
+	"""returns a word in string s around position pos"""
+
+	for m in re.finditer("\w+",s):
+		if m.start()&lt;=pos and m.end()&gt;=pos:
+			return m.group()
+	return None			
+</t>
+<t tx="ekr.20040422072343.12">def getdoc(thing, title='Help on %s', forceload=0):
+	
+	#g.trace(thing)
+
+	if 1: # Both seem to work.
+
+		# Redirect stdout to a "file like object".
+		sys.stdout = fo = g.fileLikeObject()
+		# Python's builtin help function writes to stdout.
+		help(str(thing))
+		# Restore original stdout.
+		sys.stdout = sys.__stdout__
+		# Return what was written to fo.
+		return fo.get()
+
+	else:
+		# Similar to doc function from pydoc module.
+		from pydoc import resolve, describe, inspect, text, plain
+		object, name = resolve(thing, forceload)
+		desc = describe(object)
+		module = inspect.getmodule(object)
+		if name and '.' in name:
+			desc += ' in ' + name[:name.rfind('.')]
+		elif module and module is not object:
+			desc += ' in module ' + module.__name__
+		doc = title % desc + '\n\n' + text.document(object, name)
+		return plain(doc)</t>
+<t tx="ekr.20040422072343.13">scan_url_re="""(http|https|ftp)://([^/?#\s'"]*)([^?#\s"']*)(\\?([^#\s"']*))?(#(.*))?"""
+
+for match in re.finditer(scan_url_re, text):
+	
+	#get the underlying text
+	url=match.group()
+	
+	#create new command callback
+	def url_open_command(*k,**kk):
+		import webbrowser
+		try:
+			webbrowser.open_new(url)
+		except:
+			g.es("not found: " + url,color='red')
+
+	#add to menu
+	menu_item=( 'Open URL: '+crop(url,30), url_open_command)
+	contextCommands.append( menu_item )</t>
+<t tx="ekr.20040422072343.14">scan_jump_re="&lt;"+"&lt;[^&lt;&gt;]+&gt;"+"&gt;"
+
+v=c.currentVnode()
+for match in re.finditer(scan_jump_re,text):
+	name=match.group()
+	ref=g.findReference(name,v)
+	if ref:
+		def jump_command(*k,**kk):
+			#the callback is invoked later, so we better get commander again from globals
+			c=g.top()
+			c.beginUpdate()
+			c.selectVnode(ref)
+			c.endUpdate()
+		menu_item=( 'Jump to: '+crop(name,30), jump_command)
+		contextCommands.append( menu_item )
+	else:
+		# could add "create section" here?
+		pass</t>
+<t tx="ekr.20040422072343.15">def help_command(*k,**kk):
+	# g.trace(word)
+	try:
+		doc=getdoc(word,"="*60+"\nHelp on %s")
+		# It would be nice to save log pane position
+		# and roll log back to make this position visible,
+		# since the text returned by pydoc can be several 
+		# pages long
+		g.es(doc,color="blue")
+		print doc
+	except Exception, value:
+		g.es(str(value),color="red")
+
+menu_item=('Help on: '+crop(word,30), help_command)
+contextCommands.append( menu_item )</t>
+<t tx="ekr.20040422072343.16">commandList=[
+	('Cut', c.frame.OnCutFromMenu), 
+	('Copy',c.frame.OnCopyFromMenu),
+	('Paste', c.frame.OnPasteFromMenu),
+	('Select All', rc_selectAll)]</t>
+<t tx="ekr.20040422073911">text = c.frame.body.getSelectedText()
+if text:
+	word=str(text.strip())
+else:
+	ind0,ind1=c.frame.body.getTextSelection()
+	n0,p0=ind0.split('.',2)
+	n1,p1=ind1.split('.',2)
+	assert n0==n1
+	assert p0==p1
+	text=c.frame.body.getTextRange(n0+".0",n1+".end")
+	word=getword(text,int(p0))</t>
+<t tx="ekr.20040422081253">@
+0.1, 0.2: Created by 'e'.
+0.3: EKR:
+	- Converted to 4.2 code style. Use @file node.
+	- Simplified rClickBinder, rClicker, rc_help.  Disabled signon.
+	- Removed calls to registerHandler, "by" ivar, rClickNew, and shutdown code.
+	- Added select all item for the log pane.
+0.4: Maxim Krikun
+	- added context-dependent commands:
+	   open url, jump to reference, pydoc help
+	- replaced rc_help with context-dependent pydoc help; 
+	- rc_help was not working for me :(
+0.5: EKR:
+	- Style changes.
+	- Help sends output to console as well as log pane.
+	- Used code similar to rc_help code in getdoc.
+	  Both kinds of code work for me (using 4.2 code base)
+	- Simplified crop method.</t>
 </tnodes>
 </leo_file>
