@@ -1547,7 +1547,7 @@ class baseLeoImportCommands:
 		n = len(s)
 		while i < n:
 			c = s[i]
-			if c in string.letters or c in string.digits or c == '-':
+			if c in string.ascii_letters or c in string.digits or c == '-':
 				i += 1
 			else: break
 		return i

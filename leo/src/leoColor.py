@@ -995,7 +995,7 @@ class baseColorizer:
 			if self.has_pp_directives:
 				dict1 ["#"] = self.doPPDirective
 						
-			for ch in string.letters:
+			for ch in string.ascii_letters:
 				dict1 [ch] = self.doPossibleKeyword
 			dict1 ['_'] = self.doPossibleKeyword
 			
@@ -1122,6 +1122,7 @@ class baseColorizer:
 			
 			# Get the body text, converted to unicode.
 			s = getAllText(body)
+			assert(isUnicode(s))
 			self.sel = sel = body.index("insert") # get the location of the insert point
 			start, end = string.split(sel,'.')
 			start = int(start)
@@ -1569,6 +1570,7 @@ class baseColorizer:
 	def colorizeLine (self,s,state):
 	
 		# print "line,inc,state,s:",self.line_index,self.incremental,state,s
+		assert(isUnicode(s))
 	
 		if self.incremental:
 			self.removeTagsFromLine()
@@ -1825,10 +1827,11 @@ class baseColorizer:
 	def doNormalState (self,s,i):
 	
 		ch = s[i] ; state = "normal"
+		assert(type(ch)==type(u""))
 	
-		if ch in string.letters or ch == '_' or (
+		if ch in string.ascii_letters or ch == '_' or (
 			(ch == '\\' and self.language=="latex") or
-			(ch in '/&<>' and self. language=="html")):
+			(ch in '/&<>' and self.language=="html")):
 			#@		<< handle possible keyword >>
 			#@+node:<< handle possible  keyword >>
 			if self.language == "latex":
@@ -2231,8 +2234,8 @@ class baseColorizer:
 		elif not ch2:
 			word = s[i:i+2]
 		elif (
-			(ch1 in string.letters and not ch2 in string.letters) or # single-letter control code
-			ch1 not in string.letters # non-letter control code
+			(ch1 in string.ascii_letters and not ch2 in string.ascii_letters) or # single-letter control code
+			ch1 not in string.ascii_letters # non-letter control code
 		):
 			word = s[i:i+2]
 			
@@ -2326,7 +2329,7 @@ class baseColorizer:
 		n = len(s)
 		while i < n:
 			ch = s[i]
-			if ch in string.letters or ch in string.digits or ch == '_':
+			if ch in string.ascii_letters or ch in string.digits or ch == '_':
 				i += 1
 			elif chars and ch in chars:
 				i += 1

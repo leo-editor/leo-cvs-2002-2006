@@ -345,7 +345,7 @@ class askLeoID (leoDialog):
 		i = 0 ; ok = true
 		while i < len(s):
 			ch = s[i]
-			if ch not in string.letters and ch not in string.digits:
+			if ch not in string.ascii_letters and ch not in string.digits:
 				e.delete(`i`)
 				s = e.get()
 				ok = false

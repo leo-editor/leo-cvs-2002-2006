@@ -873,8 +873,9 @@ class baseFileCommands:
 	
 		if isValidEncoding(encoding):
 			self.leo_file_encoding = encoding
+			es("File encoding: " + encoding, color="blue")
 		else:
-			es("invalid encoding in .leo file: " + encoding)
+			es("invalid encoding in .leo file: " + encoding, color="red")
 	#@-node:getXmlVersionTag
 	#@+node:skipWs
 	def skipWs (self):

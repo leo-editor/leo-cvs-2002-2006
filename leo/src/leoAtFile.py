@@ -1954,7 +1954,7 @@ class baseOldDerivedFile:
 		# We treat @(nonalpha) separately because @ is in the colorizer table.
 		if self.language=="cweb" and (
 			match_word(s,i,"@c") or
-			i+1>= n or s[i+1] not in string.letters):
+			i+1>= n or s[i+1] not in string.ascii_letters):
 			return noDirective
 	
 		for name,directive in table:
@@ -4924,7 +4924,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		# We treat @(nonalpha) separately because @ is in the colorizer table.
 		if at.language=="cweb" and (
 			match_word(s,i,"@c") or
-			i+1>= n or s[i+1] not in string.letters):
+			i+1>= n or s[i+1] not in string.ascii_letters):
 			return noDirective
 	
 		for name,directive in table:

@@ -1053,7 +1053,7 @@ def sanitize_filename(s):
 
 	result = ""
 	for ch in s.strip():
-		if ch in string.letters:
+		if ch in string.ascii_letters:
 			result += ch
 		elif ch in string.whitespace: # Translate whitespace.
 			result += '_'
@@ -1229,7 +1229,7 @@ def init_trace(args,echo=1):
 	args = get_Sherlock_args(args)
 
 	for arg in args:
-		if arg[0] in string.letters: prefix = '+'
+		if arg[0] in string.ascii_letters: prefix = '+'
 		else: prefix = arg[0] ; arg = arg[1:]
 		
 		if prefix == '?':
@@ -1762,7 +1762,7 @@ def canonicalizeMenuName (name):
 	name = name.lower() ; newname = ""
 	for ch in name:
 		# if ch not in (' ','\t','\n','\r','&'):
-		if ch in string.letters:
+		if ch in string.ascii_letters:
 			newname = newname+ch
 	return newname
 	
@@ -1771,7 +1771,7 @@ def canonicalizeTranslatedMenuName (name):
 	name = name.lower() ; newname = ""
 	for ch in name:
 		if ch not in (' ','\t','\n','\r','&'):
-		# if ch in string.letters:
+		# if ch in string.ascii_letters:
 			newname = newname+ch
 	return newname
 #@-node:canonicalizeMenuName & cononicalizeTranslatedMenuName
@@ -2628,7 +2628,7 @@ def find_on_line(s,i,pattern):
 #@+node:is_c_id
 def is_c_id(ch):
 
-	return ch in string.letters or ch in string.digits or ch == '_'
+	return ch in string.ascii_letters or ch in string.digits or ch == '_'
 #@nonl
 #@-node:is_c_id
 #@+node:is_nl
@@ -2709,7 +2709,7 @@ def match_word(s,i,pattern):
 	if i+j >= len(s):
 		return true
 	c = s[i+j]
-	return not (c in string.letters or c in string.digits or c == '_')
+	return not (c in string.ascii_letters or c in string.digits or c == '_')
 #@nonl
 #@-node:match_word
 #@+node:skip_blank_lines
@@ -2733,7 +2733,7 @@ def skip_c_id(s,i):
 	n = len(s)
 	while i < n:
 		c = s[i]
-		if c in string.letters or c in string.digits or c == '_':
+		if c in string.ascii_letters or c in string.digits or c == '_':
 			i += 1
 		else: break
 	return i

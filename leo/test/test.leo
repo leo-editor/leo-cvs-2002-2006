@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2182" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2185" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="75" left="303" height="835" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -2744,7 +2744,9 @@
 </v>
 </v>
 </v>
-<v a="V"><vh>Import elisp tests</vh></v>
+<v t="T2183" tnodeList="2183"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
+<v t="T2184"><vh>Bracket matching</vh></v>
+<v t="T2185" a="V"><vh>encoding script</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -33852,5 +33854,243 @@ node 1, line2 (no newline)</t>
 node 2, line2 (newline)</t>
 <t tx="T2182">node 3, line1 (changed)
 node 3, line2 (no newline)</t>
+<t tx="T2183"># Sample defaults file for PyChecker 0.8.13
+# This file should be called:  .pycheckrc
+# It should be placed in your home directory (value of $HOME).
+# If $HOME is not set, it will look in the current directory.
+
+# file = c:/prog/leoCVS/leo/src/leo.py
+
+# bool: warnings for Doc Strings
+noDocModule = 0
+noDocClass = 0
+noDocFunc = 0
+
+# bool: when checking if class data members (attributes) are set
+#       check all members or __init__() only
+onlyCheckInitForMembers = 0
+
+# bool: warn when all module variables are not used (including private vars)
+allVariablesUsed = 0
+
+# bool: produce warnings for each occurrence of a warning for global (xxx)
+reportAllGlobals = 0
+
+# bool: warn when private module variables are not used (_var)
+privateVariableUsed = 1
+
+# bool: warn when imports are not used
+importUsed = 1
+
+# bool: warn when import and from ... import are used for same module
+mixImport = 0 # EKR
+
+# bool: warn when imports are not used in __init__.py
+packageImportUsed = 1
+
+# bool: warn when a module reimports another module (import &amp; from/import)
+moduleImportErrors = 0 # EKR
+
+# bool: warn when modules import themselves
+reimportSelf = 0 # EKR
+
+# bool: warn when local variables are not used
+localVariablesUsed = 1
+
+# bool:  assume a, b, and c are used in this case:  a, b, c = func()
+unusedLocalTuple = 0
+
+# bool:  warn when class attributes (data members) are unused
+membersUsed = 0
+
+# bool: warn when Subclass.__init__ is not called in a subclass
+baseClassInitted = 1
+
+# bool: warn when Subclass needs to override methods that only throw exceptions
+abstractClasses = 1
+
+# bool: warn when __init__ is defined in a subclass
+initDefinedInSubclass = 0
+
+# bool: warn when __init__ returns None
+returnNoneFromInit = 1
+
+# bool: warn when code is not reachable
+unreachableCode = 0
+
+# bool: warn when a constant is used in a conditional statement (if '':)
+constantConditions = 1
+
+# bool: warn when 1 is used in a conditional statement, (if 1: while 1: etc)
+constant1 = 0
+
+# bool: warn when iterating over a string in a for loop
+stringIteration = 1
+
+# bool: warn when setting a variable to different types
+inconsistentTypes = 0
+
+# bool: warn when setting a tuple of variables to a non-sequence (a, b = None)
+unpackNonSequence = 1
+
+# bool: warn when setting a tuple of variables to the wrong length (a, b = 1,)
+unpackLength = 1
+
+# bool: warn when using strings exceptions or 
+#       other classes not derived from Exception to raise/catch exceptions
+badExceptions = 1
+
+# bool: warn when statements appear to have no effect
+noEffect = 1
+
+# bool: warn when using (expr % 1), it has no effect on integers and strings
+modulo1 = 1
+
+# bool: warn if using (expr is const-literal), 
+# doesn't always work on integers and strings
+isLiteral = 0 # EKR
+
+# bool: warn when using a deprecated module or function
+deprecated = 1
+
+# bool: warn when the class attribute does not exist
+classAttrExists = 1
+
+# bool: warn when calling an attribute not a method
+callingAttribute = 0
+
+# bool: warn when using named arguments: func(a=1, b=2), where def func(a, b):
+#       def func2(a, b, **kw): doesn't generate a warning
+namedArgs = 0 # EKR
+
+# str: name of 'self' parameter
+methodArgName = 'self'
+
+# list of str: names of first parameter to classmethods
+## classmethodArgNames = ['cls', 'klass']
+
+# bool: warn when method/function arguments are unused
+argumentsUsed = 1
+
+# bool: ignore if self is unused in methods
+ignoreSelfUnused = 0
+
+# bool: warn if functions/classes/methods names are redefined in same scope
+redefiningFunction = 1
+
+# bool:  check if an overriden method has the same signature
+#	 as base class method (__init__() methods are not checked)
+checkOverridenMethods = 1
+
+# bool:  check if a special (reserved) method has the correct signature
+#	 and is known (these are methods that begin and end with __
+## checkSpecialMethods = 1
+
+# int: warnings for code complexity, max value before generating a warning
+maxLines = 2000
+maxBranches = 500
+maxReturns = 100
+maxArgs = 100
+maxLocals = 250
+maxReferences = 500
+
+# bool:  ignore all warnings from standard library components
+#	 (this includes anything under the standard library, eg, site-packages)
+ignoreStandardLibrary = 1 # EKR
+
+# list of strings: ignore unused locals/arguments if name is one of
+unusedNames = [ '_', 'empty', 'unused', 'dummy', 'event', 's', 'i', 'commander']
+
+
+# list of strings: ignore warnings generated from these modules
+blacklist = [ 'leoGlobals', 'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
+
+
+# list of strings: ignore global variables not used if name is one of
+variablesToIgnore = [ '__all__', '__version__', '__copyright__', ]
+
+# bool: print the PyChecker parse of modules, classes, etc.
+printParse = 0
+
+# bool: turn debugging of PyChecker on
+debug = 0
+
+# bool: check that attributes of objects exist
+checkObjectAttrs = 1
+
+# bool: various warnings about incorrect usage of __slots__
+slots = 1
+
+# bool: check if __slots__ is empty
+emptySlots = 1
+
+# bool: check for using properties in classic classes
+classicProperties = 1
+
+# bool: check for integer division (may be problem between Python versions)
+intDivide = 1
+
+# bool: check if local variables shadow a global variable with same name
+shadows = 0 # EKR
+
+# bool: check if input() is used, which is a security problem, use raw_input()
+usesInput = 1
+
+# bool: check if using a constant string to getattr()/setattr()
+constAttr = 1
+
+# bool: check for using +variable, since it is almost always has no effect
+unaryPositive = 1
+
+# bool: check for modifying a parameter with a default value
+#       (value must be: list, dict, instance)
+#       modifying the value may have undesirable/unexpected side-effects
+modifyDefaultValue = 1
+
+# bool: check if the exec statement is used (possible security problem)
+usesExec = 0
+
+# bool: check consistent return values
+checkReturnValues = 1
+
+# bool: check if using implict and explicit return values
+checkImplicitReturns = 1
+
+# dict: suppress warnings, key is module.class.method or module.function
+#	value is a string of command line arguments (can omit -- for long args)
+#       { 'module1': 'no-namedargs maxlines=0',
+#	  'module2.my_func': 'argsused',
+#	  'module3.my_class': 'no-initreturn', }
+suppressions = {}
+
+# dict: suppress warnings where keys can be regular expressions
+suppressionRegexs = {}</t>
+<t tx="T2184">@comment ;
+
+(defun pymacs-load (module &amp;optional prefix noerror)
+
+  "Import the Python module named MODULE into Emacs.\
+Each function in the Python module is made available as an Emacs function.\
+The Lisp name of each function is the concatenation of PREFIX with\
+the Python name, in which underlines are replaced by dashes.  If PREFIX is\
+not given, it defaults to MODULE followed by a dash.\
+If NOERROR is not nil, do not raise error when the module is not found."
+
+  (interactive
+   (let* ((module (read-string "Python module? "))
+	  (default (concat (car (last (split-string module "\\."))) "-"))
+	  (prefix (read-string (format "Prefix? [%s] " default)
+			       nil nil default)))
+     (list module prefix)))
+  (message "Pymacs loading %s..." module)
+  (let ((lisp-code (pymacs-call "pymacs_load_helper" module prefix)))
+    (cond (lisp-code (let ((result (eval lisp-code)))
+		       (message "Pymacs loading %s...done" module)
+		       result))
+	  (noerror (message "Pymacs loading %s...failed" module) nil)
+	  (t (error "Pymacs loading %s...failed" module)))))</t>
+<t tx="T2185">from leoGlobals import *
+es(app.tkEncoding)
+es(app.config.new_leo_file_encoding)</t>
 </tnodes>
 </leo_file>

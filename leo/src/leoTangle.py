@@ -3879,7 +3879,7 @@ class baseTangleCommands:
 			elif match_word(s,i,"@c") or match_word(s,i,"@p"): kind = at_code
 			elif i < len(s) and s[i] == '@':
 				if   i + 1 >= len(s): kind = at_doc
-				elif i + 1 < len(s) and s[i+1] not in string.letters:
+				elif i + 1 < len(s) and s[i+1] not in string.ascii_letters:
 					kind = at_web
 				else: kind = at_other # Set kind later
 			else: kind = plain_line

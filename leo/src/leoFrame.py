@@ -1057,7 +1057,7 @@ class baseLeoFrame:
 		bind_last = menu_last = last
 		if len(last) == 1:
 			ch = last[0]
-			if ch in string.letters:
+			if ch in string.ascii_letters:
 				menu_last = string.upper(last)
 				if has_shift:
 					bind_last = string.upper(last)
@@ -1158,7 +1158,7 @@ class baseLeoFrame:
 		
 		if has_shift:
 			menu_head = "Shift+"
-			if len(last) > 1 or (len(last)==1 and last[0] not in string.letters):
+			if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
 				bind_head = "Shift-"
 			# else: print "no shift: last:", `last`
 		
@@ -3852,7 +3852,7 @@ class baseLeoFrame:
 				# Remove special characters from command names.
 				name2 = ""
 				for ch in name:
-					if ch in string.letters or ch in string.digits:
+					if ch in string.ascii_letters or ch in string.digits:
 						name2 = name2 + ch
 				name = name2
 				#@-node:<< set name to the label for doCommand >>

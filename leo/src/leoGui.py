@@ -328,6 +328,8 @@ class tkinterGui(leoGui):
 			elif encoding and len(encoding) > 0:
 				trace("ignoring invalid " + src + " encoding: " + `encoding`)
 				
+		es("Text encoding = " + app.tkEncoding, color="blue")
+				
 		# trace(app.tkEncoding)
 	#@nonl
 	#@-node:setEncoding
