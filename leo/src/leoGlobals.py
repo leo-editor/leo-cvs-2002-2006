@@ -1361,7 +1361,7 @@ def pause (s):
 		i += 1
 #@nonl
 #@-node:pause
-#@+node:Sherlock...
+#@+node:Sherlock... (trace)
 #@+at 
 #@nonl
 # Starting with this release, you will see trace statements throughout the 
@@ -1403,7 +1403,7 @@ def pause (s):
 # 
 #   trace_tag("-nocolor", self.disable_color)
 #@-at
-#@-node:Sherlock...
+#@-node:Sherlock... (trace)
 #@+node:init_sherlock
 # Called by startup code.
 # Args are all the arguments on the command line.
@@ -1502,8 +1502,8 @@ def trace (*args,**keys):
 		if minus: name = name[1:]
 		if (not minus and '*' in t) or name.lower() in t:
 			s = name + ": " + message
-			if 1: print s
-			else: es(s)
+			print s # Traces _always_ get printed.
+#@nonl
 #@-node:trace
 #@+node:trace_tag
 # Convert all args to strings.
@@ -1527,8 +1527,8 @@ def trace_tag (name, *args):
 	if minus: name = name[1:]
 	if (not minus and '*' in t) or name.lower() in t:
 		s = name + ": " + message
-		if 1: print s
-		else: es(s)
+		print s # Traces _always_ get printed.
+#@nonl
 #@-node:trace_tag
 #@+node:clear_stats
 def clear_stats():
@@ -2128,21 +2128,24 @@ def es(s,*args,**keys):
 		if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
 			arg = repr(arg)
 		s = s + ", " + arg
-	log = app.log
-	if log:
-		# print s
-		log.put(s,color=color)
-		for ch in s:
-			if ch == '\n': log.newlines += 1
-			else: log.newlines = 0
-		if newline:
-			ecnl() # only valid here
-	elif newline:
-		app.logWaiting.append((s+'\n',color),) # 2/16/03
-		print s
+	if app.batchMode:
+		if app.log:
+			app.log.put(s)
 	else:
-		app.logWaiting.append((s,color),) # 2/16/03
-		print s,
+		log = app.log
+		if log:
+			log.put(s,color=color)
+			for ch in s:
+				if ch == '\n': log.newlines += 1
+				else: log.newlines = 0
+			if newline:
+				ecnl() # only valid here
+		elif newline:
+			app.logWaiting.append((s+'\n',color),) # 2/16/03
+			print s
+		else:
+			app.logWaiting.append((s,color),) # 2/16/03
+			print s,
 #@nonl
 #@-node:es, enl, ecnl
 #@+node:top
