@@ -319,7 +319,9 @@ class leoFind (leoFindBase):
 	
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for key in self.intKeys:
-			exec("self.dict['%s'].set(c.%s_flag)" % (key,key))
+			val = getattr(c, key + "_flag")
+			self.dict[key].set(val)
+			# trace(key,val)
 	
 		
 		#@<< set widgets >>
@@ -350,7 +352,9 @@ class leoFind (leoFindBase):
 		
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for key in self.intKeys:
-			exec("c.%s_flag = self.dict['%s'].get()" % (key,key))
+			val = self.dict[key].get()
+			setattr(c, key + "_flag", val)
+			# trace(key,val)
 	
 		# Set ivars from radio buttons.
 		c.pattern_match_flag   = self.dict["radio-find-type"].get()    == "pattern-search"

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="101" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="123" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="88" left="369" height="734" width="662"/>
+	<global_window_position top="87" left="461" height="734" width="662"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="V"><vh>Distribution checklist</vh></v>
+<v t="T1"><vh>Distribution checklist</vh></v>
 <v t="T2"><vh>Distribution scripts</vh></v>
 <v t="T3"><vh>Notes</vh>
 <v t="T4"><vh>Quote from Alex Martelli</vh></v>
@@ -210,7 +210,7 @@
 </v>
 </v>
 </v>
-<v t="T97" a="E"><vh>Undo replace tests</vh>
+<v t="T97"><vh>Undo replace tests</vh>
 <v t="T98" a="CE"><vh>A</vh>
 <v t="T99" a="CE"><vh>B</vh>
 <v t="T100" a="E"><vh>C</vh></v>
@@ -229,6 +229,37 @@
 <v t="T99" a="CE"><vh>B</vh>
 <v t="T100"><vh>C</vh></v>
 <v t="T101"><vh>C2</vh></v>
+</v>
+</v>
+</v>
+<v t="T102"><vh>makeDict</vh></v>
+<v t="T103" a="E"><vh> Colorizer tests</vh>
+<v t="T104"><vh>tests</vh></v>
+<v t="T105"><vh>php test</vh></v>
+<v t="T106"><vh>(Incremental Syntax Coloring)</vh>
+<v t="T107" a="E"><vh> Tests</vh>
+<v t="T108"><vh> Long text for tests</vh></v>
+<v t="T109" a="E"><vh>Dave Hein</vh>
+<v t="T110"><vh>Test</vh></v>
+</v>
+<v t="T111" a="E"><vh>Dave Hein2</vh>
+<v t="T112"><vh>NewHeadline</vh></v>
+</v>
+<v t="T113"><vh>Long test</vh></v>
+<v t="T114"><vh>problems</vh></v>
+</v>
+</v>
+<v t="T115"><vh>(html syntax coloring)</vh>
+<v t="T116"><vh>test</vh></v>
+</v>
+<v t="T117"><vh>(Fixed syntax coloring bugs when language/comments change)</vh>
+<v t="T118"><vh>Test</vh></v>
+</v>
+<v t="T119" a="V"><vh>(colorizing bug)</vh>
+<v t="T120"><vh>report</vh></v>
+<v t="T121" a="E"><vh>@file c:\prog\test\Enroll SerNum.c</vh>
+<v t="T122"><vh>&lt;&lt; Defines &gt;&gt;</vh></v>
+<v t="T123"><vh>&lt;&lt; Head &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -956,5 +987,703 @@ line 1
 	after</t>
 <t tx="T100"></t>
 <t tx="T101"></t>
+<t tx="T102">def makeDict(*args,**keys):
+	return keys
+	
+print makeDict(a=1,b=2)
+
+args = (1,2)
+
+apply(print,args)</t>
+<t tx="T103"></t>
+<t tx="T104">@ignore
+@ doc
+@c
+@language c
+	@others
+
+abc
+for # comment
+# pp
+@q comment @&gt; after
+// comment
+&lt;!-- comment --&gt; after
+/* java comment */
+{ pascal comment }
+% latex comment
+xor php keyword
+fblocked tcl keyword
+synchronized java keyword
+\acute latex keyword
+alarm perl keyword
+
+# Python single-line comment
+// C single-line comment
+xx /* C block comment */ yy
+xxx """ triple string """ zzz
+a 'string' b
+c "string" d
+// C keywords
+switch, case
+</t>
+<t tx="T105">@language php
+@ doc
+@c
+
+and or
+array
+array()
+this is a test.
+__CLASS__
+&lt;?php and or array() ?&gt;
+</t>
+<t tx="T106">@ignore
+
+@
+
+We need both incremental and full syntax coloring...
+
+We must do a _full_ recoloring when selecting any node, even for two cloned nodes, because the nodes may have different contexts.
+
+Furthermore, at present undo must always do a full recoloring because setBodyStringOrPane just replaces the old text with the new, and that destroys all the coloring tags.  The only possible solution would be to do an "incremental update" in setBodyStringOrPane.  It would also be good to do that in tree.select.
+
+The present code _is_ faster than the old code because it avoids redundant drawing.</t>
+<t tx="T107"></t>
+<t tx="T108"># This creates a free-floating copy of v's tree for undo.
+# The copied trees must use different tnodes than the original.
+
+def copyTree(self,root):
+
+    c = self
+    # Create the root vnode.
+    result = v = leoNodes.vnode(c,root.t)
+        # Copy the headline and icon values v.copyNode(root,v)
+        # Copy the rest of tree.
+        v.copyTree(root,v)
+    # Replace all tnodes in v by copies.
+    assert(v.nodeAfterTree() == None)
+    while v:
+        v.t = leoNodes.tnode(0, v.t.bodyString)
+        v = v.threadNext()
+    return result
+    
+# This creates a free-floating copy of v's tree for undo.
+# The copied trees must use different tnodes than the original.
+
+def copyTree(self,root):
+
+    c = self
+    # Create the root vnode.
+    result = v = leoNodes.vnode(c,root.t)
+
+	# Copy the headline and icon values
+    v.copyNode(root,v)
+    # Copy the rest of tree.
+        v.copyTree(root,v)
+    # Replace all tnodes in v by copies.
+    assert(v.nodeAfterTree() == None)
+    while v:
+        v.t = leoNodes.tnode(0, v.t.bodyString)
+        v = v.threadNext()
+    return result</t>
+<t tx="T109">@language c</t>
+<t tx="T110">@
+This is just a test
+@c
+aprocedure(
+	a,
+	b )
+	{
+	printf( "Hello, world\n" );
+	return 0;
+}
+
+"/* testing */"
+@#
+bprocedure(
+	a,
+	b )
+	{
+	printf( "Hello, world\n" );
+	return 0;
+}
+
+@#
+cprocedure(
+	a,
+	b )
+	{
+	printf( "Hello, world\n" );
+	return 0;
+}
+
+@#
+dprocedure(
+	a,
+	b )
+	{
+	printf( "Hello, world\n" );
+	return 0;
+}
+
+@#
+int main()
+{
+  return 0
+}</t>
+<t tx="T111">Here's another issue
+
+Create a @file node[snip]
+
+You should see the &lt;!-- test --&gt; in 'red' (comment color).
+
+Now backspace over 'html' in the language directive and type 'xml'.  
+
+The bug is that XML is not a valid Leo language but the comment is still 'red'.
+If you go to another node and come back it changes back to black type.  Now
+change the language back to 'html'.  It doesn't recolorize and the comment remains
+black.
+
+This is a nit, really.
+</t>
+<t tx="T112">@language html
+&lt;? xml version="1.0"&gt;
+&lt;!-- test --&gt;
+&lt;project name="Converter" default="dist"&gt;
+&lt;/project&gt;</t>
+<t tx="T113">def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:		
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+def colorizeAnyLanguage (self,v,body,language,flag):
+	
+	try:
+		self.incremental = 1
+		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
+		if self.incremental:
+			&lt;&lt; incrementally color the text &gt;&gt;
+		else:
+			self.removeAllTags()
+			n = 1 # The Tk line number for indices, as in n.i
+			for s in lines:
+				state = self.colorizeLine(s,n,state)
+				n += 1		
+	except:
+		es_exception()
+
+
+</t>
+<t tx="T114">"""python
+string"""d
+
+'this\
+is</t>
+<t tx="T115">@language html
+@
+To do:
+
+done: use self.tag routine everywhere.
+done: convert index to be a method.
+done: create self.line_index ivar.  Use it in self.index().
+done: remove n param from most routines, especially calls to self.add_tag!
+done: complete test of syntax coloring.
+
+- add @language html when importing html file.
+</t>
+<t tx="T116">@color
+@ignore
+&lt;HTML&gt;
+&lt;!-- Author: Edward K. Ream, edream@tds.net --&gt;
+&lt;HEAD&gt;
+  &lt;META NAME="GENERATOR" CONTENT="Microsoft FrontPage 4.0"&gt;
+  &lt;TITLE&gt; Leo's Home Page &lt;/TITLE&gt;
+  &lt;META NAME="description" CONTENT="This page describes Leo.
+Leo adds powerful outlines to the noweb and CWEB literate programming languages."&gt;
+  &lt;META NAME="keywords" CONTENT="LEO, LITERATE PROGRAMMING, OUTLINES, CWEB,
+NOWEB, OUTLINES, EDWARD K. REAM, DONALD E. KNUTH, SILVIO LEVY, OPEN SOFTWARE"&gt;
+&lt;/HEAD&gt;
+&lt;!-- Last Modified: May 12, 2002 --&gt;
+&lt;BODY BGCOLOR="#fffbdc"&gt;
+
+&lt;H1 ALIGN=CENTER&gt;&lt;a NAME="top"&gt;&lt;/a&gt;&lt;IMG SRC="Blank.gif" width=
+"32" height="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;IMG SRC="leo.gif" 
+WIDTH="32" HEIGHT="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;a href="leo_TOC.html#top"&gt;&lt;IMG SRC=
+"arrow_rt.gif" WIDTH="32" HEIGHT="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;/a&gt; &amp;nbsp;&lt;/H1&gt;
+
+&lt;H1 ALIGN=CENTER&gt; Leo's Home Page&lt;/H1&gt;
+
+&lt;p align="center"&gt;&lt;a href="http://www.python.org/"&gt;&lt;img border="0" src="PythonPowered.gif" width="110" height="44"&gt; &lt;/a&gt; &lt;A HREF="http://sourceforge.net/"&gt;&lt;IMG SRC="http://sourceforge.net/sflogo.php?group_id=3458&amp;type=1" NATURALSIZEFLAG="0" ALT="SourceForge Logo"&gt;&lt;/A&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+&lt;A HREF="http://sourceforge.net/project/?group_id=3458"&gt;Leo at SourceForge&lt;/A&gt;&amp;nbsp;&amp;nbsp;
+&lt;a href="icons.html"&gt;&lt;img border="0" src="LeoCodeGray.gif" width="77" height="42"&gt;&lt;/a&gt;&amp;nbsp;&amp;nbsp;
+&lt;a href="icons.html"&gt;&lt;img border="0" src="LeoProse.gif" width="81" height="42"&gt;&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+
+&lt;H3&gt;&lt;A NAME="anchor127554"&gt;&lt;/A&gt;Summary&lt;/H3&gt;
+
+&lt;UL&gt;
+  &lt;LI&gt;Leo is a &lt;i&gt; programmer's editor&lt;/i&gt;  and a flexible &lt;i&gt;browser&lt;/i&gt; for
+    projects, programs, classes or data. Leo clarifies design, coding, debugging, testing
+  and maintenance.
+  &lt;LI&gt;Leo is an &lt;i&gt;outlining editor&lt;/i&gt;. Outlines clarify the big picture while
+    providing unlimited space for details.
+  &lt;LI&gt;Leo
+    is a &lt;a HREF="http://www.literateprogramming.com/"&gt;&lt;i&gt;literate
+    programming&lt;/i&gt;&lt;/a&gt; tool, compatible with &lt;A HREF="http://www.eecs.harvard.edu/~nr/noweb/"&gt;noweb&lt;/A&gt;
+    and &lt;a HREF="http://www-cs-faculty.stanford.edu/~knuth/cweb.html"&gt;CWEB&lt;/a&gt;.
+    Leo enhances any text-based
+programming language, from assembly language and C to Java, Python and XML.
+  &lt;LI&gt;Leo is also a &lt;i&gt;data organizer&lt;/i&gt;. A single Leo outline can generate complex
+    data spanning many different files.&amp;nbsp; Leo has been used to manage web sites.
+  &lt;LI&gt;Leo is a &lt;i&gt; project manager&lt;/i&gt;. Leo provides multiple views
+of a project within a single outline. Leo naturally represents tasks that remain
+    up-to-date.
+  &lt;LI&gt;Leo is fully &lt;i&gt; scriptable&lt;/i&gt; using &lt;A HREF="http://www.python.org/"&gt;Python&lt;/A&gt;
+  and saves its files in &lt;A HREF="http://www.w3.org/XML/"&gt;XML&lt;/A&gt; format.
+  &lt;LI&gt;Leo is &lt;i&gt;portable&lt;/i&gt;.&amp;nbsp; Leo.py is 100% pure Python and will run on
+    any platform supporting &lt;A HREF="http://www.python.org/"&gt;Python&lt;/A&gt;
+    and &lt;a href="http://tcl.activestate.com/"&gt;Tk/tcl&lt;/a&gt;, including Windows,
+    Linux and MacOS X.&amp;nbsp; Leo.exe runs on any Windows platform.
+  &lt;LI&gt;Leo is &lt;a href="http://www.opensource.org/"&gt; &lt;i&gt; Open Software&lt;/i&gt;&lt;/a&gt;, distributed under
+    the &lt;a href="http://www.python.org/doc/Copyright.html"&gt; Python License&lt;/a&gt;.
+&lt;/UL&gt;
+
+&lt;H3&gt;More Information and downloads&lt;/H3&gt;
+
+&lt;ul&gt;
+  &lt;LI&gt;An excellent &lt;a href="http://www.3dtree.com/ev/e/sbooks/leo/sbframetoc_ie.htm"&gt;online
+    tutorial&lt;/a&gt; and &lt;A HREF="http://www.jserv.com/jk_orr/xml/leo.htm"&gt;Leo resource
+  page&lt;/A&gt;, both written by &lt;a href="http://www.jserv.com/jk_orr"&gt;Joe Orr&lt;/a&gt;.
+  &lt;LI&gt;My brother's &lt;a href="SpeedReam.html"&gt;slashdot
+    article about Leo&lt;/a&gt;, the best description about why Leo is special.
+  &lt;LI&gt;&lt;A HREF="testimonials.html#anchor104391"&gt;What people are saying about Leo&lt;/A&gt;
+  &lt;LI&gt;&lt;A HREF="leo_TOC.html#anchor964914"&gt;Complete users guide&lt;/A&gt;
+    and
+    &lt;A HREF="intro.html#anchor887874"&gt;tutorial introduction&lt;/A&gt;  with
+  screen shots.
+  &lt;li&gt;&lt;a href="FAQ.html"&gt;FAQ&lt;/a&gt; and &lt;a href="http://sourceforge.net/forum/?group_id=3458"&gt;help and discussion
+    forums&lt;/a&gt;, preferable to &lt;A HREF="mailto:edream@tds.net"&gt;email&lt;/A&gt; so others may join
+    in.&lt;/li&gt;
+  &lt;li&gt;&lt;a href="icons.html"&gt;Icons&lt;/a&gt; for bragging about Leo.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;a href="http://sourceforge.net/project/showfiles.php?group_id=3458"&gt;Download
+    Leo&lt;/a&gt; from &lt;A HREF="http://sourceforge.net/project/?group_id=3458"&gt;Leo's SourceForge
+site&lt;/A&gt;.
+
+&lt;P ALIGN=left&gt;Leo's author is &lt;A HREF="http://personalpages.tds.net/~edream/index.html"&gt;Edward
+  K. Ream&lt;/A&gt; email: &lt;A HREF="mailto:edream@tds.net"&gt;edream@tds.net&lt;/A&gt; voice: (608) 231-0766
+
+&lt;HR ALIGN=LEFT&gt;
+
+&lt;p align="center"&gt;
+
+&lt;IMG SRC="Blank.gif" ALIGN="left" NATURALSIZEFLAG=
+"3" width="34" height="34"&gt;&lt;IMG SRC="leo.gif" ALIGN="left" NATURALSIZEFLAG=
+"3" width="32" height="32"&gt;&lt;a HREF="leo_TOC.html"&gt;&lt;IMG SRC="arrow_rt.gif" WIDTH="32"
+HEIGHT="32" ALIGN="left" NATURALSIZEFLAG="3"&gt;
+
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+</t>
+<t tx="T117">@ Enabling or disabling @language or @comment now recolors entire text.</t>
+<t tx="T118">@language c
+ @comment /* */
+
+/* comment */
+# test</t>
+<t tx="T119"></t>
+<t tx="T120">@nocolor
+
+Read and respond to this message at: 
+http://sourceforge.net/forum/message.php?msg_id=1719215
+By: nobody
+
+Ok, it seems to be in the code I copied in. I tried it with a second Node, and
+don't have the trouble.
+
+Console Mode gives the following:
+
+Traceback (most recent call last):
+File "d:\language\literate programming\Leo\leoColor.py", line 830,
+in colorizeAnyLanguage
+    i,state = func(s,i,n)
+
+File "d:\language\literate programming\Leo\leoColor.py", line 934,
+in continueBlockComment
+    j = string.find(s,self.block_comment_end,i)
+
+File "D:\LANGUAGE\PYTHON\lib\string.py", line 174, in find
+    return s.find(*args)
+
+TypeError: expected a character buffer object
+
+The line, "#define WIPEOUT 0 /* " seems to be the problem child -- if I move
+the start-of-comment marker to the next line, the error message goes away; however,
+the lines between the '/*' and '*/' are NOT comment-colored...
+
+--Rich
+</t>
+<t tx="T121">@language c
+@comment /* */
+@path .
+@ignore
+
+&lt;&lt; Defines &gt;&gt;
+&lt;&lt; Head &gt;&gt;</t>
+<t tx="T122">@
+@c
+
+#define WIPEOUT 0 /* 
+                   * Causes database card number &amp; flags to be set to zero. 
+                   * This is so I don't need an infinite supply of cards!
+                   */
+// Not colored (because of @language /* */)
+#include "equ.h"
+#include "cmn.h"
+#include "ramdef.h"
+#include "eeprom.h"
+#include &lt;hpc_ram.h&gt;
+#include &lt;rlydef.h&gt;</t>
+<t tx="T123"></t>
 </tnodes>
 </leo_file>

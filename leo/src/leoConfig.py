@@ -393,10 +393,10 @@ class baseConfig:
 	
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for s in findFrame.intKeys:
-			# This exec is safe because leoFind.ivars does not depend on leoConfig.txt.
 			val = config.getBoolFindPref(s)
 			if val: 
-				exec("c."+s+"_flag = val")
+				setattr(c,s+"_flag",val)
+				# trace(s+"_flag",val)
 				
 		val = config.getStringFindPref("change_string")
 		if val: c.change_text = val
@@ -469,8 +469,8 @@ class baseConfig:
 	
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for s in findFrame.intKeys:
-			# This exec is safe because leoFind.ivars does not depend on leoConfig.txt.
-			exec("val=str(c."+s+"_flag)")
+			val = getattr(c,s+"_flag")
+			# trace(val,s+"_flag")
 			self.setFindPref(s,val)
 		
 		self.setFindPref("change_string",c.change_text)

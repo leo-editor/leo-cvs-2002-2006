@@ -99,7 +99,7 @@ class baseUndoer:
 		
 		self.v = None # The node being operated upon for undo and redo.
 		for ivar in optionalIvars:
-			exec('self.%s = None' % ivar)
+			setattr(self,ivar,None)
 	#@-body
 	#@-node:1::clearIvars
 	#@-node:3::undo.__init__ & clearIvars
@@ -175,10 +175,8 @@ class baseUndoer:
 		u.undoType = d["undoType"]
 	
 		for ivar in optionalIvars:
-			if d.has_key(ivar):
-				exec('u.%s = d["%s"]' % (ivar,ivar))
-			else:
-				exec('u.%s = None' % ivar)
+			val = d.get(ivar,None)
+			setattr(u,ivar,val)
 	
 		if not u.new_undo: # Recreate an "oldText" entry if necessary.
 			if u.undoType == "Typing" and u.oldText == None:
@@ -207,7 +205,8 @@ class baseUndoer:
 		# Only enter significant entries into the dictionary.
 		# This is an important space optimization for typing.
 		for ivar in optionalIvars:
-			exec('if u.%s != None: d["%s"] = u.%s' % (ivar,ivar,ivar))
+			if getattr(u,ivar) != None:
+				d[ivar] = getattr(u,ivar)
 		# copy all significant keywords to d.
 		if keywords:
 			for key in keywords.keys():
@@ -342,7 +341,7 @@ class baseUndoer:
 			return None
 		# Clear all optional params.
 		for ivar in optionalIvars:
-			exec('u.%s = None' % ivar)
+			setattr(u,ivar,None)
 		# Set the params.
 		u.undoType = undo_type
 		u.v = v

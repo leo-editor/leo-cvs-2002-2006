@@ -207,7 +207,9 @@ class baseLeoPrefs:
 		#trace(`c.tab_width`)
 	
 		for var in ivars:
-			exec("self.%s = c.%s" % (var,var))
+			val = getattr(c,var)
+			setattr(self,var,val)
+			# trace(val,var)
 	
 		
 		#@<< remember values for revert >>
@@ -302,21 +304,23 @@ class baseLeoPrefs:
 		#@-node:1::<< update ivars >>
 
 		for var in ivars:
-			exec("c.%s = self.%s" % (var,var))
+			val = getattr(self,var)
+			setattr(c,var,val)
+			
 		c.frame.setTabWidth(c.tab_width)
-		# print "set_ivars" ; print self.print_ivars()
+		# self.print_ivars()
 	
 	def idle_set_ivars (self, event=None):
 		
 		c = top() ; v = c.currentVnode()
 		self.top.after_idle(self.set_ivars,c)
 		c.tree.recolor(v)
-		# print "idle_set_ivars" ; print self.print_ivars()
+		# print self.print_ivars()
 		
 	def print_ivars (self):
 		
 		for var in ivars:
-			exec("print self.%s, '%s'" % (var,var))
+			trace(var, getattr(self,var))
 	#@-body
 	#@-node:1::prefs.set_ivars & idle_set_ivars & print_ivars
 	#@+node:2::set_lang

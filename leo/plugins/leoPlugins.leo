@@ -21,7 +21,7 @@
 <v t="T6"><vh>Hooks should never blindly Python scripts</vh></v>
 <v t="T7"><vh>NEVER use this kind of code in a hook!!</vh></v>
 </v>
-<v t="T8" a="V"><vh>Plugins</vh>
+<v t="T8" a="E"><vh>Plugins</vh>
 <v t="T9"><vh>Commands</vh>
 <v t="T10"><vh> Importing Cisco configuration files</vh>
 <v t="T11"><vh>@file import_cisco_config.py</vh>
@@ -110,7 +110,7 @@
 <v t="T77"><vh>scanPluginDirectives</vh></v>
 </v>
 </v>
-<v t="T78"><vh>Drawing, graphics &amp; styled text</vh>
+<v t="T78" a="V"><vh>Drawing, graphics &amp; styled text</vh>
 <v t="T79"><vh>@file color_markup.py</vh>
 <v t="T80"><vh>initAnyMarkup</vh></v>
 <v t="T81"><vh>colorWikiMarkup</vh></v>
@@ -131,9 +131,9 @@
 </v>
 </v>
 <v t="T92"><vh>@file nav_buttons.py</vh>
-<v t="T93"><vh>class commanderInfoClass</vh>
+<v t="T93" a="E"><vh>class commanderInfoClass</vh>
 <v t="T94"><vh>__init__ (commanderInfoClass)</vh></v>
-<v t="T95"><vh>addWidgets</vh>
+<v t="T95" a="E"><vh>addWidgets</vh>
 <v t="T96"><vh>&lt;&lt; define callbacks &gt;&gt;</vh></v>
 </v>
 <v t="T97"><vh>createImage</vh></v>

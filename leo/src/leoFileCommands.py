@@ -355,7 +355,8 @@ class baseFileCommands:
 		#@+node:1::<< Set defaults of all flags >>
 		#@+body
 		for var in findFrame.intKeys:
-			exec("c.%s_flag = false" % var)
+			attr = "%s_flag" % (var)
+			setattr(c,attr,false)
 		
 		#@-body
 		#@-node:1::<< Set defaults of all flags >>
