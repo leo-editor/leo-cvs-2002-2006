@@ -187,6 +187,7 @@ class baseAtFile:
         
         at = self
         new_df = False ; valid = True ; n = len(s)
+        derivedFileIsThin = False
         encoding_tag = "-encoding="
         version_tag = "-ver="
         tag = "@+leo"
@@ -249,6 +250,7 @@ class baseAtFile:
         #@+node:EKR.20040503105354:<< read optional thin param >>
         if g.match(s,i,thin_tag):
             i += len(tag)
+            derivedFileIsThin = True
         #@nonl
         #@-node:EKR.20040503105354:<< read optional thin param >>
         #@nl
@@ -295,7 +297,7 @@ class baseAtFile:
         #@nonl
         #@-node:ekr.20031218072017.2638:<< set the closing comment delim >>
         #@nl
-        return valid,new_df,start,end
+        return valid,new_df,start,end,derivedFileIsThin
     #@nonl
     #@-node:EKR.20040604155223.1:top_df.parseLeoSentinel
     #@+node:ekr.20031218072017.1812:top_df.read
@@ -355,7 +357,7 @@ class baseAtFile:
         #@-node:ekr.20031218072017.1814:<< open file or return false >>
         #@nl
         g.es("reading: " + root.headString())
-        firstLines,read_new = at.scanHeader(theFile,fileName)
+        firstLines,read_new,derivedFileIsThin = at.scanHeader(theFile,fileName)
         df = g.choose(read_new,at.new_df,at.old_df)
         # g.trace(g.choose(df==at.new_df,"new","old"))
         #@    << copy ivars to df >>
@@ -578,7 +580,7 @@ class baseAtFile:
         at = self
         firstLines = [] # The lines before @+leo.
         tag = "@+leo"
-        valid = True ; new_df = False
+        valid = True ; new_df = False ; derivedFileIsThin = False
         #@    << skip any non @+leo lines >>
         #@+node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
         #@+at 
@@ -606,14 +608,14 @@ class baseAtFile:
         #@-node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
         #@nl
         if valid:
-            valid,new_df,start,end = at.parseLeoSentinel(s)
+            valid,new_df,start,end,derivedFileIsThin = at.parseLeoSentinel(s)
         if valid:
             at.startSentinelComment = start
             at.endSentinelComment = end
         else:
             at.error("Bad @+leo sentinel in " + fileName)
         # g.trace("start,end",repr(at.startSentinelComment),repr(at.endSentinelComment))
-        return firstLines, new_df
+        return firstLines,new_df,derivedFileIsThin
     #@nonl
     #@-node:ekr.20031218072017.2633:top_df.scanHeader
     #@-node:ekr.20031218072017.2625:Reading
@@ -1921,7 +1923,7 @@ class baseOldDerivedFile:
             self.onl() # End of sentinel.
     #@nonl
     #@-node:ekr.20031218072017.2698:putSentinel (applies cweb hack)
-    #@+node:ekr.20031218072017.2699:sentinelKind
+    #@+node:ekr.20031218072017.2699:sentinelKind 3.x
     def sentinelKind(self,s):
     
         """This method tells what kind of sentinel appears in line s.
@@ -1960,7 +1962,7 @@ class baseOldDerivedFile:
             # g.trace("not found:",key)
             return noSentinel
     #@nonl
-    #@-node:ekr.20031218072017.2699:sentinelKind
+    #@-node:ekr.20031218072017.2699:sentinelKind 3.x
     #@+node:ekr.20031218072017.2700:sentinelName
     # Returns the name of the sentinel for warnings.
     
@@ -3603,7 +3605,7 @@ class baseNewDerivedFile(oldDerivedFile):
         
         at = self
         
-        # This is safe (just barely) because only this method calls scanText4>
+        # This is safe (just barely) because only this method calls scanText4.
         at.perfectImportRoot = perfectImportRoot
     
         # Scan the 4.x file.
