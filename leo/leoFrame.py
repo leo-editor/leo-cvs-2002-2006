@@ -1467,9 +1467,7 @@ class LeoFrame:
 			file = None
 			open_with_file_num = 0
 			while file == None:
-				# a.openWithFileNum += 1
-				# name = "LeoTemp_" + sanitize_filename(v.headString()) + ext
-				# path = os.path.join(a.loadDir,name)
+				a.openWithFileNum += 1 # 1/24/03
 				name = "LeoTemp_" + sanitize_filename(v.headString())
 				if open_with_file_num:
 					name += '_' + str(a.openWithFileNum)
