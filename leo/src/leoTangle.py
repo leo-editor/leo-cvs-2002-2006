@@ -1398,21 +1398,12 @@ class baseTangleCommands:
             # g.trace(section.name)
             file_name = g.os_path_join(self.tangle_directory,section.name)
             file_name = g.os_path_normpath(file_name)
-            temp_name = g.create_temp_name()
+            mode = c.config.output_newline
+            # mode = g.choose(mode=="platform",'w','wb')
+            textMode = mode == 'platform'
+            self.output_file,temp_name = g.create_temp_file(textMode=textMode)
             if not temp_name:
                 g.es("Can not create temp file")
-                break
-            # Set the output_file global.
-            # Use "text" mode for platform-specific newlines.
-            mode = c.config.output_newline
-            mode = g.choose(mode=="platform",'w','wb')
-            try:
-                self.output_file = open(temp_name,mode)
-                if not self.output_file:
-                    g.es("Can not create: " + temp_name)
-                    break
-            except:
-                g.es("Can not create: " + temp_name)
                 break
             #@        <<Get root specific attributes>>
             #@+node:ekr.20031218072017.1152:<<Get root specific attributes>>
