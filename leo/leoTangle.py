@@ -327,6 +327,9 @@ class root_attributes:
 	
 		if 0:
 			
+			#@<< trace the state >>
+			#@+node:1::<< trace the state >>
+			#@+body
 			try:
 				if tangle_state.path: pass
 			except AttributeError:
@@ -344,6 +347,9 @@ class root_attributes:
 				", tab_width: " + tangle_state.tab_width +
 				# Stephen P. Schaefer 9/13/2002
 				", first_lines: " + tangle_state.first_lines)
+			#@-body
+			#@-node:1::<< trace the state >>
+
 		self.language = tangle_state.language
 		self.single_comment_string = tangle_state.single_comment_string
 		self.start_comment_string = tangle_state.start_comment_string
@@ -1659,7 +1665,7 @@ class tangleCommands:
 			width = max(0,self.tangle_indent) + 20
 		# Skip Initial white space in the doc part.
 		i = skip_ws_and_nl(s,0)
-		if i < len(s) and self.print_mode == "verbose":
+		if i < len(s) and self.print_mode == "verbose" or self.print_mode == "quiet":
 			use_block_comment = self.start_comment_string and self.end_comment_string
 			use_single_comment = not use_block_comment and self.single_comment_string
 			# javadoc_comment = use_block_comment and self.start_comment_string == "/**"
@@ -2002,7 +2008,7 @@ class tangleCommands:
 
 					self.put_part_node(part,no_first_leading_ws_flag)
 					# 4/3/01: @silent inhibits newlines after section expansion.
-					if count == sections and self.print_mode != "silent":
+					if count == sections and (self.print_mode != "silent" and self.print_mode != "quiet"):
 						
 						#@<< Put the ending comment >>
 						#@+node:2::<< Put the ending comment >>

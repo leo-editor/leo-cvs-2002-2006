@@ -53,7 +53,7 @@ leoKeywords = (
 	"@language","@last","@nocolor",
 	"@noheader", # Stephen P.Schaefer,9/2/2002
 	"@others",
-	"@pagewidth","@path","@tabwidth",
+	"@pagewidth","@path","@quiet","@tabwidth",
 	# Leo 1 directives.
 	"@cweb","@ignore","@noweb","@root","@unit","@silent","@terse","@verbose")
 #@-body
