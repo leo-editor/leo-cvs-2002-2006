@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="11565" clone_windows="0"/>
 <globals body_outline_ratio="0.452928870293">
-	<global_window_position top="-9" left="364" height="860" width="988"/>
+	<global_window_position top="40" left="350" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -69,7 +69,7 @@
 <v t="edream.110203163054.26"><vh>Travers A. Hough</vh></v>
 <v t="edream.110203163054.23"><vh>Zak Greant</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -1229,7 +1229,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1589,9 +1589,9 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
+<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
 <v t="EKR.20040524104904.212"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
+<v t="EKR.20040524104904.213" a="E"><vh>Using plugins and hooks</vh>
 <v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
 <v t="EKR.20040524104904.215"><vh>New plugin architecture</vh>
 <v t="EKR.20040524104904.216"><vh>@file plugins/mod_open_with.py</vh>
@@ -1606,7 +1606,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.223"><vh>About hooks</vh></v>
+<v t="EKR.20040524104904.223" a="TV"><vh>About hooks</vh></v>
 <v t="EKR.20040524104904.224"><vh>SECURITY WARNINGS</vh>
 <v t="EKR.20040524104904.225"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="EKR.20040524104904.226"><vh>NEVER use this kind of code in a hook!!</vh></v>
@@ -1850,7 +1850,7 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050" a="E"><vh>FAQ</vh>
+<v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
@@ -1940,7 +1940,7 @@
 <v t="edream.120903151103"><vh>Importing files</vh>
 <v t="edream.120903151103.1"><vh>How can I import many files at once?</vh></v>
 </v>
-<v t="edream.110203163054.1071" a="TV"><vh>Other topics</vh>
+<v t="edream.110203163054.1071"><vh>Other topics</vh>
 <v t="ekr.20040805102623"><vh>How can I use Python's pdb debugger with Leo?</vh></v>
 <v t="edream.110203163054.1073"><vh>How can I add support in Leo for a new language?</vh>
 <v t="edream.110203163054.1074"><vh>code</vh>
@@ -4889,7 +4889,7 @@ fileName: The name of the file being opened.
 You can use old_c.currentVnode() and new_c.currentVnode() to get the current
 vnode in the old and new windows.
 
-Leo calls the "open1" and "open2" hooks only if the file is already open. Leo
+Leo calls the "open1" and "open2" hooks only if the file is not already open. Leo
 will also call the "open1" and "open2" hooks if: a) a file is opened using the
 Recent Files menu and b) the file is not already open.
 

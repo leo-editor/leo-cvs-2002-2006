@@ -1176,7 +1176,7 @@ class baseColorizer:
                 while i > 0:
                     if i < old_len and i < new_len:
                         state = new_states[i]
-                        assert(state!="unknown")
+                        # assert(state!="unknown") # This can fail.
                         break
                     else:
                         i -= 1

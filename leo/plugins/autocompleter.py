@@ -473,7 +473,7 @@ oldCreateControl = leoTkinterFrame.leoTkinterBody.createControl
 if Tk and Pmw and sets and not g.app.unitTesting:
     leoTkinterFrame.leoTkinterBody.createControl = newCreateControl 
     leoPlugins.registerHandler('open2',initialScan) # EKR: We _must_ remove the start2 hook!
-    __version__ = "0.15"
+    __version__ = "0.150"
     print "autocompleter %s" % __version__
     g.plugin_signon(__name__)
 #@nonl

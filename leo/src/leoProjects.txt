@@ -5880,7 +5880,7 @@ if at.perfectImportRoot:
 else:
     if not at.updateWarningGiven:
         at.updateWarningGiven = True
-        print "***",at.t,at.root.t
+        # print "***",at.t,at.root.t
         g.es("Warning: updating changed text in %s" %
             (at.root.headString()),color="blue")
     # g.es("old...\n%s\n" % old)
@@ -7245,6 +7245,474 @@ if i < len(s):
 #@-node:ekr.20031218072017.2270:scanPythonText
 #@-node:ekr.20031218072017.2256:Python scanners
 #@-node:ekr.20040812033107:(Fix bugs in perfect import)  *** Disabled perfect import
+#@+node:ekr.20040831112005:(Investigated control-v problems on the Mac)
+#@+node:ekr.20040831112005.1:Report
+@killcolor
+
+Dan Winkler
+
+> I've noticed that Leo often inserts a v when I hit command-v to paste.  
+> I'm sure I've got the command key down before I type the v, but Leo is 
+> more sensitive to the timing somehow than most apps.
+
+> Now I'm seeing a problem where when I use command-v to paste into a 
+> headline it pastes the text twice.  If I use the edit menu and choose 
+> paste it works correctly and only pastes once.  Also, if I paste into 
+> the body of a node with command-v, that works correctly too.  It's only 
+> when I use the command key to paste into a headline that I see the 
+> problem.
+
+EKR:  I don't see any of these problems on my Mac.
+#@nonl
+#@-node:ekr.20040831112005.1:Report
+#@-node:ekr.20040831112005:(Investigated control-v problems on the Mac)
+#@+node:EKR.20040422132037.8:Mouse / Paste Anomalies (email sent)
+@nocolor
+
+By: Bill Drissel - drissel
+2004-04-13 19:43  
+
+Xserver (XFree86 under Cygwin) on PC (W2000); controlling Linux Red Hat;
+buncha windows up including one Leo window and many xterms and Xemacs.
+
+A: means action, R: means result
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; locate mouse symbol in text
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; up arrow to locate Ibeam in text
+R: Joy! colorizes, marks headline and saves!
+
+A: hilite headline text; type on KB
+R: keystrokes replace hilited text
+
+A: hilite text in Xemacs window; hilite headline; middle click
+R: hilited text appended to headline rather than replacing
+
+This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
+#@nonl
+#@-node:EKR.20040422132037.8:Mouse / Paste Anomalies (email sent)
+#@+node:ekr.20040910064225:(Removed assert from colorizer)
+#@+node:ekr.20040910064225.1:Report
+Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoColor.py", line 1179, in colorizeAnyLanguage
+    assert(state!="unknown")
+    
+This assert failed when when undoing a cut operation.
+#@nonl
+#@-node:ekr.20040910064225.1:Report
+#@+node:ekr.20031218072017.1880:colorizeAnyLanguage & allies
+def colorizeAnyLanguage (self,p,leading=None,trailing=None):
+    
+    """Color the body pane either incrementally or non-incrementally"""
+    
+    # g.trace("incremental",self.incremental,p)
+    if self.killFlag:
+        self.removeAllTags()
+        return
+    try:
+        << initialize ivars & tags >>
+        g.doHook("init-color-markup",colorer=self,v=self.p)
+        self.color_pass = 0
+        if self.incremental and (
+            << all state ivars match >> ):
+            << incrementally color the text >>
+        else:
+            << non-incrementally color the text >>
+        if self.redoColoring:
+            << completely recolor in two passes >>
+        << update state ivars >>
+        return "ok" # for testing.
+    except:
+        << set state ivars to "unknown" >>
+        if self.c:
+            g.es_exception()
+        else:
+            import traceback ; traceback.print_exc()
+        return "error" # for unit testing.
+#@nonl
+#@+node:ekr.20031218072017.1602:<< initialize ivars & tags >> colorizeAnyLanguage
+# Add any newly-added user keywords.
+for d in g.globalDirectiveList:
+    name = '@' + d
+    if name not in leoKeywords:
+        leoKeywords.append(name)
+
+# Copy the arguments.
+self.p = p
+
+# Get the body text, converted to unicode.
+s = self.body.getAllText() # 10/27/03
+self.sel = sel = self.body.getInsertionPoint() # 10/27/03
+start,end = self.body.convertIndexToRowColumn(sel) # 10/27/03
+
+# g.trace(self.language)
+# g.trace(self.count,self.p)
+# g.trace(body.tag_names())
+
+if not self.incremental:
+    self.removeAllTags()
+    self.removeAllImages()
+
+self.redoColoring = False
+self.redoingColoring = False
+
+<< configure tags >>
+<< configure language-specific settings >>
+
+self.hyperCount = 0 # Number of hypertext tags
+self.count += 1
+lines = string.split(s,'\n')
+#@nonl
+#@+node:ekr.20031218072017.1603:<< configure tags >>
+config = g.app.config
+assert(config)
+
+for name in default_colors_dict.keys(): # Python 2.1 support.
+    option_name,default_color = default_colors_dict[name]
+    option_color = config.getColorsPref(option_name)
+    color = g.choose(option_color,option_color,default_color)
+    # Must use foreground, not fg.
+    try:
+        self.body.tag_configure(name, foreground=color)
+    except: # Recover after a user error.
+        self.body.tag_configure(name, foreground=default_color)
+
+underline_undefined = config.getBoolColorsPref("underline_undefined_section_names")
+use_hyperlinks      = config.getBoolColorsPref("use_hyperlinks")
+self.use_hyperlinks = use_hyperlinks
+
+# underline=var doesn't seem to work.
+if 0: # use_hyperlinks: # Use the same coloring, even when hyperlinks are in effect.
+    self.body.tag_configure("link",underline=1) # defined
+    self.body.tag_configure("name",underline=0) # undefined
+else:
+    self.body.tag_configure("link",underline=0)
+    if underline_undefined:
+        self.body.tag_configure("name",underline=1)
+    else:
+        self.body.tag_configure("name",underline=0)
+        
+# 8/4/02: we only create tags for whitespace when showing invisibles.
+if self.showInvisibles:
+    for name,option_name,default_color in (
+        ("blank","show_invisibles_space_background_color","Gray90"),
+        ("tab",  "show_invisibles_tab_background_color",  "Gray80")):
+        option_color = config.getColorsPref(option_name)
+        color = g.choose(option_color,option_color,default_color)
+        try:
+            self.body.tag_configure(name,background=color)
+        except: # Recover after a user error.
+            self.body.tag_configure(name,background=default_color)
+    
+# 11/15/02: Colors for latex characters.  Should be user options...
+
+if 1: # Alas, the selection doesn't show if a background color is specified.
+    self.body.tag_configure("latexModeBackground",foreground="black")
+    self.body.tag_configure("latexModeKeyword",foreground="blue")
+    self.body.tag_configure("latexBackground",foreground="black")
+    self.body.tag_configure("latexKeyword",foreground="blue")
+else: # Looks cool, and good for debugging.
+    self.body.tag_configure("latexModeBackground",foreground="black",background="seashell1")
+    self.body.tag_configure("latexModeKeyword",foreground="blue",background="seashell1")
+    self.body.tag_configure("latexBackground",foreground="black",background="white")
+    self.body.tag_configure("latexKeyword",foreground="blue",background="white")
+    
+# Tags for wiki coloring.
+if self.showInvisibles:
+    self.body.tag_configure("elide",background="yellow")
+else:
+    self.body.tag_configure("elide",elide="1")
+self.body.tag_configure("bold",font=self.bold_font)
+self.body.tag_configure("italic",font=self.italic_font)
+self.body.tag_configure("bolditalic",font=self.bolditalic_font)
+for name in self.color_tags_list:
+    self.body.tag_configure(name,foreground=name)
+#@nonl
+#@-node:ekr.20031218072017.1603:<< configure tags >>
+#@+node:ekr.20031218072017.370:<< configure language-specific settings >> colorizer
+# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
+
+if self.language == "cweb": # Use C comments, not cweb sentinel comments.
+    delim1,delim2,delim3 = g.set_delims_from_language("c")
+elif self.comment_string:
+    delim1,delim2,delim3 = g.set_delims_from_string(self.comment_string)
+elif self.language == "plain": # 1/30/03
+    delim1,delim2,delim3 = None,None,None
+else:
+    delim1,delim2,delim3 = g.set_delims_from_language(self.language)
+
+self.single_comment_start = delim1
+self.block_comment_start = delim2
+self.block_comment_end = delim3
+
+# A strong case can be made for making this code as fast as possible.
+# Whether this is compatible with general language descriptions remains to be seen.
+self.case_sensitiveLanguage = self.language not in case_insensitiveLanguages
+self.has_string = self.language != "plain"
+if self.language == "plain":
+    self.string_delims = ()
+elif self.language in ("elisp","html"):
+    self.string_delims = ('"')
+else:
+    self.string_delims = ("'",'"')
+self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
+
+# The list of languages for which keywords exist.
+# Eventually we might just use language_delims_dict.keys()
+languages = [
+    "actionscript","c","csharp","css","cweb","elisp","html","java","latex",
+    "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
+
+self.keywords = []
+if self.language == "cweb":
+    for i in self.c_keywords:
+        self.keywords.append(i)
+    for i in self.cweb_keywords:
+        self.keywords.append(i)
+else:
+    for name in languages:
+        if self.language==name: 
+            # g.trace("setting keywords for",name)
+            self.keywords = getattr(self, name + "_keywords")
+
+# Color plain text unless we are under the control of @nocolor.
+# state = g.choose(self.flag,"normal","nocolor")
+state = self.setFirstLineState()
+
+if 1: # 10/25/02: we color both kinds of references in cweb mode.
+    self.lb = "<<"
+    self.rb = ">>"
+else:
+    self.lb = g.choose(self.language == "cweb","@<","<<")
+    self.rb = g.choose(self.language == "cweb","@>",">>")
+#@nonl
+#@-node:ekr.20031218072017.370:<< configure language-specific settings >> colorizer
+#@-node:ekr.20031218072017.1602:<< initialize ivars & tags >> colorizeAnyLanguage
+#@+node:ekr.20031218072017.1881:<< all state ivars match >>
+self.flag == self.last_flag and
+self.last_language == self.language and
+self.comment_string == self.last_comment and
+self.markup_string == self.last_markup
+#@nonl
+#@-node:ekr.20031218072017.1881:<< all state ivars match >>
+#@+node:ekr.20031218072017.1882:<< incrementally color the text >>
+@  Each line has a starting state.  The starting state for the first line is always "normal".
+
+We need remember only self.lines and self.states between colorizing.  It is not necessary to know where the text comes from, only what the previous text was!  We must always colorize everything when changing nodes, even if all lines match, because the context may be different.
+
+We compute the range of lines to be recolored by comparing leading lines and trailing lines of old and new text.  All other lines (the middle lines) must be colorized, as well as any trailing lines whose states may have changed as the result of changes to the middle lines.
+@c
+
+# g.trace("incremental")
+
+# 6/30/03: make a copies of everything
+old_lines = self.lines[:]
+old_states = self.states[:]
+new_lines = lines[:]
+new_states = []
+
+new_len = len(new_lines)
+old_len = len(old_lines)
+
+if new_len == 0:
+    self.states = []
+    self.lines = []
+    return
+
+# Bug fix: 11/21/02: must test against None.
+if leading != None and trailing != None:
+    # print "leading,trailing:",leading,trailing
+    leading_lines = leading
+    trailing_lines = trailing
+else:
+    << compute leading, middle & trailing lines >>
+    
+middle_lines = new_len - leading_lines - trailing_lines
+# print "middle lines", middle_lines
+
+<< clear leading_lines if middle lines involve @color or @recolor  >>
+<< initialize new states >>
+<< colorize until the states match >>
+#@nonl
+#@+node:ekr.20031218072017.1883:<< compute leading, middle & trailing  lines >>
+@ The leading lines are the leading matching lines.  The trailing lines are the trailing matching lines.  The middle lines are all other new lines.  We will color at least all the middle lines.  There may be no middle lines if we delete lines.
+@c
+
+min_len = min(old_len,new_len)
+
+i = 0
+while i < min_len:
+    if old_lines[i] != new_lines[i]:
+        break
+    i += 1
+leading_lines = i
+
+if leading_lines == new_len:
+    # All lines match, and we must color _everything_.
+    # (several routine delete, then insert the text again,
+    # deleting all tags in the process).
+    # print "recolor all"
+    leading_lines = trailing_lines = 0
+else:
+    i = 0
+    while i < min_len - leading_lines:
+        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+            break
+        i += 1
+    trailing_lines = i
+#@-node:ekr.20031218072017.1883:<< compute leading, middle & trailing  lines >>
+#@+node:ekr.20031218072017.1884:<< clear leading_lines if middle lines involve @color or @recolor  >>
+@ 11/19/02: Changing @color or @nocolor directives requires we recolor all leading states as well.
+@c
+
+if trailing_lines == 0:
+    m1 = new_lines[leading_lines:]
+    m2 = old_lines[leading_lines:]
+else:
+    m1 = new_lines[leading_lines:-trailing_lines]
+    m2 = old_lines[leading_lines:-trailing_lines]
+m1.extend(m2) # m1 now contains all old and new middle lines.
+if m1:
+    for s in m1:
+        s = g.toUnicode(s,g.app.tkEncoding) # 10/28/03
+        i = g.skip_ws(s,0)
+        if g.match_word(s,i,"@color") or g.match_word(s,i,"@nocolor"):
+            leading_lines = 0
+            break
+#@-node:ekr.20031218072017.1884:<< clear leading_lines if middle lines involve @color or @recolor  >>
+#@+node:ekr.20031218072017.1885:<< initialize new states >>
+# Copy the leading states from the old to the new lines.
+i = 0
+while i < leading_lines and i < old_len: # 12/8/02
+    new_states.append(old_states[i])
+    i += 1
+    
+# We know the starting state of the first middle line!
+if middle_lines > 0 and i < old_len:
+    new_states.append(old_states[i])
+    i += 1
+    
+# Set the state of all other middle lines to "unknown".
+first_trailing_line = max(0,new_len - trailing_lines)
+while i < first_trailing_line:
+    new_states.append("unknown")
+    i += 1
+
+# Copy the trailing states from the old to the new lines.
+i = max(0,old_len - trailing_lines)
+while i < old_len and i < len(old_states):
+    new_states.append(old_states[i])
+    i += 1
+
+# 1/8/03: complete new_states by brute force.
+while len(new_states) < new_len:
+    new_states.append("unknown")
+#@nonl
+#@-node:ekr.20031218072017.1885:<< initialize new states >>
+#@+node:ekr.20031218072017.1886:<< colorize until the states match >>
+# Colorize until the states match.
+# All middle lines have "unknown" state, so they will all be colored.
+
+# Start in the state _after_ the last leading line, which may be unknown.
+i = leading_lines
+while i > 0:
+    if i < old_len and i < new_len:
+        state = new_states[i]
+        # assert(state!="unknown") # This can fail.
+        break
+    else:
+        i -= 1
+
+if i == 0:
+    # Color plain text unless we are under the control of @nocolor.
+    # state = g.choose(self.flag,"normal","nocolor")
+    state = self.setFirstLineState()
+    new_states[0] = state
+
+# The new_states[] will be "unknown" unless the lines match,
+# so we do not need to compare lines here.
+while i < new_len:
+    self.line_index = i + 1
+    state = self.colorizeLine(new_lines[i],state)
+    i += 1
+    # Set the state of the _next_ line.
+    if i < new_len and state != new_states[i]:
+        new_states[i] = state
+    else: break
+    
+# Update the ivars
+self.states = new_states
+self.lines = new_lines
+#@nonl
+#@-node:ekr.20031218072017.1886:<< colorize until the states match >>
+#@-node:ekr.20031218072017.1882:<< incrementally color the text >>
+#@+node:ekr.20031218072017.1887:<< non-incrementally color the text >>
+# g.trace("non-incremental",self.language)
+
+self.line_index = 1 # The Tk line number for indices, as in n.i
+for s in lines:
+    state = self.colorizeLine(s,state)
+    self.line_index += 1
+#@-node:ekr.20031218072017.1887:<< non-incrementally color the text >>
+#@+node:ekr.20031218072017.1890:<< completely recolor in two passes >>
+# This code is executed only if graphics characters will be inserted by user markup code.
+
+# Pass 1:  Insert all graphics characters.
+
+self.removeAllImages()
+s = self.body.getAllText() # 10/27/03
+lines = s.split('\n')
+
+self.color_pass = 1
+self.line_index = 1
+state = self.setFirstLineState()
+for s in lines:
+    state = self.colorizeLine(s,state)
+    self.line_index += 1
+
+# Pass 2: Insert one blank for each previously inserted graphic.
+
+self.color_pass = 2
+self.line_index = 1
+state = self.setFirstLineState()
+for s in lines:
+    << kludge: insert a blank in s for every image in the line >>
+    state = self.colorizeLine(s,state)
+    self.line_index += 1
+#@+node:ekr.20031218072017.1891:<< kludge: insert a blank in s for every image in the line >>
+@ A spectacular kludge.
+
+Images take up a real index, yet the get routine does not return any character for them!
+In order to keep the colorer in synch, we must insert dummy blanks in s at the positions corresponding to each image.
+@c
+
+inserted = 0
+
+for photo,image,line_index,i in self.image_references:
+    if self.line_index == line_index:
+        n = i+inserted ; 	inserted += 1
+        s = s[:n] + ' ' + s[n:]
+#@-node:ekr.20031218072017.1891:<< kludge: insert a blank in s for every image in the line >>
+#@-node:ekr.20031218072017.1890:<< completely recolor in two passes >>
+#@+node:ekr.20031218072017.1888:<< update state ivars >>
+self.last_flag = self.flag
+self.last_language = self.language
+self.last_comment = self.comment_string
+self.last_markup = self.markup_string
+#@nonl
+#@-node:ekr.20031218072017.1888:<< update state ivars >>
+#@+node:ekr.20031218072017.1889:<< set state ivars to "unknown" >>
+self.last_flag = "unknown"
+self.last_language = "unknown"
+self.last_comment = "unknown"
+#@nonl
+#@-node:ekr.20031218072017.1889:<< set state ivars to "unknown" >>
+#@-node:ekr.20031218072017.1880:colorizeAnyLanguage & allies
+#@-node:ekr.20040910064225:(Removed assert from colorizer)
 #@-node:ekr.20040809102904:4.2 rc1 projects
 #@-all
 #@nonl

@@ -37,55 +37,17 @@ WshShell.SendKeys("%Fe");   WScript.Sleep(1300);  #^Q
 ---end openleo.pys
 #@nonl
 #@-node:EKR.20040611081747.1:Look at windows scripting
+#@+node:ekr.20040908104644:Leo splash screen
+To create a splash screen:
+    
+- Draw the screen.
+- Erase the screen with self.after(5000, self.destroy)
+#@+node:ekr.20040908221501:@url http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/120687
+#@-node:ekr.20040908221501:@url http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/120687
+#@-node:ekr.20040908104644:Leo splash screen
 #@+node:ekr.20040811083522:Handle contractions properly in spell checkers
 #@-node:ekr.20040811083522:Handle contractions properly in spell checkers
-#@+node:EKR.20040607073134:Download and study wingide
-#@+node:EKR.20040607073134.1:@url http://wingide.com/
-#@-node:EKR.20040607073134.1:@url http://wingide.com/
-#@-node:EKR.20040607073134:Download and study wingide
-#@+node:EKR.20040430163619:To do: 4.2
-#@+node:ekr.20040831101039:Make sure Linux install script has Linux line endings
-#@-node:ekr.20040831101039:Make sure Linux install script has Linux line endings
-#@+node:EKR.20040422132037:Linux/Mac stuff
-@nocolor
-#@nonl
-#@+node:EKR.20040422132037.5:Backspace problems on Linux
-Shift+Ctrl+BkSp doesn't delete node
-#@nonl
-#@+node:EKR.20040422132037.6:Dave Hein: fix
-By: dthein ( Dave Hein ) 
- RE: BUG: Shift+Ctrl+BkSp doesn't delete node   
-2004-01-15 03:30  
-
- OK, the cause of the keymapping problem is a issue with the X11 keyboard mapping, not with Tk.
-
-If you have this problem on your system, issue the command:
-
-xmodmap -pke 
-
-and look in the results for the line for keycode 22. I'll bet it shows something like:
-
-keycode 22 = BackSpace Terminate_Server
-
-That second token ("Terminate_Server") is what is supposed to be mapped to Shift-Backspace. You want this second token to be either not present or to be BackSpace.
-
-To fix this, create a file (e.g. .Xmodmap) and give it the content:
-
-keycode 22 = BackSpace
-
-then run the command:
-
-xmodmap .Xmodmap
-
-And you'll have fixed the problem.
-
-Now, on my system this also disables the ability to terminate the X server using Ctrl-Alt-BackSpace ... this is because of some conflict with xdb (xdb is the newer keyboard mapping facility in XFree86 ... xmodmap is the old original X11 keyboard mapping facility). I'm still working on that.
-
-I'm also not able to get xmodmap to make this change during X11 startup (again because of conflicts with xdb). But I'm working on that as well.
-#@nonl
-#@-node:EKR.20040422132037.6:Dave Hein: fix
-#@-node:EKR.20040422132037.5:Backspace problems on Linux
-#@+node:EKR.20040422132037.7:Bug: vpython and mac
+#@+node:EKR.20040422132037.7:Problems with run script command on Mac x11
 Jon Schull <jschull@softlock.com>  
 Date:  2003/12/30 Tue PM 05:50:51 EST 
 To:  edreamleo@charter.net 
@@ -161,57 +123,17 @@ Associate Professor
 Information Technology
 Rochester Institute of Technology
 schull@digitalgoods.com 585-738-6696
-#@-node:EKR.20040422132037.7:Bug: vpython and mac
-#@+node:EKR.20040422132037.8:Mouse / Paste Anomalies
-@nocolor
-
-By: Bill Drissel - drissel
-2004-04-13 19:43  
-
-Xserver (XFree86 under Cygwin) on PC (W2000); controlling Linux Red Hat;
-buncha windows up including one Leo window and many xterms and Xemacs.
-
-A: means action, R: means result
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click
-R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; locate mouse symbol in text
-R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; up arrow to locate Ibeam in text
-R: Joy! colorizes, marks headline and saves!
-
-A: hilite headline text; type on KB
-R: keystrokes replace hilited text
-
-A: hilite text in Xemacs window; hilite headline; middle click
-R: hilited text appended to headline rather than replacing
-
-This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
-#@nonl
-#@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
-#@+node:ekr.20040831112005:(Fix control-v problems on the Mac)
-#@+node:ekr.20040831112005.1:Report
-@killcolor
-
-Dan Winkler
-
-> I've noticed that Leo often inserts a v when I hit command-v to paste.  
-> I'm sure I've got the command key down before I type the v, but Leo is 
-> more sensitive to the timing somehow than most apps.
-
-> Now I'm seeing a problem where when I use command-v to paste into a 
-> headline it pastes the text twice.  If I use the edit menu and choose 
-> paste it works correctly and only pastes once.  Also, if I paste into 
-> the body of a node with command-v, that works correctly too.  It's only 
-> when I use the command key to paste into a headline that I see the 
-> problem.
-#@nonl
-#@-node:ekr.20040831112005.1:Report
-#@-node:ekr.20040831112005:(Fix control-v problems on the Mac)
+#@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
+#@+node:EKR.20040607073134:Download and study wingide
+#@+node:EKR.20040607073134.1:@url http://wingide.com/
+#@-node:EKR.20040607073134.1:@url http://wingide.com/
+#@-node:EKR.20040607073134:Download and study wingide
+#@+node:EKR.20040430163619:To do: 4.2
+#@+node:ekr.20040831101039:Make sure Linux install script has Linux line endings
+#@-node:ekr.20040831101039:Make sure Linux install script has Linux line endings
 #@+node:ekr.20040629110559:Cool Mac stuff
 #@+node:ekr.20040629111136:Native Max OS X Leo app
+@killcolor
 
 http://sourceforge.net/forum/message.php?msg_id=2630116
 By: genthaler
@@ -262,7 +184,6 @@ Guenther.
 #@+node:ekr.20040629111733.1:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
 #@-node:ekr.20040629111733.1:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
 #@-node:ekr.20040629110559:Cool Mac stuff
-#@-node:EKR.20040422132037:Linux/Mac stuff
 #@-node:EKR.20040430163619:To do: 4.2
 #@+node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
 #@+node:ekr.20040730191332:Must do...
@@ -3370,7 +3291,7 @@ if at.perfectImportRoot:
 else:
     if not at.updateWarningGiven:
         at.updateWarningGiven = True
-        print "***",at.t,at.root.t
+        # print "***",at.t,at.root.t
         g.es("Warning: updating changed text in %s" %
             (at.root.headString()),color="blue")
     # g.es("old...\n%s\n" % old)
