@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6023" clone_windows="0"/>
-<globals body_outline_ratio="0.353009259259">
-	<global_window_position top="49" left="332" height="864" width="907"/>
+<globals body_outline_ratio="0.37962962963">
+	<global_window_position top="27" left="273" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -827,7 +827,7 @@
 </v>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
 <v t="ekr.20040707141957"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
@@ -991,7 +991,7 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
@@ -1279,10 +1279,17 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041111130231" a="E"><vh>Registering &amp; unregistering the "new" drawing hooks</vh>
-<v t="ekr.20041111124032" a="TV"><vh>Register all new hooks</vh></v>
+<v t="ekr.20041111130231"><vh>Registering &amp; unregistering the "new" drawing hooks</vh>
+<v t="ekr.20041111124032"><vh>Register all new hooks</vh></v>
 <v t="ekr.20041111124353"><vh>Unregister all new hooks</vh></v>
 <v t="ekr.20041111130231.1"><vh>Print all new hooks</vh></v>
+</v>
+<v t="ekr.20041112094406.2" a="E"><vh>Mini test arguments to hooks</vh>
+<v t="ekr.20041112103504"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20041112094406.3" a="E"><vh>&lt;&lt; define hookData &gt;&gt;</vh></v>
+<v t="ekr.20041112100255" a="E"><vh>&lt;&lt; define typeData &gt;&gt;</vh></v>
+<v t="ekr.20041112102151" a="ETV"><vh>&lt;&lt; defineCheckHook &gt;&gt;</vh></v>
+<v t="ekr.20041112155634"><vh>checkOneHook</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1904,7 +1911,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2035,7 +2042,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10521,5 +10528,194 @@ if handlers:
     print "-" * 20
     for h in handlers:
         print h</t>
+<t tx="ekr.20041112094406.2">"""Mini test that documentation of hooks in leoDocs.leo is correct.
+
+hookData should match that documentation for this test to be effective.
+
+This is not a complete unit test:  it does not force executions of all hooks.
+"""
+
+&lt;&lt; imports &gt;&gt;
+&lt;&lt; define hookData &gt;&gt;
+&lt;&lt; define typeData &gt;&gt;
+checked = [] # List of all hooks that have been checked.
+
+@others
+
+tags = [] 
+for name,args in hookData:
+    tags.append(name)
+    &lt;&lt; define checkHook &gt;&gt;
+    leoPlugins.registerHandler(name,checkHook)
+    
+if 0: # print all hooks.
+    handlers = leoPlugins.getHandlersForTag(tags)
+    if handlers:
+        print "-" * 20
+        for h in handlers:
+            print h</t>
+<t tx="ekr.20041112094406.3">hookData = (
+    ("bodyclick1",   ("c","p","v","event")),
+    ("bodyclick2",   ("c","p","v","event")),
+    ("bodydclick1",  ("c","p","v","event")),
+    ("bodydclick2",  ("c","p","v","event")),
+    ("bodykey1",     ("c","p","v","ch","oldSel","undoType")),
+    ("bodykey2",     ("c","p","v","ch","oldSel","undoType")),
+    ("bodyrclick1",  ("c","p","v","event")),
+    ("bodyrclick2",  ("c","p","v","event")),
+    ("boxclick1",    ("c","p","v","event")),
+    ("boxclick2",    ("c","p","v","event")),
+    ("command1",     ("c","p","v","label")),
+    ("command2",     ("c","p","v","label")),
+    ("drag1",        ("c","p","v","event")),
+    ("drag2",        ("c","p","v","event")),
+    ("dragging1",    ("c","p","v","event")),
+    ("dragging2",    ("c","p","v","event")),
+    ("end1",         None),
+    ("enddrag1",     ("c","p","v","event")),
+    ("enddrag2",     ("c","p","v","event")),
+    ("headclick1",   ("c","p","v","event")),
+    ("headclick2",   ("c","p","v","event")),
+    ("headrclick1",  ("c","p","v","event")),
+    ("headrclick2",  ("c","p","v","event")),
+    ("headkey1",     ("c","p","v","ch")),
+    ("headkey2",     ("c","p","v","ch")),
+    ("hypercclick1", ("c","p","v","event")),
+    ("hypercclick2", ("c","p","v","event")),
+    ("hyperenter1",  ("c","p","v","event")),
+    ("hyperenter2",  ("c","p","v","event")),
+    ("hyperleave1",  ("c","p","v","event")),
+    ("hyperleave2",  ("c","p","v","event")),
+    ("iconclick1",   ("c","p","v","event")),
+    ("iconclick2",   ("c","p","v","event")),
+    ("iconrclick1",  ("c","p","v","event")),
+    ("iconrclick2",  ("c","p","v","event")),
+    ("icondclick1",  ("c","p","v","event")),
+    ("icondclick2",  ("c","p","v","event")),
+    ("idle",         ("c",)),
+    ("menu1",        ("c","p","v")),
+    ("menu2",        ("c","p","v")),
+    ("open1",        ("old_c","new_c","fileName")),
+    ("open2",        ("old_c","new_c","fileName")),
+    ("openwith1",    ("c","p","v","openType","arg","ext")),
+    ("openwith2",    ("c","p","v","openType","arg,ext" )),
+    ("recentfiles1", ("c","p","v","fileName","closeFlag")),
+    ("recentfiles2", ("c","p","v","fileName","closeFlag")),
+    ("save1",        ("c","p","v","fileName" )),
+    ("save2",        ("c","p","v","fileName" )),
+    ("select1",      ("c","new_p","old_p","new_v","old_v")),
+    ("select2",      ("c","new_p","old_p","new_v","old_v")),
+    ("select3",      ("c","new_p","old_p","new_v","old_v")),
+    ("set-mark",     ("c","p","v")),
+    ("start1",       None),
+    ("start2",       ("c","p","v","fileName" )),
+    ("unselect1",    ("c","new_p","old_p","new_v","old_v")),
+    ("unselect2",    ("c","new_p","old_p","new_v","old_v")),
+    ("@url1",        ("c","p","v")),
+    ("@url2",        ("c","p","v")),
+    # Stub hooks.
+    ("after-redraw-outline",         ("c",)),
+    ("clear-mark",                   ("c","p","v")),
+    ("close-frame",                  ("c",)),
+    ("color-optional-markup",        ("colorer","p","v","s","i","j","colortag")),
+    ("create-optional-menus",        ("c",)),
+    ("destroy-all-global-windows",   None),
+    ("draw-outline-box",             ("tree","p","v","x","y")), #
+    ("draw-outline-icon",            ("tree","p","v","x","y")), #
+    ("draw-outline-node",            ("tree","p","v","x","y")), #
+    ("draw-outline-text-box",        ("tree","p","v","x","y")), #
+    ("create-popup-menu-items",      ("c","p","v","event")),
+    ("enable-popup-menu-items",      ("c","p","v","event")),
+    ("init-color-markup",            ("colorer","p","v")),
+    ("new",                          ("old_c","new_c")),
+    ("redraw-entire-outline",        ("c",)),
+    ("scan-directives",              ("c","p","v","s","old_dict","dict","pluginsList")),
+    ("set-mark",                     ("c","p","v" )),
+    ("show-popup-menu",              ("c","p","v","event")),
+)</t>
+<t tx="ekr.20041112100255">typeData = {
+    "arg":      types.StringType,
+    "c":        leoCommands.Commands,
+    "ch":       types.StringType,
+    "closeFlag":types.StringType,
+    "colorer":  leoColor.colorizer,
+    "colortag": types.StringType,
+    "dict":     types.DictType,
+    "event":    Tk.Event,
+    "ext":      types.StringType,
+    "fileName": types.StringType,
+    "i":        types.IntType,
+    "j":        types.IntType,
+    "label":    types.StringType,
+    "new_c":    leoCommands.Commands,
+    "new_p":    leoNodes.position,
+    "newSel":   types.TupleType,
+    "new_v":    leoNodes.position,
+    "old_c":    leoCommands.Commands,
+    "old_dict": types.DictType,
+    "old_p":    leoNodes.position,
+    "oldSel":   types.TupleType,
+    "old_v":    leoNodes.position,
+    "openType": types.StringType,
+    "p":        leoNodes.position,
+    "pluginsList": types.ListType,
+    "s":        types.UnicodeType,
+    "tree":     leoTkinterTree.leoTkinterTree,
+    "v":        leoNodes.position,
+    "undoType": types.StringType,
+    "x":        types.IntType,
+    "y":        types.IntType,
+}
+</t>
+<t tx="ekr.20041112102151">def checkHook (tag,keywords,args=args):
+
+    """Check to see that the keywords passed to the hook are as described in args.
+    Each arg is a list of strings whose type is defined in typeData."""
+
+    global checked, verbose
+    if tag in checked: return
+    ok = True
+    checked.append(tag)
+    if args is None: args = []
+    args = list(args)
+    args.sort()
+    keys = list(keywords.keys())
+    keys.sort()
+    
+    if len(args) != len(keys):
+        print "%25s expected:" % (tag),args
+        print "%25s      got:" % (tag),keys
+        ok = False
+    else:
+        for arg,key in zip(args,keys):
+            arg_type = typeData.get(arg)
+            val = keywords.get(key)
+            if not checkOneHook(arg_type,val):
+                print "%25s      arg:" % (tag), arg
+                print "%25s expected:" % (tag), arg_type
+                print "%25s      got:" % (tag), type(val)
+                ok = False
+    if ok:
+        print tag</t>
+<t tx="ekr.20041112103504">import leoGlobals as g
+
+import leoColor
+import leoCommands
+import leoNodes
+import leoPlugins
+import leoTkinterTree
+
+import types
+import Tkinter as Tk</t>
+<t tx="ekr.20041112155634">def checkOneHook (arg_type, val):
+    
+    if 0:
+        if arg_type != type(val):
+            g.trace(arg,key,arg_type,type(val))
+    
+    return (
+        (arg_type is type(val)) or
+        (arg_type == types.StringType and type(val) is types.UnicodeType) or
+        (type(arg_type) == types.ClassType and isinstance(val,arg_type)))</t>
 </tnodes>
 </leo_file>
