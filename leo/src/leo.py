@@ -51,13 +51,15 @@ def run(fileName=None,*args,**keywords):
     g.app.loadDir = computeLoadDir() # Depends on g.app.tkEncoding: uses utf-8 for now.
     g.app.homeDir = computeHomeDir()
     g.app.globalConfigDir = computeGlobalConfigDir()
-    g.app.setLeoID() # Force the user to set g.app.leoID.
+    script = getBatchScript() # Do early to compute verbose.
+    verbose = script is None
+    g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
     import leoNodes ; g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
     import leoConfig ; g.app.config = leoConfig.config()
     fileName = completeFileName(fileName)
-    g.app.config.readSettingsFiles(fileName) # Must be done after setting g.app.config.
+    reportDirectories(verbose)
+    g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.
     g.app.setEncoding()
-    script = getBatchScript()
     if script:
         createNullGuiWithScript(script)
         fileName = None
@@ -103,6 +105,7 @@ def run(fileName=None,*args,**keywords):
     frame.body.setFocus()
     g.app.initing = False # "idle" hooks may now call g.app.forceShutdown.
     g.app.gui.runMainLoop()
+#@nonl
 #@+node:ekr.20031218072017.1936:isValidPython
 def isValidPython():
 
@@ -170,8 +173,6 @@ def computeGlobalConfigDir():
         not g.os_path_isdir(theDir,encoding)
     ):
         theDir = None
-
-    g.es("global config dir: %s" % (theDir),color="blue")
     
     return theDir
 #@nonl
@@ -195,7 +196,6 @@ def computeHomeDir():
     ):
         home = None
 
-    g.es("home dir: %s" % (home),color="blue")
     return home
 #@nonl
 #@-node:ekr.20041117151301:computeHomeDir
@@ -298,7 +298,8 @@ def getBatchScript ():
             name = sys.argv[i+1].strip() ; break
         i += 1
 
-    if not name: return None	
+    if not name:
+        return None
     name = g.os_path_join(g.app.loadDir,name)
     try:
         f = None
@@ -314,6 +315,19 @@ def getBatchScript ():
         return script
 #@nonl
 #@-node:ekr.20031218072017.1939:getBatchScript
+#@+node:ekr.20041130093254:reportDirectories
+def reportDirectories(verbose):
+    
+    import leoGlobals as g
+   
+    if verbose:
+        for kind,dir in (
+            ("global config",g.app.globalConfigDir),
+            ("home",g.app.homeDir),
+        ):
+            g.es("%s dir: %s" % (kind,dir),color="blue")
+#@nonl
+#@-node:ekr.20041130093254:reportDirectories
 #@-node:ekr.20031218072017.1934:run & allies
 #@+node:ekr.20031218072017.2607:profile
 #@+at 
