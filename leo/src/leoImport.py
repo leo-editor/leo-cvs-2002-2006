@@ -733,10 +733,13 @@ class baseLeoImportCommands:
 		while i < len(s) and indent > classIndent:
 			progress = i
 			if is_nl(s,i):
+				backslashNewline = i > 0 and match(s,i-1,"\\\n")
 				j = skip_nl(s,i)
-				indent = self.getLeadingIndent(s,j)
-				if indent > classIndent: i = j
-				else: break
+				if not backslashNewline:
+					indent = self.getLeadingIndent(s,j)
+					if indent > classIndent: i = j
+					else: break
+				else: i = j
 			elif match_c_word(s,i,"def"):
 				if not parent_vnode:
 					#@			<< create parent_vnode >>
@@ -816,10 +819,12 @@ class baseLeoImportCommands:
 			progress = i
 			ch = s[i]
 			if is_nl(s,i):
+				backslashNewline = i > 0 and match(s,i-1,"\\\n")
 				i = skip_nl(s,i)
-				indent = self.getLeadingIndent(s,i)
-				if indent <= defIndent:
-					break
+				if not backslashNewline:
+					indent = self.getLeadingIndent(s,i)
+					if indent <= defIndent:
+						break
 			elif ch == '#':
 				i = skip_to_end_of_line(s,i) # 7/29/02
 			elif ch == '"' or ch == '\'':
@@ -863,10 +868,11 @@ class baseLeoImportCommands:
 			# trace(get_line(s,i))
 			ch = s[i]
 			if ch == '\n':
+				backslashNewline = i > 0 and match(s,i-1,"\\\n")
 				i = skip_nl(s,i)
 				# 2/14/03: break on lesser indention.
 				j = skip_ws(s,i)
-				if not is_nl(s,j) and not match(s,j,"#"):
+				if not is_nl(s,j) and not match(s,j,"#") and not backslashNewline:
 					lineIndent = self.getLeadingIndent(s,i)
 					if lineIndent <= indent:
 						break
