@@ -110,20 +110,6 @@ class leoFind:
 	#@nonl
 	#@-node:ekr.20031218072017.3053:leoFind.__init__
 	#@+node:ekr.20031218072017.3055:Top Level Commands
-	#@+node:ekr.20031218072017.3056:changeButton
-	
-	# The user has pushed the "Change" button from the find panel.
-	
-	def changeButton(self):
-	
-		c  = self.setup_button()
-	
-		if c.script_change_flag:
-			self.doChangeScript()
-		else:
-			self.change()
-	#@nonl
-	#@-node:ekr.20031218072017.3056:changeButton
 	#@+node:ekr.20031218072017.3057:changeAllButton
 	# The user has pushed the "Change All" button from the find panel.
 	
@@ -140,6 +126,33 @@ class leoFind:
 			self.changeAll()
 	#@nonl
 	#@-node:ekr.20031218072017.3057:changeAllButton
+	#@+node:ekr.20031218072017.3056:changeButton
+	
+	# The user has pushed the "Change" button from the find panel.
+	
+	def changeButton(self):
+	
+		c  = self.setup_button()
+	
+		if c.script_change_flag:
+			self.doChangeScript()
+		else:
+			self.change()
+	#@nonl
+	#@-node:ekr.20031218072017.3056:changeButton
+	#@+node:ekr.20031218072017.3061:changeCommand
+	# The user has selected the "Replace" menu item.
+	
+	def changeCommand(self,c):
+	
+		self.setup_command(c)
+	
+		if c.script_search_flag:
+			self.doChangeScript()
+		else:
+			self.change()
+	#@nonl
+	#@-node:ekr.20031218072017.3061:changeCommand
 	#@+node:ekr.20031218072017.3058:changeThenFindButton
 	# The user has pushed the "Change Then Find" button from the find panel.
 	
@@ -161,19 +174,20 @@ class leoFind:
 				self.changeThenFind()
 	#@nonl
 	#@-node:ekr.20031218072017.3058:changeThenFindButton
-	#@+node:ekr.20031218072017.3059:findButton
-	# The user has pushed the "Find" button from the find panel.
+	#@+node:ekr.20031218072017.3062:changeThenFindCommandd
+	# The user has pushed the "Change Then Find" button from the Find menu.
 	
-	def findButton(self,event=None):
+	def changeThenFindCommand(self,c):
 	
-		c = self.setup_button()
+		self.setup_command(c)
 	
 		if c.script_search_flag:
+			self.doChangeScript()
 			self.doFindScript()
 		else:
-			self.findNext()
+			self.changeThenFind()
 	#@nonl
-	#@-node:ekr.20031218072017.3059:findButton
+	#@-node:ekr.20031218072017.3062:changeThenFindCommandd
 	#@+node:ekr.20031218072017.3060:findAllButton
 	# The user has pushed the "Find All" button from the find panel.
 	
@@ -190,33 +204,19 @@ class leoFind:
 			self.findAll()
 	#@nonl
 	#@-node:ekr.20031218072017.3060:findAllButton
-	#@+node:ekr.20031218072017.3061:changeCommand
-	# The user has selected the "Replace" menu item.
+	#@+node:ekr.20031218072017.3059:findButton
+	# The user has pushed the "Find" button from the find panel.
 	
-	def changeCommand(self,c):
+	def findButton(self,event=None):
 	
-		self.setup_command(c)
-	
-		if c.script_search_flag:
-			self.doChangeScript()
-		else:
-			self.change()
-	#@nonl
-	#@-node:ekr.20031218072017.3061:changeCommand
-	#@+node:ekr.20031218072017.3062:changeThenFindCommandd
-	# The user has pushed the "Change Then Find" button from the Find menu.
-	
-	def changeThenFindCommand(self,c):
-	
-		self.setup_command(c)
+		c = self.setup_button()
 	
 		if c.script_search_flag:
-			self.doChangeScript()
 			self.doFindScript()
 		else:
-			self.changeThenFind()
+			self.findNext()
 	#@nonl
-	#@-node:ekr.20031218072017.3062:changeThenFindCommandd
+	#@-node:ekr.20031218072017.3059:findButton
 	#@+node:ekr.20031218072017.3063:findNextCommand
 	# The user has selected the "Find Next" menu item.
 	
@@ -247,17 +247,30 @@ class leoFind:
 		c.reverse_flag = not c.reverse_flag
 	#@nonl
 	#@-node:ekr.20031218072017.3064:fndPreviousCommand
+	#@+node:EKR.20040503070514:handleUserClick
+	def handleUserClick (self,p):
+		
+		"""Reset suboutline-only search when the user clicks a headline."""
+		
+		if self.c and self.c.suboutline_only_flag:
+			# g.trace(p)
+			self.onlyVnode = p
+	#@nonl
+	#@-node:EKR.20040503070514:handleUserClick
 	#@+node:ekr.20031218072017.3065:setup_button
 	# Initializes a search when a button is pressed in the Find panel.
 	
 	def setup_button(self):
 	
-		self.c = c = g.app.log.c ; self.v = c.currentVnode()
-		assert(c)
+		self.c = c = g.app.log.c
+		self.v = c.currentVnode()
+	
 		c.bringToFront()
 		if 0: # We _must_ retain the editing status for incremental searches!
 			c.endEditing()
+	
 		c.setIvarsFromFind()
+	
 		return c
 	#@nonl
 	#@-node:ekr.20031218072017.3065:setup_button
@@ -267,8 +280,12 @@ class leoFind:
 	def setup_command(self,c):
 	
 		self.c = c ; self.v = c.currentVnode()
+	
+		# g.trace(self.v)
+	
 		if 0: # We _must_ retain the editing status for incremental searches!
 			c.endEditing()
+	
 		c.setIvarsFromFind()
 	#@nonl
 	#@-node:ekr.20031218072017.3066:setup_command

@@ -1169,6 +1169,7 @@ class leoTkinterTree (leoFrame.leoTree):
 					gui.set_focus(c,self.canvas) # Essential for proper editing.
 			else:
 				self.select(p)
+				g.app.findFrame.handleUserClick(p) # 4/3/04
 				if p.v.t.insertSpot != None: # 9/1/02
 					c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
 					c.frame.bodyCtrl.see(p.v.t.insertSpot)
@@ -1199,6 +1200,7 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		self.active = true
 		self.select(p)
+		g.app.findFrame.handleUserClick(p) # 4/3/04
 		gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
 		self.redraw()
 	#@nonl
@@ -1532,11 +1534,13 @@ class leoTkinterTree (leoFrame.leoTree):
 				self.tagBindings.append((id,id4,"<B1-Motion>"),)
 				self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
 		tree.select(p)
+		g.app.findFrame.handleUserClick(p) # 4/3/04
 		return "break" # disable expanded box handling.
 		
 	def OnIconRightClick (self,p,event):
 	
 		self.select(p)
+		g.app.findFrame.handleUserClick(p) # 4/3/04
 		return "break" # disable expanded box handling.
 	#@nonl
 	#@-node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
