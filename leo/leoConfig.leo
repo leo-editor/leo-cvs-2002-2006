@@ -122,7 +122,7 @@ output_newline = nl
 #
 #	Please specify nl when uploading files to Leo's CVS site.
 
-create_nonexistent_directories = 1
+create_nonexistent_directories = 0
 #	1: Leo attempts to create directories if they do not exist.
 #	0: Leo never attempts to create directories
 #	This option applies to directories specified in filenames in
@@ -171,7 +171,7 @@ stylesheet =
 #	Note 2: Please set this field empty when uploading to CVS.
 #	Note 3: This field must be empty for compatibility with older versions of Leo.
 
-use_configureLeo_dot_py = 1
+use_customizeLeo_dot_py = 0
 
 #	1: Leo calls code "hooks" in configureLeo.py.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.

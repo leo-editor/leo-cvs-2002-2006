@@ -702,7 +702,7 @@ def handleLeoHook(tag,**keywords):
 
 	a = app() ; c = top() # c may be None during startup.
 	
-	if not app().config.use_configureLeo_dot_py:
+	if not app().config.use_customizeLeo_dot_py:
 		return None # not enabled.
 
 	if a.hookError:
