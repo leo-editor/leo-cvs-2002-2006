@@ -2364,8 +2364,7 @@ class leoImportCommands:
 			file = open(fileName,mode)
 			while v and v != after:
 				head = v.moreHead(firstLevel)
-				if type(head) == type(u""):
-					head = head.encode(self.encoding,"replace")
+				head = toEncodedString(head,self.encoding,reportErrors=true)
 				file.write(head + nl)
 				v = v.threadNext()
 			file.close()
@@ -2391,8 +2390,7 @@ class leoImportCommands:
 			file = open(fileName,mode)
 			while v and v != after:
 				head = v.moreHead(firstLevel)
-				if type(head) == type(u""):
-					head = head.encode(self.encoding,"replace")
+				head = toEncodedString(head,self.encoding,reportErrors=true)
 				file.write(head + nl)
 				body = v.moreBody() # Inserts escapes.
 				if len(body) > 0:
@@ -2430,8 +2428,7 @@ class leoImportCommands:
 			while v and v != after:
 				s = self.convertVnodeToWeb(v)
 				if len(s) > 0:
-					if type(s) == type(u""):
-						s = s.encode(self.encoding,"replace")
+					s = toEncodedString(s,self.encoding,reportErrors=true)
 					file.write(s)
 					if s[-1] != '\n':
 						file.write(nl)
@@ -2530,8 +2527,7 @@ class leoImportCommands:
 				mode = app().config.output_newline
 				mode = choose(mode=="platform",'w','wb')
 				file = open(newFileName,mode)
-				if type(s) == type(u""):
-					s = s.encode(self.encoding,"replace")
+				s = toEncodedString(s,self.encoding,reportErrors=true)
 				file.write(s)
 				file.close()
 				es("creating: " + newFileName)
@@ -2642,8 +2638,7 @@ class leoImportCommands:
 				for line in context:
 					f.write(indent)
 					indent += '\t'
-					if type(line) == type(u""):
-						line = line.encode(self.encoding,"replace")
+					line = toEncodedString(line,self.encoding,reportErrors=true)
 					f.write(line)
 					f.write(nl)
 				
