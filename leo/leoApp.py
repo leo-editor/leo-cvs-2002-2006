@@ -16,6 +16,7 @@ class LeoApp:
 	def __init__(self, root):
 	
 		# These ivars are the global vars of this program.
+		self.commandName = None # The name of the command being executed.
 		self.config = None # The leoConfig instance.
 		self.configDir = None # The directory containing configuration info.
 		self.deleteOnClose = true # true: delete frame objects when a frame closes.
@@ -180,7 +181,7 @@ class LeoApp:
 	def quit(self):
 	
 		# Wait until everything is quiet before really quitting.
-		handleStartHook("end1")
+		handleLeoHook("end1")
 	
 		self.destroyAllGlobalWindows()
 		self.handleOpenTempFiles()

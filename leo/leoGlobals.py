@@ -144,7 +144,7 @@ def es(s):
 #@+body
 # This routine handles all hooks into Leo.  Hooks are identified by the tag param.
 
-def handleStartHook(tag):
+def handleLeoHook(tag):
 
 	from leoUtils   import es_exception
 	from leoGlobals import es,app
