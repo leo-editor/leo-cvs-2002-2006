@@ -610,24 +610,6 @@ class baseVnode:
 		return n
 	#@nonl
 	#@-node:numberOfChildren (n)
-	#@+node:v.childIndex (changed for 4.2)
-	# childIndex and nthChild are zero-based.
-	
-	def childIndex (self):
-		
-		
-		if 0: # old code:
-			parent=self.parent()
-			if not parent: return 0
-		
-			child = parent.firstChild()
-			n = 0
-			while child:
-				if child == self: return n
-				n += 1 ; child = child.next()
-			assert(false)
-	#@nonl
-	#@-node:v.childIndex (changed for 4.2)
 	#@+node:v.firstChild (changed for 4.2)
 	def firstChild (self):
 		
@@ -1113,14 +1095,14 @@ class baseVnode:
 		self.statusBits |= self.selectedBit
 	#@nonl
 	#@-node:setSelected (vnode)
-	#@+node:setVisited
+	#@+node:t.setVisited
 	# Compatibility routine for scripts
 	
 	def setVisited (self):
 	
 		self.statusBits |= self.visitedBit
 	#@nonl
-	#@-node:setVisited
+	#@-node:t.setVisited
 	#@+node:v.computeIcon & setIcon
 	def computeIcon (self):
 	
@@ -1412,35 +1394,53 @@ class position:
 		# Note: __getattr__ implements p.t.
 	#@nonl
 	#@-node:p.__init__
-	#@+node:p.__cmp__
-	def __cmp__(self,other):
+	#@+node:p.__cmp__ MUCH slower than p.equal (!!)
+	def __cmp__(self,p2):
 	
 		"""Return true if two postions are equivalent."""
-	
-		p1 = self ; p2 = other
-		equal,notEqual = 0,1
-	
-		assert(p1 is not None)
-	
-		# g.trace(repr(p1),repr(p2))
-	
-		if p2 == None:
-			return notEqual
 		
+		# The speed of this routine is critical!
+	
+		p1 = self
+		
+		assert(p1 is not None)
+		
+		if p2 is None:
+			if p1.v: return 1 # not equal
+			else:    return 0 # equal
+	
+		# g.trace(p1,p2)
+	
+		# 3/25/04: Check entire stack quickly.
+		# The stack contains vnodes, so this is not a recursive call.
+		if p1.v != p2.v or p1.stack != p2.stack:
+			return 1 # notEqual
+	
+		# This is very slow: do this last!
 		if p1.childIndex() != p2.childIndex():
-			# 3/23/04: Disambiguates clones having the same parents.
-			return notEqual
+			# 3/23/04: Disambiguate clones having the same parents.
+			return 1 # notEqual
 	
-		if p1.v != p2.v or len(p1.stack) != len(p2.stack):
-			return notEqual
-	
-		for i in xrange(len(p1.stack)):
-			if p1.stack[i] != p2.stack[i]:
-				return notEqual
-	
-		return equal
+		return 0 # equal
 	#@nonl
-	#@-node:p.__cmp__
+	#@-node:p.__cmp__ MUCH slower than p.equal (!!)
+	#@+node:p.equal
+	def equal(self,p2):
+	
+		"""Return true if two postions are equivalent."""
+		
+		# The speed of this routine is critical!
+	
+		p1 = self
+	
+		# Check entire stack quickly.
+		# The stack contains vnodes, so this is not a recursive call.
+		return (
+			p1.v == p2.v and
+			p1.stack == p2.stack and
+			p1.childIndex() == p2.childIndex())
+	#@nonl
+	#@-node:p.equal
 	#@+node:p.__getattr__  ON:  must be ON if use_plugins
 	if 1: # Good for compatibility, bad for finding conversion problems.
 	
@@ -1589,22 +1589,19 @@ class position:
 	#@+node:p.childIndex
 	def childIndex(self):
 		
-		p = self
+		# This is time-critical code!
 		
-		if not p.hasParent(): return 0
+		p = self ; v = p.v
 		
-		# Point v at the first sibling
-		v = p.v
-		while v and v._back:
-			v = v._back
-			
-		# Now count.
-		n = 0
+		# 3/25/04: Much faster code:
+		if not v or not v._back:
+			return 0
+	
+		n = 0 ; v = v._back
 		while v:
-			if v == p.v: return n
-			v = v._next
 			n += 1
-		assert(false)
+			v = v._back
+		return n
 	#@nonl
 	#@-node:p.childIndex
 	#@+node:p.numberOfChildren
@@ -2625,10 +2622,12 @@ class position:
 		result = true # optimists get only unpleasant surprises.
 		parent = p.getParent()
 		childIndex = p.childIndex()
+		
+		# g.trace(p,parent,pv)
 		#@	<< validate parent ivar >>
 		#@+node:<< validate parent ivar >>
 		if parent != pv:
-			p.invalidOutline( "Invalid parent link: " + parent.v.description() )
+			p.invalidOutline( "Invalid parent link: " + repr(parent))
 		#@nonl
 		#@-node:<< validate parent ivar >>
 		#@nl
