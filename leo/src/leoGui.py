@@ -126,7 +126,7 @@ class leoGui:
         c = leoCommands.Commands(frame,fileName)
         
         if not g.app.initing:
-            g.doHook("onCreate",c=c)
+            g.doHook("before-create-leo-frame",c=c) # Was 'onCreate': too confusing.
         
         frame.finishCreate(c)
         
