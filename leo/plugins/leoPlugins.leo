@@ -1511,11 +1511,11 @@
 </v>
 </v>
 </v>
-<v t="edream.120603093808" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" a="V" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 <v t="ekr.20040107092135" a="E"><vh>Quick search</vh>
-<v t="ekr.20040107092135.2" a="V" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
+<v t="ekr.20040107092135.2" a="E" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
 <v t="ekr.20040108054555.14"><vh>&lt;&lt; vars &gt;&gt;</vh></v>
-<v t="ekr.20040107092135.3" a="E"><vh>class SearchBox</vh>
+<v t="ekr.20040107092135.3"><vh>class SearchBox</vh>
 <v t="ekr.20040108054555.4"><vh>_getSizer</vh></v>
 <v t="ekr.20040108054555.3"><vh>addWidgets</vh></v>
 <v t="ekr.20040107092135.5"><vh>doSearch</vh></v>
@@ -1531,6 +1531,14 @@
 <v t="ekr.20040107103339"><vh>gui_search</vh></v>
 </v>
 <v t="ekr.20040108060748"><vh>&lt;&lt; doc string &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040108062655" a="E" tnodeList="ekr.20040108062655,ekr.20040108062655.2,ekr.20040108062655.3,ekr.20040108062655.4,ekr.20040108062655.5,ekr.20040108062655.6"><vh>@file nodenavigator.py</vh>
+<v t="ekr.20040108062655.2" a="E"><vh>class Navigator</vh>
+<v t="ekr.20040108062655.3"><vh>addWidgets</vh></v>
+<v t="ekr.20040108062655.4"><vh>_getSizer</vh></v>
+<v t="ekr.20040108062655.5"><vh>onSelect</vh></v>
+<v t="ekr.20040108062655.6"><vh>updateMarks</vh></v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -15560,6 +15568,8 @@ color_markup.py
 image.py
 nav_buttons.py
 plugins_menu.py
+# New from Paul Paterson.
+nodenavigator.py
 searchbox.py
 # word_export.py</t>
 <t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
@@ -15851,5 +15861,121 @@ Still to do:
 - persist recent searches across Leo sessions
 - use INI file to set options for list size etc
 """</t>
+<t tx="ekr.20040108062655">"""Add a quick node navigator to the toolbar in Leo 
+
+Adds a node navigator to the toolbar. The navigator allows quick
+access to marked nodes. You can either go to the marked node or hoist
+the marked node.
+
+""" 
+
+__name__ = "Node Navigator"
+__version__ = "0.1" 
+
+from leoPlugins import * 
+from leoGlobals import * 
+import leoFind 
+
+try:    import Tkinter 
+except: Tkinter = None 
+Tk = Tkinter 
+
+# Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform 
+USE_FIXED_SIZES = 1 
+
+@others
+
+if Tkinter: 
+	nav = Navigator() 
+	
+	if app.gui is None: 
+		app.createTkGui(__file__) 
+
+	if app.gui.guiName() == "tkinter": 
+		es("Activating NodeNavigator", color="orange") 
+		registerHandler("after-create-leo-frame", nav.addWidgets) 
+		registerHandler(("set-mark","clear-mark"),nav.updateMarks)
+		plugin_signon("nodenavigator") 
+</t>
+<t tx="ekr.20040108062655.2">class Navigator: 
+	"""A node navigation aid for Leo"""
+	@others
+</t>
+<t tx="ekr.20040108062655.3">def addWidgets(self, tags, keywords): 
+	"""Add the widgets to the navigation bar""" 
+	self.commander = keywords['c'] 
+	toolbar = self.commander.frame.iconFrame 
+	# Main container 
+	self.frame = Tkinter.Frame(toolbar) 
+	self.frame.pack(side="left")
+	# Navigation 
+	marks = ["Marks"] 
+	self.mark_value = Tkinter.StringVar() 
+	self.marks = Tkinter.OptionMenu(self._getSizer(self.frame, 29, 130), self.mark_value, *marks) 
+	self.mark_value.set(marks[0]) 
+	self.marks.pack(side="right", fill="both", expand=1) 
+	# Options
+	options = ["Hoist", "Go to"]
+	self.option_value = Tkinter.StringVar() 
+	self.options = Tkinter.OptionMenu(self._getSizer(self.frame, 29, 75), self.option_value, *options) 
+	self.option_value.set(options[0]) 
+	self.options.pack(side="left", fill="both", expand=1) 
+	 #
+	self.vnodeList = []
+
+</t>
+<t tx="ekr.20040108062655.4">def _getSizer(self, parent, height, width): 
+	"""Return a sizer object to force a Tk widget to be the right size""" 
+	if USE_FIXED_SIZES: 
+		sizer = Tkinter.Frame(parent, height=height, width=width) 
+		sizer.pack_propagate(0) # don't shrink 
+		sizer.pack(side="right") 
+		return sizer 
+	else: 
+		return parent 
+
+</t>
+<t tx="ekr.20040108062655.5">def onSelect(self, vnode): 
+	"""Do the navigation"""
+	es("Selected %s" % vnode)
+	c = top()
+	c.selectVnode(vnode)
+	name = vnode.headString()
+	if len(name) &gt; 15:
+		name = "%s ..." % name[:15]
+	self.mark_value.set(name)
+	if self.option_value.get() == "Hoist":
+		c.dehoist()
+		c.hoist()
+</t>
+<t tx="ekr.20040108062655.6">def updateMarks(self, tag, keywords):
+	"""Update the marks list"""        
+	c = keywords.get("c")
+	v = c.rootVnode()
+
+	# Clear old marks menu
+	menu = self.marks["menu"]
+	if self.vnodeList:
+		menu.delete(1, "end")
+
+	# Temporary storage
+	self.vnodeList = []
+	self.tnodeList = []
+
+	def getCaller(v):
+		"""Return a callback"""
+		return lambda : self.onSelect(v)
+
+	# Find all marked nodes
+	while v:
+		if v.isMarked() and v.t not in self.tnodeList:
+			name = v.headString().strip()
+			menu.add_command(label=name,
+							 command=getCaller(v))
+			self.tnodeList.append(v.t)
+			self.vnodeList.append(v)
+		v = v.threadNext()
+
+</t>
 </tnodes>
 </leo_file>
