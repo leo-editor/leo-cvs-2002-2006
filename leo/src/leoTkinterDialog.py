@@ -688,8 +688,7 @@ class tkinterListBoxDialog (leoTkinterDialog):
     
         # Initialize common ivars.
         self.label = label
-        self.vnodeList = []
-        self.vnodeList = []
+        self.positionList = []
         self.buttonFrame = None
         
         # Fill in the frame.
@@ -786,12 +785,12 @@ class tkinterListBoxDialog (leoTkinterDialog):
     
         if items:
             n = items[0]
-            v = self.vnodeList[n]
+            p = self.positionList[n]
             c.beginUpdate()
-            c.frame.tree.expandAllAncestors(v)
-            c.selectVnode(v,updateBeadList=True) # A case could be made for updateBeadList=False
+            c.frame.tree.expandAllAncestors(p)
+            c.selectPosition(p,updateBeadList=True) # A case could be made for updateBeadList=False
             c.endUpdate()
-            c.frame.tree.idle_scrollTo(v)
+            c.frame.tree.idle_scrollTo(p)
     #@-node:ekr.20031218072017.3896:go
     #@-others
 #@nonl
