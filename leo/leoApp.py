@@ -112,7 +112,7 @@ class LeoApp:
 			#@+node:1::<< set v834 if version is 8.3.4 or greater >>
 			#@+body
 			# A compare version utility would be good.
-
+			
 			# Tk version is of the form 9.9.9, or 9.9b9,
 			# or 9.9.9b9.  The "9b9" form is used for beta
 			# releases.  This string splitting logic handles

@@ -2035,7 +2035,7 @@ class Commands:
 			c.beginUpdate()
 			c.selectVnode(v)
 			c.endUpdate()
-			c.frame.canvas.focus_force()
+
 	#@-body
 	#@-node:3:C=26:selectThreadBack
 	#@+node:4:C=27:selectThreadNext
@@ -2050,7 +2050,6 @@ class Commands:
 			c.beginUpdate()
 			c.selectVnode(v)
 			c.endUpdate()
-			c.frame.canvas.focus_force()
 	#@-body
 	#@-node:4:C=27:selectThreadNext
 	#@+node:5:C=28:selectVisBack
@@ -2067,7 +2066,6 @@ class Commands:
 			c.beginUpdate()
 			c.selectVnode(v)
 			c.endUpdate()
-			c.frame.canvas.focus_force()
 	#@-body
 	#@-node:5:C=28:selectVisBack
 	#@+node:6:C=29:selectVisNext
@@ -2082,7 +2080,7 @@ class Commands:
 			c.beginUpdate()
 			c.selectVnode(v)
 			c.endUpdate()
-			c.frame.canvas.focus_force()
+
 	#@-body
 	#@-node:6:C=29:selectVisNext
 	#@+node:7:C=30:c.selectVnode (calls tree.select)
