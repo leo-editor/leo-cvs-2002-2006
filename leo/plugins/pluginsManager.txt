@@ -93,7 +93,7 @@
 #@+node:ekr.20040915073259.3:Enhance windows
 # Adds tabs to Leo outline.
     ## NOT READY YET: NOT CONVERTED FULLY FROM 4.1 CODE BASE
-    # chapters.py
+#chapters.py
 
 # Maximizes all new windows. (Windows platform only).
     # maximizeNewWindows.py

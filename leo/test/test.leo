@@ -722,7 +722,7 @@
 <v t="ekr.20040723065047"><vh>Test</vh></v>
 </v>
 <v t="ekr.20040717121014"><vh>tellGnxScript</vh></v>
-<v t="ekr.20040706071823" a="E"><vh>test of Python's parser module</vh></v>
+<v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
 <v t="ekr.20040804104924"><vh>Test of p.__hash__</vh>
 <v t="ekr.20040804105026"><vh>a</vh>
 <v t="ekr.20040804104328"><vh>Script</vh></v>
@@ -1233,8 +1233,9 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041017100700"><vh>Test of autocompleter</vh></v>
-<v t="ekr.20041018193142" a="TV"><vh>Make sure openWith changes are benign</vh></v>
+<v t="ekr.20041017100700" a="TV"><vh>Test of autocompleter</vh></v>
+<v t="ekr.20041018193142"><vh>Make sure openWith changes are benign</vh></v>
+<v t="ekr.20041019080125"><vh>Report loaded plugins</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1888,7 +1889,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2019,7 +2020,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -2774,7 +2775,7 @@ test\\unittest\\input\\flat.txt</t>
 test\\unittest\\input\\cweave.w</t>
 <t tx="ekr.20040712101754.22"></t>
 <t tx="ekr.20040712101754.23">openFileDialog
-test\\unittest\\input\\leoAtFile.py</t>
+test\\unittest\\input\\testLeoAtFile.py</t>
 <t tx="ekr.20040712101754.24">@language plain</t>
 <t tx="ekr.20040712101754.25"></t>
 <t tx="ekr.20040712101754.26"></t>
@@ -9462,12 +9463,16 @@ import leoGlobals as g
 
 def checkLinuxLineEndings(filename):
     
-    s = open(filename,"rb").read()
-    cr = 0 ; nl = 0
-    for ch in s:
-        if ch == '\r': cr += 1
-        if ch == '\n': nl += 1
-    assert cr == 0, "Bad Linux line ending in %s: cr: %d, nl: %d" % (cr,nl,filename)
+    try:
+        s = open(filename,"rb").read()
+        cr = 0 ; nl = 0
+        for ch in s:
+            if ch == '\r': cr += 1
+            if ch == '\n': nl += 1
+        assert cr == 0, "Bad Linux line ending in %s: cr: %d, nl: %d" % (filename,cr,nl)
+    except IOError:
+        print "checkLinuxLineEndings: can not open %s" % filename
+        raise
 
 for file in ("install","uninstall"):
     checkLinuxLineEndings(g.os_path_join(g.app.loadDir,"..",file))</t>
@@ -10141,7 +10146,7 @@ bill p</t>
 leoTest
 
 # Type an open paren to bring up calltip.
-leoTest.findAllAtFileNodes</t>
+leoTest.findAllAtFileNodes(</t>
 <t tx="ekr.20041018193142">arg = "arg" ; filename = "fileName"
 path = "path" ; shortPath = "shortPath"
 vtuple = "vtuple"
@@ -10164,5 +10169,11 @@ test(
 test(
     "os.spawnv("+arg[0]+","+repr(vtuple)+")",
     "os.spawnv(%s,%s)" % (arg[0],repr(vtuple)))</t>
+<t tx="ekr.20041019080125">import leoGlobals as g
+
+print "Loaded plugins..."
+
+for s in g.app.loadedPlugins:
+    print s</t>
 </tnodes>
 </leo_file>

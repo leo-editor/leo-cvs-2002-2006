@@ -1,6 +1,7 @@
 #@+leo-ver=4-thin
-#@+node:bwmulder.20041017125718:@thin ../plugins/mod_shadow.py
+#@+node:bwmulder.20041017125718:@thin mod_shadow.py
 #@@language python
+
 #@+others
 #@+node:bwmulder.20041017125718.1:docstring
 """
@@ -1932,5 +1933,5 @@ if active:
    g.es("Plugin enabled: Use a LEO subfolder for files with LEO sentinels",color="orange")
    
 #@nonl
-#@-node:bwmulder.20041017125718:@thin ../plugins/mod_shadow.py
+#@-node:bwmulder.20041017125718:@thin mod_shadow.py
 #@-leo
