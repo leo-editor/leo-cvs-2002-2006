@@ -4674,6 +4674,7 @@ def __init__(self,c):
     at = self
     
     at.c = c
+    at.debug = False
     at.fileCommands = c.fileCommands
     at.testing = True # True: enable additional checks.
 
@@ -5034,7 +5035,7 @@ def readOpenFile(self,root,theFile,fileName):
     firstLines,read_new,isThinDerivedFile = at.scanHeader(theFile,fileName)
 
     if read_new:
-        lastLines = at.scanText4(theFile,root)
+        lastLines = at.scanText4(theFile,fileName,root)
     else:
         lastLines = at.scanText3(theFile,root,[],at.endLeo)
         
@@ -5818,8 +5819,10 @@ def createThinChild4 (self,gnxString,headline):
     at = self ; v = at.root.v ; c = at.c ; indices = g.app.nodeIndices
     last = at.lastThinNode ; lastIndex = last.t.fileIndex
     gnx = indices.scanGnx(gnxString,0)
-    #g.trace("last",last,last.t.fileIndex)
-    #g.trace("args",indices.areEqual(gnx,last.t.fileIndex),gnxString,headline)
+    
+    if 0:
+        g.trace("last",last,last.t.fileIndex)
+        g.trace("args",indices.areEqual(gnx,last.t.fileIndex),gnxString,headline)
     
     # See if there is already a child with the proper index.
     child = at.lastThinNode.firstChild()
@@ -5854,7 +5857,7 @@ def createThinChild4 (self,gnxString,headline):
         child = leoNodes.vnode(c,t)
         t.vnodeList.append(child)
         child.linkAsNthChild(parent,parent.numberOfChildren())
-        # g.trace("creating node",child,gnx)
+        # g.trace('creating last child %s\nof parent%s\n' % (child,parent))
 
     return child
 #@nonl
@@ -5895,7 +5898,7 @@ def findChild4 (self,headline):
 #@nonl
 #@-node:ekr.20041005105605.73:findChild4
 #@+node:ekr.20041005105605.74:scanText4 & allies
-def scanText4 (self,theFile,p,verbose=False):
+def scanText4 (self,theFile,fileName,p,verbose=False):
     
     """Scan a 4.x derived file non-recursively."""
 
@@ -5905,8 +5908,7 @@ def scanText4 (self,theFile,p,verbose=False):
         s = at.readLine(theFile)
         if len(s) == 0: break
         kind = at.sentinelKind4(s)
-        if verbose:
-            g.trace(at.sentinelName(kind),s.strip())
+        # g.trace(at.sentinelName(kind),s.strip())
         if kind == at.noSentinel:
             i = 0
         else:
@@ -7836,6 +7838,8 @@ def putRefAt (self,s,i,n1,n2,p,delta):
         at.putSentinel("@" + name)
         
     if inBetween:
+        # Bug fix: reverse the +middle sentinels, not the -middle sentinels.
+        inBetween.reverse()
         for p2 in inBetween:
             at.putOpenNodeSentinel(p2,middle=True)
         
@@ -8178,7 +8182,7 @@ def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
         at.putSentinel("@+middle:" + s)
     else:
         at.putSentinel("@+node:" + s)
-    
+
     if not at.thinFile:
         # Append the n'th tnode to the root's tnode list.
         at.root.v.t.tnodeList.append(p.v.t)
@@ -10590,6 +10594,99 @@ def importFromPath (name,path,pluginName=None,verbose=False):
 #@-node:ekr.20031218072017.2278:g.importFromPath
 #@-node:ekr.20041219095213:import wrappers
 #@-node:ekr.20050106032427:(g.import wrappers return module if it is in sys.modules)
+#@+node:ekr.20050112100144:(Fixed bug in how Leo writes thin derived files)
+# The fix was simply to reverse the order in which putRefAt puts +middle and -middle sentinels.
+#@nonl
+#@+node:ekr.20050112100144.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2936140
+By: nobody
+
+I have recently stumbled two or three times upon an error,
+that causes leo to write  @thin files, that cannont be
+untangled (I hope its correct to use this term here) later on.
+The resulting Problem is really serious, since opening
+the leo file in a new session causes leo immediately to hang.
+The only way to recover the leo file I found, was to modify
+the appropriate leo sentinels in the broken derived file.
+
+Description:
+
+create a file (must be @thin not @file),
+which references a section, that is two levels
+below the current level.
+f.e.
+<< current level>>
+  reference to << 3. level>>
+    << 1.level>>
+        << 2.level >>
+            << 3.level>>
+
+Leo does not complain while saving.
+
+Close leo. Opening leo now causes leo to hang while untangling the above
+generated @thin file.
+
+To make the file readable the *middle* sentinels surrounding the reference must
+be removed.
+#@nonl
+#@-node:ekr.20050112100144.1:Report
+#@+node:ekr.20041005105605.177:putRefAt
+def putRefAt (self,s,i,n1,n2,p,delta):
+    
+    """Put a reference at s[n1:n2+2] from p."""
+    
+    at = self ; name = s[n1:n2+2]
+
+    ref = g.findReference(name,p)
+    if not ref:
+        at.writeError(
+            "undefined section: %s\n\treferenced from: %s" %
+                ( name,p.headString()))
+        return None
+    
+    # Expand the ref.
+    if not delta:
+        junk,delta = g.skip_leading_ws_with_indent(s,i,at.tab_width)
+
+    at.putLeadInSentinel(s,i,n1,delta)
+    
+    inBetween = []
+    if at.thinFile: # @+-middle used only in thin files.
+        parent = ref.parent()
+        while parent != p:
+            inBetween.append(parent)
+            parent = parent.parent()
+        
+    at.indent += delta
+    
+    if at.leadingWs:
+        at.putSentinel("@" + at.leadingWs + name)
+    else:
+        at.putSentinel("@" + name)
+        
+    if inBetween:
+        # Bug fix: reverse the +middle sentinels, not the -middle sentinels.
+        inBetween.reverse()
+        for p2 in inBetween:
+            at.putOpenNodeSentinel(p2,middle=True)
+        
+    at.putOpenNodeSentinel(ref)
+    at.putBody(ref)
+    at.putCloseNodeSentinel(ref)
+    
+    if inBetween:
+        inBetween.reverse()
+        for p2 in inBetween:
+            at.putCloseNodeSentinel(p2,middle=True)
+    
+    at.indent -= delta
+    
+    return delta
+#@nonl
+#@-node:ekr.20041005105605.177:putRefAt
+#@-node:ekr.20050112100144:(Fixed bug in how Leo writes thin derived files)
 #@-node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)
