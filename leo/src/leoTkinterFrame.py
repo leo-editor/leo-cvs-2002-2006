@@ -1067,7 +1067,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			if sel1 and sel2 and sel1 != sel2: # 7/7/03
 				v.edit_text().delete(sel1,sel2)
 			v.edit_text().insert("insert",c.getTime(body=false))
-			frame.tree.idle_head_key(v) # DTHEIN: 2004.01.03
+			frame.tree.idle_head_key(v)
 	
 		# A kludge to get around not knowing whether we are editing or not.
 		if h.strip() == v.headString().strip():
@@ -1636,17 +1636,58 @@ class leoTkinterBody (leoFrame.leoBody):
 		
 		"""Handle any key press event in the body pane."""
 	
-		c = self.c ; v = c.currentVnode() ; ch = event.char
+		c = self.c ; v = c.currentVnode()
+		ch = event.char 
 		oldSel = c.frame.body.getTextSelection()
-	
-		if 0:
-			self.keyCount += 1
-			if ch and len(ch)>0: print "%4d %s" % (self.keyCount,repr(ch))
+					
+		if 0: # won't work when menu keys are bound.
+			self.handleStatusLineKey(event)
 			
 		# We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
 		self.c.frame.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
-	#@nonl
 	#@-node:onBodyKey
+	#@+node:handleStatusLineKey
+	def handleStatusLineKey (self,event):
+		
+		c = self.c ; frame = c.frame
+		ch = event.char ; keysym = event.keysym
+		keycode = event.keycode ; state = event.state
+	
+		if 1: # ch and len(ch)>0:
+			#@		<< trace the key event >>
+			#@+node:<< trace the key event >>
+			try:    self.keyCount += 1
+			except: self.keyCount  = 1
+			
+			printable = choose(ch == keysym and state < 4,"printable","")
+			
+			print "%4d %s %d %s %x %s" % (
+				self.keyCount,repr(ch),keycode,keysym,state,printable)
+			#@nonl
+			#@-node:<< trace the key event >>
+			#@nl
+	
+		try:
+			status = self.keyStatus
+		except:
+			status = [] ; frame.clearStatusLine()
+		
+		for sym,name in (
+			("Alt_L","Alt"),("Alt_R","Alt"),
+			("Control_L","Control"),("Control_R","Control"),
+			("Escape","Esc"),
+			("Shift_L","Shift"), ("Shift_R","Shift")):
+			if keysym == sym:
+				if name not in status:
+					status.append(name)
+					frame.putStatusLine(name + ' ')
+				break
+		else:
+			status = [] ; frame.clearStatusLine()
+	
+		self.keyStatus = status
+	#@nonl
+	#@-node:handleStatusLineKey
 	#@+node:onBodyWillChange
 	# Called by command handlers that change the text just before idle time.
 	
