@@ -572,40 +572,43 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@-node:ekr.20031218072017.4145:About drawing and updating
 	#@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 	def drawBox (self,p,x,y):
-	
+		
+		tree = self
 		y += 7 # draw the box at x, y+7
 		h = self.line_height
-	
-		tree = self
-		iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
-		image = self.getIconImage(iconname)
-		id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
 		
-		if 1: # New in 4.2.  Create a frame to catch all clicks.
-			id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-			color = ""
-			self.canvas.itemconfig(id4,fill=color,outline=color)
-			self.canvas.lower(id4)
-			id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-			self.tagBindings.append((id,id3,"<1>"),)
+		if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 	
-		id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+			iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
+			image = self.getIconImage(iconname)
+			id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
+			
+			if 1: # New in 4.2.  Create a frame to catch all clicks.
+				id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
+				color = ""
+				self.canvas.itemconfig(id4,fill=color,outline=color)
+				self.canvas.lower(id4)
+				id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
+				self.tagBindings.append((id,id3,"<1>"),)
 		
-		# Remember the bindings so deleteBindings can delete them.
-		self.tagBindings.append((id,id1,"<1>"),)
-		self.tagBindings.append((id,id2,"<Double-1>"),)
+			id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
+			id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+			
+			# Remember the bindings so deleteBindings can delete them.
+			self.tagBindings.append((id,id1,"<1>"),)
+			self.tagBindings.append((id,id2,"<Double-1>"),)
+	#@nonl
 	#@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 	#@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
 	def drawIcon(self,p,x=None,y=None):
 		
 		"""Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
 	
-		tree = self
-		
-		# Make sure the bindings refer to the _present_ position.
-		v = p.v
+		tree = self ; v = p.v # Make sure the bindings refer to the _present_ position.
 	
+		#@	<< compute x,y and iconVal >>
+		#@+node:EKR.20040602150338:<< compute x,y and iconVal >>
+		
 		if x is None and y is None:
 			try:
 				x,y = v.iconx, v.icony
@@ -615,29 +618,34 @@ class leoTkinterTree (leoFrame.leoTree):
 		else:
 			# Inject the ivars.
 			v.iconx, v.icony = x,y
-	
+		
 		y += 2 # draw icon at y + 2
-	
+		
 		# Always recompute v.iconVal.
 		# This is an important drawing optimization.
 		val = v.iconVal = v.computeIcon()
 		assert(0 <= val <= 15)
+		#@nonl
+		#@-node:EKR.20040602150338:<< compute x,y and iconVal >>
+		#@nl
 	
-		# Get the image.
-		imagename = "box%02d.GIF" % val
-		image = self.getIconImage(imagename)
-		id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
-		self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
+		if not g.doHook("draw-outline-icon",tree=tree,p=p,v=v,x=x,y=y):
 	
-		id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
-		id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
-		id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+			# Get the image.
+			imagename = "box%02d.GIF" % val
+			image = self.getIconImage(imagename)
+			id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+			self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
 		
-		# Remember the bindings so deleteBindings can delete them.
-		self.tagBindings.append((id,id1,"<1>"),)
-		self.tagBindings.append((id,id2,"<Double-1>"),)
-		self.tagBindings.append((id,id3,"<3>"),)
-	
+			id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
+			id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
+			id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+			
+			# Remember the bindings so deleteBindings can delete them.
+			self.tagBindings.append((id,id1,"<1>"),)
+			self.tagBindings.append((id,id2,"<Double-1>"),)
+			self.tagBindings.append((id,id3,"<3>"),)
+		
 		return 0,icon_width # dummy icon height,width
 	#@nonl
 	#@-node:ekr.20031218072017.1002:drawIcon (tag_bind)
@@ -646,8 +654,12 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		"""Draw horizontal line from vertical line to icon"""
 		
-		# g.trace(p)
+		tree = self ; v = p.v
 		
+		data = g.doHook("draw-outline-node",tree=tree,p=p,v=v,x=x,y=y)
+		if data is not None: return data
+		
+		# g.trace(p)
 		if 1:
 			self.lineyoffset = 0
 		else:
@@ -718,6 +730,9 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		tree = self ; c = self.c ; v = p.v
 		x += text_indent
+		
+		data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
+		if data is not None: return data
 	
 		t = Tkinter.Text(self.canvas,
 			font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
@@ -792,6 +807,7 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@+node:ekr.20031218072017.1008:drawTree
 	def drawTree(self,p,x,y,h,level,hoistFlag=false):
 	
+		tree = self ; v = p.v
 		yfirst = ylast = y
 		if level==0: yfirst += 10
 		w = 0
@@ -800,6 +816,10 @@ class leoTkinterTree (leoFrame.leoTree):
 		# So making copies here actually reduces the total number of copies.
 		### This will change for incremental redraw.
 		p = p.copy()
+		
+		data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+		if data is not None: return data
+		
 		while p: # Do not use iterator.
 			h,w = self.drawNode(p,x,y)
 			y += h ; ylast = y
