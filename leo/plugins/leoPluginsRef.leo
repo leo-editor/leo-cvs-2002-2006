@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1958" clone_windows="0"/>
-<globals body_outline_ratio="0.590662323561">
-	<global_window_position top="10" left="169" height="921" width="951"/>
+<globals body_outline_ratio="0.368078175896">
+	<global_window_position top="11" left="269" height="921" width="951"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -13,7 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203113231"><vh>@file-thin pluginsNotes.txt</vh></v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="edream.110203113231.667"><vh>Commands</vh>
 <v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
 <v t="edream.110203113231.669"><vh>@file-thin import_cisco_config.py</vh></v>
@@ -226,7 +226,7 @@
 <v t="EKR.20040517080517"><vh>Key bindings</vh>
 <v t="EKR.20040517080517.1"><vh>@file-thin arrows.py</vh></v>
 </v>
-<v t="EKR.20040517080555"><vh>Menus</vh>
+<v t="EKR.20040517080555" a="E"><vh>Menus</vh>
 <v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
 <v t="EKR.20040517080555.2"><vh>@file-thin plugins_menu.py</vh></v>
 <v t="EKR.20040517080555.25"><vh>@file-thin pluginsTest.py</vh></v>
@@ -317,7 +317,7 @@
 </v>
 </v>
 <v t="ekr.20040331071919.39"><vh>Installation</vh></v>
-<v t="ekr.20040331071919.40" a="E"><vh>Operation</vh>
+<v t="ekr.20040331071919.40"><vh>Operation</vh>
 <v t="ekr.20040331071919.41"><vh>Directives</vh>
 <v t="ekr.20040331071919.42"><vh>Configuration</vh></v>
 </v>
@@ -331,7 +331,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040331072607"><vh>@file-thin hoist.py</vh></v>
+<v t="ekr.20040331072607" a="M"><vh>@file-thin hoist.py</vh></v>
 <v t="ekr.20040331151007"><vh>@file-thin niceNosent.py</vh></v>
 <v t="ekr.20040331153923"><vh>@file-thin scheduler.py</vh></v>
 <v t="ekr.20040422072343"><vh>@file-thin rClick.py</vh></v>
@@ -364,6 +364,10 @@
 </v>
 <v t="EKR.20040517090508" a="E"><vh>Enable plugins by changing pluginsManager.txt</vh>
 <v t="edream.120603093808"><vh>@file-thin pluginsManager.txt</vh></v>
+</v>
+<v t="EKR.20040605181725" a="TV"><vh>Autocompleter</vh>
+<v t="EKR.20040605181725.1"><vh>Docs</vh></v>
+<v t="EKR.20040605181725.2" a="E"><vh>@thin autocompleter.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -772,6 +776,42 @@ Ok, here's what it does
 Leo enables only those plugins whose filenames appear in PluginsManager.txt.
 
 @color</t>
+<t tx="EKR.20040605181725"></t>
+<t tx="EKR.20040605181725.1">@nocolor
+
+Allright here is .125 :).
+
+New:
+1. Can scroll Autobox from the commands Alt-Up, Alt-Down
+2. Captialization and _ do not unsummon Autobox
+3. Ctrl now unsummons calltip box
+4. Breaking of code into into individual methods.
+5. New calltip design. The system will try to more specific pattern matching based on the language you are using. For example, if you are in a node and the language is python, it will only recognize def word( ....) as the calltip. Language's currently attempted for support: Python, C, C++, Perl and Java. But dont fret because we have an Extension mechanism in place:
+a. The plugin looks in the plugins folder for a file called: autocompleter.ini . This follows the windows .ini file format as used in ConfigParser, which can be read about at: http://docs.python.org/lib/module-ConfigParser.html
+
+you can add a language by putting this in the file:
+[ yourlanguage ]
+pat = put regular expression here
+
+Then the plugin will recognize your language for the calltip system. This only works if Leo currently recognizes your language, since we are getting our info from the colorizer as to what language is in use.
+
+b. You can also supply a library of prebuilt calltip definitions and autocompleter info by putting a directory called autocompleter in the plugins directory. It will look for a file(s) of the languages used in the Leo project. The file name must be language.ato.
+
+For java it would be java.ato. In it I could have this in it:
+dog.eat
+burt.you
+public static void main( String[] args )
+
+and dog.eat, burt.you would be added to autocompletion and the 3rd line would be added to the calltips section.
+
+c. You can also set what parts of the plugin you want to use. By having in autocompleter.ini a section called [ autocompleter ], these options change behavior:
+useauto = 0 # turns off autocompletion
+usecalltips = 0 # turns of calltips
+
+also here you can add:
+autopattern = pattern #pattern is a regular expression
+
+this changes the pattern by which autocompletion options are recognized. I wouldnt use it unless you understood how the code works though.</t>
 <t tx="edream.110203113231.233">@ To do:
 	
 *** WARNING: problems with locking out event handlers could cause Leo to drop Text!
@@ -4546,6 +4586,7 @@ if Tkinter: # Register the handlers...
 
     def on_idle (tag,keywords):
         a = g.app
+		if g.app.killed: return
         for dict in a.openWithFiles:
             path = dict.get("path")
             c = dict.get("c")
@@ -4632,8 +4673,6 @@ Here is where we insert the &lt; Call XEmacs &gt; code fragment defined above:
 #               table = ("X&amp;Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)),
             
             g.top().frame.menu.createOpenWithMenuFromTable(table)
-            # Enable the idle-time hook so we can check temp files created by Open With.
-            g.enableIdleTimeHook(idleTimeDelay=500)
 
     if g.app.gui is None:
         g.app.createTkGui(__file__)
