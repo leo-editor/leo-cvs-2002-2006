@@ -632,6 +632,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		top.destroy()
 	#@nonl
 	#@-node:destroySelf
+	#@+node:bringToFront
+	def bringToFront (self):
+		
+		"""Bring the tkinter Prefs Panel to the front."""
+	
+		self.top.deiconify()
+		self.top.lift()
+	#@nonl
+	#@-node:bringToFront
 	#@+node:configureBar
 	def configureBar (self, bar, verticalFlag):
 		
@@ -706,12 +715,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		frame.tree.setTreeColorsFromConfig()
 		frame.configureBarsFromConfig()
 		c.redraw()
-		frame.body.setBodyFontFromConfig()
-		frame.body.setTabWidth(c.tab_width)
+		frame.body.setFontFromConfig()
+		frame.setTabWidth(c.tab_width) # 12/2/03
 		c.redraw()
 		frame.log.setFontFromConfig()
 		c.redraw()
-	#@nonl
 	#@-node:reconfigureFromConfig
 	#@+node:setInitialWindowGeometry
 	def setInitialWindowGeometry(self):
@@ -745,7 +753,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			# tablist = `tabw` + ' ' + `2*tabw`
 			self.bodyCtrl.configure(tabs=tabw)
 			self.tab_width = w
-			# print "frame.setTabWidth:" + `w` + "," + `tabw`
+			# trace(w,tabw)
 		except:
 			es_exception()
 			pass
@@ -1237,19 +1245,20 @@ class leoTkinterBody (leoFrame.leoBody):
 	"""A class that represents the body pane of a Tkinter window."""
 
 	#@	@+others
-	#@+node:tkBody.__init__
+	#@+node:tkBody. __init__
 	def __init__ (self,frame,parentFrame):
 		
 		# trace("leoTkinterBody")
 		
 		# Call the base class constructor.
 		leoFrame.leoBody.__init__(self,frame,parentFrame)
-		
+	
 		self.bodyCtrl = self.createControl(frame,parentFrame)
-		self.setBodyFontFromConfig()
+		self.setFontFromConfig()
+	
 		self.colorizer = leoColor.colorizer(self.c)
 	#@nonl
-	#@-node:tkBody.__init__
+	#@-node:tkBody. __init__
 	#@+node:tkBody.createBindings
 	def createBindings (self,frame):
 		
@@ -1305,14 +1314,18 @@ class leoTkinterBody (leoFrame.leoBody):
 		return body
 	#@nonl
 	#@-node:tkBody.createControl
-	#@+node:tkBody.setBodyFontFromConfig
-	def setBodyFontFromConfig (self):
+	#@+node:tkBody.setFontFromConfig
+	def setFontFromConfig (self):
 	
 		config = app.config ; body = self.bodyCtrl
 		
 		font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
-			"body_text_font_slant",  "body_text_font_weight")
+			"body_text_font_slant",  "body_text_font_weight",
+			tag = "body")
+	
+		if app.trace:
+			trace(body.cget("font"),font.cget("family"),font.cget("weight"))
 	
 		body.configure(font=font)
 		
@@ -1347,7 +1360,7 @@ class leoTkinterBody (leoFrame.leoBody):
 				except:
 					import traceback ; traceback.print_exc()
 	#@nonl
-	#@-node:tkBody.setBodyFontFromConfig
+	#@-node:tkBody.setFontFromConfig
 	#@+node:body key handlers
 	#@+at 
 	#@nonl
@@ -1679,9 +1692,17 @@ class leoTkinterBody (leoFrame.leoBody):
 	#@+node:Configuration (Tk spelling)
 	def cget(self,*args,**keys):
 		
-		return self.bodyCtrl.cget(*args,**keys)
+		val = self.bodyCtrl.cget(*args,**keys)
+		
+		if app.trace:
+			trace(val,args,keys)
+	
+		return val
 		
 	def configure (self,*args,**keys):
+		
+		if app.trace:
+			trace(args,keys)
 		
 		return self.bodyCtrl.configure(*args,**keys)
 	#@nonl
@@ -2233,6 +2254,6 @@ class leoTkinterLog (leoFrame.leoLog):
 #@nonl
 #@-node:class leoTkinterLog
 #@-others
-
+#@nonl
 #@-node:@file leoTkinterFrame.py
 #@-leo
