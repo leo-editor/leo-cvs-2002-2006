@@ -1488,22 +1488,6 @@ class position (object):
     
     #@    @+others
     #@+node:ekr.20040228094013: ctor & other special methods...
-    #@+node:ekr.20031218072017.892:p.__init__
-    def __init__ (self,v,stack):
-    
-        """Create a new position."""
-        
-        if v: self.c = v.c
-        else: self.c = g.top()
-        self.v = v
-        assert(v is None or v.t)
-        self.stack = stack[:] # Creating a copy here is safest and best.
-        
-        g.app.positions += 1
-        
-        # Note: __getattr__ implements p.t.
-    #@nonl
-    #@-node:ekr.20031218072017.892:p.__init__
     #@+node:ekr.20031218072017.893:p.__cmp__
     def __cmp__(self,p2):
     
@@ -1529,27 +1513,6 @@ class position (object):
         return 0 # equal
     #@nonl
     #@-node:ekr.20031218072017.893:p.__cmp__
-    #@+node:ekr.20040325142015:p.equal
-    def equal(self,p2):
-    
-        """Return True if two postions are equivalent.
-        
-        Use this method when the speed comparisons is crucial
-        
-        N.B. Unlike __cmp__, p2 must not be None."""
-    
-        p1 = self
-        
-        # if g.app.trace: "equal",p1.v,p2.v
-    
-        # Check entire stack quickly.
-        # The stack contains vnodes, so this does not call p.__cmp__.
-        return (
-            p1.v == p2.v and
-            p1.stack == p2.stack and
-            p1.childIndex() == p2.childIndex())
-    #@nonl
-    #@-node:ekr.20040325142015:p.equal
     #@+node:ekr.20040117170612:p.__getattr__  ON:  must be ON if use_plugins
     if 1: # Good for compatibility, bad for finding conversion problems.
     
@@ -1567,6 +1530,25 @@ class position (object):
                 raise AttributeError
     #@nonl
     #@-node:ekr.20040117170612:p.__getattr__  ON:  must be ON if use_plugins
+    #@+node:ekr.20031218072017.892:p.__init__
+    def __init__ (self,v,stack,trace=True):
+    
+        """Create a new position."""
+        
+        if v: self.c = v.c
+        else: self.c = g.top()
+        self.v = v
+        assert(v is None or v.t)
+        self.stack = stack[:] # Creating a copy here is safest and best.
+    
+        g.app.positions += 1
+        
+        if g.app.tracePositions and trace:
+            g.trace("%-25s %-25s %s" % (
+                g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
+        
+        # Note: __getattr__ implements p.t.
+    #@-node:ekr.20031218072017.892:p.__init__
     #@+node:ekr.20040117173448:p.__nonzero__
     #@+at
     # The test "if p" is the _only_ correct way to test whether a position p 
@@ -1598,6 +1580,20 @@ class position (object):
     __repr__ = __str__
     #@nonl
     #@-node:ekr.20040301205720:p.__str__ and p.__repr__
+    #@+node:ekr.20040117171654:p.copy
+    # Using this routine can generate huge numbers of temporary positions during a tree traversal.
+    
+    def copy (self):
+        
+        """"Return an independent copy of a position."""
+        
+        if g.app.tracePositions:
+            g.trace("%-25s %-25s %s" % (
+                g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
+    
+        return position(self.v,self.stack,trace=False)
+    #@nonl
+    #@-node:ekr.20040117171654:p.copy
     #@+node:ekr.20040310153624:p.dump & p.vnodeListIds
     def dumpLink (self,link):
     
@@ -1616,6 +1612,36 @@ class position (object):
         return [id(v) for v in p.v.t.vnodeList]
     #@nonl
     #@-node:ekr.20040310153624:p.dump & p.vnodeListIds
+    #@+node:ekr.20040325142015:p.equal & isEqual
+    def equal(self,p2):
+    
+        """Return True if two postions are equivalent.
+        
+        Use this method when the speed comparisons is crucial
+        
+        N.B. Unlike __cmp__, p2 must not be None.
+        
+        >>> c = g.top() ; p = c.currentPosition() ; root = c.rootPosition()
+        >>> n = g.app.positions
+        >>> assert p.equal(p.copy()) is True
+        >>> assert p.equal(root) is False
+        >>> assert g.app.positions == n + 1
+        >>> 
+        """
+    
+        p1 = self
+        
+        # if g.app.trace: "equal",p1.v,p2.v
+    
+        # Check entire stack quickly.
+        # The stack contains vnodes, so this does not call p.__cmp__.
+        return (
+            p1.v == p2.v and
+            p1.stack == p2.stack and
+            p1.childIndex() == p2.childIndex())
+            
+    isEqual = equal
+    #@-node:ekr.20040325142015:p.equal & isEqual
     #@-node:ekr.20040228094013: ctor & other special methods...
     #@+node:ekr.20040306212636:Getters
     #@+node:ekr.20040306210951: vnode proxies
@@ -1857,6 +1883,24 @@ class position (object):
         return False
     #@nonl
     #@-node:ekr.20040307104131.1:p.isAncestorOf
+    #@+node:ekr.20040803111240:p.isCurrentPosition & isRootPosition
+    #@+node:ekr.20040803140033.4:isCurrentPosition
+    def isCurrentPosition (self):
+        
+        p = self ; c = p.c
+        
+        return c.isCurrentPosition(p)
+        
+    #@-node:ekr.20040803140033.4:isCurrentPosition
+    #@+node:ekr.20040803140033.5:isRootPosition
+    def isRootPosition (self):
+        
+        p = self ; c = p.c
+        
+        return c.isRootPosition(p)
+    #@nonl
+    #@-node:ekr.20040803140033.5:isRootPosition
+    #@-node:ekr.20040803111240:p.isCurrentPosition & isRootPosition
     #@+node:ekr.20040306215056:p.isCloned
     def isCloned (self):
         
@@ -3076,18 +3120,6 @@ class position (object):
     #@-node:ekr.20031218072017.941:p.moveToVisNext
     #@-node:ekr.20031218072017.928:p.moveToX
     #@+node:ekr.20040228094013.1:p.utils...
-    #@+node:ekr.20040117171654:p.copy
-    # Using this routine can generate huge numbers of temporary positions during a tree traversal.
-    
-    def copy (self):
-        
-        """"Return an independent copy of a position."""
-        
-        g.app.copies += 1
-    
-        return position(self.v,self.stack)
-    #@nonl
-    #@-node:ekr.20040117171654:p.copy
     #@+node:ekr.20040228060340:p.vParentWithStack
     # A crucial utility method.
     # The p.level(), p.isVisible() and p.hasThreadNext() methods show how to use this method.
