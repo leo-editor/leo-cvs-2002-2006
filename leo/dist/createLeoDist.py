@@ -41,8 +41,7 @@ distutils.core.setup (
     multiple views of a project within a single Leo outline.
     
     Leo is written in 100% pure Python and works on any platform that supports
-    Python 2.2 or above and the Tk toolkit. This version of Leo was developed with
-    Python 2.3.3 and Tk 8.4.3.
+    Python 2.2.1 or above and the Tk Tk 8.4 or above.
     
     Download Python from http://python.org/
     Download tcl/Tk from http://tcl.activestate.com/software/tcltk/

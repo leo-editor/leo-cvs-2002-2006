@@ -1207,6 +1207,7 @@ py
 pyc
 pycheckrc
 pyd
+pydoc
 pypi
 python22
 python_keywords

@@ -3,7 +3,32 @@
 #@@nocolor
 
 #@+all
+#@+node:ekr.20050128065405:Study Leo2Ascii
+@killcolor
+
+I know it involves a boatload of supporting software, but I'd like to remind folks of Michael Dawson's Leo2Ascii (http://www.marshallresearch.com/michael-dawson/os/leo.html). 
+The output is particularly handsome. Perhaps there's somening in his design we can learn from?
+#@+node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
+#@-node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
+#@-node:ekr.20050128065405:Study Leo2Ascii
 #@+node:ekr.20050119072551:4.3 a2
+#@+node:ekr.20050128092443:Add g.app.config.reloadAllSettings
+@killcolor
+
+> I...change the @settings node to
+@string server = mail.otherisp.net
+
+the script doesn't print  -mail.otherisp.net-
+until I restart Leo.
+
+I see.  Thanks for this clarification.  What you want to do is a) clear all the settings, b) reload all the settings files.
+
+There probably should be a g.app.config.reloadAllSettings method, but there isn't yet.
+
+You could simulate this in a script, but clearly this is a convenience method that would be good to have.  I'll do it for a2.
+
+Edward
+#@-node:ekr.20050128092443:Add g.app.config.reloadAllSettings
 #@+node:ekr.20050126100631:Finish undo experiments
 Is it possible to ignore backspaces?
 #@nonl
@@ -58,6 +83,126 @@ the rest is in the headline!! This is user-hostile, in my opinion.
 (Still exploring)
 --Rich
 
+#@+node:ekr.20050127090959:STILL NOT REMOVING DUPLICATES from recent files
+#@-node:ekr.20050127090959:STILL NOT REMOVING DUPLICATES from recent files
+#@+node:ekr.20050126102846:Fix Unicode problems
+#@+node:ekr.20050126102846.1:Report
+http://sourceforge.net/forum/message.php?msg_id=2959696
+By: tyndal
+
+Windows XP japanese. Leo 4.3a1, Leo4.2.1, Python2.3.4
+
+I was just trying to open an example file whose filename is in japanese. It
+worked mostly fine in Leo 4.2, (the only problem is that filename displayed
+in the log window has garbage characters in it, though it might be because the
+default font doesnt display japanese, since the window title shows fine) the
+but in 4.3a1 it fails.. there are 4 different cases i tried opening the same
+file, just renamed or moved as appropriate.
+
+1. standard case -- file with ascii name in ascii
+directory.&#12288;(c:/temp/file.leo)
+2. subfolder case  -- put in subfolder with japanese name
+(c:/temp/&#12486;&#12473;&#12488;/file.leo)
+3. filename case -- renamed file to japanese name, original folder
+(c:/temp/&#12486;&#12473;&#12488;.leo)
+4. filefolder case -- put in subfolder with japanese name
+(c:/temp/&#12486;&#12473;&#12488;/&#12486;&#12473;&#12488;.leo)
+
+If i try double clicking on the leo file, only case 1 will open the file correctly,
+the other cases, the hourglass shows briefly, then disappears, seeming to the
+user as if nothing happend (no leo opens, etc)
+
+If i try opening the files from file->open, they all result in the same error.
+The title of the window shows the filename correctly, however, the leo window
+is reduced to only showing the file menu, the bar with the dehoist and hoist
+buttons, and the status bar a the bottom (the log, headlines, and text area
+arent visible). If i drag the corner of the window, i can see the 3 areas, but
+there is nothing in the headline or text area.. in the log area the output is
+the following:
+
+------- 
+Leo Log Window...
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+exception executing command
+Traceback (most recent call last):
+  File "F:\Programs\Leo\src\leoCommands.py", line 170, in doCommand
+    command()
+  File "F:\Programs\Leo\src\leoCommands.py", line 328, in open
+    ok, frame = g.openWithFileName(fileName,c)
+  File "F:\Programs\Leo\src\leoGlobals.py", line 638, in openWithFileName
+    print "exceptions opening:", fileName
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 8-10:
+ordinal not in range(128)
+
+------- 
+
+Also, upon a new instance of leo (no other instances open, blank leo window),
+if i try to open case 2, 3, or 4, and then open a regular leo file (ex test.leo
+in the test directory of leo, aka the file that shows up at the open dialog)
+the log window is blank. dont know if it is the same bug, or a separate bug.
+	
+Note: the filenames are in japanese, i dont know what encoding they will show
+up in the forum post, so check UTF8 and the other 3 japanese encodings if necessary
+(shift jis, euc, and iso-2002-jp)
+
+Thanks,
+-Tyndal
+#@-node:ekr.20050126102846.1:Report
+#@-node:ekr.20050126102846:Fix Unicode problems
+#@+node:ekr.20050126102846.2:Better messages for missing modules
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2960328
+By: nobody
+
+From: Rich
+System: Leo Log Window...
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+Part of the console report (Note that a new user would not have thought to run
+Leo from a console window, rather he just would have noticed that certain plugins
+"weren't working"). Comments identified with "{[number]}":
+
+[i]Can not import win32com.client[/i] {1}
+
+wiki markup enabled
+
+newCreateCanvas: '1' <Tkinter.Canvas instance at 0x012DA058>
+
+newTreeinit: <Tkinter.Canvas instance at 0x012DA058>
+
+[i]overriding default shortcut[/i] {2}
+new: Ctrl+E &Equal Sized Panes
+old: Ctrl+E &Execute Script
+
+Exception in thread Thread-2:
+Traceback (most recent call last):
+  File "C:\Language\Python\lib\threading.py", line 436, in __bootstrap
+    self.run()
+  File "C:\Language\Python\lib\threading.py", line 416, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "C:\Language\Literate Programming\Leo\plugins\UniversalScrolling.py",
+line 66, in run
+    canvas.yview(Tkinter.SCROLL, 1, Tkinter.UNITS)
+[i]NameError: global name 'Tkinter' is not defined[/i] {3}
+
+
+Comments:
+{1} So what can I do about this? Why is it needed?
+{2} But I [i]want[/i] Execute Script! That's why I put in into leoSettings.leo!
+{3} But Tk is loaded, and there doesn't seem to have been a problem earlier.
+(Tkinter.Canvas)
+
+Finally, is there a way to direct these messages to the Log Pane??
+
+Thanks, 
+--Rich
+
+(I'm also testing to see if [i]&[/i] work in the e-mail that gets sent from SF)
+
+#@-node:ekr.20050126102846.2:Better messages for missing modules
 #@+node:ekr.20050125172204:Remove unused files
 #@-node:ekr.20050125172204:Remove unused files
 #@+node:ekr.20050125075513:Fix Pmw problems
@@ -129,6 +274,99 @@ I have to do some more testings for the other plugins.
 #@nonl
 #@-node:ekr.20050125075757.1:Report
 #@-node:ekr.20050125075757:Fix plugin problems
+#@+node:ekr.20050127083933:Fix url/find problems
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2962084
+By: nobody
+
+Two problems:
+
+1. A @url node with spaces in it doesn't seem to work on Linux when I double-click
+the node to open the link target. In my case, the link target is a file on the
+local filesystem with spaces in the filename.
+
+So, I have to change all spaces in the @url headline to %20. This works, but
+I wanted to do this change operation all at once using Leo's find/replace dialog.
+This leads to the next problem:
+
+2. Search/Replace on headline text seems broken. I've selected "plain search",
+"wrap around", "node only", and "search headline text", and in the "find" field
+I enter an empty space " " and in the "Change" field I enter "%20". Just clicking
+"Change all" doesn't work. Clicking the headline text and making it editable,
+then marking the whole headline text and selecting "Change, Then Find" seems
+to sometimes kind of work, but unreliably. Also, if I "undo" a change operation
+on the headline text, the length of the headline text field is not correctly
+reverted to its previous state.
+
+Basically it seems that headline text is not properly handled by undo nor by
+find/change.
+#@nonl
+#@-node:ekr.20050127083933:Fix url/find problems
+#@+node:ekr.20050127090442:Fix indentation problems
+> leo\src\leoTkinterFind.py:  
+inconsistent use of tabs and spaces in indentation.
+ 
+much of PMW has inconsistent use of tabs and spaces in indentation in various files .py 
+#@nonl
+#@-node:ekr.20050127090442:Fix indentation problems
+#@+node:ekr.20050127090442.1:Fix redirect script
+redirect script IO to log pane setting isn't working, 
+#@nonl
+#@-node:ekr.20050127090442.1:Fix redirect script
+#@+node:ekr.20050127091201:open leoConfig is still an option under help
+#@-node:ekr.20050127091201:open leoConfig is still an option under help
+#@+node:ekr.20050128081226:buttons work in toolbars when settings dialog is open
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2963722
+By: paulpaterson
+
+When in settings all commands are disabled but toolbar buttons (eg hoist, script
+button) do seem to function to some extent.
+
+#@-node:ekr.20050128081226:buttons work in toolbars when settings dialog is open
+#@+node:ekr.20050128081422:Change name of Paste Retaining Clones to Paste as clone
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=2963461
+By: ktenney
+
+Howdy,
+
+I only just now realized that
+Outline -> Paste Retaining Clone
+would _create_ a clone from any node on the clipboard.
+It's name led me to believe that I had to create a clone, copy it, and use 'Paste
+Retaining Clones'
+
+It would make more sense to me if it was called
+"Paste As Clone" 
+Maybe it could be given a hotkey, such as Shft+Ctrl+Z
+#@-node:ekr.20050128081422:Change name of Paste Retaining Clones to Paste as clone
+#@+node:ekr.20050128081550:Paste Retaing clones can't be undone
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2963304
+By: grahamh
+
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.7-1, Debian GNU/Linux 3.0
+
+(Please excuse my leo-newbieness)
+
+Is this a bug?:
+
+Create a new headline "Head1", insert some body text.
+Click Outline/Copy Node.
+Type some more body text in "Head1" and change its name to "Head1a".
+Create another headline "Head2".
+Click Outline/Paste Retaining Clones.
+Your changes to "Head1" are destroyed (bug 1).
+Undo does NOT undo the destruction (bug 2)
+
+Hope this helps, Graham
+#@-node:ekr.20050128081550:Paste Retaing clones can't be undone
 #@+node:ekr.20050124110206:Priorities
 @killcolor
 
@@ -142,185 +380,7 @@ I have to do some more testings for the other plugins.
 #@nonl
 #@-node:ekr.20050124110206:Priorities
 #@-node:ekr.20050125111252:Fix bugs...
-#@+node:ekr.20041214132052:Distribution...
-#@+node:ekr.20041214132052.1:Mac packages
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2881302
-By: genthaler  Günther
-
-I'm happy to provide scripts, icons, whatever. The application bundles I've
-created previously should really provide enough of a pattern to do the job.
-What I was referring to, is what other scripts/tools I would have to integrate
-with. I'm not familiar enough with the SF way of doing things to know what I
-should provide, access to CVS etc. I also don't know whether you bundle things
-up a home and post them on SF, or if you do the compile/archive on the SF boxen.
-#@nonl
-#@-node:ekr.20041214132052.1:Mac packages
-#@+node:ekr.20041130125213.1:(Create Mac package for Leo)
-#@+node:ekr.20041130125213.2:Requests & follow up
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2859149
-By: genthaler
-
-I'd really like to have Mac OS X packages available as a download option, rather
-than doing it by hand every time a new version comes out. What do I have to
-do to make this happen?
-
-http://sourceforge.net/forum/message.php?msg_id=2859156
-By: genthaler
-
-BTW, I wasn't the first to do this and publish it - heres a link to an older
-version - http://www.wordtech-software.com/leo.html
- 
-http://sourceforge.net/forum/message.php?msg_id=2859153
-By: genthaler
-
-On Mac OS X, it's quite easy to have a double-clickable application bundle with
-its own private Python and TclTk frameworks, but it's huge; about 20MB unpacked
-IIRC. More sensible to use the OS's version, but that requires Tkinter to be
-installed in /System/Library/Frameworks/Python.framework, and that requires
-an installer package and admin privileges.
-
-Günther
-
-#@-node:ekr.20041130125213.2:Requests & follow up
-#@-node:ekr.20041130125213.1:(Create Mac package for Leo)
-#@+node:EKR.20040422132037.7:Problems with run script command on Mac x11
-Jon Schull <jschull@softlock.com>  
-Date:  2003/12/30 Tue PM 05:50:51 EST 
-To:  edreamleo@charter.net 
-Subject:  Leo, Mac OS X 10.3, and VPython 
-             
-I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
-have some observations and a suggestion.
-
-Observations.
-        Leo runs under X11 as well as under OS X.
-        My X11 python configuration was created using the recipe at XXX 
-(which enables vpython).
-        The OS X configuration is vanilla MacPython from MacPython.org, along 
-with AquaTclTk batteries included XXX.
-        In both environments I can run leo under python leo.py and under idle.
-        Under OS X we get font smoothing, but we can't run visual python 
-programs (python crashes;  this is a known incompatibility with 
-MacPython.)
-    
-        Under X11 we can run visual python programs like this one
-            #box.py
-            from visual import *
-            box()
-            
-    And we can even run them under leo (under X11). HOWEVER, when the 
-visual python program is terminated, leo vanishes (leo and the vp 
-program apparently run in the same space)
-    
-    Under x11, we can keep leo alive by putting the vp program in its own 
-space:
-    
-        os.popen3('/sw/bin/python /Users/jis/box.py')
-    
-    However,  this doesn't let us see the output of stderr and stdout.  
-Those text streams are available...
-        
-        def do(cmd='ls'):
-            from os import popen3
-            pIn,pOut,pErr=0,1,2
-            popenResults=popen3(cmd)
-            print popenResults[pOut].read()
-            print popenResults[pErr].read()
-        
-        import os	
-        do('/sw/bin/python /Users/jis/box.py')
-        
-    ...but only when the vpython program terminates.
-    
-    Here's the good news:  if we execute our vp program with 
-/sw/bin/idle.py rather than with python, we get to see the program 
-output in real time (under idle, under X11).
-    
-        import os	
-        os.chdir('/sw/lib/python2.3/idlelib')
-        os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
-        
-        #this runs as an executed script in leo, and produces a live idle 
-with real time ongoing output.
-    
-    Now, while idle is running, leo sits in suspended animation.  But when 
-the vpython program terminates, we are left in idle, and when idle is 
-terminated, leo becomes active again.
-    
-    It would be even better if leo were not suspended (using os.spawn, 
-perhaps) but the real point is that I would really really like leo's 
-"Execute script" command to execute code this way and spare me having 
-to  hard-write the path to box.py.  It ought to be possible to 
-eliminate os.chdir as well.
-
-------------------
-Jon Schull, Ph.D.
-Associate Professor
-Information Technology
-Rochester Institute of Technology
-schull@digitalgoods.com 585-738-6696
-#@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
-#@+node:ekr.20041018195347.1:Improve MacOS Docs
-I just succeeded at installing Leo under os x (10.2.8) by folliwing  
-your instructions with modification.  It would be nice to get the  
-modification added to your page for others. I actually found the mods  
-by doing a search for help after following the present instructions  
-failed. The step that is missing (as clearly as I can see) is step 3  
-(using the Package Manager) in the following that comes from
-
-http://coding.derkeiler.com/Archive/Python/comp.lang.python/2003-12/ 
-3431.html
-
-> What I did that worked on Jaguar:
->  - Installed MacPython 2.3 for Jaguar using the binary installer from:
->  <http://homepages.cwi.nl/~jack/macpython/macpython-osx.html>
->  - Installed Tcl/Tk 8.4.4 using the binary installer from
->  <http://www.maths.mq.edu.au/~steffen/tcltk/TclTkAqua/>
->  - Used Package Manager (in /Applications/MacPython) to install  
-> _tkinter
->  (and also readlines and some other useful stuff)
->
-[x]
-   - type "rehash" in a terminal
-   - type pythonw to start Python and then test Tkinter with the  
-following:
->
-> import Tkinter
->  root = Tkinter.Tk()
->
->
-> should bring up a window.
-
-(It was also nice to have a test included so you could see that  
-everything was installed properly.)
-
-I also edited the leo file that is part of the leo distribution so it  
-read:
-
-pythonw /usr/local/lib/leo/src/leo.pyw "$1"
-
-That way I can just type "leo" to start leo rather than doing
-
-/usr/local/bin/pythonw leo.pyw
-
-Finally, when leo is run for the first time, it creates a window that  
-is centered on the screen asking for an ID. The screen happened to  
-appear under existing terminal windows and I didn't see it there and  
-thought something was wrong with leo on my system. After I found it  
-(accidentally) and entered a user name, all went as advertised.
-
-Seeing the leo project in python is inspiring.  Thanks for making this  
-available.
-
-/c
-#@nonl
-#@-node:ekr.20041018195347.1:Improve MacOS Docs
-#@-node:ekr.20041214132052:Distribution...
-#@+node:ekr.20050123144622:Config
+#@+node:ekr.20050123144622:Config: find a good stopping point
 #@+node:ekr.20041118135306.1:Unit tests for settings dialog
 @killcolor
 
@@ -477,7 +537,7 @@ def getTargetLanguage (self):
 # These should always be available.
 #@nonl
 #@-node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
-#@-node:ekr.20050123144622:Config
+#@-node:ekr.20050123144622:Config: find a good stopping point
 #@+node:ekr.20050119072551.1:Docs
 #@+node:ekr.20050110094511.1:Improve docs as suggested by JasonC.
 @killcolor
@@ -678,8 +738,297 @@ HTML code (e.g. an image link gets mapped to an <img> HTML tag, a link to a
 Flash file gets mapped to an <embed> tag, etc).
 #@-node:ekr.20050105065157:Tip
 #@-node:ekr.20050119072551.1:Docs
+#@+node:ekr.20050127094324:To run Leo on Macintosh OS X 10.3
+To run Leo on Macintosh OS X 10.3
+
+1) download and install "MacPython 2.3 for Panther addons" Python is  
+already included in OS X 10.3 so only the addons are necessary
+
+	http://www.cwi.nl/~jack/macpython.html
+
+2) download and install TclTkAqua
+
+	http://tcltkaqua.sourceforge.net/
+
+3) run the PackageManager found in /Applications/MacPython-2.3 and  
+install "_tkinter-2.3-binary" by clicking on the package in the list  
+and clicking the [Install:] button with "Install dependencies" checked
+
+4) download leo (platform independent source.zip)
+
+	http://leo.sourceforge.net/
+
+5) unzip the contents into a directory by double-clicking the  
+downloaded file
+
+6) control-click on /path_to_unzipped_dir/leo/src/leo.py and open with  
+PythonLauncher
+
+7) it is a good idea to set PythonLauncher as the default program to  
+open python scripts by clicking on "leo.py", choosing Get Info from the  
+Finder's File menu, and selecting "PythonLauncher" as the default  
+program to "Open With:"
+
+By clicking the "Change All..." button, all python scripts will be  
+opened with PythonLauncher
+
+8) in order to use the Preferences, Pmw must be installed
+
+	http://pmw.sourceforge.net/
+
+download and drag the downloaded gzip file into  
+/System/Library/Frameworks/Python.framework/Versions/2.3/lib/python2.3/ 
+site-packages and double click on it to unzip and untar the file into a  
+folder to make it available to Python
+
+
+- Randall Voth
+
+#@-node:ekr.20050127094324:To run Leo on Macintosh OS X 10.3
+#@+node:ekr.20050127094933:Comment about ports
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=2961304
+By: jasonic
+
+Your response is symptomatic one of the best features of Leo - its author!
+Thanks for re-reading/thinking this through so pro-structively...
+
+Indeed, there was irony in my sugestion, and Python lessons are always welcome!
+
+I was first really introdcuced to Python dicts and namespaces working with Zope
+about 4 years ago. There it soon became clear to us that one could easily end
+up with a situation where it was necessary to map nested namespaces into dicts
+and backa again  to create a simple smart context interface.
+
+Typically when grappling with a problem longing for clean template or lookup
+dict which could access or wrap the inner ones undertandibly.
+
+In my opinion Zope's templates have always been really confusign and nasty to
+work with, creating a major obstacle to extending its audience. They just seem
+to get more and more complicated. Crudely put Plone and Zope sites almsot all
+look and feel the same. Why is that?
+
+I now wonder how different all of that might have been if Leo had been there
+c.1999?
+
+
+ekr> - In the meantime, the documentation for uA's should suggest using file
+names as uA keys.
+
+My concern about doing that is that with version changes or filename changes
+or conflicts etc, it allows the Leo file too easily broken.
+
+Ok it puts the responsibility fairly on the plugin developer. But the ironic
+point of the question was to explore a strategy which Leo could use to map namespaces
+instad of individual ad-hoc developers.
+
+Otherwise one risks trying out someplugin and cluttering up the uA tags in an
+Outline with experimental or outdated misnamed junk data.
+
+Instead don't we want Leo to provide a nice LeoNodeDict namespace mechanism
+we can read from and write to ?
+
+'leoPorts' we might call them. I am influenced here by the lovely AREXX inter-process
+commmuncation address 'ports' used on Amigas c.1988
+
+http://w3.goodnews.net/~ehoffman/AREXX.txt
+
+http://www.monkeyhouse.eclipse.co.uk/amiga/python/
+
+leoPorts namespaces coudl perhaps work like that...
+
+UNLs fit nicely into this idea, and uA could be refigured to with a registered
+leoPORT namespace.
+Effectively a dict lookup mapping an application to a unique name but not necessarily
+the filename.
+
+I am not describing thsi wvery well.. Time to go read up and refresh myself
+on Leo and AREXX.
+
+Jason
+ 
+#@-node:ekr.20050127094933:Comment about ports
 #@-node:ekr.20050119072551:4.3 a2
-#@+node:ekr.20041228084018.1:4.3.a3 plugins
+#@+node:ekr.20050126101301:4.3 a3 Mac stuff
+#@+node:ekr.20041214132052.1:Mac packages
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2881302
+By: genthaler  Günther
+
+I'm happy to provide scripts, icons, whatever. The application bundles I've
+created previously should really provide enough of a pattern to do the job.
+What I was referring to, is what other scripts/tools I would have to integrate
+with. I'm not familiar enough with the SF way of doing things to know what I
+should provide, access to CVS etc. I also don't know whether you bundle things
+up a home and post them on SF, or if you do the compile/archive on the SF boxen.
+#@nonl
+#@-node:ekr.20041214132052.1:Mac packages
+#@+node:ekr.20041130125213.1:(Create Mac package for Leo)
+#@+node:ekr.20041130125213.2:Requests & follow up
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2859149
+By: genthaler
+
+I'd really like to have Mac OS X packages available as a download option, rather
+than doing it by hand every time a new version comes out. What do I have to
+do to make this happen?
+
+http://sourceforge.net/forum/message.php?msg_id=2859156
+By: genthaler
+
+BTW, I wasn't the first to do this and publish it - heres a link to an older
+version - http://www.wordtech-software.com/leo.html
+ 
+http://sourceforge.net/forum/message.php?msg_id=2859153
+By: genthaler
+
+On Mac OS X, it's quite easy to have a double-clickable application bundle with
+its own private Python and TclTk frameworks, but it's huge; about 20MB unpacked
+IIRC. More sensible to use the OS's version, but that requires Tkinter to be
+installed in /System/Library/Frameworks/Python.framework, and that requires
+an installer package and admin privileges.
+
+Günther
+
+#@-node:ekr.20041130125213.2:Requests & follow up
+#@-node:ekr.20041130125213.1:(Create Mac package for Leo)
+#@+node:ekr.20041018195347.1:Improve MacOS Docs
+I just succeeded at installing Leo under os x (10.2.8) by folliwing  
+your instructions with modification.  It would be nice to get the  
+modification added to your page for others. I actually found the mods  
+by doing a search for help after following the present instructions  
+failed. The step that is missing (as clearly as I can see) is step 3  
+(using the Package Manager) in the following that comes from
+
+http://coding.derkeiler.com/Archive/Python/comp.lang.python/2003-12/ 
+3431.html
+
+> What I did that worked on Jaguar:
+>  - Installed MacPython 2.3 for Jaguar using the binary installer from:
+>  <http://homepages.cwi.nl/~jack/macpython/macpython-osx.html>
+>  - Installed Tcl/Tk 8.4.4 using the binary installer from
+>  <http://www.maths.mq.edu.au/~steffen/tcltk/TclTkAqua/>
+>  - Used Package Manager (in /Applications/MacPython) to install  
+> _tkinter
+>  (and also readlines and some other useful stuff)
+>
+[x]
+   - type "rehash" in a terminal
+   - type pythonw to start Python and then test Tkinter with the  
+following:
+>
+> import Tkinter
+>  root = Tkinter.Tk()
+>
+>
+> should bring up a window.
+
+(It was also nice to have a test included so you could see that  
+everything was installed properly.)
+
+I also edited the leo file that is part of the leo distribution so it  
+read:
+
+pythonw /usr/local/lib/leo/src/leo.pyw "$1"
+
+That way I can just type "leo" to start leo rather than doing
+
+/usr/local/bin/pythonw leo.pyw
+
+Finally, when leo is run for the first time, it creates a window that  
+is centered on the screen asking for an ID. The screen happened to  
+appear under existing terminal windows and I didn't see it there and  
+thought something was wrong with leo on my system. After I found it  
+(accidentally) and entered a user name, all went as advertised.
+
+Seeing the leo project in python is inspiring.  Thanks for making this  
+available.
+
+/c
+#@nonl
+#@-node:ekr.20041018195347.1:Improve MacOS Docs
+#@+node:EKR.20040422132037.7:Problems with run script command on Mac x11
+Jon Schull <jschull@softlock.com>  
+Date:  2003/12/30 Tue PM 05:50:51 EST 
+To:  edreamleo@charter.net 
+Subject:  Leo, Mac OS X 10.3, and VPython 
+             
+I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
+have some observations and a suggestion.
+
+Observations.
+        Leo runs under X11 as well as under OS X.
+        My X11 python configuration was created using the recipe at XXX 
+(which enables vpython).
+        The OS X configuration is vanilla MacPython from MacPython.org, along 
+with AquaTclTk batteries included XXX.
+        In both environments I can run leo under python leo.py and under idle.
+        Under OS X we get font smoothing, but we can't run visual python 
+programs (python crashes;  this is a known incompatibility with 
+MacPython.)
+    
+        Under X11 we can run visual python programs like this one
+            #box.py
+            from visual import *
+            box()
+            
+    And we can even run them under leo (under X11). HOWEVER, when the 
+visual python program is terminated, leo vanishes (leo and the vp 
+program apparently run in the same space)
+    
+    Under x11, we can keep leo alive by putting the vp program in its own 
+space:
+    
+        os.popen3('/sw/bin/python /Users/jis/box.py')
+    
+    However,  this doesn't let us see the output of stderr and stdout.  
+Those text streams are available...
+        
+        def do(cmd='ls'):
+            from os import popen3
+            pIn,pOut,pErr=0,1,2
+            popenResults=popen3(cmd)
+            print popenResults[pOut].read()
+            print popenResults[pErr].read()
+        
+        import os	
+        do('/sw/bin/python /Users/jis/box.py')
+        
+    ...but only when the vpython program terminates.
+    
+    Here's the good news:  if we execute our vp program with 
+/sw/bin/idle.py rather than with python, we get to see the program 
+output in real time (under idle, under X11).
+    
+        import os	
+        os.chdir('/sw/lib/python2.3/idlelib')
+        os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
+        
+        #this runs as an executed script in leo, and produces a live idle 
+with real time ongoing output.
+    
+    Now, while idle is running, leo sits in suspended animation.  But when 
+the vpython program terminates, we are left in idle, and when idle is 
+terminated, leo becomes active again.
+    
+    It would be even better if leo were not suspended (using os.spawn, 
+perhaps) but the real point is that I would really really like leo's 
+"Execute script" command to execute code this way and spare me having 
+to  hard-write the path to box.py.  It ought to be possible to 
+eliminate os.chdir as well.
+
+------------------
+Jon Schull, Ph.D.
+Associate Professor
+Information Technology
+Rochester Institute of Technology
+schull@digitalgoods.com 585-738-6696
+#@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
+#@-node:ekr.20050126101301:4.3 a3 Mac stuff
+#@+node:ekr.20041228084018.1:4.3.a4 plugins
 Edit and commit all plugins.
 #@nonl
 #@+node:ekr.20050121081635:Request:  cumulative @path directives
@@ -713,7 +1062,7 @@ re-written in many plugins.
 #@-node:ekr.20050116094523:Option not to write marks/expansion attributes
 #@+node:ekr.20041231102453.1:Move emacs commands into core
 #@-node:ekr.20041231102453.1:Move emacs commands into core
-#@-node:ekr.20041228084018.1:4.3.a3 plugins
+#@-node:ekr.20041228084018.1:4.3.a4 plugins
 #@+node:ekr.20050104083128:4.3 b1 drawing and uA's
 #@+node:ekr.20041231102453:Design new uA scheme
 #@-node:ekr.20041231102453:Design new uA scheme
@@ -4199,6 +4548,128 @@ RodrigoB.
 
 #@-node:ekr.20031218072017.411:From Rodrigo
 #@-node:ekr.20041228094138:4.4  LeoN and collaboration
+#@+node:ekr.20050127110221:Printing & flash
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=2962825
+By: jasonic
+
+-- pdf -- 
+yes I know what you mean, PDF has it uses.  If nicely embedded into Leo via
+'reportwriter'  and some export scripts {and clear useinterfance} would stillbe
+a good thing.
+
+
+As I start to think about how to print Leo, I become more aware of the differneces
+between Leo structures and linear [print] layouts.
+
+Different kinds of outlines obviously will need different kinds of printing.
+I don't yet have enough experience or overview.
+
+--xslt--
+Seems a natural way to go for printing Leo, but yet another langauge and syntax
+to wrassle with. Last time I looked I went from being horrified to very impressed
+to be being exhausted.
+
+--htmlize--
+thanks I'll check into that
+
+"print to web"  should definitely be on Leo's missing PRINT MENU.
+
+--swf [flash]--
+This printing topic pushes me harder to get FLC  [my FlashLeoClient project]
+into the Leosphere.
+
+Flash has*limited*  CSS handling, but enough to do some nice and useful typographic
+formatting in a pretty clean object-oriented manner.
+
+FLC parses .leo files into a Flash object. Flash Textformat instances are created
+using CSS and can be applied then to rendering any parts of  the deserialized
+Leo object.. The beauty is it can be very fast and ynamic so I can imagine a
+real-time WYSIWYG laytou tool for printing Leo to web and at the same making
+it suitable at the same time for print-to-paper.
+
+Since FLC is in the very first instance a READ-ONLY client tool for Leo, it
+makes it a natural Leo printing service.
+
+To complete full service, it woudl be good if Leo could create SWF files directly
+itself, just like using PDF reportwriter.
+There are a couple of libraries to help this 
+- Ming [with PHP, Perl, Python and Ruby wrappers]
+http://ming.sourceforge.net/
+
+- makeswf.r [interesting REBOL/Flash dialect by David Oldes]
+http://sweb.cz/oliva.david/swf/
+
+These could also be both configured as web-services.
+So Leo print-to-web would include by default rendering a flash swf file versoin
+of itself either using locally installed libraries or by passing a view of itself
+to a chosen client or server-based tool.
+
+But even without those extra 'services' and libraries a single flash file in
+the form of FLC could become an effective Leo printing kit. Using a standalone
+desktop  version [not embedded in the browser, out of the sandbox] much more
+is possible - remote control, peer-peer editing, file writing etc.
+
+-- flashpaper2--
+btw, Lately I've been using Flashpaper2 a lot to print all kinds of stuff, Often
+from web pages to my local adhoc home filebase. It's a very fast lighweight
+alternative to PDF, saves paper, has excellent zooming and nice search features
+built-in.
+Flashpaper renders a very litteral snapshot, but as I am discovering that turns
+out to be extremely useful.
+For example you visit a page and click on some links. Flashpaper saves teh pages
+exactly as it looks, viisted links disntinguished.  In the era of info-overload,
+even that crude mnemonic is valuable.
+
+Alas, Flashpaper2 is not free nor open in the way Leo is. But worth to play
+with it if only for for the experience.
+30 day trial downlaod from
+http://www.macromedia.com/software/flashpaper/
+
+And of course the flash _players_ is free, so can send people flashpaper documents
+just like PDF.
+Brilliant when you have a big Excel spreadsheet or CAD document which would
+normally get all messy printing across pages, confusing people.
+Instead adjust and print to a generous 'piece' of flashpaper - letting your
+coleagues pan and zoom to their comfort.
+
+I've not quite figured out the place where  Leo meets Flashpaper, because Leo
+needs to preserve its full pane contents. Flashpaper works fine with long web
+pages, automatically reading the full window contents and cutting into a paginated
+sequence, ready for paper printing.
+Leo's does not have aprint menu, so it's off the sytem's print-devices map,
+which Flash paper appearing just  like any phtycial printer.
+
+I imagine is possible to fix that in Leo, but I do not where to begin and woudl
+not be surprised to learn its a major heachche to write adn debug for multiple
+operating systems.
+
+An immediate alternative are screencapture tools like vnc2swf or MDM Capture.
+
+[vnc2swf uses Ming-0.2a]
+http://www.unixuser.org/~euske/vnc2swf/
+
+http://www.multidmedia.com/software/capture/index.php
+
+But much is hidden or lost from view. 
+Still very vauable for creating dynamic narrative tutorials [aka screencasting]
+
+AS you know I am very excited about what flash can do for Leo, and vice versa.
+But I am concerned that there is not yet a 100% Leo means which supports people's
+standard print needs and habits.
+   
+-- PRINT MENU-- 
+Leo deserves good friendly printing features which anyone can use. At the moment
+we have a confusing patchwork of choices. Printing Leo seems to be both harder
+and easier than  first meets the eye.
+
+Having a little library of export scripts - well named, documented and intended
+to aid printing woudl go a long way. Thesse scripts anyone coiuld be called
+by onayone given a Leo Outline, accessing a navabr button. PRINT MENU or list.
+Or they can just insert the appropriate script  into an outline giving finer
+grained print control on the fly.
+#@nonl
+#@-node:ekr.20050127110221:Printing & flash
 #@+node:ekr.20041228090855.3:All others
 #@+node:ekr.20041228091154:  Commands
 #@+node:ekr.20040329094003:Apply patch command

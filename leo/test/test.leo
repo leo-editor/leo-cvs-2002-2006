@@ -10861,17 +10861,12 @@ keys = {'c':c}
 
 if not spellpyx:
     spellpyx = leoPlugins.loadOnePlugin("spellpyx",verbose=True)
-        # Suppress the 'loaded spellpyx plugin' message.
-    if spellpyx and spellpyx.aspell:
-        print 'loaded spellpyx plugin'
-        spellpyx.onCreate('tag',keys)
+    if spellpyx: spellpyx.onCreate('tag',keys)
 
-if spellpyx and spellpyx.aspell:
-    # g.trace(g.dictToString(spellpyx.spellFrames,tag='spellFrames'))
+if spellpyx:
     spellFrame = spellpyx.spellFrames.get(c)
-    if spellFrame and createMenu:
-        spellFrame.createSpellMenu('tag',keys)
     if spellFrame:
+        if createMenu: spellFrame.createSpellMenu('tag',keys)
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo</t>

@@ -8,7 +8,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="EKR.20040519091259" a="E"><vh>Annoucnements</vh>
+<v t="EKR.20040519091259"><vh>Annoucnements</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -16,7 +16,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20050124083006" a="TV"><vh>ANN: Leo 4.3-a1</vh></v>
+<v t="ekr.20050124083006"><vh>ANN: Leo 4.3-a1</vh></v>
 <v t="EKR.20040519091259.5"><vh>FAQ for comp.prog.literate</vh></v>
 <v t="EKR.20040519091259.30"><vh>Previous announcements</vh>
 <v t="ekr.20040922074043"><vh>ANN: Leo 4.2 final: An outlining editor</vh></v>
@@ -205,10 +205,9 @@ marks="ekr.20050119113603.41,ekr.20050119113603.42,ekr.20050119113603.53,"><vh>@
 </v>
 </v>
 <v t="ekr.20050118092706"
-marks="ekr.20050118092706.3,ekr.20050118092706.5,ekr.20050118092706.6,ekr.20050118092706.10,ekr.20050118092706.11,ekr.20050118092706.13,ekr.20050118092706.22,"
-expanded="ekr.20050118092706.1,"><vh>@thin leo-4-3.nsi</vh></v>
+marks="ekr.20050118092706.3,ekr.20050118092706.5,ekr.20050118092706.6,ekr.20050118092706.10,ekr.20050118092706.11,ekr.20050118092706.13,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631" a="TV"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -503,8 +502,7 @@ programming tool, data organizer and project manager. Cloned nodes make possible
 multiple views of a project within a single Leo outline.
 
 Leo is written in 100% pure Python and works on any platform that supports
-Python 2.2 or above and the Tk toolkit. This version of Leo was developed with
-Python 2.3.3 and Tk 8.4.3.
+Python 2.2.1 or above and the Tk Tk 8.4 or above.
 
 Download Python from http://python.org/
 Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
@@ -655,8 +653,7 @@ Author: Edward K. Ream
 Author-email: edreamleo@charter.net
 License: Python
 Description: Leo is an outline-oriented editor written in 100% pure Python.
-		Leo works on any platform that supports Python 2.2 or above and the Tk toolkit.
-		This version of Leo was developed with Python 2.3.3 and Tk 8.4.3.
+		Leo works on any platform that supports Python 2.2.1 and Tk 8.4 or above.
 		You may download Python from http://python.org/ and
 		tcl/Tk from http://tcl.activestate.com/software/tcltk/
 		Leo features a multi-window outlining editor, Python colorizing,
@@ -1752,7 +1749,7 @@ The highlights of 3.3:
 - Fixed numerous bugs related to configuration settings.
 - Fixed the "Javadoc" bug and several latent bugs related to it.
 
-leo.py requires Python 2.2 and tcl/tk 8.3 or above.
+leo.py requires Python 2.2 and tcl/tk 8. or above.
 
 What is Leo?
 ------------

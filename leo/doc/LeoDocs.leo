@@ -24,14 +24,14 @@
 <v t="ekr.20050124153126.1"><vh>Leo is revolutionary</vh></v>
 <v t="ekr.20050124153126.2"><vh>Leo is a showcase Python/Tkinter application</vh></v>
 <v t="ekr.20050124153126.3"><vh>Leo is fun, even addicting</vh></v>
-<v t="ekr.20050124153126.4" a="E"><vh>Leo is a flexible, powerful IDE</vh></v>
+<v t="ekr.20050124153126.4"><vh>Leo is a flexible, powerful IDE</vh></v>
 <v t="ekr.20050124155449"><vh>Leo is a superb outliner</vh></v>
 <v t="ekr.20050124153126.5"><vh>Leo is an excellent PIM</vh></v>
 <v t="ekr.20050124153126.6"><vh>Leo extends, completes and simplifies literate programming</vh></v>
 <v t="ekr.20050124153126.7"><vh>Leo is a superb documentation tool</vh></v>
 <v t="ekr.20050124153126.9"><vh>Leo simplifies the understanding of complex systems</vh></v>
 <v t="ekr.20050124161300"><vh>Leo is stable, well designed and well supported</vh></v>
-<v t="ekr.20050124153126.10" a="E"><vh>Longer quotes...</vh>
+<v t="ekr.20050124153126.10"><vh>Longer quotes...</vh>
 <v t="edream.110203163054.14"><vh> Speed Ream's slashdot article (Why Leo is interesting)</vh></v>
 <v t="edream.110203163054.35"><vh>Joe Orr</vh></v>
 <v t="edream.110203163054.44"><vh>Dan Winkler</vh></v>
@@ -52,8 +52,8 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20050126100405" a="ETV"><vh>4.3-a2</vh>
-<v t="ekr.20050126100405.1" a="E"><vh>Added undo granularity</vh>
+<v t="ekr.20050126100405" a="TV"><vh>4.3-a2</vh>
+<v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
 <v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
 </v>
 </v>
@@ -1413,7 +1413,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
+<v t="EKR.20040524104904"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1485,7 +1485,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.26" a="E"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
+<v t="EKR.20040524104904.26"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
 <v t="EKR.20040524104904.27"><vh>Cloning headlines</vh>
 <v t="EKR.20040524104904.28"><vh>read me</vh></v>
 <v t="EKR.20040524104904.29"><vh>a</vh>
@@ -2784,7 +2784,7 @@ This chapter tells how to install Leo.
 New in version 4.1:  The first time you start Leo, Leo will ask you for a unique identifier.  If you are using cvs, use your cvs login name.  Otherwise your initials will do.
 
 Leo stores this identifier in leoID.txt, so you can change this identifier at any time by chaning leoID.txt.</t>
-<t tx="EKR.20040524104904.22">leo.py is Leo2 written in Python and Tk.  It should work on any platform that supports Python 2.2 or later and Tk 8.3 or later.
+<t tx="EKR.20040524104904.22">leo.py is Leo2 written in Python and Tk.  It should work on any platform that supports Python 2.2.1 or later and Tk 8.4 or later.
 
 Download Python from http://python.org/
 Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
@@ -7074,7 +7074,7 @@ Leo is:
   Leo provides multiple views of a project within a single outline.
 - Fully scriptable using Python and saves its files in XML format.
 - Portable. Leo.py is 100% pure Python.
-  leo.py requires Python 2.2 and tcl/tk 8.3 or above.
+  leo.py requires Python 2.2.1 and tcl/tk 8.4 or above.
 - Open Software, distributed under the Python License.</t>
 <t tx="edream.110203163054.1">@nocolor
 
@@ -7273,7 +7273,7 @@ Choice 2: Use one or move "Read @file Nodes" commands to update the outline from
 New in version 4.1:  The first time you start Leo, Leo will ask you for a unique identifier.  If you are using cvs, use your cvs login name.  Otherwise your initials will do.
 
 Leo stores this identifier in leoID.txt, so you can change this identifier at any time by changing leoID.txt.</t>
-<t tx="edream.110203163054.49">leo.py is Leo2 written in Python and Tk.  It should work on any platform that supports Python 2.2 or later and Tk 8.3 or later.
+<t tx="edream.110203163054.49">leo.py is Leo2 written in Python and Tk.  It should work on any platform that supports Python 2.2.1 or later and Tk 8.4 or later.
 
 Download Python from http://python.org/
 Download tcl/Tk from http://tcl.activestate.com/software/tcltk/

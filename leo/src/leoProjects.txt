@@ -18270,7 +18270,7 @@ def setColorFromConfig (self):
 #@-node:ekr.20041216052925:12/17
 #@+node:ekr.20041221070525.1:12/18
 #@+node:ekr.20041219071407.1:(Used Bunch to clarify config code)
-#@+node:ekr.20031218072017.3098:class Bunch
+#@+node:ekr.20031218072017.3098:class Bunch (object)
 @ From The Python Cookbook:  Often we want to just collect a bunch of stuff together, naming each item of the bunch; a dictionary's OK for that, but a small do-nothing class is even handier, and prettier to use.
 
 Create a Bunch whenever you want to group a few variables:
@@ -18284,7 +18284,7 @@ You can read/write the named attributes you just created, add others, del some o
 
 import operator
 
-class Bunch:
+class Bunch (object):
     
     """A class that represents a colection of things.
     
@@ -18319,7 +18319,7 @@ class Bunch:
         
 bunch = Bunch
 #@nonl
-#@-node:ekr.20031218072017.3098:class Bunch
+#@-node:ekr.20031218072017.3098:class Bunch (object)
 #@+node:ekr.20041117083141:get & allies
 def get (self,c,setting,kind):
     
@@ -22010,12 +22010,9 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-C:\prog\leoCVS\leo\doc\leoDocs.leo
-C:\prog\leoCVS\leo\config\leoSettings.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -27370,7 +27367,7 @@ def getPluginModule (moduleName):
 #@+node:ekr.20041113113140:loadOnePlugin
 def loadOnePlugin (moduleOrFileName, verbose=False):
     
-    global loadedModules
+    global loadedModules,loadingModuleNameStack
     
     if moduleOrFileName [-3:] == ".py":
         moduleName = moduleOrFileName [:-3]
@@ -27381,27 +27378,42 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
     if isLoaded(moduleName):
         module = loadedModules.get(moduleName)
         if verbose:
-            print 'plugin %s already loaded' % moduleName
+            s = 'plugin %s already loaded' % moduleName
+            print s ; g.es(s,color="blue")
         return module
 
     plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
     moduleName = g.toUnicode(moduleName,g.app.tkEncoding)
     
-    # This import typically results in calls to registerHandler.
-    global loadingModuleNameStack
+    # This import will typically result in calls to registerHandler.
+    # if the plugin does _not_ use the init top-level function.
     loadingModuleNameStack.append(moduleName)
     result = g.importFromPath(moduleName,plugins_path)
     loadingModuleNameStack.pop()
 
     if result:
-        loadedModules[moduleName] = result
+        loadingModuleNameStack.append(moduleName)
+        try:
+            # Indicate success only if init_result is True.
+            init_result = result.init()
+            # g.trace('%s.init() returns %s' % (moduleName,init_result))
+            if init_result:
+                loadedModules[moduleName] = result
+            else:
+                result = None
+        except AttributeError:
+            # No top-level init function.
+            # Guess that the module was loaded correctly.
+            loadedModules[moduleName] = result
+        loadingModuleNameStack.pop()
     
     if verbose:
         if result is None:
             s = 'can not load %s plugin' % moduleName
             print s ; g.es(s,color="blue")
         else:
-            print 'loaded %s plugin' % moduleName
+            s = 'loaded %s plugin' % moduleName
+            print s ; g.es(s,color="blue")
     
     return result
 #@-node:ekr.20041113113140:loadOnePlugin
@@ -28082,7 +28094,7 @@ def __init__ (self,c):
     u.debug_print = False # True: enable print statements in debug code.
 
     u.granularity = c.config.getString('undo_granularity')
-    if u.granularity: u.granularity.lower()
+    if u.granularity: u.granularity = u.granularity.lower()
     if u.granularity not in ('node','line','word','char'):
         u.granularity = 'line'
     # g.trace('undoer',u.granularity)
@@ -28825,6 +28837,103 @@ def recognizeStartOfTypingWord (self,
 #@-node:ekr.20050126081529:recognizeStartOfTypingWord
 #@-node:ekr.20031218072017.1490:setUndoTypingParams & recognizeStartOfTypingWord
 #@-node:ekr.20050125170349:(Added new undo granularities & undo_granularity setting)
+#@+node:ekr.20050127120924:(Plugins manager attempts to call init functions in plugins)
+#@+node:ekr.20050128095935:Request
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2963175
+By: bwmulder
+
+There have been some postings a while ago about using pydoc to browse Leo source
+code.
+
+It seems that pydoc imports modules. Pydoc, at that time, failed on some modules
+because of setup code which was executed in some plugins, and which did not
+work when some things were not setup.
+
+I am wondering if it would be better to factor out setup code in plugins so
+that the setup part (reading config file, etc) will be done only as part of
+a function call. This way, imports of the module would always work.
+
+You can currently test leoGlobals.app and such, but it seems to me that this
+is more of a hack.
+
+I realize that this would be a change in the plugin interface, but you can not
+have improvements without some pain.
+
+[Another lesson I learned recently is to avoid module level variables, and use
+classes instead. You can always create new instances, but its hard to create
+new instances of modules].
+
+I was just thinking of adding a function in my mock module which would import
+a module to figure out what modules are imported in that module. By replacing
+the real modules with mock modules, one can be assured to control the total
+environment of that module.
+#@-node:ekr.20050128095935:Request
+#@+node:ekr.20050128091841:Ahas
+@killcolor
+
+I just had two Aha's regarding this proposal:
+
+1. The init function can return True if the plugin was, in fact, loaded correctly.  This is information that up until now has not been available, and it is very useful.  For example, the code in the '@button Check spelling...' node would be much simplified if leoPlugins.loadOnePlugin only returned properly inited plugins.
+
+2. There is no need to change all plugins all at once.  The plugin manager can try calling plugin's init code, but can 'guess' that the plugin was correctly loaded if the init method does not exist.  In this way, we can add the init code to plugins that would really benefit from having it, without having to add init functions to all plugins.
+#@nonl
+#@-node:ekr.20050128091841:Ahas
+#@+node:ekr.20041113113140:loadOnePlugin
+def loadOnePlugin (moduleOrFileName, verbose=False):
+    
+    global loadedModules,loadingModuleNameStack
+    
+    if moduleOrFileName [-3:] == ".py":
+        moduleName = moduleOrFileName [:-3]
+    else:
+        moduleName = moduleOrFileName
+    moduleName = g.shortFileName(moduleName)
+
+    if isLoaded(moduleName):
+        module = loadedModules.get(moduleName)
+        if verbose:
+            s = 'plugin %s already loaded' % moduleName
+            print s ; g.es(s,color="blue")
+        return module
+
+    plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
+    moduleName = g.toUnicode(moduleName,g.app.tkEncoding)
+    
+    # This import will typically result in calls to registerHandler.
+    # if the plugin does _not_ use the init top-level function.
+    loadingModuleNameStack.append(moduleName)
+    result = g.importFromPath(moduleName,plugins_path)
+    loadingModuleNameStack.pop()
+
+    if result:
+        loadingModuleNameStack.append(moduleName)
+        try:
+            # Indicate success only if init_result is True.
+            init_result = result.init()
+            # g.trace('%s.init() returns %s' % (moduleName,init_result))
+            if init_result:
+                loadedModules[moduleName] = result
+            else:
+                result = None
+        except AttributeError:
+            # No top-level init function.
+            # Guess that the module was loaded correctly.
+            loadedModules[moduleName] = result
+        loadingModuleNameStack.pop()
+    
+    if verbose:
+        if result is None:
+            s = 'can not load %s plugin' % moduleName
+            print s ; g.es(s,color="blue")
+        else:
+            s = 'loaded %s plugin' % moduleName
+            print s ; g.es(s,color="blue")
+    
+    return result
+#@-node:ekr.20041113113140:loadOnePlugin
+#@-node:ekr.20050127120924:(Plugins manager attempts to call init functions in plugins)
 #@-node:ekr.20050125203059.2:New features...
 #@-node:ekr.20050125203059:4.3 a2 projects
 #@-all

@@ -64,7 +64,7 @@
 <v t="ekr.20041119041019.2"><vh>@bool save_clears_undo_buffer = False</vh></v>
 <v t="ekr.20041119050749.10"><vh>@string headline_time_format_string = %m/%d</vh></v>
 <v t="ekr.20041119050749.11"><vh>@bool headline_gmt_time = False</vh></v>
-<v t="ekr.20050126083026" a="TV"><vh>@string undo_granularity = word</vh></v>
+<v t="ekr.20050126083026" a="TV"><vh>@string undo_granularity = None</vh></v>
 </v>
 <v t="ekr.20041119034357.16"><vh>@page Compare panel options</vh>
 <v t="ekr.20041119034357.17"><vh>files &amp; directories</vh>
