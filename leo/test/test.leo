@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6685" clone_windows="0"/>
-<globals body_outline_ratio="0.53544494721">
-	<global_window_position top="81" left="263" height="745" width="931"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6686" clone_windows="0"/>
+<globals body_outline_ratio="0.594630872483">
+	<global_window_position top="80" left="281" height="745" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="EKR.20040623200709" annotate="7d71002e"
-expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709" annotate="7d71002e"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -524,6 +523,11 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050220024614"><vh>Mini test of g.pdb</vh></v>
 <v t="ekr.20050220034025"><vh>Mini test of g.es_exception</vh></v>
+<v t="ekr.20050406082407"><vh>xml test</vh>
+<v t="ekr.20050406082407.1"><vh>@thin xmltest.xml</vh></v>
+</v>
+<v t="ekr.20050316063336"><vh>test of NameError traceback</vh></v>
+<v t="ekr.20050316074630.1"><vh>test of an exception in another module</vh></v>
 </v>
 <v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -573,6 +577,15 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
+<v t="ekr.20050331065217"><vh>Golf test</vh>
+<v t="ekr.20050331065217.1"><vh>@golf-directive myGolfDirective</vh></v>
+<v t="ekr.20050331071301"><vh>@golf-options myGolfOptions</vh></v>
+<v t="ekr.20050331065217.2"><vh>@golf-script myGolfScript</vh></v>
+<v t="ekr.20050331065217.3"><vh>Root</vh>
+<v t="ekr.20050331065217.4"><vh>Node 1</vh></v>
+<v t="ekr.20050331065322"><vh>Node 2</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -996,7 +1009,7 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="ekr.20050315072359"><vh>Develop g.convertRowColToPythonIndex</vh>
-<v t="ekr.20050315072359.1" a="E"><vh>g.convertRowColToPythonIndex &amp; test</vh>
+<v t="ekr.20050315072359.1"><vh>g.convertRowColToPythonIndex &amp; test</vh>
 <v t="ekr.20050315072359.2"><vh>test_g_convertRowColToPythonIndex</vh></v>
 </v>
 </v>
@@ -1038,7 +1051,7 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 <v t="ekr.20050210180937"><vh>@ button jython</vh></v>
-<v t="ekr.20050331070207" a="E"><vh>@button golf</vh></v>
+<v t="ekr.20050331070207"><vh>@button golf</vh></v>
 </v>
 <v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
@@ -1114,7 +1127,7 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050119144013"><vh>Remove all file system dependencies</vh></v>
 </v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
@@ -1139,14 +1152,14 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
 </v>
 <v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
+<v t="ekr.20050106081120.2" a="E"><vh>findTestsInModule</vh>
 <v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20041130092210"><vh>Batch mode tests</vh>
+<v t="ekr.20041130092210" a="E"><vh>Batch mode tests</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
@@ -1672,6 +1685,35 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
+<v t="ekr.20050106080304" a="TV"><vh>@suite run all test routines</vh>
+<v t="ekr.20050106123646"><vh>unused</vh>
+<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
+<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
+<v t="ekr.20050106094854.2"><vh> fail</vh></v>
+<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
+<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
+<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
+<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
+<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
+</v>
+</v>
+<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
+<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
+<v t="ekr.20050106080318.3"><vh> fail</vh></v>
+<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
+<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
+<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
+<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
+<v t="ekr.20050106081120.2" a="E"><vh>findTestsInModule</vh>
+<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
+<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
+</v>
 <v t="ekr.20050225161940" annotate="7d71002e"><vh>Move executeFile into core</vh>
 <v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
 <v t="ekr.20050225162123" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@thin executeFileTest.py</vh></v>
@@ -1685,19 +1727,8 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
 </v>
 </v>
-<v t="ekr.20050316063336"><vh>test of NameError traceback</vh></v>
-<v t="ekr.20050316074630.1"><vh>test of an exception in another module</vh></v>
 <v t="ekr.20050318143124"><vh>test of undo/redo Convert All Blanks</vh>
 <v t="ekr.20050318150022"><vh>node 2</vh></v>
-</v>
-<v t="ekr.20050331065217" a="TV"><vh>Golf test</vh>
-<v t="ekr.20050331065217.1"><vh>@golf-directive myGolfDirective</vh></v>
-<v t="ekr.20050331071301"><vh>@golf-options myGolfOptions</vh></v>
-<v t="ekr.20050331065217.2"><vh>@golf-script myGolfScript</vh></v>
-<v t="ekr.20050331065217.3" a="E"><vh>Root</vh>
-<v t="ekr.20050331065217.4"><vh>Node 1</vh></v>
-<v t="ekr.20050331065322"><vh>Node 2</vh></v>
-</v>
 </v>
 </vnodes>
 <tnodes>
@@ -12352,6 +12383,30 @@ else: # For script button nodes.  Good for testing.
     # Ignore subclasses of TestCase.
     classes = [theClass for className,theClass in classes
         if not issubclass(theClass,unittest.TestCase)]
+        
+    # April 6, 2005: Ignore base classes.
+    subClasses = []
+    for theClass in classes:
+        for theClass2 in classes:
+            if theClass != theClass2 and issubclass(theClass2,theClass):
+                subClasses.append(theClass2)
+        
+    # print '%20s' % (moduleName),'subClasses',g.listToString(subClasses)
+    
+    baseClasses = []
+    for theClass in classes:
+        for subClass in subClasses:
+            if theClass != subClass and issubclass(subClass,theClass):
+                baseClasses.append(theClass)
+                
+    # print '%20s' % (moduleName),'baseClasses',g.listToString(baseClasses)
+    
+    classes = [theClass for theClass in classes
+        if theClass in subClasses or not theClass in baseClasses]
+        
+    if 0:
+        classNames = [theClass.__name__ for theClass in classes]
+        print '%20s' % (moduleName),'classes',classNames
     
     allMethods = []
     for theClass in classes:
@@ -14013,5 +14068,12 @@ if not golf or not controller:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20050331071301">optionName = True</t>
+<t tx="ekr.20050406082407">@language html
+@ignore</t>
+<t tx="ekr.20050406082407.1">@first &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;body&gt;
+
+&lt;/body&gt;</t>
 </tnodes>
 </leo_file>
