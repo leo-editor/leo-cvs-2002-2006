@@ -86,6 +86,7 @@ class leoGui:
         self.mainLoop = None
         self.root = None
         self.utils = None
+        self.isNullGui = False
     #@nonl
     #@-node:ekr.20031218072017.3722: leoGui.__init__
     #@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
@@ -371,6 +372,7 @@ class nullGui(leoGui):
         
         self.script = None
         self.lastFrame = None
+        self.isNullGui = True
     #@nonl
     #@-node:ekr.20031218072017.2225: nullGui.__init__
     #@+node:ekr.20031219075221: nullGui.__getattr__

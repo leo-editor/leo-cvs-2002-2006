@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6361" clone_windows="0"/>
-<globals body_outline_ratio="0.590277777778">
-	<global_window_position top="42" left="213" height="864" width="907"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6433" clone_windows="0"/>
+<globals body_outline_ratio="0.550925925926">
+	<global_window_position top="37" left="306" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -417,8 +417,8 @@
 <v t="ekr.20041112155634"><vh>checkOneHook</vh></v>
 </v>
 </v>
-<v t="ekr.20041126132604" a="E"><vh>Prototypes</vh>
-<v t="ekr.20041125062529" a="E"><vh>Prototypes of settings dialogs</vh>
+<v t="ekr.20041126132604"><vh>Prototypes</vh>
+<v t="ekr.20041125062529"><vh>Prototypes of settings dialogs</vh>
 <v t="ekr.20041114121805.1"><vh>Configurator script</vh>
 <v t="ekr.20041114121805.2"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20041114165932"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
@@ -440,8 +440,8 @@
 <v t="ekr.20041114134217"><vh>setDirties</vh></v>
 </v>
 </v>
-<v t="ekr.20040920104357" a="E"><vh>Tix Tests</vh>
-<v t="ekr.20041124102349" a="E"><vh>class tixDialog (leoTkinterDialog)</vh>
+<v t="ekr.20040920104357"><vh>Tix Tests</vh>
+<v t="ekr.20041124102349"><vh>class tixDialog (leoTkinterDialog)</vh>
 <v t="ekr.20041124102349.1"><vh>ctor</vh></v>
 <v t="ekr.20041124103531"><vh>createFrame</vh></v>
 </v>
@@ -1432,22 +1432,51 @@
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
 <v t="ekr.20041125145818.1" a="EM"><vh>Pmw dialog</vh>
-<v t="ekr.20041126132754"><vh>To do</vh></v>
-<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
-<v t="ekr.20041126110158" a="E"><vh>ctor</vh>
-<v t="ekr.20041126143346"><vh>&lt;&lt; create a tree holding the global, user and local @settings trees &gt;&gt;</vh></v>
-<v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog &gt;&gt;</vh></v>
-<v t="ekr.20041126113848.1" a="TV"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
-<v t="ekr.20041126113848.2"><vh>&lt;&lt; put a settingsTree in paneFrame's outline pane&gt;&gt;</vh></v>
+<v t="ekr.20041126153919"><vh>How to replace contents of frame f by another:</vh></v>
+<v t="ekr.20041126110057"><vh>class settingsController</vh>
+<v t="ekr.20041126110158"><vh> ctor</vh>
+<v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
+<v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
+<v t="ekr.20041126113848.2" a="E"><vh>&lt;&lt; put a settingsTree in paneFrame's outline pane&gt;&gt;</vh></v>
+<v t="ekr.20041127132947"><vh>&lt;&lt; put setterCanvas in paneFrame's setter pane&gt;&gt;</vh></v>
 <v t="ekr.20041126133120"><vh>&lt;&lt; put a Text widget in the comment pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041126153101.1"><vh>createSettingsTree</vh>
+<v t="ekr.20041127055009.1" a="E"><vh>&lt;&lt; create a node p for  kind &amp; root2 &gt;&gt;</vh>
+<v t="ekr.20041127081146"><vh>&lt;&lt; inject ivars into p.v &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20041127112925" a="E"><vh>createWidgets &amp; allies</vh>
+<v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
+<v t="ekr.20041127134208.1"><vh>createBool</vh></v>
+<v t="ekr.20041127134208.2" a="EM"><vh>createColor  (finish)</vh>
+<v t="ekr.20041127175454" a="E"><vh>&lt;&lt; create color name panel &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
+<v t="ekr.20041127134208.4" a="EM"><vh>createFont  (finish)</vh></v>
+<v t="ekr.20041127134208.5"><vh>createInt</vh></v>
+<v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
+<v t="ekr.20041127134208.7"><vh>createPath</vh></v>
+<v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
+<v t="ekr.20041127134208.9"><vh>createRecentFiles </vh></v>
+<v t="ekr.20041127134208.10" a="E"><vh>createShortcut </vh></v>
+<v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
+<v t="ekr.20041127134613.1"><vh>createString</vh></v>
+<v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
 </v>
 <v t="ekr.20041126104958"><vh>doButton</vh></v>
 <v t="ekr.20041126124710"><vh>handleTreeClick</vh></v>
+<v t="ekr.20041127112806"><vh>printWidgets</vh></v>
+<v t="ekr.20041127144346"><vh>onPaneResize</vh></v>
+<v t="ekr.20041127090307"><vh>rootNodeComments</vh></v>
 <v t="ekr.20041126142253.1"><vh>settingsPosition</vh></v>
+<v t="ekr.20041127092231"><vh>updateComments</vh></v>
+<v t="ekr.20041127155541"><vh>updateSetterLabel</vh></v>
+<v t="ekr.20041126153101" a="E"><vh>updateSetter</vh></v>
 </v>
 <v t="ekr.20041125163105.21"><vh>class settingsTree (leoTkinterTree)</vh>
 <v t="ekr.20041125163105.22"><vh>ctor</vh></v>
-<v t="ekr.20041125163105.23"><vh>Selecting &amp; editing...</vh>
+<v t="ekr.20041125163105.23" a="E"><vh>Selecting &amp; editing...</vh>
 <v t="ekr.20041125163105.24"><vh>endEditLabel</vh></v>
 <v t="ekr.20041125163105.25"><vh>editLabel</vh></v>
 <v t="ekr.20041125163105.26"><vh>tree.select</vh>
@@ -1457,12 +1486,132 @@
 <v t="ekr.20041125163105.30"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
 <v t="ekr.20041125163105.31"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20041127083322"><vh>setSelectColors</vh></v>
+<v t="ekr.20041127084516"><vh>setUnselectColors</vh></v>
+<v t="ekr.20041127084516.1"><vh>getTextWidget</vh></v>
 </v>
 <v t="ekr.20041125163105.32"><vh>Event handlers...</vh>
 <v t="ekr.20041126130336"><vh>expandAllAncestors</vh></v>
 <v t="ekr.20041125163105.39"><vh>onClickBoxClick</vh></v>
 </v>
 <v t="ekr.20041126142253.3"><vh>drawTopTree</vh></v>
+</v>
+<v t="ekr.20041127102844"><vh>class parserClass (parserBaseClass)</vh>
+<v t="ekr.20041127102844.1"><vh>ctor</vh></v>
+<v t="ekr.20041127110245"><vh>set</vh></v>
+<v t="ekr.20041127103503"><vh>visitNode</vh></v>
+<v t="ekr.20041127103503.1"><vh>kind handlers</vh>
+<v t="ekr.20041127111750"><vh>Not used</vh>
+<v t="ekr.20041127103503.2"><vh>doBool</vh></v>
+<v t="ekr.20041127103503.3"><vh>doColor</vh></v>
+<v t="ekr.20041127103503.11"><vh>doFloat</vh></v>
+<v t="ekr.20041127103503.8"><vh>doFont</vh></v>
+<v t="ekr.20041127103503.4"><vh>doIf</vh></v>
+<v t="ekr.20041127103503.5"><vh>doIfGui</vh></v>
+<v t="ekr.20041127103503.6"><vh>doIfPlatform</vh></v>
+<v t="ekr.20041127103503.9"><vh>doIgnore</vh></v>
+<v t="ekr.20041127103503.10"><vh>doInt</vh></v>
+<v t="ekr.20041127103503.14"><vh>doRecentFiles</vh></v>
+<v t="ekr.20041127103503.15"><vh>doShortcut</vh></v>
+<v t="ekr.20041127103503.17"><vh>doString</vh></v>
+</v>
+<v t="ekr.20041127103503.7"><vh>doDirectory &amp; doPath</vh></v>
+<v t="ekr.20041127103503.13" a="E"><vh>doRatio</vh></v>
+<v t="ekr.20041127103503.12"><vh>doPage</vh></v>
+<v t="ekr.20041127103503.16" a="E"><vh>doRecentFiles &amp; doBodyPaneList</vh></v>
+<v t="ekr.20041127113719"><vh>doShortcuts</vh></v>
+<v t="ekr.20041127103503.18"><vh>doType</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20041127144035" a="E"><vh>(Hot)</vh>
+<v t="ekr.20041126110158"><vh> ctor</vh>
+<v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
+<v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
+<v t="ekr.20041126113848.2" a="E"><vh>&lt;&lt; put a settingsTree in paneFrame's outline pane&gt;&gt;</vh></v>
+<v t="ekr.20041127132947"><vh>&lt;&lt; put setterCanvas in paneFrame's setter pane&gt;&gt;</vh></v>
+<v t="ekr.20041126133120"><vh>&lt;&lt; put a Text widget in the comment pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041126153101"><vh>updateSetter</vh></v>
+<v t="ekr.20041127112925" a="E"><vh>createWidgets &amp; allies</vh>
+<v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
+<v t="ekr.20041127134208.1"><vh>createBool</vh></v>
+<v t="ekr.20041127134208.2" a="EM"><vh>createColor  (finish)</vh>
+<v t="ekr.20041127175454" a="E"><vh>&lt;&lt; create color name panel &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
+<v t="ekr.20041127134208.4" a="EM"><vh>createFont  (finish)</vh></v>
+<v t="ekr.20041127134208.5"><vh>createInt</vh></v>
+<v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
+<v t="ekr.20041127134208.7" a="TV"><vh>createPath</vh></v>
+<v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
+<v t="ekr.20041127134208.9"><vh>createRecentFiles </vh></v>
+<v t="ekr.20041127134208.10" a="E"><vh>createShortcut </vh></v>
+<v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
+<v t="ekr.20041127134613.1"><vh>createString</vh></v>
+<v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
+</v>
+</v>
+<v t="ekr.20041127175318"><vh>leoTkinterColorPanels.py</vh>
+<v t="ekr.20041127175318.1"><vh>&lt;&lt; define gui-dependent color panel data &gt;&gt;</vh></v>
+<v t="ekr.20041127175318.2" a="E"><vh>class leoTkinterColorNamePanel</vh>
+<v t="ekr.20041127175318.3"><vh>namePanel.__init__</vh></v>
+<v t="ekr.20041127175318.4"><vh>getSelection</vh></v>
+<v t="ekr.20041127175318.5"><vh>createFrame</vh>
+<v t="ekr.20041127175318.6"><vh>&lt;&lt; create color name panel &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041127175318.7"><vh>onOk, onCancel, onRevert, OnApply</vh></v>
+<v t="ekr.20041127175318.8"><vh>select</vh></v>
+</v>
+<v t="ekr.20041127175318.9" a="E"><vh>class leoTkinterColorPanel</vh>
+<v t="ekr.20041127175318.10"><vh>colorPanel.__init__</vh></v>
+<v t="ekr.20041127175318.11"><vh>bringToFront</vh></v>
+<v t="ekr.20041127175318.12" a="E"><vh>createFrame (color panel)</vh>
+<v t="ekr.20041127175318.13"><vh>&lt;&lt; create color panel &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041127175318.14"><vh>showColorPicker</vh></v>
+<v t="ekr.20041127175318.15"><vh>showColorName</vh></v>
+<v t="ekr.20041127175318.16"><vh>colorPanel.onOk, onCancel, onRevert</vh></v>
+<v t="ekr.20041127175318.17"><vh>update</vh></v>
+</v>
+</v>
+<v t="ekr.20041127175318.18"><vh>leoTkinterFontPanel.py</vh>
+<v t="ekr.20041127175318.19"><vh>Birth</vh>
+<v t="ekr.20041127175318.20"><vh>tkinterFont.__init__</vh></v>
+<v t="ekr.20041127175318.21"><vh>createFrame</vh>
+<v t="ekr.20041127175318.22"><vh>&lt;&lt; create the Tk.IntVars &gt;&gt;</vh></v>
+<v t="ekr.20041127175318.23"><vh>&lt;&lt; create the organizer frames &gt;&gt;</vh></v>
+<v t="ekr.20041127175318.24"><vh>&lt;&lt; create the font pane &gt;&gt;</vh></v>
+<v t="ekr.20041127175318.25"><vh>&lt;&lt; create the checkboxes &gt;&gt;</vh></v>
+<v t="ekr.20041127175318.26"><vh>&lt;&lt; create the buttons &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041127175318.27"><vh>finishCreate</vh></v>
+<v t="ekr.20041127175318.28"><vh>setRevertVars</vh></v>
+</v>
+<v t="ekr.20041127175318.29"><vh>bringToFront</vh></v>
+<v t="ekr.20041127175318.30"><vh>Events</vh>
+<v t="ekr.20041127175318.31"><vh>selectFont</vh></v>
+<v t="ekr.20041127175318.32"><vh>onSizeEntryKey</vh></v>
+</v>
+<v t="ekr.20041127175318.33"><vh>Buttons</vh>
+<v t="ekr.20041127175318.34"><vh>onApply</vh></v>
+<v t="ekr.20041127175318.35"><vh>onCancel</vh></v>
+<v t="ekr.20041127175318.36"><vh>onOk</vh>
+<v t="ekr.20041127175318.37"><vh>&lt;&lt; update the configuration settings &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041127175318.38"><vh>onRevert</vh></v>
+<v t="ekr.20041127175318.39"><vh>hide</vh></v>
+</v>
+<v t="ekr.20041127175318.40"><vh>Helpers</vh>
+<v t="ekr.20041127175318.41"><vh>getActiveFont</vh></v>
+<v t="ekr.20041127175318.42"><vh>getFontSettings</vh></v>
+<v t="ekr.20041127175318.43"><vh>getImpliedFont</vh></v>
+<v t="ekr.20041127175318.44"><vh>revertIvars</vh></v>
+<v t="ekr.20041127175318.45"><vh>showSettings</vh></v>
+<v t="ekr.20041127175318.46"><vh>update</vh>
+<v t="ekr.20041127175318.47"><vh>&lt;&lt; insert the new text in the size box &gt;&gt;</vh></v>
+<v t="ekr.20041127175318.48"><vh>&lt;&lt; set the fonts in all panes &gt;&gt;</vh></v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -2085,7 +2234,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2216,7 +2365,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -12296,7 +12445,12 @@ else: # Use plain click.
 <t tx="ekr.20041125145818"></t>
 <t tx="ekr.20041125145818.1">"""Create a Pmw settings dialog by subclassing leoTkinterTree."""
 
+# To do: set dialog geometry.
+
 import leoGlobals as g
+import leoConfig
+import leoNodes
+import leoTkinterColorPanels
 import leoTkinterTree
 
 import Pmw
@@ -12311,13 +12465,13 @@ settingsController(c)</t>
 <t tx="ekr.20041125163105.21">class settingsTree (leoTkinterTree.leoTkinterTree):
     
     @others</t>
-<t tx="ekr.20041125163105.22">def __init__(self,c,frame,canvas,controller,hoistFlag):
+<t tx="ekr.20041125163105.22">def __init__(self,c,frame,canvas,controller):
     
     # Init the base class.
     leoTkinterTree.leoTkinterTree.__init__(self,c,frame,canvas)
     
     self.controller = controller
-    self.hoistFlag = hoistFlag</t>
+    self.old_p = None</t>
 <t tx="ekr.20041125163105.23"></t>
 <t tx="ekr.20041125163105.24">def endEditLabel (self):
     
@@ -12326,9 +12480,22 @@ settingsController(c)</t>
     
     pass # Editing is not allowed.</t>
 <t tx="ekr.20041125163105.26">def select (self,p,updateBeadList=True):
+
+    old_p = self.old_p
+
+    # Unselect the old
+    if old_p:
+        t = self.getTextWidget(old_p)
+        if t: self.setUnselectColors(t)
+        
+    # Select the new
+    t = self.getTextWidget(p)
+    if t: self.setSelectColors(t)
     
     # N.B. Do not change the commander's notion of the present position.
-    self.controller.handleTreeClick(p)</t>
+    self.old_p = p
+
+    self.controller.onTreeClick(p)</t>
 <t tx="ekr.20041125163105.27"># Remember the position of the scrollbar before making any changes.
 yview=body.yview()
 insertSpot = c.frame.body.getInsertionPoint()
@@ -12466,38 +12633,52 @@ for fileName in fileNames:
     self.c = c
     title = "Settings for %s" % g.shortFileName(c.fileName())
 
-    &lt;&lt; create a tree holding the global, user and local @settings trees &gt;&gt;
-    &lt;&lt; create the dialog &gt;&gt;
+    self._settingsPosition = p = self.createSettingsTree()
+    self.parser = parserClass(c,p,self)
+    self.setterLabel = None
+    self.suppressComments = None # position for which to suppress comments.
+    
+    &lt;&lt; create the dialog d &gt;&gt;
     &lt;&lt; create paneFrame, a paned widget &gt;&gt;
     &lt;&lt; put a settingsTree in paneFrame's outline pane &gt;&gt;
-    &lt;&lt; put a Text widget in the comment pane &gt;&gt;</t>
+    &lt;&lt; put setterCanvas in paneFrame's setter pane&gt;&gt;
+    &lt;&lt; put a Text widget in the comment pane &gt;&gt;
+
+    tree.redraw_now() # To allocate widgets.
+    tree.select(p)
+    d.activate()</t>
 <t tx="ekr.20041126113848">self.dialog = d = Pmw.Dialog(
+    c.frame.top,
     title=title,
     buttons = ('OK', 'Apply', 'Cancel', 'Help'),
     defaultbutton = 'OK',
-    command = self.doButton,
+    command = self.doButton
 )
-    
+
+d.withdraw()
 hull = d.component('hull')
-hull.minsize(800,600)
+hull.minsize(800,800)
+
 interior = d.interior()
 
-# Do this at idle time.
-def callback(top=hull):
-    g.app.gui.attachLeoIcon(top)
-
-hull.after_idle(callback)</t>
+if 0: # Do immediately
+    g.app.gui.attachLeoIcon(hull)
+else: # Do at idle time.
+    def setIcont(top=hull):
+        g.app.gui.attachLeoIcon(top)
+    hull.after_idle(setIcont)</t>
 <t tx="ekr.20041126113848.1">self.paneFrame = paneFrame = Pmw.PanedWidget(interior,
     separatorthickness = 4, # default is 2
-    handlesize = 8 # default is 8
+    handlesize = 8, # default is 8
+    command = self.onPaneResize
 )
 paneFrame.pack(expand = 1, fill='both')
 
 self.panes = {}
 for name,minsize,size,label,isSetterLabel in (
     ("outline",50,300,None,False),
-    ("setter",50,300,"",True),
-    ("comments",50,100,None,False),
+    ("setter",50,300,"",False),
+    ("comments",50,200,None,False),
 ):
     self.panes[name] = pane = paneFrame.add(name,min=minsize,size=size)
     if label is not None:
@@ -12517,49 +12698,27 @@ for i in (1,2):
 <t tx="ekr.20041126113848.2">outline = self.panes.get('outline')
 
 # Create the widget.
-self.scrolledCanvas = scrolledCanvas = Pmw.ScrolledCanvas(outline,
+self.scrolledTreeCanvas = scrolledTreeCanvas = Pmw.ScrolledCanvas(outline,
     hscrollmode='none',borderframe=3)
     
 # Configure the canvas component.
-scrolledCanvas.pack(side='top',expand=1,fill="both")
+scrolledTreeCanvas.pack(side='top',expand=1,fill="both")
 
-if 0:# works, but doesn't look great.
-    borderFrame = scrolledCanvas.component('borderframe')
-    borderFrame.configure(pady=4) #,background='white')
-canvas = scrolledCanvas.component('canvas')
-canvas.configure(background='white')
+treeCanvas = scrolledTreeCanvas.component('canvas')
+treeCanvas.configure(background='white')
 
-# Create the tree and redraw.
-self.tree = tree = settingsTree(c,c.frame,canvas,self,self.hoistFlag)
-tree.redraw()</t>
-<t tx="ekr.20041126124710">def handleTreeClick (self,p):
+# Create the tree.
+self.tree = tree = settingsTree(c,c.frame,treeCanvas,self)</t>
+<t tx="ekr.20041126124710">def onTreeClick (self,p):
     
-    # g.trace(p.headString())
-    
-    h = p.headString().strip()
-    if h:
-        text = h
-    else:
-        text = ''
-
-    self.setterLabel.configure(text=text)
-    
-    self.commentWidget.clear()
-    self.commentWidget.setvalue(p.bodyString())</t>
+    self.updateSetter(p)</t>
 <t tx="ekr.20041126130336">def expandAllAncestors (self,p):
     
     # This would be harmful because p is always c.currentPosition().
 
     return False # redraw_flag</t>
 <t tx="ekr.20041126132604"></t>
-<t tx="ekr.20041126132754">@killcolor
-@
-
-- Show the global, user and local @settings trees.
-
-- Create the setter pane in handleTreeClick.</t>
 <t tx="ekr.20041126133120">commentFrame = self.paneFrame.pane('comments')
-
 
 self.commentWidget = commentWidget = Pmw.ScrolledText(commentFrame)
 commentWidget.pack(expand=1,fill="both")
@@ -12570,14 +12729,13 @@ background = commentFrame.cget('background')
 text.configure(background=background,borderwidth=0)</t>
 <t tx="ekr.20041126142253.1">def settingsPosition (self):
     
-    return self._settingsPosition</t>
-<t tx="ekr.20041126142253.3"># This could be eliminated by adding a p keyword arg to drawTopTree.
-
-def drawTopTree (self):
+    return self._settingsPosition.copy()</t>
+<t tx="ekr.20041126142253.3">def drawTopTree (self):
     
-    """Draws the settings tree, i.e., the tree rooted at self.controller.settingsPosition()."""
+    """Draw the settings tree, i.e., the tree rooted at self.controller.settingsPosition()."""
     
     c = self.c ; canvas = self.canvas
+    p = self.controller.settingsPosition()
     self.redrawing = True
     # Recycle all widgets.
     self.recycleWidgets()
@@ -12590,9 +12748,8 @@ def drawTopTree (self):
     self.prevPositions = g.app.positions
     
     # Draw only the settings tree
-    p = self.controller.settingsPosition()
-    self.drawTree(p,self.root_left,self.root_top,0,0,hoistFlag=self.hoistFlag)
-    
+    self.drawTree(p,self.root_left,self.root_top,0,0)
+
     canvas.lower("lines")  # Lowest.
     canvas.lift("textBox") # Not the Tk.Text widget: it should be low.
     canvas.lift("userIcon")
@@ -12600,12 +12757,1326 @@ def drawTopTree (self):
     canvas.lift("clickBox")
     canvas.lift("iconBox") # Higest.
     self.redrawing = False</t>
-<t tx="ekr.20041126143346">if 1: # Show entire outline for now...
-    self._settingsPosition = c.rootPosition()
-    self.hoistFlag = False
-else:
-    self._settingsPosition = g.app.config.settingsRoot(c)
-    self.hoistFlag = True
+<t tx="ekr.20041126153101">def updateSetter (self,p):
+    
+    """Create a setter pane for position p."""
+    
+    sc = self.sc ; interior = sc.interior()
+    
+    # Destroy the previous widgets
+    for w in interior.winfo_children():
+        w.destroy()
+        
+    self.sc.yview('moveto',0)
+    self.updateSetterLabel(p)
+        
+    # Visit the node, and possibly its subtree, looking for widgets to create.
+    self.parser.widgets = []
+    self.parser.visitNode(p)
+    if self.parser.widgets:
+        self.createWidgets(self.parser.widgets,interior)
+
+    self.updateComments(p)
+
+    self.onPaneResize()
+        </t>
+<t tx="ekr.20041126153101.1">def createSettingsTree (self):
+    
+    """Create a tree of vnodes representing all settings."""
+
+    c = self.c ; config = g.app.config
+    root_p = None ; last_p = None
+    for kind,path,otherFileFlag in (
+        ("Global",config.globalConfigFile,True),
+        ("Home",config.homeFile,True),
+        ("Local",c.fileName(),False),
+    ):
+        if path:
+            if otherFileFlag: c2 = config.openSettingsFile(path)
+            else: c2 = c
+            root2 = config.settingsRoot(c2)
+        else:
+            root2 = None
+        &lt;&lt; create a node p for kind &amp; root2 &gt;&gt;
+    root_p.expand()
+    return root_p
 </t>
+<t tx="ekr.20041126153919">if 0:
+
+    for w in f.winfo_children():
+        w.destroy()
+    
+    frame = Tkinter.Frame(f)
+    frame.pack(expand = 1)
+    
+    # Now create widgets in frame</t>
+<t tx="ekr.20041127055009.1">createSummaryNode = True # Dithering whether to do this.
+
+if not root_p:
+    t = leoNodes.tnode()
+    root_v = leoNodes.vnode(c,t) # Using c2 --&gt; oops: nullTree.
+    root_p = leoNodes.position(root_v,[])
+    if createSummaryNode:
+        root_p.initHeadString("All settings")
+        root_p.scriptSetBodyString(self.rootNodeComments())
+        p = root_p.insertAsLastChild()
+    else:
+        p = root_p
+else:
+    p = last_p.insertAfter()
+
+if root2:
+    root2.copyTreeFromSelfTo(p)  # replace p by root2.
+&lt;&lt; inject ivars into p.v &gt;&gt;
+path2 = g.choose(otherFileFlag,path,g.shortFileName(path))
+p.initHeadString("%s settings: %s" % (kind,path2))
+last_p = p</t>
+<t tx="ekr.20041127081146"># These won't create unknownAttributes because this tree never gets written.
+v = p.v
+v.settingsCommander = c2
+v.settingsPath = path
+v.settingsAreLocal = not otherFileFlag</t>
+<t tx="ekr.20041127083322">def setSelectColors (self,textWidget): 
+    
+    fg = c.config.getColor("headline_text_selected_foreground_color")
+    bg = c.config.getColor("headline_text_selected_background_color")
+    
+    if not fg or not bg:
+        fg,bg = "black","white"
+
+    try:
+        textWidget.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
+    except:
+        g.es_exception()</t>
+<t tx="ekr.20041127084516">def setUnselectColors (self,textWidget): 
+    
+    fg = c.config.getColor("headline_text_unselected_foreground_color")
+    bg = c.config.getColor("headline_text_unselected_background_color")
+    
+    if not fg or not bg:
+        fg,bg = "black","white"
+
+    try:
+        textWidget.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
+    except:
+        g.es_exception()</t>
+<t tx="ekr.20041127084516.1">def getTextWidget (self,p):
+    
+    # The data is create in newText.
+    data = self.visibleText.get(p.v)
+    if data:
+        data = data[0] # A list of one element.
+        # g.trace(len(data),data)
+        p2,t,id = data
+        return t
+    else:
+        return None</t>
+<t tx="ekr.20041127090307">def rootNodeComments(self):
+    
+    c = self.c ; fileName = g.shortFileName(c.mFileName)
+    
+    s = """
+    
+    This tree shows Leo's global and home settings, as well as the local settings in %s.
+    
+    """ % (fileName)
+    
+    return s</t>
+<t tx="ekr.20041127092231">def updateComments (self,p):
+
+    self.commentWidget.clear()
+    
+    if p != self.suppressComments:
+        self.commentWidget.setvalue(p.bodyString())
+        
+    self.suppressComments = None</t>
+<t tx="ekr.20041127102844">class parserClass (leoConfig.parserBaseClass):
+    
+    @others</t>
+<t tx="ekr.20041127102844.1">def __init__ (self,c,p,dialogController):
+    
+    self.c = c
+    self.root = p.copy()
+    self.widgets = [] # A list of widgets to create in the setter pane.
+
+    # Keys are canonicalized names.
+    self.dispatchDict = {
+        'bool':         self.set,
+        'color':        self.set,
+        'directory':    self.doDirectory,
+        'font':         self.set,
+        'if':           None,
+        'ifgui':        None,
+        'ifplatform':   None,
+        'ignore':       None,
+        'int':          self.set,
+        'float':        self.set,
+        'path':         self.doPath,
+        'page':         self.doPage,
+        'ratio':        self.set,
+        'recentfiles':  self.doRecentFiles,
+        'shortcut':     None,
+        'shortcuts':    self.doShortcuts,
+        'string':       self.set,
+        'type':         self.doType,
+    }</t>
+<t tx="ekr.20041127103503">def visitNode (self,p):
+    
+    """Visit a node, and possibly append a widget description to self.widgets."""
+    
+    munge = g.app.config.munge
+    h = p.headString().strip() or ''
+    kind,name,val = self.parseHeadline(h)
+    
+    # g.trace(kind,name,val)
+
+    f = self.dispatchDict.get(munge(kind))
+    if f is not None:
+        try:
+            f(p,kind,name,val)
+        except TypeError:
+            g.es_exception()
+            print "*** no handler",kind</t>
+<t tx="ekr.20041127103503.1"></t>
+<t tx="ekr.20041127103503.2">def doBool (self,p,kind,name,val):
+    
+    self.set(p,kind,name,val)</t>
+<t tx="ekr.20041127103503.3">def doColor (self,p,kind,name,val):
+    
+    self.set(p,kind,name,val)</t>
+<t tx="ekr.20041127103503.4">def doIf(self,p,kind,name,val):
+    
+    pass</t>
+<t tx="ekr.20041127103503.5">def doIfGui (self,p,kind,name,val):
+    
+    pass</t>
+<t tx="ekr.20041127103503.6">def doIfPlatform (self,p,kind,name,val):
+    
+    pass</t>
+<t tx="ekr.20041127103503.7">def doDirectory (self,p,kind,name,val):
+    
+     self.set(p,kind,name,val)
+    
+doPath = doDirectory</t>
+<t tx="ekr.20041127103503.8">def doFont (self,p,kind,name,val):
+    
+     self.set(p,kind,name,val)</t>
+<t tx="ekr.20041127103503.9">def doIgnore(self,p,kind,name,val):
+
+   pass # do nothing</t>
+<t tx="ekr.20041127103503.10">def doInt (self,p,kind,name,val):
+    
+     self.set(p,kind,name,val)</t>
+<t tx="ekr.20041127103503.11">def doFloat (self,p,kind,name,val):
+    
+     self.set(p,kind,name,val)</t>
+<t tx="ekr.20041127103503.12">def doPage(self,p,kind,name,val):
+    
+    """Create a widget for each setting in the subtree."""
+
+    for p in p.subtree_iter():
+        self.visitNode(p)</t>
+<t tx="ekr.20041127103503.13">def doRatio (self,p,kind,name,val):
+    
+     self.set(p,kind,name,val)</t>
+<t tx="ekr.20041127103503.14">def doRecentFiles (self,p,kind,name,val):
+    
+    s = p.bodyString().strip()
+    
+    g.trace(s)
+
+    if s: lines = g.splitLines(s)
+    else: lines = []
+
+    self.set(p,kind,name,lines)</t>
+<t tx="ekr.20041127103503.15">def doShortcut(self,p,kind,name,val):
+    
+    self.set(p,kind,name,val)</t>
+<t tx="ekr.20041127103503.16">def doBodyPaneList (self,p,kind,name,val):
+
+    s = p.bodyString()
+    lines = g.splitLines(s)
+
+    vals = []
+    for line in lines:
+        line = line.strip()
+        if line and not g.match(line,0,'#'):
+            vals.append(line)
+                
+    self.set(p,kind,name,vals)
+
+doRecentFiles = doBodyPaneList
+</t>
+<t tx="ekr.20041127103503.17">def doString (self,p,kind,name,val):
+    
+    self.set(p,kind,name,val)</t>
+<t tx="ekr.20041127103503.18">def doType (self,p,kind,name,val):
+    
+    if val:
+        self.set(p,kind,name,val)
+    else:
+        doBodyPaneList(p,kind,name,val)</t>
+<t tx="ekr.20041127110245">def set (self,p,kind,name,val):
+    
+    self.widgets.append((p.copy(),kind,name,val),)</t>
+<t tx="ekr.20041127111750">if 0:
+    @others</t>
+<t tx="ekr.20041127112806">def printWidgets (self,widgets):
+
+    print '-'*20
+
+    for data in widgets:
+        p,kind,name,vals = data
+        if type(vals) == type([]):
+            print "%s %s..." % (name,kind)
+            for val in vals:
+                print val
+        else:
+            print "%45s %8s %s" % (name,kind,vals)</t>
+<t tx="ekr.20041127112925">def createWidgets (self,widgets,parent):
+    
+    munge = g.app.config.munge
+
+    &lt;&lt; define creatorDispatchDict &gt;&gt;
+    
+    # self.printWidgets(widgets)
+    
+    self.h = 0
+            
+    for data in widgets:
+        p,kind,name,vals = data
+        f = creatorDispatchDict.get(munge(kind))
+        if f is not None:
+            try:
+                f(parent,p,kind,name,vals)
+            except TypeError:
+                g.es_exception()
+                g.trace("***No handler***",kind)
+                
+    self.sc.resizescrollregion()</t>
+<t tx="ekr.20041127113719">def doShortcuts(self,p,kind,name,val):
+
+    s = p.bodyString()
+    lines = g.splitLines(s)
+
+    vals = []
+    for line in lines:
+        line = line.strip()
+        if line and not g.match(line,0,'#'):
+            name,val = self.parseShortcutLine(line)
+            if val is not None:
+                vals.append((name,val),)
+                
+    self.set(p,kind,name,vals)</t>
+<t tx="ekr.20041127132947"># Create the widget in the 'setter' pane.
+setter = self.panes.get('setter')
+
+self.sc = sc = Pmw.ScrolledCanvas(setter,
+    hscrollmode='none',vscrollmode='dynamic',
+    labelpos = 'n',label_text = '')
+    
+sc.pack(side='top',expand=1,fill="both")
+
+setterCanvas = sc.component('canvas')
+self.setterLabel = sc.component('label')
+
+# setterCanvas.configure(background='LightSteelBlue1')</t>
+<t tx="ekr.20041127134208">creatorDispatchDict = {
+    'bool':         self.createBool,
+    'color':        self.createColor,
+    'directory':    self.createDirectory,
+    'font':         self.createFont,
+    'int':          self.createInt,
+    'float':        self.createFloat,
+    'path':         self.createPath,
+    'ratio':        self.createRatio,
+    'recentfiles':  self.createRecentFiles,
+    'shortcut':     self.createShortcut,
+    'shortcuts':    self.createShortcuts,
+    'string':       self.createString,
+    'type':         self.createType,
+}</t>
+<t tx="ekr.20041127134208.1">def createBool (self,parent,p,kind,name,val):
+
+    # Convert val to a 1,0.
+    val = g.choose(val.lower()=='true',1,0)
+    # g.trace("%-5s %s" % (val,name))
+    
+    # Setting this var inits the checkbutton. widget.
+    boolVar = Tk.IntVar()
+    boolVar.set(val)
+    
+    def callback(event=None,self=self,p=p,name=name,var=boolVar):
+        val = var.get()
+        g.trace(val,name)
+
+    box = Tk.Checkbutton(parent,text=name,variable=boolVar,command=callback)
+
+    self.sc.create_window(10,self.h,anchor='w',window=box)
+    self.h += 20</t>
+<t tx="ekr.20041127134208.2">def createColor (self,parent,p,kind,name,val):
+    
+    # g.trace(name,val)
+    
+    # Creating this var inits the Entry widget.
+    stringVar = Tk.StringVar()
+    stringVar.set(val)
+    
+    f = Tk.Frame(parent) # No need to pack.
+
+    e = Tk.Entry(f,textvariable=stringVar,width=40)
+    e.pack(side='left',pady=2)
+    
+    label = Tk.Label(f,text=name)
+    label.pack(side='left')
+    
+    &lt;&lt; create color name panel &gt;&gt;
+    
+    self.sc.create_window(15, self.h,anchor='w',window = f)
+    self.h += 60</t>
+<t tx="ekr.20041127134208.3">def createDirectory (self,parent,p,kind,name,val):
+    
+    self.createString(parent,p,kind,name,val)</t>
+<t tx="ekr.20041127134208.4">def createFont (self,parent,p,kind,name,val):
+    
+    # Creating this var inits the Entry widget.
+    stringVar = Tk.StringVar()
+    stringVar.set(val)
+
+    f = Tk.Frame(parent) # No need to pack.
+
+    label = Tk.Label(f,text=name)
+    label.pack(side='top')
+
+    self.sc.create_window(15, self.h,anchor='w',window = f)
+    self.h += 50</t>
+<t tx="ekr.20041127134208.5">def createInt (self,parent,p,kind,name,val):
+    
+    try:
+        val = int(val)
+    except TypeError:
+        val = 0
+
+    # Setting this var inits the entry widget.
+    intVar = Tk.IntVar()
+    intVar.set(val)
+    
+    f = Tk.Frame(parent)
+
+    e = Tk.Entry(f,textvariable=intVar)
+    e.pack(side='left',pady=2)
+    
+    label = Tk.Label(f,text=name)
+    label.pack(side='left')
+    
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 20</t>
+<t tx="ekr.20041127134208.6">def createFloat (self,parent,p,kind,name,val):
+   
+    try:
+        val = float(val)
+    except TypeError:
+        val = 0
+
+    # Setting this var inits the entry widget.
+    intVar = Tk.IntVar()
+    intVar.set(val)
+    
+    f = Tk.Frame(parent)
+
+    e = Tk.Entry(f,textvariable=intVar)
+    e.pack(side='left',pady=2)
+    
+    label = Tk.Label(f,text=name)
+    label.pack(side='left')
+    
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 20</t>
+<t tx="ekr.20041127134208.7">def createPath (self,parent,p,kind,name,val):
+    
+    self.createString(parent,p,kind,name,val)</t>
+<t tx="ekr.20041127134208.8">def createRatio (self,parent,p,kind,name,val):
+    
+    self.createFloat(parent,p,kind,name,val)</t>
+<t tx="ekr.20041127134208.9">def createRecentFiles (self,parent,p,kind,name,vals):
+    
+    s = p.bodyString()
+    lines = g.splitLines(s)
+    
+    i = 0
+    for line in lines:
+        if not g.match(line.strip(),0,'#'):
+            name = "file %d" % (i)
+            self.createString(parent,p,kind,name,line)
+                
+    self.suppressComments = p.copy()
+</t>
+<t tx="ekr.20041127134208.10">def createShortcut (self,parent,p,kind,name,val):
+    
+    g.trace(name,val)
+    
+    if name:
+        self.createString(parent,p,kind,name,val)
+</t>
+<t tx="ekr.20041127134613">def createShortcuts (self,parent,p,kind,name,vals):
+    
+    s = p.bodyString()
+    lines = g.splitLines(s)
+    
+    for line in lines:
+        if not g.match(line.strip(),0,'#'):
+            name,val = self.parser.parseShortcutLine(line)
+            if name:
+                self.createString(parent,p,kind,name,val)
+                
+    self.suppressComments = p.copy()</t>
+<t tx="ekr.20041127134613.1">def createString (self,parent,p,kind,name,val):
+    
+    # g.trace(name,val)
+    
+    # Creating this var inits the Entry widget.
+    stringVar = Tk.StringVar()
+    stringVar.set(val)
+    
+    f = Tk.Frame(parent) # No need to pack.
+
+    e = Tk.Entry(f,textvariable=stringVar,width=40)
+    e.pack(side='left',pady=2)
+    
+    label = Tk.Label(f,text=name)
+    label.pack(side='left')
+    
+    self.sc.create_window(15, self.h,anchor='w',window = f)
+    self.h += 22</t>
+<t tx="ekr.20041127134613.2">def createType (self,parent,p,kind,name,vals):
+    pass</t>
+<t tx="ekr.20041127144035"></t>
+<t tx="ekr.20041127144346">def onPaneResize (self,sizes=None):
+
+    self.sc.resizescrollregion()</t>
+<t tx="ekr.20041127155541">def updateSetterLabel (self,p):
+    
+    if self.setterLabel:
+
+        h = p.headString().strip() or ''
+
+        for name in ('@page','@ignore','@'):
+            if g.match(h,0,name):
+                h = h[len(name):].strip()
+                break
+    
+        self.setterLabel.configure(text=h)</t>
+<t tx="ekr.20041127175318">import leoGlobals as g
+import leoColorPanel
+
+import Tkinter as Tk
+import tkColorChooser
+
+&lt;&lt; define gui-dependent color panel data &gt;&gt;
+
+@others</t>
+<t tx="ekr.20041127175318.1">colorNamesList = (
+    "gray60", "gray70", "gray80", "gray85", "gray90", "gray95",
+    "snow1", "snow2", "snow3", "snow4", "seashell1", "seashell2",
+    "seashell3", "seashell4", "AntiqueWhite1", "AntiqueWhite2", "AntiqueWhite3",
+    "AntiqueWhite4", "bisque1", "bisque2", "bisque3", "bisque4", "PeachPuff1",
+    "PeachPuff2", "PeachPuff3", "PeachPuff4", "NavajoWhite1", "NavajoWhite2",
+    "NavajoWhite3", "NavajoWhite4", "LemonChiffon1", "LemonChiffon2",
+    "LemonChiffon3", "LemonChiffon4", "cornsilk1", "cornsilk2", "cornsilk3",
+    "cornsilk4", "ivory1", "ivory2", "ivory3", "ivory4", "honeydew1", "honeydew2",
+    "honeydew3", "honeydew4", "LavenderBlush1", "LavenderBlush2",
+    "LavenderBlush3", "LavenderBlush4", "MistyRose1", "MistyRose2",
+    "MistyRose3", "MistyRose4", "azure1", "azure2", "azure3", "azure4",
+    "SlateBlue1", "SlateBlue2", "SlateBlue3", "SlateBlue4", "RoyalBlue1",
+    "RoyalBlue2", "RoyalBlue3", "RoyalBlue4", "blue1", "blue2", "blue3", "blue4",
+    "DodgerBlue1", "DodgerBlue2", "DodgerBlue3", "DodgerBlue4", "SteelBlue1",
+    "SteelBlue2", "SteelBlue3", "SteelBlue4", "DeepSkyBlue1", "DeepSkyBlue2",
+    "DeepSkyBlue3", "DeepSkyBlue4", "SkyBlue1", "SkyBlue2", "SkyBlue3",
+    "SkyBlue4", "LightSkyBlue1", "LightSkyBlue2", "LightSkyBlue3",
+    "LightSkyBlue4", "SlateGray1", "SlateGray2", "SlateGray3", "SlateGray4",
+    "LightSteelBlue1", "LightSteelBlue2", "LightSteelBlue3",
+    "LightSteelBlue4", "LightBlue1", "LightBlue2", "LightBlue3",
+    "LightBlue4", "LightCyan1", "LightCyan2", "LightCyan3", "LightCyan4",
+    "PaleTurquoise1", "PaleTurquoise2", "PaleTurquoise3", "PaleTurquoise4",
+    "CadetBlue1", "CadetBlue2", "CadetBlue3", "CadetBlue4", "turquoise1",
+    "turquoise2", "turquoise3", "turquoise4", "cyan1", "cyan2", "cyan3", "cyan4",
+    "DarkSlateGray1", "DarkSlateGray2", "DarkSlateGray3",
+    "DarkSlateGray4", "aquamarine1", "aquamarine2", "aquamarine3",
+    "aquamarine4", "DarkSeaGreen1", "DarkSeaGreen2", "DarkSeaGreen3",
+    "DarkSeaGreen4", "SeaGreen1", "SeaGreen2", "SeaGreen3", "SeaGreen4",
+    "PaleGreen1", "PaleGreen2", "PaleGreen3", "PaleGreen4", "SpringGreen1",
+    "SpringGreen2", "SpringGreen3", "SpringGreen4", "green1", "green2",
+    "green3", "green4", "chartreuse1", "chartreuse2", "chartreuse3",
+    "chartreuse4", "OliveDrab1", "OliveDrab2", "OliveDrab3", "OliveDrab4",
+    "DarkOliveGreen1", "DarkOliveGreen2", "DarkOliveGreen3",
+    "DarkOliveGreen4", "khaki1", "khaki2", "khaki3", "khaki4",
+    "LightGoldenrod1", "LightGoldenrod2", "LightGoldenrod3",
+    "LightGoldenrod4", "LightYellow1", "LightYellow2", "LightYellow3",
+    "LightYellow4", "yellow1", "yellow2", "yellow3", "yellow4", "gold1", "gold2",
+    "gold3", "gold4", "goldenrod1", "goldenrod2", "goldenrod3", "goldenrod4",
+    "DarkGoldenrod1", "DarkGoldenrod2", "DarkGoldenrod3", "DarkGoldenrod4",
+    "RosyBrown1", "RosyBrown2", "RosyBrown3", "RosyBrown4", "IndianRed1",
+    "IndianRed2", "IndianRed3", "IndianRed4", "sienna1", "sienna2", "sienna3",
+    "sienna4", "burlywood1", "burlywood2", "burlywood3", "burlywood4", "wheat1",
+    "wheat2", "wheat3", "wheat4", "tan1", "tan2", "tan3", "tan4", "chocolate1",
+    "chocolate2", "chocolate3", "chocolate4", "firebrick1", "firebrick2",
+    "firebrick3", "firebrick4", "brown1", "brown2", "brown3", "brown4", "salmon1",
+    "salmon2", "salmon3", "salmon4", "LightSalmon1", "LightSalmon2",
+    "LightSalmon3", "LightSalmon4", "orange1", "orange2", "orange3", "orange4",
+    "DarkOrange1", "DarkOrange2", "DarkOrange3", "DarkOrange4", "coral1",
+    "coral2", "coral3", "coral4", "tomato1", "tomato2", "tomato3", "tomato4",
+    "OrangeRed1", "OrangeRed2", "OrangeRed3", "OrangeRed4", "red1", "red2", "red3",
+    "red4", "DeepPink1", "DeepPink2", "DeepPink3", "DeepPink4", "HotPink1",
+    "HotPink2", "HotPink3", "HotPink4", "pink1", "pink2", "pink3", "pink4",
+    "LightPink1", "LightPink2", "LightPink3", "LightPink4", "PaleVioletRed1",
+    "PaleVioletRed2", "PaleVioletRed3", "PaleVioletRed4", "maroon1",
+    "maroon2", "maroon3", "maroon4", "VioletRed1", "VioletRed2", "VioletRed3",
+    "VioletRed4", "magenta1", "magenta2", "magenta3", "magenta4", "orchid1",
+    "orchid2", "orchid3", "orchid4", "plum1", "plum2", "plum3", "plum4",
+    "MediumOrchid1", "MediumOrchid2", "MediumOrchid3", "MediumOrchid4",
+    "DarkOrchid1", "DarkOrchid2", "DarkOrchid3", "DarkOrchid4", "purple1",
+    "purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
+    "MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
+    "thistle4" )
+</t>
+<t tx="ekr.20041127175318.2">class leoTkinterColorNamePanel:
+    
+    """A class to create and run a Tkinter color name panel."""
+    
+    @others
+</t>
+<t tx="ekr.20041127175318.3">def __init__ (self,colorPanel,name,color):
+    
+    # No need for a base class.
+    self.colorPanel = colorPanel
+    self.name = name
+    self.color = color
+    self.revertColor = color
+    
+    self.createFrame(name,color)</t>
+<t tx="ekr.20041127175318.4">def getSelection (self):
+
+    box = self.box ; color = None
+    
+    # Get the family name if possible, or font otherwise.
+    items = box.curselection()
+
+    if len(items)&gt; 0:
+        try: # This shouldn't fail now.
+            items = map(int, items)
+            color = box.get(items[0])
+        except:
+            g.es("unexpected exception")
+            g.es_exception()
+
+    if not color:
+        color = self.color
+    return color</t>
+<t tx="ekr.20041127175318.5">def createFrame (self,name,color):
+    
+    assert(name==self.name)
+    assert(color==self.color)
+    self.revertColor = color
+    
+    gui = g.app.gui
+
+    self.top = top = Tk.Toplevel(g.app.root)
+    top.title("Color names for " + '"' + name + '"')
+    top.protocol("WM_DELETE_WINDOW", self.onOk)
+
+    &lt;&lt; create color name panel &gt;&gt;
+    self.select(color)
+    
+    gui.center_dialog(top) # Do this _after_ building the dialog!
+    # top.resizable(0,0)
+    
+    # This must be a modal dialog.
+    top.grab_set()
+    top.focus_set() # Get all keystrokes.</t>
+<t tx="ekr.20041127175318.6"># Create organizer frames
+outer = Tk.Frame(top,bd=2,relief="groove")
+outer.pack(fill="both",expand=1)
+
+upper = Tk.Frame(outer)
+upper.pack(fill="both",expand=1)
+
+# A kludge to give vertical space to the listbox!
+spacer = Tk.Frame(upper) 
+spacer.pack(side="right",pady="2i") 
+
+lower = Tk.Frame(outer)
+# padx=20 gives more room to the Listbox!
+lower.pack(padx=40) # Not expanding centers the buttons.
+
+# Create and populate the listbox.
+self.box = box = Tk.Listbox(upper) # height doesn't seem to work.
+box.bind("&lt;Double-Button-1&gt;", self.onApply)
+
+if color not in colorNamesList:
+    box.insert(0,color)
+    
+names = list(colorNamesList) # It's actually a tuple.
+names.sort()
+for name in names:
+    box.insert("end",name)
+
+bar = Tk.Scrollbar(box)
+bar.pack(side="right", fill="y")
+box.pack(padx=2,pady=2,expand=1,fill="both")
+
+bar.config(command=box.yview)
+box.config(yscrollcommand=bar.set)
+    
+# Create the row of buttons.
+for text,command in (
+    ("OK",self.onOk),
+    ("Cancel",self.onCancel),
+    ("Revert",self.onRevert),
+    ("Apply",self.onApply) ):
+        
+    b = Tk.Button(lower,text=text,command=command)
+    b.pack(side="left",pady=6,padx=4)</t>
+<t tx="ekr.20041127175318.7">def onApply (self,event=None):
+    self.color = color = self.getSelection()
+    self.colorPanel.update(self.name,color)
+
+def onOk (self):
+    color = self.getSelection()
+    self.colorPanel.update(self.name,color)
+    self.top.destroy()
+    
+def onCancel (self):
+    self.onRevert()
+    self.top.destroy()
+    
+def onRevert (self):
+    self.color = color = self.revertColor
+    self.select(self.color)
+    self.colorPanel.update(self.name,color)</t>
+<t tx="ekr.20041127175318.8">def select (self,color):
+
+    # g.trace(color)
+
+    # The name should be on the list!
+    box = self.box
+    for i in xrange(0,box.size()):
+        item = box.get(i)
+        if color == item:
+            box.select_clear(0,"end")
+            box.select_set(i)
+            box.see(i)
+            return
+
+    # g.trace("not found:",color)</t>
+<t tx="ekr.20041127175318.9">class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
+    
+    """A class to create and run a Tkinter color panel."""
+
+    @others</t>
+<t tx="ekr.20041127175318.10">def __init__ (self,c):
+    
+    """Create a tkinter color panel."""
+    
+    # Init the base class
+    leoColorPanel.leoColorPanel.__init__(self,c)
+    
+    # For communication with callbacks.
+    self.changed_options = []
+    self.buttons = {}
+    self.nameButtons = {}
+    self.option_names = {}
+
+    self.createFrame()</t>
+<t tx="ekr.20041127175318.11">def bringToFront(self):
+    
+    self.top.deiconify()
+    self.top.lift()
+</t>
+<t tx="ekr.20041127175318.12">def createFrame (self):
+    
+    c = self.c ; gui = g.app.gui
+    self.top = top = Tk.Toplevel(g.app.root)
+    top.title("Syntax colors for " + c.frame.shortFileName()) # DS, 10/28/03
+    top.protocol("WM_DELETE_WINDOW", self.onOk)
+    gui.attachLeoIcon(top)
+
+    &lt;&lt; create color panel &gt;&gt;
+
+    gui.center_dialog(top) # Do this _after_ building the dialog!
+    top.resizable(0,0)</t>
+<t tx="ekr.20041127175318.13">outer = Tk.Frame(top,bd=2,relief="groove")
+outer.pack(anchor="n",pady=2,ipady=1,expand=1,fill="x")
+
+# Create all the rows.
+for name,option_name,default_color in self.colorPanelData:
+    # Get the color.
+    option_color = c.config.getColor(option_name)
+    color = g.choose(option_color,option_color,default_color)
+    # Create the row.
+    f = Tk.Frame(outer,bd=2)
+    f.pack()
+    
+    lab=Tk.Label(f,text=name,width=17,anchor="e")
+
+    b1 = Tk.Button(f,text="",state="disabled",bg=color,width=4)
+    self.buttons[name]=b1 # For callback.
+    self.option_names[name]=option_name # For callback.
+    
+    b2 = Tk.Button(f,width=12,text=option_color)
+    self.nameButtons[name]=b2
+    
+    # 9/15/02: Added self=self to remove Python 2.1 warning.
+    callback = lambda name=name,self=self:self.showColorPicker(name)
+    b3 = Tk.Button(f,text="Color Picker...",command=callback)
+
+    # 9/15/02: Added self=self to remove Python 2.1 warning.
+    callback = lambda name=name,color=color,self=self:self.showColorName(name,color)
+    b4 = Tk.Button(f,text="Color Name...",command=callback)
+
+    lab.pack(side="left",padx=3)
+    b1.pack (side="left",padx=3)
+    b2.pack (side="left",padx=3)
+    b3.pack (side="left",padx=3)
+    b4.pack (side="left",padx=3)
+    
+# Create the Ok, Cancel &amp; Revert buttons
+f = Tk.Frame(outer,bd=2)
+f.pack()
+b = Tk.Button(f,width=6,text="OK",command=self.onOk)
+b.pack(side="left",padx=4)
+b = Tk.Button(f,width=6,text="Cancel",command=self.onCancel)
+b.pack(side="left",padx=4,expand=1,fill="x")
+b = Tk.Button(f,width=6,text="Revert",command=self.onRevert)
+b.pack(side="right",padx=4)</t>
+<t tx="ekr.20041127175318.14">def showColorPicker (self,name):
+    
+    c = self.c
+    option_name = self.option_names[name]
+    color = c.config.getColor(option_name)
+    rgb,val = tkColorChooser.askcolor(color=color)
+    if val != None:
+        self.update(name,val)</t>
+<t tx="ekr.20041127175318.15">def showColorName (self,name,color):
+    
+    """Bring up a tkinter color name panel."""
+    
+    # No need to use an app gui routine: this is all Tk code.
+    leoTkinterColorNamePanel(self,name,color)</t>
+<t tx="ekr.20041127175318.16">def onOk (self):
+    # Update the revert colors
+    for name in self.changed_options:
+        option_name = self.option_names[name]
+        self.revertColors[option_name] = self.c.config.getColor(option_name)
+    self.changed_options = []
+    if 1: # Hide the window, preserving its position.
+        self.top.withdraw()
+    else: # works.
+        self.c.frame.colorPanel = None
+        self.top.destroy()
+    
+def onCancel (self):
+    self.onRevert()
+    if 1: # Hide the window, preserving its position.
+        self.top.withdraw()
+    else: # works.
+        self.c.frame.colorPanel = None
+        self.top.destroy()
+    
+def onRevert (self):
+    c = self.c
+    for name in self.changed_options:
+        option_name = self.option_names[name]
+        old_val = self.revertColors[option_name]
+        # Update the current settings.
+        c.config.setString(option_name,old_val)
+        # Update the buttons.
+        b = self.buttons[name]
+        b.configure(bg=old_val)
+        b = self.nameButtons[name]
+        b.configure(text=str(old_val))
+    self.changed_options = []
+    self.c.recolor()</t>
+<t tx="ekr.20041127175318.17">def update (self,name,val):
+    
+    c = self.c
+    # g.es(str(name) + " = " + str(val))
+    
+    # Put the new color in the button.
+    b = self.buttons[name]
+    b.configure(bg=val)
+    option_name = self.option_names[name]
+    
+    # Put the new color name or value in the name button.
+    b = self.nameButtons[name]
+    if type(val) == "" or type(val) == u"":
+        b.configure(text=val) # Prevents unwanted quotes in the name.
+    else:
+        b.configure(text=str(val))
+    
+    # Save the changed option names for revert and cancel.
+    if name not in self.changed_options:
+        self.changed_options.append(name)
+
+    # Set the new value and recolor.
+    c.config.setString(option_name,val)
+    self.c.recolor()</t>
+<t tx="ekr.20041127175318.18">@language python
+@tabwidth -4
+
+import leoGlobals as g
+import leoFontPanel
+
+import Tkinter as Tk
+import tkFont
+
+class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
+    
+    """A class to create and run a tkinter font panel."""
+
+    @others</t>
+<t tx="ekr.20041127175318.19"></t>
+<t tx="ekr.20041127175318.20">def __init__ (self,c):
+    
+    leoFontPanel.leoFontPanel.__init__(self,c)
+
+    self.default_font = "Courier"
+    
+    # Slots for callbacks
+    self.listBoxIndex = 0
+    self.family_list_box = None
+    self.size_entry = None
+    self.example_entry = None
+    self.outer = None
+    
+    self.setRevertVars()
+    self.createFrame()
+    
+    # Finish up after the dialog is frozen.
+    # This works around Tk weirdness
+    self.outer.after_idle(self.finishCreate)</t>
+<t tx="ekr.20041127175318.21">def createFrame (self):
+
+    c = self.c ; gui = g.app.gui
+    self.top = top = Tk.Toplevel(g.app.root)
+    gui.attachLeoIcon(top)
+
+    top.title("Fonts for " + c.frame.shortFileName()) # DS, 10/28/03
+    top.protocol("WM_DELETE_WINDOW", self.onOk)
+    
+    &lt;&lt; create the Tk.IntVars &gt;&gt;
+    &lt;&lt; Create the organizer frames &gt;&gt;
+    &lt;&lt; create the font pane &gt;&gt;
+    &lt;&lt; create the checkboxes &gt;&gt;
+    &lt;&lt; create the buttons &gt;&gt;
+    
+    # This must be done _after_ the dialog has been built!
+    w,h,x,y = gui.center_dialog(top)
+    top.wm_minsize(height=h,width=w)
+</t>
+<t tx="ekr.20041127175318.22"># Variables to track values of style checkboxes.
+self.sizeVar = Tk.IntVar()
+self.boldVar = Tk.IntVar()
+self.italVar = Tk.IntVar()
+
+# Variables to track values of pane checkboxes.
+self.bodyVar = Tk.IntVar()
+self.logVar = Tk.IntVar()
+self.treeVar = Tk.IntVar()</t>
+<t tx="ekr.20041127175318.23">self.outer = outer = Tk.Frame(top,bd=2,relief="groove",width="8i")
+outer.pack(padx=2,pady=2,expand=1,fill="both")
+
+upper = Tk.Frame(outer)
+upper.pack(fill="both",expand=1)
+
+lt = Tk.Frame(upper)
+lt.pack(side="left",fill="both",expand=1)
+
+rt = Tk.Frame(upper)
+rt.pack(side="right",anchor="n",padx=4) # Not filling or expanding centers contents.
+
+# Not filling or expanding centers contents.
+# padx=20 gives more room to the Listbox in the lt frame!
+lower = Tk.Frame(outer)
+lower.pack(side="top",anchor="w",padx=20)</t>
+<t tx="ekr.20041127175318.24"># Create the list box and its scrollbar.
+self.family_list_box = box = Tk.Listbox(lt,height=7)
+
+# Fill the listbox to set the width.
+names = tkFont.families()
+names = list(names)
+names.sort()
+for name in names:
+    box.insert("end", name)
+
+box.pack(padx=4,pady=4,fill="both",expand=1)
+box.bind("&lt;Double-Button-1&gt;", self.update)
+
+bar = Tk.Scrollbar(box)
+bar.pack(side="right", fill="y")
+
+bar.config(command=box.yview)
+box.config(yscrollcommand=bar.set)</t>
+<t tx="ekr.20041127175318.25"># Create the style checkboxes.
+for text,var in (
+    ("Bold",self.boldVar),
+    ("Italic",self.italVar)):
+
+    b = Tk.Checkbutton(rt,text=text,variable=var)
+    b.pack(side="top",anchor="w")
+
+# Create the size label and entry widget.
+row = Tk.Frame(rt)
+row.pack(side="top")
+
+lab = Tk.Label(row,text="Size:")
+lab.pack(side="left")
+
+self.size_entry = e = Tk.Entry(row,width=4)
+e.pack(side="left")
+e.bind("&lt;Key&gt;",self.onSizeEntryKey)
+
+# Create the pane checkboxes.
+for text,var in (
+    ("Body",   self.bodyVar),
+    ("Outline",self.treeVar,),
+    ("Log",    self.logVar)):
+
+    b = Tk.Checkbutton(rt,text=text,variable=var)
+    b.pack(side="top",anchor="w")</t>
+<t tx="ekr.20041127175318.26">for name,command in (
+    ("Apply",self.onApply),
+    ("OK",self.onOk),
+    ("Cancel",self.onCancel),
+    ("Revert",self.onRevert)):
+        
+    b = Tk.Button(lower,width=7,text=name,command=command)
+    b.pack(side="left",anchor="w",pady=6,padx=4,expand=0)</t>
+<t tx="ekr.20041127175318.27">def finishCreate (self):
+    
+    # These do not get changed when reverted.
+    self.bodyVar.set(1)
+    self.logVar.set(0)
+    self.treeVar.set(0)
+    
+    # All other vars do change when reverted.
+    self.revertIvars()
+    self.update()</t>
+<t tx="ekr.20041127175318.28">def setRevertVars (self):
+    
+    """Set vars for revert."""
+    
+    c = self.c
+
+    fn = c.frame.body.cget("font")
+    self.revertBodyFont = tkFont.Font(font=fn)
+    
+    fn = c.frame.log.getFontConfig()
+    self.revertLogFont = tkFont.Font(font=fn)
+    
+    self.revertTreeFont = c.frame.tree.getFont()</t>
+<t tx="ekr.20041127175318.29">def bringToFront (self):
+    
+    """Bring the tkinter Font Panel to the front."""
+    
+    self.top.deiconify()
+    self.top.lift()</t>
+<t tx="ekr.20041127175318.30"></t>
+<t tx="ekr.20041127175318.31">def selectFont (self,font):
+    
+    box = self.family_list_box
+    
+    # All selections come here.
+    self.last_selected_font = font
+
+    # The name should be on the list!
+    name, size, slant, weight = self.getFontSettings(font)
+    for i in xrange(0,box.size()):
+        item = box.get(i)
+        if name == item:
+            box.select_clear(0,"end")
+            box.select_set(i)
+            box.see(i)
+            self.last_selected_font = font
+            # g.trace(name)
+            return
+
+    # print "not found:" + name</t>
+<t tx="ekr.20041127175318.32">def onSizeEntryKey (self,event=None):
+    
+    self.size_entry.after_idle(self.idle_entry_key)
+    
+def idle_entry_key (self):
+    
+    size = self.size_entry.get() # Doesn't work until idle time.
+    try:
+        size = int(size)
+        self.sizeVar.set(size)
+    except: # The user typed an invalid number.
+        return</t>
+<t tx="ekr.20041127175318.33"></t>
+<t tx="ekr.20041127175318.34">def onApply (self):
+    
+    self.update()
+</t>
+<t tx="ekr.20041127175318.35">def onCancel (self):
+
+    self.onRevert()
+    self.showSettings()
+    self.hide()</t>
+<t tx="ekr.20041127175318.36">def onOk (self):
+
+    c = self.c
+    self.update() # It is natural for OK to apply the settings.
+    self.showSettings()
+    &lt;&lt; update the configuration settings &gt;&gt;
+    self.setRevertVars()
+    self.hide()</t>
+<t tx="ekr.20041127175318.37">set = c.config.setString
+
+fn = c.frame.body.cget("font")
+font = tkFont.Font(font=fn)
+name,size,slant,weight = self.getFontSettings(font)
+set("body_text_font_family",name)
+set("body_text_font_size",size)
+set("body_text_font_slant",slant)
+set("body_text_font_weight",weight)
+    
+fn = c.frame.log.getFontConfig()
+font = tkFont.Font(font=fn)
+name,size,slant,weight = self.getFontSettings(font)
+set("log_text_font_family",name)
+set("log_text_font_size",size)
+set("log_text_font_slant",slant)
+set("log_text_font_weight",weight)
+    
+font = c.frame.tree.getFont()
+name,size,slant,weight = self.getFontSettings(font)
+set("headline_text_font_family",name)
+set("headline_text_font_size",size)
+set("headline_text_font_slant",slant)
+set("headline_text_font_weight",weight)</t>
+<t tx="ekr.20041127175318.38">def onRevert (self):
+
+    c = self.c
+    c.frame.body.configure(font=self.revertBodyFont)
+    c.frame.log.configureFont(self.revertLogFont)
+    c.frame.tree.setFont (font=self.revertTreeFont)
+    c.redraw()
+    self.revertIvars()
+    # Don't call update here.</t>
+<t tx="ekr.20041127175318.39">def hide (self):
+    
+    """Hide the font panel."""
+
+    self.top.withdraw()</t>
+<t tx="ekr.20041127175318.40"></t>
+<t tx="ekr.20041127175318.41">@ Returns a font corresponding to present visual state of the font panel.  As a benign side effect, this routine selects the font in the list box.
+
+Alas, the selection in the list box may have been cleared.  In that case, we must figure out what it should be. We recreate the family name (and only the family name!) from self.last_selected_font, or in an emergency the font returned from getImpliedFont().
+@c
+
+def getActiveFont (self):
+
+    box = self.family_list_box
+    family = font = None
+
+    # Get the family name if possible, or font otherwise.
+    items = box.curselection()
+    if len(items) == 0:
+        # Nothing selected.
+        if self.last_selected_font:
+            font =self.last_selected_font
+        else:
+            font = self.getImpliedFont()
+    else:
+        try: # This shouldn't fail now.
+            items = map(int, items)
+            family = box.get(items[0])
+        except:
+            g.es("unexpected exception")
+            g.es_exception()
+            font = self.getImpliedFont()
+    # At this point we either have family or font.
+    assert(font or family)
+    if not family:
+        # Extract the family from the computed font.
+        family,junk,junk,junk = self.getFontSettings(font)
+    # At last we have a valid family name!
+    # Get all other font settings from the font panel.
+    bold = self.boldVar.get()
+    ital = self.italVar.get()
+    size = self.sizeVar.get()
+    # g.trace(size)
+    slant=g.choose(ital,"italic","roman")
+    weight=g.choose(bold,"bold","normal")
+    # Compute the font from all the settings.
+    font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
+    self.selectFont(font)
+    return font</t>
+<t tx="ekr.20041127175318.42">def getFontSettings (self, font):
+
+    name   = font.cget("family")
+    size   = font.cget("size")
+    slant  = font.cget("slant")
+    weight = font.cget("weight")
+
+    return name, size, slant, weight</t>
+<t tx="ekr.20041127175318.43"># If a single pane's checkbox is checked, select that pane's present font.
+# Otherwise, select the present font of some checked pane, it doesn't much matter which.
+# If none are check, select the body pane's present font.
+
+def getImpliedFont (self):
+
+    c = self.c
+
+    body = self.bodyVar.get()
+    log  = self.logVar.get()
+    tree = self.treeVar.get()
+    
+    fn = c.frame.body.cget("font")
+    bodyFont = tkFont.Font(font=fn)
+    fn = c.frame.log.getFontConfig()
+    logFont = tkFont.Font(font=fn)
+    treeFont = c.frame.tree.getFont()
+    
+    if log and not body and not tree:
+        font = logFont
+    elif tree and not body and not log:
+        font = treeFont
+    elif body: font = bodyFont
+    elif tree: font = treeFont
+    elif log:  font = logFont # Exercise for the reader: prove this case will never happen.
+    else:      font = bodyFont
+    return font</t>
+<t tx="ekr.20041127175318.44">def revertIvars (self):
+    
+    c = self.c
+    # Revert the fonts themselves in the various panes.
+    font = self.revertBodyFont
+    c.frame.body.configure(font=font)
+    font = self.revertLogFont
+    c.frame.log.configureFont(font)
+    font = self.revertTreeFont
+    c.frame.tree.setFont(font=font)
+    # Revert the setting of the items in the font panel
+    self.last_selected_font = None # Use the font for the selected panes.
+    font = self.getImpliedFont()
+    self.selectFont(font)
+    try:
+        name, size, slant, weight = self.getFontSettings(font)
+        size=int(size)
+    except: pass
+
+    self.sizeVar.set(size)
+    self.boldVar.set(g.choose(weight=="bold",1,0))
+    self.italVar.set(g.choose(slant=="italic",1,0))
+    
+    e = self.size_entry
+    e.delete(0,"end")
+    e.insert(0,str(size))</t>
+<t tx="ekr.20041127175318.45"># Note that just after a revert all three setting may be different.
+
+def showSettings (self):
+    
+    """Write all font settings to the log panel."""
+
+    c = self.c
+    g.es("---------------")
+    # Body pane.
+    fn = c.frame.body.cget("font")
+    font = tkFont.Font(font=fn)
+    name,size,slant,weight = self.getFontSettings(font)
+    g.es("body font:",name,size,slant,weight)
+    # Log pane.
+    fn = c.frame.log.getFontConfig()
+    font = tkFont.Font(font=fn)
+    name,size,slant,weight = self.getFontSettings(font)
+    g.es("log font:",name,size,slant,weight)
+    # Tree pane.
+    font = c.frame.tree.getFont()
+    name,size,slant,weight = self.getFontSettings(font)
+    g.es("headline font:",name,size,slant,weight)</t>
+<t tx="ekr.20041127175318.46">def update (self,event=None):
+    
+    """Update the body text to show the present settings."""
+    
+    c = self.c
+    size = self.sizeVar.get()
+    &lt;&lt; insert the new text in the size box &gt;&gt;
+    activeFont = self.getActiveFont()
+    bodyChecked = self.bodyVar.get()
+    logChecked = self.logVar.get()
+    treeChecked = self.treeVar.get()
+
+    if not bodyChecked and not logChecked and not treeChecked:
+        g.es("no pane selected")
+        return
+
+    # c.frame.body.configure(setgrid=0) # Disable body resizes.
+    c.beginUpdate()
+    &lt;&lt; set the fonts in all panes &gt;&gt;
+    c.endUpdate()
+    # c.frame.body.configure(setgrid=1) # Enable body resizes.
+
+    self.top.deiconify()
+    self.top.lift()</t>
+<t tx="ekr.20041127175318.47">e = self.size_entry
+e.delete(0,"end")
+e.insert(0,str(size))</t>
+<t tx="ekr.20041127175318.48">font = g.choose(bodyChecked,activeFont,self.revertBodyFont)
+c.frame.body.configure(font=font)
+
+font = g.choose(logChecked,activeFont,self.revertLogFont)
+c.frame.log.configureFont(font)
+
+font = g.choose(treeChecked,activeFont,self.revertTreeFont)
+c.frame.tree.setFont(font=font)</t>
+<t tx="ekr.20041127175454">color = val
+colorNamesList = leoTkinterColorPanels.colorNamesList
+
+# Create organizer frames
+outer = Tk.Frame(f,bd=2,relief="groove")
+outer.pack(fill="both",expand=1)
+
+upper = Tk.Frame(outer)
+upper.pack(fill="both",expand=1)
+
+# A kludge to give vertical space to the listbox!
+spacer = Tk.Frame(upper) 
+spacer.pack(side="right",pady="2i") 
+
+lower = Tk.Frame(outer)
+# padx=20 gives more room to the Listbox!
+lower.pack(padx=40) # Not expanding centers the buttons.
+
+# Create and populate the listbox.
+self.box = box = Tk.Listbox(upper) # height doesn't seem to work.
+## box.bind("&lt;Double-Button-1&gt;", self.onApply)
+
+if color not in colorNamesList:
+    box.insert(0,color)
+    
+names = list(colorNamesList) # It's actually a tuple.
+names.sort()
+for name in names:
+    box.insert("end",name)
+
+bar = Tk.Scrollbar(box)
+bar.pack(side="right", fill="y")
+box.pack(padx=2,pady=2,expand=1,fill="both")
+
+bar.config(command=box.yview)
+box.config(yscrollcommand=bar.set)
+    
+# Create the row of buttons.
+if 0:
+    for text,command in (
+        ("OK",self.onOk),
+        ("Cancel",self.onCancel),
+        ("Revert",self.onRevert),
+        ("Apply",self.onApply) ):
+            
+        b = Tk.Button(lower,text=text,command=command)
+        b.pack(side="left",pady=6,padx=4)</t>
 </tnodes>
 </leo_file>

@@ -51,7 +51,24 @@ class tkinterGui(leoGui.leoGui):
     
         """Create a hidden Tk root window."""
     
-        self.root = root = Tix.Tk() # Was Tk.Tk.
+        if 0: # Use Tix.
+            self.root = root = Tix.Tk()
+            #@        << fix problems with menus (XP) >>
+            #@+node:ekr.20041125050302:<< fix problems with menus (XP) >>
+            try:
+                import WmDefault
+                WmDefault.setup(root)
+                d = {'activebackground':'DarkBlue','activeforeground':'white'} # works
+                # d = {'activebackground':'','activeforeground':''} # doesn't work
+                WmDefault.addoptions(root,d)
+            except ImportError:
+                g.trace("can not import WMDefault")
+            #@nonl
+            #@-node:ekr.20041125050302:<< fix problems with menus (XP) >>
+            #@nl
+        else: # Use Tkinter.
+            self.root = root = Tk.Tk()
+    
         root.title("Leo Main Window")
         root.withdraw()
         

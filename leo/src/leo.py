@@ -128,7 +128,7 @@ You may download Python from http://python.org/download/
         return False
 #@nonl
 #@-node:ekr.20031218072017.1936:isValidPython
-#@+node:ekr.20041124083125:completeFileName
+#@+node:ekr.20041124083125:completeFileName (leo.py)
 def completeFileName (fileName):
     
     import leoGlobals as g
@@ -138,14 +138,17 @@ def completeFileName (fileName):
         
     # This does not depend on config settings.
     fileName = g.os_path_join(os.getcwd(),fileName)
-    fileName = g.os_path_normabs(fileName)
+
+    if 0: # Do _not_ convert to lower case.  We want to preserve case for the window name.
+        fileName = g.os_path_norm(fileName)
+
     head,ext = g.os_path_splitext(fileName)
     if not ext:
         fileName = fileName + ".leo"
 
     return fileName
 #@nonl
-#@-node:ekr.20041124083125:completeFileName
+#@-node:ekr.20041124083125:completeFileName (leo.py)
 #@+node:ekr.20041117155521:computeGlobalConfigDir
 def computeGlobalConfigDir():
     

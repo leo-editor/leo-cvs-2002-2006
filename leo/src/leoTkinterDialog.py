@@ -111,6 +111,8 @@ class leoTkinterDialog:
         
         """Create the Tk.Toplevel widget for a leoTkinterDialog."""
         
+        # g.trace("leoTkinterDialog")
+        
         self.root = g.app.root
     
         self.top = Tk.Toplevel(self.root)

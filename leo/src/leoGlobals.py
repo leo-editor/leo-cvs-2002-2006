@@ -1105,6 +1105,17 @@ def pause (s):
         i += 1
 #@nonl
 #@-node:ekr.20031218072017.3128:pause
+#@+node:ekr.20041126060136:print_dict
+def print_dict(d):
+    
+    keys = d.keys()
+    keys.sort()
+    for key in keys:
+        print key, d.get(key)
+    
+printDict = print_dict
+#@nonl
+#@-node:ekr.20041126060136:print_dict
 #@+node:ekr.20041122153823:print_stack
 def print_stack():
     
@@ -1521,12 +1532,14 @@ def sanitize_filename(s):
     return result [:128]
 #@nonl
 #@-node:ekr.20031218072017.3124:sanitize_filename
-#@+node:ekr.20031218072017.3125:shortFileName
+#@+node:ekr.20031218072017.3125:shortFileName & shortFilename
 def shortFileName (fileName):
     
     return g.os_path_basename(fileName)
+    
+shortFilename = shortFileName
 #@nonl
-#@-node:ekr.20031218072017.3125:shortFileName
+#@-node:ekr.20031218072017.3125:shortFileName & shortFilename
 #@+node:ekr.20031218072017.1241:update_file_if_changed
 def update_file_if_changed(file_name,temp_name):
 
@@ -1852,7 +1865,7 @@ def cantImport (s,moduleName=""):
 
 def doHook(tag,*args,**keywords):
     
-    if g.app.killed or g.app.hookError:
+    if g.app.killed or g.app.hookError or (g.app.gui and g.app.gui.isNullGui):
         return None
     
     # New in 4.2.  We call the idle-time handlers for all open windows.
@@ -3916,7 +3929,7 @@ class nullObject:
     def __setattr__(self,attr,val): return self
 #@nonl
 #@-node:ekr.20031219074948.1:class nullObject
-#@+node:ekr.20031218072017.3103:g,computeWindowTitle
+#@+node:ekr.20031218072017.3103:g.computeWindowTitle
 def computeWindowTitle (fileName):
 
     if fileName == None:
@@ -3929,8 +3942,8 @@ def computeWindowTitle (fileName):
             title = fn
         return title
 #@nonl
-#@-node:ekr.20031218072017.3103:g,computeWindowTitle
-#@+node:ekr.20031218072017.3138:g,executeScript
+#@-node:ekr.20031218072017.3103:g.computeWindowTitle
+#@+node:ekr.20031218072017.3138:g.executeScript
 def executeScript (name):
     
     """Execute a script whose short python file name is given"""
@@ -3950,8 +3963,8 @@ def executeScript (name):
     if theFile:
         theFile.close()
 
-#@-node:ekr.20031218072017.3138:g,executeScript
-#@+node:ekr.20031218072017.3126:g,funcToMethod
+#@-node:ekr.20031218072017.3138:g.executeScript
+#@+node:ekr.20031218072017.3126:g.funcToMethod
 #@+at 
 #@nonl
 # The following is taken from page 188 of the Python Cookbook.
@@ -3974,8 +3987,8 @@ def funcToMethod(f,theClass,name=None):
     setattr(theClass,name or f.__name__,f)
     # g.trace(name)
 #@nonl
-#@-node:ekr.20031218072017.3126:g,funcToMethod
-#@+node:ekr.20031218072017.2278:g,importFromPath
+#@-node:ekr.20031218072017.3126:g.funcToMethod
+#@+node:ekr.20031218072017.2278:g.importFromPath
 #@+at 
 #@nonl
 # Warning:
@@ -4019,7 +4032,7 @@ def importFromPath (name,path,verbose=False):
 
     return result
 #@nonl
-#@-node:ekr.20031218072017.2278:g,importFromPath
+#@-node:ekr.20031218072017.2278:g.importFromPath
 #@+node:ekr.20031218072017.3144:g,makeDict
 # From the Python cookbook.
 

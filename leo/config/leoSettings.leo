@@ -104,8 +104,8 @@
 </v>
 </v>
 <v t="ekr.20041119034357.20"><vh>@page Find/Change panel</vh>
-<v t="ekr.20041119050105.1"><vh>@string change_string = None</vh></v>
-<v t="ekr.20041119050105.2"><vh>@string find_string = None</vh></v>
+<v t="ekr.20041119050105.1"><vh>@string change_text = None</vh></v>
+<v t="ekr.20041119050105.2"><vh>@string find_text = None</vh></v>
 <v t="ekr.20041119050105.3"><vh>Checkboxes</vh>
 <v t="ekr.20041119050105.4"><vh>@bool batch = False</vh></v>
 <v t="ekr.20041119050105.5"><vh>@bool ignore_case = False</vh></v>
@@ -128,7 +128,7 @@
 <v t="ekr.20041120152900.2"><vh>@bool script_search = None</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.28"><vh>@page Preferences panel (done)</vh>
+<v t="ekr.20041119034357.28"><vh>@page Preferences panel</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
 <v t="ekr.20041119034357.30"><vh>@language default_target_language = Python</vh></v>
 <v t="ekr.20041119034357.31"><vh>@int tab_width = -4</vh></v>
@@ -139,14 +139,14 @@
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.21" a="TV"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20041119034357.21" a="E"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
 <v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
 <v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
 <v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
 <v t="ekr.20041119034357.27"><vh>@shortcuts override defaults</vh></v>
-<v t="ekr.20041119054938"><vh>@ignore No shortcut specified</vh></v>
+<v t="ekr.20041119054938" a="TV"><vh>@shortcuts No shortcut specified</vh></v>
 </v>
 <v t="ekr.20041119034357.70" a="E"><vh>Syntax coloring</vh>
 <v t="ekr.20041119034357.71"><vh>@page syntax coloring options</vh>

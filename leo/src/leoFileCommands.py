@@ -640,18 +640,18 @@ class baseFileCommands:
                 tref = self.canonicalTnodeIndex(gnx)
                 t = self.tnodesDict.get(tref)
                 if t: t.unknownAttributes = resultDict[gnx]
-                else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+                # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
                     
         marks = {} ; expanded = {}
         for gnx in self.descendentExpandedList:
             t = self.tnodesDict.get(gnx)
             if t: expanded[t]=t
-            else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
             
         for gnx in self.descendentMarksList:
             t = self.tnodesDict.get(gnx)
             if t: marks[t]=t
-            else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
         
         if marks or expanded:
             # g.trace("marks",len(marks),"expanded",len(expanded))
@@ -662,7 +662,6 @@ class baseFileCommands:
                         # There was a big performance bug in the mark hook in the Node Navigator plugin.
                 if expanded.get(p.v.t):
                     p.expand()
-            # g.trace("done")
         #@nonl
         #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
         #@nl
@@ -1481,7 +1480,7 @@ class baseFileCommands:
                 marks.append(p.copy())
             if p.hasChildren() and p.isExpanded() and not p in expanded:
                 expanded.append(p.copy())
-                
+    
         for theList,tag in ((marks,"marks="),(expanded,"expanded=")):
             if theList:
                 sList = []

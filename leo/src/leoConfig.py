@@ -901,7 +901,7 @@ class parserBaseClass:
                     path2 = None ; theType2,values2 = data
                 else:
                     path2,theType2,values2 = data
-                if c.mFileName != path2:
+                if g.os_path_normabs(c.mFileName) != g.os_path_normabs(path2):
                     g.es("over-riding @type %s from %s" % (name,path2), color="red")
             else:
                 # g.trace("defining @type %s = (%s,%s)" % (name,repr(theType),repr(values)))
@@ -940,9 +940,9 @@ class parserBaseClass:
                 # name is everything up to '='
                 j = s.find('=',i)
                 if j == -1:
-                    name = self.munge(s[i:])
+                    name = s[i:]
                 else:
-                    name = self.munge(s[i:j])
+                    name = s[i:j]
                     # val is everything after the '='
                     val = s[j+1:].strip()
     
@@ -1021,7 +1021,7 @@ class parserBaseClass:
         if data:
             if len(data) == 2: path2 = None
             else: path2 = data[0]
-            if c.mFileName != path2:
+            if g.os_path_normabs(c.mFileName) != g.os_path_normabs(path2):
                 g.es("over-riding setting: %s from %s" % (name,path2))
     
         # N.B.  We can't use c here: it may not exist later.
@@ -1094,9 +1094,11 @@ class settingsTreeParser (parserBaseClass):
         """Init any settings found in node p."""
         
         # g.trace(p.headString())
+        
+        munge = g.app.config.munge
     
         kind,name,val = self.parseHeadline(p.headString())
-        kind = g.app.config.canonicalizeSettingName(kind)
+        kind = munge(kind)
     
         if kind == "settings":
             pass

@@ -15,6 +15,9 @@ class baseLeoImportCommands:
     
         self.c = c
         
+        # New in 4.3: honor any tabwidth directive in effect when importing files.
+        self.tabwidth = c.tab_width
+    
         # Set by ImportFilesFommand.
         self.treeType = "@file" # "@root" or "@file"
         # Set by ImportWebCommand.
@@ -32,6 +35,7 @@ class baseLeoImportCommands:
         # Used by Importers.
         self.web_st = []
         self.encoding = g.app.tkEncoding # 2/25/03: was "utf-8"
+    #@nonl
     #@-node:ekr.20031218072017.3207:import.__init__
     #@+node:ekr.20031218072017.3209:Import
     #@+node:ekr.20031218072017.3210:createOutline
@@ -95,12 +99,23 @@ class baseLeoImportCommands:
         return v
     #@nonl
     #@-node:ekr.20031218072017.3210:createOutline
+    #@+node:ekr.20041126042730:getTabWidth
+    def getTabWidth (self):
+        
+        d = g.scanDirectives(self.c)
+        w = d.get("tabwidth")
+        if w not in (0,None):
+            return w
+        else:
+            return self.c.tab_width
+    #@nonl
+    #@-node:ekr.20041126042730:getTabWidth
     #@+node:ekr.20031218072017.1810:importDerivedFiles
     def importDerivedFiles (self,parent,paths):
         
         c = self.c ; at = c.atFileCommands
         current = c.currentVnode()
-        
+        self.tab_width = self.getTabWidth() # New in 4.3.
         c.beginUpdate()
         
         for fileName in paths:
@@ -142,6 +157,7 @@ class baseLeoImportCommands:
         v = current = c.currentVnode()
         if current == None: return
         if len(files) < 1: return
+        self.tab_width = self.getTabWidth() # New in 4.3.
         self.treeType = treeType
         c.beginUpdate()
         if 1: # range of update...
@@ -399,6 +415,7 @@ class baseLeoImportCommands:
         c = self.c ; current = c.currentVnode()
         if current == None: return
         if not files: return
+        self.tab_width = self.getTabWidth() # New in 4.3.
         self.webType = webType
     
         c.beginUpdate()
@@ -901,6 +918,7 @@ class baseLeoImportCommands:
     
         """Creates a child node c of parent for the class, and children of c for each def in the class."""
     
+        # g.trace("self.tab_width",self.tab_width)
         # g.trace(g.get_line(s,i))
         classIndent = self.getLeadingIndent(s,i)
         #@    << set classname and headline, or return i >>
@@ -953,7 +971,8 @@ class baseLeoImportCommands:
         #@+node:ekr.20031218072017.2260:<< create nodes for all defs of the class >>
         indent =  self.getLeadingIndent(s,i)
         start = i = g.skip_blank_lines(s,i)
-        parent_vnode = None # 7/6/02
+        parent_vnode = None
+        # g.trace(classIndent)
         while i < len(s) and indent > classIndent:
             progress = i
             if g.is_nl(s,i):
@@ -1039,6 +1058,8 @@ class baseLeoImportCommands:
         defIndent = self.getLeadingIndent(s,start)
         i = g.skip_line(s,i) # Skip the def line.
         indent = self.getLeadingIndent(s,i)
+        #g.trace(defIndent,indent)
+        #g.trace(g.get_line(s,i))
         while i < len(s) and indent > defIndent:
             progress = i
             ch = s[i]
@@ -2833,7 +2854,7 @@ class baseLeoImportCommands:
             if g.is_nl(s,j) or g.match(s,j,"#"): # Bug fix: 2/14/03
                 i = g.skip_line(s,i) # ignore blank lines and comment lines.
             else:
-                i, width = g.skip_leading_ws_with_indent(s,i,c.tab_width)
+                i, width = g.skip_leading_ws_with_indent(s,i,self.tab_width)
                 # g.trace("returns:",width)
                 return width
         # g.trace("returns:0")
@@ -3103,7 +3124,7 @@ class baseLeoImportCommands:
             j = i ; i = g.skip_line(s,i) # don't use get_line: it is only for dumping.
             line = s[j:i]
             # g.trace(line)
-            line = g.removeLeadingWhitespace(line,undent,c.tab_width)
+            line = g.removeLeadingWhitespace(line,undent,self.tab_width)
             result += line
         return result
     #@nonl

@@ -43,7 +43,7 @@ class baseCommands:
     #@+node:ekr.20031218072017.2812:c.__init__
     def __init__(self,frame,fileName):
     
-        c = self ; c.frame = frame ; c.mFileName = g.os_path_normabs(fileName)
+        c = self ; c.frame = frame ; c.mFileName = g.os_path_norm(fileName)
     
         # g.trace(c) # Do this after setting c.mFileName.
         c.initIvars()

@@ -566,6 +566,7 @@ class leoTkinterTree (leoFrame.leoTree):
         pList.append((p,t,theId),)
         self.visibleText[key] = pList
     
+        # g.trace(p,t)
         return t
     #@nonl
     #@-node:ekr.20040803072955.11:newText
@@ -1158,7 +1159,7 @@ class leoTkinterTree (leoFrame.leoTree):
             g.trace("**** gen: %3d positions: %5d +%4d" % (
                 self.generation,g.app.positions,delta))
         self.prevPositions = g.app.positions
-        
+    
         if c.hoistStack:
             p,junk = c.hoistStack[-1]
             self.drawTree(p,self.root_left,self.root_top,0,0,hoistFlag=True)
@@ -1197,6 +1198,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 y = self.drawTree(p.firstChild(),x+indent,y,h,level+1)
             if hoistFlag: break
             else:         p = p.next()
+            # g.trace(p)
             
         # Draw the vertical line.
         if level==0: # Special case to get exposed first line exactly right.
@@ -1255,7 +1257,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
     def redraw_now (self,scroll=True):
         
-        # Bug fix: 4/24/04: cancel any pending redraw "by hand".
+        # Bug fix: Cancel any pending redraw "by hand".
         # Make _sure_ that no other redraws take place after this.
         self.disableRedraw = True
         self.canvas.update_idletasks()
@@ -2775,6 +2777,8 @@ class leoTkinterTree (leoFrame.leoTree):
     def expandAllAncestors (self,p):
         
         redraw_flag = False
+        
+        # g.trace(p)
     
         for p in p.parents_iter():
             if not p.isExpanded():

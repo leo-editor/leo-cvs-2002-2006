@@ -1083,10 +1083,14 @@ class baseVnode (object):
     def contract(self):
     
         self.statusBits &= ~ self.expandedBit
+        
+        # g.trace(self.statusBits)
     
     def expand(self):
     
         self.statusBits |= self.expandedBit
+        
+        # g.trace(self.statusBits)
     
     def initExpandedBit (self):
     

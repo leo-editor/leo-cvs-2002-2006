@@ -14450,7 +14450,12 @@ def createRootWindow(self):
 
     """Create a hidden Tk root window."""
 
-    self.root = root = Tk.Tk()
+    if 0: # Use Tix.
+        self.root = root = Tix.Tk()
+        << fix problems with menus (XP) >>
+    else: # Use Tkinter.
+        self.root = root = Tk.Tk()
+
     root.title("Leo Main Window")
     root.withdraw()
     
@@ -14499,6 +14504,17 @@ def getDefaultConfigFont(self,config):
     config.defaultFontFamily = font.cget("family")
 #@nonl
 #@-node:ekr.20031218072017.2186:tkGui.getDefaultConfigFont
+#@+node:ekr.20041125050302:<< fix problems with menus (XP) >>
+try:
+    import WmDefault
+    WmDefault.setup(root)
+    d = {'activebackground':'DarkBlue','activeforeground':'white'} # works
+    # d = {'activebackground':'','activeforeground':''} # doesn't work
+    WmDefault.addoptions(root,d)
+except ImportError:
+    g.trace("can not import WMDefault")
+#@nonl
+#@-node:ekr.20041125050302:<< fix problems with menus (XP) >>
 #@-node:ekr.20031218072017.4049:createRootWindow & allies
 #@-node:ekr.20041028161201:(Investigated Initing Pmw & Tk)
 #@+node:ekr.20041029111407:(Added support for g.app.debugSwitch in es_exception)

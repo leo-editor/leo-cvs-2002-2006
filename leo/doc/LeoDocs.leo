@@ -5,12 +5,8 @@
 	<global_window_position top="24" left="270" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences>
-</preferences>
-<find_panel_settings>
-	<find_string></find_string>
-	<change_string></change_string>
-</find_panel_settings>
+<preferences/>
+<find_panel_settings/>
 <vnodes>
 <v t="edream.110203163054"><vh>Short summary</vh></v>
 <v t="edream.110203163054.1"><vh>About Leo's panes and icons (for newbies)</vh>
@@ -22,7 +18,7 @@
 </v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
-<v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
+<v t="edream.110203163054.8" a="TV"><vh>What people are saying about Leo</vh>
 <v t="edream.110203163054.15"><vh> Open Software award nominations</vh></v>
 <v t="edream.110203163054.14"><vh> Speed Ream's slashdot article (Why Leo is interesting)</vh></v>
 <v t="edream.110203163054.16"><vh>Alex Abacus</vh></v>
@@ -36,6 +32,7 @@
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 <v t="edream.110203163054.25"><vh>Dave Hein</vh></v>
 <v t="edream.110203163054.33"><vh>David McNab</vh></v>
+<v t="ekr.20041126102621"><vh>e</vh></v>
 <v t="edream.110203163054.22"><vh>F. Geiger</vh></v>
 <v t="ekr.20040828084113"><vh>Ian Mulvany</vh></v>
 <v t="edream.110203163054.43"><vh>Jim Vickroy</vh></v>
@@ -1231,7 +1228,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
+<v t="EKR.20040524104904"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1591,7 +1588,7 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
 <v t="EKR.20040524104904.212"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="EKR.20040524104904.213" a="E"><vh>Using plugins and hooks</vh>
 <v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
@@ -1608,7 +1605,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.223" a="TV"><vh>About hooks</vh></v>
+<v t="EKR.20040524104904.223"><vh>About hooks</vh></v>
 <v t="EKR.20040524104904.224"><vh>SECURITY WARNINGS</vh>
 <v t="EKR.20040524104904.225"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="EKR.20040524104904.226"><vh>NEVER use this kind of code in a hook!!</vh></v>
@@ -15574,6 +15571,53 @@ the node you're moving, but the first editor will stay focused on the main node.
 Phew!! It's a lot easier to DO than to DESCRIBE! 8-D 
  
 --Rich Ries
+</t>
+<t tx="ekr.20041126102621">executeScript and all its manifestations, make 
+Leo the only sensible approach for coding anymore.
+it hasn't been a close call for me in quite awhile.
+you may as well be dropping back to edline or wordstar
+to use anything other than Leo. (blast from the past)
+no need for the interactive intrepreter with its
+improperly handling cut and paste
+or littering the hardrive with one off
+scripts everywhere to get some little job done.
+"... the most interesting?" kind of like asking which
+you would rather have, fire or water, you need both.
+Leo is the most interesting precicely because it allows
+you to explore the rest of the landscape in ways that
+are impossible to imagine with traditional tools.
+one day there will be an openGL first person shooter plugin for Leo and nodes
+will be 3D and sort by gravity.
+things can get allot more interesting. 
+daily python gets maybe 30% of what is happening.
+some projects go many months between announcements.
+
+ I've been using Leo for just over 2 years now 
+and programming in python nearly 2 minutes longer.
+I've used every dos version back to 2.0 when it was new. beta version of unix
+srvIV w/cfront.
+and used and owned computers before there was a Mac or IBM. I have managed not
+to learn emacs at some
+consious cost in productivity but I am free now. 
+nothing to unlearn.
+the one common theme in the past 25 years is all the editors, you need them,
+they get more complicated,
+require more diskspace and CPU power.
+I don't ever recall this many people getting excited 
+about what is after all editing and presenting text 
+with an embeded language.
+is python and Leo really that interesting?
+yea, probably. I do a very serious reality check once
+in a while and the conclusion is that I am awake.
+who knows, python might be no better in the long
+run then BASIC was for its day. higher than assmbler.
+as python is higher than c but not so far its invisable.
+
+but thanks Ed! had I not found Leo, it is doubtful I
+would have found python at just the opertune time.
+inertia would have kept me thinking c or javascript/java
+was the answer.
+if I could just learn how to tame the beast.
 </t>
 </tnodes>
 </leo_file>

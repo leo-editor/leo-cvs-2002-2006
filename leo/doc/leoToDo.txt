@@ -3,6 +3,15 @@
 #@@nocolor
 
 #@+all
+#@+node:ekr.20041126102902:(Handle blanks better in imports)
+@
+
+- Add tab_width keyword arg to import command.
+- Convert tabs to blanks if tab width < 0.
+#@nonl
+#@-node:ekr.20041126102902:(Handle blanks better in imports)
+#@+node:ekr.20041126102946:(Use pyclbr to parse Python imports)
+#@-node:ekr.20041126102946:(Use pyclbr to parse Python imports)
 #@+node:EKR.20040609091327:To do: 4.3
 #@+node:ekr.20041018195347:Docs
 #@+node:ekr.20041018195347.1:Improve MacOS Docs
@@ -4694,17 +4703,6 @@ does nothing for readability in plain text.
 #@-node:ekr.20041022083226.3:Better windows
 #@-node:ekr.20040329182535.7:1 hour to 1 day projects
 #@+node:ekr.20040329182535.3:2 day to 2 week projects
-#@+node:ekr.20041007081134:* Convert Leo to Tix
-http://sourceforge.net/forum/message.php?msg_id=2792402
-By: nobody
-
-- Pmw plays ok with Tix.
-
-- It seems that Tix and Tk can play ok together but the first Toplevel must be
-derived from Tix. Something must happen during that initial creation that sets
-things up. If Tkinter.Tk() is done first, it appears all bets are off.
-#@nonl
-#@-node:ekr.20041007081134:* Convert Leo to Tix
 #@+node:ekr.20040329182535.4:Leo + zodb
 #@+node:ekr.20041002151816:ZODB docs
 #@+node:ekr.20041002151816.1:What is the ZODB?
