@@ -73,7 +73,7 @@ class undoer:
 		
 		# Ivars to transition to new undo scheme...
 		
-		self.debug = true # true: enable debugging code in new undo scheme.
+		self.debug = false # true: enable debugging code in new undo scheme.
 		self.debug_print = false # true: enable print statements in debug code.
 		self.new_undo = true # true: enable new debug code.
 		
@@ -411,6 +411,9 @@ class undoer:
 				s1 = string.join(old_middle_lines,'\n')
 				s2 = string.join(new_middle_lines,'\n')
 				self.new_mem += len(s1) + len(s2)
+			else:
+				u.oldText = None
+				u.newText = None
 		else:
 			u.oldText = oldText
 			u.newText = newText
@@ -642,11 +645,10 @@ class undoer:
 						u.v,u.leading,u.trailing,
 						u.newMiddleLines,u.oldMiddleLines,
 						u.newNewlines,u.oldNewlines,
-						tag="redo",
-						expectedStart =u.oldText,
-						expectedResult=u.newText)
+						tag="redo")
 				if u.newSel:
-					c.body.mark_set("insert",u.newSel)
+					start,end=u.newSel
+					setTextSelection (c.frame.body,start,end)
 				if u.yview:
 					first,last=u.yview
 					c.body.yview("moveto",first)
@@ -897,10 +899,10 @@ class undoer:
 						u.v,u.leading,u.trailing,
 						u.oldMiddleLines,u.newMiddleLines,
 						u.oldNewlines,u.newNewlines,
-						expectedStart =u.newText,
-						expectedResult=u.oldText)
+						tag="undo")
 				if u.oldSel:
-					c.body.mark_set("insert",u.oldSel)
+					start,end=u.oldSel
+					setTextSelection (c.frame.body,start,end)
 				if u.yview:
 					first,last=u.yview
 					c.body.yview("moveto",first)
@@ -1061,108 +1063,110 @@ class undoer:
 	# Handle text undo and redo.
 	# The terminology is for undo: converts _new_ text into _old_ text.
 	
-	def undoRedoText (self, v,
+	def undoRedoText (self,v,
 		leading,trailing, # Number of matching leading & trailing lines.
 		oldMidLines,newMidLines, # Lists of unmatched lines.
 		oldNewlines,newNewlines, # Number of trailing newlines.
-		tag="undo", # "undo" or "redo".
-		expectedStart=None,expectedResult=None):
-			# For debugging. The expected starting & result text.
-		
+		tag="undo"): # "undo" or "redo"
+	
 		c = self.commands
 		assert(v == c.currentVnode())
 	
-		if self.new_undo:
-			
-			#@<< Incrementally update the Tk.Text widget >>
-			#@+node:1::<< Incrementally update the Tk.Text widget >>
-			#@+body
-			# Only update the changed lines.
-			mid_text = string.join(oldMidLines,'\n')
-			old_mid_len = len(oldMidLines)
-			new_mid_len = len(newMidLines)
-			# Maybe this could be simplified, and it is good to treat the "end" with care.
-			if trailing == 0:
-				c.frame.body.delete(str(1+leading)+".0","end")
-				if leading > 0:
-					c.frame.body.insert("end",'\n')
-				c.frame.body.insert("end",mid_text)
-			else:
-				if new_mid_len > 0:
-					c.frame.body.delete(str(1+leading)+".0",
-						str(leading+new_mid_len)+".0 lineend")
-				elif leading > 0:
-					c.frame.body.insert(str(1+leading)+".0",'\n')
-				c.frame.body.insert(str(1+leading)+".0",mid_text)
-			# Try to end the Tk.Text widget with oldNewlines newlines.
-			# This may be off by one, and we don't care because
-			# we never use body text to compute undo results!
-			s = c.frame.body.get("1.0","end")
-			newlines = 0 ; i = len(s) - 1
-			while i >= 0 and s[i] == '\n':
-				newlines += 1 ; i -= 1
-			while newlines > oldNewlines:
-				c.frame.body.delete("end-1c")
-				newlines -= 1
-			if oldNewlines > newlines:
-				c.frame.body.insert("end",'\n'*(oldNewlines-newlines))
-			
-			#@-body
-			#@-node:1::<< Incrementally update the Tk.Text widget >>
-
-			
-			#@<< Compute the result using v's body text >>
-			#@+node:2::<< Compute the result using v's body text >>
-			#@+body
-			# Recreate the text using the present body text.
-			body = v.bodyString()
-			body_lines = body.split('\n')
-			s = []
+		
+		#@<< Incrementally update the Tk.Text widget >>
+		#@+node:1::<< Incrementally update the Tk.Text widget >>
+		#@+body
+		# Only update the changed lines.
+		mid_text = string.join(oldMidLines,'\n')
+		old_mid_len = len(oldMidLines)
+		new_mid_len = len(newMidLines)
+		# Maybe this could be simplified, and it is good to treat the "end" with care.
+		if trailing == 0:
+			c.frame.body.delete(str(1+leading)+".0","end")
 			if leading > 0:
-				s.extend(body_lines[:leading])
-			if len(oldMidLines) > 0:
-				s.extend(oldMidLines)
-			if trailing > 0:
-				s.extend(body_lines[-trailing:])
-			s = string.join(s,'\n')
-			# Remove trailing newlines in s.
-			while len(s) > 0 and s[-1] == '\n':
-				s = s[:-1]
-			# Add oldNewlines newlines.
-			if oldNewlines > 0:
-				s = s + '\n' * oldNewlines
-			result = s
-			
+				c.frame.body.insert("end",'\n')
+			c.frame.body.insert("end",mid_text)
+		else:
+			if new_mid_len > 0:
+				c.frame.body.delete(str(1+leading)+".0",
+					str(leading+new_mid_len)+".0 lineend")
+			elif leading > 0:
+				c.frame.body.insert(str(1+leading)+".0",'\n')
+			c.frame.body.insert(str(1+leading)+".0",mid_text)
+		# Try to end the Tk.Text widget with oldNewlines newlines.
+		# This may be off by one, and we don't care because
+		# we never use body text to compute undo results!
+		s = c.frame.body.get("1.0","end")
+		newlines = 0 ; i = len(s) - 1
+		while i >= 0 and s[i] == '\n':
+			newlines += 1 ; i -= 1
+		while newlines > oldNewlines:
+			c.frame.body.delete("end-1c")
+			newlines -= 1
+		if oldNewlines > newlines:
+			c.frame.body.insert("end",'\n'*(oldNewlines-newlines))
+		
+		#@-body
+		#@-node:1::<< Incrementally update the Tk.Text widget >>
+
+		
+		#@<< Compute the result using v's body text >>
+		#@+node:2::<< Compute the result using v's body text >>
+		#@+body
+		# Recreate the text using the present body text.
+		body = v.bodyString()
+		body_lines = body.split('\n')
+		s = []
+		if leading > 0:
+			s.extend(body_lines[:leading])
+		if len(oldMidLines) > 0:
+			s.extend(oldMidLines)
+		if trailing > 0:
+			s.extend(body_lines[-trailing:])
+		s = string.join(s,'\n')
+		# Remove trailing newlines in s.
+		while len(s) > 0 and s[-1] == '\n':
+			s = s[:-1]
+		# Add oldNewlines newlines.
+		if oldNewlines > 0:
+			s = s + '\n' * oldNewlines
+		result = s
+		
+		if self.debug_print:
+			print "body:  ",`body`
+			print "result:",`result`
+		#@-body
+		#@-node:2::<< Compute the result using v's body text >>
+
+		v.t.setTnodeText(result)
+		
+		#@<< Get textResult from the Tk.Text widget >>
+		#@+node:3::<< Get textResult from the Tk.Text widget >>
+		#@+body
+		textResult = c.frame.body.get("1.0","end")
+		if textResult != result:
+			# Remove the newline from textResult if that is the only difference.
+			if len(textResult) > 0 and textResult[:-1] == result:
+				textResult = result
+		#@-body
+		#@-node:3::<< Get textResult from the Tk.Text widget >>
+
+		if textResult == result:
+			c.tree.recolor_range(v,leading,trailing)
+		else: # 11/19/02: # Rewrite the pane and do a full recolor.
 			if self.debug_print:
-				print "body:  ",`body`
-				print "result:",`result`
-			#@-body
-			#@-node:2::<< Compute the result using v's body text >>
+				
+				#@<< print mismatch trace >>
+				#@+node:4::<< print mismatch trace >>
+				#@+body
+				print "undo mismatch"
+				print "expected:",`result`
+				print "actual  :",`textResult`
+				
+				#@-body
+				#@-node:4::<< print mismatch trace >>
 
-			
-			#@<< Compare the result with the expected result >>
-			#@+node:3::<< Compare the result with the expected result >>
-			#@+body
-			if self.debug and expectedResult != result:
-			
-				print "----- result computed using Tk.Text != expectedResult in", tag
-				print "expected:",`expectedResult`
-				print "actual  :",`s`
-			
-				#print "newMidLines",new_mid_len,`newMidLines`
-				#print "oldMidLines",old_mid_len,`oldMidLines`
-				#print "midText",`mid_text`
-			#@-body
-			#@-node:3::<< Compare the result with the expected result >>
-
-			v.t.setTnodeText(result)
-			if 1: # A bit of protection in case the trailing newline doesn't match.
-				c.tree.recolor_range(v,leading,trailing)
-			else:
-				c.tree.recolor(v,incremental=true)
-	
-		else: # Rewrite the body pane and do a full recolor.
-			v.setBodyStringOrPane(expectedResult)
+			v.setBodyStringOrPane(result)
 	#@-body
 	#@-node:5::undoRedoText
 	#@+node:6::undoSortChildren

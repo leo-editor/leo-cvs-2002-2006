@@ -754,13 +754,16 @@ class leoTree:
 	def onBodyWillChange (self,v,undoType):
 		c = self.commands
 		if not v: v = c.currentVnode()
-		oldSel = c.body.index("insert") # trace(`oldSel`)
+		first,last = getTextSelection(c.body)
+		oldSel = (first,last) # trace(`oldSel`)
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,undoType)
 	
 	# Bound to any key press..
 	def OnBodyKey (self,event):
 		c = self.commands ; v = c.currentVnode() ; ch = event.char
-		oldSel = c.body.index("insert") # trace(`oldSel`)
+		first,last = getTextSelection(c.body)
+		oldSel = (first,last)
+		# if ch and len(ch)>0: trace(`oldSel`)
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
 	
 	# Does the real work of updating the body pane.
@@ -775,6 +778,8 @@ class leoTree:
 			return "break" # The hook claims to have handled the event.
 		body = v.bodyString()
 		s = c.body.get("1.0", "end")
+		first,last = getTextSelection(c.body)
+		newSel = (first,last)
 		# Do nothing for control characters...
 		if (ch == None or len(ch) == 0):
 			if s == body:
@@ -807,9 +812,9 @@ class leoTree:
 			# trace("false: no newline to remove")
 			removeTrailing = false
 		elif len(old) == 0:
-			# Ambigous case.  Assume the newline is real.
+			# Ambigous case.
 			# trace("false: empty old")
-			removeTrailing = false
+			removeTrailing = ch != '\n' # false
 		elif old == new[:-1]:
 			# A single trailing character has been added.
 			# trace("false: only changed trailing.)
@@ -820,6 +825,8 @@ class leoTree:
 			# So at worst we have misreprented the user's intentions slightly.
 			# trace("true")
 			removeTrailing = true
+			
+		# trace(`ch`+","+`removeTrailing`)
 		
 		
 		#@-body
@@ -862,7 +869,6 @@ class leoTree:
 		#@-node:5::<< Make sure body is valid in the encoding >>
 
 		# trace(`ch`)
-		newSel = c.body.index("insert")
 		if ch == '\r' or ch == '\n':
 			
 			#@<< Do auto indent >>
@@ -1598,10 +1604,11 @@ class leoTree:
 		if old_body != s:
 			body.delete("1.0","end")
 			body.insert("1.0",s)
-			# Make sure what we get is what we expect.
-			s2 = body.get("1.0","end")
-			if s == s2[:-1]:
-				body.delete("end-1c")
+			if 0: # This is too drastic.
+				# Make sure what we get is what we expect.
+				s2 = body.get("1.0","end")
+				if s == s2[:-1]:
+					body.delete("end-1c")
 	
 		# We must do a full recoloring: we may be changing context!
 		self.recolor_now(v)
