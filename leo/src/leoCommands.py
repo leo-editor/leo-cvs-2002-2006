@@ -2497,7 +2497,8 @@ class baseCommands:
 		if not newNode: return
 		c.endEditing()# Make sure we capture the headline for Undo.
 		c.beginUpdate()
-		v.setDirtyDeleted() # 8/3/02: Mark @file nodes dirty for all clones in subtree.
+		# v.setDirtyDeleted() # 8/3/02: Mark @file nodes dirty for all clones in subtree.
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		# Reinsert v after back, or as the first child of parent, or as the root.
 		c.undoer.setUndoParams(op_name,v,select=newNode)
 		v.doDelete(newNode) # doDelete destroys dependents.
@@ -2524,7 +2525,8 @@ class baseCommands:
 			v.createDependents() # To handle effects of clones.
 			c.selectVnode(v)
 			c.editVnode(v)
-			v.setDirty() # Essential in Leo2.
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			c.setChanged(true)
 		c.endUpdate()
 	#@nonl
@@ -2537,7 +2539,8 @@ class baseCommands:
 		c.beginUpdate()
 		clone = v.clone(v)
 		c.initAllCloneBitsInTree(v) # 10/14/03
-		clone.setDirty() # essential in Leo2
+		# clone.setDirty() # essential in Leo2
+		clone.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.setChanged(true)
 		if c.validateOutline():
 			c.selectVnode(clone)
@@ -2633,7 +2636,8 @@ class baseCommands:
 		c.beginUpdate()
 		c.endEditing()
 		v.sortChildren()
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.setChanged(true)
 		c.endUpdate()
 		
@@ -2660,7 +2664,8 @@ class baseCommands:
 			c.beginUpdate()
 			c.endEditing()
 			parent.sortChildren()
-			parent.setDirty()
+			# parent.setDirty()
+			parent.setAllAncestorAtFileNodesDirty() # 1/12/04
 			c.setChanged(true)
 			c.endUpdate()
 	#@nonl
@@ -2694,7 +2699,9 @@ class baseCommands:
 		c.beginUpdate()
 		h,v = sortedNodes[0]
 		if v != root:
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			v.moveToRoot(oldRoot=root)
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		for h,next in sortedNodes[1:]:
 			next.moveAfter(v)
 			v = next
@@ -3160,7 +3167,8 @@ class baseCommands:
 				child.moveToNthChildOf(v,v.numberOfChildren())
 			v.expand()
 			c.selectVnode(v)
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			c.setChanged(true)
 			c.mInhibitOnTreeChanged = false
 			c.initAllCloneBits() # 7/6/02
@@ -3195,7 +3203,8 @@ class baseCommands:
 		c.beginUpdate()
 		if 1: # inside update...
 			c.endEditing()
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			#@		<< Move v down >>
 			#@+node:<< Move v down >>
 			# Remember both the before state and the after state for undo/redo
@@ -3218,7 +3227,8 @@ class baseCommands:
 			#@nonl
 			#@-node:<< Move v down >>
 			#@nl
-			v.setDirty() # This second call is essential.
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			c.selectVnode(v)# 4/23/01
 			c.setChanged(true)
 			c.initJoinedCloneBits(v) # 10/8/03
@@ -3245,11 +3255,13 @@ class baseCommands:
 		c.beginUpdate()
 		if 1: # inside update...
 			c.endEditing()
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			v.moveAfter(parent)
 			c.undoer.setUndoParams("Move Left",v,
 				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			c.selectVnode(v)
 			c.setChanged(true)
 			c.initJoinedCloneBits(v) # 10/8/03
@@ -3278,12 +3290,14 @@ class baseCommands:
 		c.beginUpdate()
 		if 1: # inside update...
 			c.endEditing()
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			n = back.numberOfChildren()
 			v.moveToNthChildOf(back,n)
 			c.undoer.setUndoParams("Move Right",v,
 				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			c.selectVnode(v)
 			c.setChanged(true)
 			c.initJoinedCloneBits(v) # 7/6/02
@@ -3312,7 +3326,8 @@ class baseCommands:
 		c.beginUpdate()
 		if 1: # inside update...
 			c.endEditing()
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			#@		<< Move v up >>
 			#@+node:<< Move v up >>
 			# Remember both the before state and the after state for undo/redo
@@ -3338,7 +3353,8 @@ class baseCommands:
 			#@nonl
 			#@-node:<< Move v up >>
 			#@nl
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			c.selectVnode(v)
 			c.setChanged(true)
 			c.initJoinedCloneBits(v) # 10/8/03
@@ -3361,7 +3377,8 @@ class baseCommands:
 				child = v.firstChild()
 				child.moveAfter(after)
 				after = child
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			c.setChanged(true)
 			c.selectVnode(v)
 		c.endUpdate()
@@ -3599,11 +3616,13 @@ class baseCommands:
 		c.beginUpdate()
 		if 1: # inside update...
 			c.endEditing()
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			v.moveAfter(after)
 			c.undoer.setUndoParams("Drag",v,
 				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			c.selectVnode(v)
 			c.setChanged(true)
 			c.initJoinedCloneBits(v) # 10/8/03
@@ -3627,17 +3646,18 @@ class baseCommands:
 		oldParent = v.parent()
 		oldN = v.childIndex()
 		c.endEditing()
-		clone.setDirty()
+		# clone.setDirty()
+		clone.setAllAncestorAtFileNodesDirty() # 1/12/04
 		clone.moveToNthChildOf(parent,n)
 		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
 		c.undoer.setUndoParams("Drag & Clone",clone,
 			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-		clone.setDirty()
+		# clone.setDirty()
+		clone.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.selectVnode(clone)
 		c.setChanged(true)
 		c.endUpdate()
 		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
-	#@nonl
 	#@-node:c.dragCloneToNthChildOf (changed in 3.11.1)
 	#@+node:c.dragToNthChildOf
 	def dragToNthChildOf(self,v,parent,n):
@@ -3652,11 +3672,13 @@ class baseCommands:
 		c.beginUpdate()
 		if 1: # inside update...
 			c.endEditing()
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			v.moveToNthChildOf(parent,n)
 			c.undoer.setUndoParams("Drag",v,
 				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			v.setDirty()
+			# v.setDirty()
+			v.setAllAncestorAtFileNodesDirty() # 1/12/04
 			c.selectVnode(v)
 			c.setChanged(true)
 			c.initJoinedCloneBits(v) # 10/8/03
@@ -3681,12 +3703,14 @@ class baseCommands:
 		oldParent = v.parent()
 		oldN = v.childIndex()
 		c.endEditing()
-		clone.setDirty()
+		# clone.setDirty()
+		clone.setAllAncestorAtFileNodesDirty() # 1/12/04
 		clone.moveAfter(after)
 		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
 		c.undoer.setUndoParams("Drag & Clone",clone,
 			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-		clone.setDirty()
+		# clone.setDirty()
+		clone.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.selectVnode(clone)
 		c.setChanged(true)
 		c.endUpdate()
