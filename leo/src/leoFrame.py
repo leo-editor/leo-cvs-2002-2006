@@ -774,6 +774,7 @@ class leoTree:
         self._editPosition = None
     
         # Controlling redraws
+        self.disableRedraw = False
         self.updateCount = 0 # self.redraw does nothing unless this is zero.
         self.redrawCount = 0 # For traces
         self.redrawScheduled = False # True if redraw scheduled.
@@ -863,16 +864,25 @@ class leoTree:
         self.updateCount += 1
     #@nonl
     #@-node:ekr.20031218072017.3714:beginUpdate
-    #@+node:ekr.20031218072017.3715:endUpdate
+    #@+node:ekr.20031218072017.3715:tree.endUpdate
     def endUpdate (self,flag=True):
+        
+        '''Redraw the tree if this is the outermost endUpdate.
+        
+        Calls to g.es() will disable redraws, so calls to c.endUpdate
+        should follow all such writes to the log pane.'''
     
         assert(self.updateCount > 0)
         self.updateCount -= 1
-        # g.trace(self.updateCount)
+        # g.trace(self.updateCount, 'disableRedraw',self.disableRedraw)
+    
         if flag and self.updateCount == 0:
+            # Bug fix: 3/11/05. Force a redraw here.
+            # Writing to the log sets self.disableRedraw.
+            self.disableRedraw = False
             self.redraw()
     #@nonl
-    #@-node:ekr.20031218072017.3715:endUpdate
+    #@-node:ekr.20031218072017.3715:tree.endUpdate
     #@+node:ekr.20031218072017.3716:Getters/Setters (tree)
     def getEditTextDict(self,v):
         # New in 4.2: the default is an empty list.
