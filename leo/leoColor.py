@@ -2109,6 +2109,7 @@ class colorizer:
 			#@-node:2::<< Test for @root, @root-doc or @root-code >>
 
 			v = v.parent()
+		return self.language # For use by external routines.
 	
 	#@-body
 	#@-node:5::scanColorDirectives

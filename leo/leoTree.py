@@ -865,10 +865,11 @@ class leoTree:
 		if s == None: s = u""
 		s = toUnicode(s,"UTF-8")
 		# Do nothing if nothing has changed.
-		if s == body: return "break"
-		# Do nothing for control characters.
-		if (ch == None or len(ch) == 0) and body == s[:-1]: return "break"
-		# print ch,len(body),len(s)
+		if ch not in ('\n','\r'):
+			if s == body: return "break"
+			# Do nothing for control characters.
+			if (ch == None or len(ch) == 0) and body == s[:-1]: return "break"
+		# print `ch`,len(body),len(s)
 		
 		#@<< set removeTrailing >>
 		#@+node:1::<< set removeTrailing >>
@@ -913,23 +914,20 @@ class leoTree:
 		#@-node:1::<< set removeTrailing >>
 
 		# trace(`ch`) ; print type(s)
-		if ch == '\r' or ch == '\n':
+		if ch in ('\n','\r'):
 			
 			#@<< Do auto indent >>
 			#@+node:2::<< Do auto indent >> (David McNab)
 			#@+body
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
 			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
-			
 				# Get the previous line.
 				s=c.body.get("insert linestart - 1 lines","insert linestart -1c")
-			
 				# Add the leading whitespace to the present line.
 				junk,width = skip_leading_ws_with_indent(s,0,c.tab_width)
 				if s and len(s) > 0 and s[-1]==':':
 					# For Python: increase auto-indent after colons.
-					language = self.colorizer.scanColorDirectives(v)
-					if language == "python":
+					if self.colorizer.scanColorDirectives(v) == "python":
 						width += abs(c.tab_width)
 				if app().config.getBoolWindowPref("smart_auto_indent"):
 					# Added Nov 18 by David McNab, david@rebirthing.co.nz
