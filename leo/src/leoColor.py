@@ -150,14 +150,14 @@ class baseLeoColorPanel:
 			self.revertColors[option_name] = config.getColorsPref(option_name)
 	#@nonl
 	#@-node:colorPanel.__init__
-	#@+node:run
+	#@+node:run (color panel)
 	def run (self):
 		
 		c = self.commands ; Tk = Tkinter
 		config = app.config
 		
 		self.top = top = Tk.Toplevel(app.root)
-		top.title("Syntax colors for " + shortFileName(c.frame.title))
+		top.title("Syntax colors for " + c.frame.shortFileName()) # DS, 10/28/03
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
 		attachLeoIcon(top)
 	
@@ -219,7 +219,7 @@ class baseLeoColorPanel:
 			top.grab_set() # Make the dialog a modal dialog.
 			top.focus_set() # Get all keystrokes.
 	#@nonl
-	#@-node:run
+	#@-node:run (color panel)
 	#@+node:showColorPicker
 	def showColorPicker (self,name):
 		
@@ -1148,7 +1148,7 @@ class baseColorizer:
 			
 			# Get the body text, converted to unicode.
 			s = getAllText(body)
-			assert(isUnicode(s))
+			s = toUnicode(s,app.tkEncoding)
 			self.sel = sel = body.index("insert") # get the location of the insert point
 			start, end = string.split(sel,'.')
 			start = int(start)
@@ -1412,7 +1412,7 @@ class baseColorizer:
 				m1.extend(m2) # m1 now contains all old and new middle lines.
 				if m1:
 					for s in m1:
-						assert(isUnicode(s))
+						s = toUnicode(s,app.tkEncoding)
 						i = skip_ws(s,0)
 						if match_word(s,i,"@color") or match_word(s,i,"@nocolor"):
 							leading_lines = 0
@@ -1596,7 +1596,7 @@ class baseColorizer:
 	def colorizeLine (self,s,state):
 	
 		# print "line,inc,state,s:",self.line_index,self.incremental,state,s
-		assert(isUnicode(s))
+		s = toUnicode(s,app.tkEncoding) # 10/28/03
 	
 		if self.incremental:
 			self.removeTagsFromLine()

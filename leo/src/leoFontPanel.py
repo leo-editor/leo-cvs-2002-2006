@@ -384,13 +384,13 @@ class baseLeoFontPanel:
 		e.insert(0,`size`)
 	#@nonl
 	#@-node:revertIvars
-	#@+node:run
+	#@+node:run (font panel)
 	def run (self):
 		
 		Tk = Tkinter ; c = self.commands
 		self.top = top = Tk.Toplevel(app.root)
 		attachLeoIcon(top)
-		top.title("Fonts for " + shortFileName(c.frame.title))
+		top.title("Fonts for " + c.frame.shortFileName()) # DS, 10/28/03
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
 		self.create_outer()
 		
@@ -409,7 +409,7 @@ class baseLeoFontPanel:
 			top.grab_set()
 			top.focus_set() # Get all keystrokes.
 	#@nonl
-	#@-node:run
+	#@-node:run (font panel)
 	#@+node:setRevertVars
 	def setRevertVars (self):
 		
