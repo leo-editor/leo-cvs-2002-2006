@@ -1471,8 +1471,12 @@ class tangleCommands:
 			self.output_file.write(' ' * abs(n))
 			
 	def onl(self):
-		self.os(self.output_newline)
-			
+		# 3/18/03: Don't mess with body_ignored_newline.
+		# self.os(self.output_newline)
+		s = self.output_newline
+		s = toEncodedString(s,self.encoding,reportErrors=true)
+		self.output_file.write(s)
+	
 	def os (self,s):
 		s = string.replace(s,body_ignored_newline,body_newline)
 		s = toEncodedString(s,self.encoding,reportErrors=true)
