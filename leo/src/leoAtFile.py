@@ -4253,6 +4253,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@nonl
 			#@-node:<< open the file; return on error >>
 			#@nl
+			root.clearVisitedInTree()
 			#@		<< write then entire @file tree >>
 			#@+node:<< write then entire @file tree >> (4.x)
 			# unvisited nodes will be orphans, except in cweb trees.
@@ -4324,21 +4325,20 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@-node:<< write then entire @file tree >> (4.x)
 			#@nl
 			at.closeWriteFile()
-			if 0: ### Not yet
-				#@			<< warn about @ignored and orphans >>
-				#@+node:<< Warn about @ignored and orphans  >>
-				# 10/26/02: Always warn, even when language=="cweb"
-				
-				next = root.nodeAfterTree()
-				v = root
-				while v and v != next:
-					if not v.isVisited():
-						at.writeError("Orphan node:  " + v.headString())
-					if v.isAtIgnoreNode():
-						at.writeError("@ignore node: " + v.headString())
-					v = v.threadNext()
-				#@-node:<< Warn about @ignored and orphans  >>
-				#@nl
+			#@		<< warn about @ignored and orphans >>
+			#@+node:<< Warn about @ignored and orphans  >>
+			# 10/26/02: Always warn, even when language=="cweb"
+			
+			next = root.nodeAfterTree()
+			v = root
+			while v and v != next:
+				if not v.isVisited():
+					at.writeError("Orphan node:  " + v.headString())
+				if v.isAtIgnoreNode():
+					at.writeError("@ignore node: " + v.headString())
+				v = v.threadNext()
+			#@-node:<< Warn about @ignored and orphans  >>
+			#@nl
 			#@		<< finish writing >>
 			#@+node:<< finish writing >>
 			#@+at 
@@ -4486,6 +4486,8 @@ class baseNewDerivedFile(oldDerivedFile):
 		""" Generate the body enclosed in sentinel lines."""
 	
 		at = self ; s = v.bodyString()
+	
+		v.setVisited() # Mark the node for the orphans check.
 		if not s: return
 	
 		inCode = true

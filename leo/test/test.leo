@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2178" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2180" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="41" left="262" height="835" width="981"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -266,7 +266,7 @@
 <v t="T164"><vh>Script to find which modules define names</vh></v>
 <v t="T165" a="E"><vh>4.0 Test files</vh>
 <v t="T166"><vh>Script to compare 3.x and 4.x derived files</vh></v>
-<v t="T167" a="EV"><vh>Test Files...</vh>
+<v t="T167"><vh>Test Files...</vh>
 <v t="T168" a="C"><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
 <v t="T169" tnodeList="169,170,170"><vh>@file c:\prog\test\atRawTest.txt</vh>
 <v t="T170"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
@@ -1608,7 +1608,7 @@
 </v>
 </v>
 <v t="T1262"><vh>Help Menu</vh>
-<v t="T1263"><vh>OnAbout (version number &amp; date)</vh></v>
+<v t="T1263" a="M"><vh>OnAbout (version number &amp; date)</vh></v>
 <v t="T1264"><vh>OnLeoDocumentation</vh></v>
 <v t="T1265"><vh>OnLeoHome</vh></v>
 <v t="T1266"><vh>OnLeoHelp</vh>
@@ -2734,8 +2734,13 @@
 </v>
 </v>
 <v t="T2176"><vh>backspace &amp; del tests</vh></v>
-<v t="T2177" a="E"><vh>Tangle tests</vh>
+<v t="T2177"><vh>Tangle tests</vh>
 <v t="T2178"><vh>@root c:\prog\test\tangleTest.txt</vh></v>
+</v>
+<v t="T2179" a="EV"><vh>Orphan test</vh>
+<v t="T2180" a="E" tnodeList="2180"><vh>@file orphanTest.txt</vh>
+<v><vh>Orphan node</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -4302,7 +4307,7 @@ if 1: # 9/19/03: all files pass
 	compare("leoTree.py")
 	compare("leoUndo.py")
 print ; print "end of compare"</t>
-<t tx="T167">@ignore
+<t tx="T167"> @ignore
 
 ## @encoding iso-8859-1
 # @comment /* */</t>
@@ -33834,5 +33839,7 @@ def profile ():
 <t tx="T2178">@root c:\prog\test\tangleTest.txt
 
 This is a test.</t>
+<t tx="T2179">@ignore</t>
+<t tx="T2180">The child node should be an orpan.</t>
 </tnodes>
 </leo_file>
