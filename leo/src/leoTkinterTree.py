@@ -1439,6 +1439,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		"""Handle a change to headline text."""
 		
 		self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
+	
 	#@-node:ekr.20031218072017.1333:onHeadChanged
 	#@+node:ekr.20031218072017.1334:OnHeadlineKey
 	def OnHeadlineKey (self,p,event):
@@ -1468,13 +1469,29 @@ class leoTkinterTree (leoFrame.leoTree):
 		#@	<< set s to the widget text >>
 		#@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 		s = edit_text.get("1.0","end")
+		
+		if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+			# Another kludge: remove one or two trailing newlines before warning of truncation.
+			if s and s[-1] == '\n': s = s[:-1]
+			if s and s[-1] == '\n': s = s[:-1]
+			i = s.find('\n')
+			if i > -1:
+				# g.trace(i,len(s),repr(s))
+				g.es("Truncating headline to one line",color="blue")
+				s = s[:i]
+			if len(s) > 250:
+				g.es("Truncating headline to 250 characters",color="blue")
+				s = s[:250]
+		
 		s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
 		
 		if not s:
 			s = u""
-		s = s.replace('\n','')
-		s = s.replace('\r','')
-		# g.trace(s)
+			
+		if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+			s = s.replace('\n','')
+			s = s.replace('\r','')
+		#@nonl
 		#@-node:ekr.20031218072017.1336:<< set s to the widget text >>
 		#@nl
 		#@	<< set head to vnode text >>
@@ -1539,6 +1556,7 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		g.doHook("headkey2",c=c,p=p,ch=ch)
 		return "break"
+	
 	#@-node:ekr.20031218072017.1335:idle_head_key
 	#@-others
 	#@nonl
