@@ -1943,16 +1943,6 @@ class vnode:
 	#@-node:1::v.copyTree
 	#@+node:2::v.copyTreeWithNewTnodes
 	#@+body
-	#@+at
-	#  This method copies all subtrees of oldRoot to the subtrees of newRoot.  
-	# The caller is responsible for copying the headline text from oldRoot to newRoot.
-	# 
-	# This method must be given the new root as well as the old:  the 
-	# wxWindows classes do not allow us to create an unattached outline.
-
-	#@-at
-	#@@c
-
 	def copyTreeWithNewTnodes (self):
 		
 		"""Return a copy of self with all new tnodes"""
