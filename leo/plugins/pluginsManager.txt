@@ -78,10 +78,13 @@
     # nodenavigator.py
     
 # Creates row-column indicators in the status area.
-    rowcol.py
+    # rowcol.py
     
 # Creates a search box and a "go" button in the icon area.
     searchbox.py
+    
+# Creates a status line at the bottom of the body pane.
+    status_line.py
 #@nonl
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040915073259.3:Enhance windows
@@ -156,10 +159,6 @@
     
 # schedule commands for later execution."""
     # scheduler.py
-    
-# A plugin to create an Emacs-like status line.
-    # Not ready yet: probably interferes with auto-completion
-    # status_line.py
     
 # New from Paul Paterson.
     # I'm not sure what the status of this is.
