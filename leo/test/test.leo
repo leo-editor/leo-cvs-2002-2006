@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2183" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-	<global_window_position top="90" left="302" height="728" width="912"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2187" clone_windows="0"/>
+<globals body_outline_ratio="0.50724637681159424">
+	<global_window_position top="71" left="319" height="759" width="671"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2707,18 +2707,20 @@
 </v>
 <v t="edream.120303092653"><vh>4.1 beta 5 tests</vh>
 <v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
-<v t="edream.112303064255" a="E"><vh>Extract section test</vh></v>
+<v t="edream.112303064255"><vh>Extract section test</vh></v>
 <v t="edream.112303110337"><vh>Change all headlines/Undo test</vh>
 <v t="edream.112303110337.1"><vh>a</vh></v>
 <v t="edream.112303110337.2"><vh>Ba</vh></v>
 <v t="edream.112303110337.3"><vh>Ca</vh></v>
 </v>
 <v t="edream.120203151550"><vh>@url file:../doc/LeoDocs.leo</vh></v>
-</v>
-<v t="edream.120303093019" a="MV" tnodeList="edream.120303093019,edream.120303093527,edream.120303093527.1"><vh>@file c:\prog\test\atFirstLastTest.txt</vh>
+<v t="edream.120303093019" tnodeList="edream.120303093019,edream.120303093527,edream.120303093527.1"><vh>@file c:\prog\test\atFirstLastTest.txt</vh>
 <v t="edream.120303093527"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
 <v t="edream.120303093527.1"><vh>others</vh></v>
 </v>
+</v>
+<v t="edream.120403115355"><vh>Cut/paste</vh></v>
+<v t="edream.120403121826" a="EV"><vh>Import test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203161858">@color
@@ -34294,5 +34296,7 @@ ctx.ServiceManager</t>
 @last ?&gt;</t>
 <t tx="edream.120303093527">ref line 1</t>
 <t tx="edream.120303093527.1">others line 1</t>
+<t tx="edream.120403115355">xxxx</t>
+<t tx="edream.120403121826"></t>
 </tnodes>
 </leo_file>

@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3986" clone_windows="0"/>
 <globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="20" left="357" height="870" width="839"/>
+	<global_window_position top="7" left="343" height="870" width="885"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,9 +12,9 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203160744" a="E"><vh> Diary</vh>
-<v t="edream.120103054230" a="E"><vh>December 2003</vh>
-<v t="edream.120403062934" a="V"><vh>12/04</vh></v>
+<v t="edream.110203160744"><vh> Diary</vh>
+<v t="edream.120103054230"><vh>December 2003</vh>
+<v t="edream.120403062934"><vh>12/04</vh></v>
 <v t="edream.120303101759"><vh>12/03</vh>
 <v t="edream.120303153525"><vh>Replaced c.OpenWithFileName by global openWithFileName</vh></v>
 <v t="edream.120303110224"><vh>Fixed dangerous bug in Convert Blanks command</vh></v>
@@ -741,6 +741,21 @@
 <v t="edream.110203160744.425"><vh>Best minor improvements</vh>
 <v t="edream.110203160744.426"><vh>Use @file extension by default if no @language</vh></v>
 <v t="edream.110203160744.427"><vh>Secondary icons: use for marks?</vh></v>
+<v t="edream.110203160744.2439" tnodeList="edream.110203160744.2439"><vh>(Use pywin extensions to improve cut/paste between apps)</vh>
+<v t="edream.110203160744.1293" a=""><vh>updateEditMenu</vh></v>
+<v t="edream.110203160744.3684" a=""><vh> tkinterGui.__init__</vh></v>
+<v t="edream.110203160744.2287" a=""><vh>tkBody.createBindings</vh></v>
+<v t="edream.110903195011" a=""><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
+<v t="edream.110203160744.1146" a=""><vh>Cut/Copy/Paste body text</vh>
+<v t="edream.110203160744.1147"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
+<v t="edream.110203160744.1148"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
+<v t="edream.110203160744.1149" a=""><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
+</v>
+<v t="edream.110203160744.2396" a=""><vh>Clipboard (tkGui)</vh>
+<v t="edream.111303093945"><vh>replaceClipboardWith</vh></v>
+<v t="edream.111303093945.1"><vh>getTextFromClipboard</vh></v>
+</v>
+</v>
 </v>
 <v t="edream.110203160744.428"><vh>Cleanup</vh>
 <v t="edream.110203160744.429"><vh>Cleanup Pychecker stuff</vh></v>
@@ -985,7 +1000,7 @@
 </v>
 </v>
 <v t="edream.110403112538"><vh>To do: 4.1</vh>
-<v t="edream.120203124941"><vh> 1. Fix all crashers &amp; other serious bugs</vh>
+<v t="edream.120203124941"><vh> 1. Fix all crashers &amp; other bugs</vh>
 <v t="edream.110203160744.3805"><vh>(Fix copy/paste bug involving clones)</vh>
 <v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
 <v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
@@ -1006,8 +1021,7 @@
 </v>
 </v>
 <v t="edream.111003111536"><vh>Investigate No tnode list</vh></v>
-<v t="edream.110403185937"><vh>Minor bugs</vh>
-<v t="edream.110203160744.2441"><vh>Continuation problem</vh></v>
+<v t="edream.110203160744.2440"><vh>Automatic select &amp; Paste bug (Linux?)</vh></v>
 <v t="edream.110203160744.2446"><vh>Extract bugs</vh>
 <v t="edream.110203160744.2447"><vh>Reports</vh>
 <v t="edream.110203160744.2448"><vh>Leading slashes are removed</vh></v>
@@ -1015,11 +1029,6 @@
 <v t="edream.110203160744.2450"><vh>Documentation problem</vh></v>
 <v t="edream.110203160744.2451"><vh>Doesn't check for complete section name</vh></v>
 </v>
-</v>
-<v t="edream.110203160744.2456"><vh>Import problems</vh></v>
-</v>
-<v t="edream.110203160744.2439"><vh>Use pywin extensions to fix cut/paste bugs</vh>
-<v t="edream.110203160744.2440"><vh>Automatic select &amp; Paste bug</vh></v>
 </v>
 </v>
 <v t="edream.120203124941.1"><vh> 2. Unit tests</vh>
@@ -3489,10 +3498,13 @@
 <v t="edream.110203160744.1757"><vh>&lt;&lt; pass the url to the web browser &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="edream.120303103648"><vh>(Made sure Leo doesn't put windows off the screen)</vh>
+<v t="edream.120403060637"><vh>Report</vh></v>
+<v t="edream.110203160744.2969" a=""><vh>getGlobals</vh></v>
+<v t="edream.110203160744.1629" a=""><vh>setInitialWindowGeometry</vh></v>
+<v t="edream.120403060759" a=""><vh>setTopGeometry</vh></v>
 </v>
-</v>
-</v>
-<v t="edream.112203132842"><vh>(Bold body pane bug)</vh>
+<v t="edream.112203132842" a="M"><vh>(Bold body pane bug)</vh>
 <v t="edream.120203130055"><vh>Scripts</vh>
 <v t="edream.120203140055" tnodeList="edream.120203140055,edream.120203140210"><vh>Show settings</vh>
 <v t="edream.120203140210"><vh>getFontSettings</vh></v>
@@ -3533,6 +3545,9 @@
 <v t="edream.110203160744.1706" a=""><vh>openWithFileName</vh></v>
 </v>
 </v>
+</v>
+</v>
+</v>
 <v t="edream.120303100236"><vh>(Fixed Replace Blanks command)</vh>
 <v t="edream.112103153646.3" a=""><vh>getSelectionLines</vh></v>
 <v t="edream.110203160744.2010" a=""><vh>Edit Body Text</vh>
@@ -3571,7 +3586,7 @@
 <v t="edream.110203160744.2023"><vh>updateBodyPane (handles undo)</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.2458"><vh>Code</vh>
+<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -5110,7 +5125,7 @@
 </v>
 </v>
 <v t="edream.110203160744.3140"><vh>Scanners for createOutline</vh>
-<v t="edream.110203160744.1977"><vh>Python scanners</vh>
+<v t="edream.110203160744.1977" a=""><vh>Python scanners</vh>
 <v t="edream.110203160744.1978"><vh>scanPythonClass</vh>
 <v t="edream.110203160744.1979"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
 <v t="edream.110203160744.1980"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
@@ -5949,7 +5964,7 @@
 <v t="edream.110903191647"><vh> leoMenu.__init__</vh></v>
 <v t="edream.110903192602"><vh>defineMenuTables</vh>
 <v t="edream.110903192602.1"><vh>&lt;&lt; define edit menu tables &gt;&gt;</vh>
-<v t="edream.110903195011"><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
+<v t="edream.110903195011" a=""><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
 <v t="edream.110903195011.1"><vh>&lt;&lt; define editMenuEditBodyTable &gt;&gt;</vh></v>
 <v t="edream.110903195011.2"><vh>&lt;&lt; define editMenuEditHeadlineTable &gt;&gt;</vh></v>
 <v t="edream.110903195011.3"><vh>&lt;&lt; define editMenuFindMenuTable &gt;&gt;</vh></v>
@@ -5979,7 +5994,7 @@
 <v t="edream.110203160744.1289"><vh>Gui-independent menu enablers</vh>
 <v t="edream.110203160744.1290"><vh>updateAllMenus</vh></v>
 <v t="edream.110203160744.1292"><vh>updateFileMenu</vh></v>
-<v t="edream.110203160744.1293"><vh>updateEditMenu</vh></v>
+<v t="edream.110203160744.1293" a=""><vh>updateEditMenu</vh></v>
 <v t="edream.110203160744.1294"><vh>updateOutlineMenu</vh></v>
 <v t="edream.110203160744.1291"><vh>hasSelection</vh></v>
 </v>
@@ -6293,7 +6308,7 @@
 <v t="edream.111103180250.1"><vh>Gui-dependent commands</vh>
 <v t="edream.111103193348"><vh>Edit Menu...</vh>
 <v t="edream.110203160744.1697"><vh>abortEditLabelCommand</vh></v>
-<v t="edream.110203160744.1146"><vh>Cut/Copy/Paste body text</vh>
+<v t="edream.110203160744.1146" a=""><vh>Cut/Copy/Paste body text</vh>
 <v t="edream.110203160744.1147"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
 <v t="edream.110203160744.1148"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
 <v t="edream.110203160744.1149" a=""><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
@@ -6323,7 +6338,7 @@
 <v t="edream.110203160744.2284"><vh>class leoTkinterBody</vh>
 <v t="edream.110203160744.2285"><vh> Birth &amp; death</vh>
 <v t="edream.110203160744.2286" a=""><vh>tkBody. __init__</vh></v>
-<v t="edream.110203160744.2287"><vh>tkBody.createBindings</vh></v>
+<v t="edream.110203160744.2287" a=""><vh>tkBody.createBindings</vh></v>
 <v t="edream.110203160744.2288"><vh>tkBody.createControl</vh></v>
 </v>
 <v t="edream.110203160744.2289" a=""><vh>tkBody.setFontFromConfig</vh></v>
@@ -6404,7 +6419,7 @@
 </v>
 </v>
 <v t="edream.110203160744.3682" tnodeList="edream.110203160744.3682,edream.110203160744.3684,edream.110203160744.3685,edream.110203160744.1853,edream.110203160744.3686,edream.110203160744.3687,edream.110203160744.3688,edream.110203160744.3690,edream.110203160744.3691,edream.110203160744.3692,edream.110203160744.3693,edream.110203160744.2388,edream.110203160744.2389,edream.110203160744.2393,edream.111303093945,edream.111303093945.1,edream.110203160744.3697,edream.110203160744.3698,edream.110203160744.3699,edream.111303093945.2,edream.111303093945.3,edream.110203160744.3695,edream.110203160744.1854,edream.110203160744.1855,edream.110203160744.1856,edream.111303093945.4,edream.111303093945.5,edream.111303093945.7,edream.111303093945.8,edream.111303093945.9,edream.111303093945.10,edream.111203203321.1,edream.110203160744.2092,edream.111303093945.11,edream.111303093945.12,edream.111303093945.13,edream.110203160744.1789,edream.111303093945.14,edream.111303093945.15,edream.110203160744.2094,edream.110203160744.2093,edream.111303093945.16,edream.111303093945.17,edream.111303093945.18,edream.111303093945.19,edream.111303093945.20,edream.111303093945.21"><vh>@file leoTkinterGui.py</vh>
-<v t="edream.110203160744.3684"><vh> tkinterGui.__init__</vh></v>
+<v t="edream.110203160744.3684" a=""><vh> tkinterGui.__init__</vh></v>
 <v t="edream.111303085501.3"><vh>app.gui.Tkinter birth &amp; death</vh>
 <v t="edream.110203160744.3685"><vh>createRootWindow &amp; allies</vh>
 <v t="edream.110203160744.1853" a=""><vh>setDefaultIcon</vh></v>
@@ -6421,9 +6436,9 @@
 <v t="edream.110203160744.2389"><vh>app.gui.Tkinter file dialogs</vh></v>
 <v t="edream.110203160744.2393"><vh>app.gui.Tkinter panels</vh></v>
 <v t="edream.111303060703"><vh>app.gui.Tkinter.utils</vh>
-<v t="edream.110203160744.2396"><vh>Clipboard</vh>
+<v t="edream.110203160744.2396" a=""><vh>Clipboard (tkGui)</vh>
 <v t="edream.111303093945"><vh>replaceClipboardWith</vh></v>
-<v t="edream.111303093945.1"><vh>getTextFromClibboard</vh></v>
+<v t="edream.111303093945.1"><vh>getTextFromClipboard</vh></v>
 </v>
 <v t="edream.110203160744.3696"><vh>Dialog</vh>
 <v t="edream.110203160744.3697"><vh>get_window_info</vh></v>
@@ -6757,11 +6772,32 @@
 </v>
 </v>
 </v>
-<v t="edream.120303103648"><vh>(Made sure Leo doesn't put windows off the screen)</vh>
-<v t="edream.120403060637"><vh>Report</vh></v>
-<v t="edream.110203160744.2969" a=""><vh>getGlobals</vh></v>
-<v t="edream.110203160744.1629" a=""><vh>setInitialWindowGeometry</vh></v>
-<v t="edream.120403060759" a=""><vh>setTopGeometry</vh></v>
+<v t="edream.110203160744.2441"><vh>(Fixed Import backslash-newline bug)</vh>
+<v t="edream.120403122144"><vh>Report</vh></v>
+<v t="edream.110203160744.1977" a=""><vh>Python scanners</vh>
+<v t="edream.110203160744.1978"><vh>scanPythonClass</vh>
+<v t="edream.110203160744.1979"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
+<v t="edream.110203160744.1980"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
+<v t="edream.110203160744.1981" a="M"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
+<v t="edream.110203160744.1982"><vh>&lt;&lt; create parent_vnode &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1983"><vh>&lt;&lt; append any other class material &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1984"><vh>scanPythonDef</vh>
+<v t="edream.110203160744.1985"><vh>&lt;&lt; set headline or return i &gt;&gt;</vh></v>
+<v t="edream.110203160744.1986" a="M"><vh>&lt;&lt; skip the Python def &gt;&gt;</vh></v>
+<v t="edream.110203160744.1987"><vh>&lt;&lt; Create def node &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1988" a="M"><vh>scanPythonDecls</vh>
+<v t="edream.110203160744.1989"><vh>&lt;&lt; break on def or class &gt;&gt;</vh></v>
+<v t="edream.110203160744.1990"><vh>&lt;&lt; Create a child node for declarations &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1991"><vh>scanPythonText</vh>
+<v t="edream.110203160744.1992"><vh>&lt;&lt; handle possible Python function or class &gt;&gt;</vh></v>
+<v t="edream.110203160744.1993"><vh>&lt;&lt; Append a reference to the methods of this file &gt;&gt;</vh></v>
+<v t="edream.110203160744.1994"><vh>&lt;&lt; Append any unused python text to the parent's body text &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -21434,53 +21470,71 @@ def writeOldDerivedFiles (self):
 </t>
 <t tx="edream.110203160744.1146"></t>
 <t tx="edream.110203160744.1147">def OnCut (self,event=None):
+	
+	"""The handler for the virtual Cut event."""
 
 	frame = self ; c = frame.c ; v = c.currentVnode()
 	
+	# This is probably being subverted by Tk.
+	if app.gui.win32clipboard:
+		data = frame.body.getSelectedText()
+		if data:
+			app.gui.replaceClipboardWith(data)
+
 	# Activate the body key handler by hand.
 	frame.body.forceFullRecolor()
 	frame.body.onBodyWillChange(v,"Cut")
 
 def OnCutFromMenu (self):
 	
-	frame = self ; c = frame.c ; v = c.currentVnode()
-
 	w = self.getFocus()
 	w.event_generate(virtual_event_name("Cut"))
-	
-	# Make sure the event sticks.
-	frame.body.forceFullRecolor()
-	frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.</t>
-<t tx="edream.110203160744.1148">def OnCopy (self,event=None):
 
+	if 0: # Make sure the event sticks.
+		frame = self ; c = frame.c ; v = c.currentVnode()
+		frame.body.forceFullRecolor()
+		frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+
+
+
+
+</t>
+<t tx="edream.110203160744.1148">def OnCopy (self,event=None):
+	
+	frame = self
+
+	if app.gui.win32clipboard:
+		data = frame.body.getSelectedText()
+		if data:
+			app.gui.replaceClipboardWith(data)
+		
 	# Copy never changes dirty bits or syntax coloring.
-	pass
 	
 def OnCopyFromMenu (self):
 
-	frame = self ; c = frame.c
-
+	frame = self
 	w = frame.getFocus()
-	w.event_generate(virtual_event_name("Copy"))</t>
-<t tx="edream.110203160744.1149">def OnPaste (self,event=None):
+	w.event_generate(virtual_event_name("Copy"))
 
+</t>
+<t tx="edream.110203160744.1149">def OnPaste (self,event=None):
 	
 	frame = self ; c = frame.c ; v = c.currentVnode()
-	
+
 	# Activate the body key handler by hand.
 	frame.body.forceFullRecolor()
 	frame.body.onBodyWillChange(v,"Paste")
 	
 def OnPasteFromMenu (self):
-	
-	frame = self ; c = frame.c ; v = c.currentVnode()
 
 	w = self.getFocus()
 	w.event_generate(virtual_event_name("Paste"))
 	
-	# Make sure the event sticks.
-	frame.body.forceFullRecolor()
-	frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.</t>
+	if 0: # Make sure the event sticks.
+		frame = self ; c = frame.c ; v = c.currentVnode()
+		frame.body.forceFullRecolor()
+		frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+</t>
 <t tx="edream.110203160744.1150">def delete(self):
 
 	c = self ; v = c.currentVnode()
@@ -22847,17 +22901,21 @@ def hasSelection (self):
 		es_exception()</t>
 <t tx="edream.110203160744.1293">def updateEditMenu (self):
 
-	c = self.c ; frame = c.frame
+	c = self.c ; frame = c.frame ; gui = app.gui
 	if not c: return
 	try:
 		# Top level Edit menu...
 		enable = frame.menu.enableMenu
 		menu = frame.menu.getMenu("Edit")
 		c.undoer.enableMenuItems()
-		if 0: # Always on for now.
-			enable(menu,"Cut",c.canCut())
-			enable(menu,"Copy",c.canCut())
-			enable(menu,"Paste",c.canPaste())
+		# Enable cut/paste.
+		data = frame.body.getSelectedText()
+		canCut = data and len(data) &gt; 0
+		enable(menu,"Cut",canCut)
+		enable(menu,"Copy",canCut)
+		data = gui.getTextFromClipboard()
+		canPaste = data and len(data) &gt; 0
+		enable(menu,"Paste",canPaste)
 		if 0: # Always on for now.
 			menu = frame.menu.getMenu("Find...")
 			enable(menu,"Find Next",c.canFind())
@@ -26541,7 +26599,7 @@ def pasteOutline(self):
 
 	c = self ; current = c.currentVnode()
 	
-	s = app.gui.getTextFromClibboard()
+	s = app.gui.getTextFromClipboard()
 	
 	if 0: # old code
 		try:
@@ -32989,10 +33047,13 @@ parent_vnode = None # 7/6/02
 while i &lt; len(s) and indent &gt; classIndent:
 	progress = i
 	if is_nl(s,i):
+		backslashNewline = i &gt; 0 and match(s,i-1,"\\\n")
 		j = skip_nl(s,i)
-		indent = self.getLeadingIndent(s,j)
-		if indent &gt; classIndent: i = j
-		else: break
+		if not backslashNewline:
+			indent = self.getLeadingIndent(s,j)
+			if indent &gt; classIndent: i = j
+			else: break
+		else: i = j
 	elif match_c_word(s,i,"def"):
 		if not parent_vnode:
 			&lt;&lt; create parent_vnode &gt;&gt;
@@ -33047,10 +33108,12 @@ while i &lt; len(s) and indent &gt; defIndent:
 	progress = i
 	ch = s[i]
 	if is_nl(s,i):
+		backslashNewline = i &gt; 0 and match(s,i-1,"\\\n")
 		i = skip_nl(s,i)
-		indent = self.getLeadingIndent(s,i)
-		if indent &lt;= defIndent:
-			break
+		if not backslashNewline:
+			indent = self.getLeadingIndent(s,i)
+			if indent &lt;= defIndent:
+				break
 	elif ch == '#':
 		i = skip_to_end_of_line(s,i) # 7/29/02
 	elif ch == '"' or ch == '\'':
@@ -33081,10 +33144,11 @@ self.createHeadline(parent,prefix + body,headline)
 		# trace(get_line(s,i))
 		ch = s[i]
 		if ch == '\n':
+			backslashNewline = i &gt; 0 and match(s,i-1,"\\\n")
 			i = skip_nl(s,i)
 			# 2/14/03: break on lesser indention.
 			j = skip_ws(s,i)
-			if not is_nl(s,j) and not match(s,j,"#"):
+			if not is_nl(s,j) and not match(s,j,"#") and not backslashNewline:
 				lineIndent = self.getLeadingIndent(s,i)
 				if lineIndent &lt;= indent:
 					break
@@ -37417,7 +37481,7 @@ def createPrefsPanel(self,c):
 
 	c = self
 	if s == None:
-		s = app.gui.getTextFromClibboard()
+		s = app.gui.getTextFromClipboard()
 	if not s:
 		return false
 
@@ -37765,7 +37829,16 @@ else:
 	self.put("&lt;change_string&gt;") ; self.putEscapedString(c.change_text)
 	self.put("&lt;/change_string&gt;") ; self.put_nl()</t>
 <t tx="edream.110203160744.2437"></t>
-<t tx="edream.110203160744.2439">import win32clipboard</t>
+<t tx="edream.110203160744.2439">@color
+
+@ This is not going well :-(  Probably what is happening is that Tk is competing with the win32 extensions in setting the clipboard.  It might not be so easy to
+
+a) completely disable Tk's clipboard handling, in _both_ headlines and body text.
+b) do the cut/paste operations "by hand".
+
+This might require new body routlines to replace the selected text in the body.  And then there are issues relating to whether the headline or body text should be changed.  All in all, this is much harder than it looks.
+
+Also, if one is not careful one can take fatal Python errors related to missing threads.  Pretty much a nightmare.</t>
 <t tx="edream.110203160744.2440">@nocolor
 
 Bumping the thread because the bug still persists. 
@@ -37777,69 +37850,7 @@ Maybe this is related to the non-sticking bug?
 ----
 
 This may be a Linux-only bug related to the control-v workaround.</t>
-<t tx="edream.110203160744.2441">@nocolor
-
- line-continuation backslash character problem   
-2003-08-01 16:07
-Help Forum
-
-Hello, 
-
-I imported as @file a python file, and there's a line with a line-continuation backslash that gets split in two parts, and then this causes a syntax error when running the program. To show what happened, I give first what the code should be, and then what it was when imported as @file in leo. The problem is with the line-continuation ending in "% self.__d" 
-
-should be : 
-
-******************** 
-#@-body 
-#@-node:1::__init__ 
-#@+node:2::get_corner 
-#@+body 
-def get_corner(self): 
-rootdir = self.__linkfixer.rootdir() 
-return ''' 
-&lt;center&gt; 
-&lt;a href="%(rootdir)s/index.html"&gt; 
-&lt;img border="0" src="%(rootdir)s/images/Yann_Le_Du.jpg"&gt;&lt;/a&gt;&lt;/center&gt;'''\ 
-% self.__d 
-
-#@-body 
-#@-node:2::get_corner 
-#@+node:3::get_corner_bgcolor 
-#@+body 
-def get_corner_bgcolor(self): 
-return 'black' 
-******************************************* 
-
-was first interpreted as : 
-
-******************************************** 
-#@-body 
-#@-node:1::__init__ 
-#@+node:2::get_corner 
-#@+body 
-def get_corner(self): 
-rootdir = self.__linkfixer.rootdir() 
-return ''' 
-&lt;center&gt; 
-&lt;a href="%(rootdir)s/index.html"&gt; 
-&lt;img border="0" src="%(rootdir)s/images/Yann_Le_Du.jpg"&gt;&lt;/a&gt;&lt;/center&gt;'''\ 
-
-#@-body 
-#@-node:2::get_corner 
-#@+node:3::get_corner_bgcolor 
-#@+body 
-% self.__d 
-def get_corner_bgcolor(self): 
-return 'black' 
-
-*********************************************** 
-
-So I just manually changed the code in the leo windows, and it works fine now, but shouldn't it be automatic ? 
-
-Thanks, 
-
-Yann Le Du
-</t>
+<t tx="edream.110203160744.2441"></t>
 <t tx="edream.110203160744.2445">@nocolor
 
 https://sourceforge.net/forum/message.php?msg_id=2106966
@@ -38010,34 +38021,6 @@ reading d:\test.leo
 
 
 </t>
-<t tx="edream.110203160744.2456">@nocolor
-
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2232767
-By: railbaron60
-
-I'm using 4.0 beta 3 on Windows 2000, with python 2.3.2. I'm never quite sure
-what to expect when importing C source and header files.
-
-Sometimes when I import a C source file to @root the body text is merely the
-functions in the original file. Other times it looks more like:
-
-@ignore
-@root foo.c
-@language c
-#ifndef INCLUDED_FOO_H
-&lt;&lt; foo #includes &gt;&gt;
-&lt;&lt; foo functions &gt;&gt;
-
-In the above case, if I remove the @ignore directive, then tangling will write
-the "@language c" directive to foo.c.
-
-Importing C header files results in body text that starts with:
-
-@ignore
-@root foo.h
-
-and ends with the rest of the header file contents.</t>
 <t tx="edream.110203160744.2457">By: jwashin ( James Washington ) 
  Scrolling and the Tree Frame in Linux   
 2003-10-20 12:13  
@@ -53340,10 +53323,9 @@ The type of commander passed to methods depends on the type of frame or dialog b
 	
 	self.oops()
 
-def getTextFromClibboard (self):
+def getTextFromClipboard (self):
 	
-	self.oops()
-</t>
+	self.oops()</t>
 <t tx="edream.110203160744.3537">def newColorFrame(self,commander):
 	"""Create a colorFrame."""
 	self.oops()
@@ -55430,7 +55412,16 @@ class tkinterGui(leoGui.leoGui):
 	leoGui.leoGui.__init__(self,"tkinter")
 
 	self.bitmap_name = None
-	self.bitmap = None</t>
+	self.bitmap = None
+	self.win32clipboard = None
+	
+	if 0: # This seems both dangerous and non-functional.
+		if sys.platform == "win32":
+			try:
+				import win32clipboard
+				self.win32clipboard = win32clipboard
+			except:
+				es_exception()</t>
 <t tx="edream.110203160744.3685">def createRootWindow(self):
 
 	"""Create a hidden Tk root window."""
@@ -56471,7 +56462,6 @@ recover and just xlate 0x1a to '~' and mark the node?
 
 The fix was to open files with 'rb' instead of 'r'.  This probably should be done in more places.
 </t>
-<t tx="edream.110403185937"></t>
 <t tx="edream.110503061633"></t>
 <t tx="edream.110503061633.1">The node-only option wasn't working due to a bug in createFrame.
 
@@ -58080,17 +58070,45 @@ def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
 	self.oops()</t>
 <t tx="edream.111303091843"></t>
 <t tx="edream.111303093945">def replaceClipboardWith (self,s):
+	
+	wcb = app.gui.win32clipboard
 
-	self.root.clipboard_clear()
-	self.root.clipboard_append(s)
+	if wcb:
+		try:
+			wcb.OpenClipboard(0)
+			wcb.EmptyClipboard()
+			wcb.SetClipboardText(s)
+			wcb.CloseClipboard()
+			return s
+		except:
+			es_exception()
+			return None
+	else:
+		self.root.clipboard_clear()
+		self.root.clipboard_append(s)</t>
+<t tx="edream.111303093945.1">def getTextFromClipboard (self):
 	
+	wcb = app.gui.win32clipboard
+	
+	if wcb:
+		try:
+			wcb.OpenClipboard(0)
+			data = wcb.GetClipboardData()
+			wcb.CloseClipboard()
+			# trace(data)
+			return data
+		except TypeError:
+			# trace(None)
+			return None
+		except:
+			es_exception()
+			return None
+	else:
+		try:
+			return self.root.selection_get(selection="CLIPBOARD")
+		except:
+			return None
 </t>
-<t tx="edream.111303093945.1">def getTextFromClibboard (self):
-	
-	try:
-		return self.root.selection_get(selection="CLIPBOARD")
-	except:
-		return None</t>
 <t tx="edream.111303093945.2">def get_focus(self,frame):
 	
 	"""Returns the widget that has focus, or body if None."""
@@ -60643,5 +60661,12 @@ So, if you want to remember and restore position please be sure to validate the 
 	
 	self.top.geometry(geom)</t>
 <t tx="edream.120403062934"></t>
+<t tx="edream.120403122144">@nocolor
+
+line-continuation backslash character problem   
+2003-08-01 16:07
+Help Forum
+
+I imported as @file a python file, and there's a line with a line-continuation backslash that gets split in two parts, and then this causes a syntax error when running the program.</t>
 </tnodes>
 </leo_file>

@@ -969,7 +969,7 @@
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
-<v t="edream.110203113231.618" a="V"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110203113231.618" a="E"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -1213,8 +1213,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.790"><vh>External editors &amp; Open With</vh>
-<v t="edream.120303095057.1" tnodeList="edream.120303095057.1,edream.120303095910,edream.120303095910.1"><vh>@file mod_tempfname.py</vh>
+<v t="edream.110203113231.790" a="E"><vh>External editors &amp; Open With</vh>
+<v t="edream.120303095057.1" a="V" tnodeList="edream.120303095057.1,edream.120303095910,edream.120303095910.1"><vh>@file mod_tempfname.py</vh>
 <v t="edream.120303095910"><vh>onStart</vh></v>
 <v t="edream.120303095910.1"><vh>openWithTempFilePath</vh></v>
 </v>
@@ -15408,12 +15408,11 @@ font = app.config.defaultFont
 print font.cget("family"), font.cget("weight")</t>
 <t tx="edream.120303095057.1">@language python
 
-"""Replace Commands.openWithTempFilePath so Leo opens temporary files
-in "username_Leo" subdirectory and omits the "LeoTemp" prefix.
-
-For general use, this code should be considerably more robust about
-creating the Leo subdirectory and signaling errors, but it is just a
-quick hack that works for me on my machines."""
+"""Replace Commands.openWithTempFilePath so Leo opens temporary
+files with a filename that begins with the headline text, and
+located in a "username_Leo" subdirectory of the temporary
+directory. The "LeoTemp" prefix is omitted.  This makes it easier to
+see which temporary file is related to which outline node."""
 
 from leoPlugins import *
 from leoGlobals import *
