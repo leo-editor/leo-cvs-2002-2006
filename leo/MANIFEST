@@ -8,6 +8,7 @@ README.txt
 __init__.py
 c2py.py
 disStats.py
+install
 leo.py
 leo.rc
 leo.res
@@ -31,10 +32,10 @@ leoNodes.py
 leoPrefs.py
 leoTangle.py
 leoTree.py
+leoTreeMod.py
 leoUndo.py
 manifest.in
 openLeo.py
-setup.py
 tangle_done.py
 untangle_done.py
 Icons\LeoApp.ico
