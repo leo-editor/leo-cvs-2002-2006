@@ -386,19 +386,28 @@ def findReference(name,root):
 
 #@-body
 #@-node:2::findReference
-#@+node:3::get_directives_dict
+#@+node:3::get_directives_dict & globalDirectiveList
 #@+body
 #@+at
-#  Scans root for @directives and returns a dict containing pointers to the 
-# start of each directive.
-# 
-# The caller passes [root_node] or None as the second arg.  This allows us to 
+#  The caller passes [root_node] or None as the second arg.  This allows us to 
 # distinguish between None and [None].
+# 
+# 5/17/03: globalDirectiveList is now visible externally so plugins may add to 
+# the list of directives.
 
 #@-at
 #@@c
 
+globalDirectiveList = [
+	"color", "comment", "encoding", "header", "ignore",
+	"language", "lineending", "nocolor", "noheader",
+	"pagewidth", "path", "quiet", "root", "silent",
+	"tabwidth", "terse", "unit", "verbose" ]
+
 def get_directives_dict(s,root=None):
+	
+	"""Scans root for @directives found in globalDirectivesList
+	Returns a dict containing pointers to the start of each directive"""
 
 	if root: root_node = root[0]
 	dict = {}
@@ -409,16 +418,9 @@ def get_directives_dict(s,root=None):
 			#@<< set dict for @ directives >>
 			#@+node:1::<< set dict for @ directives >>
 			#@+body
-			# EKR: rewritten 10/10/02
-			directiveList = (
-				"color", "comment", "encoding", "header", "ignore",
-				"language", "lineending", "nocolor", "noheader",
-				"pagewidth", "path", "quiet", "root", "silent",
-				"tabwidth", "terse", "unit", "verbose")
-			
 			j = skip_c_id(s,i+1)
 			word = s[i+1:j]
-			if word in directiveList:
+			if word in globalDirectiveList:
 				dict [word] = i
 			
 			#@-body
@@ -453,7 +455,7 @@ def get_directives_dict(s,root=None):
 		i = skip_line(s,i)
 	return dict
 #@-body
-#@-node:3::get_directives_dict
+#@-node:3::get_directives_dict & globalDirectiveList
 #@+node:4::getOutputNewline
 #@+body
 def getOutputNewline (lineending = None):
@@ -592,6 +594,7 @@ def scanDirectives(c,v=None):
 	"""
 
 	if v == None: v = c.currentVnode()
+	# trace(`v`)
 	
 	#@<< Set local vars >>
 	#@+node:1::<< Set local vars >>
@@ -610,6 +613,7 @@ def scanDirectives(c,v=None):
 	#@-node:1::<< Set local vars >>
 
 	old = {}
+	pluginsList = [] # 5/17/03: a list of items for use by plugins.
 	while v:
 		s = v.t.bodyString
 		dict = get_directives_dict(s)
@@ -716,6 +720,8 @@ def scanDirectives(c,v=None):
 		#@-body
 		#@-node:7::<< Test for @tabwidth >>
 
+		doHook("scan-directives",c=c,v=v,s=s,
+			old_dict=old,dict=dict,pluginsList=pluginsList)
 		old.update(dict)
 		v = v.parent()
 
@@ -727,7 +733,8 @@ def scanDirectives(c,v=None):
 		"lineending": lineending,
 		"pagewidth" : page_width,
 		"path"      : path,
-		"tabwidth"  : tab_width }
+		"tabwidth"  : tab_width,
+		"pluginsList"  : pluginsList }
 
 #@-body
 #@-node:9::scanDirectives (utils)

@@ -36,15 +36,16 @@ default_colors_dict = {
 #@<< leo keywords >>
 #@+node:1::<< leo keywords >>
 #@+body
-leoKeywords = (
-	"@","@c","@code","@color","@comment",
-	"@delims","@doc","@encoding","@end_raw",
-	"@first","@header","@ignore",
-	"@language","@last","@lineending",
-	"@nocolor","@noheader","@others",
-	"@pagewidth","@path","@quiet","@raw","@root","@root-code","@root-doc",
-	"@silent","@tabwidth","@terse",
-	"@unit","@verbose")
+leoKeywords = [
+		"@","@c","@code","@color","@comment",
+		"@delims","@doc","@encoding","@end_raw",
+		"@first","@header","@ignore",
+		"@language","@last","@lineending",
+		"@nocolor","@noheader","@others",
+		"@pagewidth","@path","@quiet","@raw","@root","@root-code","@root-doc",
+		"@silent","@tabwidth","@terse",
+		"@unit","@verbose" ]
+
 #@-body
 #@-node:1::<< leo keywords >>
 
@@ -885,6 +886,9 @@ class colorizer:
 		self.last_flag = "unknown"
 		self.last_language = "unknown"
 		self.last_comment = "unknown"
+		# For use of external markup routines.
+		self.last_markup = "unknown" 
+		self.markup_string = "unknown"
 		
 		#@<< ivars for communication between colorAllDirectives and its allies >>
 		#@+node:1::<< ivars for communication between colorAllDirectives and its allies >>
@@ -895,6 +899,7 @@ class colorizer:
 		self.language = None
 		self.flag = None
 		self.line_index = 0
+		
 		# Others.
 		self.single_comment_start = None
 		self.block_comment_start = None
@@ -1075,6 +1080,12 @@ class colorizer:
 			#@<< initialize ivars & tags >>
 			#@+node:1::<< initialize ivars & tags >> colorizeAnyLanguage
 			#@+body
+			# Add any newly-added user keywords.
+			for d in globalDirectiveList:
+				name = '@' + d
+				if name not in leoKeywords:
+					leoKeywords.append(name)
+			
 			# Copy the arguments.
 			self.v = v
 			self.body = body
@@ -1242,10 +1253,12 @@ class colorizer:
 			#@-body
 			#@-node:1::<< initialize ivars & tags >> colorizeAnyLanguage
 
+			doHook("init-color-markup",colorer=self,v=self.v)
 			if self.incremental and (
 				self.flag == self.last_flag and
 				self.last_language == self.language and
-				self.comment_string == self.last_comment):
+				self.comment_string == self.last_comment and
+				self.markup_string == self.last_markup):
 				# trace("incremental coloring")
 				
 				#@<< incrementally color the text >>
@@ -1270,8 +1283,6 @@ class colorizer:
 				#@-at
 				#@@c
 
-				
-				
 				old_lines = self.lines
 				old_states = self.states
 				new_lines = lines
@@ -1459,6 +1470,7 @@ class colorizer:
 			self.last_flag = self.flag
 			self.last_language = self.language
 			self.last_comment = self.comment_string
+			self.last_markup = self.markup_string
 		except:
 			self.last_flag = "unknown"
 			self.last_language = "unknown"
@@ -1494,7 +1506,7 @@ class colorizer:
 				self.doLatexLine(s,i,j)
 			else:
 				if not doHook("color-optional-markup",
-					colorer=self,s=s,i=i,j=j,colortag="comment"):
+					colorer=self,v=self.v,s=s,i=i,j=j,colortag="comment"):
 					self.tag("comment",i,j)
 			return j,"blockComment" # skip the rest of the line.
 	
@@ -1506,7 +1518,7 @@ class colorizer:
 				self.tag("comment",j,j+k)
 			else:
 				if not doHook("color-optional-markup",
-					colorer=self,s=s,i=i,j=j+k,colortag="comment"):
+					colorer=self,v=self.v,s=s,i=i,j=j+k,colortag="comment"):
 					self.tag("comment",i,j+k)
 			i = j + k
 			return i,"normal"
@@ -1611,7 +1623,7 @@ class colorizer:
 				# The entire line is in the doc part.
 				j = len(s)
 				if not doHook("color-optional-markup",
-					colorer=self,s=s,i=i,j=j,colortag="docPart"):
+					colorer=self,v=self.v,s=s,i=i,j=j,colortag="docPart"):
 					self.tag("docPart",i,j)
 				i = j # skip the rest of the line.
 			
@@ -1661,19 +1673,20 @@ class colorizer:
 	def continuePythonString (self,s,i,j,continueState):
 	
 		if j == -1: # The entire line is part of the triple-quoted string.
+			j = len(s)
 			if continueState == "string3d":
 				if not doHook("color-optional-markup",
-					colorer=self,s=s,i=i,j=len(s),colortag="string"):
-					self.tag("string",i,len(s))
+					colorer=self,v=self.v,s=s,i=i,j=j,colortag="string"):
+					self.tag("string",i,j)
 			else:
-				self.tag("string",i,len(s))
-			return len(s),continueState # skip the rest of the line.
+				self.tag("string",i,j)
+			return j,continueState # skip the rest of the line.
 	
 		else: # End the string
 			if continueState == "string3d":
 				if not doHook("color-optional-markup",
-					colorer=self,s=s,i=i,j=j,colortag="string"):
-					self.tag("string",j,j+3)
+					colorer=self,v=self.v,s=s,i=i,j=j,colortag="string"):
+					self.tag("string",i,j+3)
 				else:
 					self.tag("string",i,j+3)
 			else:
@@ -1699,7 +1712,7 @@ class colorizer:
 			self.tag("leoKeyword",i,j)
 			k = len(s) # Everything on the line is in the doc part.
 			if not doHook("color-optional-markup",
-				colorer=self,s=s,i=j,j=k,colortag="docPart"):
+				colorer=self,v=self.v,s=s,i=j,j=k,colortag="docPart"):
 				self.tag("docPart",j,k)
 			return k,"doc"
 		elif word == "@nocolor":
@@ -1900,7 +1913,7 @@ class colorizer:
 			else:
 				j = len(s)
 				if not doHook("color-optional-markup",
-					colorer=self,s=s,i=i,j=j,colortag="comment"):
+					colorer=self,v=self.v,s=s,i=i,j=j,colortag="comment"):
 					self.tag("comment",i,j)
 				i = j
 			#@-body
@@ -1916,7 +1929,7 @@ class colorizer:
 			k = len(self.block_comment_start)
 			
 			if not doHook("color-optional-markup",
-				colorer=self,s=s,i=i,j=i+k,colortag="comment"):
+				colorer=self,v=self.v,s=s,i=i,j=i+k,colortag="comment"):
 				self.tag("comment",i,i+k)
 			
 			i += k ; state = "blockComment"
@@ -1967,7 +1980,7 @@ class colorizer:
 				if delim == '"""':
 					# Only handle wiki items in """ strings.
 					if not doHook("color-optional-markup",
-						colorer=self,s=s,i=i,j=j,colortag="string"):
+						colorer=self,v=self.v,s=s,i=i,j=j,colortag="string"):
 						self.tag("string",i,j)
 				else:
 					self.tag("string",i,j)
