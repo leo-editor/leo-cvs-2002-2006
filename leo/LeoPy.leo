@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2019" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="24" left="127" height="24" width="91"/>
+	<global_window_position top="0" left="170" height="24" width="91"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -781,8 +781,7 @@
 </v>
 </v>
 <v t="T486" a="E"><vh>To do</vh>
-<v a="V"><vh>add sbooks.chm to the manifests in nsis.leo and in setup.py</vh></v>
-<v><vh>options: log_pane_wraps and outline_pane_has_horizontal_scroll_bars</vh></v>
+<v a="V"><vh>options: log_pane_wraps and outline_pane_has_horizontal_scroll_bars</vh></v>
 <v><vh>New version of leoConfig.txt to appendix.</vh></v>
 <v><vh>Release 3.5</vh>
 <v><vh>Announce 3.4 and 3.5</vh></v>
@@ -2547,41 +2546,7 @@
 </v>
 <v t="T1091" a="C"><vh>app.__init__</vh></v>
 </v>
-<v t="T1317"><vh>(Partial path name problems)</vh>
-<v t="T1094" a="C"><vh>atFile.read</vh>
-<v t="T1095"><vh>&lt;&lt; open file &gt;&gt;</vh>
-<v t="T1318"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
-</v>
-<v t="T1096"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
-<v t="T1097"><vh>&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;</vh></v>
-<v t="T1098"><vh>&lt;&lt; Delete root's tree and body text &gt;&gt;</vh></v>
-<v t="T1099"><vh>&lt;&lt; Handle clone bits &gt;&gt;</vh></v>
-<v t="T1100"><vh>&lt;&lt; Join cloned trees &gt;&gt;</vh></v>
-<v t="T1101"><vh>&lt;&lt; Handle all status bits &gt;&gt;</vh></v>
-</v>
-<v t="T589" a="C"><vh>atFile.scanAllDirectives (calls writeError on errors)</vh>
-<v t="T590" a="C"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
-<v t="T591"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
-<v t="T592"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
-<v t="T593"><vh>&lt;&lt; Test for @path &gt;&gt;</vh></v>
-<v t="T594" a="C"><vh>&lt;&lt; Test for @pagewidth and @tabwidth &gt;&gt;</vh></v>
-<v t="T595" a="M"><vh>&lt;&lt; Set current directory &gt;&gt;</vh></v>
-<v t="T596"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
-</v>
-<v t="T1319"><vh>@file Icons/test.txt</vh></v>
-<v t="T1320"><vh>@root Icons/test2.txt</vh></v>
-<v t="T597" a="C"><vh>tangle.scanAllDirectives</vh>
-<v t="T598"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
-<v t="T599"><vh>&lt;&lt; Test for @verbose, @terse or @silent &gt;&gt;</vh></v>
-<v t="T600"><vh>&lt;&lt; Test for @path, @pagewidth and @tabwidth &gt;&gt;</vh>
-<v t="T601"><vh>&lt;&lt; Remove leading and trailing delims if they exist &gt;&gt;</vh></v>
-</v>
-<v t="T602"><vh>&lt;&lt; Test for @header or @noheader &gt;&gt;</vh></v>
-<v t="T603" a="M"><vh>&lt;&lt; Set self.tangle_directory &gt;&gt;</vh></v>
-</v>
-<v t="T731" a="C"><vh>error, pathError, warning</vh></v>
-</v>
-<v t="T1321"><vh>(problems with find settings)</vh>
+<v t="T1317"><vh>(problems with find settings)</vh>
 <v t="T1309" a="C"><vh>put (basic)(leoFileCommands)</vh></v>
 <v t="T1302" a="C"><vh>putFindSettings</vh>
 <v t="T1303"><vh>&lt;&lt; put find settings that may exist in leoConfig.txt &gt;&gt;</vh></v>
@@ -2592,8 +2557,8 @@
 </v>
 </v>
 <v t="T1297" a="C"><vh>setConfigFindIvars</vh></v>
-<v t="T1322" a="C"><vh>c.setIvarsFromFind</vh></v>
-<v t="T1323" a="C"><vh>find.set_ivars</vh></v>
+<v t="T1318" a="C"><vh>c.setIvarsFromFind</vh></v>
+<v t="T1319" a="C"><vh>find.set_ivars</vh></v>
 <v t="T835" a="C"><vh>find.__init__</vh>
 <v t="T836"><vh>&lt;&lt; Initialize the leoFind ivars &gt;&gt;</vh></v>
 <v t="T837"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh></v>
@@ -2606,11 +2571,11 @@
 <v t="T656"><vh>&lt;&lt; erase filename and rename backupName to fileName &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1324"><vh>(Recent Files menu)</vh>
+<v t="T1320"><vh>(Recent Files menu)</vh>
 <v t="T1076" a="C"><vh>config.__init__</vh>
 <v t="T379" a="C"><vh>&lt;&lt; initialize constant ivars &gt;&gt;</vh></v>
 </v>
-<v t="T1325" a="C"><vh>get/setRecentFiles</vh></v>
+<v t="T1321" a="C"><vh>get/setRecentFiles</vh></v>
 <v t="T1084" a="C"><vh>app.finishCreate</vh>
 <v t="T1085"><vh>&lt;&lt; return false if not v2.2 or above &gt;&gt;</vh></v>
 <v t="T1086" a="C"><vh>&lt;&lt; set loadDir &gt;&gt;</vh></v>
@@ -2643,12 +2608,12 @@
 </v>
 <v t="T1021" a="C"><vh>OnNew</vh></v>
 </v>
-<v t="T1326"><vh>(Save clears undo option)</vh>
+<v t="T1322"><vh>(Save clears undo option)</vh>
 <v t="T1289" a="C"><vh>&lt;&lt; Define names of settings &gt;&gt;</vh></v>
 <v><vh>Save clears undo</vh>
 <v t="T588" a="C"><vh>OnSave</vh></v>
-<v t="T1327" a="C"><vh>save</vh>
-<v t="T1328"><vh>&lt;&lt; Set the default directory for new files &gt;&gt;</vh></v>
+<v t="T1323" a="C"><vh>save</vh>
+<v t="T1324"><vh>&lt;&lt; Set the default directory for new files &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -2666,7 +2631,7 @@
 <v t="T596" a="M"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1329"><vh>(Test and warn for read-only files)</vh>
+<v t="T1325"><vh>(Test and warn for read-only files)</vh>
 <v t="T653" a="C"><vh>write_LEO_file</vh>
 <v t="T654"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
 <v t="T655"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
@@ -2684,7 +2649,7 @@
 </v>
 <v t="T1094" a="C"><vh>atFile.read</vh>
 <v t="T1095"><vh>&lt;&lt; open file &gt;&gt;</vh>
-<v t="T1318"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
+<v t="T1326"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
 </v>
 <v t="T1096"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
 <v t="T1097"><vh>&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;</vh></v>
@@ -2701,9 +2666,9 @@
 <v t="T652"><vh>&lt;&lt; handle all exceptions during the write &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1330"><vh>(Unicode)</vh>
-<v t="T1331"><vh>@file c:/prog/test/unicodeTest.txt</vh>
-<v t="T1332"><vh>New ä ÃHeadlineß</vh></v>
+<v t="T1327"><vh>(Unicode)</vh>
+<v t="T1328"><vh>@file c:/prog/test/unicodeTest.txt</vh>
+<v t="T1329"><vh>New ä ÃHeadlineß</vh></v>
 </v>
 <v t="T832" a="C"><vh>tree.OnHeadlineKey, onHeadlineChanged, idle_head_key</vh></v>
 <v t="T829" a="C"><vh>tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key</vh>
@@ -2713,26 +2678,60 @@
 <v><vh>Output routines...</vh>
 <v><vh>leoFileCommands</vh>
 <v t="T1309" a="C"><vh>put (basic)(leoFileCommands)</vh></v>
-<v t="T1333" a="C"><vh>get &amp; match (basic)(leoFileCommands)</vh></v>
+<v t="T1330" a="C"><vh>get &amp; match (basic)(leoFileCommands)</vh></v>
 </v>
-<v t="T1334"><vh>leoAtFile</vh>
+<v t="T1331"><vh>leoAtFile</vh>
 <v t="T510" a="C"><vh>os, onl, etc. (leoAtFile)</vh></v>
 </v>
 <v><vh>Tangle</vh>
 <v t="T981" a="C"><vh>oblank, oblanks, os, otab, otabs (Tangle)</vh></v>
 </v>
 </v>
-<v t="T1335" a="C"><vh>es, enl, ecnl</vh></v>
-<v t="T1323" a="C"><vh>find.set_ivars</vh></v>
+<v t="T1332" a="C"><vh>es, enl, ecnl</vh></v>
+<v t="T1319" a="C"><vh>find.set_ivars</vh></v>
 <v t="T864" a="C"><vh>findNext</vh></v>
-<v t="T1336" a="C"><vh>setTnodeText</vh></v>
+<v t="T1333" a="C"><vh>setTnodeText</vh></v>
 </v>
+</v>
+<v t="T1334"><vh>(Partial path name problems)</vh>
+<v t="T1094" a="C"><vh>atFile.read</vh>
+<v t="T1095"><vh>&lt;&lt; open file &gt;&gt;</vh>
+<v t="T1326"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
+</v>
+<v t="T1096"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
+<v t="T1097"><vh>&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;</vh></v>
+<v t="T1098"><vh>&lt;&lt; Delete root's tree and body text &gt;&gt;</vh></v>
+<v t="T1099"><vh>&lt;&lt; Handle clone bits &gt;&gt;</vh></v>
+<v t="T1100"><vh>&lt;&lt; Join cloned trees &gt;&gt;</vh></v>
+<v t="T1101"><vh>&lt;&lt; Handle all status bits &gt;&gt;</vh></v>
+</v>
+<v t="T589" a="C"><vh>atFile.scanAllDirectives (calls writeError on errors)</vh>
+<v t="T590" a="C"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
+<v t="T591"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
+<v t="T592"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
+<v t="T593"><vh>&lt;&lt; Test for @path &gt;&gt;</vh></v>
+<v t="T594" a="C"><vh>&lt;&lt; Test for @pagewidth and @tabwidth &gt;&gt;</vh></v>
+<v t="T595" a="M"><vh>&lt;&lt; Set current directory &gt;&gt;</vh></v>
+<v t="T596"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
+</v>
+<v t="T1335"><vh>@file Icons/test.txt</vh></v>
+<v t="T1336"><vh>@root Icons/test2.txt</vh></v>
+<v t="T597" a="CE"><vh>tangle.scanAllDirectives</vh>
+<v t="T598"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
+<v t="T599"><vh>&lt;&lt; Test for @verbose, @terse or @silent &gt;&gt;</vh></v>
+<v t="T600"><vh>&lt;&lt; Test for @path, @pagewidth and @tabwidth &gt;&gt;</vh>
+<v t="T601"><vh>&lt;&lt; Remove leading and trailing delims if they exist &gt;&gt;</vh></v>
+</v>
+<v t="T602"><vh>&lt;&lt; Test for @header or @noheader &gt;&gt;</vh></v>
+<v t="T603" a="M"><vh>&lt;&lt; Set self.tangle_directory &gt;&gt;</vh></v>
+</v>
+<v t="T731" a="C"><vh>error, pathError, warning</vh></v>
 </v>
 <v t="T1337"><vh>Code</vh>
 <v t="T1277" a="C"><vh> OnAbout (version number)</vh></v>
 <v t="T1338"><vh> Overview of code</vh></v>
 <v t="T1339"><vh> Scripts &amp; Batch Files (Change version in setup.py)</vh>
-<v t="T1340"><vh> Batch Files &amp; other @root trees</vh>
+<v t="T1340" a="E"><vh> Batch Files &amp; other @root trees</vh>
 <v t="T1341"><vh>go.bat</vh></v>
 <v t="T1342"><vh>help.bat</vh></v>
 <v t="T1343"><vh>sdist.bat</vh></v>
@@ -2914,7 +2913,7 @@
 <v t="T1463"><vh>joinTrees</vh></v>
 <v t="T1094" a="C"><vh>atFile.read</vh>
 <v t="T1095"><vh>&lt;&lt; open file &gt;&gt;</vh>
-<v t="T1318"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
+<v t="T1326"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
 </v>
 <v t="T1096"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
 <v t="T1097"><vh>&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;</vh></v>
@@ -3091,7 +3090,7 @@
 <v t="T1524"><vh>c.__repr__</vh></v>
 <v t="T639" a="C"><vh>c.destroy</vh></v>
 <v t="T1525"><vh>c.setIvarsFromPrefs</vh></v>
-<v t="T1322" a="C"><vh>c.setIvarsFromFind</vh></v>
+<v t="T1318" a="C"><vh>c.setIvarsFromFind</vh></v>
 <v t="T774" a="C"><vh>Cut &amp; Paste Outlines</vh>
 <v t="T775"><vh>cutOutline</vh></v>
 <v t="T776"><vh>copyOutline</vh></v>
@@ -3305,7 +3304,7 @@
 <v t="T1618"><vh>get/setFindPref</vh></v>
 <v t="T1291" a="C"><vh>getFontFromParams</vh></v>
 <v t="T1619"><vh>get/setPref</vh></v>
-<v t="T1325" a="C"><vh>get/setRecentFiles</vh></v>
+<v t="T1321" a="C"><vh>get/setRecentFiles</vh></v>
 <v t="T1620"><vh>get/setColors</vh></v>
 <v t="T1621"><vh>get/setWindowPrefs</vh></v>
 <v t="T1622"><vh>open</vh>
@@ -3354,7 +3353,7 @@
 <v t="T1650"><vh>&lt;&lt; Recompute clone bits for pasted vnodes &gt;&gt;</vh></v>
 </v>
 <v><vh>get routines</vh>
-<v t="T1333" a="C"><vh>get &amp; match (basic)(leoFileCommands)</vh></v>
+<v t="T1330" a="C"><vh>get &amp; match (basic)(leoFileCommands)</vh></v>
 <v t="T1651"><vh>getClipboardHeader</vh></v>
 <v t="T1652"><vh>getCloneWindows</vh></v>
 <v t="T1653"><vh>getEscapedString</vh></v>
@@ -3430,8 +3429,8 @@
 <v t="T1686"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1327" a="C"><vh>save</vh>
-<v t="T1328"><vh>&lt;&lt; Set the default directory for new files &gt;&gt;</vh></v>
+<v t="T1323" a="C"><vh>save</vh>
+<v t="T1324"><vh>&lt;&lt; Set the default directory for new files &gt;&gt;</vh></v>
 </v>
 <v t="T1687"><vh>saveAs</vh></v>
 <v t="T1688"><vh>saveTo</vh></v>
@@ -3456,7 +3455,7 @@
 <v t="T840" a="C"><vh>find.init</vh>
 <v t="T841"><vh>&lt;&lt; set widgets &gt;&gt;</vh></v>
 </v>
-<v t="T1323" a="C"><vh>find.set_ivars</vh></v>
+<v t="T1319" a="C"><vh>find.set_ivars</vh></v>
 <v t="T842" a="C"><vh>resetWrap</vh></v>
 <v t="T1693"><vh>OnCloseFindEvent</vh></v>
 <v t="T843" a="C"><vh>Top Level Commands</vh>
@@ -3751,7 +3750,7 @@
 <v t="T1720"><vh>alert</vh></v>
 <v t="T1721"><vh>app, setApp</vh></v>
 <v t="T1722"><vh>choose</vh></v>
-<v t="T1335" a="C"><vh>es, enl, ecnl</vh></v>
+<v t="T1332" a="C"><vh>es, enl, ecnl</vh></v>
 <v t="T1723"><vh>print_stack</vh></v>
 <v t="T1724"><vh>top</vh></v>
 </v>
@@ -3941,7 +3940,7 @@
 <v><vh>Setters</vh>
 <v><vh>Setting body text</vh>
 <v t="T1788"><vh>saveBodyPaneToTnode</vh></v>
-<v t="T1336" a="C"><vh>setTnodeText</vh></v>
+<v t="T1333" a="C"><vh>setTnodeText</vh></v>
 <v t="T1789"><vh>setSelection</vh></v>
 </v>
 <v><vh>Status bits</vh>
@@ -10557,8 +10556,10 @@ if c.frame and require_path_flag and not self.tangle_directory:
 					self.tangle_directory = dir ; break
 				elif issue_error_flag:
 					self.warning("ignoring invalid " + kind + " directory: " + dir)
-			elif issue_error_flag:
-				self.warning("ignoring relative path: " + dir)
+			else:
+				path,f = os.path.split(dir)
+				if path and len(path) &gt; 0 and issue_error_flag:
+					self.warning("ignoring relative path: " + dir)
 
 if not self.tangle_directory and issue_error_flag:
 	self.pathError("No directory specified by @root, @path or Preferences.")</t>
@@ -21152,23 +21153,12 @@ except:
 	es("can not read " + fileName)
 	return None</t>
 <t tx="T1316">@ignore</t>
-<t tx="T1317">@ignore</t>
-<t tx="T1318"># 8/13/02
-try:
-	read_only = not os.access(fn,os.W_OK)
-	if read_only:
-		es("read only: " + fn)
-except: pass # os.access() may not exist on all platforms.</t>
-<t tx="T1319">this is a test</t>
-<t tx="T1320">@ this is a test
-@root Icons/test2.txt
-more test</t>
-<t tx="T1321">@nocolor
+<t tx="T1317">@nocolor
 
 write_LEO_file calls config.update() before writing the file, so the put routines can not influence the write.
 
 @color</t>
-<t tx="T1322"># This should be called whenever we need to use find values:
+<t tx="T1318"># This should be called whenever we need to use find values:
 # i.e., before reading or writing
 
 def setIvarsFromFind (self):
@@ -21177,7 +21167,7 @@ def setIvarsFromFind (self):
 	if find:
 		find.set_ivars(c)
 </t>
-<t tx="T1323">def set_ivars (self,c):
+<t tx="T1319">def set_ivars (self,c):
 	
 	# print "find.set_ivars"
 
@@ -21194,8 +21184,8 @@ def setIvarsFromFind (self):
 		s = s.encode('utf-8')
 	c.change_text = s
 </t>
-<t tx="T1324">@ignore</t>
-<t tx="T1325">def getRecentFiles (self):
+<t tx="T1320">@ignore</t>
+<t tx="T1321">def getRecentFiles (self):
 	
 	return self.recentFiles
 
@@ -21203,8 +21193,8 @@ def setRecentFiles (self,files):
 	
 	self.recentFiles = files
 </t>
-<t tx="T1326">@ignore</t>
-<t tx="T1327">def save(self,fileName):
+<t tx="T1322">@ignore</t>
+<t tx="T1323">def save(self,fileName):
 
 	c=self.commands
 	c.beginUpdate()
@@ -21219,18 +21209,24 @@ def setRecentFiles (self,files):
 				es("clearing undo")
 				c.undoer.clearUndoState()
 	c.endUpdate()</t>
-<t tx="T1328"># 8/13/02: Set c.openDirectory for new files for the benefit of leoAtFile.scanAllDirectives.
+<t tx="T1324"># 8/13/02: Set c.openDirectory for new files for the benefit of leoAtFile.scanAllDirectives.
 
 if not c.openDirectory or len(c.openDirectory) == 0:
 	dir = os.path.dirname(fileName) 
 	if len(dir) &gt; 0 and os.path.isabs(fileName) and os.path.exists(fileName):
 		c.openDirectory = dir</t>
-<t tx="T1329">@ignore</t>
-<t tx="T1330">@ignore</t>
-<t tx="T1331">@ignore
+<t tx="T1325">@ignore</t>
+<t tx="T1326"># 8/13/02
+try:
+	read_only = not os.access(fn,os.W_OK)
+	if read_only:
+		es("read only: " + fn)
+except: pass # os.access() may not exist on all platforms.</t>
+<t tx="T1327">@ignore</t>
+<t tx="T1328">@ignore
 @others</t>
-<t tx="T1332">aĂǋ</t>
-<t tx="T1333">def getBool (self):
+<t tx="T1329">aĂǋ</t>
+<t tx="T1330">def getBool (self):
 	self.skipWs() # guarantees at least one more character.
 	ch = self.fileBuffer[self.fileIndex]
 	if ch == '0':
@@ -21310,8 +21306,8 @@ def matchTag (self,tag):
 		return true
 	else:
 		return false</t>
-<t tx="T1334">leoAtFile uses readline.  Maybe we should substitute self.readLine(s) for s.readline()</t>
-<t tx="T1335">def ecnl():
+<t tx="T1331">leoAtFile uses readline.  Maybe we should substitute self.readLine(s) for s.readline()</t>
+<t tx="T1332">def ecnl():
 	ecnls(1)
 
 def ecnls(n):
@@ -21338,7 +21334,7 @@ def es(s):
 		ecnl() # only valid here
 	else:
 		print "Null log:", s</t>
-<t tx="T1336"># This sets the text in the tnode from the given string.
+<t tx="T1333"># This sets the text in the tnode from the given string.
 
 def setTnodeText (self, s):
 	
@@ -21348,6 +21344,11 @@ def setTnodeText (self, s):
 		
 	assert(type(s)==types.StringType)
 	self.bodyString = s</t>
+<t tx="T1334">@ignore</t>
+<t tx="T1335">this is a test</t>
+<t tx="T1336">@ this is a test
+@root Icons/test2.txt
+more test</t>
 <t tx="T1337">@language python
 
 @ This section contains all the source code of leo.py.
@@ -21449,6 +21450,7 @@ include Icons/*.*
 include leo.rc
 include leo.res
 include sdist.bat
+include sbooks.chm
 include manifest.in</t>
 <t tx="T1346">@first #! /usr/bin/env python
 @language python

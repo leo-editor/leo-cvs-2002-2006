@@ -35,8 +35,9 @@
 <v t="T16" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="E"><vh>Latest version</vh>
-<v t="T17" a="V"><vh>CVS version 8/13/02</vh>
-<v t="T18"><vh>called cf.flush in leoConfig.update</vh></v>
+<v t="T17" a="EV"><vh>CVS version 8/13/02</vh>
+<v><vh>Suppressed erroneous tangle warning about relative paths</vh></v>
+<v t="T18"><vh>Called cf.flush in leoConfig.update</vh></v>
 <v><vh>Add commands to open url's from the help menu</vh></v>
 <v t="T19"><vh>Rewrote scanAllDirectives routines to handle relative paths</vh></v>
 <v t="T20"><vh>Add logic to test for read-only files</vh></v>
@@ -2031,7 +2032,7 @@ This is the minimum you need to use Leo effectively.
 4. Many command key abbreviations are specified in the Syntax Coloring panel.
 
 See the Appendices for a concise summary of information about Leo.</t>
-<t tx="T17">leo.py 3.5 b6                                   August 13, 2002
+<t tx="T17">leo.py 3.5 b7                                  August 13, 2002
 
 Highlights:
 

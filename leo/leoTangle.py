@@ -3696,8 +3696,10 @@ class tangleCommands:
 							self.tangle_directory = dir ; break
 						elif issue_error_flag:
 							self.warning("ignoring invalid " + kind + " directory: " + dir)
-					elif issue_error_flag:
-						self.warning("ignoring relative path: " + dir)
+					else:
+						path,f = os.path.split(dir)
+						if path and len(path) > 0 and issue_error_flag:
+							self.warning("ignoring relative path: " + dir)
 		
 		if not self.tangle_directory and issue_error_flag:
 			self.pathError("No directory specified by @root, @path or Preferences.")
