@@ -331,7 +331,6 @@ class LeoApp:
 				trace("ignoring invalid " + src + " encoding: " + `encoding`)
 				
 		color = choose(self.tkEncoding=="ascii","red","blue")
-		es("Text encoding: " + self.tkEncoding, color=color)
 	#@nonl
 	#@-node:app.setEncoding
 	#@+node:app.setLeoID
@@ -346,7 +345,8 @@ class LeoApp:
 		# This would be set by in Python's sitecustomize.py file.
 		try:
 			app.leoID = sys.leoID
-			es("leoID = " + app.leoID, color="orange")
+			if not app.batchMode:
+				es("leoID = " + app.leoID, color="orange")
 			return
 		except:
 			app.leoID = None
