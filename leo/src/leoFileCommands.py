@@ -518,12 +518,17 @@ class baseFileCommands:
                 elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
                 elif self.matchTag(">"): break
                 else: self.getUnknownTag() # New in 4.1: ignore all other tags.
-            #
-            if not self.getOpenTag("<find_string"): # 7/30/04: Allow <find_string/>
+    
+            # # 7/31/04: Allow only <find_string> or <find_string/>
+            if self.getOpenTag("<find_string>"): 
+                c.find_text = ""
+            else:
                 c.find_text = self.getEscapedString()
                 self.getTag("</find_string>")
-            #
-            if not self.getOpenTag("<change_string"): # 7/30/04: Allow <change_string/>
+            # 7/31/04: Allow only <change_string> or <change_string/>
+            if self.getOpenTag("<change_string>"): 
+                c.change_text = ""
+            else:
                 c.change_text = self.getEscapedString()
                 self.getTag("</change_string>")
             #
