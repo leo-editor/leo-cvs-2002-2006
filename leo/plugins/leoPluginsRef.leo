@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3121" clone_windows="0"/>
-<globals body_outline_ratio="0.54525862069">
-	<global_window_position top="15" left="332" height="928" width="834"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3128" clone_windows="0"/>
+<globals body_outline_ratio="0.571120689655">
+	<global_window_position top="8" left="230" height="928" width="974"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -182,14 +182,12 @@
 <v t="bwmulder.20040602230426"><vh>test_main</vh></v>
 </v>
 </v>
-<v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
 <v t="ekr.20040918165144.1"><vh>Draw config dialog</vh></v>
 <v t="ekr.20040918165144.2"><vh>Parse jEdit description files</vh></v>
 <v t="ekr.20040918165144.3"><vh>Convert to Python indices</vh></v>
 <v t="ekr.20040918165144.4"><vh>Convert to new Undo</vh></v>
 <v t="ekr.20040918165144.5"><vh>New syntax coloring (threaded)</vh></v>
 <v t="ekr.20040918165144.6"><vh>Check Import feature</vh></v>
-<v t="ekr.20040918165144.7"><vh>Emacs-style keystroke handling</vh></v>
 <v t="ekr.20040918165144.8"><vh>Maybe:  add translation feature to g.es</vh></v>
 <v t="ekr.20040918165144.9"><vh>Write script to find args to g.es()</vh></v>
 <v t="ekr.20040918165144.10"><vh>New atFile organization (user tangle/untangle)</vh></v>
@@ -199,7 +197,7 @@
 <v t="ekr.20040918165427.5"><vh>Leo to docbook xml plugin: Leo2AsciiDoc</vh></v>
 <v t="ekr.20040918165427.6"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
@@ -262,9 +260,12 @@
 </v>
 <v t="edream.110203113231.741"><vh>@thin add_directives.py</vh></v>
 <v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
+<v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
 <v t="edream.110203113231.727"><vh>@thin mod_timestamp.py</vh></v>
 <v t="edream.110203113231.720"><vh>@thin outline_export.py</vh></v>
 <v t="ekr.20041021120118"><vh>@thin pretty_print.py</vh></v>
+<v t="mork.20041022090036.1"
+expanded="ekr.20041109175757,ekr.20041109165734,"><vh>@thin templates.py</vh></v>
 <v t="edream.110203113231.722"><vh>mod_autosave</vh>
 <v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
 <v t="edream.110203113231.724"><vh>@thin mod_autosave.py</vh></v>
@@ -309,7 +310,8 @@
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
 <v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
 </v>
-<v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
+<v t="ekr.20041017043622"
+marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@thin autocompleter.py</vh></v>
 </v>
 <v t="edream.110403140857"><vh>color_markup.py (requires add-directives plugin)</vh>
 <v t="edream.110403140857.1"><vh>Plugin documentation</vh>
@@ -350,17 +352,17 @@
 <v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
 <v t="ekr.20041002162608"><vh>Status Line</vh>
 <v t="ekr.20041002162608.1"><vh>Tk Notes</vh>
-<v t="ekr.20041002163806" a="M"><vh>*** How to use Tk bindtags</vh></v>
+<v t="ekr.20041002163806"><vh>*** How to use Tk bindtags</vh></v>
 <v t="ekr.20041002162608.2"><vh>Delay body display so alt+arrow keys aren't slowed (threaded colorizer?)</vh></v>
-<v t="ekr.20041002162608.6" a="M"><vh>How to detect changes in text</vh></v>
+<v t="ekr.20041002162608.6"><vh>How to detect changes in text</vh></v>
 </v>
 <v t="ekr.20041027065222"><vh>To do</vh></v>
-<v t="ekr.20040201060959"
-marks="ekr.20041026133619,"><vh>@thin status_line.py</vh></v>
+<v t="ekr.20040201060959"><vh>@thin status_line.py</vh></v>
 </v>
 </v>
-<v t="ekr.20040915073259" a="M"><vh>Enhancing windows</vh>
+<v t="ekr.20040915073259"><vh>Enhancing windows</vh>
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
+<v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
 <v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
 <v t="ekr.20040915073637"><vh>@thin TabbedLog.py</vh></v>
 <v t="ekr.20040915075530"><vh>@thin UASearch.py</vh></v>
@@ -539,6 +541,10 @@ marks="ekr.20041026133619,"><vh>@thin status_line.py</vh></v>
 <v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
 <v t="EKR.20040517075715.20" tnodeList="EKR.20040517075715.20"><vh>@file-nosent word_export.ini</vh></v>
 </v>
+<v t="ekr.20041107165824"><vh>temacs &amp; usetemacs</vh>
+<v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
+<v t="mork.20041030164547"><vh>@thin temacs.py</vh></v>
+</v>
 </v>
 <v t="EKR.20040517080049"><vh>Files</vh>
 <v t="EKR.20040517080049.1"><vh>@thin empty_leo_file.py</vh></v>
@@ -562,8 +568,7 @@ marks="ekr.20041026133619,"><vh>@thin status_line.py</vh></v>
 <v t="EKR.20040517080555.36"><vh>@thin scripts_menu.py</vh></v>
 </v>
 <v t="edream.110203113231.872"><vh>New kinds of nodes</vh>
-<v t="ekr.20040910070811.1"
-marks="ekr.20040910070811.10,"><vh>@thin run_nodes.py</vh></v>
+<v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
 <v t="edream.110203113231.873"><vh>@thin at_folder.py</vh></v>
 <v t="edream.110203113231.876"><vh>@thin read_only_nodes.py</vh></v>
 <v t="edream.111803100242"><vh>@thin rst.py</vh></v>
@@ -634,8 +639,7 @@ marks="ekr.20040910070811.10,"><vh>@thin run_nodes.py</vh></v>
 <v t="ekr.20040809151600"><vh>spellpyx</vh>
 <v t="ekr.20040809165421.1"><vh>Installing this plugin</vh></v>
 <v t="ekr.20040809151600.4"><vh>Notes: e</vh></v>
-<v t="ekr.20040809151600.1"
-marks="ekr.20040915052810,"><vh>@thin spellpyx.py</vh></v>
+<v t="ekr.20040809151600.1"><vh>@thin spellpyx.py</vh></v>
 <v t="ekr.20040809151600.52"><vh>aspell-1.1</vh>
 <v t="ekr.20040809160744"><vh>Notes: e</vh></v>
 <v t="ekr.20040809161108"><vh>Notes: Gary Bishop</vh></v>
@@ -653,29 +657,21 @@ marks="ekr.20040915052810,"><vh>@thin spellpyx.py</vh></v>
 </v>
 <v t="ekr.20040809110900"><vh>Tested (All these work in 4.2)</vh></v>
 </v>
-<v t="ekr.20040929104807"><vh>4.3 prototype plugins</vh>
-<v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
-<v t="ekr.20041011102931"><vh>@thin xsltWithNodes.py</vh></v>
+<v t="ekr.20041103052443"><vh>Script to find and replace all functions in leoGlobals.py</vh>
+<v t="ekr.20041103052443.1"><vh>findFunctionsInTree</vh></v>
+<v t="ekr.20041103052443.2"><vh>findDefs</vh></v>
+<v t="ekr.20041103052443.3"><vh>prependNamesInTree</vh>
+<v t="ekr.20041103052443.4"><vh>&lt;&lt; look for name followed by '(' &gt;&gt;</vh></v>
+<v t="ekr.20041103052443.5"><vh>&lt;&lt; print before and after &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041103052443.6"><vh>&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040929104807" a="E"><vh>4.3  plugins (in progress)</vh>
+<v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
 <v t="ekr.20041017035937"><vh>@thin table.py</vh></v>
-<v t="EKR.20040605181725"><vh>Autocompleter</vh>
-<v t="EKR.20040605181725.1"><vh>Configuration</vh>
-<v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
-<v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
-</v>
-<v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
-</v>
-<v t="bwmulder.20041017125718"><vh>@thin mod_shadow.py</vh></v>
-<v t="ekr.20041019072849"><vh>Note:  word_export.ini mysteriously changed</vh></v>
-<v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
-<v t="mork.20041022090036.1"><vh>@thin templates.py</vh></v>
-<v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
-<v t="mork.20041014112843.1"><vh>@thin temacs.py</vh></v>
-<v t="ekr.20040915144649"><vh>chapters.py (DOES NOT WORK WITH 4.2)</vh>
-<v t="ekr.20040915144649.1"><vh>About .2</vh></v>
-<v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
-<v t="ekr.20040915144649.17"><vh>Patch1</vh></v>
-<v t="ekr.20040915144649.18"><vh>Patch2</vh></v>
-</v>
+<v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
+<v t="mork.20040926105355.1" a="TV"><vh>@thin chapters.py</vh></v>
+<v t="bwmulder.20041017125718" a="M"><vh>@thin mod_shadow.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -7607,122 +7603,6 @@ g.plugin_signon(__name__)</t>
     ("Open LeoConfig.leo", "打开 LeoConfig.leo"),
     ("Apply Settings", "应用设置")</t>
 <t tx="ekr.20040915073259"></t>
-<t tx="ekr.20040915144649"></t>
-<t tx="ekr.20040915144649.1">@killcolor
-
-RE: Chapters.py :)  
-2004-05-17 14:16
-Ok, here comes .2. Things that are new, aside from bug fixes and such:
-
-1. Trash. If there is a Chapter in the Leo project called 'Trash' all deleted nodes are deposited there. Then when deleted in the 'Trash' chapter it is finally removed. There is an option to quickly add a Trash barrel in the menu.
-2. Menu moved from Outline to being summoned by right clicking on a chapter tab or in the area of the tabs.
-3. Swapping Chapters. Swap one Chapter for another one.
-4. Conversion ops. Take one Outline and turn each node into a Chapter. The convers operation is also there, take each top level node in each Chapter and add it to one Chapter.
-5. Import/Export. You are now able to load leo files as Chapters. This means, for example, that if you have 5 Outlines that you would like to bind together as one Leo file but keep their separateness you can now import those 5 Outlines into there own Chapters. You can also Export a single Chapter into it's own separate Leo file.
-6. Search and Clone. This functionality is very similar to the Filtered Hoist concept. You decide which Chapter you want your search results to appear in and a dialog will pop up. You can enter simple text or a more complex regular expression and the function will search all the outlines and create a node with the results as children.
-7. Editors now have headlines indicating what Chapters and what node are being worked on.</t>
-<t tx="ekr.20040915144649.17">import zipfile
-import sys
-
-if len( sys.argv ) &gt; 1 and zipfile.is_zipfile( sys.argv[ 1 ] ):
-      
-    f = zipfile.ZipFile( sys.argv[ 1 ] , mode = 'r')   
-    f2 = zipfile.ZipFile( 'new-' + sys.argv[ 1 ] , mode = 'w' )
-    for i ,z in enumerate( f.namelist() ):  
-        i = str( i + 1 )
-        zi = f.getinfo( z )
-        zi.comment = zi.filename
-        zi.filename = i
-        s = f.read( z )
-        f2.writestr( zi, s )
-            
-    f.close()
-    f2.close()
-    import os
-    os.rename( sys.argv[ 1 ], '%s%s' %( 'old', sys.argv[ 1 ] ) )
-    os.rename( 'new-' +sys.argv[ 1 ], sys.argv[ 1 ]  )
-</t>
-<t tx="ekr.20040915144649.18">you need the reportlab package installed to make this work.  reportlab can be
-downloaded from:
-http://www.reportlab.org/downloads.html
-
-Here are the changes:
-At the bottom of the def makeTabMenu, add:
-    try:
-        import reportlab
-        tmenu.add_command( label = 'Convert To PDF', command = lambda c = c:
-doPDFConversion( c ) )
-    except Exception: 
-        g.es( "no reportlab" )
-
-Add these defs to the Chapters codebase:
-    
-def doPDFConversion( c ):
-    import cStringIO
-    from reportlab.platypus import SimpleDocTemplate,  Paragraph , Spacer 
-    from reportlab.lib.styles import getSampleStyleSheet 
-    from reportlab.lib.units import inch
-    from reportlab.rl_config import defaultPageSize
-    PAGE_HEIGHT = defaultPageSize[ 1 ]
-    PAGE_WIDTH = defaultPageSize[ 0 ]
-    styles = getSampleStyleSheet()
-    pinfo = c.frame.shortFileName()
-    pinfo1 = pinfo.rstrip( '.leo' )
-    cs = cStringIO.StringIO()
-    doc = SimpleDocTemplate( cs , showBoundary = 1)
-    Story = [Spacer(1,2*inch)] 
-    pagenames = notebooks[ c ].pagenames()
-    for n,z in enumerate( pagenames ):
-        n = n + 1
-        sv = getSV( z , c)
-        tree = c.frame.trees[ sv ]
-        v = tree.rootVnode()
-        _changeTreeToPDF( sv.get(), n, v , c, Story, styles)
-    def otherPages( canvas, doc , pageinfo = pinfo):
-            canvas.saveState()
-            canvas.setFont('Times-Roman',9) 
-            canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo))
-            canvas.restoreState() 
-    doc.build(Story,  onLaterPages= otherPages)
-    f = open( '%s.pdf' % pinfo1, 'w' )
-    cs.seek( 0 )
-    f.write( cs.read() )
-    f.close()
-    cs.close()
-
-def _changeTreeToPDF( name, num, v, c, Story, styles ):
-    import copy
-    from reportlab.platypus import SimpleDocTemplate,  Paragraph , Spacer,
-PageBreak
-    from reportlab.lib.units import inch
-    enc = c.importCommands.encoding
-    hstyle = styles[ 'title' ]
-    Story.append( Paragraph( 'Chapter %s: %s' % ( num, name), hstyle ) )
-    while v:
-        head = v.moreHead( 0 )
-        head = toEncodedString(head,enc,reportErrors=True) 
-        s = head +'\n'
-        body = v.moreBody() # Inserts escapes.
-        if len(body) &gt; 0:
-            body = toEncodedString(body,enc, reportErrors=True)
-            s = s + body
-            s =s.replace( '&amp;' ,'&amp;amp;' )
-            s = s.replace( '&lt;', '&amp;lt;' )
-            s = s.replace( '&gt;', '&amp;gt;' )
-            s = s.replace( '"', '&amp;quot;' )
-            s = s.replace( "`", '&amp;apos;' )
-            s = s.split( '\n' )
-            for z in s:
-                style = styles[ "Normal" ]
-                style = copy.copy( style )
-                style.leftIndent = len( z ) - len( z.lstrip())
-                if style.leftIndent:
-                    style.firstLineIndent = style.leftIndent
-                Story.append( Paragraph( z, style ) )
-            Story.append( Spacer( 1, 0.2 * inch ) )
-        v = v.threadNext() 
-    Story.append( PageBreak() )
-</t>
 <t tx="ekr.20040918165144">@
 Each can be done without impacting other code.
 Each can be done relatively easily: one week or less</t>
@@ -7732,7 +7612,6 @@ Each can be done relatively easily: one week or less</t>
 <t tx="ekr.20040918165144.4"></t>
 <t tx="ekr.20040918165144.5"></t>
 <t tx="ekr.20040918165144.6"></t>
-<t tx="ekr.20040918165144.7"></t>
 <t tx="ekr.20040918165144.8"></t>
 <t tx="ekr.20040918165144.9"></t>
 <t tx="ekr.20040918165144.10"></t>
@@ -7801,7 +7680,7 @@ That web site is produced from a Leo outline.
     Michael Dawson</t>
 <t tx="ekr.20040918165427.6"></t>
 <t tx="ekr.20040919094459"></t>
-<t tx="ekr.20040929104807"># These will be folded into Leo's core after thorough testing</t>
+<t tx="ekr.20040929104807"></t>
 <t tx="ekr.20041001210557"></t>
 <t tx="ekr.20041002162608"></t>
 <t tx="ekr.20041002162608.1">@killcolor</t>
@@ -7899,7 +7778,6 @@ top.title(title)
 self.frame = frame = Tk.Frame(top)
 frame.pack(side="top", fill='both', expand=1, padx=5, pady=5)</t>
 <t tx="ekr.20041019072632"></t>
-<t tx="ekr.20041019072849"></t>
 <t tx="ekr.20041027065222">** Incremental find.
 
 - A good way to show options without showing find panel?
@@ -7982,6 +7860,281 @@ when running @test or @suite nodes. needed reload unittest.
 htmlize now calls the python webbrowser module for output.
 
 e</t>
+<t tx="ekr.20041103052443"># Execute this in a script button.
+
+import leoGlobals as g
+import string
+
+c = g.top()
+
+@others
+
+if 1:
+    &lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;
+else:
+    p = g.findNodeAnywhere("@file leoGlobals.py")
+    nameList = findFunctionsInTree(p)
+
+    nameList.sort() ; g.enl()
+    for name in nameList: g.es("'%s'," % name)
+    
+    s = "%d functions in leoGlobals.py" % len(nameList)
+    print s ; g.es(s)
+
+
+p = c.currentPosition()
+g.enl() ; g.enl()
+count = prependNamesInTree(p,nameList,"g.",replace=True) # Just prints if replace==False.
+s = "%d --- done --- " % count
+print s ; g.es(s)</t>
+<t tx="ekr.20041103052443.1">def findFunctionsInTree(p):
+    
+    nameList = []
+    for p in p.self_and_subtree_iter():
+        names = findDefs(p.bodyString())
+        if names:
+            for name in names:
+                if name not in nameList:
+                    nameList.append(name)
+    return nameList</t>
+<t tx="ekr.20041103052443.2">def findDefs(body):
+    
+    lines = body.split('\n')
+    names = []
+    for s in lines:
+        i = g.skip_ws(s,0)
+        if g.match(s,i,"class"):
+            return [] # The classes are defined in a single node.
+        if g.match(s,i,"def"):
+            i = g.skip_ws(s,i+3)
+            j = g.skip_c_id(s,i)
+            if j &gt; i:
+                name = s[i:j]
+                if g.match(name,0,"__init__"): 
+                    return [] # Disallow other class methods.
+                names.append(name)
+    return names</t>
+<t tx="ekr.20041103052443.3">def prependNamesInTree(p,nameList,prefix,replace=False):
+    
+    c = p.c
+    
+    assert(len(prefix) &gt; 0)
+    ch1 = string.letters + '_'
+    ch2 = string.letters + string.digits + '_'
+    def_s = "def " ; def_n = len(def_s)
+    prefix_n = len(prefix)
+    total = 0
+    c.beginUpdate()
+    for p in p.self_and_subtree_iter():
+        count = 0 ; s = p.bodyString()
+        printFlag = False
+        if s:
+            for name in nameList:
+                i = 0 ; n = len(name)
+                while 1:
+                    &lt;&lt; look for name followed by '(' &gt;&gt;
+            if count and replace:
+                if 0:
+                    &lt;&lt; print before and after &gt;&gt;
+                p.setBodyStringOrPane(s)
+                p.setDirty()
+        g.es("%3d %s" % (count,p.headString()))
+        total += count
+    c.endUpdate()
+    return total</t>
+<t tx="ekr.20041103052443.4">i = s.find(name,i)
+if i == -1:
+    break
+elif g.match(s,i-1,'.'):
+    i += n # Already an attribute.
+elif g.match(s,i-prefix_n,prefix):
+    i += n # Already preceded by the prefix.
+elif g.match(s,i-def_n,def_s):
+    i += n # preceded by "def"
+elif i &gt; 0 and s[i-1] in ch1:
+    i += n # Not a word match.
+elif i+n &lt; len(s) and s[i+n] in ch2:
+    i += n # Not a word match.
+else:
+    j = i + n
+    j = g.skip_ws(s,j)
+    if j &gt;= len(s) or s[j] != '(':
+        i += n
+    else: # Replace name by prefix+name
+        s = s[:i] + prefix + name + s[i+n:]
+        i += n ; count += 1
+        # g.es('.',newline=False)
+        if 1:
+            if not printFlag:
+                printFlag = True
+                # print p.headString()
+            print g.get_line(s,i-n)</t>
+<t tx="ekr.20041103052443.5">print "-"*10,count,p.headString()
+print "before..."
+print p.bodyString()
+print "-"*10,"after..."
+print s</t>
+<t tx="ekr.20041103052443.6">nameList = (
+'alert',
+'angleBrackets',
+'appendToList',
+'callerName',
+'CheckVersion',
+'choose',
+'clearAllIvars',
+'clear_stats',
+'collectGarbage',
+'computeLeadingWhitespace',
+'computeWidth',
+'computeWindowTitle',
+'createTopologyList',
+'create_temp_name',
+'disableIdleTimeHook',
+'doHook',
+'dump',
+'ecnl',
+'ecnls',
+'enableIdleTimeHook',
+'enl',
+'ensure_extension',
+'es',
+'esDiffTime',
+'es_error',
+'es_event_exception',
+'es_exception',
+'escaped',
+'executeScript',
+'file_date',
+'findNodeAnywhere',
+'findTopLevelNode',
+'findNodeInTree',
+'findReference',
+'find_line_start',
+'find_on_line',
+'flattenList',
+'funcToMethod',
+'getBaseDirectory',
+'getOutputNewline',
+'getTime',
+'get_Sherlock_args',
+'get_directives_dict',
+'get_leading_ws',
+'get_line',
+'get_line_after',
+'getpreferredencoding',
+'idleTimeHookHandler',
+'importFromPath',
+'initScriptFind',
+'init_sherlock',
+'init_trace',
+'isUnicode',
+'isValidEncoding',
+'is_c_id',
+'is_nl',
+'is_special',
+'is_ws',
+'is_ws_or_nl',
+'joinLines',
+'listToString',
+'makeAllNonExistentDirectories',
+'makeDict',
+'match',
+'match_c_word',
+'match_ignoring_case',
+'match_word',
+'module_date',
+'openWithFileName',
+'optimizeLeadingWhitespace',
+'os_path_abspath',
+'os_path_basename',
+'os_path_dirname',
+'os_path_exists',
+'os_path_getmtime',
+'os_path_isabs',
+'os_path_isdir',
+'os_path_isfile',
+'os_path_join',
+'os_path_norm',
+'os_path_normcase',
+'os_path_normpath',
+'os_path_split',
+'os_path_splitext',
+'pause',
+'plugin_date',
+'plugin_signon',
+'printDiffTime',
+'printGc',
+'printGcRefs',
+'printGlobals',
+'printLeoModules',
+'print_bindings',
+'print_stats',
+'readlineForceUnixNewline',
+'redirectStderr',
+'redirectStdout',
+'removeLeadingWhitespace',
+'removeTrailingWs',
+'reportBadChars',
+'restoreStderr',
+'restoreStdout',
+'sanitize_filename',
+'scanAtEncodingDirective',
+'scanAtFileOptions',
+'scanAtLineendingDirective',
+'scanAtPagewidthDirective',
+'scanAtRootOptions',
+'scanAtTabwidthDirective',
+'scanDirectives',
+'scanError',
+'scanf',
+'set_delims_from_language',
+'set_delims_from_string',
+'set_language',
+'shortFileName',
+'skip_blank_lines',
+'skip_block_comment',
+'skip_braces',
+'skip_c_id',
+'skip_heredoc_string',
+'skip_leading_ws',
+'skip_leading_ws_with_indent',
+'skip_line',
+'skip_long',
+'skip_matching_delims',
+'skip_nl',
+'skip_non_ws',
+'skip_parens',
+'skip_pascal_begin_end',
+'skip_pascal_block_comment',
+'skip_pascal_braces',
+'skip_pascal_string',
+'skip_php_braces',
+'skip_pp_directive',
+'skip_pp_if',
+'skip_pp_part',
+'skip_python_string',
+'skip_string',
+'skip_to_char',
+'skip_to_end_of_line',
+'skip_to_semicolon',
+'skip_typedef',
+'skip_ws',
+'skip_ws_and_nl',
+'splitLines',
+'stat',
+'stdErrIsRedirected',
+'stdOutIsRedirected',
+'toEncodedString',
+'toUnicode',
+'toUnicodeFileEncoding',
+'top',
+'trace',
+'trace_tag',
+'update_file_if_changed',
+'utils_rename',
+'windows',
+'wrap_lines')</t>
+<t tx="ekr.20041107165824"></t>
 <t tx="pap.20041006194759">def getDetails(self, text):
     """Get the details of the plugin
     
@@ -7994,7 +8147,10 @@ e</t>
     """
     self.is_plugin = self.hasImport(text, "leoPlugins") 
     self.version = self.getPattern(text, r'__version__\s*=\s*"(.*?)"', "-")
-    self.description = self.getPattern(text, r'"""(.*?)"""', "Unknown")
+    # Bug fix: 11/9/04: allow both single and double triple-quoted strings.
+    pat1 = self.getPattern(text, r'"""(.*?)"""',"")
+    pat2 = self.getPattern(text, r"'''(.*?)'''","")
+    self.description = pat1 or pat2 or "Unknown"
     self.commands = sets.Set(self.getPatterns(text, "def cmd_(\w*?)\("))
     self.handlers = sets.Set(self.getPatterns(text, r'registerHandler\("(.*?)"'))
     if 1: # Just look for the matching .ini file.

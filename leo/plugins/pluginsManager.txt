@@ -54,7 +54,7 @@
     # arrows.py
 
 # Handles autocompletion when the user types '.' or '(' characters.
-# autocompleter.py
+#autocompleter.py
 
 # Allows coloring of wiki-style markup.
     # NOTE: requires add_directives.py plugin.

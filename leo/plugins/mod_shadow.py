@@ -1767,7 +1767,5 @@ if active:
    __version__ = "0.1"
    print "Shadow plugin enabled"
    g.es("Shadow plugin enabled: Use a LEO subfolder for files with LEO sentinels",color="orange")
-   
-#@nonl
 #@-node:bwmulder.20041017125718:@thin mod_shadow.py
 #@-leo

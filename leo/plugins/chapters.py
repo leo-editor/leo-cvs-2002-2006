@@ -1,7 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:mork.20040926105355.1:@thin chapters.py
-#@<< docstring >>
-#@+node:ekr.20041109091913:<< docstring >>
+#@<<docstring>>
+#@+node:ekr.20041109123143:<<docstring>>
 '''This plugin creates separate outlines called "chapters" within a single .leo file.  Clones work between Chapters.
 
 Requires Python Mega Widgets and Leo 4.2 or above.
@@ -22,8 +22,10 @@ Warnings:
 - Outlines containing multiple chapters are stored as a zipped file that can only be read when this plugin has been enabled.
 '''
 #@nonl
-#@-node:ekr.20041109091913:<< docstring >>
+#@-node:ekr.20041109123143:<<docstring>>
 #@nl
+
+# To do:  Find/Change does not appear to work.
 
 #@@language python
 #@@tabwidth -4
@@ -138,6 +140,7 @@ class Chapter:
         self.frame = frame
         self.canvas = canvas
         self.treeBar = frame.treeBar
+    
         if hasattr( c, 'cChapter' ):
             tn = leoNodes.tnode( '', 'New Headline' )
             vn = leoNodes.vnode( c, tn )
@@ -155,9 +158,9 @@ class Chapter:
     #@+node:ekr.20041103051228.1:_saveInfo
     def _saveInfo( self ):
         
-        self.cp = self.c._currentPosition
-        self.rp = self.c._rootPosition
-        self.tp = self.c._topPosition
+        self.cp = self.c._currentPosition.copy()
+        self.rp = self.c._rootPosition.copy()
+        self.tp = self.c._topPosition.copy()
     #@nonl
     #@-node:ekr.20041103051228.1:_saveInfo
     #@+node:ekr.20041103051228.2:setVariables
@@ -1346,11 +1349,8 @@ def regexClone( c , name ):
 #@nonl
 #@-node:mork.20040930092207:functions without classification
 #@+node:mork.20040930091624.1:PDF
-#@+at
-# Needs reportlab to make these usefull.  Cant remember the URL for reportlab 
-# at the top of my head....
-#@-at
-#@@c
+# Requires reportlab toolkit at http://www.reportlab.org
+
 #@+others
 #@+node:mork.20040926105355.42:doPDFConversion
 def doPDFConversion( c ):
@@ -1375,20 +1375,28 @@ def doPDFConversion( c ):
         chapter = chapters[ sv ]
         v = chapter.rp
         _changeTreeToPDF( sv.get(), n, v , c, Story, styles, maxlen)
+    #@    << define otherPages callback >>
+    #@+node:ekr.20041109120739:<< define otherPages callback >>
     def otherPages( canvas, doc , pageinfo = pinfo):
-            canvas.saveState()
-            canvas.setFont('Times-Roman',9) 
-            canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo)) 
-            canvas.restoreState() 
-    doc.build(Story,  onLaterPages= otherPages)
+    
+        canvas.saveState()
+        canvas.setFont('Times-Roman',9) 
+        canvas.drawString(inch, 0.75 * inch, "Page %d %s" % (doc.page, pageinfo)) 
+        canvas.restoreState()
+    #@nonl
+    #@-node:ekr.20041109120739:<< define otherPages callback >>
+    #@nl
+    doc.build(Story,  onLaterPages = otherPages)
     f = open( '%s.pdf' % pinfo1, 'w' )
     cs.seek( 0 )
     f.write( cs.read() )
     f.close()
     cs.close()
+#@nonl
 #@-node:mork.20040926105355.42:doPDFConversion
 #@+node:mork.20040926105355.43:_changeTreeToPDF
-def _changeTreeToPDF( name, num, v, c, Story, styles , maxlen):
+def _changeTreeToPDF( name, num, p, c, Story, styles , maxlen):
+    
     import copy
     from reportlab.platypus import SimpleDocTemplate,  Paragraph , Spacer, PageBreak, XPreformatted
     from reportlab.lib.units import inch
@@ -1396,39 +1404,41 @@ def _changeTreeToPDF( name, num, v, c, Story, styles , maxlen):
     enc = c.importCommands.encoding
     hstyle = styles[ 'title' ]
     Story.append( Paragraph( 'Chapter %s: %s' % ( num, name), hstyle ) )
-    style = styles[ 'Normal' ]        
-    while v:
-			    head = v.moreHead( 0 )
-			    head = g.toEncodedString(head,enc,reportErrors=True) 
-			    s = head +'\n'
-			    body = v.moreBody() # Inserts escapes.
-			    if len(body) > 0:
-			        body = g.toEncodedString(body,enc, reportErrors=True)
-			        s = s + body
-			        s = s.split( '\n' )
-			        s2 = []
-			        for z in s:
-			            if len( z ) < maxlen:
-			                s2.append( z )
-			            else:
-			                while 1:
-			                    s2.append( z[ : maxlen ] )
-			                    if len( z[ maxlen: ] ) > maxlen:
-			                        z = z[ maxlen: ]
-			                    else:
-			                        s2.append( z[ maxlen: ] )
-			                        break
-
-			        s = '\n'.join( s2 )
-			        s =s.replace( '&' ,'&amp;' )
-			        s = s.replace( '<', '&lt;' )
-			        s = s.replace( '>', '&gt;' )
-			        s = s.replace( '"', '&quot;' )
-			        s = s.replace( "`", '&apos;' )
-			        Story.append( XPreformatted( s, style ) )
-			        Story.append( Spacer( 1, 0.2 * inch ) )
-			    v = v.threadNext() 
+    style = styles[ 'Normal' ]
+    g.trace(p)
+    for v in p.self_and_subtree_iter():
+    # while v:
+        head = v.moreHead( 0 )
+        head = g.toEncodedString(head,enc,reportErrors=True) 
+        s = head +'\n'
+        body = v.moreBody() # Inserts escapes.
+        if len(body) > 0:
+            body = g.toEncodedString(body,enc, reportErrors=True)
+            s = s + body
+            s = s.split( '\n' )
+            s2 = []
+            for z in s:
+                if len( z ) < maxlen:
+                    s2.append( z )
+                else:
+                    while 1:
+                        s2.append( z[ : maxlen ] )
+                        if len( z[ maxlen: ] ) > maxlen:
+                            z = z[ maxlen: ]
+                        else:
+                            s2.append( z[ maxlen: ] )
+                            break
+            s = '\n'.join( s2 )
+            s = s.replace( '&' ,'&amp;' )
+            s = s.replace( '<', '&lt;' )
+            s = s.replace( '>', '&gt;' )
+            s = s.replace( '"', '&quot;' )
+            s = s.replace( "`", '&apos;' )
+            Story.append( XPreformatted( s, style ) )
+            Story.append( Spacer( 1, 0.2 * inch ) )
+        #v = v.threadNext() 
     Story.append( PageBreak() )
+#@nonl
 #@-node:mork.20040926105355.43:_changeTreeToPDF
 #@-others
 #@nonl
