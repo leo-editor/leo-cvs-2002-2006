@@ -159,7 +159,7 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.1860:createVnode (changed for 4.2) sets skip
     #@+node:ekr.20040326063413:getExistingVnode
-    def getExistingVnode (self,tref):
+    def getExistingVnode (self,tref,headline):
     
         tref1 = tref
         assert(tref > -1)
@@ -168,8 +168,9 @@ class baseFileCommands:
         try:
             return t.vnodeList[0]
         except IndexError:
-            g.trace(tref1,t,t.vnodeList)
-            # import traceback ; traceback.print_stack()
+            g.es("Missing vnode:",headline,color="red")
+            g.es("Probably an outline topology error.")
+            # g.trace(tref1,t,t.vnodeList)
             return None
     #@nonl
     #@-node:ekr.20040326063413:getExistingVnode
@@ -906,14 +907,13 @@ class baseFileCommands:
             headline = self.getEscapedString() ; self.getTag("</vh>")
         
         # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-        # g.trace(skip,tref,headline)
         if skip:
-            v = self.getExistingVnode(tref)
-        else:
-            v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+            v = self.getExistingVnode(tref,headline)
+        if v is None:
+            v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+            skip = skip or skip2
             if tnodeList:
                 v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-                # g.trace("%4d" % len(tnodeList),v)
     
         #@    << Set the remembered status bits >>
         #@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
