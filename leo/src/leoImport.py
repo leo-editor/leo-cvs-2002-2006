@@ -2018,7 +2018,7 @@ class baseLeoImportCommands:
 	
 	def convertCodePartToWeb (self,s,i,v,result):
 	
-		# line = get_line(s,i) ; trace(`line`)
+		# trace(get_line(s,i))
 		c = self.commands ; nl = self.output_newline
 		lb = choose(self.webType=="cweb","@<","<<")
 		rb = choose(self.webType=="cweb","@>",">>")
@@ -2158,13 +2158,14 @@ class baseLeoImportCommands:
 	#@nonl
 	# %defs a b c
 	#@-at
+	#@nonl
 	#@-node:convertCodePartToWeb
 	#@+node:convertDocPartToWeb (handle @ %def)
 	def convertDocPartToWeb (self,s,i,result):
 		
 		nl = self.output_newline
 	
-		# line = get_line(s,i) ; trace(`line`)
+		# trace(get_line(s,i))
 		if match_word(s,i,"@doc"):
 			i = skip_line(s,i)
 		elif match(s,i,"@ ") or match(s,i,"@\t") or match(s,i,"@*"):
@@ -2208,7 +2209,7 @@ class baseLeoImportCommands:
 		i = 0 ; result = "" ; docSeen = false
 		while i < len(s):
 			progress = i
-			# line = get_line(s,i) ; trace(`line`)
+			# trace(get_line(s,i))
 			i = skip_ws_and_nl(s,i)
 			if self.isDocStart(s,i) or match_word(s,i,"@doc"):
 				i,result = self.convertDocPartToWeb(s,i,result)
@@ -2249,13 +2250,12 @@ class baseLeoImportCommands:
 	
 	def copyPart (self,s,i,result):
 	
-		# line = get_line(s,i) ; trace(`line`)
+		# trace(get_line(s,i))
 		lb = choose(self.webType=="cweb","@<","<<")
 		rb = choose(self.webType=="cweb","@>",">>")
 		type = self.webType
 		while i < len(s):
 			progress = j = i # We should be at the start of a line here.
-			# line = get_line(s,i) ; trace(`line`)
 			i = skip_nl(s,i) ; i = skip_ws(s,i)
 			if self.isDocStart(s,i):
 				return i, result
@@ -2381,7 +2381,6 @@ class baseLeoImportCommands:
 	
 		self.setEncoding()
 		path, self.fileName = os.path.split(fileName) # path/fileName
-		# trace(`self.fileName`)
 		#@	<< Read file into s >>
 		#@+node:<< Read file into s >>
 		try:
@@ -2400,13 +2399,9 @@ class baseLeoImportCommands:
 		line_delim = start_delim = end_delim = None
 		#@	<< set delims from the header line >>
 		#@+node:<< set delims from the header line >>
-		#@+at 
-		#@nonl
 		# This code is similar to atFile::scanHeader.
-		#@-at
-		#@@c
 		
-		tag = "@+leo"
+		tag = "@+leo" ; tag2 = "-ver="
 		# Skip any non @+leo lines.
 		i = 0
 		while i < len(s) and not find_on_line(s,i,tag):
@@ -2422,6 +2417,9 @@ class baseLeoImportCommands:
 		i = skip_ws(s,i)
 		if match(s,i,tag): i += len(tag)
 		else: valid = false
+		# Skip a version tag. Bug fix: 10/15/03
+		if valid and match(s,i,tag2):
+			i += len(tag2) + 1 # Skip the tag and the actual version.
 		# The closing comment delim is the trailing non-whitespace.
 		i = j = skip_ws(s,i)
 		while i < len(s) and not is_ws(s[i]) and not is_nl(s,i):
@@ -2435,38 +2433,35 @@ class baseLeoImportCommands:
 		#@nl
 		if valid == false:
 			es("invalid @+leo sentinel in " + fileName)
+			return
+	
+		# trace("line: '%s', start: '%s', end: '%s'" % (line_delim,start_delim,end_delim))
+	
+		s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
+		ext = app.config.remove_sentinels_extension
+		if ext == None or len(ext) == 0:
+			ext = ".txt"
+		if ext[0] == '.':
+			newFileName = os.path.join(path,fileName+ext)
 		else:
-			if 0:
-				trace("line:"+`line_delim`+","+
-					"start:"+`start_delim`+","+
-					"end:"+`end_delim`)
-			s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
-			ext = app.config.remove_sentinels_extension
-			if ext == None or len(ext) == 0:
-				ext = ".txt"
-			if ext[0] == '.':
-				newFileName = os.path.join(path,fileName+ext)
-			else:
-				head,ext2 = os.path.splitext(fileName) 
-				newFileName = os.path.join(path,head+ext+ext2)
-			# newFileName = os.path.join(path,fileName+".txt") # 8/4/02: use txt, not tmp.
-			#@		<< Write s into newFileName >>
-			#@+node:<< Write s into newFileName >>
-			try:
-				# 10/14/02: support for output_newline setting.
-				mode = app.config.output_newline
-				mode = choose(mode=="platform",'w','wb')
-				file = open(newFileName,mode)
-				s = toEncodedString(s,self.encoding,reportErrors=true)
-				file.write(s)
-				file.close()
-				es("creating: " + newFileName)
-			except:
-				es("exception creating: " + newFileName)
-				es_exception()
-			#@nonl
-			#@-node:<< Write s into newFileName >>
-			#@nl
+			head,ext2 = os.path.splitext(fileName) 
+			newFileName = os.path.join(path,head+ext+ext2)
+		#@	<< Write s into newFileName >>
+		#@+node:<< Write s into newFileName >>
+		try:
+			mode = app.config.output_newline
+			mode = choose(mode=="platform",'w','wb')
+			file = open(newFileName,mode)
+			s = toEncodedString(s,self.encoding,reportErrors=true)
+			file.write(s)
+			file.close()
+			es("creating: " + newFileName)
+		except:
+			es("exception creating: " + newFileName)
+			es_exception()
+		#@nonl
+		#@-node:<< Write s into newFileName >>
+		#@nl
 	#@nonl
 	#@-node:removeSentinelsCommand
 	#@+node:removeSentinelLines
