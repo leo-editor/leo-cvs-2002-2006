@@ -585,7 +585,7 @@ def openWithFileName(fileName,old_c,enableLog=True):
     fileName = oldFileName # Use the idiosyncratic file name.
 
     try:
-        # 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
         if theFile:
             c,frame = app.gui.newLeoCommanderAndFrame(fileName)
@@ -595,6 +595,7 @@ def openWithFileName(fileName,old_c,enableLog=True):
                 app.lockLog()
                 frame.c.fileCommands.open(theFile,fileName) # closes file.
                 app.unlockLog()
+                g.app.config.readSettings(c,settingsFile=False)
             frame.openDirectory = g.os_path_dirname(fileName)
             g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
             return True, frame

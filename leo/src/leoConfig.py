@@ -521,7 +521,7 @@ class baseConfig:
                 g.es("reading settings in %s" % path,color="blue")
                 c = self.openSettingsFile(path)
                 if c:
-                    d = self.readSettings(c)
+                    d = self.readSettings(c,settingsFile=True)
                     if d:
                         if 0:
                             #@                        << print d >>
@@ -548,12 +548,18 @@ class baseConfig:
     # Called to read all leoSettings.leo file.
     # Also called when opening an .leo file to read @settings tree.
     
-    def readSettings (self,c):
+    def readSettings (self,c,settingsFile=True):
         
         """Read settings from a file that may contain an @settings tree."""
         
         parser = settingsTreeParser(c)
-        return parser.traverse()
+        d = parser.traverse()
+        
+        if not settingsFile:
+            g.trace("local settings:",d)
+            self.localOptionsDict[c] = d
+    
+        return d
     #@nonl
     #@-node:ekr.20041117083857.1:readSettings
     #@-node:ekr.20041117093246:Scanning @settings
@@ -577,7 +583,9 @@ class parserBaseClass:
         'bool','color','directory','font','int',
         'float','path','ratio','shortcut','string']
     
-    control_types = ['if','if-gui','if-platform','ignore','page','shortcuts']
+    control_types = [
+        'if','if-gui','if-platform',
+        'ignore','page','recent-files','settings','shortcuts']
     
     # Keys are settings names, values are (type,value) tuples.
     settingsDict = {}
@@ -607,6 +615,7 @@ class parserBaseClass:
             'path':         self.doPath,
             'page':         self.doPage,
             'ratio':        self.doRatio,
+            'recent-files': self.doRecentFiles,
             'shortcuts':    self.doShortcuts,
             'string':       self.doString,
         }
@@ -726,6 +735,15 @@ class parserBaseClass:
             self.valueError(p,kind,name,val)
     #@nonl
     #@-node:ekr.20041121125741:doRatio
+    #@+node:ekr.20041121151924:doRecentFiles
+    def doRecentFiles (self,p,kind,name,val):
+        
+        s = p.bodyString().strip()
+        if s:
+            lines = g.splitLines(s)
+            self.set("recent-files","recent-files",lines)
+    #@nonl
+    #@-node:ekr.20041121151924:doRecentFiles
     #@+node:ekr.20041120113848:doShortcut
     def doShortcut(self,p,kind,name,val):
         
@@ -819,7 +837,7 @@ class parserBaseClass:
             return c.nullPosition()
     #@nonl
     #@-node:ekr.20041120074536:settingsRoot
-    #@+node:ekr.20041120094940.9:settingsParser.set
+    #@+node:ekr.20041120094940.9:set (settingsParser)
     def set (self,kind,name,val):
         
         """Init the setting for name to val."""
@@ -833,7 +851,7 @@ class parserBaseClass:
         
         d[name] = kind,val
     #@nonl
-    #@-node:ekr.20041120094940.9:settingsParser.set
+    #@-node:ekr.20041120094940.9:set (settingsParser)
     #@+node:ekr.20041119204700.1:traverse
     def traverse (self):
         
@@ -843,7 +861,9 @@ class parserBaseClass:
         if not p:
             return None
     
-        while p:
+        self.settingsDict = {}
+        after = p.nodeAfterTree()
+        while p and p != after:
             result = self.visitNode(p)
             if result == "skip":
                 p.moveToNodeAfterTree()
@@ -897,7 +917,7 @@ class settingsTreeParser (parserBaseClass):
     
         if kind == "settings":
             pass
-        if kind not in self.control_types and val in (u'None',u'none','None','none','',None):
+        elif kind not in self.control_types and val in (u'None',u'none','None','none','',None):
             # None is valid for all data types.
             self.set(kind,name,None)
         elif kind in self.control_types or kind in self.basic_types:

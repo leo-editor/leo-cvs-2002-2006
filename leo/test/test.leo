@@ -8,6 +8,9 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
+<v t="ekr.20041121151002" a="E"><vh>@settings</vh>
+<v t="ekr.20041121151002.1" a="TV"><vh>@recent-files</vh></v>
+</v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
@@ -762,7 +765,7 @@
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
@@ -10927,5 +10930,8 @@ Bigger projects:
     top.grab_set() # Make the dialog a modal dialog.
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
+<t tx="ekr.20041121151002"></t>
+<t tx="ekr.20041121151002.1">a
+b</t>
 </tnodes>
 </leo_file>

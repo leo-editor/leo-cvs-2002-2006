@@ -709,7 +709,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.1975:destroyAllObjects
     #@+node:ekr.20031218072017.3965:destroyAllPanels
     def destroyAllPanels (self):
-        
+    
         """Destroy all panels attached to this frame."""
         
         panels = (self.comparePanel, self.colorPanel, self.findPanel, self.fontPanel, self.prefsPanel)
@@ -717,21 +717,16 @@ class leoTkinterFrame (leoFrame.leoFrame):
         for panel in panels:
             if panel:
                 panel.top.destroy()
-    
-        self.comparePanel = None
-        self.colorPanel = None
-        self.findPanel = None
-        self.fontPanel = None
-        self.prefsPanel = None
     #@nonl
     #@-node:ekr.20031218072017.3965:destroyAllPanels
     #@+node:ekr.20031218072017.1974:destroySelf
     def destroySelf (self):
         
         top = self.top # Remember this: we are about to destroy all of our ivars!
+        
+        # g.trace(self)
     
-        if g.app.windowList:
-            self.destroyAllObjects()
+        self.destroyAllObjects()
     
         top.destroy()
     #@nonl
