@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3759" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3766" clone_windows="0"/>
 <globals body_outline_ratio="0.47009569377990429">
-	<global_window_position top="10" left="376" height="836" width="837"/>
+	<global_window_position top="38" left="331" height="836" width="837"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -89,59 +89,22 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20040205065800" a="TV"><vh>To do: make changes</vh></v>
-<v t="ekr.20040131040356"><vh>4.1 rc4</vh>
-<v t="ekr.20040201114855"><vh>New plugins in 4.1 rc4</vh>
-<v t="ekr.20040201114855.42"><vh>mod_http.py plugin: Bernhard Mulder</vh></v>
-<v t="ekr.20040201114855.91"><vh>newButtons.py plugin: Paul Paterson</vh></v>
-<v t="ekr.20040201114855.29"><vh>nodenavigator.py plugin: Paul Paterson</vh></v>
-<v t="ekr.20040201114855.36"><vh>rowcol.py: EKR</vh></v>
-<v t="ekr.20040201114855.3"><vh>rst2.py plugin: Steve Zatz</vh></v>
-<v t="ekr.20040201114855.13"><vh>searchbox.py plugin: Paul Paterson</vh></v>
-<v t="ekr.20040201120903"><vh>status_line.py plugin: EKR</vh></v>
-</v>
-<v t="ekr.20040131041015"><vh>New features in 4.1 rc4</vh>
-<v t="ekr.20040131040544.10"><vh>Leo no longer automatically draws the status area</vh></v>
-<v t="ekr.20040131040544.21"><vh>Esc and enter key now work in the find panel</vh></v>
-<v t="ekr.20040131040544.55"><vh>Improved message for orphan nodes</vh></v>
-<v t="ekr.20040131040544.178"><vh>Eliminated marking nodes dirty unnecessarily</vh></v>
-<v t="ekr.20040131040544.222"><vh>Execute Script command now ends all nodes with a newline</vh></v>
-<v t="ekr.20040131040544.2"><vh>Added message when plugins are disabled</vh></v>
-<v t="ekr.20040201061329"><vh>Created status_line.py plugin</vh></v>
-<v t="ekr.20040201114855.105"><vh>Simplified operation of script-find/change &amp; improved documentation</vh>
-<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
-<v t="edream.111803060152.1"><vh>How it works</vh></v>
-<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
-<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
-</v>
-</v>
-<v t="ekr.20040201114855.106"><vh>Added done message to Mark Changed commands</vh></v>
-</v>
-<v t="ekr.20040131040356.1"><vh>Bugs fixed in 4.1 rc4</vh>
-<v t="ekr.20040131044727"><vh>Fixed several bugs when writing derived files</vh></v>
-<v t="ekr.20040131040754"><vh>Fixed several crashers</vh></v>
-<v t="ekr.20040131040544.5"><vh>Fixed "bad leo file" when reading some 3.x .leo files</vh></v>
-<v t="ekr.20040131040544.18"><vh>Fixed huge performance bug in cut/copy node commands</vh></v>
-<v t="ekr.20040131040544.32"><vh>Leo now properly re-enables drawing after exceptions</vh></v>
-<v t="ekr.20040201114855.107"><vh>Fixed major bug in tkFind.init</vh></v>
-<v t="ekr.20040131040544.73"><vh>Fixed bug in Move Up command</vh></v>
-<v t="ekr.20040131040544.81"><vh>Fixed bug in Import Derived File</vh></v>
-<v t="ekr.20040131040544.146"><vh>Fixed bugs related to saving read-only files</vh></v>
-<v t="ekr.20040131040544.169"><vh>Fixed bug in Import Python Window command when using Python 2.2</vh></v>
-<v t="ekr.20040131040544.228"><vh>Fixed bugs in Convert All BlanksTabs commands</vh></v>
-<v t="ekr.20040131040544.258"><vh>Fixed crashes in open_shell.py plugin</vh></v>
-<v t="ekr.20040131044136"><vh>Fixed several bugs involving cut &amp; paste</vh></v>
-<v t="ekr.20040131040544.227"><vh>Fixed whitespace problem in leoTkinterGui.py</vh></v>
-<v t="ekr.20040131100557"><vh>Fixed glitches when inserting node in hoisted outline</vh></v>
-<v t="ekr.20040203084228"><vh>Fixed bugs in search command</vh></v>
-</v>
-<v t="ekr.20040131040356.2"><vh>Bug fixed in previous 4.1 releases</vh></v>
-<v t="ekr.20040131040356.3"><vh>New code-level features</vh></v>
-<v t="ekr.20040131040356.4"><vh>New configuration settings</vh></v>
-<v t="ekr.20040131040356.5"><vh>New features</vh></v>
+<v t="ekr.20040216151748" a="TV"><vh>4.1 final</vh>
+<v t="ekr.20040217085036"><vh>Added several new plugins</vh></v>
+<v t="ekr.20040216152948"><vh>Added Toggle Angle Brackets command</vh></v>
+<v t="ekr.20040216153725"><vh>Changed Undo/Redo messages</vh></v>
+<v t="ekr.20040217075627"><vh>Fixed clone bug when pasting nodes</vh></v>
+<v t="ekr.20040217085036.1"><vh>Investigated encoding problem: it's a Python 2.3 bug</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
+<v t="ekr.20040216151748"><vh>4.1 final</vh>
+<v t="ekr.20040217085036"><vh>Added several new plugins</vh></v>
+<v t="ekr.20040216152948"><vh>Added Toggle Angle Brackets command</vh></v>
+<v t="ekr.20040216153725"><vh>Changed Undo/Redo messages</vh></v>
+<v t="ekr.20040217075627"><vh>Fixed clone bug when pasting nodes</vh></v>
+<v t="ekr.20040217085036.1"><vh>Investigated encoding problem: it's a Python 2.3 bug</vh></v>
+</v>
 <v t="ekr.20040131040356"><vh>4.1 rc4</vh>
 <v t="ekr.20040201114855"><vh>New plugins in 4.1 rc4</vh>
 <v t="ekr.20040201114855.42"><vh>mod_http.py plugin: Bernhard Mulder</vh></v>
@@ -1242,7 +1205,7 @@
 </v>
 <v t="edream.110203163054.818"><vh>Chapter 5: Using Leo's Commands</vh>
 <v t="edream.110203163054.819"><vh> The File Menu</vh>
-<v t="edream.110203163054.820" a="M"><vh>Loading, Saving and Reverting Files</vh></v>
+<v t="edream.110203163054.820"><vh>Loading, Saving and Reverting Files</vh></v>
 <v t="edream.110203163054.821"><vh>Communicating with external editors</vh>
 <v t="edream.110203163054.356"><vh>Open With command</vh>
 <v t="edream.110203163054.343"><vh>createOpenWithMenuFromTable</vh></v>
@@ -1807,6 +1770,7 @@
 <v t="edream.110203163054.1126"><vh>Escape convention</vh></v>
 <v t="edream.110203163054.1127"><vh>Grandchild</vh></v>
 <v t="edream.110203163054.1128"><vh>Headline</vh></v>
+<v t="ekr.20040216164644"><vh>Hoist &amp; dehoist</vh></v>
 <v t="edream.110203163054.1129"><vh>Leo, Leo1 and Leo2</vh></v>
 <v t="edream.110203163054.1130"><vh>Literate programming</vh></v>
 <v t="edream.110203163054.1131"><vh>Marking</vh></v>
@@ -6640,10 +6604,9 @@ The table argument describes the entries to be created.  This table is a sequenc
 - data is a tuple of the form (command,arg,ext)
 - command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
 - arg is an argument to be passed to the given command.
-- path is the full path name of the temporary file to be passed to the external editor.
 - ext is a file extension or None.
 
-When the user selects the Open With item corresponding to the table item Leo executes command(arg+path) where path is the full path to the temp file.
+When the user selects the Open With item corresponding to the table item Leo executes command(arg).
 If ext is not None, the temp file has the given extension.
 Otherwise, Leo computes an extension based on what @language directive is in effect.
 
@@ -9782,7 +9745,7 @@ A note about typography:  in this chapter command names and menu names will be c
 <t tx="edream.110203163054.819"></t>
 <t tx="edream.110203163054.820">The New command creates a new Leo main window.  The Open command opens an existing Leo file and shows it in a main window.  The Close command closes the topmost Leo window, and gives you an opportunity to save your work if you haven't yet done so.
 
-The Save, Save As and Save A Copy As commands save the topmost Leo window to a file.  The Save As and Save A Copy As commands create a complete copy of a Leo file.  The Save command updates the file without rewriting those parts that have not been changed.  As a result, the Save command is significantly faster than the Save As and Save A Copy As commands.
+The Save, Save As and Save To commands save the topmost Leo window to a file.  The Save As command changes the name of the outline being edited; the Save To command does not.
 
 The Revert command reloads a file, discarding any changes made to the file since it was last saved.
 
@@ -10333,8 +10296,8 @@ head = v.headString()
 print "head:", head
 
 # This won't really anyting because we haven changed body or head.
-v.setBodyStringOrPane(body)     # set body text of v to s.
-v.setHeadStringOrHeadline(head) # set headline text of v to s.</t>
+v.setBodyStringOrPane(body)     # set body text of v to body.
+v.setHeadStringOrHeadline(head) # set headline text of v to head.</t>
 <t tx="edream.110203163054.897">@nocolor
 The following shows how to access all the vnodes of an outline in order.
 @color
@@ -25000,47 +24963,80 @@ This changes the comment symbol to " ' " apostrophe... making comments parseable
 by a BASIC (or other language.)</t>
 <t tx="ekr.20040201120903">Adds a status line to the bottom of Leo windows.</t>
 <t tx="ekr.20040203084228">The Change All command was looping when the find pattern was '\n'.</t>
-<t tx="ekr.20040205065800">By: rogererens ( Roger Erens ) 
- RE: Documentation for 4.1rc3   
-2004-02-04 10:04  
+<t tx="ekr.20040216151748">Leo 4.1 Final              February 18, 2004
 
- Not specifically for 4.1rc3, but I noticed these inaccuracies in the documentation:
+Leo 4.1 Final is the culmination of four months of work. No significant bugs
+have been reported since 4.1 rc4. Several people have contributed nifty plugins
+recently. See leoPlugins.leo for full details.
 
-+ Notes
-+ Notes on LeoDocs.leo
-- Setting the headline and body text of the presently selected node
-in LeoDocs/Users Guide/Chapter 7/Basic scripts/Setting the headline and body text of the presently selected node:
+The highlights of Leo 4.1:
 
-v.setBodyStringOrPane(body) # set body text of v to s.
-v.setHeadStringOrHeadline(head) # set headline text of v to s.
+- Leo runs in batch mode when invoked with --script aScriptFile.py
+- Leo supports Unicode characters (e.g. Chinese) in path and file names.
+- @directives and section references are now valid when executing scripts.
+- @ignored and orphan nodes now valid in @file-nosent trees.
+- Script-based find/change commands.
+- Check Outline command.
+- Hoist &amp; DeHoist commands.
+- A new gui-agnostic architecture: useful for batch mode and unit tests.
+- Several new configuration settings.
+- Many new unit tests.
+- Excellent new plugins.
+- A host of bug fixes.</t>
+<t tx="ekr.20040216152948"></t>
+<t tx="ekr.20040216153725">Changed Undo/Redo messages:
 
-should be
+- Insert Outline to Insert Node.
+- Delete Outline to Delete Node.
+- Clone to Clone Node.
 
-v.setBodyStringOrPane(body) # set body text of v to body.
-v.setHeadStringOrHeadline(head) # set headline text of v to head.
+This is a real code change: it affects the undo/redo logic.</t>
+<t tx="ekr.20040216164644">Hoisting a node redraws the screen that node and its descendants becomes the only visible part of the outline.  Leo prevents the you from moving nodes outside the hoisted outline.  Dehoisting a node restores the outline.
 
-- createOpenWithMenuFromTable
-in LeoDocs/Users Guide/Chapter 5/The File Menu/Commuicating with external editors/Open With command/createOpenWithMenuFromTable node:
+Multiple hoists may be in effect: each dehoist undoes the effect of the immediately preceding hoist.</t>
+<t tx="ekr.20040217075627">Clone bits could be improperly set in some cases.  This bug would not have caused serious long-term problems.
 
-\- path is the full path name of the temporary file to be passed to the external editor.
+Steps to reproduce:
 
-is obsolete. I also think that this sentence
+1. Create a parent node (named 'cloned').
+2. Create two children nodes (one named 'dummy' and another named 'bottom') under the parent node 'cloned'.
+3. Move the 'bottom' node below the 'dummy' node.
+4. Clone node 'cloned'.
+5. Copy node 'dummy'.
+6. Paste node 'dummy' in between 'dummy' and 'bottom'.
+7. After pasting you'll see that 'bottom' is now marked as a cloned node.</t>
+<t tx="ekr.20040217085036">See leoPlugins.leo for full details.</t>
+<t tx="ekr.20040217085036.1">Here is the bug report I submitted to Python:
 
-When the user selects the Open With item corresponding to the table item Leo executes command(arg+path) where path is the full path to the temp file.
+The documentation for encoding lines at
 
-is out of date because of its reference to path. This is also stated in the @doc part in LeoPy.leo.
-- Open with...
-Open with... uses a command like "os.startfile" to open temporary files.
-It is stated that you can edit the temporary file with the editor as named in the "Open with..." submenu.
-However, the temporary files are edited with the application that is associated with their extension. In my case I always fire up vim with .txt-files.
-Hence the menu item would be better called something like "Open as..." with submenu items like ".doc file" or ".txt file"
-Or, use something else instead of "os.startfile" to really use the intended editor.
-- importing file of unknown type into @file
-this leads to the appearing of an @ignore directive at the first line of the bodytext. However, the Users Guide/Appendices/Directives/@ignores node states that this directive is not valid in @file trees??
-- Save To
-Save To is not described in Users Guide, Chapter 5, File Menu
+C:\Python23\Doc\Python-Docs-2.3.1\whatsnew\section-encodings.html
 
-Probably it's the same as 'Save as'  
-</t>
+states:
+
+"Encodings are declared by including a specially formatted comment in the
+first or second line of the source file."
+
+In fact, contrary to the implication, the Python 2.3 parser does not look
+for lines of the form:
+
+# -*- coding: &lt;encoding&gt; -*-
+
+For example, Python improperly scans the following line for an encoding
+
+#@+leo-ver=4-encoding=iso-8859-1.
+
+and reports that iso-8859-1. (note trailing dot) is an invalid encoding!
+
+The workaround for my app is to precede this line with the following line:
+
+# -*- coding: iso-8859-1 -*-
+
+This makes Python 2.3 happy.
+
+To make myself perfectly clear: Python has absolutely no right to complain
+about comment lines that do not have the form:
+
+# -*- coding: &lt;encoding&gt; -*-</t>
 </tnodes>
 </leo_file>
