@@ -326,14 +326,11 @@ class nullGui(leoGui):
 	
 		"""Run the gui's main loop."""
 		
-		script = self.script
+		if self.script:
+			print "Start of batch script...\n\n"
+			top().executeScript(script=self.script)
+			print "\nEnd of batch script"
 		
-		if script:
-			trace("nullGui executing script...\n\n")
-			from leoGlobals import top
-			top().executeScript(script=script)
-		else:
-			trace("nullGui: main loop: no script")
 	#@nonl
 	#@-node:runMainLoop
 	#@+node:oops
