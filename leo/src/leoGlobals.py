@@ -2180,10 +2180,21 @@ class mulderUpdateAlgorithm:
 	diffs in files without sentinels."""
 	
 	#@	@+others
+	#@+node:EKR.20040505103527:TO DO
+	#@+at
+	# 
+	# - is_sentinel is not strictly correct.  There must be an atFile method 
+	# that does the job absolutely correctly.
+	# 
+	# - Similarly, marker_from_extension can probably be replaced by a call to 
+	# some method in leoGlobals.py.
+	#@-at
+	#@-node:EKR.20040505103527:TO DO
 	#@+node:EKR.20040504150046.3:__init__
-	def __init__ (self):
+	def __init__ (self,testing=false,verbose=false):
 		
-		self.testing = false
+		self.testing = testing
+		self.verbose = false
 		self.do_backups = false
 	#@nonl
 	#@-node:EKR.20040504150046.3:__init__
@@ -2215,7 +2226,7 @@ class mulderUpdateAlgorithm:
 				while fat_pos < j:
 					line = fat_lines[fat_pos]
 					write_lines.append(line)
-					if self.testing: print "Copy sentinel:",fat_pos,line,
+					if self.testing and self.verbose: print "Copy sentinel:",fat_pos,line,
 					fat_pos += 1
 			j_last = j ; i += 1
 	
@@ -2360,7 +2371,7 @@ class mulderUpdateAlgorithm:
 	#@nonl
 	#@-node:EKR.20040505080156.3:getSentinelsFromFile/Lines
 	#@-node:EKR.20040505080156:Get or remove sentinel lines
-	#@+node:EKR.20040504150046.10:propagateDiffsToSentinelsFile (was pull_source)
+	#@+node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
 	def propagateDiffsToSentinelsFile(self,sourcefilename,targetfilename):
 		
 		#@	<< init propagateDiffsToSentinelsFile vars >>
@@ -2418,7 +2429,7 @@ class mulderUpdateAlgorithm:
 			#@-node:EKR.20040504150046.12:<<paranoia check>>
 			#@nl
 	#@nonl
-	#@-node:EKR.20040504150046.10:propagateDiffsToSentinelsFile (was pull_source)
+	#@-node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
 	#@+node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
 	def propagateDiffsToSentinelsLines (self,i_lines,j_lines,fat_lines,mapping):
 		
@@ -2441,6 +2452,7 @@ class mulderUpdateAlgorithm:
 		matcher = difflib.SequenceMatcher(None,i_lines,j_lines)
 		
 		testing = self.testing
+		verbose = self.verbose
 		#@nonl
 		#@-node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
 		#@nl
@@ -2449,14 +2461,16 @@ class mulderUpdateAlgorithm:
 		while fat_pos < mapping[0]:
 			line = fat_lines[fat_pos]
 			write_lines.append(line)
-			if testing: print "copy initial line",fat_pos,line,
+			if testing and verbose: print "copy initial line",fat_pos,line,
 			fat_pos += 1
 		#@nonl
 		#@-node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
 		#@nl
 		for tag, i1, i2, j1, j2 in matcher.get_opcodes():
 			if testing:
-				print ; print "Opcode",tag,i1,i2,j1,j2 ; print
+				if verbose: print
+				print "Opcode %7s %3d %3d %3d %3d" % (tag,i1,i2,j1,j2)
+				if verbose: print
 			#@		<< update and check the loop invariant >>
 			#@+node:EKR.20040504145804.4:<< update and check the loop invariant>>
 			# We need the ranges returned by get_opcodes to completely cover the source lines being compared.
@@ -2493,7 +2507,7 @@ class mulderUpdateAlgorithm:
 					write_lines.append(line)
 					fat_pos += 1
 				
-				if testing:
+				if testing and verbose:
 					print "Equal: synch i", i_pos,i2
 					print "Equal: synch j", j_pos,j2
 				
@@ -2523,10 +2537,14 @@ class mulderUpdateAlgorithm:
 				
 				while j_pos < j2:
 					line = j_lines[j_pos]
-					if testing: print "Replace:", line,
+					if testing:
+						print "Replace i:",i_pos,repr(i_lines[i_pos])
+						print "Replace j:",j_pos,repr(line)
+						i_pos += 1
+				
 					write_lines.append(line)
 					j_pos += 1
-					
+				
 				i_pos = i2
 				
 				# Copy the sentinels which might be between the changed code.         
@@ -2537,7 +2555,7 @@ class mulderUpdateAlgorithm:
 			elif tag == 'delete':
 				#@			<< handle 'delete' tag >>
 				#@+node:EKR.20040504145804.7:<< handle 'delete' tag >>
-				if testing:
+				if testing and verbose:
 					print "delete: i",i_pos,i1
 					print "delete: j",j_pos,j1
 				
@@ -2568,12 +2586,13 @@ class mulderUpdateAlgorithm:
 		while fat_pos < len(fat_lines):
 			line = fat_lines[fat_pos]
 			write_lines.append(line)
-			if testing: print "Append last line",line
+			if testing and verbose: print "Append last line",line
 			fat_pos += 1
 		#@nonl
 		#@-node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
 		#@nl
 		return write_lines
+	#@nonl
 	#@-node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
 	#@+node:EKR.20040504150046.5:report_mismatch
 	def report_mismatch (self,lines1,lines2,message,lines1_message,lines2_message):
