@@ -603,35 +603,39 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
-        if theFile:
-            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
-            frame.log.enable(enableLog)
-            g.app.writeWaitingLog() # New in 4.3: write queued log first.
-            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
-                app.setLog(frame.log,"openWithFileName")
-                app.lockLog()
-                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
-                app.unlockLog()
-                for frame in g.app.windowList:
-                    # The recent files list has been updated by menu.updateRecentFiles.
-                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
-            frame.openDirectory = g.os_path_dirname(fileName)
-            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
-            return True, frame
-        else:
-            g.es("can not open: " + fileName,color="red")
-            return False, None
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        frame.openDirectory = g.os_path_dirname(fileName)
+        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        return True, frame
     except IOError:
-        g.es("can not open: " + fileName, color="blue")
-        return False, None
+        try:
+            # Do not use string + here: it will fail for non-ascii strings!
+            g.es("can not open: %s" % (fileName), color="blue")
+            return False, None
+        except UnicodeError:
+            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            return False, None
     except:
-        if 1:
-            print "exceptions opening:", fileName
+        if 0:
+            print "exceptions opening: %s" % g.toEncodedString(fileName)
             traceback.print_exc()
         else:
-            g.es("exceptions opening: " + fileName,color="red")
+            g.es("exceptions opening: %s" % g.toEncodedString(fileName),color="red")
             g.es_exception()
         return False, None
+#@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20031218072017.3100:wrap_lines
 #@+at 
