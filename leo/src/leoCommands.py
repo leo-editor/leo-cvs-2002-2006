@@ -551,30 +551,46 @@ class baseCommands:
             return None
     #@nonl
     #@-node:ekr.20031218072017.2830:createOpenWithTempFile
-    #@+node:ekr.20031218072017.2832:openWithTempFilePath
+    #@+node:ekr.20031218072017.2832:c.openWithTempFilePath
     def openWithTempFilePath (self,p,ext):
         
         """Return the path to the temp file corresponding to p and ext."""
-    
-        name = "LeoTemp_%s_%s%s" % (
-            str(id(p.v.t)),
-            g.sanitize_filename(p.headString()),
-            ext)
-    
-        name = g.toUnicode(name,g.app.tkEncoding)
-    
-        if 1:
-            td = g.os_path_abspath(tempfile.gettempdir())
-        else:
-            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
-    
-        path = g.os_path_join(td,name)
         
-        g.trace(path)
-    
-        return path
+        if 0: # new code: similar to code in mod_tempfname.py plugin.
+            try:
+                # At least in Windows, user name may contain special characters
+                # which would require escaping quotes.
+                leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+            except:
+                leoTempDir = "LeoTemp"
+                g.es("Could not retrieve your user name.")
+                g.es("Temporary files will be stored in: %s" % leoTempDir)
+            
+            td = os.path.join(os.path.abspath(tempfile.gettempdir()),leoTempDir)
+            if not os.path.exists(td):
+                os.mkdir(td)
+            
+            name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+            path = os.path.join(td,name)
+            return path
+        else: # Original code.
+            name = "LeoTemp_%s_%s%s" % (
+                str(id(p.v.t)),
+                g.sanitize_filename(p.headString()),
+                ext)
+        
+            name = g.toUnicode(name,g.app.tkEncoding)
+        
+            if 1:
+                td = g.os_path_abspath(tempfile.gettempdir())
+            else:
+                td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+        
+            path = g.os_path_join(td,name)
+        
+            return path
     #@nonl
-    #@-node:ekr.20031218072017.2832:openWithTempFilePath
+    #@-node:ekr.20031218072017.2832:c.openWithTempFilePath
     #@-node:ekr.20031218072017.2823:openWith and allies
     #@+node:ekr.20031218072017.2833:close
     def close(self):
