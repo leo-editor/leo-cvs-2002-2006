@@ -19,6 +19,7 @@ class LeoApp:
 		self.config = None # The leoConfig instance.
 		self.configDir = None # The directory containing configuration info.
 		self.deleteOnClose = true # true: delete frame objects when a frame closes.
+		self.hookSyntaxError = false # true: syntax error: suppress further calls to hooks.
 		self.idle_imported = false # true: we have done an import idle
 		self.loadDir = None # The directory from which Leo was loaded.
 		self.log = None # The LeoFrame containing the present log.
@@ -153,10 +154,25 @@ class LeoApp:
 	#@-node:3::app.finishCreate
 	#@+node:4::app.handleOpenTempFiles
 	#@+body
+	#@+at
+	#  Try to remove temp files created with the Open With command.  This may 
+	# fail if the files are still open.
+	# 
+	# We can't use es here because the log stream no longer exists.
+
+	#@-at
+	#@@c 
+
 	def handleOpenTempFiles (self):
 		
 		for f,path in self.openWithFiles:
-			print path
+			if os.path.exists(path):
+				try:
+					os.remove(path)
+					print "deleting temp file:", path
+				except:
+					print "can not delete temp file:", path
+	
 	#@-body
 	#@-node:4::app.handleOpenTempFiles
 	#@+node:5::app.quit
@@ -164,6 +180,8 @@ class LeoApp:
 	def quit(self):
 	
 		# Wait until everything is quiet before really quitting.
+		handleStartHook("end1")
+	
 		self.destroyAllGlobalWindows()
 		self.handleOpenTempFiles()
 	

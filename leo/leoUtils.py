@@ -922,7 +922,134 @@ def readlineForceUnixNewline(f):
 
 #@-body
 #@-node:16::readlineForceUnixNewline (Steven P. Schaefer)
-#@+node:17::scanError
+#@+node:17::scanDirectives (utils)
+#@+body
+#@+at
+#  A general-purpose routine that scans v and its ancestors for directives.  
+# It returns a dict containing the settings in effect as the result of the 
+# @comment, @language, @pagewidth, @path and @tabwidth directives.  This code 
+# does not check on the existence of paths, and issues no error messages.
+# 
+# Perhaps this routine should be the basis of atFile.scanAllDirectives and 
+# tangle.scanAllDirectives, but I am loath to make any further to these two 
+# already-infamous routines.  Also, this code does not check for @color and 
+# @nocolor directives: leoColor.useSyntaxColoring does that.
+
+#@-at
+#@@c
+
+def scanDirectives(c,v=None):
+
+	if v == None: v = c.currentVnode()
+	
+	#@<< Set local vars >>
+	#@+node:1::<< Set local vars >>
+	#@+body
+	loadDir = app().loadDir
+	
+	page_width = c.page_width
+	tab_width  = c.tab_width
+	language = c.target_language
+	delim1, delim2, delim3 = set_delims_from_language(c.target_language)
+	path = None
+	
+	#@-body
+	#@-node:1::<< Set local vars >>
+
+	old = {}
+	while v:
+		s = v.t.bodyString
+		dict = get_directives_dict(s)
+		
+		#@<< Test for @comment and @language >>
+		#@+node:2::<< Test for @comment and @language >>
+		#@+body
+		# @language and @comment may coexist in @file trees.
+		# For this to be effective the @comment directive should follow the @language directive.
+		
+		if not old.has_key("comment") and dict.has_key("comment"):
+			k = dict["comment"]
+			delim1, delim2, delim3 = set_delims_from_string(s[k:])
+		
+		if not old.has_key("language") and dict.has_key("language"):
+			k = dict["language"]
+			issue_error_flag = false # DTHEIN 3-NOV-2002: define var before function call
+			language, delim1, delim2, delim3 = set_language(s,k,issue_error_flag)
+		#@-body
+		#@-node:2::<< Test for @comment and @language >>
+
+		
+		#@<< Test for @pagewidth >>
+		#@+node:3::<< Test for @pagewidth >>
+		#@+body
+		if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+		
+			k = dict["pagewidth"]
+			j = i = k + len("@pagewidth")
+			i, val = skip_long(s,i)
+			if val != None and val > 0:
+				page_width = val
+		#@-body
+		#@-node:3::<< Test for @pagewidth >>
+
+		
+		#@<< Test for @path >>
+		#@+node:4::<< Test for @path >>
+		#@+body
+		if not path and not old.has_key("path") and dict.has_key("path"):
+		
+			k = dict["path"]
+			
+			#@<< compute path from s[k:] >>
+			#@+node:1::<< compute path from s[k:] >>
+			#@+body
+			j = i = k + len("@path")
+			i = skip_to_end_of_line(s,i)
+			path = string.strip(s[j:i])
+			
+			# Remove leading and trailing delims if they exist.
+			if len(path) > 2 and (
+				(path[0]=='<' and path[-1] == '>') or
+				(path[0]=='"' and path[-1] == '"') ):
+				path = path[1:-1]
+			
+			path = string.strip(path)
+			path = os.path.join(loadDir,path)
+			#@-body
+			#@-node:1::<< compute path from s[k:] >>
+
+			if path and len(path) > 0:
+				base = getBaseDirectory() # returns "" on error.
+				path = os.path.join(base,path)
+		#@-body
+		#@-node:4::<< Test for @path >>
+
+		
+		#@<< Test for @tabwidth >>
+		#@+node:5::<< Test for @tabwidth >>
+		#@+body
+		if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+		
+			k = dict["tabwidth"]
+			j = i = k + len("@tabwidth")
+			i, val = skip_long(s, i)
+			if val != None and val != 0:
+				tab_width = val
+		#@-body
+		#@-node:5::<< Test for @tabwidth >>
+
+		old.update(dict)
+		v = v.parent()
+	return {
+		"delims"    : (delim1,delim2,delim3),
+		"language"  : language,
+		"pagewidth" : page_width,
+		"path"      : path,
+		"tabwidth"  : tab_width }
+
+#@-body
+#@-node:17::scanDirectives (utils)
+#@+node:18::scanError
 #@+body
 #@+at
 #  It seems dubious to bump the Tangle error count here.  OTOH, it really 
@@ -940,8 +1067,8 @@ def scanError(s):
 
 	es(s)
 #@-body
-#@-node:17::scanError
-#@+node:18::Scanners: calling scanError
+#@-node:18::scanError
+#@+node:19::Scanners: calling scanError
 #@+body
 #@+at
 #  These scanners all call scanError() directly or indirectly, so they will 
@@ -1328,8 +1455,8 @@ def skip_typedef(s,i):
 	return i
 #@-body
 #@-node:15::skip_typedef
-#@-node:18::Scanners: calling scanError
-#@+node:19::Scanners: no error messages
+#@-node:19::Scanners: calling scanError
+#@+node:20::Scanners: no error messages
 #@+node:1::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
@@ -1603,8 +1730,8 @@ def skip_ws_and_nl(s,i):
 	return i
 #@-body
 #@-node:20::skip_ws, skip_ws_and_nl
-#@-node:19::Scanners: no error messages
-#@+node:20::shortFileName
+#@-node:20::Scanners: no error messages
+#@+node:21::shortFileName
 #@+body
 def shortFileName (fileName):
 	
@@ -1613,8 +1740,8 @@ def shortFileName (fileName):
 	head,tail = os.path.split(fileName)
 	return tail
 #@-body
-#@-node:20::shortFileName
-#@+node:21::sortSequence
+#@-node:21::shortFileName
+#@+node:22::sortSequence
 #@+body
 #@+at
 #  sequence is a sequence of items, each of which is a sequence containing at 
@@ -1653,8 +1780,8 @@ def sortSequence (sequence, n):
 #@-at
 #@@c
 #@-body
-#@-node:21::sortSequence
-#@+node:22::Timing
+#@-node:22::sortSequence
+#@+node:23::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1669,8 +1796,8 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:22::Timing
-#@+node:23::Tk.Text selection (utils)
+#@-node:23::Timing
+#@+node:24::Tk.Text selection (utils)
 #@+node:1::bound_paragraph
 #@+body
 def bound_paragraph(t=None):
@@ -1778,8 +1905,8 @@ def setTextSelection (t,start,end):
 
 #@-body
 #@-node:4::setTextSelection
-#@-node:23::Tk.Text selection (utils)
-#@+node:24::Unicode...
+#@-node:24::Tk.Text selection (utils)
+#@+node:25::Unicode...
 #@+node:1::convertChar/String/ToXMLCharRef
 #@+body
 def convertCharToXMLCharRef(c,xml_encoding):
@@ -1860,8 +1987,8 @@ def returnNonEncodingChar(c,xml_encoding):
 			return c
 #@-body
 #@-node:3::es_nonEncodingChar, returnNonEncodingChar
-#@-node:24::Unicode...
-#@+node:25::update_file_if_changed
+#@-node:25::Unicode...
+#@+node:26::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1907,8 +2034,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
 #@-body
-#@-node:25::update_file_if_changed
-#@+node:26::utils_rename
+#@-node:26::update_file_if_changed
+#@+node:27::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1927,134 +2054,7 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 
 #@-body
-#@-node:26::utils_rename
-#@+node:27::scanDirectives (utils)
-#@+body
-#@+at
-#  A general-purpose routine that scans v and its ancestors for directives.  
-# It returns a dict containing the settings in effect as the result of the 
-# @comment, @language, @pagewidth, @path and @tabwidth directives.  This code 
-# does not check on the existence of paths, and issues no error messages.
-# 
-# Perhaps this routine should be the basis of atFile.scanAllDirectives and 
-# tangle.scanAllDirectives, but I am loath to make any further to these two 
-# already-infamous routines.  Also, this code does not check for @color and 
-# @nocolor directives: leoColor.useSyntaxColoring does that.
-
-#@-at
-#@@c
-
-def scanDirectives(c,v=None):
-
-	if v == None: v = c.currentVnode()
-	
-	#@<< Set local vars >>
-	#@+node:1::<< Set local vars >>
-	#@+body
-	loadDir = app().loadDir
-	
-	page_width = c.page_width
-	tab_width  = c.tab_width
-	language = c.target_language
-	delim1, delim2, delim3 = set_delims_from_language(c.target_language)
-	path = None
-	
-	#@-body
-	#@-node:1::<< Set local vars >>
-
-	old = {}
-	while v:
-		s = v.t.bodyString
-		dict = get_directives_dict(s)
-		
-		#@<< Test for @comment and @language >>
-		#@+node:2::<< Test for @comment and @language >>
-		#@+body
-		# @language and @comment may coexist in @file trees.
-		# For this to be effective the @comment directive should follow the @language directive.
-		
-		if not old.has_key("comment") and dict.has_key("comment"):
-			k = dict["comment"]
-			delim1, delim2, delim3 = set_delims_from_string(s[k:])
-		
-		if not old.has_key("language") and dict.has_key("language"):
-			k = dict["language"]
-			issue_error_flag = false # DTHEIN 3-NOV-2002: define var before function call
-			language, delim1, delim2, delim3 = set_language(s,k,issue_error_flag)
-		#@-body
-		#@-node:2::<< Test for @comment and @language >>
-
-		
-		#@<< Test for @pagewidth >>
-		#@+node:3::<< Test for @pagewidth >>
-		#@+body
-		if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
-		
-			k = dict["pagewidth"]
-			j = i = k + len("@pagewidth")
-			i, val = skip_long(s,i)
-			if val != None and val > 0:
-				page_width = val
-		#@-body
-		#@-node:3::<< Test for @pagewidth >>
-
-		
-		#@<< Test for @path >>
-		#@+node:4::<< Test for @path >>
-		#@+body
-		if not path and not old.has_key("path") and dict.has_key("path"):
-		
-			k = dict["path"]
-			
-			#@<< compute path from s[k:] >>
-			#@+node:1::<< compute path from s[k:] >>
-			#@+body
-			j = i = k + len("@path")
-			i = skip_to_end_of_line(s,i)
-			path = string.strip(s[j:i])
-			
-			# Remove leading and trailing delims if they exist.
-			if len(path) > 2 and (
-				(path[0]=='<' and path[-1] == '>') or
-				(path[0]=='"' and path[-1] == '"') ):
-				path = path[1:-1]
-			
-			path = string.strip(path)
-			path = os.path.join(loadDir,path)
-			#@-body
-			#@-node:1::<< compute path from s[k:] >>
-
-			if path and len(path) > 0:
-				base = getBaseDirectory() # returns "" on error.
-				path = os.path.join(base,path)
-		#@-body
-		#@-node:4::<< Test for @path >>
-
-		
-		#@<< Test for @tabwidth >>
-		#@+node:5::<< Test for @tabwidth >>
-		#@+body
-		if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
-		
-			k = dict["tabwidth"]
-			j = i = k + len("@tabwidth")
-			i, val = skip_long(s, i)
-			if val != None and val != 0:
-				tab_width = val
-		#@-body
-		#@-node:5::<< Test for @tabwidth >>
-
-		old.update(dict)
-		v = v.parent()
-	return {
-		"delims"    : (delim1,delim2,delim3),
-		"language"  : language,
-		"pagewidth" : page_width,
-		"path"      : path,
-		"tabwidth"  : tab_width }
-
-#@-body
-#@-node:27::scanDirectives (utils)
+#@-node:27::utils_rename
 #@+node:28::wrap_lines
 #@+body
 #@+at

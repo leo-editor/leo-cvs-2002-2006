@@ -136,18 +136,47 @@ def es(s):
 			else: log.es_newlines = 0
 		ecnl() # only valid here
 	else:
-		print "Null log:", s
+		# print "Null log:",
+		print s
 #@-body
 #@-node:5::es, enl, ecnl
-#@+node:6::print_stack
+#@+node:6::handleLeoHook
+#@+body
+# This routine handles all hooks into Leo.  Hooks are identified by the tag param.
+
+def handleStartHook(tag):
+
+	from leoUtils   import es_exception
+	from leoGlobals import es,app
+	import exceptions
+	a = app()
+	if a.hookSyntaxError: return
+
+	try:
+		import leoCustomize
+		try:
+			leoCustomize.customizeLeo(tag)
+		except:
+			es("exception executing leoCustomize.customizeLeo("+tag+")")
+			es_exception()
+	except exceptions.SyntaxError:
+		es("syntax error in leoCustomize.customizeLeo()")
+		es_exception()
+		a.hookSyntaxError = true # Suppress further calls.
+	except:
+		pass # Not an error.
+
+#@-body
+#@-node:6::handleLeoHook
+#@+node:7::print_stack
 #@+body
 def print_stack():
 
 	import traceback
 	traceback.print_stack()
 #@-body
-#@-node:6::print_stack
-#@+node:7::unloadAll
+#@-node:7::print_stack
+#@+node:8::unloadAll
 #@+body
 #@+at
 #  Unloads all of Leo's modules.  Based on code from the Python Cookbook.
@@ -181,15 +210,15 @@ def unloadAll():
 		import leoUtils
 		leoUtils.es_exception()
 #@-body
-#@-node:7::unloadAll
-#@+node:8::top
+#@-node:8::unloadAll
+#@+node:9::top
 #@+body
 def top():
 
 	frame = app().log # the current frame
 	return frame.commands
 #@-body
-#@-node:8::top
+#@-node:9::top
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

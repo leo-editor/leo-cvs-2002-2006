@@ -1317,10 +1317,13 @@ class LeoFrame:
 		#@<< set ext based on the present language >>
 		#@+node:1::<< set ext based on the present language >>
 		#@+body
-		ext = language_extension_dict.get(c.target_language)
+		dict = scanDirectives(c)
+		language = dict.get("language")
+		ext = language_extension_dict.get(language)
 		if ext == None: ext = "txt"
 		ext = "." + ext
-		# trace(c.target_language + "," + ext)
+		# trace(language)
+		
 		#@-body
 		#@-node:1::<< set ext based on the present language >>
 
@@ -1357,8 +1360,15 @@ class LeoFrame:
 		#@<< open f in the external editor >>
 		#@+node:3::<< open f in the external editor >>
 		#@+body
+		# Double clicking python files executes them.
+		
 		try:
-			os.startfile("c:/python22/tools/idle/idle.py " + path)
+			if ext == ".py":
+				# open idle in edit mode.  This does not work well.
+				os.system("c:/python22/tools/idle/idle.py -e " + path)
+				# os.system("idle.py -e " + path)
+			else:
+				os.startfile(path)
 		except:
 			es("exception opening " + path)
 			es_exception()
@@ -2088,7 +2098,7 @@ class LeoFrame:
 			try:
 				exec(s,globals(),locals())
 			except:
-				es_exception(full=true)
+				es_exception(full=false)
 		else:
 			es("no script selected")
 	

@@ -111,6 +111,7 @@ def leoOpen(fileName=None,*args):
 	if not app.finishCreate(): # do this after gApp exists.
 		root.destroy()
 		return
+	leoGlobals.handleStartHook("start1")
 	# Create the first Leo window
 	frame1 = leoFrame.LeoFrame()
 	frame1.top.withdraw()
@@ -135,6 +136,7 @@ def leoOpen(fileName=None,*args):
 		frame1.title = fileName
 		frame1.top.title(fileName)
 	init_sherlock(args)
+	leoGlobals.handleStartHook("start2")
 	root.mainloop()
 #@-body
 #@-node:5::leoOpen (leo.py)
@@ -172,12 +174,14 @@ def run(*args):
 	if not app.finishCreate(): # do this after gApp exists.
 		root.destroy()
 		return
+	leoGlobals.handleStartHook("start1")
 	# Create the first Leo window
 	frame = leoFrame.LeoFrame()
 	frame.top.deiconify() # 7/19/02
 	frame.commands.redraw() # 9/1/02
 	frame.startupWindow = leoGlobals.true
 	init_sherlock(args)
+	leoGlobals.handleStartHook("start2")
 	root.mainloop()
 #@-body
 #@-node:6::run (leo.py)
