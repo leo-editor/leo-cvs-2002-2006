@@ -13,7 +13,7 @@ class leoTkinterDialog:
     """The base class for all Leo Tkinter dialogs"""
     #@    @+others
     #@+node:ekr.20031218072017.3860:__init__ (leoDialog)
-    def __init__(self,title="",resizeable=True):
+    def __init__(self,title="",resizeable=True,canClose=True):
         
         """Constructor for the leoTkinterDialog class."""
         
@@ -28,6 +28,7 @@ class leoTkinterDialog:
         self.root = None # g.app.root
         self.top = None # The toplevel Tk widget.
         self.focus_widget = None # The widget to get the first focus.
+        self.canClose = canClose
     #@nonl
     #@-node:ekr.20031218072017.3860:__init__ (leoDialog)
     #@+node:ekr.20031218072017.3861:cancelButton, noButton, okButton, yesButton
@@ -121,6 +122,9 @@ class leoTkinterDialog:
         self.frame = Tk.Frame(self.top)
         self.frame.pack(side="top",expand=1,fill="both")
         
+        if not self.canClose:
+            self.top.protocol("WM_DELETE_WINDOW", self.onClose)
+        
         # Do this at idle time.
         def callback(top=self.top):
             g.app.gui.attachLeoIcon(top)
@@ -128,6 +132,14 @@ class leoTkinterDialog:
         self.top.after_idle(callback)
     #@nonl
     #@-node:ekr.20031218072017.3865:createTopFrame
+    #@+node:ekr.20040731065422:onClose
+    def onClose (self):
+        
+        """Disable all attempts to close this frame with the close box."""
+        
+        pass
+    #@nonl
+    #@-node:ekr.20040731065422:onClose
     #@+node:ekr.20031218072017.3866:run
     def run (self,modal):
         
@@ -136,6 +148,7 @@ class leoTkinterDialog:
         self.modal = modal
         
         self.center() # Do this after all packing complete.
+        self.top.lift() # 7/31/04
     
         if self.modal:
             self.top.grab_set() # Make the dialog a modal dialog.
@@ -278,12 +291,13 @@ class tkinterAskLeoID (leoTkinterDialog):
         
         """Create the Leo Id dialog."""
         
-        leoTkinterDialog.__init__(self,"Enter unique id",resizeable=False) # Initialize the base class.
+        # Initialize the base class: prevent clicks in the close box from closing.
+        leoTkinterDialog.__init__(self,"Enter unique id",resizeable=False,canClose=False)
+            
         self.id_entry = None
         self.answer = None
     
         self.createTopFrame()
-        self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
         self.top.bind("<Key>", self.onKey)
         
         message = (
@@ -315,14 +329,6 @@ class tkinterAskLeoID (leoTkinterDialog):
         text.pack()
     #@nonl
     #@-node:ekr.20031218072017.1985:tkinterAskLeoID.createFrame
-    #@+node:ekr.20031218072017.1986:tkinterAskLeoID.onCloseWindow
-    def onCloseWindow (self):
-        
-        """Prevent the Leo Id dialog from closing by ignoring close events."""
-    
-        pass
-    #@nonl
-    #@-node:ekr.20031218072017.1986:tkinterAskLeoID.onCloseWindow
     #@+node:ekr.20031218072017.1987:tkinterAskLeoID.onButton
     def onButton(self):
         
@@ -573,7 +579,7 @@ class tkinterAskYesNoCancel(leoTkinterDialog):
             
         """Create a dialog having three buttons."""
     
-        leoTkinterDialog.__init__(self,title,resizeable) # Initialize the base class.
+        leoTkinterDialog.__init__(self,title,resizeable,canClose=False) # Initialize the base class.
         self.yesMessage,self.noMessage = yesMessage,noMessage
         self.defaultButton = defaultButton
     
