@@ -95,9 +95,9 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040519082027" a="E"><vh>Distribution scripts</vh>
+<v t="EKR.20040519082027" a="TV"><vh>Distribution scripts</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt; (no spaces in file names)</vh></v>
-<v t="EKR.20040519083717" a="E"><vh>@file-thin leo.nsi</vh></v>
+<v t="EKR.20040519083717"><vh>@file-thin leo.nsi</vh></v>
 <v t="EKR.20040519082027.20"><vh>@file-thin preSetup.py</vh></v>
 <v t="EKR.20040519082027.23"><vh>@file-thin createLeoDist.py</vh></v>
 <v t="EKR.20040519082027.29"><vh>@file-thin postSetup.py</vh></v>
