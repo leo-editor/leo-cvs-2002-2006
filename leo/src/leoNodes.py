@@ -701,8 +701,6 @@ class baseVnode (object):
     #@-node:ekr.20031218072017.3346:v.Comparisons
     #@+node:ekr.20031218072017.3359:Getters (vnode)
     #@+node:ekr.20040306214240:Tree Traversal getters
-    # These aren't very useful.
-    #@nonl
     #@+node:ekr.20031218072017.3406:v.back
     # Compatibility routine for scripts
     
@@ -713,6 +711,7 @@ class baseVnode (object):
     #@-node:ekr.20031218072017.3406:v.back
     #@+node:ekr.20031218072017.3409:v.next
     # Compatibility routine for scripts
+    # Used by p.findAllPotentiallyDirtyNodes.
     
     def next (self):
     
@@ -2137,7 +2136,7 @@ class position (object):
     #@+node:ekr.20040318125934:p.findAllPotentiallyDirtyNodes
     def findAllPotentiallyDirtyNodes(self):
         
-        p = self
+        p = self 
         
         # Start with all nodes in the vnodeList.
         nodes = []
@@ -2145,24 +2144,23 @@ class position (object):
     
         # Add nodes until no more are added.
         while newNodes:
-            # g.trace(len(newNodes))
             addedNodes = []
             nodes.extend(newNodes)
             for v in newNodes:
                 for v2 in v.t.vnodeList:
                     if v2 not in nodes and v2 not in addedNodes:
                         addedNodes.append(v2)
-                    for v3 in v2.directParents(): # 3/23/04
+                    for v3 in v2.directParents():
                         if v3 not in nodes and v3 not in addedNodes:
                             addedNodes.append(v3)
             newNodes = addedNodes[:]
     
-        # g.trace(nodes)
+        # g.trace(len(nodes))
         return nodes
     #@nonl
     #@-node:ekr.20040318125934:p.findAllPotentiallyDirtyNodes
     #@+node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
-    def setAllAncestorAtFileNodesDirty (self):
+    def setAllAncestorAtFileNodesDirty (self,setDescendentsDirty=False):
     
         p = self ; c = p.c
         changed = False
@@ -2170,24 +2168,36 @@ class position (object):
         # Calculate all nodes that are joined to v or parents of such nodes.
         nodes = p.findAllPotentiallyDirtyNodes()
         
+        if setDescendentsDirty:
+            # N.B. Only mark _direct_ descendents of nodes.
+            # Using the findAllPotentiallyDirtyNodes algorithm would mark way too many nodes.
+            for p2 in p.subtree_iter():
+                if p2.v not in nodes:
+                    nodes.append(p2.v)
+        
         c.beginUpdate()
         if 1: # update...
+            count = 0 # for debugging.
             for v in nodes:
                 # g.trace(v.isAnyAtFileNode(),v.t.isDirty(),v)
                 if not v.t.isDirty() and v.isAnyAtFileNode():
                     changed = True
                     v.t.setDirty() # Do not call v.setDirty here!
+                    count += 1
+            # g.trace(count)
         c.endUpdate(changed)
         return changed
     #@nonl
     #@-node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
     #@+node:ekr.20040303163330:p.setDirty
-    # Ensures that all ancestor @file nodes are marked dirty.
+    # Ensures that all ancestor and descentent @file nodes are marked dirty.
     # It is much safer to do it this way.
     
     def setDirty (self):
     
         p = self ; c = p.c
+        
+        # g.trace()
     
         c.beginUpdate()
         if 1: # update...
@@ -2196,7 +2206,7 @@ class position (object):
                 p.v.t.setDirty()
                 changed = True
             # This must be called even if p.v is already dirty.
-            if p.setAllAncestorAtFileNodesDirty():
+            if p.setAllAncestorAtFileNodesDirty(setDescendentsDirty=True):
                 changed = True
         c.endUpdate(changed)
     
