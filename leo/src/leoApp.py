@@ -26,7 +26,6 @@ class LeoApp:
         self.commandName = None # The name of the command being executed.
         self.config = None # The leoConfig instance.
         self.count = 0 # General purpose debugging count.
-        self.copies = 0 # Number of calls to position.copy
         self.debug = False # True: enable extra debugging tests (not used at present).
             # WARNING: this could greatly slow things down.
         self.disableSave = False
@@ -59,6 +58,7 @@ class LeoApp:
         self.searchDict = {} # For communication between find/change scripts.
         self.scriptDict = {} # For communication between Execute Script command and scripts.
         self.trace = False # True: enable debugging traces.
+        self.tracePositions = False
         self.trace_list = [] # "Sherlock" argument list for tracing().
         self.tkEncoding = "utf-8"
         self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
