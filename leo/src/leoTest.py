@@ -804,7 +804,7 @@ class leoFileTests(unittest.TestCase):
     #@-node:EKR.20040623200709.66:tearDown
     #@+node:EKR.20040623215308:Tests
     #@+node:ekr.20040303063549.121:test test.leo
-    def test1 (self):
+    def testTestDotLeo (self):
     
         path = g.os_path_join(g.app.loadDir,"..","test","test.leo")
     
@@ -812,7 +812,7 @@ class leoFileTests(unittest.TestCase):
     #@nonl
     #@-node:ekr.20040303063549.121:test test.leo
     #@+node:ekr.20040303063549.122:test LeoPy.leo
-    def test2 (self):
+    def testLeoPyDotLeo (self):
         
         path = g.os_path_join(g.app.loadDir,"LeoPy.leo")
     
@@ -820,7 +820,7 @@ class leoFileTests(unittest.TestCase):
     #@nonl
     #@-node:ekr.20040303063549.122:test LeoPy.leo
     #@+node:ekr.20040303063549.123:test leoPlugins.leo
-    def test3 (self):
+    def testLeoPluginsDotLeo (self):
         
         path = g.os_path_join(g.app.loadDir,"..","plugins","leoPlugins.leo")
         
@@ -828,7 +828,7 @@ class leoFileTests(unittest.TestCase):
     #@nonl
     #@-node:ekr.20040303063549.123:test leoPlugins.leo
     #@+node:ekr.20040303063549.124:test LeoDocs.leo
-    def test4 (self):
+    def testLeoDocsDotLeo (self):
         
         path = g.os_path_join(g.app.loadDir,"..","doc","LeoDocs.leo")
         

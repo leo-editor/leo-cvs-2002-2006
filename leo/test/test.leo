@@ -22,7 +22,7 @@
 </v>
 <v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="EKR.20040623200709" a="E"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040303063549" a="E"><vh>Unit test scripts (Must be located here)</vh>
 <v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
 <v t="ekr.20040302092753"><vh>aa</vh></v>
@@ -151,7 +151,7 @@
 <v t="ekr.20040303063549.89"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.120"><vh>leoFileTests (revised)</vh></v>
+<v t="ekr.20040303063549.120" a="TV"><vh>leoFileTests (revised)</vh></v>
 <v t="ekr.20040315202718.2"><vh>findCommandTests</vh></v>
 <v t="ekr.20040303063549.90"><vh>importTests</vh>
 <v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
@@ -252,60 +252,17 @@
 <v t="ekr.20040303063549.44"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.125" a="TV"><vh>Run all tests</vh></v>
+<v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all non-file tests</vh></v>
 </v>
 </v>
-<v t="EKR.20040612095237"><vh>Prototypes of new commands</vh>
-<v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
-<v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
-<v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
-<v t="ekr.20040402064301.1"><vh>__init__</vh></v>
-<v t="ekr.20040402093822"><vh>get</vh></v>
-<v t="ekr.20040402072335"><vh>put</vh></v>
-<v t="ekr.20040402081135"><vh>putOperator</vh></v>
-<v t="ekr.20040402080311"><vh>putToken</vh></v>
-<v t="ekr.20040402074431"><vh>putNormalToken</vh></v>
-<v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
-</v>
-</v>
-<v t="EKR.20040610201941"><vh>Check Syntax prototype</vh>
-<v t="EKR.20040610192622"><vh>Check Syntax script</vh></v>
-<v t="EKR.20040610192622.1"><vh>Check Syntax data</vh></v>
-</v>
-<v t="EKR.20040610201236"><vh>Tabnanny prototype</vh>
-<v t="EKR.20040610194209"><vh>TabNanny script</vh>
-<v t="EKR.20040610195543"><vh>checkString</vh></v>
-</v>
-<v t="EKR.20040610195543.1"><vh>tabnanny.py (reference only)</vh>
-<v t="EKR.20040610195543.2"><vh>&lt;&lt; tabnanny declarations &gt;&gt;</vh></v>
-<v t="EKR.20040610195543.3"><vh>errprint</vh></v>
-<v t="EKR.20040610195543.4"><vh>main</vh></v>
-<v t="EKR.20040610195543.5"><vh>class NannyNag</vh>
-<v t="EKR.20040610195543.6"><vh>__init__</vh></v>
-<v t="EKR.20040610195543.7"><vh>get_lineno</vh></v>
-<v t="EKR.20040610195543.8"><vh>get_msg</vh></v>
-<v t="EKR.20040610195543.9"><vh>get_line</vh></v>
-</v>
-<v t="EKR.20040610195543.10"><vh>check</vh></v>
-<v t="EKR.20040610195543.11"><vh>class Whitespace</vh>
-<v t="EKR.20040610195543.12"><vh>&lt;&lt; class Whitespace declarations &gt;&gt;</vh></v>
-<v t="EKR.20040610195543.13"><vh>__init__</vh></v>
-<v t="EKR.20040610195543.14"><vh>longest_run_of_spaces</vh></v>
-<v t="EKR.20040610195543.15"><vh>indent_level</vh></v>
-<v t="EKR.20040610195543.16"><vh>equal</vh></v>
-<v t="EKR.20040610195543.17"><vh>not_equal_witness</vh></v>
-<v t="EKR.20040610195543.18"><vh>less</vh></v>
-<v t="EKR.20040610195543.19"><vh>not_less_witness</vh></v>
-</v>
-<v t="EKR.20040610195543.20"><vh>format_witnesses</vh></v>
-<v t="EKR.20040610195543.21"><vh>process_tokens</vh></v>
-</v>
-<v t="EKR.20040610194209.1"><vh>TabNanny data</vh></v>
-</v>
-<v t="EKR.20040611083703"><vh>Using a generator instead of readLinesClass</vh></v>
-</v>
 <v t="EKR.20040623202054.1"><vh>Others...</vh>
+<v t="EKR.20040626212434"><vh>Drawing experiments</vh>
+<v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
+<v t="EKR.20040626212434.2"><vh>Lines &amp; arcs</vh></v>
+<v t="EKR.20040626213007"><vh>Paul Klee</vh></v>
+<v t="EKR.20040627150213"><vh>Complex functions</vh></v>
+</v>
 <v t="ekr.20040303071432"><vh>Mini tests, scripts &amp; experiments</vh>
 <v t="ekr.20040312101720"><vh>Experiments</vh>
 <v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
@@ -428,33 +385,6 @@
 </v>
 <v t="ekr.20040409142108"><vh>firstChild</vh></v>
 <v t="ekr.20040409140343.1"><vh>last</vh></v>
-</v>
-</v>
-<v t="ekr.20040312021734"><vh>Scripts</vh>
-<v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
-<v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
-<v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
-<v t="ekr.20040319111213"><vh>FilterHoist script</vh>
-<v t="ekr.20040319111213.1"><vh>description</vh></v>
-<v t="ekr.20040319142708"><vh>filter</vh></v>
-<v t="ekr.20040319142202"><vh>old code</vh>
-<v t="ekr.20040319111213.2"><vh>filter</vh></v>
-<v t="ekr.20040319111213.3"><vh>search</vh></v>
-</v>
-<v t="ekr.20040319111213.4"><vh>filterHoist</vh></v>
-<v t="ekr.20040319111213.5"><vh>addMenu</vh></v>
-</v>
-<v t="ekr.20040322120331"><vh>script to print tnodeList's</vh></v>
-<v t="ekr.20040330095252"><vh>script to clear log frame</vh></v>
-<v t="EKR.20040424065452"><vh>Compare script</vh></v>
-<v t="EKR.20040424091411"><vh>Compare script using text mode to ignore newlines</vh></v>
-<v t="EKR.20040517074600.8"><vh>Count pages</vh></v>
-<v t="EKR.20040517074600.9"><vh>Scripts to debug font problem</vh>
-<v t="EKR.20040517074600.10"><vh>Show font</vh></v>
-<v t="EKR.20040517074600.11"><vh>Show settings</vh>
-<v t="EKR.20040517074600.12"><vh>getFontSettings</vh></v>
-</v>
-<v t="EKR.20040517074600.13"><vh>Print default font</vh></v>
 </v>
 </v>
 <v t="EKR.20040531110157"><vh>at-file thin tests</vh>
@@ -711,37 +641,107 @@
 <v t="EKR.20040610132739"><vh>copied</vh></v>
 </v>
 </v>
-</v>
 <v t="EKR.20040612150543"><vh>Test of better error messages in Execute Script command</vh>
 <v t="EKR.20040612215136"><vh>Contains error</vh></v>
 </v>
-<v t="EKR.20040613162717"><vh>Report newlines</vh></v>
 <v t="EKR.20040615070332"><vh>Test print</vh></v>
 <v t="EKR.20040625110032"><vh>@ thin c:\prog\test\mixedCommentDelims.txt</vh>
 <v t="EKR.20040625110032.1"><vh>node 1</vh></v>
-<v t="EKR.20040625110032.2" a="E"><vh>node 2</vh>
+<v t="EKR.20040625110032.2"><vh>node 2</vh>
 <v t="EKR.20040625110032.3"><vh>Node 3</vh></v>
 </v>
-</v>
-</v>
-<v t="EKR.20040622074004"><vh>Test of conflicting node defs</vh>
-<v t="EKR.20040622074004.1"><vh>a</vh>
-<v t="EKR.20040622074004.2"><vh>b</vh></v>
-<v t="EKR.20040622074004.3"><vh>c</vh></v>
-</v>
-<v t="EKR.20040622102618" a="E"><vh>@thin c:\prog\test\cloneConflicts.txt</vh></v>
 </v>
 <v t="EKR.20040627100615"><vh>Test of error messages when redirecting output</vh></v>
 <v t="EKR.20040627103732"><vh>Test of writing descendent uA's</vh>
 <v t="EKR.20040627121836"><vh>print all tnode attributes</vh></v>
-<v t="EKR.20040627103902" a="E"><vh>Test of user icons</vh></v>
-<v t="EKR.20040627103801" descendentTnodeUnknownAttributes="7d71005812000000454b522e323030343036323731323233313871017d710228550b6c696e65594f666673657471034b03550569636f6e7371045d7105287d710628550577686572657107550a6265666f726549636f6e710855047870616471094b02550474797065710a550466696c65710b680b582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e676966710c5507796f6666736574710d4afdffffff757d710e28680a680b680d4afdffffff680b582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710f68094afeffffff6807550e6265666f7265486561646c696e6571105507786f666673657471114b02756575732e"><vh>@thin c:\prog\test\uaTest.txt</vh></v>
+<v t="EKR.20040627103902"><vh>Test of user icons</vh></v>
+<v t="EKR.20040627103801"><vh>@thin c:\prog\test\uaTest.txt</vh></v>
 </v>
-<v t="EKR.20040626212434" a="E"><vh>drawing experiments</vh>
-<v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
-<v t="EKR.20040626212434.2"><vh>Lines &amp; arcs</vh></v>
-<v t="EKR.20040626213007"><vh>Paul Klee</vh></v>
-<v t="EKR.20040627150213" a="E"><vh>Complex functions</vh></v>
+<v t="EKR.20040611083703"><vh>Using a generator instead of readLinesClass</vh></v>
+<v t="EKR.20040622074004"><vh>Test of conflicting node defs</vh>
+<v t="EKR.20040622074004.1"><vh>a</vh>
+<v t="EKR.20040622074004.2" a="M"><vh>b</vh></v>
+<v t="EKR.20040622074004.3"><vh>c</vh></v>
+</v>
+<v t="EKR.20040622102618"><vh>@thin c:\prog\test\cloneConflicts.txt</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040312021734"><vh>Scripts</vh>
+<v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
+<v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
+<v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
+<v t="ekr.20040319111213"><vh>FilterHoist script</vh>
+<v t="ekr.20040319111213.1"><vh>description</vh></v>
+<v t="ekr.20040319142708"><vh>filter</vh></v>
+<v t="ekr.20040319142202"><vh>old code</vh>
+<v t="ekr.20040319111213.2"><vh>filter</vh></v>
+<v t="ekr.20040319111213.3"><vh>search</vh></v>
+</v>
+<v t="ekr.20040319111213.4"><vh>filterHoist</vh></v>
+<v t="ekr.20040319111213.5"><vh>addMenu</vh></v>
+</v>
+<v t="ekr.20040322120331"><vh>script to print tnodeList's</vh></v>
+<v t="ekr.20040330095252"><vh>script to clear log frame</vh></v>
+<v t="EKR.20040424065452"><vh>Compare script</vh></v>
+<v t="EKR.20040424091411"><vh>Compare script using text mode to ignore newlines</vh></v>
+<v t="EKR.20040517074600.8"><vh>Count pages</vh></v>
+<v t="EKR.20040517074600.9"><vh>Scripts to debug font problem</vh>
+<v t="EKR.20040517074600.10"><vh>Show font</vh></v>
+<v t="EKR.20040517074600.11"><vh>Show settings</vh>
+<v t="EKR.20040517074600.12"><vh>getFontSettings</vh></v>
+</v>
+<v t="EKR.20040517074600.13"><vh>Print default font</vh></v>
+</v>
+<v t="EKR.20040613162717"><vh>Report newlines</vh></v>
+</v>
+<v t="EKR.20040612095237"><vh>Prototypes of new commands</vh>
+<v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
+<v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
+<v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
+<v t="ekr.20040402064301.1"><vh>__init__</vh></v>
+<v t="ekr.20040402093822"><vh>get</vh></v>
+<v t="ekr.20040402072335"><vh>put</vh></v>
+<v t="ekr.20040402081135"><vh>putOperator</vh></v>
+<v t="ekr.20040402080311"><vh>putToken</vh></v>
+<v t="ekr.20040402074431"><vh>putNormalToken</vh></v>
+<v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
+</v>
+</v>
+<v t="EKR.20040610201941"><vh>Check Syntax prototype</vh>
+<v t="EKR.20040610192622"><vh>Check Syntax script</vh></v>
+<v t="EKR.20040610192622.1"><vh>Check Syntax data</vh></v>
+</v>
+<v t="EKR.20040610201236"><vh>Tabnanny prototype</vh>
+<v t="EKR.20040610194209"><vh>TabNanny script</vh>
+<v t="EKR.20040610195543"><vh>checkString</vh></v>
+</v>
+<v t="EKR.20040610195543.1"><vh>tabnanny.py (reference only) (good)</vh>
+<v t="EKR.20040610195543.2"><vh>&lt;&lt; tabnanny declarations &gt;&gt;</vh></v>
+<v t="EKR.20040610195543.3"><vh>errprint</vh></v>
+<v t="EKR.20040610195543.4"><vh>main</vh></v>
+<v t="EKR.20040610195543.5"><vh>class NannyNag</vh>
+<v t="EKR.20040610195543.6"><vh>__init__</vh></v>
+<v t="EKR.20040610195543.7"><vh>get_lineno</vh></v>
+<v t="EKR.20040610195543.8"><vh>get_msg</vh></v>
+<v t="EKR.20040610195543.9"><vh>get_line</vh></v>
+</v>
+<v t="EKR.20040610195543.10"><vh>check</vh></v>
+<v t="EKR.20040610195543.11"><vh>class Whitespace</vh>
+<v t="EKR.20040610195543.12"><vh>&lt;&lt; class Whitespace declarations &gt;&gt;</vh></v>
+<v t="EKR.20040610195543.13"><vh>__init__</vh></v>
+<v t="EKR.20040610195543.14"><vh>longest_run_of_spaces</vh></v>
+<v t="EKR.20040610195543.15"><vh>indent_level</vh></v>
+<v t="EKR.20040610195543.16"><vh>equal</vh></v>
+<v t="EKR.20040610195543.17"><vh>not_equal_witness</vh></v>
+<v t="EKR.20040610195543.18"><vh>less</vh></v>
+<v t="EKR.20040610195543.19"><vh>not_less_witness</vh></v>
+</v>
+<v t="EKR.20040610195543.20"><vh>format_witnesses</vh></v>
+<v t="EKR.20040610195543.21"><vh>process_tokens</vh></v>
+</v>
+<v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -2302,13 +2302,14 @@ import compiler
 
 next = p.next()
 s = next.bodyString()
+headline = next.headString()
 
 try:
     val = compiler.parse(s)
     # print val
-    g.es("Parsed OK",color="blue")
+    g.es("Syntax OK: %s" % headline,color="blue")
 except SyntaxError:
-    g.es("Syntax error",color="blue")</t>
+    g.es("Syntax error: %s" % headline,color="blue")</t>
 <t tx="EKR.20040610192622.1">import string
 
 string.join(a,b]
@@ -2327,8 +2328,15 @@ s = next.bodyString()
 headline = next.headString()
 
 checkString(s,headline)</t>
-<t tx="EKR.20040610194209.1">    a = 5 # 4 spaces
-    b = 6 # a tab.</t>
+<t tx="EKR.20040610194209.1">@tabwidth 4
+
+# Tabnanny _only_ checks errors involving tabs.
+# It does _not_ check other indentation errors.
+# It does _not_ check syntax.
+
+    a = 5
+	b = 6 #Contains tab.
+    c = 3</t>
 <t tx="EKR.20040610195543">def checkString (s,headline):
 
     """Check indentation using tabnanny.process_tokens."""
@@ -2338,7 +2346,8 @@ checkString(s,headline)</t>
     import tokenize
 
     try:
-        readline = g.readLinesGenerator(s).next
+        # readline = g.readLinesGenerator(s).next
+        readline = g.readLinesClass(s).next
         tabnanny.process_tokens(tokenize.generate_tokens(readline))
 
     except tokenize.TokenError, msg:
@@ -2358,7 +2367,11 @@ checkString(s,headline)</t>
         g.es("offending line:\n%s" % repr(str(line))[1:-1])
         return
         
-    g.es("Indentation is good",color="blue")
+    except:
+        g.trace("unexpected exception")
+        return
+        
+    g.es("Indentation OK: %s" % headline,color="blue")
 </t>
 <t tx="EKR.20040610195543.1">@ignore
 @language python
@@ -2714,7 +2727,9 @@ To do:
 - Specify which nodes to check.
 - Check only Python code.
 - use g.readLinesClass or similar code in existing Python module.</t>
-<t tx="EKR.20040611083703">from __future__ import generators
+<t tx="EKR.20040611083703"># This kind of code is used in the prototypes of new commands.
+
+from __future__ import generators
 
 import leoGlobals as g
 
@@ -2796,9 +2811,9 @@ unittest.TextTestRunner().run(suite)</t>
 <t tx="EKR.20040621100553">Line 1
 
 @last last line 1: no newline</t>
-<t tx="EKR.20040622074004"></t>
+<t tx="EKR.20040622074004">@ignore</t>
 <t tx="EKR.20040622074004.1"></t>
-<t tx="EKR.20040622074004.2">node b, line 1 (changed 11)</t>
+<t tx="EKR.20040622074004.2">node b, line 1 (changed 12)</t>
 <t tx="EKR.20040622074004.3"></t>
 <t tx="EKR.20040623201322.4"></t>
 <t tx="EKR.20040623201322.7"></t>
@@ -2856,7 +2871,9 @@ Line 1
 #@-node:EKR.20040624112329.3:@@thin
 #@-leo
 last line 1: no newline</t>
-<t tx="EKR.20040625110032">@others</t>
+<t tx="EKR.20040625110032">@ignore
+
+@others</t>
 <t tx="EKR.20040625110032.1"></t>
 <t tx="EKR.20040625110032.2"># @language html
 
@@ -2938,7 +2955,7 @@ print '
 
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
-<t tx="EKR.20040627103732"></t>
+<t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
@@ -4005,17 +4022,7 @@ unittest.TextTestRunner().run(suite)</t>
 import leoTest
 reload(leoTest)
 
-if 0: # Run test cases by name.
-
-    suite = unittest.TestSuite()
-    for name in ("test1","test2","test3","test4"):
-        test = leoTest.leoFileTests(name)
-        suite.addTest(test)
-
-else: # Run all test cases.
-
-    suite = unittest.makeSuite(leoTest.leoFileTests)
-
+suite = unittest.makeSuite(leoTest.leoFileTests)
 unittest.TextTestRunner().run(suite)</t>
 <t tx="ekr.20040303063549.125">import leoGlobals as g
 import unittest
@@ -4718,7 +4725,9 @@ os.system(s)
 
 assert(os.path.exists(path))
 print "done"</t>
-<t tx="ekr.20040327114250"># A file to be executed in batch mode as part of unit testing.
+<t tx="ekr.20040327114250">@ignore
+
+# A file to be executed in batch mode as part of unit testing.
 
 @language python
 @tabwidth -4
