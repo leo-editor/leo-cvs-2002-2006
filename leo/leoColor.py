@@ -14,18 +14,18 @@ import string,Tkinter,tkColorChooser
 #@+body
 # These defaults are sure to exist.
 default_colors_dict = {
-	# tag name     :(     option name,           default color),
-	"comment"      :("comment_color",               "red"),
-	"cwebName"     :("cweb_section_name_color",     "red"),
-	"pp"           :("directive_color",             "blue"),
-	"docPart"      :("doc_part_color",              "red"),
-	"keyword"      :("keyword_color",               "blue"),
-	"leoKeyword"   :("leo_keyword_color",           "blue"),
-	"link"         :("section_name_color",          "red"),
-	"nameBrackets" :("section_name_brackets_color", "blue"),
-	"string"       :("string_color",                "#00aa00"), # Used by IDLE.
-	"name"         :("undefined_section_name_color","red") }
-
+	# tag name      :(     option name,           default color),
+	"comment"       :("comment_color",               "red"),
+	"cwebName"      :("cweb_section_name_color",     "red"),
+	"pp"             :("directive_color",             "blue"),
+	"docPart"        :("doc_part_color",              "red"),
+	"keyword"        :("keyword_color",               "blue"),
+	"leoKeyword"     :("leo_keyword_color",           "blue"),
+	"link"           :("section_name_color",          "red"),
+	"nameBrackets"   :("section_name_brackets_color", "blue"),
+	"string"         :("string_color",                "#00aa00"), # Used by IDLE.
+	"name"           :("undefined_section_name_color","red"),
+	"latexBackground":("latex_background_color","white") }
 #@-body
 #@-node:2::<< define colorizer constants >>
 
@@ -559,6 +559,8 @@ class colorizer:
 		# For incremental coloring.
 		self.tags = (
 			"blank","comment","cwebName","docPart","keyword","leoKeyword",
+			"latexModeBackground","latexModeKeyword",
+			"latexBackground","latexKeyword",
 			"link","name","nameBrackets","pp","string","tab")
 		self.incremental = false
 		self.lines = []
@@ -781,6 +783,19 @@ class colorizer:
 			if self.showInvisibles:
 				body.tag_config("blank",background="Gray90")
 				body.tag_config("tab",background="Gray80")
+				
+			# 11/15/02: Colors for latex characters.  Should be user options...
+			
+			if 1: # Alas, the selection doesn't show if a background color is specified.
+				body.tag_configure("latexModeBackground",foreground="black")
+				body.tag_configure("latexModeKeyword",foreground="blue")
+				body.tag_configure("latexBackground",foreground="black")
+				body.tag_configure("latexKeyword",foreground="blue")
+			else: # Looks cool, and good for debugging.
+				body.tag_configure("latexModeBackground",foreground="black",background="seashell1")
+				body.tag_configure("latexModeKeyword",foreground="blue",background="seashell1")
+				body.tag_configure("latexBackground",foreground="black",background="white")
+				body.tag_configure("latexKeyword",foreground="blue",background="white")
 			#@-body
 			#@-node:1::<< configure tags >>
 
@@ -1202,7 +1217,7 @@ class colorizer:
 			return j+3,"normal"
 	#@-body
 	#@-node:5::continueSingle/DoublePythonString
-	#@+node:6::doAtKeyword
+	#@+node:6::doAtKeyword: NOT for cweb keywords
 	#@+body
 	# Handles non-cweb keyword.
 	
@@ -1231,7 +1246,7 @@ class colorizer:
 		else:
 			return j,"normal"
 	#@-body
-	#@-node:6::doAtKeyword
+	#@-node:6::doAtKeyword: NOT for cweb keywords
 	#@+node:7::doLatexNormal
 	#@+body
 	def doLatexNormalState (self,s,i,n):
@@ -1248,66 +1263,51 @@ class colorizer:
 	
 		ch = s[i] ; state = choose(self.latex_mode,"latexNormal","normal")
 	
-		if self.has_string and (ch == '"' or ch == "'"):
+		if ch in string.letters or ch == '_' or (ch == '\\' and self.latex_mode):
 			
-			#@<< handle string >>
-			#@+node:1::<< handle string >>
+			#@<< handle possible keyword >>
+			#@+node:1::Valid regardless of latex mode
+			#@+node:1::<< handle possible  keyword >>
 			#@+body
-			if self.language == "python":
-				j, state = self.skip_python_string(s,i)
-				self.body.tag_add("string", index(n,i), index(n,j))
-				i = j
+			if self.latex_mode:
+				if match(s,i,"\\"):
+					j = self.skip_id(s,i+1)
+					word = s[i:j]
+					if word in latex_keywords:
+						if self.language=="cweb":
+							self.body.tag_add("latexModeKeyword", index(n,i), index(n,j))
+						else:
+							self.body.tag_add("latexKeyword", index(n,i), index(n,j))
+					else:
+						if self.language=="cweb":
+							self.body.tag_add("latexModeBackground", index(n,i), index(n,j))
+						else:
+							self.body.tag_add("latexBackground", index(n,i), index(n,j))
+				else:
+					if self.language=="cweb":
+						self.body.tag_add("latexModeBackground", index(n,i), index(n,i+1))
+					else:
+						self.body.tag_add("latexBackground", index(n,i), index(n,i+1))
+					j = i + 1 # skip the character.
 			else:
-				j, state = self.skip_string(s,i)
-				self.body.tag_add("string", index(n,i), index(n,j))
-				i = j
-			
+				j = self.skip_id(s,i)
+				word = s[i:j]
+				if word in self.keywords:
+					self.body.tag_add("keyword", index(n,i), index(n,j))
+				elif self.language == "php":
+					if word in php_paren_keywords and match(s,j,"()"):
+						self.body.tag_add("keyword", index(n,i), index(n,j+2))
+						j += 2
+			i = j
 			#@-body
-			#@-node:1::<< handle string >>
-
-		elif match(s,i,self.single_comment_start):
-			
-			#@<< handle single-line comment >>
-			#@+node:3::<< handle single-line comment >>
-			#@+body
-			# print "single-line comment n,i,s:",`n`,`i`,`s`
-			
-			self.body.tag_add("comment", index(n,i), index(n,"end"))
-			i = len(s)
-			#@-body
-			#@-node:3::<< handle single-line comment >>
-
-		elif match(s,i,self.block_comment_start):
-			
-			#@<< start block comment >>
-			#@+node:2::<< start block comment >>
-			#@+body
-			k = len(self.block_comment_start)
-			self.body.tag_add("comment", index(n,i), index(n,i+k))
-			i += k ; state = "blockComment"
-			#@-body
-			#@-node:2::<< start block comment >>
-
-		elif ch == '#' and self.has_pp_directives:
-			
-			#@<< handle C preprocessor line >>
-			#@+node:4::<< handle C preprocessor line >>
-			#@+body
-			# 10/17/02: recognize comments in preprocessor lines.
-			j = i
-			while i < len(s):
-				if match(s,i,self.single_comment_start) or match(s,i,self.block_comment_start):
-					break
-				else: i += 1
-			
-			self.body.tag_add("pp", index(n,j), index(n,i))
-			#@-body
-			#@-node:4::<< handle C preprocessor line >>
+			#@-node:1::<< handle possible  keyword >>
+			#@-node:1::Valid regardless of latex mode
 
 		elif match(s,i,self.lb):
 			
 			#@<< handle possible noweb section ref or def >>
-			#@+node:6::<< handle possible noweb section ref or def >>
+			#@+node:1::Valid regardless of latex mode
+			#@+node:3::<< handle possible noweb section ref or def >>
 			#@+body
 			self.body.tag_add("nameBrackets", index(n,i), index(n,i+2))
 			
@@ -1351,12 +1351,14 @@ class colorizer:
 				i = j + k
 			
 			#@-body
-			#@-node:6::<< handle possible noweb section ref or def >>
+			#@-node:3::<< handle possible noweb section ref or def >>
+			#@-node:1::Valid regardless of latex mode
 
 		elif ch == '@':
 			
 			#@<< handle at keyword >>
-			#@+node:5::<< handle at keyword >>
+			#@+node:1::Valid regardless of latex mode
+			#@+node:2::<< handle at keyword >>
 			#@+body
 			if self.language == "cweb":
 				if match(s,i,"@(") or match(s,i,"@<"):
@@ -1390,6 +1392,8 @@ class colorizer:
 						#@+node:1::<< Handle cweb control word >>
 						#@+body
 						# Color and skip the word.
+						assert(self.language=="cweb")
+						
 						j = i + len(word)
 						self.body.tag_add("keyword",index(n,i),index(n,j))
 						i = j
@@ -1414,38 +1418,116 @@ class colorizer:
 			else:
 				i,state = self.doAtKeyword(s,i,n)
 			#@-body
-			#@-node:5::<< handle at keyword >>
+			#@-node:2::<< handle at keyword >>
+			#@-node:1::Valid regardless of latex mode
 
-		elif ch in string.letters or ch == '_' or (ch == '\\' and self.latex_mode):
+		elif self.latex_mode:
 			
-			#@<< handle possible keyword >>
-			#@+node:7::<< handle possible  keyword >>
+			#@<< handle latex normal character >>
+			#@+node:2::Vaid only in latex mode
+			#@+node:1::<< handle latex normal character >>
 			#@+body
-			if self.latex_mode:
+			if self.language=="cweb":
+				self.body.tag_add("latexModeBackground", index(n,i), index(n,i+1))
+			else:
+				self.body.tag_add("latexBackground", index(n,i), index(n,i+1))
+			i += 1
+			#@-body
+			#@-node:1::<< handle latex normal character >>
+			#@-node:2::Vaid only in latex mode
+
+		elif self.has_string and (ch == '"' or ch == "'"):
+			
+			#@<< handle string >>
+			#@+node:3::Valid when not in latex_mode
+			#@+node:1::<< handle string >>
+			#@+body
+			if self.language == "python":
+				j, state = self.skip_python_string(s,i)
+				self.body.tag_add("string", index(n,i), index(n,j))
+				i = j
+			else:
+				j, state = self.skip_string(s,i)
+				self.body.tag_add("string", index(n,i), index(n,j))
+				i = j
+			
+			#@-body
+			#@-node:1::<< handle string >>
+			#@-node:3::Valid when not in latex_mode
+
+		elif match(s,i,self.single_comment_start):
+			
+			#@<< handle single-line comment >>
+			#@+node:3::Valid when not in latex_mode
+			#@+node:3::<< handle single-line comment >>
+			#@+body
+			# print "single-line comment n,i,s:",`n`,`i`,`s`
+			
+			self.body.tag_add("comment", index(n,i), index(n,"end"))
+			i = len(s)
+			#@-body
+			#@-node:3::<< handle single-line comment >>
+			#@-node:3::Valid when not in latex_mode
+
+		elif self.language=="cweb" and ch == '%':
+			
+			#@<< handle latex line in cweb mode >>
+			#@+node:3::Valid when not in latex_mode
+			#@+node:4::<< handle latex line in cweb mode >>
+			#@+body
+			self.body.tag_add("keyword", index(n,i), index(n,i+1))
+			i += 1 # Skip the %
+			
+			while i < len(s):
 				if match(s,i,"\\"):
 					j = self.skip_id(s,i+1)
 					word = s[i:j]
 					if word in latex_keywords:
-						self.body.tag_add("keyword", index(n,i), index(n,j))
+						self.body.tag_add("latexModeKeyword", index(n,i), index(n,j))
+					i = j
 				else:
-					j = i + 1 # skip the backslash.
-			else:
-				j = self.skip_id(s,i)
-				word = s[i:j]
-				if word in self.keywords:
-					self.body.tag_add("keyword", index(n,i), index(n,j))
-				elif self.language == "php":
-					if word in php_paren_keywords and match(s,j,"()"):
-						self.body.tag_add("keyword", index(n,i), index(n,j+2))
-						j += 2
-			i = j
+					self.body.tag_add("latexModeBackground", index(n,i), index(n,i+1))
+					i += 1
 			#@-body
-			#@-node:7::<< handle possible  keyword >>
+			#@-node:4::<< handle latex line in cweb mode >>
+			#@-node:3::Valid when not in latex_mode
+
+		elif match(s,i,self.block_comment_start):
+			
+			#@<< start block comment >>
+			#@+node:3::Valid when not in latex_mode
+			#@+node:2::<< start block comment >>
+			#@+body
+			k = len(self.block_comment_start)
+			self.body.tag_add("comment", index(n,i), index(n,i+k))
+			i += k ; state = "blockComment"
+			#@-body
+			#@-node:2::<< start block comment >>
+			#@-node:3::Valid when not in latex_mode
+
+		elif ch == '#' and self.has_pp_directives:
+			
+			#@<< handle C preprocessor line >>
+			#@+node:3::Valid when not in latex_mode
+			#@+node:5::<< handle C preprocessor line >>
+			#@+body
+			# 10/17/02: recognize comments in preprocessor lines.
+			j = i
+			while i < len(s):
+				if match(s,i,self.single_comment_start) or match(s,i,self.block_comment_start):
+					break
+				else: i += 1
+			
+			self.body.tag_add("pp", index(n,j), index(n,i))
+			#@-body
+			#@-node:5::<< handle C preprocessor line >>
+			#@-node:3::Valid when not in latex_mode
 
 		elif self.language == "php" and (match(s,i,"<") or match(s,i,"?")):
 			
 			#@<< handle special php keywords >>
-			#@+node:8::<< handle special php keywords >>
+			#@+node:3::Valid when not in latex_mode
+			#@+node:6::<< handle special php keywords >>
 			#@+body
 			if match(s,i,"<?php"):
 				self.body.tag_add("keyword", index(n,i), index(n,i+5))
@@ -1457,59 +1539,72 @@ class colorizer:
 				i += 1
 			
 			#@-body
-			#@-node:8::<< handle special php keywords >>
+			#@-node:6::<< handle special php keywords >>
+			#@-node:3::Valid when not in latex_mode
 
 		elif ch == ' ':
 			
 			#@<< handle blank >>
-			#@+node:9::<< handle blank >>
+			#@+node:3::Valid when not in latex_mode
+			#@+node:7::<< handle blank >>
 			#@+body
 			if self.showInvisibles:
 				self.body.tag_add("blank", index(n,i))
 			i += 1
 			#@-body
-			#@-node:9::<< handle blank >>
+			#@-node:7::<< handle blank >>
+			#@-node:3::Valid when not in latex_mode
 
 		elif ch == '\t':
 			
 			#@<< handle tab >>
-			#@+node:10::<< handle tab >>
+			#@+node:3::Valid when not in latex_mode
+			#@+node:8::<< handle tab >>
 			#@+body
 			if self.showInvisibles:
 				self.body.tag_add("tab", index(n,i))
 			i += 1
 			#@-body
-			#@-node:10::<< handle tab >>
+			#@-node:8::<< handle tab >>
+			#@-node:3::Valid when not in latex_mode
 
 		else:
 			
 			#@<< handle normal character >>
-			#@+node:11::<< handle normal character >>
+			#@+node:3::Valid when not in latex_mode
+			#@+node:9::<< handle normal character >>
 			#@+body
 			# self.body.tag_add("normal", index(n,i))
 			i += 1
-			
 			#@-body
-			#@-node:11::<< handle normal character >>
+			#@-node:9::<< handle normal character >>
+			#@-node:3::Valid when not in latex_mode
 
 	
 		assert(self.progress < i)
 		return i,state
 	#@-body
+	#@+node:1::Valid regardless of latex mode
+	#@-node:1::Valid regardless of latex mode
+	#@+node:2::Vaid only in latex mode
+	#@-node:2::Vaid only in latex mode
+	#@+node:3::Valid when not in latex_mode
+	#@-node:3::Valid when not in latex_mode
 	#@-node:8::doNormalState
 	#@+node:9::removeAllTags & removeTagsFromLines
 	#@+body
 	def removeAllTags (self):
 	
 		self.body.tag_delete(
-			"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
-			"link", "name", "nameBrackets", "pp", "string", "tab")
+			"blank","comment","cwebName","docPart","keyword","leoKeyword",
+			"latexModeBackground","latexModeKeyword",
+			"latexBackground","latexKeyword",
+			"link","name","nameBrackets","pp","string","tab")
 			
 	def removeTagsFromLine (self,n):
 		
 		for tag in self.tags:
 			self.body.tag_remove(tag,index(n,0),index(n,"end"))
-	
 	#@-body
 	#@-node:9::removeAllTags & removeTagsFromLines
 	#@-node:3::colorizeLine & allies
