@@ -599,7 +599,7 @@ class config:
 			encoding = self.initConfigParam(
 				"tk_encoding",self.tkEncoding)
 				
-			if encoding: # May be None.
+			if encoding and len(encoding) > 0: # May be None.
 				if isValidEncoding(encoding):
 					self.tkEncoding = encoding
 				else:

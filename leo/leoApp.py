@@ -232,7 +232,7 @@ class LeoApp:
 		
 			if encoding and len(encoding) > 0:
 				self.tkEncoding = encoding
-				print self.tkEncoding,src
+				# print self.tkEncoding,src
 				break
 		
 		#@-body

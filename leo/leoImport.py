@@ -2273,6 +2273,7 @@ class leoImportCommands:
 	def convertVnodeToWeb (self,v):
 	
 		if not v: return ""
+		startInCode = not app().config.at_root_bodies_start_in_doc_mode
 		nl = self.output_newline
 		s = v.bodyString()
 		lb = choose(self.webType=="cweb","@<","<<")
@@ -2297,7 +2298,7 @@ class leoImportCommands:
 				#@-node:1::<< Supply a missing doc part >>
 
 				i,result = self.convertCodePartToWeb(s,i,v,result)
-			elif self.treeType == "@file":
+			elif self.treeType == "@file" or startInCode:
 				
 				#@<< Supply a missing doc part >>
 				#@+node:1::<< Supply a missing doc part >>

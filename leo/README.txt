@@ -1,5 +1,9 @@
 Important note: See INSTALL.TXT for installation instructions.
 
+leo.py 3.11 beta 3                       February 26, 2003
+
+- Added tk_encoding setting and new logic for determining encoding of strings returned by Tk Text widgets.  Many people report that these changes solve their problems with non-ascii characters.
+
 leo.py 3.11 beta 2                       February 24, 2003
 
 This version of Leo fixes some unicode problems when the system encoding is not "utf-8".
