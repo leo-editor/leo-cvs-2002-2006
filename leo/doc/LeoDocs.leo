@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="12806" clone_windows="0"/>
 <globals body_outline_ratio="0.501162790698">
-	<global_window_position top="5" left="398" height="860" width="796"/>
+	<global_window_position top="10" left="398" height="860" width="796"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -105,7 +105,7 @@
 <v t="ekr.20050123092834.510"><vh>Search commands are now restricted to hoisted area</vh></v>
 </v>
 <v t="ekr.20050123100706.1"><vh>Distribution</vh>
-<v t="ekr.20050123092834.491"><vh>(Fixed file association in leoDist.leo)</vh></v>
+<v t="ekr.20050123092834.491"><vh>Fixed file association in leoDist.leo</vh></v>
 </v>
 <v t="ekr.20050123092834.165"><vh>Files</vh>
 <v t="ekr.20050123092834.492"><vh>g.import wrappers return module if it is in sys.modules</vh></v>
@@ -210,7 +210,7 @@
 <v t="ekr.20050123092834.510"><vh>Search commands are now restricted to hoisted area</vh></v>
 </v>
 <v t="ekr.20050123100706.1"><vh>Distribution</vh>
-<v t="ekr.20050123092834.491"><vh>(Fixed file association in leoDist.leo)</vh></v>
+<v t="ekr.20050123092834.491"><vh>Fixed file association in leoDist.leo</vh></v>
 </v>
 <v t="ekr.20050123092834.165"><vh>Files</vh>
 <v t="ekr.20050123092834.492"><vh>g.import wrappers return module if it is in sys.modules</vh></v>
@@ -7634,7 +7634,7 @@ This is the minimum you need to use Leo effectively.
 4. Many command key abbreviations are specified in the Syntax Coloring panel.
 
 See the Appendices for a concise summary of information about Leo.</t>
-<t tx="edream.110203163054.63"></t>
+<t tx="edream.110203163054.63">@nocolor</t>
 <t tx="edream.110203163054.64">Leo 4.1 alpha 1                   November 3, 2003
 
 *** Alpha quality code:  Please make full backups before playing with this code!
@@ -16155,8 +16155,7 @@ Added treeCanvas.name = '1' in:
 &lt;&lt; replace tree pane with settings tree &gt;&gt;</t>
 <t tx="ekr.20050123092834.510"></t>
 <t tx="ekr.20050123092834.517">Leo can still read such files, but old-style file formats are now deprecated</t>
-<t tx="ekr.20050123092834.520">The new code greatly simplifies the class structure. The intention is to allow
-plugins to override methods of this file more easily.
+<t tx="ekr.20050123092834.520">The new code greatly simplifies the class structure. The intention is to allow plugins to override methods of this file more easily.
 
 The highlights:
 
@@ -16168,9 +16167,7 @@ The highlights:
     - All constants are class constants: no more module-level constants.
 
 - All top-level methods support toString or fromString arguments.</t>
-<t tx="ekr.20050123092834.526">
-
-The following are all Python global functions:
+<t tx="ekr.20050123092834.526">Fixed shawdow warnings.  The following are all Python global functions:
 
 cmp -&gt; compare
 dict -&gt; theDict

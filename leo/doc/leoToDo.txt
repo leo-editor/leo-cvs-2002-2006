@@ -4,31 +4,6 @@
 
 #@+all
 #@+node:ekr.20050102180943.1:4.3 a1
-#@+node:ekr.20050122105757:** Implement 'Undo Clear Recent Files'
-#@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
-def setRecentFiles (self,files):
-    
-    c = self.c
-    
-    # Append the files to the global list.
-    g.app.config.appendToRecentFiles(files)
-    
-    # Do nothing if there is no @settings tree or no @recent-files node.
-    p = g.app.config.findSettingsPosition(c,"@recent-files")
-    if not p:
-        # g.trace("no @recent-files node for ",c.mFileName)
-        return
-
-    # g.trace("updating @recent-files for ",c.mFileName)
-
-    # Update the @recent-files entry, leaving c's changed status untouched.
-    changed = c.isChanged()
-    body = '\n'.join(files)
-    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
-    c.setChanged(changed)
-#@nonl
-#@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
-#@-node:ekr.20050122105757:** Implement 'Undo Clear Recent Files'
 #@+node:ekr.20050122192837:Small bugs 3
 #@+node:ekr.20050121075634:Investigate Control-Q binding
 #@+node:ekr.20050121075634.1:Report
@@ -84,14 +59,10 @@ All is now well and Leo continues to be a revelation.
     - Make sure proper values from Prefs panel are used in Tangle/Untangle commands.
 #@nonl
 #@-node:ekr.20041118135306.1:Unit tests for settings dialog
-#@+node:ekr.20050122092221:Do release notes
-@killcolor
-
-- This really is an alpha release.  Be careful.
-
-- Files must have @recent-files (or @recentFiles, etc.) nodes to keep track of recent files.
+#@+node:ekr.20050123122012:Finish release notes and announcements
+- Add quotes, etc.
 #@nonl
-#@-node:ekr.20050122092221:Do release notes
+#@-node:ekr.20050123122012:Finish release notes and announcements
 #@-node:ekr.20050102180943.1:4.3 a1
 #@+node:ekr.20050119072551:4.3 a2 config
 #@+node:ekr.20050122091016:Minor
@@ -1083,6 +1054,7 @@ u.redoDispatchDict = {
     "Change":             u.redoTyping,
     "Change All":         u.redoChangeAll,
     "Change Headline":    u.redoChangeHeadline,
+    'Clear Recent Files': u.redoTyping,
     "Clone Node":         u.redoClone,
     "Convert All Blanks": u.redoReplaceNodesContents,
     "Convert All Tabs":   u.redoReplaceNodesContents,
@@ -1125,6 +1097,7 @@ u.undoDispatchDict = {
     "Change":             u.undoTyping,
     "Change All":         u.undoChangeAll,
     "Change Headline":    u.undoChangeHeadline,
+    'Clear Recent Files': u.undoTyping,
     "Clone Node":         u.undoClone,
     "Convert All Blanks": u.undoReplaceNodesContents,
     "Convert All Tabs":   u.undoReplaceNodesContents,

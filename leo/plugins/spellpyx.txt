@@ -31,6 +31,7 @@ DocTestSuite
 EOD
 EOL_SPAN
 EXCLUDE_MATCH
+EqualSizedPanes
 Esc
 FAQ_
 Fetherston's
@@ -43,6 +44,7 @@ GPL
 H1
 HIGHLIGHT_DIGITS
 Hein
+Hmmmmmm
 IDE
 IGNORE_CASE
 IMG
@@ -72,6 +74,7 @@ MARK_PREVIOUS
 MacOS
 MacOSXTk8
 MaxOS
+McNab
 Merenda
 Metadata
 ModuleType
@@ -83,6 +86,7 @@ NoNodeEditors
 OLDconvert
 OLDfilter
 OLDsearch
+OnActivateTree
 OnCascade
 OnCopyNode
 OnEqualSizedPanes
@@ -102,6 +106,7 @@ PRN
 PY_COMPILED
 PY_SOURCE
 PageMaker
+Pickler
 Pmw
 Prefs
 Prepass
@@ -141,6 +146,7 @@ TokenError
 Toplevel
 TreePad
 TypeError
+UNL
 UST
 UnicodeError
 Unindent
@@ -199,6 +205,7 @@ _easiest_
 _easily_
 _every_
 _firstChild
+_flag
 _frame_
 _frames_
 _higher_
@@ -209,6 +216,7 @@ _inside_
 _is_
 _less_
 _lot_
+_many_
 _much_
 _names_
 _never_
@@ -306,6 +314,7 @@ badline
 basefont
 basename
 batchChange
+batchMode
 batchTest
 batchfile
 beforeHeadline
@@ -323,6 +332,7 @@ bodyFlag
 bodyString
 body_newline
 body_pane_wraps
+bodyclick1
 bodyclick2
 bodydclick2
 bodykey1
@@ -342,6 +352,7 @@ bytecode
 bz2
 c2py
 c_language
+callTagHandler
 callerName
 can`t
 cantImport
@@ -359,7 +370,9 @@ changeAll
 changeList
 changeString
 changeTok
+change_ctrl
 change_string
+change_text
 chapter6_
 chapter8_
 checkCompile
@@ -397,6 +410,7 @@ closePipes
 closing_delim
 cmd
 cmnd
+cmp
 codeLine
 codeList
 codeName
@@ -410,8 +424,10 @@ command1
 command2
 commandName
 comment2
+compareFiles
 compareHeadlines
 compareOutlines
+computeHomeDir
 computeIcon
 computeWidth
 cond
@@ -463,6 +479,7 @@ d2
 darwin
 dataParent_v
 data_p
+debugSwitch
 defFun
 defadvice
 defalias
@@ -513,10 +530,15 @@ doctest
 doctests
 docutils
 doesn
+drag1
+drag2
+dragging1
+dragging2
 drawBox
 drawIcon
 drawText
 drawTree
+dst
 dtors
 dumpCodeList
 dx
@@ -542,6 +564,7 @@ end1
 endDrag
 endUpdate
 end_raw
+enddrag1
 enddrag2
 endif
 enum
@@ -560,6 +583,7 @@ exportHeadlines
 exportTests
 expr_names
 expression_number
+extensionsDir
 f1
 f2
 failedMethod
@@ -573,6 +597,7 @@ fileCommands
 fileIndex
 fileName
 file_format
+file_util
 fillbox
 filterCallback
 finalCol
@@ -614,6 +639,8 @@ forum_id
 forwards
 freebsd4
 freebsd5
+freenet
+fromString
 frontMatter
 ftok
 func
@@ -649,7 +676,10 @@ gen_when
 gen_while
 generalTestCase
 generate_tokens
+getAllText
 getBack
+getBaseDirectly
+getBaseDirectory
 getCaseDataNodes
 getColorizer
 getFont
@@ -721,6 +751,7 @@ hyperLinkEnter
 hyperLinkLeave
 hypercclick1
 hypercclick2
+hyperclick2
 hyperenter
 hyperenter1
 hyperenter2
@@ -747,18 +778,23 @@ idle_redraw
 ifdef
 ifndef
 ignoreAtIgnore
+ignoreLineEndings
 igrep
 ihooks
 imag
 importCommands
 importExport
+importExtension
 importFiles
 importIndentTest
+importModule
 importTests
 in_headline
 incompletions
 indices
 initMarked
+initWriteIvars
+inits
 inline
 inodes
 input_ins
@@ -873,6 +909,7 @@ leoUtils
 leo_TOC
 leo_file
 leo_header
+leodir
 leopath
 leosetup
 level1
@@ -1021,8 +1058,11 @@ noweb
 nowrap
 nsi
 nthChild
+nullLog
+nullMenu
 nullPosition
 nw
+nz
 occurances
 ok
 oldSel
@@ -1058,6 +1098,7 @@ onXXX
 on_idle
 open1
 open2
+openDir
 openFileDialog
 openLeo
 openPipes
@@ -1159,10 +1200,12 @@ pstats
 putDirective
 putDocPart
 putOperator
+putRefAt
 putTnodes
 putVnode
 py
 pyc
+pycheckrc
 pyd
 pypi
 python22
@@ -1172,6 +1215,7 @@ pythonw
 pythonware
 randint
 rapidq
+rawPrint
 rawfile
 rawfiles
 rb
@@ -1193,7 +1237,9 @@ readonly
 realMenuName
 reassignIndices
 rebol
+recentFiles
 recentfiles2
+redirectClass
 redoBletch
 redraw_flag
 refLinesCount
@@ -1219,6 +1265,7 @@ replaceOutline
 replacePatterns
 reportBadChars
 repr
+resizePanesToRatio
 resizeable
 restoreStderr
 restoreStdout
@@ -1262,6 +1309,7 @@ sbyte
 scanDirectives
 scanError
 scanHeader
+scanHeaderForThin
 scanText
 scanText4
 script1
@@ -1301,6 +1349,7 @@ setWriteBit
 set_class
 set_debug
 set_debugGc
+set_focus
 set_lang
 set_language
 set_trace
@@ -1439,7 +1488,11 @@ testmod
 testsName
 text1
 text2
+theDict
+theDir
 theFile
+theId
+theIter
 theList
 theType
 thinFile
@@ -1479,6 +1532,8 @@ tp
 traceDrawing
 tracePositions
 trace_gc
+treeCanvas
+treeWantsFocus
 trees_
 tx
 txt
@@ -1519,6 +1574,7 @@ unselecting
 updateButtons
 updateCount
 updateDictionary
+update_ivars
 url
 url1
 url2
@@ -1531,6 +1587,8 @@ user_name
 ushort
 usr
 utf
+utils_remove
+utils_rename
 uxxxx
 v1
 v2
@@ -1554,6 +1612,7 @@ vnx
 vparents
 vtag
 walkback
+wantedFocus
 wasChanged
 wb
 weblogs
@@ -1587,6 +1646,7 @@ wxWindows
 wx_gui
 x1
 x2
+xWantsFocus
 x_keywords
 xemacs
 xmax
