@@ -142,7 +142,8 @@ def es(s):
 #@-node:5::es, enl, ecnl
 #@+node:6::handleLeoHook
 #@+body
-# This routine handles all hooks into Leo.  Hooks are identified by the tag param.
+# This routine calls a hook routine.  Hooks are identified by the tag param.
+# Returns the value returned by the hook routine, or None if the there is an exception.
 
 def handleLeoHook(tag):
 
@@ -150,7 +151,7 @@ def handleLeoHook(tag):
 	from leoGlobals import es,app
 	import exceptions
 	a = app()
-	if a.hookSyntaxError: return
+	if a.hookSyntaxError: return None
 
 	try:
 		import leoCustomize
@@ -160,14 +161,14 @@ def handleLeoHook(tag):
 		except:
 			es("exception executing leoCustomize.customizeLeo("+tag+")")
 			es_exception()
+			return None # No return value
 	except exceptions.SyntaxError:
 		es("syntax error in leoCustomize.customizeLeo()")
 		es_exception()
 		a.hookSyntaxError = true # Suppress further calls.
+		return None
 	except:
-		pass # Not an error.
-
-	return true # The command1 hook has not overridden the command.
+		return None # Not an error.
 
 #@-body
 #@-node:6::handleLeoHook

@@ -77,7 +77,7 @@ def init_sherlock (args):
 	# leoUtils.trace("argv", "sys.argv: " + `sys.argv`)
 #@-body
 #@-node:4::init_sherlock
-#@+node:5::leoOpen (leo.py)
+#@+node:5::leo.leoOpen
 #@+body
 def leoOpen(fileName=None,*args):
 	
@@ -139,8 +139,8 @@ def leoOpen(fileName=None,*args):
 	leoGlobals.handleLeoHook("start2")
 	root.mainloop()
 #@-body
-#@-node:5::leoOpen (leo.py)
-#@+node:6::run (leo.py)
+#@-node:5::leo.leoOpen
+#@+node:6::leo.run
 #@+body
 def run(*args):
 
@@ -184,7 +184,7 @@ def run(*args):
 	leoGlobals.handleLeoHook("start2")
 	root.mainloop()
 #@-body
-#@-node:6::run (leo.py)
+#@-node:6::leo.run
 #@+node:7::onKillLeoEvent
 #@+body
 # Apparently the value returned from this routine is ignored.

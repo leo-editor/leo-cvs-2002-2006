@@ -110,7 +110,9 @@ class LeoFrame:
 		#@-body
 		#@-node:2::<< create the first tree node >>
 
-		self.createMenuBar(top)
+		flag = handleLeoHook("menu1")
+		if flag == None or flag != false:
+			self.createMenuBar(top)
 		app().log = self # the LeoFrame containing the log
 		app().windowList.append(self)
 		# Sign on.
@@ -839,10 +841,11 @@ class LeoFrame:
 				#@-node:1::<< get menu and bind shortcuts >>
 
 				callback=lambda self=self,cmd=command,label=name:self.doCommand(cmd,label)
+				realLabel = app().realMenuName(label)
 				if menu_shortcut:
-					menu.add_command(label=label,accelerator=menu_shortcut,command=callback)
+					menu.add_command(label=realLabel,accelerator=menu_shortcut,command=callback)
 				else:
-					menu.add_command(label=label,command=callback)
+					menu.add_command(label=realLabel,command=callback)
 					
 				if bind_shortcut:
 					if bind_shortcut in self.menuShortcuts:
@@ -862,7 +865,7 @@ class LeoFrame:
 								# es_exception()
 	#@-body
 	#@-node:8::createMenuEntries
-	#@+node:9::doCommand
+	#@+node:9::frame.doCommand
 	#@+body
 	#@+at
 	#  Executes the given command, invoking hooks and catching exceptions.
@@ -890,7 +893,7 @@ class LeoFrame:
 			handleLeoHook("command2")
 		return "break" # Inhibit all other handlers.
 	#@-body
-	#@-node:9::doCommand
+	#@-node:9::frame.doCommand
 	#@+node:10::initialRatios
 	#@+body
 	def initialRatios (self):
@@ -1111,17 +1114,21 @@ class LeoFrame:
 	#@-node:6::OnMouseWheel (Tomaz Ficko)
 	#@-node:15::Event handlers
 	#@+node:16::Menu enablers (Frame)
-	#@+node:1::OnMenuClick (enables and disables all menu items)
+	#@+node:1::frame.OnMenuClick (enables and disables all menu items)
 	#@+body
 	# This is the Tk "postcommand" callback.  It should update all menu items.
 	
 	def OnMenuClick (self):
-	
-		self.updateFileMenu()
-		self.updateEditMenu()
-		self.updateOutlineMenu()
+		
+		# Allow the user first crack at updating menus.
+		flag = handleLeoHook("menu2")
+		
+		if flag == None or flag != false:
+			self.updateFileMenu()
+			self.updateEditMenu()
+			self.updateOutlineMenu()
 	#@-body
-	#@-node:1::OnMenuClick (enables and disables all menu items)
+	#@-node:1::frame.OnMenuClick (enables and disables all menu items)
 	#@+node:2::hasSelection
 	#@+body
 	# Returns true if text in the outline or body text is selected.
@@ -1425,7 +1432,9 @@ class LeoFrame:
 			file = open(fileName,'r')
 			if file:
 				frame = LeoFrame(fileName)
-				frame.commands.fileCommands.open(file,fileName) # closes file.
+				flag = handleLeoHook("open1")
+				if flag == None or flag != false:
+					frame.commands.fileCommands.open(file,fileName) # closes file.
 				frame.openDirectory=os.path.dirname(fileName)
 				
 				#@<< make fileName the most recent file of frame >>
@@ -1462,6 +1471,7 @@ class LeoFrame:
 				#@-body
 				#@-node:1::<< make fileName the most recent file of frame >>
 
+				handleLeoHook("open2")
 				return true, frame
 			else:
 				es("can not open" + fileName)
@@ -3109,6 +3119,7 @@ class LeoFrame:
 	def createNewMenu (self,menuName,parentName="top"):
 		
 		import Tkinter
+		from leoGlobals import app
 		try:
 			parent = self.menus.get(parentName)
 			if parent == None:
@@ -3120,7 +3131,8 @@ class LeoFrame:
 			else:
 				menu = Tkinter.Menu(parent,tearoff=0)
 				self.menus[menuName] = menu
-				parent.add_cascade(label=menuName,menu=menu)
+				label=app().realMenuName(menuName)
+				parent.add_cascade(label=label,menu=menu)
 				return menu
 		except:
 			es("exception creating " + menuName + " menu")
@@ -3166,10 +3178,12 @@ class LeoFrame:
 	#@+body
 	def deleteMenuItem (self,itemName,menuName="top"):
 	
+		from leoGlobals import app
 		try:
 			menu = self.menus.get(menuName)
 			if menu:
-				menu.delete(itemName)
+				realItemName=app().realMenuName(itemName)
+				menu.delete(realItemName)
 			else:
 				es("menu not found: " + menuName)
 		except:

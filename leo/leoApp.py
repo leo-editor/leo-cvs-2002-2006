@@ -29,6 +29,7 @@ class LeoApp:
 		self.openWithFiles = [] # List of data used by Open With command.
 		self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
 		self.quitting = false # True if quitting.  Locks out some events.
+		self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
 		self.root = root # The hidden main window
 		self.trace_list = [] # "Sherlock" argument list for tracing().
 		self.unicodeErrorGiven = false # true: suppres unicode tracebacks.
@@ -192,7 +193,18 @@ class LeoApp:
 			self.root.quit()
 	#@-body
 	#@-node:5::app.quit
-	#@+node:6::app.testDialogs
+	#@+node:6::app.realMenuName
+	#@+body
+	# Returns the translation of a menu name or an item name.
+	# Note: app().menus always contains the _untranslated_ menu names.
+	
+	def realMenuName (self, menuName):
+		
+		name = self.realMenuNameDict.get(menuName)
+		return choose(name==None,menuName,name)
+	#@-body
+	#@-node:6::app.realMenuName
+	#@+node:7::app.testDialogs
 	#@+body
 	def testDialogs (self):
 	
@@ -200,7 +212,7 @@ class LeoApp:
 		d = leoDialog.leoDialog()
 		d.testDialogs()
 	#@-body
-	#@-node:6::app.testDialogs
+	#@-node:7::app.testDialogs
 	#@-others
 #@-body
 #@-node:0::@file leoApp.py
