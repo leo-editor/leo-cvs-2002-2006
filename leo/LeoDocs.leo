@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1071" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1073" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="15" left="98" height="23" width="80"/>
+	<global_window_position top="53" left="138" height="23" width="80"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0">
+<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
-<find_panel_settings>
-	<find_string></find_string>
+<find_panel_settings search_body="1" whole_word="1">
+	<find_string>os.rename</find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
@@ -22,7 +22,7 @@
 </v>
 <v t="T6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="T7" a="C"><vh>Acknowledgements</vh></v>
-<v t="T8" a="E"><vh>Release Notes</vh>
+<v t="T8"><vh>Release Notes</vh>
 <v t="T9"><vh>Warnings</vh></v>
 <v t="T10"><vh>Installation notes</vh>
 <v t="T11" a="C"><vh>System requirements</vh></v>
@@ -35,7 +35,7 @@
 <v t="T16" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="E"><vh>Latest version</vh>
-<v t="T17" a="CEV"><vh>leo.py 3.5</vh>
+<v t="T17" a="CE"><vh>leo.py 3.5</vh>
 <v t="T18"><vh>Bug fixes</vh>
 <v t="T19"><vh>Called cf.flush in leoConfig.update</vh></v>
 <v t="T20"><vh>Fixed crasher in leoFileCommands.readOutlineOnly</vh></v>
@@ -393,7 +393,7 @@
 </v>
 </v>
 </v>
-<v t="T272"><vh>Users Guide</vh>
+<v t="T272" a="V"><vh>Users Guide</vh>
 <v t="T273"><vh>An overview of Leo</vh></v>
 <v t="T274"><vh>Front material</vh>
 <v t="T275"><vh>Title Page &amp; Summary</vh></v>
@@ -528,7 +528,7 @@
 </v>
 </v>
 </v>
-<v t="T327"><vh>More about directives</vh>
+<v t="T327" a="E"><vh>More about directives</vh>
 <v t="T328"><vh>@CWEB and @noweb specify the source language</vh></v>
 <v t="T329"><vh>@color and @nocolor control syntax coloring</vh></v>
 <v t="T330"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
@@ -826,431 +826,433 @@
 <v t="T44"><vh>Tree code</vh></v>
 </v>
 <v t="T496"><vh>Converting @root trees to @file trees</vh></v>
-<v t="T497"><vh>Directives</vh>
+<v t="T497" a="E"><vh>Directives</vh>
 <v t="T498"><vh>@c and @code</vh></v>
 <v t="T499"><vh>@chapter (Macintosh only)</vh></v>
 <v t="T500"><vh>@color</vh></v>
 <v t="T501"><vh>@comment</vh></v>
 <v t="T502"><vh>@cweb</vh></v>
-<v t="T503"><vh>@doc and @(space)</vh></v>
-<v t="T504"><vh>@file (not valid in @root or @unit trees)</vh></v>
-<v t="T505"><vh>@ignore  (not valid in @file trees)</vh></v>
-<v t="T506"><vh>@language</vh></v>
-<v t="T507"><vh>@nocolor</vh></v>
-<v t="T508"><vh>@noweb</vh></v>
-<v t="T509"><vh>@others (valid only in @file trees)</vh></v>
-<v t="T510"><vh>@pagewidth</vh></v>
-<v t="T511"><vh>@path</vh></v>
-<v t="T512"><vh>@root  (not valid in @file trees)</vh></v>
-<v t="T513"><vh>@section (Macintosh only)</vh></v>
-<v t="T514"><vh>@silent (not valid in @file trees)</vh></v>
-<v t="T515"><vh>@tabwidth</vh></v>
-<v t="T516"><vh>@terse  (not valid in @file trees)</vh></v>
-<v t="T517"><vh>@unit   (not valid in @file trees)</vh></v>
-<v t="T518"><vh>@verbose, @terse and @silent directives</vh></v>
+<v t="T503"><vh>@delims (not valid in @root or @unit trees)</vh></v>
+<v t="T504"><vh>@doc and @(space)</vh></v>
+<v t="T505"><vh>@file (not valid in @root or @unit trees)</vh></v>
+<v t="T506"><vh>@first (not valid in @root or @unit trees)</vh></v>
+<v t="T507"><vh>@ignore  (not valid in @file trees)</vh></v>
+<v t="T508"><vh>@language</vh></v>
+<v t="T509"><vh>@nocolor</vh></v>
+<v t="T510"><vh>@noweb</vh></v>
+<v t="T511"><vh>@others (valid only in @file trees)</vh></v>
+<v t="T512"><vh>@pagewidth</vh></v>
+<v t="T513"><vh>@path</vh></v>
+<v t="T514"><vh>@root  (not valid in @file trees)</vh></v>
+<v t="T515"><vh>@section (Macintosh only)</vh></v>
+<v t="T516"><vh>@silent (not valid in @file trees)</vh></v>
+<v t="T517"><vh>@tabwidth</vh></v>
+<v t="T518"><vh>@terse  (not valid in @file trees)</vh></v>
+<v t="T519"><vh>@unit   (not valid in @file trees)</vh></v>
+<v t="T520"><vh>@verbose, @terse and @silent directives</vh></v>
 </v>
 <v><vh>Error Messages</vh>
-<v t="T519"><vh>Errors while tangling</vh>
-<v t="T520"><vh>Can not re-open temp file</vh></v>
-<v t="T521"><vh>Can not rename temporary file name</vh></v>
-<v t="T522"><vh>@code expects the header: [text of header] to contain a section name</vh></v>
-<v t="T523"><vh>@directive not valid here</vh></v>
-<v t="T524"><vh>Halting Tangle: too many errors</vh></v>
-<v t="T525"><vh>Invalid recursive reference of &lt;&lt; section name &gt;&gt;</vh></v>
+<v t="T521"><vh>Errors while tangling</vh>
+<v t="T522"><vh>Can not re-open temp file</vh></v>
+<v t="T523"><vh>Can not rename temporary file name</vh></v>
+<v t="T524"><vh>@code expects the header: [text of header] to contain a section name</vh></v>
+<v t="T525"><vh>@directive not valid here</vh></v>
+<v t="T526"><vh>Halting Tangle: too many errors</vh></v>
+<v t="T527"><vh>Invalid recursive reference of &lt;&lt; section name &gt;&gt;</vh></v>
 <v t="T201" a="C"><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
-<v t="T526"><vh>No file written because of errors</vh></v>
-<v t="T527"><vh>Run on comment</vh></v>
-<v t="T528"><vh>Run on file name in @root directive</vh></v>
-<v t="T529"><vh>Run on section name</vh></v>
-<v t="T530"><vh>Run on string</vh></v>
-<v t="T531"><vh>Section definition not valid here.</vh></v>
-<v t="T532"><vh>Sections nested too deeply</vh></v>
-<v t="T533"><vh>The outline contains no roots</vh></v>
-<v t="T534"><vh>Undefined section:  &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T535"><vh>Unexpected @directive while putting code</vh></v>
-<v t="T536"><vh>Warning: possible duplicate definition of: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T537"><vh>Warning: &lt;&lt;&lt; section name &gt;&gt;&gt; has been defined but not used</vh></v>
+<v t="T528"><vh>No file written because of errors</vh></v>
+<v t="T529"><vh>Run on comment</vh></v>
+<v t="T530"><vh>Run on file name in @root directive</vh></v>
+<v t="T531"><vh>Run on section name</vh></v>
+<v t="T532"><vh>Run on string</vh></v>
+<v t="T533"><vh>Section definition not valid here.</vh></v>
+<v t="T534"><vh>Sections nested too deeply</vh></v>
+<v t="T535"><vh>The outline contains no roots</vh></v>
+<v t="T536"><vh>Undefined section:  &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T537"><vh>Unexpected @directive while putting code</vh></v>
+<v t="T538"><vh>Warning: possible duplicate definition of: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T539"><vh>Warning: &lt;&lt;&lt; section name &gt;&gt;&gt; has been defined but not used</vh></v>
 </v>
-<v t="T538"><vh>Errors while untangling</vh>
-<v t="T539"><vh>Incompatible definitions of &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T540"><vh>Missing root part</vh></v>
-<v t="T541"><vh>Missing root section</vh></v>
-<v t="T542"><vh>Missing sentinel line for &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T543"><vh>Unterminated section: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T540"><vh>Errors while untangling</vh>
+<v t="T541"><vh>Incompatible definitions of &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T542"><vh>Missing root part</vh></v>
+<v t="T543"><vh>Missing root section</vh></v>
+<v t="T544"><vh>Missing sentinel line for &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T545"><vh>Unterminated section: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
 </v>
 <v><vh>Errors while reading @file nodes</vh>
-<v t="T544"><vh>Minor errors</vh></v>
-<v t="T545"><vh>Serious errors</vh></v>
+<v t="T546"><vh>Minor errors</vh></v>
+<v t="T547"><vh>Serious errors</vh></v>
 </v>
-<v t="T546"><vh>Errors while writing @file nodes</vh></v>
+<v t="T548"><vh>Errors while writing @file nodes</vh></v>
 </v>
-<v t="T547"><vh>Formats of Files Derived from @file</vh>
-<v t="T548"><vh>Sentinels in derived files</vh>
-<v t="T549"><vh>The @delims directive </vh></v>
-<v t="T550"><vh>@leo &amp; comment delimiters</vh></v>
-<v t="T551"><vh>@node</vh></v>
-<v t="T552"><vh>@body</vh></v>
-<v t="T553"><vh>@at and @doc &amp; the trailing whitespace convention</vh></v>
-<v t="T554"><vh>@others</vh></v>
-<v t="T555"><vh>@@delims</vh></v>
-<v t="T556"><vh>@@&lt;text&gt;</vh></v>
-<v t="T557"><vh>@verbatim and @verbatimAfterRef</vh></v>
-<v t="T558"><vh>@&lt;&lt;section name&gt;&gt;</vh></v>
+<v t="T549"><vh>Formats of Files Derived from @file</vh>
+<v t="T550"><vh>Sentinels in derived files</vh>
+<v t="T551"><vh>The @delims directive </vh></v>
+<v t="T552"><vh>@leo &amp; comment delimiters</vh></v>
+<v t="T553"><vh>@node</vh></v>
+<v t="T554"><vh>@body</vh></v>
+<v t="T555"><vh>@at and @doc &amp; the trailing whitespace convention</vh></v>
+<v t="T556"><vh>@others</vh></v>
+<v t="T557"><vh>@@delims</vh></v>
+<v t="T558"><vh>@@&lt;text&gt;</vh></v>
+<v t="T559"><vh>@verbatim and @verbatimAfterRef</vh></v>
+<v t="T560"><vh>@&lt;&lt;section name&gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T559"><vh>Future Features</vh></v>
+<v t="T561"><vh>Future Features</vh></v>
 <v t="T271" a="C"><vh>Known Bugs &amp; Limitations</vh></v>
-<v t="T560"><vh>Reference for @file trees</vh></v>
+<v t="T562"><vh>Reference for @file trees</vh></v>
 <v><vh>Macintosh Notes</vh>
-<v t="T561"><vh>Differences Between the PC and Mac Versions</vh></v>
-<v t="T562"><vh>Transferring Files</vh></v>
+<v t="T563"><vh>Differences Between the PC and Mac Versions</vh></v>
+<v t="T564"><vh>Transferring Files</vh></v>
 </v>
-<v t="T563"><vh>Sherlock</vh></v>
+<v t="T565"><vh>Sherlock</vh></v>
 <v t="T13" a="C"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
 <v t="T14"><vh>Example of leoConfig.txt</vh></v>
 </v>
-<v t="T564"><vh>XML file format</vh>
-<v t="T565"><vh>&lt;?xml ... ?&gt;</vh></v>
-<v t="T566"><vh>&lt;leo_file&gt; ... &lt;/leo_file&gt;</vh>
-<v t="T567"><vh>&lt;leo_header ... /&gt;</vh></v>
-<v t="T568"><vh>&lt;globals ... &gt; ... &lt;/globals&gt;</vh></v>
-<v t="T569"><vh>&lt;preferences ... &gt; ... &lt;/preferences&gt;</vh></v>
-<v t="T570"><vh>&lt;find_panel_settings ... &gt; ... &lt;/find_panel_settings&gt;</vh></v>
-<v t="T571"><vh>&lt;vnodes&gt;...&lt;/vnodes&gt;</vh>
-<v t="T572"><vh>&lt;v...&gt; ... &lt;/v&gt;</vh></v>
+<v t="T566"><vh>XML file format</vh>
+<v t="T567"><vh>&lt;?xml ... ?&gt;</vh></v>
+<v t="T568"><vh>&lt;leo_file&gt; ... &lt;/leo_file&gt;</vh>
+<v t="T569"><vh>&lt;leo_header ... /&gt;</vh></v>
+<v t="T570"><vh>&lt;globals ... &gt; ... &lt;/globals&gt;</vh></v>
+<v t="T571"><vh>&lt;preferences ... &gt; ... &lt;/preferences&gt;</vh></v>
+<v t="T572"><vh>&lt;find_panel_settings ... &gt; ... &lt;/find_panel_settings&gt;</vh></v>
+<v t="T573"><vh>&lt;vnodes&gt;...&lt;/vnodes&gt;</vh>
+<v t="T574"><vh>&lt;v...&gt; ... &lt;/v&gt;</vh></v>
 </v>
-<v t="T573"><vh>&lt;tnodes&gt; ... &lt;/tnodes&gt;</vh>
-<v t="T574"><vh>&lt;t...&gt; ... &lt;/t&gt;</vh></v>
+<v t="T575"><vh>&lt;tnodes&gt; ... &lt;/tnodes&gt;</vh>
+<v t="T576"><vh>&lt;t...&gt; ... &lt;/t&gt;</vh></v>
 </v>
-<v t="T575"><vh>&lt;clone_windows&gt; ... &lt;/clone_windows&gt;</vh>
-<v t="T576"><vh>&lt;clone_window ...&gt; ... &lt;/clone_window&gt;</vh></v>
+<v t="T577"><vh>&lt;clone_windows&gt; ... &lt;/clone_windows&gt;</vh>
+<v t="T578"><vh>&lt;clone_window ...&gt; ... &lt;/clone_window&gt;</vh></v>
 </v>
 </v>
-<v t="T577"><vh>DTD for Leo's File Format</vh></v>
-<v t="T578"><vh>An example file</vh>
-<v t="T579"><vh>The file itself</vh></v>
+<v t="T579"><vh>DTD for Leo's File Format</vh></v>
+<v t="T580"><vh>An example file</vh>
+<v t="T581"><vh>The file itself</vh></v>
 <v><vh>The outline  from which the example file was created</vh>
-<v t="T580"><vh>Headline 1</vh>
-<v t="T581"><vh>Headline 2</vh>
+<v t="T582"><vh>Headline 1</vh>
+<v t="T583"><vh>Headline 2</vh>
 <v><vh>Headline 3 ( No body text)</vh></v>
 </v>
 </v>
-<v t="T582" a="C"><vh>Headline 4 ( a clone )</vh>
-<v t="T583"><vh>Headline 5</vh></v>
+<v t="T584" a="C"><vh>Headline 4 ( a clone )</vh>
+<v t="T585"><vh>Headline 5</vh></v>
 </v>
-<v t="T582" a="C"><vh>Headline 4 ( a clone )</vh>
-<v t="T583"><vh>Headline 5</vh></v>
-</v>
-</v>
+<v t="T584" a="C"><vh>Headline 4 ( a clone )</vh>
+<v t="T585"><vh>Headline 5</vh></v>
 </v>
 </v>
 </v>
-<v t="T584"><vh>Glossary</vh>
-<v t="T585"><vh>@file node, @others node, @root node, etc.</vh></v>
-<v t="T586"><vh>@file tree, @others tree, @root tree, etc.</vh></v>
-<v t="T587"><vh>Body pane</vh></v>
-<v t="T588"><vh>Body text</vh></v>
-<v t="T589"><vh>Body text box</vh></v>
-<v t="T590"><vh>Child</vh></v>
-<v t="T591"><vh>Chunk</vh></v>
-<v t="T592"><vh>Clone</vh></v>
-<v t="T593"><vh>Clone Arrow</vh></v>
-<v t="T594"><vh>Code section</vh></v>
-<v t="T595"><vh>CWEB</vh></v>
-<v t="T596"><vh>Demote</vh></v>
-<v t="T597"><vh>Derived file</vh></v>
-<v t="T598"><vh>Descendent</vh></v>
-<v t="T599"><vh>Directive</vh></v>
-<v t="T600"><vh>Doc section</vh></v>
-<v t="T601"><vh>Escape convention</vh></v>
-<v t="T602"><vh>Grandchild</vh></v>
-<v t="T603"><vh>Headline</vh></v>
-<v t="T604"><vh>Leo, Leo1 and Leo2</vh></v>
-<v t="T605"><vh>Literate programming</vh></v>
-<v t="T606"><vh>Marking</vh></v>
-<v t="T607"><vh>Named nodes</vh></v>
-<v t="T608"><vh>Node</vh></v>
-<v t="T609"><vh>noweb</vh></v>
-<v t="T610"><vh>Offspring</vh></v>
-<v t="T611"><vh>Organizing node</vh></v>
-<v t="T612"><vh>Orphan node</vh></v>
-<v t="T613"><vh>Outline</vh></v>
-<v t="T614"><vh>Outline pane</vh></v>
-<v t="T615"><vh>Parent</vh></v>
-<v t="T616"><vh>Part</vh></v>
-<v t="T617"><vh>pdf file</vh></v>
-<v t="T618"><vh>Promote</vh></v>
-<v t="T619"><vh>Root</vh></v>
-<v t="T620"><vh>Scope</vh></v>
-<v t="T621"><vh>Section</vh></v>
-<v t="T622"><vh>Section name</vh></v>
-<v t="T623"><vh>Section reference</vh></v>
-<v t="T624"><vh>Sentinels, sentinel lines</vh></v>
-<v t="T625"><vh>Sibling</vh></v>
-<v t="T626"><vh>Status Icon</vh></v>
-<v t="T627"><vh>Tangling</vh></v>
-<v t="T628"><vh>Target language</vh></v>
-<v t="T629"><vh>Tree</vh></v>
-<v t="T630"><vh>Unnamed node</vh></v>
-<v t="T631"><vh>Untangling</vh></v>
-<v t="T632"><vh>Weaving</vh></v>
 </v>
-<v t="T633"><vh>Sample Code</vh>
-<v t="T634"><vh>Hello World using @root</vh>
-<v t="T635"><vh>&lt;&lt; includes &gt;&gt;</vh></v>
-<v t="T636"><vh>&lt;&lt; methods &gt;&gt;</vh></v>
 </v>
-<v t="T637"><vh>Hello World using @file</vh>
-<v t="T638"><vh>@file sampleHello.c</vh>
-<v t="T639"><vh>&lt;&lt; includes &gt;&gt;</vh></v>
-<v t="T640"><vh>main</vh></v>
+<v t="T586"><vh>Glossary</vh>
+<v t="T587"><vh>@file node, @others node, @root node, etc.</vh></v>
+<v t="T588"><vh>@file tree, @others tree, @root tree, etc.</vh></v>
+<v t="T589"><vh>Body pane</vh></v>
+<v t="T590"><vh>Body text</vh></v>
+<v t="T591"><vh>Body text box</vh></v>
+<v t="T592"><vh>Child</vh></v>
+<v t="T593"><vh>Chunk</vh></v>
+<v t="T594"><vh>Clone</vh></v>
+<v t="T595"><vh>Clone Arrow</vh></v>
+<v t="T596"><vh>Code section</vh></v>
+<v t="T597"><vh>CWEB</vh></v>
+<v t="T598"><vh>Demote</vh></v>
+<v t="T599"><vh>Derived file</vh></v>
+<v t="T600"><vh>Descendent</vh></v>
+<v t="T601"><vh>Directive</vh></v>
+<v t="T602"><vh>Doc section</vh></v>
+<v t="T603"><vh>Escape convention</vh></v>
+<v t="T604"><vh>Grandchild</vh></v>
+<v t="T605"><vh>Headline</vh></v>
+<v t="T606"><vh>Leo, Leo1 and Leo2</vh></v>
+<v t="T607"><vh>Literate programming</vh></v>
+<v t="T608"><vh>Marking</vh></v>
+<v t="T609"><vh>Named nodes</vh></v>
+<v t="T610"><vh>Node</vh></v>
+<v t="T611"><vh>noweb</vh></v>
+<v t="T612"><vh>Offspring</vh></v>
+<v t="T613"><vh>Organizing node</vh></v>
+<v t="T614"><vh>Orphan node</vh></v>
+<v t="T615"><vh>Outline</vh></v>
+<v t="T616"><vh>Outline pane</vh></v>
+<v t="T617"><vh>Parent</vh></v>
+<v t="T618"><vh>Part</vh></v>
+<v t="T619"><vh>pdf file</vh></v>
+<v t="T620"><vh>Promote</vh></v>
+<v t="T621"><vh>Root</vh></v>
+<v t="T622"><vh>Scope</vh></v>
+<v t="T623"><vh>Section</vh></v>
+<v t="T624"><vh>Section name</vh></v>
+<v t="T625"><vh>Section reference</vh></v>
+<v t="T626"><vh>Sentinels, sentinel lines</vh></v>
+<v t="T627"><vh>Sibling</vh></v>
+<v t="T628"><vh>Status Icon</vh></v>
+<v t="T629"><vh>Tangling</vh></v>
+<v t="T630"><vh>Target language</vh></v>
+<v t="T631"><vh>Tree</vh></v>
+<v t="T632"><vh>Unnamed node</vh></v>
+<v t="T633"><vh>Untangling</vh></v>
+<v t="T634"><vh>Weaving</vh></v>
+</v>
+<v t="T635"><vh>Sample Code</vh>
+<v t="T636"><vh>Hello World using @root</vh>
+<v t="T637"><vh>&lt;&lt; includes &gt;&gt;</vh></v>
+<v t="T638"><vh>&lt;&lt; methods &gt;&gt;</vh></v>
+</v>
+<v t="T639"><vh>Hello World using @file</vh>
+<v t="T640"><vh>@file sampleHello.c</vh>
+<v t="T641"><vh>&lt;&lt; includes &gt;&gt;</vh></v>
+<v t="T642"><vh>main</vh></v>
 </v>
 </v>
 <v><vh>Examples of using @root trees</vh>
-<v t="T641"><vh>Nodes</vh>
-<v t="T642"><vh>tnode</vh>
-<v t="T643"><vh>tnode.h</vh>
-<v t="T644"><vh>&lt;&lt; tnode data members &gt;&gt;</vh></v>
-<v t="T645"><vh>&lt;&lt; tnode constructors &amp; destructors &gt;&gt;</vh></v>
-<v t="T646"><vh>&lt;&lt; tnode debugging &gt;&gt;</vh></v>
-<v t="T647"><vh>&lt;&lt; tnode getters &gt;&gt;</vh></v>
-<v t="T648"><vh>&lt;&lt; tnode setters &gt;&gt;</vh></v>
+<v t="T643"><vh>Nodes</vh>
+<v t="T644"><vh>tnode</vh>
+<v t="T645"><vh>tnode.h</vh>
+<v t="T646"><vh>&lt;&lt; tnode data members &gt;&gt;</vh></v>
+<v t="T647"><vh>&lt;&lt; tnode constructors &amp; destructors &gt;&gt;</vh></v>
+<v t="T648"><vh>&lt;&lt; tnode debugging &gt;&gt;</vh></v>
+<v t="T649"><vh>&lt;&lt; tnode getters &gt;&gt;</vh></v>
+<v t="T650"><vh>&lt;&lt; tnode setters &gt;&gt;</vh></v>
 </v>
-<v t="T649"><vh>tnode.cpp</vh>
-<v t="T650"><vh>&lt;&lt; tnode includes &gt;&gt;</vh></v>
-<v t="T651"><vh>&lt;&lt; tnode abbreviations &gt;&gt;</vh></v>
+<v t="T651"><vh>tnode.cpp</vh>
+<v t="T652"><vh>&lt;&lt; tnode includes &gt;&gt;</vh></v>
+<v t="T653"><vh>&lt;&lt; tnode abbreviations &gt;&gt;</vh></v>
 </v>
-<v t="T652"><vh>Birth &amp; Death</vh></v>
+<v t="T654"><vh>Birth &amp; Death</vh></v>
 <v><vh>Debugging</vh>
-<v t="T653"><vh>edump</vh></v>
+<v t="T655"><vh>edump</vh></v>
 </v>
 <v><vh>Getters</vh>
 <v><vh>Getting body text and selection</vh>
-<v t="T654"><vh>bodyRTF</vh></v>
-<v t="T655"><vh>bodyCString</vh></v>
-<v t="T656"><vh>bodyCStringLength</vh></v>
-<v t="T657"><vh>bodyString (tnode)</vh></v>
-<v t="T658"><vh>loadBodyPaneFromTnode</vh></v>
-<v t="T659"><vh>selectionLength</vh></v>
-<v t="T660"><vh>selectionStart</vh></v>
+<v t="T656"><vh>bodyRTF</vh></v>
+<v t="T657"><vh>bodyCString</vh></v>
+<v t="T658"><vh>bodyCStringLength</vh></v>
+<v t="T659"><vh>bodyString (tnode)</vh></v>
+<v t="T660"><vh>loadBodyPaneFromTnode</vh></v>
+<v t="T661"><vh>selectionLength</vh></v>
+<v t="T662"><vh>selectionStart</vh></v>
 </v>
 <v><vh>Status bits</vh>
-<v t="T661"><vh>isDirty</vh></v>
-<v t="T662"><vh>isRichTextBit</vh></v>
-<v t="T663"><vh>isVisited</vh></v>
+<v t="T663"><vh>isDirty</vh></v>
+<v t="T664"><vh>isRichTextBit</vh></v>
+<v t="T665"><vh>isVisited</vh></v>
 </v>
-<v t="T664"><vh>cloneIndex</vh></v>
-<v t="T665"><vh>fileIndex</vh></v>
-<v t="T666"><vh>hasBody</vh></v>
-<v t="T667"><vh>joinHead</vh></v>
+<v t="T666"><vh>cloneIndex</vh></v>
+<v t="T667"><vh>fileIndex</vh></v>
+<v t="T668"><vh>hasBody</vh></v>
+<v t="T669"><vh>joinHead</vh></v>
 </v>
 <v><vh>Setters</vh>
 <v><vh>Setting body text</vh>
-<v t="T668"><vh>saveBodyPaneToTnode</vh></v>
-<v t="T669"><vh>setTnodeRTF</vh></v>
-<v t="T670"><vh>setTnodeText</vh></v>
-<v t="T671"><vh>setSelection </vh></v>
+<v t="T670"><vh>saveBodyPaneToTnode</vh></v>
+<v t="T671"><vh>setTnodeRTF</vh></v>
+<v t="T672"><vh>setTnodeText</vh></v>
+<v t="T673"><vh>setSelection </vh></v>
 </v>
 <v><vh>Status bits</vh>
-<v t="T672"><vh>clearDirty</vh></v>
-<v t="T673"><vh>clearRichTextBit</vh></v>
-<v t="T674"><vh>clearVisited</vh></v>
-<v t="T675"><vh>setDirty</vh></v>
-<v t="T676"><vh>setRichTextBit</vh></v>
-<v t="T677"><vh>setVisited</vh></v>
+<v t="T674"><vh>clearDirty</vh></v>
+<v t="T675"><vh>clearRichTextBit</vh></v>
+<v t="T676"><vh>clearVisited</vh></v>
+<v t="T677"><vh>setDirty</vh></v>
+<v t="T678"><vh>setRichTextBit</vh></v>
+<v t="T679"><vh>setVisited</vh></v>
 </v>
-<v t="T678"><vh>setCloneIndex</vh></v>
-<v t="T679"><vh>setFileIndex</vh></v>
-<v t="T680"><vh>setJoinHead</vh></v>
+<v t="T680"><vh>setCloneIndex</vh></v>
+<v t="T681"><vh>setFileIndex</vh></v>
+<v t="T682"><vh>setJoinHead</vh></v>
 </v>
 </v>
-<v t="T681"><vh>vnode</vh>
-<v t="T682"><vh>vnode.h</vh>
-<v t="T683"><vh>&lt;&lt; dvnode data members &gt;&gt;</vh></v>
-<v t="T684"><vh>&lt;&lt; vnode access methods &gt;&gt;</vh></v>
-<v t="T685"><vh>&lt;&lt; vnode comparisons &gt;&gt;</vh></v>
-<v t="T686"><vh>&lt;&lt; vnode constructors &amp; destructors &gt;&gt;</vh></v>
-<v t="T687"><vh>&lt;&lt; vnode data members &gt;&gt;</vh></v>
-<v t="T688"><vh>&lt;&lt; vnode debugging &gt;&gt;</vh></v>
-<v t="T689"><vh>&lt;&lt; vnode file methods &gt;&gt;</vh></v>
-<v t="T690"><vh>&lt;&lt; vnode getters &gt;&gt;</vh></v>
-<v t="T691"><vh>&lt;&lt; vnode private methods &gt;&gt;</vh></v>
-<v t="T692"><vh>&lt;&lt; vnode setters &gt;&gt;</vh></v>
-<v t="T693"><vh>&lt;&lt; vnode tree methods &gt;&gt;</vh></v>
+<v t="T683"><vh>vnode</vh>
+<v t="T684"><vh>vnode.h</vh>
+<v t="T685"><vh>&lt;&lt; dvnode data members &gt;&gt;</vh></v>
+<v t="T686"><vh>&lt;&lt; vnode access methods &gt;&gt;</vh></v>
+<v t="T687"><vh>&lt;&lt; vnode comparisons &gt;&gt;</vh></v>
+<v t="T688"><vh>&lt;&lt; vnode constructors &amp; destructors &gt;&gt;</vh></v>
+<v t="T689"><vh>&lt;&lt; vnode data members &gt;&gt;</vh></v>
+<v t="T690"><vh>&lt;&lt; vnode debugging &gt;&gt;</vh></v>
+<v t="T691"><vh>&lt;&lt; vnode file methods &gt;&gt;</vh></v>
+<v t="T692"><vh>&lt;&lt; vnode getters &gt;&gt;</vh></v>
+<v t="T693"><vh>&lt;&lt; vnode private methods &gt;&gt;</vh></v>
+<v t="T694"><vh>&lt;&lt; vnode setters &gt;&gt;</vh></v>
+<v t="T695"><vh>&lt;&lt; vnode tree methods &gt;&gt;</vh></v>
 </v>
-<v t="T694"><vh>vnode.cpp</vh>
-<v t="T695"><vh>&lt;&lt; vnode includes &gt;&gt;</vh></v>
-<v t="T696"><vh>&lt;&lt; vnode abbreviations &gt;&gt;</vh></v>
+<v t="T696"><vh>vnode.cpp</vh>
+<v t="T697"><vh>&lt;&lt; vnode includes &gt;&gt;</vh></v>
+<v t="T698"><vh>&lt;&lt; vnode abbreviations &gt;&gt;</vh></v>
 </v>
-<v t="T697"><vh>Birth &amp; Death</vh></v>
+<v t="T699"><vh>Birth &amp; Death</vh></v>
 <v><vh>Comparisons</vh>
-<v t="T698"><vh>atFileNodeName</vh></v>
-<v t="T699"><vh>isAtFileNode</vh></v>
-<v t="T700"><vh>isAtIgnoreNode</vh></v>
-<v t="T701"><vh>isAtOthersNode</vh></v>
-<v t="T702"><vh>matchHeadline</vh></v>
+<v t="T700"><vh>atFileNodeName</vh></v>
+<v t="T701"><vh>isAtFileNode</vh></v>
+<v t="T702"><vh>isAtIgnoreNode</vh></v>
+<v t="T703"><vh>isAtOthersNode</vh></v>
+<v t="T704"><vh>matchHeadline</vh></v>
 </v>
 <v><vh>Dumping</vh>
-<v t="T703"><vh>edump</vh></v>
-<v t="T704"><vh>description</vh></v>
+<v t="T705"><vh>edump</vh></v>
+<v t="T706"><vh>description</vh></v>
 </v>
 <v><vh>File Conversion</vh>
-<v t="T705"><vh>convertTreeToString</vh></v>
-<v t="T706"><vh>moreHead</vh></v>
-<v t="T707"><vh>moreBody</vh></v>
+<v t="T707"><vh>convertTreeToString</vh></v>
+<v t="T708"><vh>moreHead</vh></v>
+<v t="T709"><vh>moreBody</vh></v>
 </v>
 <v><vh>Getters</vh>
 <v><vh>Children</vh>
-<v t="T708"><vh>childIndex</vh></v>
-<v t="T709"><vh>firstChild</vh></v>
-<v t="T710"><vh>hasChildren</vh></v>
-<v t="T711"><vh>lastChild</vh></v>
-<v t="T712"><vh>nthChild</vh></v>
-<v t="T713"><vh>numberOfChildren</vh></v>
+<v t="T710"><vh>childIndex</vh></v>
+<v t="T711"><vh>firstChild</vh></v>
+<v t="T712"><vh>hasChildren</vh></v>
+<v t="T713"><vh>lastChild</vh></v>
+<v t="T714"><vh>nthChild</vh></v>
+<v t="T715"><vh>numberOfChildren</vh></v>
 </v>
 <v><vh>Cross-file clones</vh>
-<v t="T714"><vh>xCloneName</vh></v>
-<v t="T715"><vh>xCloneIndex</vh></v>
+<v t="T716"><vh>xCloneName</vh></v>
+<v t="T717"><vh>xCloneIndex</vh></v>
 </v>
 <v><vh>Structure Links</vh>
-<v t="T716"><vh>back</vh></v>
-<v t="T717"><vh>lastNode</vh></v>
-<v t="T718"><vh>level</vh></v>
-<v t="T719"><vh>next</vh></v>
-<v t="T720"><vh>parent</vh></v>
-<v t="T721"><vh>nodeAfterTree</vh></v>
-<v t="T722"><vh>threadBack</vh></v>
-<v t="T723"><vh>threadNext</vh></v>
-<v t="T724"><vh>visBack</vh></v>
-<v t="T725"><vh>visNext</vh></v>
+<v t="T718"><vh>back</vh></v>
+<v t="T719"><vh>lastNode</vh></v>
+<v t="T720"><vh>level</vh></v>
+<v t="T721"><vh>next</vh></v>
+<v t="T722"><vh>parent</vh></v>
+<v t="T723"><vh>nodeAfterTree</vh></v>
+<v t="T724"><vh>threadBack</vh></v>
+<v t="T725"><vh>threadNext</vh></v>
+<v t="T726"><vh>visBack</vh></v>
+<v t="T727"><vh>visNext</vh></v>
 </v>
 <v><vh>Head &amp; Body Strings</vh>
-<v t="T726"><vh>bodyCString</vh></v>
-<v t="T727"><vh>bodyCStringLength</vh></v>
-<v t="T728"><vh>bodyRTF</vh></v>
-<v t="T729"><vh>bodyString</vh></v>
-<v t="T730"><vh>headCString</vh></v>
-<v t="T731"><vh>headCStringLength</vh></v>
-<v t="T732"><vh>headString</vh></v>
+<v t="T728"><vh>bodyCString</vh></v>
+<v t="T729"><vh>bodyCStringLength</vh></v>
+<v t="T730"><vh>bodyRTF</vh></v>
+<v t="T731"><vh>bodyString</vh></v>
+<v t="T732"><vh>headCString</vh></v>
+<v t="T733"><vh>headCStringLength</vh></v>
+<v t="T734"><vh>headString</vh></v>
 </v>
 <v><vh>Status Bits</vh>
-<v t="T733"><vh>isCloned</vh></v>
-<v t="T734"><vh>isDirty</vh></v>
-<v t="T735"><vh>isDummy</vh></v>
-<v t="T736"><vh>isExpanded</vh></v>
-<v t="T737"><vh>isExpandedBitSet</vh></v>
-<v t="T738"><vh>isMarked</vh></v>
-<v t="T739"><vh>isOrphan</vh></v>
-<v t="T740"><vh>isSelectedBitSet</vh></v>
-<v t="T741"><vh>isTopBitSet</vh></v>
-<v t="T742"><vh>isVisible</vh></v>
-<v t="T743"><vh>isVisited</vh></v>
-<v t="T744"><vh>status</vh></v>
+<v t="T735"><vh>isCloned</vh></v>
+<v t="T736"><vh>isDirty</vh></v>
+<v t="T737"><vh>isDummy</vh></v>
+<v t="T738"><vh>isExpanded</vh></v>
+<v t="T739"><vh>isExpandedBitSet</vh></v>
+<v t="T740"><vh>isMarked</vh></v>
+<v t="T741"><vh>isOrphan</vh></v>
+<v t="T742"><vh>isSelectedBitSet</vh></v>
+<v t="T743"><vh>isTopBitSet</vh></v>
+<v t="T744"><vh>isVisible</vh></v>
+<v t="T745"><vh>isVisited</vh></v>
+<v t="T746"><vh>status</vh></v>
 </v>
 <v><vh>VCL classes (vnode)</vh>
-<v t="T745"><vh>findRoot</vh></v>
-<v t="T746"><vh>commands</vh></v>
-<v t="T747"><vh>leoForm</vh></v>
-<v t="T748"><vh>treeNode</vh></v>
-<v t="T749"><vh>treeNodes</vh></v>
-<v t="T750"><vh>treeView</vh></v>
+<v t="T747"><vh>findRoot</vh></v>
+<v t="T748"><vh>commands</vh></v>
+<v t="T749"><vh>leoForm</vh></v>
+<v t="T750"><vh>treeNode</vh></v>
+<v t="T751"><vh>treeNodes</vh></v>
+<v t="T752"><vh>treeView</vh></v>
 </v>
-<v t="T751"><vh>currentVnode (vnode)</vh></v>
-<v t="T752"><vh>iconVal</vh></v>
-<v t="T753"><vh>isAncestorOf </vh></v>
-<v t="T754"><vh>isRoot</vh></v>
-<v t="T755"><vh>joinList</vh></v>
-<v t="T756"><vh>selectionStart</vh></v>
-<v t="T757"><vh>selectionLength</vh></v>
-<v t="T758"><vh>t</vh></v>
+<v t="T753"><vh>currentVnode (vnode)</vh></v>
+<v t="T754"><vh>iconVal</vh></v>
+<v t="T755"><vh>isAncestorOf </vh></v>
+<v t="T756"><vh>isRoot</vh></v>
+<v t="T757"><vh>joinList</vh></v>
+<v t="T758"><vh>selectionStart</vh></v>
+<v t="T759"><vh>selectionLength</vh></v>
+<v t="T760"><vh>t</vh></v>
 </v>
 <v><vh>Setters</vh>
 <v><vh>cross-file clones</vh>
-<v t="T759"><vh>setXCloneIndex</vh></v>
-<v t="T760"><vh>setXCloneName</vh></v>
+<v t="T761"><vh>setXCloneIndex</vh></v>
+<v t="T762"><vh>setXCloneName</vh></v>
 </v>
 <v><vh>headline and body text</vh>
-<v t="T761"><vh>appendStringToBody</vh></v>
-<v t="T762"><vh>setBodyStringOrPane (new for SWIG)</vh></v>
-<v t="T763"><vh>setHeadString &amp; initHeadString</vh></v>
-<v t="T764"><vh>setHeadStringOrHeadline (new for SWIG)</vh></v>
-<v t="T765"><vh>trimTrailingLines</vh></v>
+<v t="T763"><vh>appendStringToBody</vh></v>
+<v t="T764"><vh>setBodyStringOrPane (new for SWIG)</vh></v>
+<v t="T765"><vh>setHeadString &amp; initHeadString</vh></v>
+<v t="T766"><vh>setHeadStringOrHeadline (new for SWIG)</vh></v>
+<v t="T767"><vh>trimTrailingLines</vh></v>
 </v>
 <v><vh>icons</vh>
-<v t="T766"><vh>computeIcon</vh></v>
-<v t="T767"><vh>setIcon</vh></v>
-<v t="T768"><vh>setIconVal</vh></v>
-<v t="T769"><vh>setIconWithVal</vh></v>
+<v t="T768"><vh>computeIcon</vh></v>
+<v t="T769"><vh>setIcon</vh></v>
+<v t="T770"><vh>setIconVal</vh></v>
+<v t="T771"><vh>setIconWithVal</vh></v>
 </v>
-<v t="T770"><vh>setJoinList</vh></v>
-<v t="T771"><vh>setSelection</vh></v>
-<v t="T772"><vh>setT</vh></v>
-<v t="T773"><vh>setTreeNode</vh></v>
+<v t="T772"><vh>setJoinList</vh></v>
+<v t="T773"><vh>setSelection</vh></v>
+<v t="T774"><vh>setT</vh></v>
+<v t="T775"><vh>setTreeNode</vh></v>
 <v><vh>status bits</vh>
-<v t="T774"><vh>clearClonedBit</vh></v>
-<v t="T775"><vh>clearDirty &amp; clearDirtyJoined</vh></v>
-<v t="T776"><vh>clearDummy</vh></v>
-<v t="T777"><vh>clearMarked</vh></v>
-<v t="T778"><vh>clearOrphan</vh></v>
-<v t="T779"><vh>clearVisited</vh></v>
-<v t="T780"><vh>initClonedBit</vh></v>
-<v t="T781"><vh>initDirtyBit</vh></v>
-<v t="T782"><vh>initExpandedBit (new)</vh></v>
-<v t="T783"><vh>initMarkedBit</vh></v>
-<v t="T784"><vh>initSelectedBit (new)</vh></v>
-<v t="T785"><vh>initTopBit (new)</vh></v>
-<v t="T786"><vh>initStatus</vh></v>
-<v t="T787"><vh>setAncestorAtFileNodeDirty</vh></v>
-<v t="T788"><vh>setClonedBit</vh></v>
-<v t="T789"><vh>setDirty &amp; setDirtyJoined</vh></v>
-<v t="T790"><vh>setDummy</vh></v>
-<v t="T791"><vh>setOrphan</vh></v>
-<v t="T792"><vh>setVisited</vh></v>
-<v t="T793"><vh>setMarked</vh></v>
+<v t="T776"><vh>clearClonedBit</vh></v>
+<v t="T777"><vh>clearDirty &amp; clearDirtyJoined</vh></v>
+<v t="T778"><vh>clearDummy</vh></v>
+<v t="T779"><vh>clearMarked</vh></v>
+<v t="T780"><vh>clearOrphan</vh></v>
+<v t="T781"><vh>clearVisited</vh></v>
+<v t="T782"><vh>initClonedBit</vh></v>
+<v t="T783"><vh>initDirtyBit</vh></v>
+<v t="T784"><vh>initExpandedBit (new)</vh></v>
+<v t="T785"><vh>initMarkedBit</vh></v>
+<v t="T786"><vh>initSelectedBit (new)</vh></v>
+<v t="T787"><vh>initTopBit (new)</vh></v>
+<v t="T788"><vh>initStatus</vh></v>
+<v t="T789"><vh>setAncestorAtFileNodeDirty</vh></v>
+<v t="T790"><vh>setClonedBit</vh></v>
+<v t="T791"><vh>setDirty &amp; setDirtyJoined</vh></v>
+<v t="T792"><vh>setDummy</vh></v>
+<v t="T793"><vh>setOrphan</vh></v>
+<v t="T794"><vh>setVisited</vh></v>
+<v t="T795"><vh>setMarked</vh></v>
 </v>
 </v>
 <v><vh>Moving, Inserting, Deleting, Cloning</vh>
 <v><vh>Entry Points (vnode)</vh>
-<v t="T794"><vh>clone (vnode)</vh></v>
-<v t="T795"><vh>createDependents</vh></v>
-<v t="T796"><vh>doDelete</vh>
-<v t="T797"><vh>&lt;&lt; dump the dv list &gt;&gt;</vh></v>
+<v t="T796"><vh>clone (vnode)</vh></v>
+<v t="T797"><vh>createDependents</vh></v>
+<v t="T798"><vh>doDelete</vh>
+<v t="T799"><vh>&lt;&lt; dump the dv list &gt;&gt;</vh></v>
 </v>
-<v t="T798"><vh>freeDVNodes</vh></v>
-<v t="T799"><vh>insertAfter</vh></v>
-<v t="T800"><vh>insertAsLastChild</vh></v>
-<v t="T801"><vh>insertAsNthChild</vh></v>
-<v t="T802"><vh>moveAfter</vh></v>
-<v t="T803"><vh>moveToRoot</vh></v>
-<v t="T804"><vh>moveToNthChildOf</vh></v>
-<v t="T805"><vh>restoreOutlineFromDVnodes</vh>
-<v t="T806"><vh>&lt;&lt; Insert v into the outline &gt;&gt;</vh></v>
-<v t="T807"><vh>&lt;&lt; Set back and parent fields for the new vnode &gt;&gt;</vh></v>
-<v t="T808"><vh>&lt;&lt; set icons for all vnodes of the result tree &gt;&gt;</vh></v>
+<v t="T800"><vh>freeDVNodes</vh></v>
+<v t="T801"><vh>insertAfter</vh></v>
+<v t="T802"><vh>insertAsLastChild</vh></v>
+<v t="T803"><vh>insertAsNthChild</vh></v>
+<v t="T804"><vh>moveAfter</vh></v>
+<v t="T805"><vh>moveToRoot</vh></v>
+<v t="T806"><vh>moveToNthChildOf</vh></v>
+<v t="T807"><vh>restoreOutlineFromDVnodes</vh>
+<v t="T808"><vh>&lt;&lt; Insert v into the outline &gt;&gt;</vh></v>
+<v t="T809"><vh>&lt;&lt; Set back and parent fields for the new vnode &gt;&gt;</vh></v>
+<v t="T810"><vh>&lt;&lt; set icons for all vnodes of the result tree &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T809"><vh>cloneTree</vh></v>
-<v t="T810"><vh>copyCloneBitsTo</vh></v>
-<v t="T811"><vh>copyTree</vh></v>
-<v t="T812"><vh>destroyDependents</vh></v>
-<v t="T813"><vh>destroyTree</vh></v>
-<v t="T814"><vh>invalidOutline</vh></v>
-<v t="T815"><vh>isJoinedTo</vh></v>
-<v t="T816"><vh>isOnJoinListOf</vh></v>
-<v t="T817"><vh>joinNodeTo</vh></v>
-<v t="T818"><vh>joinTreeTo</vh></v>
-<v t="T819"><vh>saveOutlineWithLevel</vh>
-<v t="T820"><vh>&lt;&lt; Set the data fields of dv &gt;&gt;</vh></v>
+<v t="T811"><vh>cloneTree</vh></v>
+<v t="T812"><vh>copyCloneBitsTo</vh></v>
+<v t="T813"><vh>copyTree</vh></v>
+<v t="T814"><vh>destroyDependents</vh></v>
+<v t="T815"><vh>destroyTree</vh></v>
+<v t="T816"><vh>invalidOutline</vh></v>
+<v t="T817"><vh>isJoinedTo</vh></v>
+<v t="T818"><vh>isOnJoinListOf</vh></v>
+<v t="T819"><vh>joinNodeTo</vh></v>
+<v t="T820"><vh>joinTreeTo</vh></v>
+<v t="T821"><vh>saveOutlineWithLevel</vh>
+<v t="T822"><vh>&lt;&lt; Set the data fields of dv &gt;&gt;</vh></v>
 </v>
-<v t="T821"><vh>shouldBeClone</vh></v>
-<v t="T822"><vh>unjoinNode</vh>
-<v t="T823"><vh>&lt;&lt; Set prev to the node that points to this &gt;&gt;</vh></v>
+<v t="T823"><vh>shouldBeClone</vh></v>
+<v t="T824"><vh>unjoinNode</vh>
+<v t="T825"><vh>&lt;&lt; Set prev to the node that points to this &gt;&gt;</vh></v>
 </v>
-<v t="T824"><vh>unjoinTree</vh></v>
-<v t="T825"><vh>validateOutlineWithParent</vh>
-<v t="T826"><vh>&lt;&lt; validate parent ivar &gt;&gt;</vh></v>
-<v t="T827"><vh>&lt;&lt; validate childIndex ivar &gt;&gt;</vh></v>
-<v t="T828"><vh>&lt;&lt; validate x ivar &gt;&gt;</vh></v>
+<v t="T826"><vh>unjoinTree</vh></v>
+<v t="T827"><vh>validateOutlineWithParent</vh>
+<v t="T828"><vh>&lt;&lt; validate parent ivar &gt;&gt;</vh></v>
+<v t="T829"><vh>&lt;&lt; validate childIndex ivar &gt;&gt;</vh></v>
+<v t="T830"><vh>&lt;&lt; validate x ivar &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -1258,330 +1260,330 @@
 </v>
 <v><vh>Examples of using @file trees</vh>
 <v><vh>atFile</vh>
-<v t="T829"><vh>@file sampleAtFile.h</vh>
-<v t="T830"><vh>&lt;&lt; declare public utility functions &gt;&gt;</vh></v>
-<v t="T831"><vh>&lt;&lt; private atFile data &gt;&gt;</vh></v>
-<v t="T832"><vh>&lt;&lt; private read methods &gt;&gt;</vh></v>
-<v t="T833"><vh>&lt;&lt; private sentinel methods &gt;&gt;</vh></v>
-<v t="T834"><vh>&lt;&lt; private utilities &gt;&gt;</vh></v>
-<v t="T835"><vh>&lt;&lt; private write methods &gt;&gt;</vh></v>
+<v t="T831"><vh>@file sampleAtFile.h</vh>
+<v t="T832"><vh>&lt;&lt; declare public utility functions &gt;&gt;</vh></v>
+<v t="T833"><vh>&lt;&lt; private atFile data &gt;&gt;</vh></v>
+<v t="T834"><vh>&lt;&lt; private read methods &gt;&gt;</vh></v>
+<v t="T835"><vh>&lt;&lt; private sentinel methods &gt;&gt;</vh></v>
+<v t="T836"><vh>&lt;&lt; private utilities &gt;&gt;</vh></v>
+<v t="T837"><vh>&lt;&lt; private write methods &gt;&gt;</vh></v>
 </v>
-<v t="T836"><vh>@file sampleAtFile.cpp</vh>
+<v t="T838"><vh>@file sampleAtFile.cpp</vh>
 <v><vh>Declarations</vh>
-<v t="T837"><vh>&lt;&lt; atFile includes &gt;&gt;</vh></v>
-<v t="T838"><vh>&lt;&lt; atFile abbreviations &gt;&gt;</vh></v>
-<v t="T839"><vh>&lt;&lt; atFile constants &gt;&gt;</vh></v>
+<v t="T839"><vh>&lt;&lt; atFile includes &gt;&gt;</vh></v>
+<v t="T840"><vh>&lt;&lt; atFile abbreviations &gt;&gt;</vh></v>
+<v t="T841"><vh>&lt;&lt; atFile constants &gt;&gt;</vh></v>
 </v>
 <v><vh>Commands methods</vh>
-<v t="T840"><vh>Commands::readAtFile</vh></v>
-<v t="T841"><vh>Commands::writeAtFile</vh></v>
+<v t="T842"><vh>Commands::readAtFile</vh></v>
+<v t="T843"><vh>Commands::writeAtFile</vh></v>
 </v>
-<v t="T842"><vh>atFile ctor</vh></v>
+<v t="T844"><vh>atFile ctor</vh></v>
 <v><vh>Reading</vh>
-<v t="T843"><vh>createNthChild</vh></v>
-<v t="T844"><vh>joinTrees</vh></v>
-<v t="T845"><vh>read</vh>
-<v t="T846"><vh>&lt;&lt; Declare read vars &gt;&gt;</vh></v>
-<v t="T847"><vh>&lt;&lt; read the entire file into fileData &gt;&gt;</vh></v>
-<v t="T848"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
-<v t="T849"><vh>&lt;&lt; Issue structure error message &gt;&gt;</vh></v>
-<v t="T850"><vh>&lt;&lt; Delete root's tree and body text &gt;&gt;</vh></v>
-<v t="T851"><vh>&lt;&lt; Handle clone bits &gt;&gt;</vh></v>
-<v t="T852"><vh>&lt;&lt; Join cloned trees &gt;&gt;</vh></v>
-<v t="T853"><vh>&lt;&lt; Handle all status bits &gt;&gt;</vh></v>
-<v t="T854"><vh>&lt;&lt; Issue serious error message &gt;&gt;</vh></v>
+<v t="T845"><vh>createNthChild</vh></v>
+<v t="T846"><vh>joinTrees</vh></v>
+<v t="T847"><vh>read</vh>
+<v t="T848"><vh>&lt;&lt; Declare read vars &gt;&gt;</vh></v>
+<v t="T849"><vh>&lt;&lt; read the entire file into fileData &gt;&gt;</vh></v>
+<v t="T850"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
+<v t="T851"><vh>&lt;&lt; Issue structure error message &gt;&gt;</vh></v>
+<v t="T852"><vh>&lt;&lt; Delete root's tree and body text &gt;&gt;</vh></v>
+<v t="T853"><vh>&lt;&lt; Handle clone bits &gt;&gt;</vh></v>
+<v t="T854"><vh>&lt;&lt; Join cloned trees &gt;&gt;</vh></v>
+<v t="T855"><vh>&lt;&lt; Handle all status bits &gt;&gt;</vh></v>
+<v t="T856"><vh>&lt;&lt; Issue serious error message &gt;&gt;</vh></v>
 </v>
-<v t="T855"><vh>readAll</vh></v>
-<v t="T856"><vh>scanDoc</vh>
-<v t="T857"><vh>&lt;&lt; Skip the opening sentinel &gt;&gt;</vh></v>
-<v t="T858"><vh>&lt;&lt; Skip an opening block delim &gt;&gt;</vh></v>
-<v t="T859"><vh>&lt;&lt; Append the next comment line to v's body &gt;&gt;</vh></v>
-<v t="T860"><vh>&lt;&lt; Skip the closing sentinel &gt;&gt;</vh></v>
-<v t="T861"><vh>&lt;&lt; Remove a closing block delim from v's body &gt;&gt;</vh></v>
+<v t="T857"><vh>readAll</vh></v>
+<v t="T858"><vh>scanDoc</vh>
+<v t="T859"><vh>&lt;&lt; Skip the opening sentinel &gt;&gt;</vh></v>
+<v t="T860"><vh>&lt;&lt; Skip an opening block delim &gt;&gt;</vh></v>
+<v t="T861"><vh>&lt;&lt; Append the next comment line to v's body &gt;&gt;</vh></v>
+<v t="T862"><vh>&lt;&lt; Skip the closing sentinel &gt;&gt;</vh></v>
+<v t="T863"><vh>&lt;&lt; Remove a closing block delim from v's body &gt;&gt;</vh></v>
 </v>
-<v t="T862"><vh>scanHeader</vh></v>
-<v t="T863"><vh>scanText</vh>
-<v t="T864"><vh>&lt;&lt; Set lineIndent and linep &gt;&gt;</vh></v>
-<v t="T865"><vh>&lt;&lt; remove indent and append line &gt;&gt;</vh></v>
-<v t="T866"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
-<v t="T867"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
+<v t="T864"><vh>scanHeader</vh></v>
+<v t="T865"><vh>scanText</vh>
+<v t="T866"><vh>&lt;&lt; Set lineIndent and linep &gt;&gt;</vh></v>
+<v t="T867"><vh>&lt;&lt; remove indent and append line &gt;&gt;</vh></v>
+<v t="T868"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
+<v t="T869"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
 <v><vh>start sentinels</vh>
-<v t="T868"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
-<v t="T869"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
-<v t="T870"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
-<v t="T871"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
-<v t="T872"><vh>&lt;&lt; scan @+node &gt;&gt;</vh>
-<v t="T873"><vh>&lt;&lt; skip the node sentinel, setting headline, ref and n &gt;&gt;</vh>
-<v t="T874"><vh>&lt;&lt; Set status bits in dummy vnode &gt;&gt;</vh>
-<v t="T875"><vh>&lt;&lt; set index from the C=nnn, field &gt;&gt;</vh></v>
+<v t="T870"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
+<v t="T871"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
+<v t="T872"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
+<v t="T873"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
+<v t="T874"><vh>&lt;&lt; scan @+node &gt;&gt;</vh>
+<v t="T875"><vh>&lt;&lt; skip the node sentinel, setting headline, ref and n &gt;&gt;</vh>
+<v t="T876"><vh>&lt;&lt; Set status bits in dummy vnode &gt;&gt;</vh>
+<v t="T877"><vh>&lt;&lt; set index from the C=nnn, field &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T876"><vh>&lt;&lt; copy new_ms to child's body &gt;&gt;</vh></v>
-<v t="T877"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
+<v t="T878"><vh>&lt;&lt; copy new_ms to child's body &gt;&gt;</vh></v>
+<v t="T879"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
 </v>
-<v t="T878"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
+<v t="T880"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
 </v>
 <v><vh>unpaired sentinels</vh>
-<v t="T879"><vh>&lt;&lt; scan @ref &gt;&gt;</vh></v>
-<v t="T880"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
-<v t="T881"><vh>&lt;&lt; scan @@ &gt;&gt;</vh></v>
+<v t="T881"><vh>&lt;&lt; scan @ref &gt;&gt;</vh></v>
+<v t="T882"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
+<v t="T883"><vh>&lt;&lt; scan @@ &gt;&gt;</vh></v>
 </v>
-<v t="T882"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
+<v t="T884"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>Writing</vh>
-<v t="T883"><vh>putBody</vh></v>
-<v t="T884"><vh>putBodyPart (removes trailing lines)</vh>
-<v t="T885"><vh>&lt;&lt; put code/doc parts and sentinels &gt;&gt;</vh></v>
+<v t="T885"><vh>putBody</vh></v>
+<v t="T886"><vh>putBodyPart (removes trailing lines)</vh>
+<v t="T887"><vh>&lt;&lt; put code/doc parts and sentinels &gt;&gt;</vh></v>
 </v>
-<v t="T886"><vh>putCodePart &amp; allies</vh>
-<v t="T887"><vh>&lt;&lt; handle the start of a line &gt;&gt;</vh>
-<v t="T888"><vh>&lt;&lt; compute delta, the width of the whitespace &gt;&gt;</vh></v>
-<v t="T889"><vh>&lt;&lt; handle @others &gt;&gt;</vh></v>
-<v t="T890"><vh>&lt;&lt; put @verbatim sentinel if necessary &gt;&gt;</vh></v>
+<v t="T888"><vh>putCodePart &amp; allies</vh>
+<v t="T889"><vh>&lt;&lt; handle the start of a line &gt;&gt;</vh>
+<v t="T890"><vh>&lt;&lt; compute delta, the width of the whitespace &gt;&gt;</vh></v>
+<v t="T891"><vh>&lt;&lt; handle @others &gt;&gt;</vh></v>
+<v t="T892"><vh>&lt;&lt; put @verbatim sentinel if necessary &gt;&gt;</vh></v>
 </v>
-<v t="T891"><vh>&lt;&lt; put the line &gt;&gt;</vh>
-<v t="T892"><vh>&lt;&lt; put possible section reference &gt;&gt;</vh></v>
+<v t="T893"><vh>&lt;&lt; put the line &gt;&gt;</vh>
+<v t="T894"><vh>&lt;&lt; put possible section reference &gt;&gt;</vh></v>
 </v>
-<v t="T893"><vh>findReference</vh></v>
-<v t="T894"><vh>inAtOthers</vh></v>
-<v t="T895"><vh>putAtOthers</vh></v>
-<v t="T896"><vh>putAtOthersChild</vh></v>
+<v t="T895"><vh>findReference</vh></v>
+<v t="T896"><vh>inAtOthers</vh></v>
+<v t="T897"><vh>putAtOthers</vh></v>
+<v t="T898"><vh>putAtOthersChild</vh></v>
 </v>
-<v t="T897"><vh>putDirective</vh></v>
-<v t="T898"><vh>putDoc</vh>
-<v t="T899"><vh>&lt;&lt; skip the @&lt;space&gt; or @doc &gt;&gt;</vh></v>
-<v t="T900"><vh>&lt;&lt; set limit to the end of the doc part &gt;&gt;</vh></v>
+<v t="T899"><vh>putDirective</vh></v>
+<v t="T900"><vh>putDoc</vh>
+<v t="T901"><vh>&lt;&lt; skip the @&lt;space&gt; or @doc &gt;&gt;</vh></v>
+<v t="T902"><vh>&lt;&lt; set limit to the end of the doc part &gt;&gt;</vh></v>
 </v>
-<v t="T901"><vh>putDocPart</vh>
-<v t="T902"><vh>&lt;&lt; copy words, splitting the line if needed &gt;&gt;</vh></v>
+<v t="T903"><vh>putDocPart</vh>
+<v t="T904"><vh>&lt;&lt; copy words, splitting the line if needed &gt;&gt;</vh></v>
 </v>
-<v t="T903"><vh>write</vh>
-<v t="T904"><vh>&lt;&lt; Open files.  Set orphan flag and return on errors &gt;&gt;</vh>
-<v t="T905"><vh>&lt;&lt; setOrphan and return if mTargetFileName is bad &gt;&gt;</vh></v>
-<v t="T906"><vh>&lt;&lt; Open a temp file and set mOutputFileName &gt;&gt;</vh></v>
+<v t="T905"><vh>write</vh>
+<v t="T906"><vh>&lt;&lt; Open files.  Set orphan flag and return on errors &gt;&gt;</vh>
+<v t="T907"><vh>&lt;&lt; setOrphan and return if mTargetFileName is bad &gt;&gt;</vh></v>
+<v t="T908"><vh>&lt;&lt; Open a temp file and set mOutputFileName &gt;&gt;</vh></v>
 </v>
-<v t="T907"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
-<v t="T908"><vh>&lt;&lt; Issue final write error message &gt;&gt;</vh></v>
-<v t="T909"><vh>&lt;&lt; Replace the target with the temp file if different &gt;&gt;</vh></v>
+<v t="T909"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="T910"><vh>&lt;&lt; Issue final write error message &gt;&gt;</vh></v>
+<v t="T911"><vh>&lt;&lt; Replace the target with the temp file if different &gt;&gt;</vh></v>
 </v>
-<v t="T910"><vh>writeAll</vh>
-<v t="T911"><vh>&lt;&lt; Clear all orphan bits &gt;&gt;</vh></v>
+<v t="T912"><vh>writeAll</vh>
+<v t="T913"><vh>&lt;&lt; Clear all orphan bits &gt;&gt;</vh></v>
 </v>
-<v t="T912"><vh>Output</vh>
-<v t="T913"><vh>putBlanks</vh></v>
-<v t="T914"><vh>putChar</vh></v>
-<v t="T915"><vh>putIndent</vh></v>
-<v t="T916"><vh>putInt</vh></v>
-<v t="T917"><vh>putString</vh></v>
-<v t="T918"><vh>putTabs</vh></v>
+<v t="T914"><vh>Output</vh>
+<v t="T915"><vh>putBlanks</vh></v>
+<v t="T916"><vh>putChar</vh></v>
+<v t="T917"><vh>putIndent</vh></v>
+<v t="T918"><vh>putInt</vh></v>
+<v t="T919"><vh>putString</vh></v>
+<v t="T920"><vh>putTabs</vh></v>
 </v>
 </v>
 <v><vh>Sentinels</vh>
-<v t="T919"><vh>nodeSentinelText</vh>
-<v t="T920"><vh>&lt;&lt; append the status-bit characters to s &gt;&gt;</vh></v>
+<v t="T921"><vh>nodeSentinelText</vh>
+<v t="T922"><vh>&lt;&lt; append the status-bit characters to s &gt;&gt;</vh></v>
 </v>
-<v t="T921"><vh>putCloseNodeSentinel</vh></v>
-<v t="T922"><vh>putCloseSentinels</vh></v>
-<v t="T923"><vh>putOpenLeoSentinel</vh></v>
-<v t="T924"><vh>putOpenNodeSentinel</vh></v>
-<v t="T925"><vh>putOpenSentinels</vh></v>
-<v t="T926"><vh>putSentinel</vh></v>
-<v t="T927"><vh>sentinelKind</vh></v>
-<v t="T928"><vh>sentinelName</vh></v>
-<v t="T929"><vh>skipSentinelStart</vh></v>
+<v t="T923"><vh>putCloseNodeSentinel</vh></v>
+<v t="T924"><vh>putCloseSentinels</vh></v>
+<v t="T925"><vh>putOpenLeoSentinel</vh></v>
+<v t="T926"><vh>putOpenNodeSentinel</vh></v>
+<v t="T927"><vh>putOpenSentinels</vh></v>
+<v t="T928"><vh>putSentinel</vh></v>
+<v t="T929"><vh>sentinelKind</vh></v>
+<v t="T930"><vh>sentinelName</vh></v>
+<v t="T931"><vh>skipSentinelStart</vh></v>
 </v>
 <v><vh>Utility functions</vh>
-<v t="T930"><vh>compareFiles</vh></v>
-<v t="T931"><vh>directiveKind</vh></v>
-<v t="T932"><vh>isSectionName</vh></v>
-<v t="T933"><vh>setAncestorAtFileNodeDirty</vh></v>
+<v t="T932"><vh>compareFiles</vh></v>
+<v t="T933"><vh>directiveKind</vh></v>
+<v t="T934"><vh>isSectionName</vh></v>
+<v t="T935"><vh>setAncestorAtFileNodeDirty</vh></v>
 </v>
 <v><vh>Utilites</vh>
-<v t="T934"><vh>appendToBody</vh></v>
-<v t="T935"><vh>atFile::scanAllDirectives</vh>
-<v t="T936"><vh>&lt;&lt; Set global arguments to default values &gt;&gt;</vh></v>
-<v t="T937"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
-<v t="T938"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
-<v t="T939"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T940"><vh>&lt;&lt; Remove leading and trailing delims if they exist &gt;&gt;</vh></v>
+<v t="T936"><vh>appendToBody</vh></v>
+<v t="T937"><vh>atFile::scanAllDirectives</vh>
+<v t="T938"><vh>&lt;&lt; Set global arguments to default values &gt;&gt;</vh></v>
+<v t="T939"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
+<v t="T940"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
+<v t="T941"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T942"><vh>&lt;&lt; Remove leading and trailing delims if they exist &gt;&gt;</vh></v>
 </v>
-<v t="T941"><vh>&lt;&lt; Test for @pagewidth and @tabwidth &gt;&gt;</vh></v>
-<v t="T942"><vh>&lt;&lt; Set current directory if possible &gt;&gt;</vh></v>
-<v t="T943"><vh>&lt;&lt; Set comment Strings from global vars &gt;&gt;</vh></v>
+<v t="T943"><vh>&lt;&lt; Test for @pagewidth and @tabwidth &gt;&gt;</vh></v>
+<v t="T944"><vh>&lt;&lt; Set current directory if possible &gt;&gt;</vh></v>
+<v t="T945"><vh>&lt;&lt; Set comment Strings from global vars &gt;&gt;</vh></v>
 </v>
-<v t="T944"><vh>error</vh></v>
-<v t="T945"><vh>skipIndent</vh></v>
-<v t="T946"><vh>updateCloneIndices</vh></v>
-<v t="T947"><vh>writeError</vh></v>
+<v t="T946"><vh>error</vh></v>
+<v t="T947"><vh>skipIndent</vh></v>
+<v t="T948"><vh>updateCloneIndices</vh></v>
+<v t="T949"><vh>writeError</vh></v>
 </v>
 </v>
 </v>
 <v><vh>FileCommands</vh>
-<v t="T948"><vh>@file sampleFileCommands.cpp</vh>
+<v t="T950"><vh>@file sampleFileCommands.cpp</vh>
 <v><vh>Declaratons</vh>
-<v t="T949"><vh>&lt;&lt; File commands includes &gt;&gt;</vh></v>
-<v t="T950"><vh>&lt;&lt; Declare File commands private functions &gt;&gt;</vh></v>
-<v t="T951"><vh>&lt;&lt; Declare the EBadLeoFile class &gt;&gt;</vh></v>
+<v t="T951"><vh>&lt;&lt; File commands includes &gt;&gt;</vh></v>
+<v t="T952"><vh>&lt;&lt; Declare File commands private functions &gt;&gt;</vh></v>
+<v t="T953"><vh>&lt;&lt; Declare the EBadLeoFile class &gt;&gt;</vh></v>
 </v>
 <v><vh>Tag List routines</vh>
-<v t="T952"><vh>deleteTagList</vh></v>
-<v t="T953"><vh>getVtag</vh></v>
-<v t="T954"><vh>newVtag</vh></v>
+<v t="T954"><vh>deleteTagList</vh></v>
+<v t="T955"><vh>getVtag</vh></v>
+<v t="T956"><vh>newVtag</vh></v>
 </v>
 <v><vh>Export</vh>
-<v t="T955"><vh>exportMoreText</vh></v>
-<v t="T956"><vh>flattenOutline</vh></v>
-<v t="T957"><vh>flattenOutlineWithFilename</vh></v>
-<v t="T958"><vh>outlineToNoweb</vh></v>
-<v t="T959"><vh>convertToNoweb</vh></v>
-<v t="T960"><vh>convertCodePartToNoweb</vh>
-<v t="T961"><vh>&lt;&lt; Output the section reference &gt;&gt;</vh>
-<v t="T962"><vh>&lt;&lt; Set name to the file name p2..p &gt;&gt;</vh></v>
-<v t="T963"><vh>&lt;&lt; point p1 and p2 at section name in v's headline &gt;&gt;</vh></v>
+<v t="T957"><vh>exportMoreText</vh></v>
+<v t="T958"><vh>flattenOutline</vh></v>
+<v t="T959"><vh>flattenOutlineWithFilename</vh></v>
+<v t="T960"><vh>outlineToNoweb</vh></v>
+<v t="T961"><vh>convertToNoweb</vh></v>
+<v t="T962"><vh>convertCodePartToNoweb</vh>
+<v t="T963"><vh>&lt;&lt; Output the section reference &gt;&gt;</vh>
+<v t="T964"><vh>&lt;&lt; Set name to the file name p2..p &gt;&gt;</vh></v>
+<v t="T965"><vh>&lt;&lt; point p1 and p2 at section name in v's headline &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T964"><vh>convertDocPartToNoweb</vh></v>
-<v t="T965"><vh>copyPart</vh>
-<v t="T966"><vh>&lt;&lt; return p if this is a section definition &gt;&gt;</vh></v>
+<v t="T966"><vh>convertDocPartToNoweb</vh></v>
+<v t="T967"><vh>copyPart</vh>
+<v t="T968"><vh>&lt;&lt; return p if this is a section definition &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>Import</vh>
-<v t="T967"><vh>convertMoreStringsToOutlineAfter</vh>
-<v t="T968"><vh>&lt;&lt; Declare the vars for convertMoreStringsToOutlineAfter &gt;&gt;</vh></v>
-<v t="T969"><vh>&lt;&lt; Link a new vnode v into the outline &gt;&gt;</vh></v>
-<v t="T970"><vh>&lt;&lt; Set the headline string, skipping over the leader &gt;&gt;</vh></v>
-<v t="T971"><vh>&lt;&lt; Count the number of following body lines &gt;&gt;</vh></v>
-<v t="T972"><vh>&lt;&lt; Add the lines to the body text of v &gt;&gt;</vh></v>
+<v t="T969"><vh>convertMoreStringsToOutlineAfter</vh>
+<v t="T970"><vh>&lt;&lt; Declare the vars for convertMoreStringsToOutlineAfter &gt;&gt;</vh></v>
+<v t="T971"><vh>&lt;&lt; Link a new vnode v into the outline &gt;&gt;</vh></v>
+<v t="T972"><vh>&lt;&lt; Set the headline string, skipping over the leader &gt;&gt;</vh></v>
+<v t="T973"><vh>&lt;&lt; Count the number of following body lines &gt;&gt;</vh></v>
+<v t="T974"><vh>&lt;&lt; Add the lines to the body text of v &gt;&gt;</vh></v>
 </v>
-<v t="T973"><vh>importMoreText</vh>
-<v t="T974"><vh>&lt;&lt; Read the file into strings &gt;&gt;</vh></v>
+<v t="T975"><vh>importMoreText</vh>
+<v t="T976"><vh>&lt;&lt; Read the file into strings &gt;&gt;</vh></v>
 </v>
-<v t="T975"><vh>moreHeadlineLevel</vh></v>
-<v t="T976"><vh>stringsAreValidMoreFile</vh></v>
+<v t="T977"><vh>moreHeadlineLevel</vh></v>
+<v t="T978"><vh>stringsAreValidMoreFile</vh></v>
 </v>
 <v><vh>Reading</vh>
 <v><vh>fileInfo class</vh>
-<v t="T977"><vh>&lt;&lt; Declare the fileInfo class &gt;&gt;</vh></v>
-<v t="T978"><vh>Birth &amp; Death</vh></v>
-<v t="T979"><vh>createVnode</vh>
-<v t="T980"><vh>&lt;&lt; Create a root vnode &gt;&gt;</vh></v>
+<v t="T979"><vh>&lt;&lt; Declare the fileInfo class &gt;&gt;</vh></v>
+<v t="T980"><vh>Birth &amp; Death</vh></v>
+<v t="T981"><vh>createVnode</vh>
+<v t="T982"><vh>&lt;&lt; Create a root vnode &gt;&gt;</vh></v>
 </v>
-<v t="T981"><vh>finishOutline (alert)</vh>
-<v t="T982"><vh>&lt;&lt; Set attributes and icons for all nodes &gt;&gt;</vh></v>
-<v t="T983"><vh>&lt;&lt; Create join lists of all vnodes &gt;&gt;</vh></v>
-<v t="T984"><vh>&lt;&lt; Set the current node &gt;&gt;</vh></v>
+<v t="T983"><vh>finishOutline (alert)</vh>
+<v t="T984"><vh>&lt;&lt; Set attributes and icons for all nodes &gt;&gt;</vh></v>
+<v t="T985"><vh>&lt;&lt; Create join lists of all vnodes &gt;&gt;</vh></v>
+<v t="T986"><vh>&lt;&lt; Set the current node &gt;&gt;</vh></v>
 </v>
-<v t="T985"><vh>finishPaste (creating join lists could be a problem)</vh>
-<v t="T986"><vh>&lt;&lt; Check number of created tnodes &gt;&gt;</vh></v>
-<v t="T987"><vh>&lt;&lt; Set attributes and icons for all pasted nodes &gt;&gt;</vh></v>
-<v t="T988"><vh>&lt;&lt; Create join lists of all pasted vnodes &gt;&gt;</vh></v>
-<v t="T989"><vh>&lt;&lt; Recompute clone bits for pasted vnodes &gt;&gt;</vh></v>
+<v t="T987"><vh>finishPaste (creating join lists could be a problem)</vh>
+<v t="T988"><vh>&lt;&lt; Check number of created tnodes &gt;&gt;</vh></v>
+<v t="T989"><vh>&lt;&lt; Set attributes and icons for all pasted nodes &gt;&gt;</vh></v>
+<v t="T990"><vh>&lt;&lt; Create join lists of all pasted vnodes &gt;&gt;</vh></v>
+<v t="T991"><vh>&lt;&lt; Recompute clone bits for pasted vnodes &gt;&gt;</vh></v>
 </v>
-<v t="T990"><vh>getT</vh></v>
-<v t="T991"><vh>newCloneWindow</vh></v>
-<v t="T992"><vh>newTnode (alert)</vh></v>
-<v t="T993"><vh>setMaxTnodeIndex</vh></v>
-<v t="T994"><vh>setNumberOfTnodes</vh></v>
+<v t="T992"><vh>getT</vh></v>
+<v t="T993"><vh>newCloneWindow</vh></v>
+<v t="T994"><vh>newTnode (alert)</vh></v>
+<v t="T995"><vh>setMaxTnodeIndex</vh></v>
+<v t="T996"><vh>setNumberOfTnodes</vh></v>
 </v>
 <v><vh>get routines</vh>
-<v t="T995"><vh>get (basic)</vh></v>
-<v t="T996"><vh>getClipboardHeader</vh></v>
-<v t="T997"><vh>getCloneWindows</vh></v>
-<v t="T998"><vh>getEscapedString (uses large buffer)</vh>
-<v t="T999"><vh>&lt;&lt; allocate mTextBuf &gt;&gt;</vh></v>
-<v t="T1000"><vh>&lt;&lt; increase the size of mTextBuf &gt;&gt;</vh></v>
+<v t="T997"><vh>get (basic)</vh></v>
+<v t="T998"><vh>getClipboardHeader</vh></v>
+<v t="T999"><vh>getCloneWindows</vh></v>
+<v t="T1000"><vh>getEscapedString (uses large buffer)</vh>
+<v t="T1001"><vh>&lt;&lt; allocate mTextBuf &gt;&gt;</vh></v>
+<v t="T1002"><vh>&lt;&lt; increase the size of mTextBuf &gt;&gt;</vh></v>
 </v>
-<v t="T1001"><vh>getFindPanelSettings</vh>
-<v t="T1002"><vh>&lt;&lt; Set defaults of all flags &gt;&gt;</vh></v>
+<v t="T1003"><vh>getFindPanelSettings</vh>
+<v t="T1004"><vh>&lt;&lt; Set defaults of all flags &gt;&gt;</vh></v>
 </v>
-<v t="T1003"><vh>getGlobals</vh>
-<v t="T1004"><vh>&lt;&lt; set the window position &gt;&gt;</vh></v>
-<v t="T1005"><vh>&lt;&lt; set the log window position &gt;&gt;</vh></v>
+<v t="T1005"><vh>getGlobals</vh>
+<v t="T1006"><vh>&lt;&lt; set the window position &gt;&gt;</vh></v>
+<v t="T1007"><vh>&lt;&lt; set the log window position &gt;&gt;</vh></v>
 </v>
-<v t="T1006"><vh>getLeoFile (reads all @file nodes)</vh></v>
-<v t="T1007"><vh>getLeoHeader</vh></v>
-<v t="T1008"><vh>getLeoOutline</vh></v>
-<v t="T1009"><vh>getPosition</vh></v>
-<v t="T1010"><vh>getPrefs</vh>
-<v t="T1011"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
-<v t="T1012"><vh>&lt;&lt; Set the default directory preference &gt;&gt;</vh></v>
-<v t="T1013"><vh>&lt;&lt; Set the TSyntaxMemo options &gt;&gt;</vh></v>
+<v t="T1008"><vh>getLeoFile (reads all @file nodes)</vh></v>
+<v t="T1009"><vh>getLeoHeader</vh></v>
+<v t="T1010"><vh>getLeoOutline</vh></v>
+<v t="T1011"><vh>getPosition</vh></v>
+<v t="T1012"><vh>getPrefs</vh>
+<v t="T1013"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
+<v t="T1014"><vh>&lt;&lt; Set the default directory preference &gt;&gt;</vh></v>
+<v t="T1015"><vh>&lt;&lt; Set the TSyntaxMemo options &gt;&gt;</vh></v>
 </v>
-<v t="T1014"><vh>getSize</vh></v>
-<v t="T1015"><vh>getTnodes</vh></v>
-<v t="T1016"><vh>getTnode (alert)</vh></v>
-<v t="T1017"><vh>getVnodes</vh></v>
-<v t="T1018"><vh>getVnode</vh>
-<v t="T1019"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
+<v t="T1016"><vh>getSize</vh></v>
+<v t="T1017"><vh>getTnodes</vh></v>
+<v t="T1018"><vh>getTnode (alert)</vh></v>
+<v t="T1019"><vh>getVnodes</vh></v>
+<v t="T1020"><vh>getVnode</vh>
+<v t="T1021"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
 </v>
-<v t="T1020"><vh>skipWs</vh></v>
-<v t="T1021"><vh>skipWsAndNl</vh></v>
+<v t="T1022"><vh>skipWs</vh></v>
+<v t="T1023"><vh>skipWsAndNl</vh></v>
 </v>
-<v t="T1022"><vh>open</vh>
-<v t="T1023"><vh>&lt;&lt; Create the TFileStream and the file buffer &gt;&gt;</vh></v>
-<v t="T1024"><vh>&lt;&lt; Set the default directory &gt;&gt;</vh></v>
-<v t="T1025"><vh>&lt;&lt; Delete the TFileStream and the file buffer &gt;&gt;</vh></v>
+<v t="T1024"><vh>open</vh>
+<v t="T1025"><vh>&lt;&lt; Create the TFileStream and the file buffer &gt;&gt;</vh></v>
+<v t="T1026"><vh>&lt;&lt; Set the default directory &gt;&gt;</vh></v>
+<v t="T1027"><vh>&lt;&lt; Delete the TFileStream and the file buffer &gt;&gt;</vh></v>
 </v>
-<v t="T1026"><vh>readLine</vh>
-<v t="T1027"><vh>&lt;&lt; reallocate mLineBuf &gt;&gt;</vh></v>
-<v t="T1028"><vh>&lt;&lt; fill mFileBuf or set mFileEmptyFlag &gt;&gt;</vh></v>
-<v t="T1029"><vh>&lt;&lt; return the last line, if any &gt;&gt;</vh></v>
+<v t="T1028"><vh>readLine</vh>
+<v t="T1029"><vh>&lt;&lt; reallocate mLineBuf &gt;&gt;</vh></v>
+<v t="T1030"><vh>&lt;&lt; fill mFileBuf or set mFileEmptyFlag &gt;&gt;</vh></v>
+<v t="T1031"><vh>&lt;&lt; return the last line, if any &gt;&gt;</vh></v>
 </v>
-<v t="T1030"><vh>xmlUnescape</vh></v>
+<v t="T1032"><vh>xmlUnescape</vh></v>
 </v>
 <v><vh>Writing</vh>
-<v t="T1031"><vh>assignFileIndices</vh></v>
-<v t="T1032"><vh>compactFileIndices</vh></v>
-<v t="T1033"><vh>shouldCompactOnSave</vh>
-<v t="T1034"><vh>&lt;&lt; Compute the number of tnodes used &gt;&gt;</vh></v>
+<v t="T1033"><vh>assignFileIndices</vh></v>
+<v t="T1034"><vh>compactFileIndices</vh></v>
+<v t="T1035"><vh>shouldCompactOnSave</vh>
+<v t="T1036"><vh>&lt;&lt; Compute the number of tnodes used &gt;&gt;</vh></v>
 </v>
 <v><vh>put routines</vh>
-<v t="T1035"><vh>put (basic)</vh>
-<v t="T1036"><vh>&lt;&lt; put s to the mMemoryStream &gt;&gt;</vh></v>
-<v t="T1037"><vh>&lt;&lt; put s to mFileStream &gt;&gt;</vh></v>
+<v t="T1037"><vh>put (basic)</vh>
+<v t="T1038"><vh>&lt;&lt; put s to the mMemoryStream &gt;&gt;</vh></v>
+<v t="T1039"><vh>&lt;&lt; put s to mFileStream &gt;&gt;</vh></v>
 </v>
-<v t="T1038"><vh>putClipboardHeader</vh>
-<v t="T1039"><vh>&lt;&lt; count the number of tnodes &gt;&gt;</vh></v>
+<v t="T1040"><vh>putClipboardHeader</vh>
+<v t="T1041"><vh>&lt;&lt; count the number of tnodes &gt;&gt;</vh></v>
 </v>
-<v t="T1040"><vh>putCloneWindows</vh>
-<v t="T1041"><vh>&lt;&lt; put position of clone window &gt;&gt;</vh></v>
+<v t="T1042"><vh>putCloneWindows</vh>
+<v t="T1043"><vh>&lt;&lt; put position of clone window &gt;&gt;</vh></v>
 </v>
-<v t="T1042"><vh>putEscapedString</vh></v>
-<v t="T1043"><vh>putFindSettings</vh></v>
-<v t="T1044"><vh>putGlobals</vh>
-<v t="T1045"><vh>&lt;&lt; put the body/outline ratio &gt;&gt;</vh></v>
-<v t="T1046"><vh>&lt;&lt; put the position of this form &gt;&gt;</vh></v>
-<v t="T1047"><vh>&lt;&lt; put the position of the log window &gt;&gt;</vh></v>
+<v t="T1044"><vh>putEscapedString</vh></v>
+<v t="T1045"><vh>putFindSettings</vh></v>
+<v t="T1046"><vh>putGlobals</vh>
+<v t="T1047"><vh>&lt;&lt; put the body/outline ratio &gt;&gt;</vh></v>
+<v t="T1048"><vh>&lt;&lt; put the position of this form &gt;&gt;</vh></v>
+<v t="T1049"><vh>&lt;&lt; put the position of the log window &gt;&gt;</vh></v>
 </v>
-<v t="T1048"><vh>putHeader</vh>
-<v t="T1049"><vh>&lt;&lt; count the number of tnodes and clone windows &gt;&gt;</vh></v>
+<v t="T1050"><vh>putHeader</vh>
+<v t="T1051"><vh>&lt;&lt; count the number of tnodes and clone windows &gt;&gt;</vh></v>
 </v>
-<v t="T1050"><vh>putLeoOutline (writes to clipboard)</vh></v>
-<v t="T1051"><vh>putPrefs</vh>
-<v t="T1052"><vh>&lt;&lt; put syntax coloring prefs &gt;&gt;</vh></v>
-<v t="T1053"><vh>&lt;&lt; put default directory &gt;&gt;</vh></v>
+<v t="T1052"><vh>putLeoOutline (writes to clipboard)</vh></v>
+<v t="T1053"><vh>putPrefs</vh>
+<v t="T1054"><vh>&lt;&lt; put syntax coloring prefs &gt;&gt;</vh></v>
+<v t="T1055"><vh>&lt;&lt; put default directory &gt;&gt;</vh></v>
 </v>
-<v t="T1054"><vh>putProlog</vh></v>
-<v t="T1055"><vh>putPostlog</vh></v>
-<v t="T1056"><vh>putTnodes</vh></v>
-<v t="T1057"><vh>put ( tnode * )</vh></v>
-<v t="T1058"><vh>putVnodes</vh></v>
-<v t="T1059"><vh>put ( vnode * )</vh>
-<v t="T1060"><vh>&lt;&lt; Put tnode index if this vnode has body text &gt;&gt;</vh></v>
-<v t="T1061"><vh>&lt;&lt; Put a vnode tag if this vnode has a clone window &gt;&gt;</vh></v>
-<v t="T1062"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
-<v t="T1063"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
+<v t="T1056"><vh>putProlog</vh></v>
+<v t="T1057"><vh>putPostlog</vh></v>
+<v t="T1058"><vh>putTnodes</vh></v>
+<v t="T1059"><vh>put ( tnode * )</vh></v>
+<v t="T1060"><vh>putVnodes</vh></v>
+<v t="T1061"><vh>put ( vnode * )</vh>
+<v t="T1062"><vh>&lt;&lt; Put tnode index if this vnode has body text &gt;&gt;</vh></v>
+<v t="T1063"><vh>&lt;&lt; Put a vnode tag if this vnode has a clone window &gt;&gt;</vh></v>
+<v t="T1064"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="T1065"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1064"><vh>save</vh></v>
-<v t="T1065"><vh>saveAs</vh></v>
-<v t="T1066"><vh>saveACopyAs</vh></v>
-<v t="T1067"><vh>saveOutlineOnlyTo</vh></v>
-<v t="T1068"><vh>xmlEscape</vh></v>
-<v t="T1069"><vh>write_LEO_file</vh>
-<v t="T1070"><vh>&lt;&lt; Open fileName and buffer it &gt;&gt;</vh></v>
-<v t="T1071"><vh>&lt;&lt; Close the file &gt;&gt;</vh></v>
+<v t="T1066"><vh>save</vh></v>
+<v t="T1067"><vh>saveAs</vh></v>
+<v t="T1068"><vh>saveACopyAs</vh></v>
+<v t="T1069"><vh>saveOutlineOnlyTo</vh></v>
+<v t="T1070"><vh>xmlEscape</vh></v>
+<v t="T1071"><vh>write_LEO_file</vh>
+<v t="T1072"><vh>&lt;&lt; Open fileName and buffer it &gt;&gt;</vh></v>
+<v t="T1073"><vh>&lt;&lt; Close the file &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -6716,19 +6718,48 @@ In @file trees, the @c directive indicates the start of a code section.
 <t tx="T500">Indicates that syntax coloring is enabled for the body text in which it appears and all descendent nodes ( unless over-ridden in the descendent nodes ).</t>
 <t tx="T501">This directive indicates the delimiters to be used by the Tangle command.</t>
 <t tx="T502">The @cweb directive specifies that the source code is CWEB code, overriding the default specified in the Preferences panel.  This directive affects syntax coloring.</t>
-<t tx="T503">In @root and @unit trees, the @doc directive indicates the start of a comment enclosed in the beginning and ending block comment delimiters ( see @comment ).
+<t tx="T503">@nocolor
+
+The @delims directive changes the comment strings used to mark sentinel lines. This directive is often used to place Javascript text inside XML or HTML files.  This directive is valid only in @file trees.  You can use the @comment directive in @unit or @root trees.
+
+The @delims directive contains one or two delimiters, separated by whitespace. If only one delim is present it delimits single-line comments. If two delims are present they delimit block comments. The @delims directive can not be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels. The @delims directive inserts @@delims sentinels into the derived file. The new delimiter strings continue in effect until the next @@delims sentinel in the derived file or the end of the derived file.
+
+Note: Leo can not revert to previous delimiters automatically; you must change back to previous delimiters using another @delims directive. For example:
+
+@color
+
+@delims /* */ 
+Javascript stuff 
+@delims &lt;-- --&gt; 
+HTML stuff
+
+@nocolor
+Adding, deleting or changing @@delims sentinels will destroy Leo's ability to read the derived file. Mistakes using the @delims directive have no effect on Leo, though such mistakes will thoroughly mess up a derived file as far as compilers, HTML renderers, etc. are concerned.</t>
+<t tx="T504">In @root and @unit trees, the @doc directive indicates the start of a comment enclosed in the beginning and ending block comment delimiters ( see @comment ).
 
 In @file trees, the @(space) (@ followed by a space, tab or newline) indicates the start of an doc part.  @(space) is optional: it is not needed if the body text contains no doc part.
 
 </t>
-<t tx="T504">Strictly speaking, @file is not a directive; it is not valid in body text.
+<t tx="T505">Strictly speaking, @file is not a directive; it is not valid in body text.
 
 A headline that starts with @file &lt;filename&gt; forms the root of an @file tree.  Leo writes all nodes in the tree to the derived file &lt;filename&gt; when any Save command is executed.  The @file tree is recreated from the derived file when the .leo file is opened.
 
 The Leo2 documentation discusses how to write code in @file trees.
 </t>
-<t tx="T505">This directive causes the Tangle and Untangle commands to ignore this node and all its descendents.</t>
-<t tx="T506">The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle.
+<t tx="T506">The @first directive allows you to place lines at the very start of files derived from @file nodes. For example, the body text of @file spam.py might be:
+
+	@first #! /usr/bin/env python
+
+The body text of @file foo.perl might be:
+
+	@first #/usr/bin/perl
+
+@first directives are recognized only at the start of the body text of @file nodes. No text may precede @first directives. More than one @first directive may exist, like this:
+
+	@first #! /usr/bin/env python
+	@first # more comments.</t>
+<t tx="T507">This directive causes the Tangle and Untangle commands to ignore this node and all its descendents.</t>
+<t tx="T508">The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle.
 
 The form of this directive is
 
@@ -6745,9 +6776,9 @@ but the following is invalid:
 @LANGUAGE html
 
 The @comment directive is now officially deprecated: you should use the @language directive whenever possible.  At present Untangle will not process an @root or @unit node if an @comment directive is in effect.  Why?  Because Untangle can't be sure of properly parsing a derived file if the language of the derived file isn't known.  It might be possible to assume some defaults in this case, but that is not done at present and is not a high priority.</t>
-<t tx="T507">Indicates that syntax coloring is disabled for the body text in which it appears and all descendent nodes ( unless over-ridden in the descendent nodes ).</t>
-<t tx="T508">The @noweb directive specifies that the source code is noweb code, overriding the default specified in the Preferences panel.</t>
-<t tx="T509">The @others directive is valid only in @file trees.  The @others directive causes the expansion of all unnamed nodes to be output to the derived file in the position of the @others directive.
+<t tx="T509">Indicates that syntax coloring is disabled for the body text in which it appears and all descendent nodes ( unless over-ridden in the descendent nodes ).</t>
+<t tx="T510">The @noweb directive specifies that the source code is noweb code, overriding the default specified in the Preferences panel.</t>
+<t tx="T511">The @others directive is valid only in @file trees.  The @others directive causes the expansion of all unnamed nodes to be output to the derived file in the position of the @others directive.
 
 For example, a common Python idiom is:
 
@@ -6769,37 +6800,37 @@ class y:
 The named nodes &lt;&lt;members of x&gt;&gt; and &lt;&lt;members of y&gt;&gt; contain only an @others directive.  Define members of the x and y classes as descendents of the nodes containing @Others.
 
 </t>
-<t tx="T510">The @pagewidth directives affects how Tangle outputs block comments:  it specifies the width of output pages in columns.  The form of the @pagewidth directive is @pagewidth n, where n is a positive integer.
+<t tx="T512">The @pagewidth directives affects how Tangle outputs block comments:  it specifies the width of output pages in columns.  The form of the @pagewidth directive is @pagewidth n, where n is a positive integer.
 </t>
-<t tx="T511">The @path directive specifies the directory to be used if an @root directory does not specify a full path name.  This overrides the "Default Tangle Directory" option in the Preferences panel.
+<t tx="T513">The @path directive specifies the directory to be used if an @root directory does not specify a full path name.  This overrides the "Default Tangle Directory" option in the Preferences panel.
 
 The form of the @page directive is @page filename, where filename is taken to be everything following @page to the end of the line.
 </t>
-<t tx="T512">This directive starts the text that forms a single derived file, after all section references have been replaced by their definitions.
+<t tx="T514">This directive starts the text that forms a single derived file, after all section references have been replaced by their definitions.
 
 By default, only descendents of the @root node are examined for section definitions.  However, if the @root directive is a descendent of a node containing the @unit directive, all descendents of the @unit node are examined for section definitions.</t>
-<t tx="T513">This directive affects only the Weave (Print) command (and possibly the Create CWEB command).  It indicates the start of a section.  This puts the section title at the top of each page.</t>
-<t tx="T514">The @silent causes Tangle to output no comments for doc chunks and no sentinel lines for Untangle. Comments written by the user in code sections are always output.
+<t tx="T515">This directive affects only the Weave (Print) command (and possibly the Create CWEB command).  It indicates the start of a section.  This puts the section title at the top of each page.</t>
+<t tx="T516">The @silent causes Tangle to output no comments for doc chunks and no sentinel lines for Untangle. Comments written by the user in code sections are always output.
 
 </t>
-<t tx="T515">The @tabwidth directives affects how Tangle outputs leading whitespace:  it specifies the width of tabs in spaces.  The form of the @pagewidth directive is @tabwidth n, where n is a positive integer.
+<t tx="T517">The @tabwidth directives affects how Tangle outputs leading whitespace:  it specifies the width of tabs in spaces.  The form of the @pagewidth directive is @tabwidth n, where n is a positive integer.
 </t>
-<t tx="T516">The @terse directive causes Tangle not to output comments for doc chunks.  Tangle will output only those sentinel comments needed by Untangle.  As always, comments written by the user in code sections are output.
+<t tx="T518">The @terse directive causes Tangle not to output comments for doc chunks.  Tangle will output only those sentinel comments needed by Untangle.  As always, comments written by the user in code sections are output.
 
 These directives are not valid in @file trees.</t>
-<t tx="T517">Expands the nodes searched for section definitions when processing an @root directive.
+<t tx="T519">Expands the nodes searched for section definitions when processing an @root directive.
 
 By default, only descendents of the @root node are examined for section definitions.  However, if the @root directive is a descendent of a node containing the @unit directive, all descendents of the @unit node are examined for section definitions.</t>
-<t tx="T518">The @verbose directive causes Tangle to output comments for doc chunks and sentinel comments needed by Untangle.  This is the default behavior if none of the @verbose, @terse or @silent directives are in effect.
+<t tx="T520">The @verbose directive causes Tangle to output comments for doc chunks and sentinel comments needed by Untangle.  This is the default behavior if none of the @verbose, @terse or @silent directives are in effect.
 </t>
-<t tx="T519">The following error messages may be generated by the Tangle commands.  Such errors appear in the log window, which will be opened if necessary.	
+<t tx="T521">The following error messages may be generated by the Tangle commands.  Such errors appear in the log window, which will be opened if necessary.	
 </t>
-<t tx="T520">A file error occurred while trying to reopen the temporary file used during tangling.</t>
-<t tx="T521">A file error occurred while trying to change the name of the temporary file used during tangling.</t>
-<t tx="T522">An @code directive appeared in body text whose header does not contain a section name.</t>
-<t tx="T523">An @directive was seen somewhere other than the start of a line.</t>
-<t tx="T524">Tangle detected more than 20 errors.</t>
-<t tx="T525">A section was defined in terms of itself, either directly or indirectly.  The trace shows the chain of section definitions that resulted in the illegal definition.
+<t tx="T522">A file error occurred while trying to reopen the temporary file used during tangling.</t>
+<t tx="T523">A file error occurred while trying to change the name of the temporary file used during tangling.</t>
+<t tx="T524">An @code directive appeared in body text whose header does not contain a section name.</t>
+<t tx="T525">An @directive was seen somewhere other than the start of a line.</t>
+<t tx="T526">Tangle detected more than 20 errors.</t>
+<t tx="T527">A section was defined in terms of itself, either directly or indirectly.  The trace shows the chain of section definitions that resulted in the illegal definition.
 
 This message is followed by a walkback of the section names that recursively reference the section.  The walkback looks like this:
 
@@ -6807,33 +6838,33 @@ called from &lt;&lt; section name &gt;&gt;
 called from &lt;&lt; section name &gt;&gt;
 ...
 </t>
-<t tx="T526">Tangle did not write a file because errors were found.</t>
-<t tx="T527">A C-language comment was not properly terminated.</t>
-<t tx="T528">The file name in an @root directive was not terminated with the proper delimiter.</t>
-<t tx="T529">A section name was not properly terminated before the end of the line in which it started.
+<t tx="T528">Tangle did not write a file because errors were found.</t>
+<t tx="T529">A C-language comment was not properly terminated.</t>
+<t tx="T530">The file name in an @root directive was not terminated with the proper delimiter.</t>
+<t tx="T531">A section name was not properly terminated before the end of the line in which it started.
 </t>
-<t tx="T530">A C-language string or character constant was not properly terminated.</t>
-<t tx="T531">Something that looks like a section definition was seen in the middle of a line.</t>
-<t tx="T532">A section was defined using more than 100 levels of section definitions (!)
+<t tx="T532">A C-language string or character constant was not properly terminated.</t>
+<t tx="T533">Something that looks like a section definition was seen in the middle of a line.</t>
+<t tx="T534">A section was defined using more than 100 levels of section definitions (!)
 
 You could easily create an outline containing every computer program ever written in less than 50 levels.</t>
-<t tx="T533">The selected outline contained no @root directive.</t>
-<t tx="T534">A reference to an undefined section was encountered.</t>
-<t tx="T535">Tangle outputs 2-character WEB control code in a comment.  This message is given if we find such comments in a code definition.</t>
-<t tx="T536">(The text of the duplicate definition follows.)
+<t tx="T535">The selected outline contained no @root directive.</t>
+<t tx="T536">A reference to an undefined section was encountered.</t>
+<t tx="T537">Tangle outputs 2-character WEB control code in a comment.  This message is given if we find such comments in a code definition.</t>
+<t tx="T538">(The text of the duplicate definition follows.)
 
 The section may have been defined in more than one place.</t>
-<t tx="T537">The indicated section appears in the outline but is never referenced.</t>
-<t tx="T538">The following error messages may be generated by the Untangle commands.  Such errors appear in the log window, which will be opened if necessary.	
+<t tx="T539">The indicated section appears in the outline but is never referenced.</t>
+<t tx="T540">The following error messages may be generated by the Untangle commands.  Such errors appear in the log window, which will be opened if necessary.	
 </t>
-<t tx="T539">Two expansions of &lt;&lt; section name &gt;&gt; were different in the derived file.  This typically arises when the programmer changes one of the expansions but not the other.</t>
-<t tx="T540">No end sentinel line was found for a part of the expansion of the code in the @root node.  This is likely the result of adding, deleting or altering a sentinel line.</t>
-<t tx="T541">No end sentinel line was found for the expansion of the code in the @root node.  This is likely the result of adding, deleting or altering a sentinel line.</t>
-<t tx="T542">The end sentinel name for &lt;&lt; section name &gt;&gt; was expected but not found.  This is likely the result of adding, deleting or altering a sentinel line.</t>
-<t tx="T543">The end of the file was reached before encountering the end sentinel line for
+<t tx="T541">Two expansions of &lt;&lt; section name &gt;&gt; were different in the derived file.  This typically arises when the programmer changes one of the expansions but not the other.</t>
+<t tx="T542">No end sentinel line was found for a part of the expansion of the code in the @root node.  This is likely the result of adding, deleting or altering a sentinel line.</t>
+<t tx="T543">No end sentinel line was found for the expansion of the code in the @root node.  This is likely the result of adding, deleting or altering a sentinel line.</t>
+<t tx="T544">The end sentinel name for &lt;&lt; section name &gt;&gt; was expected but not found.  This is likely the result of adding, deleting or altering a sentinel line.</t>
+<t tx="T545">The end of the file was reached before encountering the end sentinel line for
 	&lt;&lt; section name &gt;&gt;.
 This is likely the result of adding, deleting or altering a sentinel line.</t>
-<t tx="T544">The following are all minor errors, meaning that no data is likely to have been lost.  You can proceed as usual.
+<t tx="T546">The following are all minor errors, meaning that no data is likely to have been lost.  You can proceed as usual.
 
 1. Rereading file.  Clone links into this file will be lost
 
@@ -6854,7 +6885,7 @@ The name of the derived file may have been changed.
 5. Ignoring text after @-leo
 
 Some text follows the trailing @-leo sentinel line.  Make sure this text is not important.</t>
-<t tx="T545">The following are all serious errors, meaning that the data in a derived file has been corrupted.  You should restore the information from a backup .leo file using the Read Outline Only commands, followed by a Write @file Nodes command.
+<t tx="T547">The following are all serious errors, meaning that the data in a derived file has been corrupted.  You should restore the information from a backup .leo file using the Read Outline Only commands, followed by a Write @file Nodes command.
 
  1. Bad @+leo sentinel in &lt;filename&gt;
  2. Bad @delims"
@@ -6870,7 +6901,7 @@ Some text follows the trailing @-leo sentinel line.  Make sure this text is not 
 12. Unexpected end of file. Expecting &lt;sentinel kind&gt; sentinel
 13. Unknown sentinel: &lt;sentinel line&gt;
 </t>
-<t tx="T546">Errors while writing @file nodes are harmless.  No information is lost because all information is written to the .leo file rather than the derived file.
+<t tx="T548">Errors while writing @file nodes are harmless.  No information is lost because all information is written to the .leo file rather than the derived file.
 
 1. Bad @delims directive
 
@@ -6904,7 +6935,7 @@ The path may be specified by the Preferences panel, an @path directive or by a p
 			
 The node given by &lt;headline&gt; contains a reference to &lt;&lt;section name&gt;&gt;, 
 but no named node for &lt;&lt;section name&gt;&gt; exists in the descendents of &lt;headline&gt;	</t>
-<t tx="T547">New for leo.py v2.0 and Borland Leo 2.6:
+<t tx="T549">New for leo.py v2.0 and Borland Leo 2.6:
 
 Leo suppresses blank lines between sentinels by default.  This is an upward compatible change in the format of derived files: leo.py v2.0 can read derived files from all previous versions of Leo, but previous versions of Leo can not read derived files without blanks lines.
 
@@ -6916,12 +6947,12 @@ to
 
 Note: leo.py v2.0 can read derived files without blank lines between sentinels regardless of the setting of self.suppress_newlines.
 </t>
-<t tx="T548">The following sections describe the comment lines embedded in derived files.  It is not necessary to understand this in detail.  All you need to know is this:
+<t tx="T550">The following sections describe the comment lines embedded in derived files.  It is not necessary to understand this in detail.  All you need to know is this:
 
 1. Sentinel lines are comment lines whose first character (following the comment delimiter) is @.
 2. Do not alter sentinel lines in derived files.  Doing so will corrupt the outline structure!
 3. Do not alter blank lines in front of, behind or between sentinels.  Doing so will corrupt the outline structure in older versions of Leo.</t>
-<t tx="T549">The @delims directive changes the comment strings used to mark sentinel lines.  The @delims directive contains one or two delimiters, separated by whitespace.  If only one delim is present it delimits single-line comments.  If two delims are present they delimit block comments. The @delim directive can _not_ be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels.
+<t tx="T551">The @delims directive changes the comment strings used to mark sentinel lines.  The @delims directive contains one or two delimiters, separated by whitespace.  If only one delim is present it delimits single-line comments.  If two delims are present they delimit block comments. The @delim directive can _not_ be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels.
 
 NB: Leo can not revert to previous delimiters automatically; you must change back to previous delimiters using another @delims directive.  For example:
 
@@ -6930,14 +6961,14 @@ Javascript stuff
 @delims &lt;-- --&gt;
 HTML stuff
 </t>
-<t tx="T550">A file produced by an @file node begins with an @+leo sentinel.  The last lines of the file should be the matching @-leo sentinel
+<t tx="T552">A file produced by an @file node begins with an @+leo sentinel.  The last lines of the file should be the matching @-leo sentinel
 
 The comment delimiters that delimit all sentinels are specified by the first line of the file, that is, the @+leo sentinel.  This sentinel has the form:
 
 &lt;opening_delim&gt;@leo&lt;closing_delim&gt;
 
 &lt;closing_delim&gt; may be empty, in which case single-line comments are used.  The Write code generates single-line comments if possible.  Presently, the Write logic generates single line comments for all languages except HTML.  (Block comments can be specified using the @comment directive.)</t>
-<t tx="T551">Suppose the parent node of a node N is P and that P has n children.  The sentinel 
+<t tx="T553">Suppose the parent node of a node N is P and that P has n children.  The sentinel 
 
   @+node:&lt;child_index&gt;:&lt;status_fields&gt;:&lt;headline&gt;
 
@@ -6954,23 +6985,23 @@ The &lt;status_field&gt; field the cloneIndex field of the form: "C=nnn", where 
 The &lt;headline&gt; field contains headline text, not reference text.
 
 The indentation of the expansion is increased by the extra indentation of preceding the reference.  tree level never affects indentation level.</t>
-<t tx="T552">If a node contains significant I(non-whitespace) body text, @+body and @-body sentinels surround the text.  These sentinels are nested within @node directives.
+<t tx="T554">If a node contains significant I(non-whitespace) body text, @+body and @-body sentinels surround the text.  These sentinels are nested within @node directives.
 </t>
-<t tx="T553">@+doc and @-doc delimit doc parts within a node that start with @doc. These sentinels are nested within @body directives.  Similarly, @+at and @-at delimit doc parts within a node that start with @&lt;whitespace&gt;.
+<t tx="T555">@+doc and @-doc delimit doc parts within a node that start with @doc. These sentinels are nested within @body directives.  Similarly, @+at and @-at delimit doc parts within a node that start with @&lt;whitespace&gt;.
 
 We use the following convention to determine where putDocPart has inserted line breaks: A line in a doc part is followed by an inserted newline if and only if the newline if  preceded by whitespace.  To make this convention work, the Write deletes the trailing whitespace of all lines that are followed by a "real" newline.</t>
-<t tx="T554">@+others indicates the start of the expansion of an @+others directive, which continues until the matching @-others. @others sentinels are nested within @body sentinels; the expansion of the @others directive always occurs within the body text of some node N.
+<t tx="T556">@+others indicates the start of the expansion of an @+others directive, which continues until the matching @-others. @others sentinels are nested within @body sentinels; the expansion of the @others directive always occurs within the body text of some node N.
 </t>
-<t tx="T555">The @delims directive inserts @@delims sentinels into the derived file. The new delimiter strings continue in effect until the next @@delims sentinel _in the derived file_ or the end of the derived file.
+<t tx="T557">The @delims directive inserts @@delims sentinels into the derived file. The new delimiter strings continue in effect until the next @@delims sentinel _in the derived file_ or the end of the derived file.
 
 Adding, deleting or changing @@delim _sentinels_ will destroy Leo's ability to read the derived file.  Mistakes in using the @delims _directives_ have no effect on Leo, though such mistakes will thoroughly mess up a derived file as far as compilers, HTML renderers, etc. are concerned.</t>
-<t tx="T556">The @@&lt;text&gt; sentinel represents any line starting with @ in body text except @&lt;whitespace&gt;, @doc and @others. Examples:
+<t tx="T558">The @@&lt;text&gt; sentinel represents any line starting with @ in body text except @&lt;whitespace&gt;, @doc and @others. Examples:
 
   @@nocolor
   @@pagewidth 80
   @@tabwidth 4
   @@code</t>
-<t tx="T557">@verbatim indicates that the next line of the derived file is not a sentinel.  This escape convention allows body text to contain lines that would otherwise be considered sentinel lines.
+<t tx="T559">@verbatim indicates that the next line of the derived file is not a sentinel.  This escape convention allows body text to contain lines that would otherwise be considered sentinel lines.
 
 New for leo.py version 2.0 and Borland Leo version 2.6:
 
@@ -6979,8 +7010,8 @@ New for leo.py version 2.0 and Borland Leo version 2.6:
   &lt;&lt; ref &gt;&gt; #+others
 
 This sentinel is required only when blank lines are suppressed between sentinel lines.</t>
-<t tx="T558">@&lt;&lt;section_name&gt;&gt; represents section reference.  If the reference does not end the line, the sentinel line ending the expansion is followed by the remainder of the reference line.  This allows the Read code to recreate the reference line exactly.</t>
-<t tx="T559">The following is a list of features I'd like to add to Leo.
+<t tx="T560">@&lt;&lt;section_name&gt;&gt; represents section reference.  If the reference does not end the line, the sentinel line ending the expansion is followed by the remainder of the reference line.  This allows the Read code to recreate the reference line exactly.</t>
+<t tx="T561">The following is a list of features I'd like to add to Leo.
 
 Styled text and graphics
 
@@ -6989,7 +7020,7 @@ Except for syntax coloring, there is no way to style text in an outline.  The ul
 Lists of sections
 
 It would be useful to have easily available, possibly as a pop-up menu, a list of the most recently accessed sections, and possibly a full list of all section names as well.</t>
-<t tx="T560">The following documentation applies to @file trees.
+<t tx="T562">The following documentation applies to @file trees.
 
 @file node:			Node whose headline starts with @file filename.
 Named node:			Node whose headline starts with  &lt;&lt;section_name&gt;&gt;.
@@ -7048,7 +7079,7 @@ Typically a single @others directive in the @file node suffices.  For example, t
   @others
 
 Sections may be defined in any descendant of the @file node provided that the method is not a descendant of any definition node.</t>
-<t tx="T561">The following is a list of the major differences between the Macintosh and PC versions of Leo.
+<t tx="T563">The following is a list of the major differences between the Macintosh and PC versions of Leo.
 
 1.  The PC version does not have a Print (Weave) command. This command is under development.
 
@@ -7064,7 +7095,7 @@ Sections may be defined in any descendant of the @file node provided that the me
 
 
 </t>
-<t tx="T562">The commercial Mac and PC versions of Leo will use the same file format, so nothing special will need to be done to transfer files between these two versions.  Transferring information between the commercial PC version and the free Mac version is relatively straightforward.
+<t tx="T564">The commercial Mac and PC versions of Leo will use the same file format, so nothing special will need to be done to transfer files between these two versions.  Transferring information between the commercial PC version and the free Mac version is relatively straightforward.
 
 1. Create a text file in MORE format.
 
@@ -7080,13 +7111,13 @@ On the Mac, load the text file into a text editor.  Select all the text and copy
 
 On the PC, load the text file into a text editor.  Select all the text and copy it to the clipboard.  In Leo, choose the Import More Text command to create the outline.
 </t>
-<t tx="T563">Sherlock is a flexible tracing and measurement package for C, C++ and Objective C.  All parts of Sherlock are in the public domain.
+<t tx="T565">Sherlock is a flexible tracing and measurement package for C, C++ and Objective C.  All parts of Sherlock are in the public domain.
 
 You will see Sherlock macros throughout Leo's C++ code.  The most common of these macros are FTAG, STATB, STATX, TRACEP, TRACEPB and TRACEPX.  These Sherlock macros are not functional in the production version of Leo.
 
 Full documentation for Sherlock can be found at:
 	http://personalpages.tds.net/~edream/sl_index.html</t>
-<t tx="T564">This Appendix describes Leo's file format.  Most users of Leo can skip this appendix.  This technical information will be of use only to those wanting to process Leo files with special-purpose filters.
+<t tx="T566">This Appendix describes Leo's file format.  Most users of Leo can skip this appendix.  This technical information will be of use only to those wanting to process Leo files with special-purpose filters.
 
 Leo's uses XML for its file format.  The following sections describe this format in detail.  The last node gives an example, and it will be useful to refer to this example frequently.
 
@@ -7110,15 +7141,15 @@ The format of Leo2 .leo files is very similar to the format of Leo1 .leo files. 
 
 In all other respects Leo1 and Leo2 .leo files are identical. Leo1 can open Leo2 files, but Leo1 ignores all information unique to Leo2.  However,  Leo1 treats @file nodes as regular outline nodes: Leo1 neither reads derived files when outlines (.leo files) are loaded nor writes derived files when outlines are saved.
 </t>
-<t tx="T565">Leo files start out with the following line declaring the format to be formatted as a type of XML.
+<t tx="T567">Leo files start out with the following line declaring the format to be formatted as a type of XML.
 
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 </t>
-<t tx="T566">The &lt;leo_file&gt; tag opens an element that contains the entire file. The &lt;/leo_file&gt; tag at the end of the file ends this element.
+<t tx="T568">The &lt;leo_file&gt; tag opens an element that contains the entire file. The &lt;/leo_file&gt; tag at the end of the file ends this element.
 
 The following sections describe the elements that may appear between the &lt;leo_file&gt; tag and the &lt;/leo_file&gt; tag.  These elements must appear in the order given.  However, the clone_windows element is optional.
 </t>
-<t tx="T567">The file header element specifies information used to parse the file or to allocate data structures needed to read the file.  The header starts with &lt;leo_header and ends with /&gt;  In between are the following four required attribute fields.
+<t tx="T569">The file header element specifies information used to parse the file or to allocate data structures needed to read the file.  The header starts with &lt;leo_header and ends with /&gt;  In between are the following four required attribute fields.
 
 file_format="1" indicates the version number of the file format: 1, 2, 3, etc.
 
@@ -7130,7 +7161,7 @@ clone_windows="0" indicates the number of clone windows specified by the file.
 
 I'll say more about tnodes later.
 </t>
-<t tx="T568">The globals element specifies information relating to the entire file.  This element starts with the following the &lt;globals body_outline_ratio="0.50"&gt; tag and ends with &lt;/globals&gt; tag.
+<t tx="T570">The globals element specifies information relating to the entire file.  This element starts with the following the &lt;globals body_outline_ratio="0.50"&gt; tag and ends with &lt;/globals&gt; tag.
 
 The body_outline_ratio attribute specifies the ratio of the height of the body pane to the total height of the Leo window.  It initializes the position of the splitter separating the outline pane from the body pane.
 
@@ -7140,7 +7171,7 @@ In between the &lt;globals...&gt; tag and the &lt;/globals tag&gt; are the follo
 
 &lt;global_log_window_position top="183" left="446" height="397" width="534"/&gt;
 </t>
-<t tx="T569">The preferences element specifies the preferences that the user can change using the Preferences command.  It starts with the &lt;preferences...&gt; tag and ends with &lt;/preferences&gt; tag.
+<t tx="T571">The preferences element specifies the preferences that the user can change using the Preferences command.  It starts with the &lt;preferences...&gt; tag and ends with &lt;/preferences&gt; tag.
 
 The following three attributes may appear before the &gt; that ends the &lt;preferences...&gt; tag.
 
@@ -7156,7 +7187,7 @@ Following the &lt;preferences...&gt; tag is the following element.
 
 The sss string encodes the settings of the TSyntaxMemo component used for body text.  This string is simply passed to and from TSyntaxMemo and is not used by Leo in any other way.  Future versions of TSyntaxMemo will allow more settings to be encoded, and those settings will appear between the &lt;preferences...&gt; and &lt;/preferences&gt; tags.
 </t>
-<t tx="T570">The find_panel_settings element specifies the settings of the Find panel at the time the file was saved.  This element starts with the &lt;find_panel_settings...&gt; tag and continues until the &lt;/find_panel_settings&gt; tag.
+<t tx="T572">The find_panel_settings element specifies the settings of the Find panel at the time the file was saved.  This element starts with the &lt;find_panel_settings...&gt; tag and continues until the &lt;/find_panel_settings&gt; tag.
 
 Zero or more of the following attributes may appear before the &gt; that terminates the &lt;find_panel_settings...&gt; tag. Leo writes these attributes in the order shown, but they may appear in any order.
 
@@ -7181,11 +7212,11 @@ The following elements appear after the &lt;find_panel_settings&gt; tag and befo
 
 The sss strings indicate the find and change strings in the Find panel.  Either sss string may be empty.  Both sss strings are encoded with the usual XML escapes.
 </t>
-<t tx="T571">The vnodes element specifies the list of so-called vnodes of an outline.  
+<t tx="T573">The vnodes element specifies the list of so-called vnodes of an outline.  
 
 The vnodes element starts with &lt;vnodes...&gt; and ends with &lt;/vnodes&gt;.  In between these tags are one or more v elements.
 </t>
-<t tx="T572">The v element represents a single vnode and has the following form:
+<t tx="T574">The v element represents a single vnode and has the following form:
 
 &lt;v...&gt;&lt;vh&gt;sss&lt;/vh&gt; (zero or more nested v elements) &lt;/v&gt;
 
@@ -7215,11 +7246,11 @@ V	The vnode is the current vnode.
 
 For example, a="CEM"  specifies that the vnode is a clone, is expanded and is marked.
 </t>
-<t tx="T573">The tnodes element specifies the list of tnodes of an outline.
+<t tx="T575">The tnodes element specifies the list of tnodes of an outline.
 
 The tnodes element starts with &lt;tnodes...&gt; and ends with &lt;/tnodes&gt;.  In between these tags are zero or more t elements.  
 </t>
-<t tx="T574">The t element represents a single tnode.  Each tnode represents body text.  Because of cloning, a tnode may be shared among several vnodes.
+<t tx="T576">The t element represents a single tnode.  Each tnode represents body text.  Because of cloning, a tnode may be shared among several vnodes.
 
 tnodes have the following form:
 
@@ -7231,11 +7262,11 @@ The tx="Tnnn" attribute must appear before the &gt; that terminates the &lt;t...
 
 The rtf="1" attribute may appear before the &gt; that terminates the &lt;t...&gt;tag.  If present it specifies that body text is encoded as Rich Text Format.  This attribute is not used at present.
 </t>
-<t tx="T575">The clone_windows element is optional.  If present it specifies the list of cloned windows of an outline.
+<t tx="T577">The clone_windows element is optional.  If present it specifies the list of cloned windows of an outline.
 
 The clone_windows element starts with &lt;clone_windows&gt; and ends with &lt;/clone_windows&gt;.  In between these tags are one or more clone_window elements.  
 </t>
-<t tx="T576">The clone_window element specifies a single clone window to be opened when the file opens.
+<t tx="T578">The clone_window element specifies a single clone window to be opened when the file opens.
 
 The clone_window element has the following form:
 
@@ -7248,7 +7279,7 @@ All attributes and elements shown above are required.
 The vtag attribute must match the vtag attribute in some vnode, and associates the clone window with the vnode.
 
 The global_window_position element specifies the size and position of the clone window.  The top and left attributes specify the position of the clone window in global coordinates.  The height and width attributes specify the size of the clone window.</t>
-<t tx="T577">&lt;!-- This is a comment --&gt;
+<t tx="T579">&lt;!-- This is a comment --&gt;
 &lt;!-- Version 1 of LEO DTD --&gt;
 
 &lt;!DOCTYPE LeoOutlineDocumentType [
@@ -7332,8 +7363,8 @@ The global_window_position element specifies the size and position of the clone 
                 width   CDATA #REQUIRED &gt;
 ]
 </t>
-<t tx="T578">The following node contains the text of an actual leo file.  After that node is a node containing the outline that created the leo file.</t>
-<t tx="T579">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+<t tx="T580">The following node contains the text of an actual leo file.  After that node is a node containing the outline that created the leo file.</t>
+<t tx="T581">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;leo_file&gt;
 &lt;leo_header file_format="1" tnodes="4" max_tnode_index="4" clone_windows="0"/&gt;
 &lt;globals body_outline_ratio="0.499"&gt;
@@ -7367,94 +7398,94 @@ The global_window_position element specifies the size and position of the clone 
 &lt;t tx="T4"&gt;Text of headline 5.&lt;/t&gt;
 &lt;/tnodes&gt;
 &lt;/leo_file&gt;</t>
-<t tx="T580">Text of headline 1.</t>
-<t tx="T581">Text of headline 2.</t>
-<t tx="T582">Text of headline 4.</t>
-<t tx="T583">Text of headline 5.</t>
-<t tx="T584">@nocolor
+<t tx="T582">Text of headline 1.</t>
+<t tx="T583">Text of headline 2.</t>
+<t tx="T584">Text of headline 4.</t>
+<t tx="T585">Text of headline 5.</t>
+<t tx="T586">@nocolor
 @ignore</t>
-<t tx="T585">We often refer to outline nodes by the directives they contain.  For example, an @root node is a node containing an @root directive, an @ignore node is a node containing an @ignore directive, and so on.
+<t tx="T587">We often refer to outline nodes by the directives they contain.  For example, an @root node is a node containing an @root directive, an @ignore node is a node containing an @ignore directive, and so on.
 
 Exception: an @file node is a node whose headline starts with @file.</t>
-<t tx="T586">An @root tree is a tree whose is an @root node.  An @file tree is a tree whose root is an @file node, and so on.</t>
-<t tx="T587">The pane containing the body text of the currently selected headline in the outline pane.</t>
-<t tx="T588">The text in the body pane.  Body text is always associated with a particular headline.</t>
-<t tx="T589">A small blue box in the icon just to the left of a headline that indicates that the node contains body text.</t>
-<t tx="T590">A node directly contained by a node.</t>
-<t tx="T591">Another name for a section or part.</t>
-<t tx="T592">A copy of a tree that changes whenever the original changes.  The original and all clones are treated equally:  no special status is given to the "original" node.</t>
-<t tx="T593">A small red arrow in the icon just to the left of a headline that indicates that the node is a clone of another node.</t>
-<t tx="T594">A section containing code.  Code sections start with @c or @code directives.</t>
-<t tx="T595">A literate programming language invented by Donald Knuth and Silvio Levy.  CWEB produces derived files for the C language.
+<t tx="T588">An @root tree is a tree whose is an @root node.  An @file tree is a tree whose root is an @file node, and so on.</t>
+<t tx="T589">The pane containing the body text of the currently selected headline in the outline pane.</t>
+<t tx="T590">The text in the body pane.  Body text is always associated with a particular headline.</t>
+<t tx="T591">A small blue box in the icon just to the left of a headline that indicates that the node contains body text.</t>
+<t tx="T592">A node directly contained by a node.</t>
+<t tx="T593">Another name for a section or part.</t>
+<t tx="T594">A copy of a tree that changes whenever the original changes.  The original and all clones are treated equally:  no special status is given to the "original" node.</t>
+<t tx="T595">A small red arrow in the icon just to the left of a headline that indicates that the node is a clone of another node.</t>
+<t tx="T596">A section containing code.  Code sections start with @c or @code directives.</t>
+<t tx="T597">A literate programming language invented by Donald Knuth and Silvio Levy.  CWEB produces derived files for the C language.
 
 http://www-cs-faculty.stanford.edu/~knuth/cweb.html</t>
-<t tx="T596">To move left all following siblings of a node so that they become children of a node.</t>
-<t tx="T597">The output file created as the result of tangling a node containing an @root directive. The file consists of the expansion of the text following the @root directive.</t>
-<t tx="T598">An offspring of a node.  That is, a child, grandchild, etc. of a node.</t>
-<t tx="T599">A keyword, preceded by an '@' sign, that is used to control syntax coloring or the Tangle, Untangle or Weave commands.</t>
-<t tx="T600">A section containing only documentation. That is, a section that start with @.  Doc sections are associated with the immediately following code section, if any.</t>
-<t tx="T601">A convention for representing sequences of characters that would otherwise have special meaning.  Leo has only one such convention: in @root trees, @@ in the leftmost column of a code part stands for a single @ character.
+<t tx="T598">To move left all following siblings of a node so that they become children of a node.</t>
+<t tx="T599">The output file created as the result of tangling a node containing an @root directive. The file consists of the expansion of the text following the @root directive.</t>
+<t tx="T600">An offspring of a node.  That is, a child, grandchild, etc. of a node.</t>
+<t tx="T601">A keyword, preceded by an '@' sign, that is used to control syntax coloring or the Tangle, Untangle or Weave commands.</t>
+<t tx="T602">A section containing only documentation. That is, a section that start with @.  Doc sections are associated with the immediately following code section, if any.</t>
+<t tx="T603">A convention for representing sequences of characters that would otherwise have special meaning.  Leo has only one such convention: in @root trees, @@ in the leftmost column of a code part stands for a single @ character.
 
 Note: the markup language Leo uses in body pane is based on noweb.  However, Leo does not support noweb's @&lt;&lt; and @&gt;&gt; escape conventions.  If a line in a code part contains &lt;&lt; followed by &gt;&gt;, then that line does contain a section name, regardless of context.  If the &lt;&lt; and &gt;&gt; characters should not, if fact, delimit a section name, then you must place the &lt;&lt; and &gt;&gt; on separate lines.
 
 Eliminating noweb's escape conventions for &lt;&lt; and &gt;&gt; characters solves some difficult problems when automatically untangling derived files.  Moreover, it is typically easier to split source lines than to use @&lt;&lt; and @&gt;&gt;.  Finally, Leo's Export and Import commands do support the @&lt;&lt; and @&gt;&gt; conventions.</t>
-<t tx="T602">The child of a child of a node.</t>
-<t tx="T603">The organizational unit of an outline.  A node.  Each headline contains headline text and (possibly empty) body text.</t>
-<t tx="T604">Leo stands for Literate Editor with Outlines. That is, Leo supports both literate programming and outlining.
+<t tx="T604">The child of a child of a node.</t>
+<t tx="T605">The organizational unit of an outline.  A node.  Each headline contains headline text and (possibly empty) body text.</t>
+<t tx="T606">Leo stands for Literate Editor with Outlines. That is, Leo supports both literate programming and outlining.
 
 Leo1 denotes all versions of Leo that write version 1 .leo files, that is, all Windows version of Leo prior to version 2.0.  The last version of Leo1, version 1.15, understands enough about Leo2 to issue a warning when opening version 2 files.
 
 Leo2 denotes all versions of Leo that write version 2 .leo files, that is, all versions of leo.py and all Windows versions with version number 2.0 and above.  Only Leo2 can generate derived files from @file trees.</t>
-<t tx="T605">A style of programming that aims at producing the highest quality program listings.  Literate programming languages apply two fundamental operations to text: weaving and tangling.  Leo supports two literate programming languages, CWEB and noweb.
+<t tx="T607">A style of programming that aims at producing the highest quality program listings.  Literate programming languages apply two fundamental operations to text: weaving and tangling.  Leo supports two literate programming languages, CWEB and noweb.
 
 Knuth's book is the best overall introduction to literate programming:
 Literate Programming, by D. E. Knuth ISBN 0-937073-80-6.
 
 More information is available at Knuth's web site:
 http://www-cs-faculty.stanford.edu/%7Eknuth/lp.html</t>
-<t tx="T606">Marking a node by placing a red mark near its leader character. Marks can be placed using the Mark command, as the result of Find and Change commands, or as the result of the Mark Changed Roots and Mark Changed Items command. The Tangle Marked command tangles only those subtrees that are marked.</t>
-<t tx="T607">Within an @file tree, a node that contain a section name, like &lt;&lt;x&gt;&gt;, at the start of its headline text.
+<t tx="T608">Marking a node by placing a red mark near its leader character. Marks can be placed using the Mark command, as the result of Find and Change commands, or as the result of the Mark Changed Roots and Mark Changed Items command. The Tangle Marked command tangles only those subtrees that are marked.</t>
+<t tx="T609">Within an @file tree, a node that contain a section name, like &lt;&lt;x&gt;&gt;, at the start of its headline text.
 
 Within an @file tree, all nodes containing a section reference must have a descendent named node corresponding to the reference.
 
 Within an @root or @unit tree, an @code directive is an abbreviation for &lt;&lt;x&gt;&gt;=, where &lt;&lt; x &gt;&gt; is found in the headline.
 
 </t>
-<t tx="T608">The organizational unit of an outline.  A headline.  The combination of headline text and outline text.
+<t tx="T610">The organizational unit of an outline.  A headline.  The combination of headline text and outline text.
 </t>
-<t tx="T609">A simple literate programming language invented by Norman Ramsey.  noweb can produce derived files for any text-based programming language.
+<t tx="T611">A simple literate programming language invented by Norman Ramsey.  noweb can produce derived files for any text-based programming language.
 
 http://www.eecs.harvard.edu/~nr/noweb/</t>
-<t tx="T610">The children, grandchildren, etc. of a node.</t>
-<t tx="T611">An unnamed node in an @tree that contains no body text.  Such nodes may appear anywhere in an @file tree; they do not affect the derived file in any way.  In particular, organizing nodes do not affect indentation in the derived file.</t>
-<t tx="T612">An unnamed node that is either 1) a descendent of a named node or 2) the descendent of no @others node.
+<t tx="T612">The children, grandchildren, etc. of a node.</t>
+<t tx="T613">An unnamed node in an @tree that contains no body text.  Such nodes may appear anywhere in an @file tree; they do not affect the derived file in any way.  In particular, organizing nodes do not affect indentation in the derived file.</t>
+<t tx="T614">An unnamed node that is either 1) a descendent of a named node or 2) the descendent of no @others node.
 
 Orphan and @ignore nodes are not allowed in @file trees: no derived file is written if an @file node contains an @ignore or orphan node.</t>
-<t tx="T613">1. A visual representation of a hierarchy on the screen.
+<t tx="T615">1. A visual representation of a hierarchy on the screen.
 
 2. The data contained by the hierarchy.
 
 Outlines are composed of headlines representing data.  The combination of a headline and its associated body text is called a node.
 </t>
-<t tx="T614">he pane containing a visual representation of outlines.</t>
-<t tx="T615">The node the directly contains a node.</t>
-<t tx="T616">Another name for a section or chunk.</t>
-<t tx="T617">A file that can be read by Adobe Acrobat.</t>
-<t tx="T618">To move all children of a node left in an outline so that they become siblings of the node.</t>
-<t tx="T619">The first node of the entire outline.  In the PC version of Leo several nodes may be siblings of the root.</t>
-<t tx="T620">The portion of the outline in which a section definition is known. By default the scope of a section definition is the smallest subtree containing both the section and a node containing an @root directive. The @unit directive declares that the subtree containing the @unit directive is the scope for all sections defined in that tree.</t>
-<t tx="T621"> synonym for part or chunk.  A named fragment of code that can be incorporated into other code by referring to the section name.</t>
-<t tx="T622">A name enclosed in &lt;&lt; and &gt;&gt;.  Section names may contain any characters except newlines and "&gt;&gt;".</t>
-<t tx="T623">A section name appearing in a code part. Tangling replaces all references by their definitions.</t>
-<t tx="T624">Comment lines in files derived from @file nodes.  Such lines start with an @ following the opening comment delimiter.  Sentinels embed outline structure into derived files.  Do not alter such lines!  Doing so can corrupt the outline structure.</t>
-<t tx="T625">Nodes with the same parent.  Siblings of the root have no parent.</t>
-<t tx="T626">The icon that appears just to the left of headline text in the outline pane.  This icon shows: a blue body text box if the node contains body text, a red clone arrow if the node is cloned, and a red marker bar if the node is marked.  The icon is outlined in black if the node is dirty, that is, if the node has been changed since the file was last change.
+<t tx="T616">he pane containing a visual representation of outlines.</t>
+<t tx="T617">The node the directly contains a node.</t>
+<t tx="T618">Another name for a section or chunk.</t>
+<t tx="T619">A file that can be read by Adobe Acrobat.</t>
+<t tx="T620">To move all children of a node left in an outline so that they become siblings of the node.</t>
+<t tx="T621">The first node of the entire outline.  In the PC version of Leo several nodes may be siblings of the root.</t>
+<t tx="T622">The portion of the outline in which a section definition is known. By default the scope of a section definition is the smallest subtree containing both the section and a node containing an @root directive. The @unit directive declares that the subtree containing the @unit directive is the scope for all sections defined in that tree.</t>
+<t tx="T623"> synonym for part or chunk.  A named fragment of code that can be incorporated into other code by referring to the section name.</t>
+<t tx="T624">A name enclosed in &lt;&lt; and &gt;&gt;.  Section names may contain any characters except newlines and "&gt;&gt;".</t>
+<t tx="T625">A section name appearing in a code part. Tangling replaces all references by their definitions.</t>
+<t tx="T626">Comment lines in files derived from @file nodes.  Such lines start with an @ following the opening comment delimiter.  Sentinels embed outline structure into derived files.  Do not alter such lines!  Doing so can corrupt the outline structure.</t>
+<t tx="T627">Nodes with the same parent.  Siblings of the root have no parent.</t>
+<t tx="T628">The icon that appears just to the left of headline text in the outline pane.  This icon shows: a blue body text box if the node contains body text, a red clone arrow if the node is cloned, and a red marker bar if the node is marked.  The icon is outlined in black if the node is dirty, that is, if the node has been changed since the file was last change.
 </t>
-<t tx="T627">The process of creating derived files from @root or @file trees.  Leo tangles @file automatically when writing a .leo file.  The user must explicitly tangle @root trees using the Tangle command.  Tangling expands all references in an @root node or @file node.</t>
-<t tx="T628">The language used to syntax color text.  This language determines the default comment delimiters used during tangling and untangling.
+<t tx="T629">The process of creating derived files from @root or @file trees.  Leo tangles @file automatically when writing a .leo file.  The user must explicitly tangle @root trees using the Tangle command.  Tangling expands all references in an @root node or @file node.</t>
+<t tx="T630">The language used to syntax color text.  This language determines the default comment delimiters used during tangling and untangling.
 </t>
-<t tx="T629">Another name for an outline.</t>
-<t tx="T630">A node whose headline text does not start with &lt;&lt; name &gt;&gt;.
+<t tx="T631">Another name for an outline.</t>
+<t tx="T632">A node whose headline text does not start with &lt;&lt; name &gt;&gt;.
 
 Unnamed nodes in @file trees must be a descendent of an @others node and must not be the descendent of any named node.
 
@@ -7465,12 +7496,12 @@ For example, the following tree is invalid:
     unnamed node
 	
 The unnamed node would be an orphan node.</t>
-<t tx="T631">Updating an outline based on changes to derived files.  Untangling allows changes to be propagated from derived files back to the outline.  Especially useful when fixing syntax errors outside Leo.
+<t tx="T633">Updating an outline based on changes to derived files.  Untangling allows changes to be propagated from derived files back to the outline.  Especially useful when fixing syntax errors outside Leo.
 </t>
-<t tx="T632">The process of creating typeset documentation from a noweb or CWEB source file.  Weaving creates documentation. Tangling creates source code files known as derived files.
+<t tx="T634">The process of creating typeset documentation from a noweb or CWEB source file.  Weaving creates documentation. Tangling creates source code files known as derived files.
 
 Leo does not support weaving directly.  If you want to weave a file you can create noweb or CWEB files using Leo's export commands, then use the noweb or CWEB systems to weave those files.</t>
-<t tx="T633">@ The following is part of Leo's actual source code.  The code is written in C++ and uses Borland's Delphi classes.
+<t tx="T635">@ The following is part of Leo's actual source code.  The code is written in C++ and uses Borland's Delphi classes.
 
 For @root trees:  The Tangle command will generate derived files from @root trees.  The Untangle command will update outlines based on changes made to files derived from @root trees.
 
@@ -7487,7 +7518,7 @@ If you actually want to create files you must remove the @ignore directive below
 
 @ignore
 @language c</t>
-<t tx="T634">@ To create the file hello.c in the current directory.
+<t tx="T636">@ To create the file hello.c in the current directory.
 
 1. Remove the @ignore directive from the parent of this node.
 2. Select this headline.
@@ -7500,37 +7531,37 @@ When you look at hello.c you will see that it contains comments starting with //
 &lt;&lt; includes &gt;&gt;
 &lt;&lt; methods &gt;&gt;
 </t>
-<t tx="T635">@code
+<t tx="T637">@code
 
 #include "stdio.h"</t>
-<t tx="T636">@code
+<t tx="T638">@code
 
 void main ( void )
 {
 	printf("Hello World!\n");
 }</t>
-<t tx="T637">@ To create the file hello.c in the current directory.
+<t tx="T639">@ To create the file hello.c in the current directory.
 
 1. Remove the @ignore directive from the parent of this node.
 2. Save this file.  This will create hello.c automatically.
 
 When you look at hello.c you will see that it contains comments starting with //@.  Leave these comments alone!  They are needed to recreate the outline when reading this .leo file.</t>
-<t tx="T638">@ This shows how to use Leo to create source files for Leo2.  
+<t tx="T640">@ This shows how to use Leo to create source files for Leo2.  
 @c
 
 &lt;&lt; includes &gt;&gt;
 @others</t>
-<t tx="T639">#include "stdio.h"</t>
-<t tx="T640">void main ( void )
+<t tx="T641">#include "stdio.h"</t>
+<t tx="T642">void main ( void )
 {
 	printf("Hello World!\n");
 }</t>
-<t tx="T641">@ The vnodes and tnodes classes form the heart of the "model" classes (using the Smalltalk model/view/controller terminology).  That is, the vnode and tnode classes represent nearly all the data contained in the outline.  These two classes also provide a way of hiding the underlying implementation.  For instance, the Delphi classes used to implement outlines (TTreeView, TTreeNode and TTreeNodes) appear only in the implementation of the vnodes and tnodes class.
+<t tx="T643">@ The vnodes and tnodes classes form the heart of the "model" classes (using the Smalltalk model/view/controller terminology).  That is, the vnode and tnode classes represent nearly all the data contained in the outline.  These two classes also provide a way of hiding the underlying implementation.  For instance, the Delphi classes used to implement outlines (TTreeView, TTreeNode and TTreeNodes) appear only in the implementation of the vnodes and tnodes class.
 
 The developer documentation contains an extended discussion of these two classes.  To summarize:  a vnode (visual nodes) represents a headlines _at a particular location on the screen_.  When a headline is cloned, vnodes must be copied.  tnodes, (text nodes) on the other hand, represent body text: a tnode is shared by all vnodes that are clones of each other.  In other words, tnodes are the "unit of sharing" of body text.</t>
-<t tx="T642">@unit
+<t tx="T644">@unit
 </t>
-<t tx="T643">@ tnode.h created May 20, 1999.
+<t tx="T645">@ tnode.h created May 20, 1999.
 
 tnodes represent the body text associated with headlines.
 
@@ -7557,7 +7588,7 @@ public:
 };
 
 #endif // tnode_h_</t>
-<t tx="T644">@code
+<t tx="T646">@code
 
 String * mBodyRTF ;  // The string containing the RTF.
 String * mBodyString ;  // The body text itself.
@@ -7593,15 +7624,15 @@ For @root nodes this field contains the maximum clone index.
 
 long mCloneIndex ;
 </t>
-<t tx="T645">@code
+<t tx="T647">@code
 
 tnode ( long index = 0, char * bodyText = NULL ) ;
 ~tnode () ;</t>
-<t tx="T646">@code
+<t tx="T648">@code
 
 void edump ( bool verboseFlag = FALSE ) ;
 </t>
-<t tx="T647">@code
+<t tx="T649">@code
 
 char * bodyCString ( void ) ;
 long bodyCStringLength ( void ) ;
@@ -7620,7 +7651,7 @@ long refCount ( void ) ;
 int selectionLength ( void ) ;
 int selectionStart ( void ) ;
 </t>
-<t tx="T648">@code
+<t tx="T650">@code
 
 void clearDirty ( void ) ;
 void clearRichTextBit ( void ) ;
@@ -7637,7 +7668,7 @@ void setTnodeRTF ( String s ) ; // For reading from files.
 void setTnodeText ( String s ) ;
 void setVisited ( void ) ;
 </t>
-<t tx="T649">@root "sampleTnode.cpp"
+<t tx="T651">@root "sampleTnode.cpp"
 
 #pragma option -w-par  // suppress warning: "Parameter is never used"
 
@@ -7645,7 +7676,7 @@ void setVisited ( void ) ;
 &lt;&lt; tnode abbreviations &gt;&gt;
 &lt;&lt; tnode methods &gt;&gt;
 </t>
-<t tx="T650">@code
+<t tx="T652">@code
 
 #include &lt;vcl.h&gt;
 #pragma hdrstop
@@ -7655,7 +7686,7 @@ void setVisited ( void ) ;
 
 #include "Leo.h"
 </t>
-<t tx="T651">@code
+<t tx="T653">@code
 
 enum {
     // Not archived...
@@ -7664,7 +7695,7 @@ enum {
 	visitedBit = 0x04
 } ;
 </t>
-<t tx="T652">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T654">&lt;&lt; tnode methods &gt;&gt;=
 
 // Note: all params have defaults, so new tnode() is valid.
 
@@ -7691,7 +7722,7 @@ tnode::~tnode ()
 	delete mBodyRTF ;
 }
 </t>
-<t tx="T653">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T655">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::edump ( bool verboseFlag )
 {
@@ -7702,21 +7733,21 @@ void tnode::edump ( bool verboseFlag )
 
 	}
 }</t>
-<t tx="T654">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T656">&lt;&lt; tnode methods &gt;&gt;=
 
 String tnode::bodyRTF ( void )
 {
 	assert ( mBodyRTF ) ;
 	return *mBodyRTF ;
 }</t>
-<t tx="T655">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T657">&lt;&lt; tnode methods &gt;&gt;=
 
 char * tnode::bodyCString ( void )
 {
 	assert ( mBodyString ) ;
 	return mBodyString -&gt; c_str() ;
 }</t>
-<t tx="T656">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T658">&lt;&lt; tnode methods &gt;&gt;=
 
 long tnode::bodyCStringLength ( void )
 {
@@ -7728,14 +7759,14 @@ long tnode::bodyCStringLength ( void )
 		return strlen( mBodyString -&gt; c_str() );
 	#endif
 }</t>
-<t tx="T657">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T659">&lt;&lt; tnode methods &gt;&gt;=
 
 String tnode::bodyString ( void )
 {
 	assert ( mBodyString ) ;
 	return *mBodyString ;
 }</t>
-<t tx="T658">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T660">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::loadBodyPaneFromTnode ( TSyntaxMemo * syntaxMemo )
 {
@@ -7762,51 +7793,51 @@ void tnode::loadBodyPaneFromTnode ( TSyntaxMemo * syntaxMemo )
 		mSelectionLength = 0 ;
 	}
 }</t>
-<t tx="T659">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T661">&lt;&lt; tnode methods &gt;&gt;=
 
 int tnode::selectionLength ( void )
 {
     return mSelectionLength ;
 }
 </t>
-<t tx="T660">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T662">&lt;&lt; tnode methods &gt;&gt;=
 
 int tnode::selectionStart ( void )
 {
     return mSelectionStart ;
 }
 </t>
-<t tx="T661">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T663">&lt;&lt; tnode methods &gt;&gt;=
 
 bool tnode::isDirty ( void )
 {
     return ( ( mStatusBits &amp; dirtyBit ) != 0 ) ;
 }</t>
-<t tx="T662">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T664">&lt;&lt; tnode methods &gt;&gt;=
 
 bool tnode::isRichTextBit ( void )
 {
     return ( ( mStatusBits &amp; richTextBit ) != 0 ) ;
 }</t>
-<t tx="T663">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T665">&lt;&lt; tnode methods &gt;&gt;=
 
 bool tnode::isVisited ( void )
 {
     return ( ( mStatusBits &amp; visitedBit ) != 0 ) ;
 }</t>
-<t tx="T664">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T666">&lt;&lt; tnode methods &gt;&gt;=
 
 long tnode::cloneIndex ( void )
 {
 	return mCloneIndex ;
 }</t>
-<t tx="T665">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T667">&lt;&lt; tnode methods &gt;&gt;=
 
 long tnode::fileIndex ( void )
 {
 	return mFileIndex ;
 }</t>
-<t tx="T666">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T668">&lt;&lt; tnode methods &gt;&gt;=
 
 bool tnode::hasBody ( void )
 {
@@ -7817,13 +7848,13 @@ bool tnode::hasBody ( void )
 	else
 		return mBodyString -&gt; Length() &gt; 0 ;
 }</t>
-<t tx="T667">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T669">&lt;&lt; tnode methods &gt;&gt;=
 
 vnode * tnode::joinHead ( void )
 {
     return mJoinHead ;
 }</t>
-<t tx="T668">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T670">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::saveBodyPaneToTnode ( TSyntaxMemo * memo )
 {
@@ -7846,7 +7877,7 @@ void tnode::saveBodyPaneToTnode ( TSyntaxMemo * memo )
 	}
 }
 </t>
-<t tx="T669">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T671">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setTnodeRTF ( String s )
 {
@@ -7855,7 +7886,7 @@ void tnode::setTnodeRTF ( String s )
 		mBodyRTF = new String ( s ) ;
 	}
 }</t>
-<t tx="T670">@ This sets the text in the tnode from the given string.
+<t tx="T672">@ This sets the text in the tnode from the given string.
 
 &lt;&lt; tnode methods &gt;&gt;=
 
@@ -7865,7 +7896,7 @@ void tnode::setTnodeText ( String s )
 	mBodyString = new String ( s ) ;
 }
 </t>
-<t tx="T671">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T673">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setSelection ( int start, int length )
 {
@@ -7873,64 +7904,64 @@ void tnode::setSelection ( int start, int length )
 	mSelectionLength = length ;
 }
 </t>
-<t tx="T672">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T674">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::clearDirty ( void )
 {
     mStatusBits &amp;= ~ dirtyBit ;
 }</t>
-<t tx="T673">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T675">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::clearRichTextBit ( void )
 {
 	mStatusBits &amp;= ~richTextBit ;
 }</t>
-<t tx="T674">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T676">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::clearVisited ( void )
 {
     mStatusBits &amp;= ~visitedBit ;
 }</t>
-<t tx="T675">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T677">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setDirty ( void )
 {
     mStatusBits |= dirtyBit ;
 }</t>
-<t tx="T676">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T678">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode:: setRichTextBit ( void )
 {
 	mStatusBits |= richTextBit ;
 }
 </t>
-<t tx="T677">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T679">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setVisited ( void )
 {
 	mStatusBits |= visitedBit ;
 }</t>
-<t tx="T678">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T680">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setCloneIndex ( long index )
 {
 	mCloneIndex = index ;
 }</t>
-<t tx="T679">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T681">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setFileIndex ( long index )
 {
 	mFileIndex = index ;
 }</t>
-<t tx="T680">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T682">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setJoinHead ( vnode * v )
 {
 	mJoinHead = v ;
 }</t>
-<t tx="T681">@unit
+<t tx="T683">@unit
 </t>
-<t tx="T682">@ vnodes represent all additional data attached to TTreeNodes.
+<t tx="T684">@ vnodes represent all additional data attached to TTreeNodes.
 
 @root "sampleVnode.h"
 
@@ -7970,7 +8001,7 @@ public:
 };
 
 #endif // vnode_h_</t>
-<t tx="T683">@ The following stores all information needed to restore a vnode that is about to be deleted.  Much of this information is held in the TTreeView or TTreeNode classes, so it must be captured before actually deleting any information.
+<t tx="T685">@ The following stores all information needed to restore a vnode that is about to be deleted.  Much of this information is held in the TTreeView or TTreeNode classes, so it must be captured before actually deleting any information.
 
 vnode::doDelete does not delete vnodes, nor does it decrease the refCount field in tnodes, so we save the pointers to these nodes here.
 
@@ -7981,7 +8012,7 @@ long level ;  // The level of the outline relative to the root.
 String headline ;  // The text of the soon-to-be deleted TTreeNode.
 vnode * v ;  // The vnode.  Neither v nor v -&gt; mT will be deleted by doDelete().
 </t>
-<t tx="T684">@code
+<t tx="T686">@code
 
 vnode * next ( void ) ;
 vnode * back ( void ) ;
@@ -7990,17 +8021,17 @@ vnode * threadBack ( void ) ;
 vnode * threadNext ( void ) ;
 vnode * visBack ( void ) ;
 vnode * visNext ( void ) ;</t>
-<t tx="T685">@code
+<t tx="T687">@code
 
 String atFileNodeName ( void ) ;
 bool isAtFileNode ( void ) ;
 bool isAtIgnoreNode ( void ) ;
 bool isAtOthersNode ( void ) ;
 bool matchHeadline ( String pattern ) ;</t>
-<t tx="T686">@code
+<t tx="T688">@code
 
 vnode ( Commands * commands, tnode * t = NULL ) ;</t>
-<t tx="T687">@ The commander for this vnode.  This allows us to determine reliably what the current vnode is, regardless of what window is active.  It also speeds access to the current body pane, tree view, etc.
+<t tx="T689">@ The commander for this vnode.  This allows us to determine reliably what the current vnode is, regardless of what window is active.  It also speeds access to the current body pane, tree view, etc.
 @code
 
 Commands * mCommands ;
@@ -8040,17 +8071,17 @@ unsigned long mXCloneIndex ; // Immutable cloneIndex field within the file.
 
 #endif
 </t>
-<t tx="T688">@code
+<t tx="T690">@code
 
 String description ( void ) ;
 void edump ( bool verboseFlag = FALSE ) ;
 </t>
-<t tx="T689">@code
+<t tx="T691">@code
 
 String convertTreeToString ( void ) ;
 String moreBody ( void ) ;
 String moreHead ( long firstLevel ) ;</t>
-<t tx="T690">@code
+<t tx="T692">@code
 
 // Getters outside this class.
 Commands * commands ( void ) ;
@@ -8104,13 +8135,13 @@ tnode * t ( void ) ;
     String xCloneName ( void ) ;
     long xCloneIndex ( void ) ;
 #endif</t>
-<t tx="T691">@ The following must must not be called externally.
+<t tx="T693">@ The following must must not be called externally.
 @code
 
 vnode * cloneNode ( void ) ;
 void linkNodeAsChildOfAtIndex (vnode * theParent, long index ) ;
 void unlinkNode ( void ) ;</t>
-<t tx="T692">@code
+<t tx="T694">@code
 
 void appendStringToBody ( String s ) ;
 
@@ -8158,7 +8189,7 @@ void setVisited ( void ) ;
 #endif
 
 void trimTrailingLines ( void ) ;</t>
-<t tx="T693">@code
+<t tx="T695">@code
 
 // Entry points...(These call TTreeNode methods)
 vnode * clone ( vnode * v ) ;
@@ -8191,7 +8222,7 @@ void unjoinNode ( void ) ;
 void unjoinTree ( void ) ;
 bool validateOutlineWithParent (vnode *p ) ;
 </t>
-<t tx="T694">@ vnode.w.cpp created May 19, 1999.
+<t tx="T696">@ vnode.w.cpp created May 19, 1999.
 
 @root "sampleVnode.cpp"
 
@@ -8200,7 +8231,7 @@ bool validateOutlineWithParent (vnode *p ) ;
 &lt;&lt; vnode includes &gt;&gt;
 &lt;&lt; vnode abbreviations &gt;&gt;
 &lt;&lt; vnode methods &gt;&gt;</t>
-<t tx="T695">@code
+<t tx="T697">@code
 
 #include &lt;vcl.h&gt;
 #pragma hdrstop
@@ -8215,7 +8246,7 @@ bool validateOutlineWithParent (vnode *p ) ;
 
 #include "Leo.h"
 </t>
-<t tx="T696">@ Define the meaning of vnode status bits.
+<t tx="T698">@ Define the meaning of vnode status bits.
 @code
 
 enum {
@@ -8232,7 +8263,7 @@ enum {
     visitedBit	= 0x80
 } ;
 </t>
-<t tx="T697">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T699">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode::vnode ( Commands * commands, tnode * t )
 {
@@ -8246,7 +8277,7 @@ vnode::vnode ( Commands * commands, tnode * t )
 	mIconVal = -1 ;
 }
 </t>
-<t tx="T698">@ Returns the filename following @file in the receivers's headline, or the empty string if the receiver is not an @file node.
+<t tx="T700">@ Returns the filename following @file in the receivers's headline, or the empty string if the receiver is not an @file node.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8263,7 +8294,7 @@ String vnode::atFileNodeName ( void )
 	else return "" ;
 }
 </t>
-<t tx="T699">@ Returns TRUE if the receiver's headline starts with @file.
+<t tx="T701">@ Returns TRUE if the receiver's headline starts with @file.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8273,7 +8304,7 @@ bool vnode::isAtFileNode ( void )
 	return s . Length() &gt; 0 ;
 }
 </t>
-<t tx="T700">@ Returns TRUE if the receiver contains @ignore in its body at the start of a line.
+<t tx="T702">@ Returns TRUE if the receiver contains @ignore in its body at the start of a line.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8284,7 +8315,7 @@ bool vnode::isAtIgnoreNode ( void )
 	return is_special (ip, body.Length(), "@ignore");
 }
 </t>
-<t tx="T701">@ Returns TRUE if the receiver contains @others in its body at the start of a line.
+<t tx="T703">@ Returns TRUE if the receiver contains @others in its body at the start of a line.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8295,7 +8326,7 @@ bool vnode::isAtOthersNode ( void )
 	return is_special (ip, body.Length(), "@others");
 }
 </t>
-<t tx="T702">@ Returns TRUE if the headline matches the pattern ignoring whitespace.  The headline may contain characters following the successfully matched pattern.
+<t tx="T704">@ Returns TRUE if the headline matches the pattern ignoring whitespace.  The headline may contain characters following the successfully matched pattern.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8318,21 +8349,21 @@ bool vnode::matchHeadline ( String pattern )
 	}
 }
 </t>
-<t tx="T703">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T705">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::edump ( bool verboseFlag )
 {
     if ( mT )
 		mT -&gt; edump ( verboseFlag ) ;
 }</t>
-<t tx="T704">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T706">&lt;&lt; vnode methods &gt;&gt;=
 
 String vnode::description ( void )
 {
 	return "v: " + this -&gt; headString() ;
 }
 </t>
-<t tx="T705">@ Convert the outline to a string in "MORE" format.
+<t tx="T707">@ Convert the outline to a string in "MORE" format.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8361,7 +8392,7 @@ String vnode::convertTreeToString ( void )
 	return s ;
 }
 </t>
-<t tx="T706">@ Return the headline string in MORE format.
+<t tx="T708">@ Return the headline string in MORE format.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8377,7 +8408,7 @@ String vnode::moreHead ( long firstLevel )
 
 	return s;
 }</t>
-<t tx="T707">@ Return the body string in MORE format.
+<t tx="T709">@ Return the body string in MORE format.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8403,7 +8434,7 @@ String vnode::moreBody ( void )
 	return s ;
 }
 </t>
-<t tx="T708">@ The first child has index 1.
+<t tx="T710">@ The first child has index 1.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8412,7 +8443,7 @@ long vnode::childIndex ( void)
 	assert(mTreeNode);
 	return mTreeNode -&gt; Index ;
 }</t>
-<t tx="T709">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T711">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::firstChild ( void )
 {
@@ -8420,14 +8451,14 @@ vnode * vnode::firstChild ( void )
 	TTreeNode * n = mTreeNode -&gt; getFirstChild() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T710">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T712">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::hasChildren ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; HasChildren ;
 }</t>
-<t tx="T711">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T713">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::lastChild ( void )
 {
@@ -8435,7 +8466,7 @@ vnode * vnode::lastChild ( void )
 	TTreeNode * n = mTreeNode -&gt; GetLastChild() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T712">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T714">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::nthChild ( long n )
 {
@@ -8450,14 +8481,14 @@ vnode * vnode::nthChild ( long n )
 	}
 	return NULL ;
 }</t>
-<t tx="T713">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T715">&lt;&lt; vnode methods &gt;&gt;=
 
 long vnode::numberOfChildren ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; Count ;
 }</t>
-<t tx="T714">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T716">&lt;&lt; vnode methods &gt;&gt;=
 
 #ifdef V_XCLONES
 
@@ -8467,7 +8498,7 @@ String vnode::xCloneName ( void )
 }
 
 #endif</t>
-<t tx="T715">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T717">&lt;&lt; vnode methods &gt;&gt;=
 
 #ifdef V_XCLONES
 
@@ -8477,7 +8508,7 @@ long vnode::xCloneIndex ( void )
 }
 
 #endif</t>
-<t tx="T716">@ Return the previous sibling, or NULL.
+<t tx="T718">@ Return the previous sibling, or NULL.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8487,7 +8518,7 @@ vnode * vnode::back ( void )
 	TTreeNode * n = mTreeNode -&gt; getPrevSibling() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T717">@ This function returns the last node of the receiver's tree.
+<t tx="T719">@ This function returns the last node of the receiver's tree.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8507,7 +8538,7 @@ vnode * vnode::lastNode ( void )
 	return result;
 }
 </t>
-<t tx="T718">@ This function returns the indentation level of the receiver. The root nodes have level 0, their children have level 1, and so on.
+<t tx="T720">@ This function returns the indentation level of the receiver. The root nodes have level 0, their children have level 1, and so on.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8516,7 +8547,7 @@ long vnode::level ( void )
 	assert(mTreeNode);
 	return mTreeNode -&gt; Level ;
 }</t>
-<t tx="T719">@ Return the next sibling, or NULL.
+<t tx="T721">@ Return the next sibling, or NULL.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8526,7 +8557,7 @@ vnode * vnode::next (void)
 	TTreeNode * n = mTreeNode -&gt; getNextSibling() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T720">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T722">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::parent ( void )
 {
@@ -8534,7 +8565,7 @@ vnode * vnode::parent ( void )
 	TTreeNode * n = mTreeNode -&gt; Parent ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T721">@ Return the vnode following the tree whose root is the receiver.
+<t tx="T723">@ Return the vnode following the tree whose root is the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8549,7 +8580,7 @@ vnode * vnode::nodeAfterTree ( void )
     }
     return next ;
 }</t>
-<t tx="T722">@ Return the previous element of the outline, or NULL if at the start of the outline.
+<t tx="T724">@ Return the previous element of the outline, or NULL if at the start of the outline.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8559,7 +8590,7 @@ vnode * vnode::threadBack ( void )
 	TTreeNode * n = mTreeNode -&gt; GetPrev() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T723">@ Return the next item in the outline, or NULL if at the end of the outline.
+<t tx="T725">@ Return the next item in the outline, or NULL if at the end of the outline.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8569,7 +8600,7 @@ vnode * vnode::threadNext ( void )
 	TTreeNode * n = mTreeNode -&gt; GetNext() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T724">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T726">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::visBack ( void )
 {
@@ -8577,7 +8608,7 @@ vnode * vnode::visBack ( void )
 	TTreeNode * n = mTreeNode -&gt; GetPrevVisible() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T725">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T727">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::visNext ( void )
 {
@@ -8585,111 +8616,111 @@ vnode * vnode::visNext ( void )
 	TTreeNode * n = mTreeNode -&gt; GetNextVisible() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T726">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T728">&lt;&lt; vnode methods &gt;&gt;=
 
 char * vnode::bodyCString ( void )
 {
 	assert ( mT ) ;
     return mT -&gt; bodyCString() ;
 }</t>
-<t tx="T727">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T729">&lt;&lt; vnode methods &gt;&gt;=
 
 long vnode::bodyCStringLength ( void )
 {
 	assert ( mT ) ;
     return mT -&gt; bodyCStringLength() ;
 }</t>
-<t tx="T728">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T730">&lt;&lt; vnode methods &gt;&gt;=
 
 String vnode::bodyRTF ( void )
 {
 	assert(mT);
 	return mT -&gt; bodyRTF();
 }</t>
-<t tx="T729">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T731">&lt;&lt; vnode methods &gt;&gt;=
 
 String vnode::bodyString ( void )
 {
 	assert (mT);
     return mT -&gt; bodyString() ;
 }</t>
-<t tx="T730">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T732">&lt;&lt; vnode methods &gt;&gt;=
 
 char * vnode::headCString ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; Text . c_str();
 }</t>
-<t tx="T731">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T733">&lt;&lt; vnode methods &gt;&gt;=
 
 long vnode::headCStringLength ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; Text . Length() ;
 }</t>
-<t tx="T732">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T734">&lt;&lt; vnode methods &gt;&gt;=
 
 String vnode::headString ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; Text ;
 }</t>
-<t tx="T733">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T735">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isCloned ( void )
 {
     return ( ( mStatusBits &amp; clonedBit ) != 0 ) ;
 }</t>
-<t tx="T734">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T736">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isDirty ( void )
 {
     return mT -&gt; isDirty() ;
 }</t>
-<t tx="T735">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T737">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isDummy ( void )
 {
     return ( ( mStatusBits &amp; dummyBit ) != 0 ) ;
 }</t>
-<t tx="T736">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T738">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isExpanded ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; Expanded ;
 }</t>
-<t tx="T737">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T739">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isExpandedBitSet ( void )
 {
 	return ( ( mStatusBits &amp; expandedBit ) != 0 ) ;
 }</t>
-<t tx="T738">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T740">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isMarked ( void )
 {
     return ( ( mStatusBits &amp; markedBit ) != 0 ) ;
 }</t>
-<t tx="T739">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T741">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isOrphan ( void )
 {
     return ( ( mStatusBits &amp; orphanBit ) != 0 ) ;
 }</t>
-<t tx="T740">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T742">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isSelectedBitSet ( void )
 {
 	return ( ( mStatusBits &amp; selectedBit ) != 0 ) ;
 }</t>
-<t tx="T741">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T743">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isTopBitSet ( void )
 {
 	return ( ( mStatusBits &amp; topBit ) != 0 ) ;
 }</t>
-<t tx="T742">@ Return TRUE if all parents are expanded.
+<t tx="T744">@ Return TRUE if all parents are expanded.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8698,19 +8729,19 @@ bool vnode::isVisible ( void )
 	assert(mTreeNode);
 	return mTreeNode -&gt; IsVisible ;
 }</t>
-<t tx="T743">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T745">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isVisited ( void )
 {
     return ( ( mStatusBits &amp; visitedBit ) != 0 ) ;
 }</t>
-<t tx="T744">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T746">&lt;&lt; vnode methods &gt;&gt;=
 
 short vnode::status ( void )
 {
     return mStatusBits ;
 }</t>
-<t tx="T745">@ Return the root (the first node) of the tree containing the receiver.  This is called by the commands class.
+<t tx="T747">@ Return the root (the first node) of the tree containing the receiver.  This is called by the commands class.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8726,7 +8757,7 @@ vnode * vnode::findRoot ( void )
 
     return v ;
 }</t>
-<t tx="T746">@ This method returns the active form.
+<t tx="T748">@ This method returns the active form.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8741,7 +8772,7 @@ Commands * vnode::commands ( void )
     	return leoForm -&gt; commands();
 	#endif
 }</t>
-<t tx="T747">@ This method returns the TLeoForm containing v. We can not assume that this form is the active form.
+<t tx="T749">@ This method returns the TLeoForm containing v. We can not assume that this form is the active form.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8768,14 +8799,14 @@ TLeoForm * vnode::leoForm ( void )
 	#endif
 }
 </t>
-<t tx="T748">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T750">&lt;&lt; vnode methods &gt;&gt;=
 
 TTreeNode * vnode::treeNode ( void )
 {
 	assert(mTreeNode);
     return mTreeNode ;
 }</t>
-<t tx="T749">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T751">&lt;&lt; vnode methods &gt;&gt;=
 
 TTreeNodes * vnode::treeNodes ( void )
 {
@@ -8784,14 +8815,14 @@ TTreeNodes * vnode::treeNodes ( void )
 	assert(treeView &amp;&amp; treeView -&gt; Items);
 	return treeView -&gt; Items ;
 }</t>
-<t tx="T750">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T752">&lt;&lt; vnode methods &gt;&gt;=
 
 TTreeView * vnode::treeView ( void )
 {
 	assert(mTreeNode &amp;&amp; mTreeNode -&gt; TreeView);
     return (TTreeView *) mTreeNode -&gt; TreeView ;
 }</t>
-<t tx="T751">@ We can not use this -&gt; treeView() -&gt; Selected because the Selected property will be NULL if the TLeoForm is not the current form.
+<t tx="T753">@ We can not use this -&gt; treeView() -&gt; Selected because the Selected property will be NULL if the TLeoForm is not the current form.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8800,13 +8831,13 @@ vnode * vnode::currentVnode ( void )
 	assert(mCommands);
 	return mCommands -&gt; currentVnode();
 }</t>
-<t tx="T752">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T754">&lt;&lt; vnode methods &gt;&gt;=
 
 long vnode::iconVal ( void )
 {
    return mIconVal ;
 }</t>
-<t tx="T753">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T755">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isAncestorOf ( vnode * v )
 {
@@ -8816,33 +8847,33 @@ bool vnode::isAncestorOf ( vnode * v )
 
     return FALSE ;
 }</t>
-<t tx="T754">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T756">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isRoot ( TTreeView * treeView )
 {
 	return this -&gt; threadBack() == NULL ;
 }</t>
-<t tx="T755">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T757">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::joinList ( void )
 {
 	return mJoinList ;
 }</t>
-<t tx="T756">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T758">&lt;&lt; vnode methods &gt;&gt;=
 
 int vnode::selectionStart ( void )
 {
 	return mT -&gt; selectionStart();
 }
 </t>
-<t tx="T757">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T759">&lt;&lt; vnode methods &gt;&gt;=
 
 int vnode::selectionLength ( void )
 {
 	return mT -&gt; selectionLength();
 }
 </t>
-<t tx="T758">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T760">&lt;&lt; vnode methods &gt;&gt;=
 
 tnode * vnode::t ( void )
 {
@@ -8850,7 +8881,7 @@ tnode * vnode::t ( void )
 	assert(mT);
 	return mT ;
 }</t>
-<t tx="T759">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T761">&lt;&lt; vnode methods &gt;&gt;=
 
 #ifdef V_XCLONES
 
@@ -8860,7 +8891,7 @@ void vnode::setXCloneIndex ( long index )
 }
 
 #endif</t>
-<t tx="T760">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T762">&lt;&lt; vnode methods &gt;&gt;=
 
 #ifdef V_XCLONES
 
@@ -8870,7 +8901,7 @@ void vnode::setXCloneName ( String name )
 }
 
 #endif</t>
-<t tx="T761">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T763">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::appendStringToBody ( String s )
 {
@@ -8881,7 +8912,7 @@ void vnode::appendStringToBody ( String s )
 	this -&gt; setIcon();
 }
 </t>
-<t tx="T762">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T764">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setBodyStringOrPane ( String s )
 {
@@ -8902,7 +8933,7 @@ void vnode::setBodyStringOrPane ( String s )
 	t -&gt; setSelection(0,0);  // 9/27/00
 }
 </t>
-<t tx="T763">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T765">&lt;&lt; vnode methods &gt;&gt;=
 
 void  vnode::setHeadString ( String s )
 {
@@ -8916,7 +8947,7 @@ void  vnode::initHeadString ( String s )
 	assert(mTreeNode);
 	mTreeNode -&gt; Text = s ;
 }</t>
-<t tx="T764">@ Unlike setBodyStringOrPane, this code will work whether or not the receiver is the presently selected vnode, because the assignment mTreeNode -&gt; Text = s updates the headline.
+<t tx="T766">@ Unlike setBodyStringOrPane, this code will work whether or not the receiver is the presently selected vnode, because the assignment mTreeNode -&gt; Text = s updates the headline.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8930,7 +8961,7 @@ void vnode::setHeadStringOrHeadline ( String s )
 	this -&gt; setHeadString( s );
 }
 </t>
-<t tx="T765">@ This trims trailing blank lines from a node.  It is surprising difficult to do this during Untangle.
+<t tx="T767">@ This trims trailing blank lines from a node.  It is surprising difficult to do this during Untangle.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8957,7 +8988,7 @@ void vnode::trimTrailingLines(void)
 	}
 }
 </t>
-<t tx="T766">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T768">&lt;&lt; vnode methods &gt;&gt;=
 
 long vnode::computeIcon ( void )
 {
@@ -8972,7 +9003,7 @@ long vnode::computeIcon ( void )
 	return val ;
 }
 </t>
-<t tx="T767">@ The caller must call commands -&gt; Repaint().
+<t tx="T769">@ The caller must call commands -&gt; Repaint().
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8990,7 +9021,7 @@ void vnode::setIcon ( void )
 	}
 }
 </t>
-<t tx="T768">@ Calling setIconVal -1 is the idiom to force the icon to be redrawn.
+<t tx="T770">@ Calling setIconVal -1 is the idiom to force the icon to be redrawn.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -8999,7 +9030,7 @@ void vnode::setIconVal ( long val )
 	mIconVal = val ;
 }
 </t>
-<t tx="T769">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T771">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setIconWithVal ( long val )
 {
@@ -9010,21 +9041,21 @@ void vnode::setIconWithVal ( long val )
         mTreeNode -&gt; SelectedIndex = val ;
 	}
 }</t>
-<t tx="T770">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T772">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setJoinList ( vnode * v )
 {
 	assert(mJoinList==NULL);
 	mJoinList = v ;
 }</t>
-<t tx="T771">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T773">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setSelection ( int start, int length )
 {
 	mT -&gt; setSelection ( start, length );
 }
 </t>
-<t tx="T772">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T774">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setT (tnode * t )
 {
@@ -9035,21 +9066,21 @@ void vnode::setT (tnode * t )
 	}
 }
 </t>
-<t tx="T773">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T775">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setTreeNode ( TTreeNode * treeNode )
 {
 	assert(treeNode);
     mTreeNode = treeNode ;
 }</t>
-<t tx="T774">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T776">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearClonedBit ( void )
 {
     mStatusBits &amp;= ~ clonedBit ;
 	this -&gt; setIcon();
 }</t>
-<t tx="T775">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T777">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearDirty ( void )
 {
@@ -9070,13 +9101,13 @@ void vnode::clearDirtyJoined ( void )
 		v2 -&gt; setIcon();
 }
 </t>
-<t tx="T776">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T778">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearDummy ( void )
 {
     mStatusBits &amp;= ~ dummyBit ;
 }</t>
-<t tx="T777">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T779">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearMarked ( void )
 {
@@ -9084,19 +9115,19 @@ void vnode::clearMarked ( void )
 	this -&gt; setIcon();
 }
 </t>
-<t tx="T778">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T780">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearOrphan ( void )
 {
     mStatusBits &amp;= ~ orphanBit ;
 }</t>
-<t tx="T779">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T781">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearVisited ( void )
 {
     mStatusBits &amp;= ~ visitedBit ;
 }</t>
-<t tx="T780">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T782">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initClonedBit ( bool val )
 {
@@ -9105,45 +9136,45 @@ void vnode::initClonedBit ( bool val )
 	else
 		mStatusBits &amp;= ~clonedBit ;
 }</t>
-<t tx="T781">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T783">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initDirtyBit ( void )
 {
 	mT -&gt; setDirty();
 }
 </t>
-<t tx="T782">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T784">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initExpandedBit ( void )
 {
     mStatusBits |= expandedBit ;
 }</t>
-<t tx="T783">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T785">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initMarkedBit ( void )
 {
 	mStatusBits |= markedBit ;
 }</t>
-<t tx="T784">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T786">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initSelectedBit ( void )
 {
     mStatusBits |= selectedBit ;
 }</t>
-<t tx="T785">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T787">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initTopBit ( void )
 {
     mStatusBits |= topBit ;
 }</t>
-<t tx="T786">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T788">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initStatus ( short status )
 {
 	mStatusBits = status ;
 }
 </t>
-<t tx="T787">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T789">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setAncestorAtFileNodeDirty ( void )
 {
@@ -9155,7 +9186,7 @@ void vnode::setAncestorAtFileNodeDirty ( void )
 	}
 }
 </t>
-<t tx="T788">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T790">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setClonedBit ( void )
 {
@@ -9163,7 +9194,7 @@ void vnode::setClonedBit ( void )
 	this -&gt; setIcon();
 }
 </t>
-<t tx="T789">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T791">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setDirty ( void )
 {
@@ -9193,25 +9224,25 @@ void vnode::setDirtyJoined ( void )
 		v2 -&gt; setDirty();
 }
 </t>
-<t tx="T790">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T792">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setDummy ( void )
 {
     mStatusBits |= dummyBit ;
 }</t>
-<t tx="T791">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T793">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setOrphan ( void )
 {
     mStatusBits |= orphanBit ;
 }</t>
-<t tx="T792">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T794">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setVisited ( void )
 {
     mStatusBits |= visitedBit ;
 }</t>
-<t tx="T793">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T795">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setMarked ( void )
 {
@@ -9219,7 +9250,7 @@ void vnode::setMarked ( void )
 	this -&gt; setIcon();
 }
 </t>
-<t tx="T794">@ Create a clone of back and insert it as the next sibling of back.
+<t tx="T796">@ Create a clone of back and insert it as the next sibling of back.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9236,7 +9267,7 @@ vnode * vnode::clone ( vnode * back )
 		v -&gt; setClonedBit() ;
 	return clone ;
 }</t>
-<t tx="T795">@ This method creates all nodes that depend on the receiver.
+<t tx="T797">@ This method creates all nodes that depend on the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9259,7 +9290,7 @@ void vnode::createDependents ( void )
 	}
 }
 </t>
-<t tx="T796">@ This is the main delete routine.  It deletes the receiver's entire tree from the screen.
+<t tx="T798">@ This is the main delete routine.  It deletes the receiver's entire tree from the screen.
 
 Deleting an outline is actually a tricky operation because of the Undo command.  We don't actually delete vnodes (or reduce the refCount field of tnodes) until the delete operation becomes undoable.  (This can happen even if unlimited undo/redo is ever implemented.)
 
@@ -9295,7 +9326,7 @@ dvnode * vnode::doDelete ( vnode * newVnode )  // delete is a C++ keyword
 	return dv ;
 }
 </t>
-<t tx="T797">@code
+<t tx="T799">@code
 
 TRACEP("vnode::doDelete:dumpDVnodes",
 	ecnl(); es("Dump of dvnodes: ");
@@ -9307,7 +9338,7 @@ TRACEP("vnode::doDelete:dumpDVnodes",
 	ecnls(2);
 );
 </t>
-<t tx="T798">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T800">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::freeDVnodes ( dvnode * dv )
 {
@@ -9318,7 +9349,7 @@ void vnode::freeDVnodes ( dvnode * dv )
 	}
 }
 </t>
-<t tx="T799">@ This method inserts a new vnode after the receiver.
+<t tx="T801">@ This method inserts a new vnode after the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9346,7 +9377,7 @@ vnode * vnode::insertAfter ( tnode * t )
 	return v ;
 }
 </t>
-<t tx="T800">@ This method inserts a new node as the last child of the receiver.
+<t tx="T802">@ This method inserts a new node as the last child of the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9355,7 +9386,7 @@ vnode * vnode::insertAsLastChild ( tnode * t )
 	long n = this -&gt; numberOfChildren() ;
 	return insertAsNthChild ( n, t ) ;
 }</t>
-<t tx="T801">@ This method inserts a new vnode as the nth child of the receiver.
+<t tx="T803">@ This method inserts a new vnode as the nth child of the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9386,7 +9417,7 @@ vnode * vnode::insertAsNthChild ( long index, tnode * t )
 	return v ;
 }
 </t>
-<t tx="T802">@ This method moves the receiver after node v.
+<t tx="T804">@ This method moves the receiver after node v.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9411,7 +9442,7 @@ void vnode::moveAfter (vnode * v )
 	this -&gt; createDependents() ;
 }
 </t>
-<t tx="T803">@ This method moves the receiver before node v.
+<t tx="T805">@ This method moves the receiver before node v.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9423,7 +9454,7 @@ void vnode::moveToRoot ( void  )
 	this -&gt; createDependents() ;
 }
 </t>
-<t tx="T804">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T806">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode:: moveToNthChildOf (vnode * parent, long index )
 {
@@ -9445,7 +9476,7 @@ void vnode:: moveToNthChildOf (vnode * parent, long index )
 
 	this -&gt; createDependents() ;
 }</t>
-<t tx="T805">@ This method restores the tree described by dv in the position described by back and parent.  If back exists, we insert the tree after back.  Otherwise, if parent exists we insert the tree as the first child of parent.  If both back and parent are null the new tree becomes the root vnode.
+<t tx="T807">@ This method restores the tree described by dv in the position described by back and parent.  If back exists, we insert the tree after back.  Otherwise, if parent exists we insert the tree as the first child of parent.  If both back and parent are null the new tree becomes the root vnode.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9469,7 +9500,7 @@ vnode * vnode::restoreOutlineFromDVnodes ( dvnode * dv, vnode * parent, vnode * 
 	return result ;
 }
 </t>
-<t tx="T806">@code
+<t tx="T808">@code
 
 if ( back ) {
 	vnode * next = back -&gt; next();
@@ -9495,7 +9526,7 @@ else {
         treeNodes -&gt; InsertObject( root -&gt; mTreeNode, s, v ) ;
 }
 </t>
-<t tx="T807">@code
+<t tx="T809">@code
 
 long delta = dv -&gt; next -&gt; level - dv -&gt; level ;
 
@@ -9516,7 +9547,7 @@ else {
 		parent = back -&gt; parent();
 }
 </t>
-<t tx="T808">@ New code:  8/8/00
+<t tx="T810">@ New code:  8/8/00
 @code
 
 vnode * next = result -&gt; nodeAfterTree();
@@ -9525,7 +9556,7 @@ for ( vnode * v = result ; v &amp;&amp; v != next ; v = v -&gt; threadNext() ) {
 	v -&gt; setIcon();
 }
 </t>
-<t tx="T809">@ This method creates a cloned tree after oldTree.
+<t tx="T811">@ This method creates a cloned tree after oldTree.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9550,7 +9581,7 @@ vnode * vnode::cloneTree ( vnode * oldTree )
 	return newTree ;
 }
 </t>
-<t tx="T810">@ This methods propagates clone bits from the receiver's tree to tree2.
+<t tx="T812">@ This methods propagates clone bits from the receiver's tree to tree2.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9580,7 +9611,7 @@ void vnode::copyCloneBitsTo ( vnode * tree2 )
 	}
 	PERM_ASSERT(child2 == NULL);
 }</t>
-<t tx="T811">@ This method copies all subtrees of oldRoot to the subtrees of newRoot.  The caller is responsible for copying the headline text from oldRoot to newRoot.
+<t tx="T813">@ This method copies all subtrees of oldRoot to the subtrees of newRoot.  The caller is responsible for copying the headline text from oldRoot to newRoot.
 
 This method must be given the new root as well as the old:  the Borland classes do not allow us to create an unattached outline.
 
@@ -9613,7 +9644,7 @@ void vnode::copyTree( vnode * oldTree, vnode * newTree )
 	assert ( new_v == NULL ) ;
 }
 </t>
-<t tx="T812">@ This method destroys all dependent vnodes and TTreeNode's associated with the receiver.
+<t tx="T814">@ This method destroys all dependent vnodes and TTreeNode's associated with the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9635,7 +9666,7 @@ void vnode::destroyDependents ( void )
 	}
 }
 </t>
-<t tx="T813">@ This method destroys (irrevocably deletes) a vnode tree.
+<t tx="T815">@ This method destroys (irrevocably deletes) a vnode tree.
 
 This code should be called only when it is no longer possible to undo a previous delete.  It is always valid to destroy dependent trees.
 
@@ -9658,7 +9689,7 @@ void vnode::destroyTree ( void )
 	// Destroy the entire tree of TTreeNodes.
 	treeNode -&gt; Delete() ;
 }</t>
-<t tx="T814">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T816">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::invalidOutline ( String message )
 {
@@ -9675,13 +9706,13 @@ void vnode::invalidOutline ( String message )
 	alert ( s . c_str() ) ;
 }
 </t>
-<t tx="T815">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T817">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isJoinedTo ( vnode * v )
 {
 	return v &amp;&amp; this -&gt; mT == v -&gt; mT ;
 }</t>
-<t tx="T816">@ This function returns true if the nodes v1 and v2 are on the same join list.
+<t tx="T818">@ This function returns true if the nodes v1 and v2 are on the same join list.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9706,7 +9737,7 @@ bool vnode::isOnJoinListOf ( vnode *v2)
 	return FALSE;
 }
 </t>
-<t tx="T817">@ This method joins the receiver to v2 if the two nodes have not already been joined.
+<t tx="T819">@ This method joins the receiver to v2 if the two nodes have not already been joined.
 
 Joining involves placing each vnode on the others join list.
 
@@ -9746,7 +9777,7 @@ void vnode::joinNodeTo ( vnode * v2 )
 	PERM_ASSERT( v1 -&gt; mJoinList &amp;&amp; v2 -&gt; mJoinList );
 }
 </t>
-<t tx="T818">@ This function joins all nodes in the receiver and tree2.  This code makes no assumptions about the two trees, and some or all of the nodes may already have been joined.  The PERM_ASSERT's guarantee that both trees have the same topology.
+<t tx="T820">@ This function joins all nodes in the receiver and tree2.  This code makes no assumptions about the two trees, and some or all of the nodes may already have been joined.  The PERM_ASSERT's guarantee that both trees have the same topology.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9771,7 +9802,7 @@ void vnode::joinTreeTo ( vnode *tree2 )
 	PERM_ASSERT(child2 == NULL);
 }
 </t>
-<t tx="T819">@ This method is called just before destroying a Tree of TTreeNodes.  It copies the data into the dvnode so the headlines can be restored if the deleted is undone.
+<t tx="T821">@ This method is called just before destroying a Tree of TTreeNodes.  It copies the data into the dvnode so the headlines can be restored if the deleted is undone.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9794,13 +9825,13 @@ dvnode * vnode::saveOutlineWithLevel ( long level )
 	return root ;
 }
 </t>
-<t tx="T820">@code
+<t tx="T822">@code
 
 dv -&gt; next = NULL ;
 dv -&gt; level = level ;
 dv -&gt; headline = v -&gt; headString();
 dv -&gt; v = v ;</t>
-<t tx="T821">@ This function returns true if the receiver should be a clone.  This can be done _very_ quickly using the receiver's join list.
+<t tx="T823">@ This function returns true if the receiver should be a clone.  This can be done _very_ quickly using the receiver's join list.
 
 The receiver is a clone if and only it is structurally _dissimilar_ to a node joined to it.  Structurally _similar_ joined nodes have non-null, distinct and joined parents, and have the same child indices.
 
@@ -9828,7 +9859,7 @@ bool vnode::shouldBeClone ( void )
 	return FALSE ;  
 }
 </t>
-<t tx="T822">@ This code carefully unlinks the receiver from its join list.  We can not simply assume that all such links will eventually be cleared.
+<t tx="T824">@ This code carefully unlinks the receiver from its join list.  We can not simply assume that all such links will eventually be cleared.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9858,7 +9889,7 @@ void vnode::unjoinNode ( void )
 		#endif
 	}
 }</t>
-<t tx="T823">@ We guard against any cycles in the join list, which would cause this loop to hang.  It's much better to cause an assert to fail.
+<t tx="T825">@ We guard against any cycles in the join list, which would cause this loop to hang.  It's much better to cause an assert to fail.
 @code
 
 Commands * commands = this -&gt; commands() ;
@@ -9873,7 +9904,7 @@ for (
 		assert ( 0 ) ;
 	else
 		prev -&gt; setVisited() ;</t>
-<t tx="T824">@ This function unjoins all nodes of the receiver's tree.
+<t tx="T826">@ This function unjoins all nodes of the receiver's tree.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9887,7 +9918,7 @@ void vnode::unjoinTree ( void )
 		v = v -&gt; threadNext() ;
 	}
 }</t>
-<t tx="T825">@ This routine checks the structure of the receiver's tree.
+<t tx="T827">@ This routine checks the structure of the receiver's tree.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -9910,11 +9941,11 @@ bool vnode::validateOutlineWithParent ( vnode * p )
 
 	return result ;
 }</t>
-<t tx="T826">@code
+<t tx="T828">@code
 
 if ( parent != p )
 	this -&gt; invalidOutline ( "Invalid parent link: " + parent -&gt; description() ) ;</t>
-<t tx="T827">@code
+<t tx="T829">@code
 
 if ( p )
 {
@@ -9927,11 +9958,11 @@ if ( p )
 else if ( childIndex &lt; 0 )
 	this -&gt; invalidOutline ( "negative childIndex" + childIndex ) ;
 </t>
-<t tx="T828">@code
+<t tx="T830">@code
 
 if ( this -&gt; t() == NULL &amp;&amp; p != NULL )
 	this -&gt; invalidOutline ( "NULL t" ) ;</t>
-<t tx="T829">#include &lt;stdio.h&gt;
+<t tx="T831">#include &lt;stdio.h&gt;
 
 class vnode ;
 class Commands ;
@@ -9954,12 +9985,12 @@ private:
 	&lt;&lt; private write methods &gt;&gt;
 };
 </t>
-<t tx="T830">bool compareFiles ( String path1, String path2 ) ;
+<t tx="T832">bool compareFiles ( String path1, String path2 ) ;
 short directiveKind (char * ip, char * limit) ;
 bool isSectionName ( char *ip, char *limit, char **end_pp ) ;
 bool matchHeadline ( vnode * v, String pattern ) ;
 void setAncestorAtFileNodeDirty ( vnode * v ) ;</t>
-<t tx="T831">@ The commander for the current window.
+<t tx="T833">@ The commander for the current window.
 @c
 
 Commands * mCommands ;
@@ -10001,7 +10032,7 @@ String mEndSentinelComment ;
 
 vnode * mRoot ;
 </t>
-<t tx="T832">@code
+<t tx="T834">@code
 
 vnode * createNthChild (long n, vnode * parent, String headline) ;
 void joinTrees ( vnode *tree1, vnode *tree2 ) ;
@@ -10010,7 +10041,7 @@ char * scanHeader ( char * ip, char * limit ) ;
 char * scanText (vnode *v, TMemoryStream *ms,
 	char *ip, char *limit, short endSentinelKind) ;
 void updateCloneIndices ( vnode * root, vnode * next ) ;</t>
-<t tx="T833">@code
+<t tx="T835">@code
 
 String nodeSentinelText ( vnode * v ) ;
 
@@ -10027,7 +10058,7 @@ short sentinelKind ( char *ip, char *limit ) ;
 String sentinelName ( short sentinelKind ) ;
 
 char * skipSentinelStart( char *ip, char *limit) ;</t>
-<t tx="T834">@code
+<t tx="T836">@code
 
 void appendToBody (TMemoryStream *ms, char *start, char *end);
 void appendToBody (TMemoryStream *ms, String s);
@@ -10035,7 +10066,7 @@ void error ( String message );
 void scanAllDirectives ( vnode * v );
 char * skipIndent (long n, char * ip, char * limit);
 void writeError ( String message );</t>
-<t tx="T835">@code
+<t tx="T837">@code
 
 // Top level...
 vnode * findReference (vnode *root, char *ip, char *end_p, char *limit ) ;
@@ -10057,7 +10088,7 @@ void putInt (int n) ;
 char * putLeadingWs ( char * ip, char * limit_p ) ;
 void putString ( String s ) ;
 void putTabs (int n) ;</t>
-<t tx="T836">// atFile.cpp created June 6, 2001.
+<t tx="T838">// atFile.cpp created June 6, 2001.
 
 #pragma option -w-par  // no warning: "Parameter is never used"
 #pragma option -w-sig  // no warning: "Conversion may lose significant digits"
@@ -10067,7 +10098,7 @@ void putTabs (int n) ;</t>
 &lt;&lt; atFile constants &gt;&gt;
 
 @others</t>
-<t tx="T837">#include &lt;vcl.h&gt;
+<t tx="T839">#include &lt;vcl.h&gt;
 #pragma hdrstop
 
 #include "args.h"
@@ -10088,7 +10119,7 @@ void putTabs (int n) ;</t>
 
 #include "Leo.h"
 </t>
-<t tx="T838">#define oblank() this -&gt; putBlanks(1)
+<t tx="T840">#define oblank() this -&gt; putBlanks(1)
 #define oblanks(n) this -&gt; putBlanks(n)
 #define ochar(c) this -&gt; putChar(c)
 #define oint(n) this -&gt; putInt(n)
@@ -10097,7 +10128,7 @@ void putTabs (int n) ;</t>
 #define otab() this -&gt; putTabs(1)
 #define otabs(n) this -&gt; putTabs(n)
 </t>
-<t tx="T839">@ These constants indicate the kind of at_directives.
+<t tx="T841">@ These constants indicate the kind of at_directives.
 @c
 
 enum {
@@ -10126,21 +10157,21 @@ enum {
   	startDirective //@@
 };
 </t>
-<t tx="T840">void Commands::readAtFile ( vnode * v )
+<t tx="T842">void Commands::readAtFile ( vnode * v )
 {
 	atFile * at = new atFile( this );
 	at -&gt; read ( v ) ;
 	delete at ;
 }
 </t>
-<t tx="T841">void Commands::writeAtFile ( vnode * v )
+<t tx="T843">void Commands::writeAtFile ( vnode * v )
 {
 	atFile * at = new atFile( this );
 	at -&gt; write ( v ) ;
 	delete at ;
 }
 </t>
-<t tx="T842">atFile::atFile( Commands * theCommander )
+<t tx="T844">atFile::atFile( Commands * theCommander )
 {
 	// Inialize ivars.
 	mCommands = theCommander ;
@@ -10155,7 +10186,7 @@ enum {
 	mRoot = NULL ;
 }
 </t>
-<t tx="T843">@ Sections appear in the derived file in reference order, not tree order.  Therefore, when we insert the nth child of the parent there is no guarantee that the previous n-1 children have already been inserted. And it won't work just to insert the nth child as the last child if there aren't n-1 previous siblings.  For example, if we insert the third child followed by the second child followed by the first child the second and third children will be out of order.
+<t tx="T845">@ Sections appear in the derived file in reference order, not tree order.  Therefore, when we insert the nth child of the parent there is no guarantee that the previous n-1 children have already been inserted. And it won't work just to insert the nth child as the last child if there aren't n-1 previous siblings.  For example, if we insert the third child followed by the second child followed by the first child the second and third children will be out of order.
 
 To ensure that nodes are placed in the correct location we create "dummy" children as needed as placeholders.  In the example above, we would insert two dummy children when inserting the third child.  When inserting the other two children we replace the previously inserted dummy child with the actual children.
 
@@ -10194,7 +10225,7 @@ vnode * atFile::createNthChild(long n, vnode * parent, String headline)
     return result ;
 }
 </t>
-<t tx="T844">@ This function joins all nodes in the two trees which should have the same topology. This code makes no other assumptions about the two trees; some or all of the nodes may already have been joined.
+<t tx="T846">@ This function joins all nodes in the two trees which should have the same topology. This code makes no other assumptions about the two trees; some or all of the nodes may already have been joined.
 
 There are several differences between this method and the similar vnode:joinTreeTo method.  First, we can not assert that the two trees have the same topology because the derived file could have been edited outside of Leo.  Second, this method also merges the tnodes of all joined nodes.
 @c
@@ -10219,7 +10250,7 @@ void atFile::joinTrees ( vnode *tree1, vnode *tree2 )
 		error("cloned nodes have different topologies");
 }
 </t>
-<t tx="T845">@ This is the entry point to the read code.  The root vnode should be an @file node.
+<t tx="T847">@ This is the entry point to the read code.  The root vnode should be an @file node.
 
 If there are structure errors the first time we delete root and its body text, then rescan.  All other errors indicate potentially serious problems with sentinels.
 
@@ -10255,13 +10286,13 @@ void atFile::read ( vnode * root )
 	}
 }
 </t>
-<t tx="T846">String fileData("");
+<t tx="T848">String fileData("");
 hashTable * h = NULL ;
 TMemoryStream * ms = NULL ;
 char *buf = NULL ;
 char *ip = NULL ;
 char *limit = NULL ;</t>
-<t tx="T847">@c
+<t tx="T849">@c
 
 if ( mTargetFileName . IsEmpty() )
 	error("Missing file name in @file node");
@@ -10279,7 +10310,7 @@ else if ( FileExists ( mTargetFileName ) ) {
 }
 else error ( mTargetFileName + " does not exit ");
 </t>
-<t tx="T848">indent = 0 ;
+<t tx="T850">indent = 0 ;
 ip = buf ;
 limit = ip + fileData.Length() ;
 ms = new TMemoryStream() ;  // Must use new.
@@ -10291,15 +10322,15 @@ String s( (char *) ms -&gt; Memory, ms -&gt; Size);
 root -&gt; setBodyStringOrPane(s);
 delete ms ;
 </t>
-<t tx="T849">es("----- Minor error reading: ");
+<t tx="T851">es("----- Minor error reading: ");
 es(mRoot -&gt; headCString());
 es(":marks have been cleared."); enl();</t>
-<t tx="T850">while ( root -&gt; firstChild() )
+<t tx="T852">while ( root -&gt; firstChild() )
 	root -&gt; firstChild() -&gt; doDelete(root);
 	
 root -&gt; setBodyStringOrPane ( "" ) ;
 </t>
-<t tx="T851">@code
+<t tx="T853">@code
 
 mCommands -&gt; clearAllVisited() ;
 
@@ -10329,7 +10360,7 @@ delete h ;
 for (vnode *v = root ; v &amp;&amp; v != next ; v = v -&gt; threadNext() )
 	if ( v -&gt; t() -&gt; isVisited() )
 		v -&gt; initClonedBit(TRUE);</t>
-<t tx="T852">@code
+<t tx="T854">@code
 
 h = new hashTable() ;
 
@@ -10351,7 +10382,7 @@ for (vnode *v = root ; v &amp;&amp; v != next ; v = v -&gt; threadNext() )
 }
 
 delete h ;</t>
-<t tx="T853">vnode *current = NULL ;
+<t tx="T855">vnode *current = NULL ;
 
 for (vnode *v = root ; v &amp;&amp; v != next ; v = v -&gt; threadNext() )
 {
@@ -10378,10 +10409,10 @@ if ( current ) {
 	#endif
 }
 </t>
-<t tx="T854">es("----- Serious error reading: ");
+<t tx="T856">es("----- Serious error reading: ");
 es(mRoot -&gt; headCString()); enl();
 es("----- Outline may be corrupted due to damaged sentinel lines!"); enl();</t>
-<t tx="T855">@ This method scans all vnodes, calling read for every @file node found.  v should point to the root of the entire tree on entry.
+<t tx="T857">@ This method scans all vnodes, calling read for every @file node found.  v should point to the root of the entire tree on entry.
 @c
 
 void atFile::readAll ( vnode * root )
@@ -10408,7 +10439,7 @@ void atFile::readAll ( vnode * root )
 }
 
 </t>
-<t tx="T856">@ This method scans the doc part and appends the text to v's body.  The caller has already appended @&lt;space&gt; or @doc.
+<t tx="T858">@ This method scans the doc part and appends the text to v's body.  The caller has already appended @&lt;space&gt; or @doc.
 @c
 
 char * atFile::scanDoc (
@@ -10425,16 +10456,16 @@ char * atFile::scanDoc (
 	&lt;&lt; Remove a closing block delim from v's body &gt;&gt;
 	return ip ;
 }</t>
-<t tx="T857">assert(match(ip, limit, kind == startDoc ? "+doc" : "+at"));
+<t tx="T859">assert(match(ip, limit, kind == startDoc ? "+doc" : "+at"));
 ip = skip_line(ip, limit); 
 this -&gt; appendToBody(ms, kind == startDoc ? "@doc" : "@");
 </t>
-<t tx="T858">if ( ! single ) {
+<t tx="T860">if ( ! single ) {
 	char *ip1 = skip_ws(ip, limit);
 	if (match(ip1, limit, mStartSentinelComment.c_str()))
 		ip = skip_line(ip, limit);
 }</t>
-<t tx="T859">char *ip2 = skip_to_end_of_line(ip, limit);  // End of line.
+<t tx="T861">char *ip2 = skip_to_end_of_line(ip, limit);  // End of line.
 
 // Point ip to the start of the real line.
 if ( single ) {
@@ -10460,13 +10491,13 @@ if ( ip2 &lt; limit &amp;&amp; is_nl(*ip2) &amp;&amp; line == trim)
 // Finish the line.
 ip = skip_line(ip, limit);
 </t>
-<t tx="T860">if ( sentinelKind(ip, limit) == endKind ) {
+<t tx="T862">if ( sentinelKind(ip, limit) == endKind ) {
 	ip = skipSentinelStart(ip, limit);
 	ip = skip_line(ip, limit);
 }
 else error("Missing " + sentinelName(endKind) + " sentinel");
 </t>
-<t tx="T861">@ This code will typically only be executed for HTML files.
+<t tx="T863">@ This code will typically only be executed for HTML files.
 @c
 
 if ( ! single )
@@ -10492,7 +10523,7 @@ if ( ! single )
 	}
 }
 </t>
-<t tx="T862">@ This method sets mStartSentinelComment and mEndSentinelComment based on the first @+leo sentinel line of the file.  We can not call sentinelKind here because that depends on the comment delimiters we set here.
+<t tx="T864">@ This method sets mStartSentinelComment and mEndSentinelComment based on the first @+leo sentinel line of the file.  We can not call sentinelKind here because that depends on the comment delimiters we set here.
 @c
 
 char * atFile::scanHeader ( char * ip, char * limit )
@@ -10531,7 +10562,7 @@ char * atFile::scanHeader ( char * ip, char * limit )
 		
 	return ip ;
 }</t>
-<t tx="T863">@ This method is the heart of the new read code.  It scans text until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels.
+<t tx="T865">@ This method is the heart of the new read code.  It scans text until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels.
 @c
 
 char * atFile::scanText (
@@ -10570,7 +10601,7 @@ char * atFile::scanText (
 	return ip ;
 }
 </t>
-<t tx="T864">@ lineIndent is the total indentation on a sentinel line.  The first "indent" portion of that must be removed when recreating text.  linep points to the first "real" character of a line, the character following the "indent" whitespace.
+<t tx="T866">@ lineIndent is the total indentation on a sentinel line.  The first "indent" portion of that must be removed when recreating text.  linep points to the first "real" character of a line, the character following the "indent" whitespace.
 @c
 
 {
@@ -10592,7 +10623,7 @@ char * atFile::scanText (
 
 	lineIndent = n ;
 }</t>
-<t tx="T865">@ The sentinelKind routine returned noSentinel, so if the line contains only a newline that newline is not part of a sentinel and it must be appended to make progress.  Otherwise, we don't want to append the trailing newline here because it might be part of a sentinel.
+<t tx="T867">@ The sentinelKind routine returned noSentinel, so if the line contains only a newline that newline is not part of a sentinel and it must be appended to make progress.  Otherwise, we don't want to append the trailing newline here because it might be part of a sentinel.
 @c
 
 {
@@ -10605,7 +10636,7 @@ char * atFile::scanText (
 	String line (ip1, ip-ip1);
 	this -&gt; appendToBody(ms, line);
 }</t>
-<t tx="T866">ip = skip_line(ip, limit); // Skip the sentinel.
+<t tx="T868">ip = skip_line(ip, limit); // Skip the sentinel.
 
 if (kind == endSentinelKind) {
 	if (kind == endLeo) {
@@ -10621,22 +10652,22 @@ else {
 	String expect = sentinelName(endSentinelKind);
 	error( "Ignoring " + name + " sentinel.  Expecting " + expect);
 }</t>
-<t tx="T867">// Issue the error.
+<t tx="T869">// Issue the error.
 String name = sentinelName(endSentinelKind);
 error("Unexpected end of file. Expecting " + name + "sentinel" );</t>
-<t tx="T868">assert(match(ip,limit,"+at"));
+<t tx="T870">assert(match(ip,limit,"+at"));
 ip = scanDoc(ms, ip, limit, kind);</t>
-<t tx="T869">assert(match(ip,limit,"+body"));
+<t tx="T871">assert(match(ip,limit,"+body"));
 ip = skip_line(ip, limit); // Skip the sentinel.
 ip = scanText(v, ms, ip, limit, endBody );
 </t>
-<t tx="T870">assert(match(ip,limit,"+doc"));
+<t tx="T872">assert(match(ip,limit,"+doc"));
 ip = scanDoc(ms, ip, limit, kind);
 </t>
-<t tx="T871">assert(match(ip,limit,"+leo"));
+<t tx="T873">assert(match(ip,limit,"+leo"));
 ip = skip_line(ip, limit);
 error("Ignoring unexpected @+leo sentinel" );</t>
-<t tx="T872">{
+<t tx="T874">{
 	long n = 0 ; // Default for bad index.
 	String headline (""), ref("");
 	tnode dummy_t(0,"");
@@ -10670,7 +10701,7 @@ error("Ignoring unexpected @+leo sentinel" );</t>
 	indent = oldIndent ;
 }
 </t>
-<t tx="T873">assert(match(ip,limit,"+node:"));
+<t tx="T875">assert(match(ip,limit,"+node:"));
 ip += 6 ;
 ip = skip_ws(ip, limit);
 
@@ -10721,7 +10752,7 @@ if (match(ip, limit, "&lt;&lt;")) {
 }
 ip = skip_line(hp, limit);
 </t>
-<t tx="T874">while ( ip &lt; limit &amp;&amp; *ip != ':' &amp;&amp; !is_nl(*ip) )
+<t tx="T876">while ( ip &lt; limit &amp;&amp; *ip != ':' &amp;&amp; !is_nl(*ip) )
 {
 	long index = 0 ;
 	
@@ -10734,7 +10765,7 @@ ip = skip_line(hp, limit);
 	}
 }
 </t>
-<t tx="T875">@code
+<t tx="T877">@code
 
 if ( *ip == '=' ) {
 	++ ip ;
@@ -10747,7 +10778,7 @@ if ( *ip == '=' ) {
 		++ ip ;
 }
 </t>
-<t tx="T876">String s( (char *) new_ms -&gt; Memory, new_ms -&gt; Size);
+<t tx="T878">String s( (char *) new_ms -&gt; Memory, new_ms -&gt; Size);
 String body = child -&gt; bodyString();
 
 if ( child -&gt; isDummy() )
@@ -10761,7 +10792,7 @@ else if ( body . Length() &gt; 0 &amp;&amp; body != s )
 // This is reasonable, but maybe not best.
 child -&gt; t() -&gt; setTnodeText ( s );
 </t>
-<t tx="T877">String fileName = headline.Trim();
+<t tx="T879">String fileName = headline.Trim();
 long len = fileName.Length();
 if ( len &gt; 5 &amp;&amp; fileName.SubString(1,5) == "@file") {
 	fileName = fileName.SubString(6,len-5);
@@ -10770,7 +10801,7 @@ if ( len &gt; 5 &amp;&amp; fileName.SubString(1,5) == "@file") {
 }
 else error ("Missing @file in root @node sentinel");
 </t>
-<t tx="T878">@ We must make sure that the generated at-others is properly indented.
+<t tx="T880">@ We must make sure that the generated at-others is properly indented.
 @c
 
 assert(match(ip,limit,"+others"));
@@ -10785,7 +10816,7 @@ ip = skip_line(ip, limit); // Skip the sentinel.
 }
 ip = scanText(v, ms, ip, limit, endOthers );
 </t>
-<t tx="T879">@ The sentinel contains an @ followed by a section name in angle brackets.
+<t tx="T881">@ The sentinel contains an @ followed by a section name in angle brackets.
 
 This code is different from the code for the @@ sentinel: the expansion of the reference does not include a trailing newline.
 @c
@@ -10811,7 +10842,7 @@ assert(match(ip,limit,"&lt;&lt;"));
 	ip = skip_line(ip1, limit);
     this -&gt; appendToBody(ms, line);
 }</t>
-<t tx="T880">assert(match(ip,limit,"verbatim"));
+<t tx="T882">assert(match(ip,limit,"verbatim"));
 {
 	// Skip the sentinel.
 	ip = skip_line(ip,limit);
@@ -10822,7 +10853,7 @@ assert(match(ip,limit,"&lt;&lt;"));
 	String line (ip1, ip-ip1);
 	this -&gt; appendToBody(ms, line);
 }</t>
-<t tx="T881">assert(match(ip,limit,"@"));
+<t tx="T883">assert(match(ip,limit,"@"));
 {
 	String line("");
 	char *ip1 = ip ;  // The first '@' has already been eaten.
@@ -10844,13 +10875,13 @@ assert(match(ip,limit,"&lt;&lt;"));
 	}
     this -&gt; appendToBody(ms, line);
 }</t>
-<t tx="T882">{
+<t tx="T884">{
 	char * ip1 = ip ;
 	ip = skip_line(ip, limit);
 	String line (ip1, ip-ip1);
 	error("Unknown sentinel: " + line);
 }</t>
-<t tx="T883">@ root is an ancestor of v, or root == v.  This puts the entire expansion of v's body text enclosed in sentinel lines.
+<t tx="T885">@ root is an ancestor of v, or root == v.  This puts the entire expansion of v's body text enclosed in sentinel lines.
 @c
 
 void atFile::putBody ( vnode * root, vnode * v, long delta )
@@ -10862,7 +10893,7 @@ void atFile::putBody ( vnode * root, vnode * v, long delta )
 		putCloseSentinels(root, v) ;
 	indent -= delta ;
 }</t>
-<t tx="T884">@ We generate the body part only if it contains something besides whitespace. The check for at-ignore is made in atFile::write.
+<t tx="T886">@ We generate the body part only if it contains something besides whitespace. The check for at-ignore is made in atFile::write.
 @c
 
 void atFile::putBodyPart ( vnode * v )
@@ -10878,7 +10909,7 @@ void atFile::putBodyPart ( vnode * v )
 	&lt;&lt; put code/doc parts and sentinels &gt;&gt;
 	putSentinel("@-body");
 }</t>
-<t tx="T885">while (ip &lt; limit) {
+<t tx="T887">while (ip &lt; limit) {
 	short kind = directiveKind(ip, limit) ;
 	char *ip1 = ip ;
 	switch ( kind ) {
@@ -10900,7 +10931,7 @@ void atFile::putBodyPart ( vnode * v )
 	assert (ip1 &lt; ip);  // We must make progress.
 }
 </t>
-<t tx="T886">@ This method expands a code part, terminated by any at-directive except at-others.  It expands references and at-others and outputs @verbatim sentinels as needed.
+<t tx="T888">@ This method expands a code part, terminated by any at-directive except at-others.  It expands references and at-others and outputs @verbatim sentinels as needed.
 @c
 
 char * atFile::putCodePart ( vnode * v, char * ip, char * limit )
@@ -10914,7 +10945,7 @@ char * atFile::putCodePart ( vnode * v, char * ip, char * limit )
 done:
 	return ip ;
 }</t>
-<t tx="T887">@ The at-others directive is the only directive that is recognized following leading whitespace, so it is just a little tricky to recognize it.
+<t tx="T889">@ The at-others directive is the only directive that is recognized following leading whitespace, so it is just a little tricky to recognize it.
 @c
 
 &lt;&lt; compute delta, the width of the whitespace &gt;&gt;
@@ -10929,7 +10960,7 @@ else if ( kind1 == noDirective ) {
 	&lt;&lt; put @verbatim sentinel if necessary &gt;&gt;
 }
 else goto done ;</t>
-<t tx="T888">delta = 0 ;
+<t tx="T890">delta = 0 ;
 {
 	char * ip2 = ip ;
 	while ( ip2 &lt; limit ) {
@@ -10945,7 +10976,7 @@ else goto done ;</t>
 	}
 }
 </t>
-<t tx="T889">// This skips all indent and delta whitespace, so putAtOthers must generate it all.
+<t tx="T891">// This skips all indent and delta whitespace, so putAtOthers must generate it all.
 
 ip = skip_to_end_of_line(ip, limit);  // Bug fix: 7/6/01
 if ( atOthersSeen )
@@ -10955,14 +10986,14 @@ else {
 	putAtOthers(v, delta);
 }
 </t>
-<t tx="T890">{
+<t tx="T892">{
 	String s(mStartSentinelComment);
 	s += "@" ;
 	if (match (ip, limit, s.c_str()))
 		putSentinel("verbatim");
 }
 </t>
-<t tx="T891">putIndent(indent);
+<t tx="T893">putIndent(indent);
 
 while (ip &lt; limit ) {
     if (*ip == body_newline) {
@@ -10978,7 +11009,7 @@ while (ip &lt; limit ) {
     }
     else ochar(*ip++);
 }</t>
-<t tx="T892">char *end_p = NULL ;
+<t tx="T894">char *end_p = NULL ;
 
 if ( isSectionName ( ip, limit, &amp;end_p ) )
 {
@@ -11001,7 +11032,7 @@ if ( isSectionName ( ip, limit, &amp;end_p ) )
 }
 else ochar(*ip++);  // This is _not_ an error.
 </t>
-<t tx="T893">@ ip points to the start of a reference in root.  We search the descendents of root looking for the matching definition node.  There should be exactly one such node (descendents of other definition nodes are not searched).
+<t tx="T895">@ ip points to the start of a reference in root.  We search the descendents of root looking for the matching definition node.  There should be exactly one such node (descendents of other definition nodes are not searched).
 @c
 
 vnode * atFile::findReference (
@@ -11017,7 +11048,7 @@ vnode * atFile::findReference (
 	}
 	return NULL ;
 }</t>
-<t tx="T894">@ Returns TRUE if v should be included in the expansion of the at-others directive in the body text of v's parent. v will not be included if it is a definition node or if its body text contains another at-others or @ignore directive.
+<t tx="T896">@ Returns TRUE if v should be included in the expansion of the at-others directive in the body text of v's parent. v will not be included if it is a definition node or if its body text contains another at-others or @ignore directive.
 @c
 
 bool atFile::inAtOthers (vnode * v)
@@ -11036,7 +11067,7 @@ bool atFile::inAtOthers (vnode * v)
 	return ! v -&gt; isAtIgnoreNode() &amp;&amp; ! v -&gt; isAtOthersNode() ;
 }
 </t>
-<t tx="T895">@ The at-others directive is recognized only at the start of the line.  This code must generate all leading whitespace for the opening sentinel.
+<t tx="T897">@ The at-others directive is recognized only at the start of the line.  This code must generate all leading whitespace for the opening sentinel.
 @c
 
 void atFile::putAtOthers ( vnode * v, long delta )
@@ -11053,7 +11084,7 @@ void atFile::putAtOthers ( vnode * v, long delta )
 	indent -= delta ;
 }
 </t>
-<t tx="T896">void atFile::putAtOthersChild ( vnode * v )
+<t tx="T898">void atFile::putAtOthersChild ( vnode * v )
 {
 	putOpenNodeSentinel(v) ;
 		// Insert the expansion of v.
@@ -11069,7 +11100,7 @@ void atFile::putAtOthers ( vnode * v, long delta )
 	putCloseNodeSentinel(v) ;
 }
 </t>
-<t tx="T897">@ This method outputs the directive or reference at ip in a sentinel.
+<t tx="T899">@ This method outputs the directive or reference at ip in a sentinel.
 @c
 
 char * atFile::putDirective ( char * ip, char * limit )
@@ -11084,7 +11115,7 @@ char * atFile::putDirective ( char * ip, char * limit )
 	return ip ;
 }
 </t>
-<t tx="T898">@ This method outputs a doc section terminated by @code or end-of-text.  All other interior directives become part of the doc part.
+<t tx="T900">@ This method outputs a doc section terminated by @code or end-of-text.  All other interior directives become part of the doc part.
 @c
 
 char * atFile::putDoc ( char *ip, char *limit, short kind )
@@ -11099,7 +11130,7 @@ char * atFile::putDoc ( char *ip, char *limit, short kind )
 	return ip ;
 }
 </t>
-<t tx="T899">@ Do not skip whitespace following the @doc or @.  It is needed by the read code.
+<t tx="T901">@ Do not skip whitespace following the @doc or @.  It is needed by the read code.
 @c
 
 if ( kind == docDirective )
@@ -11107,7 +11138,7 @@ if ( kind == docDirective )
 else
 	++ip; // Skip the "@";
 </t>
-<t tx="T900">@ at-code or the end of body text terminates the doc part.
+<t tx="T902">@ at-code or the end of body text terminates the doc part.
 @c
 
 char *ip2 = ip ;
@@ -11120,7 +11151,7 @@ while ( ip2 &lt; limit ) {
 
 limit = ip2 ;
 </t>
-<t tx="T901">@ This method puts a comment part in comments.
+<t tx="T903">@ This method puts a comment part in comments.
 @c
 
 char * atFile::putDocPart ( char * ip, char * limit )
@@ -11150,7 +11181,7 @@ char * atFile::putDocPart ( char * ip, char * limit )
 	return ip ;
 }
 </t>
-<t tx="T902">@ We remove trailing whitespace from lines that have _not_ been split so that a newline has been inserted by this routine if and only if it is preceded by whitespace.
+<t tx="T904">@ We remove trailing whitespace from lines that have _not_ been split so that a newline has been inserted by this routine if and only if it is preceded by whitespace.
 @c
 
 char *line = ip ; // Start of the current line.
@@ -11191,7 +11222,7 @@ if (ip &lt; limit &amp;&amp; is_nl(*ip) ) {
 	ip = skip_nl(ip, limit);
 	onl();  // No an inserted newline and no trailing whitespace.
 }</t>
-<t tx="T903">@ This is the entry point to the write code.  The root vnode should be an @file node.
+<t tx="T905">@ This is the entry point to the write code.  The root vnode should be an @file node.
 We set the orphan flag if there are problems writing the file to force Commands::write_LEO_file to the tree to the .leo file.
 @c
 
@@ -11222,7 +11253,7 @@ void atFile::write ( vnode * root )
 	}
 }
 </t>
-<t tx="T904">@code
+<t tx="T906">@code
 
 // Set globals from ancestors.
 this -&gt; scanAllDirectives(root);
@@ -11239,7 +11270,7 @@ if ( mOutputStream == NULL ) {
 	mRoot -&gt; setOrphan();
 	return ;
 }</t>
-<t tx="T905">@code
+<t tx="T907">@code
 
 
 if ( mTargetFileName . Length() == 0 ) {
@@ -11257,7 +11288,7 @@ if ( index &gt; 0 ) {
 	}
 }
 </t>
-<t tx="T906">@ We create the temporary file where the target file will eventually be placed:
+<t tx="T908">@ We create the temporary file where the target file will eventually be placed:
 
 1. In the directory specified in mTargetFileName if it contains a full path.
 2. In the directory specified in an @path directive.
@@ -11294,7 +11325,7 @@ else close (handle);
 
 String s ( (char *) pathname);
 mOutputFileName = s ;</t>
-<t tx="T907">for ( vnode * v = root ; v &amp;&amp; v != next ; v = v -&gt; threadNext() ) {
+<t tx="T909">for ( vnode * v = root ; v &amp;&amp; v != next ; v = v -&gt; threadNext() ) {
 	if ( ! v -&gt; isVisited() ) {
 		mRoot -&gt; setOrphan();
 		String s("Orphan node:  ");
@@ -11309,10 +11340,10 @@ mOutputFileName = s ;</t>
 	}
 }
 </t>
-<t tx="T908">ecnl() ;
+<t tx="T910">ecnl() ;
 es("----- Not written: ");
 es(mTargetFileName.c_str()); enl();</t>
-<t tx="T909">if ( compareFiles ( mOutputFileName, mTargetFileName ) ) {
+<t tx="T911">if ( compareFiles ( mOutputFileName, mTargetFileName ) ) {
 	// Just delete the temp file.
 	remove ( mOutputFileName.c_str() ) ;
 	es("Unchanged: "); es(mTargetFileName.c_str() ); enl();
@@ -11329,7 +11360,7 @@ else {
 	}
 }
 </t>
-<t tx="T910">@ This method scans all vnodes, calling write for every @file node found.  v should point to the root of the entire tree.
+<t tx="T912">@ This method scans all vnodes, calling write for every @file node found.  v should point to the root of the entire tree.
 @c
 
 void atFile::writeAll ( vnode * v )
@@ -11347,26 +11378,26 @@ void atFile::writeAll ( vnode * v )
     }
 }
 </t>
-<t tx="T911">@ We must clear these bits because they may have been set on a previous write.  Calls to atFile::write may set the orphan bits in @file nodes.  If so, write_LEO_file will write the entire @file tree.
+<t tx="T913">@ We must clear these bits because they may have been set on a previous write.  Calls to atFile::write may set the orphan bits in @file nodes.  If so, write_LEO_file will write the entire @file tree.
 @c
 
 for ( vnode * v2 = v ; v2 ; v2 = v2 -&gt; threadNext() )
 	v2 -&gt; clearOrphan();</t>
-<t tx="T912">@ These methods write their arguments to the output file.
+<t tx="T914">@ These methods write their arguments to the output file.
 </t>
-<t tx="T913">void atFile::putBlanks ( int n )
+<t tx="T915">void atFile::putBlanks ( int n )
 {
 	while (n-- &gt; 0)
 		ochar(' ');
 }
 </t>
-<t tx="T914">void atFile::putChar (char c)
+<t tx="T916">void atFile::putChar (char c)
 {
 	if ( mOutputStream )
 		mOutputStream -&gt; Write( &amp;c, 1 );
 }
 </t>
-<t tx="T915">@ This methods puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
+<t tx="T917">@ This methods puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 @c
 
 void atFile::putIndent ( int n )
@@ -11378,26 +11409,26 @@ void atFile::putIndent ( int n )
 	else
 		oblanks ( n ) ;
 }</t>
-<t tx="T916">void atFile::putInt (int i) 
+<t tx="T918">void atFile::putInt (int i) 
 {
 	char buf [100];
 	long n = sprintf(buf, "%d", i);
 	if ( n != EOF )
 		putString(buf);
 }</t>
-<t tx="T917">void atFile::putString ( String s ) 
+<t tx="T919">void atFile::putString ( String s ) 
 {
 	if ( mOutputStream )
 		mOutputStream -&gt; Write( s.c_str(), s.Length() );
 }
 </t>
-<t tx="T918">void atFile::putTabs ( int n )
+<t tx="T920">void atFile::putTabs ( int n )
 {
 	while ( n-- &gt; 0 )
 		ochar('\t');
 }
 </t>
-<t tx="T919">String atFile::nodeSentinelText ( vnode * v )
+<t tx="T921">String atFile::nodeSentinelText ( vnode * v )
 {
 	String s("");
 	// A hack: zero indicates the root node so scanText won't create a child.
@@ -11412,7 +11443,7 @@ void atFile::putIndent ( int n )
 	return s ;
 }
 </t>
-<t tx="T920">@ The cloneIndex field of the @root node is really the maximum clone index.
+<t tx="T922">@ The cloneIndex field of the @root node is really the maximum clone index.
 
 We make the @file node the top or current node if the top or current node is a descendent of the root.  This minimizes changes to the derived file.
 @c
@@ -11425,13 +11456,13 @@ if ( cloneIndex &gt; 0 ) {
 }
 
 </t>
-<t tx="T921">void atFile::putCloseNodeSentinel ( vnode * v )
+<t tx="T923">void atFile::putCloseNodeSentinel ( vnode * v )
 {
 	String s = this -&gt; nodeSentinelText(v);
 	this -&gt; putSentinel( "@-node:" + s);
 }
 </t>
-<t tx="T922">@ root is an ancestor of v, or root == v.  We call putCloseSentinel for v up to, but not including, root.
+<t tx="T924">@ root is an ancestor of v, or root == v.  We call putCloseSentinel for v up to, but not including, root.
 @c
 
 void atFile::putCloseSentinels ( vnode * root, vnode * v )
@@ -11444,7 +11475,7 @@ void atFile::putCloseSentinels ( vnode * root, vnode * v )
 		this -&gt; putCloseNodeSentinel(v);
 	}
 }</t>
-<t tx="T923">@ This method is the same as putSentinel except we don't put an opening newline and leading whitespace.
+<t tx="T925">@ This method is the same as putSentinel except we don't put an opening newline and leading whitespace.
 @c
 
 void atFile::putOpenLeoSentinel ( String text )
@@ -11454,7 +11485,7 @@ void atFile::putOpenLeoSentinel ( String text )
 	os(mEndSentinelComment);
 	onl(); // Ends of sentinel.
 }</t>
-<t tx="T924">@ This method puts an open node sentinel for node v.
+<t tx="T926">@ This method puts an open node sentinel for node v.
 @c
 
 void atFile::putOpenNodeSentinel ( vnode * v )
@@ -11467,7 +11498,7 @@ void atFile::putOpenNodeSentinel ( vnode * v )
 	}
 }
 </t>
-<t tx="T925">@ root is an ancestor of v, or root == v.  We call putOpenNodeSentinel on all the descendents of root which are the ancestors of v.
+<t tx="T927">@ root is an ancestor of v, or root == v.  We call putOpenNodeSentinel on all the descendents of root which are the ancestors of v.
 @c
 
 void atFile::putOpenSentinels ( vnode * root, vnode * v )
@@ -11483,7 +11514,7 @@ void atFile::putOpenSentinels ( vnode * root, vnode * v )
 		last = node ;
 	}
 }</t>
-<t tx="T926">@ All sentinels are eventually output by this method.
+<t tx="T928">@ All sentinels are eventually output by this method.
 
 Sentinels include both the preceding and following newlines. This rule greatly simplies the code and has several important benefits:
 
@@ -11501,7 +11532,7 @@ void atFile::putSentinel ( String text )
 	os(mEndSentinelComment);
 	onl(); // Ends of sentinel.
 }</t>
-<t tx="T927">@ This method tells what kind of sentinel appears at ip.  Typically ip will point to the newline before the actual sentinel, but it is also valid for ip to point directly at the start of a sentinel line.
+<t tx="T929">@ This method tells what kind of sentinel appears at ip.  Typically ip will point to the newline before the actual sentinel, but it is also valid for ip to point directly at the start of a sentinel line.
 @c
 
 #define test(name,start,end)\
@@ -11540,7 +11571,7 @@ short atFile::sentinelKind ( char *ip, char *limit )
 }
 
 #undef test</t>
-<t tx="T928">@ This method returns the name of the sentinel for warnings.
+<t tx="T930">@ This method returns the name of the sentinel for warnings.
 @c
 
 String atFile::sentinelName ( short sentinelKind )
@@ -11565,7 +11596,7 @@ String atFile::sentinelName ( short sentinelKind )
 	default: return "&lt;unknown sentinel!&gt;" ;
 	}
 }</t>
-<t tx="T929">char * atFile::skipSentinelStart( char * ip, char * limit)
+<t tx="T931">char * atFile::skipSentinelStart( char * ip, char * limit)
 {
 	if (is_nl(*ip))
 		ip = skip_nl(ip, limit) ;
@@ -11575,7 +11606,7 @@ String atFile::sentinelName ( short sentinelKind )
 	assert(ip &lt; limit &amp;&amp; *ip == '@');
 	return ++ip ;
 }</t>
-<t tx="T930">@ Returns TRUE if two files are identical.
+<t tx="T932">@ Returns TRUE if two files are identical.
 @c
 
 bool compareFiles ( String path1, String path2 )
@@ -11594,7 +11625,7 @@ bool compareFiles ( String path1, String path2 )
 	if (f2 &gt; -1) FileClose(f2);
 	return result ;
 }</t>
-<t tx="T931">@ Returns the kind of at-directive or noDirective.
+<t tx="T933">@ Returns the kind of at-directive or noDirective.
 @c
 
 short directiveKind ( char * ip, char * limit )
@@ -11619,7 +11650,7 @@ short directiveKind ( char * ip, char * limit )
 		return miscDirective ;
 }
 </t>
-<t tx="T932">@ Returns TRUE if ip points to the start of a section name.  If so, we set end_pp in the caller to the character past the section reference.
+<t tx="T934">@ Returns TRUE if ip points to the start of a section name.  If so, we set end_pp in the caller to the character past the section reference.
 @c
 
 bool isSectionName ( char *ip, char *limit, char **end_pp )
@@ -11637,7 +11668,7 @@ bool isSectionName ( char *ip, char *limit, char **end_pp )
 	return match(ip, limit, "&gt;&gt;") ;
 }
 </t>
-<t tx="T933">@ This function sets any ancestor @file node to be dirty.
+<t tx="T935">@ This function sets any ancestor @file node to be dirty.
 @c
 
 void setAncestorAtFileNodeDirty ( vnode * v )
@@ -11650,7 +11681,7 @@ void setAncestorAtFileNodeDirty ( vnode * v )
 		v = v -&gt; parent();
 	}
 }</t>
-<t tx="T934">void atFile::appendToBody (TMemoryStream *ms, String s)
+<t tx="T936">void atFile::appendToBody (TMemoryStream *ms, String s)
 {
 	assert(ms);
 	if ( s . Length() &gt; 0 )
@@ -11665,7 +11696,7 @@ void atFile::appendToBody (TMemoryStream *ms, char *start, char *end)
 		ms -&gt; Write( start, len ) ;
 }
 </t>
-<t tx="T935">@ This code scans the node v and all of v's ancestors looking for directives.  If found, the corresponding Tangle/Untangle globals are set.
+<t tx="T937">@ This code scans the node v and all of v's ancestors looking for directives.  If found, the corresponding Tangle/Untangle globals are set.
 
 Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node x, no @owncolor or @nocolor directives are examined in any ancestor of x.
 
@@ -11705,7 +11736,7 @@ void atFile::scanAllDirectives ( vnode * v )
 #undef test
 #undef prev
 </t>
-<t tx="T936">#if 0 // not used in atFile::scanAllDirectives.
+<t tx="T938">#if 0 // not used in atFile::scanAllDirectives.
 	// CWEB flag might be useful.
     arg_allow_rich_text = default_allow_rich_text ;
     arg_extended_noweb_flag = default_extended_noweb_flag ;
@@ -11722,7 +11753,7 @@ arg_page_width = default_page_width ;
 arg_tab_width = default_tab_width ;
 arg_present_language = arg_target_language = default_target_language ;
 set_delims_from_language(arg_present_language);</t>
-<t tx="T937">@ A directory in an @file node over-rides everything else.
+<t tx="T939">@ A directory in an @file node over-rides everything else.
 @c
 
 String s = v -&gt; atFileNodeName() ;
@@ -11732,7 +11763,7 @@ if ( dir.Length() &gt; 0 ) {
 	if ( ! path_specified )
 		error ( String("Directory \"") + dir + "\" does not exist ");
 }</t>
-<t tx="T938">if ( prev(comment_bits) || prev(language_bits) )
+<t tx="T940">if ( prev(comment_bits) || prev(language_bits) )
 	;  // Do nothing more.
 else if (test(comment_bits)) {
 	set_root_delims ( at_comment_ptr, len-(at_comment_ptr-ip) ) ;
@@ -11741,7 +11772,7 @@ else if (test(comment_bits)) {
 }
 else if (test(language_bits))
 	set_language (ip, len, at_language_ptr, 0 /* issue_error_flag */ ) ;</t>
-<t tx="T939">if (test(path_bits) &amp;&amp; !path_specified &amp;&amp; !prev(path_bits)) {
+<t tx="T941">if (test(path_bits) &amp;&amp; !path_specified &amp;&amp; !prev(path_bits)) {
 	char * p2 = at_path_ptr + 5 ; // Point past @path
 	ip = skip_to_end_of_line(at_path_ptr, limit);
 	String s(p2, ip - p2 );
@@ -11755,14 +11786,14 @@ else if (test(language_bits))
 	}	
 	else error ("ignoring empty @path") ;
 }</t>
-<t tx="T940">if ( s . Length() &gt; 2 &amp;&amp; (
+<t tx="T942">if ( s . Length() &gt; 2 &amp;&amp; (
 		s[1] == '"' &amp;&amp; s[s.Length()] == '"' ||
 		s[1] == '&lt;' &amp;&amp; s[s.Length()] == '&gt;'
 ) ) {
 	s . Delete ( s.Length(), 1 ) ;
 	s . Delete ( 1, 1 ) ;
 }</t>
-<t tx="T941">if (test(page_width_bits) &amp;&amp; !prev(page_width_bits) ) {
+<t tx="T943">if (test(page_width_bits) &amp;&amp; !prev(page_width_bits) ) {
 	char * p2 = at_page_width_ptr + 10 ; // Point past @pagewidth
 	val = 0 ;
 	ip = skip_long (p2, limit, &amp; val );
@@ -11786,7 +11817,7 @@ if (test(tab_width_bits) &amp;&amp; !prev(tab_width_bits) ) {
 	else arg_tab_width = val ;
 }
 </t>
-<t tx="T942">@ This code is executed if no valid path was specified in the @file node or in an @path directive.  We try to set the current directory to the following:
+<t tx="T944">@ This code is executed if no valid path was specified in the @file node or in an @path directive.  We try to set the current directory to the following:
 
 1. The Tangle Default Directory specified in the Preferences panel.
 2. The mOpenDirectory specified by the Open command.
@@ -11816,7 +11847,7 @@ if ( !path_specified ) {
 	error ("No directory specified by @file, @path or Preferences.");
 }
 </t>
-<t tx="T943">@ We use single-line comments if we have a choice.
+<t tx="T945">@ We use single-line comments if we have a choice.
 @c
 
 if ( single_comment_string ) {
@@ -11827,7 +11858,7 @@ else {
 	mStartSentinelComment = start_comment_string ;
 	mEndSentinelComment = end_comment_string ;
 }</t>
-<t tx="T944">void atFile::error ( String message )
+<t tx="T946">void atFile::error ( String message )
 {
 	if ( message.Length() &gt; 0 ) {
 		message += "\n" ;
@@ -11836,7 +11867,7 @@ else {
 	++ mErrors ;
 }
 </t>
-<t tx="T945">@ ip points at the start of a line.  Skip past whitespace equivalent to n spaces.
+<t tx="T947">@ ip points at the start of a line.  Skip past whitespace equivalent to n spaces.
 @c
 
 char * atFile::skipIndent ( long n, char * ip, char * limit )
@@ -11851,7 +11882,7 @@ char * atFile::skipIndent ( long n, char * ip, char * limit )
 	}
 	return ip ;
 }</t>
-<t tx="T946">@ Update the cloneIndex field of each vnode of root's subtree. The maximum clone index is stored in the cloneIndex field of root (root should not be cloned).  next points to the node after the tree.
+<t tx="T948">@ Update the cloneIndex field of each vnode of root's subtree. The maximum clone index is stored in the cloneIndex field of root (root should not be cloned).  next points to the node after the tree.
 @c
 
 void atFile::updateCloneIndices ( vnode * root, vnode * next )
@@ -11869,7 +11900,7 @@ void atFile::updateCloneIndices ( vnode * root, vnode * next )
 			
 	root -&gt; t() -&gt; setCloneIndex(maxIndex) ;
 }</t>
-<t tx="T947">void atFile::writeError ( String message )
+<t tx="T949">void atFile::writeError ( String message )
 {
 	if ( mErrors == 0 ) {
 		es("----- Errors in: "); es(mTargetFileName.c_str() ); enl();
@@ -11877,7 +11908,7 @@ void atFile::updateCloneIndices ( vnode * root, vnode * next )
 	error ( message ) ;
 	mRoot -&gt; setOrphan();
 }</t>
-<t tx="T948">#pragma option -w-par  // suppress warning: "Parameter `param' not used."
+<t tx="T950">#pragma option -w-par  // suppress warning: "Parameter `param' not used."
 
 &lt;&lt; File commands includes &gt;&gt;
 &lt;&lt; Declare the fileInfo class &gt;&gt;
@@ -11885,7 +11916,7 @@ void atFile::updateCloneIndices ( vnode * root, vnode * next )
 &lt;&lt; Declare File commands private functions &gt;&gt;
 
 @others</t>
-<t tx="T949">#include &lt;vcl.h&gt;
+<t tx="T951">#include &lt;vcl.h&gt;
 #pragma hdrstop
 
 #include "args.h"
@@ -11909,13 +11940,13 @@ void atFile::updateCloneIndices ( vnode * root, vnode * next )
 
 #include "Leo.h"
 </t>
-<t tx="T950">static String convertToNoweb ( vnode * v ) ;
+<t tx="T952">static String convertToNoweb ( vnode * v ) ;
 static char * convertCodePartToNoweb(
 	vnode *v, char *p, char *limit, String&amp; result) ;
 static char * convertDocPartToNoweb( char *p, char *limit, String&amp; outerResult) ;
 static char * copyPart( char *p, char *limit, String&amp; result) ;</t>
-<t tx="T951">class EBadLeoFile {} ;</t>
-<t tx="T952">void Commands::deleteTagList( void )
+<t tx="T953">class EBadLeoFile {} ;</t>
+<t tx="T954">void Commands::deleteTagList( void )
 {
 	while ( mTagList ) {
 		tag_list * next = mTagList -&gt; next ;
@@ -11923,7 +11954,7 @@ static char * copyPart( char *p, char *limit, String&amp; result) ;</t>
 		mTagList = next ;
 	}
 }</t>
-<t tx="T953">vnode * Commands::getVtag ( long vref )
+<t tx="T955">vnode * Commands::getVtag ( long vref )
 {
 	for ( tag_list * p = mTagList ; p ; p = p -&gt; next )
 		if ( p -&gt; vref == vref )
@@ -11940,7 +11971,7 @@ long Commands::getVtag ( vnode * v )
 
 	return NULL ;
 }</t>
-<t tx="T954">void Commands::newVtag ( long vtag, vnode * v )
+<t tx="T956">void Commands::newVtag ( long vtag, vnode * v )
 {
     // Allocate the node.
     tag_list * p = new tag_list();
@@ -11951,7 +11982,7 @@ long Commands::getVtag ( vnode * v )
     p -&gt; next = mTagList ;
     mTagList = p ;
 }</t>
-<t tx="T955">void Commands::exportMoreText ( void )
+<t tx="T957">void Commands::exportMoreText ( void )
 {
 	vnode * v = this -&gt; currentVnode();
 	if ( v == NULL ) return ;
@@ -11964,7 +11995,7 @@ long Commands::getVtag ( vnode * v )
 	clipboard -&gt; SetTextBuf( s . c_str() );
 	clipboard -&gt; Close();
 }</t>
-<t tx="T956">void Commands::flattenOutline ( TStrings * files )
+<t tx="T958">void Commands::flattenOutline ( TStrings * files )
 {
 	vnode * v = this -&gt; currentVnode() ;
 	if ( v == NULL ) return ;
@@ -12004,7 +12035,7 @@ long Commands::getVtag ( vnode * v )
 	}
 }
 </t>
-<t tx="T957">void Commands::flattenOutlineWithFilename ( String fileName )
+<t tx="T959">void Commands::flattenOutlineWithFilename ( String fileName )
 {
 	TStringList * list = new TStringList();
 	list -&gt; Add(fileName);
@@ -12012,7 +12043,7 @@ long Commands::getVtag ( vnode * v )
     delete list ;
 }
 </t>
-<t tx="T958">void Commands::outlineToNoweb( TStrings * files )
+<t tx="T960">void Commands::outlineToNoweb( TStrings * files )
 {
 	vnode * v = this -&gt; currentVnode() ;
 	if ( v == NULL ) return ;
@@ -12046,7 +12077,7 @@ long Commands::getVtag ( vnode * v )
 	}
 }
 </t>
-<t tx="T959">@ This code converts a vnode to noweb text as follows:
+<t tx="T961">@ This code converts a vnode to noweb text as follows:
 
 Convert @root to &lt; &lt; * &gt; &gt;
 Convert @doc to @
@@ -12095,7 +12126,7 @@ static String convertToNoweb ( vnode * v )
 	return result ;
 }
 </t>
-<t tx="T960">@ The code part should start either with @code or @root or &lt;&lt; section name &gt;&gt;=
+<t tx="T962">@ The code part should start either with @code or @root or &lt;&lt; section name &gt;&gt;=
 @c
 
 static char * convertCodePartToNoweb( vnode *v, char *p, char *limit, String&amp; result)
@@ -12107,7 +12138,7 @@ static char * convertCodePartToNoweb( vnode *v, char *p, char *limit, String&amp
 	return p ;
 }
 </t>
-<t tx="T961">if ( p + 4 &lt; limit &amp;&amp; strn_eq(p, "@code", 5)) {
+<t tx="T963">if ( p + 4 &lt; limit &amp;&amp; strn_eq(p, "@code", 5)) {
 	p = skip_line(p, limit);
 	char * p1 = NULL, *p2 = NULL ;
 	&lt;&lt; point p1 and p2 at section name in v's headline &gt;&gt;
@@ -12140,7 +12171,7 @@ else if ( p + 1 &lt; limit &amp;&amp; strn_eq(p, "&lt;&lt;", 2)) {
 		result += *p++ ;
 }
 </t>
-<t tx="T962">if ( p2 &lt; p ) {
+<t tx="T964">if ( p2 &lt; p ) {
 	char delim = ' ';
 	if ( *p2 == '&lt;' ) { ++ p2 ; delim = '&gt;' ; }
 	if ( *p2 == '"' ) { ++ p2 ; delim = '"' ; }
@@ -12155,7 +12186,7 @@ else if ( p + 1 &lt; limit &amp;&amp; strn_eq(p, "&lt;&lt;", 2)) {
 	}
 }
 </t>
-<t tx="T963">char * hp = v -&gt; headCString();
+<t tx="T965">char * hp = v -&gt; headCString();
 char * hlim = hp + v -&gt; headCStringLength();
 
 hp = skip_ws (hp, hlim);
@@ -12172,7 +12203,7 @@ if ( hp + 2 &lt; hlim &amp;&amp; strn_eq(hp, "&lt;&lt;", 2)) {
 	}
 }
 </t>
-<t tx="T964">static char * convertDocPartToNoweb( char *p, char *limit, String&amp; outerResult)
+<t tx="T966">static char * convertDocPartToNoweb( char *p, char *limit, String&amp; outerResult)
 {
 	String result("") ;
 	// Ignore anything following @space or @doc.
@@ -12193,7 +12224,7 @@ if ( hp + 2 &lt; hlim &amp;&amp; strn_eq(hp, "&lt;&lt;", 2)) {
 	}
 	return p ;
 }</t>
-<t tx="T965">@ This code copies characters to result until the end of the present section is seen.
+<t tx="T967">@ This code copies characters to result until the end of the present section is seen.
 @c
 
 static char * copyPart( char *p, char *limit, String&amp; result)
@@ -12232,7 +12263,7 @@ static char * copyPart( char *p, char *limit, String&amp; result)
 	return p ;
 }
 </t>
-<t tx="T966">// This code leaves p and the outer p2 unchanged.
+<t tx="T968">// This code leaves p and the outer p2 unchanged.
 {
 	char * p1 = p ;
 	char * p2 = skip_line (p, limit);
@@ -12243,7 +12274,7 @@ static char * copyPart( char *p, char *limit, String&amp; result)
 		else
 			++ p1 ;
 }</t>
-<t tx="T967">@ Almost all the time spent in this command is spent here.
+<t tx="T969">@ Almost all the time spent in this command is spent here.
 @c
 
 vnode * Commands::convertMoreStringsToOutlineAfter
@@ -12273,7 +12304,7 @@ vnode * Commands::convertMoreStringsToOutlineAfter
 
     return theRoot ;
 }</t>
-<t tx="T968">vnode * theRoot = NULL ;
+<t tx="T970">vnode * theRoot = NULL ;
 vnode * lastVnode = NULL ;
 vnode * v = NULL ;  // The new vnode.
 long index = 0 ;
@@ -12293,7 +12324,7 @@ if ( count &gt; 0 ) {
 	firstLevel = this -&gt; moreHeadlineLevel ( cs, &amp;junkFlag );
 }
 </t>
-<t tx="T969">assert(level &gt;= 0 );
+<t tx="T971">assert(level &gt;= 0 );
 
 if ( lastVnode == NULL )
 	theRoot = v = firstVnode -&gt; insertAfter ( ) ;
@@ -12315,7 +12346,7 @@ else {
 
 lastVnode = v ;
 lastLevel = level ;</t>
-<t tx="T970">{
+<t tx="T972">{
 	char * cString = cs ;
 	
 	while ( *cString == '\t' )
@@ -12327,7 +12358,7 @@ lastLevel = level ;</t>
 	v -&gt; treeNode() -&gt; Text = String ( cString ) ;
 }
 </t>
-<t tx="T971">bodyLines = 0 ;
+<t tx="T973">bodyLines = 0 ;
 ++ index ;  // Skip the headline.
 
 while ( index &lt; count )
@@ -12346,7 +12377,7 @@ while ( index &lt; count )
     ++ index ;
 }
 </t>
-<t tx="T972">if ( bodyLines &gt; 0 )
+<t tx="T974">if ( bodyLines &gt; 0 )
 {
 	String body ( "" ) ;
 
@@ -12359,7 +12390,7 @@ while ( index &lt; count )
 	v -&gt; t() -&gt; setTnodeText ( body ) ;
 }
 </t>
-<t tx="T973">@ On entry, files contains at most one file to convert.
+<t tx="T975">@ On entry, files contains at most one file to convert.
 @c
 
 void Commands::importMoreText ( TStrings * files )
@@ -12387,7 +12418,7 @@ void Commands::importMoreText ( TStrings * files )
 		alert ( s . c_str() ) ;
     }
 }</t>
-<t tx="T974">@ This code is _very_ fast.
+<t tx="T976">@ This code is _very_ fast.
 @c
 
 try {
@@ -12400,7 +12431,7 @@ catch ( ... )
 	alert ( s . c_str() );
 	return ;
 }</t>
-<t tx="T975">@ return the headline level of s, or -1 if the string is not a MORE headline.
+<t tx="T977">@ return the headline level of s, or -1 if the string is not a MORE headline.
 @c
 
 long Commands::moreHeadlineLevel ( char * s, bool * plusFlag )
@@ -12419,7 +12450,7 @@ long Commands::moreHeadlineLevel ( char * s, bool * plusFlag )
     else
         return -1 ;
 }</t>
-<t tx="T976">bool Commands::stringsAreValidMoreFile ( TStrings * strings )
+<t tx="T978">bool Commands::stringsAreValidMoreFile ( TStrings * strings )
 {
     long count = strings -&gt; Count ;
 	if ( count &lt; 1 ) return FALSE ;
@@ -12453,7 +12484,7 @@ long Commands::moreHeadlineLevel ( char * s, bool * plusFlag )
 
     return TRUE ;
 }</t>
-<t tx="T977">@ This class buffers all information from an outline while a file is being read.  The setMaxTnodeIndex method creates the mTnodes array used to associate tnodes with tnode indices.  The createVnode method creates a vnode and also creates its tnode if it has not already been created.  The finishOutline completes the construction of the outline.
+<t tx="T979">@ This class buffers all information from an outline while a file is being read.  The setMaxTnodeIndex method creates the mTnodes array used to associate tnodes with tnode indices.  The createVnode method creates a vnode and also creates its tnode if it has not already been created.  The finishOutline completes the construction of the outline.
 
 Vnode tags are not part of vnodes:  they are created by this class and destroyed when this class is destroyed.
 @c
@@ -12495,7 +12526,7 @@ public:
 	void setNumberOfTnodes ( long n ) ;
 };
 </t>
-<t tx="T978">fileInfo::fileInfo ( TLeoForm * leoForm, Commands * commands )
+<t tx="T980">fileInfo::fileInfo ( TLeoForm * leoForm, Commands * commands )
 {
 	mLeoForm = leoForm ;
 	mCommands = commands ;
@@ -12515,7 +12546,7 @@ fileInfo::~fileInfo ( void )
 	mCommands -&gt; deleteTagList();
 }
 </t>
-<t tx="T979">vnode * fileInfo::createVnode ( 
+<t tx="T981">vnode * fileInfo::createVnode ( 
 	vnode * parent, vnode * back, String headline, 
 	short attrib, long tref, long vtag,
 	String xfile, long xindex )
@@ -12553,18 +12584,18 @@ fileInfo::~fileInfo ( void )
 	return v ;
 }
 </t>
-<t tx="T980">v = mCommands -&gt; rootVnode();
+<t tx="T982">v = mCommands -&gt; rootVnode();
 assert(v);
 v -&gt; setT(t) ;  // deletes previous root tnode.
 mRootVnode = v ;
 </t>
-<t tx="T981">void fileInfo::finishOutline ( void )
+<t tx="T983">void fileInfo::finishOutline ( void )
 {
 	&lt;&lt; Set attributes and icons for all nodes &gt;&gt;
 	&lt;&lt; Create join lists of all vnodes &gt;&gt;
 	&lt;&lt; Set the current node &gt;&gt;
 }</t>
-<t tx="T982">this -&gt; mCommands -&gt; BeginUpdate();
+<t tx="T984">this -&gt; mCommands -&gt; BeginUpdate();
 
 for ( vnode * v = mRootVnode ; v ; v = v -&gt; threadNext() )
 {
@@ -12578,7 +12609,7 @@ for ( vnode * v = mRootVnode ; v ; v = v -&gt; threadNext() )
 
 this -&gt; mCommands -&gt; EndUpdate();
 </t>
-<t tx="T983">@ We can create all join lists in a first pass through all vnodes using the mJoinHead field in each tnode.  The second pass circularizes each list.
+<t tx="T985">@ We can create all join lists in a first pass through all vnodes using the mJoinHead field in each tnode.  The second pass circularizes each list.
 @c
 
 for ( vnode * v = mRootVnode ; v ; v = v -&gt; threadNext() )
@@ -12615,7 +12646,7 @@ for ( vnode * v = mRootVnode ; v ; v = v -&gt; threadNext() )
 	last -&gt; setJoinList(head);
 }
 </t>
-<t tx="T984">@ Initializing the current vnode is tricky.  We must not "update" the old current node, namely the new root.
+<t tx="T986">@ Initializing the current vnode is tricky.  We must not "update" the old current node, namely the new root.
 
 Leo2: we do not set the current node here, because it might be a dummy node. We must wait until we have a complete node so that the event handler will set the body text properly.
 @c
@@ -12631,7 +12662,7 @@ mCommands -&gt; setCurrentVnode ( mCurrentVnode ) ;
     mCommands -&gt; selectVnode ( mCurrentVnode ) ;
 #endif
 </t>
-<t tx="T985">@ This method finishes pasting the outline from the clipboard.
+<t tx="T987">@ This method finishes pasting the outline from the clipboard.
 @c
 
 vnode * fileInfo::finishPaste ( void )
@@ -12650,7 +12681,7 @@ vnode * fileInfo::finishPaste ( void )
 	mCommands -&gt; selectVnode ( mCurrentVnode ) ;
 	return mCurrentVnode ;
 }</t>
-<t tx="T986">if ( mTnodesSeen != mNumberOfTnodes )
+<t tx="T988">if ( mTnodesSeen != mNumberOfTnodes )
 {
 	String s("Bad tnode count.  Seen: ") ;
 	s += mTnodesSeen ;
@@ -12659,7 +12690,7 @@ vnode * fileInfo::finishPaste ( void )
 	alert( s . c_str() );
 }
 </t>
-<t tx="T987">for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNext() )
+<t tx="T989">for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNext() )
 {
 	if ( v -&gt; isExpandedBitSet() )
     	v -&gt; treeNode() -&gt; Expand ( FALSE ) ;
@@ -12671,7 +12702,7 @@ vnode * fileInfo::finishPaste ( void )
 	#endif
 }
 </t>
-<t tx="T988">@ We can create all join lists in a first pass through all vnodes using the mJoinHead field in each tnode.  The second pass circularizes each list.
+<t tx="T990">@ We can create all join lists in a first pass through all vnodes using the mJoinHead field in each tnode.  The second pass circularizes each list.
 @c
 
 for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNext() )
@@ -12708,7 +12739,7 @@ for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNe
 	last -&gt; setJoinList(head);
 }
 </t>
-<t tx="T989">@ This must be done after the join lists have been created.  The saved clone bit is unreliable for pasted nodes.
+<t tx="T991">@ This must be done after the join lists have been created.  The saved clone bit is unreliable for pasted nodes.
 @c
 
 for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNext() ) {
@@ -12716,7 +12747,7 @@ for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNe
 	v -&gt; clearDirty () ;  // Calls setIcon();
 }
 </t>
-<t tx="T990">@ The entry for tnode i is stored at mTnodes [ i - 1 ].  An index of 0 represents NULL.
+<t tx="T992">@ The entry for tnode i is stored at mTnodes [ i - 1 ].  An index of 0 represents NULL.
 @c
 
 tnode * fileInfo::getT ( long index )
@@ -12724,7 +12755,7 @@ tnode * fileInfo::getT ( long index )
 	return ( index &lt; 1 || index &gt; mMaxTnodeIndex ) ?
 		NULL : mTnodes [ index - 1 ] ;
 }</t>
-<t tx="T991">void fileInfo::newCloneWindow (
+<t tx="T993">void fileInfo::newCloneWindow (
 	long vref, long top, long left, long height, long width )
 {
 #if USE_CLONE_WINDOW
@@ -12750,7 +12781,7 @@ tnode * fileInfo::getT ( long index )
 #endif
 }
 </t>
-<t tx="T992">tnode * fileInfo::newTnode ( long index )
+<t tx="T994">tnode * fileInfo::newTnode ( long index )
 {
 	if ( index &lt;= 0 || index &gt; mMaxTnodeIndex ||
 		mTnodes [ index - 1 ] != NULL
@@ -12771,7 +12802,7 @@ tnode * fileInfo::getT ( long index )
 	}
 }
 </t>
-<t tx="T993">void fileInfo::setMaxTnodeIndex ( long n )
+<t tx="T995">void fileInfo::setMaxTnodeIndex ( long n )
 {
 	mMaxTnodeIndex = n ;
 	mCommands -&gt; mMaxTnodeIndex = n ;
@@ -12782,11 +12813,11 @@ tnode * fileInfo::getT ( long index )
 	for ( long i = 0 ; i &lt;= n ; ++ i )
 		mTnodes [i] = NULL ;
 }</t>
-<t tx="T994">void fileInfo::setNumberOfTnodes ( long n )
+<t tx="T996">void fileInfo::setNumberOfTnodes ( long n )
 {
 	mNumberOfTnodes = n ;
 }</t>
-<t tx="T995">bool Commands::getBool ( void )
+<t tx="T997">bool Commands::getBool ( void )
 {
 	skipWs();
 	char c = *mLinePtr++ ;
@@ -12879,7 +12910,7 @@ bool Commands::matchChar ( char c )
 	}
 }
 </t>
-<t tx="T996">void Commands::getClipboardHeader ( fileInfo * info )
+<t tx="T998">void Commands::getClipboardHeader ( fileInfo * info )
 {
 	// Set defaults.
 	bool maxIndexSeen = FALSE ;
@@ -12916,7 +12947,7 @@ bool Commands::matchChar ( char c )
 	if ( ! maxIndexSeen )
 		info -&gt; setMaxTnodeIndex ( 0 ) ;
 }</t>
-<t tx="T997">void Commands::getCloneWindows ( fileInfo * info )
+<t tx="T999">void Commands::getCloneWindows ( fileInfo * info )
 {
 	// The clone_windows tag is optional.
 	if ( ! matchTag("&lt;clone_windows&gt;") ) return ;
@@ -12934,7 +12965,7 @@ bool Commands::matchChar ( char c )
 	getTag("&lt;/clone_windows&gt;");
 }
 </t>
-<t tx="T998">String Commands::getEscapedString ( void )
+<t tx="T1000">String Commands::getEscapedString ( void )
 {
 	if ( mTextBuf == NULL ) {
 		&lt;&lt; allocate mTextBuf &gt;&gt;
@@ -12959,11 +12990,11 @@ bool Commands::matchChar ( char c )
 
 	return this -&gt; xmlUnescape ( mTextBuf ) ;
 }</t>
-<t tx="T999">mTextBufSize = 1000 ;
+<t tx="T1001">mTextBufSize = 1000 ;
 mTextBuf = new char [ mTextBufSize ] ;
 mTextPtr = mTextBuf ;
 mTextLimit = mTextBuf + mTextBufSize ;</t>
-<t tx="T1000">{
+<t tx="T1002">{
 	long offset = mTextPtr - mTextBuf ;
 	char * oldBuf = mTextBuf ;
 
@@ -12983,7 +13014,7 @@ mTextLimit = mTextBuf + mTextBufSize ;</t>
 
 	if ( oldBuf ) delete [] oldBuf ;
 }</t>
-<t tx="T1001">#define match_flag(a, b)\
+<t tx="T1003">#define match_flag(a, b)\
 	if ( matchTag(b) ) { getTag("=\""); a=getBool(); getDoubleQuote(); }
 
 void Commands::getFindPanelSettings ( void )
@@ -13031,7 +13062,7 @@ void Commands::getFindPanelSettings ( void )
 
 #undef match_flag
 </t>
-<t tx="T1002">batch_flag = FALSE ;
+<t tx="T1004">batch_flag = FALSE ;
 wrap_flag = FALSE ;
 whole_word_flag = FALSE ;
 ignore_case_flag = FALSE ;
@@ -13043,7 +13074,7 @@ mark_changes_flag = FALSE ;
 mark_finds_flag = FALSE ;
 reverse_flag = FALSE ;
 </t>
-<t tx="T1003">void Commands::getGlobals ( fileInfo * info )
+<t tx="T1005">void Commands::getGlobals ( fileInfo * info )
 {
 	long top, left, height, width ;
 
@@ -13070,11 +13101,11 @@ reverse_flag = FALSE ;
 	getTag("&lt;/globals&gt;") ;
 }
 </t>
-<t tx="T1004">assert ( mLeoForm ) ;
+<t tx="T1006">assert ( mLeoForm ) ;
 mLeoForm -&gt; SetBounds(left, top, width, height) ;</t>
-<t tx="T1005">if ( SherlockForm )
+<t tx="T1007">if ( SherlockForm )
 	SherlockForm -&gt; SetBounds(left, top, width, height) ;</t>
-<t tx="T1006">double Commands::getLeoFile ( TLeoForm * leoForm )
+<t tx="T1008">double Commands::getLeoFile ( TLeoForm * leoForm )
 {
 	fileInfo * info = new fileInfo( leoForm, this );
 	try {
@@ -13115,7 +13146,7 @@ mLeoForm -&gt; SetBounds(left, top, width, height) ;</t>
 	return ratio ;
 }
 </t>
-<t tx="T1007">void Commands::getLeoHeader ( fileInfo * info )
+<t tx="T1009">void Commands::getLeoHeader ( fileInfo * info )
 {
 	// Set defaults.
 	bool maxIndexSeen = FALSE ;
@@ -13157,7 +13188,7 @@ mLeoForm -&gt; SetBounds(left, top, width, height) ;</t>
 		info -&gt; setMaxTnodeIndex ( 0 ) ;
 }
 </t>
-<t tx="T1008">@ This method reads a Leo outline from string s.
+<t tx="T1010">@ This method reads a Leo outline from string s.
 @c
 
 vnode * Commands::getLeoOutline ( String * s )
@@ -13204,7 +13235,7 @@ vnode * Commands::getLeoOutline ( String * s )
 	return v ;
 }
 </t>
-<t tx="T1009">void Commands::getPosition ( long *top, long *left, long *height, long *width )
+<t tx="T1011">void Commands::getPosition ( long *top, long *left, long *height, long *width )
 {
 	*top = *left = *height = *width = 0 ;
 	// New in version 1.7: attributes may appear in any order.
@@ -13225,7 +13256,7 @@ vnode * Commands::getLeoOutline ( String * s )
 	}
 }
 </t>
-<t tx="T1010">void Commands::getPrefs ( fileInfo * info )
+<t tx="T1012">void Commands::getPrefs ( fileInfo * info )
 {
 	TLeoForm * form = this -&gt; mLeoForm ;
 	PERM_ASSERT(form);
@@ -13309,7 +13340,7 @@ vnode * Commands::getLeoOutline ( String * s )
 	}
 }
 </t>
-<t tx="T1011">// Must match longer tags before short prefixes.
+<t tx="T1013">// Must match longer tags before short prefixes.
 if ( matchTag("CWEB") ) {
 	form -&gt; mTargetLanguage = cweb_language ;
 	getDoubleQuote();
@@ -13349,10 +13380,10 @@ else if ( matchTag("Python") ) {
 
 mSyntaxMemo -&gt; Parser1 = TSMParser ( form -&gt; mTargetLanguage ) ;
 </t>
-<t tx="T1012">mLeoForm -&gt; mDefaultDirectory = getEscapedString();
+<t tx="T1014">mLeoForm -&gt; mDefaultDirectory = getEscapedString();
 SetCurrentDir ( mLeoForm -&gt; mDefaultDirectory ) ;
 </t>
-<t tx="T1013">String s = getEscapedString();
+<t tx="T1015">String s = getEscapedString();
 getTag("&lt;/TSyntaxMemo_options&gt;");
 
 // Update the syntax settigns immediately.
@@ -13362,7 +13393,7 @@ assert(mSyntaxMemoParser1);
 	mSyntaxMemoParser1 -&gt; UpdateEditors();
 #endif
 </t>
-<t tx="T1014">void Commands::getSize ( long *height, long *width )
+<t tx="T1016">void Commands::getSize ( long *height, long *width )
 {
 	*height = *width = 0 ;
 	// New in version 1.7: attributes may appear in any order.
@@ -13377,7 +13408,7 @@ assert(mSyntaxMemoParser1);
 	}
 }
 </t>
-<t tx="T1015">void Commands::getTnodes ( fileInfo * info )
+<t tx="T1017">void Commands::getTnodes ( fileInfo * info )
 {
 	if ( matchTag("&lt;tnodes&gt;") ) {
 		while ( matchTag("&lt;t") )
@@ -13385,7 +13416,7 @@ assert(mSyntaxMemoParser1);
 		getTag ("&lt;/tnodes&gt;");
 	}
 }</t>
-<t tx="T1016">void Commands::getTnode ( fileInfo * info )
+<t tx="T1018">void Commands::getTnode ( fileInfo * info )
 {
 	// we have already matched &lt;t.
 	bool rtf = FALSE ;
@@ -13426,7 +13457,7 @@ assert(mSyntaxMemoParser1);
 	getTag ("&lt;/t&gt;");
 }
 </t>
-<t tx="T1017">void Commands::getVnodes ( fileInfo * info )
+<t tx="T1019">void Commands::getVnodes ( fileInfo * info )
 {
 	vnode * parent = NULL, * back = NULL ;
 
@@ -13443,7 +13474,7 @@ assert(mSyntaxMemoParser1);
 	getTag ("&lt;/vnodes&gt;");
 }
 </t>
-<t tx="T1018">vnode * Commands::getVnode ( fileInfo * info, vnode * parent, vnode * back )
+<t tx="T1020">vnode * Commands::getVnode ( fileInfo * info, vnode * parent, vnode * back )
 {
 	vnode * v = NULL ;  // The newly created vnode.
 	tnode dummy_t(0,"");
@@ -13513,7 +13544,7 @@ assert(mSyntaxMemoParser1);
 	return v ;
 }
 </t>
-<t tx="T1019">// The a=" has already been seen.
+<t tx="T1021">// The a=" has already been seen.
 for (;;) {
 	if      ( matchChar('C') ) dummy.initClonedBit(TRUE);
 	else if ( matchChar('D') ) dummy.setDummy();
@@ -13526,7 +13557,7 @@ for (;;) {
 }
 getDoubleQuote();
 </t>
-<t tx="T1020">void Commands::skipWs ( void )
+<t tx="T1022">void Commands::skipWs ( void )
 {
 	while ( mLinePtr &lt; mLineLimit ) {
 		char c = *mLinePtr ;
@@ -13539,7 +13570,7 @@ getDoubleQuote();
 	if ( mLinePtr &gt;= mLineLimit )
 		throw EBadLeoFile() ;
 }</t>
-<t tx="T1021">@ This routine is part of the read logic, and as such must handle raw '\r' and '\n' characters.  This is an adjustment to help TSyntaxMemo recognize lines properly.
+<t tx="T1023">@ This routine is part of the read logic, and as such must handle raw '\r' and '\n' characters.  This is an adjustment to help TSyntaxMemo recognize lines properly.
 @c
 
 void Commands::skipWsAndNl ( void )
@@ -13558,7 +13589,7 @@ void Commands::skipWsAndNl ( void )
 		throw EBadLeoFile() ;
 }
 </t>
-<t tx="T1022">void Commands::open ( String fileName )
+<t tx="T1024">void Commands::open ( String fileName )
 {
 	mFileName = new String( fileName ) ;  // Do not delete this!
 	mLeoForm -&gt; Caption = fileName ;
@@ -13576,11 +13607,11 @@ void Commands::skipWsAndNl ( void )
 	&lt;&lt; Delete the TFileStream and the file buffer &gt;&gt;
 }
 </t>
-<t tx="T1023">mFileStream = new TFileStream ( fileName, fmOpenRead | fmShareDenyWrite ) ;
+<t tx="T1025">mFileStream = new TFileStream ( fileName, fmOpenRead | fmShareDenyWrite ) ;
 mFileBufSize = 1024 * 16 ;
 mFileBuf = new char [ mFileBufSize ] ;
 </t>
-<t tx="T1024">@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
+<t tx="T1026">@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
 @c
 
 String dir = ExtractFileDir ( fileName ) ;
@@ -13589,7 +13620,7 @@ if ( dir . Length() &gt; 0 ) {
 	SetCurrentDir ( dir ) ;
 }
 </t>
-<t tx="T1025">delete mFileStream ;
+<t tx="T1027">delete mFileStream ;
 mFileStream = NULL ;
 
 delete [] mFileBuf ;
@@ -13597,7 +13628,7 @@ mFileBuf = NULL ;
 
 mFileBufSize = 0 ;
 </t>
-<t tx="T1026">@ This method fills a line buffer from a TFileStream.  There is no maximum size of a line:  we reallocate mLineBuf if needed.  We return FALSE if no more lines remain.  Otherwise, mLinePtr points to the start of the line and mLineLimit points to the character after the newline that ends the line.
+<t tx="T1028">@ This method fills a line buffer from a TFileStream.  There is no maximum size of a line:  we reallocate mLineBuf if needed.  We return FALSE if no more lines remain.  Otherwise, mLinePtr points to the start of the line and mLineLimit points to the character after the newline that ends the line.
 
 8/25/99: This routine now removes all body_ignored_newline characters.
 @c
@@ -13637,7 +13668,7 @@ bool Commands::readLine ( void )
 	}
 }
 </t>
-<t tx="T1027">{
+<t tx="T1029">{
 	unsigned long increment = 10000 ;
 	long offset = mLinePtr - mLineBuf ;
 	char * oldBuf = mLineBuf ;
@@ -13658,7 +13689,7 @@ bool Commands::readLine ( void )
 
 	if ( oldBuf ) delete [] oldBuf ;
 }</t>
-<t tx="T1028">if ( mUsingClipboard ) {
+<t tx="T1030">if ( mUsingClipboard ) {
 	// Get the next line from the memory stream.
 	if ( mMemoryStream &amp;&amp; ! mFileEmptyFlag ) {
 		assert( mFileBufSize &gt; 0 ) ;
@@ -13680,7 +13711,7 @@ else {
 	}
 	else mFileEmptyFlag = TRUE ;
 }</t>
-<t tx="T1029">if ( mLinePtr == mLineBuf ) {
+<t tx="T1031">if ( mLinePtr == mLineBuf ) {
 	mLineLimit = mLinePtr ;
 	return FALSE ;
 }
@@ -13694,7 +13725,7 @@ else {
 	return TRUE ;
 }
 </t>
-<t tx="T1030">String Commands::xmlUnescape ( char * cs )
+<t tx="T1032">String Commands::xmlUnescape ( char * cs )
 {
 	char * cs1 = cs;
 
@@ -13747,7 +13778,7 @@ else {
 	return s2 ;
 }
 </t>
-<t tx="T1031">void Commands::assignFileIndices ( void )
+<t tx="T1033">void Commands::assignFileIndices ( void )
 {
 	for ( vnode * v = this -&gt; rootVnode(); v ; v = v -&gt; threadNext() )
 	{
@@ -13760,7 +13791,7 @@ else {
 		else t -&gt; setFileIndex ( 0 ) ;
 	}
 }</t>
-<t tx="T1032">void Commands::compactFileIndices ( void )
+<t tx="T1034">void Commands::compactFileIndices ( void )
 {
 	mMaxTnodeIndex = 0 ;
 	
@@ -13780,7 +13811,7 @@ else {
 		}
 	}
 }</t>
-<t tx="T1033">@ This method sets policy for when we should compact a file before doing a Save Command.
+<t tx="T1035">@ This method sets policy for when we should compact a file before doing a Save Command.
 @c
 
 bool Commands::shouldCompactOnSave ( void )
@@ -13790,7 +13821,7 @@ bool Commands::shouldCompactOnSave ( void )
 	long tnodesUnused = mMaxTnodeIndex - tnodesUsed ;
 	return ( tnodesUnused &gt; 100 ) ;
 }</t>
-<t tx="T1034">this -&gt; clearAllVisited();
+<t tx="T1036">this -&gt; clearAllVisited();
 
 for ( vnode * v = this -&gt; rootVnode(); v ; v = v -&gt; threadNext() )
 {
@@ -13801,7 +13832,7 @@ for ( vnode * v = this -&gt; rootVnode(); v ; v = v -&gt; threadNext() )
 	}
 }
 </t>
-<t tx="T1035">@ All output eventually comes to put (char *)
+<t tx="T1037">@ All output eventually comes to put (char *)
 @c
 
 void Commands::put ( char * s )
@@ -13865,7 +13896,7 @@ void Commands::put ( double n )
 	put ( String ( n ) ) ;
 }
 </t>
-<t tx="T1036">@ mFileStream will be NULL if there is any file error.
+<t tx="T1038">@ mFileStream will be NULL if there is any file error.
 @c
 
 if ( mMemoryStream == NULL ) return ;
@@ -13880,7 +13911,7 @@ catch (...)
 	String s("Error writing to clipboard") ;
 	alert ( s . c_str() ) ;
 }</t>
-<t tx="T1037">@ mFileStream will be NULL if there is any file error.
+<t tx="T1039">@ mFileStream will be NULL if there is any file error.
 @c
 
 if ( mFileStream == NULL ) return ;
@@ -13896,7 +13927,7 @@ catch (...)
 	String s = String("Error writing to ") + ( * mFileName ) ;
 	alert ( s . c_str() ) ;
 }</t>
-<t tx="T1038">void Commands::putClipboardHeader ( void )
+<t tx="T1040">void Commands::putClipboardHeader ( void )
 {
 	long tnodes = 0;
 	&lt;&lt; count the number of tnodes &gt;&gt;
@@ -13909,7 +13940,7 @@ catch (...)
 			put( mMaxTnodeIndex ); put_double_quote();
 	put("/&gt;"); put_nl();
 }</t>
-<t tx="T1039">this -&gt; clearAllVisited();
+<t tx="T1041">this -&gt; clearAllVisited();
 
 // Count the vnode and tnodes.
 vnode * current = this -&gt; currentVnode() ;
@@ -13925,7 +13956,7 @@ for ( vnode * v = current ; v &amp;&amp; v != after ; v = v -&gt; threadNext() )
 		++tnodes ;
 	}
 }</t>
-<t tx="T1040">void Commands::putCloneWindows ( void )
+<t tx="T1042">void Commands::putCloneWindows ( void )
 {
 #if USE_CLONE_WINDOW
 	if ( mLeoForm == NULL || mLeoForm -&gt; mCloneFormList == NULL ) return ;
@@ -13951,7 +13982,7 @@ for ( vnode * v = current ; v &amp;&amp; v != after ; v = v -&gt; threadNext() )
 #endif
 }
 </t>
-<t tx="T1041">long top = clone -&gt; Top;
+<t tx="T1043">long top = clone -&gt; Top;
 long left = clone -&gt; Left;
 long height = clone -&gt; Height;
 long width = clone -&gt; Width;
@@ -13963,7 +13994,7 @@ put("&lt;global_window_position");
 	put(" width=\"");  put( width ); put_double_quote();
 put("/&gt;"); put_nl();
 </t>
-<t tx="T1042">@ Surprisingly, the call to xmlEscape here is _much_ faster than calling put for each characters of s.c_str().
+<t tx="T1044">@ Surprisingly, the call to xmlEscape here is _much_ faster than calling put for each characters of s.c_str().
 @c
 
 void Commands::putEscapedString ( String s )
@@ -13971,7 +14002,7 @@ void Commands::putEscapedString ( String s )
    put ( this -&gt; xmlEscape ( s ) ) ;
 }
 </t>
-<t tx="T1043">#define put_flag(a,b) if (a) { put(" "); put(b); put("=\"1\""); }
+<t tx="T1045">#define put_flag(a,b) if (a) { put(" "); put(b); put("=\"1\""); }
 
 void Commands::putFindSettings ( void )
 {
@@ -13999,7 +14030,7 @@ void Commands::putFindSettings ( void )
 
 #undef put_flag
 </t>
-<t tx="T1044">void Commands::putGlobals ( void )
+<t tx="T1046">void Commands::putGlobals ( void )
 {
 	long top, left, height, width ;
 
@@ -14010,7 +14041,7 @@ void Commands::putFindSettings ( void )
 		&lt;&lt; put the position of the log window &gt;&gt;
 	put("&lt;/globals&gt;"); put_nl();
 }</t>
-<t tx="T1045">{
+<t tx="T1047">{
 	long treeViewH = mTreeView -&gt; Height ;
 	long richViewH = mSyntaxMemo -&gt; Height ;
 	double ratio = double(treeViewH) / (double) (treeViewH + richViewH) ;
@@ -14026,7 +14057,7 @@ void Commands::putFindSettings ( void )
 	put_double_quote();
 }
 </t>
-<t tx="T1046">top = mLeoForm -&gt; Top ;
+<t tx="T1048">top = mLeoForm -&gt; Top ;
 left = mLeoForm -&gt; Left;
 height = mLeoForm -&gt; Height ;
 width = mLeoForm -&gt; Width ;
@@ -14039,7 +14070,7 @@ put("&lt;global_window_position");
 	put(" width=\"");  put( width ); put_double_quote();
 put("/&gt;"); put_nl();
 </t>
-<t tx="T1047">top = SherlockForm -&gt; Top ;
+<t tx="T1049">top = SherlockForm -&gt; Top ;
 left = SherlockForm -&gt; Left;
 height = SherlockForm -&gt; Height ;
 width = SherlockForm -&gt; Width ;
@@ -14052,7 +14083,7 @@ put("&lt;global_log_window_position");
 	put(" width=\"");  put( width ); put_double_quote();
 put("/&gt;"); put_nl();
 </t>
-<t tx="T1048">void Commands::putHeader ( void )
+<t tx="T1050">void Commands::putHeader ( void )
 {
 	long tnodes = 0, clone_windows = 0 ;
 	#if 0 // These counts are not used in Leo2.
@@ -14067,7 +14098,7 @@ put("/&gt;"); put_nl();
 	put("/&gt;"); put_nl();
 }
 </t>
-<t tx="T1049">this -&gt; clearAllVisited();
+<t tx="T1051">this -&gt; clearAllVisited();
 
 // Count the vnode and tnodes.
 for ( vnode * v = this -&gt; rootVnode(); v ; v = v -&gt; threadNext() ) {
@@ -14094,7 +14125,7 @@ for ( vnode * v = this -&gt; rootVnode(); v ; v = v -&gt; threadNext() ) {
     }
 #endif  // USE_CLONE_WINDOW
 </t>
-<t tx="T1050">@ This method writes a Leo outline to the clipboard.
+<t tx="T1052">@ This method writes a Leo outline to the clipboard.
 @c
 
 bool Commands::putLeoOutline ( TMemoryStream * ms )
@@ -14115,7 +14146,7 @@ bool Commands::putLeoOutline ( TMemoryStream * ms )
 	return ok ;
 }
 </t>
-<t tx="T1051">void Commands::putPrefs ( void )
+<t tx="T1053">void Commands::putPrefs ( void )
 {
 	TLeoForm * form = this -&gt; mLeoForm ;
 	PERM_ASSERT(form);
@@ -14155,7 +14186,7 @@ bool Commands::putLeoOutline ( TMemoryStream * ms )
 	put_nl(); put("&lt;/preferences&gt;"); put_nl();
 }
 </t>
-<t tx="T1052">String key = " defaultTargetLanguage=\"" ;
+<t tx="T1054">String key = " defaultTargetLanguage=\"" ;
 
 switch ( default_target_language ) {
 	case c_language:		put(key); put("C\""); break;
@@ -14170,25 +14201,25 @@ switch ( default_target_language ) {
 	default: put("Plain\"");
 }
 </t>
-<t tx="T1053">if ( mLeoForm -&gt; mDefaultDirectory . Length() &gt; 0 ) {
+<t tx="T1055">if ( mLeoForm -&gt; mDefaultDirectory . Length() &gt; 0 ) {
 	put("&lt;defaultDirectory&gt;");
 	putEscapedString ( mLeoForm -&gt; mDefaultDirectory ) ;
 	put ("&lt;/defaultDirectory&gt;");
 }
 </t>
-<t tx="T1054">void Commands::putProlog ( void )
+<t tx="T1056">void Commands::putProlog ( void )
 {
 	put(prolog_string); put_nl();
 	// internal or external DTD goes here
 	put("&lt;leo_file&gt;"); put_nl();
 }
 </t>
-<t tx="T1055">void Commands::putPostlog ( void )
+<t tx="T1057">void Commands::putPostlog ( void )
 {
 	put("&lt;/leo_file&gt;"); put_nl();
 }
 </t>
-<t tx="T1056">@ This method puts all tnodes in index order.  All tnode indices must have been assigned at this point.
+<t tx="T1058">@ This method puts all tnodes in index order.  All tnode indices must have been assigned at this point.
 @c
 
 void Commands::putTnodes ( void )
@@ -14246,7 +14277,7 @@ void Commands::putTnodes ( void )
 	delete [] tnodes ;
 }
 </t>
-<t tx="T1057">void Commands::put ( tnode * t )
+<t tx="T1059">void Commands::put ( tnode * t )
 {
 	assert(t);
 	String bodyString = t -&gt; bodyString();
@@ -14268,7 +14299,7 @@ void Commands::putTnodes ( void )
 	put("&lt;/t&gt;"); put_nl();
 }
 </t>
-<t tx="T1058">@ This method puts all vnodes by starting the recursion.  put(vnode*) will write all vnodes in the order in which they appear in the outline.
+<t tx="T1060">@ This method puts all vnodes by starting the recursion.  put(vnode*) will write all vnodes in the order in which they appear in the outline.
 @c
 
 void Commands::putVnodes ( void )
@@ -14301,7 +14332,7 @@ void Commands::putVnodes ( void )
 	put("&lt;/vnodes&gt;"); put_nl();
 }
 </t>
-<t tx="T1059">@ When forceFlag is TRUE we generate full vnodes for v's tree.  Otherwise, if dummyFlag is TRUE we generate dummy vnodes only.  In particular, we generate dummy vnodes for all valid, non-ignored @file nodes.
+<t tx="T1061">@ When forceFlag is TRUE we generate full vnodes for v's tree.  Otherwise, if dummyFlag is TRUE we generate dummy vnodes only.  In particular, we generate dummy vnodes for all valid, non-ignored @file nodes.
 
 atFile::write has already set the orphan bit for some nodes, including all invalid @file nodes.  However, we must make a separate check for atIgnored nodes.
 @c
@@ -14342,7 +14373,7 @@ void Commands::put ( vnode * v, vnode * topVnode, bool forceFlag, bool dummyFlag
 	delete at ;
 }
 </t>
-<t tx="T1060">tnode * t = v -&gt; t();
+<t tx="T1062">tnode * t = v -&gt; t();
 
 if ( t &amp;&amp; t -&gt; hasBody() || v -&gt; joinList() != NULL )
 {
@@ -14354,7 +14385,7 @@ if ( t &amp;&amp; t -&gt; hasBody() || v -&gt; joinList() != NULL )
 		alert("error writing file (bad vnode)!  Try using the Save To command");
 	}
 }</t>
-<t tx="T1061">#if USE_CLONE_WINDOW
+<t tx="T1063">#if USE_CLONE_WINDOW
 
 // See if any clone window has this vnode as its master.
 if ( mLeoForm )
@@ -14377,7 +14408,7 @@ if ( mLeoForm )
 
 #endif
 </t>
-<t tx="T1062">@ Dummy vnodes carry all attributes.
+<t tx="T1064">@ Dummy vnodes carry all attributes.
 @c
 
 vnode * current = this -&gt; currentVnode();
@@ -14399,7 +14430,7 @@ if (
 	put_double_quote();
 }
 </t>
-<t tx="T1063">@ Dummy vnodes have no headline text.
+<t tx="T1065">@ Dummy vnodes have no headline text.
 @c
 
 assert(v -&gt; treeNode());
@@ -14411,7 +14442,7 @@ if ( headString . Length() &gt; 0 ) {
     put("&lt;/vh&gt;");
 }
 </t>
-<t tx="T1064">bool Commands::save ( String fileName )
+<t tx="T1066">bool Commands::save ( String fileName )
 {
 	this -&gt; endEditing () ;  // Set the current headline text.
 
@@ -14430,7 +14461,7 @@ if ( headString . Length() &gt; 0 ) {
 	catch ( ... ) {}
 	return FALSE;
 }</t>
-<t tx="T1065">bool Commands::saveAs ( String fileName )
+<t tx="T1067">bool Commands::saveAs ( String fileName )
 {
 	this -&gt; endEditing () ;  // Set the current headline text.
 	this -&gt; compactFileIndices() ;
@@ -14445,7 +14476,7 @@ if ( headString . Length() &gt; 0 ) {
 	catch ( ... ) {}
 	return FALSE;
 }</t>
-<t tx="T1066">bool Commands::saveACopyAs ( String fileName )
+<t tx="T1068">bool Commands::saveACopyAs ( String fileName )
 {
 	try {
     	this -&gt; endEditing () ;  // Set the current headline text.
@@ -14456,7 +14487,7 @@ if ( headString . Length() &gt; 0 ) {
 	catch ( ... ) {}
 	return FALSE;
 }</t>
-<t tx="T1067">bool Commands::saveOutlineOnlyTo ( String fileName )
+<t tx="T1069">bool Commands::saveOutlineOnlyTo ( String fileName )
 {
 	try {
     	this -&gt; endEditing () ;  // Set the current headline text.
@@ -14467,7 +14498,7 @@ if ( headString . Length() &gt; 0 ) {
 	catch ( ... ) {}
 	return FALSE;
 }</t>
-<t tx="T1068">@ Surprisingly, this is a time critical routine.  This code is much faster than creating the result string by concatenations.  It is also much faster to use this routine than calling put() repeatedly for each character of s.c_str().
+<t tx="T1070">@ Surprisingly, this is a time critical routine.  This code is much faster than creating the result string by concatenations.  It is also much faster to use this routine than calling put() repeatedly for each character of s.c_str().
 
 8/25/99:  We enforce the end-of-line convention here by turning bare '\r' or '\n' characters into cr/lf sequences.  This is an adjustment for TSyntaxMemo's difficulty recognizing lines that start with only '\r'.
 @c
@@ -14520,7 +14551,7 @@ String Commands::xmlEscape ( String s )
 	return s2 ; 
 }
 </t>
-<t tx="T1069">@ The caller does any repainting.
+<t tx="T1071">@ The caller does any repainting.
 @c
 
 bool Commands::write_LEO_file ( String fileName, bool outlineOnlyFlag )
@@ -14549,7 +14580,7 @@ bool Commands::write_LEO_file ( String fileName, bool outlineOnlyFlag )
 	return ok ;
 }
 </t>
-<t tx="T1070">delete mFileName ;
+<t tx="T1072">delete mFileName ;
 mFileName = new String( fileName ) ;
 mFileSize = 0 ;
 
@@ -14560,7 +14591,7 @@ catch (...) {
 	mFileStream = NULL ;
 }
 </t>
-<t tx="T1071">if ( mFileStream ) {
+<t tx="T1073">if ( mFileStream ) {
 	mFileStream -&gt; Size = mFileSize ;  // Truncate the file.
 	delete mFileStream ;
 	mFileStream = NULL ;
