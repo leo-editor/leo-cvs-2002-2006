@@ -2605,7 +2605,8 @@ class baseLeoImportCommands:
         self.setEncoding()
     
         for fileName in paths:
-            path, self.fileName = g.os_path_split(fileName) # path/fileName
+    
+            path, self.fileName = g.os_path_split(fileName)
             #@        << Read file into s >>
             #@+node:ekr.20031218072017.3301:<< Read file into s >>
             try:
@@ -2614,7 +2615,7 @@ class baseLeoImportCommands:
                 s = g.toUnicode(s,self.encoding)
                 theFile.close()
             except IOError:
-                g.es("Can not open " + fileName, color="blue")
+                g.es("can not open " + fileName, color="blue")
                 leoTest.fail()
                 return
             #@nonl
@@ -2646,14 +2647,13 @@ class baseLeoImportCommands:
             # g.trace("line: '%s', start: '%s', end: '%s'" % (line_delim,start_delim,end_delim))
             s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
             ext = g.app.config.remove_sentinels_extension
-            if ext == None or len(ext) == 0:
+            if not ext:
                 ext = ".txt"
             if ext[0] == '.':
                 newFileName = g.os_path_join(path,fileName+ext)
             else:
                 head,ext2 = g.os_path_splitext(fileName) 
                 newFileName = g.os_path_join(path,head+ext+ext2)
-            # g.trace(repr(s))
             #@        << Write s into newFileName >>
             #@+node:ekr.20031218072017.1149:<< Write s into newFileName >>
             try:
