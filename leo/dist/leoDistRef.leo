@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="737" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="738" clone_windows="0"/>
 <globals body_outline_ratio="0.522639068564">
-	<global_window_position top="53" left="191" height="833" width="987"/>
+	<global_window_position top="50" left="215" height="833" width="987"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -15,6 +15,7 @@
 <v t="EKR.20040519091259"><vh>Annoucnements</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
+<v t="ekr.20040630210818"><vh>July 2004</vh></v>
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
@@ -77,7 +78,7 @@
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
-<v t="EKR.20040519090846" a="TV"><vh>Distribution files</vh>
+<v t="EKR.20040519090846"><vh>Distribution files</vh>
 <v t="EKR.20040519090846.1"><vh>@silentfile ../doc/LICENSE.TXT</vh></v>
 <v t="EKR.20040519090846.2"><vh>@silentfile ../doc/INSTALL.TXT</vh>
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
@@ -103,8 +104,10 @@
 <v t="EKR.20040519082027.23"><vh>@thin ../createLeoDist.py</vh></v>
 <v t="EKR.20040519082027.29"><vh>@thin postSetup.py</vh></v>
 </v>
-<v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
-<v t="ekr.20040629173419.1" tnodeList="ekr.20040629173419.1"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
+<v t="ekr.20040629175400" a="TV"><vh>Pychecker stuff</vh>
+<v t="ekr.20040701160830"><vh>@url http://pychecker.sourceforge.net/</vh></v>
+<v t="ekr.20040701160830.1"><vh>Long argument names for use in suppressions</vh></v>
+<v t="ekr.20040629173419.1" a="M" tnodeList="ekr.20040629173419.1"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (ref)</vh></v>
 <v t="ekr.20040629173538"><vh>@url http://pychecker.sourceforge.net/</vh></v>
 <v t="ekr.20040629183539"><vh>Warnings (all major problems fixed)</vh>
@@ -133,9 +136,6 @@
 <v t="ekr.20040629183539.23"><vh>leoTkinterTree.py</vh></v>
 <v t="ekr.20040629183539.24"><vh>leoUndo.py</vh></v>
 </v>
-</v>
-<v t="ekr.20040629173419"><vh>Checklist for 4.2 beta 1</vh>
-<v t="ekr.20040629173419.2"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2350,57 +2350,25 @@ Wiki:     http://leo.hd1.org/
 Edward K. Ream
 </t>
 <t tx="EKR.20040519100230"></t>
-<t tx="ekr.20040629173419">@nocolor
-Documentation
-	- (done) Update readme.txt
-	- (done) Update LeoDocs.leo
-Version numbers
-	- (done) Update version number in Help menu.
-	- (done) Update version number in createLeoDist.py
-	* (done) Make sure the top-level directory has no spaces in its name.
-
-(done) Create the distribution using the distribution scripts.
-
-(done) Create and test leosetup.exe.
-	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
-	- Test created leosetup.exe file.
-	- test the files created in c:\program files\leo
-
-@color
-# **** Scan all folders &amp; files before uploading.
-@nocolor
-
-Create Release on SourceForge
-
-Uploads
-    - Upload leodocs.zip
-	- Upload leosetup.exe
-	- Upload leo-x-y.zip
-	- Upload sbook.chm if it has been changed.
-Announcements
-    * Update version number on web site.
-	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
-	- Announce to Leo's SourceForce site.
-	- Announce to comp.lang.python
-	- Announce to comp.programming.literate
-	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
-<t tx="ekr.20040629173419.1"># Sample defaults file for PyChecker 0.8.13
+<t tx="ekr.20040629173419.1"># Sample defaults file for PyChecker 0.8.14
 # This file should be called:  .pycheckrc
 # It should be placed in your home directory (value of $HOME).
 # If $HOME is not set, it will look in the current directory.
 
-# file = c:/prog/leoCVS/leo/src/leo.py
+# Disabled tests...
+
+checkReturnValues = 0 # bool: check consistent return values
+checkImplicitReturns = 0 # bool: check if using implict and explicit return values
+classAttrExists = 0 # bool: warn when the class attribute does not exist
+constantConditions = 0 # bool: warn when a constant is used in a conditional statement (if '':)
+constant1 = 0 # bool: warn when 1 is used in a conditional statement, (if 1: while 1: etc)
+shadows = 1 # bool: check if local variables shadow a global variable with same name
+shadowBuiltins = 0 # EKR: (Not in ref file)
 
 # bool: warnings for Doc Strings
 noDocModule = 0
 noDocClass = 0
 noDocFunc = 0
-
-# bool: warn when a constant is used in a conditional statement (if '':)
-constantConditions = 0 # EKR.
-
-# bool: warn when 1 is used in a conditional statement, (if 1: while 1: etc)
-constant1 = 0
 
 # bool: when checking if class data members (attributes) are set
 #       check all members or __init__() only
@@ -2431,7 +2399,7 @@ moduleImportErrors = 0 # EKR
 reimportSelf = 0 # EKR
 
 # bool: warn when local variables are not used
-localVariablesUsed = 1
+localVariablesUsed = 0 # EKR
 
 # bool:  assume a, b, and c are used in this case:  a, b, c = func()
 unusedLocalTuple = 0
@@ -2455,7 +2423,7 @@ returnNoneFromInit = 1
 unreachableCode = 0
 
 # bool: warn when a constant is used in a conditional statement (if '':)
-constantConditions = 1
+constantConditions = 0 # EKR
 
 # bool: warn when 1 is used in a conditional statement, (if 1: while 1: etc)
 constant1 = 0
@@ -2489,9 +2457,6 @@ isLiteral = 0 # EKR
 # bool: warn when using a deprecated module or function
 deprecated = 1
 
-# bool: warn when the class attribute does not exist
-classAttrExists = 1
-
 # bool: warn when calling an attribute not a method
 callingAttribute = 0
 
@@ -2506,7 +2471,7 @@ methodArgName = 'self'
 ## classmethodArgNames = ['cls', 'klass']
 
 # bool: warn when method/function arguments are unused
-argumentsUsed = 1
+argumentsUsed = 0 # EKR
 
 # bool: ignore if self is unused in methods
 ignoreSelfUnused = 0
@@ -2516,7 +2481,7 @@ redefiningFunction = 1
 
 # bool:  check if an overriden method has the same signature
 #	 as base class method (__init__() methods are not checked)
-checkOverridenMethods = 1
+checkOverridenMethods = 0 # EKR
 
 # bool:  check if a special (reserved) method has the correct signature
 #	 and is known (these are methods that begin and end with __
@@ -2542,9 +2507,7 @@ unusedNames = [
 
 # list of strings: ignore warnings generated from these modules
 blacklist = [
-	'leoGlobals',
-	'leoConfig',
-	'leoFrame', 'leoMenu', 'leoGui', # Base classes have lots of unused params.
+	'leoConfig', # Pychecker has lots of problems with this file...
 	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
 
 # list of strings: ignore global variables not used if name is one of
@@ -2571,9 +2534,6 @@ classicProperties = 1
 # bool: check for integer division (may be problem between Python versions)
 intDivide = 1
 
-# bool: check if local variables shadow a global variable with same name
-shadows = 0 # EKR
-
 # bool: check if input() is used, which is a security problem, use raw_input()
 usesInput = 1
 
@@ -2592,27 +2552,30 @@ modifyDefaultValue = 1
 # bool: check if the exec statement is used (possible security problem)
 usesExec = 0
 
-# bool: check consistent return values
-checkReturnValues = 1
-
-# bool: check if using implict and explicit return values
-checkImplicitReturns = 1
-
 # dict: suppress warnings, key is module.class.method or module.function
 #	value is a string of command line arguments (can omit -- for long args)
 #       { 'module1': 'no-namedargs maxlines=0',
 #	  'module2.my_func': 'argsused',
 #	  'module3.my_class': 'no-initreturn', }
-if 1:
-	suppressions = {}
-else: # Doesn't work
-	suppressions = {
-		'leoFrame' : 'argumentsUsed=0',
-		'leoGui' : 'argumentsUsed=0' }
+
+suppressions = {
+
+    # Works: BOTH must be specified!
+        #'leoImport.baseLeoImportCommands' : '--no-objattrs', 
+        #'leoImport.leoImportCommands'     : '--no-objattrs',
+        
+    # Fix erroneous report about lastVnode.  BOTH MUST BE SPECIFIED
+        'leoImport.baseLeoImportCommands.convertMoreStringsToOutlineAfter' : '--no-objattrs', 
+        'leoImport.leoImportCommands.convertMoreStringsToOutlineAfter'     : '--no-objattrs',
+        
+    # Base classes have lots of unused params.
+        'leoFrame' : '--no-argsused',
+        'leoMenu'  : '--no-argsused',
+        'leoGui'   : '--no-argsused',
+}
 
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}</t>
-<t tx="ekr.20040629173419.2"></t>
 <t tx="ekr.20040629173538"></t>
 <t tx="ekr.20040629175400"></t>
 <t tx="ekr.20040629180414"># Sample defaults file for PyChecker 0.8.13
@@ -3141,5 +3104,193 @@ Wiki:     http://leo.hd1.org/
 
 Edward K. Ream
 June 30, 2004</t>
+<t tx="ekr.20040630210818">HTML Editing in Leo is sooooo much easier then with NoNodeEditors. Ive
+had a blast working on a web page. Usually I had to look at a bunch of
+gunk all at once. Now I can look at little pieces of gunk! :) 
+
+-Anon (for now)
+
+Before leo, I try to avoid or refactor long functions. With leo, I am
+very tempted not to. Being able to view and slice my code at a higher
+level in pretty much anyway I want, I feel like a commanding master in
+my own mess...Leo lets me be lazy and get away with it. ;)
+
+Mark Ng
+
+[Quote] I have just finished a little embedded system for someone, written in
+C using leo as the editor. I told the customer he _had_ to use leo for
+ongoing maintenance, after I looked at one of the main state machines:
+600 lines in the derived file, but trivialy easy to get your head
+around in Leo...
+
+The good news is that having been forced to meet leo he thinks it'll
+solve many other problems that his company has with code maintenance.
+Another step to world domination!
+
+Leo allows you to do things that you'd never consider with another editor. 
+
+BTW: in a real-time embedded system like I was working on, not having
+the overhead of a function call (which you'd have had if you'd split
+the case statement as you would wiht a normal editor) saves time, and
+makes the system more flexible...
+[End Quote]</t>
+<t tx="ekr.20040701160830"></t>
+<t tx="ekr.20040701160830.1">@killcolor
+
+--name    enables
+--no-name disables
+
+abstract
+allglobals
+argsused
+badexcept
+blacklist=
+callattr
+callinit
+changetypes
+classattr
+classdoc
+classmethodargs=
+complexity
+config=
+constCond
+constant1
+debug
+deprecated
+emptyslots
+errors
+exec
+funcdoc
+implicitreturns
+import
+initattr
+initreturn
+initsubclass
+input
+intdivide
+isliteral
+local
+maxargs=
+maxbranches=
+maxlines=
+maxlocals=
+maxrefs=
+maxreturns=
+members
+miximport
+moddefvalue
+moduledoc
+modulo1
+namedargs
+noeffect
+objattrs
+override
+pkgimport
+positive
+printparse
+privatevar
+properties
+quiet
+quixote
+rcfile
+reimport
+reimportself
+returnvalues
+reuseattr
+self=
+selfused
+shadow
+shadowbuiltin
+slots
+special
+stdlib
+stringfind
+stringiter
+tuple
+unpack
+unpacklen
+unreachable
+unusednames=
+var
+varargsused
+varlist=
+version
+
+no-abstract
+no-allglobals
+no-argsused
+no-badexcept
+no-blacklist=
+no-callattr
+no-callinit
+no-changetypes
+no-classattr
+no-classdoc
+no-classmethodargs=
+no-complexity
+no-config=
+no-constCond
+no-constant1
+no-debug
+no-deprecated
+no-emptyslots
+no-errors
+no-exec
+no-funcdoc
+no-implicitreturns
+no-import
+no-initattr
+no-initreturn
+no-initsubclass
+no-input
+no-intdivide
+no-isliteral
+no-local
+no-maxargs=
+no-maxbranches=
+no-maxlines=
+no-maxlocals=
+no-maxrefs=
+no-maxreturns=
+no-members
+no-miximport
+no-moddefvalue
+no-moduledoc
+no-modulo1
+no-namedargs
+no-noeffect
+no-objattrs
+no-override
+no-pkgimport
+no-positive
+no-printparse
+no-privatevar
+no-properties
+no-quiet
+no-quixote
+no-rcfile
+no-reimport
+no-reimportself
+no-returnvalues
+no-reuseattr
+no-self=
+no-selfused
+no-shadow
+no-shadowbuiltin
+no-slots
+no-special
+no-stdlib
+no-stringfind
+no-stringiter
+no-tuple
+no-unpack
+no-unpacklen
+no-unreachable
+no-unusednames=
+no-var
+no-varargsused
+no-varlist=
+no-version
+</t>
 </tnodes>
 </leo_file>
