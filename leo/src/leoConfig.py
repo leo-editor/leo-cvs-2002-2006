@@ -419,6 +419,7 @@ class parserBaseClass:
         d = self.settingsDict
         bunch = d.get(key)
         if bunch:
+            # g.trace(key,bunch.val,bunch.path)
             path = bunch.path
             if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
                 g.es("over-riding setting: %s from %s" % (name,path))
@@ -1528,6 +1529,8 @@ class settingsController:
     #@    @+others
     #@+node:ekr.20041225063637.13: ctor
     def __init__ (self,c,replaceBody=True):
+        
+        self.createSummaryNode = True # Dithering whether to do this.
     
         #@    << init ivars >>
         #@+node:ekr.20050123194330:<< init ivars >>
@@ -1917,9 +1920,8 @@ class settingsController:
     def createSettingsTree (self):
         
         """Create a tree of vnodes representing all settings."""
-        
-        createSummaryNode = True # Dithering whether to do this.
-        createEmptyNodes = False
+    
+        createEmptyRootNodes = False
     
         c = self.c ; config = g.app.config
         root_p = None ; last_p = None
@@ -1934,23 +1936,24 @@ class settingsController:
                 root2 = g.app.config.settingsRoot(c2)
             else:
                 root2 = None
-            if root2 or createEmptyNodes:
+            if root2 or createEmptyRootNodes:
                 #@            << create a node p for kind & root2 >>
                 #@+node:ekr.20041225063637.22:<< create a node p for  kind & root2 >>
                 if not root_p:
                     t = leoNodes.tnode()
                     root_v = leoNodes.vnode(c,t) # Using c2 --> oops: nullTree.
                     root_p = leoNodes.position(root_v,[])
-                    if createSummaryNode:
+                    if self.createSummaryNode:
                         root_p.initHeadString("All settings")
                         root_p.scriptSetBodyString(self.rootNodeComments())
                         p = root_p.insertAsLastChild()
                     else:
                         p = root_p.copy()
+                    last_p = p.copy()
                 else:
-                    # Pychecker caught the bug: last_p is None here the first time.
-                    pass
-                    ### p = last_p.insertAfter()
+                    # Pychecker may complain, but last_p _is_ defined here!
+                    p = last_p.insertAfter()
+                    last_p = p.copy()
                 
                 if root2:
                     root2.copyTreeFromSelfTo(p)  # replace p by root2.
@@ -1973,7 +1976,6 @@ class settingsController:
                 
                 path2 = g.choose(otherFileFlag,path,g.shortFileName(path))
                 p.initHeadString("%s settings: %s" % (kind,path2))
-                last_p = p
                 #@nonl
                 #@-node:ekr.20041225063637.22:<< create a node p for  kind & root2 >>
                 #@nl
@@ -2680,7 +2682,7 @@ class settingsController:
         """Return the node corresponding to p1 (in root1) in the root2's tree."""
         
         if p1 == root1: return root2
-        
+    
         # Go up tree 1, computing child indices.
         childIndices = []
         for p in p1.self_and_parents_iter():
@@ -2689,12 +2691,12 @@ class settingsController:
             childIndices.append(p.childIndex())
             
         childIndices.reverse()
-        #g.trace(childIndices)
+        # g.trace(childIndices)
         
         # Go down tree 2, moving to the n'th child.
         p2 = root2.copy()
         for n in childIndices:
-            #g.trace(p2)
+            # g.trace(p2)
             p2.moveToNthChild(n)
     
         # g.trace(p2)
@@ -2880,19 +2882,22 @@ class settingsController:
         munge = g.app.config.munge
         name = name.strip() ; kind = munge(kind.strip())
     
-        # Root 1 is the root of the dialog's outline.
+        # Root1 is the root of the dialog's outline.
         p1 = p
-        root1 = self.findSettingsRoot(p1).copy()
+        root1 = self.findSettingsRoot(p1.copy())
         c1 = root1.c
         
-        # Root is the root of the settings outline in the file.
+        # Root2 is the root of the settings outline in the file.
         root2 = g.app.config.settingsRoot(c) # c is NOT self.c
-        # g.trace(root2.c.mFileName)
-        p2 = self.findCorrespondingNode(root1,root2,p1)
+        #g.trace(root2.c.mFileName)
+        p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
         if p2:
             c2 = p2.c ; filename = c2.mFileName
         else:
-            g.trace("can't happen: can't find node in",root2.c.mFileName)
+            g.trace("can't happen: can't find node in root2:",root2.c.mFileName)
+            g.trace('root1',root1)
+            g.trace('root2',root2)
+            g.trace('p1',p1)
             c2 = None ; filename = None
     
         # Update the outline in the dialog and the target file.
