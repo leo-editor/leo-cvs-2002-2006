@@ -895,7 +895,16 @@ class LeoFrame:
 		return "break" # Inhibit all other handlers.
 	#@-body
 	#@-node:9::frame.doCommand
-	#@+node:10::initialRatios
+	#@+node:10::frame.longFileName & shortFileName
+	#@+body
+	def longFileName (self):
+		return self.mFileName
+		
+	def shortFileName (self):
+		return shortFileName(self.mFileName)
+	#@-body
+	#@-node:10::frame.longFileName & shortFileName
+	#@+node:11::initialRatios
 	#@+body
 	def initialRatios (self):
 	
@@ -917,8 +926,8 @@ class LeoFrame:
 		# print (`r`,`r2`)
 		return verticalFlag,r,r2
 	#@-body
-	#@-node:10::initialRatios
-	#@+node:11::getFocus
+	#@-node:11::initialRatios
+	#@+node:12::getFocus
 	#@+body
 	# Returns the frame that has focus, or body if None.
 	
@@ -930,16 +939,16 @@ class LeoFrame:
 		else:
 			return self.body
 	#@-body
-	#@-node:11::getFocus
-	#@+node:12::notYet
+	#@-node:12::getFocus
+	#@+node:13::notYet
 	#@+body
 	def notYet(self,name):
 	
 		es(name + " not ready yet")
 	
 	#@-body
-	#@-node:12::notYet
-	#@+node:13::frame.put, putnl
+	#@-node:13::notYet
+	#@+node:14::frame.put, putnl
 	#@+body
 	# All output to the log stream eventually comes here.
 	
@@ -963,8 +972,8 @@ class LeoFrame:
 			print "Null log"
 			print
 	#@-body
-	#@-node:13::frame.put, putnl
-	#@+node:14::resizePanesToRatio
+	#@-node:14::frame.put, putnl
+	#@+node:15::resizePanesToRatio
 	#@+body
 	def resizePanesToRatio(self,ratio,secondary_ratio):
 	
@@ -973,8 +982,8 @@ class LeoFrame:
 		# trace(`ratio`)
 	
 	#@-body
-	#@-node:14::resizePanesToRatio
-	#@+node:15::Event handlers
+	#@-node:15::resizePanesToRatio
+	#@+node:16::Event handlers
 	#@+node:1::frame.OnCloseLeoEvent
 	#@+body
 	# Called from quit logic and when user closes the window.
@@ -1120,8 +1129,8 @@ class LeoFrame:
 			self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
 	#@-body
 	#@-node:6::OnMouseWheel (Tomaz Ficko)
-	#@-node:15::Event handlers
-	#@+node:16::Menu enablers (Frame)
+	#@-node:16::Event handlers
+	#@+node:17::Menu enablers (Frame)
 	#@+node:1::frame.OnMenuClick (enables and disables all menu items)
 	#@+body
 	# This is the Tk "postcommand" callback.  It should update all menu items.
@@ -1231,8 +1240,8 @@ class LeoFrame:
 		enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
 	#@-body
 	#@-node:5::updateOutlineMenu
-	#@-node:16::Menu enablers (Frame)
-	#@+node:17::Menu Command Handlers
+	#@-node:17::Menu enablers (Frame)
+	#@+node:18::Menu Command Handlers
 	#@+node:1::File Menu
 	#@+node:1::top level
 	#@+node:1::OnNew
@@ -2091,9 +2100,10 @@ class LeoFrame:
 				
 		# Otherwise, the script is v's body text if v is an @pythonscript node.
 		if s == None or len(s) == 0:
-			h = v.headString()
-			if match_word(h,0,"@pythonscript"):
-				s = v.bodyString()
+			if 0: # Do nothing.  Make sure the user _sees_ the script to be executed.
+				h = v.headString()
+				if match_word(h,0,"@pythonscript"):
+					s = v.bodyString()
 				
 		# trace(`s`)
 		if s and len(s) > 0:
@@ -2104,7 +2114,6 @@ class LeoFrame:
 				es_exception(full=false)
 		else:
 			es("no script selected")
-	
 	#@-body
 	#@-node:7::OnExecuteScript
 	#@+node:8::OnSelectAll
@@ -3117,8 +3126,8 @@ class LeoFrame:
 	#@-body
 	#@-node:6::OnLeoConfig, OnApplyConfig
 	#@-node:5::Help Menu
-	#@-node:17::Menu Command Handlers
-	#@+node:18::Menu Convenience Routines
+	#@-node:18::Menu Command Handlers
+	#@+node:19::Menu Convenience Routines
 	#@+body
 	#@+at
 	#  These are intended for use by scripts, and some are used by Leo.
@@ -3202,8 +3211,8 @@ class LeoFrame:
 			es_exception()
 	#@-body
 	#@-node:4::deleteMenuItem
-	#@-node:18::Menu Convenience Routines
-	#@+node:19::Configuration
+	#@-node:19::Menu Convenience Routines
+	#@+node:20::Configuration
 	#@+node:1::f.configureBar
 	#@+body
 	def configureBar (self, bar, verticalFlag):
@@ -3377,8 +3386,8 @@ class LeoFrame:
 		self.log.configure(bd=border)
 	#@-body
 	#@-node:7::reconfigurePanes (use config bar_width)
-	#@-node:19::Configuration
-	#@+node:20::Splitter stuff
+	#@-node:20::Configuration
+	#@+node:21::Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -3635,7 +3644,7 @@ class LeoFrame:
 			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 	#@-body
 	#@-node:7::placeSplitter
-	#@-node:20::Splitter stuff
+	#@-node:21::Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py
