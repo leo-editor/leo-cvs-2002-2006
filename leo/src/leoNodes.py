@@ -2172,19 +2172,20 @@ class position (object):
             # N.B. Only mark _direct_ descendents of nodes.
             # Using the findAllPotentiallyDirtyNodes algorithm would mark way too many nodes.
             for p2 in p.subtree_iter():
-                if p2.v not in nodes:
+                # Only @thin nodes need to be marked.
+                if p2.v not in nodes and p2.isAtThinFileNode():
                     nodes.append(p2.v)
         
         c.beginUpdate()
         if 1: # update...
             count = 0 # for debugging.
             for v in nodes:
-                # g.trace(v.isAnyAtFileNode(),v.t.isDirty(),v)
                 if not v.t.isDirty() and v.isAnyAtFileNode():
+                    # g.trace(v)
                     changed = True
                     v.t.setDirty() # Do not call v.setDirty here!
                     count += 1
-            # g.trace(count)
+            # g.trace(count,changed)
         c.endUpdate(changed)
         return changed
     #@nonl
@@ -2193,11 +2194,11 @@ class position (object):
     # Ensures that all ancestor and descentent @file nodes are marked dirty.
     # It is much safer to do it this way.
     
-    def setDirty (self):
+    def setDirty (self,setDescendentsDirty=True):
     
         p = self ; c = p.c
         
-        # g.trace()
+        # g.trace(g.app.count) ; g.app.count += 1
     
         c.beginUpdate()
         if 1: # update...
@@ -2205,14 +2206,29 @@ class position (object):
             if not p.v.t.isDirty():
                 p.v.t.setDirty()
                 changed = True
-            # This must be called even if p.v is already dirty.
-            if p.setAllAncestorAtFileNodesDirty(setDescendentsDirty=True):
+            # N.B. This must be called even if p.v is already dirty.
+            # Typing can change the @ignore state!
+            if p.setAllAncestorAtFileNodesDirty(setDescendentsDirty):
                 changed = True
         c.endUpdate(changed)
     
         return changed
     #@nonl
     #@-node:ekr.20040303163330:p.setDirty
+    #@+node:ekr.20040702104823:p.inAtIgnoreRange
+    def inAtIgnoreRange (self):
+        
+        """Returns True if position p or one of p's parents is an @ignore node."""
+        
+        p = self
+        
+        for p in p.self_and_parents_iter():
+            if p.isAtIgnoreNode():
+                return True
+    
+        return False
+    #@nonl
+    #@-node:ekr.20040702104823:p.inAtIgnoreRange
     #@-node:ekr.20040305162628:p.Dirty bits
     #@-node:ekr.20040305222924:Setters
     #@+node:ekr.20040315023430:File Conversion
