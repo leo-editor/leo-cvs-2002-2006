@@ -271,7 +271,7 @@ class baseUndoer:
 	
 	def setUndoParams (self,undo_type,v,**keywords):
 		
-		# trace(undo_type)
+		# trace(undo_type,v,keywords)
 	
 		u = self
 		if u.redoing or u.undoing: return None
@@ -280,7 +280,7 @@ class baseUndoer:
 		if undo_type == "Can't Undo":
 			u.clearUndoState()
 			return None
-		# trace(undo_type,v)
+	
 		# Set the type: set the menu labels later.
 		u.undoType = undo_type
 		# Calculate the standard derived information.
@@ -311,7 +311,7 @@ class baseUndoer:
 	
 	def setUndoTypingParams (self,v,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
 		
-		# trace(undo_type)
+		# trace(undo_type,v,"old:",oldText,"new:",newText)
 	
 		u = self ; c = u.commands
 		if u.redoing or u.undoing: return None
@@ -635,7 +635,7 @@ class baseUndoer:
 				"Change","Convert Blanks","Convert Tabs","Cut",
 				"Delete","Indent","Paste","Reformat Paragraph","Undent"):
 			
-				# trace(`redoType` + ":" + `u.v`)
+				# trace(redoType,u.v)
 				# selectVnode causes recoloring, so avoid if possible.
 				if current != u.v:
 					c.selectVnode(u.v)
@@ -663,7 +663,7 @@ class baseUndoer:
 					d = u.getBead(u.bead+1)
 					assert(d)
 					redoType = u.undoType
-					# trace(`redoType`)
+					# trace(redoType,u.v,u.newText)
 					if redoType == "Change All":
 						c.selectVnode(u.v)
 						break
@@ -676,7 +676,7 @@ class baseUndoer:
 			
 			elif redoType == "Change Headline":
 				
-				# trace(`u.newText`)
+				# trace(redoType,u.v,u.newText)
 				u.v.setHeadStringOrHeadline(u.newText)
 				# Update all joined headlines.
 				for v2 in u.v.t.joinList:
@@ -918,7 +918,7 @@ class baseUndoer:
 					d = u.getBead(u.bead)
 					assert(d)
 					undoType = u.undoType
-					# trace(`undoType`)
+					# trace(undoType,u.v,u.oldText)
 					if undoType == "Change All":
 						c.selectVnode(u.v)
 						break
