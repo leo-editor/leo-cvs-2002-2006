@@ -2180,7 +2180,6 @@ print ; print '-' * 20</t>
 @language python
 @tabwidth -4
 
-import leoGlobals as g
 import unittest
 
 c = g.top()
@@ -2990,8 +2989,7 @@ print "expected..."
 for line in g.splitLines(expected):
     print "%3d" % len(line),repr(line)
 print '-' * 20</t>
-<t tx="ekr.20040707141957.12">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040707141957.12">import leoTest
 
 c = g.top() ; p = c.currentPosition()
 
@@ -3201,26 +3199,22 @@ All other approaches quickly get deeply involved with Leo's internals...</t>
 <t tx="ekr.20040712101754"></t>
 <t tx="ekr.20040712101754.2">@language python
 @tabwidth -4</t>
-<t tx="ekr.20040712101754.3">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040712101754.3">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","test","test.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
-<t tx="ekr.20040712101754.4">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040712101754.4">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","src","LeoPy.leo")
 leoTest.runLeoTest(path)
 </t>
-<t tx="ekr.20040712101754.5">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040712101754.5">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","plugins","leoPlugins.leo")
 leoTest.runLeoTest(path)
 </t>
-<t tx="ekr.20040712101754.6">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040712101754.6">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","doc","LeoDocs.leo")
 leoTest.runLeoTest(path)
@@ -3229,7 +3223,6 @@ leoTest.runLeoTest(path)
 @tabwidth -4</t>
 <t tx="ekr.20040712101754.8"># Create unit tests in g.app.scriptDict["suite"]
 
-import leoGlobals as g
 import unittest
 import leoTest
 
@@ -3240,7 +3233,6 @@ suite = leoTest.makeImportExportSuite("importTests",doImport=True)
 g.app.scriptDict['suite'] = suite</t>
 <t tx="ekr.20040712101754.9"># Create unit tests in g.app.scriptDict["suite"]
 
-import leoGlobals as g
 
 import unittest
 import leoTest
@@ -3290,7 +3282,6 @@ test\\unittest\\output\\outlineToCweb.txt</t>
 <t tx="ekr.20040712101754.36"></t>
 <t tx="ekr.20040712101754.37"># Create unit tests in g.app.scriptDict["suite"]
 
-import leoGlobals as g
 import leoTest
 
 suite = leoTest.makeEditBodySuite()
@@ -3346,7 +3337,6 @@ line 4</t>
 3.0 lineend - 1c</t>
 <t tx="ekr.20040712101754.53"># Create unit tests in g.app.scriptDict["suite"]
 
-import leoGlobals as g
 import leoTest
 
 suite = leoTest.makeReformatParagraphSuite()
@@ -3678,8 +3668,7 @@ the "lead" paragraph.
   
 This paragraph ends the test. It is the
 "final" paragraph.</t>
-<t tx="ekr.20040712101754.99">import leoGlobals as g
-
+<t tx="ekr.20040712101754.99">
 c = g.top() ; p = c.currentPosition()
 
 &lt;&lt; coverage tests &gt;&gt;
@@ -3719,8 +3708,7 @@ for t in c.all_unique_tnodes_iter():
     
 # print "duplicate tests pass"</t>
 <t tx="ekr.20040712101754.102">@color</t>
-<t tx="ekr.20040712101754.103">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040712101754.103">import leoTest
 
 c = g.top() ; p = c.currentPosition()
 
@@ -3737,8 +3725,7 @@ Line 1
 #@-node:#@file
 #@-leo
 last line 1: no newline</t>
-<t tx="ekr.20040712101754.106">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040712101754.106">import leoTest
 
 c = g.top() ; p = c.currentPosition()
 
@@ -3756,8 +3743,7 @@ Line 1
 #@-leo
 last line 1: newline
 </t>
-<t tx="ekr.20040712101754.109">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040712101754.109">import leoTest
 
 c = g.top() ; p = c.currentPosition()
 
@@ -3776,8 +3762,7 @@ Line 1
 last line 1: two trailing newlines
 </t>
 <t tx="ekr.20040712101754.115"></t>
-<t tx="ekr.20040712101754.116">import leoGlobals as g
-
+<t tx="ekr.20040712101754.116">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -3798,8 +3783,7 @@ More plain text.
 continues */
 
 More plain text.</t>
-<t tx="ekr.20040712101754.118">import leoGlobals as g
-
+<t tx="ekr.20040712101754.118">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -3864,8 +3848,7 @@ _width
 _x, _xmouse, _xscale
 _y, _ymouse, _yscale
 and, add, eq, ge, gt, le, lt, ne, not, or, Array, Boolean, Color, Date, Key, Math, MovieClip, Mouse, Number, Object, Selection, Sound, String, XML, XMLSocket</t>
-<t tx="ekr.20040712101754.120">import leoGlobals as g
-
+<t tx="ekr.20040712101754.120">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -3890,8 +3873,7 @@ assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 #include "eeprom.h"
 #include &lt;hpc_ram.h&gt;
 #include &lt;rlydef.h&gt;</t>
-<t tx="ekr.20040712101754.122">import leoGlobals as g
-
+<t tx="ekr.20040712101754.122">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -3930,8 +3912,7 @@ uint ulong unchecked unsafe ushort using
 value virtual void volatile 
 where while
 yield</t>
-<t tx="ekr.20040712101754.124">import leoGlobals as g
-
+<t tx="ekr.20040712101754.124">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4007,8 +3988,7 @@ pitch, range, pitch-during, cue-after, pause-after, cue-before, pause-before, sp
 /*aural values*/
 stress, azimuth, elevation, pitch, richness, volume,
 page-break, page-after, page-inside</t>
-<t tx="ekr.20040712101754.126">import leoGlobals as g
-
+<t tx="ekr.20040712101754.126">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4043,8 +4023,7 @@ if else, while, do // C keywords.</t>
 
     my \c code goes here // This is \LaTeX text
     /* This is also \LaTeX text */</t>
-<t tx="ekr.20040712101754.129">import leoGlobals as g
-
+<t tx="ekr.20040712101754.129">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4073,8 +4052,7 @@ set setq
 t type-of 
 unless 
 when while</t>
-<t tx="ekr.20040712101754.131">import leoGlobals as g
-
+<t tx="ekr.20040712101754.131">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4087,8 +4065,7 @@ assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 b = "cd"
 d
 </t>
-<t tx="ekr.20040712101754.133">import leoGlobals as g
-
+<t tx="ekr.20040712101754.133">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4189,8 +4166,7 @@ HEIGHT="32" ALIGN="left" NATURALSIZEFLAG="3"&gt;
 
 &lt;/BODY&gt;
 &lt;/HTML&gt;</t>
-<t tx="ekr.20040712101754.135">import leoGlobals as g
-
+<t tx="ekr.20040712101754.135">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4204,8 +4180,7 @@ assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 &lt;!-- test --&gt;
 &lt;project name="Converter" default="dist"&gt;
 &lt;/project&gt;"""</t>
-<t tx="ekr.20040712101754.137">import leoGlobals as g
-
+<t tx="ekr.20040712101754.137">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4227,8 +4202,7 @@ This is a test of \LaTeX mode.
 This is a keyword \% not the start of a comment.
 
 More keywords: \@ and \( and \) and \{ and \}</t>
-<t tx="ekr.20040712101754.139">import leoGlobals as g
-
+<t tx="ekr.20040712101754.139">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4266,8 +4240,7 @@ c "string" d
 // C keywords
 switch, case
 </t>
-<t tx="ekr.20040712101754.141">import leoGlobals as g
-
+<t tx="ekr.20040712101754.141">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4287,8 +4260,7 @@ this is a test.
 __CLASS__
 &lt;?php and or array() ?&gt;
 &lt;?PHP and or array() ?&gt;</t>
-<t tx="ekr.20040712101754.143">import leoGlobals as g
-
+<t tx="ekr.20040712101754.143">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4635,8 +4607,7 @@ assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 &lt;KEYWORD3&gt;__truediv__&lt;/KEYWORD3&gt;
 &lt;KEYWORD3&gt;__version__&lt;/KEYWORD3&gt;
 &lt;KEYWORD3&gt;__xor__&lt;/KEYWORD3&gt;</t>
-<t tx="ekr.20040712101754.154">import leoGlobals as g
-
+<t tx="ekr.20040712101754.154">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4651,8 +4622,7 @@ string""" ; following = a
 
 'this\
 is'''</t>
-<t tx="ekr.20040712101754.156">import leoGlobals as g
-
+<t tx="ekr.20040712101754.156">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4677,8 +4647,7 @@ def copyTree(self,root):
         v.t = leoNodes.tnode(0, v.t.bodyString)
         v = v.threadNext()
     return result</t>
-<t tx="ekr.20040712101754.158">import leoGlobals as g
-
+<t tx="ekr.20040712101754.158">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4716,8 +4685,7 @@ SPACE$,SQR,STACK,STATIC,STEP,STR$,STRF$,STRING,STRING$,
 SUB,SUBI,SWAP,TALLY,TAN,THEN,TIME$,TIMER,TO,TYPE,UBOUND,
 UCASE$,UNLOADLIBRARY,UNTIL,VAL,VARIANT,VARPTR,VARPTR$,VARTYPE,
 WEND,WHILE,WITH,WORD,XOR</t>
-<t tx="ekr.20040712101754.160">import leoGlobals as g
-
+<t tx="ekr.20040712101754.160">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4791,8 +4759,7 @@ unset? url?
 value? view? 
 within? word?  
 zero?</t>
-<t tx="ekr.20040712101754.162">import leoGlobals as g
-
+<t tx="ekr.20040712101754.162">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4821,8 +4788,7 @@ cd,chdir,eval,exec,
 exit,kill,newgrp,pwd,read,readonly,
 shift,test,trap,ulimit,
 umask,wait</t>
-<t tx="ekr.20040712101754.164">import leoGlobals as g
-
+<t tx="ekr.20040712101754.164">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4923,8 +4889,7 @@ assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 
 &lt;!-- comments --&gt;
 &lt;EOL_SPAN TYPE="COMMENT1"&gt;%&lt;/EOL_SPAN&gt;</t>
-<t tx="ekr.20040712101754.168">import leoGlobals as g
-
+<t tx="ekr.20040712101754.168">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -4970,9 +4935,8 @@ string"""
 if 1 and 2:
     pass
 
-import leoGlobals as g ; print g.app().loadDir</t>
-<t tx="ekr.20040712101754.170">import leoGlobals as g
-
+print g.app().loadDir</t>
+<t tx="ekr.20040712101754.170">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -5011,10 +4975,9 @@ __abc__
 if 1 and 2:
     pass
 
-import leoGlobals as g ; print g.app().loadDir
+print g.app().loadDir
 </t>
-<t tx="ekr.20040712101754.172">import leoGlobals as g
-
+<t tx="ekr.20040712101754.172">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -5033,20 +4996,17 @@ assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 if 1 and 2:
     pass</t>
 <t tx="ekr.20040712101754.174"></t>
-<t tx="ekr.20040712101754.175">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.175">c = g.top()
 root = c.rootPosition()
 
 # NOTE: p.__getattr__ must be enabled for this test to work.
 
 for p in root.allNodes_iter():
     assert(p.t == p.v.t)</t>
-<t tx="ekr.20040712101754.176">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.176">c = g.top()
 
 c.frame.body.colorizer.python_keywords.append("as")</t>
-<t tx="ekr.20040712101754.177">import leoGlobals as g
-
+<t tx="ekr.20040712101754.177">
 c = g.top() ; p = c.currentPosition()
 
 p = p.firstChild()
@@ -5098,8 +5058,7 @@ def moreBody (self):
 </t>
 <t tx="ekr.20040712101754.181"># The actual test is in a child node.</t>
 <t tx="ekr.20040712101754.182"></t>
-<t tx="ekr.20040712101754.183">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.183">c = g.top()
 
 try:
     for p in c.allNodes_iter():
@@ -5128,8 +5087,7 @@ except AssertionError:
     print "parents2"
     for parent in parents2: print parent
     raise</t>
-<t tx="ekr.20040712101754.184">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.184">c = g.top()
 try:
     for p in c.allNodes_iter():
         if p.isCloned():
@@ -5147,8 +5105,7 @@ except AssertionError:
     print "vparents..."
     for parent in vparents: print parent
     raise # for unittest.</t>
-<t tx="ekr.20040712101754.185">import leoGlobals as g
-
+<t tx="ekr.20040712101754.185">
 c = g.top()
 
 for p in c.allNodes_iter():
@@ -5159,8 +5116,7 @@ for p in c.allNodes_iter():
         for v in p.v.t.vnodeList:
             assert(v.t._firstChild == childv)
             assert(id(v.t._firstChild) == id(childv))</t>
-<t tx="ekr.20040712101754.186">import leoGlobals as g
-import os
+<t tx="ekr.20040712101754.186">import os
 import sys
 
 verbose = False
@@ -5192,7 +5148,6 @@ finally:
 assert(g.os_path_exists(test_file))</t>
 <t tx="ekr.20040712101754.187"></t>
 <t tx="ekr.20040712101754.188">import leoNodes
-import leoGlobals as g
 
 c = g.top()
 current = c.currentPosition()
@@ -5262,14 +5217,12 @@ if 0: # subtree of root node:
 if 0: # child1's tree.  child2 should not be included.
     for v in child.vnodes_iter(): print v
     for t in child.tnodes_iter(): print t</t>
-<t tx="ekr.20040712101754.199">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.199">c = g.top()
 p = c.currentPosition()
     
 assert(p == p.copy())
 assert(p != p.threadNext())</t>
-<t tx="ekr.20040712101754.200">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.200">c = g.top()
 
 for p in c.allNodes_iter():
     if p.isCloned() and p.hasChildren():
@@ -5279,8 +5232,7 @@ for p in c.allNodes_iter():
         for v in p.v.t.vnodeList:
             assert(v.t._firstChild == childv)
             assert(id(v.t._firstChild) == id(childv))</t>
-<t tx="ekr.20040712101754.201">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.201">c = g.top()
 
 for copy in (True,False):
     p2 = c.rootPosition()
@@ -5290,8 +5242,7 @@ for copy in (True,False):
         
     assert not p2, repr(p2)
 </t>
-<t tx="ekr.20040712101754.202">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.202">c = g.top()
 
 for copy in (True,False):
     for p in c.allNodes_iter(copy=copy):
@@ -5302,8 +5253,7 @@ for copy in (True,False):
             p2.moveToNext()
 
     assert not p2, repr(p2)</t>
-<t tx="ekr.20040712101754.203">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.203">c = g.top()
 
 for p in c.allNodes_iter():
     
@@ -5318,8 +5268,7 @@ for p in c.allNodes_iter():
 
     if p.hasBack():
         assert(p.back().level() == p.level())</t>
-<t tx="ekr.20040712101754.204">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.204">c = g.top()
 
 for p in c.allNodes_iter():
     
@@ -5327,8 +5276,7 @@ for p in c.allNodes_iter():
     next = p.next()
     if back: assert(back.getNext() == p)
     if next: assert(next.getBack() == p)</t>
-<t tx="ekr.20040712101754.205">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.205">c = g.top()
 
 for copy in (True,False):
 
@@ -5341,7 +5289,6 @@ for copy in (True,False):
         assert not p2, repr(p2)</t>
 <t tx="ekr.20040712101754.206"># Test consistency of p.parent, p.next, p.back and p.firstChild.
 
-import leoGlobals as g
 c = g.top()
 
 for p in c.allNodes_iter():
@@ -5358,8 +5305,7 @@ for p in c.allNodes_iter():
         
     if p.hasBack():
         assert(p.back().parent() == p.parent())</t>
-<t tx="ekr.20040712101754.207">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.207">c = g.top()
 
 for p in c.allNodes_iter():
 
@@ -5371,8 +5317,7 @@ for p in c.allNodes_iter():
 
     if threadNext:
         assert(p == threadNext.getThreadBack())</t>
-<t tx="ekr.20040712101754.208">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.208">c = g.top()
 
 for p in c.allNodes_iter():
     if p.isCloned():
@@ -5384,8 +5329,7 @@ for p in c.allNodes_iter():
                 assert(parent in vparents)
             for parent in vparents:
                 assert(parent in parents)</t>
-<t tx="ekr.20040712101754.209">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.209">c = g.top()
     
 for p in c.allNodes_iter():
 
@@ -5399,8 +5343,7 @@ for p in c.allNodes_iter():
     assert(
         (next and p.hasNext()) or
         (not next and not p.hasNext()))</t>
-<t tx="ekr.20040712101754.210">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.210">c = g.top()
     
 for p in c.allNodes_iter():
 
@@ -5414,8 +5357,7 @@ for p in c.allNodes_iter():
     assert(
         (parent and p.hasParent()) or
         (not parent and not p.hasParent()))</t>
-<t tx="ekr.20040712101754.211">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.211">c = g.top()
 
 for p in c.allNodes_iter():
 
@@ -5429,8 +5371,7 @@ for p in c.allNodes_iter():
     assert(
         (threadNext and p.hasThreadNext()) or
         (not threadNext and not p.hasThreadNext()))</t>
-<t tx="ekr.20040712101754.212">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040712101754.212">c = g.top()
 
 for p in c.allNodes_iter():
 
@@ -5447,8 +5388,7 @@ for p in c.allNodes_iter():
             assert(len(vnodeList) == 1)</t>
 <t tx="ekr.20040712101754.213"></t>
 <t tx="ekr.20040712101754.214"></t>
-<t tx="ekr.20040712101754.215">import leoGlobals as g
-import leoNodes
+<t tx="ekr.20040712101754.215">import leoNodes
 
 c = g.top();  p = c.currentPosition()
 root1 = p.firstChild()
@@ -5465,8 +5405,7 @@ c.redraw()</t>
 <t tx="ekr.20040712101754.218"></t>
 <t tx="ekr.20040712101754.219"></t>
 <t tx="ekr.20040712101754.220"></t>
-<t tx="ekr.20040712101754.221">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040712101754.221">import leoTest
 
 c = g.top() ; p = c.currentPosition()
 u = leoTest.testUtils()
@@ -5498,7 +5437,6 @@ c.checkOutline()</t>
     outline1.doDelete(copy)</t>
 <t tx="ekr.20040712101754.227"># Create unit tests in g.app.scriptDict["suite"]
 
-import leoGlobals as g
 import unittest
 import leoTest
 
@@ -5615,7 +5553,6 @@ g.app.scriptDict['suite'] = suite</t>
 <t tx="ekr.20040712101754.253"></t>
 <t tx="ekr.20040712101754.254"># Create unit tests in g.app.scriptDict["suite"]
 
-import leoGlobals as g
 import unittest
 import leoTest
 
@@ -5647,8 +5584,7 @@ g.app.scriptDict['suite'] = suite</t>
     
     pass</t>
 <t tx="ekr.20040712101754.260">aaa</t>
-<t tx="ekr.20040712101754.272">import leoGlobals as g
-
+<t tx="ekr.20040712101754.272">
 c = g.top()
 errors = c.checkOutline(verbose=False,unittest=True,full=True) # Run full check.
 assert errors == 0, "Check Outline reported %d errors" % errors</t>
@@ -5677,8 +5613,7 @@ else:
                             
 if suite:
     g.app.scriptDict['suite'] = suite</t>
-<t tx="ekr.20040712101754.274">import leoGlobals as g
-import unittest
+<t tx="ekr.20040712101754.274">import unittest
 import leoTest
 
 import sys
@@ -5704,8 +5639,7 @@ else:
     print "Can't create unit tests from doctests"
     print "doctest.DocTestSuite requires Python 2.3 or above."
     print</t>
-<t tx="ekr.20040712101813">import leoGlobals as g
-
+<t tx="ekr.20040712101813">
 c = g.top()
 
 result = c.checkAllPythonCode(unittest=True,ignoreAtIgnore=True)
@@ -5713,7 +5647,6 @@ result = c.checkAllPythonCode(unittest=True,ignoreAtIgnore=True)
 assert result=="ok", "checkPythonCode returns: %s" % result</t>
 <t tx="ekr.20040713070526">@language python 
 
-import leoGlobals as g
 import leoTest
 
 c = g.top() ; p = c.currentPosition()
@@ -9151,7 +9084,6 @@ def gen_while(self,args):
 @language python
 @tabwidth -4
 
-import leoGlobals as g
 import unittest
 
 c = g.top()
@@ -9182,7 +9114,6 @@ c.importCommands.importFilesCommand (names,"@file",
 @language python
 @tabwidth -4
 
-import leoGlobals as g
 import leoTest
 
 c = g.top() ; p = c.currentPosition()
@@ -9246,7 +9177,6 @@ This should be the last line (no newline following!)
 @language python
 @tabwidth -4
 
-import leoGlobals as g
 import leoTest
 
 c = g.top() ; p = c.currentPosition()
@@ -9306,7 +9236,6 @@ This should be the last line (no newline following!)
 @language python
 @tabwidth -4
 
-import leoGlobals as g
 import leoTest
 
 c = g.top() ; p = c.currentPosition()
@@ -9423,7 +9352,6 @@ Line 0
 @language python
 @tabwidth -4
 
-import leoGlobals as g
 import leoTest
 
 c = g.top() ; p = c.currentPosition()
@@ -9575,8 +9503,7 @@ c = g.top()
 
 c.frame.tree.idle_redraw()</t>
 <t tx="ekr.20040722051235"></t>
-<t tx="ekr.20040722055040">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20040722055040">c = g.top()
 
 for p in c.allNodes_iter():
     
@@ -9654,14 +9581,12 @@ if 0:
     btags = body.bindtags()
     btags =(ctags[0],btags[0],btags[1],btags[2],btags[3])
     body.bindtags(btags)</t>
-<t tx="ekr.20040730181601">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040730181601">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
-<t tx="ekr.20040730181610">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040730181610">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile2.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
@@ -9669,7 +9594,6 @@ leoTest.runLeoTest(path,verbose=False,full=True)
 <t tx="ekr.20040730185319"></t>
 <t tx="ekr.20040802065214"># Make sure that changing this headline marks descendant @thin nodes dirty.
 
-import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
 
@@ -9694,7 +9618,6 @@ c.endUpdate()
 <t tx="ekr.20040802065214.1">test</t>
 <t tx="ekr.20040802071519"># Tests that p.setBodyStringOrPane works immediately.
 
-import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
 
@@ -9714,14 +9637,12 @@ finally:
     child.setBodyStringOrPane(before)
     c.selectPosition(p)</t>
 <t tx="ekr.20040802071519.1">after</t>
-<t tx="ekr.20040803090901">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040803090901">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","dist","leoDist.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
-<t tx="ekr.20040803091512">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040803091512">import leoTest
 
 c = g.top() ; u = leoTest.testUtils()
 
@@ -9796,7 +9717,6 @@ src\\leo.py</t>
 <t tx="ekr.20040831101747"># Apparently these file are fine when they are written.
 # The problem comes later in the distribution process.
 
-import leoGlobals as g
 
 def checkLinuxLineEndings(filename):
     
@@ -9813,8 +9733,7 @@ def checkLinuxLineEndings(filename):
 
 for file in ("install","uninstall"):
     checkLinuxLineEndings(g.os_path_join(g.app.loadDir,"..",file))</t>
-<t tx="ekr.20040831104758">import leoGlobals as g
-import leoTest
+<t tx="ekr.20040831104758">import leoTest
 
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile3.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
@@ -9964,8 +9883,7 @@ c = g.top()
 
 # print c,c.currentPosition()
 print "filename", filename</t>
-<t tx="ekr.20040917062206">import leoGlobals as g
-assert(g.cantImport("xyzzy","during unit testing") is None)</t>
+<t tx="ekr.20040917062206">assert(g.cantImport("xyzzy","during unit testing") is None)</t>
 <t tx="ekr.20040918093738">@ignore # To suppress syntax checking.</t>
 <t tx="ekr.20040918093738.1">import leoGlobals as g
 
@@ -10096,7 +10014,6 @@ g.es("hi",color="red")</t>
 @language python
 @tabwidth -4
 
-import leoGlobals as g
 
 c = g.top()
 p = c.currentPosition()
@@ -10441,8 +10358,7 @@ defaultTargetLanguage="C" use_header_flag="1"&gt;
 &lt;/xsl:template&gt;
 
 &lt;/xsl:stylesheet&gt;</t>
-<t tx="ekr.20041013062906">import leoGlobals as g
-
+<t tx="ekr.20041013062906">
 c = g.top()
 p = c.currentPosition()
 p.OnHyperLinkControlClick(event=None)</t>
@@ -10540,8 +10456,7 @@ print "Loaded plugins..."
 
 for s in g.app.loadedPlugins:
     print s</t>
-<t tx="ekr.20041019124050">import leoGlobals as g
-
+<t tx="ekr.20041019124050">
 c = g.top()
 p = c.currentPosition()
 
@@ -10561,8 +10476,7 @@ line 1
 line 2
 line 3
 """</t>
-<t tx="ekr.20041020100733">import leoGlobals as g
-import leoTest
+<t tx="ekr.20041020100733">import leoTest
 
 c = g.top() ; p = c.currentPosition()
 
@@ -10581,8 +10495,7 @@ unnamed node line 1
 last line</t>
 <t tx="ekr.20041020100918">section line 1</t>
 <t tx="ekr.20041020100918.1">unnamed node line 1</t>
-<t tx="ekr.20041021062800">import leoGlobals as g
-import leoTest
+<t tx="ekr.20041021062800">import leoTest
 
 c = g.top() ; p = c.currentPosition()
 
@@ -10617,8 +10530,7 @@ unnamed node line 1
 #@-node:unnamed node
 #@-leo
 </t>
-<t tx="ekr.20041021065844">import leoGlobals as g
-import leoTest
+<t tx="ekr.20041021065844">import leoTest
 
 c = g.top() ; p = c.currentPosition()
 
@@ -10650,8 +10562,7 @@ zerodivide = 1 / 0</t>
 <t tx="ekr.20041105091229">import leoGlobals as g
 
 g.pdb()</t>
-<t tx="ekr.20041107105213">import leoGlobals as g
-
+<t tx="ekr.20041107105213">
 c = g.top()
 p = c.currentPosition().firstChild()
 
@@ -12487,8 +12398,7 @@ def doIndent (self):
 # ExecuteScript = Alt+Ctrl+E
 # Exit = alt-ctrl-Z</t>
 <t tx="ekr.20050105080048"></t>
-<t tx="ekr.20050105080048.1">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20050105080048.1">c = g.top()
 f = c.frame
 
 assert(f.c==c)
@@ -12515,8 +12425,7 @@ for ivar in ivars:
 # These do not have to be initied.
 for ivar in ('findPanel',):
     assert hasattr(f,ivar), 'missing frame ivar: %s' % ivar</t>
-<t tx="ekr.20050105082500">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20050105082500">c = g.top()
 f = c.frame
 
 assert(f.c==c)
@@ -12541,8 +12450,7 @@ for ivar in ivars:
     assert hasattr(c,ivar), 'missing commander ivar: %s' % ivar
     val = getattr(c,ivar)
     assert val is not None,'null commander ivar: %s'% ivar</t>
-<t tx="ekr.20050105084757">import leoGlobals as g
-
+<t tx="ekr.20050105084757">
 ivars = (
     'extensionsDir','globalConfigDir',
     'homeDir','loadDir','testDir'
@@ -12553,8 +12461,7 @@ for ivar in ivars:
     val = getattr(g.app,ivar)
     assert val is not None, 'null g.app directory: %s'% ivar
     assert g.os_path_exists(g.os_path_abspath(val)), 'non-existent g.app directory: %s' % ivar</t>
-<t tx="ekr.20050105084757.1">import leoGlobals as g
-import os
+<t tx="ekr.20050105084757.1">import os
 
 exists = g.os_path_exists
 
@@ -12572,8 +12479,7 @@ f.close()
 assert exists(path)
 assert g.utils_remove(path,verbose=True)
 assert not exists(path)</t>
-<t tx="ekr.20050105090632">import leoGlobals as g
-
+<t tx="ekr.20050105090632">
 ivars = (
     # These are non-official and might be removed...
         # 'afterHandler','count','positions',
@@ -12601,8 +12507,7 @@ for ivar in (
     'root',
 ):
     assert hasattr(g.app,ivar), 'missing app ivar: %s' % ivar</t>
-<t tx="ekr.20050105091547">import leoGlobals as g
-import os
+<t tx="ekr.20050105091547">import os
 
 exists = g.os_path_exists
 path = g.os_path_join(g.app.testDir,'xyzzy')
@@ -12627,8 +12532,7 @@ f.close()
 assert s == 'test %s' % path
 os.remove(path2)
 assert not exists(path)</t>
-<t tx="ekr.20050105093136">import leoGlobals as g
-import os
+<t tx="ekr.20050105093136">import os
 
 c = g.top() ; at = c.atFileCommands
 
@@ -12648,8 +12552,7 @@ f.close()
 assert exists(path)
 assert at.remove(path)
 assert not exists(path)</t>
-<t tx="ekr.20050105093524">import leoGlobals as g
-import os
+<t tx="ekr.20050105093524">import os
 
 c = g.top() ; at = c.atFileCommands
 
@@ -12676,8 +12579,7 @@ f.close()
 assert s == 'test %s' % path
 os.remove(path2)
 assert not exists(path)</t>
-<t tx="ekr.20050105094311">import leoGlobals as g
-import os
+<t tx="ekr.20050105094311">import os
 
 c = g.top() ; at = c.atFileCommands
 
@@ -12712,8 +12614,7 @@ f.close()
 # print 'Contents of %s: %s' % (at.targetFileName,s)
 assert s == 'test %s' % at.outputFileName, 'unexpected contents of target file'
 os.remove(at.targetFileName)</t>
-<t tx="ekr.20050105095743">import leoGlobals as g
-import os
+<t tx="ekr.20050105095743">import os
 
 c = g.top() ; at = c.atFileCommands
 
@@ -12748,8 +12649,7 @@ f.close()
 # print 'Contents of %s: %s' % (at.targetFileName,s)
 assert s == 'test %s' % at.outputFileName, 'unexpected contents of target file'
 os.remove(at.targetFileName)</t>
-<t tx="ekr.20050105100227">import leoGlobals as g
-import os
+<t tx="ekr.20050105100227">import os
 
 c = g.top() ; at = c.atFileCommands
 
@@ -12786,8 +12686,7 @@ f.close()
 # print 'Contents of %s: %s' % (at.targetFileName,s)
 assert s == 'test %s' % at.outputFileName, 'unexpected contents of target file'
 os.remove(at.targetFileName)</t>
-<t tx="ekr.20050106080304">import leoGlobals as g
-import glob
+<t tx="ekr.20050106080304">import glob
 import inspect
 import unittest
 
@@ -12854,8 +12753,7 @@ else: # For script button nodes.  Good for testing.
 
     """Mark a unit test as having failed."""
 
-    import leoGlobals as g
-
+    
     g.app.unitTestDict["fail"] = g.callerName(2)</t>
 <t tx="ekr.20050106080318.4">def setUp (self):
 
@@ -12955,8 +12853,7 @@ else: # For script button nodes.  Good for testing.
 
     """Mark a unit test as having failed."""
 
-    import leoGlobals as g
-
+    
     g.app.unitTestDict["fail"] = g.callerName(2)</t>
 <t tx="ekr.20050106094854.3">def setUp (self):
 
@@ -13295,7 +13192,6 @@ g.doHook("unselect2",   c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
 g.doHook("select2",     c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
 g.doHook("select3",     c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)</t>
 <t tx="ekr.20050120095423.6"># N.B.  We don't import the files: multiple imports might cause problems.
-import leoGlobals as g
 import unittest
 import leoTest
 
@@ -13351,7 +13247,6 @@ if suite:
         return "Test tabbing of %s plugin" % fn</t>
 <t tx="ekr.20050120095423.11"># Create unit tests in g.app.scriptDict["suite"]
 
-import leoGlobals as g
 import leoPlugins
 import leoTest
 import glob
@@ -13405,8 +13300,6 @@ g.app.scriptDict['suite'] = suite</t>
 
     """Mark a unit test as having failed."""
 
-    import leoGlobals as g
-
     g.app.unitTestDict["fail"] = g.callerName(2)</t>
 <t tx="ekr.20050120095423.16">def runTest(self):
 
@@ -13448,8 +13341,7 @@ g.app.scriptDict['suite'] = suite</t>
         if self.openFlag:
             new_c = c.new() # Create the new window.
             new_c.frame.setTitle("unit test for 'new' hook")</t>
-<t tx="ekr.20050120095423.21">import leoGlobals as g
-import leoPlugins
+<t tx="ekr.20050120095423.21">import leoPlugins
 
 print
 print 'loaded plugins...'
@@ -13469,19 +13361,14 @@ headlines = '\n'.join(headlines)
 print headlines
 
 </t>
-<t tx="ekr.20050203001146">import leoGlobals as g
-
+<t tx="ekr.20050203001146">
 c = g.top()
 
 # g.es(c.page_width)
 
 assert c.page_width == 80</t>
 <t tx="ekr.20050203084930"></t>
-<t tx="ekr.20050203084930.1">import leoGlobals as g
-
-w = g.app.config.get(None,'global_setting_for_unit_tests','int')
-
-# print w 
+<t tx="ekr.20050203084930.1">w = g.app.config.get(None,'global_setting_for_unit_tests','int')
 
 assert w == 132</t>
 <t tx="ekr.20050203085849">import leoGlobals as g
@@ -13495,8 +13382,7 @@ print 'hello'
 #assert c.redirect_execute_script_output_to_log_pane is True
 #assert c.config.redirect_execute_script_output_to_log_pane is True
 </t>
-<t tx="ekr.20050206090416">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20050206090416">c = g.top()
 
 file = u'Ỗ'
 path = g.os_path_join('Ỗ','Ỗ')
@@ -13505,25 +13391,21 @@ path = g.os_path_join('Ỗ','Ỗ')
 ok,frame = g.openWithFileName(path,c)
 
 assert not ok and not frame</t>
-<t tx="ekr.20050206201145">import leoGlobals as g
-
+<t tx="ekr.20050206201145">
 s = "testᾹ(U+1FB9: Greek Capital Letter Alpha With Macron)"
 
 s2 = 'test: %s' % s</t>
 <t tx="ekr.20050208051418"></t>
-<t tx="ekr.20050208051418.1"># import leoGlobals as g
-old_c = g.top()
+<t tx="ekr.20050208051418.1">old_c = g.top()
 filename = "testᾹ(U+1FB9: Greek Capital Letter Alpha With Macron)"
 ok,frame = g.openWithFileName(filename,old_c)
 assert(not ok)</t>
-<t tx="ekr.20050208051854">import leoGlobals as g
-c = g.top()
+<t tx="ekr.20050208051854">c = g.top()
 at = c.atFileCommands
 at.errors = 0
 at.printError(
     "test of printError: Ᾱ(U+1FB9: Greek Capital Letter Alpha With Macron)")</t>
-<t tx="ekr.20050208073718">import leoGlobals as g
-import os
+<t tx="ekr.20050208073718">import os
 c = g.top()
 
 # g.es("tkEncoding",g.app.tkEncoding,color='orange')
@@ -13544,8 +13426,7 @@ ok,frame = g.openWithFileName(s,c)
 if frame: frame.c.close()
 
 assert ok and frame, 'did not open'</t>
-<t tx="ekr.20050208104202">import leoGlobals as g
-
+<t tx="ekr.20050208104202">
 for s,encoding in (
     ('a',    'utf-8'),
     ('a',    'ascii'),
@@ -13564,8 +13445,7 @@ for s,encoding in (
         s2 = g.toUnicode(s,encoding)
         s3 = g.toEncodedString(s2,encoding)
         assert s3 == s, 'Round-trip two fails for %s' %s</t>
-<t tx="ekr.20050208111037">import leoGlobals as g
-
+<t tx="ekr.20050208111037">
 encoding = 'ascii'
 
 s = '炰'
@@ -13730,8 +13610,7 @@ assert not child.isMarked(), "unit test didn't restore mark"
 @c
 
 And this is text (changed)</t>
-<t tx="ekr.20050218015346">import leoGlobals as g
-import glob
+<t tx="ekr.20050218015346">import glob
 import inspect
 import unittest
 
@@ -13780,8 +13659,6 @@ else: # For script button nodes.  Good for testing.
 <t tx="ekr.20050218015346.13">def fail (self):
 
     """Mark a unit test as having failed."""
-
-    import leoGlobals as g
 
     g.app.unitTestDict["fail"] = g.callerName(2)</t>
 <t tx="ekr.20050218015346.14">def setUp (self):
