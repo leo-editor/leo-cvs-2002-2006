@@ -2019,8 +2019,7 @@ class baseFileCommands:
                     backupName = g.os_path_join(g.app.loadDir,fileName)
                     backupName = fileName + ".bak"
                     if g.os_path_exists(backupName):
-                        os.unlink(backupName)
-                    # os.rename(fileName,backupName)
+                        os.remove(backupName)
                     g.utils_rename(fileName,backupName)
                 except OSError:
                     if self.read_only:
@@ -2049,7 +2048,7 @@ class baseFileCommands:
                 #@+node:ekr.20031218072017.3048:<< delete backup file >>
                 if backupName and g.os_path_exists(backupName):
                     try:
-                        os.unlink(backupName)
+                        os.remove(backupName)
                     except OSError:
                         if self.read_only:
                             g.es("read only",color="red")
@@ -2104,7 +2103,7 @@ class baseFileCommands:
             
             if fileName and g.os_path_exists(fileName):
                 try:
-                    os.unlink(fileName)
+                    os.remove(fileName)
                 except OSError:
                     if self.read_only:
                         g.es("read only",color="red")
@@ -2149,7 +2148,7 @@ class baseFileCommands:
             #@+node:ekr.20031218072017.3048:<< delete backup file >>
             if backupName and g.os_path_exists(backupName):
                 try:
-                    os.unlink(backupName)
+                    os.remove(backupName)
                 except OSError:
                     if self.read_only:
                         g.es("read only",color="red")
@@ -2172,7 +2171,7 @@ class baseFileCommands:
             
             if fileName and g.os_path_exists(fileName):
                 try:
-                    os.unlink(fileName)
+                    os.remove(fileName)
                 except OSError:
                     if self.read_only:
                         g.es("read only",color="red")
