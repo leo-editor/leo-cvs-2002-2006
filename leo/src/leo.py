@@ -92,12 +92,14 @@ def run(fileName=None,*args,**keywords):
     try:
         import leoNodes
     except ImportError:
-         print "Error importing leoNodes.py"
-    
+        print "Error importing leoNodes.py"
+        import traceback ; traceback.print_exc()
     try:
         import leoConfig
     except ImportError:
         print "Error importing leoConfig.py"
+        import traceback ; traceback.print_exc()
+    #@nonl
     #@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
     #@nl
     g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
