@@ -3317,7 +3317,6 @@ class baseCommands:
         #@+node:ekr.20040711135244.10:putNormalToken
         def putNormalToken (self,token5tuple):
         
-            a = self.array
             t1,t2,t3,t4,t5 = token5tuple
             srow,scol = t3 ; erow,ecol = t4
             line = t5
@@ -3328,40 +3327,40 @@ class baseCommands:
         
             if startLine:
                 ws = line[0:scol]
-                if ws: a.append(ws)
+                if ws: self.array.append(ws)
         
-            # g.trace(name,repr(val))
+            # g.trace(name,repr(str(val)))
             if name in ("nl","newline","endmarker"):
                 if name in ("nl","newline"):
-                    a.append('\n')
-                self.lines.append(''.join(a))
+                    self.array.append('\n')
+                self.lines.append(''.join(self.array))
                 self.array = []
             elif name == "op":
                 self.putOperator(val)
             elif name == "name":
-                a.append("%s " % val)
+                self.array.append("%s " % val)
                 if self.prevName == "def": # A personal idiosyncracy.
-                    a.append(' ') # Retain the blank before '('.
+                    self.array.append(' ') # Retain the blank before '('.
                 self.prevName = val
             elif name == "number":
-                a.append(val)
+                self.array.append(val)
             elif name in ("comment","string"):
                 # These may span lines, so duplicate the end-of-line logic.
                 lines = g.splitLines(val)
                 for line in lines:
-                    a.append(line)
+                    self.array.append(line)
                     if line and line[-1] == '\n':
-                        self.lines.append(''.join(a))
+                        self.lines.append(''.join(self.array))
                         self.array = []
             elif name == "errortoken":
-                a.append(val)
+                self.array.append(val)
                 if val == '@':
                     # Preserve whitespace after @.
                     i = g.skip_ws(line,scol+1)
                     ws = line[scol+1:i]
-                    if ws: a.append(ws)
+                    if ws: self.array.append(ws)
             elif name == "indent":
-                a.append(val)
+                self.array.append(val)
             elif name == "dedent":
                 pass
             else:

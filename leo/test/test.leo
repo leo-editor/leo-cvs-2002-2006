@@ -1233,9 +1233,13 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041017100700" a="TV"><vh>Test of autocompleter</vh></v>
+<v t="ekr.20041017100700"><vh>Test of autocompleter</vh></v>
 <v t="ekr.20041018193142"><vh>Make sure openWith changes are benign</vh></v>
 <v t="ekr.20041019080125"><vh>Report loaded plugins</vh></v>
+<v t="ekr.20041019124050" a="ETV"><vh>@test pretty printing a docstring</vh>
+<v t="ekr.20041019124050.1"><vh>Original</vh></v>
+<v t="ekr.20041019124050.2"><vh>Test</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -10175,5 +10179,26 @@ print "Loaded plugins..."
 
 for s in g.app.loadedPlugins:
     print s</t>
+<t tx="ekr.20041019124050">import leoGlobals as g
+
+c = g.top()
+p = c.currentPosition()
+
+test1 = p.firstChild()
+test2 = p.firstChild().next()
+
+c.prettyPrintPythonCode(p=test2,dump=False)
+
+assert(test2.bodyString()==test1.bodyString())</t>
+<t tx="ekr.20041019124050.1">"""
+line 1
+line 2
+line 3
+"""</t>
+<t tx="ekr.20041019124050.2">"""
+line 1
+line 2
+line 3
+"""</t>
 </tnodes>
 </leo_file>
