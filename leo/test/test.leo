@@ -635,8 +635,8 @@
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"
 marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
-<v t="ekr.20040716144017" a="E"><vh>Perfect Import tests</vh>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1" a="M"><vh>-input</vh></v>
 <v t="ekr.20040716081019" a="M"><vh>-input-after</vh></v>
@@ -664,7 +664,7 @@ marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040716141621.6" a="M"><vh>-j_lines</vh></v>
 <v t="ekr.20040716141621.7" a="M"><vh>-result</vh></v>
 </v>
-<v t="ekr.20040716142121" a="E"><vh>@test replace across sentinel blocks: Succeeds ONLY when ignoring sentinels</vh>
+<v t="ekr.20040716142121"><vh>@test replace across sentinel blocks: Succeeds ONLY when ignoring sentinels</vh>
 <v t="ekr.20040716142423" a="M"><vh>-input</vh>
 <v t="ekr.20040716142423.1" a="M"><vh>Node 1</vh></v>
 <v t="ekr.20040716142423.2" a="M"><vh>Node 2</vh></v>
@@ -680,7 +680,7 @@ marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040716142121.7" a="M"><vh>-result</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.7" a="E"><vh>Import/Export tests</vh>
+<v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
 <v t="ekr.20040712101754.10"><vh>importTests</vh>
@@ -729,7 +729,7 @@ marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 </v>
-<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
@@ -978,10 +978,10 @@ marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.211"><vh>@test hasThreadNextBack</vh></v>
 <v t="ekr.20040712101754.212"><vh>@test vnode list</vh></v>
 </v>
-<v t="ekr.20040713070526"><vh>@test Pretty Print command</vh>
+<v t="ekr.20040713070526" a="E"><vh>@test Pretty Print command</vh>
 <v t="ekr.20040713123617"><vh>tempNode</vh></v>
 <v t="ekr.20040713071919"><vh>before</vh></v>
-<v t="ekr.20040713123828.1"><vh>after</vh></v>
+<v t="ekr.20040713123828.1" a="ETV"><vh>after</vh></v>
 </v>
 <v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
@@ -1096,7 +1096,7 @@ marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040716140617.1" a="M"><vh>runPerfectImportTest</vh></v>
 </v>
 </v>
-<v t="ekr.20040716062608" a="ETV"><vh>Perfect Import Script</vh></v>
+<v t="ekr.20040716062608" a="E"><vh>Perfect Import Script</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1765,7 +1765,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -1903,7 +1903,7 @@ print s ; g.es(s)</t>
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -5238,9 +5238,18 @@ else:
 @c
 
 def        spam (self         )  :   
+
+    """ This is a ' triple'   quoted string:
+        It should remain untouched."""
     
     if a==3:
         print "Ä á Û"
+        
+    ''' Another ' triple'   quoted string:
+        It should remain untouched.'''
+        
+    "yet another\
+    multi-line string"
         
 class eggs:
     
@@ -5253,9 +5262,15 @@ class eggs:
 @c 
 
 def spam (self):
+
+    """ This is a ' triple'   quoted string:
+        It should remain untouched."""
     
     if a==3:
         print "Ä á Û"
+        
+    ''' Another ' triple'   quoted string:
+        It should remain untouched.'''
         
 class eggs:
     
@@ -5292,9 +5307,18 @@ for p in before.subtree_iter():
 @c 
 
 def spam (self):
+
+    """ This is a ' triple'   quoted string:
+        It should remain untouched."""
     
     if a==3:
         print "Ä á Û"
+        
+    ''' Another ' triple'   quoted string:
+        It should remain untouched.'''
+        
+    "yet another\
+    multi-line string"
         
 class eggs:
     
