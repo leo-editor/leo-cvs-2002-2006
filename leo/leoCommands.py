@@ -1351,11 +1351,12 @@ class Commands:
 	#@+node:3::clearAllVisited
 	#@+body
 	def clearAllVisited (self):
-	
-		c = self ; v = c.rootVnode()
 		
+		# tick()
+		c = self ; v = c.rootVnode()
 		c.beginUpdate()
 		while v:
+			# tick("clearAllVisited loop")
 			v.clearVisited()
 			if v.t:
 				v.t.clearVisited()
@@ -1425,7 +1426,8 @@ class Commands:
 	# Returns false if any node of tree is a clone of parent or any of parents ancestors.
 	
 	def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
-	
+		
+		# tick()
 		clone_message = "Illegal move or drag: no clone may contain a clone of itself"
 		drag_message  = "Illegal drag: Can't drag a node into its own tree"
 	
@@ -1487,7 +1489,8 @@ class Commands:
 	# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
 	
 	def insertHeadline (self,op_name="Insert Outline"):
-	
+		
+		# tick()
 		c = self ; current = c.currentVnode()
 		if not current: return
 		c.beginUpdate()
@@ -1829,7 +1832,7 @@ class Commands:
 	#@-body
 	#@-node:11::unmarkAll
 	#@-node:14::Mark & Unmark & goto
-	#@+node:15::Moving, Dragging, Promote, Demote, Sort
+	#@+node:15::Moving, Dragging, Promote, Demote, Sort (commands)
 	#@+node:1::c.dragAfter
 	#@+body
 	def dragAfter(self,v,after):
@@ -1855,34 +1858,7 @@ class Commands:
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@-body
 	#@-node:1::c.dragAfter
-	#@+node:2::c.dragCloneAfter
-	#@+body
-	def dragCloneAfter (self,v,after):
-	
-		c = self
-		c.beginUpdate()
-		clone = v.clone(v) # Creates clone & dependents, does not set undo.
-		if not c.checkMoveWithParentWithWarning(clone,after.parent(),true):
-			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
-			c.endUpdate(false) # Nothing has changed.
-			return
-		# Remember both the before state and the after state for undo/redo
-		oldBack = v.back()
-		oldParent = v.parent()
-		oldN = v.childIndex()
-		c.endEditing()
-		clone.setDirty()
-		clone.moveAfter(after)
-		c.undoer.setUndoParams("Drag & Clone",clone,
-			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-		clone.setDirty()
-		c.selectVnode(clone)
-		c.setChanged(true)
-		c.endUpdate()
-		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
-	#@-body
-	#@-node:2::c.dragCloneAfter
-	#@+node:3::c.dragCloneToNthChildOf
+	#@+node:2::c.dragCloneToNthChildOf
 	#@+body
 	def dragCloneToNthChildOf (self,v,parent,n):
 	
@@ -1908,8 +1884,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:3::c.dragCloneToNthChildOf
-	#@+node:4::c.dragToNthChildOf
+	#@-node:2::c.dragCloneToNthChildOf
+	#@+node:3::c.dragToNthChildOf
 	#@+body
 	def dragToNthChildOf(self,v,parent,n):
 	
@@ -1933,8 +1909,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:4::c.dragToNthChildOf
-	#@+node:5::c.sortChildren, sortSiblings
+	#@-node:3::c.dragToNthChildOf
+	#@+node:4::c.sortChildren, sortSiblings
 	#@+body
 	def sortChildren(self):
 	
@@ -1990,8 +1966,8 @@ class Commands:
 			c.setChanged(true)
 			c.endUpdate()
 	#@-body
-	#@-node:5::c.sortChildren, sortSiblings
-	#@+node:6::c.sortTopLevel
+	#@-node:4::c.sortChildren, sortSiblings
+	#@+node:5::c.sortTopLevel
 	#@+body
 	def sortTopLevel (self):
 		
@@ -2028,8 +2004,8 @@ class Commands:
 			v = next
 		c.endUpdate()
 	#@-body
-	#@-node:6::c.sortTopLevel
-	#@+node:7::demote
+	#@-node:5::c.sortTopLevel
+	#@+node:6::demote
 	#@+body
 	def demote(self):
 	
@@ -2060,8 +2036,8 @@ class Commands:
 		c.undoer.setUndoParams("Demote",v,lastChild=last)
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:7::demote
-	#@+node:8::moveOutlineDown
+	#@-node:6::demote
+	#@+node:7::moveOutlineDown
 	#@+body
 	#@+at
 	#  Moving down is more tricky than moving up; we can't move v to be a 
@@ -2116,11 +2092,12 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:8::moveOutlineDown
-	#@+node:9::moveOutlineLeft
+	#@-node:7::moveOutlineDown
+	#@+node:8::moveOutlineLeft
 	#@+body
 	def moveOutlineLeft(self):
-	
+		
+		# clear_stats() ; # tick()
 		c = self
 		v = c.currentVnode()
 		if not v: return
@@ -2142,12 +2119,14 @@ class Commands:
 			c.setChanged(true)
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+		# print_stats()
 	#@-body
-	#@-node:9::moveOutlineLeft
-	#@+node:10::moveOutlineRight
+	#@-node:8::moveOutlineLeft
+	#@+node:9::moveOutlineRight
 	#@+body
 	def moveOutlineRight(self):
-	
+		
+		# clear_stats() ; # tick()
 		c = self
 		v = c.currentVnode()
 		if not v: return
@@ -2172,9 +2151,10 @@ class Commands:
 			c.initJoinedCloneBits(v) # 7/6/02
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+		# print_stats()
 	#@-body
-	#@-node:10::moveOutlineRight
-	#@+node:11::moveOutlineUp
+	#@-node:9::moveOutlineRight
+	#@+node:10::moveOutlineUp
 	#@+body
 	def moveOutlineUp(self):
 	
@@ -2222,8 +2202,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:11::moveOutlineUp
-	#@+node:12::promote
+	#@-node:10::moveOutlineUp
+	#@+node:11::promote
 	#@+body
 	def promote(self):
 	
@@ -2246,8 +2226,35 @@ class Commands:
 		c.undoer.setUndoParams("Promote",v,lastChild=last)
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:12::promote
-	#@-node:15::Moving, Dragging, Promote, Demote, Sort
+	#@-node:11::promote
+	#@+node:12::c.dragCloneAfter
+	#@+body
+	def dragCloneAfter (self,v,after):
+	
+		c = self
+		c.beginUpdate()
+		clone = v.clone(v) # Creates clone & dependents, does not set undo.
+		if not c.checkMoveWithParentWithWarning(clone,after.parent(),true):
+			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+			c.endUpdate(false) # Nothing has changed.
+			return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.endEditing()
+		clone.setDirty()
+		clone.moveAfter(after)
+		c.undoer.setUndoParams("Drag & Clone",clone,
+			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+		clone.setDirty()
+		c.selectVnode(clone)
+		c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+	#@-body
+	#@-node:12::c.dragCloneAfter
+	#@-node:15::Moving, Dragging, Promote, Demote, Sort (commands)
 	#@+node:16::Selecting & Updating (commands)
 	#@+node:1::editVnode (calls tree.editLabel)
 	#@+body

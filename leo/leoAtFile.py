@@ -86,18 +86,17 @@ class atFile:
 		# Constant data structures used only by 4.x code.
 		
 		self.gnxSentinels = (
+			"@afterref",
 			"@comment",
 			"@delims",
-			"@tnode",
 			"@verbatim",
-			# "@verbatimAfterRef",
 			"@+at",     "@-at",
-			"@+body",   "@-body",
 			"@+doc",    "@-doc",
 			"@+leo",    "@-leo",
-			"@+node",   "@-node",
 			"@+ref",    "@-ref",
-			"@+others", "@-others" )
+			"@+others", "@-others",
+			"@+t",      "@-t",
+			"@+v",      "@-v" )
 			
 		self.gnxSentinelDict = {}
 		for s in self.gnxSentinels:
@@ -106,24 +105,24 @@ class atFile:
 		# Dispatcher dict.
 		self.gnxDispatchDict = {
 			"@@"       : self.doDirective,
+			"@afterref": self.doAfterref,
 			"@comment" : self.doComment,
 			"@delims"  : self.doDelims,
-			"@tnode"   : self.doTnode,
 			"@verbatim": self.doVerbatim,
 			"@+at"     : self.doStartAt,
 			"@-at"     : self.doEndAt,
-			"@+body"   : self.doStartBody,
-			"@-body"   : self.doEndBody,
 			"@+doc"    : self.doStartDoc,
 			"@-doc"    : self.doEndDoc,
 			"@+leo"    : self.doStartLeo,
 			"@-leo"    : self.doEndLeo,
 			"@+others" : self.doStartOthers,
 			"@-others" : self.doEndOthers,
-			"@+parent" : self.doStartParent,
-			"@-parent" : self.doEndParent,
 			"@+ref"    : self.doStartRef,
-			"@-ref"    : self.doEndRef }
+			"@-ref"    : self.doEndRef,
+			"@+t"      : self.doStartTnode,
+			"@-t"      : self.doEndTnode,
+			"@+v"      : self.doStartVnode,
+			"@-v"      : self.doEndVnode }
 		#@-body
 		#@-node:2::<< init the 4.x constants >>
 
@@ -242,98 +241,19 @@ class atFile:
 	#@-body
 	#@-node:2::atFile.__init__, initIvars & initGnxIvars
 	#@+node:3::Sentinels
-	#@+node:1::gnxSentinelKind
-	#@+body
-	#@+at
-	#  This method tells what kind of sentinel appears in line s.  Typically s 
-	# will be an empty line before the actual sentinel, but it is also valid 
-	# for s to be an actual sentinel line.
-	# 
-
-	#@-at
-	#@@c
-
-	def gnxSentinelKind(self,s):
-	
-		i = skip_ws(s,0)
-		if match(s,i,self.startSentinelComment): 
-			i += len(self.startSentinelComment)
-		else:
-			return None
-	
-		# Locally undo cweb hack here
-		start = self.startSentinelComment
-		if start and len(start) > 0 and start[-1] == '@':
-			s = s[:i] + string.replace(s[i:],'@@','@')
-		# Do not skip whitespace here!
-		if match(s,i,"@@"): return atFile.startDirective
-		if not match(s,i,'@'): return None
-		j = i # start of lookup
-		i += 1 # skip the at sign.
-		if match(s,i,'+') or match(s,i,'-'):
-			i += 1
-		i = skip_c_id(s,i)
-		# trace(`s[j:i]`)
-		key = s[j:i]
-		if len(key) > 0 and self.gnxSentinelDict.has_key(key):
-			return key
-		else:
-			return None
-	#@-body
-	#@-node:1::gnxSentinelKind
-	#@+node:2::nodeSentinelText
-	#@+body
-	def nodeSentinelText(self,v):
-	
-		config = app().config
-	
-		if config.write_clone_indices:
-			cloneIndex = v.t.cloneIndex
-			clone_s = choose(cloneIndex > 0, "C=" + `cloneIndex`, "")
-		else: clone_s = ""
-		
-		if v == self.root or not v.parent():
-			index = 0
-		else:
-			index = v.childIndex() + 1
-	
-		h = v.headString()
-		
-		#@<< remove comment delims from h if necessary >>
-		#@+node:1::<< remove comment delims from h if necessary >>
-		#@+body
-		#@+at
-		#  Bug fix 1/24/03:
-		# 
-		# If the present @language/@comment settings do not specify a 
-		# single-line comment we remove all block comment delims from h.  This 
-		# prevents headline text from interfering with the parsing of node sentinels.
-
-		#@-at
-		#@@c
-
-		start = self.startSentinelComment
-		end = self.endSentinelComment
-		
-		if end and len(end) > 0:
-			h = h.replace(start,"")
-			h = h.replace(end,"")
-		#@-body
-		#@-node:1::<< remove comment delims from h if necessary >>
-
-	
-		return str(index) + ':' + clone_s + ':' + h
-	#@-body
-	#@-node:2::nodeSentinelText
-	#@+node:3::putCloseNodeSentinel
+	#@+node:1::Common Sentinels
+	#@+node:1::putCloseNodeSentinel
 	#@+body
 	def putCloseNodeSentinel(self,v):
 	
-		s = self.nodeSentinelText(v)
-		self.putSentinel("@-node:" + s)
+		if self.using_gnx:
+			self.putSentinelAndGnx(v,"@-v")
+		else:
+			s = self.nodeSentinelText(v)
+			self.putSentinel("@-node:" + s)
 	#@-body
-	#@-node:3::putCloseNodeSentinel
-	#@+node:4::putCloseSentinels
+	#@-node:1::putCloseNodeSentinel
+	#@+node:2::putCloseSentinels
 	#@+body
 	#@+at
 	#  root is an ancestor of v, or root == v.  We call putCloseSentinel for v 
@@ -350,8 +270,8 @@ class atFile:
 			if  v == root: break
 			self.putCloseNodeSentinel(v)
 	#@-body
-	#@-node:4::putCloseSentinels
-	#@+node:5::putOpenLeoSentinel
+	#@-node:2::putCloseSentinels
+	#@+node:3::putOpenLeoSentinel
 	#@+body
 	#@+at
 	#  This method is the same as putSentinel except we don't put an opening 
@@ -376,8 +296,8 @@ class atFile:
 		else:
 			self.onl() # End of sentinel.
 	#@-body
-	#@-node:5::putOpenLeoSentinel
-	#@+node:6::putOpenNodeSentinel
+	#@-node:3::putOpenLeoSentinel
+	#@+node:4::putOpenNodeSentinel
 	#@+body
 	#@+at
 	#  This method puts an open node sentinel for node v.
@@ -388,12 +308,17 @@ class atFile:
 	
 		if v.isAtFileNode() and v != self.root:
 			self.writeError("@file not valid in: " + v.headString())
+			return
+		
+		if self.using_gnx:
+			self.putSentinelAndGnx(v,"@+v")
+			self.putEscapedHeadline(v)
 		else:
 			s = self.nodeSentinelText(v)
 			self.putSentinel("@+node:" + s)
 	#@-body
-	#@-node:6::putOpenNodeSentinel
-	#@+node:7::putOpenSentinels
+	#@-node:4::putOpenNodeSentinel
+	#@+node:5::putOpenSentinels
 	#@+body
 	#@+at
 	#  root is an ancestor of v, or root == v.  We call putOpenNodeSentinel on 
@@ -413,8 +338,8 @@ class atFile:
 			self.putOpenNodeSentinel(node)
 			last = node
 	#@-body
-	#@-node:7::putOpenSentinels
-	#@+node:8::putSentinel (applies cweb hack)
+	#@-node:5::putOpenSentinels
+	#@+node:6::putSentinel (applies cweb hack)
 	#@+body
 	#@+at
 	#  All sentinels are eventually output by this method.
@@ -462,8 +387,72 @@ class atFile:
 		else:
 			self.onl() # End of sentinel.
 	#@-body
-	#@-node:8::putSentinel (applies cweb hack)
-	#@+node:9::sentinelKind
+	#@-node:6::putSentinel (applies cweb hack)
+	#@+node:7::skipSentinelStart
+	#@+body
+	def skipSentinelStart(self,s,i):
+	
+		start = self.startSentinelComment
+		assert(start and len(start)>0)
+	
+		if is_nl(s,i): i = skip_nl(s,i)
+		i = skip_ws(s,i)
+		assert(match(s,i,start))
+		i += len(start)
+		# 7/8/02: Support for REM hack
+		i = skip_ws(s,i)
+		assert(i < len(s) and s[i] == '@')
+		return i + 1
+	
+	#@-body
+	#@-node:7::skipSentinelStart
+	#@-node:1::Common Sentinels
+	#@+node:2::Sentinels 3.x
+	#@+node:1::nodeSentinelText
+	#@+body
+	def nodeSentinelText(self,v):
+	
+		config = app().config
+	
+		if config.write_clone_indices:
+			cloneIndex = v.t.cloneIndex
+			clone_s = choose(cloneIndex > 0, "C=" + `cloneIndex`, "")
+		else: clone_s = ""
+		
+		if v == self.root or not v.parent():
+			index = 0
+		else:
+			index = v.childIndex() + 1
+	
+		h = v.headString()
+		
+		#@<< remove comment delims from h if necessary >>
+		#@+node:1::<< remove comment delims from h if necessary >>
+		#@+body
+		#@+at
+		#  Bug fix 1/24/03:
+		# 
+		# If the present @language/@comment settings do not specify a 
+		# single-line comment we remove all block comment delims from h.  This 
+		# prevents headline text from interfering with the parsing of node sentinels.
+
+		#@-at
+		#@@c
+
+		start = self.startSentinelComment
+		end = self.endSentinelComment
+		
+		if end and len(end) > 0:
+			h = h.replace(start,"")
+			h = h.replace(end,"")
+		#@-body
+		#@-node:1::<< remove comment delims from h if necessary >>
+
+	
+		return str(index) + ':' + clone_s + ':' + h
+	#@-body
+	#@-node:1::nodeSentinelText
+	#@+node:2::sentinelKind
 	#@+body
 	#@+at
 	#  This method tells what kind of sentinel appears in line s.  Typically s 
@@ -519,8 +508,8 @@ class atFile:
 		else:
 			return atFile.noSentinel
 	#@-body
-	#@-node:9::sentinelKind
-	#@+node:10::sentinelName
+	#@-node:2::sentinelKind
+	#@+node:3::sentinelName
 	#@+body
 	# Returns the name of the sentinel for warnings.
 	
@@ -541,25 +530,65 @@ class atFile:
 		else:
 			return "<unknown sentinel!>"
 	#@-body
-	#@-node:10::sentinelName
-	#@+node:11::skipSentinelStart
+	#@-node:3::sentinelName
+	#@-node:2::Sentinels 3.x
+	#@+node:3::Sentinels 4.x
+	#@+node:1::gnxSentinelKind (needed??)
 	#@+body
-	def skipSentinelStart(self,s,i):
+	#@+at
+	#  This method tells what kind of sentinel appears in line s.  Typically s 
+	# will be an empty line before the actual sentinel, but it is also valid 
+	# for s to be an actual sentinel line.
+	# 
+
+	#@-at
+	#@@c
+
+	def gnxSentinelKind(self,s):
 	
+		i = skip_ws(s,0)
+		if match(s,i,self.startSentinelComment): 
+			i += len(self.startSentinelComment)
+		else:
+			return None
+	
+		# Locally undo cweb hack here
 		start = self.startSentinelComment
-		assert(start and len(start)>0)
+		if start and len(start) > 0 and start[-1] == '@':
+			s = s[:i] + string.replace(s[i:],'@@','@')
+		# Do not skip whitespace here!
+		if match(s,i,"@@"): return atFile.startDirective
+		if not match(s,i,'@'): return None
+		j = i # start of lookup
+		i += 1 # skip the at sign.
+		if match(s,i,'+') or match(s,i,'-'):
+			i += 1
+		i = skip_c_id(s,i)
+		# trace(`s[j:i]`)
+		key = s[j:i]
+		if len(key) > 0 and self.gnxSentinelDict.has_key(key):
+			return key
+		else:
+			return None
+	#@-body
+	#@-node:1::gnxSentinelKind (needed??)
+	#@+node:2::putSentinelAndGnx
+	#@+body
+	def putSentinelAndGnx (self,vt,s):
+		
+		try:
+			gnx = vt.gnx
+		except:
+			if 0: # not ready yet: self.indices does not exist
+				vt.gnx = gnx = self.indices.getNewIndex()
+			else:
+				gnx = "gnx for " + `vt`
 	
-		if is_nl(s,i): i = skip_nl(s,i)
-		i = skip_ws(s,i)
-		assert(match(s,i,start))
-		i += len(start)
-		# 7/8/02: Support for REM hack
-		i = skip_ws(s,i)
-		assert(i < len(s) and s[i] == '@')
-		return i + 1
+		self.putSentinel(s + gnx)
 	
 	#@-body
-	#@-node:11::skipSentinelStart
+	#@-node:2::putSentinelAndGnx
+	#@-node:3::Sentinels 4.x
 	#@-node:3::Sentinels
 	#@+node:4::Utilites
 	#@+node:1::atFile.scanAllDirectives (calls writeError on errors)
@@ -874,22 +903,7 @@ class atFile:
 		self.errors += 1
 	#@-body
 	#@-node:3::error
-	#@+node:4::skipIndent
-	#@+body
-	# Skip past whitespace equivalent to width spaces.
-	
-	def skipIndent(self,s,i,width):
-	
-		ws = 0 ; n = len(s)
-		while i < n and ws < width:
-			if   s[i] == '\t': ws += (abs(self.tab_width) - (ws % abs(self.tab_width)))
-			elif s[i] == ' ':  ws += 1
-			else: break
-			i += 1
-		return i
-	#@-body
-	#@-node:4::skipIndent
-	#@+node:5::readError
+	#@+node:4::readError
 	#@+body
 	def readError(self,message):
 	
@@ -904,8 +918,23 @@ class atFile:
 		self.root.setOrphan()
 		self.root.setDirty()
 	#@-body
-	#@-node:5::readError
-	#@+node:6::updateCloneIndices
+	#@-node:4::readError
+	#@+node:5::skipIndent
+	#@+body
+	# Skip past whitespace equivalent to width spaces.
+	
+	def skipIndent(self,s,i,width):
+	
+		ws = 0 ; n = len(s)
+		while i < n and ws < width:
+			if   s[i] == '\t': ws += (abs(self.tab_width) - (ws % abs(self.tab_width)))
+			elif s[i] == ' ':  ws += 1
+			else: break
+			i += 1
+		return i
+	#@-body
+	#@-node:5::skipIndent
+	#@+node:6::updateCloneIndices (3.x only)
 	#@+body
 	#@+at
 	#  The new Leo2 computes clone indices differently from the old Leo2:
@@ -943,7 +972,7 @@ class atFile:
 		# Make sure the root's clone index is zero.
 		root.t.setCloneIndex(0)
 	#@-body
-	#@-node:6::updateCloneIndices
+	#@-node:6::updateCloneIndices (3.x only)
 	#@+node:7::writeError
 	#@+body
 	def writeError(self,message):
@@ -2526,28 +2555,7 @@ class atFile:
 	#@+node:4::Handlers for sentinels...
 	#@+body
 	#@+others
-	#@+node:1::doNormalLine
-	#@+body
-	def doNormalLine (self,s,i):
-	
-		if self.raw:
-			i = 0
-		else:
-			i = self.skipIndent(s,0,self.indent)
-		
-		assert(self.nextLine != None)
-		
-		# We don't output the trailing newline if the next line is a sentinel.
-		if self.nextKind == None:
-			line = s[i:]
-			self.out.append(line)
-		else:
-			line = s[i:-1] # don't output the newline
-			self.out.append(line)
-	
-	#@-body
-	#@-node:1::doNormalLine
-	#@+node:2::Non-paired sentinels
+	#@+node:1::Non-paired sentinels
 	#@+node:1::doComment
 	#@+body
 	def doComment (self,s,i):
@@ -2624,26 +2632,7 @@ class atFile:
 	
 	#@-body
 	#@-node:3::doDirective
-	#@+node:4::doTnode (create new node)
-	#@+body
-	# The format of this sentinel is:
-	#
-	#	@tnode gti
-	#	text of headline on a single line.
-	
-	def doTnode (self,s,i):
-		
-		assert(match(s,i,"tnode"))
-		
-		### set the gti ###
-	
-		# Skip the sentinel and set the headline.
-		s = readlineForceUnixNewline(self.file)
-		self.headline = s.replace("\\n","\n")
-	
-	#@-body
-	#@-node:4::doTnode (create new node)
-	#@+node:5::doVerbatim
+	#@+node:4::doVerbatim
 	#@+body
 	def doVerbatim (self,s,i):
 	
@@ -2657,28 +2646,11 @@ class atFile:
 		self.out.append(s[i:])
 	
 	#@-body
-	#@-node:5::doVerbatim
-	#@-node:2::Non-paired sentinels
-	#@+node:3::Start Sentinels
-	#@+node:1::doStartBody
-	#@+body
-	def doStartBody (self,s,i):
-		
-		assert(match(s,i,"+body"))
-	
-		# Save old values
-		self.indentStack.push(self.indent)
-		self.outStack.push(self.out)
-		self.vStack.push(self.v)
-		
-		# Simulate a recursive call.
-		self.indent = self.lineIndent
-		self.out = []
-		self.v = self.createChild(self.v,self.headline)
-	
-	#@-body
-	#@-node:1::doStartBody
-	#@+node:2::doStartAt & doStartDoc
+	#@-node:4::doVerbatim
+	#@-node:1::Non-paired sentinels
+	#@+node:2::Paired sentinels
+	#@+node:1::+- at, doc
+	#@+node:1::doStartAt & doStartDoc
 	#@+body
 	def doStartAt (self,s,i):
 	
@@ -2692,84 +2664,7 @@ class atFile:
 	
 	
 	#@-body
-	#@-node:2::doStartAt & doStartDoc
-	#@+node:3::doStartLeo
-	#@+body
-	def doStartLeo (self,s,i):
-	
-		assert(match(s,i,"+leo"))
-		self.readError("Ignoring unexpected @+leo sentinel")
-	
-	#@-body
-	#@-node:3::doStartLeo
-	#@+node:4::doStartOthers
-	#@+body
-	def doStartOthers (self,s,i):
-	
-		assert(match(s,i,"+others"))
-		self.out.append(self.leading_ws + "@others")
-	
-		self.endSentinelStack.push(self.endSentinelKind)
-		self.endSentinelKind = "-others"
-	
-	#@-body
-	#@-node:4::doStartOthers
-	#@+node:5::doStartParent
-	#@+body
-	def doStartParent (self,s,i):
-		
-		assert(match(s,i,"+parent"))
-	
-		self.endSentinelStack.push(self.endSentinelKind)
-		self.endSentinelKind = "-parent"
-	
-	#@-body
-	#@-node:5::doStartParent
-	#@+node:6::doStartRef
-	#@+body
-	#@+at
-	#  The sentinel contains an @+ref followed by a section name in angle 
-	# brackets.  This code is different from the code for the @@ sentinel: the 
-	# expansion of the reference does not include a trailing newline.
-
-	#@-at
-	#@@c
-
-	def doStartRef (self,s,i):
-	
-		assert(match(s,i,"+ref"))
-		i += 4 ; i = skip_ws(s,i)
-	
-		if len(self.endSentinelComment) == 0:
-			line = s[i:-1] # No trailing newline
-		else:
-			k = string.find(s,self.endSentinelComment,i)
-			line = s[i:k] # No trailing newline, whatever k is.
-			
-		self.out.append(line)
-		
-		self.endSentinelStack.push(self.endSentinelKind)
-		self.endSentinelKind = "-ref"
-	#@-body
-	#@-node:6::doStartRef
-	#@-node:3::Start Sentinels
-	#@+node:4::End sentinels
-	#@+node:1::checkEndSentinel
-	#@+body
-	def checkEndSentinel (self,s,i):
-		
-		assert(match(s,i,self.kind))
-		
-		ok = self.kind == self.endSentinelKind
-		if not ok:
-			self.readError(
-				"Ignoring unexpected %s sentinel. Expecting " %
-				(self.kind,self.endSentinelKind))
-				
-		return ok
-	
-	#@-body
-	#@-node:1::checkEndSentinel
+	#@-node:1::doStartAt & doStartDoc
 	#@+node:2::doEndAt & doEndDoc
 	#@+body
 	def doEndAt (self,s,i):
@@ -2782,28 +2677,18 @@ class atFile:
 	
 	#@-body
 	#@-node:2::doEndAt & doEndDoc
-	#@+node:3::doEndBody
+	#@-node:1::+- at, doc
+	#@+node:2::+- leo
+	#@+node:1::doStartLeo
 	#@+body
-	def doEndBody (self,s,i):
-		
-		ok = self.checkEndSentinel(s,i)
-		if ok:
-			# Set the body, removing cursed newlines.
-			body = string.join(self.out,"")
-			body = string.replace(body,'\r','')
-			self.v.t.setTnodeText(body)
-			
-			# Simulate the return from a recursive call.
-			self.indent = self.indentStack.pop()
-			self.out = self.outStack.pop()
-			self.v = self.vStack.pop()
+	def doStartLeo (self,s,i):
 	
-		# Always end raw mode.
-		self.raw = false
+		assert(match(s,i,"+leo"))
+		self.readError("Ignoring unexpected @+leo sentinel")
 	
 	#@-body
-	#@-node:3::doEndBody
-	#@+node:4::doEndLeo
+	#@-node:1::doStartLeo
+	#@+node:2::doEndLeo
 	#@+body
 	def doEndLeo (self,s,i):
 		
@@ -2829,59 +2714,216 @@ class atFile:
 	
 		return ok #### do we need a returnFlag?
 	#@-body
-	#@-node:4::doEndLeo
-	#@+node:5::doEndOthers & doEndParent
+	#@-node:2::doEndLeo
+	#@-node:2::+- leo
+	#@+node:3::+- others
+	#@+node:1::doStartOthers
+	#@+body
+	def doStartOthers (self,s,i):
+	
+		assert(match(s,i,"+others"))
+		self.out.append(self.leading_ws + "@others")
+	
+		self.endSentinelStack.push(self.endSentinelKind)
+		self.endSentinelKind = "-others"
+	
+	#@-body
+	#@-node:1::doStartOthers
+	#@+node:2::doEndOthers
 	#@+body
 	def doEndOthers (self,s,i):
 	
 		ok = self.checkEndSentinel(s,i)
 		if ok:
 			self.endSentinelKind = self.endSentinelStack.pop()
-	
-	def doEndParent (self,s,i):
-	
-		ok = self.checkEndSentinel(s,i)
-		if ok:
-			self.endSentinelKind = self.endSentinelStack.pop()
-	
 	#@-body
-	#@-node:5::doEndOthers & doEndParent
-	#@+node:6::doEndRef
+	#@-node:2::doEndOthers
+	#@-node:3::+- others
+	#@+node:4::+- ref & afterref
+	#@+node:1::doStartRef
+	#@+body
+	#@+at
+	#  The sentinel contains an @+ref followed by a section name in angle 
+	# brackets.  This code is different from the code for the @@ sentinel: the 
+	# expansion of the reference does not include a trailing newline.
+
+	#@-at
+	#@@c
+
+	def doStartRef (self,s,i):
+	
+		assert(match(s,i,"+ref"))
+		i += 4 ; i = skip_ws(s,i)
+	
+		if len(self.endSentinelComment) == 0:
+			line = s[i:-1] # No trailing newline
+		else:
+			k = string.find(s,self.endSentinelComment,i)
+			line = s[i:k] # No trailing newline, whatever k is.
+			
+		self.out.append(line)
+		
+		self.endSentinelStack.push(self.endSentinelKind)
+		self.endSentinelKind = "-ref"
+	#@-body
+	#@-node:1::doStartRef
+	#@+node:2::doEndRef
 	#@+body
 	def doEndRef (self,s,i):
 	
 		ok = self.checkEndSentinel(s,i)
 		if ok:
 			self.endSentinelKind = self.endSentinelStack.pop()
-			
-			#@<< look for sentinels that may follow a reference >>
-			#@+node:1::<< look for sentinels that may follow a reference >>
-			#@+body
-			s = readlineForceUnixNewline(self.file)
-			self.kind = self.gnxSentinelKind(s)
-			
-			if len(s) > 1 and kind == atFile.startVerbatimAfterRef:
-				s = readlineForceUnixNewline(self.file)
-				# trace("verbatim:"+`s`)
-				self.out.append(s)
-			elif kind == "newline": #### Does not exist
-				self.out.append('\n')
-				s = readlineForceUnixNewline(self.file)
-				self.nextline = s
-				trace(`s`)
-			elif kind == "nonewlline":  #### Does not exist
-				s = readlineForceUnixNewline(self.file)
-				self.nextline = s
-			elif len(s) > 1 and self.gnxSentinelKind(s) == None:
-				self.out.append(s)
-			else:
-				self.nextLine = s # Handle the sentinel or blank line later.
-			
-			#@-body
-			#@-node:1::<< look for sentinels that may follow a reference >>
 	#@-body
-	#@-node:6::doEndRef
-	#@-node:4::End sentinels
+	#@-node:2::doEndRef
+	#@+node:3::doAfterRef (rewrite)
+	#@+body
+	def doAfterref (self,s,i):
+		
+		if self.endSentinelKind != "-ref":
+			self.readError("Ignoring unexpected @afterref sentinel")
+			return
+			
+		
+		#@<< handle line following @afterref >>
+		#@+node:1::<< handle line following @afterref >>
+		#@+body
+		s = readlineForceUnixNewline(self.file)
+		self.kind = self.gnxSentinelKind(s)
+		
+		if len(s) > 1 and self.kind == "verbatimafterref":
+			s = readlineForceUnixNewline(self.file)
+			# trace("verbatim:"+`s`)
+			self.out.append(s)
+		elif len(s) > 1 and self.gnxSentinelKind(s) == None:
+			self.out.append(s)
+		else:
+			self.nextLine = s # Handle the sentinel or blank line later.
+		
+		#@-body
+		#@-node:1::<< handle line following @afterref >>
+
+	
+	#@-body
+	#@-node:3::doAfterRef (rewrite)
+	#@-node:4::+- ref & afterref
+	#@+node:5::+- t
+	#@+node:1::doTnode (create new node)
+	#@+body
+	# The format of this sentinel is:
+	#
+	#	@tnode gti
+	#	text of headline on a single line.
+	
+	def doTnode (self,s,i):
+		
+		assert(match(s,i,"tnode"))
+		
+		### set the gti ###
+	
+		# Skip the sentinel and set the headline.
+		s = readlineForceUnixNewline(self.file)
+		self.headline = s.replace("\\n","\n")
+	
+	#@-body
+	#@-node:1::doTnode (create new node)
+	#@+node:2::doStartTnode
+	#@+body
+	def doStartTnode (self,s,i):
+		
+		assert(match(s,i,"+t"))
+	
+		# Save old values
+		self.indentStack.push(self.indent)
+		self.outStack.push(self.out)
+		self.vStack.push(self.v)
+		
+		# Simulate a recursive call.
+		self.indent = self.lineIndent
+		self.out = []
+		self.v = self.createChild(self.v,self.headline)
+	
+	#@-body
+	#@-node:2::doStartTnode
+	#@+node:3::doEndTnode
+	#@+body
+	def doEndTnode (self,s,i):
+		
+		ok = self.checkEndSentinel(s,i)
+		if ok:
+			# Set the body, removing cursed newlines.
+			body = string.join(self.out,"")
+			body = string.replace(body,'\r','')
+			self.v.t.setTnodeText(body)
+			
+			# Simulate the return from a recursive call.
+			self.indent = self.indentStack.pop()
+			self.out = self.outStack.pop()
+			self.v = self.vStack.pop()
+	
+		# Always end raw mode.
+		self.raw = false
+	
+	#@-body
+	#@-node:3::doEndTnode
+	#@-node:5::+- t
+	#@+node:6::+- v
+	#@+node:1::doStartVnode
+	#@+body
+	def doStartVnode (self,s,i):
+		
+		assert(match(s,i,"+v"))
+	
+	#@-body
+	#@-node:1::doStartVnode
+	#@+node:2::doEndVnode
+	#@+body
+	def doEndVnode (self,s,i):
+		
+		ok = self.checkEndSentinel(s,i)
+		if ok:
+			pass
+	#@-body
+	#@-node:2::doEndVnode
+	#@-node:6::+- v
+	#@-node:2::Paired sentinels
+	#@+node:3::checkEndSentinel
+	#@+body
+	def checkEndSentinel (self,s,i):
+		
+		assert(match(s,i,self.kind))
+		
+		ok = self.kind == self.endSentinelKind
+		if not ok:
+			self.readError(
+				"Ignoring unexpected %s sentinel. Expecting " %
+				(self.kind,self.endSentinelKind))
+				
+		return ok
+	
+	#@-body
+	#@-node:3::checkEndSentinel
+	#@+node:4::doNormalLine
+	#@+body
+	def doNormalLine (self,s,i):
+	
+		if self.raw:
+			i = 0
+		else:
+			i = self.skipIndent(s,0,self.indent)
+		
+		assert(self.nextLine != None)
+		
+		# We don't output the trailing newline if the next line is a sentinel.
+		if self.nextKind == None:
+			line = s[i:]
+			self.out.append(line)
+		else:
+			line = s[i:-1] # don't output the newline
+			self.out.append(line)
+	
+	#@-body
+	#@-node:4::doNormalLine
 	#@+node:5::doUnknownGnxSentinel
 	#@+body
 	def doUnknownGnxSentinel (self,s,i):
@@ -2898,6 +2940,7 @@ class atFile:
 	#@-node:4::4.x
 	#@-node:5::Reading
 	#@+node:6::Writing
+	#@+node:1::Top level
 	#@+node:1::atFile.checkForLeoCustomize
 	#@+body
 	# Check file given by v, or self.targetFileName if v == None.
@@ -2907,107 +2950,7 @@ class atFile:
 		return true # This routine is no longer needed.
 	#@-body
 	#@-node:1::atFile.checkForLeoCustomize
-	#@+node:2::atFile.closeWriteFile
-	#@+body
-	def closeWriteFile (self):
-		
-		if self.outputFile:
-			if self.suppress_newlines and self.newline_pending:
-				self.newline_pending = false
-				self.onl() # Make sure file ends with a newline.
-			self.outputFile.flush()
-			self.outputFile.close()
-			self.outputFile = None
-	
-	#@-body
-	#@-node:2::atFile.closeWriteFile
-	#@+node:3::atFile.handleWriteException
-	#@+body
-	def handleWriteException (self,root=None):
-		
-		es("exception writing:" + self.targetFileName)
-		es_exception()
-		
-		if self.outputFile:
-			self.outputFile.flush()
-			self.outputFile.close()
-			self.outputFile = None
-		
-		if self.outputFileName != None:
-			try: # Just delete the temp file.
-				os.remove(self.outputFileName)
-			except:
-				es("exception deleting:" + self.outputFileName)
-				es_exception()
-	
-		if root:
-			# Make sure we try to rewrite this file.
-			root.setOrphan()
-			root.setDirty()
-	#@-body
-	#@-node:3::atFile.handleWriteException
-	#@+node:4::atFile.openWriteFile (assert)
-	#@+body
-	# Open files.  Set root.orphan and root.dirty flags and return on errors.
-	
-	def openWriteFile (self,root):
-	
-		try:
-			self.scanAllDirectives(root)
-			valid = self.errors == 0
-		except:
-			es("exception in atFile.scanAllDirectives")
-			es_exception()
-			valid = false
-		
-		if valid:
-			try:
-				fn = self.targetFileName
-				self.shortFileName = fn # name to use in status messages.
-				self.targetFileName = os.path.join(self.default_directory,fn)
-				self.targetFileName = os.path.normpath(self.targetFileName)
-				path = os.path.dirname(self.targetFileName)
-				if path and len(path) > 0:
-					valid = os.path.exists(path)
-					if not valid:
-						self.writeError("path does not exist: " + path)
-				else:
-					valid = false
-			except:
-				es("exception creating path:" + fn)
-				es_exception()
-				valid = false
-		
-		if valid:
-			if os.path.exists(self.targetFileName):
-				try:
-					read_only = not os.access(self.targetFileName,os.W_OK)
-					if read_only:
-						es("read only: " + self.targetFileName)
-						valid = false
-				except:
-					pass # os.access() may not exist on all platforms.
-			
-		if valid:
-			try:
-				self.outputFileName = self.targetFileName + ".tmp"
-				self.outputFile = open(self.outputFileName,'wb')
-				valid = self.outputFile != None
-				if not valid:
-					self.writeError("can not open " + self.outputFileName)
-			except:
-				es("exception opening:" + self.outputFileName)
-				es_exception()
-				valid = false
-		
-		if not valid:
-			root.setOrphan()
-			root.setDirty()
-		
-		return valid
-	#@-body
-	#@-node:4::atFile.openWriteFile (assert)
-	#@+node:5::atFile.rawWrite
+	#@+node:2::atFile.rawWrite
 	#@+body
 	def rawWrite(self,root):
 	
@@ -3134,78 +3077,8 @@ class atFile:
 		except:
 			self.handleWriteException(root)
 	#@-body
-	#@-node:5::atFile.rawWrite
-	#@+node:6::atFile.replaceTargetFileIfDifferent
-	#@+body
-	def replaceTargetFileIfDifferent (self):
-		
-		assert(self.outputFile == None)
-		
-		if os.path.exists(self.targetFileName):
-			if filecmp.cmp(self.outputFileName,self.targetFileName):
-				
-				#@<< delete the output file >>
-				#@+node:1::<< delete the output file >>
-				#@+body
-				try: # Just delete the temp file.
-					os.remove(self.outputFileName)
-				except:
-					es("exception deleting:" + self.outputFileName)
-					es_exception()
-				
-				es("unchanged: " + self.shortFileName)
-				#@-body
-				#@-node:1::<< delete the output file >>
-
-			else:
-				if self.checkForLeoCustomize() == false:
-					return
-				
-				#@<< replace the target file with the output file >>
-				#@+node:2::<< replace the target file with the output file >>
-				#@+body
-				try:
-					# 10/6/02: retain the access mode of the previous file,
-					# removing any setuid, setgid, and sticky bits.
-					mode = (os.stat(self.targetFileName))[0] & 0777
-				except:
-					mode = None
-				
-				try: # Replace target file with temp file.
-					os.remove(self.targetFileName)
-					utils_rename(self.outputFileName,self.targetFileName)
-					if mode: # 10/3/02: retain the access mode of the previous file.
-						os.chmod(self.targetFileName,mode)
-					es("writing: " + self.shortFileName)
-				except:
-					self.writeError("exception removing and renaming:" + self.outputFileName +
-						" to " + self.targetFileName)
-					es_exception()
-				#@-body
-				#@-node:2::<< replace the target file with the output file >>
-
-				
-		elif self.checkForLeoCustomize() == false:
-			return
-		else:
-			
-			#@<< rename the output file to be the target file >>
-			#@+node:3::<< rename the output file to be the target file >>
-			#@+body
-			try:
-				utils_rename(self.outputFileName,self.targetFileName)
-				es("creating: " + self.targetFileName)
-			except:
-				self.writeError("exception renaming:" + self.outputFileName +
-					" to " + self.targetFileName)
-				es_exception()
-			#@-body
-			#@-node:3::<< rename the output file to be the target file >>
-
-	
-	#@-body
-	#@-node:6::atFile.replaceTargetFileIfDifferent
-	#@+node:7::atFile.silentWrite
+	#@-node:2::atFile.rawWrite
+	#@+node:3::atFile.silentWrite
 	#@+body
 	def silentWrite(self,root):
 	
@@ -3250,8 +3123,8 @@ class atFile:
 		except:
 			self.handleWriteException(root)
 	#@-body
-	#@-node:7::atFile.silentWrite
-	#@+node:8::atFile.write
+	#@-node:3::atFile.silentWrite
+	#@+node:4::atFile.write
 	#@+body
 	# This is the entry point to the write code.  root should be an @file vnode.
 	
@@ -3293,7 +3166,9 @@ class atFile:
 			# unvisited nodes will be orphans, except in cweb trees.
 			root.clearVisitedInTree()
 			next = root.nodeAfterTree()
-			self.updateCloneIndices(root, next)
+			
+			if not self.using_gnx:
+				self.updateCloneIndices(root, next)
 			
 			
 			#@<< put all @first lines in root >>
@@ -3322,28 +3197,22 @@ class atFile:
 			#@-body
 			#@-node:1::<< put all @first lines in root >>
 
-			self.putOpenLeoSentinel("@+leo")
 			
-			#@<< put optional @comment sentinel lines >>
-			#@+node:2::<< put optional @comment sentinel lines >>
+			#@<< write the derived file >>
+			#@+node:2::<< write the derived file>>
 			#@+body
-			s2 = app().config.output_initial_comment
-			if s2:
-				lines = string.split(s2,"\\n")
-				for line in lines:
-					line = line.replace("@date",time.asctime())
-					if len(line)> 0:
-						self.putSentinel("@comment " + line)
-			#@-body
-			#@-node:2::<< put optional @comment sentinel lines >>
-
+			tag1 = choose(self.using_gnx,"@+leo-ver=2","@+leo")
+			tag2 = choose(self.using_gnx,"@-leo-ver=2","@-leo")
 			
+			self.putOpenLeoSentinel(tag1)
+			self.putInitialComment()
 			self.putOpenNodeSentinel(root)
 			self.putBodyPart(root)
 			self.putCloseNodeSentinel(root)
-			
-			root.setVisited()
-			self.putSentinel("@-leo")
+			self.putSentinel(tag2)
+			#@-body
+			#@-node:2::<< write the derived file>>
+
 			
 			#@<< put all @last lines in root >>
 			#@+node:3::<< put all @last lines in root >>
@@ -3373,6 +3242,9 @@ class atFile:
 				self.os(line[i:]) ; self.onl()
 			#@-body
 			#@-node:3::<< put all @last lines in root >>
+
+			
+			root.setVisited()
 			#@-body
 			#@-node:3::<< write then entire @file tree >>
 
@@ -3422,8 +3294,8 @@ class atFile:
 		except:
 			self.handleWriteException()
 	#@-body
-	#@-node:8::atFile.write
-	#@+node:9::atFile.writeAll
+	#@-node:4::atFile.write
+	#@+node:5::atFile.writeAll
 	#@+body
 	#@+at
 	#  This method scans all vnodes, calling write for every @file node 
@@ -3500,8 +3372,8 @@ class atFile:
 				es("no @file or similar nodes in the selected tree")
 	
 	#@-body
-	#@-node:9::atFile.writeAll
-	#@+node:10::atFile.writeMissing
+	#@-node:5::atFile.writeAll
+	#@+node:6::atFile.writeMissing
 	#@+body
 	def writeMissing(self,v):
 	
@@ -3598,44 +3470,197 @@ class atFile:
 		else:
 			es("no missing @file node in the selected tree")
 	#@-body
-	#@-node:10::atFile.writeMissing
-	#@+node:11::os, onl, etc. (leoAtFile)
+	#@-node:6::atFile.writeMissing
+	#@+node:7::Top level write helpers
+	#@+node:1::atFile.closeWriteFile
 	#@+body
-	def oblank(self):
-		self.os(' ')
-	
-	def oblanks(self,n):
-		self.os(' ' * abs(n))
-	
-	def onl(self):
-		self.os(self.output_newline)
-	
-	def os(self,s):
-		if s is None or len(s) == 0: return
-		if self.trace: trace(`s`)
-		if self.suppress_newlines and self.newline_pending:
-			self.newline_pending = false
-			s = self.output_newline + s
+	def closeWriteFile (self):
+		
 		if self.outputFile:
-			try:
-				s = toEncodedString(s,self.encoding,reportErrors=true)
-				self.outputFile.write(s)
+			if self.suppress_newlines and self.newline_pending:
+				self.newline_pending = false
+				self.onl() # Make sure file ends with a newline.
+			self.outputFile.flush()
+			self.outputFile.close()
+			self.outputFile = None
+	
+	#@-body
+	#@-node:1::atFile.closeWriteFile
+	#@+node:2::atFile.handleWriteException
+	#@+body
+	def handleWriteException (self,root=None):
+		
+		es("exception writing:" + self.targetFileName)
+		es_exception()
+		
+		if self.outputFile:
+			self.outputFile.flush()
+			self.outputFile.close()
+			self.outputFile = None
+		
+		if self.outputFileName != None:
+			try: # Just delete the temp file.
+				os.remove(self.outputFileName)
 			except:
-				es("exception writing:" + `s`)
+				es("exception deleting:" + self.outputFileName)
 				es_exception()
 	
-	def otabs(self,n):
-		self.os('\t' * abs(n))
+		if root:
+			# Make sure we try to rewrite this file.
+			root.setOrphan()
+			root.setDirty()
 	#@-body
-	#@-node:11::os, onl, etc. (leoAtFile)
-	#@+node:12::putBodyPart (removes trailing lines)
+	#@-node:2::atFile.handleWriteException
+	#@+node:3::atFile.openWriteFile
 	#@+body
-	#@+at
-	#  We generate the body part only if it contains something besides 
-	# whitespace. The check for at-ignore is made in atFile::write.
+	# Open files.  Set root.orphan and root.dirty flags and return on errors.
+	
+	def openWriteFile (self,root):
+	
+		try:
+			self.scanAllDirectives(root)
+			valid = self.errors == 0
+		except:
+			es("exception in atFile.scanAllDirectives")
+			es_exception()
+			valid = false
+		
+		if valid:
+			try:
+				fn = self.targetFileName
+				self.shortFileName = fn # name to use in status messages.
+				self.targetFileName = os.path.join(self.default_directory,fn)
+				self.targetFileName = os.path.normpath(self.targetFileName)
+				path = os.path.dirname(self.targetFileName)
+				if path and len(path) > 0:
+					valid = os.path.exists(path)
+					if not valid:
+						self.writeError("path does not exist: " + path)
+				else:
+					valid = false
+			except:
+				es("exception creating path:" + fn)
+				es_exception()
+				valid = false
+		
+		if valid:
+			if os.path.exists(self.targetFileName):
+				try:
+					read_only = not os.access(self.targetFileName,os.W_OK)
+					if read_only:
+						es("read only: " + self.targetFileName)
+						valid = false
+				except:
+					pass # os.access() may not exist on all platforms.
+			
+		if valid:
+			try:
+				self.outputFileName = self.targetFileName + ".tmp"
+				self.outputFile = open(self.outputFileName,'wb')
+				valid = self.outputFile != None
+				if not valid:
+					self.writeError("can not open " + self.outputFileName)
+			except:
+				es("exception opening:" + self.outputFileName)
+				es_exception()
+				valid = false
+		
+		if not valid:
+			root.setOrphan()
+			root.setDirty()
+		
+		return valid
+	#@-body
+	#@-node:3::atFile.openWriteFile
+	#@+node:4::atFile.putInitialComment
+	#@+body
+	def putInitialComment (self):
+		
+		s2 = app().config.output_initial_comment
+		if s2:
+			lines = string.split(s2,"\\n")
+			for line in lines:
+				line = line.replace("@date",time.asctime())
+				if len(line)> 0:
+					self.putSentinel("@comment " + line)
+	#@-body
+	#@-node:4::atFile.putInitialComment
+	#@+node:5::atFile.replaceTargetFileIfDifferent
+	#@+body
+	def replaceTargetFileIfDifferent (self):
+		
+		assert(self.outputFile == None)
+		
+		if os.path.exists(self.targetFileName):
+			if filecmp.cmp(self.outputFileName,self.targetFileName):
+				
+				#@<< delete the output file >>
+				#@+node:1::<< delete the output file >>
+				#@+body
+				try: # Just delete the temp file.
+					os.remove(self.outputFileName)
+				except:
+					es("exception deleting:" + self.outputFileName)
+					es_exception()
+				
+				es("unchanged: " + self.shortFileName)
+				#@-body
+				#@-node:1::<< delete the output file >>
 
-	#@-at
-	#@@c
+			else:
+				if self.checkForLeoCustomize() == false:
+					return
+				
+				#@<< replace the target file with the output file >>
+				#@+node:2::<< replace the target file with the output file >>
+				#@+body
+				try:
+					# 10/6/02: retain the access mode of the previous file,
+					# removing any setuid, setgid, and sticky bits.
+					mode = (os.stat(self.targetFileName))[0] & 0777
+				except:
+					mode = None
+				
+				try: # Replace target file with temp file.
+					os.remove(self.targetFileName)
+					utils_rename(self.outputFileName,self.targetFileName)
+					if mode: # 10/3/02: retain the access mode of the previous file.
+						os.chmod(self.targetFileName,mode)
+					es("writing: " + self.shortFileName)
+				except:
+					self.writeError("exception removing and renaming:" + self.outputFileName +
+						" to " + self.targetFileName)
+					es_exception()
+				#@-body
+				#@-node:2::<< replace the target file with the output file >>
+
+				
+		elif self.checkForLeoCustomize() == false:
+			return
+		else:
+			
+			#@<< rename the output file to be the target file >>
+			#@+node:3::<< rename the output file to be the target file >>
+			#@+body
+			try:
+				utils_rename(self.outputFileName,self.targetFileName)
+				es("creating: " + self.targetFileName)
+			except:
+				self.writeError("exception renaming:" + self.outputFileName +
+					" to " + self.targetFileName)
+				es_exception()
+			#@-body
+			#@-node:3::<< rename the output file to be the target file >>
+
+	
+	#@-body
+	#@-node:5::atFile.replaceTargetFileIfDifferent
+	#@-node:7::Top level write helpers
+	#@-node:1::Top level
+	#@+node:2::putBodyPart
+	#@+body
+	# We generate the body part only if it contains something besides whitespace.
+	
 	def putBodyPart(self,v):
 	
 		# trace(`v`)
@@ -3643,7 +3668,10 @@ class atFile:
 		i = skip_ws_and_nl(s, 0)
 		if i >= len(s): return
 		s = removeTrailingWs(s) # don't use string.rstrip!
-		self.putSentinel("@+body")
+		if self.using_gnx:
+			self.putSentinelAndGnx(v.t,"@+t")
+		else:
+			self.putSentinel("@+body")
 		
 		#@<< put code/doc parts and sentinels >>
 		#@+node:1::<< put code/doc parts and sentinels >>
@@ -3747,10 +3775,115 @@ class atFile:
 		#@-body
 		#@-node:1::<< put code/doc parts and sentinels >>
 
-		self.putSentinel("@-body")
+		if self.using_gnx:
+			self.putSentinelAndGnx(v.t,"@-t")
+		else:
+			self.putSentinel("@-body")
 	#@-body
-	#@-node:12::putBodyPart (removes trailing lines)
-	#@+node:13::putCodePart & allies
+	#@-node:2::putBodyPart
+	#@+node:3::putDoc
+	#@+body
+	#@+at
+	#  This method outputs a doc section terminated by @code or end-of-text.  
+	# All other interior directives become part of the doc part.
+
+	#@-at
+	#@@c
+	def putDoc(self,s,i,kind):
+	
+		if self.trace: trace("%d %s" % (self.indent,get_line(s,i)))
+	
+		if kind == atFile.atDirective:
+			i += 1 ; tag = "at"
+		elif kind == atFile.docDirective:
+			i += 4 ; tag = "doc"
+		else: assert(false)
+		# Set j to the end of the doc part.
+		n = len(s) ; j = i
+		while j < n:
+			j = skip_line(s, j)
+			kind = self.directiveKind(s, j)
+			if kind == atFile.codeDirective or kind == atFile.cDirective:
+				break
+		self.putSentinel("@+" + tag)
+		self.putDocPart(s[i:j])
+		self.putSentinel("@-" + tag)
+		return j
+	#@-body
+	#@-node:3::putDoc
+	#@+node:4::putDocPart
+	#@+body
+	# Puts a comment part in comments.
+	# Note: this routine is _never_ called in cweb mode,
+	# so noweb section references are _valid_ in cweb doc parts!
+	
+	def putDocPart(self,s):
+	
+		# j = skip_line(s,0) ; trace(`s[:j]`)
+		c = self.commands
+		single = len(self.endSentinelComment) == 0
+		if not single:
+			self.putIndent(self.indent)
+			self.os(self.startSentinelComment) ; self.onl()
+		# Put all lines.
+		i = 0 ; n = len(s)
+		while i < n:
+			self.putIndent(self.indent)
+			leading = self.indent
+			if single:
+				self.os(self.startSentinelComment) ; self.oblank()
+				leading += len(self.startSentinelComment) + 1
+			
+			#@<< copy words, splitting the line if needed >>
+			#@+node:1::<< copy words, splitting the line if needed >>
+			#@+body
+			#@+at
+			#  We remove trailing whitespace from lines that have _not_ been 
+			# split so that a newline has been inserted by this routine if and 
+			# only if it is preceded by whitespace.
+
+			#@-at
+			#@@c
+
+			line = i # Start of the current line.
+			while i < n:
+				word = i # Start of the current word.
+				# Skip the next word and trailing whitespace.
+				i = skip_ws(s, i)
+				while i < n and not is_nl(s,i) and not is_ws(s[i]):
+					i += 1
+				i = skip_ws(s,i)
+				# Output the line if no more is left.
+				if i < n and is_nl(s,i):
+					break
+				# Split the line before the current word if needed.
+				lineLen = i - line
+				if line == word or leading + lineLen < self.page_width:
+					word = i # Advance to the next word.
+				else:
+					# Write the line before the current word and insert a newline.
+					theLine = s[line:word]
+					self.os(theLine)
+					self.onl() # This line must contain trailing whitespace.
+					line = i = word  # Put word on the next line.
+					break
+			# Remove trailing whitespace and output the remainder of the line.
+			theLine = string.rstrip(s[line:i]) # from right.
+			self.os(theLine)
+			if i < n and is_nl(s,i):
+				i = skip_nl(s,i)
+				self.onl() # No inserted newline and no trailing whitespace.
+			#@-body
+			#@-node:1::<< copy words, splitting the line if needed >>
+
+		if not single:
+			# This comment is like a sentinel.
+			self.onl() ; self.putIndent(self.indent)
+			self.os(self.endSentinelComment)
+			self.onl() # Note: no trailing whitespace.
+	#@-body
+	#@-node:4::putDocPart
+	#@+node:5::putCodePart & allies
 	#@+body
 	#@+at
 	#  This method expands a code part, terminated by any at-directive except 
@@ -3921,22 +4054,7 @@ class atFile:
 		self.raw = false
 		return i
 	#@-body
-	#@+node:3::isSectionName
-	#@+body
-	# returns (flag, end). end is the index of the character after the section name.
-	
-	def isSectionName(self,s,i):
-	
-		if not match(s,i,"<<"):
-			return false, -1
-		i = find_on_line(s,i,">>")
-		if i:
-			return true, i + 2
-		else:
-			return false, -1
-	#@-body
-	#@-node:3::isSectionName
-	#@+node:4::inAtOthers
+	#@+node:3::inAtOthers
 	#@+body
 	#@+at
 	#  Returns true if v should be included in the expansion of the at-others 
@@ -3963,7 +4081,22 @@ class atFile:
 		else: # old & reliable code
 			return not v.isAtIgnoreNode() and not v.isAtOthersNode()
 	#@-body
-	#@-node:4::inAtOthers
+	#@-node:3::inAtOthers
+	#@+node:4::isSectionName
+	#@+body
+	# returns (flag, end). end is the index of the character after the section name.
+	
+	def isSectionName(self,s,i):
+	
+		if not match(s,i,"<<"):
+			return false, -1
+		i = find_on_line(s,i,">>")
+		if i:
+			return true, i + 2
+		else:
+			return false, -1
+	#@-body
+	#@-node:4::isSectionName
 	#@+node:5::putAtOthers
 	#@+body
 	#@+at
@@ -3992,7 +4125,6 @@ class atFile:
 	def putAtOthersChild(self,v):
 		
 		# trace("%d %s" % (self.indent,`v`))
-	
 		self.putOpenNodeSentinel(v)
 		
 		# Insert the expansion of v.
@@ -4007,6 +4139,7 @@ class atFile:
 			child = child.next()
 	
 		self.putCloseNodeSentinel(v)
+	
 	#@-body
 	#@-node:6::putAtOthersChild
 	#@+node:7::putRef
@@ -4025,49 +4158,87 @@ class atFile:
 		#@<< Generate the expansion of the reference >>
 		#@+node:1::<< Generate the expansion of the reference >>
 		#@+body
-		# 2/24/02: adjust indent here so sentinel looks better.
-		self.indent += delta 
-		self.putSentinel("@" + name)
-		self.putOpenSentinels(v,ref)
-		self.putBodyPart(ref)
-		ref.setVisited()
-		self.putCloseSentinels(v,ref)
+		# Adjust indent here so sentinel looks better.
+		self.indent += delta
+		
+		if self.using_gnx:
+			self.putSentinel("@+ref")
+			self.os(name) ; self.onl()
+			self.putOpenSentinels(v,ref)
+			self.putBodyPart(ref)
+			self.putCloseSentinels(v,ref)
+			
+			#@<< Add @afterref sentinel if required >>
+			#@+node:1::<< Add @afterref sentinel if required >>
+			#@+body
+			pass
+			#@-body
+			#@-node:1::<< Add @afterref sentinel if required >>
+
+			self.putSentinel("@-ref")
+		else:
+			self.putSentinel("@" + name)
+			self.putOpenSentinels(v,ref)
+			self.putBodyPart(ref)
+			self.putCloseSentinels(v,ref)
+			
+			#@<< Add @verbatimAfterRef sentinel if required >>
+			#@+node:2::<< Add @verbatimAfterRef sentinel if required >>
+			#@+body
+			j = skip_ws(s,i)
+			if j < len(s) and match(s,j,self.startSentinelComment + '@'):
+				self.putSentinel("@verbatimAfterRef")
+				# 9/27/02: Put the line immediately, before the @-node sentinel.
+				k = skip_to_end_of_line(s,i)
+				self.os(s[i:k])
+				i = k ; newlineSeen = false
+			#@-body
+			#@-node:2::<< Add @verbatimAfterRef sentinel if required >>
+
+		
 		self.indent -= delta
+		ref.setVisited()
 		
 		#@-body
 		#@-node:1::<< Generate the expansion of the reference >>
 
 	
-		# 2/25/02: Add a sentinel if required.
-		j = skip_ws(s,i)
-		if j < len(s) and match(s,j,self.startSentinelComment + '@'):
-			self.putSentinel("@verbatimAfterRef")
-			# 9/27/02: Put the line immediately, before the @-node sentinel.
-			k = skip_to_end_of_line(s,i)
-			self.os(s[i:k])
-			i = k ; newlineSeen = false
-		else:
-			if 0: # 9/27/02: generate new directives.
-				if is_nl(s,j):
-					self.putSentinel("@newline")
-					i = skip_nl(s,j) ; newlineSeen = true
-				else:
-					self.putSentinel("@nonewline")
-					i = j ; newlineSeen = false
-			if 0: # The old code did nothing
-				if is_nl(s,j):
-					i = j ; newlineSeen = false
-				else:
-					k = skip_to_end_of_line(s,i)
-					self.os(s[i:k])
-					i = k ; newlineSeen = false
-	
 		# The newlineSeen allows the caller to break out of the loop.
 		return i,newlineSeen
 	#@-body
 	#@-node:7::putRef
-	#@-node:13::putCodePart & allies
-	#@+node:14::putDirective  (handles @delims)
+	#@-node:5::putCodePart & allies
+	#@+node:6::Utils
+	#@+node:1::os, onl, etc. (leoAtFile)
+	#@+body
+	def oblank(self):
+		self.os(' ')
+	
+	def oblanks(self,n):
+		self.os(' ' * abs(n))
+	
+	def onl(self):
+		self.os(self.output_newline)
+	
+	def os(self,s):
+		if s is None or len(s) == 0: return
+		if self.trace: trace(`s`)
+		if self.suppress_newlines and self.newline_pending:
+			self.newline_pending = false
+			s = self.output_newline + s
+		if self.outputFile:
+			try:
+				s = toEncodedString(s,self.encoding,reportErrors=true)
+				self.outputFile.write(s)
+			except:
+				es("exception writing:" + `s`)
+				es_exception()
+	
+	def otabs(self,n):
+		self.os('\t' * abs(n))
+	#@-body
+	#@-node:1::os, onl, etc. (leoAtFile)
+	#@+node:2::putDirective  (handles @delims)
 	#@+body
 	# This method outputs s, a directive or reference, in a sentinel.
 	
@@ -4111,110 +4282,8 @@ class atFile:
 		i = skip_line(s,k)
 		return i
 	#@-body
-	#@-node:14::putDirective  (handles @delims)
-	#@+node:15::putDoc
-	#@+body
-	#@+at
-	#  This method outputs a doc section terminated by @code or end-of-text.  
-	# All other interior directives become part of the doc part.
-
-	#@-at
-	#@@c
-	def putDoc(self,s,i,kind):
-	
-		if self.trace: trace("%d %s" % (self.indent,get_line(s,i)))
-	
-		if kind == atFile.atDirective:
-			i += 1 ; tag = "at"
-		elif kind == atFile.docDirective:
-			i += 4 ; tag = "doc"
-		else: assert(false)
-		# Set j to the end of the doc part.
-		n = len(s) ; j = i
-		while j < n:
-			j = skip_line(s, j)
-			kind = self.directiveKind(s, j)
-			if kind == atFile.codeDirective or kind == atFile.cDirective:
-				break
-		self.putSentinel("@+" + tag)
-		self.putDocPart(s[i:j])
-		self.putSentinel("@-" + tag)
-		return j
-	#@-body
-	#@-node:15::putDoc
-	#@+node:16::putDocPart
-	#@+body
-	# Puts a comment part in comments.
-	# Note: this routine is _never_ called in cweb mode,
-	# so noweb section references are _valid_ in cweb doc parts!
-	
-	def putDocPart(self,s):
-	
-		# j = skip_line(s,0) ; trace(`s[:j]`)
-		c = self.commands
-		single = len(self.endSentinelComment) == 0
-		if not single:
-			self.putIndent(self.indent)
-			self.os(self.startSentinelComment) ; self.onl()
-		# Put all lines.
-		i = 0 ; n = len(s)
-		while i < n:
-			self.putIndent(self.indent)
-			leading = self.indent
-			if single:
-				self.os(self.startSentinelComment) ; self.oblank()
-				leading += len(self.startSentinelComment) + 1
-			
-			#@<< copy words, splitting the line if needed >>
-			#@+node:1::<< copy words, splitting the line if needed >>
-			#@+body
-			#@+at
-			#  We remove trailing whitespace from lines that have _not_ been 
-			# split so that a newline has been inserted by this routine if and 
-			# only if it is preceded by whitespace.
-
-			#@-at
-			#@@c
-
-			line = i # Start of the current line.
-			while i < n:
-				word = i # Start of the current word.
-				# Skip the next word and trailing whitespace.
-				i = skip_ws(s, i)
-				while i < n and not is_nl(s,i) and not is_ws(s[i]):
-					i += 1
-				i = skip_ws(s,i)
-				# Output the line if no more is left.
-				if i < n and is_nl(s,i):
-					break
-				# Split the line before the current word if needed.
-				lineLen = i - line
-				if line == word or leading + lineLen < self.page_width:
-					word = i # Advance to the next word.
-				else:
-					# Write the line before the current word and insert a newline.
-					theLine = s[line:word]
-					self.os(theLine)
-					self.onl() # This line must contain trailing whitespace.
-					line = i = word  # Put word on the next line.
-					break
-			# Remove trailing whitespace and output the remainder of the line.
-			theLine = string.rstrip(s[line:i]) # from right.
-			self.os(theLine)
-			if i < n and is_nl(s,i):
-				i = skip_nl(s,i)
-				self.onl() # No inserted newline and no trailing whitespace.
-			#@-body
-			#@-node:1::<< copy words, splitting the line if needed >>
-
-		if not single:
-			# This comment is like a sentinel.
-			self.onl() ; self.putIndent(self.indent)
-			self.os(self.endSentinelComment)
-			self.onl() # Note: no trailing whitespace.
-	#@-body
-	#@-node:16::putDocPart
-	#@+node:17::putEmptyDirective (Dave Hein)
+	#@-node:2::putDirective  (handles @delims)
+	#@+node:3::putEmptyDirective (Dave Hein)
 	#@+body
 	# 14-SEP-2002 DTHEIN
 	# added for use by putBodyPart()
@@ -4235,8 +4304,38 @@ class atFile:
 		i = skip_line(s,i)
 		return i
 	#@-body
-	#@-node:17::putEmptyDirective (Dave Hein)
-	#@+node:18::putIndent
+	#@-node:3::putEmptyDirective (Dave Hein)
+	#@+node:4::putEscapedHeadline
+	#@+body
+	def putEscapedHeadline (self,v):
+		
+		h = v.headString()
+		
+		#@<< remove comment delims from h if necessary >>
+		#@+node:1::<< remove comment delims from h if necessary >>
+		#@+body
+		#@+at
+		#  If the present @language/@comment settings do not specify a 
+		# single-line comment we remove all block comment delims from h.  This 
+		# prevents headline text from interfering with the parsing of node sentinels.
+
+		#@-at
+		#@@c
+
+		start = self.startSentinelComment
+		end = self.endSentinelComment
+		
+		if end and len(end) > 0:
+			h = h.replace(start,"")
+			h = h.replace(end,"")
+		#@-body
+		#@-node:1::<< remove comment delims from h if necessary >>
+
+		os(h) ; onl()
+	
+	#@-body
+	#@-node:4::putEscapedHeadline
+	#@+node:5::putIndent
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 	
@@ -4252,7 +4351,8 @@ class atFile:
 		else:
 			self.oblanks(n)
 	#@-body
-	#@-node:18::putIndent
+	#@-node:5::putIndent
+	#@-node:6::Utils
 	#@-node:6::Writing
 	#@+node:7::Testing
 	#@+node:1::scanAll

@@ -959,7 +959,8 @@ class vnode:
 	# childIndex and nthChild are zero-based.
 	
 	def childIndex (self):
-	
+		
+		# tick()
 		parent=self.parent()
 		if not parent: return 0
 	
@@ -992,7 +993,8 @@ class vnode:
 	# Compatibility routine for scripts
 	
 	def lastChild (self):
-	
+		
+		# tick()
 		child = self.firstChild()
 		while child and child.next():
 			child = child.next()
@@ -1004,7 +1006,8 @@ class vnode:
 	# childIndex and nthChild are zero-based.
 	
 	def nthChild (self, n):
-	
+		
+		# tick()
 		child = self.firstChild()
 		if not child: return None
 		while n > 0 and child:
@@ -1016,7 +1019,8 @@ class vnode:
 	#@+node:6::numberOfChildren (n)
 	#@+body
 	def numberOfChildren (self):
-	
+		
+		# tick()
 		n = 0
 		child = self.firstChild()
 		while child:
@@ -1743,7 +1747,7 @@ class vnode:
 	#@-body
 	#@-node:7::trimTrailingLines
 	#@-node:11::Setters
-	#@+node:12::Moving, Inserting, Deleting, Cloning, Sorting
+	#@+node:12::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
 	#@+node:1::Entry Points (vnode)
 	#@+node:1::doDelete
 	#@+body
@@ -1758,7 +1762,8 @@ class vnode:
 	def doDelete (self, newVnode):
 	
 		"""Unlinks the receiver, but does not destroy it. May be undone"""
-	
+		
+		# tick()
 		v = self ; c = v.commands
 		v.setDirty() # 1/30/02: mark @file nodes dirty!
 		v.destroyDependents()
@@ -1776,7 +1781,8 @@ class vnode:
 	def insertAfter (self, t = None):
 	
 		"""Inserts a new vnode after the receiver"""
-	
+		
+		# tick()
 		if not t: t = tnode()
 		v = vnode(self.commands,t)
 		v.mHeadString = "NewHeadline"
@@ -1790,7 +1796,8 @@ class vnode:
 	def insertAsLastChild (self,t = None):
 	
 		"""Inserts a new vnode as the last child of the receiver"""
-	
+		
+		# tick()
 		n = self.numberOfChildren()
 		if not t:
 			t = tnode()
@@ -1803,8 +1810,8 @@ class vnode:
 	
 		"""Inserts a new node as the the nth child of the receiver.
 		The receiver must have at least n-1 children"""
-	
-		# trace(`n` + `self`)
+		
+		# tick() ; # trace(`n` + `self`)
 		if not t: t = tnode()
 		v = vnode(self.commands,t)
 		v.mHeadString = "NewHeadline"
@@ -1822,7 +1829,7 @@ class vnode:
 		"""Moves the receiver after a"""
 	
 		v = self ; c = self.commands
-		# trace(`v`)
+		# tick() ; # trace(`v`)
 		v.destroyDependents()
 		v.unlink()
 		v.linkAfter(a)
@@ -1840,7 +1847,8 @@ class vnode:
 	def moveToNthChildOf (self, p, n):
 	
 		"""Moves the receiver to the nth child of p"""
-	
+		
+		# tick()
 		v = self ; c = self.commands
 	
 		v.destroyDependents()
@@ -1860,7 +1868,7 @@ class vnode:
 		"""Moves the receiver to the root position"""
 	
 		v = self
-		# trace(`v`)
+		# tick() ; # trace(`v`)
 		v.destroyDependents()
 		v.unlink()
 		v.linkAsRoot(oldRoot)
@@ -1872,7 +1880,8 @@ class vnode:
 	# Restores (relinks) the dv tree in the position described by back and parent.
 	
 	def restoreOutlineFromDVnodes (self, dv, parent, back):
-	
+		
+		# tick()
 		if back:
 			dv.linkAfter(back)
 		elif parent:
@@ -1891,7 +1900,8 @@ class vnode:
 	# Warning: caller is responsible for hanling join links properly.
 	
 	def swap_links (self,unlinked,linked):
-	
+		
+		# tick()
 		assert(unlinked and linked)
 		assert(unlinked.mParent == None)
 		assert(unlinked.mBack == None)
@@ -1923,7 +1933,8 @@ class vnode:
 	# Creates a clone of back and insert it as the next sibling of back.
 	
 	def clone (self,back):
-	
+		
+		# tick()
 		clone = self.cloneTree(back)
 		clone.createDependents()
 		# Set the clone bit in all nodes joined to back.
@@ -1940,6 +1951,7 @@ class vnode:
 	#@+body
 	def sortChildren (self):
 		
+		# tick()
 		# Create a list of vnode, headline tuples
 		v = self ; pairs = []
 		child = v.firstChild()
@@ -1971,7 +1983,8 @@ class vnode:
 	#@@c
 
 	def copyTree (self, oldTree, newTree):
-	
+		
+		# tick()
 		old_v = oldTree.firstChild()
 		if not old_v: return
 		# Copy the first child of oldTree to the first child of newTree.
@@ -2006,7 +2019,8 @@ class vnode:
 	#@@c
 
 	def joinTreeTo (self, tree2):
-	
+		
+		# tick()
 		tree1 = self
 		assert(tree2)
 		# Join the roots.
@@ -2039,7 +2053,8 @@ class vnode:
 	#@@c
 
 	def shouldBeClone (self,verbose=0):
-	
+		
+		# tick()
 		p = self.parent()
 		n = self.childIndex()
 		if verbose:
@@ -2077,7 +2092,8 @@ class vnode:
 	# This routine checks the structure of the receiver's tree.
 	
 	def validateOutlineWithParent (self, p):
-	
+		
+		# tick()
 		result = true # optimists get only unpleasant surprises.
 		parent = self.parent()
 		childIndex = self.childIndex()
@@ -2130,6 +2146,8 @@ class vnode:
 	# This method creates a cloned tree after oldTree.
 	
 	def cloneTree (self, oldTree):
+		
+		# tick()
 		# Create a new tree following oldTree.
 		newTree = self.insertAfter(oldTree.t)
 		newTree.initHeadString (oldTree.mHeadString)
@@ -2145,7 +2163,8 @@ class vnode:
 	# This methods propagates clone bits from the receiver's tree to tree2.
 	
 	def copyCloneBitsTo (self, tree2):
-	
+		
+		# tick()
 		tree1 = self
 		assert(tree2)
 		# Set the bit in the root.
@@ -2170,16 +2189,19 @@ class vnode:
 	#@+node:3::v.copyNode
 	#@+body
 	def copyNode (self, old_node, new_node):
-	
+		
+		# tick()
 		new_node.mHeadString = old_node.mHeadString
 		new_node.iconVal = old_node.iconVal
+	
 	#@-body
 	#@-node:3::v.copyNode
 	#@+node:4::createDependents (bug fix: 4/22/01)
 	#@+body
 	# This method creates all nodes that depend on the receiver.
 	def createDependents (self):
-	
+		
+		# tick()
 		v = self ; t = v.t ; parent = v.parent()
 		if not parent: return
 		# Copy v as the nth child of all nodes joined to parent.
@@ -2200,7 +2222,8 @@ class vnode:
 	# Destroys all dependent vnodes and tree nodes associated with the receiver.
 	
 	def destroyDependents (self):
-	
+		
+		# tick()
 		parent = self.parent()
 		if not parent: return
 		# Destroy the nth child of all nodes joined to the receiver's parent.
@@ -2250,7 +2273,8 @@ class vnode:
 	#@+node:8::isJoinedTo
 	#@+body
 	def isJoinedTo (self, v):
-	
+		
+		# tick()
 		return v and self.t == v.t
 	#@-body
 	#@-node:8::isJoinedTo
@@ -2258,7 +2282,8 @@ class vnode:
 	#@+body
 	# Returns true if the nodes v1 and v2 are on the same join list.
 	def isOnJoinListOf (self, v2):
-	
+		
+		# tick()
 		v1 = self
 		assert(v2 and v1.t and v2.t)
 		
@@ -2287,7 +2312,8 @@ class vnode:
 	#@@c
 
 	def joinNodeTo (self, v2):
-	
+		
+		# tick()
 		v1 = self
 		if v1.isOnJoinListOf(v2): return # 12/17/01: fix same bug as in LeoCB
 	
@@ -2314,8 +2340,8 @@ class vnode:
 	# Links the receiver after v.
 	
 	def linkAfter (self, v):
-	
-		# trace(`v`)
+		
+		# tick() ; # trace(`v`)
 		self.mParent = v.mParent
 		self.mBack = v
 		self.mNext = v.mNext
@@ -2331,7 +2357,7 @@ class vnode:
 		"""Links the receiver as the n'th child of p"""
 	
 		v = self
-		# trace(`v` + ", " + `p` + ", " + `n`)
+		# tick() ; # trace(`v` + ", " + `p` + ", " + `n`)
 		v.mParent = p
 		if n == 0:
 			v.mBack = None
@@ -2361,7 +2387,7 @@ class vnode:
 	def linkAsRoot(self, oldRoot = None):
 	
 		v = self ; c = v.commands ; tree = c.tree
-		# trace(`v`)
+		# tick() ; # trace(`v`)
 		# Bug fix 3/16/02:
 		# Clear all links except the child link.
 		# This allows a node with children to be moved up properly to the root position.
@@ -2382,6 +2408,7 @@ class vnode:
 		"""Unlinks the receiver from the tree before moving or deleting."""
 		v = self ; c = v.commands ; tree = c.tree
 		
+		# tick()
 		# trace(`v.mParent`+", child:"+`v.mFirstChild`+", back:"+`v.mBack`+", next:"+`v.mNext`)
 		
 		# Special case the root
@@ -2411,7 +2438,8 @@ class vnode:
 	#@@c
 
 	def unjoinNode (self):
-	
+		
+		# tick()
 		next = self.joinList
 		if not next: return
 	
@@ -2425,26 +2453,26 @@ class vnode:
 			#@<< Set prev to the node that points to self >>
 			#@+node:1::<< Set prev to the node that points to self >>
 			#@+body
-			#@+at
-			#  We guard against any cycles in the join list, which would cause 
-			# self loop to hang.  It's much better to cause an assert to fail.
-
-			#@-at
-			#@@c
-
-			self.commands.clearAllVisited()
+			if 1: # 3/6/03: _much_ faster.
+				prev = next
+				while prev and prev.joinList != self:
+					prev = prev.joinList
 			
-			prev = next
-			while prev and prev.joinList != self:
-				assert(not prev.isVisited())
-				prev.setVisited()
-				prev = prev.joinList
+			else: # Very slow.
+				# Guard against any cycles in the join list
+				self.commands.clearAllVisited() # A _huge_ performance hit!
+				prev = next
+				while prev and prev.joinList != self:
+					assert(not prev.isVisited())
+					prev.setVisited()
+					prev = prev.joinList
 			#@-body
 			#@-node:1::<< Set prev to the node that points to self >>
 
 			# Remove self from the join list.
 			prev.joinList = next
 			self.joinList = None
+	
 	#@-body
 	#@-node:15::unjoinNode
 	#@+node:16::unjoinTree
@@ -2452,7 +2480,8 @@ class vnode:
 	# This function unjoins all nodes of the receiver's tree.
 	
 	def unjoinTree (self):
-	
+		
+		# tick()
 		v = self
 		after = self.nodeAfterTree()
 		while v and v != after:
@@ -2461,7 +2490,7 @@ class vnode:
 	#@-body
 	#@-node:16::unjoinTree
 	#@-node:3::Private helper functions
-	#@-node:12::Moving, Inserting, Deleting, Cloning, Sorting
+	#@-node:12::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
 	#@-others
 #@-body
 #@-node:4::class vnode

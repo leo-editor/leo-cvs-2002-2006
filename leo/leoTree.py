@@ -255,7 +255,8 @@ class leoTree:
 	#@+node:2::beginUpdate
 	#@+body
 	def beginUpdate (self):
-	
+		
+		# tick()
 		self.updateCount += 1
 	#@-body
 	#@-node:2::beginUpdate
@@ -342,7 +343,8 @@ class leoTree:
 	#@+node:6::drawTree
 	#@+body
 	def drawTree(self,v,x,y,h,level):
-	
+		
+		# Recursive routine, tick() not useful.
 		yfirst = ylast = y
 		if level==0: yfirst += 10
 		while v:
@@ -372,7 +374,8 @@ class leoTree:
 	#@+node:7::endUpdate
 	#@+body
 	def endUpdate (self, flag=true):
-	
+		
+		# tick()
 		assert(self.updateCount > 0)
 		self.updateCount -= 1
 		if flag and self.updateCount == 0:
@@ -630,7 +633,7 @@ class leoTree:
 	# This _is_ useful when a flag is passed to c.endUpdate.
 	def redraw (self):
 		if self.updateCount == 0 and not self.redrawScheduled:
-			# print "tree.redraw"
+			# tick() # print "tree.redraw"
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
 			
@@ -638,6 +641,7 @@ class leoTree:
 	def force_redraw (self):
 		# print "tree.force_redraw"
 		if not self.redrawScheduled:
+			# tick()
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
 			
@@ -645,15 +649,14 @@ class leoTree:
 	# It is up to the caller to ensure that no other redraws are pending.
 	def redraw_now (self):
 	
-		# print "tree.redraw_now: ", self.redrawScheduled
+		# tick() ; # print "tree.redraw_now: ", self.redrawScheduled
 		self.idle_redraw()
 	
 	def idle_redraw (self):
 	
-		# trace()
 		self.redrawScheduled = false
 		frame = self.commands.frame
-		if frame in app().windowList and app().quitting == 0:
+		if frame in app().windowList and app().quitting == false:
 			# self.redrawCount += 1 ; trace(`self.redrawCount`)
 			self.expandAllAncestors(self.currentVnode)
 			# Erase and redraw the entire tree.
@@ -1611,11 +1614,13 @@ class leoTree:
 		c.frame.setTabWidth(w)
 	#@-body
 	#@-node:6::tree.scanForTabWidth
-	#@+node:7::tree.select
+	#@+node:7::tree.select (move left is slow)
 	#@+body
 	# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
 	
 	def select (self,v):
+		
+		# tick()
 	
 		
 		#@<< define vars and stop editing >>
@@ -1700,7 +1705,7 @@ class leoTree:
 
 		handleLeoHook("select2",c=c,new_v=v,old_v=old_v)
 	#@-body
-	#@-node:7::tree.select
+	#@-node:7::tree.select (move left is slow)
 	#@+node:8::tree.set...LabelState
 	#@+body
 	def setNormalLabelState (self,v): # selected, editing

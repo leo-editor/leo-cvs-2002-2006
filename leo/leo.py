@@ -113,6 +113,7 @@ def leoOpen(fileName=None,*args):
 		frame1.commands.redraw() # Bug fix: 12/12/02
 		frame = frame1
 	init_sherlock(args)
+	clear_stats()
 	issueHookWarning()
 	# Write any queued output generated before a log existed.
 	app.writeWaitingLog() # 2/16/03

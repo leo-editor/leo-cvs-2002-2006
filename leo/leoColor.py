@@ -1957,6 +1957,7 @@ class colorizer:
 			#@+body
 			if self.showInvisibles:
 				self.tag("tab",i,i+1)
+			#print "tab",i,self.body.cget("tabs"),self.body.tag_config("tab")
 			i += 1
 			#@-body
 			#@-node:5::<< handle tab >>

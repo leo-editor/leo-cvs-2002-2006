@@ -346,12 +346,13 @@ class LeoFrame:
 		try: # 8/11/02: This can fail when called from scripts.
 			# 9/20/22: Use the present font for computations.
 			font = self.body.cget("font")
-			font = font = tkFont.Font(font=font)
+			font = tkFont.Font(font=font)
 			tabw = font.measure(" " * abs(w)) # 7/2/02
-			# print "frame.setTabWidth:" + `w` + "," + `tabw`
+			# tablist = `tabw` + ' ' + `2*tabw`
 			self.body.configure(tabs=tabw)
+			# print "frame.setTabWidth:" + `w` + "," + `tabw`
 		except:
-			# es_exception()
+			es_exception()
 			pass
 	
 	#@-body

@@ -505,6 +505,7 @@ class undoer:
 	#@+body
 	def redo (self):
 		
+		# clear_stats() ; tick()
 		u = self ; c = u.commands
 		if not u.canRedo(): return
 		if not u.getBead(u.bead+1): return
@@ -720,6 +721,7 @@ class undoer:
 		u.redoing = false
 		u.bead += 1
 		u.setUndoTypes()
+		# print_stats()
 	#@-body
 	#@-node:5::u.redo
 	#@+node:6::u.undo
@@ -731,7 +733,8 @@ class undoer:
 	#@@c
 
 	def undo (self):
-	
+		
+		# clear_stats() ; # tick()
 		u = self ; c = u.commands
 		if not u.canUndo(): return
 		if not u.getBead(u.bead): return
@@ -974,6 +977,7 @@ class undoer:
 		u.undoing = false
 		u.bead -= 1
 		u.setUndoTypes()
+		# print_stats()
 	#@-body
 	#@-node:6::u.undo
 	#@+node:7::Undo helpers

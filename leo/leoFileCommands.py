@@ -69,6 +69,8 @@ class fileCommands:
 	#@+node:1::createVnode
 	#@+body
 	def createVnode(self,parent,back,tref,headline):
+		
+		# tick()
 	
 		# trace(`headline` + ", parent:" + `parent` + ", back:" + `back`)
 		v = None ; c = self.commands
