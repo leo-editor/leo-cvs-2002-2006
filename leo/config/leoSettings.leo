@@ -35,14 +35,14 @@
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
-<v t="ekr.20041119034357.3" a="E"><vh>@page General configuration options</vh>
+<v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041119034357.7"><vh>.leo file options</vh>
 <v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
 <v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
 </v>
-<v t="ekr.20041119034357.11" a="E"><vh>directory options</vh>
+<v t="ekr.20041119034357.11"><vh>directory options</vh>
 <v t="ekr.20041119041304"><vh>@bool create_nonexistent_directories = False</vh></v>
 <v t="ekr.20041119041304.1"><vh>@string relative_path_base_directory = .</vh></v>
 </v>
@@ -51,19 +51,20 @@
 <v t="ekr.20041119041747.1"><vh>@string trailing_body_newlines = one</vh></v>
 <v t="ekr.20041119041747.4"><vh>@bool write_strips_blank_lines = True</vh></v>
 </v>
-<v t="ekr.20041119034357.15" a="E"><vh>unicode encoding options</vh>
+<v t="ekr.20041119034357.15"><vh>unicode encoding options</vh>
 <v t="ekr.20041119042929.9"><vh>@string default_derived_file_encoding = UTF-8</vh></v>
 <v t="ekr.20041119042929.10"><vh>@string new_leo_file_encoding = UTF-8</vh></v>
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.10"><vh>@page Command options</vh>
+<v t="ekr.20041119034357.10" a="E"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
 <v t="ekr.20041119041019.1"><vh>@string remove_sentinels_extension = .txt</vh></v>
 <v t="ekr.20041119041019.2"><vh>@bool save_clears_undo_buffer = False</vh></v>
 <v t="ekr.20041119050749.10"><vh>@string headline_time_format_string = %m/%d</vh></v>
 <v t="ekr.20041119050749.11"><vh>@bool headline_gmt_time = False</vh></v>
+<v t="ekr.20050126083026" a="TV"><vh>@string undo_granularity = word</vh></v>
 </v>
 <v t="ekr.20041119034357.16"><vh>@page Compare panel options</vh>
 <v t="ekr.20041119034357.17"><vh>files &amp; directories</vh>
@@ -185,7 +186,7 @@
 </v>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 </v>
-<v t="ekr.20041213105954" a="E"><vh>Window options</vh>
+<v t="ekr.20041213105954"><vh>Window options</vh>
 <v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
@@ -214,8 +215,8 @@
 <v t="ekr.20041119050749.17"><vh>@bool look_for_control_drag_on_mouse_down = True</vh></v>
 <v t="ekr.20041119050749.18"><vh>@bool outline_pane_scrolls_horizontally = False</vh></v>
 </v>
-<v t="ekr.20041213105954.2" a="E"><vh>@page Splitter options</vh>
-<v t="ekr.20041119034357.68" a="TV"><vh>@string split_bar_relief = groove</vh></v>
+<v t="ekr.20041213105954.2"><vh>@page Splitter options</vh>
+<v t="ekr.20041119034357.68"><vh>@string split_bar_relief = groove</vh></v>
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
@@ -1024,5 +1025,12 @@ Warning: the number of pixels per inch varies...</t>
 <t tx="ekr.20041217184352.2">LightYellow1
 
 #f2fdff</t>
+<t tx="ekr.20050126083026">word granularity: start a new undo unit when typing starts a new word.
+line granularity: start a new undo unit when typing moves to new line.
+node granularity: start a new undo unit when typing moves to a new node.
+char granularity: start a new undo unit for each character typed.
+
+Leo used char granularity for all version prior to 4.3. char granularity is not
+recommended; it is clumsy and wasteful of computer memory.</t>
 </tnodes>
 </leo_file>
