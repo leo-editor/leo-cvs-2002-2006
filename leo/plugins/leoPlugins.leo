@@ -981,7 +981,6 @@
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
-<v t="edream.120603093808" a="MV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 <v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
 <v t="edream.031217101015"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.619"><vh>From Bernhard Mulder</vh>
@@ -1520,7 +1519,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107092135" a="E"><vh>New plugins:  very cool</vh>
+<v t="ekr.20040107092135"><vh>New plugins:  very cool</vh>
 <v t="ekr.20040109080300"><vh> Changes made by EKR</vh></v>
 <v t="ekr.20040111053758"><vh> Description of rst2 by Steve Zatz</vh></v>
 <v t="ekr.20040118081748" tnodeList="ekr.20040118081748,ekr.20040118081748.1,ekr.20040118081748.2,ekr.20040118081748.3,ekr.20040118081748.4,ekr.20040118081748.5,ekr.20040118081748.6,ekr.20040118081748.7,ekr.20040118081748.8"><vh>@file rst2.py</vh>
@@ -1647,6 +1646,7 @@
 <v t="ekr.20040127114616"><vh>main code</vh></v>
 </v>
 </v>
+<v t="edream.120603093808" a="MV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.031216103123">@nocolor
@@ -7633,7 +7633,7 @@ def newMoreHead (self,firstLevel,useVerticalBar=true):
 <t tx="edream.110203113231.722"></t>
 <t tx="edream.110203113231.723">[Main]
 active = Yes
-interval = 600</t>
+interval = 20</t>
 <t tx="edream.110203113231.724">"""Autosave the Leo document every so often"""
 
 # By Paul Paterson.
@@ -15665,29 +15665,34 @@ plugin_signon(__name__)</t>
 	name = sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
 	path = os.path.join(td,name)
 	return path</t>
-<t tx="edream.120603093808"># Only plugins whose filenames appear in this file will be enabled.
+<t tx="edream.120603093808"># Leo enables only those plugins whose filenames appear here.
 # Leo loads plugins in the order they appear in this file.
+# File names may be indented as desired.
 
-add_directives.py
-open_with.py
-color_markup.py
-image.py
-# nav_buttons.py
-plugins_menu.py
-rowcol.py
+# "official" plugins...
+	add_directives.py
+	# mod_autosave.py
+	open_with.py
+	color_markup.py
+	image.py
+	# nav_buttons.py
+	plugins_menu.py
+	rowcol.py
+	# word_export.py
+	# xemacs.py
+
 # New from Steve Zatz
-# ** requires docutils: http://docutils.sourceforge.net/
-# ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
-# rst2.py
+	# ** requires docutils: http://docutils.sourceforge.net/
+	# ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
+	# rst2.py
+
 # New from Paul Paterson.
-nodenavigator.py
-searchbox.py
-newButtons.py
-# word_export.py
-# xemacs.py
+	nodenavigator.py
+	searchbox.py
+	# newButtons.py
 
 # New from Bernhard Mulder
-# mod_http.py</t>
+	# mod_http.py</t>
 <t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
 <t tx="edream.120703082844">@language python
 

@@ -2799,7 +2799,16 @@
 <v t="edream.121303091808"><vh>Batch test</vh>
 <v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 </v>
-<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
+<v t="ekr.20040126105605"><vh>Clone test</vh>
+<v t="ekr.20040126105605.1"><vh>moving last b up destroys the outline!!</vh></v>
+<v t="ekr.20040126105605.2" a="E"><vh>a</vh>
+<v t="ekr.20040126105605.3"><vh>b</vh></v>
+</v>
+<v t="ekr.20040126105605.2" a="E"><vh>a</vh>
+<v t="ekr.20040126105605.3"><vh>b</vh></v>
+</v>
+</v>
+<v t="edream.110203161858.2119" a="V"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
 <v t="dthein.20040108213304"><vh>reformatParagraphsTests</vh>
 <v t="dthein.20040108213304.1"><vh>testNoTrailingNewline</vh>
@@ -2963,15 +2972,6 @@
 <v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
 <v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
-</v>
-<v t="ekr.20040126105605" a="V"><vh>Clone test</vh>
-<v t="ekr.20040126105605.1"><vh>moving last b up destroys the outline!!</vh></v>
-<v t="ekr.20040126105605.2" a="E"><vh>a</vh>
-<v t="ekr.20040126105605.3"><vh>b</vh></v>
-</v>
-<v t="ekr.20040126105605.2" a="E"><vh>a</vh>
-<v t="ekr.20040126105605.3"><vh>b</vh></v>
-</v>
 </v>
 </vnodes>
 <tnodes>
