@@ -22,6 +22,7 @@ import leoGui
 import leoNodes
 import leoTkinterGui
 
+import doctest
 import glob
 import os
 import sys
@@ -52,7 +53,8 @@ def doTests(all):
             test = makeTestSuite(c,p)
             if test: suite.addTest(test)
 
-    unittest.TextTestRunner().run(suite)
+    # Verbosity: 1: print just dots.
+    unittest.TextTestRunner(verbosity=1).run(suite)
     
     c.setChanged(changed) # Restore changed state.
     c.selectVnode(p1) # N.B. Restore the selected node.
@@ -1047,6 +1049,166 @@ class importExportTestCase(unittest.TestCase):
 #@-node:ekr.20040707140849.28:class importExportTestCase
 #@-node:ekr.20040708173707:Import/Export test code (leoTest.py)
 #@-node:ekr.20040708145036:Specific to particular unit tests...
+#@+node:ekr.20040710184602:Test of doctest
+#@+node:ekr.20040710183515:factorial
+def factorial(n):
+    """Return the factorial of n, an exact integer >= 0.
+
+    If the result is small enough to fit in an int, return an int.
+    Else return a long.
+
+    >>> [factorial(n) for n in range(6)]
+    [1, 1, 2, 6, 24, 120]
+    >>> [factorial(long(n)) for n in range(6)]
+    [1, 1, 2, 6, 24, 120]
+    >>> factorial(30)
+    265252859812191058636308480000000L
+    >>> factorial(30L)
+    265252859812191058636308480000000L
+    >>> factorial(-1)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be >= 0
+
+    Factorials of floats are OK, but the float must be an exact integer:
+    >>> factorial(30.1)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be exact integer
+    >>> factorial(30.0)
+    265252859812191058636308480000000L
+
+    It must also not be ridiculously large:
+    >>> factorial(1e100)
+    Traceback (most recent call last):
+        ...
+    OverflowError: n too large
+    """
+
+    import math
+    if not n >= 0:
+        raise ValueError("n must be >= 0")
+    if math.floor(n) != n:
+        raise ValueError("n must be exact integer")
+    if n+1 == n:  # catch a value like 1e300
+        raise OverflowError("n too large")
+    result = 1
+    factor = 2
+    while factor <= n:
+        try:
+            result *= factor
+        except OverflowError:
+            result *= long(factor)
+        factor += 1
+    return result
+#@nonl
+#@-node:ekr.20040710183515:factorial
+#@-node:ekr.20040710184602:Test of doctest
+#@+node:ekr.20040711043551:Docutils stuff
+#@+node:ekr.20040711042449:createUnitTestsFromDoctests
+def createUnitTestsFromDoctests (modules,verbose=True):
+    
+    created = False # True if suite is non-empty.
+    
+    suite = unittest.makeSuite(unittest.TestCase)
+    
+    for module in list(modules):
+        try:
+            test = doctest.DocTestSuite(module)
+            suite.addTest(test)
+            created = True
+            if verbose:
+                print "Adding doctests for ",module
+        except ValueError:
+            pass # No tests found.
+            
+    return g.choose(created,suite,None)
+#@nonl
+#@-node:ekr.20040711042449:createUnitTestsFromDoctests
+#@+node:ekr.20040711052911.1:findAllAtFileNodes
+def findAllAtFileNodes(c):
+    
+    paths = []
+    
+    for p in c.all_positions_iter():
+        name = p.anyAtFileNodeName()
+        if name:
+            head,tail = g.os_path_split(name)
+            filename,ext = g.os_path_splitext(tail)
+            if ext == ".py":
+                path = g.os_path_join(g.app.loadDir,name)
+                path = g.os_path_abspath(path)
+                paths.append(path)
+        
+    return paths
+#@nonl
+#@-node:ekr.20040711052911.1:findAllAtFileNodes
+#@+node:ekr.20040711052911:importAllModulesInPathList
+def importAllModulesInPathList(paths):
+    
+    paths = list(paths)
+    modules = []
+    
+    for path in paths:
+        module = safeImportModule(path)
+        if module:
+            modules.append(module)
+            
+    return modules
+#@-node:ekr.20040711052911:importAllModulesInPathList
+#@+node:ekr.20040711043551.1:importAllModulesInPath
+def importAllModulesInPath (path):
+
+    path = g.os_path_abspath(path)
+    
+    if not g.os_path_exists(path):
+        g.es("path does not exist: %s" % path)
+        return []
+
+    path2 = g.os_path_join(path,"leo*.py")
+    files = glob.glob(path2)
+    modules = []
+
+    for file in files:
+        module = safeImportModule(file)
+        if module:
+            modules.append(module)
+
+    return modules
+#@-node:ekr.20040711043551.1:importAllModulesInPath
+#@+node:ekr.20040711061551:safeImportModule
+#@+at 
+# Warning: do NOT use g.importFromPath here!
+# g.importFromPath uses imp.load_module, and that is equivalent to reload!
+# reload Leo files while running will crash Leo.
+# 
+# Instead, we use exec to do a "plain" import
+#@-at
+#@@c
+
+def safeImportModule (fileName):
+    
+    scriptString = """
+try:
+    import %s
+    module = %s
+except ImportError:
+    module = None
+"""
+
+    fileName = g.os_path_abspath(fileName)
+    head,tail = g.os_path_split(fileName)
+    moduleName,ext = g.os_path_splitext(tail)
+    if ext == ".py":
+        script = scriptString % (moduleName,moduleName)
+        exec(script.strip() + '\n')
+        return module
+    else:
+        print "Bad .py file:",fileName
+        return None
+#@nonl
+#@-node:ekr.20040711061551:safeImportModule
+#@-node:ekr.20040711043551:Docutils stuff
 #@-others
 #@nonl
 #@-node:EKR.20040623200709:@thin ../src/leoTest.py
