@@ -11,7 +11,7 @@ The code is based on code found in Python's IDLE program."""
 
 import leoGlobals as g
 
-print '*' * 20, " overriding leoTkinterTree class ", '*' * 20
+print '*' * 20, " overriding leoTkinterTree class "
 
 import leoTkinterTree
 import leoFrame
@@ -183,6 +183,9 @@ class myLeoTkinterTree(leoFrame.leoTree):
     # - setText now ensures that state is "normal" before attempting to set 
     # the text.
     #     - This is the robust way.
+    # 
+    # 7/31/04: newText must call setText for all nodes allocated, even if p 
+    # matches.
     #@-at
     #@nonl
     #@-node:ekr.20040728143724:Most recent changes
@@ -324,13 +327,14 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 t.bind("<Control-t>",self.onControlT)
         
             id = canvas.create_window(x,y,anchor="nw",window=t,tag=tag)
-            self.setText(t,p.headString(),tag="newText")
             t.leo_window_id = id # Never changes.
             
         if self.trace and self.verbose:
             g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),self.textAddr(t),align=-20)
     
-        # Common configuration
+        # Common configuration.
+        # Bug fix 7/31/04:  We must call setText even if p matches: p's text may have changed!
+        self.setText(t,p.headString(),tag="newText")
         t.configure(width=self.headWidth(p.copy()))
         t.leo_position = p.copy() # Never changes.
         t.leo_generation = self.generation
@@ -1804,7 +1808,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         """Update headline text at idle time."""
         
-        c = self.c ; v = p.v
+        c = self.c
     
         if not p or p != c.currentPosition():
             return "break"
@@ -1867,8 +1871,8 @@ class myLeoTkinterTree(leoFrame.leoTree):
         changed = s != head
         if changed:
             c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-            #@        << update v and all nodes joined to v >>
-            #@+node:ekr.20040723104427.22:<< update v and all nodes joined to v >>
+            #@        << update p >>
+            #@+node:ekr.20040723104427.22:<< update p >>
             c.beginUpdate()
             if 1: # update...
                 # Update changed bit.
@@ -1877,34 +1881,36 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 # Update all dirty bits.
                 if not p.isDirty():
                     p.setDirty()
-                # Update v.
-                v.initHeadString(s)
+                # Update p.
+                p.initHeadString(s)
                 self.setText(edit_text,s,tag="idle_head_key2")
                 edit_text.mark_set("insert",index)
             c.endUpdate(False) # do not redraw now.
             #@nonl
-            #@-node:ekr.20040723104427.22:<< update v and all nodes joined to v >>
+            #@-node:ekr.20040723104427.22:<< update p >>
             #@nl
         if done or changed:
-            #@        << reconfigure v and all nodes joined to v >>
-            #@+node:ekr.20040723104427.23:<< reconfigure v and all nodes joined to v >>
+            #@        << reconfigure p and all nodes joined to p >>
+            #@+node:ekr.20040723104427.23:<< reconfigure p and all nodes joined to p >>
             # Reconfigure p's headline.
             if done:
                 self.setDisabledLabelState(p)
             
-            edit_text.configure(width=self.headWidth(p.copy())) # Make a copy.
+            edit_text.configure(width=self.headWidth(p))
             #@nonl
-            #@-node:ekr.20040723104427.23:<< reconfigure v and all nodes joined to v >>
+            #@-node:ekr.20040723104427.23:<< reconfigure p and all nodes joined to p >>
             #@nl
             #@        << update the screen >>
             #@+node:ekr.20040723104427.24:<< update the screen >>
             if done:
+                # g.trace("done")
                 c.beginUpdate()
                 self.endEditLabel()
                 c.endUpdate()
             
             elif changed:
-                # Update v immediately.  Joined nodes are redrawn later by endEditLabel.
+                # g.trace("changed")
+                # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
                 # Redrawing the whole screen now messes up the cursor in the headline.
                 self.drawIcon(p) # just redraw the icon.
             #@nonl
