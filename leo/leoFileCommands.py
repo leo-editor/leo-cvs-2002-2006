@@ -1013,13 +1013,6 @@ class fileCommands:
 	def put_dquoted_bool (self,b):
 		if b: self.put('"1"')
 		else: self.put('"0"')
-		
-	def put_find_flag (self,a,b):
-		config = app().config
-		if config.configsExist: # 7/18/02
-			config.setFindPref(b,`a`)
-		else:
-			self.put_flag(a,b)
 			
 	def put_flag (self,a,b):
 		if a:
@@ -1062,41 +1055,49 @@ class fileCommands:
 	def putFindSettings (self):
 	
 		c = self.commands ; config = app().config
-		c.setIvarsFromFind()
-		config.setConfigFindIvars(c)
 	
 		self.put("<find_panel_settings")
-		self.put_find_flag(c.batch_flag,"batch")
-		self.put_find_flag(c.ignore_case_flag,"ignore_case")
-		self.put_find_flag(c.mark_changes_flag,"mark_changes")
-		self.put_find_flag(c.mark_finds_flag,"mark_finds")
-		self.put_find_flag(c.pattern_match_flag,"pattern_match")
-		self.put_find_flag(c.reverse_flag,"reverse")
-		self.put_find_flag(c.search_headline_flag,"search_headline")
-		self.put_find_flag(c.search_body_flag,"search_body")
-		self.put_find_flag(c.suboutline_only_flag,"suboutline_only")
-		self.put_find_flag(c.whole_word_flag,"whole_word")
-		self.put_find_flag(c.wrap_flag,"wrap")
+		
+		
+		#@<< put find settings that may exist in leoConfig.txt >>
+		#@+node:1::<< put find settings that may exist in leoConfig.txt >>
+		#@+body
+		if config.configsExist and not config.read_only: # 8/6/02
+			pass # config.update has already been called.
+		else:
+			self.put_flag(c.batch_flag,"batch")
+			self.put_flag(c.ignore_case_flag,"ignore_case")
+			self.put_flag(c.mark_changes_flag,"mark_changes")
+			self.put_flag(c.mark_finds_flag,"mark_finds")
+			self.put_flag(c.pattern_match_flag,"pattern_match")
+			self.put_flag(c.reverse_flag,"reverse")
+			self.put_flag(c.search_headline_flag,"search_headline")
+			self.put_flag(c.search_body_flag,"search_body")
+			self.put_flag(c.suboutline_only_flag,"suboutline_only")
+			self.put_flag(c.whole_word_flag,"whole_word")
+			self.put_flag(c.wrap_flag,"wrap")
+		
 		self.put(">") ; self.put_nl()
-		#
-		if config.configsExist: # 7/18/02
-			config.setFindPref("find_string",c.find_text)
+		
+		if config.configsExist and not config.read_only: # 8/6/02
 			self.put_tab()
 			self.put("<find_string></find_string>") ; self.put_nl()
 		else:
 			self.put_tab()
 			self.put("<find_string>") ; self.putEscapedString(c.find_text)
 			self.put("</find_string>") ; self.put_nl()
-		#
-		if config.configsExist: # 7/18/02
-			config.setFindPref("change_string",c.change_text)
+		
+		if config.configsExist and not config.read_only: # 8/6/02
 			self.put_tab()
 			self.put("<change_string></change_string>") ; self.put_nl()
 		else:
 			self.put_tab()
 			self.put("<change_string>") ; self.putEscapedString(c.change_text)
 			self.put("</change_string>") ; self.put_nl()
-		#
+		#@-body
+		#@-node:1::<< put find settings that may exist in leoConfig.txt >>
+
+		
 		self.put("</find_panel_settings>") ; self.put_nl()
 	#@-body
 	#@-node:4:C=13:putFindSettings
@@ -1191,10 +1192,10 @@ class fileCommands:
 	def putPrefs (self):
 	
 		c = self.commands ; config = app().config
-		c.setIvarsFromPrefs()
 	
 		self.put("<preferences")
 		self.put(" allow_rich_text=") ; self.put_dquoted_bool(0) # no longer used
+		
 		
 		#@<< put prefs that may exist in leoConfig.txt >>
 		#@+node:1::<< put prefs that may exist in leoConfig.txt >>
@@ -1207,13 +1208,7 @@ class fileCommands:
 			language = "Plain"
 		
 		if config.configsExist and not config.read_only: # 8/6/02
-			config.setPref("tab_width",`c.tab_width`)
-			config.setPref("page_width",`c.page_width`)
-			config.setPref("run_tangle_done.py",`c.tangle_batch_flag`)
-			config.setPref("run_untangle_done.py",`c.untangle_batch_flag`)
-			config.setPref("output_doc_chunks",`c.output_doc_flag`)
-			config.setPref("tangle_outputs_header",`c.use_header_flag`)
-			config.setPref("default_target_language",language)
+			pass # config.update has already been called.
 		else:
 			self.put(" tab_width=") ; self.put_in_dquotes(`c.tab_width`)
 			self.put(" page_width=") ; self.put_in_dquotes(`c.page_width`)
@@ -1230,7 +1225,7 @@ class fileCommands:
 		#@+node:1::<< put default directory >>
 		#@+body
 		if config.configsExist:
-			config.setPref("default_tangle_directory",c.tangle_directory)
+			pass # Has been done earlier.
 		elif len(c.tangle_directory) > 0:
 			self.put_tab()
 			self.put("<defaultDirectory>")
@@ -1242,6 +1237,7 @@ class fileCommands:
 		#@-body
 		#@-node:1::<< put prefs that may exist in leoConfig.txt >>
 
+		
 		self.put("</preferences>") ; self.put_nl()
 	#@-body
 	#@-node:8:C=15:putPrefs
@@ -1502,7 +1498,7 @@ class fileCommands:
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
-		c=self.commands
+		c=self.commands ; config = app().config
 		
 		if not outlineOnlyFlag:
 			try:
@@ -1555,7 +1551,14 @@ class fileCommands:
 				#@-node:2::<< delete backup file >>
 
 				return false
-			app().config.update()
+			
+			# 8/6/02: Update leoConfig.txt completely here.
+			c.setIvarsFromFind()
+			config.setConfigFindIvars(c)
+			c.setIvarsFromPrefs()
+			config.setCommandsIvars(c)
+			config.update()
+			
 			self.putProlog()
 			self.putHeader()
 			self.putGlobals()

@@ -5,7 +5,7 @@
 	<global_window_position top="109" left="211" height="19" width="69"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
+<preferences allow_rich_text="0">
 </preferences>
 <find_panel_settings>
 	<find_string></find_string>
@@ -35,8 +35,10 @@
 <v t="T16" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="E"><vh>Latest version</vh>
-<v t="T17" a="E"><vh>leo.py 3.4 beta 3</vh>
-<v t="T18" a="V"><vh>Created leoConfig.leo</vh></v>
+<v t="T17" a="EV"><vh>leo.py 3.4 beta 4</vh>
+<v><vh>Fixed bugs that delayed writing of find and prefs panels</vh></v>
+<v><vh>Made leoConfig.txt be read/write by default</vh></v>
+<v t="T18"><vh>Created leoConfig.leo</vh></v>
 <v t="T19"><vh>Fixed a major config bug. This fixes font problems</vh></v>
 <v><vh>Toggle Split Direction now updates leoConfig.txt</vh></v>
 <v t="T20"><vh>Added comments to leoConfig.txt about split direction and ratio</vh></v>
@@ -1977,7 +1979,7 @@ This is the minimum you need to use Leo effectively.
 4. Many command key abbreviations are specified in the Syntax Coloring panel.
 
 See the Appendices for a concise summary of information about Leo.</t>
-<t tx="T17">leo.py 3.4 beta 3                              August 6, 2002
+<t tx="T17">leo.py 3.4 beta 4                              August 6, 2002
 
 This fixes all bugs discussed on Leo's SourceForge forum as of 9:26 a.m. today.
 

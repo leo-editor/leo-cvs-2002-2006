@@ -5,7 +5,7 @@
 	<global_window_position top="42" left="312" height="20" width="60"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
+<preferences allow_rich_text="0">
 </preferences>
 <find_panel_settings>
 	<find_string></find_string>
@@ -13,9 +13,9 @@
 </find_panel_settings>
 <vnodes>
 <v a="E"><vh>leoConfig.leo</vh>
-<v t="T1" a="EV"><vh>leoConfig.txt</vh>
+<v t="T1" a="E"><vh>leoConfig.txt</vh>
 <v t="T2"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T3"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T3" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T4"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -57,25 +57,22 @@
 If sys.leo_config_directory does not exist,
 Leo attempts to load this file from the directory from which Leo was loaded.
 
-Settings in this file override settings in all .leo files.
-(But not always, see below for the real truth.)
-
-Leo does not write settings to the &lt;preferences&gt; and &lt;find_panel_settings&gt;
-elements of .leo files that exist in this file.
+Leo writes settings to the &lt;preferences&gt; and &lt;find_panel_settings&gt;
+elements of .leo files if this file does not exist or is read-only.
 
 Leo uses Python's ConfigParser module to parse this file,
 with all of ConfigParser's features (and bugs!).
 
 Comments start with a pound character in the leftmost column.
 You may specify booleans as 0/1, no/yes, false/true, off/on (case insensitive).
-These get converted to 0/1 if the file is not read_only</t>
+These get converted to 0/1 if the file is not read_only.</t>
 <t tx="T3">@c
 
 [config options]
 
-read_only = 1
-#	WARNING: Clearing the read_only attribute will cause Leo to remove
-#	all comments and alter order of attributes when rewriting this file!!
+read_only = 0
+#	0: Leo writes this file, clearing all comments in the process.
+#	1: Leo writes nothing to this file.
 #	Syntax errors in this file set this file to read-only.
 
 xml_version_string = UTF-8

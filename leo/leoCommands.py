@@ -121,7 +121,7 @@ class Commands:
 		pass
 	#@-body
 	#@-node:5::c.setIvarsFromPrefs
-	#@+node:6::c.setIvarsFromFind
+	#@+node:6:C=3:c.setIvarsFromFind
 	#@+body
 	# This should be called whenever we need to use find values:
 	# i.e., before reading or writing
@@ -133,8 +133,8 @@ class Commands:
 			find.set_ivars(c)
 
 	#@-body
-	#@-node:6::c.setIvarsFromFind
-	#@+node:7:C=3:Cut & Paste Outlines
+	#@-node:6:C=3:c.setIvarsFromFind
+	#@+node:7:C=4:Cut & Paste Outlines
 	#@+node:1::cutOutline
 	#@+body
 	def cutOutline(self):
@@ -209,7 +209,7 @@ class Commands:
 			es("The clipboard is not a valid " + choose(isLeo,"Leo","MORE") + " file")
 	#@-body
 	#@-node:3::pasteOutline
-	#@-node:7:C=3:Cut & Paste Outlines
+	#@-node:7:C=4:Cut & Paste Outlines
 	#@+node:8::Drawing Utilities
 	#@+node:1::beginUpdate
 	#@+body
@@ -259,8 +259,8 @@ class Commands:
 	#@-body
 	#@-node:5::redraw & repaint
 	#@-node:8::Drawing Utilities
-	#@+node:9:C=4:Edit Body Text
-	#@+node:1:C=5:convertAllBlanks
+	#@+node:9:C=5:Edit Body Text
+	#@+node:1:C=6:convertAllBlanks
 	#@+body
 	def convertAllBlanks (self):
 		
@@ -291,8 +291,8 @@ class Commands:
 		else:
 			es("nothing changed")
 	#@-body
-	#@-node:1:C=5:convertAllBlanks
-	#@+node:2:C=6:convertAllTabs
+	#@-node:1:C=6:convertAllBlanks
+	#@+node:2:C=7:convertAllTabs
 	#@+body
 	def convertAllTabs (self):
 	
@@ -324,8 +324,8 @@ class Commands:
 		else:
 			es("nothing changed")
 	#@-body
-	#@-node:2:C=6:convertAllTabs
-	#@+node:3:C=7:convertBlanks
+	#@-node:2:C=7:convertAllTabs
+	#@+node:3:C=8:convertBlanks
 	#@+body
 	def convertBlanks (self):
 	
@@ -341,8 +341,8 @@ class Commands:
 			c.updateBodyPane(head,result,tail,"Convert Blanks") # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
 	#@-body
-	#@-node:3:C=7:convertBlanks
-	#@+node:4:C=8:convertTabs
+	#@-node:3:C=8:convertBlanks
+	#@+node:4:C=9:convertTabs
 	#@+body
 	def convertTabs (self):
 	
@@ -359,7 +359,7 @@ class Commands:
 			c.updateBodyPane(head,result,tail,"Convert Tabs") # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
 	#@-body
-	#@-node:4:C=8:convertTabs
+	#@-node:4:C=9:convertTabs
 	#@+node:5::createLastChildNode
 	#@+body
 	def createLastChildNode (self,parent,headline,body):
@@ -565,7 +565,7 @@ class Commands:
 			c.updateBodyPane(head,result,tail,"Indent")
 	#@-body
 	#@-node:12::indentBody
-	#@+node:13:C=9:updateBodyPane (handles undo)
+	#@+node:13:C=10:updateBodyPane (handles undo)
 	#@+body
 	def updateBodyPane (self,head,middle,tail,undoType):
 		
@@ -604,9 +604,9 @@ class Commands:
 		c.body.focus_force()
 		c.recolor() # 7/5/02
 	#@-body
-	#@-node:13:C=9:updateBodyPane (handles undo)
-	#@-node:9:C=4:Edit Body Text
-	#@+node:10:C=10:Enabling Menu Items (Commands)
+	#@-node:13:C=10:updateBodyPane (handles undo)
+	#@-node:9:C=5:Edit Body Text
+	#@+node:10:C=11:Enabling Menu Items (Commands)
 	#@+node:1::canContractAllHeadlines
 	#@+body
 	def canContractAllHeadlines (self):
@@ -725,7 +725,7 @@ class Commands:
 		return false
 	#@-body
 	#@-node:9::canExpandSubheads
-	#@+node:10:C=11:canExtract, canExtractSection & canExtractSectionNames
+	#@+node:10:C=12:canExtract, canExtractSection & canExtractSectionNames
 	#@+body
 	def canExtract (self):
 	
@@ -739,7 +739,7 @@ class Commands:
 	canExtractSection = canExtract
 	canExtractSectionNames = canExtract
 	#@-body
-	#@-node:10:C=11:canExtract, canExtractSection & canExtractSectionNames
+	#@-node:10:C=12:canExtract, canExtractSection & canExtractSectionNames
 	#@+node:11::canGoToNextDirtyHeadline
 	#@+body
 	def canGoToNextDirtyHeadline (self):
@@ -840,7 +840,7 @@ class Commands:
 			return v and v.back()
 	#@-body
 	#@-node:18::canMoveOutlineUp
-	#@+node:19:C=12:canPasteOutline
+	#@+node:19:C=13:canPasteOutline
 	#@+body
 	def canPasteOutline (self,s=None):
 	
@@ -861,7 +861,7 @@ class Commands:
 		else:
 			return false
 	#@-body
-	#@-node:19:C=12:canPasteOutline
+	#@-node:19:C=13:canPasteOutline
 	#@+node:20::canPromote
 	#@+body
 	def canPromote (self):
@@ -870,7 +870,7 @@ class Commands:
 		return v and v.hasChildren()
 	#@-body
 	#@-node:20::canPromote
-	#@+node:21:C=13:canRevert
+	#@+node:21:C=14:canRevert
 	#@+body
 	def canRevert (self):
 	
@@ -879,7 +879,7 @@ class Commands:
 		return (c.frame and c.frame.mFileName and
 			len(c.frame.mFileName) > 0 and c.isChanged())
 	#@-body
-	#@-node:21:C=13:canRevert
+	#@-node:21:C=14:canRevert
 	#@+node:22::canSelect....
 	#@+body
 	# 7/29/02: The shortcuts for these commands are now unique.
@@ -963,7 +963,7 @@ class Commands:
 		return false
 	#@-body
 	#@-node:26::canUnmarkAll
-	#@-node:10:C=10:Enabling Menu Items (Commands)
+	#@-node:10:C=11:Enabling Menu Items (Commands)
 	#@+node:11::Expand & Contract
 	#@+node:1::Commands
 	#@+node:1::contractAllHeadlines
@@ -1315,7 +1315,7 @@ class Commands:
 	#@-node:7::setChanged
 	#@-node:12::Getters & Setters
 	#@+node:13::Insert, Delete & Clone (Commands)
-	#@+node:1:C=14:c.checkMoveWithParentWithWarning
+	#@+node:1:C=15:c.checkMoveWithParentWithWarning
 	#@+body
 	# Returns false if any node of tree is a clone of parent or any of parents ancestors.
 	
@@ -1344,8 +1344,8 @@ class Commands:
 			parent = parent.parent()
 		return true
 	#@-body
-	#@-node:1:C=14:c.checkMoveWithParentWithWarning
-	#@+node:2:C=15:c.deleteHeadline
+	#@-node:1:C=15:c.checkMoveWithParentWithWarning
+	#@+node:2:C=16:c.deleteHeadline
 	#@+body
 	# Deletes the current vnode and dependent nodes. Does nothing if the outline would become empty.
 	
@@ -1369,8 +1369,8 @@ class Commands:
 		c.endUpdate()
 		c.validateOutline()
 	#@-body
-	#@-node:2:C=15:c.deleteHeadline
-	#@+node:3:C=16:c.insertHeadline
+	#@-node:2:C=16:c.deleteHeadline
+	#@+node:3:C=17:c.insertHeadline
 	#@+body
 	# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
 	
@@ -1393,7 +1393,7 @@ class Commands:
 		c.tree.redraw_now()
 		c.editVnode(v)
 	#@-body
-	#@-node:3:C=16:c.insertHeadline
+	#@-node:3:C=17:c.insertHeadline
 	#@+node:4::clone (Commands)
 	#@+body
 	def clone (self):
@@ -1411,7 +1411,7 @@ class Commands:
 		c.endUpdate() # updates all icons
 	#@-body
 	#@-node:4::clone (Commands)
-	#@+node:5:C=17:c.copyTree
+	#@+node:5:C=18:c.copyTree
 	#@+body
 	# This creates a free-floating copy of v's tree for undo.
 	# The copied trees must use different tnodes than the original.
@@ -1432,7 +1432,7 @@ class Commands:
 			v = v.threadNext()
 		return result
 	#@-body
-	#@-node:5:C=17:c.copyTree
+	#@-node:5:C=18:c.copyTree
 	#@+node:6::initAllCloneBits
 	#@+body
 	#@+at
@@ -1675,8 +1675,8 @@ class Commands:
 	#@-body
 	#@-node:9::unmarkAll
 	#@-node:14::Mark & Unmark
-	#@+node:15:C=18:Moving, Dragging, Promote, Demote, Sort
-	#@+node:1:C=19:c.dragAfter
+	#@+node:15:C=19:Moving, Dragging, Promote, Demote, Sort
+	#@+node:1:C=20:c.dragAfter
 	#@+body
 	def dragAfter(self,v,after):
 	
@@ -1700,8 +1700,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:1:C=19:c.dragAfter
-	#@+node:2:C=20:c.dragToNthChildOf
+	#@-node:1:C=20:c.dragAfter
+	#@+node:2:C=21:c.dragToNthChildOf
 	#@+body
 	def dragToNthChildOf(self,v,parent,n):
 	
@@ -1725,8 +1725,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:2:C=20:c.dragToNthChildOf
-	#@+node:3:C=21:c.sortChildren, sortSiblings
+	#@-node:2:C=21:c.dragToNthChildOf
+	#@+node:3:C=22:c.sortChildren, sortSiblings
 	#@+body
 	def sortChildren(self):
 	
@@ -1782,7 +1782,7 @@ class Commands:
 			c.setChanged(true)
 		c.endUpdate()
 	#@-body
-	#@-node:3:C=21:c.sortChildren, sortSiblings
+	#@-node:3:C=22:c.sortChildren, sortSiblings
 	#@+node:4::demote
 	#@+body
 	def demote(self):
@@ -1815,7 +1815,7 @@ class Commands:
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
 	#@-node:4::demote
-	#@+node:5:C=22:moveOutlineDown
+	#@+node:5:C=23:moveOutlineDown
 	#@+body
 	#@+at
 	#  Moving down is more tricky than moving up; we can't move v to be a child of itself.  An important optimization:  we don't 
@@ -1868,7 +1868,7 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:5:C=22:moveOutlineDown
+	#@-node:5:C=23:moveOutlineDown
 	#@+node:6::moveOutlineLeft
 	#@+body
 	def moveOutlineLeft(self):
@@ -1926,7 +1926,7 @@ class Commands:
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
 	#@-node:7::moveOutlineRight
-	#@+node:8:C=23:moveOutlineUp
+	#@+node:8:C=24:moveOutlineUp
 	#@+body
 	def moveOutlineUp(self):
 	
@@ -1974,7 +1974,7 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:8:C=23:moveOutlineUp
+	#@-node:8:C=24:moveOutlineUp
 	#@+node:9::promote
 	#@+body
 	def promote(self):
@@ -1999,9 +1999,9 @@ class Commands:
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
 	#@-node:9::promote
-	#@-node:15:C=18:Moving, Dragging, Promote, Demote, Sort
+	#@-node:15:C=19:Moving, Dragging, Promote, Demote, Sort
 	#@+node:16::Selecting & Updating (commands)
-	#@+node:1:C=24:editVnode (calls tree.editLabel)
+	#@+node:1:C=25:editVnode (calls tree.editLabel)
 	#@+body
 	# Selects v: sets the focus to v and edits v.
 	
@@ -2012,7 +2012,7 @@ class Commands:
 			c.selectVnode(v)
 			c.tree.editLabel(v)
 	#@-body
-	#@-node:1:C=24:editVnode (calls tree.editLabel)
+	#@-node:1:C=25:editVnode (calls tree.editLabel)
 	#@+node:2::endEditing (calls tree.endEditLabel)
 	#@+body
 	# Ends the editing in the outline.
@@ -2023,7 +2023,7 @@ class Commands:
 
 	#@-body
 	#@-node:2::endEditing (calls tree.endEditLabel)
-	#@+node:3:C=25:selectThreadBack
+	#@+node:3:C=26:selectThreadBack
 	#@+body
 	def selectThreadBack(self):
 	
@@ -2037,8 +2037,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:3:C=25:selectThreadBack
-	#@+node:4:C=26:selectThreadNext
+	#@-node:3:C=26:selectThreadBack
+	#@+node:4:C=27:selectThreadNext
 	#@+body
 	def selectThreadNext(self):
 	
@@ -2052,8 +2052,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:4:C=26:selectThreadNext
-	#@+node:5:C=27:selectVisBack
+	#@-node:4:C=27:selectThreadNext
+	#@+node:5:C=28:selectVisBack
 	#@+body
 	# This has an up arrow for a control key.
 	
@@ -2069,8 +2069,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:5:C=27:selectVisBack
-	#@+node:6:C=28:selectVisNext
+	#@-node:5:C=28:selectVisBack
+	#@+node:6:C=29:selectVisNext
 	#@+body
 	def selectVisNext(self):
 	
@@ -2084,7 +2084,7 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:6:C=28:selectVisNext
+	#@-node:6:C=29:selectVisNext
 	#@+node:7::c.selectVnode (calls tree.select)
 	#@+body
 	# This is called inside commands to select a new vnode.

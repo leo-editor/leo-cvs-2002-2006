@@ -12,18 +12,15 @@
 #	If sys.leo_config_directory does not exist,
 #	Leo attempts to load this file from the directory from which Leo was loaded.
 #	
-#	Settings in this file override settings in all .leo files.
-#	(But not always, see below for the real truth.)
-#	
-#	Leo does not write settings to the <preferences> and <find_panel_settings>
-#	elements of .leo files that exist in this file.
+#	Leo writes settings to the <preferences> and <find_panel_settings>
+#	elements of .leo files if this file does not exist or is read-only.
 #	
 #	Leo uses Python's ConfigParser module to parse this file,
 #	with all of ConfigParser's features (and bugs!).
 #	
 #	Comments start with a pound character in the leftmost column.
 #	You may specify booleans as 0/1, no/yes, false/true, off/on (case insensitive).
-#	These get converted to 0/1 if the file is not read_only
+#	These get converted to 0/1 if the file is not read_only.
 
 
 # -- end -- << general comments and warnings >>
@@ -33,9 +30,9 @@
 # << General configuration options, especially read-only mode >>
 [config options]
 
-read_only = 1
-#	WARNING: Clearing the read_only attribute will cause Leo to remove
-#	all comments and alter order of attributes when rewriting this file!!
+read_only = 0
+#	0: Leo writes this file, clearing all comments in the process.
+#	1: Leo writes nothing to this file.
 #	Syntax errors in this file set this file to read-only.
 
 xml_version_string = UTF-8

@@ -743,6 +743,7 @@ class config:
 	def setConfigFindIvars (self,c):
 		
 		# print "setConfigFindIvars"
+	
 		self.setFindPref("batch",`c.batch_flag`)
 		self.setFindPref("ignore_case",`c.ignore_case_flag`)
 		self.setFindPref("mark_changes",`c.mark_changes_flag`)
