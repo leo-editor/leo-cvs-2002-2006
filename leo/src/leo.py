@@ -175,7 +175,7 @@ You may download Python from http://python.org/download/
         ok = g.CheckVersion(sys.version, "2.2.1")
         if not ok:
             print message
-            g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
+            g.app.gui.runAskOkDialog(None,"Python version error",message=message,text="Exit")
         return ok
     except:
         print "isValidPython: unexpected exception: g.CheckVersion"
@@ -237,11 +237,11 @@ def computeHomeDir():
     import leoGlobals as g
 
     encoding = startupEncoding()
-    dotDir = g.os_path_abspath('./',encoding)
-    home = os.getenv('HOME',default=dotDir)
-    if len(home) > 1 and home[0]=='%' and home[-1]=='%':
+    # dotDir = g.os_path_abspath('./',encoding)
+    home = os.getenv('HOME',default=None)
+    if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
 	    # Get the indirect reference to the true home.
-	    home = os.getenv(home[1:-1],default=dotDir)
+	    home = os.getenv(home[1:-1],default=None)
     
     home = g.os_path_abspath(home,encoding)
     
