@@ -658,8 +658,8 @@ class baseTangleCommands:
     
         """The main routine of tangle pass 1"""
     
+        p = p.copy() # 9/14/04
         next = p.nodeAfterTree()
-        
         while p and p != next:
             self.p = p
             self.setRootFromHeadline(p)
@@ -708,6 +708,7 @@ class baseTangleCommands:
         
         Reports on its results if report_flag is True."""
     
+        p = p.copy() # 9/14/04
         assert(p)
         any_root_flag = False
         next = p.nodeAfterTree()
@@ -897,7 +898,7 @@ class baseTangleCommands:
     
     def untangleTree(self,p,report_flag):
     
-        # g.trace(p)
+        p = p.copy() # 9/14/04
         c = self.c
         any_root_flag = False
         afterEntireTree = p.nodeAfterTree()
