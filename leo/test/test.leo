@@ -979,7 +979,7 @@
 </v>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
 <v t="ekr.20040707141957"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
@@ -1132,7 +1132,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2" a="E"><vh>Test Leo files...</vh>
+<v t="ekr.20040712101754.2"><vh>Test Leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1431,43 +1431,43 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="EM"><vh>Pmw dialog</vh>
+<v t="ekr.20041125145818.1" a="MTV"><vh>Pmw dialog</vh>
 <v t="ekr.20041127231319"><vh>To do</vh></v>
-<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
+<v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041126110158"><vh> ctor</vh>
 <v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
 <v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
-<v t="ekr.20041126113848.2" a="E"><vh>&lt;&lt; put a settingsTree in paneFrame's outline pane&gt;&gt;</vh></v>
+<v t="ekr.20041126113848.2"><vh>&lt;&lt; put a settingsTree in paneFrame's outline pane&gt;&gt;</vh></v>
 <v t="ekr.20041127132947"><vh>&lt;&lt; put setterCanvas in paneFrame's setter pane&gt;&gt;</vh></v>
 <v t="ekr.20041126133120"><vh>&lt;&lt; put a Text widget in the comment pane &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041126153101.1"><vh>createSettingsTree</vh>
-<v t="ekr.20041127055009.1" a="E"><vh>&lt;&lt; create a node p for  kind &amp; root2 &gt;&gt;</vh>
+<v t="ekr.20041127055009.1"><vh>&lt;&lt; create a node p for  kind &amp; root2 &gt;&gt;</vh>
 <v t="ekr.20041127081146"><vh>&lt;&lt; inject ivars into p.v &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20041127112925" a="E"><vh>createWidgets &amp; allies</vh>
+<v t="ekr.20041127112925"><vh>createWidgets &amp; allies</vh>
 <v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
 <v t="ekr.20041127134208.1"><vh>createBool</vh></v>
-<v t="ekr.20041127134208.2" a="EMTV"><vh>createColor</vh>
+<v t="ekr.20041127134208.2" a="M"><vh>createColor</vh>
 <v t="ekr.20041128062141"><vh>&lt;&lt; munge val and add val to colorNamesList &gt;&gt;</vh></v>
-<v t="ekr.20041128062902" a="E"><vh>&lt;&lt; create optionMenu and callback &gt;&gt;</vh></v>
+<v t="ekr.20041128062902"><vh>&lt;&lt; create optionMenu and callback &gt;&gt;</vh></v>
 <v t="ekr.20041128062902.1"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
-<v t="ekr.20041127134208.4" a="EM"><vh>createFont  (finish)</vh></v>
+<v t="ekr.20041127134208.4" a="M"><vh>createFont  (finish)</vh></v>
 <v t="ekr.20041127134208.5"><vh>createInt</vh></v>
 <v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
 <v t="ekr.20041127134208.7"><vh>createPath</vh></v>
 <v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
 <v t="ekr.20041127134208.9"><vh>createRecentFiles </vh></v>
-<v t="ekr.20041127134208.10" a="E"><vh>createShortcut </vh></v>
+<v t="ekr.20041127134208.10"><vh>createShortcut </vh></v>
 <v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
 <v t="ekr.20041128061452"><vh>createSpacerFrame</vh></v>
 <v t="ekr.20041127134613.1"><vh>createString</vh></v>
 <v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
 </v>
-<v t="ekr.20041128042051" a="EM"><vh>value handlers &amp; callbacks...</vh>
+<v t="ekr.20041128042051" a="M"><vh>value handlers &amp; callbacks...</vh>
 <v t="ekr.20041128042051.1"><vh>initValue</vh></v>
 <v t="ekr.20041128043411"><vh>traceNameVal</vh></v>
 <v t="ekr.20041128045021"><vh>def onApply</vh></v>
@@ -1482,11 +1482,11 @@
 <v t="ekr.20041126142253.1"><vh>settingsPosition</vh></v>
 <v t="ekr.20041127092231"><vh>updateComments</vh></v>
 <v t="ekr.20041127155541"><vh>updateSetterLabel</vh></v>
-<v t="ekr.20041126153101" a="E"><vh>updateSetter</vh></v>
+<v t="ekr.20041126153101"><vh>updateSetter</vh></v>
 </v>
 <v t="ekr.20041125163105.21"><vh>class settingsTree (leoTkinterTree)</vh>
 <v t="ekr.20041125163105.22"><vh>ctor</vh></v>
-<v t="ekr.20041125163105.23" a="E"><vh>Selecting &amp; editing...</vh>
+<v t="ekr.20041125163105.23"><vh>Selecting &amp; editing...</vh>
 <v t="ekr.20041125163105.24"><vh>endEditLabel</vh></v>
 <v t="ekr.20041125163105.25"><vh>editLabel</vh></v>
 <v t="ekr.20041125163105.26"><vh>tree.select</vh>
@@ -1510,7 +1510,7 @@
 <v t="ekr.20041127102844.1"><vh>ctor</vh></v>
 <v t="ekr.20041127110245"><vh>set</vh></v>
 <v t="ekr.20041127103503"><vh>visitNode</vh></v>
-<v t="ekr.20041127103503.1" a="E"><vh>kind handlers</vh>
+<v t="ekr.20041127103503.1"><vh>kind handlers</vh>
 <v t="ekr.20041127111750"><vh>Not used</vh>
 <v t="ekr.20041127103503.2"><vh>doBool</vh></v>
 <v t="ekr.20041127103503.3"><vh>doColor</vh></v>
@@ -1526,9 +1526,9 @@
 <v t="ekr.20041127103503.17"><vh>doString</vh></v>
 </v>
 <v t="ekr.20041127103503.7"><vh>doDirectory &amp; doPath</vh></v>
-<v t="ekr.20041127103503.13" a="E"><vh>doRatio</vh></v>
+<v t="ekr.20041127103503.13"><vh>doRatio</vh></v>
 <v t="ekr.20041127103503.12"><vh>doPage</vh></v>
-<v t="ekr.20041127103503.16" a="E"><vh>doRecentFiles &amp; doBodyPaneList</vh></v>
+<v t="ekr.20041127103503.16"><vh>doRecentFiles &amp; doBodyPaneList</vh></v>
 <v t="ekr.20041127113719"><vh>doShortcuts</vh></v>
 <v t="ekr.20041127103503.18"><vh>doType</vh></v>
 </v>
@@ -2154,7 +2154,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2285,7 +2285,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -13029,10 +13029,10 @@ self.setterLabel = sc.component('label')
     var = Tk.IntVar()
     var.set(val)
     
-    def callback(event=None,self=self,p=p,name=name,var=var):
+    def callback():
         val = var.get()
         val = g.choose(val,True,False)
-        # self.traceNameVal(name,val)
+        # g.trace(name,val)
         return val
         
     val = g.choose(val,True,False)
@@ -13056,8 +13056,7 @@ self.setterLabel = sc.component('label')
     
     self.colorSettingDict [munge(name)] = val
     
-    def getColorCallback (self=self,name=name):
-        munge = g.app.config.munge
+    def getColorCallback ():
         return self.colorSettingDict.get(munge(name))
 
     self.initValue(p,name,kind,val,getColorCallback)
@@ -13170,7 +13169,7 @@ self.setterLabel = sc.component('label')
     
     f = Tk.Frame(parent) # No need to pack.
     
-    def callback(event=None,self=self,p=p,name=name,var=var):
+    def callback():
         val = var.get()
         self.traceNameVal(name,val)
         return val
@@ -13282,31 +13281,27 @@ colorNamesList.insert(0,noColor)
 initVal = val
 if val is noColor: val = None</t>
 <t tx="ekr.20041128062902">optionMenu = Pmw.OptionMenu(f,items=colorNamesList,initialitem=initVal)
-
-def optionMenuCallback (newName,
-    self=self,f=f,name=name,noColor=noColor,optionMenu=optionMenu):
-
-    self.colorSettingDict[munge(name)] = g.choose(newName is noColor,None,newName)
-    menuButton = optionMenu.component('menubutton')
-    if newName is noColor:
-        newName = f.cget('background')
-    menuButton.configure(background=newName,activebackground=newName)
-
-optionMenu.configure(command=optionMenuCallback)
 optionMenu.pack(side="left",padx=2)
 
 menuButton = optionMenu.component('menubutton')
 menuButton.configure(width=20) # Constant width is good enough.
 if val:
-    menuButton.configure(background=val,activebackground=val)</t>
-<t tx="ekr.20041128062902.1">def pickerCallback (event=None,self=self,
-    color=val,f=f,name=name,optionMenu=optionMenu,parent=parent):
+    menuButton.configure(background=val,activebackground=val)
+
+# Callback uses optionMenu and menuButton.
+def optionMenuCallback (newName):
+    self.colorSettingDict[munge(name)] = g.choose(newName is noColor,None,newName)
+    if newName is noColor:
+        newName = f.cget('background')
+    menuButton.configure(background=newName,activebackground=newName)
+
+optionMenu.configure(command=optionMenuCallback)</t>
+<t tx="ekr.20041128062902.1">def pickerCallback (color=val):
 
     rgb,val = tkColorChooser.askcolor(parent=parent,color=color)
     if rgb or val:
         # g.trace(rgb,val)
         self.colorSettingDict[munge(name)] = val
-        menuButton = optionMenu.component('menubutton')
         menuButton.configure(background=val,activebackground=val,text=val)
 
 b = Tk.Button(f,text="Color Picker...",command=pickerCallback)
