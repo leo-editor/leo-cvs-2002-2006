@@ -37,119 +37,16 @@ WshShell.SendKeys("%Fe");   WScript.Sleep(1300);  #^Q
 ---end openleo.pys
 #@nonl
 #@-node:EKR.20040611081747.1:Look at windows scripting
+#@+node:ekr.20040811083522:Handle contractions properly in spell checkers
+#@-node:ekr.20040811083522:Handle contractions properly in spell checkers
 #@+node:EKR.20040607073134:Download and study wingide
 #@+node:EKR.20040607073134.1:@url http://wingide.com/
 #@-node:EKR.20040607073134.1:@url http://wingide.com/
 #@-node:EKR.20040607073134:Download and study wingide
 #@+node:EKR.20040430163619:To do: 4.2
-#@+node:ekr.20040812033107:Fix bug:  Perfect Import does not import pyrex/plex files correctly
-@nocolor
-
-One problem is that continued lines don't have to be indented!  This should be fixed asap.
-#@nonl
-#@+node:ekr.20040828161347:Report
-@killcolor
-
-https://sourceforge.net/forum/message.php?msg_id=2711908
-By: nobody
-
-import worked ok on a few files already ok since b3,
-this one doesn't import well.
-<http://users.wpi.edu/~squirrel/programs/piemenu.html>
-<http://users.wpi.edu/~squirrel/programs/piemenu.py>
-
-the methods are all in each class declaration node.
-the nodes for each method are made and marked but empty.
-same with the other 2 classes in the file.
-the generated @file had indentation errors...
-
-import to @file doesn't print status to log?
-and why must it mark each method node?
-did it know there were problems? why no errors?
-maybe a config enabled backup dir to put bak files
-if there are going to be some incomplete imports.
-
-looks like it got confused on class variables
-and some var = funct asssignments after methods.
-some got put after @others at the wrong indent.
-
-has anyone tried to import decorators?
-no time like the present...
-they import ok for a simple @memoize example.
-
-Leo 4.2 beta 3, build  1.152 , August 10, 2004
-Python 2.3.3, Tk 8.4.3, win32
-e
-#@nonl
-#@-node:ekr.20040828161347:Report
-#@-node:ekr.20040812033107:Fix bug:  Perfect Import does not import pyrex/plex files correctly
-#@+node:ekr.20040811112113:Document @test, @suite and unit-testing breakthroughs
-@nocolor
-
-Leo now makes it extremely easy to convert other scripts to unit tests.  See test.leo for complete examples.
-
-Using @test nodes
-
-- Enable the mod_scripting.py plugin. This plugin creates two buttons in the
-icon area called "run Script" and "script Button".
-
-- Start with a test script that you want to convert to a unit test. Change its
-headline from test x to @test x.
-
-- Select the node called "Do @test" in test.leo and click the scriptButton
-button. This reate a button called "Do @test".
-
-- Click on this button to run all @test and @suite nodes in the presently
-selected headline. Leo now executes the script (in the @test or @suite node!) as
-a unit test! That's all there is to it!
-
-
-Using @suite nodes
-
-Such nodes create a suite of tests. Leo executes the script in these nodes
-similar to @test nodes, but Leo assumes that the script in an @suite node will
-do the following:
-
-- Create a suite of unit tests
-- Put the suite in g.app.scriptDict["suite"]
-
-The difference between @test and @suite is:
-
-- Leo creates a unit test from script in an @test node by creating an instance of generalTestCase, a subclass of unittest.TestCase.
-- The script in an @suite node creates the test suite.
-
-@suite nodes allow us to create "legacy" unit tests simply. For example, rather than rewriting all the reformatParagraph unit tests to use @test nodes, I simply wrote an @suite node with the following body.
-
-@color
-import leoGlobals as g
-import leoTest ; reload(leoTest)
-suite = leoTest.makeReformatParagraphSuite()
-g.app.scriptDict['suite'] = suite
-@nocolor
-
-@test and @suite perfectly integrate outlines, scripting and script buttons.  This is a big step forward.
-
-Notes:
-    
-- @test nodes dramatically simplifies the test code. There is no need for
-explicit unit testing classes and methods. Nor is there any need for setUp and
-tearDown methods; scripts can use try/finally instead.
-
-- leoTest.doTests performs its own kind of setUp/tearDown code. It ensures that
-the script being executed is the presently selected node. This makes it trivial
-for a test script to find its own data: the script can just look in a sibling or
-descendent node. There is hardly any need for testUtils.findNodeAnywhere.
-leoTest.doTests also saves and restores the "changed" state of test.leo.
-
-- Test scripts can't use @others if descendent nodes hold data. In practice this
-doesn't matter. I recommend putting lengthy shared code in leoTest.py.
-#@nonl
-#@-node:ekr.20040811112113:Document @test, @suite and unit-testing breakthroughs
-#@+node:ekr.20040811083522:Handle contractions properly in spell checkers
-#@-node:ekr.20040811083522:Handle contractions properly in spell checkers
-#@+node:ekr.20040810110025:Complete all plugins
-#@-node:ekr.20040810110025:Complete all plugins
-#@+node:EKR.20040422132037:Linux bugs 3
+#@+node:ekr.20040831101039:Make sure Linux install script has Linux line endings
+#@-node:ekr.20040831101039:Make sure Linux install script has Linux line endings
+#@+node:EKR.20040422132037:Linux/Mac stuff
 @nocolor
 #@nonl
 #@+node:EKR.20040422132037.5:Backspace problems on Linux
@@ -313,7 +210,6 @@ Dan Winkler
 #@nonl
 #@-node:ekr.20040831112005.1:Report
 #@-node:ekr.20040831112005:(Fix control-v problems on the Mac)
-#@-node:EKR.20040422132037:Linux bugs 3
 #@+node:ekr.20040629110559:Cool Mac stuff
 #@+node:ekr.20040629111136:Native Max OS X Leo app
 
@@ -366,6 +262,7 @@ Guenther.
 #@+node:ekr.20040629111733.1:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
 #@-node:ekr.20040629111733.1:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
 #@-node:ekr.20040629110559:Cool Mac stuff
+#@-node:EKR.20040422132037:Linux/Mac stuff
 #@-node:EKR.20040430163619:To do: 4.2
 #@+node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
 #@+node:ekr.20040730191332:Must do...
@@ -3446,25 +3343,9 @@ def readEndNode (self,s,i,middle=False):
             old = at.t.getBody()
         else:
             old = None
-        if old and not g.app.unitTesting:
-            if at.perfectImportRoot:
-                << bump at.correctedLines and tell about the correction >>
-                p.setMarked()
-                at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
-                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-                at.c.setChanged(True)
-            else:
-                if not at.updateWarningGiven:
-                    at.updateWarningGiven = True
-                    g.es("Warning: updating changed text",color="blue")
-                #g.es("old...\n%s\n" % old)
-                #g.es("new...\n%s\n" % s)
-                # Just set the dirty bit. Ancestors will be marked dirty later.
-                at.t.setDirty()
-                if 1: # We must avoid the full setChanged logic here!
-                    c.changed = True
-                else: # Far too slow for mass changes.
-                    at.c.setChanged(True)
+        # 9/4/04: Suppress this warning for the root: @first complicates matters.
+        if old and not g.app.unitTesting and at.t != at.root.t:
+            << indicate that the node has been changed >>
         at.t.tempBodyString = s
 
     # Indicate that the tnode has been set in the derived file.
@@ -3478,6 +3359,28 @@ def readEndNode (self,s,i,middle=False):
         at.lastThinNode = at.thinNodeStack.pop()
 
     at.popSentinelStack(endNode)
+#@nonl
+#@+node:ekr.20040904081433:<< indicate that the node has been changed >>
+if at.perfectImportRoot:
+    << bump at.correctedLines and tell about the correction >>
+    # p.setMarked()
+    at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
+    at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+    at.c.setChanged(True)
+else:
+    if not at.updateWarningGiven:
+        at.updateWarningGiven = True
+        print "***",at.t,at.root.t
+        g.es("Warning: updating changed text in %s" %
+            (at.root.headString()),color="blue")
+    # g.es("old...\n%s\n" % old)
+    # g.es("new...\n%s\n" % s)
+    # Just set the dirty bit. Ancestors will be marked dirty later.
+    at.t.setDirty()
+    if 1: # We must avoid the full setChanged logic here!
+        c.changed = True
+    else: # Far too slow for mass changes.
+        at.c.setChanged(True)
 #@nonl
 #@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
 # Report the number of corrected nodes.
@@ -3508,6 +3411,7 @@ else:
     g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
 #@nonl
 #@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+#@-node:ekr.20040904081433:<< indicate that the node has been changed >>
 #@-node:ekr.20031218072017.2772:readEndNode (4.x)
 #@+node:ekr.20031218072017.1485:setTnodeText
 # This sets the text in the tnode from the given string.

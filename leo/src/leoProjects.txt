@@ -5782,6 +5782,1469 @@ def readLastDocLine (self,tag):
 #@nonl
 #@-node:ekr.20031218072017.1753:readLastDocLine
 #@-node:ekr.20040831120106:(Fixed read errors with @language html)
+#@+node:ekr.20040831113849:(Removed spurious "Warning: updating changed text" message)
+#@+node:ekr.20040831121549.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2735294
+By: lmcgign
+
+If I create an @file or @thin node, clone that node, put an
+'@first <something>' directive in it, save all changes and exit, and *then*
+open up the file in Leo again, Leo indicates there have been changes (with the
+'*' in the title bar) to the Leo file as soon as it starts up.
+
+If the node is *not* cloned, or if the node does *not* contain a *non empty*
+@first directive, this behavior does not appear.
+
+I'm running Leo 4.2 beta 3, build  1.152,
+Python 2.3.4, Tk 8.4.3, win32.
+
+-----------
+
+Small correction:
+
+If the node is an @file one the behavior appears, even if the node has *not*
+been cloned.
+
+For an @thin node, though, the node needs to be cloned for the behavior
+to appear.
+
+Leo's console window indicates a Warning line when the behavior occurs:
+
+reading: <leo_filename>
+reading: @file gratis.py
+Warning: updating changed text   <--- 
+leoConfig.txt encoding: utf-8
+
+-Martin
+#@nonl
+#@-node:ekr.20040831121549.1:Report
+#@+node:ekr.20040904080309:Notes
+@killcolor
+
+- This happens in leoPlugins.leo at present.
+
+- It happens with @file and @first, but not with @thin and @first.
+#@nonl
+#@-node:ekr.20040904080309:Notes
+#@+node:ekr.20031218072017.2772:readEndNode (4.x)
+def readEndNode (self,s,i,middle=False):
+    
+    """Handle end-of-node processing for @-others and @-ref sentinels."""
+
+    at = self ; c = self.c
+    
+    # End raw mode.
+    at.raw = False
+    
+    # Set the temporary body text.
+    s = ''.join(at.out)
+    s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
+
+    if at.importing:
+        at.t.bodyString = s
+    elif middle: 
+        pass # Middle sentinels never alter text.
+    else:
+        if hasattr(at.t,"tempBodyString") and s != at.t.tempBodyString:
+            old = at.t.tempBodyString
+        elif at.t.hasBody() and s != at.t.getBody():
+            old = at.t.getBody()
+        else:
+            old = None
+        # 9/4/04: Suppress this warning for the root: @first complicates matters.
+        if old and not g.app.unitTesting and at.t != at.root.t:
+            << indicate that the node has been changed >>
+        at.t.tempBodyString = s
+
+    # Indicate that the tnode has been set in the derived file.
+    at.t.setVisited()
+
+    # End the previous node sentinel.
+    at.indent = at.indentStack.pop()
+    at.out = at.outStack.pop()
+    at.t = at.tStack.pop()
+    if at.thinFile and not at.importing:
+        at.lastThinNode = at.thinNodeStack.pop()
+
+    at.popSentinelStack(endNode)
+#@nonl
+#@+node:ekr.20040904081433:<< indicate that the node has been changed >>
+if at.perfectImportRoot:
+    << bump at.correctedLines and tell about the correction >>
+    # p.setMarked()
+    at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
+    at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+    at.c.setChanged(True)
+else:
+    if not at.updateWarningGiven:
+        at.updateWarningGiven = True
+        print "***",at.t,at.root.t
+        g.es("Warning: updating changed text in %s" %
+            (at.root.headString()),color="blue")
+    # g.es("old...\n%s\n" % old)
+    # g.es("new...\n%s\n" % s)
+    # Just set the dirty bit. Ancestors will be marked dirty later.
+    at.t.setDirty()
+    if 1: # We must avoid the full setChanged logic here!
+        c.changed = True
+    else: # Far too slow for mass changes.
+        at.c.setChanged(True)
+#@nonl
+#@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+# Report the number of corrected nodes.
+at.correctedLines += 1
+
+found = False
+for p in at.perfectImportRoot.self_and_subtree_iter():
+    if p.v.t == at.t:
+        found = True ; break
+
+if found:
+    if 0: # Not needed: we mark all corrected nodes.
+        g.es("Correcting %s" % p.headString(),color="blue")
+    if 0: # For debugging.
+        print ; print '-' * 40
+        print "old",len(old)
+        for line in g.splitLines(old):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+        print "new",len(s)
+        for line in g.splitLines(s):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+else:
+    # This should never happen.
+    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
+#@nonl
+#@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+#@-node:ekr.20040904081433:<< indicate that the node has been changed >>
+#@-node:ekr.20031218072017.2772:readEndNode (4.x)
+#@-node:ekr.20040831113849:(Removed spurious "Warning: updating changed text" message)
+#@+node:ekr.20040901061935:(Added option to disable left click logic in outline pane)
+#@+node:ekr.20040906081644:Notes
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2706676
+By: nobody
+
+Ive downloaded 4.2B3 and really really dont want to use the left click select/expand
+anywhere Tree functionality( Ive never had a problem selecting the node I want
+:) ).  I looked in the config file and didnt see an option for turning it off.
+So do I need to hack the leo code to do this?
+
+Option name: expanded_click_area
+#@nonl
+#@-node:ekr.20040906081644:Notes
+#@+node:ekr.20040803072955.16:__init__
+def __init__(self,c,frame,canvas):
+    
+    # Init the base class.
+    leoFrame.leoTree.__init__(self,frame)
+
+    # Objects associated with this tree.
+    self.canvas = canvas
+    
+    << define drawing constants >>
+    << old ivars >>
+    << inject callbacks into the position class >>
+    
+    self.redrawing = False # Used only to disable traces.
+    self.trace = False
+    self.verbose = False
+    self.useBindtags = True
+    self.generation = 0
+    self.dragging = False
+    self.prevPositions = 0
+    self.expanded_click_area = g.app.config.getBoolWindowPref("expanded_click_area")
+    
+    self.createPermanentBindings()
+    self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
+    
+    # Keys are id's, values are unchanging positions...
+    self.ids = {}
+    self.iconIds = {}
+
+    # Lists of visible (in-use) widgets...
+    self.visibleBoxes = []
+    self.visibleClickBoxes = []
+    self.visibleIcons = []
+    self.visibleLines = []
+    self.visibleText  = {} # Keys are vnodes, values are Tk.Text widgets
+    self.visibleUserIcons = []
+
+    # Lists of free, hidden widgets...
+    self.freeBoxes = []
+    self.freeClickBoxes = []
+    self.freeIcons = []
+    self.freeLines = []
+    self.freeText = {} # Keys are vnodes, values are Tk.Text widgets
+    self.freeUserIcons = []
+#@nonl
+#@+node:ekr.20040803072955.17:<< define drawing constants >>
+self.box_padding = 5 # extra padding between box and icon
+self.box_width = 9 + self.box_padding
+self.icon_width = 20
+self.text_indent = 4 # extra padding between icon and tex
+
+self.hline_y = 7 # Vertical offset of horizontal line
+self.root_left = 7 + self.box_width
+self.root_top = 2
+
+self.default_line_height = 17 + 2 # default if can't set line_height from font.
+self.line_height = self.default_line_height
+#@nonl
+#@-node:ekr.20040803072955.17:<< define drawing constants >>
+#@+node:ekr.20040803072955.18:<< old ivars >>
+# Miscellaneous info.
+self.iconimages = {} # Image cache set by getIconImage().
+self.active = False # True if tree is active
+self._editPosition = None # Returned by leoTree.editPosition()
+self.lineyoffset = 0 # y offset for this headline.
+self.disableRedraw = False # True: reschedule a redraw for later.
+self.lastClickFrameId = None # id of last entered clickBox.
+self.lastColoredText = None # last colored text widget.
+
+# Set self.font and self.fontName.
+self.setFontFromConfig()
+
+# Drag and drop
+self.drag_p = None
+self.controlDrag = False # True: control was down when drag started.
+
+# Keep track of popup menu so we can handle behavior better on Linux Context menu
+self.popupMenu = None
+
+# Incremental redraws:
+self.allocateOnlyVisibleNodes = False # True: enable incremental redraws.
+self.prevMoveToFrac = None
+self.visibleArea = None
+self.expandedVisibleArea = None
+
+if self.allocateOnlyVisibleNodes:
+    self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw)
+#@nonl
+#@-node:ekr.20040803072955.18:<< old ivars >>
+#@+node:ekr.20040803072955.19:<< inject callbacks into the position class >>
+# The new code injects 3 callbacks for the colorizer.
+
+if not leoTkinterTree.callbacksInjected: # Class var.
+    leoTkinterTree.callbacksInjected = True
+    self.injectCallbacks()
+#@nonl
+#@-node:ekr.20040803072955.19:<< inject callbacks into the position class >>
+#@-node:ekr.20040803072955.16:__init__
+#@+node:ekr.20040803072955.20:createPermanentBindings
+def createPermanentBindings (self):
+    
+    canvas = self.canvas
+
+    if self.expanded_click_area:
+        canvas.tag_bind('clickBox','<Button-1>', self.onClickBoxClick)
+    else:
+        canvas.tag_bind('plusBox','<Button-1>',   self.onClickBoxClick)
+
+    canvas.tag_bind('iconBox','<Button-1>', self.onIconBoxClick)
+    canvas.tag_bind('iconBox','<Double-1>', self.onIconBoxDoubleClick)
+    canvas.tag_bind('iconBox','<Button-3>', self.onIconBoxRightClick)
+    canvas.tag_bind('iconBox','<B1-Motion>',            self.onDrag)
+    canvas.tag_bind('iconBox','<Any-ButtonRelease-1>',  self.onEndDrag)
+
+    if self.useBindtags: # Create a dummy widget to hold all bindings.
+        t = Tk.Text(canvas) # This _must_ be a Text widget attached to the canvas!
+        if 1: # Either way works properly.
+            t.bind("<Button-1>", self.onHeadlineClick)
+            t.bind("<Button-3>", self.onHeadlineRightClick)
+            t.bind("<Key>",      self.onHeadlineKey)
+        else:
+            t.bind("<Button-1>", self.onHeadlineClick, '+')
+            t.bind("<Button-3>", self.onHeadlineRightClick, '+')
+            t.bind("<Key>",      self.onHeadlineKey, '+')
+        t.bind("<Control-t>",self.onControlT)
+    
+        # newText() attaches these bindings to all headlines.
+        self.textBindings = t.bindtags()
+#@nonl
+#@-node:ekr.20040803072955.20:createPermanentBindings
+#@+node:ekr.20040803072955.7:newBox
+def newBox (self,p,x,y,image):
+    
+    canvas = self.canvas ; tag = "plusBox" # 9/5/04: was plugBox.
+
+    if self.freeBoxes:
+        id = self.freeBoxes.pop(0)
+        canvas.coords(id,x,y)
+        canvas.itemconfigure(id,image=image)
+    else:
+        id = canvas.create_image(x,y,image=image,tag=tag)
+        
+    if self.trace and self.verbose:
+        g.trace("%3d %3d %3d %8s" % (id,x,y,' '),p.headString(),align=-20)
+
+    assert(id not in self.visibleBoxes)
+    self.visibleBoxes.append(id)
+
+    assert(not self.ids.get(id))
+    assert(p)
+    self.ids[id] = p
+
+    return id
+#@nonl
+#@-node:ekr.20040803072955.7:newBox
+#@+node:ekr.20040803072955.37:drawClickBox
+def drawClickBox (self,p,y):
+
+    canvas = self.canvas ; h = self.line_height
+    
+    # Define a slighly larger rect to catch clicks.
+    if self.expanded_click_area:
+        id = self.newClickBox(p,0,y,1000,y+h-2)
+        
+        if 0: # A major change to the user interface.
+            << change the appearance of headlines >>
+#@nonl
+#@+node:ekr.20040803072955.38:<< change the appearance of headlines >>
+
+# Define a slighly smaller rect to colorize.
+color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
+
+# Color the click box or the headline
+def enterRect(event,id=color_rect,p=p,t=self.lastText):
+    if 1: # Color or underline the headline
+        t2 = self.lastColoredText
+        if t2: # decolor the old headline.
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # decolor
+                t2.configure(background="white")
+        if t and p != self.editPosition():
+            if 1: # underline
+                t.tag_add('underline','1.0','end')
+                t.tag_configure('underline',underline=True)
+            else: # color
+                t.configure(background="LightSteelBlue1")
+            self.lastColoredText = t
+        else: self.lastColoredText = None
+    else: # Color the click box.
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+
+bind_id = self.canvas.tag_bind(click_rect, "<Enter>", enterRect) # , '+')
+self.tagBindings.append((click_rect,bind_id,"<Enter>"),)
+#@nonl
+#@-node:ekr.20040803072955.38:<< change the appearance of headlines >>
+#@-node:ekr.20040803072955.37:drawClickBox
+#@-node:ekr.20040901061935:(Added option to disable left click logic in outline pane)
+#@+node:ekr.20040812033107:(Fix bugs in perfect import)  *** Disabled perfect import
+@nocolor
+
+One problem is that continued lines don't have to be indented!  This should be fixed asap.
+
+@color
+#@nonl
+#@+node:ekr.20040828161347:Report
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=2711908
+By: nobody
+
+import worked ok on a few files already ok since b3,
+this one doesn't import well.
+<http://users.wpi.edu/~squirrel/programs/piemenu.html>
+<http://users.wpi.edu/~squirrel/programs/piemenu.py>
+
+the methods are all in each class declaration node.
+the nodes for each method are made and marked but empty.
+same with the other 2 classes in the file.
+the generated @file had indentation errors...
+
+import to @file doesn't print status to log?
+and why must it mark each method node?
+did it know there were problems? why no errors?
+maybe a config enabled backup dir to put bak files
+if there are going to be some incomplete imports.
+
+looks like it got confused on class variables
+and some var = funct asssignments after methods.
+some got put after @others at the wrong indent.
+
+has anyone tried to import decorators?
+no time like the present...
+they import ok for a simple @memoize example.
+
+Leo 4.2 beta 3, build  1.152 , August 10, 2004
+Python 2.3.3, Tk 8.4.3, win32
+e
+#@nonl
+#@-node:ekr.20040828161347:Report
+#@+node:ekr.20040907083404:Notes
+@killcolor
+
+A file containing tabs generates diffs for every line, which means that perfect import is totally confused.
+
+I suppose that if perfect import is in effect then maybe we should leave whitespace alone, regardless of tab setting...
+
+Hmmm...
+#@nonl
+#@-node:ekr.20040907083404:Notes
+#@+node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
+import difflib,shutil
+
+class mulderUpdateAlgorithm:
+    
+    """A class to update derived files using
+    diffs in files without sentinels.
+    """
+    
+    @others
+    
+def doMulderUpdateAlgorithm(sourcefilename,targetfilename):
+
+    mu = mulderUpdateAlgorithm()
+
+    mu.pull_source(sourcefilename,targetfilename)
+    mu.copy_time(targetfilename,sourcefilename)
+#@nonl
+#@+node:EKR.20040504150046.3:__init__
+def __init__ (self,testing=False,verbose=False):
+    
+    self.testing = testing
+    self.verbose = False
+    self.do_backups = False
+#@nonl
+#@-node:EKR.20040504150046.3:__init__
+#@+node:EKR.20040504150046.9:copy_sentinels
+@ This script retains _all_ sentinels.  If lines are replaced, or deleted,
+we restore deleted sentinel lines by checking for gaps in the mapping.
+@c
+
+def copy_sentinels (self,write_lines,fat_lines,fat_pos,mapping,startline,endline):
+    """
+    
+    Copy sentinel lines from fat_lines to write_lines.
+
+    Copy all sentinels _after_ the current reader postion up to,
+    but not including, mapping[endline].
+
+    """
+
+    j_last = mapping[startline]
+    i = startline + 1
+    while i <= endline:
+        j = mapping[i]
+        if j_last + 1 != j:
+            fat_pos = j_last + 1
+            # Copy the deleted sentinels that comprise the gap.
+            while fat_pos < j:
+                line = fat_lines[fat_pos]
+                write_lines.append(line)
+                if self.testing and self.verbose: print "Copy sentinel:",fat_pos,line,
+                fat_pos += 1
+        j_last = j ; i += 1
+
+    fat_pos = mapping[endline]
+    return fat_pos
+#@nonl
+#@-node:EKR.20040504150046.9:copy_sentinels
+#@+node:EKR.20040504155109:copy_time
+def copy_time(self,sourcefilename,targetfilename):
+    
+    """
+    Set the target file's modification time to
+    that of the source file.
+    """
+
+    st = os.stat(sourcefilename)
+
+    if hasattr(os, 'utime'):
+        os.utime(targetfilename, (st.st_atime, st.st_mtime))
+    elif hasattr(os, 'mtime'):
+        os.mtime(targetfilename, st.st_mtime)
+    else:
+        g.trace("Can not set modification time")
+#@nonl
+#@-node:EKR.20040504155109:copy_time
+#@+node:EKR.20040504150046.6:create_mapping
+def create_mapping (self,lines,delims):
+    """
+
+    'lines' is a list of lines of a file with sentinels.
+ 
+    Returns:
+
+    result: lines with all sentinels removed.
+
+    mapping: a list such that result[mapping[i]] == lines[i]
+    for all i in range(len(result))
+
+    """
+    
+    if not lines:
+        return [],[]
+
+    # Create mapping and set i to the index of the last non-sentinel line.
+    mapping = []
+    for i in xrange(len(lines)):
+        if not g.is_sentinel(lines[i],delims):
+            mapping.append(i)
+
+    # Create a last mapping entry for copy_sentinels.
+    mapping.append(i)
+    
+    # Use removeSentinelsFromLines to handle @nonl properly.
+    stripped_lines = self.removeSentinelsFromLines(lines,delims)
+
+    return stripped_lines, mapping
+#@nonl
+#@-node:EKR.20040504150046.6:create_mapping
+#@+node:EKR.20040505080156:Get or remove sentinel lines
+# These routines originally were part of push_filter & push_filter_lines.
+#@nonl
+#@+node:EKR.20040505081121:separateSentinelsFromFile/Lines
+def separateSentinelsFromFile (self,filename):
+    
+    """Separate the lines of the file into a tuple of two lists,
+    containing the sentinel and non-sentinel lines of the file."""
+    
+    lines = file(filename).readlines()
+    delims = g.comment_delims_from_extension(filename)
+    
+    return self.separateSentinelsFromLines(lines,delims)
+    
+def separateSentinelsFromLines (self,lines,delims):
+    
+    """Separate lines (a list of lines) into a tuple of two lists,
+    containing the sentinel and non-sentinel lines of the original list."""
+    
+    strippedLines = self.removeSentinelsFromLines(lines,delims)
+    sentinelLines = self.getSentinelsFromLines(lines,delims)
+    
+    return strippedLines,sentinelLines
+#@nonl
+#@-node:EKR.20040505081121:separateSentinelsFromFile/Lines
+#@+node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
+def removeSentinelsFromFile (self,filename):
+    
+    """Return a copy of file with all sentinels removed."""
+    
+    lines = file(filename).readlines()
+    delims = g.comment_delims_from_extension(filename)
+    
+    return removeSentinelsFromLines(lines,delims)
+    
+def removeSentinelsFromLines (self,lines,delims):
+
+    """Return a copy of lines with all sentinels removed."""
+    
+    delim1,delim2,delim3 = delims
+    result = [] ; last_nosent_i = -1
+    for i in xrange(len(lines)):
+        if not g.is_sentinel(lines[i],delims):
+            result.append(lines[i])
+            last_nosent_i = i
+    << remove the newline from result[-1] if line[i] is followed by @nonl >>
+    return result
+#@nonl
+#@+node:ekr.20040716105102:<< remove the newline from result[-1] if line[i] is followed by @nonl >>
+i = last_nosent_i
+
+if i + 1 < len(lines):
+
+    line = lines[i+1]
+    j = g.skip_ws(line,0)
+
+    if match(line,j,delim1):
+        j += len(delim1)
+
+        if g.match(line,j,"@nonl"):
+            line = lines[i]
+            if line[-1] == '\n':
+                assert(result[-1] == line)
+                result[-1] = line[:-1]
+#@nonl
+#@-node:ekr.20040716105102:<< remove the newline from result[-1] if line[i] is followed by @nonl >>
+#@-node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
+#@+node:EKR.20040505080156.3:getSentinelsFromFile/Lines
+def getSentinelsFromFile (self,filename,delims):
+    
+    """Returns all sentinels lines in a file."""
+    
+    lines = file(filename).readlines()
+    delims = g.comment_delims_from_extension(filename)
+
+    return getSentinelsFromLines(lines,delims)
+    
+def getSentinelsFromLines (self,lines,delims):
+    
+    """Returns all sentinels lines in lines."""
+    
+    return [line for line in lines if g.is_sentinel(line,delims)]
+#@nonl
+#@-node:EKR.20040505080156.3:getSentinelsFromFile/Lines
+#@-node:EKR.20040505080156:Get or remove sentinel lines
+#@+node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
+def propagateDiffsToSentinelsFile(self,sourcefilename,targetfilename):
+    
+    << init propagateDiffsToSentinelsFile vars >>
+    
+    write_lines = self.propagateDiffsToSentinelsLines(
+        i_lines,j_lines,fat_lines,mapping)
+        
+    # Update _source_ file if it is not the same as write_lines.
+    written = self.write_if_changed(write_lines,targetfilename,sourcefilename)
+    if written:
+        << paranoia check>>
+#@nonl
+#@+node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
+# Get the sentinel comment delims.
+delims = self.comment_delims_from_extension(sourcefilename)
+if not delims:
+    return
+
+try:
+    # Create the readers.
+    sfile = file(sourcefilename)
+    tfile = file(targetfilename)
+    
+    fat_lines = sfile.readlines() # Contains sentinels.
+    j_lines   = tfile.readlines() # No sentinels.
+    
+    i_lines,mapping = self.create_mapping(fat_lines,delims)
+    
+    sfile.close()
+    tfile.close()
+except:
+    g.es_exception("can not open files")
+    return
+#@nonl
+#@-node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
+#@+node:EKR.20040504150046.12:<<paranoia check>>
+# Check that 'push' will re-create the changed file.
+strippedLines,sentinel_lines = self.separateSentinelsFromFile(sourcefilename)
+
+if strippedLines != j_lines:
+    self.report_mismatch(strippedLines, j_lines,
+        "Propagating diffs did not work as expected",
+        "Content of sourcefile:",
+        "Content of modified file:")
+
+# Check that no sentinels got lost.
+fat_sentinel_lines = self.getSentinelsFromLines(fat_lines,delims)
+
+if sentinel_lines != fat_sentinel_lines:
+    self.report_mismatch(sentinel_lines,fat_sentinel_lines,
+        "Propagating diffs modified sentinel lines:",
+        "Current sentinel lines:",
+        "Old sentinel lines:")
+#@nonl
+#@-node:EKR.20040504150046.12:<<paranoia check>>
+#@-node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
+#@+node:EKR.20040504145804.1:propagateDiffsToSentinelsLines (called from perfect import)
+def propagateDiffsToSentinelsLines (self,
+    i_lines,j_lines,fat_lines,mapping):
+    
+    """Compare the 'i_lines' with 'j_lines' and propagate the diffs back into
+    'write_lines' making sure that all sentinels of 'fat_lines' are copied.
+
+    i/j_lines have no sentinels.  fat_lines does."""
+
+    << init propagateDiffsToSentinelsLines vars >>
+    << copy the sentinels at the beginning of the file >>
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if testing:
+            if verbose: print
+            print "Opcode %7s %3d %3d %3d %3d" % (tag,i1,i2,j1,j2)
+            if verbose: print
+        << update and check the loop invariant >>
+        if tag == 'equal':
+            << handle 'equal' tag >>
+        elif tag == 'replace':
+            << handle 'replace' tag >>
+        elif tag == 'delete':
+            << handle 'delete' tag >>
+        elif tag == 'insert':
+            << handle 'insert' tag >>
+        else: assert 0,"bad tag"
+    << copy the sentinels at the end of the file >>
+    return write_lines
+#@nonl
+#@+node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
+# Indices into i_lines, j_lines & fat_lines.
+i_pos = j_pos = fat_pos = 0
+
+# These vars check that all ranges returned by get_opcodes() are contiguous.
+i2_old = j2_old = -1
+
+# Create the output lines.
+write_lines = []
+
+matcher = difflib.SequenceMatcher(None,i_lines,j_lines)
+
+testing = self.testing
+verbose = self.verbose
+#@nonl
+#@-node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
+#@+node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
+while fat_pos < mapping[0]:
+
+    line = fat_lines[fat_pos]
+    write_lines.append(line)
+    if testing:
+        print "copy initial line",fat_pos,line,
+    fat_pos += 1
+#@-node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
+#@+node:EKR.20040504145804.4:<< update and check the loop invariant>>
+# We need the ranges returned by get_opcodes to completely cover the source lines being compared.
+# We also need the ranges not to overlap.
+
+assert(i2_old in (-1,i1))
+assert(j2_old in (-1,j1))
+
+i2_old = i2 ; j2_old = j2
+
+# Check the loop invariants.
+assert i_pos == i1
+assert j_pos == j1
+assert fat_pos == mapping[i1]
+
+if 0: # not yet.
+    if testing: # A bit costly.
+        t_sourcelines,t_sentinel_lines = push_filter_lines(write_lines, delims)
+        # Check that we have all the modifications so far.
+        assert t_sourcelines == j_lines[:j1],"t_sourcelines == j_lines[:j1]"
+        # Check that we kept all sentinels so far.
+        assert t_sentinel_lines == push_filter_lines(fat_lines[:fat_pos], delims)[1]
+#@nonl
+#@-node:EKR.20040504145804.4:<< update and check the loop invariant>>
+#@+node:EKR.20040504145804.5:<< handle 'equal' tag >>
+# Copy the lines, including sentinels.
+while fat_pos <= mapping[i2-1]:
+    line = fat_lines[fat_pos]
+    if 0: # too verbose.
+        if testing: print "Equal: copying ", line,
+    write_lines.append(line)
+    fat_pos += 1
+
+if testing and verbose:
+    print "Equal: synch i", i_pos,i2
+    print "Equal: synch j", j_pos,j2
+
+i_pos = i2
+j_pos = j2
+
+# Copy the sentinels which might follow the lines.       
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i2-1,i2)
+#@nonl
+#@-node:EKR.20040504145804.5:<< handle 'equal' tag >>
+#@+node:EKR.20040504145804.6:<< handle 'replace' tag >>
+@ Replace lines that may span sentinels.
+
+For now, we put all the new contents after the first sentinel.
+
+A more complex approach: run the difflib across the different lines and try to
+construct a mapping changed line => orignal line.
+@c
+
+while j_pos < j2:
+    line = j_lines[j_pos]
+    if testing:
+        print "Replace i:",i_pos,repr(i_lines[i_pos])
+        print "Replace j:",j_pos,repr(line)
+        i_pos += 1
+
+    write_lines.append(line)
+    j_pos += 1
+
+i_pos = i2
+
+# Copy the sentinels which might be between the changed code.         
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
+#@nonl
+#@-node:EKR.20040504145804.6:<< handle 'replace' tag >>
+#@+node:EKR.20040504145804.7:<< handle 'delete' tag >>
+if testing and verbose:
+    print "delete: i",i_pos,i1
+    print "delete: j",j_pos,j1
+
+j_pos = j2
+i_pos = i2
+
+# Restore any deleted sentinels.
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
+#@nonl
+#@-node:EKR.20040504145804.7:<< handle 'delete' tag >>
+#@+node:EKR.20040504145804.8:<< handle 'insert' tag >>
+while j_pos < j2:
+    line = j_lines[j_pos]
+    if testing: print "Insert:", line,
+    write_lines.append(line)
+    j_pos += 1
+
+# The input streams are already in synch.
+#@nonl
+#@-node:EKR.20040504145804.8:<< handle 'insert' tag >>
+#@+node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
+while fat_pos < len(fat_lines):
+
+    line = fat_lines[fat_pos]
+    write_lines.append(line)
+    if testing:
+        print "Append last line",line
+    fat_pos += 1
+#@-node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
+#@-node:EKR.20040504145804.1:propagateDiffsToSentinelsLines (called from perfect import)
+#@+node:EKR.20040504150046.5:report_mismatch
+def report_mismatch (self,lines1,lines2,message,lines1_message,lines2_message):
+
+    """
+    Generate a report when something goes wrong.
+    """
+
+    print '='*20
+    print message
+    
+    if 0:
+        print lines1_message
+        print '-'*20
+        for line in lines1:
+          print line,
+         
+        print '='*20
+    
+        print lines2_message
+        print '-'*20
+        for line in lines2:
+            print line,
+#@nonl
+#@-node:EKR.20040504150046.5:report_mismatch
+#@+node:ekr.20040718101315:stripWhitespaceFromBlankLines(before_lines)
+def stripWhitespaceFromBlankLines (self,lines):
+    
+    # All backslashes must be doubled.
+
+    """Strip blanks and tabs from lines containing only blanks and tabs.
+    
+    >>> import leoGlobals as g
+    >>> s = "a\\n \\t\\n\\t\\t \\t\\nb"
+    >>> theLines = g.splitLines(s)
+    >>> theLines
+    ['a\\n', ' \\t\\n', '\\t\\t \\t\\n', 'b']
+    >>> g.mulderUpdateAlgorithm().stripWhitespaceFromBlankLines(theLines)
+    ['a\\n', '\\n', '\\n', 'b']
+    """
+
+    for i in xrange(len(lines)):
+        stripped_line = lines[i].lstrip(" \t")
+        if stripped_line in ('\n',''):
+            lines[i] = stripped_line
+            
+    return lines
+#@nonl
+#@-node:ekr.20040718101315:stripWhitespaceFromBlankLines(before_lines)
+#@+node:EKR.20040504160820:write_if_changed
+def write_if_changed(self,lines,sourcefilename,targetfilename):
+    """
+    
+    Replaces target file if it is not the same as 'lines',
+    and makes the modification date of target file the same as the source file.
+    
+    Optionally backs up the overwritten file.
+
+    """
+    
+    copy = not os.path.exists(targetfilename) or lines != file(targetfilename).readlines()
+        
+    if self.testing:
+        if copy:
+            print "Writing",targetfilename,"without sentinals"
+        else:
+            print "Files are identical"
+
+    if copy:
+        if self.do_backups:
+            << make backup file >>
+        outfile = open(targetfilename, "w")
+        for line in lines:
+            outfile.write(line)
+        outfile.close()
+        self.copy_time(sourcefilename,targetfilename)
+    return copy
+#@+node:EKR.20040504160820.1:<< make backup file >>
+if os.path.exists(targetfilename):
+    count = 0
+    backupname = "%s.~%s~" % (targetfilename,count)
+    while os.path.exists(backupname):
+        count += 1
+        backupname = "%s.~%s~" % (targetfilename,count)
+    os.rename(targetfilename, backupname)
+    if testing:
+        print "backup file in ", backupname
+#@nonl
+#@-node:EKR.20040504160820.1:<< make backup file >>
+#@-node:EKR.20040504160820:write_if_changed
+#@-node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
+#@+node:EKR.20040506075328.2:perfectImport
+def perfectImport (self,fileName,p,testing=False,verbose=False,convertBlankLines=True,verify=True):
+    
+    << about this algorithm >>
+    c = p.c ; root = p.copy()
+    df = c.atFileCommands.new_df
+    if testing:
+        << clear all dirty bits >>
+    << Assign file indices >>
+    << Write root's tree to to string s >>
+
+    # Set up the data for the algorithm.
+    mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
+    delims = g.comment_delims_from_extension(fileName)
+    fat_lines = g.splitLines(s) # Keep the line endings.
+    i_lines,mapping = mu.create_mapping(fat_lines,delims)
+    j_lines = file(fileName).readlines()
+    
+    # Correct write_lines using the algorihm.
+    if i_lines != j_lines:
+        if verbose:
+            g.es("Running Perfect Import",color="blue")
+        write_lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
+        if 1: # For testing.
+            << put the corrected fat lines in a new node >>
+        << correct root's tree using write_lines >>
+    if verify:
+        << verify that writing the tree would produce the original file >>
+#@nonl
+#@+node:ekr.20040717112739:<< about this algorithm >>
+@nocolor
+@
+
+This algorithm corrects the result of an Import To @file command so that it is guaranteed that the result of writing the imported file will be identical to the original file except for any sentinels that have been inserted.
+
+On entry, p points to the newly imported outline.
+
+We correct the outline by applying Bernhard Mulder's algorithm.
+
+1.  We use the atFile.write code to write the newly imported outline to a string s.  This string contains represents a thin derived file, so it can be used to recreate then entire outline structure without any other information.
+
+Splitting s into lines creates the fat_lines argument to mu methods.
+
+2. We make corrections to fat_lines using Mulder's algorithm.  The corrected fat_lines represents the corrected outline.  To do this, we set the arguments as follows:
+
+- i_lines: fat_lines stripped of sentinels
+- j_lines to the lines of the original imported file.
+
+The algorithm updates fat_lines using diffs between i_lines and j_lines.
+
+3. Mulder's algorithm doesn't specify which nodes have been changed.  In fact, it Mulder's algorithm doesn't really understand nodes at all.  Therefore, if we want to mark changed nodes we do so by comparing the original version of the imported outline with the corrected version of the outline.
+#@nonl
+#@-node:ekr.20040717112739:<< about this algorithm >>
+#@+node:ekr.20040716065356:<< clear all dirty bits >>
+for p2 in p.self_and_subtree_iter():
+    p2.clearDirty()
+#@nonl
+#@-node:ekr.20040716065356:<< clear all dirty bits >>
+#@+node:ekr.20040716064333:<< Assign file indices  >>
+nodeIndices = g.app.nodeIndices
+
+nodeIndices.setTimestamp()
+
+for p2 in root.self_and_subtree_iter():
+    try: # Will fail for None or any pre 4.1 file index.
+        id,time,n = p2.v.t.fileIndex
+    except TypeError:
+        p2.v.t.fileIndex = nodeIndices.getNewIndex()
+#@nonl
+#@-node:ekr.20040716064333:<< Assign file indices  >>
+#@+node:ekr.20040716064333.1:<< Write root's tree to to string s >>
+df.write(root,thinFile=True,toString=True)
+s = df.stringOutput
+if not s: return
+#@-node:ekr.20040716064333.1:<< Write root's tree to to string s >>
+#@+node:ekr.20040717132539:<< put the corrected fat lines in a new node >>
+write_lines_node = root.insertAfter()
+write_lines_node.initHeadString("write_lines")
+s = ''.join(write_lines)
+write_lines_node.scriptSetBodyString(s,encoding=g.app.tkEncoding)
+#@nonl
+#@-node:ekr.20040717132539:<< put the corrected fat lines in a new node >>
+#@+node:ekr.20040717113036:<< correct root's tree using write_lines >>
+@ Notes:
+1. This code must overwrite the newly-imported tree because the gnx's in
+write_lines refer to those nodes.
+
+2. The code in readEndNode now reports when nodes change during importing. This
+code also marks changed nodes.
+@c
+
+try:
+    df.correctedLines = 0
+    df.targetFileName = "<perfectImport string-file>"
+    df.inputFile = fo = g.fileLikeObject()
+    df.file = fo # Strange, that this is needed.  Should be cleaned up.
+    for line in write_lines:
+        fo.write(line)
+    firstLines,junk = c.atFileCommands.scanHeader(fo,df.targetFileName)
+    # To do: pass params to readEndNode.
+    df.readOpenFile(root,fo,firstLines,perfectImportRoot=root)
+    n = df.correctedLines
+    if verbose:
+        g.es("%d marked node%s corrected" % (n,g.choose(n==1,'','s')),color="blue")
+except:
+    g.es("Exception in Perfect Import",color="red")
+    g.es_exception()
+    s = None
+#@nonl
+#@-node:ekr.20040717113036:<< correct root's tree using write_lines >>
+#@+node:ekr.20040718035658:<< verify that writing the tree would produce the original file >>
+try:
+    # Read the original file into before_lines.
+    before = file(fileName)
+    before_lines = before.readlines()
+    before.close()
+    
+    # Write the tree into after_lines.
+    df.write(root,thinFile=True,toString=True)
+    after_lines1 = g.splitLines(df.stringOutput)
+    
+    # Strip sentinels from after_lines and compare.
+    after_lines = mu.removeSentinelsFromLines(after_lines1,delims)
+    
+    # A major kludge: Leo can not represent unindented blank lines in indented nodes!
+    # We ignore the problem here by stripping whitespace from blank lines.
+    # We shall need output options to handle such lines.
+    if convertBlankLines:
+        mu.stripWhitespaceFromBlankLines(before_lines)
+        mu.stripWhitespaceFromBlankLines(after_lines)
+    if before_lines == after_lines:
+        if verbose:
+            g.es("Perfect Import verified",color="blue")
+    else:
+        leoTest.fail()
+        if verbose:
+            g.es("Perfect Import failed verification test!",color="red")
+            << dump the files >>
+except IOError:
+    g.es("Can not reopen %s!" % fileName,color="red")
+    leoTest.fail()
+#@nonl
+#@+node:ekr.20040718045423:<< dump the files >>
+print len(before_lines),len(after_lines)
+
+if len(before_lines)==len(after_lines):
+    for i in xrange(len(before_lines)):
+        extra = 3
+        if before_lines[i] != after_lines[i]:
+            j = max(0,i-extra)
+            print '-' * 20
+            while j < i + extra + 1:
+                leader = g.choose(i == j,"* ","  ")
+                print "%s%3d" % (leader,j), repr(before_lines[j])
+                print "%s%3d" % (leader,j), repr(after_lines[j])
+                j += 1
+else:
+    for i in xrange(min(len(before_lines),len(after_lines))):
+        if before_lines[i] != after_lines[i]:
+            extra = 5
+            print "first mismatch at line %d" % i
+            print "printing %d lines after mismatch" % extra
+            print "before..."
+            for j in xrange(i+1+extra):
+                print "%3d" % j, repr(before_lines[j])
+            print
+            print "after..."
+            for k in xrange(1+extra):
+                print "%3d" % (i+k), repr(after_lines[i+k])
+            print
+            print "with sentinels"
+            j = 0 ; k = 0
+            while k < i + 1 + extra:
+                print "%3d" % k,repr(after_lines1[j])
+                if not g.is_sentinel(after_lines1[j],delims):
+                    k += 1
+                j += 1
+            break
+#@nonl
+#@-node:ekr.20040718045423:<< dump the files >>
+#@-node:ekr.20040718035658:<< verify that writing the tree would produce the original file >>
+#@-node:EKR.20040506075328.2:perfectImport
+#@+node:ekr.20031218072017.3212:importFilesCommand
+def importFilesCommand (self,files,treeType,
+    perfectImport=True,testing=False,verbose=False):
+
+    c = self.c
+    if c == None: return
+    v = current = c.currentVnode()
+    if current == None: return
+    if len(files) < 1: return
+    self.treeType = treeType
+    c.beginUpdate()
+    if 1: # range of update...
+        if len(files) == 2:
+            << Create a parent for two files having a common prefix >>
+        for fileName in files:
+            v = self.createOutline(fileName,current)
+            if v: # createOutline may fail.
+                perfectImport = False ###
+                testing = True; verbose = True
+                if perfectImport and treeType == "@file": # Can't correct @root trees.
+                    self.perfectImport(fileName,v,testing=testing,verbose=verbose,verify=False)
+                else:
+                    g.es("imported " + fileName,color="blue")
+                v.contract()
+                v.setDirty()
+                c.setChanged(True)
+        c.validateOutline()
+        current.expand()
+    c.endUpdate()
+    c.selectVnode(current)
+#@nonl
+#@+node:ekr.20031218072017.3213:<< Create a parent for two files having a common prefix >>
+@ The two filenames have a common prefix everything before the last period is the same.  For example, x.h and x.cpp.
+@c
+
+name0 = files[0]
+name1 = files[1]
+prefix0, junk = g.os_path_splitext(name0)
+prefix1, junk = g.os_path_splitext(name1)
+if len(prefix0) > 0 and prefix0 == prefix1:
+    current = current.insertAsLastChild()
+    junk, nameExt = g.os_path_split(prefix1)
+    name,ext = g.os_path_splitext(prefix1)
+    current.initHeadString(name)
+#@nonl
+#@-node:ekr.20031218072017.3213:<< Create a parent for two files having a common prefix >>
+#@-node:ekr.20031218072017.3212:importFilesCommand
+#@+node:ekr.20031218072017.3319:undentBody
+# We look at the first line to determine how much leading whitespace to delete.
+
+def undentBody (self,s):
+
+    """Removes extra leading indentation from all lines."""
+
+    # g.trace(s)
+    c = self.c
+    i = 0 ; result = ""
+    # Copy an @code line as is.
+    if g.match(s,i,"@code"):
+        j = i ; i = g.skip_line(s,i) # don't use get_line: it is only for dumping.
+        result += s[j:i]
+    # Calculate the amount to be removed from each line.
+    undent = self.getLeadingIndent(s,i)
+    if undent == 0: return s
+    while i < len(s):
+        j = i ; i = g.skip_line(s,i) # don't use get_line: it is only for dumping.
+        line = s[j:i]
+        # g.trace(line)
+        line = g.removeLeadingWhitespace(line,undent,c.tab_width)
+        result += line
+    return result
+#@nonl
+#@-node:ekr.20031218072017.3319:undentBody
+#@+node:ekr.20031218072017.3202:removeLeadingWhitespace
+# Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
+
+def removeLeadingWhitespace (s,first_ws,tab_width):
+
+    j = 0 ; ws = 0
+    for ch in s:
+        if ws >= first_ws:
+            break
+        elif ch == ' ':
+            j += 1 ; ws += 1
+        elif ch == '\t':
+            j += 1 ; ws += (abs(tab_width) - (ws % abs(tab_width)))
+        else: break
+    if j > 0:
+        s = s[j:]
+    return s
+#@nonl
+#@-node:ekr.20031218072017.3202:removeLeadingWhitespace
+#@+node:ekr.20031218072017.2256:Python scanners
+#@+node:ekr.20031218072017.2257:scanPythonClass
+def scanPythonClass (self,s,i,start,parent):
+
+    """Creates a child node c of parent for the class, and children of c for each def in the class."""
+
+    # g.trace(g.get_line(s,i))
+    classIndent = self.getLeadingIndent(s,i)
+    << set classname and headline, or return i >>
+    i = g.skip_line(s,i) # Skip the class line.
+    << create class_vnode >>
+    savedMethodName = self.methodName
+    self.methodName = headline
+    # Create a node for leading declarations of the class.
+    i = self.scanPythonDecls(s,i,class_vnode,classIndent,indent_parent_ref_flag=True)
+    << create nodes for all defs of the class >>
+    << append any other class material >>
+    self.methodName = savedMethodName
+    return i
+#@+node:ekr.20031218072017.2258:<< set classname and headline, or return i >>
+# Skip to the class name.
+i = g.skip_ws(s,i)
+i = g.skip_c_id(s,i) # skip "class"
+i = g.skip_ws_and_nl(s,i)
+if i < len(s) and g.is_c_id(s[i]):
+    j = i ; i = g.skip_c_id(s,i)
+    classname = s[j:i]
+    headline = "class " + classname
+else:
+    return i
+#@nonl
+#@-node:ekr.20031218072017.2258:<< set classname and headline, or return i >>
+#@+node:ekr.20031218072017.2259:<< create class_vnode  >>
+# Create the section name using the old value of self.methodName.
+if  self.treeType == "@file":
+    prefix = ""
+else:
+    prefix = g.angleBrackets(" " + self.methodName + " methods ") + "=\n\n"
+    self.methodsSeen = True
+
+# i points just after the class line.
+
+# Add a docstring to the class node.
+docStringSeen = False
+j = g.skip_ws_and_nl(s,i)
+if g.match(s,j,'"""') or g.match(s,j,"'''"):
+    j = g.skip_python_string(s,j)
+    if j != len(s): # No scanning error.
+        i = j ; docStringSeen = True
+
+body = s[start:i]
+body = self.undentBody(body)
+if docStringSeen: body = body + '\n'
+class_vnode = self.createHeadline(parent,prefix + body,headline)
+#@nonl
+#@-node:ekr.20031218072017.2259:<< create class_vnode  >>
+#@+node:ekr.20031218072017.2260:<< create nodes for all defs of the class >>
+indent =  self.getLeadingIndent(s,i)
+start = i = g.skip_blank_lines(s,i)
+parent_vnode = None # 7/6/02
+while i < len(s) and indent > classIndent:
+    progress = i
+    if g.is_nl(s,i):
+        backslashNewline = i > 0 and g.match(s,i-1,"\\\n")
+        j = g.skip_nl(s,i)
+        if not backslashNewline:
+            indent = self.getLeadingIndent(s,j)
+            if indent > classIndent: i = j
+            else: break
+        else: i = j
+    elif g.match_c_word(s,i,"def"):
+        if not parent_vnode:
+            << create parent_vnode >>
+        i = start = self.scanPythonDef(s,i,start,parent_vnode)
+        indent = self.getLeadingIndent(s,i)
+    elif g.match_c_word(s,i,"class"):
+        if not parent_vnode:
+            << create parent_vnode >>
+        i = start = self.scanPythonClass(s,i,start,parent_vnode)
+        indent = self.getLeadingIndent(s,i)
+    elif s[i] == '#': i = g.skip_to_end_of_line(s,i)
+    elif s[i] == '"' or s[i] == '\'': i = g.skip_python_string(s,i)
+    else: i += 1
+    assert(progress < i)
+#@nonl
+#@+node:ekr.20031218072017.2261:<< create parent_vnode >>
+# This must be done after the declaration reference is generated.
+if self.treeType == "@file":
+    class_vnode.appendStringToBody("\t@others\n")
+else:
+    ref = g.angleBrackets(" class " + classname + " methods ")
+    class_vnode.appendStringToBody("\t" + ref + "\n\n")
+parent_vnode = class_vnode
+#@nonl
+#@-node:ekr.20031218072017.2261:<< create parent_vnode >>
+#@-node:ekr.20031218072017.2260:<< create nodes for all defs of the class >>
+#@+node:ekr.20031218072017.2262:<< append any other class material >>
+s2 = s[start:i]
+if s2:
+    class_vnode.appendStringToBody(s2)
+#@nonl
+#@-node:ekr.20031218072017.2262:<< append any other class material >>
+#@-node:ekr.20031218072017.2257:scanPythonClass
+#@+node:ekr.20031218072017.2263:scanPythonDef
+def scanPythonDef (self,s,i,start,parent):
+
+    """Creates a node of parent for the def."""
+
+    # g.trace(g.get_line(s,i))
+    << set headline or return i >>
+    << skip the Python def >>
+    # Create the def node.
+    savedMethodName = self.methodName
+    self.methodName = headline
+    << Create def node >>
+    self.methodName = savedMethodName
+    return i
+#@+node:ekr.20031218072017.2264:<< set headline or return i >>
+i = g.skip_ws(s,i)
+i = g.skip_c_id(s,i) # Skip the "def"
+i = g.skip_ws_and_nl(s,i)
+if i < len(s) and g.is_c_id(s[i]):
+    j = i ; i = g.skip_c_id(s,i)
+    headline = s[j:i]
+    # g.trace("headline:" + headline)
+else: return i
+#@nonl
+#@-node:ekr.20031218072017.2264:<< set headline or return i >>
+#@+node:ekr.20031218072017.2265:<< skip the Python def >>
+# Set defIndent to the indentation of the def line.
+defIndent = self.getLeadingIndent(s,start)
+i = g.skip_line(s,i) # Skip the def line.
+indent = self.getLeadingIndent(s,i)
+while i < len(s) and indent > defIndent:
+    progress = i
+    ch = s[i]
+    if g.is_nl(s,i):
+        backslashNewline = i > 0 and g.match(s,i-1,"\\\n")
+        i = g.skip_nl(s,i)
+        if not backslashNewline:
+            indent = self.getLeadingIndent(s,i)
+            if indent <= defIndent:
+                break
+    elif ch == '#':
+        i = g.skip_to_end_of_line(s,i) # 7/29/02
+    elif ch == '"' or ch == '\'':
+        i = g.skip_python_string(s,i)
+    else: i += 1
+    assert(progress < i)
+#@nonl
+#@-node:ekr.20031218072017.2265:<< skip the Python def >>
+#@+node:ekr.20031218072017.2266:<< Create def node >>
+# Create the prefix line for @root trees.
+if self.treeType == "@file":
+    prefix = ""
+else:
+    prefix = g.angleBrackets(" " + savedMethodName + " methods ") + "=\n\n"
+    self.methodsSeen = True
+
+# Create body.
+start = g.skip_blank_lines(s,start)
+body = s[start:i]
+body = self.undentBody(body)
+
+# Create the node.
+self.createHeadline(parent,prefix + body,headline)
+
+#@-node:ekr.20031218072017.2266:<< Create def node >>
+#@-node:ekr.20031218072017.2263:scanPythonDef
+#@+node:ekr.20031218072017.2267:scanPythonDecls
+def scanPythonDecls (self,s,i,parent,indent,indent_parent_ref_flag=True):
+    
+    done = False ; start = i
+    while not done and i < len(s):
+        progress = i
+        # g.trace(g.get_line(s,i))
+        ch = s[i]
+        if ch == '\n':
+            backslashNewline = i > 0 and g.match(s,i-1,"\\\n")
+            i = g.skip_nl(s,i)
+            # 2/14/03: break on lesser indention.
+            j = g.skip_ws(s,i)
+            if not g.is_nl(s,j) and not g.match(s,j,"#") and not backslashNewline:
+                lineIndent = self.getLeadingIndent(s,i)
+                if lineIndent <= indent:
+                    break
+        elif ch == '#': i = g.skip_to_end_of_line(s,i)
+        elif ch == '"' or ch == '\'':
+            i = g.skip_python_string(s,i)
+        elif g.is_c_id(ch):
+            << break on def or class >>
+        else: i += 1
+        assert(progress < i)
+    j = g.skip_blank_lines(s,start)
+    if g.is_nl(s,j): j = g.skip_nl(s,j)
+    if j < i:
+        << Create a child node for declarations >>
+    return i
+#@nonl
+#@+node:ekr.20031218072017.2268:<< break on def or class >>
+if g.match_c_word(s,i,"def") or g.match_c_word(s,i,"class"):
+    i = g.find_line_start(s,i)
+    done = True
+    break
+else:
+    i = g.skip_c_id(s,i)
+#@nonl
+#@-node:ekr.20031218072017.2268:<< break on def or class >>
+#@+node:ekr.20031218072017.2269:<< Create a child node for declarations >>
+headline = ref = g.angleBrackets(" " + self.methodName + " declarations ")
+leading_tab = g.choose(indent_parent_ref_flag,"\t","")
+
+# Append the reference to the parent's body.
+parent.appendStringToBody(leading_tab + ref + "\n") # 7/6/02
+
+# Create the node for the decls.
+body = self.undentBody(s[j:i])
+if self.treeType == "@root":
+    body = "@code\n\n" + body
+self.createHeadline(parent,body,headline)
+#@nonl
+#@-node:ekr.20031218072017.2269:<< Create a child node for declarations >>
+#@-node:ekr.20031218072017.2267:scanPythonDecls
+#@+node:ekr.20031218072017.2270:scanPythonText
+# See the comments for scanCText for what the text looks like.
+
+def scanPythonText (self,s,parent):
+
+    """Creates a child of parent for each Python function definition seen."""
+
+    decls_seen = False ; start = i = 0
+    self.methodsSeen = False
+    while i < len(s):
+        progress = i
+        # g.trace(g.get_line(s,i))
+        ch = s[i]
+        if ch == '\n' or ch == '\r': i = g.skip_nl(s,i)
+        elif ch == '#': i = g.skip_to_end_of_line(s,i)
+        elif ch == '"' or ch == '\'': i = g.skip_python_string(s,i)
+        elif g.is_c_id(ch):
+            << handle possible Python function or class >>
+        else: i += 1
+        assert(progress < i)
+    if not decls_seen: # 2/17/03
+        parent.appendStringToBody("@ignore\n" + self.rootLine + "@language python\n")
+    << Append a reference to the methods of this file >>
+    << Append any unused python text to the parent's body text >>
+#@nonl
+#@+node:ekr.20031218072017.2271:<< handle possible Python function or class >>
+if g.match_c_word(s,i,"def") or g.match_word(s,i,"class"):
+    isDef = g.match_c_word(s,i,"def")
+    if not decls_seen:
+        parent.appendStringToBody("@ignore\n" + self.rootLine + "@language python\n")
+        i = start = self.scanPythonDecls(s,start,parent,-1,indent_parent_ref_flag=False)
+        decls_seen = True
+        if self.treeType == "@file": # 7/29/02
+            parent.appendStringToBody("@others\n") # 7/29/02
+    if isDef:
+        i = start = self.scanPythonDef(s,i,start,parent)
+    else:
+        i = start = self.scanPythonClass(s,i,start,parent)
+else:
+    i = g.skip_c_id(s,i)
+#@nonl
+#@-node:ekr.20031218072017.2271:<< handle possible Python function or class >>
+#@+node:ekr.20031218072017.2272:<< Append a reference to the methods of this file >>
+if self.treeType == "@root" and self.methodsSeen:
+    parent.appendStringToBody(
+        g.angleBrackets(" " + self.methodName + " methods ") + "\n\n")
+#@nonl
+#@-node:ekr.20031218072017.2272:<< Append a reference to the methods of this file >>
+#@+node:ekr.20031218072017.2273:<< Append any unused python text to the parent's body text >>
+# Do nothing if only whitespace is left.
+i = start ; i = g.skip_ws_and_nl(s,i)
+if i < len(s):
+    parent.appendStringToBody(s[start:])
+#@nonl
+#@-node:ekr.20031218072017.2273:<< Append any unused python text to the parent's body text >>
+#@-node:ekr.20031218072017.2270:scanPythonText
+#@-node:ekr.20031218072017.2256:Python scanners
+#@-node:ekr.20040812033107:(Fix bugs in perfect import)  *** Disabled perfect import
 #@-node:ekr.20040809102904:4.2 rc1 projects
 #@-all
 #@nonl

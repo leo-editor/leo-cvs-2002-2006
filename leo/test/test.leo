@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="5956" clone_windows="0"/>
-<globals body_outline_ratio="0.481481481481">
-	<global_window_position top="36" left="296" height="864" width="907"/>
+<globals body_outline_ratio="0.635416666667">
+	<global_window_position top="45" left="210" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -15,12 +15,13 @@
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
-<v t="ekr.20040901065642.2" a="E"><vh>runTimeit</vh>
+<v t="ekr.20040901065642.2"><vh>runTimeit</vh>
 <v t="ekr.20040901072339"><vh>&lt;&lt; scan for #@count &gt;&gt;</vh></v>
 <v t="ekr.20040901071028"><vh>&lt;&lt; put setup code in s1 and everything else in s2 &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040721145258.1"><vh>Run gc</vh></v>
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
+<v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
 <v t="ekr.20040708205841"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
@@ -665,12 +666,12 @@
 <v t="ekr.20040805102453"><vh>@url http://docs.python.org/lib/debugger-commands.html</vh></v>
 </v>
 </v>
-<v t="ekr.20040723064143.1" a="TV"><vh>To do (when file tests are easier)</vh>
+<v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217" a="E"><vh>Test multi-line @doc parts with @language html</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
@@ -763,7 +764,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2" a="E"><vh>Test Leo files...</vh>
+<v t="ekr.20040712101754.2"><vh>Test Leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1133,9 +1134,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+<v t="ekr.20040707081532.1" a="ETV"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g

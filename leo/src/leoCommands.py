@@ -189,11 +189,11 @@ class baseCommands:
         return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"
     #@nonl
     #@-node:ekr.20040629121554:getBuildNumber
-    #@+node:ekr.20040629121554.1:getSignOnLine
+    #@+node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     def getSignOnLine (self):
         c = self
-        return "Leo 4.2 beta 3, build %s, August 10, 2004" % c.getBuildNumber()
-    #@-node:ekr.20040629121554.1:getSignOnLine
+        return "Leo 4.2 rc 1, build %s, September 14, 2004" % c.getBuildNumber()
+    #@-node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     #@+node:ekr.20040629121554.2:initVersion
     def initVersion (self):
         c = self
@@ -958,7 +958,7 @@ class baseCommands:
             multiple=True)
     
         if names:
-            c.importCommands.importFilesCommand (names,"@file")
+            c.importCommands.importFilesCommand(names,"@file")
     #@nonl
     #@-node:ekr.20031218072017.2853:importAtFile
     #@+node:ekr.20031218072017.2854:importCWEBFiles
