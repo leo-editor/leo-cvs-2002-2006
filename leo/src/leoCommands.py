@@ -4894,13 +4894,23 @@ class baseCommands:
         
         """Return the presently selected position."""
         
-        return self._currentPosition.copy() # Must make the second copy now.
+        c = self
+        
+        if c._currentPosition:
+            return c._currentPosition.copy() # Must make the second copy now.
+        else:
+            return c.nullPosition()
         
     def setCurrentPosition (self,p):
         
         """Set the presently selected position."""
-    
-        self._currentPosition = p.copy() # Must make the first copy _now_
+        
+        c = self
+        
+        if p:
+            c._currentPosition = p.copy() # Must make the first copy _now_
+        else:
+            c._currentPosition = None
         
     # Define these for compatibiility with old scripts.
     currentVnode = currentPosition
@@ -4962,13 +4972,23 @@ class baseCommands:
         
         """Return the root position."""
         
-        return self._topPosition.copy()
+        c = self
+        
+        if c._topPosition:
+            return c._topPosition.copy()
+        else:
+            return c.nullPosition()
     
     def setTopPosition(self,p):
         
         """Set the root positioin."""
+        
+        c = self
     
-        self._topPosition = p
+        if p:
+            c._topPosition = p.copy()
+        else:
+            c._topPosition = None
         
     # Define these for compatibiility with old scripts.
     topVnode = topPosition
