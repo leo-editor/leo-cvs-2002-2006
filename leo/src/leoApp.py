@@ -28,6 +28,10 @@ class LeoApp:
         self.count = 0 # General purpose debugging count.
         self.debug = False # True: enable extra debugging tests (not used at present).
             # WARNING: this could greatly slow things down.
+        self.debugSwitch = 0
+            # 0: default behavior
+            # 1: full traces in g.es_exception.
+            # 2: call pdb.set_trace in g.es_exception, etc.
         self.disableSave = False
         self.failedPlugins = [] # List of loaded plugins that have failed to load.
         self.globalWindows = []
