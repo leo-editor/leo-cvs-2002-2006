@@ -24,7 +24,8 @@ __version__ = "0.4"
 # - Better error messages.
 # 0.4 EKR:
 # 
-# - Added autostart code per http://sourceforge.net/forum/message.php?msg_id=2842589
+# - Added autostart code per 
+# http://sourceforge.net/forum/message.php?msg_id=2842589
 #@-at
 #@nonl
 #@-node:ekr.20040909110753:<< version history >>

@@ -25,19 +25,23 @@ import os
 #@nonl
 # This plugin writes out @text nodes as a reStructuredText file.
 # 
-# If the filename ends in .html, .htm or .tex and if you have docutils_ (a Python
+# If the filename ends in .html, .htm or .tex and if you have docutils_ (a 
+# Python
 # module) installed, then it will be written as HTML or LaTeX, respectively.
 # 
 # Headlines are translated into reStructuredText headlines, e.g. underlined
-# depending on the level and empty line separated from body text otherwise, text
-# is written as it is. The "#" character is not used for underlining, so it may
+# depending on the level and empty line separated from body text otherwise, 
+# text
+# is written as it is. The "#" character is not used for underlining, so it 
+# may
 # be used for a title as in::
 # 
 #     #####
 #     Title
 #     #####
 # 
-# Otherwise, section underlining is discouraged, since it is automatically generated.
+# Otherwise, section underlining is discouraged, since it is automatically 
+# generated.
 # 
 # .. _docutils: http://docutils.sourceforge.net
 #@-at
@@ -55,23 +59,31 @@ import os
 # - EKR: The code now lets other plugins handle @folder and @url nodes.
 # 
 # - HTML generation: @rst nodes can now generate HTML, if Python docutils_ are
-#   installed. Simply give the filename an extension .htm or .html. You can try
+#   installed. Simply give the filename an extension .htm or .html. You can 
+# try
 #   this out by renaming the filename in this @rst tree.
 # 
-# - underlines: I changed the order of the underline characters again. The ">" is
-#   doesn't really look good as an underline in my opinion, so I moved it to a very
+# - underlines: I changed the order of the underline characters again. The ">" 
+# is
+#   doesn't really look good as an underline in my opinion, so I moved it to a 
+# very
 #   low level.
 # 
-# - JD 2003-03-10 (rev 1.3): some more corrections to the unicode-> encoding translation.
+# - JD 2003-03-10 (rev 1.3): some more corrections to the unicode-> encoding 
+# translation.
 #   No only check for missing docutils (doesn't mask other errors any more).
 # 
-# - JD 2003-03-11 (rev 1.4): separated out the file launching code to a different pluging.
+# - JD 2003-03-11 (rev 1.4): separated out the file launching code to a 
+# different pluging.
 # 
-# - 2003-11-02 Added generation of LaTeX files, just make the extension of the filename '.tex'. --Timo Honkasalo
+# - 2003-11-02 Added generation of LaTeX files, just make the extension of the 
+# filename '.tex'. --Timo Honkasalo
 # 
-# - JD 2004-09-09 changed 'v' to 'p' in onIconDoubleClick to support the new plugin API of Leo 4.2.
+# - JD 2004-09-09 changed 'v' to 'p' in onIconDoubleClick to support the new 
+# plugin API of Leo 4.2.
 # 
-# - JD 2004-09-09 changed headline directive from @rst to @text to become compatible with the rst2 plugin.
+# - JD 2004-09-09 changed headline directive from @rst to @text to become 
+# compatible with the rst2 plugin.
 #@-at
 #@nonl
 #@-node:edream.111803100242.2:<< change log >>

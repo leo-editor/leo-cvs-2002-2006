@@ -23,18 +23,23 @@ import os
 #@nonl
 # Change log:
 # 
-# - JD 2003-03-10 (rev 1.3): some more corrections to the unicode-> encoding translation.
+# - JD 2003-03-10 (rev 1.3): some more corrections to the unicode-> encoding 
+# translation.
 #   No only check for missing docutils (doesn't mask other errors any more).
 # 
-# - JD 2003-03-11 (rev 1.4): separated out the file launching code to a different pluging.
+# - JD 2003-03-11 (rev 1.4): separated out the file launching code to a 
+# different pluging.
 # 
-# - 2003-11-02 Added generation of LaTeX files, just make the extension of the filename '.tex'. --Timo Honkasalo
+# - 2003-11-02 Added generation of LaTeX files, just make the extension of the 
+# filename '.tex'. --Timo Honkasalo
 # 
-# - 2003-12-24 S Zatz modifications to introduce concept of plain @rst nodes to improve program documentation
+# - 2003-12-24 S Zatz modifications to introduce concept of plain @rst nodes 
+# to improve program documentation
 # 
 # - 2004-04-08 EKR:
 #     - Eliminated "comment" text at start of nodes.
-#     - Rewrote code that strips @nocolor, @ignore and @wrap directives from start of text.
+#     - Rewrote code that strips @nocolor, @ignore and @wrap directives from 
+# start of text.
 #     - Changed code to show explicitly that it uses positions.
 #     - Added comments to << define code-block>>
 #     - Added div.code-block style to silver_city.css (see documentation)

@@ -133,7 +133,7 @@ if Tk and aspell and not g.app.unitTesting:
             
             """Ctor for the Aspell class."""
         
-            self.sc = aspell.spell_checker(prefix= aspell_dir)
+            self.sc = aspell.spell_checker(prefix=aspell_dir,lang=local_language_code)
             
             self.aspell_exe_loc = self.getAspellDirectory()
             self.local_language_code = local_language_code

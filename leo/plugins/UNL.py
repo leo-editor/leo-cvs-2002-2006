@@ -14,35 +14,43 @@ Also allows "jumping" to UNLs.
 # 
 # This plugin consists of two parts.
 # 
-# 1) It shows the 'address' or 'path' (list of ancestors and itself) of the currently selected node in the status line. 'Uniform 
-# Node
+# 1) It shows the 'address' or 'path' (list of ancestors and itself) of the 
+# currently selected node in the status line. 'Uniform Node
 # Locator' (UNL) also seems a nice description of it.
 # 
 # I use it to be able to copy the UNL into mail when discussing stuff in the
-# selected node, so other people can find the node of interest quickly in their
-# own copy of the outlines (given the same directory structure). It's a matter of selecting the UNL in the status line and 
-# pressing CTRL-C (on windows XP) in order to copy it onto the clipboard.
+# selected node, so other people can find the node of interest quickly in 
+# their
+# own copy of the outlines (given the same directory structure). It's a matter 
+# of selecting the UNL in the status line and pressing CTRL-C (on windows XP) 
+# in order to copy it onto the clipboard.
 # 
-# 2) This plugin also overrides the default way of handling doubleclicking on @url nodes.
-# When doubleclicking the icon of an @url node for the case of a leo file on the
+# 2) This plugin also overrides the default way of handling doubleclicking on 
+# @url nodes.
+# When doubleclicking the icon of an @url node for the case of a leo file on 
+# the
 # file system, it is now possible to jump directly to a node in that leo
-# file. This is accomplished by appending the '#'-sign and the UNL of a node to the URL of the leo file. As an example, see the 
-# following node.
+# file. This is accomplished by appending the '#'-sign and the UNL of a node 
+# to the URL of the leo file. As an example, see the following node.
 # 
 # This way, the need for duplicating nodes among leo files
 # ought to be reduced. (Duplicates will get out of sync surely, as currently
-# can be seen at this moment with the 'About Hooks' node in both leoPlugins.leo and in leoDocs.leo: one mentions the 'select3' 
-# hook, the other does not).
+# can be seen at this moment with the 'About Hooks' node in both 
+# leoPlugins.leo and in leoDocs.leo: one mentions the 'select3' hook, the 
+# other does not).
 # 
-# Beware when moving nodes that are being referred to or changing a headline name.
-# (TODO: create a link checker script to see if nodes referred to still exist).
+# Beware when moving nodes that are being referred to or changing a headline 
+# name.
+# (TODO: create a link checker script to see if nodes referred to still 
+# exist).
 # 
 # Don't refer to nodes that contain UNLs in the headline, as this busts the
 # recognition of UNLs. Instead, refer to the parent or child of such nodes.
 # 
-# An added bonus is that the need for URLs to contain '%20' in stead of spaces is removed, since the invoked function 
-# urlparse.urlsplit() can handle spaces. And I presume the recognition of valid URLs in Python's standard libs is more solid than 
-# found in the current Leo Core code.
+# An added bonus is that the need for URLs to contain '%20' in stead of spaces 
+# is removed, since the invoked function urlparse.urlsplit() can handle 
+# spaces. And I presume the recognition of valid URLs in Python's standard 
+# libs is more solid than found in the current Leo Core code.
 #@-at
 #@nonl
 #@-node:rogererens.20041014104346:<< about this plugin >>
@@ -82,8 +90,10 @@ except ImportError:
 #@+node:rogererens.20041130095659:@url file:C:/Leo/plugins/leoPlugins.leo#Plugins-->Experimental/unfinished plugins-->@thin UNL.py-->To do
 #@+at
 # 
-# A contrived example targeted at MS WindowsXP with Leo installed in the C directory.
-# Naturally, a clone must be used instead of referring to nodes _within_ a leo file.
+# A contrived example targeted at MS WindowsXP with Leo installed in the C 
+# directory.
+# Naturally, a clone must be used instead of referring to nodes _within_ a leo 
+# file.
 # UNL is helpful for referring to nodes in _other_ leo files!
 # 
 # on windowsXP:
@@ -93,6 +103,8 @@ except ImportError:
 #@-at
 #@nonl
 #@-node:rogererens.20041130095659:@url file:C:/Leo/plugins/leoPlugins.leo#Plugins-->Experimental/unfinished plugins-->@thin UNL.py-->To do
+#@+node:ekr.20041202032543:@url file:c:/prog/leoCvs/leo/doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
+#@-node:ekr.20041202032543:@url file:c:/prog/leoCvs/leo/doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
 #@+node:rogererens.20041013082304.1:createStatusLine
 def createStatusLine(tag,keywords):
 
@@ -199,25 +211,33 @@ def onUrl1 (tag,keywords):
 #@+node:rogererens.20041014110709:To do
 #@+at
 # 
-# How about other plugins that create a status line? Should I test whether the status line is already created?
+# How about other plugins that create a status line? Should I test whether the 
+# status line is already created?
 # 
-# Don't know exactly yet about the interaction with other plugins. The info in the status line may be overwritten by them. That's 
-# fine with me: I can always click on the icon of the node again to show the info again.
+# Don't know exactly yet about the interaction with other plugins. The info in 
+# the status line may be overwritten by them. That's fine with me: I can 
+# always click on the icon of the node again to show the info again.
 # 
-# Keep the pane of the UNL referred to on top (now the pane with the referring node stays on top).
-# Maybe this should be a settings-dependent behaviour. Could this be solved by using the 'onCreate' idiom and a UNLclass?
+# Keep the pane of the UNL referred to on top (now the pane with the referring 
+# node stays on top).
+# Maybe this should be a settings-dependent behaviour. Could this be solved by 
+# using the 'onCreate' idiom and a UNLclass?
 # 
 # Find out about the difference between the event 'select2' and 'select3'.
 # 
-# A UNL checker script would be handy to check whether all references are still valid.
+# A UNL checker script would be handy to check whether all references are 
+# still valid.
 # 
 # Deal with path-separators for various platforms?
 # 
 # Handle relative paths?
 # 
-# Introduce a menu item to improve documentation? By firing up a browser, directing it to leo on sourceforge (sourceforge userid 
-# needed?). EKR could start up a new thread beforehand, "documentation improvements", where a new message might be posted with the 
-# relevant UNL placed automatically in the text box. Then the user just needs to type in his/her comments and post the message.
+# Introduce a menu item to improve documentation? By firing up a browser, 
+# directing it to leo on sourceforge (sourceforge userid needed?). EKR could 
+# start up a new thread beforehand, "documentation improvements", where a new 
+# message might be posted with the relevant UNL placed automatically in the 
+# text box. Then the user just needs to type in his/her comments and post the 
+# message.
 #@-at
 #@nonl
 #@-node:rogererens.20041014110709:To do
