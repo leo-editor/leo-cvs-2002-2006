@@ -1656,7 +1656,7 @@
 </v>
 </v>
 </v>
-<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" a="MTV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 <v t="ekr.20040317155851"><vh>Suggestions for improvement</vh>
 <v t="ekr.20040317155817"><vh>@url http://komodo.nique.net/~grayrest/leoUIproposal.txt</vh></v>
 </v>
@@ -1982,11 +1982,11 @@
 <v t="ekr.20040419105219.1"><vh>writing derived files</vh></v>
 <v t="ekr.20040419105219.2"><vh>reading derived files</vh></v>
 </v>
-</v>
-<v t="ekr.20040201060959" a="E" tnodeList="ekr.20040201060959,EKR.20040424152057,EKR.20040424152057.1,EKR.20040424152057.2"><vh>@file status_line.py</vh>
+<v t="ekr.20040201060959" tnodeList="ekr.20040201060959,EKR.20040424152057,EKR.20040424152057.1,EKR.20040424152057.2"><vh>@file status_line.py</vh>
 <v t="EKR.20040424152057"><vh>createStatusLine</vh></v>
-<v t="EKR.20040424152057.1" a="TV"><vh>createBindings (experimental, flakey and probably platform-dependent)</vh></v>
+<v t="EKR.20040424152057.1"><vh>createBindings (experimental, flakey and probably platform-dependent)</vh></v>
 <v t="EKR.20040424152057.2"><vh>doKey</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -16185,7 +16185,7 @@ g.plugin_signon(__name__)</t>
 	# nav_buttons.py
 	plugins_menu.py
 	rowcol.py
-	status_line.py
+	# status_line.py
 	# word_export.py
 	# xemacs.py
 	
@@ -16211,7 +16211,7 @@ g.plugin_signon(__name__)</t>
 	
 # New or improved in 4.2
 	# startfile.py
-	lineNumbers.py
+	# lineNumbers.py
 	rClick.py
 	# niceNosent.py
 	# scheduler.py</t>
