@@ -588,9 +588,9 @@ def findReference(name,root):
 
 globalDirectiveList = [
 	"color", "comment", "encoding", "header", "ignore",
-	"language", "lineending", "nocolor", "noheader",
+	"language", "lineending", "nocolor", "noheader", "nowrap",
 	"pagewidth", "path", "quiet", "root", "silent",
-	"tabwidth", "terse", "unit", "verbose" ]
+	"tabwidth", "terse", "unit", "verbose", "wrap"]
 
 def get_directives_dict(s,root=None):
 	
@@ -781,13 +781,15 @@ def scanDirectives(c,v=None):
 	Returns a dict containing the results, including defaults.
 	"""
 
+	if c == None or top() == None: return None
 	if v == None: v = c.currentVnode()
+	a = app()
 	# trace(`v`)
 	
 	#@<< Set local vars >>
 	#@+node:1::<< Set local vars >>
 	#@+body
-	loadDir = app().loadDir
+	loadDir = a.loadDir
 	
 	page_width = c.page_width
 	tab_width  = c.tab_width
@@ -796,7 +798,7 @@ def scanDirectives(c,v=None):
 	path = None
 	encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
 	lineending = getOutputNewline() # 4/24/03 initialize from config settings.
-	
+	wrap = a.config.getBoolPref("body_pane_wraps")
 	#@-body
 	#@-node:1::<< Set local vars >>
 
@@ -903,10 +905,21 @@ def scanDirectives(c,v=None):
 			w = scanAtTabwidthDirective(s,dict)
 			if w and w > 0:
 				tab_width = w
-		
-		
 		#@-body
 		#@-node:7::<< Test for @tabwidth >>
+
+		
+		#@<< Test for @wrap and @nowrap >>
+		#@+node:8::<< Test for @wrap and @nowrap >>
+		#@+body
+		if not old.has_key("wrap") and not old.has_key("nowrap"):
+			
+			if dict.has_key("wrap"):
+				wrap = true
+			elif dict.has_key("nowrap"):
+				wrap = false
+		#@-body
+		#@-node:8::<< Test for @wrap and @nowrap >>
 
 		doHook("scan-directives",c=c,v=v,s=s,
 			old_dict=old,dict=dict,pluginsList=pluginsList)
@@ -914,6 +927,7 @@ def scanDirectives(c,v=None):
 		v = v.parent()
 
 	if path == None: path = getBaseDirectory()
+
 	return {
 		"delims"    : (delim1,delim2,delim3),
 		"encoding"  : encoding,
@@ -922,7 +936,9 @@ def scanDirectives(c,v=None):
 		"pagewidth" : page_width,
 		"path"      : path,
 		"tabwidth"  : tab_width,
-		"pluginsList"  : pluginsList }
+		"pluginsList": pluginsList,
+		"wrap"      : wrap }
+
 
 #@-body
 #@-node:9::scanDirectives (utils)

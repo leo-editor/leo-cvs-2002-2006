@@ -41,10 +41,10 @@ leoKeywords = [
 		"@delims","@doc","@encoding","@end_raw",
 		"@first","@header","@ignore",
 		"@language","@last","@lineending",
-		"@nocolor","@noheader","@others",
+		"@nocolor","@noheader","@nowrap","@others",
 		"@pagewidth","@path","@quiet","@raw","@root","@root-code","@root-doc",
 		"@silent","@tabwidth","@terse",
-		"@unit","@verbose" ]
+		"@unit","@verbose","@wrap" ]
 
 #@-body
 #@-node:1::<< leo keywords >>

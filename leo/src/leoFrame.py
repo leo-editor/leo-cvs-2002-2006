@@ -593,7 +593,19 @@ class leoCoreFrame:
 	
 	#@-body
 	#@-node:8::f.setTreeColorsFromConfig
-	#@+node:9::reconfigurePanes (use config bar_width)
+	#@+node:9::f.setWrap
+	#@+body
+	def setWrap (self,v):
+		
+		c = self.commands
+		dict = scanDirectives(c,v)
+		if dict:
+			wrap = dict.get("wrap")
+			wrap = choose(wrap,"word","none")
+			self.body.configure(wrap=wrap)
+	#@-body
+	#@-node:9::f.setWrap
+	#@+node:10::reconfigurePanes (use config bar_width)
 	#@+body
 	def reconfigurePanes (self):
 		
@@ -608,7 +620,7 @@ class leoCoreFrame:
 		border = choose(self.splitVerticalFlag,4,2) 
 		self.log.configure(bd=border)
 	#@-body
-	#@-node:9::reconfigurePanes (use config bar_width)
+	#@-node:10::reconfigurePanes (use config bar_width)
 	#@-node:2::Configuration
 	#@+node:3::Scrolling callbacks (frame)
 	#@+body

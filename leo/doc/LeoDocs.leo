@@ -60,7 +60,7 @@
 <v t="T43"><vh>Dan Winkler 1</vh></v>
 <v t="T44"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="T45"><vh>Release Notes</vh>
+<v t="T45" a="V"><vh>Release Notes</vh>
 <v t="T46"><vh>Warnings</vh></v>
 <v t="T47"><vh>Installation notes</vh>
 <v t="T48" a="C"><vh>System requirements</vh></v>
@@ -81,220 +81,114 @@
 <v t="T61" a="C"><vh>Quick start</vh></v>
 </v>
 <v t="T62" a="E"><vh>Latest version</vh>
-<v t="T63" a="C"><vh>3.11.1</vh></v>
-<v t="T64" a="C"><vh>3.11</vh>
-<v t="T65"><vh>New in 3.11 final</vh>
-<v t="T66"><vh>Bug fixes</vh>
-<v t="T67"><vh>Added call to c.redraw() in fileCommands.readAtFileNodes</vh></v>
-<v t="T68"><vh>Added getpreferredencoding to leoGlobals.py</vh></v>
-<v t="T69"><vh>Eliminated caught exception in frame.setTabWidth</vh></v>
-<v t="T70"><vh>Fixed bug in skip_long</vh></v>
-<v t="T71"><vh>Fixed bug that prevented email line in About Leo from working</vh></v>
-<v t="T72"><vh>Fixed unicode bugs when Tangling and Untangling</vh></v>
-<v t="T73"><vh>Fixed various bugs reported by Pychecker</vh></v>
-<v t="T74"><vh>Removed all __del__ methods</vh></v>
+<v><vh>3.11 beta 1</vh></v>
 </v>
-<v t="T75" a="E"><vh>New and improved features and commands</vh>
-<v t="T76"><vh>Added patch by Davide Salomoni to OnIconDoubleClick</vh></v>
-<v t="T77" a="C"><vh>@lineending directive specifies line endings</vh></v>
-<v t="T78"><vh>Added thin_at_file_trees &amp; load_derived_files_immediately options</vh></v>
+<v t="T63" a="E"><vh>leo.py versions</vh>
+<v t="T64"><vh>3.11.1</vh></v>
+<v t="T65"><vh>3.11</vh>
+<v t="T66"><vh>New in 3.11 final</vh>
+<v t="T67"><vh>Bug fixes</vh>
+<v t="T68"><vh>Added call to c.redraw() in fileCommands.readAtFileNodes</vh></v>
+<v t="T69"><vh>Added getpreferredencoding to leoGlobals.py</vh></v>
+<v t="T70"><vh>Eliminated caught exception in frame.setTabWidth</vh></v>
+<v t="T71"><vh>Fixed bug in skip_long</vh></v>
+<v t="T72"><vh>Fixed bug that prevented email line in About Leo from working</vh></v>
+<v t="T73"><vh>Fixed unicode bugs when Tangling and Untangling</vh></v>
+<v t="T74"><vh>Fixed various bugs reported by Pychecker</vh></v>
+<v t="T75"><vh>Removed all __del__ methods</vh></v>
 </v>
-</v>
-<v t="T79"><vh>** Leo now uses unicode internally</vh>
-<v t="T80"><vh>Added calls to toEncodedString before all calls to write</vh></v>
-<v t="T81"><vh>Check for valid encoding when setting app().tkEncoding</vh></v>
-<v t="T82"><vh>How Leo handles unicode</vh></v>
-<v t="T83" a="C"><vh>Unicode settings</vh></v>
-<v t="T84"><vh>Unicode theory of operation</vh></v>
-<v t="T85"><vh>Use app().tkEncoding when writing to log pane</vh></v>
-</v>
-<v t="T86"><vh>** Improved hooks &amp; a new plugin architecture</vh>
-<v t="T87"><vh>New plugin architecture</vh>
-<v t="T88"><vh>@file plugins/mod_open_with.py</vh>
-<v t="T89"><vh>on_idle</vh>
-<v t="T90"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
-<v t="T91"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
-<v t="T92"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
+<v t="T76"><vh>New and improved features and commands</vh>
+<v t="T77"><vh>Added patch by Davide Salomoni to OnIconDoubleClick</vh></v>
+<v t="T78" a="C"><vh>@lineending directive specifies line endings</vh></v>
+<v t="T79"><vh>Added thin_at_file_trees &amp; load_derived_files_immediately options</vh></v>
 </v>
 </v>
-<v t="T93"><vh>create_open_with_menu</vh>
-<v t="T94"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
+<v t="T80"><vh>** Leo now uses unicode internally</vh>
+<v t="T81"><vh>Added calls to toEncodedString before all calls to write</vh></v>
+<v t="T82"><vh>Check for valid encoding when setting app().tkEncoding</vh></v>
+<v t="T83"><vh>How Leo handles unicode</vh></v>
+<v t="T84" a="C"><vh>Unicode settings</vh></v>
+<v t="T85"><vh>Unicode theory of operation</vh></v>
+<v t="T86"><vh>Use app().tkEncoding when writing to log pane</vh></v>
+</v>
+<v t="T87"><vh>** Improved hooks &amp; a new plugin architecture</vh>
+<v t="T88"><vh>New plugin architecture</vh>
+<v t="T89"><vh>@file plugins/mod_open_with.py</vh>
+<v t="T90"><vh>on_idle</vh>
+<v t="T91"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
+<v t="T92"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
+<v t="T93"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
 </v>
 </v>
-</v>
-<v t="T95"><vh>Major reorganization of hooks</vh>
-<v t="T96"><vh>About hooks</vh></v>
-</v>
-<v t="T97"><vh>Added several new plugins</vh></v>
-<v t="T98"><vh>Improved Open With plugin</vh></v>
-<v t="T99"><vh>Added logic to retain log output until a log exists</vh></v>
-</v>
-<v t="T100"><vh>New configuration options &amp; plugins</vh>
-<v t="T101" a="E"><vh>Plugins</vh></v>
-<v t="T83" a="C"><vh>Unicode settings</vh></v>
-<v t="T102"><vh>Colors for Show Invisibibles command</vh></v>
-<v t="T103"><vh>look_for_control_drag_on_mouse_down option</vh></v>
-<v t="T104"><vh>body_insertion_cursor_color setting</vh></v>
-<v t="T105"><vh>time/date settings</vh></v>
-</v>
-<v t="T106"><vh>New commands</vh>
-<v t="T107"><vh>Toggle Angle Brackets</vh></v>
-<v t="T108"><vh>Insert Body/Headline Time/Date</vh></v>
-<v t="T109"><vh>Go To First/last Node</vh></v>
-<v t="T110"><vh>Go To Parent</vh></v>
-<v t="T111"><vh>Go To Next/Previous Sibling</vh></v>
-<v t="T112"><vh>Write Missing @file Nodes</vh></v>
-</v>
-<v t="T113"><vh>Improved commands</vh>
-<v t="T114"><vh>Added support for body/headline_gmt_time settings</vh></v>
-<v t="T115"><vh>Tangle now supports output_newline option</vh></v>
-<v t="T116"><vh>Major improvements to expand/contract commands</vh></v>
-<v t="T117"><vh>Leo now allows multiple writes of cloned nodes</vh></v>
-<v t="T118"><vh>The Sort Siblings command can now sort top-level nodes</vh></v>
-<v t="T119"><vh>Changed locks on customizeLeo.py</vh></v>
-</v>
-<v t="T120"><vh>Other improvements</vh>
-<v t="T121"><vh>Allow color param when queuing messages to log pane</vh></v>
-<v t="T122" a="E"><vh>Improved scrolling when moving right</vh></v>
-<v t="T123"><vh>Put file name first in window title</vh></v>
-<v t="T124"><vh>Leo scrolls partially visible headlines into full view</vh></v>
-<v t="T125"><vh>Allowed @comment with @language plain</vh></v>
-<v t="T126"><vh>The Find button is now default button in the Find panel</vh></v>
-<v t="T127"><vh>Improved syntax coloring for html and xml</vh>
-<v t="T128"><vh>example of syntax coloring for html</vh></v>
-</v>
-<v t="T129"><vh>Improved Prefs panel</vh></v>
-<v t="T130"><vh>Removed setup.py from distributed files</vh></v>
-</v>
-<v t="T131"><vh>Bug fixes</vh>
-<v t="T132"><vh>Eliminated potential hang in Open With command</vh></v>
-<v t="T133"><vh>Fixed 2 line number bugs</vh></v>
-<v t="T134"><vh>Fixed bug involving nested comments in sentinel lines</vh></v>
-<v t="T135"><vh>Fixed bugs in promote/demote</vh></v>
-<v t="T136"><vh>Fixed configuration bug.</vh></v>
-<v t="T137"><vh>Fixed crasher in undo logic</vh></v>
-<v t="T138"><vh>Fixed drag problem</vh></v>
-<v t="T139" a="M"><vh>Fixed huge performance bug in v.unjoinNode</vh></v>
-<v t="T140"><vh>Fixed long-standing control-v bug on Linux</vh></v>
-<v t="T141"><vh>Fixed minor import bugs</vh></v>
-<v t="T142"><vh>Fixed problem with block comments</vh></v>
-<v t="T143" a="E"><vh>Fixed several problems revealed by French plugin</vh></v>
-<v t="T144" a="E"><vh>Fixed several problems with noweb mode</vh></v>
-<v t="T145"><vh>Fixed syntax coloring bugs</vh></v>
-<v t="T146"><vh>Full recolor after paste</vh></v>
-<v t="T147"><vh>Installer now creates plugins directory</vh></v>
-<v t="T148"><vh>Removed duplicate redraws when renaming nodes</vh></v>
-<v t="T149"><vh>Udated recent files menu when saving a new .leo file</vh></v>
-<v t="T150"><vh>Worked around bugs in Python 2.3 a1</vh></v>
+<v t="T94"><vh>create_open_with_menu</vh>
+<v t="T95"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="T151"><vh>leo.py versions</vh>
-<v t="T63" a="C"><vh>3.11.1</vh></v>
-<v t="T64" a="C"><vh>3.11</vh>
-<v t="T65"><vh>New in 3.11 final</vh>
-<v t="T66"><vh>Bug fixes</vh>
-<v t="T67"><vh>Added call to c.redraw() in fileCommands.readAtFileNodes</vh></v>
-<v t="T68"><vh>Added getpreferredencoding to leoGlobals.py</vh></v>
-<v t="T69"><vh>Eliminated caught exception in frame.setTabWidth</vh></v>
-<v t="T70"><vh>Fixed bug in skip_long</vh></v>
-<v t="T71"><vh>Fixed bug that prevented email line in About Leo from working</vh></v>
-<v t="T72"><vh>Fixed unicode bugs when Tangling and Untangling</vh></v>
-<v t="T73"><vh>Fixed various bugs reported by Pychecker</vh></v>
-<v t="T74"><vh>Removed all __del__ methods</vh></v>
+<v t="T96"><vh>Major reorganization of hooks</vh>
+<v t="T97"><vh>About hooks</vh></v>
 </v>
-<v t="T75"><vh>New and improved features and commands</vh>
-<v t="T76"><vh>Added patch by Davide Salomoni to OnIconDoubleClick</vh></v>
-<v t="T77" a="C"><vh>@lineending directive specifies line endings</vh></v>
-<v t="T78"><vh>Added thin_at_file_trees &amp; load_derived_files_immediately options</vh></v>
+<v t="T98"><vh>Added several new plugins</vh></v>
+<v t="T99"><vh>Improved Open With plugin</vh></v>
+<v t="T100"><vh>Added logic to retain log output until a log exists</vh></v>
 </v>
+<v t="T101"><vh>New configuration options &amp; plugins</vh>
+<v t="T102"><vh>Plugins</vh></v>
+<v t="T84" a="C"><vh>Unicode settings</vh></v>
+<v t="T103"><vh>Colors for Show Invisibibles command</vh></v>
+<v t="T104"><vh>look_for_control_drag_on_mouse_down option</vh></v>
+<v t="T105"><vh>body_insertion_cursor_color setting</vh></v>
+<v t="T106"><vh>time/date settings</vh></v>
 </v>
-<v t="T79"><vh>** Leo now uses unicode internally</vh>
-<v t="T80"><vh>Added calls to toEncodedString before all calls to write</vh></v>
-<v t="T81"><vh>Check for valid encoding when setting app().tkEncoding</vh></v>
-<v t="T82"><vh>How Leo handles unicode</vh></v>
-<v t="T83" a="C"><vh>Unicode settings</vh></v>
-<v t="T84"><vh>Unicode theory of operation</vh></v>
-<v t="T85"><vh>Use app().tkEncoding when writing to log pane</vh></v>
+<v t="T107"><vh>New commands</vh>
+<v t="T108"><vh>Toggle Angle Brackets</vh></v>
+<v t="T109"><vh>Insert Body/Headline Time/Date</vh></v>
+<v t="T110"><vh>Go To First/last Node</vh></v>
+<v t="T111"><vh>Go To Parent</vh></v>
+<v t="T112"><vh>Go To Next/Previous Sibling</vh></v>
+<v t="T113"><vh>Write Missing @file Nodes</vh></v>
 </v>
-<v t="T86"><vh>** Improved hooks &amp; a new plugin architecture</vh>
-<v t="T87"><vh>New plugin architecture</vh>
-<v t="T88"><vh>@file plugins/mod_open_with.py</vh>
-<v t="T89"><vh>on_idle</vh>
-<v t="T90"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
-<v t="T91"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
-<v t="T92"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
+<v t="T114"><vh>Improved commands</vh>
+<v t="T115"><vh>Added support for body/headline_gmt_time settings</vh></v>
+<v t="T116"><vh>Tangle now supports output_newline option</vh></v>
+<v t="T117"><vh>Major improvements to expand/contract commands</vh></v>
+<v t="T118"><vh>Leo now allows multiple writes of cloned nodes</vh></v>
+<v t="T119"><vh>The Sort Siblings command can now sort top-level nodes</vh></v>
+<v t="T120"><vh>Changed locks on customizeLeo.py</vh></v>
 </v>
+<v t="T121"><vh>Other improvements</vh>
+<v t="T122"><vh>Allow color param when queuing messages to log pane</vh></v>
+<v t="T123"><vh>Improved scrolling when moving right</vh></v>
+<v t="T124"><vh>Put file name first in window title</vh></v>
+<v t="T125"><vh>Leo scrolls partially visible headlines into full view</vh></v>
+<v t="T126"><vh>Allowed @comment with @language plain</vh></v>
+<v t="T127"><vh>The Find button is now default button in the Find panel</vh></v>
+<v t="T128"><vh>Improved syntax coloring for html and xml</vh>
+<v t="T129"><vh>example of syntax coloring for html</vh></v>
 </v>
-<v t="T93"><vh>create_open_with_menu</vh>
-<v t="T94"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
+<v t="T130"><vh>Improved Prefs panel</vh></v>
+<v t="T131"><vh>Removed setup.py from distributed files</vh></v>
 </v>
-</v>
-</v>
-<v t="T95"><vh>Major reorganization of hooks</vh>
-<v t="T96"><vh>About hooks</vh></v>
-</v>
-<v t="T97"><vh>Added several new plugins</vh></v>
-<v t="T98"><vh>Improved Open With plugin</vh></v>
-<v t="T99"><vh>Added logic to retain log output until a log exists</vh></v>
-</v>
-<v t="T100"><vh>New configuration options &amp; plugins</vh>
-<v t="T101"><vh>Plugins</vh></v>
-<v t="T83" a="C"><vh>Unicode settings</vh></v>
-<v t="T102"><vh>Colors for Show Invisibibles command</vh></v>
-<v t="T103"><vh>look_for_control_drag_on_mouse_down option</vh></v>
-<v t="T104"><vh>body_insertion_cursor_color setting</vh></v>
-<v t="T105"><vh>time/date settings</vh></v>
-</v>
-<v t="T106"><vh>New commands</vh>
-<v t="T107"><vh>Toggle Angle Brackets</vh></v>
-<v t="T108"><vh>Insert Body/Headline Time/Date</vh></v>
-<v t="T109"><vh>Go To First/last Node</vh></v>
-<v t="T110"><vh>Go To Parent</vh></v>
-<v t="T111"><vh>Go To Next/Previous Sibling</vh></v>
-<v t="T112"><vh>Write Missing @file Nodes</vh></v>
-</v>
-<v t="T113"><vh>Improved commands</vh>
-<v t="T114"><vh>Added support for body/headline_gmt_time settings</vh></v>
-<v t="T115"><vh>Tangle now supports output_newline option</vh></v>
-<v t="T116"><vh>Major improvements to expand/contract commands</vh></v>
-<v t="T117"><vh>Leo now allows multiple writes of cloned nodes</vh></v>
-<v t="T118"><vh>The Sort Siblings command can now sort top-level nodes</vh></v>
-<v t="T119"><vh>Changed locks on customizeLeo.py</vh></v>
-</v>
-<v t="T120"><vh>Other improvements</vh>
-<v t="T121"><vh>Allow color param when queuing messages to log pane</vh></v>
-<v t="T122"><vh>Improved scrolling when moving right</vh></v>
-<v t="T123"><vh>Put file name first in window title</vh></v>
-<v t="T124"><vh>Leo scrolls partially visible headlines into full view</vh></v>
-<v t="T125"><vh>Allowed @comment with @language plain</vh></v>
-<v t="T126"><vh>The Find button is now default button in the Find panel</vh></v>
-<v t="T127"><vh>Improved syntax coloring for html and xml</vh>
-<v t="T128"><vh>example of syntax coloring for html</vh></v>
-</v>
-<v t="T129"><vh>Improved Prefs panel</vh></v>
-<v t="T130"><vh>Removed setup.py from distributed files</vh></v>
-</v>
-<v t="T131"><vh>Bug fixes</vh>
-<v t="T132"><vh>Eliminated potential hang in Open With command</vh></v>
-<v t="T133"><vh>Fixed 2 line number bugs</vh></v>
-<v t="T134"><vh>Fixed bug involving nested comments in sentinel lines</vh></v>
-<v t="T135"><vh>Fixed bugs in promote/demote</vh></v>
-<v t="T136"><vh>Fixed configuration bug.</vh></v>
-<v t="T137"><vh>Fixed crasher in undo logic</vh></v>
-<v t="T138"><vh>Fixed drag problem</vh></v>
-<v t="T139"><vh>Fixed huge performance bug in v.unjoinNode</vh></v>
-<v t="T140"><vh>Fixed long-standing control-v bug on Linux</vh></v>
-<v t="T141"><vh>Fixed minor import bugs</vh></v>
-<v t="T142"><vh>Fixed problem with block comments</vh></v>
-<v t="T143"><vh>Fixed several problems revealed by French plugin</vh></v>
-<v t="T144"><vh>Fixed several problems with noweb mode</vh></v>
-<v t="T145"><vh>Fixed syntax coloring bugs</vh></v>
-<v t="T146"><vh>Full recolor after paste</vh></v>
-<v t="T147"><vh>Installer now creates plugins directory</vh></v>
-<v t="T148"><vh>Removed duplicate redraws when renaming nodes</vh></v>
-<v t="T149"><vh>Udated recent files menu when saving a new .leo file</vh></v>
-<v t="T150"><vh>Worked around bugs in Python 2.3 a1</vh></v>
+<v t="T132"><vh>Bug fixes</vh>
+<v t="T133"><vh>Eliminated potential hang in Open With command</vh></v>
+<v t="T134"><vh>Fixed 2 line number bugs</vh></v>
+<v t="T135"><vh>Fixed bug involving nested comments in sentinel lines</vh></v>
+<v t="T136"><vh>Fixed bugs in promote/demote</vh></v>
+<v t="T137"><vh>Fixed configuration bug.</vh></v>
+<v t="T138"><vh>Fixed crasher in undo logic</vh></v>
+<v t="T139"><vh>Fixed drag problem</vh></v>
+<v t="T140"><vh>Fixed huge performance bug in v.unjoinNode</vh></v>
+<v t="T141"><vh>Fixed long-standing control-v bug on Linux</vh></v>
+<v t="T142"><vh>Fixed minor import bugs</vh></v>
+<v t="T143"><vh>Fixed problem with block comments</vh></v>
+<v t="T144"><vh>Fixed several problems revealed by French plugin</vh></v>
+<v t="T145"><vh>Fixed several problems with noweb mode</vh></v>
+<v t="T146"><vh>Fixed syntax coloring bugs</vh></v>
+<v t="T147"><vh>Full recolor after paste</vh></v>
+<v t="T148"><vh>Installer now creates plugins directory</vh></v>
+<v t="T149"><vh>Removed duplicate redraws when renaming nodes</vh></v>
+<v t="T150"><vh>Udated recent files menu when saving a new .leo file</vh></v>
+<v t="T151"><vh>Worked around bugs in Python 2.3 a1</vh></v>
 </v>
 </v>
 <v t="T152"><vh>3.10</vh>
@@ -1008,7 +902,7 @@
 <v t="T685"><vh>@encoding directive specifies encoding of text</vh></v>
 <v t="T686"><vh>@first and @last directives allow leading and trailing lines in @file trees</vh></v>
 <v t="T687"><vh>@language specifying the target language</vh></v>
-<v t="T77" a="C"><vh>@lineending directive specifies line endings</vh></v>
+<v t="T78" a="C"><vh>@lineending directive specifies line endings</vh></v>
 <v t="T688"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
 <v t="T261" a="C"><vh>@raw and @end_raw directives delimit raw text</vh></v>
 </v>
@@ -2186,7 +2080,7 @@
 <v t="T1522"><vh>tk is the future of Leo</vh></v>
 <v t="T1523"><vh>Why I like Python</vh></v>
 </v>
-<v t="T1524" a="V"><vh>Leaps</vh>
+<v t="T1524"><vh>Leaps</vh>
 <v t="T1525"><vh>100's administering Leaps (and LeoCon)</vh>
 <v t="T1526"><vh>Leap 102: LeoCon 1</vh></v>
 </v>
@@ -2895,7 +2789,8 @@ This is the minimum you need to use Leo effectively.
 
 See the Appendices for a concise summary of information about Leo.</t>
 <t tx="T62"></t>
-<t tx="T63">leo.py 3.11.1                       May 1, 2003
+<t tx="T63"></t>
+<t tx="T64">leo.py 3.11.1                       May 1, 2003
 
 This version fixes two bugs:
 	
@@ -2903,7 +2798,7 @@ This version fixes two bugs:
 
 - Creating clones by control dragging did not always work.
   This bug has existed in Leo for a long time.</t>
-<t tx="T64">leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
+<t tx="T65">leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
 
 leo.py 3.11.1                       May 1, 2003
@@ -2954,19 +2849,19 @@ The Highlights of 3.11:
 - Many other bug fixes and improvements.
 
 See the children of this node for full details.</t>
-<t tx="T65"></t>
 <t tx="T66"></t>
-<t tx="T67">This ensures that the outline is redrawn properly after the Read @file Nodes command.</t>
-<t tx="T68">Browsing the comp.lang.python yesturday I found that there are serious problems with Python's getdefaultlocale() routine.  Martin v. Löwis says "getdefaultlocale() is broken, and cannot be fixed", though he does suggest the following workaround:
+<t tx="T67"></t>
+<t tx="T68">This ensures that the outline is redrawn properly after the Read @file Nodes command.</t>
+<t tx="T69">Browsing the comp.lang.python yesturday I found that there are serious problems with Python's getdefaultlocale() routine.  Martin v. Löwis says "getdefaultlocale() is broken, and cannot be fixed", though he does suggest the following workaround:
 
 leoGlobals.py uses locale.getpreferredencoding to define getpreferredencoding if locale.getpreferredencoding exists (it is new in Python 2.3alpha).  Otherwise, Leo uses the code copied from the 2.3a2 version of Python to define getpreferredencoding.  Either way, leoGlobals.py now defines getpreferredencoding and Leo uses getpreferredencoding rather than getdefaultlocale.</t>
-<t tx="T69">After opening the Python window the call to tkFont() threw a (caught) exception on every call to frame.setTabWidth.  The fix was to add the optional root param.</t>
-<t tx="T70">skip_long was throwing an exception if there were no valid digits following a + or - sign.</t>
-<t tx="T71"></t>
-<t tx="T72">- tangle.scanAllDirectives was not setting self.encoding when handling @encoding.
+<t tx="T70">After opening the Python window the call to tkFont() threw a (caught) exception on every call to frame.setTabWidth.  The fix was to add the optional root param.</t>
+<t tx="T71">skip_long was throwing an exception if there were no valid digits following a + or - sign.</t>
+<t tx="T72"></t>
+<t tx="T73">- tangle.scanAllDirectives was not setting self.encoding when handling @encoding.
 - tangle.scanAllDirectives wasn't scanning the @encoding line properly.
 - fixed crashers in Tangle and Untangle logic.</t>
-<t tx="T73">Fixed bug in handleLinesFollowingSentinel:
+<t tx="T74">Fixed bug in handleLinesFollowingSentinel:
 c:\prog\LeoCVS\leo\leoAtFile.py:482: No global (i) found
 Removed i arg from rfind.
 
@@ -2984,12 +2879,12 @@ c:\prog\LeoCVS\leo\leoNodes.py:2581: No class attribute (defaultLoc) found
 Fixed bug in put: changed a to app()
 c:\prog\leoCvs\leo\leoFrame.py:4973: No global (a) found
 </t>
-<t tx="T74">I had completely misunderstood __del__ methods!  __del__ methods _disable_ the gc's ability to collect circular garbage (!!) and so __del__ methods will _never_ be called (!!)
+<t tx="T75">I had completely misunderstood __del__ methods!  __del__ methods _disable_ the gc's ability to collect circular garbage (!!) and so __del__ methods will _never_ be called (!!)
 
 BTW, when deleting an entire Leo window Leo calls various destroy methods to unlink items.  This allows the garbage collector to collect all data structures.  Because of unlimited undo only these destroy methods have the potential for creating "real" garbage.</t>
-<t tx="T75"></t>
-<t tx="T76">This adds http:\\ to url's if needed.</t>
-<t tx="T77">New in version 3.11.  The @lineending directive allows you to specify the line endings for individual derived files.  This directive will override the output_newline setting in leoConfig.txt.  Note that @lineending _never_ affects the line endings in .leo files themselves:  we must have consistent line endings in .leo files!  See below for more details.
+<t tx="T76"></t>
+<t tx="T77">This adds http:\\ to url's if needed.</t>
+<t tx="T78">New in version 3.11.  The @lineending directive allows you to specify the line endings for individual derived files.  This directive will override the output_newline setting in leoConfig.txt.  Note that @lineending _never_ affects the line endings in .leo files themselves:  we must have consistent line endings in .leo files!  See below for more details.
 
 The valid forms of the new @lineending directive are:
 
@@ -2998,12 +2893,12 @@ The valid forms of the new @lineending directive are:
 @lineending crlf     (Windows)
 @lineending lf       (same as nl, not recommended)
 @lineending platform (same as platform value for output_newline setting in leoConfig.txt)</t>
-<t tx="T78">This will have no effect until version 4.0.</t>
-<t tx="T79">Leo now uses unicode internally for most strings.  This solves a lot of problems.  The children of this node discuss all the details...</t>
-<t tx="T80">This fixes several bugs.</t>
-<t tx="T81">In particular, the locale returned by locale.getdefaultlocale()[1] need not be a valid unicode encoding.
+<t tx="T79">This will have no effect until version 4.0.</t>
+<t tx="T80">Leo now uses unicode internally for most strings.  This solves a lot of problems.  The children of this node discuss all the details...</t>
+<t tx="T81">This fixes several bugs.</t>
+<t tx="T82">In particular, the locale returned by locale.getdefaultlocale()[1] need not be a valid unicode encoding.
 </t>
-<t tx="T82">Leo now uses unicode internally for most strings.  The highlights:
+<t tx="T83">Leo now uses unicode internally for most strings.  The highlights:
 
 1. Leo converts headline and body text to unicode when reading .leo files and derived files.  Both .leo files and derived files may specify their encoding, with "utf-8" being used by default.  If the encoding used in a derived file is not "utf-8" it is represented in the @+leo sentinel line.  For example:
 
@@ -3024,7 +2919,7 @@ default_derived_file_encoding to anything that makes sense for you.
 4. You may use the @encoding directive to specify the encoding used in a derived file.  You can't mix encodings in a single derived file.
 
 This is all should need to know to use extended character sets on Leo.</t>
-<t tx="T83">leoConfig.py now contains two new settings, with the defaults shown below: 
+<t tx="T84">leoConfig.py now contains two new settings, with the defaults shown below: 
 
 default_derived_file_encoding = UTF-8 
 new_leo_file_encoding = UTF-8 
@@ -3035,7 +2930,7 @@ I do not recommend changing new_leo_file_encoding (see the comments in leoConfig
 
 You may set default_derived_file_encoding to anything that makes sense for you.
 </t>
-<t tx="T84">The following paragraphs discuss code-level details.  You should not need to read this section in order to use Leo.
+<t tx="T85">The following paragraphs discuss code-level details.  You should not need to read this section in order to use Leo.
 
 1. Leo uses unicode objects in vnodes and tnodes to denote headline and body text.  Note that unicode strings have no encoding; only plain strings have encodings. This means that once an (encoded) plain string has been converted to a unicode string it doesn't matter how the unicode string was created.  This is the key that makes Leo's new code robust. 
 
@@ -3053,10 +2948,10 @@ are promoted to unicode objects using the "system encoding". This encoding shoul
 
 - All strings are converted to unicode when Leo reads files or gets text from Tk.Text widgets. 
 - All string literals in Leo's code have only ascii characters.</t>
-<t tx="T85"></t>
-<t tx="T86">It is now much easier to customize Leo.  The new scheme is based on plugins (files in the plugins directory) rather than modifying customizeLeo.py.  Many thanks to Paul Paterson for suggesting this scheme and for doing the first implementation.
+<t tx="T86"></t>
+<t tx="T87">It is now much easier to customize Leo.  The new scheme is based on plugins (files in the plugins directory) rather than modifying customizeLeo.py.  Many thanks to Paul Paterson for suggesting this scheme and for doing the first implementation.
 </t>
-<t tx="T87">@nocolor
+<t tx="T88">@nocolor
 
 New in 3.11. Leo now looks in the plugins folder for files whose name matches
 mod_*.py. Leo tries to import all such files at startup ("start2") time. 
@@ -3109,7 +3004,7 @@ It should now be _much_ easier to submit a plugin for inclusion in LeoPy.leo.
 Just send me a .leo file containing @file mod_your_plugin.py. Please have this
 @file node be @ignored: this is more convenient for me. Ideally, your .leo file
 should contain _only_ your plugin code.</t>
-<t tx="T88">@color
+<t tx="T89">@color
 @language python
 @ignore
 
@@ -3124,7 +3019,7 @@ if 1: # Register the handlers...
 	registerHandler("idle", on_idle)
 	registerHandler(("start2","open2","command2"), create_open_with_menu)
 	es("...open with")</t>
-<t tx="T89"># frame.OnOpenWith creates the dict as follows:
+<t tx="T90"># frame.OnOpenWith creates the dict as follows:
 # dict = {"c":c, "v":v, "f":f, "path":path, "time":time}
 
 def on_idle (tag,keywords):
@@ -3142,7 +3037,7 @@ def on_idle (tag,keywords):
 					dict["time"] = time
 					&lt;&lt; update v's body text &gt;&gt;
 			except: pass</t>
-<t tx="T90">&lt;&lt; set s to the new text &gt;&gt;
+<t tx="T91">&lt;&lt; set s to the new text &gt;&gt;
 body = v.bodyString()
 &lt;&lt; set conflict flag &gt;&gt;
 
@@ -3163,7 +3058,7 @@ if update:
 	c.selectVnode(v)
 	v.OpenWithOldBody = s
 </t>
-<t tx="T91">try:
+<t tx="T92">try:
 	# Update v from the changed temp file.
 	f=open(path)
 	s=f.read()
@@ -3172,14 +3067,14 @@ except:
 	es("can not open " + shortFileName(path))
 	break
 </t>
-<t tx="T92">try:
+<t tx="T93">try:
 	# The OpenWithOldBody attribute does not normally exist in vnodes.
 	old_body = v.OpenWithOldBody
 	conflict = body != old_body and body != s
 except:
 	conflict = v.isDirty() and body != s
 </t>
-<t tx="T93">def create_open_with_menu (tag,keywords):
+<t tx="T94">def create_open_with_menu (tag,keywords):
 
 	if  (tag in ("start2","open2") or
 		(tag=="command2" and keywords.get("label")=="new")):
@@ -3190,7 +3085,7 @@ except:
 		from leoGlobals import enableIdleTimeHook
 		enableIdleTimeHook(idleTimeDelay=500)
 </t>
-<t tx="T94">@ Entries in the following table are the tuple (commandName,shortcut,data).
+<t tx="T95">@ Entries in the following table are the tuple (commandName,shortcut,data).
 data is the tuple (command,arg,ext).
 command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
 Leo executes command(arg+path) where path is the full path to the temp file.
@@ -3211,7 +3106,7 @@ else: # David McNab's table.
 
 top().frame.createOpenWithMenuFromTable(table)
 </t>
-<t tx="T95">Simplified and regularized hooks:
+<t tx="T96">Simplified and regularized hooks:
 
 - replaced "event1" and "event2" hooks with 'regular' hooks.
 	* Much easier to understand.
@@ -3233,7 +3128,7 @@ Improved code:
 - the tracing code also checks to make sure that most hooks have c,v keywords.
 - created es_event_exception().
 - put all event handlers in try/except blocks that call es_event_exception on errors.</t>
-<t tx="T96">At startup time Leo looks all files of the form mod_*.py in the plugins
+<t tx="T97">At startup time Leo looks all files of the form mod_*.py in the plugins
 directory. Leo assumes that these files are "plugins" containing Python modules
 that customizes Leo's operation. Leo attempts to import each file.
 
@@ -3352,17 +3247,17 @@ b) the file is not already open.
 
 (5) "@url1" and "@url2" hooks are only executed if "icondclick1" hook returns
 None.</t>
-<t tx="T97">See the Code:Customizing Leo:Plugins folder in LeoPy.leo for full details of all plugins.
+<t tx="T98">See the Code:Customizing Leo:Plugins folder in LeoPy.leo for full details of all plugins.
 
 - Added disabled support for @folder.
 
 - Demoted up/down arrow stuff to a disabled plugin for now.</t>
-<t tx="T98">The idle-time hook now checks for dirty @file nodes that have been modified in an external editor since the last check.  An alert is raised when such conflicting changes are found.
+<t tx="T99">The idle-time hook now checks for dirty @file nodes that have been modified in an external editor since the last check.  An alert is raised when such conflicting changes are found.
 
 Improved sanitize_filename utility (in leoGlobals.py) so that it converts all characters used to denote filenames to underscores.</t>
-<t tx="T99">This allows output from registering hooks to appear in the log pane.</t>
-<t tx="T100"></t>
-<t tx="T101">The following new plugins are now in LeoPy.leo.
+<t tx="T100">This allows output from registering hooks to appear in the log pane.</t>
+<t tx="T101"></t>
+<t tx="T102">The following new plugins are now in LeoPy.leo.
 
 - mod_script_io_to_body.py
 	Redirect output from scripts to end of body pane.
@@ -3372,16 +3267,16 @@ Improved sanitize_filename utility (in leoGlobals.py) so that it converts all ch
 
 - mod_french_fm.py
 	Full translation of all Leo's menus into French.</t>
-<t tx="T102">Added support for the following options:
+<t tx="T103">Added support for the following options:
 
 show_invisibles_space_background_color
 show_invisibles_tab_background_color
 </t>
-<t tx="T103">This option controls when the control key is considered to start a control-drag.
+<t tx="T104">This option controls when the control key is considered to start a control-drag.
 
 If look_for_control_drag_on_mouse_down = 1 the the control key must be down when dragging starts.  Otherwise, the control key must be down when dragging ends.</t>
-<t tx="T104">This allows Leo to be used with a black background.</t>
-<t tx="T105">Two new settings in leoConfig.leo/.txt specify the format of the time/date
+<t tx="T105">This allows Leo to be used with a black background.</t>
+<t tx="T106">Two new settings in leoConfig.leo/.txt specify the format of the time/date
 strings inserted by the Insert Body Time/Date and Insert Headline Time/Date
 commands:
 
@@ -3395,11 +3290,11 @@ of the format options. The "%m/%d/%Y %H:%M:%S" format is used by default,
 resulting in a time/date format such as: 1/30/2003 8:31:55
 
 </t>
-<t tx="T106"></t>
-<t tx="T107">- if the headline is bracketed (named) then the &lt;&lt; &gt;&gt; are removed.
+<t tx="T107"></t>
+<t tx="T108">- if the headline is bracketed (named) then the &lt;&lt; &gt;&gt; are removed.
 - if the headline is not bracketed (unnamed) then the &lt;&lt; &gt;&gt; are inserted. 
 </t>
-<t tx="T108">The Insert Body Time/Date and Insert Headline Time/Date commands are in the
+<t tx="T109">The Insert Body Time/Date and Insert Headline Time/Date commands are in the
 Edit Body and Edit Headline menus respectively. They insert the formatted time
 &amp; date into the body or headline text. You must be editing a headline to be
 able to insert the time/date into the headline. If you aren't Leo will say:
@@ -3415,34 +3310,34 @@ These settings are really the format string passed to time.strftime(format).
 See http://www.python.org/doc/current/lib/module-time.html for a complete list
 of the format options. The "%m/%d/%Y %H:%M:%S" format is used by default,
 resulting in a time/date format such as: 1/30/2003 8:31:55</t>
-<t tx="T109">These commands select the first or last node of an outline and make that node visible.</t>
-<t tx="T110">This command selects the parent of the previously selected node and makes that node visible.</t>
-<t tx="T111">These commands select the previous or following sibling of a node and make the newly selected node visible.</t>
-<t tx="T112">This command writes any files (in the presently selected outline) that do not exist.</t>
-<t tx="T113"></t>
-<t tx="T114">This allows time to be expressed as local time or gmttime.</t>
-<t tx="T115"></t>
-<t tx="T116">The Expand To Level n commands now expand only the nodes in the presently selected outline.  This makes these commands much more useful.
+<t tx="T110">These commands select the first or last node of an outline and make that node visible.</t>
+<t tx="T111">This command selects the parent of the previously selected node and makes that node visible.</t>
+<t tx="T112">These commands select the previous or following sibling of a node and make the newly selected node visible.</t>
+<t tx="T113">This command writes any files (in the presently selected outline) that do not exist.</t>
+<t tx="T114"></t>
+<t tx="T115">This allows time to be expressed as local time or gmttime.</t>
+<t tx="T116"></t>
+<t tx="T117">The Expand To Level n commands now expand only the nodes in the presently selected outline.  This makes these commands much more useful.
 
 With these changes there is no longer any need for the Expand Subheads command.</t>
-<t tx="T117">This can be useful when clones are in the range of different @path directives.</t>
-<t tx="T118"></t>
-<t tx="T119">1. Leo now longer warns when writing customizeLeo.py.
+<t tx="T118">This can be useful when clones are in the range of different @path directives.</t>
+<t tx="T119"></t>
+<t tx="T120">1. Leo now longer warns when writing customizeLeo.py.
 
 2. Inserted a lock that prevents customizeLeo.py from being written unless use_customize_leo_dot_py = 1 in leoConfig.txt.  Leo writes a message to the log if customizeLeo.py is dirty but was not written because of the setting in leoConfig.txt.
 </t>
-<t tx="T120"></t>
 <t tx="T121"></t>
 <t tx="T122"></t>
-<t tx="T123">This makes the file name easier to see in the Windows task bar.
+<t tx="T123"></t>
+<t tx="T124">This makes the file name easier to see in the Windows task bar.
 </t>
-<t tx="T124"></t>
-<t tx="T125">This allows Leo to syntax color comments with @language plain.
+<t tx="T125"></t>
+<t tx="T126">This allows Leo to syntax color comments with @language plain.
 The @comment directive must follow the @langauge directive.</t>
-<t tx="T126">In other words, the Pressing the Enter key in the Find panel executes the Find Next command.
+<t tx="T127">In other words, the Pressing the Enter key in the Find panel executes the Find Next command.
 </t>
-<t tx="T127">The syntax colorer now colors all element tags.  See the example in the child of this node.</t>
-<t tx="T128">@language html
+<t tx="T128">The syntax colorer now colors all element tags.  See the example in the child of this node.</t>
+<t tx="T129">@language html
 @color
 @ignore
 &lt;HTML&gt;
@@ -3537,55 +3432,54 @@ HEIGHT="32" ALIGN="left" NATURALSIZEFLAG="3"&gt;
 &lt;/BODY&gt;
 &lt;/HTML&gt;
 </t>
-<t tx="T129">- Added "Replace tabs with spaces" checkbox.
+<t tx="T130">- Added "Replace tabs with spaces" checkbox.
 
 - The close button is equivalent to the "Cancel" button rather than the "Ok" button.</t>
-<t tx="T130">This was causing great confusion.</t>
-<t tx="T131"></t>
+<t tx="T131">This was causing great confusion.</t>
 <t tx="T132"></t>
-<t tx="T133">- There was a bug that prevented the command from working properly if the line number preceeded the present line.
+<t tx="T133"></t>
+<t tx="T134">- There was a bug that prevented the command from working properly if the line number preceeded the present line.
 
 - The goto line number option only works on full path names in @file nodes. 
 It does not work for relative paths or in combination with an @path directive.</t>
-<t tx="T134">This problem only arose with languages such as html that have no single-line comment delimiter.
+<t tx="T135">This problem only arose with languages such as html that have no single-line comment delimiter.
 </t>
-<t tx="T135"></t>
-<t tx="T136">Leo did not properly handle configuration settings containing the % character.
+<t tx="T136"></t>
+<t tx="T137">Leo did not properly handle configuration settings containing the % character.
 </t>
-<t tx="T137"></t>
-<t tx="T138">Double-clicking the icon box used to set the cursor to the hand.
+<t tx="T138"></t>
+<t tx="T139">Double-clicking the icon box used to set the cursor to the hand.
 </t>
-<t tx="T139">Every call to v.unjoinNode was calling c.clearAllVistied.
+<t tx="T140">Every call to v.unjoinNode was calling c.clearAllVistied.
 
 Fixing this bug will allow me not to use inodes &amp; locations for the foreseeable future.</t>
-<t tx="T140"></t>
 <t tx="T141"></t>
-<t tx="T142">In the unusual case that a language has no single-line comment delimiter, Leo will remove the block delimiters from the headline text in node sentinels.  createNthChild must take this into account by doing a second comparison of headlines if the normal comparison fails.  If the second comparison of headlines succeeds we assume that we should use the headline from the outline instead of the derived file.  I believe some kind of kludge like this will also be required for 4.0.</t>
-<t tx="T143">- Translating the "Tangle..." label differently from the "Tangle" one was 
+<t tx="T142"></t>
+<t tx="T143">In the unusual case that a language has no single-line comment delimiter, Leo will remove the block delimiters from the headline text in node sentinels.  createNthChild must take this into account by doing a second comparison of headlines if the normal comparison fails.  If the second comparison of headlines succeeds we assume that we should use the headline from the outline instead of the derived file.  I believe some kind of kludge like this will also be required for 4.0.</t>
+<t tx="T144">- Translating the "Tangle..." label differently from the "Tangle" one was 
 impossible without modifying leo's source code (same thing for "Untangle..." 
 and "Untangle").
 
 - Couldn't translate either "Show Invisibles" and "Hide Invisibles". First 
 toggle is OK then an error occurs after the second...</t>
-<t tx="T144">- changed copyPart so it returns on @code as well as @c.
+<t tx="T145">- changed copyPart so it returns on @code as well as @c.
 
 - changed convertVnodeToWeb so that it takes acount of the "at_root_bodies_start_in_doc_mode" setting.
 
 - For the most part, directives other than @c, @code, @space, @doc, @others get written to the file as @@directive.  There are minor differences between how this is handled in @root and @file trees. This might be considered a bug, and I am not going to do anything unless someone complains loudly.
 </t>
-<t tx="T145">Enabling or disabling @language or @comment now recolors entire text.</t>
-<t tx="T146"></t>
-<t tx="T147">I had forgotten to compile leo.nsi.</t>
-<t tx="T148"></t>
+<t tx="T146">Enabling or disabling @language or @comment now recolors entire text.</t>
+<t tx="T147"></t>
+<t tx="T148">I had forgotten to compile leo.nsi.</t>
 <t tx="T149"></t>
-<t tx="T150">Python 2.3a1 contains a bug in the tkinter code.  This bug has been fixed on Python's cvs site.  Until this bug is fixed in an official Python release Leo must use:
+<t tx="T150"></t>
+<t tx="T151">Python 2.3a1 contains a bug in the tkinter code.  This bug has been fixed on Python's cvs site.  Until this bug is fixed in an official Python release Leo must use:
 
 true,false = 1,0
 
 rather than:
 
 true,false = True,False</t>
-<t tx="T151"></t>
 <t tx="T152">leo.py 3.10                             December 14, 2002
 
 This version of Leo corrects bugs, improves Leo's documentation and adds many new features:

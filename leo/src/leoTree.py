@@ -935,7 +935,7 @@ class leoTree:
 			removeTrailing = ch != '\n' # false
 		elif old == new[:-1]:
 			# A single trailing character has been added.
-			trace("false: only changed trailing.")
+			# trace("false: only changed trailing.")
 			removeTrailing = false
 		else:
 			# The text didn't have a newline, and now it does.
@@ -1830,6 +1830,8 @@ class leoTree:
 			#@<< select the new node >>
 			#@+node:3::<< select the new node >>
 			#@+body
+			self.commands.frame.setWrap(v)
+			
 			# Delete only if necessary: this may reduce flicker slightly.
 			s = v.t.bodyString
 			s = toUnicode(s,"utf-8")
