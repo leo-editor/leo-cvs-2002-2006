@@ -35771,6 +35771,115 @@ def putUnknownAttributes (self,torv):
 #@nonl
 #@-node:EKR.20040526202501:putUnknownAttributes
 #@-node:EKR.20040507093503:(Fixed problems saving unknownAttribute field)
+#@+node:EKR.20040525135323:(Created all_t/vnodes_iter)
+#@+node:ekr.20040312090934:c.allNodes_iter, all_vnodes_iter, all_tnodes_iter
+def allNodes_iter(self,copy=false):
+	
+	c = self
+	return c.rootPosition().allNodes_iter(copy)
+	
+def all_tnodes_iter(self):
+	
+	c = self
+	return c.rootPosition().all_tnodes_iter(all=true)
+
+	
+def all_vnodes_iter(self):
+	
+	c = self
+	return c.rootPosition().all_vnodes_iter(all=true)
+#@nonl
+#@-node:ekr.20040312090934:c.allNodes_iter, all_vnodes_iter, all_tnodes_iter
+#@+node:EKR.20040527065806.1:all_tnodes_iter
+class all_tnodes_iter_class:
+
+	"""Returns a list all tnodes in a position's subtree."""
+
+	@others
+
+def all_tnodes_iter (self,all=false):
+	
+	return self.all_tnodes_iter_class(self,all)
+#@nonl
+#@+node:EKR.20040527065917.4:__init__ & __iter__
+def __init__(self,p,all):
+
+	self.first = p.copy()
+	if all: self.after = None
+	else:   self.after = p.nodeAfterTree()
+	self.p = None
+	self.marks = {}
+
+def __iter__(self):
+
+	return self
+#@nonl
+#@-node:EKR.20040527065917.4:__init__ & __iter__
+#@+node:EKR.20040527065917.5:next
+def next(self):
+	
+	if self.first:
+		self.p = self.first
+		self.first = None
+	else:
+		self.p.moveToThreadNext()
+		while self.p and self.p != self.after and self.marks.get(self.p.v.t):
+			self.p.moveToThreadNext()
+
+	if self.p and self.p != self.after:
+		self.marks[self.p.v.t] = self.p.v.t
+		return self.p.v.t
+	else:
+		raise StopIteration
+#@nonl
+#@-node:EKR.20040527065917.5:next
+#@-node:EKR.20040527065806.1:all_tnodes_iter
+#@+node:EKR.20040527065806:all_vnodes_iter
+class all_vnodes_iter_class:
+
+	"""Returns a list all vnodes in a position's subtree."""
+
+	@others
+
+def all_vnodes_iter (self,all=false):
+	
+	return self.all_vnodes_iter_class(self,all)
+#@nonl
+#@+node:EKR.20040527065917.1:__init__ & __iter__
+def __init__(self,p,all):
+
+	self.first = p.copy()
+	if all: self.after = None
+	else:   self.after = p.nodeAfterTree()
+	self.p = None
+	self.marks = {}
+	
+def __iter__(self):
+
+	return self
+#@nonl
+#@-node:EKR.20040527065917.1:__init__ & __iter__
+#@+node:EKR.20040527065917.2:next
+def next(self):
+	
+	if self.first:
+		self.p = self.first
+		self.first = None
+		
+	else:
+		self.p.moveToThreadNext()
+		while self.p and self.p != self.after and self.marks.get(self.p.v):
+			self.p.moveToThreadNext()
+
+	if self.p and self.p != self.after:
+		self.marks[self.p.v] = self.p.v
+		return self.p.v
+	else:
+		raise StopIteration
+#@nonl
+#@-node:EKR.20040527065917.2:next
+#@-node:EKR.20040527065806:all_vnodes_iter
+#@-node:EKR.20040525135323:(Created all_t/vnodes_iter)
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@+node:EKR.20040512081330:In progress
