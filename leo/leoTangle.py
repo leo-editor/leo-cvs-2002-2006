@@ -4095,7 +4095,7 @@ class tangleCommands:
 			#@+body
 			if not old.has_key("tabwidth") and dict.has_key("tabwidth"):
 				
-				w = scanAtTabwidthDirective(s,dict,issue_error_flag=true)
+				w = scanAtTabwidthDirective(s,dict,issue_error_flag)
 				if w and w != 0:
 					self.tab_width = w
 			
