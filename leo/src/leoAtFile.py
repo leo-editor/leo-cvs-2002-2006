@@ -270,8 +270,8 @@ class baseAtFile:
 						g.es("changed: " + p.headString(),color="blue")
 						if 0: # For debugging.
 							print ; print "changed: " + p.headString()
-							print ; print "new:",`s`
-							print ; print "old:",`p.bodyString()`
+							print ; print "new:",s
+							print ; print "old:",p.bodyString()
 						p.setBodyStringOrPane(s) # Sets v and v.c dirty.
 						p.setMarked()
 				#@-node:<< copy all tempBodyStrings to tnodes >>
@@ -1304,7 +1304,7 @@ class baseOldDerivedFile:
 					elif s[i] == ' ': lineIndent += 1
 					else: break
 					i += 1
-				# g.trace("lineIndent:" +`lineIndent` + ", " + `s`)
+				# g.trace("lineIndent,s:",lineIndent,s)
 				
 				# Set leading_ws to the additional indentation on the line.
 				leading_ws = s[linep:i]
@@ -1487,7 +1487,7 @@ class baseOldDerivedFile:
 					# NB: this call to createNthChild is the bottleneck!
 					child = self.createNthChild(childIndex,p,headline)
 					child.t.setCloneIndex(cloneIndex)
-					# if cloneIndex > 0: g.trace("clone index:" + `cloneIndex` + ", " + `child`)
+					# if cloneIndex > 0: g.trace("cloneIndex,child:"cloneIndex,child)
 					self.scanText(file,child,out,endNode)
 				
 				#@<< look for sentinels that may follow a reference >>
@@ -1497,12 +1497,13 @@ class baseOldDerivedFile:
 				
 				if len(s) > 1 and kind == startVerbatimAfterRef:
 					s = self.readLine(file)
-					# g.trace("verbatim:"+`s`)
+					# g.trace("verbatim:",repr(s))
 					out.append(s)
 				elif len(s) > 1 and self.sentinelKind(s) == noSentinel:
 					out.append(s)
 				else:
 					nextLine = s # Handle the sentinel or blank line later.
+				
 				#@-node:<< look for sentinels that may follow a reference >>
 				#@nl
 				#@nonl
@@ -1642,7 +1643,7 @@ class baseOldDerivedFile:
 				if start and len(start) > 0 and start[-1] == '@':
 					s2 = s2.replace('@@','@')
 				out.append(s2)
-				# g.trace(`s2`)
+				# g.trace(s2)
 				#@nonl
 				#@-node:<< scan @@ >>
 				#@nl
@@ -2220,8 +2221,8 @@ class baseOldDerivedFile:
 			else: # Emergency!
 				# assert(0)
 				g.es("Unknown language: using Python comment delimiters")
-				g.es("c.target_language:"+`c.target_language`)
-				g.es("delim1,delim2,delim3:" + `delim1`+":"+`delim2`+":"+`delim3`)
+				g.es("c.target_language:",c.target_language)
+				g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
 				self.startSentinelComment = "#" # This should never happen!
 				self.endSentinelComment = ""
 			#@nonl
@@ -2885,7 +2886,7 @@ class baseOldDerivedFile:
 	
 	def putDocPart(self,s):
 	
-		# j = g.skip_line(s,0) ; g.trace(`s[:j]`)
+		# j = g.skip_line(s,0) ; g.trace(s[:j])
 		single = len(self.endSentinelComment) == 0
 		if not single:
 			self.putIndent(self.indent)
@@ -3248,7 +3249,7 @@ class baseOldDerivedFile:
 				s = g.toEncodedString(s,self.encoding,reportErrors=true)
 				self.outputFile.write(s)
 			except:
-				g.es("exception writing:" + `s`)
+				g.es("exception writing:",s)
 				g.es_exception()
 	
 	def otabs(self,n):
@@ -3444,13 +3445,13 @@ class baseNewDerivedFile(oldDerivedFile):
 		v = at.root.v
 	
 		if not hasattr(v.t,"tnodeList"):
-			at.readError("no tnodeList for " + `v`)
+			at.readError("no tnodeList for " + repr(v))
 			g.es("Write the @file node or use the Import Derived File command")
 			g.trace("no tnodeList for ",v)
 			return None
 			
 		if at.tnodeListIndex >= len(v.t.tnodeList):
-			at.readError("bad tnodeList index: %d, %s" % (at.tnodeListIndex,`v`))
+			at.readError("bad tnodeList index: %d, %s" % (at.tnodeListIndex,repr(v)))
 			g.trace("bad tnodeList index",at.tnodeListIndex,len(v.t.tnodeList),v)
 			return None
 			
@@ -3462,7 +3463,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		try:
 			v = t.vnodeList[0]
 		except:
-			at.readError("No vnodeList for tnode: %s" % `t`)
+			at.readError("No vnodeList for tnode: %s" % repr(t))
 			g.trace(at.tnodeListIndex)
 			return None
 	
@@ -3512,7 +3513,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			s = at.readLine(file)
 			if len(s) == 0: break
 			kind = at.sentinelKind(s)
-			# g.trace(at.sentinelName(kind),`s`)
+			# g.trace(at.sentinelName(kind),s)
 			if kind == noSentinel:
 				i = 0
 			else:
@@ -3975,7 +3976,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			if s and s[-1] == '\n':
 				at.out = [s[:-1]]
 			else:
-				g.trace("out:",`s`)
+				g.trace("out:",s)
 				at.readError("unexpected @nonl directive in code part")	
 		else:
 			s = ''.join(at.pending)
@@ -3983,14 +3984,14 @@ class baseNewDerivedFile(oldDerivedFile):
 				if s and s[-1] == '\n':
 					at.pending = [s[:-1]]
 				else:
-					g.trace("docOut:",`s`)
+					g.trace("docOut:",s)
 					at.readError("unexpected @nonl directive in pending doc part")
 			else:
 				s = ''.join(at.docOut)
 				if s and s[-1] == '\n':
 					at.docOut = [s[:-1]]
 				else:
-					g.trace("docOut:",`s`)
+					g.trace("docOut:",s)
 					at.readError("unexpected @nonl directive in doc part")
 	#@nonl
 	#@-node:readNonl
@@ -4237,7 +4238,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		if g.match(s,i,"@"):
 			j = g.skip_ws(s,i+1)
 			if j > i+1:
-				# g.trace(`ws`,`s`)
+				# g.trace(ws,s)
 				if g.match(s,j,"@+others"):
 					return startOthers
 				elif g.match(s,j,"<<"):
@@ -4973,7 +4974,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		at = self ; s = ''.join(at.pending) ; at.pending = []
 		
-		# g.trace("split",`s`)
+		# g.trace("split",s)
 		
 		# Remove trailing newline temporarily.  We'll add it back later.
 		if s and s[-1] == '\n':
@@ -5074,7 +5075,7 @@ class baseNewDerivedFile(oldDerivedFile):
 				s = g.toEncodedString(s,self.encoding,reportErrors=true)
 				self.outputFile.write(s)
 			except:
-				g.es("exception writing:" + `s`)
+				g.es("exception writing:",s)
 				g.es_exception(full=true)
 	
 	def otabs(self,n):

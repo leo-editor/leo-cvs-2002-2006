@@ -42,7 +42,7 @@ class baseLeoImportCommands:
 		# g.trace(ext,fileName)
 		self.fileType = ext
 		self.setEncoding()
-		# g.trace(`self.fileName`) ; g.trace(`self.fileType`)
+		# g.trace(self.fileName,self.fileType)
 		# All file types except the following just get copied to the parent node.
 		# Note: we should _not_ import header files using this code.
 		ext = ext.lower()
@@ -411,7 +411,7 @@ class baseLeoImportCommands:
 			i = 0
 			while i < len(s):
 				i = g.skip_ws_and_nl(s,i)
-				# line = g.get_line(s,i) ; g.trace(`line`)
+				# line = g.get_line(s,i) ; g.trace(line)
 				# Allow constructs such as @ @c, or @ @<.
 				if self.isDocStart(s,i):
 					i += 2 ; i = g.skip_ws(s,i)
@@ -442,7 +442,7 @@ class baseLeoImportCommands:
 			i = 0
 			while i < len(s):
 				i = g.skip_ws_and_nl(s,i)
-				# line = g.get_line(s,i) ; g.trace(`line`)
+				# line = g.get_line(s,i) ; g.trace(line)
 				if g.match(s,i,"<<"):
 					k = g.find_on_line(s,i,">>=")
 					if k > -1:
@@ -480,7 +480,7 @@ class baseLeoImportCommands:
 		i = 0 ; 	self.web_st = []
 		while i < len(s):
 			i = g.skip_ws_and_nl(s,i)
-			# line = g.get_line(s,i) ; g.trace(`line`)
+			# line = g.get_line(s,i) ; g.trace(line)
 			if self.isDocStart(s,i):
 				if type == "cweb": i += 2
 				else: i = g.skip_line(s,i)
@@ -517,7 +517,7 @@ class baseLeoImportCommands:
 				else: i = g.skip_line(s,i)
 			self.createHeadline(parent,s[j:i],g.angleBrackets(" @ "))
 			
-		# g.trace(`g.get_line(s,i)`)
+		# g.trace(g.get_line(s,i))
 		#@nonl
 		#@-node:<< Create nodes for limbo text and the root section >>
 		#@nl
@@ -776,7 +776,7 @@ class baseLeoImportCommands:
 		if i < len(s) and g.is_c_id(s[i]):
 			j = i ; i = g.skip_c_id(s,i)
 			headline = s[j:i]
-			# g.trace("headline:" + `headline`)
+			# g.trace("headline:" + headline)
 		else: return i
 		#@nonl
 		#@-node:<< set headline or return i >>
@@ -1011,7 +1011,7 @@ class baseLeoImportCommands:
 		parent.appendStringToBody(s[:startOfCode])
 		scan_start = i = startOfCode
 		while i < endOfCode:
-			# line = g.get_line(s,i) ; g.trace(`line`)
+			# line = g.get_line(s,i) ; g.trace(line)
 			ch = s[i]
 			# These cases skip tokens.
 			if ch == '/' or ch == '#':
@@ -1180,7 +1180,7 @@ class baseLeoImportCommands:
 		#@-node:<< define scanCText vars >>
 		#@nl
 		while i < len(s):
-			# line = g.get_line(s,i) ; g.trace(`line`)
+			# line = g.get_line(s,i) ; g.trace(line)
 			ch = s[i]
 			# These cases skip tokens.
 			if ch == '/':
@@ -1601,9 +1601,9 @@ class baseLeoImportCommands:
 		#@nonl
 		#@-node:<< define scanJavaText vars >>
 		#@nl
-		# if not outerFlag: g.trace("inner:" + `s`)
+		# if not outerFlag: g.trace("inner:",s)
 		while i < len(s):
-			# g.trace(`g.get_line(s,i)`)
+			# g.trace(g.get_line(s,i))
 			ch = s[i]
 			# These cases skip tokens.
 			if ch == '/':
@@ -1687,13 +1687,13 @@ class baseLeoImportCommands:
 				elif not name:
 					i += 1
 				elif (outerFlag and (class_seen or interface_seen)) or (not outerFlag and lparen):
-					# g.trace("starting:"+name)
-					# g.trace("outerFlag:"+`outerFlag`)
-					# g.trace("lparen:"`lparen`)
-					# g.trace("class_seen:"+`class_seen`)
-					# g.trace("scan_start:"+g.get_line_after(s,scan_start))
-					# g.trace("func_start:"+g.get_line_after(s,function_start))
-					# g.trace("s:"+g.get_line(s,i))
+					# g.trace("starting:",name)
+					# g.trace("outerFlag:",outerFlag)
+					# g.trace("lparen:",lparen)
+					# g.trace("class_seen:",class_seen)
+					# g.trace("scan_start:",g.get_line_after(s,scan_start))
+					# g.trace("func_start:",g.get_line_after(s,function_start))
+					# g.trace("s:",g.get_line(s,i))
 				
 					# Point i _after_ the last character of the method.
 					i += 1
@@ -1766,7 +1766,7 @@ class baseLeoImportCommands:
 						#@		<< recursively scan the text >>
 						#@+node:<< recursively scan the text >>
 						# These mark the points in the present function.
-						# g.trace("recursive scan:" + `g.get_line(s,brace_ip1+ 1)`)
+						# g.trace("recursive scan:",g.get_line(s,brace_ip1+ 1))
 						oldMethodName = self.methodName
 						self.methodName = headline
 						self.scanJavaText(s[brace_ip1+1:brace_ip2], # Don't include either brace.
@@ -1834,7 +1834,7 @@ class baseLeoImportCommands:
 		scan_start = function_start = i = 0
 		name = None
 		while i < len(s):
-			# line = g.get_line(s,i) ; g.trace(`line`)
+			# line = g.get_line(s,i) ; g.trace(line)
 			ch = s[i]
 			if ch == '{': i = g.skip_pascal_braces(s,i)
 			elif ch == '"' or ch == '\'': i = g.skip_pascal_string(s,i)
@@ -1850,7 +1850,7 @@ class baseLeoImportCommands:
 				elif (g.match_c_word(s,i,"function")  or g.match_c_word(s,i,"procedure") or
 					g.match_c_word(s,i,"constructor") or g.match_c_word(s,i,"destructor")):
 				
-					# line = g.get_line(s,i) ; g.trace(`line`)
+					# line = g.get_line(s,i) ; g.trace(line)
 					
 					start = i
 					i = g.skip_c_id(s,i)
@@ -2030,7 +2030,7 @@ class baseLeoImportCommands:
 			#@	<< set file_name >>
 			#@+node:<< Set file_name >>
 			# set j & k so line[j:k] is the file name.
-			# g.trace(`line`)
+			# g.trace(line)
 			
 			if g.match(line,0,"<"):
 				j = 1 ; k = string.find(line,">",1)
@@ -2539,7 +2539,7 @@ class baseLeoImportCommands:
 	#@+node:createHeadline
 	def createHeadline (self,parent,body,headline):
 	
-		# g.trace("parent,headline:" + `parent` + ":" + `headline`)
+		# g.trace("parent,headline:",parent,headline)
 		# Create the vnode.
 		v = parent.insertAsLastChild()
 		v.initHeadString(headline,self.encoding)
@@ -2561,13 +2561,13 @@ class baseLeoImportCommands:
 		c = self.c
 		i = g.find_line_start(s,i)
 		while i < len(s):
-			# g.trace(`g.get_line(s,i)`)
+			# g.trace(g.get_line(s,i))
 			j = g.skip_ws(s,i) # Bug fix: 2/14/03
 			if g.is_nl(s,j) or g.match(s,j,"#"): # Bug fix: 2/14/03
 				i = g.skip_line(s,i) # ignore blank lines and comment lines.
 			else:
 				i, width = g.skip_leading_ws_with_indent(s,i,c.tab_width)
-				# g.trace("returns:" + `width`)
+				# g.trace("returns:",width)
 				return width
 		# g.trace("returns:0")
 		return 0
@@ -2602,8 +2602,8 @@ class baseLeoImportCommands:
 	#@+node:massageBody
 	def massageBody (self,s,methodKind):
 		
-		# g.trace(`s`)
-		# g.trace(`g.get_line(s,0)`)
+		# g.trace(s)
+		# g.trace(g.get_line(s,0))
 		c = self.c
 		if self.treeType == "@file":
 			if self.fileType == ".py": # 7/31/02: was "py"
@@ -2643,7 +2643,7 @@ class baseLeoImportCommands:
 		
 		Also removes leading and trailing whitespace."""
 	
-		# g.trace(`g.get_line(s,0)`)
+		# g.trace(g.get_line(s,0))
 		s = string.strip(s)
 		s = string.replace(s,"\n"," ")
 		s = string.replace(s,"\r"," ")
@@ -2687,7 +2687,7 @@ class baseLeoImportCommands:
 						doc = g.choose(self.webType=="cweb", "@ ","@\n")
 					else:
 						doc += "\n\n"
-					# g.trace("new doc:" + `doc`)
+					# g.trace("new doc:",doc)
 					s = s[:start] + doc + s[end:]
 					i = start + len(doc)
 			else: i = g.skip_line(s,i)
@@ -2698,7 +2698,7 @@ class baseLeoImportCommands:
 		#@+node:<< Replace abbreviated names with full names >>
 		i = 0
 		while i < len(s):
-			# g.trace(`g.get_line(s,i)`)
+			# g.trace(g.get_line(s,i))
 			if g.match(s,i,lb):
 				i += 2 ; j = i ; k = g.find_on_line(s,j,rb)
 				if k > -1:
@@ -2706,7 +2706,7 @@ class baseLeoImportCommands:
 					name2 = self.cstLookup(name)
 					if name != name2:
 						# Replace name by name2 in s.
-						# g.trace("replacing:" + `name` + ", by:" + `name2`)
+						# g.trace("replacing %s by %s" % (name,name2))
 						s = s[:j] + name2 + s[k:]
 						i = j + len(name2)
 			i = g.skip_line(s,i)
@@ -2737,7 +2737,7 @@ class baseLeoImportCommands:
 	
 		Returns (body, comment)"""
 	
-		# g.trace(`g.get_line(s,0)`)
+		# g.trace(g.get_line(s,0))
 		s_original = s
 		s = string.lstrip(s)
 		i = 0 ; comment = ""
@@ -2822,7 +2822,7 @@ class baseLeoImportCommands:
 	
 		"""Removes extra leading indentation from all lines."""
 	
-		# g.trace(`s`)
+		# g.trace(s)
 		c = self.c
 		i = 0 ; result = ""
 		# Copy an @code line as is.
@@ -2835,7 +2835,7 @@ class baseLeoImportCommands:
 		while i < len(s):
 			j = i ; i = g.skip_line(s,i) # don't use get_line: it is only for dumping.
 			line = s[j:i]
-			# g.trace(`line`)
+			# g.trace(line)
 			line = g.removeLeadingWhitespace(line,undent,c.tab_width)
 			result += line
 		return result

@@ -159,7 +159,7 @@ class baseUndoer:
 				assert(old_d["undoType"] == "Typing")
 				assert(old_d["v"] == u.p)
 				u.oldText = old_d["newText"]
-				# g.trace(`u.oldText`)
+				# g.trace(u.oldText)
 		return d
 		
 	def peekBead (self,n):
@@ -193,7 +193,7 @@ class baseUndoer:
 				old_d = u.beads[n-1]
 				if old_d["undoType"] == "Typing" and old_d["v"] == u.p:
 					del d["oldText"] # We can recreate this entry from old_d["newText"]
-					# g.trace(`u.oldText`)
+					# g.trace(u.oldText)
 		# g.trace(d)
 		return d
 	#@-node:getBead, peekBead, setBead
@@ -1139,8 +1139,8 @@ class baseUndoer:
 			s = s + '\n' * oldNewlines
 		result = s
 		if u.debug_print:
-			print "body:  ",`body`
-			print "result:",`result`
+			print "body:  ",body
+			print "result:",result
 		#@nonl
 		#@-node:<< Compute the result using v's body text >>
 		#@nl

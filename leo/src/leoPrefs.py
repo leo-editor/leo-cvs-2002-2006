@@ -57,7 +57,7 @@ class leoPrefs:
 	def init(self,c):
 	
 		self.c = c
-		#g.trace(`c.tab_width`)
+		#g.trace(c.tab_width)
 	
 		for var in self.ivars:
 			val = getattr(c,var)

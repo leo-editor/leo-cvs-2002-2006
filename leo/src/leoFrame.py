@@ -483,7 +483,7 @@ class leoFrame:
 			r2 = config.getFloatWindowPref("initial_horizontal_secondary_ratio")
 			if r2 == None or r2 < 0.0 or r2 > 1.0: r2 = 0.8
 	
-		# print (`r`,`r2`)
+		# print r,r2
 		return verticalFlag,r,r2
 	#@nonl
 	#@-node:initialRatios

@@ -273,7 +273,7 @@ def set_language(s,i,issue_errors_flag=false):
 	"""
 
 	tag = "@language"
-	# g.trace(`g.get_line(s,i)`)
+	# g.trace(g.get_line(s,i))
 	assert(i != None)
 	assert(g.match_word(s,i,tag))
 	i += len(tag) ; i = g.skip_ws(s, i)
@@ -420,7 +420,7 @@ def scanAtLineendingDirective(s,dict):
 
 	if e in ("cr","crlf","lf","nl","platform"):
 		lineending = g.getOutputNewline(e)
-		# g.trace(`e`,`lineending`)
+		# g.trace(e,lineending)
 		return lineending
 	else:
 		# g.es("invalid @lineending directive:"+e,color="red")
@@ -459,7 +459,7 @@ def scanAtTabwidthDirective(s,dict,issue_error_flag=false):
 	i = k + len("@tabwidth")
 	i, val = g.skip_long(s, i)
 	if val != None and val != 0:
-		# g.trace(`val`)
+		# g.trace(val)
 		return val
 	else:
 		if issue_error_flag:
@@ -706,7 +706,7 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 		firstLineWidth = 10
 	outputLineWidth = firstLineWidth
 
-	# g.trace(`lines`)
+	# g.trace(lines)
 	result = [] # The lines of the result.
 	line = "" # The line being formed.  It never ends in whitespace.
 	for s in lines:
@@ -756,7 +756,7 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 				#@nl
 	if len(line) > 0:
 		result.append(line)
-	# g.trace(`result`)
+	# g.trace(result)
 	return result
 #@nonl
 #@-node:wrap_lines
@@ -809,7 +809,7 @@ def dump(s):
 	
 	out = ""
 	for i in s:
-		out += `ord(i)` + ","
+		out += str(ord(i)) + ","
 	return out
 		
 def oldDump(s):
@@ -952,7 +952,7 @@ def create_temp_name ():
 
 	import tempfile
 	temp = tempfile.mktemp()
-	# g.trace(`temp`)
+	# g.trace(temp)
 	return temp
 #@nonl
 #@-node:create_temp_name
@@ -980,7 +980,7 @@ def getBaseDirectory():
 	elif base and base == ".":
 		base = g.top().openDirectory
 
-	# g.trace(`base`)
+	# g.trace(base)
 	if base and len(base) > 0 and g.os_path_isabs(base):
 		return base # base need not exist yet.
 	else:
@@ -1105,7 +1105,7 @@ def update_file_if_changed(file_name,temp_name):
 				g.es("***updating: " + file_name)
 			except:
 				g.es("Rename failed: no file created!",color="red")
-				g.es(`file_name` + " may be read-only or in use")
+				g.es(file_name," may be read-only or in use")
 				g.es_exception()
 	else:
 		try:
@@ -1114,7 +1114,7 @@ def update_file_if_changed(file_name,temp_name):
 			g.es("creating: " + file_name)
 		except:
 			g.es("rename failed: no file created!",color="red")
-			g.es(`file_name` + " may be read-only or in use")
+			g.es(file_name," may be read-only or in use")
 			g.es_exception()
 #@-node:update_file_if_changed
 #@+node:utils_rename
@@ -1324,7 +1324,7 @@ def pause (s):
 def init_sherlock (args):
 	
 	g.init_trace(args,echo=0)
-	# g.trace("argv", "sys.argv: " + `sys.argv`)
+	# g.trace("sys.argv:",sys.argv)
 #@nonl
 #@-node:init_sherlock
 #@+node:get_Sherlock_args
@@ -1527,7 +1527,7 @@ def printDiffTime(message, start):
 def funcToMethod(f,theClass,name=None):
 
 	setattr(theClass,name or f.__name__,f)
-	# g.trace(`name`)
+	# g.trace(name)
 #@nonl
 #@-node:funcToMethod
 #@+node:findNodeInTree, findNodeAnywhere, findTopLevelNode
@@ -2555,8 +2555,8 @@ def skip_pp_if(s,i):
 		i = g.skip_line(s,i)
 	else:
 		g.es("no matching #endif: " + start_line)
-		
-	# g.trace(`delta1` + ":" + start_line)
+
+	# g.trace(delta1,start_line)
 	return i,delta1
 #@-node:skip_pp_if
 #@+node:skip_pp_part
@@ -2571,7 +2571,7 @@ def skip_pp_part(s,i):
 		c = s[i]
 		if 0:
 			if c == '\n':
-				g.trace(`delta` + ":" + g.get_line(s,i))
+				g.trace(delta,g.get_line(s,i))
 		if g.match_word(s,i,"#if") or g.match_word(s,i,"#ifdef") or g.match_word(s,i,"#ifndef"):
 			i,delta1 = g.skip_pp_if(s,i)
 			delta += delta1
@@ -2673,7 +2673,7 @@ def find_line_start(s,i):
 #@+node:find_on_line
 def find_on_line(s,i,pattern):
 
-	# j = g.skip_line(s,i) ; g.trace(`s[i:j]`)
+	# j = g.skip_line(s,i) ; g.trace(s[i:j])
 	j = string.find(s,'\n',i)
 	if j == -1: j = len(s)
 	k = string.find(s,pattern,i,j)
@@ -2699,7 +2699,7 @@ def is_special(s,i,directive):
 
 	"""Return true if the body text contains the @ directive."""
 
-	# j = g.skip_line(s,i) ; g.trace(`s[i:j]` + " : " + `directive`)
+	# j = g.skip_line(s,i) ; g.trace(s[i:j],':',directive)
 	assert (directive and directive [0] == '@' )
 
 	# 10/23/02: all directives except @others must start the line.
@@ -2955,7 +2955,7 @@ def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
 		change_text = change_v.bodyString()
 	else:
 		change_text = ""
-	# print `find_v`,`change_v`
+	# print find_v,change_v
 	
 	# Initialize the find panel.
 	c.script_search_flag = script_search

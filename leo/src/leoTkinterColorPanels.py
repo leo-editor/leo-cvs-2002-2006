@@ -222,7 +222,7 @@ class leoTkinterColorNamePanel:
 				box.see(i)
 				return
 	
-		# g.trace("not found:" + `color`)
+		# g.trace("not found:",color)
 	#@nonl
 	#@-node:select
 	#@-others
@@ -372,7 +372,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 			b = self.buttons[name]
 			b.configure(bg=old_val)
 			b = self.nameButtons[name]
-			b.configure(text=`old_val`)
+			b.configure(text=str(old_val))
 		self.changed_options = []
 		self.c.recolor()
 	#@nonl

@@ -608,7 +608,7 @@ class baseColorizer:
 		config = g.app.config
 		self.latex_cweb_docs     = config.getBoolColorsPref("color_cweb_doc_parts_with_latex")
 		self.latex_cweb_comments = config.getBoolColorsPref("color_cweb_comments_with_latex")
-		# print "docs,comments",`self.latex_cweb_docs`,`self.latex_cweb_comments`
+		# print "docs,comments",self.latex_cweb_docs,self.latex_cweb_comments
 		#@nonl
 		#@-node:<< ivars for communication between colorAllDirectives and its allies >>
 		#@nl
@@ -1735,7 +1735,7 @@ class baseColorizer:
 					# Set the bindings to vnode callbacks.
 					# Create the tag.
 					# Create the tag name.
-					tagName = "hyper" + `self.hyperCount`
+					tagName = "hyper" + str(self.hyperCount)
 					self.hyperCount += 1
 					self.body.tag_delete(tagName)
 					self.tag(tagName,i+2,j)
@@ -1866,8 +1866,8 @@ class baseColorizer:
 			ch1 not in string.ascii_letters # non-letter control code
 		):
 			word = s[i:i+2]
-			
-		# if word: g.trace(`word`)
+	
+		# if word: g.trace(word)
 			
 		return word
 	#@nonl

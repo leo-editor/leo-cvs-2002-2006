@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4466" clone_windows="0"/>
-<globals body_outline_ratio="0.5033482142857143">
+<globals body_outline_ratio="0.503348214286">
 	<global_window_position top="12" left="232" height="896" width="951"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -14,7 +14,10 @@
 <vnodes>
 <v t="ekr.20031218072017"><vh> Diary</vh>
 <v t="ekr.20040105070023"><vh>2004</vh>
-<v t="ekr.20040305161150"><vh>March</vh>
+<v t="ekr.20040305161150"><vh>March 2004</vh>
+<v t="ekr.20040325095227"><vh>4/25 Released 4.2 a1</vh>
+<v t="ekr.20040318150305"><vh>Removed all  back quotes</vh></v>
+</v>
 <v t="ekr.20040322112731"><vh>3/22</vh>
 <v t="ekr.20040322112731.1"><vh>Replaced joinList by vnodeList</vh></v>
 </v>
@@ -4676,7 +4679,8 @@
 </v>
 <v t="ekr.20031218072017.3346"><vh>Comparisons (vnode)</vh>
 <v t="ekr.20031218072017.3347"><vh>afterHeadlineMatch</vh></v>
-<v t="ekr.20031218072017.3348"><vh>is...FileNode and is...FileNodeName</vh></v>
+<v t="ekr.20031218072017.3348"><vh>at...FileNodeName</vh></v>
+<v t="ekr.20040325073709"><vh>isAt...FileNode</vh></v>
 <v t="ekr.20031218072017.3350" a="M"><vh>isAnyAtFileNode &amp; anyAtFileNodeName</vh></v>
 <v t="ekr.20031218072017.3351"><vh>isAtIgnoreNode</vh></v>
 <v t="ekr.20031218072017.3352"><vh>isAtOthersNode</vh></v>
@@ -5796,16 +5800,54 @@
 <v t="ekr.20031218072017.1016"><vh>idle_second_redraw</vh></v>
 </v>
 </v>
+<v t="ekr.20040323090456.1"><vh>(Cleaned up isAnyAtFileNode &amp; related routines)</vh>
+<v t="ekr.20031218072017.3346"><vh>Comparisons (vnode)</vh>
+<v t="ekr.20031218072017.3347"><vh>afterHeadlineMatch</vh></v>
+<v t="ekr.20031218072017.3348"><vh>at...FileNodeName</vh></v>
+<v t="ekr.20040325073709"><vh>isAt...FileNode</vh></v>
+<v t="ekr.20031218072017.3350" a="M"><vh>isAnyAtFileNode &amp; anyAtFileNodeName</vh></v>
+<v t="ekr.20031218072017.3351"><vh>isAtIgnoreNode</vh></v>
+<v t="ekr.20031218072017.3352"><vh>isAtOthersNode</vh></v>
+<v t="ekr.20031218072017.3353"><vh>matchHeadline</vh></v>
 </v>
 </v>
-<v t="ekr.20040117181936"><vh>To do: 4.2</vh>
+</v>
+</v>
+<v t="ekr.20040117181936" a="V"><vh>To do: 4.2</vh>
 <v t="ekr.20040321104014"><vh>  Big picture</vh></v>
-<v t="ekr.20040324074355" a="M"><vh>Save is very slow now</vh></v>
-<v t="ekr.20040324035902"><vh>Changeover</vh></v>
+<v t="ekr.20040324080004"><vh>(Improve speed of Save command)</vh>
+<v t="ekr.20040324085927"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.3137"><vh>Timing</vh></v>
+<v t="ekr.20031218072017.1999"><vh>toString</vh></v>
+<v t="ekr.20031218072017.3046"><vh>write_Leo_file</vh>
+<v t="ekr.20040324080359"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
+<v t="ekr.20040324080359.1"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3047"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
+<v t="ekr.20040324080359.2"><vh>&lt;&lt; create the output file &gt;&gt;</vh>
+<v t="ekr.20031218072017.3048"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040324080819"><vh>&lt;&lt; update leoConfig.txt &gt;&gt;</vh></v>
+<v t="ekr.20040324080819.1" a="M"><vh>&lt;&lt; put the .leo file &gt;&gt;</vh></v>
+<v t="ekr.20040324080819.2"><vh>&lt;&lt; report the exception &gt;&gt;</vh></v>
+<v t="ekr.20040324080819.3"><vh>&lt;&lt; close the output file &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3049"><vh>&lt;&lt; erase filename and rename backupName to fileName &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0,4.2)</vh></v>
+<v t="ekr.20031218072017.1579"><vh>putVnodes</vh></v>
+<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
+<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1865"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="ekr.20040324082713"><vh>&lt;&lt; Put tnodeList and unKnownAttributes &gt;&gt;</vh>
+<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1866"><vh>&lt;&lt; Write the head text &gt;&gt;</vh></v>
+</v>
+</v>
 <v t="ekr.20040323170225.1"><vh>Cleanup</vh>
-<v t="ekr.20040323090456"><vh>Break position links at app.shutdown code?</vh></v>
-<v t="ekr.20040318150305"><vh>Remove back quotes</vh></v>
 <v t="ekr.20040302084553.2"><vh>Clean up setDirty logic</vh></v>
+<v t="ekr.20040323090456"><vh>Break position links at app.shutdown code?</vh></v>
+</v>
+<v t="ekr.20040325095459"><vh>Conversion</vh>
 <v t="ekr.20040315073818" a="M"><vh>create find-script to complete transition</vh></v>
 <v t="ekr.20040312092039"><vh>Convert all code DO THIS LATER</vh>
 <v t="ekr.20040312094553" a="M"><vh>Change v to p</vh></v>
@@ -5896,7 +5938,8 @@
 </v>
 <v t="ekr.20031218072017.3346"><vh>Comparisons (vnode)</vh>
 <v t="ekr.20031218072017.3347"><vh>afterHeadlineMatch</vh></v>
-<v t="ekr.20031218072017.3348"><vh>is...FileNode and is...FileNodeName</vh></v>
+<v t="ekr.20031218072017.3348"><vh>at...FileNodeName</vh></v>
+<v t="ekr.20040325073709"><vh>isAt...FileNode</vh></v>
 <v t="ekr.20031218072017.3350" a="M"><vh>isAnyAtFileNode &amp; anyAtFileNodeName</vh></v>
 <v t="ekr.20031218072017.3351"><vh>isAtIgnoreNode</vh></v>
 <v t="ekr.20031218072017.3352"><vh>isAtOthersNode</vh></v>
@@ -5953,7 +5996,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406" a="E"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -6129,7 +6172,7 @@
 <v t="ekr.20031218072017.2537"><vh>@file ../scripts/untangle_done.py</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2538" a="E"><vh> Distribution &amp; version stuff</vh>
+<v t="ekr.20031218072017.2538"><vh> Distribution &amp; version stuff</vh>
 <v t="ekr.20031218072017.2539"><vh> Distribution scripts &amp; files</vh>
 <v t="ekr.20031218072017.2540"><vh>leo.nsi</vh>
 <v t="ekr.20031218072017.2541"><vh>@root ../dist/leo.nsi</vh>
@@ -6185,8 +6228,8 @@
 <v t="ekr.20031218072017.2580" tnodeList="ekr.20031218072017.2580"><vh>@silentfile ../uninstall</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2581" a="E"><vh> Version stuff (update this for every release)</vh>
-<v t="ekr.20031218072017.2582" a="V"><vh> version &amp; signon stuff</vh></v>
+<v t="ekr.20031218072017.2581"><vh> Version stuff (update this for every release)</vh>
+<v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh></v>
 <v t="ekr.20031218072017.2571"><vh>&lt;&lt; setup info for setup.py &gt;&gt; UPDATE BY HAND (no spaces)</vh></v>
 <v t="ekr.20031218072017.2563"><vh>@silentfile ../doc/PKG-INFO.TXT</vh></v>
 <v t="ekr.20031218072017.2564"><vh>@silentfile ../doc/README.TXT</vh></v>
@@ -8735,7 +8778,7 @@
 <v t="ekr.20031218072017.3205"><vh>skip_leading_ws_with_indent</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20040312145256,ekr.20031218072017.3347,ekr.20031218072017.3348,ekr.20031218072017.3350,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20040306214240,ekr.20031218072017.3406,ekr.20031218072017.3409,ekr.20040307085922,ekr.20031218072017.3366,ekr.20031218072017.3361,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3375,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20040323100443,ekr.20040307073708,ekr.20040307073708.7,ekr.20040307073708.8,ekr.20040307073708.9,ekr.20040307073708.13,ekr.20040307073708.14,ekr.20040307073708.15,ekr.20040301071824,ekr.20031218072017.3419,ekr.20031218072017.3421,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.3422,ekr.20031218072017.3438,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20031218072017.3397,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3385,ekr.20040315032144,ekr.20031218072017.3402,ekr.20040315042106,ekr.20031218072017.3404,ekr.20031218072017.3358,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20031218072017.890,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040117170612,ekr.20040117173448,ekr.20040301205720,ekr.20040310153624,ekr.20040306211032,ekr.20040306212151,ekr.20040306220230,ekr.20040306214401,ekr.20040306220230.1,ekr.20040323160302,ekr.20040306214240.3,ekr.20040303212445,ekr.20040306212636.1,ekr.20040307104131.3,ekr.20040306215548,ekr.20031218072017.915,ekr.20040227212621,ekr.20040227224946,ekr.20040307104131.1,ekr.20040306215056,ekr.20040307104131.2,ekr.20040117162509.16,ekr.20031218072017.4146,ekr.20040227214711,ekr.20040306220634.9,ekr.20040306220634.8,ekr.20040306220634.29,ekr.20040306220634.31,ekr.20040315034158,ekr.20040315032503,ekr.20040305223522,ekr.20040305222924.1,ekr.20040305223225,ekr.20040315031445,ekr.20040312015705,ekr.20040306220634.17,ekr.20031218072017.3388,ekr.20040305162628,ekr.20040311113514,ekr.20040303163717,ekr.20040318125934,ekr.20040303214038,ekr.20040303163330,ekr.20040315023430,ekr.20040315023430.1,ekr.20040315023430.2,ekr.20040315023430.3,ekr.20040305162628.1,ekr.20040305171133,ekr.20040305171133.1,ekr.20040305171133.3,ekr.20040305173559,ekr.20040305173559.1,ekr.20040305173559.2,ekr.20040305172211.1,ekr.20040305172211.2,ekr.20040305172211.3,ekr.20040305172855,ekr.20040305172855.1,ekr.20040305172855.2,ekr.20040305173343,ekr.20040305173343.1,ekr.20040305173343.2,ekr.20040303175026.2,ekr.20040303175026.3,ekr.20040303175026.4,ekr.20040303175026.5,ekr.20040303175026.6,ekr.20040303175026.8,ekr.20040303175026.9,ekr.20040303175026.10,ekr.20040306060312,ekr.20040303175026.11,ekr.20040303175026.12,ekr.20040303175026.13,ekr.20040303175026.14,ekr.20040303175026.15,ekr.20040303175026.16,ekr.20040303175026.18,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941,ekr.20040117171654,ekr.20040228060340,ekr.20040228060340.1,ekr.20040310062332,ekr.20040310062332.1,ekr.20040310062332.2,ekr.20040310062332.3,ekr.20040310062332.4,ekr.20040310062332.5"><vh>@file leoNodes.py</vh>
+<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20040312145256,ekr.20031218072017.3347,ekr.20031218072017.3348,ekr.20040325073709,ekr.20031218072017.3350,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20040306214240,ekr.20031218072017.3406,ekr.20031218072017.3409,ekr.20040307085922,ekr.20031218072017.3366,ekr.20031218072017.3361,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3375,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20040323100443,ekr.20040307073708,ekr.20040307073708.7,ekr.20040307073708.8,ekr.20040307073708.9,ekr.20040307073708.13,ekr.20040307073708.14,ekr.20040307073708.15,ekr.20040301071824,ekr.20031218072017.3419,ekr.20031218072017.3421,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.3422,ekr.20031218072017.3438,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20031218072017.3397,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3385,ekr.20040315032144,ekr.20031218072017.3402,ekr.20040315042106,ekr.20031218072017.3404,ekr.20031218072017.3358,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20031218072017.890,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040117170612,ekr.20040117173448,ekr.20040301205720,ekr.20040310153624,ekr.20040306211032,ekr.20040306212151,ekr.20040306220230,ekr.20040306214401,ekr.20040306220230.1,ekr.20040323160302,ekr.20040306214240.3,ekr.20040303212445,ekr.20040306212636.1,ekr.20040307104131.3,ekr.20040306215548,ekr.20031218072017.915,ekr.20040227212621,ekr.20040227224946,ekr.20040307104131.1,ekr.20040306215056,ekr.20040307104131.2,ekr.20040117162509.16,ekr.20031218072017.4146,ekr.20040227214711,ekr.20040306220634.9,ekr.20040306220634.8,ekr.20040306220634.29,ekr.20040306220634.31,ekr.20040315034158,ekr.20040315032503,ekr.20040305223522,ekr.20040305222924.1,ekr.20040305223225,ekr.20040315031445,ekr.20040312015705,ekr.20040306220634.17,ekr.20031218072017.3388,ekr.20040305162628,ekr.20040311113514,ekr.20040303163717,ekr.20040318125934,ekr.20040303214038,ekr.20040303163330,ekr.20040315023430,ekr.20040315023430.1,ekr.20040315023430.2,ekr.20040315023430.3,ekr.20040305162628.1,ekr.20040305171133,ekr.20040305171133.1,ekr.20040305171133.3,ekr.20040305173559,ekr.20040305173559.1,ekr.20040305173559.2,ekr.20040305172211.1,ekr.20040305172211.2,ekr.20040305172211.3,ekr.20040305172855,ekr.20040305172855.1,ekr.20040305172855.2,ekr.20040305173343,ekr.20040305173343.1,ekr.20040305173343.2,ekr.20040303175026.2,ekr.20040303175026.3,ekr.20040303175026.4,ekr.20040303175026.5,ekr.20040303175026.6,ekr.20040303175026.8,ekr.20040303175026.9,ekr.20040303175026.10,ekr.20040306060312,ekr.20040303175026.11,ekr.20040303175026.12,ekr.20040303175026.13,ekr.20040303175026.14,ekr.20040303175026.15,ekr.20040303175026.16,ekr.20040303175026.18,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941,ekr.20040117171654,ekr.20040228060340,ekr.20040228060340.1,ekr.20040310062332,ekr.20040310062332.1,ekr.20040310062332.2,ekr.20040310062332.3,ekr.20040310062332.4,ekr.20040310062332.5"><vh>@file leoNodes.py</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2412"><vh>&lt;&lt; About the vnode and tnode classes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3321"><vh>class tnode</vh>
@@ -8780,7 +8823,8 @@
 </v>
 <v t="ekr.20031218072017.3346"><vh>Comparisons (vnode)</vh>
 <v t="ekr.20031218072017.3347"><vh>afterHeadlineMatch</vh></v>
-<v t="ekr.20031218072017.3348"><vh>is...FileNode and is...FileNodeName</vh></v>
+<v t="ekr.20031218072017.3348"><vh>at...FileNodeName</vh></v>
+<v t="ekr.20040325073709"><vh>isAt...FileNode</vh></v>
 <v t="ekr.20031218072017.3350" a="M"><vh>isAnyAtFileNode &amp; anyAtFileNodeName</vh></v>
 <v t="ekr.20031218072017.3351"><vh>isAtIgnoreNode</vh></v>
 <v t="ekr.20031218072017.3352"><vh>isAtOthersNode</vh></v>
@@ -9218,44 +9262,6 @@
 </v>
 </v>
 <v t="ekr.20031218072017.2243"><vh>class nullUndoer</vh></v>
-</v>
-</v>
-<v t="ekr.20040324080004"><vh>(Improve speed of Save command)</vh>
-<v t="ekr.20040324085927"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.3137"><vh>Timing</vh></v>
-<v t="ekr.20031218072017.1999"><vh>toString</vh></v>
-<v t="ekr.20031218072017.3046" a="E"><vh>write_Leo_file</vh>
-<v t="ekr.20040324080359"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
-<v t="ekr.20040324080359.1"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3047"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
-<v t="ekr.20040324080359.2"><vh>&lt;&lt; create the output file &gt;&gt;</vh>
-<v t="ekr.20031218072017.3048"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040324080819"><vh>&lt;&lt; update leoConfig.txt &gt;&gt;</vh></v>
-<v t="ekr.20040324080819.1" a="M"><vh>&lt;&lt; put the .leo file &gt;&gt;</vh></v>
-<v t="ekr.20040324080819.2"><vh>&lt;&lt; report the exception &gt;&gt;</vh></v>
-<v t="ekr.20040324080819.3"><vh>&lt;&lt; close the output file &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3049"><vh>&lt;&lt; erase filename and rename backupName to fileName &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0,4.2)</vh></v>
-<v t="ekr.20031218072017.1579"><vh>putVnodes</vh></v>
-<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
-<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1865"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
-<v t="ekr.20040324082713"><vh>&lt;&lt; Put tnodeList and unKnownAttributes &gt;&gt;</vh>
-<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1866"><vh>&lt;&lt; Write the head text &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040323090456.1"><vh>(Cleaned up isAnyAtFileNode &amp; related routines)</vh>
-<v t="ekr.20031218072017.3346"><vh>Comparisons (vnode)</vh>
-<v t="ekr.20031218072017.3347"><vh>afterHeadlineMatch</vh></v>
-<v t="ekr.20031218072017.3348"><vh>is...FileNode and is...FileNodeName</vh></v>
-<v t="ekr.20031218072017.3350" a="M"><vh>isAnyAtFileNode &amp; anyAtFileNodeName</vh></v>
-<v t="ekr.20031218072017.3351"><vh>isAtIgnoreNode</vh></v>
-<v t="ekr.20031218072017.3352"><vh>isAtOthersNode</vh></v>
-<v t="ekr.20031218072017.3353"><vh>matchHeadline</vh></v>
 </v>
 </v>
 <v t="ekr.20040324093353"><vh>(Restore current node)</vh></v>
@@ -14862,7 +14868,6 @@ reading d:\test.leo
 		root = g.app.root # 4/3/03: must specify root so idle window will work properly.
 		font = tkFont.Font(root=root,font=font)
 		tabw = font.measure(" " * abs(w)) # 7/2/02
-		# tablist = `tabw` + ' ' + `2*tabw`
 		self.bodyCtrl.configure(tabs=tabw)
 		self.tab_width = w
 		# g.trace(w,tabw)
@@ -17640,7 +17645,7 @@ def yviewCallback (self,*args,**keys):
 	# Compute the image name
 	imagename = "box"
 	if val &lt; 10: imagename += "0"
-	imagename += `val`
+	imagename += str(val)
 
 	# Get the image
 	image = self.getIconImage(imagename + ".GIF")
@@ -18061,7 +18066,7 @@ g.app.gui.set_focus(c,c.frame.bodyCtrl)</t>
 
 	if not self.allocateOnlyVisibleNodes: return
 
-	# print "allocateNodesBeforeScrolling:",self.redrawCount,`args`
+	# print "allocateNodesBeforeScrolling:",self.redrawCount,args
 
 	assert(self.visibleArea)
 	assert(len(args)==2 or len(args)==3)
@@ -18113,7 +18118,7 @@ g.app.gui.set_focus(c,c.frame.bodyCtrl)</t>
 	yfirst = ylast = y
 	if level==0: yfirst += 10
 	while v:
-		# g.trace(`x` + ", " + `y` + ", " + `v`)
+		# g.trace(x,y,v)
 		h = self.updateNode(v,x,y)
 		y += h ; ylast = y
 		if v.isExpanded() and v.firstChild():
@@ -19887,7 +19892,7 @@ if 0: # elegant, but may be a security hole.
 else: # easier to read in the config file.
 	for i in xrange(len(files)):
 		f = g.toEncodedString(files[i],self.config_encoding) # 10/31/03
-		config.set(section, "file"+`i`, f)</t>
+		config.set(section, "file"+str(i), f)</t>
 <t tx="ekr.20031218072017.1147">def flattenOutline (self,fileName):
 
 	c = self.c ; nl = self.output_newline
@@ -19973,7 +19978,7 @@ def put_all_roots(self):
 
 	for section in self.root_list:
 	
-		# g.trace(`section.name`)
+		# g.trace(section.name)
 		file_name = g.os_path_join(self.tangle_directory,section.name)
 		file_name = g.os_path_normpath(file_name)
 		temp_name = g.create_temp_name()
@@ -21236,7 +21241,7 @@ else:
 				g.es("***updating: " + file_name)
 			except:
 				g.es("Rename failed: no file created!",color="red")
-				g.es(`file_name` + " may be read-only or in use")
+				g.es(file_name," may be read-only or in use")
 				g.es_exception()
 	else:
 		try:
@@ -21245,7 +21250,7 @@ else:
 			g.es("creating: " + file_name)
 		except:
 			g.es("rename failed: no file created!",color="red")
-			g.es(`file_name` + " may be read-only or in use")
+			g.es(file_name," may be read-only or in use")
 			g.es_exception()
 </t>
 <t tx="ekr.20031218072017.1242">@ignore</t>
@@ -21466,7 +21471,7 @@ File names may be enclosed in &lt; and &gt; characters, or in double quotes.  If
 @c
 def setRootFromText(self,s,err_flag):
 	
-	# g.trace(`s`)
+	# g.trace(s)
 	self.root_name = None
 	i,self.start_mode = g.scanAtRootOptions(s,0)
 	i = g.skip_ws(s,i)
@@ -21552,7 +21557,7 @@ def getBaseDirectory():
 	elif base and base == ".":
 		base = g.top().openDirectory
 
-	# g.trace(`base`)
+	# g.trace(base)
 	if base and len(base) &gt; 0 and g.os_path_isabs(base):
 		return base # base need not exist yet.
 	else:
@@ -22567,7 +22572,7 @@ if not s:
 	s = u""
 s = s.replace('\n','')
 s = s.replace('\r','')
-# g.trace(`s`)
+# g.trace(s)
 </t>
 <t tx="ekr.20031218072017.1337">head = v.headString()
 if head == None:
@@ -22979,7 +22984,7 @@ elif dict.has_key("language"):
 			self.end_comment_string)
 
 	# 10/30/02: These ivars must be updated here!
-	# g.trace(`self.language`)
+	# g.trace(self.language)
 	self.use_noweb_flag = true
 	self.use_cweb_flag = false # Only raw cweb mode is ever used.
 	self.raw_cweb_flag = self.language == "cweb" # A new ivar.
@@ -23105,7 +23110,7 @@ if c.frame and require_path_flag and not self.tangle_directory:
 
 	for dir2, kind in table:
 		if dir2 and len(dir2) &gt; 0:
-			# print "base,dir:",`base`,`dir`
+			# print "base,dir:",base,dir
 			dir = g.os_path_join(base,dir2)
 			if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
 				&lt;&lt; handle absolute path &gt;&gt;
@@ -23253,7 +23258,7 @@ def set_delims_from_language(language):
 	"""
 
 	tag = "@language"
-	# g.trace(`g.get_line(s,i)`)
+	# g.trace(g.get_line(s,i))
 	assert(i != None)
 	assert(g.match_word(s,i,tag))
 	i += len(tag) ; i = g.skip_ws(s, i)
@@ -23333,7 +23338,7 @@ def findReference(name,root):
 
 	if e in ("cr","crlf","lf","nl","platform"):
 		lineending = g.getOutputNewline(e)
-		# g.trace(`e`,`lineending`)
+		# g.trace(e,lineending)
 		return lineending
 	else:
 		# g.es("invalid @lineending directive:"+e,color="red")
@@ -23368,7 +23373,7 @@ def findReference(name,root):
 	i = k + len("@tabwidth")
 	i, val = g.skip_long(s, i)
 	if val != None and val != 0:
-		# g.trace(`val`)
+		# g.trace(val)
 		return val
 	else:
 		if issue_error_flag:
@@ -24839,8 +24844,8 @@ if oldNewlines &gt; 0:
 	s = s + '\n' * oldNewlines
 result = s
 if u.debug_print:
-	print "body:  ",`body`
-	print "result:",`result`</t>
+	print "body:  ",body
+	print "result:",result</t>
 <t tx="ekr.20031218072017.1496">textResult = c.frame.body.getAllText()
 
 if textResult != result:
@@ -25686,7 +25691,7 @@ self.getTag("&lt;/leo_file&gt;")</t>
 <t tx="ekr.20031218072017.1556"># All other exceptions are Leo bugs.
 
 g.es_exception()
-g.alert(self.mFileName + " is not a valid Leo file: " + `message`)</t>
+g.alert(self.mFileName + " is not a valid Leo file: " + str(message))</t>
 <t tx="ekr.20031218072017.1557"># This method finishes pasting the outline from the clipboard.
 def finishPaste(self):
 
@@ -25777,8 +25782,9 @@ def getLeoOutline (self,s):
 		else:
 			&lt;&lt; handle read from file &gt;&gt;
 	else:
-		g.es("no tnode with index: " + `index` + ".  The text will be discarded")
-	self.getTag("&lt;/t&gt;")</t>
+		g.es("no tnode with index: %s.  The text will be discarded" % str(index))
+	self.getTag("&lt;/t&gt;")
+</t>
 <t tx="ekr.20031218072017.1562">s = self.getEscapedString()
 t.setTnodeText(s,encoding=self.leo_file_encoding)</t>
 <t tx="ekr.20031218072017.1563">if t:
@@ -26001,7 +26007,7 @@ for index in keys:
 		gnx = g.app.nodeIndices.toString(t.fileIndex)
 		self.put_in_dquotes(gnx)
 	else:
-		self.put_in_dquotes("T" + `t.fileIndex`)
+		self.put_in_dquotes("T" + str(t.fileIndex))
 
 	if hasattr(t,"unknownAttributes"):
 		&lt;&lt; put unknown tnode attributes &gt;&gt;
@@ -26053,7 +26059,7 @@ for key in keys:
 	
 	# This message should never be printed and we want to avoid crashing here!
 	if not g.isUnicode(self.t.headString):
-		s = "Leo internal error: not unicode:" + `self.t.headString`
+		s = "Leo internal error: not unicode:" + repr(self.t.headString)
 		print s ; g.es(s,color="red")
 		
 	# Make _sure_ we return a unicode string.
@@ -26498,7 +26504,7 @@ self.rootMode = None # None, "code" or "doc"
 config = g.app.config
 self.latex_cweb_docs     = config.getBoolColorsPref("color_cweb_doc_parts_with_latex")
 self.latex_cweb_comments = config.getBoolColorsPref("color_cweb_comments_with_latex")
-# print "docs,comments",`self.latex_cweb_docs`,`self.latex_cweb_comments`</t>
+# print "docs,comments",self.latex_cweb_docs,self.latex_cweb_comments</t>
 <t tx="ekr.20031218072017.1607">self.state_dict = {
 	"blockComment" : self.continueBlockComment,
 	"doubleString" : self.continueDoubleString, # 1/25/03
@@ -27686,8 +27692,8 @@ headline = string.strip(headline)</t>
 	line1 = "\n" + headline
 	# Create copy for undo.
 	v_copy = c.undoer.saveTree(v)
-	# g.trace("v:     " + `v`)
-	# g.trace("v_copy:" + `v_copy`)
+	# g.trace("v:     ",v)
+	# g.trace("v_copy:",v_copy)
 	oldText = body.getAllText()
 	oldSel = body.getTextSelection()
 	&lt;&lt; Set headline for extractSection &gt;&gt;
@@ -28235,7 +28241,7 @@ at.putPending(split=false)</t>
 	
 	at = self ; s = ''.join(at.pending) ; at.pending = []
 	
-	# g.trace("split",`s`)
+	# g.trace("split",s)
 	
 	# Remove trailing newline temporarily.  We'll add it back later.
 	if s and s[-1] == '\n':
@@ -29200,8 +29206,8 @@ df.root_seen = false
 		g.es("changed: " + p.headString(),color="blue")
 		if 0: # For debugging.
 			print ; print "changed: " + p.headString()
-			print ; print "new:",`s`
-			print ; print "old:",`p.bodyString()`
+			print ; print "new:",s
+			print ; print "old:",p.bodyString()
 		p.setBodyStringOrPane(s) # Sets v and v.c dirty.
 		p.setMarked()
 </t>
@@ -29345,15 +29351,14 @@ df.root_seen = false
 	return head,result,tail,trailingNL # string, list, string, bool</t>
 <t tx="ekr.20031218072017.1826">if 0:
 	print ; print "head_lines"
-	for line in head_lines: print `line`
-	print ; print "ins", `ins`
+	for line in head_lines: print line
+	print ; print "ins", ins
 	print ; print "tail_lines"
-	for line in tail_lines: print `line`
+	for line in tail_lines: print line
 else:
-	g.es("head_lines: " + `head_lines`)
-	g.es("ins: ", `ins`)
-	g.es("tail_lines: " + `tail_lines`)
-</t>
+	g.es("head_lines: ",head_lines)
+	g.es("ins: ",ins)
+	g.es("tail_lines: ",tail_lines)</t>
 <t tx="ekr.20031218072017.1827">def findMatchingBracket (self):
 	
 	c = self ; body = c.frame.body
@@ -29386,7 +29391,7 @@ else:
 		body.setInsertionPoint(adj_index)
 		body.makeIndexVisible(adj_index)
 	else:
-		g.es("unmatched " + `ch`)</t>
+		g.es("unmatched '%s'",ch)</t>
 <t tx="ekr.20031218072017.1828"># To do: replace comments with blanks before scanning.
 # Test  unmatched())
 def findSingleMatchingBracket(self,ch,index):
@@ -29754,7 +29759,7 @@ _tkinter.TclError: invalid command name
 <t tx="ekr.20031218072017.1847">def setLog (self,log,tag=""):
 	"""set the frame to which log messages will go"""
 	
-	# print "setLog:",tag,"locked:",self.logIsLocked,`log`
+	# print "setLog:",tag,"locked:",self.logIsLocked,log
 	if not self.logIsLocked:
 		self.log = log
 		
@@ -30685,7 +30690,7 @@ i += 1</t>
 <t tx="ekr.20031218072017.1915"># Set the bindings to vnode callbacks.
 # Create the tag.
 # Create the tag name.
-tagName = "hyper" + `self.hyperCount`
+tagName = "hyper" + str(self.hyperCount)
 self.hyperCount += 1
 self.body.tag_delete(tagName)
 self.tag(tagName,i+2,j)
@@ -30876,7 +30881,7 @@ if 0: # elegant, but may be a security hole.
 else: # easier to read in the config file.
 	try:
 		for i in xrange(10):
-			f = config.get(section,"file" + `i`,raw=1)
+			f = config.get(section,"file" + str(i),raw=1)
 			f = g.toUnicode(f,"utf-8") # 10/31/03
 			self.recentFiles.append(f)
 	except: pass</t>
@@ -31029,7 +31034,7 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 			loadDir = None
 		if not loadDir:
 			loadDir = g.os_path_abspath(os.getcwd())
-			print "Using emergency loadDir:",`loadDir`
+			print "Using emergency loadDir:",repr(loadDir)
 
 		encoding = g.choose(sys.platform=="dawwin","utf-8",g.app.tkEncoding) # 11/18/03
 		loadDir = g.toUnicode(loadDir,encoding) # 10/20/03
@@ -31398,10 +31403,11 @@ self._parent = self._next = self._back = None</t>
 	c = self.c ; tnodes = 0
 	&lt;&lt; count the number of tnodes &gt;&gt;
 	self.put('&lt;leo_header file_format="1" tnodes=')
-	self.put_in_dquotes(`tnodes`)
+	self.put_in_dquotes(str(tnodes))
 	self.put(" max_tnode_index=")
-	self.put_in_dquotes(`tnodes`)
-	self.put("/&gt;") ; self.put_nl()</t>
+	self.put_in_dquotes(str(tnodes))
+	self.put("/&gt;") ; self.put_nl()
+</t>
 <t tx="ekr.20031218072017.1972">c.clearAllVisited()
 
 for p in c.currentPosition().self_and_subtree_iter():
@@ -31509,8 +31515,7 @@ else:
 </t>
 <t tx="ekr.20031218072017.1981">g.app.gui.runAskLeoIDDialog() # New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
 g.trace(g.app.leoID)
-
-g.es("leoID = " + `g.app.leoID`, color="blue")</t>
+g.es("leoID=",repr(g.app.leoID),color="blue")</t>
 <t tx="ekr.20031218072017.1982">for dir in (configDir,loadDir):
 	try:
 		# Look in configDir first.
@@ -31604,7 +31609,7 @@ i = 0 ; ok = true
 while i &lt; len(s):
 	ch = s[i]
 	if ch not in string.ascii_letters and ch not in string.digits:
-		e.delete(`i`)
+		e.delete(str(i))
 		s = e.get()
 		ok = false
 	else:
@@ -31683,7 +31688,7 @@ def setDefaultId (self,id):
 	"""Create a gnx from its string representation"""
 	
 	if type(s) not in (type(""),type(u"")):
-		g.es("scanGnx: unexpected index type:"+`type(s)`+`s`,color="red")
+		g.es("scanGnx: unexpected index type:",type(s),s,color="red")
 		return None,None,None
 		
 	s = s.strip()
@@ -31829,13 +31834,13 @@ def __init__ (self,bodyString=None,headString=None):
 	v = at.root.v
 
 	if not hasattr(v.t,"tnodeList"):
-		at.readError("no tnodeList for " + `v`)
+		at.readError("no tnodeList for " + repr(v))
 		g.es("Write the @file node or use the Import Derived File command")
 		g.trace("no tnodeList for ",v)
 		return None
 		
 	if at.tnodeListIndex &gt;= len(v.t.tnodeList):
-		at.readError("bad tnodeList index: %d, %s" % (at.tnodeListIndex,`v`))
+		at.readError("bad tnodeList index: %d, %s" % (at.tnodeListIndex,repr(v)))
 		g.trace("bad tnodeList index",at.tnodeListIndex,len(v.t.tnodeList),v)
 		return None
 		
@@ -31847,7 +31852,7 @@ def __init__ (self,bodyString=None,headString=None):
 	try:
 		v = t.vnodeList[0]
 	except:
-		at.readError("No vnodeList for tnode: %s" % `t`)
+		at.readError("No vnodeList for tnode: %s" % repr(t))
 		g.trace(at.tnodeListIndex)
 		return None
 
@@ -31887,7 +31892,7 @@ def __init__ (self,bodyString=None,headString=None):
 <t tx="ekr.20031218072017.2009">def newTnode(self,index):
 
 	if self.tnodesDict.has_key(index):
-		g.es("bad tnode index: " + `index` + ". Using empty text.")
+		g.es("bad tnode index: %s. Using empty text." % str(index))
 		return leoNodes.tnode()
 	else:
 		# Create the tnode.  Use the _original_ index as the key in tnodesDict.
@@ -31895,7 +31900,7 @@ def __init__ (self,bodyString=None,headString=None):
 		self.tnodesDict[index] = t
 	
 		if type(index) not in (type(""),type(u"")):
-			g.es("newTnode: unexpected index type:"+`type(index)`+`index`,color="red")
+			g.es("newTnode: unexpected index type:",type(index),index,color="red")
 		
 		# Convert any pre-4.1 index to a gnx.
 		id,time,n = gnx = g.app.nodeIndices.scanGnx(index,0)
@@ -32643,7 +32648,7 @@ aa</t>
 		val = getattr(c, key + "_flag")
 		val = g.choose(val,1,0) # 2/1/04: work around major Tk problem.
 		self.dict[key].set(val)
-		# g.trace(key,`val`)
+		# g.trace(key,val)
 
 	&lt;&lt; set find/change widgets &gt;&gt;
 	&lt;&lt; set radio buttons from ivars &gt;&gt;</t>
@@ -32806,8 +32811,8 @@ else:
 	self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
 	self.put(" node_only=") ; self.put_dquoted_bool(c.node_only_flag)
 	self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
-	self.put(" page_width=") ; self.put_in_dquotes(`c.page_width`)
-	self.put(" tab_width=") ; self.put_in_dquotes(`c.tab_width`)
+	self.put(" page_width=") ; self.put_in_dquotes(str(c.page_width))
+	self.put(" tab_width=") ; self.put_in_dquotes(str(c.tab_width))
 	self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
 	self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
 	self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
@@ -33784,7 +33789,7 @@ def os (self,s):
 			s = g.toEncodedString(s,self.encoding,reportErrors=true)
 			self.outputFile.write(s)
 		except:
-			g.es("exception writing:" + `s`)
+			g.es("exception writing:",s)
 			g.es_exception(full=true)
 
 def otabs(self,n):
@@ -34323,9 +34328,8 @@ def configure (self,*args,**keys):
 		# if g.app.trace: g.trace(font)
 		return font
 	except:
-		g.es("exception setting font from " + `family_name`)
-		g.es("family,size,slant,weight:"+
-			`family`+':'+`size`+':'+`slant`+':'+`weight`)
+		g.es("exception setting font from ",family_name)
+		g.es("family,size,slant,weight:",family,size,slant,weight)
 		# g.es_exception() # 12/15/03: This just confuses people.
 		return g.app.config.defaultFont</t>
 <t tx="ekr.20031218072017.2188">def newLeoCommanderAndFrame(self,fileName):
@@ -34360,7 +34364,7 @@ else:
 	s = "untitled"
 	n = g.app.numberOfWindows
 	if n &gt; 0:
-		s += `n`
+		s += str(n)
 	title = g.computeWindowTitle(s)
 	g.app.numberOfWindows = n+1
 
@@ -35214,7 +35218,7 @@ i = g.skip_ws_and_nl(s,i)
 if i &lt; len(s) and g.is_c_id(s[i]):
 	j = i ; i = g.skip_c_id(s,i)
 	headline = s[j:i]
-	# g.trace("headline:" + `headline`)
+	# g.trace("headline:" + headline)
 else: return i</t>
 <t tx="ekr.20031218072017.2265"># Set defIndent to the indentation of the def line.
 defIndent = self.getLeadingIndent(s,start)
@@ -35618,7 +35622,7 @@ def batchChange (self,pos1,pos2,count):
 	gui.replaceSelectionRangeWithText(st,pos1,pos2,c.change_text)
 	s = gui.getAllText(st)
 	# Update the selection.
-	insert=g.choose(c.reverse_flag,pos1,pos1+'+'+`len(c.change_text)`+'c')
+	insert=g.choose(c.reverse_flag,pos1,pos1+'+'+str(len(c.change_text))+'c')
 	gui.setSelectionRange(st,insert,insert)
 	gui.setInsertPoint(st,insert)
 	# Update the node
@@ -36194,7 +36198,7 @@ if y &lt; 0 or y &gt; h:
 	frac = g.choose(y &lt; 0, lo - line_frac, lo + line_frac)
 	frac = min(frac,1.0)
 	frac = max(frac,0.0)
-	# g.es("lo,hi,frac:" + `lo` + " " + `hi` + " " + `frac`)
+	# g.es("lo,hi,frac:",lo,hi,frac)
 	canvas.yview("moveto", frac)
 	
 	# Queue up another event to keep scrolling while the cursor is outside the canvas.
@@ -36450,9 +36454,11 @@ else:
 	self.sentinel = self.sentinel_end = None
 	
 if 0:
-	g.trace("single,start,end,sentinel:"+
-		`self.single_comment_string` +":"+ `self.start_comment_string` +":"+
-		`self.end_comment_string` +":"+ `self.sentinel`)
+	g.trace("single,start,end,sentinel:",
+		repr(self.single_comment_string),
+		repr(self.start_comment_string),
+		repr(self.end_comment_string),
+		repr(self.sentinel))
 
 # Set defaults.  See set_delims_from_langauge.
 self.line_comment = self.single_comment_string
@@ -36472,7 +36478,8 @@ if self.language == "pascal":
 if self.language == "latex": # 3/10/03: Joo-won Jung
 	self.string1 = self.string2 = None # This is debatable.
 if self.language == "html":
-	self.string1 = '"' ; self.string2 = None # 12/3/03</t>
+	self.string1 = '"' ; self.string2 = None # 12/3/03
+</t>
 <t tx="ekr.20031218072017.2369">def skip_string(s,i):
 	
 	j = i ; delim = s[i] ; i += 1
@@ -36813,8 +36820,8 @@ elif delim2 and delim3:
 else: # Emergency!
 	# assert(0)
 	g.es("Unknown language: using Python comment delimiters")
-	g.es("c.target_language:"+`c.target_language`)
-	g.es("delim1,delim2,delim3:" + `delim1`+":"+`delim2`+":"+`delim3`)
+	g.es("c.target_language:",c.target_language)
+	g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
 	self.startSentinelComment = "#" # This should never happen!
 	self.endSentinelComment = ""</t>
 <t tx="ekr.20031218072017.2401"></t>
@@ -37153,7 +37160,7 @@ def runChangeScript (self):
 		change_text = change_v.bodyString()
 	else:
 		change_text = ""
-	# print `find_v`,`change_v`
+	# print find_v,change_v
 	
 	# Initialize the find panel.
 	c.script_search_flag = script_search
@@ -37348,10 +37355,10 @@ pat = re.compile("""^(@$|@ |@doc)(.*?)$
 m = pat.match(s)
 print "---"
 if m:
-	print "doc:   ", `m.group(2).strip()`
-	print "blanks:", `m.group(3).strip()`
-	print "def:   ", `m.group(4).strip()`
-	print "rest:  ", `m.group(5).strip()`
+	print "doc:   ", m.group(2).strip()
+	print "blanks:", m.group(3).strip()
+	print "def:   ", m.group(4).strip()
+	print "rest:  ", m.group(5).strip()
 else:
 	print "no match"
 </t>
@@ -37365,7 +37372,7 @@ script = """
 import leoGlobals as g
 from leoGlobals import true,false
 c = g.top() ; v = c.currentVnode()
-print `v`
+print v
 v = v.threadNext()
 c.selectVnode(v)"""
 
@@ -37465,7 +37472,7 @@ while v:
 	# 12/13/03: Empty tnodeLists are not errors because they never get written to the .leo file.
 	# New in 4.2: tnode list is in tnode.
 	if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) &gt; 0 and not v.isAnyAtFileNode():
-		g.es("deleting tnodeList for " + `v`,color="blue")
+		g.es("deleting tnodeList for ",v,color="blue")
 		delattr(v.t,"tnodeList")
 		c.setChanged(true)
 	v = v.threadNext()
@@ -37494,9 +37501,9 @@ g.checkTopologyOfAllClones()</t>
 		if aTuple:
 			head,body = aTuple
 			if v.headString()!= head:
-				g.es("headline mismatch in joined nodes",`v`)
+				g.es("headline mismatch in joined nodes",v)
 			if v.bodyString()!= body:
-				g.es("body mismatch in joined nodes",`v`)
+				g.es("body mismatch in joined nodes",v)
 		else:
 			d[v.t] = (v.headString(),v.bodyString())
 		v = v.threadNext()
@@ -37536,12 +37543,11 @@ g.checkTopologyOfAllClones()</t>
 		if top2:
 			count += 1
 			if top1 != top1:
-				g.es("mismatched topologies for two vnodes with the same tnode!",`v`)
+				g.es("mismatched topologies for two vnodes with the same tnode!",v)
 		else:
 			d[v.t] = top1
 		v = v.threadNext()
-	g.es("end of checkTopologiesOfLinkedNodes. Checked nodes: " + `count`)
-</t>
+	g.es("end of checkTopologiesOfLinkedNodes. Checked %d nodes: " % count)</t>
 <t tx="ekr.20031218072017.2438">@ Nodes with the same topologies should be joined PROVIDED:
 	- Topologies are non-trivial.
 	- Topologies include tnodes somehow.
@@ -38272,7 +38278,7 @@ def handlePossibleFunctionHeader(codeList, i, prevSemi, firstOpen):
 		ivars = ivarsDict [ gClassName ]
 	else:
 		ivars = []
-	# print "key:ivars=", gClassName, ':', `ivars`
+	# print "key,ivars:",gClassName,ivars
 
 	i = 0
 	while i &lt; len(body):
@@ -38604,7 +38610,7 @@ def prevNonWsOrNlChar(list, i):
 			i = skipWs(list,i)
 			assert(j &lt; i)
 			if i &gt;= len(list) or list[i] == '\n':
-				# print "removing trailing ws:", `i-j`
+				# print "removing trailing ws:", i-j
 				del list[j:i]
 				i = j
 		else: i += 1</t>
@@ -38813,7 +38819,7 @@ import compiler,dis,os,string,sys,types
 			any(a,stats)
 		except:
 			import traceback ; traceback.print_exc()
-			print "----- no matching class in", `m`
+			print "----- no matching class in", m
 			
 	g.print_stats(stats)</t>
 <t tx="ekr.20031218072017.2512">def getFiles (dir):
@@ -38901,7 +38907,7 @@ import compiler,dis,os,string,sys,types
 	stats2.sort()
 	stats2.reverse()
 	for stat,i in stats2:
-		print string.rjust(`stat`,6), dis.opname[i]
+		print string.rjust(repr(stat),6), dis.opname[i]
 	print "total", total</t>
 <t tx="ekr.20031218072017.2517">@language python
 
@@ -40892,7 +40898,7 @@ def setEncoding (self):
 			# g.trace(self.tkEncoding,src)
 			break
 		elif encoding and len(encoding) &gt; 0:
-			g.trace("ignoring invalid " + src + " encoding: " + `encoding`)
+			g.trace("ignoring invalid ",src," encoding: ",encoding)
 			
 	color = g.choose(self.tkEncoding=="ascii","red","blue")</t>
 <t tx="ekr.20031218072017.2619">def writeWaitingLog (self):
@@ -41711,7 +41717,7 @@ while i &lt; len(s):
 	elif s[i] == ' ': lineIndent += 1
 	else: break
 	i += 1
-# g.trace("lineIndent:" +`lineIndent` + ", " + `s`)
+# g.trace("lineIndent,s:",lineIndent,s)
 
 # Set leading_ws to the additional indentation on the line.
 leading_ws = s[linep:i]</t>
@@ -41836,7 +41842,7 @@ else:
 	# NB: this call to createNthChild is the bottleneck!
 	child = self.createNthChild(childIndex,p,headline)
 	child.t.setCloneIndex(cloneIndex)
-	# if cloneIndex &gt; 0: g.trace("clone index:" + `cloneIndex` + ", " + `child`)
+	# if cloneIndex &gt; 0: g.trace("cloneIndex,child:"cloneIndex,child)
 	self.scanText(file,child,out,endNode)
 
 &lt;&lt; look for sentinels that may follow a reference &gt;&gt;</t>
@@ -41907,12 +41913,13 @@ kind = self.sentinelKind(s)
 
 if len(s) &gt; 1 and kind == startVerbatimAfterRef:
 	s = self.readLine(file)
-	# g.trace("verbatim:"+`s`)
+	# g.trace("verbatim:",repr(s))
 	out.append(s)
 elif len(s) &gt; 1 and self.sentinelKind(s) == noSentinel:
 	out.append(s)
 else:
 	nextLine = s # Handle the sentinel or blank line later.
+
 </t>
 <t tx="ekr.20031218072017.2682">assert(g.match(s,i,"+others"))
 
@@ -41951,7 +41958,7 @@ start = self.startSentinelComment
 if start and len(start) &gt; 0 and start[-1] == '@':
 	s2 = s2.replace('@@','@')
 out.append(s2)
-# g.trace(`s2`)</t>
+# g.trace(s2)</t>
 <t tx="ekr.20031218072017.2686">assert(g.match(s,i,"comment"))
 
 # We need do nothing more to ignore the comment line!
@@ -42578,7 +42585,7 @@ if initialLastDirective != -1:
 
 def putDocPart(self,s):
 
-	# j = g.skip_line(s,0) ; g.trace(`s[:j]`)
+	# j = g.skip_line(s,0) ; g.trace(s[:j])
 	single = len(self.endSentinelComment) == 0
 	if not single:
 		self.putIndent(self.indent)
@@ -42870,7 +42877,7 @@ def os(self,s):
 			s = g.toEncodedString(s,self.encoding,reportErrors=true)
 			self.outputFile.write(s)
 		except:
-			g.es("exception writing:" + `s`)
+			g.es("exception writing:",s)
 			g.es_exception()
 
 def otabs(self,n):
@@ -43030,7 +43037,7 @@ def putEmptyDirective(self,s,i):
 		s = at.readLine(file)
 		if len(s) == 0: break
 		kind = at.sentinelKind(s)
-		# g.trace(at.sentinelName(kind),`s`)
+		# g.trace(at.sentinelName(kind),s)
 		if kind == noSentinel:
 			i = 0
 		else:
@@ -43323,7 +43330,7 @@ else:
 		if s and s[-1] == '\n':
 			at.out = [s[:-1]]
 		else:
-			g.trace("out:",`s`)
+			g.trace("out:",s)
 			at.readError("unexpected @nonl directive in code part")	
 	else:
 		s = ''.join(at.pending)
@@ -43331,14 +43338,14 @@ else:
 			if s and s[-1] == '\n':
 				at.pending = [s[:-1]]
 			else:
-				g.trace("docOut:",`s`)
+				g.trace("docOut:",s)
 				at.readError("unexpected @nonl directive in pending doc part")
 		else:
 			s = ''.join(at.docOut)
 			if s and s[-1] == '\n':
 				at.docOut = [s[:-1]]
 			else:
-				g.trace("docOut:",`s`)
+				g.trace("docOut:",s)
 				at.readError("unexpected @nonl directive in doc part")</t>
 <t tx="ekr.20031218072017.2782">@ The sentinel contains an @ followed by a section name in angle brackets.  This code is different from the code for the @@ sentinel: the expansion of the reference does not include a trailing newline.
 @c
@@ -43518,7 +43525,7 @@ if start and start[-1] == '@':
 	if g.match(s,i,"@"):
 		j = g.skip_ws(s,i+1)
 		if j &gt; i+1:
-			# g.trace(`ws`,`s`)
+			# g.trace(ws,s)
 			if g.match(s,j,"@+others"):
 				return startOthers
 			elif g.match(s,j,"&lt;&lt;"):
@@ -43643,8 +43650,8 @@ def idle_colorize(self,p):
 		ch1 not in string.ascii_letters # non-letter control code
 	):
 		word = s[i:i+2]
-		
-	# if word: g.trace(`word`)
+
+	# if word: g.trace(word)
 		
 	return word</t>
 <t tx="ekr.20031218072017.2804"># self.flag is true unless an unambiguous @nocolor is seen.
@@ -43912,7 +43919,7 @@ closeFlag = (
 if ext[0] != ".":
 	ext = "."+ext
 	
-# print "ext",`ext`</t>
+# print "ext",ext</t>
 <t tx="ekr.20031218072017.2825">dict = None ; path = None
 &lt;&lt; set dict and path if a temp file already refers to v.t &gt;&gt;
 if path:
@@ -44438,7 +44445,7 @@ except:
 	&lt;&lt; set root to the nearest @file, @silentfile or @rawfile ancestor node &gt;&gt;
 	&lt;&lt; read the file into lines &gt;&gt;
 	&lt;&lt; get n, the line number, from a dialog &gt;&gt;
-	# g.trace("n:"+`n`)
+	# g.trace(n)
 	if n==1:
 		p = root ; n2 = 1 ; found = true
 	elif n &gt;= len(lines):
@@ -44635,7 +44642,7 @@ i = 0
 while i &lt; len(lines) and lines[i].find(tag)==-1:
 	i += 1
 leoLine = i # Index of the line containing the leo sentinel
-# g.trace("leoLine:"+`leoLine`)
+# g.trace("leoLine:",leoLine)
 
 delim = None # All sentinels start with this.
 if leoLine &lt; len(lines):
@@ -44654,7 +44661,7 @@ nodeSentinelLine = -1
 line = n - 1
 while line &gt;= 0:
 	s = lines[line]
-	# g.trace(`s`)
+	# g.trace(s)
 	i = g.skip_ws(s,0)
 	if g.match(s,i,delim):
 		&lt;&lt; handle delim while scanning backward &gt;&gt;
@@ -45341,7 +45348,7 @@ def leoPyShellMain(self):
 
 	c = self
 	c.beginUpdate()
-	# g.trace("v,parent,n:"+v.headString()+","+parent.headString()+","+`n`)
+	# g.trace("v,parent,n:",v.headString(),parent.headString(),n)
 	clone = v.clone(v) # Creates clone &amp; dependents, does not set undo.
 	if not c.checkMoveWithParentWithWarning(clone,parent,true):
 		clone.doDelete(v) # Destroys clone &amp; dependents. Makes v the current node.
@@ -46114,27 +46121,27 @@ def setConfigIvars (self,c):
 		language = "plain"
 	self.setPref("default_tangle_directory",c.tangle_directory)
 	self.setPref("default_target_language",language)
-	self.setPref("output_doc_chunks",`c.output_doc_flag`)
-	self.setPref("page_width",`c.page_width`)
-	self.setPref("run_tangle_done.py",`c.tangle_batch_flag`)
-	self.setPref("run_untangle_done.py",`c.untangle_batch_flag`)
-	self.setPref("tab_width",`c.tab_width`)
-	self.setPref("tangle_outputs_header",`c.use_header_flag`)
+	self.setPref("output_doc_chunks",str(c.output_doc_flag))
+	self.setPref("page_width",str(c.page_width))
+	self.setPref("run_tangle_done.py",str(c.tangle_batch_flag))
+	self.setPref("run_untangle_done.py",str(c.untangle_batch_flag))
+	self.setPref("tab_width",str(c.tab_width))
+	self.setPref("tangle_outputs_header",str(c.use_header_flag))
 	
-	self.setFindPref("batch",`c.batch_flag`)
-	self.setFindPref("ignore_case",`c.ignore_case_flag`)
-	self.setFindPref("mark_changes",`c.mark_changes_flag`)
-	self.setFindPref("mark_finds",`c.mark_finds_flag`)
-	self.setFindPref("pattern_match",`c.pattern_match_flag`)
-	self.setFindPref("reverse",`c.reverse_flag`)
-	self.setFindPref("script_change",`c.script_change_flag`)
-	self.setFindPref("script_search",`c.script_search_flag`)
-	self.setFindPref("search_body",`c.search_body_flag`)
-	self.setFindPref("search_headline",`c.search_headline_flag`)
-	self.setFindPref("selection_only",`c.selection_only_flag`) # 11/9/03
-	self.setFindPref("suboutline_only",`c.suboutline_only_flag`)
-	self.setFindPref("wrap",`c.wrap_flag`)
-	self.setFindPref("whole_word",`c.whole_word_flag`)
+	self.setFindPref("batch",str(c.batch_flag))
+	self.setFindPref("ignore_case",str(c.ignore_case_flag))
+	self.setFindPref("mark_changes",str(c.mark_changes_flag))
+	self.setFindPref("mark_finds",str(c.mark_finds_flag))
+	self.setFindPref("pattern_match",str(c.pattern_match_flag))
+	self.setFindPref("reverse",str(c.reverse_flag))
+	self.setFindPref("script_change",str(c.script_change_flag))
+	self.setFindPref("script_search",str(c.script_search_flag))
+	self.setFindPref("search_body",str(c.search_body_flag))
+	self.setFindPref("search_headline",str(c.search_headline_flag))
+	self.setFindPref("selection_only",str(c.selection_only_flag)) # 11/9/03
+	self.setFindPref("suboutline_only",str(c.suboutline_only_flag))
+	self.setFindPref("wrap",str(c.wrap_flag))
+	self.setFindPref("whole_word",str(c.whole_word_flag))
 	
 	self.setFindPref("change_string",c.change_text)
 	self.setFindPref("find_string",c.find_text)</t>
@@ -46391,23 +46398,24 @@ else:
 	self.put("&lt;/globals&gt;") ; self.put_nl()</t>
 <t tx="ekr.20031218072017.3038"># Puts an innumerate number of digits
 
-self.put(" body_outline_ratio=") ; self.put_in_dquotes(`c.frame.ratio`)</t>
+self.put(" body_outline_ratio=")
+self.put_in_dquotes(str(c.frame.ratio))</t>
 <t tx="ekr.20031218072017.3039">width,height,left,top = c.frame.get_window_info()
 
 self.put_tab()
 self.put("&lt;global_window_position")
-self.put(" top=") ; self.put_in_dquotes(`top`)
-self.put(" left=") ; self.put_in_dquotes(`left`)
-self.put(" height=") ; self.put_in_dquotes(`height`)
-self.put(" width=") ; self.put_in_dquotes(`width`)
+self.put(" top=") ; self.put_in_dquotes(str(top))
+self.put(" left=") ; self.put_in_dquotes(str(left))
+self.put(" height=") ; self.put_in_dquotes(str(height))
+self.put(" width=") ; self.put_in_dquotes(str(width))
 self.put("/&gt;") ; self.put_nl()</t>
 <t tx="ekr.20031218072017.3040">top = left = height = width = 0 # no longer used
 self.put_tab()
 self.put("&lt;global_log_window_position")
-self.put(" top=") ; self.put_in_dquotes(`top`)
-self.put(" left=") ; self.put_in_dquotes(`left`)
-self.put(" height=") ; self.put_in_dquotes(`height`)
-self.put(" width=") ; self.put_in_dquotes(`width`)
+self.put(" top=") ; self.put_in_dquotes(str(top))
+self.put(" left=") ; self.put_in_dquotes(str(left))
+self.put(" height=") ; self.put_in_dquotes(str(height))
+self.put(" width=") ; self.put_in_dquotes(str(width))
 self.put("/&gt;") ; self.put_nl()</t>
 <t tx="ekr.20031218072017.3041">def putHeader (self):
 
@@ -46415,9 +46423,9 @@ self.put("/&gt;") ; self.put_nl()</t>
 
 	self.put("&lt;leo_header")
 	self.put(" file_format=") ; self.put_in_dquotes("2")
-	self.put(" tnodes=") ; self.put_in_dquotes(`tnodes`)
-	self.put(" max_tnode_index=") ; self.put_in_dquotes(`self.maxTnodeIndex`)
-	self.put(" clone_windows=") ; self.put_in_dquotes(`clone_windows`)
+	self.put(" tnodes=") ; self.put_in_dquotes(str(tnodes))
+	self.put(" max_tnode_index=") ; self.put_in_dquotes(str(self.maxTnodeIndex))
+	self.put(" clone_windows=") ; self.put_in_dquotes(str(clone_windows))
 	self.put("/&gt;") ; self.put_nl()</t>
 <t tx="ekr.20031218072017.3042">def putPostlog (self):
 
@@ -46781,7 +46789,7 @@ def setup_command(self,c):
 	if count &gt; 0:
 		# A change was made.  Tag the end of the Change All command.
 		c.undoer.setUndoParams("Change All",v)
-	g.es("changed: " + `count`)
+	g.es("changed: ",count)
 	self.restore(data)</t>
 <t tx="ekr.20031218072017.3070"># Replace selection with c.change_text.
 # If no selection, insert c.change_text at the cursor.
@@ -46789,7 +46797,7 @@ def setup_command(self,c):
 def changeSelection(self):
 
 	c = self.c ; v = self.v ; gui = g.app.gui
-	# g.trace(`self.in_headline`)
+	# g.trace(self.in_headline)
 	t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
 	oldSel = sel = gui.getTextSelection(t)
 	if sel and len(sel) == 2:
@@ -46874,7 +46882,7 @@ def runFindScript (self):
 			self.printLine(line,allFlag=true)
 		else: break
 	c.endUpdate()
-	g.es("found: " + `count`)
+	g.es("found: ",count)
 	self.restore(data)</t>
 <t tx="ekr.20031218072017.3074">def findNext(self,initFlag=true):
 
@@ -47014,7 +47022,7 @@ if g.is_c_id(after) and g.is_c_id(last):
 def selectNextVnode(self):
 
 	c = self.c ; v = self.v
-	# g.trace(`v`)
+	# g.trace(v)
 
 	if c.selection_only_flag:
 		return None
@@ -47032,7 +47040,7 @@ def selectNextVnode(self):
 		# just switch to body pane.
 		self.in_headline = false
 		self.initNextText()
-		# g.trace(`v`)
+		# g.trace(v)
 		return v
 
 	if c.reverse_flag: v = v.threadBack()
@@ -47156,12 +47164,12 @@ def initInteractiveCommands(self):
 	context = c.batch_flag # "batch" now indicates context
 
 	if allFlag and both and context:
-		g.es(`self.v`)
+		g.es(self.v)
 		type = g.choose(self.in_headline,"head: ","body: ")
 		g.es(type + line)
 	elif allFlag and context and not self.v.isVisited():
 		# We only need to print the context once.
-		g.es(`self.v`)
+		g.es(self.v)
 		g.es(line)
 		self.v.setVisited()
 	else:
@@ -47219,7 +47227,7 @@ def restore (self,data):
 	c.endUpdate(false) # Do not draw again!
 
 	t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
-	# g.trace(`self.in_headline` + "," + `t`)
+	# g.trace(self.in_headline,t)
 	insert = g.choose(c.reverse_flag,pos,newpos)
 	gui.setInsertPoint(t,insert)
 	gui.setSelectionRange(t,pos,newpos)
@@ -47457,7 +47465,7 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 		firstLineWidth = 10
 	outputLineWidth = firstLineWidth
 
-	# g.trace(`lines`)
+	# g.trace(lines)
 	result = [] # The lines of the result.
 	line = "" # The line being formed.  It never ends in whitespace.
 	for s in lines:
@@ -47481,7 +47489,7 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 				&lt;&lt; place word on a new line &gt;&gt;
 	if len(line) &gt; 0:
 		result.append(line)
-	# g.trace(`result`)
+	# g.trace(result)
 	return result</t>
 <t tx="ekr.20031218072017.3101">if len(line) == 0:
 	# Just add the word to the start of the line.
@@ -47545,7 +47553,7 @@ virtual_event_name = angleBrackets</t>
 	
 	out = ""
 	for i in s:
-		out += `ord(i)` + ","
+		out += str(ord(i)) + ","
 	return out
 		
 def oldDump(s):
@@ -47646,7 +47654,7 @@ def create_temp_name ():
 
 	import tempfile
 	temp = tempfile.mktemp()
-	# g.trace(`temp`)
+	# g.trace(temp)
 	return temp</t>
 <t tx="ekr.20031218072017.3118">def ensure_extension (name, ext):
 
@@ -47803,7 +47811,7 @@ The newly created method has the same name as the function unless the optional n
 def funcToMethod(f,theClass,name=None):
 
 	setattr(theClass,name or f.__name__,f)
-	# g.trace(`name`)</t>
+	# g.trace(name)</t>
 <t tx="ekr.20031218072017.3127"># Very useful for tracing.
 
 def get_line (s,i):
@@ -47864,7 +47872,7 @@ If two arguments are supplied to trace, the first argument is the "tracepoint na
 def init_sherlock (args):
 	
 	g.init_trace(args,echo=0)
-	# g.trace("argv", "sys.argv: " + `sys.argv`)</t>
+	# g.trace("sys.argv:",sys.argv)</t>
 <t tx="ekr.20031218072017.3131">@ It no args are given we attempt to get them from the "SherlockArgs" file.  If there are still no arguments we trace everything.  This default makes tracing much more useful in Python.
 @c
 
@@ -48397,8 +48405,8 @@ def skip_pp_if(s,i):
 		i = g.skip_line(s,i)
 	else:
 		g.es("no matching #endif: " + start_line)
-		
-	# g.trace(`delta1` + ":" + start_line)
+
+	# g.trace(delta1,start_line)
 	return i,delta1
 </t>
 <t tx="ekr.20031218072017.3169"># Skip to an #else or #endif.  The caller has eaten the #if, #ifdef, #ifndef or #else
@@ -48412,7 +48420,7 @@ def skip_pp_part(s,i):
 		c = s[i]
 		if 0:
 			if c == '\n':
-				g.trace(`delta` + ":" + g.get_line(s,i))
+				g.trace(delta,g.get_line(s,i))
 		if g.match_word(s,i,"#if") or g.match_word(s,i,"#ifdef") or g.match_word(s,i,"#ifndef"):
 			i,delta1 = g.skip_pp_if(s,i)
 			delta += delta1
@@ -48478,7 +48486,7 @@ def escaped(s,i):
 	else: return i + 1</t>
 <t tx="ekr.20031218072017.3176">def find_on_line(s,i,pattern):
 
-	# j = g.skip_line(s,i) ; g.trace(`s[i:j]`)
+	# j = g.skip_line(s,i) ; g.trace(s[i:j])
 	j = string.find(s,'\n',i)
 	if j == -1: j = len(s)
 	k = string.find(s,pattern,i,j)
@@ -48497,7 +48505,7 @@ def is_special(s,i,directive):
 
 	"""Return true if the body text contains the @ directive."""
 
-	# j = g.skip_line(s,i) ; g.trace(`s[i:j]` + " : " + `directive`)
+	# j = g.skip_line(s,i) ; g.trace(s[i:j],':',directive)
 	assert (directive and directive [0] == '@' )
 
 	# 10/23/02: all directives except @others must start the line.
@@ -48823,7 +48831,7 @@ class leoImportCommands (baseLeoImportCommands):
 	# g.trace(ext,fileName)
 	self.fileType = ext
 	self.setEncoding()
-	# g.trace(`self.fileName`) ; g.trace(`self.fileType`)
+	# g.trace(self.fileName,self.fileType)
 	# All file types except the following just get copied to the parent node.
 	# Note: we should _not_ import header files using this code.
 	ext = ext.lower()
@@ -49120,7 +49128,7 @@ def scanBodyForHeadline (self,s):
 <t tx="ekr.20031218072017.3229">i = 0
 while i &lt; len(s):
 	i = g.skip_ws_and_nl(s,i)
-	# line = g.get_line(s,i) ; g.trace(`line`)
+	# line = g.get_line(s,i) ; g.trace(line)
 	# Allow constructs such as @ @c, or @ @&lt;.
 	if self.isDocStart(s,i):
 		i += 2 ; i = g.skip_ws(s,i)
@@ -49145,7 +49153,7 @@ while i &lt; len(s):
 <t tx="ekr.20031218072017.3230">i = 0
 while i &lt; len(s):
 	i = g.skip_ws_and_nl(s,i)
-	# line = g.get_line(s,i) ; g.trace(`line`)
+	# line = g.get_line(s,i) ; g.trace(line)
 	if g.match(s,i,"&lt;&lt;"):
 		k = g.find_on_line(s,i,"&gt;&gt;=")
 		if k &gt; -1:
@@ -49180,7 +49188,7 @@ while i &lt; len(s):
 <t tx="ekr.20031218072017.3232">i = 0 ; 	self.web_st = []
 while i &lt; len(s):
 	i = g.skip_ws_and_nl(s,i)
-	# line = g.get_line(s,i) ; g.trace(`line`)
+	# line = g.get_line(s,i) ; g.trace(line)
 	if self.isDocStart(s,i):
 		if type == "cweb": i += 2
 		else: i = g.skip_line(s,i)
@@ -49212,7 +49220,7 @@ if g.match(s,i,lb):
 		else: i = g.skip_line(s,i)
 	self.createHeadline(parent,s[j:i],g.angleBrackets(" @ "))
 	
-# g.trace(`g.get_line(s,i)`)</t>
+# g.trace(g.get_line(s,i))</t>
 <t tx="ekr.20031218072017.3234">if type=="cweb":
 	assert(self.isModuleStart(s,i))
 	start = i
@@ -49329,7 +49337,7 @@ def scanPHPText (self,s,parent):
 	parent.appendStringToBody(s[:startOfCode])
 	scan_start = i = startOfCode
 	while i &lt; endOfCode:
-		# line = g.get_line(s,i) ; g.trace(`line`)
+		# line = g.get_line(s,i) ; g.trace(line)
 		ch = s[i]
 		# These cases skip tokens.
 		if ch == '/' or ch == '#':
@@ -49505,7 +49513,7 @@ def scanCText (self,s,parent):
 
 	&lt;&lt; define scanCText vars &gt;&gt;
 	while i &lt; len(s):
-		# line = g.get_line(s,i) ; g.trace(`line`)
+		# line = g.get_line(s,i) ; g.trace(line)
 		ch = s[i]
 		# These cases skip tokens.
 		if ch == '/':
@@ -49836,9 +49844,9 @@ if i &lt; len(s):
 def scanJavaText (self,s,parent,outerFlag): # true if at outer level.
 
 	&lt;&lt; define scanJavaText vars &gt;&gt;
-	# if not outerFlag: g.trace("inner:" + `s`)
+	# if not outerFlag: g.trace("inner:",s)
 	while i &lt; len(s):
-		# g.trace(`g.get_line(s,i)`)
+		# g.trace(g.get_line(s,i))
 		ch = s[i]
 		# These cases skip tokens.
 		if ch == '/':
@@ -49876,13 +49884,13 @@ if not g.match (s,i,'}'):
 elif not name:
 	i += 1
 elif (outerFlag and (class_seen or interface_seen)) or (not outerFlag and lparen):
-	# g.trace("starting:"+name)
-	# g.trace("outerFlag:"+`outerFlag`)
-	# g.trace("lparen:"`lparen`)
-	# g.trace("class_seen:"+`class_seen`)
-	# g.trace("scan_start:"+g.get_line_after(s,scan_start))
-	# g.trace("func_start:"+g.get_line_after(s,function_start))
-	# g.trace("s:"+g.get_line(s,i))
+	# g.trace("starting:",name)
+	# g.trace("outerFlag:",outerFlag)
+	# g.trace("lparen:",lparen)
+	# g.trace("class_seen:",class_seen)
+	# g.trace("scan_start:",g.get_line_after(s,scan_start))
+	# g.trace("func_start:",g.get_line_after(s,function_start))
+	# g.trace("s:",g.get_line(s,i))
 
 	# Point i _after_ the last character of the method.
 	i += 1
@@ -49960,7 +49968,7 @@ else:
 	ref_name = g.angleBrackets(" " + self.methodName + " " + kind + " ")
 	parent.appendStringToBody(leader + ref_name + "\n")</t>
 <t tx="ekr.20031218072017.3275"># These mark the points in the present function.
-# g.trace("recursive scan:" + `g.get_line(s,brace_ip1+ 1)`)
+# g.trace("recursive scan:",g.get_line(s,brace_ip1+ 1))
 oldMethodName = self.methodName
 self.methodName = headline
 self.scanJavaText(s[brace_ip1+1:brace_ip2], # Don't include either brace.
@@ -50018,7 +50026,7 @@ def scanPascalText (self,s,parent):
 	scan_start = function_start = i = 0
 	name = None
 	while i &lt; len(s):
-		# line = g.get_line(s,i) ; g.trace(`line`)
+		# line = g.get_line(s,i) ; g.trace(line)
 		ch = s[i]
 		if ch == '{': i = g.skip_pascal_braces(s,i)
 		elif ch == '"' or ch == '\'': i = g.skip_pascal_string(s,i)
@@ -50035,7 +50043,7 @@ def scanPascalText (self,s,parent):
 elif (g.match_c_word(s,i,"function")  or g.match_c_word(s,i,"procedure") or
 	g.match_c_word(s,i,"constructor") or g.match_c_word(s,i,"destructor")):
 
-	# line = g.get_line(s,i) ; g.trace(`line`)
+	# line = g.get_line(s,i) ; g.trace(line)
 	
 	start = i
 	i = g.skip_c_id(s,i)
@@ -50183,7 +50191,7 @@ else:
 	file_name = line = None
 </t>
 <t tx="ekr.20031218072017.3293"># set j &amp; k so line[j:k] is the file name.
-# g.trace(`line`)
+# g.trace(line)
 
 if g.match(line,0,"&lt;"):
 	j = 1 ; k = string.find(line,"&gt;",1)
@@ -50431,7 +50439,7 @@ elif start_delim:
 <t tx="ekr.20031218072017.3305"></t>
 <t tx="ekr.20031218072017.3306">def createHeadline (self,parent,body,headline):
 
-	# g.trace("parent,headline:" + `parent` + ":" + `headline`)
+	# g.trace("parent,headline:",parent,headline)
 	# Create the vnode.
 	v = parent.insertAsLastChild()
 	v.initHeadString(headline,self.encoding)
@@ -50447,13 +50455,13 @@ elif start_delim:
 	c = self.c
 	i = g.find_line_start(s,i)
 	while i &lt; len(s):
-		# g.trace(`g.get_line(s,i)`)
+		# g.trace(g.get_line(s,i))
 		j = g.skip_ws(s,i) # Bug fix: 2/14/03
 		if g.is_nl(s,j) or g.match(s,j,"#"): # Bug fix: 2/14/03
 			i = g.skip_line(s,i) # ignore blank lines and comment lines.
 		else:
 			i, width = g.skip_leading_ws_with_indent(s,i,c.tab_width)
-			# g.trace("returns:" + `width`)
+			# g.trace("returns:",width)
 			return width
 	# g.trace("returns:0")
 	return 0</t>
@@ -50484,8 +50492,8 @@ def isModuleStart (self,s,i):
 </t>
 <t tx="ekr.20031218072017.3310">def massageBody (self,s,methodKind):
 	
-	# g.trace(`s`)
-	# g.trace(`g.get_line(s,0)`)
+	# g.trace(s)
+	# g.trace(g.get_line(s,0))
 	c = self.c
 	if self.treeType == "@file":
 		if self.fileType == ".py": # 7/31/02: was "py"
@@ -50522,7 +50530,7 @@ def isModuleStart (self,s,i):
 	
 	Also removes leading and trailing whitespace."""
 
-	# g.trace(`g.get_line(s,0)`)
+	# g.trace(g.get_line(s,0))
 	s = string.strip(s)
 	s = string.replace(s,"\n"," ")
 	s = string.replace(s,"\r"," ")
@@ -50565,13 +50573,13 @@ while i &lt; len(s):
 				doc = g.choose(self.webType=="cweb", "@ ","@\n")
 			else:
 				doc += "\n\n"
-			# g.trace("new doc:" + `doc`)
+			# g.trace("new doc:",doc)
 			s = s[:start] + doc + s[end:]
 			i = start + len(doc)
 	else: i = g.skip_line(s,i)</t>
 <t tx="ekr.20031218072017.3314">i = 0
 while i &lt; len(s):
-	# g.trace(`g.get_line(s,i)`)
+	# g.trace(g.get_line(s,i))
 	if g.match(s,i,lb):
 		i += 2 ; j = i ; k = g.find_on_line(s,j,rb)
 		if k &gt; -1:
@@ -50579,7 +50587,7 @@ while i &lt; len(s):
 			name2 = self.cstLookup(name)
 			if name != name2:
 				# Replace name by name2 in s.
-				# g.trace("replacing:" + `name` + ", by:" + `name2`)
+				# g.trace("replacing %s by %s" % (name,name2))
 				s = s[:j] + name2 + s[k:]
 				i = j + len(name2)
 	i = g.skip_line(s,i)</t>
@@ -50589,7 +50597,7 @@ while i &lt; len(s):
 
 	Returns (body, comment)"""
 
-	# g.trace(`g.get_line(s,0)`)
+	# g.trace(g.get_line(s,0))
 	s_original = s
 	s = string.lstrip(s)
 	i = 0 ; comment = ""
@@ -50659,7 +50667,7 @@ def undentBody (self,s):
 
 	"""Removes extra leading indentation from all lines."""
 
-	# g.trace(`s`)
+	# g.trace(s)
 	c = self.c
 	i = 0 ; result = ""
 	# Copy an @code line as is.
@@ -50672,7 +50680,7 @@ def undentBody (self,s):
 	while i &lt; len(s):
 		j = i ; i = g.skip_line(s,i) # don't use get_line: it is only for dumping.
 		line = s[j:i]
-		# g.trace(`line`)
+		# g.trace(line)
 		line = g.removeLeadingWhitespace(line,undent,c.tab_width)
 		result += line
 	return result</t>
@@ -50764,7 +50772,7 @@ class vnode (baseVnode):
 <t tx="ekr.20031218072017.3343">if 0: # not used
 	def __cmp__(self,other):
 		
-		g.trace(`self` + "," + `other`)
+		g.trace(self,other)
 		return not (self is other) # Must return 0, 1 or -1</t>
 <t tx="ekr.20031218072017.3344">def __init__ (self,c,t):
 
@@ -50774,12 +50782,11 @@ class vnode (baseVnode):
 <t tx="ekr.20031218072017.3345">def __repr__ (self):
 	
 	if self.t:
-		return "&lt;vnode %d:%s&gt;" % (id(self),`self.t.headString`)
+		return "&lt;vnode %d:'%s'&gt;" % (id(self),self.t.headString)
 	else:
 		return "&lt;vnode %d:NULL tnode&gt;" % (id(self))
 		
-__str__ = __repr__
-</t>
+__str__ = __repr__</t>
 <t tx="ekr.20031218072017.3346"></t>
 <t tx="ekr.20031218072017.3347"># 12/03/02: We now handle @file options here.
 
@@ -50810,7 +50817,7 @@ def atFileNodeName (self):
 
 def atNoSentinelsFileNodeName (self):
 	return self.nodeName("@nosentinelsfile")
-	
+
 def atRawFileNodeName (self):
 	return self.nodeName("@rawfile")
 	
@@ -50818,14 +50825,7 @@ def atSilentFileNodeName (self):
 	return self.nodeName("@silentfile")
 	
 def atThinFileNodeName (self):
-	return self.nodeName("@thinfile")
-	
-isAtFileNode            = atFileNodeName
-isAtNoSentinelsFileNode = atNoSentinelsFileNodeName
-isAtRawFileNode         = atRawFileNodeName
-isAtSilentFileNode      = atSilentFileNodeName
-isAtThinFileNode        = atThinFileNodeName
-</t>
+	return self.nodeName("@thinfile")</t>
 <t tx="ekr.20031218072017.3349"># Returns true if the receiver's headline starts with @file.
 def isAtFileNode (self):
 	s = self.atFileNodeName()
@@ -50870,7 +50870,8 @@ def isAtThinFileNode (self):
 	else:
 		return ""
 		
-isAnyAtFileNode = anyAtFileNodeName</t>
+def isAnyAtFileNode (self):
+	return g.choose(self.anyAtFileNodeName(),true,false)</t>
 <t tx="ekr.20031218072017.3351">def isAtIgnoreNode (self):
 
 	"""Returns true if the receiver contains @ignore in its body at the start of a line."""
@@ -51073,11 +51074,12 @@ def bodyString (self):
 
 	# This message should never be printed and we want to avoid crashing here!
 	if not g.isUnicode(self.t.bodyString):
-		s = "Leo internal error: not unicode:" + `self.t.bodyString`
+		s = "Leo internal error: not unicode:" + repr(self.t.bodyString)
 		print s ; g.es(s,color="red")
 
 	# Make _sure_ we return a unicode string.
-	return g.toUnicode(self.t.bodyString,g.app.tkEncoding)</t>
+	return g.toUnicode(self.t.bodyString,g.app.tkEncoding)
+</t>
 <t tx="ekr.20031218072017.3379">def currentPosition (self):
 	return self.c.currentPosition()
 		
@@ -51223,7 +51225,7 @@ def setVisited (self):
 
 	v = self
 	body = v.bodyString()
-	# g.trace(`body`)
+	# g.trace(body)
 	lines = string.split(body,'\n')
 	i = len(lines) - 1 ; changed = false
 	while i &gt;= 0:
@@ -51235,7 +51237,7 @@ def setVisited (self):
 		else: break
 	if changed:
 		body = string.join(body,'') + '\n' # Add back one last newline.
-		# g.trace(`body`)
+		# g.trace(body)
 		v.setBodyStringOrPane(body)
 		# Don't set the dirty bit: it would just be annoying.
 </t>
@@ -51895,7 +51897,7 @@ if 1: # A single enum...
 	@others</t>
 <t tx="ekr.20031218072017.3450">def __init__ (self,name,root_flag):
 
-	# g.trace("tst_node.__init__" + `name`)
+	# g.trace("tst_node.__init__",name)
 	self.name = name
 	self.is_root = root_flag
 	self.referenced = false
@@ -51907,7 +51909,7 @@ if 1: # A single enum...
 	@others</t>
 <t tx="ekr.20031218072017.3453">def __init__ (self,name,code,doc,is_root,is_dirty):
 
-	# g.trace("part_node.__init__" + `name`)
+	# g.trace("part_node.__init__",name)
 	self.name = name # Section or file name.
 	self.code = code # The code text.
 	self.doc = doc # The doc text.
@@ -51923,7 +51925,7 @@ if 1: # A single enum...
 
 def __init__ (self,name,code,part,of,nl_flag,update_flag):
 
-	# g.trace("ust_node.__init__", `name` +":"+ `part`)
+	# g.trace("ust_node.__init__",name,part)
 	self.name = name # section name
 	self.parts = {} # parts dict
 	self.code = code # code text
@@ -51942,8 +51944,8 @@ def __init__ (self,name,code,part,of,nl_flag,update_flag):
 def __init__ (self,name,indent,part,of,nl_flag,code):
 
 	if 0:
-		g.trace("def_node.__init__",
-			"name:" + name + ", part:" + `part` + ", of:" + `of` + ", indent:" + `indent`)
+		g.trace("def_node.__init__:",
+			"name:",name," part:",part," of:",of," indent:",indent)
 	self.name = name
 	self.indent = indent
 	self.code = code
@@ -52266,7 +52268,7 @@ We assume that all sections from root to end are contained in the derived file, 
 
 def untangleRoot(self,root,begin,end):
 
-	# g.trace("root,begin,end:" + `root` + `begin` + `end`)
+	# g.trace("root,begin,end:",root,begin,end)
 	&lt;&lt; Set path &amp; root_name to the file specified in the @root directive &gt;&gt;
 	&lt;&lt; return if @silent or unknown language &gt;&gt;
 	&lt;&lt; Read the file into file_buf &gt;&gt;
@@ -52357,7 +52359,7 @@ def untangleTree(self,p,report_flag):
 					any_root_flag = true
 					end = None
 					&lt;&lt; set end to the next root in the unit &gt;&gt;
-					# g.trace("end:" + `end`)
+					# g.trace("end:",end)
 					self.scanAllDirectives(p,require_path,report_errors)
 					self.untangleRoot(p,unitNode,afterUnit)
 					p = end.copy()
@@ -52399,7 +52401,7 @@ def handle_newline(self,s,i):
 	kind, end = self.token_type(s,i,dont_report_errors)
 	# token_type will not skip whitespace in noweb mode.
 	i = g.skip_ws(s,i)
-	# g.trace(`kind` + "," + `g.get_line(s,i)`)
+	# g.trace(kind,g.get_line(s,i))
 
 	if kind == plain_line:
 		pass
@@ -52449,7 +52451,7 @@ def skip_body (self,p):
 
 	while i &lt; len(s):
 		progress = i # progress indicator
-		# line = g.get_line(s,i) ; g.trace(`line`)
+		# line = g.get_line(s,i) ; g.trace(line)
 		kind, end = self.token_type(s,i,report_errors)
 		# if g.is_nl(s,i): i = g.skip_nl(s,i)
 		i = g.skip_ws(s,i)
@@ -52516,7 +52518,7 @@ doc = None</t>
 # Skip the section definition line.
 k = i ; i, kind, junk = self.skip_section_name(s,i)
 section_name = s[k:i]
-# g.trace(`section_name`)
+# g.trace(section_name)
 assert(kind == section_def)
 i = g.skip_to_end_of_line(s,i)
 
@@ -52574,7 +52576,7 @@ code = doc = None</t>
 
 def skip_code(self,s,i):
 
-	# g.trace(`g.get_line(s,i)`)
+	# g.trace(g.get_line(s,i))
 	code1 = i
 	nl_i = i # For error messages
 	done = false # true when end of code part seen.
@@ -52583,7 +52585,7 @@ def skip_code(self,s,i):
 	else:
 		&lt;&lt; skip a CWEB code section &gt;&gt;
 	code = s[code1:i]
-	# g.trace(returns: + `code`)
+	# g.trace("returns:",code)
 	return i,code</t>
 <t tx="ekr.20031218072017.3499">@ This code handles the following escape conventions: double at-sign at the start of a line and at-&lt;&lt; and at.&gt;.
 @c
@@ -52634,7 +52636,7 @@ else:
 	i = j</t>
 <t tx="ekr.20031218072017.3503">def skip_doc(self,s,i):
 
-	# g.trace(`g.get_line(s,i)`)
+	# g.trace(g.get_line(s,i))
 	# Skip @space, @*, @doc, @chapter and @section directives.
 	doc1 = i
 	while i &lt; len(s):
@@ -52682,7 +52684,7 @@ Most of the differences bewteen noweb mode and CWEB mode are handled by token_ty
 
 def put_code(self,s,no_first_lws_flag):
 
-	# g.trace(`g.get_line(s,0)`)
+	# g.trace(g.get_line(s,0))
 	i = 0
 	if i &lt; len(s):
 		i = self.put_newline(s,i,no_first_lws_flag)
@@ -52749,7 +52751,7 @@ else: self.os("@") ; i += 1</t>
 
 def put_doc(self,s):
 
-	# g.trace(`g.get_line(s,0)`)
+	# g.trace(g.get_line(s,0))
 	width = self.page_width
 	words = 0 ; word_width = 0 ; line_width = 0
 	# 8/1/02: can't use choose here!
@@ -52855,11 +52857,11 @@ while j &lt; len(s) and not g.is_ws_or_nl(s,j):
 
 def put_leading_ws(self,n):
 
-	# g.trace("tab_width:" + `self.tab_width` + ", indent:" + `indent`)
+	# g.trace("tab_width,indent:",self.tab_width,indent)
 	w = self.tab_width
 
 	if w &gt; 1:
-		q,r = divmod(n,w) 
+		q,r = divmod(n,w)
 		self.otabs(q) 
 		self.oblanks(r) 
 	else:
@@ -52898,7 +52900,7 @@ def put_part_node(self,part,no_first_lws_flag):
 	if 0:
 		if part: name = part.name # can't use choose.
 		else: name = "&lt;NULL part&gt;"
-		g.trace(`name`)
+		g.trace(name)
 
 	if part.doc and self.output_doc_flag and self.print_mode != "silent" and part.doc:
 		self.put_doc(part.doc)
@@ -52911,7 +52913,7 @@ def put_part_node(self,part,no_first_lws_flag):
 def put_section(self,s,i,name,name_end):
 
 	j = g.skip_line(s,i)
-	# g.trace("indent:" + `self.tangle_indent`  + ", " + `s[i:j]`)
+	# g.trace("indent:",self.tangle_indent,s[i:j])
 	outer_old_indent = self.tangle_indent
 	trailing_ws_indent = 0 # Set below.
 	inner_old_indent = 0 # Set below.
@@ -52942,7 +52944,7 @@ if g.is_nl(s,j):
 # Bump the indentation
 j, width = g.skip_leading_ws_with_indent(s,j,self.tab_width)
 self.tangle_indent += width
-# g.trace("leading ws:" + `width` + " + new indent:" + `self.tangle_indent`)
+# g.trace("leading ws,new indent:",width,self.tangle_indent)
 
 # 4/27/01: Force no trailing whitespace in @silent mode.
 if self.print_mode == "silent":
@@ -53002,7 +53004,7 @@ else:
 self.onl() # Always output a newline.</t>
 <t tx="ekr.20031218072017.3524">if sections &gt; 1:
 	self.oblank()
-	self.os("(" + `count` + " of " + `sections` + ")")</t>
+	self.os("(%d of %d)" % count,sections)</t>
 <t tx="ekr.20031218072017.3525">@ We do not produce an ending comment unless we are ending the last part of the section,and the comment is clearer if we don't say(n of m).
 @c
 
@@ -53064,7 +53066,7 @@ def section_check (self,name):
 
 	keys = self.tst.keys()
 	keys.sort()
-	# g.trace(`keys`)
+	# g.trace(keys)
 	for name in keys:
 		section = self.tst[name]
 		if not section.referenced:
@@ -53093,24 +53095,24 @@ def st_dump(self,verbose_flag=true):
 def st_dump_node(self,section):
 
 	s = ("\nsection: " + section.name +
-		", referenced:" + `section.referenced` +
-		", is root:" + `section.is_root`)
+		", referenced:" + str(section.referenced) +
+		", is root:" + str(section.is_root))
 	
 	if len(section.parts) &gt; 0:
 		s += "\n----- parts of " + g.angleBrackets(section.name)
 		n = 1 # part list is in numeric order
 		for part in section.parts:
-			s += "\n----- Part " + `n`
+			s += "\n----- Part " + str(n)
 			n += 1
-			s += "\ndoc:  [" + `part.doc`  + "]"
-			s += "\ncode: [" + `part.code` + "]"
+			s += "\ndoc:  [" + repr(part.doc)  + "]"
+			s += "\ncode: [" + repr(part.code) + "]"
 		s += "\n----- end of partList\n"
 	return s</t>
 <t tx="ekr.20031218072017.3532">def st_enter(self,name,code,doc,multiple_parts_flag,is_root_flag):
 
 	"""Enters names and their associated code and doc parts into the given symbol table."""
 	
-	# g.trace(`name`)
+	# g.trace(name)
 	section = self.st_lookup(name,is_root_flag)
 	assert(section)
 	if doc:
@@ -53191,8 +53193,8 @@ def st_enter_root_name(self,name,code,doc):
 		s += "\n\n" + section.name
 		for part in section.parts.values():
 			assert(part.of == section.of)
-			s += "\n----- part " + `part.part` + " of " + `part.of` + " -----\n"
-			s += `g.get_line(part.code,0)`
+			s += "\n----- part %d of %d -----\n" % (part.part,part.of)
+			s += repr(g.get_line(part.code,0))
 	s += "\n--------------------"
 	return s</t>
 <t tx="ekr.20031218072017.3540">@ This routine enters names and their code parts into the given table. The 'part' and 'of' parameters are taken from the "(part n of m)" portion of the line that introduces the section definition in the C code.
@@ -53212,7 +53214,7 @@ def ust_enter (self,name,part,of,code,nl_flag,is_root_flag):
 		self.ust[name] = u
 	section = self.ust[name]
 	section.parts[part]=u # Parts may be defined in any order.
-	# g.trace("section name: [" + name + "](" + `part` + " of " + `of` + ")..."+`g.get_line(code,0)`)</t>
+	# g.trace("section [%s](part %d of %d)...%s" % (name,part,of,g.get_line(code,0)))</t>
 <t tx="ekr.20031218072017.3541">i = g.skip_blank_lines(code,0)
 if i &gt; 0:
 	code = code[i:]
@@ -53222,7 +53224,7 @@ if i &gt; 0:
 
 def ust_lookup (self,name,part_number,is_root_flag,update_flag):
 	
-	# g.trace(`name` + ":" + `part_number`)
+	# g.trace(name,part_number)
 	
 	if not is_root_flag:
 		name = self.standardize_name(name)
@@ -53233,10 +53235,10 @@ def ust_lookup (self,name,part_number,is_root_flag,update_flag):
 		if section.parts.has_key(part_number):
 			part = section.parts[part_number]
 			if update_flag: part.update_flag = true
-			# g.trace("found:" + name + " (" + `part_number` + ")...\n" + `g.get_line(part.code,0)`)
+			# g.trace("found: %d (%d)...\n" % (name,part_number,g.get_line(part.code,0)))
 			return part, true
 
-	# g.trace("not found:" + name + " (" + `part_number` + ")...\n")
+	# g.trace("not found: %s(%d)...\n" % (name,part_number))
 	return None, false</t>
 <t tx="ekr.20031218072017.3543">def ust_warn_about_orphans (self):
 
@@ -53244,7 +53246,7 @@ def ust_lookup (self,name,part_number,is_root_flag,update_flag):
 	no corresponding section has been seen in the outline."""
 
 	for section in self.ust.values():
-		# g.trace(`section`)
+		# g.trace(section)
 		for part in section.parts.values():
 			assert(part.of == section.of)
 			if not part.update_flag:
@@ -53356,9 +53358,9 @@ def massage_block_comment (self,s):
 def forgiving_compare (self,name,part,s1,s2):
 
 	if 0:
-		g.trace(`name`+":"+`part`+
-			  "\n1:"+`g.get_line(s1,0)`+
-			  "\n2:"+ `g.get_line(s2,0)`)
+		g.trace(name,part,
+			"\n1:",g.get_line(s1,0),
+			"\n2:",g.get_line(s2,0))
 	s1 = g.toUnicode(s1,self.encoding) # 4/4/03
 	s2 = g.toUnicode(s2,self.encoding) # 4/4/03
 	&lt;&lt; Define forgiving_compare vars &gt;&gt;
@@ -53550,9 +53552,9 @@ else:
 		self.mismatch("One part ends before the other.")</t>
 <t tx="ekr.20031218072017.3561">if 0:
 	g.trace(self.message +
-		"\nPart " + `part` + ", section " + name +
-		"\n1:" + g.get_line(s1,p1) +
-		"\n2:" + g.get_line(s2,p2) )</t>
+		"\nPart ",part," section ",name,
+		"\n1:",g.get_line(s1,p1),
+		"\n2:",g.get_line(s2,p2))</t>
 <t tx="ekr.20031218072017.3562">def mismatch (self,message):
 
 	self.message = message</t>
@@ -53612,7 +53614,7 @@ i = g.skip_leading_ws(s,i,indent,c.tab_width) # skip indent leading white space.
 Tangle increases the indentation by one tab if the section reference is not the first non-whitespace item on the line,so self code must do the same.
 @c
 
-# g.trace(`g.get_line(s,i)`)
+# g.trace(g.get_line(s,i))
 result,junk,kind,name,part,of,end,nl_flag = self.is_sentinel_line_with_data(s,i)
 assert(result==true)
 &lt;&lt; terminate the previous part of this section if it exists &gt;&gt;
@@ -53719,7 +53721,7 @@ We use the forgiving_compare() to compare code parts. It's not possible to chang
 
 def update_def (self,name,part_number,head,code,tail,is_root_flag): # Doc parts are never updated!
 
-	# g.trace(`name` + ":" + `part_number` + ":" + `code`)
+	# g.trace(name,part_number,code)
 	p = self.p ; body = p.bodyString()
 	if not head: head = ""
 	if not tail: tail = ""
@@ -53730,7 +53732,7 @@ def update_def (self,name,part_number,head,code,tail,is_root_flag): # Doc parts 
 		return false_ret  # Not an error.
 	ucode = g.toUnicode(part.code,self.encoding) # 4/4/03
 	&lt;&lt; Remove leading blank lines and comments from ucode &gt;&gt;
-	# g.trace(`ucode`)
+	# g.trace(ucode)
 	if not ucode or len(ucode) == 0:
 		return false_ret # Not an error.
 	if code and self.forgiving_compare(name,part,code,ucode):
@@ -53746,10 +53748,7 @@ def update_def (self,name,part_number,head,code,tail,is_root_flag): # Doc parts 
 	ucode = ucode + trail_ws
 	body = head + ucode + tail
 	self.update_current_vnode(body)
-	if 0:
-		g.trace("head:" + `head`)
-		g.trace("ucode:" + `ucode`)
-		g.trace("tail:" + `tail`)
+	# g.trace("\nhead:",head,"\nucode:"ucode,"\ntail:",tail)
 	return body, len(head) + len(ucode),true
 </t>
 <t tx="ekr.20031218072017.3574">@ We assume that any leading comments came from an @doc part.  This isn't always valid and this code will eliminate such leading comments.  This is a defect in Untangle; it can hardly be avoided.
@@ -53757,7 +53756,7 @@ def update_def (self,name,part_number,head,code,tail,is_root_flag): # Doc parts 
 
 i = g.skip_blank_lines(ucode,0)
 j = g.skip_ws(ucode,i)
-# g.trace("comment,end,single:"+`self.comment`+":"+`self.comment_end`+":"+`self.line_comment`)
+# g.trace("comment,end,single:",self.comment,self.comment_end,self.line_comment)
 
 if self.comment and self.comment_end:
 	if ucode and g.match(ucode,j,self.comment):
@@ -53795,7 +53794,7 @@ if ucode: ucode = ucode[i:]</t>
 
 def compare_section_names (self,s1,s2):
 
-	# g.trace(`g.get_line(s1,0)` + ":" + `g.get_line(s2,0)`)
+	# g.trace(g.get_line(s1,0),':',g.get_line(s2,0))
 	if g.match(s1,0,"&lt;&lt;") or g.match(s1,0,"@&lt;"):
 		# Use a forgiving compare of the two section names.
 		delim = g.choose(self.use_cweb_flag,"@&gt;","&gt;&gt;")
@@ -53858,7 +53857,7 @@ def is_escaped (self,s,i):
 	elif g.match(s,i,"&lt;&lt;"):
 		i, kind, end = self.skip_noweb_section_name(s,i)
 
-	# g.trace(`kind` + ":" + `g.get_line(s,end)`)
+	# g.trace(kind,g.get_line(s,end))
 	return i, kind, end</t>
 <t tx="ekr.20031218072017.3584">@ This function returns true if i points to a line a sentinel line of one of the following forms:
 
@@ -53983,7 +53982,7 @@ if i &lt; len(s) and not g.is_nl(s,i):
 
 def push_new_def_node (self,name,indent,part,of,nl_flag):
 		
-	# g.trace(`name` + ":" + `part`)
+	# g.trace(name,part)
 	node = def_node(name,indent,part,of,nl_flag,None)
 	self.def_stack.append(node)</t>
 <t tx="ekr.20031218072017.3593"># This function scans a positive integer.
@@ -53999,7 +53998,7 @@ def scan_short_val (self,s,i):
 		i += 1
 
 	val = int(s[j:i])
-	# g.trace(s[j:i] + ":" + `val`)
+	# g.trace(s[j:i],val)
 	return i, val</t>
 <t tx="ekr.20031218072017.3594">def setRootFromHeadline (self,p):
 
@@ -54116,7 +54115,7 @@ def skip_section_name(self,s,i):
 	while i &lt; n and name [i] != '&gt;':
 		i += 1
 	name = string.strip(name[j:i])
-	# g.trace(`name`)
+	# g.trace(name)
 	return name</t>
 <t tx="ekr.20031218072017.3599">def token_type(self,s,i,err_flag):
 
@@ -54133,7 +54132,7 @@ def skip_section_name(self,s,i):
 		&lt;&lt; set token_type for CWEB mode &gt;&gt;
 	if kind == at_other :
 		&lt;&lt; set kind for directive &gt;&gt;
-	# g.trace(`kind` + ":" + `g.get_line(s,i)`)
+	# g.trace(kind,g.get_line(s,i))
 	return kind, end
 </t>
 <t tx="ekr.20031218072017.3600">if g.match(s,i,"&lt;&lt;"):
@@ -54302,7 +54301,7 @@ def canUndo (self):
 			assert(old_d["undoType"] == "Typing")
 			assert(old_d["v"] == u.p)
 			u.oldText = old_d["newText"]
-			# g.trace(`u.oldText`)
+			# g.trace(u.oldText)
 	return d
 	
 def peekBead (self,n):
@@ -54336,7 +54335,7 @@ def setBead (self,n,keywords=None):
 			old_d = u.beads[n-1]
 			if old_d["undoType"] == "Typing" and old_d["v"] == u.p:
 				del d["oldText"] # We can recreate this entry from old_d["newText"]
-				# g.trace(`u.oldText`)
+				# g.trace(u.oldText)
 	# g.trace(d)
 	return d
 </t>
@@ -54894,15 +54893,15 @@ if s2 and len(s2) &gt; 0:
 	if match and self.printMatches:
 		
 		if self.printBothMatches:
-			self.dump(string.rjust("1." + `lines1`,6) + ' :',s1)
-			self.dump(string.rjust("2." + `lines2`,6) + ' :',s2)
+			self.dump(string.rjust("1." + str(lines1),6) + ' :',s1)
+			self.dump(string.rjust("2." + str(lines2),6) + ' :',s2)
 		else:
-			self.dump(string.rjust(       `lines1`,6) + ' :',s1)
+			self.dump(string.rjust(       str(lines1),6) + ' :',s1)
 	
 	if not match and self.printMismatches:
 		
-		self.dump(string.rjust("1." + `lines1`,6) + '*:',s1)
-		self.dump(string.rjust("2." + `lines2`,6) + '*:',s2)</t>
+		self.dump(string.rjust("1." + str(lines1),6) + '*:',s1)
+		self.dump(string.rjust("2." + str(lines2),6) + '*:',s2)</t>
 <t tx="ekr.20031218072017.3642">if self.limitCount &gt; 0 and mismatches &gt;= self.limitCount:
 	
 	if printTrailing:
@@ -54917,9 +54916,9 @@ if n2 &gt; 0:
 	lines2 += self.dumpToEndOfFile("2.",f2,s2,lines2,printTrailing)
 
 self.show("")
-self.show("lines1:" + `lines1`)
-self.show("lines2:" + `lines2`)
-self.show("mismatches:" + `mismatches`)</t>
+self.show("lines1:" + str(lines1))
+self.show("lines2:" + str(lines2))
+self.show("mismatches:" + str(mismatches))</t>
 <t tx="ekr.20031218072017.3644">def filecmp (self,f1,f2):
 
 	val = filecmp.cmp(f1,f2)
@@ -54928,8 +54927,8 @@ self.show("mismatches:" + `mismatches`)</t>
 		else:   self.show("*** not equal")
 	else:
 		self.show("filecmp.cmp returns:")
-		if val: self.show(`val` + " (equal)")
-		else:   self.show(`val` + " (not equal)")
+		if val: self.show(str(val)+ " (equal)")
+		else:   self.show(str(val) + " (not equal)")
 	return val</t>
 <t tx="ekr.20031218072017.3645"></t>
 <t tx="ekr.20031218072017.3646">def doOpen (self,name):
@@ -54971,11 +54970,11 @@ self.show("mismatches:" + `mismatches`)</t>
 		if len(s) == 0: break
 		trailingLines += 1
 		if self.printTrailingMismatches and printTrailing:
-			tag2 = string.rjust(tag + `line`,6) + "+:"
+			tag2 = string.rjust(tag + str(line),6) + "+:"
 			self.dump(tag2,s)
 		s = None
 
-	self.show(tag + `trailingLines` + " trailing lines")
+	self.show(tag + str(trailingLines) + " trailing lines")
 	return trailingLines</t>
 <t tx="ekr.20031218072017.3649">@ These methods are based on atFile.scanHeader().  They are simpler because we only care about the starting sentinel comment: any line starting with the starting sentinel comment is presumed to be a sentinel line.
 @c
@@ -55006,24 +55005,24 @@ def isSentinel (self,s,sentinelComment):
 		print</t>
 <t tx="ekr.20031218072017.3651">def showIvars (self):
 	
-	self.show("fileName1:"        + `self.fileName1`)
-	self.show("fileName2:"        + `self.fileName2`)
-	self.show("outputFileName:"   + `self.outputFileName`)
-	self.show("limitToExtension:" + `self.limitToExtension`)
+	self.show("fileName1:"        + str(self.fileName1))
+	self.show("fileName2:"        + str(self.fileName2))
+	self.show("outputFileName:"   + str(self.outputFileName))
+	self.show("limitToExtension:" + str(self.limitToExtension))
 	self.show("")
 
-	self.show("ignoreBlankLines:"         + `self.ignoreBlankLines`)
-	self.show("ignoreFirstLine1:"         + `self.ignoreFirstLine1`)
-	self.show("ignoreFirstLine2:"         + `self.ignoreFirstLine2`)
-	self.show("ignoreInteriorWhitespace:" + `self.ignoreInteriorWhitespace`)
-	self.show("ignoreLeadingWhitespace:"  + `self.ignoreLeadingWhitespace`)
-	self.show("ignoreSentinelLines:"      + `self.ignoreSentinelLines`)
+	self.show("ignoreBlankLines:"         + str(self.ignoreBlankLines))
+	self.show("ignoreFirstLine1:"         + str(self.ignoreFirstLine1))
+	self.show("ignoreFirstLine2:"         + str(self.ignoreFirstLine2))
+	self.show("ignoreInteriorWhitespace:" + str(self.ignoreInteriorWhitespace))
+	self.show("ignoreLeadingWhitespace:"  + str(self.ignoreLeadingWhitespace))
+	self.show("ignoreSentinelLines:"      + str(self.ignoreSentinelLines))
 	self.show("")
 	
-	self.show("limitCount:"              + `self.limitCount`)
-	self.show("printMatches:"            + `self.printMatches`)
-	self.show("printMismatches:"         + `self.printMismatches`)
-	self.show("printTrailingMismatches:" + `self.printTrailingMismatches`)</t>
+	self.show("limitCount:"              + str(self.limitCount))
+	self.show("printMatches:"            + str(self.printMatches))
+	self.show("printMismatches:"         + str(self.printMismatches))
+	self.show("printTrailingMismatches:" + str(self.printTrailingMismatches))</t>
 <t tx="ekr.20031218072017.3652">@language python
 
 import leoGlobals as g
@@ -55414,7 +55413,7 @@ def setTitle (self,title):
 		r2 = config.getFloatWindowPref("initial_horizontal_secondary_ratio")
 		if r2 == None or r2 &lt; 0.0 or r2 &gt; 1.0: r2 = 0.8
 
-	# print (`r`,`r2`)
+	# print r,r2
 	return verticalFlag,r,r2</t>
 <t tx="ekr.20031218072017.3690">def longFileName (self):
 
@@ -56227,13 +56226,13 @@ def canonicalizeTranslatedMenuName (self,name):
 	try:
 		menu = self.getMenu(menuName)
 		if menu == None:
-			print "menu does not exist: ", menuName
-			g.es("menu does not exist: " + `menuName`)
+			print "menu does not exist: ",menuName
+			g.es("menu does not exist: ",menuName)
 			return
 		self.createMenuEntries(menu,table,openWith)
 	except:
-		print "exception creating items for ", menuName," menu"
-		g.es("exception creating items for " + `menuName` + " menu")
+		s = "exception creating items for %s menu" % menuName
+		print s ; g.es(s)
 		g.es_exception()
 		
 	g.app.menuWarningsGiven = true</t>
@@ -56506,7 +56505,7 @@ ivars = [
 def init(self,c):
 
 	self.c = c
-	#g.trace(`c.tab_width`)
+	#g.trace(c.tab_width)
 
 	for var in self.ivars:
 		val = getattr(c,var)
@@ -56763,7 +56762,7 @@ def onRevert (self):
 			box.see(i)
 			return
 
-	# g.trace("not found:" + `color`)</t>
+	# g.trace("not found:",color)</t>
 <t tx="ekr.20031218072017.3831">class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 	
 	"""A class to create and run a Tkinter color panel."""
@@ -56833,7 +56832,7 @@ def onRevert (self):
 		b = self.buttons[name]
 		b.configure(bg=old_val)
 		b = self.nameButtons[name]
-		b.configure(text=`old_val`)
+		b.configure(text=str(old_val))
 	self.changed_options = []
 	self.c.recolor()</t>
 <t tx="ekr.20031218072017.3837">def update (self,name,val):
@@ -56989,7 +56988,7 @@ def finishCreate (self):
 	if b:
 		e = self.countEntry
 		e.delete(0,"end")
-		e.insert(0,`n`)
+		e.insert(0,str(n))
 
 	# Whitespace options.
 	b = config.getBoolComparePref("ignore_blank_lines")
@@ -57607,7 +57606,7 @@ i = 0
 while i &lt; len(s):
 	ch = s[i]
 	if ch not in string.digits:
-		e.delete(`i`)
+		e.delete(str(i))
 		s = e.get()
 	else:
 		i += 1</t>
@@ -58282,7 +58281,7 @@ def getActiveFont (self):
 	bold = self.boldVar.get()
 	ital = self.italVar.get()
 	size = self.sizeVar.get()
-	# g.trace(`size`)
+	# g.trace(size)
 	slant=g.choose(ital,"italic","roman")
 	weight=g.choose(bold,"bold","normal")
 	# Compute the font from all the settings.
@@ -58349,7 +58348,7 @@ def getImpliedFont (self):
 	
 	e = self.size_entry
 	e.delete(0,"end")
-	e.insert(0,`size`)</t>
+	e.insert(0,str(size))</t>
 <t tx="ekr.20031218072017.3935"># Note that just after a revert all three setting may be different.
 
 def showSettings (self):
@@ -58362,16 +58361,16 @@ def showSettings (self):
 	fn = c.frame.body.cget("font")
 	font = tkFont.Font(font=fn)
 	name,size,slant,weight = self.getFontSettings(font)
-	g.es("body font:" + name + "," + `size` + "," + slant + "," + weight)
+	g.es("body font:",name,size,slant,weight)
 	# Log pane.
 	fn = c.frame.log.getFontConfig()
 	font = tkFont.Font(font=fn)
 	name,size,slant,weight = self.getFontSettings(font)
-	g.es("log font:" + name + "," + `size` + "," + slant + "," + weight)
+	g.es("log font:",name,size,slant,weight)
 	# Tree pane.
 	font = c.frame.tree.getFont()
 	name,size,slant,weight = self.getFontSettings(font)
-	g.es("headline font:" + name + "," + `size` + "," + slant + "," + weight)</t>
+	g.es("headline font:",name,size,slant,weight)</t>
 <t tx="ekr.20031218072017.3936">def update (self,event=None):
 	
 	"""Update the body text to show the present settings."""
@@ -58399,7 +58398,7 @@ def showSettings (self):
 	self.top.lift()</t>
 <t tx="ekr.20031218072017.3937">e = self.size_entry
 e.delete(0,"end")
-e.insert(0,`size`)</t>
+e.insert(0,str(size))</t>
 <t tx="ekr.20031218072017.3938">font = g.choose(bodyChecked,activeFont,self.revertBodyFont)
 c.frame.body.configure(font=font)
 
@@ -58484,7 +58483,7 @@ Only the general-purpose divideAnySplitter routine doesn't know about these inva
 
 	self.divideLeoSplitter(self.splitVerticalFlag, ratio)
 	self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
-	# g.trace(`ratio`)
+	# g.trace(ratio)
 </t>
 <t tx="ekr.20031218072017.3947">def bindBar (self, bar, verticalFlag):
 	
@@ -58583,7 +58582,7 @@ def onDragSplitterBar (self, event, verticalFlag):
 	if offset &gt; wMax - 2: offset = wMax - 2
 	# Redraw the splitter as the drag is occuring.
 	frac = float(offset) / wMax
-	# g.trace(`frac`)
+	# g.trace(frac)
 	self.divideLeoSplitter(verticalFlag, frac)</t>
 <t tx="ekr.20031218072017.3952">def placeSplitter (self,bar,pane1,pane2,verticalFlag):
 
@@ -59067,7 +59066,7 @@ def toggleSplitDirection(self):
 				g.es_exception()</t>
 <t tx="ekr.20031218072017.3993">def showProgressBar (self,count,size,total):
 
-	# g.trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
+	# g.trace("count,size,total:",count,size,total)
 	if self.scale == None:
 		&lt;&lt; create the scale widget &gt;&gt;
 	self.scale.set(count*size)
@@ -59925,8 +59924,7 @@ def moveIndexToNextLine(self,t,index):
 	return g.app.gui.setTextSelection(t,n1,n2)</t>
 <t tx="ekr.20031218072017.4088">def setSelectionRangeWithLength(self,t,start,length):
 	
-	return g.app.gui.setTextSelection(t,start,start + "+" + `length` + "c")
-</t>
+	return g.app.gui.setTextSelection(t,start,"%s+%dc" % (start,length))</t>
 <t tx="ekr.20031218072017.4089">def setTextSelection (self,t,start,end):
 	
 	"""tk gui: set the selection range in Tk.Text widget t."""
@@ -60313,9 +60311,9 @@ revertButton.pack(side="left",pady=7,expand=1)</t>
 	self.tangle_batch_var.set(c.tangle_batch_flag)
 	self.untangle_batch_var.set(c.untangle_batch_flag)
 	self.pageWidthText.delete("1.0","end")
-	self.pageWidthText.insert("end",`c.page_width`)
+	self.pageWidthText.insert("end",str(c.page_width))
 	self.tabWidthText.delete("1.0","end")
-	self.tabWidthText.insert("end",`abs(c.tab_width)`)
+	self.tabWidthText.insert("end",str(abs(c.tab_width)))
 
 	# Default Tangle Options
 	self.tangleDirectoryText.delete("1.0","end")
@@ -60571,11 +60569,11 @@ def lastVisible(self):
 
 def yoffset(self, v1):
 
-	# if not v1.isVisible(): print "yoffset not visible:", `v1`
+	# if not v1.isVisible(): print "yoffset not visible:",v1
 	root = self.c.rootPosition()
 	h, flag = self.yoffsetTree(root,v1)
 	# flag can be false during initialization.
-	# if not flag: print "yoffset fails:", h, `v1`
+	# if not flag: print "yoffset fails:",h,v1
 	return h
 
 # Returns the visible height of the tree and all sibling trees, stopping at v1
@@ -61184,11 +61182,11 @@ g.es("done",color="blue")</t>
 
 	# Check the params.
 	if kind != "@file" and kind != "@root":
-		g.es("kind must be @file or @root: " + `kind`)
+		g.es("kind must be @file or @root: " + kind)
 		return
 
 	if not g.os_path_exists(dir):
-		g.es("directory does not exist: " + `dir`)
+		g.es("directory does not exist: " + dir)
 		return
 	
 	c.beginUpdate()
@@ -62155,7 +62153,7 @@ Python 2.3.2 on Linux.
 
 	return true
 </t>
-<t tx="ekr.20040117170612">if 0: # Good for compatibility, bad for finding conversion problems.
+<t tx="ekr.20040117170612">if 1: # Good for compatibility, bad for finding conversion problems.
 
 	def __getattr__ (self,attr):
 		
@@ -65254,11 +65252,11 @@ def canHoist(self):
 	root = c.rootPosition()
 	p = c.currentPosition()
 
-	if p == root:
-		return p.hasNext()
-	elif c.hoistStack:
+	if c.hoistStack:
 		p2,junk = c.hoistStack[-1]
 		return p2 != p
+	elif p == root:
+		return p.hasNext()
 	else:
 		return true</t>
 <t tx="ekr.20040303175026"></t>
@@ -66669,7 +66667,7 @@ This is "having my cake and eating it too."</t>
 v = p.v
 # New in 4.2: tnode list is in tnode.
 if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) &gt; 0 and not v.isAnyAtFileNode():
-	s = "deleting tnodeList for " + `v`
+	s = "deleting tnodeList for " + repr(v)
 	print s ; g.es(s,color="blue")
 	delattr(v.t,"tnodeList")</t>
 <t tx="ekr.20040313151511">assert p.simpleLevel()==p.level(), "simpleLevel==level"
@@ -67302,14 +67300,9 @@ def findNodeAtTopLevel(headline):
 
 4.2 will optimize all aspects of Leo's core:
 
-- Shared tree represent clones.
+- (done) Shared tree represent clones.
 - Drawing code uses minimum number of Tk widgets
-- Add granularity to undo minimizes typing info.
-	- User can choose granularity:
-		- character (present) very expensive.
-		- word
-		- line
-		- node (least expensive)
+- User can choose undo granularity: char,word,line,node	
 - @file thin makes Leo "nimble".
 
 Will not do for 4.2:
@@ -67505,11 +67498,6 @@ Document iterators.</t>
 - Create unit tests for Find commands.
 - Test all changed code:
 	- Make a list of the code that has changed.</t>
-<t tx="ekr.20040324035902">- Create copy of present code.
-- Move sandbox into leoCVS.
-- Rename Leo42.leo to LeoPy.leo
-- Test
-- Do full commit</t>
 <t tx="ekr.20040324061854">if u.redoing or u.undoing:
 	return None
 
@@ -67882,7 +67870,6 @@ try:
 		"style",tw._w,"help","noActivates")
 except Tk.TclError:
 	pass</t>
-<t tx="ekr.20040324074355"></t>
 <t tx="ekr.20040324075752">@nocolor
 
 https://sourceforge.net/forum/message.php?msg_id=2460535
@@ -68011,5 +67998,21 @@ self.canvas.after_idle(self.idle_scrollTo)</t>
 		else:
 			return ""</t>
 <t tx="ekr.20040324093353"></t>
+<t tx="ekr.20040325073709">def isAtFileNode (self):
+	return g.choose(self.atFileNodeName(),true,false)
+	
+def isAtNoSentinelsFileNode (self):
+	return g.choose(self.atNoSentinelsFileNodeName(),true,false)
+
+def isAtRawFileNode (self):
+	return g.choose(self.atRawFileNodeName(),true,false)
+
+def isAtSilentFileNode (self):
+	return g.choose(self.atSilentFileNodeName(),true,false)
+
+def isAtThinFileNode (self):
+	return g.choose(self.atThinFileNodeName(),true,false)</t>
+<t tx="ekr.20040325095227"></t>
+<t tx="ekr.20040325095459"></t>
 </tnodes>
 </leo_file>

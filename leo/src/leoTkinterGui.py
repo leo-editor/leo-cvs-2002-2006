@@ -390,9 +390,8 @@ class tkinterGui(leoGui.leoGui):
 			# if g.app.trace: g.trace(font)
 			return font
 		except:
-			g.es("exception setting font from " + `family_name`)
-			g.es("family,size,slant,weight:"+
-				`family`+':'+`size`+':'+`slant`+':'+`weight`)
+			g.es("exception setting font from ",family_name)
+			g.es("family,size,slant,weight:",family,size,slant,weight)
 			# g.es_exception() # 12/15/03: This just confuses people.
 			return g.app.config.defaultFont
 	#@nonl
@@ -588,7 +587,8 @@ class tkinterGui(leoGui.leoGui):
 	#@+node:setSelectionRangeWithLength
 	def setSelectionRangeWithLength(self,t,start,length):
 		
-		return g.app.gui.setTextSelection(t,start,start + "+" + `length` + "c")
+		return g.app.gui.setTextSelection(t,start,"%s+%dc" % (start,length))
+	#@nonl
 	#@-node:setSelectionRangeWithLength
 	#@+node:setTextSelection
 	def setTextSelection (self,t,start,end):

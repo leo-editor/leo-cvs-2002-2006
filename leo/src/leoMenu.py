@@ -883,13 +883,13 @@ class leoMenu:
 		try:
 			menu = self.getMenu(menuName)
 			if menu == None:
-				print "menu does not exist: ", menuName
-				g.es("menu does not exist: " + `menuName`)
+				print "menu does not exist: ",menuName
+				g.es("menu does not exist: ",menuName)
 				return
 			self.createMenuEntries(menu,table,openWith)
 		except:
-			print "exception creating items for ", menuName," menu"
-			g.es("exception creating items for " + `menuName` + " menu")
+			s = "exception creating items for %s menu" % menuName
+			print s ; g.es(s)
 			g.es_exception()
 			
 		g.app.menuWarningsGiven = true

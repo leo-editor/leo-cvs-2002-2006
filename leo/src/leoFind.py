@@ -293,7 +293,7 @@ class leoFind:
 		gui.replaceSelectionRangeWithText(st,pos1,pos2,c.change_text)
 		s = gui.getAllText(st)
 		# Update the selection.
-		insert=g.choose(c.reverse_flag,pos1,pos1+'+'+`len(c.change_text)`+'c')
+		insert=g.choose(c.reverse_flag,pos1,pos1+'+'+str(len(c.change_text))+'c')
 		gui.setSelectionRange(st,insert,insert)
 		gui.setInsertPoint(st,insert)
 		# Update the node
@@ -377,7 +377,7 @@ class leoFind:
 		if count > 0:
 			# A change was made.  Tag the end of the Change All command.
 			c.undoer.setUndoParams("Change All",v)
-		g.es("changed: " + `count`)
+		g.es("changed: ",count)
 		self.restore(data)
 	#@nonl
 	#@-node:changeAll
@@ -388,7 +388,7 @@ class leoFind:
 	def changeSelection(self):
 	
 		c = self.c ; v = self.v ; gui = g.app.gui
-		# g.trace(`self.in_headline`)
+		# g.trace(self.in_headline)
 		t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
 		oldSel = sel = gui.getTextSelection(t)
 		if sel and len(sel) == 2:
@@ -510,7 +510,7 @@ class leoFind:
 				self.printLine(line,allFlag=true)
 			else: break
 		c.endUpdate()
-		g.es("found: " + `count`)
+		g.es("found: ",count)
 		self.restore(data)
 	#@nonl
 	#@-node:findAll
@@ -677,7 +677,7 @@ class leoFind:
 	def selectNextVnode(self):
 	
 		c = self.c ; v = self.v
-		# g.trace(`v`)
+		# g.trace(v)
 	
 		if c.selection_only_flag:
 			return None
@@ -695,7 +695,7 @@ class leoFind:
 			# just switch to body pane.
 			self.in_headline = false
 			self.initNextText()
-			# g.trace(`v`)
+			# g.trace(v)
 			return v
 	
 		if c.reverse_flag: v = v.threadBack()
@@ -836,12 +836,12 @@ class leoFind:
 		context = c.batch_flag # "batch" now indicates context
 	
 		if allFlag and both and context:
-			g.es(`self.v`)
+			g.es(self.v)
 			type = g.choose(self.in_headline,"head: ","body: ")
 			g.es(type + line)
 		elif allFlag and context and not self.v.isVisited():
 			# We only need to print the context once.
-			g.es(`self.v`)
+			g.es(self.v)
 			g.es(line)
 			self.v.setVisited()
 		else:
@@ -908,7 +908,7 @@ class leoFind:
 		c.endUpdate(false) # Do not draw again!
 	
 		t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
-		# g.trace(`self.in_headline` + "," + `t`)
+		# g.trace(self.in_headline,t)
 		insert = g.choose(c.reverse_flag,pos,newpos)
 		gui.setInsertPoint(t,insert)
 		gui.setSelectionRange(t,pos,newpos)

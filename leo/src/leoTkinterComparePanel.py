@@ -136,7 +136,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		if b:
 			e = self.countEntry
 			e.delete(0,"end")
-			e.insert(0,`n`)
+			e.insert(0,str(n))
 	
 		# Whitespace options.
 		b = config.getBoolComparePref("ignore_blank_lines")

@@ -492,7 +492,7 @@ class baseFileCommands:
 			# All other exceptions are Leo bugs.
 			
 			g.es_exception()
-			g.alert(self.mFileName + " is not a valid Leo file: " + `message`)
+			g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
 			#@nonl
 			#@-node:<< raise an alert >>
 			#@nl
@@ -725,9 +725,8 @@ class baseFileCommands:
 				#@-node:<< handle read from file >>
 				#@nl
 		else:
-			g.es("no tnode with index: " + `index` + ".  The text will be discarded")
+			g.es("no tnode with index: %s.  The text will be discarded" % str(index))
 		self.getTag("</t>")
-	#@nonl
 	#@-node:getTnode
 	#@+node:getTnodes
 	def getTnodes (self):
@@ -931,7 +930,7 @@ class baseFileCommands:
 	def newTnode(self,index):
 	
 		if self.tnodesDict.has_key(index):
-			g.es("bad tnode index: " + `index` + ". Using empty text.")
+			g.es("bad tnode index: %s. Using empty text." % str(index))
 			return leoNodes.tnode()
 		else:
 			# Create the tnode.  Use the _original_ index as the key in tnodesDict.
@@ -939,7 +938,7 @@ class baseFileCommands:
 			self.tnodesDict[index] = t
 		
 			if type(index) not in (type(""),type(u"")):
-				g.es("newTnode: unexpected index type:"+`type(index)`+`index`,color="red")
+				g.es("newTnode: unexpected index type:",type(index),index,color="red")
 			
 			# Convert any pre-4.1 index to a gnx.
 			id,time,n = gnx = g.app.nodeIndices.scanGnx(index,0)
@@ -1155,11 +1154,10 @@ class baseFileCommands:
 		#@-node:<< count the number of tnodes >>
 		#@nl
 		self.put('<leo_header file_format="1" tnodes=')
-		self.put_in_dquotes(`tnodes`)
+		self.put_in_dquotes(str(tnodes))
 		self.put(" max_tnode_index=")
-		self.put_in_dquotes(`tnodes`)
+		self.put_in_dquotes(str(tnodes))
 		self.put("/>") ; self.put_nl()
-	#@nonl
 	#@-node:putClipboardHeader
 	#@+node:putEscapedString
 	# Surprisingly, the call to xmlEscape here is _much_ faster than calling put for each characters of s.
@@ -1228,7 +1226,8 @@ class baseFileCommands:
 		#@+node:<< put the body/outline ratio >>
 		# Puts an innumerate number of digits
 		
-		self.put(" body_outline_ratio=") ; self.put_in_dquotes(`c.frame.ratio`)
+		self.put(" body_outline_ratio=")
+		self.put_in_dquotes(str(c.frame.ratio))
 		#@nonl
 		#@-node:<< put the body/outline ratio >>
 		#@nl
@@ -1239,10 +1238,10 @@ class baseFileCommands:
 		
 		self.put_tab()
 		self.put("<global_window_position")
-		self.put(" top=") ; self.put_in_dquotes(`top`)
-		self.put(" left=") ; self.put_in_dquotes(`left`)
-		self.put(" height=") ; self.put_in_dquotes(`height`)
-		self.put(" width=") ; self.put_in_dquotes(`width`)
+		self.put(" top=") ; self.put_in_dquotes(str(top))
+		self.put(" left=") ; self.put_in_dquotes(str(left))
+		self.put(" height=") ; self.put_in_dquotes(str(height))
+		self.put(" width=") ; self.put_in_dquotes(str(width))
 		self.put("/>") ; self.put_nl()
 		#@nonl
 		#@-node:<< put the position of this frame >>
@@ -1252,10 +1251,10 @@ class baseFileCommands:
 		top = left = height = width = 0 # no longer used
 		self.put_tab()
 		self.put("<global_log_window_position")
-		self.put(" top=") ; self.put_in_dquotes(`top`)
-		self.put(" left=") ; self.put_in_dquotes(`left`)
-		self.put(" height=") ; self.put_in_dquotes(`height`)
-		self.put(" width=") ; self.put_in_dquotes(`width`)
+		self.put(" top=") ; self.put_in_dquotes(str(top))
+		self.put(" left=") ; self.put_in_dquotes(str(left))
+		self.put(" height=") ; self.put_in_dquotes(str(height))
+		self.put(" width=") ; self.put_in_dquotes(str(width))
 		self.put("/>") ; self.put_nl()
 		#@nonl
 		#@-node:<< put the position of the log window >>
@@ -1270,9 +1269,9 @@ class baseFileCommands:
 	
 		self.put("<leo_header")
 		self.put(" file_format=") ; self.put_in_dquotes("2")
-		self.put(" tnodes=") ; self.put_in_dquotes(`tnodes`)
-		self.put(" max_tnode_index=") ; self.put_in_dquotes(`self.maxTnodeIndex`)
-		self.put(" clone_windows=") ; self.put_in_dquotes(`clone_windows`)
+		self.put(" tnodes=") ; self.put_in_dquotes(str(tnodes))
+		self.put(" max_tnode_index=") ; self.put_in_dquotes(str(self.maxTnodeIndex))
+		self.put(" clone_windows=") ; self.put_in_dquotes(str(clone_windows))
 		self.put("/>") ; self.put_nl()
 	#@nonl
 	#@-node:putHeader
@@ -1326,8 +1325,8 @@ class baseFileCommands:
 			self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
 			self.put(" node_only=") ; self.put_dquoted_bool(c.node_only_flag)
 			self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
-			self.put(" page_width=") ; self.put_in_dquotes(`c.page_width`)
-			self.put(" tab_width=") ; self.put_in_dquotes(`c.tab_width`)
+			self.put(" page_width=") ; self.put_in_dquotes(str(c.page_width))
+			self.put(" tab_width=") ; self.put_in_dquotes(str(c.tab_width))
 			self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
 			self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
 			self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
@@ -1397,7 +1396,7 @@ class baseFileCommands:
 			gnx = g.app.nodeIndices.toString(t.fileIndex)
 			self.put_in_dquotes(gnx)
 		else:
-			self.put_in_dquotes("T" + `t.fileIndex`)
+			self.put_in_dquotes("T" + str(t.fileIndex))
 	
 		if hasattr(t,"unknownAttributes"):
 			#@		<< put unknown tnode attributes >>

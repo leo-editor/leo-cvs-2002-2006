@@ -599,7 +599,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		# Compute the image name
 		imagename = "box"
 		if val < 10: imagename += "0"
-		imagename += `val`
+		imagename += str(val)
 	
 		# Get the image
 		image = self.getIconImage(imagename + ".GIF")
@@ -1031,11 +1031,11 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 	def yoffset(self, v1):
 	
-		# if not v1.isVisible(): print "yoffset not visible:", `v1`
+		# if not v1.isVisible(): print "yoffset not visible:",v1
 		root = self.c.rootPosition()
 		h, flag = self.yoffsetTree(root,v1)
 		# flag can be false during initialization.
-		# if not flag: print "yoffset fails:", h, `v1`
+		# if not flag: print "yoffset fails:",h,v1
 		return h
 	
 	# Returns the visible height of the tree and all sibling trees, stopping at v1
@@ -1247,7 +1247,7 @@ class leoTkinterTree (leoFrame.leoTree):
 					frac = g.choose(y < 0, lo - line_frac, lo + line_frac)
 					frac = min(frac,1.0)
 					frac = max(frac,0.0)
-					# g.es("lo,hi,frac:" + `lo` + " " + `hi` + " " + `frac`)
+					# g.es("lo,hi,frac:",lo,hi,frac)
 					canvas.yview("moveto", frac)
 					
 					# Queue up another event to keep scrolling while the cursor is outside the canvas.
@@ -1414,7 +1414,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			s = u""
 		s = s.replace('\n','')
 		s = s.replace('\r','')
-		# g.trace(`s`)
+		# g.trace(s)
 		#@-node:<< set s to the widget text >>
 		#@nl
 		#@	<< set head to vnode text >>
@@ -1704,7 +1704,7 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		if not self.allocateOnlyVisibleNodes: return
 	
-		# print "allocateNodesBeforeScrolling:",self.redrawCount,`args`
+		# print "allocateNodesBeforeScrolling:",self.redrawCount,args
 	
 		assert(self.visibleArea)
 		assert(len(args)==2 or len(args)==3)
@@ -1778,7 +1778,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		yfirst = ylast = y
 		if level==0: yfirst += 10
 		while v:
-			# g.trace(`x` + ", " + `y` + ", " + `v`)
+			# g.trace(x,y,v)
 			h = self.updateNode(v,x,y)
 			y += h ; ylast = y
 			if v.isExpanded() and v.firstChild():

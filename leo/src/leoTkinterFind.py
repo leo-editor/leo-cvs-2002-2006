@@ -188,7 +188,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 			val = getattr(c, key + "_flag")
 			val = g.choose(val,1,0) # 2/1/04: work around major Tk problem.
 			self.dict[key].set(val)
-			# g.trace(key,`val`)
+			# g.trace(key,val)
 	
 		#@	<< set find/change widgets >>
 		#@+node:<< set find/change widgets >>

@@ -147,7 +147,7 @@ def computeLoadDir():
 			loadDir = None
 		if not loadDir:
 			loadDir = g.os_path_abspath(os.getcwd())
-			print "Using emergency loadDir:",`loadDir`
+			print "Using emergency loadDir:",repr(loadDir)
 
 		encoding = g.choose(sys.platform=="dawwin","utf-8",g.app.tkEncoding) # 11/18/03
 		loadDir = g.toUnicode(loadDir,encoding) # 10/20/03

@@ -325,7 +325,7 @@ class LeoApp:
 				# g.trace(self.tkEncoding,src)
 				break
 			elif encoding and len(encoding) > 0:
-				g.trace("ignoring invalid " + src + " encoding: " + `encoding`)
+				g.trace("ignoring invalid ",src," encoding: ",encoding)
 				
 		color = g.choose(self.tkEncoding=="ascii","red","blue")
 	#@nonl
@@ -378,8 +378,7 @@ class LeoApp:
 		#@+node:<< put up a dialog requiring a valid id >>
 		g.app.gui.runAskLeoIDDialog() # New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
 		g.trace(g.app.leoID)
-		
-		g.es("leoID = " + `g.app.leoID`, color="blue")
+		g.es("leoID=",repr(g.app.leoID),color="blue")
 		#@nonl
 		#@-node:<< put up a dialog requiring a valid id >>
 		#@nl
@@ -410,7 +409,7 @@ class LeoApp:
 	def setLog (self,log,tag=""):
 		"""set the frame to which log messages will go"""
 		
-		# print "setLog:",tag,"locked:",self.logIsLocked,`log`
+		# print "setLog:",tag,"locked:",self.logIsLocked,log
 		if not self.logIsLocked:
 			self.log = log
 			

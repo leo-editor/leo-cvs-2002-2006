@@ -165,7 +165,7 @@ class tst_node:
 	#@+node:tst_node.__init__
 	def __init__ (self,name,root_flag):
 	
-		# g.trace("tst_node.__init__" + `name`)
+		# g.trace("tst_node.__init__",name)
 		self.name = name
 		self.is_root = root_flag
 		self.referenced = false
@@ -187,7 +187,7 @@ class part_node:
 	#@+node:part_node.__init__
 	def __init__ (self,name,code,doc,is_root,is_dirty):
 	
-		# g.trace("part_node.__init__" + `name`)
+		# g.trace("part_node.__init__",name)
 		self.name = name # Section or file name.
 		self.code = code # The code text.
 		self.doc = doc # The doc text.
@@ -219,7 +219,7 @@ class ust_node:
 	
 	def __init__ (self,name,code,part,of,nl_flag,update_flag):
 	
-		# g.trace("ust_node.__init__", `name` +":"+ `part`)
+		# g.trace("ust_node.__init__",name,part)
 		self.name = name # section name
 		self.parts = {} # parts dict
 		self.code = code # code text
@@ -254,8 +254,8 @@ class def_node:
 	def __init__ (self,name,indent,part,of,nl_flag,code):
 	
 		if 0:
-			g.trace("def_node.__init__",
-				"name:" + name + ", part:" + `part` + ", of:" + `of` + ", indent:" + `indent`)
+			g.trace("def_node.__init__:",
+				"name:",name," part:",part," of:",of," indent:",indent)
 		self.name = name
 		self.indent = indent
 		self.code = code
@@ -813,7 +813,7 @@ class baseTangleCommands:
 	
 	def untangleRoot(self,root,begin,end):
 	
-		# g.trace("root,begin,end:" + `root` + `begin` + `end`)
+		# g.trace("root,begin,end:",root,begin,end)
 		#@	<< Set path & root_name to the file specified in the @root directive >>
 		#@+node:<< Set path & root_name to the file specified in the @root directive >>
 		s = root.bodyString()
@@ -945,7 +945,7 @@ class baseTangleCommands:
 						#@nonl
 						#@-node:<< set end to the next root in the unit >>
 						#@nl
-						# g.trace("end:" + `end`)
+						# g.trace("end:",end)
 						self.scanAllDirectives(p,require_path,report_errors)
 						self.untangleRoot(p,unitNode,afterUnit)
 						p = end.copy()
@@ -986,7 +986,7 @@ class baseTangleCommands:
 		kind, end = self.token_type(s,i,dont_report_errors)
 		# token_type will not skip whitespace in noweb mode.
 		i = g.skip_ws(s,i)
-		# g.trace(`kind` + "," + `g.get_line(s,i)`)
+		# g.trace(kind,g.get_line(s,i))
 	
 		if kind == plain_line:
 			pass
@@ -1078,7 +1078,7 @@ class baseTangleCommands:
 	
 		while i < len(s):
 			progress = i # progress indicator
-			# line = g.get_line(s,i) ; g.trace(`line`)
+			# line = g.get_line(s,i) ; g.trace(line)
 			kind, end = self.token_type(s,i,report_errors)
 			# if g.is_nl(s,i): i = g.skip_nl(s,i)
 			i = g.skip_ws(s,i)
@@ -1090,7 +1090,7 @@ class baseTangleCommands:
 				# Skip the section definition line.
 				k = i ; i, kind, junk = self.skip_section_name(s,i)
 				section_name = s[k:i]
-				# g.trace(`section_name`)
+				# g.trace(section_name)
 				assert(kind == section_def)
 				i = g.skip_to_end_of_line(s,i)
 				
@@ -1208,7 +1208,7 @@ class baseTangleCommands:
 	
 	def skip_code(self,s,i):
 	
-		# g.trace(`g.get_line(s,i)`)
+		# g.trace(g.get_line(s,i))
 		code1 = i
 		nl_i = i # For error messages
 		done = false # true when end of code part seen.
@@ -1284,14 +1284,14 @@ class baseTangleCommands:
 			#@-node:<< skip a CWEB code section >>
 			#@nl
 		code = s[code1:i]
-		# g.trace(returns: + `code`)
+		# g.trace("returns:",code)
 		return i,code
 	#@nonl
 	#@-node:skip_code
 	#@+node:skip_doc
 	def skip_doc(self,s,i):
 	
-		# g.trace(`g.get_line(s,i)`)
+		# g.trace(g.get_line(s,i))
 		# Skip @space, @*, @doc, @chapter and @section directives.
 		doc1 = i
 		while i < len(s):
@@ -1388,7 +1388,7 @@ class baseTangleCommands:
 	
 		for section in self.root_list:
 		
-			# g.trace(`section.name`)
+			# g.trace(section.name)
 			file_name = g.os_path_join(self.tangle_directory,section.name)
 			file_name = g.os_path_normpath(file_name)
 			temp_name = g.create_temp_name()
@@ -1484,7 +1484,7 @@ class baseTangleCommands:
 	
 	def put_code(self,s,no_first_lws_flag):
 	
-		# g.trace(`g.get_line(s,0)`)
+		# g.trace(g.get_line(s,0))
 		i = 0
 		if i < len(s):
 			i = self.put_newline(s,i,no_first_lws_flag)
@@ -1572,7 +1572,7 @@ class baseTangleCommands:
 	
 	def put_doc(self,s):
 	
-		# g.trace(`g.get_line(s,0)`)
+		# g.trace(g.get_line(s,0))
 		width = self.page_width
 		words = 0 ; word_width = 0 ; line_width = 0
 		# 8/1/02: can't use choose here!
@@ -1705,11 +1705,11 @@ class baseTangleCommands:
 	
 	def put_leading_ws(self,n):
 	
-		# g.trace("tab_width:" + `self.tab_width` + ", indent:" + `indent`)
+		# g.trace("tab_width,indent:",self.tab_width,indent)
 		w = self.tab_width
 	
 		if w > 1:
-			q,r = divmod(n,w) 
+			q,r = divmod(n,w)
 			self.otabs(q) 
 			self.oblanks(r) 
 		else:
@@ -1762,7 +1762,7 @@ class baseTangleCommands:
 		if 0:
 			if part: name = part.name # can't use choose.
 			else: name = "<NULL part>"
-			g.trace(`name`)
+			g.trace(name)
 	
 		if part.doc and self.output_doc_flag and self.print_mode != "silent" and part.doc:
 			self.put_doc(part.doc)
@@ -1785,7 +1785,7 @@ class baseTangleCommands:
 	def put_section(self,s,i,name,name_end):
 	
 		j = g.skip_line(s,i)
-		# g.trace("indent:" + `self.tangle_indent`  + ", " + `s[i:j]`)
+		# g.trace("indent:",self.tangle_indent,s[i:j])
 		outer_old_indent = self.tangle_indent
 		trailing_ws_indent = 0 # Set below.
 		inner_old_indent = 0 # Set below.
@@ -1803,7 +1803,7 @@ class baseTangleCommands:
 		# Bump the indentation
 		j, width = g.skip_leading_ws_with_indent(s,j,self.tab_width)
 		self.tangle_indent += width
-		# g.trace("leading ws:" + `width` + " + new indent:" + `self.tangle_indent`)
+		# g.trace("leading ws,new indent:",width,self.tangle_indent)
 		
 		# 4/27/01: Force no trailing whitespace in @silent mode.
 		if self.print_mode == "silent":
@@ -1870,7 +1870,7 @@ class baseTangleCommands:
 							#@+node:<< put ( n of m ) >>
 							if sections > 1:
 								self.oblank()
-								self.os("(" + `count` + " of " + `sections` + ")")
+								self.os("(%d of %d)" % count,sections)
 							#@nonl
 							#@-node:<< put ( n of m ) >>
 							#@nl
@@ -1883,7 +1883,7 @@ class baseTangleCommands:
 							#@+node:<< put ( n of m ) >>
 							if sections > 1:
 								self.oblank()
-								self.os("(" + `count` + " of " + `sections` + ")")
+								self.os("(%d of %d)" % count,sections)
 							#@nonl
 							#@-node:<< put ( n of m ) >>
 							#@nl
@@ -2002,7 +2002,7 @@ class baseTangleCommands:
 	
 		keys = self.tst.keys()
 		keys.sort()
-		# g.trace(`keys`)
+		# g.trace(keys)
 		for name in keys:
 			section = self.tst[name]
 			if not section.referenced:
@@ -2037,17 +2037,17 @@ class baseTangleCommands:
 	def st_dump_node(self,section):
 	
 		s = ("\nsection: " + section.name +
-			", referenced:" + `section.referenced` +
-			", is root:" + `section.is_root`)
+			", referenced:" + str(section.referenced) +
+			", is root:" + str(section.is_root))
 		
 		if len(section.parts) > 0:
 			s += "\n----- parts of " + g.angleBrackets(section.name)
 			n = 1 # part list is in numeric order
 			for part in section.parts:
-				s += "\n----- Part " + `n`
+				s += "\n----- Part " + str(n)
 				n += 1
-				s += "\ndoc:  [" + `part.doc`  + "]"
-				s += "\ncode: [" + `part.code` + "]"
+				s += "\ndoc:  [" + repr(part.doc)  + "]"
+				s += "\ncode: [" + repr(part.code) + "]"
 			s += "\n----- end of partList\n"
 		return s
 	#@nonl
@@ -2057,7 +2057,7 @@ class baseTangleCommands:
 	
 		"""Enters names and their associated code and doc parts into the given symbol table."""
 		
-		# g.trace(`name`)
+		# g.trace(name)
 		section = self.st_lookup(name,is_root_flag)
 		assert(section)
 		if doc:
@@ -2155,8 +2155,8 @@ class baseTangleCommands:
 			s += "\n\n" + section.name
 			for part in section.parts.values():
 				assert(part.of == section.of)
-				s += "\n----- part " + `part.part` + " of " + `part.of` + " -----\n"
-				s += `g.get_line(part.code,0)`
+				s += "\n----- part %d of %d -----\n" % (part.part,part.of)
+				s += repr(g.get_line(part.code,0))
 		s += "\n--------------------"
 		return s
 	#@nonl
@@ -2194,7 +2194,7 @@ class baseTangleCommands:
 			self.ust[name] = u
 		section = self.ust[name]
 		section.parts[part]=u # Parts may be defined in any order.
-		# g.trace("section name: [" + name + "](" + `part` + " of " + `of` + ")..."+`g.get_line(code,0)`)
+		# g.trace("section [%s](part %d of %d)...%s" % (name,part,of,g.get_line(code,0)))
 	#@nonl
 	#@-node:ust_enter
 	#@+node:ust_lookup
@@ -2202,7 +2202,7 @@ class baseTangleCommands:
 	
 	def ust_lookup (self,name,part_number,is_root_flag,update_flag):
 		
-		# g.trace(`name` + ":" + `part_number`)
+		# g.trace(name,part_number)
 		
 		if not is_root_flag:
 			name = self.standardize_name(name)
@@ -2213,10 +2213,10 @@ class baseTangleCommands:
 			if section.parts.has_key(part_number):
 				part = section.parts[part_number]
 				if update_flag: part.update_flag = true
-				# g.trace("found:" + name + " (" + `part_number` + ")...\n" + `g.get_line(part.code,0)`)
+				# g.trace("found: %d (%d)...\n" % (name,part_number,g.get_line(part.code,0)))
 				return part, true
 	
-		# g.trace("not found:" + name + " (" + `part_number` + ")...\n")
+		# g.trace("not found: %s(%d)...\n" % (name,part_number))
 		return None, false
 	#@nonl
 	#@-node:ust_lookup
@@ -2227,7 +2227,7 @@ class baseTangleCommands:
 		no corresponding section has been seen in the outline."""
 	
 		for section in self.ust.values():
-			# g.trace(`section`)
+			# g.trace(section)
 			for part in section.parts.values():
 				assert(part.of == section.of)
 				if not part.update_flag:
@@ -2375,9 +2375,9 @@ class baseTangleCommands:
 	def forgiving_compare (self,name,part,s1,s2):
 	
 		if 0:
-			g.trace(`name`+":"+`part`+
-				  "\n1:"+`g.get_line(s1,0)`+
-				  "\n2:"+ `g.get_line(s2,0)`)
+			g.trace(name,part,
+				"\n1:",g.get_line(s1,0),
+				"\n2:",g.get_line(s2,0))
 		s1 = g.toUnicode(s1,self.encoding) # 4/4/03
 		s2 = g.toUnicode(s2,self.encoding) # 4/4/03
 		#@	<< Define forgiving_compare vars >>
@@ -2670,9 +2670,9 @@ class baseTangleCommands:
 			#@+node:<< Trace the mismatch >>
 			if 0:
 				g.trace(self.message +
-					"\nPart " + `part` + ", section " + name +
-					"\n1:" + g.get_line(s1,p1) +
-					"\n2:" + g.get_line(s2,p2) )
+					"\nPart ",part," section ",name,
+					"\n1:",g.get_line(s1,p1),
+					"\n2:",g.get_line(s2,p2))
 			#@nonl
 			#@-node:<< Trace the mismatch >>
 			#@nl
@@ -2724,9 +2724,11 @@ class baseTangleCommands:
 			self.sentinel = self.sentinel_end = None
 			
 		if 0:
-			g.trace("single,start,end,sentinel:"+
-				`self.single_comment_string` +":"+ `self.start_comment_string` +":"+
-				`self.end_comment_string` +":"+ `self.sentinel`)
+			g.trace("single,start,end,sentinel:",
+				repr(self.single_comment_string),
+				repr(self.start_comment_string),
+				repr(self.end_comment_string),
+				repr(self.sentinel))
 		
 		# Set defaults.  See set_delims_from_langauge.
 		self.line_comment = self.single_comment_string
@@ -2747,7 +2749,6 @@ class baseTangleCommands:
 			self.string1 = self.string2 = None # This is debatable.
 		if self.language == "html":
 			self.string1 = '"' ; self.string2 = None # 12/3/03
-		#@nonl
 		#@-node:<< set the private global matching vars >>
 		#@nl
 		line_indent = 0  # The indentation to use if we see a section reference.
@@ -2796,7 +2797,7 @@ class baseTangleCommands:
 				#@-at
 				#@@c
 				
-				# g.trace(`g.get_line(s,i)`)
+				# g.trace(g.get_line(s,i))
 				result,junk,kind,name,part,of,end,nl_flag = self.is_sentinel_line_with_data(s,i)
 				assert(result==true)
 				#@<< terminate the previous part of this section if it exists >>
@@ -2958,7 +2959,7 @@ class baseTangleCommands:
 	
 	def update_def (self,name,part_number,head,code,tail,is_root_flag): # Doc parts are never updated!
 	
-		# g.trace(`name` + ":" + `part_number` + ":" + `code`)
+		# g.trace(name,part_number,code)
 		p = self.p ; body = p.bodyString()
 		if not head: head = ""
 		if not tail: tail = ""
@@ -2980,7 +2981,7 @@ class baseTangleCommands:
 		
 		i = g.skip_blank_lines(ucode,0)
 		j = g.skip_ws(ucode,i)
-		# g.trace("comment,end,single:"+`self.comment`+":"+`self.comment_end`+":"+`self.line_comment`)
+		# g.trace("comment,end,single:",self.comment,self.comment_end,self.line_comment)
 		
 		if self.comment and self.comment_end:
 			if ucode and g.match(ucode,j,self.comment):
@@ -3001,7 +3002,7 @@ class baseTangleCommands:
 		#@nonl
 		#@-node:<< Remove leading blank lines and comments from ucode >>
 		#@nl
-		# g.trace(`ucode`)
+		# g.trace(ucode)
 		if not ucode or len(ucode) == 0:
 			return false_ret # Not an error.
 		if code and self.forgiving_compare(name,part,code,ucode):
@@ -3017,10 +3018,7 @@ class baseTangleCommands:
 		ucode = ucode + trail_ws
 		body = head + ucode + tail
 		self.update_current_vnode(body)
-		if 0:
-			g.trace("head:" + `head`)
-			g.trace("ucode:" + `ucode`)
-			g.trace("tail:" + `tail`)
+		# g.trace("\nhead:",head,"\nucode:"ucode,"\ntail:",tail)
 		return body, len(head) + len(ucode),true
 	#@-node:update_def (pass 2)
 	#@+node:update_current_vnode
@@ -3051,7 +3049,7 @@ class baseTangleCommands:
 	
 	def compare_section_names (self,s1,s2):
 	
-		# g.trace(`g.get_line(s1,0)` + ":" + `g.get_line(s2,0)`)
+		# g.trace(g.get_line(s1,0),':',g.get_line(s2,0))
 		if g.match(s1,0,"<<") or g.match(s1,0,"@<"):
 			# Use a forgiving compare of the two section names.
 			delim = g.choose(self.use_cweb_flag,"@>",">>")
@@ -3128,7 +3126,7 @@ class baseTangleCommands:
 		elif g.match(s,i,"<<"):
 			i, kind, end = self.skip_noweb_section_name(s,i)
 	
-		# g.trace(`kind` + ":" + `g.get_line(s,end)`)
+		# g.trace(kind,g.get_line(s,end))
 		return i, kind, end
 	#@nonl
 	#@-node:is_section_name
@@ -3293,7 +3291,7 @@ class baseTangleCommands:
 	
 	def push_new_def_node (self,name,indent,part,of,nl_flag):
 			
-		# g.trace(`name` + ":" + `part`)
+		# g.trace(name,part)
 		node = def_node(name,indent,part,of,nl_flag,None)
 		self.def_stack.append(node)
 	#@nonl
@@ -3312,7 +3310,7 @@ class baseTangleCommands:
 			i += 1
 	
 		val = int(s[j:i])
-		# g.trace(s[j:i] + ":" + `val`)
+		# g.trace(s[j:i],val)
 		return i, val
 	#@nonl
 	#@-node:scan_short_val
@@ -3343,7 +3341,7 @@ class baseTangleCommands:
 	#@@c
 	def setRootFromText(self,s,err_flag):
 		
-		# g.trace(`s`)
+		# g.trace(s)
 		self.root_name = None
 		i,self.start_mode = g.scanAtRootOptions(s,0)
 		i = g.skip_ws(s,i)
@@ -3493,7 +3491,7 @@ class baseTangleCommands:
 		while i < n and name [i] != '>':
 			i += 1
 		name = string.strip(name[j:i])
-		# g.trace(`name`)
+		# g.trace(name)
 		return name
 	#@nonl
 	#@-node:standardize_name
@@ -3583,7 +3581,7 @@ class baseTangleCommands:
 						self.end_comment_string)
 			
 				# 10/30/02: These ivars must be updated here!
-				# g.trace(`self.language`)
+				# g.trace(self.language)
 				self.use_noweb_flag = true
 				self.use_cweb_flag = false # Only raw cweb mode is ever used.
 				self.raw_cweb_flag = self.language == "cweb" # A new ivar.
@@ -3764,7 +3762,7 @@ class baseTangleCommands:
 		
 			for dir2, kind in table:
 				if dir2 and len(dir2) > 0:
-					# print "base,dir:",`base`,`dir`
+					# print "base,dir:",base,dir
 					dir = g.os_path_join(base,dir2)
 					if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
 						#@				<< handle absolute path >>
@@ -3868,7 +3866,7 @@ class baseTangleCommands:
 			#@nonl
 			#@-node:<< set kind for directive >>
 			#@nl
-		# g.trace(`kind` + ":" + `g.get_line(s,i)`)
+		# g.trace(kind,g.get_line(s,i))
 		return kind, end
 	#@-node:token_type
 	#@-others

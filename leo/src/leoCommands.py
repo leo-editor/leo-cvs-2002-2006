@@ -264,7 +264,7 @@ class baseCommands:
 				if ext[0] != ".":
 					ext = "."+ext
 					
-				# print "ext",`ext`
+				# print "ext",ext
 				#@nonl
 				#@-node:<< set ext based on the present language >>
 				#@nl
@@ -1163,7 +1163,7 @@ class baseCommands:
 		#@nonl
 		#@-node:<< get n, the line number, from a dialog >>
 		#@nl
-		# g.trace("n:"+`n`)
+		# g.trace(n)
 		if n==1:
 			p = root ; n2 = 1 ; found = true
 		elif n >= len(lines):
@@ -1366,7 +1366,7 @@ class baseCommands:
 		while i < len(lines) and lines[i].find(tag)==-1:
 			i += 1
 		leoLine = i # Index of the line containing the leo sentinel
-		# g.trace("leoLine:"+`leoLine`)
+		# g.trace("leoLine:",leoLine)
 		
 		delim = None # All sentinels start with this.
 		if leoLine < len(lines):
@@ -1393,7 +1393,7 @@ class baseCommands:
 		line = n - 1
 		while line >= 0:
 			s = lines[line]
-			# g.trace(`s`)
+			# g.trace(s)
 			i = g.skip_ws(s,0)
 			if g.match(s,i,delim):
 				#@		<< handle delim while scanning backward >>
@@ -1805,8 +1805,8 @@ class baseCommands:
 		line1 = "\n" + headline
 		# Create copy for undo.
 		v_copy = c.undoer.saveTree(v)
-		# g.trace("v:     " + `v`)
-		# g.trace("v_copy:" + `v_copy`)
+		# g.trace("v:     ",v)
+		# g.trace("v_copy:",v_copy)
 		oldText = body.getAllText()
 		oldSel = body.getTextSelection()
 		#@	<< Set headline for extractSection >>
@@ -1928,14 +1928,15 @@ class baseCommands:
 			#@+node:<< trace head_lines, ins, tail_lines >>
 			if 0:
 				print ; print "head_lines"
-				for line in head_lines: print `line`
-				print ; print "ins", `ins`
+				for line in head_lines: print line
+				print ; print "ins", ins
 				print ; print "tail_lines"
-				for line in tail_lines: print `line`
+				for line in tail_lines: print line
 			else:
-				g.es("head_lines: " + `head_lines`)
-				g.es("ins: ", `ins`)
-				g.es("tail_lines: " + `tail_lines`)
+				g.es("head_lines: ",head_lines)
+				g.es("ins: ",ins)
+				g.es("tail_lines: ",tail_lines)
+			#@nonl
 			#@-node:<< trace head_lines, ins, tail_lines >>
 			#@nl
 	
@@ -2007,7 +2008,7 @@ class baseCommands:
 			body.setInsertionPoint(adj_index)
 			body.makeIndexVisible(adj_index)
 		else:
-			g.es("unmatched " + `ch`)
+			g.es("unmatched '%s'",ch)
 	#@nonl
 	#@-node:findMatchingBracket
 	#@+node:findMatchingBracket
@@ -2425,7 +2426,7 @@ class baseCommands:
 				v = p.v
 				# New in 4.2: tnode list is in tnode.
 				if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode():
-					s = "deleting tnodeList for " + `v`
+					s = "deleting tnodeList for " + repr(v)
 					print s ; g.es(s,color="blue")
 					delattr(v.t,"tnodeList")
 				#@nonl
@@ -3713,7 +3714,7 @@ class baseCommands:
 	
 		c = self
 		c.beginUpdate()
-		# g.trace("v,parent,n:"+v.headString()+","+parent.headString()+","+`n`)
+		# g.trace("v,parent,n:",v.headString(),parent.headString(),n)
 		clone = v.clone(v) # Creates clone & dependents, does not set undo.
 		if not c.checkMoveWithParentWithWarning(clone,parent,true):
 			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
@@ -4034,11 +4035,11 @@ class baseCommands:
 		root = c.rootPosition()
 		p = c.currentPosition()
 	
-		if p == root:
-			return p.hasNext()
-		elif c.hoistStack:
+		if c.hoistStack:
 			p2,junk = c.hoistStack[-1]
 			return p2 != p
+		elif p == root:
+			return p.hasNext()
 		else:
 			return true
 	#@nonl

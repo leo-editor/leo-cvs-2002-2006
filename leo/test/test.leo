@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2833" clone_windows="0"/>
-<globals body_outline_ratio="0.54966887417218546">
+<globals body_outline_ratio="0.549668874172">
 	<global_window_position top="62" left="275" height="755" width="891"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -364,7 +364,7 @@
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010" a="M"><vh>Run all tests except files tests</vh></v>
 </v>
-<v t="ekr.20040311111734" a="MV" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
+<v t="ekr.20040311111734" a="M" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
 <v t="ekr.20040311111734.1"><vh>&lt;&lt; node one &gt;&gt;</vh></v>
 <v t="ekr.20040311111734.2"><vh>node a</vh></v>
 <v t="ekr.20040311111734.3"><vh>node b</vh></v>
@@ -379,12 +379,13 @@
 <v t="ekr.20040323113659.3"><vh>child-of-clone2</vh></v>
 </v>
 </v>
-<v t="ekr.20040303071432"><vh>Mini tests, scripts &amp; experiments</vh>
-<v t="ekr.20040312101720"><vh>Experiments</vh>
+<v t="ekr.20040303071432" a="E"><vh>Mini tests, scripts &amp; experiments</vh>
+<v t="ekr.20040312101720" a="E"><vh>Experiments</vh>
 <v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
 <v t="ekr.20040323075614"><vh>Test of using an iterator inside a list comprehension</vh></v>
-<v t="ekr.20040323080317"><vh>Test of using c.allNodes_iter to create a list of all positions</vh></v>
+<v t="ekr.20040323080317" a="V"><vh>Test of using c.allNodes_iter to create a list of all positions</vh></v>
 <v t="ekr.20040323082119"><vh>Creating a list of distinct vnodes</vh></v>
+<v t="ekr.20040325082811"><vh>Test that back quotes are not needed in es</vh></v>
 </v>
 <v t="ekr.20040312101720.1"><vh>Mini tests</vh>
 <v t="ekr.20040309111054" a="M"><vh>Print iterations: do not delete</vh>
@@ -458,6 +459,9 @@
 <v t="ekr.20040323090541"><vh>Check consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
 <v t="ekr.20040323085933"><vh>test of findAllPotentiallyDirtyNodes</vh></v>
 <v t="ekr.20040323162303"><vh>Check that cloned nodes actually share subtrees</vh></v>
+<v t="ekr.20040325073120"><vh>Test that isAt...FileNode works</vh>
+<v t="ekr.20040325073120.1"><vh>@thinfile thinfile.txt</vh></v>
+</v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
@@ -3432,5 +3436,17 @@ print "done"</t>
 					assert(parent in vparents)
 				for parent in vparents:
 					assert(parent in parents)</t>
+<t tx="ekr.20040325073120">@ignore</t>
+<t tx="ekr.20040325073120.1">import leoGlobals as g
+c = g.top() ; p = c.currentPosition()
+
+print "isAny",p.isAnyAtFileNode()
+print "isThin",p.isAtThinFileNode()
+print "isThin",p.isAtThinFileNode()
+print "noSent name",repr(p.atNoSentinelsFileNodeName())</t>
+<t tx="ekr.20040325082811">import leoGlobals as g
+
+g.es("v",g.top().currentPosition())
+g.es(1,2)</t>
 </tnodes>
 </leo_file>

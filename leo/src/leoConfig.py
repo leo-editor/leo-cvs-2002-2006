@@ -455,27 +455,27 @@ class baseConfig:
 			language = "plain"
 		self.setPref("default_tangle_directory",c.tangle_directory)
 		self.setPref("default_target_language",language)
-		self.setPref("output_doc_chunks",`c.output_doc_flag`)
-		self.setPref("page_width",`c.page_width`)
-		self.setPref("run_tangle_done.py",`c.tangle_batch_flag`)
-		self.setPref("run_untangle_done.py",`c.untangle_batch_flag`)
-		self.setPref("tab_width",`c.tab_width`)
-		self.setPref("tangle_outputs_header",`c.use_header_flag`)
+		self.setPref("output_doc_chunks",str(c.output_doc_flag))
+		self.setPref("page_width",str(c.page_width))
+		self.setPref("run_tangle_done.py",str(c.tangle_batch_flag))
+		self.setPref("run_untangle_done.py",str(c.untangle_batch_flag))
+		self.setPref("tab_width",str(c.tab_width))
+		self.setPref("tangle_outputs_header",str(c.use_header_flag))
 		
-		self.setFindPref("batch",`c.batch_flag`)
-		self.setFindPref("ignore_case",`c.ignore_case_flag`)
-		self.setFindPref("mark_changes",`c.mark_changes_flag`)
-		self.setFindPref("mark_finds",`c.mark_finds_flag`)
-		self.setFindPref("pattern_match",`c.pattern_match_flag`)
-		self.setFindPref("reverse",`c.reverse_flag`)
-		self.setFindPref("script_change",`c.script_change_flag`)
-		self.setFindPref("script_search",`c.script_search_flag`)
-		self.setFindPref("search_body",`c.search_body_flag`)
-		self.setFindPref("search_headline",`c.search_headline_flag`)
-		self.setFindPref("selection_only",`c.selection_only_flag`) # 11/9/03
-		self.setFindPref("suboutline_only",`c.suboutline_only_flag`)
-		self.setFindPref("wrap",`c.wrap_flag`)
-		self.setFindPref("whole_word",`c.whole_word_flag`)
+		self.setFindPref("batch",str(c.batch_flag))
+		self.setFindPref("ignore_case",str(c.ignore_case_flag))
+		self.setFindPref("mark_changes",str(c.mark_changes_flag))
+		self.setFindPref("mark_finds",str(c.mark_finds_flag))
+		self.setFindPref("pattern_match",str(c.pattern_match_flag))
+		self.setFindPref("reverse",str(c.reverse_flag))
+		self.setFindPref("script_change",str(c.script_change_flag))
+		self.setFindPref("script_search",str(c.script_search_flag))
+		self.setFindPref("search_body",str(c.search_body_flag))
+		self.setFindPref("search_headline",str(c.search_headline_flag))
+		self.setFindPref("selection_only",str(c.selection_only_flag)) # 11/9/03
+		self.setFindPref("suboutline_only",str(c.suboutline_only_flag))
+		self.setFindPref("wrap",str(c.wrap_flag))
+		self.setFindPref("whole_word",str(c.whole_word_flag))
 		
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
@@ -603,7 +603,7 @@ class baseConfig:
 			else: # easier to read in the config file.
 				try:
 					for i in xrange(10):
-						f = config.get(section,"file" + `i`,raw=1)
+						f = config.get(section,"file" + str(i),raw=1)
 						f = g.toUnicode(f,"utf-8") # 10/31/03
 						self.recentFiles.append(f)
 				except: pass
@@ -714,7 +714,7 @@ class baseConfig:
 			else: # easier to read in the config file.
 				for i in xrange(len(files)):
 					f = g.toEncodedString(files[i],self.config_encoding) # 10/31/03
-					config.set(section, "file"+`i`, f)
+					config.set(section, "file"+str(i), f)
 			#@nonl
 			#@-node:<< write recent files section >>
 			#@nl

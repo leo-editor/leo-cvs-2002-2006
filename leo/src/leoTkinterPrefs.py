@@ -194,9 +194,9 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		self.tangle_batch_var.set(c.tangle_batch_flag)
 		self.untangle_batch_var.set(c.untangle_batch_flag)
 		self.pageWidthText.delete("1.0","end")
-		self.pageWidthText.insert("end",`c.page_width`)
+		self.pageWidthText.insert("end",str(c.page_width))
 		self.tabWidthText.delete("1.0","end")
-		self.tabWidthText.insert("end",`abs(c.tab_width)`)
+		self.tabWidthText.insert("end",str(abs(c.tab_width)))
 	
 		# Default Tangle Options
 		self.tangleDirectoryText.delete("1.0","end")

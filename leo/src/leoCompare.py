@@ -322,15 +322,15 @@ class baseLeoCompare:
 				if match and self.printMatches:
 					
 					if self.printBothMatches:
-						self.dump(string.rjust("1." + `lines1`,6) + ' :',s1)
-						self.dump(string.rjust("2." + `lines2`,6) + ' :',s2)
+						self.dump(string.rjust("1." + str(lines1),6) + ' :',s1)
+						self.dump(string.rjust("2." + str(lines2),6) + ' :',s2)
 					else:
-						self.dump(string.rjust(       `lines1`,6) + ' :',s1)
+						self.dump(string.rjust(       str(lines1),6) + ' :',s1)
 				
 				if not match and self.printMismatches:
 					
-					self.dump(string.rjust("1." + `lines1`,6) + '*:',s1)
-					self.dump(string.rjust("2." + `lines2`,6) + '*:',s2)
+					self.dump(string.rjust("1." + str(lines1),6) + '*:',s1)
+					self.dump(string.rjust("2." + str(lines2),6) + '*:',s2)
 			#@nonl
 			#@-node:<< print matches and/or mismatches >>
 			#@nl
@@ -356,9 +356,9 @@ class baseLeoCompare:
 			lines2 += self.dumpToEndOfFile("2.",f2,s2,lines2,printTrailing)
 		
 		self.show("")
-		self.show("lines1:" + `lines1`)
-		self.show("lines2:" + `lines2`)
-		self.show("mismatches:" + `mismatches`)
+		self.show("lines1:" + str(lines1))
+		self.show("lines2:" + str(lines2))
+		self.show("mismatches:" + str(mismatches))
 		#@nonl
 		#@-node:<< handle reporting after at least one eof is seen >>
 		#@nl
@@ -373,8 +373,8 @@ class baseLeoCompare:
 			else:   self.show("*** not equal")
 		else:
 			self.show("filecmp.cmp returns:")
-			if val: self.show(`val` + " (equal)")
-			else:   self.show(`val` + " (not equal)")
+			if val: self.show(str(val)+ " (equal)")
+			else:   self.show(str(val) + " (not equal)")
 		return val
 	#@nonl
 	#@-node:filecmp
@@ -424,11 +424,11 @@ class baseLeoCompare:
 			if len(s) == 0: break
 			trailingLines += 1
 			if self.printTrailingMismatches and printTrailing:
-				tag2 = string.rjust(tag + `line`,6) + "+:"
+				tag2 = string.rjust(tag + str(line),6) + "+:"
 				self.dump(tag2,s)
 			s = None
 	
-		self.show(tag + `trailingLines` + " trailing lines")
+		self.show(tag + str(trailingLines) + " trailing lines")
 		return trailingLines
 	#@nonl
 	#@-node:dumpToEndOfFile
@@ -502,24 +502,24 @@ class baseLeoCompare:
 	#@+node:showIvars
 	def showIvars (self):
 		
-		self.show("fileName1:"        + `self.fileName1`)
-		self.show("fileName2:"        + `self.fileName2`)
-		self.show("outputFileName:"   + `self.outputFileName`)
-		self.show("limitToExtension:" + `self.limitToExtension`)
+		self.show("fileName1:"        + str(self.fileName1))
+		self.show("fileName2:"        + str(self.fileName2))
+		self.show("outputFileName:"   + str(self.outputFileName))
+		self.show("limitToExtension:" + str(self.limitToExtension))
 		self.show("")
 	
-		self.show("ignoreBlankLines:"         + `self.ignoreBlankLines`)
-		self.show("ignoreFirstLine1:"         + `self.ignoreFirstLine1`)
-		self.show("ignoreFirstLine2:"         + `self.ignoreFirstLine2`)
-		self.show("ignoreInteriorWhitespace:" + `self.ignoreInteriorWhitespace`)
-		self.show("ignoreLeadingWhitespace:"  + `self.ignoreLeadingWhitespace`)
-		self.show("ignoreSentinelLines:"      + `self.ignoreSentinelLines`)
+		self.show("ignoreBlankLines:"         + str(self.ignoreBlankLines))
+		self.show("ignoreFirstLine1:"         + str(self.ignoreFirstLine1))
+		self.show("ignoreFirstLine2:"         + str(self.ignoreFirstLine2))
+		self.show("ignoreInteriorWhitespace:" + str(self.ignoreInteriorWhitespace))
+		self.show("ignoreLeadingWhitespace:"  + str(self.ignoreLeadingWhitespace))
+		self.show("ignoreSentinelLines:"      + str(self.ignoreSentinelLines))
 		self.show("")
 		
-		self.show("limitCount:"              + `self.limitCount`)
-		self.show("printMatches:"            + `self.printMatches`)
-		self.show("printMismatches:"         + `self.printMismatches`)
-		self.show("printTrailingMismatches:" + `self.printTrailingMismatches`)
+		self.show("limitCount:"              + str(self.limitCount))
+		self.show("printMatches:"            + str(self.printMatches))
+		self.show("printMismatches:"         + str(self.printMismatches))
+		self.show("printTrailingMismatches:" + str(self.printTrailingMismatches))
 	#@nonl
 	#@-node:showIvars
 	#@-others

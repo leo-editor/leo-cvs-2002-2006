@@ -106,7 +106,7 @@ class leoGui:
 			s = "untitled"
 			n = g.app.numberOfWindows
 			if n > 0:
-				s += `n`
+				s += str(n)
 			title = g.computeWindowTitle(s)
 			g.app.numberOfWindows = n+1
 		

@@ -228,7 +228,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	
 		self.divideLeoSplitter(self.splitVerticalFlag, ratio)
 		self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
-		# g.trace(`ratio`)
+		# g.trace(ratio)
 	#@-node:resizePanesToRatio
 	#@+node:bindBar
 	def bindBar (self, bar, verticalFlag):
@@ -338,7 +338,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		if offset > wMax - 2: offset = wMax - 2
 		# Redraw the splitter as the drag is occuring.
 		frac = float(offset) / wMax
-		# g.trace(`frac`)
+		# g.trace(frac)
 		self.divideLeoSplitter(verticalFlag, frac)
 	#@nonl
 	#@-node:onDrag...
@@ -753,7 +753,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			root = g.app.root # 4/3/03: must specify root so idle window will work properly.
 			font = tkFont.Font(root=root,font=font)
 			tabw = font.measure(" " * abs(w)) # 7/2/02
-			# tablist = `tabw` + ' ' + `2*tabw`
 			self.bodyCtrl.configure(tabs=tabw)
 			self.tab_width = w
 			# g.trace(w,tabw)
@@ -1200,7 +1199,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:showProgressBar
 	def showProgressBar (self,count,size,total):
 	
-		# g.trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
+		# g.trace("count,size,total:",count,size,total)
 		if self.scale == None:
 			#@		<< create the scale widget >>
 			#@+node:<< create the scale widget >>

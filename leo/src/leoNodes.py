@@ -397,7 +397,7 @@ class baseVnode:
 	if 0: # not used
 		def __cmp__(self,other):
 			
-			g.trace(`self` + "," + `other`)
+			g.trace(self,other)
 			return not (self is other) # Must return 0, 1 or -1
 	#@nonl
 	#@-node:v.__cmp__ (not used)
@@ -421,11 +421,12 @@ class baseVnode:
 	def __repr__ (self):
 		
 		if self.t:
-			return "<vnode %d:%s>" % (id(self),`self.t.headString`)
+			return "<vnode %d:'%s'>" % (id(self),self.t.headString)
 		else:
 			return "<vnode %d:NULL tnode>" % (id(self))
 			
 	__str__ = __repr__
+	#@nonl
 	#@-node:v.__repr__ & v.__str__
 	#@+node:v.dump
 	def dumpLink (self,link):
@@ -461,7 +462,7 @@ class baseVnode:
 		else: return ""
 	#@nonl
 	#@-node:afterHeadlineMatch
-	#@+node:is...FileNode and is...FileNodeName
+	#@+node:at...FileNodeName
 	#@+at 
 	#@nonl
 	# Returns the filename following @file or @rawfile, in the receivers's 
@@ -479,7 +480,7 @@ class baseVnode:
 	
 	def atNoSentinelsFileNodeName (self):
 		return self.nodeName("@nosentinelsfile")
-		
+	
 	def atRawFileNodeName (self):
 		return self.nodeName("@rawfile")
 		
@@ -488,13 +489,25 @@ class baseVnode:
 		
 	def atThinFileNodeName (self):
 		return self.nodeName("@thinfile")
+	#@nonl
+	#@-node:at...FileNodeName
+	#@+node:isAt...FileNode
+	def isAtFileNode (self):
+		return g.choose(self.atFileNodeName(),true,false)
 		
-	isAtFileNode            = atFileNodeName
-	isAtNoSentinelsFileNode = atNoSentinelsFileNodeName
-	isAtRawFileNode         = atRawFileNodeName
-	isAtSilentFileNode      = atSilentFileNodeName
-	isAtThinFileNode        = atThinFileNodeName
-	#@-node:is...FileNode and is...FileNodeName
+	def isAtNoSentinelsFileNode (self):
+		return g.choose(self.atNoSentinelsFileNodeName(),true,false)
+	
+	def isAtRawFileNode (self):
+		return g.choose(self.atRawFileNodeName(),true,false)
+	
+	def isAtSilentFileNode (self):
+		return g.choose(self.atSilentFileNodeName(),true,false)
+	
+	def isAtThinFileNode (self):
+		return g.choose(self.atThinFileNodeName(),true,false)
+	#@nonl
+	#@-node:isAt...FileNode
 	#@+node:isAnyAtFileNode & anyAtFileNodeName
 	def anyAtFileNodeName (self):
 		
@@ -516,7 +529,8 @@ class baseVnode:
 		else:
 			return ""
 			
-	isAnyAtFileNode = anyAtFileNodeName
+	def isAnyAtFileNode (self):
+		return g.choose(self.anyAtFileNodeName(),true,false)
 	#@nonl
 	#@-node:isAnyAtFileNode & anyAtFileNodeName
 	#@+node:isAtIgnoreNode
@@ -722,12 +736,11 @@ class baseVnode:
 	
 		# This message should never be printed and we want to avoid crashing here!
 		if not g.isUnicode(self.t.bodyString):
-			s = "Leo internal error: not unicode:" + `self.t.bodyString`
+			s = "Leo internal error: not unicode:" + repr(self.t.bodyString)
 			print s ; g.es(s,color="red")
 	
 		# Make _sure_ we return a unicode string.
 		return g.toUnicode(self.t.bodyString,g.app.tkEncoding)
-	#@nonl
 	#@-node:v.bodyString
 	#@+node:v.currentVnode (and c.currentPosition 4.2)
 	def currentPosition (self):
@@ -758,7 +771,7 @@ class baseVnode:
 		
 		# This message should never be printed and we want to avoid crashing here!
 		if not g.isUnicode(self.t.headString):
-			s = "Leo internal error: not unicode:" + `self.t.headString`
+			s = "Leo internal error: not unicode:" + repr(self.t.headString)
 			print s ; g.es(s,color="red")
 			
 		# Make _sure_ we return a unicode string.
@@ -1153,7 +1166,7 @@ class baseVnode:
 	
 		v = self
 		body = v.bodyString()
-		# g.trace(`body`)
+		# g.trace(body)
 		lines = string.split(body,'\n')
 		i = len(lines) - 1 ; changed = false
 		while i >= 0:
@@ -1165,7 +1178,7 @@ class baseVnode:
 			else: break
 		if changed:
 			body = string.join(body,'') + '\n' # Add back one last newline.
-			# g.trace(`body`)
+			# g.trace(body)
 			v.setBodyStringOrPane(body)
 			# Don't set the dirty bit: it would just be annoying.
 	#@-node:v.trimTrailingLines
@@ -1280,7 +1293,7 @@ class nodeIndices:
 		"""Create a gnx from its string representation"""
 		
 		if type(s) not in (type(""),type(u"")):
-			g.es("scanGnx: unexpected index type:"+`type(s)`+`s`,color="red")
+			g.es("scanGnx: unexpected index type:",type(s),s,color="red")
 			return None,None,None
 			
 		s = s.strip()
@@ -1429,7 +1442,7 @@ class position:
 	#@nonl
 	#@-node:p.__cmp__
 	#@+node:p.__getattr__  ON:  must be ON if use_plugins
-	if 0: # Good for compatibility, bad for finding conversion problems.
+	if 1: # Good for compatibility, bad for finding conversion problems.
 	
 		def __getattr__ (self,attr):
 			

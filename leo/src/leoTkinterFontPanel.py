@@ -349,7 +349,7 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		bold = self.boldVar.get()
 		ital = self.italVar.get()
 		size = self.sizeVar.get()
-		# g.trace(`size`)
+		# g.trace(size)
 		slant=g.choose(ital,"italic","roman")
 		weight=g.choose(bold,"bold","normal")
 		# Compute the font from all the settings.
@@ -425,7 +425,7 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		
 		e = self.size_entry
 		e.delete(0,"end")
-		e.insert(0,`size`)
+		e.insert(0,str(size))
 	#@nonl
 	#@-node:revertIvars
 	#@+node:showSettings
@@ -441,16 +441,16 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		fn = c.frame.body.cget("font")
 		font = tkFont.Font(font=fn)
 		name,size,slant,weight = self.getFontSettings(font)
-		g.es("body font:" + name + "," + `size` + "," + slant + "," + weight)
+		g.es("body font:",name,size,slant,weight)
 		# Log pane.
 		fn = c.frame.log.getFontConfig()
 		font = tkFont.Font(font=fn)
 		name,size,slant,weight = self.getFontSettings(font)
-		g.es("log font:" + name + "," + `size` + "," + slant + "," + weight)
+		g.es("log font:",name,size,slant,weight)
 		# Tree pane.
 		font = c.frame.tree.getFont()
 		name,size,slant,weight = self.getFontSettings(font)
-		g.es("headline font:" + name + "," + `size` + "," + slant + "," + weight)
+		g.es("headline font:",name,size,slant,weight)
 	#@nonl
 	#@-node:showSettings
 	#@+node:update
@@ -464,7 +464,7 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		#@+node:<< insert the new text in the size box >>
 		e = self.size_entry
 		e.delete(0,"end")
-		e.insert(0,`size`)
+		e.insert(0,str(size))
 		#@nonl
 		#@-node:<< insert the new text in the size box >>
 		#@nl
