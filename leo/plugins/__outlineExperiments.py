@@ -2,29 +2,17 @@
 #@+node:ekr.20040723100651:@thin __outlineExperiments.py
 """Override outline drawing code to test optimized drawing"""
 
+"""This class implements a tree control similar to Windows explorer.  The code is based on code found in Python's IDLE program."""
+
+# To do: Undo headline doesn't work.
+# Key bindings are now OK.  However, the undo text isn't set properly.
+
 #@@language python
 #@@tabwidth -4
 
 import leoGlobals as g
 
 print '*' * 20, " overriding leoTkinterTree class ", '*' * 20
-
-#@<< about the tree classes >>
-#@+node:ekr.20040723173301:<< about the tree classes >>
-#@+at 
-#@nonl
-# This class implements a tree control similar to Windows explorer.  The draw 
-# code is based on code found in Python's IDLE program.  Thank you Guido van 
-# Rossum!
-# 
-# The tree class knows about vnodes.  The vnode class could be split into a 
-# base class (say a treeItem class) containing the ivars known to the tree 
-# class, and a derived class containing everything else, including, e.g., the 
-# bodyString ivar.  I haven't chosen to split the vnode class this way because 
-# nothing would be gained in Leo.
-#@-at
-#@-node:ekr.20040723173301:<< about the tree classes >>
-#@nl
 
 import leoTkinterTree
 import leoFrame
@@ -35,55 +23,25 @@ import sys
 
 #@<< about drawing >>
 #@+node:ekr.20040723173301.1:<< About drawing >>
-#@+at 
-#@nonl
-# Leo must redraw the outline pane when commands are executed and as the 
-# result of mouse and keyboard events.  The main challenges are eliminating 
-# flicker and handling events properly.
+#@+at
 # 
-# Eliminating flicker.  Leo must update the outline pane with minimum 
-# flicker.  Various versions of Leo have approached this problem in different 
-# ways.  The drawing code in leo.py is robust, flexible, relatively simple and 
-# should work in almost any conceivable environment.
+# Leo must update the outline pane with minimum flicker.  Leo assumes that all 
+# code that changes the outline pane will be enclosed in matching calls to the 
+# c.beginUpdate and c.endUpdate  methods of the Commands class. 
+# c.beginUpdate() inhibits drawing until the matching c.endUpdate().  These 
+# calls may be nested; only the outermost call to c.endUpdate() calls 
+# c.redraw() to force a redraw of the outline pane.  Calls to c.endUpdate may 
+# contain an optional flag argument.  Leo redraws the screen only if flag is 
+# True.  This allows code to suppress redrawing entirely when needed.  For an 
+# example, see idle_body_key.
 # 
-# Leo assumes that all code that changes the outline pane will be enclosed in 
-# matching calls to the c.beginUpdate and c.endUpdate  methods of the Commands 
-# class. c.beginUpdate() inhibits drawing until the matching c.endUpdate().  
-# These calls may be nested; only the outermost call to c.endUpdate() calls 
-# c.redraw() to force a redraw of the outline pane.
-# 
-# In leo.py, code may call c.endUpdate(flag) instead of c.endUpdate().  Leo 
-# redraws the screen only if flag is True.  This allows code to suppress 
-# redrawing entirely when needed.  For example, study the idle_body_key event 
-# handler to see how Leo conditionally redraws the outline pane.
-# 
-# The leoTree class redraws all icons automatically when c.redraw() is 
-# called.  This is a major simplification compared to previous versions of 
-# Leo.  The entire machinery of drawing icons in the vnode class has been 
-# eliminated.  The v.computeIcon method tells what the icon should be.  The 
-# v.iconVal ivar that tells what the present icon is. The event handler simply 
-# compares these two values and sets redraw_flag if they don't match.
+# c.redraw and its allies in this class redraw all icons automatically.   
+# v.computeIcon method tells what the icon should be.  The v.iconVal tells 
+# what the present icon is. The body key handler simply compares these two 
+# values and sets redraw_flag if they don't match.
 #@-at
 #@nonl
 #@-node:ekr.20040723173301.1:<< About drawing >>
-#@nl
-#@<< drawing constants >>
-#@+node:ekr.20040723101548:<< drawing constants >>
-# These should be ivars.  Sheesh.
-
-box_padding = 5 # extra padding between box and icon
-box_width = 9 + box_padding
-icon_width = 20
-icon_padding = 2
-text_indent = 4 # extra padding between icon and tex
-child_indent = 28 # was 20
-hline_y = 7 # Vertical offset of horizontal line
-root_left = 7 + box_width
-root_top = 2
-hiding = True # True if we don't reallocate items
-line_height = 17 + 2 # To be replaced by Font height
-#@nonl
-#@-node:ekr.20040723101548:<< drawing constants >>
 #@nl
 
 # class leoTkinterTree (leoFrame.leoTree):
@@ -92,6 +50,140 @@ class myLeoTkinterTree(leoFrame.leoTree):
     callbacksInjected = False
     
     #@    @+others
+    #@+node:ekr.20040729143503.1:Notes
+    #@@killcolor
+    #@nonl
+    #@+node:ekr.20040725173253:Changes made since first update
+    #@+at
+    # 
+    # - disabled drawing of user icons.  They weren't being hidden, which 
+    # messed up scrolling.
+    # 
+    # - Expanded clickBox so all clicks fall inside it.
+    # 
+    # - Added binding for plugBox so it doesn't interfere with the clickBox.  
+    # Another weirdness.
+    # 
+    # - Setting self.useBindtags = True also seems to work.
+    # 
+    # - Re-enabled code in drawText that sets the headline state.
+    # 
+    # - Clear self.ids dict on each redraw so "invisible" id's don't confuse 
+    # eventToPosition.
+    #     This effectively disables a check on id's, but that can't be helped.
+    # 
+    # - eventToPosition now returns p.copy, which means that nobody can change 
+    # the list.
+    # 
+    # - Likewise, clear self.iconIds so old icon id's don't confuse 
+    # findVnodeWithIconId.
+    # 
+    # - All drawing methods must do p = p.copy() at the beginning if they make 
+    # any changes to p.
+    #     - This ensures neither they nor their allies can change the caller's 
+    # position.
+    #     - In fact, though, only drawTree changes position.
+    # 
+    # - Fixed the race conditions that caused drawing sometimes to fail.  The 
+    # essential idea is that we must not call w.config if we are about to do a 
+    # redraw.  For full details, see the Notes node in the Race Conditions 
+    # section.
+    #@-at
+    #@nonl
+    #@-node:ekr.20040725173253:Changes made since first update
+    #@+node:ekr.20040726152305:Changes made since second update
+    #@+at
+    # 
+    # - Removed code in leoTkinterFrame.OnActivateTree:
+    #     self.tree.undimEditLabel()
+    # 
+    # I have no idea why this was originally there.  It seems to be pure 
+    # duplication.
+    # 
+    # - Removed code from self.OnActivate:
+    #     self.undimEditLabel()
+    # 
+    # Again, needless duplication.  The OnActivate logic might be simplified 
+    # further...
+    # 
+    # - Removed duplicate code in tree.select.  The following code was being 
+    # called twice (!!):
+    #     self.endEditLabel()
+    #     self.setUnselectedLabelState(old_p)
+    # 
+    # - Add p.copy() instead of p when inserting nodes into data structures in 
+    # select.
+    # 
+    # - Fixed a _major_ bug in Leo's core.  c.setCurrentPosition must COPY the 
+    # position given to it!  It's _not_ enough to return a copy of position: 
+    # it may already have changed!!
+    # 
+    # - Fixed a another (lesser??) bug in Leo's core.  handleUserClick should 
+    # also make a copy.
+    # 
+    # - Fixed bug in mod_scripting.py.  The callback was failing if the script 
+    # was empty.
+    # 
+    # - Put in the self.recycle ivar AND THE CODE STILL FAILS.
+    #     It seems to me that this shows there is a bug in my code somewhere, 
+    # but where ???????????????????
+    #@-at
+    #@nonl
+    #@-node:ekr.20040726152305:Changes made since second update
+    #@+node:ekr.20040728143724:Most recent changes
+    #@+at
+    # 
+    # - Added generation count.
+    #     - Incremented on each redraw.
+    #     - Potentially a barrior to race conditions, but it never seemed to 
+    # do anything.
+    #     - This code is a candidate for elimination.
+    # 
+    # - Used vnodes rather than positions in several places.
+    #     - I actually don't think this was involved in the real problem, and 
+    # it doesn't hurt.
+    # 
+    # - Added much better traces: the beginning of the end for the bugs :-)
+    #     - Added self.verbose option.
+    #     - Added align keyword option to g.trace.
+    #     - Separate each set of traces by a blank line.
+    #         - This makes clear the grouping of id's.
+    # 
+    # - Defensive code: Disable dragging at start of redraw code.
+    #     - This protects against race conditions.
+    # 
+    # - Fixed blunder 1: Fixed a number of bugs in the dragging code.
+    #     - I had never looked at this code!
+    #     - Eliminating false drags greatly simplifies matters.
+    #     - One of the blunders was the confusion between self.dragging and 
+    # self._dragging.
+    #         - self.setDragging sets self._dragging.
+    #         - self._dragging is TOTALLY USELESS!!
+    # 
+    # - Fixed blunder 2: Added the following to eventToPosition:
+    #         x = canvas.canvasx(x)
+    #         y = canvas.canvasy(y)
+    #     - Apparently this was the cause of false associations between icons 
+    # and id's.
+    #     - It's amazing that the code didn't fail earlier without these!
+    # 
+    # - Converted all module-level constants to ivars.
+    # 
+    # - Lines no longer interfere with eventToPosition.
+    #     - The problem was that find_nearest or find_overlapping don't depend 
+    # on stacking order!
+    #     - Added p param to horizontal lines, but not vertical lines.
+    #     - EventToPosition adds 1 to the x coordinate of vertical lines, then 
+    # recomputes the id.
+    # 
+    # - Compute indentation only in forceDrawNode.  Removed child_indent 
+    # constant.
+    # 
+    # - Simplified drawTree to use indentation returned from forceDrawNode.
+    #@-at
+    #@nonl
+    #@-node:ekr.20040728143724:Most recent changes
+    #@-node:ekr.20040729143503.1:Notes
     #@+node:ekr.20040723183449.1:Allocation...
     #@+node:ekr.20040723184305:newBox
     def newBox (self,p,x,y,image):
@@ -118,7 +210,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         return id
     #@nonl
     #@-node:ekr.20040723184305:newBox
-    #@+node:ekr.20040724072523.1:newClickBox 
+    #@+node:ekr.20040724072523.1:newClickBox
     def newClickBox (self,p,x1,y1,x2,y2):
         
         canvas = self.canvas ; defaultColor = "" ; tag="clickBox" 
@@ -143,7 +235,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         return id
     #@nonl
-    #@-node:ekr.20040724072523.1:newClickBox 
+    #@-node:ekr.20040724072523.1:newClickBox
     #@+node:ekr.20040723184305.1:newIcon
     def newIcon (self,p,x,y,image):
         
@@ -175,15 +267,22 @@ class myLeoTkinterTree(leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040723184305.1:newIcon
     #@+node:ekr.20040723184305.2:newLine
-    def newLine (self):
+    def newLine (self,p,x1,y1,x2,y2):
+        
+        canvas = self.canvas
         
         if self.freeLines:
             id = self.freeLines.pop(0)
+            canvas.coords(id,x1,y1,x2,y2)
         else:
-            id = self.canvas.create_line(0,0,0,0,tag="lines",fill="gray50") # stipple="gray25")
+            id = canvas.create_line(x1,y1,x2,y2,tag="lines",fill="gray50") # stipple="gray25")
             assert(not self.ids.get(id))
+    
+        assert(not self.ids.get(id))
+        self.ids[id] = p
             
         self.visibleLines.append(id)
+    
         return id
     #@nonl
     #@-node:ekr.20040723184305.2:newLine
@@ -288,9 +387,14 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 freeList.append(data)
             self.freeText[key] = freeList
         self.visibleText = {}
+        
+        for id in self.visibleUserIcons:
+            # The present code does not recycle user Icons.
+            self.canvas.delete(id)
+        self.visibleUserIcons = []
     #@nonl
     #@-node:ekr.20040723194802:recycleWidgets
-    #@+node:ekr.20040726233715:destroyWidgets NOT USED
+    #@+node:ekr.20040726233715:destroyWidgets (not used)
     # This was a desparation measure.  It would leak bindings bigtime.
     
     def destroyWidgets (self):
@@ -305,7 +409,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.visibleLines = []
         self.visibleText  = []
     #@nonl
-    #@-node:ekr.20040726233715:destroyWidgets NOT USED
+    #@-node:ekr.20040726233715:destroyWidgets (not used)
     #@+node:ekr.20040725072304:getTextStats
     def getTextStats (self):
         
@@ -330,6 +434,22 @@ class myLeoTkinterTree(leoFrame.leoTree):
         # Objects associated with this tree.
         self.canvas = canvas
         
+        #@    << define drawing constants >>
+        #@+node:ekr.20040723101548:<< define drawing constants >>
+        self.box_padding = 5 # extra padding between box and icon
+        self.box_width = 9 + self.box_padding
+        self.icon_width = 20
+        self.text_indent = 4 # extra padding between icon and tex
+        
+        self.hline_y = 7 # Vertical offset of horizontal line
+        self.root_left = 7 + self.box_width
+        self.root_top = 2
+        
+        self.default_line_height = 17 + 2 # default if can't set line_height from font.
+        self.line_height = self.default_line_height
+        #@nonl
+        #@-node:ekr.20040723101548:<< define drawing constants >>
+        #@nl
         #@    << old ivars >>
         #@+node:ekr.20040723171712.1:<< old ivars >>
         # Miscellaneous info.
@@ -393,6 +513,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.visibleIcons = []
         self.visibleLines = []
         self.visibleText  = {} # Keys are vnodes, values are Tk.Text widgets
+        self.visibleUserIcons = []
     
         # Lists of free, hidden widgets...
         self.freeBoxes = []
@@ -400,6 +521,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         self.freeIcons = []
         self.freeLines = []
         self.freeText = {} # Keys are vnodes, values are Tk.Text widgets
+        self.freeUserIcons = []
     #@nonl
     #@-node:ekr.20040723171712:__init__
     #@+node:ekr.20040723102245.2:createPermanentBindings
@@ -570,7 +692,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
             self.line_height = linespace + 5 # Same as before for the default font on Windows.
             # print metrics
         except:
-            self.line_height = line_height # was 17 + 2
+            self.line_height = self.default_line_height
             g.es("exception setting outline line height")
             g.es_exception()
     #@nonl
@@ -743,18 +865,13 @@ class myLeoTkinterTree(leoFrame.leoTree):
             image = self.getIconImage(imagename)
             id = self.newIcon(p,x,y+self.lineyoffset,image)
             
-        return 0,icon_width # dummy icon height,width
+        return 0,self.icon_width # dummy icon height,width
     #@nonl
     #@-node:ekr.20040723101121.5:drawIcon
     #@+node:ekr.20040723190945:drawLine
-    def drawLine (self,x1,y1,x2,y2):
+    def drawLine (self,p,x1,y1,x2,y2):
         
-        id = self.newLine()
-        
-        self.canvas.coords(id,x1,y1,x2,y2)
-        
-        assert(not self.ids.get(id))
-        self.ids[id] = None
+        id = self.newLine(p,x1,y1,x2,y2)
         
         return id
     #@-node:ekr.20040723190945:drawLine
@@ -778,47 +895,52 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 self.lineyoffset = 0
         
         # Draw the horizontal line.
-        self.drawLine(
+        self.drawLine(p,
             x,y+7+self.lineyoffset,
-            x+box_width,y+7+self.lineyoffset)
+            x+self.box_width,y+7+self.lineyoffset)
         
         if self.inVisibleArea(y):
             return self.force_draw_node(p,x,y)
         else:
             return self.line_height,0
     #@nonl
-    #@+node:ekr.20040723101121.8:force_draw_node
+    #@+node:ekr.20040730043511:force_draw_node
     def force_draw_node(self,p,x,y):
     
-        h,w = self.drawUserIcons(p,"beforeBox",x,y)
-        xw = w # The extra indentation before the icon box.
+        h = 0 # The total height of the line.
+        indent = 0 # The amount to indent this line.
+        
+        h2,w2 = self.drawUserIcons(p,"beforeBox",x,y)
+        h = max(h,h2) ; x += w2 ; indent += w2
+    
         if p.hasChildren():
-            self.drawBox(p,x+w,y)
+            self.drawBox(p,x,y)
     
-        w += box_width # even if box isn't drawn.
+        indent += self.box_width
+        x += self.box_width # even if box isn't drawn.
     
-        h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
-        h = max(h,h2) ; w += w2 ; xw += w2
+        h2,w2 = self.drawUserIcons(p,"beforeIcon",x,y)
+        h = max(h,h2) ; x += w2 ; indent += w2
     
-        h2,w2 = self.drawIcon(p,x+w,y)
-        h = max(h,h2) ; w += w2
+        h2,w2 = self.drawIcon(p,x,y)
+        h = max(h,h2) ; x += w2 ; indent += w2/2
+        
+        # Nothing after here affects indentation.
+        h2,w2 = self.drawUserIcons(p,"beforeHeadline",x,y)
+        h = max(h,h2) ; x += w2
     
-        h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
-        h = max(h,h2) ; w += w2
-    
-        expand_x = x+w # save this for later.
-        h2 = self.drawText(p,x+w,y)
+        h2 = self.drawText(p,x,y)
         h = max(h,h2)
-        w += self.widthInPixels(p.headString())
+        x += self.widthInPixels(p.headString())
     
-        h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
+        h2,w2 = self.drawUserIcons(p,"afterHeadline",x,y)
         h = max(h,h2)
         
         self.drawClickBox(p,y)
     
-        return h,xw
+        return h,indent
     #@nonl
-    #@-node:ekr.20040723101121.8:force_draw_node
+    #@-node:ekr.20040730043511:force_draw_node
     #@-node:ekr.20040723101121.7:drawNode & force_draw_node (good trace)
     #@+node:ekr.20040723101121.10:drawText
     def drawText(self,p,x,y):
@@ -829,7 +951,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         c = self.c ; canvas = self.canvas
         h = self.line_height
-        x += text_indent
+        x += self.text_indent
         
         data = g.doHook("draw-outline-text-box",tree=self,p=p,v=p.v,x=x,y=y)
         if data is not None: return data
@@ -884,6 +1006,116 @@ class myLeoTkinterTree(leoFrame.leoTree):
         return self.line_height
     #@nonl
     #@-node:ekr.20040723101121.10:drawText
+    #@+node:ekr.20040723101121.22:drawUserIcons
+    def drawUserIcons(self,p,where,x,y):
+        
+        """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
+        
+        h,w = 0,0 ; t = p.v.t
+        
+        if not hasattr(t,"unknownAttributes"):
+            return h,w
+        
+        iconsList = t.unknownAttributes.get("icons")
+        if not iconsList:
+            return h,w
+        
+        try:
+            for dict in iconsList:
+                h2,w2 = self.drawUserIcon(p,where,x,y,w,dict)
+                h = max(h,h2) ; w += w2
+        except:
+            g.es_exception()
+            
+        g.trace(where,h,w)
+    
+        return h,w
+    #@nonl
+    #@-node:ekr.20040723101121.22:drawUserIcons
+    #@+node:ekr.20040723101121.17:drawUserIcon
+    def drawUserIcon (self,p,where,x,y,w2,dict):
+        
+        h,w = 0,0
+    
+        if where != dict.get("where","beforeHeadline"):
+            return h,w
+            
+        # g.trace(where,x,y,dict)
+        
+        #@    << set offsets and pads >>
+        #@+node:ekr.20040723101121.18:<< set offsets and pads >>
+        xoffset = dict.get("xoffset")
+        try:    xoffset = int(xoffset)
+        except: xoffset = 0
+        
+        yoffset = dict.get("yoffset")
+        try:    yoffset = int(yoffset)
+        except: yoffset = 0
+        
+        xpad = dict.get("xpad")
+        try:    xpad = int(xpad)
+        except: xpad = 0
+        
+        ypad = dict.get("ypad")
+        try:    ypad = int(ypad)
+        except: ypad = 0
+        #@nonl
+        #@-node:ekr.20040723101121.18:<< set offsets and pads >>
+        #@nl
+        type = dict.get("type")
+        if type == "icon":
+            s = dict.get("icon")
+            #@        << draw the icon in string s >>
+            #@+node:ekr.20040723101121.19:<< draw the icon in string s >>
+            pass
+            #@nonl
+            #@-node:ekr.20040723101121.19:<< draw the icon in string s >>
+            #@nl
+        elif type == "file":
+            file = dict.get("file")
+            #@        << draw the icon at file >>
+            #@+node:ekr.20040723101121.21:<< draw the icon at file >>
+            try:
+                image = self.iconimages[file]
+                # Get the image from the cache if possible.
+            except KeyError:
+                try:
+                    fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
+                    fullname = g.os_path_normpath(fullname)
+                    image = Tk.PhotoImage(master=self.canvas,file=fullname)
+                    self.iconimages[fullname] = image
+                except:
+                    #g.es("Exception loading: " + fullname)
+                    #g.es_exception()
+                    image = None
+                    
+            if image:
+                id = self.canvas.create_image(x+xoffset+w2,y+yoffset,anchor="nw",image=image,tag="userIcon")
+                self.ids[id] = p
+            
+                assert(id not in self.visibleIcons)
+                self.visibleUserIcons.append(id)
+            
+                h = image.height() + yoffset + ypad
+                w = image.width()  + xoffset + xpad
+            #@-node:ekr.20040723101121.21:<< draw the icon at file >>
+            #@nl
+        elif type == "url":
+            url = dict.get("url")
+            #@        << draw the icon at url >>
+            #@+node:ekr.20040723101121.20:<< draw the icon at url >>
+            pass
+            #@nonl
+            #@-node:ekr.20040723101121.20:<< draw the icon at url >>
+            #@nl
+            
+        # Allow user to specify height, width explicitly.
+        h = dict.get("height",h)
+        w = dict.get("width",w)
+    
+        return h,w
+    #@nonl
+    #@-node:ekr.20040723101121.17:drawUserIcon
     #@+node:ekr.20040723101121.13:drawTopTree
     def drawTopTree (self):
         
@@ -913,17 +1145,16 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         if c.hoistStack:
             p,junk = c.hoistStack[-1]
-            self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
+            self.drawTree(p.copy(),self.root_left,self.root_top,0,0,hoistFlag=True)
         else:
-            self.drawTree(c.rootPosition(),root_left,root_top,0,0)
+            self.drawTree(c.rootPosition(),self.root_left,self.root_top,0,0)
         
         canvas.lower("lines")  # Lowest.
         canvas.lift("textBox") # Not the Tk.Text widget: it should be low.
+        canvas.lift("userIcon")
         canvas.lift("plusBox") 
         canvas.lift("clickBox")
         canvas.lift("iconBox") # Higest.
-        
-        # canvas.update_idletasks() # So recent changes will take.
     
         # g.trace("end   %s" % self.getTextStats())
         self.redrawing = False
@@ -935,7 +1166,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         tree = self ; v = p.v
         yfirst = ylast = y
         if level==0: yfirst += 10
-        w = 0
+        h1 = None
         
         data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
         if data is not None: return data
@@ -943,18 +1174,18 @@ class myLeoTkinterTree(leoFrame.leoTree):
         p = p.copy() # Make _sure_ we never change the caller's position.
         
         while p: # Do not use iterator.
-            h,w = self.drawNode(p,x,y)
+            h,indent = self.drawNode(p,x,y)
+            if h1 is None: h1 = g.choose(level==0,0,h/2)
             y += h ; ylast = y
             if p.isExpanded() and p.hasFirstChild():
                 # Must make an additional copy here by calling firstChild.
-                y,w2 = self.drawTree(p.firstChild(),x+child_indent+w,y,h,level+1)
-                x += w2 ; w += w2
+                y = self.drawTree(p.firstChild(),x+indent,y,h,level+1)
             if hoistFlag: break
             else:         p = p.next()
             
-        # Draw the virtical line.
-        self.drawLine(x, yfirst-hline_y,x, ylast+hline_y-h)
-        return y,w
+        # Draw the vertical line.
+        self.drawLine(None,x,yfirst-max(self.hline_y,h1),x,ylast+self.hline_y-h)
+        return y
     #@nonl
     #@-node:ekr.20040723101121.15:drawTree
     #@+node:ekr.20040726072127:Top level...
@@ -1092,113 +1323,6 @@ class myLeoTkinterTree(leoFrame.leoTree):
     #@-node:ekr.20040723141518.8:idle_second_redraw
     #@-node:ekr.20040726072127:Top level...
     #@+node:ekr.20040723102245:Unchanged...
-    #@+node:ekr.20040723101121.17:drawUserIcon
-    def drawUserIcon (self,where,x,y,dict):
-        
-        h,w = 0,0
-    
-        if where != dict.get("where","beforeHeadline"):
-            return h,w
-            
-        # g.trace(where,x,y,dict)
-        
-        #@    << set offsets and pads >>
-        #@+node:ekr.20040723101121.18:<< set offsets and pads >>
-        xoffset = dict.get("xoffset")
-        try:    xoffset = int(xoffset)
-        except: xoffset = 0
-        
-        yoffset = dict.get("yoffset")
-        try:    yoffset = int(yoffset)
-        except: yoffset = 0
-        
-        xpad = dict.get("xpad")
-        try:    xpad = int(xpad)
-        except: xpad = 0
-        
-        ypad = dict.get("ypad")
-        try:    ypad = int(ypad)
-        except: ypad = 0
-        #@nonl
-        #@-node:ekr.20040723101121.18:<< set offsets and pads >>
-        #@nl
-        type = dict.get("type")
-        if type == "icon":
-            s = dict.get("icon")
-            #@        << draw the icon in string s >>
-            #@+node:ekr.20040723101121.19:<< draw the icon in string s >>
-            pass
-            #@nonl
-            #@-node:ekr.20040723101121.19:<< draw the icon in string s >>
-            #@nl
-        elif type == "file":
-            file = dict.get("file")
-            #@        << draw the icon at file >>
-            #@+node:ekr.20040723101121.21:<< draw the icon at file >>
-            try:
-                image = self.iconimages[file]
-                # Get the image from the cache if possible.
-            except KeyError:
-                try:
-                    fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
-                    fullname = g.os_path_normpath(fullname)
-                    image = Tk.PhotoImage(master=self.canvas,file=fullname)
-                    self.iconimages[fullname] = image
-                except:
-                    #g.es("Exception loading: " + fullname)
-                    #g.es_exception()
-                    image = None
-                    
-            if image:
-                id = self.canvas.create_image(x+xoffset,y+yoffset,anchor="nw",image=image)
-                self.canvas.lift(id)
-                h = image.height() + yoffset + ypad
-                w = image.width()  + xoffset + xpad
-            #@nonl
-            #@-node:ekr.20040723101121.21:<< draw the icon at file >>
-            #@nl
-        elif type == "url":
-            url = dict.get("url")
-            #@        << draw the icon at url >>
-            #@+node:ekr.20040723101121.20:<< draw the icon at url >>
-            pass
-            #@nonl
-            #@-node:ekr.20040723101121.20:<< draw the icon at url >>
-            #@nl
-            
-        # Allow user to specify height, width explicitly.
-        h = dict.get("height",h)
-        w = dict.get("width",w)
-    
-        return h,w
-    #@nonl
-    #@-node:ekr.20040723101121.17:drawUserIcon
-    #@+node:ekr.20040723101121.22:drawUserIcons
-    def drawUserIcons(self,p,where,x,y):
-        
-        """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
-        
-        h,w = 0,0 ; t = p.v.t
-        
-        return h,w # Not ready yet.  Messes up scrolling.
-        
-        if not hasattr(t,"unknownAttributes"):
-            return h,w
-        
-        iconsList = t.unknownAttributes.get("icons")
-        if not iconsList:
-            return h,w
-        
-        try:
-            for dict in iconsList:
-                h2,w2 = self.drawUserIcon(where,x+w,y,dict)
-                h = max(h,h2) ; w += w2
-        except:
-            g.es_exception()
-    
-        return h,w
-    #@nonl
-    #@-node:ekr.20040723101121.22:drawUserIcons
     #@+node:ekr.20040723101121.23:inVisibleArea & inExpandedVisibleArea
     def inVisibleArea (self,y1):
         
@@ -1419,6 +1543,15 @@ class myLeoTkinterTree(leoFrame.leoTree):
         if not theId: return None
     
         p = self.ids.get(theId)
+        
+        # A kludge: p will be None for vertical lines.
+        if not p:
+            item = canvas.find_overlapping(x+1,y,x+1,y)
+            try:    theId = item[0]
+            except: theId = item
+            if not theId: return None
+            p = self.ids.get(theId)
+            # g.trace("was vertical line",p)
         
         if self.trace:
             if p:
@@ -2230,7 +2363,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         # Allocate all nodes in expanded visible area.
         self.updatedNodeCount = 0
-        self.updateTree(self.c.rootPosition(),root_left,root_top,0,0)
+        self.updateTree(self.c.rootPosition(),self.root_left,self.root_top,0,0)
         # if self.updatedNodeCount: print "updatedNodeCount:", self.updatedNodeCount
     #@-node:ekr.20040723174025.1:allocateNodes
     #@+node:ekr.20040723174025.2:allocateNodesBeforeScrolling
@@ -2317,10 +2450,10 @@ class myLeoTkinterTree(leoFrame.leoTree):
         if level==0: yfirst += 10
         while v:
             # g.trace(x,y,v)
-            h = self.updateNode(v,x,y)
+            h,indent = self.updateNode(v,x,y)
             y += h ; ylast = y
             if v.isExpanded() and v.firstChild():
-                y = self.updateTree(v.firstChild(),x+child_indent,y,h,level+1)
+                y = self.updateTree(v.firstChild(),x+indent,y,h,level+1)
             v = v.next()
         return y
     #@-node:ekr.20040723174025.6:tree.updateTree
