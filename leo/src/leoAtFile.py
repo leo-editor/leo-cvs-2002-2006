@@ -4621,7 +4621,6 @@ class baseNewDerivedFile(oldDerivedFile):
         
         at = self
         if at.outputFile:
-            g.trace()
             at.outputFile.flush()
             if self.toStringFlag:
                 self.stringOutput = self.outputFile.get()
