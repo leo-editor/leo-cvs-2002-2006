@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-15"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1197" clone_windows="0"/>
-<globals body_outline_ratio="0.38200000000000001">
-	<global_window_position top="0" left="0" height="49" width="157"/>
+<globals body_outline_ratio="0.5">
+	<global_window_position top="25" left="124" height="24" width="71"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -21,7 +21,7 @@
 <v t="T6" a="C"><vh>This is a cloned headline</vh></v>
 <v><vh>This node contains no text</vh></v>
 </v>
-<v t="T7"><vh>Please use SourceForge to ask questions and make comments</vh></v>
+<v t="T7" a="V"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="T8" a="C"><vh>Acknowledgements</vh></v>
 <v t="T9"><vh>What people are saying about Leo</vh>
 <v t="T10"><vh>Alex Abacus</vh></v>
@@ -45,7 +45,7 @@
 <v t="T28"><vh>Kent Tenney</vh></v>
 <v t="T29"><vh>Jim Vickroy</vh></v>
 </v>
-<v t="T30" a="E"><vh>Release Notes</vh>
+<v t="T30"><vh>Release Notes</vh>
 <v t="T31"><vh>Warnings</vh></v>
 <v t="T32"><vh>Installation notes</vh>
 <v t="T33" a="C"><vh>System requirements</vh></v>
@@ -61,8 +61,8 @@
 </v>
 <v t="T42" a="C"><vh>Quick start</vh></v>
 </v>
-<v a="E"><vh>Latest version</vh>
-<v t="T43" a="CV"><vh>leo.py 3.8</vh>
+<v><vh>Latest version</vh>
+<v t="T43" a="C"><vh>leo.py 3.8</vh>
 <v t="T44"><vh>Fixed bugs</vh>
 <v t="T45"><vh>Crashers</vh>
 <v t="T46"><vh>Fixed another crasher in scanAllDirectives</vh></v>
@@ -677,7 +677,7 @@
 </v>
 <v t="T409"><vh>Creating and destroying headlines</vh></v>
 <v t="T230" a="C"><vh>Dragging headlines</vh></v>
-<v t="T410" a="M"><vh>Editing body text</vh></v>
+<v t="T410"><vh>Editing body text</vh></v>
 <v t="T411"><vh>Expanding &amp; contracting headlines</vh></v>
 <v t="T412"><vh>Marking headlines</vh></v>
 <v t="T413"><vh>Moving &amp; Reorganizing headlines</vh></v>
@@ -733,14 +733,14 @@
 <v t="T440"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
 <v t="T441"><vh>@first and @last directives allow leading and trailing lines in @file trees</vh></v>
 <v t="T442"><vh>@language specifying the target language</vh></v>
-<v t="T443" a="M"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
+<v t="T443"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
 <v t="T67" a="C"><vh>@raw and @end_raw directives delimit raw text</vh></v>
 </v>
 <v t="T70" a="C"><vh>About CWEB   </vh></v>
 <v t="T65" a="C"><vh>Appendix 1 to Chapter 4: Using @rawfile and @silentfile trees</vh></v>
 <v><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
 <v t="T444"><vh>@root vs. @file trees</vh></v>
-<v t="T445" a="M"><vh>Sections and section definitions</vh></v>
+<v t="T445"><vh>Sections and section definitions</vh></v>
 <v t="T446"><vh>Tangling @root trees with the Tangle commands</vh></v>
 <v t="T447"><vh>Untangling @root trees with the Untangle commands</vh></v>
 <v t="T68" a="C"><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
@@ -756,13 +756,13 @@
 <v t="T453"><vh>Exporting Files from Leo Outlines</vh></v>
 <v t="T454"><vh>Quitting Leo</vh></v>
 </v>
-<v a="E"><vh> The Edit Menu</vh>
+<v><vh> The Edit Menu</vh>
 <v t="T455"><vh>Undoing changes</vh></v>
 <v t="T456"><vh>Cutting, pasting and selecting text</vh></v>
 <v t="T457"><vh>Shifting body text</vh></v>
 <v t="T458"><vh>Creating nodes from body text</vh></v>
 <v t="T459"><vh>Converting leading blanks and tabs in body text</vh></v>
-<v t="T460" a="M"><vh>Reformatting paragraph to fill lines to page width</vh></v>
+<v t="T460"><vh>Reformatting paragraph to fill lines to page width</vh></v>
 <v t="T461"><vh>Matching brackets and parenthesis</vh></v>
 <v t="T462"><vh>Finding and changing text</vh>
 <v t="T463"><vh>Batch</vh></v>
@@ -894,7 +894,7 @@
 </v>
 <v t="T523"><vh>The Commands class</vh>
 <v t="T524"><vh>File menu commands</vh></v>
-<v t="T525" a="M"><vh>Edit menu commands</vh></v>
+<v t="T525"><vh>Edit menu commands</vh></v>
 <v t="T526"><vh>Outline menu commands</vh></v>
 <v t="T527"><vh>Window menu commands</vh></v>
 <v t="T528"><vh>Menu enablers</vh></v>
@@ -987,7 +987,7 @@
 <v t="T580"><vh>@noweb</vh></v>
 <v t="T581"><vh>@others (valid only in @file trees)</vh></v>
 <v t="T582"><vh>@pagewidth</vh></v>
-<v t="T583" a="M"><vh>@path</vh></v>
+<v t="T583"><vh>@path</vh></v>
 <v t="T584"><vh>@root  (not valid in @file trees)</vh></v>
 <v t="T585"><vh>@section (Macintosh only)</vh></v>
 <v t="T586"><vh>@silent (not valid in @file trees)</vh></v>
@@ -1191,7 +1191,7 @@
 <v t="T734"><vh>Promote</vh></v>
 <v t="T735"><vh>Root</vh></v>
 <v t="T736"><vh>Scope</vh></v>
-<v t="T737" a="M"><vh>Section</vh></v>
+<v t="T737"><vh>Section</vh></v>
 <v t="T738"><vh>Section name</vh></v>
 <v t="T739"><vh>Section reference</vh></v>
 <v t="T740"><vh>Sentinels, sentinel lines</vh></v>
@@ -1861,7 +1861,7 @@ Enough of this commentary, I just looked at the clock. Best wishes to anyone wil
 
 Please use Leo's SourceForge forums at
 
-	http://sourceforge.net/forum/?group_id=3458
+http://sourceforge.net/forum/?group_id=3458
 
 to ask questions or suggest improvements.  That way other people can share in the discussions.</t>
 <t tx="T8">@nocolor
@@ -5953,11 +5953,11 @@ We may not eliminate @c directives in @root trees.  If we convert the doc part t
 @c
 # This method puts an open node sentinel for node v.
 def putOpenNodeSentinel(self,v):
-??? if v.isAtFileNode() and v != self.root:
-??????? &lt;&lt; issue an error message &gt;&gt;
-??? else:
-??????? s = self.nodeSentinelText(v)
-??????? self.putSentinel("@+node:" + s)
+	if v.isAtFileNode() and v != self.root:
+		&lt;&lt; issue an error message &gt;&gt;
+	else:
+		s = self.nodeSentinelText(v)
+		self.putSentinel("@+node:" + s)
 
 @nocolor
 The following escape convention applies only in @root trees.  Within a code parts @@ in the first column (and only in the first column) stands for a single @ sign.</t>
@@ -6152,7 +6152,6 @@ A paragraph is delimited by blank lines, Leo directives, and (of course) start a
 The command operates on the paragraph containing the insert cursor.  If the insert cursor is on a blank line or directive, nothing happens.  If the cursor is on a line containing text, then the paragraph containing that text line is reformatted and the insert cursor is moved to the next paragraph.
 
 Be careful that you don't do this on source code!  Of course, if you do reformat something that should have been left alone, then just Undo.
-
 
 NOTE: Lines with hanging indentation are handled so that the hanging indenation is preserved.  This is most useful for bulleted or numbered lists, such as:
 

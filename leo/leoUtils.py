@@ -1889,7 +1889,133 @@ def utils_rename(src,dst):
 
 #@-body
 #@-node:26::utils_rename
-#@+node:27::wrap_lines
+#@+node:27::scanDirectives (utils)
+#@+body
+#@+at
+#  A general-purpose routine that scans v and its ancestors for directives.  
+# It returns a dict containing the settings in effect as the result of the 
+# @comment, @language, @pagewidth, @path and @tabwidth directives.  This code 
+# does not check on the existence of paths, and issues no error messages.
+# 
+# Perhaps this routine should be the basis of atFile.scanAllDirectives and 
+# tangle.scanAllDirectives, but I am loath to make any further to these two 
+# already-infamous routines.  Also, this code does not check for @color and 
+# @nocolor directives: leoColor.useSyntaxColoring does that.
+
+#@-at
+#@@c
+
+def scanDirectives(c,v=None):
+
+	if v == None: v = c.currentVnode()
+	
+	#@<< Set local vars >>
+	#@+node:1::<< Set local vars >>
+	#@+body
+	loadDir = app().loadDir
+	
+	page_width = c.page_width
+	tab_width  = c.tab_width
+	language = c.target_language
+	delim1, delim2, delim3 = set_delims_from_language(c.target_language)
+	path = None
+	
+	#@-body
+	#@-node:1::<< Set local vars >>
+
+	old = {}
+	while v:
+		s = v.t.bodyString
+		dict = get_directives_dict(s)
+		
+		#@<< Test for @comment and @language >>
+		#@+node:2::<< Test for @comment and @language >>
+		#@+body
+		# @language and @comment may coexist in @file trees.
+		# For this to be effective the @comment directive should follow the @language directive.
+		
+		if not old.has_key("comment") and dict.has_key("comment"):
+			k = dict["comment"]
+			delim1, delim2, delim3 = set_delims_from_string(s[k:])
+		
+		if not old.has_key("language") and dict.has_key("language"):
+			k = dict["language"]
+			language, delim1, delim2, delim3 = set_language(s,k,issue_error_flag)
+		#@-body
+		#@-node:2::<< Test for @comment and @language >>
+
+		
+		#@<< Test for @pagewidth >>
+		#@+node:3::<< Test for @pagewidth >>
+		#@+body
+		if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+		
+			k = dict["pagewidth"]
+			j = i = k + len("@pagewidth")
+			i, val = skip_long(s,i)
+			if val != None and val > 0:
+				page_width = val
+		#@-body
+		#@-node:3::<< Test for @pagewidth >>
+
+		
+		#@<< Test for @path >>
+		#@+node:4::<< Test for @path >>
+		#@+body
+		if not path and not old.has_key("path") and dict.has_key("path"):
+		
+			k = dict["path"]
+			
+			#@<< compute path from s[k:] >>
+			#@+node:1::<< compute path from s[k:] >>
+			#@+body
+			j = i = k + len("@path")
+			i = skip_to_end_of_line(s,i)
+			path = string.strip(s[j:i])
+			
+			# Remove leading and trailing delims if they exist.
+			if len(path) > 2 and (
+				(path[0]=='<' and path[-1] == '>') or
+				(path[0]=='"' and path[-1] == '"') ):
+				path = path[1:-1]
+			
+			path = string.strip(path)
+			path = os.path.join(loadDir,path)
+			#@-body
+			#@-node:1::<< compute path from s[k:] >>
+
+			if path and len(path) > 0:
+				base = getBaseDirectory() # returns "" on error.
+				path = os.path.join(base,path)
+		#@-body
+		#@-node:4::<< Test for @path >>
+
+		
+		#@<< Test for @tabwidth >>
+		#@+node:5::<< Test for @tabwidth >>
+		#@+body
+		if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+		
+			k = dict["tabwidth"]
+			j = i = k + len("@tabwidth")
+			i, val = skip_long(s, i)
+			if val != None and val != 0:
+				tab_width = val
+		#@-body
+		#@-node:5::<< Test for @tabwidth >>
+
+		old.update(dict)
+		v = v.parent()
+	return {
+		"delims"    : (delim1,delim2,delim3),
+		"language"  : language,
+		"pagewidth" : page_width,
+		"path"      : path,
+		"tabwidth"  : tab_width }
+
+#@-body
+#@-node:27::scanDirectives (utils)
+#@+node:28::wrap_lines
 #@+body
 #@+at
 #  Returns a list of lines, consisting of the input lines wrapped to the given pageWidth.
@@ -1960,7 +2086,7 @@ def wrap_lines (lines,pageWidth):
 	# trace(`result`)
 	return result
 #@-body
-#@-node:27::wrap_lines
+#@-node:28::wrap_lines
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py

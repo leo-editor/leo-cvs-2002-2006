@@ -590,19 +590,11 @@ class Commands:
 	#@-node:12::indentBody
 	#@+node:13::reformatParagraph
 	#@+body
-	#@+at
-	#  To do:
-	# 1. Use range of selected text.
-	# 2. Honor @pagewidth directives.
-	# 
-
-	#@-at
-	#@@c
-
 	def reformatParagraph(self):
 		"""Reformat a text paragraph in a Tk.Text widget
 	
-	Wraps the concatenated text to pageWidth.  Leading tabs are sized to tabWidth.
+	Wraps the concatenated text to present page width setting.
+	Leading tabs are sized to present tab width setting.
 	First and second line of original text is used to determine leading whitespace
 	in reformatted text.  Hanging indentation is honored.
 	
@@ -611,11 +603,14 @@ class Commands:
 	cursor."""
 	
 		c = self ; body = c.frame.body
-		pageWidth = c.page_width
-		tabWidth = c.tab_width
 		x = body.index("current")
 		head, lines, tail = self.getBodyLines()
 		result = []
+	
+		dict = scanDirectives(c)
+		pageWidth = dict.get("pagewidth")
+		tabWidth  = dict.get("tabwidth")
+		# trace(`tabWidth`+","+`pageWidth`)
 	
 		# If active selection, then don't attempt a reformat.
 		selStart, selEnd = getTextSelection(body)
@@ -630,30 +625,30 @@ class Commands:
 		else: return
 		
 		# Compute the leading whitespace.
-		indents = [0,0,0]
+		indents = [0,0]
 		for i in (0,1):
 			if firstLine + i < len(lines):
 				ws = get_leading_ws(lines[firstLine+i])
 				indents[i] = computeWidth(ws,tabWidth)
-		indents[2] = max(indents)
+		indents[1] = max(indents)
 	
 	    # Put the leading unchanged lines.
 		for i in range(0,firstLine):
 			result.append(lines[i])
 			
 		# Wrap the lines, decreasing the page width by indent.
-		wrapped_lines = wrap_lines(lines[firstLine:lastLine],pageWidth-indents[2])
+		wrapped_lines = wrap_lines(lines[firstLine:lastLine],pageWidth-indents[1])
 		lineCount = len(wrapped_lines)
 		
 		# Add the leading whitespace to the wrapped lines.
-		leading_ws = [0,0,0]
-		for i in (0,1,2):
+		leading_ws = [0,0]
+		for i in (0,1):
 			leading_ws[i] = computeLeadingWhitespace(indents[i],tabWidth)
 			
 		i = 0
 		for line in wrapped_lines:
 			result.append(leading_ws[i] + line)
-			if i < 2: i += 1
+			if i < 1: i += 1
 	
 		# Put the trailing unchanged lines.
 		for i in range(lastLine,len(lines)):
@@ -666,7 +661,10 @@ class Commands:
 				c.updateBodyPane(head,result,tail,"Reformat Paragraph") # Handles undo
 				break
 	
-		# Set the new insert at the start of the next paragraph.
+		
+		#@<< Set the new insert at the start of the next paragraph >>
+		#@+node:1::<< Set the new insert at the start of the next paragraph >>
+		#@+body
 		lastLine = firstLine + lineCount
 		if not endsWithNL:
 			insPos = str(lastLine) + ".0lineend"
@@ -682,9 +680,12 @@ class Commands:
 				lastLine += 1
 				insPos = str(lastLine) + ".0"
 		setTextSelection(body,insPos,insPos)
+		#@-body
+		#@-node:1::<< Set the new insert at the start of the next paragraph >>
+
 	
 		# Make sure we can see the new cursor.
-		body.see("insert")
+		body.see("insert-5l")
 	#@-body
 	#@-node:13::reformatParagraph
 	#@+node:14::updateBodyPane (handles undo)
