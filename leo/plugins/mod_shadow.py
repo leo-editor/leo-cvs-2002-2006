@@ -58,6 +58,7 @@ __version__ = "0.9"
 # - Use import leoGlobals as g.
 # 
 # 0.9 Adapt to cvs post 4.2 by Bernhard Mulder
+# - fixed assertion in original_replaceTargetFileIfDifferent
 #@-at
 #@nonl
 #@-node:ekr.20041110090700:<< version history >>
@@ -907,8 +908,12 @@ def replaceTargetFileIfDifferent (self):
                 push_file(self.shadow_filename,targetFileName)
 
     finally:
+        if self.writing_to_shadow_directory:
         assert self.targetFileName == self.shadow_filename 
         assert self.outputFileName == self.shadow_filename+'.tmp'
+        else:
+            assert self.targetFileName == targetFileName
+            assert self.outputFileName == outputFileName
         # We need to check what's going on if the targetFileName or the outputFileName is changed.
         
         # Not sure if this finally clause is needed or not
