@@ -2641,18 +2641,23 @@ class baseCommands:
         
         c = self
         
-        # Paste retaining clones can't be fully undone.  Warn first.
-        message = (
-            'Are you sure you want to Paste As Clone?\n\n'
-            'This operation can not be undone; it will clear the Undo stack.')
-        
-        response = g.app.gui.runAskYesNoDialog('Paste As Clone?',message=message)
+        if 1:
+            # For now, just execute the command.
+            return c.pasteOutline(reassignIndices=False)
     
-        if response == 'yes':
-            val = c.pasteOutline(reassignIndices=False)
-            c.undoer.clearUndoState()
-            g.es('Undo stack cleared',color='red')
-            return val
+        else:
+            # Paste retaining clones can't be fully undone.  Warn first.
+            message = (
+                'Are you sure you want to Paste As Clone?\n\n'
+                'This operation can not be undone; it will clear the Undo stack.')
+            
+            response = g.app.gui.runAskYesNoDialog('Paste As Clone?',message=message)
+        
+            if response == 'yes':
+                val = c.pasteOutline(reassignIndices=False)
+                c.undoer.clearUndoState()
+                g.es('Undo stack cleared',color='red')
+                return val
     #@nonl
     #@-node:EKR.20040610130943:pasteOutlineRetainingClones
     #@-node:ekr.20031218072017.1548:Cut & Paste Outlines
