@@ -4193,12 +4193,13 @@ def getScript (c,p,useSelectedText=True):
 #@+node:ekr.20041219095213:import wrappers
 #@+at 
 #@nonl
-# Warning:
+# 1/6/05: The problem with Tkinter is that imp.load_module is equivalent to 
+# reload.
 # 
-# These functions use imp.load_module, and that is equivalent to reload!
-# 
-# Calling any of these functions to reload Leo files will crash Leo!
+# The solutions is easy: simply return sys.modules.get(moduleName) if 
+# moduleName is in sys.modules!
 #@-at
+#@nonl
 #@+node:ekr.20040917061619:g.cantImport
 def cantImport (moduleName,pluginName=None,verbose=True):
     
@@ -4222,21 +4223,23 @@ def importModule (moduleName,pluginName=None,verbose=False):
 
     moduleName is the module's name, without file extension.'''
     
-    try:
-        theFile = None ; module = None
-        import imp
+    module = sys.modules.get(moduleName)
+    if not module:
         try:
-            data = imp.find_module(moduleName) # This can open the file.
-            theFile,pathname,description = data
-            module = imp.load_module(moduleName,theFile,pathname,description)
-        except ImportError:
-            g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
-        except:
-            g.es("unexpected exception in g.import",color='blue')
-            g.es_exception()
-    finally:
-        if theFile: theFile.close()
-
+            theFile = None
+            import imp
+            try:
+                data = imp.find_module(moduleName) # This can open the file.
+                theFile,pathname,description = data
+                module = imp.load_module(moduleName,theFile,pathname,description)
+            except ImportError:
+                g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+            except Exception:
+                g.es("unexpected exception in g.import",color='blue')
+                g.es_exception()
+        # Put no return statements before here!
+        finally:
+            if theFile: theFile.close()
     return module
 #@nonl
 #@-node:ekr.20041219095213.1:g.importModule
@@ -4262,39 +4265,34 @@ def importExtension (moduleName,pluginName=None,verbose=False):
 #@+node:ekr.20031218072017.2278:g.importFromPath
 def importFromPath (name,path,pluginName=None,verbose=False):
     
+    fn = g.shortFileName(name)
+    moduleName,ext = g.os_path_splitext(fn)
+    path = g.os_path_normpath(path)
+    path = g.toEncodedString(path,app.tkEncoding)
+    
     # g.trace(verbose,name,pluginName)
-
-    try:
-        theFile = None ; data = None ; result = None
-        import imp
+    module = sys.modules.get(moduleName)
+    if not module:
         try:
-            fn = g.shortFileName(name)
-            mod_name,ext = g.os_path_splitext(fn)
-            path = g.os_path_normpath(path)
-            if g.CheckVersion(sys.version,"2.3"):
-                path = g.toEncodedString(path,app.tkEncoding)
-            else:
-                path = str(path) # May throw exception.
+            theFile = None
+            import imp
             try:
-                data = imp.find_module(mod_name,[path]) # This can open the file.
+                data = imp.find_module(moduleName,[path]) # This can open the file.
+                theFile,pathname,description = data
+                module = imp.load_module(moduleName,theFile,pathname,description)
             except ImportError:
                 pass
-            if data:
-                theFile,pathname,description = data
-                try:
-                    result = imp.load_module(mod_name,theFile,pathname,description)
-                except ImportError:
-                    g.es_exception()
-        except:
-            g.es_exception()
-
-    # Put no return statements before here!
-    finally: 
-        if theFile: theFile.close()
+            except Exception:
+                g.es("unexpected exception in g.importFromPath",color='blue')
+                g.es_exception()
+        # Put no return statements before here!
+        finally: 
+            if theFile: theFile.close()
         
-    if not result:
-        g.cantImport(mod_name,pluginName=pluginName,verbose=verbose)
-    return result
+    if not module:
+        g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+    return module
+#@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath
 #@-node:ekr.20041219095213:import wrappers
 #@+node:ekr.20040629162023:readLines class and generator
