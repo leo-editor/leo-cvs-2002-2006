@@ -37,6 +37,7 @@ class LeoApp:
 		self.killed = false # true: we are about to destroy the root window.
 		self.leoID = None # The id part of gnx's.
 		self.loadDir = None # The directory from which Leo was loaded.
+		self.loadedPlugins = [] # List of loaded plugins that have signed on.
 		self.log = None # The LeoFrame containing the present log.
 		self.logIsLocked = false # true: no changes to log are allowed.
 		self.logWaiting = [] # List of messages waiting to go to a log.
