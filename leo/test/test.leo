@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5941" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5942" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
 	<global_window_position top="51" left="257" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -648,13 +648,13 @@
 <v t="ekr.20040717121014"><vh>tellGnxScript</vh></v>
 <v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
-<v t="ekr.20040723064143.1" a="E"><vh>To do (when file tests are easier)</vh>
+<v t="EKR.20040619133116" a="ETV"><vh>Unit testing...</vh>
+<v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 </v>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
@@ -746,11 +746,12 @@
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
+<v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
 <v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
 <v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 </v>
-<v t="ekr.20040712101754.36" a="TV"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
@@ -851,6 +852,7 @@
 <v t="ekr.20040713071919"><vh>before</vh></v>
 <v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
+<v t="ekr.20040803091512" a="M"><vh>@test bogus tnodeList doesn't corrupt @thin nodes</vh></v>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
 <v t="ekr.20040712101754.104"><vh>@@file</vh></v>
@@ -1025,7 +1027,7 @@
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
 <v t="ekr.20040712101754.261"><vh>Plugins tests</vh>
 <v t="ekr.20040801141212"><vh>@suite test syntax of all plugins correctly</vh>
-<v t="ekr.20040801141543" a="E"><vh>class parseFileTestCase</vh>
+<v t="ekr.20040801141543"><vh>class parseFileTestCase</vh>
 <v t="ekr.20040801141543.1"><vh>__init__</vh></v>
 <v t="ekr.20040801141543.3"><vh>runTest</vh></v>
 <v t="ekr.20040801141543.5"><vh>shortDescription</vh></v>
@@ -9271,5 +9273,36 @@ finally:
     child.setBodyStringOrPane(before)
     c.selectPosition(p)</t>
 <t tx="ekr.20040802071519.1">after</t>
+<t tx="ekr.20040803090901">import leoGlobals as g
+import leoTest
+reload(leoTest)
+
+path = g.os_path_join(g.app.loadDir,"..","dist","leoDist.leo")
+leoTest.runLeoTest(path,verbose=False,full=True)
+</t>
+<t tx="ekr.20040803091512">import leoGlobals as g
+import leoTest
+reload(leoTest)
+
+c = g.top() ; u = leoTest.testUtils()
+
+name = "@thin ../src/leoTest.py"
+
+p = u.findNodeAnywhere(c,name)
+
+assert p, "Can't find %s" % name
+
+p.v.t.tnodeList = ["bogus tnodeList"]
+
+if 0: # This causes p to be written, thereby clearing the tnodeList.
+    p.setDirty()
+    
+if 0: # This actually saves this file, so it is a bit dangerous.
+    g.app.unitTesting = True
+    g.app.unitTestDict = {}
+    c.save()
+    ok = g.app.unitTestDict.get("warning")
+    assert ok, "putVnode failed to give warning"
+    g.app.unitTesting = False</t>
 </tnodes>
 </leo_file>

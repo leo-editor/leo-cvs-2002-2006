@@ -14,7 +14,7 @@
 
 # See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
 
-if 0: # Set to 1 for lint-like testing.
+if 1: # Set to 1 for lint-like testing.
     try:
         import pychecker.checker
         # This works.  We may want to set options here...

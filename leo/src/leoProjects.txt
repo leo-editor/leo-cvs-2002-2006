@@ -1768,101 +1768,6 @@ def matchHeadline (self,pattern): return self.v.matchHeadline(pattern)
 ## def afterHeadlineMatch (self,s): return self.v.afterHeadlineMatch(s)
 #@nonl
 #@-node:ekr.20040306211032:p.Comparisons
-#@+node:ekr.20040706072845:No longer used (from v.comparisons)
-#@+node:ekr.20040328055931:afterHeadlineFileTypeName NO LONGER USED
-def afterHeadlineFileTypeName(self,s):
-    
-    h = self.headString()
-
-    if s != "@file" and g.match_word(h,0,s):
-        # No options are valid.
-        return s,string.strip(h[len(s):])
-
-    elif g.match(h,0,"@file"):
-        i,atFileType,junk = g.scanAtFileOptions(h)
-        return atFileType,h[i:].strip()
-
-    else:
-        return None,None
-#@nonl
-#@-node:ekr.20040328055931:afterHeadlineFileTypeName NO LONGER USED
-#@+node:ekr.20031218072017.3347:afterHeadlineMatch NO LONGER USED
-def afterHeadlineMatch(self,s):
-    
-    atFileType,fileName = self.afterHeadlineFileTypeName(s)
-    if s == atFileType:
-        return fileName
-    else:
-        return ""
-#@nonl
-#@-node:ekr.20031218072017.3347:afterHeadlineMatch NO LONGER USED
-#@+node:ekr.20040706073044:anyAtFileNodeName OLD
-def anyAtFileNodeName (self):
-    
-    """Return the file name following an @file node or an empty string."""
-    
-    if g.match(h,0,"@file"):
-        type,name = self.afterHeadlineFileTypeName("@file")
-        if type and name: return name
-        else:             return ""
-    else:
-        # New, shorter names are now preferred.
-        names = [
-            "@thin", "@asis", "@noref", "@nosent",
-            "@thinfile", "@silentfile", "@rawfile", "@nosentinelsfile" ]
-        for name in names:
-            if g.match(h,0,name):
-                name = self.afterHeadlineMatch(name)
-                if name: return name
-        return ""
-#@nonl
-#@-node:ekr.20040706073044:anyAtFileNodeName OLD
-#@+node:ekr.20040706073337:at...FileNodeName  OLD
-@ Returns the filename following @file or @rawfile, in the receivers's headline, or the empty string if the receiver is not an @file node.
-@c
-
-def atFileNodeName (self):
-    if 1: # new code
-        names = ("@file"),
-        return self.findAtFileName(names)
-    else:
-        return self.afterHeadlineMatch("@file")
-
-def atNoSentinelsFileNodeName (self):
-    if 1: # new code
-        names = ("@nosent", "@file-nosent", "@nosentinelsfile")
-        return self.findAtFileName(names)
-    else:
-        return self.afterHeadlineMatch("@nosentinelsfile")
-
-def atRawFileNodeName (self):
-    if 1: # new code
-        names = ("@noref", "@file-noref", "@rawfile")
-        return self.findAtFileName(names)
-    else:
-        return self.afterHeadlineMatch("@rawfile")
-    
-def atSilentFileNodeName (self):
-    if 1: # new code
-        names = ("@asis", "@file-asis", "@silentfile")
-        return self.findAtFileName(names)
-    else:
-        return self.afterHeadlineMatch("@silentfile")
-    
-def atThinFileNodeName (self):
-    if 1: # new code
-        names = ("@thin", "@file-thin", "@thinfile")
-        return self.findAtFileName(names)
-    else:
-        return self.afterHeadlineMatch("@thinfile") or self.afterHeadlineMatch("@thin")
-    
-# New names, less confusing
-atNoSentFileNodeName  = atNoSentinelsFileNodeName
-atNorefFileNodeName   = atRawFileNodeName
-atAsisFileNodeName     = atSilentFileNodeName
-#@nonl
-#@-node:ekr.20040706073337:at...FileNodeName  OLD
-#@-node:ekr.20040706072845:No longer used (from v.comparisons)
 #@+node:ekr.20031218072017.3346:v.Comparisons
 #@+node:ekr.20040705201018:findAtFileName (new in 4.2 b3)
 def findAtFileName (self,names):
@@ -3740,7 +3645,7 @@ leoConfig.txt encoding: utf-8
 13 plugins loaded
 leoID = fil
 #@-node:ekr.20040715171241:Report
-#@+node:ekr.20031218072017.2007:findChild 4.x
+#@+node:ekr.20031218072017.2007:findChild 4.x (@file only)
 def findChild (self,headline):
     
     """Return the next tnode in at.root.t.tnodeList."""
@@ -3790,7 +3695,7 @@ else:
     return None
 #@nonl
 #@-node:ekr.20040716061450:<< Check the headlines >>
-#@-node:ekr.20031218072017.2007:findChild 4.x
+#@-node:ekr.20031218072017.2007:findChild 4.x (@file only)
 #@-node:ekr.20040712082657:(Removed headline check logic in atFile read logic)
 #@+node:ekr.20040718163531:(Fix pretty-printing bug)
 #@+node:ekr.20040718163531.1:Report
@@ -5612,18 +5517,25 @@ if attr: fc.put(' a="%s"' % attr)
 #@nonl
 #@-node:ekr.20031218072017.1865:<< Put attribute bits >>
 #@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
-# Write tnodeList only for @file nodes.
+# Write the tnodeList only for @file nodes.
 # New in 4.2: tnode list is in tnode.
 
 if 0: # Debugging.
-    if v.isAnyAtFileNode() and not v.isAtThinFileNode():
+    if v.isAnyAtFileNode():
         if hasattr(v.t,"tnodeList"):
             g.trace(v.headString(),len(v.t.tnodeList))
         else:
             g.trace(v.headString(),"no tnodeList")
 
 if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
-    fc.putTnodeList(v) # New in 4.0
+    if isThin:
+        if g.app.unitTesting:
+            g.app.unitTestDict["warning"] = True
+        g.es("deleting tnode list for %s" % p.headString(),color="blue")
+        # This is safe: cloning can't change the type of this node!
+        delattr(v.t,"tnodeList")
+    else:
+        fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
@@ -6894,18 +6806,25 @@ if attr: fc.put(' a="%s"' % attr)
 #@nonl
 #@-node:ekr.20031218072017.1865:<< Put attribute bits >>
 #@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
-# Write tnodeList only for @file nodes.
+# Write the tnodeList only for @file nodes.
 # New in 4.2: tnode list is in tnode.
 
 if 0: # Debugging.
-    if v.isAnyAtFileNode() and not v.isAtThinFileNode():
+    if v.isAnyAtFileNode():
         if hasattr(v.t,"tnodeList"):
             g.trace(v.headString(),len(v.t.tnodeList))
         else:
             g.trace(v.headString(),"no tnodeList")
 
 if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
-    fc.putTnodeList(v) # New in 4.0
+    if isThin:
+        if g.app.unitTesting:
+            g.app.unitTestDict["warning"] = True
+        g.es("deleting tnode list for %s" % p.headString(),color="blue")
+        # This is safe: cloning can't change the type of this node!
+        delattr(v.t,"tnodeList")
+    else:
+        fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
@@ -7071,7 +6990,7 @@ def create_mapping (self,lines,delims):
 #@-node:ekr.20040716105102.1:(Fixed bugs with handling @nonl)
 #@+node:ekr.20040718042049:From atFile...
 #@+node:ekr.20031218072017.2756:Reading (4.x)
-#@+node:ekr.20040321064134.5:createThinChild (4.2)
+#@+node:ekr.20040321064134.5:createThinChild (4.2: @thin only)
 def createThinChild (self,gnxString,headline):
 
     """Find or create a new vnode whose parent is at.lastThinNode."""
@@ -7119,7 +7038,7 @@ def createThinChild (self,gnxString,headline):
 
     return child
 #@nonl
-#@-node:ekr.20040321064134.5:createThinChild (4.2)
+#@-node:ekr.20040321064134.5:createThinChild (4.2: @thin only)
 #@+node:ekr.20031218072017.2757:new_df.readOpenFile
 def readOpenFile(self,root,file,firstLines,perfectImportRoot=None):
     
@@ -7146,7 +7065,7 @@ def readOpenFile(self,root,file,firstLines,perfectImportRoot=None):
     root.v.t.tempBodyString = s
 #@nonl
 #@-node:ekr.20031218072017.2757:new_df.readOpenFile
-#@+node:ekr.20031218072017.2007:findChild 4.x
+#@+node:ekr.20031218072017.2007:findChild 4.x (@file only)
 def findChild (self,headline):
     
     """Return the next tnode in at.root.t.tnodeList."""
@@ -7196,7 +7115,7 @@ else:
     return None
 #@nonl
 #@-node:ekr.20040716061450:<< Check the headlines >>
-#@-node:ekr.20031218072017.2007:findChild 4.x
+#@-node:ekr.20031218072017.2007:findChild 4.x (@file only)
 #@+node:ekr.20031218072017.2758:scanText4 & allies
 def scanText4 (self,file,p):
     
@@ -7230,6 +7149,7 @@ at.lastLines = [] # The lines after @-leo
 at.leadingWs = ""
 at.root = p
 at.rootSeen = False
+at.updateWarningGiven = False
 
 # Stacked ivars...
 at.endSentinelStack = [endLeo] # We have already handled the @+leo sentinel.
@@ -7367,7 +7287,7 @@ def readStartMiddle (self,s,i):
     at.readStartNode(s,i,middle=True)
 #@nonl
 #@-node:EKR.20040524070500:readStartMiddle
-#@+node:ekr.20031218072017.2766:readStartNode
+#@+node:ekr.20031218072017.2766:readStartNode (4.x)
 def readStartNode (self,s,i,middle=False):
     
     """Read an @+node or @+middle sentinel."""
@@ -7451,7 +7371,7 @@ if 0: # This doesn't work so well in cooperative environments.
             at.readError("Missing @file in root @node sentinel")
 #@nonl
 #@-node:ekr.20031218072017.2768:<< Check the filename in the sentinel >>
-#@-node:ekr.20031218072017.2766:readStartNode
+#@-node:ekr.20031218072017.2766:readStartNode (4.x)
 #@+node:ekr.20031218072017.2769:readStartOthers
 def readStartOthers (self,s,i):
     
@@ -7562,7 +7482,9 @@ def readEndNode (self,s,i,middle=False):
                 at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
                 at.c.setChanged(True)
             else:
-                g.es("Warning: updating changed text",color="blue")
+                if not at.updateWarningGiven:
+                    at.updateWarningGiven = True
+                    g.es("Warning: updating changed text",color="blue")
                 #g.es("old...\n%s\n" % old)
                 #g.es("new...\n%s\n" % s)
                 # Just set the dirty bit. Ancestors will be marked dirty later.
@@ -8097,7 +8019,9 @@ def readEndNode (self,s,i,middle=False):
                 at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
                 at.c.setChanged(True)
             else:
-                g.es("Warning: updating changed text",color="blue")
+                if not at.updateWarningGiven:
+                    at.updateWarningGiven = True
+                    g.es("Warning: updating changed text",color="blue")
                 #g.es("old...\n%s\n" % old)
                 #g.es("new...\n%s\n" % s)
                 # Just set the dirty bit. Ancestors will be marked dirty later.
@@ -11998,6 +11922,1465 @@ elif changed:
 - Removed all clones in project section to the old code.
 #@nonl
 #@-node:ekr.20040802100054:Integrated new outline code into core
+#@+node:ekr.20040802100609:(Give update warning only once per derived file)
+# This prevents redundant warnings during mass updates.
+#@nonl
+#@+node:ekr.20031218072017.2759:<< init ivars for scanText4 >>
+# Unstacked ivars...
+at.cloneSibCount = 0
+at.done = False
+at.inCode = True
+at.indent = 0 # Changed only for sentinels.
+at.lastLines = [] # The lines after @-leo
+at.leadingWs = ""
+at.root = p
+at.rootSeen = False
+at.updateWarningGiven = False
+
+# Stacked ivars...
+at.endSentinelStack = [endLeo] # We have already handled the @+leo sentinel.
+at.out = [] ; at.outStack = []
+at.t = p.v.t ; at.tStack = []
+at.lastThinNode = p.v ; at.thinNodeStack = [p.v]
+
+if 0: # Useful for debugging.
+    if hasattr(p.v.t,"tnodeList"):
+        g.trace("len(tnodeList)",len(p.v.t.tnodeList),p.v)
+    else:
+        g.trace("no tnodeList",p.v)
+        
+# g.trace(at.startSentinelComment)
+#@nonl
+#@-node:ekr.20031218072017.2759:<< init ivars for scanText4 >>
+#@+node:ekr.20031218072017.2772:readEndNode (4.x)
+def readEndNode (self,s,i,middle=False):
+    
+    """Handle end-of-node processing for @-others and @-ref sentinels."""
+
+    at = self ; c = self.c
+    
+    # End raw mode.
+    at.raw = False
+    
+    # Set the temporary body text.
+    s = ''.join(at.out)
+    s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
+
+    if at.importing:
+        at.t.bodyString = s
+    elif middle: 
+        pass # Middle sentinels never alter text.
+    else:
+        if hasattr(at.t,"tempBodyString") and s != at.t.tempBodyString:
+            old = at.t.tempBodyString
+        elif at.t.hasBody() and s != at.t.getBody():
+            old = at.t.getBody()
+        else:
+            old = None
+        if old:
+            if at.perfectImportRoot:
+                << bump at.correctedLines and tell about the correction >>
+                p.setMarked()
+                at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
+                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+                at.c.setChanged(True)
+            else:
+                if not at.updateWarningGiven:
+                    at.updateWarningGiven = True
+                    g.es("Warning: updating changed text",color="blue")
+                #g.es("old...\n%s\n" % old)
+                #g.es("new...\n%s\n" % s)
+                # Just set the dirty bit. Ancestors will be marked dirty later.
+                at.t.setDirty()
+                if 1: # We must avoid the full setChanged logic here!
+                    c.changed = True
+                else: # Far too slow for mass changes.
+                    at.c.setChanged(True)
+        at.t.tempBodyString = s
+
+    # Indicate that the tnode has been set in the derived file.
+    at.t.setVisited()
+
+    # End the previous node sentinel.
+    at.indent = at.indentStack.pop()
+    at.out = at.outStack.pop()
+    at.t = at.tStack.pop()
+    if at.thinFile and not at.importing:
+        at.lastThinNode = at.thinNodeStack.pop()
+
+    at.popSentinelStack(endNode)
+#@nonl
+#@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+# Report the number of corrected nodes.
+at.correctedLines += 1
+
+found = False
+for p in at.perfectImportRoot.self_and_subtree_iter():
+    if p.v.t == at.t:
+        found = True ; break
+
+if found:
+    if 0: # Not needed: we mark all corrected nodes.
+        g.es("Correcting %s" % p.headString(),color="blue")
+    if 0: # For debugging.
+        print ; print '-' * 40
+        print "old",len(old)
+        for line in g.splitLines(old):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+        print "new",len(s)
+        for line in g.splitLines(s):
+            #line = line.replace(' ','< >').replace('\t','<TAB>')
+            print repr(str(line))
+        print ; print '-' * 40
+else:
+    # This should never happen.
+    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
+#@nonl
+#@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
+#@-node:ekr.20031218072017.2772:readEndNode (4.x)
+#@-node:ekr.20040802100609:(Give update warning only once per derived file)
+#@+node:ekr.20040713062342:(Made sure tnodeList is updated properly in all situations)
+#@+node:ekr.20040803091155:What I did: putVnode deletes unneeded tnodeLists!
+@nocolor
+
+A MAJOR change: putVnode doesn't put tnodeLists for @thin nodes.
+
+Instead it issues an informational message and deletes the tnodeList.
+
+@color
+#@nonl
+#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+def putVnode (self,p):
+
+    """Write a <v> element corresponding to a vnode."""
+
+    fc = self ; c = fc.c ; v = p.v
+    isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
+
+    fc.put("<v")
+    << Put tnode index >>
+    << Put attribute bits >>
+    << Put tnodeList and unKnownAttributes >>
+    fc.put(">")
+    << Write the head text >>
+
+    if not self.usingClipboard:
+        << issue informational messages >>
+
+   # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
+    if p.hasChildren():
+        if forceWrite or self.usingClipboard:
+            fc.put_nl()
+            # This optimization eliminates all "recursive" copies.
+            p.moveToFirstChild()
+            while 1:
+                fc.putVnode(p)
+                if p.hasNext(): p.moveToNext()
+                else:           break
+            p.moveToParent()
+
+    fc.put("</v>") ; fc.put_nl()
+#@nonl
+#@+node:ekr.20031218072017.1864:<< Put tnode index >>
+if v.t.fileIndex:
+    if g.app.use_gnx:
+        gnx = g.app.nodeIndices.toString(v.t.fileIndex)
+        fc.put(" t=") ; fc.put_in_dquotes(gnx)
+    else:
+        fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
+        
+    # g.trace(v.t)
+    if forceWrite or self.usingClipboard:
+        v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
+else:
+    g.trace(v.t.fileIndex,v)
+    g.es("error writing file(bad v.t.fileIndex)!")
+    g.es("try using the Save To command")
+#@nonl
+#@-node:ekr.20031218072017.1864:<< Put tnode index >>
+#@+node:ekr.20031218072017.1865:<< Put attribute bits >>
+attr = ""
+if p.v.isExpanded(): attr += "E"
+if p.v.isMarked():   attr += "M"
+if p.v.isOrphan():   attr += "O"
+
+if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
+    # Almost 30% of the entire writing time came from here!!!
+    if p.equal(self.topPosition):     attr += "T" # was a bottleneck
+    if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+
+if attr: fc.put(' a="%s"' % attr)
+#@nonl
+#@-node:ekr.20031218072017.1865:<< Put attribute bits >>
+#@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+# Write the tnodeList only for @file nodes.
+# New in 4.2: tnode list is in tnode.
+
+if 0: # Debugging.
+    if v.isAnyAtFileNode():
+        if hasattr(v.t,"tnodeList"):
+            g.trace(v.headString(),len(v.t.tnodeList))
+        else:
+            g.trace(v.headString(),"no tnodeList")
+
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
+    if isThin:
+        if g.app.unitTesting:
+            g.app.unitTestDict["warning"] = True
+        g.es("deleting tnode list for %s" % p.headString(),color="blue")
+        # This is safe: cloning can't change the type of this node!
+        delattr(v.t,"tnodeList")
+    else:
+        fc.putTnodeList(v) # New in 4.0
+
+if hasattr(v,"unknownAttributes"): # New in 4.0
+    self.putUnknownAttributes(v)
+    
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
+#@nonl
+#@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+#@+node:ekr.20040702085529:<< issue informational messages >>
+if p.isAtThinFileNode and p.isOrphan():
+    g.es("Writing erroneous: %s" % p.headString(),color="blue")
+    p.clearOrphan()
+
+if 0: # For testing.
+    if p.isAtIgnoreNode():
+         for p2 in p.self_and_subtree_iter():
+                if p2.isAtThinFileNode():
+                    g.es("Writing @ignore'd: %s" % p2.headString(),color="blue")
+#@nonl
+#@-node:ekr.20040702085529:<< issue informational messages >>
+#@+node:ekr.20031218072017.1866:<< Write the head text >>
+headString = p.v.headString()
+
+if headString:
+    fc.put("<vh>")
+    fc.putEscapedString(headString)
+    fc.put("</vh>")
+#@nonl
+#@-node:ekr.20031218072017.1866:<< Write the head text >>
+#@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+#@-node:ekr.20040803091155:What I did: putVnode deletes unneeded tnodeLists!
+#@+node:ekr.20040803084520:Notes
+@killcolor
+
+New in 4.0:  <v> elements corresponding to @file nodes now contain tnodeList attributes.  The tnodeList attribute allows the read code in leoAtFile.py to recreate the order in which nodes should appear in the outline.  The tnodeList attribute is a list of gnx's: global node indices for tnodes.
+
+N.B. Leo does _not_ write tnodeList attributes for @thin trees: @thin trees contain gnx's in each node.
+
+N.B. tnodeList are _created_ by the atFile code but _written_ by the fileCommands code (to the .leo file).  Therefore, we must make SURE to autoSave .leo files whenever any @file node is written.
+
+***** Possible bug.  The present code in putVnode DOES write tnodeList attributes for @thin tree.
+THIS MAKES NO SENSE!!!!  Instead, the code should clear the tnodeList instead of writing it!
+
+** When atFile classes are unified, it would make sense to clear root.v.t.tnodeList before _all_ writes.
+
+Writing:
+
+- atFile.old_df.write removes the tnodeList if it exist.
+    - tnodeList is not needed in old-style derived files.
+    - ????? WHY DOESN'T THIS SOLVE ALL tnodeList PROBLEMS ?????
+- new_df.writeOpenFile sets at.root.v.t.tnodeList = [] initially.
+- new_df.write _clears_ this after writing to a string.
+    - ????? This caused problems when executing scripts, BUT WHY ?????
+- atFile.new_df.putOpenNodeSentinel appends the tnode of the node being written to this list.
+- top_df.writeAll returns mustAutoSave if any @file node was written.
+    writing an @thin node does _not_ set mustAutoSave.
+
+Reading:
+
+- atFile.findChild returns the next tnode on this list.
+#@nonl
+#@-node:ekr.20040803084520:Notes
+#@+node:ekr.20031218072017.2072:c.checkOutline
+def checkOutline (self,verbose=True,unittest=False,full=True):
+    
+    """Report any possible clone errors in the outline.
+    
+    Remove any unused tnodeLists."""
+    
+    c = self ; count = 1 ; errors = 0
+    isTkinter = g.app.gui and g.app.gui.guiName() == "tkinter"
+
+    if full and not unittest:
+        g.es("all tests enabled: this may take awhile",color="blue")
+
+    p = c.rootPosition()
+    << assert equivalence of lastVisible methods >>
+    for p in c.allNodes_iter():
+        try:
+            count += 1
+            << remove unused tnodeList >>
+            if full: # Unit tests usually set this false.
+                << do full tests >>
+        except AssertionError,message:
+            errors += 1
+            << give test failed message >>
+    if verbose or not unittest:
+        << print summary message >>
+    return errors
+#@nonl
+#@+node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+if 0:
+    g.app.debug = True
+
+    p1 = p.oldLastVisible()
+    p2 = p.lastVisible()
+    
+    if p1 != p2:
+        print "oldLastVisible",p1
+        print "   lastVisible",p2
+    
+    assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
+    assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
+    
+    g.app.debug = False
+#@nonl
+#@-node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+#@+node:ekr.20040313150633:<< remove unused tnodeList >>
+# Empty tnodeLists are not errors.
+v = p.v
+
+# New in 4.2: tnode list is in tnode.
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode():
+    if 0:
+        s = "deleting tnodeList for " + repr(v)
+        print ; print s ; g.es(s,color="blue")
+    delattr(v.t,"tnodeList")
+#@nonl
+#@-node:ekr.20040313150633:<< remove unused tnodeList >>
+#@+node:ekr.20040323155951:<< do full tests >>
+if not unittest:
+    if count % 100 == 0:
+        g.es('.',newline=False)
+    if count % 2000 == 0:
+        g.enl()
+
+@others
+#@nonl
+#@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+threadBack = p.threadBack()
+threadNext = p.threadNext()
+
+if threadBack:
+    assert p == threadBack.threadNext(), "p==threadBack.threadNext"
+
+if threadNext:
+    assert p == threadNext.threadBack(), "p==threadNext.threadBack"
+#@nonl
+#@-node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+#@+node:ekr.20040314035615.1:assert consistency of next and back links
+back = p.back()
+next = p.next()
+
+if back:
+    assert p == back.next(), "p==back.next"
+        
+if next:
+    assert p == next.back(), "p==next.back"
+#@nonl
+#@-node:ekr.20040314035615.1:assert consistency of next and back links
+#@+node:ekr.20040314035615.2:assert consistency of parent and child links
+if p.hasParent():
+    n = p.childIndex()
+    assert p == p.parent().moveToNthChild(n), "p==parent.moveToNthChild"
+    
+for child in p.children_iter():
+    assert p == child.parent(), "p==child.parent"
+
+if p.hasNext():
+    assert p.next().parent() == p.parent(), "next.parent==parent"
+    
+if p.hasBack():
+    assert p.back().parent() == p.parent(), "back.parent==parent"
+#@nonl
+#@-node:ekr.20040314035615.2:assert consistency of parent and child links
+#@+node:ekr.20040323155951.1:assert consistency of directParents and parent
+if p.hasParent():
+    t = p.parent().v.t
+    for v in p.directParents():
+        try:
+            assert v.t == t
+        except:
+            print "p",p
+            print "p.directParents",p.directParents()
+            print "v",v
+            print "v.t",v.t
+            print "t = p.parent().v.t",t
+            raise AssertionError,"v.t == t"
+#@-node:ekr.20040323155951.1:assert consistency of directParents and parent
+#@+node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+if p.isCloned():
+    parents = p.v.t.vnodeList
+    for child in p.children_iter():
+        vparents = child.directParents()
+        assert len(parents) == len(vparents), "len(parents) == len(vparents)"
+        for parent in parents:
+            assert parent in vparents, "parent in vparents"
+        for parent in vparents:
+            assert parent in parents, "parent in parents"
+#@nonl
+#@-node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+#@+node:ekr.20040323162707:assert that clones actually share subtrees
+if p.isCloned() and p.hasChildren():
+    childv = p.firstChild().v
+    assert childv == p.v.t._firstChild, "childv == p.v.t._firstChild"
+    assert id(childv) == id(p.v.t._firstChild), "id(childv) == id(p.v.t._firstChild)"
+    for v in p.v.t.vnodeList:
+        assert v.t._firstChild == childv, "v.t._firstChild == childv"
+        assert id(v.t._firstChild) == id(childv), "id(v.t._firstChild) == id(childv)"
+#@nonl
+#@-node:ekr.20040323162707:assert that clones actually share subtrees
+#@+node:ekr.20040314043623:assert consistency of vnodeList
+vnodeList = p.v.t.vnodeList
+    
+for v in vnodeList:
+    
+    try:
+        assert v.t == p.v.t
+    except AssertionError:
+        print "p",p
+        print "v",v
+        print "p.v",p.v
+        print "v.t",v.t
+        print "p.v.t",p.v.t
+        raise AssertionError, "v.t == p.v.t"
+
+    if p.v.isCloned():
+        assert v.isCloned(), "v.isCloned"
+        assert len(vnodeList) > 1, "len(vnodeList) > 1"
+    else:
+        assert not v.isCloned(), "not v.isCloned"
+        assert len(vnodeList) == 1, "len(vnodeList) == 1"
+#@nonl
+#@-node:ekr.20040314043623:assert consistency of vnodeList
+#@+node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
+# Not a great test: it only tests visible nodes.
+# This test may fail if a joined node is being editred.
+
+if isTkinter:
+    t = p.edit_text()
+    if t:
+        s = t.get("1.0","end")
+        assert p.headString().strip() == s.strip(), "May fail if joined node is being edited"
+#@nonl
+#@-node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
+#@-node:ekr.20040323155951:<< do full tests >>
+#@+node:ekr.20040314043900:<<print summary message >>
+if full:
+    print
+    g.enl()
+
+s = "%d nodes checked, %d errors" % (count,errors)
+if errors or verbose:
+    print s ; g.es(s,color="red")
+elif verbose:
+    g.es(s,color="green")
+#@nonl
+#@-node:ekr.20040314043900:<<print summary message >>
+#@+node:ekr.20040314044652:<< give test failed message >>
+s = "test failed: %s %s" % (message,repr(p))
+print s ; print
+g.es(s,color="red")
+#@nonl
+#@-node:ekr.20040314044652:<< give test failed message >>
+#@-node:ekr.20031218072017.2072:c.checkOutline
+#@+node:ekr.20040803082633:From atFile...
+#@+node:ekr.20031218072017.2766:readStartNode (4.x)
+def readStartNode (self,s,i,middle=False):
+    
+    """Read an @+node or @+middle sentinel."""
+    
+    at = self
+    if middle:
+        assert(g.match(s,i,"+middle:"))
+        i += 8
+    else:
+        assert(g.match(s,i,"+node:"))
+        i += 6
+    
+    if at.thinFile:
+        << set gnx and bump i >>
+    << Set headline, undoing the CWEB hack >>
+    if not at.root_seen:
+        at.root_seen = True
+        << Check the filename in the sentinel >>
+
+    i,newIndent = g.skip_leading_ws_with_indent(s,0,at.tab_width)
+    at.indentStack.append(at.indent) ; at.indent = newIndent
+    
+    at.outStack.append(at.out) ; at.out = []
+    at.tStack.append(at.t)
+
+    if at.importing:
+        p = at.createImportedNode(at.root,at.c,headline)
+        at.t = p.v.t
+    elif at.thinFile:
+        at.thinNodeStack.append(at.lastThinNode)
+        at.lastThinNode = v = at.createThinChild(gnx,headline)
+        at.t = v.t
+    else:
+        at.t = at.findChild(headline)
+    
+    at.endSentinelStack.append(endNode)
+#@nonl
+#@+node:EKR.20040427105350:<< set gnx and bump i >>
+# We have skipped past the opening colon of the gnx.
+j = s.find(':',i)
+if j == -1:
+    g.trace("no closing colon",g.get_line(s,i))
+    at.readError("Expecting gnx in @+node sentinel")
+    return # 5/17/04
+else:
+    gnx = s[i:j]
+    i = j + 1 # Skip the i
+#@nonl
+#@-node:EKR.20040427105350:<< set gnx and bump i >>
+#@+node:ekr.20031218072017.2767:<< Set headline, undoing the CWEB hack >>
+# Set headline to the rest of the line.
+# Don't strip leading whitespace."
+
+if len(at.endSentinelComment) == 0:
+    headline = s[i:-1].rstrip()
+else:
+    k = s.rfind(at.endSentinelComment,i)
+    headline = s[i:k].rstrip() # works if k == -1
+
+# Undo the CWEB hack: undouble @ signs if the opening comment delim ends in '@'.
+if at.startSentinelComment[-1:] == '@':
+    headline = headline.replace('@@','@')
+#@nonl
+#@-node:ekr.20031218072017.2767:<< Set headline, undoing the CWEB hack >>
+#@+node:ekr.20031218072017.2768:<< Check the filename in the sentinel >>
+if 0: # This doesn't work so well in cooperative environments.
+    if not at.importing:
+
+        h = headline.strip()
+        
+        if h[:5] == "@file":
+            i,junk,junk = g.scanAtFileOptions(h)
+            fileName = string.strip(h[i:])
+            if fileName != at.targetFileName:
+                at.readError("File name in @node sentinel does not match file's name")
+        elif h[:8] == "@rawfile":
+            fileName = string.strip(h[8:])
+            if fileName != at.targetFileName:
+                at.readError("File name in @node sentinel does not match file's name")
+        else:
+            at.readError("Missing @file in root @node sentinel")
+#@nonl
+#@-node:ekr.20031218072017.2768:<< Check the filename in the sentinel >>
+#@-node:ekr.20031218072017.2766:readStartNode (4.x)
+#@+node:ekr.20040321064134.5:createThinChild (4.2: @thin only)
+def createThinChild (self,gnxString,headline):
+
+    """Find or create a new vnode whose parent is at.lastThinNode."""
+
+    at = self ; v = at.root.v ; c = at.c ; indices = g.app.nodeIndices
+    last = at.lastThinNode ; lastIndex = last.t.fileIndex
+    gnx = indices.scanGnx(gnxString,0)
+    #g.trace("last",last,last.t.fileIndex)
+    #g.trace("args",indices.areEqual(gnx,last.t.fileIndex),gnxString,headline)
+    
+    # See if there is already a child with the proper index.
+    child = at.lastThinNode.firstChild()
+    while child and not indices.areEqual(gnx,child.t.fileIndex):
+        child = child.next()
+
+    if at.cloneSibCount > 1:
+        n = at.cloneSibCount ; at.cloneSibCount = 0
+        if child: clonedSibs,junk = at.scanForClonedSibs(child)
+        else: clonedSibs = 0
+        copies = n - clonedSibs
+        # g.trace(copies,headline)
+    else:
+        if indices.areEqual(gnx,lastIndex):
+            return last
+        if child:
+            return child
+        copies = 1 # Create exactly one copy.
+
+    while copies > 0:
+        copies -= 1
+        # Create the tnode only if it does not already exist.
+        tnodesDict = c.fileCommands.tnodesDict
+        t = tnodesDict.get(gnxString)
+        if t:
+            assert(indices.areEqual(t.fileIndex,gnx))
+        else:
+            t = leoNodes.tnode(bodyString=None,headString=headline)
+            t.fileIndex = gnx
+            tnodesDict[gnxString] = t
+        parent = at.lastThinNode
+        child = leoNodes.vnode(c,t)
+        t.vnodeList.append(child)
+        child.linkAsNthChild(parent,parent.numberOfChildren())
+        # g.trace("creating node",child,gnx)
+
+    return child
+#@nonl
+#@-node:ekr.20040321064134.5:createThinChild (4.2: @thin only)
+#@+node:ekr.20031218072017.2007:findChild 4.x (@file only)
+def findChild (self,headline):
+    
+    """Return the next tnode in at.root.t.tnodeList."""
+
+    at = self ; v = at.root.v
+
+    if not hasattr(v.t,"tnodeList"):
+        at.readError("no tnodeList for " + repr(v))
+        g.es("Write the @file node or use the Import Derived File command")
+        g.trace("no tnodeList for ",v)
+        return None
+        
+    if at.tnodeListIndex >= len(v.t.tnodeList):
+        at.readError("bad tnodeList index: %d, %s" % (at.tnodeListIndex,repr(v)))
+        g.trace("bad tnodeList index",at.tnodeListIndex,len(v.t.tnodeList),v)
+        return None
+        
+    t = v.t.tnodeList[at.tnodeListIndex]
+    assert(t)
+    at.tnodeListIndex += 1
+
+    # Get any vnode joined to t.
+    try:
+        v = t.vnodeList[0]
+    except:
+        at.readError("No vnodeList for tnode: %s" % repr(t))
+        g.trace(at.tnodeListIndex)
+        return None
+        
+    # Don't check the headline.  It simply causes problems.
+    t.setVisited() # Supress warning about unvisited node.
+    return t
+    
+    if 0: # Old code:
+        << Check the headlines >>
+#@nonl
+#@+node:ekr.20040716061450:<< Check the headlines >>
+if headline.strip() == v.headString().strip():
+    t.setVisited() # Supress warning about unvisited node.
+    return t
+else:
+    at.readError(
+        "Mismatched headline.\nExpecting: %s\ngot: %s" %
+        (headline,v.headString()))
+    g.trace("Mismatched headline",headline,v.headString())
+    g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
+    return None
+#@nonl
+#@-node:ekr.20040716061450:<< Check the headlines >>
+#@-node:ekr.20031218072017.2007:findChild 4.x (@file only)
+#@+node:ekr.20031218072017.2322:old_df.write
+# This is the entry point to the write code.  root should be an @file vnode.
+
+def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=False):
+    
+    if thinFile:
+        self.error("@file-thin not supported before 4.2")
+        return
+    
+    # Remove any old tnodeList.
+    if hasattr(root.v.t,"tnodeList"):
+        # g.trace("removing tnodeList for ",root)
+        delattr(root.v.t,"tnodeList")
+
+    c = self.c
+    << initialize >>
+    try:
+        << open the file; return on error >>
+        root.clearAllVisitedInTree() # 1/28/04: clear both vnode and tnode bits.
+        << write then entire @file tree >>
+        self.closeWriteFile()
+        if not nosentinels:
+            self.warnAboutOrphandAndIgnoredNodes()
+        << finish writing >>
+    except:
+        self.handleWriteException()
+#@+node:ekr.20031218072017.2323:<< initialize >>
+self.sentinels = not nosentinels
+self.raw = False
+
+self.errors = 0 # 9/26/02
+c.setIvarsFromPrefs()
+self.root = root
+c.endEditing() # Capture the current headline.
+#@nonl
+#@-node:ekr.20031218072017.2323:<< initialize >>
+#@+node:ekr.20031218072017.2324:<< open the file; return on error >>
+if nosentinels:
+    self.targetFileName = root.atNoSentFileNodeName()
+else:
+    self.targetFileName = root.atFileNodeName()
+
+ok = self.openWriteFile(root,toString)
+if not ok: return
+#@nonl
+#@-node:ekr.20031218072017.2324:<< open the file; return on error >>
+#@+node:ekr.20031218072017.2325:<< write then entire @file tree >> (3.x)
+next = root.nodeAfterTree()
+
+<< put all @first lines in root >>
+<< write the derived file >>
+<< put all @last lines in root >>
+
+root.setVisited()
+#@nonl
+#@+node:ekr.20031218072017.2326:<< put all @first lines in root >> (3.x)
+@ Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines preceding the @+leo sentinel.
+@c
+
+s = root.v.t.bodyString
+tag = "@first"
+i = 0
+while g.match(s,i,tag):
+    i += len(tag)
+    i = g.skip_ws(s,i)
+    j = i
+    i = g.skip_to_end_of_line(s,i)
+    # 21-SEP-2002 DTHEIN: write @first line, whether empty or not
+    line = s[j:i]
+    self.putBuffered(line) ; self.onl()
+    i = g.skip_nl(s,i)
+#@nonl
+#@-node:ekr.20031218072017.2326:<< put all @first lines in root >> (3.x)
+#@+node:ekr.20031218072017.2327:<< write the derived file>>
+tag1 = "@+leo"
+
+self.putOpenLeoSentinel(tag1)
+self.putInitialComment()
+self.putOpenNodeSentinel(root)
+self.putBodyPart(root)
+self.putCloseNodeSentinel(root)
+self.putSentinel("@-leo")
+#@nonl
+#@-node:ekr.20031218072017.2327:<< write the derived file>>
+#@+node:ekr.20031218072017.2328:<< put all @last lines in root >> (3.x)
+@ Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines following the @-leo sentinel.
+@c
+
+tag = "@last"
+lines = string.split(root.v.t.bodyString,'\n')
+n = len(lines) ; j = k = n - 1
+# Don't write an empty last line.
+if j >= 0 and len(lines[j])==0:
+    j = k = n - 2
+# Scan backwards for @last directives.
+while j >= 0:
+    line = lines[j]
+    if g.match(line,0,tag): j -= 1
+    else: break
+# Write the @last lines.
+for line in lines[j+1:k+1]:
+    i = len(tag) ; i = g.skip_ws(line,i)
+    self.putBuffered(line[i:]) ; self.onl()
+#@nonl
+#@-node:ekr.20031218072017.2328:<< put all @last lines in root >> (3.x)
+#@-node:ekr.20031218072017.2325:<< write then entire @file tree >> (3.x)
+#@+node:ekr.20031218072017.2330:<< finish writing >>
+@ We set the orphan and dirty flags if there are problems writing the file to force write_Leo_file to write the tree to the .leo file.
+@c
+
+if self.errors > 0 or self.root.isOrphan():
+    root.setOrphan()
+    root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
+    os.remove(self.outputFileName) # Delete the temp file.
+    g.es("Not written: " + self.outputFileName)
+else:
+    root.clearOrphan()
+    root.clearDirty()
+    self.replaceTargetFileIfDifferent()
+#@nonl
+#@-node:ekr.20031218072017.2330:<< finish writing >>
+#@-node:ekr.20031218072017.2322:old_df.write
+#@+node:ekr.20031218072017.2114:new_df.write
+# This is the entry point to the write code.  root should be an @file vnode.
+
+def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=False):
+    
+    """Write a 4.x derived file."""
+    
+    at = self ; c = at.c
+
+    << open the file; return on error >>
+    try:
+        self.writeOpenFile(root,nosentinels,thinFile,toString,oneNodeOnly)
+        if toString:
+            at.closeWriteFile()
+            # Major bug: failure to clear this wipes out headlines!
+            # Minor bug: sometimes this causes slight problems...
+            at.root.v.t.tnodeList = [] 
+        else:
+            at.closeWriteFile()
+            << set dirty and orphan bits on error >>
+    except:
+        if toString:
+            g.es("exception preprocessing script",color="blue")
+            g.es_exception(full=False)
+            at.root.v.t.tnodeList = []
+        else:
+            at.handleWriteException() # Sets dirty and orphan bits.
+#@nonl
+#@+node:ekr.20031218072017.2116:<< open the file; return on error >>
+if toString:
+    at.targetFileName = "<new_df.write string-file>"
+elif nosentinels:
+    at.targetFileName = root.atNoSentFileNodeName()
+elif thinFile:
+    at.targetFileName = root.atThinFileNodeName()
+else:
+    at.targetFileName = root.atFileNodeName()
+    
+ok = at.openWriteFile(root,toString)
+    
+if not ok:
+    return
+#@nonl
+#@-node:ekr.20031218072017.2116:<< open the file; return on error >>
+#@+node:ekr.20031218072017.2121:<< set dirty and orphan bits on error >>
+# Setting the orphan and dirty flags tells Leo to write the tree..
+
+if at.errors > 0 or at.root.isOrphan():
+    root.setOrphan()
+    root.setDirty() # Make _sure_ we try to rewrite this file.
+    os.remove(at.outputFileName) # Delete the temp file.
+    g.es("Not written: " + at.outputFileName)
+else:
+    root.clearOrphan()
+    root.clearDirty()
+    at.replaceTargetFileIfDifferent()
+#@nonl
+#@-node:ekr.20031218072017.2121:<< set dirty and orphan bits on error >>
+#@-node:ekr.20031218072017.2114:new_df.write
+#@+node:ekr.20031218072017.2001:putOpenNodeSentinel (sets tnodeList) 4.x
+def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
+    
+    """Write @+node sentinel for p."""
+    
+    at = self
+
+    if not inAtAll and p.isAtFileNode() and p != at.root:
+        at.writeError("@file not valid in: " + p.headString())
+        return
+        
+    # g.trace(at.thinFile,p)
+        
+    s = at.nodeSentinelText(p)
+    
+    if middle:
+        at.putSentinel("@+middle:" + s)
+    else:
+        at.putSentinel("@+node:" + s)
+    
+    if not at.thinFile:
+        # Append the n'th tnode to the root's tnode list.
+        at.root.v.t.tnodeList.append(p.v.t)
+#@nonl
+#@-node:ekr.20031218072017.2001:putOpenNodeSentinel (sets tnodeList) 4.x
+#@+node:EKR.20040506075328:new_df.writeOpenFile
+def writeOpenFile(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=False):
+    
+    at = self ; c = at.c
+    
+    << init atFile ivars for writing >>
+    root.clearAllVisitedInTree() # Clear both vnode and tnode bits.
+    root.clearVisitedInTree()
+
+    << put all @first lines in root >>
+
+    # Put the main part of the file.
+    at.putOpenLeoSentinel("@+leo-ver=4")
+    at.putInitialComment()
+    at.putOpenNodeSentinel(root)
+    at.putBody(root)
+    at.putCloseNodeSentinel(root)
+    at.putSentinel("@-leo")
+    root.setVisited()
+    
+    << put all @last lines in root >>
+    
+    if not toString and not nosentinels:
+        at.warnAboutOrphandAndIgnoredNodes()
+#@nonl
+#@+node:EKR.20040506075328.1:<< init atFile ivars for writing >>
+# Set flags telling what kind of writing we are doing.
+at.sentinels = not nosentinels
+at.thinFile = thinFile
+at.raw = False
+assert(at.toStringFlag == toString) # Must have been set earlier.
+
+# Init other ivars.
+at.errors = 0
+c.setIvarsFromPrefs()
+at.root = root
+at.root.v.t.tnodeList = []
+
+c.endEditing() # Capture the current headline.
+#@nonl
+#@-node:EKR.20040506075328.1:<< init atFile ivars for writing >>
+#@+node:ekr.20031218072017.2118:<< put all @first lines in root >> (4.x)
+@ Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines preceding the @+leo sentinel.
+@c
+
+s = root.v.t.bodyString
+tag = "@first"
+i = 0
+while g.match(s,i,tag):
+    i += len(tag)
+    i = g.skip_ws(s,i)
+    j = i
+    i = g.skip_to_end_of_line(s,i)
+    # Write @first line, whether empty or not
+    line = s[j:i]
+    self.os(line) ; self.onl()
+    i = g.skip_nl(s,i)
+#@nonl
+#@-node:ekr.20031218072017.2118:<< put all @first lines in root >> (4.x)
+#@+node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
+@ Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines following the @-leo sentinel.
+@c
+
+tag = "@last"
+
+# 4/17/04 Use g.splitLines to preserve trailing newlines.
+lines = g.splitLines(root.v.t.bodyString)
+n = len(lines) ; j = k = n - 1
+
+# Scan backwards for @last directives.
+while j >= 0:
+    line = lines[j]
+    if g.match(line,0,tag): j -= 1
+    elif not line.strip():
+        j -= 1
+    else: break
+    
+# Write the @last lines.
+for line in lines[j+1:k+1]:
+    if g.match(line,0,tag):
+        i = len(tag) ; i = g.skip_ws(line,i)
+        self.os(line[i:])
+#@nonl
+#@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
+#@-node:EKR.20040506075328:new_df.writeOpenFile
+#@+node:ekr.20031218072017.2122:new_df.norefWrite
+def norefWrite(self,root,toString=False):
+
+    at = self
+
+    c = at.c ; at.root = root
+    at.errors = 0
+    at.root.t.tnodeList = [] # 9/26/03: after beta 1 release.
+    at.sentinels = True # 10/1/03
+    at.thinFile = False # 5/17/04
+    c.endEditing() # Capture the current headline.
+    try:
+        at.targetFileName = root.atNorefFileNodeName()
+        ok = at.openWriteFile(root,toString)
+        if not ok: return
+        << write root's tree >>
+        at.closeWriteFile()
+        at.replaceTargetFileIfDifferent()
+        root.clearOrphan() ; root.clearDirty()
+    except:
+        at.handleWriteException(root)
+        
+rawWrite = norefWrite
+#@+node:ekr.20031218072017.2123:<< write root's tree >>
+<< put all @first lines in root >>
+at.putOpenLeoSentinel("@+leo-ver=4")
+<< put optional @comment sentinel lines >>
+
+for p in root.self_and_subtree_iter():
+    << Write p's node >>
+
+at.putSentinel("@-leo")
+<< put all @last lines in root >>
+#@nonl
+#@+node:ekr.20031218072017.2124:<< put all @first lines in root >>
+@ Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines preceding the @+leo sentinel.
+@c
+
+s = root.v.t.bodyString
+tag = "@first"
+i = 0
+while g.match(s,i,tag):
+    i += len(tag)
+    i = g.skip_ws(s,i)
+    j = i
+    i = g.skip_to_end_of_line(s,i)
+    # Write @first line, whether empty or not
+    line = s[j:i]
+    at.putBuffered(line) ; at.onl()
+    i = g.skip_nl(s,i)
+#@nonl
+#@-node:ekr.20031218072017.2124:<< put all @first lines in root >>
+#@+node:ekr.20031218072017.2125:<< put optional @comment sentinel lines >>
+s2 = g.app.config.output_initial_comment
+if s2:
+    lines = string.split(s2,"\\n")
+    for line in lines:
+        line = line.replace("@date",time.asctime())
+        if len(line)> 0:
+            at.putSentinel("@comment " + line)
+#@-node:ekr.20031218072017.2125:<< put optional @comment sentinel lines >>
+#@+node:ekr.20031218072017.2126:<< Write p's node >>
+at.putOpenNodeSentinel(p,inAtOthers=True)
+
+s = p.bodyString()
+if s and len(s) > 0:
+    s = g.toEncodedString(s,at.encoding,reportErrors=True) # 3/7/03
+    at.outputStringWithLineEndings(s)
+    
+# Put an @nonl sentinel if s does not end in a newline.
+if s and s[-1] != '\n':
+    at.onl_sent() ; at.putSentinel("@nonl")
+
+at.putCloseNodeSentinel(p,inAtOthers=True)
+#@nonl
+#@-node:ekr.20031218072017.2126:<< Write p's node >>
+#@+node:ekr.20031218072017.2127:<< put all @last lines in root >>
+@ Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines following the @-leo sentinel.
+@c
+
+tag = "@last"
+lines = string.split(root.v.t.bodyString,'\n')
+n = len(lines) ; j = k = n - 1
+# Don't write an empty last line.
+if j >= 0 and len(lines[j])==0:
+    j = k = n - 2
+# Scan backwards for @last directives.
+while j >= 0:
+    line = lines[j]
+    if g.match(line,0,tag): j -= 1
+    else: break
+# Write the @last lines.
+for line in lines[j+1:k+1]:
+    i = len(tag) ; i = g.skip_ws(line,i)
+    at.putBuffered(line[i:]) ; at.onl()
+#@nonl
+#@-node:ekr.20031218072017.2127:<< put all @last lines in root >>
+#@-node:ekr.20031218072017.2123:<< write root's tree >>
+#@-node:ekr.20031218072017.2122:new_df.norefWrite
+#@-node:ekr.20040803082633:From atFile...
+#@+node:ekr.20040803082633.1:From leoFileCommands...
+#@+node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
+def getTnodeList (self,s):
+
+    """Parse a list of tnode indices in string s."""
+    
+    # Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
+    
+    fc = self ; 
+
+    indexList = s.split(',') # The list never ends in a comma.
+    tnodeList = []
+    for index in indexList:
+        index = self.canonicalTnodeIndex(index)
+        t = fc.tnodesDict.get(index)
+        if not t:
+            # Not an error: create a new tnode and put it in fc.tnodesDict.
+            # g.trace("not allocated: %s" % index)
+            t = self.newTnode(index)
+        tnodeList.append(t)
+        
+    # if tnodeList: g.trace(len(tnodeList))
+    return tnodeList
+#@-node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
+#@+node:ekr.20031218072017.2002:putTnodeList (4.0,4.2)
+def putTnodeList (self,v):
+    
+    """Put the tnodeList attribute of a tnode."""
+    
+    # g.trace(v)
+    
+    # Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
+
+    fc = self ; nodeIndices = g.app.nodeIndices
+    tnodeList = v.t.tnodeList
+    if tnodeList:
+        # g.trace("%4d" % len(tnodeList),v)
+        fc.put(" tnodeList=") ; fc.put_dquote()
+        if g.app.use_gnx:
+            for t in tnodeList:
+                try: # Will fail for None or any pre 4.1 file index.
+                    id,time,n = t.fileIndex
+                except:
+                    g.trace("assigning gnx for ",v,t)
+                    gnx = nodeIndices.getNewIndex()
+                    v.t.setFileIndex(gnx) # Don't convert to string until the actual write.
+            s = ','.join([nodeIndices.toString(t.fileIndex) for t in tnodeList])
+        else:
+            s = ','.join([str(t.fileIndex) for t in tnodeList])
+        fc.put(s) ; fc.put_dquote()
+#@nonl
+#@-node:ekr.20031218072017.2002:putTnodeList (4.0,4.2)
+#@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
+def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
+
+    c = self.c ; v = None
+    setCurrent = setExpanded = setMarked = setOrphan = setTop = False
+    tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
+    # we have already matched <v.
+    while 1:
+        if self.matchTag("a=\""):
+            << Handle vnode attribute bits >>
+        elif self.matchTag("t="):
+            # New for 4.1.  Read either "Tnnn" or "gnx".
+            tref = self.getDqString()
+        elif self.matchTag("vtag=\"V"):
+            self.getIndex() ; self.getDquote() # ignored
+        elif self.matchTag("tnodeList="):
+            s = self.getDqString()
+            tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag("descendentTnodeUnknownAttributes="):
+            # New for 4.2
+            s = self.getDqString()
+            dict = self.getDescendentUnknownAttributes(s)
+            if dict:
+                self.descendentUnknownAttributesDictList.append(dict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
+        elif self.matchTag(">"):
+            break
+        else: # New for 4.0: allow unknown attributes.
+            # New in 4.2: allow pickle'd and hexlify'ed values.
+            attr,val = self.getUnknownAttribute("vnode")
+            if attr: attrDict[attr] = val
+    # Headlines are optional.
+    if self.matchTag("<vh>"):
+        headline = self.getEscapedString() ; self.getTag("</vh>")
+    
+    # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    if skip:
+        v = self.getExistingVnode(tref,headline)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
+        if tnodeList:
+            v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
+
+    << Set the remembered status bits >>
+
+    # Recursively create all nested nodes.
+    parent = v ; back = None
+    while self.matchTag("<v"):
+        append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
+        append2 = appendToTopStack and len(self.topVnodeStack) == 0
+        back = self.getVnode(parent,back,skip,
+            appendToCurrentStack=append1,appendToTopStack=append2)
+            
+    << Append to current or top stack >>
+
+    # End this vnode.
+    self.getTag("</v>")
+    return v
+#@nonl
+#@+node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+# The a=" has already been seen.
+while 1:
+    if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
+    elif self.matchChar('D'): pass # Not used.
+    elif self.matchChar('E'): setExpanded = True
+    elif self.matchChar('M'): setMarked = True
+    elif self.matchChar('O'): setOrphan = True
+    elif self.matchChar('T'): setTop = True
+    elif self.matchChar('V'): setCurrent = True
+    else: break
+
+self.getDquote()
+#@nonl
+#@-node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+#@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+if setCurrent:
+    self.currentVnodeStack = [v]
+
+if setTop:
+    self.topVnodeStack = [v]
+    
+if setExpanded:
+    v.initExpandedBit()
+    
+if setMarked:
+    v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
+
+if setOrphan:
+    v.setOrphan()
+#@nonl
+#@-node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+#@+node:ekr.20040326055828:<< Append to current or top stack >>
+if not setCurrent and len(self.currentVnodeStack) > 0 and appendToCurrentStack:
+    #g.trace("append current",v)
+    self.currentVnodeStack.append(v)
+    
+if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
+    #g.trace("append top",v)
+    self.topVnodeStack.append(v)
+#@nonl
+#@-node:ekr.20040326055828:<< Append to current or top stack >>
+#@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
+#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+def putVnode (self,p):
+
+    """Write a <v> element corresponding to a vnode."""
+
+    fc = self ; c = fc.c ; v = p.v
+    isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
+
+    fc.put("<v")
+    << Put tnode index >>
+    << Put attribute bits >>
+    << Put tnodeList and unKnownAttributes >>
+    fc.put(">")
+    << Write the head text >>
+
+    if not self.usingClipboard:
+        << issue informational messages >>
+
+   # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
+    if p.hasChildren():
+        if forceWrite or self.usingClipboard:
+            fc.put_nl()
+            # This optimization eliminates all "recursive" copies.
+            p.moveToFirstChild()
+            while 1:
+                fc.putVnode(p)
+                if p.hasNext(): p.moveToNext()
+                else:           break
+            p.moveToParent()
+
+    fc.put("</v>") ; fc.put_nl()
+#@nonl
+#@+node:ekr.20031218072017.1864:<< Put tnode index >>
+if v.t.fileIndex:
+    if g.app.use_gnx:
+        gnx = g.app.nodeIndices.toString(v.t.fileIndex)
+        fc.put(" t=") ; fc.put_in_dquotes(gnx)
+    else:
+        fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
+        
+    # g.trace(v.t)
+    if forceWrite or self.usingClipboard:
+        v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
+else:
+    g.trace(v.t.fileIndex,v)
+    g.es("error writing file(bad v.t.fileIndex)!")
+    g.es("try using the Save To command")
+#@nonl
+#@-node:ekr.20031218072017.1864:<< Put tnode index >>
+#@+node:ekr.20031218072017.1865:<< Put attribute bits >>
+attr = ""
+if p.v.isExpanded(): attr += "E"
+if p.v.isMarked():   attr += "M"
+if p.v.isOrphan():   attr += "O"
+
+if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
+    # Almost 30% of the entire writing time came from here!!!
+    if p.equal(self.topPosition):     attr += "T" # was a bottleneck
+    if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+
+if attr: fc.put(' a="%s"' % attr)
+#@nonl
+#@-node:ekr.20031218072017.1865:<< Put attribute bits >>
+#@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+# Write the tnodeList only for @file nodes.
+# New in 4.2: tnode list is in tnode.
+
+if 0: # Debugging.
+    if v.isAnyAtFileNode():
+        if hasattr(v.t,"tnodeList"):
+            g.trace(v.headString(),len(v.t.tnodeList))
+        else:
+            g.trace(v.headString(),"no tnodeList")
+
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
+    if isThin:
+        if g.app.unitTesting:
+            g.app.unitTestDict["warning"] = True
+        g.es("deleting tnode list for %s" % p.headString(),color="blue")
+        # This is safe: cloning can't change the type of this node!
+        delattr(v.t,"tnodeList")
+    else:
+        fc.putTnodeList(v) # New in 4.0
+
+if hasattr(v,"unknownAttributes"): # New in 4.0
+    self.putUnknownAttributes(v)
+    
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
+#@nonl
+#@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+#@+node:ekr.20040702085529:<< issue informational messages >>
+if p.isAtThinFileNode and p.isOrphan():
+    g.es("Writing erroneous: %s" % p.headString(),color="blue")
+    p.clearOrphan()
+
+if 0: # For testing.
+    if p.isAtIgnoreNode():
+         for p2 in p.self_and_subtree_iter():
+                if p2.isAtThinFileNode():
+                    g.es("Writing @ignore'd: %s" % p2.headString(),color="blue")
+#@nonl
+#@-node:ekr.20040702085529:<< issue informational messages >>
+#@+node:ekr.20031218072017.1866:<< Write the head text >>
+headString = p.v.headString()
+
+if headString:
+    fc.put("<vh>")
+    fc.putEscapedString(headString)
+    fc.put("</vh>")
+#@nonl
+#@-node:ekr.20031218072017.1866:<< Write the head text >>
+#@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+#@+node:ekr.20031218072017.2015:top_df.writeAll
+def writeAll(self,writeAtFileNodesFlag=False,writeDirtyAtFileNodesFlag=False,toString=False):
+    
+    """Write @file nodes in all or part of the outline"""
+
+    at = self ; c = at.c
+    write_new = not g.app.config.write_old_format_derived_files
+    df = g.choose(write_new,at.new_df,at.old_df)
+    df.initIvars()
+    writtenFiles = [] # Files that might be written again.
+    mustAutoSave = False
+
+    if writeAtFileNodesFlag:
+        # Write all nodes in the selected tree.
+        p = c.currentPosition()
+        after = p.nodeAfterTree()
+    else:
+        # Write dirty nodes in the entire outline.
+        p =  c.rootPosition()
+        after = c.nullPosition()
+
+    << Clear all orphan bits >>
+    while p and p != after:
+        if p.isAnyAtFileNode() or p.isAtIgnoreNode():
+            << handle v's tree >>
+            p.moveToNodeAfterTree()
+        else:
+            p.moveToThreadNext()
+
+    << say the command is finished >>
+    return mustAutoSave
+#@nonl
+#@+node:ekr.20031218072017.2016:<< Clear all orphan bits >>
+@ We must clear these bits because they may have been set on a previous write.
+Calls to atFile::write may set the orphan bits in @file nodes.
+If so, write_Leo_file will write the entire @file tree.
+@c
+    
+for v2 in p.self_and_subtree_iter():
+    v2.clearOrphan()
+#@nonl
+#@-node:ekr.20031218072017.2016:<< Clear all orphan bits >>
+#@+node:ekr.20031218072017.2017:<< handle v's tree >>
+if p.v.isDirty() or writeAtFileNodesFlag or p.v.t in writtenFiles:
+
+    df.fileChangedFlag = False # 1/9/04
+    autoSave = False
+    
+    # Tricky: @ignore not recognised in @silentfile nodes.
+    if p.isAtAsisFileNode():
+        at.asisWrite(p,toString=toString)
+        writtenFiles.append(p.v.t) ; autoSave = True
+    elif p.isAtIgnoreNode():
+        pass
+    elif p.isAtNorefFileNode():
+        at.norefWrite(p,toString=toString)
+        writtenFiles.append(p.v.t) ; autoSave = True
+    elif p.isAtNoSentFileNode():
+        at.write(p,nosentinels=True,toString=toString)
+        writtenFiles.append(p.v.t) # No need for autosave
+    elif p.isAtThinFileNode():
+        at.write(p,thinFile=True,toString=toString)
+        writtenFiles.append(p.v.t) # No need for autosave.
+    elif p.isAtFileNode():
+        at.write(p,toString=toString)
+        writtenFiles.append(p.v.t) ; autoSave = True
+
+    if df.fileChangedFlag and autoSave: # Set by replaceTargetFileIfDifferent.
+        mustAutoSave = True
+#@nonl
+#@-node:ekr.20031218072017.2017:<< handle v's tree >>
+#@+node:ekr.20031218072017.2018:<< say the command is finished >>
+if writeAtFileNodesFlag or writeDirtyAtFileNodesFlag:
+    if len(writtenFiles) > 0:
+        g.es("finished")
+    elif writeAtFileNodesFlag:
+        g.es("no @file nodes in the selected tree")
+    else:
+        g.es("no dirty @file nodes")
+#@nonl
+#@-node:ekr.20031218072017.2018:<< say the command is finished >>
+#@-node:ekr.20031218072017.2015:top_df.writeAll
+#@+node:ekr.20031218072017.2012:writeAtFileNodes
+def writeAtFileNodes (self):
+    
+    c = self.c
+
+    self.assignFileIndices() # 4/3/04
+    changedFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=True)
+    assert(changedFiles != None)
+    if changedFiles:
+        g.es("auto-saving outline",color="blue")
+        c.save() # Must be done to set or clear tnodeList.
+#@nonl
+#@-node:ekr.20031218072017.2012:writeAtFileNodes
+#@+node:ekr.20031218072017.1666:writeDirtyAtFileNodes
+def writeDirtyAtFileNodes (self): # fileCommands
+
+    """The Write Dirty @file Nodes command"""
+    
+    c = self.c
+
+    self.assignFileIndices() # 4/3/04
+    changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=True)
+    if changedFiles:
+        g.es("auto-saving outline",color="blue")
+        c.save() # Must be done to set or clear tnodeList.
+#@nonl
+#@-node:ekr.20031218072017.1666:writeDirtyAtFileNodes
+#@+node:ekr.20031218072017.2013:writeMissingAtFileNodes
+def writeMissingAtFileNodes (self):
+
+    c = self.c ; v = c.currentVnode()
+
+    if v:
+        at = c.atFileCommands
+        self.assignFileIndices() # 4/3/04
+        changedFiles = at.writeMissing(v)
+        assert(changedFiles != None)
+        if changedFiles:
+            g.es("auto-saving outline",color="blue")
+            c.save() # Must be done to set or clear tnodeList.
+#@nonl
+#@-node:ekr.20031218072017.2013:writeMissingAtFileNodes
+#@-node:ekr.20040803082633.1:From leoFileCommands...
+#@-node:ekr.20040713062342:(Made sure tnodeList is updated properly in all situations)
 #@-node:ekr.20040706080316:Projects: 4.2 b3
 #@+node:ekr.20031218072017.984:Unfinished projects
 #@+node:ekr.20031218072017.985:(Button class)

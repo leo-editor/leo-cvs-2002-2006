@@ -4,35 +4,51 @@
 
 #@+all
 #@+node:EKR.20040430163619:To do: 4.2
-#@+node:ekr.20040713062342:(Make sure tnodeList is updated properly in all situations)
-#@+node:ekr.20040723050756:Make sure executing scripts don't interfere with tnodeList
-#@-node:ekr.20040723050756:Make sure executing scripts don't interfere with tnodeList
-#@-node:ekr.20040713062342:(Make sure tnodeList is updated properly in all situations)
-#@+node:EKR.20040422132037:Linux bugs 4
+#@+node:ekr.20040323195916.1:Unit tests
+@nocolor
+
+- Unit tests for node iterators.
+
+- Unit tests for undo/redo.
+
+** Test for memory leaks.
+
+- Test tangle/untangle commands.
+
+- Create unit tests for Find commands.
+
+- Create unit tests for all dialogs.
+
+- Run profiler on code.
+#@nonl
+#@+node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
+#@-node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
+#@+node:EKR.20040621184626:Finish unit tests for @asis
+@ - Support toString in asis methods
+#@-node:EKR.20040621184626:Finish unit tests for @asis
+#@-node:ekr.20040323195916.1:Unit tests
+#@+node:ekr.20040803100035:Run Pychecker
+#@+node:ekr.20031218072017.2606:<< Import pychecker >>
+@color
+
+# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
+
+if 1: # Set to 1 for lint-like testing.
+    try:
+        import pychecker.checker
+        # This works.  We may want to set options here...
+        # from pychecker import Config 
+        print ; print "Warning: pychecker.checker running..." ; print
+    except:
+        pass
+#@nonl
+#@-node:ekr.20031218072017.2606:<< Import pychecker >>
+#@-node:ekr.20040803100035:Run Pychecker
+#@+node:EKR.20040422132037:Linux bugs 3
 @nocolor
 #@nonl
-#@+node:EKR.20040422132037.4:config problem on Linux
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2373816
-By: sbeards
-
-A related issue is that leoConfig.txt gets auto-tangled and overwritten on startup.
-This will be a problem if Leo is run by a non-root user or the file is not readable.
-For example, I get the following traceback after starting Leo (when leoConfig.txt
-is read-only):
-
-Traceback (most recent call last):
-  File "/usr/local/share/leo-4.1-rc3/src/leoConfig.py", line 672, in update
-    cf = open(self.configFileName,mode)
-IOError: [Errno 13] Permission denied:
-'/usr/local/share/leo-4.1-rc3/src/../config/leoConfig.txt'
-
-Is there a reason leoConfig.txt gets auto-tangled on startup? Is there anyway
-to disable this? Is this by design?
-#@-node:EKR.20040422132037.4:config problem on Linux
 #@+node:EKR.20040422132037.5:Backspace problems on Linux
-Shift+Ctrl+BkSp doesn't delete node   
+Shift+Ctrl+BkSp doesn't delete node
 #@nonl
 #@+node:EKR.20040422132037.6:Dave Hein: fix
 By: dthein ( Dave Hein ) 
@@ -173,7 +189,7 @@ R: hilited text appended to headline rather than replacing
 This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
 #@nonl
 #@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
-#@-node:EKR.20040422132037:Linux bugs 4
+#@-node:EKR.20040422132037:Linux bugs 3
 #@+node:EKR.20040609155110:Docs
 #@+node:EKR.20040503091612:Dangers of @file-thin: converting to @file-thin
 Using @ignore with @file-thin is asking for trouble.
@@ -1002,44 +1018,6 @@ self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
 #@+node:ekr.20040707060750:RsT plugin should say where files get written
 #@-node:ekr.20040707060750:RsT plugin should say where files get written
 #@-node:ekr.20040706080747:Plugins
-#@+node:ekr.20040323195916.1:Unit tests & pychecker
-@nocolor
-
-- Unit tests for node iterators.
-
-- Unit tests for undo/redo.
-
-** Test for memory leaks.
-
-- Test tangle/untangle commands.
-
-- Create unit tests for Find commands.
-
-- Create unit tests for all dialogs.
-
-- Run profiler on code.
-#@nonl
-#@+node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
-#@-node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
-#@+node:EKR.20040621184626:Finish unit tests for @asis
-@ - Support toString in asis methods
-#@-node:EKR.20040621184626:Finish unit tests for @asis
-#@+node:ekr.20031218072017.2606:<< Import pychecker >>
-@color
-
-# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
-
-if 0: # Set to 1 for lint-like testing.
-    try:
-        import pychecker.checker
-        # This works.  We may want to set options here...
-        # from pychecker import Config 
-        print ; print "Warning: pychecker.checker running..." ; print
-    except:
-        pass
-#@nonl
-#@-node:ekr.20031218072017.2606:<< Import pychecker >>
-#@-node:ekr.20040323195916.1:Unit tests & pychecker
 #@+node:ekr.20040629110559:Cool Mac stuff
 #@+node:ekr.20040629111136:Native Max OS X Leo app
 
@@ -2210,6 +2188,26 @@ Every time I get a new copy, I need to do a side-by-side compare and edit with t
 #@nonl
 #@-node:ekr.20040225061559:Look at older config files when reading config data the first time for a new install
 #@-node:ekr.20040327050211:Fix problems with updating leoConfig.txt
+#@+node:EKR.20040422132037.4:config problem on Linux
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2373816
+By: sbeards
+
+A related issue is that leoConfig.txt gets auto-tangled and overwritten on startup.
+This will be a problem if Leo is run by a non-root user or the file is not readable.
+For example, I get the following traceback after starting Leo (when leoConfig.txt
+is read-only):
+
+Traceback (most recent call last):
+  File "/usr/local/share/leo-4.1-rc3/src/leoConfig.py", line 672, in update
+    cf = open(self.configFileName,mode)
+IOError: [Errno 13] Permission denied:
+'/usr/local/share/leo-4.1-rc3/src/../config/leoConfig.txt'
+
+Is there a reason leoConfig.txt gets auto-tangled on startup? Is there anyway
+to disable this? Is this by design?
+#@-node:EKR.20040422132037.4:config problem on Linux
 #@-node:ekr.20031218072017.828:Rewrite the config manager
 #@+node:ekr.20031218072017.829:gui interface for plugins manager
 @nocolor
@@ -4156,7 +4154,9 @@ def readEndNode (self,s,i,middle=False):
                 at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
                 at.c.setChanged(True)
             else:
-                g.es("Warning: updating changed text",color="blue")
+                if not at.updateWarningGiven:
+                    at.updateWarningGiven = True
+                    g.es("Warning: updating changed text",color="blue")
                 #g.es("old...\n%s\n" % old)
                 #g.es("new...\n%s\n" % s)
                 # Just set the dirty bit. Ancestors will be marked dirty later.
@@ -9256,18 +9256,25 @@ if attr: fc.put(' a="%s"' % attr)
 #@nonl
 #@-node:ekr.20031218072017.1865:<< Put attribute bits >>
 #@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
-# Write tnodeList only for @file nodes.
+# Write the tnodeList only for @file nodes.
 # New in 4.2: tnode list is in tnode.
 
 if 0: # Debugging.
-    if v.isAnyAtFileNode() and not v.isAtThinFileNode():
+    if v.isAnyAtFileNode():
         if hasattr(v.t,"tnodeList"):
             g.trace(v.headString(),len(v.t.tnodeList))
         else:
             g.trace(v.headString(),"no tnodeList")
 
 if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
-    fc.putTnodeList(v) # New in 4.0
+    if isThin:
+        if g.app.unitTesting:
+            g.app.unitTestDict["warning"] = True
+        g.es("deleting tnode list for %s" % p.headString(),color="blue")
+        # This is safe: cloning can't change the type of this node!
+        delattr(v.t,"tnodeList")
+    else:
+        fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
