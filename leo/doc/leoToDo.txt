@@ -3,16 +3,327 @@
 #@@nocolor
 
 #@+all
-#@+node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
-#@+node:ekr.20040919101448:Do first
+#@+node:EKR.20040609091327:To do: 4.3
+#@+node:ekr.20041001182352.1:Urgent 3
 #@+node:ekr.20040919182750.1:Support for CVS
 #@+node:ekr.20040916122326:Check Import command
 - Ignore position of blank lines wrt sentinels.
 - Ignore (optionally?) underindented blank lines.
 #@nonl
 #@-node:ekr.20040916122326:Check Import command
-#@+node:ekr.20040919101930.2:Resolve CVS Conflicts command
-#@-node:ekr.20040919101930.2:Resolve CVS Conflicts command
+#@+node:ekr.20031218072017.658:Resolve CVS Conflicts command
+@nocolor
+
+There have been a couple different suggestions on how to obtain a .leo file
+that presents the conflicts for resolution.  My initial thought was to have
+some sort of external file containing only the structure information of interest.
+Edward has suggested that we could process the CVS created .leo file with all
+its conflict indicators.
+
+I'd like to offer another alternative: based on the ad-hoc procedure that Edward
+is currently using, i.e.,
+
+* Save your work to foo.leo file.
+* copy your foo.leo file to fooCvsTmp.leo
+* cvs ci
+* if there are no conflicts (hurray)
+*    remove fooCvsTmp.leo; finished
+* otherwise
+*    remove foo.leo
+*    cvs up foo.leo
+*    read foo.leo into an internal directed acyclic graph (DAG)
+*    generate the conflict resolution DAG from the proposed new leo internal
+DAG (which Leo already has as a matter of course) and the CVS derived DAG
+*    present for editting
+*    when you are satisfied and want to try to check in again, repeat.
+
+From the user's point of view, a CVS check in either succeeds or requires that
+the conflicts be resolved, after which another check in may be attempted.  If
+we're somehow interrupted in the middle of the process, the fooCvsTmp.leo file
+preserves the users work.
+#@+node:ekr.20031218072017.659:Jonathon 1
+https://sourceforge.net/forum/message.php?msg_id=1803722
+By: jmgilligan
+
+What is the intended behavior when foo.leo has a cloned node that appears several
+times in a derived (or multiple derived files) and the user edits this file
+or files to change two or more instances of the cloned node in different ways.
+
+Example:
+
+@file foo.py
+****begin tnode
+@others
+****end tnode
+...definition of procedure a
+***begin tnode
+def a:
+...print "a:", <<bar>>
+***end tnode
+...<<bar>>
+****begin tnode
+"bar"
+****end tnode
+
+...definition of procedure b
+***begin tnode
+def b:
+...print "b:", <<bar>>
+***end tnode
+...<<bar>>
+****begin tnode
+"bar"
+****end tnode
+
+...definition of procedure c
+***begin tnode
+def c:
+...print "a:", <<bar>>
+***end tnode
+...<<bar>>
+****begin tnode
+"bar"
+****end tnode
+
+In the .leo, if I edit <<bar>>, it will change simultaneously in each place,
+always in synch. However, suppose I edit foo.py in a text editor and change
+foo.py to read:
+
+#@verbatim
+#@+leo
+#@verbatim
+#@+node:0::@file foo.py
+#@verbatim
+#@+body
+#@verbatim
+#@+others
+#@verbatim
+#@+node:1::definition of a
+#@verbatim
+#@+body
+print "a:", 
+#@verbatim
+#@<<bar>>
+#@verbatim
+#@+node:1::<<bar>>
+#@verbatim
+#@+body
+"bar"
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::<<bar>>
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::definition of a
+#@verbatim
+#@+node:2::definition of b
+#@verbatim
+#@+body
+print "b:", 
+#@verbatim
+#@<<bar>>
+#@verbatim
+#@+node:1::<<bar>>
+#@verbatim
+#@+body
+"variation b"
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::<<bar>>
+#@verbatim
+#@-body
+#@verbatim
+#@-node:2::definition of b
+#@verbatim
+#@+node:3::definition of c
+#@verbatim
+#@+body
+print "c:", 
+#@verbatim
+#@<<bar>>
+#@verbatim
+#@+node:1::<<bar>>
+#@verbatim
+#@+body
+"variation c"
+#@verbatim
+#@-body
+#@verbatim
+#@-node:1::<<bar>>
+#@verbatim
+#@-body
+#@verbatim
+#@-node:3::definition of c
+#@verbatim
+#@-others
+#@verbatim
+#@-body
+#@verbatim
+#@-node:0::@file foo.py
+#@verbatim
+#@-leo
+
+Now what is supposed to happen when leo tries to read foo.py back in? It seems
+that there are three possible behaviors:
+
+1) leo reports a conflict that the user needs to resolve.
+2) leo breaks the clone: the three nodes become separate vnodes, not clones
+of the same one.
+3) leo arbitrarily takes one of the tnodes to be the new tnode for all of the
+clones. This is currently what happens. It creates something like a race condition,
+where the last node in the derived file determines what the final result will
+be. In this case, all three tnodes get text "variation c".
+
+This general question of how Leo should deal with conflicts in clone nodes seems
+to me that it needs to be addressed, particularly with respect to trying to
+avoid cvs conflicts via thick/thin modes.
+
+Note that this can become quite a subtle question because the same node can
+be cloned across several different derived files, in which case a serious race
+condition may pertain.
+
+At the least, I would like to see leo perform consistency checking on cloned
+nodes when it reads a derived file back in and warn the user if cloned nodes
+are inconsistent.
+
+Note that the issue also occurs with OpenWith: I can open each instance of a
+cloned node as a separate file in the external text editor. Which version is
+read back into leo depends on the order in which I save them from the external
+editor.
+#@-node:ekr.20031218072017.659:Jonathon 1
+#@+node:ekr.20031218072017.660:Jonathan 2
+By: jmgilligan ( Jonathan M. Gilligan ) 
+ Possible solution   
+2003-01-13 20:55  
+One possible solution for the conflicting clones problem is to have Leo, when it detects a conflicting clone, generate a text file (perhaps named LeoConflict_NNNN.leo, where NNNN is the gid of the node in question), which contains all the different versions of the node in question, output in leo XML format. 
+
+The vnode would then be marked with a "conflict" flag that would prevent the user from opening it in Leo until the conflict is resolved. See below for how the user resolves the conflict. 
+
+What I have in mind is something similar to the CVS conflict file, where a conflict between two versions is marked 
+
+<<<<<<< 
+blah blah blah? 
+======= 
+blah blah blah! 
+>>>>>>> 
+
+Except that we would output this file in Leo XML format. The reason for XML format would be to avoid problems of how to generically delimit the different sections (different versions of the cloned node). Here leo's XML tags can unambiguously delimit the sections. 
+
+The user would then edit the conflict file and delete all but the desired version. Then he would tell leo to resolve the conflict by reading the corrected file in and replacing the contents of the conflicting node with the contents of the LeoConflict_NNNN.leo file. 
+
+On the down side, this may well be too baroque a fix for a problem that most users may never encounter. If so, perhaps it's best left alone until more pressing problems are solved. I know what I am doing with Leo and am always careful NOT to generate conflicting clones when I edit in an external text editor, so I don't absolutely need a resolution to this problem. I raised it because it's good for a program to have well-defined behavior when presented with anomalous input. 
+
+In this sense, perhaps the best thing is to allow users to generate code from clones (what Allan Holub referred to as "enough rope to shoot yourself in the foot"), but to tell them that this practice is frowned upon.  
+
+ 
+#@-node:ekr.20031218072017.660:Jonathan 2
+#@+node:ekr.20031218072017.661:Gil 1
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1836117
+By: gilshwartz
+
+Edward, now that conflicting clones may not be the result of bad style, I would
+like to propose yet another solution that I have been thinking of for a while.
+
+My basic approach is that cloning is not just a convenience tool, it may also
+reflect some of the properties of the code/code set. Therefore my goal is for
+clone links to remain even if they are conflicting, and let the user resolve
+them at any convenient time. I also think that Leo's user interface is the best
+tool to resolve such conflicts.
+
+Thus here is my view of clone management and resolution inside Leo. Anytime
+content is loaded into Leo, if a clone set agrees (i.e. have the same content)
+all clone copies are marked "green". When one green clone is edited, all green
+clones are changed. This is Leo as it is now.
+
+If at some point conflicting clones are loaded, Leo decides on some representing
+content (may be based on policies like most occurring content, or latest timestamp,
+etc.) and provides visual clues for the conflict. The visual clue is give by
+a double node box, e.g.
+
++---------------+
++ clone org +
++---------------+
++ resolution +
++---------------+
+
+such that it is a single node in the tree, but has two content node, the original
+text, and the possibly arbitrary resolution.
+
+The resolution pseudo node is marked "blue", while the original text is either
+"green", if it is identical to the blue node, or "red", if it is not. To emphasis,
+the red/green nodes contain the specific (possibly) unique code associated with
+the derived file, while the pseudo blue node contains the shared clone content.
+During save to derived files, only the red/green content is saved, so effectively
+the file is not changed and the conflict is not resolved until the user chooses
+to do so. However, the clone relationship (via the gti) remains.
+
+During editing, changes to red/green clones are local and do not propagate to
+other clone copies (actually any change to a green node would turn it red).
+Changes to the blue nodes do propagate since it is a single view of the clone.
+A node pair may be converted to a regular node, effectively getting a new gti
+and eliminating the blue copy. Or, it may be converted to the shared copy,
+effectively forgetting its original content (leaving only the blue node). Once
+there are no more red nodes in a clone set, all its nodes become green again
+and the conflict is resolved.
+
+Some additional clone actions I think are useful are:
+
+1. Go to next/prev clone.
+2. Go to next/prev green clone (useful when there are red ones).
+3. Convert all green copies to a new clone group (useful when some clone copies
+needs to remain clones, but break from the original clone set, thus getting
+a new clone gti)
+
+Action 3 enables the user to partition its clone set to several clone groups
+by copying a clone's original content to its blue copy and finding matching
+(green) clones.
+
+What do we gain by all this?
+
+1. We can have conflicting clones without catastrophes.
+2. We get tools to handle conflicts and resolve them.
+3. We keep on working is Leo's environment, which is the most supportive one
+we can expect.
+
+Gil
+
+(By the way, I have a feeling that it would be useful to include along with
+the gti a hash of its node content, which could tell Leo is a node was changed
+outside of it. Also, including a timestamp in the opening sentinel, indicating
+when Leo last saved it. These may help having intelligent decisions by Leo in
+cases like conflicting clones.)
+#@-node:ekr.20031218072017.661:Gil 1
+#@+node:ekr.20031218072017.662:Gil 2
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1804169
+By: gilshwartz
+
+Another thing to think about is what should happen when close heading is changing.
+Right now, if you are inside Leo, all headings will be changed, and if you try
+to change by hand it in the derived file, clone links are removed (after some
+error reporting). This is quite reasonable in the current scheme of things,
+where one is not really expected to mess up with Leo sentinels.
+
+However, if/when @include is implemented, one would probably edit some files
+with clones that may extend to other files and changing the clone node name
+(via Leo) is quite feasible. Note that the gti for the cloned node would probably
+not change. So
+
+1. Do Leo resync the clone content based on the gti?
+2. Does it break cloning and allocates a new gti for one (arbitrary?) clone
+set?
+3. Let the user resolve manually, offer undoable auto-resolution with reporting,
+other?
+
+More things to think about.
+
+Gil
+#@-node:ekr.20031218072017.662:Gil 2
+#@-node:ekr.20031218072017.658:Resolve CVS Conflicts command
 #@+node:ekr.20040721094203:Make sure Leo uses "verbatim" whitespace
 @killcolor
 
@@ -1983,426 +2294,153 @@ print "actual  :",textResult
 #@-node:ekr.20031218072017.1493:undoRedoText
 #@-node:ekr.20040323084434:(Add granularity setting for undo)
 #@-node:ekr.20040916122326.1:Undo...
-#@+node:ekr.20040918165519:Mark Task & Clone To Task commands
+#@+node:EKR.20040602153716:(Finish drawUserIcons)
+#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+Also add corresponding commands.
+#@nonl
+#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+#@+node:ekr.20040317184631:Design
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2477913
+By: edream
+
+A better design for user icons
+
+Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
+to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
+than a list of tuples.  Each of these "subsidiary" dictionaries could have the
+following keys:
+
+"type"
+
+"file", "icon" or "url".  At present my prototype code uses "file" to specify
+the location of an icon.
+
+"where":
+
+"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
+where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
+means before the plus/minus box.  "beforeIcon" means before the standard icon.
+
+"height":
+
+the height of the icon to use when calculating the line height.  Default: get
+from the icon itself, if possible.
+
+"width":
+
+the width of the icon to use when calculating where to put the following element.
+Default: get from the icon, if possible.
+
+"xoffset"
+
+Leo draws the icon at x + xoffset, where x is determined by the where param
+above.  Default 0.
+
+"xpad"
+
+The amount of extra space following the icon.  Default 0.
+
+"yoffset"
+
+Leo draws the icon at y + yoffset.  Default 0.
+
+"ypad"
+
+The amount of extra vertical space to add to the line height.  Default 0.
+
+These offset and pad values are integer pixel values and may be positive or
+negative.
+
+"lineHeight"  NOT USED.
+
+Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+
+Edward
+
+P.S.  Other gui's might not be able to support all these options.  That's ok.
+The drawing code in gui plugins should degrade gracefully.
+
+EKR
+#@nonl
+#@-node:ekr.20040317184631:Design
+#@+node:ekr.20040317184631.2:Changes
 @nocolor
 
-http://sourceforge.net/forum/message.php?msg_id=2415033
-By: nobody
+"lineHeight"
 
-Ive been scanning Speed Reams Slash post and the Faq and saw an interesting
-usage pattern: Creating a node called a Task and adding cloned nodes to it that
-represent that task(I hope that explains it).  I can see myself using this idiom
-in the future.  Now my question is does the Task/clone idiom warrant special
-commands in Leo?  My basis:
+This key won't be used.
 
-1. Do enough Leo users work with this idiom that making it easier to utilize
-would be desirable?  I guess a good rule of thumb might be, if the sequence
-of actions occur more frequently than the primitive commands like opening a
-file it should be considered.
+t.unknownAttributes["lineYOffset"] 
 
-Maybe a way of doing it:
-
-1. A special mark node as Task command.
-2. A Add to lask marked task command, that clones a node and moves that node
-into the Task node.
+An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
 #@nonl
-#@-node:ekr.20040918165519:Mark Task & Clone To Task commands
-#@-node:ekr.20040919101448:Do first
-#@+node:ekr.20040919101930:Most important: do in plugins
-#@+node:ekr.20040930112719.2:(Support @thin nodes in Import Derived Files command: DO THIS IN NEW CODE)
-#@+node:ekr.20041001075422:What I did
-@killcolor
+#@-node:ekr.20040317184631.2:Changes
+#@+node:ekr.20040317184631.1:To do
+@nocolor
 
-- scanHeader and parseLeoSentinel now return tuples containing derivedFileIsThin.
-- Added special case code in importDerivedFiles to handle thin files.
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
 #@nonl
-#@-node:ekr.20041001075422:What I did
-#@+node:ekr.20040930112719.3:Notes
-@killcolor
-
-- Check whether the file is a thin derived file.
-- If so, create an @thin node and simulate the Read @file Nodes command.
-
-It's possible that there may be a few glitches in doing this. However, it's
-something that should be attempted immediately.
-#@-node:ekr.20040930112719.3:Notes
-#@+node:ekr.20031218072017.1810:importDerivedFiles
-def importDerivedFiles (self,parent,paths):
+#@-node:ekr.20040317184631.1:To do
+#@+node:EKR.20040526202501:putUnknownAttributes
+def putUnknownAttributes (self,torv,toString=False):
     
-    c = self.c ; at = c.atFileCommands
-    current = c.currentVnode()
+    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
     
-    c.beginUpdate()
-    
-    for fileName in paths:
-        << set isThin if fileName is a thin derived file >>
-        v = parent.insertAfter()
-        if isThin:
-            v.initHeadString("@thin " + fileName)
-            c.undoer.setUndoParams("Import",v,select=current)
-            at.read(v,thinFile=True)
-        else:
-            v.initHeadString("Imported @file " + fileName)
-            c.undoer.setUndoParams("Import",v,select=current)
-            at.read(v,importFileName=fileName)
-        c.selectVnode(v)
-        v.expand()
+    result = []
+    attrDict = torv.unknownAttributes
+    if type(attrDict) != type({}):
+        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+        return
 
-    c.endUpdate()
+    for key in attrDict.keys():
+        try:
+            val = attrDict[key]
+            s = pickle.dumps(val,bin=True)
+            attr = ' %s="%s"' % (key,binascii.hexlify(s))
+            self.put(attr)
+
+        except pickle.PicklingError:
+            # New in 4.2 beta 1: keep going after error.
+            g.es("ignoring non-pickleable attribute %s in %s" % (
+                key,torv),color="blue")
 #@nonl
-#@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
-fileName = g.os_path_normpath(fileName)
-
-try:
-    theFile = open(fileName,'rb')
-    junk,read_new,isThin = at.scanHeader(theFile,fileName)
-    theFile.close()
-
-except IOError:
-    isThin = False
-#@nonl
-#@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
-#@-node:ekr.20031218072017.1810:importDerivedFiles
-#@+node:ekr.20031218072017.1812:top_df.read
-# The caller has enclosed this code in beginUpdate/endUpdate.
-
-def read(self,root,importFileName=None,thinFile=False):
-    
-    """Common read logic for any derived file."""
-    
-    at = self ; c = at.c
-    at.errors = 0
-    importing = importFileName is not None
-    << set fileName from root and importFileName >>
-    << open file or return False >>
-    g.es("reading: " + root.headString())
-    firstLines,read_new,derivedFileIsThin = at.scanHeader(theFile,fileName)
-    df = g.choose(read_new,at.new_df,at.old_df)
-    # g.trace(g.choose(df==at.new_df,"new","old"))
-    << copy ivars to df >>
-    root.clearVisitedInTree()
-    try:
-        # 1/28/04: Don't set comment delims when importing.
-        # 1/28/04: Call scanAllDirectives here, not in readOpenFile.
-        importing = importFileName is not None
-        df.scanAllDirectives(root,importing=importing,reading=True)
-        df.readOpenFile(root,theFile,firstLines)
-    except:
-        at.error("Unexpected exception while reading derived file")
-        g.es_exception()
-    theFile.close()
-    root.clearDirty() # May be set dirty below.
-    after = root.nodeAfterTree()
-    << warn about non-empty unvisited nodes >>
-    if df.errors == 0:
-        if not df.importing:
-            << copy all tempBodyStrings to tnodes >>
-    << delete all tempBodyStrings >>
-    return df.errors == 0
-#@nonl
-#@+node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
-at.scanDefaultDirectory(root,importing=importing)
-if at.errors: return
-
-if importFileName:
-    fileName = importFileName
-elif root.isAnyAtFileNode():
-    fileName = root.anyAtFileNodeName()
-else:
-    fileName = None
-
-if not fileName:
-    at.error("Missing file name.  Restoring @file tree from .leo file.")
-    return False
-#@nonl
-#@-node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
-#@+node:ekr.20031218072017.1814:<< open file or return false >>
-fn = g.os_path_join(at.default_directory,fileName)
-fn = g.os_path_normpath(fn)
-
-try:
-    # 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
-    theFile = open(fn,'rb')
-    if theFile:
-        << warn on read-only file >>
-    else: return False
-except:
-    at.error("Can not open: " + '"@file ' + fn + '"')
-    root.setDirty()
-    return False
-#@nonl
-#@+node:ekr.20031218072017.1815:<< warn on read-only file >>
-try:
-    read_only = not os.access(fn,os.W_OK)
-    if read_only:
-        g.es("read only: " + fn,color="red")
-except:
-    pass # os.access() may not exist on all platforms.
-#@nonl
-#@-node:ekr.20031218072017.1815:<< warn on read-only file >>
-#@-node:ekr.20031218072017.1814:<< open file or return false >>
-#@+node:ekr.20031218072017.1816:<< copy ivars to df >>
-# Telling what kind of file we are reading.
-df.importing = importFileName != None
-df.raw = False
-if importing and df == at.new_df:
-    thinFile = True
-df.thinFile = thinFile
-
-# Set by scanHeader.
-df.encoding = at.encoding
-df.endSentinelComment = at.endSentinelComment
-df.startSentinelComment = at.startSentinelComment
-
-# Set other common ivars.
-df.errors = 0
-df.file = theFile
-df.importRootSeen = False
-df.indent = 0
-df.targetFileName = fileName
-df.root = root
-df.root_seen = False
-df.perfectImportRoot = None # Set only in readOpenFile.
-#@nonl
-#@-node:ekr.20031218072017.1816:<< copy ivars to df >>
-#@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
-for p in root.self_and_subtree_iter():
-
-    # g.trace(p)
-    try: s = p.v.t.tempBodyString
-    except: s = ""
-    if s and not p.v.t.isVisited():
-        at.error("Not in derived file:" + p.headString())
-        p.v.t.setVisited() # One message is enough.
-#@nonl
-#@-node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
-#@+node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
-for p in root.self_and_subtree_iter():
-    try: s = p.v.t.tempBodyString
-    except: s = ""
-    if s != p.bodyString():
-        if 0: # For debugging.
-            print ; print "changed: " + p.headString()
-            print ; print "new:",s
-            print ; print "old:",p.bodyString()
-        if thinFile:
-            p.v.setTnodeText(s)
-            if p.v.isDirty():
-                p.setAllAncestorAtFileNodesDirty()
-        else:
-            p.setBodyStringOrPane(s) # Sets v and v.c dirty.
-            
-        if not thinFile or (thinFile and p.v.isDirty()):
-            g.es("changed: " + p.headString(),color="blue")
-            p.setMarked()
-#@nonl
-#@-node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
-#@+node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
-for p in c.allNodes_iter():
-    
-    if hasattr(p.v.t,"tempBodyString"):
-        delattr(p.v.t,"tempBodyString")
-#@nonl
-#@-node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
-#@-node:ekr.20031218072017.1812:top_df.read
-#@+node:ekr.20031218072017.2757:new_df.readOpenFile
-def readOpenFile(self,root,theFile,firstLines,perfectImportRoot=None):
-    
-    """Read an open 4.x thick or thin derived file."""
-    
-    at = self
-    
-    # This is safe (just barely) because only this method calls scanText4.
-    at.perfectImportRoot = perfectImportRoot
-
-    # Scan the 4.x file.
-    at.tnodeListIndex = 0
-    # at.thinFile tells scanText4 whether this is a thin file or not.
-    lastLines = at.scanText4(theFile,root)
-    root.v.t.setVisited() # Disable warning about set nodes.
-    
-    # Handle first and last lines.
-    try: body = root.v.t.tempBodyString
-    except: body = ""
-    lines = body.split('\n')
-    at.completeFirstDirectives(lines,firstLines)
-    at.completeLastDirectives(lines,lastLines)
-    s = '\n'.join(lines).replace('\r', '')
-    root.v.t.tempBodyString = s
-#@nonl
-#@-node:ekr.20031218072017.2757:new_df.readOpenFile
-#@+node:ekr.20031218072017.2633:top_df.scanHeader
-def scanHeader(self,theFile,fileName):
-    
-    """Scan the @+leo sentinel.
-    
-    Sets self.encoding, and self.start/endSentinelComment.
-    
-    Returns (firstLines,new_df) where:
-    firstLines contains all @first lines,
-    new_df is True if we are reading a new-format derived file."""
-    
-    at = self
-    firstLines = [] # The lines before @+leo.
-    tag = "@+leo"
-    valid = True ; new_df = False ; derivedFileIsThin = False
-    << skip any non @+leo lines >>
-    if valid:
-        valid,new_df,start,end,derivedFileIsThin = at.parseLeoSentinel(s)
-    if valid:
-        at.startSentinelComment = start
-        at.endSentinelComment = end
-    else:
-        at.error("Bad @+leo sentinel in " + fileName)
-    # g.trace("start,end",repr(at.startSentinelComment),repr(at.endSentinelComment))
-    return firstLines,new_df,derivedFileIsThin
-#@nonl
-#@+node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
-@ Queue up the lines before the @+leo.  These will be used to add as parameters to the @first directives, if any.  Empty lines are ignored (because empty @first directives are ignored). NOTE: the function now returns a list of the lines before @+leo.
-
-We can not call sentinelKind here because that depends on the comment delimiters we set here.  @first lines are written "verbatim", so nothing more needs to be done!
-@c
-
-s = at.readLine(theFile)
-while len(s) > 0:
-    j = s.find(tag)
-    if j != -1: break
-    firstLines.append(s) # Queue the line
-    s = at.readLine(theFile)
-    
-n = len(s)
-valid = n > 0
-#@-node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
-#@-node:ekr.20031218072017.2633:top_df.scanHeader
-#@+node:EKR.20040604155223.1:top_df.parseLeoSentinel
-def parseLeoSentinel (self,s):
-    
-    at = self
-    new_df = False ; valid = True ; n = len(s)
-    derivedFileIsThin = False
-    encoding_tag = "-encoding="
-    version_tag = "-ver="
-    tag = "@+leo"
-    thin_tag = "-thin"
-    << set the opening comment delim >>
-    << make sure we have @+leo >>
-    << read optional version param >>
-    << read optional thin param >>
-    << read optional encoding param >>
-    << set the closing comment delim >>
-    return valid,new_df,start,end,derivedFileIsThin
-#@nonl
-#@+node:EKR.20040604155223:<< set the opening comment delim >>
-# s contains the tag
-i = j = g.skip_ws(s,0)
-
-# The opening comment delim is the initial non-tag
-while i < n and not g.match(s,i,tag) and not g.is_nl(s,i):
-    i += 1
-
-if j < i:
-    start = s[j:i]
-else:
-    valid = False
-#@nonl
-#@-node:EKR.20040604155223:<< set the opening comment delim >>
-#@+node:ekr.20031218072017.2635:<< make sure we have @+leo >>
-@ REM hack: leading whitespace is significant before the @+leo.  We do this so that sentinelKind need not skip whitespace following self.startSentinelComment.  This is correct: we want to be as restrictive as possible about what is recognized as a sentinel.  This minimizes false matches.
-@c
-
-if 0: # Make leading whitespace significant.
-    i = g.skip_ws(s,i)
-
-if g.match(s,i,tag):
-    i += len(tag)
-else: valid = False
-#@nonl
-#@-node:ekr.20031218072017.2635:<< make sure we have @+leo >>
-#@+node:ekr.20031218072017.2636:<< read optional version param >>
-new_df = g.match(s,i,version_tag)
-
-if new_df:
-    # Skip to the next minus sign or end-of-line
-    i += len(version_tag)
-    j = i
-    while i < len(s) and not g.is_nl(s,i) and s[i] != '-':
-        i += 1
-
-    if j < i:
-        pass # version = s[j:i]
-    else:
-        valid = False
-#@-node:ekr.20031218072017.2636:<< read optional version param >>
-#@+node:EKR.20040503105354:<< read optional thin param >>
-if g.match(s,i,thin_tag):
-    i += len(tag)
-    derivedFileIsThin = True
-#@nonl
-#@-node:EKR.20040503105354:<< read optional thin param >>
-#@+node:ekr.20031218072017.2637:<< read optional encoding param >>
-# Set the default encoding
-at.encoding = g.app.config.default_derived_file_encoding
-
-if g.match(s,i,encoding_tag):
-    # Read optional encoding param, e.g., -encoding=utf-8,
-    i += len(encoding_tag)
-    # Skip to the next end of the field.
-    j = s.find(",.",i)
-    if j > -1:
-        # The encoding field was written by 4.2 or after:
-        encoding = s[i:j]
-        i = j + 1 # 6/8/04
-    else:
-        # The encoding field was written before 4.2.
-        j = s.find('.',i)
-        if j > -1:
-            encoding = s[i:j]
-            i = j + 1 # 6/8/04
-        else:
-            encoding = None
-    # g.trace("encoding:",encoding)
-    if encoding:
-        if g.isValidEncoding(encoding):
-            at.encoding = encoding
-        else:
-            print "bad encoding in derived file:",encoding
-            g.es("bad encoding in derived file:",encoding)
-    else:
-        valid = False
-#@-node:ekr.20031218072017.2637:<< read optional encoding param >>
-#@+node:ekr.20031218072017.2638:<< set the closing comment delim >>
-# The closing comment delim is the trailing non-whitespace.
-i = j = g.skip_ws(s,i)
-while i < n and not g.is_ws(s[i]) and not g.is_nl(s,i):
-    i += 1
-end = s[j:i]
-#@nonl
-#@-node:ekr.20031218072017.2638:<< set the closing comment delim >>
-#@-node:EKR.20040604155223.1:top_df.parseLeoSentinel
-#@+node:ekr.20031218072017.3302:<< set delims from the header line >>
-# Skip any non @+leo lines.
-i = 0
-while i < len(s) and not g.find_on_line(s,i,"@+leo"):
-    i = g.skip_line(s,i)
-
-# Get the comment delims from the @+leo sentinel line.
-at = self.c.atFileCommands
-j = g.skip_line(s,i) ; line = s[i:j]
-
-valid,new_df,start_delim,end_delim,derivedFileIsThin = at.parseLeoSentinel(line)
-if not valid:
-    g.es("invalid @+leo sentinel in " + fileName)
-    return
-
-if end_delim:
-    line_delim = None
-else:
-    line_delim,start_delim = start_delim,None
-#@nonl
-#@-node:ekr.20031218072017.3302:<< set delims from the header line >>
-#@-node:ekr.20040930112719.2:(Support @thin nodes in Import Derived Files command: DO THIS IN NEW CODE)
-#@+node:EKR.20040507095329.1:More flexible atFile classes (in plugin)
-#@-node:EKR.20040507095329.1:More flexible atFile classes (in plugin)
+#@-node:EKR.20040526202501:putUnknownAttributes
+#@-node:EKR.20040602153716:(Finish drawUserIcons)
+#@-node:ekr.20041001182352.1:Urgent 3
+#@+node:ekr.20040919101448:Important 5
 #@+node:ekr.20031218072017.828:Rewrite the config manager
 http://sourceforge.net/forum/message.php?msg_id=2329053
 By: dsalomoni
@@ -3132,6 +3170,8 @@ a big problem with modern editors, but it _would_ be nicer...
 #@+node:ekr.20040831114214:Thread the colorizer?
 #@-node:ekr.20040831114214:Thread the colorizer?
 #@-node:ekr.20031218072017.734:Rewrite colorizer to use jEdit language descriptionfiles
+#@+node:ekr.20041002112001:Use threaded Colorizer
+#@-node:ekr.20041002112001:Use threaded Colorizer
 #@+node:ekr.20040919101930.1:Emacs emulation
 #@+node:EKR.20040424151321:(Status line experiments) TO DO: create status line class
 #@+node:ekr.20031218072017.3941: frame.Birth & Death
@@ -4090,189 +4130,6 @@ Edward
 #@-node:ekr.20040401121456:emacs roadmap
 #@-node:ekr.20040217153407.3:Emacs-style keystroke handling
 #@-node:ekr.20040919101930.1:Emacs emulation
-#@+node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-Also add corresponding commands.
-#@nonl
-#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-#@+node:ekr.20040317184631:Design
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2477913
-By: edream
-
-A better design for user icons
-
-Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
-to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
-than a list of tuples.  Each of these "subsidiary" dictionaries could have the
-following keys:
-
-"type"
-
-"file", "icon" or "url".  At present my prototype code uses "file" to specify
-the location of an icon.
-
-"where":
-
-"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
-where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
-means before the plus/minus box.  "beforeIcon" means before the standard icon.
-
-"height":
-
-the height of the icon to use when calculating the line height.  Default: get
-from the icon itself, if possible.
-
-"width":
-
-the width of the icon to use when calculating where to put the following element.
-Default: get from the icon, if possible.
-
-"xoffset"
-
-Leo draws the icon at x + xoffset, where x is determined by the where param
-above.  Default 0.
-
-"xpad"
-
-The amount of extra space following the icon.  Default 0.
-
-"yoffset"
-
-Leo draws the icon at y + yoffset.  Default 0.
-
-"ypad"
-
-The amount of extra vertical space to add to the line height.  Default 0.
-
-These offset and pad values are integer pixel values and may be positive or
-negative.
-
-"lineHeight"  NOT USED.
-
-Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-
-Edward
-
-P.S.  Other gui's might not be able to support all these options.  That's ok.
-The drawing code in gui plugins should degrade gracefully.
-
-EKR
-#@nonl
-#@-node:ekr.20040317184631:Design
-#@+node:ekr.20040317184631.2:Changes
-@nocolor
-
-"lineHeight"
-
-This key won't be used.
-
-t.unknownAttributes["lineYOffset"] 
-
-An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
-#@nonl
-#@-node:ekr.20040317184631.2:Changes
-#@+node:ekr.20040317184631.1:To do
-@nocolor
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-#@nonl
-#@-node:ekr.20040317184631.1:To do
-#@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv,toString=False):
-    
-    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
-    
-    result = []
-    attrDict = torv.unknownAttributes
-    if type(attrDict) != type({}):
-        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
-        return
-
-    for key in attrDict.keys():
-        try:
-            val = attrDict[key]
-            s = pickle.dumps(val,bin=True)
-            attr = ' %s="%s"' % (key,binascii.hexlify(s))
-            self.put(attr)
-
-        except pickle.PicklingError:
-            # New in 4.2 beta 1: keep going after error.
-            g.es("ignoring non-pickleable attribute %s in %s" % (
-                key,torv),color="blue")
-#@nonl
-#@-node:EKR.20040526202501:putUnknownAttributes
-#@-node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:ekr.20040217153407:User customizeable tangling and untangling
-#@+node:ekr.20031218072017.805:Allow other section delims besides << and >>
-Maybe the section operator could be customizable, 
-I personally prefer the wiki way [[name of section]]. 
-
-@setlink-tag [[ ]] 
-#@-node:ekr.20031218072017.805:Allow other section delims besides << and >>
-#@+node:ekr.20031218072017.803:@template directive?
-#@-node:ekr.20031218072017.803:@template directive?
-#@+node:ekr.20031218072017.795:Metatags
-@nocolor
-
-By: nobody ( Nobody/Anonymous ) 
- RE: 3.11 todo list & schedule   
-2003-02-11 03:25  
-
-Here are some features I'd like to see: 
- 
-
- 
-3. Metatags. @sectionname or @savedate are expanded to the appropriate text when saved.
-
--marshall-  
-#@-node:ekr.20031218072017.795:Metatags
-#@-node:ekr.20040217153407:User customizeable tangling and untangling
-#@-node:ekr.20040919101930:Most important: do in plugins
-#@+node:ekr.20040919101930.3:Other
-#@+node:ekr.20040130073846:Use Python indices instead of Tk indices
-This would really help when writing gui plugins.
-
-The first place it would be useful would be in eliminating calls to the Tk search routine.
-#@nonl
-#@+node:ekr.20040105120208.1:Use string.find or re.find instead of tk.find
-#@-node:ekr.20040105120208.1:Use string.find or re.find instead of tk.find
-#@+node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
-This might be the best way to reliably have Tk move to the next line!
-#@-node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
-#@-node:ekr.20040130073846:Use Python indices instead of Tk indices
 #@+node:EKR.20040628085831:@import, etc.
 #@+node:ekr.20040718033104:@shadow
 #@-node:ekr.20040718033104:@shadow
@@ -4281,11 +4138,40 @@ This might be the best way to reliably have Tk move to the next line!
 #@+node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040628085831:@import, etc.
-#@+node:ekr.20031218072017.736:Use xml parser to read .leo files
-http://www.reportlab.com
+#@-node:ekr.20040919101448:Important 5
+#@+node:ekr.20041001182730:Easy
+#@+node:ekr.20041001182730.2:Allow other directive lead-ins besides @
+#@-node:ekr.20041001182730.2:Allow other directive lead-ins besides @
+#@+node:ekr.20031218072017.805:Allow other section delims besides << and >>
+Maybe the section operator could be customizable, 
+I personally prefer the wiki way [[name of section]]. 
 
-import xml.sax
-#@-node:ekr.20031218072017.736:Use xml parser to read .leo files
+@setlink-tag [[ ]] 
+#@-node:ekr.20031218072017.805:Allow other section delims besides << and >>
+#@+node:ekr.20040918165519:Mark Task & Clone To Task commands
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2415033
+By: nobody
+
+Ive been scanning Speed Reams Slash post and the Faq and saw an interesting
+usage pattern: Creating a node called a Task and adding cloned nodes to it that
+represent that task(I hope that explains it).  I can see myself using this idiom
+in the future.  Now my question is does the Task/clone idiom warrant special
+commands in Leo?  My basis:
+
+1. Do enough Leo users work with this idiom that making it easier to utilize
+would be desirable?  I guess a good rule of thumb might be, if the sequence
+of actions occur more frequently than the primitive commands like opening a
+file it should be considered.
+
+Maybe a way of doing it:
+
+1. A special mark node as Task command.
+2. A Add to lask marked task command, that clones a node and moves that node
+into the Task node.
+#@nonl
+#@-node:ekr.20040918165519:Mark Task & Clone To Task commands
 #@+node:ekr.20040831092540:Allow uA's to be stored as plain strings
 I would like to store unknown
 attributes as a simple string. The reason, is because I am using an unknown
@@ -4300,6 +4186,428 @@ Martin Clifford
 Senior Software Engineer
 Snell & Wilcox
 #@-node:ekr.20040831092540:Allow uA's to be stored as plain strings
+#@-node:ekr.20041001182730:Easy
+#@+node:ekr.20040919101930.3:Other
+#@+node:ekr.20040930112719.2:(Support @thin nodes in Import Derived Files command: DO THIS IN NEW CODE)
+#@+node:ekr.20041001075422:What I did
+@killcolor
+
+- scanHeader and parseLeoSentinel now return tuples containing derivedFileIsThin.
+- Added special case code in importDerivedFiles to handle thin files.
+#@nonl
+#@-node:ekr.20041001075422:What I did
+#@+node:ekr.20040930112719.3:Notes
+@killcolor
+
+- Check whether the file is a thin derived file.
+- If so, create an @thin node and simulate the Read @file Nodes command.
+
+It's possible that there may be a few glitches in doing this. However, it's
+something that should be attempted immediately.
+#@-node:ekr.20040930112719.3:Notes
+#@+node:ekr.20031218072017.1810:importDerivedFiles
+def importDerivedFiles (self,parent,paths):
+    
+    c = self.c ; at = c.atFileCommands
+    current = c.currentVnode()
+    
+    c.beginUpdate()
+    
+    for fileName in paths:
+        << set isThin if fileName is a thin derived file >>
+        v = parent.insertAfter()
+        if isThin:
+            v.initHeadString("@thin " + fileName)
+            c.undoer.setUndoParams("Import",v,select=current)
+            at.read(v,thinFile=True)
+        else:
+            v.initHeadString("Imported @file " + fileName)
+            c.undoer.setUndoParams("Import",v,select=current)
+            at.read(v,importFileName=fileName)
+        c.selectVnode(v)
+        v.expand()
+
+    c.endUpdate()
+#@nonl
+#@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+fileName = g.os_path_normpath(fileName)
+
+try:
+    theFile = open(fileName,'rb')
+    junk,read_new,isThin = at.scanHeader(theFile,fileName)
+    theFile.close()
+
+except IOError:
+    isThin = False
+#@nonl
+#@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+#@-node:ekr.20031218072017.1810:importDerivedFiles
+#@+node:ekr.20031218072017.1812:top_df.read
+# The caller has enclosed this code in beginUpdate/endUpdate.
+
+def read(self,root,importFileName=None,thinFile=False):
+    
+    """Common read logic for any derived file."""
+    
+    at = self ; c = at.c
+    at.errors = 0
+    importing = importFileName is not None
+    << set fileName from root and importFileName >>
+    << open file or return False >>
+    g.es("reading: " + root.headString())
+    firstLines,read_new,derivedFileIsThin = at.scanHeader(theFile,fileName)
+    df = g.choose(read_new,at.new_df,at.old_df)
+    # g.trace(g.choose(df==at.new_df,"new","old"))
+    << copy ivars to df >>
+    root.clearVisitedInTree()
+    try:
+        # 1/28/04: Don't set comment delims when importing.
+        # 1/28/04: Call scanAllDirectives here, not in readOpenFile.
+        importing = importFileName is not None
+        df.scanAllDirectives(root,importing=importing,reading=True)
+        df.readOpenFile(root,theFile,firstLines)
+    except:
+        at.error("Unexpected exception while reading derived file")
+        g.es_exception()
+    theFile.close()
+    root.clearDirty() # May be set dirty below.
+    after = root.nodeAfterTree()
+    << warn about non-empty unvisited nodes >>
+    if df.errors == 0:
+        if not df.importing:
+            << copy all tempBodyStrings to tnodes >>
+    << delete all tempBodyStrings >>
+    return df.errors == 0
+#@nonl
+#@+node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
+at.scanDefaultDirectory(root,importing=importing)
+if at.errors: return
+
+if importFileName:
+    fileName = importFileName
+elif root.isAnyAtFileNode():
+    fileName = root.anyAtFileNodeName()
+else:
+    fileName = None
+
+if not fileName:
+    at.error("Missing file name.  Restoring @file tree from .leo file.")
+    return False
+#@nonl
+#@-node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
+#@+node:ekr.20031218072017.1814:<< open file or return false >>
+fn = g.os_path_join(at.default_directory,fileName)
+fn = g.os_path_normpath(fn)
+
+try:
+    # 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
+    theFile = open(fn,'rb')
+    if theFile:
+        << warn on read-only file >>
+    else: return False
+except:
+    at.error("Can not open: " + '"@file ' + fn + '"')
+    root.setDirty()
+    return False
+#@nonl
+#@+node:ekr.20031218072017.1815:<< warn on read-only file >>
+try:
+    read_only = not os.access(fn,os.W_OK)
+    if read_only:
+        g.es("read only: " + fn,color="red")
+except:
+    pass # os.access() may not exist on all platforms.
+#@nonl
+#@-node:ekr.20031218072017.1815:<< warn on read-only file >>
+#@-node:ekr.20031218072017.1814:<< open file or return false >>
+#@+node:ekr.20031218072017.1816:<< copy ivars to df >>
+# Telling what kind of file we are reading.
+df.importing = importFileName != None
+df.raw = False
+if importing and df == at.new_df:
+    thinFile = True
+df.thinFile = thinFile
+
+# Set by scanHeader.
+df.encoding = at.encoding
+df.endSentinelComment = at.endSentinelComment
+df.startSentinelComment = at.startSentinelComment
+
+# Set other common ivars.
+df.errors = 0
+df.file = theFile
+df.importRootSeen = False
+df.indent = 0
+df.targetFileName = fileName
+df.root = root
+df.root_seen = False
+df.perfectImportRoot = None # Set only in readOpenFile.
+#@nonl
+#@-node:ekr.20031218072017.1816:<< copy ivars to df >>
+#@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
+for p in root.self_and_subtree_iter():
+
+    # g.trace(p)
+    try: s = p.v.t.tempBodyString
+    except: s = ""
+    if s and not p.v.t.isVisited():
+        at.error("Not in derived file:" + p.headString())
+        p.v.t.setVisited() # One message is enough.
+#@nonl
+#@-node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
+#@+node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
+for p in root.self_and_subtree_iter():
+    try: s = p.v.t.tempBodyString
+    except: s = ""
+    if s != p.bodyString():
+        if 0: # For debugging.
+            print ; print "changed: " + p.headString()
+            print ; print "new:",s
+            print ; print "old:",p.bodyString()
+        if thinFile:
+            p.v.setTnodeText(s)
+            if p.v.isDirty():
+                p.setAllAncestorAtFileNodesDirty()
+        else:
+            p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+            
+        if not thinFile or (thinFile and p.v.isDirty()):
+            g.es("changed: " + p.headString(),color="blue")
+            p.setMarked()
+#@nonl
+#@-node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
+#@+node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
+for p in c.allNodes_iter():
+    
+    if hasattr(p.v.t,"tempBodyString"):
+        delattr(p.v.t,"tempBodyString")
+#@nonl
+#@-node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
+#@-node:ekr.20031218072017.1812:top_df.read
+#@+node:ekr.20031218072017.2757:new_df.readOpenFile
+def readOpenFile(self,root,theFile,firstLines,perfectImportRoot=None):
+    
+    """Read an open 4.x thick or thin derived file."""
+    
+    at = self
+    
+    # This is safe (just barely) because only this method calls scanText4.
+    at.perfectImportRoot = perfectImportRoot
+
+    # Scan the 4.x file.
+    at.tnodeListIndex = 0
+    # at.thinFile tells scanText4 whether this is a thin file or not.
+    lastLines = at.scanText4(theFile,root)
+    root.v.t.setVisited() # Disable warning about set nodes.
+    
+    # Handle first and last lines.
+    try: body = root.v.t.tempBodyString
+    except: body = ""
+    lines = body.split('\n')
+    at.completeFirstDirectives(lines,firstLines)
+    at.completeLastDirectives(lines,lastLines)
+    s = '\n'.join(lines).replace('\r', '')
+    root.v.t.tempBodyString = s
+#@nonl
+#@-node:ekr.20031218072017.2757:new_df.readOpenFile
+#@+node:ekr.20031218072017.2633:top_df.scanHeader
+def scanHeader(self,theFile,fileName):
+    
+    """Scan the @+leo sentinel.
+    
+    Sets self.encoding, and self.start/endSentinelComment.
+    
+    Returns (firstLines,new_df) where:
+    firstLines contains all @first lines,
+    new_df is True if we are reading a new-format derived file."""
+    
+    at = self
+    firstLines = [] # The lines before @+leo.
+    tag = "@+leo"
+    valid = True ; new_df = False ; derivedFileIsThin = False
+    << skip any non @+leo lines >>
+    if valid:
+        valid,new_df,start,end,derivedFileIsThin = at.parseLeoSentinel(s)
+    if valid:
+        at.startSentinelComment = start
+        at.endSentinelComment = end
+    else:
+        at.error("Bad @+leo sentinel in " + fileName)
+    # g.trace("start,end",repr(at.startSentinelComment),repr(at.endSentinelComment))
+    return firstLines,new_df,derivedFileIsThin
+#@nonl
+#@+node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
+@ Queue up the lines before the @+leo.  These will be used to add as parameters to the @first directives, if any.  Empty lines are ignored (because empty @first directives are ignored). NOTE: the function now returns a list of the lines before @+leo.
+
+We can not call sentinelKind here because that depends on the comment delimiters we set here.  @first lines are written "verbatim", so nothing more needs to be done!
+@c
+
+s = at.readLine(theFile)
+while len(s) > 0:
+    j = s.find(tag)
+    if j != -1: break
+    firstLines.append(s) # Queue the line
+    s = at.readLine(theFile)
+    
+n = len(s)
+valid = n > 0
+#@-node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
+#@-node:ekr.20031218072017.2633:top_df.scanHeader
+#@+node:EKR.20040604155223.1:top_df.parseLeoSentinel
+def parseLeoSentinel (self,s):
+    
+    at = self
+    new_df = False ; valid = True ; n = len(s)
+    derivedFileIsThin = False
+    encoding_tag = "-encoding="
+    version_tag = "-ver="
+    tag = "@+leo"
+    thin_tag = "-thin"
+    << set the opening comment delim >>
+    << make sure we have @+leo >>
+    << read optional version param >>
+    << read optional thin param >>
+    << read optional encoding param >>
+    << set the closing comment delim >>
+    return valid,new_df,start,end,derivedFileIsThin
+#@nonl
+#@+node:EKR.20040604155223:<< set the opening comment delim >>
+# s contains the tag
+i = j = g.skip_ws(s,0)
+
+# The opening comment delim is the initial non-tag
+while i < n and not g.match(s,i,tag) and not g.is_nl(s,i):
+    i += 1
+
+if j < i:
+    start = s[j:i]
+else:
+    valid = False
+#@nonl
+#@-node:EKR.20040604155223:<< set the opening comment delim >>
+#@+node:ekr.20031218072017.2635:<< make sure we have @+leo >>
+@ REM hack: leading whitespace is significant before the @+leo.  We do this so that sentinelKind need not skip whitespace following self.startSentinelComment.  This is correct: we want to be as restrictive as possible about what is recognized as a sentinel.  This minimizes false matches.
+@c
+
+if 0: # Make leading whitespace significant.
+    i = g.skip_ws(s,i)
+
+if g.match(s,i,tag):
+    i += len(tag)
+else: valid = False
+#@nonl
+#@-node:ekr.20031218072017.2635:<< make sure we have @+leo >>
+#@+node:ekr.20031218072017.2636:<< read optional version param >>
+new_df = g.match(s,i,version_tag)
+
+if new_df:
+    # Skip to the next minus sign or end-of-line
+    i += len(version_tag)
+    j = i
+    while i < len(s) and not g.is_nl(s,i) and s[i] != '-':
+        i += 1
+
+    if j < i:
+        pass # version = s[j:i]
+    else:
+        valid = False
+#@-node:ekr.20031218072017.2636:<< read optional version param >>
+#@+node:EKR.20040503105354:<< read optional thin param >>
+if g.match(s,i,thin_tag):
+    i += len(tag)
+    derivedFileIsThin = True
+#@nonl
+#@-node:EKR.20040503105354:<< read optional thin param >>
+#@+node:ekr.20031218072017.2637:<< read optional encoding param >>
+# Set the default encoding
+at.encoding = g.app.config.default_derived_file_encoding
+
+if g.match(s,i,encoding_tag):
+    # Read optional encoding param, e.g., -encoding=utf-8,
+    i += len(encoding_tag)
+    # Skip to the next end of the field.
+    j = s.find(",.",i)
+    if j > -1:
+        # The encoding field was written by 4.2 or after:
+        encoding = s[i:j]
+        i = j + 1 # 6/8/04
+    else:
+        # The encoding field was written before 4.2.
+        j = s.find('.',i)
+        if j > -1:
+            encoding = s[i:j]
+            i = j + 1 # 6/8/04
+        else:
+            encoding = None
+    # g.trace("encoding:",encoding)
+    if encoding:
+        if g.isValidEncoding(encoding):
+            at.encoding = encoding
+        else:
+            print "bad encoding in derived file:",encoding
+            g.es("bad encoding in derived file:",encoding)
+    else:
+        valid = False
+#@-node:ekr.20031218072017.2637:<< read optional encoding param >>
+#@+node:ekr.20031218072017.2638:<< set the closing comment delim >>
+# The closing comment delim is the trailing non-whitespace.
+i = j = g.skip_ws(s,i)
+while i < n and not g.is_ws(s[i]) and not g.is_nl(s,i):
+    i += 1
+end = s[j:i]
+#@nonl
+#@-node:ekr.20031218072017.2638:<< set the closing comment delim >>
+#@-node:EKR.20040604155223.1:top_df.parseLeoSentinel
+#@+node:ekr.20031218072017.3302:<< set delims from the header line >>
+# Skip any non @+leo lines.
+i = 0
+while i < len(s) and not g.find_on_line(s,i,"@+leo"):
+    i = g.skip_line(s,i)
+
+# Get the comment delims from the @+leo sentinel line.
+at = self.c.atFileCommands
+j = g.skip_line(s,i) ; line = s[i:j]
+
+valid,new_df,start_delim,end_delim,derivedFileIsThin = at.parseLeoSentinel(line)
+if not valid:
+    g.es("invalid @+leo sentinel in " + fileName)
+    return
+
+if end_delim:
+    line_delim = None
+else:
+    line_delim,start_delim = start_delim,None
+#@nonl
+#@-node:ekr.20031218072017.3302:<< set delims from the header line >>
+#@-node:ekr.20040930112719.2:(Support @thin nodes in Import Derived Files command: DO THIS IN NEW CODE)
+#@+node:ekr.20040217153407:User customizeable tangling and untangling
+#@+node:ekr.20031218072017.803:@template directive?
+#@-node:ekr.20031218072017.803:@template directive?
+#@+node:ekr.20031218072017.795:Metatags
+@nocolor
+
+By: nobody ( Nobody/Anonymous ) 
+ RE: 3.11 todo list & schedule   
+2003-02-11 03:25  
+
+Here are some features I'd like to see: 
+ 
+3. Metatags. @sectionname or @savedate are expanded to the appropriate text when saved.
+
+-marshall-  
+#@-node:ekr.20031218072017.795:Metatags
+#@-node:ekr.20040217153407:User customizeable tangling and untangling
+#@+node:ekr.20040130073846:Use Python indices instead of Tk indices
+This would really help when writing gui plugins.
+
+The first place it would be useful would be in eliminating calls to the Tk search routine.
+#@nonl
+#@+node:ekr.20040105120208.1:Use string.find or re.find instead of tk.find
+#@-node:ekr.20040105120208.1:Use string.find or re.find instead of tk.find
+#@+node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
+This might be the best way to reliably have Tk move to the next line!
+#@-node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
+#@-node:ekr.20040130073846:Use Python indices instead of Tk indices
 #@+node:ekr.20040918093558:Fix Font dialog problems on the Mac
 @killcolor
 
@@ -4312,8 +4620,13 @@ headlines did not change to show the new font until I started up again.
 
 -- Dan Windler
 #@-node:ekr.20040918093558:Fix Font dialog problems on the Mac
+#@+node:ekr.20031218072017.736:Use xml parser to read .leo files
+http://www.reportlab.com
+
+import xml.sax
+#@-node:ekr.20031218072017.736:Use xml parser to read .leo files
 #@-node:ekr.20040919101930.3:Other
-#@-node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
+#@-node:EKR.20040609091327:To do: 4.3
 #@+node:ekr.20040329182535.7:1-2 hour projects
 #@+node:EKR.20040611081747.1:Look at windows scripting
 ------cut openleo.pys
@@ -5014,8 +5327,6 @@ default section name, which obviously can be changed.
 #@-node:ekr.20040329094003:Apply patch command
 #@-node:ekr.20040329182535.5:1 day projects
 #@+node:ekr.20040329182535.3:2 day projects
-#@+node:ekr.20040217152936.1:Incremental drawing of outline pane: see projects
-#@-node:ekr.20040217152936.1:Incremental drawing of outline pane: see projects
 #@+node:ekr.20031218072017.743:Note windows
 Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2205285
@@ -5177,354 +5488,6 @@ CEO, Dev Designs
 #@-node:ekr.20040124074218.3:pyGtk plugin
 #@+node:ekr.20040217153407.1:** Unify @root and @file
 #@-node:ekr.20040217153407.1:** Unify @root and @file
-#@+node:ekr.20031218072017.658:Resolve Conflicts command (may not be needed with @thin)
-@nocolor
-
-There have been a couple different suggestions on how to obtain a .leo file
-that presents the conflicts for resolution.  My initial thought was to have
-some sort of external file containing only the structure information of interest.
-Edward has suggested that we could process the CVS created .leo file with all
-its conflict indicators.
-
-I'd like to offer another alternative: based on the ad-hoc procedure that Edward
-is currently using, i.e.,
-
-* Save your work to foo.leo file.
-* copy your foo.leo file to fooCvsTmp.leo
-* cvs ci
-* if there are no conflicts (hurray)
-*    remove fooCvsTmp.leo; finished
-* otherwise
-*    remove foo.leo
-*    cvs up foo.leo
-*    read foo.leo into an internal directed acyclic graph (DAG)
-*    generate the conflict resolution DAG from the proposed new leo internal
-DAG (which Leo already has as a matter of course) and the CVS derived DAG
-*    present for editting
-*    when you are satisfied and want to try to check in again, repeat.
-
-From the user's point of view, a CVS check in either succeeds or requires that
-the conflicts be resolved, after which another check in may be attempted.  If
-we're somehow interrupted in the middle of the process, the fooCvsTmp.leo file
-preserves the users work.
-#@+node:ekr.20031218072017.659:Jonathon 1
-https://sourceforge.net/forum/message.php?msg_id=1803722
-By: jmgilligan
-
-What is the intended behavior when foo.leo has a cloned node that appears several
-times in a derived (or multiple derived files) and the user edits this file
-or files to change two or more instances of the cloned node in different ways.
-
-Example:
-
-@file foo.py
-****begin tnode
-@others
-****end tnode
-...definition of procedure a
-***begin tnode
-def a:
-...print "a:", <<bar>>
-***end tnode
-...<<bar>>
-****begin tnode
-"bar"
-****end tnode
-
-...definition of procedure b
-***begin tnode
-def b:
-...print "b:", <<bar>>
-***end tnode
-...<<bar>>
-****begin tnode
-"bar"
-****end tnode
-
-...definition of procedure c
-***begin tnode
-def c:
-...print "a:", <<bar>>
-***end tnode
-...<<bar>>
-****begin tnode
-"bar"
-****end tnode
-
-In the .leo, if I edit <<bar>>, it will change simultaneously in each place,
-always in synch. However, suppose I edit foo.py in a text editor and change
-foo.py to read:
-
-#@verbatim
-#@+leo
-#@verbatim
-#@+node:0::@file foo.py
-#@verbatim
-#@+body
-#@verbatim
-#@+others
-#@verbatim
-#@+node:1::definition of a
-#@verbatim
-#@+body
-print "a:", 
-#@verbatim
-#@<<bar>>
-#@verbatim
-#@+node:1::<<bar>>
-#@verbatim
-#@+body
-"bar"
-#@verbatim
-#@-body
-#@verbatim
-#@-node:1::<<bar>>
-#@verbatim
-#@-body
-#@verbatim
-#@-node:1::definition of a
-#@verbatim
-#@+node:2::definition of b
-#@verbatim
-#@+body
-print "b:", 
-#@verbatim
-#@<<bar>>
-#@verbatim
-#@+node:1::<<bar>>
-#@verbatim
-#@+body
-"variation b"
-#@verbatim
-#@-body
-#@verbatim
-#@-node:1::<<bar>>
-#@verbatim
-#@-body
-#@verbatim
-#@-node:2::definition of b
-#@verbatim
-#@+node:3::definition of c
-#@verbatim
-#@+body
-print "c:", 
-#@verbatim
-#@<<bar>>
-#@verbatim
-#@+node:1::<<bar>>
-#@verbatim
-#@+body
-"variation c"
-#@verbatim
-#@-body
-#@verbatim
-#@-node:1::<<bar>>
-#@verbatim
-#@-body
-#@verbatim
-#@-node:3::definition of c
-#@verbatim
-#@-others
-#@verbatim
-#@-body
-#@verbatim
-#@-node:0::@file foo.py
-#@verbatim
-#@-leo
-
-Now what is supposed to happen when leo tries to read foo.py back in? It seems
-that there are three possible behaviors:
-
-1) leo reports a conflict that the user needs to resolve.
-2) leo breaks the clone: the three nodes become separate vnodes, not clones
-of the same one.
-3) leo arbitrarily takes one of the tnodes to be the new tnode for all of the
-clones. This is currently what happens. It creates something like a race condition,
-where the last node in the derived file determines what the final result will
-be. In this case, all three tnodes get text "variation c".
-
-This general question of how Leo should deal with conflicts in clone nodes seems
-to me that it needs to be addressed, particularly with respect to trying to
-avoid cvs conflicts via thick/thin modes.
-
-Note that this can become quite a subtle question because the same node can
-be cloned across several different derived files, in which case a serious race
-condition may pertain.
-
-At the least, I would like to see leo perform consistency checking on cloned
-nodes when it reads a derived file back in and warn the user if cloned nodes
-are inconsistent.
-
-Note that the issue also occurs with OpenWith: I can open each instance of a
-cloned node as a separate file in the external text editor. Which version is
-read back into leo depends on the order in which I save them from the external
-editor.
-#@-node:ekr.20031218072017.659:Jonathon 1
-#@+node:ekr.20031218072017.660:Jonathan 2
-By: jmgilligan ( Jonathan M. Gilligan ) 
- Possible solution   
-2003-01-13 20:55  
-One possible solution for the conflicting clones problem is to have Leo, when it detects a conflicting clone, generate a text file (perhaps named LeoConflict_NNNN.leo, where NNNN is the gid of the node in question), which contains all the different versions of the node in question, output in leo XML format. 
-
-The vnode would then be marked with a "conflict" flag that would prevent the user from opening it in Leo until the conflict is resolved. See below for how the user resolves the conflict. 
-
-What I have in mind is something similar to the CVS conflict file, where a conflict between two versions is marked 
-
-<<<<<<< 
-blah blah blah? 
-======= 
-blah blah blah! 
->>>>>>> 
-
-Except that we would output this file in Leo XML format. The reason for XML format would be to avoid problems of how to generically delimit the different sections (different versions of the cloned node). Here leo's XML tags can unambiguously delimit the sections. 
-
-The user would then edit the conflict file and delete all but the desired version. Then he would tell leo to resolve the conflict by reading the corrected file in and replacing the contents of the conflicting node with the contents of the LeoConflict_NNNN.leo file. 
-
-On the down side, this may well be too baroque a fix for a problem that most users may never encounter. If so, perhaps it's best left alone until more pressing problems are solved. I know what I am doing with Leo and am always careful NOT to generate conflicting clones when I edit in an external text editor, so I don't absolutely need a resolution to this problem. I raised it because it's good for a program to have well-defined behavior when presented with anomalous input. 
-
-In this sense, perhaps the best thing is to allow users to generate code from clones (what Allan Holub referred to as "enough rope to shoot yourself in the foot"), but to tell them that this practice is frowned upon.  
-
- 
-#@-node:ekr.20031218072017.660:Jonathan 2
-#@+node:ekr.20031218072017.661:Gil 1
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1836117
-By: gilshwartz
-
-Edward, now that conflicting clones may not be the result of bad style, I would
-like to propose yet another solution that I have been thinking of for a while.
-
-My basic approach is that cloning is not just a convenience tool, it may also
-reflect some of the properties of the code/code set. Therefore my goal is for
-clone links to remain even if they are conflicting, and let the user resolve
-them at any convenient time. I also think that Leo's user interface is the best
-tool to resolve such conflicts.
-
-Thus here is my view of clone management and resolution inside Leo. Anytime
-content is loaded into Leo, if a clone set agrees (i.e. have the same content)
-all clone copies are marked "green". When one green clone is edited, all green
-clones are changed. This is Leo as it is now.
-
-If at some point conflicting clones are loaded, Leo decides on some representing
-content (may be based on policies like most occurring content, or latest timestamp,
-etc.) and provides visual clues for the conflict. The visual clue is give by
-a double node box, e.g.
-
-+---------------+
-+ clone org +
-+---------------+
-+ resolution +
-+---------------+
-
-such that it is a single node in the tree, but has two content node, the original
-text, and the possibly arbitrary resolution.
-
-The resolution pseudo node is marked "blue", while the original text is either
-"green", if it is identical to the blue node, or "red", if it is not. To emphasis,
-the red/green nodes contain the specific (possibly) unique code associated with
-the derived file, while the pseudo blue node contains the shared clone content.
-During save to derived files, only the red/green content is saved, so effectively
-the file is not changed and the conflict is not resolved until the user chooses
-to do so. However, the clone relationship (via the gti) remains.
-
-During editing, changes to red/green clones are local and do not propagate to
-other clone copies (actually any change to a green node would turn it red).
-Changes to the blue nodes do propagate since it is a single view of the clone.
-A node pair may be converted to a regular node, effectively getting a new gti
-and eliminating the blue copy. Or, it may be converted to the shared copy,
-effectively forgetting its original content (leaving only the blue node). Once
-there are no more red nodes in a clone set, all its nodes become green again
-and the conflict is resolved.
-
-Some additional clone actions I think are useful are:
-
-1. Go to next/prev clone.
-2. Go to next/prev green clone (useful when there are red ones).
-3. Convert all green copies to a new clone group (useful when some clone copies
-needs to remain clones, but break from the original clone set, thus getting
-a new clone gti)
-
-Action 3 enables the user to partition its clone set to several clone groups
-by copying a clone's original content to its blue copy and finding matching
-(green) clones.
-
-What do we gain by all this?
-
-1. We can have conflicting clones without catastrophes.
-2. We get tools to handle conflicts and resolve them.
-3. We keep on working is Leo's environment, which is the most supportive one
-we can expect.
-
-Gil
-
-(By the way, I have a feeling that it would be useful to include along with
-the gti a hash of its node content, which could tell Leo is a node was changed
-outside of it. Also, including a timestamp in the opening sentinel, indicating
-when Leo last saved it. These may help having intelligent decisions by Leo in
-cases like conflicting clones.)
-#@-node:ekr.20031218072017.661:Gil 1
-#@+node:ekr.20031218072017.662:Gil 2
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1804169
-By: gilshwartz
-
-Another thing to think about is what should happen when close heading is changing.
-Right now, if you are inside Leo, all headings will be changed, and if you try
-to change by hand it in the derived file, clone links are removed (after some
-error reporting). This is quite reasonable in the current scheme of things,
-where one is not really expected to mess up with Leo sentinels.
-
-However, if/when @include is implemented, one would probably edit some files
-with clones that may extend to other files and changing the clone node name
-(via Leo) is quite feasible. Note that the gti for the cloned node would probably
-not change. So
-
-1. Do Leo resync the clone content based on the gti?
-2. Does it break cloning and allocates a new gti for one (arbitrary?) clone
-set?
-3. Let the user resolve manually, offer undoable auto-resolution with reporting,
-other?
-
-More things to think about.
-
-Gil
-#@-node:ekr.20031218072017.662:Gil 2
-#@-node:ekr.20031218072017.658:Resolve Conflicts command (may not be needed with @thin)
-#@+node:ekr.20031218072017.811:Split panes (could be done in gui plugins)
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1759009
-By: davidmcnab
-
-Hi,
-
-I know I've put this one before, but as I use Leo more and more, the lack of
-this is really pressing.
-
-I tried your previous suggestion - opening another editor to have a view of
-the file, but this is really painful, especially when I'm wanting to work on
-two or more files simultaneously.
-
-I've tried having files open in Emacs and writing them out, then doing a 'read
-@file nodes', but this doesn't always work - the changes made in Emacs aren't
-getting incorporated into the Leo tree (unless I quit/restart Leo).
-
-(BTW - I'm using latest CVS of Leo).
-
-What would make for Total Hacking Heaven is the ability to split a body pane
-vertically or horizontally, and to be able to split the sub-panes
-vertically/horizontally.
-
-What that, hotkeys would move the cursor between panes (ie make different panes
-'active'). Also, clicking on a node would display that node in the *currently
-active* body pane.
-
-This in place, as well as an accurage 'goto line number' feature would make
-Leo even more of a killer app.
-
-Cheers
-David
-
-#@-node:ekr.20031218072017.811:Split panes (could be done in gui plugins)
 #@+node:ekr.20040914095432:Use TreeCC to create generalized import
 @killcolor
 

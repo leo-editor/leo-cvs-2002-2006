@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5984" clone_windows="0"/>
-<globals body_outline_ratio="0.635416666667">
-	<global_window_position top="50" left="343" height="864" width="907"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5986" clone_windows="0"/>
+<globals body_outline_ratio="0.365740740741">
+	<global_window_position top="35" left="360" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -712,16 +712,16 @@
 </v>
 </v>
 <v t="ekr.20040930124233"><vh>headfind</vh></v>
+<v t="ekr.20041002105138"><vh>headfine (uses re)</vh></v>
 <v t="ekr.20041001161303"><vh>print all laoded plugins</vh></v>
 </v>
-<v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
-<v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
-<v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
-<v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
+<v t="ekr.20041001211817"><vh>Startup</vh>
+<v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
+<v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
@@ -812,14 +812,14 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2" a="E"><vh>Test Leo files...</vh>
+<v t="ekr.20040712101754.2"><vh>Test Leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
 <v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
 <v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
 <v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
-<v t="ekr.20040712101754.5" a="TV"><vh>@test leoPlugins.leo</vh></v>
+<v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
@@ -1184,9 +1184,13 @@
 </v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+<v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041001111106" a="M"
-marks="ekr.20041001111106.5,ekr.20041001111106.6,"><vh>@thin c:\prog\test\at-file-thin-test2.txt</vh></v>
+<v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
+<v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
+<v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
+<v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1455,7 +1459,7 @@ font = config.getFontFromParams(
         
 print font
 
-c = top() ; body = c.frame.body.bodyCtrl
+c = g.top() ; body = c.frame.body.bodyCtrl
 
 print body
 
@@ -1816,7 +1820,7 @@ for n in xrange(2000):
 import Tkinter as Tk
 import random as r ; rand = r.randint
 
-top = Tk.Toplevel(None) ; top.title("Drawing")
+top = Tk.Toplevel(None) ; top.title("Paul Klee")
 canvas = Tk.Canvas(top,height="5i",width="9i") # ,background="white")
 canvas.pack() ; top.update()
 
@@ -1861,12 +1865,6 @@ for s in t.__dict__:
 import Tkinter as Tk
 import random as r ; rand = r.randint
 
-top = Tk.Toplevel(None) ; top.title("Drawing")
-canvas = Tk.Canvas(top,height="5i",width="9i") # ,background="white")
-canvas.pack() ; top.update()
-
-@others
-
 mincolor,maxcolor=125,225
 xmax,ymax = 300,300
 h=w=1
@@ -1874,11 +1872,19 @@ i = r.uniform(2.0,4.0)
 j = r.uniform(-5.0,5.0)
 power = r.uniform(1.1,1.2)
     #(1.5,1.7)
+
+top = Tk.Toplevel(None)
+top.title("Complex function: (%f,%f)*(x,y)**%f" % (i,j,power))
+canvas = Tk.Canvas(top,height="5i",width="9i") # ,background="white")
+canvas.pack() ; top.update()
+
+@others
+
 for n in xrange(1):
     i += 0.5
     j += 0.5
     power += 0.01
-    print "i,j,power:",i,j,power
+    # print "i,j,power:",i,j,power
     c = complex(i,j)
     for format,m in (
         #("#%02x%02x%02x",256),
@@ -9709,5 +9715,53 @@ headfind()</t>
 
 for s in g.app.loadedPlugins:
     print s</t>
+<t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
+
+import leoTest
+reload(leoTest)
+
+leoTest.doTests(all=False)</t>
+<t tx="ekr.20041001203411"></t>
+<t tx="ekr.20041001203411.1">import leoGlobals as g
+
+g.es("hi",color="red")</t>
+<t tx="ekr.20041001211817"></t>
+<t tx="ekr.20041002105138"># Add to rClick or use as scriptButton.
+import leoGlobals as g
+import re
+
+def headfind():
+    """Search with re and
+    - GO to found headline beginning with the selected text or clipboard buffer
+    - EXCEPT when found search string is '-info' node
+    (BOTH 1.followed by ' -info'
+    AND 2.appears anywhere in headline(preceding space or start)
+    THEN just SHOW found info node's body text in Log pane."""
+    c = g.top()
+    s = c.frame.body.getSelectedText() or g.app.gui.getTextFromClipboard()
+    if s:
+        s = re.escape(s.lower())
+        sUseLogTrigger = re.escape(" -info")
+        for p in c.allNodes_iter():
+            srch="(^%s|(\b| )%s%s)" % (s,s,sUseLogTrigger)
+            if re.findall(srch,p.headString().lower()):
+                g.es("found " + s)
+                sUseLogTrigger_srch="(^| )%s%s" % (s,sUseLogTrigger)
+                if re.findall(sUseLogTrigger_srch,p.headString().lower()):
+                    body2=p.bodyString()
+                    g.es(body2,color="orange")
+                    return
+                else:
+                    c.beginUpdate()
+                    c.frame.tree.expandAllAncestors(p)
+                    c.selectVnode(p)
+                    c.endUpdate()
+                    return
+
+        g.es("no headline matches '%s'" % (s),color="blue")
+    else:
+        g.es("no selected text &amp; clipboard empty",color="blue")
+        
+headfind()</t>
 </tnodes>
 </leo_file>

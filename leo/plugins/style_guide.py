@@ -1,7 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040919081244:@thin style_guide.py
 """
-This is the plugin's docstring. Leo print's the __version__ variable (see
+This is the plugin's docstring. Leo prints the __version__ variable (see
 below) and this docstring when the user selects the plugin in the Plugins menu.
 Therefore, this docstring should be a clear, concise description of what the
 plugin does and how to use it.

@@ -70,22 +70,18 @@
 #@+node:ekr.20040722122459.2:Enhance the icon or status areas
 # Creates Hoist and De-Hoist buttons.
     hoist.py
-
-# Adds "run Script" and "scriptButton" buttons to the icon area.
-    # Highly recommended for all Python programmers.
-    mod_scripting.py
     
 # Automatically add nodes for common tasks.
     # newButtons.py
 
 # Creates "Recent" and "Marks" popups in the icon area.
-    nodenavigator.py
+    # nodenavigator.py
+    
+# Creates row-column indicators in the status area.
+    rowcol.py
     
 # Creates a search box and a "go" button in the icon area.
     searchbox.py
-
-# Creates row-column indicators in the status area.
-    # rowcol.py
 #@nonl
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040915073259.3:Enhance windows
@@ -254,6 +250,18 @@
     # This does not work on Linux because os.startfile does not exist.
     # startfile.py
 #@-node:ekr.20040722140829:New kinds of nodes
+#@+node:ekr.20041001210557.1:Scripting
+# Adds "run Script" and "scriptButton" buttons to the icon area.
+# Highly recommended for all Python programmers.
+# 
+# Optionally adds support for @plugin and @script nodes.
+# 
+# WARNING:
+#     @plugin and @script are potentially HIGHLY dangerous.
+#     @plugin and @script are enabled by constants in mod_scripting.py.
+
+    mod_scripting.py
+#@-node:ekr.20041001210557.1:Scripting
 #@+node:ekr.20040810065413:Spell checking
 # Both these plugins check spelling.
     # Both share the same code base.
