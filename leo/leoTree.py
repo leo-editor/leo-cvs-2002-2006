@@ -1371,21 +1371,23 @@ class leoTree:
 			frame.createMenuEntries(menu,table)
 		# Create the rest of the popup menu.
 		table = (
-			("Read @file Nodes",None,frame.OnReadAtFileNodes),
-			("Write @file Nodes",None,frame.OnWriteAtFileNodes),
+			("&Read @file Nodes",None,frame.OnReadAtFileNodes),
+			("&Write @file Nodes",None,frame.OnWriteAtFileNodes),
 			("-",None,None),
-			("Tangle","Shift+Ctrl+T",frame.OnTangle),
-			("Untangle","Shift+Ctrl+U",frame.OnUntangle),
+			("&Tangle","Shift+Ctrl+T",frame.OnTangle),
+			("&Untangle","Shift+Ctrl+U",frame.OnUntangle),
+			("-",None,None),
+			("Toggle Angle &Brackets","Ctrl+B",frame.OnToggleAngleBrackets),
 			("-",None,None),
 			("Cut Node","Shift+Ctrl+X",frame.OnCutNode),
 			("Copy Node","Shift+Ctrl+C",frame.OnCopyNode),
-			("Paste Node","Shift+Ctrl+V",frame.OnPasteNode),
-			("Delete Node","Shift+Ctrl+BkSp",frame.OnDeleteNode),
+			("&Paste Node","Shift+Ctrl+V",frame.OnPasteNode),
+			("&Delete Node","Shift+Ctrl+BkSp",frame.OnDeleteNode),
 			("-",None,None),
-			("Insert Node","Ctrl+I",frame.OnInsertNode),
-			("Clone Node","Ctrl+`",frame.OnCloneNode),
-			("Sort Children",None,frame.OnSortChildren),
-			("Sort Siblings","Alt-A",frame.OnSortSiblings),
+			("&Insert Node","Ctrl+I",frame.OnInsertNode),
+			("&Clone Node","Ctrl+`",frame.OnCloneNode),
+			("Sort C&hildren",None,frame.OnSortChildren),
+			("&Sort Siblings","Alt-A",frame.OnSortSiblings),
 			("-",None,None),
 			("Contract Parent","Alt+0",frame.OnContractParent))
 		
