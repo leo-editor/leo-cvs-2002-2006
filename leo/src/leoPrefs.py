@@ -151,7 +151,8 @@ class baseLeoPrefs:
 		left_data = [
 			("C/C++","c"), ("CWEB", "cweb"),
 			("HTML", "html"), ("Java", "java"),
-			("LaTeX", "latex"), ("Pascal", "pascal") ]
+			("LaTeX", "latex"), ("Pascal", "pascal"),
+			("Rebol", "rebol")]
 		
 		for text,value in left_data:
 			button = Tk.Radiobutton(lt,anchor="w",text=text,
@@ -168,6 +169,7 @@ class baseLeoPrefs:
 			button = Tk.Radiobutton(rt,anchor="w",text=text,
 				variable=self.lang_var,value=value,command=self.set_lang)
 			button.pack(fill="x")
+		
 		#@-body
 		#@-node:4::<< Create the Target Language frame >>
 
