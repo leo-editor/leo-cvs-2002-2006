@@ -360,10 +360,11 @@ class LeoFrame:
 	#@+body
 	def setTabWidth (self, w):
 		
-		try: # 8/11/02: This can fail when called from scripts.
-			# 9/20/22: Use the present font for computations.
+		try: # This can fail when called from scripts
+			# Use the present font for computations.
 			font = self.body.cget("font")
-			font = tkFont.Font(font=font)
+			root = app().root # 4/3/03: must specify root so idle window will work properly.
+			font = tkFont.Font(root=root,font=font)
 			tabw = font.measure(" " * abs(w)) # 7/2/02
 			# tablist = `tabw` + ' ' + `2*tabw`
 			self.body.configure(tabs=tabw)
