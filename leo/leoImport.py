@@ -93,7 +93,8 @@ class leoImportCommands:
 		self.fileType = type
 		# trace(`self.fileName`) ; trace(`self.fileType`)
 		# All file types except the following just get copied to the parent node.
-		appendFileFlag = type not in [".c", ".cpp", ".java", ".pas", ".py"]
+		# 08-SEP-2002 DTHEIN: Added php
+		appendFileFlag = type not in [".c", ".cpp", ".java", ".pas", ".py", ".php"]
 		
 		#@<< Read file into s >>
 		#@+node:1::<< Read file into s >>
@@ -126,6 +127,8 @@ class leoImportCommands:
 			self.scanPascalText(s,v)
 		elif type == ".py":
 			self.scanPythonText(s,v)
+		elif type == ".php":
+			self.scanPHPText(s,v) # 08-SEP-2002 DTHEIN
 		else:
 			es("createOutline: can't happen")
 		return v
