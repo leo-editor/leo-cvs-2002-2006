@@ -2588,22 +2588,28 @@ class LeoFrame:
 	def OnOpenPythonWindow(self,event=None):
 	
 		try:
-			import idle
-			if app().idle_imported:
-				reload(idle)
-			app().idle_imported = true
-		except:
-			try:
-				executable_dir = os.path.dirname(sys.executable)
-				idle_dir=os.path.join(executable_dir,"tools","idle")
+			executable_dir = os.path.dirname(sys.executable)
+			idle_dir=os.path.join(executable_dir,"Tools","idle")
+			if idle_dir not in sys.path:
+				if 0: # This message would be misleading: idle will reset sys.path.
+					es("appending " + `idle_dir` + " to sys.path")
 				sys.path.append(idle_dir)
-				# Try again
-				import idle
+			try:
+				# Set argv so idle will rerun leopy.leo as a script.
+				sys.argv = [os.path.join(app().loadDir,"leopy.leo")]
+				import idle # Must do this even if we have done so before.
+				if app().idle_imported:
+					reload(idle)
 				app().idle_imported = true
 			except:
+				es("app().idle_imported exception")
+		except:
+			try:
 				es("Can not import idle")
-				es("Please add \Python2x\Tools\idle to sys.paths")
-				traceback.print_exc()
+				es("Please add " + `idle_dir` + " to sys.path")
+				import traceback
+				traceback.print_exc() # This can fail!!
+			except: pass
 	
 		return "break" # inhibit further command processing.
 	#@-body

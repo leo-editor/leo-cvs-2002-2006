@@ -74,15 +74,16 @@ def init_sherlock (args):
 	# leoUtils.trace("argv", "sys.argv: " + `sys.argv`)
 #@-body
 #@-node:4::init_sherlock
-#@+node:5:C=1:open (leo.py)
+#@+node:5:C=1:leoOpen (leo.py)
 #@+body
-def open(fileName=None,*args):
+def leoOpen(fileName=None,*args):
 	
 	if fileName == None:
 		run()
 		return
 
-	reload_all()
+	if 0: # 9/5/02
+		reload_all()
 
 	# Create a hidden main window: this window never becomes visible!
 	root = Tkinter.Tk()
@@ -131,7 +132,7 @@ def open(fileName=None,*args):
 	init_sherlock(args)
 	root.mainloop()
 #@-body
-#@-node:5:C=1:open (leo.py)
+#@-node:5:C=1:leoOpen (leo.py)
 #@+node:6:C=3:reload_all
 #@+body
 def reload_all ():
@@ -245,7 +246,7 @@ if __name__ == "__main__":
 			fileName = string.join(sys.argv[1:],' ')
 		else:
 			fileName = sys.argv[1]
-		open(fileName)
+		leoOpen(fileName)
 	else:
 		run()
 #@-body
