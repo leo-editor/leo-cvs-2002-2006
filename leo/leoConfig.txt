@@ -1,0 +1,80 @@
+# leoConfig.txt: configuration file for Leo.
+# 7/5/2002 by Edward K. Ream
+
+# Leo looks for this file using the directory in sys.leo_config_directory.
+# (You would typically set this attribute in sitecustomize.py).
+# If sys.leo_config_directory does not exist,
+# Leo attempts to load this file from the directory from which Leo was loaded.
+
+# Settings in this file override settings in all .leo files.
+# Leo does not write settings to the <preferences> and <find_panel_settings>
+# elements of .leo files that exist in this file.
+
+# Leo uses Python's ConfigParser module, so this file has all the features
+# (and bugs!) of the ConfigParser module.
+
+# Comments start with a pound character.
+# You may specify booleans as 0/1, no/yes, false/true, off/on (case insensitive).
+# These get converted to 0/1 if the file is not read_only
+
+# WARNING: Do not place any options before the [config options] section.
+
+[config options]
+
+# WARNING: Clearing the read_only attribute will cause Leo to remove
+# all comments and alter order of attributes when rewriting this file!!
+
+read_only = 1
+
+[recent files]
+
+# The list of files initially in the "Recent Files" menu.
+file1 = c:\prog\leocvs\leo\leopy.leo
+file0 = c:\prog\leocvs\leo\leodocs.leo
+
+[find/change prefs]
+
+# These are the initial settings of the Find/Change panel.
+
+change_string = 
+find_string = 
+
+batch = 0
+ignore_case = 0
+mark_changes = 0
+mark_finds = 0
+pattern_match = 0
+reverse = 0
+search_body = 1
+search_headline = 0
+suboutline_only = 0
+whole_word = 1
+wrap = 0
+
+[prefs panel]
+
+# These are the initial settings of the Preferences panel.
+# Default Tangle Directory is deprecated.
+
+default_tangle_directory = 
+default_target_language = Python
+
+# Negative tab widths cause tabs to be converted to blanks.
+
+tab_width = 4
+page_width = 132
+
+output_doc_chunks = 1
+tangle_outputs_header = 1
+
+run_tangle_done.py = 0
+run_untangle_done.py = 0
+
+[font prefs]
+
+# This section is not functional yet.
+
+[syntax coloring prefs]
+
+# This section is not functional yet.
+
