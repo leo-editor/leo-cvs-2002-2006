@@ -44,6 +44,7 @@ class config:
 
 		# Settings in each section.
 		self.read_only = false
+		self.xml_version_string = None
 		self.findDict = {}
 		self.fontDict = {}
 		self.prefsDict = {}
@@ -168,6 +169,11 @@ class config:
 				self.read_only = config.getboolean(self.configSection, "read_only")
 			except:
 				self.read_only = false # not an error.
+				
+			try:
+				self.xml_version_string = config.get(self.configSection, "xml_version_string")
+			except:
+				self.xml_version_string = prolog_version_string
 			#@-body
 			#@-node:1::<< get config options >>
 
@@ -192,17 +198,22 @@ class config:
 			#@+node:3::<< get prefs >>
 			#@+body
 			# Names of prefsSection prefs
-			boolPrefsNames = ["output_doc_chunks",
-					"run_tangle_done.py","run_untangle_done.py",
-					"tangle_outputs_header" ]
+			boolPrefsNames = [
+				"output_doc_chunks",
+				"run_tangle_done.py","run_untangle_done.py",
+				"tangle_outputs_header" ]
 					
 			for name in ["page_width","tab_width"]:
 				try:
 					val = config.getint(self.prefsSection, name)
 					self.prefsDict[name] = val
 				except: pass # not an error.
+				
+			stringPrefsDict = [
+				"default_tangle_directory",
+				"default_target_language"]
 			
-			for name in ["default_tangle_directory", "default_target_language"]:
+			for name in stringPrefsDict:
 				try:
 					val = config.get(self.prefsSection, name)
 					self.prefsDict[name] = val
@@ -263,7 +274,7 @@ class config:
 			# print `self.prefsDict`
 			cf.close()
 		except:
-			es("Can not open " + self.configFileName)
+			# es("Can not open " + self.configFileName)
 			pass
 	#@-body
 	#@-node:7::open
@@ -465,6 +476,7 @@ class config:
 			config.add_section(section)
 			
 			config.set(section,"read_only",self.read_only)
+			config.set(section,"xml_version_string",self.xml_version_string)
 			#@-body
 			#@-node:1::<< write config section >>
 

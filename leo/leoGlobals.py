@@ -24,6 +24,12 @@ body_newline = '\n'
 body_ignored_newline = '\r'
 prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 
+# New in leo.py 3.0
+prolog_prefix_string = "<?xml version=\"1.0\" encoding="
+prolog_version_string1 = "UTF-8" # for leo.py 2.x
+prolog_version_string2 = "ISO-8859-1" # for leo.py 3.x
+prolog_postfix_string = "?>"
+
 # These are set by the @langauge directive.
 # Used by Tangle, Untangle and syntax coloring.
 ada_language =		 1

@@ -106,11 +106,13 @@ class LeoFind:
 		# self.top.SetIcon("LeoIcon")
 	
 		# Create the find panel...
+		outer = Tk.Frame(top,relief="groove",bd=2)
+		outer.pack(padx=2,pady=2)
 		
 		#@<< Create the Find and Change panes >>
 		#@+node:2::<< Create the Find and Change panes >>
 		#@+body
-		fc = Tk.Frame(top, bd="1m")
+		fc = Tk.Frame(outer, bd="1m")
 		fc.pack(anchor="n", fill="x", expand=1)
 		
 		fpane = Tk.Frame(fc, borderwidth=1, height="0.95i", width="1.5i")
@@ -136,7 +138,7 @@ class LeoFind:
 		#@<< Create two columns of checkboxes >>
 		#@+node:3::<< Create two columns of checkboxes >>
 		#@+body
-		boxes = Tk.Frame(top, bd="1m")
+		boxes = Tk.Frame(outer, bd="1m")
 		boxes.pack(anchor="n", expand=1, fill="x")
 		
 		lt = Tk.Frame(boxes, bd=1)
@@ -172,8 +174,8 @@ class LeoFind:
 		#@+node:4::<< Create two rows of buttons >>
 		#@+body
 		# Create the button panes
-		buttons  = Tk.Frame(top, bd=1)
-		buttons2 = Tk.Frame(top, bd=1)
+		buttons  = Tk.Frame(outer, bd=1)
+		buttons2 = Tk.Frame(outer, bd=1)
 		buttons.pack (anchor="n", expand=1, fill="x")
 		buttons2.pack(anchor="n", expand=1, fill="x")
 		

@@ -9,7 +9,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import leoDialog, leoNodes, leoPrefs
+import leoColor,leoDialog,leoFontPanel,leoNodes, leoPrefs
 import Tkinter, tkFileDialog, tkFont
 
 # Needed for menu commands
@@ -228,7 +228,8 @@ class LeoFrame:
 		
 		for i in xrange(len(self.recentFiles)):
 			name = self.recentFiles[i]
-			exec("recentFilesMenu.add_command(label=name,command=self.OnOpenRecentFile" + `i` + ")")
+			callback = lambda n=i: self.OnOpenRecentFile(n)
+			recentFilesMenu.add_command(label=name,command=callback)
 
 		#@-body
 		#@-node:2:C=6:<< create the recent files submenu >>
@@ -402,7 +403,7 @@ class LeoFrame:
 		editMenu.add_command(label="Set Font...",
 			accelerator="Shift+Alt+T",command=self.OnFontPanel)
 		editMenu.add_command(label="Set Colors...",
-			accelerator="Shift+Alt+S",command=self.OnSyntaxColoring)
+			accelerator="Shift+Alt+S",command=self.OnColorPanel)
 		
 		label = choose(c.tree.colorizer.showInvisibles,"Hide Invisibles","Show Invisibles")
 		editMenu.add_command(label=label,command=self.OnViewAllCharacters,
@@ -756,7 +757,7 @@ class LeoFrame:
 			# "z" unused
 			# Shift-Alt
 			# ("E", self.OnExecuteScript),
-			("S", self.OnSyntaxColoring),
+			("S", self.OnColorPanel),
 			("T", self.OnFontPanel)
 			#@-body
 			#@-node:3::<< alt key bindings >>
@@ -1158,7 +1159,8 @@ class LeoFrame:
 					# Recreate frame.recentFilesMenu.
 					i = 0
 					for name in frame.recentFiles:
-						exec("frame.recentFilesMenu.add_command(label=name,command=frame.OnOpenRecentFile" + `i` + ")")
+						callback = lambda n=i: self.OnOpenRecentFile(n)
+						frame.recentFilesMenu.add_command(label=name,command=callback)
 						i += 1
 					
 				# Update the config file.
@@ -1311,20 +1313,9 @@ class LeoFrame:
 	#@-node:9:C=22:frame.OnQuit
 	#@-node:1::top level
 	#@+node:2:C=23:Recent Files submenu
-	#@+node:1::OnOpenRecentFile1...OnOpenFileN
+	#@+node:1::OnOpenFileN
 	#@+body
-	def OnOpenRecentFile0(self): return self.OnOpenFileN(0)
-	def OnOpenRecentFile1(self): return self.OnOpenFileN(1)
-	def OnOpenRecentFile2(self): return self.OnOpenFileN(2)
-	def OnOpenRecentFile3(self): return self.OnOpenFileN(3)
-	def OnOpenRecentFile4(self): return self.OnOpenFileN(4)
-	def OnOpenRecentFile5(self): return self.OnOpenFileN(5)
-	def OnOpenRecentFile6(self): return self.OnOpenFileN(6)
-	def OnOpenRecentFile7(self): return self.OnOpenFileN(7)
-	def OnOpenRecentFile8(self): return self.OnOpenFileN(8)
-	def OnOpenRecentFile9(self): return self.OnOpenFileN(9)
-	
-	def OnOpenFileN(self,n):
+	def OnOpenRecentFile(self,n):
 		
 		if n < len(self.recentFiles):
 			fileName = self.recentFiles[n]
@@ -1332,20 +1323,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1::OnOpenRecentFile1...OnOpenFileN
-	#@+node:2::OnOpenRecentFile
-	#@+body
-	def OnOpenRecentFile(self,fileName):
-		
-		# Update the submenu.
-		# trace(`fileName`)
-	
-		# Create a new frame before deleting this frame.
-		ok, frame = self.OpenWithFileName(fileName)
-	
-		return "break" # inhibit further command processing
-	#@-body
-	#@-node:2::OnOpenRecentFile
+	#@-node:1::OnOpenFileN
 	#@-node:2:C=23:Recent Files submenu
 	#@+node:3::Read/Write submenu
 	#@+node:1:C=24:fileCommands.OnReadOutlineOnly
@@ -1767,135 +1745,24 @@ class LeoFrame:
 	#@+node:9:C=30:OnFontPanel
 	#@+body
 	def OnFontPanel(self,event=None):
-		
-		frame = self ; c = frame.commands ; Tk = Tkinter
-		
-		
-		#@<< Create the font dialog >>
-		#@+node:1::<< Create the font dialog >>
-		#@+body
-		top = Tk.Toplevel(app().root)
-		top.title("Select a font")
-		
-		# Create the outer frames
-		outer = Tk.Frame(top)
-		outer.pack(fill="both",expand=1,padx=2,pady=2)
-		
-		w,ff = create_labeled_frame(outer)
-		w.pack(fill="both",expand=1,padx=2,pady=2)
-		
-		# Create a frame containing the grid of inner boxes.
-		g = Tk.Frame(ff)
-		g.grid()
-		
-		# Create the inner frames of the grid.
-		family = Tk.Frame(g)
-		family.grid(row=1,col=1)
-		
-		style = Tk.Frame(g)
-		style.grid(row=1,col=2)
-		
-		buttons = Tk.Frame(g)
-		buttons.grid(row=1,col=3)
-		
-		size = Tk.Frame(g)
-		size.grid(row=2,col=1,columnspan=3,sticky="news")
-		
-		sample = Tk.Frame(g)
-		sample.grid(row=3,col=1,columnspan=3,sticky="news")
-		
-		# Create the Family pane.
-		w,f = create_labeled_frame(family,caption="Family")
-		w.pack(padx=2)
-		
-		b = Tk.Listbox(f,height=7,width=12)
-		b.pack(padx=2)
-		
-		# Create the Style frame.
-		w,f = create_labeled_frame(style,caption="Style")
-		w.pack(padx=2)
-		
-		styles = Tk.Frame(f)
-		styles.pack()
-		i = 1
-		for name in ("Bold","Italic","Underline","OverStrike"):
-			b = Tk.Checkbutton(styles,text=name)
-			b.pack(anchor="w",pady=1)
-			i += 1
-		
-		# Create the column of buttons.
-		buttonFrame = Tk.Frame(buttons)
-		buttonFrame.pack(padx=2)
-		
-		b = Tk.Button(buttonFrame,width=7,text="OK")
-		b.pack(side="top")
-		b = Tk.Button(buttonFrame,width=7,text="Cancel")
-		b.pack(side="top",fill="y",expand=1,pady=10)
-		b = Tk.Button(buttonFrame,width=7,text="Apply")
-		b.pack(side="bottom")
-		
-		
-		#@<< create the size pane >>
-		#@+node:1::<< create the size pane >>
-		#@+body
-		w,f = create_labeled_frame(size,caption="Size")
-		w.pack(padx=2,fill="both",expand=1)
-		
-		sizes = Tk.Frame(f)
-		f.grid(sticky="news")
-		
-		size8 = Tk.Radiobutton(f,text="8")
-		size8.grid(row=1,column=0,sticky="w")
-		size10 = Tk.Radiobutton(f,text="10")
-		size10.grid(row=2,column=0,sticky="w")
-		
-		size12 = Tk.Radiobutton(f,text="12")
-		size12.grid(row=1,column=1,sticky="w")
-		size14 = Tk.Radiobutton(f,text="14")
-		size14.grid(row=2,column=1,sticky="w")
-		
-		size18 = Tk.Radiobutton(f,text="18")
-		size18.grid(row=1,column=2,sticky="w")
-		size24 = Tk.Radiobutton(f,text="24")
-		size24.grid(row=2,column=2,sticky="w")
-		
-		sizeBox = Tk.Entry(f,width=12)
-		sizeBox.grid(row=1,rowspan=2,column=3,padx=10)
-		#@-body
-		#@-node:1::<< create the size pane >>
-
-		
-		# Create the sample pane.
-		w,f  = create_labeled_frame(sample,caption="Sample",pady=2)
-		w.pack(side="top",fill="both",expand=1,padx=2,pady=2)
-		color = f.cget("bg")
-		e = Tk.Entry(f,bd=0,bg=color)
-		e.insert(0, "Sample Text Here (May be edited)") 
-		e.pack(fill="x",expand=1,padx=5,pady=5)
-		#@-body
-		#@-node:1::<< Create the font dialog >>
-
-		
-		# This must be done _after_ the dialog has been built!
-		center_dialog(top)
-		top.resizable(0,0)
 	
-		## To do: set body text font, size based on dialog
+		fp =  leoFontPanel.leoFontPanel(self.commands)
+		fp.run()
 	
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:9:C=30:OnFontPanel
-	#@+node:10:C=31:OnSyntaxColoring
+	#@+node:10:C=31:OnColorPanel
 	#@+body
-	def OnSyntaxColoring(self,event=None):
+	def OnColorPanel(self,event=None):
 		
-		frame = self ; c = frame.commands
-		
-		trace()
+		cp = leoColor.leoColorPanel(self.commands)
+		cp.run()
 	
 		return "break" # inhibit further command processing
+
 	#@-body
-	#@-node:10:C=31:OnSyntaxColoring
+	#@-node:10:C=31:OnColorPanel
 	#@+node:11:C=32:OnViewAllCharacters
 	#@+body
 	def OnViewAllCharacters (self, event=None):
@@ -2509,7 +2376,7 @@ class LeoFrame:
 		tkMessageBox.showinfo(
 			"About Leo",
 			"Leo in Python/Tk\n" +
-			"Version 2.5.1, July 7, 2002\n\n" +
+			"Version 3.0, July 15, 2002\n\n" +
 	
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +

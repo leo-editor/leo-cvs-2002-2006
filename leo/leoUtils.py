@@ -178,7 +178,7 @@ def center_dialog(top):
 # Typically the caller would pack w into other frames, and pack content into f.
 
 def create_labeled_frame (parent,
-	caption=None,relief="ridge",bd=2,padx=0,pady=0):
+	caption=None,relief="groove",bd=2,padx=0,pady=0):
 	
 	Tk = Tkinter
 	# Create w, the master frame.

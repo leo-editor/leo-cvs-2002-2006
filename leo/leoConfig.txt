@@ -25,6 +25,7 @@
 # all comments and alter order of attributes when rewriting this file!!
 
 read_only = 1
+xml_version_string = ISO-8859-1
 
 [recent files]
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="958" clone_windows="0"/>
 <globals body_outline_ratio="0.5">

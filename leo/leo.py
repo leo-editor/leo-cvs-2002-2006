@@ -107,7 +107,9 @@ def open(fileName=None,*args):
 	# Initialize application globals
 	app = leoApp.LeoApp(root)
 	leoGlobals.setApp(app)
-	app.finishCreate() # do this after gApp exists.
+	if not app.finishCreate(): # do this after gApp exists.
+		root.destroy()
+		return
 	# Create the first Leo window
 	frame1 = leoFrame.LeoFrame()
 	frame1.top.withdraw()
@@ -184,7 +186,9 @@ def run(*args):
 	# Initialize application globals
 	app = leoApp.LeoApp(root)
 	leoGlobals.setApp(app)
-	app.finishCreate() # do this after gApp exists.
+	if not app.finishCreate(): # do this after gApp exists.
+		root.destroy()
+		return
 	# Create the first Leo window
 	frame = leoFrame.LeoFrame()
 	frame.startupWindow = leoGlobals.true

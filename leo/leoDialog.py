@@ -19,7 +19,32 @@ class leoDialog:
 		self.top = None
 	#@-body
 	#@-node:1::dialog.__init__
-	#@+node:2::askOkCancel
+	#@+node:2::askOk
+	#@+body
+	def askOk(self, title, message):
+	
+		Tk = Tkinter ; root = app().root
+		self.answer="ok"
+		self.top = top = Tk.Toplevel(root)
+		top.title(title)
+		top.resizable(0,0) # neither height or width is resizable.
+		frame = Tk.Frame(top)
+		self.top.bind("<Key>", self.OnOkCancelKey)
+		frame.pack()
+		label = Tk.Label(frame, text=message)
+		label.pack(pady=10)
+		center = Tk.Frame(frame)
+		center.pack()
+		ok = Tk.Button(center,width=6,text="OK",bd=4, # default button
+			underline=0,command=self.okButton)
+		ok.pack(side="left",padx=5,pady=10)
+		self.center() # Do this after packing.
+		top.grab_set() # Make the dialog a modal dialog.
+		top.focus_force() # Get all keystrokes.
+		root.wait_window(top)
+	#@-body
+	#@-node:2::askOk
+	#@+node:3::askOkCancel
 	#@+body
 	def askOkCancel(self, title, message):
 	
@@ -47,8 +72,8 @@ class leoDialog:
 		root.wait_window(top)
 		return self.answer
 	#@-body
-	#@-node:2::askOkCancel
-	#@+node:3::askYesNo
+	#@-node:3::askOkCancel
+	#@+node:4::askYesNo
 	#@+body
 	def askYesNo(self, title, message):
 	
@@ -76,8 +101,8 @@ class leoDialog:
 		root.wait_window(top)
 		return self.answer
 	#@-body
-	#@-node:3::askYesNo
-	#@+node:4::askYesNoCancel
+	#@-node:4::askYesNo
+	#@+node:5::askYesNoCancel
 	#@+body
 	def askYesNoCancel(self, title, message):
 	
@@ -108,8 +133,8 @@ class leoDialog:
 		root.wait_window(top)
 		return self.answer
 	#@-body
-	#@-node:4::askYesNoCancel
-	#@+node:5::dialog.center
+	#@-node:5::askYesNoCancel
+	#@+node:6::dialog.center
 	#@+body
 	# Center the dialog on the screen.
 	
@@ -131,8 +156,8 @@ class leoDialog:
 		y = (sh - h)/2
 		top.geometry("%dx%d%+d%+d" % (w,h,x,y))
 	#@-body
-	#@-node:5::dialog.center
-	#@+node:6::Event handlers & command handlers
+	#@-node:6::dialog.center
+	#@+node:7::Event handlers & command handlers
 	#@+node:1::cancelButton, noButton, okButton, yesButton
 	#@+body
 	# Command handlers.
@@ -179,7 +204,7 @@ class leoDialog:
 		return "break"
 	#@-body
 	#@-node:2::OnOkCancelKey, OnYesNoKey, OnYesNoCancelKey
-	#@-node:6::Event handlers & command handlers
+	#@-node:7::Event handlers & command handlers
 	#@-others
 #@-body
 #@-node:0::@file leoDialog.py

@@ -60,16 +60,17 @@ class LeoPrefs:
 		self.top = top = Tk.Toplevel()
 		head,tail = os.path.split(c.frame.title)
 		self.top.title("Prefs for " + tail)
-		top.resizable(0,0) # neither height or width is resizable.
+		
+		# Create the outer frame
+		outer = Tk.Frame(top,bd=2,relief="groove")
+		outer.pack(fill="both",expand=1,padx=2,pady=2)
 		
 		#@<< Create the Global Options frame >>
 		#@+node:2::<< Create the Global Options frame >>
 		#@+body
-		glob = Tk.Frame(top, bd="2", relief="groove") 
-		glob.pack(anchor="n", pady=2, ipadx="1m", expand=1, fill="x")
-		
-		globTitle = Tk.Label(glob, text="Global Options...")
-		globTitle.pack(pady="1m")
+		# Frame and title
+		w,glob = create_labeled_frame (outer,caption="Global Options")
+		w.pack(padx=2,pady=2,expand=1,fill="x")
 		
 		# Page width & page width
 		f = Tk.Frame(glob)
@@ -105,11 +106,8 @@ class LeoPrefs:
 		#@+node:3::<< Create the Tangle Options frame >>
 		#@+body
 		# Frame and title
-		tangle = Tk.Frame(top, bd="2", relief="groove")
-		tangle.pack(anchor="n", ipadx="1m", expand=1, fill="x")
-		
-		tangleTitle = Tk.Label(tangle, text="Default Options...")
-		tangleTitle.pack(pady="1m")
+		w,tangle = create_labeled_frame (outer,caption="Default Options")
+		w.pack(padx=2,pady=2,expand=1,fill="x")
 		
 		# Label and text
 		lab3 = Tk.Label(tangle, anchor="w", text="Default tangle directory")
@@ -135,11 +133,8 @@ class LeoPrefs:
 		#@+node:4::<< Create the Target Language frame >>
 		#@+body
 		# Frame and title
-		target = Tk.Frame(top, bd="2", relief="groove")
-		target.pack(anchor="n", pady=2, expand=1, fill="x") #   
-		
-		targetTitle = Tk.Label(target, text="Default Target Language...")
-		targetTitle.pack(pady="1m")
+		w,target = create_labeled_frame (outer,caption="Default Target Language")
+		w.pack(padx=2,pady=2,expand=1,fill="x")
 		
 		# Frames for two columns of radio buttons
 		lt = Tk.Frame(target)
@@ -173,8 +168,8 @@ class LeoPrefs:
 		#@<< Create the Ok, Cancel & Revert buttons >>
 		#@+node:5::<< Create the Ok, Cancel & Revert buttons >>
 		#@+body
-		buttons = Tk.Frame(top,bd="2",relief="groove")
-		buttons.pack(expand=1,fill="x")
+		buttons = Tk.Frame(outer)
+		buttons.pack(padx=2,pady=2,expand=1,fill="x")
 		
 		okButton = Tk.Button(buttons,text="OK",width=7,command=self.onOK)
 		cancelButton = Tk.Button(buttons,text="Cancel",width=7,command=self.onCancel)
@@ -186,6 +181,7 @@ class LeoPrefs:
 		#@-body
 		#@-node:5::<< Create the Ok, Cancel & Revert buttons >>
 
+		top.resizable(0,0) # neither height or width is resizable.
 		self.top.protocol("WM_DELETE_WINDOW", self.OnClosePrefsFrame)
 		self.init(c)
 		# es("Prefs.__init__")

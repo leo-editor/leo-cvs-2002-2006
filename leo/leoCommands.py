@@ -181,7 +181,8 @@ class Commands:
 		if not s or not c.canPasteOutline(s):
 			return # This should never happen.
 	
-		isLeo = len(s)>=len(prolog_string) and prolog_string==s[0:len(prolog_string)]
+		# isLeo = len(s)>=len(prolog_string) and prolog_string==s[0:len(prolog_string)]
+		isLeo = match(s,0,prolog_prefix_string)
 	
 		# trace(`s`)
 		if isLeo:
@@ -835,7 +836,9 @@ class Commands:
 				return false
 	
 		# trace(`s`)
-		if len(s) >= len(prolog_string) and s[0:len(prolog_string)] == prolog_string:
+		# if len(s) >= len(prolog_string) and s[0:len(prolog_string)] == prolog_string:
+			
+		if match(s,0,prolog_prefix_string):
 			return true
 		elif len(s) > 0:
 			return c.importCommands.stringIsValidMoreFile(s)

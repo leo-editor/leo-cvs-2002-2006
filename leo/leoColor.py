@@ -8,7 +8,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import keyword, string
+import keyword, string, Tkinter
 
 
 #@<< define colorizer constants >>
@@ -204,9 +204,12 @@ def index(i,j):
 
 
 class colorizer:
-
+	
+	#@<< class colorizer methods >>
+	#@+node:4::<< class colorizer methods >>
+	#@+body
 	#@+others
-	#@+node:4:C=2:color.__init__
+	#@+node:1:C=2:color.__init__
 	#@+body
 	def disable (self):
 	
@@ -223,8 +226,8 @@ class colorizer:
 		self.delim = None # delimiter for triple strings.
 		trace("-nocolor", self.disable)
 	#@-body
-	#@-node:4:C=2:color.__init__
-	#@+node:5::color.callbacks...
+	#@-node:1:C=2:color.__init__
+	#@+node:2::color.callbacks...
 	#@+node:1::OnHyperLinkControlClick
 	#@+body
 	def OnHyperLinkControlClick (self,v):
@@ -246,8 +249,8 @@ class colorizer:
 		pass # trace(`v`)
 	#@-body
 	#@-node:3::OnHyperLinkLeave
-	#@-node:5::color.callbacks...
-	#@+node:6:C=3:colorize
+	#@-node:2::color.callbacks...
+	#@+node:3:C=3:colorize
 	#@+body
 	def colorize(self,v,body):
 	
@@ -255,8 +258,8 @@ class colorizer:
 			flag,language = self.updateSyntaxColorer(v)
 			self.colorizeAnyLanguage(v,body,language,flag)
 	#@-body
-	#@-node:6:C=3:colorize
-	#@+node:7:C=4:colorizeAnyLanguage
+	#@-node:3:C=3:colorize
+	#@+node:4:C=4:colorizeAnyLanguage
 	#@+body
 	tags = (
 		"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
@@ -732,8 +735,8 @@ class colorizer:
 	#@-body
 	#@+node:3::Multiline State Handlers
 	#@-node:3::Multiline State Handlers
-	#@-node:7:C=4:colorizeAnyLanguage
-	#@+node:8:C=5:scanColorDirectives
+	#@-node:4:C=4:colorizeAnyLanguage
+	#@+node:5:C=5:scanColorDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all of v's ancestors looking for @color and @nocolor directives.
@@ -778,8 +781,8 @@ class colorizer:
 		# trace(`language`)
 		return language
 	#@-body
-	#@-node:8:C=5:scanColorDirectives
-	#@+node:9::color.schedule
+	#@-node:5:C=5:scanColorDirectives
+	#@+node:6::color.schedule
 	#@+body
 	def schedule(self,v,body):
 	
@@ -792,8 +795,8 @@ class colorizer:
 		if v and body and self.enabled:
 			self.colorize(v,body)
 	#@-body
-	#@-node:9::color.schedule
-	#@+node:10::getCwebWord
+	#@-node:6::color.schedule
+	#@+node:7::getCwebWord
 	#@+body
 	def getCwebWord (self,s,i):
 		
@@ -821,8 +824,8 @@ class colorizer:
 			
 		return word
 	#@-body
-	#@-node:10::getCwebWord
-	#@+node:11:C=6:updateSyntaxColorer
+	#@-node:7::getCwebWord
+	#@+node:8:C=6:updateSyntaxColorer
 	#@+body
 	# Returns (flag,language)
 	# flag is true unless an unambiguous @nocolor is seen.
@@ -835,8 +838,8 @@ class colorizer:
 		return flag,language
 
 	#@-body
-	#@-node:11:C=6:updateSyntaxColorer
-	#@+node:12::useSyntaxColoring
+	#@-node:8:C=6:updateSyntaxColorer
+	#@+node:9::useSyntaxColoring
 	#@+body
 	# Return true if v unless v is unambiguously under the control of @nocolor.
 	
@@ -862,8 +865,8 @@ class colorizer:
 		# trace("useSyntaxColoring",`val`)
 		return val
 	#@-body
-	#@-node:12::useSyntaxColoring
-	#@+node:13::Utils
+	#@-node:9::useSyntaxColoring
+	#@+node:10::Utils
 	#@+body
 	#@+at
 	#  These methods are like the corresponding functions in leoUtils.py except they issue no error messages.
@@ -918,8 +921,94 @@ class colorizer:
 		return i
 	#@-body
 	#@-node:3::skip_string
-	#@-node:13::Utils
+	#@-node:10::Utils
 	#@-others
+	
+	#@-body
+	#@-node:4::<< class colorizer methods >>
+
+	
+class leoColorPanel:
+	
+	#@<< class leoColorPanel methods >>
+	#@+node:5:C=7:<< class leoColorPanel methods >>
+	#@+body
+	#@+others
+	#@+node:1::colorPanel.__init__
+	#@+body
+	def __init__ (self,c):
+		
+		self.command = c
+		self.frame = c.frame
+	#@-body
+	#@-node:1::colorPanel.__init__
+	#@+node:2::run
+	#@+body
+	def run (self):
+		
+		
+		#@<< create color panel >>
+		#@+node:1::<< create color panel >>
+		#@+body
+		Tk = Tkinter
+		
+		top = Tk.Toplevel(app().root)
+		top.title("Select syntax colors")
+		
+		outer = Tk.Frame(top,bd=2,relief="groove")
+		outer.pack(anchor="n",pady=2,ipady=1,expand=1,fill="x")
+		
+		data = (
+			("Comments:","red"),
+			("Directives:","blue"),("Doc parts:","red"),
+			("Keywords:","blue"),
+			("Section names:","red"),("Strings:","green"),
+			("Undefined names:","orange"))
+		
+		for name,color in data:
+			f = Tk.Frame(outer,bd=2)
+			f.pack()
+			lab=Tk.Label(f,text=name,width=14,anchor="e")
+			b1 = Tk.Button(f,text="",state="disabled",bg=color,width=4)
+			callback = lambda name=name,color=color: self.showColorPicker(name,color)
+			b2 = Tk.Button(f,text="Set...",command=callback)
+			lab.pack(side="left",padx=3)
+			b1.pack (side="left",padx=3)
+			b2.pack (side="left",padx=3)
+			
+		f = Tk.Frame(outer,bd=2)
+		f.pack()
+		
+		b = Tk.Button(f,width=6,text="OK")
+		b.pack(side="left",padx=6)
+		b = Tk.Button(f,width=6,text="Cancel")
+		b.pack(side="right",padx=6)
+
+		#@-body
+		#@-node:1::<< create color panel >>
+
+	
+		# This must be done _after_ the dialog has been built!
+		center_dialog(top)
+		top.resizable(0,0)
+		top.grab_set() # Make the dialog a modal dialog.
+		top.focus_force() # Get all keystrokes.
+	#@-body
+	#@-node:2::run
+	#@+node:3::showColorPicker
+	#@+body
+	def showColorPicker (self,name,color):
+		
+		trace(`name` + "," + `color`)
+		import tkColorChooser
+		rgb,val = tkColorChooser.askcolor(color=color)
+		es(`val`)
+	#@-body
+	#@-node:3::showColorPicker
+	#@-others
+	
+	#@-body
+	#@-node:5:C=7:<< class leoColorPanel methods >>
 #@-body
 #@-node:0::@file leoColor.py
 #@-leo

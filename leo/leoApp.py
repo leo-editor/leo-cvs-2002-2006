@@ -6,7 +6,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import leo,leoConfig,leoFind
+import leo,leoConfig,leoDialog,leoFind
 import os, sys, Tkinter
 
 class LeoApp:
@@ -45,8 +45,30 @@ class LeoApp:
 	def finishCreate(self):
 	
 		
+		#@<< return false if not v2.2 or above >>
+		#@+node:1::<< return false if not v2.2 or above >>
+		#@+body
+		try:
+			version = self.root.getvar("tk_patchLevel")
+			vlist = string.split(version,".")
+			v0 = int(vlist[0])
+			v1 = int(vlist[1])
+			v22 = v0 > 2 or (v0 == 2 and v1 > 1)
+		except:
+			print "exception getting version"
+			v22 = true # Just hope
+			
+		if not v22:
+			d = leoDialog.leoDialog()
+			d.askOk("Python version error",
+				"leo.py requires Python 2.2 or higher...Goodbye.")
+			return false
+		#@-body
+		#@-node:1::<< return false if not v2.2 or above >>
+
+		
 		#@<< set loadDir >>
-		#@+node:1:C=3:<< set loadDir >>
+		#@+node:2:C=3:<< set loadDir >>
 		#@+body
 		# loadDir should be the directory that contains leo.py
 		
@@ -63,11 +85,11 @@ class LeoApp:
 		# Trace hasn't been enabled yet.
 		# print `self.loadDir`
 		#@-body
-		#@-node:1:C=3:<< set loadDir >>
+		#@-node:2:C=3:<< set loadDir >>
 
 		
 		#@<< set the default Leo icon >>
-		#@+node:2::<< set the default Leo icon >>
+		#@+node:3::<< set the default Leo icon >>
 		#@+body
 		try: # 6/2/02: Try to set the default bitmap.
 			bitmap_name = os.path.join(self.loadDir, "Icons\LeoApp.ico")
@@ -112,13 +134,14 @@ class LeoApp:
 			except:
 				es("exception setting bitmap")
 		#@-body
-		#@-node:2::<< set the default Leo icon >>
+		#@-node:3::<< set the default Leo icon >>
 
 		self.config = leoConfig.config()
 		
 		# Create the global windows
 		self.findFrame = leoFind.LeoFind()
 		self.findFrame.top.withdraw()
+		return true # all went well.
 	#@-body
 	#@-node:2:C=2:app.finishCreate
 	#@+node:3::destroyAllGlobalWindows
