@@ -49,6 +49,7 @@ class LeoApp:
 		self.quitting = false # True if quitting.  Locks out some events.
 		self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
 		self.root = None # The hidden main window. Set later.
+		self.searchDict = {} # For communication between find/change scripts.
 		self.trace_list = [] # "Sherlock" argument list for tracing().
 		self.tkEncoding = "utf-8"
 		self.unicodeErrorGiven = true # true: suppres unicode tracebacks.
