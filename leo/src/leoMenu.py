@@ -23,7 +23,7 @@ class leoMenu:
         self.c = frame.c
         self.frame = frame
         self.menus = {} # Menu dictionary.
-        self.menuShortcuts = []
+        self.menuShortcuts = {}
         
         self.defineMenuTables()
     #@nonl
@@ -805,7 +805,7 @@ class leoMenu:
     #@-at
     #@@c
     
-    def createMenuEntries (self,menu,table,openWith=False,dontBind=False):
+    def createMenuEntries (self,menu,table,openWith=False,dontBind=False,init=False):
         
         c = self.c
         for label,accel,command in table:
@@ -895,21 +895,36 @@ class leoMenu:
                 if bind_shortcut and not dontBind:
                     #@                << handle bind_shorcut >>
                     #@+node:ekr.20031218072017.1729:<< handle bind_shorcut >>
-                    if bind_shortcut in self.menuShortcuts:
+                    d = self.menuShortcuts
+                    bunch = d.get(bind_shortcut)
+                    
+                    if bunch and not g.app.menuWarningsGiven:
+                        if bunch.init:
+                            if 0: # Testing only.
+                                s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
+                                    accel,label,bunch.accel,bunch.label)
+                                g.es(s,color="red")
+                                print s
+                            # Unbind the previous accelerator.
+                            if menu != bunch.menu or label != bunch.label:
+                                self.clearAccel(bunch.menu,bunch.label)
+                        else:
+                            s = 'duplicate shortcut\nnew: %s %s\nold: %s %s' % (
+                                accel,label,bunch.accel,bunch.label)
+                            g.es(s,color="red")
+                            print s
+                    
+                    d[bind_shortcut] = g.Bunch(label=label,accel=accel,init=init,menu=menu)
+                        
+                    try:
+                        self.frame.body.bind(bind_shortcut,callback)
+                        self.bind(bind_shortcut,callback)
+                    except: # could be a user error
                         if not g.app.menuWarningsGiven:
-                            g.es("duplicate shortcut:", accel, bind_shortcut, label,color="red")
-                            print "duplicate shortcut:", accel, bind_shortcut, label
-                    else:
-                        self.menuShortcuts.append(bind_shortcut)
-                        try:
-                            self.frame.body.bind(bind_shortcut,callback)
-                            self.bind(bind_shortcut,callback)
-                        except: # could be a user error
-                            if not g.app.menuWarningsGiven:
-                                print "exception binding menu shortcut..."
-                                print bind_shortcut
-                                g.es_exception()
-                                g.app.menuWarningsGive = True
+                            print "exception binding menu shortcut..."
+                            print bind_shortcut
+                            g.es_exception()
+                            g.app.menuWarningsGive = True
                     #@nonl
                     #@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
                     #@nl
@@ -941,9 +956,9 @@ class leoMenu:
         #@+node:ekr.20031218072017.3790:<< create the file menu >>
         fileMenu = self.createNewMenu("&File")
         
-        self.createMenuEntries(fileMenu,self.fileMenuTopTable)
+        self.createMenuEntries(fileMenu,self.fileMenuTopTable,init=True)
         self.createNewMenu("Open &With...","File")
-        self.createMenuEntries(fileMenu,self.fileMenuTop2Table)
+        self.createMenuEntries(fileMenu,self.fileMenuTop2Table,init=True)
         #@<< create the recent files submenu >>
         #@+node:ekr.20031218072017.3791:<< create the recent files submenu >>
         self.createNewMenu("Recent &Files...","File")
@@ -959,7 +974,7 @@ class leoMenu:
         #@+node:ekr.20031218072017.3792:<< create the read/write submenu >>
         readWriteMenu = self.createNewMenu("&Read/Write...","File")
         
-        self.createMenuEntries(readWriteMenu,self.fileMenuReadWriteMenuTable)
+        self.createMenuEntries(readWriteMenu,self.fileMenuReadWriteMenuTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3792:<< create the read/write submenu >>
         #@nl
@@ -967,7 +982,7 @@ class leoMenu:
         #@+node:ekr.20031218072017.3793:<< create the tangle submenu >>
         tangleMenu = self.createNewMenu("&Tangle...","File")
         
-        self.createMenuEntries(tangleMenu,self.fileMenuTangleMenuTable)
+        self.createMenuEntries(tangleMenu,self.fileMenuTangleMenuTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3793:<< create the tangle submenu >>
         #@nl
@@ -975,7 +990,7 @@ class leoMenu:
         #@+node:ekr.20031218072017.3794:<< create the untangle submenu >>
         untangleMenu = self.createNewMenu("&Untangle...","File")
         
-        self.createMenuEntries(untangleMenu,self.fileMenuUntangleMenuTable)
+        self.createMenuEntries(untangleMenu,self.fileMenuUntangleMenuTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3794:<< create the untangle submenu >>
         #@nl
@@ -983,7 +998,7 @@ class leoMenu:
         #@+node:ekr.20031218072017.3795:<< create the import submenu >>
         importMenu = self.createNewMenu("&Import...","File")
         
-        self.createMenuEntries(importMenu,self.fileMenuImportMenuTable)
+        self.createMenuEntries(importMenu,self.fileMenuImportMenuTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3795:<< create the import submenu >>
         #@nl
@@ -991,12 +1006,12 @@ class leoMenu:
         #@+node:ekr.20031218072017.3796:<< create the export submenu >>
         exportMenu = self.createNewMenu("&Export...","File")
         
-        self.createMenuEntries(exportMenu,self.fileMenuExportMenuTable)
+        self.createMenuEntries(exportMenu,self.fileMenuExportMenuTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3796:<< create the export submenu >>
         #@nl
         self.add_separator(fileMenu)
-        self.createMenuEntries(fileMenu,self.fileMenuTop3MenuTable)
+        self.createMenuEntries(fileMenu,self.fileMenuTop3MenuTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3790:<< create the file menu >>
         #@nl
@@ -1004,13 +1019,13 @@ class leoMenu:
         #@+node:ekr.20031218072017.3786:<< create the edit menu >>
         editMenu = self.createNewMenu("&Edit")
         
-        self.createMenuEntries(editMenu,self.editMenuTopTable)
+        self.createMenuEntries(editMenu,self.editMenuTopTable,init=True)
         
         #@<< create the edit body submenu >>
         #@+node:ekr.20031218072017.3787:<< create the edit body submenu >>
         editBodyMenu = self.createNewMenu("Edit &Body...","Edit")
         
-        self.createMenuEntries(editBodyMenu,self.editMenuEditBodyTable)
+        self.createMenuEntries(editBodyMenu,self.editMenuEditBodyTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3787:<< create the edit body submenu >>
         #@nl
@@ -1018,7 +1033,7 @@ class leoMenu:
         #@+node:ekr.20031218072017.3788:<< create the edit headline submenu >>
         editHeadlineMenu = self.createNewMenu("Edit &Headline...","Edit")
         
-        self.createMenuEntries(editHeadlineMenu,self.editMenuEditHeadlineTable)
+        self.createMenuEntries(editHeadlineMenu,self.editMenuEditHeadlineTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3788:<< create the edit headline submenu >>
         #@nl
@@ -1026,12 +1041,12 @@ class leoMenu:
         #@+node:ekr.20031218072017.3789:<< create the find submenu >>
         findMenu = self.createNewMenu("&Find...","Edit")
         
-        self.createMenuEntries(findMenu,self.editMenuFindMenuTable)
+        self.createMenuEntries(findMenu,self.editMenuFindMenuTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3789:<< create the find submenu >>
         #@nl
         
-        self.createMenuEntries(editMenu,self.editMenuTop2Table)
+        self.createMenuEntries(editMenu,self.editMenuTop2Table,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3786:<< create the edit menu >>
         #@nl
@@ -1039,13 +1054,13 @@ class leoMenu:
         #@+node:ekr.20031218072017.3797:<< create the outline menu >>
         outlineMenu = self.createNewMenu("&Outline")
         
-        self.createMenuEntries(outlineMenu,self.outlineMenuTopMenuTable)
+        self.createMenuEntries(outlineMenu,self.outlineMenuTopMenuTable,init=True)
         
         #@<< create check submenu >>
         #@+node:ekr.20040711140738.1:<< create check submenu >>
         checkOutlineMenu = self.createNewMenu("Chec&k...","Outline")
         
-        self.createMenuEntries(checkOutlineMenu,self.outlineMenuCheckOutlineMenuTable)
+        self.createMenuEntries(checkOutlineMenu,self.outlineMenuCheckOutlineMenuTable,init=True)
         #@nonl
         #@-node:ekr.20040711140738.1:<< create check submenu >>
         #@nl
@@ -1053,7 +1068,7 @@ class leoMenu:
         #@+node:ekr.20031218072017.3798:<< create expand/contract submenu >>
         expandMenu = self.createNewMenu("&Expand/Contract...","Outline")
         
-        self.createMenuEntries(expandMenu,self.outlineMenuExpandContractMenuTable)
+        self.createMenuEntries(expandMenu,self.outlineMenuExpandContractMenuTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3798:<< create expand/contract submenu >>
         #@nl
@@ -1061,7 +1076,7 @@ class leoMenu:
         #@+node:ekr.20031218072017.3799:<< create move submenu >>
         moveSelectMenu = self.createNewMenu("&Move...","Outline")
         
-        self.createMenuEntries(moveSelectMenu,self.outlineMenuMoveMenuTable)
+        self.createMenuEntries(moveSelectMenu,self.outlineMenuMoveMenuTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3799:<< create move submenu >>
         #@nl
@@ -1069,7 +1084,7 @@ class leoMenu:
         #@+node:ekr.20031218072017.3800:<< create mark submenu >>
         markMenu = self.createNewMenu("M&ark/Unmark...","Outline")
         
-        self.createMenuEntries(markMenu,self.outlineMenuMarkMenuTable)
+        self.createMenuEntries(markMenu,self.outlineMenuMarkMenuTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3800:<< create mark submenu >>
         #@nl
@@ -1077,7 +1092,7 @@ class leoMenu:
         #@+node:ekr.20031218072017.3801:<< create goto submenu >>
         gotoMenu = self.createNewMenu("&Go To...","Outline")
         
-        self.createMenuEntries(gotoMenu,self.outlineMenuGoToMenuTable)
+        self.createMenuEntries(gotoMenu,self.outlineMenuGoToMenuTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3801:<< create goto submenu >>
         #@nl
@@ -1089,7 +1104,7 @@ class leoMenu:
         #@+node:ekr.20031218072017.3802:<< create the window menu >>
         windowMenu = self.createNewMenu("&Window")
         
-        self.createMenuEntries(windowMenu,self.windowMenuTopTable)
+        self.createMenuEntries(windowMenu,self.windowMenuTopTable,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3802:<< create the window menu >>
         #@nl
@@ -1097,12 +1112,12 @@ class leoMenu:
         #@+node:ekr.20031218072017.3803:<< create the help menu >>
         helpMenu = self.createNewMenu("&Help")
         
-        self.createMenuEntries(helpMenu,self.helpMenuTopTable)
+        self.createMenuEntries(helpMenu,self.helpMenuTopTable,init=True)
         
         if sys.platform=="win32":
-            self.createMenuEntries(helpMenu,self.helpMenuTop2Table)
+            self.createMenuEntries(helpMenu,self.helpMenuTop2Table,init=True)
         
-        self.createMenuEntries(helpMenu,self.helpMenuTop3Table)
+        self.createMenuEntries(helpMenu,self.helpMenuTop3Table,init=True)
         #@nonl
         #@-node:ekr.20031218072017.3803:<< create the help menu >>
         #@nl
@@ -1156,7 +1171,7 @@ class leoMenu:
         table = (
             ("Clear Recent Files",None,c.clearRecentFiles),
             ("-",None,None))
-        self.createMenuEntries(recentFilesMenu,table)
+        self.createMenuEntries(recentFilesMenu,table,init=True)
         
         # Create all the other entries.
         i = 3
@@ -1248,7 +1263,10 @@ class leoMenu:
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3809:9 Routines with Tk spellings
-    #@+node:ekr.20031218072017.3810:7 Routines with new spellings
+    #@+node:ekr.20031218072017.3810:8 Routines with new spellings
+    def clearAccel (self,menu,name):
+        self.oops
+    
     def createMenuBar (self,frame):
         self.oops()
         
@@ -1270,7 +1288,7 @@ class leoMenu:
     def setMenuLabel (self,menu,name,label,underline=-1):
         self.oops()
     #@nonl
-    #@-node:ekr.20031218072017.3810:7 Routines with new spellings
+    #@-node:ekr.20031218072017.3810:8 Routines with new spellings
     #@-node:ekr.20031218072017.3808:Must be overridden in menu subclasses
     #@-others
 #@nonl
