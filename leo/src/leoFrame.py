@@ -5,11 +5,10 @@
 These classes should be overridden to create frames for a particular gui."""
 
 import leoGlobals as g
-import leoColor,leoMenu,leoNodes,leoUndo
-import os
-import string
-import sys
-import time
+
+import leoColor
+import leoMenu
+import leoUndo
 
 #@<< About handling events >>
 #@+node:ekr.20031218072017.2410:<< About handling events >>
@@ -922,15 +921,15 @@ class nullBody (leoBody):
     #@nonl
     #@-node:ekr.20031218072017.2194:findStartOfLine
     #@+node:ekr.20031218072017.2195:scanToStartOfLine
-    def scanToStartOfLine (self,index):
+    def scanToStartOfLine (self,i):
         
-        if index <= 0:
+        if i <= 0:
             return 0
             
         assert(self.s[i] != '\n')
         
         while i >= 0:
-            if s[i] == '\n':
+            if self.s[i] == '\n':
                 return i + 1
         
         return 0
@@ -939,13 +938,13 @@ class nullBody (leoBody):
     #@+node:ekr.20031218072017.2196:scanToEndOfLine
     def scanToEndOfLine (self,i):
         
-        if index >= len(self.s):
+        if i >= len(self.s):
             return len(self.s)
             
         assert(self.s[i] != '\n')
         
-        while i < len(s):
-            if s[i] == '\n':
+        while i < len(self.s):
+            if self.s[i] == '\n':
                 return i - 1
         
         return i
@@ -1125,7 +1124,7 @@ class nullBody (leoBody):
     def deleteLine (self,lineNumber): # zero based line number.
         self.deleteLines(lineNumber,1)
         
-    def deleteLines (self,line1,numberOfLines): # zero based line numbers.
+    def deleteLines (self,lineNumber,numberOfLines): # zero based line numbers.
         n1 = self.findStartOfLine(lineNumber)
         n2 = self.findStartOfLine(lineNumber+numberOfLines+1)
         if n2:
