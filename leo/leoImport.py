@@ -1199,7 +1199,8 @@ class leoImportCommands:
 				#@+node:3::<< handle open curly bracket in C >> (scans function)
 				#@+body
 				j = i = skip_braces(s,i) # Skip all inner blocks.
-				# This may fail if #if's contain unmathed curly braces.
+				
+				# This may fail if #if's contain unmatched curly braces.
 				if (match(s,i,'}') and lparen and name and function_start):
 					# Point i _after_ the last character of the function.
 					i += 1
@@ -1264,8 +1265,8 @@ class leoImportCommands:
 
 			elif is_c_id(ch):
 				
-				#@<< skip c identifier, typedef, struct, union, namespace >>
-				#@+node:4::<< skip c identifier, typedef, struct, union, namespace >>
+				#@<< handle id, class, typedef, struct, union, namespace >>
+				#@+node:4::<< handle id, class, typedef, struct, union, namespace >>
 				#@+body
 				if match_c_word(s,i,"typedef"):
 					i = skip_typedef(s,i)
@@ -1278,8 +1279,8 @@ class leoImportCommands:
 					# lparen = None ;  # This can appear in an argument list.
 				elif match_c_word(s,i,"namespace"):
 					
-					#@<< Create children for the namespace >>
-					#@+node:2::<< Create children for the namespace >>
+					#@<< create children for the namespace >>
+					#@+node:1::<< create children for the namespace >>
 					#@+body
 					#@+at
 					#  Namesspaces change the self.moduleName and recursively call self function with a text covering only the 
@@ -1318,8 +1319,10 @@ class leoImportCommands:
 							self.methodName = savedMethodName
 							scan_start = function_start = i
 					#@-body
-					#@-node:2::<< Create children for the namespace >>
+					#@-node:1::<< create children for the namespace >>
 
+				# elif match_c_word(s,i,"class"):
+					# < < create children for the class > >
 				else:
 					# Remember the last name before an open parenthesis.
 					if lparen == None:
@@ -1328,7 +1331,7 @@ class leoImportCommands:
 						i = skip_c_id(s,i)
 					
 					#@<< test for operator keyword >>
-					#@+node:1::<< test for operator keyword >>
+					#@+node:2::<< test for operator keyword >>
 					#@+body
 					# We treat a C++ a construct such as operator + as a function name.
 					if match(name,0,"operator"):
@@ -1341,9 +1344,9 @@ class leoImportCommands:
 								i += 1
 							name = s[j:i] # extend the name.
 					#@-body
-					#@-node:1::<< test for operator keyword >>
+					#@-node:2::<< test for operator keyword >>
 				#@-body
-				#@-node:4::<< skip c identifier, typedef, struct, union, namespace >>
+				#@-node:4::<< handle id, class, typedef, struct, union, namespace >>
 
 			else: i += 1
 		

@@ -13,7 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
-<v t="T2" a="EV"><vh>@root leoConfig.txt</vh>
+<v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
 <v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
@@ -24,7 +24,7 @@
 <v t="T10" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T11"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
-<v t="T13"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
+<v t="T13" a="V"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T15"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
@@ -98,9 +98,10 @@ save_clears_undo_buffer = 0
 
 [recent files]
 
-file2 = c:\prog\leocvs\leo\leoConfig.leo
-file1 = c:\prog\leocvs\leo\leopy.leo
-file0 = c:\prog\leocvs\leo\leodocs.leo
+# file2 = c:\prog\leocvs\leo\leoConfig.leo
+# file1 = c:\prog\leocvs\leo\leodocs.leo
+# file0 = c:\prog\leocvs\leo\leopy.leo
+
 #	Paths to recent files.
 #	Valid option names: file0 through file9.</t>
 <t tx="T6">@c
@@ -356,7 +357,7 @@ headline_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
 <t tx="T13">@c
 
-log_pane_wraps = 1
+log_pane_wraps = 0
 #	0/1: Wrap body text if 1.
 
 log_text_font_family =

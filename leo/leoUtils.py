@@ -904,24 +904,7 @@ def skip_pp_part(s,i):
 	return i,delta
 #@-body
 #@-node:9:C=13:skip_pp_part
-#@+node:10::skip_to_semicolon
-#@+body
-# Skips to the next semicolon that is not in a comment or a string.
-
-def skip_to_semicolon(s,i):
-
-	n = len(s)
-	while i < n:
-		c = s[i]
-		if c == ';': return i
-		elif c == '\'' or c == '"' : i = skip_string(s,i)
-		elif match(s,i,"//"): i = skip_to_end_of_line(s,i)
-		elif match(s,i,"/*"): i = skip_block_comment(s,i)
-		else: i += 1
-	return i
-#@-body
-#@-node:10::skip_to_semicolon
-#@+node:11::skip_python_string
+#@+node:10::skip_python_string
 #@+body
 def skip_python_string(s,i):
 
@@ -934,8 +917,8 @@ def skip_python_string(s,i):
 	else:
 		return skip_string(s,i)
 #@-body
-#@-node:11::skip_python_string
-#@+node:12::skip_string : called by tangle
+#@-node:10::skip_python_string
+#@+node:11::skip_string : called by tangle
 #@+body
 def skip_string(s,i):
 	
@@ -952,8 +935,25 @@ def skip_string(s,i):
 		i += 1
 	return i
 #@-body
-#@-node:12::skip_string : called by tangle
-#@+node:13::skip_typedef
+#@-node:11::skip_string : called by tangle
+#@+node:12::skip_to_semicolon
+#@+body
+# Skips to the next semicolon that is not in a comment or a string.
+
+def skip_to_semicolon(s,i):
+
+	n = len(s)
+	while i < n:
+		c = s[i]
+		if c == ';': return i
+		elif c == '\'' or c == '"' : i = skip_string(s,i)
+		elif match(s,i,"//"): i = skip_to_end_of_line(s,i)
+		elif match(s,i,"/*"): i = skip_block_comment(s,i)
+		else: i += 1
+	return i
+#@-body
+#@-node:12::skip_to_semicolon
+#@+node:13:C=14:skip_typedef
 #@+body
 def skip_typedef(s,i):
 
@@ -966,7 +966,7 @@ def skip_typedef(s,i):
 		i = skip_to_semicolon(s,i)
 	return i
 #@-body
-#@-node:13::skip_typedef
+#@-node:13:C=14:skip_typedef
 #@-node:13::Scanners: calling scanError
 #@+node:14::Scanners: no error messages
 #@+node:1::escaped
@@ -982,7 +982,7 @@ def escaped(s,i):
 	return (count%2) == 1
 #@-body
 #@-node:1::escaped
-#@+node:2:C=14:find_line_start
+#@+node:2:C=15:find_line_start
 #@+body
 def find_line_start(s,i):
 
@@ -990,7 +990,7 @@ def find_line_start(s,i):
 	if i == -1: return 0
 	else: return i + 1
 #@-body
-#@-node:2:C=14:find_line_start
+#@-node:2:C=15:find_line_start
 #@+node:3::find_on_line
 #@+body
 def find_on_line(s,i,pattern):
@@ -1040,7 +1040,7 @@ def is_special(s,i,directive):
 	return false, -1
 #@-body
 #@-node:6::is_special
-#@+node:7:C=15:is_special_bits
+#@+node:7:C=16:is_special_bits
 #@+body
 #@+at
 #  Returns bits, dict where:
@@ -1129,7 +1129,7 @@ def is_special_bits(s,root=None):
 		i = skip_line(s,i)
 	return bits, dict
 #@-body
-#@-node:7:C=15:is_special_bits
+#@-node:7:C=16:is_special_bits
 #@+node:8::is_ws & is_ws_or_nl
 #@+body
 def is_ws(c):
@@ -1373,7 +1373,7 @@ def esDiffTime(message, start):
 	return time.clock()
 #@-body
 #@-node:17::Timing
-#@+node:18:C=16:Tk.Text selection (utils)
+#@+node:18:C=17:Tk.Text selection (utils)
 #@+node:1::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
@@ -1401,7 +1401,7 @@ def getSelectedText (t):
 		return None
 #@-body
 #@-node:2::getSelectedText
-#@+node:3:C=17:setTextSelection
+#@+node:3:C=18:setTextSelection
 #@+body
 #@+at
 #  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
@@ -1421,9 +1421,9 @@ def setTextSelection (t,start,end):
 	t.tag_remove("sel",end,"end")
 	t.mark_set("insert",end)
 #@-body
-#@-node:3:C=17:setTextSelection
-#@-node:18:C=16:Tk.Text selection (utils)
-#@+node:19:C=18:update_file_if_changed
+#@-node:3:C=18:setTextSelection
+#@-node:18:C=17:Tk.Text selection (utils)
+#@+node:19:C=19:update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace file_name with temp_name. Otherwise, we just delete 
@@ -1459,7 +1459,7 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only)")
 			traceback.print_exc()
 #@-body
-#@-node:19:C=18:update_file_if_changed
+#@-node:19:C=19:update_file_if_changed
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py
