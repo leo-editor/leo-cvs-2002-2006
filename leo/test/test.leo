@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6604" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6613" clone_windows="0"/>
 <globals body_outline_ratio="0.440677966102">
-	<global_window_position top="53" left="165" height="621" width="814"/>
+	<global_window_position top="99" left="216" height="787" width="944"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -540,6 +540,10 @@
 <v t="ekr.20050113094943"><vh>Unicode stuff</vh></v>
 <v t="ekr.20050119220832"><vh>@url file:.\..\leo\doc\LeoDocs.leo#Users Guide--&gt;Chapter 8: Customizing Leo</vh></v>
 <v t="ekr.20050203085849"><vh>test local settings (c.redirect_execute_script_output_to_log_pane)</vh></v>
+<v t="ekr.20050211121701"><vh>Develop &amp; test g.removeExtraLws</vh>
+<v t="ekr.20050211121701.1"><vh>g.removeExtraLws</vh></v>
+<v t="ekr.20050211121701.2"><vh>test_g_removeExtraLws</vh></v>
+</v>
 </v>
 <v t="ekr.20041126132604"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -958,6 +962,7 @@
 </v>
 </v>
 <v t="ekr.20050124065111"><vh>Prototype for Pretty Print command</vh></v>
+<v t="ekr.20050210180034"><vh>jython script</vh></v>
 </v>
 <v t="ekr.20041001211817"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
@@ -1458,6 +1463,18 @@
 </v>
 <v t="ekr.20040712101813"><vh>@xx test checkAllPythonCode</vh></v>
 </v>
+<v t="ekr.20050216060307"><vh>Tangle/Untangle tests</vh>
+<v t="ekr.20050216060736"><vh>@test tangle command</vh>
+<v t="ekr.20050216060736.1"><vh>Tangle Root</vh>
+<v t="ekr.20050216060736.2"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050216062636"><vh>@test untangle command</vh>
+<v t="ekr.20050216062636.4" a="E"><vh>Tangle Root</vh>
+<v t="ekr.20050216062636.5" a="E"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
 <v t="ekr.20040712101754.2"><vh>Test .leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
@@ -1573,10 +1590,46 @@
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
-<v t="ekr.20050210180034" a="TV"><vh>jython script</vh></v>
-<v t="ekr.20050211121701"><vh>Develop &amp; test g.removeExtraLws</vh>
-<v t="ekr.20050211121701.1"><vh>g.removeExtraLws</vh></v>
-<v t="ekr.20050211121701.2"><vh>test_g_removeExtraLws</vh></v>
+<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
+<v t="ekr.20050106123646"><vh>unused</vh>
+<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
+<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
+<v t="ekr.20050106094854.2"><vh> fail</vh></v>
+<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
+<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
+<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
+<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
+<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
+</v>
+</v>
+<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
+<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
+<v t="ekr.20050106080318.3"><vh> fail</vh></v>
+<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
+<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
+<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
+<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
+</v>
+<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
+<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
+<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
+<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
+</v>
+<v t="ekr.20050216060307" a="TV"><vh>Tangle/Untangle tests</vh>
+<v t="ekr.20050216060736"><vh>@test tangle command</vh>
+<v t="ekr.20050216060736.1"><vh>Tangle Root</vh>
+<v t="ekr.20050216060736.2"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050216062636"><vh>@test untangle command</vh>
+<v t="ekr.20050216062636.4" a="E"><vh>Tangle Root</vh>
+<v t="ekr.20050216062636.5" a="E"><vh>&lt;&lt; first child &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -2198,7 +2251,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2353,7 +2406,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10896,8 +10949,8 @@ if not spellpyx or not spellFrame:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo
-/Users/edream/leoCVS/leo/test/test.leo</t>
+<t tx="ekr.20041121151002.1">/Users/edream/leoCVS/leo/test/test.leo
+C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124144944">import os
 import sys
 for s in sys.path:
@@ -13620,5 +13673,40 @@ test_g_removeExtraLws()</t>
             repr(s),repr(expected),repr(result))
             
     print 'Success'</t>
+<t tx="ekr.20050216060307">@ignore</t>
+<t tx="ekr.20050216060736">root = p.firstChild()
+
+c.selectPosition(root,updateBeadList=False)
+
+c.tangleCommands.tangle()</t>
+<t tx="ekr.20050216060736.1">@root unittest\tangleTest1.txt
+
+&lt;&lt; first child &gt;&gt;</t>
+<t tx="ekr.20050216060736.2">This is the first child.
+@c
+
+And this is text</t>
+<t tx="ekr.20050216062636">root = p.firstChild()
+child = root.firstChild()
+s = child.bodyString()
+
+c.selectPosition(root,updateBeadList=False)
+
+c.tangleCommands.untangle()
+assert child.bodyString() != s, "untangle didn't update node"
+assert child.isMarked()
+
+child.setBodyTextOrPane(s)
+child.clearMarked()
+assert child.bodyString() == s, "unit test didn't restore body text"
+assert not child.isMarked(), "unit test didn't restore mark"
+</t>
+<t tx="ekr.20050216062636.4">@root unittest\tangleTest1.txt
+
+&lt;&lt; first child &gt;&gt;</t>
+<t tx="ekr.20050216062636.5">This is the first child.
+@c
+
+And this is text (changed)</t>
 </tnodes>
 </leo_file>
