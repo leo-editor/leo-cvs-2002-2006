@@ -979,7 +979,7 @@
 </v>
 </v>
 <v t="T756"><vh>External editors &amp; Open With</vh>
-<v t="T757" tnodeList="757,758,759,760,761,762"><vh>@file open_with.py</vh>
+<v t="T757" a="E" tnodeList="757,758,759,760,761,762"><vh>@file open_with.py</vh>
 <v t="T758"><vh>on_idle</vh>
 <v t="T759"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
 <v t="T760"><vh>&lt;&lt; set s to the file text &gt;&gt;</vh></v>
@@ -7977,7 +7977,8 @@ mTargetLanguageRadioBox = wxRadioBox(self,
 	WXSIZEOF(targetLanguageChoices),
 	targetLanguageChoices,
 	5,wxRA_SPECIFY_ROWS)</t>
-<t tx="T584">@ It is usually best not to catch exceptions in plugins.  doHook catches all exceptions and disables further calls to plugins.
+<t tx="T584">@ It is usually best not to catch exceptions in plugins:
+doHook catches all exceptions and disables further calls to plugins.
 @c</t>
 <t tx="T585">@ These were contributed by Bernhard Mulder, bwm@acm.org.</t>
 <t tx="T586">"""
@@ -10112,7 +10113,7 @@ else:
 
 if update:
 	es("updated from: " + shortFileName(path),color="blue")
-	v.setBodyStringOrPane(s)
+	v.setBodyStringOrPane(s,encoding) # 10/16/03
 	c.selectVnode(v)
 	dict["body"] = s
 elif conflict:
