@@ -740,7 +740,7 @@ class baseLeoFrame:
 		try:
 			app().setLog(self,"OnActivateTree")
 			self.tree.undimEditLabel()
-			self.tree.canvas.focus_set()
+			set_focus(self.tree.canvas)
 		except:
 			es_event_exception("activate tree")
 	
@@ -1885,7 +1885,7 @@ class baseLeoFrame:
 			c.editVnode(v)
 		c.endUpdate()
 		
-		frame.body.focus_set()
+		set_focus(frame.body)
 	#@-body
 	#@-node:1::OnNew
 	#@+node:2::frame.OnOpen
@@ -3433,7 +3433,6 @@ class baseLeoFrame:
 	
 		tree = self.commands.tree
 		tree.editLabel(tree.currentVnode)
-	
 	#@-body
 	#@-node:1::OnEditHeadline
 	#@+node:2::OnEndEditHeadline
@@ -3490,7 +3489,7 @@ class baseLeoFrame:
 		find.top.lift()
 		
 		t = find.find_text
-		t.focus_set()
+		set_focus(t)
 		setTextSelection (t,"1.0","end") # Thanks Rich.
 		find.commands = self
 	
@@ -3984,9 +3983,9 @@ class baseLeoFrame:
 	
 		# trace(`event`)
 		if self.getFocus() == self.body:
-			self.canvas.focus_force()
+			set_focus(self.canvas)
 		else:
-			self.body.focus_force()
+			set_focus(self.body)
 	#@-body
 	#@-node:2::OnToggleActivePane
 	#@+node:3::OnToggleSplitDirection
