@@ -289,7 +289,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
             g.app.gui.setTextSelection(w,"1.0","end")
             return "break"
         except:
-            pass
+            return None # To keep pychecker happy.
     #@nonl
     #@-node:EKR.20040603221140:selectAll
     #@+node:ekr.20031218072017.3908:Tkinter wrappers (leoTkinterFind)
