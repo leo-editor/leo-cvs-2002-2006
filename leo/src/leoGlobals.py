@@ -3142,6 +3142,28 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 	return i, count
 #@nonl
 #@-node:skip_leading_ws_with_indent
+#@+node:initScriptFind
+def initScriptFind(findHeadline,changeHeadline,firstNode=None):
+	
+	import leoTest
+	# from leoGlobals import *
+	
+	# Find the scripts.
+	c = top() ; v = c.currentVnode()
+	u = leoTest.testUtils()
+	find_v   = u.findNodeInTree(v,"Find script")
+	change_v = u.findNodeInTree(v,"Change script")
+	# print `find_v`,`change_v`
+	
+	# Initialize the find panel.
+	c.script_search_flag = true
+	c.script_change_flag = true
+	c.find_text   = find_v.bodyString().strip()
+	c.change_text = change_v.bodyString().strip()
+	app.findFrame.init(c)
+	c.frame.OnFindPanel()
+#@nonl
+#@-node:initScriptFind
 #@+node:isUnicode
 def isUnicode(s):
 	
