@@ -188,6 +188,7 @@ __repr__
 __version__
 __wx_gui
 __xxx__
+_after_
 _all_
 _ancestors_
 _any_
@@ -398,6 +399,7 @@ class_var
 clearAllVisited
 clearAllVistied
 clearDirty
+clearMark
 clearUndoState
 clearVisited
 clearWriteBit
@@ -633,6 +635,7 @@ firstPart
 flattenOutline
 fmerenda
 fn
+fname
 focus_set
 font_size
 forceShutdown
@@ -996,6 +999,8 @@ minibuffer
 minimalLeoFile
 minimalLeoFile2
 miscDirective
+mkstemp
+mktemp
 mockup
 mod_
 mod_autosave
@@ -1168,6 +1173,7 @@ popen2
 popup
 porv
 pos
+positionList
 positions1
 positions2
 postSetup
@@ -1205,6 +1211,7 @@ putOperator
 putRefAt
 putTnodes
 putVnode
+put_all_roots
 py
 pyc
 pycheckrc
@@ -1283,6 +1290,7 @@ rootVnode
 root_bits
 rst
 rst2
+rstFile
 rstrip
 runAtFileTest
 runGC
@@ -1320,6 +1328,7 @@ script2
 scriptButton
 scriptDict
 scriptFile
+scriptWrite
 scriptable
 scripts_menu
 searchDict
@@ -1478,6 +1487,7 @@ tempChild_v
 tempNode
 temp_p
 temp_v
+tempfile
 test1
 test2
 testData
@@ -1570,6 +1580,7 @@ unknownAttribute
 unknownAttributes
 unknownDirective
 unlocklog
+unmarkAll
 unmarking
 unselect1
 unselect2
@@ -1638,6 +1649,7 @@ writeAtFileNodes
 writeBit
 writeNodeToNode
 writeNodesToNode
+writeTreeAsRst
 write_Leo_file
 ws
 wsToString

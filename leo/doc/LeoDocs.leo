@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="13143" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="13163" clone_windows="0"/>
 <globals body_outline_ratio="0.53452685422">
-	<global_window_position top="79" left="259" height="782" width="931"/>
+	<global_window_position top="46" left="353" height="782" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -59,6 +59,7 @@
 <v t="ekr.20050221104844.27" a="E"><vh>Fixed bugs in nav_buttons and nodenavigator plugins</vh></v>
 <v t="ekr.20050221104844.45" a="E"><vh>Made sure Leo asks for leoID at most once</vh></v>
 <v t="ekr.20050221104844.54" a="E"><vh>Fixed botch in g.pdb</vh></v>
+<v t="ekr.20050222100936" a="E"><vh>Fixed crasher when executing a script if the script was selected text in a new window</vh></v>
 </v>
 <v t="ekr.20050221104844.57"><vh>New features</vh>
 <v t="ekr.20050221104844.58"><vh>Added sets.py to distribution</vh></v>
@@ -218,6 +219,7 @@
 <v t="ekr.20050221104844.27" a="E"><vh>Fixed bugs in nav_buttons and nodenavigator plugins</vh></v>
 <v t="ekr.20050221104844.45" a="E"><vh>Made sure Leo asks for leoID at most once</vh></v>
 <v t="ekr.20050221104844.54" a="E"><vh>Fixed botch in g.pdb</vh></v>
+<v t="ekr.20050222100936" a="E"><vh>Fixed crasher when executing a script if the script was selected text in a new window</vh></v>
 </v>
 <v t="ekr.20050221104844.57"><vh>New features</vh>
 <v t="ekr.20050221104844.58"><vh>Added sets.py to distribution</vh></v>
@@ -16824,6 +16826,7 @@ Leo 4.3 a3 adds several new features:
 - The 'extensions' folder contains sets.py from Python 2.4.
   This allows the Plugin Manager plugin to work on Python 2.2.x.
 - g.es does nothing if color=='suppress'.  A useful hack.
+- This is the first release that include installers for MacOSX.
 
 The defining features of Leo 4.3:
 
@@ -16937,5 +16940,21 @@ All changes were to g.app.leoID():
 <t tx="ekr.20050221104844.57"></t>
 <t tx="ekr.20050221104844.58">This allows plugins such as plugin_manager.py to work on Python 2.2.x.</t>
 <t tx="ekr.20050221104844.59">g.es does nothing if color=='suppress'.  This can be useful in unit tests.</t>
+<t tx="ekr.20050222100936">http://sourceforge.net/forum/message.php?msg_id=3008045
+
+Leo crashed when executing a script if the script was selected text in a new window.
+
+What I did:
+
+- g.getScript now calls g.getOutputNewline(c=c) rather than look at atFile.output_newline.
+
+atFile.output_newline may not exist if a) the file is new and b) g.getScript
+doesn't call atfile.write.
+
+- Set scripting=scriptWrite in call to atFile.scanAllDirectives in atFile.write.
+
+This suppresses the following irrelevant message when executing scripts:
+
+    "No absolute directory specified anywhere."</t>
 </tnodes>
 </leo_file>

@@ -23,8 +23,13 @@ hoist.py
 
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
-#spellpyx.py
+spellpyx.py
 #nodenavigator.py
+rst2.py
+#searchbox.py
+#xemacs.py
+open_with.py
+#nav_buttons.py
 plugin_manager.py
 
 UNL.py

@@ -32,7 +32,8 @@
 <v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
 <v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
 </v>
-<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709"
+expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -596,7 +597,7 @@
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
 </v>
-<v t="ekr.20040312021734" a="TV"><vh>Scripts</vh>
+<v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1653,7 +1654,7 @@
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
-<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
+<v t="ekr.20050106080304" a="TV"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
 <v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
 <v t="ekr.20050106094854.1"><vh>__init__</vh></v>

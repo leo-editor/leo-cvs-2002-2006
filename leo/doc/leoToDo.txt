@@ -141,6 +141,178 @@ This will slow down reading a bit, but that can't be helped.
 #@-node:ekr.20050209094854:First: Remove unreferenced clone nodes when reading thin derived files
 #@+node:ekr.20050202052911.2:First: Full documentation of tnodeLists & potential problems
 #@-node:ekr.20050202052911.2:First: Full documentation of tnodeLists & potential problems
+#@+node:ekr.20050222045210:Better @path conventions
+#@+node:ekr.20031218072017.1416:app.__init__
+def __init__(self):
+
+    # These ivars are the global vars of this program.
+    self.afterHandler = None
+    self.batchMode = False # True: run in batch mode.
+    self.commandName = None # The name of the command being executed.
+    self.config = None # The leoConfig instance.
+    self.count = 0 # General purpose debugging count.
+    self.debug = False # True: enable extra debugging tests (not used at present).
+        # WARNING: this could greatly slow things down.
+    self.debugSwitch = 0
+        # 0: default behavior
+        # 1: full traces in g.es_exception.
+        # 2: call pdb.set_trace in g.es_exception, etc.
+    self.disableSave = False
+    self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
+    self.gui = None # The gui class.
+    self.hasOpenWithMenu = False # True: open with plugin has been loaded.
+    self.hookError = False # True: suppress further calls to hooks.
+    self.hookFunction = None # Application wide hook function.
+    self.homeDir = None # The user's home directory.
+    self.idle_imported = False # True: we have done an import idle
+    self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
+    self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
+    self.initing = True # True: we are initiing the app.
+    self.killed = False # True: we are about to destroy the root window.
+    self.leoID = None # The id part of gnx's.
+    self.loadDir = None # The directory from which Leo was loaded.
+    self.loadedPlugins = [] # List of loaded plugins that have signed on.
+    self.log = None # The LeoFrame containing the present log.
+    self.logIsLocked = False # True: no changes to log are allowed.
+    self.logWaiting = [] # List of messages waiting to go to a log.
+    self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.nodeIndices = None # Singleton node indices instance.
+    self.numberOfWindows = 0 # Number of opened windows.
+    self.openWithFiles = [] # List of data used by Open With command.
+    self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
+    self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
+    self.quitting = False # True if quitting.  Locks out some events.
+    self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
+    self.root = None # The hidden main window. Set later.
+    self.searchDict = {} # For communication between find/change scripts.
+    self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.trace = False # True: enable debugging traces.
+    self.tracePositions = False
+    self.trace_list = [] # "Sherlock" argument list for tracing().
+    self.tkEncoding = "utf-8"
+    self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
+    self.unitTestDict = {} # For communication between unit tests and code.
+    self.unitTesting = False # True if unit testing.
+    self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
+    self.wantedCommander = None # Used by leoTkinterFrame logic to manage calls to g.app.gui.set_focus.
+    self.windowList = [] # Global list of all frames.  Does not include hidden root window.
+
+    # Global panels.  Destroyed when Leo ends.
+    self.pythonFrame = None
+    
+    << Define global constants >>
+    << Define global data structures >>
+#@nonl
+#@+node:ekr.20031218072017.1417:<< define global constants >>
+self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+
+# New in leo.py 3.0
+self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
+self.prolog_postfix_string = "?>"
+
+# leo.py 3.11
+self.use_unicode = True # True: use new unicode logic.
+#@-node:ekr.20031218072017.1417:<< define global constants >>
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */",	# C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    "perl" : "perl",
+    "perlpod" : "perl",
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    "perl"  : "perl",
+    "php"   : "php",
+    "py"    : "python",
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@-node:ekr.20031218072017.1416:app.__init__
+#@+node:ekr.20031218072017.1264:getBaseDirectory
+# Handles the conventions applying to the "relative_path_base_directory" configuration option.
+
+def getBaseDirectory(c=None):
+
+    base = app.config.relative_path_base_directory
+
+    if base and base == "!":
+        base = app.loadDir
+    elif base and base == ".":
+        base = c.openDirectory
+
+    # g.trace(base)
+    if base and len(base) > 0 and g.os_path_isabs(base):
+        return base # base need not exist yet.
+    else:
+        return "" # No relative base given.
+#@-node:ekr.20031218072017.1264:getBaseDirectory
+#@-node:ekr.20050222045210:Better @path conventions
 #@+node:ekr.20050217083136:Fix bug:  see gcg.leo
 #@+node:ekr.20050217083136.1:Email
 I wrote in the leo help forum that html comment -->after >> bugging me when i  save my .leo file.
