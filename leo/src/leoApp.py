@@ -100,10 +100,10 @@ class LeoApp:
 			"shell" : "#",  # shell scripts
 			"tcltk" : "#",
 			"unknown" : "#" } # Set when @comment is seen.
-			
+		
 		self.language_extension_dict = {
 			"actionscript" : "as", #jason 2003-07-03
-			"c" : "c", 
+			"c" : "c",
 			"cweb" : "w",
 			"elisp" : "el",
 			"forth" : "forth",
@@ -115,7 +115,7 @@ class LeoApp:
 			"noweb" : "nw",
 			"pascal" : "p",
 			"perl" : "perl",
-			"perlpod" : "perl", 
+			"perlpod" : "perl",
 			"php" : "php",
 			"plain" : "txt",
 			"python" : "py",
@@ -124,7 +124,6 @@ class LeoApp:
 			"tex" : "tex",
 			"tcltk" : "tcl",
 			"unknown" : "txt" } # Set when @comment is seen.
-		#@nonl
 		#@-node:<< define global data structures >> app
 		#@nl
 	#@nonl

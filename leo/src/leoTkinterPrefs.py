@@ -140,8 +140,8 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		for text,value in left_data:
 			button = Tk.Radiobutton(lt,anchor="w",text=text,
 				variable=self.lang_var,value=value,command=self.set_lang)
-			button.pack(fill="x") 
-			
+			button.pack(fill="x")
+		
 		# Right column of radio buttons.
 		right_data = [
 			("Perl", "perl"),
@@ -151,7 +151,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 			("Python", "python"),
 			("Rebol", "rebol"),
 			("tcl/tk", "tcltk")]
-			
+		
 		for text,value in right_data:
 			button = Tk.Radiobutton(rt,anchor="w",text=text,
 				variable=self.lang_var,value=value,command=self.set_lang)
