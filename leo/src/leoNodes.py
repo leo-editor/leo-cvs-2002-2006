@@ -742,12 +742,6 @@ class baseVnode (object):
         return self.t._firstChild
     #@nonl
     #@-node:ekr.20031218072017.3362:v.firstChild (changed for 4.2)
-    #@+node:ekr.20031218072017.3363:v.hasChildren
-    def hasChildren (self):
-    
-        return self.firstChild() != None
-    #@nonl
-    #@-node:ekr.20031218072017.3363:v.hasChildren
     #@+node:ekr.20040307085922:v.hasChildren & hasFirstChild
     def hasChildren (self):
         
@@ -1972,9 +1966,9 @@ class position (object):
             v,n = p.vParentWithStack(v,p.stack,n)
             if v:
                 level += 1
-                if verbose: g.trace(level,"level,n: %2d" % (level,n))
+                if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
             else:
-                if verbose: g.trace(level,"level,n: %2d" % (level,n))
+                if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
                 # if g.app.debug: assert(level==simpleLevel)
                 return level
     #@nonl
@@ -2138,13 +2132,6 @@ class position (object):
         p.v.clearDirty()
     #@nonl
     #@-node:ekr.20040311113514:p.clearDirty
-    #@+node:ekr.20040303163717:p.isDirty
-    def isDirty (self):
-        
-        p = self
-        return p.v and p.v.isDirty()
-    #@nonl
-    #@-node:ekr.20040303163717:p.isDirty
     #@+node:ekr.20040318125934:p.findAllPotentiallyDirtyNodes
     def findAllPotentiallyDirtyNodes(self):
         
@@ -2842,20 +2829,19 @@ class position (object):
         return result
     #@nonl
     #@-node:ekr.20040303175026.13:p.validateOutlineWithParent
-    #@+node:ekr.20040303175026.18:p.invalidOutline
+    #@+node:ekr.20040310062332.1:p.invalidOutline
     def invalidOutline (self, message):
+        
+        p = self
     
-        s = "invalid outline: " + message + "\n"
-        parent = self.getParent()
-    
-        if parent:
-            s += repr(parent)
+        if p.hasParent():
+            node = p.parent()
         else:
-            s += repr(self)
+            node = p
     
-        g.alert(s)
+        g.alert("invalid outline: %s\n%s" % (message,node))
     #@nonl
-    #@-node:ekr.20040303175026.18:p.invalidOutline
+    #@-node:ekr.20040310062332.1:p.invalidOutline
     #@-node:ekr.20040303175026:p.Moving, Inserting, Deleting, Cloning, Sorting (position)
     #@+node:ekr.20031218072017.928:p.moveToX
     #@+at
@@ -3207,19 +3193,6 @@ class position (object):
     
     # These are private routines:  the position class does not define proxies for these.
     #@nonl
-    #@+node:ekr.20040310062332.1:p.invalidOutline
-    def invalidOutline (self, message):
-        
-        p = self
-    
-        if p.hasParent():
-            node = p.parent()
-        else:
-            node = p
-    
-        g.alert("invalid outline: %s\n%s" % (message,node))
-    #@nonl
-    #@-node:ekr.20040310062332.1:p.invalidOutline
     #@+node:ekr.20040310062332.2:p.linkAfter
     def linkAfter (self,after):
     
