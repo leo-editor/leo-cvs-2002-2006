@@ -1904,9 +1904,12 @@ Leo is distributed as a single compressed folder.  Simply uncompress this folder
 	
 @nocolor
 
-Another way to open files would be to create a shell file, something like this:
+On Linux, the following shell script will allow you to open foo.leo files by typing leo foo
 
-\python22\python leo.py %1</t>
+#!/bin/sh 
+python &lt;leopath&gt;/leo.py $1
+
+where &lt;leopath&gt; is replaced with the path to the leo directory. </t>
 <t tx="T35">@nocolor
 
 leo.py requires Python 2.1 and tcl/tk 8.3 or above.
@@ -1968,12 +1971,7 @@ Copy and Paste seem to work just fine now in Leo!  This was my original question
 
 I also noticed that someone else built everything on OS X 10.2 (Jaguar), but they did it under X.  Since, the new version of Tk appears to support the OS X interface quite well, I'm not going to bother installing X (for now).
 
-So, Leo works two different ways on OS X 10.2.
-
-Bruce
-
-P.S.  Feel free to edit/modify this message in anyway.
-</t>
+So, Leo works two different ways on OS X 10.2.</t>
 <t tx="T38">The Icons folder contains two Icons, called LeoApp and LeoDoc, that represent the Leo application and Leo documents respectively.
 
 In Windows, to associate LeoDoc with .leo files, open the Setting:Folder Options:File Type panel, create an entry for .leo files.  Then choose Change Icon and select the LeoDoc icon.  Associate leo.py as the application to open .leo files.</t>
@@ -2788,11 +2786,11 @@ See the Appendices for a concise summary of information about Leo.</t>
 
 Many improvements have been made to Leo.  The highlights:
 
+- Now works with Python 2.1.  Previous versions required Python 2.2.
 - Many new user options, including user-definable shortcuts for all commands
   and colors for all parts of Leo's windows.
   As a result, it is now possible to use arrow keys as you desire.
-- Minimal support for Unicode Latin-1 (iso-8859-1) encoding.
-  Better support is coming.
+- Minimal support for Unicode Latin-1 (iso-8859-1) encoding. Better support is coming.
 - Improved handling of relative path names.
 - The @first directive allows lines to preceed the opening @+leo sentinel line.
 - The @last  directive allows lines to follow  the closing @-leo sentinel line.
@@ -2801,6 +2799,8 @@ Many improvements have been made to Leo.  The highlights:
 - Leo is now compatible with Python 2.1.
 - Simplified sentinels reduce spurious CVS diffs.
 - Many other minor improvements and bug fixes.
+
+Warning: Leo expects that all characters in derived files and .leo files are contained in the encoding specified by the xml_version_string option in leoConfig.txt.  Characters will be garbled if this restriction is not followed.  This restriction will be removed in the next release.
 
 See the children of this node for full details.</t>
 <t tx="T44"></t>
