@@ -1,4 +1,4 @@
-#@+leo-encoding=iso-8859-1.
+#@+leo
 #@+node:0::@file leoFind.py
 #@+body
 #@@language python

@@ -1,4 +1,4 @@
-#@+leo-encoding=iso-8859-1.
+#@+leo
 #@+node:0::@file leoGlobals.py
 #@+body
 # Global constants, variables and utility functions used throughout Leo.

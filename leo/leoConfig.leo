@@ -16,7 +16,7 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -30,9 +30,9 @@
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T19" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -103,7 +103,7 @@ create_nonexistent_directories = 0
 #	@file, @rawfile, @root and @silentfile trees, and to filenames
 #	speicied in the @path directory.
 
-default_derived_file_encoding = iso-8859-1
+default_derived_file_encoding = UTF-8
 #	The encoding used for derived files if no @encoding directive is in effect.
 #	This setting is also used to encode files created by the Tangle commands.
 #	Default is UTF-8 (case not important).
@@ -114,7 +114,7 @@ load_derived_files_immediately = 0
 #	0: Leo loads derived files when corresponding @file node is first selected.
 #	This setting may be overridden by @file-now or @file-wait options.
 
-new_leo_file_encoding = iso-8859-1
+new_leo_file_encoding = UTF-8
 #	The encoding specified in the following line of new .leo files:
 #	&lt;?xml version="1.0" encoding="UTF-8"&gt;
 #	Default is UTF-8 (upper case for compatibility for old versions of Leo).
@@ -198,7 +198,7 @@ thin_at_file_trees = 0
 #	1: Leo writes only root of @file tree to .leo file.
 #	This setting may be overridden by @file-thin or @file-fat options.
 
-tk_encoding = cp1252
+tk_encoding =
 #	The encoding that Tk text widgets are assumed for non-ascii character strings.
 #	You would typically use this setting only in an emergency.
 #	Leo assumes that Tk text widgets return:

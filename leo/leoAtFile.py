@@ -1,6 +1,6 @@
 #line1
 #line2
-#@+leo-encoding=iso-8859-1.
+#@+leo
 #@+node:0::@file leoAtFile.py 
 #@+body
 #@@first

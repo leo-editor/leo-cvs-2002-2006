@@ -1,4 +1,4 @@
-#@+leo-encoding=iso-8859-1.
+#@+leo
 #@+node:0::@file disStats.py
 #@+body
 # routines to gather static statistics about opcodes based on dis module.
