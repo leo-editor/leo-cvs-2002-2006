@@ -49,12 +49,12 @@
 	hoist.py
 	
 # New or improved in 4.2
+    autocompleter.py
 	# startfile.py
 	# lineNumbers.py
 	rClick.py
 	# niceNosent.py
 	# scheduler.py
-	# autocompleter.py
 	# fastgotonode.py
 	# xemacs_a.py
     # dyna_menu.py

@@ -1684,38 +1684,38 @@ def suggestions(self, base, start=None, number=None):
 #@-node:ekr.20040320072156.13:suggestions
 #@-node:ekr.20040320091826:(problem with dot in Word completion plugin)
 #@-node:edream.110203113231.9:Unfinished projects
-#@+node:EKR.20040517075110:Script to find and replace all functions in leoGlobals.py
+#@+node:EKR.20040517075110:replaceLeoGlobals
+"""Script to find and replace all functions in leoGlobals.py."""
 @color
 @language python
+@tabwidth -4
 
 import leoGlobals as g
 import leoPlugins
 
 import string
 
-c = g.top()
+c = g.top() ; p = c.currentPosition()
 
 @others
 
 if 1:
-	<< set nameList to the list of functions in leoGlobals.py >>
+    << set nameList to the list of functions in leoGlobals.py >>
 else:
-	p = g.findNodeAnywhere("@file leoGlobals.py")
-	nameList = findFunctionsInTree(p)
+    p = g.findNodeAnywhere("@file leoGlobals.py")
+    nameList = findFunctionsInTree(p)
 
-	nameList.sort() ; g.enl()
-	for name in nameList: g.es("'%s'," % name)
-	
-	s = "%d functions in leoGlobals.py" % len(nameList)
-	print s ; g.es(s)
+    nameList.sort() ; g.enl()
+    for name in nameList: g.es("'%s'," % name)
+    
+    s = "%d functions in leoGlobals.py" % len(nameList)
+    print s ; g.es(s)
 
 if 1:
-	p = g.findTopLevelNode("New or improved in 4.2") ## Change this to have this script work on other subtrees.
-	g.enl() ; g.enl()
-	count = prependNamesInTree(p,nameList,"g.",replace=True) # Just prints if replace==False.
-	s = "%d --- done --- " % count
-	print s ; g.es(s)
-#@nonl
+    g.enl() ; g.enl()
+    count = prependNamesInTree(p,nameList,"g.",replace=True) # Just prints if replace==False.
+    s = "%d --- done --- " % count
+    print s ; g.es(s)
 #@+node:EKR.20040517075110.1:<< set nameList to the list of functions in leoGlobals.py >>
 nameList = (
 'alert',
@@ -1881,95 +1881,95 @@ nameList = (
 #@-node:EKR.20040517075110.1:<< set nameList to the list of functions in leoGlobals.py >>
 #@+node:EKR.20040517075110.2:findFunctionsInTree
 def findFunctionsInTree(p):
-	
-	nameList = []
-	for p in p.self_and_subtree_iter():
-		names = findDefs(p.bodyString())
-		if names:
-			for name in names:
-				if name not in nameList:
-					nameList.append(name)
-	return nameList
+    
+    nameList = []
+    for p in p.self_and_subtree_iter():
+        names = findDefs(p.bodyString())
+        if names:
+            for name in names:
+                if name not in nameList:
+                    nameList.append(name)
+    return nameList
 #@nonl
 #@-node:EKR.20040517075110.2:findFunctionsInTree
 #@+node:EKR.20040517075110.3:findDefs
 def findDefs(body):
-	
-	lines = body.split('\n')
-	names = []
-	for s in lines:
-		i = g.skip_ws(s,0)
-		if g.match(s,i,"class"):
-			return [] # The classes are defined in a single node.
-		if g.match(s,i,"def"):
-			i = g.skip_ws(s,i+3)
-			j = g.skip_c_id(s,i)
-			if j > i:
-				name = s[i:j]
-				if g.match(name,0,"__init__"): 
-					return [] # Disallow other class methods.
-				names.append(name)
-	return names
+    
+    lines = body.split('\n')
+    names = []
+    for s in lines:
+        i = g.skip_ws(s,0)
+        if g.match(s,i,"class"):
+            return [] # The classes are defined in a single node.
+        if g.match(s,i,"def"):
+            i = g.skip_ws(s,i+3)
+            j = g.skip_c_id(s,i)
+            if j > i:
+                name = s[i:j]
+                if g.match(name,0,"__init__"): 
+                    return [] # Disallow other class methods.
+                names.append(name)
+    return names
 #@nonl
 #@-node:EKR.20040517075110.3:findDefs
 #@+node:EKR.20040517075110.4:prependNamesInTree
 def prependNamesInTree(p,nameList,prefix,replace=False):
-	
-	c = p.c
-	
-	assert(len(prefix) > 0)
-	ch1 = string.letters + '_'
-	ch2 = string.letters + string.digits + '_'
-	def_s = "def " ; def_n = len(def_s)
-	prefix_n = len(prefix)
-	total = 0
-	c.beginUpdate()
-	for p in p.self_and_subtree_iter():
-		count = 0 ; s = p.bodyString()
-		printFlag = False
-		if s:
-			for name in nameList:
-				i = 0 ; n = len(name)
-				while 1:
-					<< look for name followed by '(' >>
-			if count and replace:
-				if 0:
-					<< print before and after >>
-				p.setBodyStringOrPane(s)
-				p.setDirty()
-		g.es("%3d %s" % (count,p.headString()))
-		total += count
-	c.endUpdate()
-	return total
+    
+    c = p.c
+    
+    assert(len(prefix) > 0)
+    ch1 = string.letters + '_'
+    ch2 = string.letters + string.digits + '_'
+    def_s = "def " ; def_n = len(def_s)
+    prefix_n = len(prefix)
+    total = 0
+    c.beginUpdate()
+    for p in p.self_and_subtree_iter():
+        count = 0 ; s = p.bodyString()
+        printFlag = False
+        if s:
+            for name in nameList:
+                i = 0 ; n = len(name)
+                while 1:
+                    << look for name followed by '(' >>
+            if count and replace:
+                if 0:
+                    << print before and after >>
+                p.setBodyStringOrPane(s)
+                p.setDirty()
+        g.es("%3d %s" % (count,p.headString()))
+        total += count
+    c.endUpdate()
+    return total
 #@nonl
 #@+node:EKR.20040517075110.5:<< look for name followed by '(' >>
 i = s.find(name,i)
 if i == -1:
-	break
+    break
 elif g.match(s,i-1,'.'):
-	i += n # Already an attribute.
+    i += n # Already an attribute.
 elif g.match(s,i-prefix_n,prefix):
-	i += n # Already preceded by the prefix.
+    i += n # Already preceded by the prefix.
 elif g.match(s,i-def_n,def_s):
-	i += n # preceded by "def"
+    i += n # preceded by "def"
 elif i > 0 and s[i-1] in ch1:
-	i += n # Not a word match.
+    i += n # Not a word match.
 elif i+n < len(s) and s[i+n] in ch2:
-	i += n # Not a word match.
+    i += n # Not a word match.
 else:
-	j = i + n
-	j = g.skip_ws(s,j)
-	if j >= len(s) or s[j] != '(':
-		i += n
-	else: # Replace name by prefix+name
-		s = s[:i] + prefix + name + s[i+n:]
-		i += n ; count += 1
-		# g.es('.',newline=False)
-		if 1:
-			if not printFlag:
-				printFlag = True
-				# print p.headString()
-			print g.get_line(s,i-n)
+    j = i + n
+    j = g.skip_ws(s,j)
+    if j >= len(s) or s[j] != '(':
+        i += n
+    else: # Replace name by prefix+name
+        s = s[:i] + prefix + name + s[i+n:]
+        i += n ; count += 1
+        # g.es('.',newline=False)
+        if 1:
+            if not printFlag:
+                printFlag = True
+                # print p.headString()
+            print g.get_line(s,i-n)
 #@nonl
 #@-node:EKR.20040517075110.5:<< look for name followed by '(' >>
 #@+node:EKR.20040517075110.6:<< print before and after >>
@@ -1981,7 +1981,7 @@ print s
 #@nonl
 #@-node:EKR.20040517075110.6:<< print before and after >>
 #@-node:EKR.20040517075110.4:prependNamesInTree
-#@-node:EKR.20040517075110:Script to find and replace all functions in leoGlobals.py
+#@-node:EKR.20040517075110:replaceLeoGlobals
 #@+node:EKR.20040608102548:(Fixed unicode bug in plugins_menu.py)
 #@+node:EKR.20040608102548.1:Report
 @nocolor
