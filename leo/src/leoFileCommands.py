@@ -501,8 +501,7 @@ class baseFileCommands:
 		c.initAllCloneBits() # 5/3/03
 		c.selectVnode(c.tree.currentVnode) # load body pane
 		c.tree.initing = false # Enable changes in endEditLabel
-		# 4.0:  Save this dict for Read @file Node command.
-		# self.tnodesDict = {}
+		self.tnodesDict = {}
 		return ok, self.ratio
 	#@-body
 	#@-node:7::getLeoFile (calls setAllJoinLinks, initAllCloneBits)
@@ -766,7 +765,9 @@ class baseFileCommands:
 			headline = self.getEscapedString() ; self.getTag("</vh>")
 		# Link v into the outline using parent and back.
 		v = self.createVnode(parent,back,tref,headline)
-		if tnodeList: v.tnodeList = tnodeList # New for 4.0
+		if tnodeList:
+			v.tnodeList = tnodeList # New for 4.0
+			# trace("%4d" % len(tnodeList),v)
 		
 		#@<< Set the remembered status bits >>
 		#@+node:2::<< Set the remembered status bits >>
@@ -804,19 +805,29 @@ class baseFileCommands:
 	
 		"""Parse a list of tnode indices terminated by a double quote."""
 	
-		fc = self ; tnodeList = []
+		fc = self ; 
 		
 		if fc.matchChar('"'):
-			return tnodeList
+			return []
 	
+		indexList = []
 		while 1:
 			index = fc.getIndex()
-			tnodeList.append(index)
+			indexList.append(index)
 			if fc.matchChar('"'):
-				# trace(`tnodeList`)
-				return tnodeList
+				break
 			else:
 				fc.getTag(',')
+				
+		# Resolve all indices.
+		tnodeList = []
+		for index in indexList:
+			t = fc.tnodesDict.get(index)
+			if t == None:
+				# Not an error: create a new tnode and put it in fc.tnodesDict.
+				t = self.newTnode(index)
+			tnodeList.append(t)
+		return tnodeList
 	#@-body
 	#@-node:16::getTnodeList (4.0)
 	#@+node:17::getVnodes

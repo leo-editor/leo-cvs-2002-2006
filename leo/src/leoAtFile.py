@@ -245,25 +245,26 @@ class baseAtFile:
 
 	#@-at
 	#@@c
-	def read(self,root):
+	def read(self,root,importFileName=None):
 	
+		# trace("old read")
 		c = self.commands
 		
 		#@<< set self.targetFileName >>
-		#@+node:5::<< set self.targetFileName >>
+		#@+node:1::<< set self.targetFileName >>
 		#@+body
 		if root.isAtFileNode():
 			self.targetFileName = root.atFileNodeName()
 		else:
 			self.targetFileName = root.atRawFileNodeName()
 		#@-body
-		#@-node:5::<< set self.targetFileName >>
+		#@-node:1::<< set self.targetFileName >>
 
 		self.root = root ; self.raw = false
 		self.errors = self.structureErrors = 0
 		
 		#@<< open file >>
-		#@+node:1::<< open file >>
+		#@+node:2::<< open file >>
 		#@+body
 		self.scanAllDirectives(root) # 1/30/02
 		
@@ -295,13 +296,13 @@ class baseAtFile:
 			except:
 				self.readError("Can not open: " + '"@file ' + fn + '"')
 		#@-body
-		#@-node:1::<< open file >>
+		#@-node:2::<< open file >>
 
 		if self.errors > 0: return 0
 		es("reading: " + root.headString())
 		
 		#@<< Scan the file buffer >>
-		#@+node:2::<< Scan the file buffer  >>
+		#@+node:3::<< Scan the file buffer  >>
 		#@+body
 		firstLines = self.scanHeader(file)
 		
@@ -328,11 +329,11 @@ class baseAtFile:
 			root.t.setTnodeText(bodyText)
 		
 		#@-body
-		#@-node:2::<< Scan the file buffer  >>
+		#@-node:3::<< Scan the file buffer  >>
 
 		
 		#@<< Bump mStructureErrors if any vnodes are unvisited >>
-		#@+node:3::<< Bump mStructureErrors if any vnodes are unvisited >>
+		#@+node:4::<< Bump mStructureErrors if any vnodes are unvisited >>
 		#@+body
 		#@+at
 		#  createNthNode marks all nodes in the derived file as visited.  Any 
@@ -352,14 +353,14 @@ class baseAtFile:
 			v = v.threadNext()
 		
 		#@-body
-		#@-node:3::<< Bump mStructureErrors if any vnodes are unvisited >>
+		#@-node:4::<< Bump mStructureErrors if any vnodes are unvisited >>
 
 		if self.structureErrors > 0:
 			self.readError("-- Rereading file.  Clone links into this file will be lost.") ;
 			self.errors = 0
 			
 			#@<< quickly delete root's tree and body text >>
-			#@+node:4::<< quickly delete root's tree and body text >>
+			#@+node:5::<< quickly delete root's tree and body text >>
 			#@+body
 			#@+at
 			#  Calling v.doDelete is _way_ too slow here because it repeatedly 
@@ -380,12 +381,12 @@ class baseAtFile:
 			
 			root.setBodyStringOrPane("")
 			#@-body
-			#@-node:4::<< quickly delete root's tree and body text >>
+			#@-node:5::<< quickly delete root's tree and body text >>
 
 			file.seek(0)
 			
 			#@<< Scan the file buffer >>
-			#@+node:2::<< Scan the file buffer  >>
+			#@+node:3::<< Scan the file buffer  >>
 			#@+body
 			firstLines = self.scanHeader(file)
 			
@@ -412,7 +413,7 @@ class baseAtFile:
 				root.t.setTnodeText(bodyText)
 			
 			#@-body
-			#@-node:2::<< Scan the file buffer  >>
+			#@-node:3::<< Scan the file buffer  >>
 
 		file.close()
 		if self.errors > 0:
@@ -859,7 +860,7 @@ class baseAtFile:
 		self.using_gnx = match(s,i,version_tag)
 		
 		if self.using_gnx:
-			trace("reading gnx file")
+			trace("reading gnx file",self.targetFileName)
 			i += len(version_tag)
 			# Skip to the next minus sign or end-of-line
 			j = i
@@ -2114,6 +2115,8 @@ class baseAtFile:
 		if self.errors == 0:
 			es_error("----- error reading @file " + self.targetFileName)
 			self.error(message) # 9/10/02: we must increment self.errors!
+			
+		print message
 	
 		if 0: # CVS conflicts create too many messages.
 			self.error(message)
