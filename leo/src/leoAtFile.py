@@ -258,11 +258,13 @@ class baseAtFile:
 			if j > -1:
 				# The encoding field was written by 4.2 or after:
 				encoding = s[i:j]
+				i = j + 1 # 6/8/04
 			else:
 				# The encoding field was written before 4.2.
 				j = s.find('.',i)
 				if j > -1:
 					encoding = s[i:j]
+					i = j + 1 # 6/8/04
 				else:
 					encoding = None
 			# g.trace("encoding:",encoding)
