@@ -540,8 +540,15 @@ class tangleCommands:
 		self.start_comment_string = delim2
 		self.end_comment_string = delim3
 		
-		# Abbreviations for self.language
-		self.use_cweb_flag = self.language == "cweb"
+		# Abbreviations for self.language.
+		# Warning: these must also be initialized in tangle.scanAllDirectives.
+		if 1: # 10/30/02: Don't change the code, just ignore @language cweb.
+			self.use_cweb_flag = false
+			self.raw_cweb_flag = self.language == "cweb" # A new ivar.
+		else:
+			self.use_cweb_flag = self.language == "cweb"
+			self.raw_cweb_flag = false # was never used before.
+		
 		self.use_noweb_flag = not self.use_cweb_flag
 		
 		# Set only from directives.
@@ -1073,6 +1080,7 @@ class tangleCommands:
 			# We expect to see only @doc,@c or @root directives
 			# while scanning a code section.
 			i = skip_to_end_of_line(s,i)
+			trace(`kind`)
 			self.error("directive not valid here: " + s[j:i])
 		elif kind == bad_section_name:
 			if self.use_cweb_flag:
@@ -3878,6 +3886,15 @@ class tangleCommands:
 					trace(`self.single_comment_string` + "," +
 						`self.start_comment_string` + "," +
 						`self.end_comment_string`)
+					
+				# 10/30/02: These ivars must be updated here!
+				# trace(`self.language`)
+				self.use_noweb_flag = true
+				self.use_cweb_flag = false # Only raw cweb mode is ever used.
+				self.raw_cweb_flag = self.language == "cweb" # A new ivar.
+			
+			
+			
 			#@-body
 			#@-node:2::<< Test for @comment and @language >>
 
@@ -4158,7 +4175,9 @@ class tangleCommands:
 						self.setRootFromText(self.head_root,err_flag)
 					else:
 						kind = bad_section_name # The warning has been given.
-			elif match(s,i,"@ ") or match(s,i,"@\t") or match(s,i,"@\n"): kind = at_doc
+			elif match(s,i,"@ ") or match(s,i,"@\t") or match(s,i,"@\n"):
+				# 10/30/02: Only @doc starts a noweb doc part in raw cweb mode.
+				kind = choose(self.raw_cweb_flag,plain_line,at_doc)
 			elif match(s,i,"@@"): kind = at_at
 			elif i < len(s) and s[i] == '@': kind = at_other
 			else: kind = plain_line
@@ -4191,12 +4210,22 @@ class tangleCommands:
 			#@+body
 			# This code will return at_other for any directive other than those listed.
 			
-			for name, type in [ ("@chapter", at_chapter),
-				("@c", at_code), # 2/28/02: treat @c just like @code.
-				("@code", at_code), ("@doc", at_doc),
-				("@root", at_root), ("@section", at_section) ]:
-				if match_word(s,i,name):
-					kind = type ; break
+			if match_word(s,i,"@c"):
+				# 10/30/02: Only @code starts a code section in raw cweb mode.
+				kind = choose(self.raw_cweb_flag,plain_line,at_code)
+			else:
+				for name, type in [
+					("@chapter", at_chapter),
+					("@code", at_code),
+					("@doc", at_doc),
+					("@root", at_root),
+					("@section", at_section) ]:
+					if match_word(s,i,name):
+						kind = type ; break
+					
+			if self.raw_cweb_flag and kind == at_other:
+				# 10/30/02: Everything else is plain text in raw cweb mode.
+				kind = plain_line
 			
 			if kind == at_root:
 				i = self.setRootFromText(s[i+5:],err_flag)
