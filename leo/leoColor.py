@@ -1845,6 +1845,7 @@ class leoColorPanel:
 		self.top = top = Tk.Toplevel(app().root)
 		top.title("Syntax colors for " + shortFileName(c.frame.title))
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
+		attachLeoIcon(top)
 	
 		
 		#@<< create color panel >>

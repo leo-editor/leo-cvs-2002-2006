@@ -220,6 +220,7 @@ class LeoApp:
 		# Create the global windows
 		self.findFrame = leoFind.LeoFind()
 		self.findFrame.top.withdraw()
+		attachLeoIcon(self.findFrame.top)
 		return true # all went well.
 	#@-body
 	#@-node:3::app.finishCreate

@@ -558,15 +558,21 @@ class vnode:
 
 	#@-at
 	#@-body
-	#@+node:1::OnBoxClick
+	#@+node:1::OnBoxClick, OnIconDoubleClick
 	#@+body
-	# Called when the box is clicked or the icon or headline are double-clicked.
+	# Called when the box is clicked.
 	
 	def OnBoxClick(self,event=None):
 	
 		self.commands.tree.OnBoxClick(self)
+		
+	# Called when the icon is double-clicked.
+		
+	def OnIconDoubleClick(self,event=None):
+	
+		self.commands.tree.OnIconDoubleClick(self)
 	#@-body
-	#@-node:1::OnBoxClick
+	#@-node:1::OnBoxClick, OnIconDoubleClick
 	#@+node:2::OnDrag
 	#@+body
 	def OnDrag(self,event=None):

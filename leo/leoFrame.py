@@ -91,37 +91,7 @@ class LeoFrame:
 
 		self.top = top = Tk.Toplevel()
 		top.withdraw() # 7/15/02
-		
-		#@<< attach LeoDoc icon with tkIcon >>
-		#@+node:2::<< attach LeoDoc icon with tkIcon >>
-		#@+body
-		#@+at
-		#  This code requires Fredrik Lundh's PIL and tkIcon packages:
-		# 
-		# Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
-		# Download tkIcon from http://www.effbot.org/downloads/#tkIcon
-		# 
-		# We wait until the window has been drawn once before attaching the 
-		# icon in OnVisiblity.
-		# 
-		# Many thanks to Jonathan M. Gilligan for suggesting this code.
-
-		#@-at
-		#@@c
-
-		try:
-			import Image,tkIcon
-			self.top.bind("<Visibility>", self.OnVisibility)
-			icon_file_name = os.path.join(app().loadDir,'Icons','LeoDoc.ico') # LeoDoc64.ico looks worse :-(
-			icon_file_name = os.path.normpath(icon_file_name)
-			icon_image = Image.open(icon_file_name)
-			self.icon = tkIcon.Icon(icon_image)
-		except:
-			# es_exception()
-			self.icon = None
-		#@-body
-		#@-node:2::<< attach LeoDoc icon with tkIcon >>
-
+		attachLeoIcon(top)
 		# print `top`
 		
 		if sys.platform=="win32":
@@ -139,7 +109,7 @@ class LeoFrame:
 		self.setTabWidth(c.tab_width)
 		
 		#@<< create the first tree node >>
-		#@+node:3::<< create the first tree node >>
+		#@+node:2::<< create the first tree node >>
 		#@+body
 		t = leoNodes.tnode()
 		v = leoNodes.vnode(c,t)
@@ -152,7 +122,7 @@ class LeoFrame:
 		c.editVnode(v)
 		c.endUpdate(false)
 		#@-body
-		#@-node:3::<< create the first tree node >>
+		#@-node:2::<< create the first tree node >>
 
 		flag = handleLeoHook("menu1")
 		if flag == None or flag != false:
@@ -485,6 +455,8 @@ class LeoFrame:
 	#@+body
 	def OnActivateBody (self,event=None):
 	
+		c=self.commands ; v = c.currentVnode()
+		
 		app().log = self
 		self.tree.OnDeactivate()
 		# trace(`app().log`)
@@ -2144,7 +2116,8 @@ class LeoFrame:
 		if s and len(s) > 0:
 			s += '\n' # Make sure we end the script properly.
 			try:
-				exec(s,globals(),locals())
+				# 11/18/02: don't pollute the exec environment with Leo globals.
+				exec(s,__builtins__,__builtins__)
 			except:
 				es_exception(full=false)
 		else:
@@ -2713,11 +2686,10 @@ class LeoFrame:
 		find = app().findFrame
 		# 15-SEP-2002 DTHEIN: call withdraw() to force findFrame to top after 
 		#                     opening multiple Leo files.
-		find.top.withdraw() 
+		find.top.withdraw()
 		find.top.deiconify()
 		find.find_text.focus_set()
 		find.commands = self
-	
 	
 	#@-body
 	#@-node:1::OnFindPanel

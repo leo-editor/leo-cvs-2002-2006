@@ -406,6 +406,7 @@ class leoFontPanel:
 		
 		Tk = Tkinter ; c = self.commands
 		self.top = top = Tk.Toplevel(app().root)
+		attachLeoIcon(top)
 		top.title("Fonts for " + shortFileName(c.frame.title))
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
 		self.create_outer()
@@ -424,7 +425,6 @@ class leoFontPanel:
 		if 0: # It need not be modal: it will go away if the owning window closes!
 			top.grab_set()
 			top.focus_force() # Get all keystrokes.
-	
 	#@-body
 	#@-node:11::run
 	#@+node:12::selectFont

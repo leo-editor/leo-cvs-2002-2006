@@ -136,7 +136,56 @@ def windows():
 #@-node:2::Most common functions
 #@+node:3::Commands, Dialogs, Directives, & Menus...
 #@+node:1::Dialog utils...
-#@+node:1::get_window_info
+#@+node:1::attachLeoIcon & allies
+#@+body
+#@+at
+#  This code requires Fredrik Lundh's PIL and tkIcon packages:
+# 
+# Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
+# Download tkIcon from http://www.effbot.org/downloads/#tkIcon
+# 
+# We wait until the window has been drawn once before attaching the icon in OnVisiblity.
+# 
+# Many thanks to Jonathan M. Gilligan for suggesting this code.
+
+#@-at
+#@@c
+
+leoIcon = None
+
+def attachLeoIcon (w):
+	try:
+		global leoIcon
+		import Image,tkIcon
+		f = onVisibility
+		callback = lambda event,w=w,f=f:f(w,event)
+		w.bind("<Visibility>",callback)
+		if not leoIcon:
+			icon_file_name = os.path.join(app().loadDir,'Icons','LeoDoc.ico') # LeoDoc64.ico looks worse :-(
+			icon_file_name = os.path.normpath(icon_file_name)
+			icon_image = Image.open(icon_file_name)
+			leoIcon = tkIcon.Icon(icon_image)
+	except:
+		# es_exception()
+		leoIcon = None
+#@-body
+#@+node:1::onVisibility
+#@+body
+# Handle the "visibility" event and attempt to attach the Leo icon.
+# This code must be executed whenever the window is redrawn.
+
+def onVisibility (w,event):
+
+	# print "globals.onVisibility"
+	global leoIcon
+	if leoIcon and w and event and event.widget == w:
+
+		# print "OnVisibility"
+		leoIcon.attach(w)
+#@-body
+#@-node:1::onVisibility
+#@-node:1::attachLeoIcon & allies
+#@+node:2::get_window_info
 #@+body
 # WARNING: Call this routine _after_ creating a dialog.
 # (This routine inhibits the grid and pack geometry managers.)
@@ -153,8 +202,8 @@ def get_window_info (top):
 	
 	return w,h,x,y
 #@-body
-#@-node:1::get_window_info
-#@+node:2::center_dialog
+#@-node:2::get_window_info
+#@+node:3::center_dialog
 #@+body
 # Center the dialog on the screen.
 # WARNING: Call this routine _after_ creating a dialog.
@@ -173,8 +222,8 @@ def center_dialog(top):
 	
 	return w,h,x,y
 #@-body
-#@-node:2::center_dialog
-#@+node:3::create_labeled_frame
+#@-node:3::center_dialog
+#@+node:4::create_labeled_frame
 #@+body
 # Returns frames w and f.
 # Typically the caller would pack w into other frames, and pack content into f.
@@ -217,7 +266,7 @@ def create_labeled_frame (parent,
 
 	return w,f
 #@-body
-#@-node:3::create_labeled_frame
+#@-node:4::create_labeled_frame
 #@-node:1::Dialog utils...
 #@+node:2::Directives...
 #@+node:1::@language and @comment directives (leoUtils)
@@ -2394,8 +2443,6 @@ def unloadAll():
 #@-node:2::unloadAll
 #@-node:9::Startup & initialization...
 #@-others
-
-
 #@-body
 #@-node:0::@file leoGlobals.py
 #@-leo

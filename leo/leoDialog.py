@@ -114,6 +114,7 @@ class leoDialog:
 		Tk = Tkinter ; root = app().root
 		self.answer="ok"
 		self.top = top = Tk.Toplevel(root)
+		attachLeoIcon(self.top)
 		top.title(title)
 		top.resizable(0,0) # neither height or width is resizable.
 		frame = Tk.Frame(top)
@@ -141,6 +142,7 @@ class leoDialog:
 		Tk = Tkinter ; root = app().root
 		self.answer="ok"
 		self.top = top = Tk.Toplevel(root)
+		attachLeoIcon(self.top)
 		top.title(title)
 		top.resizable(0,0) # neither height or width is resizable.
 		frame = Tk.Frame(top)
@@ -170,6 +172,7 @@ class leoDialog:
 		Tk = Tkinter ; root = app().root
 		self.number=-1
 		self.top = top = Tk.Toplevel(root)
+		attachLeoIcon(self.top)
 		top.title(title)
 		top.resizable(0,0) # neither height or width is resizable.
 		frame = Tk.Frame(top)
@@ -181,7 +184,7 @@ class leoDialog:
 		txt.pack(side="left")
 	
 		center = Tk.Frame(top)
-		center.pack(side="top")
+		center.pack(side="top",padx=30)
 		ok = Tk.Button(center,width=6,text="OK",bd=4, # default button
 			underline=0,command=self.okNumberButton)
 		cancel = Tk.Button(center,width=6,text="Cancel",
@@ -202,6 +205,7 @@ class leoDialog:
 		Tk = Tkinter ; root = app().root
 		self.answer="No"
 		self.top = top = Tk.Toplevel(root)
+		attachLeoIcon(self.top)
 		top.title(title)
 		top.resizable(0,0) # neither height or width is resizable.
 		frame = Tk.Frame(top)
@@ -231,6 +235,7 @@ class leoDialog:
 		Tk = Tkinter ; root = app().root
 		self.answer="cancel"
 		self.top = top = Tk.Toplevel(root)
+		attachLeoIcon(self.top)
 		top.title(title)
 		top.resizable(0,0) # neither height or width is resizable.
 		frame = Tk.Frame(top)

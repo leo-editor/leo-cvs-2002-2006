@@ -441,7 +441,7 @@ class leoTree:
 		if 1: # 6/15/02: this reference is now cleared in v.__del__
 			v.icon_id = id
 		self.canvas.tag_bind(id, "<1>", v.OnIconClick)
-		self.canvas.tag_bind(id, "<Double-1>", v.OnBoxClick)
+		self.canvas.tag_bind(id, "<Double-1>", v.OnIconDoubleClick)
 	
 		return 0 # dummy icon height
 	#@-body
@@ -1221,7 +1221,7 @@ class leoTree:
 	def OnIconClick (self,v,event):
 	
 		canvas = self.canvas
-		# es("OnIconClick" + `v`)
+		# print "OnIconClick1:", `v`
 		
 		if event:
 			canvas_x = canvas.canvasx(event.x)
@@ -1238,7 +1238,85 @@ class leoTree:
 		self.select(v)
 	#@-body
 	#@-node:11::tree.OnIconClick
-	#@+node:12::tree.OnPopup
+	#@+node:12::tree.OnIconDoubleClick
+	#@+body
+	def OnIconDoubleClick (self,v,event=None):
+	
+		s = v.headString().strip()
+		if match_word(s,0,"@url"):
+			url = s[4:].strip()
+			
+			#@<< stop the url after any embedded blank and issue warning >>
+			#@+node:1::<< stop the url after any embedded blank and issue warning >>
+			#@+body
+			# For safety, the URL string should end at the first whitespace.
+			
+			url = url.replace('\t',' ')
+			i = url.find(' ')
+			if i > -1:
+				es("ignoring characters after space in url:"+url[i:])
+				es("use %20 instead of spaces")
+				url = url[:i]
+			
+			#@-body
+			#@-node:1::<< stop the url after any embedded blank and issue warning >>
+
+			
+			#@<< check the url; return if bad >>
+			#@+node:2::<< check the url; return if bad >>
+			#@+body
+			if not url or len(url) == 0:
+				es("no url following @url")
+				return
+				
+
+			#@+at
+			#  A valid url is (according to D.T.Hein):
+			# 
+			# 3 or more lowercase alphas, followed by,
+			# one ':', followed by,
+			# one or more of: (excludes !"#;<>[\]^`|)
+			# 	$%&'()*+,-./0-9:=?@A-Z_a-z{}~
+			# followed by one of: (same as above, except no minus sign or comma).
+			# 	$%&'()*+/0-9:=?@A-Z_a-z}~
+
+			#@-at
+			#@@c
+			urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
+			import re
+			if not re.match(urlPattern,url):
+				es("invalid url: "+url)
+				return
+			#@-body
+			#@-node:2::<< check the url; return if bad >>
+
+			
+			#@<< pass the url to the web browser >>
+			#@+node:3::<< pass the url to the web browser >>
+			#@+body
+			#@+at
+			#  Most browsers should handle the following urls:
+			# 	ftp://ftp.uu.net/public/whatever.
+			# 	http://localhost/MySiteUnderDevelopment/index.html
+			# 	file:///home/me/todolist.html
+
+			#@-at
+			#@@c
+
+			try:
+				import os
+				import webbrowser
+				os.chdir(app().loadDir)
+				# print "url:",`url`
+				webbrowser.open(url)
+			except:
+				es("exception opening " + url)
+				es_exception()
+			#@-body
+			#@-node:3::<< pass the url to the web browser >>
+	#@-body
+	#@-node:12::tree.OnIconDoubleClick
+	#@+node:13::tree.OnPopup
 	#@+body
 	# 20-SEP-2002 DTHEIN:
 	# On Linux we must do something special to make the popup menu
@@ -1346,7 +1424,7 @@ class leoTree:
 	def OnPopupFocusLost(self,event=None):
 		self.popupMenu.unpost()
 	#@-body
-	#@-node:12::tree.OnPopup
+	#@-node:13::tree.OnPopup
 	#@-node:5::Event handers
 	#@+node:6::Selecting & editing (tree)
 	#@+node:1::abortEditLabelCommand
