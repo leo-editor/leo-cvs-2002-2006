@@ -1192,6 +1192,11 @@ class settingsController:
     #@    @+others
     #@+node:ekr.20041225063637.13: ctor
     def __init__ (self,c,replaceBody=True):
+        
+        if not Pmw:
+            s = 'Setting dialog requires Pmw: see http://pmw.sourceforge.net'
+            print s ; g.es(s,color='blue')
+            return
     
         #@    << init ivars >>
         #@+node:ekr.20050123194330:<< init ivars >>
@@ -1225,11 +1230,6 @@ class settingsController:
         #@nonl
         #@-node:ekr.20050123194330:<< init ivars >>
         #@nl
-        
-        # Do this after defining ivars to keep pychecker happy.
-        if not Pmw:
-            g.trace("Setting dialog requires Pmw",color='blue')
-            return
     
         self._settingsPosition = p = self.createSettingsTree()
         self.parser = settingsDialogParserClass(c,p,self)
