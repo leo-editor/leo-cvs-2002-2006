@@ -360,8 +360,7 @@ class leoMenu:
         self.helpMenuTop3Table = (
             ("Open Leo&Docs.leo",None,c.leoDocumentation),
             ("-",None,None),
-            ("Open Leo&Config.leo",None,c.leoConfig),
-            # ("Apply &Settings",None,c.applyConfig),
+            ("Open Leo&Settings.leo",None,c.leoConfig),
         )
         #@nonl
         #@-node:ekr.20031218072017.3774:<< define help menu tables >>

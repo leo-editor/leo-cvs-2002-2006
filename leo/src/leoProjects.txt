@@ -4471,8 +4471,7 @@ self.helpMenuTop2Table = (
 self.helpMenuTop3Table = (
     ("Open Leo&Docs.leo",None,c.leoDocumentation),
     ("-",None,None),
-    ("Open Leo&Config.leo",None,c.leoConfig),
-    # ("Apply &Settings",None,c.applyConfig),
+    ("Open Leo&Settings.leo",None,c.leoConfig),
 )
 #@nonl
 #@-node:ekr.20031218072017.3774:<< define help menu tables >>
@@ -14669,15 +14668,19 @@ def updateRecentFiles (self,fileName):
     
     if g.app.unitTesting: return
     
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
     # Update the recent files list in all windows.
     if fileName:
-        compareFileName = g.os_path_normpath(g.os_path_abspath(fileName))
+        compareFileName = munge(fileName)
         # g.trace(fileName)
         for frame in g.app.windowList:
             c = frame.c
             # Remove all versions of the file name.
             for name in c.recentFiles:
-                if compareFileName == g.os_path_normpath(g.os_path_abspath(name)):
+                if compareFileName == munge(name):
                     c.recentFiles.remove(name)
             c.recentFiles.insert(0,fileName)
             # g.trace(fileName)
@@ -14695,32 +14698,22 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
 
     if not fileName or len(fileName) == 0:
         return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
 
-    # Create a full normalized path name.
-    # Display the file name with case intact.
-    if 1: # New code, also appears to work.
-        fileName = g.os_path_abspath(fileName)
-    else: # Old code, works.
-        fileName = g.os_path_join(os.getcwd(),fileName)
-
-    fileName = g.os_path_normpath(fileName)
-    oldFileName = fileName
-    
-    fileName = g.os_path_normcase(fileName)
+    # Create a full normalized path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
     list = app.windowList
     for frame in list:
-        fn = g.os_path_normcase(frame.c.mFileName)
-        fn = g.os_path_normpath(fn)
-        if fileName == fn:
-            frame.deiconify()
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
             # g.es("This window already open")
             return True, frame
-            
-    fileName = oldFileName # Use the idiosyncratic file name.
-
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
@@ -15082,32 +15075,22 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
 
     if not fileName or len(fileName) == 0:
         return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
 
-    # Create a full normalized path name.
-    # Display the file name with case intact.
-    if 1: # New code, also appears to work.
-        fileName = g.os_path_abspath(fileName)
-    else: # Old code, works.
-        fileName = g.os_path_join(os.getcwd(),fileName)
-
-    fileName = g.os_path_normpath(fileName)
-    oldFileName = fileName
-    
-    fileName = g.os_path_normcase(fileName)
+    # Create a full normalized path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
     list = app.windowList
     for frame in list:
-        fn = g.os_path_normcase(frame.c.mFileName)
-        fn = g.os_path_normpath(fn)
-        if fileName == fn:
-            frame.deiconify()
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
             # g.es("This window already open")
             return True, frame
-            
-    fileName = oldFileName # Use the idiosyncratic file name.
-
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
@@ -15223,12 +15206,14 @@ g.app.testDir = g.os_path_abspath(
 try:
     import leoNodes
 except ImportError:
-     print "Error importing leoNodes.py"
-
+    print "Error importing leoNodes.py"
+    import traceback ; traceback.print_exc()
 try:
     import leoConfig
 except ImportError:
     print "Error importing leoConfig.py"
+    import traceback ; traceback.print_exc()
+#@nonl
 #@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
 #@+node:ekr.20040411081633:<< start psycho >>
 if g.app and g.app.use_psyco:
@@ -17170,32 +17155,22 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
 
     if not fileName or len(fileName) == 0:
         return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
 
-    # Create a full normalized path name.
-    # Display the file name with case intact.
-    if 1: # New code, also appears to work.
-        fileName = g.os_path_abspath(fileName)
-    else: # Old code, works.
-        fileName = g.os_path_join(os.getcwd(),fileName)
-
-    fileName = g.os_path_normpath(fileName)
-    oldFileName = fileName
-    
-    fileName = g.os_path_normcase(fileName)
+    # Create a full normalized path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
     list = app.windowList
     for frame in list:
-        fn = g.os_path_normcase(frame.c.mFileName)
-        fn = g.os_path_normpath(fn)
-        if fileName == fn:
-            frame.deiconify()
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
             # g.es("This window already open")
             return True, frame
-            
-    fileName = oldFileName # Use the idiosyncratic file name.
-
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
@@ -17252,11 +17227,17 @@ def findSettingsPosition (self,c,setting):
 #@+node:ekr.20041201080436:config.appendToRecentFiles
 def appendToRecentFiles (self,files):
     
-    for theFile in files:
-        if theFile in self.recentFiles:
-            self.recentFiles.remove(theFile)
-        # g.trace(theFile)
-        self.recentFiles.append(theFile)
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+    
+    for name in files:
+        # Remove all variants of name.
+        for name2 in self.recentFiles:
+            if munge(name) == munge(name2):
+                self.recentFiles.remove(name2)
+
+        self.recentFiles.append(name)
 #@nonl
 #@-node:ekr.20041201080436:config.appendToRecentFiles
 #@+node:ekr.20041120064303:config.readSettingsFiles
@@ -17879,8 +17860,7 @@ def setFontFromConfig (self):
 def getFont (self):
 
     return self.font
-        
-# Called by leoFontPanel.
+
 def setFont (self,font=None, fontName=None):
     
     # ESSENTIAL: retain a link to font.
@@ -21075,6 +21055,7 @@ def __init__ (self,c,replaceBody=True):
         return
 
     << init ivars >>
+    << define Tk color names>>
 
     self._settingsPosition = p = self.createSettingsTree()
     self.parser = settingsDialogParserClass(c,p,self)
@@ -21132,6 +21113,72 @@ self.top = None
 self.tree = None
 #@nonl
 #@-node:ekr.20050123194330:<< init ivars >>
+#@+node:ekr.20050129111522:<< define Tk color names >>
+self.colorNamesList = (
+    "gray60", "gray70", "gray80", "gray85", "gray90", "gray95",
+    "snow1", "snow2", "snow3", "snow4", "seashell1", "seashell2",
+    "seashell3", "seashell4", "AntiqueWhite1", "AntiqueWhite2", "AntiqueWhite3",
+    "AntiqueWhite4", "bisque1", "bisque2", "bisque3", "bisque4", "PeachPuff1",
+    "PeachPuff2", "PeachPuff3", "PeachPuff4", "NavajoWhite1", "NavajoWhite2",
+    "NavajoWhite3", "NavajoWhite4", "LemonChiffon1", "LemonChiffon2",
+    "LemonChiffon3", "LemonChiffon4", "cornsilk1", "cornsilk2", "cornsilk3",
+    "cornsilk4", "ivory1", "ivory2", "ivory3", "ivory4", "honeydew1", "honeydew2",
+    "honeydew3", "honeydew4", "LavenderBlush1", "LavenderBlush2",
+    "LavenderBlush3", "LavenderBlush4", "MistyRose1", "MistyRose2",
+    "MistyRose3", "MistyRose4", "azure1", "azure2", "azure3", "azure4",
+    "SlateBlue1", "SlateBlue2", "SlateBlue3", "SlateBlue4", "RoyalBlue1",
+    "RoyalBlue2", "RoyalBlue3", "RoyalBlue4", "blue1", "blue2", "blue3", "blue4",
+    "DodgerBlue1", "DodgerBlue2", "DodgerBlue3", "DodgerBlue4", "SteelBlue1",
+    "SteelBlue2", "SteelBlue3", "SteelBlue4", "DeepSkyBlue1", "DeepSkyBlue2",
+    "DeepSkyBlue3", "DeepSkyBlue4", "SkyBlue1", "SkyBlue2", "SkyBlue3",
+    "SkyBlue4", "LightSkyBlue1", "LightSkyBlue2", "LightSkyBlue3",
+    "LightSkyBlue4", "SlateGray1", "SlateGray2", "SlateGray3", "SlateGray4",
+    "LightSteelBlue1", "LightSteelBlue2", "LightSteelBlue3",
+    "LightSteelBlue4", "LightBlue1", "LightBlue2", "LightBlue3",
+    "LightBlue4", "LightCyan1", "LightCyan2", "LightCyan3", "LightCyan4",
+    "PaleTurquoise1", "PaleTurquoise2", "PaleTurquoise3", "PaleTurquoise4",
+    "CadetBlue1", "CadetBlue2", "CadetBlue3", "CadetBlue4", "turquoise1",
+    "turquoise2", "turquoise3", "turquoise4", "cyan1", "cyan2", "cyan3", "cyan4",
+    "DarkSlateGray1", "DarkSlateGray2", "DarkSlateGray3",
+    "DarkSlateGray4", "aquamarine1", "aquamarine2", "aquamarine3",
+    "aquamarine4", "DarkSeaGreen1", "DarkSeaGreen2", "DarkSeaGreen3",
+    "DarkSeaGreen4", "SeaGreen1", "SeaGreen2", "SeaGreen3", "SeaGreen4",
+    "PaleGreen1", "PaleGreen2", "PaleGreen3", "PaleGreen4", "SpringGreen1",
+    "SpringGreen2", "SpringGreen3", "SpringGreen4", "green1", "green2",
+    "green3", "green4", "chartreuse1", "chartreuse2", "chartreuse3",
+    "chartreuse4", "OliveDrab1", "OliveDrab2", "OliveDrab3", "OliveDrab4",
+    "DarkOliveGreen1", "DarkOliveGreen2", "DarkOliveGreen3",
+    "DarkOliveGreen4", "khaki1", "khaki2", "khaki3", "khaki4",
+    "LightGoldenrod1", "LightGoldenrod2", "LightGoldenrod3",
+    "LightGoldenrod4", "LightYellow1", "LightYellow2", "LightYellow3",
+    "LightYellow4", "yellow1", "yellow2", "yellow3", "yellow4", "gold1", "gold2",
+    "gold3", "gold4", "goldenrod1", "goldenrod2", "goldenrod3", "goldenrod4",
+    "DarkGoldenrod1", "DarkGoldenrod2", "DarkGoldenrod3", "DarkGoldenrod4",
+    "RosyBrown1", "RosyBrown2", "RosyBrown3", "RosyBrown4", "IndianRed1",
+    "IndianRed2", "IndianRed3", "IndianRed4", "sienna1", "sienna2", "sienna3",
+    "sienna4", "burlywood1", "burlywood2", "burlywood3", "burlywood4", "wheat1",
+    "wheat2", "wheat3", "wheat4", "tan1", "tan2", "tan3", "tan4", "chocolate1",
+    "chocolate2", "chocolate3", "chocolate4", "firebrick1", "firebrick2",
+    "firebrick3", "firebrick4", "brown1", "brown2", "brown3", "brown4", "salmon1",
+    "salmon2", "salmon3", "salmon4", "LightSalmon1", "LightSalmon2",
+    "LightSalmon3", "LightSalmon4", "orange1", "orange2", "orange3", "orange4",
+    "DarkOrange1", "DarkOrange2", "DarkOrange3", "DarkOrange4", "coral1",
+    "coral2", "coral3", "coral4", "tomato1", "tomato2", "tomato3", "tomato4",
+    "OrangeRed1", "OrangeRed2", "OrangeRed3", "OrangeRed4", "red1", "red2", "red3",
+    "red4", "DeepPink1", "DeepPink2", "DeepPink3", "DeepPink4", "HotPink1",
+    "HotPink2", "HotPink3", "HotPink4", "pink1", "pink2", "pink3", "pink4",
+    "LightPink1", "LightPink2", "LightPink3", "LightPink4", "PaleVioletRed1",
+    "PaleVioletRed2", "PaleVioletRed3", "PaleVioletRed4", "maroon1",
+    "maroon2", "maroon3", "maroon4", "VioletRed1", "VioletRed2", "VioletRed3",
+    "VioletRed4", "magenta1", "magenta2", "magenta3", "magenta4", "orchid1",
+    "orchid2", "orchid3", "orchid4", "plum1", "plum2", "plum3", "plum4",
+    "MediumOrchid1", "MediumOrchid2", "MediumOrchid3", "MediumOrchid4",
+    "DarkOrchid1", "DarkOrchid2", "DarkOrchid3", "DarkOrchid4", "purple1",
+    "purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
+    "MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
+    "thistle4" )
+#@nonl
+#@-node:ekr.20050129111522:<< define Tk color names >>
 #@+node:ekr.20050121105232:<< set background color for widgets >>
 if 0:
     # Get the color from the background color of the body text widget.
@@ -21475,7 +21522,7 @@ def createColor (self,parent,p,kind,name,val):
     
     munge = g.app.config.munge
     noColor = "<no color>"
-    colorNamesList = list(leoTkinterColorPanels.colorNamesList)
+    colorNamesList = list(self.colorNamesList)
     
     f = Tk.Frame(parent,background=self.commonBackground) # No need to pack.
     << munge val and add val to colorNamesList >>
@@ -22011,8 +22058,10 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
 C:\prog\leoCVS\leo\test\test.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
 C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\Leo Stuff\oldLeoFiles.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -22100,15 +22149,19 @@ def updateRecentFiles (self,fileName):
     
     if g.app.unitTesting: return
     
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
     # Update the recent files list in all windows.
     if fileName:
-        compareFileName = g.os_path_normpath(g.os_path_abspath(fileName))
+        compareFileName = munge(fileName)
         # g.trace(fileName)
         for frame in g.app.windowList:
             c = frame.c
             # Remove all versions of the file name.
             for name in c.recentFiles:
-                if compareFileName == g.os_path_normpath(g.os_path_abspath(name)):
+                if compareFileName == munge(name):
                     c.recentFiles.remove(name)
             c.recentFiles.insert(0,fileName)
             # g.trace(fileName)
@@ -22371,6 +22424,7 @@ def __init__ (self,c,replaceBody=True):
         return
 
     << init ivars >>
+    << define Tk color names>>
 
     self._settingsPosition = p = self.createSettingsTree()
     self.parser = settingsDialogParserClass(c,p,self)
@@ -22428,6 +22482,72 @@ self.top = None
 self.tree = None
 #@nonl
 #@-node:ekr.20050123194330:<< init ivars >>
+#@+node:ekr.20050129111522:<< define Tk color names >>
+self.colorNamesList = (
+    "gray60", "gray70", "gray80", "gray85", "gray90", "gray95",
+    "snow1", "snow2", "snow3", "snow4", "seashell1", "seashell2",
+    "seashell3", "seashell4", "AntiqueWhite1", "AntiqueWhite2", "AntiqueWhite3",
+    "AntiqueWhite4", "bisque1", "bisque2", "bisque3", "bisque4", "PeachPuff1",
+    "PeachPuff2", "PeachPuff3", "PeachPuff4", "NavajoWhite1", "NavajoWhite2",
+    "NavajoWhite3", "NavajoWhite4", "LemonChiffon1", "LemonChiffon2",
+    "LemonChiffon3", "LemonChiffon4", "cornsilk1", "cornsilk2", "cornsilk3",
+    "cornsilk4", "ivory1", "ivory2", "ivory3", "ivory4", "honeydew1", "honeydew2",
+    "honeydew3", "honeydew4", "LavenderBlush1", "LavenderBlush2",
+    "LavenderBlush3", "LavenderBlush4", "MistyRose1", "MistyRose2",
+    "MistyRose3", "MistyRose4", "azure1", "azure2", "azure3", "azure4",
+    "SlateBlue1", "SlateBlue2", "SlateBlue3", "SlateBlue4", "RoyalBlue1",
+    "RoyalBlue2", "RoyalBlue3", "RoyalBlue4", "blue1", "blue2", "blue3", "blue4",
+    "DodgerBlue1", "DodgerBlue2", "DodgerBlue3", "DodgerBlue4", "SteelBlue1",
+    "SteelBlue2", "SteelBlue3", "SteelBlue4", "DeepSkyBlue1", "DeepSkyBlue2",
+    "DeepSkyBlue3", "DeepSkyBlue4", "SkyBlue1", "SkyBlue2", "SkyBlue3",
+    "SkyBlue4", "LightSkyBlue1", "LightSkyBlue2", "LightSkyBlue3",
+    "LightSkyBlue4", "SlateGray1", "SlateGray2", "SlateGray3", "SlateGray4",
+    "LightSteelBlue1", "LightSteelBlue2", "LightSteelBlue3",
+    "LightSteelBlue4", "LightBlue1", "LightBlue2", "LightBlue3",
+    "LightBlue4", "LightCyan1", "LightCyan2", "LightCyan3", "LightCyan4",
+    "PaleTurquoise1", "PaleTurquoise2", "PaleTurquoise3", "PaleTurquoise4",
+    "CadetBlue1", "CadetBlue2", "CadetBlue3", "CadetBlue4", "turquoise1",
+    "turquoise2", "turquoise3", "turquoise4", "cyan1", "cyan2", "cyan3", "cyan4",
+    "DarkSlateGray1", "DarkSlateGray2", "DarkSlateGray3",
+    "DarkSlateGray4", "aquamarine1", "aquamarine2", "aquamarine3",
+    "aquamarine4", "DarkSeaGreen1", "DarkSeaGreen2", "DarkSeaGreen3",
+    "DarkSeaGreen4", "SeaGreen1", "SeaGreen2", "SeaGreen3", "SeaGreen4",
+    "PaleGreen1", "PaleGreen2", "PaleGreen3", "PaleGreen4", "SpringGreen1",
+    "SpringGreen2", "SpringGreen3", "SpringGreen4", "green1", "green2",
+    "green3", "green4", "chartreuse1", "chartreuse2", "chartreuse3",
+    "chartreuse4", "OliveDrab1", "OliveDrab2", "OliveDrab3", "OliveDrab4",
+    "DarkOliveGreen1", "DarkOliveGreen2", "DarkOliveGreen3",
+    "DarkOliveGreen4", "khaki1", "khaki2", "khaki3", "khaki4",
+    "LightGoldenrod1", "LightGoldenrod2", "LightGoldenrod3",
+    "LightGoldenrod4", "LightYellow1", "LightYellow2", "LightYellow3",
+    "LightYellow4", "yellow1", "yellow2", "yellow3", "yellow4", "gold1", "gold2",
+    "gold3", "gold4", "goldenrod1", "goldenrod2", "goldenrod3", "goldenrod4",
+    "DarkGoldenrod1", "DarkGoldenrod2", "DarkGoldenrod3", "DarkGoldenrod4",
+    "RosyBrown1", "RosyBrown2", "RosyBrown3", "RosyBrown4", "IndianRed1",
+    "IndianRed2", "IndianRed3", "IndianRed4", "sienna1", "sienna2", "sienna3",
+    "sienna4", "burlywood1", "burlywood2", "burlywood3", "burlywood4", "wheat1",
+    "wheat2", "wheat3", "wheat4", "tan1", "tan2", "tan3", "tan4", "chocolate1",
+    "chocolate2", "chocolate3", "chocolate4", "firebrick1", "firebrick2",
+    "firebrick3", "firebrick4", "brown1", "brown2", "brown3", "brown4", "salmon1",
+    "salmon2", "salmon3", "salmon4", "LightSalmon1", "LightSalmon2",
+    "LightSalmon3", "LightSalmon4", "orange1", "orange2", "orange3", "orange4",
+    "DarkOrange1", "DarkOrange2", "DarkOrange3", "DarkOrange4", "coral1",
+    "coral2", "coral3", "coral4", "tomato1", "tomato2", "tomato3", "tomato4",
+    "OrangeRed1", "OrangeRed2", "OrangeRed3", "OrangeRed4", "red1", "red2", "red3",
+    "red4", "DeepPink1", "DeepPink2", "DeepPink3", "DeepPink4", "HotPink1",
+    "HotPink2", "HotPink3", "HotPink4", "pink1", "pink2", "pink3", "pink4",
+    "LightPink1", "LightPink2", "LightPink3", "LightPink4", "PaleVioletRed1",
+    "PaleVioletRed2", "PaleVioletRed3", "PaleVioletRed4", "maroon1",
+    "maroon2", "maroon3", "maroon4", "VioletRed1", "VioletRed2", "VioletRed3",
+    "VioletRed4", "magenta1", "magenta2", "magenta3", "magenta4", "orchid1",
+    "orchid2", "orchid3", "orchid4", "plum1", "plum2", "plum3", "plum4",
+    "MediumOrchid1", "MediumOrchid2", "MediumOrchid3", "MediumOrchid4",
+    "DarkOrchid1", "DarkOrchid2", "DarkOrchid3", "DarkOrchid4", "purple1",
+    "purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
+    "MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
+    "thistle4" )
+#@nonl
+#@-node:ekr.20050129111522:<< define Tk color names >>
 #@+node:ekr.20050121105232:<< set background color for widgets >>
 if 0:
     # Get the color from the background color of the body text widget.
@@ -23042,10 +23162,10 @@ def __init__(self,buttonType,parent_widget,**keywords):
     self.hotKey = None
     text = keywords['text']
 
-	<< set self.hotKey if '&' is in the string >>
-    
+    << set self.hotKey if '&' is in the string >>
+
     # Create the button...
-	if self.hotKey:
+    if self.hotKey:
         keywords['text'] = text
         keywords['underline'] = index
 
@@ -23085,10 +23205,10 @@ def bindHotKey (self,widget):
 # The hot key has been hit.  Call the button's command.
 
 def callback (self, event):
-    
-    g.trace(self.text)
 
-	self.button.invoke ()
+    # g.trace(self.text)
+
+    self.button.invoke ()
 #@-node:ekr.20041025152717:callback
 #@-node:ekr.20041025152343:class underlinedTkButton
 #@+node:ekr.20031218072017.3898:Birth & death
@@ -25519,12 +25639,14 @@ g.app.testDir = g.os_path_abspath(
 try:
     import leoNodes
 except ImportError:
-     print "Error importing leoNodes.py"
-
+    print "Error importing leoNodes.py"
+    import traceback ; traceback.print_exc()
 try:
     import leoConfig
 except ImportError:
     print "Error importing leoConfig.py"
+    import traceback ; traceback.print_exc()
+#@nonl
 #@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
 #@+node:ekr.20040411081633:<< start psycho >>
 if g.app and g.app.use_psyco:
@@ -26568,32 +26690,22 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
 
     if not fileName or len(fileName) == 0:
         return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
 
-    # Create a full normalized path name.
-    # Display the file name with case intact.
-    if 1: # New code, also appears to work.
-        fileName = g.os_path_abspath(fileName)
-    else: # Old code, works.
-        fileName = g.os_path_join(os.getcwd(),fileName)
-
-    fileName = g.os_path_normpath(fileName)
-    oldFileName = fileName
-    
-    fileName = g.os_path_normcase(fileName)
+    # Create a full normalized path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
     list = app.windowList
     for frame in list:
-        fn = g.os_path_normcase(frame.c.mFileName)
-        fn = g.os_path_normpath(fn)
-        if fileName == fn:
-            frame.deiconify()
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
             # g.es("This window already open")
             return True, frame
-            
-    fileName = oldFileName # Use the idiosyncratic file name.
-
     try:
         # Open the file in binary mode to allow 0x1a in bodies & headlines.
         theFile = open(fileName,'rb')
@@ -27976,6 +28088,24 @@ self.tree.setColorFromConfig()
 #@-node:ekr.20041228052527.3:Plugins...
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@+node:ekr.20050125203059:4.3 a2 projects
+#@+node:ekr.20050129112109: (Removed unused files)
+#@+node:ekr.20050129112109.1:What I did
+@killcolor
+
+- Removed following files and corresponding imports.
+    - leoColorPanel.py
+    - leoFontPanel.py
+    - leoPrefs.py
+    - leoTkinterColorPanels.py
+    - leoTkinterFontPanel.py
+    - leoTkinterPrefs.py
+
+- moved colorNamesList from leoTkinterColorPanels.py to leoConfig.py
+
+- Removed unused code from gui.Tkinter panels.
+#@nonl
+#@-node:ekr.20050129112109.1:What I did
+#@-node:ekr.20050129112109: (Removed unused files)
 #@+node:ekr.20050125203059.1:Bugs
 #@+node:ekr.20050125202008:(Fixed very old bug in Undo Insert Node )
 #@+node:ekr.20041011092930:Report
@@ -28050,6 +28180,153 @@ def undoInsertNodes (self):
 #@nonl
 #@-node:EKR.20040526084140:undoInsertNodes
 #@-node:ekr.20050125202008:(Fixed very old bug in Undo Insert Node )
+#@+node:ekr.20050127090959:(Made sure to remove duplicates from recent files)
+#@+node:ekr.20041201080436:config.appendToRecentFiles
+def appendToRecentFiles (self,files):
+    
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+    
+    for name in files:
+        # Remove all variants of name.
+        for name2 in self.recentFiles:
+            if munge(name) == munge(name2):
+                self.recentFiles.remove(name2)
+
+        self.recentFiles.append(name)
+#@nonl
+#@-node:ekr.20041201080436:config.appendToRecentFiles
+#@+node:ekr.20031218072017.2083:c.updateRecentFiles
+def updateRecentFiles (self,fileName):
+    
+    """Create the RecentFiles menu.  May be called with Null fileName."""
+    
+    if g.app.unitTesting: return
+    
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Update the recent files list in all windows.
+    if fileName:
+        compareFileName = munge(fileName)
+        # g.trace(fileName)
+        for frame in g.app.windowList:
+            c = frame.c
+            # Remove all versions of the file name.
+            for name in c.recentFiles:
+                if compareFileName == munge(name):
+                    c.recentFiles.remove(name)
+            c.recentFiles.insert(0,fileName)
+            # g.trace(fileName)
+            # Recreate the Recent Files menu.
+            frame.menu.createRecentFilesMenuItems()
+    else:
+        for frame in g.app.windowList:
+            frame.menu.createRecentFilesMenuItems()
+#@nonl
+#@-node:ekr.20031218072017.2083:c.updateRecentFiles
+#@+node:ekr.20031218072017.2052:g.openWithFileName
+def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Create a full normalized path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
+
+    # If the file is already open just bring its window to the front.
+    list = app.windowList
+    for frame in list:
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
+            app.setLog(frame.log,"openWithFileName")
+            # g.es("This window already open")
+            return True, frame
+    try:
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
+        theFile = open(fileName,'rb')
+        if theFile:
+            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+            frame.log.enable(enableLog)
+            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+                app.setLog(frame.log,"openWithFileName")
+                app.lockLog()
+                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+                app.unlockLog()
+                for frame in g.app.windowList:
+                    # The recent files list has been updated by menu.updateRecentFiles.
+                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
+            frame.openDirectory = g.os_path_dirname(fileName)
+            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+            return True, frame
+        else:
+            g.es("can not open: " + fileName,color="red")
+            return False, None
+    except IOError:
+        g.es("can not open: " + fileName, color="blue")
+        return False, None
+    except:
+        if 1:
+            print "exceptions opening:", fileName
+            traceback.print_exc()
+        else:
+            g.es("exceptions opening: " + fileName,color="red")
+            g.es_exception()
+        return False, None
+#@-node:ekr.20031218072017.2052:g.openWithFileName
+#@-node:ekr.20050127090959:(Made sure to remove duplicates from recent files)
+#@+node:ekr.20050127090442:Fixed indentation problems in leoTkinterFind.py
+There was an inconsistent use of tabs and spaces in indentation.
+#@nonl
+#@-node:ekr.20050127090442:Fixed indentation problems in leoTkinterFind.py
+#@+node:ekr.20050127091201:(Changed Help menu & related code to handle leoSettings.leo instead of leoConfig.leo)
+#@+node:ekr.20041219072416:<< compute directories >>
+g.app.loadDir = computeLoadDir()
+    # Depends on g.app.tkEncoding: uses utf-8 for now.
+
+g.app.homeDir = computeHomeDir()
+
+g.app.extensionsDir = g.os_path_abspath(
+    g.os_path_join(g.app.loadDir,'..','extensions'))
+
+g.app.globalConfigDir = computeGlobalConfigDir()
+
+g.app.testDir = g.os_path_abspath(
+    g.os_path_join(g.app.loadDir,'..','test'))
+#@nonl
+#@-node:ekr.20041219072416:<< compute directories >>
+#@+node:ekr.20031218072017.2943:leoConfig
+def leoConfig (self):
+
+    c = self
+    name = 'leoSettings.leo'
+    homeDir = g.app.homeDir
+    configDir = g.app.globalConfigDir
+
+    # Look in configDir first.
+    fileName = g.os_path_join(configDir,name)
+
+    # Look in homeDir second.
+    ok, frame = g.openWithFileName(fileName,c)
+    if not ok:
+        if configDir == loadDir:
+            g.es("%s not found in %s" % (name,configDir))
+        else:
+            fileName = g.os_path_join(homeDir,name)
+            ok, frame = g.openWithFileName(fileName,c)
+            if not ok:
+                g.es("%s not found in %s or %s" % (name,configDir,homeDir))
+#@nonl
+#@-node:ekr.20031218072017.2943:leoConfig
+#@-node:ekr.20050127091201:(Changed Help menu & related code to handle leoSettings.leo instead of leoConfig.leo)
 #@-node:ekr.20050125203059.1:Bugs
 #@+node:ekr.20050125203059.2:New features...
 #@+node:ekr.20050125170349:(Added new undo granularities & undo_granularity setting)
@@ -28557,6 +28834,7 @@ print "actual  :",textResult
 #@nonl
 #@-node:ekr.20031218072017.1497:<< print mismatch trace >>
 #@-node:ekr.20031218072017.1493:undoRedoText
+#@clone 2
 #@+node:ekr.20031218072017.1490:setUndoTypingParams & recognizeStartOfTypingWord
 @ This routine saves enough information so a typing operation can be undone and redone.
 
@@ -28758,7 +29036,7 @@ else:
         old_d.get('trailing') != u.trailing
     )
     if granularity == 'word' and not newBead:
-        # Protect that may be changed by the user
+        # Protect the method that may be changed by the user
         try:
             << set newBead if the change does not continue a word >>
         except Exception:
@@ -28784,7 +29062,8 @@ else:
     new_lines = g.splitLines(newText)
     #g.trace(old_row,old_col,len(old_lines))
     #g.trace(new_row,new_col,len(new_lines))
-    if old_row != new_row or old_col != new_col - 1:
+    # Recognize backspace, del, etc. as contiguous.
+    if old_row != new_row or abs(old_col-new_col) != 1:
         # The new and old characters are not contiguous.
         newBead = True
     elif old_col == 0 or new_col == 0:
@@ -28880,6 +29159,24 @@ I just had two Aha's regarding this proposal:
 2. There is no need to change all plugins all at once.  The plugin manager can try calling plugin's init code, but can 'guess' that the plugin was correctly loaded if the init method does not exist.  In this way, we can add the init code to plugins that would really benefit from having it, without having to add init functions to all plugins.
 #@nonl
 #@-node:ekr.20050128091841:Ahas
+#@+node:ekr.20050128111043:What I did
+@killcolor
+
+The code attempts to call the init method when importing the plugin. If the
+top-level init function exits, the plugin manager will record the plugin as
+having been loaded successfully only if init returns True (or equivalent). If
+the top-level init function does not exist, the plugin manager considers that
+the plugin was loaded successfully. This guess is needed for compatibility with
+old plugins.
+
+Other changes:
+
+- Added init to the spellpyx plugin.
+- Changed the scripts in the '@button Check spelling...' nodes in test.leo and leoPy.leo and leoPyRef.leo.
+
+Edward
+#@nonl
+#@-node:ekr.20050128111043:What I did
 #@+node:ekr.20041113113140:loadOnePlugin
 def loadOnePlugin (moduleOrFileName, verbose=False):
     
