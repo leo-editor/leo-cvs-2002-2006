@@ -786,11 +786,11 @@ class LeoFrame:
 			#@+at
 			#  7/29/02: It's too confusing to have arrow keys mean different things in different panes.
 			# 
-			# For one thing, we want to leave the focus in the body pane after the first click in the outline pane, but that means that 
-			# the arrow keys must still be functional in the _body_ pane!
+			# For one thing, we want to leave the focus in the body pane after the first click in the outline pane, but that means 
+			# that the arrow keys must still be functional in the _body_ pane!
 			# 
-			# Alas, all the various combinations of key bindings of arrow keys appear to do something; there are none left to use for 
-			# moving around in the outline pane.  So we are stuck with poor shortcuts.
+			# Alas, all the various combinations of key bindings of arrow keys appear to do something; there are none left to use 
+			# for moving around in the outline pane.  So we are stuck with poor shortcuts.
 
 			#@-at
 			#@@c
@@ -1189,8 +1189,8 @@ class LeoFrame:
 		#@+node:1::<< Set closeFlag if the only open window is empty >>
 		#@+body
 		#@+at
-		#  If this is the only open window was opened when the app started, and the window has never been written to or saved, then we 
-		# will automatically close that window if this open command completes successfully.
+		#  If this is the only open window was opened when the app started, and the window has never been written to or saved, 
+		# then we will automatically close that window if this open command completes successfully.
 
 		#@-at
 		#@@c
@@ -2990,12 +2990,12 @@ class LeoFrame:
 			try: body.configure(fg=fg)
 			except: pass
 			
-		if 0: # not ready yet
+		if sys.platform != "win32": # Maybe a Windows bug.
 			fg = config.getWindowPref("body_cursor_foreground_color")
 			bg = config.getWindowPref("body_cursor_background_color")
 			print `fg`, `bg`
 			if fg and bg:
-				cursor="xterm" # + " " + fg + " " + bg
+				cursor="xterm" + " " + fg + " " + bg
 				try: body.configure(cursor=cursor)
 				except:
 					traceback.print_exc()
