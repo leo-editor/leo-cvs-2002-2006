@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041121151002"><vh>@settings</vh>
+<v t="ekr.20041121151002" a="TV"><vh>@settings</vh>
 <v t="ekr.20041121151002.1"><vh>@recent-files</vh></v>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
 </v>
@@ -555,8 +555,7 @@
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
 </v>
-<v t="ekr.20040312021734"><vh>Scripts &amp; buttons</vh>
-<v t="ekr.20041113113555"><vh>@button spell check</vh></v>
+<v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -901,9 +900,11 @@
 <v t="ekr.20041124144944"><vh>print sys.path</vh></v>
 <v t="ekr.20041126035448"><vh>Script to import a file</vh></v>
 </v>
-<v t="ekr.20041001211817"><vh>Startup</vh>
+<v t="ekr.20041001211817"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
+<v t="ekr.20041113113555"><vh>@button spellpyx</vh></v>
+<v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
 <v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
@@ -1431,9 +1432,8 @@
 </v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
-<v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="E"><vh>Pmw dialog</vh>
+<v t="ekr.20041125145818.1"><vh>Pmw dialog</vh>
 <v t="ekr.20041130085400"><vh>Status: read me</vh>
 <v t="ekr.20041130095005"><vh>bugs, etc</vh></v>
 <v t="ekr.20041130085943"><vh>buttons</vh></v>
@@ -1441,9 +1441,9 @@
 <v t="ekr.20041130085400.2" a="M"><vh>fonts</vh></v>
 <v t="ekr.20041130085400.3" a="M"><vh>types</vh></v>
 </v>
-<v t="ekr.20041127231319" a="TV"><vh>To do</vh></v>
+<v t="ekr.20041127231319"><vh>To do</vh></v>
 <v t="ekr.20041128225703"><vh>Notes</vh></v>
-<v t="ekr.20041126110057"><vh>class settingsController</vh>
+<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
 <v t="ekr.20041126110158"><vh> ctor</vh>
 <v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
 <v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
@@ -1496,9 +1496,9 @@
 <v t="ekr.20041127092231"><vh>updateComments</vh></v>
 <v t="ekr.20041127155541"><vh>updateSetterLabel</vh></v>
 </v>
-<v t="ekr.20041128042051"><vh>value handlers...</vh>
+<v t="ekr.20041128042051" a="E"><vh>value handlers...</vh>
 <v t="ekr.20041128042051.1"><vh>initValue</vh></v>
-<v t="ekr.20041128081018.1"><vh>writeChangedVars &amp; helpers</vh>
+<v t="ekr.20041128081018.1" a="E"><vh>writeChangedVars &amp; helpers</vh>
 <v t="ekr.20041130062919"><vh>updateConfig</vh></v>
 <v t="ekr.20041129113302" a="M"><vh>updateOneNode</vh></v>
 <v t="ekr.20041129095748.1"><vh>writeChangedList</vh>
@@ -11200,7 +11200,9 @@ Bigger projects:
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002"></t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo</t>
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\doc\leodocs.leo
+C:\prog\leoCVS\leo\plugins\leoplugins.leo
+C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -13549,7 +13551,8 @@ print ; print</t>
     """Update the node in c corresponding to p = data[0]."""
     
     p,name,kind,oldVal,val = data
-    name = name.strip() ; kind = kind.strip()
+    munge = g.app.munge
+    name = name.strip() ; kind = munge(kind.strip())
 
     # Root 1 is the root of the dialog's outline.
     p1 = p
