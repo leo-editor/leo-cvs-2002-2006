@@ -2,13 +2,13 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1088" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="37" left="253" height="23" width="80"/>
+	<global_window_position top="34" left="197" height="23" width="80"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
 <find_panel_settings search_body="1" whole_word="1">
-	<find_string>createLeoSplitter</find_string>
+	<find_string>@page</find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
@@ -27,12 +27,12 @@
 <v t="T10"><vh>David McNab</vh></v>
 <v t="T11"><vh>Speed Ream's slashdot article</vh></v>
 </v>
-<v t="T12"><vh>Release Notes</vh>
+<v t="T12" a="E"><vh>Release Notes</vh>
 <v t="T13"><vh>Warnings</vh></v>
-<v t="T14"><vh>Installation notes</vh>
+<v t="T14" a="E"><vh>Installation notes</vh>
 <v t="T15" a="C"><vh>System requirements</vh></v>
-<v t="T16" a="C"><vh>How to Install &amp; Run Leo</vh>
-<v t="T17" a="C"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
+<v t="T16" a="CE"><vh>How to Install &amp; Run Leo</vh>
+<v t="T17" a="CE"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
 <v t="T18"><vh>Example of leoConfig.txt</vh></v>
 </v>
 </v>
@@ -57,7 +57,7 @@
 </v>
 </v>
 </v>
-<v><vh>leo.py versions</vh>
+<v a="E"><vh>leo.py versions</vh>
 <v t="T21" a="C"><vh>leo.py 3.5</vh>
 <v t="T22"><vh>Bug fixes</vh>
 <v t="T23"><vh>Called cf.flush in leoConfig.update</vh></v>
@@ -175,8 +175,8 @@
 <v t="T101"><vh>Made Prefs panel non-modal</vh></v>
 </v>
 </v>
-<v t="T102"><vh>leo.py 2.5.1 Many improvements</vh>
-<v t="T103"><vh>New &amp; improved commands</vh>
+<v t="T102" a="E"><vh>leo.py 2.5.1 Many improvements</vh>
+<v t="T103" a="E"><vh>New &amp; improved commands</vh>
 <v t="T104"><vh>Tabs and spaces</vh>
 <v t="T105"><vh>Added Convert All Blanks and Convert All Tabs commands</vh></v>
 <v t="T106"><vh>Added Convert Tabs command</vh></v>
@@ -184,7 +184,7 @@
 <v t="T108"><vh>Negative tab width converts tabs to spaces</vh></v>
 </v>
 <v t="T109"><vh>Improved Preferences panel</vh></v>
-<v t="T17" a="C"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
+<v t="T17" a="CE"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
 <v t="T18"><vh>Example of leoConfig.txt</vh></v>
 </v>
 <v t="T110"><vh>Cut and Paste now works properly in all situations</vh></v>
@@ -245,7 +245,7 @@
 <v t="T145"><vh>Fixed bugs</vh></v>
 <v t="T146"><vh>Remaining minor problems</vh></v>
 </v>
-<v t="T147"><vh>0.08 Find, Change and Tangle commands &amp; major bugs fixed</vh>
+<v t="T147" a="E"><vh>0.08 Find, Change and Tangle commands &amp; major bugs fixed</vh>
 <v t="T148"><vh>About the Find and Change commands</vh></v>
 <v t="T149"><vh>About the Tangle command</vh></v>
 <v t="T150"><vh>About hyperlinking</vh></v>
@@ -276,7 +276,7 @@
 <v t="T172"><vh>New Things To Do</vh></v>
 </v>
 </v>
-<v><vh>Borland PC versions</vh>
+<v a="E"><vh>Borland PC versions</vh>
 <v t="T173"><vh>Borland 2.7 Major bug fix: please upgrade</vh></v>
 <v t="T174"><vh>Borland 2.6 Major changes: please upgrade</vh>
 <v t="T175" a="M"><vh>Format change: no blank lines between sentinels in derived files</vh></v>
@@ -307,7 +307,7 @@
 </v>
 <v t="T198"><vh>version 2.2 (beta)</vh></v>
 <v t="T199"><vh>version 2.1 (beta)</vh></v>
-<v><vh>1.x versions</vh>
+<v a="E"><vh>1.x versions</vh>
 <v t="T200"><vh>Changes made in version 1.15</vh></v>
 <v t="T201"><vh>Changes made in version 1.14</vh></v>
 <v t="T202"><vh>Changes made in version 1.13</vh></v>
@@ -353,7 +353,7 @@
 <v t="T236"><vh>Changes made in version 1.2</vh></v>
 <v t="T237"><vh>Changes made in version 1.1</vh></v>
 <v t="T238"><vh>Changes made in version 1.0</vh></v>
-<v t="T239"><vh>Changes made in version 0.19</vh>
+<v t="T239" a="E"><vh>Changes made in version 0.19</vh>
 <v t="T240"><vh>Fixed directory bug</vh></v>
 <v t="T241"><vh>Added @language HTML, perl and perlpod</vh></v>
 <v t="T242"><vh>Eliminated @noweb &amp; replaced @cweb with @language cweb</vh></v>
@@ -371,7 +371,7 @@
 <v t="T252"><vh>Added @language fortran90</vh></v>
 <v t="T253"><vh>Added @language perlpod</vh></v>
 </v>
-<v t="T254"><vh>Changes made in version 0.17</vh>
+<v t="T254" a="E"><vh>Changes made in version 0.17</vh>
 <v t="T255"><vh>Support for noweb &lt;&lt;*&gt;&gt; convention</vh></v>
 <v t="T256"><vh>new @cweb, @noweb, @path, @tabwidth and @pagewidth directives</vh></v>
 <v t="T257"><vh>CWEB mode now has a chance of working</vh></v>
@@ -398,7 +398,7 @@
 </v>
 </v>
 </v>
-<v t="T276"><vh>Users Guide</vh>
+<v t="T276" a="E"><vh>Users Guide</vh>
 <v t="T277"><vh>An overview of Leo</vh></v>
 <v t="T278"><vh>Front material</vh>
 <v t="T279"><vh>Title Page &amp; Summary</vh></v>
@@ -423,8 +423,8 @@
 </v>
 <v t="T293"><vh>Chapter 2: Installing Leo</vh>
 <v t="T15" a="C"><vh>System requirements</vh></v>
-<v t="T16" a="C"><vh>How to Install &amp; Run Leo</vh>
-<v t="T17" a="C"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
+<v t="T16" a="CE"><vh>How to Install &amp; Run Leo</vh>
+<v t="T17" a="CE"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
 <v t="T18"><vh>Example of leoConfig.txt</vh></v>
 </v>
 </v>
@@ -491,7 +491,7 @@
 <v t="T309"><vh>Resizing panes</vh></v>
 <v t="T310"><vh>Undoing operations</vh></v>
 </v>
-<v t="T311"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T311" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
 <v t="T312"><vh>Overview</vh></v>
 <v t="T313"><vh>Sections and section references</vh></v>
 <v t="T314"><vh>Organizing @file trees.</vh>
@@ -533,7 +533,7 @@
 </v>
 </v>
 </v>
-<v t="T331"><vh>More about directives</vh>
+<v t="T331" a="E"><vh>More about directives</vh>
 <v t="T332"><vh>@CWEB and @noweb specify the source language</vh></v>
 <v t="T333"><vh>@color and @nocolor control syntax coloring</vh></v>
 <v t="T334"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
@@ -544,7 +544,7 @@
 </v>
 <v t="T243" a="C"><vh>About CWEB   </vh></v>
 </v>
-<v><vh>Appendix to Chapter 4: Using @root directives, Tangling and Untangling</vh>
+<v a="E"><vh>Appendix to Chapter 4: Using @root directives, Tangling and Untangling</vh>
 <v t="T339"><vh>@root vs. @file trees</vh></v>
 <v t="T340"><vh>Sections and section definitions</vh></v>
 <v t="T341"><vh>Tangling @root trees with the Tangle commands</vh></v>
@@ -762,7 +762,7 @@
 <v t="T456"><vh>Unlimited undo</vh></v>
 </v>
 </v>
-<v t="T457"><vh>FAQ</vh>
+<v t="T457" a="E"><vh>FAQ</vh>
 <v t="T458"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="T459"><vh>Where are the simple examples?</vh></v>
 <v t="T460"><vh>How can I create Javascript comments?</vh></v>
@@ -770,13 +770,13 @@
 <v t="T462"><vh>How should I choose between @root and @file trees?</vh></v>
 <v t="T463"><vh>When should I use clones?</vh></v>
 <v t="T464"><vh>How can I cut and paste nodes between different copies of Leo</vh></v>
-<v t="T465"><vh>How can I customize Leo?</vh>
-<v t="T17" a="CM"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
+<v t="T465" a="E"><vh>How can I customize Leo?</vh>
+<v t="T17" a="CEM"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
 <v t="T18"><vh>Example of leoConfig.txt</vh></v>
 </v>
 </v>
-<v t="T466"><vh>How can I add support in Leo for a new language?</vh>
-<v t="T467"><vh>code</vh>
+<v t="T466" a="E"><vh>How can I add support in Leo for a new language?</vh>
+<v t="T467" a="E"><vh>code</vh>
 <v t="T468"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T469"><vh>&lt;&lt; Create the Target Language frame &gt;&gt;</vh></v>
 <v t="T470"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
@@ -822,7 +822,7 @@
 </v>
 </v>
 </v>
-<v t="T500"><vh>Appendices</vh>
+<v t="T500" a="E"><vh>Appendices</vh>
 <v t="T42" a="C"><vh>Code hidden in leo.py</vh>
 <v t="T43"><vh>c2py.py</vh></v>
 <v t="T44"><vh>disStats.py</vh></v>
@@ -832,7 +832,7 @@
 <v t="T48"><vh>Tree code</vh></v>
 </v>
 <v t="T501"><vh>Converting @root trees to @file trees</vh></v>
-<v t="T502"><vh>Directives</vh>
+<v t="T502" a="E"><vh>Directives</vh>
 <v t="T503"><vh>@c and @code</vh></v>
 <v t="T504"><vh>@chapter (Macintosh only)</vh></v>
 <v t="T505"><vh>@color</vh></v>
@@ -848,7 +848,7 @@
 <v t="T515"><vh>@noweb</vh></v>
 <v t="T516"><vh>@others (valid only in @file trees)</vh></v>
 <v t="T517"><vh>@pagewidth</vh></v>
-<v t="T518"><vh>@path</vh></v>
+<v t="T518" a="V"><vh>@path</vh></v>
 <v t="T519"><vh>@root  (not valid in @file trees)</vh></v>
 <v t="T520"><vh>@section (Macintosh only)</vh></v>
 <v t="T521"><vh>@silent (not valid in @file trees)</vh></v>
@@ -1596,7 +1596,7 @@
 </v>
 </v>
 </v>
-<v t="T1079" a="V"><vh>White papers</vh>
+<v t="T1079"><vh>White papers</vh>
 <v t="T1080"><vh>Recovering from Read Errors</vh></v>
 <v><vh>CVS postings</vh>
 <v t="T1081"><vh>How to use Leo with CVS</vh></v>
@@ -4575,9 +4575,18 @@ but the following is invalid:
 
 The @path, @pagewidth and @tabwidth directives allow preferences to be set on a file-by-file basis: they override the corresponding defaults in the Preferences panel.
 
-The form of the @path directive is @path filename, where filename is taken to be everything following @path to the end of the line. If no path is specified in the @root directory the derived file is written to the directory containing the .leo file. This may be over-ridden using the "Tangle Default Directory" option in the Preferences panel.
+The form of the @path directive is @path filename, where filename is taken to be everything following @path to the end of the line.
+
+If the filename in @file pathname or @root pathname is an absolute filename the location of the derived file is specified only by the filename.  Otherwise, if the filename is a relative filename, the location of the derived file is relative to:
+	
+1. the directory specified the applicable @path directive, or
+2. the "Default Tangle Directory" in the Preferences panel if no @path directive is in effect, or
+3. the directory in which the .leo resides if the .leo file has ever been saved.
+
+An error occurs if no absolute path can be computed according to these rules, or if the filename or directory does not exist.
 
 The form of the @pagewidth directive is @pagewidth n, where n is a positive integer that indicates the width of tangled pages in columns. This setting only affects how Tangle outputs block comments.
+
 The form of the @tabwidth directive is @tabwidth n, where n is a positive integer that indicates the width of tabs in spaces. This is used by Tangle to output leading whitespace.</t>
 <t tx="T339">@file trees are much easier to use than @root trees:
 
@@ -4589,7 +4598,7 @@ However, @root trees are more flexible than @file trees:
 
 1. Within @file trees, sections must be defined in descendents of the node that contains the section reference.
 
-2. Within @root trees a section may be defined anywhere within the @root tree, regardless of where the section is referenced.  Moreover, the @unit directive expands the scope of section definitions in @root trees so that a section may be referenced in several @root trees.
+2. Within @root trees a section may be defined anywhere within the @root tree, regardless of where the section is referenced.  Moreover, the @unit directive expands the scope of section definitions in @root trees so that a section may be referenced in several @root trees.  (See "Tangling @root trees with the Tangle commands for a complete description of the @root directives.)
 
 3. The meaning of section definitions in @root trees are independent of their position within the tree.
 
@@ -4706,6 +4715,15 @@ The @root directive has three forms. All three forms mean exactly the same thing
 @root &lt;filename&gt;
 
 @nocolor
+
+If filename is an absolute filename the location of the derived file is specified only by the filename.  Otherwise, if the @root node contains a relative filename, the location of the derived file is relative to:
+	
+1. the directory specified the applicable @path directive, or
+2. the "Default Tangle Directory" in the Preferences panel if no @path directive is in effect, or
+3. the directory in which the .leo resides if the .leo file has ever been saved.
+
+An error occurs if no absolute path can be computed according to these rules, or if the filename or directory does not exist.
+
 The Tangle commands format derived files so they are easy to read. The .c file in the Examples folder shows how derived files are formatted by the Tangle commands.
 
 There is one complication that we haven't discussed yet: the scope of section definitions. The scope of a definition is the tree in which the definition is known.
@@ -6857,10 +6875,15 @@ The named nodes &lt;&lt;members of x&gt;&gt; and &lt;&lt;members of y&gt;&gt; co
 </t>
 <t tx="T517">The @pagewidth directives affects how Tangle outputs block comments:  it specifies the width of output pages in columns.  The form of the @pagewidth directive is @pagewidth n, where n is a positive integer.
 </t>
-<t tx="T518">The @path directive specifies the directory to be used if an @root directory does not specify a full path name.  This overrides the "Default Tangle Directory" option in the Preferences panel.
+<t tx="T518">The @path directive specifies the directory to be used if an @file or @root directive does not specify a full path name. The form of the @path directive is @path filename, where filename is taken to be everything following @path to the end of the line.
 
-The form of the @page directive is @page filename, where filename is taken to be everything following @page to the end of the line.
-</t>
+If the filename in @file pathname or @root pathname is an absolute filename the location of the derived file is specified only by the filename.  Otherwise, if the filename is a relative filename, the location of the derived file is relative to:
+	
+1. the directory specified the applicable @path directive, or
+2. the "Default Tangle Directory" in the Preferences panel if no @path directive is in effect, or
+3. the directory in which the .leo resides if the .leo file has ever been saved.
+
+An error occurs if no absolute path can be computed according to these rules, or if the filename or directory does not exist.</t>
 <t tx="T519">This directive starts the text that forms a single derived file, after all section references have been replaced by their definitions.
 
 By default, only descendents of the @root node are examined for section definitions.  However, if the @root directive is a descendent of a node containing the @unit directive, all descendents of the @unit node are examined for section definitions.</t>
