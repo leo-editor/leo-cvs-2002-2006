@@ -677,6 +677,7 @@ class atFile:
 		# This code rarely gets executed, so simple code suffices.
 		if i+1 >= n or match(s,i,"@ ") or match(s,i,"@\t") or match(s,i,"@\n"):
 			# 10/25/02: @space is not recognized in cweb mode.
+			# 11/15/02: Noweb doc parts are _never_ scanned in cweb mode.
 			return choose(self.language=="cweb",
 				atFile.noDirective,atFile.atDirective)
 	
@@ -684,7 +685,7 @@ class atFile:
 		# We treat @(nonalpha) separately because @ is in the colorizer table.
 		if self.language=="cweb" and (
 			match_word(s,i,"@c") or
-			i+1>= n or s[i+1] not in string.ascii_letters):
+			i+1>= n or s[i+1] not in string.letters):
 			return atFile.noDirective
 	
 		for name,directive in table:
@@ -2521,6 +2522,8 @@ class atFile:
 	#@+node:7::putDocPart
 	#@+body
 	# Puts a comment part in comments.
+	# Note: this routine is _never_ called in cweb mode,
+	# so noweb section references are _valid_ in cweb doc parts!
 	
 	def putDocPart(self,s):
 	

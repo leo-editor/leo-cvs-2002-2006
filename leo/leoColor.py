@@ -592,6 +592,7 @@ class colorizer:
 		self.state_dict = {
 			"blockComment" : self.continueBlockComment,
 			"doubleString" : self.continueSingleString,
+			"latexNormal"  : self.doLatexNormalState,
 			"nocolor"      : self.continueNocolor,
 			"normal"       : self.doNormalState,
 			"singleString" : self.continueDoubleString,
@@ -827,6 +828,8 @@ class colorizer:
 			# Color plain text unless we are under the control of @nocolor.
 			state = choose(self.flag,"normal","nocolor")
 			
+			self.latex_mode = self.language=="latex" # Cweb doc parts also use this mode.
+			
 			if 1: # 10/25/02: we color both kinds of references in cweb mode.
 				self.lb = "<<"
 				self.rb = ">>"
@@ -1022,7 +1025,7 @@ class colorizer:
 	#@+body
 	def colorizeLine (self,s,n,state):
 	
-		# print "inc,state,s:",`self.incremental`,state,s
+		# print "inc,state,latex,s:",`self.incremental`,state,`self.latex_mode`,s
 	
 		if self.incremental:
 			self.removeTagsFromLine(n)
@@ -1088,7 +1091,8 @@ class colorizer:
 	def continueDocPart (self,s,i,n):
 		
 		state = "doc"
-		if self.language in ("cweb","latex"):
+		if self.language == "cweb":
+			assert(not "cweb doc mode does not exist")
 			
 			#@<< handle cweb doc part >>
 			#@+node:1::<< handle cweb doc part >>
@@ -1212,7 +1216,7 @@ class colorizer:
 		
 		# 7/8/02: don't color doc parts in plain text.
 		if self.language != "plain" and (word == "@" or word == "@doc"):
-			# at-space starts doc part
+			# at-space is a Leo keyword.
 			self.body.tag_add("leoKeyword", index(n,i), index(n,j))
 			# Everything on the line is in the doc part.
 			self.body.tag_add("docPart", index(n,j), index(n,len(s)))
@@ -1228,13 +1232,21 @@ class colorizer:
 			return j,"normal"
 	#@-body
 	#@-node:6::doAtKeyword
-	#@+node:7::doNormalState
+	#@+node:7::doLatexNormal
+	#@+body
+	def doLatexNormalState (self,s,i,n):
+		
+		self.latex_mode = true
+		return self.doNormalState(s,i,n)
+	#@-body
+	#@-node:7::doLatexNormal
+	#@+node:8::doNormalState
 	#@+body
 	## To do: rewrite using dynamically generated tables.
 	
 	def doNormalState (self,s,i,n):
 	
-		ch = s[i] ; state = "normal"
+		ch = s[i] ; state = choose(self.latex_mode,"latexNormal","normal")
 	
 		if self.has_string and (ch == '"' or ch == "'"):
 			
@@ -1346,7 +1358,7 @@ class colorizer:
 			#@<< handle at keyword >>
 			#@+node:5::<< handle at keyword >>
 			#@+body
-			if self.language in ("cweb","latex"):
+			if self.language == "cweb":
 				if match(s,i,"@(") or match(s,i,"@<"):
 					
 					#@<< handle cweb ref or def >>
@@ -1383,7 +1395,11 @@ class colorizer:
 						i = j
 						
 						if word in ("@ ","@\t","@\n","@*","@**"):
-							state = "doc"
+							self.latex_mode = true
+							state = "latexNormal"
+						elif word in ("@<","@(","@c","@d","@f","@p"):
+							self.latex_mode = false
+							state = "normal"
 						elif word in ("@^","@.","@:","@="): # Ended by "@>"
 							j = string.find(s,"@>",i)
 							if j > -1:
@@ -1400,23 +1416,28 @@ class colorizer:
 			#@-body
 			#@-node:5::<< handle at keyword >>
 
-		elif ch in string.letters or ch == '_' or (ch == '\\' and self.language == "latex"):
+		elif ch in string.letters or ch == '_' or (ch == '\\' and self.latex_mode):
 			
 			#@<< handle possible keyword >>
 			#@+node:7::<< handle possible  keyword >>
 			#@+body
-			if self.language == "latex" and match(s,i,"\\"):
-				j = self.skip_id(s,i+1)
+			if self.latex_mode:
+				if match(s,i,"\\"):
+					j = self.skip_id(s,i+1)
+					word = s[i:j]
+					if word in latex_keywords:
+						self.body.tag_add("keyword", index(n,i), index(n,j))
+				else:
+					j = i + 1 # skip the backslash.
 			else:
 				j = self.skip_id(s,i)
-			
-			word = s[i:j]
-			if word in self.keywords:
-				self.body.tag_add("keyword", index(n,i), index(n,j))
-			elif self.language == "php":
-				if word in php_paren_keywords and match(s,j,"()"):
-					self.body.tag_add("keyword", index(n,i), index(n,j+2))
-					j += 2
+				word = s[i:j]
+				if word in self.keywords:
+					self.body.tag_add("keyword", index(n,i), index(n,j))
+				elif self.language == "php":
+					if word in php_paren_keywords and match(s,j,"()"):
+						self.body.tag_add("keyword", index(n,i), index(n,j+2))
+						j += 2
 			i = j
 			#@-body
 			#@-node:7::<< handle possible  keyword >>
@@ -1475,8 +1496,8 @@ class colorizer:
 		assert(self.progress < i)
 		return i,state
 	#@-body
-	#@-node:7::doNormalState
-	#@+node:8::removeAllTags & removeTagsFromLines
+	#@-node:8::doNormalState
+	#@+node:9::removeAllTags & removeTagsFromLines
 	#@+body
 	def removeAllTags (self):
 	
@@ -1490,7 +1511,7 @@ class colorizer:
 			self.body.tag_remove(tag,index(n,0),index(n,"end"))
 	
 	#@-body
-	#@-node:8::removeAllTags & removeTagsFromLines
+	#@-node:9::removeAllTags & removeTagsFromLines
 	#@-node:3::colorizeLine & allies
 	#@-node:4::colorizeAnyLanguage & allies
 	#@+node:5::scanColorDirectives
