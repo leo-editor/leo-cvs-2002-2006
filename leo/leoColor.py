@@ -46,16 +46,13 @@ default_colors_dict = {
 #@+node:1::<< leo keywords >>
 #@+body
 leoKeywords = (
-	# Leo 2 directives.
-	"@","@c","@code","@doc","@color","@comment",
-	"@delims","@first",
-	"@header", # Stephen P. Scahefer, 9/2/2002
-	"@language","@last","@nocolor",
-	"@noheader", # Stephen P.Schaefer,9/2/2002
-	"@others",
-	"@pagewidth","@path","@quiet","@tabwidth",
-	# Leo 1 directives.
-	"@cweb","@ignore","@noweb","@root","@unit","@silent","@terse","@verbose")
+	"@","@c","@code","@color","@comment","@cweb",
+	"@delims","@doc","@first","@header","@ignore",
+	"@language","@last",
+	"@nocolor","@noheader","@noweb","@others",
+	"@pagewidth","@path","@quiet","@root",
+	"@silent","@tabwidth","@terse",
+	"@unit","@verbose")
 #@-body
 #@-node:1::<< leo keywords >>
 

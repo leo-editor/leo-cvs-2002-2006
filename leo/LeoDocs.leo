@@ -530,7 +530,7 @@
 </v>
 </v>
 </v>
-<v t="T348" a="E"><vh>Users Guide</vh>
+<v t="T348" a="V"><vh>Users Guide</vh>
 <v t="T349"><vh>An overview of Leo</vh></v>
 <v t="T350"><vh>Front material</vh>
 <v t="T351"><vh>Title Page &amp; Summary</vh></v>
@@ -619,9 +619,9 @@
 <v t="T381"><vh>Resizing panes</vh></v>
 <v t="T382"><vh>Undoing operations</vh></v>
 </v>
-<v t="T383" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T383"><vh>Chapter 4: Writing Programs in Leo</vh>
 <v t="T384" a="M"><vh>Overview</vh></v>
-<v t="T385" a="MV"><vh>Sections and section references</vh></v>
+<v t="T385" a="M"><vh>Sections and section references</vh></v>
 <v t="T386"><vh>Organizing @file trees.</vh>
 <v t="T387"><vh>Examples</vh>
 <v t="T388"><vh>@file f.c</vh>
@@ -6805,7 +6805,7 @@ Late in 1997 I wrote a Print command to typeset an outline. Printing (Weaving) i
 
 Starting in May of 1998 I began work on a version of Leo using objective C and Apple's Yellow Box environment.  In some ways, this was the most powerful version of Leo.  Alas, a year later Apple chose not to support Yellow Box on Windows, so I had to begin again.  I was most unhappy.
 
-In May of 1999 I began work on the Borland version of Leo for Windows.  This version was successful, and I continue to support the Windows/Borland version to the present day.  The Borland Delphi classes are a pleasure to use and free of bugs.  I redesigned Leo's file format for the Windows version of Leo;  the Yellow Box file format is a binary format that requires the Yellow Box runtime.  Fortunately, I choose to use XML for Leo's file format.  I have Marc-Antoine Parent to thank for this decision; he urged me to use XML and patiently explained how to use XML properly.  However, there are two significant problems with the Borland version of Leo.  First, it works only on Windows.  Second, it can never be Open software, because it uses Borland's Delphi classes and a commercial syntax coloring component.
+In May of 1999 I began work on the Borland version of Leo for Windows.  This version was successful, and I continue to support the Windows/Borland version to the present day.  The Borland Delphi classes are a pleasure to use and free of bugs.  I redesigned Leo's file format for the Windows version of Leo;  the Yellow Box file format is a binary format that requires the Yellow Box runtime.  Fortunately, I choose to use XML for Leo's file format. I have Marc-Antoine Parent to thank for this decision; he urged me to use XML and patiently explained how to use XML properly.  However, there are two significant problems with the Borland version of Leo.  First, it works only on Windows.  Second, it can never be Open software, because it uses Borland's Delphi classes and a commercial syntax coloring component.
 
 In May of 2000 I began work an wxWindows version of Leo.  This was supposed to be a cross-platform version.  Alas, after much work I chose to abandon the wxWindows version.  There were too many bugs and too many incompatibilities between platforms.  Something good did come from this effort.  I spent a lot of time adding Python scripting to the wxWindows code and I became familiar with Python and its internals.
 

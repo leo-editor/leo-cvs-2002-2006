@@ -24,7 +24,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import leoNodes
+import leoColor,leoNodes
 import filecmp, os, os.path, time, traceback
 
 class atFile:
@@ -41,7 +41,7 @@ class atFile:
 	codeDirective	=  5 # @code
 	cDirective		=  6 # @c<space> or @c<newline>
 	othersDirective	=  7 # at-others
-	miscDirective	=  8 # All other directive
+	miscDirective	=  8 # All other directives
 	
 	# The kind of sentinel line.
 	noSentinel		=  9 # Not a sentinel
@@ -632,19 +632,24 @@ class atFile:
 		n = len(s)
 		if i >= n or s[i] != '@':
 			return atFile.noDirective
+	
+		table = (
+			("@c",atFile.cDirective),
+			("@code",atFile.codeDirective),
+			("@doc",atFile.docDirective),
+			("@others",atFile.othersDirective))
+	
 		# This code rarely gets executed, so simple code suffices.
 		if i+1 >= n or match(s,i,"@ ") or match(s,i,"@\t") or match(s,i,"@\n"):
 			return atFile.atDirective
-		if match_word(s,i,"@c"):
-			return atFile.cDirective
-		elif match_word(s,i,"@code"):
-			return atFile.codeDirective
-		elif match_word(s,i,"@doc"):
-			return atFile.docDirective
-		elif match_word(s,i,"@others"):
-			return atFile.othersDirective
-		else:
-			return atFile.miscDirective
+		for name,directive in table:
+			if match_word(s,i,name):
+				return directive
+		# 10/14/02: return miscDirective only for real directives.
+		for name in leoColor.leoKeywords:
+			if match_word(s,i,name):
+				return atFile.miscDirective
+		return atFile.noDirective
 	#@-body
 	#@-node:2::directiveKind
 	#@+node:3::error
@@ -2066,7 +2071,6 @@ class atFile:
 			kind1 = self.directiveKind(s,i)
 			kind2 = self.directiveKind(s,j)
 			if kind1 == atFile.othersDirective or kind2 == atFile.othersDirective:
-			
 				if leading_nl: self.onl() # 9/27/02
 				
 				#@<< handle @others >>
@@ -2094,7 +2098,8 @@ class atFile:
 				#@<< put @verbatim sentinel if necessary >>
 				#@+node:2::<< put @verbatim sentinel if necessary >>
 				#@+body
-				if match (s, i, self.startSentinelComment + '@'):
+				if match (s,i,self.startSentinelComment + '@'):
+					print "verbatim"
 					self.putSentinel("verbatim")
 				#@-body
 				#@-node:2::<< put @verbatim sentinel if necessary >>

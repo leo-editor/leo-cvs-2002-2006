@@ -3029,7 +3029,67 @@ class LeoFrame:
 	#@-node:5::Help Menu
 	#@-node:16::Menu Command Handlers
 	#@+node:17::Configuration
-	#@+node:1::f.reconfigureFromConfig
+	#@+node:1::f.configureBar
+	#@+body
+	def configureBar (self, bar, verticalFlag):
+		
+		config = app().config
+	
+		# Get configuration settings.
+		w = config.getWindowPref("split_bar_width")
+		if not w or w < 1: w = 7
+		relief = config.getWindowPref("split_bar_relief")
+		if not relief: relief = "flat"
+		color = config.getWindowPref("split_bar_color")
+		if not color: color = "LightSteelBlue2"
+	
+		try:
+			if verticalFlag:
+				# Panes arranged vertically; horizontal splitter bar
+				bar.configure(relief=relief,height=w,bg=color,cursor="sb_v_double_arrow")
+			else:
+				# Panes arranged horizontally; vertical splitter bar
+				bar.configure(relief=relief,width=w,bg=color,cursor="sb_h_double_arrow")
+		except: # Could be a user error. Use all defaults
+			es("exception in user configuration for splitbar")
+			es_exception()
+			if verticalFlag:
+				# Panes arranged vertically; horizontal splitter bar
+				bar.configure(height=7,cursor="sb_v_double_arrow")
+			else:
+				# Panes arranged horizontally; vertical splitter bar
+				bar.configure(width=7,cursor="sb_h_double_arrow")
+	#@-body
+	#@-node:1::f.configureBar
+	#@+node:2::f.configureBarsFromConfig
+	#@+body
+	def configureBarsFromConfig (self):
+		
+		config = app().config
+	
+		w = config.getWindowPref("split_bar_width")
+		if not w or w < 1: w = 7
+		
+		relief = config.getWindowPref("split_bar_relief")
+		if not relief or relief == "": relief = "flat"
+	
+		color = config.getWindowPref("split_bar_color")
+		if not color or color == "": color = "LightSteelBlue2"
+	
+		if self.splitVerticalFlag:
+			bar1,bar2=self.bar1,self.bar2
+		else:
+			bar1,bar2=self.bar2,self.bar1
+			
+		try:
+			bar1.configure(relief=relief,height=w,bg=color)
+			bar2.configure(relief=relief,width=w,bg=color)
+		except: # Could be a user error.
+			es("exception in user configuration for splitbar")
+			es_exception()
+	#@-body
+	#@-node:2::f.configureBarsFromConfig
+	#@+node:3::f.reconfigureFromConfig
 	#@+body
 	def reconfigureFromConfig (self):
 		
@@ -3052,24 +3112,8 @@ class LeoFrame:
 		f.setLogFontFromConfig()
 		c.redraw()
 	#@-body
-	#@-node:1::f.reconfigureFromConfig
-	#@+node:2::reconfigurePanes (use config bar_width)
-	#@+body
-	def reconfigurePanes (self):
-		
-		border = app().config.getIntWindowPref('additional_body_text_border')
-		if border == None: border = 0
-		
-		# The body pane needs a _much_ bigger border when tiling horizontally.
-		border = choose(self.splitVerticalFlag,2+border,6+border)
-		self.body.configure(bd=border)
-		
-		# The log pane needs a slightly bigger border when tiling vertically.
-		border = choose(self.splitVerticalFlag,4,2) 
-		self.log.configure(bd=border)
-	#@-body
-	#@-node:2::reconfigurePanes (use config bar_width)
-	#@+node:3::f.setBodyFontFromConfig
+	#@-node:3::f.reconfigureFromConfig
+	#@+node:4::f.setBodyFontFromConfig
 	#@+body
 	def setBodyFontFromConfig (self):
 		
@@ -3102,8 +3146,8 @@ class LeoFrame:
 				except:
 					traceback.print_exc()
 	#@-body
-	#@-node:3::f.setBodyFontFromConfig
-	#@+node:4::f.setLogFontFromConfig
+	#@-node:4::f.setBodyFontFromConfig
+	#@+node:5::f.setLogFontFromConfig
 	#@+body
 	def setLogFontFromConfig (self):
 	
@@ -3127,8 +3171,8 @@ class LeoFrame:
 			except: pass
 	
 	#@-body
-	#@-node:4::f.setLogFontFromConfig
-	#@+node:5::setTreeColorsFromConfig (frame)
+	#@-node:5::f.setLogFontFromConfig
+	#@+node:6::f.setTreeColorsFromConfig
 	#@+body
 	def setTreeColorsFromConfig (self):
 		
@@ -3140,7 +3184,23 @@ class LeoFrame:
 			except: pass
 	
 	#@-body
-	#@-node:5::setTreeColorsFromConfig (frame)
+	#@-node:6::f.setTreeColorsFromConfig
+	#@+node:7::reconfigurePanes (use config bar_width)
+	#@+body
+	def reconfigurePanes (self):
+		
+		border = app().config.getIntWindowPref('additional_body_text_border')
+		if border == None: border = 0
+		
+		# The body pane needs a _much_ bigger border when tiling horizontally.
+		border = choose(self.splitVerticalFlag,2+border,6+border)
+		self.body.configure(bd=border)
+		
+		# The log pane needs a slightly bigger border when tiling vertically.
+		border = choose(self.splitVerticalFlag,4,2) 
+		self.log.configure(bd=border)
+	#@-body
+	#@-node:7::reconfigurePanes (use config bar_width)
 	#@-node:17::Configuration
 	#@+node:18::Splitter stuff
 	#@+body
@@ -3167,62 +3227,7 @@ class LeoFrame:
 			bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
 	#@-body
 	#@-node:1::bindBar
-	#@+node:2::configureBar
-	#@+body
-	def configureBar (self, bar, verticalFlag):
-		
-		config = app().config
-	
-		# Get configuration settings.
-		w = config.getWindowPref("split_bar_width")
-		if not w or w < 1: w = 7
-		relief = config.getWindowPref("split_bar_relief")
-		if not relief: relief = "flat"
-		color = config.getWindowPref("split_bar_color")
-		if not color: color = "LightSteelBlue2"
-	
-		try:
-			if verticalFlag:
-				# Panes arranged vertically; horizontal splitter bar
-				bar.configure(relief=relief,height=w,bg=color,cursor="sb_v_double_arrow")
-			else:
-				# Panes arranged horizontally; vertical splitter bar
-				bar.configure(relief=relief,width=w,bg=color,cursor="sb_h_double_arrow")
-		except: # Could be a user error. Use all defaults
-			es("exception in user configuration for splitbar")
-			es_exception()
-			if verticalFlag:
-				# Panes arranged vertically; horizontal splitter bar
-				bar.configure(height=7,cursor="sb_v_double_arrow")
-			else:
-				# Panes arranged horizontally; vertical splitter bar
-				bar.configure(width=7,cursor="sb_h_double_arrow")
-	#@-body
-	#@-node:2::configureBar
-	#@+node:3::f.configureBarsFromConfig
-	#@+body
-	def configureBarsFromConfig (self):
-		
-		config = app().config
-	
-		w = config.getWindowPref("split_bar_width")
-		if not w or w < 1: w = 7
-		
-		relief = config.getWindowPref("split_bar_relief")
-		if not relief or relief == "": relief = "flat"
-	
-		color = config.getWindowPref("split_bar_color")
-		if not color or color == "": color = "LightSteelBlue2"
-	
-		if self.splitVerticalFlag:
-			bar1,bar2=self.bar1,self.bar2
-		else:
-			bar1,bar2=self.bar2,self.bar1
-		bar1.configure(relief=relief,height=w,bg=color)
-		bar2.configure(relief=relief,width=w,bg=color)
-	#@-body
-	#@-node:3::f.configureBarsFromConfig
-	#@+node:4::createBothLeoSplitters
+	#@+node:2::createBothLeoSplitters
 	#@+body
 	def createBothLeoSplitters (self,top):
 	
@@ -3334,8 +3339,8 @@ class LeoFrame:
 		# Give the log and body panes the proper borders.
 		self.reconfigurePanes()
 	#@-body
-	#@-node:4::createBothLeoSplitters
-	#@+node:5::createLeoSplitter
+	#@-node:2::createBothLeoSplitters
+	#@+node:3::createLeoSplitter
 	#@+body
 	# Create a splitter window and panes into which the caller packs widgets.
 	# Returns (f, bar, pane1, pane2)
@@ -3356,8 +3361,8 @@ class LeoFrame:
 		
 		return f, bar, pane1, pane2
 	#@-body
-	#@-node:5::createLeoSplitter
-	#@+node:6::divideAnySplitter
+	#@-node:3::createLeoSplitter
+	#@+node:4::divideAnySplitter
 	#@+body
 	# This is the general-purpose placer for splitters.
 	# It is the only general-purpose splitter code in Leo.
@@ -3375,8 +3380,8 @@ class LeoFrame:
 			pane1.place(relwidth=frac)
 			pane2.place(relwidth=1-frac)
 	#@-body
-	#@-node:6::divideAnySplitter
-	#@+node:7::divideLeoSplitter
+	#@-node:4::divideAnySplitter
+	#@+node:5::divideLeoSplitter
 	#@+body
 	# Divides the main or secondary splitter, using the key invariant.
 	def divideLeoSplitter (self, verticalFlag, frac):
@@ -3397,8 +3402,8 @@ class LeoFrame:
 		self.divideAnySplitter (frac, verticalFlag,
 			self.bar2, self.split2Pane1, self.split2Pane2)
 	#@-body
-	#@-node:7::divideLeoSplitter
-	#@+node:8::onDrag...
+	#@-node:5::divideLeoSplitter
+	#@+node:6::onDrag...
 	#@+body
 	def onDragMainSplitBar (self, event):
 		self.onDragSplitterBar(event,self.splitVerticalFlag)
@@ -3435,8 +3440,8 @@ class LeoFrame:
 		# trace(`frac`)
 		self.divideLeoSplitter(verticalFlag, frac)
 	#@-body
-	#@-node:8::onDrag...
-	#@+node:9::placeSplitter
+	#@-node:6::onDrag...
+	#@+node:7::placeSplitter
 	#@+body
 	def placeSplitter (self,bar,pane1,pane2,verticalFlag):
 	
@@ -3453,7 +3458,7 @@ class LeoFrame:
 			pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
 			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 	#@-body
-	#@-node:9::placeSplitter
+	#@-node:7::placeSplitter
 	#@-node:18::Splitter stuff
 	#@-others
 #@-body
