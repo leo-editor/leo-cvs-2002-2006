@@ -133,6 +133,11 @@ def leoOpen(fileName=None,*args):
 		frame1.top.deiconify()
 		app.log = frame1
 		leoGlobals.es("File not found: " + fileName)
+		# 10/6/02: Set the file's name if it doesn't exist.
+		fileName = leoUtils.ensure_extension(fileName, ".leo")
+		frame1.mFileName = fileName
+		frame1.title = fileName
+		frame1.top.title(fileName)
 	init_sherlock(args)
 	root.mainloop()
 #@-body
