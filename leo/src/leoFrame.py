@@ -1440,6 +1440,12 @@ class nullTree (leoTree):
         pass
     #@nonl
     #@-node:ekr.20031218072017.2240:Tree operations
+    #@+node:ekr.20040725044521:edit_text
+    def edit_text (self,p):
+        
+        self.oops()
+    #@nonl
+    #@-node:ekr.20040725044521:edit_text
     #@-node:ekr.20031218072017.2236:Dummy operations...
     #@+node:ekr.20031218072017.2241:getFont & setFont
     def getFont(self):
