@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4613" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="17" left="305" height="79" width="110"/>
+	<global_window_position top="13" left="375" height="903" width="850"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -5525,7 +5525,7 @@
 <v t="T3289" a="C"><vh>runMainLoop</vh></v>
 <v t="T3672"><vh>profile</vh></v>
 </v>
-<v t="T3673"><vh>@file leoApp.py</vh>
+<v t="T3673" a="E"><vh>@file leoApp.py</vh>
 <v t="T3026" a="C"><vh>app.__init__</vh>
 <v t="T3027"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T1134" a="C"><vh>&lt;&lt; define global data structures &gt;&gt;</vh></v>
@@ -7879,7 +7879,7 @@
 </v>
 </v>
 <v t="T4583" a="EV"><vh>(Added apply button to Font panel)</vh>
-<v t="T4584" a="E"><vh>@file leoFontPanel.py</vh>
+<v t="T4584"><vh>@file leoFontPanel.py</vh>
 <v t="T4585"><vh>Birth &amp; Death</vh>
 <v t="T4586"><vh>fontPanel.__init__</vh></v>
 <v t="T4587"><vh>create_outer</vh>
@@ -30212,9 +30212,10 @@ self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2</t>
 wrap = config.getBoolWindowPref('body_pane_wraps')
 wrap = choose(wrap,"word","none")
 
+# Setgrid=1 cause severe problems with the font panel.
 self.body = body = Tk.Text(split1Pane2,name='body',
 	bd=2,bg="white",relief="flat",
-	setgrid=1,wrap=wrap, selectbackground="Gray80") 
+	setgrid=0,wrap=wrap, selectbackground="Gray80") 
 self.setBodyFontFromConfig()
 
 self.bodyBar = bodyBar = Tk.Scrollbar(split1Pane2,name='bodyBar')
@@ -30234,7 +30235,7 @@ body.pack(expand=1, fill="both")</t>
 wrap = choose(wrap,"word","none")
 
 self.log = log = Tk.Text(split2Pane2,name="log",
-	setgrid=1,wrap=wrap,bd=2,bg="white",relief="flat")
+	setgrid=0,wrap=wrap,bd=2,bg="white",relief="flat")
 	
 self.setLogFontFromConfig()
 
@@ -30557,7 +30558,7 @@ def OnApplyConfig (self,event=None):
 		"log_text_font_slant",  "log_text_font_weight")
 	
 	log.configure(font=font)
-	
+
 	bg = config.getWindowPref("log_text_background_color")
 	if bg:
 		try: log.configure(bg=bg)
@@ -30567,6 +30568,7 @@ def OnApplyConfig (self,event=None):
 	if fg:
 		try: log.configure(fg=fg)
 		except: pass
+
 </t>
 <t tx="T2347">def setTabWidth (self, w):
 	
@@ -59944,11 +59946,12 @@ if self.dictionary.has_key(word.lower()):
 What I did:
 
 - Added Apply button.
-- Update temporarily sets setgrid=0 to disable the resizing of the body pane.
+- Frame class now permanently sets setgrid=0 to disable the resizing of the body pane.
 
 To do:
 	
 - Make the font panel a standard dialog.
+- Use a Tk.Text widget instead of a ListBox widget so we can display fonts in differently.
 
 @color</t>
 <t tx="T4584">@language python
@@ -60033,7 +60036,7 @@ for text,var in (
 	("Bold",self.boldVar),
 	("Italic",self.italVar)):
 
-	b = Tk.Checkbutton(rt,text=text,variable=var) # ,command=self.update)
+	b = Tk.Checkbutton(rt,text=text,variable=var)
 	b.pack(side="top",anchor="w")
 
 # Create the size label and entry widget.
@@ -60159,12 +60162,7 @@ def idle_entry_key (self):
 		size = int(size)
 		self.sizeVar.set(size)
 	except: # The user typed an invalid number.
-		return
-
-	if 0: # This is too upsetting.
-		# trace(`size`)
-		if 0 &lt; size &lt; 100: # Choosing very small or large fonts drives Tk crazy.
-			self.update()</t>
+		return</t>
 <t tx="T4602"></t>
 <t tx="T4603">@ Returns a font corresponding to present visual state of the font panel.  As a benign side effect, this routine selects the font in the list box.
 
@@ -60352,12 +60350,14 @@ def showSettings (self):
 	if not bodyChecked and not logChecked and not treeChecked:
 		es("no pane selected")
 		return
+	
 
-	c.frame.body.configure(setgrid=0) # Disable body resizes.
+	# c.frame.body.configure(setgrid=0) # Disable body resizes.
 	c.beginUpdate()
 	&lt;&lt; set the fonts in all panes &gt;&gt;
 	c.endUpdate()
-	c.frame.body.configure(setgrid=1) # Enable body resizes.
+	# c.frame.body.configure(setgrid=1) # Enable body resizes.
+
 	self.top.deiconify()
 	self.top.lift()</t>
 <t tx="T4612">e = self.size_entry

@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="68" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="63" left="468" height="75" width="94"/>
+	<global_window_position top="63" left="468" height="734" width="662"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">

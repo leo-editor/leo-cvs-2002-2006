@@ -100,7 +100,7 @@ class baseLeoFontPanel:
 			("Bold",self.boldVar),
 			("Italic",self.italVar)):
 		
-			b = Tk.Checkbutton(rt,text=text,variable=var) # ,command=self.update)
+			b = Tk.Checkbutton(rt,text=text,variable=var)
 			b.pack(side="top",anchor="w")
 		
 		# Create the size label and entry widget.
@@ -272,11 +272,6 @@ class baseLeoFontPanel:
 			self.sizeVar.set(size)
 		except: # The user typed an invalid number.
 			return
-	
-		if 0: # This is too upsetting.
-			# trace(`size`)
-			if 0 < size < 100: # Choosing very small or large fonts drives Tk crazy.
-				self.update()
 	#@-body
 	#@-node:2::onSizeEntryKey
 	#@-node:3::Events
@@ -518,8 +513,9 @@ class baseLeoFontPanel:
 		if not bodyChecked and not logChecked and not treeChecked:
 			es("no pane selected")
 			return
+		
 	
-		c.frame.body.configure(setgrid=0) # Disable body resizes.
+		# c.frame.body.configure(setgrid=0) # Disable body resizes.
 		c.beginUpdate()
 		
 		#@<< set the fonts in all panes >>
@@ -537,7 +533,8 @@ class baseLeoFontPanel:
 		#@-node:2::<< set the fonts in all panes >>
 
 		c.endUpdate()
-		c.frame.body.configure(setgrid=1) # Enable body resizes.
+		# c.frame.body.configure(setgrid=1) # Enable body resizes.
+	
 		self.top.deiconify()
 		self.top.lift()
 	#@-body

@@ -229,9 +229,10 @@ class baseLeoFrame:
 		wrap = config.getBoolWindowPref('body_pane_wraps')
 		wrap = choose(wrap,"word","none")
 		
+		# Setgrid=1 cause severe problems with the font panel.
 		self.body = body = Tk.Text(split1Pane2,name='body',
 			bd=2,bg="white",relief="flat",
-			setgrid=1,wrap=wrap, selectbackground="Gray80") 
+			setgrid=0,wrap=wrap, selectbackground="Gray80") 
 		self.setBodyFontFromConfig()
 		
 		self.bodyBar = bodyBar = Tk.Scrollbar(split1Pane2,name='bodyBar')
@@ -294,7 +295,7 @@ class baseLeoFrame:
 		wrap = choose(wrap,"word","none")
 		
 		self.log = log = Tk.Text(split2Pane2,name="log",
-			setgrid=1,wrap=wrap,bd=2,bg="white",relief="flat")
+			setgrid=0,wrap=wrap,bd=2,bg="white",relief="flat")
 			
 		self.setLogFontFromConfig()
 		
@@ -547,7 +548,7 @@ class baseLeoFrame:
 			"log_text_font_slant",  "log_text_font_weight")
 		
 		log.configure(font=font)
-		
+	
 		bg = config.getWindowPref("log_text_background_color")
 		if bg:
 			try: log.configure(bg=bg)
@@ -557,6 +558,7 @@ class baseLeoFrame:
 		if fg:
 			try: log.configure(fg=fg)
 			except: pass
+	
 	
 	#@-body
 	#@-node:6::f.setLogFontFromConfig
