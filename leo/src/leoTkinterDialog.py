@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoTkinterDialog.py
+#@+node:ekr.20031218072017.3858:@file-thin leoTkinterDialog.py
 #@@language python
 
 import leoGlobals as g
@@ -9,11 +9,11 @@ import string,Tkinter
 Tk = Tkinter
 
 #@+others
-#@+node: class leoTkinterDialog
+#@+node:ekr.20031218072017.3859: class leoTkinterDialog
 class leoTkinterDialog:
 	"""The base class for all Leo Tkinter dialogs"""
 	#@	@+others
-	#@+node:__init__ (leoDialog)
+	#@+node:ekr.20031218072017.3860:__init__ (leoDialog)
 	def __init__(self,title="",resizeable=true):
 		
 		"""Constructor for the leoTkinterDialog class."""
@@ -30,8 +30,8 @@ class leoTkinterDialog:
 		self.top = None # The toplevel Tk widget.
 		self.focus_widget = None # The widget to get the first focus.
 	#@nonl
-	#@-node:__init__ (leoDialog)
-	#@+node:cancelButton, noButton, okButton, yesButton
+	#@-node:ekr.20031218072017.3860:__init__ (leoDialog)
+	#@+node:ekr.20031218072017.3861:cancelButton, noButton, okButton, yesButton
 	def cancelButton(self):
 		
 		"""Do default click action in cancel button."""
@@ -60,15 +60,15 @@ class leoTkinterDialog:
 		self.answer="yes"
 		self.top.destroy()
 	#@nonl
-	#@-node:cancelButton, noButton, okButton, yesButton
-	#@+node:center
+	#@-node:ekr.20031218072017.3861:cancelButton, noButton, okButton, yesButton
+	#@+node:ekr.20031218072017.3862:center
 	def center(self):
 		
 		"""Center any leoTkinterDialog."""
 		
 		g.app.gui.center_dialog(self.top)
-	#@-node:center
-	#@+node:createButtons
+	#@-node:ekr.20031218072017.3862:center
+	#@+node:ekr.20031218072017.3863:createButtons
 	def createButtons (self,buttons):
 		
 		"""Create a row of buttons.
@@ -97,16 +97,16 @@ class leoTkinterDialog:
 			
 		return buttonList
 	#@nonl
-	#@-node:createButtons
-	#@+node:createMessageFrame
+	#@-node:ekr.20031218072017.3863:createButtons
+	#@+node:ekr.20031218072017.3864:createMessageFrame
 	def createMessageFrame (self,message):
 		
 		"""Create a frame containing a Tk.Label widget."""
 	
 		label = Tk.Label(self.frame,text=message)
 		label.pack(pady=10)
-	#@-node:createMessageFrame
-	#@+node:createTopFrame
+	#@-node:ekr.20031218072017.3864:createMessageFrame
+	#@+node:ekr.20031218072017.3865:createTopFrame
 	def createTopFrame(self):
 		
 		"""Create the Tk.Toplevel widget for a leoTkinterDialog."""
@@ -128,8 +128,8 @@ class leoTkinterDialog:
 		
 		self.top.after_idle(callback)
 	#@nonl
-	#@-node:createTopFrame
-	#@+node:run
+	#@-node:ekr.20031218072017.3865:createTopFrame
+	#@+node:ekr.20031218072017.3866:run
 	def run (self,modal):
 		
 		"""Run a leoTkinterDialog."""
@@ -149,17 +149,17 @@ class leoTkinterDialog:
 			self.root.wait_window(self.top)
 			return None
 	#@nonl
-	#@-node:run
+	#@-node:ekr.20031218072017.3866:run
 	#@-others
 #@nonl
-#@-node: class leoTkinterDialog
-#@+node:class tkinterAboutLeo
+#@-node:ekr.20031218072017.3859: class leoTkinterDialog
+#@+node:ekr.20031218072017.3867:class tkinterAboutLeo
 class tkinterAboutLeo (leoTkinterDialog):
 	
 	"""A class that creates the Tkinter About Leo dialog."""
 
 	#@	@+others
-	#@+node:tkinterAboutLeo.__init__
+	#@+node:ekr.20031218072017.3868:tkinterAboutLeo.__init__
 	def __init__ (self,version,copyright,url,email):
 		
 		"""Create a Tkinter About Leo dialog."""
@@ -173,8 +173,8 @@ class tkinterAboutLeo (leoTkinterDialog):
 	
 		self.createTopFrame()
 		self.createFrame()
-	#@-node:tkinterAboutLeo.__init__
-	#@+node:tkinterAboutLeo.createFrame
+	#@-node:ekr.20031218072017.3868:tkinterAboutLeo.__init__
+	#@+node:ekr.20031218072017.3869:tkinterAboutLeo.createFrame
 	def createFrame (self):
 		
 		"""Create the frame for an About Leo dialog."""
@@ -227,8 +227,8 @@ class tkinterAboutLeo (leoTkinterDialog):
 	
 		text.configure(state="disabled")
 	#@nonl
-	#@-node:tkinterAboutLeo.createFrame
-	#@+node:tkinterAboutLeo.onAboutLeoEmail
+	#@-node:ekr.20031218072017.3869:tkinterAboutLeo.createFrame
+	#@+node:ekr.20031218072017.3870:tkinterAboutLeo.onAboutLeoEmail
 	def onAboutLeoEmail(self,event=None):
 		
 		"""Handle clicks in the email link in an About Leo dialog."""
@@ -239,8 +239,8 @@ class tkinterAboutLeo (leoTkinterDialog):
 		except:
 			g.es("not found: " + self.email)
 	#@nonl
-	#@-node:tkinterAboutLeo.onAboutLeoEmail
-	#@+node:tkinterAboutLeo.onAboutLeoUrl
+	#@-node:ekr.20031218072017.3870:tkinterAboutLeo.onAboutLeoEmail
+	#@+node:ekr.20031218072017.3871:tkinterAboutLeo.onAboutLeoUrl
 	def onAboutLeoUrl(self,event=None):
 		
 		"""Handle clicks in the url link in an About Leo dialog."""
@@ -251,8 +251,8 @@ class tkinterAboutLeo (leoTkinterDialog):
 		except:
 			g.es("not found: " + self.url)
 	#@nonl
-	#@-node:tkinterAboutLeo.onAboutLeoUrl
-	#@+node:tkinterAboutLeo: setArrowCursor, setDefaultCursor
+	#@-node:ekr.20031218072017.3871:tkinterAboutLeo.onAboutLeoUrl
+	#@+node:ekr.20031218072017.3872:tkinterAboutLeo: setArrowCursor, setDefaultCursor
 	def setArrowCursor (self,event=None):
 		
 		"""Set the cursor to an arrow in an About Leo dialog."""
@@ -265,16 +265,16 @@ class tkinterAboutLeo (leoTkinterDialog):
 		
 		self.text.configure(cursor="xterm")
 	#@nonl
-	#@-node:tkinterAboutLeo: setArrowCursor, setDefaultCursor
+	#@-node:ekr.20031218072017.3872:tkinterAboutLeo: setArrowCursor, setDefaultCursor
 	#@-others
-#@-node:class tkinterAboutLeo
-#@+node:class tkinterAskLeoID
+#@-node:ekr.20031218072017.3867:class tkinterAboutLeo
+#@+node:ekr.20031218072017.1983:class tkinterAskLeoID
 class tkinterAskLeoID (leoTkinterDialog):
 	
 	"""A class that creates the Tkinter About Leo dialog."""
 
 	#@	@+others
-	#@+node:tkinterAskLeoID.__init__
+	#@+node:ekr.20031218072017.1984:tkinterAskLeoID.__init__
 	def __init__(self):
 		
 		"""Create the Leo Id dialog."""
@@ -301,8 +301,8 @@ class tkinterAskLeoID (leoTkinterDialog):
 		self.ok_button = buttonList[0]
 		self.ok_button.configure(state="disabled")
 	#@nonl
-	#@-node:tkinterAskLeoID.__init__
-	#@+node:tkinterAskLeoID.createFrame
+	#@-node:ekr.20031218072017.1984:tkinterAskLeoID.__init__
+	#@+node:ekr.20031218072017.1985:tkinterAskLeoID.createFrame
 	def createFrame(self,message):
 		
 		"""Create the frame for the Leo Id dialog."""
@@ -315,16 +315,16 @@ class tkinterAskLeoID (leoTkinterDialog):
 		self.id_entry = text = Tk.Entry(f,width=20)
 		text.pack()
 	#@nonl
-	#@-node:tkinterAskLeoID.createFrame
-	#@+node:tkinterAskLeoID.onCloseWindow
+	#@-node:ekr.20031218072017.1985:tkinterAskLeoID.createFrame
+	#@+node:ekr.20031218072017.1986:tkinterAskLeoID.onCloseWindow
 	def onCloseWindow (self):
 		
 		"""Prevent the Leo Id dialog from closing by ignoring close events."""
 	
 		pass
 	#@nonl
-	#@-node:tkinterAskLeoID.onCloseWindow
-	#@+node:tkinterAskLeoID.onButton
+	#@-node:ekr.20031218072017.1986:tkinterAskLeoID.onCloseWindow
+	#@+node:ekr.20031218072017.1987:tkinterAskLeoID.onButton
 	def onButton(self):
 		
 		"""Handle clicks in the Leo Id close button."""
@@ -336,14 +336,14 @@ class tkinterAskLeoID (leoTkinterDialog):
 		self.answer = g.app.leoID = s
 		self.top.destroy() # terminates wait_window
 	#@nonl
-	#@-node:tkinterAskLeoID.onButton
-	#@+node:tkinterAskLeoID.onKey
+	#@-node:ekr.20031218072017.1987:tkinterAskLeoID.onButton
+	#@+node:ekr.20031218072017.1988:tkinterAskLeoID.onKey
 	def onKey(self,event):
 		
 		"""Handle keystrokes in the Leo Id dialog."""
 		
 		#@	<< eliminate invalid characters >>
-		#@+node:<< eliminate invalid characters >>
+		#@+node:ekr.20031218072017.1989:<< eliminate invalid characters >>
 		e = self.id_entry
 		s = e.get().strip()
 		i = 0 ; ok = true
@@ -357,10 +357,10 @@ class tkinterAskLeoID (leoTkinterDialog):
 				i += 1
 		if not ok: return
 		#@nonl
-		#@-node:<< eliminate invalid characters >>
+		#@-node:ekr.20031218072017.1989:<< eliminate invalid characters >>
 		#@nl
 		#@	<< enable the ok button if there are 3 or more valid characters >>
-		#@+node:<< enable the ok button if there are 3 or more valid characters >>
+		#@+node:ekr.20031218072017.1990:<< enable the ok button if there are 3 or more valid characters >>
 		e = self.id_entry
 		b = self.ok_button
 		
@@ -369,7 +369,7 @@ class tkinterAskLeoID (leoTkinterDialog):
 		else:
 			b.configure(state="disabled")
 		#@nonl
-		#@-node:<< enable the ok button if there are 3 or more valid characters >>
+		#@-node:ekr.20031218072017.1990:<< enable the ok button if there are 3 or more valid characters >>
 		#@nl
 		
 		ch = event.char.lower()
@@ -377,17 +377,17 @@ class tkinterAskLeoID (leoTkinterDialog):
 			self.onButton()
 		return "break"
 	
-	#@-node:tkinterAskLeoID.onKey
+	#@-node:ekr.20031218072017.1988:tkinterAskLeoID.onKey
 	#@-others
 #@nonl
-#@-node:class tkinterAskLeoID
-#@+node:class tkinterAskOk
+#@-node:ekr.20031218072017.1983:class tkinterAskLeoID
+#@+node:ekr.20031218072017.3873:class tkinterAskOk
 class tkinterAskOk(leoTkinterDialog):
 	
 	"""A class that creates a Tkinter dialog with a single OK button."""
 
 	#@	@+others
-	#@+node:class tkinterAskOk.__init__
+	#@+node:ekr.20031218072017.3874:class tkinterAskOk.__init__
 	def __init__ (self,title,message=None,text="Ok",resizeable=false):
 	
 		"""Create a dialog with one button"""
@@ -403,8 +403,8 @@ class tkinterAskOk(leoTkinterDialog):
 		buttons = {"text":text,"command":self.okButton,"default":true}, # Singleton tuple.
 		self.createButtons(buttons)
 	#@nonl
-	#@-node:class tkinterAskOk.__init__
-	#@+node:class tkinterAskOk.onKey
+	#@-node:ekr.20031218072017.3874:class tkinterAskOk.__init__
+	#@+node:ekr.20031218072017.3875:class tkinterAskOk.onKey
 	def onKey(self,event):
 		
 		"""Handle Key events in askOk dialogs."""
@@ -415,17 +415,17 @@ class tkinterAskOk(leoTkinterDialog):
 			self.okButton()
 	
 		return "break"
-	#@-node:class tkinterAskOk.onKey
+	#@-node:ekr.20031218072017.3875:class tkinterAskOk.onKey
 	#@-others
 #@nonl
-#@-node:class tkinterAskOk
-#@+node:class tkinterAskOkCancelNumber
+#@-node:ekr.20031218072017.3873:class tkinterAskOk
+#@+node:ekr.20031218072017.3876:class tkinterAskOkCancelNumber
 class  tkinterAskOkCancelNumber (leoTkinterDialog):
 	
 	"""Create and run a modal Tkinter dialog to get a number."""
 	
 	#@	@+others
-	#@+node:tkinterAskOKCancelNumber.__init__
+	#@+node:ekr.20031218072017.3877:tkinterAskOKCancelNumber.__init__
 	def __init__ (self,title,message):
 		
 		"""Create a number dialog"""
@@ -446,8 +446,8 @@ class  tkinterAskOkCancelNumber (leoTkinterDialog):
 		buttonList = self.createButtons(buttons)
 		self.ok_button = buttonList[0] # Override the default kind of Ok button.
 	#@nonl
-	#@-node:tkinterAskOKCancelNumber.__init__
-	#@+node:tkinterAskOKCancelNumber.createFrame
+	#@-node:ekr.20031218072017.3877:tkinterAskOKCancelNumber.__init__
+	#@+node:ekr.20031218072017.3878:tkinterAskOKCancelNumber.createFrame
 	def createFrame (self,message):
 		
 		"""Create the frame for a number dialog."""
@@ -460,8 +460,8 @@ class  tkinterAskOkCancelNumber (leoTkinterDialog):
 		self.number_entry = t = Tk.Entry(f,width=20)
 		t.pack(side="left")
 	#@nonl
-	#@-node:tkinterAskOKCancelNumber.createFrame
-	#@+node:tkinterAskOKCancelNumber.okButton, cancelButton
+	#@-node:ekr.20031218072017.3878:tkinterAskOKCancelNumber.createFrame
+	#@+node:ekr.20031218072017.3879:tkinterAskOKCancelNumber.okButton, cancelButton
 	def okButton(self):
 		
 		"""Handle clicks in the ok button of a number dialog."""
@@ -482,12 +482,12 @@ class  tkinterAskOkCancelNumber (leoTkinterDialog):
 		self.answer=-1
 		self.top.destroy()
 	#@nonl
-	#@-node:tkinterAskOKCancelNumber.okButton, cancelButton
-	#@+node:tkinterAskOKCancelNumber.onKey
+	#@-node:ekr.20031218072017.3879:tkinterAskOKCancelNumber.okButton, cancelButton
+	#@+node:ekr.20031218072017.3880:tkinterAskOKCancelNumber.onKey
 	def onKey (self,event):
 		
 		#@	<< eliminate non-numbers >>
-		#@+node:<< eliminate non-numbers >>
+		#@+node:ekr.20031218072017.3881:<< eliminate non-numbers >>
 		e = self.number_entry
 		s = e.get().strip()
 		
@@ -500,7 +500,7 @@ class  tkinterAskOkCancelNumber (leoTkinterDialog):
 			else:
 				i += 1
 		#@nonl
-		#@-node:<< eliminate non-numbers >>
+		#@-node:ekr.20031218072017.3881:<< eliminate non-numbers >>
 		#@nl
 	
 		ch = event.char.lower()
@@ -512,16 +512,16 @@ class  tkinterAskOkCancelNumber (leoTkinterDialog):
 	
 		return "break"
 	#@nonl
-	#@-node:tkinterAskOKCancelNumber.onKey
+	#@-node:ekr.20031218072017.3880:tkinterAskOKCancelNumber.onKey
 	#@-others
-#@-node:class tkinterAskOkCancelNumber
-#@+node:class tkinterAskYesNo
+#@-node:ekr.20031218072017.3876:class tkinterAskOkCancelNumber
+#@+node:ekr.20031218072017.3882:class tkinterAskYesNo
 class tkinterAskYesNo (leoTkinterDialog):
 
 	"""A class that creates a Tkinter dialog with two buttons: Yes and No."""
 
 	#@	@+others
-	#@+node:tkinterAskYesNo.__init__
+	#@+node:ekr.20031218072017.3883:tkinterAskYesNo.__init__
 	def __init__ (self,title,message=None,resizeable=false):
 		
 		"""Create a dialog having yes and no buttons."""
@@ -537,8 +537,8 @@ class tkinterAskYesNo (leoTkinterDialog):
 			{"text":"Yes","command":self.yesButton,  "default":true},
 			{"text":"No", "command":self.noButton} )
 		self.createButtons(buttons)
-	#@-node:tkinterAskYesNo.__init__
-	#@+node:tkinterAskYesNo.onKey
+	#@-node:ekr.20031218072017.3883:tkinterAskYesNo.__init__
+	#@+node:ekr.20031218072017.3884:tkinterAskYesNo.onKey
 	def onKey(self,event):
 		
 		"""Handle keystroke events in dialogs having yes and no buttons."""
@@ -552,11 +552,11 @@ class tkinterAskYesNo (leoTkinterDialog):
 	
 		return "break"
 	#@nonl
-	#@-node:tkinterAskYesNo.onKey
+	#@-node:ekr.20031218072017.3884:tkinterAskYesNo.onKey
 	#@-others
 
-#@-node:class tkinterAskYesNo
-#@+node:class tkinterAskYesNoCancel
+#@-node:ekr.20031218072017.3882:class tkinterAskYesNo
+#@+node:ekr.20031218072017.3885:class tkinterAskYesNoCancel
 class tkinterAskYesNoCancel(leoTkinterDialog):
 	
 	"""A class to create and run Tkinter dialogs having three buttons.
@@ -564,7 +564,7 @@ class tkinterAskYesNoCancel(leoTkinterDialog):
 	By default, these buttons are labeled Yes, No and Cancel."""
 	
 	#@	@+others
-	#@+node:askYesNoCancel.__init__
+	#@+node:ekr.20031218072017.3886:askYesNoCancel.__init__
 	def __init__ (self,title,
 		message=None,
 		yesMessage="Yes",
@@ -590,8 +590,8 @@ class tkinterAskYesNoCancel(leoTkinterDialog):
 			{"text":"Cancel",  "command":self.cancelButton,"default":"Cancel"==defaultButton} )
 		self.createButtons(buttons)
 	
-	#@-node:askYesNoCancel.__init__
-	#@+node:askYesNoCancel.onKey
+	#@-node:ekr.20031218072017.3886:askYesNoCancel.__init__
+	#@+node:ekr.20031218072017.3887:askYesNoCancel.onKey
 	def onKey(self,event):
 		
 		"""Handle keystrokes in dialogs with three buttons."""
@@ -610,8 +610,8 @@ class tkinterAskYesNoCancel(leoTkinterDialog):
 	
 		return "break"
 	#@nonl
-	#@-node:askYesNoCancel.onKey
-	#@+node:askYesNoCancel.noButton & yesButton
+	#@-node:ekr.20031218072017.3887:askYesNoCancel.onKey
+	#@+node:ekr.20031218072017.3888:askYesNoCancel.noButton & yesButton
 	def noButton(self):
 		
 		"""Handle clicks in the 'no' (second) button in a dialog with three buttons."""
@@ -625,16 +625,16 @@ class tkinterAskYesNoCancel(leoTkinterDialog):
 		
 		self.answer=self.yesMessage.lower()
 		self.top.destroy()
-	#@-node:askYesNoCancel.noButton & yesButton
+	#@-node:ekr.20031218072017.3888:askYesNoCancel.noButton & yesButton
 	#@-others
-#@-node:class tkinterAskYesNoCancel
-#@+node:class tkinterListboxDialog
+#@-node:ekr.20031218072017.3885:class tkinterAskYesNoCancel
+#@+node:ekr.20031218072017.3889:class tkinterListboxDialog
 class tkinterListBoxDialog (leoTkinterDialog):
 
 	"""A base class for Tkinter dialogs containing a Tk Listbox"""
 
 	#@	@+others
-	#@+node:tkinterListboxDialog.__init__
+	#@+node:ekr.20031218072017.3890:tkinterListboxDialog.__init__
 	def __init__ (self,c,title,label):
 		
 		"""Constructor for the base listboxDialog class."""
@@ -657,8 +657,8 @@ class tkinterListBoxDialog (leoTkinterDialog):
 		# Make the common bindings after creating self.box.
 		
 		self.box.bind("<Double-Button-1>",self.go)
-	#@-node:tkinterListboxDialog.__init__
-	#@+node:addStdButtons
+	#@-node:ekr.20031218072017.3890:tkinterListboxDialog.__init__
+	#@+node:ekr.20031218072017.3891:addStdButtons
 	def addStdButtons (self,frame):
 		
 		"""Add stanadard buttons to a listBox dialog."""
@@ -670,8 +670,8 @@ class tkinterListBoxDialog (leoTkinterDialog):
 		ok.pack(side="left",pady=2,padx=5)
 		hide.pack(side="left",pady=2,padx=5)
 	#@nonl
-	#@-node:addStdButtons
-	#@+node:createFrame
+	#@-node:ekr.20031218072017.3891:addStdButtons
+	#@+node:ekr.20031218072017.3892:createFrame
 	def createFrame(self):
 		
 		"""Create the essentials of a listBoxDialog frame
@@ -699,8 +699,8 @@ class tkinterListBoxDialog (leoTkinterDialog):
 		bar.config(command=box.yview)
 		box.config(yscrollcommand=bar.set)
 	#@nonl
-	#@-node:createFrame
-	#@+node:destroy
+	#@-node:ekr.20031218072017.3892:createFrame
+	#@+node:ekr.20031218072017.3893:destroy
 	def destroy (self,event=None):
 		
 		"""Hide, do not destroy, a listboxDialog window
@@ -708,16 +708,16 @@ class tkinterListBoxDialog (leoTkinterDialog):
 		subclasses may override to really destroy the window"""
 		
 		self.top.withdraw() # Don't allow this window to be destroyed.
-	#@-node:destroy
-	#@+node:hide
+	#@-node:ekr.20031218072017.3893:destroy
+	#@+node:ekr.20031218072017.3894:hide
 	def hide (self):
 		
 		"""Hide a list box dialog."""
 		
 		self.top.withdraw()
 	#@nonl
-	#@-node:hide
-	#@+node:fillbox
+	#@-node:ekr.20031218072017.3894:hide
+	#@+node:ekr.20031218072017.3895:fillbox
 	def fillbox(self,event=None):
 		
 		"""Fill a listbox from information.
@@ -726,8 +726,8 @@ class tkinterListBoxDialog (leoTkinterDialog):
 		
 		pass
 	#@nonl
-	#@-node:fillbox
-	#@+node:go
+	#@-node:ekr.20031218072017.3895:fillbox
+	#@+node:ekr.20031218072017.3896:go
 	def go(self,event=None):
 		
 		"""Handle clicks in the "go" button in a list box dialog."""
@@ -748,11 +748,11 @@ class tkinterListBoxDialog (leoTkinterDialog):
 			c.selectVnode(v,updateBeadList=true) # A case could be made for updateBeadList=false
 			c.endUpdate()
 			c.frame.tree.idle_scrollTo(v)
-	#@-node:go
+	#@-node:ekr.20031218072017.3896:go
 	#@-others
 #@nonl
-#@-node:class tkinterListboxDialog
+#@-node:ekr.20031218072017.3889:class tkinterListboxDialog
 #@-others
 #@nonl
-#@-node:@file leoTkinterDialog.py
+#@-node:ekr.20031218072017.3858:@file-thin leoTkinterDialog.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoTkinterMenu.py
+#@+node:ekr.20031218072017.4100:@file-thin leoTkinterMenu.py
 """Tkinter menu handling for Leo."""
 
 import leoGlobals as g
@@ -11,7 +11,8 @@ import Tkinter
 class leoTkinterMenu (leoMenu.leoMenu):
 	"""A class that represents a Leo window."""
 	#@	@+others
-	#@+node:leoTkinterMenu.__init__
+	#@+node:ekr.20031218072017.4101:Birth & death
+	#@+node:ekr.20031218072017.4102:leoTkinterMenu.__init__
 	def __init__ (self,frame):
 		
 		# Init the base class.
@@ -21,68 +22,69 @@ class leoTkinterMenu (leoMenu.leoMenu):
 		self.c = frame.c
 		self.frame = frame
 	#@nonl
-	#@-node:leoTkinterMenu.__init__
-	#@+node:Tkinter menu bindings
+	#@-node:ekr.20031218072017.4102:leoTkinterMenu.__init__
+	#@-node:ekr.20031218072017.4101:Birth & death
+	#@+node:ekr.20031218072017.4103:Tkinter menu bindings
 	# See the Tk docs for what these routines are to do
 	#@nonl
-	#@-node:Tkinter menu bindings
-	#@+node:add_cascade
+	#@+node:ekr.20031218072017.4104:9 Routines with Tk spellings
+	#@+node:ekr.20031218072017.4105:add_cascade
 	def add_cascade (self,parent,label,menu,underline):
 		
 		"""Wrapper for the Tkinter add_cascade menu method."""
 		
 		return parent.add_cascade(label=label,menu=menu,underline=underline)
 	
-	#@-node:add_cascade
-	#@+node:add_command
+	#@-node:ekr.20031218072017.4105:add_cascade
+	#@+node:ekr.20031218072017.4106:add_command
 	def add_command (self,menu,**keys):
 		
 		"""Wrapper for the Tkinter add_command menu method."""
 	
 		return menu.add_command(**keys)
 		
-	#@-node:add_command
-	#@+node:add_separator
+	#@-node:ekr.20031218072017.4106:add_command
+	#@+node:ekr.20031218072017.4107:add_separator
 	def add_separator(self,menu):
 		
 		"""Wrapper for the Tkinter add_separator menu method."""
 	
 		menu.add_separator()
 		
-	#@-node:add_separator
-	#@+node:bind
+	#@-node:ekr.20031218072017.4107:add_separator
+	#@+node:ekr.20031218072017.4108:bind
 	def bind (self,bind_shortcut,callback):
 		
 		"""Wrapper for the Tkinter bind menu method."""
 	
 		return self.top.bind(bind_shortcut,callback)
 		
-	#@-node:bind
-	#@+node:delete
+	#@-node:ekr.20031218072017.4108:bind
+	#@+node:ekr.20031218072017.4109:delete
 	def delete (self,menu,realItemName):
 		
 		"""Wrapper for the Tkinter delete menu method."""
 	
 		return menu.delete(realItemName)
 	#@nonl
-	#@-node:delete
-	#@+node:delete_range
+	#@-node:ekr.20031218072017.4109:delete
+	#@+node:ekr.20031218072017.4110:delete_range
 	def delete_range (self,menu,n1,n2):
 		
 		"""Wrapper for the Tkinter delete menu method."""
 	
 		return menu.delete(n1,n2)
 	
-	#@-node:delete_range
-	#@+node:destroy
+	#@-node:ekr.20031218072017.4110:delete_range
+	#@+node:ekr.20031218072017.4111:destroy
 	def destroy (self,menu):
 		
 		"""Wrapper for the Tkinter destroy menu method."""
 	
 		return menu.destroy()
 	
-	#@-node:destroy
-	#@+node:insert_cascade
+	#@-node:ekr.20031218072017.4111:destroy
+	#@+node:ekr.20031218072017.4112:insert_cascade
 	def insert_cascade (self,parent,index,label,menu,underline):
 		
 		"""Wrapper for the Tkinter insert_cascade menu method."""
@@ -92,16 +94,18 @@ class leoTkinterMenu (leoMenu.leoMenu):
 			menu=menu,underline=underline)
 	
 	
-	#@-node:insert_cascade
-	#@+node:new_menu
+	#@-node:ekr.20031218072017.4112:insert_cascade
+	#@+node:ekr.20031218072017.4113:new_menu
 	def new_menu(self,parent,tearoff=false):
 		
 		"""Wrapper for the Tkinter new_menu menu method."""
 	
 		return Tkinter.Menu(parent,tearoff=tearoff)
 	#@nonl
-	#@-node:new_menu
-	#@+node:createMenuBar
+	#@-node:ekr.20031218072017.4113:new_menu
+	#@-node:ekr.20031218072017.4104:9 Routines with Tk spellings
+	#@+node:ekr.20031218072017.4114:7 Routines with other spellings
+	#@+node:ekr.20031218072017.4115:createMenuBar
 	def createMenuBar(self,frame):
 	
 		top = frame.top
@@ -113,8 +117,8 @@ class leoTkinterMenu (leoMenu.leoMenu):
 		
 		top.config(menu=topMenu) # Display the menu.
 	#@nonl
-	#@-node:createMenuBar
-	#@+node:createOpenWithMenuFromTable
+	#@-node:ekr.20031218072017.4115:createMenuBar
+	#@+node:ekr.20031218072017.4116:createOpenWithMenuFromTable
 	#@+at 
 	#@nonl
 	# Entries in the table passed to createOpenWithMenuFromTable are
@@ -165,8 +169,8 @@ class leoTkinterMenu (leoMenu.leoMenu):
 				
 		# for i in shortcut_table: print i
 		self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=1)
-	#@-node:createOpenWithMenuFromTable
-	#@+node:defineMenuCallback (tk)
+	#@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
+	#@+node:ekr.20031218072017.4117:defineMenuCallback (tk)
 	def defineMenuCallback(self,command,name):
 		
 		# The first parameter must be event, and it must default to None.
@@ -175,8 +179,8 @@ class leoTkinterMenu (leoMenu.leoMenu):
 	
 		return callback
 	#@nonl
-	#@-node:defineMenuCallback (tk)
-	#@+node:defineOpenWithMenuCallback
+	#@-node:ekr.20031218072017.4117:defineMenuCallback (tk)
+	#@+node:ekr.20031218072017.4118:defineOpenWithMenuCallback
 	def defineOpenWithMenuCallback(self,command):
 		
 		# The first parameter must be event, and it must default to None.
@@ -185,8 +189,8 @@ class leoTkinterMenu (leoMenu.leoMenu):
 	
 		return callback
 	#@nonl
-	#@-node:defineOpenWithMenuCallback
-	#@+node:disableMenu
+	#@-node:ekr.20031218072017.4118:defineOpenWithMenuCallback
+	#@+node:ekr.20031218072017.4119:disableMenu
 	def disableMenu (self,menu,name):
 		
 		try:
@@ -200,8 +204,8 @@ class leoTkinterMenu (leoMenu.leoMenu):
 				print "disableMenu menu,name:",menu,name
 				g.es_exception()
 				pass
-	#@-node:disableMenu
-	#@+node:enableMenu
+	#@-node:ekr.20031218072017.4119:disableMenu
+	#@+node:ekr.20031218072017.4120:enableMenu
 	# Fail gracefully if the item name does not exist.
 	
 	def enableMenu (self,menu,name,val):
@@ -219,8 +223,8 @@ class leoTkinterMenu (leoMenu.leoMenu):
 				g.es_exception()
 				pass
 	#@nonl
-	#@-node:enableMenu
-	#@+node:setMenuLabel
+	#@-node:ekr.20031218072017.4120:enableMenu
+	#@+node:ekr.20031218072017.4121:setMenuLabel
 	def setMenuLabel (self,menu,name,label,underline=-1):
 	
 		try:
@@ -240,8 +244,10 @@ class leoTkinterMenu (leoMenu.leoMenu):
 			g.es_exception()
 			pass
 	#@nonl
-	#@-node:setMenuLabel
+	#@-node:ekr.20031218072017.4121:setMenuLabel
+	#@-node:ekr.20031218072017.4114:7 Routines with other spellings
+	#@-node:ekr.20031218072017.4103:Tkinter menu bindings
 	#@-others
 #@nonl
-#@-node:@file leoTkinterMenu.py
+#@-node:ekr.20031218072017.4100:@file-thin leoTkinterMenu.py
 #@-leo

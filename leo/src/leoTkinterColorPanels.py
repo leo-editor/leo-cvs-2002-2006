@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoTkinterColorPanels.py
+#@+node:ekr.20031218072017.3822:@file-thin leoTkinterColorPanels.py
 import leoGlobals as g
 from leoGlobals import true,false
 
@@ -9,7 +9,7 @@ import string,Tkinter,tkColorChooser
 Tk = Tkinter
 
 #@<< define gui-dependent color panel data >>
-#@+node:<< define gui-dependent color panel data >>
+#@+node:ekr.20031218072017.3823:<< define gui-dependent color panel data >>
 colorNamesList = (
 	"gray60", "gray70", "gray80", "gray85", "gray90", "gray95",
 	"snow1", "snow2", "snow3", "snow4", "seashell1", "seashell2",
@@ -73,17 +73,17 @@ colorNamesList = (
 	"purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
 	"MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
 	"thistle4" )
-#@-node:<< define gui-dependent color panel data >>
+#@-node:ekr.20031218072017.3823:<< define gui-dependent color panel data >>
 #@nl
 
 #@+others
-#@+node:class leoTkinterColorNamePanel
+#@+node:ekr.20031218072017.3824:class leoTkinterColorNamePanel
 class leoTkinterColorNamePanel:
 	
 	"""A class to create and run a Tkinter color name panel."""
 	
 	#@	@+others
-	#@+node:namePanel.__init__
+	#@+node:ekr.20031218072017.3825:namePanel.__init__
 	def __init__ (self,colorPanel,name,color):
 		
 		# No need for a base class.
@@ -94,8 +94,8 @@ class leoTkinterColorNamePanel:
 		
 		self.createFrame(name,color)
 	#@nonl
-	#@-node:namePanel.__init__
-	#@+node:getSelection
+	#@-node:ekr.20031218072017.3825:namePanel.__init__
+	#@+node:ekr.20031218072017.3826:getSelection
 	def getSelection (self):
 	
 		box = self.box ; color = None
@@ -115,8 +115,8 @@ class leoTkinterColorNamePanel:
 			color = self.color
 		return color
 	#@nonl
-	#@-node:getSelection
-	#@+node:createFrame
+	#@-node:ekr.20031218072017.3826:getSelection
+	#@+node:ekr.20031218072017.3827:createFrame
 	def createFrame (self,name,color):
 		
 		assert(name==self.name)
@@ -130,7 +130,7 @@ class leoTkinterColorNamePanel:
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
 	
 		#@	<< create color name panel >>
-		#@+node:<< create color name panel >>
+		#@+node:ekr.20031218072017.3828:<< create color name panel >>
 		# Create organizer frames
 		outer = Tk.Frame(top,bd=2,relief="groove")
 		outer.pack(fill="both",expand=1)
@@ -175,7 +175,7 @@ class leoTkinterColorNamePanel:
 			b = Tk.Button(lower,text=text,command=command)
 			b.pack(side="left",pady=6,padx=4)
 		#@nonl
-		#@-node:<< create color name panel >>
+		#@-node:ekr.20031218072017.3828:<< create color name panel >>
 		#@nl
 		self.select(color)
 		
@@ -186,8 +186,8 @@ class leoTkinterColorNamePanel:
 		top.grab_set()
 		top.focus_set() # Get all keystrokes.
 	#@nonl
-	#@-node:createFrame
-	#@+node:onOk, onCancel, onRevert, OnApply
+	#@-node:ekr.20031218072017.3827:createFrame
+	#@+node:ekr.20031218072017.3829:onOk, onCancel, onRevert, OnApply
 	def onApply (self,event=None):
 		self.color = color = self.getSelection()
 		self.colorPanel.update(self.name,color)
@@ -206,8 +206,8 @@ class leoTkinterColorNamePanel:
 		self.select(self.color)
 		self.colorPanel.update(self.name,color)
 	#@nonl
-	#@-node:onOk, onCancel, onRevert, OnApply
-	#@+node:select
+	#@-node:ekr.20031218072017.3829:onOk, onCancel, onRevert, OnApply
+	#@+node:ekr.20031218072017.3830:select
 	def select (self,color):
 	
 		# g.trace(color)
@@ -224,16 +224,16 @@ class leoTkinterColorNamePanel:
 	
 		# g.trace("not found:",color)
 	#@nonl
-	#@-node:select
+	#@-node:ekr.20031218072017.3830:select
 	#@-others
-#@-node:class leoTkinterColorNamePanel
-#@+node:class leoTkinterColorPanel
+#@-node:ekr.20031218072017.3824:class leoTkinterColorNamePanel
+#@+node:ekr.20031218072017.3831:class leoTkinterColorPanel
 class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 	
 	"""A class to create and run a Tkinter color panel."""
 
 	#@	@+others
-	#@+node:colorPanel.__init__
+	#@+node:ekr.20031218072017.3832:colorPanel.__init__
 	def __init__ (self,c):
 		
 		"""Create a tkinter color panel."""
@@ -249,14 +249,14 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 	
 		self.createFrame()
 	#@nonl
-	#@-node:colorPanel.__init__
-	#@+node:bringToFront
+	#@-node:ekr.20031218072017.3832:colorPanel.__init__
+	#@+node:ekr.20031218072017.3833:bringToFront
 	def bringToFront(self):
 		
 		self.top.deiconify()
 		self.top.lift()
-	#@-node:bringToFront
-	#@+node:createFrame (color panel)
+	#@-node:ekr.20031218072017.3833:bringToFront
+	#@+node:ekr.20031218072017.1875:createFrame (color panel)
 	def createFrame (self):
 		
 		c = self.c ; config = g.app.config ; gui = g.app.gui
@@ -267,7 +267,7 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 		gui.attachLeoIcon(top)
 	
 		#@	<< create color panel >>
-		#@+node:<< create color panel >>
+		#@+node:ekr.20031218072017.1876:<< create color panel >>
 		outer = Tk.Frame(top,bd=2,relief="groove")
 		outer.pack(anchor="n",pady=2,ipady=1,expand=1,fill="x")
 		
@@ -313,14 +313,14 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 		b = Tk.Button(f,width=6,text="Revert",command=self.onRevert)
 		b.pack(side="right",padx=4)
 		#@nonl
-		#@-node:<< create color panel >>
+		#@-node:ekr.20031218072017.1876:<< create color panel >>
 		#@nl
 	
 		gui.center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0)
 	#@nonl
-	#@-node:createFrame (color panel)
-	#@+node:showColorPicker
+	#@-node:ekr.20031218072017.1875:createFrame (color panel)
+	#@+node:ekr.20031218072017.3834:showColorPicker
 	def showColorPicker (self,name):
 		
 		option_name = self.option_names[name]
@@ -329,8 +329,8 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 		if val != None:
 			self.update(name,val)
 	#@nonl
-	#@-node:showColorPicker
-	#@+node:showColorName
+	#@-node:ekr.20031218072017.3834:showColorPicker
+	#@+node:ekr.20031218072017.3835:showColorName
 	def showColorName (self,name,color):
 		
 		"""Bring up a tkinter color name panel."""
@@ -338,8 +338,8 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 		# No need to use an app gui routine: this is all Tk code.
 		leoTkinterColorNamePanel(self,name,color)
 	#@nonl
-	#@-node:showColorName
-	#@+node:colorPanel.onOk, onCancel, onRevert
+	#@-node:ekr.20031218072017.3835:showColorName
+	#@+node:ekr.20031218072017.3836:colorPanel.onOk, onCancel, onRevert
 	def onOk (self):
 		# Update the revert colors
 		config = g.app.config
@@ -376,8 +376,8 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 		self.changed_options = []
 		self.c.recolor()
 	#@nonl
-	#@-node:colorPanel.onOk, onCancel, onRevert
-	#@+node:update
+	#@-node:ekr.20031218072017.3836:colorPanel.onOk, onCancel, onRevert
+	#@+node:ekr.20031218072017.3837:update
 	def update (self,name,val):
 		
 		config = g.app.config
@@ -403,11 +403,11 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 		config.setColorsPref(option_name,val)
 		self.c.recolor()
 	#@nonl
-	#@-node:update
+	#@-node:ekr.20031218072017.3837:update
 	#@-others
 #@nonl
-#@-node:class leoTkinterColorPanel
+#@-node:ekr.20031218072017.3831:class leoTkinterColorPanel
 #@-others
 #@nonl
-#@-node:@file leoTkinterColorPanels.py
+#@-node:ekr.20031218072017.3822:@file-thin leoTkinterColorPanels.py
 #@-leo

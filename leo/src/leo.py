@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #@+leo-ver=4
-#@+node:@file leo.py 
+#@+node:ekr.20031218072017.2605:@file-thin leo.py 
 #@@first
 
 """Entry point for Leo in Python."""
@@ -8,7 +8,7 @@
 #@@language python
 
 #@<< Import pychecker >>
-#@+node:<< Import pychecker >>
+#@+node:ekr.20031218072017.2606:<< Import pychecker >>
 #@+at 
 #@nonl
 # pychecker is extremely useful, and it sometimes reports problems 
@@ -32,7 +32,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 		import pychecker.checker
 	except: pass
 #@nonl
-#@-node:<< Import pychecker >>
+#@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@nl
 
 # Warning: do not import any Leo modules here!
@@ -41,7 +41,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 import os,string,sys
 
 #@+others
-#@+node:run & allies
+#@+node:ekr.20031218072017.1934:run & allies
 def run(fileName=None,*args,**keywords):
 	
 	"""Initialize and run Leo"""
@@ -63,13 +63,13 @@ def run(fileName=None,*args,**keywords):
 		fileName = None
 	else:
 		#@		<< print encoding info >>
-		#@+node:<< print encoding info >>
+		#@+node:ekr.20031218072017.1935:<< print encoding info >>
 		g.es("leoConfig.txt encoding: " + g.app.config.config_encoding, color="blue")
 		
 		if 0: # This is just confusing for users.
 			g.es("Text encoding: " + g.app.tkEncoding, color="blue")
 		#@nonl
-		#@-node:<< print encoding info >>
+		#@-node:ekr.20031218072017.1935:<< print encoding info >>
 		#@nl
 	# Load plugins. Plugins may create g.app.gui.
 	g.doHook("start1")
@@ -85,7 +85,7 @@ def run(fileName=None,*args,**keywords):
 	g.init_sherlock(args)
 	g.clear_stats()
 	#@	<< start psycho >>
-	#@+node:<< start psycho >>
+	#@+node:ekr.20040411081633:<< start psycho >>
 	if g.app.config.use_psyco:
 		try:
 			import psyco
@@ -102,7 +102,7 @@ def run(fileName=None,*args,**keywords):
 			print "unexpected exception importing psyco"
 			g.es_exception()
 	#@nonl
-	#@-node:<< start psycho >>
+	#@-node:ekr.20040411081633:<< start psycho >>
 	#@nl
 	# Create the main frame.  Show it and all queued messages.
 	c,frame = createFrame(fileName)
@@ -116,8 +116,7 @@ def run(fileName=None,*args,**keywords):
 	frame.body.setFocus()
 	g.app.initing = false # "idle" hooks may now call g.app.forceShutdown.
 	g.app.gui.runMainLoop()
-#@-node:run & allies
-#@+node:isValidPython
+#@+node:ekr.20031218072017.1936:isValidPython
 def isValidPython():
 	
 	import leoGlobals as g
@@ -138,8 +137,8 @@ You may download Python 2.2 and Python 2.3 from http://python.org/download/
 		import traceback ; traceback.print_exc()
 		return false
 #@nonl
-#@-node:isValidPython
-#@+node:computeLoadDir
+#@-node:ekr.20031218072017.1936:isValidPython
+#@+node:ekr.20031218072017.1937:computeLoadDir
 def computeLoadDir():
 	
 	"""Returns the directory containing leo.py."""
@@ -176,8 +175,8 @@ def computeLoadDir():
 		import traceback ; traceback.print_exc()
 		return None
 #@nonl
-#@-node:computeLoadDir
-#@+node:createFrame (leo.py)
+#@-node:ekr.20031218072017.1937:computeLoadDir
+#@+node:ekr.20031218072017.1624:createFrame (leo.py)
 def createFrame (fileName):
 	
 	"""Create a LeoFrame during Leo's startup process."""
@@ -206,8 +205,8 @@ def createFrame (fileName):
 		g.es("File not found: " + fileName)
 
 	return c,frame
-#@-node:createFrame (leo.py)
-#@+node:createNullGuiWithScript (leo.py)
+#@-node:ekr.20031218072017.1624:createFrame (leo.py)
+#@+node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
 def createNullGuiWithScript (script):
 	
 	import leoGlobals as g
@@ -219,8 +218,8 @@ def createNullGuiWithScript (script):
 	g.app.root = g.app.gui.createRootWindow()
 	g.app.gui.finishCreate()
 	g.app.gui.setScript(script)
-#@-node:createNullGuiWithScript (leo.py)
-#@+node:getBatchScript
+#@-node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)
+#@+node:ekr.20031218072017.1939:getBatchScript
 def getBatchScript ():
 	
 	import leoGlobals as g
@@ -248,8 +247,9 @@ def getBatchScript ():
 		if f: f.close()
 		return script
 #@nonl
-#@-node:getBatchScript
-#@+node:profile
+#@-node:ekr.20031218072017.1939:getBatchScript
+#@-node:ekr.20031218072017.1934:run & allies
+#@+node:ekr.20031218072017.2607:profile
 #@+at 
 #@nonl
 # To gather statistics, do the following in a Python window, not idle:
@@ -275,7 +275,7 @@ def profile ():
 	p.sort_stats('cum','file','name')
 	p.print_stats()
 #@nonl
-#@-node:profile
+#@-node:ekr.20031218072017.2607:profile
 #@-others
 
 if __name__ == "__main__":
@@ -290,5 +290,5 @@ if __name__ == "__main__":
 
 
 
-#@-node:@file leo.py 
+#@-node:ekr.20031218072017.2605:@file-thin leo.py 
 #@-leo

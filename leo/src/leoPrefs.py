@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoPrefs.py
+#@+node:ekr.20031218072017.3812:@file-thin leoPrefs.py
 #@@language python
 
 import leoGlobals as g
@@ -10,7 +10,7 @@ import string
 class leoPrefs:
 	
 	#@	<< define leoPrefs constants >>
-	#@+node:<< define leoPrefs constants >>
+	#@+node:ekr.20031218072017.3813:<< define leoPrefs constants >>
 	# Constants used for defaults when leoConfig.txt can not be read.
 	default_page_width = 132
 	default_tab_width = 4
@@ -23,12 +23,13 @@ class leoPrefs:
 		"tangle_directory", "page_width", "tab_width",
 		"target_language" ]
 	#@nonl
-	#@-node:<< define leoPrefs constants >>
+	#@-node:ekr.20031218072017.3813:<< define leoPrefs constants >>
 	#@nl
 
 	"""A base class that creates Leo's preferenes panel."""
 	#@	@+others
-	#@+node:prefs.__init__
+	#@+node:ekr.20031218072017.3814:Birth
+	#@+node:ekr.20031218072017.3815:prefs.__init__
 	def __init__ (self,c):
 	
 		self.c = c
@@ -50,8 +51,8 @@ class leoPrefs:
 		self.init(c)
 		# g.es("Prefs.__init__")
 	#@nonl
-	#@-node:prefs.__init__
-	#@+node:prefs.init
+	#@-node:ekr.20031218072017.3815:prefs.__init__
+	#@+node:ekr.20031218072017.3816:prefs.init
 	# Initializes prefs ivars and widgets from c's ivars.
 	
 	def init(self,c):
@@ -65,7 +66,7 @@ class leoPrefs:
 			# g.trace(val,var)
 	
 		#@	<< remember values for revert >>
-		#@+node:<< remember values for revert >>
+		#@+node:ekr.20031218072017.3817:<< remember values for revert >>
 		# Global options
 		self.revert_tangle_batch_flag = c.tangle_batch_flag
 		self.revert_untangle_batch_flag = c.untangle_batch_flag
@@ -82,11 +83,12 @@ class leoPrefs:
 			c.target_language = "python"
 		self.revert_target_language = c.target_language
 		#@nonl
-		#@-node:<< remember values for revert >>
+		#@-node:ekr.20031218072017.3817:<< remember values for revert >>
 		#@nl
 	#@nonl
-	#@-node:prefs.init
-	#@+node:restoreOptions
+	#@-node:ekr.20031218072017.3816:prefs.init
+	#@-node:ekr.20031218072017.3814:Birth
+	#@+node:ekr.20031218072017.3818:restoreOptions
 	def restoreOptions (self):
 		
 		c = self.c
@@ -105,8 +107,8 @@ class leoPrefs:
 		# Default Target Language
 		c.target_language = self.revert_target_language
 	#@nonl
-	#@-node:restoreOptions
-	#@+node:Must be overridden in subclasses
+	#@-node:ekr.20031218072017.3818:restoreOptions
+	#@+node:ekr.20031218072017.3819:Must be overridden in subclasses
 	def bringToFront (self):
 		self.oops()
 		
@@ -117,8 +119,8 @@ class leoPrefs:
 			
 	def setWidgets(self):
 		self.oops()
-	#@-node:Must be overridden in subclasses
-	#@+node:printIvars
+	#@-node:ekr.20031218072017.3819:Must be overridden in subclasses
+	#@+node:ekr.20031218072017.3820:printIvars
 	def print_ivars (self):
 		
 		"""Debugging routine for Prefs panel."""
@@ -126,8 +128,8 @@ class leoPrefs:
 		for var in self.ivars:
 			g.trace(var, getattr(self,var))
 	#@nonl
-	#@-node:printIvars
+	#@-node:ekr.20031218072017.3820:printIvars
 	#@-others
 #@nonl
-#@-node:@file leoPrefs.py
+#@-node:ekr.20031218072017.3812:@file-thin leoPrefs.py
 #@-leo

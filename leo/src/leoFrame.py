@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoFrame.py
+#@+node:ekr.20031218072017.3655:@file-thin leoFrame.py
 """The base classes for all Leo Windows, their body, log and tree panes, key bindings and menus.
 
 These classes should be overridden to create frames for a particular gui."""
@@ -11,7 +11,7 @@ import leoColor,leoMenu,leoNodes,leoUndo
 import os,string,sys,time
 
 #@<< About handling events >>
-#@+node:<< About handling events >>
+#@+node:ekr.20031218072017.2410:<< About handling events >>
 #@+at 
 #@nonl
 # Leo must handle events or commands that change the text in the outline or 
@@ -48,17 +48,17 @@ import os,string,sys,time
 # rather than c.beginUpdate and c.endUpdate ensures that the outline pane is 
 # redrawn only when needed.
 #@-at
-#@-node:<< About handling events >>
+#@-node:ekr.20031218072017.2410:<< About handling events >>
 #@nl
 
 #@+others
-#@+node:class leoBody
+#@+node:ekr.20031218072017.3656:class leoBody
 class leoBody:
 	
 	"""The base class for the body pane in Leo windows."""
 	
 	#@	@+others
-	#@+node:leoBody.__init__
+	#@+node:ekr.20031218072017.3657:leoBody.__init__
 	def __init__ (self,frame,parentFrame):
 	
 		self.frame = frame
@@ -72,20 +72,20 @@ class leoBody:
 		# Must be overridden in subclasses...
 		self.colorizer = None
 	#@nonl
-	#@-node:leoBody.__init__
-	#@+node:oops
+	#@-node:ekr.20031218072017.3657:leoBody.__init__
+	#@+node:ekr.20031218072017.3658:oops
 	def oops (self):
 		
 		g.trace("leoBody oops:", g.callerName(2), "should be overridden in subclass")
 	#@nonl
-	#@-node:oops
-	#@+node:leoBody.setFontFromConfig
+	#@-node:ekr.20031218072017.3658:oops
+	#@+node:ekr.20031218072017.3659:leoBody.setFontFromConfig
 	def setFontFromConfig (self):
 		
 		self.oops()
 	#@nonl
-	#@-node:leoBody.setFontFromConfig
-	#@+node:Must be overriden in subclasses
+	#@-node:ekr.20031218072017.3659:leoBody.setFontFromConfig
+	#@+node:ekr.20031218072017.3660:Must be overriden in subclasses
 	def createBindings (self,frame):
 		self.oops()
 	
@@ -101,14 +101,13 @@ class leoBody:
 	def setBodyFontFromConfig (self):
 		self.oops()
 		
-	#@-node:Must be overriden in subclasses
-	#@+node:Bounding box (Tk spelling)
+	#@+node:ekr.20031218072017.3661:Bounding box (Tk spelling)
 	def bbox(self,index):
 	
 		self.oops()
 	#@nonl
-	#@-node:Bounding box (Tk spelling)
-	#@+node:Color tags (Tk spelling)
+	#@-node:ekr.20031218072017.3661:Bounding box (Tk spelling)
+	#@+node:ekr.20031218072017.3662:Color tags (Tk spelling)
 	def tag_add (self,tagName,index1,index2):
 	
 		self.oops()
@@ -128,8 +127,8 @@ class leoBody:
 	def tag_remove (self,tagName,index1,index2):
 		self.oops()
 	#@nonl
-	#@-node:Color tags (Tk spelling)
-	#@+node:Configuration (Tk spelling)
+	#@-node:ekr.20031218072017.3662:Color tags (Tk spelling)
+	#@+node:ekr.20031218072017.3663:Configuration (Tk spelling)
 	def cget(self,*args,**keys):
 		
 		self.oops()
@@ -138,8 +137,8 @@ class leoBody:
 		
 		self.oops()
 	#@nonl
-	#@-node:Configuration (Tk spelling)
-	#@+node:Focus
+	#@-node:ekr.20031218072017.3663:Configuration (Tk spelling)
+	#@+node:ekr.20031218072017.3664:Focus
 	def hasFocus (self):
 		
 		self.oops()
@@ -148,8 +147,8 @@ class leoBody:
 		
 		self.oops()
 	#@nonl
-	#@-node:Focus
-	#@+node:Height & width
+	#@-node:ekr.20031218072017.3664:Focus
+	#@+node:ekr.20031218072017.3665:Height & width
 	def getBodyPaneHeight (self):
 		
 		self.oops()
@@ -158,14 +157,14 @@ class leoBody:
 		
 		self.oops()
 	#@nonl
-	#@-node:Height & width
-	#@+node:Idle time...
+	#@-node:ekr.20031218072017.3665:Height & width
+	#@+node:ekr.20031218072017.3666:Idle time...
 	def scheduleIdleTimeRoutine (self,function,*args,**keys):
 	
 		self.oops()
 	#@nonl
-	#@-node:Idle time...
-	#@+node:Indices
+	#@-node:ekr.20031218072017.3666:Idle time...
+	#@+node:ekr.20031218072017.3667:Indices
 	def adjustIndex (self,index,offset):
 		
 		self.oops()
@@ -186,8 +185,8 @@ class leoBody:
 		
 		self.oops()
 	#@nonl
-	#@-node:Indices
-	#@+node:Insert point
+	#@-node:ekr.20031218072017.3667:Indices
+	#@+node:ekr.20031218072017.3668:Insert point
 	def getBeforeInsertionPoint (self):
 		self.oops()
 	
@@ -212,13 +211,13 @@ class leoBody:
 	def setInsertPointToStartOfLine (self,lineNumber): # zero-based line number
 		self.oops()
 	#@nonl
-	#@-node:Insert point
-	#@+node:Menus
+	#@-node:ekr.20031218072017.3668:Insert point
+	#@+node:ekr.20031218072017.3669:Menus
 	def bind (self,*args,**keys):
 		
 		self.oops()
-	#@-node:Menus
-	#@+node:Selection
+	#@-node:ekr.20031218072017.3669:Menus
+	#@+node:ekr.20031218072017.3670:Selection
 	def deleteTextSelection (self):
 		self.oops()
 		
@@ -237,8 +236,9 @@ class leoBody:
 	def setTextSelection (self,i,j=None):
 		self.oops()
 	#@nonl
-	#@-node:Selection
-	#@+node:delete...
+	#@-node:ekr.20031218072017.3670:Selection
+	#@+node:ekr.20031218072017.3671:Text
+	#@+node:ekr.20031218072017.3672:delete...
 	def deleteAllText(self):
 		self.oops()
 	
@@ -257,8 +257,8 @@ class leoBody:
 	def deleteRange (self,index1,index2):
 		self.oops()
 	#@nonl
-	#@-node:delete...
-	#@+node:get...
+	#@-node:ekr.20031218072017.3672:delete...
+	#@+node:ekr.20031218072017.3673:get...
 	def getAllText (self):
 		self.oops()
 		
@@ -280,8 +280,8 @@ class leoBody:
 	def getTextRange (self,index1,index2):
 		self.oops()
 	#@nonl
-	#@-node:get...
-	#@+node:Insert...
+	#@-node:ekr.20031218072017.3673:get...
+	#@+node:ekr.20031218072017.3674:Insert...
 	def insertAtInsertPoint (self,s):
 		
 		self.oops()
@@ -294,13 +294,14 @@ class leoBody:
 		
 		self.oops()
 	#@nonl
-	#@-node:Insert...
-	#@+node:setSelectionAreas
+	#@-node:ekr.20031218072017.3674:Insert...
+	#@+node:ekr.20031218072017.3675:setSelectionAreas
 	def setSelectionAreas (self,before,sel,after):
 		self.oops()
 	#@nonl
-	#@-node:setSelectionAreas
-	#@+node:Visibility & scrolling
+	#@-node:ekr.20031218072017.3675:setSelectionAreas
+	#@-node:ekr.20031218072017.3671:Text
+	#@+node:ekr.20031218072017.3676:Visibility & scrolling
 	def makeIndexVisible (self,index):
 		self.oops()
 		
@@ -319,8 +320,9 @@ class leoBody:
 	def scrollDown (self):
 		self.oops()
 	#@nonl
-	#@-node:Visibility & scrolling
-	#@+node:Coloring 
+	#@-node:ekr.20031218072017.3676:Visibility & scrolling
+	#@-node:ekr.20031218072017.3660:Must be overriden in subclasses
+	#@+node:ekr.20031218072017.3677:Coloring
 	# It's weird to have the tree class be responsible for coloring the body pane!
 	
 	def getColorizer(self):
@@ -346,11 +348,11 @@ class leoBody:
 		
 		return self.colorizer.updateSyntaxColorer(p.copy())
 	#@nonl
-	#@-node:Coloring 
+	#@-node:ekr.20031218072017.3677:Coloring
 	#@-others
 #@nonl
-#@-node:class leoBody
-#@+node:class leoFrame
+#@-node:ekr.20031218072017.3656:class leoBody
+#@+node:ekr.20031218072017.3678:class leoFrame
 class leoFrame:
 	
 	"""The base class for all Leo windows."""
@@ -358,7 +360,7 @@ class leoFrame:
 	instances = 0
 	
 	#@	@+others
-	#@+node:  leoFrame.__init__
+	#@+node:ekr.20031218072017.3679:  leoFrame.__init__
 	def __init__ (self):
 		
 		self.c = None # Must be created by subclasses.
@@ -387,8 +389,9 @@ class leoFrame:
 		self.lastStatusRow = self.lastStatusCol = 0
 		self.tab_width = 0 # The tab width in effect in this pane.
 	#@nonl
-	#@-node:  leoFrame.__init__
-	#@+node: gui-dependent commands
+	#@-node:ekr.20031218072017.3679:  leoFrame.__init__
+	#@+node:ekr.20031218072017.3680: Must be defined in subclasses
+	#@+node:ekr.20031218072017.3681: gui-dependent commands
 	# In the Edit menu...
 	def OnCopy  (self,event=None): self.oops()
 	def OnCut   (self,event=None): self.oops()
@@ -413,8 +416,8 @@ class leoFrame:
 	# In help menu...
 	def leoHelp (self): self.oops()
 	#@nonl
-	#@-node: gui-dependent commands
-	#@+node:bringToFront, deiconify, lift & update
+	#@-node:ekr.20031218072017.3681: gui-dependent commands
+	#@+node:ekr.20031218072017.3682:bringToFront, deiconify, lift & update
 	def bringToFront (self):
 		
 		self.oops()
@@ -430,41 +433,44 @@ class leoFrame:
 	def update (self):
 		
 		self.oops()
-	#@-node:bringToFront, deiconify, lift & update
-	#@+node:resizePanesToRatio
+	#@-node:ekr.20031218072017.3682:bringToFront, deiconify, lift & update
+	#@+node:ekr.20031218072017.3683:config stuff...
+	#@+node:ekr.20031218072017.3684:resizePanesToRatio
 	def resizePanesToRatio (self,ratio,secondary_ratio):
 		
 		pass
 	#@nonl
-	#@-node:resizePanesToRatio
-	#@+node:setInitialWindowGeometry
+	#@-node:ekr.20031218072017.3684:resizePanesToRatio
+	#@+node:ekr.20031218072017.3685:setInitialWindowGeometry
 	def setInitialWindowGeometry (self):
 		
 		self.oops()
 	#@nonl
-	#@-node:setInitialWindowGeometry
-	#@+node:setTopGeometry
+	#@-node:ekr.20031218072017.3685:setInitialWindowGeometry
+	#@+node:ekr.20031218072017.3686:setTopGeometry
 	def setTopGeometry (self,w,h,x,y,adjustSize=true):
 		
 		self.oops()
 	#@nonl
-	#@-node:setTopGeometry
-	#@+node:setTabWidth
+	#@-node:ekr.20031218072017.3686:setTopGeometry
+	#@-node:ekr.20031218072017.3683:config stuff...
+	#@-node:ekr.20031218072017.3680: Must be defined in subclasses
+	#@+node:ekr.20031218072017.3687:setTabWidth
 	def setTabWidth (self,w):
 		
 		# Subclasses may override this to affect drawing.
 		self.tab_width = w
 	#@nonl
-	#@-node:setTabWidth
-	#@+node:getTitle & setTitle
+	#@-node:ekr.20031218072017.3687:setTabWidth
+	#@+node:ekr.20031218072017.3688:getTitle & setTitle
 	def getTitle (self):
 		return self.title
 		
 	def setTitle (self,title):
 		self.title = title
 	#@nonl
-	#@-node:getTitle & setTitle
-	#@+node:initialRatios
+	#@-node:ekr.20031218072017.3688:getTitle & setTitle
+	#@+node:ekr.20031218072017.3689:initialRatios
 	def initialRatios (self):
 	
 		config = g.app.config
@@ -486,8 +492,8 @@ class leoFrame:
 		# print r,r2
 		return verticalFlag,r,r2
 	#@nonl
-	#@-node:initialRatios
-	#@+node:longFileName & shortFileName
+	#@-node:ekr.20031218072017.3689:initialRatios
+	#@+node:ekr.20031218072017.3690:longFileName & shortFileName
 	def longFileName (self):
 	
 		return self.c.mFileName
@@ -496,13 +502,13 @@ class leoFrame:
 	
 		return g.shortFileName(self.c.mFileName)
 	#@nonl
-	#@-node:longFileName & shortFileName
-	#@+node:oops
+	#@-node:ekr.20031218072017.3690:longFileName & shortFileName
+	#@+node:ekr.20031218072017.3691:oops
 	def oops(self):
 		
 		print "leoFrame oops:", g.callerName(2), "should be overridden in subclass"
-	#@-node:oops
-	#@+node:promptForSave
+	#@-node:ekr.20031218072017.3691:oops
+	#@+node:ekr.20031218072017.3692:promptForSave
 	def promptForSave (self):
 		
 		"""Prompt the user to save changes.
@@ -525,7 +531,7 @@ class leoFrame:
 		else:
 			if not c.mFileName:
 				#@			<< Put up a file save dialog to set mFileName >>
-				#@+node:<< Put up a file save dialog to set mFileName >>
+				#@+node:ekr.20031218072017.3693:<< Put up a file save dialog to set mFileName >>
 				# Make sure we never pass None to the ctor.
 				if not c.mFileName:
 					c.mFileName = ""
@@ -536,7 +542,7 @@ class leoFrame:
 					filetypes=[("Leo files", "*.leo")],
 					defaultextension=".leo")
 				#@nonl
-				#@-node:<< Put up a file save dialog to set mFileName >>
+				#@-node:ekr.20031218072017.3693:<< Put up a file save dialog to set mFileName >>
 				#@nl
 			if c.mFileName:
 				# print "saving", c.mFileName
@@ -545,8 +551,8 @@ class leoFrame:
 			else:
 				return true # Veto.
 	#@nonl
-	#@-node:promptForSave
-	#@+node:scanForTabWidth
+	#@-node:ekr.20031218072017.3692:promptForSave
+	#@+node:ekr.20031218072017.1375:scanForTabWidth
 	# Similar to code in scanAllDirectives.
 	
 	def scanForTabWidth (self,p):
@@ -557,7 +563,7 @@ class leoFrame:
 			s = p.v.t.bodyString
 			dict = g.get_directives_dict(s)
 			#@		<< set w and break on @tabwidth >>
-			#@+node:<< set w and break on @tabwidth >>
+			#@+node:ekr.20031218072017.1376:<< set w and break on @tabwidth >>
 			if dict.has_key("tabwidth"):
 				
 				val = g.scanAtTabwidthDirective(s,dict,issue_error_flag=false)
@@ -565,22 +571,22 @@ class leoFrame:
 					w = val
 					break
 			#@nonl
-			#@-node:<< set w and break on @tabwidth >>
+			#@-node:ekr.20031218072017.1376:<< set w and break on @tabwidth >>
 			#@nl
 	
 		c.frame.setTabWidth(w)
 	#@nonl
-	#@-node:scanForTabWidth
+	#@-node:ekr.20031218072017.1375:scanForTabWidth
 	#@-others
 #@nonl
-#@-node:class leoFrame
-#@+node:class leoLog
+#@-node:ekr.20031218072017.3678:class leoFrame
+#@+node:ekr.20031218072017.3694:class leoLog
 class leoLog:
 	
 	"""The base class for the log pane in Leo windows."""
 	
 	#@	@+others
-	#@+node:leoLog.__init__
+	#@+node:ekr.20031218072017.3695:leoLog.__init__
 	def __init__ (self,frame,parentFrame):
 		
 		self.frame = frame
@@ -590,25 +596,25 @@ class leoLog:
 	
 		self.logCtrl = self.createControl(parentFrame)
 		self.setFontFromConfig()
-	#@-node:leoLog.__init__
-	#@+node:leoLog.configure
+	#@-node:ekr.20031218072017.3695:leoLog.__init__
+	#@+node:ekr.20031218072017.3696:leoLog.configure
 	def configure (self,*args,**keys):
 		
 		self.oops()
 	#@nonl
-	#@-node:leoLog.configure
-	#@+node:leoLog.configureBorder
+	#@-node:ekr.20031218072017.3696:leoLog.configure
+	#@+node:ekr.20031218072017.3697:leoLog.configureBorder
 	def configureBorder(self,border):
 		
 		self.oops()
-	#@-node:leoLog.configureBorder
-	#@+node:leoLog.createControl
+	#@-node:ekr.20031218072017.3697:leoLog.configureBorder
+	#@+node:ekr.20031218072017.3698:leoLog.createControl
 	def createControl (self,parentFrame):
 		
 		self.oops()
 	#@nonl
-	#@-node:leoLog.createControl
-	#@+node:leoLog.enable & disable
+	#@-node:ekr.20031218072017.3698:leoLog.createControl
+	#@+node:ekr.20031218072017.3699:leoLog.enable & disable
 	def enable (self,enabled=true):
 		
 		self.enabled = enabled
@@ -616,20 +622,20 @@ class leoLog:
 	def disable (self):
 		
 		self.enabled = false
-	#@-node:leoLog.enable & disable
-	#@+node:leoLog.oops
+	#@-node:ekr.20031218072017.3699:leoLog.enable & disable
+	#@+node:ekr.20031218072017.3700:leoLog.oops
 	def oops (self):
 		
 		print "leoLog oops:", g.callerName(2), "should be overridden in subclass"
 	#@nonl
-	#@-node:leoLog.oops
-	#@+node:leoLog.setFontFromConfig
+	#@-node:ekr.20031218072017.3700:leoLog.oops
+	#@+node:ekr.20031218072017.3701:leoLog.setFontFromConfig
 	def setFontFromConfig (self):
 		
 		self.oops()
 	#@nonl
-	#@-node:leoLog.setFontFromConfig
-	#@+node:leoLog.onActivateLog
+	#@-node:ekr.20031218072017.3701:leoLog.setFontFromConfig
+	#@+node:ekr.20031218072017.3702:leoLog.onActivateLog
 	def onActivateLog (self,event=None):
 	
 		try:
@@ -637,8 +643,8 @@ class leoLog:
 		except:
 			g.es_event_exception("activate log")
 	#@nonl
-	#@-node:leoLog.onActivateLog
-	#@+node:leoLog.put & putnl
+	#@-node:ekr.20031218072017.3702:leoLog.onActivateLog
+	#@+node:ekr.20031218072017.3703:leoLog.put & putnl
 	# All output to the log stream eventually comes here.
 	
 	def put (self,s,color=None):
@@ -647,11 +653,11 @@ class leoLog:
 	def putnl (self):
 		self.oops()
 	#@nonl
-	#@-node:leoLog.put & putnl
+	#@-node:ekr.20031218072017.3703:leoLog.put & putnl
 	#@-others
 #@nonl
-#@-node:class leoLog
-#@+node:class leoTree
+#@-node:ekr.20031218072017.3694:class leoLog
+#@+node:ekr.20031218072017.3704:class leoTree
 # This would be useful if we removed all the tree redirection routines.
 # However, those routines are pretty ingrained into Leo...
 
@@ -660,7 +666,7 @@ class leoTree:
 	"""The base class for the outline pane in Leo windows."""
 	
 	#@	@+others
-	#@+node:  tree.__init__ (base class)
+	#@+node:ekr.20031218072017.3705:  tree.__init__ (base class)
 	def __init__ (self,frame):
 		
 		self.frame = frame
@@ -679,8 +685,9 @@ class leoTree:
 		self.redrawCount = 0 # For traces
 		self.redrawScheduled = false # true if redraw scheduled.
 	#@nonl
-	#@-node:  tree.__init__ (base class)
-	#@+node:Drawing
+	#@-node:ekr.20031218072017.3705:  tree.__init__ (base class)
+	#@+node:ekr.20031218072017.3706: Must be defined in subclasses
+	#@+node:ekr.20031218072017.3707:Drawing
 	def drawIcon(self,v,x=None,y=None):
 		self.oops()
 	
@@ -692,8 +699,8 @@ class leoTree:
 		
 	def redrawAfterException (self):
 		self.oops()
-	#@-node:Drawing
-	#@+node:Edit label
+	#@-node:ekr.20031218072017.3707:Drawing
+	#@+node:ekr.20031218072017.3708:Edit label
 	def editLabel(self,v):
 		self.oops()
 	
@@ -703,16 +710,16 @@ class leoTree:
 	def setNormalLabelState(self,v):
 		self.oops()
 	#@nonl
-	#@-node:Edit label
-	#@+node:Fonts
+	#@-node:ekr.20031218072017.3708:Edit label
+	#@+node:ekr.20031218072017.3709:Fonts
 	def getFont(self):
 		self.oops()
 		
 	def setFont(self,font=None,fontName=None):
 		self.oops()
 	#@nonl
-	#@-node:Fonts
-	#@+node:Notifications
+	#@-node:ekr.20031218072017.3709:Fonts
+	#@+node:ekr.20031218072017.3710:Notifications
 	# These should all be internal to the tkinter.frame class.
 	
 	def OnActivateHeadline(self,v):
@@ -727,8 +734,8 @@ class leoTree:
 	def idle_head_key(self,v,ch=None):
 		self.oops()
 	#@nonl
-	#@-node:Notifications
-	#@+node:Scrolling
+	#@-node:ekr.20031218072017.3710:Notifications
+	#@+node:ekr.20031218072017.3711:Scrolling
 	def scrollTo(self,v):
 		self.oops()
 	
@@ -737,26 +744,27 @@ class leoTree:
 		self.oops()
 	
 	
-	#@-node:Scrolling
-	#@+node:Selecting
+	#@-node:ekr.20031218072017.3711:Scrolling
+	#@+node:ekr.20031218072017.3712:Selecting
 	def select(self,p,updateBeadList=true):
 		
 		self.oops()
 	#@nonl
-	#@-node:Selecting
-	#@+node:Tree operations
+	#@-node:ekr.20031218072017.3712:Selecting
+	#@+node:ekr.20031218072017.3713:Tree operations
 	def expandAllAncestors(self,v):
 		
 		self.oops()
 	#@nonl
-	#@-node:Tree operations
-	#@+node:beginUpdate
+	#@-node:ekr.20031218072017.3713:Tree operations
+	#@-node:ekr.20031218072017.3706: Must be defined in subclasses
+	#@+node:ekr.20031218072017.3714:beginUpdate
 	def beginUpdate (self):
 	
 		self.updateCount += 1
 	#@nonl
-	#@-node:beginUpdate
-	#@+node:endUpdate
+	#@-node:ekr.20031218072017.3714:beginUpdate
+	#@+node:ekr.20031218072017.3715:endUpdate
 	def endUpdate (self,flag=true):
 	
 		assert(self.updateCount > 0)
@@ -765,8 +773,8 @@ class leoTree:
 		if flag and self.updateCount == 0:
 			self.redraw()
 	#@nonl
-	#@-node:endUpdate
-	#@+node:Getters/Setters (tree)
+	#@-node:ekr.20031218072017.3715:endUpdate
+	#@+node:ekr.20031218072017.3716:Getters/Setters (tree)
 	def dragging(self):
 		return self._dragging
 	
@@ -783,14 +791,14 @@ class leoTree:
 	def setEditPosition(self,p):
 		self._editPosition = p
 	#@nonl
-	#@-node:Getters/Setters (tree)
-	#@+node:oops
+	#@-node:ekr.20031218072017.3716:Getters/Setters (tree)
+	#@+node:ekr.20031218072017.3718:oops
 	def oops(self):
 		
 		print "leoTree oops:", g.callerName(2), "should be overridden in subclass"
 	#@nonl
-	#@-node:oops
-	#@+node:tree.OnIconDoubleClick (@url)
+	#@-node:ekr.20031218072017.3718:oops
+	#@+node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
 	def OnIconDoubleClick (self,v,event=None):
 	
 		# Note: "icondclick" hooks handled by vnode callback routine.
@@ -801,7 +809,7 @@ class leoTree:
 			if not g.doHook("@url1",c=c,v=v):
 				url = s[4:].strip()
 				#@			<< stop the url after any whitespace >>
-				#@+node:<< stop the url after any whitespace  >>
+				#@+node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
 				# For safety, the URL string should end at the first whitespace.
 				
 				url = url.replace('\t',' ')
@@ -811,10 +819,10 @@ class leoTree:
 						g.es("ignoring characters after space in url:"+url[i:])
 						g.es("use %20 instead of spaces")
 					url = url[:i]
-				#@-node:<< stop the url after any whitespace  >>
+				#@-node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
 				#@nl
 				#@			<< check the url; return if bad >>
-				#@+node:<< check the url; return if bad >>
+				#@+node:ekr.20031218072017.2314:<< check the url; return if bad >>
 				if not url or len(url) == 0:
 					g.es("no url following @url")
 					return
@@ -841,10 +849,10 @@ class leoTree:
 				if not re.match(urlPattern,url):
 					g.es("invalid url: "+url)
 					return
-				#@-node:<< check the url; return if bad >>
+				#@-node:ekr.20031218072017.2314:<< check the url; return if bad >>
 				#@nl
 				#@			<< pass the url to the web browser >>
-				#@+node:<< pass the url to the web browser >>
+				#@+node:ekr.20031218072017.2315:<< pass the url to the web browser >>
 				#@+at 
 				#@nonl
 				# Most browsers should handle the following urls:
@@ -869,24 +877,24 @@ class leoTree:
 					g.es("exception opening " + url)
 					g.es_exception()
 				
-				#@-node:<< pass the url to the web browser >>
+				#@-node:ekr.20031218072017.2315:<< pass the url to the web browser >>
 				#@nl
 			g.doHook("@url2",c=c,v=v)
 	#@nonl
-	#@-node:tree.OnIconDoubleClick (@url)
-	#@+node:tree.enableDrawingAfterException
+	#@-node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
+	#@+node:ekr.20040106095546.1:tree.enableDrawingAfterException
 	def enableDrawingAfterException (self):
 		pass
 	#@nonl
-	#@-node:tree.enableDrawingAfterException
+	#@-node:ekr.20040106095546.1:tree.enableDrawingAfterException
 	#@-others
 #@nonl
-#@-node:class leoTree
-#@+node:class nullBody
+#@-node:ekr.20031218072017.3704:class leoTree
+#@+node:ekr.20031218072017.2191:class nullBody
 class nullBody (leoBody):
 
 	#@	@+others
-	#@+node: nullBody.__init__
+	#@+node:ekr.20031218072017.2192: nullBody.__init__
 	def __init__ (self,frame,parentFrame):
 		
 		leoBody.__init__ (self,frame,parentFrame) # Init the base class.
@@ -897,8 +905,9 @@ class nullBody (leoBody):
 		
 		self.colorizer = leoColor.nullColorizer(self.c)
 	#@nonl
-	#@-node: nullBody.__init__
-	#@+node:findStartOfLine
+	#@-node:ekr.20031218072017.2192: nullBody.__init__
+	#@+node:ekr.20031218072017.2193:Utils (internal use)
+	#@+node:ekr.20031218072017.2194:findStartOfLine
 	def findStartOfLine (self,lineNumber):
 		
 		lines = g.splitLines(self.s)
@@ -909,8 +918,8 @@ class nullBody (leoBody):
 			index += len(line)
 		return index
 	#@nonl
-	#@-node:findStartOfLine
-	#@+node:scanToStartOfLine
+	#@-node:ekr.20031218072017.2194:findStartOfLine
+	#@+node:ekr.20031218072017.2195:scanToStartOfLine
 	def scanToStartOfLine (self,index):
 		
 		if index <= 0:
@@ -924,8 +933,8 @@ class nullBody (leoBody):
 		
 		return 0
 	#@nonl
-	#@-node:scanToStartOfLine
-	#@+node:scanToEndOfLine
+	#@-node:ekr.20031218072017.2195:scanToStartOfLine
+	#@+node:ekr.20031218072017.2196:scanToEndOfLine
 	def scanToEndOfLine (self,i):
 		
 		if index >= len(self.s):
@@ -939,8 +948,9 @@ class nullBody (leoBody):
 		
 		return i
 	#@nonl
-	#@-node:scanToEndOfLine
-	#@+node:Must be overriden in subclasses
+	#@-node:ekr.20031218072017.2196:scanToEndOfLine
+	#@-node:ekr.20031218072017.2193:Utils (internal use)
+	#@+node:ekr.20031218072017.2197:Must be overriden in subclasses
 	def createBindings (self,frame):
 		self.oops()
 	
@@ -956,13 +966,12 @@ class nullBody (leoBody):
 	def setBodyFontFromConfig (self):
 		self.oops()
 	#@nonl
-	#@-node:Must be overriden in subclasses
-	#@+node:Bounding box
+	#@+node:ekr.20031218072017.2198:Bounding box
 	def bbox(self,index):
 		return (0,0)
 	#@nonl
-	#@-node:Bounding box
-	#@+node:Color tags
+	#@-node:ekr.20031218072017.2198:Bounding box
+	#@+node:ekr.20031218072017.2199:Color tags
 	def tag_add (self,tagName,index1,index2):
 		pass
 	
@@ -978,24 +987,24 @@ class nullBody (leoBody):
 	def tag_remove (self,tagName,index1,index2):
 		pass
 	#@nonl
-	#@-node:Color tags
-	#@+node:Configuration
+	#@-node:ekr.20031218072017.2199:Color tags
+	#@+node:ekr.20031218072017.2200:Configuration
 	def cget(self,*args,**keys):
 		pass
 		
 	def configure (self,*args,**keys):
 		pass
 	#@nonl
-	#@-node:Configuration
-	#@+node:Focus
+	#@-node:ekr.20031218072017.2200:Configuration
+	#@+node:ekr.20031218072017.2201:Focus
 	def hasFocus (self):
 		return true
 		
 	def setFocus (self):
 		pass
 	#@nonl
-	#@-node:Focus
-	#@+node:Height & width (use dummy values...)
+	#@-node:ekr.20031218072017.2201:Focus
+	#@+node:ekr.20031218072017.2202:Height & width (use dummy values...)
 	def getBodyPaneHeight (self):
 		
 		return 500
@@ -1004,14 +1013,14 @@ class nullBody (leoBody):
 	
 		return 600
 	#@nonl
-	#@-node:Height & width (use dummy values...)
-	#@+node:Idle time...
+	#@-node:ekr.20031218072017.2202:Height & width (use dummy values...)
+	#@+node:ekr.20031218072017.2203:Idle time...
 	def scheduleIdleTimeRoutine (self,function,*args,**keys):
 	
 		g.trace()
 	#@nonl
-	#@-node:Idle time...
-	#@+node:Indices
+	#@-node:ekr.20031218072017.2203:Idle time...
+	#@+node:ekr.20031218072017.2204:Indices
 	def adjustIndex (self,index,offset):
 		return index + offset
 		
@@ -1034,8 +1043,8 @@ class nullBody (leoBody):
 		
 	def getImageIndex (self,image):
 		self.oops()
-	#@-node:Indices
-	#@+node:Insert point
+	#@-node:ekr.20031218072017.2204:Indices
+	#@+node:ekr.20031218072017.2205:Insert point
 	def getBeforeInsertionPoint (self):
 		return self.insertPoint - 1
 	
@@ -1062,12 +1071,12 @@ class nullBody (leoBody):
 	def setInsertPointToStartOfLine (self,lineNumber): # zero-based line number
 		self.insertPoint = self.findStartOfLine(lineNumber)
 	#@nonl
-	#@-node:Insert point
-	#@+node:Menus
+	#@-node:ekr.20031218072017.2205:Insert point
+	#@+node:ekr.20031218072017.2206:Menus
 	def bind (self,*args,**keys):
 		pass
-	#@-node:Menus
-	#@+node:Selection
+	#@-node:ekr.20031218072017.2206:Menus
+	#@+node:ekr.20031218072017.2207:Selection
 	def deleteTextSelection (self):
 		i,j = self.selection
 		self.s = self.s[:i] + self.s[j:]
@@ -1096,8 +1105,9 @@ class nullBody (leoBody):
 		else:
 			self.selection = i,j
 	#@nonl
-	#@-node:Selection
-	#@+node:delete...
+	#@-node:ekr.20031218072017.2207:Selection
+	#@+node:ekr.20031218072017.2208:Text
+	#@+node:ekr.20031218072017.2209:delete...
 	def deleteAllText(self):
 		self.insertPoint = 0
 		self.selection = 0,0
@@ -1124,8 +1134,8 @@ class nullBody (leoBody):
 	def deleteRange (self,index1,index2):
 		del self.s[index1:index2]
 	#@nonl
-	#@-node:delete...
-	#@+node:get...
+	#@-node:ekr.20031218072017.2209:delete...
+	#@+node:ekr.20031218072017.2210:get...
 	def getAllText (self):
 		return g.toUnicode(self.s,g.app.tkEncoding)
 		
@@ -1141,8 +1151,7 @@ class nullBody (leoBody):
 		s = self.s[index1:index2]
 		return g.toUnicode(s,g.app.tkEncoding)
 	#@nonl
-	#@-node:get...
-	#@+node:getInsertLines
+	#@+node:ekr.20031218072017.2211:getInsertLines
 	def getInsertLines (self):
 		
 		"""Return before,ins,after where:
@@ -1168,8 +1177,8 @@ class nullBody (leoBody):
 	
 		return before,ins,after
 	
-	#@-node:getInsertLines
-	#@+node:getSelectionAreas
+	#@-node:ekr.20031218072017.2211:getInsertLines
+	#@+node:ekr.20031218072017.2212:getSelectionAreas
 	def getSelectionAreas (self):
 		
 		"""Return before,sel,after where:
@@ -1194,8 +1203,8 @@ class nullBody (leoBody):
 		after  = g.toUnicode(after ,g.app.tkEncoding)
 		return before,sel,after
 	#@nonl
-	#@-node:getSelectionAreas
-	#@+node:getSelectionLines (nullBody)
+	#@-node:ekr.20031218072017.2212:getSelectionAreas
+	#@+node:ekr.20031218072017.2213:getSelectionLines (nullBody)
 	def getSelectionLines (self):
 		
 		"""Return before,sel,after where:
@@ -1225,8 +1234,9 @@ class nullBody (leoBody):
 		
 		g.trace(n1,n2)
 		return before,sel,after
-	#@-node:getSelectionLines (nullBody)
-	#@+node:Insert...
+	#@-node:ekr.20031218072017.2213:getSelectionLines (nullBody)
+	#@-node:ekr.20031218072017.2210:get...
+	#@+node:ekr.20031218072017.2214:Insert...
 	def insertAtInsertPoint (self,s):
 		
 		i = self.insertPoint
@@ -1241,8 +1251,8 @@ class nullBody (leoBody):
 		i = self.findStartOfLine(lineNumber)
 		self.s = self.s[:i] + s + self.s[i:]
 	#@nonl
-	#@-node:Insert...
-	#@+node:setSelectionAreas
+	#@-node:ekr.20031218072017.2214:Insert...
+	#@+node:ekr.20031218072017.2215:setSelectionAreas
 	def setSelectionAreas (self,before,sel,after):
 		
 		if before is None: before = ""
@@ -1253,8 +1263,9 @@ class nullBody (leoBody):
 		
 		self.selection = len(before), len(before) + len(sel)
 	#@nonl
-	#@-node:setSelectionAreas
-	#@+node:Visibility & scrolling
+	#@-node:ekr.20031218072017.2215:setSelectionAreas
+	#@-node:ekr.20031218072017.2208:Text
+	#@+node:ekr.20031218072017.2216:Visibility & scrolling
 	def makeIndexVisible (self,index):
 		pass
 		
@@ -1273,24 +1284,25 @@ class nullBody (leoBody):
 	def scrollDown (self):
 		pass
 	#@nonl
-	#@-node:Visibility & scrolling
-	#@+node:oops
+	#@-node:ekr.20031218072017.2216:Visibility & scrolling
+	#@-node:ekr.20031218072017.2197:Must be overriden in subclasses
+	#@+node:ekr.20031218072017.2217:oops
 	def oops(self):
 	
 		g.trace("nullBody:", g.callerName(2))
 		pass
 	#@nonl
-	#@-node:oops
+	#@-node:ekr.20031218072017.2217:oops
 	#@-others
 #@nonl
-#@-node:class nullBody
-#@+node:class nullFrame
+#@-node:ekr.20031218072017.2191:class nullBody
+#@+node:ekr.20031218072017.2222:class nullFrame
 class nullFrame (leoFrame):
 	
 	"""A null frame class for tests and batch execution."""
 	
 	#@	@+others
-	#@+node:__init__
+	#@+node:ekr.20040327105706:__init__
 	def __init__ (self,title,useNullUndoer=false):
 	
 		leoFrame.__init__(self) # Init the base class.
@@ -1298,16 +1310,16 @@ class nullFrame (leoFrame):
 		self.title = title
 		self.useNullUndoer = useNullUndoer
 	#@nonl
-	#@-node:__init__
-	#@+node:__getattr__ NOT USED
+	#@-node:ekr.20040327105706:__init__
+	#@+node:ekr.20040327105706.1:__getattr__ NOT USED
 	if 0: # This causes no end of problems.
 	
 		def __getattr__(self,attr):
 			g.trace("nullFrame",attr)
 			return nullObject()
 	#@nonl
-	#@-node:__getattr__ NOT USED
-	#@+node:finishCreate
+	#@-node:ekr.20040327105706.1:__getattr__ NOT USED
+	#@+node:ekr.20040327105706.2:finishCreate
 	def finishCreate(self,c):
 	
 		self.c = c
@@ -1321,19 +1333,19 @@ class nullFrame (leoFrame):
 		if self.useNullUndoer:
 			c.undoer = leoUndo.nullUndoer(c)
 	#@nonl
-	#@-node:finishCreate
-	#@+node:oops
+	#@-node:ekr.20040327105706.2:finishCreate
+	#@+node:ekr.20040327105706.3:oops
 	def oops(self):
 		
 		# g.trace("nullFrame:", g.callerName(2))
 	
 		pass # This is NOT an error.
 	#@nonl
-	#@-node:oops
+	#@-node:ekr.20040327105706.3:oops
 	#@-others
 #@nonl
-#@-node:class nullFrame
-#@+node:class nullLog
+#@-node:ekr.20031218072017.2222:class nullFrame
+#@+node:ekr.20031218072017.2232:class nullLog
 class nullLog (leoLog):
 	
 	def __init__ (self,frame=None,parentFrame=None):
@@ -1365,12 +1377,12 @@ class nullLog (leoLog):
 	def setFontFromConfig (self):
 		pass
 #@nonl
-#@-node:class nullLog
-#@+node:class nullTree
+#@-node:ekr.20031218072017.2232:class nullLog
+#@+node:ekr.20031218072017.2233:class nullTree
 class nullTree (leoTree):
 
 	#@	@+others
-	#@+node: nullTree.__init__
+	#@+node:ekr.20031218072017.2234: nullTree.__init__
 	def __init__ (self,frame):
 		
 		leoTree.__init__(self,frame) # Init the base class.
@@ -1380,16 +1392,17 @@ class nullTree (leoTree):
 		self.fontName = None
 		
 	#@nonl
-	#@-node: nullTree.__init__
-	#@+node:oops
+	#@-node:ekr.20031218072017.2234: nullTree.__init__
+	#@+node:ekr.20031218072017.2235:oops
 	def oops(self):
 			
 		# It is not an error to call this routine...
 		g.trace("nullTree:", g.callerName(2))
 		pass
 	#@nonl
-	#@-node:oops
-	#@+node:Drawing
+	#@-node:ekr.20031218072017.2235:oops
+	#@+node:ekr.20031218072017.2236:Dummy operations...
+	#@+node:ekr.20031218072017.2237:Drawing
 	def enableDrawingAfterException (self):
 		pass
 	
@@ -1402,8 +1415,8 @@ class nullTree (leoTree):
 	def redraw_now(self):
 		pass
 	#@nonl
-	#@-node:Drawing
-	#@+node:Edit label
+	#@-node:ekr.20031218072017.2237:Drawing
+	#@+node:ekr.20031218072017.2238:Edit label
 	def editLabel(self,v):
 		pass
 	
@@ -1413,21 +1426,22 @@ class nullTree (leoTree):
 	def setNormalLabelState(self,v):
 		pass
 	#@nonl
-	#@-node:Edit label
-	#@+node:Scrolling
+	#@-node:ekr.20031218072017.2238:Edit label
+	#@+node:ekr.20031218072017.2239:Scrolling
 	def scrollTo(self,v):
 		pass
 	
 	def idle_scrollTo(self,v):
 		pass
-	#@-node:Scrolling
-	#@+node:Tree operations
+	#@-node:ekr.20031218072017.2239:Scrolling
+	#@+node:ekr.20031218072017.2240:Tree operations
 	def expandAllAncestors(self,v):
 	
 		pass
 	#@nonl
-	#@-node:Tree operations
-	#@+node:getFont & setFont
+	#@-node:ekr.20031218072017.2240:Tree operations
+	#@-node:ekr.20031218072017.2236:Dummy operations...
+	#@+node:ekr.20031218072017.2241:getFont & setFont
 	def getFont(self):
 	
 		return self.font
@@ -1437,19 +1451,19 @@ class nullTree (leoTree):
 		self.font = font
 		self.fontName = fontName
 	#@nonl
-	#@-node:getFont & setFont
-	#@+node:select
+	#@-node:ekr.20031218072017.2241:getFont & setFont
+	#@+node:ekr.20031218072017.2242:select
 	def select(self,p,updateBeadList=true):
 		
 		self.c.setCurrentPosition(p)
 	
 		self.frame.scanForTabWidth(p)
 	#@nonl
-	#@-node:select
+	#@-node:ekr.20031218072017.2242:select
 	#@-others
 #@nonl
-#@-node:class nullTree
+#@-node:ekr.20031218072017.2233:class nullTree
 #@-others
 #@nonl
-#@-node:@file leoFrame.py
+#@-node:ekr.20031218072017.3655:@file-thin leoFrame.py
 #@-leo

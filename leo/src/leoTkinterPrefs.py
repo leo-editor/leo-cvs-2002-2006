@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoTkinterPrefs.py
+#@+node:ekr.20031218072017.4122:@file-thin leoTkinterPrefs.py
 #@@language python
 
 import leoGlobals as g
@@ -14,7 +14,8 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 	"""A class that creates Leo's preferenes panel."""
 
 	#@	@+others
-	#@+node:tkinterPrefs.__init__
+	#@+node:ekr.20031218072017.4123:Birth
+	#@+node:ekr.20031218072017.4124:tkinterPrefs.__init__
 	def __init__ (self,c):
 		
 		"""Ctor for the leoTkinterPrefs class."""
@@ -25,8 +26,8 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		self.createFrame()
 		self.setWidgets()
 	#@nonl
-	#@-node:tkinterPrefs.__init__
-	#@+node:createFrame
+	#@-node:ekr.20031218072017.4124:tkinterPrefs.__init__
+	#@+node:ekr.20031218072017.4125:createFrame
 	def createFrame (self):
 		
 		"""Create the tkinter Prefs panel."""
@@ -41,7 +42,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		outer = Tk.Frame(top,bd=2,relief="groove")
 		outer.pack(fill="both",expand=1,padx=2,pady=2)
 		#@	<< Create the Tk.IntVars >>
-		#@+node:<< Create the Tk.IntVars >>
+		#@+node:ekr.20031218072017.4126:<< Create the Tk.IntVars >>
 		self.replace_tabs_var = Tk.IntVar()
 		self.tangle_batch_var = Tk.IntVar()
 		self.untangle_batch_var = Tk.IntVar()
@@ -51,10 +52,10 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		
 		self.lang_var = Tk.StringVar()
 		#@nonl
-		#@-node:<< Create the Tk.IntVars >>
+		#@-node:ekr.20031218072017.4126:<< Create the Tk.IntVars >>
 		#@nl
 		#@	<< Create the Global Options frame >>
-		#@+node:<< Create the Global Options frame >>
+		#@+node:ekr.20031218072017.4127:<< Create the Global Options frame >>
 		# Frame and title
 		w,glob = gui.create_labeled_frame (outer,caption="Global Options")
 		w.pack(padx=2,pady=2,expand=1,fill="x")
@@ -89,10 +90,10 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		for box in (replaceBox, doneBox, unBox):
 			box.pack(fill="x")
 		#@nonl
-		#@-node:<< Create the Global Options frame >>
+		#@-node:ekr.20031218072017.4127:<< Create the Global Options frame >>
 		#@nl
 		#@	<< Create the Tangle Options frame >>
-		#@+node:<< Create the Tangle Options frame >>
+		#@+node:ekr.20031218072017.4128:<< Create the Tangle Options frame >>
 		# Frame and title
 		w,tangle = gui.create_labeled_frame (outer,caption="Default Options")
 		w.pack(padx=2,pady=2,expand=1,fill="x")
@@ -114,10 +115,10 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		header.pack(fill="x")
 		doc.pack(fill="x")
 		#@nonl
-		#@-node:<< Create the Tangle Options frame >>
+		#@-node:ekr.20031218072017.4128:<< Create the Tangle Options frame >>
 		#@nl
 		#@	<< Create the Target Language frame >>
-		#@+node:<< Create the Target Language frame >> frame
+		#@+node:ekr.20031218072017.369:<< Create the Target Language frame >> frame
 		# Frame and title
 		w,target = gui.create_labeled_frame (outer,caption="Default Target Language")
 		w.pack(padx=2,pady=2,expand=1,fill="x")
@@ -163,10 +164,10 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 				variable=self.lang_var,value=value,command=self.set_lang)
 			button.pack(fill="x")
 		#@nonl
-		#@-node:<< Create the Target Language frame >> frame
+		#@-node:ekr.20031218072017.369:<< Create the Target Language frame >> frame
 		#@nl
 		#@	<< Create the Ok, Cancel & Revert buttons >>
-		#@+node:<< Create the Ok, Cancel & Revert buttons >>
+		#@+node:ekr.20031218072017.4129:<< Create the Ok, Cancel & Revert buttons >>
 		buttons = Tk.Frame(outer)
 		buttons.pack(padx=2,pady=2,expand=1,fill="x")
 		
@@ -178,14 +179,14 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		cancelButton.pack(side="left",pady=7,expand=0)
 		revertButton.pack(side="left",pady=7,expand=1)
 		#@nonl
-		#@-node:<< Create the Ok, Cancel & Revert buttons >>
+		#@-node:ekr.20031218072017.4129:<< Create the Ok, Cancel & Revert buttons >>
 		#@nl
 		gui.center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0) # neither height or width is resizable.
 		self.top.protocol("WM_DELETE_WINDOW", self.onCancel)
 	#@nonl
-	#@-node:createFrame
-	#@+node:setWidgets
+	#@-node:ekr.20031218072017.4125:createFrame
+	#@+node:ekr.20031218072017.4130:setWidgets
 	def setWidgets (self):
 		
 		"""Set the values of checkbox & other widgets from the commander's ivars."""
@@ -212,8 +213,9 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 			c.target_language = "python"
 		self.lang_var.set(c.target_language)
 	#@nonl
-	#@-node:setWidgets
-	#@+node:bringToFront
+	#@-node:ekr.20031218072017.4130:setWidgets
+	#@-node:ekr.20031218072017.4123:Birth
+	#@+node:ekr.20031218072017.4131:bringToFront
 	def bringToFront (self):
 		
 		"""Bring the tkinter Prefs Panel to the front."""
@@ -221,8 +223,9 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		self.top.deiconify()
 		self.top.lift()
 	#@nonl
-	#@-node:bringToFront
-	#@+node:hide
+	#@-node:ekr.20031218072017.4131:bringToFront
+	#@+node:ekr.20031218072017.4132:Event handlers
+	#@+node:ekr.20031218072017.4133:hide
 	def hide (self):
 		
 		"""Hide the tkinter Prefs panel."""
@@ -233,8 +236,8 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 			self.c.frame.prefsPanel = None
 			self.top.destroy()
 	#@nonl
-	#@-node:hide
-	#@+node:onOK, onCancel, onRevert
+	#@-node:ekr.20031218072017.4133:hide
+	#@+node:ekr.20031218072017.4134:onOK, onCancel, onRevert
 	def onOK (self):
 		"""Handle a click in the OK button in the tkinter Prefs panel."""
 		g.app.config.setConfigIvars(self.c)
@@ -256,8 +259,8 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		self.init(c)
 		self.set_ivars(c)
 	#@nonl
-	#@-node:onOK, onCancel, onRevert
-	#@+node:set_ivars & idle_set_ivars
+	#@-node:ekr.20031218072017.4134:onOK, onCancel, onRevert
+	#@+node:ekr.20031218072017.4135:set_ivars & idle_set_ivars
 	# These event handlers get executed when the user types in the prefs panel.
 	
 	def set_ivars (self,c):
@@ -265,7 +268,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		"""Idle-time code to any change in the tkinter Prefs panel."""
 	
 		#@	<< update ivars >>
-		#@+node:<< update ivars >>
+		#@+node:ekr.20031218072017.4136:<< update ivars >>
 		# Global options
 		w = self.pageWidthText.get("1.0","end")
 		w = string.strip(w)
@@ -296,7 +299,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		
 		# Default Target Language
 		self.target_language = self.lang_var.get()
-		#@-node:<< update ivars >>
+		#@-node:ekr.20031218072017.4136:<< update ivars >>
 		#@nl
 		for var in self.ivars:
 			val = getattr(self,var)
@@ -314,8 +317,8 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		c.frame.body.recolor(v)
 		# print self.print_ivars()
 	#@nonl
-	#@-node:set_ivars & idle_set_ivars
-	#@+node:set_lang
+	#@-node:ekr.20031218072017.4135:set_ivars & idle_set_ivars
+	#@+node:ekr.20031218072017.4137:set_lang
 	def set_lang (self):
 		
 		"""Handle a change to the Default Target Language radio box."""
@@ -327,8 +330,9 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		c.frame.body.recolor(v)
 		# g.trace(language)
 	#@nonl
-	#@-node:set_lang
+	#@-node:ekr.20031218072017.4137:set_lang
+	#@-node:ekr.20031218072017.4132:Event handlers
 	#@-others
 #@nonl
-#@-node:@file leoTkinterPrefs.py
+#@-node:ekr.20031218072017.4122:@file-thin leoTkinterPrefs.py
 #@-leo

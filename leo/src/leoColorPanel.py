@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoColorPanel.py
+#@+node:ekr.20031218072017.3626:@file-thin leoColorPanel.py
 import leoGlobals as g
 from leoGlobals import true,false
 
@@ -10,7 +10,7 @@ class leoColorPanel:
 	Subclasses may create subsidiary panels."""
 	
 	#@	<< define default color panel data >>
-	#@+node:<< define default color panel data >>
+	#@+node:ekr.20031218072017.3627:<< define default color panel data >>
 	colorPanelData = (
 		#Dialog name,                option name,         default color),
 		("Brackets",          "section_name_brackets_color", "blue"),
@@ -24,11 +24,11 @@ class leoColorPanel:
 		("Strings",           "string_color",   "#00aa00"), # Used by IDLE.
 		("Undefined Names",   "undefined_section_name_color","red") )
 	#@nonl
-	#@-node:<< define default color panel data >>
+	#@-node:ekr.20031218072017.3627:<< define default color panel data >>
 	#@nl
 
 	#@	@+others
-	#@+node:leoColorPanels.__init__
+	#@+node:ekr.20031218072017.3628:leoColorPanels.__init__
 	def __init__ (self,c):
 		
 		self.c = c
@@ -41,16 +41,16 @@ class leoColorPanel:
 		for name,option_name,default_color in self.colorPanelData:
 			self.revertColors[option_name] = config.getColorsPref(option_name)
 	#@nonl
-	#@-node:leoColorPanels.__init__
-	#@+node:Must be overridden in subclasses
+	#@-node:ekr.20031218072017.3628:leoColorPanels.__init__
+	#@+node:ekr.20031218072017.3629:Must be overridden in subclasses
 	def bringToFront (self):
 		self.oops()
 	
 	def oops(self):
 		print "leoColorPanel oops:", g.callerName(2), "should be overridden in subclass"
 	#@nonl
-	#@-node:Must be overridden in subclasses
+	#@-node:ekr.20031218072017.3629:Must be overridden in subclasses
 	#@-others
 #@nonl
-#@-node:@file leoColorPanel.py
+#@-node:ekr.20031218072017.3626:@file-thin leoColorPanel.py
 #@-leo

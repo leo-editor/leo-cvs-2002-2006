@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #@+leo-ver=4
-#@+node:@file leoApp.py
+#@+node:ekr.20031218072017.2608:@file-thin leoApp.py
 #@@first
 
 #@@language python
@@ -17,7 +17,7 @@ class LeoApp:
 	Ivars of this class are Leo's global variables."""
 	
 	#@	@+others
-	#@+node:app.__init__
+	#@+node:ekr.20031218072017.1416:app.__init__
 	def __init__(self):
 	
 		# These ivars are the global vars of this program.
@@ -70,7 +70,7 @@ class LeoApp:
 		self.pythonFrame = None
 		
 		#@	<< Define global constants >>
-		#@+node:<< define global constants >>
+		#@+node:ekr.20031218072017.1417:<< define global constants >>
 		self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 		
 		# New in leo.py 3.0
@@ -79,10 +79,10 @@ class LeoApp:
 		
 		# leo.py 3.11
 		self.use_unicode = true # true: use new unicode logic.
-		#@-node:<< define global constants >>
+		#@-node:ekr.20031218072017.1417:<< define global constants >>
 		#@nl
 		#@	<< Define global data structures >>
-		#@+node:<< define global data structures >> app
+		#@+node:ekr.20031218072017.368:<< define global data structures >> app
 		# Internally, lower case is used for all language names.
 		self.language_delims_dict = {
 			"actionscript" : "// /* */", #jason 2003-07-03
@@ -135,11 +135,11 @@ class LeoApp:
 			"tcltk" : "tcl",
 			"unknown" : "txt" } # Set when @comment is seen.
 		#@nonl
-		#@-node:<< define global data structures >> app
+		#@-node:ekr.20031218072017.368:<< define global data structures >> app
 		#@nl
 	#@nonl
-	#@-node:app.__init__
-	#@+node:app.closeLeoWindow
+	#@-node:ekr.20031218072017.1416:app.__init__
+	#@+node:ekr.20031218072017.2609:app.closeLeoWindow
 	def closeLeoWindow (self,frame):
 		
 		"""Attempt to close a Leo window.
@@ -170,8 +170,8 @@ class LeoApp:
 			g.app.finishQuit()
 	
 		return true # The window has been closed.
-	#@-node:app.closeLeoWindow
-	#@+node:app.createTkGui
+	#@-node:ekr.20031218072017.2609:app.closeLeoWindow
+	#@+node:ekr.20031218072017.2610:app.createTkGui
 	def createTkGui (self,fileName=None): # Do NOT omit fileName param: it is used in plugin code.
 		
 		"""A convenience routines for plugins to create the default Tk gui class."""
@@ -185,8 +185,8 @@ class LeoApp:
 		if fileName:
 			print "Tk gui created in", g.shortFileName(fileName)
 	#@nonl
-	#@-node:app.createTkGui
-	#@+node:app.destroyAllGlobalWindows
+	#@-node:ekr.20031218072017.2610:app.createTkGui
+	#@+node:ekr.20031218072017.2611:app.destroyAllGlobalWindows
 	def destroyAllGlobalWindows (self):
 		
 		for w in self.globalWindows:
@@ -198,8 +198,8 @@ class LeoApp:
 		self.pythonFrame = None
 			
 		g.doHook("destroy-all-global-windows")
-	#@-node:app.destroyAllGlobalWindows
-	#@+node:app.destroyAllOpenWithFiles
+	#@-node:ekr.20031218072017.2611:app.destroyAllGlobalWindows
+	#@+node:ekr.20031218072017.2612:app.destroyAllOpenWithFiles
 	def destroyAllOpenWithFiles (self):
 	
 		"""Try to remove temp files created with the Open With command.
@@ -214,8 +214,8 @@ class LeoApp:
 		# Delete the list so the gc can recycle Leo windows!
 		g.app.openWithFiles = []
 	#@nonl
-	#@-node:app.destroyAllOpenWithFiles
-	#@+node:app.destroyOpenWithFilesForFrame
+	#@-node:ekr.20031218072017.2612:app.destroyAllOpenWithFiles
+	#@+node:ekr.20031218072017.2613:app.destroyOpenWithFilesForFrame
 	def destroyOpenWithFilesForFrame (self,frame):
 		
 		"""Close all "Open With" files associated with frame"""
@@ -227,8 +227,8 @@ class LeoApp:
 			c = dict.get("c")
 			if c.frame == frame:
 				g.app.destroyOpenWithFileWithDict(dict)
-	#@-node:app.destroyOpenWithFilesForFrame
-	#@+node:app.destroyOpenWithFileWithDict
+	#@-node:ekr.20031218072017.2613:app.destroyOpenWithFilesForFrame
+	#@+node:ekr.20031218072017.2614:app.destroyOpenWithFileWithDict
 	def destroyOpenWithFileWithDict (self,dict):
 		
 		path = dict.get("path")
@@ -242,8 +242,8 @@ class LeoApp:
 		# Remove dict from the list so the gc can recycle the Leo window!
 		g.app.openWithFiles.remove(dict)
 	#@nonl
-	#@-node:app.destroyOpenWithFileWithDict
-	#@+node:app.destroyWindow
+	#@-node:ekr.20031218072017.2614:app.destroyOpenWithFileWithDict
+	#@+node:ekr.20031218072017.2615:app.destroyWindow
 	def destroyWindow (self,frame):
 			
 		g.app.destroyOpenWithFilesForFrame(frame)
@@ -253,8 +253,8 @@ class LeoApp:
 		# force the window to go away now.
 		frame.destroySelf() 
 	#@nonl
-	#@-node:app.destroyWindow
-	#@+node:app.finishQuit
+	#@-node:ekr.20031218072017.2615:app.destroyWindow
+	#@+node:ekr.20031218072017.1732:app.finishQuit
 	def finishQuit(self):
 		
 		self.killed = true # Disable after events.
@@ -273,8 +273,8 @@ class LeoApp:
 		self.destroyAllOpenWithFiles()
 		
 		g.app.gui.destroySelf()
-	#@-node:app.finishQuit
-	#@+node:app.forceShutdown
+	#@-node:ekr.20031218072017.1732:app.finishQuit
+	#@+node:ekr.20031218072017.2616:app.forceShutdown
 	def forceShutdown (self):
 		
 		"""Forces an immediate shutdown of Leo at any time.
@@ -289,8 +289,8 @@ class LeoApp:
 	
 		self.finishQuit()
 	#@nonl
-	#@-node:app.forceShutdown
-	#@+node:app.onQuit
+	#@-node:ekr.20031218072017.2616:app.forceShutdown
+	#@+node:ekr.20031218072017.2617:app.onQuit
 	def onQuit (self):
 		
 		g.app.quitting = true
@@ -303,8 +303,8 @@ class LeoApp:
 		g.app.quitting = false # If we get here the quit has been disabled.
 	
 	
-	#@-node:app.onQuit
-	#@+node:app.setEncoding
+	#@-node:ekr.20031218072017.2617:app.onQuit
+	#@+node:ekr.20031218072017.2618:app.setEncoding
 	#@+at 
 	#@nonl
 	# According to Martin v. Löwis, getdefaultlocale() is broken, and cannot 
@@ -334,15 +334,15 @@ class LeoApp:
 				
 		color = g.choose(self.tkEncoding=="ascii","red","blue")
 	#@nonl
-	#@-node:app.setEncoding
-	#@+node:app.setLeoID
+	#@-node:ekr.20031218072017.2618:app.setEncoding
+	#@+node:ekr.20031218072017.1978:app.setLeoID
 	def setLeoID (self):
 	
 		tag = ".leoID.txt"
 		loadDir = g.app.loadDir
 		configDir = g.app.config.configDir
 		#@	<< return if we can set self.leoID from sys.leoID >>
-		#@+node:<< return if we can set self.leoID from sys.leoID>>
+		#@+node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
 		# This would be set by in Python's sitecustomize.py file.
 		try:
 			g.app.leoID = sys.leoID
@@ -352,10 +352,10 @@ class LeoApp:
 		except:
 			g.app.leoID = None
 		#@nonl
-		#@-node:<< return if we can set self.leoID from sys.leoID>>
+		#@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
 		#@nl
 		#@	<< return if we can set self.leoID from "leoID.txt" >>
-		#@+node:<< return if we can set self.leoID from "leoID.txt" >>
+		#@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
 		for dir in (configDir,loadDir):
 			try:
 				fn = g.os_path_join(dir, tag)
@@ -377,18 +377,18 @@ class LeoApp:
 		else:
 			g.es(tag + " not found in " + configDir + " or " + loadDir, color="red")
 		
-		#@-node:<< return if we can set self.leoID from "leoID.txt" >>
+		#@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
 		#@nl
 		#@	<< put up a dialog requiring a valid id >>
-		#@+node:<< put up a dialog requiring a valid id >>
+		#@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
 		g.app.gui.runAskLeoIDDialog() # New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
 		g.trace(g.app.leoID)
 		g.es("leoID=",repr(g.app.leoID),color="blue")
 		#@nonl
-		#@-node:<< put up a dialog requiring a valid id >>
+		#@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
 		#@nl
 		#@	<< attempt to create leoID.txt >>
-		#@+node:<< attempt to create leoID.txt >>
+		#@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
 		for dir in (configDir,loadDir):
 			try:
 				# Look in configDir first.
@@ -406,11 +406,11 @@ class LeoApp:
 		else:
 			g.es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
 		
-		#@-node:<< attempt to create leoID.txt >>
+		#@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
 		#@nl
 	#@nonl
-	#@-node:app.setLeoID
-	#@+node:app.setLog, lockLog, unlocklog
+	#@-node:ekr.20031218072017.1978:app.setLeoID
+	#@+node:ekr.20031218072017.1847:app.setLog, lockLog, unlocklog
 	def setLog (self,log,tag=""):
 		"""set the frame to which log messages will go"""
 		
@@ -426,15 +426,15 @@ class LeoApp:
 		"""Enable changes to the log"""
 		self.logIsLocked = false
 	#@nonl
-	#@-node:app.setLog, lockLog, unlocklog
-	#@+node:app.writeWaitingLog
+	#@-node:ekr.20031218072017.1847:app.setLog, lockLog, unlocklog
+	#@+node:ekr.20031218072017.2619:app.writeWaitingLog
 	def writeWaitingLog (self):
 	
 		if self.log:
 			for s,color in self.logWaiting:
 				g.es(s,color=color,newline=0) # The caller must write the newlines.
 			self.logWaiting = []
-	#@-node:app.writeWaitingLog
+	#@-node:ekr.20031218072017.2619:app.writeWaitingLog
 	#@-others
-#@-node:@file leoApp.py
+#@-node:ekr.20031218072017.2608:@file-thin leoApp.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoTkinterComparePanel.py
+#@+node:ekr.20031218072017.3838:@file-thin leoTkinterComparePanel.py
 #@@language python
 
 """Leo's base compare class."""
@@ -17,7 +17,8 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 	"""A class that creates Leo's compare panel."""
 
 	#@	@+others
-	#@+node: tkinterComparePanel.__init__
+	#@+node:ekr.20031218072017.3839:Birth...
+	#@+node:ekr.20031218072017.3840: tkinterComparePanel.__init__
 	def __init__ (self,c):
 		
 		# Init the base class.
@@ -25,7 +26,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		self.c = c
 	
 		#@	<< init tkinter compare ivars >>
-		#@+node:<< init tkinter compare ivars >>
+		#@+node:ekr.20031218072017.3841:<< init tkinter compare ivars >>
 		# Ivars pointing to Tk elements.
 		self.browseEntries = []
 		self.extensionEntry = None
@@ -54,7 +55,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		self.printTrailingMismatchesVar  = Tk.IntVar()
 		self.stopAfterMismatchVar        = Tk.IntVar()
 		#@nonl
-		#@-node:<< init tkinter compare ivars >>
+		#@-node:ekr.20031218072017.3841:<< init tkinter compare ivars >>
 		#@nl
 		
 		# These ivars are set from Entry widgets.
@@ -66,8 +67,8 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		
 		self.createFrame()
 	#@nonl
-	#@-node: tkinterComparePanel.__init__
-	#@+node:finishCreate
+	#@-node:ekr.20031218072017.3840: tkinterComparePanel.__init__
+	#@+node:ekr.20031218072017.3842:finishCreate
 	# Initialize ivars from config parameters.
 	
 	def finishCreate (self):
@@ -159,8 +160,8 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		if b == None: b = 0
 		self.makeWhitespaceVisibleVar.set(b)
 	#@nonl
-	#@-node:finishCreate
-	#@+node:createFrame
+	#@-node:ekr.20031218072017.3842:finishCreate
+	#@+node:ekr.20031218072017.3843:createFrame
 	def createFrame (self):
 	
 		gui = g.app.gui
@@ -169,7 +170,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		top.protocol("WM_DELETE_WINDOW", self.onClose)
 	
 		#@	<< create the organizer frames >>
-		#@+node:<< create the organizer frames >>
+		#@+node:ekr.20031218072017.3844:<< create the organizer frames >>
 		outer = Tk.Frame(top, bd=2,relief="groove")
 		outer.pack(pady=4)
 		
@@ -197,10 +198,10 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		lower = Tk.Frame(outer)
 		lower.pack(pady=6)
 		#@nonl
-		#@-node:<< create the organizer frames >>
+		#@-node:ekr.20031218072017.3844:<< create the organizer frames >>
 		#@nl
 		#@	<< create the browser rows >>
-		#@+node:<< create the browser rows >>
+		#@+node:ekr.20031218072017.3845:<< create the browser rows >>
 		for row,text,text2,command,var in (
 			(row1,"Compare path 1:","Ignore first line",self.onBrowse1,self.ignoreFirstLine1Var),
 			(row2,"Compare path 2:","Ignore first line",self.onBrowse2,self.ignoreFirstLine2Var),
@@ -219,10 +220,10 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 			b = Tk.Checkbutton(row,text=text2,anchor="w",variable=var,width=15)
 			b.pack(side="left")
 		#@nonl
-		#@-node:<< create the browser rows >>
+		#@-node:ekr.20031218072017.3845:<< create the browser rows >>
 		#@nl
 		#@	<< create the extension row >>
-		#@+node:<< create the extension row >>
+		#@+node:ekr.20031218072017.3846:<< create the extension row >>
 		b = Tk.Checkbutton(row4,anchor="w",var=self.limitToExtensionVar,
 			text="Limit directory compares to type:")
 		b.pack(side="left",padx=4)
@@ -234,10 +235,10 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 			text="Append output to output file")
 		b.pack(side="left",padx=4)
 		#@nonl
-		#@-node:<< create the extension row >>
+		#@-node:ekr.20031218072017.3846:<< create the extension row >>
 		#@nl
 		#@	<< create the whitespace options frame >>
-		#@+node:<< create the whitespace options frame >>
+		#@+node:ekr.20031218072017.3847:<< create the whitespace options frame >>
 		w,f = gui.create_labeled_frame(ws,caption="Whitespace options",relief="groove")
 			
 		for text,var in (
@@ -253,10 +254,10 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		spacer = Tk.Frame(f)
 		spacer.pack(padx="1i")
 		#@nonl
-		#@-node:<< create the whitespace options frame >>
+		#@-node:ekr.20031218072017.3847:<< create the whitespace options frame >>
 		#@nl
 		#@	<< create the print options frame >>
-		#@+node:<< create the print options frame >>
+		#@+node:ekr.20031218072017.3848:<< create the print options frame >>
 		w,f = gui.create_labeled_frame(pr,caption="Print options",relief="groove")
 		
 		row = Tk.Frame(f)
@@ -289,10 +290,10 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		spacer = Tk.Frame(f)
 		spacer.pack(padx="1i")
 		#@nonl
-		#@-node:<< create the print options frame >>
+		#@-node:ekr.20031218072017.3848:<< create the print options frame >>
 		#@nl
 		#@	<< create the compare buttons >>
-		#@+node:<< create the compare buttons >>
+		#@+node:ekr.20031218072017.3849:<< create the compare buttons >>
 		for text,command in (
 			("Compare files",      self.onCompareFiles),
 			("Compare directories",self.onCompareDirectories) ):
@@ -300,15 +301,15 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 			b = Tk.Button(lower,text=text,command=command,width=18)
 			b.pack(side="left",padx=6)
 		#@nonl
-		#@-node:<< create the compare buttons >>
+		#@-node:ekr.20031218072017.3849:<< create the compare buttons >>
 		#@nl
 	
 		gui.center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0)
 		self.finishCreate()
 	#@nonl
-	#@-node:createFrame
-	#@+node:setIvarsFromWidgets
+	#@-node:ekr.20031218072017.3843:createFrame
+	#@+node:ekr.20031218072017.3850:setIvarsFromWidgets
 	def setIvarsFromWidgets (self):
 	
 		# File paths: checks for valid file name.
@@ -367,14 +368,15 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		else:
 			self.limitCount = 0
 	#@nonl
-	#@-node:setIvarsFromWidgets
-	#@+node:bringToFront
+	#@-node:ekr.20031218072017.3850:setIvarsFromWidgets
+	#@-node:ekr.20031218072017.3839:Birth...
+	#@+node:ekr.20031218072017.3851:bringToFront
 	def bringToFront(self):
 		
 		self.top.deiconify()
 		self.top.lift()
-	#@-node:bringToFront
-	#@+node:browser
+	#@-node:ekr.20031218072017.3851:bringToFront
+	#@+node:ekr.20031218072017.3852:browser
 	def browser (self,n):
 		
 		types = [
@@ -402,8 +404,9 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 			
 		return fileName
 	#@nonl
-	#@-node:browser
-	#@+node:onBrowse...
+	#@-node:ekr.20031218072017.3852:browser
+	#@+node:ekr.20031218072017.3853:Event handlers...
+	#@+node:ekr.20031218072017.3854:onBrowse...
 	def onBrowse1 (self):
 		
 		fileName = self.browser("1")
@@ -437,14 +440,14 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 			e.delete(0,"end")
 			e.insert(0,fileName)
 	#@nonl
-	#@-node:onBrowse...
-	#@+node:onClose
+	#@-node:ekr.20031218072017.3854:onBrowse...
+	#@+node:ekr.20031218072017.3855:onClose
 	def onClose (self):
 		
 		self.top.withdraw()
 	#@nonl
-	#@-node:onClose
-	#@+node:onCompare...
+	#@-node:ekr.20031218072017.3855:onClose
+	#@+node:ekr.20031218072017.3856:onCompare...
 	def onCompareDirectories (self):
 	
 		self.setIvarsFromWidgets()
@@ -455,8 +458,8 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		self.setIvarsFromWidgets()
 		self.compare_files(self.fileName1,self.fileName2)
 	#@nonl
-	#@-node:onCompare...
-	#@+node:onPrintMatchedLines
+	#@-node:ekr.20031218072017.3856:onCompare...
+	#@+node:ekr.20031218072017.3857:onPrintMatchedLines
 	def onPrintMatchedLines (self):
 		
 		v = self.printMatchesVar.get()
@@ -464,8 +467,9 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 		state = g.choose(v,"normal","disabled")
 		b.configure(state=state)
 	#@nonl
-	#@-node:onPrintMatchedLines
+	#@-node:ekr.20031218072017.3857:onPrintMatchedLines
+	#@-node:ekr.20031218072017.3853:Event handlers...
 	#@-others
 #@nonl
-#@-node:@file leoTkinterComparePanel.py
+#@-node:ekr.20031218072017.3838:@file-thin leoTkinterComparePanel.py
 #@-leo

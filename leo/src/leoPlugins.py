@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoPlugins.py
+#@+node:ekr.20031218072017.3439:@file-thin leoPlugins.py
 """Install and run Leo plugins.
 
 On startup:
@@ -28,7 +28,7 @@ def doPlugins(tag,keywords):
 	return doHandlersForTag(tag,keywords)
 		
 #@+others
-#@+node:loadHandlers
+#@+node:ekr.20031218072017.3440:loadHandlers
 def loadHandlers(loadAllFlag=false):
 
 	"""Load all enabled plugins from the plugins directory"""
@@ -45,7 +45,7 @@ def loadHandlers(loadAllFlag=false):
 		enabled_files = files
 	else:
 		#@		<< set enabled_files from pluginsManager.txt >>
-		#@+node:<< set enabled_files from pluginsManager.txt >>
+		#@+node:ekr.20031218072017.3441:<< set enabled_files from pluginsManager.txt >>
 		if not g.os_path_exists(manager_path):
 			return
 		
@@ -63,7 +63,7 @@ def loadHandlers(loadAllFlag=false):
 			import leoTest ; leoTest.fail()
 			return
 		#@nonl
-		#@-node:<< set enabled_files from pluginsManager.txt >>
+		#@-node:ekr.20031218072017.3441:<< set enabled_files from pluginsManager.txt >>
 		#@nl
 		enabled_files = [g.os_path_abspath(file) for file in enabled_files]
 	
@@ -80,8 +80,8 @@ def loadHandlers(loadAllFlag=false):
 			for name in g.app.loadedPlugins:
 				print name
 #@nonl
-#@-node:loadHandlers
-#@+node:doHandlersForTag
+#@-node:ekr.20031218072017.3440:loadHandlers
+#@+node:ekr.20031218072017.3442:doHandlersForTag
 def doHandlersForTag (tag,keywords):
 	
 	"""Execute all handlers for a given tag, in alphabetical order"""
@@ -105,8 +105,8 @@ def doHandlersForTag (tag,keywords):
 				return ret
 	return None
 #@nonl
-#@-node:doHandlersForTag
-#@+node:registerHandler
+#@-node:ekr.20031218072017.3442:doHandlersForTag
+#@+node:ekr.20031218072017.3443:registerHandler
 def registerHandler(tags,fn):
 	
 	""" Register one or more handlers"""
@@ -130,8 +130,8 @@ def registerOneHandler(tag,fn):
 		existing.append(fn)
 	except AttributeError:
 		g.es("*** Two exclusive handlers for '%s'" % tag)
-#@-node:registerHandler
-#@+node:registerExclusiveHandler
+#@-node:ekr.20031218072017.3443:registerHandler
+#@+node:ekr.20031218072017.3444:registerExclusiveHandler
 def registerExclusiveHandler(tags, fn):
 	
 	""" Register one or more exclusive handlers"""
@@ -154,8 +154,8 @@ def registerOneExclusiveHandler(tag, fn):
 		g.es("*** Two exclusive handlers for '%s'" % tag)
 	else:
 		handlers[tag] = (fn,)
-#@-node:registerExclusiveHandler
+#@-node:ekr.20031218072017.3444:registerExclusiveHandler
 #@-others
 #@nonl
-#@-node:@file leoPlugins.py
+#@-node:ekr.20031218072017.3439:@file-thin leoPlugins.py
 #@-leo

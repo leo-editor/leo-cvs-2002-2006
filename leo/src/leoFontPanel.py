@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoFontPanel.py
+#@+node:ekr.20031218072017.3652:@file-thin leoFontPanel.py
 #@@language python
 
 import leoGlobals as g
@@ -12,7 +12,7 @@ class leoFontPanel:
 	"""The base class for Leo's font panel."""
 
 	#@	@+others
-	#@+node:fontPanel.__init__
+	#@+node:ekr.20031218072017.3653:fontPanel.__init__
 	def __init__ (self,c):
 	
 		self.c = c
@@ -20,8 +20,8 @@ class leoFontPanel:
 		self.default_font = None # Should be set in subclasses.
 		self.last_selected_font = None
 	#@nonl
-	#@-node:fontPanel.__init__
-	#@+node:Must be overridden in subclasses
+	#@-node:ekr.20031218072017.3653:fontPanel.__init__
+	#@+node:ekr.20031218072017.3654:Must be overridden in subclasses
 	def bringToFront(self):
 		
 		self.oops()
@@ -32,8 +32,8 @@ class leoFontPanel:
 			g.callerName(2),
 			"should be overridden in subclass")
 	#@nonl
-	#@-node:Must be overridden in subclasses
+	#@-node:ekr.20031218072017.3654:Must be overridden in subclasses
 	#@-others
 #@nonl
-#@-node:@file leoFontPanel.py
+#@-node:ekr.20031218072017.3652:@file-thin leoFontPanel.py
 #@-leo

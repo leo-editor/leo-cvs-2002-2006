@@ -1,9 +1,9 @@
 #@+leo-ver=4
-#@+node:@file leoKeys.py
+#@+node:ekr.20031218072017.3748:@file-thin leoKeys.py
 """Gui-independent keystroke handling for Leo."""
 
 import leoGlobals as g
 from leoGlobals import true,false
 #@nonl
-#@-node:@file leoKeys.py
+#@-node:ekr.20031218072017.3748:@file-thin leoKeys.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoConfig.py
+#@+node:ekr.20031218072017.3001:@file-thin leoConfig.py
 #@@language python
 
 import leoGlobals as g
@@ -10,7 +10,7 @@ import ConfigParser,exceptions,os,string,sys
 class baseConfig:
 	"""The base class for Leo's configuration handler."""
 	#@	<< define defaultsDict >>
-	#@+node:<< define defaultsDict >>
+	#@+node:ekr.20031218072017.2404:<< define defaultsDict >>
 	#@+at 
 	#@nonl
 	# This contains only the "interesting" defaults.
@@ -69,10 +69,10 @@ class baseConfig:
 		"split_bar_relief" : "groove",
 		"split_bar_width" : 7 }
 	#@nonl
-	#@-node:<< define defaultsDict >>
+	#@-node:ekr.20031218072017.2404:<< define defaultsDict >>
 	#@nl
 	#@	@+others
-	#@+node:config.__init__
+	#@+node:ekr.20031218072017.3002:config.__init__
 	def __init__ (self):
 	
 		self.init()
@@ -93,7 +93,7 @@ class baseConfig:
 		self.defaultFontFamily = None
 		
 		#@	<< initialize constant ivars, lists & dicts >>
-		#@+node:<< initialize constant ivars, lists & dicts >> (leoConfig)
+		#@+node:ekr.20031218072017.3003:<< initialize constant ivars, lists & dicts >> (leoConfig)
 		# Names of sections.
 		self.configSection = "config options"
 		self.compareSection = "compare options"
@@ -127,10 +127,10 @@ class baseConfig:
 			(self.colorsSection,self.colorsDict),
 			(self.windowSection,self.windowDict) )
 		#@nonl
-		#@-node:<< initialize constant ivars, lists & dicts >> (leoConfig)
+		#@-node:ekr.20031218072017.3003:<< initialize constant ivars, lists & dicts >> (leoConfig)
 		#@nl
 		#@	<< initialize ivars that may be set by config options >>
-		#@+node:<< initialize ivars that may be set by config options >>
+		#@+node:ekr.20031218072017.3004:<< initialize ivars that may be set by config options >>
 		# 10/11/02: Defaults are specified only here.
 		
 		self.at_root_bodies_start_in_doc_mode = true # For compatibility with previous versions.
@@ -154,13 +154,14 @@ class baseConfig:
 		self.undo_granularity = "word" # "char","word","line","node"
 		self.write_old_format_derived_files = false # Use new format if leoConfig.txt does not exist.
 		#@nonl
-		#@-node:<< initialize ivars that may be set by config options >>
+		#@-node:ekr.20031218072017.3004:<< initialize ivars that may be set by config options >>
 		#@nl
 	
 		self.open() # read and process the configuration file.
 	#@nonl
-	#@-node:config.__init__
-	#@+node:get...FromDict & setDict
+	#@-node:ekr.20031218072017.3002:config.__init__
+	#@+node:ekr.20031218072017.3005:getters/setters
+	#@+node:ekr.20031218072017.1932:get...FromDict & setDict
 	def getBoolFromDict (self,name,dict):
 		val = self.getIntFromDict(name,dict)
 		if val != None:
@@ -196,8 +197,8 @@ class baseConfig:
 			
 	getStringFromDict = getFromDict
 	#@nonl
-	#@-node:get...FromDict & setDict
-	#@+node:get/setColors
+	#@-node:ekr.20031218072017.1932:get...FromDict & setDict
+	#@+node:ekr.20031218072017.3006:get/setColors
 	def getBoolColorsPref (self,name):
 		return self.getBoolFromDict(name,self.colorsDict)
 		
@@ -211,8 +212,8 @@ class baseConfig:
 		
 	getStringColorsPref = getColorsPref
 	#@nonl
-	#@-node:get/setColors
-	#@+node:get/setComparePref
+	#@-node:ekr.20031218072017.3006:get/setColors
+	#@+node:ekr.20031218072017.3007:get/setComparePref
 	def getBoolComparePref (self,name):
 		return self.getBoolFromDict(name,self.compareDict)
 		
@@ -229,8 +230,8 @@ class baseConfig:
 		
 	getStringComparePref = getComparePref
 	#@nonl
-	#@-node:get/setComparePref
-	#@+node:get/setFindPref
+	#@-node:ekr.20031218072017.3007:get/setComparePref
+	#@+node:ekr.20031218072017.3008:get/setFindPref
 	def getBoolFindPref (self,name):
 		return self.getBoolFromDict(name,self.findDict)
 	
@@ -244,8 +245,8 @@ class baseConfig:
 		
 	getStringFindPref = getFindPref
 	#@nonl
-	#@-node:get/setFindPref
-	#@+node:get/setPref
+	#@-node:ekr.20031218072017.3008:get/setFindPref
+	#@+node:ekr.20031218072017.3009:get/setPref
 	def getBoolPref (self,name):
 		return self.getBoolFromDict(name,self.prefsDict)
 	
@@ -262,8 +263,8 @@ class baseConfig:
 		
 	getStringPref = getPref
 	#@nonl
-	#@-node:get/setPref
-	#@+node:get/setRecentFiles
+	#@-node:ekr.20031218072017.3009:get/setPref
+	#@+node:ekr.20031218072017.3010:get/setRecentFiles
 	def getRecentFiles (self):
 		
 		return self.recentFiles
@@ -271,8 +272,8 @@ class baseConfig:
 	def setRecentFiles (self,files):
 	
 		self.recentFiles = files
-	#@-node:get/setRecentFiles
-	#@+node:get/setWindowPrefs
+	#@-node:ekr.20031218072017.3010:get/setRecentFiles
+	#@+node:ekr.20031218072017.3011:get/setWindowPrefs
 	def getBoolWindowPref (self,name):
 		return self.getBoolFromDict(name,self.windowDict)
 		
@@ -292,8 +293,8 @@ class baseConfig:
 		
 	getStringWindowPref = getWindowPref
 	#@nonl
-	#@-node:get/setWindowPrefs
-	#@+node:config.getFontFromParams
+	#@-node:ekr.20031218072017.3011:get/setWindowPrefs
+	#@+node:ekr.20031218072017.2174:config.getFontFromParams
 	def getFontFromParams(self,family,size,slant,weight,defaultSize=12,tag=""):
 	
 		"""Compute a font from font parameters.
@@ -321,8 +322,8 @@ class baseConfig:
 		
 		return g.app.gui.getFontFromParams(family,size,slant,weight)
 	#@nonl
-	#@-node:config.getFontFromParams
-	#@+node:getShortcut (config)
+	#@-node:ekr.20031218072017.2174:config.getFontFromParams
+	#@+node:ekr.20031218072017.1722:getShortcut (config)
 	def getShortcut (self,name):
 		
 		if 1: # 2/8/04: allow & in keys.
@@ -339,8 +340,8 @@ class baseConfig:
 			# This allows settings to disable a default shortcut.
 			return val
 	#@nonl
-	#@-node:getShortcut (config)
-	#@+node:init/Boolean/ConfigParam
+	#@-node:ekr.20031218072017.1722:getShortcut (config)
+	#@+node:ekr.20031218072017.3012:init/Boolean/ConfigParam
 	def initConfigParam (self,name,defaultVal):
 		try:
 			val = self.config.get(self.configSection,name,raw=1) # 2/4/03
@@ -354,8 +355,8 @@ class baseConfig:
 		except:
 			val = defaultVal
 		return val
-	#@-node:init/Boolean/ConfigParam
-	#@+node:setCommandsFindIvars
+	#@-node:ekr.20031218072017.3012:init/Boolean/ConfigParam
+	#@+node:ekr.20031218072017.3013:setCommandsFindIvars
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
 	def setCommandsFindIvars (self,c):
@@ -380,15 +381,15 @@ class baseConfig:
 	
 		g.app.findFrame.init(c)
 	#@nonl
-	#@-node:setCommandsFindIvars
-	#@+node:setCommandsIvars
+	#@-node:ekr.20031218072017.3013:setCommandsFindIvars
+	#@+node:ekr.20031218072017.3014:setCommandsIvars
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
 	def setCommandsIvars (self,c):
 	
 		config = self
 		#@	<< set prefs ivars >>
-		#@+node:<< set prefs ivars >>
+		#@+node:ekr.20031218072017.3015:<< set prefs ivars >>
 		val = config.getIntPref("tab_width")
 		if val: c.tab_width = val
 		
@@ -424,11 +425,11 @@ class baseConfig:
 				
 			except: pass
 		#@nonl
-		#@-node:<< set prefs ivars >>
+		#@-node:ekr.20031218072017.3015:<< set prefs ivars >>
 		#@nl
 	#@nonl
-	#@-node:setCommandsIvars
-	#@+node:setConfigFindIvars
+	#@-node:ekr.20031218072017.3014:setCommandsIvars
+	#@+node:ekr.20031218072017.3016:setConfigFindIvars
 	def setConfigFindIvars (self,c):
 		
 		"""Set the config ivars from the commander."""
@@ -444,8 +445,8 @@ class baseConfig:
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
 	#@nonl
-	#@-node:setConfigFindIvars
-	#@+node:c.setConfigIvars
+	#@-node:ekr.20031218072017.3016:setConfigFindIvars
+	#@+node:ekr.20031218072017.3017:c.setConfigIvars
 	# Sets config ivars from c.
 	
 	def setConfigIvars (self,c):
@@ -481,8 +482,9 @@ class baseConfig:
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
 	#@nonl
-	#@-node:c.setConfigIvars
-	#@+node:open
+	#@-node:ekr.20031218072017.3017:c.setConfigIvars
+	#@-node:ekr.20031218072017.3005:getters/setters
+	#@+node:ekr.20031218072017.1929:open
 	def open (self):
 		
 		config = ConfigParser.ConfigParser()
@@ -491,7 +493,7 @@ class baseConfig:
 			cf = open(self.configFileName)
 			config.readfp(cf)
 			#@		<< get config options >>
-			#@+node:<< get config options >>
+			#@+node:ekr.20031218072017.1421:<< get config options >>
 			#@+at 
 			#@nonl
 			# Rewritten 10/11/02 as follows:
@@ -596,10 +598,10 @@ class baseConfig:
 				
 			self.write_old_format_derived_files = self.initBooleanConfigParam(
 				"write_old_format_derived_files",self.write_old_format_derived_files)
-			#@-node:<< get config options >>
+			#@-node:ekr.20031218072017.1421:<< get config options >>
 			#@nl
 			#@		<< get recent files >>
-			#@+node:<< get recent files >>
+			#@+node:ekr.20031218072017.1930:<< get recent files >>
 			section = self.recentFilesSection
 			
 			if 0: # elegant, but may be a security hole.
@@ -612,7 +614,7 @@ class baseConfig:
 						self.recentFiles.append(f)
 				except: pass
 			#@nonl
-			#@-node:<< get recent files >>
+			#@-node:ekr.20031218072017.1930:<< get recent files >>
 			#@nl
 			for section, dict in self.sectionInfo:
 				if dict != None:
@@ -623,7 +625,7 @@ class baseConfig:
 							dict[string.lower(opt)]= val
 					except: pass
 			#@		<< create rawKeysDict without ampersands >>
-			#@+node:<< create rawKeysDict without ampersands >> (config)
+			#@+node:ekr.20040208104150:<< create rawKeysDict without ampersands >> (config)
 			# 2/8/04: New code.
 			for key in self.keysDict.keys():
 				newKey = key.replace('&','')
@@ -635,10 +637,10 @@ class baseConfig:
 				for key in keys:
 					print self.rawKeysDict[key]
 			#@nonl
-			#@-node:<< create rawKeysDict without ampersands >> (config)
+			#@-node:ekr.20040208104150:<< create rawKeysDict without ampersands >> (config)
 			#@nl
 			#@		<< convert find/change options to unicode >>
-			#@+node:<< convert find/change options to unicode >>
+			#@+node:ekr.20031218072017.1422:<< convert find/change options to unicode >>
 			find = self.findDict.get("find_string")
 			if find:
 				# Leo always writes utf-8 encoding, but users may not.
@@ -650,10 +652,10 @@ class baseConfig:
 				# Leo always writes utf-8 encoding, but users may not.
 				change = g.toUnicode(change,"utf-8")
 				self.findDict["change_string"] = change
-			#@-node:<< convert find/change options to unicode >>
+			#@-node:ekr.20031218072017.1422:<< convert find/change options to unicode >>
 			#@nl
 			#@		<< print options >>
-			#@+node:<< print options >>
+			#@+node:ekr.20031218072017.1931:<< print options >>
 			if 0:
 				print "\n\ncolorsDict:\n" ,self.colorsDict
 				print "\n\ncompareDict:\n",self.compareDict
@@ -669,7 +671,7 @@ class baseConfig:
 				for i in self.windowDict.keys():
 					print i
 			#@nonl
-			#@-node:<< print options >>
+			#@-node:ekr.20031218072017.1931:<< print options >>
 			#@nl
 			cf.close()
 			self.configsExist = true
@@ -680,8 +682,8 @@ class baseConfig:
 			g.es_exception()
 			pass
 		self.config = None
-	#@-node:open
-	#@+node:update (config)
+	#@-node:ekr.20031218072017.1929:open
+	#@+node:ekr.20031218072017.1145:update (config)
 	# Rewrites the entire config file from ivars.
 	# This is called when a .leo file is written and when the preferences panel changes.
 	
@@ -703,7 +705,7 @@ class baseConfig:
 			cf = open(self.configFileName,mode)
 			config.readfp(cf)
 			#@		<< write recent files section >>
-			#@+node:<< write recent files section >>
+			#@+node:ekr.20031218072017.1146:<< write recent files section >>
 			section = self.recentFilesSection
 			files = self.recentFiles
 			
@@ -720,7 +722,7 @@ class baseConfig:
 					f = g.toEncodedString(files[i],self.config_encoding) # 10/31/03
 					config.set(section, "file"+str(i), f)
 			#@nonl
-			#@-node:<< write recent files section >>
+			#@-node:ekr.20031218072017.1146:<< write recent files section >>
 			#@nl
 			for section,dict in self.sectionInfo:
 				if dict:
@@ -733,8 +735,8 @@ class baseConfig:
 			g.es_exception()
 		self.config = None
 	#@nonl
-	#@-node:update (config)
-	#@+node:update_section
+	#@-node:ekr.20031218072017.1145:update (config)
+	#@+node:ekr.20031218072017.1420:update_section
 	def update_section (self,config,section,dict):
 		
 		section = g.toEncodedString(section,self.config_encoding) # 10/31/03
@@ -751,12 +753,12 @@ class baseConfig:
 			name = g.toEncodedString(name,self.config_encoding) # 10/31/03
 			config.set(section,name,val)
 	#@nonl
-	#@-node:update_section
+	#@-node:ekr.20031218072017.1420:update_section
 	#@-others
 	
 class config (baseConfig):
 	"""A class to manage configuration settings."""
 	pass
 #@nonl
-#@-node:@file leoConfig.py
+#@-node:ekr.20031218072017.3001:@file-thin leoConfig.py
 #@-leo

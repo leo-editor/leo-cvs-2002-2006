@@ -1,5 +1,5 @@
 #@+leo-ver=4
-#@+node:@file leoTkinterFind.py
+#@+node:ekr.20031218072017.3897:@file-thin leoTkinterFind.py
 import leoGlobals as g
 from leoGlobals import true,false
 
@@ -13,7 +13,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 	"""A class that implements Leo's tkinter find dialog."""
 
 	#@	@+others
-	#@+node:__init__
+	#@+node:ekr.20031218072017.3898:Birth & death
+	#@+node:ekr.20031218072017.3899:__init__
 	def __init__(self,title="Leo Find/Change",resizeable=false):
 		
 		# Init the base classes...
@@ -22,7 +23,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		leoTkinterDialog.leoTkinterDialog.__init__(self,title,resizeable)
 	
 		#@	<< init the tkinter ivars >>
-		#@+node:<< init the tkinter ivars >>
+		#@+node:ekr.20031218072017.3900:<< init the tkinter ivars >>
 		self.dict = {}
 		
 		for key in self.intKeys:
@@ -33,20 +34,20 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 			
 		self.s_text = Tk.Text() # Used by find.search()
 		#@nonl
-		#@-node:<< init the tkinter ivars >>
+		#@-node:ekr.20031218072017.3900:<< init the tkinter ivars >>
 		#@nl
 		
 		self.createTopFrame() # Create the outer tkinter dialog frame.
 		self.createFrame()
 	#@nonl
-	#@-node:__init__
-	#@+node:destroySelf
+	#@-node:ekr.20031218072017.3899:__init__
+	#@+node:ekr.20031218072017.3901:destroySelf
 	def destroySelf (self):
 		
 		self.top.destroy()
 	#@nonl
-	#@-node:destroySelf
-	#@+node:find.createFrame
+	#@-node:ekr.20031218072017.3901:destroySelf
+	#@+node:ekr.20031218072017.3902:find.createFrame
 	def createFrame (self):
 	
 		# Create the find panel...
@@ -54,7 +55,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		outer.pack(padx=2,pady=2)
 	
 		#@	<< Create the Find and Change panes >>
-		#@+node:<< Create the Find and Change panes >>
+		#@+node:ekr.20031218072017.3904:<< Create the Find and Change panes >>
 		fc = Tk.Frame(outer, bd="1m")
 		fc.pack(anchor="n", fill="x", expand=1)
 		
@@ -87,10 +88,10 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		ctxt.pack(side="right", expand=1, fill="both")
 		ftxt.pack(side="right", expand=1, fill="both")
 		#@nonl
-		#@-node:<< Create the Find and Change panes >>
+		#@-node:ekr.20031218072017.3904:<< Create the Find and Change panes >>
 		#@nl
 		#@	<< Create four columns of radio and checkboxes >>
-		#@+node:<< Create four columns of radio and checkboxes >>
+		#@+node:ekr.20031218072017.3903:<< Create four columns of radio and checkboxes >>
 		columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
 		columnsFrame.pack(anchor="e",expand=1,padx="7p",pady="2p") # Don't fill.
 		
@@ -138,10 +139,10 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 				box.pack(fill="x")
 				box.bind("<1>", self.resetWrap)
 				if var == None: box.configure(state="disabled")
-		#@-node:<< Create four columns of radio and checkboxes >>
+		#@-node:ekr.20031218072017.3903:<< Create four columns of radio and checkboxes >>
 		#@nl
 		#@	<< Create two rows of buttons >>
-		#@+node:<< Create two rows of buttons >>
+		#@+node:ekr.20031218072017.3905:<< Create two rows of buttons >>
 		# Create the button panes
 		buttons  = Tk.Frame(outer,bd=1)
 		buttons2 = Tk.Frame(outer,bd=1)
@@ -166,7 +167,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		changeFindButton.pack(pady="1p",           side="left",expand=1)
 		changeAllButton.pack (pady="1p",padx="25p",side="right")
 		#@nonl
-		#@-node:<< Create two rows of buttons >>
+		#@-node:ekr.20031218072017.3905:<< Create two rows of buttons >>
 		#@nl
 		
 		for widget in (self.find_text, self.change_text):
@@ -179,8 +180,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		
 		self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
 	#@nonl
-	#@-node:find.createFrame
-	#@+node:find.init
+	#@-node:ekr.20031218072017.3902:find.createFrame
+	#@+node:ekr.20031218072017.2059:find.init
 	def init (self,c):
 	
 		# N.B.: separate c.ivars are much more convenient than a dict.
@@ -191,17 +192,17 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 			# g.trace(key,val)
 	
 		#@	<< set find/change widgets >>
-		#@+node:<< set find/change widgets >>
+		#@+node:ekr.20031218072017.2060:<< set find/change widgets >>
 		self.find_text.delete("1.0","end")
 		self.find_text.insert("end",c.find_text)
 		
 		self.change_text.delete("1.0","end")
 		self.change_text.insert("end",c.change_text)
 		#@nonl
-		#@-node:<< set find/change widgets >>
+		#@-node:ekr.20031218072017.2060:<< set find/change widgets >>
 		#@nl
 		#@	<< set radio buttons from ivars >>
-		#@+node:<< set radio buttons from ivars >>
+		#@+node:ekr.20031218072017.2061:<< set radio buttons from ivars >>
 		found = false
 		for var,setting in (
 			("pattern_match","pattern-search"),
@@ -225,11 +226,11 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		if not found:
 			self.dict["radio-search-scope"].set("entire-outine")
 		#@nonl
-		#@-node:<< set radio buttons from ivars >>
+		#@-node:ekr.20031218072017.2061:<< set radio buttons from ivars >>
 		#@nl
 	#@nonl
-	#@-node:find.init
-	#@+node:find.set_ivars
+	#@-node:ekr.20031218072017.2059:find.init
+	#@+node:ekr.20031218072017.1460:find.set_ivars
 	def set_ivars (self,c):
 		
 		# N.B.: separate c.ivars are much more convenient than a dict.
@@ -256,14 +257,15 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
 		c.change_text = s
 	#@nonl
-	#@-node:find.set_ivars
-	#@+node:onCloseWindow
+	#@-node:ekr.20031218072017.1460:find.set_ivars
+	#@-node:ekr.20031218072017.3898:Birth & death
+	#@+node:ekr.20031218072017.3906:onCloseWindow
 	def onCloseWindow(self,event=None):
 	
 		self.top.withdraw()
 	#@nonl
-	#@-node:onCloseWindow
-	#@+node:bringToFront
+	#@-node:ekr.20031218072017.3906:onCloseWindow
+	#@+node:ekr.20031218072017.3907:bringToFront
 	def bringToFront (self):
 		
 		"""Bring the tkinter Find Panel to the front."""
@@ -277,8 +279,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		gui.set_focus(c,t)
 		gui.setTextSelection (t,"1.0","end") # Thanks Rich.
 	#@nonl
-	#@-node:bringToFront
-	#@+node:Tkinter wrappers (leoTkinterFind)
+	#@-node:ekr.20031218072017.3907:bringToFront
+	#@+node:ekr.20031218072017.3908:Tkinter wrappers (leoTkinterFind)
 	def gui_search (self,t,*args,**keys):
 		return t.search(*args,**keys)
 	
@@ -288,8 +290,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		t.insert("end",s)
 		t.mark_set("insert",g.choose(c.reverse_flag,"end","1.0"))
 		return t
-	#@-node:Tkinter wrappers (leoTkinterFind)
+	#@-node:ekr.20031218072017.3908:Tkinter wrappers (leoTkinterFind)
 	#@-others
 #@nonl
-#@-node:@file leoTkinterFind.py
+#@-node:ekr.20031218072017.3897:@file-thin leoTkinterFind.py
 #@-leo
