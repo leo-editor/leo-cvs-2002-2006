@@ -128,63 +128,6 @@ schull@digitalgoods.com 585-738-6696
 #@+node:EKR.20040607073134.1:@url http://wingide.com/
 #@-node:EKR.20040607073134.1:@url http://wingide.com/
 #@-node:EKR.20040607073134:Download and study wingide
-#@+node:EKR.20040430163619:To do: 4.2
-#@+node:ekr.20040831101039:Make sure Linux install script has Linux line endings
-#@-node:ekr.20040831101039:Make sure Linux install script has Linux line endings
-#@+node:ekr.20040629110559:Cool Mac stuff
-#@+node:ekr.20040629111136:Native Max OS X Leo app
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2630116
-By: genthaler
-
-Hi Mac OS X users,
-
-I've put a native Mac OS X Leo application at
-
-http://idisk.mac.com/genthaler-Public/Leo.zip
-
-Just unzip it and put it in /Applications or ~/Applications
-
-The Leo version I've used is 4.2a3 i.e. the latest version on SF. Living on
-the edge...
-
-It includes application and document icons (just the 32*32 ones, I don't have
-time to create 128*128) as well as .leo extension associations.
-
-AFAIK, it requires 10.3 (it uses the python in
-/System/Library/Frameworks/Python.framework) and the MacPython-Panther addon
-(http://ftp.cwi.nl/jack/python/mac/MacPython-Panther-2.3-2.dmg).
-It also requires Aqua Tcl/Tk - I used the BI version from
-http://prdownloads.sourceforge.net/tcltkaqua/TclTkAquaBI-8.4.6.1.dmg?download
-The standard version should work, though.
-
-Once they're installed, use /Applications/MacPython-2.3/PackageManager to install
-_tkinter.
-
-The control -> command key swapping announced above works nicely too. I changed
-EditHeadline in leoConfig.leo (<< F-keys and others >>) to Ctrl+Command+H so
-that Command-H still hides the application in standard fashion.
-
-An accidental goodness is that the Leo plugins folder coincides with the standard
-Mac OS X application bundle plugins folder - this means that you can use the
-Finder's Get Info window to add, delete, enable & disable Leo plugins!
-
-One minor unpleasantness is that you can only double-click or drag-drop a document
-icon when Leo isn't open, and Leo closes when the last document is closed. You
-can still use Leo's File->Open to open multiple documents, though.
-
-Ed, feel free to copy this into the download area.
-
-Guenther.
-#@nonl
-#@+node:ekr.20040629111733:@url http://idisk.mac.com/genthaler-Public/Leo.zip (download)
-#@-node:ekr.20040629111733:@url http://idisk.mac.com/genthaler-Public/Leo.zip (download)
-#@-node:ekr.20040629111136:Native Max OS X Leo app
-#@+node:ekr.20040629111733.1:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
-#@-node:ekr.20040629111733.1:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
-#@-node:ekr.20040629110559:Cool Mac stuff
-#@-node:EKR.20040430163619:To do: 4.2
 #@+node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
 #@+node:ekr.20040730191332:Must do...
 #@+node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
@@ -6322,6 +6265,38 @@ Cheers
 David
 
 #@-node:ekr.20031218072017.811:Split panes (could be done in gui plugins)
+#@+node:ekr.20040914095432:Use TreeCC to create generalized import
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2754954
+RE: euphoria or general language plugins  
+2004-09-11 20:37
+>>Leo doesn't really understand languages otherwise.
+import is another area Leo is too hardwired
+wrt language. if a plugin for each language
+could preprocess the file or code string and insert some minimal sentinals to create nodes and headlines,
+then pass the string to Leo to do the dirty work, adding new languages for import could be easier.
+I'm at this point in a new html file import,
+creating the nodes while parsing is more complicated than one would like.
+I think this has been discussed before, so
+maybe will have to search the forums before I say more.
+
+e
+
+---------
+
+http://sourceforge.net/forum/message.php?msg_id=2758616
+By: differance
+
+Check out treecc:
+http://www.southern-storm.com.au/treecc.html
+http://www.southern-storm.com.au/treecc_essay.html
+
+It was developed for DotGNU, but I think you should be able to use it.
+
+Seth
+
+#@-node:ekr.20040914095432:Use TreeCC to create generalized import
 #@-node:ekr.20040329182535.1:1-2 week projects
 #@+node:ekr.20040123102724:Can't or wont
 #@+node:ekr.20031218072017.835:(Use pywin extensions to improve cut/paste between apps)

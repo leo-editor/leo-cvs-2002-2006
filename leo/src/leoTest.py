@@ -83,7 +83,7 @@ def doTests(all):
     c.setChanged(changed) # Restore changed state.
     c.selectVnode(p1) # N.B. Restore the selected node.
 #@nonl
-#@+node:ekr.20040707073029:generalTestCase
+#@+node:ekr.20040707073029:class generalTestCase
 class generalTestCase(unittest.TestCase):
 
     """Create a unit test from a snippet of code."""
@@ -146,7 +146,7 @@ class generalTestCase(unittest.TestCase):
     #@-node:ekr.20040707093235:shortDescription
     #@-others
 #@nonl
-#@-node:ekr.20040707073029:generalTestCase
+#@-node:ekr.20040707073029:class generalTestCase
 #@+node:ekr.20040707213238:makeTestSuite
 #@+at 
 #@nonl

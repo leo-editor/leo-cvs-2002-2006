@@ -7713,6 +7713,293 @@ self.last_comment = "unknown"
 #@-node:ekr.20031218072017.1889:<< set state ivars to "unknown" >>
 #@-node:ekr.20031218072017.1880:colorizeAnyLanguage & allies
 #@-node:ekr.20040910064225:(Removed assert from colorizer)
+#@+node:ekr.20040913111703:(Fixed bugs in Tangle/Untangle)
+#@+node:ekr.20040914074643:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2756978
+By: nobody
+
+The tangle menu options tangle all the @root nodes in a Leo file regardless
+of the selection made (tangle m tangle marked, tangle all). In some of my files
+Two of more will tangle togeather leaving others alone. Any suggestions.
+
+The fix was to do p = p.copy in tangleTree, tanglePass1 and untangleTree.  untangleTree calls tanglePass1 to traverse the tree, so there are the only changes needed.
+#@nonl
+#@-node:ekr.20040914074643:Report
+#@-node:ekr.20040913111703:(Fixed bugs in Tangle/Untangle)
+#@+node:ekr.20040914081306:(Shifted all Alt-shortcuts to Ctrl shortcuts on the Mac)
+#@+node:ekr.20040914081306.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2742238
+By: hinsen
+
+The shortcut definitions in Leo are quite inconvenient on the Mac, as those
+using the Alt key don't work. Alt is used for entry of additional characters.
+On the other hand, ctrl is available for shortcuts but not used in Leo, since
+the ctrl-based shortcuts are shifted to the command key (following standard
+Mac practice).
+
+The patch at the end of this message simply shifts all Alt-shortcuts to Ctrl
+on the Mac.
+
+That leaves one minor clash: Command-` is used for CloneNode in Leo, although
+it canonical MacOS function (switching between the windows of an application)
+would be very useful in Leo as well. Removing the CloneNode binding is easy
+enough, but it seems that I must implement a window switching function myself.
+Not today :-)
+
+Konrad.
+
+#@-node:ekr.20040914081306.1:Report
+#@+node:ekr.20031218072017.2098:canonicalizeShortcut
+@ This code "canonicalizes" both the shortcuts that appear in menus and the arguments to bind, mostly ignoring case and the order in which special keys are specified in leoConfig.txt.
+
+For example, Ctrl+Shift+a is the same as Shift+Control+A.  Either may appear in leoConfig.txt.  Each generates Shift+Ctrl-A in the menu and Control+A as the argument to bind.
+
+Returns (bind_shortcut, menu_shortcut)
+@c
+
+def canonicalizeShortcut (self,shortcut):
+    
+    if shortcut == None or len(shortcut) == 0:
+        return None,None
+    s = shortcut.strip().lower()
+    
+    has_cmd   = s.find("cmd") >= 0     or s.find("command") >= 0 # 11/18/03
+    has_ctrl  = s.find("control") >= 0 or s.find("ctrl") >= 0
+    has_alt   = s.find("alt") >= 0
+    has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
+    if sys.platform == "darwin":
+        if has_ctrl and not has_cmd:
+            has_cmd = True ; has_ctrl = False
+        if has_alt and not has_ctrl: # 9/14/04
+            has_ctrl = True ; has_alt = False
+    << set the last field, preserving case >>
+    << canonicalize the last field >>
+    << synthesize the shortcuts from the information >>
+    # print shortcut,bind_shortcut,menu_shortcut
+    return bind_shortcut,menu_shortcut
+#@nonl
+#@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+s2 = shortcut
+s2 = string.strip(s2)
+
+# Replace all minus signs by plus signs, except a trailing minus:
+if len(s2) > 0 and s2[-1] == "-":
+    s2 = string.replace(s2,"-","+")
+    s2 = s2[:-1] + "-"
+else:
+    s2 = string.replace(s2,"-","+")
+
+fields = string.split(s2,"+")
+if fields == None or len(fields) == 0:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s
+    return None,None
+
+last = fields[-1]
+if last == None or len(last) == 0:
+    if not g.app.menuWarningsGiven:
+        print "bad shortcut specifier:", s
+    return None,None
+#@nonl
+#@-node:ekr.20031218072017.2102:<< set the last field, preserving case >>
+#@+node:ekr.20031218072017.2099:<< canonicalize the last field >>
+bind_last = menu_last = last
+if len(last) == 1:
+    ch = last[0]
+    if ch in string.ascii_letters:
+        menu_last = string.upper(last)
+        if has_shift:
+            bind_last = string.upper(last)
+        else:
+            bind_last = string.lower(last)
+    elif ch in string.digits:
+        bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
+    else:
+        << define dict of Tk bind names >>
+        if ch in dict.keys():
+            bind_last = dict[ch]
+elif len(last) > 0:
+    << define dict of special names >>
+    last2 = string.lower(last)
+    if last2 in dict.keys():
+        bind_last,menu_last = dict[last2]
+#@nonl
+#@+node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
+# These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
+dict = {
+    "!" : "exclam",
+    '"' : "quotedbl",
+    "#" : "numbersign",
+    "$" : "dollar",
+    "%" : "percent",
+    "&" : "ampersand",
+    "'" : "quoteright",
+    "(" : "parenleft",
+    ")" : "parenright",
+    "*" : "asterisk",
+    "+" : "plus",
+    "," : "comma",
+    "-" : "minus",
+    "." : "period",
+    "/" : "slash",
+    ":" : "colon",
+    ";" : "semicolon",
+    "<" : "less",
+    "=" : "equal",
+    ">" : "greater",
+    "?" : "question",
+    "@" : "at",
+    "[" : "bracketleft",
+    "\\": "backslash",
+    "]" : "bracketright",
+    "^" : "asciicircum",
+    "_" : "underscore",
+    "`" : "quoteleft",
+    "{" : "braceleft",
+    "|" : "bar",
+    "}" : "braceright",
+    "~" : "asciitilde" }
+#@nonl
+#@-node:ekr.20031218072017.2100:<< define dict of Tk bind names >>
+#@+node:ekr.20031218072017.2101:<< define dict of special names >>
+# These keys are simply made-up names.  The menu_bind values are known to Tk.
+# Case is not significant in the keys.
+
+dict = {
+    "bksp"    : ("BackSpace","BkSp"),
+    "esc"     : ("Escape","Esc"),
+    # Arrow keys...
+    "dnarrow" : ("Down", "DnArrow"),
+    "ltarrow" : ("Left", "LtArrow"),
+    "rtarrow" : ("Right","RtArrow"),
+    "uparrow" : ("Up",   "UpArrow"),
+    # Page up/down keys...
+    "pageup"  : ("Prior","PgUp"),
+    "pagedn"  : ("Next", "PgDn")
+}
+
+@  The following are not translated, so what appears in the menu is the same as what is passed to Tk.  Case is significant.
+
+Note: the Tk documentation states that not all of these may be available on all platforms.
+
+F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
+BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
+Down, Left, Right, Up,
+Begin, End, Home, Next, Prior,
+Num_Lock, Pause, Scroll_Lock, Sys_Req,
+KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
+KP_Multiply, KP_Separator,KP_Space, KP_Subtract, KP_Tab,
+KP_F1,KP_F2,KP_F3,KP_F4,
+KP_0,KP_1,KP_2,KP_3,KP_4,KP_5,KP_6,KP_7,KP_8,KP_9
+#@-node:ekr.20031218072017.2101:<< define dict of special names >>
+#@-node:ekr.20031218072017.2099:<< canonicalize the last field >>
+#@+node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+bind_head = menu_head = ""
+
+if has_shift:
+    menu_head = "Shift+"
+    if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+        bind_head = "Shift-"
+if has_alt:
+    bind_head = bind_head + "Alt-"
+    menu_head = menu_head + "Alt+"
+
+if has_ctrl:
+    bind_head = bind_head + "Control-"
+    menu_head = menu_head + "Ctrl+"
+    
+if has_cmd: # 11/18/03
+    bind_head = bind_head + "Command-"
+    menu_head = menu_head + "Command+"
+    
+bind_shortcut = "<" + bind_head + bind_last + ">"
+menu_shortcut = menu_head + menu_last
+#@nonl
+#@-node:ekr.20031218072017.2103:<< synthesize the shortcuts from the information >>
+#@-node:ekr.20031218072017.2098:canonicalizeShortcut
+#@-node:ekr.20040914081306:(Shifted all Alt-shortcuts to Ctrl shortcuts on the Mac)
+#@+node:ekr.20040914082436:(Added c.frame.openDirectory to sys.path when executing scripts)
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p)
+    << redirect output >>
+    if script:
+        script = script.strip()
+    if script:
+        # 9/14/04: Temporarily add the open directory to sys.path.
+        sys.path.insert(0,c.frame.openDirectory)
+        script += '\n' # Make sure we end the script properly.
+        try:
+            exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            << unredirect output >>
+            g.es("exception executing script")
+            n = g.es_exception(full=False,c=c)
+            if n is not None:
+                << dump the lines of script near the error >>
+                if p and not script1:
+                    c.goToScriptLineNumber(p,script,n)
+            c.frame.tree.redrawAfterException()
+        del sys.path[0]
+    elif not error:
+        << unredirect output >>
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
+lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    s = "line %d: %s" % (n,lines[n-1])
+    print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@-node:ekr.20040914082436:(Added c.frame.openDirectory to sys.path when executing scripts)
 #@-node:ekr.20040809102904:4.2 rc1 projects
 #@-all
 #@nonl

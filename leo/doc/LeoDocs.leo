@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="11565" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="11706" clone_windows="0"/>
 <globals body_outline_ratio="0.452928870293">
-	<global_window_position top="40" left="350" height="860" width="988"/>
+	<global_window_position top="12" left="284" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -69,7 +69,7 @@
 <v t="edream.110203163054.26"><vh>Travers A. Hough</vh></v>
 <v t="edream.110203163054.23"><vh>Zak Greant</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -81,8 +81,38 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
-<v t="ekr.20040713110718" a="E"><vh>4.2 beta 3</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="ekr.20040914103359" a="ETV"><vh>4.2 rc1</vh>
+<v t="ekr.20040914103743.1"><vh>Added new features</vh>
+<v t="ekr.20040914103359.137" a="E"><vh>Added c.frame.openDirectory to sys.path when executing scripts</vh></v>
+<v t="ekr.20040914103359.37" a="E"><vh>Added expanded_click_area option to disable left click logic in outline pane</vh></v>
+<v t="ekr.20040914103359.2" a="E"><vh>Restored the "iconclick1/2" hooks</vh></v>
+<v t="ekr.20040914103359.19"><vh>(Allow longer headlines for to support long url's)</vh>
+<v t="ekr.20040914103359.20"><vh>Report</vh></v>
+<v t="ekr.20040914103359.21"><vh>idle_head_key</vh>
+<v t="ekr.20040914103359.22"><vh>&lt;&lt; set head to vnode text &gt;&gt;</vh></v>
+<v t="ekr.20040914103359.23"><vh>&lt;&lt; set the widget text to head &gt;&gt;</vh></v>
+<v t="ekr.20040914103359.24"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
+<v t="ekr.20040914103359.25"><vh>&lt;&lt; update p &gt;&gt;</vh></v>
+<v t="ekr.20040914103359.26"><vh>&lt;&lt; reconfigure p and all nodes joined to p &gt;&gt;</vh></v>
+<v t="ekr.20040914103359.27"><vh>&lt;&lt; update the screen &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040914103743"><vh>Fixed bugs</vh>
+<v t="ekr.20040914103359.47" a="E"><vh>Disabled perfect import</vh></v>
+<v t="ekr.20040914103359.127" a="E"><vh>Fixed bugs in Tangle/Untangle</vh></v>
+<v t="ekr.20040914103359.12" a="E"><vh>Fixed Import Derived Files command</vh></v>
+<v t="ekr.20040914103359.15" a="E"><vh>Fixed parsing of minimal &lt;preferences&gt; tag</vh></v>
+<v t="ekr.20040914103359.7" a="E"><vh>Fixed problem with tabs on MacOs</vh></v>
+<v t="ekr.20040914103359.28" a="E"><vh>Fixed read errors with @language html</vh></v>
+<v t="ekr.20040914103359.4" a="E"><vh>Made sure a proper message is given with invalid versions of Python</vh></v>
+<v t="ekr.20040914103359.110" a="E"><vh>Removed failed assert from colorizer</vh></v>
+<v t="ekr.20040914103359.31" a="E"><vh>Removed spurious "Warning: updating changed text" messages</vh></v>
+<v t="ekr.20040914103359.129" a="E"><vh>Shifted all Alt-shortcuts to Ctrl shortcuts on the Mac</vh></v>
+</v>
+</v>
+<v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
 <v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
 <v t="ekr.20040804164600.16"><vh>Leo gives the user a chance to save read-only files</vh></v>
 <v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
@@ -1229,7 +1259,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
+<v t="EKR.20040524104904"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1589,9 +1619,9 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
 <v t="EKR.20040524104904.212"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="EKR.20040524104904.213" a="E"><vh>Using plugins and hooks</vh>
+<v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
 <v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
 <v t="EKR.20040524104904.215"><vh>New plugin architecture</vh>
 <v t="EKR.20040524104904.216"><vh>@file plugins/mod_open_with.py</vh>
@@ -1606,7 +1636,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.223" a="TV"><vh>About hooks</vh></v>
+<v t="EKR.20040524104904.223"><vh>About hooks</vh></v>
 <v t="EKR.20040524104904.224"><vh>SECURITY WARNINGS</vh>
 <v t="EKR.20040524104904.225"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="EKR.20040524104904.226"><vh>NEVER use this kind of code in a hook!!</vh></v>
@@ -1990,7 +2020,7 @@
 </v>
 <v t="edream.110203163054.1108"><vh>How can I create a template .leo file?</vh></v>
 <v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
-<v t="ekr.20040908100113" a="E"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
+<v t="ekr.20040908100113"><vh>Control-Shift backspace doesn't work.  What should I do?</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.1158"><vh>Sample Code</vh>
@@ -15355,5 +15385,177 @@ And you'll have fixed the problem.
 Now, on my system this also disables the ability to terminate the X server using Ctrl-Alt-BackSpace ... this is because of some conflict with xdb (xdb is the newer keyboard mapping facility in XFree86 ... xmodmap is the old original X11 keyboard mapping facility). I'm still working on that.
 
 I'm also not able to get xmodmap to make this change during X11 startup (again because of conflicts with xdb). But I'm working on that as well.</t>
+<t tx="ekr.20040914103359">Leo 4.2 release candidate 1        September 14, 2004
+
+This version fixes a number of minor bugs reported since the last release. See
+the children of this node for details.
+
+The highlights of Leo 4.2:
+
+- @thin trees make Leo much more friendly to cvs. Files derived from @thin can
+be committed to cvs and updated from cvs without having to commit or update the
+corresponding .leo file. There is no longer any need to keep .leo files and
+derived files in synch.
+
+- Leo's data structures have been reorganized. As a result, all outline
+operations are much faster. To support this organization, scripts that traverse
+Leo's data structures must now use a positions rather than vnodes. Old scripts
+that appear to use vnodes will still work because methods like c.currentVnode
+that appear to return vnodes actually return positions.
+
+- A new mod_scripting plugin is a big advance in scripting and testing.
+test.leo now uses @test and @script nodes to define unit tests without
+explicitly creating subclasses of unittest.TestCase. Converting scripts to unit
+tests now takes a few seconds!
+
+- A much faster and more robust spell checker plugin. (requires Python 2.3)
+
+- Leo is now much more friendly to using spaces instead of tabs.
+
+- The Execute Script command reports erroneous lines more clearly.
+
+- The Perfect Import feature guarantee that Leo imports file exactly.</t>
+<t tx="ekr.20040914103359.2"></t>
+<t tx="ekr.20040914103359.4"></t>
+<t tx="ekr.20040914103359.7">With TclTkAqua on the Mac (but *not* with tcltk installed via Fink), the tab
+problem doesn't exist there), the tab, return, and backspace keys did not generate
+ASCII codes, i.e. event.char is an empty string. So when I press the tab key,
+Tk inserts a tab character and Leo isn't even aware of it.</t>
+<t tx="ekr.20040914103359.12">If only one file was specified Leo gave an error for every character of the file name!
+</t>
+<t tx="ekr.20040914103359.15"></t>
+<t tx="ekr.20040914103359.19"></t>
+<t tx="ekr.20040914103359.20">@killcolor
+
+From Dan Winkler:
+
+On a couple of occasions, I tried to paste in a long @url node and got 
+this message:
+
+	Truncating headline to 250 characters
+
+I wonder if the 250 character limit on headline length should be 
+rethought in light of the @url directive and long web addresses.</t>
+<t tx="ekr.20040914103359.21">def idle_head_key (self,p,ch=None):
+    
+    """Update headline text at idle time."""
+    
+    c = self.c
+
+    if not p or not p.isCurrentPosition():
+        return "break"
+        
+    edit_text = self.edit_text(p)
+    index = edit_text.index("insert")
+
+    if g.doHook("headkey1",c=c,p=p,ch=ch):
+        return "break" # The hook claims to have handled the event.
+        
+    &lt;&lt; set head to vnode text &gt;&gt;
+    done = ch in ('\r','\n')
+    if done:
+        &lt;&lt; set the widget text to head &gt;&gt;
+    &lt;&lt; set s to the widget text &gt;&gt;
+    changed = s != head
+    if changed:
+        c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
+        &lt;&lt; update p &gt;&gt;
+    if done or changed:
+        &lt;&lt; reconfigure p and all nodes joined to p &gt;&gt;
+        &lt;&lt; update the screen &gt;&gt;
+
+    g.doHook("headkey2",c=c,p=p,ch=ch)
+    return "break"</t>
+<t tx="ekr.20040914103359.22">head = p.headString()
+if head == None:
+    head = u""
+head = g.toUnicode(head,"utf-8")</t>
+<t tx="ekr.20040914103359.23">self.setText(edit_text,head,tag="idle_head_key")
+edit_text.mark_set("insert",index)</t>
+<t tx="ekr.20040914103359.24">s = edit_text.get("1.0","end")
+
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
+    # Another kludge: remove one or two trailing newlines before warning of truncation.
+    if s and s[-1] == '\n': s = s[:-1]
+    if s and s[-1] == '\n': s = s[:-1]
+    i = s.find('\n')
+    if i &gt; -1:
+        # g.trace(i,len(s),repr(s))
+        g.es("Truncating headline to one line",color="blue")
+        s = s[:i]
+    limit = 1000
+    if len(s) &gt; limit:
+        g.es("Truncating headline to %d characters" % (limit),color="blue")
+        s = s[:limit]
+
+s = g.toUnicode(s,g.app.tkEncoding)
+
+if not s:
+    s = u""
+    
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+    s = s.replace('\n','')
+    s = s.replace('\r','')</t>
+<t tx="ekr.20040914103359.25">c.beginUpdate()
+if 1: # update...
+    # Update changed bit.
+    if not c.changed:
+        c.setChanged(True)
+    # Update all dirty bits.
+    # Bug fix 8/2/04: must call p.setDirty even if p is dirty!
+    p.setDirty()
+    # Update p.
+    p.initHeadString(s)
+    self.setText(edit_text,s,tag="idle_head_key2")
+    edit_text.mark_set("insert",index)
+c.endUpdate(False) # do not redraw now.</t>
+<t tx="ekr.20040914103359.26"># Reconfigure p's headline.
+if done:
+    self.setDisabledLabelState(p)
+
+edit_text.configure(width=self.headWidth(p))</t>
+<t tx="ekr.20040914103359.27">if done:
+    # g.trace("done")
+    c.beginUpdate()
+    self.endEditLabel()
+    c.endUpdate()
+
+elif changed:
+    # g.trace("changed")
+    # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Redrawing the whole screen now messes up the cursor in the headline.
+    self.drawIcon(p) # just redraw the icon.</t>
+<t tx="ekr.20040914103359.28"></t>
+<t tx="ekr.20040914103359.31"></t>
+<t tx="ekr.20040914103359.37"></t>
+<t tx="ekr.20040914103359.47">There were too many problems with this feature.  In the future Leo will have a Check Import command.</t>
+<t tx="ekr.20040914103359.110"></t>
+<t tx="ekr.20040914103359.127">Leo wasn't always traversing the outline correctly when looking for @root nodes.</t>
+<t tx="ekr.20040914103359.129">http://sourceforge.net/forum/message.php?msg_id=2742238
+By: hinsen
+
+The shortcut definitions in Leo are quite inconvenient on the Mac, as those
+using the Alt key don't work. Alt is used for entry of additional characters.
+On the other hand, ctrl is available for shortcuts but not used in Leo, since
+the ctrl-based shortcuts are shifted to the command key (following standard
+Mac practice).
+
+The patch at the end of this message simply shifts all Alt-shortcuts to Ctrl
+on the Mac.
+
+That leaves one minor clash: Command-` is used for CloneNode in Leo, although
+it canonical MacOS function (switching between the windows of an application)
+would be very useful in Leo as well. Removing the CloneNode binding is easy
+enough, but it seems that I must implement a window switching function myself.
+Not today :-)
+
+Konrad.
+</t>
+<t tx="ekr.20040914103359.137"></t>
+<t tx="ekr.20040914103743"></t>
+<t tx="ekr.20040914103743.1"></t>
 </tnodes>
 </leo_file>

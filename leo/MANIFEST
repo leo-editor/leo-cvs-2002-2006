@@ -75,6 +75,7 @@ plugins\arrows.py
 plugins\aspell.pyd
 plugins\at_folder.py
 plugins\autocompleter.py
+plugins\chinese_menu.py
 plugins\color_markup.py
 plugins\dump_globals.py
 plugins\editAttributes.py
@@ -94,7 +95,6 @@ plugins\mod_scripting.py
 plugins\mod_spelling.ini
 plugins\mod_spelling.py
 plugins\mod_spelling.txt
-plugins\mod_spelling.wl
 plugins\mod_tempfname.py
 plugins\mod_timestamp.py
 plugins\nav_buttons.py
@@ -105,6 +105,7 @@ plugins\open_shell.py
 plugins\open_with.py
 plugins\outline_export.py
 plugins\override_commands.py
+plugins\pie_menus.py
 plugins\pluginsManager.txt
 plugins\pluginsNotes.txt
 plugins\pluginsTest.py
@@ -117,6 +118,7 @@ plugins\redirect_to_log.py
 plugins\rowcol.py
 plugins\rst.py
 plugins\rst2.py
+plugins\run_nodes.py
 plugins\scheduler.py
 plugins\script_io_to_body.py
 plugins\scripts_menu.py

@@ -115,11 +115,10 @@
 #@nonl
 #@-node:ekr.20040722121404:Experimental plugins
 #@+node:ekr.20040722134535.1:External editors & Open With
-# Replaces Commands.openWithTempFilePath so Leo opens temporary files with a
-# filename that begins with the headline text, and located in a "username_Leo"
-# subdirectory of the temporary directory. The "LeoTemp" prefix is omitted.
-# Use this with the open_with plugin.
-    # mod_tempfname.py
+# Opens temporary files with a filename that begins with the headline text,
+# located in a "username_Leo" subdirectory of the temporary directory.
+    # Recommended for use with the open_with, vim or xemacs plugins.
+    mod_tempfname.py
 
 # Opens a windows shell.
     # open_shell.py
@@ -131,11 +130,17 @@
     # startfile.py
     
 # vim handler.
+    # Recommended: use mod_tempfname.py.
     # vim.py
     
 # Formats and exports the selected outline to Word.
 # Do this using the Plugins:Word Export:Export menu item.
     # word_export.py
+    
+# xemacs handler
+    # Recommended: use mod_tempfname.py.
+    # http://www.cs.mu.oz.au/~markn/leo/external_editors.leo
+    # xemacs.py
 #@nonl
 #@-node:ekr.20040722134535.1:External editors & Open With
 #@+node:ekr.20040722140105:Files
