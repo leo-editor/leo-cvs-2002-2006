@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3379" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3654" clone_windows="0"/>
 <globals body_outline_ratio="0.47009569377990429">
 	<global_window_position top="10" left="376" height="836" width="837"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -16,13 +16,13 @@
 <v t="edream.110203163054.1"><vh>About Leo's panes and icons (for newbies)</vh>
 <v t="edream.110203163054.2"><vh>This node contains text</vh></v>
 <v t="edream.110203163054.3" a="M"><vh>This headline is marked</vh></v>
-<v t="edream.110203163054.4" a=""><vh>This is a cloned headline</vh></v>
-<v t="edream.110203163054.4" a=""><vh>This is a cloned headline</vh></v>
+<v t="edream.110203163054.4"><vh>This is a cloned headline</vh></v>
+<v t="edream.110203163054.4"><vh>This is a cloned headline</vh></v>
 <v t="edream.110203163054.5"><vh>This node contains no text</vh></v>
 </v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
-<v t="edream.110203163054.7" a=""><vh>Acknowledgements</vh></v>
-<v t="edream.110203163054.8" a="V"><vh>What people are saying about Leo</vh>
+<v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
+<v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
 <v t="edream.110203163054.9" a="EM"><vh>Quotes of the Month</vh>
 <v t="ekr.20040129074732"><vh>Annon: (not yet)</vh></v>
 <v t="ekr.20040118085921"><vh>Tarvin Rhodes (not yet)</vh></v>
@@ -68,12 +68,12 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
-<v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
+<v t="edream.110203163054.49"><vh>System requirements</vh></v>
 <v t="edream.110203163054.50"><vh>How to install leo.py on Linux</vh></v>
-<v t="edream.110203163054.51" a=""><vh>How to install leo.py on Windows</vh></v>
+<v t="edream.110203163054.51"><vh>How to install leo.py on Windows</vh></v>
 <v t="edream.110203163054.52"><vh>How to install leo.py on MacOS X Jaguar</vh>
 <v t="edream.110203163054.53"><vh>From Joe Grace 2/17/03</vh></v>
 <v t="edream.110203163054.54"><vh>From Bruce Bolden 1</vh></v>
@@ -84,20 +84,49 @@
 <v t="edream.110203163054.58"><vh>Making .leo documents open with Leo</vh></v>
 </v>
 <v t="edream.110203163054.59"><vh>How to install the Borland version of Leo on Windows</vh></v>
-<v t="edream.110203163054.60" a=""><vh>How to associate leo.py with .leo files on Windows</vh></v>
-<v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
-<v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
+<v t="edream.110203163054.60"><vh>How to associate leo.py with .leo files on Windows</vh></v>
+<v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
+<v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
-<v t="edream.121403160546"><vh>4.1 final</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="ekr.20040131040356" a="TV"><vh>4.1 rc4</vh>
+<v t="ekr.20040131041015"><vh>New features in 4.1 rc4</vh>
+<v t="ekr.20040131040544.10" a="E"><vh>Leo no longer automatically draws the atus area</vh></v>
+<v t="ekr.20040131040544.21" a="E"><vh>Esc and enter key now work in the find panel</vh></v>
+<v t="ekr.20040131040544.55" a="E"><vh>Improved message for orphan nodes</vh></v>
+<v t="ekr.20040131040544.178" a="E"><vh>Eliminated marking nodes dirty unnecessarily</vh></v>
+<v t="ekr.20040131040544.222" a="E"><vh>Execute Script command now ends all nodes with a newline</vh></v>
+<v t="ekr.20040131040544.2" a="E"><vh>Added message when plugins are disabled</vh></v>
+</v>
+<v t="ekr.20040131040356.1"><vh>Bugs fixed in 4.1 rc4</vh>
+<v t="ekr.20040131044727" a="E"><vh>Fixed several bugs when writing derived files</vh></v>
+<v t="ekr.20040131040754"><vh>Fixed several crashers</vh></v>
+<v t="ekr.20040131040544.5" a="E"><vh>Fixed "bad leo file" when reading some 3.x .leo files</vh></v>
+<v t="ekr.20040131040544.18" a="E"><vh>Fixed huge performance bug in cut/copy node commands</vh></v>
+<v t="ekr.20040131040544.32" a="E"><vh>Leo now properly re-enables drawing after exceptions</vh></v>
+<v t="ekr.20040131040544.73" a="E"><vh>Fixed bug in Move Up command</vh></v>
+<v t="ekr.20040131040544.81" a="E"><vh>Fixed bug in Import Derived File</vh></v>
+<v t="ekr.20040131040544.146" a="E"><vh>Fixed bugs related to saving read-only files</vh></v>
+<v t="ekr.20040131040544.169" a="E"><vh>Fixed bug in Import Python Window command when using Python 2.2</vh></v>
+<v t="ekr.20040131040544.228" a="E"><vh>Fixed bugs in Convert All BlanksTabs commands</vh></v>
+<v t="ekr.20040131040544.258"><vh>Fixed crashes in open_shell.py plugin</vh></v>
+<v t="ekr.20040131044136"><vh>Fixed several bugs involving cut &amp; paste</vh></v>
+<v t="ekr.20040131040544.227"><vh>Fixed whitespace problem in leoTkinterGui.py</vh></v>
+</v>
+<v t="ekr.20040131040356.2"><vh>Bug fixed in previous 4.1 releases</vh></v>
+<v t="ekr.20040131040356.3"><vh>New code-level features</vh></v>
+<v t="ekr.20040131040356.4"><vh>New configuration settings</vh></v>
+<v t="ekr.20040131040356.5"><vh>New features</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.117" a="E"><vh>leo.py versions</vh>
+<v t="edream.121403160546"><vh>4.1 rc3</vh>
 <v t="edream.121403165221"><vh>Bugs fixed in this release</vh></v>
 <v t="edream.121403161017"><vh>Bug fixed in previous 4.1 releases</vh></v>
 <v t="edream.121403161017.1"><vh>New code-level features</vh></v>
 <v t="edream.121403161017.2"><vh>New configuration settings</vh></v>
 <v t="edream.121403161340"><vh>New features</vh></v>
 </v>
-</v>
-<v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="edream.110603185805"><vh>4.1 beta 5</vh>
 <v t="edream.120403174147"><vh>Changes made in 4.1 beta 5</vh>
 <v t="edream.120403180443"><vh>New and improved features</vh>
@@ -138,12 +167,12 @@
 <v t="edream.110603190125.1"><vh>.leo files are now cvs-friendly</vh></v>
 </v>
 <v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
-<v t="edream.112303173638" a=""><vh>Running Leo in batch mode</vh></v>
-<v t="edream.110203163054.833" a=""><vh>Executing Python scripts in body text</vh></v>
+<v t="edream.112303173638"><vh>Running Leo in batch mode</vh></v>
+<v t="edream.110203163054.833"><vh>Executing Python scripts in body text</vh></v>
 <v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
 <v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
 <v t="edream.111803060152"><vh>Added script-based find/change commands</vh>
-<v t="edream.110603190322.6" a=""><vh> Script Find and Script Change</vh>
+<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
 <v t="edream.111803060152.1"><vh>How it works</vh></v>
 <v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
 </v>
@@ -196,7 +225,7 @@
 </v>
 </v>
 <v t="edream.110203163054.99"><vh>4.0 beta 1</vh>
-<v t="edream.110203163054.100" a=""><vh>4.0 Theory of operation</vh></v>
+<v t="edream.110203163054.100"><vh>4.0 Theory of operation</vh></v>
 <v t="edream.110203163054.101"><vh>New commands &amp; options</vh>
 <v t="edream.110203163054.102"><vh>New write_old_format_derived_files option</vh></v>
 <v t="edream.110203163054.103"><vh>New Clear Recent Files command</vh></v>
@@ -276,7 +305,7 @@
 <v t="edream.110203163054.170"><vh>Use "file in directory" format for entries in Recent Files list</vh></v>
 </v>
 <v t="edream.110203163054.171"><vh>Hooks</vh>
-<v t="edream.110203163054.172" a=""><vh>About hooks</vh></v>
+<v t="edream.110203163054.172"><vh>About hooks</vh></v>
 <v t="edream.110203163054.173"><vh>Added "clear-mark" and "set-mark" hooks</vh></v>
 <v t="edream.110203163054.174"><vh>Added hooks to customize popup menus</vh></v>
 <v t="edream.110203163054.175"><vh>Added new hooks so that plugins may extend popup menus </vh></v>
@@ -308,7 +337,7 @@
 </v>
 <v t="edream.110203163054.197"><vh>New and improved features and commands</vh>
 <v t="edream.110203163054.198"><vh>Added patch by Davide Salomoni to OnIconDoubleClick</vh></v>
-<v t="edream.110203163054.199" a=""><vh>@lineending directive specifies line endings</vh></v>
+<v t="edream.110203163054.199"><vh>@lineending directive specifies line endings</vh></v>
 <v t="edream.110203163054.200"><vh>Added thin_at_file_trees &amp; load_derived_files_immediately options</vh></v>
 </v>
 </v>
@@ -316,7 +345,7 @@
 <v t="edream.110203163054.202"><vh>Added calls to toEncodedString before all calls to write</vh></v>
 <v t="edream.110203163054.203"><vh>Check for valid encoding when setting app().tkEncoding</vh></v>
 <v t="edream.110203163054.204"><vh>How Leo handles unicode</vh></v>
-<v t="edream.110203163054.205" a=""><vh>Unicode settings</vh></v>
+<v t="edream.110203163054.205"><vh>Unicode settings</vh></v>
 <v t="edream.110203163054.206"><vh>Unicode theory of operation</vh></v>
 <v t="edream.110203163054.207"><vh>Use app().tkEncoding when writing to log pane</vh></v>
 </v>
@@ -343,7 +372,7 @@
 </v>
 <v t="edream.110203163054.222"><vh>New configuration options &amp; plugins</vh>
 <v t="edream.110203163054.223"><vh>Plugins</vh></v>
-<v t="edream.110203163054.205" a=""><vh>Unicode settings</vh></v>
+<v t="edream.110203163054.205"><vh>Unicode settings</vh></v>
 <v t="edream.110203163054.224"><vh>Colors for Show Invisibibles command</vh></v>
 <v t="edream.110203163054.225"><vh>look_for_control_drag_on_mouse_down option</vh></v>
 <v t="edream.110203163054.226"><vh>body_insertion_cursor_color setting</vh></v>
@@ -452,10 +481,10 @@
 <v t="edream.110203163054.317"><vh>Incremental undo reduces memory usages significantly</vh></v>
 </v>
 <v t="edream.110203163054.318"><vh>Major configuration improvements</vh>
-<v t="edream.110203163054.319" a=""><vh>Chapter 8: Customizing Leo</vh>
-<v t="edream.110203163054.320" a=""><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
+<v t="edream.110203163054.320"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
-<v t="edream.110203163054.322" a=""><vh>Overview of plugins and hooks</vh></v>
+<v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.323"><vh>New plugin architecture</vh>
 <v t="edream.110203163054.324"><vh>@file plugins/mod_open_with.py</vh>
 <v t="edream.110203163054.325"><vh>on_idle</vh>
@@ -469,7 +498,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.172" a=""><vh>About hooks</vh></v>
+<v t="edream.110203163054.172"><vh>About hooks</vh></v>
 <v t="edream.110203163054.331"><vh>SECURITY WARNINGS</vh>
 <v t="edream.110203163054.332"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="edream.110203163054.333"><vh>NEVER use this kind of code in a hook!!</vh></v>
@@ -484,7 +513,7 @@
 <v t="edream.110203163054.340"><vh>Convenience methods to create, destroy and modify menus</vh>
 <v t="edream.110203163054.341"><vh>createMenuItemsFromTable</vh></v>
 <v t="edream.110203163054.342"><vh>createNewMenu</vh></v>
-<v t="edream.110203163054.343" a=""><vh>createOpenWithMenuFromTable</vh></v>
+<v t="edream.110203163054.343"><vh>createOpenWithMenuFromTable</vh></v>
 <v t="edream.110203163054.344"><vh>deleteMenu</vh></v>
 <v t="edream.110203163054.345"><vh>deleteMenuItem</vh></v>
 <v t="edream.110203163054.346"><vh>Example: how to create a menu</vh></v>
@@ -493,29 +522,29 @@
 <v t="edream.110203163054.347"><vh>Translating menus into other languages</vh></v>
 <v t="edream.121403162622"><vh>Support for unit testing</vh></v>
 </v>
-<v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
+<v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
 <v t="edream.120703073611"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
 <v t="edream.120703073611.1"><vh>Recommended conventions for plugins</vh></v>
 </v>
-<v t="edream.110203163054.349" a=""><vh>More flexible creation of non-existent directories</vh></v>
+<v t="edream.110203163054.349"><vh>More flexible creation of non-existent directories</vh></v>
 </v>
 <v t="edream.110203163054.350"><vh>New commands &amp; features</vh>
-<v t="edream.110203163054.351" a=""><vh>@url</vh></v>
+<v t="edream.110203163054.351"><vh>@url</vh></v>
 <v t="edream.110203163054.352"><vh>Execute Script command</vh></v>
-<v t="edream.110203163054.353" a=""><vh>Go To Line Number command</vh></v>
-<v t="edream.110203163054.349" a=""><vh>More flexible creation of non-existent directories</vh></v>
+<v t="edream.110203163054.353"><vh>Go To Line Number command</vh></v>
+<v t="edream.110203163054.349"><vh>More flexible creation of non-existent directories</vh></v>
 <v t="edream.110203163054.354"><vh>Much better support for cweb</vh>
-<v t="edream.110203163054.355" a=""><vh>About cweb mode </vh></v>
+<v t="edream.110203163054.355"><vh>About cweb mode </vh></v>
 </v>
-<v t="edream.110203163054.356" a=""><vh>Open With command</vh>
-<v t="edream.110203163054.343" a=""><vh>createOpenWithMenuFromTable</vh></v>
+<v t="edream.110203163054.356"><vh>Open With command</vh>
+<v t="edream.110203163054.343"><vh>createOpenWithMenuFromTable</vh></v>
 </v>
-<v t="edream.110203163054.357" a=""><vh>Optional Emacs-style auto-indent</vh></v>
-<v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
-<v t="edream.110203163054.358" a=""><vh>Reformat Paragraph command</vh></v>
+<v t="edream.110203163054.357"><vh>Optional Emacs-style auto-indent</vh></v>
+<v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
+<v t="edream.110203163054.358"><vh>Reformat Paragraph command</vh></v>
 </v>
-<v t="edream.110203163054.359" a=""><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+<v t="edream.110203163054.359"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.360"><vh>leo.py 3.8</vh>
@@ -542,14 +571,14 @@
 </v>
 <v t="edream.110203163054.380"><vh>New &amp; changed features</vh>
 <v t="edream.110203163054.381"><vh>New @rawfile &amp; @silentfile trees</vh>
-<v t="edream.110203163054.359" a=""><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+<v t="edream.110203163054.359"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 </v>
 <v t="edream.110203163054.382"><vh>New @raw, @end_raw and @quiet directives</vh>
-<v t="edream.110203163054.383" a=""><vh>@raw and @end_raw directives delimit raw text</vh></v>
-<v t="edream.110203163054.384" a=""><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
+<v t="edream.110203163054.383"><vh>@raw and @end_raw directives delimit raw text</vh></v>
+<v t="edream.110203163054.384"><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
 </v>
 <v t="edream.110203163054.385"><vh>Much better support for CWEB</vh>
-<v t="edream.110203163054.355" a=""><vh>About cweb mode </vh></v>
+<v t="edream.110203163054.355"><vh>About cweb mode </vh></v>
 </v>
 <v t="edream.110203163054.386"><vh>Allow @comment and @language to coexist</vh></v>
 <v t="edream.110203163054.387"><vh>Configuration settings and commands</vh>
@@ -575,7 +604,7 @@
 <v t="edream.110203163054.403"><vh>leo.py 3.7</vh>
 <v t="edream.110203163054.404"><vh>Fixed Bugs</vh>
 <v t="edream.110203163054.405"><vh>Language and syntax coloring bugs</vh>
-<v t="edream.110203163054.406" a=""><vh>Fixed @comment bug</vh></v>
+<v t="edream.110203163054.406"><vh>Fixed @comment bug</vh></v>
 <v t="edream.110203163054.407"><vh>Fixed colorizing for "while" in C</vh></v>
 <v t="edream.110203163054.408"><vh>Fixed @language plain # bug</vh></v>
 <v t="edream.110203163054.409"><vh>Fixed @language plain single-quote bug</vh></v>
@@ -584,7 +613,7 @@
 <v t="edream.110203163054.411"><vh>Bugs relating to tangling and derived files</vh>
 <v t="edream.110203163054.412"><vh>Fixed major bug in @file read code</vh></v>
 <v t="edream.110203163054.413"><vh>Fixed minor read bug</vh></v>
-<v t="edream.110203163054.406" a=""><vh>Fixed @comment bug</vh></v>
+<v t="edream.110203163054.406"><vh>Fixed @comment bug</vh></v>
 <v t="edream.110203163054.414"><vh>Fixed a bug that affected wrapping in doc parts</vh></v>
 </v>
 <v t="edream.110203163054.415"><vh>Other bugs</vh>
@@ -679,7 +708,7 @@
 <v t="edream.110203163054.491"><vh>Toggle Split Direction now updates leoConfig.txt</vh></v>
 </v>
 <v t="edream.110203163054.492"><vh>Documentation for code in leo.py that may be of wider interest</vh>
-<v t="edream.110203163054.493" a=""><vh>Code hidden in leo.py</vh>
+<v t="edream.110203163054.493"><vh>Code hidden in leo.py</vh>
 <v t="edream.110203163054.494"><vh>c2py.py</vh></v>
 <v t="edream.110203163054.495"><vh>disStats.py</vh></v>
 <v t="edream.110203163054.496"><vh>Tkinter utilities</vh></v>
@@ -777,7 +806,7 @@
 <v t="edream.110203163054.571"><vh>Negative tab width converts tabs to spaces</vh></v>
 </v>
 <v t="edream.110203163054.572"><vh>Improved Preferences panel</vh></v>
-<v t="edream.110203163054.320" a=""><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="edream.110203163054.320"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.573"><vh>Cut and Paste now works properly in all situations</vh></v>
 <v t="edream.110203163054.574"><vh>Added Recent Files menu</vh></v>
 <v t="edream.110203163054.575"><vh>All Extract and Import commands are now undoable</vh></v>
@@ -804,8 +833,8 @@
 <v t="edream.110203163054.591"><vh>leo.py 2.4</vh>
 <v t="edream.110203163054.592"><vh>Fixed several bugs</vh></v>
 <v t="edream.110203163054.593"><vh>Added better error recovery when writing .leo files</vh></v>
-<v t="edream.110203163054.594" a=""><vh>Dragging headlines</vh></v>
-<v t="edream.110203163054.60" a=""><vh>How to associate leo.py with .leo files on Windows</vh></v>
+<v t="edream.110203163054.594"><vh>Dragging headlines</vh></v>
+<v t="edream.110203163054.60"><vh>How to associate leo.py with .leo files on Windows</vh></v>
 </v>
 <v t="edream.110203163054.595"><vh>leo.py 2.3</vh></v>
 <v t="edream.110203163054.596"><vh>leo.py 2.2 Bug fixes and documentation revised</vh></v>
@@ -905,8 +934,8 @@
 <v t="edream.110203163054.677"><vh>Changes made in version 1.13</vh></v>
 <v t="edream.110203163054.678"><vh>Changes made in version 1.12</vh></v>
 <v t="edream.110203163054.679"><vh>Changes made in version 1.11</vh>
-<v t="edream.110203163054.680" a=""><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
-<v t="edream.110203163054.681" a=""><vh>Untangling: updating an outline</vh></v>
+<v t="edream.110203163054.680"><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
+<v t="edream.110203163054.681"><vh>Untangling: updating an outline</vh></v>
 </v>
 <v t="edream.110203163054.682"><vh>Changes made in version 1.10</vh></v>
 <v t="edream.110203163054.683"><vh>Changes made in version 1.9</vh>
@@ -930,7 +959,7 @@
 <v t="edream.110203163054.699"><vh>Fixed directory bug</vh></v>
 <v t="edream.110203163054.700"><vh>Added @language HTML, perl and perlpod</vh></v>
 <v t="edream.110203163054.701"><vh>Eliminated @noweb &amp; replaced @cweb with @language cweb</vh></v>
-<v t="edream.110203163054.355" a=""><vh>About cweb mode </vh></v>
+<v t="edream.110203163054.355"><vh>About cweb mode </vh></v>
 <v t="edream.110203163054.702"><vh>Improved syntax coloring</vh></v>
 <v t="edream.110203163054.703"><vh>Improved Print command</vh></v>
 <v t="edream.110203163054.704"><vh>Improved how Untangle handles block comments</vh></v>
@@ -967,7 +996,7 @@
 <v t="edream.110203163054.732"><vh>Untangle warns about sections not in the outline</vh></v>
 <v t="edream.110203163054.733"><vh>A limitations involving Untangle</vh></v>
 </v>
-<v t="edream.110203163054.734" a=""><vh>Known Bugs &amp; Limitations</vh></v>
+<v t="edream.110203163054.734"><vh>Known Bugs &amp; Limitations</vh></v>
 </v>
 </v>
 </v>
@@ -977,7 +1006,7 @@
 <v t="edream.110203163054.738"><vh>Title Page &amp; Summary</vh></v>
 <v t="edream.110203163054.739"><vh>Preface</vh></v>
 <v t="edream.110203163054.740"><vh>Leo's Design Goals</vh></v>
-<v t="edream.110203163054.7" a=""><vh>Acknowledgements</vh></v>
+<v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.741"><vh>Legal Notices: Leo uses the Python license</vh></v>
 </v>
 <v t="edream.110203163054.742"><vh>Chapter 1: Introducing Leo</vh>
@@ -996,55 +1025,55 @@
 <v t="edream.120703113515"><vh>A recommended workflow for using Leo</vh></v>
 </v>
 <v t="edream.110203163054.753"><vh>Chapter 2: Installing Leo</vh>
-<v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
-<v t="edream.110203163054.51" a=""><vh>How to install leo.py on Windows</vh></v>
-<v t="edream.110203163054.60" a=""><vh>How to associate leo.py with .leo files on Windows</vh></v>
-<v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
+<v t="edream.110203163054.49"><vh>System requirements</vh></v>
+<v t="edream.110203163054.51"><vh>How to install leo.py on Windows</vh></v>
+<v t="edream.110203163054.60"><vh>How to associate leo.py with .leo files on Windows</vh></v>
+<v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.754"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
-<v t="edream.110203163054.755" a=""><vh>Cloning headlines</vh>
+<v t="edream.110203163054.755"><vh>Cloning headlines</vh>
 <v t="edream.110203163054.756"><vh>read me</vh></v>
-<v t="edream.110203163054.757" a=""><vh>a</vh>
-<v t="edream.110203163054.758" a=""><vh>b</vh>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
+<v t="edream.110203163054.757"><vh>a</vh>
+<v t="edream.110203163054.758"><vh>b</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
 <v t="edream.110203163054.760"><vh>d</vh></v>
 <v t="edream.110203163054.761"><vh>e</vh></v>
 </v>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
-<v t="edream.110203163054.760"><vh>d</vh></v>
-<v t="edream.110203163054.761"><vh>e</vh></v>
-</v>
-</v>
-<v t="edream.110203163054.762"><vh>g</vh></v>
-<v t="edream.110203163054.758" a=""><vh>b</vh>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
-<v t="edream.110203163054.760"><vh>d</vh></v>
-<v t="edream.110203163054.761"><vh>e</vh></v>
-</v>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
-<v t="edream.110203163054.760"><vh>d</vh></v>
-<v t="edream.110203163054.761"><vh>e</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203163054.757" a=""><vh>a</vh>
-<v t="edream.110203163054.758" a=""><vh>b</vh>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
-<v t="edream.110203163054.760"><vh>d</vh></v>
-<v t="edream.110203163054.761"><vh>e</vh></v>
-</v>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
 <v t="edream.110203163054.760"><vh>d</vh></v>
 <v t="edream.110203163054.761"><vh>e</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.762"><vh>g</vh></v>
-<v t="edream.110203163054.758" a=""><vh>b</vh>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
+<v t="edream.110203163054.758"><vh>b</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
 <v t="edream.110203163054.760"><vh>d</vh></v>
 <v t="edream.110203163054.761"><vh>e</vh></v>
 </v>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
+<v t="edream.110203163054.760"><vh>d</vh></v>
+<v t="edream.110203163054.761"><vh>e</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203163054.757"><vh>a</vh>
+<v t="edream.110203163054.758"><vh>b</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
+<v t="edream.110203163054.760"><vh>d</vh></v>
+<v t="edream.110203163054.761"><vh>e</vh></v>
+</v>
+<v t="edream.110203163054.759"><vh>c</vh>
+<v t="edream.110203163054.760"><vh>d</vh></v>
+<v t="edream.110203163054.761"><vh>e</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.762"><vh>g</vh></v>
+<v t="edream.110203163054.758"><vh>b</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
+<v t="edream.110203163054.760"><vh>d</vh></v>
+<v t="edream.110203163054.761"><vh>e</vh></v>
+</v>
+<v t="edream.110203163054.759"><vh>c</vh>
 <v t="edream.110203163054.760"><vh>d</vh></v>
 <v t="edream.110203163054.761"><vh>e</vh></v>
 </v>
@@ -1054,16 +1083,16 @@
 </v>
 <v t="edream.110203163054.764"><vh>Creating and destroying headlines</vh></v>
 <v t="edream.110203163054.765"><vh>Cutting, pasting and deleting headlines</vh></v>
-<v t="edream.110203163054.594" a=""><vh>Dragging headlines</vh></v>
+<v t="edream.110203163054.594"><vh>Dragging headlines</vh></v>
 <v t="edream.110203163054.766"><vh>Editing body text</vh></v>
 <v t="edream.110203163054.767"><vh>Expanding &amp; contracting headlines</vh></v>
 <v t="edream.110203163054.768"><vh>Indenting body text automatically</vh>
-<v t="edream.110203163054.357" a=""><vh>Optional Emacs-style auto-indent</vh></v>
+<v t="edream.110203163054.357"><vh>Optional Emacs-style auto-indent</vh></v>
 </v>
 <v t="edream.110203163054.769"><vh>Marking headlines</vh></v>
 <v t="edream.110203163054.770"><vh>Moving &amp; Reorganizing headlines</vh></v>
 <v t="edream.110203163054.771"><vh>Opening URL's automatically</vh>
-<v t="edream.110203163054.351" a=""><vh>@url</vh></v>
+<v t="edream.110203163054.351"><vh>@url</vh></v>
 </v>
 <v t="edream.110203163054.772"><vh>Resizing panes</vh></v>
 <v t="edream.110203163054.773"><vh>Undoing operations</vh></v>
@@ -1117,31 +1146,31 @@
 <v t="edream.110203163054.808"><vh>@encoding directive specifies encoding of text</vh></v>
 <v t="edream.110203163054.809"><vh>@first and @last directives allow leading and trailing lines in @file trees</vh></v>
 <v t="edream.110203163054.810"><vh>@language specifying the target language</vh></v>
-<v t="edream.110203163054.199" a=""><vh>@lineending directive specifies line endings</vh></v>
+<v t="edream.110203163054.199"><vh>@lineending directive specifies line endings</vh></v>
 <v t="edream.110203163054.811"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
-<v t="edream.110203163054.383" a=""><vh>@raw and @end_raw directives delimit raw text</vh></v>
+<v t="edream.110203163054.383"><vh>@raw and @end_raw directives delimit raw text</vh></v>
 <v t="edream.110203163054.812"><vh>@wrap and @nowrap directives control line wrapping in the body pane</vh></v>
 </v>
-<v t="edream.110203163054.355" a=""><vh>About cweb mode </vh></v>
-<v t="edream.110203163054.359" a=""><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+<v t="edream.110203163054.355"><vh>About cweb mode </vh></v>
+<v t="edream.110203163054.359"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 <v t="edream.110203163054.813"><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
 <v t="edream.110203163054.814"><vh>@root vs. @file trees</vh></v>
 <v t="edream.110203163054.815"><vh>Sections and section definitions</vh></v>
 <v t="edream.110203163054.816"><vh>Tangling @root trees with the Tangle commands</vh></v>
 <v t="edream.110203163054.817"><vh>Untangling @root trees with the Untangle commands</vh></v>
-<v t="edream.110203163054.384" a=""><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
+<v t="edream.110203163054.384"><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.818"><vh>Chapter 5: Using Leo's Commands</vh>
 <v t="edream.110203163054.819"><vh> The File Menu</vh>
 <v t="edream.110203163054.820" a="M"><vh>Loading, Saving and Reverting Files</vh></v>
 <v t="edream.110203163054.821"><vh>Communicating with external editors</vh>
-<v t="edream.110203163054.356" a=""><vh>Open With command</vh>
-<v t="edream.110203163054.343" a=""><vh>createOpenWithMenuFromTable</vh></v>
+<v t="edream.110203163054.356"><vh>Open With command</vh>
+<v t="edream.110203163054.343"><vh>createOpenWithMenuFromTable</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.822"><vh>Tangling an outline: Producing Derived Files</vh></v>
-<v t="edream.110203163054.681" a=""><vh>Untangling: updating an outline</vh></v>
+<v t="edream.110203163054.681"><vh>Untangling: updating an outline</vh></v>
 <v t="edream.110203163054.823"><vh>Tangling and Untangling: the Interface with the IDE</vh></v>
 <v t="edream.110203163054.824" a="M"><vh>Importing Files into Leo Outlines</vh></v>
 <v t="edream.110203163054.825"><vh>Exporting Files from Leo Outlines</vh></v>
@@ -1153,9 +1182,9 @@
 <v t="edream.110203163054.830"><vh>Shifting body text</vh></v>
 <v t="edream.110203163054.831"><vh>Creating nodes from body text</vh></v>
 <v t="edream.110203163054.832"><vh>Converting leading blanks and tabs in body text</vh></v>
-<v t="edream.110203163054.833" a=""><vh>Executing Python scripts in body text</vh></v>
+<v t="edream.110203163054.833"><vh>Executing Python scripts in body text</vh></v>
 <v t="edream.110203163054.834"><vh>Finding and changing text</vh>
-<v t="edream.110603190322.6" a=""><vh> Script Find and Script Change</vh>
+<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
 <v t="edream.111803060152.1"><vh>How it works</vh></v>
 <v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
 </v>
@@ -1172,11 +1201,11 @@
 <v t="edream.110203163054.845"><vh>Wrap Around</vh></v>
 </v>
 <v t="edream.110203163054.846"><vh>Finding locations in outlines corresponding to line in derived files</vh>
-<v t="edream.110203163054.353" a=""><vh>Go To Line Number command</vh></v>
+<v t="edream.110203163054.353"><vh>Go To Line Number command</vh></v>
 </v>
 <v t="edream.110203163054.847"><vh>Inserting the date and time</vh></v>
 <v t="edream.110203163054.848"><vh>Reformatting paragraphs in body text</vh>
-<v t="edream.110203163054.358" a=""><vh>Reformat Paragraph command</vh></v>
+<v t="edream.110203163054.358"><vh>Reformat Paragraph command</vh></v>
 </v>
 <v t="edream.110203163054.849"><vh>Matching brackets and parenthesis</vh></v>
 <v t="edream.110203163054.850"><vh>Setting Preferences</vh>
@@ -1192,49 +1221,49 @@
 <v t="edream.110703093314.1"><vh> Hoisting &amp; De-hoisting headlines</vh></v>
 <v t="edream.110203163054.858"><vh> Marking headlines</vh></v>
 <v t="edream.110203163054.857"><vh> Moving, sorting and reorganizing headlines</vh></v>
-<v t="edream.110203163054.755" a=""><vh>Cloning headlines</vh>
+<v t="edream.110203163054.755"><vh>Cloning headlines</vh>
 <v t="edream.110203163054.756"><vh>read me</vh></v>
-<v t="edream.110203163054.757" a=""><vh>a</vh>
-<v t="edream.110203163054.758" a=""><vh>b</vh>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
+<v t="edream.110203163054.757"><vh>a</vh>
+<v t="edream.110203163054.758"><vh>b</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
 <v t="edream.110203163054.760"><vh>d</vh></v>
 <v t="edream.110203163054.761"><vh>e</vh></v>
 </v>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
-<v t="edream.110203163054.760"><vh>d</vh></v>
-<v t="edream.110203163054.761"><vh>e</vh></v>
-</v>
-</v>
-<v t="edream.110203163054.762"><vh>g</vh></v>
-<v t="edream.110203163054.758" a=""><vh>b</vh>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
-<v t="edream.110203163054.760"><vh>d</vh></v>
-<v t="edream.110203163054.761"><vh>e</vh></v>
-</v>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
-<v t="edream.110203163054.760"><vh>d</vh></v>
-<v t="edream.110203163054.761"><vh>e</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203163054.757" a=""><vh>a</vh>
-<v t="edream.110203163054.758" a=""><vh>b</vh>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
-<v t="edream.110203163054.760"><vh>d</vh></v>
-<v t="edream.110203163054.761"><vh>e</vh></v>
-</v>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
 <v t="edream.110203163054.760"><vh>d</vh></v>
 <v t="edream.110203163054.761"><vh>e</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.762"><vh>g</vh></v>
-<v t="edream.110203163054.758" a=""><vh>b</vh>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
+<v t="edream.110203163054.758"><vh>b</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
 <v t="edream.110203163054.760"><vh>d</vh></v>
 <v t="edream.110203163054.761"><vh>e</vh></v>
 </v>
-<v t="edream.110203163054.759" a=""><vh>c</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
+<v t="edream.110203163054.760"><vh>d</vh></v>
+<v t="edream.110203163054.761"><vh>e</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203163054.757"><vh>a</vh>
+<v t="edream.110203163054.758"><vh>b</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
+<v t="edream.110203163054.760"><vh>d</vh></v>
+<v t="edream.110203163054.761"><vh>e</vh></v>
+</v>
+<v t="edream.110203163054.759"><vh>c</vh>
+<v t="edream.110203163054.760"><vh>d</vh></v>
+<v t="edream.110203163054.761"><vh>e</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.762"><vh>g</vh></v>
+<v t="edream.110203163054.758"><vh>b</vh>
+<v t="edream.110203163054.759"><vh>c</vh>
+<v t="edream.110203163054.760"><vh>d</vh></v>
+<v t="edream.110203163054.761"><vh>e</vh></v>
+</v>
+<v t="edream.110203163054.759"><vh>c</vh>
 <v t="edream.110203163054.760"><vh>d</vh></v>
 <v t="edream.110203163054.761"><vh>e</vh></v>
 </v>
@@ -1327,12 +1356,12 @@
 <v t="edream.110203163054.929"><vh>Setters</vh></v>
 </v>
 </v>
-<v t="edream.112303173638" a=""><vh>Running Leo in batch mode</vh></v>
+<v t="edream.112303173638"><vh>Running Leo in batch mode</vh></v>
 </v>
-<v t="edream.110203163054.319" a=""><vh>Chapter 8: Customizing Leo</vh>
-<v t="edream.110203163054.320" a=""><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
+<v t="edream.110203163054.320"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
-<v t="edream.110203163054.322" a=""><vh>Overview of plugins and hooks</vh></v>
+<v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.323"><vh>New plugin architecture</vh>
 <v t="edream.110203163054.324"><vh>@file plugins/mod_open_with.py</vh>
 <v t="edream.110203163054.325"><vh>on_idle</vh>
@@ -1346,7 +1375,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.172" a=""><vh>About hooks</vh></v>
+<v t="edream.110203163054.172"><vh>About hooks</vh></v>
 <v t="edream.110203163054.331"><vh>SECURITY WARNINGS</vh>
 <v t="edream.110203163054.332"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="edream.110203163054.333"><vh>NEVER use this kind of code in a hook!!</vh></v>
@@ -1361,7 +1390,7 @@
 <v t="edream.110203163054.340"><vh>Convenience methods to create, destroy and modify menus</vh>
 <v t="edream.110203163054.341"><vh>createMenuItemsFromTable</vh></v>
 <v t="edream.110203163054.342"><vh>createNewMenu</vh></v>
-<v t="edream.110203163054.343" a=""><vh>createOpenWithMenuFromTable</vh></v>
+<v t="edream.110203163054.343"><vh>createOpenWithMenuFromTable</vh></v>
 <v t="edream.110203163054.344"><vh>deleteMenu</vh></v>
 <v t="edream.110203163054.345"><vh>deleteMenuItem</vh></v>
 <v t="edream.110203163054.346"><vh>Example: how to create a menu</vh></v>
@@ -1370,7 +1399,7 @@
 <v t="edream.110203163054.347"><vh>Translating menus into other languages</vh></v>
 <v t="edream.121403162622"><vh>Support for unit testing</vh></v>
 </v>
-<v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
+<v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
 <v t="edream.120703073611"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
 <v t="edream.120703073611.1"><vh>Recommended conventions for plugins</vh></v>
@@ -1403,10 +1432,10 @@
 <v t="edream.110203163054.365"><vh>Part 1</vh></v>
 <v t="edream.110203163054.367"><vh>Part 2</vh></v>
 </v>
-<v t="edream.110203163054.100" a=""><vh>4.0 Theory of operation</vh></v>
+<v t="edream.110203163054.100"><vh>4.0 Theory of operation</vh></v>
 </v>
 <v t="edream.110203163054.952"><vh>Appendices</vh>
-<v t="edream.110203163054.493" a=""><vh>Code hidden in leo.py</vh>
+<v t="edream.110203163054.493"><vh>Code hidden in leo.py</vh>
 <v t="edream.110203163054.494"><vh>c2py.py</vh></v>
 <v t="edream.110203163054.495"><vh>disStats.py</vh></v>
 <v t="edream.110203163054.496"><vh>Tkinter utilities</vh></v>
@@ -1447,7 +1476,7 @@
 <v t="edream.110203163054.981"><vh>@directive not valid here</vh></v>
 <v t="edream.110203163054.982"><vh>Halting Tangle: too many errors</vh></v>
 <v t="edream.110203163054.983"><vh>Invalid recursive reference of &lt;&lt; section name &gt;&gt;</vh></v>
-<v t="edream.110203163054.680" a=""><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
+<v t="edream.110203163054.680"><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
 <v t="edream.110203163054.984"><vh>No file written because of errors</vh></v>
 <v t="edream.110203163054.985"><vh>Run on comment</vh></v>
 <v t="edream.110203163054.986"><vh>Run on file name in @root directive</vh></v>
@@ -1490,7 +1519,7 @@
 </v>
 <v t="edream.110203163054.1018"><vh>Format of derived files (4.x)</vh></v>
 <v t="edream.110203163054.1019"><vh>Future Features</vh></v>
-<v t="edream.110203163054.734" a=""><vh>Known Bugs &amp; Limitations</vh></v>
+<v t="edream.110203163054.734"><vh>Known Bugs &amp; Limitations</vh></v>
 <v t="edream.110203163054.1020"><vh>Reference for @file trees</vh></v>
 <v t="edream.110203163054.1024"><vh>Sherlock</vh></v>
 <v t="edream.110203163054.1025"><vh>Unicode</vh>
@@ -1524,10 +1553,10 @@
 <v t="edream.110203163054.1047"><vh>Headline 3 ( No body text)</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1048" a=""><vh>Headline 4 ( a clone )</vh>
+<v t="edream.110203163054.1048"><vh>Headline 4 ( a clone )</vh>
 <v t="edream.110203163054.1049"><vh>Headline 5</vh></v>
 </v>
-<v t="edream.110203163054.1048" a=""><vh>Headline 4 ( a clone )</vh>
+<v t="edream.110203163054.1048"><vh>Headline 4 ( a clone )</vh>
 <v t="edream.110203163054.1049"><vh>Headline 5</vh></v>
 </v>
 </v>
@@ -1548,28 +1577,28 @@
 </v>
 <v t="edream.110203163054.1059"><vh>Using derived files</vh>
 <v t="edream.110203163054.1060"><vh>How do I prevent Leo from inserting sentinels in derived files?</vh>
-<v t="edream.110203163054.359" a=""><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+<v t="edream.110203163054.359"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 </v>
 <v t="edream.110203163054.1061"><vh>How do I prevent Leo from expanding sections?</vh>
-<v t="edream.110203163054.359" a=""><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+<v t="edream.110203163054.359"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 </v>
 <v t="edream.110203163054.1062"><vh>How do I generate files after using the Import commands?</vh></v>
 <v t="edream.110203163054.1063"><vh>How can I create Javascript comments?</vh></v>
 <v t="edream.110203163054.1064"><vh>How can I disable PHP comments?</vh></v>
 <v t="edream.110203163054.1065"><vh>How do I make derived files start with a shebang line?</vh></v>
 <v t="edream.110203163054.1066"><vh>How do I use Leo to create cweb files?</vh>
-<v t="edream.110203163054.355" a=""><vh>About cweb mode </vh></v>
+<v t="edream.110203163054.355"><vh>About cweb mode </vh></v>
 </v>
 <v t="edream.110203163054.1067"><vh>Can @file trees contain material not in the derived file?</vh></v>
 </v>
 <v t="edream.110203163054.1068"><vh>Customizing Leo</vh>
-<v t="edream.110203163054.322" a=""><vh>Overview of plugins and hooks</vh></v>
+<v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.1069"><vh>I'm having trouble getting plugins to work.  What should I do?</vh></v>
 <v t="edream.110203163054.1070"><vh>How can I add support for a new language? </vh></v>
-<v t="edream.110203163054.319" a=""><vh>Chapter 8: Customizing Leo</vh>
-<v t="edream.110203163054.320" a=""><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
+<v t="edream.110203163054.320"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
-<v t="edream.110203163054.322" a=""><vh>Overview of plugins and hooks</vh></v>
+<v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.323"><vh>New plugin architecture</vh>
 <v t="edream.110203163054.324"><vh>@file plugins/mod_open_with.py</vh>
 <v t="edream.110203163054.325"><vh>on_idle</vh>
@@ -1583,7 +1612,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.172" a=""><vh>About hooks</vh></v>
+<v t="edream.110203163054.172"><vh>About hooks</vh></v>
 <v t="edream.110203163054.331"><vh>SECURITY WARNINGS</vh>
 <v t="edream.110203163054.332"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="edream.110203163054.333"><vh>NEVER use this kind of code in a hook!!</vh></v>
@@ -1598,7 +1627,7 @@
 <v t="edream.110203163054.340"><vh>Convenience methods to create, destroy and modify menus</vh>
 <v t="edream.110203163054.341"><vh>createMenuItemsFromTable</vh></v>
 <v t="edream.110203163054.342"><vh>createNewMenu</vh></v>
-<v t="edream.110203163054.343" a=""><vh>createOpenWithMenuFromTable</vh></v>
+<v t="edream.110203163054.343"><vh>createOpenWithMenuFromTable</vh></v>
 <v t="edream.110203163054.344"><vh>deleteMenu</vh></v>
 <v t="edream.110203163054.345"><vh>deleteMenuItem</vh></v>
 <v t="edream.110203163054.346"><vh>Example: how to create a menu</vh></v>
@@ -1607,7 +1636,7 @@
 <v t="edream.110203163054.347"><vh>Translating menus into other languages</vh></v>
 <v t="edream.121403162622"><vh>Support for unit testing</vh></v>
 </v>
-<v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
+<v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
 <v t="edream.120703073611"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
 <v t="edream.120703073611.1"><vh>Recommended conventions for plugins</vh></v>
@@ -1623,14 +1652,14 @@
 <v t="edream.110203163054.1075"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="edream.110203163054.1076"><vh>&lt;&lt; Create the Target Language frame &gt;&gt;</vh></v>
 <v t="edream.110203163054.1077"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
-<v t="edream.110203163054.1078" a=""><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
-<v t="edream.110203163054.1079" a=""><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
+<v t="edream.110203163054.1078"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
+<v t="edream.110203163054.1079"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
 <v t="edream.110203163054.1080"><vh>&lt;&lt; initialize constant ivars &gt;&gt;</vh></v>
 <v t="edream.110203163054.1081"><vh>set_delims_from_language</vh></v>
 <v t="edream.110203163054.1082"><vh>set_language</vh></v>
 <v t="edream.110203163054.1083"><vh>colorizeAnyLanguage</vh>
 <v t="edream.110203163054.1084"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
-<v t="edream.110203163054.1078" a=""><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
+<v t="edream.110203163054.1078"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
 <v t="edream.110203163054.1085"><vh>Multiline State Handlers</vh>
 <v t="edream.110203163054.1086"><vh>&lt;&lt; continue doc part &gt;&gt;</vh>
 <v t="edream.110203163054.1087"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
@@ -1657,7 +1686,7 @@
 <v t="edream.110203163054.1104"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203163054.1105"><vh>getPrefs</vh>
-<v t="edream.110203163054.1079" a=""><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
+<v t="edream.110203163054.1079"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.1106"><vh>@root tcl/tk test</vh>
@@ -1718,7 +1747,7 @@
 <v t="edream.110203163054.1157"><vh>Weaving</vh></v>
 </v>
 <v t="edream.110203163054.1158"><vh>Sample Code</vh>
-<v t="edream.112303173638" a=""><vh>Running Leo in batch mode</vh></v>
+<v t="edream.112303173638"><vh>Running Leo in batch mode</vh></v>
 <v t="edream.110203163054.1159"><vh>Hello World using @root</vh>
 <v t="edream.110203163054.1160"><vh>&lt;&lt; includes &gt;&gt;</vh></v>
 <v t="edream.110203163054.1161"><vh>&lt;&lt; methods &gt;&gt;</vh></v>
@@ -24586,5 +24615,126 @@ Tarvin Rhodes
 </t>
 <t tx="ekr.20040129074732">Im a newbie to Leo( a couple of weeks ) and I feel addicted to programming again...in fact it has resurrected a dead project of mine :) The Outline has proven most liberating in terms of testing ideas out...Thanks alot!  
 </t>
+<t tx="ekr.20040131040356">Leo 4.1 Release Candidate 4              February 2, 2004
+
+This release fixes a serious bug in the logic that reads old-style derived files.
+
+There are no known bugs in this version of Leo.
+
+The highlights of this release:
+
+- Leo runs in batch mode when invoked with --script aScriptFile.py
+- Leo supports Unicode characters (e.g. Chinese) in path and file names.
+- @directives and section references are now valid when executing scripts.
+- @ignored and orphan nodes now valid in @file-nosent trees.
+- Script-based find/change commands.
+- Check Outline command.
+- Hoist &amp; DeHoist commands.
+- A new gui-agnostic architecture: useful for batch mode and unit tests.
+- Several new configuration settings.
+- Many new unit tests.
+- A host of bug fixes.</t>
+<t tx="ekr.20040131040356.1"></t>
+<t tx="ekr.20040131040356.2">See previous release notes for more details:
+
+4.1 rc3:
+
+- Corrected counts when replacing tabs/blanks.
+- Don't write tnodeList when executing scripts.
+- Fixed long-standing clone-drag bug.
+- Fixed inconsistency between how 4.x and 3.x handle @others.
+  The code now works as it did in all 3.x versions, namely
+  @others does not terminate doc parts.
+- Leo now properly sets clone marks when when cutting and pasting nodes.
+- Only double-quotes delimit strings in html files.
+  This bug prevented Leo from untangling some valid html/xml files.
+- Leo now puts class docstrings in class nodes when importing .py files.
+- Fixed several reorg bugs.
+
+4.1 rc2, rc1, betas, alphas:
+
+- Fixed several minor problems with the Extract Section and Import commands.
+- Fixed problem that prevent the Find panel from working on the Mac.
+- Improved @url handling so that @url file:\\path\x.leo works properly.
+- Improved support for @lineending platform.
+- Leo honors outline/body pane ratio when opening .leo files.
+- Leo now ensures that newly-opened windows fit entirely on the screen.
+- Fixed a crasher when Undoing a Change All command when searching headlines.
+- Fixed other bugs resulting from the 4.1 reorg:
+- Fixed problem loading plugins on Linux.
+- Fixed crashers in the Extract Section and Extract commands.
+- Fixed a crasher when writing a file containing an undefined section.
+- Removed duplicate bindings in popup menus.
+- Made sure to show Leo's windows in wx gui plugin.
+- More than one section reference may now appear on the same line.
+- Use "utf-8" encoding for filenames under MacOS (Darwin)
+- Allow command or cmnd prefix for menu shortcuts under Darwin.
+- Fixed a LaTeX coloring bug
+</t>
+<t tx="ekr.20040131040356.3">- The 4.1 code base has been reorganized to support gui plugins.
+- Created a flexible framework for creating &amp; running regression tests.
+- app.forceShutdown now works when called from plugins.
+- Created app.unitTestDict for communication between tests and between tests and code.
+
+- An example wx_gui plugin is partly functional.
+
+	Warning: Use the __wx_gui.py plugin with _extreme_ caution until further notice:
+	bugs in this plugin could cause body text to be cleared improperly when changing nodes.
+</t>
+<t tx="ekr.20040131040356.4">- use_gnx specifies whether .leo files use integers as indices:
+  
+	use_gnx = 0 makes .leo files compatible with previous versions of Leo.
+	use_gnx = 1 makes .leo files cvs-friendly
+
+- config_encoding specifies the encoding of leoConfig.txt.</t>
+<t tx="ekr.20040131040356.5">- Import Derived File command now uses a file dialog.
+
+	This is much more natural than using @file nodes.
+
+- Leo now loads all plugins listed in pluginsManager.text.
+
+	It is no longer necessary to edit plugin files to enable or disable plugins.</t>
+<t tx="ekr.20040131040544.2"></t>
+<t tx="ekr.20040131040544.5"></t>
+<t tx="ekr.20040131040544.10">This allows plugins to draw the status area in the icon area.</t>
+<t tx="ekr.20040131040544.18">The old code was concatenating strings; the new code uses list.append.</t>
+<t tx="ekr.20040131040544.21">- ESC closes the Find panel.
+
+- Hitting the Return key is now equivalent to hitting the Find button.</t>
+<t tx="ekr.20040131040544.32"></t>
+<t tx="ekr.20040131040544.55">Leo now reports the parent of the orphan node.</t>
+<t tx="ekr.20040131040544.73">This bug happened when a move up command would cause a node to become the sibling of (a clone of) itself.  In such cases, Leo simply selects the other cloned copy of the moved node.</t>
+<t tx="ekr.20040131040544.81">The bug was causing Leo not to remember the comment delimiters in the @+leo sentinel.  As a result, Leo was recognizing no sentinels and the command complained about missing @-leo sentinels.</t>
+<t tx="ekr.20040131040544.146">- Leo now does a better job of checking and reporting read-only violations.
+
+- Leo now clears the file-dirty mark only if the file was sucessfully saved.
+
+</t>
+<t tx="ekr.20040131040544.169"></t>
+<t tx="ekr.20040131040544.178">Leo sets only ancetor @file nodes dirty (not nodes themselves) when altering outline structure, i.e., when moving, inserting, deleting, cloning and sorting nodes.</t>
+<t tx="ekr.20040131040544.222">That is, when preprocessing the script (expanding section references, etc.) Leo now ensures that child nodes effectively end in a newline.  This prevents unintended concatenation of lines.</t>
+<t tx="ekr.20040131040544.227">A contained a space before a tab in the leading whitespace of the line.</t>
+<t tx="ekr.20040131040544.228">- These commands did not properly count the number of changed nodes.
+- These commands now mark only changed nodes as dirty.</t>
+<t tx="ekr.20040131040544.258"></t>
+<t tx="ekr.20040131040754">Fixed crashers in:
+
+- Insert Headline Time/Date commands.
+- Change headline command.
+- Write Dirty/Missing @file Nodes commands.
+- Batch mode.</t>
+<t tx="ekr.20040131041015"></t>
+<t tx="ekr.20040131044136">- Fixed a bug that caused cut and paste operations in headlines to revert when those commands were chosen from the Edit menu.
+
+- Extended control-v bug fix to "darwin","freebsd4","freebsd5"
+
+- Cut and paste are now always enabled when not editing the body pane.  This isn't perfect, and is an improvement.</t>
+<t tx="ekr.20040131044727">1. Fixed a bug that caused improper indentation of sections.
+
+The bug happened in some cases when a section reference occured following non-whitespace.
+
+2. Leo ensures that leading whitespace is not added when writing empty lines.
+
+This _might_ fix the "Zope Sprint" bug: "blank" lines in the expansion of @others got leading whitespace.</t>
 </tnodes>
 </leo_file>
