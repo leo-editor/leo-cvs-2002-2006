@@ -555,6 +555,7 @@ class baseAtFile:
 		write_new = not app.config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
 		df.initIvars()
+		changedFiles = [] # Files that were actually changed.
 		writtenFiles = [] # Files that might be written again.
 	
 		if writeAtFileNodesFlag:
@@ -605,6 +606,9 @@ class baseAtFile:
 				
 					if not v.isAtIgnoreNode():
 						writtenFiles.append(v.t)
+				
+					if df.fileChangedFlag: # Set by replaceTargetFileIfDifferent.
+						changedFiles.append(v.t)
 				#@nonl
 				#@-node:<< handle v's tree >>
 				#@nl
@@ -624,31 +628,26 @@ class baseAtFile:
 		#@nonl
 		#@-node:<< say the command is finished >>
 		#@nl
-		
-		return len(writtenFiles) # 9/23/03: so caller knows whether to do an auto-save.
-	#@nonl
+		return len(changedFiles) > 0 # So caller knows whether to do an auto-save.
 	#@-node:top_df.writeAll
 	#@+node:top_df.write, rawWrite, silentWrite
 	def rawWrite (self,v):
-		
 		at = self
 		write_new = not app.config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
-		try: df.rawWrite(v)
+		try:    df.rawWrite(v)
 		except: at.writeException(v)
 		
 	def silentWrite (self,v):
-	
-		at = self # 9/26/03
+		at = self
 		try: at.old_df.silentWrite(v) # No new_df.silentWrite method.
 		except: at.writeException(v)
 		
 	def write (self,v,nosentinels=false):
-		
 		at = self
 		write_new = not app.config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
-		try: df.write(v,nosentinels)
+		try:    df.write(v,nosentinels)
 		except: at.writeException(v)
 			
 	def writeException(self,v):
@@ -683,7 +682,7 @@ class baseAtFile:
 		write_new = not app.config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
 		df.initIvars()
-		writtenFiles = false
+		writtenFiles = false ; changedFiles = false
 		after = v.nodeAfterTree()
 		while v and v != after:
 			if v.isAtSilentFileNode() or (v.isAnyAtFileNode() and not v.isAtIgnoreNode()):
@@ -752,6 +751,10 @@ class baseAtFile:
 						else: assert(0)
 						
 						writtenFiles = true
+						
+						if df.fileChangedFlag: # Set by replaceTargetFileIfDifferent.
+							changedFiles = true
+						#@nonl
 						#@-node:<< write the @file node >>
 						#@nl
 				v = v.nodeAfterTree()
@@ -765,7 +768,7 @@ class baseAtFile:
 		else:
 			es("no missing @file node in the selected tree")
 			
-		return writtenFiles # 9/23/03: so caller knows whether to do an auto-save.
+		return changedFiles # So caller knows whether to do an auto-save.
 	#@nonl
 	#@-node:top_df.writeMissing
 	#@-others
@@ -851,6 +854,9 @@ class baseOldDerivedFile:
 		self.file = None
 		self.importing = false
 		self.importRootSeen = false
+		
+		# Set when a file has actually been updated.
+		self.fileChangedFlag = false
 		#@nonl
 		#@-node:<< init atFile ivars >>
 		#@nl
@@ -2666,6 +2672,7 @@ class baseOldDerivedFile:
 		
 		assert(self.outputFile == None)
 		
+		self.fileChangedFlag = false
 		if os.path.exists(self.targetFileName):
 			if filecmp.cmp(self.outputFileName,self.targetFileName):
 				#@			<< delete the output file >>
@@ -2700,6 +2707,7 @@ class baseOldDerivedFile:
 							except:
 								es("exception in os.chmod(%s)" % (self.targetFileName))
 						es("writing: " + self.shortFileName)
+						self.fileChangedFlag = true
 					except:
 						# 6/28/03
 						self.writeError("exception renaming: %s to: %s" % (self.outputFileName,self.targetFileName))
@@ -2721,6 +2729,7 @@ class baseOldDerivedFile:
 			try:
 				utils_rename(self.outputFileName,self.targetFileName)
 				es("creating: " + self.targetFileName)
+				self.fileChangedFlag = true
 			except:
 				self.writeError("exception renaming:" + self.outputFileName +
 					" to " + self.targetFileName)

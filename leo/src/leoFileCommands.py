@@ -1849,9 +1849,9 @@ class baseFileCommands:
 		
 		c = self.commands
 	
-		writtenFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=true)
-		assert(writtenFiles != None)
-		if writtenFiles:
+		changedFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=true)
+		assert(changedFiles != None)
+		if changedFiles:
 			es("auto-saving outline",color="blue")
 			c.frame.OnSave() # Must be done to set or clear tnodeList.
 	#@nonl
@@ -1863,10 +1863,10 @@ class baseFileCommands:
 		
 		c = self.commands
 	
-		writtenFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
+		changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
 		
-		assert(writtenFiles != None)
-		if writtenFiles:
+		assert(changedFiles != None)
+		if changedFiles:
 			es("auto-saving outline",color="blue")
 			c.frame.OnSave() # Must be done to set or clear tnodeList.
 	#@nonl
@@ -1878,9 +1878,9 @@ class baseFileCommands:
 	
 		if v:
 			at = c.atFileCommands
-			writtenFiles = at.writeMissing(v)
-			assert(writtenFiles != None)
-			if writtenFiles:
+			changedFiles = at.writeMissing(v)
+			assert(changedFiles != None)
+			if changedFiles:
 				es("auto-saving outline",color="blue")
 				c.frame.OnSave() # Must be done to set or clear tnodeList.
 	#@nonl
