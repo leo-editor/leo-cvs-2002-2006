@@ -4,85 +4,6 @@
 
 #@+all
 #@+node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
-#@+node:ekr.20040917080403:Fix bugs reported late in 4.2 cycle
-#@+node:ekr.20040917080403.1:Clean up code in runOpenFileDialog
-@
-
-Replace the try/except code with
-
-    if multiple and g.CheckVersion(sys.version,"2.3") and g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4"):
-#@nonl
-#@+node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
-def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
-
-    """Create and run an Tkinter open file dialog ."""
-    
-    # askopenfilenames only exists in Python 2.3 or later.
-    # Not only that, askopenfilenames apparently doesn't work with Tk versions earlier than 8.4.
-    
-    # if multiple and g.CheckVersion(sys.version,"2.3") and g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4"):
-    if multiple and g.CheckVersion(sys.version,"2.3"):
-        try:
-            files = tkFileDialog.askopenfilenames(
-                title=title, filetypes=filetypes)
-            return list(files)
-        except:
-            # Work around an apparent Linux bug in askopenfilenames.
-            file = tkFileDialog.askopenfilename(
-                title=title, filetypes=filetypes)
-            return [file]
-    else:
-        file = tkFileDialog.askopenfilename(
-            title=title, filetypes=filetypes)
-        if multiple: return [file]
-        else:        return file
-    
-        # DTHEIN 2004.01.31: remove default extension on open,
-        # so that we can open files without extensions
-
-def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
-
-    """Create and run an Tkinter save file dialog ."""
-
-    return tkFileDialog.asksaveasfilename(
-        initialfile=initialfile,
-        title=title,
-        filetypes=filetypes)
-    # EKR: 2004.01.31: remove default extensions on save too.
-    # defaultextension=defaultextension)
-#@nonl
-#@-node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
-#@-node:ekr.20040917080403.1:Clean up code in runOpenFileDialog
-#@+node:ekr.20040917063309:Fix bug re non-existent filename on command line
-@killcolor
-When I start leo from the command line (linux) with e.g.
-
-[davides@icarus utilities]$ leodev test.leo
-
-(leodev is an alias to the latest cvs version)
-
-and "test.leo" does not exist, the Log pane says
-
-File not found: /localstore/computer/davides/SW/test/utilities/test.leo
-
-but then I would expect that the current file name were set to "test.leo", so that when I do a save, "test.leo" gets saved. It is set to "untitled" instead, so that in essence in this case Leo ignores my command line argument. I would also change the log message to say something like "New file" or similar. Cf. what happens when you do e.g. "vi newfile.txt" (or "emacs", or even "edit" in ms-dos).
-
-Davide 
-#@nonl
-#@-node:ekr.20040917063309:Fix bug re non-existent filename on command line
-#@+node:ekr.20040918093558:Fix Font dialog problems on the Mac
-@killcolor
-
-There seems to be a bug when setting font preferences on the Mac.  If I 
-check more than one box and then apply a font change, the change is set 
-correctly when I restart Leo but doesn't always preview correctly 
-before that.  I set headline and body text to the same font and the 
-headlines did not change to show the new font until I started up again. 
-  Not a big deal.
-
--- Dan Windler
-#@-node:ekr.20040918093558:Fix Font dialog problems on the Mac
-#@-node:ekr.20040917080403:Fix bugs reported late in 4.2 cycle
 #@+node:ekr.20040919101448:Do first: can't be done in plugins
 #@+node:ekr.20040916122326.1:Undo...
 #@+node:EKR.20040601133022.1:(Finish the new undo)
@@ -832,1484 +753,7 @@ This implies:
 - Removing commands that write old-style formats.
 #@nonl
 #@-node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
-#@+node:ekr.20040701152235:Fix shawdow warnings ?
-@killcolor
-
-cmp,dict,dir,file,id,type are all global functions.
-#@+node:ekr.20040701152235.2:leoApp
-c:\prog\leoCVS\leo\src\leoApp.py:209: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:224: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:368: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:401: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.2:leoApp
-#@+node:ekr.20040701152235.3:leoPlugins
-C:\prog\leoCVS\leo\src\leoPlugins.py:40: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:53: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:67: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:72: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:74: (file) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.3:leoPlugins
-#@+node:ekr.20040701152235.4:leoColor
-C:\prog\leoCVS\leo\src\leoColor.py:1948: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoColor.py:2059: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.4:leoColor
-#@+node:ekr.20040701152235.5:leoNodes
-C:\prog\leoCVS\leo\src\leoNodes.py:578: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1372: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1394: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1411: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1412: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1419: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1443: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1446: (id) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.5:leoNodes
-#@+node:ekr.20040701152235.6:leoCompare
-C:\prog\leoCVS\leo\src\leoCompare.py:44: (cmp) shadows builtin
-C:\prog\leoCVS\leo\src\leoCompare.py:397: (cmp) shadows builtin
-C:\prog\leoCVS\leo\src\leoCompare.py:468: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.6:leoCompare
-#@+node:ekr.20040701152235.8:leoFind
-c:\prog\leoCVS\leo\src\leoFind.py:864: (type) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.8:leoFind
-#@+node:ekr.20040701152235.9:leoMenu
-c:\prog\leoCVS\leo\src\leoMenu.py:656: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoMenu.py:700: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.9:leoMenu
-#@+node:ekr.20040701152235.10:leoTkinterTree
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:162: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:167: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:586: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:639: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:783: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:844: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:883: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:893: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:911: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:949: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1390: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1588: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1590: (id) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.10:leoTkinterTree
-#@+node:ekr.20040701152235.11:leoTkinterFrame
-C:\prog\leoCVS\leo\src\leoTkinterFrame.py:807: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1233: (file) shadows builtin
-
-c:\prog\leoCVS\leo\src\leoFrame.py:522: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoFrame.py:566: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.11:leoTkinterFrame
-#@+node:ekr.20040701152235.12:leoTkinterPrefs
-c:\prog\leoCVS\leo\src\leoTkinterPrefs.py:295: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.12:leoTkinterPrefs
-#@+node:ekr.20040701152235.13:leoTkinterGui
-c:\prog\leoCVS\leo\src\leoTkinterGui.py:78: (file) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.13:leoTkinterGui
-#@+node:ekr.20040701152235.14:leoAtFile
-C:\prog\leoCVS\leo\src\leoAtFile.py:336: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:473: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:490: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:549: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:551: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2142: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2157: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2278: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2280: (dir) shadows builtin
-#@-node:ekr.20040701152235.14:leoAtFile
-#@+node:ekr.20040701152235.15:leoFileCommands
-C:\prog\leoCVS\leo\src\leoFileCommands.py:90: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:866: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:990: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1191: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1228: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1269: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1318: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1756: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:2018: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.15:leoFileCommands
-#@+node:ekr.20040701152235.16:leoImport
-C:\prog\leoCVS\leo\src\leoImport.py:52: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:273: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:473: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1626: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1648: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1650: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2303: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2348: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2371: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2398: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2426: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2476: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2727: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2792: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.16:leoImport
-#@+node:ekr.20040701152235.17:leoTangle
-c:\prog\leoCVS\leo\src\leoTangle.py:540: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:541: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:666: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:718: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:911: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:924: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:2038: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3563: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3656: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3667: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3780: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3865: (type) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.17:leoTangle
-#@+node:ekr.20040701152235.18:leoCommands
-C:\prog\leoCVS\leo\src\leoCommands.py:324: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:340: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:346: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:465: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:468: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:480: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:495: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:734: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1238: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1677: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1721: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1770: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1800: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.18:leoCommands
-#@-node:ekr.20040701152235:Fix shawdow warnings ?
 #@-node:ekr.20040919101448:Do first: can't be done in plugins
-#@+node:ekr.20040919182750:Top 3
-#@+node:ekr.20040916122326.1:Undo...
-#@+node:EKR.20040601133022.1:(Finish the new undo)
-#@+node:EKR.20040606195417.5:To do
-@nocolor
-
-- (done) Create u.saveNode, u.saveNodeAndChildren, u.saveListOfNodes.
-- Create u.appendSavedNode.
-- Use u.appendSavedNode in Change All command.
-- Unit tests.
-#@nonl
-#@-node:EKR.20040606195417.5:To do
-#@+node:EKR.20040528075307:u.saveTree
-def saveTree (self,p,treeInfo=None):
-    
-    """Create all info needed to handle a general undo operation."""
-
-    # WARNING: read this before doing anything "clever"
-    << about u.saveTree >>
-    
-    u = self ; topLevel = (treeInfo == None)
-    if topLevel: treeInfo = []
-
-    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
-    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    treeInfo.append(data)
-
-    # Recursively add info for the subtree.
-    child = p.firstChild()
-    while child:
-        self.saveTree(child,treeInfo)
-        child = child.next()
-
-    # if topLevel: g.trace(treeInfo)
-    return treeInfo
-#@+node:EKR.20040530114124:<< about u.saveTree >>
-@ 
-The old code made a free-standing copy of the tree using v.copy and t.copy.  This looks "elegant" and is WRONG.  The problem is that it can not handle clones properly, especially when some clones were in the "undo" tree and some were not.   Moreover, it required complex adjustments to t.vnodeLists.
-
-Instead of creating new nodes, the new code creates all information needed to properly restore the vnodes and tnodes.  It creates a list of tuples, on tuple for each vnode in the tree.  Each tuple has the form,
-
-(vnodeInfo, tnodeInfo) where vnodeInfo and tnodeInfo are dicts contain all info needed to recreate the nodes.  The v.createUndoInfoDict and t.createUndoInfoDict methods correspond to the old v.copy and t.copy methods.
-
-Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the createUndoInfoDict info, but quite a bit uglier.
-#@-node:EKR.20040530114124:<< about u.saveTree >>
-#@-node:EKR.20040528075307:u.saveTree
-#@+node:EKR.20040606195417.2:u.saveNodeAndChildren
-def saveNodeAndChildren (self,p):
-    
-    """Create all info needed for a node and all its immediate children."""
-
-    u = self
-    treeInfo = []
-
-    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
-    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    treeInfo.append(data)
-
-    # Add info for all children.
-    child = p.firstChild()
-    while child:
-        data = (child.v,child.v.createUndoInfo(),child.v.t.createUndoInfo())
-        treeInfo.append(data)
-        child = child.next()
-
-    return treeInfo
-
-#@-node:EKR.20040606195417.2:u.saveNodeAndChildren
-#@+node:EKR.20040606195417.1:u.saveNode
-def saveNode (self,p):
-    
-    """Create all info for a single vnode."""
-    
-    u = self
-
-    treeInfo = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    return treeInfo
-#@nonl
-#@-node:EKR.20040606195417.1:u.saveNode
-#@+node:EKR.20040606195417.3:u.saveListOfNodes
-def saveListOfNodes (self,listOfVnodes):
-    
-    """Create all info for a list of vnodes."""
-    
-    u = self ; treeInfo = []
-
-    for v in listOfVnodes:
-        data = (v,v.createUndoInfo(),v.t.createUndoInfo())
-        treeInfo.append(data)
-
-    return treeInfo
-#@nonl
-#@-node:EKR.20040606195417.3:u.saveListOfNodes
-#@-node:EKR.20040601133022.1:(Finish the new undo)
-#@+node:ekr.20040323084434:(Add granularity setting for undo)
-#@+node:ekr.20040328111626:Notes
-@nocolor
-
-- "node" and "line" granularity are easy:
-	- Node: just replace "new" text with present text.
-	- Line: create a new node if the present line isn't the same as the "line" attribute of the undo node.
-		(Very similar to node granularity.
-
-- "word" granularity is still fairly easy:
-	- inWord flag is True or False.
-	- create a new node if we are starting a new word.
-
-- copy/paste always start new undo typing nodes.
-	
-#@nonl
-#@-node:ekr.20040328111626:Notes
-#@+node:ekr.20031218072017.3606:undo.__init__ & clearIvars
-def __init__ (self,c):
-    
-    u = self ; u.c = c
-    
-    # Ivars to transition to new undo scheme...
-    u.debug = False # True: enable debugging code in new undo scheme.
-    u.debug_print = False # True: enable print statements in debug code.
-    u.new_undo = True # True: enable new debug code.
-
-    # Statistics comparing old and new ways (only if u.debug is on).
-    u.new_mem = 0
-    u.old_mem = 0
-
-    # State ivars...
-    u.undoType = "Can't Undo"
-    # These must be set here, _not_ in clearUndoState.
-    u.redoMenuLabel = "Can't Redo"
-    u.undoMenuLabel = "Can't Undo"
-    u.realRedoMenuLabel = "Can't Redo"
-    u.realUndoMenuLabel = "Can't Undo"
-    u.undoing = False # True if executing an Undo command.
-    u.redoing = False # True if executing a Redo command.
-    
-    # New in 4.2...
-    << Define optional ivars >>
-    << define redoDispatchDict >>
-    << define undoDispatchDict >>
-    u.updateSetChangedFlag = True
-    u.redrawFlag = True
-#@nonl
-#@+node:ekr.20031218072017.3607:clearIvars
-def clearIvars (self):
-    
-    u = self
-    
-    u.p = None # The position/node being operated upon for undo and redo.
-    for ivar in u.optionalIvars:
-        setattr(u,ivar,None)
-#@nonl
-#@-node:ekr.20031218072017.3607:clearIvars
-#@+node:ekr.20031218072017.3604:<< Define optional ivars >>
-# New in 4.2: this is now an ivar, not a global, and it's a list, not a tuple.
-
-u.optionalIvars = [
-    "lastChild",
-    "parent","oldParent",
-    "back","oldBack",
-    "n","oldN","oldV",
-    "oldText","newText",
-    "oldSel","newSel",
-    "sort","select",
-    "oldTree","newTree", # Added newTree 10/14/03
-    "yview",
-    # For incremental undo typing...
-    "leading","trailing",
-    "oldMiddleLines","newMiddleLines",
-    "oldNewlines","newNewlines" ]
-#@nonl
-#@-node:ekr.20031218072017.3604:<< Define optional ivars >>
-#@+node:EKR.20040526072519:<< define redoDispatchDict >>
-u.redoDispatchDict = {
-    "Change":             u.redoTyping,
-    "Change All":         u.redoChangeAll,
-    "Change Headline":    u.redoChangeHeadline,
-    "Clone Node":         u.redoClone,
-    "Convert All Blanks": u.redoReplaceNodesContents,
-    "Convert All Tabs":   u.redoReplaceNodesContents,
-    "Convert Blanks":     u.redoTyping,
-    "Convert Tabs":       u.redoTyping,
-    "Cut":                u.redoTyping,
-    "Cut Node":           u.redoDeleteNode,
-    "De-Hoist":           u.redoDehoist,
-    "Delete":             u.redoTyping,
-    "Delete Node":        u.redoDeleteNode,
-    "Demote":             u.redoDemote,
-    "Drag":               u.redoMoveNode,
-    "Drag & Clone":       u.redoClone,
-    "Extract":            u.redoReplaceNodes,
-    "Extract Names":      u.redoReplaceNodes,
-    "Extract Section":    u.redoReplaceNodes,
-    "Hoist":              u.redoHoist,
-    "Import":             u.redoInsertNodes,
-    "Indent":             u.redoTyping,
-    "Insert Node":        u.redoInsertNodes,
-    "Move Down":          u.redoMoveNode,
-    "Move Left":          u.redoMoveNode,
-    "Move Right":         u.redoMoveNode,
-    "Move Up":            u.redoMoveNode,
-    "Paste":              u.redoTyping,
-    "Paste Node":         u.redoInsertNodes,
-    "Pretty Print":       u.redoChangeAll,
-    "Promote":            u.redoPromote,
-    "Read @file Nodes":   u.redoReplaceNodes,
-    "Reformat Paragraph": u.redoTyping,
-    "Sort Children":      u.redoSortChildren,
-    "Sort Siblings":      u.redoSortSiblings,
-    "Sort Top Level":     u.redoSortTopLevel,
-    "Typing":             u.redoTyping,
-    "Undent":             u.redoTyping }
-#@nonl
-#@-node:EKR.20040526072519:<< define redoDispatchDict >>
-#@+node:EKR.20040526075238:<< define undoDispatchDict >>
-u.undoDispatchDict = {
-    "Change":             u.undoTyping,
-    "Change All":         u.undoChangeAll,
-    "Change Headline":    u.undoChangeHeadline,
-    "Clone Node":         u.undoClone,
-    "Convert All Blanks": u.undoReplaceNodesContents,
-    "Convert All Tabs":   u.undoReplaceNodesContents,
-    "Convert Blanks":     u.undoTyping,
-    "Convert Tabs":       u.undoTyping,
-    "Cut":                u.undoTyping,
-    "Cut Node":           u.undoDeleteNode,
-    "De-Hoist":           u.undoDehoist,
-    "Delete":             u.undoTyping,
-    "Delete Node":        u.undoDeleteNode,
-    "Demote":             u.undoDemote,
-    "Drag":               u.undoMoveNode,
-    "Drag & Clone":       u.undoDragClone, # redo uses redoClone.
-    "Extract":            u.undoReplaceNodes,
-    "Extract Names":      u.undoReplaceNodes,
-    "Extract Section":    u.undoReplaceNodes,
-    "Hoist":              u.undoHoist,
-    "Import":             u.undoInsertNodes,
-    "Indent":             u.undoTyping,
-    "Insert Node":        u.undoInsertNodes,
-    "Move Down":          u.undoMoveNode,
-    "Move Left":          u.undoMoveNode,
-    "Move Right":         u.undoMoveNode,
-    "Move Up":            u.undoMoveNode,
-    "Paste":              u.undoTyping,
-    "Paste Node":         u.undoInsertNodes,
-    "Pretty Print":       u.undoChangeAll,
-    "Promote":            u.undoPromote,
-    "Read @file Nodes":   u.undoReplaceNodes,
-    "Reformat Paragraph": u.undoTyping,
-    "Sort Children":      u.undoSortChildren,
-    "Sort Siblings":      u.undoSortSiblings,
-    "Sort Top Level":     u.undoSortTopLevel,
-    "Typing":             u.undoTyping,
-    "Undent":             u.undoTyping }
-#@nonl
-#@-node:EKR.20040526075238:<< define undoDispatchDict >>
-#@-node:ekr.20031218072017.3606:undo.__init__ & clearIvars
-#@+node:ekr.20031218072017.1421:<< get config options >>
-@ Rewritten 10/11/02 as follows:
-
-1. We call initConfigParam and initBooleanConfigParam to get the values.
-
-The general purpose code will enter all these values into configDict.  This allows update() to write the configuration section without special case code.  configDict is not accessible by the user.  Rather, for greater speed the user access these values via the ivars of this class.
-
-2. We pass the ivars themselves as params so that default initialization is done in the ctor, as would normally be expected.
-@c
-
-self.at_root_bodies_start_in_doc_mode = self.initBooleanConfigParam(
-    "at_root_bodies_start_in_doc_mode",self.at_root_bodies_start_in_doc_mode)
-    
-encoding = self.initConfigParam(
-    "config_encoding",self.config_encoding)
-    
-if g.isValidEncoding(encoding):
-    self.config_encoding = encoding
-else:
-    g.es("bad config_encoding: " + encoding)
-    
-self.create_nonexistent_directories = self.initBooleanConfigParam(
-    "create_nonexistent_directories",self.create_nonexistent_directories)
-    
-encoding = self.initConfigParam(
-    "default_derived_file_encoding",self.default_derived_file_encoding)
-
-if g.isValidEncoding(encoding):
-    self.default_derived_file_encoding = encoding
-else:
-    g.es("bad default_derived_file_encoding: " + encoding)
-    
-encoding = self.initConfigParam(
-    "new_leo_file_encoding",
-    self.new_leo_file_encoding)
-
-if g.isValidEncoding(encoding):
-    self.new_leo_file_encoding = encoding
-else:
-    g.es("bad new_leo_file_encoding: " + encoding)
-
-self.output_initial_comment = self.initConfigParam(
-    "output_initial_comment",self.output_initial_comment)
-
-self.output_newline = self.initConfigParam(
-    "output_newline",self.output_newline)
-
-self.read_only = self.initBooleanConfigParam(
-    "read_only",self.read_only)
-
-self.relative_path_base_directory = self.initConfigParam(
-    "relative_path_base_directory",self.relative_path_base_directory)
-    
-self.redirect_execute_script_output_to_log_pane = self.initBooleanConfigParam(
-    "redirect_execute_script_output_to_log_pane",
-    self.redirect_execute_script_output_to_log_pane)
-    
-self.remove_sentinels_extension = self.initConfigParam(
-    "remove_sentinels_extension",self.remove_sentinels_extension)
-
-self.save_clears_undo_buffer = self.initBooleanConfigParam(
-    "save_clears_undo_buffer",self.save_clears_undo_buffer)
-    
-self.stylesheet = self.initConfigParam(
-    "stylesheet",self.stylesheet)
-    
-encoding = self.initConfigParam(
-    "tk_encoding",self.tkEncoding)
-    
-if encoding and len(encoding) > 0: # May be None.
-    if g.isValidEncoding(encoding):
-        self.tkEncoding = encoding
-    else:
-        g.es("bad tk_encoding: " + encoding)
-        
-# New in 4.2
-self.trailing_body_newlines = self.initConfigParam(
-    "trailing_body_newlines",self.trailing_body_newlines)
-
-# TO BE REMOVED
-g.app.use_gnx = self.initBooleanConfigParam(
-    "use_gnx",g.app.use_gnx)
-    
-self.use_plugins = self.initBooleanConfigParam(
-    "use_plugins",self.use_plugins)
-
-self.use_psyco = self.initBooleanConfigParam(
-    "use_psyco",self.use_psyco)
-    
-self.undo_granularity = self.initConfigParam(
-    "undo_granularity",self.undo_granularity)
-    
-# TO BE REMOVED
-self.write_old_format_derived_files = self.initBooleanConfigParam(
-    "write_old_format_derived_files",self.write_old_format_derived_files)
-
-# New in 4.2
-self.write_strips_blank_lines = self.initBooleanConfigParam(
-    "write_strips_blank_lines",self.write_strips_blank_lines)
-    
-#g.trace("write_strips_blank_lines",self.write_strips_blank_lines)
-#g.trace("trailing_body_newlines",self.trailing_body_newlines)
-#@nonl
-#@-node:ekr.20031218072017.1421:<< get config options >>
-#@+node:ekr.20031218072017.1490:setUndoTypingParams
-@ This routine saves enough information so a typing operation can be undone and redone.
-
-We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
-@c
-
-def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
-    
-    # g.trace(undo_type,p,"old:",oldText,"new:",newText)
-    u = self ; c = u.c
-    << return if there is nothing to do >>
-    << init the undo params >>
-    << compute leading, middle & trailing  lines >>
-    << save undo text info >>
-    << save the selection and scrolling position >>
-    << adjust the undo stack, clearing all forward entries >>
-    u.setUndoTypes() # Recalculate the menu labels.
-    return d
-#@nonl
-#@+node:ekr.20040324061854:<< return if there is nothing to do >>
-if u.redoing or u.undoing:
-    return None
-
-if undo_type == None:
-    return None
-
-if undo_type == "Can't Undo":
-    u.clearUndoState()
-    return None
-
-if oldText == newText:
-    # g.trace("no change")
-    return None
-#@nonl
-#@-node:ekr.20040324061854:<< return if there is nothing to do >>
-#@+node:ekr.20040324061854.1:<< init the undo params >>
-# Clear all optional params.
-for ivar in u.optionalIvars:
-    setattr(u,ivar,None)
-
-# Set the params.
-u.undoType = undo_type
-u.p = p
-#@nonl
-#@-node:ekr.20040324061854.1:<< init the undo params >>
-#@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
-@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
-
-NB: the number of old and new middle lines may be different.
-@c
-
-old_lines = string.split(oldText,'\n')
-new_lines = string.split(newText,'\n')
-new_len = len(new_lines)
-old_len = len(old_lines)
-min_len = min(old_len,new_len)
-
-i = 0
-while i < min_len:
-    if old_lines[i] != new_lines[i]:
-        break
-    i += 1
-leading = i
-
-if leading == new_len:
-    # This happens when we remove lines from the end.
-    # The new text is simply the leading lines from the old text.
-    trailing = 0
-else:
-    i = 0
-    while i < min_len - leading:
-        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
-            break
-        i += 1
-    trailing = i
-    
-# NB: the number of old and new middle lines may be different.
-if trailing == 0:
-    old_middle_lines = old_lines[leading:]
-    new_middle_lines = new_lines[leading:]
-else:
-    old_middle_lines = old_lines[leading:-trailing]
-    new_middle_lines = new_lines[leading:-trailing]
-    
-# Remember how many trailing newlines in the old and new text.
-i = len(oldText) - 1 ; old_newlines = 0
-while i >= 0 and oldText[i] == '\n':
-    old_newlines += 1
-    i -= 1
-
-i = len(newText) - 1 ; new_newlines = 0
-while i >= 0 and newText[i] == '\n':
-    new_newlines += 1
-    i -= 1
-
-if u.debug_print:
-    g.trace()
-    print "lead,trail",leading,trailing
-    print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
-    print "new mid,nls:",len(new_middle_lines),new_newlines,newText
-    #print "lead,trail:",leading,trailing
-    #print "old mid:",old_middle_lines
-    #print "new mid:",new_middle_lines
-    print "---------------------"
-#@nonl
-#@-node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
-#@+node:ekr.20031218072017.1492:<< save undo text info >>
-@ This is the start of the incremental undo algorithm.
-
-We must save enough info to do _both_ of the following:
-
-Undo: Given newText, recreate oldText.
-Redo: Given oldText, recreate oldText.
-
-The "given" texts for the undo and redo routines are simply v.bodyString().
-@c
-
-if u.new_undo:
-    if u.debug:
-        # Remember the complete text for comparisons...
-        u.oldText = oldText
-        u.newText = newText
-        # Compute statistics comparing old and new ways...
-        # The old doesn't often store the old text, so don't count it here.
-        u.old_mem += len(newText)
-        s1 = string.join(old_middle_lines,'\n')
-        s2 = string.join(new_middle_lines,'\n')
-        u.new_mem += len(s1) + len(s2)
-    else:
-        u.oldText = None
-        u.newText = None
-else:
-    u.oldText = oldText
-    u.newText = newText
-
-self.leading = leading
-self.trailing = trailing
-self.oldMiddleLines = old_middle_lines
-self.newMiddleLines = new_middle_lines
-self.oldNewlines = old_newlines
-self.newNewlines = new_newlines
-#@nonl
-#@-node:ekr.20031218072017.1492:<< save undo text info >>
-#@+node:ekr.20040324061854.2:<< save the selection and scrolling position >>
-#Remember the selection.
-u.oldSel = oldSel
-u.newSel = newSel
-
-# Remember the scrolling position.
-if oldYview:
-    u.yview = oldYview
-else:
-    u.yview = c.frame.body.getYScrollPosition()
-#@-node:ekr.20040324061854.2:<< save the selection and scrolling position >>
-#@+node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
-# Push params on undo stack, clearing all forward entries.
-u.bead += 1
-d = u.setBead(u.bead)
-u.beads[u.bead:] = [d]
-
-# g.trace(len(u.beads), u.bead)
-#@nonl
-#@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
-#@-node:ekr.20031218072017.1490:setUndoTypingParams
-#@+node:ekr.20031218072017.2038:<< redo typing cases >>
-elif redoType in ( "Typing",
-	"Change","Convert Blanks","Convert Tabs","Cut",
-	"Delete","Indent","Paste","Reformat Paragraph","Undent"):
-
-	# g.trace(redoType,u.p)
-	# selectVnode causes recoloring, so avoid if possible.
-	if current != u.p:
-		c.selectVnode(u.p)
-	elif redoType in ("Cut","Paste"):
-		c.frame.body.forceFullRecolor()
-
-	self.undoRedoText(
-		u.p,u.leading,u.trailing,
-		u.newMiddleLines,u.oldMiddleLines,
-		u.newNewlines,u.oldNewlines,
-		tag="redo",undoType=redoType)
-	
-	if u.newSel:
-		c.frame.body.setTextSelection(u.newSel)
-	if u.yview:
-		c.frame.body.setYScrollPosition(u.yview)
-	redrawFlag = (current != u.p)
-		
-elif redoType == "Change All":
-
-	count = 0
-	while 1:
-		u.bead += 1
-		d = u.getBead(u.bead+1)
-		assert(d)
-		redoType = u.undoType
-		# g.trace(redoType,u.p,u.newText)
-		if redoType == "Change All":
-			c.selectVnode(u.p)
-			break
-		elif redoType == "Change":
-			u.p.v.setTnodeText(u.newText)
-			u.p.setDirty()
-			count += 1
-		elif redoType == "Change Headline":
-			u.p.initHeadString(u.newText)
-			count += 1
-		else: assert(False)
-	g.es("redo %d instances" % count)
-
-elif redoType == "Change Headline":
-	
-	# g.trace(redoType,u.p,u.newText)
-	u.p.setHeadStringOrHeadline(u.newText)
-	c.selectVnode(u.p)
-#@nonl
-#@-node:ekr.20031218072017.2038:<< redo typing cases >>
-#@+node:ekr.20031218072017.2047:<< undo typing cases >>
-@ When making "large" changes to text, we simply save the old and new text for undo and redo.  This happens rarely, so the expense is minor.
-
-But for typical typing situations, where we are typing a single character, saving both the old and new text wastes a huge amount of space and puts extreme stress on the garbage collector.  This in turn can cause big performance problems.
-@c
-	
-elif undoType in ( "Typing",
-	"Change","Convert Blanks","Convert Tabs","Cut",
-	"Delete","Indent","Paste","Reformat Paragraph","Undent"):
-
-	# g.trace(undoType,u.p)
-	# selectVnode causes recoloring, so don't do this unless needed.
-	if current != u.p:
-		c.selectVnode(u.p)
-	elif undoType in ("Cut","Paste"):
-		c.frame.body.forceFullRecolor()
-
-	self.undoRedoText(
-		u.p,u.leading,u.trailing,
-		u.oldMiddleLines,u.newMiddleLines,
-		u.oldNewlines,u.newNewlines,
-		tag="undo",undoType=undoType)
-	if u.oldSel:
-		c.frame.body.setTextSelection(u.oldSel)
-	if u.yview:
-		c.frame.body.setYScrollPosition(u.yview)
-	redrawFlag = (current != u.p)
-		
-elif undoType == "Change All":
-
-	count = 0
-	while 1:
-		u.bead -= 1
-		d = u.getBead(u.bead)
-		assert(d)
-		undoType = u.undoType
-		# g.trace(undoType,u.p,u.oldText)
-		if undoType == "Change All":
-			c.selectVnode(u.p)
-			break
-		elif undoType == "Change":
-			u.p.setTnodeText(u.oldText)  # p.setTnodeText
-			count += 1
-			u.p.setDirty()
-		elif undoType == "Change Headline":
-			u.p.initHeadString(u.oldText)  # p.initHeadString
-			count += 1
-		else: assert(False)
-	g.es("undo %d instances" % count)
-		
-elif undoType == "Change Headline":
-	
-	# g.trace(u.oldText)
-	u.p.setHeadStringOrHeadline(u.oldText)
-	c.selectVnode(u.p)
-#@nonl
-#@-node:ekr.20031218072017.2047:<< undo typing cases >>
-#@+node:ekr.20031218072017.1493:undoRedoText
-# Handle text undo and redo.
-# The terminology is for undo: converts _new_ text into _old_ text.
-
-def undoRedoText (self,p,
-    leading,trailing, # Number of matching leading & trailing lines.
-    oldMidLines,newMidLines, # Lists of unmatched lines.
-    oldNewlines,newNewlines, # Number of trailing newlines.
-    tag="undo", # "undo" or "redo"
-    undoType=None):
-
-    u = self ; c = u.c
-    assert(p == c.currentPosition())
-    v = p.v
-
-    << Incrementally update the Tk.Text widget >>
-    << Compute the result using v's body text >>
-    # g.trace(v)
-    # g.trace("old:",v.bodyString())
-    v.setTnodeText(result)
-    # g.trace("new:",v.bodyString())
-    << Get textResult from the Tk.Text widget >>
-    if textResult == result:
-        if undoType in ("Cut","Paste"):
-            # g.trace("non-incremental undo")
-            c.frame.body.recolor(p,incremental=False)
-        else:
-            # g.trace("incremental undo:",leading,trailing)
-            c.frame.body.recolor_range(p,leading,trailing)
-    else: # 11/19/02: # Rewrite the pane and do a full recolor.
-        if u.debug_print:
-            << print mismatch trace >>
-        # g.trace("non-incremental undo")
-        p.setBodyStringOrPane(result)
-#@nonl
-#@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
-# Only update the changed lines.
-mid_text = string.join(oldMidLines,'\n')
-new_mid_len = len(newMidLines)
-# Maybe this could be simplified, and it is good to treat the "end" with care.
-if trailing == 0:
-    c.frame.body.deleteLine(leading)
-    if leading > 0:
-        c.frame.body.insertAtEnd('\n')
-    c.frame.body.insertAtEnd(mid_text)
-else:
-    if new_mid_len > 0:
-        c.frame.body.deleteLines(leading,new_mid_len)
-    elif leading > 0:
-        c.frame.body.insertAtStartOfLine(leading,'\n')
-    c.frame.body.insertAtStartOfLine(leading,mid_text)
-# Try to end the Tk.Text widget with oldNewlines newlines.
-# This may be off by one, and we don't care because
-# we never use body text to compute undo results!
-s = c.frame.body.getAllText()
-newlines = 0 ; i = len(s) - 1
-while i >= 0 and s[i] == '\n':
-    newlines += 1 ; i -= 1
-while newlines > oldNewlines:
-    c.frame.body.deleteLastChar()
-    newlines -= 1
-if oldNewlines > newlines:
-    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
-#@nonl
-#@-node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
-#@+node:ekr.20031218072017.1495:<< Compute the result using v's body text >>
-# Recreate the text using the present body text.
-body = v.bodyString()
-body = g.toUnicode(body,"utf-8")
-body_lines = body.split('\n')
-s = []
-if leading > 0:
-    s.extend(body_lines[:leading])
-if len(oldMidLines) > 0:
-    s.extend(oldMidLines)
-if trailing > 0:
-    s.extend(body_lines[-trailing:])
-s = string.join(s,'\n')
-# Remove trailing newlines in s.
-while len(s) > 0 and s[-1] == '\n':
-    s = s[:-1]
-# Add oldNewlines newlines.
-if oldNewlines > 0:
-    s = s + '\n' * oldNewlines
-result = s
-if u.debug_print:
-    print "body:  ",body
-    print "result:",result
-#@nonl
-#@-node:ekr.20031218072017.1495:<< Compute the result using v's body text >>
-#@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
-textResult = c.frame.body.getAllText()
-
-if textResult != result:
-    # Remove the newline from textResult if that is the only difference.
-    if len(textResult) > 0 and textResult[:-1] == result:
-        textResult = result
-#@nonl
-#@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
-#@+node:ekr.20031218072017.1497:<< print mismatch trace >>
-print "undo mismatch"
-print "expected:",result
-print "actual  :",textResult
-#@nonl
-#@-node:ekr.20031218072017.1497:<< print mismatch trace >>
-#@-node:ekr.20031218072017.1493:undoRedoText
-#@-node:ekr.20040323084434:(Add granularity setting for undo)
-#@-node:ekr.20040916122326.1:Undo...
-#@+node:ekr.20031218072017.828:Rewrite the config manager
-http://sourceforge.net/forum/message.php?msg_id=2329053
-By: dsalomoni
-
-I would be reluctant to run this script in a linux environment, for the following
-reasons:
-
-1) chmod 666 on the leo config file makes it writable by anybody. 
-
-2) on the other hand, leo is currently IMHO not suitable for generic linux
-installations, because it does not support per-user config files, so you actually
-need to either carve leoconfig.txt in stone (not realistic), or make it writable
-by any user as above (not advisable).
-
-3) having a single dummy leoID defeats its main purpose in a multi-user environment.
-If you could set per-user config files, the leoID could by default simply derived
-from the username.
-
-As a matter of fact, I've been suggesting to friends etc wanting to try out
-leo/install it on their systems not to do that globally.
-
-So, my view is that we could:
-
-1) in the short term, provide a simple per-user installation based for example
-on the script above, but with path defaults pointing to the user's home dir
-(and of course w/o the requirement to be root) -- with leoID generated by default
-looking at the username.
-
-2) in the medium term, provide per-user config possibilities -- this would possibly
-allow for a system-wide installation of leo and still allow configuration, per-user
-plugins, etc. But this is linked I guess to the decommissioning of/changes to
-the leoConfig.leo machinery.
-
-Davide
-#@nonl
-#@+node:ekr.20040922073523:comments from e
-@killcolor
-http://sourceforge.net/forum/message.php?msg_id=2769775
-By: nobody
-
-Leo should make it a priority to determine leoID
-and users HOME and other dir of interest
-before plugins are loaded so thay can have access.
-at 'after-create-leo-frame' g.app.leoID not defined
-but g.app.loadDir and many others are.
-if there will be more than one config, a system,
-a per user in HOME, and maybe per currentdir or
-in the same dir as the leo, they should be known.
-
-g.app.homeDir = os.getenv('HOME', 
-                    default= os.path.abspath('./'))
-on windows this can point many places
-best to set HOME if you want it in a specific place.
-otherwise it can be %WINDIR%/APPDATA or %ROOT%/APPDATA
-APPDATA can be an env variable, probably win2k or later.
-
-# abspath resolves './' sometimes returned curdir
-import user, os
-print os.path.abspath(user.home) 
-print os.path.abspath(os.path.expanduser("~"))
-
-obviously this will need allot of work to get
-crossplatform and bulletproof. you would think
-it would be easy to know where everything should go
-or how to nail down how to find everything.
-no such luck, all I've seen is bits and pieces.
-
-e
-#@-node:ekr.20040922073523:comments from e
-#@+node:ekr.20040105080119:Search for settings in various places: Rodrigo
-@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=2355843
-By: rodrigo_b
-
-At least pluginManager should be there too	
-
-(or both files could be merged... who knows)
-
-The better would be to have
-
-$HOME/.leo/
-$HOME/.leo/leoConfig.txt
-$HOME/.leo/plugins/pluginManager.txt
-$HOME/.leo/plugins/<myplugins>.py
-
-look for .leoConfig.txt, then leoConfig.txt
-#@nonl
-#@+node:ekr.20040919075839:Stephen Schaefer
-By: Stephen Schaefer - thyrsus
-RE: 4.2 rc1 released  
-2004-09-18 05:32
-It took me two hours to track it down, but I did manage to get leoConfit.txt and .leoID.txt to be taken from $HOME/.leoconfig
-
-Mostly it took so long because the documenation assumed a knowledge of Python operation I didn't posess.
-
-First, the current leo requires Python 2.3, and I'm running on a Red Hat 7.3 system where the "native" python is 1.5.2, and "python2" is 2.2.2. It's far cheaper to add another python than to make sure a different python doesn't break things, so my python 2.3 is rooted at /apps/python/python-2.3.2. There is a file that python looks for but is not present when it is installed from source:
-
-/apps/python/python-2.3.2/lib/python2.3/sitecusomize.py
-
-I created that file with the following contents (. for leading space):
-
-import sys
-import os
-try:
-....sys.leo_config_directory = os.environ['HOME'] + '/.leoconfig'
-except KeyError:
-....sys.leo_config_directory = None
-
-If I were more sophisticated, I would check that $HOME/.leoconfig was a directory, and if not also set sys.leo_config_directory to None.
-
-It doesn't seem appropriate to insist that anyone using python 2.3.2 for any reason whatsoever would be forced to have a .leoconfig in their home directory (think of a limited account that doesn't have a writable home directory), but it would be appropriate for leo to create $HOME/.leoconfig if it weren't present and set sys.leo_config_directory at that point -- indeed the entire logic could be handled outside of sitecustomize.py. I'll post code for the above if someone else doesn't beat me to it :-).
-#@-node:ekr.20040919075839:Stephen Schaefer
-#@-node:ekr.20040105080119:Search for settings in various places: Rodrigo
-#@+node:ekr.20040208112836:Specify shortcuts, ampersand bindings & translations in the same place
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2415127
-By: edream
-
-I have just hacked the code to allow & in entries in leoConfig.txt that describe
-shortcuts.
-
-This is a hack because it probably interacts poorly with the present mechanism
-that allows menu entries to be translated.  I haven't looked into this in detail:
-possibly everything works when menus are translated.  More likely things break.
-If so, not using & in leoConfig.txt will probably "restore" things to their
-former not-very-good state.
-
-It appears that I shall have to revisit this whole gruesome topic when
-the configuration code gets rewritten.
-#@nonl
-#@-node:ekr.20040208112836:Specify shortcuts, ampersand bindings & translations in the same place
-#@+node:ekr.20040212094034:Another comment
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2420426
-By: dalcolmo
-
-> One copy of leoConfig.txt might specify installation options; other copies
-might specify per-folder or per-file options.
-
-Maybe I misunderstand this, but would the .leo file be the place for any per-file
-options?
-
-> "inheritable" copies of leoConfig.txt.
-Yes! I want a copy per user, so I won't have to manually update the latest
-installation of leo with my configurations. The typical global rc file (in /etc
-or in the leo program dir) and local config file in ~/.leo would do fine. As
-far as I am concerned, that would also be my preferred setup under Windows,
-but I am sure most people would disagree.
-
-Please move all global configuration options to one place. Currently, besides
-having to edit leoConfig.leo, I have also to edit leoPlugins.leo or
-pluginsManager.txt
-I believe, these should also be configuration settings.
-
-Best regards - Josef Dalcolmo
-#@nonl
-#@-node:ekr.20040212094034:Another comment
-#@+node:ekr.20040213060739:Config stuff
-@nocolor
-
-By: nobody ( Nobody/Anonymous ) 
- RE: 4.1rc4 Plug-in Bug?   
-2004-02-13 03:32  
-
- if you write protect leoconfig.txt you also notice via traceback that it opens for write on entry too, not sure if it actually writes anything at that time.
-
-looking forward to what the team dreams up for config options.
-checkbox or dropdown & edit of available options
-with spin boxes for font size etc
-a positive way to lock all the panes ito the same scheme or allow individual choice.
-and all the other per user options maybe an override on the command line to enable or disable a plugin or select a particular config.txt
- 
-#@-node:ekr.20040213060739:Config stuff
-#@+node:ekr.20040216153659.1:Find some way to translate all other Leo messages.
-Including, e.g., Undo messages.
-#@nonl
-#@-node:ekr.20040216153659.1:Find some way to translate all other Leo messages.
-#@+node:ekr.20031218072017.651:Suggestion from RodrigoB
-http://sourceforge.net/forum/message.php?msg_id=2312787
-By: nobody
-
-I had the idea some days ago, and I think I have not posted it yet.
-
-The idea is simple but usefull, it is related about how to get a better configuration
-interface for Leo.
-The idea is:
-
-let the configuration interface be a Plugin. This plugin define the
-@configuration-file nodes. Under that nodes (and they childs), when selecting
-the body, the body text is parsed to construct a tk dialog directly into the
-body pane (replacing the text view, or as a window element in the text). When
-modifying the menu, the text is changed. If something go wrong with the text
-format, an error is raised and the original text is show.
-
-The advantage of this plugin is that it is easier to devellop and integrate
-very well with the actual scheme. It allow to define the configuration as a
-hierarchy of nodes, similar to the linux kernel configuration, and use the power
-of Leo.
-
-The text format could be
-
-option1 = 1 # checkbox <= the plugin infere that it have to show the option1
-as a checkbox
-option2 = bla # [bla, blo, bli] <= the plugin infere that it have to show a
-combobox for option2, with options bla, blo, bli
-option3 = rodrigo # text   <= trivial, etc...
-
-The comment after the option could allow to specify python code for conditions,
-etc, etc	
-Obviously the comment can be placed, the line before, or the line after, or
-under what ever format required.
-
-That is the idea, it is implementable, and, to my eyes, would solve the problem.
-
-RodrigoB.
-
-
-#@-node:ekr.20031218072017.651:Suggestion from RodrigoB
-#@+node:ekr.20031218072017.652:Add settings menu
-- Add Settings menu.
-	- Create Settings menu dynamically from leoConfig.txt
-- Write leoConfig.txt by hand.
-
-- Remove Open LeoConfig.leo command
-- Remove Apply Settings command (will be done with apply, cancel, ok, revert buttons in all Settings submenus)
-#@nonl
-#@+node:ekr.20031218072017.653:Notes
-@nocolor
-
-It would be an understatement to say that the way Leo handles configuration settings could be improved.  The present scheme involves editing leoConfig.leo, then remembering to save all .leo files before tangling leoConfig.leo.  Moreover, even when doing this properly, not all changes to settings "take" immediately.  Furthermore, there are no easy analogies to the typical "apply" or "revert" or "revert to default" buttons commonly seen in options dialogs.
-
-Last night I studied the way the jEdit editor handles options.  See http://www.jedit.org/
-Visually, jEdit's "Global Options" dialogs are very impressive.  There is a tree view on the left, there is a unique panel on the left for each item in the tree view.  All options are set visually.
-
-Something like this could be done in Leo, but actually I like the opening up leoConfig.leo and setting options in a typical Leo window.  The advantage of leoConfig.leo is that there is plenty of room to explain what each setting does.
-
-Leo's Set Colors and Set Font dialogs can and should affect the settings in leoConfig.leo, but at present they only affect leoConfig.txt, which is most annoying, and basically wrong.
-
-This morning I realized that a large part of Leo's difficulties with configuration options stems from me trying to work around the limitations of Python's ConfigParser module.  Relying on this module may be the worst mistake I have made in the Python version of Leo.  This mistake has had several ramifications:
-
--  leoConfig.leo uses @root trees rather than @file trees because ConfigParser deletes all comments when writing leoConfig.txt.  Suppose instead that Leo would read and write leoConfig.txt without the "help" of the ConfigParser module.  For reading, all that is needed is that Leo parse leoConfig.txt into a single configuration dictionary.  This would, in fact, be very easy to do.
-
-- Leo needs to do a better job of ensuring that leoConfig.txt always matches the settings in effect.  This can be done if Leo can _rewrite_ leoConfig.txt as it was (with all comments and especially sentinel lines), merely substituting new settings for old.  This is only slightly harder to do.
-
-Other improvements come to mind, not directly related to the problems with ConfigParser:
-
-- There should be a separate Settings Menu.  This would have the Set Colors and Set Font commands, as well as the following commands: Edit Settings (Same as present Open leoConfig.leo command) and Use Default Settings command (rewrites leoConfig.txt using preset defaults) and possibly Set Default Settings, Apply Settings and Revert Settings commands.
-
-- All classes that use configuration settings should implement a configure method that immediately updates settings to the values just written to leoConfig.txt.  This includes the commands, frame and tree classes, and others.
-
-With this long background, there are two main approaches to improving how Leo handles options:
-
-1. Use a graphical scheme like jEdit does, and dispense with leoConfig.leo entirely.  leoConfig.txt would be the only repository for options.  This graphical scheme would use typical Apply, Revert, OK and Cancel buttons, much like the present Set Colors and Set Font dialogs.
-
-2. Improve how Leo handles leoConfig.leo and leoConfig.txt so that leoConfig.leo can use @file trees and so that settings are _reliably_ updated when the user would expect them to be.
-
-At present, I favor the second scheme.  It is simple to implement, it is the most Leonine, and moreover it allows for full discussion of all options.  True, the graphical way is good looking, but that is about all it has going for it.  I suppose a help feature could be added to the graphical way, but we are talking about a lot of effort for very little real value to the user.
-
-Actually though, the issues of keeping leoConfig.txt up-to-date and of applying settings immediately remain mostly the same regardless of which way is chosen.  In particular, without the "help" of the ConfigParser module Leo could maintain options much more easily.
-
-Anyway, this is how I see matters.  Any comments?
-
-Edward
-#@-node:ekr.20031218072017.653:Notes
-#@+node:ekr.20031218072017.654:Cleanup prefs code?
-I'm not at all sure that it is worthwhile now.
-#@nonl
-#@-node:ekr.20031218072017.654:Cleanup prefs code?
-#@-node:ekr.20031218072017.652:Add settings menu
-#@+node:ekr.20031218072017.655:multiple copies of leoConfig.txt
-@nocolor
-
-> It just leaves still the problem of merging ones personal settings of leoConfig.txt 
-with the ones in the new distribution. 
-
-I am going to work on this just after 3.11b1 goes out the door. I think what I shall do is have Leo looks for several different files: first leoConfig.txt, then leoSiteConfig.txt, with the latter overriding the former. That way you can have stable settings (leoSiteConfig.txt won't be part of distributions). 
-
-I may also have Leo look for leoLinuxConfig.txt, leoWinConfig.txt and leoMacConfig.txt, depending on the platform, so you can have stable platform settings as well. 
-#@nonl
-#@-node:ekr.20031218072017.655:multiple copies of leoConfig.txt
-#@+node:ekr.20031218072017.656:Different fonts for Linux/Mac
-@nocolor
-
-By: sanori ( Joo-won Jung ) 
- How about split font config for win and unix?   
-2003-02-10 12:02  
-Developer Forum
-
-How about split the font's configurations like IDLE, python IDE? 
-Because the 10pt size in Windows and Unix (X window, exactly) is not the same. Moreover, the font set that the OS provides does not the same. 
-
-I'm using leo on both windows and Linux, and leo is in the vfat partition to use it both OS. Of course, I can change the font size by using the font dialog. But, I want leo to be more comportable. :)
-
--Sanori 
-#@-node:ekr.20031218072017.656:Different fonts for Linux/Mac
-#@+node:ekr.20040226105601:Design for new config system (alpaha, etc.) Tom
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2434323
-By: nobody
-
-Okay, so 4.2 is to address a graphical interface to configuring Leo, so I'm
-going to go over some of the ways the Alpha, AlphaX, and AlphaTk family of
-editors handle this. These are editors that use Tcl as the core scripting
-language, much as elisp does for Emacs. In AlphaTk, all of the code is in Tcl &
-Tk, so it run on any system that support Tcl/Tk 8.3+, and shows off the type of
-dialogs that can be given to Leo as it also (currently) uses the Tk half of
-this. It is available for Windows, and has a 45 day free demo period. It works
-fine with The Tcl/Tk we use to run Leo so you only need to download AlphaTk.exe
-via this link: http://www.santafe.edu/~vince/alphatk/download.html
-
-In Alpha, like Emacs, their are "modes" specfic to each language that give you
-useful functionality when you are editing code in that language. Each mode has
-its own namespace (e.g. 'pyth' for the python Mode) that hold all the variables
-and functions that provide the functionality mentioned above. There is a set of
-variables and functions that form a sort of "global mode" that would be useful
-in editing plain text, and provides values and simple editting bahavior if no
-such simularly named things exists in the pyth namespace, if these do exist,
-them overide these global values & functions when in that editting mode.
-
-Modes are held in a directory named "Modes", in Leo this would probably be a
-subdirectory of 'plugins'. In Alpha a simple mode can be defined in a single
-file, Leo should proabably use the multi-file method, each mode is given its own
-subdirectory (e.g. ...\plugins\Modes\Python Mode\), then various files to define
-that mode's functionality would be placed in that directory. Thus you could
-include the syntax files directly from jEdit here. 
-
-Alpha only concerns itself with what it needs to know to accomplish what its
-user is trying to do, thus, if a user never edits a c++ file in a session, Alpha
-never loads in the details of the C Mode (which includes c++), it knows it has a
-C Mode, what file extensions it should activate for & has a short description to
-give if the users ask for help on the mode, but only loads the rest of the code
-that defines the mode if it is called on to edit a c or c++ file. It does this
-by scanning all of the subdirectories files for a function call that has all
-this info as parameters. These are gathered into a cache (a script file) that
-gets executed when alpha starts up. This cache has a dictionary of filenames to
-modification dates so that the cache remains valid as long as the files scanned
-are already in the dictionary and have the same modification dates. Any conflict
-gets caught at start-up and triggers a rescanning. 
-
-Alpha has a function, 'newPref', that builds dictionaries of various kinds of
-variables, consisting of variable_name to a tuple. That tuple varies according
-to the type of variable, but has as a minimum, the default value and the
-namespace it is to be created in. Other parts of the tuple might include a list
-of the possible values, or a series of tuples (<text to present in drop down
-box>, <value>). Any change by the user to a value other than the default gets
-that choice written to a cache that gets loaded the first time a mode is
-activated. When newPref executes it checks to see if the variable already
-exists, and only creates that variable and intializes it to the default if it
-doesn't. A further wrinkle is that any comment immediately preceding a newPref
-call gets stored as help text for that variable.
-
-These dictionaries are used to allow the configuration dialog for a mode be
-automatically created on the fly. Flag dictionaries get their keys dumped and
-sorted to create an array of checkboxes, their stored comments forms a "tooltip"
-box of text displayed when the arrow hovers over the checkbox.
-
-Other dictionaries drive other types of widgets in the dialog panes.
-
-More later, but much of this could be adapted to Leo. Other things to check out
-are the keysetting dialogs, an example of which is under "Config->Special
-Keys...".
-
-Tom
-#@+node:ekr.20040227053137:More alpha stuff
-https://sourceforge.net/forum/message.php?msg_id=2444789
-By: nobody
-
-To continue on things that Alpha contribute to Leo, let me tell you the some of
-the reasons behind the design.
-
-File structure: Alpha has the equivalent of a plugin directory, however, the
-actual plug-ins are organized in subdirectories; files that tell alpha how to
-support languages are placed in the "Modes" directory, files that add
-functionality exposed primarily through an add-in menu are placed in the "Menus"
-directory (Leo might use "Menus & Widgets" to include things like the new search
-plug-in), other code that provides functionality that is not tied to a
-particular language, and is not primarily invoked via a menu are placed in the
-"Packages" directory, (e.g. the completion package that provide general word
-completion).
-
-This helps out when someone wants to roll their own code, if you want to add a
-language look at the examples that are in the 'Modes' directory, you can quickly
-cobble together elementary support and then extend it over time.
-
-Installing a plug-in is really just a matter of putting the files in the right
-place and have Alpha update its indexes. Now that does not mean that the new
-features are enabled (other than for a language, those activate whenever Alpha
-realises that it is editting a file of that language), if you go to
-"Config->Global-Setup->Features" or "Config->Global-Setup->Menus", you get a
-panel of checkboxes for Features or Menus that you can check to enable Globally,
-(i.e. no matter what mode is currently active). Note that a tooltip box giving a
-description is available whenever you hover the mouse over the feature/menu
-name. These are built dynamically, are sorted alphabetically, and continued on
-another page whenever their are too many to position on a single page. This
-means no carefully redesign of a dialog box is needed to accomadate new
-features.
-
-The preferences for a language are only settable when a given mode is active.
-Although in Alpha this is dependent on the file you are editing, Leo can be
-thought of as in a given language mode dependent on what language directive is
-in effect for the current cursor position. Once you are in a mode, the
-"Config-><mode> Mode Prefs" Menu becomes active, Allowing you to choose what
-Menus & Feature you would like available when you are in this mode. You also
-have access to the Preferences that are available in that mode.
-
-Note that any preference, feature set, menus that you chose are all store in a
-cache of code that sets them to your chosen values whenever you start Alpha.
-These values can be saved and used when you upgade to a new version (of Alpha or
-any of its packages), conversely, discarded the Prefs directory restores you to
-all the defaults as orginally specified. Mechanisms exist to prune out cached
-values that are no longer used, and to ensure that a new variable that has been
-added is set if it needs to be before some code gets executed.
-
-Tom
-
-#@-node:ekr.20040227053137:More alpha stuff
-#@-node:ekr.20040226105601:Design for new config system (alpaha, etc.) Tom
-#@+node:ekr.20040327050211:Fix problems with updating leoConfig.txt
-#@+node:ekr.20040330092305:Preserve comments in config files (so we can use sentinels!)
-@nocolor
-
-> I don't know how to read [an @file-nosent config] file into the body of that node.
-
-You can't, at least not automatically.  Leo needs sentinels in order to read a derived file, that is, in order to update the outline using information in a derived file.
-
-I've been dithering about exactly what to do about configuration files.  Your question reminds me that we would prefer to have sentinels in config files.  In order to do that, Leo must preserve comments in config files, which of course would be much better than the present pathetic situation in which Python's configParser module strips comments.  As I have said before, using configParser was a blunder.  Somehow I'll fix this for 4.2.
-
-Edward
-#@nonl
-#@-node:ekr.20040330092305:Preserve comments in config files (so we can use sentinels!)
-#@+node:ekr.20040124073801:Add nullConfig class?
-#@-node:ekr.20040124073801:Add nullConfig class?
-#@+node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
-#@+node:EKR.20040606193323:Report
-@nocolor
-
-Open discussion
-http://sourceforge.net/forum/message.php?msg_id=2603738
-
-I always set tabs to -4 in the config. when you open the prefs it says 4 but
-there is a checkmark for convert tabs to space. open a new leo, open prefs. its
-not checked! open another leo, its checked.
-
-The problem is that tab_width is usually stored in leoConfig.txt, not the .leo file.
-I'm going to ignore this problem for now...
-#@nonl
-#@-node:EKR.20040606193323:Report
-#@+node:ekr.20031218072017.2062:getPrefs
-def getPrefs (self):
-
-    c = self.c ; config = g.app.config
-    
-    if self.getOpenTag("<preferences"):
-        return # <preferences/> seeen
-
-    table = (
-        ("allow_rich_text",None,None), # Ignored.
-        ("tab_width","tab_width",self.getLong),
-        ("page_width","page_width",self.getLong),
-        ("tangle_bat","tangle_batch_flag",self.getBool),
-        ("untangle_bat","untangle_batch_flag",self.getBool),
-        ("output_doc_chunks","output_doc_flag",self.getBool),
-        ("noweb_flag",None,None), # Ignored.
-        ("extended_noweb_flag",None,None), # Ignored.
-        ("defaultTargetLanguage","target_language",self.getTargetLanguage),
-        ("use_header_flag","use_header_flag",self.getBool))
-    
-    done = False
-    while 1:
-        found = False
-        for tag,var,f in table:
-            if self.matchTag("%s=" % tag):
-                if var:
-                    self.getDquote() ; val = f() ; self.getDquote()
-                    setattr(c,var,val)
-                else:
-                    self.getDqString()
-                found = True ; break
-        if not found:
-            if self.matchTag("/>"):
-                done = True ; break
-            if self.matchTag(">"):
-                break
-            else: # New in 4.1: ignore all other tags.
-                self.getUnknownTag()
-
-    if not done: # 8/31/04
-        while 1:
-            if self.matchTag("<defaultDirectory>"):
-                # New in version 0.16.
-                c.tangle_directory = self.getEscapedString()
-                self.getTag("</defaultDirectory>")
-                if not g.os_path_exists(c.tangle_directory):
-                    g.es("default tangle directory not found:" + c.tangle_directory)
-            elif self.matchTag("<TSyntaxMemo_options>"):
-                self.getEscapedString() # ignored
-                self.getTag("</TSyntaxMemo_options>")
-            else: break
-        self.getTag("</preferences>")
-
-    # Override .leo file's preferences if settings are in leoConfig.txt.
-    if config.configsExist:
-        config.setCommandsIvars(c)
-#@nonl
-#@+node:ekr.20031218072017.2063:getTargetLanguage
-def getTargetLanguage (self):
-    
-    # Must match longer tags before short prefixes.
-    for name in g.app.language_delims_dict.keys():
-        if self.matchTagWordIgnoringCase(name):
-            language = name.replace("/","")
-            # self.getDquote()
-            return language
-            
-    return "c" # default
-#@nonl
-#@-node:ekr.20031218072017.2063:getTargetLanguage
-#@-node:ekr.20031218072017.2062:getPrefs
-#@-node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
-#@+node:ekr.20040225061559:Look at older config files when reading config data the first time for a new install
-@nocolor
-
-Is there a way that a "new" Leo installation could query the older one for config data?
-
-Every time I get a new copy, I need to do a side-by-side compare and edit with the previous leoConfig.leo in order to change the settings to the way I want them. It would be really nice if this could be automated in some fashion.
-#@nonl
-#@-node:ekr.20040225061559:Look at older config files when reading config data the first time for a new install
-#@-node:ekr.20040327050211:Fix problems with updating leoConfig.txt
-#@+node:EKR.20040422132037.4:config problem on Linux
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2373816
-By: sbeards
-
-A related issue is that leoConfig.txt gets auto-tangled and overwritten on startup.
-This will be a problem if Leo is run by a non-root user or the file is not readable.
-For example, I get the following traceback after starting Leo (when leoConfig.txt
-is read-only):
-
-Traceback (most recent call last):
-  File "/usr/local/share/leo-4.1-rc3/src/leoConfig.py", line 672, in update
-    cf = open(self.configFileName,mode)
-IOError: [Errno 13] Permission denied:
-'/usr/local/share/leo-4.1-rc3/src/../config/leoConfig.txt'
-
-Is there a reason leoConfig.txt gets auto-tangled on startup? Is there anyway
-to disable this? Is this by design?
-#@-node:EKR.20040422132037.4:config problem on Linux
-#@+node:ekr.20031218072017.829:gui interface for plugins manager
-@nocolor
-
-Interim design:
-	
-- use pluginsManager.txt in plugins directory.
-	- Load file, scan for non-comment lines whose files are in plugins directory
-- load plugins only if they are in pluginsManager.txt
-- (later?) do a graphical interface for pluginsManager.txt
-
-Simplest graphical interface:
-
-- Listbox of all files.
-- Enable, Disable, Revert, Cancel, OK buttons, Enable All, Disable All.
-- Selecting an item in the Listbox enables one of the Enable/Disable buttons
-- Selecting OK rewrites the file "in place" without altering comment lines.
-- Opening file creates one entry for each .py file in plugins directory.
-
-This is like the Spell-check plugin.
-#@nonl
-#@-node:ekr.20031218072017.829:gui interface for plugins manager
-#@-node:ekr.20031218072017.828:Rewrite the config manager
-#@+node:ekr.20040919182750.1:Make sure Leo works with CVS
-#@+node:ekr.20040916122326:Check Import command
-#@-node:ekr.20040916122326:Check Import command
-#@+node:ekr.20040919101930.2:Resolve CVS Conflicts command
-#@-node:ekr.20040919101930.2:Resolve CVS Conflicts command
-#@-node:ekr.20040919182750.1:Make sure Leo works with CVS
-#@-node:ekr.20040919182750:Top 3
 #@+node:ekr.20040916121944:Can be done in plugins
 #@+node:ekr.20040919101930:Most important
 #@+node:ekr.20031218072017.828:Rewrite the config manager
@@ -2380,6 +824,146 @@ or how to nail down how to find everything.
 no such luck, all I've seen is bits and pieces.
 
 e
+#@+node:ekr.20040924081853:more comments
+https://sourceforge.net/forum/message.php?msg_id=2771155
+By: nobody
+
+>>I'll get everything correct eventually :-)
+
+with no doubt many security and data integrity
+roadblocks along the way. I stumbled on to
+the leoID not being set yet in htmlize.
+rather than only adding a leoID to the temp file
+created in %tmp% I would much prefer to
+put the file into the users %HOME% to avoid
+using %tmp% as it shows up on the bugtrack
+as a security hole in so many apps.
+lets not have Leo get its widest exposure that way.
+plugins should not have to roll their own access to the same areas the config
+will later need anyway. for now, I will just defer creating such
+filenames till the first time they are needed.
+
+e
+#@-node:ekr.20040924081853:more comments
+#@+node:ekr.20040928085738:still more comments
+https://sourceforge.net/forum/message.php?msg_id=2776098
+By: nobody
+
+do we not discuss config options after every release?
+it is worth taking the time to get it right.
+
+>>This is a happy development. It means that there is now a natural way to keep
+three kinds of configuration options:
+per-project options in .leo files, per-user options in a leoConfig.txt file
+in the user's home directory, and per-installation in a leoConfig.txt file in
+Leo's installation directory.
+
+the exact details of conflict resolution to be announced?
+the leo, then the user, then the system. for everything?
+can the leo specify its local plugin directory, leoID?
+that could have implications for downloading a leo.
+the local leo options would seem to need an override.
+a ./config in the same dir, env variable or commandline.
+maybe if the leoID is different than the users
+all destructive options should be overridden.
+it would then be up to the user only to determine
+if the leoID is different than their own to be safe.
+safe meaning no reads or writes outside the current dir.
+probably a long list of other restrictions.
+
+
+I noticed this in docutils doc's
+see the docutils config help file, paraphrased:
+
+"The default implicit config file paths can be overridden by the DOCUTILSCONFIG
+environment variable. DOCUTILSCONFIG should contain a colon-separated
+(semicolon-separated on Windows) sequence of config file paths to search
+ ...
+In addition, a configuration file may be explicitly specified with the "--config"
+command-line option. "
+
+continuing: "docutils uses ConfigParser"
+
+I wonder if subclassing and adding support
+for comments (a glaring oversight) would improve things.
+although, I see mentioned in docutils config page,
+Lines beginning with "#" or ";" are ignored and may be used to provide comments.
+perhaps I misremember ConfigParser eating comments.
+maybe it doesn't rewrite them in the correct order?
+I dont think many programs rewrite their configs, so
+this is probably not a problem for them.
+
+the rearranging of rewritten config options is wrong.
+but as with many of the config methods utilizing an
+undecorated dict, it would have to be determined
+if useful enough to go through the trouble to maintain
+the origional order. and then, what happens to new values,
+are they inserted or appended. the comments saved too.
+are the section names themselves rearanged in the file?
+many of us will in a pinch hand edit or machine generate
+or read config files and the less surprize the better.
+
+there are about 5 other config modules out there
+attempting to fix various problems in ConfigParser.
+some projects subclass ConfigParser to their own design,
+(from memory) pygame, distutils among others.
+I realize the "not invented here syndrome" will preclude
+using any of these in Leo, but perhaps like twisted often
+does, they can be branched into Leo and worked on directly.
+plugin ini files should be able to use 
+(but not required to use) what Leo knows 
+to parse config files or use config options
+as early as possible while the plugins are loading.
+storing them in ../plugins makes them global to all users.
+the user might even want their own plugins dir. 
+concider Leo is installed not writable to a user.
+they can then not use any custom plugins.
+the ability to turn off plugins already loaded
+would require Leo to support unhook of some kind
+and loading plugins on demand when apply config
+could be a problem on some plugins.
+how far should the new config go with plugins?
+pluginManager.txt isn't very user friendly, forcing
+all leo's to have the same plugins all the time.
+
+<http://docutils.sf.net/docs/config.htm>
+<http://www.tundraware.com/Software/tconfpy>
+<https://sourceforge.net/projects/config-py/>  
+  attempting to be a replacement for ConfigParser
+  no mention of comments in the config files though.
+<http://cvs.zope.org/%2Acheckout%2A/ZODB3/ZConfig/doc/zconfig.pdf?rev=HEAD
+ZConfig>
+  I haven't looked at it, but,
+  can be used separately and has distro on pypi
+     <http://www.python.org/pypi>
+     <http://www.zope.org/Members/fdrake/zconfig/>
+<http://www.voidspace.org.uk/atlantibots/pythonutils.html>
+   configobj does support comments.
+
+I don't know which if any of these support unicode, 
+in later version of ConfigParser, unicode may be ok.
+filenames on many systems are unicode, Leo is unicode
+aware, that would seem to be a necessary option.
+
+py-tconfpy being the most ambitious and flexible,
+does support comments. in addition to the standard
+config type use, it has a kind of limited python syntax.
+worth a look. offloading some of the user customization
+smarts into the config file itself is unproven controlable.
+the more complicated the config file is, the easier it is
+to mess up and the harder it is to recover from mistakes.
+
+>>. In other words it is like blocking the users from setting certain things. 
+or from shooting yourself in the foot as root.
+
+e
+
+______________________________________________________________________
+You are receiving this email because you elected to monitor this forum.
+To stop monitoring this forum, login to SourceForge.net and visit: 
+https://sourceforge.net/forum/unmonitor.php?forum_id=10226
+
+#@-node:ekr.20040928085738:still more comments
 #@-node:ekr.20040922073523:comments from e
 #@+node:ekr.20040105080119:Search for settings in various places: Rodrigo
 @nocolor
@@ -3119,7 +1703,7 @@ def read(self,root,importFileName=None,thinFile=False):
     << set fileName from root and importFileName >>
     << open file or return False >>
     g.es("reading: " + root.headString())
-    firstLines,read_new = at.scanHeader(file,fileName)
+    firstLines,read_new = at.scanHeader(theFile,fileName)
     df = g.choose(read_new,at.new_df,at.old_df)
     # g.trace(g.choose(df==at.new_df,"new","old"))
     << copy ivars to df >>
@@ -3129,11 +1713,11 @@ def read(self,root,importFileName=None,thinFile=False):
         # 1/28/04: Call scanAllDirectives here, not in readOpenFile.
         importing = importFileName is not None
         df.scanAllDirectives(root,importing=importing,reading=True)
-        df.readOpenFile(root,file,firstLines)
+        df.readOpenFile(root,theFile,firstLines)
     except:
         at.error("Unexpected exception while reading derived file")
         g.es_exception()
-    file.close()
+    theFile.close()
     root.clearDirty() # May be set dirty below.
     after = root.nodeAfterTree()
     << warn about non-empty unvisited nodes >>
@@ -3165,8 +1749,8 @@ fn = g.os_path_normpath(fn)
 
 try:
     # 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
-    file = open(fn,'rb')
-    if file:
+    theFile = open(fn,'rb')
+    if theFile:
         << warn on read-only file >>
     else: return False
 except:
@@ -3199,7 +1783,7 @@ df.startSentinelComment = at.startSentinelComment
 
 # Set other common ivars.
 df.errors = 0
-df.file = file
+df.file = theFile
 df.importRootSeen = False
 df.indent = 0
 df.targetFileName = fileName
@@ -3271,8 +1855,8 @@ def scanDefaultDirectory(self,p,importing=False):
         
     for p in p.self_and_parents_iter():
         s = p.v.t.bodyString
-        dict = g.get_directives_dict(s)
-        if dict.has_key("path"):
+        theDict = g.get_directives_dict(s)
+        if theDict.has_key("path"):
             << handle @path >>
             return
 
@@ -3289,21 +1873,21 @@ def scanDefaultDirectory(self,p,importing=False):
 
 name = p.anyAtFileNodeName() # 4/28/04
     
-dir = g.choose(name,g.os_path_dirname(name),None)
+theDir = g.choose(name,g.os_path_dirname(name),None)
 
-if dir and g.os_path_isabs(dir):
-    if g.os_path_exists(dir):
-        at.default_directory = dir
+if theDir and g.os_path_isabs(theDir):
+    if g.os_path_exists(theDir):
+        at.default_directory = theDir
     else:
-        at.default_directory = g.makeAllNonExistentDirectories(dir)
+        at.default_directory = g.makeAllNonExistentDirectories(theDir)
         if not at.default_directory:
-            at.error("Directory \"" + dir + "\" does not exist")
+            at.error("Directory \"" + theDir + "\" does not exist")
 #@nonl
 #@-node:ekr.20031218072017.2628:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
 #@+node:ekr.20031218072017.2629:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
 # We set the current director to a path so future writes will go to that directory.
 
-k = dict["path"]
+k = theDict["path"]
 << compute relative path from s[k:] >>
 
 if path and len(path) > 0:
@@ -3350,18 +1934,18 @@ assert(not at.default_directory)
 
 if c.frame :
     base = g.getBaseDirectory() # returns "" on error.
-    for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-        if dir and len(dir) > 0:
-            dir = g.os_path_join(base,dir)
-            if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
-                if g.os_path_exists(dir):
-                    at.default_directory = dir ; break
+    for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if theDir and len(theDir) > 0:
+            theDir = g.os_path_join(base,theDir)
+            if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(theDir):
+                    at.default_directory = theDir ; break
                 else:
-                    at.default_directory = g.makeAllNonExistentDirectories(dir)
+                    at.default_directory = g.makeAllNonExistentDirectories(theDir)
 #@-node:ekr.20031218072017.2632:<< Set current directory >>
 #@-node:ekr.20031218072017.2627:top_df.scanDefaultDirectory
 #@+node:ekr.20031218072017.2633:top_df.scanHeader
-def scanHeader(self,file,fileName):
+def scanHeader(self,theFile,fileName):
     
     """Scan the @+leo sentinel.
     
@@ -3392,12 +1976,12 @@ def scanHeader(self,file,fileName):
 We can not call sentinelKind here because that depends on the comment delimiters we set here.  @first lines are written "verbatim", so nothing more needs to be done!
 @c
 
-s = at.readLine(file)
+s = at.readLine(theFile)
 while len(s) > 0:
     j = s.find(tag)
     if j != -1: break
     firstLines.append(s) # Queue the line
-    s = at.readLine(file)
+    s = at.readLine(theFile)
     
 n = len(s)
 valid = n > 0
@@ -3658,7 +2242,7 @@ def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
     old = {}
     for p in p.self_and_parents_iter():
         s = p.v.t.bodyString
-        dict = g.get_directives_dict(s)
+        theDict = g.get_directives_dict(s)
         << Test for @path >>
         << Test for @encoding >>
         << Test for @comment and @language >>
@@ -3666,7 +2250,7 @@ def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
         << Test for @lineending >>
         << Test for @pagewidth >>
         << Test for @tabwidth >>
-        old.update(dict)
+        old.update(theDict)
     << Set current directory >>
     if not importing and not reading:
         # 5/19/04: don't override comment delims when reading!
@@ -3691,60 +2275,60 @@ self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config set
 
 name = p.anyAtFileNodeName() # 4/28/04
 
-dir = g.choose(name,g.os_path_dirname(name),None)
+theDir = g.choose(name,g.os_path_dirname(name),None)
 
-if dir and len(dir) > 0 and g.os_path_isabs(dir):
-    if g.os_path_exists(dir):
-        self.default_directory = dir
+if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
+    if g.os_path_exists(theDir):
+        self.default_directory = theDir
     else: # 9/25/02
-        self.default_directory = g.makeAllNonExistentDirectories(dir)
+        self.default_directory = g.makeAllNonExistentDirectories(theDir)
         if not self.default_directory:
-            self.error("Directory \"" + dir + "\" does not exist")
+            self.error("Directory \"" + theDir + "\" does not exist")
 #@nonl
 #@-node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 #@+node:ekr.20031218072017.2390:<< Test for @comment and @language >>
 # 10/17/02: @language and @comment may coexist in @file trees.
 # For this to be effective the @comment directive should follow the @language directive.
 
-if not old.has_key("comment") and dict.has_key("comment"):
-    k = dict["comment"]
+if not old.has_key("comment") and theDict.has_key("comment"):
+    k = theDict["comment"]
     # 11/14/02: Similar to fix below.
     delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
 
 # Reversion fix: 12/06/02: We must use elif here, not if.
-elif not old.has_key("language") and dict.has_key("language"):
-    k = dict["language"]
+elif not old.has_key("language") and theDict.has_key("language"):
+    k = theDict["language"]
     # 11/14/02: Fix bug reported by J.M.Gilligan.
     self.language,delim1,delim2,delim3 = g.set_language(s,k)
 #@nonl
 #@-node:ekr.20031218072017.2390:<< Test for @comment and @language >>
 #@+node:ekr.20031218072017.2391:<< Test for @encoding >>
-if not old.has_key("encoding") and dict.has_key("encoding"):
+if not old.has_key("encoding") and theDict.has_key("encoding"):
     
-    e = g.scanAtEncodingDirective(s,dict)
+    e = g.scanAtEncodingDirective(s,theDict)
     if e:
         self.encoding = e
 #@nonl
 #@-node:ekr.20031218072017.2391:<< Test for @encoding >>
 #@+node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
 # EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
-if dict.has_key("header") and dict.has_key("noheader"):
+if theDict.has_key("header") and theDict.has_key("noheader"):
     g.es("conflicting @header and @noheader directives")
 #@nonl
 #@-node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
 #@+node:ekr.20031218072017.2393:<< Test for @lineending >>
-if not old.has_key("lineending") and dict.has_key("lineending"):
+if not old.has_key("lineending") and theDict.has_key("lineending"):
     
-    lineending = g.scanAtLineendingDirective(s,dict)
+    lineending = g.scanAtLineendingDirective(s,theDict)
     if lineending:
         self.output_newline = lineending
 #@-node:ekr.20031218072017.2393:<< Test for @lineending >>
 #@+node:ekr.20031218072017.2394:<< Test for @path >>
 # We set the current director to a path so future writes will go to that directory.
 
-if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
+if not self.default_directory and not old.has_key("path") and theDict.has_key("path"):
 
-    k = dict["path"]
+    k = theDict["path"]
     << compute relative path from s[k:] >>
     if path and len(path) > 0:
         base = g.getBaseDirectory() # returns "" on error.
@@ -3784,17 +2368,17 @@ else: # 9/25/02
 #@-node:ekr.20031218072017.2396:<< handle absolute path >>
 #@-node:ekr.20031218072017.2394:<< Test for @path >>
 #@+node:ekr.20031218072017.2397:<< Test for @pagewidth >>
-if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
     
-    w = g.scanAtPagewidthDirective(s,dict,issue_error_flag=True)
+    w = g.scanAtPagewidthDirective(s,theDict,issue_error_flag=True)
     if w and w > 0:
         self.page_width = w
 #@nonl
 #@-node:ekr.20031218072017.2397:<< Test for @pagewidth >>
 #@+node:ekr.20031218072017.2398:<< Test for @tabwidth >>
-if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
     
-    w = g.scanAtTabwidthDirective(s,dict,issue_error_flag=True)
+    w = g.scanAtTabwidthDirective(s,theDict,issue_error_flag=True)
     if w and w != 0:
         self.tab_width = w
 
@@ -3804,14 +2388,14 @@ if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 
 if c.frame and not self.default_directory:
     base = g.getBaseDirectory() # returns "" on error.
-    for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-        if dir and len(dir) > 0:
-            dir = g.os_path_join(base,dir)
-            if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
-                if g.os_path_exists(dir):
-                    self.default_directory = dir ; break
+    for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if theDir and len(theDir) > 0:
+            theDir = g.os_path_join(base,theDir)
+            if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(theDir):
+                    self.default_directory = theDir ; break
                 else: # 9/25/02
-                    self.default_directory = g.makeAllNonExistentDirectories(dir)
+                    self.default_directory = g.makeAllNonExistentDirectories(theDir)
 
 if not self.default_directory and not scripting and not importing:
     # This should never happen: c.openDirectory should be a good last resort.
@@ -3856,14 +2440,14 @@ else: # Emergency!
 #@nonl
 #@-node:EKR.20040507095329.2:To do
 #@+node:ekr.20031218072017.2647:old_df.readOpenFile
-def readOpenFile(self,root,file,firstLines):
+def readOpenFile(self,root,theFile,firstLines):
     
     """Read an open 3.x derived file."""
     
     at = self
 
     # Scan the file buffer
-    lastLines = at.scanText(file,root,[],endLeo)
+    lastLines = at.scanText(theFile,root,[],endLeo)
     root.v.t.setVisited() # Disable warning about set nodes.
 
     # Handle first and last lines.
@@ -3877,7 +2461,7 @@ def readOpenFile(self,root,file,firstLines):
 #@nonl
 #@-node:ekr.20031218072017.2647:old_df.readOpenFile
 #@+node:ekr.20031218072017.2757:new_df.readOpenFile
-def readOpenFile(self,root,file,firstLines,perfectImportRoot=None):
+def readOpenFile(self,root,theFile,firstLines,perfectImportRoot=None):
     
     """Read an open 4.x thick or thin derived file."""
     
@@ -3889,7 +2473,7 @@ def readOpenFile(self,root,file,firstLines,perfectImportRoot=None):
     # Scan the 4.x file.
     at.tnodeListIndex = 0
     # at.thinFile tells scanText4 whether this is a thin file or not.
-    lastLines = at.scanText4(file,root)
+    lastLines = at.scanText4(theFile,root)
     root.v.t.setVisited() # Disable warning about set nodes.
     
     # Handle first and last lines.
@@ -4034,7 +2618,7 @@ def read(self,root,importFileName=None,thinFile=False):
     << set fileName from root and importFileName >>
     << open file or return False >>
     g.es("reading: " + root.headString())
-    firstLines,read_new = at.scanHeader(file,fileName)
+    firstLines,read_new = at.scanHeader(theFile,fileName)
     df = g.choose(read_new,at.new_df,at.old_df)
     # g.trace(g.choose(df==at.new_df,"new","old"))
     << copy ivars to df >>
@@ -4044,11 +2628,11 @@ def read(self,root,importFileName=None,thinFile=False):
         # 1/28/04: Call scanAllDirectives here, not in readOpenFile.
         importing = importFileName is not None
         df.scanAllDirectives(root,importing=importing,reading=True)
-        df.readOpenFile(root,file,firstLines)
+        df.readOpenFile(root,theFile,firstLines)
     except:
         at.error("Unexpected exception while reading derived file")
         g.es_exception()
-    file.close()
+    theFile.close()
     root.clearDirty() # May be set dirty below.
     after = root.nodeAfterTree()
     << warn about non-empty unvisited nodes >>
@@ -4080,8 +2664,8 @@ fn = g.os_path_normpath(fn)
 
 try:
     # 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
-    file = open(fn,'rb')
-    if file:
+    theFile = open(fn,'rb')
+    if theFile:
         << warn on read-only file >>
     else: return False
 except:
@@ -4114,7 +2698,7 @@ df.startSentinelComment = at.startSentinelComment
 
 # Set other common ivars.
 df.errors = 0
-df.file = file
+df.file = theFile
 df.importRootSeen = False
 df.indent = 0
 df.targetFileName = fileName
@@ -9614,9 +8198,9 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         elif self.matchTag("descendentTnodeUnknownAttributes="):
             # New for 4.2
             s = self.getDqString()
-            dict = self.getDescendentUnknownAttributes(s)
-            if dict:
-                self.descendentUnknownAttributesDictList.append(dict)
+            theDict = self.getDescendentUnknownAttributes(s)
+            if theDict:
+                self.descendentUnknownAttributesDictList.append(theDict)
         elif self.matchTag("expanded="): # New in 4.2
             s = self.getDqString()
             self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
@@ -9826,11 +8410,11 @@ if headString:
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@+node:ekr.20031218072017.2297:fileCommands.open
-def open(self,file,fileName):
+def open(self,theFile,fileName):
 
     c = self.c ; frame = c.frame
     # Read the entire file into the buffer
-    self.fileBuffer = file.read() ; file.close()
+    self.fileBuffer = theFile.read() ; theFile.close()
     self.fileIndex = 0
     << Set the default directory >>
     self.topPosition = None
@@ -9849,19 +8433,19 @@ def open(self,file,fileName):
 @ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
 @c
 
-dir = g.os_path_dirname(fileName)
+theDir = g.os_path_dirname(fileName)
 
-if len(dir) > 0:
-    c.openDirectory = dir
+if len(theDir) > 0:
+    c.openDirectory = theDir
 #@nonl
 #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
 #@-node:ekr.20031218072017.2297:fileCommands.open
 #@+node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
-def readOutlineOnly (self,file,fileName):
+def readOutlineOnly (self,theFile,fileName):
 
     c = self.c
     # Read the entire file into the buffer
-    self.fileBuffer = file.read() ; file.close()
+    self.fileBuffer = theFile.read() ; theFile.close()
     self.fileIndex = 0
     << Set the default directory >>
     c.beginUpdate()
@@ -9883,10 +8467,10 @@ def readOutlineOnly (self,file,fileName):
 @ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
 @c
 
-dir = g.os_path_dirname(fileName)
+theDir = g.os_path_dirname(fileName)
 
-if len(dir) > 0:
-    c.openDirectory = dir
+if len(theDir) > 0:
+    c.openDirectory = theDir
 #@nonl
 #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
 #@-node:ekr.20031218072017.3030:fileCommands.readOutlineOnly

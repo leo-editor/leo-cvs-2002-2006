@@ -909,6 +909,7 @@ menu1
 menuName
 menu_shortcut
 menubar
+millennia
 mincolor
 minibuffer
 minimalLeoFile
