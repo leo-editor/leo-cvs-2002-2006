@@ -829,6 +829,7 @@ class leoTree:
 		v.t.bodyString = s
 		v.t.insertSpot = c.body.index("insert") # 9/1/02
 		# Recolor the body.
+		self.scanForTabWidth(v) # 9/13/02
 		self.recolor_now(v) # We are already at idle time, so this doesn't help much.
 		# Update dirty bits and changed bit.
 		if not c.changed:
@@ -1267,6 +1268,7 @@ class leoTree:
 			# print first,last,`v`
 		self.currentVnode = v
 		self.setSelectedLabelState(v)
+		self.scanForTabWidth(v) # 9/13/02
 		# Set focus.
 		if self.bodyKeepsFocus:
 			self.commands.body.focus_set()
@@ -1295,6 +1297,41 @@ class leoTree:
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="white")
 	#@-body
 	#@-node:5:C=32:tree.set...LabelState
+	#@+node:6:C=33:tree.scanForTabWidth
+	#@+body
+	# Similar to code in scanAllDirectives.
+	
+	def scanForTabWidth (self, v):
+		
+		c = self.commands ; w = c.tab_width
+	
+		while v:
+			s = v.t.bodyString
+			bits, dict = is_special_bits(s)
+			
+			#@<< set w and break on @tabwidth >>
+			#@+node:1::<< set w and break on @tabwidth >>
+			#@+body
+			if (bits & tab_width_bits) != 0:
+			
+				k = dict["tab_width"]
+				i = k + len("@tabwidth")
+				i, val = skip_long(s, i)
+				if val != None and val != 0:
+					w = val
+					break
+				else:
+					if 0: # silently ignore this.
+						i = skip_to_end_of_line(s,i)
+						es("Ignoring " + s[k:i])
+			#@-body
+			#@-node:1::<< set w and break on @tabwidth >>
+
+			v = v.parent()
+	
+		c.frame.setTabWidth(w)
+	#@-body
+	#@-node:6:C=33:tree.scanForTabWidth
 	#@-node:12:C=28:Selecting & editing (tree)
 	#@-others
 #@-body
