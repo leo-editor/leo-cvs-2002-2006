@@ -1037,7 +1037,7 @@ def file_date (file,format=None):
 			import time
 			n = os.path.getmtime(file)
 			if format == None:
-				format = "%d %b %Y %H:%M:%S"
+				format = "%m/%d/%y %H:%M:%S"
 			return time.strftime(format,time.gmtime(n))
 		except: pass
 	return ""
@@ -3135,6 +3135,18 @@ def unloadAll():
 
 #@-body
 #@-node:2::unloadAll
+#@+node:3::plugin_signon
+#@+body
+def plugin_signon(module_name):
+	
+	exec("import %s ; m = %s" % (
+		module_name,module_name))
+
+	es("...%s.py v%s: %s" % (
+		m.__name__, m.__version__, plugin_date(m)))
+
+#@-body
+#@-node:3::plugin_signon
 #@-node:10::Startup & initialization...
 #@+node:11::Unicode utils...
 #@+node:1::isValidEncoding
