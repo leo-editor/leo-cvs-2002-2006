@@ -390,7 +390,7 @@ class undoer:
 
 			
 			#@<< redo move & drag cases >>
-			#@+node:4::<< redo move & drag cases >>
+			#@+node:4:C=3:<< redo move & drag cases >>
 			#@+body
 			elif type in ["Drag","Move Down","Move Left","Move Right","Move Up"]:
 			
@@ -413,7 +413,7 @@ class undoer:
 				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:4::<< redo move & drag cases >>
+			#@-node:4:C=3:<< redo move & drag cases >>
 
 			
 			#@<< redo promote and demote cases >>
@@ -527,7 +527,7 @@ class undoer:
 		u.setUndoTypes()
 	#@-body
 	#@-node:4:C=2:redo
-	#@+node:5:C=3:undo
+	#@+node:5:C=4:undo
 	#@+body
 	#@+at
 	#  This function and its allies undo the operation described by the undo parmaters.
@@ -608,7 +608,7 @@ class undoer:
 
 			
 			#@<< undo move & drag cases >>
-			#@+node:4:C=4:<< undo move  & drag cases >>
+			#@+node:4:C=5:<< undo move  & drag cases >>
 			#@+body
 			elif type in ["Drag", "Move Down","Move Left","Move Right","Move Up"]:
 			
@@ -626,7 +626,7 @@ class undoer:
 				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:4:C=4:<< undo move  & drag cases >>
+			#@-node:4:C=5:<< undo move  & drag cases >>
 
 			
 			#@<< undo promote and demote cases >>
@@ -750,7 +750,7 @@ class undoer:
 		u.bead -= 1
 		u.setUndoTypes()
 	#@-body
-	#@-node:5:C=3:undo
+	#@-node:5:C=4:undo
 	#@+node:6::Undo helpers
 	#@+node:1::findSharedVnode
 	#@+body
@@ -764,7 +764,7 @@ class undoer:
 		return None
 	#@-body
 	#@-node:1::findSharedVnode
-	#@+node:2:C=5:undoDemote
+	#@+node:2:C=6:undoDemote
 	#@+body
 	# undoes the previous demote operation.
 	def undoDemote (self):
@@ -786,8 +786,8 @@ class undoer:
 		c.selectVnode(u.v)
 		c.endUpdate()
 	#@-body
-	#@-node:2:C=5:undoDemote
-	#@+node:3:C=6:undoPromote
+	#@-node:2:C=6:undoDemote
+	#@+node:3:C=7:undoPromote
 	#@+body
 	# Undoes the previous promote operation.
 	def undoPromote (self):
@@ -810,8 +810,8 @@ class undoer:
 		c.selectVnode(v1)
 		c.endUpdate()
 	#@-body
-	#@-node:3:C=6:undoPromote
-	#@+node:4:C=7:undoReplace
+	#@-node:3:C=7:undoPromote
+	#@+node:4:C=8:undoReplace
 	#@+body
 	#@+at
 	#  This routine implements undo by properly replacing v's tree by the oldv 
@@ -860,7 +860,7 @@ class undoer:
 			v.setClonedBit()
 		c.initAllCloneBits()
 	#@-body
-	#@-node:4:C=7:undoReplace
+	#@-node:4:C=8:undoReplace
 	#@+node:5::undoSortChildren
 	#@+body
 	def undoSortChildren (self):

@@ -11,14 +11,17 @@
 #@+node:1::<< Import pychecker >>
 #@+body
 #@+at
-#  pychecker is extremely useful, and it sometimes reports problems erroneously.  In particular, the following warnings are invalid:
+#  pychecker is extremely useful, and it sometimes reports problems 
+# erroneously.  In particular, the following warnings are invalid:
 # 
-# in leoFrame.py and leoNodes.py: warnings about the event param not being used. pychecker doesn't understand that these routines 
-# are Tkinter callbacks.
+# in leoFrame.py and leoNodes.py: warnings about the event param not being 
+# used. pychecker doesn't understand that these routines are Tkinter callbacks.
 # 
-# in leoApp.py and leoUtils.py: pychecker doesn't seem to handle globals very well.  There are spurious warnings about globals.
+# in leoApp.py and leoUtils.py: pychecker doesn't seem to handle globals very 
+# well.  There are spurious warnings about globals.
 # 
-# several files: pychecker complains about several routines being "too big", i.e., pychecker doesn't understand about literate programming.
+# several files: pychecker complains about several routines being "too big", 
+# i.e., pychecker doesn't understand about literate programming.
 # 
 
 #@-at
@@ -152,9 +155,10 @@ def reload_all ():
 		
 
 #@+at
-#  Warning: Python version 2.2 warns if import * is done outside the module level.  Alas, for reasons that are not clear to me, it 
-# appears necessary to do an import * whenever leoGlobals or leoUtils change.  The workaround is to quit Python and then reload 
-# leo.py from scratch.  Sigh.
+#  Warning: Python version 2.2 warns if import * is done outside the module 
+# level.  Alas, for reasons that are not clear to me, it appears necessary to 
+# do an import * whenever leoGlobals or leoUtils change.  The workaround is to 
+# quit Python and then reload leo.py from scratch.  Sigh.
 
 #@-at
 #@@c 

@@ -327,18 +327,23 @@ def print_bindings (name,window):
 #@+node:4:C=7:Sherlock...
 #@+body
 #@+at
-#  Starting with this release, you will see trace statements throughout the code.  The trace function is defined in leoUtils.py; 
-# trace implements much of the functionality of my Sherlock tracing package.  Traces are more convenient than print statements for 
-# two reasons: 1) you don't need explicit trace names and 2) you can disable them without recompiling.
+#  Starting with this release, you will see trace statements throughout the 
+# code.  The trace function is defined in leoUtils.py; trace implements much 
+# of the functionality of my Sherlock tracing package.  Traces are more 
+# convenient than print statements for two reasons: 1) you don't need explicit 
+# trace names and 2) you can disable them without recompiling.
 # 
-# In the following examples, suppose that the call to trace appears in function f.
+# In the following examples, suppose that the call to trace appears in 
+# function f.
 # 
-# trace(string) prints string if tracing for f has been enabled.  For example, the following statment prints from s[i] to the end 
-# of the line if tracing for f has been enabled.
+# trace(string) prints string if tracing for f has been enabled.  For example, 
+# the following statment prints from s[i] to the end of the line if tracing 
+# for f has been enabled.
 # 
 # 	j = skip_line(s,i) ; trace(s[i:j])
 # 
-# trace(function) exectutes the function if tracing for f has been enabled.  For example,
+# trace(function) exectutes the function if tracing for f has been enabled.  
+# For example,
 # 
 # 	trace(self.f2)
 # 
@@ -350,11 +355,14 @@ def print_bindings (name,window):
 # 	init_trace("-a")         # disable tracing for a
 # 	traces = init_trace("?") # return the list of enabled traces
 # 
-# If two arguments are supplied to trace, the first argument is the "tracepoint name" and the second argument is the "tracepoint 
-# action" as shown in the examples above.  If tracing for the tracepoint name is enabled, the tracepoint action is printed (if it 
-# is a string) or exectuted (if it is a function name).
+# If two arguments are supplied to trace, the first argument is the 
+# "tracepoint name" and the second argument is the "tracepoint action" as 
+# shown in the examples above.  If tracing for the tracepoint name is enabled, 
+# the tracepoint action is printed (if it is a string) or exectuted (if it is 
+# a function name).
 # 
-# "*" will not match an explicit tracepoint name that starts with a minus sign.  For example,
+# "*" will not match an explicit tracepoint name that starts with a minus 
+# sign.  For example,
 # 
 # 	trace("-nocolor", self.disable_color)
 
@@ -363,8 +371,9 @@ def print_bindings (name,window):
 #@+node:1::get_Sherlock_args
 #@+body
 #@+at
-#  It no args are given we attempt to get them from the "SherlockArgs" file.  If there are still no arguments we trace 
-# everything.  This default makes tracing much more useful in Python.
+#  It no args are given we attempt to get them from the "SherlockArgs" file.  
+# If there are still no arguments we trace everything.  This default makes 
+# tracing much more useful in Python.
 
 #@-at
 #@@c
@@ -457,7 +466,8 @@ def ensure_extension (name, ext):
 #@+body
 #@+at
 #  We search the descendents of v looking for the definition node matching name.
-# There should be exactly one such node (descendents of other definition nodes are not searched).
+# There should be exactly one such node (descendents of other definition nodes 
+# are not searched).
 
 #@-at
 #@@c
@@ -573,8 +583,9 @@ def skip_leading_ws(s,i,ws,tab_width):
 #@+node:7::skip_leading_ws_with_indent
 #@+body
 #@+at
-#  Skips leading whitespace and returns (i, indent), where i points after the whitespace and indent is the width of the 
-# whitespace, assuming tab_width wide tabs.
+#  Skips leading whitespace and returns (i, indent), where i points after the 
+# whitespace and indent is the width of the whitespace, assuming tab_width 
+# wide tabs.
 
 #@-at
 #@@c
@@ -651,7 +662,8 @@ def setMenuLabel (menu,name,label):
 #@+node:12::scanError
 #@+body
 #@+at
-#  It seems dubious to bump the Tangle error count here.  OTOH, it really doesn't hurt.
+#  It seems dubious to bump the Tangle error count here.  OTOH, it really 
+# doesn't hurt.
 
 #@-at
 #@@c
@@ -669,8 +681,10 @@ def scanError(s):
 #@+node:13::Scanners: calling scanError
 #@+body
 #@+at
-#  These scanners all call scanError() directly or indirectly, so they will call es() if they find an error.  scanError() also 
-# bumps commands.tangleCommands.errors, which is harmless if we aren't tangling, and useful if we are.
+#  These scanners all call scanError() directly or indirectly, so they will 
+# call es() if they find an error.  scanError() also bumps 
+# commands.tangleCommands.errors, which is harmless if we aren't tangling, and 
+# useful if we are.
 # 
 # These routines are called by the Import routines and the Tangle routines.
 
@@ -695,10 +709,11 @@ def skip_block_comment (s,i):
 #@+node:2:C=10:skip_braces
 #@+body
 #@+at
-#  Skips from the opening to the matching . If no matching is found i is set to len(s).
+#  Skips from the opening to the matching . If no matching is found i is set 
+# to len(s).
 # 
-# This code is called only from the import logic, so we are allowed to try some tricks.  In particular, we assume all braces are 
-# matched in #if blocks.
+# This code is called only from the import logic, so we are allowed to try 
+# some tricks.  In particular, we assume all braces are matched in #if blocks.
 
 #@-at
 #@@c
@@ -763,7 +778,8 @@ def skip_php_braces(s,i):
 #@+node:4::skip_parens
 #@+body
 #@+at
-#  Skips from the opening ( to the matching ) . If no matching is found i is set to len(s)
+#  Skips from the opening ( to the matching ) . If no matching is found i is 
+# set to len(s)
 
 #@-at
 #@@c
@@ -1104,7 +1120,8 @@ def is_nl(s,i):
 #@+at
 #  Return true if the body text contains the @ directive.
 # 
-# We no longer require that the directive appear befor e any @c directive or section definition.
+# We no longer require that the directive appear befor e any @c directive or 
+# section definition.
 
 #@-at
 #@@c
@@ -1129,7 +1146,8 @@ def is_special(s,i,directive):
 # bits is a bit-set representing all the @directives of a particular body text.
 # dict contains various pointers into the text.
 # 
-# The caller passes [root_node] or None as the second arg.  This allows us to distinguish between None and [None].
+# The caller passes [root_node] or None as the second arg.  This allows us to 
+# distinguish between None and [None].
 
 #@-at
 #@@c
@@ -1188,8 +1206,9 @@ def is_special_bits(s,root=None):
 			#@+node:2::<< set root bits for noweb * chunks >>
 			#@+body
 			#@+at
-			#  The following looks for chunk definitions of the form < < * > > =. If found, we take this to be equivalent to @root 
-			# filename if the headline has the form @root filename.
+			#  The following looks for chunk definitions of the form < < * > > 
+			# =. If found, we take this to be equivalent to @root filename if 
+			# the headline has the form @root filename.
 
 			#@-at
 			#@@c
@@ -1292,8 +1311,9 @@ def skip_c_id(s,i):
 #@+node:15::skip_line, skip_to_end_of_line
 #@+body
 #@+at
-#  These methods skip to the next newline, regardless of whether the newline may be preceeded by a backslash. Consequently, they 
-# should be used only when we know that we are not in a preprocessor directive or string.
+#  These methods skip to the next newline, regardless of whether the newline 
+# may be preceeded by a backslash. Consequently, they should be used only when 
+# we know that we are not in a preprocessor directive or string.
 
 #@-at
 #@@c
@@ -1350,8 +1370,8 @@ def skip_matching_delims(s,i,delim1,delim2):
 #@+node:18::skip_nl
 #@+body
 #@+at
-#  This function skips a single "logical" end-of-line character.  We need this function because different systems have different 
-# end-of-line conventions.
+#  This function skips a single "logical" end-of-line character.  We need this 
+# function because different systems have different end-of-line conventions.
 
 #@-at
 #@@c
@@ -1406,7 +1426,8 @@ def shortFileName (fileName):
 #@+node:16::sortSequence
 #@+body
 #@+at
-#  sequence is a sequence of items, each of which is a sequence containing at least n elements.
+#  sequence is a sequence of items, each of which is a sequence containing at 
+# least n elements.
 # returns a list of the the items sorted on the n'th element of each tuple.
 
 #@-at
@@ -1426,12 +1447,15 @@ def sortSequence (sequence, n):
 	
 
 #@+at
-#  The sort() method takes an optional argument specifying a comparison function of two arguments (list items) which should return 
-# -1, 0 or 1 depending on whether the first argument is considered smaller than, equal to, or larger than the second argument.
+#  The sort() method takes an optional argument specifying a comparison 
+# function of two arguments (list items) which should return -1, 0 or 1 
+# depending on whether the first argument is considered smaller than, equal 
+# to, or larger than the second argument.
 # 
-# Note that this slows the sorting process down considerably; e.g. to sort a list in reverse order it is much faster to use calls 
-# to the methods sort() and reverse() than to use the built-in function sort() with a comparison function that reverses the 
-# ordering of the elements.
+# Note that this slows the sorting process down considerably; e.g. to sort a 
+# list in reverse order it is much faster to use calls to the methods sort() 
+# and reverse() than to use the built-in function sort() with a comparison 
+# function that reverses the ordering of the elements.
 # 
 # So a "clever" solution wouldn't be so clever after all.
 
@@ -1508,8 +1532,9 @@ def setTextSelection (t,start,end):
 #@+node:19:C=21:update_file_if_changed
 #@+body
 #@+at
-#  This function compares two files. If they are different, we replace file_name with temp_name. Otherwise, we just delete 
-# temp_name.  Both files should be closed.
+#  This function compares two files. If they are different, we replace 
+# file_name with temp_name. Otherwise, we just delete temp_name.  Both files 
+# should be closed.
 
 #@-at
 #@@c
@@ -1685,8 +1710,9 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 #@+at
 #  Stephen P. Schaefer 9/7/2002
 # 
-# The Unix readline() routine delivers "\r\n" line end strings verbatim, while the windows versions force the string to use the 
-# Unix convention of using only "\n".  This routine causes the Unix readline to do the same.
+# The Unix readline() routine delivers "\r\n" line end strings verbatim, while 
+# the windows versions force the string to use the Unix convention of using 
+# only "\n".  This routine causes the Unix readline to do the same.
 
 #@-at
 #@@c

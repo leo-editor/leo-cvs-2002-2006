@@ -158,11 +158,14 @@ class leoFontPanel:
 	#@+node:4::getActiveFont
 	#@+body
 	#@+at
-	#  Returns a font corresponding to present visual state of the font panel.  As a benign side effect, this routine selects the 
-	# font in the list box.
+	#  Returns a font corresponding to present visual state of the font 
+	# panel.  As a benign side effect, this routine selects the font in the 
+	# list box.
 	# 
-	# Alas, the selection in the list box may have been cleared.  In that case, we must figure out what it should be. We recreate 
-	# the family name (and only the family name!) from self.last_selected_font, or in an emergency the font returned from getImpliedFont().
+	# Alas, the selection in the list box may have been cleared.  In that 
+	# case, we must figure out what it should be. We recreate the family name 
+	# (and only the family name!) from self.last_selected_font, or in an 
+	# emergency the font returned from getImpliedFont().
 
 	#@-at
 	#@@c
@@ -253,15 +256,20 @@ class leoFontPanel:
 	#@+node:7::on...BoxChanged
 	#@+body
 	#@+at
-	#  We define these routines so that changing one pane box affects only that pane.
+	#  We define these routines so that changing one pane box affects only 
+	# that pane.
 	# 
-	# When we turn a box on, we expect that the present font will instantly apply to the new pane, and when we turn a box off we 
-	# call implied font to see which font should be highlighted and we revert the pane's font. It is crucial that unchecking a box 
-	# be equivalent to a "small revert".  This is the _only_ scheme that isn't confusing to the user.
+	# When we turn a box on, we expect that the present font will instantly 
+	# apply to the new pane, and when we turn a box off we call implied font 
+	# to see which font should be highlighted and we revert the pane's font. 
+	# It is crucial that unchecking a box be equivalent to a "small revert".  
+	# This is the _only_ scheme that isn't confusing to the user.
 	# 
-	# Note: if we just called update instead of these routines we could do something unexpected after after a revert.  For 
-	# example, suppose all three pane boxes are checked and we do a revert.  If we then uncheck a box, we expect only that pane to 
-	# change, but if we call update the other two panes might also change...
+	# Note: if we just called update instead of these routines we could do 
+	# something unexpected after after a revert.  For example, suppose all 
+	# three pane boxes are checked and we do a revert.  If we then uncheck a 
+	# box, we expect only that pane to change, but if we call update the other 
+	# two panes might also change...
 
 	#@-at
 	#@@c

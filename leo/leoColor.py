@@ -1140,7 +1140,8 @@ class colorizer:
 	#@+node:5:C=7:scanColorDirectives
 	#@+body
 	#@+at
-	#  This code scans the node v and all of v's ancestors looking for @color and @nocolor directives.
+	#  This code scans the node v and all of v's ancestors looking for @color 
+	# and @nocolor directives.
 
 	#@-at
 	#@@c
@@ -1158,9 +1159,11 @@ class colorizer:
 			#@+node:1::<< Test for @comment or @language >>
 			#@+body
 			#@+at
-			#  Disabling syntax coloring when @comment is seen is stupid and confusing.  If the user want's plain text, then an 
-			# @language plain should work.  Moreover, why not recognize directives even in plain text?  If the user _really_ want 
-			# no syntax coloring, an @nocolor in a parent node will work fine.
+			#  Disabling syntax coloring when @comment is seen is stupid and 
+			# confusing.  If the user want's plain text, then an @language 
+			# plain should work.  Moreover, why not recognize directives even 
+			# in plain text?  If the user _really_ want no syntax coloring, an 
+			# @nocolor in a parent node will work fine.
 
 			#@-at
 			#@@c
@@ -1276,7 +1279,8 @@ class colorizer:
 	#@+node:10::Utils
 	#@+body
 	#@+at
-	#  These methods are like the corresponding functions in leoUtils.py except they issue no error messages.
+	#  These methods are like the corresponding functions in leoUtils.py 
+	# except they issue no error messages.
 
 	#@-at
 	#@-body

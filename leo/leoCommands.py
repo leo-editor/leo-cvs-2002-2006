@@ -6,7 +6,8 @@
 
 
 #@+at
-#  This class implements the most basic commands.  Subcommanders contain an ivar that points to an instance of this class.
+#  This class implements the most basic commands.  Subcommanders contain an 
+# ivar that points to an instance of this class.
 
 #@-at
 #@@c
@@ -164,7 +165,8 @@ class Commands:
 	#@+node:3::pasteOutline
 	#@+body
 	#@+at
-	#  To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
+	#  To cut and paste between apps, just copy into an empty body first, then 
+	# copy to Leo's clipboard.
 
 	#@-at
 	#@@c
@@ -1851,8 +1853,10 @@ class Commands:
 	#@+node:5:C=25:moveOutlineDown
 	#@+body
 	#@+at
-	#  Moving down is more tricky than moving up; we can't move v to be a child of itself.  An important optimization:  we don't 
-	# have to call checkMoveWithParentWithWarning() if the parent of the moved node remains the same.
+	#  Moving down is more tricky than moving up; we can't move v to be a 
+	# child of itself.  An important optimization:  we don't have to call 
+	# checkMoveWithParentWithWarning() if the parent of the moved node remains 
+	# the same.
 
 	#@-at
 	#@@c

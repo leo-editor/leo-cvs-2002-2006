@@ -8,7 +8,8 @@
 
 
 #@+at
-#  When using c2py as a script to translate entire files, use convertCFileToPython().  When using c2py within Leo, use convertCurrentTree().
+#  When using c2py as a script to translate entire files, use 
+# convertCFileToPython().  When using c2py within Leo, use convertCurrentTree().
 # 
 # Please set user data in the << specifying user types >> section.
 
@@ -21,10 +22,12 @@
 #@+node:1::<< what c2py does >>
 #@+body
 #@+at
-#  c2py converts C or C++ text into python text.  The conversion is not complete.  Nevertheless, c2py eliminates much of the 
-# tedious text manipulation that would otherwise be required.
+#  c2py converts C or C++ text into python text.  The conversion is not 
+# complete.  Nevertheless, c2py eliminates much of the tedious text 
+# manipulation that would otherwise be required.
 # 
-# The following is a list of the translations performed by c2py.  These transformations are controlled by convertCodeList().
+# The following is a list of the translations performed by c2py.  These 
+# transformations are controlled by convertCodeList().
 # 
 # I.  Prepass
 # 
@@ -49,7 +52,8 @@
 # to:
 # 	aClass.__init__(t1 v1,...,tn vn)
 # 
-# Yes, I know, aClass.__init__ isn't proper Python, but retaining the class name is useful.
+# Yes, I know, aClass.__init__ isn't proper Python, but retaining the class 
+# name is useful.
 # 
 # 2. Let t denote any member of typeList or classList.
 # 
@@ -59,11 +63,13 @@
 # 	d) For all i in ivarsDict[aClass] converts this -> i to self.i
 # 	e) For all i in ivarsDict[aClass] converts i to self.i
 # 
-# 3. Converts < < x > > = to @c.  This Leo-specific translation is not done when translating files.
+# 3. Converts < < x > > = to @c.  This Leo-specific translation is not done 
+# when translating files.
 # 
 # II.  Main Pass
 # 
-# This pass does the following simple translations everywhere except in comments and strings.
+# This pass does the following simple translations everywhere except in 
+# comments and strings.
 # 
 # Changes all -> to .
 # Changes all this.self to self (This corrects problems during the prepass.)
@@ -79,7 +85,8 @@
 # Changes all FALSE to false
 # Changes all NULL to None
 # Changes all this to self
-# Changes all @code to @c.  This Leo-specific translation is not done when translating files.
+# Changes all @code to @c.  This Leo-specific translation is not done when 
+# translating files.
 # 
 # III.  Complex Pass
 # 
@@ -97,7 +104,8 @@
 # This pass completes the translation.
 # 
 # Removes all semicolons.
-# Removes @c if it starts the text.  This Leo-specific translation is not done when translating files.
+# Removes @c if it starts the text.  This Leo-specific translation is not done 
+# when translating files.
 # Removes all blank lines.
 # Removes excess whitespace from all lines, leaving leading whitespace unchanged.
 # Replaces C/C++ comments by Python comments.
@@ -116,14 +124,17 @@
 #@+at
 #  Strategy and Performance
 # 
-# c2py is straightforward.  The speed of c2py is unimportant.  We don't care about the memory used because we translate only small 
-# pieces of text at a time.
+# c2py is straightforward.  The speed of c2py is unimportant.  We don't care 
+# about the memory used because we translate only small pieces of text at a time.
 # 
-# We can do body[i:j] = x, regardless of len(x).  We can also do del body[i:j] to delete characters.
+# We can do body[i:j] = x, regardless of len(x).  We can also do del body[i:j] 
+# to delete characters.
 # 
-# We scan repeatedly through the text.  Using many passes greatly simplifies the code and does not slow down c2py significantly.
+# We scan repeatedly through the text.  Using many passes greatly simplifies 
+# the code and does not slow down c2py significantly.
 # 
-# No scans are done within strings or comments.  The idiom to handle such scans is the following:
+# No scans are done within strings or comments.  The idiom to handle such 
+# scans is the following:
 # 
 # def someScan(body):
 # 	i = 0
@@ -134,7 +145,8 @@
 # 			<< convert what we are looking for, setting i >>
 # 		else: i += 1
 # 
-# That's about all there is to it.  The code was remarkably easy to write and seems clear to me.
+# That's about all there is to it.  The code was remarkably easy to write and 
+# seems clear to me.
 
 #@-at
 #@-body
@@ -147,7 +159,8 @@ import string
 #@+node:2::<< specifying user types >>
 #@+body
 #@+at
-#  Please change the following lists so they contain the types and classes used by your program.
+#  Please change the following lists so they contain the types and classes 
+# used by your program.
 # 
 # c2py removes all type definitions correctly; it converts
 # 	new aType(...)
@@ -165,9 +178,11 @@ typeList = ["char", "void", "short", "long", "int", "double", "float"]
 
 
 #@+at
-#  Please change ivarsDict so it represents the instance variables (ivars) used by your program's classes.
+#  Please change ivarsDict so it represents the instance variables (ivars) 
+# used by your program's classes.
 # 
-# ivarsDict is a dictionary used to translate ivar i of class c to self.i.  It also translates this->i to self.i.
+# ivarsDict is a dictionary used to translate ivar i of class c to self.i.  It 
+# also translates this->i to self.i.
 
 #@-at
 #@@c
@@ -358,8 +373,9 @@ def convertStringLeo1to2 (s):
 #@+node:4::convertCodeList1to2
 #@+body
 #@+at
-#  We do _not_ replace @root by @file or insert @others as needed.  Inserting @others can be done easily enough by hand, and may 
-# take more global knowledge than we can reasonably expect to have.
+#  We do _not_ replace @root by @file or insert @others as needed.  Inserting 
+# @others can be done easily enough by hand, and may take more global 
+# knowledge than we can reasonably expect to have.
 
 #@-at
 #@@c
@@ -378,8 +394,9 @@ def convertCodeList1to2(list):
 #@+node:6::c2py entry points
 #@+body
 #@+at
-#  We separate the processing into two parts, 1) a leo-aware driver that iterates over @file trees and 2) a text-based part that 
-# processes one or more files or strings.
+#  We separate the processing into two parts, 1) a leo-aware driver that 
+# iterates over @file trees and 2) a text-based part that processes one or 
+# more files or strings.
 
 #@-at
 #@-body

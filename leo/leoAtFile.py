@@ -8,9 +8,11 @@
 #@+at
 #  Class to read and write @file nodes.
 # 
-# This code uses readline() to get each line rather than reading the entire file into a buffer.  This is more memory efficient and 
-# saves us from having to scan for the end of each line.  The result is cleaner and faster code.  This code also accumulates body 
-# text line-by-line rather than character-by-character, a much faster way.
+# This code uses readline() to get each line rather than reading the entire 
+# file into a buffer.  This is more memory efficient and saves us from having 
+# to scan for the end of each line.  The result is cleaner and faster code.  
+# This code also accumulates body text line-by-line rather than 
+# character-by-character, a much faster way.
 
 #@-at
 #@@c
@@ -75,8 +77,9 @@ class atFile:
 		#@+node:1::<< initialize atFile ivars >>
 		#@+body
 		#@+at
-		#  errors is the number of errors seen while reading and writing.  structureErrors are errors reported by createNthChild.  
-		# If structure errors are found we delete the outline tree and rescan.
+		#  errors is the number of errors seen while reading and writing.  
+		# structureErrors are errors reported by createNthChild.  If structure 
+		# errors are found we delete the outline tree and rescan.
 
 		#@-at
 		#@@c
@@ -97,8 +100,10 @@ class atFile:
 		
 
 		#@+at
-		#  The files used by the output routines.  When tangling, we first write to a temporary output file.  After tangling is 
-		# temporary file.  Otherwise we delete the old target file and rename the temporary file to be the target file.
+		#  The files used by the output routines.  When tangling, we first 
+		# write to a temporary output file.  After tangling is temporary 
+		# file.  Otherwise we delete the old target file and rename the 
+		# temporary file to be the target file.
 
 		#@-at
 		#@@c
@@ -109,8 +114,9 @@ class atFile:
 		
 
 		#@+at
-		#  The indentation used when outputting section references or at-others sections.  We add the indentation of the line 
-		# containing the at-node directive and restore the old value when the
+		#  The indentation used when outputting section references or 
+		# at-others sections.  We add the indentation of the line containing 
+		# the at-node directive and restore the old value when the
 		# expansion is complete.
 
 		#@-at
@@ -153,7 +159,8 @@ class atFile:
 	#@+node:3::putCloseSentinels
 	#@+body
 	#@+at
-	#  root is an ancestor of v, or root == v.  We call putCloseSentinel for v up to, but not including, root.
+	#  root is an ancestor of v, or root == v.  We call putCloseSentinel for v 
+	# up to, but not including, root.
 
 	#@-at
 	#@@c
@@ -170,7 +177,8 @@ class atFile:
 	#@+node:4::putOpenLeoSentinel
 	#@+body
 	#@+at
-	#  This method is the same as putSentinel except we don't put an opening newline and leading whitespace.
+	#  This method is the same as putSentinel except we don't put an opening 
+	# newline and leading whitespace.
 
 	#@-at
 	#@@c
@@ -201,8 +209,8 @@ class atFile:
 	#@+node:6::putOpenSentinels
 	#@+body
 	#@+at
-	#  root is an ancestor of v, or root == v.  We call putOpenNodeSentinel on all the descendents of root which are the ancestors 
-	# of v.
+	#  root is an ancestor of v, or root == v.  We call putOpenNodeSentinel on 
+	# all the descendents of root which are the ancestors of v.
 
 	#@-at
 	#@@c
@@ -224,16 +232,21 @@ class atFile:
 	#@+at
 	#  All sentinels are eventually output by this method.
 	# 
-	# Sentinels include both the preceding and following newlines. This rule greatly simplies the code and has several important benefits:
+	# Sentinels include both the preceding and following newlines. This rule 
+	# greatly simplies the code and has several important benefits:
 	# 
-	# 1. Callers never have to generate newlines before or after sentinels.  Similarly, routines that expand code and doc parts 
-	# never have to add "extra" newlines.
-	# 2. There is no need for a "no-newline" directive.  If text follows a section reference, it will appear just after the 
-	# newline that ends sentinel at the end of the expansion of the reference.  If no significant text follows a reference, there 
-	# will be two newlines following the ending sentinel.
+	# 1. Callers never have to generate newlines before or after sentinels.  
+	# Similarly, routines that expand code and doc parts never have to add 
+	# "extra" newlines.
+	# 2. There is no need for a "no-newline" directive.  If text follows a 
+	# section reference, it will appear just after the newline that ends 
+	# sentinel at the end of the expansion of the reference.  If no 
+	# significant text follows a reference, there will be two newlines 
+	# following the ending sentinel.
 	# 
-	# The only exception is that no newline is required before the opening "leo" sentinel. The putLeoSentinel and isLeoSentinel 
-	# routines handle this minor exception.
+	# The only exception is that no newline is required before the opening 
+	# "leo" sentinel. The putLeoSentinel and isLeoSentinel routines handle 
+	# this minor exception.
 
 	#@-at
 	#@@c
@@ -253,10 +266,12 @@ class atFile:
 	#@+node:8:C=3:sentinelKind
 	#@+body
 	#@+at
-	#  This method tells what kind of sentinel appears in line s.  Typically s will be an empty line before the actual sentinel, 
-	# but it is also valid for s to be an actual sentinel line.
+	#  This method tells what kind of sentinel appears in line s.  Typically s 
+	# will be an empty line before the actual sentinel, but it is also valid 
+	# for s to be an actual sentinel line.
 	# 
-	# Returns (kind, s, emptyFlag), where emptyFlag is true if kind == noSentinel and s was an empty line on entry.
+	# Returns (kind, s, emptyFlag), where emptyFlag is true if kind == 
+	# noSentinel and s was an empty line on entry.
 
 	#@-at
 	#@@c
@@ -335,13 +350,16 @@ class atFile:
 	#@+node:1:C=4:atFile.scanAllDirectives (calls writeError on errors)
 	#@+body
 	#@+at
-	#  This code scans the node v and all of v's ancestors looking for directives.  If found, the corresponding Tangle/Untangle 
-	# globals are set.
+	#  This code scans the node v and all of v's ancestors looking for 
+	# directives.  If found, the corresponding Tangle/Untangle globals are set.
 	# 
-	# Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an 
-	# @color directive is seen in node x, no @color or @nocolor directives are examined in any ancestor of x.
+	# Once a directive is seen, no other related directives in nodes further 
+	# up the tree have any effect.  For example, if an @color directive is 
+	# seen in node x, no @color or @nocolor directives are examined in any 
+	# ancestor of x.
 	# 
-	# This code is similar to Commands::scanAllDirectives, but it has been modified for use by the atFile class.
+	# This code is similar to Commands::scanAllDirectives, but it has been 
+	# modified for use by the atFile class.
 
 	#@-at
 	#@@c
@@ -582,8 +600,8 @@ class atFile:
 	# 1. The new Leo2 recomputes clone indices for every write.
 	# 2. The new Leo2 forces the clone index of the @file node to be zero.
 	# 
-	# Also, the read logic ignores the clone index of @file nodes, thereby ensuring that we don't mistakenly join an @file node to 
-	# another node.
+	# Also, the read logic ignores the clone index of @file nodes, thereby 
+	# ensuring that we don't mistakenly join an @file node to another node.
 
 	#@-at
 	#@@c
@@ -628,19 +646,26 @@ class atFile:
 	#@+node:1::createNthChild
 	#@+body
 	#@+at
-	#  Sections appear in the derived file in reference order, not tree order.  Therefore, when we insert the nth child of the 
-	# parent there is no guarantee that the previous n-1 children have already been inserted. And it won't work just to insert the 
-	# nth child as the last child if there aren't n-1 previous siblings.  For example, if we insert the third child followed by 
-	# the second child followed by the first child the second and third children will be out of order.
+	#  Sections appear in the derived file in reference order, not tree 
+	# order.  Therefore, when we insert the nth child of the parent there is 
+	# no guarantee that the previous n-1 children have already been inserted. 
+	# And it won't work just to insert the nth child as the last child if 
+	# there aren't n-1 previous siblings.  For example, if we insert the third 
+	# child followed by the second child followed by the first child the 
+	# second and third children will be out of order.
 	# 
-	# To ensure that nodes are placed in the correct location we create "dummy" children as needed as placeholders.  In the 
-	# example above, we would insert two dummy children when inserting the third child.  When inserting the other two children we 
-	# replace the previously inserted dummy child with the actual children.
+	# To ensure that nodes are placed in the correct location we create 
+	# "dummy" children as needed as placeholders.  In the example above, we 
+	# would insert two dummy children when inserting the third child.  When 
+	# inserting the other two children we replace the previously inserted 
+	# dummy child with the actual children.
 	# 
 	# vnode child indices are zero-based.  Here we use 1-based indices.
 	# 
-	# With the "mirroring" scheme it is a structure error if we ever have to create dummy vnodes.  Such structure errors cause a 
-	# second pass to be made, with an empty root.  This second pass will generate other structure errors, which are ignored.
+	# With the "mirroring" scheme it is a structure error if we ever have to 
+	# create dummy vnodes.  Such structure errors cause a second pass to be 
+	# made, with an empty root.  This second pass will generate other 
+	# structure errors, which are ignored.
 
 	#@-at
 	#@@c
@@ -681,12 +706,15 @@ class atFile:
 	#@+node:2::joinTrees
 	#@+body
 	#@+at
-	#  This function joins all nodes in the two trees which should have the same topology. This code makes no other assumptions 
-	# about the two trees; some or all of the nodes may already have been joined.
+	#  This function joins all nodes in the two trees which should have the 
+	# same topology. This code makes no other assumptions about the two trees; 
+	# some or all of the nodes may already have been joined.
 	# 
-	# There are several differences between this method and the similar vnode:joinTreeTo method.  First, we can not assert that 
-	# the two trees have the same topology because the derived file could have been edited outside of Leo.  Second, this method 
-	# also merges the tnodes of all joined nodes.
+	# There are several differences between this method and the similar 
+	# vnode:joinTreeTo method.  First, we can not assert that the two trees 
+	# have the same topology because the derived file could have been edited 
+	# outside of Leo.  Second, this method also merges the tnodes of all 
+	# joined nodes.
 
 	#@-at
 	#@@c
@@ -712,10 +740,13 @@ class atFile:
 	#@+node:3:C=7:atFile.read
 	#@+body
 	#@+at
-	#  This is the entry point to the read code.  The root vnode should be an @file node.  If doErrorRecoveryFlag is false we are 
-	# doing an update.  In that case it would be very unwise to do any error recovery which might clear clone links.  If 
-	# doErrorRecoveryFlag is true and there are structure errors during the first pass we delete root's children and its body 
-	# text, then rescan.  All other errors indicate potentially serious problems with sentinels.
+	#  This is the entry point to the read code.  The root vnode should be an 
+	# @file node.  If doErrorRecoveryFlag is false we are doing an update.  In 
+	# that case it would be very unwise to do any error recovery which might 
+	# clear clone links.  If doErrorRecoveryFlag is true and there are 
+	# structure errors during the first pass we delete root's children and its 
+	# body text, then rescan.  All other errors indicate potentially serious 
+	# problems with sentinels.
 	# 
 	# The caller has enclosed this code in beginUpdate/endUpdate.
 
@@ -793,8 +824,9 @@ class atFile:
 		#@+node:3::<< Bump mStructureErrors if any vnodes are unvisited >>
 		#@+body
 		#@+at
-		#  createNthNode marks all nodes in the derived file as visited.  Any unvisited nodes are either dummies or nodes that 
-		# don't exist in the derived file.
+		#  createNthNode marks all nodes in the derived file as visited.  Any 
+		# unvisited nodes are either dummies or nodes that don't exist in the 
+		# derived file.
 
 		#@-at
 		#@@c
@@ -896,8 +928,9 @@ class atFile:
 			#@+node:6::<< Join cloned trees >>
 			#@+body
 			#@+at
-			#  In most cases, this code is not needed, because the outline already has been read and nodes joined.  However, there 
-			# could be problems on read errors, so we also join nodes here.
+			#  In most cases, this code is not needed, because the outline 
+			# already has been read and nodes joined.  However, there could be 
+			# problems on read errors, so we also join nodes here.
 
 			#@-at
 			#@@c
@@ -958,13 +991,16 @@ class atFile:
 	#@+node:4::readAll (Leo2)
 	#@+body
 	#@+at
-	#  This method scans all vnodes, calling read for every @file node found.  v should point to the root of the entire tree on entry.
+	#  This method scans all vnodes, calling read for every @file node found.  
+	# v should point to the root of the entire tree on entry.
 	# 
-	# Bug fix: 9/19/01 This routine clears all orphan status bits, so we must set the dirty bit of orphan @file nodes to force the 
-	# writing of those nodes on saves.  If we didn't do this, a _second_ save of the .leo file would effectively wipe out bad 
-	# @file nodes!
+	# Bug fix: 9/19/01 This routine clears all orphan status bits, so we must 
+	# set the dirty bit of orphan @file nodes to force the writing of those 
+	# nodes on saves.  If we didn't do this, a _second_ save of the .leo file 
+	# would effectively wipe out bad @file nodes!
 	# 
-	# 10/19/01: With the "new" Leo2 there are no such problems, and setting the dirty bit here is still correct.
+	# 10/19/01: With the "new" Leo2 there are no such problems, and setting 
+	# the dirty bit here is still correct.
 
 	#@-at
 	#@@c
@@ -1046,7 +1082,8 @@ class atFile:
 			#@+node:3::<< set kind, nextLine >>
 			#@+body
 			#@+at
-			#  For non-sentinel lines we look ahead to see whether the next line is a sentinel.
+			#  For non-sentinel lines we look ahead to see whether the next 
+			# line is a sentinel.
 
 			#@-at
 			#@@c
@@ -1127,17 +1164,21 @@ class atFile:
 	#@+node:6:C=8:scanHeader
 	#@+body
 	#@+at
-	#  This method sets self.startSentinelComment and self.endSentinelComment based on the first @+leo sentinel line of the file.  
-	# We can not call sentinelKind here because that depends on the comment delimiters we set here.  @first lines are written 
-	# "verbatim", so nothing more needs to be done!
+	#  This method sets self.startSentinelComment and self.endSentinelComment 
+	# based on the first @+leo sentinel line of the file.  We can not call 
+	# sentinelKind here because that depends on the comment delimiters we set 
+	# here.  @first lines are written "verbatim", so nothing more needs to be done!
 	# 
-	# 7/8/02: Leading whitespace is now significant here before the @+leo.  This is part of the "REM hack".  We do this so that 
-	# sentinelKind need not skip whitespace following self.startSentinelComment.  This is correct: we want to be as restrictive as 
-	# possible about what is recognized as a sentinel.  This minimizes false matches.
+	# 7/8/02: Leading whitespace is now significant here before the @+leo.  
+	# This is part of the "REM hack".  We do this so that sentinelKind need 
+	# not skip whitespace following self.startSentinelComment.  This is 
+	# correct: we want to be as restrictive as possible about what is 
+	# recognized as a sentinel.  This minimizes false matches.
 	# 
-	# 14-SEP-2002 DTHEIN:  Queue up the lines before the @+leo.  These will be used to add as parameters to the @first directives, 
-	# if any.  Empty lines are ignored (because empty @first directives are ignored). NOTE: the function now returns a list of the 
-	# lines before @+leo.
+	# 14-SEP-2002 DTHEIN:  Queue up the lines before the @+leo.  These will be 
+	# used to add as parameters to the @first directives, if any.  Empty lines 
+	# are ignored (because empty @first directives are ignored). NOTE: the 
+	# function now returns a list of the lines before @+leo.
 
 	#@-at
 	#@@c
@@ -1245,8 +1286,10 @@ class atFile:
 	#@+node:9:C=9:scanText
 	#@+body
 	#@+at
-	#  This method is the heart of the new read code.  It reads lines from the file until the given ending sentinel is found, and 
-	# warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels.
+	#  This method is the heart of the new read code.  It reads lines from the 
+	# file until the given ending sentinel is found, and warns if any other 
+	# ending sentinel is found instead.  It calls itself recursively to handle 
+	# most nested sentinels.
 	# 
 
 	#@-at
@@ -1270,8 +1313,9 @@ class atFile:
 			#@+node:1::<< set kind, nextKind >>
 			#@+body
 			#@+at
-			#  For non-sentinel lines we look ahead to see whether the next line is a sentinel.  If so, the newline that ends a 
-			# non-sentinel line belongs to the next sentinel.
+			#  For non-sentinel lines we look ahead to see whether the next 
+			# line is a sentinel.  If so, the newline that ends a non-sentinel 
+			# line belongs to the next sentinel.
 
 			#@-at
 			#@@c
@@ -1297,9 +1341,11 @@ class atFile:
 				#@+node:2::<< Set lineIndent, linep and leading_ws >>
 				#@+body
 				#@+at
-				#  lineIndent is the total indentation on a sentinel line.  The first "self.indent" portion of that must be 
-				# removed when recreating text.  leading_ws is the remainder of the leading whitespace.  linep points to the first 
-				# "real" character of a line, the character following the "indent" whitespace.
+				#  lineIndent is the total indentation on a sentinel line.  
+				# The first "self.indent" portion of that must be removed when 
+				# recreating text.  leading_ws is the remainder of the leading 
+				# whitespace.  linep points to the first "real" character of a 
+				# line, the character following the "indent" whitespace.
 
 				#@-at
 				#@@c
@@ -1609,8 +1655,10 @@ class atFile:
 				#@+node:2::<< scan @ref >>
 				#@+body
 				#@+at
-				#  The sentinel contains an @ followed by a section name in angle brackets.  This code is different from the code 
-				# for the @@ sentinel: the expansion of the reference does not include a trailing newline.
+				#  The sentinel contains an @ followed by a section name in 
+				# angle brackets.  This code is different from the code for 
+				# the @@ sentinel: the expansion of the reference does not 
+				# include a trailing newline.
 
 				#@-at
 				#@@c
@@ -1744,7 +1792,8 @@ class atFile:
 	#@+node:2::putBody
 	#@+body
 	#@+at
-	#  root is an ancestor of v, or root == v.  This puts the entire expansion of v's body text enclosed in sentinel lines.
+	#  root is an ancestor of v, or root == v.  This puts the entire expansion 
+	# of v's body text enclosed in sentinel lines.
 
 	#@-at
 	#@@c
@@ -1761,7 +1810,8 @@ class atFile:
 	#@+node:3::putBodyPart (removes trailing lines)
 	#@+body
 	#@+at
-	#  We generate the body part only if it contains something besides whitespace. The check for at-ignore is made in atFile::write.
+	#  We generate the body part only if it contains something besides 
+	# whitespace. The check for at-ignore is made in atFile::write.
 
 	#@-at
 	#@@c
@@ -1879,8 +1929,9 @@ class atFile:
 	#@+node:4:C=12:putCodePart & allies
 	#@+body
 	#@+at
-	#  This method expands a code part, terminated by any at-directive except at-others.  It expands references and at-others and 
-	# outputs @verbatim sentinels as needed.
+	#  This method expands a code part, terminated by any at-directive except 
+	# at-others.  It expands references and at-others and outputs @verbatim 
+	# sentinels as needed.
 
 	#@-at
 	#@@c
@@ -1895,8 +1946,9 @@ class atFile:
 			#@+node:1::<< handle the start of a line >>
 			#@+body
 			#@+at
-			#  The at-others directive is the only directive that is recognized following leading whitespace, so it is just a 
-			# little tricky to recognize it.
+			#  The at-others directive is the only directive that is 
+			# recognized following leading whitespace, so it is just a little 
+			# tricky to recognize it.
 
 			#@-at
 			#@@c
@@ -1994,10 +2046,12 @@ class atFile:
 	#@+node:4:C=13:inAtOthers
 	#@+body
 	#@+at
-	#  Returns true if v should be included in the expansion of the at-others directive in the body text of v's parent.
+	#  Returns true if v should be included in the expansion of the at-others 
+	# directive in the body text of v's parent.
 	# 
-	# 7/30/02: v will not be included if it is a definition node or if its body text contains an @ignore directive. Previously, a 
-	# "nested" @others directive would also inhibit the inclusion of v.
+	# 7/30/02: v will not be included if it is a definition node or if its 
+	# body text contains an @ignore directive. Previously, a "nested" @others 
+	# directive would also inhibit the inclusion of v.
 
 	#@-at
 	#@@c
@@ -2020,8 +2074,8 @@ class atFile:
 	#@+node:5:C=14:putAtOthers
 	#@+body
 	#@+at
-	#  The at-others directive is recognized only at the start of the line.  This code must generate all leading whitespace for 
-	# the opening sentinel.
+	#  The at-others directive is recognized only at the start of the line.  
+	# This code must generate all leading whitespace for the opening sentinel.
 
 	#@-at
 	#@@c
@@ -2150,7 +2204,8 @@ class atFile:
 	#@+node:7::putDoc
 	#@+body
 	#@+at
-	#  This method outputs a doc section terminated by @code or end-of-text.  All other interior directives become part of the doc part.
+	#  This method outputs a doc section terminated by @code or end-of-text.  
+	# All other interior directives become part of the doc part.
 
 	#@-at
 	#@@c
@@ -2199,8 +2254,9 @@ class atFile:
 			#@+node:1::<< copy words, splitting the line if needed >>
 			#@+body
 			#@+at
-			#  We remove trailing whitespace from lines that have _not_ been split so that a newline has been inserted by this 
-			# routine if and only if it is preceded by whitespace.
+			#  We remove trailing whitespace from lines that have _not_ been 
+			# split so that a newline has been inserted by this routine if and 
+			# only if it is preceded by whitespace.
 
 			#@-at
 			#@@c
@@ -2262,8 +2318,9 @@ class atFile:
 	#@+node:10:C=18:atFile.write
 	#@+body
 	#@+at
-	#  This is the entry point to the write code.  root should be an @file vnode. We set the orphan and dirty flags if there are 
-	# problems writing the file to force Commands::write_LEO_file to write the tree to the .leo file.
+	#  This is the entry point to the write code.  root should be an @file 
+	# vnode. We set the orphan and dirty flags if there are problems writing 
+	# the file to force Commands::write_LEO_file to write the tree to the .leo file.
 
 	#@-at
 	#@@c
@@ -2342,7 +2399,8 @@ class atFile:
 			#@+node:2:C=19:<< put all @first lines in root >>
 			#@+body
 			#@+at
-			#  Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines 
+			#  Write any @first lines.  These lines are also converted to 
+			# @verbatim lines, so the read logic simply ignores lines 
 			# preceding the @+leo sentinel.
 
 			#@-at
@@ -2375,8 +2433,9 @@ class atFile:
 				#@+node:6:C=21:<< put all @last lines in root >>
 				#@+body
 				#@+at
-				#  Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores 
-				# lines following the @-leo sentinel.
+				#  Write any @last lines.  These lines are also converted to 
+				# @verbatim lines, so the read logic simply ignores lines 
+				# following the @-leo sentinel.
 
 				#@-at
 				#@@c
@@ -2489,8 +2548,9 @@ class atFile:
 	#@+node:11::writeAll
 	#@+body
 	#@+at
-	#  This method scans all vnodes, calling write for every @file node found.  If partialFlag is true we write all @file nodes in 
-	# the selected outline.  Otherwise we write @file nodes in the entire outline.
+	#  This method scans all vnodes, calling write for every @file node 
+	# found.  If partialFlag is true we write all @file nodes in the selected 
+	# outline.  Otherwise we write @file nodes in the entire outline.
 
 	#@-at
 	#@@c
@@ -2505,8 +2565,9 @@ class atFile:
 		#@+node:1::<< Clear all orphan bits >>
 		#@+body
 		#@+at
-		#  We must clear these bits because they may have been set on a previous write.  Calls to atFile::write may set the orphan 
-		# bits in @file nodes.  If so, write_LEO_file will write the entire @file tree.
+		#  We must clear these bits because they may have been set on a 
+		# previous write.  Calls to atFile::write may set the orphan bits in 
+		# @file nodes.  If so, write_LEO_file will write the entire @file tree.
 
 		#@-at
 		#@@c

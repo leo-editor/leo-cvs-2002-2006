@@ -128,7 +128,8 @@ class fileCommands:
 			#@+node:2::<< Recompute clone bits for pasted vnodes >>
 			#@+body
 			#@+at
-			#  This must be done after the join lists have been created.  The saved clone bit is unreliable for pasted nodes.
+			#  This must be done after the join lists have been created.  The 
+			# saved clone bit is unreliable for pasted nodes.
 
 			#@-at
 			#@@c
@@ -836,8 +837,10 @@ class fileCommands:
 		#@+node:1:C=10:<< Set the default directory >>
 		#@+body
 		#@+at
-		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
-		# has specified the "Default Directory" preference that will over-ride what we are about to set.
+		#  The most natural default directory is the directory containing the 
+		# .leo file that we are about to open.  If the user has specified the 
+		# "Default Directory" preference that will over-ride what we are about 
+		# to set.
 
 		#@-at
 		#@@c
@@ -879,8 +882,10 @@ class fileCommands:
 		#@+node:1:C=10:<< Set the default directory >>
 		#@+body
 		#@+at
-		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
-		# has specified the "Default Directory" preference that will over-ride what we are about to set.
+		#  The most natural default directory is the directory containing the 
+		# .leo file that we are about to open.  If the user has specified the 
+		# "Default Directory" preference that will over-ride what we are about 
+		# to set.
 
 		#@-at
 		#@@c
@@ -963,7 +968,8 @@ class fileCommands:
 	#@+node:3::shouldCompactOnSave
 	#@+body
 	#@+at
-	#  This method sets policy for when we should compact a file before doing a Save Command.
+	#  This method sets policy for when we should compact a file before doing 
+	# a Save Command.
 
 	#@-at
 	#@@c
@@ -1067,7 +1073,8 @@ class fileCommands:
 	#@+node:3::putEscapedString
 	#@+body
 	#@+at
-	#  Surprisingly, the call to xmlEscape here is _much_ faster than calling put for each characters of s.
+	#  Surprisingly, the call to xmlEscape here is _much_ faster than calling 
+	# put for each characters of s.
 
 	#@-at
 	#@@c
@@ -1303,7 +1310,8 @@ class fileCommands:
 	#@+node:11::putTnodes (Leo2)
 	#@+body
 	#@+at
-	#  This method puts all tnodes in index order.  All tnode indices must have been assigned at this point.
+	#  This method puts all tnodes in index order.  All tnode indices must 
+	# have been assigned at this point.
 
 	#@-at
 	#@@c
@@ -1348,8 +1356,8 @@ class fileCommands:
 	#@+node:13::putVnodes (Leo2)
 	#@+body
 	#@+at
-	#  This method puts all vnodes by starting the recursion.  putVnode will write all vnodes in the order in which they appear in 
-	# the outline.
+	#  This method puts all vnodes by starting the recursion.  putVnode will 
+	# write all vnodes in the order in which they appear in the outline.
 
 	#@-at
 	#@@c
@@ -1376,8 +1384,8 @@ class fileCommands:
 	#@+node:14::putVnode (Leo2)
 	#@+body
 	#@+at
-	#  This writes full headline and body text for all vnodes, even orphan and @ignored nodes.  This allows all Leo outlines to be 
-	# used as backup files.
+	#  This writes full headline and body text for all vnodes, even orphan and 
+	# @ignored nodes.  This allows all Leo outlines to be used as backup files.
 
 	#@-at
 	#@@c

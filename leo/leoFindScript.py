@@ -6,7 +6,8 @@
 
 
 #@+at
-#  This file contains functions for non-interactive searching.  You might find these useful while running other scripts.
+#  This file contains functions for non-interactive searching.  You might find 
+# these useful while running other scripts.
 
 #@-at
 #@@c
