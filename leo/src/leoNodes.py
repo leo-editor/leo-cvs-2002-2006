@@ -536,22 +536,24 @@ class baseVnode:
 			es_event_exception("drag")
 	#@-body
 	#@-node:2::OnDrag
-	#@+node:3::OnEndDrag
+	#@+node:3::v.OnEndDrag
 	#@+body
 	def OnEndDrag(self,event=None):
+		
+		"""Vnode end-drag handler."""
 		
 		# trace()
 	
 		try:
 			v = self ; c = v.commands
-			if c.frame.tree.dragging:
-				if not doHook("enddrag1",c=c,v=v,event=event):
-					self.commands.tree.OnEndDrag(self,event)
-				doHook("enddrag2",c=c,v=v,event=event)
+			# 7/10/03: Always call tree.OnEndDrag, regardless of state.
+			if not doHook("enddrag1",c=c,v=v,event=event):
+				self.commands.tree.OnEndDrag(self,event)
+			doHook("enddrag2",c=c,v=v,event=event)
 		except:
 			es_event_exception("enddrag")
 	#@-body
-	#@-node:3::OnEndDrag
+	#@-node:3::v.OnEndDrag
 	#@+node:4::v.OnHeadlineClick & OnHeadlineRightClick
 	#@+body
 	def OnHeadlineClick(self,event=None):

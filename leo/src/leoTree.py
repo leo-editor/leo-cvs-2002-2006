@@ -154,7 +154,7 @@ class baseLeoTree:
 		self.initing = false # true: opening file.
 		
 		# Drag and drop
-		self.aboutToDrag = false # true: inhibit first redraw so bindings remain in place.
+		self.drag_v = None
 		self.dragging = false # true: presently dragging.
 		self.controlDrag = false # true: control was down when drag started.
 		self.drag_id = None # To reset bindings after drag
@@ -311,8 +311,6 @@ class baseLeoTree:
 		self.tagBindings.append((id,id3,"<3>"),)
 	
 		return 0 # dummy icon height
-	
-	
 	#@-body
 	#@-node:4::drawIcon (tag_bind)
 	#@+node:5::Drawing routines (tree)...
@@ -323,8 +321,9 @@ class baseLeoTree:
 	
 	def redraw (self,event=None):
 		
+		# trace()
+		
 		if self.updateCount == 0 and not self.redrawScheduled:
-			# stat() # print "tree.redraw"
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
 			
@@ -335,12 +334,12 @@ class baseLeoTree:
 	#@+body
 	# Schedules a redraw even if inside beginUpdate/endUpdate
 	def force_redraw (self):
-		# print "tree.force_redraw"
+	
+		# trace()
+	
 		if not self.redrawScheduled:
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
-			
-	
 	#@-body
 	#@-node:2::force_redraw
 	#@+node:3::redraw_now
@@ -349,7 +348,8 @@ class baseLeoTree:
 	# It is up to the caller to ensure that no other redraws are pending.
 	def redraw_now (self):
 	
-		# trace(`self.redrawScheduled`)
+		# trace()
+	
 		self.idle_redraw()
 	#@-body
 	#@-node:3::redraw_now
@@ -363,11 +363,11 @@ class baseLeoTree:
 		if frame not in app().windowList or app().quitting:
 			# trace("no frame")
 			return
-		if self.aboutToDrag:
-			# trace("aboutToDrag")
-			self.aboutToDrag = false
-			return
 			
+		if self.drag_v:
+			# trace("dragging",self.drag_v)
+			return
+	
 		# trace()
 	
 		self.expandAllAncestors(self.currentVnode)
@@ -1239,7 +1239,6 @@ class baseLeoTree:
 		
 		c = self.commands
 		assert(v == self.drag_v)
-		self.aboutToDrag = false
 	
 		if not event:
 			return
@@ -1265,9 +1264,14 @@ class baseLeoTree:
 	#@+body
 	def OnEndDrag(self,v,event):
 		
-		# Note: "enddrag" hooks handled by vnode callback routine.
+		"""Tree end-of-drag handler called from vnode event handler."""
 		
 		# trace(v)
+		
+		# 7/10/03: Make sure we are still dragging.
+		if not self.drag_v:
+			return
+	
 		assert(v == self.drag_v)
 		c = self.commands ; canvas = self.canvas
 	
@@ -1316,6 +1320,7 @@ class baseLeoTree:
 			self.drag_id = None
 			
 		self.dragging = false
+		self.drag_v = None
 	#@-body
 	#@-node:9::tree.OnEndDrag
 	#@+node:10::headline key handlers (tree)
@@ -1488,18 +1493,21 @@ class baseLeoTree:
 			if id != None:
 				try: id = id[0]
 				except: pass
-				# trace("binding",id,v)
-				self.drag_id = id
+				trace("drag_v",v)
 				self.drag_v = v
-				canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
-				canvas.tag_bind(id,"<Any-ButtonRelease-1>", v.OnEndDrag)
-				self.aboutToDrag = true
+				self.drag_id = id
+				id4 = canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
+				id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", v.OnEndDrag)
+				
+				# Remember the bindings so deleteBindings can delete them.
+				self.tagBindings.append((id,id4,"<B1-Motion>"),)
+				self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
+	
 		self.select(v)
 		
 	def OnIconRightClick (self,v,event):
 	
 		self.select(v)
-	
 	#@-body
 	#@-node:11::tree.OnIconClick & OnIconRightClick
 	#@+node:12::tree.OnIconDoubleClick (@url)
