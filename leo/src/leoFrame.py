@@ -587,7 +587,7 @@ class leoLog:
 		self.c = frame.c
 		self.newlines = 0
 	
-		self.logControl = self.createControl(parentFrame)
+		self.logCtrl = self.createControl(parentFrame)
 		self.setFontFromConfig()
 	#@-node:leoLog.__init__
 	#@+node:leoLog.configure

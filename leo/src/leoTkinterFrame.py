@@ -2151,17 +2151,17 @@ class leoTkinterLog (leoFrame.leoLog):
 		
 		self.colorTags = [] # list of color names used as tags in log window.
 		
-		self.logControl.bind("<Button-1>", self.onActivateLog)
+		self.logCtrl.bind("<Button-1>", self.onActivateLog)
 	#@nonl
 	#@-node:tkLog.__init__
 	#@+node:tkLog.configureBorder & configureFont
 	def configureBorder(self,border):
 		
-		self.logControl.configure(bd=border)
+		self.logCtrl.configure(bd=border)
 		
 	def configureFont(self,font):
 	
-		self.logControl.configure(font=font)
+		self.logCtrl.configure(font=font)
 	#@nonl
 	#@-node:tkLog.configureBorder & configureFont
 	#@+node:tkLog.createControl
@@ -2196,7 +2196,7 @@ class leoTkinterLog (leoFrame.leoLog):
 	#@+node:tkLog.getFontConfig
 	def getFontConfig (self):
 	
-		font = self.logControl.cget("font")
+		font = self.logCtrl.cget("font")
 		# trace(font)
 		return font
 	#@nonl
@@ -2204,7 +2204,7 @@ class leoTkinterLog (leoFrame.leoLog):
 	#@+node:tkLog.hasFocus
 	def hasFocus (self):
 		
-		return app.gui.get_focus(self.frame) == self.logControl
+		return app.gui.get_focus(self.frame) == self.logCtrl
 	#@nonl
 	#@-node:tkLog.hasFocus
 	#@+node:tkLog.onActivateLog
@@ -2221,25 +2221,24 @@ class leoTkinterLog (leoFrame.leoLog):
 	# All output to the log stream eventually comes here.
 	
 	def put (self,s,color=None):
-		# print `app.quitting`,`self.logControl`
 		if app.quitting: return
-		if self.logControl:
+		if self.logCtrl:
 			if type(s) == type(u""): # 3/18/03
 				s = toEncodedString(s,app.tkEncoding)
 			if color:
 				if color not in self.colorTags:
 					self.colorTags.append(color)
-					self.logControl.tag_config(color,foreground=color)
-				self.logControl.insert("end",s)
-				self.logControl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+					self.logCtrl.tag_config(color,foreground=color)
+				self.logCtrl.insert("end",s)
+				self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
 				if "black" not in self.colorTags:
 					self.colorTags.append("black")
-					self.logControl.tag_config("black",foreground="black")
-				self.logControl.tag_add("black","end")
+					self.logCtrl.tag_config("black",foreground="black")
+				self.logCtrl.tag_add("black","end")
 			else:
-				self.logControl.insert("end",s)
-			self.logControl.see("end")
-			self.logControl.update_idletasks()
+				self.logCtrl.insert("end",s)
+			self.logCtrl.see("end")
+			self.logCtrl.update_idletasks()
 		else:
 			app.logWaiting.append((s,color),) # 2/25/03
 			print "Null tkinter log"
@@ -2249,10 +2248,10 @@ class leoTkinterLog (leoFrame.leoLog):
 	
 	def putnl (self):
 		if app.quitting: return
-		if self.logControl:
-			self.logControl.insert("end",'\n')
-			self.logControl.see("end")
-			self.logControl.update_idletasks()
+		if self.logCtrl:
+			self.logCtrl.insert("end",'\n')
+			self.logCtrl.see("end")
+			self.logCtrl.update_idletasks()
 		else:
 			app.logWaiting.append(('\n',"black"),) # 6/28/03
 			print "Null tkinter log"
@@ -2262,7 +2261,7 @@ class leoTkinterLog (leoFrame.leoLog):
 	#@+node:tkLog.setFontFromConfig
 	def setFontFromConfig (self):
 	
-		logCtrl = self.logControl ; config = app.config
+		logCtrl = self.logCtrl ; config = app.config
 	
 		font = config.getFontFromParams(
 			"log_text_font_family", "log_text_font_size",
