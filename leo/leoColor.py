@@ -1024,7 +1024,7 @@ class colorizer:
 			#@-body
 			#@-node:1::<< handle string >>
 
-		elif self.single_comment_start and match(s,i,self.single_comment_start):
+		elif match(s,i,self.single_comment_start):
 			
 			#@<< handle single-line comment >>
 			#@+node:3::<< handle single-line comment >>
@@ -1034,7 +1034,7 @@ class colorizer:
 			#@-body
 			#@-node:3::<< handle single-line comment >>
 
-		elif self.block_comment_start and match(s,i,self.block_comment_start):
+		elif match(s,i,self.block_comment_start):
 			
 			#@<< start block comment >>
 			#@+node:2::<< start block comment >>
@@ -1050,8 +1050,14 @@ class colorizer:
 			#@<< handle C preprocessor line >>
 			#@+node:4::<< handle C preprocessor line >>
 			#@+body
-			body.tag_add("pp", index(n,i), index(n,"end"))
-			i = sLen
+			# 10/17/02: recognize comments in preprocessor lines.
+			j = i
+			while i < sLen:
+				if match(s,i,self.single_comment_start) or match(s,i,self.block_comment_start):
+					break
+				else: i += 1
+			
+			body.tag_add("pp", index(n,j), index(n,i))
 			#@-body
 			#@-node:4::<< handle C preprocessor line >>
 
