@@ -668,14 +668,14 @@ class baseColorizer:
 			"body_text_font_slant",  "body_text_font_weight")
 			
 		if self.italic_font:
-			self.italic_font.configure(slant="italic")
+			self.italic_font.configure(slant="italic",weight="normal")
 		
 		self.bolditalic_font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
 			"body_text_font_slant",  "body_text_font_weight")
 			
 		if self.bolditalic_font:
-			self.bolditalic_font.configure(weight="bold",slant="italic") ## Tk call
+			self.bolditalic_font.configure(weight="bold",slant="italic")
 		
 		self.color_tags_list = []
 		self.image_references = []
@@ -1031,14 +1031,14 @@ class baseColorizer:
 					i += 1
 					
 				# Set the state of all other middle lines to "unknown".
-				first_trailing_line = new_len - trailing_lines
+				first_trailing_line = max(0,new_len - trailing_lines) # 11/23/03
 				while i < first_trailing_line:
 					new_states.append("unknown")
 					i += 1
 				
 				# Copy the trailing states from the old to the new lines.
-				j = old_len - trailing_lines
-				while j < old_len and j < len(old_states):
+				j = max(0,old_len - trailing_lines)
+				while j < old_len and j < len(old_states): # 11/23/03
 					new_states.append(old_states[j])
 					j += 1
 					i += 1 # for the assert below.
