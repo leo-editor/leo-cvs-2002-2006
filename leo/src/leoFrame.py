@@ -689,7 +689,9 @@ class leoTree:
 	
 	def redraw_now(self):
 		self.oops()
-	#@nonl
+		
+	def redrawAfterException (self):
+		self.oops()
 	#@-node:Drawing
 	#@+node:Edit label
 	def editLabel(self,v):

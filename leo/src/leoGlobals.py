@@ -966,10 +966,6 @@ def es_exception (full=true,c=None):
 		es_error(i)
 	
 	traceback.print_exc()
-	
-	if c is None:
-		c = top()
-	c.frame.tree.enableDrawingAfterException()
 #@nonl
 #@-node:es_exception
 #@+node:printBindings

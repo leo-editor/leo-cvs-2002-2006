@@ -130,7 +130,7 @@ class baseCommands:
 				es("exception executing command")
 				print "exception executing command"
 				es_exception(c=c)
-				c.redraw() # 11/23/03
+				c.frame.tree.redrawAfterException() # 1/26/04
 		
 		doHook("command2",c=c,v=v,label=label)
 				
@@ -1072,6 +1072,7 @@ class baseCommands:
 			except:
 				es("exception executing script")
 				es_exception(full=false,c=c)
+				c.frame.tree.redrawAfterException() # 1/26/04
 		elif not error:
 			es("no script selected",color="blue")
 	#@nonl

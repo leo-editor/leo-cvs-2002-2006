@@ -386,21 +386,27 @@ class leoTkinterTree (leoFrame.leoTree):
 			self.canvas.after_idle(self.idle_redraw)
 	#@nonl
 	#@-node:redraw
-	#@+node:tkTree.enableDrawingAfterException
-	def enableDrawingAfterException (self):
+	#@+node:tkTree.redrawAfterException
+	#@+at 
+	#@nonl
+	# This is called only from doCommand.  The implicit assumption is that 
+	# doCommand itself is not contained in a beginUpdate/endUpdate pair.
+	#@-at
+	#@@c
+	
+	def redrawAfterException (self):
 		
 		"""Make sure drawing is enabled following an exception."""
-		
-		if 0: # This makes things worse.
-			self.redrawScheduled = false
-			self.updateCount = 0
+			
+		if not self.redrawScheduled:
+			self.redrawScheduled = true
+			self.canvas.after_idle(self.idle_redraw)
+			self.updateCount = 0 # would not work if we are in a beginUpdate/endUpdate pair.
 	#@nonl
-	#@-node:tkTree.enableDrawingAfterException
+	#@-node:tkTree.redrawAfterException
 	#@+node:force_redraw
 	# Schedules a redraw even if inside beginUpdate/endUpdate
 	def force_redraw (self):
-	
-		# trace()
 	
 		if not self.redrawScheduled:
 			self.redrawScheduled = true
@@ -420,6 +426,9 @@ class leoTkinterTree (leoFrame.leoTree):
 	def idle_redraw (self):
 		
 		self.redrawScheduled = false # 7/10/03: Always do this here.
+		
+		if 0: # This can be called as the result of update_idletasks, so the count need not be 0.
+			trace(self.updateCount)
 	
 		frame = self.c.frame
 		if frame not in app.windowList or app.quitting:
