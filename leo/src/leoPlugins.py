@@ -259,7 +259,10 @@ def registerOneExclusiveHandler(tag, fn):
     """Register one exclusive handler"""
     
     global handlers, loadingModuleNameStack
-    moduleName = loadingModuleNameStack[-1]
+    try:
+        moduleName = loadingModuleNameStack[-1]
+    except IndexError:
+        moduleName = '<no module>'
     
     if 0:
         if g.app.unitTesting: print
@@ -292,7 +295,10 @@ def registerOneHandler(tag,fn):
     """Register one handler"""
     
     global handlers, loadingModuleNameStack
-    moduleName = loadingModuleNameStack[-1]
+    try:
+        moduleName = loadingModuleNameStack[-1]
+    except IndexError:
+        moduleName = '<no module>'
     
     if 0:
         if g.app.unitTesting: print
