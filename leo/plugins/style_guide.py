@@ -1,16 +1,14 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040919081244:@thin style_guide.py
-# This node and its decendents form a style guide for plugins.
-# You would typically organize the plugin's code as shown below.
-# Just copy and paste everything following this comment into the root node of your plugin.
-# Note: do NOT include the Python comments below: they are comments about this style guide.
-
 """
 This is the plugin's docstring. Leo print's the __version__ variable (see
 below) and this docstring when the user selects the plugin in the Plugins menu.
 Therefore, this docstring should be a clear, concise description of what the
 plugin does and how to use it.
 """
+
+# This node and its decendents form a style guide for plugins.
+# NOTE: Do NOT include either these initial comments or any of Python comments below.
 
 #@@language python
 #@@tabwidth -4

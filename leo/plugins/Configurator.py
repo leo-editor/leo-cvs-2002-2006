@@ -1,6 +1,6 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040609213754:@thin Configurator.py
-
+# This is not a plugin.
 
 #@@language python
 #@@tabwidth -4
@@ -8,10 +8,10 @@
 import leoGlobals as g
 
 try: import Tkinter as Tk
-except ImportError: Tk = None
+except ImportError: Tk = g.cantImport("Tk")
 
 try: import Pmw as P
-except ImportError: P = None
+except ImportError: P = g.cantImport("Pmw")
 
 import sys
 import ConfigParser as cp
@@ -20,7 +20,7 @@ import os
 
 if Tk and P and not g.app.unitTesting:
 
-    if 0: # Standalone doesn't work well
+    if 1: # Standalone doesn't work well
         fileName = r"c:\prog\leoCVS\leo\config\leoConfig.txt"
     else:
         if len( sys.argv ) < 2 or not os.path.exists( sys.argv[ 1 ] ):

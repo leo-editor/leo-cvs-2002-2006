@@ -47,6 +47,18 @@
     # quit_leo.py
 #@nonl
 #@-node:ekr.20040722122459:Debugging & testing
+#@+node:ekr.20040919095858:Dyna plugins
+# Several plugins written by 'e'.
+# Included as is without any editing by EKR.
+
+# There is a lot of good stuff here, including many scripts.
+# The exSButton.py plugin inspired the mod_scripting.py plugin.
+
+    # dyna_menu.py
+    # dynacommon.py
+    # exSButton.py
+#@nonl
+#@-node:ekr.20040919095858:Dyna plugins
 #@+node:ekr.20040722122459.3:Enhance the body pane
 # Rebind up/down arrow keys
     # arrows.py
@@ -66,6 +78,9 @@
     
 # Allows right clicks in the body pane.
     rClick.py
+    
+# Sends output from the Execute Script command to the end of the body pane.
+    # script_io_to_body.py
 #@nonl
 #@-node:ekr.20040722122459.3:Enhance the body pane
 #@+node:ekr.20040722122459.2:Enhance the icon or status areas
@@ -96,9 +111,12 @@
 
 # Maximizes all new windows. (Windows platform only).
     # maximizeNewWindows.py
+    
+# Sends all output to the log pane.
+    # redirect_to_log.py
 
 # Turns the log into a tabbed component.  Other plugins may add tabs.
-    TabbedLog.py
+    # TabbedLog.py
     
 # A plugin for searching unknownAttributes (uA's).
     # Requires tabbedLog.py plugin.
@@ -113,6 +131,25 @@
     # URLloader.py
 #@nonl
 #@-node:ekr.20040915073259.3:Enhance windows
+#@+node:ekr.20040919091615:Example code
+#@+at
+# 
+# You would typically not enable any of the following "plugins".
+# These plugins contain example code only.
+# 
+# style_guide.py
+#     Shows the recommended style for all plugins.
+#     I shall reject submissions that grossly violate these guidelines.
+# __overrideClasses.py
+#     Shows how to override Leo's core classes.
+# override_commands.py
+#     Shows how to override commands with code defined in a plugin.
+# redefine_put.py
+#     Contrived example that redefines the "put" and "put_nl" methods that 
+# draw to the log pane.
+#@-at
+#@nonl
+#@-node:ekr.20040919091615:Example code
 #@+node:ekr.20040722121404:Experimental plugins
 # PRE_ALPHA QUALITY: MAY BE DANGEROUS
     # __wx_gui.py
@@ -125,9 +162,6 @@
     # Temporarily replaces the outline pane!
     # editAttributes.py
 
-# The original inspirations for mod_scripting.py 
-    # dyna_menu.py
-    
 # Creates Parameterize Section Reference command.
     # macros.py
     
@@ -243,7 +277,8 @@
     # mod_spelling.py
     
 # Newer, faster.  Requires aspell.pyd configured for Python and aspell.
-# The present version of aspell.py works only with Python 2.3.
+# The present version of aspell.py
+# NOTE:  works only with Python 2.3.
     spellpyx.py
 #@nonl
 #@-node:ekr.20040810065413:Spell checking
