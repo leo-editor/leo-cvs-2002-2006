@@ -163,6 +163,38 @@ def fail ():
 	g.app.unitTestDict["fail"] = callerName(2)
 #@nonl
 #@-node: fail
+#@+node: makeBatchModeSuite
+def makeBatchModeSuite (*args,**keys):
+	
+	"""Create a colorizer test for every descendant of testParentHeadline.."""
+	
+	return unittest.makeSuite(batchModeTestCase,'test')
+#@nonl
+#@-node: makeBatchModeSuite
+#@+node:class batchModeTestCase
+class batchModeTestCase(unittest.TestCase):
+	
+	"""unit tests for batch mode (--script)."""
+	
+	#@	@+others
+	#@+node:test_1
+	def test_1 (self):
+	
+		path = r"c:\prog\test\unittest\createdFile.txt"
+		
+		s = r"c:\python23\python c:\prog\LeoCVS\leo\src\leo.py -script c:\prog\test\unittest\batchTest.py"
+		
+		if os.path.exists(path):
+			os.remove(path)
+		
+		os.system(s)
+		
+		assert(os.path.exists(path))
+	#@nonl
+	#@-node:test_1
+	#@-others
+#@nonl
+#@-node:class batchModeTestCase
 #@+node: makeColorSuite
 def makeColorSuite(testParentHeadline,tempHeadline):
 	
@@ -748,29 +780,29 @@ class outlineTestCase(unittest.TestCase):
 		self.c.selectVnode(self.old_v)
 	#@nonl
 	#@-node:tearDown
-	#@+node: makePluginsSuite
-	def makePluginsSuite(verbose=false,*args,**keys):
-		
-		"""Create an plugins test for every .py file in the plugins directory."""
-		
-		plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
-		
-		files = glob.glob(g.os_path_join(plugins_path,"*.py"))
-		files = [g.os_path_abspath(file) for file in files]
-		files.sort()
-	
-		# Create the suite and add all test cases.
-		suite = unittest.makeSuite(unittest.TestCase)
-		
-		for file in files:
-			test = pluginTestCase(file,verbose)
-			suite.addTest(test)
-	
-		return suite
-	#@-node: makePluginsSuite
 	#@-others
 #@nonl
 #@-node:class outlineTestCase
+#@+node: makePluginsSuite
+def makePluginsSuite(verbose=false,*args,**keys):
+	
+	"""Create an plugins test for every .py file in the plugins directory."""
+	
+	plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
+	
+	files = glob.glob(g.os_path_join(plugins_path,"*.py"))
+	files = [g.os_path_abspath(file) for file in files]
+	files.sort()
+
+	# Create the suite and add all test cases.
+	suite = unittest.makeSuite(unittest.TestCase)
+	
+	for file in files:
+		test = pluginTestCase(file,verbose)
+		suite.addTest(test)
+
+	return suite
+#@-node: makePluginsSuite
 #@+node:class pluginTestCase
 class pluginTestCase(unittest.TestCase):
 	
@@ -797,16 +829,16 @@ class pluginTestCase(unittest.TestCase):
 		path = g.os_path_join(g.app.loadDir,"..","plugins")
 		
 		if self.verbose:
-			g.trace(str(shortFileName(fileName)))
+			g.trace(str(g.shortFileName(fileName)))
 	
-		module = importFromPath(fileName,path)
+		module = g.importFromPath(fileName,path)
 		assert(module)
 		
 		# Run any unit tests in the module itself.
 		if hasattr(module,"unitTest"):
 			
 			if self.verbose:
-				g.trace("Executing unitTest in %s..." % str(shortFileName(fileName)))
+				g.trace("Executing unitTest in %s..." % str(g.shortFileName(fileName)))
 	
 			module.unitTest()
 	#@nonl
@@ -1142,7 +1174,7 @@ class positionTestCase(unittest.TestCase):
 #@-node:Reformat Paragraph tests
 #@+node:makeReformatParagraphSuite
 # DTHEIN 2004.01.11: Added method
-def makeReformatParagraphSuite():
+def makeReformatParagraphSuite(*args,**keys):
 	
 	"""makeReformatParagraphSuite() -> suite
 	
