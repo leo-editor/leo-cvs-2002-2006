@@ -380,7 +380,7 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
                 s = p.bodyString()
             s = g.toEncodedString(s,encoding,reportErrors=True)
             
-            if config.underlinechange:
+            if config.underline_change:
                 pass
             else:
                 rstFile.write(h+'\n')
