@@ -1121,6 +1121,7 @@ class leoTree:
 			else:
 				es("dragged node will be moved")
 		self.OnContinueDrag(v,event)
+	
 	#@-body
 	#@-node:8::tree.OnDrag
 	#@+node:9::tree.OnEndDrag

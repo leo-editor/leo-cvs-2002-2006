@@ -569,6 +569,7 @@ class vnode:
 		if handleLeoHook("event1",kind="iconDoubleClick",v=self) == None:
 			self.commands.tree.OnIconDoubleClick(self)
 			handleLeoHook("event2",kind="iconDoubleClick",v=self)
+	
 	#@-body
 	#@-node:1::OnBoxClick, OnIconDoubleClick
 	#@+node:2::OnDrag
@@ -579,6 +580,7 @@ class vnode:
 			self.commands.tree.OnDrag(self,event)
 			handleLeoHook("event2",kind="drag",v=self)
 	
+	
 	#@-body
 	#@-node:2::OnDrag
 	#@+node:3::OnEndDrag
@@ -588,6 +590,7 @@ class vnode:
 		if handleLeoHook("event1",kind="endDrag",v=self) == None:
 			self.commands.tree.OnEndDrag(self,event)
 			handleLeoHook("event2",kind="endDrag",v=self)
+	
 	
 	#@-body
 	#@-node:3::OnEndDrag
@@ -606,6 +609,7 @@ class vnode:
 			self.commands.tree.OnPopup(self,event)
 			handleLeoHook("event2",kind="headPopup",v=self)
 	
+	
 	#@-body
 	#@-node:4::OnHeadlineClick & OnHeadlinePopup
 	#@+node:5::OnHeadlineKey
@@ -615,6 +619,7 @@ class vnode:
 		if handleLeoHook("event1",kind="headKey",v=self) == None:
 			self.commands.tree.OnHeadlineKey(self,event)
 			handleLeoHook("event2",kind="headKey",v=self)
+	
 	#@-body
 	#@-node:5::OnHeadlineKey
 	#@+node:6::OnHyperLinkControlClick
@@ -630,6 +635,7 @@ class vnode:
 			c.body.mark_set("insert","1.0")
 			handleLeoHook("event2",kind="hyperLinkControlClick",v=self)
 	
+	
 	#@-body
 	#@-node:6::OnHyperLinkControlClick
 	#@+node:7::OnHyperLinkEnter
@@ -641,6 +647,7 @@ class vnode:
 				c = self.commands ; v = self
 				c.body.tag_config(v.tagName,background="green")
 				handleLeoHook("event2",kind="hyperLinkEnter",v=self)
+	
 	#@-body
 	#@-node:7::OnHyperLinkEnter
 	#@+node:8::OnHyperLinkLeave
@@ -652,6 +659,7 @@ class vnode:
 				c = self.commands ; v = self
 				c.body.tag_config(v.tagName,background="white")
 				handleLeoHook("event2",kind="hyperLinkLeave",v=self)
+	
 	#@-body
 	#@-node:8::OnHyperLinkLeave
 	#@+node:9::OnIconClick
