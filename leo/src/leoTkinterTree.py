@@ -787,10 +787,10 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.36:drawBox
     def drawBox (self,p,x,y):
     
-        tree = self ; canvas = self.canvas
+        tree = self ; c = self.c ; canvas = self.canvas
         y += 7 # draw the box at x, y+7
         
-        theId = g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y)
+        theId = g.doHook("draw-outline-box",tree=tree,c=c,p=p,v=p,x=x,y=y)
             
         if theId is None:
             iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
@@ -854,7 +854,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
     
-        canvas = self.canvas
+        canvas = self.canvas ; c = self.c
         #@    << compute x,y and iconVal >>
         #@+node:ekr.20040803072955.40:<< compute x,y and iconVal >>
         v = p.v
@@ -879,7 +879,7 @@ class leoTkinterTree (leoFrame.leoTree):
         #@-node:ekr.20040803072955.40:<< compute x,y and iconVal >>
         #@nl
     
-        if not g.doHook("draw-outline-icon",tree=self,p=p,v=p,x=x,y=y):
+        if not g.doHook("draw-outline-icon",tree=self,c=c,p=p,v=p,x=x,y=y):
     
             # Get the image.
             imagename = "box%02d.GIF" % val
@@ -899,9 +899,9 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.42:drawNode & force_draw_node (good trace)
     def drawNode(self,p,x,y):
         
-        canvas = self.canvas
+        canvas = self.canvas ; c = self.c
         
-        data = g.doHook("draw-outline-node",tree=self,p=p,v=p,x=x,y=y)
+        data = g.doHook("draw-outline-node",tree=self,c=c,p=p,v=p,x=x,y=y)
         if data is not None: return data
         
         if self.trace and self.verbose:
@@ -974,7 +974,7 @@ class leoTkinterTree (leoFrame.leoTree):
         h = self.line_height
         x += self.text_indent
         
-        data = g.doHook("draw-outline-text-box",tree=self,p=p,v=p,x=x,y=y)
+        data = g.doHook("draw-outline-text-box",tree=self,c=c,p=p,v=p,x=x,y=y)
         if data is not None: return data
         
         t = self.newText(p,x,y+self.lineyoffset)
@@ -1186,11 +1186,12 @@ class leoTkinterTree (leoFrame.leoTree):
     #@+node:ekr.20040803072955.53:drawTree
     def drawTree(self,p,x,y,h,level,hoistFlag=False):
     
-        tree = self ; v = p.v
+        tree = self ; c = self.c ; v = p.v
         yfirst = ylast = y
         h1 = None
         
-        data = g.doHook("draw-sub-outline",tree=tree,p=p,v=p,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+        data = g.doHook("draw-sub-outline",tree=tree,
+            c=c,p=p,v=p,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
         if data is not None: return data
         
         while p: # Do not use iterator.
@@ -1305,7 +1306,7 @@ class leoTkinterTree (leoFrame.leoTree):
         oldcursor = self.canvas['cursor']
         self.canvas['cursor'] = "watch"
     
-        if not g.doHook("redraw-entire-outline",c=self.c):
+        if not g.doHook("redraw-entire-outline",c=c):
             c.setTopVnode(None)
             self.setVisibleAreaToFullCanvas()
             self.drawTopTree()
@@ -1318,7 +1319,7 @@ class leoTkinterTree (leoFrame.leoTree):
             if 0:
                 self.redrawCount += 1
                 print "idle_redraw allocated:",self.redrawCount
-        g.doHook("after-redraw-outline",c=self.c)
+        g.doHook("after-redraw-outline",c=c)
     
         self.canvas['cursor'] = oldcursor
     #@nonl
