@@ -1324,11 +1324,16 @@ class leoTree:
 
 				#@-at
 				#@@c
+
 				urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
 				import re
+				# 4/21/03: Add http:// if required.
+				if not re.match('^([a-z]{3,}:)',url):
+					url = 'http://' + url
 				if not re.match(urlPattern,url):
 					es("invalid url: "+url)
 					return
+				
 				#@-body
 				#@-node:2::<< check the url; return if bad >>
 
