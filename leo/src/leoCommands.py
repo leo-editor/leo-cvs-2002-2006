@@ -23,6 +23,7 @@ import leoUndo
 
 import compiler # for Check Python command
 import os
+import parser # needed only for weird Python 2.2 parser errors.
 import string
 import sys
 import tempfile
@@ -3042,7 +3043,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20040723094220.1:checkAllPythonCode
     #@+node:ekr.20040723094220.3:checkPythonCode
-    def checkPythonCode (self,unittest=False,ignoreAtIgnore=True):
+    def checkPythonCode (self,unittest=False,ignoreAtIgnore=True,suppressErrors=False):
         
         c = self ; count = 0 ; result = "ok"
         
@@ -3067,10 +3068,12 @@ class baseCommands:
             if g.scanForAtLanguage(c,p) == "python":
                 if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
                     try:
-                        c.checkPythonNode(p,unittest)
-                    except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                        c.checkPythonNode(p,unittest,suppressErrors)
+                    except (parser.ParserError,SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
                         result = "error" # Continue to check.
                     except:
+                        g.es("surprise in checkPythonNode")
+                        g.es_exception()
                         return "surprise" # abort
     
         if not unittest:
@@ -3081,7 +3084,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20040723094220.3:checkPythonCode
     #@+node:ekr.20040723094220.5:checkPythonNode
-    def checkPythonNode (self,p,unittest=False):
+    def checkPythonNode (self,p,unittest=False,suppressErrors=False):
     
         c = self
         
@@ -3091,11 +3094,12 @@ class baseCommands:
     
         try:
             compiler.parse(body + '\n')
-        except SyntaxError:
-            if unittest:
-                raise
+        except (parser.ParserError,SyntaxError):
+            if not suppressErrors:
+                s = "Syntax error in: %s" % h
+                print s ; g.es(s,color="blue")
+            if unittest: raise
             else:
-                g.es("Syntax error in: %s" % h,color="blue")
                 g.es_exception(full=False,color="black")
                 p.setMarked()
     
@@ -3113,31 +3117,34 @@ class baseCommands:
             # readline = g.readLinesGenerator(body).next
             readline = g.readLinesClass(body).next
             tabnanny.process_tokens(tokenize.generate_tokens(readline))
-    
-        except tokenize.TokenError, msg:
-            if unittest:
-                raise
-            else:
-                g.es("Token error in %s" % headline,color="blue")
+            return
+            
+        except parser.ParserError, msg:
+            if not suppressErrors:
+                g.es("ParserError in %s" % headline,color="blue")
                 g.es(str(msg))
-                p.setMarked()
+            
+        except tokenize.TokenError, msg:
+            if not suppressErrors:
+                g.es("TokenError in %s" % headline,color="blue")
+                g.es(str(msg))
     
         except tabnanny.NannyNag, nag:
-            if unittest:
-                raise
-            else:
+            if not suppressErrors:
                 badline = nag.get_lineno()
                 line    = nag.get_line()
                 message = nag.get_msg()
                 g.es("Indentation error in %s, line %d" % (headline, badline),color="blue")
                 g.es(message)
                 g.es("offending line:\n%s" % repr(str(line))[1:-1])
-                p.setMarked()
             
         except:
             g.trace("unexpected exception")
             g.es_exception()
-            if unittest: raise
+    
+        if unittest: raise
+        else: p.setMarked()
+    #@nonl
     #@-node:ekr.20040723094220.6:tabNannyNode
     #@-node:ekr.20040723094220:Check Outline commands & allies
     #@+node:ekr.20040412060927:c.dumpOutline
