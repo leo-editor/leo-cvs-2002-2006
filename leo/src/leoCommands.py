@@ -1124,7 +1124,7 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2863:delete
     #@+node:ekr.20031218072017.2140:c.executeScript
-    def executeScript(self,p=None,script=None,useSelectedText=True):
+    def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
     
         """This executes body text as a Python script.
         
@@ -1151,7 +1151,9 @@ class baseCommands:
             sys.path.insert(0,c.frame.openDirectory)
             script += '\n' # Make sure we end the script properly.
             try:
-                exec script in {} # Use {} to get a pristine environment!
+                p = c.currentPosition()
+                d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+                exec script in d # Use {} to get a pristine environment!
                 #@            << unredirect output >>
                 #@+node:EKR.20040627100424:<< unredirect output >>
                 if c.config.redirect_execute_script_output_to_log_pane:

@@ -127,15 +127,20 @@ class generalTestCase(unittest.TestCase):
     #@nonl
     #@-node:ekr.20040707073029.3:tearDown
     #@+node:ekr.20040707073029.4:runTest
-    def runTest (self):
+    def runTest (self,define_g = True):
     
-        c = self.c ; p = self.p
+        c = self.c ; p = self.p.copy()
         script = g.getScript(c,p).strip()
         self.assert_(script)
     
-        # Now just execute the script.
-        # Let unit test handle any errors!
-        exec script + '\n' in {} # Use {} to get a pristine environment!
+        # Execute the script. Let unit test handle any errors!
+        
+        if define_g:
+            # Execute the test in an environment containing c, g & p.
+            exec script + '\n' in {'c':c,'g':g,'p':p}
+        else:
+            # Execute the test in a totally pristine environment.
+            exec script + '\n' in {}
     #@nonl
     #@-node:ekr.20040707073029.4:runTest
     #@+node:ekr.20040707093235:shortDescription
