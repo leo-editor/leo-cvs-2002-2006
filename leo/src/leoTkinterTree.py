@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.4138:@file-thin leoTkinterTree.py
+#@+node:ekr.20031218072017.4138:@thin leoTkinterTree.py
 #@@language python
 
 #@<< about the tree classes >>
@@ -439,14 +439,21 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@nonl
 	#@-node:ekr.20031218072017.1013:force_redraw
 	#@+node:ekr.20031218072017.1014:redraw_now
-	# Redraws immediately: used by Find so a redraw doesn't mess up selections.
-	# It is up to the caller to ensure that no other redraws are pending.
+	# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
 	
 	def redraw_now (self,scroll=true):
 		
 		# g.trace()
-	
+		
+		# Bug fix: 4/24/04: cancel any pending redraw "by hand".
+		# Make _sure_ that no other redraws take place after this.
+		self.disableRedraw = true
+		self.canvas.update_idletasks()
+		self.disableRedraw = false
+			
+		# Now do the actual redraw.
 		self.idle_redraw(scroll=scroll)
+	#@nonl
 	#@-node:ekr.20031218072017.1014:redraw_now
 	#@+node:ekr.20031218072017.1015:idle_redraw
 	def idle_redraw (self,scroll=true):
@@ -777,8 +784,8 @@ class leoTkinterTree (leoFrame.leoTree):
 			self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 			
 		# g.trace(g.app.copies) ; g.app.copies = 0
+		# g.trace()
 		# import traceback ; traceback.print_stack()
-	#@nonl
 	#@-node:ekr.20031218072017.2029:drawTopTree
 	#@+node:ekr.20031218072017.1008:drawTree
 	def drawTree(self,p,x,y,h,level,hoistFlag=false):
@@ -2133,5 +2140,5 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@-node:ekr.20031218072017.1141:tree.moveUpDown
 	#@-others
 #@nonl
-#@-node:ekr.20031218072017.4138:@file-thin leoTkinterTree.py
+#@-node:ekr.20031218072017.4138:@thin leoTkinterTree.py
 #@-leo
