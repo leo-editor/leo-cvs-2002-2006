@@ -35,10 +35,11 @@ def loadHandlers():
 	import glob,os,sys
 	oldpath = sys.path
 	try: # Make sure we restore sys.path.
-		files = glob.glob(os.path.join("plugins","mod_*.py"))
+		path = os.path.join(app().loadDir,"plugins") # 2/19/03
+		files = glob.glob(os.path.join(path,"mod_*.py"))
 		if len(files) > 0:
 			es("Loading plugins:")
-			sys.path.append(os.path.join(os.getcwd(),"plugins"))
+			sys.path.append(path)
 			for file in files:
 				try:
 					fn = shortFileName(file)

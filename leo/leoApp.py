@@ -169,8 +169,6 @@ class LeoApp:
 				self.loadDir = "LeoPy"
 			print "Setting load directory to:", self.loadDir
 		
-		# Trace hasn't been enabled yet.
-		# print self.loadDir
 		#@-body
 		#@-node:2::<< set loadDir >>
 
