@@ -1398,10 +1398,12 @@ class leoColorPanel:
 			b2 = Tk.Button(f,width=12,text=option_color)
 			self.nameButtons[name]=b2
 			
-			callback = lambda name=name:self.showColorPicker(name)
+			# 9/15/02: Added self=self to remove Python 2.1 warning.
+			callback = lambda name=name,self=self:self.showColorPicker(name)
 			b3 = Tk.Button(f,text="Color Picker...",command=callback)
 		
-			callback = lambda name=name,color=color:self.showColorName(name,color)
+			# 9/15/02: Added self=self to remove Python 2.1 warning.
+			callback = lambda name=name,color=color,self=self:self.showColorName(name,color)
 			b4 = Tk.Button(f,text="Color Name...",command=callback)
 		
 			lab.pack(side="left",padx=3)

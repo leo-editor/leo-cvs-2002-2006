@@ -246,7 +246,8 @@ class LeoFrame:
 		
 		for i in xrange(len(self.recentFiles)):
 			name = self.recentFiles[i]
-			callback = lambda n=i: self.OnOpenRecentFile(n)
+			# 9/15/02: Added self=self to remove Python 2.1 warning.
+			callback = lambda n=i,self=self: self.OnOpenRecentFile(n)
 			recentFilesMenu.add_command(label=name,command=callback)
 
 		#@-body
@@ -1313,7 +1314,8 @@ class LeoFrame:
 					# Recreate frame.recentFilesMenu.
 					i = 0
 					for name in frame.recentFiles:
-						callback = lambda n=i: self.OnOpenRecentFile(n)
+						# 9/15/02: Added self=self to remove Python 2.1 warning.
+						callback = lambda n=i,self=self: self.OnOpenRecentFile(n)
 						frame.recentFilesMenu.add_command(label=name,command=callback)
 						i += 1
 					
