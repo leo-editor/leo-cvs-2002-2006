@@ -1373,7 +1373,9 @@ def match(s,i,pattern):
 #@+body
 def match_c_word (s,i,name):
 
+	if name == None: return false
 	n = len(name)
+	if n == 0: return false
 	return name == s[i:i+n] and (i+n == len(s) or not is_c_id(s[i+n]))
 #@-body
 #@-node:9::match_c_word
@@ -1381,6 +1383,7 @@ def match_c_word (s,i,name):
 #@+body
 def match_ignoring_case(s1,s2):
 
+	if s1 == None or s2 == None: return false
 	return string.lower(s1) == string.lower(s2)
 #@-body
 #@-node:10::match_ignoring_case
@@ -1388,7 +1391,9 @@ def match_ignoring_case(s1,s2):
 #@+body
 def match_word(s,i,pattern):
 
+	if pattern == None: return false
 	j = len(pattern)
+	if j == 0: return false
 	if string.find(s,pattern,i,i+j) != i:
 		return false
 	if i+j >= len(s):

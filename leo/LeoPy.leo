@@ -12,9 +12,10 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1"><vh>Diary</vh>
-<v><vh>Oct 2002</vh>
+<v t="T1" a="V"><vh>Diary</vh>
+<v a="E"><vh>Oct 2002</vh>
 <v a="E"><vh>10/17</vh>
+<v><vh>Match routines all return false if pattern is None or empty</vh></v>
 <v><vh>Colorizer now recognizes comments after preprocessor directives</vh></v>
 <v><vh>Corrected reversion in set_delims_from_string</vh></v>
 </v>
@@ -1186,7 +1187,7 @@
 <v t="T704"><vh>Argument: what is Leo?</vh></v>
 </v>
 </v>
-<v t="T705" a="V"><vh>colorizing bug</vh>
+<v t="T705"><vh>colorizing bug</vh>
 <v t="T706"><vh>@file c:\prog\test\Enroll SerNum.c</vh>
 <v t="T707"><vh>&lt;&lt; Defines &gt;&gt;</vh></v>
 <v><vh>&lt;&lt; Head &gt;&gt;</vh></v>
@@ -37980,14 +37981,19 @@ def match(s,i,pattern):
 	return s and pattern and string.find(s,pattern,i,i+len(pattern)) == i</t>
 <t tx="T2404">def match_c_word (s,i,name):
 
+	if name == None: return false
 	n = len(name)
+	if n == 0: return false
 	return name == s[i:i+n] and (i+n == len(s) or not is_c_id(s[i+n]))</t>
 <t tx="T2405">def match_ignoring_case(s1,s2):
 
+	if s1 == None or s2 == None: return false
 	return string.lower(s1) == string.lower(s2)</t>
 <t tx="T2406">def match_word(s,i,pattern):
 
+	if pattern == None: return false
 	j = len(pattern)
+	if j == 0: return false
 	if string.find(s,pattern,i,i+j) != i:
 		return false
 	if i+j &gt;= len(s):
