@@ -774,7 +774,7 @@ class leoTree:
 			return "break"
 		# Call the pre-key hook.
 		flag = handleLeoHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
-		if flag == true:
+		if flag != None:  # Anything other than None overrides.
 			return "break" # The hook claims to have handled the event.
 		body = v.bodyString()
 		s = c.body.get("1.0", "end")
@@ -1129,7 +1129,7 @@ class leoTree:
 		if not v or not v.edit_text or v != c.currentVnode():
 			return "break"
 		flag = handleLeoHook("headkey1",c=c,v=v,ch=ch)
-		if flag == true:
+		if flag != None:  # Anything other than None overrides.
 			return "break" # The hook claims to have handled the event.
 		s = v.edit_text.get("1.0","end")
 		
@@ -1252,7 +1252,7 @@ class leoTree:
 		s = v.headString().strip()
 		if match_word(s,0,"@url"):
 			flag = handleLeoHook("@url1",c=c,v=v)
-			if flag != true:
+			if flag == None:  # Anything other than None overrides.
 				url = s[4:].strip()
 				
 				#@<< stop the url after any embedded blank and issue warning >>

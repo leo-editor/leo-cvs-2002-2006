@@ -453,16 +453,10 @@ class atFile:
 			if os.path.exists(dir):
 				self.default_directory = dir
 			else: # 9/25/02
-				if config.create_nonexistent_directories:
-					try:
-						os.mkdir(dir)
-						self.default_directory = dir
-						es("creating @path directory:" + dir)
-					except:
-						self.error("exception creating @path directory: " + dir)
-						es_exception()
-				else:
+				self.default_directory = makeAllNonExistentDirectories(dir)
+				if not self.default_directory:
 					self.error("Directory \"" + dir + "\" does not exist")
+					
 		
 		#@-body
 		#@-node:2::<< Set path from @file node >>
@@ -515,15 +509,8 @@ class atFile:
 						if os.path.exists(path):
 							self.default_directory = path
 						else: # 9/25/02
-							if config.create_nonexistent_directories:
-								try:
-									os.mkdir(path)
-									self.default_directory = path
-									es("creating @path directory:" + dir)
-								except:
-									self.error("exception creating @path directory: " + path)
-									es_exception()
-							else:
+							self.default_directory = makeAllNonExistentDirectories(path)
+							if not self.default_directory:
 								self.error("invalid @path: " + path)
 						
 						#@-body
@@ -617,14 +604,7 @@ class atFile:
 						if os.path.exists(dir):
 							self.default_directory = dir ; break
 						else: # 9/25/02
-							if config.create_nonexistent_directories:
-								try:
-									os.mkdir(dir)
-									es("creating @file directory:" + dir)
-									self.default_directory = dir ; break
-								except:
-									self.error("exception creating @file directory: " + dir)
-									es_exception()
+							self.default_directory = makeAllNonExistentDirectories(dir)
 		
 		if not self.default_directory:
 			# This should never happen: c.openDirectory should be a good last resort.

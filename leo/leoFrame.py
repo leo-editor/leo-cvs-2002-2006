@@ -125,7 +125,7 @@ class LeoFrame:
 		#@-node:2::<< create the first tree node >>
 
 		flag = handleLeoHook("menu1")
-		if flag == None or flag != false:
+		if flag == None: # Anything other than None overrides.
 			self.createMenuBar(top)
 		app().log = self # the LeoFrame containing the log
 		app().windowList.append(self)
@@ -1238,7 +1238,7 @@ class LeoFrame:
 	
 		app().commandName = label
 		flag = handleLeoHook("command1",label=label)
-		if flag == None or flag != false:
+		if flag == None: # Anything other than None overrides.
 			try:
 				command(event)
 			except:
@@ -1347,7 +1347,7 @@ class LeoFrame:
 		
 		openType,arg,ext=data
 		flag = handleLeoHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext)
-		if flag != true:
+		if flag == None:  # Anything other than None overrides.
 			
 			#@<< set ext based on the present language >>
 			#@+node:1::<< set ext based on the present language >>
@@ -1456,7 +1456,7 @@ class LeoFrame:
 				frame = LeoFrame(fileName)
 				flag = handleLeoHook("open1",
 					old_c=self,new_c=frame.commands,fileName=fileName)
-				if flag == None or flag != false:
+				if flag == None:  # Anything other than None overrides.
 					frame.commands.fileCommands.open(file,fileName) # closes file.
 				frame.openDirectory=os.path.dirname(fileName)
 				
@@ -1673,7 +1673,7 @@ class LeoFrame:
 		if n < len(self.recentFiles):
 			fileName = self.recentFiles[n]
 			flag = handleLeoHook("recentfiles1",c=c,fileName=fileName,closeFlag=closeFlag)
-			if flag != false:
+			if flag == None:  # Anything other than None overrides.
 				ok, frame = self.OpenWithFileName(fileName)
 				if ok and closeFlag:
 					app().windowList.remove(self)
@@ -3538,8 +3538,7 @@ class LeoFrame:
 		
 		# Allow the user first crack at updating menus.
 		flag = handleLeoHook("menu2")
-		
-		if flag == None or flag != false:
+		if flag == None:  # Anything other than None overrides.
 			self.updateFileMenu()
 			self.updateEditMenu()
 			self.updateOutlineMenu()

@@ -1148,7 +1148,47 @@ def getOutputNewline ():
 
 #@-body
 #@-node:5::getUserNewline
-#@+node:6::readlineForceUnixNewline (Steven P. Schaefer)
+#@+node:6::makeAllNonExistentDirectories
+#@+body
+#@+at
+#  This is a generalization of os.makedir.
+# It attempts to make all non-existent directories.
+
+#@-at
+#@@c
+
+def makeAllNonExistentDirectories (dir):
+
+	if not app().config.create_nonexistent_directories:
+		return None
+
+	dir1 = dir = os.path.normpath(dir)
+	# Split dir into all its component parts.
+	paths = []
+	while len(dir) > 0:
+		head,tail=os.path.split(dir)
+		if len(tail) == 0:
+			paths.append(head)
+			break
+		else:
+			paths.append(tail)
+			dir = head
+	path = ""
+	paths.reverse()
+	for s in paths:
+		path=os.path.join(path,s)
+		if not os.path.exists(path):
+			try:
+				os.mkdir(path)
+				es("created directory: "+path)
+			except:
+				es("exception creating directory: "+path)
+				es_exception()
+				return None
+	return dir1 # All have been created.
+#@-body
+#@-node:6::makeAllNonExistentDirectories
+#@+node:7::readlineForceUnixNewline (Steven P. Schaefer)
 #@+body
 #@+at
 #  Stephen P. Schaefer 9/7/2002
@@ -1168,8 +1208,8 @@ def readlineForceUnixNewline(f):
 	return s
 
 #@-body
-#@-node:6::readlineForceUnixNewline (Steven P. Schaefer)
-#@+node:7::shortFileName
+#@-node:7::readlineForceUnixNewline (Steven P. Schaefer)
+#@+node:8::shortFileName
 #@+body
 def shortFileName (fileName):
 	
@@ -1178,8 +1218,8 @@ def shortFileName (fileName):
 	head,tail = os.path.split(fileName)
 	return tail
 #@-body
-#@-node:7::shortFileName
-#@+node:8::update_file_if_changed
+#@-node:8::shortFileName
+#@+node:9::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1225,8 +1265,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
 #@-body
-#@-node:8::update_file_if_changed
-#@+node:9::utils_rename
+#@-node:9::update_file_if_changed
+#@+node:10::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1238,14 +1278,17 @@ def update_file_if_changed(file_name,temp_name):
 
 def utils_rename(src,dst):
 	
+	head,tail=os.path.split(dst)
+	if head and len(head) > 0:
+		makeAllNonExistentDirectories(head)
+	
 	if sys.platform=="win32":
 		os.rename(src,dst)
 	else:
 		from distutils.file_util import move_file
 		move_file(src,dst)
-
 #@-body
-#@-node:9::utils_rename
+#@-node:10::utils_rename
 #@-node:6::Files & Directories...
 #@+node:7::Lists...
 #@+node:1::appendToList

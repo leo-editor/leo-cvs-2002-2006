@@ -3958,24 +3958,16 @@ class tangleCommands:
 							#@+body
 							if os.path.exists(dir):
 								self.tangle_directory = dir
-							else: # 9/25/02
-								config = app().config
-								if config.create_nonexistent_directories:
-									try:
-										os.mkdir(dir)
-										es("creating @path directory:" + dir)
-										self.tangle_directory = dir
-										break
-									except:
-										self.error("exception creating @path directory: " + dir)
-										es_exception()
-								elif issue_error_flag and not self.path_warning_given:
-									self.path_warning_given = true # supress future warnings
-									self.error("@path directory does not exist: " + dir)
-									if base and len(base) > 0:
-										es("relative_path_base_directory: " + base)
-									if relative_path and len(relative_path) > 0:
-										es("relative path in @path directive: " + relative_path)
+							else: # 11/19/02
+								self.tangle_directory = makeAllNonExistentDirectories(dir)
+								if not self.tangle_directory:
+									if issue_error_flag and not self.path_warning_given:
+										self.path_warning_given = true # supress future warnings
+										self.error("@path directory does not exist: " + dir)
+										if base and len(base) > 0:
+											es("relative_path_base_directory: " + base)
+										if relative_path and len(relative_path) > 0:
+											es("relative path in @path directive: " + relative_path)
 							#@-body
 							#@-node:2::<< handle absolute @path >>
 
@@ -4113,20 +4105,8 @@ class tangleCommands:
 								self.tangle_directory = dir 
 							break
 						else: # 9/25/02
-							config = app().config
-							if config.create_nonexistent_directories:
-								try:
-									os.mkdir(dir)
-									es("creating @root directory:" + dir)
-									if kind == "@root" and not os.path.isabs(root_dir):
-										self.tangle_directory = base
-									else:
-										self.tangle_directory = dir
-									break
-								except:
-									self.error("exception creating @root directory: " + dir)
-									es_exception()
-							else:
+							self.tangle_directory = makeAllNonExistentDirectories(dir)
+							if not self.tangle_directory:
 								# 10/27/02: It is an error for this not to exist now.
 								self.error("@root directory does not exist:" + dir)
 								if base and len(base) > 0:
