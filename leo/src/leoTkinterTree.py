@@ -1168,8 +1168,8 @@ class leoTkinterTree (leoFrame.leoTree):
         self.prevPositions = g.app.positions
     
         if c.hoistStack:
-            p,junk = c.hoistStack[-1]
-            self.drawTree(p,self.root_left,self.root_top,0,0,hoistFlag=True)
+            bunch = c.hoistStack[-1]
+            self.drawTree(bunch.p,self.root_left,self.root_top,0,0,hoistFlag=True)
         else:
             self.drawTree(c.rootPosition(),self.root_left,self.root_top,0,0)
         

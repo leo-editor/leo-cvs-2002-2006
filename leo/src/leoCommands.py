@@ -108,7 +108,7 @@ class baseCommands:
         self.visitedList = [] # list of vnodes for the Nodes dialog.
         
         # 4.1: for hoist/dehoist commands.
-        self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects only drawing routines.
+        self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects drawing routines and find commands.
         
         self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
         #@nonl
@@ -2637,14 +2637,14 @@ class baseCommands:
         c = self ; p = c.currentPosition()
         if p and c.canDehoist():
             c.undoer.setUndoParams("De-Hoist",p)
-            h,expanded = c.hoistStack.pop()
-            if expanded: p.expand()
-            else:        p.contract()
+            bunch = c.hoistStack.pop()
+            if bunch.expanded: p.expand()
+            else:              p.contract()
             c.redraw()
             c.frame.clearStatusLine()
             if c.hoistStack:
-                p,junk = c.hoistStack[-1]
-                c.frame.putStatusLine("Hoist: " + p.headString())
+                bunch = c.hoistStack[-1]
+                c.frame.putStatusLine("Hoist: " + bunch.p.headString())
             else:
                 c.frame.putStatusLine("No hoist")
     
@@ -2654,7 +2654,8 @@ class baseCommands:
         if p and c.canHoist():
             c.undoer.setUndoParams("Hoist",p)
             # New in 4.2: remember expansion state.
-            c.hoistStack.append((p,p.isExpanded()),)
+            bunch = g.Bunch(p=p.copy(),expanded=p.isExpanded())
+            c.hoistStack.append(bunch)
             p.expand()
             c.redraw()
             c.frame.clearStatusLine()
@@ -2729,7 +2730,7 @@ class baseCommands:
             if (
                 # 1/31/04: Make sure new node is visible when hoisting.
                 (hasChildren and isExpanded) or
-                (c.hoistStack and p == c.hoistStack[-1][0])
+                (c.hoistStack and p == c.hoistStack[-1].p)
             ):
                 p = p.insertAsNthChild(0)
             else:
@@ -4779,8 +4780,8 @@ class baseCommands:
         
         if c.hoistStack:
             current = c.currentPosition()
-            p,junk = c.hoistStack[-1]
-            return current != p
+            bunch = c.hoistStack[-1]
+            return current != bunch.p
         else:
             return True
     #@nonl
@@ -4925,33 +4926,16 @@ class baseCommands:
         c = self
         
         # N.B.  This is called at idle time, so minimizing positions is crucial!
-    
-        if 1: # minimizes positions
-    
-            if c.hoistStack:
-                p2,junk = c.hoistStack[-1]
-                return p2 and not p2.isCurrentPosition()
-            elif c.currentPositionIsRootPosition():
-                return c.currentPositionHasNext()
-            else:
-                return True
-    
-        else: # old code
-    
-            root = c.rootPosition()
-            p = c.currentPosition()
-        
-            if c.hoistStack:
-                p2,junk = c.hoistStack[-1]
-                return p2 != p
-            
-            elif p == root:
-                return p.hasNext()
-            else:
-                return True
+        if c.hoistStack:
+            bunch = c.hoistStack[-1]
+            return bunch.p and not bunch.p.isCurrentPosition()
+        elif c.currentPositionIsRootPosition():
+            return c.currentPositionHasNext()
+        else:
+            return True
     #@nonl
     #@-node:ekr.20040303165342:canHoist & canDehoist
-    #@+node:ekr.20031218072017.2970:canMoveOutlineDown (changed for hoist)
+    #@+node:ekr.20031218072017.2970:canMoveOutlineDown
     def canMoveOutlineDown (self):
     
         c = self ; current = c.currentPosition()
@@ -4961,41 +4945,41 @@ class baseCommands:
             p.moveToVisNext()
     
         if c.hoistStack:
-            h,junk = c.hoistStack[-1]
-            return p and p != h and h.isAncestorOf(p)
+            bunch = c.hoistStack[-1]
+            return p and p != bunch.p and bunch.p.isAncestorOf(p)
         else:
             return p
     #@nonl
-    #@-node:ekr.20031218072017.2970:canMoveOutlineDown (changed for hoist)
-    #@+node:ekr.20031218072017.2971:canMoveOutlineLeft (changed for hoist)
+    #@-node:ekr.20031218072017.2970:canMoveOutlineDown
+    #@+node:ekr.20031218072017.2971:canMoveOutlineLeft
     def canMoveOutlineLeft (self):
     
         c = self ; p = c.currentPosition()
     
         if c.hoistStack:
-            h,junk = c.hoistStack[-1]
+            bunch = c.hoistStack[-1]
             if p and p.hasParent():
                 p.moveToParent()
-                return p != h and h.isAncestorOf(p)
+                return p != bunch.p and bunch.p.isAncestorOf(p)
             else:
                 return False
         else:
             return p and p.hasParent()
     #@nonl
-    #@-node:ekr.20031218072017.2971:canMoveOutlineLeft (changed for hoist)
-    #@+node:ekr.20031218072017.2972:canMoveOutlineRight (changed for hoist)
+    #@-node:ekr.20031218072017.2971:canMoveOutlineLeft
+    #@+node:ekr.20031218072017.2972:canMoveOutlineRight
     def canMoveOutlineRight (self):
     
         c = self ; p = c.currentPosition()
         
         if c.hoistStack:
-            h,junk = c.hoistStack[-1]
-            return p and p.hasBack() and p != h
+            bunch = c.hoistStack[-1]
+            return p and p.hasBack() and p != bunch.p
         else:
             return p and p.hasBack()
     #@nonl
-    #@-node:ekr.20031218072017.2972:canMoveOutlineRight (changed for hoist)
-    #@+node:ekr.20031218072017.2973:canMoveOutlineUp (changed for hoist)
+    #@-node:ekr.20031218072017.2972:canMoveOutlineRight
+    #@+node:ekr.20031218072017.2973:canMoveOutlineUp
     def canMoveOutlineUp (self):
     
         c = self ; p = c.currentPosition()
@@ -5005,12 +4989,12 @@ class baseCommands:
         if not pback: return False
     
         if c.hoistStack:
-            h,junk = c.hoistStack[-1]
-            return h != p and h.isAncestorOf(pback)
+            bunch = c.hoistStack[-1]
+            return bunch.p != p and bunch.p.isAncestorOf(pback)
         else:
             return True
     #@nonl
-    #@-node:ekr.20031218072017.2973:canMoveOutlineUp (changed for hoist)
+    #@-node:ekr.20031218072017.2973:canMoveOutlineUp
     #@+node:ekr.20031218072017.2974:canPasteOutline
     def canPasteOutline (self,s=None):
     
