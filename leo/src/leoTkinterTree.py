@@ -1176,10 +1176,10 @@ class baseLeoTkinterTree:
 		if not newSel:
 			newSel = c.body.getTextSelection()
 		if oldText != None:
+			trace("setting s = oldText")
 			s = oldText
 		else:
 			s = c.body.getAllText()
-		# trace(s)
 		#@	<< return if nothing has changed >>
 		#@+node:<< return if nothing has changed >>
 		# 6/22/03: Make sure we handle delete key properly.
@@ -1317,8 +1317,10 @@ class baseLeoTkinterTree:
 		#@nonl
 		#@-node:<< set s to widget text, removing trailing newlines if necessary >>
 		#@nl
-		if undoType:
-			c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel,oldYview=oldYview)
+		if undoType: # 11/6/03: set oldText properly when oldText param exists.
+			if not oldText: oldText = body
+			newText = s
+			c.undoer.setUndoTypingParams(v,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
 		v.t.setTnodeText(s)
 		v.t.insertSpot = c.bodyCtrl.index("insert")
 		#@	<< recolor the body >>
