@@ -336,11 +336,13 @@ class leoGui:
     #@+node:ekr.20031218072017.3739:Idle time
     def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
         
+        # print 'leoGui:setIdleTimeHook'
         pass # Not an error.
         
     def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
         
-       pass # Not an error.
+        # print 'leoGui:setIdleTimeHookAfterDelay'
+        pass # Not an error.
     #@-node:ekr.20031218072017.3739:Idle time
     #@-node:ekr.20031218072017.3733:app.gui utils
     #@+node:ekr.20031218072017.3740:guiName
