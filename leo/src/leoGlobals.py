@@ -4354,7 +4354,7 @@ def getScript (c,p,useSelectedText=True,script=None):
     p.v.setTnodeText(old_body)
     
     # g.trace(repr(c.atFileCommands.output_newline))
-    if c.atFileCommands.output_newline == 'crlf':
+    if c.atFileCommands.output_newline == '\r\n':
         return script.replace("\r\n","\n") # 1/11/05
     else:
         return script
@@ -4363,7 +4363,7 @@ def getScript (c,p,useSelectedText=True,script=None):
 def test_g_getScript_strips_returns():
 
     old_output_newline = c.atFileCommands.output_newline
-    c.atFileCommands.output_newline = 'crlf'
+    c.atFileCommands.output_newline = '\r\n'
     script = g.getScript(c,p)
     c.atFileCommands.output_newline = old_output_newline
     
