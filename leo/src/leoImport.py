@@ -36,7 +36,7 @@ class baseLeoImportCommands:
 		c = self.c ; current = c.currentVnode()
 		junk, self.fileName = os_path_split(fileName) # junk/fileName
 		self.methodName,ext = os_path_splitext(self.fileName) # methodName.fileType
-		
+		# trace(ext,fileName)
 		self.fileType = ext
 		self.setEncoding()
 		# trace(`self.fileName`) ; trace(`self.fileType`)
@@ -957,9 +957,29 @@ class baseLeoImportCommands:
 		#@+node:<< Append file if not pure PHP >>
 		# If the file does not begin with <?php or end with ?> then
 		# it is simply appended like a generic import would do.
-		s.strip() #remove inadvertent whitespace
-		if not s.startswith("<?php") \
-		or not (s.endswith("?>") or s.endswith("?>\n") or s.endswith("?>\r\n")):
+		
+		s.strip() # Remove inadvertent whitespace.
+		
+		#if (
+		#	not s.startswith("<?php")
+		#	or not (s.endswith("?>") or s.endswith("?>\n") or s.endswith("?>\r\n")
+		#):
+		
+		if (
+			not (
+				s.startswith("<?P") or
+				s.startswith("<?p") or
+				s.startswith("<?=") or
+				s.startswith("<?\n") or
+				s.startswith("<?\r") or
+				s.startswith("<? ") or
+				s.startswith("<?\t")
+			) or not (
+				s.endswith("?>\n") or
+				s.endswith("?>\r") or
+				s.endswith("?>\r\n")
+			)
+		):
 			es("File seems to be mixed HTML and PHP; importing as plain text file.")
 			parent.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
 			return
