@@ -2520,18 +2520,19 @@ class baseLeoImportCommands:
         if not p: return
         self.setEncoding()
         firstLevel = p.level()
+        mode = g.app.config.output_newline
+        mode = g.choose(mode=="platform",'w','wb')
         try:
-            mode = g.app.config.output_newline
-            mode = g.choose(mode=="platform",'w','wb')
             theFile = open(fileName,mode)
-            for p in p.self_and_subtree_iter():
-                head = p.moreHead(firstLevel,useVerticalBar=True)
-                head = g.toEncodedString(head,self.encoding,reportErrors=True)
-                theFile.write(head + nl)
-            theFile.close()
-        except:
-            g.es("exception while exporting headlines")
-            g.es_exception()
+        except IOError:
+            g.es("Can not open " + fileName,color="blue")
+            leoTest.fail()
+            return
+        for p in p.self_and_subtree_iter():
+            head = p.moreHead(firstLevel,useVerticalBar=True)
+            head = g.toEncodedString(head,self.encoding,reportErrors=True)
+            theFile.write(head + nl)
+        theFile.close()
     #@nonl
     #@-node:ekr.20031218072017.1462:exportHeadlines
     #@+node:ekr.20031218072017.1147:flattenOutline
@@ -2542,24 +2543,27 @@ class baseLeoImportCommands:
         if not p: return
         self.setEncoding()
         firstLevel = p.level()
+    
+        # 10/14/02: support for output_newline setting.
+        mode = g.app.config.output_newline
+        mode = g.choose(mode=="platform",'w','wb')
         try:
-            # 10/14/02: support for output_newline setting.
-            mode = g.app.config.output_newline
-            mode = g.choose(mode=="platform",'w','wb')
             theFile = open(fileName,mode)
-            
-            for p in p.self_and_subtree_iter():
-                head = p.moreHead(firstLevel)
-                head = g.toEncodedString(head,self.encoding,reportErrors=True)
-                theFile.write(head + nl)
-                body = p.moreBody() # Inserts escapes.
-                if len(body) > 0:
-                    body = g.toEncodedString(body,self.encoding,reportErrors=True)
-                    theFile.write(body + nl)
-            theFile.close()
-        except:
-            g.es("exception while flattening outline")
-            g.es_exception()
+        except IOError:
+            g.es("Can not open " + fileName,color="blue")
+            leoTest.fail()
+            return
+        
+        for p in p.self_and_subtree_iter():
+            head = p.moreHead(firstLevel)
+            head = g.toEncodedString(head,self.encoding,reportErrors=True)
+            theFile.write(head + nl)
+            body = p.moreBody() # Inserts escapes.
+            if len(body) > 0:
+                body = g.toEncodedString(body,self.encoding,reportErrors=True)
+                theFile.write(body + nl)
+        theFile.close()
+    #@nonl
     #@-node:ekr.20031218072017.1147:flattenOutline
     #@+node:ekr.20031218072017.1148:outlineToWeb
     def outlineToWeb (self,fileName,webType):
@@ -2569,28 +2573,30 @@ class baseLeoImportCommands:
         if not current: return
         self.setEncoding()
         self.webType = webType
-        try: # This can fail if the file is open by another app.
-            # 10/14/02: support for output_newline setting.
-            mode = g.app.config.output_newline
-            mode = g.choose(mode=="platform",'w','wb')
+        # 10/14/02: support for output_newline setting.
+        mode = g.app.config.output_newline
+        mode = g.choose(mode=="platform",'w','wb')
+        try:
             theFile = open(fileName,mode)
-            self.treeType = "@file"
-            # Set self.treeType to @root if p or an ancestor is an @root node.
-            for p in current.parents_iter():
-                flag,junk = g.is_special(p.bodyString(),0,"@root")
-                if flag:
-                    self.treeType = "@root"
-                    break
-            for p in current.self_and_subtree_iter():
-                s = self.convertVnodeToWeb(p)
-                if len(s) > 0:
-                    s = g.toEncodedString(s,self.encoding,reportErrors=True)
-                    theFile.write(s)
-                    if s[-1] != '\n': theFile.write(nl)
-            theFile.close()
-        except:
-            g.es("exception in Outline To noweb command")
-            g.es_exception()
+        except IOError:
+            g.es("Can not open " + fileName,color="blue")
+            leoTest.fail()
+            return
+    
+        self.treeType = "@file"
+        # Set self.treeType to @root if p or an ancestor is an @root node.
+        for p in current.parents_iter():
+            flag,junk = g.is_special(p.bodyString(),0,"@root")
+            if flag:
+                self.treeType = "@root"
+                break
+        for p in current.self_and_subtree_iter():
+            s = self.convertVnodeToWeb(p)
+            if len(s) > 0:
+                s = g.toEncodedString(s,self.encoding,reportErrors=True)
+                theFile.write(s)
+                if s[-1] != '\n': theFile.write(nl)
+        theFile.close()
     #@nonl
     #@-node:ekr.20031218072017.1148:outlineToWeb
     #@+node:ekr.20031218072017.3300:removeSentinelsCommand
