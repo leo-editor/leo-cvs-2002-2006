@@ -798,7 +798,7 @@ def scanDirectives(c,v=None):
 	path = None
 	encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
 	lineending = getOutputNewline() # 4/24/03 initialize from config settings.
-	wrap = a.config.getBoolPref("body_pane_wraps")
+	wrap = a.config.getBoolWindowPref("body_pane_wraps") # 7/7/03: this is a window pref.
 	#@-body
 	#@-node:1::<< Set local vars >>
 
