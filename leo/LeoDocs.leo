@@ -2,20 +2,20 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1088" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="-2" left="187" height="23" width="80"/>
+	<global_window_position top="0" left="187" height="23" width="80"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
 <find_panel_settings search_body="1" whole_word="1">
-	<find_string>@page</find_string>
+	<find_string>createLeoSplitter</find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
 <v t="T1"><vh>Short summary</vh></v>
 <v t="T2"><vh>About Leo's panes and icons (for newbies)</vh>
 <v t="T3"><vh>This node contains text</vh></v>
-<v t="T4" a="M"><vh>This headline is marked</vh></v>
+<v t="T4"><vh>This headline is marked</vh></v>
 <v t="T5" a="C"><vh>This is a cloned headline</vh></v>
 <v t="T5" a="C"><vh>This is a cloned headline</vh></v>
 <v><vh>This node contains no text</vh></v>
@@ -224,7 +224,7 @@
 <v t="T130"><vh>Improved the syntax colorer</vh></v>
 </v>
 <v t="T131"><vh>2.0 Untangle, Unlimited Undo/Redo, Syntax Coloring, etc.</vh>
-<v t="T132" a="M"><vh>Format change: no blank lines between sentinels in derived files</vh></v>
+<v t="T132"><vh>Format change: no blank lines between sentinels in derived files</vh></v>
 <v t="T133"><vh>Unlimited Undo and Redo</vh></v>
 <v><vh>Drawing and syntax coloring</vh>
 <v t="T134"><vh>Syntax coloring works for all languages</vh></v>
@@ -279,8 +279,8 @@
 <v><vh>Borland PC versions</vh>
 <v t="T173"><vh>Borland 2.7 Major bug fix: please upgrade</vh></v>
 <v t="T174"><vh>Borland 2.6 Major changes: please upgrade</vh>
-<v t="T175" a="M"><vh>Format change: no blank lines between sentinels in derived files</vh></v>
-<v t="T176" a="M"><vh>Eliminated spurious read errors</vh></v>
+<v t="T175"><vh>Format change: no blank lines between sentinels in derived files</vh></v>
+<v t="T176"><vh>Eliminated spurious read errors</vh></v>
 <v t="T177"><vh>@c now is the same as @code</vh></v>
 <v t="T178"><vh>Fixed old bugs in Untangle</vh></v>
 <v t="T179"><vh>Compatibility with leo.py v2.0</vh></v>
@@ -398,7 +398,7 @@
 </v>
 </v>
 </v>
-<v t="T276" a="V"><vh>Users Guide</vh>
+<v t="T276" a="E"><vh>Users Guide</vh>
 <v t="T277"><vh>An overview of Leo</vh></v>
 <v t="T278"><vh>Front material</vh>
 <v t="T279"><vh>Title Page &amp; Summary</vh></v>
@@ -484,16 +484,16 @@
 </v>
 <v t="T304"><vh>Creating and destroying headlines</vh></v>
 <v t="T124" a="C"><vh>Dragging headlines</vh></v>
-<v t="T305"><vh>Editing body text</vh></v>
+<v t="T305" a="M"><vh>Editing body text</vh></v>
 <v t="T306"><vh>Expanding &amp; contracting headlines</vh></v>
 <v t="T307"><vh>Marking headlines</vh></v>
 <v t="T308"><vh>Moving &amp; Reorganizing headlines</vh></v>
 <v t="T309"><vh>Resizing panes</vh></v>
 <v t="T310"><vh>Undoing operations</vh></v>
 </v>
-<v t="T311"><vh>Chapter 4: Writing Programs in Leo</vh>
-<v t="T312"><vh>Overview</vh></v>
-<v t="T313"><vh>Sections and section references</vh></v>
+<v t="T311" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T312" a="M"><vh>Overview</vh></v>
+<v t="T313" a="M"><vh>Sections and section references</vh></v>
 <v t="T314"><vh>Organizing @file trees.</vh>
 <v t="T315"><vh>Examples</vh>
 <v t="T316"><vh>@file f.c</vh>
@@ -540,13 +540,13 @@
 <v t="T335"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
 <v t="T336"><vh>@first directive allows preliminary lines in @file trees</vh></v>
 <v t="T337"><vh>@language specifying the target language</vh></v>
-<v t="T338"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
+<v t="T338" a="M"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
 </v>
 <v t="T243" a="C"><vh>About CWEB   </vh></v>
 </v>
 <v><vh>Appendix to Chapter 4: Using @root directives, Tangling and Untangling</vh>
 <v t="T339"><vh>@root vs. @file trees</vh></v>
-<v t="T340"><vh>Sections and section definitions</vh></v>
+<v t="T340" a="M"><vh>Sections and section definitions</vh></v>
 <v t="T341"><vh>Tangling @root trees with the Tangle commands</vh></v>
 <v t="T342"><vh>Untangling @root trees with the Untangle commands</vh></v>
 <v t="T343"><vh>@verbose, @terse and @silent directives control comments in @root trees</vh></v>
@@ -771,7 +771,7 @@
 <v t="T463"><vh>When should I use clones?</vh></v>
 <v t="T464"><vh>How can I cut and paste nodes between different copies of Leo</vh></v>
 <v t="T465"><vh>How can I customize Leo?</vh>
-<v t="T17" a="CM"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
+<v t="T17" a="C"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
 <v t="T18"><vh>Example of leoConfig.txt</vh></v>
 </v>
 </v>
@@ -822,7 +822,7 @@
 </v>
 </v>
 </v>
-<v t="T500"><vh>Appendices</vh>
+<v t="T500" a="E"><vh>Appendices</vh>
 <v t="T42" a="C"><vh>Code hidden in leo.py</vh>
 <v t="T43"><vh>c2py.py</vh></v>
 <v t="T44"><vh>disStats.py</vh></v>
@@ -832,7 +832,7 @@
 <v t="T48"><vh>Tree code</vh></v>
 </v>
 <v t="T501"><vh>Converting @root trees to @file trees</vh></v>
-<v t="T502"><vh>Directives</vh>
+<v t="T502" a="E"><vh>Directives</vh>
 <v t="T503"><vh>@c and @code</vh></v>
 <v t="T504"><vh>@chapter (Macintosh only)</vh></v>
 <v t="T505"><vh>@color</vh></v>
@@ -848,7 +848,7 @@
 <v t="T515"><vh>@noweb</vh></v>
 <v t="T516"><vh>@others (valid only in @file trees)</vh></v>
 <v t="T517"><vh>@pagewidth</vh></v>
-<v t="T518"><vh>@path</vh></v>
+<v t="T518" a="MV"><vh>@path</vh></v>
 <v t="T519"><vh>@root  (not valid in @file trees)</vh></v>
 <v t="T520"><vh>@section (Macintosh only)</vh></v>
 <v t="T521"><vh>@silent (not valid in @file trees)</vh></v>
@@ -953,7 +953,7 @@
 </v>
 </v>
 </v>
-<v t="T591"><vh>Glossary</vh>
+<v t="T591" a="E"><vh>Glossary</vh>
 <v t="T592"><vh>@file node, @others node, @root node, etc.</vh></v>
 <v t="T593"><vh>@file tree, @others tree, @root tree, etc.</vh></v>
 <v t="T594"><vh>Body pane</vh></v>
@@ -990,7 +990,7 @@
 <v t="T625"><vh>Promote</vh></v>
 <v t="T626"><vh>Root</vh></v>
 <v t="T627"><vh>Scope</vh></v>
-<v t="T628"><vh>Section</vh></v>
+<v t="T628" a="M"><vh>Section</vh></v>
 <v t="T629"><vh>Section name</vh></v>
 <v t="T630"><vh>Section reference</vh></v>
 <v t="T631"><vh>Sentinels, sentinel lines</vh></v>
@@ -4242,7 +4242,7 @@ The Left and Right (arrow) keys move the insertion cursor one character to the l
 
 The Up and Down (arrow) keys move the insertion cursor one line up or down and clear any selection in the text. If Up or Right is typed with the Shift key down, then the insertion cursor moves and the selection is extended to include the new character. Control-Up and Control-Down move the insertion cursor by paragraphs (groups of lines separated by blank lines), and Control-Shift-Up and Control-Shift-Down move the insertion cursor by paragraphs and also extend the selection. Control-p and Control-n behave the same as Up and Down, respectively. 
 
-(12) The Next(Page Down) and Prior(Page Up) keys move the insertion cursor forward or backwards by one screenful and clear any selection in the text. If the Shift key is held down while Next or Prior is typed, then the selection is extended to include the new character.
+The Next(Page Down) and Prior(Page Up) keys move the insertion cursor forward or backwards by one screenful and clear any selection in the text. If the Shift key is held down while Next or Prior is typed, then the selection is extended to include the new character.
 
 Line movement is by text lines terminated by hard returns (newlines), not by displayed lines;  if a text line is long and wraps across more than one display line, then the Up and Down movement will skip the extra wrapped display lines.
 
