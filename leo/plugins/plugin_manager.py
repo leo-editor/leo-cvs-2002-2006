@@ -11,7 +11,7 @@ A plugin to manage Leo's Plugins:
 This plugin does not work with Python 2.2.x because it imports Sets.
 """
 
-__version__ = "0.7"
+__version__ = "0.8"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -48,6 +48,10 @@ __plugin_requires__ = ["plugin_menu"]
 # work everywhere.
 #     - Added better import tests, and message when import fails.
 #     - Added an init method, although a simple raise would also work.
+# 0.8 EKR
+#     - Well, that was easy.  Put sets.py from Python 2.4 in extensions 
+# folder.
+#     - Use g.importExtension rather than import to get sets module.
 #@-at
 #@-node:pap.20041006184225.2:<< version history >>
 #@nl
@@ -58,11 +62,11 @@ try:
     import leoPlugins
     Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
     Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+    sets = g.importExtension('sets',  pluginName=__name__,verbose=True)
     import fnmatch
     import os
     import re
     import sha
-    import sets
     import sys
     import urllib
     import threading
@@ -117,11 +121,12 @@ def init():
 #@nonl
 #@-node:ekr.20050213122944:init
 #@+node:ekr.20041231134702:topLevelMenu
+# This is called from plugins_menu plugin.
+# It should only be defined if the extension has been registered.
+
 def topLevelMenu():
-    # This is called from plugins_menu plugin.
-    # It should only be defined if the extension has been registered.
+    
     """Manage the plugins"""
-    g.trace()
     dlg = ManagerDialog()
 #@nonl
 #@-node:ekr.20041231134702:topLevelMenu
