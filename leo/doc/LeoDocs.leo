@@ -69,7 +69,7 @@
 <v t="edream.110203163054.26"><vh>Travers A. Hough</vh></v>
 <v t="edream.110203163054.23"><vh>Zak Greant</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -81,8 +81,8 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20040922074200" a="ETV"><vh>4.2 final</vh></v>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="ekr.20040922074200"><vh>4.2 final</vh></v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="ekr.20040922074200"><vh>4.2 final</vh></v>
@@ -1231,7 +1231,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1545,7 +1545,7 @@
 <v t="EKR.20040524104904.181"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
 </v>
 <v t="EKR.20040524104904.182"><vh>Chapter 7: Scripting Leo with Python</vh>
-<v t="EKR.20040524104904.183"><vh>Overview</vh></v>
+<v t="EKR.20040524104904.183"><vh>Overview of Leo's code</vh></v>
 <v t="EKR.20040524104904.184"><vh>Basic scripts</vh>
 <v t="EKR.20040524104904.185"><vh>Writing to log window</vh></v>
 <v t="EKR.20040524104904.186"><vh>Getting commanders and frames</vh></v>

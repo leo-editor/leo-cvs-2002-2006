@@ -250,6 +250,7 @@ def createDynamicButton (c,p,d):
     #@nl
     
     b = c.frame.addIconButton(text=buttonText)
+    if not b: return
     d [key] = b
     if sys.platform == "win32":
         width = int(len(text) * 0.9)

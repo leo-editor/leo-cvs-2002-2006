@@ -5,6 +5,44 @@
 This contains my notes for the Leo project.
 
 #@+all
+#@+node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
+#@-node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
+#@+node:ekr.20031218072017.421:Early Milestones
+#@+node:ekr.20031218072017.422:02/03/02 Leo 0.08 released
+#@-node:ekr.20031218072017.422:02/03/02 Leo 0.08 released
+#@+node:ekr.20031218072017.423:12/17/01 ** Leo 0.05 released
+#@-node:ekr.20031218072017.423:12/17/01 ** Leo 0.05 released
+#@+node:ekr.20031218072017.424:12/16/01 Leo becomes functional
+leo.py reads and writes exactly like LeoCB
+#@nonl
+#@-node:ekr.20031218072017.424:12/16/01 Leo becomes functional
+#@+node:ekr.20031218072017.425:12/13/01 Syntax coloring works
+Amazing.  I wrote some dummy code last night, read up on indices this morning, and got everything to work in a couple of hours. The result is very fast: no optimization is needed for Leo. I love Tkinter!
+
+Added c.recolor and tree.recolor routines.  This hooks should be called whenever the body text changes.  Apparently there is no "OnTextChanged" event in Tk.
+#@nonl
+#@-node:ekr.20031218072017.425:12/13/01 Syntax coloring works
+#@+node:ekr.20031218072017.426:12/09/01 Tree now drawn properly
+#@-node:ekr.20031218072017.426:12/09/01 Tree now drawn properly
+#@+node:ekr.20031218072017.427:12/05/01 Tree works with Tkinter
+#@-node:ekr.20031218072017.427:12/05/01 Tree works with Tkinter
+#@+node:ekr.20031218072017.428:11/10/01 ** began conversion to tk
+This marked my complete frustration with wxLeo and wxPython, and the real beginning of the work on leo.py.
+#@nonl
+#@-node:ekr.20031218072017.428:11/10/01 ** began conversion to tk
+#@+node:ekr.20031218072017.429:10/26/01 First successful read of .leo file w/ @file nodes
+#@-node:ekr.20031218072017.429:10/26/01 First successful read of .leo file w/ @file nodes
+#@+node:ekr.20031218072017.430:9/29/01 c2py: Totally in love with Python
+I am totally in love with Python.  Everything is so much easier:  Automatic debugging, no declarations, no types, no compilation. Great data structures. Even without single stepping the debugging is easy.
+
+All major aspects of c2py are now complete.
+#@nonl
+#@-node:ekr.20031218072017.430:9/29/01 c2py: Totally in love with Python
+#@+node:ekr.20031218072017.431:ca. 9/1/01 began work on wxPython version of Leo
+I am not sure exactly when this happened.  The details apparently have been lost.  There was a time when I was experimenting with Python and wxPython, and a time when I was working on wxWindows version of Leo.
+#@nonl
+#@-node:ekr.20031218072017.431:ca. 9/1/01 began work on wxPython version of Leo
+#@-node:ekr.20031218072017.421:Early Milestones
 #@+node:ekr.20031218072017.365:How to...
 #@+node:ekr.20031218072017.366:How to add and remove files from CVS repository
 use the command line option in the admin menu to do the following:
@@ -1319,42 +1357,6 @@ people can add it to their sources.list or you can talk to the people
 who run the default servers and get Leo hosted there (better).
 #@-node:ekr.20040104162835.16:Getting Leo on Fink Commander
 #@-node:ekr.20040104162835.8:Mac notes: Dan Winkler
-#@+node:ekr.20031218072017.421:Early Milestones
-#@+node:ekr.20031218072017.422:02/03/02 Leo 0.08 released
-#@-node:ekr.20031218072017.422:02/03/02 Leo 0.08 released
-#@+node:ekr.20031218072017.423:12/17/01 ** Leo 0.05 released
-#@-node:ekr.20031218072017.423:12/17/01 ** Leo 0.05 released
-#@+node:ekr.20031218072017.424:12/16/01 Leo becomes functional
-leo.py reads and writes exactly like LeoCB
-#@nonl
-#@-node:ekr.20031218072017.424:12/16/01 Leo becomes functional
-#@+node:ekr.20031218072017.425:12/13/01 Syntax coloring works
-Amazing.  I wrote some dummy code last night, read up on indices this morning, and got everything to work in a couple of hours. The result is very fast: no optimization is needed for Leo. I love Tkinter!
-
-Added c.recolor and tree.recolor routines.  This hooks should be called whenever the body text changes.  Apparently there is no "OnTextChanged" event in Tk.
-#@nonl
-#@-node:ekr.20031218072017.425:12/13/01 Syntax coloring works
-#@+node:ekr.20031218072017.426:12/09/01 Tree now drawn properly
-#@-node:ekr.20031218072017.426:12/09/01 Tree now drawn properly
-#@+node:ekr.20031218072017.427:12/05/01 Tree works with Tkinter
-#@-node:ekr.20031218072017.427:12/05/01 Tree works with Tkinter
-#@+node:ekr.20031218072017.428:11/10/01 ** began conversion to tk
-This marked my complete frustration with wxLeo and wxPython, and the real beginning of the work on leo.py.
-#@nonl
-#@-node:ekr.20031218072017.428:11/10/01 ** began conversion to tk
-#@+node:ekr.20031218072017.429:10/26/01 First successful read of .leo file w/ @file nodes
-#@-node:ekr.20031218072017.429:10/26/01 First successful read of .leo file w/ @file nodes
-#@+node:ekr.20031218072017.430:9/29/01 c2py: Totally in love with Python
-I am totally in love with Python.  Everything is so much easier:  Automatic debugging, no declarations, no types, no compilation. Great data structures. Even without single stepping the debugging is easy.
-
-All major aspects of c2py are now complete.
-#@nonl
-#@-node:ekr.20031218072017.430:9/29/01 c2py: Totally in love with Python
-#@+node:ekr.20031218072017.431:ca. 9/1/01 began work on wxPython version of Leo
-I am not sure exactly when this happened.  The details apparently have been lost.  There was a time when I was experimenting with Python and wxPython, and a time when I was working on wxWindows version of Leo.
-#@nonl
-#@-node:ekr.20031218072017.431:ca. 9/1/01 began work on wxPython version of Leo
-#@-node:ekr.20031218072017.421:Early Milestones
 #@+node:ekr.20031218072017.434:Unused code
 @ignore
 @language python

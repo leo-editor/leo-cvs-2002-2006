@@ -1335,11 +1335,15 @@ class importExportTestCase(unittest.TestCase):
         s = d.bodyString()
         lines = s.split('\n')
         name = lines[0]
-        val = lines[1]
-        if self.doImport and type(val) != type([]):
-            val = [val]
-        self.fileName = val
-        theDict = {name: val}
+        fileName = lines[1]
+    
+        self.fileName = fileName = g.os_path_join(g.app.loadDir,"..",fileName)
+    
+        if self.doImport:
+            theDict = {name: [fileName]}
+        else:
+            theDict = {name: fileName}
+    
         g.app.unitTesting = True
         self.gui = leoGui.unitTestGui(theDict,trace=False)
     

@@ -4,8 +4,249 @@
 
 #@+all
 #@+node:EKR.20040609091327:To do: 4.3
-#@+node:ekr.20041006110656:First 3
-#@+node:ekr.20041004094706:Better error reporting in executeScript
+#@+node:ekr.20041006110656:First 5
+#@+node:ekr.20041007052853:(Fix problems with paste on Linux)
+#@+node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
+#@-node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
+#@+node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
+@
+
+The following are called only when g.app.gui.win32clipboard is not None, and
+presently that never happens.
+#@nonl
+#@+node:ekr.20031218072017.845:replaceClipboardWith
+def replaceClipboardWith (self,s):
+
+    # g.app.gui.win32clipboard is always None.
+    wcb = g.app.gui.win32clipboard
+
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            wcb.EmptyClipboard()
+            wcb.SetClipboardText(s)
+            wcb.CloseClipboard()
+        except:
+            g.es_exception()
+    else:
+        self.root.clipboard_clear()
+        self.root.clipboard_append(s)
+#@nonl
+#@-node:ekr.20031218072017.845:replaceClipboardWith
+#@+node:ekr.20031218072017.846:getTextFromClipboard
+def getTextFromClipboard (self):
+    
+    # g.app.gui.win32clipboard is always None.
+    wcb = g.app.gui.win32clipboard
+    
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            data = wcb.GetClipboardData()
+            wcb.CloseClipboard()
+            # g.trace(data)
+            return data
+        except TypeError:
+            # g.trace(None)
+            return None
+        except:
+            g.es_exception()
+            return None
+    else:
+        try:
+            s = self.root.selection_get(selection="CLIPBOARD")
+            return s
+        except:
+            return None
+#@nonl
+#@-node:ekr.20031218072017.846:getTextFromClipboard
+#@-node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
+#@+node:ekr.20031218072017.840:Cut/Copy/Paste body text
+#@+node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
+def OnCut (self,event=None):
+    
+    """The handler for the virtual Cut event."""
+
+    frame = self ; c = frame.c ; v = c.currentVnode()
+    
+    if 0: # g.app.gui.win32clipboard is always None.
+        if g.app.gui.win32clipboard:
+            data = frame.body.getSelectedText()
+            if data:
+                g.app.gui.replaceClipboardWith(data)
+
+    # Activate the body key handler by hand.
+    frame.body.forceFullRecolor()
+    frame.body.onBodyWillChange(v,"Cut")
+
+def OnCutFromMenu (self):
+    
+    w = self.getFocus()
+    w.event_generate(g.virtual_event_name("Cut"))
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
+
+    if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+        frame.tree.onHeadChanged(v)
+
+
+
+#@-node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
+#@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
+def OnCopy (self,event=None):
+    
+    frame = self
+
+    if 0: # g.app.gui.win32clipboard is always None.
+        if g.app.gui.win32clipboard:
+            data = frame.body.getSelectedText()
+            if data:
+                g.app.gui.replaceClipboardWith(data)
+        
+    # Copy never changes dirty bits or syntax coloring.
+    
+def OnCopyFromMenu (self):
+
+    frame = self
+    w = frame.getFocus()
+    w.event_generate(g.virtual_event_name("Copy"))
+#@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
+#@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
+def OnPaste (self,event=None):
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
+    
+    if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
+        bodyCtrl = frame.body.bodyCtrl
+        s = bodyCtrl.selection_get( selection='CLIPBOARD' )
+        bodyCtrl.insert('insert', s)
+        bodyCtrl.event_generate('<Key>')
+        bodyCtrl.update_idletasks()
+    else:
+        # Activate the body key handler by hand.
+        frame.body.forceFullRecolor()
+        frame.body.onBodyWillChange(v,"Paste")
+    
+def OnPasteFromMenu (self):
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
+
+    w = self.getFocus()
+    w.event_generate(g.virtual_event_name("Paste"))
+    
+    if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+        frame.tree.onHeadChanged(v)
+#@nonl
+#@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
+#@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
+#@+node:ekr.20031218072017.838:tkBody.createBindings
+def createBindings (self,frame):
+    
+    t = self.bodyCtrl
+    
+    # Event handlers...
+    t.bind("<Button-1>", frame.OnBodyClick)
+    if sys.platform == "win32":
+        # Support Linux middle-button paste easter egg.
+        t.bind("<Button-2>", frame.OnPaste)
+    t.bind("<Button-3>", frame.OnBodyRClick)
+    t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
+    t.bind("<Key>", frame.body.onBodyKey)
+
+    # Gui-dependent commands...
+    t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+    t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+    t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+#@nonl
+#@-node:ekr.20031218072017.838:tkBody.createBindings
+#@-node:ekr.20041007052853:(Fix problems with paste on Linux)
+#@+node:ekr.20041004094706:Better error reporting in c.executeScript
+#@+node:ekr.20041007080346:Report from e
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=2792394
+
+I've narrowed down when the IndexError happens,
+probably any similar error would be the same.
+
+import leoGlobals as g
+c = g.top() 
+p = c.currentPosition()
+cv = c.currentVnode()
+cv.moveOutlineRight()  #error
+
+gives this error
+unknown position attribute: moveOutlineRight
+exception executing script
+AttributeError
+--------------------
+
+and this  additional traceback from 
+leoCommands.py", line 1171, in executeScript
+    s = "line %d: %s" % (n,lines[n-1])
+IndexError: list index out of range
+
+when run this script inside a def wrapper,
+
+import leoGlobals as g
+def x():
+....c = g.top() 
+....p = c.currentPosition()
+....cv = c.currentVnode()  #insert sets the current node
+....cv.moveOutlineRight()  #error
+x()
+
+all you get is
+unknown position attribute: moveOutlineRight
+exception executing script
+AttributeError
+--------------------
+so it appears the frame in the code that determines the 
+line number n is off at least one.
+in neither case is the line number of the error correct, so no error line
+shows.
+
+maybe getLastTracebackLineNumber needs to check for ValueError?
+there is still a piece missing, how to tell what frame your in.
+
+in #@+node: getLastTracebackLineNumber leoGlobals.py
+data = traceback.extract_tb(tb, 2) seems like a good idea
+and seems to fix the IndexError error shown above.
+but now with error inside a def you get the function name
+instead of the line the error is on. not good enough.
+
+change to:
+data = traceback.extract_tb(tb)
+item = data[-2] or data[-1] 
+
+this seems to work w/ error code indented 0 from far left, 
+or nested inside a def inside another def or another,
+I'll leave it in and see if there are additional problems.
+the line number still doesn't match with row,col display.
+thats confusing if you don't account for the sentinals.
+maybe the line number minus a simple count of sentinal lines?
+
+#@-node:ekr.20041007080346:Report from e
+#@+node:ekr.20041007080346.1:Report 2 from e
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=2792620
+
+not a trivial simple count after all.
+if the error is inside a node then would need to 
+start count from the previous +node sentinal.
+I didn't attempt to fix that,
+
+lets see if the line number is always right first.
+
+item = data[-2] or data[-1]
+
+isn't fixing all cases.
+
+this works better:
+
+item = data[-1]
+if not item[-1] is None:
+    item = data[-2]
+#@-node:ekr.20041007080346.1:Report 2 from e
 #@+node:ekr.20041004094706.1:Traceback
 Unexpected end of file. Expecting @-leosentinel
 AttributeError: 'NoneType' object has no attribute 'setOrphan'
@@ -180,7 +421,7 @@ except (TypeError,ValueError): n = None
 #@-node:EKR.20040612223431:<< compute n from the line >>
 #@-node:ekr.20040731211839:<< look for lines containing a specific message >>
 #@-node:ekr.20031218072017.3112:es_exception
-#@-node:ekr.20041004094706:Better error reporting in executeScript
+#@-node:ekr.20041004094706:Better error reporting in c.executeScript
 #@+node:ekr.20041004193600:Add safeguards on @button and @script
 #@+node:ekr.20041004193600.1:Paul's first posting
 @killcolor
@@ -253,7 +494,7 @@ that someone found a collision recently).
 #@-node:ekr.20041004193600:Add safeguards on @button and @script
 #@+node:ekr.20041003174108.1:Do unit tests based on new atFile code
 #@-node:ekr.20041003174108.1:Do unit tests based on new atFile code
-#@-node:ekr.20041006110656:First 3
+#@-node:ekr.20041006110656:First 5
 #@+node:ekr.20041001182352.1:Urgent 3
 #@+node:EKR.20040602153716:(Finish drawUserIcons)
 #@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
@@ -4649,6 +4890,17 @@ default section name, which obviously can be changed.
 #@-node:ekr.20040329094003:Apply patch command
 #@-node:ekr.20040329182535.5:1 day projects
 #@+node:ekr.20040329182535.3:2 day projects
+#@+node:ekr.20041007081134:Convert Leo to Tix
+http://sourceforge.net/forum/message.php?msg_id=2792402
+By: nobody
+
+- Pmw plays ok with Tix.
+
+- It seems that Tix and Tk can play ok together but the first Toplevel must be
+derived from Tix. Something must happen during that initial creation that sets
+things up. If Tkinter.Tk() is done first, it appears all bets are off.
+#@nonl
+#@-node:ekr.20041007081134:Convert Leo to Tix
 #@+node:ekr.20031218072017.733:Execute scripts like IDE's do
 @nocolor
 
@@ -5667,6 +5919,9 @@ def createBindings (self,frame):
     
     # Event handlers...
     t.bind("<Button-1>", frame.OnBodyClick)
+    if sys.platform == "win32":
+        # Support Linux middle-button paste easter egg.
+        t.bind("<Button-2>", frame.OnPaste)
     t.bind("<Button-3>", frame.OnBodyRClick)
     t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
     t.bind("<Key>", frame.body.onBodyKey)
@@ -5698,11 +5953,11 @@ def OnCut (self,event=None):
 
     frame = self ; c = frame.c ; v = c.currentVnode()
     
-    # This is probably being subverted by Tk.
-    if g.app.gui.win32clipboard:
-        data = frame.body.getSelectedText()
-        if data:
-            g.app.gui.replaceClipboardWith(data)
+    if 0: # g.app.gui.win32clipboard is always None.
+        if g.app.gui.win32clipboard:
+            data = frame.body.getSelectedText()
+            if data:
+                g.app.gui.replaceClipboardWith(data)
 
     # Activate the body key handler by hand.
     frame.body.forceFullRecolor()
@@ -5720,17 +5975,17 @@ def OnCutFromMenu (self):
 
 
 
-
 #@-node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
 #@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
 def OnCopy (self,event=None):
     
     frame = self
 
-    if g.app.gui.win32clipboard:
-        data = frame.body.getSelectedText()
-        if data:
-            g.app.gui.replaceClipboardWith(data)
+    if 0: # g.app.gui.win32clipboard is always None.
+        if g.app.gui.win32clipboard:
+            data = frame.body.getSelectedText()
+            if data:
+                g.app.gui.replaceClipboardWith(data)
         
     # Copy never changes dirty bits or syntax coloring.
     
@@ -5739,16 +5994,22 @@ def OnCopyFromMenu (self):
     frame = self
     w = frame.getFocus()
     w.event_generate(g.virtual_event_name("Copy"))
-
 #@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
 #@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 def OnPaste (self,event=None):
     
     frame = self ; c = frame.c ; v = c.currentVnode()
-
-    # Activate the body key handler by hand.
-    frame.body.forceFullRecolor()
-    frame.body.onBodyWillChange(v,"Paste")
+    
+    if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
+        bodyCtrl = frame.body.bodyCtrl
+        s = bodyCtrl.selection_get( selection='CLIPBOARD' )
+        bodyCtrl.insert('insert', s)
+        bodyCtrl.event_generate('<Key>')
+        bodyCtrl.update_idletasks()
+    else:
+        # Activate the body key handler by hand.
+        frame.body.forceFullRecolor()
+        frame.body.onBodyWillChange(v,"Paste")
     
 def OnPasteFromMenu (self):
     
@@ -5759,12 +6020,19 @@ def OnPasteFromMenu (self):
     
     if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
         frame.tree.onHeadChanged(v)
+#@nonl
 #@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
-#@+node:ekr.20031218072017.844:Clipboard (tkGui)
+#@+node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
+@
+
+The following are called only when g.app.gui.win32clipboard is not None, and
+presently that never happens.
+#@nonl
 #@+node:ekr.20031218072017.845:replaceClipboardWith
 def replaceClipboardWith (self,s):
-    
+
+    # g.app.gui.win32clipboard is always None.
     wcb = g.app.gui.win32clipboard
 
     if wcb:
@@ -5783,6 +6051,7 @@ def replaceClipboardWith (self,s):
 #@+node:ekr.20031218072017.846:getTextFromClipboard
 def getTextFromClipboard (self):
     
+    # g.app.gui.win32clipboard is always None.
     wcb = g.app.gui.win32clipboard
     
     if wcb:
@@ -5800,11 +6069,13 @@ def getTextFromClipboard (self):
             return None
     else:
         try:
-            return self.root.selection_get(selection="CLIPBOARD")
+            s = self.root.selection_get(selection="CLIPBOARD")
+            return s
         except:
             return None
+#@nonl
 #@-node:ekr.20031218072017.846:getTextFromClipboard
-#@-node:ekr.20031218072017.844:Clipboard (tkGui)
+#@-node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
 #@-node:ekr.20031218072017.835:(Use pywin extensions to improve cut/paste between apps)
 #@+node:ekr.20031218072017.753:Emacs comint-mode:  The improved Execute Script command does most of this
 @nocolor

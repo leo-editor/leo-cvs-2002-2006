@@ -1065,11 +1065,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         frame = self ; c = frame.c ; v = c.currentVnode()
         
-        # This is probably being subverted by Tk.
-        if g.app.gui.win32clipboard:
-            data = frame.body.getSelectedText()
-            if data:
-                g.app.gui.replaceClipboardWith(data)
+        if 0: # g.app.gui.win32clipboard is always None.
+            if g.app.gui.win32clipboard:
+                data = frame.body.getSelectedText()
+                if data:
+                    g.app.gui.replaceClipboardWith(data)
     
         # Activate the body key handler by hand.
         frame.body.forceFullRecolor()
@@ -1087,17 +1087,17 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
     
     
-    
     #@-node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
     #@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
     def OnCopy (self,event=None):
         
         frame = self
     
-        if g.app.gui.win32clipboard:
-            data = frame.body.getSelectedText()
-            if data:
-                g.app.gui.replaceClipboardWith(data)
+        if 0: # g.app.gui.win32clipboard is always None.
+            if g.app.gui.win32clipboard:
+                data = frame.body.getSelectedText()
+                if data:
+                    g.app.gui.replaceClipboardWith(data)
             
         # Copy never changes dirty bits or syntax coloring.
         
@@ -1106,16 +1106,22 @@ class leoTkinterFrame (leoFrame.leoFrame):
         frame = self
         w = frame.getFocus()
         w.event_generate(g.virtual_event_name("Copy"))
-    
     #@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
     #@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
     def OnPaste (self,event=None):
         
         frame = self ; c = frame.c ; v = c.currentVnode()
-    
-        # Activate the body key handler by hand.
-        frame.body.forceFullRecolor()
-        frame.body.onBodyWillChange(v,"Paste")
+        
+        if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
+            bodyCtrl = frame.body.bodyCtrl
+            s = bodyCtrl.selection_get( selection='CLIPBOARD' )
+            bodyCtrl.insert('insert', s)
+            bodyCtrl.event_generate('<Key>')
+            bodyCtrl.update_idletasks()
+        else:
+            # Activate the body key handler by hand.
+            frame.body.forceFullRecolor()
+            frame.body.onBodyWillChange(v,"Paste")
         
     def OnPasteFromMenu (self):
         
@@ -1126,6 +1132,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
             frame.tree.onHeadChanged(v)
+    #@nonl
     #@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
     #@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
     #@+node:ekr.20031218072017.3982:endEditLabelCommand
@@ -1417,6 +1424,9 @@ class leoTkinterBody (leoFrame.leoBody):
         
         # Event handlers...
         t.bind("<Button-1>", frame.OnBodyClick)
+        if sys.platform == "win32":
+            # Support Linux middle-button paste easter egg.
+            t.bind("<Button-2>", frame.OnPaste)
         t.bind("<Button-3>", frame.OnBodyRClick)
         t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
         t.bind("<Key>", frame.body.onBodyKey)
