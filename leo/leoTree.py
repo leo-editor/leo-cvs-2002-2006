@@ -1370,7 +1370,7 @@ class leoTree:
 		next = v.nodeAfterTree()
 		v2 = v
 		while (not isAtFile or not isAtRoot) and v2 != None and v2 != next:
-			if v2.isAtFileNode():
+			if v2.isAtFileNode() or v.isAtRawFileNode() or v.isAtSilentFileNode() or v.isAtNoSentinelsFileNode():
 				isAtFile = true
 			isRoot, junk = is_special(v2.bodyString(),0,"@root")
 			if isRoot:

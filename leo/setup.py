@@ -40,7 +40,7 @@ modules.sort()
 #@+node:1::<< setup info for setup.py >> (version number)
 #@+body
 setup( name="leo",
-	version="3.8",
+	version="3.9",
 	author="Edward K. Ream",
 	author_email="edream@tds.net",
 	url="http://personalpages.tds.net/~edream/front.html",

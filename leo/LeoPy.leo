@@ -1169,7 +1169,7 @@
 <v t="T650" a="C"><vh>Bug report</vh></v>
 </v>
 </v>
-<v a="E"><vh>Later versions</vh>
+<v><vh>Later versions</vh>
 <v><vh>3.10</vh>
 <v><vh>Do first (for best testing)</vh>
 <v t="T651"><vh>Invalid directives should generate error</vh></v>
@@ -14463,7 +14463,7 @@ def finishCreate (self):
 	# Doing so would add unwanted leading tabs.
 	ver = "$Revision$" # CVS will update this.
 	build = ver[10:-1] # Strip off "$Reversion" and "$"
-	version = "leo.py 3.8, Build " + build + ", October 29, 2002\n\n"
+	version = "leo.py 3.9, Build " + build + ", November 23, 2002\n\n"
 	copyright = (
 		"Copyright 1999-2002 by Edward K. Ream\n" +
 		"All Rights Reserved\n" +
@@ -16681,7 +16681,7 @@ enableMenu(menu,"Contract Parent",c.canContractParent())</t>
 next = v.nodeAfterTree()
 v2 = v
 while (not isAtFile or not isAtRoot) and v2 != None and v2 != next:
-	if v2.isAtFileNode():
+	if v2.isAtFileNode() or v.isAtRawFileNode() or v.isAtSilentFileNode() or v.isAtNoSentinelsFileNode():
 		isAtFile = true
 	isRoot, junk = is_special(v2.bodyString(),0,"@root")
 	if isRoot:
@@ -28637,7 +28637,7 @@ EDWARD K. REAM (REAM) SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESSED OR IMPLIE
 
 Important note: You can install leo.py on Windows using the single-click installer called leosetup.exe.
 
-leo.py 3.8 requires Python 2.1 and tcl/tk 8.3 or above.
+leo.py 3.9 requires Python 2.1 and tcl/tk 8.3 or above.
 
 	Download Python from http://python.org/ 
 	Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
@@ -28651,11 +28651,7 @@ Leo is distributed as a single compressed folder.  Simply uncompress this folder
 	leo.go() # runs leo.py after reloading all modules.
 	leo.leoOpen(fileName) # runs leo.py, reloads all modules, and opens fileName.
 
-You may specify options using the configuration file called leoConfig.txt.  You should generate this file using leoConfig.leo.
-
-
-
-</t>
+You may specify options using the configuration file called leoConfig.txt.  You should generate this file using leoConfig.leo.</t>
 <t tx="T1821">Using shell scripts and batch files to make using Leo easier
 ------------------------------------------------------------
 
@@ -28731,7 +28727,7 @@ I also noticed that someone else built everything on OS X 10.2 (Jaguar), but the
 So, Leo works two different ways on OS X 10.2.</t>
 <t tx="T1824">Metadata-Version: 1.0
 Name: leo
-Version: 3.8
+Version: 3.9
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://personalpages.tds.net/~edream/front.html
 Author: Edward K. Ream
@@ -28745,9 +28741,49 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
         Leo features a multi-window outlining editor, Python colorizing,
         powerful outline commands and many other things, including 
         Unlimited Undo/Redo and an integrated Python shell(IDLE) window.
+        Leo will place its own icon in Leo windows provided that you have
+        installed Fredrik Lundh's PIL and tkIcon packages:
+        Download PIL from http://www.pythonware.com/downloads/index.htm#pil
+        Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
 <t tx="T1825">Important note: See INSTALL.TXT for installation instructions.
+
+leo.py 3.9                               Nov 23, 2002
+
+This is one of the most interesting versions of Leo ever released:
+
+* Major performance improvements:
+  - Incremental syntax coloring speeds response when typing.
+  - Incremental undo drastically reduces memory used.
+
+* Major improvements in customizing Leo:
+  - Leo looks in the file customizeLeo.py for user-specific customizations.
+  - Leo calls "hook routines" in customizeLeo.py for all commands and events.
+    These hook routines can modify or replace any command or event.
+  - New convenience routines simplify creating and modifying menus.
+  - Easy translation of menus to other languages using customizeLeo.py.
+
+* Better integration with other tools:
+  - The Open With command allows you to communicate back and forth to other editors.
+  - The Go To Line Number command converts lines numbers in derived files
+    to locations in the outline.
+  - Double-clicking the icon of a @url node launches any url in your web browser.
+  - The Execute Script command executes Python code in any body pane.
+    This is much more convenient than opening Leo's Idle window.
+  - Much better support for cweb. At last, Leo has a power user of cweb.
+    By default, @space, @* and @** sections are colored as latex text.
+	Leo properly generates @q..@&gt; sentinels.
+  - @nosentinelfile is like @file except Leo writes no sentinel lines.
+
+* Other improvements:
+  - Optional Emacs-style auto-indent.
+  - Reformat Paragraph command.
+  - Leo will optionally create nonexistent directories specified in
+    @file, @root or @path, including all nonexistent parent directories.
+  - Leo will place its own icon in Leo windows provided that you have
+    installed Fredrik Lundh's PIL and tkIcon packages.
+  - The usual assortment of bug fixes.
 
 leo.py 3.8                                 October 29, 2002
 
@@ -30700,7 +30736,7 @@ modules.sort()
 # print "modules:", `modules`
 &lt;&lt; setup info for setup.py &gt;&gt;</t>
 <t tx="T1915">setup( name="leo",
-	version="3.8",
+	version="3.9",
 	author="Edward K. Ream",
 	author_email="edream@tds.net",
 	url="http://personalpages.tds.net/~edream/front.html",
