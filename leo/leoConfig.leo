@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="6" left="172" height="26" width="84"/>
+	<global_window_position top="35" left="191" height="25" width="84"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0" tab_width="4" page_width="80" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
+<preferences allow_rich_text="0">
 </preferences>
-<find_panel_settings search_body="1" whole_word="1">
+<find_panel_settings>
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
-<v t="T2" a="E"><vh>@root leoConfig.txt</vh>
+<v t="T2" a="EV"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -93,17 +93,13 @@ read_only = 0
 #	1: Leo writes nothing to this file.
 #	Syntax errors in this file set this file to read-only.
 
-xml_version_string = ISO-8859-1
+xml_version_string = UTF-8
 #	The version used at the start of .leo files.
 #	Default is UTF-8.  Better is ISO-8859-1.
 #	Even better (but less common?) may be ISO-8859-15, the same as ISO-8859-1,
 #	except that it includes the newly defined Euro symbol. 
 
-#	Use UTF-8 to write leo.py 2.x files.
-
-save_clears_undo_buffer = 0
-#	1: Save command clears undo buffer.
-#	0: Undo buffer persists across saves.
+#	Use UTF-8 (case is significant) to write leo.py 2.x files.
 
 path_directive_creates_directories = 0
 #	1: @path directive attempts to create directory if it does not exist.
@@ -121,17 +117,7 @@ relative_path_base_directory = .
 #
 #	Relative paths are not allowed:
 #		Relative paths would be dangerous because their meaning
-#		would depend on the chaning value of the current working directory.
-
-write_clone_indices = 0
-#	1: Files derived from @file nodes contain clone indices.
-#	0: Files derived from @file nodes contain no clone indices.
-#	Please specify 0 if you are going to submit files to Leo's CVS site.
-
-use_relative_node_indices = 0
-#	1: Files derived from @file nodes use relative node indices.
-#	0: Files derived from @file nodes use absolute node indices.
-#	Please specify 1 if you are going to submit files to Leo's CVS site.
+#		would depend on the changing value of the current working directory.
 
 remove_sentinels_extension = .txt
 #	The string to be appended to file names resulting from the Remove Sentinels command.
@@ -144,7 +130,22 @@ remove_sentinels_extension = .txt
 #	Example 2:
 #		File name x.y
 #		remove_sentinels_extension = .txt
-#		Result: x.y.txt</t>
+#		Result: x.y.txt
+
+save_clears_undo_buffer = 0
+#	1: Save command clears undo buffer.
+#	0: Undo buffer persists across saves.
+
+use_relative_node_indices = 0
+#	At present this user option is non-functional.
+#	1: Files derived from @file nodes use relative node indices.
+#	0: Files derived from @file nodes use absolute node indices.
+#	Please specify 1 if you are going to submit files to Leo's CVS site.
+
+write_clone_indices = 0
+#	1: Files derived from @file nodes contain clone indices.
+#	0: Files derived from @file nodes contain no clone indices.
+#	Please specify 0 if you are going to submit files to Leo's CVS site.</t>
 <t tx="T5">@c
 
 # The list of files in the "Recent Files" menu at startup.
@@ -622,8 +623,8 @@ body_text_foreground_color =
 body_text_background_color =
 #	Foreground and background colors of body text.
 
-body_cursor_foreground_color = red
-body_cursor_background_color = green
+body_cursor_foreground_color =
+body_cursor_background_color =
 # 	Foreground and background colors for the cursor in body text.
 
 body_text_font_family = Courier
