@@ -2601,7 +2601,7 @@ class LeoFrame:
 		
 		# Don't use triple-quoted strings or continued strings here.
 		# Doing so would add unwanted leading tabs.
-		version = "leo.py 3.5, Build $Revision$, August 14, 2002\n\n"
+		version = "leo.py 3.5, September 3, 2002\n$Revision$\n\n"
 		copyright = (
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
