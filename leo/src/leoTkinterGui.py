@@ -177,9 +177,9 @@ class tkinterGui(leoGui.leoGui):
     #@-node:ekr.20031218072017.4055:runMainLoop
     #@-node:ekr.20031218072017.4048:app.gui.Tkinter birth & death
     #@+node:ekr.20031218072017.4056:app.gui.Tkinter dialogs
-    def runAboutLeoDialog(self,version,theCopyright,url,email):
+    def runAboutLeoDialog(self,c,version,theCopyright,url,email):
         """Create and run a Tkinter About Leo dialog."""
-        d = leoTkinterDialog.tkinterAboutLeo(version,theCopyright,url,email)
+        d = leoTkinterDialog.tkinterAboutLeo(c,version,theCopyright,url,email)
         return d.run(modal=False)
         
     def runAskLeoIDDialog(self):
@@ -187,26 +187,26 @@ class tkinterGui(leoGui.leoGui):
         d = leoTkinterDialog.tkinterAskLeoID()
         return d.run(modal=True)
     
-    def runAskOkDialog(self,title,message=None,text="Ok"):
+    def runAskOkDialog(self,c,title,message=None,text="Ok"):
         """Create and run a Tkinter an askOK dialog ."""
-        d = leoTkinterDialog.tkinterAskOk(title,message,text)
+        d = leoTkinterDialog.tkinterAskOk(c,title,message,text)
         return d.run(modal=True)
     
-    def runAskOkCancelNumberDialog(self,title,message):
+    def runAskOkCancelNumberDialog(self,c,title,message):
         """Create and run askOkCancelNumber dialog ."""
-        d = leoTkinterDialog.tkinterAskOkCancelNumber(title,message)
+        d = leoTkinterDialog.tkinterAskOkCancelNumber(c,title,message)
         return d.run(modal=True)
     
-    def runAskYesNoDialog(self,title,message=None):
+    def runAskYesNoDialog(self,c,title,message=None):
         """Create and run an askYesNo dialog."""
-        d = leoTkinterDialog.tkinterAskYesNo(title,message)
+        d = leoTkinterDialog.tkinterAskYesNo(c,title,message)
         return d.run(modal=True)
     
-    def runAskYesNoCancelDialog(self,title,
+    def runAskYesNoCancelDialog(self,c,title,
         message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
         """Create and run an askYesNoCancel dialog ."""
         d = leoTkinterDialog.tkinterAskYesNoCancel(
-            title,message,yesMessage,noMessage,defaultButton)
+            c,title,message,yesMessage,noMessage,defaultButton)
         return d.run(modal=True)
     #@nonl
     #@-node:ekr.20031218072017.4056:app.gui.Tkinter dialogs
@@ -429,6 +429,15 @@ class tkinterGui(leoGui.leoGui):
                     widget.focus_set()
     #@nonl
     #@-node:ekr.20031218072017.2373:set_focus (app.gui)
+    #@+node:ekr.20050210082320:widget_wants_focus (tk.gui)
+    def widget_wants_focus(self,c,widget,tag=''):
+    
+        """Indicate that a widget want to get focus."""
+        
+        if c:
+            c.frame.widgetWantsFocus(widget,True,tag=tag)
+    #@nonl
+    #@-node:ekr.20050210082320:widget_wants_focus (tk.gui)
     #@-node:ekr.20031218072017.4064:Focus
     #@+node:ekr.20031218072017.4066:Font
     #@+node:ekr.20031218072017.2187:tkGui.getFontFromParams

@@ -2002,7 +2002,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if g.os_path_exists(theFile):
             os.startfile(theFile)
         else:	
-            answer = g.app.gui.runAskYesNoDialog(
+            answer = g.app.gui.runAskYesNoDialog(c,
                 "Download Tutorial?",
                 "Download tutorial (sbooks.chm) from SourceForge?")
     
@@ -2060,7 +2060,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     # here that alters text improperly.
     #@-at
     #@nonl
-    #@+node:ekr.20050120092028:xWantsFocus
+    #@+node:ekr.20050120092028:xWantsFocus (tkFrame)
     #@+at 
     #@nonl
     # All these do the same thing, but separate names are good for tracing and
@@ -2083,8 +2083,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def treeWantsFocus(self,widget,later=True,tag=''):
         # g.trace(tag,repr(widget))
         self.set_focus(widget,later=later,tag=tag)
+        
+    def widgetWantsFocus(self,widget,later=True,tag=''):
+        # g.trace(tag,repr(widget))
+        self.set_focus(widget,later=later,tag=tag)
     #@nonl
-    #@-node:ekr.20050120092028:xWantsFocus
+    #@-node:ekr.20050120092028:xWantsFocus (tkFrame)
     #@+node:ekr.20050120092028.1:set_focus (tkFrame)
     #@+at
     # Very tricky code:
