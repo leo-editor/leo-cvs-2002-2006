@@ -2452,7 +2452,15 @@ class leoImportCommands:
 					"start:"+`start_delim`+","+
 					"end:"+`end_delim`)
 			s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
-			newFileName = os.path.join(path,fileName+".txt") # 8/4/02: use txt, not tmp.
+			ext = app().config.remove_sentinels_extension
+			if ext == None or len(ext) == 0:
+				ext = ".txt"
+			if ext[0] == '.':
+				newFileName = os.path.join(path,fileName+ext)
+			else:
+				head,ext2 = os.path.splitext(fileName) 
+				newFileName = os.path.join(path,head+ext+ext2)
+			# newFileName = os.path.join(path,fileName+".txt") # 8/4/02: use txt, not tmp.
 			
 			#@<< Write s into newFileName >>
 			#@+node:3::<< Write s into newFileName >>

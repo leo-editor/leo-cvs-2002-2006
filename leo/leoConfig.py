@@ -16,6 +16,7 @@ class config:
 		defaultConfigDict = {
 			"path_directive_creates_directories" : 0,
 			"read_only" : 1,
+			"remove_sentinels_extension" : None, # New style: this module won't know defaults.
 			"save_clears_undo_buffer" : 0,
 			"xml_version_string" : "UTF-8" } # By default, we write leo.py 2.x files.
 	
@@ -152,6 +153,7 @@ class config:
 		boolConfigNames = (
 			"path_directive_creates_directories",
 			"read_only",
+			"remove_sentinels_extension",
 			"save_clears_undo_buffer")
 		stringConfigNames = ( "xml_version_string", )
 	
@@ -343,6 +345,7 @@ class config:
 		self.relative_path_base_directory = "!"
 		self.save_clears_undo_buffer = false
 		self.use_relative_node_indices = 1
+		self.remove_sentinels_extension = None
 		self.write_clone_indices = 0
 		self.xml_version_string = None
 		self.compareDict = {}
@@ -590,6 +593,10 @@ class config:
 			try: self.use_relative_node_indices = config.getboolean(
 				self.configSection,"use_relative_node_indices")
 			except: self.use_relative_node_indices = 1
+			
+			try: self.remove_sentinels_extension = config.get(
+				self.configSection,"remove_sentinels_extension")
+			except: self.remove_sentinels_extension = None # New style: this module won't know defaults.
 			
 			try: self.write_clone_indices = config.getboolean(
 				self.configSection,"write_clone_indices")

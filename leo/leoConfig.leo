@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
@@ -132,7 +132,19 @@ use_relative_node_indices = 0
 #	1: Files derived from @file nodes use relative node indices.
 #	0: Files derived from @file nodes use absolute node indices.
 #	Please specify 1 if you are going to submit files to Leo's CVS site.
-</t>
+
+remove_sentinels_extension = .txt
+#	The string to be appended to file names resulting from the Remove Sentinels command.
+#	If the value starts with . the extension is appended to the original file name.
+#	Otherwise, the extension is appended before the file extension.
+#	Example 1:
+#		File name x.y
+#		remove_sentinels_extension = _ns
+#		Result: x_ns.y
+#	Example 2:
+#		File name x.y
+#		remove_sentinels_extension = .txt
+#		Result: x.y.txt</t>
 <t tx="T5">@c
 
 # The list of files in the "Recent Files" menu at startup.
