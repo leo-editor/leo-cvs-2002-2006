@@ -458,11 +458,11 @@ class baseCommands:
                             vtuple = arg[1:] 
                             vtuple.append(path)
                             command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
-                            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple)) 
+                            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple)) # Bug fix: 1/21/05
                         else:
                             filename = g.os_path_basename(arg)
                             command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
-                            apply(os.spawnl,(os.P_NOWAIT,arg,(filename,path)))
+                            apply(os.spawnv,(os.P_NOWAIT,arg,(filename,path)))
                     else:
                         command="bad command:"+str(openType)
                     # This seems a bit redundant.
