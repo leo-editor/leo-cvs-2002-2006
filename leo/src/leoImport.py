@@ -1,6 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3206:@thin leoImport.py
 #@@language python
+#@@tabwidth -4
 
 import leoGlobals as g
 import string
@@ -38,7 +39,6 @@ class baseLeoImportCommands:
         c = self.c ; current = c.currentVnode()
         junk,self.fileName = g.os_path_split(fileName)
         self.methodName,ext = g.os_path_splitext(self.fileName)
-        g.trace(fileName)
         self.fileType = ext
         self.setEncoding()
         # g.trace(self.fileName,self.fileType)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4255" clone_windows="0"/>
-<globals body_outline_ratio="0.292849035187">
+<leo_header file_format="2" tnodes="0" max_tnode_index="4256" clone_windows="0"/>
+<globals body_outline_ratio="0.414301929625">
 	<global_window_position top="16" left="146" height="881" width="1011"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="ekr.20040303080938" a="TV"><vh>Diary</vh>
+<v t="ekr.20040303080938"><vh>Diary</vh>
 <v t="ekr.20040315210314"><vh>March 2004</vh>
 <v t="ekr.20040315210314.1"><vh>3/15: Created stubs for Find Commands tests</vh></v>
 <v t="ekr.20040315210314.2"><vh>3/15: Convert this file to 4.2 format</vh></v>
@@ -641,11 +641,10 @@
 <v t="EKR.20040610132739"><vh>copied</vh></v>
 </v>
 </v>
-<v t="EKR.20040612095237" a="E"><vh>Prototypes of new commands</vh>
-<v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
-<v t="ekr.20040402043516.1"><vh>readLinesClass</vh></v>
+<v t="EKR.20040612095237" a="TV"><vh>Prototypes of new commands</vh>
+<v t="ekr.20040402043516" a="E"><vh>A pretty printer for Leo</vh>
 <v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
-<v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
+<v t="ekr.20040402064301" a="E"><vh>class prettyPrinter</vh>
 <v t="ekr.20040402064301.1"><vh>__init__</vh></v>
 <v t="ekr.20040402093822"><vh>get</vh></v>
 <v t="ekr.20040402072335"><vh>put</vh></v>
@@ -689,10 +688,7 @@
 </v>
 <v t="EKR.20040610194209.1"><vh>TabNanny data</vh></v>
 </v>
-<v t="EKR.20040611083703"><vh>Using a generator instead of readLinesClass</vh>
-<v t="EKR.20040611094028"><vh>readLinesGenerator</vh></v>
-<v t="EKR.20040610195651"><vh>readLinesClass</vh></v>
-</v>
+<v t="EKR.20040611083703" a="E"><vh>Using a generator instead of readLinesClass</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2287,15 +2283,8 @@ checkString(s,headline)</t>
     
     import tokenize
 
-    def readLineGenerator(s):
-        for line in s.splitlines(True):
-            g.trace(line,newline=False)
-            yield line
-        yield ''
-
-    readline = readLineGenerator(s).next
-
     try:
+        readline = g.readLinesGenerator(s).next
         tabnanny.process_tokens(tokenize.generate_tokens(readline))
 
     except tokenize.TokenError, msg:
@@ -2657,22 +2646,6 @@ def not_less_witness(self, other):
                 msg = "indent not equal e.g. " + format_witnesses(witness)
                 raise NannyNag(start[0], msg, line)
 </t>
-<t tx="EKR.20040610195651">class readLinesClass:
-    
-    """A class whose next method provides a readline method for Python's tokenize module."""
-
-    def __init__ (self,s):
-        self.lines = g.splitLines(s)
-        self.i = 0
-
-    def next(self):
-        if self.i &lt; len(self.lines):
-            line = self.lines[self.i]
-            self.i += 1
-        else:
-            line = ''
-        # g.trace(self.i,line)
-        return line</t>
 <t tx="EKR.20040610201236">@
 
 To do:
@@ -2696,14 +2669,14 @@ import leoGlobals as g
 lines = "a\nb\nc\nd"
 
 if 1: # Both work
-    readline = readLinesGenerator(lines).next
+    readline = g.readLinesGenerator(lines).next
 else:
-    readline = readLinesClass(lines).next
+    readline = g.readLinesClass(lines).next
 
 print '-' * 20
 
 if 1: # Both work
-    for s in readLinesGenerator(lines):
+    for s in g.readLinesGenerator(lines):
         print s,
 else:
     while 1:
@@ -2712,11 +2685,6 @@ else:
         else: break
     
 print ; print '-' * 20</t>
-<t tx="EKR.20040611094028">def readLinesGenerator(s):
-
-    for line in g.splitLines(s):
-        yield line
-    yield ''</t>
 <t tx="EKR.20040612095237">@language python
 @tabwidth -4</t>
 <t tx="ekr.20040126105605"></t>
@@ -4573,7 +4541,8 @@ import tokenize,token
 @others
 
 c = g.top()
-print '-'*90
+
+print '-'*50
 
 if 1:
     # Just print the present position.
@@ -4581,23 +4550,10 @@ if 1:
 else:
     # Print all top-level nodes.
     for p in c.rootPosition().self_and_siblings_iter():
-        prettyPrintNode(p)</t>
-<t tx="ekr.20040402043516.1">class readLinesClass:
-    
-    """A class whose next method provides a readline method for Python's tokenize module."""
-
-    def __init__ (self,s):
-        self.lines = g.splitLines(s)
-        self.i = 0
-
-    def next(self):
-        if self.i &lt; len(self.lines):
-            line = self.lines[self.i]
-            self.i += 1
-        else:
-            line = ''
-        # g.trace(self.i,line)
-        return line</t>
+        prettyPrintNode(p)
+        
+print
+print '-'*50</t>
 <t tx="ekr.20040402064301">class prettyPrinter:
     
     @others</t>
@@ -4707,10 +4663,10 @@ else:
     print '-'*10, p.headString()
 
     pp = prettyPrinter(p)
-    # Create readLinesClass and return its next method.
-    leoReadlines = readLinesClass(s).next
     
-    for token5tuple in tokenize.generate_tokens(leoReadlines):
+    readlines = g.readLinesGenerator(s).next
+
+    for token5tuple in tokenize.generate_tokens(readlines):
         pp.putToken(token5tuple)
         
     lines = pp.get()

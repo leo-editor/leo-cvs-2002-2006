@@ -1,6 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3320:@thin leoNodes.py
 #@@language python
+#@@tabwidth -4
 
 #@<< About the vnode and tnode classes >>
 #@+node:ekr.20031218072017.2412:<< About the vnode and tnode classes >>
@@ -1315,6 +1316,7 @@ class baseVnode (object):
 class vnode (baseVnode):
     """A class that implements vnodes."""
     pass
+#@nonl
 #@-node:ekr.20031218072017.3341:class vnode
 #@+node:ekr.20031218072017.1991:class nodeIndices
 # Indices are Python dicts containing 'id','loc','time' and 'n' keys.
@@ -2681,6 +2683,8 @@ class position (object):
         Returns the newly created position."""
         
         p = self ; c = p.c
+        
+        # g.trace(p,back)
     
         p2 = back.copy()
         p2.v = vnode(c,back.v.t)

@@ -1,6 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.2810:@thin leoCommands.py
 #@@language python
+#@@tabwidth -4
 
 from __future__ import generators # To make the code work in Python 2.2.
 

@@ -752,6 +752,7 @@ def printFindList( findList, bodyFlag = 1 ):
 #@+node:EKR.20040517142700:c2py  Convert C code to Python syntax
 #@@first
 #@@language python
+#@@tabwidth -4
 
 import leoGlobals as g
 import string

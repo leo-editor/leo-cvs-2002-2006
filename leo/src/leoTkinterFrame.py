@@ -6,6 +6,7 @@
 # To do: Use config params for window height, width and bar color, relief and width.
 
 #@@language python
+#@@tabwidth -4
 
 import leoGlobals as g
 

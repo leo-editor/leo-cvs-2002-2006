@@ -1,6 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.4138:@thin leoTkinterTree.py
 #@@language python
+#@@tabwidth -4
 
 #@<< about the tree classes >>
 #@+node:ekr.20031218072017.4139:<< about the tree classes >>
@@ -1276,7 +1277,7 @@ class leoTkinterTree (leoFrame.leoTree):
             return self.icon_id_dict.get(id)
     #@nonl
     #@-node:ekr.20031218072017.2341:tree.findVnodeWithIconId
-    #@+node:EKR.20040608110312:Dragging
+    #@+node:EKR.20040608110312:Dragging (tk tree)
     #@+node:ekr.20031218072017.2342:tree.OnContinueDrag
     def OnContinueDrag(self,p,event):
     
@@ -1423,7 +1424,7 @@ class leoTkinterTree (leoFrame.leoTree):
         self.drag_p = None
     #@nonl
     #@-node:ekr.20031218072017.1777:tree.OnEndDrag
-    #@-node:EKR.20040608110312:Dragging
+    #@-node:EKR.20040608110312:Dragging (tk tree)
     #@+node:ekr.20031218072017.1332:headline key handlers (tree)
     #@+at 
     #@nonl

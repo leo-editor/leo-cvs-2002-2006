@@ -6,6 +6,7 @@
 """Global constants, variables and utility functions used throughout Leo."""
 
 #@@language python
+#@@tabwidth -4
 
 import leoGlobals as g # So code can use g below.
 
@@ -55,162 +56,6 @@ def createTopologyList (c=None,root=None,useHeadlines=False):
 #@nonl
 #@-node:ekr.20031218072017.822:createTopologyList
 #@-node:ekr.20031218072017.3095:Checking Leo Files...
-#@+node:ekr.20031218072017.3097:CheckVersion (Dave Hein)
-#@+at
-# g.CheckVersion() is a generic version checker.  Assumes a
-# version string of up to four parts, or tokens, with
-# leftmost token being most significant and each token
-# becoming less signficant in sequence to the right.
-# 
-# RETURN VALUE
-# 
-# 1 if comparison is True
-# 0 if comparison is False
-# 
-# PARAMETERS
-# 
-# version: the version string to be tested
-# againstVersion: the reference version string to be
-#               compared against
-# condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
-# stringCompare: whether to test a token using only the
-#              leading integer of the token, or using the
-#              entire token string.  For example, a value
-#              of "0.0.1.0" means that we use the integer
-#              value of the first, second, and fourth
-#              tokens, but we use a string compare for the
-#              third version token.
-# delimiter: the character that separates the tokens in the
-#          version strings.
-# 
-# The comparison uses the precision of the version string
-# with the least number of tokens.  For example a test of
-# "8.4" against "8.3.3" would just compare the first two
-# tokens.
-# 
-# The version strings are limited to a maximum of 4 tokens.
-#@-at
-#@@c
-
-def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
-    import sre  # Unicode-aware regular expressions
-    #
-    # tokenize the stringCompare flags
-    compareFlag = string.split( stringCompare, '.' )
-    #
-    # tokenize the version strings
-    testVersion = string.split( version, delimiter )
-    testAgainst = string.split( againstVersion, delimiter )
-    #
-    # find the 'precision' of the comparison
-    tokenCount = 4
-    if tokenCount > len(testAgainst):
-        tokenCount = len(testAgainst)
-    if tokenCount > len(testVersion):
-        tokenCount = len(testVersion)
-    #
-    # Apply the stringCompare flags
-    justInteger = sre.compile("^[0-9]+")
-    for i in range(tokenCount):
-        if "0" == compareFlag[i]:
-            m = justInteger.match( testVersion[i] )
-            testVersion[i] = m.group()
-            m = justInteger.match( testAgainst[i] )
-            testAgainst[i] = m.group()
-        elif "1" != compareFlag[i]:
-            errMsg = "stringCompare argument must be of " +\
-                 "the form \"x.x.x.x\" where each " +\
-                 "'x' is either '0' or '1'."
-            raise EnvironmentError,errMsg
-    #
-    # Compare the versions
-    if condition == ">=":
-        for i in range(tokenCount):
-            if testVersion[i] < testAgainst[i]:
-                return 0
-            if testVersion[i] > testAgainst[i]:
-                return 1 # it was greater than
-        return 1 # it was equal
-    if condition == ">":
-        for i in range(tokenCount):
-            if testVersion[i] < testAgainst[i]:
-                return 0
-            if testVersion[i] > testAgainst[i]:
-                return 1 # it was greater than
-        return 0 # it was equal
-    if condition == "==":
-        for i in range(tokenCount):
-            if testVersion[i] != testAgainst[i]:
-                return 0 # any token was not equal
-        return 1 # every token was equal
-    if condition == "!=":
-        for i in range(tokenCount):
-            if testVersion[i] != testAgainst[i]:
-                return 1 # any token was not equal
-        return 0 # every token was equal
-    if condition == "<":
-        for i in range(tokenCount):
-            if testVersion[i] >= testAgainst[i]:
-                return 0
-            if testVersion[i] < testAgainst[i]:
-                return 1 # it was less than
-        return 0 # it was equal
-    if condition == "<=":
-        for i in range(tokenCount):
-            if testVersion[i] > testAgainst[i]:
-                return 0
-            if testVersion[i] < testAgainst[i]:
-                return 1 # it was less than
-        return 1 # it was equal
-    #
-    # didn't find a condition that we expected.
-    raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
-#@-node:ekr.20031218072017.3097:CheckVersion (Dave Hein)
-#@+node:ekr.20031218072017.3098:class Bunch
-# From The Python Cookbook.
-
-import operator
-
-class Bunch:
-    
-    """A class that represents a colection of things.
-    
-    Especially useful for representing a collection of related variables."""
-    
-    def __init__(self, **keywords):
-        self.__dict__.update (keywords)
-
-    def ivars(self):
-        return self.__dict__.keys()
-        
-    def __setitem__ (self,key,value):
-        return operator.setitem(self.__dict__,key,value)
-        
-    def __getitem__ (self,key):
-        return operator.getitem(self.__dict__,key)
-        
-        
-        
-#@-node:ekr.20031218072017.3098:class Bunch
-#@+node:ekr.20031219074948.1:class nullObject
-# From the Python cookbook, recipe 5.23
-
-class nullObject:
-    
-    """An object that does nothing, and does it very well."""
-    
-    def __init__   (self,*args,**keys): pass
-    def __call__   (self,*args,**keys): return self
-    
-    def __repr__   (self): return "nullObject"
-    
-    def __nonzero__ (self): return 0
-    
-    def __delattr__(self,attr):     return self
-    def __getattr__(self,attr):     return self
-    def __setattr__(self,attr,val): return self
-#@nonl
-#@-node:ekr.20031219074948.1:class nullObject
 #@+node:ekr.20031218072017.3099:Commands & Directives
 #@+node:ekr.20031218072017.1380:Directive utils...
 #@+node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
@@ -766,20 +611,6 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 #@nonl
 #@-node:ekr.20031218072017.3100:wrap_lines
 #@-node:ekr.20031218072017.3099:Commands & Directives
-#@+node:ekr.20031218072017.3103:computeWindowTitle
-def computeWindowTitle (fileName):
-
-    if fileName == None:
-        return "untitled"
-    else:
-        path,fn = g.os_path_split(fileName)
-        if path:
-            title = fn + " in " + path
-        else:
-            title = fn
-        return title
-#@nonl
-#@-node:ekr.20031218072017.3103:computeWindowTitle
 #@+node:ekr.20031218072017.3104:Debugging, Dumping, Timing, Tracing & Sherlock
 #@+node:ekr.20031218072017.3105:alert
 def alert(message):
@@ -789,17 +620,6 @@ def alert(message):
     import tkMessageBox
     tkMessageBox.showwarning("Alert", message)
 #@-node:ekr.20031218072017.3105:alert
-#@+node:ekr.20031218072017.3106:angleBrackets & virtual_event_name
-# Returns < < s > >
-
-def angleBrackets(s):
-
-    return ( "<<" + s +
-        ">>") # must be on a separate line.
-
-virtual_event_name = angleBrackets
-#@nonl
-#@-node:ekr.20031218072017.3106:angleBrackets & virtual_event_name
 #@+node:ekr.20031218072017.3107:callerName
 def callerName (n=1):
 
@@ -955,198 +775,6 @@ def file_date (file,format=None):
             pass # Time module is platform dependent.
     return ""
 #@-node:ekr.20031218072017.1317:file/module/plugin_date
-#@+node:ekr.20031218072017.3116:Files & Directories...
-#@+node:ekr.20031218072017.3117:create_temp_name
-# Returns a temporary file name.
-
-def create_temp_name ():
-
-    import tempfile
-    temp = tempfile.mktemp()
-    # g.trace(temp)
-    return temp
-#@nonl
-#@-node:ekr.20031218072017.3117:create_temp_name
-#@+node:ekr.20031218072017.3118:ensure_extension
-def ensure_extension (name, ext):
-
-    file, old_ext = g.os_path_splitext(name)
-    if len(name) == 0:
-        return name # don't add to an empty name.
-    elif old_ext and old_ext == ext:
-        return name
-    else:
-        return file + ext
-#@nonl
-#@-node:ekr.20031218072017.3118:ensure_extension
-#@+node:ekr.20031218072017.1264:getBaseDirectory
-# Handles the conventions applying to the "relative_path_base_directory" configuration option.
-
-def getBaseDirectory():
-
-    base = app.config.relative_path_base_directory
-
-    if base and base == "!":
-        base = app.loadDir
-    elif base and base == ".":
-        base = g.top().openDirectory
-
-    # g.trace(base)
-    if base and len(base) > 0 and g.os_path_isabs(base):
-        return base # base need not exist yet.
-    else:
-        return "" # No relative base given.
-#@-node:ekr.20031218072017.1264:getBaseDirectory
-#@+node:ekr.20031218072017.3119:makeAllNonExistentDirectories
-# This is a generalization of os.makedir.
-
-def makeAllNonExistentDirectories (dir):
-
-    """Attempt to make all non-existent directories"""
-
-    if not app.config.create_nonexistent_directories:
-        return None
-
-    dir1 = dir = g.os_path_normpath(dir)
-
-    # Split dir into all its component parts.
-    paths = []
-    while len(dir) > 0:
-        head,tail=g.os_path_split(dir)
-        if len(tail) == 0:
-            paths.append(head)
-            break
-        else:
-            paths.append(tail)
-            dir = head
-    path = ""
-    paths.reverse()
-    for s in paths:
-        path = g.os_path_join(path,s)
-        if not g.os_path_exists(path):
-            try:
-                os.mkdir(path)
-                g.es("created directory: "+path)
-            except:
-                g.es("exception creating directory: "+path)
-                g.es_exception()
-                return None
-    return dir1 # All have been created.
-#@nonl
-#@-node:ekr.20031218072017.3119:makeAllNonExistentDirectories
-#@+node:ekr.20031218072017.3120:readlineForceUnixNewline (Steven P. Schaefer)
-#@+at 
-#@nonl
-# Stephen P. Schaefer 9/7/2002
-# 
-# The Unix readline() routine delivers "\r\n" line end strings verbatim, while 
-# the windows versions force the string to use the Unix convention of using 
-# only "\n".  This routine causes the Unix readline to do the same.
-#@-at
-#@@c
-
-def readlineForceUnixNewline(f):
-
-    s = f.readline()
-    if len(s) >= 2 and s[-2] == "\r" and s[-1] == "\n":
-        s = s[0:-2] + "\n"
-    return s
-#@-node:ekr.20031218072017.3120:readlineForceUnixNewline (Steven P. Schaefer)
-#@+node:ekr.20031218072017.3124:sanitize_filename
-def sanitize_filename(s):
-
-    """Prepares string s to be a valid file name:
-    
-    - substitute '_' whitespace and characters used special path characters.
-    - eliminate all other non-alphabetic characters.
-    - strip leading and trailing whitespace.
-    - return at most 128 characters."""
-
-    result = ""
-    for ch in s.strip():
-        if ch in string.ascii_letters:
-            result += ch
-        elif ch in string.whitespace: # Translate whitespace.
-            result += '_'
-        elif ch in ('.','\\','/',':'): # Translate special path characters.
-            result += '_'
-    while 1:
-        n = len(result)
-        result = result.replace('__','_')
-        if len(result) == n:
-            break
-    result = result.strip()
-    return result [:128]
-#@nonl
-#@-node:ekr.20031218072017.3124:sanitize_filename
-#@+node:ekr.20031218072017.3125:shortFileName
-def shortFileName (fileName):
-    
-    return g.os_path_basename(fileName)
-#@nonl
-#@-node:ekr.20031218072017.3125:shortFileName
-#@+node:ekr.20031218072017.1241:update_file_if_changed
-def update_file_if_changed(file_name,temp_name):
-
-    """Compares two files.
-    
-    If they are different, we replace file_name with temp_name.
-    Otherwise, we just delete temp_name.
-    Both files should be closed."""
-
-    if g.os_path_exists(file_name):
-        import filecmp
-        if filecmp.cmp(temp_name, file_name):
-            try: # Just delete the temp file.
-                os.remove(temp_name)
-            except: pass
-            g.es("unchanged: " + file_name)
-        else:
-            try:
-                # 10/6/02: retain the access mode of the previous file,
-                # removing any setuid, setgid, and sticky bits.
-                mode = (os.stat(file_name))[0] & 0777
-            except:
-                mode = None
-            try: # Replace file with temp file.
-                os.remove(file_name)
-                g.utils_rename(temp_name, file_name)
-                if mode: # 10/3/02: retain the access mode of the previous file.
-                    os.chmod(file_name,mode)
-                g.es("***updating: " + file_name)
-            except:
-                g.es("Rename failed: no file created!",color="red")
-                g.es(file_name," may be read-only or in use")
-                g.es_exception()
-    else:
-        try:
-            # os.rename(temp_name, file_name)
-            g.utils_rename(temp_name, file_name)
-            g.es("creating: " + file_name)
-        except:
-            g.es("rename failed: no file created!",color="red")
-            g.es(file_name," may be read-only or in use")
-            g.es_exception()
-#@-node:ekr.20031218072017.1241:update_file_if_changed
-#@+node:ekr.20031218072017.1263:utils_rename
-# os.rename may fail on some Unix flavors if src and dst are on different filesystems.
-
-def utils_rename(src,dst):
-
-    """Platform-independent rename."""
-    
-    head,tail=g.os_path_split(dst)
-    if head and len(head) > 0:
-        g.makeAllNonExistentDirectories(head)
-    
-    if sys.platform=="win32":
-        os.rename(src,dst)
-    else:
-        from distutils.file_util import move_file
-        move_file(src,dst)
-#@nonl
-#@-node:ekr.20031218072017.1263:utils_rename
-#@-node:ekr.20031218072017.3116:Files & Directories...
 #@+node:ekr.20031218072017.3121:redirecting stderr and stdout
 class redirectClass:
     #@    << redirectClass methods >>
@@ -1512,71 +1140,198 @@ def printDiffTime(message, start):
 #@nonl
 #@-node:ekr.20031218072017.3137:Timing
 #@-node:ekr.20031218072017.3104:Debugging, Dumping, Timing, Tracing & Sherlock
-#@+node:ekr.20040331083824.1:fileLikeObject
-class fileLikeObject:
-    
-    """Define a file-like object for redirecting i/o."""
-    
-    # Used by Execute Script command and rClick plugin.
-    
-    def __init__(self): self.s = ""
-    def clear (self):   self.s = ""
-    def close (self):   pass
-    def flush (self):   pass
-        
-    def get (self):
-        return self.s
-        
-    def write (self,s):
-        if s:
-            self.s = self.s + s
+#@+node:ekr.20031218072017.3116:Files & Directories...
+#@+node:ekr.20031218072017.3117:create_temp_name
+# Returns a temporary file name.
+
+def create_temp_name ():
+
+    import tempfile
+    temp = tempfile.mktemp()
+    # g.trace(temp)
+    return temp
 #@nonl
-#@-node:ekr.20040331083824.1:fileLikeObject
-#@+node:ekr.20031218072017.3126:funcToMethod
+#@-node:ekr.20031218072017.3117:create_temp_name
+#@+node:ekr.20031218072017.3118:ensure_extension
+def ensure_extension (name, ext):
+
+    file, old_ext = g.os_path_splitext(name)
+    if len(name) == 0:
+        return name # don't add to an empty name.
+    elif old_ext and old_ext == ext:
+        return name
+    else:
+        return file + ext
+#@nonl
+#@-node:ekr.20031218072017.3118:ensure_extension
+#@+node:ekr.20031218072017.1264:getBaseDirectory
+# Handles the conventions applying to the "relative_path_base_directory" configuration option.
+
+def getBaseDirectory():
+
+    base = app.config.relative_path_base_directory
+
+    if base and base == "!":
+        base = app.loadDir
+    elif base and base == ".":
+        base = g.top().openDirectory
+
+    # g.trace(base)
+    if base and len(base) > 0 and g.os_path_isabs(base):
+        return base # base need not exist yet.
+    else:
+        return "" # No relative base given.
+#@-node:ekr.20031218072017.1264:getBaseDirectory
+#@+node:ekr.20031218072017.3119:makeAllNonExistentDirectories
+# This is a generalization of os.makedir.
+
+def makeAllNonExistentDirectories (dir):
+
+    """Attempt to make all non-existent directories"""
+
+    if not app.config.create_nonexistent_directories:
+        return None
+
+    dir1 = dir = g.os_path_normpath(dir)
+
+    # Split dir into all its component parts.
+    paths = []
+    while len(dir) > 0:
+        head,tail=g.os_path_split(dir)
+        if len(tail) == 0:
+            paths.append(head)
+            break
+        else:
+            paths.append(tail)
+            dir = head
+    path = ""
+    paths.reverse()
+    for s in paths:
+        path = g.os_path_join(path,s)
+        if not g.os_path_exists(path):
+            try:
+                os.mkdir(path)
+                g.es("created directory: "+path)
+            except:
+                g.es("exception creating directory: "+path)
+                g.es_exception()
+                return None
+    return dir1 # All have been created.
+#@nonl
+#@-node:ekr.20031218072017.3119:makeAllNonExistentDirectories
+#@+node:ekr.20031218072017.3120:readlineForceUnixNewline (Steven P. Schaefer)
 #@+at 
 #@nonl
-# The following is taken from page 188 of the Python Cookbook.
+# Stephen P. Schaefer 9/7/2002
 # 
-# The following method allows you to add a function as a method of any class.  
-# That is, it converts the function to a method of the class.  The method just 
-# added is available instantly to all existing instances of the class, and to 
-# all instances created in the future.
-# 
-# The function's first argument should be self.
-# 
-# The newly created method has the same name as the function unless the 
-# optional name argument is supplied, in which case that name is used as the 
-# method name.
+# The Unix readline() routine delivers "\r\n" line end strings verbatim, while 
+# the windows versions force the string to use the Unix convention of using 
+# only "\n".  This routine causes the Unix readline to do the same.
 #@-at
 #@@c
 
-def funcToMethod(f,theClass,name=None):
+def readlineForceUnixNewline(f):
 
-    setattr(theClass,name or f.__name__,f)
-    # g.trace(name)
+    s = f.readline()
+    if len(s) >= 2 and s[-2] == "\r" and s[-1] == "\n":
+        s = s[0:-2] + "\n"
+    return s
+#@-node:ekr.20031218072017.3120:readlineForceUnixNewline (Steven P. Schaefer)
+#@+node:ekr.20031218072017.3124:sanitize_filename
+def sanitize_filename(s):
+
+    """Prepares string s to be a valid file name:
+    
+    - substitute '_' whitespace and characters used special path characters.
+    - eliminate all other non-alphabetic characters.
+    - strip leading and trailing whitespace.
+    - return at most 128 characters."""
+
+    result = ""
+    for ch in s.strip():
+        if ch in string.ascii_letters:
+            result += ch
+        elif ch in string.whitespace: # Translate whitespace.
+            result += '_'
+        elif ch in ('.','\\','/',':'): # Translate special path characters.
+            result += '_'
+    while 1:
+        n = len(result)
+        result = result.replace('__','_')
+        if len(result) == n:
+            break
+    result = result.strip()
+    return result [:128]
 #@nonl
-#@-node:ekr.20031218072017.3126:funcToMethod
-#@+node:ekr.20031218072017.3138:executeScript
-def executeScript (name):
+#@-node:ekr.20031218072017.3124:sanitize_filename
+#@+node:ekr.20031218072017.3125:shortFileName
+def shortFileName (fileName):
     
-    """Execute a script whose short python file name is given"""
+    return g.os_path_basename(fileName)
+#@nonl
+#@-node:ekr.20031218072017.3125:shortFileName
+#@+node:ekr.20031218072017.1241:update_file_if_changed
+def update_file_if_changed(file_name,temp_name):
+
+    """Compares two files.
     
-    mod_name,ext = g.os_path_splitext(name)
-    file = None
-    try:
-        # This code is in effect an import or a reload.
-        # This allows the user to modify scripts without leaving Leo.
-        import imp
-        file,filename,description = imp.find_module(mod_name)
-        imp.load_module(mod_name,file,filename,description)
-    except:
-        g.es("Exception executing " + name,color="red")
-        g.es_exception()
+    If they are different, we replace file_name with temp_name.
+    Otherwise, we just delete temp_name.
+    Both files should be closed."""
 
-    if file:
-        file.close()
+    if g.os_path_exists(file_name):
+        import filecmp
+        if filecmp.cmp(temp_name, file_name):
+            try: # Just delete the temp file.
+                os.remove(temp_name)
+            except: pass
+            g.es("unchanged: " + file_name)
+        else:
+            try:
+                # 10/6/02: retain the access mode of the previous file,
+                # removing any setuid, setgid, and sticky bits.
+                mode = (os.stat(file_name))[0] & 0777
+            except:
+                mode = None
+            try: # Replace file with temp file.
+                os.remove(file_name)
+                g.utils_rename(temp_name, file_name)
+                if mode: # 10/3/02: retain the access mode of the previous file.
+                    os.chmod(file_name,mode)
+                g.es("***updating: " + file_name)
+            except:
+                g.es("Rename failed: no file created!",color="red")
+                g.es(file_name," may be read-only or in use")
+                g.es_exception()
+    else:
+        try:
+            # os.rename(temp_name, file_name)
+            g.utils_rename(temp_name, file_name)
+            g.es("creating: " + file_name)
+        except:
+            g.es("rename failed: no file created!",color="red")
+            g.es(file_name," may be read-only or in use")
+            g.es_exception()
+#@-node:ekr.20031218072017.1241:update_file_if_changed
+#@+node:ekr.20031218072017.1263:utils_rename
+# os.rename may fail on some Unix flavors if src and dst are on different filesystems.
 
-#@-node:ekr.20031218072017.3138:executeScript
+def utils_rename(src,dst):
+
+    """Platform-independent rename."""
+    
+    head,tail=g.os_path_split(dst)
+    if head and len(head) > 0:
+        g.makeAllNonExistentDirectories(head)
+    
+    if sys.platform=="win32":
+        os.rename(src,dst)
+    else:
+        from distutils.file_util import move_file
+        move_file(src,dst)
+#@nonl
+#@-node:ekr.20031218072017.1263:utils_rename
+#@-node:ekr.20031218072017.3116:Files & Directories...
 #@+node:ekr.20031218072017.1588:Garbage Collection
 lastObjectCount = 0
 lastObjectsDict = {}
@@ -1816,77 +1571,6 @@ def plugin_signon(module_name,verbose=False):
 #@nonl
 #@-node:ekr.20031218072017.1318:g.plugin_signon
 #@-node:ekr.20031218072017.3139:Hooks & plugins (leoGlobals)
-#@+node:ekr.20031218072017.2278:importFromPath
-def importFromPath (name,path):
-    
-    import imp
-
-    try:
-        file = None ; result = None
-        try:
-            fn = g.shortFileName(name)
-            mod_name,ext = g.os_path_splitext(fn)
-            path = g.os_path_normpath(path)
-            if g.CheckVersion(sys.version,"2.3"):
-                path = g.toEncodedString(path,app.tkEncoding) # 12/01/03
-            else:
-                path = str(path) # 1/29/04: May throw exception.
-            # g.trace(path)
-            data = imp.find_module(mod_name,[path]) # This can open the file.
-            if data:
-                file,pathname,description = data
-                result = imp.load_module(mod_name,file,pathname,description)
-        except:
-            g.es_exception()
-
-    # Bug fix: 6/12/03: Put no return statements before here!
-    finally: 
-        if file: file.close()
-
-    return result
-#@nonl
-#@-node:ekr.20031218072017.2278:importFromPath
-#@+node:ekr.20031218072017.3140:Lists...
-#@+node:ekr.20031218072017.3141:appendToList
-def appendToList(out, s):
-
-    for i in s:
-        out.append(i)
-#@nonl
-#@-node:ekr.20031218072017.3141:appendToList
-#@+node:ekr.20031218072017.3142:flattenList
-def flattenList (theList):
-
-    result = []
-    for item in theList:
-        if type(item) == types.ListType:
-            result.extend(g.flattenList(item))
-        else:
-            result.append(item)
-    return result
-#@nonl
-#@-node:ekr.20031218072017.3142:flattenList
-#@+node:ekr.20031218072017.3143:listToString
-def listToString(theList):
-
-    if list:
-        theList = g.flattenList(theList)
-        return string.join(theList,"")
-    else:
-        return ""
-#@nonl
-#@-node:ekr.20031218072017.3143:listToString
-#@-node:ekr.20031218072017.3140:Lists...
-#@+node:ekr.20031218072017.3144:makeDict
-# From the Python cookbook.
-
-def makeDict(**keys):
-    
-    """Returns a Python dictionary from using the optional keyword arguments."""
-
-    return keys
-#@nonl
-#@-node:ekr.20031218072017.3144:makeDict
 #@+node:ekr.20031218072017.3145:Most common functions...
 # These are guaranteed always to exist for scripts.
 #@+node:ekr.20031218072017.3146:app & leoProxy (no longer used)
@@ -2185,505 +1869,6 @@ def toUnicodeFileEncoding(path,encoding):
 #@nonl
 #@-node:ekr.20031218072017.2160:toUnicodeFileEncoding
 #@-node:ekr.20031218072017.2145:os.path wrappers (leoGlobals.py)
-#@+node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
-import difflib,shutil
-
-class mulderUpdateAlgorithm:
-    
-    """A class to update derived files using
-    diffs in files without sentinels."""
-    
-    #@    @+others
-    #@+node:EKR.20040505103527:TO DO
-    #@+at
-    # 
-    # - is_sentinel is not strictly correct.  There must be an atFile method 
-    # that does the job absolutely correctly.
-    # 
-    # - Similarly, marker_from_extension can probably be replaced by a call to 
-    # some method in leoGlobals.py.
-    #@-at
-    #@-node:EKR.20040505103527:TO DO
-    #@+node:EKR.20040504150046.3:__init__
-    def __init__ (self,testing=False,verbose=False):
-        
-        self.testing = testing
-        self.verbose = False
-        self.do_backups = False
-    #@nonl
-    #@-node:EKR.20040504150046.3:__init__
-    #@+node:EKR.20040504150046.9:copy_sentinels
-    #@+at 
-    #@nonl
-    # This script retains _all_ sentinels.  If lines are replaced, or deleted,
-    # we restore deleted sentinel lines by checking for gaps in the mapping.
-    #@-at
-    #@@c
-    
-    def copy_sentinels (self,write_lines,fat_lines,fat_pos,mapping,startline,endline):
-        """
-        
-        Copy sentinel lines from fat_lines to write_lines.
-    
-        Copy all sentinels _after_ the current reader postion up to,
-        but not including, mapping[endline].
-    
-        """
-    
-        j_last = mapping[startline]
-        i = startline + 1
-        while i <= endline:
-            j = mapping[i]
-            if j_last + 1 != j:
-                fat_pos = j_last + 1
-                # Copy the deleted sentinels that comprise the gap.
-                while fat_pos < j:
-                    line = fat_lines[fat_pos]
-                    write_lines.append(line)
-                    if self.testing and self.verbose: print "Copy sentinel:",fat_pos,line,
-                    fat_pos += 1
-            j_last = j ; i += 1
-    
-        fat_pos = mapping[endline]
-        return fat_pos
-    #@nonl
-    #@-node:EKR.20040504150046.9:copy_sentinels
-    #@+node:EKR.20040504155109:copy_time
-    def copy_time(self,sourcefilename,targetfilename):
-        
-        """
-        Set the target file's modification time to
-        that of the source file.
-        """
-    
-        st = os.stat(sourcefilename)
-        if hasattr(os, 'utime'):
-            os.utime(targetfilename, (st.st_atime, st.st_mtime))
-        elif hasattr(os, 'mtime'):
-            os.mtime(targetfilename, st.st_mtime)
-        else:
-            g.trace("Can not set modification time")
-    #@nonl
-    #@-node:EKR.20040504155109:copy_time
-    #@+node:EKR.20040504150046.6:create_mapping
-    def create_mapping (self,lines,marker):
-        """
-    
-        'lines' is a list of lines of a file with sentinels.
-     
-        Returns:
-    
-        result: lines with all sentinels removed.
-    
-        mapping: a list such that result[mapping[i]] == lines[i]
-        for all i in range(len(result))
-    
-        """
-    
-        mapping = [] ; result = []
-        for i in xrange(len(lines)):
-            line = lines[i]
-            if not self.is_sentinel(line,marker):
-                result.append(line)
-                mapping.append(i)
-    
-        # Create a last mapping entry for copy_sentinels.
-        mapping.append(i)
-    
-        return result, mapping
-    #@nonl
-    #@-node:EKR.20040504150046.6:create_mapping
-    #@+node:EKR.20040504154039:is_sentinel NOT CORRECT
-    def is_sentinel (self,line,marker):
-        
-        """
-        Check if line starts with a sentinel comment.
-        """
-        
-        return line.lstrip().startswith(marker)
-    #@-node:EKR.20040504154039:is_sentinel NOT CORRECT
-    #@+node:EKR.20040504150046.4:marker_from_extension
-    def marker_from_extension(self,filename):
-        """
-        Tries to guess the sentinel leadin
-        comment from the filename extension.
-        
-        This code should probably be shared
-        with the main Leo code.
-        """
-        root, ext = os.path.splitext(filename)
-        if ext == '.tmp':
-            root, ext = os.path.splitext(root)
-        if ext in ('.h', '.c'):
-            marker = "//@"
-        elif ext in (".py", ".cfg", ".bat", ".ksh"):
-            marker = "#@"
-        else:
-            g.trace("unknown extension %s" % ext)
-            marker = None
-    
-        return marker
-    #@nonl
-    #@-node:EKR.20040504150046.4:marker_from_extension
-    #@+node:EKR.20040505080156:Get or remove sentinel lines
-    # These routines originally were part of push_filter & push_filter_lines.
-    #@nonl
-    #@+node:EKR.20040505081121:separateSentinelsFromFile/Lines
-    def separateSentinelsFromFile (self,filename):
-        
-        """Separate the lines of the file into a tuple of two lists,
-        containing the sentinel and non-sentinel lines of the file."""
-        
-        lines = file(filename).readlines()
-        marker = self.marker_from_extension(filename)
-        
-        return self.separateSentinelsFromLines(lines,marker)
-        
-    def separateSentinelsFromLines (self,lines,marker):
-        
-        """Separate lines (a list of lines) into a tuple of two lists,
-        containing the sentinel and non-sentinel lines of the original list."""
-        
-        strippedLines = self.removeSentinelsFromLines(lines,marker)
-        sentinelLines = self.getSentinelsFromLines(lines,marker)
-        
-        return strippedLines,sentinelLines
-    #@nonl
-    #@-node:EKR.20040505081121:separateSentinelsFromFile/Lines
-    #@+node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
-    def removeSentinelsFromFile (self,filename):
-        
-        """Return a copy of file with all sentinels removed."""
-        
-        lines = file(filename).readlines()
-        marker = self.marker_from_extension(filename)
-        
-        return removeSentinelsFromLines(lines,marker)
-        
-    def removeSentinelsFromLines (self,lines,marker):
-    
-        """Return a copy of lines with all sentinels removed."""
-        
-        return [line for line in lines if not self.is_sentinel(line,marker)]
-    #@nonl
-    #@-node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
-    #@+node:EKR.20040505080156.3:getSentinelsFromFile/Lines
-    def getSentinelsFromFile (self,filename,marker):
-        
-        """Returns all sentinels lines in a file."""
-        
-        lines = file(filename).readlines()
-        marker = self.marker_from_extension(filename)
-    
-        return getSentinelsFromLines(lines,marker)
-        
-    def getSentinelsFromLines (self,lines,marker):
-        
-        """Returns all sentinels lines in lines."""
-        
-        return [line for line in lines if self.is_sentinel(line,marker)]
-    #@nonl
-    #@-node:EKR.20040505080156.3:getSentinelsFromFile/Lines
-    #@-node:EKR.20040505080156:Get or remove sentinel lines
-    #@+node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
-    def propagateDiffsToSentinelsFile(self,sourcefilename,targetfilename):
-        
-        #@    << init propagateDiffsToSentinelsFile vars >>
-        #@+node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
-        # Get the sentinel comment marker.
-        marker = self.marker_from_extension(sourcefilename)
-        if not marker:
-            return
-        
-        try:
-            # Create the readers.
-            sfile = file(sourcefilename)
-            tfile = file(targetfilename)
-            
-            fat_lines = sfile.readlines() # Contains sentinels.
-            j_lines   = tfile.readlines() # No sentinels.
-            
-            i_lines,mapping = self.create_mapping(fat_lines,marker)
-            
-            sfile.close()
-            tfile.close()
-        except:
-            g.es_exception("can not open files")
-            return
-        #@nonl
-        #@-node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
-        #@nl
-        
-        write_lines = self.propagateDiffsToSentinelsLines(
-            i_lines,j_lines,fat_lines,mapping)
-            
-        # Update _source_ file if it is not the same as write_lines.
-        written = self.write_if_changed(write_lines,targetfilename,sourcefilename)
-        if written:
-            #@        << paranoia check>>
-            #@+node:EKR.20040504150046.12:<<paranoia check>>
-            # Check that 'push' will re-create the changed file.
-            strippedLines,sentinel_lines = self.separateSentinelsFromFile(sourcefilename)
-            
-            if strippedLines != j_lines:
-                self.report_mismatch(strippedLines, j_lines,
-                    "Propagating diffs did not work as expected",
-                    "Content of sourcefile:",
-                    "Content of modified file:")
-            
-            # Check that no sentinels got lost.
-            fat_sentinel_lines = self.getSentinelsFromLines(fat_lines,marker)
-            
-            if sentinel_lines != fat_sentinel_lines:
-                self.report_mismatch(sentinel_lines,fat_sentinel_lines,
-                    "Propagating diffs modified sentinel lines:",
-                    "Current sentinel lines:",
-                    "Old sentinel lines:")
-            #@nonl
-            #@-node:EKR.20040504150046.12:<<paranoia check>>
-            #@nl
-    #@nonl
-    #@-node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
-    #@+node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
-    def propagateDiffsToSentinelsLines (self,i_lines,j_lines,fat_lines,mapping):
-        
-        """Compare the 'i_lines' with 'j_lines' and propagate the diffs back into
-        'write_lines' making sure that all sentinels of 'fat_lines' are copied.
-    
-        i/j_lines have no sentinels.  fat_lines does."""
-    
-        #@    << init propagateDiffsToSentinelsLines vars >>
-        #@+node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
-        # Indices into i_lines, j_lines & fat_lines.
-        i_pos = j_pos = fat_pos = 0
-        
-        # These vars check that all ranges returned by get_opcodes() are contiguous.
-        i2_old = j2_old = -1
-        
-        # Create the output lines.
-        write_lines = []
-        
-        matcher = difflib.SequenceMatcher(None,i_lines,j_lines)
-        
-        testing = self.testing
-        verbose = self.verbose
-        #@nonl
-        #@-node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
-        #@nl
-        #@    << copy the sentinels at the beginning of the file >>
-        #@+node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
-        while fat_pos < mapping[0]:
-            line = fat_lines[fat_pos]
-            write_lines.append(line)
-            if testing and verbose: print "copy initial line",fat_pos,line,
-            fat_pos += 1
-        #@nonl
-        #@-node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
-        #@nl
-        for tag, i1, i2, j1, j2 in matcher.get_opcodes():
-            if testing:
-                if verbose: print
-                print "Opcode %7s %3d %3d %3d %3d" % (tag,i1,i2,j1,j2)
-                if verbose: print
-            #@        << update and check the loop invariant >>
-            #@+node:EKR.20040504145804.4:<< update and check the loop invariant>>
-            # We need the ranges returned by get_opcodes to completely cover the source lines being compared.
-            # We also need the ranges not to overlap.
-            
-            assert(i2_old in (-1,i1))
-            assert(j2_old in (-1,j1))
-            
-            i2_old = i2 ; j2_old = j2
-            
-            # Check the loop invariants.
-            assert i_pos == i1
-            assert j_pos == j1
-            assert fat_pos == mapping[i1]
-            
-            if 0: # not yet.
-                if testing: # A bit costly.
-                    t_sourcelines,t_sentinel_lines = push_filter_lines(write_lines, marker)
-                    # Check that we have all the modifications so far.
-                    assert t_sourcelines == j_lines[:j1],"t_sourcelines == j_lines[:j1]"
-                    # Check that we kept all sentinels so far.
-                    assert t_sentinel_lines == push_filter_lines(fat_lines[:fat_pos], marker)[1]
-            #@nonl
-            #@-node:EKR.20040504145804.4:<< update and check the loop invariant>>
-            #@nl
-            if tag == 'equal':
-                #@            << handle 'equal' tag >>
-                #@+node:EKR.20040504145804.5:<< handle 'equal' tag >>
-                # Copy the lines, including sentinels.
-                while fat_pos <= mapping[i2-1]:
-                    line = fat_lines[fat_pos]
-                    if 0: # too verbose.
-                        if testing: print "Equal: copying ", line,
-                    write_lines.append(line)
-                    fat_pos += 1
-                
-                if testing and verbose:
-                    print "Equal: synch i", i_pos,i2
-                    print "Equal: synch j", j_pos,j2
-                
-                i_pos = i2
-                j_pos = j2
-                
-                # Copy the sentinels which might follow the lines.       
-                fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i2-1,i2)
-                #@nonl
-                #@-node:EKR.20040504145804.5:<< handle 'equal' tag >>
-                #@nl
-            elif tag == 'replace':
-                #@            << handle 'replace' tag >>
-                #@+node:EKR.20040504145804.6:<< handle 'replace' tag >>
-                #@+at 
-                #@nonl
-                # Replace lines that may span sentinels.
-                # 
-                # For now, we put all the new contents after the first 
-                # sentinel.
-                # 
-                # A more complex approach: run the difflib across the 
-                # different lines and try to
-                # construct a mapping changed line => orignal line.
-                #@-at
-                #@@c
-                
-                while j_pos < j2:
-                    line = j_lines[j_pos]
-                    if testing:
-                        print "Replace i:",i_pos,repr(i_lines[i_pos])
-                        print "Replace j:",j_pos,repr(line)
-                        i_pos += 1
-                
-                    write_lines.append(line)
-                    j_pos += 1
-                
-                i_pos = i2
-                
-                # Copy the sentinels which might be between the changed code.         
-                fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
-                #@nonl
-                #@-node:EKR.20040504145804.6:<< handle 'replace' tag >>
-                #@nl
-            elif tag == 'delete':
-                #@            << handle 'delete' tag >>
-                #@+node:EKR.20040504145804.7:<< handle 'delete' tag >>
-                if testing and verbose:
-                    print "delete: i",i_pos,i1
-                    print "delete: j",j_pos,j1
-                
-                j_pos = j2
-                i_pos = i2
-                
-                # Restore any deleted sentinels.
-                fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
-                #@nonl
-                #@-node:EKR.20040504145804.7:<< handle 'delete' tag >>
-                #@nl
-            elif tag == 'insert':
-                #@            << handle 'insert' tag >>
-                #@+node:EKR.20040504145804.8:<< handle 'insert' tag >>
-                while j_pos < j2:
-                    line = j_lines[j_pos]
-                    if testing: print "Insert:", line,
-                    write_lines.append(line)
-                    j_pos += 1
-                
-                # The input streams are already in synch.
-                #@nonl
-                #@-node:EKR.20040504145804.8:<< handle 'insert' tag >>
-                #@nl
-            else: assert 0,"bad tag"
-        #@    << copy the sentinels at the end of the file >>
-        #@+node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
-        while fat_pos < len(fat_lines):
-            line = fat_lines[fat_pos]
-            write_lines.append(line)
-            if testing and verbose: print "Append last line",line
-            fat_pos += 1
-        #@nonl
-        #@-node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
-        #@nl
-        return write_lines
-    #@nonl
-    #@-node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
-    #@+node:EKR.20040504150046.5:report_mismatch
-    def report_mismatch (self,lines1,lines2,message,lines1_message,lines2_message):
-    
-        """
-        Generate a report when something goes wrong.
-        """
-    
-        print '='*20
-        print message
-        
-        if 0:
-            print lines1_message
-            print '-'*20
-            for line in lines1:
-              print line,
-             
-            print '='*20
-        
-            print lines2_message
-            print '-'*20
-            for line in lines2:
-                print line,
-    #@nonl
-    #@-node:EKR.20040504150046.5:report_mismatch
-    #@+node:EKR.20040504160820:write_if_changed
-    def write_if_changed(self,lines,sourcefilename,targetfilename):
-        """
-        
-        Replaces target file if it is not the same as 'lines',
-        and makes the modification date of target file the same as the source file.
-        
-        Optionally backs up the overwritten file.
-    
-        """
-        
-        copy = not os.path.exists(targetfilename) or lines != file(targetfilename).readlines()
-            
-        if self.testing:
-            if copy:
-                print "Writing",targetfilename,"without sentinals"
-            else:
-                print "Files are identical"
-    
-        if copy:
-            if self.do_backups:
-                #@            << make backup file >>
-                #@+node:EKR.20040504160820.1:<< make backup file >>
-                if os.path.exists(targetfilename):
-                    count = 0
-                    backupname = "%s.~%s~" % (targetfilename,count)
-                    while os.path.exists(backupname):
-                        count += 1
-                        backupname = "%s.~%s~" % (targetfilename,count)
-                    os.rename(targetfilename, backupname)
-                    if testing:
-                        print "backup file in ", backupname
-                #@nonl
-                #@-node:EKR.20040504160820.1:<< make backup file >>
-                #@nl
-            outfile = open(targetfilename, "w")
-            for line in lines:
-                outfile.write(line)
-            outfile.close()
-            self.copy_time(sourcefilename,targetfilename)
-        return copy
-    #@-node:EKR.20040504160820:write_if_changed
-    #@-others
-    
-def doMulderUpdateAlgorithm(sourcefilename,targetfilename):
-
-    mu = mulderUpdateAlgorithm()
-
-    mu.pull_source(sourcefilename,targetfilename)
-    mu.copy_time(targetfilename,sourcefilename)
-#@nonl
-#@-node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
 #@+node:ekr.20031218072017.3151:Scanning...
 #@+node:ekr.20031218072017.3152:g.scanAtFileOptions
 def scanAtFileOptions (h,err_flag=False):
@@ -3652,6 +2837,851 @@ except:
         #@nl
 #@-node:ekr.20031218072017.1503:getpreferredencoding from 2.3a2
 #@-node:ekr.20031218072017.1498:Unicode utils...
+#@+node:EKR.20040612114220:Utility classes, functions & objects...
+#@+node:ekr.20031218072017.3140: List utilities...
+#@+node:ekr.20031218072017.3141:appendToList
+def appendToList(out, s):
+
+    for i in s:
+        out.append(i)
+#@nonl
+#@-node:ekr.20031218072017.3141:appendToList
+#@+node:ekr.20031218072017.3142:flattenList
+def flattenList (theList):
+
+    result = []
+    for item in theList:
+        if type(item) == types.ListType:
+            result.extend(g.flattenList(item))
+        else:
+            result.append(item)
+    return result
+#@nonl
+#@-node:ekr.20031218072017.3142:flattenList
+#@+node:ekr.20031218072017.3143:listToString
+def listToString(theList):
+
+    if list:
+        theList = g.flattenList(theList)
+        return string.join(theList,"")
+    else:
+        return ""
+#@nonl
+#@-node:ekr.20031218072017.3143:listToString
+#@-node:ekr.20031218072017.3140: List utilities...
+#@+node:ekr.20031218072017.3106:angleBrackets & virtual_event_name
+# Returns < < s > >
+
+def angleBrackets(s):
+
+    return ( "<<" + s +
+        ">>") # must be on a separate line.
+
+virtual_event_name = angleBrackets
+#@nonl
+#@-node:ekr.20031218072017.3106:angleBrackets & virtual_event_name
+#@+node:ekr.20031218072017.3097:CheckVersion (Dave Hein)
+#@+at
+# g.CheckVersion() is a generic version checker.  Assumes a
+# version string of up to four parts, or tokens, with
+# leftmost token being most significant and each token
+# becoming less signficant in sequence to the right.
+# 
+# RETURN VALUE
+# 
+# 1 if comparison is True
+# 0 if comparison is False
+# 
+# PARAMETERS
+# 
+# version: the version string to be tested
+# againstVersion: the reference version string to be
+#               compared against
+# condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
+# stringCompare: whether to test a token using only the
+#              leading integer of the token, or using the
+#              entire token string.  For example, a value
+#              of "0.0.1.0" means that we use the integer
+#              value of the first, second, and fourth
+#              tokens, but we use a string compare for the
+#              third version token.
+# delimiter: the character that separates the tokens in the
+#          version strings.
+# 
+# The comparison uses the precision of the version string
+# with the least number of tokens.  For example a test of
+# "8.4" against "8.3.3" would just compare the first two
+# tokens.
+# 
+# The version strings are limited to a maximum of 4 tokens.
+#@-at
+#@@c
+
+def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
+    import sre  # Unicode-aware regular expressions
+    #
+    # tokenize the stringCompare flags
+    compareFlag = string.split( stringCompare, '.' )
+    #
+    # tokenize the version strings
+    testVersion = string.split( version, delimiter )
+    testAgainst = string.split( againstVersion, delimiter )
+    #
+    # find the 'precision' of the comparison
+    tokenCount = 4
+    if tokenCount > len(testAgainst):
+        tokenCount = len(testAgainst)
+    if tokenCount > len(testVersion):
+        tokenCount = len(testVersion)
+    #
+    # Apply the stringCompare flags
+    justInteger = sre.compile("^[0-9]+")
+    for i in range(tokenCount):
+        if "0" == compareFlag[i]:
+            m = justInteger.match( testVersion[i] )
+            testVersion[i] = m.group()
+            m = justInteger.match( testAgainst[i] )
+            testAgainst[i] = m.group()
+        elif "1" != compareFlag[i]:
+            errMsg = "stringCompare argument must be of " +\
+                 "the form \"x.x.x.x\" where each " +\
+                 "'x' is either '0' or '1'."
+            raise EnvironmentError,errMsg
+    #
+    # Compare the versions
+    if condition == ">=":
+        for i in range(tokenCount):
+            if testVersion[i] < testAgainst[i]:
+                return 0
+            if testVersion[i] > testAgainst[i]:
+                return 1 # it was greater than
+        return 1 # it was equal
+    if condition == ">":
+        for i in range(tokenCount):
+            if testVersion[i] < testAgainst[i]:
+                return 0
+            if testVersion[i] > testAgainst[i]:
+                return 1 # it was greater than
+        return 0 # it was equal
+    if condition == "==":
+        for i in range(tokenCount):
+            if testVersion[i] != testAgainst[i]:
+                return 0 # any token was not equal
+        return 1 # every token was equal
+    if condition == "!=":
+        for i in range(tokenCount):
+            if testVersion[i] != testAgainst[i]:
+                return 1 # any token was not equal
+        return 0 # every token was equal
+    if condition == "<":
+        for i in range(tokenCount):
+            if testVersion[i] >= testAgainst[i]:
+                return 0
+            if testVersion[i] < testAgainst[i]:
+                return 1 # it was less than
+        return 0 # it was equal
+    if condition == "<=":
+        for i in range(tokenCount):
+            if testVersion[i] > testAgainst[i]:
+                return 0
+            if testVersion[i] < testAgainst[i]:
+                return 1 # it was less than
+        return 1 # it was equal
+    #
+    # didn't find a condition that we expected.
+    raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
+#@-node:ekr.20031218072017.3097:CheckVersion (Dave Hein)
+#@+node:ekr.20031218072017.3098:class Bunch
+# From The Python Cookbook.
+
+import operator
+
+class Bunch:
+    
+    """A class that represents a colection of things.
+    
+    Especially useful for representing a collection of related variables."""
+    
+    def __init__(self, **keywords):
+        self.__dict__.update (keywords)
+
+    def ivars(self):
+        return self.__dict__.keys()
+        
+    def __setitem__ (self,key,value):
+        return operator.setitem(self.__dict__,key,value)
+        
+    def __getitem__ (self,key):
+        return operator.getitem(self.__dict__,key)
+        
+        
+        
+#@-node:ekr.20031218072017.3098:class Bunch
+#@+node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
+import difflib,shutil
+
+class mulderUpdateAlgorithm:
+    
+    """A class to update derived files using
+    diffs in files without sentinels."""
+    
+    #@    @+others
+    #@+node:EKR.20040505103527:TO DO
+    #@+at
+    # 
+    # - is_sentinel is not strictly correct.  There must be an atFile method 
+    # that does the job absolutely correctly.
+    # 
+    # - Similarly, marker_from_extension can probably be replaced by a call to 
+    # some method in leoGlobals.py.
+    #@-at
+    #@-node:EKR.20040505103527:TO DO
+    #@+node:EKR.20040504150046.3:__init__
+    def __init__ (self,testing=False,verbose=False):
+        
+        self.testing = testing
+        self.verbose = False
+        self.do_backups = False
+    #@nonl
+    #@-node:EKR.20040504150046.3:__init__
+    #@+node:EKR.20040504150046.9:copy_sentinels
+    #@+at 
+    #@nonl
+    # This script retains _all_ sentinels.  If lines are replaced, or deleted,
+    # we restore deleted sentinel lines by checking for gaps in the mapping.
+    #@-at
+    #@@c
+    
+    def copy_sentinels (self,write_lines,fat_lines,fat_pos,mapping,startline,endline):
+        """
+        
+        Copy sentinel lines from fat_lines to write_lines.
+    
+        Copy all sentinels _after_ the current reader postion up to,
+        but not including, mapping[endline].
+    
+        """
+    
+        j_last = mapping[startline]
+        i = startline + 1
+        while i <= endline:
+            j = mapping[i]
+            if j_last + 1 != j:
+                fat_pos = j_last + 1
+                # Copy the deleted sentinels that comprise the gap.
+                while fat_pos < j:
+                    line = fat_lines[fat_pos]
+                    write_lines.append(line)
+                    if self.testing and self.verbose: print "Copy sentinel:",fat_pos,line,
+                    fat_pos += 1
+            j_last = j ; i += 1
+    
+        fat_pos = mapping[endline]
+        return fat_pos
+    #@nonl
+    #@-node:EKR.20040504150046.9:copy_sentinels
+    #@+node:EKR.20040504155109:copy_time
+    def copy_time(self,sourcefilename,targetfilename):
+        
+        """
+        Set the target file's modification time to
+        that of the source file.
+        """
+    
+        st = os.stat(sourcefilename)
+        if hasattr(os, 'utime'):
+            os.utime(targetfilename, (st.st_atime, st.st_mtime))
+        elif hasattr(os, 'mtime'):
+            os.mtime(targetfilename, st.st_mtime)
+        else:
+            g.trace("Can not set modification time")
+    #@nonl
+    #@-node:EKR.20040504155109:copy_time
+    #@+node:EKR.20040504150046.6:create_mapping
+    def create_mapping (self,lines,marker):
+        """
+    
+        'lines' is a list of lines of a file with sentinels.
+     
+        Returns:
+    
+        result: lines with all sentinels removed.
+    
+        mapping: a list such that result[mapping[i]] == lines[i]
+        for all i in range(len(result))
+    
+        """
+    
+        mapping = [] ; result = []
+        for i in xrange(len(lines)):
+            line = lines[i]
+            if not self.is_sentinel(line,marker):
+                result.append(line)
+                mapping.append(i)
+    
+        # Create a last mapping entry for copy_sentinels.
+        mapping.append(i)
+    
+        return result, mapping
+    #@nonl
+    #@-node:EKR.20040504150046.6:create_mapping
+    #@+node:EKR.20040504154039:is_sentinel NOT CORRECT
+    def is_sentinel (self,line,marker):
+        
+        """
+        Check if line starts with a sentinel comment.
+        """
+        
+        return line.lstrip().startswith(marker)
+    #@-node:EKR.20040504154039:is_sentinel NOT CORRECT
+    #@+node:EKR.20040504150046.4:marker_from_extension
+    def marker_from_extension(self,filename):
+        """
+        Tries to guess the sentinel leadin
+        comment from the filename extension.
+        
+        This code should probably be shared
+        with the main Leo code.
+        """
+        root, ext = os.path.splitext(filename)
+        if ext == '.tmp':
+            root, ext = os.path.splitext(root)
+        if ext in ('.h', '.c'):
+            marker = "//@"
+        elif ext in (".py", ".cfg", ".bat", ".ksh"):
+            marker = "#@"
+        else:
+            g.trace("unknown extension %s" % ext)
+            marker = None
+    
+        return marker
+    #@nonl
+    #@-node:EKR.20040504150046.4:marker_from_extension
+    #@+node:EKR.20040505080156:Get or remove sentinel lines
+    # These routines originally were part of push_filter & push_filter_lines.
+    #@nonl
+    #@+node:EKR.20040505081121:separateSentinelsFromFile/Lines
+    def separateSentinelsFromFile (self,filename):
+        
+        """Separate the lines of the file into a tuple of two lists,
+        containing the sentinel and non-sentinel lines of the file."""
+        
+        lines = file(filename).readlines()
+        marker = self.marker_from_extension(filename)
+        
+        return self.separateSentinelsFromLines(lines,marker)
+        
+    def separateSentinelsFromLines (self,lines,marker):
+        
+        """Separate lines (a list of lines) into a tuple of two lists,
+        containing the sentinel and non-sentinel lines of the original list."""
+        
+        strippedLines = self.removeSentinelsFromLines(lines,marker)
+        sentinelLines = self.getSentinelsFromLines(lines,marker)
+        
+        return strippedLines,sentinelLines
+    #@nonl
+    #@-node:EKR.20040505081121:separateSentinelsFromFile/Lines
+    #@+node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
+    def removeSentinelsFromFile (self,filename):
+        
+        """Return a copy of file with all sentinels removed."""
+        
+        lines = file(filename).readlines()
+        marker = self.marker_from_extension(filename)
+        
+        return removeSentinelsFromLines(lines,marker)
+        
+    def removeSentinelsFromLines (self,lines,marker):
+    
+        """Return a copy of lines with all sentinels removed."""
+        
+        return [line for line in lines if not self.is_sentinel(line,marker)]
+    #@nonl
+    #@-node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
+    #@+node:EKR.20040505080156.3:getSentinelsFromFile/Lines
+    def getSentinelsFromFile (self,filename,marker):
+        
+        """Returns all sentinels lines in a file."""
+        
+        lines = file(filename).readlines()
+        marker = self.marker_from_extension(filename)
+    
+        return getSentinelsFromLines(lines,marker)
+        
+    def getSentinelsFromLines (self,lines,marker):
+        
+        """Returns all sentinels lines in lines."""
+        
+        return [line for line in lines if self.is_sentinel(line,marker)]
+    #@nonl
+    #@-node:EKR.20040505080156.3:getSentinelsFromFile/Lines
+    #@-node:EKR.20040505080156:Get or remove sentinel lines
+    #@+node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
+    def propagateDiffsToSentinelsFile(self,sourcefilename,targetfilename):
+        
+        #@    << init propagateDiffsToSentinelsFile vars >>
+        #@+node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
+        # Get the sentinel comment marker.
+        marker = self.marker_from_extension(sourcefilename)
+        if not marker:
+            return
+        
+        try:
+            # Create the readers.
+            sfile = file(sourcefilename)
+            tfile = file(targetfilename)
+            
+            fat_lines = sfile.readlines() # Contains sentinels.
+            j_lines   = tfile.readlines() # No sentinels.
+            
+            i_lines,mapping = self.create_mapping(fat_lines,marker)
+            
+            sfile.close()
+            tfile.close()
+        except:
+            g.es_exception("can not open files")
+            return
+        #@nonl
+        #@-node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
+        #@nl
+        
+        write_lines = self.propagateDiffsToSentinelsLines(
+            i_lines,j_lines,fat_lines,mapping)
+            
+        # Update _source_ file if it is not the same as write_lines.
+        written = self.write_if_changed(write_lines,targetfilename,sourcefilename)
+        if written:
+            #@        << paranoia check>>
+            #@+node:EKR.20040504150046.12:<<paranoia check>>
+            # Check that 'push' will re-create the changed file.
+            strippedLines,sentinel_lines = self.separateSentinelsFromFile(sourcefilename)
+            
+            if strippedLines != j_lines:
+                self.report_mismatch(strippedLines, j_lines,
+                    "Propagating diffs did not work as expected",
+                    "Content of sourcefile:",
+                    "Content of modified file:")
+            
+            # Check that no sentinels got lost.
+            fat_sentinel_lines = self.getSentinelsFromLines(fat_lines,marker)
+            
+            if sentinel_lines != fat_sentinel_lines:
+                self.report_mismatch(sentinel_lines,fat_sentinel_lines,
+                    "Propagating diffs modified sentinel lines:",
+                    "Current sentinel lines:",
+                    "Old sentinel lines:")
+            #@nonl
+            #@-node:EKR.20040504150046.12:<<paranoia check>>
+            #@nl
+    #@nonl
+    #@-node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
+    #@+node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
+    def propagateDiffsToSentinelsLines (self,i_lines,j_lines,fat_lines,mapping):
+        
+        """Compare the 'i_lines' with 'j_lines' and propagate the diffs back into
+        'write_lines' making sure that all sentinels of 'fat_lines' are copied.
+    
+        i/j_lines have no sentinels.  fat_lines does."""
+    
+        #@    << init propagateDiffsToSentinelsLines vars >>
+        #@+node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
+        # Indices into i_lines, j_lines & fat_lines.
+        i_pos = j_pos = fat_pos = 0
+        
+        # These vars check that all ranges returned by get_opcodes() are contiguous.
+        i2_old = j2_old = -1
+        
+        # Create the output lines.
+        write_lines = []
+        
+        matcher = difflib.SequenceMatcher(None,i_lines,j_lines)
+        
+        testing = self.testing
+        verbose = self.verbose
+        #@nonl
+        #@-node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
+        #@nl
+        #@    << copy the sentinels at the beginning of the file >>
+        #@+node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
+        while fat_pos < mapping[0]:
+            line = fat_lines[fat_pos]
+            write_lines.append(line)
+            if testing and verbose: print "copy initial line",fat_pos,line,
+            fat_pos += 1
+        #@nonl
+        #@-node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
+        #@nl
+        for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+            if testing:
+                if verbose: print
+                print "Opcode %7s %3d %3d %3d %3d" % (tag,i1,i2,j1,j2)
+                if verbose: print
+            #@        << update and check the loop invariant >>
+            #@+node:EKR.20040504145804.4:<< update and check the loop invariant>>
+            # We need the ranges returned by get_opcodes to completely cover the source lines being compared.
+            # We also need the ranges not to overlap.
+            
+            assert(i2_old in (-1,i1))
+            assert(j2_old in (-1,j1))
+            
+            i2_old = i2 ; j2_old = j2
+            
+            # Check the loop invariants.
+            assert i_pos == i1
+            assert j_pos == j1
+            assert fat_pos == mapping[i1]
+            
+            if 0: # not yet.
+                if testing: # A bit costly.
+                    t_sourcelines,t_sentinel_lines = push_filter_lines(write_lines, marker)
+                    # Check that we have all the modifications so far.
+                    assert t_sourcelines == j_lines[:j1],"t_sourcelines == j_lines[:j1]"
+                    # Check that we kept all sentinels so far.
+                    assert t_sentinel_lines == push_filter_lines(fat_lines[:fat_pos], marker)[1]
+            #@nonl
+            #@-node:EKR.20040504145804.4:<< update and check the loop invariant>>
+            #@nl
+            if tag == 'equal':
+                #@            << handle 'equal' tag >>
+                #@+node:EKR.20040504145804.5:<< handle 'equal' tag >>
+                # Copy the lines, including sentinels.
+                while fat_pos <= mapping[i2-1]:
+                    line = fat_lines[fat_pos]
+                    if 0: # too verbose.
+                        if testing: print "Equal: copying ", line,
+                    write_lines.append(line)
+                    fat_pos += 1
+                
+                if testing and verbose:
+                    print "Equal: synch i", i_pos,i2
+                    print "Equal: synch j", j_pos,j2
+                
+                i_pos = i2
+                j_pos = j2
+                
+                # Copy the sentinels which might follow the lines.       
+                fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i2-1,i2)
+                #@nonl
+                #@-node:EKR.20040504145804.5:<< handle 'equal' tag >>
+                #@nl
+            elif tag == 'replace':
+                #@            << handle 'replace' tag >>
+                #@+node:EKR.20040504145804.6:<< handle 'replace' tag >>
+                #@+at 
+                #@nonl
+                # Replace lines that may span sentinels.
+                # 
+                # For now, we put all the new contents after the first 
+                # sentinel.
+                # 
+                # A more complex approach: run the difflib across the 
+                # different lines and try to
+                # construct a mapping changed line => orignal line.
+                #@-at
+                #@@c
+                
+                while j_pos < j2:
+                    line = j_lines[j_pos]
+                    if testing:
+                        print "Replace i:",i_pos,repr(i_lines[i_pos])
+                        print "Replace j:",j_pos,repr(line)
+                        i_pos += 1
+                
+                    write_lines.append(line)
+                    j_pos += 1
+                
+                i_pos = i2
+                
+                # Copy the sentinels which might be between the changed code.         
+                fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
+                #@nonl
+                #@-node:EKR.20040504145804.6:<< handle 'replace' tag >>
+                #@nl
+            elif tag == 'delete':
+                #@            << handle 'delete' tag >>
+                #@+node:EKR.20040504145804.7:<< handle 'delete' tag >>
+                if testing and verbose:
+                    print "delete: i",i_pos,i1
+                    print "delete: j",j_pos,j1
+                
+                j_pos = j2
+                i_pos = i2
+                
+                # Restore any deleted sentinels.
+                fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
+                #@nonl
+                #@-node:EKR.20040504145804.7:<< handle 'delete' tag >>
+                #@nl
+            elif tag == 'insert':
+                #@            << handle 'insert' tag >>
+                #@+node:EKR.20040504145804.8:<< handle 'insert' tag >>
+                while j_pos < j2:
+                    line = j_lines[j_pos]
+                    if testing: print "Insert:", line,
+                    write_lines.append(line)
+                    j_pos += 1
+                
+                # The input streams are already in synch.
+                #@nonl
+                #@-node:EKR.20040504145804.8:<< handle 'insert' tag >>
+                #@nl
+            else: assert 0,"bad tag"
+        #@    << copy the sentinels at the end of the file >>
+        #@+node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
+        while fat_pos < len(fat_lines):
+            line = fat_lines[fat_pos]
+            write_lines.append(line)
+            if testing and verbose: print "Append last line",line
+            fat_pos += 1
+        #@nonl
+        #@-node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
+        #@nl
+        return write_lines
+    #@nonl
+    #@-node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
+    #@+node:EKR.20040504150046.5:report_mismatch
+    def report_mismatch (self,lines1,lines2,message,lines1_message,lines2_message):
+    
+        """
+        Generate a report when something goes wrong.
+        """
+    
+        print '='*20
+        print message
+        
+        if 0:
+            print lines1_message
+            print '-'*20
+            for line in lines1:
+              print line,
+             
+            print '='*20
+        
+            print lines2_message
+            print '-'*20
+            for line in lines2:
+                print line,
+    #@nonl
+    #@-node:EKR.20040504150046.5:report_mismatch
+    #@+node:EKR.20040504160820:write_if_changed
+    def write_if_changed(self,lines,sourcefilename,targetfilename):
+        """
+        
+        Replaces target file if it is not the same as 'lines',
+        and makes the modification date of target file the same as the source file.
+        
+        Optionally backs up the overwritten file.
+    
+        """
+        
+        copy = not os.path.exists(targetfilename) or lines != file(targetfilename).readlines()
+            
+        if self.testing:
+            if copy:
+                print "Writing",targetfilename,"without sentinals"
+            else:
+                print "Files are identical"
+    
+        if copy:
+            if self.do_backups:
+                #@            << make backup file >>
+                #@+node:EKR.20040504160820.1:<< make backup file >>
+                if os.path.exists(targetfilename):
+                    count = 0
+                    backupname = "%s.~%s~" % (targetfilename,count)
+                    while os.path.exists(backupname):
+                        count += 1
+                        backupname = "%s.~%s~" % (targetfilename,count)
+                    os.rename(targetfilename, backupname)
+                    if testing:
+                        print "backup file in ", backupname
+                #@nonl
+                #@-node:EKR.20040504160820.1:<< make backup file >>
+                #@nl
+            outfile = open(targetfilename, "w")
+            for line in lines:
+                outfile.write(line)
+            outfile.close()
+            self.copy_time(sourcefilename,targetfilename)
+        return copy
+    #@-node:EKR.20040504160820:write_if_changed
+    #@-others
+    
+def doMulderUpdateAlgorithm(sourcefilename,targetfilename):
+
+    mu = mulderUpdateAlgorithm()
+
+    mu.pull_source(sourcefilename,targetfilename)
+    mu.copy_time(targetfilename,sourcefilename)
+#@nonl
+#@-node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
+#@+node:ekr.20031219074948.1:class nullObject
+# From the Python cookbook, recipe 5.23
+
+class nullObject:
+    
+    """An object that does nothing, and does it very well."""
+    
+    def __init__   (self,*args,**keys): pass
+    def __call__   (self,*args,**keys): return self
+    
+    def __repr__   (self): return "nullObject"
+    
+    def __nonzero__ (self): return 0
+    
+    def __delattr__(self,attr):     return self
+    def __getattr__(self,attr):     return self
+    def __setattr__(self,attr,val): return self
+#@nonl
+#@-node:ekr.20031219074948.1:class nullObject
+#@+node:ekr.20031218072017.3103:computeWindowTitle
+def computeWindowTitle (fileName):
+
+    if fileName == None:
+        return "untitled"
+    else:
+        path,fn = g.os_path_split(fileName)
+        if path:
+            title = fn + " in " + path
+        else:
+            title = fn
+        return title
+#@nonl
+#@-node:ekr.20031218072017.3103:computeWindowTitle
+#@+node:ekr.20031218072017.3138:executeScript
+def executeScript (name):
+    
+    """Execute a script whose short python file name is given"""
+    
+    mod_name,ext = g.os_path_splitext(name)
+    file = None
+    try:
+        # This code is in effect an import or a reload.
+        # This allows the user to modify scripts without leaving Leo.
+        import imp
+        file,filename,description = imp.find_module(mod_name)
+        imp.load_module(mod_name,file,filename,description)
+    except:
+        g.es("Exception executing " + name,color="red")
+        g.es_exception()
+
+    if file:
+        file.close()
+
+#@-node:ekr.20031218072017.3138:executeScript
+#@+node:ekr.20040331083824.1:fileLikeObject
+class fileLikeObject:
+    
+    """Define a file-like object for redirecting i/o."""
+    
+    # Used by Execute Script command and rClick plugin.
+    
+    def __init__(self): self.s = ""
+    def clear (self):   self.s = ""
+    def close (self):   pass
+    def flush (self):   pass
+        
+    def get (self):
+        return self.s
+        
+    def write (self,s):
+        if s:
+            self.s = self.s + s
+#@nonl
+#@-node:ekr.20040331083824.1:fileLikeObject
+#@+node:ekr.20031218072017.3126:funcToMethod
+#@+at 
+#@nonl
+# The following is taken from page 188 of the Python Cookbook.
+# 
+# The following method allows you to add a function as a method of any class.  
+# That is, it converts the function to a method of the class.  The method just 
+# added is available instantly to all existing instances of the class, and to 
+# all instances created in the future.
+# 
+# The function's first argument should be self.
+# 
+# The newly created method has the same name as the function unless the 
+# optional name argument is supplied, in which case that name is used as the 
+# method name.
+#@-at
+#@@c
+
+def funcToMethod(f,theClass,name=None):
+
+    setattr(theClass,name or f.__name__,f)
+    # g.trace(name)
+#@nonl
+#@-node:ekr.20031218072017.3126:funcToMethod
+#@+node:ekr.20031218072017.2278:importFromPath
+def importFromPath (name,path):
+    
+    import imp
+
+    try:
+        file = None ; result = None
+        try:
+            fn = g.shortFileName(name)
+            mod_name,ext = g.os_path_splitext(fn)
+            path = g.os_path_normpath(path)
+            if g.CheckVersion(sys.version,"2.3"):
+                path = g.toEncodedString(path,app.tkEncoding) # 12/01/03
+            else:
+                path = str(path) # 1/29/04: May throw exception.
+            # g.trace(path)
+            data = imp.find_module(mod_name,[path]) # This can open the file.
+            if data:
+                file,pathname,description = data
+                result = imp.load_module(mod_name,file,pathname,description)
+        except:
+            g.es_exception()
+
+    # Bug fix: 6/12/03: Put no return statements before here!
+    finally: 
+        if file: file.close()
+
+    return result
+#@nonl
+#@-node:ekr.20031218072017.2278:importFromPath
+#@+node:ekr.20031218072017.3144:makeDict
+# From the Python cookbook.
+
+def makeDict(**keys):
+    
+    """Returns a Python dictionary from using the optional keyword arguments."""
+
+    return keys
+#@nonl
+#@-node:ekr.20031218072017.3144:makeDict
+#@+node:EKR.20040612114220.4:readLinesClass
+class readLinesClass:
+    
+    """A class whose next method provides a readline method for Python's tokenize module."""
+
+    def __init__ (self,s):
+        self.lines = g.splitLines(s)
+        self.i = 0
+
+    def next(self):
+        if self.i < len(self.lines):
+            line = self.lines[self.i]
+            self.i += 1
+        else:
+            line = ''
+        # g.trace(self.i,line)
+        return line
+#@nonl
+#@-node:EKR.20040612114220.4:readLinesClass
+#@+node:EKR.20040612114220.3:readLinesGenerator
+def readLinesGenerator(s):
+
+    for line in g.splitLines(s):
+        yield line
+    yield ''
+#@nonl
+#@-node:EKR.20040612114220.3:readLinesGenerator
+#@-node:EKR.20040612114220:Utility classes, functions & objects...
 #@+node:ekr.20031218072017.3197:Whitespace...
 #@+node:ekr.20031218072017.3198:computeLeadingWhitespace
 # Returns optimized whitespace corresponding to width with the indicated tab_width.

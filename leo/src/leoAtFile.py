@@ -3,6 +3,7 @@
 """Classes to read and write @file nodes."""
 
 #@@language python
+#@@tabwidth -4
 
 import leoGlobals as g
 

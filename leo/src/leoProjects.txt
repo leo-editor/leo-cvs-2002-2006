@@ -16,6 +16,8 @@
 #@@c
 
 #@@language python
+#@@tabwidth -4
+
 #@+all
 #@+node:ekr.20031218072017.1135: Bindings
 #@+node:ekr.20031218072017.1136:(up-down arrows )
@@ -4348,6 +4350,7 @@ class baseVnode (object):
 class vnode (baseVnode):
     """A class that implements vnodes."""
     pass
+#@nonl
 #@+node:ekr.20031218072017.951:<< vnode constants >>
 # Define the meaning of status bits in new vnodes.
 
@@ -6395,6 +6398,8 @@ def clone (self,back):
     Returns the newly created position."""
     
     p = self ; c = p.c
+    
+    # g.trace(p,back)
 
     p2 = back.copy()
     p2.v = vnode(c,back.v.t)
@@ -7657,6 +7662,8 @@ def clone (self,back):
     Returns the newly created position."""
     
     p = self ; c = p.c
+    
+    # g.trace(p,back)
 
     p2 = back.copy()
     p2.v = vnode(c,back.v.t)
@@ -8235,7 +8242,7 @@ def findVnodeWithIconId (self,id):
         return self.icon_id_dict.get(id)
 #@nonl
 #@-node:ekr.20031218072017.2341:tree.findVnodeWithIconId
-#@+node:EKR.20040608110312:Dragging
+#@+node:EKR.20040608110312:Dragging (tk tree)
 #@+node:ekr.20031218072017.2342:tree.OnContinueDrag
 def OnContinueDrag(self,p,event):
 
@@ -8379,7 +8386,7 @@ childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
 #@nonl
 #@-node:ekr.20031218072017.1778:<< set vdrag, childFlag >>
 #@-node:ekr.20031218072017.1777:tree.OnEndDrag
-#@-node:EKR.20040608110312:Dragging
+#@-node:EKR.20040608110312:Dragging (tk tree)
 #@+node:ekr.20031218072017.1332:headline key handlers (tree)
 @ The <Key> event generates the event before the headline text is changed(!), so we register an idle-event handler to do the work later.
 @c
@@ -12705,6 +12712,8 @@ def clone (self,back):
     Returns the newly created position."""
     
     p = self ; c = p.c
+    
+    # g.trace(p,back)
 
     p2 = back.copy()
     p2.v = vnode(c,back.v.t)
@@ -34114,6 +34123,7 @@ def swapLinks (self,v2): # not used.
 #@-node:EKR.20040528070309.2:(Fixed undoReplaceNodes)
 #@-node:EKR.20040601083927:In 4.2 a3
 #@+node:EKR.20040610102329:In 4.2 a4
+#@+node:EKR.20040612121907:6/04
 #@+node:ekr.20040330092305.1:(Made "end1" and "ilde"events work again)
 @nocolor
 
@@ -36814,7 +36824,6 @@ def createOutline (self,fileName,parent):
     c = self.c ; current = c.currentVnode()
     junk,self.fileName = g.os_path_split(fileName)
     self.methodName,ext = g.os_path_splitext(self.fileName)
-    g.trace(fileName)
     self.fileType = ext
     self.setEncoding()
     # g.trace(self.fileName,self.fileType)
@@ -38689,7 +38698,7 @@ end = s[j:i]
 # All appears to work well at present.
 # Besides, there have been no bug reports lately.
 #@nonl
-#@+node:EKR.20040608110312:Dragging
+#@+node:EKR.20040608110312:Dragging (tk tree)
 #@+node:ekr.20031218072017.2342:tree.OnContinueDrag
 def OnContinueDrag(self,p,event):
 
@@ -38833,7 +38842,7 @@ childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
 #@nonl
 #@-node:ekr.20031218072017.1778:<< set vdrag, childFlag >>
 #@-node:ekr.20031218072017.1777:tree.OnEndDrag
-#@-node:EKR.20040608110312:Dragging
+#@-node:EKR.20040608110312:Dragging (tk tree)
 #@-node:ekr.20031218072017.859:(Experimented with clone dragging)
 #@+node:EKR.20040609090913:(Fixed Open With bug)
 #@+node:EKR.20040609090913.1:Traceback
@@ -39855,7 +39864,6 @@ def createOutline (self,fileName,parent):
     c = self.c ; current = c.currentVnode()
     junk,self.fileName = g.os_path_split(fileName)
     self.methodName,ext = g.os_path_splitext(self.fileName)
-    g.trace(fileName)
     self.fileType = ext
     self.setEncoding()
     # g.trace(self.fileName,self.fileType)
@@ -39948,6 +39956,8 @@ Here is what I did:
 Leo seemed to do a reasonable job with the Import.
 #@-node:EKR.20040610082623.1:Reply
 #@-node:EKR.20040521084602:(Checked PHP import bug: works for me)
+#@-node:EKR.20040612121907:6/04
+#@+node:EKR.20040612121907.1:6/11/04
 #@+node:EKR.20040610082855:(Fixed crasher in openRecentFile)
 #@+node:EKR.20040610082855.1:Report
 @nocolor
@@ -40783,6 +40793,8 @@ def selectAllText (self):
 #@nonl
 #@-node:ekr.20031218072017.4023:selectAllText
 #@-node:EKR.20040611081747.2:(Fixed bug in delete command)
+#@-node:EKR.20040612121907.1:6/11/04
+#@+node:EKR.20040612121907.2:6/12/04
 #@+node:EKR.20040612112111:Mass code changes to test.leo, leoPy.leo and leoPlugins.leo
 @nocolor
 
@@ -40799,6 +40811,399 @@ except ImportError: Tk = None
 - Converted leading tabs to spaces
 #@nonl
 #@-node:EKR.20040612112111:Mass code changes to test.leo, leoPy.leo and leoPlugins.leo
+#@+node:EKR.20040612113045:(Fixed oops: nullGui setIdleTimeHook)
+#@+node:ekr.20031218072017.3739:Idle time
+def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
+    
+    pass # Not an error.
+    
+def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
+    
+   pass # Not an error.
+#@-node:ekr.20031218072017.3739:Idle time
+#@-node:EKR.20040612113045:(Fixed oops: nullGui setIdleTimeHook)
+#@+node:EKR.20040612094305:Added readLineGenerator & readLineClass to leoGlobals
+#@-node:EKR.20040612094305:Added readLineGenerator & readLineClass to leoGlobals
+#@+node:EKR.20040612093706:(Investigated clone-drag bug in 4.1)
+# This does not happen in 4.2, only 4.1.  It hardly seems worthwhile messing with the 4.1 code base now.
+#@nonl
+#@+node:EKR.20040612093706.1:Report
+@nocolor
+
+This one has bitten me for the 2nd time now: There are situations, where 
+clones are not marked as clones. Finally I found how to reproduce the behavior:
+
+Build the following outline:
+
+Level 1
+...Level 2
+......Clone
+......Level 3
+
+Now do a CLONE DRAG of 'Clone' to 'Level 3' and shift it to the right.
+
+Your outline now looks like this:
+
+Level 1
+...Level 2
+......Clone
+......Level 3
+.........Clone
+
+Both clones are marked as clone. So far so good.
+
+Now create another top level node 'Another Level 1'
+
+CLONE DRAG the 'Level 3' node to 'Another Level 1', but leave it at top level.
+
+Your outline now looks this way:
+
+Level 1
+...Level 2
+......Clone
+......Level 3
+.........Clone
+Another Level 1
+Level 3
+...Clone
+
+Still everything's ok.
+
+Now clone drag the only 'Level 2' node to 'Another Level 1' and shift it right.
+The node is not expanded, so expand it until you see the node 'Clone'. This node is NOT
+marked as clone. However, it IS a clone, as you can see, if you write into one of the 'Clone' nodes.
+
+Your outline now looks this way:
+
+Level 1
+...Level 2 *
+......Clone *
+......Level 3 *
+.........Clone *
+Another Level 1
+...Level 2 *
+......Clone *
+......Level 3 *
+.........Clone (*)
+Level 3 *
+...Clone *
+
+In the above hierarchy I have marked all clones with a '*' and the clones erratically not 
+being marked as clone marked with a '(*)'.
+
+Now, if you delete the top level 'Level 3' node, the erratically unmarked clone
+becomes marked - the error has gone!
+
+HTH
+Franz GEIGER
+#@nonl
+#@-node:EKR.20040612093706.1:Report
+#@+node:ekr.20031218072017.2945:Dragging (commands)
+#@+node:ekr.20031218072017.2353:c.dragAfter
+def dragAfter(self,v,after):
+
+    c = self
+    if not c.checkMoveWithParentWithWarning(v,after.parent(),True): return
+    # Remember both the before state and the after state for undo/redo
+    oldBack = v.back()
+    oldParent = v.parent()
+    oldN = v.childIndex()
+    c.beginUpdate()
+    if 1: # inside update...
+        c.endEditing()
+        # v.setDirty()
+        v.setAllAncestorAtFileNodesDirty() # 1/12/04
+        v.moveAfter(after)
+        c.undoer.setUndoParams("Drag",v,
+            oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+        # v.setDirty()
+        v.setAllAncestorAtFileNodesDirty() # 1/12/04
+        c.selectVnode(v)
+        c.setChanged(True)
+    c.endUpdate()
+    c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
+#@nonl
+#@-node:ekr.20031218072017.2353:c.dragAfter
+#@+node:ekr.20031218072017.2946:c.dragCloneToNthChildOf (changed in 3.11.1)
+def dragCloneToNthChildOf (self,v,parent,n):
+
+    c = self
+    c.beginUpdate()
+    # g.trace("v,parent,n:",v.headString(),parent.headString(),n)
+    clone = v.clone(v) # Creates clone & dependents, does not set undo.
+    if not c.checkMoveWithParentWithWarning(clone,parent,True):
+        clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+        c.endUpdate(False) # Nothing has changed.
+        return
+    # Remember both the before state and the after state for undo/redo
+    oldBack = v.back()
+    oldParent = v.parent()
+    oldN = v.childIndex()
+    c.endEditing()
+    # clone.setDirty()
+    clone.setAllAncestorAtFileNodesDirty() # 1/12/04
+    clone.moveToNthChildOf(parent,n)
+    c.undoer.setUndoParams("Drag & Clone",clone,
+        oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+    # clone.setDirty()
+    clone.setAllAncestorAtFileNodesDirty() # 1/12/04
+    c.selectVnode(clone)
+    c.setChanged(True)
+    c.endUpdate()
+    c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+#@-node:ekr.20031218072017.2946:c.dragCloneToNthChildOf (changed in 3.11.1)
+#@+node:ekr.20031218072017.2947:c.dragToNthChildOf
+def dragToNthChildOf(self,v,parent,n):
+
+    # g.es("dragToNthChildOf")
+    c = self
+    if not c.checkMoveWithParentWithWarning(v,parent,True): return
+    # Remember both the before state and the after state for undo/redo
+    oldBack = v.back()
+    oldParent = v.parent()
+    oldN = v.childIndex()
+    c.beginUpdate()
+    if 1: # inside update...
+        c.endEditing()
+        # v.setDirty()
+        v.setAllAncestorAtFileNodesDirty() # 1/12/04
+        v.moveToNthChildOf(parent,n)
+        c.undoer.setUndoParams("Drag",v,
+            oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+        # v.setDirty()
+        v.setAllAncestorAtFileNodesDirty() # 1/12/04
+        c.selectVnode(v)
+        c.setChanged(True)
+    c.endUpdate()
+    c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
+#@nonl
+#@-node:ekr.20031218072017.2947:c.dragToNthChildOf
+#@+node:ekr.20031218072017.2948:c.dragCloneAfter
+def dragCloneAfter (self,v,after):
+
+    c = self
+    c.beginUpdate()
+    clone = v.clone(v) # Creates clone & dependents, does not set undo.
+    # g.trace("v,after:",v.headString(),after.headString())
+    if not c.checkMoveWithParentWithWarning(clone,after.parent(),True):
+        g.trace("invalid clone move")
+        clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+        c.endUpdate(False) # Nothing has changed.
+        return
+    # Remember both the before state and the after state for undo/redo
+    oldBack = v.back()
+    oldParent = v.parent()
+    oldN = v.childIndex()
+    c.endEditing()
+    # clone.setDirty()
+    clone.setAllAncestorAtFileNodesDirty() # 1/12/04
+    clone.moveAfter(after)
+    c.undoer.setUndoParams("Drag & Clone",clone,
+        oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+    # clone.setDirty()
+    clone.setAllAncestorAtFileNodesDirty() # 1/12/04
+    c.selectVnode(clone)
+    c.setChanged(True)
+    c.endUpdate()
+    c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+#@nonl
+#@-node:ekr.20031218072017.2948:c.dragCloneAfter
+#@-node:ekr.20031218072017.2945:Dragging (commands)
+#@+node:EKR.20040608110312:Dragging (tk tree)
+#@+node:ekr.20031218072017.2342:tree.OnContinueDrag
+def OnContinueDrag(self,p,event):
+
+    try:
+        << continue dragging >>
+    except:
+        g.es_event_exception("continue drag")
+#@nonl
+#@+node:ekr.20031218072017.2343:<< continue dragging >>
+# g.trace(p)
+assert(p == self.drag_p)
+
+canvas = self.canvas
+frame = self.c.frame
+
+if event:
+    x,y = event.x,event.y
+else:
+    x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
+    if x == -1 or y == -1: return # Stop the scrolling if we go outside the entire window.
+
+if 0: # no longer used.
+    canvas_x = canvas.canvasx(x)
+    canvas_y = canvas.canvasy(y)
+    id = self.canvas.find_closest(canvas_x,canvas_y)
+
+# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
+if self.drag_id: # This gets cleared by OnEndDrag()
+    << scroll the canvas as needed >>
+#@nonl
+#@+node:ekr.20031218072017.2344:<< scroll the canvas as needed >>
+# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
+h = canvas.winfo_height()
+if y < 0 or y > h:
+    lo, hi = frame.treeBar.get()
+    n = self.savedNumberOfVisibleNodes
+    line_frac = 1.0 / float(n)
+    frac = g.choose(y < 0, lo - line_frac, lo + line_frac)
+    frac = min(frac,1.0)
+    frac = max(frac,0.0)
+    # g.es("lo,hi,frac:",lo,hi,frac)
+    canvas.yview("moveto", frac)
+    
+    # Queue up another event to keep scrolling while the cursor is outside the canvas.
+    lo, hi = frame.treeBar.get()
+    if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
+        canvas.after_idle(self.OnContinueDrag,p,None) # Don't propagate the event.
+#@nonl
+#@-node:ekr.20031218072017.2344:<< scroll the canvas as needed >>
+#@-node:ekr.20031218072017.2343:<< continue dragging >>
+#@-node:ekr.20031218072017.2342:tree.OnContinueDrag
+#@+node:ekr.20031218072017.1776:tree.OnDrag
+# This precomputes numberOfVisibleNodes(), a significant optimization.
+# We also indicate where findVnodeWithIconId() should start looking for tree id's.
+
+def OnDrag(self,p,event):
+
+    # Note: "drag" hooks handled by vnode callback routine.
+
+    c = self.c ; v = p.v
+    assert(p == self.drag_p)
+
+    if not event:
+        return
+
+    if not self.dragging():
+        windowPref = g.app.config.getBoolWindowPref
+        # Only do this once: greatly speeds drags.
+        self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
+        self.setDragging(True)
+        if windowPref("allow_clone_drags"):
+            self.controlDrag = c.frame.controlKeyIsDown
+            if windowPref("look_for_control_drag_on_mouse_down"):
+                if windowPref("enable_drag_messages"):
+                    if self.controlDrag:
+                        g.es("dragged node will be cloned")
+                    else:
+                        g.es("dragged node will be moved")
+        else: self.controlDrag = False
+        self.canvas['cursor'] = "hand2" # "center_ptr"
+
+    self.OnContinueDrag(p,event)
+#@nonl
+#@-node:ekr.20031218072017.1776:tree.OnDrag
+#@+node:ekr.20031218072017.1777:tree.OnEndDrag
+def OnEndDrag(self,p,event):
+    
+    """Tree end-of-drag handler called from vnode event handler."""
+    
+    v = p.v
+    
+    # 7/10/03: Make sure we are still dragging.
+    if not self.drag_p:
+        return
+
+    assert(p == self.drag_p)
+    c = self.c ; canvas = self.canvas ; config = g.app.config
+
+    if event:
+        << set vdrag, childFlag >>
+        if config.getBoolWindowPref("allow_clone_drags"):
+            if not config.getBoolWindowPref("look_for_control_drag_on_mouse_down"):
+                self.controlDrag = c.frame.controlKeyIsDown
+
+        if vdrag and vdrag != p:
+            if self.controlDrag: # Clone p and move the clone.
+                if childFlag:
+                    c.dragCloneToNthChildOf(p,vdrag,0)
+                else:
+                    c.dragCloneAfter(p,vdrag)
+            else: # Just drag p.
+                if childFlag:
+                    c.dragToNthChildOf(p,vdrag,0)
+                else:
+                    c.dragAfter(p,vdrag)
+        else:
+            if p and self.dragging():
+                pass # g.es("not dragged: " + p.headString())
+            if 0: # Don't undo the scrolling we just did!
+                self.idle_scrollTo(p)
+    
+    # 1216/02: Reset the old cursor by brute force.
+    self.canvas['cursor'] = "arrow"
+
+    if self.drag_id:
+        canvas.tag_unbind(self.drag_id,"<B1-Motion>")
+        canvas.tag_unbind(self.drag_id,"<Any-ButtonRelease-1>")
+        self.drag_id = None
+        
+    self.setDragging(False)
+    self.drag_p = None
+#@nonl
+#@+node:ekr.20031218072017.1778:<< set vdrag, childFlag >>
+x,y = event.x,event.y
+canvas_x = canvas.canvasx(x)
+canvas_y = canvas.canvasy(y)
+
+id = self.canvas.find_closest(canvas_x,canvas_y)
+vdrag = self.findVnodeWithIconId(id)
+childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
+#@nonl
+#@-node:ekr.20031218072017.1778:<< set vdrag, childFlag >>
+#@-node:ekr.20031218072017.1777:tree.OnEndDrag
+#@-node:EKR.20040608110312:Dragging (tk tree)
+#@+node:ekr.20040303175026.8:p.clone
+def clone (self,back):
+    
+    """Create a clone of back.
+    
+    Returns the newly created position."""
+    
+    p = self ; c = p.c
+    
+    # g.trace(p,back)
+
+    p2 = back.copy()
+    p2.v = vnode(c,back.v.t)
+    p2.linkAfter(back)
+
+    return p2
+#@nonl
+#@-node:ekr.20040303175026.8:p.clone
+#@+node:ekr.20040310062332.2:p.linkAfter
+def linkAfter (self,after):
+
+    """Link self after v."""
+    
+    p = self
+    # g.trace(p,after)
+    
+    p.stack = after.stack[:] # 3/12/04
+    p.v._parent = after.v._parent
+    
+    # Add v to it's tnode's vnodeList.
+    if p.v not in p.v.t.vnodeList:
+        p.v.t.vnodeList.append(p.v)
+    
+    p.v._back = after.v
+    p.v._next = after.v._next
+    
+    after.v._next = p.v
+    
+    if p.v._next:
+        p.v._next._back = p.v
+
+    if 0:
+        g.trace('-'*20,after)
+        p.dump(label="p")
+        after.dump(label="back")
+        if p.hasNext(): p.next().dump(label="next")
+#@nonl
+#@-node:ekr.20040310062332.2:p.linkAfter
+#@-node:EKR.20040612093706:(Investigated clone-drag bug in 4.1)
+#@-node:EKR.20040612121907.2:6/12/04
 #@-node:EKR.20040610102329:In 4.2 a4
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects

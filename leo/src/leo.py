@@ -6,6 +6,7 @@
 """Entry point for Leo in Python."""
 
 #@@language python
+#@@tabwidth -4
 
 #@<< Import pychecker >>
 #@+node:ekr.20031218072017.2606:<< Import pychecker >>

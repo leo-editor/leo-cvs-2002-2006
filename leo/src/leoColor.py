@@ -3,6 +3,7 @@
 """Syntax coloring routines for Leo."""
 
 #@@language python
+#@@tabwidth -4
 
 import leoGlobals as g
 import re

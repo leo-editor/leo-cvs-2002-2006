@@ -1,6 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3652:@thin leoFontPanel.py
 #@@language python
+#@@tabwidth -4
 
 import leoGlobals as g
 import sys

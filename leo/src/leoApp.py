@@ -4,6 +4,7 @@
 #@@first
 
 #@@language python
+#@@tabwidth -4
 
 import leoGlobals as g
 import os
