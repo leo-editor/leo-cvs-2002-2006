@@ -1112,12 +1112,13 @@ class atFile:
 				#@+node:3::<< Set headline and ref >>
 				#@+body
 				# Set headline to the rest of the line.
+				# 6/22/03: don't strip leading whitespace.
 				if len(self.endSentinelComment) == 0:
-					headline = string.strip(s[i:-1])
+					headline = s[i:-1].rstrip()
 				else:
 					# 10/24/02: search from the right, not the left.
 					k = s.rfind(self.endSentinelComment,i)
-					headline = string.strip(s[i:k]) # works if k == -1
+					headline = s[i:k].rstrip() # works if k == -1
 					
 				# 10/23/02: The cweb hack: undouble @ signs if the opening comment delim ends in '@'.
 				if self.startSentinelComment[-1:] == '@':

@@ -1887,6 +1887,7 @@ class leoCoreFrame:
 		
 		a = app() ; c = self.commands ; v = c.currentVnode()
 		if not data: return
+		if len(data) != 3: return # 6/22/03
 		try:
 			openType,arg,ext=data
 			if not doHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext):
@@ -4337,13 +4338,13 @@ class leoCoreFrame:
 		parent.insert_cascade(index,label=label,menu=openWithMenu,underline=amp_index)
 		# Populate the "Open With..." menu.
 		shortcut_table = []
-		for name,shortcut,data in table:
-			try:
-				data2 = (name,shortcut,data)
-				shortcut_table.append(data2)
-			except:
-				es("createOpenWithMenuFromTable: invalid data")
+		for triple in table:
+			if len(triple) == 3: # 6/22/03
+				shortcut_table.append(triple)
+			else:
+				es("createOpenWithMenuFromTable: invalid data",color="red")
 				return
+				
 		# for i in shortcut_table: print i
 		self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=1)
 	

@@ -17,7 +17,7 @@
 <v t="T3"><vh>Singleton sequences</vh></v>
 <v t="T4"><vh>How to get screenshots</vh></v>
 </v>
-<v t="T5"><vh>Previous tests</vh>
+<v t="T5" a="V"><vh>Previous tests</vh>
 <v t="T6"><vh>Coloring Test</vh>
 <v t="T7"><vh>Colorizing Test</vh></v>
 <v t="T8"><vh>Color test without images</vh></v>
@@ -103,8 +103,8 @@
 </v>
 <v t="T58"><vh>v.__repr__ and v.__str___</vh></v>
 <v t="T59"><vh>Overriding core classes</vh></v>
+<v t="T60"><vh>Trailing newline in body</vh></v>
 </v>
-<v t="T60" a="V"><vh>Deleting ivars</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1"></t>
@@ -531,29 +531,7 @@ print v
 print `v`</t>
 <t tx="T59">import leoFrame
 print "%d leoFrame instances" % leoFrame.LeoFrame.instances</t>
-<t tx="T60">def clearAllIvars (o):
-	
-	if 0:
-		o.__dict__ = {}
-	else:
-		names = o.__dict__.keys()
-		print names
-		for name in names:
-			exec("o.%s = None" % name) # del may not actually remove the ivar.
-			# exec("del o.%s" % name)
-		
-class test:
-	def __init__(self):
-		self.a = 1
-		self.b = 2
-		self.c = []
-		self.d = {}
-		
-t = test()
-print t
-print t.__dict__
-clearAllIvars(t)
-print t
-print t.__dict__</t>
+<t tx="T60">ab
+</t>
 </tnodes>
 </leo_file>
