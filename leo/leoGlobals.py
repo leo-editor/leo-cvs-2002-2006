@@ -3226,9 +3226,12 @@ except:
 		# it might return "ascii" instead.
 		
 		def getpreferredencoding(do_setlocale = true):
-		    """Return the charset that the user is likely using."""
-		    import _locale
-		    return _locale._getdefaultlocale()[1]
+			"""Return the charset that the user is likely using."""
+			try:
+				import _locale
+				return _locale._getdefaultlocale()[1]
+			except:
+				return None # Good enough for a.finishCreate.
 		#@-body
 		#@-node:1::<< define getpreferredencoding using _locale >>
 
@@ -3241,25 +3244,33 @@ except:
 		try:
 		    local.CODESET
 		except NameError:
-		    # Fall back to parsing environment variables :-(
-		    def getpreferredencoding(do_setlocale = true):
-		        """Return the charset that the user is likely using,
-		        by looking at environment variables."""
-		        return locale.getdefaultlocale()[1]
+			# Fall back to parsing environment variables :-(
+			def getpreferredencoding(do_setlocale = true):
+				"""Return the charset that the user is likely using,
+				by looking at environment variables."""
+				try:
+					return locale.getdefaultlocale()[1]
+				except:
+					return None # Good enough for a.finishCreate.
 		else:
-		    def getpreferredencoding(do_setlocale = true):
-		        """Return the charset that the user is likely using,
-		        according to the system configuration."""
-		        if do_setlocale:
-		            oldloc = locale.setlocale(LC_CTYPE)
-		            locale.setlocale(LC_CTYPE, "")
-		            result = locale.nl_langinfo(CODESET)
-		            locale.setlocale(LC_CTYPE, oldloc)
-		            return result
-		        else:
-		            return locale.nl_langinfo(CODESET)
+			def getpreferredencoding(do_setlocale = true):
+				"""Return the charset that the user is likely using,
+				according to the system configuration."""
+				try:
+					if do_setlocale:
+						oldloc = locale.setlocale(LC_CTYPE)
+						locale.setlocale(LC_CTYPE, "")
+						result = locale.nl_langinfo(CODESET)
+						locale.setlocale(LC_CTYPE, oldloc)
+						return result
+					else:
+						return locale.nl_langinfo(CODESET)
+				except:
+					return None # Good enough for a.finishCreate.
 		#@-body
 		#@-node:2::<< define getpreferredencoding for *nix >>
+
+
 #@-body
 #@-node:4::getpreferredencoding from 2.3a2
 #@-node:11::Unicode utils...
