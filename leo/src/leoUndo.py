@@ -514,7 +514,8 @@ class baseUndoer:
 				elif u.parent:
 					u.p.linkAsNthChild(u.parent,0)
 				else:
-					u.p.linkAsRoot()
+					oldRoot = c.rootPosition()
+					u.p.linkAsRoot(oldRoot)
 			
 				c.selectVnode(u.p)
 			#@nonl
@@ -545,7 +546,8 @@ class baseUndoer:
 				elif u.parent:
 					u.p.linkAsNthChild(u.parent,0)
 				else:
-					u.p.linkAsRoot()
+					oldRoot = c.rootPosition()
+					u.p.linkAsRoot(oldRoot)
 					
 				# Restore all vnodeLists (and thus all clone marks).
 				u.p.restoreLinksInTree()
@@ -752,7 +754,8 @@ class baseUndoer:
 				elif u.parent:
 					u.p.linkAsNthChild(u.parent,0)
 				else:
-					u.p.linkAsRoot()
+					oldRoot = c.rootPosition()
+					u.p.linkAsRoot(oldRoot)
 					
 				# Restore all vnodeLists (and thus all clone marks).
 				u.p.restoreLinksInTree()
