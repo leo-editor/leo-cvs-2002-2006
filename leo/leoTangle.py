@@ -1056,7 +1056,11 @@ class tangleCommands:
 				# Tangle code.
 				j = skip_blank_lines(s,i)
 				k, code = self.skip_code(s,j)
-				self.st_enter_root_name(old_root_name,code,doc)
+				# we can rely on language and *_comment_string only if scanAllDirectives has
+				# processed the node prior to this invocation
+				self.st_enter_root_name(old_root_name,code,doc,
+				    self.language,self.single_comment_string,
+				    self.start_comment_string,self.end_comment_string)
 				
 				if not self.tangling: # Untangle code.
 					part = 1 # Use 1 for root part.
@@ -1314,10 +1318,23 @@ class tangleCommands:
 			if not self.output_file:
 				es("Can not create: " + temp_name)
 				break
+			
+			#@<<Get root specific attributes>>
+			#@+node:1::<<Get root specific attributes>>
+			#@+body
+			# do we need to retrieve verbose/terse? path? pagewidth? tabwidth? header/noheader?
+			self.language = section.language
+			self.single_comment_string = section.single_comment_string
+			self.start_comment_string = section.start_comment_string
+			self.end_comment_string = section.end_comment_string
+
+			#@-body
+			#@-node:1::<<Get root specific attributes>>
+
 			if self.use_header_flag and self.print_bits == verbose_bits:
 				
 				#@<< Write a banner at the start of the output file >>
-				#@+node:1::<<Write a banner at the start of the output file>>
+				#@+node:2::<<Write a banner at the start of the output file>>
 				#@+body
 				if self.single_comment_string:
 					self.os(self.single_comment_string)
@@ -1332,7 +1349,7 @@ class tangleCommands:
 					self.onl() ; self.onl()
 
 				#@-body
-				#@-node:1::<<Write a banner at the start of the output file>>
+				#@-node:2::<<Write a banner at the start of the output file>>
 
 			for part in section.parts:
 				if part.is_root:
@@ -1347,7 +1364,7 @@ class tangleCommands:
 				es("unchanged:  " + file_name)
 				
 				#@<< Erase the temporary file >>
-				#@+node:2::<< Erase the temporary file >>
+				#@+node:3::<< Erase the temporary file >>
 				#@+body
 				
 				try: # Just delete the temp file.
@@ -1355,7 +1372,7 @@ class tangleCommands:
 				except: pass
 
 				#@-body
-				#@-node:2::<< Erase the temporary file >>
+				#@-node:3::<< Erase the temporary file >>
 	#@-body
 	#@-node:2:C=10:tangle.put_all_roots
 	#@+node:3::put_code
@@ -1981,7 +1998,9 @@ class tangleCommands:
 	#@-at
 	#@@c
 	
-	def st_enter(self,name,code,doc,multiple_parts_flag,is_root_flag):
+	def st_enter(self,name,code,doc,multiple_parts_flag,is_root_flag,
+	             language=None,single_comment_string=None,start_comment_string=None,
+	             end_comment_string=None):
 		
 		# trace(`name`)
 		section = self.st_lookup(name,is_root_flag)
@@ -2020,6 +2039,19 @@ class tangleCommands:
 		if is_root_flag:
 			self.root_list.append(section)
 			section.referenced = true # Mark the root as referenced.
+			
+			#@<<remember root node attributes>>
+			#@+node:2::<<remember root node attributes>>
+			#@+body
+			# remember the language and comment characteristics
+			section.language = language
+			section.single_comment_string = single_comment_string
+			section.start_comment_string = start_comment_string
+			section.end_comment_string = end_comment_string
+
+			#@-body
+			#@-node:2::<<remember root node attributes>>
+
 		return len(section.parts) # part number
 	#@-body
 	#@-node:4::st_enter
@@ -2041,11 +2073,14 @@ class tangleCommands:
 	#@+body
 	# Enters a root name into the given symbol table.
 	
-	def st_enter_root_name(self,name,code,doc):
+	def st_enter_root_name(self,name,code,doc,language,single_comment_string,
+	                       start_comment_string,end_comment_string):
 		
 		# assert(code)
 		if name: # User errors can result in an empty @root name.
-			self.st_enter(name,code,doc,disallow_multiple_parts,is_root_name)
+			self.st_enter(name,code,doc,disallow_multiple_parts,is_root_name,
+	                      language,single_comment_string,start_comment_string,
+						  end_comment_string)
 	#@-body
 	#@-node:6::st_enter_root_name
 	#@+node:7::st_lookup
