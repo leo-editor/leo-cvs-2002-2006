@@ -4,11 +4,37 @@ leo.py is available at:  http://sourceforge.net/projects/leo/
 leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
 
-leo.py 4.0 alpha 2
+leo.py 4.0 beta 1                      September 26, 2003
 
-This version is experimental.  Use at your own risk.
+This is the first official release of Leo 4.0.
 
-This is the first official public release of 4.0.  I am using it to develop Leo, and it appears stable.
+Please use caution: this version has been tested by only a few people.
+
+Highlights of this version:
+
+** Improved format of derived files.
+	- Eliminated child indices.
+	- Eliminated extraneous blank lines.
+	- Eliminated @body sentinels.
+	- Eliminated @node sentinels that indicate outline structure.
+
+** Greatly improved error handling.
+	- Read errors leave the outline completely unchanged.
+	- Broken clone links are gone forever.
+	- 4.0 is much safer than all previous versions.
+
+** Full compatibility will previous versions of Leo.
+	- Leo reads all derived files properly, regardless of version.
+	- Leo writes new-format derived files by default, and this default may be changed.
+	- New commands in the read/write menu allow you to explicitly specify the format of derived files.
+
+* New commands:
+	- Write 3.x Derived File.
+	- Write 4.x Derived File.
+	- Import Derived File.
+	- Clear Recent Files.
+
+- Several minor bug fixes.
 
 leo.py 3.12.1 beta 1                     July 25, 2003
 

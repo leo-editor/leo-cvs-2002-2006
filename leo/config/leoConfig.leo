@@ -215,7 +215,9 @@ use_plugins = 1
 
 write_old_format_derived_files = 0
 #	1: Write all derived files using pre-4.0 format.
-#	0: Write all derived files using 4.0 format.</t>
+#	0: Write all derived files using 4.0 format.
+#	Please write 4.0 derived files when uploading code to cvs.
+#	The use of pre-4.0 derived files is deprecated.</t>
 <t tx="T5"># The list of files in the "Recent Files" menu at startup.
 
 [recent files]

@@ -1,11 +1,16 @@
+# -*- coding: utf-8 -*-
 #@+leo-ver=4
 #@+node:@file leoGui.py
+#@@first # -*- coding: utf-8 -*-
+
 """A module containing all of Leo's default gui code.
 
 Plugins may define their own gui classes by setting app().gui."""
 
 from leoGlobals import *
-import os,sys,tkFont,traceback
+import os,sys,tkFont,Tkinter,traceback
+
+Tk = Tkinter
 
 class tkinterGuiClass:
 	
@@ -17,7 +22,7 @@ class tkinterGuiClass:
 		
 		"""tkinterGuiClass.__getattr to handle unknown calls without crashing."""
 		
-		print "tkinterGui.__getattr__: not found:",name
+		# print "tkinterGui.__getattr__: not found:",name
 		return self.ignoreUnknownAttr
 		
 	def  ignoreUnknownAttr(self,*args,**keys):
@@ -31,6 +36,124 @@ class tkinterGuiClass:
 		return "tkinter"
 	#@nonl
 	#@-node:guiName
+	#@+node:destroy
+	def destroy(self,widget):
+		
+		widget.destroy()
+	#@nonl
+	#@-node:destroy
+	#@+node:attachLeoIcon & allies
+	#@+at 
+	#@nonl
+	# This code requires Fredrik Lundh's PIL and tkIcon packages:
+	# 
+	# Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
+	# Download tkIcon from http://www.effbot.org/downloads/#tkIcon
+	# 
+	# We wait until the window has been drawn once before attaching the icon 
+	# in OnVisiblity.
+	# 
+	# Many thanks to Jonathan M. Gilligan for suggesting this code.
+	#@-at
+	#@@c
+	
+	leoIcon = None
+	
+	def attachLeoIcon (self,w):
+		try:
+			import Image,_tkicon
+			import tkIcon
+			global leoIcon
+			
+			f = onVisibility
+			callback = lambda event,w=w,f=f:f(w,event)
+			w.bind("<Visibility>",callback)
+			if not leoIcon:
+				# Using a .gif rather than an .ico allows us to specify transparency.
+				icon_file_name = os.path.join(app().loadDir,'..','Icons','LeoWin.gif')
+				icon_file_name = os.path.normpath(icon_file_name)
+				icon_image = Image.open(icon_file_name)
+				if 1: # Doesn't resize.
+					leoIcon = createLeoIcon(icon_image)
+				else: # Assumes 64x64
+					leoIcon = tkIcon.Icon(icon_image)
+				
+		except:
+			# es_exception()
+			leoIcon = None
+	#@nonl
+	#@-node:attachLeoIcon & allies
+	#@+node:createLeoIcon
+	# This code is adapted from tkIcon.__init__
+	# Unlike the tkIcon code, this code does _not_ resize the icon file.
+	
+	def createLeoIcon (icon):
+		
+		try:
+			import Image,_tkicon
+			import tkIcon
+			
+			i = icon ; m = None
+			# create transparency mask
+			if i.mode == "P":
+				try:
+					t = i.info["transparency"]
+					m = i.point(lambda i, t=t: i==t, "1")
+				except KeyError: pass
+			elif i.mode == "RGBA":
+				# get transparency layer
+				m = i.split()[3].point(lambda i: i == 0, "1")
+			if not m:
+				m = Image.new("1", i.size, 0) # opaque
+			# clear unused parts of the original image
+			i = i.convert("RGB")
+			i.paste((0, 0, 0), (0, 0), m)
+			# create icon
+			m = m.tostring("raw", ("1", 0, 1))
+			c = i.tostring("raw", ("BGRX", 0, -1))
+			return _tkicon.new(i.size, c, m)
+		except:
+			return None
+	#@nonl
+	#@-node:createLeoIcon
+	#@+node:onVisibility
+	# Handle the "visibility" event and attempt to attach the Leo icon.
+	# This code must be executed whenever the window is redrawn.
+	
+	def onVisibility (w,event):
+	
+		global leoIcon
+	
+		try:
+			import Image,_tkicon
+			import tkIcon
+			if leoIcon and w and event and event.widget == w:
+				if 1: # Allows us not to resize the icon.
+					leoIcon.attach(w.winfo_id())
+				else:
+					leoIcon.attach(w)
+		except: pass
+	#@nonl
+	#@-node:onVisibility
+	#@+node:center_dialog
+	# Center the dialog on the screen.
+	# WARNING: Call this routine _after_ creating a dialog.
+	# (This routine inhibits the grid and pack geometry managers.)
+	
+	def center_dialog(self,dialog,top):
+	
+		sw = top.winfo_screenwidth()
+		sh = top.winfo_screenheight()
+		w,h,x,y = get_window_info(top)
+		
+		# Set the new window coordinates, leaving w and h unchanged.
+		x = (sw - w)/2
+		y = (sh - h)/2
+		top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+		
+		return w,h,x,y
+	#@nonl
+	#@-node:center_dialog
 	#@+node:createRootWindow
 	def createRootWindow(self):
 	
@@ -38,7 +161,7 @@ class tkinterGuiClass:
 		
 		# Create a hidden main window: this window never becomes visible!
 		
-		print "createRootWindow"
+		# print "createRootWindow"
 	
 		root = Tkinter.Tk()
 		root.title("Leo Main Window")
@@ -73,13 +196,13 @@ class tkinterGuiClass:
 			elif encoding and len(encoding) > 0:
 				print "ignoring invalid " + src + " encoding: " + `encoding`
 				
-		print "setEncoding",a.tkEncoding
+		# print "setEncoding",a.tkEncoding
 	#@nonl
 	#@-node:setGuiEncoding
 	#@+node:setDefaultIcon
 	def setDefaultIcon(self):
 		
-		print "setDefaultIcon"
+		# print "setDefaultIcon"
 		
 		a = app()
 		try:
@@ -120,7 +243,7 @@ class tkinterGuiClass:
 		
 		"""Get the default font from a new text widget."""
 		
-		print "getDefaultConfigFont",`config`
+		# print "getDefaultConfigFont",`config`
 	
 		t = Tkinter.Text()
 		fn = t.cget("font")
@@ -147,20 +270,6 @@ class tkinterGuiClass:
 			return self.defaultFont
 	#@nonl
 	#@-node:getFontFromParams
-	#@+node:createFrame
-	def createFrame (self,frame):
-		
-		"""Create a tkinter leo Window for the given leoFrame class."""
-		
-		trace(`frame`)
-	#@nonl
-	#@-node:createFrame
-	#@+node:createMenus
-	def createMenus (self,frame):
-		
-		trace(`frame`)
-	#@nonl
-	#@-node:createMenus
 	#@-others
 #@nonl
 #@-node:@file leoGui.py

@@ -6,7 +6,7 @@
 
 from leoGlobals import *
 import leo,leoConfig,leoDialog,leoFind,leoNodes
-import locale,os,sys,Tkinter
+import locale,os,sys
 
 class LeoApp:
 

@@ -10,10 +10,22 @@
 # This install script created by Frank Merenda 
 # (fmerenda@yahoo.com)
 #
-# version 1.0 - 06/30/2003
-# - initial creation
-# version 1.1 - 08/28/2003 EKR
-# - Change step 5 below.
+# verison 1.0 - 06/30/2003
+# - initial creation 
+#
+# 
+# - minor changes to try and use a "prefix" directory
+# - step 5 copies the src and config directories as 
+# directories rather that file (this seems to prevent
+# the need to remove ".." from the python scripts on RH9
+# anyway.)
+# - IMPORTANT NOTE: I did not understand step 6 so its
+# commented out. Someone who knows leo better than I do
+# should look at this.
+# - Note: I'm a leo newbie so I don't know if this fixes plugin
+# problems since I don't think I use them.
+# David Holden (dh@iucr.org)
+#   
 #
 ############################################
 
@@ -21,9 +33,14 @@
 ################################
 # Variables for usage in this script.
 ################################
+LEO_PREFIX="/usr/local"
 LEO_RUN_SCRIPT_SOURCE='./scripts/install/leo-script.txt'
-LEO_RUN_SCRIPT_OUTPUT='/usr/bin/leo'
-LEO_LIB_DIR='/usr/lib/leo'
+LEO_RUN_SCRIPT_OUTPUT="${LEO_PREFIX}/bin/leo"
+LEO_LIB_DIR="${LEO_PREFIX}/lib/leo"
+
+
+echo ""
+echo "Prefix directory set to \"$LEO_PREFIX\""
 
 ################################
 # Step 1
@@ -32,8 +49,10 @@ LEO_LIB_DIR='/usr/lib/leo'
 CURRENT_USER=$(whoami)
 
 if [ "$CURRENT_USER" = "root" ] ; then
+	echo ""
     echo Verified user is root
 else
+	echo ""
     echo You must be root to run this program
     exit 0;
 fi    
@@ -42,6 +61,7 @@ fi
 # Step 2
 # Make the directory structure
 ################################
+echo ""
 echo Making directory structure $LEO_LIB_DIR
 
 RESULTS=`mkdir -p $LEO_LIB_DIR 2>&1`
@@ -54,6 +74,7 @@ fi
 # Step 3
 # Copy the files
 ################################
+echo ""
 echo Copying files.....
 
 RESULTS=`cp -rp * $LEO_LIB_DIR/ 2>&1`
@@ -78,11 +99,6 @@ rm -rf $LEO_LIB_DIR/config
 # Don't make a liar out of me in step 4.
 # Copy the files. that you just deleted....   
 ###############################
-
-# 8/22/03: copy the entire directory
-#cp -rp src/* $LEO_LIB_DIR/
-#cp -rp config/* $LEO_LIB_DIR/
-
 cp -rp src $LEO_LIB_DIR/.
 cp -rp config $LEO_LIB_DIR/.
 
@@ -91,30 +107,33 @@ cp -rp config $LEO_LIB_DIR/.
 # Add in symbolic links to point to 
 # leoConfig and LeoDocs.   
 ###############################
-mkdir -p /usr/lib/config 
-chmod 777 /usr/lib/config
-ln -sf /$LEO_LIB_DIR/leoConfig.leo /usr/lib/config/leoConfig.leo
-chmod 666 /$LEO_LIB_DIR/leoConfig.leo  
-
-ln -sf /$LEO_LIB_DIR/leoConfig.txt /usr/lib/config/leoConfig.txt
-chmod 666 /$LEO_LIB_DIR/leoConfig.txt  
-
-mkdir -p /usr/lib/doc
-ln -sf $LEO_LIB_DIR/doc/LeoDocs.leo /usr/lib/doc/LeoDocs.leo
-chmod 666 $LEO_LIB_DIR/doc/LeoDocs.leo 
+#mkdir -p /usr/lib/config 
+#chmod 777 /usr/lib/config
+#ln -sf /$LEO_LIB_DIR/leoConfig.leo /usr/lib/config/leoConfig.leo
+#chmod 666 /$LEO_LIB_DIR/leoConfig.leo  
+#
+#ln -sf /$LEO_LIB_DIR/leoConfig.txt /usr/lib/config/leoConfig.txt
+#chmod 666 /$LEO_LIB_DIR/leoConfig.txt  
+#
+#mkdir -p /usr/lib/doc
+#ln -sf $LEO_LIB_DIR/doc/LeoDocs.leo /usr/lib/doc/LeoDocs.leo
+#chmod 666 $LEO_LIB_DIR/doc/LeoDocs.leo 
    
 ################################
 # Step 7
 # Create the startup script
 ################################
+echo ""
 echo Creating startup script located at: $LEO_RUN_SCRIPT_OUTPUT
 
-# RESULTS=`cp $LEO_RUN_SCRIPT_SOURCE $LEO_RUN_SCRIPT_OUTPUT`
-echo "python /usr/lib/leo/src/leo.py \"> $LEO_RUN_SCRIPT_OUTPUT
+echo "python ${LEO_PREFIX}/lib/leo/src/leo.py \$1" > $LEO_RUN_SCRIPT_OUTPUT
 
 RESULTS=`chmod 755 $LEO_RUN_SCRIPT_OUTPUT`   
    
-echo "***** Leo installed successfully - type 'leo filename.leo' to use it."   
+echo ""
+echo "***** Leo installed successfully - "
+echo "      make sure ${LEO_PREFIX}/bin is in your path then"
+echo "      type 'leo filename.leo' to use it."   
+echo "                                                 *****"
+echo ""
 exit 0;
-   
-
