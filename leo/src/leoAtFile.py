@@ -2379,7 +2379,10 @@ class atFile:
     
                 if not thinFile or (thinFile and p.v.isDirty()):
                     # New in Leo 4.3: support for mod_labels plugin:
-                    c.mod_label_controller.add_label(p,"before change:",old_body)
+                    try:
+                        c.mod_label_controller.add_label(p,"before change:",old_body)
+                    except Exception:
+                        pass
                     g.es("changed: " + p.headString(),color="blue")
                     p.setMarked()
     #@nonl
