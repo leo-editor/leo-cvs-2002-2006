@@ -1597,6 +1597,7 @@ class baseVnode:
 		clone.createDependents()
 	
 		# Set the clone bit in all nodes joined to back.
+		# This is not nearly enough.
 		clone.setClonedBit()
 		back.setClonedBit()
 		for v in back.t.joinList:
