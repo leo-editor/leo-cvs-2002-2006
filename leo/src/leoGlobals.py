@@ -2378,7 +2378,10 @@ def windows():
 #@+node:1::getindex
 #@+body
 def getindex(text, index):
-		return tuple(map(int,string.split(text.index(index), ".")))
+	
+	"""Convert string index of the form line.col into a tuple of two ints."""
+	
+	return tuple(map(int,string.split(text.index(index), ".")))
 #@-body
 #@-node:1::getindex
 #@+node:2::scanAtFileOptions
@@ -3265,7 +3268,10 @@ endsWithNL: true if the paragraph ends with a newline"""
 #@+node:2::getindex
 #@+body
 def getindex(text, index):
-		return tuple(map(int,string.split(text.index(index), ".")))
+	
+	"""Convert string index of the form line.col into a tuple of two ints."""
+	
+	return tuple(map(int,string.split(text.index(index), ".")))
 #@-body
 #@-node:2::getindex
 #@+node:3::getSelectedText
@@ -3283,16 +3289,20 @@ def getSelectedText (t):
 #@-node:3::getSelectedText
 #@+node:4::getTextSelection
 #@+body
-# t is a Tk.Text widget.  Returns the selected range of t.
-
 def getTextSelection (t):
+	
+	"""Return a tuple representing the selected range of t, a Tk.Text widget.
+	
+	Return a tuple giving the insertion point if no range of text is selected."""
 
 	# To get the current selection
 	sel = t.tag_ranges("sel")
 	if len(sel) == 2:
-		start, end = sel # unpack tuple.
-		return start, end
-	else: return None, None
+		return sel
+	else:
+		# 7/1/03: Return the insertion point if there is no selected text.
+		insert = t.index("insert")
+		return insert,insert
 #@-body
 #@-node:4::getTextSelection
 #@+node:5::setTextSelection
@@ -3307,6 +3317,7 @@ def setTextSelection (t,start,end):
 
 	if not start or not end:
 		return
+
 	if t.compare(start, ">", end):
 		start,end = end,start
 		

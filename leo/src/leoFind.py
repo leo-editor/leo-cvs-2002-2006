@@ -611,14 +611,17 @@ class leoFind (leoFindBase):
 		c = self.commands ; v = self.v
 		# trace(`self.in_headline`)
 		t = choose(self.in_headline,v.edit_text(),c.body)
-		# Not yet: set undo params.
-		sel = t.tag_ranges("sel")
+		oldSel = sel = t.tag_ranges("sel")
+		if len(sel) == 2:
+			start,end = sel
+			if start == end:
+				sel = None
 		if len(sel) != 2:
 			es("No text selected")
 			return false
 		# trace(`sel` + ", " + `c.change_text`)
 		# Replace the selection
-		start,end = sel
+		start,end = oldSel
 		t.delete(start,end)
 		t.insert(start,c.change_text)
 		# 2/7/02: Also update s_text in case we find another match on the same line.
@@ -626,6 +629,7 @@ class leoFind (leoFindBase):
 		self.s_text.insert(start,c.change_text)
 		# Update the selection for the next match.
 		setTextSelection(t,start,start + "+" + `len(c.change_text)` + "c")
+		newSel = getTextSelection(t)
 		t.focus_force()
 	
 		c.beginUpdate()
@@ -636,7 +640,7 @@ class leoFind (leoFindBase):
 		if self.in_headline:
 			c.tree.idle_head_key(v)
 		else:
-			c.tree.onBodyChanged(v,"Change")
+			c.tree.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
 		c.endUpdate(false) # No redraws here: they would destroy the headline selection.
 		# trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
 		return true

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="67" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="68" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="63" left="549" height="75" width="94"/>
+	<global_window_position top="63" left="468" height="75" width="94"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -110,10 +110,11 @@
 <v t="T64"><vh>@file ../test/missing_test.txt</vh></v>
 </v>
 </v>
-<v t="T65" a="E"><vh>Spell test </vh>
-<v t="T66" a="V"><vh>node two</vh></v>
+<v t="T65" a="V"><vh>Spell test </vh>
+<v t="T66"><vh>node two</vh></v>
 <v t="T67"><vh>node two no misspellings</vh></v>
 </v>
+<v t="T68"><vh>Undo typing tests</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1"></t>
@@ -568,5 +569,6 @@ the cat was sitting phew, another day. by zz z z
 two initabc
 </t>
 <t tx="T67">everything good.</t>
+<t tx="T68">test one</t>
 </tnodes>
 </leo_file>

@@ -2825,10 +2825,10 @@ class baseLeoFrame:
 	def OnDelete(self,event=None):
 	
 		c = self.commands ; v = c.currentVnode()
-		first, last = getTextSelection(self.body)
+		first, last = oldSel = getTextSelection(self.body)
 		if first and last:
 			self.body.delete(first,last)
-			c.tree.onBodyChanged(v,"Delete")
+			c.tree.onBodyChanged(v,"Delete",oldSel=oldSel)
 	
 	#@-body
 	#@-node:4::OnDelete
@@ -3369,11 +3369,11 @@ class baseLeoFrame:
 	def OnInsertBodyTime (self,event=None):
 		
 		c = self.commands ; v = c.currentVnode()
-		sel1,sel2 = getTextSelection(c.body)
+		sel1,sel2 = oldSel = getTextSelection(c.body)
 		if sel1 and sel2:
 			c.body.delete(sel1,sel2)
 		c.body.insert("insert",self.getTime(body=true))
-		c.tree.onBodyChanged(v,"Typing")
+		c.tree.onBodyChanged(v,"Typing",oldSel=oldSel)
 		
 	def OnInsertHeadlineTime (self,event=None):
 	

@@ -47,6 +47,7 @@ optionalIvars = (
 	"back","oldBack",
 	"n","oldN","oldV",
 	"oldText","newText",
+	"oldInsert","newInsert", # 7/1/03
 	"oldSel","newSel",
 	"sort","select",
 	"oldTree",
@@ -672,6 +673,7 @@ class baseUndoer:
 					u.newMiddleLines,u.oldMiddleLines,
 					u.newNewlines,u.oldNewlines,
 					tag="redo")
+				
 				if u.newSel:
 					start,end=u.newSel
 					setTextSelection (c.frame.body,start,end)

@@ -849,7 +849,7 @@ class baseLeoTree:
 	#@+others
 	#@+node:1::idle_body_key
 	#@+body
-	def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None):
+	def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None,newSel=None):
 		
 		"""Update the body pane at idle time."""
 	
@@ -859,7 +859,8 @@ class baseLeoTree:
 		if doHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType):
 			return "break" # The hook claims to have handled the event.
 		body = v.bodyString()
-		newSel = getTextSelection(c.body)
+		if not newSel:
+			newSel = getTextSelection(c.body)
 		
 		#@<< set s to the widget text >>
 		#@+node:1::<< set s to the widget text >>
@@ -1068,7 +1069,7 @@ class baseLeoTree:
 	#@+body
 	# Called by command handlers that have already changed the text.
 	
-	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None):
+	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None):
 		
 		"""Handle a change to the body pane."""
 		
@@ -1079,7 +1080,7 @@ class baseLeoTree:
 		if not oldSel:
 			oldSel = getTextSelection(c.body)
 	
-		self.idle_body_key(v,oldSel,undoType,oldYview=oldYview)
+		self.idle_body_key(v,oldSel,undoType,oldYview=oldYview,newSel=newSel)
 	
 	#@-body
 	#@-node:2::onBodyChanged
