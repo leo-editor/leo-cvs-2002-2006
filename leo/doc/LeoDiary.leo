@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1542" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1553" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="155" left="383" height="600" width="800"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences>
-</preferences>
-<find_panel_settings>
-	<find_string></find_string>
-	<change_string></change_string>
-</find_panel_settings>
+<preferences/>
+<find_panel_settings/>
 <vnodes>
-<v t="ekr.20040403120433" a="E"><vh>Diary</vh>
-<v t="ekr.20041023132837.1" a="TV"><vh>2004</vh>
+<v t="ekr.20041228094925"><vh>Early Milestones</vh>
+<v t="ekr.20041228094925.1"><vh>02/03/02 Leo 0.08 released</vh></v>
+<v t="ekr.20041228094925.2"><vh>12/17/01 ** Leo 0.05 released</vh></v>
+<v t="ekr.20041228094925.3"><vh>12/16/01 Leo becomes functional</vh></v>
+<v t="ekr.20041228094925.4"><vh>12/13/01 Syntax coloring works</vh></v>
+<v t="ekr.20041228094925.5"><vh>12/09/01 Tree now drawn properly</vh></v>
+<v t="ekr.20041228094925.6"><vh>12/05/01 Tree works with Tkinter</vh></v>
+<v t="ekr.20041228094925.7"><vh>11/10/01 ** began conversion to tk</vh></v>
+<v t="ekr.20041228094925.8"><vh>10/26/01 First successful read of .leo file w/ @file nodes</vh></v>
+<v t="ekr.20041228094925.9"><vh>9/29/01 c2py: Totally in love with Python</vh></v>
+<v t="ekr.20041228094925.10"><vh>ca. 9/1/01 began work on wxPython version of Leo</vh></v>
+</v>
+<v t="ekr.20040403120433" a="TV"><vh>Diary</vh>
+<v t="ekr.20041023132837.1"><vh>2004</vh>
 <v t="ekr.20041023132837.2"><vh>June 2004</vh>
 <v t="ekr.20041023132837.3"><vh>6/3</vh>
 <v t="ekr.20041023132837.4"><vh>Dimmed selection-only radio button in Find Panel</vh></v>
@@ -6490,5 +6499,20 @@ in &lt; &lt; initialize new states &gt; &gt; has caused no end of troubles.  The
 <t tx="ekr.20041023132837.81"></t>
 <t tx="ekr.20041023132837.82"></t>
 <t tx="ekr.20041023132837.83"></t>
+<t tx="ekr.20041228094925"></t>
+<t tx="ekr.20041228094925.1"></t>
+<t tx="ekr.20041228094925.2"></t>
+<t tx="ekr.20041228094925.3">leo.py reads and writes exactly like LeoCB</t>
+<t tx="ekr.20041228094925.4">Amazing.  I wrote some dummy code last night, read up on indices this morning, and got everything to work in a couple of hours. The result is very fast: no optimization is needed for Leo. I love Tkinter!
+
+Added c.recolor and tree.recolor routines.  This hooks should be called whenever the body text changes.  Apparently there is no "OnTextChanged" event in Tk.</t>
+<t tx="ekr.20041228094925.5"></t>
+<t tx="ekr.20041228094925.6"></t>
+<t tx="ekr.20041228094925.7">This marked my complete frustration with wxLeo and wxPython, and the real beginning of the work on leo.py.</t>
+<t tx="ekr.20041228094925.8"></t>
+<t tx="ekr.20041228094925.9">I am totally in love with Python.  Everything is so much easier:  Automatic debugging, no declarations, no types, no compilation. Great data structures. Even without single stepping the debugging is easy.
+
+All major aspects of c2py are now complete.</t>
+<t tx="ekr.20041228094925.10">I am not sure exactly when this happened.  The details apparently have been lost.  There was a time when I was experimenting with Python and wxPython, and a time when I was working on wxWindows version of Leo.</t>
 </tnodes>
 </leo_file>

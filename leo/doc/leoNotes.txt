@@ -1009,6 +1009,8 @@ returns, to be different :-)
 #@-node:ekr.20031218072017.389:cursed newline answer 2
 #@-node:ekr.20031218072017.386:How to remove cursed newlines: use binary mode
 #@+node:ekr.20031218072017.390:How to run Pychecker
+Do the following in Idle:
+
 import pychecker.checker ; import leo
 #@nonl
 #@-node:ekr.20031218072017.390:How to run Pychecker
@@ -1072,950 +1074,7 @@ def createRootWindow(self):
     return root
 #@nonl
 #@-node:ekr.20041214135556:How to use Tile
-#@+node:ekr.20031218072017.392:Python Notes & HowTo's...
-#@+node:ekr.20031218072017.393:What's new for each version:
-New in 2.2 (Do not use)
-
-- Iterators/Generators
-- Nested Scopes
-- New Classes
-
-The what's new for each version:
-
-http://www.amk.ca/python/2.0/
-http://www.amk.ca/python/2.1/
-#@+node:ekr.20031218072017.394:@url http://www.python.org/2.3/highlights.html
-#@-node:ekr.20031218072017.394:@url http://www.python.org/2.3/highlights.html
-#@+node:ekr.20031218072017.395:@url http://www.amk.ca/python/2.1/
-#@-node:ekr.20031218072017.395:@url http://www.amk.ca/python/2.1/
-#@+node:ekr.20031218072017.396:@url http://www.amk.ca/python/2.0/
-#@-node:ekr.20031218072017.396:@url http://www.amk.ca/python/2.0/
-#@-node:ekr.20031218072017.393:What's new for each version:
-#@+node:ekr.20031218072017.397:Default values & keyword arguments
-@nocolor
-
-1. You specify default values of _formal parameters_ in a def statement.
-
-2. You specify keywords arguments in a _function call_.
-
-3. An argument list must have any positional arguments followed by any keyword arguments, where the keywords must be chosen from the formal parameter names.  It's not important whether a formal parameter has a default value or not.
-
-4. No argument may receive a value more than once.
-
-5. When a final formal parameter of the form **name is present, it receives a dictionary containing all keyword arguments whose keyword doesn't correspond to a formal parameter.
-
-EKR Notes:
-
-1.  I have been confusing default values with keyword arguments.  _Any_ formal parameter may be specified with a keyword argument!
-
-2.  Arbitrary keyword params can be used if the def has an **arg.
-#@nonl
-#@-node:ekr.20031218072017.397:Default values & keyword arguments
-#@+node:ekr.20031218072017.398:How to call any Python method from the C API
-In general, everything you can do in Python is accessible through the C API.
-
-	lines = block.split('\n');
- 
-> That will be
- 
-	lines = PyObject_CallMethod(block, "split", "s", "\n");
-#@-node:ekr.20031218072017.398:How to call any Python method from the C API
-#@+node:ekr.20031218072017.399:How to run Python programs easily on NT,2K,XP
-#@+node:ekr.20031218072017.400:setting the PATHEXT env var
-It is worth noting that NT, Win2K and XP all have an alternative which is
-to add .PY to the PATHEXT environment variable. Then you can run any .PY
-file directly just by typing the name of the script without the extension. 
-
-e.g.
-C:\>set PATHEXT=.COM;.EXE;.BAT;.CMD
-
-C:\>set PATH=%PATH%;c:\python22\tools\Scripts
-
-C:\>google
-'google' is not recognized as an internal or external command,
-operable program or batch file.
-
-C:\>set PATHEXT=.COM;.EXE;.BAT;.CMD;.PY
-
-C:\>google
-Usage: C:\python22\tools\Scripts\google.py querystring
-
-C:\>
-#@-node:ekr.20031218072017.400:setting the PATHEXT env var
-#@+node:ekr.20031218072017.401:Yet another Python .bat wrapper
->> It has a header of just one line. All the ugly stuff is at the end.
->>
->> -------------------------------------------------------------------
->> goto ="python"
->>
->> # Python code goes here
->>
->> ''' hybrid python/batch footer:
->> @:="python"
->> @python.exe %0 %1 %2 %3 %4 %5 %6 %7 %8 %9
->> @if errorlevel 9009 echo Python may be downloaded from
->www.python.org/download
->> @rem '''
->> -------------------------------------------------------------------
->>
->>         Oren
->>
->
-
-It's for running python scripts on windows, without having to type:
-
-[<path to python>\]python[.exe] <scriptname> [<arguments>*]
-
-and almost takes the place of the "shabang" line at the top of *nix
-scripts.
-
-#@-node:ekr.20031218072017.401:Yet another Python .bat wrapper
-#@-node:ekr.20031218072017.399:How to run Python programs easily on NT,2K,XP
-#@-node:ekr.20031218072017.392:Python Notes & HowTo's...
 #@-node:ekr.20031218072017.365:How to...
-#@+node:ekr.20040706072605:Ideas for later...
-#@+node:EKR.20040512082621:HTML widgets
-#@+node:EKR.20040512082621.1:htmllib.tcl
-http://sourceforge.net/forum/message.php?msg_id=2565345
-By: nobody
-
-I just met a nice TCL-based html help viewer bundled with the evaluation version
-of Fujitsu-Siemens OpenFT for Unix (see
-fujitsu-siemens.com/products/software/openseas/openft.html)
-
-It is based on a TCL library htmllib.tcl, written by Stephen Uhler in 1995 while
-working in Sun's TCL group.Iit seemts that this lib is owned by Sun and i'm
-not certain about license. It is freely downloadable, anyway.
-
-The usage is really simple -- you have to create a text widget, a string variable
-containing html text and a link callback, then feed all three to the library
-routine. It should be not hard pythonize this process.
-
-see http://www.usenix.org/publications/login/1999-8/features/tclsh.html,
-ftp://ftp.scriptics.com/pub/tcl/misc/html_library-0.3.tar.gz
-or just google for htmllib.tcl
-#@-node:EKR.20040512082621.1:htmllib.tcl
-#@-node:EKR.20040512082621:HTML widgets
-#@+node:ekr.20040226085005:Java notes
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2442609
-By: nobody
-
->>Anyway, I can import java, javax, javax.swing. And I just created my first
-JTree.
-
-good man.  You will probably be subclassing JApplet.  You subclass a Java class
-like this:
-
-class EdwardsApplet(JApplet):
-   pass
-
-Id recommend getting the SDK javadoc on your PC or have a good link to the SDK
-javadoc.  Read the JApplet doc in the Swing package.  The thing to keep in mind
-is that you will be adding things to the JApplet's content pane, which will
-be using a Layout Manager.  I believe the default for it is the BorderLayout.
-This means after you get a reference to the ContentPane, you should be able
-to add your components with:
-
-cp = getContentPane()
-cp.add( JTree() , BorderLayout.EAST )
-
-Ill have to look at how Jython should package applets but you will be using,
-I believe, a program called appletviewer that comes with the JDK to view your
-applet.  Remember that Jython is a couple of versions behind CPython, so stick
-to only features available in 2.1.  As is, you will be calling things like you
-did in Python.  The Jython home page might have tips on building an applet.
-
-What would be cool is if Leo could be totally packaged as a Jython applet, then
-a demoer could test a pretty full fledged Leo throught there browser. :)
-
-______________________________________________________________________
-You are receiving this email because you elected to monitor this forum.
-To stop monitoring this forum, login to SourceForge.net and visit: 
-https://sourceforge.net/forum/unmonitor.php?forum_id=10226
-#@-node:ekr.20040226085005:Java notes
-#@+node:ekr.20040125121407:Leo & Emacs
-@nocolor
-#@nonl
-#@+node:ekr.20040125121407.1:comment
-https://sourceforge.net/forum/message.php?msg_id=2389876
-By: randomandy
-
-Is it only me who sees this as a question on how to reinvent the wheel? (or
-in the case of emacs, how to reinvent the <i>everything</i>.)
-
-Leo and Python both seem so well suited as wonderful hierarchal glue programs.
-And both are so elegant in the way their simple functionality brings such power
-and order to the cause. It just seems it would be a shame to take something
-so novel and unique and try to turn it into <i>yet another</i> huge text editor.
-
-I'm with <A HREF="http://sourceforge.net/forum/message.php?msg_id=2345873">Danny
-</A> on this one. The ideal solution is to find the most elegant and seamless
-way to splice one's own beloved text editor (or multipurpose editor/OS) in with
-the Leo paradigm. Have Leo hand off the text duties to the editor, or have the
-editor deliver heirarchy commands to Leo.
-
-I'm also quite curious if this makes a good tie in with SciTE. SciTE produces
-stunningly readible language highlighting/formatting. Could it be employed for
-basic cell text display, and then for heavier editing, a keystroke or button
-could open the cell text in one's preferred weapons grade text editor?
-
-Scintilla also has a similarly beautiful code-to-html and code-to-pdf capability
-that seems very suited to the literary part of the Leo paradigm: publication.
-It would be nice if that code could be exploited as well.
-
-This Leo is really a marvelous work. It's transforming the way I think (i.e.
-making it possible again). Nice work, Edward.
-#@-node:ekr.20040125121407.1:comment
-#@+node:ekr.20040125121407.2:comment
-By: dannyobrien ( danny o'brien ) 
- RE: What would it take to turn Leo into Emacs   
-2003-12-23 09:18  
-
- I agree with the embedding; I've used the vim plugin and it works well, but actually embedding the editor directly into the text field of leo (and allowing a range of keyboard shortcuts for eg headline editing) would be perfect.
-
-There is some support for this in gvim, the GUI version of vim that comes as standard. This can be run so as its GUI is "embedded" in another GTK widget, using that library's GtkSocket/GtkPlug system. A quick demo of that (and how to do it in python) is here:
-
-http://www.daa.com.au/pipermail/pygtk/2003-October/006185.html
-
-To see this working with gvim, run the second (socket.py) program on that page then type
-
-gvim --socketid <number generated by socket.py>
-
-I'm not sure how you could do this in other widget libraries - I don't know much about X Windows, but I suppose it would need support in vim as well as the widget set.
- 
-#@-node:ekr.20040125121407.2:comment
-#@+node:ekr.20040125121407.3:comment
-https://sourceforge.net/forum/message.php?msg_id=2388448
-By: mdawson
-
-I use XEmacs as my text editor.  The first thing I did when
-evaluating Leo was to set up "open with" to use XEmacs for editing
-Leo body text.
-
-My progress so far:
-
-- my Open_With Plugin opens a Leo node as a foreground buffer in
-XEmacs, or a background (invisible) buffer in XEmacs.
-
-- my Open_Tree Plugin opens a sub-tree of Leo nodes as background
-buffers in XEmacs.
-
-- my filename modification plugin changes the temporary file names
-used by Leo so that they can be spotted more easily in an XEmacs
-buffer listing (e.g. ibuffer).
-
-- an elisp function to kill all XEmacs Leo buffers at once.
-
-- another elisp function to indent and unindent the Leo comments in
-derived Python source, which improves the readability of code.
-
-- my setup of the elisp Multiple-Major-Modes XEmacs package, so that
-XEmacs is in text-mode in Leo @doc sections, and the correct
-language mode in @code sections.
-
-Any of these might be able to be adapted for your own use. They
-should all work with Emacs as well as XEmacs, but I've not tested
-that.
-
-These are all outlined in Appendix "C. XEmacs Text Editor" of the
-document at:
-    http://devguide.leo.marshallresearch.ca
-
-and the Leo outline that contains them is available
-at:
-    http://leo.marshallresearch.ca
-
-
-    ----------------------------------------
-    Michael Dawson
-
- 
-#@-node:ekr.20040125121407.3:comment
-#@-node:ekr.20040125121407:Leo & Emacs
-#@+node:ekr.20040107064101.5:Zope notes
-#@+node:ekr.20040107065006:posting
-@nocolor
-
-Yes he's absolutely right -- focus on the ZODB.
-
-..stay alway from ZTP. ZPT, TPZ, CMF, Plone and all that other stuff for now.
-
-I jsut came accross a handy slide show overview from last spring:
-http://jace.seacrow.com/tech/zope/blug-zodb
-
-BerkeyDB Storage is cool too and fits Leo well I think. plays nicely wiht ZODB
-standalnioe and in Zope.
-#@-node:ekr.20040107065006:posting
-#@+node:ekr.20040107064854:example Code
-from ZODG import FileStorage,DB
-from Persistence import Persistent
-
-# Connect to db.
-# FileStorage is standard: entire db is stored in a single file.
-storage = FileStorage.FileStorage("/tmp/test-filestorage.fs")
-db = DB.(storage)
-conn = db.open()
-
-# Get the root of the db.
-root = conn.root()
-
-# Defining user classes.
-class leoData(Persistent):
-	pass
-	
-# Commit or revert.
-get_transaction().commit()
-get_transaction().abort()
-#@nonl
-#@-node:ekr.20040107064854:example Code
-#@+node:ekr.20040107080609.1:Zshell
-@nocolor
-
-By: jasonic ( Jason Cunliffe )
-ZShell  
-2003-12-31 22:25
-
-Hi, Just another friendly reminder to check out Jerome Alet's ZShell, one of Zope's best kept secrets:
-
-http://www.librelogiciel.com/software/
-
-ZShell : Manipulate the Zope Object DataBase with Unix shell like commands
-
-and also
-
-ZShellScripts : Unifies the Zope notion of Scripts and provides several Script interpreters : Python, Unix shell , Lisp, Perl, PHP, Ruby, and Zope ZShell
-
-Not only for obvious usefullness, but also as a valuable study of Python access to the ZODB.
-
-JAXML is cool too..
-http://www.librelogiciel.com/software/jaxml/action_Presentation
-
-- Jason
-#@nonl
-#@-node:ekr.20040107080609.1:Zshell
-#@+node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
-#@-node:ekr.20040107064854.1:@url http://zope.org/Products/StandaloneZODB
-#@+node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
-#@-node:ekr.20040107064854.2:@url http://jace.seacrow.com/tech/zope/blug-zodb
-#@-node:ekr.20040107064101.5:Zope notes
-#@+node:ekr.20031218072017.404:LeoN, Zope & collaboration info
-@nocolor
-#@nonl
-#@+node:ekr.20031218072017.405:Kent Tenny Notes
-@nocolor
-
-Outlook: server for email, addresses & calendar.  Groupware.  Chandler similar.
-
-Zope: back end is ZODB.  Zope like an OS: run Python code on Zope.
-
-Zope: another way to access Leo files.  Maybe twisted is better?
-
-Wiki anology: edit Leo files with browser.  Write through the web.
-
-longrun.org
-
-Wiki principles: 
-	- Sharing is 90% of collaboration.
-	- Zope: Subscribe to a wiki: email when page changes.
-	- RSS: xml that defines piece of info(tile,url,abstract)
-		- Client has a list of rss feeds: an xml file.
-		- List of intesting people: notified when they say something.
-
-Two goals:
-	- publish Leo files
-	- edit Leo files
-
-Brother needs cvs.
-Kent not so worried about cvs.
-	-Leo file is a web site!
-	- Helper layer between user and OS.
-		- Look at aap project.  Author of vim. a-p.org
-			- Replacement for make in Python.  Automating tool.
-		- Expert prepares Leo file.  User uses it.
-#@nonl
-#@-node:ekr.20031218072017.405:Kent Tenny Notes
-#@+node:ekr.20031218072017.406:url's
-#@+node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
-#@-node:ekr.20031218072017.407:@url http://24.243.129.68:8080/members/sandbox
-#@+node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
-#@-node:ekr.20031218072017.408:@url http://www.zopelabs.com/cookbook
-#@+node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
-#@-node:ekr.20031218072017.409:@url http://zwiki.org/FrontPage  Zope implementation of wiki
-#@-node:ekr.20031218072017.406:url's
-#@+node:ekr.20031218072017.410:Collaboration & Sharing
-#@+node:ekr.20031218072017.411:From Rodrigo
-Developers Forum
-By: rodrigo_b ( Rodrigo Benenson ) 
- RE: Leo over the network   
-2003-05-10 00:06  
-So this is my first proposal: 
-
-Requirements 
--------------------- 
-
-* Read remote outlines. 
-** With Leo clients. 
-** Over the web. 
-
-* Edit remote outlines. 
-
-* Import remote outlines (retrieve outlines from the web). 
-
-* Synchronize local outlines with remote ones (web to local and local to web). 
-
-* Publish outlines (send outlines to the web). 
-
-* The Leo client have to be keept lighweigth. 
-
-* The Leo remote outline access server should be a lighweigth daemon. 
-
-* This daemon should automagically render HTML from the outlines. 
-
-* The outlines should be editable from the web and via Leo client. 
-
-* Concurency management is must. 
-
-* The remote servers should be included in the leo client as leo nodes (just like leo files, but remotes). 
-"@leo-outline leo.server.org:854" 
-
-* By this way I could have access to local server nodes. 
-"@leo-outline localhost:854" 
-
-* The remote server should offer one and only one big outline with sub nodes, and so on, and so on... 
-
-* At least the concurency should be managed as "when someone write, all the other ones only can read" 
-
-* It is better if Leo devellop simultaneaously some hypertext/wiki extensions. 
-
----------------------------- 
-End of requeriments 
-
-This requeriments requires a client-server architecture, with basic commands as: 
-- Update node 
-- Lock/release node 
-- Edit outline 
-- Download outline 
-- Upload outline 
-
-well that is by the moment, I hope that we will be able to create a Finite, clear, requeriments list for this branch of Leo. 
-
-RodrigoB.  
-
-#@-node:ekr.20031218072017.411:From Rodrigo
-#@-node:ekr.20031218072017.410:Collaboration & Sharing
-#@+node:ekr.20031218072017.412:Zope
-#@+node:ekr.20031218072017.413:From Rodrigo re: Zope.
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007586
-By: rodrigo_b
-
-z2.py,
->Supposing that that I did find this file, what would I be looking for? 
-
-This is the Main script, the principal program, the code that startup all the
-servers, the only python program that make run Zope, it the code called by start.py,
-and it is the one to which you pass the command lines.
-
-With the command line you can indicate which services to start up at which ports.
-This is IMPORTANT. Also you can enable/disable the Debug mode.
-
-python z2.py --help will give you some infos about what I'm talking about.
-
-In linux the debug or not debug mode, enable the console or daemon mode (that
-means 'background task mode').
-
-In windows, I'm not sure that disabling the debug mode will be enough.
-I know that at the install time you can setup Zope as a Windows Service, so
-it will start automatically every time Windows Startup, and it will not open
-a console window.
-
-But first look at the debug mode.
-
-Start.bat give some defaults command lines to z2.py
-
-Webdav,
->What issues are involved in this choice, and why should I care today? 
-
-from www.webdav.org
-
-What is WebDAV? 
-Briefly: WebDAV stands for "Web-based Distributed Authoring and Versioning".
-It is a set of extensions to the HTTP protocol which allows users to collaboratively
-edit and manage files on remote web servers.
-
-For example that means that you can open you Windows Explorer (from your mail
-I understand that you work on an MsWindows OS),
-tip the url "localhost:%i"%(your webdav port) and you will be able to navigate,
-view and edit the Zope Objects just as a normal file system (well, almost).
-
-WebDav is a standard and there are Python implementations. WebDav is support
-by  Oscom.
-
-WebDav is cool.
-WebDav is the 'highest level tool'.
-
-ZODB,
-
->Does that mean that gnx's aren't needed with Zope? Could Leo nodes live in
-the ZODB?
-
-You have to thinks to ZODB just as what it is: a Persistent Object Database.
-Most objects in Zope are Persistents, that mean that their instances do not
-die when you shutdown the server.
-
-The ZODB store his data in it own format.
-I think that GNX should be keeped.
-You have to basic ways to put nodes into Zope.
-
-First: the hard way: create a new Product (Products are something like Zope
-plugins) that is based on the Leo code, but were there is no node storage, instead
-the node should be Persistents. Then add rendering code to this objects.
-
-Leo node object + Persistence + ZClass + Rendering Code -> Leo Zope node.
-
-Additionaly you should create an Folder like object that should be an 'Leo Outline
-Zope Object',  actuating as an Leo nodes container.
-
-This shema is similar to the Zwiki way, with a Zwiki Web and the Zwiki Pages.
-
-Second: Use A zope folder just as Leo manage the @file nodes. Let have simple
-DTMLDocuments, edited via WebDav, with <dtml-comments> , and stuff like that.
-The Leo import/export that nodes.
-
-RodrigoB.
-
-#@-node:ekr.20031218072017.413:From Rodrigo re: Zope.
-#@+node:ekr.20031218072017.414:Clarification from Kent Tenny
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2009081
-By: ktenney
-
-Edward,
-
-I don't see ZLeo replacing Leo, rather a method of accessing
-Leo files.
-
-When I write, I almost always want it to be web accessable,
-so that I can access it from any browser, and so that I can
-share it easily. I would like myfile.leo to live
-at http://longrun.org/leo/myfile.leo. It can be read and
-written to from any browser (according to how permissions are
-configured) The page describing how to configure Apache would
-be found at http://longrun.org/leo/myfile.leo/Apache/configure
-The only requirement to work with Leo files is a browser.
-
-I wouldn't want to lose the capability to edit outside
-the browser, using a standalone version of Leo or Zope's
-ExternalEditor product. ExternalEditor allows me to click
-an icon to open the page I'm viewing in any editor. I could
-open it in Leo as a Leo file, or open just the page in
-Vim (http://vim.sourceforge.net/index.php)
-
-Zope is ponderous, I think of it as more of a platform
-than an application. My understanding of how Zope works
-grows slowly, in the mean time my focus is on _products_.
-Installing a product in Zope is like installing an application
-in Windows or Linux.
-
-One of the most evolved products is Plone/CMF http://plone.org
-which is basically a turnkey web site.
-
-twisted http://twistedmatrix.com is a brilliant set of network
-programming tools. That's all I know about it.
-
-I'm not sure about Chandler (http://www.osafoundation.org/) 
-(they did choose Python and ZODB http://www.osafoundation.org/technology.htm)
-
-You might try subscribing to a Zope mailing list or two
-http://www.zope.org/Resources/MailingLists
-The community of users and developers is very important to Zope.
-
-Thanks,
-Kent
-#@-node:ekr.20031218072017.414:Clarification from Kent Tenny
-#@+node:ekr.20031218072017.415:From Rodrigo re: ip
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007817
-By: rodrigo_b
-
-If zope is running some server then this server will be accesible from your
-network if and only if there is no firewall in the way.
-
-The people can access to your services using (normally on internet you do not
-have a domain name)
-
-your_ip:the_service_port
-
-Example:
-zope http service on port 8080 on your machine.
-When  you connect to internet your machine got an extra IP.
-Then simple put on the web browser
-
-http://your_conexion_ip:8080
-
-and Tada you will see the root_zope/index_html object rendered intro HTML.
-
-Most of the ISP give you a dinamic IP.
-Some companies provides you dinamic IP Domain Name services, allowing to attach
-a domain name to your machine dinamically (each time you reconect).
-
-then you can have:
-
-http://leo.edward.com:8080/
-
-The 8080 stuff can be avoied if you setup zope to use the standard port 80 for
-HTTP service.
-
-With this in mind you can access ftp
-
-ftp://your_ip_or_domain_name:8021
-
-or webdav, or anything else.
-#@-node:ekr.20031218072017.415:From Rodrigo re: ip
-#@+node:ekr.20031218072017.416:Other servers
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007832
-By: rodrigo_b
-
-I would made a warning.
-
-Zope IT IS NOT the only way to obtain an local HTTP server, pythonic and
-flexible.
-
-There is a lot of other way.
-
-Also Zope IT IS NOT THE BEST pythonic http/ftp/webdav or anything server
-aviable.
-
-I think that we should define better 
-
-What we want to do?
-
-before choosing the tool.
-
-As I said, I had already used Zope, I choosed it because of very specific features,
-but nothing indicate that Zope is the best way to get Leo to the colaborative
-network universe.
-
-I think that we should at least consider:
-- SimpleHTTPServer
-- To take of the Medusa Server from Zope (that is use Zope code in the standard
-Leo distribution, avoying dependences)
-- Twisted matrix (I had no experience with it, but it looks much more
-flexible/powerfull)
-
-Zope provides you a specific framework, you have to match you application to
-this framework, Zope (in my opinion) it is not a tool, it's an ambient.
-
-It's seems that Edward it is new in the web oriented software, I think it has
-a lot of potencialities and it will benefits Leo devellopment.
-
-Please Edward, look at Zope as an example but not as THE options. Think about
-what can be done, what should be done, and then we will take the best tool.
-
-Anyway my opinion:
-- SimpleHTTP server: usefull, it is in python, not very eficiente, just http
-server	
-- Medusa: usefull, very eficiente, just http server...
-- Twisted Matrix: very powerfull, fresh comunity, confusing documentation, a
-new paradigm, a devellopment tool.
-- Zope: powerfull, eficient, comes with battery included, bad documentation,
-to very paradigm oriented, the apps have to fit the paradigm, don't believe
-all the promises, strong enthousiast comunity, poor web examples.
-
-
-RodrigoB. 
-#@-node:ekr.20031218072017.416:Other servers
-#@+node:ekr.20031218072017.417:Is my ip public?
-https://sourceforge.net/forum/message.php?msg_id=2007962
-By: bwmulder
-
-Since no one else answered this question, let me take a first take on the
-question:
-
-If you are connected to the internet, people can use your IP number to connect
-to your computer. This IP number is often given dynamically, though some DSL
-providers give you fixed IP numbers for an additional fee. If you did not ask
-for fixed IP numbers, you probably have an dynamic IP number (I think).
-
-An IP number consist of four digits. A connection to the (example) IP number
-111.222.333.444 can by made via the request http://111.222.333.444
-
-If you have a dynamic IP number, and your Internet provider provides you with
-some space to publish HTML, you could, via a script, upload your current IP
-number dynamically.
-
-You might also consider buying a domain name. In this case, people can use the
-domain name to connect to your computer instead of the IP number.
-
-Another consideration are firewalls. Normally, you want a firewall isolating
-your computer from attacks from the Internet. I firewall can be some additional
-software. I am currently using a router, a piece of hardware, as a firewall.
-Windows XP has firewall software build in. You might have to configure your
-firewall to let requests for your server go through.
-
-Finally, you might want to check the agreement you entered with your Internet
-service provider, if you are allowed to run a server from your connection. It
-might become a problem if your server becomes very popular.
-#@-node:ekr.20031218072017.417:Is my ip public?
-#@+node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2009279
-By: paulpaterson
-
-What I see Zope offering is an alternative way of storing and retrieving nodes.
-What you also get for "free" with Zope is concurrent access, security,
-http/ftp/webdav access to the same node information etc. The hidden price you
-pay is that Zope is big and many users will have other tools which can provide
-these facilities also.
-
-So, my thinking is that we can abstract the basic idea (alternative ways of
-storing and retrieving node information) into Leo and then let the magic really
-happen in the concrete implementation stage.
-
-What does this mean? Well, we could change Leo so that whenever it goes to retrieve
-Headline or Body it goes to a Node Server object to do that. The Node Server
-object uses whatever method it wants to retrieve or set the information. The
-Node server would also be responsible for telling Leo what child nodes an object
-has and whether they are clones or not.
-
-The cool part is that we could implement different kinds of Node server to talk
-to different back-ends. These can then be thought of as drivers. So we might
-have,
-
-- a file system driver where all information is stored in files and directories
-- a database driver where the DB stores all information
-- an ftp driver
-- a Zope driver
-- the default Leo driver
-
-People could write a driver to their own back end storage system. 
-
-What is the advantage of this?
-
-Well, the magic really happens in the back-end. If you choose a back end which
-supports versioning, security, concurrent working, web access, etc etc then
-Leo now supports them. If you choose a back-end which supports dynamic mark-up
-or some other fancy stuff then Leo supports it. The key is that Leo doesn't
-need to bind itself to any one system to achieve this - the end user can install
-the relevant driver, configure the back-end and just go with it.
-
-Paul
-#@-node:ekr.20031218072017.418:Back ends for storing/retrieving nodes: Paul Paterson
-#@+node:ekr.20031218072017.419:From Paul Paterson
-Ok, I'll have a bash in a rough order or when things occurred...
-
-
-1. Everything is web based. I had the same problem you did. I ran the
-thing and said, "ok, so what did it do". Others have pointed you in the
-right direction now with visiting http://localhost:8080 and
-http://localhost:8080/manage to view the site and mange it respectively.
-
-If you are running WinNT, 2000 or XP you can also run Zope as a service,
-which is much more convenient as you don't need the console window open
-all the time.
-
-
-2. Everything in Zope is an object. Ok, you'll see this a lot. The best
-thing to do is think "wow, cool" and then forget it again as you
-probably wont really see how this helps at all until you get much deeper
-into Zope. 
-
-
-3. DTML allows you to construct web pages by piecing together bits much
-like writing a program from functions. In fact you will find DTML is a
-lot like tangling Leo's @root nodes. Here's a bit...
-
-<!-- start html -->
-
-<h>DTML allows you to assemble web pages much like Leo tangles
-documents</h>
-
-<p>For instance, have a look at how this page is constructed</p>
-
-<dtml-var first_bit>
-<dtml-var second_bit>
-<dtml-var third_bit>
-
-<!-- end html -->
-
-The <dtml-var name> bit is like a < < name > > directive. It effectively
-inserts the object (could be HTML, an image or something more complex)
-in the current page. 
-
-To see this snippet in action you can visit my server at
-http://24.243.129.68:8080/members/sandbox/index_html
-
-To see the code, visit http://24.243.129.68:8080/members/sandbox/manage
-(username=edream, pwd=leo) and then click on the index_html to see the
-main DTML. Feel free to mess around in here but please don't publish the
-IP address as my ISP doesn't allow servers!
-
-
-4. There is a lot of power in Zope products. Try going to www.zope.org
-and seeing what is available. As an example I put a Wiki in the sandbox
-area http://24.243.129.68:8080/members/sandbox/edswiki
-
-
-5. If you are looking for a good book to begin with then steer clear of
-"The Zope Book"! If you don't mind paying then "The book of Zope" is a
-much better introduction. When you have read this then "The Zope Book"
-will make some sense but really I found this book tremendously hard to
-get through.
-
-
-6. Web standards are very cool! Zope supports FTP. Point your favourite
-FTP tool to,
-
-ftp://24.243.129.68:8021/members/sandbox/
-
-Or try using WebDav by creating a network place pointing to
-
-http://24.243.129.68:8080/members/sandbox
-
-You can then use windows explorer or an ftp tool to browse your objects.
-
-
-7. Everything is an object! I can't do justice to the concept of
-Acquisition here but by the time you have messed around with Zope a bit
-you should start to see how acquisition starts to make things really
-work like classes in Python. 
-
-
-I realize this isn't very coherent - if I get a spare moment this
-weekend I'll knock up a quick demo showing Leo interacting with Zope.
-
-Regards,
-
-Paul
-#@-node:ekr.20031218072017.419:From Paul Paterson
-#@-node:ekr.20031218072017.412:Zope
-#@+node:ekr.20031218072017.420:Jabber
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2016634
-By: jasonic
-
-I have been thinking about LeoZopeWiki integration. I am a recovering Zope addict
-[1999-2001] :-)  I believe Zope offers a very valuable client and server for
-Leo.
-
-I think Ed higlighted the distinction of collboration vs. sharing. So consdering
-that re:  Leo and CVS , Leo and Zope, Leo and wikis, I had another idea this
-morning..
-
-LEO+JABBER
-
-Jabber is an open XML-based  instant messaging and *presence* system. Although
-Jabber is typically used for IM chat, its core designers have a much bigger
-vision in mind.
-
-Jabber Software Foundation
-http://www.jabber.org/
-O'Reilly Book
-http://www.oreilly.com/catalog/jabber/
-Python Jabber library
-http://jabberpy.sourceforge.net/
-
-CVS etc all depend on runing diff on posted static files which are checked in
-or out. Clearly valuable, and good for __sharing__ but not so suitable as the
-communication paradigm needed for collboration.
-
-Wikis and Zope all suffer from problem of versioning and the time delay and
-lack of timely communications to their cobtributors. There is no 'shared state'
-or persistence in the collaboration beyond their own files or objectdatabases.
-
-For example if two people want to edit a wiki or Zope site, they have an imeedaiet
-problem of knowing whether or not the someone else is working one it already.
-
-Score:
-Sharing 1
-Collaboration 0
-
-Two  or more people wanting to edit a common project based on Leo have the same
-dilemma. They can check the leo file into a wiki, Zope or CVS, but they still
-don't have direct communication at teh content level.
-
-score:
-Sharing 1
-Collaboration 0
-
-PROPOSAL: LeoJabber
-1. Integrate a Jabber client into Leo 
-2. Add special Leo module to jabberd [Jabber's server daemon]
-
-Leo-based developers could work in direct communication with each other allowing
-them to add, edit and comment nodes in a shared le-space, local or remote. Static
-publishing via upload/import etc all still apply.
-
-LeoJabber would mean subscribing developers could immediately be aware of changes
-and then apply whatever strategy is appropriate for handling them, such as:
- 
-a. autoUpdate()
-b. makeNewNode()
-c. runDiffFunctions()
-d. notifyPartners()
-e. notifyPublic()
-etc..
-
-Jabber via its presencing mechanism offers real-time and just-in time communcations.
-If you are logged out, then mesages are queued.
-
-An open Jabber message session is actually one long piece of XML data passed
-over an XMLSocket :-) Sounds like a great fit for Leo
-
-- All Jabber configs are XML.
-- Good smart open source community.
-- Similar open embracing philsophy as Leo
-- Jabber connects diverse messaging systems., MSN, AOL etc [Most are
-close/proprietary, though the trend is toward greater openness and connectivity]
-- Many Jabber clients already. There is even one written in Flash so that any
-webpage can participate.
-
-Embedding Jabber in Leo would allow 'discussion' threads to  be integrated.
-Developers need to bounce idea and notes around just as this forum does. But
-often they need to be more provate or more focused on project specifics.
-WORKFLOW 
-It is important to know  which code is uptodate, but arguably, even *more* important
-is to know which people and what discussions are uptodate. And if not, what
-their status is. The larger, longer the more global the develpoment office/project,
-the more this is true.
-
-IM [instant messaging] are popular largely becuae they offer direct communication
-with status feedback to crucial people's workflow:
-"off-line", "on-line", "back-soon", "later" etc
-
-Jabber extends this idea to create a platform for any presence application.
-That is its long term-goal.
-
-So in a Leo deevlopment project, that presence might apply to adding status
-mesages such as
-"making changes" "new version" "debugging" "review only" "major re-write"
-
-or perhaps status/presence woudl be used for much lower level Leo-specific
-purposes.
-
-"new node"
-"cloned to .."
-"@file imported"
-"version uploaded"
-etc
-
-I am not suggesting that Leo forget CVS or file upload storage. But I think
-Jabber may truly provide the Missing Link, literally for Leo collaboration.
-
-Jabber Software Foundation
-http://www.jabber.org/
-O'Reilly Book
-http://www.oreilly.com/catalog/jabber/
-Python Jabber library
-http://jabberpy.sourceforge.net/
-
-hope this makes sense
-Jason
-#@-node:ekr.20031218072017.420:Jabber
-#@-node:ekr.20031218072017.404:LeoN, Zope & collaboration info
-#@-node:ekr.20040706072605:Ideas for later...
 #@+node:ekr.20040104162835.8:Mac notes: Dan Winkler
 #@+node:ekr.20040104162835.9:Porting notes
 Here's Apple's documentation on making Unix software run on OS X:
@@ -2152,47 +1211,317 @@ people can add it to their sources.list or you can talk to the people
 who run the default servers and get Leo hosted there (better).
 #@-node:ekr.20040104162835.16:Getting Leo on Fink Commander
 #@-node:ekr.20040104162835.8:Mac notes: Dan Winkler
-#@+node:ekr.20031218072017.421:Early Milestones
-#@+node:ekr.20031218072017.422:02/03/02 Leo 0.08 released
-#@-node:ekr.20031218072017.422:02/03/02 Leo 0.08 released
-#@+node:ekr.20031218072017.423:12/17/01 ** Leo 0.05 released
-#@-node:ekr.20031218072017.423:12/17/01 ** Leo 0.05 released
-#@+node:ekr.20031218072017.424:12/16/01 Leo becomes functional
-leo.py reads and writes exactly like LeoCB
-#@nonl
-#@-node:ekr.20031218072017.424:12/16/01 Leo becomes functional
-#@+node:ekr.20031218072017.425:12/13/01 Syntax coloring works
-Amazing.  I wrote some dummy code last night, read up on indices this morning, and got everything to work in a couple of hours. The result is very fast: no optimization is needed for Leo. I love Tkinter!
+#@+node:ekr.20031218072017.392:Python Notes...
+#@+node:ekr.20031218072017.393:What's new for each version:
+New in 2.2 (Do not use)
 
-Added c.recolor and tree.recolor routines.  This hooks should be called whenever the body text changes.  Apparently there is no "OnTextChanged" event in Tk.
-#@nonl
-#@-node:ekr.20031218072017.425:12/13/01 Syntax coloring works
-#@+node:ekr.20031218072017.426:12/09/01 Tree now drawn properly
-#@-node:ekr.20031218072017.426:12/09/01 Tree now drawn properly
-#@+node:ekr.20031218072017.427:12/05/01 Tree works with Tkinter
-#@-node:ekr.20031218072017.427:12/05/01 Tree works with Tkinter
-#@+node:ekr.20031218072017.428:11/10/01 ** began conversion to tk
-This marked my complete frustration with wxLeo and wxPython, and the real beginning of the work on leo.py.
-#@nonl
-#@-node:ekr.20031218072017.428:11/10/01 ** began conversion to tk
-#@+node:ekr.20031218072017.429:10/26/01 First successful read of .leo file w/ @file nodes
-#@-node:ekr.20031218072017.429:10/26/01 First successful read of .leo file w/ @file nodes
-#@+node:ekr.20031218072017.430:9/29/01 c2py: Totally in love with Python
-I am totally in love with Python.  Everything is so much easier:  Automatic debugging, no declarations, no types, no compilation. Great data structures. Even without single stepping the debugging is easy.
+- Iterators/Generators
+- Nested Scopes
+- New Classes
 
-All major aspects of c2py are now complete.
+The what's new for each version:
+
+http://www.amk.ca/python/2.0/
+http://www.amk.ca/python/2.1/
+#@+node:ekr.20031218072017.394:@url http://www.python.org/2.3/highlights.html
+#@-node:ekr.20031218072017.394:@url http://www.python.org/2.3/highlights.html
+#@+node:ekr.20031218072017.395:@url http://www.amk.ca/python/2.1/
+#@-node:ekr.20031218072017.395:@url http://www.amk.ca/python/2.1/
+#@+node:ekr.20031218072017.396:@url http://www.amk.ca/python/2.0/
+#@-node:ekr.20031218072017.396:@url http://www.amk.ca/python/2.0/
+#@-node:ekr.20031218072017.393:What's new for each version:
+#@+node:ekr.20031218072017.397:Default values & keyword arguments
+@nocolor
+
+1. You specify default values of _formal parameters_ in a def statement.
+
+2. You specify keywords arguments in a _function call_.
+
+3. An argument list must have any positional arguments followed by any keyword arguments, where the keywords must be chosen from the formal parameter names.  It's not important whether a formal parameter has a default value or not.
+
+4. No argument may receive a value more than once.
+
+5. When a final formal parameter of the form **name is present, it receives a dictionary containing all keyword arguments whose keyword doesn't correspond to a formal parameter.
+
+EKR Notes:
+
+1.  I have been confusing default values with keyword arguments.  _Any_ formal parameter may be specified with a keyword argument!
+
+2.  Arbitrary keyword params can be used if the def has an **arg.
 #@nonl
-#@-node:ekr.20031218072017.430:9/29/01 c2py: Totally in love with Python
-#@+node:ekr.20031218072017.431:ca. 9/1/01 began work on wxPython version of Leo
-I am not sure exactly when this happened.  The details apparently have been lost.  There was a time when I was experimenting with Python and wxPython, and a time when I was working on wxWindows version of Leo.
-#@nonl
-#@-node:ekr.20031218072017.431:ca. 9/1/01 began work on wxPython version of Leo
-#@-node:ekr.20031218072017.421:Early Milestones
+#@-node:ekr.20031218072017.397:Default values & keyword arguments
+#@+node:ekr.20031218072017.398:How to call any Python method from the C API
+In general, everything you can do in Python is accessible through the C API.
+
+	lines = block.split('\n');
+ 
+> That will be
+ 
+	lines = PyObject_CallMethod(block, "split", "s", "\n");
+#@-node:ekr.20031218072017.398:How to call any Python method from the C API
+#@+node:ekr.20031218072017.399:How to run Python programs easily on NT,2K,XP
+#@+node:ekr.20031218072017.400:setting the PATHEXT env var
+It is worth noting that NT, Win2K and XP all have an alternative which is
+to add .PY to the PATHEXT environment variable. Then you can run any .PY
+file directly just by typing the name of the script without the extension. 
+
+e.g.
+C:\>set PATHEXT=.COM;.EXE;.BAT;.CMD
+
+C:\>set PATH=%PATH%;c:\python22\tools\Scripts
+
+C:\>google
+'google' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\>set PATHEXT=.COM;.EXE;.BAT;.CMD;.PY
+
+C:\>google
+Usage: C:\python22\tools\Scripts\google.py querystring
+
+C:\>
+#@-node:ekr.20031218072017.400:setting the PATHEXT env var
+#@+node:ekr.20031218072017.401:Yet another Python .bat wrapper
+>> It has a header of just one line. All the ugly stuff is at the end.
+>>
+>> -------------------------------------------------------------------
+>> goto ="python"
+>>
+>> # Python code goes here
+>>
+>> ''' hybrid python/batch footer:
+>> @:="python"
+>> @python.exe %0 %1 %2 %3 %4 %5 %6 %7 %8 %9
+>> @if errorlevel 9009 echo Python may be downloaded from
+>www.python.org/download
+>> @rem '''
+>> -------------------------------------------------------------------
+>>
+>>         Oren
+>>
+>
+
+It's for running python scripts on windows, without having to type:
+
+[<path to python>\]python[.exe] <scriptname> [<arguments>*]
+
+and almost takes the place of the "shabang" line at the top of *nix
+scripts.
+
+#@-node:ekr.20031218072017.401:Yet another Python .bat wrapper
+#@-node:ekr.20031218072017.399:How to run Python programs easily on NT,2K,XP
+#@-node:ekr.20031218072017.392:Python Notes...
 #@+node:ekr.20031218072017.434:Unused code
 @ignore
 @language python
 @color
 #@nonl
+#@+node:ekr.20031218072017.2387:old_df.scanAllDirectives
+@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node p, no @color or @nocolor directives are examined in any ancestor of p.
+
+This code is similar to Commands.scanAllDirectives, but it has been modified for use by the atFile class.
+@c
+
+def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
+    
+    """Scan position p and p's ancestors looking for directives,
+    setting corresponding atFile ivars.
+    """
+
+    c = self.c
+    << Set ivars >>
+    << Set path from @file node >>
+    old = {}
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        theDict = g.get_directives_dict(s)
+        << Test for @path >>
+        << Test for @encoding >>
+        << Test for @comment and @language >>
+        << Test for @header and @noheader >>
+        << Test for @lineending >>
+        << Test for @pagewidth >>
+        << Test for @tabwidth >>
+        old.update(theDict)
+    << Set current directory >>
+    if not importing and not reading:
+        # 5/19/04: don't override comment delims when reading!
+        << Set comment strings from delims >>
+#@nonl
+#@+node:ekr.20031218072017.2388:<< Set ivars >>
+self.page_width = self.c.page_width
+self.tab_width  = self.c.tab_width
+
+self.default_directory = None # 8/2: will be set later.
+
+delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
+self.language = c.target_language
+
+self.encoding = g.app.config.default_derived_file_encoding
+self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config settings.
+#@nonl
+#@-node:ekr.20031218072017.2388:<< Set ivars >>
+#@+node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+# An absolute path in an @file node over-rides everything else.
+# A relative path gets appended to the relative path by the open logic.
+
+name = p.anyAtFileNodeName() # 4/28/04
+
+theDir = g.choose(name,g.os_path_dirname(name),None)
+
+if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
+    if g.os_path_exists(theDir):
+        self.default_directory = theDir
+    else: # 9/25/02
+        self.default_directory = g.makeAllNonExistentDirectories(theDir)
+        if not self.default_directory:
+            self.error("Directory \"" + theDir + "\" does not exist")
+#@nonl
+#@-node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+#@+node:ekr.20031218072017.2390:<< Test for @comment and @language >>
+# 10/17/02: @language and @comment may coexist in @file trees.
+# For this to be effective the @comment directive should follow the @language directive.
+
+if not old.has_key("comment") and theDict.has_key("comment"):
+    k = theDict["comment"]
+    # 11/14/02: Similar to fix below.
+    delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
+
+# Reversion fix: 12/06/02: We must use elif here, not if.
+elif not old.has_key("language") and theDict.has_key("language"):
+    k = theDict["language"]
+    # 11/14/02: Fix bug reported by J.M.Gilligan.
+    self.language,delim1,delim2,delim3 = g.set_language(s,k)
+#@nonl
+#@-node:ekr.20031218072017.2390:<< Test for @comment and @language >>
+#@+node:ekr.20031218072017.2391:<< Test for @encoding >>
+if not old.has_key("encoding") and theDict.has_key("encoding"):
+    
+    e = g.scanAtEncodingDirective(s,theDict)
+    if e:
+        self.encoding = e
+#@nonl
+#@-node:ekr.20031218072017.2391:<< Test for @encoding >>
+#@+node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
+# EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
+if theDict.has_key("header") and theDict.has_key("noheader"):
+    g.es("conflicting @header and @noheader directives")
+#@nonl
+#@-node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
+#@+node:ekr.20031218072017.2393:<< Test for @lineending >>
+if not old.has_key("lineending") and theDict.has_key("lineending"):
+    
+    lineending = g.scanAtLineendingDirective(s,theDict)
+    if lineending:
+        self.output_newline = lineending
+#@-node:ekr.20031218072017.2393:<< Test for @lineending >>
+#@+node:ekr.20031218072017.2394:<< Test for @path >>
+# We set the current director to a path so future writes will go to that directory.
+
+if not self.default_directory and not old.has_key("path") and theDict.has_key("path"):
+
+    k = theDict["path"]
+    << compute relative path from s[k:] >>
+    if path and len(path) > 0:
+        base = g.getBaseDirectory() # returns "" on error.
+        path = g.os_path_join(base,path)
+        if g.os_path_isabs(path):
+            << handle absolute path >>
+        else:
+            self.error("ignoring bad @path: " + path)
+    else:
+        self.error("ignoring empty @path")
+#@nonl
+#@+node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
+j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) > 2 and (
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
+path = path.strip()
+
+if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+    path = g.os_path_join(g.app.loadDir,path)
+#@nonl
+#@-node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
+#@+node:ekr.20031218072017.2396:<< handle absolute path >>
+# path is an absolute path.
+
+if g.os_path_exists(path):
+    self.default_directory = path
+else: # 9/25/02
+    self.default_directory = g.makeAllNonExistentDirectories(path)
+    if not self.default_directory:
+        self.error("invalid @path: " + path)
+#@-node:ekr.20031218072017.2396:<< handle absolute path >>
+#@-node:ekr.20031218072017.2394:<< Test for @path >>
+#@+node:ekr.20031218072017.2397:<< Test for @pagewidth >>
+if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
+    
+    w = g.scanAtPagewidthDirective(s,theDict,issue_error_flag=True)
+    if w and w > 0:
+        self.page_width = w
+#@nonl
+#@-node:ekr.20031218072017.2397:<< Test for @pagewidth >>
+#@+node:ekr.20031218072017.2398:<< Test for @tabwidth >>
+if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
+    
+    w = g.scanAtTabwidthDirective(s,theDict,issue_error_flag=True)
+    if w and w != 0:
+        self.tab_width = w
+
+#@-node:ekr.20031218072017.2398:<< Test for @tabwidth >>
+#@+node:ekr.20031218072017.2399:<< Set current directory >>
+# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
+
+if c.frame and not self.default_directory:
+    base = g.getBaseDirectory() # returns "" on error.
+    for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if theDir and len(theDir) > 0:
+            theDir = g.os_path_join(base,theDir)
+            if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(theDir):
+                    self.default_directory = theDir ; break
+                else: # 9/25/02
+                    self.default_directory = g.makeAllNonExistentDirectories(theDir)
+
+if not self.default_directory and not scripting and not importing:
+    # This should never happen: c.openDirectory should be a good last resort.
+    g.trace()
+    self.error("No absolute directory specified anywhere.")
+    self.default_directory = ""
+#@-node:ekr.20031218072017.2399:<< Set current directory >>
+#@+node:ekr.20031218072017.2400:<< Set comment strings from delims >>
+if scripting:
+    # Force Python language.
+    delim1,delim2,delim3 = g.set_delims_from_language("python")
+    self.language = "python"
+    
+# Use single-line comments if we have a choice.
+# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
+
+if delim1:
+    self.startSentinelComment = delim1
+    self.endSentinelComment = "" # Must not be None.
+elif delim2 and delim3:
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
+else: # Emergency!
+    # assert(0)
+    g.es("Unknown language: using Python comment delimiters")
+    g.es("c.target_language:",c.target_language)
+    g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
+    self.startSentinelComment = "#" # This should never happen!
+    self.endSentinelComment = ""
+    
+# g.trace(repr(self.startSentinelComment),repr(self.endSentinelComment))
+#@nonl
+#@-node:ekr.20031218072017.2400:<< Set comment strings from delims >>
+#@-node:ekr.20031218072017.2387:old_df.scanAllDirectives
 #@+node:EKR.20040505090056:From perfect import script
 @ignore
 #@nonl
@@ -3056,23 +2385,7 @@ def convertTreeToSharedNodes(self):
 		v._parent = None
 #@nonl
 #@-node:ekr.20040301201418:c.convertTreeToSharedNodes (for conversion)
-#@+node:ekr.20031218072017.3380:v.edit_text
-def edit_text (self):
-
-    v = self ; c = v.c ; p = c.currentPosition()
-    
-    g.trace("ooooops")
-    #import traceback ; traceback.print_stack()
-    
-    pairs = self.c.frame.tree.getEditTextDict(v)
-    for p2,t2 in pairs:
-        if p.equal(p2):
-            # g.trace("found",t2)
-            return t2
-            
-    return None
-#@nonl
-#@-node:ekr.20031218072017.3380:v.edit_text
+#@+node:ekr.20041228094801:Config...
 #@+node:ekr.20041118184748:Unused old config stuff
 #@+node:ekr.20041115110846.4:Apply Config command
 #@+node:ekr.20031218072017.3774:<< define help menu tables >>
@@ -3353,143 +2666,7 @@ def createGlobalWindows (self):
 #@nonl
 #@-node:ekr.20031218072017.4050:tkGui.createGlobalWindows
 #@-node:ekr.20041121111018:Unused (find initing)
-#@+node:ekr.20031218072017.2816:c.setIvarsFromPrefs
-@ This should be called whenever we need to use preference:
-i.e., before reading, writing, tangling, untangling.
-
-7/2/02: We no longer need this now that the Prefs dialog is modal.
-@c
-
-def setIvarsFromPrefs (self):
-
-    pass
-#@nonl
-#@-node:ekr.20031218072017.2816:c.setIvarsFromPrefs
-#@+node:ekr.20031218072017.2611:app.destroyAllGlobalWindows
-def destroyAllGlobalWindows (self):
-    
-    for w in self.globalWindows:
-        w.destroySelf()
-        
-    self.globalWindows = []
-    
-    self.findFrame = None
-    self.pythonFrame = None
-#@-node:ekr.20031218072017.2611:app.destroyAllGlobalWindows
-#@+node:ekr.20041217112202:From new config code
-#@+node:ekr.20041122095745:doType
-def doType (self,p,kind,name,val):
-
-    c = p.c ; d = g.app.config.types_dict
-
-    name,theType,values = self.parseType(p)
-
-    if name and theType:
-        data = d.get(name)
-        if data:
-            if len(data) == 2:
-                path2 = None ; theType2,values2 = data
-            else:
-                path2,theType2,values2 = data
-            if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path2):
-                g.es("over-riding @type %s from %s" % (name,path2), color="red")
-        else:
-            # g.trace("defining @type %s = (%s,%s)" % (name,repr(theType),repr(values)))
-            pass
-        # N.B.  We can't use c here: it may not exist later.
-        d[name] = c.mFileName,theType,values
-    else:
-        g.es("invalid @type: %s" % (p.headString()), color="red")
-#@nonl
-#@-node:ekr.20041122095745:doType
-#@+node:ekr.20041122100810:parseType
-def parseType (self,p):
-    
-    """Parse lines of the form:
-    @type name:type
-    @type name:type=values
-    """
-    s = p.headString().strip()
-    assert(g.match(s,0,'@type'))
-    # g.trace(s)
-    i = len('@type')
-    i = g.skip_ws(s,i)
-    j = g.skip_id(s,i)
-    name = s[i:j]
-    # g.trace(name)
-    if not name: return None,None,None
-    i = g.skip_ws(s,j)
-    if not g.match(s,i,':'): return None,None,None
-    i += 1
-    i = g.skip_ws(s,i)
-    j = g.skip_id(s,i,'-')
-    theType = s[i:j]
-    # g.trace(i,j,theType)
-    if not theType: return None,None,None
-    i = g.skip_ws(s,j)
-    if g.match(s,i,'='):
-        splitchar = ',' ; vals = s[i+1:]
-    else:
-        splitchar = '\n' ; vals = p.bodyString()
-    vals = vals.strip()
-    if vals: values = vals.split(splitchar)
-    else: values = []
-    values = [val.strip() for val in values]
-    # g.trace("%s %s %s" %(name,theType,values))
-    return name,theType,values
-#@nonl
-#@-node:ekr.20041122100810:parseType
-#@+node:ekr.20041217112505:getValFromDict
-def getValFromDict (self,d,setting,requestedType,found):
-
-    data = d.get(self.munge(setting))
-    if data:
-        # g.trace(setting,requestedType,data)
-        found = True
-        if len(data) == 2:
-            path = None ; dType,val = data
-        elif len(data) == 3:
-            path,dType,val = data
-        else:
-            g.trace("bad tuple",data)
-            return None,found
-            
-        if 0: # This is not reliable.
-            if dType != requestedType:
-                ok = False
-                << set ok if we can translate one type into the other >>
-                if not ok:
-                    << give warning the first time (setting,dType) is seen >>
-        if val not in (u'None',u'none','None','none','',None):
-            # g.trace(setting,val)
-            return val,found
-            
-    # Do NOT warn if not found here.  It may be in another dict.
-    return None,found
-#@nonl
-#@+node:ekr.20041217112505.1:<< set ok if we can translate one type into the other >>
-for toBeTranslatedType,otherType in (
-    (requestedType,dType),(dType,requestedType)):
-    data = self.types_dict.get(toBeTranslatedType)
-    if data:
-        transType,validValues = data
-        ok = transType == otherType
-        if ok:
-            # g.trace("translated %12s to %s for %s" % (toBeTranslatedType,transType,setting))
-            break
-#@nonl
-#@-node:ekr.20041217112505.1:<< set ok if we can translate one type into the other >>
-#@+node:ekr.20041217112505.2:<< give warning the first time (setting,dType) is seen >>
-wTypes = self.warningsDict.get(setting,[])
-if dType not in wTypes:
-    wTypes.append(dType)
-    self.warningsDict[setting] = wTypes
-    g.trace("Requested type %s, got %s for setting %s" % (requestedType,dType,setting))
-    # g.print_stack()
-#@nonl
-#@-node:ekr.20041217112505.2:<< give warning the first time (setting,dType) is seen >>
-#@-node:ekr.20041217112505:getValFromDict
-#@-node:ekr.20041217112202:From new config code
+#@-node:ekr.20041228094801:Config...
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
