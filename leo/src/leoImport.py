@@ -739,9 +739,9 @@ class baseLeoImportCommands:
     
         # Set up the data for the algorithm.
         mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
-        marker = mu.marker_from_extension(fileName)
+        delims = g.comment_delims_from_extension(fileName)
         fat_lines = g.splitLines(s) # Keep the line endings.
-        i_lines,mapping = mu.create_mapping(fat_lines,marker)
+        i_lines,mapping = mu.create_mapping(fat_lines,delims)
         j_lines = file(fileName).readlines()
         
         # Correct write_lines using the algorihm.
@@ -808,7 +808,7 @@ class baseLeoImportCommands:
                 after_lines1 = g.splitLines(df.stringOutput)
                 
                 # Strip sentinels from after_lines and compare.
-                after_lines = mu.removeSentinelsFromLines(after_lines1,marker)
+                after_lines = mu.removeSentinelsFromLines(after_lines1,delims)
                 
                 # A major kludge: Leo can not represent unindented blank lines in indented nodes!
                 # We ignore the problem here by stripping whitespace from blank lines.
@@ -841,9 +841,9 @@ class baseLeoImportCommands:
                         else:
                             for i in xrange(min(len(before_lines),len(after_lines))):
                                 if before_lines[i] != after_lines[i]:
-                                    extra = 3
+                                    extra = 5
                                     print "first mismatch at line %d" % i
-                                    print "printing %d lines after mismatch"
+                                    print "printing %d lines after mismatch" % extra
                                     print "before..."
                                     for j in xrange(i+1+extra):
                                         print "%3d" % j, repr(before_lines[j])
@@ -856,7 +856,7 @@ class baseLeoImportCommands:
                                     j = 0 ; k = 0
                                     while k < i + 1 + extra:
                                         print "%3d" % k,repr(after_lines1[j])
-                                        if not mu.is_sentinel(after_lines1[j],marker):
+                                        if not g.is_sentinel(after_lines1[j],delims):
                                             k += 1
                                         j += 1
                                     break
