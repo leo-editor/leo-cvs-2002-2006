@@ -11,6 +11,8 @@ Run the unit tests in test.leo using the Execute Script command.
 #@@language python
 #@@tabwidth -4
 
+__pychecker__ = '--no-import --no-reimportself --no-reimport'
+
 #@<< leoTest imports >>
 #@+node:EKR.20040623200709.2:<< leoTest imports >>
 import leoGlobals as g
@@ -96,6 +98,16 @@ class generalTestCase(unittest.TestCase):
         self.c = c
         self.p = p.copy()
     #@-node:ekr.20040707073029.1:__init__
+    #@+node:ekr.20040809073623: fail
+    def fail (self):
+    
+        """Mark a unit test as having failed."""
+    
+        import leoGlobals as g
+    
+        g.app.unitTestDict["fail"] = g.callerName(2)
+    #@nonl
+    #@-node:ekr.20040809073623: fail
     #@+node:ekr.20040707073029.2:setUp
     def setUp (self):
     
@@ -212,6 +224,8 @@ lastFunctionsDict = {}
 
 # Adapted from similar code in leoGlobals.g.
 def runGc(disable=False):
+    
+    message = "runGC"
 
     if gc is None:
         print "@gc: can not import gc"
@@ -220,10 +234,10 @@ def runGc(disable=False):
     gc.enable()
     set_debugGc()
     gc.collect()
-    printGc(message="@gc",onlyPrintChanges=False)
+    printGc(message=message,onlyPrintChanges=False)
     if disable:
         gc.disable()
-    # makeObjectList()
+    # makeObjectList(message)
 
 runGC = runGc
 #@nonl
@@ -243,7 +257,7 @@ def set_debugGc ():
 #@nonl
 #@-node:ekr.20040721145258:enableGc
 #@+node:ekr.20040721144439.3:makeObjectList
-def makeObjectList():
+def makeObjectList(message):
 
     # WARNING: this id trick is not proper: newly allocated objects can have the same address as old objets.
     global lastObjectsDict
@@ -339,11 +353,11 @@ def printGc(message=None,onlyPrintChanges=False):
 #@+node:ekr.20040721144439.8:printGcRefs
 def printGcRefs (verbose=True):
 
-    refs = gc.get_referrers(app.windowList[0])
+    refs = gc.get_referrers(g.app.windowList[0])
     print '-' * 30
 
     if verbose:
-        print "refs of", app.windowList[0]
+        print "refs of", g.app.windowList[0]
         for ref in refs:
             print type(ref)
     else:
@@ -460,7 +474,7 @@ class testUtils:
     
         c = g.top() ; n = 0
         for p in c.allNodes_iter():
-            if v.isCloned():
+            if p.isCloned():
                 n += 1
         return n
     #@nonl
@@ -706,6 +720,16 @@ class reformatParagraphTestCase(unittest.TestCase):
     """Unit tests for Leo's reformat paragraph command."""
 
     #@    @+others
+    #@+node:ekr.20040809073137: fail
+    def fail (self):
+    
+        """Mark a unit test as having failed."""
+    
+        import leoGlobals as g
+    
+        g.app.unitTestDict["fail"] = g.callerName(2)
+    #@nonl
+    #@-node:ekr.20040809073137: fail
     #@+node:ekr.20040708074710.3:setUp
     # DTHEIN 2004.01.11: Added method
     def setUp(self):
@@ -1115,6 +1139,16 @@ class editBodyTestCase(unittest.TestCase):
         self.ins    = ins.copy() # One line giveing the insert point in tk coordinate.
         self.temp_v = temp_v.copy()
     #@nonl
+    #@+node:ekr.20040809073457: fail
+    def fail (self):
+    
+        """Mark a unit test as having failed."""
+    
+        import leoGlobals as g
+    
+        g.app.unitTestDict["fail"] = g.callerName(2)
+    #@nonl
+    #@-node:ekr.20040809073457: fail
     #@-node:ekr.20040707140849.13:__init__
     #@+node:ekr.20040707140849.14:editBody
     def editBody (self):
@@ -1244,6 +1278,16 @@ class importExportTestCase(unittest.TestCase):
         self.old_v = c.currentVnode()
     #@nonl
     #@-node:ekr.20040707140849.29:__init__
+    #@+node:ekr.20040809073457.1: fail
+    def fail (self):
+    
+        """Mark a unit test as having failed."""
+    
+        import leoGlobals as g
+    
+        g.app.unitTestDict["fail"] = g.callerName(2)
+    #@nonl
+    #@-node:ekr.20040809073457.1: fail
     #@+node:ekr.20040707140849.30:importExport
     def importExport (self):
     
