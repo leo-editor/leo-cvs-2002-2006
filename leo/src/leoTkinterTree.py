@@ -1555,7 +1555,9 @@ class leoTkinterTree (leoFrame.leoTree):
 		#@nonl
 		#@-node:<< Create the menu table >>
 		#@nl
-		frame.menu.createMenuEntries(menu,table)
+		
+		# 11/27/03: Don't actually set binding: it would conflict with previous.
+		frame.menu.createMenuEntries(menu,table,dontBind=true)
 	#@nonl
 	#@-node:createPopupMenu
 	#@+node:enablePopupMenuItems
