@@ -33,7 +33,7 @@ import sys
 #@nonl
 #@-node:ekr.20050227071948.35:<< imports >>
 #@nl
-__version__ = "0.10"
+__version__ = "0.11"
 #@<< version history >>
 #@+node:ekr.20050227071948.36:<< version history >>
 #@@killcolor
@@ -69,6 +69,9 @@ __version__ = "0.10"
 #     - Replaced string.find(s,...) by s.find(...) & removed import string.
 #     - show_menu now returns 'break':  fixes the 'popup menu is not unposting 
 # bug)
+# 
+# 0.11 EKR:
+#     - hasUD and getUD now make sure that the dict is actually a dict.
 #@-at
 #@nonl
 #@-node:ekr.20050227071948.36:<< version history >>
@@ -221,8 +224,11 @@ class cleoController:
         
         # g.trace(node) # EKR: node had better not be a position!
        
-        return hasattr(node,"unknownAttributes") and \
-            node.unknownAttributes.has_key(udict)
+        return (
+            hasattr(node,"unknownAttributes") and
+            node.unknownAttributes.has_key(udict) and
+            type(node.unknownAttributes.get(udict)) == type({}) # EKR
+        )
     #@nonl
     #@-node:ekr.20050227074440.1:hasUD
     #@+node:ekr.20050227074440.2:getUD
@@ -236,7 +242,7 @@ class cleoController:
         # Create a subdictionary for the private use of my plugin.
         d = node.unknownAttributes.get(udict)
     
-        if d is None:
+        if d is None or type(d) != type({}): # EKR
             node.unknownAttributes[udict] = d = {}
             
         return d
