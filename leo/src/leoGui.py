@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #@+leo-ver=4
 #@+node:@file leoGui.py
-#@@first # -*- coding: utf-8 -*-
+#@@first
 
 """A module containing all of Leo's default gui code.
 

@@ -4854,43 +4854,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.os(s) ; at.onl()
 	#@nonl
 	#@-node:putPending
-	#@+node:hasSectionName
-	def findSectionName(self,s,i):
-		
-		end = s.find('\n',i)
-		if end == -1:
-			n1 = s.find("<<",i)
-			n2 = s.find(">>",i)
-		else:
-			n1 = s.find("<<",i,end)
-			n2 = s.find(">>",i,end)
-	
-		return -1 < n1 < n2, n1, n2
-	#@nonl
-	#@-node:hasSectionName
-	#@+node:os, onl, etc.
-	def oblank(self):
-		self.os(' ')
-	
-	def oblanks(self,n):
-		self.os(' ' * abs(n))
-	
-	def onl(self):
-		self.os(self.output_newline)
-		
-	def os (self,s):
-		if s and self.outputFile:
-			try:
-				s = toEncodedString(s,self.encoding,reportErrors=true)
-				self.outputFile.write(s)
-			except:
-				es("exception writing:" + `s`)
-				es_exception()
-	
-	def otabs(self,n):
-		self.os('\t' * abs(n))
-	#@nonl
-	#@-node:os, onl, etc.
 	#@+node:directiveKind
 	# Returns the kind of at-directive or noDirective.
 	
@@ -4939,6 +4902,97 @@ class baseNewDerivedFile(oldDerivedFile):
 		return noDirective
 	#@nonl
 	#@-node:directiveKind
+	#@+node:hasSectionName
+	def findSectionName(self,s,i):
+		
+		end = s.find('\n',i)
+		if end == -1:
+			n1 = s.find("<<",i)
+			n2 = s.find(">>",i)
+		else:
+			n1 = s.find("<<",i,end)
+			n2 = s.find(">>",i,end)
+	
+		return -1 < n1 < n2, n1, n2
+	#@nonl
+	#@-node:hasSectionName
+	#@+node:os, onl, etc.
+	def oblank(self):
+		self.os(' ')
+	
+	def oblanks(self,n):
+		self.os(' ' * abs(n))
+	
+	def onl(self):
+		self.os(self.output_newline)
+		
+	def os (self,s):
+		if s and self.outputFile:
+			try:
+				s = toEncodedString(s,self.encoding,reportErrors=true)
+				self.outputFile.write(s)
+			except:
+				es("exception writing:" + `s`)
+				es_exception()
+	
+	def otabs(self,n):
+		self.os('\t' * abs(n))
+	#@nonl
+	#@-node:os, onl, etc.
+	#@+node:putDirective  (handles @delims) 4,x
+	#@+at 
+	#@nonl
+	# This method outputs s, a directive or reference, in a sentinel.
+	# 
+	# It is important for PHP and other situations that @first and @last 
+	# directives get translated to verbatim lines that do _not_ include what 
+	# follows the @first & @last directives.
+	#@-at
+	#@@c
+	
+	def putDirective(self,s,i):
+	
+		tag = "@delims"
+		assert(i < len(s) and s[i] == '@')
+		k = i
+		j = skip_to_end_of_line(s,i)
+		directive = s[i:j]
+	
+		if match_word(s,k,"@delims"):
+			#@		<< handle @delims >>
+			#@+node:<< handle @delims >>
+			# Put a space to protect the last delim.
+			self.putSentinel(directive + " ") # 10/23/02: put @delims, not @@delims
+			
+			# Skip the keyword and whitespace.
+			j = i = skip_ws(s,k+len(tag))
+			
+			# Get the first delim.
+			while i < len(s) and not is_ws(s[i]) and not is_nl(s,i):
+				i += 1
+			if j < i:
+				self.startSentinelComment = s[j:i]
+				# Get the optional second delim.
+				j = i = skip_ws(s,i)
+				while i < len(s) and not is_ws(s[i]) and not is_nl(s,i):
+					i += 1
+				self.endSentinelComment = choose(j<i, s[j:i], "")
+			else:
+				self.writeError("Bad @delims directive")
+			#@nonl
+			#@-node:<< handle @delims >>
+			#@nl
+		elif match_word(s,k,"@last"):
+			self.putSentinel("@@last") # 10/27/03: Convert to an verbatim line _without_ anything else.
+		elif match_word(s,k,"@first"):
+			self.putSentinel("@@first") # 10/27/03: Convert to an verbatim line _without_ anything else.
+		else:
+			self.putSentinel("@" + directive)
+	
+		i = skip_line(s,k)
+		return i
+	#@nonl
+	#@-node:putDirective  (handles @delims) 4,x
 	#@-others
 	#@nonl
 	#@-node:<< class baseNewDerivedFile methods >>

@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 #@+leo-ver=4
 #@+node:@file leo.py 
-#@@first #! /usr/bin/env python
+#@@first
 
 """Entry point for Leo in Python."""
 

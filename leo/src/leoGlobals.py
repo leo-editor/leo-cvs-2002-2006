@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #@+leo-ver=4
 #@+node:@file leoGlobals.py
-#@@first # -*- coding: utf-8 -*-
+#@@first
 
 """Global constants, variables and utility functions used throughout Leo."""
 

@@ -4,6 +4,15 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
+Leo 4.0.4                         October 29, 2003
+
+- Fixed a problem with the titles in Font and Color panels.
+- Worked around a Unicode assert failure in the colorizer.
+- Fixed crasher in OnEndEditHeadline.
+- Fixed import problems in leoPlugins.leo.
+- @first and @last sentinels no longer contain corresponding text.
+  This fixes a problem that affected PHP comment delimiters.
+
 Leo 4.0.3                         October 25, 2003
 
 - Fixes several problems with the auto_save and plugin menu plugins.

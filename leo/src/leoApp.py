@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #@+leo-ver=4
 #@+node:@file leoApp.py
-#@@first # -*- coding: utf-8 -*-
+#@@first
 #@@language python
 
 from leoGlobals import *
