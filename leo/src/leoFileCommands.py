@@ -3,7 +3,7 @@
 #@@language python
 
 from leoGlobals import *
-import leoDialog,leoNodes
+import leoNodes
 import os,os.path,time
 
 #@+at 
@@ -63,6 +63,21 @@ class baseFileCommands:
 		self.tnodesDict = {}
 	#@nonl
 	#@-node:leoFileCommands._init_
+	#@+node:cononicalTnodeIndex
+	def cononicalTnodeIndex(self,index):
+		
+		"""Convert Tnnn to nnn, leaving gnx's unchanged."""
+	
+	
+		# index might be Tnnn, nnn, or gnx.
+		id,time,n = app.nodeIndices.scanGnx(index,0)
+		if time == None: # A pre-4.1 file index.
+			if index[0] == "T":
+				index = index[1:]
+	
+		return index
+	#@nonl
+	#@-node:cononicalTnodeIndex
 	#@+node:createVnode
 	def createVnode(self,parent,back,tref,headline,attrDict):
 		
@@ -72,6 +87,7 @@ class baseFileCommands:
 		if tref == -1:
 			t = leoNodes.tnode()
 		else:
+			tref = self.cononicalTnodeIndex(tref)
 			t = self.tnodesDict.get(tref)
 			if not t:
 				t = self.newTnode(tref)
@@ -109,37 +125,32 @@ class baseFileCommands:
 		current = c.currentVnode()
 		after = current.nodeAfterTree()
 		c.beginUpdate()
-		if 1: # inside update...
-			if 0: # Warning: this will only join pasted clones, and is very dangerous.
-				#@			<< Create join lists of all pasted vnodes >>
-				#@+node:<< Create join lists of all pasted vnodes >>
-				v = c.currentVnode()
-				
-				while v and v != after:
-					if v not in v.t.joinList:
-						v.t.joinList.append(v)
-					v = v.threadNext()
-				#@-node:<< Create join lists of all pasted vnodes >>
-				#@nl
-			#@		<< Recompute clone bits for pasted vnodes >>
-			#@+node:<< Recompute clone bits for pasted vnodes >>
-			#@+at 
-			#@nonl
-			# This must be done after the join lists have been created.  The 
-			# saved clone bit is unreliable for pasted nodes.
-			#@-at
-			#@@c
-			
-			v = c.currentVnode()
-			while v and v != after:
-				v.initClonedBit(v.shouldBeClone())
-				v.clearDirty()
-				v = v.threadNext()
-			#@nonl
-			#@-node:<< Recompute clone bits for pasted vnodes >>
-			#@nl
-			self.compactFileIndices()
-			c.selectVnode(current)
+		#@	<< reassign tnode indices and clear all clone links >>
+		#@+node:<< reassign tnode indices and clear all clone links >>
+		#@+at 
+		#@nonl
+		# putLeoOutline calls assignFileIndices (when copying nodes) so that 
+		# vnode can be associated with tnodes.
+		# However, we must _reassign_ the indices here so that no "false 
+		# clones" are created.
+		#@-at
+		#@@c
+		
+		v = current
+		v.clearVisitedInTree()
+		after = v.nodeAfterTree()
+		
+		while v and v != after:
+			if not v.t.isVisited():
+				v.t.setVisited()
+				self.maxTnodeIndex += 1
+				v.t.setFileIndex(self.maxTnodeIndex)
+				# trace(v,self.maxTnodeIndex)
+			v = v.threadNext()
+		#@nonl
+		#@-node:<< reassign tnode indices and clear all clone links >>
+		#@nl
+		c.selectVnode(current)
 		c.endUpdate()
 		return current
 	#@nonl
@@ -410,7 +421,7 @@ class baseFileCommands:
 		# Bug fix: 7/15/02: use max, not min!!!
 		y = max(y,0) ; x = max(x,0)
 		geom = "%dx%d%+d%+d" % (w,h,x,y)
-		self.frame.setTopGeometry(geom) ## self.frame.top.geometry(geom)
+		self.frame.setTopGeometry(geom)
 		# 7/15/02: Redraw the window before writing into it.
 		self.frame.deiconify()
 		self.frame.lift()
@@ -437,8 +448,6 @@ class baseFileCommands:
 			self.read_only = not os.access(fileName,os.W_OK)
 			if self.read_only:
 				es("read only: " + fileName,color="red")
-				leoDialog.askOk("Read-only ouline",
-					"Warning: the outline: " + fileName + " is read-only.").run(modal=true)
 		except:
 			if 0: # testing only: access may not exist on all platforms.
 				es("exception getting file access")
@@ -515,6 +524,7 @@ class baseFileCommands:
 				self.getDquote() ; self.numberOfTnodes = self.getLong() ; self.getDquote()
 			elif self.matchTag("max_tnode_index="):
 				self.getDquote() ; self.maxTnodeIndex = self.getLong() ; self.getDquote()
+				# trace("max_tnode_index:",self.maxTnodeIndex)
 			elif self.matchTag("clone_windows="):
 				self.getDquote() ; self.getLong() ; self.getDquote() # no longer used.
 			else:
@@ -606,7 +616,7 @@ class baseFileCommands:
 				
 				for name in app.language_delims_dict.keys():
 					if self.matchTagWordIgnoringCase(name):
-						language = name.replace("/","") # Bug fix: 10/20/03
+						language = name.replace("/","") # 10/18/03
 						self.getDquote()
 						break
 				
@@ -656,10 +666,10 @@ class baseFileCommands:
 		# we have already matched <t.
 		index = -1 ; attrDict = {}
 		# New in version 1.7: attributes may appear in any order.
-		while 1:
-			if self.matchTag("tx=\"T"):
-				index = self.getIndex() ; self.getDquote()
-				# if self.usingClipboard: trace(index)
+		while 1:	
+			if self.matchTag("tx="):
+				# New for 4.1.  Read either "Tnnn" or "gnx".
+				index = self.getDqString()
 			elif self.matchTag("rtf=\"1\""): pass # ignored
 			elif self.matchTag("rtf=\"0\""): pass # ignored
 			elif self.matchTag(">"):
@@ -667,8 +677,17 @@ class baseFileCommands:
 			else: # New for 4.0: allow unknown attributes.
 				attr,val = self.getUnknownTag()
 				attrDict[attr] = val
+				
+		if app.use_gnx:
+			# index might be Tnnn, nnn, or gnx.
+			id,time,n = app.nodeIndices.scanGnx(index,0)
+			if time == None: # A pre-4.1 file index.
+				if index[0] == "T":
+					index = index[1:]
 	
+		index = self.cononicalTnodeIndex(index)
 		t = self.tnodesDict.get(index)
+		# trace(t)
 		#@	<< handle unknown attributes >>
 		#@+node:<< handle unknown attributes >>
 		keys = attrDict.keys()
@@ -744,12 +763,14 @@ class baseFileCommands:
 				#@nonl
 				#@-node:<< Handle vnode attribute bits  >>
 				#@nl
-			elif self.matchTag("t=\"T"):
-				tref = self.getIndex() ; self.getDquote()
+			elif self.matchTag("t="):
+				# New for 4.1.  Read either "Tnnn" or "gnx".
+				tref = self.getDqString()
 			elif self.matchTag("vtag=\"V"):
 				self.getIndex() ; self.getDquote() # ignored
-			elif self.matchTag("tnodeList=\""):
-				tnodeList = self.getTnodeList() # New for 4.0
+			elif self.matchTag("tnodeList="):
+				s = self.getDqString()
+				tnodeList = self.getTnodeList(s) # New for 4.0
 			elif self.matchTag(">"):
 				break
 			else: # New for 4.0: allow unknown attributes.
@@ -792,32 +813,25 @@ class baseFileCommands:
 	#@nonl
 	#@-node:getVnode
 	#@+node:getTnodeList (4.0)
-	def getTnodeList (self):
+	def getTnodeList (self,s):
 	
-		"""Parse a list of tnode indices terminated by a double quote."""
-	
-		fc = self ; 
+		"""Parse a list of tnode indices in string s."""
 		
-		if fc.matchChar('"'):
-			return []
+		# Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
+		
+		fc = self ; 
 	
-		indexList = []
-		while 1:
-			index = fc.getIndex()
-			indexList.append(index)
-			if fc.matchChar('"'):
-				break
-			else:
-				fc.getTag(',')
-				
-		# Resolve all indices.
+		indexList = s.split(',') # The list never ends in a comma.
 		tnodeList = []
 		for index in indexList:
+			index = self.cononicalTnodeIndex(index)
 			t = fc.tnodesDict.get(index)
-			if t == None:
+			if not t:
 				# Not an error: create a new tnode and put it in fc.tnodesDict.
+				# trace("not allocated: %s" % index)
 				t = self.newTnode(index)
 			tnodeList.append(t)
+			
 		return tnodeList
 	#@nonl
 	#@-node:getTnodeList (4.0)
@@ -912,9 +926,18 @@ class baseFileCommands:
 			es("bad tnode index: " + `index` + ". Using empty text.")
 			return leoNodes.tnode()
 		else:
+			# Create the tnode.  Use the _original_ index as the key in tnodesDict.
 			t = leoNodes.tnode()
-			t.setFileIndex(index)
 			self.tnodesDict[index] = t
+			
+			# trace(index,t)
+			assert(type(index) == type("s"))
+			
+			# Convert any pre-4.1 index to a gnx.
+			id,time,n = gnx = app.nodeIndices.scanGnx(index,0)
+			if time != None:
+				t.setFileIndex(gnx)
+	
 			return t
 	#@nonl
 	#@-node:newTnode
@@ -940,7 +963,7 @@ class baseFileCommands:
 		self.fileBuffer = file.read() ; file.close()
 		self.fileIndex = 0
 		#@	<< Set the default directory >>
-		#@+node:<< Set the default directory >>
+		#@+node:<< Set the default directory >> in fileCommands.readOutlineOnly
 		#@+at 
 		#@nonl
 		# The most natural default directory is the directory containing the 
@@ -950,11 +973,13 @@ class baseFileCommands:
 		#@-at
 		#@@c
 		
-		dir = os.path.dirname(fileName) 
+		dir = os.path.dirname(fileName)
+		dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+		
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@nonl
-		#@-node:<< Set the default directory >>
+		#@-node:<< Set the default directory >> in fileCommands.readOutlineOnly
 		#@nl
 		c.beginUpdate()
 		ok, ratio = self.getLeoFile(self.frame,fileName,atFileNodesFlag=false)
@@ -980,7 +1005,7 @@ class baseFileCommands:
 		self.fileBuffer = file.read() ; file.close()
 		self.fileIndex = 0
 		#@	<< Set the default directory >>
-		#@+node:<< Set the default directory >>
+		#@+node:<< Set the default directory >> in fileCommands.readOutlineOnly
 		#@+at 
 		#@nonl
 		# The most natural default directory is the directory containing the 
@@ -990,11 +1015,13 @@ class baseFileCommands:
 		#@-at
 		#@@c
 		
-		dir = os.path.dirname(fileName) 
+		dir = os.path.dirname(fileName)
+		dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+		
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@nonl
-		#@-node:<< Set the default directory >>
+		#@-node:<< Set the default directory >> in fileCommands.readOutlineOnly
 		#@nl
 		c.beginUpdate()
 		ok, ratio = self.getLeoFile(self.frame,fileName,atFileNodesFlag=true)
@@ -1018,8 +1045,6 @@ class baseFileCommands:
 	def setAllJoinLinks (self,root=None):
 		
 		"""Update all join links in the tree"""
-		
-		# trace(root)
 	
 		if root: # Only update the subtree.
 			v = root # 6/3/03
@@ -1031,6 +1056,7 @@ class baseFileCommands:
 		else: # Update everything.
 			v = self.commands.rootVnode()
 			while v:
+				# trace(v,v.t)
 				if v not in v.t.joinList:
 					v.t.joinList.append(v)
 				v = v.threadNext()
@@ -1047,54 +1073,58 @@ class baseFileCommands:
 		return s
 	#@nonl
 	#@-node:xmlUnescape
-	#@+node:assignFileIndices
-	def assignFileIndices (self,root=None):
+	#@+node:assignFileIndices & compactFileIndices
+	def assignFileIndices (self):
 		
 		"""Assign a file index to all tnodes"""
 		
-		c=self.commands
+		c=self.commands ; nodeIndices = app.nodeIndices
+		root = c.rootVnode() # 4.1: Always assign all indices.
+		nodeIndices.setTimestamp() # This call is fairly expensive.
 		
-		if root == None:
-			root = c.rootVnode()
-		v = root
-		while v:
-			t = v.t
+		# trace(app.use_gnx,root)
 	
-			# 8/28/99.  Write shared tnodes even if they are empty.
-			if t.hasBody() or len(v.t.joinList) > 0:
-				if t.fileIndex == 0:
-					self.maxTnodeIndex += 1
-					t.setFileIndex(self.maxTnodeIndex)
-			else:
-				t.setFileIndex(0)
+		if app.use_gnx:
+			#@		<< assign missing gnx's, converting ints to gnx's >>
+			#@+node:<< assign missing gnx's, converting ints to gnx's >>
+			# Always assign an (immutable) index, even if the tnode is empty.
+			
+			v = root
+			while v:
+				try: # Will fail for None or any pre 4.1 file index.
+					id,time,n = v.t.fileIndex
+				except:
+					# Don't convert to string until the actual write.
+					v.t.fileIndex = nodeIndices.getNewIndex()
+				v = v.threadNext()
+			#@nonl
+			#@-node:<< assign missing gnx's, converting ints to gnx's >>
+			#@nl
+		else:
+			#@		<< reassign all tnode indices >>
+			#@+node:<< reassign all tnode indices >>
+			# Clear out all indices.
+			v = root
+			while v:
+				v.t.fileIndex = None
+				v = v.threadNext()
 				
-			# if self.usingClipboard: trace(t.fileIndex)
-			v = v.threadNext()
-	#@nonl
-	#@-node:assignFileIndices
-	#@+node:compactFileIndices
-	def compactFileIndices (self):
-		
-		"""Assign a file index to all tnodes, compacting all file indices"""
-		
-		c = self.commands ; root = c.rootVnode()
-		
-		v = root
-		self.maxTnodeIndex = 0
-		while v: # Clear all indices.
-			v.t.setFileIndex(0)
-			v = v.threadNext()
-	
-		v = c.rootVnode()
-		while v: # Set indices for all tnodes that will be written.
-			t = v.t
-			if t.hasBody() or len(v.t.joinList) > 0: # Write shared tnodes even if they are empty.
-				if t.fileIndex == 0:
+			# Recreate integer indices.
+			self.maxTnodeIndex = 0
+			v = root
+			while v:
+				if v.t.fileIndex == None:
 					self.maxTnodeIndex += 1
-					t.setFileIndex(self.maxTnodeIndex)
-			v = v.threadNext()
+					v.t.fileIndex = self.maxTnodeIndex
+				v = v.threadNext()
+			#@nonl
+			#@-node:<< reassign all tnode indices >>
+			#@nl
+	
+	# Indices are now immutable, so there is no longer any difference between these two routines.
+	compactFileIndices = assignFileIndices
 	#@nonl
-	#@-node:compactFileIndices
+	#@-node:assignFileIndices & compactFileIndices
 	#@+node:put (basic)(leoFileCommands)
 	# All output eventually comes here.
 	def put (self,s):
@@ -1148,7 +1178,8 @@ class baseFileCommands:
 		after = v.nodeAfterTree()
 		while v and v != after:
 			t = v.t
-			if t and not t.isVisited() and (t.hasBody() or len(v.t.joinList) > 0):
+			# if t and not t.isVisited() and (t.hasBody() or len(v.t.joinList) > 0):
+			if t and not t.isVisited():
 				t.setVisited()
 				tnodes += 1
 			v = v.threadNext()
@@ -1225,7 +1256,7 @@ class baseFileCommands:
 		self.put("</find_panel_settings>") ; self.put_nl()
 	#@nonl
 	#@-node:putFindSettings
-	#@+node:putGlobals (changed for 4.0)
+	#@+node:fileCommands.putGlobals (changed for 4.0)
 	def putGlobals (self):
 	
 		c=self.commands
@@ -1241,8 +1272,7 @@ class baseFileCommands:
 		self.put(">") ; self.put_nl()
 		#@	<< put the position of this frame >>
 		#@+node:<< put the position of this frame >>
-		width,height,left,top = get_window_info(self.frame.top)
-		#print ("t,l,h,w:" + `top` + ":" + `left` + ":" + `height` + ":" + `width`)
+		width,height,left,top = c.frame.get_window_info()
 		
 		self.put_tab()
 		self.put("<global_window_position")
@@ -1267,10 +1297,9 @@ class baseFileCommands:
 		#@nonl
 		#@-node:<< put the position of the log window >>
 		#@nl
-	
 		self.put("</globals>") ; self.put_nl()
 	#@nonl
-	#@-node:putGlobals (changed for 4.0)
+	#@-node:fileCommands.putGlobals (changed for 4.0)
 	#@+node:putHeader
 	def putHeader (self):
 	
@@ -1394,11 +1423,15 @@ class baseFileCommands:
 	#@-node:putProlog
 	#@+node:putTnode
 	def putTnode (self,t):
-		
-		# if self.usingClipboard: trace(t.fileIndex)
 	
 		self.put("<t")
-		self.put(" tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
+		self.put(" tx=")
+		if app.use_gnx:
+			gnx = app.nodeIndices.toString(t.fileIndex)
+			self.put_in_dquotes(gnx)
+		else:
+			self.put_in_dquotes("T" + `t.fileIndex`)
+	
 		if hasattr(t,"unknownAttributes"):
 			#@		<< put unknown tnode attributes >>
 			#@+node:<< put unknown tnode attributes >>
@@ -1427,12 +1460,25 @@ class baseFileCommands:
 	def putTnodeList (self,v):
 		
 		"""Put the optional tnodeList attribute of a vnode."""
+		
+		# Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
 	
-		fc = self
+		fc = self ; nodeIndices = app.nodeIndices
 		if v.tnodeList:
 			# trace("%4d" % len(v.tnodeList),v)
 			fc.put(" tnodeList=") ; fc.put_dquote()
-			s = ','.join([str(t.fileIndex) for t in v.tnodeList])
+			if app.use_gnx:
+				for t in v.tnodeList:
+					try: # Will fail for None or any pre 4.1 file index.
+						id,time,n = t.fileIndex
+					except:
+						trace("assigning gnx for ",v,t)
+						gnx = nodeIndices.getNewIndex()
+						t.setFileIndex(gnx) # Don't convert to string until the actual write.
+				s = ','.join([nodeIndices.toString(t.fileIndex) for t in v.tnodeList])
+			else:
+				s = ','.join([str(t.fileIndex) for t in v.tnodeList])
+			# trace(s)
 			fc.put(s) ; fc.put_dquote()
 	#@nonl
 	#@-node:putTnodeList (4.0)
@@ -1484,18 +1530,21 @@ class baseFileCommands:
 	
 		fc = self ; c = fc.commands
 		fc.put("<v")
-		#@	<< Put tnode index if this vnode has body text >>
-		#@+node:<< Put tnode index if this vnode has body text >>
-		t = v.t
-		if t and (t.hasBody() or len(v.t.joinList) > 0):
-			if t.fileIndex > 0:
-				fc.put(" t=") ; fc.put_in_dquotes("T" + `t.fileIndex`)
-				v.t.setVisited() # Indicate we wrote the body text.
+		#@	<< Put tnode index >>
+		#@+node:<< Put tnode index >>
+		if v.t.fileIndex:
+			if app.use_gnx:
+				gnx = app.nodeIndices.toString(v.t.fileIndex)
+				fc.put(" t=") ; fc.put_in_dquotes(gnx)
 			else:
-				es("error writing file(bad vnode)!")
-				es("try using the Save To command")
+				fc.put(" t=") ; fc.put_in_dquotes("T" + `v.t.fileIndex`)
+			v.t.setVisited() # Indicate we wrote the body text.
+		else:
+			trace(v.t.fileIndex,v)
+			es("error writing file(bad v.t.fileIndex)!")
+			es("try using the Save To command")
 		#@nonl
-		#@-node:<< Put tnode index if this vnode has body text >>
+		#@-node:<< Put tnode index >>
 		#@nl
 		#@	<< Put attribute bits >>
 		#@+node:<< Put attribute bits >>
@@ -1504,7 +1553,8 @@ class baseFileCommands:
 		if ( v.isCloned() or v.isExpanded() or v.isMarked() or
 			v == current or v == top ):
 			fc.put(" a=") ; fc.put_dquote()
-			if v.isCloned(): fc.put("C")
+			if 0: # 10/25/03: Clone bits are never used.
+				if v.isCloned(): fc.put("C")
 			if v.isExpanded(): fc.put("E")
 			if v.isMarked(): fc.put("M")
 			if v.isOrphan(): fc.put("O")
@@ -1639,6 +1689,8 @@ class baseFileCommands:
 	
 		if not c.openDirectory or len(c.openDirectory) == 0:
 			dir = os.path.dirname(fileName)
+			dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+	
 			if len(dir) > 0 and os.path.isabs(dir) and os.path.exists(dir):
 				c.openDirectory = dir
 	#@nonl
@@ -1664,11 +1716,12 @@ class baseFileCommands:
 	
 		try:
 			#@		<< create backup file >>
-			#@+node:<< create backup file >>
+			#@+node:<< create backup file >> in write_LEO_file
 			# rename fileName to fileName.bak if fileName exists.
 			if os.path.exists(fileName):
 				try:
 					backupName = os.path.join(app.loadDir,fileName)
+					backupName = toUnicode(backupName,app.tkEncoding) # 10/20/03
 					backupName = fileName + ".bak"
 					if os.path.exists(backupName):
 						os.unlink(backupName)
@@ -1681,7 +1734,7 @@ class baseFileCommands:
 			else:
 				backupName = None
 			#@nonl
-			#@-node:<< create backup file >>
+			#@-node:<< create backup file >> in write_LEO_file
 			#@nl
 			self.mFileName = fileName
 			self.outputFile = open(fileName, 'wb') # 9/18/02
