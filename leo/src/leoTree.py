@@ -1711,18 +1711,6 @@ class leoTree:
 		#@-node:4::<< set the current node and redraw >>
 
 		doHook("select2",c=c,new_v=v,old_v=old_v)
-		
-		#@<< update the sections list and the icons >>
-		#@+node:7::<< update the sections list and the icons >>
-		#@+body
-		for d in app().sectionDialogs:
-			try:
-				d.fillbox()
-			except: pass
-		
-		#@-body
-		#@-node:7::<< update the sections list and the icons >>
-
 		doHook("select3",c=c,new_v=v,old_v=old_v)
 	
 	#@-body

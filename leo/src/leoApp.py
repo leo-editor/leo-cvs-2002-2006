@@ -121,11 +121,6 @@ class LeoApp:
 	
 		if self.findFrame:
 			self.findFrame.top.destroy()
-			
-		for d in self.sectionDialogs:
-			try:
-				d.top.destroy() # actually destroy the Tk window.
-			except: pass
 	
 	#@-body
 	#@-node:2::app.destroyAllGlobalWindows

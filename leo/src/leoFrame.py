@@ -3830,22 +3830,25 @@ class LeoFrame:
 	#@-node:10::OnGoNext
 	#@-node:3::Move/Select
 	#@+node:4::Mark/Goto
-	#@+node:1::recentSectionsDialogCallback
+	#@+node:1::recentButtonCallback
 	#@+body
-	def recentSectionsDialogCallback(c):
-			
-		# Bring the dialog to the front if it already exits.
-		for d in app().sectionDialogs:
-			if d.c == c:
-				d.top.deiconify()
-				return
-			
-		# Create and run the dialog.
-		d = leoDialog.recentSectionsDialog(c,"Recent nodes: " + shortFileName(c.frame.mFileName))
-		d.root.wait_window(d.top)
+	def recentButtonCallback(self,event=None):
+		
+		c = self.c ; d = self.recentSectionsDialog
+		
+		if d:
+			d.active = true
+			d.fillbox()
+			d.top.deiconify()
+		else:
+			# Create and run the dialog.
+			title = "Recent nodes: " + shortFileName(c.frame.mFileName)
+			d = leoDialog.recentSectionsDialog(c,self.nav_buttons,title)
+			self.recentSectionsDialog = d
+			d.root.wait_window(d.top)
 	
 	#@-body
-	#@-node:1::recentSectionsDialogCallback
+	#@-node:1::recentButtonCallback
 	#@+node:2::OnGoPrevVisitedNode
 	#@+body
 	def OnGoPrevVisitedNode(self,event=None):

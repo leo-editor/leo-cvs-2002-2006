@@ -620,25 +620,37 @@ class recentSectionsDialog (listBoxDialog):
 	#@+node:3::<< recentSectionsDialog methods >>
 	#@+body
 	#@+others
-	#@+node:1::addButtons
+	#@+node:1::__init__  recentSectionsDialog
+	#@+body
+	def __init__ (self,c,buttons,label):
+		
+		self.lt_nav_iconFrame_button, self.rt_nav_iconFrame_button = buttons
+		self.active = true
+		
+		listBoxDialog.__init__(self,c,label)
+	
+	#@-body
+	#@-node:1::__init__  recentSectionsDialog
+	#@+node:2::addButtons
 	#@+body
 	def addButtons (self):
-		
-		c = self.c
+	
 		self.buttonFrame = f = Tk.Frame(self.outerFrame)
 		f.pack()
 		
 		row1 = Tk.Frame(f)
 		row1.pack()
 		
-		# Create the back and forward buttons.
-		image = c.lt_nav_button.cget("image")
-		command = c.lt_nav_button.cget("command")
+		# Create the back and forward buttons, cloning the images & commands of the already existing buttons.
+		image   = self.lt_nav_iconFrame_button.cget("image")
+		command = self.lt_nav_iconFrame_button.cget("command")
+	
 		self.lt_nav_button = b = Tk.Button(row1,image=image,command=command)
 		b.pack(side="left",pady=2,padx=5)
 		
-		image = c.rt_nav_button.cget("image")
-		command = c.rt_nav_button.cget("command")
+		image   = self.rt_nav_iconFrame_button.cget("image")
+		command = self.rt_nav_iconFrame_button.cget("command")
+	
 		self.rt_nav_button = b = Tk.Button(row1,image=image,command=command)
 		b.pack(side="left",pady=2,padx=5)
 		
@@ -658,33 +670,29 @@ class recentSectionsDialog (listBoxDialog):
 		b.pack(side="left",pady=2,padx=5)
 	
 	#@-body
-	#@-node:1::addButtons
-	#@+node:2::clearAll
+	#@-node:2::addButtons
+	#@+node:3::clearAll
 	#@+body
 	def clearAll (self,event=None):
 	
 		"""callback for the "Delete" button"""
-		
-		c = self.c
 	
-		c.visitedList = []
+		self.c.visitedList = []
 		self.vnodeList = []
 		self.fillbox()
 	
 	#@-body
-	#@-node:2::clearAll
-	#@+node:3::createFrame
+	#@-node:3::clearAll
+	#@+node:4::createFrame
 	#@+body
 	def createFrame(self):
 		
-		c = self.c
-	
 		listBoxDialog.createFrame(self)	
 		self.addButtons()
 	
 	#@-body
-	#@-node:3::createFrame
-	#@+node:4::deleteEntry
+	#@-node:4::createFrame
+	#@+node:5::deleteEntry
 	#@+body
 	def deleteEntry (self,event=None):
 	
@@ -707,39 +715,36 @@ class recentSectionsDialog (listBoxDialog):
 			self.fillbox()
 	
 	#@-body
-	#@-node:4::deleteEntry
-	#@+node:5::destroy
+	#@-node:5::deleteEntry
+	#@+node:6::destroy
 	#@+body
 	def destroy (self,event=None):
 		
-		"""Really destroy a recentSectionsDialog
+		"""Hide a recentSectionsDialog and mark it inactive
 		
 		This is an escape from possible performace penalties"""
-		
-		if self in app().sectionDialogs:
-			app().sectionDialogs.remove(self)
 			
-		self.top.destroy()
+		self.active = false
+		self.top.withdraw()
+		
+	
 	#@-body
-	#@-node:5::destroy
-	#@+node:6::fillbox (recent sections)
+	#@-node:6::destroy
+	#@+node:7::fillbox (recent sections)
 	#@+body
 	def fillbox(self,event=None):
 	
 		"""Update the listbox and update vnodeList & tnodeList ivars"""
 		
-		c = self.c
 		
-		# Only fill the box if the dialog is visible.
-		# This is another escape to avoid possible performance problems.
-		
-		# trace(self.top.state())
-		
-		if self.top.state() == "normal":
+		# Only fill the box if the dialog is visible and the dialog is active.
+		if self.top.state() == "normal" and self.active:
 			
 			#@<< reconstruct the contents of self.box >>
 			#@+node:1::<< reconstruct the contents of self.box >>>
 			#@+body
+			c = self.c
+			
 			self.box.delete(0,"end")
 			self.vnodeList = []
 			self.tnodeList = []
@@ -759,30 +764,16 @@ class recentSectionsDialog (listBoxDialog):
 
 			self.synchButtons()
 	#@-body
-	#@-node:6::fillbox (recent sections)
-	#@+node:7::recent...__init__
-	#@+body
-	def __init__ (self,c,label):
-		
-		listBoxDialog.__init__(self,c,label)
-		
-		if self not in app().sectionDialogs:
-			app().sectionDialogs.append(self)
-	
-	
-	#@-body
-	#@-node:7::recent...__init__
+	#@-node:7::fillbox (recent sections)
 	#@+node:8::synchNavButtons
 	#@+body
 	def synchButtons (self):
-		
-		c = self.c
-		
+	
 		# Keep the arrow boxes in synch.
-		image = c.lt_nav_button.cget("image")
+		image = self.lt_nav_iconFrame_button.cget("image")
 		self.lt_nav_button.configure(image=image)
 		
-		image = c.rt_nav_button.cget("image")
+		image = self.rt_nav_iconFrame_button.cget("image")
 		self.rt_nav_button.configure(image=image)
 	#@-body
 	#@-node:8::synchNavButtons
