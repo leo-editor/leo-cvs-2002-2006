@@ -2453,7 +2453,7 @@ class atFile:
             if j > -1:
                 # The encoding field was written by 4.2 or after:
                 encoding = s[i:j]
-                i = j + 1 # 6/8/04
+                i = j + 2 # 6/8/04, 1/11/05 (was i = j + 1)
             else:
                 # The encoding field was written before 4.2.
                 j = s.find('.',i)
@@ -2485,6 +2485,24 @@ class atFile:
         #@nl
         return valid,new_df,start,end,isThinDerivedFile
     #@nonl
+    #@+node:ekr.20050211111552:test_parseLeoSentinel
+    def test_parseLeoSentinel (self):
+        
+        s1 = '#@+leo-ver=4-thin-encoding=utf-8,.'  # 4.2 format.
+        s2 = '#@+leo-ver=4-thin-encoding=utf-8.' # pre-4.2 format.
+        
+        at=c.atFileCommands # Self is a dummy argument.
+        
+        for s in (s1,s2):
+            valid,new_df,start,end,isThinDerivedFile = at.parseLeoSentinel(s)
+            # g.trace('start',start,'end',repr(end),'len(s)',len(s))
+            assert valid, 'not valid'
+            assert new_df, 'not new_df'
+            assert isThinDerivedFile, 'not thin'
+            assert end == '', 'invalid end: %s' % repr(end)
+            assert at.encoding == 'utf-8', 'bad encoding: %s' % repr(at.encoding)
+    #@nonl
+    #@-node:ekr.20050211111552:test_parseLeoSentinel
     #@-node:ekr.20041005105605.120:parseLeoSentinel
     #@+node:ekr.20041005105605.127:readError
     def readError(self,message):
@@ -4360,10 +4378,8 @@ class atFile:
     #@+node:ekr.20050107085710:test_atFile_rename
     def test_atFile_rename (self):
     
-        import leoGlobals as g
         import os
-        
-        c = g.top() ; at = c.atFileCommands
+        at = c.atFileCommands
     
         exists = g.os_path_exists
         path = g.os_path_join(g.app.testDir,'xyzzy')
@@ -4404,15 +4420,10 @@ class atFile:
             return False
     #@nonl
     #@+node:ekr.20050107090156:test_atFile_remove
-    def test_atFile_remove(self):
+    def test_atFile_remove(self,**keys):
         
-        __pychecker__ = '--no-reimport' # Reimports needed in test methods.
-        
-        import leoGlobals as g
         import os
-        
-        c = g.top() ; at = c.atFileCommands
-        
+        at = c.atFileCommands
         exists = g.os_path_exists
         
         path = g.os_path_join(g.app.testDir,'xyzzy')
@@ -4463,12 +4474,9 @@ class atFile:
             except UnicodeError:
                 print g.toEncodedString(message,g.app.tkEncoding)
                 
-    def test_printError(self):
+    def test_printError(self,**keys):
     
-        import leoGlobals as g
-        
-        c = g.top() ; at = c.atFileCommands
-        
+        at = c.atFileCommands
         at.errors = 0
         at.printError(
             "test of printError: Ᾱ(U+1FB9: Greek Capital Letter Alpha With Macron)")
