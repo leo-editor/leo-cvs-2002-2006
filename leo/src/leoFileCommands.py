@@ -1713,10 +1713,18 @@ class baseFileCommands:
 						os.unlink(backupName)
 					# os.rename(fileName,backupName)
 					utils_rename(fileName,backupName)
+				except OSError:
+					if self.read_only:
+						es("read only",color="red")
+					else:
+						es("exception creating backup file: " + backupName)
+						es_exception()
+					return false
 				except:
 					es("exception creating backup file: " + backupName)
 					es_exception()
 					backupName = None
+					return false
 			else:
 				backupName = None
 			#@nonl
@@ -1731,10 +1739,17 @@ class baseFileCommands:
 				if backupName and os_path_exists(backupName):
 					try:
 						os.unlink(backupName)
+					except OSError:
+						if self.read_only:
+							es("read only",color="red")
+						else:
+							es("exception deleting backup file:" + backupName)
+							es_exception()
+						return false
 					except:
 						es("exception deleting backup file:" + backupName)
 						es_exception()
-						return false # 1/29/04: Make sure we indicate failure.
+						return false
 				#@-node:<< delete backup file >>
 				#@nl
 				return false
@@ -1772,6 +1787,12 @@ class baseFileCommands:
 			if fileName and os_path_exists(fileName):
 				try:
 					os.unlink(fileName)
+				except OSError:
+					if self.read_only:
+						es("read only",color="red")
+					else:
+						es("exception deleting: " + fileName)
+						es_exception()
 				except:
 					es("exception deleting: " + fileName)
 					es_exception()
@@ -1780,6 +1801,12 @@ class baseFileCommands:
 				es("restoring " + fileName + " from " + backupName)
 				try:
 					utils_rename(backupName, fileName)
+				except OSError:
+					if self.read_only:
+						es("read only",color="red")
+					else:
+						es("exception renaming " + backupName + " to " + fileName)
+						es_exception()
 				except:
 					es("exception renaming " + backupName + " to " + fileName)
 					es_exception()
@@ -1800,10 +1827,17 @@ class baseFileCommands:
 			if backupName and os_path_exists(backupName):
 				try:
 					os.unlink(backupName)
+				except OSError:
+					if self.read_only:
+						es("read only",color="red")
+					else:
+						es("exception deleting backup file:" + backupName)
+						es_exception()
+					return false
 				except:
 					es("exception deleting backup file:" + backupName)
 					es_exception()
-					return false # 1/29/04: Make sure we indicate failure.
+					return false
 			#@-node:<< delete backup file >>
 			#@nl
 			return true
@@ -1815,6 +1849,12 @@ class baseFileCommands:
 			if fileName and os_path_exists(fileName):
 				try:
 					os.unlink(fileName)
+				except OSError:
+					if self.read_only:
+						es("read only",color="red")
+					else:
+						es("exception deleting: " + fileName)
+						es_exception()
 				except:
 					es("exception deleting: " + fileName)
 					es_exception()
@@ -1823,6 +1863,12 @@ class baseFileCommands:
 				es("restoring " + fileName + " from " + backupName)
 				try:
 					utils_rename(backupName, fileName)
+				except OSError:
+					if self.read_only:
+						es("read only",color="red")
+					else:
+						es("exception renaming " + backupName + " to " + fileName)
+						es_exception()
 				except:
 					es("exception renaming " + backupName + " to " + fileName)
 					es_exception()
@@ -1898,6 +1944,5 @@ class baseFileCommands:
 class fileCommands (baseFileCommands):
 	"""A class creating the fileCommands subcommander."""
 	pass
-#@nonl
 #@-node:@file leoFileCommands.py
 #@-leo
