@@ -737,8 +737,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		w = config.getIntWindowPref("initial_window_width")
 		x = config.getIntWindowPref("initial_window_left")
 		y = config.getIntWindowPref("initial_window_top")
-	
-		self.setTopGeometry(w,h,x,y)
+		
+		if h and w and x and y:
+			self.setTopGeometry(w,h,x,y)
 	#@nonl
 	#@-node:setInitialWindowGeometry
 	#@+node:setTabWidth
