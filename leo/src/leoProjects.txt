@@ -8171,8 +8171,6 @@ def convertTreeToString (self):
 
     p = self ; level1 = p.level()
     
-    g.trace()
-    
     array = []
     for p in p.self_and_subtree_iter():
         array.append(p.moreHead(level1)+'\n')
@@ -8225,13 +8223,13 @@ def moreBody (self):
 #@-node:ekr.20040315023430:File Conversion
 #@-node:ekr.20040315031219.1:Flatten outline
 #@+node:ekr.20031218072017.2072:c.checkOutline
-def checkOutline (self,verbose=True,unittest=False):
+def checkOutline (self,verbose=True,unittest=False,full=True):
     
     """Report any possible clone errors in the outline.
     
     Remove any unused tnodeLists."""
     
-    c = self ; count = 1 ; errors = 0 ; full = True
+    c = self ; count = 1 ; errors = 0
     if full and not unittest:
         g.es("all tests enabled: this may take awhile",color="blue")
 
@@ -8241,13 +8239,12 @@ def checkOutline (self,verbose=True,unittest=False):
         try:
             count += 1
             << remove unused tnodeList >>
-            if not unittest: # this would be very slow.
-                if full: # For testing only.
-                    << do full tests >>
+            if full: # Unit tests usually set this false.
+                << do full tests >>
         except AssertionError,message:
             errors += 1
             << give test failed message >>
-    if not unittest:
+    if verbose or not unittest:
         << print summary message >>
     return errors
 #@nonl
@@ -8397,10 +8394,9 @@ elif verbose:
 #@nonl
 #@-node:ekr.20040314043900:<<print summary message >>
 #@+node:ekr.20040314044652:<< give test failed message >>
-if 1: # errors == 1:
-    s = "test failed: %s %s" % (message,repr(p))
-    print s ; print
-    g.es(s,color="red")
+s = "test failed: %s %s" % (message,repr(p))
+print s ; print
+g.es(s,color="red")
 #@nonl
 #@-node:ekr.20040314044652:<< give test failed message >>
 #@-node:ekr.20031218072017.2072:c.checkOutline
@@ -8558,13 +8554,13 @@ self.language_extension_dict = {
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@-node:ekr.20031218072017.1416:app.__init__
 #@+node:ekr.20031218072017.2072:c.checkOutline
-def checkOutline (self,verbose=True,unittest=False):
+def checkOutline (self,verbose=True,unittest=False,full=True):
     
     """Report any possible clone errors in the outline.
     
     Remove any unused tnodeLists."""
     
-    c = self ; count = 1 ; errors = 0 ; full = True
+    c = self ; count = 1 ; errors = 0
     if full and not unittest:
         g.es("all tests enabled: this may take awhile",color="blue")
 
@@ -8574,13 +8570,12 @@ def checkOutline (self,verbose=True,unittest=False):
         try:
             count += 1
             << remove unused tnodeList >>
-            if not unittest: # this would be very slow.
-                if full: # For testing only.
-                    << do full tests >>
+            if full: # Unit tests usually set this false.
+                << do full tests >>
         except AssertionError,message:
             errors += 1
             << give test failed message >>
-    if not unittest:
+    if verbose or not unittest:
         << print summary message >>
     return errors
 #@nonl
@@ -8730,10 +8725,9 @@ elif verbose:
 #@nonl
 #@-node:ekr.20040314043900:<<print summary message >>
 #@+node:ekr.20040314044652:<< give test failed message >>
-if 1: # errors == 1:
-    s = "test failed: %s %s" % (message,repr(p))
-    print s ; print
-    g.es(s,color="red")
+s = "test failed: %s %s" % (message,repr(p))
+print s ; print
+g.es(s,color="red")
 #@nonl
 #@-node:ekr.20040314044652:<< give test failed message >>
 #@-node:ekr.20031218072017.2072:c.checkOutline
@@ -14243,13 +14237,13 @@ if keys:
 #@-node:ekr.20040323090456.2:(Removed v.parents field)
 #@+node:ekr.20040322123611:(Check Outline command)
 #@+node:ekr.20031218072017.2072:c.checkOutline
-def checkOutline (self,verbose=True,unittest=False):
+def checkOutline (self,verbose=True,unittest=False,full=True):
     
     """Report any possible clone errors in the outline.
     
     Remove any unused tnodeLists."""
     
-    c = self ; count = 1 ; errors = 0 ; full = True
+    c = self ; count = 1 ; errors = 0
     if full and not unittest:
         g.es("all tests enabled: this may take awhile",color="blue")
 
@@ -14259,13 +14253,12 @@ def checkOutline (self,verbose=True,unittest=False):
         try:
             count += 1
             << remove unused tnodeList >>
-            if not unittest: # this would be very slow.
-                if full: # For testing only.
-                    << do full tests >>
+            if full: # Unit tests usually set this false.
+                << do full tests >>
         except AssertionError,message:
             errors += 1
             << give test failed message >>
-    if not unittest:
+    if verbose or not unittest:
         << print summary message >>
     return errors
 #@nonl
@@ -14415,10 +14408,9 @@ elif verbose:
 #@nonl
 #@-node:ekr.20040314043900:<<print summary message >>
 #@+node:ekr.20040314044652:<< give test failed message >>
-if 1: # errors == 1:
-    s = "test failed: %s %s" % (message,repr(p))
-    print s ; print
-    g.es(s,color="red")
+s = "test failed: %s %s" % (message,repr(p))
+print s ; print
+g.es(s,color="red")
 #@nonl
 #@-node:ekr.20040314044652:<< give test failed message >>
 #@-node:ekr.20031218072017.2072:c.checkOutline
@@ -21184,13 +21176,13 @@ def deleteOutline (self,op_name="Delete Node"):
 #@nonl
 #@-node:ekr.20031218072017.1193:c.deleteOutline
 #@+node:ekr.20031218072017.2072:c.checkOutline
-def checkOutline (self,verbose=True,unittest=False):
+def checkOutline (self,verbose=True,unittest=False,full=True):
     
     """Report any possible clone errors in the outline.
     
     Remove any unused tnodeLists."""
     
-    c = self ; count = 1 ; errors = 0 ; full = True
+    c = self ; count = 1 ; errors = 0
     if full and not unittest:
         g.es("all tests enabled: this may take awhile",color="blue")
 
@@ -21200,13 +21192,12 @@ def checkOutline (self,verbose=True,unittest=False):
         try:
             count += 1
             << remove unused tnodeList >>
-            if not unittest: # this would be very slow.
-                if full: # For testing only.
-                    << do full tests >>
+            if full: # Unit tests usually set this false.
+                << do full tests >>
         except AssertionError,message:
             errors += 1
             << give test failed message >>
-    if not unittest:
+    if verbose or not unittest:
         << print summary message >>
     return errors
 #@nonl
@@ -21356,10 +21347,9 @@ elif verbose:
 #@nonl
 #@-node:ekr.20040314043900:<<print summary message >>
 #@+node:ekr.20040314044652:<< give test failed message >>
-if 1: # errors == 1:
-    s = "test failed: %s %s" % (message,repr(p))
-    print s ; print
-    g.es(s,color="red")
+s = "test failed: %s %s" % (message,repr(p))
+print s ; print
+g.es(s,color="red")
 #@nonl
 #@-node:ekr.20040314044652:<< give test failed message >>
 #@-node:ekr.20031218072017.2072:c.checkOutline
@@ -31019,13 +31009,13 @@ def undoReplace (self,p,new_data,old_data):
 #@nonl
 #@-node:ekr.20031218072017.1714:undoReplace
 #@+node:ekr.20031218072017.2072:c.checkOutline
-def checkOutline (self,verbose=True,unittest=False):
+def checkOutline (self,verbose=True,unittest=False,full=True):
     
     """Report any possible clone errors in the outline.
     
     Remove any unused tnodeLists."""
     
-    c = self ; count = 1 ; errors = 0 ; full = True
+    c = self ; count = 1 ; errors = 0
     if full and not unittest:
         g.es("all tests enabled: this may take awhile",color="blue")
 
@@ -31035,13 +31025,12 @@ def checkOutline (self,verbose=True,unittest=False):
         try:
             count += 1
             << remove unused tnodeList >>
-            if not unittest: # this would be very slow.
-                if full: # For testing only.
-                    << do full tests >>
+            if full: # Unit tests usually set this false.
+                << do full tests >>
         except AssertionError,message:
             errors += 1
             << give test failed message >>
-    if not unittest:
+    if verbose or not unittest:
         << print summary message >>
     return errors
 #@nonl
@@ -31191,10 +31180,9 @@ elif verbose:
 #@nonl
 #@-node:ekr.20040314043900:<<print summary message >>
 #@+node:ekr.20040314044652:<< give test failed message >>
-if 1: # errors == 1:
-    s = "test failed: %s %s" % (message,repr(p))
-    print s ; print
-    g.es(s,color="red")
+s = "test failed: %s %s" % (message,repr(p))
+print s ; print
+g.es(s,color="red")
 #@nonl
 #@-node:ekr.20040314044652:<< give test failed message >>
 #@-node:ekr.20031218072017.2072:c.checkOutline
@@ -39260,12 +39248,16 @@ def getScript (c,p):
     
     try:
         script = None
-        if c.frame.body.hasTextSelection():
-            # Temporarily replace v's body text with just the selected text.
-            s = c.frame.body.getSelectedText()
-            p.v.setTnodeText(s) 
+        # 7/7/04: Allow p not to be the present position.
+        if p == c.currentPosition():
+            if c.frame.body.hasTextSelection():
+                # Temporarily replace v's body text with just the selected text.
+                s = c.frame.body.getSelectedText()
+                p.v.setTnodeText(s)
+            else:
+                s = c.frame.body.getAllText()
         else:
-            s = c.frame.body.getAllText()
+            s = p.bodyString()
     
         if s.strip():
             g.app.scriptDict["script1"]=s
@@ -41088,12 +41080,16 @@ def getScript (c,p):
     
     try:
         script = None
-        if c.frame.body.hasTextSelection():
-            # Temporarily replace v's body text with just the selected text.
-            s = c.frame.body.getSelectedText()
-            p.v.setTnodeText(s) 
+        # 7/7/04: Allow p not to be the present position.
+        if p == c.currentPosition():
+            if c.frame.body.hasTextSelection():
+                # Temporarily replace v's body text with just the selected text.
+                s = c.frame.body.getSelectedText()
+                p.v.setTnodeText(s)
+            else:
+                s = c.frame.body.getAllText()
         else:
-            s = c.frame.body.getAllText()
+            s = p.bodyString()
     
         if s.strip():
             g.app.scriptDict["script1"]=s
@@ -42419,12 +42415,16 @@ def getScript (c,p):
     
     try:
         script = None
-        if c.frame.body.hasTextSelection():
-            # Temporarily replace v's body text with just the selected text.
-            s = c.frame.body.getSelectedText()
-            p.v.setTnodeText(s) 
+        # 7/7/04: Allow p not to be the present position.
+        if p == c.currentPosition():
+            if c.frame.body.hasTextSelection():
+                # Temporarily replace v's body text with just the selected text.
+                s = c.frame.body.getSelectedText()
+                p.v.setTnodeText(s)
+            else:
+                s = c.frame.body.getAllText()
         else:
-            s = c.frame.body.getAllText()
+            s = p.bodyString()
     
         if s.strip():
             g.app.scriptDict["script1"]=s

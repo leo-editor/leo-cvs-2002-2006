@@ -4,6 +4,44 @@
 
 #@+all
 #@+node:EKR.20040430163619:To do: 4.2
+#@+node:ekr.20040702064435:(Fix problem with xml parsing)
+@nocolor
+@language html
+https://sourceforge.net/forum/message.php?msg_id=2645776
+By: billp9619
+
+Yes this works now. However, the opposite should also be true ...that instead
+of <find_string></find_string> an outside process or editor is free to change
+it to <find_string/>. This currently causes Leo to fail to load the file reprting
+it was looking for </find_string>.
+
+This is original Leo xml:
+
+@color
+<preferences>
+</preferences>
+<find_panel_settings>
+<find_string></find_string>
+<change_string></change_string>
+</find_panel_settings>
+@nocolor
+
+My xml editor automatically changed it to this:
+
+@color
+<preferences/>
+<find_panel_settings>
+<find_string/>
+<change_string/>
+</find_panel_settings>
+@nocolor
+
+Leo will not load the edited "/>" type empty tags. 
+
+Both forms of empty tags should always be accepted because it is officially
+identical in meaning for xml.
+#@nonl
+#@-node:ekr.20040702064435:(Fix problem with xml parsing)
 #@+node:EKR.20040506075328.3:(Perfect Import)
 #@+node:EKR.20040506091116: Notes
 @nocolor
@@ -4069,6 +4107,8 @@ if 0: # Set to 1 for lint-like testing.
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@-node:ekr.20040701120647:Pychecker stuff...
 #@-node:ekr.20040323195916.1:Tests & pychecker
+#@+node:ekr.20040707060750:RsT plugin should say where files get written
+#@-node:ekr.20040707060750:RsT plugin should say where files get written
 #@-node:EKR.20040430163619:To do: 4.2
 #@+node:ekr.20040629110559:Cool Mac stuff
 #@+node:ekr.20040629111136:Native Max OS X Leo app

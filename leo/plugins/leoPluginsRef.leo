@@ -261,7 +261,7 @@
 <v t="edream.110203113231.933"><vh>@file-thin mod_spelling.py</vh></v>
 </v>
 </v>
-<v t="ekr.20040330120121"><vh>New or improved in 4.2</vh>
+<v t="ekr.20040330120121" a="E"><vh>New or improved in 4.2</vh>
 <v t="ekr.20040331072607"><vh>@file-thin hoist.py</vh></v>
 <v t="ekr.20040419105219"><vh>@file-thin lineNumbers.py</vh></v>
 <v t="ekr.20040331151007"><vh>@file-thin niceNosent.py</vh></v>
@@ -269,7 +269,8 @@
 <v t="ekr.20040331153923"><vh>@file-thin scheduler.py</vh></v>
 <v t="EKR.20040422094618"><vh>@file-thin startfile.py</vh></v>
 <v t="ekr.20040201060959"><vh>@file-thin status_line.py</vh></v>
-<v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
+<v t="EKR.20040613213623"
+expanded="EKR.20040613215415.2,EKR.20040613222712.1,EKR.20040618091543.2,"><vh>@thin mod_scripting.py</vh></v>
 <v t="ekr.20040331071919"><vh>Leo to AsciiDoc</vh>
 <v t="ekr.20040331071919.1"><vh>Leo 2 AsciiDoc Developers Guide</vh>
 <v t="ekr.20040331071919.2"><vh>About this document</vh>
@@ -363,10 +364,10 @@
 <v t="ekr.20040331071319"><vh>@file-thin rst2.py</vh></v>
 </v>
 </v>
-<v t="EKR.20040517090508" a="MTV"><vh>Enable plugins by changing pluginsManager.txt</vh>
+<v t="EKR.20040517090508" a="EM"><vh>Enable plugins by changing pluginsManager.txt</vh>
 <v t="edream.120603093808"><vh>@file-thin pluginsManager.txt</vh></v>
 </v>
-<v t="EKR.20040612183736"><vh>Unfinished</vh>
+<v t="EKR.20040612183736" a="TV"><vh>Unfinished</vh>
 <v t="EKR.20040608080921.1"><vh>@thin fastgotonode.py</vh></v>
 <v t="EKR.20040609091913"><vh>Plugin generalizing marks (mulder)</vh>
 <v t="EKR.20040609091913.1"><vh>@url http://home.pacbell.net/bwmulder/python/Leo/mod_label.leo</vh></v>
@@ -2742,6 +2743,8 @@ Advantages of this (XMLRPC) approach,
 Some kind of 'submit plugin' option would be interesting, but suddenly security issues start to loom!
 
 Do you think this is worth pursuing?</t>
+<t tx="edream.110203113231.984"></t>
+<t tx="edream.110203113231.994"></t>
 <t tx="edream.110403140857"></t>
 <t tx="edream.110403140857.1"></t>
 <t tx="edream.110403140857.2">@

@@ -2233,8 +2233,6 @@ class position (object):
     
         p = self ; level1 = p.level()
         
-        g.trace()
-        
         array = []
         for p in p.self_and_subtree_iter():
             array.append(p.moreHead(level1)+'\n')
