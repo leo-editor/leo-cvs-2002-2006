@@ -34,7 +34,7 @@ default_colors_dict = {
 #@+node:1::<< define colorizer keywords >>
 #@+body
 #@<< leo keywords >>
-#@+node:1::<< leo keywords >>
+#@+node:2::<< leo keywords >>
 #@+body
 leoKeywords = [
 		"@","@c","@code","@color","@comment",
@@ -47,11 +47,24 @@ leoKeywords = [
 		"@unit","@verbose","@wrap" ]
 
 #@-body
-#@-node:1::<< leo keywords >>
+#@-node:2::<< leo keywords >>
+
+
+
+#@<< actionscript keywords >>
+#@+node:1::<< actionscript keywords >>
+#@+body
+actionscript_keywords = (
+#Jason 2003-07-03 
+#Actionscript keywords for Leo adapted from UltraEdit syntax highlighting
+"break", "call", "continue", "delete", "do", "else", "false", "for", "function", "goto", "if", "in", "new", "null", "return", "true", "typeof", "undefined", "var", "void", "while", "with", "#include", "catch", "constructor", "prototype", "this", "try", "_parent", "_root", "__proto__", "ASnative", "abs", "acos", "appendChild", "asfunction", "asin", "atan", "atan2", "attachMovie", "attachSound", "attributes", "BACKSPACE", "CAPSLOCK", "CONTROL", "ceil", "charAt", "charCodeAt", "childNodes", "chr", "cloneNode", "close", "concat", "connect", "cos", "createElement", "createTextNode", "DELETEKEY", "DOWN", "docTypeDecl", "duplicateMovieClip", "END", "ENTER", "ESCAPE", "enterFrame", "entry", "equal", "eval", "evaluate", "exp", "firstChild", "floor", "fromCharCode", "fscommand", "getAscii", "getBeginIndex", "getBounds", "getBytesLoaded", "getBytesTotal", "getCaretIndex", "getCode", "getDate", "getDay", "getEndIndex", "getFocus", "getFullYear", "getHours", "getMilliseconds", "getMinutes", "getMonth", "getPan", "getProperty", "getRGB", "getSeconds", "getTime", "getTimer", "getTimezoneOffset", "getTransform", "getURL", "getUTCDate", "getUTCDay", "getUTCFullYear", "getUTCHours", "getUTCMilliseconds", "getUTCMinutes", "getUTCMonth", "getUTCSeconds", "getVersion", "getVolume", "getYear", "globalToLocal", "gotoAndPlay", "gotoAndStop", "HOME", "haschildNodes", "hide", "hitTest", "INSERT", "Infinity", "ifFrameLoaded", "ignoreWhite", "indexOf", "insertBefore", "int", "isDown", "isFinite", "isNaN", "isToggled", "join", "keycode", "keyDown", "keyUp", "LEFT", "LN10", "LN2", "LOG10E", "LOG2E", "lastChild", "lastIndexOf", "length", "load", "loaded", "loadMovie", "loadMovieNum", "loadVariables", "loadVariablesNum", "localToGlobal", "log", "MAX_VALUE", "MIN_VALUE", "max", "maxscroll", "mbchr", "mblength", "mbord", "mbsubstring", "min", "NEGATIVE_INFINITY", "NaN", "newline", "nextFrame", "nextScene", "nextSibling", "nodeName", "nodeType", "nodeValue", "on", "onClipEvent", "onClose", "onConnect", "onData", "onLoad", "onXML", "ord", "PGDN", "PGUP", "PI", "POSITIVE_INFINITY", "parentNode", "parseFloat", "parseInt", "parseXML", "play", "pop", "pow", "press", "prevFrame", "previousSibling", "prevScene", "print", "printAsBitmap", "printAsBitmapNum", "printNum", "push", "RIGHT", "random", "release", "removeMovieClip", "removeNode", "reverse", "round", "SPACE", "SQRT1_2", "SQRT2", "scroll", "send", "sendAndLoad", "set", "setDate", "setFocus", "setFullYear", "setHours", "setMilliseconds", "setMinutes", "setMonth", "setPan", "setProperty", "setRGB", "setSeconds", "setSelection", "setTime", "setTransform", "setUTCDate", "setUTCFullYear", "setUTCHours", "setUTCMilliseconds", "setUTCMinutes", "setUTCMonth", "setUTCSeconds", "setVolume", "setYear", "shift", "show", "sin", "slice", "sort", "start", "startDrag", "status", "stop", "stopAllSounds", "stopDrag", "substr", "substring", "swapDepths", "splice", "split", "sqrt", "TAB", "tan", "targetPath", "tellTarget", "toggleHighQuality", "toLowerCase", "toString", "toUpperCase", "trace", "UP", "UTC", "unescape", "unloadMovie", "unLoadMovieNum", "unshift", "updateAfterEvent", "valueOf", "xmlDecl", "_alpha", "_currentframe", "_droptarget", "_focusrect", "_framesloaded", "_height", "_highquality", "_name", "_quality", "_rotation", "_soundbuftime", "_target", "_totalframes", "_url", "_visible", "_width", "_x", "_xmouse", "_xscale", "_y", "_ymouse", "_yscale", "and", "add", "eq", "ge", "gt", "le", "lt", "ne", "not", "or", "Array", "Boolean", "Color", "Date", "Key", "Math", "MovieClip", "Mouse", "Number", "Object", "Selection", "Sound", "String", "XML", "XMLSocket"
+)
+#@-body
+#@-node:1::<< actionscript keywords >>
 
 
 #@<< c keywords >>
-#@+node:2::<< c keywords >>
+#@+node:3::<< c keywords >>
 #@+body
 c_keywords = (
 	# C keywords
@@ -68,12 +81,12 @@ c_keywords = (
 	"template","this","throw","true","try",
 	"typeid","typename","using","virtual","wchar_t")
 #@-body
-#@-node:2::<< c keywords >>
+#@-node:3::<< c keywords >>
 
 cweb_keywords = c_keywords
 
 #@<< html keywords >>
-#@+node:3::<< html keywords >>
+#@+node:4::<< html keywords >>
 #@+body
 # No longer used by syntax colorer.
 html_keywords = ()
@@ -93,11 +106,11 @@ if 0: # Not used at present.
 
 	html_specials = ( "<%","%>" )
 #@-body
-#@-node:3::<< html keywords >>
+#@-node:4::<< html keywords >>
 
 
 #@<< java keywords >>
-#@+node:4::<< java keywords >>
+#@+node:5::<< java keywords >>
 #@+body
 java_keywords = (
 	"abstract","boolean","break","byte","byvalue",
@@ -112,11 +125,11 @@ java_keywords = (
 	"this","throw","transient","true","try",
 	"var","void","volatile","while")
 #@-body
-#@-node:4::<< java keywords >>
+#@-node:5::<< java keywords >>
 
 
 #@<< latex keywords >>
-#@+node:5::<< latex keywords >>
+#@+node:6::<< latex keywords >>
 #@+body
 #If you see two idenitical words, with minor capitalization differences
 #DO NOT ASSUME that they are the same word. For example \vert produces
@@ -244,11 +257,11 @@ latex_keywords = (
 	#Z
 	"\\zeta" )
 #@-body
-#@-node:5::<< latex keywords >>
+#@-node:6::<< latex keywords >>
 
 
 #@<< pascal keywords >>
-#@+node:6::<< pascal keywords >>
+#@+node:7::<< pascal keywords >>
 #@+body
 pascal_keywords = (
 	"and","array","as","begin",
@@ -273,11 +286,11 @@ pascal_keywords = (
 	# limited contexts
 	"exports","property","default","write","stored","index","name" )
 #@-body
-#@-node:6::<< pascal keywords >>
+#@-node:7::<< pascal keywords >>
 
 
 #@<< perl keywords >>
-#@+node:7::<< perl keywords >>
+#@+node:8::<< perl keywords >>
 #@+body
 perl_keywords = (
 	"continue","do","else","elsif","format","for","format","for","foreach",
@@ -343,12 +356,12 @@ perl_keywords = (
 	"print","printf","return","reverse",
 	"sort","system","syscall","unlink","utime","warn")
 #@-body
-#@-node:7::<< perl keywords >>
+#@-node:8::<< perl keywords >>
 
 perlpod_keywords = perl_keywords
 
 #@<< python keywords >>
-#@+node:8::<< python keywords >>
+#@+node:9::<< python keywords >>
 #@+body
 python_keywords = (
 	"and",       "del",       "for",       "is",        "raise",    
@@ -358,11 +371,11 @@ python_keywords = (
 	"continue",  "exec",      "import",    "pass",      "while",
 	"def",       "finally",   "in",        "print")
 #@-body
-#@-node:8::<< python keywords >>
+#@-node:9::<< python keywords >>
 
 
 #@<< tcl/tk keywords >>
-#@+node:9::<< tcl/tk keywords >>
+#@+node:10::<< tcl/tk keywords >>
 #@+body
 tcltk_keywords = ( # Only the tcl keywords are here.
 	"after",     "append",    "array",
@@ -394,11 +407,11 @@ tcltk_keywords = ( # Only the tcl keywords are here.
 	"variable",  "vwait",
 	"while" )
 #@-body
-#@-node:9::<< tcl/tk keywords >>
+#@-node:10::<< tcl/tk keywords >>
 
 
 #@<< php keywords >>
-#@+node:10::<< php keywords >>
+#@+node:11::<< php keywords >>
 #@+body
 php_keywords = ( # 08-SEP-2002 DTHEIN
 	"__CLASS__", "__FILE__", "__FUNCTION__", "__LINE__",
@@ -422,7 +435,83 @@ php_paren_keywords = (
 # "<?php", "?>"
 
 #@-body
-#@-node:10::<< php keywords >>
+#@-node:11::<< php keywords >>
+
+
+#@<< rebol keywords >>
+#@+node:12::<< rebol keywords >>
+#@+body
+rebol_keywords = (
+#Jason 2003-07-03 
+#based on UltraEdit syntax highlighting
+"about", "abs", "absolute", "add", "alert", "alias", "all", "alter", "and", "and~", "any", "append", "arccosine", "arcsine", "arctangent", "array", "ask", "at",  
+"back", "bind", "boot-prefs", "break", "browse", "build-port", "build-tag",  
+"call", "caret-to-offset", "catch", "center-face", "change", "change-dir", "charset", "checksum", "choose", "clean-path", "clear", "clear-fields", "close", "comment", "complement", "compose", "compress", "confirm", "continue-post", "context", "copy", "cosine", "create-request", "crypt", "cvs-date", "cvs-version",  
+"debase", "decode-cgi", "decode-url", "decompress", "deflag-face", "dehex", "delete", "demo", "desktop", "detab", "dh-compute-key", "dh-generate-key", "dh-make-key", "difference", "dirize", "disarm", "dispatch", "divide", "do", "do-boot", "do-events", "do-face", "do-face-alt", "does", "dsa-generate-key", "dsa-make-key", "dsa-make-signature", "dsa-verify-signature",  
+"echo", "editor", "either", "else", "emailer", "enbase", "entab", "exclude", "exit", "exp", "extract", 
+"fifth", "find", "find-key-face", "find-window", "flag-face", "first", "flash", "focus", "for", "forall", "foreach", "forever", "form", "forskip", "fourth", "free", "func", "function",  
+"get", "get-modes", "get-net-info", "get-style",  
+"halt", "has", "head", "help", "hide", "hide-popup",  
+"if", "import-email", "in", "inform", "input", "insert", "insert-event-func", "intersect", 
+"join", 
+"last", "launch", "launch-thru", "layout", "license", "list-dir", "load", "load-image", "load-prefs", "load-thru", "log-10", "log-2", "log-e", "loop", "lowercase",  
+"make", "make-dir", "make-face", "max", "maximum", "maximum-of", "min", "minimum", "minimum-of", "mold", "multiply",  
+"negate", "net-error", "next", "not", "now",  
+"offset-to-caret", "open", "open-events", "or", "or~", 
+"parse", "parse-email-addrs", "parse-header", "parse-header-date", "parse-xml", "path-thru", "pick", "poke", "power", "prin", "print", "probe", "protect", "protect-system",  
+"q", "query", "quit",  
+"random", "read", "read-io", "read-net", "read-thru", "reboot", "recycle", "reduce", "reform", "rejoin", "remainder", "remold", "remove", "remove-event-func", "rename", "repeat", "repend", "replace", "request", "request-color", "request-date", "request-download", "request-file", "request-list", "request-pass", "request-text", "resend", "return", "reverse", "rsa-encrypt", "rsa-generate-key", "rsa-make-key", 
+"save", "save-prefs", "save-user", "scroll-para", "second", "secure", "select", "send", "send-and-check", "set", "set-modes", "set-font", "set-net", "set-para", "set-style", "set-user", "set-user-name", "show", "show-popup", "sine", "size-text", "skip", "sort", "source", "split-path", "square-root", "stylize", "subtract", "switch",  
+"tail", "tangent", "textinfo", "third", "throw", "throw-on-error", "to", "to-binary", "to-bitset", "to-block", "to-char", "to-date", "to-decimal", "to-email", "to-event", "to-file", "to-get-word", "to-hash", "to-hex", "to-idate", "to-image", "to-integer", "to-issue", "to-list", "to-lit-path", "to-lit-word", "to-local-file", "to-logic", "to-money", "to-none", "to-pair", "to-paren", "to-path", "to-rebol-file", "to-refinement", "to-set-path", "to-set-word", "to-string", "to-tag", "to-time", "to-tuple", "to-url", "to-word", "trace", "trim", "try",  
+"unfocus", "union", "unique", "uninstall", "unprotect", "unset", "until", "unview", "update", "upgrade", "uppercase", "usage", "use",  
+"vbug", "view", "view-install", "view-prefs",  
+"wait", "what", "what-dir", "while", "write", "write-io",  
+"xor", "xor~",  
+"action!", "any-block!", "any-function!", "any-string!", "any-type!", "any-word!",  
+"binary!", "bitset!", "block!",  
+"char!",  
+"datatype!", "date!", "decimal!", 
+"email!", "error!", "event!",  
+"file!", "function!",  
+"get-word!",  
+"hash!",  
+"image!", "integer!", "issue!",  
+"library!", "list!", "lit-path!", "lit-word!", "logic!",  
+"money!",  
+"native!", "none!", "number!",  
+"object!", "op!",  
+"pair!", "paren!", "path!", "port!",  
+"refinement!", "routine!",  
+"series!", "set-path!", "set-word!", "string!", "struct!", "symbol!",  
+"tag!", "time!", "tuple!",  
+"unset!", "url!",  
+"word!",  
+"any-block?", "any-function?", "any-string?", "any-type?", "any-word?",  
+"binary?", "bitset?", "block?",  
+"char?", "connected?", "crypt-strength?", 
+"datatype?", "date?", "decimal?", "dir?",  
+"email?", "empty?", "equal?", "error?", "even?", "event?", "exists?", "exists-key?"
+"file?", "flag-face?", "found?", "function?",  
+"get-word?", "greater-or-equal?", "greater?",  
+"hash?", "head?",  
+"image?", "in-window?", "index?", "info?", "input?", "inside?", "integer?", "issue?",  
+"length?", "lesser-or-equal?", "lesser?", "library?", "link-app?", "link?", "list?", "lit-path?", "lit-word? logic?",  
+"modified?", "money?",  
+"native?", "negative?", "none?", "not-equal?", "number?",  
+"object?", "odd?", "offset?", "op?", "outside?",  
+"pair?", "paren?", "path?", "port?", "positive?",  
+"refinement?", "routine?",  
+"same?", "screen-offset?", "script?", "series?", "set-path?", "set-word?", "size?", "span?", "strict-equal?", "strict-not-equal?", "string?", "struct?",  
+"tag?", "tail?", "time?", "tuple?", "type?",  
+"unset?", "url?",  
+"value?", "view?", 
+"within?", "word?",  
+"zero?"
+)
+#@-body
+#@-node:12::<< rebol keywords >>
+
+
 #@-body
 #@-node:1::<< define colorizer keywords >>
 
@@ -1227,8 +1316,8 @@ class baseColorizer:
 			# The list of languages for which keywords exist.
 			# Eventually we might just use language_delims_dict.keys()
 			languages = [
-				"c","cweb","html","java","latex",
-				"pascal","perl","perlpod","php","python","tcltk"]
+				"actionscript","c","cweb","html","java","latex",
+				"pascal","perl","perlpod","php","python","rebol","tcltk"]
 			
 			self.keywords = []
 			if self.language == "cweb":
