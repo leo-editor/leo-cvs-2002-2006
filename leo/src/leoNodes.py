@@ -1034,6 +1034,23 @@ class baseVnode:
 		self.statusBits = status
 	#@nonl
 	#@-node:initStatus
+	#@+node:v.setAllAncestorAtFileNodesDirty
+	# !1/29/04: new routine.
+	
+	def setAllAncestorAtFileNodesDirty (self):
+	
+		v = self ; c = v.c
+		changed = false
+		c.beginUpdate()
+		if v.setAncestorAtFileNodeDirty():
+			changed = true
+		for v2 in v.t.joinList:
+			if v2 != v and v2.setAncestorAtFileNodeDirty():
+				changed = true
+		c.endUpdate(changed)
+		return changed
+	#@nonl
+	#@-node:v.setAllAncestorAtFileNodesDirty
 	#@+node:setAncestorsOfClonedNodesInTreeDirty
 	#@+at 
 	#@nonl

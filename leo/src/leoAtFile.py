@@ -4001,6 +4001,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at = self
 		j = skip_ws(s,i)
 		assert(match(s,j,"<<"))
+		# trace(i,s)
 		
 		if len(at.endSentinelComment) == 0:
 			line = s[i:-1] # No trailing newline
@@ -4014,7 +4015,6 @@ class baseNewDerivedFile(oldDerivedFile):
 			line = line.replace('@@','@')
 	
 		at.out.append(line)
-	#@nonl
 	#@-node:readRef
 	#@+node:readVerbatim
 	def readVerbatim (self,s,i):
