@@ -90,7 +90,8 @@ class baseUndoer:
             # For incremental undo typing...
             "leading","trailing",
             "oldMiddleLines","newMiddleLines",
-            "oldNewlines","newNewlines" ]
+            "oldNewlines","newNewlines",
+        ]
         #@nonl
         #@-node:ekr.20031218072017.3604:<< Define optional ivars >>
         #@nl
@@ -972,6 +973,10 @@ class baseUndoer:
     def redoInsertNodes (self):
         
         u = self ; c = u.c
+        
+        if 0: # Paste retaining clones can't be undone!
+            # Remember the previous headline.
+            old = c.currentPosition().headString()
     
         if u.back:
             u.p.linkAfter(u.back)
@@ -985,6 +990,13 @@ class baseUndoer:
         u.p.restoreLinksInTree()
     
         c.selectVnode(u.p)
+        
+        if 0: # Paste retaining clones can't be undone!
+            if u.headString:
+                new = u.headString
+                g.trace('old',old,'new',new)
+                u.p.setHeadStringOrHeadline(new)
+                u.headString=old
     #@nonl
     #@-node:EKR.20040526072519.4:redoInsertNodes
     #@+node:EKR.20040526075238.1:redoMoveNode
@@ -1259,10 +1271,23 @@ class baseUndoer:
         
         u = self ; c = u.c
         
+        if 0: # Paste retaining clones can't be undone!
+            # Remember the previous headline.
+            old = c.currentPosition().headString()
+        
         c.selectVnode(u.p)
         c.deleteOutline()
+    
         if u.select:
             c.selectVnode(u.select)
+            
+        # New in 4.3: Support for Paste As Clone.
+        if 0: # Paste retaining clones can't be undone!
+            if u.headString:
+                new = u.headString
+                g.trace('old',old,'new',new)
+                u.p.setHeadStringOrHeadline(new)
+                u.headString=old
     #@nonl
     #@-node:EKR.20040526084140:undoInsertNodes
     #@+node:EKR.20040526084140.1:undoMoveNode
