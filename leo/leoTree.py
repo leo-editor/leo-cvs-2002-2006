@@ -792,22 +792,29 @@ class leoTree:
 		# Ignore characters that don't change the body text.
 		s = c.body.get("1.0", "end")
 		
-		# This may be all that is needed to support Unicode !!
+		#@<< Make sure that the body text is valid in the encoding >>
+		#@+node:3::<< Make sure that the body text is valid in the encoding >>
+		#@+body
 		xml_encoding = app().config.xml_version_string
-		if type(s) == types.UnicodeType:
-			try:
-				# print `xml_encoding`
-				# Tk always uses utf-8 encoding.
-				# print `s`,"tk"
-				s = s.encode("utf-8") # result is a string.
-				# print `s`,"utf-8"
-				s = s.decode(xml_encoding) # result is unicode.
-				s = s.encode(xml_encoding) # result is a string.
-				# print `s`,`xml_encoding`
-			except: traceback.print_exc()
-	
-		if len(s) > 0 and s[-1]=='\n': s = s[:-1]
 		
+		try:
+			if type(s) == types.UnicodeType:
+				# This can fail, e.g, if character > 256 used in Latin-1 encoding.
+				s2 = s.encode(xml_encoding) # result is a string.
+				s = s2 # don't destroy s until we know that all is well.
+		except:
+			u = deleteNonEncodingChars(s,xml_encoding)
+			s = u.encode(xml_encoding) # result is a string.
+			ins = c.body.index("insert")
+			c.body.delete("1.0","end")
+			c.body.insert("end",u) # Always put unicode in the Tk.Text widget!
+			c.body.mark_set("insert",ins)
+			return "break"
+		
+		#@-body
+		#@-node:3::<< Make sure that the body text is valid in the encoding >>
+
+		if len(s) > 0 and s[-1]=='\n': s = s[:-1]
 		body = v.bodyString()
 		if type(body) == types.UnicodeType:
 			# vnode strings are encoded using the xml_encoding.
@@ -1048,20 +1055,32 @@ class leoTree:
 		if not v or not v.edit_text or v != c.currentVnode():
 			return
 		s = v.edit_text.get("1.0","end")
+		
+		#@<< Make sure that the headline text is valid in the encoding >>
+		#@+node:1::<< Make sure that the headline text is valid in the encoding >>
+		#@+body
+		xml_encoding = app().config.xml_version_string
+		
+		if type(s) == types.UnicodeType:
+			try: # This can fail, e.g, if character > 256 used in Latin-1 encoding.
+				s2 = s.encode(xml_encoding) # result is a string.
+				s = s2 # don't destroy s until we know that all is well.
+			except:
+				u = deleteNonEncodingChars(s,xml_encoding)
+				s = u.encode(xml_encoding) # result is a string.
+				ins = v.edit_text.index("insert")
+				v.edit_text.delete("1.0","end")
+				v.edit_text.insert("end",u) # Always put unicode in the Tk.Text widget!
+				v.edit_text.mark_set("insert",ins)
+				return "break"
+		#@-body
+		#@-node:1::<< Make sure that the headline text is valid in the encoding >>
+
+				
 		# remove all newlines and update the vnode
+		if not s: s = ""
 		s = string.replace(s,'\n','')
 		s = string.replace(s,'\r','')
-		
-		xml_encoding = app().config.xml_version_string
-		if type(s) == types.UnicodeType:
-			try:
-				# Tk always uses utf-8 encoding.
-				s = s.encode("utf-8") # result is a string.
-				s = s.decode(xml_encoding) # result is unicode.
-				s = s.encode(xml_encoding) # result is a string.
-			except: traceback.print_exc()
-	
-		if not s: s = ""
 		
 		head = v.headString()
 		if type(head) == types.UnicodeType:
@@ -1356,20 +1375,18 @@ class leoTree:
 		# Replace body text
 		body.delete("1.0", "end")
 		
-		if 1: # 10/2/02: new code
-			xml_encoding = app().config.xml_version_string
-			s = v.t.bodyString
-			if type(s) == types.UnicodeType:
-				try:
-					s = s.encode(xml_encoding) # result is a string.
-				except: traceback.print_exc()
-			try:
-				# Tk expects utf-8 encoding.
-				d = s.decode("utf-8") # result is unicode.
-				body.insert("1.0", d)
-			except: traceback.print_exc()
-		else:
-			body.insert("1.0", v.t.bodyString)
+		xml_encoding = app().config.xml_version_string
+		s = v.t.bodyString
+		if type(s) != types.UnicodeType:
+			try: # Tk expects utf-8 encoding, and converting to unicode is safe.
+				s2 = unicode(s,xml_encoding)
+				s = s2 # don't destroy s until we know that all is well.
+			except:
+				s = v.t.bodyString
+				es("exception converting to " + xml_encoding + ":" + s)
+				traceback.print_exc()
+	
+		body.insert("1.0", s)
 		self.recolor_now(v)
 		# Unselect any previous selected but unedited label.
 		self.endEditLabel()

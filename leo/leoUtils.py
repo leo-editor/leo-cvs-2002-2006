@@ -1555,7 +1555,63 @@ def setTextSelection (t,start,end):
 #@-body
 #@-node:3::setTextSelection
 #@-node:20::Tk.Text selection (utils)
-#@+node:21::update_file_if_changed
+#@+node:21::Unicode...
+#@+node:1::convertChar/String/ToXMLCharRef
+#@+body
+def convertCharToXMLCharRef(c,xml_encoding):
+
+	try:
+		if type(c) == types.UnicodeType:
+			xml_encoding = app().config.xml_version_string
+			e = c.encode(xml_encoding)
+			e = unicode(e,xml_encoding)
+			return e
+		else:
+			s = unicode(c,xml_encoding)
+			return s
+	except:
+		#Convert to a character reference.
+		return u"&#%d;" % ord(c)
+
+def convertStringToXMLCharRef(s,xml_encoding):
+	
+	s2 = u""
+	for c in s:
+		s2 += convertCharToXMLCharRef(c,xml_encoding)
+	return s2
+#@-body
+#@-node:1::convertChar/String/ToXMLCharRef
+#@+node:2::deleteNonEncodingChar/s
+#@+body
+def deleteNonEncodingChar(c,xml_encoding):
+
+	try:
+		if type(c) == types.UnicodeType:
+			xml_encoding = app().config.xml_version_string
+			e = c.encode(xml_encoding)
+			e = unicode(e,xml_encoding)
+			return e
+		else:
+			s = unicode(c,xml_encoding)
+			return s
+	except:
+		# traceback.print_exc()
+		m = "invalid in "+xml_encoding+": "
+		c2 = c.encode("utf-8")
+		m = unicode(m,"utf-8") + unicode(c2,"utf-8")
+		es(m)
+		return u""
+			
+def deleteNonEncodingChars(s,xml_encoding):
+	
+	s2 = u""
+	for c in s:
+		s2 += deleteNonEncodingChar(c,xml_encoding)
+	return s2
+#@-body
+#@-node:2::deleteNonEncodingChar/s
+#@-node:21::Unicode...
+#@+node:22::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1599,8 +1655,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only")
 			traceback.print_exc()
 #@-body
-#@-node:21::update_file_if_changed
-#@+node:22::utils_rename
+#@-node:22::update_file_if_changed
+#@+node:23::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1619,8 +1675,8 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 
 #@-body
-#@-node:22::utils_rename
-#@+node:23::version checking (Dave Hein)
+#@-node:23::utils_rename
+#@+node:24::version checking (Dave Hein)
 #@+body
 #@+at
 # 
@@ -1735,8 +1791,8 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 	raise "condition must be one of '>=', '>', '==', '!=', '<', or '<='."
 
 #@-body
-#@-node:23::version checking (Dave Hein)
-#@+node:24::readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:24::version checking (Dave Hein)
+#@+node:25::readlineForceUnixNewline (Steven P. Schaefer)
 #@+body
 #@+at
 #  Stephen P. Schaefer 9/7/2002
@@ -1756,7 +1812,7 @@ def readlineForceUnixNewline(f):
 	return s
 
 #@-body
-#@-node:24::readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:25::readlineForceUnixNewline (Steven P. Schaefer)
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py
