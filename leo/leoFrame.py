@@ -1313,7 +1313,8 @@ class LeoFrame:
 				
 				# Kludge: disable the shortcuts for cut, copy, paste.
 				# This has already been bound in leoFrame.__init__
-				if 1: # bug fix: 3/11/02.  No. This code must be enabled.
+				# 2/13/03: A _possible_ fix for the Linux control-v bug.
+				if sys.platform not in ("linux1","linux2"):
 					if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
 						bind_shortcut = None
 				#@-body
