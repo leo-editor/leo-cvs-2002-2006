@@ -719,7 +719,7 @@ class colorizer:
 			# A strong case can be made for making this code as fast as possible.
 			# Whether this is compatible with general language descriptions remains to be seen.
 			self.has_string = self.language != "plain"
-			self.has_pp_directives = self.language in ["c","cweb"]
+			self.has_pp_directives = self.language in ["c","cweb","latex"]
 			
 			# The list of languages for which keywords exist.
 			# Eventually we might just use language_delims_dict.keys()
@@ -842,7 +842,7 @@ class colorizer:
 		
 		body = self.body ; state = docState
 	
-		if self.language == "cweb":
+		if self.language in ("cweb","latex"):
 			
 			#@<< handle cweb doc part >>
 			#@+node:1::<< handle cweb doc part >>
@@ -1068,7 +1068,7 @@ class colorizer:
 		elif match(s,i,self.lb):
 			
 			#@<< handle possible noweb section ref or def >>
-			#@+node:5::<< handle possible noweb section ref or def >>
+			#@+node:6::<< handle possible noweb section ref or def >>
 			#@+body
 			body.tag_add("nameBrackets", index(n,i), index(n,i+2))
 			
@@ -1111,98 +1111,71 @@ class colorizer:
 				body.tag_add("nameBrackets", index(n,j), index(n,j+k))
 				i = j + k
 			#@-body
-			#@-node:5::<< handle possible noweb section ref or def >>
-
-		elif self.language == "cweb" and (match(s,i,"@(") or match(s,i,"@<")):
-			
-			#@<< handle cweb ref or def >>
-			#@+node:6::<< handle cweb ref or def >>
-			#@+body
-			body.tag_add("nameBrackets", index(n,i), index(n,i+2))
-			
-			# See if the line contains the right name bracket.
-			j = string.find(s,"@>=",i+2)
-			k = choose(j==-1,2,3)
-			if j == -1:
-				j = string.find(s,"@>",i+2)
-			
-			if j == -1:
-				i += 2
-			else:
-				body.tag_add("cwebName", index(n,i+2), index(n,j))
-				body.tag_add("nameBrackets", index(n,j), index(n,j+k))
-				i = j + k
-			
-			#@-body
-			#@-node:6::<< handle cweb ref or def >>
+			#@-node:6::<< handle possible noweb section ref or def >>
 
 		elif ch == '@':
 			
-			#@<< handle possible @keyword >>
-			#@+node:7::<< handle possible @keyword >>
+			#@<< handle at keyword >>
+			#@+node:5::<< handle at keyword >>
 			#@+body
-			word = None
-			if self.language == "cweb":
-				
-				#@<< Handle all cweb control codes >>
-				#@+node:1::<< Handle all cweb control codes >>
-				#@+body
-				word = self.getCwebWord(s,i)
-				if word:
-					# Color and skip the word.
-					j = i + len(word)
-					body.tag_add("keyword",index(n,i),index(n,j))
-					i = j
-				
-					if word in ("@ ","@\t","@\n","@*","@**"):
-						return i,docState
-				
-					if word in ("@^","@.","@:","@="): # Ended by "@>"
-						j = string.find(s,"@>",i)
-						if j > -1:
-							body.tag_add("cwebName", index(n,i), index(n,j))
-							body.tag_add("nameBrackets", index(n,j), index(n,j+2))
-							i = j + 2
-				
-				#@-body
-				#@-node:1::<< Handle all cweb control codes >>
+			if self.language in ("cweb","latex"):
+				if match(s,i,"@(") or match(s,i,"@<"):
+					
+					#@<< handle cweb ref or def >>
+					#@+node:2::<< handle cweb ref or def >>
+					#@+body
+					body.tag_add("nameBrackets", index(n,i), index(n,i+2))
+					
+					# See if the line contains the right name bracket.
+					j = string.find(s,"@>=",i+2)
+					k = choose(j==-1,2,3)
+					if j == -1:
+						j = string.find(s,"@>",i+2)
+					
+					if j == -1:
+						i += 2
+					else:
+						body.tag_add("cwebName", index(n,i+2), index(n,j))
+						body.tag_add("nameBrackets", index(n,j), index(n,j+k))
+						i = j + k
+					
+					#@-body
+					#@-node:2::<< handle cweb ref or def >>
 
-			if not word:
-				
-				#@<< Handle non-cweb @keywords >>
-				#@+node:2::<< Handle non-cweb @keywords >>
-				#@+body
-				j = self.skip_id(s,i+1)
-				word = s[i:j]
-				word = string.lower(word)
-				if i != 0 and word != "@others":
-					word = "" # can't be a Leo keyword, even if it looks like it.
-				
-				# 7/8/02: don't color doc parts in plain text.
-				if self.language != "plain" and (word == "@" or word == "@doc"):
-					# at-space starts doc part
-					body.tag_add("leoKeyword", index(n,i), index(n,j))
-					# Everything on the line is in the doc part.
-					body.tag_add("docPart", index(n,j), index(n,sLen))
-					i = sLen ; state = docState
-				elif word == "@nocolor":
-					# Nothing on the line is colored.
-					body.tag_add("leoKeyword", index(n,i), index(n,j))
-					i = j ; state = nocolorState
-				elif word in leoKeywords:
-					body.tag_add("leoKeyword", index(n,i), index(n,j))
-					i = j
 				else:
-					i = j
-				#@-body
-				#@-node:2::<< Handle non-cweb @keywords >>
+					word = self.getCwebWord(s,i)
+					if word:
+						
+						#@<< Handle cweb control word >>
+						#@+node:1::<< Handle cweb control word >>
+						#@+body
+						# Color and skip the word.
+						j = i + len(word)
+						body.tag_add("keyword",index(n,i),index(n,j))
+						i = j
+						
+						if word in ("@ ","@\t","@\n","@*","@**"):
+							state = docState
+						elif word in ("@^","@.","@:","@="): # Ended by "@>"
+							j = string.find(s,"@>",i)
+							if j > -1:
+								body.tag_add("cwebName", index(n,i), index(n,j))
+								body.tag_add("nameBrackets", index(n,j), index(n,j+2))
+								i = j + 2
+						#@-body
+						#@-node:1::<< Handle cweb control word >>
+
+					else:
+						i,state = self.doAtKeyword(s,i,n)
+			else:
+				i,state = self.doAtKeyword(s,i,n)
 			#@-body
-			#@-node:7::<< handle possible @keyword >>
+			#@-node:5::<< handle at keyword >>
 
 		elif ch in string.letters or ch == '_' or (ch == '\\' and self.language == "latex"):
 			
 			#@<< handle possible keyword >>
-			#@+node:8::<< handle possible  keyword >>
+			#@+node:7::<< handle possible  keyword >>
 			#@+body
 			if self.language == "latex" and match(s,i,"\\"):
 				j = self.skip_id(s,i+1)
@@ -1218,12 +1191,12 @@ class colorizer:
 					j += 2
 			i = j
 			#@-body
-			#@-node:8::<< handle possible  keyword >>
+			#@-node:7::<< handle possible  keyword >>
 
 		elif self.language == "php" and (match(s,i,"<") or match(s,i,"?")):
 			
 			#@<< handle special php keywords >>
-			#@+node:9::<< handle special php keywords >>
+			#@+node:8::<< handle special php keywords >>
 			#@+body
 			if match(s,i,"<?php"):
 				body.tag_add("keyword", index(n,i), index(n,i+5))
@@ -1235,46 +1208,80 @@ class colorizer:
 				i += 1
 			
 			#@-body
-			#@-node:9::<< handle special php keywords >>
+			#@-node:8::<< handle special php keywords >>
 
 		elif ch == ' ':
 			
 			#@<< handle blank >>
-			#@+node:10::<< handle blank >>
+			#@+node:9::<< handle blank >>
 			#@+body
 			if self.showInvisibles:
 				body.tag_add("blank", index(n,i))
 			i += 1
 			#@-body
-			#@-node:10::<< handle blank >>
+			#@-node:9::<< handle blank >>
 
 		elif ch == '\t':
 			
 			#@<< handle tab >>
-			#@+node:11::<< handle tab >>
+			#@+node:10::<< handle tab >>
 			#@+body
 			if self.showInvisibles:
 				body.tag_add("tab", index(n,i))
 			i += 1
 			#@-body
-			#@-node:11::<< handle tab >>
+			#@-node:10::<< handle tab >>
 
 		else:
 			
 			#@<< handle normal character >>
-			#@+node:12::<< handle normal character >>
+			#@+node:11::<< handle normal character >>
 			#@+body
 			# body.tag_add("normal", index(n,i))
 			i += 1
 			
 			#@-body
-			#@-node:12::<< handle normal character >>
+			#@-node:11::<< handle normal character >>
 
 	
 		assert(self.progress < i)
 		return i,state
 	#@-body
 	#@-node:7::doNormalState
+	#@+node:8::doAtKeyword
+	#@+body
+	# Handles non-cweb keyword.
+	
+	def doAtKeyword (self,s,i,n):
+		
+		body = self.body ; sLen = len(s)
+		state = normalState
+	
+		j = self.skip_id(s,i+1)
+		word = s[i:j]
+		word = string.lower(word)
+		if i != 0 and word != "@others":
+			word = "" # can't be a Leo keyword, even if it looks like it.
+		
+		# 7/8/02: don't color doc parts in plain text.
+		if self.language != "plain" and (word == "@" or word == "@doc"):
+			# at-space starts doc part
+			body.tag_add("leoKeyword", index(n,i), index(n,j))
+			# Everything on the line is in the doc part.
+			body.tag_add("docPart", index(n,j), index(n,sLen))
+			i = sLen ; state = docState
+		elif word == "@nocolor":
+			# Nothing on the line is colored.
+			body.tag_add("leoKeyword", index(n,i), index(n,j))
+			i = j ; state = nocolorState
+		elif word in leoKeywords:
+			body.tag_add("leoKeyword", index(n,i), index(n,j))
+			i = j
+		else:
+			i = j
+		return i,state
+	#@-body
+	#@-node:8::doAtKeyword
 	#@-node:4::colorizeAnyLanguage & allies
 	#@+node:5::scanColorDirectives
 	#@+body
@@ -1337,6 +1344,7 @@ class colorizer:
 	#@+body
 	def getCwebWord (self,s,i):
 		
+		# trace(get_line(s,i))
 		if not match(s,i,"@"):
 			return None
 		
