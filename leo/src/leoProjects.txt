@@ -730,7 +730,7 @@ if require_path_flag and not old.has_key("path") and theDict.has_key("path"):
     k = theDict["path"]
     << compute dir and relative_path from s[k:] >>
     if len(theDir) > 0:
-        base = g.getBaseDirectory() # May return "".
+        base = g.getBaseDirectory(c=c) # May return "".
         if theDir and len(theDir) > 0:
             theDir = g.os_path_join(base,theDir)
             if g.os_path_isabs(theDir):
@@ -835,7 +835,7 @@ if c.frame and require_path_flag and not self.tangle_directory:
         (c.tangle_directory,"default tangle"), # Probably should be eliminated.
         (c.frame.openDirectory,"open"))
 
-    base = g.getBaseDirectory() # May return "".
+    base = g.getBaseDirectory(c=c) # May return ""
 
     for dir2, kind in table:
         if dir2 and len(dir2) > 0:
@@ -1314,7 +1314,7 @@ def scanDirectives(c,p=None):
             old_dict=old,dict=dict,pluginsList=pluginsList)
         old.update(dict)
 
-    if path == None: path = g.getBaseDirectory()
+    if path == None: path = g.getBaseDirectory(c=c)
 
     return {
         "delims"    : (delim1,delim2,delim3),
@@ -1380,7 +1380,7 @@ if not path and not old.has_key("path") and dict.has_key("path"):
     k = dict["path"]
     << compute relative path from s[k:] >>
     if path and len(path) > 0:
-        base = g.getBaseDirectory() # returns "" on error.
+        base = g.getBaseDirectory(c=c) # returns "" on error.
         path = g.os_path_join(base,path)
         
 #@nonl
@@ -4287,7 +4287,7 @@ if not self.default_directory and not old.has_key("path") and theDict.has_key("p
     k = theDict["path"]
     << compute relative path from s[k:] >>
     if path and len(path) > 0:
-        base = g.getBaseDirectory() # returns "" on error.
+        base = g.getBaseDirectory(c=c) # returns "" on error.
         path = g.os_path_join(base,path)
         if g.os_path_isabs(path):
             << handle absolute path >>
@@ -4381,7 +4381,7 @@ if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
 # This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 
 if c.frame and not self.default_directory:
-    base = g.getBaseDirectory() # returns "" on error.
+    base = g.getBaseDirectory(c=c) # returns "" on error.
     for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
         if theDir and len(theDir) > 0:
             theDir = g.os_path_join(base,theDir)
@@ -8853,7 +8853,7 @@ if not self.default_directory and not old.has_key("path") and theDict.has_key("p
     k = theDict["path"]
     << compute relative path from s[k:] >>
     if path and len(path) > 0:
-        base = g.getBaseDirectory() # returns "" on error.
+        base = g.getBaseDirectory(c=c) # returns "" on error.
         path = g.os_path_join(base,path)
         if g.os_path_isabs(path):
             << handle absolute path >>
@@ -8947,7 +8947,7 @@ if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
 # This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 
 if c.frame and not self.default_directory:
-    base = g.getBaseDirectory() # returns "" on error.
+    base = g.getBaseDirectory(c=c) # returns "" on error.
     for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
         if theDir and len(theDir) > 0:
             theDir = g.os_path_join(base,theDir)
@@ -9039,7 +9039,7 @@ k = theDict["path"]
 << compute relative path from s[k:] >>
 
 if path and len(path) > 0:
-    base = g.getBaseDirectory() # returns "" on error.
+    base = g.getBaseDirectory(c=c) # returns "" on error.
     path = g.os_path_join(base,path)
     
     if g.os_path_isabs(path):
@@ -9081,7 +9081,7 @@ else:
 assert(not at.default_directory)
 
 if c.frame :
-    base = g.getBaseDirectory() # returns "" on error.
+    base = g.getBaseDirectory(c=c) # returns "" on error.
     for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
         if theDir and len(theDir) > 0:
             theDir = g.os_path_join(base,theDir)
@@ -10001,9 +10001,9 @@ def getScript (c,p,useSelectedText=True):
 
     if not p: p = c.currentPosition()
     old_body = p.bodyString()
-    
+
     try:
-        script = None
+        script = ''
         # Allow p not to be the present position.
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
@@ -10027,7 +10027,7 @@ def getScript (c,p,useSelectedText=True):
         s = "unexpected exception"
         print s ; g.es(s)
         g.es_exception()
-        script = None
+        script = ''
 
     p.v.setTnodeText(old_body)
     return script
@@ -10741,6 +10741,107 @@ def getOutputNewline (c=None,name=None):
 #@nonl
 #@-node:ekr.20031218072017.1386:getOutputNewline
 #@-node:ekr.20050117111810:(Fixed configuration bug)
+#@+node:ekr.20040226094105:(Put the scrollWheel workaround in createTkTreeCanvas)
+#@+node:ekr.20041221071131.1:createTkTreeCanvas
+def createTkTreeCanvas (self,parentFrame,scrolls,pack):
+    
+    frame = self ; c = frame.c
+    
+    canvas = Tk.Canvas(parentFrame,name="canvas",
+        bd=0,bg="white",relief="flat")
+
+    frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
+    
+    # Bind mouse wheel event to canvas
+    if sys.platform != "win32": # Works on 98, crashes on XP.
+        canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+        if 1: # New in 4.3.
+            << workaround for mouse-wheel problems >>
+        
+    canvas['yscrollcommand'] = self.setCallback
+    treeBar['command']     = self.yviewCallback
+    
+    treeBar.pack(side="right", fill="y")
+    if scrolls: 
+        treeXBar = Tk.Scrollbar( 
+            parentFrame,name='treeXBar',orient="horizontal") 
+        canvas['xscrollcommand'] = treeXBar.set 
+        treeXBar['command'] = canvas.xview 
+        treeXBar.pack(side="bottom", fill="x")
+    
+    if pack:
+        canvas.pack(expand=1,fill="both")
+
+    canvas.bind("<Button-1>", frame.OnActivateTree)
+
+    # Handle mouse wheel in the outline pane.
+    if sys.platform == "linux2": # This crashes tcl83.dll
+        canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+    if 1:
+        << do scrolling by hand in a separate thread >>
+    
+    # g.print_bindings("canvas",canvas)
+    return canvas
+    
+#@nonl
+#@+node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
+# Handle mapping of mouse-wheel to buttons 4 and 5.
+
+def mapWheel(e):
+    if e.num == 4: # Button 4
+        e.delta = 120
+        return frame.OnMouseWheel(e)
+    elif e.num == 5: # Button 5
+        e.delta = -120
+        return frame.OnMouseWheel(e)
+
+canvas.bind("<ButtonPress>",mapWheel,add=1)
+#@nonl
+#@-node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
+#@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
+import threading
+import time
+
+way = 'Down' # global.
+ev = threading.Event()
+
+def run(ev = ev):
+    global way
+    while 1:
+        ev.wait()
+        if way=='Down': canvas.yview("scroll", 1,"units")
+        else:           canvas.yview("scroll",-1,"units")
+        time.sleep(.1)
+
+t = threading.Thread(target = run)
+t.setDaemon(True)
+t.start()
+    
+def exe(event,ev=ev,theWay='Down',canvas=canvas):
+    global way
+    if event.widget!=canvas: return
+    if canvas.find_overlapping(event.x,event.y,event.x,event.y): return
+    ev.set()
+    way = theWay
+        
+def off(event,ev=ev,canvas=canvas):
+    if event.widget!=canvas: return
+    ev.clear()
+
+if 1: # Use shift-click
+    canvas.bind_all('<Shift Button-3>',exe)
+    canvas.bind_all('<Shift Button-1>',lambda event,way='Up': exe(event,theWay=way))
+    canvas.bind_all('<Shift ButtonRelease-1>', off)
+    canvas.bind_all('<Shift ButtonRelease-3>', off)
+else: # Use plain click.
+    canvas.bind_all( '<Button-3>', exe)
+    canvas.bind_all( '<Button-1>', lambda event,way='Up': exe(event,theWay=way))
+    canvas.bind_all( '<ButtonRelease-1>', off)
+    canvas.bind_all( '<ButtonRelease-3>', off)
+#@nonl
+#@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
+#@-node:ekr.20041221071131.1:createTkTreeCanvas
+#@-node:ekr.20040226094105:(Put the scrollWheel workaround in createTkTreeCanvas)
 #@-node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)
@@ -10863,9 +10964,9 @@ def getScript (c,p,useSelectedText=True):
 
     if not p: p = c.currentPosition()
     old_body = p.bodyString()
-    
+
     try:
-        script = None
+        script = ''
         # Allow p not to be the present position.
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
@@ -10889,7 +10990,7 @@ def getScript (c,p,useSelectedText=True):
         s = "unexpected exception"
         print s ; g.es(s)
         g.es_exception()
-        script = None
+        script = ''
 
     p.v.setTnodeText(old_body)
     return script
@@ -12213,7 +12314,7 @@ if not self.default_directory and not old.has_key("path") and theDict.has_key("p
     k = theDict["path"]
     << compute relative path from s[k:] >>
     if path and len(path) > 0:
-        base = g.getBaseDirectory() # returns "" on error.
+        base = g.getBaseDirectory(c=c) # returns "" on error.
         path = g.os_path_join(base,path)
         if g.os_path_isabs(path):
             << handle absolute path >>
@@ -12307,7 +12408,7 @@ if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
 # This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 
 if c.frame and not self.default_directory:
-    base = g.getBaseDirectory() # returns "" on error.
+    base = g.getBaseDirectory(c=c) # returns "" on error.
     for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
         if theDir and len(theDir) > 0:
             theDir = g.os_path_join(base,theDir)
@@ -12399,7 +12500,7 @@ k = theDict["path"]
 << compute relative path from s[k:] >>
 
 if path and len(path) > 0:
-    base = g.getBaseDirectory() # returns "" on error.
+    base = g.getBaseDirectory(c=c) # returns "" on error.
     path = g.os_path_join(base,path)
     
     if g.os_path_isabs(path):
@@ -12441,7 +12542,7 @@ else:
 assert(not at.default_directory)
 
 if c.frame :
-    base = g.getBaseDirectory() # returns "" on error.
+    base = g.getBaseDirectory(c=c) # returns "" on error.
     for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
         if theDir and len(theDir) > 0:
             theDir = g.os_path_join(base,theDir)
@@ -12510,6 +12611,532 @@ def sentinelName(self, kind):
 #@-node:ekr.20041005105605.243:sentinelName
 #@-node:ekr.20041005105605.219:Uilites... (atFile)
 #@-node:ekr.20050101093544:(Always use os.rename in utils_rename)
+#@+node:ekr.20050119225135:(Implemented delayed focus scheme)
+#@+node:ekr.20050120091434:What I did
+@killcolor
+
+The original problem with the UNL plugin not staying on top was that button-1
+was bound to OnActivateTree, which called g.app.gui.set_focus.
+
+However, there was another problem, the idle-time code in the status line logic
+was also messing with the focus. It turns out that repeatedly calling
+g.app.gui.set_focus is a bad idea: it interferes with opening new windows.
+
+To deal with this I basically rewrote all the code that sets focus. The new code
+replaces direct calls to g.app.gui.set_focus with calls to frame.bodyWantsFocus,
+frame.statusLineWantsFocus, frame.treeWantsFocus and frame.logWantsFocus.
+Actually, they all do the same thing, but using different methods improves
+traces.
+
+This is an excellent pattern. Rather than setting the focus directly, these
+xWantsFocus methods merely signal their intension to set the focus. This allows
+very complex logic to be hidden in leoTkinterFrame.set_focus.
+
+leoTkinterFrame.set_focus is indeed complex. It took me several hours to get it
+just right. It queues up a 'one-shot' callback. That is, at most one copy of the
+callback is ever waiting to be executed. Furthermore, the callback is only
+queued for execution at the result of a call to xWantsFocus; it is never run
+automatically at idle time. Finally, even when executed, the callback does
+nothing if the last requested commander (in the new ivar, g.app.wantedFocus)
+does not match the commander to which the callback was bound. These checks allow
+the UNL plugin to open a window properly and keep it topmost :-)
+
+This is a big step forward for Leo. Using delayed focus methods ensures that the
+body pane always has focus unless the code has a specific, positive reason for
+the focus to be elsewhere. This was difficult (or rather impossible) to do with
+the old code: there are _many_ Tk calls that can affect the focus. Moreover, it
+minimizes calls to g.app.gui.set_focus.
+
+Oh yes, one more thing. All the new methods support a 'tag' keyword argument.
+This is typically set to the name of the routine in which the call takes place.
+It is a big help in making sense of traces.
+
+More details:
+- 'later' keyword arg
+- eliminates most calls to g.app.gui.set_focus
+- A case could be made for using a single, global one-shot callback in g.app.gui.set_focus.
+- Stresses Tk much less.
+- A problem with losing data in test.leo.
+#@nonl
+#@-node:ekr.20050120091434:What I did
+#@+node:ekr.20031218072017.2373:set_focus (app.gui)
+def set_focus(self,c,widget,tag=''):
+    
+    """Put the focus on the widget."""
+    
+    # g.trace(tag,widget)
+    
+    # g.trace(c.frame.top.wm_stackorder())
+    
+    if widget:
+        widget.focus_set()
+
+    if 0: # Causes a weird problem on some machines.
+        if c.frame.top:
+            focus = c.frame.top.focus_displayof()
+            if focus != widget:
+                widget.focus_set()
+#@nonl
+#@-node:ekr.20031218072017.2373:set_focus (app.gui)
+#@+node:ekr.20050120110418:Activation methods
+@
+
+N.B. There is NO WAY to keep track reliably of which window is on top!! Leo must
+never ever depend on this knowledge!!
+#@+node:ekr.20040803072955.105:OnActivate (tkTree)
+def OnActivate (self,p,event=None):
+
+    try:
+        c = self.c ; gui = g.app.gui
+        # g.trace(c)
+        << activate this window >>
+    except:
+        g.es_event_exception("activate tree")
+#@nonl
+#@+node:ekr.20040803072955.106:<< activate this window >>
+current = c.currentPosition()
+
+if p == current:
+    # g.trace("is current")
+    if self.active:
+        self.editLabel(p)
+    else:
+        # Set the focus immediately.  This is essential for proper editing.
+        c.frame.treeWantsFocus(self.canvas,later=False,tag='OnActivate')
+else:
+    # g.trace("not current")
+    self.select(p)
+    if c.frame.findPanel:
+        c.frame.findPanel.handleUserClick(p)
+    if p.v.t.insertSpot != None:
+        c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+        c.frame.bodyCtrl.see(p.v.t.insertSpot)
+    else:
+        c.frame.bodyCtrl.mark_set("insert","1.0")
+    c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='OnActivate')
+
+self.active = True
+#@nonl
+#@-node:ekr.20040803072955.106:<< activate this window >>
+#@-node:ekr.20040803072955.105:OnActivate (tkTree)
+#@+node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
+def OnActivateBody (self,event=None):
+
+    try:
+        frame = self ; c = frame.c ; gui = g.app.gui
+        # g.trace(c.shortFileName())
+        g.app.setLog(frame.log,"OnActivateBody")
+        w = gui.get_focus(frame)
+        if w != frame.body.bodyCtrl:
+            self.tree.OnDeactivate()
+        self.bodyWantsFocus(self.bodyCtrl,tag='OnActivateBody')
+    except:
+        g.es_event_exception("activate body")
+#@nonl
+#@-node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
+#@+node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
+def OnActivateLeoEvent(self,event=None):
+    
+    # g.trace(self.c.shortFileName())
+
+    try:
+        g.app.setLog(self.log,"OnActivateLeoEvent")
+    except:
+        g.es_event_exception("activate Leo")
+
+def OnDeactivateLeoEvent(self,event=None):
+    
+    if 0: # This causes problems on the Mac.
+        try:
+            g.app.setLog(None,"OnDeactivateLeoEvent")
+        except:
+            g.es_event_exception("deactivate Leo")
+#@nonl
+#@-node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
+#@+node:ekr.20031218072017.3976:OnActivateTree
+def OnActivateTree (self,event=None):
+    
+    # g.trace(self.c)
+
+    try:
+        frame = self ; c = frame.c ; gui = g.app.gui
+        g.app.setLog(frame.log,"OnActivateTree")
+        if 0: # Do NOT do this here!
+            # OnActivateTree can get called when the tree gets DE-activated!!
+            frame.bodyWantsFocus(frame.bodyCtrl,tag='OnActivateTree')
+            
+    except:
+        g.es_event_exception("activate tree")
+#@-node:ekr.20031218072017.3976:OnActivateTree
+#@+node:ekr.20031218072017.4045:tkLog.onActivateLog
+def onActivateLog (self,event=None):
+
+    try:
+        g.app.setLog(self,"OnActivateLog")
+        self.frame.tree.OnDeactivate()
+        self.frame.logWantsFocus(self.logCtrl,tag='onActivateLog')
+    except:
+        g.es_event_exception("activate log")
+#@nonl
+#@-node:ekr.20031218072017.4045:tkLog.onActivateLog
+#@-node:ekr.20050120110418:Activation methods
+#@+node:ekr.20040803072955.128:tree.select
+# Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+
+    if not p: return
+
+    # g.trace(len(p.bodyString()),p.headString())
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << select the new node >>
+        if p and p != old_p: # 3/26/03: Suppress duplicate call.
+            try: # may fail during initialization
+                self.idle_scrollTo(p)
+            except: pass
+        << update c.beadList or c.beadPointer >>
+        << update c.visitedList >>
+
+    << set the current node >>
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    # g.printGc()
+#@nonl
+#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+# Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+if old_p and old_p != p:
+    if self.trace and self.verbose:
+        g.trace("unselect:",old_p.headString())
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p)
+
+if old_p and old_p.edit_text():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot
+#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20040803072955.130:<< select the new node >>
+frame.setWrap(p)
+
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(body,s,tag="select:set body",isHeadline=False)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+#@nonl
+#@-node:ekr.20040803072955.130:<< select the new node >>
+#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by c and make c the present node.
+        # print "updating c.beadList"
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+    # g.trace(c.beadPointer,p,present_p)
+#@nonl
+#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20040803072955.132:<< update c.visitedList >>
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+#@nonl
+#@-node:ekr.20040803072955.132:<< update c.visitedList >>
+#@+node:ekr.20040803072955.133:<< set the current node >>
+self.c.setCurrentPosition(p)
+if p != old_p:
+    self.setSelectedLabelState(p)
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
+#@nonl
+#@-node:ekr.20040803072955.133:<< set the current node >>
+#@-node:ekr.20040803072955.128:tree.select
+#@+node:ekr.20050120083053:Delayed Focus (tkFrame)
+@
+
+New in 4.3
+
+Rather than calling g.app.gui.set_focus directly, the code calls
+self.xWantsFocus. This defers to idle-time code in the status-line class.
+#@nonl
+#@+node:ekr.20050120092028:xWantsFocus
+@ All these do the same thing, but separate names are good for tracing and
+makes the intent of the code clearer.
+@c 
+
+def bodyWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag,self.c.shortFileName())
+    self.set_focus(widget,later=later,tag=tag)
+    
+def logWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag)
+    self.set_focus(widget,later=later,tag=tag)
+    
+def statusLineWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag)
+    self.set_focus(widget,later=later,tag=tag)
+    
+def treeWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag,repr(widget))
+    self.set_focus(widget,later=later,tag=tag)
+#@nonl
+#@-node:ekr.20050120092028:xWantsFocus
+#@+node:ekr.20050120092028.1:set_focus (tkFrame)
+@
+Very tricky code:
+Many Tk calls can mess with the focus, so we must always set the focus,
+regardless of what we did previously.
+
+Alas, because of bugs in Tk and/or window managers, we can not call method at
+idle time: that would interfere with switching between windows. Instead, the
+xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
+to g.app.g.app.gui.set_focus.
+@c
+
+def set_focus(self,widget,later=False,tag=''):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    c = self.c
+    
+    # Crucial: disable the callback if we later change our minds.
+    self.wantedWidget = widget
+    g.app.wantedCommander = c
+    # g.trace(c.shortFileName())
+
+    if widget and not g.app.unitTesting:
+        # Messing with focus may be dangerous in unit tests.
+        if later:
+            # Queue up the call (just once) for later.
+            def setFocusCallback(c=c,widget=widget):
+                self.wantedCallbackScheduled = False
+                if (
+                    widget == c.frame.wantedWidget
+                    and c == g.app.wantedCommander
+                    and not g.app.unitTesting
+                ):
+                    # g.trace(repr(c.shortFileName()))
+                    g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+            if not self.wantedCallbackScheduled:
+                self.wantedCallbackScheduled = True
+                self.outerFrame.after(500,setFocusCallback)
+        else:
+            # g.trace(tag,c.shortFileName())
+            g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+#@nonl
+#@-node:ekr.20050120092028.1:set_focus (tkFrame)
+#@-node:ekr.20050120083053:Delayed Focus (tkFrame)
+#@+node:ekr.20041223104933:class statusLineClass
+class statusLineClass:
+    
+    '''A class representing the status line.'''
+    
+    @others
+#@nonl
+#@+node:ekr.20031218072017.3961: ctor
+def __init__ (self,c,parentFrame):
+    
+    self.c = c
+    self.bodyCtrl = c.frame.bodyCtrl
+    self.colorTags = [] # list of color names used as tags.
+    self.enabled = False
+    self.isVisible = False
+    self.lastRow = self.lastCol = 0
+    self.log = c.frame.log
+    #if 'black' not in self.log.colorTags:
+    #    self.log.colorTags.append("black")
+    self.parentFrame = parentFrame
+    self.statusFrame = Tk.Frame(parentFrame,bd=2)
+    text = "line 0, col 0"
+    width = len(text) + 4
+    self.labelWidget = Tk.Label(self.statusFrame,text=text,width=width,anchor="w")
+    self.labelWidget.pack(side="left",padx=1)
+    
+    bg = self.statusFrame.cget("background")
+    self.textWidget = Tk.Text(self.statusFrame,
+        height=1,state="disabled",bg=bg,relief="groove")
+    self.textWidget.pack(side="left",expand=1,fill="x")
+    self.textWidget.bind("<Button-1>", self.onActivate)
+#@nonl
+#@-node:ekr.20031218072017.3961: ctor
+#@+node:ekr.20031218072017.3962:clear
+def clear (self):
+    
+    t = self.textWidget
+    if not t: return
+    
+    t.configure(state="normal")
+    t.delete("1.0","end")
+    t.configure(state="disabled")
+#@nonl
+#@-node:ekr.20031218072017.3962:clear
+#@+node:EKR.20040424153344:enable, disable & isEnabled
+def disable (self,background=None):
+    
+    c = self.c ; t = self.textWidget
+    if t:
+        if not background:
+            background = self.statusFrame.cget("background")
+        t.configure(state="disabled",background=background)
+    self.enabled = False
+    c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='statusLine.disable')
+    
+def enable (self,background="white"):
+    
+    # g.trace()
+    c = self.c ; t = self.textWidget
+    if t:
+        t.configure(state="normal",background=background)
+        c.frame.statusLineWantsFocus(t,tag='statusLine.ensable')
+        t.focus_set()
+    self.enabled = True
+        
+def isEnabled(self):
+    return self.enabled
+#@nonl
+#@-node:EKR.20040424153344:enable, disable & isEnabled
+#@+node:ekr.20041026132435:get
+def get (self):
+    
+    t = self.textWidget
+    if t:
+        return t.get("1.0","end")
+    else:
+        return ""
+#@nonl
+#@-node:ekr.20041026132435:get
+#@+node:ekr.20041223114744:getFrame
+def getFrame (self):
+    
+    return self.statusFrame
+#@nonl
+#@-node:ekr.20041223114744:getFrame
+#@+node:ekr.20050120093555:onActivate
+def onActivate (self,event=None):
+    
+    # Don't change background as the result of simple mouse clicks.
+    background = self.statusFrame.cget("background")
+    self.enable(background=background)
+#@nonl
+#@-node:ekr.20050120093555:onActivate
+#@+node:ekr.20041223111916:pack & show
+def pack (self):
+    
+    if not self.isVisible:
+        self.isVisible = True
+        self.statusFrame.pack(fill="x",pady=1)
+
+        # Register an idle-time handler to update the row and column indicators.
+        self.statusFrame.after_idle(self.update)
+        
+show = pack
+#@nonl
+#@-node:ekr.20041223111916:pack & show
+#@+node:ekr.20031218072017.3963:put
+def put(self,s,color=None):
+    
+    t = self.textWidget
+    if not t: return
+    
+    t.configure(state="normal")
+        
+    if color and color not in self.colorTags:
+        self.colorTags.append(color)
+        t.tag_config(color,foreground=color)
+
+    if color:
+        t.insert("end",s)
+        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+        t.tag_config("black",foreground="black")
+        t.tag_add("black","end")
+    else:
+        t.insert("end",s)
+    
+    t.configure(state="disabled")
+    t.update_idletasks()
+#@nonl
+#@-node:ekr.20031218072017.3963:put
+#@+node:EKR.20040424154804:setFocus
+if 0: # No longer used in 4.3.  Done as the result of statusLineWantsFocus.
+
+    def setFocus (self):
+    
+        # Force the focus to the icon area.
+        t = self.textWidget
+        if t:
+            t.focus_set()
+#@nonl
+#@-node:EKR.20040424154804:setFocus
+#@+node:ekr.20041223111916.1:unpack & hide
+def unpack (self):
+    
+    if self.isVisible:
+        self.isVisible = False
+        self.statusFrame.pack_forget()
+
+hide = unpack
+#@nonl
+#@-node:ekr.20041223111916.1:unpack & hide
+#@+node:ekr.20031218072017.1733:update
+def update (self):
+    
+    c = self.c ; body = self.bodyCtrl ; lab = self.labelWidget
+    if g.app.killed or not self.isVisible:
+        return
+
+    index = body.index("insert")
+    row,col = g.app.gui.getindex(body,index)
+
+    if col > 0:
+        s = body.get("%d.0" % (row),index)
+        s = g.toUnicode(s,g.app.tkEncoding)
+        col = g.computeWidth (s,c.tab_width)
+
+    if row != self.lastRow or col != self.lastCol:
+        s = "line %d, col %d " % (row,col)
+        lab.configure(text=s)
+        self.lastRow = row
+        self.lastCol = col
+
+    self.statusFrame.after(500,self.update)
+#@nonl
+#@-node:ekr.20031218072017.1733:update
+#@-node:ekr.20041223104933:class statusLineClass
+#@-node:ekr.20050119225135:(Implemented delayed focus scheme)
 #@-node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20041115111203:Config...
 # 2004
@@ -12924,7 +13551,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
 
     # Create a full normalized path name.
     # Display the file name with case intact.
-    fileName = g.os_path_join(os.getcwd(), fileName)
+    if 1: # New code, also appears to work.
+        fileName = g.os_path_abspath(fileName)
+    else: # Old code, works.
+        fileName = g.os_path_join(os.getcwd(),fileName)
     fileName = g.os_path_normpath(fileName)
     oldFileName = fileName 
     fileName = g.os_path_normcase(fileName)
@@ -13345,7 +13975,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
 
     # Create a full normalized path name.
     # Display the file name with case intact.
-    fileName = g.os_path_join(os.getcwd(), fileName)
+    if 1: # New code, also appears to work.
+        fileName = g.os_path_abspath(fileName)
+    else: # Old code, works.
+        fileName = g.os_path_join(os.getcwd(),fileName)
     fileName = g.os_path_normpath(fileName)
     oldFileName = fileName 
     fileName = g.os_path_normcase(fileName)
@@ -14071,7 +14704,7 @@ def scanDirectives(c,p=None):
             old_dict=old,dict=dict,pluginsList=pluginsList)
         old.update(dict)
 
-    if path == None: path = g.getBaseDirectory()
+    if path == None: path = g.getBaseDirectory(c=c)
 
     return {
         "delims"    : (delim1,delim2,delim3),
@@ -14137,7 +14770,7 @@ if not path and not old.has_key("path") and dict.has_key("path"):
     k = dict["path"]
     << compute relative path from s[k:] >>
     if path and len(path) > 0:
-        base = g.getBaseDirectory() # returns "" on error.
+        base = g.getBaseDirectory(c=c) # returns "" on error.
         path = g.os_path_join(base,path)
         
 #@nonl
@@ -15458,7 +16091,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
 
     # Create a full normalized path name.
     # Display the file name with case intact.
-    fileName = g.os_path_join(os.getcwd(), fileName)
+    if 1: # New code, also appears to work.
+        fileName = g.os_path_abspath(fileName)
+    else: # Old code, works.
+        fileName = g.os_path_join(os.getcwd(),fileName)
     fileName = g.os_path_normpath(fileName)
     oldFileName = fileName 
     fileName = g.os_path_normcase(fileName)
@@ -17164,8 +17800,10 @@ top.minsize(30,10) # In grid units.
 frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
 frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
 
-frame.top.bind("<Activate>", frame.OnActivateLeoEvent) # Doesn't work on windows.
-frame.top.bind("<Deactivate>", frame.OnDeactivateLeoEvent) # Doesn't work on windows.
+# These don't work on Windows. Because of bugs in window managers,
+# there is NO WAY to know which window is on top!
+frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
+frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
 
 frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
 frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
@@ -17331,7 +17969,9 @@ def createTkTreeCanvas (self,parentFrame,scrolls,pack):
     
     # Bind mouse wheel event to canvas
     if sys.platform != "win32": # Works on 98, crashes on XP.
-        canvas.bind("<MouseWheel>", self.OnMouseWheel)
+        canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+        if 1: # New in 4.3.
+            << workaround for mouse-wheel problems >>
         
     canvas['yscrollcommand'] = self.setCallback
     treeBar['command']     = self.yviewCallback
@@ -17358,6 +17998,21 @@ def createTkTreeCanvas (self,parentFrame,scrolls,pack):
     # g.print_bindings("canvas",canvas)
     return canvas
     
+#@nonl
+#@+node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
+# Handle mapping of mouse-wheel to buttons 4 and 5.
+
+def mapWheel(e):
+    if e.num == 4: # Button 4
+        e.delta = 120
+        return frame.OnMouseWheel(e)
+    elif e.num == 5: # Button 5
+        e.delta = -120
+        return frame.OnMouseWheel(e)
+
+canvas.bind("<ButtonPress>",mapWheel,add=1)
+#@nonl
+#@-node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
 #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
 import threading
 import time
@@ -17430,8 +18085,10 @@ top.minsize(30,10) # In grid units.
 frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
 frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
 
-frame.top.bind("<Activate>", frame.OnActivateLeoEvent) # Doesn't work on windows.
-frame.top.bind("<Deactivate>", frame.OnDeactivateLeoEvent) # Doesn't work on windows.
+# These don't work on Windows. Because of bugs in window managers,
+# there is NO WAY to know which window is on top!
+frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
+frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
 
 frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
 frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
@@ -17848,6 +18505,7 @@ def __init__ (self,c,parentFrame):
     self.textWidget = Tk.Text(self.statusFrame,
         height=1,state="disabled",bg=bg,relief="groove")
     self.textWidget.pack(side="left",expand=1,fill="x")
+    self.textWidget.bind("<Button-1>", self.onActivate)
 #@nonl
 #@-node:ekr.20031218072017.3961: ctor
 #@+node:ekr.20031218072017.3962:clear
@@ -17864,19 +18522,21 @@ def clear (self):
 #@+node:EKR.20040424153344:enable, disable & isEnabled
 def disable (self,background=None):
     
-    t = self.textWidget
+    c = self.c ; t = self.textWidget
     if t:
         if not background:
             background = self.statusFrame.cget("background")
         t.configure(state="disabled",background=background)
     self.enabled = False
+    c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='statusLine.disable')
     
 def enable (self,background="white"):
     
-    g.trace()
-    t = self.textWidget
+    # g.trace()
+    c = self.c ; t = self.textWidget
     if t:
         t.configure(state="normal",background=background)
+        c.frame.statusLineWantsFocus(t,tag='statusLine.ensable')
         t.focus_set()
     self.enabled = True
         
@@ -17900,6 +18560,27 @@ def getFrame (self):
     return self.statusFrame
 #@nonl
 #@-node:ekr.20041223114744:getFrame
+#@+node:ekr.20050120093555:onActivate
+def onActivate (self,event=None):
+    
+    # Don't change background as the result of simple mouse clicks.
+    background = self.statusFrame.cget("background")
+    self.enable(background=background)
+#@nonl
+#@-node:ekr.20050120093555:onActivate
+#@+node:ekr.20041223111916:pack & show
+def pack (self):
+    
+    if not self.isVisible:
+        self.isVisible = True
+        self.statusFrame.pack(fill="x",pady=1)
+
+        # Register an idle-time handler to update the row and column indicators.
+        self.statusFrame.after_idle(self.update)
+        
+show = pack
+#@nonl
+#@-node:ekr.20041223111916:pack & show
 #@+node:ekr.20031218072017.3963:put
 def put(self,s,color=None):
     
@@ -17925,26 +18606,16 @@ def put(self,s,color=None):
 #@nonl
 #@-node:ekr.20031218072017.3963:put
 #@+node:EKR.20040424154804:setFocus
-def setFocus (self):
+if 0: # No longer used in 4.3.  Done as the result of statusLineWantsFocus.
+
+    def setFocus (self):
     
-    t = self.textWidget
-    if t:
-        t.focus_set()
+        # Force the focus to the icon area.
+        t = self.textWidget
+        if t:
+            t.focus_set()
 #@nonl
 #@-node:EKR.20040424154804:setFocus
-#@+node:ekr.20041223111916:pack & show
-def pack (self):
-    
-    if not self.isVisible:
-        self.isVisible = True
-        self.statusFrame.pack(fill="x",pady=1)
-
-        # Register an idle-time handler to update the row and column indicators.
-        self.statusFrame.after_idle(self.update)
-        
-show = pack
-#@nonl
-#@-node:ekr.20041223111916:pack & show
 #@+node:ekr.20041223111916.1:unpack & hide
 def unpack (self):
     
@@ -17977,9 +18648,6 @@ def update (self):
         self.lastCol = col
 
     self.statusFrame.after(500,self.update)
-
-    if self.enabled:
-        self.setFocus()
 #@nonl
 #@-node:ekr.20031218072017.1733:update
 #@-node:ekr.20041223104933:class statusLineClass
@@ -18098,10 +18766,13 @@ self.tree = None
 self.treeBar = None
 
 # Used by event handlers...
-self.redrawCount = 0
-self.draggedItem = None
 self.controlKeyIsDown = False # For control-drags
+self.draggedItem = None
+self.isActive = True
+self.redrawCount = 0
 self.revertHeadline = None # Previous headline text for abortEditLabel.
+self.wantedWidget = None
+self.wantedCallbackScheduled = False
 #@nonl
 #@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
 #@-node:ekr.20031218072017.1801:__init__ (tkFrame)
@@ -18148,8 +18819,10 @@ top.minsize(30,10) # In grid units.
 frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
 frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
 
-frame.top.bind("<Activate>", frame.OnActivateLeoEvent) # Doesn't work on windows.
-frame.top.bind("<Deactivate>", frame.OnDeactivateLeoEvent) # Doesn't work on windows.
+# These don't work on Windows. Because of bugs in window managers,
+# there is NO WAY to know which window is on top!
+frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
+frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
 
 frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
 frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
@@ -18283,7 +18956,9 @@ def createTkTreeCanvas (self,parentFrame,scrolls,pack):
     
     # Bind mouse wheel event to canvas
     if sys.platform != "win32": # Works on 98, crashes on XP.
-        canvas.bind("<MouseWheel>", self.OnMouseWheel)
+        canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+        if 1: # New in 4.3.
+            << workaround for mouse-wheel problems >>
         
     canvas['yscrollcommand'] = self.setCallback
     treeBar['command']     = self.yviewCallback
@@ -18310,6 +18985,21 @@ def createTkTreeCanvas (self,parentFrame,scrolls,pack):
     # g.print_bindings("canvas",canvas)
     return canvas
     
+#@nonl
+#@+node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
+# Handle mapping of mouse-wheel to buttons 4 and 5.
+
+def mapWheel(e):
+    if e.num == 4: # Button 4
+        e.delta = 120
+        return frame.OnMouseWheel(e)
+    elif e.num == 5: # Button 5
+        e.delta = -120
+        return frame.OnMouseWheel(e)
+
+canvas.bind("<ButtonPress>",mapWheel,add=1)
+#@nonl
+#@-node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
 #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
 import threading
 import time
@@ -20901,9 +21591,9 @@ def getScript (c,p,useSelectedText=True):
 
     if not p: p = c.currentPosition()
     old_body = p.bodyString()
-    
+
     try:
-        script = None
+        script = ''
         # Allow p not to be the present position.
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
@@ -20927,7 +21617,7 @@ def getScript (c,p,useSelectedText=True):
         s = "unexpected exception"
         print s ; g.es(s)
         g.es_exception()
-        script = None
+        script = ''
 
     p.v.setTnodeText(old_body)
     return script
@@ -21604,7 +22294,8 @@ def onClickBoxClick (self,event):
         self.select(p)
         if c.frame.findPanel:
             c.frame.findPanel.handleUserClick(p)
-        gui.set_focus(c,c.frame.bodyCtrl)
+            
+        c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='onClickBoxClick')
     g.doHook("boxclick2",c=c,p=p,v=p,event=event)
 #@nonl
 #@-node:ekr.20040803072955.79:onClickBoxClick
@@ -22475,6 +23166,689 @@ def registerOneHandler(tag,fn):
 #@nonl
 #@-node:ekr.20031218072017.3443:registerHandler
 #@-node:ekr.20050111082850:(Changes to plugin handling)
+#@+node:ekr.20050119211822.2:(Added support for Leo-relative files)
+#@+node:ekr.20050119211822:@url file:.\..\doc\LeoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
+#@-node:ekr.20050119211822:@url file:.\..\doc\LeoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
+#@+node:ekr.20050119220219:Notes
+@killcolor
+
+Actually, support already existed for them in getBaseDirectly!
+
+What I did.
+
+- Added a c keyword to getBaseDirectory.  It is never a good idea to use g.top().
+- Added similar logic to os_path_join.
+
+- Changed some stupid code in g.openWithFileName (called by @url logic):
+    changed: fileName = g.os_path_join(os.getcwd(),fileName)
+    to:      fileName = g.os_path_abspath(fileName)
+
+MAYBE g.os_path_abspath should force '.' to mean c.openDir, but I kinda doubt
+it. This could be asking for trouble.
+
+OTOH, the various flavors of scanAllDirectives already do this.  Hmmmmmm.
+#@-node:ekr.20050119220219:Notes
+#@+node:ekr.20031218072017.2154:os_path_join
+def os_path_join(*args,**keys):
+    
+    encoding = keys.get("encoding")
+
+    uargs = [g.toUnicodeFileEncoding(arg,encoding) for arg in args]
+    
+    # Note:  This is exactly the same convention as used by getBaseDirectory.
+    if uargs and uargs[0] == '!!':
+        uargs[0] = g.app.loadDir
+    elif uargs and uargs[0] == '.':
+        c = keys.get('c')
+        if c and c.openDirectory:
+            uargs[0] = c.openDirectory
+            g.trace(c.openDirectory)
+
+    path = os.path.join(*uargs)
+    
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    return path
+#@nonl
+#@-node:ekr.20031218072017.2154:os_path_join
+#@+node:ekr.20031218072017.1380:Directive utils...
+#@+node:EKR.20040504150046.4:g.comment_delims_from_extension
+def comment_delims_from_extension(filename):
+    
+    """
+    Return the comment delims corresponding to the filename's extension.
+
+    >>> g.comment_delims_from_extension(".py")
+    ('#', None, None)
+
+    >>> g.comment_delims_from_extension(".c")
+    ('//', '/*', '*/')
+    
+    >>> g.comment_delims_from_extension(".html")
+    (None, '<!--', '-->')
+
+    """
+
+    root, ext = os.path.splitext(filename)
+    if ext == '.tmp':
+        root, ext = os.path.splitext(root)
+        
+    language = g.app.extension_dict.get(ext[1:])
+    if ext:
+        
+        return g.set_delims_from_language(language)
+    else:
+        g.trace("unknown extension %s" % ext)
+        return None,None,None
+#@nonl
+#@-node:EKR.20040504150046.4:g.comment_delims_from_extension
+#@+node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
+#@+node:ekr.20031218072017.1382:set_delims_from_language
+# Returns a tuple (single,start,end) of comment delims
+
+def set_delims_from_language(language):
+
+    val = app.language_delims_dict.get(language)
+    if val:
+        delim1,delim2,delim3 = g.set_delims_from_string(val)
+        if delim2 and not delim3:
+            return None,delim1,delim2
+        else: # 0,1 or 3 params.
+            return delim1,delim2,delim3
+    else:
+        return None, None, None # Indicate that no change should be made
+#@-node:ekr.20031218072017.1382:set_delims_from_language
+#@+node:ekr.20031218072017.1383:set_delims_from_string
+def set_delims_from_string(s):
+
+    """Returns (delim1, delim2, delim2), the delims following the @comment directive.
+    
+    This code can be called from @languge logic, in which case s can point at @comment"""
+
+    # Skip an optional @comment
+    tag = "@comment"
+    i = 0
+    if g.match_word(s,i,tag):
+        i += len(tag)
+        
+    count = 0 ; delims = [None, None, None]
+    while count < 3 and i < len(s):
+        i = j = g.skip_ws(s,i)
+        while i < len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
+            i += 1
+        if j == i: break
+        delims[count] = s[j:i]
+        count += 1
+        
+    # 'rr 09/25/02
+    if count == 2: # delims[0] is always the single-line delim.
+        delims[2] = delims[1]
+        delims[1] = delims[0]
+        delims[0] = None
+
+    # 7/8/02: The "REM hack": replace underscores by blanks.
+    # 9/25/02: The "perlpod hack": replace double underscores by newlines.
+    for i in xrange(0,3):
+        if delims[i]:
+            delims[i] = string.replace(delims[i],"__",'\n') 
+            delims[i] = string.replace(delims[i],'_',' ')
+
+    return delims[0], delims[1], delims[2]
+#@nonl
+#@-node:ekr.20031218072017.1383:set_delims_from_string
+#@+node:ekr.20031218072017.1384:set_language
+def set_language(s,i,issue_errors_flag=False):
+    
+    """Scan the @language directive that appears at s[i:].
+
+    Returns (language, delim1, delim2, delim3)
+    """
+
+    tag = "@language"
+    # g.trace(g.get_line(s,i))
+    assert(i != None)
+    assert(g.match_word(s,i,tag))
+    i += len(tag) ; i = g.skip_ws(s, i)
+    # Get the argument.
+    j = i ; i = g.skip_c_id(s,i)
+    # Allow tcl/tk.
+    arg = string.lower(s[j:i])
+    if app.language_delims_dict.get(arg):
+        language = arg
+        delim1, delim2, delim3 = g.set_delims_from_language(language)
+        return language, delim1, delim2, delim3
+    
+    if issue_errors_flag:
+        g.es("ignoring: " + g.get_line(s,i))
+
+    return None, None, None, None,
+#@nonl
+#@-node:ekr.20031218072017.1384:set_language
+#@-node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
+#@+node:ekr.20031218072017.1385:findReference
+@ We search the descendents of v looking for the definition node matching name.
+There should be exactly one such node (descendents of other definition nodes are not searched).
+@c
+
+def findReference(name,root):
+
+    for p in root.subtree_iter():
+        assert(p!=root)
+        if p.matchHeadline(name) and not p.isAtIgnoreNode():
+            return p
+
+    # g.trace("not found:",name,root)
+    return root.c.nullPosition()
+#@nonl
+#@-node:ekr.20031218072017.1385:findReference
+#@+node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
+# The caller passes [root_node] or None as the second arg.  This allows us to distinguish between None and [None].
+
+def get_directives_dict(s,root=None):
+    
+    """Scans root for @directives found in globalDirectivesList.
+
+    Returns a dict containing pointers to the start of each directive"""
+
+    if root: root_node = root[0]
+    dict = {}
+    i = 0 ; n = len(s)
+    while i < n:
+        if s[i] == '@' and i+1 < n:
+            << set dict for @ directives >>
+        elif root and g.match(s,i,"<<"):
+            << set dict["root"] for noweb * chunks >>
+        i = g.skip_line(s,i)
+    return dict
+#@nonl
+#@+node:ekr.20031218072017.1261:<< set dict for @ directives >>
+j = g.skip_c_id(s,i+1)
+word = s[i+1:j]
+if word in g.globalDirectiveList:
+    if dict.has_key(word):
+        # Ignore second value.
+        pass
+        # g.es("Warning: conflicting values for %s" % (word), color="blue")
+    else:
+        dict [word] = i
+#@nonl
+#@-node:ekr.20031218072017.1261:<< set dict for @ directives >>
+#@+node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+@ The following looks for chunk definitions of the form < < * > > =. If found, we take this to be equivalent to @root filename if the headline has the form @root filename.
+@c
+
+i = g.skip_ws(s,i+2)
+if i < n and s[i] == '*' :
+    i = g.skip_ws(s,i+1) # Skip the '*'
+    if g.match(s,i,">>="):
+        # < < * > > = implies that @root should appear in the headline.
+        i += 3
+        if root_node:
+            dict["root"]=0 # value not immportant
+        else:
+            g.es(g.angleBrackets("*") + "= requires @root in the headline")
+#@nonl
+#@-node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+#@-node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
+#@+node:ekr.20031218072017.1386:getOutputNewline
+def getOutputNewline (c=None,name=None):
+    
+    '''Convert the name of a line ending to the line ending itself.
+    
+    Priority:
+    - Use name if name given
+    - Use c.config.output_newline if c given,
+    - Otherwise use g.app.config.output_newline.'''
+    
+    if name: s = name
+    elif c:  s = c.config.output_newline
+    else:    s = app.config.output_newline
+
+    if not s: s = ''
+    s = s.lower()
+    if s in ( "nl","lf"): s = '\n'
+    elif s == "cr": s = '\r'
+    elif s == "platform": s = os.linesep  # 12/2/03: emakital
+    elif s == "crlf": s = "\r\n"
+    else: s = '\n' # Default for erroneous values.
+    return s
+#@nonl
+#@-node:ekr.20031218072017.1386:getOutputNewline
+#@+node:ekr.20031218072017.1387:scanAtEncodingDirective
+def scanAtEncodingDirective(s,dict):
+    
+    """Scan the @encoding directive at s[dict["encoding"]:].
+
+    Returns the encoding name or None if the encoding name is invalid.
+    """
+
+    k = dict["encoding"]
+    i = g.skip_to_end_of_line(s,k)
+    j = len("@encoding")
+    encoding = s[k+j:i].strip()
+    if g.isValidEncoding(encoding):
+        # g.trace(encoding)
+        return encoding
+    else:
+        g.es("invalid @encoding:"+encoding,color="red")
+        return None
+#@nonl
+#@-node:ekr.20031218072017.1387:scanAtEncodingDirective
+#@+node:ekr.20031218072017.1388:scanAtLineendingDirective
+def scanAtLineendingDirective(s,dict):
+    
+    """Scan the @lineending directive at s[dict["lineending"]:].
+
+    Returns the actual lineending or None if the name of the lineending is invalid.
+    """
+
+    k = dict["lineending"]
+    i = g.skip_to_end_of_line(s,k)
+    j = len("@lineending")
+    j = g.skip_ws(s,j)
+    e = s[k+j:i].strip()
+
+    if e in ("cr","crlf","lf","nl","platform"):
+        lineending = g.getOutputNewline(name=e)
+        # g.trace(e,lineending)
+        return lineending
+    else:
+        # g.es("invalid @lineending directive:"+e,color="red")
+        return None
+#@nonl
+#@-node:ekr.20031218072017.1388:scanAtLineendingDirective
+#@+node:ekr.20031218072017.1389:scanAtPagewidthDirective
+def scanAtPagewidthDirective(s,dict,issue_error_flag=False):
+    
+    """Scan the @pagewidth directive at s[dict["pagewidth"]:].
+
+    Returns the value of the width or None if the width is invalid.
+    """
+    
+    k = dict["pagewidth"]
+    j = i = k + len("@pagewidth")
+    i, val = g.skip_long(s,i)
+    if val != None and val > 0:
+        # g.trace(val)
+        return val
+    else:
+        if issue_error_flag:
+            j = g.skip_to_end_of_line(s,k)
+            g.es("ignoring " + s[k:j],color="red")
+        return None
+#@-node:ekr.20031218072017.1389:scanAtPagewidthDirective
+#@+node:ekr.20031218072017.1390:scanAtTabwidthDirective
+def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
+    
+    """Scan the @tabwidth directive at s[dict["tabwidth"]:].
+
+    Returns the value of the width or None if the width is invalid.
+    """
+    
+    k = dict["tabwidth"]
+    i = k + len("@tabwidth")
+    i, val = g.skip_long(s, i)
+    if val != None and val != 0:
+        # g.trace(val)
+        return val
+    else:
+        if issue_error_flag:
+            i = g.skip_to_end_of_line(s,k)
+            g.es("Ignoring " + s[k:i],color="red")
+        return None
+
+#@-node:ekr.20031218072017.1390:scanAtTabwidthDirective
+#@+node:ekr.20040715155607:scanForAtIgnore
+def scanForAtIgnore(c,p):
+    
+    """Scan position p and its ancestors looking for @ignore directives."""
+    
+    language = c.target_language
+
+    if c is None or g.top() is None:
+        return False # For unit tests.
+
+    for p in p.self_and_parents_iter():
+        s = p.bodyString()
+        d = g.get_directives_dict(s)
+        if d.has_key("ignore"):
+            return True
+
+    return False
+#@nonl
+#@-node:ekr.20040715155607:scanForAtIgnore
+#@+node:ekr.20041123094807:g.scanForAtSettings
+def scanForAtSettings(p):
+    
+    """Scan position p and its ancestors looking for @settings nodes."""
+    
+    for p in p.self_and_parents_iter():
+        h = p.headString()
+        h = g.app.config.canonicalizeSettingName(h)
+        if h.startswith("@settings"):
+            return True
+
+    return False
+#@nonl
+#@-node:ekr.20041123094807:g.scanForAtSettings
+#@+node:ekr.20040712084911.1:scanForAtLanguage
+def scanForAtLanguage(c,p):
+    
+    """Scan position p and p's ancestors looking only for @language and @ignore directives.
+
+    Returns the language found, or c.target_language."""
+    
+
+    if c and p:
+        for p in p.self_and_parents_iter():
+            s = p.bodyString()
+            d = g.get_directives_dict(s)
+            if d.has_key("language"):
+                k = d["language"]
+                language,delim1,delim2,delim3 = g.set_language(s,k)
+                return language # Continue looking for @ignore
+
+    return c.target_language
+#@nonl
+#@-node:ekr.20040712084911.1:scanForAtLanguage
+#@+node:ekr.20031218072017.1391:scanDirectives (utils)
+@ Perhaps this routine should be the basis of atFile.scanAllDirectives and tangle.scanAllDirectives, but I am loath to make any further to these two already-infamous routines.  Also, this code does not check for @color and @nocolor directives: leoColor.useSyntaxColoring does that.
+@c
+
+def scanDirectives(c,p=None):
+    
+    """Scan vnode v and v's ancestors looking for directives.
+
+    Returns a dict containing the results, including defaults."""
+
+    if c == None or g.top() == None:
+        return {} # For unit tests.
+    if p is None:
+        p = c.currentPosition()
+
+    << Set local vars >>
+    old = {}
+    pluginsList = [] # 5/17/03: a list of items for use by plugins.
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        dict = g.get_directives_dict(s)
+        << Test for @comment and @language >>
+        << Test for @encoding >>
+        << Test for @lineending >>
+        << Test for @pagewidth >>
+        << Test for @path >>
+        << Test for @tabwidth >>
+        << Test for @wrap and @nowrap >>
+        g.doHook("scan-directives",c=c,p=p,v=p,s=s,
+            old_dict=old,dict=dict,pluginsList=pluginsList)
+        old.update(dict)
+
+    if path == None: path = g.getBaseDirectory(c=c)
+
+    return {
+        "delims"    : (delim1,delim2,delim3),
+        "encoding"  : encoding,
+        "language"  : language,
+        "lineending": lineending,
+        "pagewidth" : page_width,
+        "path"      : path,
+        "tabwidth"  : tab_width,
+        "pluginsList": pluginsList,
+        "wrap"      : wrap }
+#@nonl
+#@+node:ekr.20031218072017.1392:<< Set local vars >>
+page_width = c.page_width
+tab_width  = c.tab_width
+language = c.target_language
+delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
+path = None
+encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
+lineending = g.getOutputNewline(c=c) # Init from config settings.
+wrap = c.config.getBool("body_pane_wraps")
+#@nonl
+#@-node:ekr.20031218072017.1392:<< Set local vars >>
+#@+node:ekr.20031218072017.1393:<< Test for @comment and @language >>
+# @language and @comment may coexist in @file trees.
+# For this to be effective the @comment directive should follow the @language directive.
+
+if not old.has_key("comment") and dict.has_key("comment"):
+    k = dict["comment"]
+    delim1,delim2,delim3 = g.set_delims_from_string(s[k:])
+
+# Reversion fix: 12/06/02: We must use elif here, not if.
+elif not old.has_key("language") and dict.has_key("language"):
+    k = dict["language"]
+    language,delim1,delim2,delim3 = g.set_language(s,k)
+#@nonl
+#@-node:ekr.20031218072017.1393:<< Test for @comment and @language >>
+#@+node:ekr.20031218072017.1394:<< Test for @encoding >>
+if not old.has_key("encoding") and dict.has_key("encoding"):
+    
+    e = g.scanAtEncodingDirective(s,dict)
+    if e:
+        encoding = e
+#@-node:ekr.20031218072017.1394:<< Test for @encoding >>
+#@+node:ekr.20031218072017.1395:<< Test for @lineending >>
+if not old.has_key("lineending") and dict.has_key("lineending"):
+    
+    e = g.scanAtLineendingDirective(s,dict)
+    if e:
+        lineending = e
+#@-node:ekr.20031218072017.1395:<< Test for @lineending >>
+#@+node:ekr.20031218072017.1396:<< Test for @pagewidth >>
+if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+    
+    w = g.scanAtPagewidthDirective(s,dict)
+    if w and w > 0:
+        page_width = w
+#@nonl
+#@-node:ekr.20031218072017.1396:<< Test for @pagewidth >>
+#@+node:ekr.20031218072017.1397:<< Test for @path >>
+if not path and not old.has_key("path") and dict.has_key("path"):
+
+    k = dict["path"]
+    << compute relative path from s[k:] >>
+    if path and len(path) > 0:
+        base = g.getBaseDirectory(c=c) # returns "" on error.
+        path = g.os_path_join(base,path)
+        
+#@nonl
+#@+node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
+j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) > 2 and (
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
+
+path = string.strip(path)
+if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+    path = g.os_path_join(app.loadDir,path)
+#@nonl
+#@-node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
+#@-node:ekr.20031218072017.1397:<< Test for @path >>
+#@+node:ekr.20031218072017.1399:<< Test for @tabwidth >>
+if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+    
+    w = g.scanAtTabwidthDirective(s,dict)
+    if w and w != 0:
+        tab_width = w
+#@nonl
+#@-node:ekr.20031218072017.1399:<< Test for @tabwidth >>
+#@+node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
+if not old.has_key("wrap") and not old.has_key("nowrap"):
+    
+    if dict.has_key("wrap"):
+        wrap = True
+    elif dict.has_key("nowrap"):
+        wrap = False
+#@nonl
+#@-node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
+#@-node:ekr.20031218072017.1391:scanDirectives (utils)
+#@-node:ekr.20031218072017.1380:Directive utils...
+#@+node:ekr.20031218072017.1264:getBaseDirectory
+# Handles the conventions applying to the "relative_path_base_directory" configuration option.
+
+def getBaseDirectory(c=None):
+
+    base = app.config.relative_path_base_directory
+
+    if base and base == "!":
+        base = app.loadDir
+    elif base and base == ".":
+        base = c.openDirectory
+
+    # g.trace(base)
+    if base and len(base) > 0 and g.os_path_isabs(base):
+        return base # base need not exist yet.
+    else:
+        return "" # No relative base given.
+#@-node:ekr.20031218072017.1264:getBaseDirectory
+#@+node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
+def OnIconDoubleClick (self,v,event=None):
+
+    # Note: "icondclick" hooks handled by vnode callback routine.
+
+    c = self.c
+    s = v.headString().strip()
+    if g.match_word(s,0,"@url"):
+        if not g.doHook("@url1",c=c,p=v,v=v):
+            url = s[4:].strip()
+            << stop the url after any whitespace >>
+            << check the url; return if bad >>
+            << pass the url to the web browser >>
+        g.doHook("@url2",c=c,p=v,v=v)
+#@nonl
+#@+node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
+# For safety, the URL string should end at the first whitespace.
+
+url = url.replace('\t',' ')
+i = url.find(' ')
+if i > -1:
+    if 0: # No need for a warning.  Assume everything else is a comment.
+        g.es("ignoring characters after space in url:"+url[i:])
+        g.es("use %20 instead of spaces")
+    url = url[:i]
+#@-node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
+#@+node:ekr.20031218072017.2314:<< check the url; return if bad >>
+if not url or len(url) == 0:
+    g.es("no url following @url")
+    return
+    
+@ A valid url is (according to D.T.Hein):
+
+3 or more lowercase alphas, followed by,
+one ':', followed by,
+one or more of: (excludes !"#;<>[\]^`|)
+  $%&'()*+,-./0-9:=?@A-Z_a-z{}~
+followed by one of: (same as above, except no minus sign or comma).
+  $%&'()*+/0-9:=?@A-Z_a-z}~
+@c
+
+urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
+import re
+# 4/21/03: Add http:// if required.
+if not re.match('^([a-z]{3,}:)',url):
+    url = 'http://' + url
+if not re.match(urlPattern,url):
+    g.es("invalid url: "+url)
+    return
+#@-node:ekr.20031218072017.2314:<< check the url; return if bad >>
+#@+node:ekr.20031218072017.2315:<< pass the url to the web browser >>
+@ Most browsers should handle the following urls:
+  ftp://ftp.uu.net/public/whatever.
+  http://localhost/MySiteUnderDevelopment/index.html
+  file://home/me/todolist.html
+@c
+
+try:
+    import os
+    os.chdir(g.app.loadDir)
+
+    if g.match(url,0,"file:") and url[-4:]==".leo":
+        ok,frame = g.openWithFileName(url[5:],c)
+        if ok:
+            frame.bringToFront()
+    else:
+        import webbrowser
+        
+        # Mozilla throws a weird exception, then opens the file!
+        try: webbrowser.open(url)
+        except: pass
+except:
+    g.es("exception opening " + url)
+    g.es_exception()
+
+#@-node:ekr.20031218072017.2315:<< pass the url to the web browser >>
+#@-node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
+#@+node:ekr.20031218072017.2052:g.openWithFileName
+def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+
+    # Create a full normalized path name.
+    # Display the file name with case intact.
+    if 1: # New code, also appears to work.
+        fileName = g.os_path_abspath(fileName)
+    else: # Old code, works.
+        fileName = g.os_path_join(os.getcwd(),fileName)
+    fileName = g.os_path_normpath(fileName)
+    oldFileName = fileName 
+    fileName = g.os_path_normcase(fileName)
+
+    # If the file is already open just bring its window to the front.
+    list = app.windowList
+    for frame in list:
+        fn = g.os_path_normcase(frame.c.mFileName)
+        fn = g.os_path_normpath(fn)
+        if fileName == fn:
+            frame.deiconify()
+            app.setLog(frame.log,"openWithFileName")
+            # g.es("This window already open")
+            return True, frame
+            
+    fileName = oldFileName # Use the idiosyncratic file name.
+
+    try:
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
+        theFile = open(fileName,'rb')
+        if theFile:
+            c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+            frame.log.enable(enableLog)
+            if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+                app.setLog(frame.log,"openWithFileName")
+                app.lockLog()
+                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+                app.unlockLog()
+                for frame in g.app.windowList:
+                    # The recent files list has been updated by menu.updateRecentFiles.
+                    frame.c.config.setRecentFiles(g.app.config.recentFiles)
+            frame.openDirectory = g.os_path_dirname(fileName)
+            g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+            return True, frame
+        else:
+            g.es("can not open: " + fileName,color="red")
+            return False, None
+    except IOError:
+        g.es("can not open: " + fileName, color="blue")
+        return False, None
+    except:
+        if 1:
+            print "exceptions opening:", fileName
+            traceback.print_exc()
+        else:
+            g.es("exceptions opening: " + fileName,color="red")
+            g.es_exception()
+        return False, None
+#@nonl
+#@-node:ekr.20031218072017.2052:g.openWithFileName
+#@-node:ekr.20050119211822.2:(Added support for Leo-relative files)
 #@-node:ekr.20041228052527.2:New features...
 #@+node:ekr.20041228052527.3:Plugins...
 #@+node:EKR.20040424151321:(Improved status line plugin)
@@ -22519,10 +23893,13 @@ self.tree = None
 self.treeBar = None
 
 # Used by event handlers...
-self.redrawCount = 0
-self.draggedItem = None
 self.controlKeyIsDown = False # For control-drags
+self.draggedItem = None
+self.isActive = True
+self.redrawCount = 0
 self.revertHeadline = None # Previous headline text for abortEditLabel.
+self.wantedWidget = None
+self.wantedCallbackScheduled = False
 #@nonl
 #@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
 #@-node:ekr.20031218072017.1801:__init__ (tkFrame)
@@ -22569,8 +23946,10 @@ top.minsize(30,10) # In grid units.
 frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
 frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
 
-frame.top.bind("<Activate>", frame.OnActivateLeoEvent) # Doesn't work on windows.
-frame.top.bind("<Deactivate>", frame.OnDeactivateLeoEvent) # Doesn't work on windows.
+# These don't work on Windows. Because of bugs in window managers,
+# there is NO WAY to know which window is on top!
+frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
+frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
 
 frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
 frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
@@ -22704,7 +24083,9 @@ def createTkTreeCanvas (self,parentFrame,scrolls,pack):
     
     # Bind mouse wheel event to canvas
     if sys.platform != "win32": # Works on 98, crashes on XP.
-        canvas.bind("<MouseWheel>", self.OnMouseWheel)
+        canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+        if 1: # New in 4.3.
+            << workaround for mouse-wheel problems >>
         
     canvas['yscrollcommand'] = self.setCallback
     treeBar['command']     = self.yviewCallback
@@ -22731,6 +24112,21 @@ def createTkTreeCanvas (self,parentFrame,scrolls,pack):
     # g.print_bindings("canvas",canvas)
     return canvas
     
+#@nonl
+#@+node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
+# Handle mapping of mouse-wheel to buttons 4 and 5.
+
+def mapWheel(e):
+    if e.num == 4: # Button 4
+        e.delta = 120
+        return frame.OnMouseWheel(e)
+    elif e.num == 5: # Button 5
+        e.delta = -120
+        return frame.OnMouseWheel(e)
+
+canvas.bind("<ButtonPress>",mapWheel,add=1)
+#@nonl
+#@-node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
 #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
 import threading
 import time
