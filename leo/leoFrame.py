@@ -1516,7 +1516,7 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:2::frame.OnOpen
-	#@+node:3::frame.OnOpenWith
+	#@+node:3::frame.OnOpenWith and allies
 	#@+body
 	#@+at
 	#  This routine handles the items in the Open With... menu.
@@ -1551,76 +1551,97 @@ class LeoFrame:
 				#@-node:1::<< set ext based on the present language >>
 
 				
-				#@<< set path to the full pathname of a temp file using ext >>
-				#@+node:2::<< set path to the full pathname of a temp file using ext >>
+				#@<< create or reopen temp file, testing for conflicting changes >>
+				#@+node:2::<< create or reopen temp file, testing for conflicting changes >>
 				#@+body
-				#@+at
-				#  Warning: this is not a complete solution to the problem of 
-				# editing multiple copies of a node: temp files will typically 
-				# have different file extensions for different editors.
-
-				#@-at
-				#@@c
-
 				path = None
 				
-				#@<< if a temp file already refers to v.t set path to it >>
-				#@+node:1::<< if a temp file already refers to v.t set path to it >>
+				#@<< set dict and path if a temp file already refers to v.t >>
+				#@+node:1::<<set dict and path if a temp file already refers to v.t >>
 				#@+body
 				for dict in a.openWithFiles:
 					v2 = dict.get("v")
 					if v.t == v2.t:
 						path = dict.get("path")
 						if os.path.exists(path):
-							es("reopening: " + shortFileName(path))
 							break
 				#@-body
-				#@-node:1::<< if a temp file already refers to v.t set path to it >>
+				#@-node:1::<<set dict and path if a temp file already refers to v.t >>
 
-				if path == None:
+				if path:
 					
-					#@<< create a temp file for v.t and set path >>
-					#@+node:2::<< create a temp file for v.t and set path >>
+					#@<< create or recreate temp file as needed >>
+					#@+node:2::<< create or recreate temp file as needed >>
 					#@+body
-					name = "LeoTemp_" + str(id(v.t)) + '_' + sanitize_filename(v.headString()) + ext
-					td = os.path.abspath(tempfile.gettempdir())
-					path = os.path.join(td,name)
-					# If the path exists we will simply try to reopen it.
-					if os.path.exists(path):
-						# 1/28/03: this will never be executed.
-						es("reopening: " + shortFileName(path))
+					#@+at
+					#  We test for changes in both v and the temp file:
+					# 
+					# - If only v's body text has changed, we recreate the 
+					# temp file.
+					# - If only the temp file has changed, do nothing here.
+					# - If both have changed we must prompt the user to see 
+					# which code to use.
+
+					#@-at
+					#@@c
+
+					encoding = dict.get("encoding")
+					old_body = dict.get("body")
+					new_body = v.bodyString()
+					new_body = toEncodedString(new_body,encoding,reportErrors=true)
+					
+					old_time = dict.get("time")
+					try:
+						new_time=os.path.getmtime(path)
+					except:
+						new_time=None
+						
+					body_changed = old_body != new_body
+					temp_changed = old_time != new_time
+					
+					if body_changed and temp_changed:
+						
+						#@<< Raise dialog about conflict and set result >>
+						#@+node:1::<< Raise dialog about conflict and set result >>
+						#@+body
+						message = (
+							"Conflicting changes in outline and temp file\n\n" +
+							"Do you want to use the code in the outline or the temp file?\n\n")
+						
+						d = leoDialog.leoDialog()
+						result = d.askYesNoCancel(
+							"Conflict!", message,
+							yesMessage = "Use Outline",
+							noMessage = "Use Temp File",
+							defaultButton = "Cancel")
+						
+						
+						#@-body
+						#@-node:1::<< Raise dialog about conflict and set result >>
+
+						if result == "cancel": return
+						rewrite = result == "outline"
 					else:
-						try:
-							file = open(path,"w")
-							# 3/7/03: convert s to whatever encoding is in effect.
-							s = v.bodyString()
-							dict = scanDirectives(self.commands,v=v)
-							encoding = dict.get("encoding",None)
-							if encoding == None:
-								encoding = app().config.default_derived_file_encoding
-							s = toEncodedString(s,encoding,reportErrors=true) 
-							file.write(s)
-							file.flush()
-							file.close()
-							try:    time=os.path.getmtime(path)
-							except: time=None
-							es("creating:  " + shortFileName(path))
-							# es("time: " + str(time))
-							dict = {"c":c, "v":v, "f":file, "path":path, "time":time}
-							a.openWithFiles.append(dict)
-						except:
-							file = None
-							es("exception opening temp file")
-							es_exception()
-							return
+						rewrite = body_changed
+							
+					if rewrite:
+						path = self.createOpenWithTempFile(v,ext)
+					else:
+						es("reopening: " + shortFileName(path),color="blue")
 					#@-body
-					#@-node:2::<< create a temp file for v.t and set path >>
+					#@-node:2::<< create or recreate temp file as needed >>
+
+				else:
+					path = self.createOpenWithTempFile(v,ext)
+				
+				if not path:
+					return # An error has occured.
 				#@-body
-				#@-node:2::<< set path to the full pathname of a temp file using ext >>
+				#@-node:2::<< create or reopen temp file, testing for conflicting changes >>
 
 				
-				#@<< execute a command to open path >>
-				#@+node:3::<< execute a command to open path >>
+				#@<< execute a command to open path in external editor >>
+				#@+node:3::<< execute a command to open path in external editor >>
 				#@+body
 				try:
 					if arg == None: arg = ""
@@ -1650,7 +1671,7 @@ class LeoFrame:
 					es("exception executing: "+command)
 					es_exception()
 				#@-body
-				#@-node:3::<< execute a command to open path >>
+				#@-node:3::<< execute a command to open path in external editor >>
 
 			handleLeoHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
 		except:
@@ -1659,7 +1680,57 @@ class LeoFrame:
 	
 		return "break"
 	#@-body
-	#@-node:3::frame.OnOpenWith
+	#@+node:4::frame.createOpenWithTempFile
+	#@+body
+	def createOpenWithTempFile (self, v, ext):
+		
+		c = self.commands ; a = app()
+		name = "LeoTemp_" + str(id(v.t)) + '_' + sanitize_filename(v.headString()) + ext
+		td = os.path.abspath(tempfile.gettempdir())
+		path = os.path.join(td,name)
+		try:
+			if os.path.exists(path):
+				es("recreating:  " + shortFileName(path),color="red")
+			else:
+				es("creating:  " + shortFileName(path),color="blue")
+			file = open(path,"w")
+			# 3/7/03: convert s to whatever encoding is in effect.
+			s = v.bodyString()
+			dict = scanDirectives(self.commands,v=v)
+			encoding = dict.get("encoding",None)
+			if encoding == None:
+				encoding = a.config.default_derived_file_encoding
+			s = toEncodedString(s,encoding,reportErrors=true) 
+			file.write(s)
+			file.flush()
+			file.close()
+			try:    time=os.path.getmtime(path)
+			except: time=None
+			# es("time: " + str(time))
+			# 4/22/03: add body and encoding entries to dict for later comparisons.
+			dict = {"body":s, "c":c, "encoding":encoding, "f":file, "path":path, "time":time, "v":v}
+			
+			#@<< remove previous entry from a.openWithFiles if it exists >>
+			#@+node:1::<< remove previous entry from a.openWithFiles if it exists >>
+			#@+body
+			for dict in a.openWithFiles:
+				v2 = dict.get("v")
+				if v.t == v2.t:
+					print "removing previous entry in a.openWithFiles for",v
+					a.openWithFiles.remove(dict)
+			#@-body
+			#@-node:1::<< remove previous entry from a.openWithFiles if it exists >>
+ # 4/22/03
+			a.openWithFiles.append(dict)
+			return path
+		except:
+			file = None
+			es("exception creating temp file",color="red")
+			es_exception()
+			return None
+	#@-body
+	#@-node:4::frame.createOpenWithTempFile
+	#@-node:3::frame.OnOpenWith and allies
 	#@+node:4::frame.OpenWithFileName
 	#@+body
 	def OpenWithFileName(self, fileName):
