@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4431" clone_windows="0"/>
 <globals body_outline_ratio="0.47433035714285715">
-	<global_window_position top="29" left="271" height="896" width="940"/>
+	<global_window_position top="39" left="198" height="896" width="940"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -5067,46 +5067,29 @@
 <v t="ekr.20031218072017.2789"><vh>putOpenLeoSentinel 4.x</vh></v>
 <v t="ekr.20031218072017.2695"><vh>putOpenLeoSentinel 3.x</vh></v>
 </v>
-<v t="ekr.20040312092455.2"><vh>(Enable and test atFile read logic)</vh>
-<v t="ekr.20031218072017.2759"><vh>&lt;&lt; init ivars for scanText4 &gt;&gt;</vh></v>
-<v t="ekr.20040316075317"><vh>reading...</vh>
-<v t="ekr.20031218072017.2626"><vh> top_df.readAll</vh></v>
-<v t="ekr.20031218072017.2007"><vh>findChild</vh></v>
-<v t="ekr.20031218072017.2008"><vh>getTnodeList (4.0,4.2)</vh></v>
-<v t="ekr.20031218072017.1566"><vh>getVnode changed for 4.2)</vh>
-<v t="ekr.20031218072017.1567"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1568"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
+<v t="ekr.20040317094229"><vh>(Draw optional icons)</vh>
+<v t="ekr.20040317184631"><vh>Design</vh></v>
+<v t="ekr.20040317184631.1"><vh>To do</vh></v>
+<v t="ekr.20040317184631.2"><vh>Changes</vh></v>
+<v t="ekr.20031218072017.4140"><vh>&lt;&lt; drawing constants &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.4147"><vh>tree.getIconImage</vh></v>
+<v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
+<v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
+<v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
+<v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040317171729"><vh>force_draw_node</vh></v>
 </v>
-<v t="ekr.20040316075317.1"><vh>writing...</vh>
-<v t="ekr.20031218072017.1570"><vh>assignFileIndices &amp; compactFileIndices</vh>
-<v t="ekr.20031218072017.1571"><vh>&lt;&lt; assign missing gnx's, converting ints to gnx's &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1572"><vh>&lt;&lt; reassign all tnode indices &gt;&gt;</vh></v>
+<v t="ekr.20040317094609"><vh>drawUserIcons</vh></v>
+<v t="ekr.20040317095510"><vh>drawUserIcon</vh>
+<v t="ekr.20040317173849"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040317095153"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040317095153.1"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+<v t="ekr.20040317100702"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2114"><vh>new_df.write (inits root.tnodeList)</vh>
-<v t="ekr.20031218072017.2115"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2116"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2117"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
-<v t="ekr.20031218072017.2118"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2119"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
-</v>
-<v t="ekr.20031218072017.2121"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2322"><vh>old_df.write</vh>
-<v t="ekr.20031218072017.2323"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2324"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2325"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (3.x)</vh>
-<v t="ekr.20031218072017.2326"><vh>&lt;&lt; put all @first lines in root &gt;&gt; (3.x)</vh></v>
-<v t="ekr.20031218072017.2327"><vh>&lt;&lt; write the derived file&gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2328"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (3.x)</vh></v>
-</v>
-<v t="ekr.20031218072017.2330"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2001"><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
-<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0,4.2)</vh></v>
-<v t="ekr.20031218072017.1575"><vh>putTnodes</vh>
-<v t="ekr.20031218072017.1576"><vh>&lt;&lt; write only those tnodes that were referenced &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20031218072017.1008"><vh>drawTree</vh>
+<v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -5404,7 +5387,49 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20040312092455.2"><vh>(Enable and test atFile read logic)</vh>
+<v t="ekr.20031218072017.2759"><vh>&lt;&lt; init ivars for scanText4 &gt;&gt;</vh></v>
+<v t="ekr.20040316075317"><vh>reading...</vh>
+<v t="ekr.20031218072017.2626"><vh> top_df.readAll</vh></v>
+<v t="ekr.20031218072017.2007"><vh>findChild</vh></v>
+<v t="ekr.20031218072017.2008"><vh>getTnodeList (4.0,4.2)</vh></v>
+<v t="ekr.20031218072017.1566"><vh>getVnode changed for 4.2)</vh>
+<v t="ekr.20031218072017.1567"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1568"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040316075317.1"><vh>writing...</vh>
+<v t="ekr.20031218072017.1570"><vh>assignFileIndices &amp; compactFileIndices</vh>
+<v t="ekr.20031218072017.1571"><vh>&lt;&lt; assign missing gnx's, converting ints to gnx's &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1572"><vh>&lt;&lt; reassign all tnode indices &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2114"><vh>new_df.write (inits root.tnodeList)</vh>
+<v t="ekr.20031218072017.2115"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2116"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2117"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
+<v t="ekr.20031218072017.2118"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2119"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+</v>
+<v t="ekr.20031218072017.2121"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2322"><vh>old_df.write</vh>
+<v t="ekr.20031218072017.2323"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2324"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2325"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (3.x)</vh>
+<v t="ekr.20031218072017.2326"><vh>&lt;&lt; put all @first lines in root &gt;&gt; (3.x)</vh></v>
+<v t="ekr.20031218072017.2327"><vh>&lt;&lt; write the derived file&gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2328"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (3.x)</vh></v>
+</v>
+<v t="ekr.20031218072017.2330"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2001"><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
+<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0,4.2)</vh></v>
+<v t="ekr.20031218072017.1575"><vh>putTnodes</vh>
+<v t="ekr.20031218072017.1576"><vh>&lt;&lt; write only those tnodes that were referenced &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -5702,115 +5727,6 @@
 </v>
 <v t="ekr.20031218072017.1847"><vh>app.setLog, lockLog, unlocklog</vh></v>
 <v t="ekr.20031218072017.2619"><vh>app.writeWaitingLog</vh></v>
-</v>
-<v t="ekr.20031218072017.2794" tnodeList="ekr.20031218072017.2794,ekr.20031218072017.1595,ekr.20031218072017.2795,ekr.20031218072017.2796,ekr.20031218072017.371,ekr.20031218072017.372,ekr.20031218072017.373,ekr.20040206072057,ekr.20031218072017.374,ekr.20031218072017.375,ekr.20031218072017.376,ekr.20031218072017.377,ekr.20031218072017.378,ekr.20031218072017.379,ekr.20031218072017.381,ekr.20031218072017.383,ekr.20031218072017.380,ekr.20031218072017.382,ekr.20031218072017.1605,ekr.20031218072017.1606,ekr.20031218072017.1607,ekr.20031218072017.1608,ekr.20031218072017.2801,ekr.20031218072017.1880,ekr.20031218072017.1602,ekr.20031218072017.1603,ekr.20031218072017.370,ekr.20031218072017.1881,ekr.20031218072017.1882,ekr.20031218072017.1883,ekr.20031218072017.1884,ekr.20031218072017.1885,ekr.20031218072017.1886,ekr.20031218072017.1887,ekr.20031218072017.1890,ekr.20031218072017.1891,ekr.20031218072017.1888,ekr.20031218072017.1889,ekr.20031218072017.1892,ekr.20031218072017.1618,ekr.20031218072017.1893,ekr.20031218072017.1614,ekr.20031218072017.1615,ekr.20031218072017.1616,ekr.20031218072017.1894,ekr.20031218072017.1613,ekr.20031218072017.1620,ekr.20031218072017.1895,ekr.20031218072017.1896,ekr.20031218072017.1898,ekr.20031218072017.1899,ekr.20031218072017.1900,ekr.20031218072017.1901,ekr.20031218072017.1902,ekr.20031218072017.1904,ekr.20031218072017.1903,ekr.20031218072017.1617,ekr.20031218072017.1619,ekr.20031218072017.1905,ekr.20031218072017.1907,ekr.20031218072017.1612,ekr.20031218072017.1909,ekr.20031218072017.1910,ekr.20031218072017.1911,ekr.20031218072017.1912,ekr.20031218072017.1913,ekr.20031218072017.1914,ekr.20031218072017.1915,ekr.20031218072017.1604,ekr.20031218072017.1377,ekr.20031218072017.1378,ekr.20031218072017.1379,ekr.20031218072017.2802,ekr.20031218072017.2803,ekr.20031218072017.1944,ekr.20031218072017.2804,ekr.20031218072017.2805,ekr.20031218072017.2806,ekr.20031218072017.1609,ekr.20031218072017.2807,ekr.20031218072017.2808,ekr.20031218072017.1610,ekr.20031218072017.2809,ekr.20031218072017.2218,ekr.20031218072017.2219,ekr.20031218072017.2220"><vh>@file leoColor.py</vh>
-<v t="ekr.20031218072017.1595"><vh>&lt;&lt; define leo keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2795"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2796"><vh>class colorizer</vh>
-<v t="ekr.20031218072017.371"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
-<v t="ekr.20031218072017.372"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.373"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
-<v t="ekr.20040206072057"><vh>&lt;&lt; csharp keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.374"><vh>&lt;&lt; elisp keywords&gt;&gt;</vh></v>
-<v t="ekr.20031218072017.375"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.376"><vh>&lt;&lt; java keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.377"><vh>&lt;&lt; latex keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.378"><vh>&lt;&lt; pascal keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.379"><vh>&lt;&lt; perl keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.380"><vh>&lt;&lt; php keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.381"><vh>&lt;&lt; python keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.382"><vh>&lt;&lt; rebol keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.383"><vh>&lt;&lt; tcl/tk keywords &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1605"><vh>color.__init__</vh>
-<v t="ekr.20031218072017.1606"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1607"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1608"><vh>&lt;&lt; define fonts and data for wiki tags &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2801"><vh>colorize &amp; recolor_range</vh></v>
-<v t="ekr.20031218072017.1880"><vh>colorizeAnyLanguage &amp; allies</vh>
-<v t="ekr.20031218072017.1602"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt; colorizeAnyLanguage</vh>
-<v t="ekr.20031218072017.1603"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.370"><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
-</v>
-<v t="ekr.20031218072017.1881"><vh>&lt;&lt; all state ivars match &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1882"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
-<v t="ekr.20031218072017.1883"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1884"><vh>&lt;&lt; clear leading_lines if middle lines involve @color or @recolor  &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1885"><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1886"><vh>&lt;&lt; colorize until the states match &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1887"><vh>&lt;&lt; non-incrementally color the text &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1888"><vh>&lt;&lt; update state ivars &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1889"><vh>&lt;&lt; set state ivars to "unknown" &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1890"><vh>&lt;&lt; completely recolor in two passes &gt;&gt;</vh>
-<v t="ekr.20031218072017.1891"><vh>&lt;&lt; kludge: insert a blank in s for every image in the line &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.1892"><vh>colorizeLine &amp; allies</vh>
-<v t="ekr.20031218072017.1618"><vh>continueBlockComment</vh></v>
-<v t="ekr.20031218072017.1893"><vh>continueSingle/DoubleString</vh></v>
-<v t="ekr.20031218072017.1614"><vh>continueDocPart</vh>
-<v t="ekr.20031218072017.1615"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1616"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1894"><vh>continueNocolor</vh></v>
-<v t="ekr.20031218072017.1613"><vh>continueSingle/DoublePythonString</vh></v>
-<v t="ekr.20031218072017.1620"><vh>doAtKeyword: NOT for cweb keywords</vh></v>
-<v t="ekr.20031218072017.1895"><vh>doLatexLine</vh></v>
-<v t="ekr.20031218072017.1896"><vh>doNormalState</vh>
-<v t="ekr.20031218072017.1897"><vh>Valid regardless of latex mode</vh>
-<v t="ekr.20031218072017.1898"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
-<v t="ekr.20031218072017.1899"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1900"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1901"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1902"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
-<v t="ekr.20031218072017.1903"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1904"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1617"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1619"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1905"><vh>&lt;&lt; handle latex line &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1906"><vh>Vaid only in latex mode</vh>
-<v t="ekr.20031218072017.1907"><vh>&lt;&lt; handle latex normal character &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1908"><vh>Valid when not in latex_mode</vh>
-<v t="ekr.20031218072017.1612"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1909"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1910"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1911"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1912"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1913"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.1914"><vh>doNowebSecRef</vh>
-<v t="ekr.20031218072017.1915"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1604"><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
-</v>
-<v t="ekr.20031218072017.1377" a="M"><vh>scanColorDirectives</vh>
-<v t="ekr.20031218072017.1378"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1379"><vh>&lt;&lt; Test for @root, @root-doc or @root-code &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2802"><vh>color.schedule &amp; idle_colorize (not used)</vh></v>
-<v t="ekr.20031218072017.2803"><vh>getCwebWord</vh></v>
-<v t="ekr.20031218072017.1944"><vh>removeAllImages</vh></v>
-<v t="ekr.20031218072017.2804"><vh>updateSyntaxColorer</vh></v>
-<v t="ekr.20031218072017.2805" a="M"><vh>useSyntaxColoring</vh></v>
-<v t="ekr.20031218072017.2806"><vh>Utils</vh>
-<v t="ekr.20031218072017.1609"><vh>index &amp; tag</vh></v>
-<v t="ekr.20031218072017.2807"><vh>setFirstLineState</vh></v>
-<v t="ekr.20031218072017.2808"><vh>skip_id</vh></v>
-<v t="ekr.20031218072017.1610"><vh>skip_python_string</vh></v>
-<v t="ekr.20031218072017.2809"><vh>skip_string</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.2218"><vh>class nullColorizer</vh>
-<v t="ekr.20031218072017.2219"><vh>__init__</vh></v>
-<v t="ekr.20031218072017.2220"><vh>entry points</vh></v>
-</v>
 </v>
 <v t="ekr.20031218072017.3001" tnodeList="ekr.20031218072017.3001,ekr.20031218072017.2404,ekr.20031218072017.3002,ekr.20031218072017.3003,ekr.20031218072017.3004,ekr.20031218072017.1932,ekr.20031218072017.3006,ekr.20031218072017.3007,ekr.20031218072017.3008,ekr.20031218072017.3009,ekr.20031218072017.3010,ekr.20031218072017.3011,ekr.20031218072017.2174,ekr.20031218072017.1722,ekr.20031218072017.3012,ekr.20031218072017.3013,ekr.20031218072017.3014,ekr.20031218072017.3015,ekr.20031218072017.3016,ekr.20031218072017.3017,ekr.20031218072017.1929,ekr.20031218072017.1421,ekr.20031218072017.1930,ekr.20040208104150,ekr.20031218072017.1422,ekr.20031218072017.1931,ekr.20031218072017.1145,ekr.20031218072017.1146,ekr.20031218072017.1420"><vh>@file leoConfig.py</vh>
 <v t="ekr.20031218072017.2404"><vh>&lt;&lt; define defaultsDict &gt;&gt;</vh></v>
@@ -7700,6 +7616,115 @@
 </v>
 </v>
 </v>
+<v t="ekr.20031218072017.2794" tnodeList="ekr.20031218072017.2794,ekr.20031218072017.1595,ekr.20031218072017.2795,ekr.20031218072017.2796,ekr.20031218072017.371,ekr.20031218072017.372,ekr.20031218072017.373,ekr.20040206072057,ekr.20031218072017.374,ekr.20031218072017.375,ekr.20031218072017.376,ekr.20031218072017.377,ekr.20031218072017.378,ekr.20031218072017.379,ekr.20031218072017.381,ekr.20031218072017.383,ekr.20031218072017.380,ekr.20031218072017.382,ekr.20031218072017.1605,ekr.20031218072017.1606,ekr.20031218072017.1607,ekr.20031218072017.1608,ekr.20031218072017.2801,ekr.20031218072017.1880,ekr.20031218072017.1602,ekr.20031218072017.1603,ekr.20031218072017.370,ekr.20031218072017.1881,ekr.20031218072017.1882,ekr.20031218072017.1883,ekr.20031218072017.1884,ekr.20031218072017.1885,ekr.20031218072017.1886,ekr.20031218072017.1887,ekr.20031218072017.1890,ekr.20031218072017.1891,ekr.20031218072017.1888,ekr.20031218072017.1889,ekr.20031218072017.1892,ekr.20031218072017.1618,ekr.20031218072017.1893,ekr.20031218072017.1614,ekr.20031218072017.1615,ekr.20031218072017.1616,ekr.20031218072017.1894,ekr.20031218072017.1613,ekr.20031218072017.1620,ekr.20031218072017.1895,ekr.20031218072017.1896,ekr.20031218072017.1898,ekr.20031218072017.1899,ekr.20031218072017.1900,ekr.20031218072017.1901,ekr.20031218072017.1902,ekr.20031218072017.1904,ekr.20031218072017.1903,ekr.20031218072017.1617,ekr.20031218072017.1619,ekr.20031218072017.1905,ekr.20031218072017.1907,ekr.20031218072017.1612,ekr.20031218072017.1909,ekr.20031218072017.1910,ekr.20031218072017.1911,ekr.20031218072017.1912,ekr.20031218072017.1913,ekr.20031218072017.1914,ekr.20031218072017.1915,ekr.20031218072017.1604,ekr.20031218072017.1377,ekr.20031218072017.1378,ekr.20031218072017.1379,ekr.20031218072017.2802,ekr.20031218072017.2803,ekr.20031218072017.1944,ekr.20031218072017.2804,ekr.20031218072017.2805,ekr.20031218072017.2806,ekr.20031218072017.1609,ekr.20031218072017.2807,ekr.20031218072017.2808,ekr.20031218072017.1610,ekr.20031218072017.2809,ekr.20031218072017.2218,ekr.20031218072017.2219,ekr.20031218072017.2220"><vh>@file leoColor.py</vh>
+<v t="ekr.20031218072017.1595"><vh>&lt;&lt; define leo keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2795"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2796"><vh>class colorizer</vh>
+<v t="ekr.20031218072017.371"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
+<v t="ekr.20031218072017.372"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.373"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
+<v t="ekr.20040206072057"><vh>&lt;&lt; csharp keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.374"><vh>&lt;&lt; elisp keywords&gt;&gt;</vh></v>
+<v t="ekr.20031218072017.375"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.376"><vh>&lt;&lt; java keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.377"><vh>&lt;&lt; latex keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.378"><vh>&lt;&lt; pascal keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.379"><vh>&lt;&lt; perl keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.380"><vh>&lt;&lt; php keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.381"><vh>&lt;&lt; python keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.382"><vh>&lt;&lt; rebol keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.383"><vh>&lt;&lt; tcl/tk keywords &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1605"><vh>color.__init__</vh>
+<v t="ekr.20031218072017.1606"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1607"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1608"><vh>&lt;&lt; define fonts and data for wiki tags &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2801"><vh>colorize &amp; recolor_range</vh></v>
+<v t="ekr.20031218072017.1880"><vh>colorizeAnyLanguage &amp; allies</vh>
+<v t="ekr.20031218072017.1602"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt; colorizeAnyLanguage</vh>
+<v t="ekr.20031218072017.1603"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.370"><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
+</v>
+<v t="ekr.20031218072017.1881"><vh>&lt;&lt; all state ivars match &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1882"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
+<v t="ekr.20031218072017.1883"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1884"><vh>&lt;&lt; clear leading_lines if middle lines involve @color or @recolor  &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1885"><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1886"><vh>&lt;&lt; colorize until the states match &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1887"><vh>&lt;&lt; non-incrementally color the text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1888"><vh>&lt;&lt; update state ivars &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1889"><vh>&lt;&lt; set state ivars to "unknown" &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1890"><vh>&lt;&lt; completely recolor in two passes &gt;&gt;</vh>
+<v t="ekr.20031218072017.1891"><vh>&lt;&lt; kludge: insert a blank in s for every image in the line &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.1892"><vh>colorizeLine &amp; allies</vh>
+<v t="ekr.20031218072017.1618"><vh>continueBlockComment</vh></v>
+<v t="ekr.20031218072017.1893"><vh>continueSingle/DoubleString</vh></v>
+<v t="ekr.20031218072017.1614"><vh>continueDocPart</vh>
+<v t="ekr.20031218072017.1615"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1616"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1894"><vh>continueNocolor</vh></v>
+<v t="ekr.20031218072017.1613"><vh>continueSingle/DoublePythonString</vh></v>
+<v t="ekr.20031218072017.1620"><vh>doAtKeyword: NOT for cweb keywords</vh></v>
+<v t="ekr.20031218072017.1895"><vh>doLatexLine</vh></v>
+<v t="ekr.20031218072017.1896"><vh>doNormalState</vh>
+<v t="ekr.20031218072017.1897"><vh>Valid regardless of latex mode</vh>
+<v t="ekr.20031218072017.1898"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
+<v t="ekr.20031218072017.1899"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1900"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1901"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1902"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
+<v t="ekr.20031218072017.1903"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1904"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1617"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1619"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1905"><vh>&lt;&lt; handle latex line &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1906"><vh>Vaid only in latex mode</vh>
+<v t="ekr.20031218072017.1907"><vh>&lt;&lt; handle latex normal character &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1908"><vh>Valid when not in latex_mode</vh>
+<v t="ekr.20031218072017.1612"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1909"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1910"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1911"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1912"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1913"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.1914"><vh>doNowebSecRef</vh>
+<v t="ekr.20031218072017.1915"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1604"><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
+</v>
+<v t="ekr.20031218072017.1377" a="M"><vh>scanColorDirectives</vh>
+<v t="ekr.20031218072017.1378"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1379"><vh>&lt;&lt; Test for @root, @root-doc or @root-code &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2802"><vh>color.schedule &amp; idle_colorize (not used)</vh></v>
+<v t="ekr.20031218072017.2803"><vh>getCwebWord</vh></v>
+<v t="ekr.20031218072017.1944"><vh>removeAllImages</vh></v>
+<v t="ekr.20031218072017.2804"><vh>updateSyntaxColorer</vh></v>
+<v t="ekr.20031218072017.2805" a="M"><vh>useSyntaxColoring</vh></v>
+<v t="ekr.20031218072017.2806"><vh>Utils</vh>
+<v t="ekr.20031218072017.1609"><vh>index &amp; tag</vh></v>
+<v t="ekr.20031218072017.2807"><vh>setFirstLineState</vh></v>
+<v t="ekr.20031218072017.2808"><vh>skip_id</vh></v>
+<v t="ekr.20031218072017.1610"><vh>skip_python_string</vh></v>
+<v t="ekr.20031218072017.2809"><vh>skip_string</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2218"><vh>class nullColorizer</vh>
+<v t="ekr.20031218072017.2219"><vh>__init__</vh></v>
+<v t="ekr.20031218072017.2220"><vh>entry points</vh></v>
+</v>
+</v>
 <v t="ekr.20031218072017.2810" tnodeList="ekr.20031218072017.2810,ekr.20031218072017.2812,ekr.20031218072017.2813,ekr.20031218072017.2814,ekr.20031218072017.2815,ekr.20031218072017.2816,ekr.20031218072017.2817,ekr.20031218072017.2582,ekr.20040312090934,ekr.20031218072017.1623,ekr.20031218072017.2821,ekr.20031218072017.2822,ekr.20031218072017.2823,ekr.20031218072017.2824,ekr.20031218072017.2825,ekr.20031218072017.2826,ekr.20031218072017.2827,ekr.20031218072017.2828,ekr.20031218072017.2829,ekr.20031218072017.2830,ekr.20031218072017.2831,ekr.20031218072017.2832,ekr.20031218072017.2833,ekr.20031218072017.2834,ekr.20031218072017.2835,ekr.20031218072017.2836,ekr.20031218072017.2837,ekr.20031218072017.2080,ekr.20031218072017.2081,ekr.20031218072017.2082,ekr.20031218072017.2083,ekr.20031218072017.2839,ekr.20031218072017.1839,ekr.20031218072017.1809,ekr.20031218072017.2014,ekr.20031218072017.2842,ekr.20031218072017.2843,ekr.20031218072017.2844,ekr.20031218072017.2846,ekr.20031218072017.2847,ekr.20031218072017.2848,ekr.20031218072017.2850,ekr.20031218072017.2851,ekr.20031218072017.2852,ekr.20031218072017.2853,ekr.20031218072017.2854,ekr.20031218072017.2855,ekr.20031218072017.2856,ekr.20031218072017.2857,ekr.20031218072017.2858,ekr.20031218072017.2859,ekr.20031218072017.2860,ekr.20031218072017.2863,ekr.20031218072017.2140,ekr.20031218072017.2141,ekr.20031218072017.2142,ekr.20031218072017.2143,ekr.20031218072017.2864,ekr.20031218072017.2865,ekr.20031218072017.2866,ekr.20031218072017.2867,ekr.20031218072017.2868,ekr.20031218072017.2869,ekr.20031218072017.2870,ekr.20031218072017.2871,ekr.20031218072017.2872,ekr.20031218072017.2873,ekr.20031218072017.2874,ekr.20031218072017.2875,ekr.20031218072017.2876,ekr.20031218072017.2877,ekr.20031218072017.2878,ekr.20031218072017.2879,ekr.20031218072017.2880,ekr.20031218072017.2881,ekr.20031218072017.2882,ekr.20031218072017.2088,ekr.20031218072017.2090,ekr.20031218072017.2883,ekr.20031218072017.2086,ekr.20031218072017.1704,ekr.20031218072017.1705,ekr.20031218072017.1821,ekr.20031218072017.1822,ekr.20031218072017.1823,ekr.20031218072017.1824,ekr.20031218072017.1706,ekr.20031218072017.1707,ekr.20031218072017.1708,ekr.20031218072017.1709,ekr.20031218072017.1710,ekr.20031218072017.1711,ekr.20031218072017.1825,ekr.20031218072017.1826,ekr.20031218072017.1827,ekr.20031218072017.1828,ekr.20031218072017.1829,ekr.20031218072017.1830,ekr.20031218072017.1831,ekr.20031218072017.1832,ekr.20031218072017.1833,ekr.20031218072017.1834,ekr.20031218072017.1835,ekr.20031218072017.1836,ekr.20031218072017.1837,ekr.20031218072017.1838,ekr.20031218072017.2886,ekr.20031218072017.2290,ekr.20031218072017.2888,ekr.20031218072017.2889,ekr.20031218072017.2890,ekr.20031218072017.2891,ekr.20031218072017.2892,ekr.20031218072017.2893,ekr.20031218072017.1549,ekr.20031218072017.1550,ekr.20031218072017.1551,ekr.20031218072017.2072,ekr.20040314062338,ekr.20040313150633,ekr.20040313151511,ekr.20040314035615,ekr.20040314035615.1,ekr.20040314035615.2,ekr.20040314043623,ekr.20040314044652,ekr.20040314043900,ekr.20031218072017.2028,ekr.20031218072017.1760,ekr.20031218072017.1193,ekr.20031218072017.1761,ekr.20031218072017.1762,ekr.20031218072017.1765,ekr.20031218072017.1188,ekr.20031218072017.1189,ekr.20031218072017.1190,ekr.20031218072017.2896,ekr.20031218072017.2897,ekr.20031218072017.2900,ekr.20031218072017.2901,ekr.20031218072017.2902,ekr.20031218072017.2903,ekr.20031218072017.2904,ekr.20031218072017.2905,ekr.20031218072017.2906,ekr.20031218072017.2907,ekr.20031218072017.2908,ekr.20031218072017.2910,ekr.20031218072017.2911,ekr.20031218072017.2912,ekr.20031218072017.1628,ekr.20031218072017.1627,ekr.20031218072017.2914,ekr.20031218072017.2915,ekr.20031218072017.2916,ekr.20031218072017.2917,ekr.20031218072017.2918,ekr.20031218072017.2919,ekr.20031218072017.2920,ekr.20031218072017.2921,ekr.20031218072017.2923,ekr.20031218072017.2924,ekr.20031218072017.2925,ekr.20031218072017.2926,ekr.20031218072017.2927,ekr.20031218072017.2928,ekr.20031218072017.2929,ekr.20031218072017.2930,ekr.20031218072017.1767,ekr.20031218072017.1768,ekr.20031218072017.1769,ekr.20031218072017.1770,ekr.20031218072017.1771,ekr.20031218072017.1772,ekr.20031218072017.1773,ekr.20031218072017.1774,ekr.20031218072017.2092,ekr.20031218072017.2932,ekr.20031218072017.2933,ekr.20031218072017.2934,ekr.20031218072017.2936,ekr.20031218072017.2935,ekr.20031218072017.2937,ekr.20031218072017.2939,ekr.20031218072017.2940,ekr.20031218072017.2941,ekr.20031218072017.2942,ekr.20031218072017.2943,ekr.20031218072017.2944,ekr.20031218072017.2353,ekr.20031218072017.2946,ekr.20031218072017.2947,ekr.20031218072017.2948,ekr.20031218072017.2950,ekr.20031218072017.2951,ekr.20031218072017.2952,ekr.20031218072017.2953,ekr.20031218072017.2954,ekr.20040131170659,ekr.20031218072017.2956,ekr.20031218072017.2957,ekr.20031218072017.2958,ekr.20031218072017.2959,ekr.20031218072017.2960,ekr.20031218072017.2961,ekr.20031218072017.2962,ekr.20031218072017.2963,ekr.20031218072017.2964,ekr.20031218072017.2287,ekr.20031218072017.2965,ekr.20031218072017.2966,ekr.20031218072017.2967,ekr.20040303165342,ekr.20031218072017.2968,ekr.20031218072017.2969,ekr.20031218072017.2970,ekr.20031218072017.2971,ekr.20031218072017.2972,ekr.20031218072017.2973,ekr.20031218072017.2974,ekr.20031218072017.2975,ekr.20031218072017.2976,ekr.20031218072017.2977,ekr.20031218072017.2978,ekr.20031218072017.2979,ekr.20031218072017.2980,ekr.20031218072017.2981,ekr.20031218072017.2983,ekr.20031218072017.2984,ekr.20031218072017.2985,ekr.20031218072017.2986,ekr.20031218072017.2987,ekr.20031218072017.2988,ekr.20040311173238,ekr.20031218072017.2989,ekr.20040311094927,ekr.20031218072017.2991,ekr.20031218072017.2992,ekr.20031218072017.2993,ekr.20031218072017.2994,ekr.20031218072017.2995,ekr.20031218072017.2996,ekr.20031218072017.2997,ekr.20031218072017.2998,ekr.20031218072017.2999,ekr.20031218072017.3000"><vh>@file leoCommands.py</vh>
 <v t="ekr.20031218072017.2811"><vh> c.Birth &amp; death</vh>
 <v t="ekr.20031218072017.2812"><vh>c.__init__, initIvars</vh>
@@ -8442,68 +8467,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.3603" tnodeList="ekr.20031218072017.3603,ekr.20031218072017.2413,ekr.20031218072017.3604,ekr.20031218072017.3605,ekr.20031218072017.3606,ekr.20031218072017.3607,ekr.20031218072017.3609,ekr.20031218072017.3610,ekr.20031218072017.3611,ekr.20031218072017.3612,ekr.20031218072017.3613,ekr.20031218072017.3614,ekr.20031218072017.3615,ekr.20031218072017.1490,ekr.20031218072017.1491,ekr.20031218072017.1492,ekr.20031218072017.3616,ekr.20031218072017.2030,ekr.20031218072017.2031,ekr.20031218072017.2033,ekr.20031218072017.2034,ekr.20031218072017.2032,ekr.20031218072017.2035,ekr.20031218072017.2036,ekr.20031218072017.1713,ekr.20031218072017.2037,ekr.20031218072017.2038,ekr.20031218072017.2039,ekr.20031218072017.2040,ekr.20031218072017.2041,ekr.20031218072017.2042,ekr.20031218072017.2043,ekr.20031218072017.2044,ekr.20031218072017.2045,ekr.20031218072017.1712,ekr.20031218072017.2046,ekr.20031218072017.2047,ekr.20031218072017.3618,ekr.20031218072017.3620,ekr.20031218072017.3621,ekr.20031218072017.1714,ekr.20031218072017.1493,ekr.20031218072017.1494,ekr.20031218072017.1495,ekr.20031218072017.1496,ekr.20031218072017.1497,ekr.20031218072017.3622,ekr.20031218072017.3623,ekr.20031218072017.3624,ekr.20031218072017.2243"><vh>@file leoUndo.py</vh>
-<v t="ekr.20031218072017.2413"><vh>&lt;&lt; How Leo implements unlimited undo &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3604"><vh>&lt;&lt; Define optional ivars &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3605"><vh>class undoer</vh>
-<v t="ekr.20031218072017.3606"><vh>undo.__init__ &amp; clearIvars</vh>
-<v t="ekr.20031218072017.3607"><vh>clearIvars</vh></v>
-</v>
-<v t="ekr.20031218072017.3608"><vh>State routines...</vh>
-<v t="ekr.20031218072017.3609"><vh>clearUndoState</vh></v>
-<v t="ekr.20031218072017.3610"><vh>canRedo &amp; canUndo</vh></v>
-<v t="ekr.20031218072017.3611"><vh>enableMenuItems</vh></v>
-<v t="ekr.20031218072017.3612"><vh>getBead, peekBead, setBead</vh></v>
-<v t="ekr.20031218072017.3613"><vh>redoMenuName, undoMenuName</vh></v>
-<v t="ekr.20031218072017.3614"><vh>setRedoType, setUndoType</vh></v>
-<v t="ekr.20031218072017.3615"><vh>setUndoParams</vh></v>
-<v t="ekr.20031218072017.1490"><vh>setUndoTypingParams</vh>
-<v t="ekr.20031218072017.1491"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1492"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3616"><vh>setUndoTypes</vh></v>
-</v>
-<v t="ekr.20031218072017.2030"><vh>u.redo</vh>
-<v t="ekr.20031218072017.2031"><vh>&lt;&lt; redo clone cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2032"><vh>&lt;&lt; redo delete cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2033"><vh>&lt;&lt; redo hoist cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2034"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2035"><vh>&lt;&lt; redo move &amp; drag cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2036"><vh>&lt;&lt; redo promote and demote cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1713"><vh>&lt;&lt; redo replace cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2037"><vh>&lt;&lt; redo sort cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2038"><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2039"><vh>u.undo</vh>
-<v t="ekr.20031218072017.2040"><vh>&lt;&lt; undo clone cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2041"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2042"><vh>&lt;&lt; undo hoist cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2043"><vh>&lt;&lt; undo insert cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2044"><vh>&lt;&lt; undo move  &amp; drag cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1712"><vh>&lt;&lt; undo replace cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2045"><vh>&lt;&lt; undo promote and demote cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2046"><vh>&lt;&lt; undo sort cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2047"><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3617"><vh>Undo helpers</vh>
-<v t="ekr.20031218072017.3618"><vh>u.saveTree, restoreExtraAttributes</vh></v>
-<v t="ekr.20031218072017.3620"><vh>undoDemote</vh></v>
-<v t="ekr.20031218072017.3621"><vh>undoPromote</vh></v>
-<v t="ekr.20031218072017.1714"><vh>undoReplace</vh></v>
-<v t="ekr.20031218072017.1493"><vh>undoRedoText</vh>
-<v t="ekr.20031218072017.1494"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1495"><vh>&lt;&lt; Compute the result using v's body text &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1496"><vh>&lt;&lt; Get textResult from the Tk.Text widget &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1497"><vh>&lt;&lt; print mismatch trace &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3622"><vh>undoSortChildren</vh></v>
-<v t="ekr.20031218072017.3623"><vh>undoSortSiblings</vh></v>
-<v t="ekr.20031218072017.3624"><vh>undoSortTopLevel</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.2243"><vh>class nullUndoer</vh></v>
-</v>
-</v>
 <v t="ekr.20031218072017.4138" tnodeList="ekr.20031218072017.4138,ekr.20031218072017.4139,ekr.20031218072017.2409,ekr.20031218072017.4140,ekr.20031218072017.1017,ekr.20031218072017.4142,ekr.20031218072017.4143,ekr.20031218072017.1956,ekr.20031218072017.1957,ekr.20031218072017.1958,ekr.20031218072017.1959,ekr.20031218072017.1960,ekr.20031218072017.1961,ekr.20031218072017.1962,ekr.20031218072017.1963,ekr.20031218072017.1964,ekr.20031218072017.1965,ekr.20031218072017.1966,ekr.20031218072017.1967,ekr.20031218072017.1012,ekr.20040106095546,ekr.20031218072017.1013,ekr.20031218072017.1014,ekr.20031218072017.1015,ekr.20031218072017.1016,ekr.20031218072017.4145,ekr.20031218072017.1000,ekr.20031218072017.1002,ekr.20031218072017.1004,ekr.20040317171729,ekr.20031218072017.1005,ekr.20031218072017.1006,ekr.20031218072017.2029,ekr.20031218072017.1008,ekr.20031218072017.1009,ekr.20040317095510,ekr.20040317173849,ekr.20040317095153,ekr.20040317100702,ekr.20040317095153.1,ekr.20040317094609,ekr.20031218072017.1010,ekr.20031218072017.4147,ekr.20031218072017.1018,ekr.20040314092716,ekr.20040314092716.1,ekr.20031218072017.4148,ekr.20031218072017.4149,ekr.20031218072017.4151,ekr.20031218072017.4152,ekr.20031218072017.4153,ekr.20031218072017.4154,ekr.20031218072017.2336,ekr.20031218072017.2337,ekr.20031218072017.2338,ekr.20031218072017.2339,ekr.20031218072017.2340,ekr.20031218072017.2341,ekr.20031218072017.2342,ekr.20031218072017.2343,ekr.20031218072017.2344,ekr.20031218072017.2345,ekr.20031218072017.1776,ekr.20031218072017.1777,ekr.20031218072017.1778,ekr.20031218072017.1332,ekr.20031218072017.1333,ekr.20031218072017.1334,ekr.20031218072017.1335,ekr.20031218072017.1336,ekr.20031218072017.1337,ekr.20031218072017.1338,ekr.20031218072017.1339,ekr.20031218072017.1340,ekr.20031218072017.2346,ekr.20031218072017.2348,ekr.20031218072017.2349,ekr.20031218072017.2249,ekr.20031218072017.2250,ekr.20031218072017.2350,ekr.20031218072017.2351,ekr.20031218072017.2352,ekr.20031218072017.1027,ekr.20031218072017.1028,ekr.20031218072017.4156,ekr.20031218072017.1030,ekr.20031218072017.1029,ekr.20031218072017.1031,ekr.20031218072017.4158,ekr.20031218072017.4159,ekr.20031218072017.4160,ekr.20031218072017.4161,ekr.20031218072017.1019,ekr.20031218072017.1020,ekr.20031218072017.1021,ekr.20031218072017.1022,ekr.20031218072017.1023,ekr.20031218072017.1024,ekr.20031218072017.1025,ekr.20031218072017.4162,ekr.20031218072017.4163,ekr.20031218072017.4164,ekr.20031218072017.4165,ekr.20031218072017.1141"><vh>@file leoTkinterTree.py</vh>
 <v t="ekr.20031218072017.4139"><vh>&lt;&lt; about the tree classes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -8640,29 +8603,66 @@
 </v>
 <v t="ekr.20031218072017.1141"><vh>tree.moveUpDown</vh></v>
 </v>
-<v t="ekr.20040317094229" a="ETV"><vh>(Draw optional icons)</vh>
-<v t="ekr.20040317184631"><vh>Design</vh></v>
-<v t="ekr.20040317184631.1"><vh>To do</vh></v>
-<v t="ekr.20040317184631.2"><vh>Changes</vh></v>
-<v t="ekr.20031218072017.4140"><vh>&lt;&lt; drawing constants &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.4147"><vh>tree.getIconImage</vh></v>
-<v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
-<v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
-<v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
-<v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3603" tnodeList="ekr.20031218072017.3603,ekr.20031218072017.2413,ekr.20031218072017.3604,ekr.20031218072017.3605,ekr.20031218072017.3606,ekr.20031218072017.3607,ekr.20031218072017.3609,ekr.20031218072017.3610,ekr.20031218072017.3611,ekr.20031218072017.3612,ekr.20031218072017.3613,ekr.20031218072017.3614,ekr.20031218072017.3615,ekr.20031218072017.1490,ekr.20031218072017.1491,ekr.20031218072017.1492,ekr.20031218072017.3616,ekr.20031218072017.2030,ekr.20031218072017.2031,ekr.20031218072017.2033,ekr.20031218072017.2034,ekr.20031218072017.2032,ekr.20031218072017.2035,ekr.20031218072017.2036,ekr.20031218072017.1713,ekr.20031218072017.2037,ekr.20031218072017.2038,ekr.20031218072017.2039,ekr.20031218072017.2040,ekr.20031218072017.2041,ekr.20031218072017.2042,ekr.20031218072017.2043,ekr.20031218072017.2044,ekr.20031218072017.2045,ekr.20031218072017.1712,ekr.20031218072017.2046,ekr.20031218072017.2047,ekr.20031218072017.3618,ekr.20031218072017.3620,ekr.20031218072017.3621,ekr.20031218072017.1714,ekr.20031218072017.1493,ekr.20031218072017.1494,ekr.20031218072017.1495,ekr.20031218072017.1496,ekr.20031218072017.1497,ekr.20031218072017.3622,ekr.20031218072017.3623,ekr.20031218072017.3624,ekr.20031218072017.2243"><vh>@file leoUndo.py</vh>
+<v t="ekr.20031218072017.2413"><vh>&lt;&lt; How Leo implements unlimited undo &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3604"><vh>&lt;&lt; Define optional ivars &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3605"><vh>class undoer</vh>
+<v t="ekr.20031218072017.3606"><vh>undo.__init__ &amp; clearIvars</vh>
+<v t="ekr.20031218072017.3607"><vh>clearIvars</vh></v>
 </v>
-<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
-<v t="ekr.20040317171729"><vh>force_draw_node</vh></v>
+<v t="ekr.20031218072017.3608"><vh>State routines...</vh>
+<v t="ekr.20031218072017.3609"><vh>clearUndoState</vh></v>
+<v t="ekr.20031218072017.3610"><vh>canRedo &amp; canUndo</vh></v>
+<v t="ekr.20031218072017.3611"><vh>enableMenuItems</vh></v>
+<v t="ekr.20031218072017.3612"><vh>getBead, peekBead, setBead</vh></v>
+<v t="ekr.20031218072017.3613"><vh>redoMenuName, undoMenuName</vh></v>
+<v t="ekr.20031218072017.3614"><vh>setRedoType, setUndoType</vh></v>
+<v t="ekr.20031218072017.3615"><vh>setUndoParams</vh></v>
+<v t="ekr.20031218072017.1490"><vh>setUndoTypingParams</vh>
+<v t="ekr.20031218072017.1491"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1492"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040317094609"><vh>drawUserIcons</vh></v>
-<v t="ekr.20040317095510"><vh>drawUserIcon</vh>
-<v t="ekr.20040317173849"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
-<v t="ekr.20040317095153"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
-<v t="ekr.20040317095153.1"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
-<v t="ekr.20040317100702"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3616"><vh>setUndoTypes</vh></v>
 </v>
-<v t="ekr.20031218072017.1008"><vh>drawTree</vh>
-<v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2030"><vh>u.redo</vh>
+<v t="ekr.20031218072017.2031"><vh>&lt;&lt; redo clone cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2032"><vh>&lt;&lt; redo delete cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2033"><vh>&lt;&lt; redo hoist cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2034"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2035"><vh>&lt;&lt; redo move &amp; drag cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2036"><vh>&lt;&lt; redo promote and demote cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1713"><vh>&lt;&lt; redo replace cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2037"><vh>&lt;&lt; redo sort cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2038"><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2039"><vh>u.undo</vh>
+<v t="ekr.20031218072017.2040"><vh>&lt;&lt; undo clone cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2041"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2042"><vh>&lt;&lt; undo hoist cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2043"><vh>&lt;&lt; undo insert cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2044"><vh>&lt;&lt; undo move  &amp; drag cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1712"><vh>&lt;&lt; undo replace cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2045"><vh>&lt;&lt; undo promote and demote cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2046"><vh>&lt;&lt; undo sort cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2047"><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3617"><vh>Undo helpers</vh>
+<v t="ekr.20031218072017.3618"><vh>u.saveTree, restoreExtraAttributes</vh></v>
+<v t="ekr.20031218072017.3620"><vh>undoDemote</vh></v>
+<v t="ekr.20031218072017.3621"><vh>undoPromote</vh></v>
+<v t="ekr.20031218072017.1714"><vh>undoReplace</vh></v>
+<v t="ekr.20031218072017.1493"><vh>undoRedoText</vh>
+<v t="ekr.20031218072017.1494"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1495"><vh>&lt;&lt; Compute the result using v's body text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1496"><vh>&lt;&lt; Get textResult from the Tk.Text widget &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1497"><vh>&lt;&lt; print mismatch trace &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3622"><vh>undoSortChildren</vh></v>
+<v t="ekr.20031218072017.3623"><vh>undoSortSiblings</vh></v>
+<v t="ekr.20031218072017.3624"><vh>undoSortTopLevel</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2243"><vh>class nullUndoer</vh></v>
 </v>
 </v>
 </vnodes>
@@ -19350,7 +19350,7 @@ else: # easier to read in the config file.
 		mode = g.choose(mode=="platform",'w','wb')
 		file = open(fileName,mode)
 		
-		for p in p.subtree_iter():
+		for p in p.self_and_subtree_iter():
 			head = p.moreHead(firstLevel)
 			head = g.toEncodedString(head,self.encoding,reportErrors=true)
 			file.write(head + nl)
@@ -19361,7 +19361,8 @@ else: # easier to read in the config file.
 		file.close()
 	except:
 		g.es("exception while flattening outline")
-		g.es_exception()</t>
+		g.es_exception()
+</t>
 <t tx="ekr.20031218072017.1148">def outlineToWeb (self,fileName,webType):
 
 	c = self.c ; nl = self.output_newline
@@ -19381,7 +19382,7 @@ else: # easier to read in the config file.
 			if flag:
 				self.treeType = "@root"
 				break
-		for p in current.subtree_iter():
+		for p in current.self_and_subtree_iter():
 			s = self.convertVnodeToWeb(p)
 			if len(s) &gt; 0:
 				s = g.toEncodedString(s,self.encoding,reportErrors=true)
@@ -22736,12 +22737,13 @@ There should be exactly one such node (descendents of other definition nodes are
 
 def findReference(name,root):
 
-	for p in root.firstChild().subtree_iter():
+	for p in root.subtree_iter():
+		assert(p!=root)
 		if p.matchHeadline(name) and not p.isAtIgnoreNode():
 			return p
 
-	return root.c.nullPosition()
-</t>
+	g.trace("not found:",name,root)
+	return root.c.nullPosition()</t>
 <t tx="ekr.20031218072017.1386">def getOutputNewline (lineending = None):
 	
 	"""Convert the name of a line ending to the line ending itself.
@@ -23798,7 +23800,7 @@ def putOpenLeoSentinel(self,s):
 		mode = g.app.config.output_newline
 		mode = g.choose(mode=="platform",'w','wb')
 		file = open(fileName,mode)
-		for p in p.subtree_iter():
+		for p in p.self_and_subtree_iter():
 			head = p.moreHead(firstLevel,useVerticalBar=true)
 			head = g.toEncodedString(head,self.encoding,reportErrors=true)
 			file.write(head + nl)
@@ -23825,7 +23827,7 @@ def putOpenLeoSentinel(self,s):
 	if not p: return
 	self.setEncoding()
 	&lt;&lt; open filename to f, or return &gt;&gt;
-	for p in p.subtree_iter():
+	for p in p.self_and_subtree_iter():
 		s = p.bodyString()
 		s2 = string.strip(s)
 		if s2 and len(s2) &gt; 0:
@@ -25177,7 +25179,7 @@ However, we must _reassign_ the indices here so that no "false clones" are creat
 
 current.clearVisitedInTree()
 
-for p in current.subtree_iter():
+for p in current.self_and_subtree_iter():
 	t = p.v.t
 	if not t.isVisited():
 		t.setVisited()
@@ -27310,7 +27312,7 @@ def undoReplace (self,p,new_data,old_data,text):
 	# Restore all headlines and bodies from the saved lists.
 	encoding = g.app.tkEncoding
 	i = 0
-	for p in result.subtree_iter():
+	for p in result.self_and_subtree_iter():
 		p.initHeadString(old_headlines[i],encoding)
 		p.setTnodeText(old_bodies[i],encoding)
 		u.restoreExtraAttributes(p,old_attributes[i])
@@ -27864,7 +27866,7 @@ a clone.)
 			clonedTnodes[t] = t
 	if not clonedTnodes:
 		return true
-	for p in root.subtree_iter():
+	for p in root.self_and_subtree_iter():
 		if p.isCloned() and clonedTnodes.get(p.v.t):
 			if warningFlag:
 				g.alert(message)
@@ -28653,14 +28655,14 @@ df.raw = false
 df.root = root
 df.root_seen = false
 </t>
-<t tx="ekr.20031218072017.1817">for p in root.subtree_iter():
+<t tx="ekr.20031218072017.1817">for p in root.self_and_subtree_iter():
 
 	try: s = p.v.t.tempBodyString
 	except: s = ""
 	if s and not p.v.t.isVisited():
 		at.error("Not in derived file:" + p.headString())
 		p.v.t.setVisited() # One message is enough.</t>
-<t tx="ekr.20031218072017.1818">for p in root.subtree_iter():
+<t tx="ekr.20031218072017.1818">for p in root.self_and_subtree_iter():
 	try: s = p.v.t.tempBodyString
 	except: s = ""
 	if s != p.bodyString():
@@ -28670,7 +28672,8 @@ df.root_seen = false
 			print ; print "new:",`s`
 			print ; print "old:",`p.bodyString()`
 		p.setBodyStringOrPane(s) # Sets v and v.c dirty.
-		p.setMarked()</t>
+		p.setMarked()
+</t>
 <t tx="ekr.20031218072017.1819">for p in c.allNodes_iter():
 	if hasattr(p.v.t,"tempBodyString"):
 		delattr(p.v.t,"tempBodyString")</t>
@@ -30877,7 +30880,7 @@ self._parent = self._next = self._back = None</t>
 	self.put("/&gt;") ; self.put_nl()</t>
 <t tx="ekr.20031218072017.1972">c.clearAllVisited()
 
-for p in c.currentPosition().subtree_iter():
+for p in c.currentPosition().self_and_subtree_iter():
 	t = p.v.t
 	if t and not t.isVisited():
 		t.setVisited()
@@ -31447,7 +31450,7 @@ Calls to atFile::write may set the orphan bits in @file nodes.
 If so, write_LEO_file will write the entire @file tree.
 @c
 	
-for v2 in p.subtree_iter():
+for v2 in p.self_and_subtree_iter():
 	v2.clearOrphan()</t>
 <t tx="ekr.20031218072017.2017"># This code is a little tricky: @ignore not recognised in @silentfile nodes.
 if p.v.isDirty() or writeAtFileNodesFlag or p.v.t in writtenFiles:
@@ -31487,7 +31490,7 @@ if p.v.isDirty() or writeAtFileNodesFlag or p.v.t in writtenFiles:
 
 	p = p.copy()
 	after = p.nodeAfterTree()
-	while p and p != after:
+	while p and p != after: # Don't use iterator.
 		if p.isAtSilentFileNode() or (p.isAnyAtFileNode() and not p.isAtIgnoreNode()):
 			missing = false ; valid = true
 			df.targetFileName = p.anyAtFileNodeName()
@@ -32959,7 +32962,7 @@ else:
 at.putOpenLeoSentinel("@+leo-ver=4")
 &lt;&lt; put optional @comment sentinel lines &gt;&gt;
 
-for p in root.subtree_iter():
+for p in root.self_and_subtree_iter():
 	&lt;&lt; Write p's node &gt;&gt;
 
 at.putSentinel("@-leo")
@@ -35740,7 +35743,7 @@ def OnPopupFocusLost(self,event=None):
 <t tx="ekr.20031218072017.2351">isAtFile = false
 isAtRoot = false
 
-for v2 in v.subtree_iter():
+for v2 in v.self_and_subtree_iter():
 	if isAtFile and isAtRoot:
 		break
 	if (v2.isAtFileNode() or
@@ -41753,7 +41756,7 @@ def skipIndent(self,s,i,width):
 self.putOpenLeoSentinel("@+leo")
 &lt;&lt; put optional @comment sentinel lines &gt;&gt;
 
-for p in root.subtree_iter():
+for p in root.self_and_subtree_iter():
 	&lt;&lt; Write p's node &gt;&gt;
 
 self.putSentinel("@-leo")
@@ -41789,7 +41792,7 @@ self.putCloseNodeSentinel(p)
 		self.targetFileName = root.atSilentFileNodeName()
 		ok = self.openWriteFile(root)
 		if not ok: return
-		for p in root.subtree_iter():
+		for p in root.self_and_subtree_iter():
 			&lt;&lt; Write p's headline if it starts with @@ &gt;&gt;
 			&lt;&lt; Write p's body &gt;&gt;
 		self.closeWriteFile()
@@ -44934,7 +44937,7 @@ canCutOutline = canDeleteHeadline</t>
 	
 	c = self
 	
-	for p in c.currentPosition().subtree_iter():
+	for p in c.allNodes_iter():
 		if not p.isExpanded():
 			return true
 
@@ -44945,7 +44948,7 @@ canCutOutline = canDeleteHeadline</t>
 	c = self
 	
 	for p in c.currentPosition().subtree_iter():
-		if p != current and not p.isExpanded():
+		if not p.isExpanded():
 			return true
 		
 	return false</t>
@@ -50594,7 +50597,7 @@ def clearAllVisited (self):
 </t>
 <t tx="ekr.20031218072017.3388">def clearAllVisitedInTree (self):
 	
-	for p in self.subtree_iter():
+	for p in self.self_and_subtree_iter():
 		p.v.clearVisited()
 		p.v.t.clearVisited()</t>
 <t tx="ekr.20031218072017.3389">def clearClonedBit (self):
@@ -53901,7 +53904,7 @@ def setUndoParams (self,undo_type,p,**keywords):
 	headlines = []
 	bodies = []
 	extraAttributes = []
-	for p in p.subtree_iter(copy=true):
+	for p in p.self_and_subtree_iter(copy=true):
 		headlines.append(p.headString())
 		bodies.append(p.bodyString())
 		data = p.v.extraAttributes(), p.v.t.extraAttributes()
@@ -62948,13 +62951,14 @@ Edward
 	# 10/26/02: Always warn, even when language=="cweb"
 	at = self ; root = at.root
 	
-	for p in root.subtree_iter():
+	for p in root.self_and_subtree_iter():
 		if not p.v.t.isVisited(): # 1/24/04: check tnode bit, not vnode bit.
 			at.writeError("Orphan node:  " + p.headString())
 			if p.isCloned() and p.hasParent():
 				g.es("parent node: " + p.parent().headString(),color="blue")
 		if p.isAtIgnoreNode():
-			at.writeError("@ignore node: " + p.headString())</t>
+			at.writeError("@ignore node: " + p.headString())
+</t>
 <t tx="ekr.20040128174042.1">@nocolor
 
 Request
@@ -65213,23 +65217,31 @@ def __iter__(self):
 	else: raise StopIteration</t>
 <t tx="ekr.20040305173559">class subtree_iter_class:
 
-	"""Returns a list of positions in a subtree, including the root of the subtree."""
+	"""Returns a list of positions in a subtree, possibly including the root of the subtree."""
 
 	@others
 
 def subtree_iter (self,copy=false):
 
-	return self.subtree_iter_class(self,copy)</t>
-<t tx="ekr.20040305173559.1">def __init__(self,p,copy):
+	return self.subtree_iter_class(self,copy,includeSelf=false)
 	
-	self.first = p.copy()
+def self_and_subtree_iter (self,copy=false):
+
+	return self.subtree_iter_class(self,copy,includeSelf=true)</t>
+<t tx="ekr.20040305173559.1">def __init__(self,p,copy,includeSelf):
+	
+	if includeSelf:
+		self.first = p.copy()
+	else:
+		self.first = p.copy().moveToThreadNext()
 	self.after = p.nodeAfterTree()
 	self.p = None
 	self.copy = copy
 	
 def __iter__(self):
 
-	return self</t>
+	return self
+</t>
 <t tx="ekr.20040305173559.2">def next(self):
 	
 	if self.first:
@@ -65417,8 +65429,9 @@ def setVisited  (self): return self.v.setVisited()</t>
 
 def clearVisitedInTree (self):
 	
-	for p in self.subtree_iter():
-		p.clearVisited()</t>
+	for p in self.self_and_subtree_iter():
+		p.clearVisited()
+</t>
 <t tx="ekr.20040306220634.29">def setSelection (self,start,length):
 
 	return self.v.setSelection(start,length)</t>
@@ -66205,7 +66218,7 @@ While I was at it, I improved the code as follows:
 	g.trace()
 	
 	array = []
-	for p in p.subtree_iter():
+	for p in p.self_and_subtree_iter():
 		array.append(p.moreHead(level1)+'\n')
 		body = p.moreBody()
 		if body:
