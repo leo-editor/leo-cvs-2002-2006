@@ -279,16 +279,14 @@ class leoDialog:
 		center.pack()
 		yes = Tk.Button(center,width=6,text=yesMessage,
 			underline=0,command=self.yesButton)
-		if defaultButton == "No":
-			no.configure(bd=4) # make it the default button
 		no = Tk.Button(center,width=6,text=noMessage,
 			underline=0,command=self.noButton)
-		if defaultButton == "Yes":
-			yes.configure(bd=4) # make it the default button
-		if defaultButton == "Cancel":
-			no.configure(bd=4) # make it the default button
 		cancel = Tk.Button(center,width=6,text="Cancel",
 			underline=0,command=self.cancelButton)
+		if 0: # not ready for prime time.
+			for button,s in ((yes,"Yes"),(no,"No"),(cancel,"Cancel")):
+				if defaultButton == s:
+					button.configure(bd=4)  # make it the default button
 		yes.pack(side="left",padx=5,pady=10)
 		no.pack(side="left",padx=5,pady=10)
 		cancel.pack(side="left",padx=5,pady=10)
