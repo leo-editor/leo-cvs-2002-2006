@@ -1982,6 +1982,125 @@ print s
 #@-node:EKR.20040517075110.6:<< print before and after >>
 #@-node:EKR.20040517075110.4:prependNamesInTree
 #@-node:EKR.20040517075110:Script to find and replace all functions in leoGlobals.py
+#@+node:EKR.20040608102548:(Fixed unicode bug in plugins_menu.py)
+#@+node:EKR.20040608102548.1:Report
+@nocolor
+
+By: Maxim Krikun - tws5
+ Non-ASCII in plugin config   
+2004-03-25 23:34  
+
+ I run Leo 4.1 final, build 1.77 ,
+Python 2.3.0, Tk 8.4.3, on windows 98.
+
+For some reason i had to enter non-ascii string in plugin preferences box (header_style for word export plugin, since ms word is localized and has style names different from "Header"). 
+
+I found that the dialog doesn't close on OK button, and the ini file gets broken -- not all options remain there. 
+
+As i investigated, ConfigParser.write() method when writing to a file claimed it can't convert unicode string to ascii. This problem was fixed by setting system default locale in site.py, (s/if: 0/if: 1/ at line 321).
+
+The fix:
+
+in << Create widgets for each section and option >>:
+
+e = Tk.Entry(b)
+e.insert(0, unicode(config.get(section, option)))
+#@nonl
+#@-node:EKR.20040608102548.1:Report
+#@+node:EKR.20040608103502:Unicode chars
+楢
+#@-node:EKR.20040608103502:Unicode chars
+#@+node:EKR.20040608104417:Traceback
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "C:\PYTHON23\lib\lib-tk\Tkinter.py", line 1345, in __call__
+    return self.func(*args)
+  File "C:\prog\leoCVS\leo\plugins\plugins_menu.py", line 208, in onOk
+    self.writeConfiguration()
+  File "C:\prog\leoCVS\leo\plugins\plugins_menu.py", line 223, in writeConfiguration
+    self.config.write(f)
+  File "C:\PYTHON23\lib\ConfigParser.py", line 366, in write
+    fp.write("%s = %s\n" %
+UnicodeEncodeError: 'ascii' codec can't encode character u'\u6962' in position 0: ordinal not in range(128)
+#@-node:EKR.20040608104417:Traceback
+#@+node:EKR.20040517080555.13:<< create the frame from the configuration data >>
+root = g.app.root
+
+<< Create the top level and the main frame >>
+<< Create widgets for each section and option >>
+<< Create Ok, Cancel and Apply buttons >>
+
+g.app.gui.center_dialog(top) # Do this after packing.
+top.grab_set() # Make the dialog a modal dialog.
+top.focus_force() # Get all keystrokes.
+root.wait_window(top)
+#@nonl
+#@+node:EKR.20040517080555.14:<< Create the top level and the main frame >>
+self.top = top = Tk.Toplevel(root)
+g.app.gui.attachLeoIcon(self.top)
+top.title("Properties of "+ plugin.name)
+top.resizable(0,0) # neither height or width is resizable.
+    
+self.frame = frame = Tk.Frame(top)
+frame.pack(side="top")
+#@nonl
+#@-node:EKR.20040517080555.14:<< Create the top level and the main frame >>
+#@+node:EKR.20040517080555.15:<< Create widgets for each section and option >>
+# Create all the entry boxes on the screen to allow the user to edit the properties
+sections = config.sections()
+sections.sort()
+for section in sections:
+    # Create a frame for the section.
+    f = Tk.Frame(top, relief="groove",bd=2)
+    f.pack(side="top",padx=5,pady=5)
+    Tk.Label(f, text=section.capitalize()).pack(side="top")
+    # Create an inner frame for the options.
+    b = Tk.Frame(f)
+    b.pack(side="top",padx=2,pady=2)
+    # Create a Tk.Label and Tk.Entry for each option.
+    options = config.options(section)
+    options.sort()
+    row = 0
+    for option in options:
+        e = Tk.Entry(b)
+        e.insert(0, unicode(config.get(section,option))) # 6/8/04
+        Tk.Label(b, text=option).grid(row=row, column=0, sticky="e", pady=4)
+        e.grid(row=row, column=1, sticky="ew", pady = 4)
+        row += 1
+        self.entries.append((section, option, e))
+#@nonl
+#@-node:EKR.20040517080555.15:<< Create widgets for each section and option >>
+#@+node:EKR.20040517080555.16:<< Create Ok, Cancel and Apply buttons >>
+box = Tk.Frame(top, borderwidth=5)
+box.pack(side="bottom")
+
+list = [("OK",self.onOk),("Cancel",top.destroy)]
+if plugin.hasapply:
+    list.append(("Apply",self.onApply),)
+
+for text,f in list:
+    Tk.Button(box,text=text,width=6,command=f).pack(side="left",padx=5)
+#@nonl
+#@-node:EKR.20040517080555.16:<< Create Ok, Cancel and Apply buttons >>
+#@-node:EKR.20040517080555.13:<< create the frame from the configuration data >>
+#@+node:EKR.20040517080555.18:writeConfiguration
+def writeConfiguration(self):
+    
+    """Write the configuration to disk"""
+
+    # Set values back into the config item.
+    for section, option, entry in self.entries:
+        s = entry.get()
+        s = g.toEncodedString(s,"ascii",reportErrors=True) # Config params had better be ascii.
+        self.config.set(section,option,s)
+
+    # Write out to the file.
+    f = open(self.filename, "w")
+    self.config.write(f)
+    f.close()
+#@nonl
+#@-node:EKR.20040517080555.18:writeConfiguration
+#@-node:EKR.20040608102548:(Fixed unicode bug in plugins_menu.py)
 #@-all
 #@nonl
 #@-node:edream.110203113231:@file-thin pluginsNotes.txt

@@ -10209,32 +10209,33 @@ def executeScript(self,p=None,script=None):
     
     We execute the selected text, or the entire body text if no text is selected."""
     
-    error = False
-    c = self ; s = None
+    c = self ; error = False ; s = None ; script1 = script
 
-    if script:
-        s = script
-    else:
-        << get script into s >>
+    if not script:
+        << get script into script >>
     << redirect output if redirect_execute_script_output_to_log_pane >>
-    s = s.strip()
-    if s:
-        s += '\n' # Make sure we end the script properly.
+    script = script.strip()
+    if script:
+        script += '\n' # Make sure we end the script properly.
         try:
-            exec s in {} # Use {} to get a pristine environment!
-            if not script:
+            exec script in {} # Use {} to get a pristine environment!
+            if not script1:
                 g.es("end of script",color="purple")
         except:
             g.es("exception executing script")
-            g.es_exception(full=False,c=c)
-            c.frame.tree.redrawAfterException() # 1/26/04
+            n = g.es_exception(full=False,c=c)
+            if n is not None:
+                << dump the lines of script near the error >>
+                if p and not script1:
+                    c.goToScriptLineNumber(p,script,n)
+            c.frame.tree.redrawAfterException()
     elif not error:
         g.es("no script selected",color="blue")
         
-    # 4/3/04: The force a redraw _after_ all messages have been output.
+    # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2142:<< get script into s >>
+#@+node:ekr.20031218072017.2142:<< get script into script >>
 try:
     try:
         if not p:
@@ -10258,11 +10259,12 @@ try:
             df.endSentinelComment = None
             # Write the "derived file" into fo.
             fo = g.fileLikeObject()
-            df.write(p.copy(),nosentinels=True,scriptFile=fo)
+            # nosentinels=False makes it much easier to find the proper line.
+            df.write(p.copy(),nosentinels=False,scriptFile=fo) 
             assert(p)
-            s = fo.get()
+            script = fo.get()
             g.app.scriptDict["script2"]=s
-            error = len(s) == 0
+            error = len(script) == 0
     except:
         s = "unexpected exception"
         print s ; g.es(s)
@@ -10270,7 +10272,7 @@ try:
 finally:
     p.v.setTnodeText(old_body)
 #@nonl
-#@-node:ekr.20031218072017.2142:<< get script into s >>
+#@-node:ekr.20031218072017.2142:<< get script into script >>
 #@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
@@ -10278,6 +10280,27 @@ if g.app.config.redirect_execute_script_output_to_log_pane:
     g.redirectStderr() # Redirect stderr
 #@nonl
 #@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
+lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    s = "line %d: %s" % (n,lines[n-1])
+    print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
 #@-node:ekr.20031218072017.2140:executeScript
 #@+node:ekr.20031218072017.1570:assignFileIndices & compactFileIndices
 def assignFileIndices (self):
@@ -23362,32 +23385,33 @@ def executeScript(self,p=None,script=None):
     
     We execute the selected text, or the entire body text if no text is selected."""
     
-    error = False
-    c = self ; s = None
+    c = self ; error = False ; s = None ; script1 = script
 
-    if script:
-        s = script
-    else:
-        << get script into s >>
+    if not script:
+        << get script into script >>
     << redirect output if redirect_execute_script_output_to_log_pane >>
-    s = s.strip()
-    if s:
-        s += '\n' # Make sure we end the script properly.
+    script = script.strip()
+    if script:
+        script += '\n' # Make sure we end the script properly.
         try:
-            exec s in {} # Use {} to get a pristine environment!
-            if not script:
+            exec script in {} # Use {} to get a pristine environment!
+            if not script1:
                 g.es("end of script",color="purple")
         except:
             g.es("exception executing script")
-            g.es_exception(full=False,c=c)
-            c.frame.tree.redrawAfterException() # 1/26/04
+            n = g.es_exception(full=False,c=c)
+            if n is not None:
+                << dump the lines of script near the error >>
+                if p and not script1:
+                    c.goToScriptLineNumber(p,script,n)
+            c.frame.tree.redrawAfterException()
     elif not error:
         g.es("no script selected",color="blue")
         
-    # 4/3/04: The force a redraw _after_ all messages have been output.
+    # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2142:<< get script into s >>
+#@+node:ekr.20031218072017.2142:<< get script into script >>
 try:
     try:
         if not p:
@@ -23411,11 +23435,12 @@ try:
             df.endSentinelComment = None
             # Write the "derived file" into fo.
             fo = g.fileLikeObject()
-            df.write(p.copy(),nosentinels=True,scriptFile=fo)
+            # nosentinels=False makes it much easier to find the proper line.
+            df.write(p.copy(),nosentinels=False,scriptFile=fo) 
             assert(p)
-            s = fo.get()
+            script = fo.get()
             g.app.scriptDict["script2"]=s
-            error = len(s) == 0
+            error = len(script) == 0
     except:
         s = "unexpected exception"
         print s ; g.es(s)
@@ -23423,7 +23448,7 @@ try:
 finally:
     p.v.setTnodeText(old_body)
 #@nonl
-#@-node:ekr.20031218072017.2142:<< get script into s >>
+#@-node:ekr.20031218072017.2142:<< get script into script >>
 #@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
@@ -23431,6 +23456,27 @@ if g.app.config.redirect_execute_script_output_to_log_pane:
     g.redirectStderr() # Redirect stderr
 #@nonl
 #@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
+lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    s = "line %d: %s" % (n,lines[n-1])
+    print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
 #@-node:ekr.20031218072017.2140:executeScript
 #@-node:ekr.20040403091954:(Problems with marking nodes in a script)
 #@-node:ekr.20040403104315.3:4/3
@@ -23925,32 +23971,33 @@ def executeScript(self,p=None,script=None):
     
     We execute the selected text, or the entire body text if no text is selected."""
     
-    error = False
-    c = self ; s = None
+    c = self ; error = False ; s = None ; script1 = script
 
-    if script:
-        s = script
-    else:
-        << get script into s >>
+    if not script:
+        << get script into script >>
     << redirect output if redirect_execute_script_output_to_log_pane >>
-    s = s.strip()
-    if s:
-        s += '\n' # Make sure we end the script properly.
+    script = script.strip()
+    if script:
+        script += '\n' # Make sure we end the script properly.
         try:
-            exec s in {} # Use {} to get a pristine environment!
-            if not script:
+            exec script in {} # Use {} to get a pristine environment!
+            if not script1:
                 g.es("end of script",color="purple")
         except:
             g.es("exception executing script")
-            g.es_exception(full=False,c=c)
-            c.frame.tree.redrawAfterException() # 1/26/04
+            n = g.es_exception(full=False,c=c)
+            if n is not None:
+                << dump the lines of script near the error >>
+                if p and not script1:
+                    c.goToScriptLineNumber(p,script,n)
+            c.frame.tree.redrawAfterException()
     elif not error:
         g.es("no script selected",color="blue")
         
-    # 4/3/04: The force a redraw _after_ all messages have been output.
+    # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2142:<< get script into s >>
+#@+node:ekr.20031218072017.2142:<< get script into script >>
 try:
     try:
         if not p:
@@ -23974,11 +24021,12 @@ try:
             df.endSentinelComment = None
             # Write the "derived file" into fo.
             fo = g.fileLikeObject()
-            df.write(p.copy(),nosentinels=True,scriptFile=fo)
+            # nosentinels=False makes it much easier to find the proper line.
+            df.write(p.copy(),nosentinels=False,scriptFile=fo) 
             assert(p)
-            s = fo.get()
+            script = fo.get()
             g.app.scriptDict["script2"]=s
-            error = len(s) == 0
+            error = len(script) == 0
     except:
         s = "unexpected exception"
         print s ; g.es(s)
@@ -23986,7 +24034,7 @@ try:
 finally:
     p.v.setTnodeText(old_body)
 #@nonl
-#@-node:ekr.20031218072017.2142:<< get script into s >>
+#@-node:ekr.20031218072017.2142:<< get script into script >>
 #@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
@@ -23994,6 +24042,27 @@ if g.app.config.redirect_execute_script_output_to_log_pane:
     g.redirectStderr() # Redirect stderr
 #@nonl
 #@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
+lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    s = "line %d: %s" % (n,lines[n-1])
+    print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
 #@-node:ekr.20031218072017.2140:executeScript
 #@+node:ekr.20031218072017.1934:run & allies
 def run(fileName=None,*args,**keywords):
@@ -39128,12 +39197,15 @@ end = s[j:i]
 #@-node:ekr.20031218072017.2638:<< set the closing comment delim >>
 #@-node:EKR.20040604155223.1:top_df.parseLeoSentinel
 #@+node:ekr.20031218072017.2864:goToLineNumber & allies
-def goToLineNumber (self):
+def goToLineNumber (self,root=None,lines=None,n=None):
 
-    c = self ; p = c.currentPosition()
-    << set root to the nearest ancestor @file node >>
-    << read the file into lines >>
-    << get n, the line number, from a dialog >>
+    c = self ; p = c.currentPosition() ; root1 = root
+    if root is None:
+        << set root to the nearest ancestor @file node >>
+    if lines is None:
+        << read the file into lines >>
+    if n is None:
+        << get n, the line number, from a dialog >>
     if n==1:
         p = root ; n2 = 1 ; found = True
     elif n >= len(lines):
@@ -39303,8 +39375,10 @@ if tnodeIndex < len(tnodeList):
             print s ; g.es(s, color="red")
         ok = False
 else:
-    s = "Invalid computed tnodeIndex: %d" % tnodeIndex
-    print s ; g.es(s, color = "red") ; ok = False
+    if root1 is None: # Kludge: disable this message when called by goToScriptLineNumber.
+        s = "Invalid computed tnodeIndex: %d" % tnodeIndex
+        print s ; g.es(s, color = "red")
+    ok = False
 #@nonl
 #@-node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
 #@+node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
@@ -41173,6 +41247,385 @@ def linkAfter (self,after):
 #@nonl
 #@-node:ekr.20040310062332.2:p.linkAfter
 #@-node:EKR.20040612093706:(Investigated clone-drag bug in 4.1)
+#@+node:EKR.20040612141359:(Fixed problems with trailing newlines and spurious changed bit)
+#@+node:EKR.20040612152431:What I did
+@nocolor
+
+- Set removeTrailing to True unless ch is a newline.
+
+This allows Alt-f to work properly.
+
+- Return "break" after the "final" text has been computed if nothing has changed.
+
+This suppresses spurious newlines.
+
+A new idea:  Make sure the text _does_ have a newline at all times.  I'm not sure this will work...
+
+- ALWAYS set the text in select.  This prevents some weird problems with trailling newlines.
+#@nonl
+#@-node:EKR.20040612152431:What I did
+#@+node:ekr.20031218072017.1019:tree.select
+# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
+
+def select (self,p,updateBeadList=True):
+
+    if not p: return
+    
+    << define vars and stop editing >>
+    
+    # g.trace(p)
+
+    if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
+        << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_v=p,old_v=old_p):
+        << select the new node >>
+        if p and p != old_p: # 3/26/03: Suppress duplicate call.
+            try: # may fail during initialization
+                self.idle_scrollTo(p)
+            except: pass
+        << update c.beadList or c.beadPointer >>
+        << update c.visitedList >>
+
+    << set the current node >>
+    
+    g.doHook("select2",c=c,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_v=p,old_v=old_p)
+#@nonl
+#@+node:ekr.20031218072017.1020:<< define vars and stop editing >>
+c = self.c
+frame = c.frame ; body = frame.bodyCtrl
+
+old_p = c.currentPosition()
+
+# Unselect any previous selected but unedited label.
+self.endEditLabel()
+self.setUnselectedLabelState(old_p)
+#@nonl
+#@-node:ekr.20031218072017.1020:<< define vars and stop editing >>
+#@+node:ekr.20031218072017.1021:<< unselect the old node >> (changed in 4.2)
+# Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+if old_p and old_p != p:
+    # g.trace("different node")
+    self.endEditLabel()
+    self.setUnselectedLabelState(old_p)
+
+if old_p and old_p.edit_text():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot
+#@nonl
+#@-node:ekr.20031218072017.1021:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20031218072017.1022:<< select the new node >>
+frame.setWrap(p)
+
+# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+body.delete("1.0","end")
+body.insert("1.0",s)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p)
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+#@nonl
+#@-node:ekr.20031218072017.1022:<< select the new node >>
+#@+node:ekr.20031218072017.1023:<< update c.beadList or c.beadPointer >>
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by c and make c the present node.
+        # print "updating c.beadList"
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p)
+        
+    # g.trace(c.beadPointer,p,present_p)
+#@nonl
+#@-node:ekr.20031218072017.1023:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20031218072017.1024:<< update c.visitedList >>
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p)
+#@nonl
+#@-node:ekr.20031218072017.1024:<< update c.visitedList >>
+#@+node:ekr.20031218072017.1025:<< set the current node >>
+self.c.setCurrentPosition(p)
+self.setSelectedLabelState(p)
+self.frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+g.app.gui.set_focus(c,c.frame.bodyCtrl)
+#@nonl
+#@-node:ekr.20031218072017.1025:<< set the current node >>
+#@-node:ekr.20031218072017.1019:tree.select
+#@+node:ekr.20031218072017.1321:idle_body_key
+def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Update the body pane at idle time."""
+
+    # g.trace(ch,ord(ch))
+    c = self.c
+    if not c: return "break"
+    if not p: return "break"
+    if p != c.currentPosition(): return "break"
+    v = p.v # used only to get p.iconVal.
+
+    if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+    body = p.bodyString()
+    if not newSel:
+        newSel = c.frame.body.getTextSelection()
+    if oldText != None:
+        s = oldText
+    else:
+        s = c.frame.body.getAllText()
+    << return if nothing has changed >>
+    << set removeTrailing >>
+    if ch in ('\t','\n','\r',chr(8)):
+        d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+        tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+        if ch in ('\n','\r'):
+            << Do auto indent >>
+        elif ch == '\t' and tab_width < 0:
+            << convert tab to blanks >>
+        elif ch in (chr(8)) and tab_width < 0:
+            << handle backspace with negative tab_width >>
+    << set s to widget text, removing trailing newlines if necessary >>
+    if undoType: # 11/6/03: set oldText properly when oldText param exists.
+        if not oldText: oldText = body
+        newText = s
+        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+    p.v.setTnodeText(s)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed:
+        c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return "break"
+#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
+# 6/22/03: Make sure we handle delete key properly.
+if ch not in ('\n','\r',chr(8)):
+
+    if s == body:
+        return "break"
+
+    # Do nothing for control characters.
+    if (ch == None or len(ch) == 0) and body == s[:-1]:
+        return "break"
+#@nonl
+#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
+#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = s ; old = body
+
+if len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
+#@nonl
+#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
+#@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+# Do nothing if we are in @nocolor mode or if we are executing a Change command.
+if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+    # Get the previous line.
+    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s[-1]==':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if g.app.config.getBoolWindowPref("smart_auto_indent"):
+        # Added Nov 18 by David McNab, david@rebirthing.co.nz
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width]
+        tabex = 0
+        for i in range(0, len(s)):
+            if s[i] == '\t':
+                tabex += tab_width - 1
+            if s[i] in '([{':
+                brackets.append(i+tabex + 1)
+            elif s[i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+        # end patch by David McNab
+    ws = g.computeLeadingWhitespace (width,tab_width)
+    if ws and len(ws) > 0:
+        c.frame.bodyCtrl.insert("insert", ws)
+        removeTrailing = False # bug fix: 11/18
+#@nonl
+#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+#@+node:ekr.20031218072017.1325:<< convert tab to blanks >>
+# Do nothing if we are executing a Change command.
+if undoType != "Change":
+    
+    # Get the characters preceeding the tab.
+    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+    
+    if 1: # 6/26/03: Convert tab no matter where it is.
+
+        w = g.computeWidth(prev,tab_width)
+        w2 = (abs(tab_width) - (w % abs(tab_width)))
+        # g.trace("prev w:",w,"prev chars:",prev)
+        c.frame.bodyCtrl.delete("insert -1c")
+        c.frame.bodyCtrl.insert("insert",' ' * w2)
+    
+    else: # Convert only leading tabs.
+    
+        # Get the characters preceeding the tab.
+        prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+
+        # Do nothing if there are non-whitespace in prev:
+        all_ws = True
+        for ch in prev:
+            if ch != ' ' and ch != '\t':
+                all_ws = False
+        if all_ws:
+            w = g.computeWidth(prev,tab_width)
+            w2 = (abs(tab_width) - (w % abs(tab_width)))
+            # g.trace("prev w:",w,"prev chars:",prev)
+            c.frame.bodyCtrl.delete("insert -1c")
+            c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20031218072017.1325:<< convert tab to blanks >>
+#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+# Get the preceeding characters.
+prev   =c.frame.bodyCtrl.get("insert linestart","insert")
+allPrev=c.frame.bodyCtrl.get("1.0","insert")
+n = len(allPrev)
+try:
+    oldAllPrev = body[:n]
+    assert(allPrev==oldAllPrev)
+    deletedChar = body[n:n+1]
+except (IndexError,AssertionError):
+    deletedChar = None
+
+if deletedChar in (u' ',' '):
+    n = len(prev) ; w = abs(tab_width)
+    n2 = n % w # Delete up to n2 - 1 spaces.
+    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
+        count = 0
+        while n2 > 0:
+            n2 -= 1
+            ch = prev[n-count-1]
+            # g.trace(count,repr(ch))
+            if ch in (u' ',' '): count += 1
+            else: break
+        # g.trace(count,(n%w))
+        if count > 0:
+            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+#@nonl
+#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+s = c.frame.body.getAllText()
+if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+    s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # print "no real change"
+    return "break"
+#@nonl
+#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+#@+node:ekr.20031218072017.1327:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20031218072017.1327:<< recolor the body >>
+#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+redraw_flag = False
+
+c.beginUpdate()
+
+# Update dirty bits.
+if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+    redraw_flag = True
+    
+# Update icons.
+val = p.computeIcon()
+if val != v.iconVal:
+    v.iconVal = val
+    redraw_flag = True
+
+c.endUpdate(redraw_flag) # redraw only if necessary
+#@nonl
+#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+#@-node:ekr.20031218072017.1321:idle_body_key
+#@+node:ekr.20031218072017.2989:c.setChanged
+def setChanged (self,changedFlag):
+
+    c = self
+    if not c.frame: return
+    
+    # import traceback ; traceback.print_stack()
+
+    # Clear all dirty bits _before_ setting the caption.
+    # 9/15/01 Clear all dirty bits except orphaned @file nodes
+    if not changedFlag:
+        # g.trace("clearing all dirty bits")
+        for p in c.allNodes_iter():
+            if p.isDirty() and not (p.isAtFileNode() or p.isAtNorefFileNode()):
+                p.clearDirty()
+    # Update all derived changed markers.
+    c.changed = changedFlag
+    s = c.frame.getTitle()
+    if len(s) > 2 and not c.loading: # don't update while loading.
+        if changedFlag:
+            # import traceback ; traceback.print_stack()
+            if s [0] != '*': c.frame.setTitle("* " + s)
+        else:
+            if s[0:2]=="* ": c.frame.setTitle(s[2:])
+#@nonl
+#@-node:ekr.20031218072017.2989:c.setChanged
+#@-node:EKR.20040612141359:(Fixed problems with trailing newlines and spurious changed bit)
 #@-node:EKR.20040612121907.2:6/12/04
 #@-node:EKR.20040610102329:In 4.2 a4
 #@-node:EKR.20040517090500:May 2004

@@ -22,8 +22,8 @@
 	image.py
 	# nav_buttons.py
 	plugins_menu.py
-	rowcol.py
-	# status_line.py
+	# rowcol.py
+	status_line.py
 	word_export.py
 	# xemacs.py
 	
@@ -57,6 +57,7 @@
 	# autocompleter.py
 	# fastgotonode.py
 	# xemacs_a.py
+    # dyna_menu.py
 #@nonl
 #@-node:edream.120603093808:@file-thin pluginsManager.txt
 #@-leo
