@@ -2128,11 +2128,11 @@ class baseLeoFrame:
 			#@<< remove previous entry from a.openWithFiles if it exists >>
 			#@+node:1::<< remove previous entry from a.openWithFiles if it exists >>
 			#@+body
-			for dict in a.openWithFiles[:]: # 6/30/03
-				v2 = dict.get("v")
+			for d in a.openWithFiles[:]: # 6/30/03
+				v2 = d.get("v")
 				if v.t == v2.t:
 					print "removing previous entry in a.openWithFiles for",v
-					a.openWithFiles.remove(dict)
+					a.openWithFiles.remove(d)
 			#@-body
 			#@-node:1::<< remove previous entry from a.openWithFiles if it exists >>
  # 4/22/03
