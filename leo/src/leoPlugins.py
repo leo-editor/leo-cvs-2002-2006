@@ -38,7 +38,7 @@ def loadHandlers(loadAllFlag=False):
     manager_path = g.os_path_join(plugins_path,"pluginsManager.txt")
     
     files = glob.glob(g.os_path_join(plugins_path,"*.py"))
-    files = [g.os_path_abspath(file) for file in files]
+    files = [g.os_path_abspath(theFile) for theFile in files]
 
     if loadAllFlag:
         files.sort()
@@ -51,13 +51,13 @@ def loadHandlers(loadAllFlag=False):
         
         enabled_files = []
         try:
-            file = open(manager_path)
-            lines = file.readlines()
+            theFile = open(manager_path)
+            lines = theFile.readlines()
             for s in lines:
                 s = s.strip()
                 if s and not g.match(s,0,"#"):
                     enabled_files.append(g.os_path_join(plugins_path,s))
-            file.close()
+            theFile.close()
         except IOError:
             g.es("Can not open: " + manager_path)
             leoTest.fail()
@@ -65,15 +65,15 @@ def loadHandlers(loadAllFlag=False):
         #@nonl
         #@-node:ekr.20031218072017.3441:<< set enabled_files from pluginsManager.txt >>
         #@nl
-        enabled_files = [g.os_path_abspath(file) for file in enabled_files]
+        enabled_files = [g.os_path_abspath(theFile) for theFile in enabled_files]
     
     # Load plugins in the order they appear in the enabled_files list.
     g.app.loadedPlugins = []
     if files and enabled_files:
-        for file in enabled_files:
-            if file in files:
-                file = g.toUnicode(file,g.app.tkEncoding)
-                g.importFromPath(file,plugins_path)
+        for theFile in enabled_files:
+            if theFile in files:
+                theFile = g.toUnicode(theFile,g.app.tkEncoding)
+                g.importFromPath(theFile,plugins_path)
     if g.app.loadedPlugins and not loadAllFlag:
         g.es("%d plugins loaded" % (len(g.app.loadedPlugins)), color="blue")
         if 0:

@@ -1278,10 +1278,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3992:leoHelp
     def leoHelp (self):
         
-        file = g.os_path_join(g.app.loadDir,"..","doc","sbooks.chm")
+        theFile = g.os_path_join(g.app.loadDir,"..","doc","sbooks.chm")
     
-        if g.os_path_exists(file):
-            os.startfile(file)
+        if g.os_path_exists(theFile):
+            os.startfile(theFile)
         else:	
             answer = g.app.gui.runAskYesNoDialog(
                 "Download Tutorial?",
@@ -1293,7 +1293,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
                         url = "http://umn.dl.sourceforge.net/sourceforge/leo/sbooks.chm"
                         import urllib
                         self.scale = None
-                        urllib.urlretrieve(url,file,self.showProgressBar)
+                        urllib.urlretrieve(url,theFile,self.showProgressBar)
                         if self.scale:
                             self.scale.destroy()
                             self.scale = None

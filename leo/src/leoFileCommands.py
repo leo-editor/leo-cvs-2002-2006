@@ -1224,11 +1224,11 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.3029:readAtFileNodes
     #@+node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
-    def readOutlineOnly (self,file,fileName):
+    def readOutlineOnly (self,theFile,fileName):
     
         c = self.c
         # Read the entire file into the buffer
-        self.fileBuffer = file.read() ; file.close()
+        self.fileBuffer = theFile.read() ; theFile.close()
         self.fileIndex = 0
         #@    << Set the default directory >>
         #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
@@ -1265,11 +1265,11 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
     #@+node:ekr.20031218072017.2297:fileCommands.open
-    def open(self,file,fileName):
+    def open(self,theFile,fileName):
     
         c = self.c ; frame = c.frame
         # Read the entire file into the buffer
-        self.fileBuffer = file.read() ; file.close()
+        self.fileBuffer = theFile.read() ; theFile.close()
         self.fileIndex = 0
         #@    << Set the default directory >>
         #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly

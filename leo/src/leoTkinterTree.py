@@ -1083,15 +1083,15 @@ class leoTkinterTree (leoFrame.leoTree):
             #@-node:ekr.20040803072955.49:<< draw the icon in string s >>
             #@nl
         elif type == "file":
-            file = dict.get("file")
+            theFile = dict.get("file")
             #@        << draw the icon at file >>
             #@+node:ekr.20040803072955.50:<< draw the icon at file >>
             try:
-                image = self.iconimages[file]
+                image = self.iconimages[theFile]
                 # Get the image from the cache if possible.
             except KeyError:
                 try:
-                    fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
+                    fullname = g.os_path_join(g.app.loadDir,"..","Icons",theFile)
                     fullname = g.os_path_normpath(fullname)
                     image = Tk.PhotoImage(master=self.canvas,file=fullname)
                     self.iconimages[fullname] = image

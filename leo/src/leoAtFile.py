@@ -333,8 +333,8 @@ class baseAtFile:
         
         try:
             # 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
-            file = open(fn,'rb')
-            if file:
+            theFile = open(fn,'rb')
+            if theFile:
                 #@        << warn on read-only file >>
                 #@+node:ekr.20031218072017.1815:<< warn on read-only file >>
                 try:
@@ -355,7 +355,7 @@ class baseAtFile:
         #@-node:ekr.20031218072017.1814:<< open file or return false >>
         #@nl
         g.es("reading: " + root.headString())
-        firstLines,read_new = at.scanHeader(file,fileName)
+        firstLines,read_new = at.scanHeader(theFile,fileName)
         df = g.choose(read_new,at.new_df,at.old_df)
         # g.trace(g.choose(df==at.new_df,"new","old"))
         #@    << copy ivars to df >>
@@ -374,7 +374,7 @@ class baseAtFile:
         
         # Set other common ivars.
         df.errors = 0
-        df.file = file
+        df.file = theFile
         df.importRootSeen = False
         df.indent = 0
         df.targetFileName = fileName
@@ -390,11 +390,11 @@ class baseAtFile:
             # 1/28/04: Call scanAllDirectives here, not in readOpenFile.
             importing = importFileName is not None
             df.scanAllDirectives(root,importing=importing,reading=True)
-            df.readOpenFile(root,file,firstLines)
+            df.readOpenFile(root,theFile,firstLines)
         except:
             at.error("Unexpected exception while reading derived file")
             g.es_exception()
-        file.close()
+        theFile.close()
         root.clearDirty() # May be set dirty below.
         after = root.nodeAfterTree()
         #@    << warn about non-empty unvisited nodes >>
@@ -565,7 +565,7 @@ class baseAtFile:
     #@nonl
     #@-node:ekr.20031218072017.2627:top_df.scanDefaultDirectory
     #@+node:ekr.20031218072017.2633:top_df.scanHeader
-    def scanHeader(self,file,fileName):
+    def scanHeader(self,theFile,fileName):
         
         """Scan the @+leo sentinel.
         
@@ -594,12 +594,12 @@ class baseAtFile:
         #@-at
         #@@c
         
-        s = at.readLine(file)
+        s = at.readLine(theFile)
         while len(s) > 0:
             j = s.find(tag)
             if j != -1: break
             firstLines.append(s) # Queue the line
-            s = at.readLine(file)
+            s = at.readLine(theFile)
             
         n = len(s)
         valid = n > 0
@@ -970,14 +970,14 @@ class baseOldDerivedFile:
     #@nonl
     #@-node:ekr.20031218072017.1811:createImportedNode
     #@+node:ekr.20031218072017.2647:old_df.readOpenFile
-    def readOpenFile(self,root,file,firstLines):
+    def readOpenFile(self,root,theFile,firstLines):
         
         """Read an open 3.x derived file."""
         
         at = self
     
         # Scan the file buffer
-        lastLines = at.scanText(file,root,[],endLeo)
+        lastLines = at.scanText(theFile,root,[],endLeo)
         root.v.t.setVisited() # Disable warning about set nodes.
     
         # Handle first and last lines.
@@ -1179,10 +1179,10 @@ class baseOldDerivedFile:
     #@nonl
     #@-node:ekr.20031218072017.2652:handleLinesFollowingSentinel
     #@+node:ekr.20031218072017.2654:readLine
-    def readLine (self,file):
+    def readLine (self,theFile):
         """Reads one line from file using the present encoding"""
         
-        s = g.readlineForceUnixNewline(file)
+        s = g.readlineForceUnixNewline(theFile)
         u = g.toUnicode(s,self.encoding)
         return u
     
@@ -1192,23 +1192,23 @@ class baseOldDerivedFile:
     # We accept the first line even if it looks like a sentinel.
     # 5/1/03: The starting comment now looks like a sentinel, to warn users from changing it.
     
-    def readLinesToNextSentinel (self,file):
+    def readLinesToNextSentinel (self,theFile):
         
         """	read lines following multiline sentinels"""
         
         lines = []
         start = self.startSentinelComment + '@ '
-        nextLine = self.readLine(file)
+        nextLine = self.readLine(theFile)
         while nextLine and len(nextLine) > 0:
             if len(lines) == 0:
                 lines.append(nextLine)
-                nextLine = self.readLine(file)
+                nextLine = self.readLine(theFile)
             else:
                 # 5/1/03: looser test then calling sentinelKind.
                 s = nextLine ; i = g.skip_ws(s,0)
                 if g.match(s,i,start):
                     lines.append(nextLine)
-                    nextLine = self.readLine(file)
+                    nextLine = self.readLine(theFile)
                 else: break
     
         return nextLine,lines
@@ -1218,7 +1218,7 @@ class baseOldDerivedFile:
     # Scans the doc part and appends the text out.
     # s,i point to the present line on entry.
     
-    def scanDoc(self,file,s,i,out,kind):
+    def scanDoc(self,theFile,s,i,out,kind):
     
         endKind = g.choose(kind ==startDoc,endDoc,endAt)
         single = len(self.endSentinelComment) == 0
@@ -1227,7 +1227,7 @@ class baseOldDerivedFile:
         assert(g.match(s,i,g.choose(kind == startDoc, "+doc", "+at")))
         
         out.append(g.choose(kind == startDoc, "@doc", "@"))
-        s = self.readLine(file)
+        s = self.readLine(theFile)
         #@-node:ekr.20031218072017.2657:<< Skip the opening sentinel >>
         #@nl
         #@    << Skip an opening block delim >>
@@ -1235,7 +1235,7 @@ class baseOldDerivedFile:
         if not single:
             j = g.skip_ws(s,0)
             if g.match(s,j,self.startSentinelComment):
-                s = self.readLine(file)
+                s = self.readLine(theFile)
         #@nonl
         #@-node:ekr.20031218072017.2658:<< Skip an opening block delim >>
         #@nl
@@ -1257,7 +1257,7 @@ class baseOldDerivedFile:
             if kind == noSentinel:
                 j = g.skip_ws(s,0)
                 blankLine = s[j] == '\n'
-                nextLine = self.readLine(file)
+                nextLine = self.readLine(theFile)
                 nextKind = self.sentinelKind(nextLine)
                 if blankLine and nextKind == endKind:
                     kind = endKind # stop the scan now
@@ -1293,7 +1293,7 @@ class baseOldDerivedFile:
             #@nl
             if nextLine:
                 s = nextLine ; nextLine = None
-            else: s = self.readLine(file)
+            else: s = self.readLine(theFile)
         if kind != endKind:
             self.readError("Missing " + self.sentinelName(endKind) + " sentinel")
         #@    << Remove a closing block delim from out >>
@@ -1321,7 +1321,7 @@ class baseOldDerivedFile:
     #@nonl
     #@-node:ekr.20031218072017.2656:scanDoc
     #@+node:ekr.20031218072017.2663:scanText (3.x)
-    def scanText (self,file,p,out,endSentinelKind,nextLine=None):
+    def scanText (self,theFile,p,out,endSentinelKind,nextLine=None):
         
         """Scan a 3.x derived file recursively."""
     
@@ -1334,7 +1334,7 @@ class baseOldDerivedFile:
             if nextLine:
                 s = nextLine ; nextLine = None
             else:
-                s = self.readLine(file)
+                s = self.readLine(theFile)
                 if len(s) == 0: break
             #@nonl
             #@-node:ekr.20031218072017.2664:<< put the next line into s >>
@@ -1354,7 +1354,7 @@ class baseOldDerivedFile:
             kind = self.sentinelKind(s)
             
             if kind == noSentinel:
-                nextLine = self.readLine(file)
+                nextLine = self.readLine(theFile)
                 nextKind = self.sentinelKind(nextLine)
             else:
                 nextLine = nextKind = None
@@ -1431,7 +1431,7 @@ class baseOldDerivedFile:
                             # Ignore everything after @-leo.
                             # Such lines were presumably written by @last.
                             while 1:
-                                s = self.readLine(file)
+                                s = self.readLine(theFile)
                                 if len(s) == 0: break
                                 lastLines.append(s) # Capture all trailing lines, even if empty.
                         elif kind == endBody:
@@ -1455,7 +1455,7 @@ class baseOldDerivedFile:
                 
                 child_out = [] ; child = p.copy() # Do not change out or p!
                 oldIndent = self.indent ; self.indent = lineIndent
-                self.scanText(file,child,child_out,endBody)
+                self.scanText(theFile,child,child_out,endBody)
                 
                 # Set the body, removing cursed newlines.
                 # This must be done here, not in the @+node logic.
@@ -1566,7 +1566,7 @@ class baseOldDerivedFile:
                         #@-node:ekr.20031218072017.2680:<< Check the filename in the sentinel >>
                         #@nl
                     # Put the text of the root node in the current node.
-                    self.scanText(file,p,out,endNode)
+                    self.scanText(theFile,p,out,endNode)
                     p.v.t.setCloneIndex(cloneIndex)
                     # if cloneIndex > 0: g.trace("clone index:",cloneIndex,p)
                 else:
@@ -1574,15 +1574,15 @@ class baseOldDerivedFile:
                     child = self.createNthChild(childIndex,p,headline)
                     child.t.setCloneIndex(cloneIndex)
                     # if cloneIndex > 0: g.trace("cloneIndex,child:"cloneIndex,child)
-                    self.scanText(file,child,out,endNode)
+                    self.scanText(theFile,child,out,endNode)
                 
                 #@<< look for sentinels that may follow a reference >>
                 #@+node:ekr.20031218072017.2681:<< look for sentinels that may follow a reference >>
-                s = self.readLine(file)
+                s = self.readLine(theFile)
                 kind = self.sentinelKind(s)
                 
                 if len(s) > 1 and kind == startVerbatimAfterRef:
-                    s = self.readLine(file)
+                    s = self.readLine(theFile)
                     # g.trace("verbatim:",repr(s))
                     out.append(s)
                 elif len(s) > 1 and self.sentinelKind(s) == noSentinel:
@@ -1628,7 +1628,7 @@ class baseOldDerivedFile:
                 #@    << scan @+at >>
                 #@+node:ekr.20031218072017.2673:<< scan @+at >>
                 assert(g.match(s,i,"+at"))
-                self.scanDoc(file,s,i,out,kind)
+                self.scanDoc(theFile,s,i,out,kind)
                 #@nonl
                 #@-node:ekr.20031218072017.2673:<< scan @+at >>
                 #@nl
@@ -1636,7 +1636,7 @@ class baseOldDerivedFile:
                 #@    << scan @+doc >>
                 #@+node:ekr.20031218072017.2675:<< scan @+doc >>
                 assert(g.match(s,i,"+doc"))
-                self.scanDoc(file,s,i,out,kind)
+                self.scanDoc(theFile,s,i,out,kind)
                 #@nonl
                 #@-node:ekr.20031218072017.2675:<< scan @+doc >>
                 #@nl
@@ -1648,7 +1648,7 @@ class baseOldDerivedFile:
                 # Make sure that the generated at-others is properly indented.
                 out.append(leading_ws + "@others")
                 
-                self.scanText(file,p,out,endOthers)
+                self.scanText(theFile,p,out,endOthers)
                 #@nonl
                 #@-node:ekr.20031218072017.2682:<< scan @+others >>
                 #@nl
@@ -1747,7 +1747,7 @@ class baseOldDerivedFile:
                 assert(g.match(s,i,"verbatim"))
                 
                 # Skip the sentinel.
-                s = self.readLine(file) 
+                s = self.readLine(theFile) 
                 
                 # Append the next line to the text.
                 i = self.skipIndent(s,0,self.indent)
@@ -3624,7 +3624,7 @@ class baseNewDerivedFile(oldDerivedFile):
     #@nonl
     #@-node:ekr.20040321064134.5:createThinChild (4.2: @thin only)
     #@+node:ekr.20031218072017.2757:new_df.readOpenFile
-    def readOpenFile(self,root,file,firstLines,perfectImportRoot=None):
+    def readOpenFile(self,root,theFile,firstLines,perfectImportRoot=None):
         
         """Read an open 4.x thick or thin derived file."""
         
@@ -3636,7 +3636,7 @@ class baseNewDerivedFile(oldDerivedFile):
         # Scan the 4.x file.
         at.tnodeListIndex = 0
         # at.thinFile tells scanText4 whether this is a thin file or not.
-        lastLines = at.scanText4(file,root)
+        lastLines = at.scanText4(theFile,root)
         root.v.t.setVisited() # Disable warning about set nodes.
         
         # Handle first and last lines.
@@ -3685,7 +3685,7 @@ class baseNewDerivedFile(oldDerivedFile):
     #@nonl
     #@-node:ekr.20031218072017.2007:findChild 4.x (@file only)
     #@+node:ekr.20031218072017.2758:scanText4 & allies
-    def scanText4 (self,file,p):
+    def scanText4 (self,theFile,p):
         
         """Scan a 4.x derived file non-recursively."""
     
@@ -3720,7 +3720,7 @@ class baseNewDerivedFile(oldDerivedFile):
         #@-node:ekr.20031218072017.2759:<< init ivars for scanText4 >>
         #@nl
         while at.errors == 0 and not at.done:
-            s = at.readLine(file)
+            s = at.readLine(theFile)
             if len(s) == 0: break
             kind = at.sentinelKind(s)
             # g.trace(at.sentinelName(kind),s.strip())

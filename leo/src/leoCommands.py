@@ -486,7 +486,7 @@ class baseCommands:
                 g.es("recreating:  " + g.shortFileName(path),color="red")
             else:
                 g.es("creating:  " + g.shortFileName(path),color="blue")
-            file = open(path,"w")
+            theFile = open(path,"w")
             # 3/7/03: convert s to whatever encoding is in effect.
             s = v.bodyString()
             dict = g.scanDirectives(c,p=v)
@@ -494,14 +494,14 @@ class baseCommands:
             if encoding == None:
                 encoding = g.app.config.default_derived_file_encoding
             s = g.toEncodedString(s,encoding,reportErrors=True) 
-            file.write(s)
-            file.flush()
-            file.close()
+            theFile.write(s)
+            theFile.flush()
+            theFile.close()
             try:    time = g.os_path_getmtime(path)
             except: time = None
             # g.es("time: " + str(time))
             # 4/22/03: add body and encoding entries to dict for later comparisons.
-            dict = {"body":s, "c":c, "encoding":encoding, "f":file, "path":path, "time":time, "v":v}
+            dict = {"body":s, "c":c, "encoding":encoding, "f":theFile, "path":path, "time":time, "v":v}
             #@        << remove previous entry from app.openWithFiles if it exists >>
             #@+node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
             for d in g.app.openWithFiles[:]: # 6/30/03
@@ -516,7 +516,7 @@ class baseCommands:
             g.app.openWithFiles.append(dict)
             return path
         except:
-            file = None
+            theFile = None
             g.es("exception creating temp file",color="red")
             g.es_exception()
             return None
@@ -755,12 +755,12 @@ class baseCommands:
             return
     
         try:
-            file = open(fileName,'r')
+            theFile = open(fileName,'r')
             c,frame = g.app.gui.newLeoCommanderAndFrame(fileName)
             frame.deiconify()
             frame.lift()
             g.app.root.update() # Force a screen redraw immediately.
-            c.fileCommands.readOutlineOnly(file,fileName) # closes file.
+            c.fileCommands.readOutlineOnly(theFile,fileName) # closes file.
         except:
             g.es("can not open:" + fileName)
     #@nonl
@@ -1260,9 +1260,9 @@ class baseCommands:
             fileName = g.os_path_join(path,fileName)
             
             try:
-                file=open(fileName)
-                lines = file.readlines()
-                file.close()
+                theFile=open(fileName)
+                lines = theFile.readlines()
+                theFile.close()
             except:
                 g.es("not found: " + fileName)
                 return

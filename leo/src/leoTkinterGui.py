@@ -75,9 +75,9 @@ class tkinterGui(leoGui.leoGui):
                 # tk 8.4.3 or greater: load a 16 by 16 icon.
                 path = g.os_path_join(g.app.loadDir,"..","Icons")
                 if g.os_path_exists(path):
-                    file = g.os_path_join(path,"LeoApp16.ico")
+                    theFile = g.os_path_join(path,"LeoApp16.ico")
                     if g.os_path_exists(path):
-                        self.bitmap = Tk.BitmapImage(file)
+                        self.bitmap = Tk.BitmapImage(theFile)
                     else:
                         g.es("LeoApp16.ico not in Icons directory", color="red")
                 else:
@@ -201,14 +201,14 @@ class tkinterGui(leoGui.leoGui):
                 return list(files)
             except:
                 # Work around an apparent Linux bug in askopenfilenames.
-                file = tkFileDialog.askopenfilename(
+                theFile = tkFileDialog.askopenfilename(
                     title=title, filetypes=filetypes)
-                return [file]
+                return [theFile]
         else:
-            file = tkFileDialog.askopenfilename(
+            theFile = tkFileDialog.askopenfilename(
                 title=title, filetypes=filetypes)
-            if multiple: return [file]
-            else:        return file
+            if multiple: return [theFile]
+            else:        return theFile
         
             # DTHEIN 2004.01.31: remove default extension on open,
             # so that we can open files without extensions

@@ -589,14 +589,14 @@ def openWithFileName(fileName,old_c,enableLog=True):
 
     try:
         # 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
-        file = open(fileName,'rb')
-        if file:
+        theFile = open(fileName,'rb')
+        if theFile:
             c,frame = app.gui.newLeoCommanderAndFrame(fileName)
             frame.log.enable(enableLog)
             if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
                 app.setLog(frame.log,"openWithFileName")
                 app.lockLog()
-                frame.c.fileCommands.open(file,fileName) # closes file.
+                frame.c.fileCommands.open(theFile,fileName) # closes file.
                 app.unlockLog()
             frame.openDirectory = g.os_path_dirname(fileName)
             g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
@@ -897,20 +897,20 @@ def printLeoModules(message=None):
 #@-node:ekr.20031218072017.3108:Dumps
 #@+node:ekr.20031218072017.1317:file/module/plugin_date
 def module_date (mod,format=None):
-    file = g.os_path_join(app.loadDir,mod.__file__)
-    root,ext = g.os_path_splitext(file) 
+    theFile = g.os_path_join(app.loadDir,mod.__file__)
+    root,ext = g.os_path_splitext(theFile) 
     return g.file_date(root + ".py",format=format)
 
 def plugin_date (plugin_mod,format=None):
-    file = g.os_path_join(app.loadDir,"..","plugins",plugin_mod.__file__)
-    root,ext = g.os_path_splitext(file) 
+    theFile = g.os_path_join(app.loadDir,"..","plugins",plugin_mod.__file__)
+    root,ext = g.os_path_splitext(theFile) 
     return g.file_date(root + ".py",format=format)
 
-def file_date (file,format=None):
-    if file and len(file)and g.os_path_exists(file):
+def file_date (theFile,format=None):
+    if theFile and len(theFile)and g.os_path_exists(theFile):
         try:
             import time
-            n = g.os_path_getmtime(file)
+            n = g.os_path_getmtime(theFile)
             if format == None:
                 format = "%m/%d/%y %H:%M:%S"
             return time.strftime(format,time.gmtime(n))
@@ -1303,13 +1303,13 @@ def create_temp_name ():
 #@+node:ekr.20031218072017.3118:ensure_extension
 def ensure_extension (name, ext):
 
-    file, old_ext = g.os_path_splitext(name)
+    theFile, old_ext = g.os_path_splitext(name)
     if len(name) == 0:
         return name # don't add to an empty name.
     elif old_ext and old_ext == ext:
         return name
     else:
-        return file + ext
+        return theFile + ext
 #@nonl
 #@-node:ekr.20031218072017.3118:ensure_extension
 #@+node:ekr.20031218072017.1264:getBaseDirectory
@@ -3854,19 +3854,19 @@ def executeScript (name):
     """Execute a script whose short python file name is given"""
     
     mod_name,ext = g.os_path_splitext(name)
-    file = None
+    theFile = None
     try:
         # This code is in effect an import or a reload.
         # This allows the user to modify scripts without leaving Leo.
         import imp
-        file,filename,description = imp.find_module(mod_name)
-        imp.load_module(mod_name,file,filename,description)
+        theFile,filename,description = imp.find_module(mod_name)
+        imp.load_module(mod_name,theFile,filename,description)
     except:
         g.es("Exception executing " + name,color="red")
         g.es_exception()
 
-    if file:
-        file.close()
+    if theFile:
+        theFile.close()
 
 #@-node:ekr.20031218072017.3138:g,executeScript
 #@+node:ekr.20031218072017.3126:g,funcToMethod
@@ -3907,7 +3907,7 @@ def importFromPath (name,path,verbose=False):
     import imp
 
     try:
-        file = None ; data = None ; result = None
+        theFile = None ; data = None ; result = None
         try:
             fn = g.shortFileName(name)
             mod_name,ext = g.os_path_splitext(fn)
@@ -3923,9 +3923,9 @@ def importFromPath (name,path,verbose=False):
                     s = "Can not import %s from %s" % (mod_name,path)
                     print s ; g.es(s,color="blue")
             if data:
-                file,pathname,description = data
+                theFile,pathname,description = data
                 try:
-                    result = imp.load_module(mod_name,file,pathname,description)
+                    result = imp.load_module(mod_name,theFile,pathname,description)
                 except ImportError:
                     g.es_exception()
         except:
@@ -3933,7 +3933,7 @@ def importFromPath (name,path,verbose=False):
 
     # Put no return statements before here!
     finally: 
-        if file: file.close()
+        if theFile: theFile.close()
 
     return result
 #@nonl

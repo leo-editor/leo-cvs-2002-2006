@@ -50,10 +50,10 @@ class baseLeoImportCommands:
         #@    << Read file into s >>
         #@+node:ekr.20031218072017.3211:<< Read file into s >>
         try:
-            file = open(fileName)
-            s = file.read()
+            theFile = open(fileName)
+            s = theFile.read()
             s = g.toUnicode(s,self.encoding)
-            file.close()
+            theFile.close()
         except IOError:
             g.es("can not open " + fileName)
             leoTest.fail()
@@ -281,12 +281,12 @@ class baseLeoImportCommands:
         #@    << Read the file into array >>
         #@+node:ekr.20031218072017.3221:<< Read the file into array >>
         try:
-            file = open(fileName)
-            s = file.read()
+            theFile = open(fileName)
+            s = theFile.read()
             s = string.replace(s,"\r","")
             s = g.toUnicode(s,self.encoding)
             array = string.split(s,"\n")
-            file.close()
+            theFile.close()
         except IOError:
             g.es("Can not open " + fileName, color="blue")
             leoTest.fail()
@@ -367,7 +367,7 @@ class baseLeoImportCommands:
         if self.webType=="cweb":
             v.setBodyStringOrPane("@ignore\n" + self.rootLine + "@language cweb")
     
-        # Scan the file,creating one section for each function definition.
+        # Scan the file, creating one section for each function definition.
         self.scanWebFile(path,v)
         return v
     #@nonl
@@ -2504,12 +2504,12 @@ class baseLeoImportCommands:
         try:
             mode = g.app.config.output_newline
             mode = g.choose(mode=="platform",'w','wb')
-            file = open(fileName,mode)
+            theFile = open(fileName,mode)
             for p in p.self_and_subtree_iter():
                 head = p.moreHead(firstLevel,useVerticalBar=True)
                 head = g.toEncodedString(head,self.encoding,reportErrors=True)
-                file.write(head + nl)
-            file.close()
+                theFile.write(head + nl)
+            theFile.close()
         except:
             g.es("exception while exporting headlines")
             g.es_exception()
@@ -2527,17 +2527,17 @@ class baseLeoImportCommands:
             # 10/14/02: support for output_newline setting.
             mode = g.app.config.output_newline
             mode = g.choose(mode=="platform",'w','wb')
-            file = open(fileName,mode)
+            theFile = open(fileName,mode)
             
             for p in p.self_and_subtree_iter():
                 head = p.moreHead(firstLevel)
                 head = g.toEncodedString(head,self.encoding,reportErrors=True)
-                file.write(head + nl)
+                theFile.write(head + nl)
                 body = p.moreBody() # Inserts escapes.
                 if len(body) > 0:
                     body = g.toEncodedString(body,self.encoding,reportErrors=True)
-                    file.write(body + nl)
-            file.close()
+                    theFile.write(body + nl)
+            theFile.close()
         except:
             g.es("exception while flattening outline")
             g.es_exception()
@@ -2554,7 +2554,7 @@ class baseLeoImportCommands:
             # 10/14/02: support for output_newline setting.
             mode = g.app.config.output_newline
             mode = g.choose(mode=="platform",'w','wb')
-            file = open(fileName,mode)
+            theFile = open(fileName,mode)
             self.treeType = "@file"
             # Set self.treeType to @root if p or an ancestor is an @root node.
             for p in current.parents_iter():
@@ -2566,9 +2566,9 @@ class baseLeoImportCommands:
                 s = self.convertVnodeToWeb(p)
                 if len(s) > 0:
                     s = g.toEncodedString(s,self.encoding,reportErrors=True)
-                    file.write(s)
-                    if s[-1] != '\n': file.write(nl)
-            file.close()
+                    theFile.write(s)
+                    if s[-1] != '\n': theFile.write(nl)
+            theFile.close()
         except:
             g.es("exception in Outline To noweb command")
             g.es_exception()
@@ -2584,10 +2584,10 @@ class baseLeoImportCommands:
             #@        << Read file into s >>
             #@+node:ekr.20031218072017.3301:<< Read file into s >>
             try:
-                file = open(fileName)
-                s = file.read()
+                theFile = open(fileName)
+                s = theFile.read()
                 s = g.toUnicode(s,self.encoding)
-                file.close()
+                theFile.close()
             except IOError:
                 g.es("Can not open " + fileName, color="blue")
                 leoTest.fail()
@@ -2634,10 +2634,10 @@ class baseLeoImportCommands:
             try:
                 mode = g.app.config.output_newline
                 mode = g.choose(mode=="platform",'w','wb')
-                file = open(newFileName,mode)
+                theFile = open(newFileName,mode)
                 s = g.toEncodedString(s,self.encoding,reportErrors=True)
-                file.write(s)
-                file.close()
+                theFile.write(s)
+                theFile.close()
                 g.es("created: " + newFileName)
             except:
                 g.es("exception creating: " + newFileName)

@@ -1668,8 +1668,8 @@ def importAllModulesInPath (path):
     files = glob.glob(path2)
     modules = []
 
-    for file in files:
-        module = safeImportModule(file)
+    for theFile in files:
+        module = safeImportModule(theFile)
         if module:
             modules.append(module)
 

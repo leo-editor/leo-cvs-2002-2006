@@ -85,9 +85,9 @@ def run(fileName=None,*args,**keywords):
         try:
             import psyco
             if 0:
-                file = r"c:\prog\test\psycoLog.txt"
-                g.es("psyco now logging to",file,color="blue")
-                psyco.log(file)
+                theFile = r"c:\prog\test\psycoLog.txt"
+                g.es("psyco now logging to",theFile,color="blue")
+                psyco.log(theFile)
                 psyco.profile()
             psyco.full()
             g.es("psyco now running",color="blue")
@@ -282,8 +282,6 @@ if __name__ == "__main__":
         run(fileName)
     else:
         run()
-
-
-
+#@nonl
 #@-node:ekr.20031218072017.2605:@thin leo.py 
 #@-leo
