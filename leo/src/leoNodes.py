@@ -1065,7 +1065,6 @@ class baseVnode (object):
     def clearMarked (self):
     
         self.statusBits &= ~ self.markedBit
-        g.doHook("clear-mark",c=self.c,v=self)
     #@-node:ekr.20031218072017.3391:clearMarked
     #@+node:ekr.20031218072017.3392:clearOrphan
     def clearOrphan (self):
@@ -1112,16 +1111,15 @@ class baseVnode (object):
             self.statusBits &= ~ self.clonedBit
     #@nonl
     #@-node:ekr.20031218072017.3397:setClonedBit & initClonedBit
-    #@+node:ekr.20031218072017.3398:setMarked & initMarkedBit
+    #@+node:ekr.20031218072017.3398:v.setMarked & initMarkedBit
     def setMarked (self):
     
         self.statusBits |= self.markedBit
-        g.doHook("set-mark",c=self.c,v=self)
     
     def initMarkedBit (self):
     
         self.statusBits |= self.markedBit
-    #@-node:ekr.20031218072017.3398:setMarked & initMarkedBit
+    #@-node:ekr.20031218072017.3398:v.setMarked & initMarkedBit
     #@+node:ekr.20031218072017.3399:setOrphan
     def setOrphan (self):
     
@@ -1960,7 +1958,10 @@ class position (object):
     # Clone bits are no longer used.
     # Dirty bits are handled carefully by the position class.
     
-    def clearMarked  (self): return self.v.clearMarked()
+    def clearMarked  (self):
+        g.doHook("clear-mark",c=self.c,p=self)
+        return self.v.clearMarked()
+    
     def clearOrphan  (self): return self.v.clearOrphan()
     def clearVisited (self): return self.v.clearVisited()
     
@@ -1971,7 +1972,10 @@ class position (object):
     def initMarkedBit      (self): return self.v.initMarkedBit()
     def initStatus (self, status): return self.v.initStatus()
         
-    def setMarked   (self): return self.v.setMarked()
+    def setMarked (self):
+        g.doHook("set-mark",c=self.c,p=self)
+        return self.v.setMarked()
+    
     def setOrphan   (self): return self.v.setOrphan()
     def setSelected (self): return self.v.setSelected()
     def setVisited  (self): return self.v.setVisited()
@@ -2060,10 +2064,19 @@ class position (object):
     #@+node:ekr.20040305223225:p.setHeadStringOrHeadline
     def setHeadStringOrHeadline (self,s,encoding="utf-8"):
     
-        p = self
-    
-        p.c.endEditing()
+        p = self ; c = p.c
+        
+        t = p.edit_text()
+        
         p.v.initHeadString(s,encoding)
+        
+        c.endEditing()
+    
+        if t:
+            g.trace(s)
+            t.delete("1.0","end")
+            t.insert("end",s)
+    
         p.setDirty()
     #@nonl
     #@-node:ekr.20040305223225:p.setHeadStringOrHeadline
