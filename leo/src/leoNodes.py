@@ -1063,11 +1063,11 @@ class baseVnode (object):
         c.endUpdate() # recomputes all icons
     #@nonl
     #@-node:ekr.20031218072017.3390:clearDirty & clearDirtyJoined (redundant code)
-    #@+node:ekr.20031218072017.3391:clearMarked
+    #@+node:ekr.20031218072017.3391:v.clearMarked
     def clearMarked (self):
     
         self.statusBits &= ~ self.markedBit
-    #@-node:ekr.20031218072017.3391:clearMarked
+    #@-node:ekr.20031218072017.3391:v.clearMarked
     #@+node:ekr.20031218072017.3392:clearOrphan
     def clearOrphan (self):
     
@@ -2009,13 +2009,13 @@ class position (object):
     #@-node:ekr.20040306212636:Getters
     #@+node:ekr.20040305222924:Setters
     #@+node:ekr.20040306220634:vnode proxies
-    #@+node:ekr.20040306220634.9: Status bits
+    #@+node:ekr.20040306220634.9: Status bits (position)
     # Clone bits are no longer used.
     # Dirty bits are handled carefully by the position class.
     
     def clearMarked  (self):
+        self.v.clearMarked()
         g.doHook("clear-mark",c=self.c,p=self,v=self)
-        return self.v.clearMarked()
     
     def clearOrphan  (self): return self.v.clearOrphan()
     def clearVisited (self): return self.v.clearVisited()
@@ -2028,14 +2028,14 @@ class position (object):
     def initStatus (self, status): return self.v.initStatus()
         
     def setMarked (self):
+        self.v.setMarked()
         g.doHook("set-mark",c=self.c,p=self,v=self)
-        return self.v.setMarked()
     
     def setOrphan   (self): return self.v.setOrphan()
     def setSelected (self): return self.v.setSelected()
     def setVisited  (self): return self.v.setVisited()
     #@nonl
-    #@-node:ekr.20040306220634.9: Status bits
+    #@-node:ekr.20040306220634.9: Status bits (position)
     #@+node:ekr.20040306220634.8:p.computeIcon & p.setIcon
     def computeIcon (self):
         
