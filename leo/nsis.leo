@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="20" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="28" left="91" height="24" width="87"/>
+	<global_window_position top="53" left="38" height="24" width="87"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -14,7 +14,7 @@
 <vnodes>
 <v t="T1" a="E"><vh>NSIS Sample Scripts</vh>
 <v t="T2" a="EM"><vh>NSIS script for Leo</vh>
-<v t="T3" a="EM"><vh>@file leo.nsi</vh>
+<v t="T3" a="MV"><vh>@root leo.nsi</vh>
 <v t="T4"><vh>&lt;&lt; installer settings &gt;&gt;</vh>
 <v t="T5"><vh>&lt;&lt; icons used by the installer &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; the installation dir &gt;&gt;</vh></v>
@@ -30,7 +30,7 @@
 <v t="T14" a="E"><vh>&lt;&lt; uninstall section &gt;&gt;</vh>
 <v t="T15"><vh>&lt;&lt; remove file association &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; remove program folder &gt;&gt;</vh></v>
-<v t="T17" a="V"><vh>&lt;&lt; remove shortcuts &gt;&gt;</vh></v>
+<v t="T17"><vh>&lt;&lt; remove shortcuts &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>hold</vh>
@@ -38,7 +38,7 @@
 </v>
 </v>
 <v t="T19" a="EM"><vh>License file</vh>
-<v t="T20" a="M"><vh>leo_license.txt</vh></v>
+<v t="T20" a="M"><vh>@root leo_license.txt</vh></v>
 </v>
 </v>
 </vnodes>
@@ -64,6 +64,8 @@ Version 1.0 of this script by Joe Orr, donated to public domain.
 
 @color</t>
 <t tx="T3">@comment ;
+@silent
+@root leo.nsi
 
 ; NOTE: this .NSI script is designed for NSIS v1.8+
 
@@ -89,14 +91,17 @@ Caption "Leo Installer"
 &lt;&lt; the installation dir &gt;&gt;
 
 ComponentText "This will install Leo on your computer. Select which optional components you would also like to install."</t>
-<t tx="T5">Icon Icons\leo_inst.ico
+<t tx="T5">@code
+Icon Icons\leo_inst.ico
 EnabledBitmap Icons\leo_on.bmp
 DisabledBitmap Icons\leo_off.bmp</t>
-<t tx="T6">InstallDir "$PROGRAMFILES\Leo"
+<t tx="T6">@code
+InstallDir "$PROGRAMFILES\Leo"
 InstallDirRegKey HKEY_LOCAL_MACHINE "SOFTWARE\EKR\leo" ""
 DirShow show # (make this hide to not let the user change it)
 DirText "Select the directory to install Leo in:"</t>
-<t tx="T7">LicenseText "You must agree to this license before installing."
+<t tx="T7">@code
+LicenseText "You must agree to this license before installing."
 LicenseData "leo_license.txt"</t>
 <t tx="T8">@ You may not need to change these for your own app...
 @c
@@ -134,12 +139,12 @@ ok:
   File leo.res
   File sdist.bat
   File manifest.in
-
   SetOutPath "$INSTDIR\Icons"
   File "Icons\*.*"
 
 SectionEnd ; end of default section</t>
-<t tx="T10"># I sure hope there is a better way to do this, but other techniques don't seem to work.
+<t tx="T10">@code
+# I sure hope there is a better way to do this, but other techniques don't seem to work.
 
 # Supposedly the Python installer creates the following registry entry
 # HKEY_LOCAL_MACHINE\Software\Python\PythonCore\CurrentVersion
@@ -245,7 +250,8 @@ SectionEnd ; end of uninstall section</t>
       DeleteRegValue HKCR ".leo" "backup_val"
   NoOwn:
 </t>
-<t tx="T16">MessageBox MB_YESNO|MB_ICONQUESTION \
+<t tx="T16">@code
+MessageBox MB_YESNO|MB_ICONQUESTION \
              "Delete all files in Leo Program folder?" \
              IDNO NoDelete
   Delete "$INSTDIR\Icons\*.*" ; Icons dir
@@ -254,7 +260,8 @@ SectionEnd ; end of uninstall section</t>
   RMDir "$INSTDIR"
 NoDelete:
 </t>
-<t tx="T17">Delete "$SMPROGRAMS\Leo\*.*"
+<t tx="T17">@code
+Delete "$SMPROGRAMS\Leo\*.*"
 Delete "$DESKTOP\Leo.lnk"</t>
 <t tx="T18">
 # yo - why doesn't this work?
