@@ -18,7 +18,6 @@ After startup:
 from leoGlobals import *
 
 handlers = {}
-count = 0 ; examined = 0
 
 def doPlugins(tag,keywords):
 	if app.killed:
@@ -29,20 +28,55 @@ def doPlugins(tag,keywords):
 		
 #@+others
 #@+node:loadHandlers
-def loadHandlers():
+def loadHandlers(loadAllFlag=false):
 
-	"""Load all plugins from the plugins directory"""
+	"""Load all enabled plugins from the plugins directory"""
 	import glob,os
-	global count
 	
-	path = os_path_join(app.loadDir,"..","plugins")
-	files = glob.glob(os_path_join(path,"*.py"))
-	files.sort()
-	if files:
-		for file in files:
-			file = toUnicode(file,app.tkEncoding)
-			importFromPath(file,path)
-		es("%d plugins loaded, %d examined" % (count,len(files)), color="blue")
+	plugins_path = os_path_join(app.loadDir,"..","plugins")
+	manager_path = os_path_join(plugins_path,"pluginsManager.txt")
+	
+	files = glob.glob(os_path_join(plugins_path,"*.py"))
+	files = [os_path_abspath(file) for file in files]
+
+	if loadAllFlag:
+		files.sort()
+		enabled_files = files
+	else:
+		#@		<< set enabled_files from pluginsManager.txt >>
+		#@+node:<< set enabled_files from pluginsManager.txt >>
+		if not os_path_exists(manager_path):
+			return
+		
+		enabled_files = []
+		try:
+			file = open(manager_path)
+			lines = file.readlines()
+			for s in lines:
+				s = s.strip()
+				if s and not match(s,0,"#"):
+					enabled_files.append(os_path_join(plugins_path,s))
+			file.close()
+		except:
+			es("Can not open: " + manager_path)
+			return
+		#@nonl
+		#@-node:<< set enabled_files from pluginsManager.txt >>
+		#@nl
+		enabled_files = [os_path_abspath(file) for file in enabled_files]
+	
+	# Load plugins in the order they appear in the enabled_files list.
+	app.loadedPlugins = []
+	if files and enabled_files:
+		for file in enabled_files:
+			if file in files:
+				file = toUnicode(file,app.tkEncoding)
+				importFromPath(file,plugins_path)
+	if app.loadedPlugins and not loadAllFlag:
+		es("%d plugins loaded" % (len(app.loadedPlugins)), color="blue")
+		if 0:
+			for name in app.loadedPlugins:
+				print name
 #@nonl
 #@-node:loadHandlers
 #@+node:doHandlersForTag
