@@ -142,34 +142,60 @@ def es(s):
 #@-node:5::es, enl, ecnl
 #@+node:6::handleLeoHook
 #@+body
-# This routine calls a hook routine.  Hooks are identified by the tag param.
+#@+at
+#  This global function calls a hook routine.  Hooks are identified by the tag param.
 # Returns the value returned by the hook routine, or None if the there is an exception.
+# 
+# We look for a hook routine in three places:
+# 1. top().hookFunction
+# 2. app().hookFunction
+# 3. leoCustomize.customizeLeo()
+# We set app().hookError on all exceptions.  Scripts that reset 
+# app().hookError to try again.
+
+#@-at
+#@@c
 
 def handleLeoHook(tag):
 
 	from leoUtils   import es_exception
-	from leoGlobals import es,app
+	from leoGlobals import es,app,top
 	import exceptions
-	a = app()
-	if a.hookSyntaxError: return None
+	a = app() ; c = top() # c may be None during startup.
 
-	try:
-		import leoCustomize
-		try:
-			flag = leoCustomize.customizeLeo(tag)
-			return flag # Give the command1 hook a chance to override the command.
-		except:
-			es("exception executing leoCustomize.customizeLeo("+tag+")")
-			es_exception()
-			return None # No return value
-	except exceptions.SyntaxError:
-		es("syntax error in leoCustomize.customizeLeo()")
-		es_exception()
-		a.hookSyntaxError = true # Suppress further calls.
+	if a.hookError == true:
 		return None
-	except:
-		return None # Not an error.
+	elif c and c.hookFunction:
+		try:
+			title = c.frame.top.title()
+			return c.hookFunction(tag)
+		except:
+			es("exception in hook function for " + title)
+	elif a.hookFunction:
+		try:
+			return a.hookFunction(tag)
+		except:
+			es("exception in app().hookFunction")
+	else:
+		try:
+			from leoCustomize import customizeLeo
+			try:
+				a.hookFunction = customizeLeo
+				return customizeLeo(tag)
+			except:
+				a.hookFunction = None
+				es("exception in leoCustomize.customizeLeo")
+		except exceptions.SyntaxError:
+			es("syntax error in leoCustomize.customizeLeo")
+		except:
+			# Import failed.  This is not an error.
+			a.hookError = true # Supress this function.
+			return None
 
+	# Handle all exceptions except import failure.
+	es_exception()
+	a.hookError = true # Supress this function.
+	return None # No return value
 #@-body
 #@-node:6::handleLeoHook
 #@+node:7::print_stack
@@ -180,7 +206,43 @@ def print_stack():
 	traceback.print_stack()
 #@-body
 #@-node:7::print_stack
-#@+node:8::unloadAll
+#@+node:8::top
+#@+body
+#@+at
+#  11/6/02: app().log is now set correctly when there are multiple windows.
+# 
+# Before 11/6/02, app().log depended on activate events, and was not 
+# reliable.  The following routines now set app().log:
+# 
+# - frame.doCommand
+# - frame.OnMenuClick
+# 
+# Thus, top() will be reliable after any command is executed.  Creating a new 
+# window and opening a .leo file also set app().log correctly, so it appears 
+# that all holes have now been plugged.
+# 
+# Note 1: handleLeoHook calls top(), so the wrong hook function might be 
+# dispatched if this routine does not return the proper value.
+# 
+# Note 2: The value of top() may change during a new or open command, which 
+# may change the routine used to execute the "command1" and "command2" hooks.  
+# This is not a bug, and hook routines must be aware of this fact.
+
+#@-at
+#@@c
+
+def top():
+
+	# 11/6/02: app().log is now set correctly when there are multiple windows.
+	frame = app().log # the current frame
+	if frame:
+		return frame.commands
+	else:
+		return None
+
+#@-body
+#@-node:8::top
+#@+node:9::unloadAll
 #@+body
 #@+at
 #  Unloads all of Leo's modules.  Based on code from the Python Cookbook.
@@ -213,16 +275,9 @@ def unloadAll():
 	except:
 		import leoUtils
 		leoUtils.es_exception()
-#@-body
-#@-node:8::unloadAll
-#@+node:9::top
-#@+body
-def top():
 
-	frame = app().log # the current frame
-	return frame.commands
 #@-body
-#@-node:9::top
+#@-node:9::unloadAll
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

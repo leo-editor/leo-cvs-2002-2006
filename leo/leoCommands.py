@@ -41,6 +41,7 @@ class Commands:
 		#@+node:1::<< initialize ivars >>
 		#@+body
 		# per-document info...
+		self.hookFunction = None
 		self.openDirectory = None # 7/2/02
 		
 		self.expansionLevel = 0  # The expansion level of this outline.

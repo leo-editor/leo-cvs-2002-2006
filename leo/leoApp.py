@@ -20,7 +20,8 @@ class LeoApp:
 		self.config = None # The leoConfig instance.
 		self.configDir = None # The directory containing configuration info.
 		self.deleteOnClose = true # true: delete frame objects when a frame closes.
-		self.hookSyntaxError = false # true: syntax error: suppress further calls to hooks.
+		self.hookError = false # true: suppress further calls to hooks.
+		self.hookFunction = None # Application wide hook function.
 		self.idle_imported = false # true: we have done an import idle
 		self.loadDir = None # The directory from which Leo was loaded.
 		self.log = None # The LeoFrame containing the present log.

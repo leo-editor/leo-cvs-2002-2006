@@ -124,6 +124,8 @@ class LeoFrame:
 	
 		self.top.protocol("WM_DELETE_WINDOW", self.OnCloseLeoEvent)
 		self.top.bind("<Button-1>", self.OnActivateLeoEvent)
+		self.top.bind("<Activate>", self.OnActivateLeoEvent) # Doesn't work on windows.
+		self.top.bind("<Deactivate>", self.OnDeactivateLeoEvent) # Doesn't work on windows.
 		self.tree.canvas.bind("<Button-1>", self.OnActivateTree)
 		self.body.bind("<Button-1>", self.OnActivateBody)
 		self.body.bind("<Double-Button-1>", self.OnBodyDoubleClick)
@@ -880,7 +882,9 @@ class LeoFrame:
 
 	def doCommand (self,command,label,event=None):
 		
-		# trace()
+		# A horrible kludge: set app().log to cover for a possibly missing activate event.
+		app().log = self
+	
 		app().commandName = label
 		flag = handleLeoHook("command1")
 		if flag == None or flag != false:
@@ -1061,6 +1065,7 @@ class LeoFrame:
 	
 		app().log = self
 		self.tree.OnDeactivate()
+		# trace(`app().log`)
 	
 	def OnBodyDoubleClick (self,event=None):
 	
@@ -1073,21 +1078,26 @@ class LeoFrame:
 		return "break" # Inhibit all further event processing.
 	#@-body
 	#@-node:2::OnActivateBody & OnBodyDoubleClick
-	#@+node:3::OnActivateLeoEvent
+	#@+node:3::OnActivateLeoEvent, OnDeactivateLeoEvent
 	#@+body
 	def OnActivateLeoEvent(self,event=None):
 	
-		c = self.commands
 		app().log = self
+		# trace(`app().log`)
 	
+	def OnDeactivateLeoEvent(self,event=None):
+		
+		app().log = None
+		# trace(`app().log`)
 	#@-body
-	#@-node:3::OnActivateLeoEvent
+	#@-node:3::OnActivateLeoEvent, OnDeactivateLeoEvent
 	#@+node:4::OnActivateLog
 	#@+body
 	def OnActivateLog (self,event=None):
 	
 		app().log = self
 		self.tree.OnDeactivate()
+		# trace(`app().log`)
 	#@-body
 	#@-node:4::OnActivateLog
 	#@+node:5::OnActivateTree
@@ -1097,6 +1107,7 @@ class LeoFrame:
 		app().log = self
 		self.tree.undimEditLabel()
 		self.tree.canvas.focus_set()
+		# trace(`app().log`)
 	#@-body
 	#@-node:5::OnActivateTree
 	#@+node:6::OnMouseWheel (Tomaz Ficko)
@@ -1119,6 +1130,9 @@ class LeoFrame:
 	# This is the Tk "postcommand" callback.  It should update all menu items.
 	
 	def OnMenuClick (self):
+		
+		# A horrible kludge: set app().log to cover for a possibly missing activate event.
+		app().log = self
 		
 		# Allow the user first crack at updating menus.
 		flag = handleLeoHook("menu2")
