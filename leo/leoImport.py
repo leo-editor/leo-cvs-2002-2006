@@ -182,11 +182,11 @@ class leoImportCommands:
 				v = self.createOutline(fileName,current)
 				if v: # 8/11/02: createOutline may fail.
 					es("imported " + fileName)
-					c.contractVnode(v)
+					v.contract()
 					v.setDirty()
 					c.setChanged(true)
 			c.validateOutline()
-			c.expandVnode(current)
+			current.expand()
 		c.endUpdate()
 		c.selectVnode(current)
 	#@-body
@@ -423,7 +423,7 @@ class leoImportCommands:
 		for i in xrange(len(files)):
 			fileName = files[i]
 			v = self.createOutlineFromWeb(fileName,current)
-			c.contractVnode(v)
+			v.contract()
 			v.setDirty()
 			c.setChanged(true)
 		c.selectVnode(current)
