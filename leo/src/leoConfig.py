@@ -1245,6 +1245,7 @@ class settingsController:
         #@nonl
         #@-node:ekr.20050121105232:<< set background color for widgets >>
         #@nl
+        c.disableCommandsMessage = 'All commands disabled while settings dialog is open'
         if self.replaceBody:
             #@        << replace the body pane with the outer dialog frame >>
             #@+middle:ekr.20041225073207:When replacing body & tree panes...
@@ -2211,9 +2212,11 @@ class settingsController:
             if endDialog:
                 c.frame.replaceTreePaneWithComponent('tree')
                 c.frame.replaceBodyPaneWithComponent('body')
+                c.disableCommandsMessage = '' # Re-enable all commands.
         else:
             if endDialog:
                 self.dialog.destroy()
+                c.disableCommandsMessage = '' # Re-enable all commands.
             else:
                 self.dialog.withdraw()
                 self.dialog.deiconify()
@@ -2414,9 +2417,11 @@ class settingsController:
             if changed:
                 # print "write","key","ival",ival,"fval",fval
                 if type(oldVal) == type({}):
-                    print "write  %10s -> %10s %s" % ("dict","dict",iname)
+                    s = "write  %s" % (iname)
+                    print s ; g.es(s,color='blue')
                 else:
-                    print "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
+                    s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
+                    print s ; g.es(s,color='blue')
                 self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
                 changedList.append((ip,iname,ikind,oldVal,newVal),)
                 
@@ -2446,7 +2451,7 @@ class settingsController:
                     c2.frame.tree.setFontFromConfig()
                     c2.redraw()
             elif munge(kind) == "color":
-                g.trace("setting colors")
+                # g.trace("setting colors")
                 g.app.config.set(c,name,kind,val)
                 for c2 in (c,self.c):
                     c2.frame.tree.setColorFromConfig()
