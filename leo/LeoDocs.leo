@@ -35,7 +35,7 @@
 <v t="T16" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="E"><vh>Latest version</vh>
-<v t="T17" a="C"><vh>leo.py 3.5</vh>
+<v t="T17" a="CV"><vh>leo.py 3.5</vh>
 <v t="T18"><vh>Bug fixes</vh>
 <v t="T19"><vh>Called cf.flush in leoConfig.update</vh></v>
 <v t="T20"><vh>Fixed crasher in leoFileCommands.readOutlineOnly</vh></v>
@@ -393,7 +393,7 @@
 </v>
 </v>
 </v>
-<v t="T272" a="E"><vh>Users Guide</vh>
+<v t="T272"><vh>Users Guide</vh>
 <v t="T273"><vh>An overview of Leo</vh></v>
 <v t="T274"><vh>Front material</vh>
 <v t="T275"><vh>Title Page &amp; Summary</vh></v>
@@ -486,7 +486,7 @@
 <v t="T305"><vh>Resizing panes</vh></v>
 <v t="T306"><vh>Undoing operations</vh></v>
 </v>
-<v t="T307" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T307"><vh>Chapter 4: Writing Programs in Leo</vh>
 <v t="T308"><vh>Overview</vh></v>
 <v t="T309"><vh>Sections and section references</vh></v>
 <v t="T310"><vh>Organizing @file trees.</vh>
@@ -528,13 +528,13 @@
 </v>
 </v>
 </v>
-<v t="T327" a="E"><vh>More about directives</vh>
+<v t="T327"><vh>More about directives</vh>
 <v t="T328"><vh>@CWEB and @noweb specify the source language</vh></v>
 <v t="T329"><vh>@color and @nocolor control syntax coloring</vh></v>
 <v t="T330"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
 <v t="T331"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
 <v t="T332"><vh>@first directive allows preliminary lines in @file trees</vh></v>
-<v t="T333" a="V"><vh>@language specifying the target language</vh></v>
+<v t="T333"><vh>@language specifying the target language</vh></v>
 <v t="T334"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
 </v>
 <v t="T239" a="C"><vh>About CWEB   </vh></v>
@@ -4567,7 +4567,9 @@ Section definition lines of the form:
 
 (note the equal sign) also start named code sections.  Named code sections in @root trees may be defined in several places.  The definition of a named code section is the concatenation of all code sections with the same name. Body text that defines no code section is ignored.
 
-As in @file trees, paired &lt;&lt; and &gt;&gt; characters on the same line always denote a section name, even within comments are strings.  That is, &lt;&lt; and &gt;&gt; characters that do not delimit a section name must be placed on separate lines.  If &lt;&lt; and &gt;&gt; are not paired on a line, they are treated as literal &lt;&lt; and &gt;&gt; characters. 
+As in @file trees, paired &lt;&lt; and &gt;&gt; characters on the same line always denote a section name, even within comments are strings.  That is, &lt;&lt; and &gt;&gt; characters that do not delimit a section name must be placed on separate lines.  If &lt;&lt; and &gt;&gt; are not paired on a line, they are treated as literal &lt;&lt; and &gt;&gt; characters.
+
+At least one non-blank line must follow the section definition line.  That is, empty sections are not allowed. 
 
 Here is a typical example of body text within an @root tree:
 @color
