@@ -271,7 +271,7 @@ class baseConfig:
     munge = canonicalizeSettingName
     #@nonl
     #@-node:ekr.20041123070429:canonicalizeSettingName (munge)
-    #@+node:ekr.20041123092357:findSettingsPosition
+    #@+node:ekr.20041123092357:config.findSettingsPosition
     def findSettingsPosition (self,c,setting):
         
         """Return the position for the setting in the @settings tree for c."""
@@ -291,7 +291,7 @@ class baseConfig:
         
         return c.nullPosition()
     #@nonl
-    #@-node:ekr.20041123092357:findSettingsPosition
+    #@-node:ekr.20041123092357:config.findSettingsPosition
     #@+node:ekr.20041117083141:get & allies
     def get (self,c,setting,theType):
         
@@ -586,6 +586,16 @@ class baseConfig:
         self.set(c,setting,"string",val)
     #@nonl
     #@-node:ekr.20041118084241:setString
+    #@+node:ekr.20041201080436:config.appendToRecentFiles
+    def appendToRecentFiles (self,files):
+        
+        for file in files:
+            if file in self.recentFiles:
+                self.recentFiles.remove(file)
+            # g.trace(file)
+            self.recentFiles.append(file)
+    #@nonl
+    #@-node:ekr.20041201080436:config.appendToRecentFiles
     #@-node:ekr.20041118084146:Setters
     #@+node:ekr.20041117093246:Scanning @settings
     #@+node:ekr.20041117085625:openSettingsFile
@@ -613,8 +623,10 @@ class baseConfig:
         return c
     #@nonl
     #@-node:ekr.20041117085625:openSettingsFile
-    #@+node:ekr.20041120064303:readSettingsFiles
+    #@+node:ekr.20041120064303:config.readSettingsFiles
     def readSettingsFiles (self,fileName,verbose=True):
+        
+        munge = self.munge
         
         # Init settings from leoSettings.leo files.
         for path,setOptionsFlag in (
@@ -645,6 +657,23 @@ class baseConfig:
                             #@nl
                         if setOptionsFlag:
                             self.localOptionsDict[c] = d
+                            #@                        << update recent files from d >>
+                            #@+node:ekr.20041201081440:<< update recent files from d >>
+                            for key in d.keys():
+                                if munge(key) == "recentfiles":
+                                    data = d.get(key)
+                                    # Entries were created by parserBaseClass.set.
+                                    # They have the form: path,kind,val
+                                    path,kind,files = data
+                                    files = [file.strip() for file in files]
+                                    if 0:
+                                        print "config.readSettingsFiles.  recent files..."
+                                        for file in files:
+                                            print file
+                                    self.appendToRecentFiles(files)
+                            #@nonl
+                            #@-node:ekr.20041201081440:<< update recent files from d >>
+                            #@nl
                         else:
                             self.dictList.insert(0,d)
                     else:
@@ -653,7 +682,7 @@ class baseConfig:
     
         self.inited = True
     #@nonl
-    #@-node:ekr.20041120064303:readSettingsFiles
+    #@-node:ekr.20041120064303:config.readSettingsFiles
     #@+node:ekr.20041117083857.1:readSettings
     # Called to read all leoSettings.leo file.
     # Also called when opening an .leo file to read @settings tree.
