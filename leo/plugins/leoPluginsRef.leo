@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3616" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3639" clone_windows="0"/>
 <globals body_outline_ratio="0.461538461538">
-	<global_window_position top="19" left="277" height="897" width="873"/>
+	<global_window_position top="6" left="385" height="897" width="873"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
+<v t="bwmulder.20050327101545"><vh>@settings</vh>
+<v t="bwmulder.20050327101545.1"><vh>@page rst2</vh>
+<v t="bwmulder.20050327101545.2"><vh>@bool rst2_bodyfilter = False</vh></v>
+<v t="bwmulder.20050327101545.3"><vh>@bool rst2file = False</vh></v>
+<v t="bwmulder.20050327101545.4"><vh>@bool rst2_format_headlines = False</vh></v>
+<v t="bwmulder.20050327101545.5"><vh>@bool rst2_clear_attributes=False</vh></v>
+<v t="bwmulder.20050327101545.6"><vh>@bool rst2_run_on_open_window = False</vh></v>
+<v t="bwmulder.20050327101545.7"><vh>@bool rst2_http_server_support = False</vh></v>
+<v t="bwmulder.20050327101545.8"><vh>@bool rst2_replace_code_blocks = False</vh></v>
+<v t="bwmulder.20050327101545.9"><vh>@string rst2_node_begin_marker=http-node-marker-</vh></v>
+</v>
+<v t="bwmulder.20050327101545.10"><vh>@page debug settings for rst2</vh>
+<v t="bwmulder.20050327101545.11"><vh>@bool rst2_debug_handle_starttag = False</vh></v>
+<v t="bwmulder.20050327101545.12"><vh>@bool rst2_debug_store_lines = False</vh></v>
+<v t="bwmulder.20050327101545.13"><vh>@bool rst2_debug_handle_endtag = False</vh></v>
+<v t="bwmulder.20050327101545.14"><vh>@bool rst2_debug_show_unknownattributes = False</vh></v>
+<v t="bwmulder.20050327101545.15"><vh>@bool rst2_debug_node_html_1 = False</vh></v>
+<v t="bwmulder.20050327101545.16"><vh>@bool rst2_debug_anchors = False</vh></v>
+<v t="bwmulder.20050327101545.17"><vh>@bool rst2_debug_before_and_after_replacement = False</vh></v>
+</v>
+<v t="bwmulder.20050327101545.18"><vh>@page http</vh>
+<v t="bwmulder.20050327101545.19"><vh>@bool http_active = False</vh></v>
+<v t="bwmulder.20050327101545.20"><vh>@int http_port = 8080</vh></v>
+<v t="bwmulder.20050327101545.21"><vh>@int http_timeout = 0</vh></v>
+<v t="bwmulder.20050327101545.22"><vh>@string rst2_http_attributename = rst_http_attribute</vh></v>
+</v>
+</v>
 <v t="edream.110203113231"
 marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></v>
 <v t="ekr.20041211035618"><vh>Scripts, buttons &amp; settings</vh>
@@ -26,7 +53,7 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 <v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins</vh>
+<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
@@ -194,8 +221,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 </v>
 <v t="edream.110403140857.7"><vh>Release notes</vh></v>
 </v>
-<v t="edream.110403140857.8"
-expanded="edream.110403140857.19,"><vh>@thin color_markup.py</vh></v>
+<v t="edream.110403140857.8"><vh>@thin color_markup.py</vh></v>
 </v>
 <v t="edream.110203113231.925"><vh>@thin script_io_to_body.py</vh></v>
 </v>
@@ -228,8 +254,7 @@ expanded="edream.110403140857.19,"><vh>@thin color_markup.py</vh></v>
 <v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
 <v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
 <v t="ekr.20040915073259.1"><vh>@thin maximizeNewWindows.py</vh></v>
-<v t="mork.20041022155742.1"
-expanded="mork.20041022160305,"><vh>@thin nodebar.py</vh></v>
+<v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
 <v t="edream.110203113231.924"><vh>@thin redirect_to_log.py</vh></v>
 <v t="ekr.20040915073637"><vh>@thin TabbedLog.py</vh></v>
 <v t="ekr.20040915075530"><vh>@thin UASearch.py</vh></v>
@@ -503,8 +528,8 @@ expanded="mork.20041022160305,"><vh>@thin nodebar.py</vh></v>
 <v t="EKR.20040517075715.4"><vh>@thin open_with.py</vh></v>
 <v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
 <v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
-<v t="EKR.20040517075715.13" a="E"><vh>Word export</vh>
-<v t="EKR.20040517075715.14" a="E"><vh>@thin word_export.py</vh></v>
+<v t="EKR.20040517075715.13"><vh>Word export</vh>
+<v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
 <v t="EKR.20040517075715.20" tnodeList="EKR.20040517075715.20"><vh>@file-nosent word_export.ini</vh></v>
 </v>
 </v>
@@ -533,8 +558,7 @@ expanded="mork.20041022160305,"><vh>@thin nodebar.py</vh></v>
 <v t="edream.110203113231.872"><vh>New kinds of nodes</vh>
 <v t="edream.110203113231.873"><vh>@thin at_folder.py</vh></v>
 <v t="ekr.20040915085351"><vh>@thin at_produce.py</vh></v>
-<v t="ktenney.20041211072654.1" a="E"
-expanded="ktenney.20041211072654.7,"><vh>@thin at_view.py</vh></v>
+<v t="ktenney.20041211072654.1"><vh>@thin at_view.py</vh></v>
 <v t="edream.110203113231.876"><vh>@thin read_only_nodes.py</vh></v>
 <v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
 <v t="ekr.20040828103325"><vh>@thin startfile.py</vh></v>
@@ -558,7 +582,6 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 <v t="ekr.20050111122605"><vh>Servers</vh>
 <v t="EKR.20040517080250"><vh>http plugin</vh>
-<v t="EKR.20040517080250.49"><vh>@thin mod_http.ini</vh></v>
 <v t="EKR.20040517080250.1"><vh>@thin mod_http.py</vh></v>
 </v>
 </v>
@@ -628,10 +651,10 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 <v t="ekr.20040331071919.8"><vh>&lt;&lt; root of mod_leo2ascd.py &gt;&gt;</vh>
 <v t="ekr.20040331071919.9"><vh>&lt;&lt; Key Functions &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.10" a="E"><vh>&lt;&lt; Declarations and Utilities &gt;&gt;</vh>
+<v t="ekr.20040331071919.10"><vh>&lt;&lt; Declarations and Utilities &gt;&gt;</vh>
 <v t="ekr.20040331071919.11"><vh>&lt;&lt; The Code -- Declarations and Utilities &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040331071919.12" a="E"><vh>&lt;&lt; Write the outline tree as AsciiDoc file &gt;&gt;</vh>
+<v t="ekr.20040331071919.12"><vh>&lt;&lt; Write the outline tree as AsciiDoc file &gt;&gt;</vh>
 <v t="ekr.20040331071919.13"><vh>&lt;&lt; Write a node &gt;&gt;</vh></v>
 </v>
 </v>
@@ -689,7 +712,7 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 </v>
 </v>
 </v>
-<v t="ekr.20050226183339" a="ETV"><vh>New in 4.3a4</vh>
+<v t="ekr.20050226183339"><vh>New in 4.3a4</vh>
 <v t="ekr.20050226090248"><vh>New/updated from Leo User</vh>
 <v t="mork.20041020082242.1"><vh>@thin base64Packager.py</vh></v>
 <v t="mork.20041018162155.1"><vh>@thin EditAttributes.py</vh></v>
@@ -735,8 +758,7 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 <v t="ekr.20050227071948.29" annotate="7d71002e"><vh>drawing hooks</vh></v>
 </v>
 </v>
-<v t="ekr.20050227071948.33" annotate="540c0100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334643066323736323535303436653666363436353731303532383638303236663731303635353034363636393663363537313037363235353032363236373731303832383638303236663731303935353030373130613632353530393631373236333638363537343739373036353731306232383638303236663731306335353035346637343638363537323731306436323535303236363637373130653238363830323666373130663638306136323735326571002e"
-expanded="ekr.20050227085542.1,ekr.20050227085542.2,"><vh>@thin cleo.py</vh></v>
+<v t="ekr.20050227071948.33" annotate="540c0100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334643066323736323535303436653666363436353731303532383638303236663731303635353034363636393663363537313037363235353032363236373731303832383638303236663731303935353030373130613632353530393631373236333638363537343739373036353731306232383638303236663731306335353035346637343638363537323731306436323535303236363637373130653238363830323666373130663638306136323735326571002e"><vh>@thin cleo.py</vh></v>
 </v>
 <v t="ekr.20050303080042"><vh>footprints</vh>
 <v t="ekr.20050303080236"><vh>To do</vh></v>
@@ -2245,6 +2267,72 @@ class basic_dict_test(unittest.TestCase):
     dict.__init__(self, value)
     self.set_monitor_object(monitor)
 </t>
+<t tx="bwmulder.20050327101545">@nocolor</t>
+<t tx="bwmulder.20050327101545.1">Here are the possible settings for the rst2 plugin.
+
+Typical settings:
+
+Everything false: previous version of plugin.
+
+Everything false except rst2_replace_code_blocks:
+
+Like the old plugin, but some of the documentation of Leo works even if Silvercity is not installed.
+
+rst2_bodyfilter = True
+rstfile = True
+rst2_format_headlines = True
+rst2_run_on_open_window = True
+rst2_http_server_support = True
+
+Format (non-code) documents.</t>
+<t tx="bwmulder.20050327101545.2">A pure document contains (only) node for rst formatting.
+
+If this is not set, then the plugins assumes that rst code is only under @rst nodes.</t>
+<t tx="bwmulder.20050327101545.3">Set to true if the rst file should be written to disk.
+
+Useful for debugging.
+
+The name is the same as the html file with the extension .txt.</t>
+<t tx="bwmulder.20050327101545.4">Should headline be included in the html file?
+</t>
+<t tx="bwmulder.20050327101545.5">Set this attribute to clear all http attribute (the name is set by the rst2_http_attributename setting).
+
+Useful to clean up the document from unwanted html attributes.</t>
+<t tx="bwmulder.20050327101545.6">Should rst nodes be formatted as soon as the window is opened?</t>
+<t tx="bwmulder.20050327101545.7">Attach http code to nodes so that the http plugin can use the code for display.
+</t>
+<t tx="bwmulder.20050327101545.8">Compatibility option if you format some code which has the code-block directive, but the silvercity software is not installed.</t>
+<t tx="bwmulder.20050327101545.9">Internal marker used to delimit the http code for one node.
+
+This marker must not be occur elsewhere in the document.
+
+Unless your document contains this marker, you should not need to change this setting.</t>
+<t tx="bwmulder.20050327101545.10"></t>
+<t tx="bwmulder.20050327101545.11"></t>
+<t tx="bwmulder.20050327101545.12"></t>
+<t tx="bwmulder.20050327101545.13"></t>
+<t tx="bwmulder.20050327101545.14"></t>
+<t tx="bwmulder.20050327101545.15"></t>
+<t tx="bwmulder.20050327101545.16"></t>
+<t tx="bwmulder.20050327101545.17"></t>
+<t tx="bwmulder.20050327101545.18"></t>
+<t tx="bwmulder.20050327101545.19">Use this option to activate the http plugin.
+
+Point your browser to http://localhost:8080 to start browsing your outline.
+
+Use http_port to change the default port.</t>
+<t tx="bwmulder.20050327101545.20">The port used for the http server.
+
+Default is 8080.
+
+</t>
+<t tx="bwmulder.20050327101545.21">Timeout for the select call of the server in milliseconds.
+
+Normally, there is no need to change this setting.;
+</t>
+<t tx="bwmulder.20050327101545.22">Attribute used in vnodes to store the http code for a node.
+ 
+Normally you would have little reason to change this settings.</t>
 <t tx="edream.110203113231.233">@ To do:
     
      WARNING: problems with locking out event handlers could cause Leo to drop Text!
@@ -7982,9 +8070,7 @@ used. Maybe this information can be centralized.
 
 - Simplify the directory settings.</t>
 <t tx="ekr.20050217093214">@nocolor</t>
-<t tx="ekr.20050217093214.1">C:\prog\leoCVS\leo\test\test.leo
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo</t>
+<t tx="ekr.20050217093214.1">C:\code\leo\leo\plugins\leoPluginsRef.leo</t>
 <t tx="ekr.20050226090248"> </t>
 <t tx="ekr.20050226183339"></t>
 <t tx="ekr.20050227071948"></t>

@@ -84,7 +84,9 @@ class config:
 #@nl
 #@+others
 #@+node:bwmulder.20050326224000:possible @settings
-See the rst2 plugin.
+#@+doc
+# See the beginning of the LEO file
+#@-doc
 #@nonl
 #@-node:bwmulder.20050326224000:possible @settings
 #@+node:bwmulder.20050326191345.1:onFileOpen

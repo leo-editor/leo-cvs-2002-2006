@@ -20,6 +20,10 @@ import ConfigParser
 from HTMLParser import HTMLParser
 from pprint import pprint
 try:
+    import sys
+    dir = os.path.split(__file__)[0]
+    if dir not in sys.path:
+        sys.path.append(dir)
     import mod_http
     from mod_http import set_http_attribute, get_http_attribute, reconstruct_html_from_attrs
 except:
@@ -57,123 +61,13 @@ except:
 # 2.3 bwmulder
 #     - added various options which can be set with @settings directive
 #     - add support for mod_http plugin.
+#     - added possible settings to the beginning of the Leo file
 #@-at
 #@nonl
 #@-node:ekr.20040331071319.2:<< change log >>
 #@nl
 
 #@+others
-#@+node:bwmulder.20050326220848:Possible settings with rst2 and http plugin
-#@+node:bwmulder.20050326220848.1:@settings
-#@@nocolor
-#@nonl
-#@+node:bwmulder.20050326220848.2:@page rst2
-Here are the possible settings for the rst2 plugin.
-
-Typical settings:
-
-Everything false: previous version of plugin.
-
-Everything false except rst2_replace_code_blocks:
-
-Like the old plugin, but some of the documentation of Leo works even if Silvercity is not installed.
-
-rst2_bodyfilter = True
-rstfile = True
-rst2_format_headlines = True
-rst2_run_on_open_window = True
-rst2_http_server_support = True
-
-Format (non-code) documents.
-#@nonl
-#@+node:bwmulder.20050326220848.3:@bool rst2_bodyfilter = True
-A pure document contains (only) node for rst formatting.
-
-If this is not set, then the plugins assumes that rst code is only under @rst nodes.
-#@nonl
-#@-node:bwmulder.20050326220848.3:@bool rst2_bodyfilter = True
-#@+node:bwmulder.20050326220848.4:@bool rst2file = True
-Set to true if the rst file should be written to disk.
-
-Useful for debugging.
-
-The name is the same as the html file with the extension .txt.
-#@nonl
-#@-node:bwmulder.20050326220848.4:@bool rst2file = True
-#@+node:bwmulder.20050326220848.5:@bool rst2_format_headlines = True
-Should headline be included in the html file?
-#@-node:bwmulder.20050326220848.5:@bool rst2_format_headlines = True
-#@+node:bwmulder.20050326220848.6:@bool rst2_clear_attributes=False
-Set this attribute to clear all http attribute (the name is set by the rst2_http_attributename setting).
-
-Useful to clean up the document from unwanted html attributes.
-#@nonl
-#@-node:bwmulder.20050326220848.6:@bool rst2_clear_attributes=False
-#@+node:bwmulder.20050326220848.7:@bool rst2_run_on_open_window = True
-Should rst nodes be formatted as soon as the window is opened?
-#@nonl
-#@-node:bwmulder.20050326220848.7:@bool rst2_run_on_open_window = True
-#@+node:bwmulder.20050326220848.8:@bool rst2_http_server_support=True
-Attach http code to nodes so that the http plugin can use the code for display.
-#@-node:bwmulder.20050326220848.8:@bool rst2_http_server_support=True
-#@+node:bwmulder.20050326220848.9:@bool rst2_replace_code_blocks = True
-Compatibility option if you format some code which has the code-block directive, but the silvercity software is not installed.
-#@nonl
-#@-node:bwmulder.20050326220848.9:@bool rst2_replace_code_blocks = True
-#@+node:bwmulder.20050326220848.10:@string rst2_node_begin_marker=http-node-marker-
-Internal marker used to delimit the http code for one node.
-
-This marker must not be occur elsewhere in the document.
-
-Unless your document contains this marker, you should not need to change this setting.
-#@nonl
-#@-node:bwmulder.20050326220848.10:@string rst2_node_begin_marker=http-node-marker-
-#@+node:bwmulder.20050326220848.11:@page debug settings for rst2
-#@+node:bwmulder.20050326220848.12:@bool rst2_debug_handle_starttag = False
-#@-node:bwmulder.20050326220848.12:@bool rst2_debug_handle_starttag = False
-#@+node:bwmulder.20050326220848.13:@bool rst2_debug_store_lines = False
-#@-node:bwmulder.20050326220848.13:@bool rst2_debug_store_lines = False
-#@+node:bwmulder.20050326220848.14:@bool rst2_debug_handle_endtag = False
-#@-node:bwmulder.20050326220848.14:@bool rst2_debug_handle_endtag = False
-#@+node:bwmulder.20050326220848.15:@bool rst2_debug_show_unknownattributes = False
-#@-node:bwmulder.20050326220848.15:@bool rst2_debug_show_unknownattributes = False
-#@+node:bwmulder.20050326220848.16:@bool rst2_debug_node_html_1 = False
-#@-node:bwmulder.20050326220848.16:@bool rst2_debug_node_html_1 = False
-#@+node:bwmulder.20050326220848.17:@bool rst2_debug_anchors = False
-#@-node:bwmulder.20050326220848.17:@bool rst2_debug_anchors = False
-#@+node:bwmulder.20050326220848.18:@bool rst2_debug_before_and_after_replacement = False
-#@-node:bwmulder.20050326220848.18:@bool rst2_debug_before_and_after_replacement = False
-#@-node:bwmulder.20050326220848.11:@page debug settings for rst2
-#@-node:bwmulder.20050326220848.2:@page rst2
-#@+node:bwmulder.20050326220848.19:@page http
-#@+node:bwmulder.20050326220848.20:@bool http_active = True
-Use this option to activate the http plugin.
-
-Point your browser to http://localhost:8080 to start browsing your outline.
-
-Use http_port to change the default port.
-#@nonl
-#@-node:bwmulder.20050326220848.20:@bool http_active = True
-#@+node:bwmulder.20050326220848.21:@int http_port = 8080 
-The port used for the http server.
-
-Default is 8080.
-
-#@-node:bwmulder.20050326220848.21:@int http_port = 8080 
-#@+node:bwmulder.20050326220848.22:@int http_timeout = 0
-Timeout for the select call of the server in milliseconds.
-
-Normally, there is no need to change this setting.;
-#@-node:bwmulder.20050326220848.22:@int http_timeout = 0
-#@+node:bwmulder.20050326220848.23:@string rst2_http_attributename = rst_http_attribute
-Attribute used in vnodes to store the http code for a node.
- 
-Normally you would have little reason to change this settings.
-#@nonl
-#@-node:bwmulder.20050326220848.23:@string rst2_http_attributename = rst_http_attribute
-#@-node:bwmulder.20050326220848.19:@page http
-#@-node:bwmulder.20050326220848.1:@settings
-#@-node:bwmulder.20050326220848:Possible settings with rst2 and http plugin
 #@+node:bwmulder.20050319123911:http plugin interface
 #@+doc
 # if enabled, this plugin stores information for the http plugin.
@@ -616,6 +510,9 @@ def applyConfiguration (c):
     getboolean("rst2_bodyfilter")
     getboolean("rst2_clear_attributes")
     getboolean("rst2_http_server_support")
+    if config.rst2_http_server_support and not mod_http:
+        g.es("Resetting rst2_http_server_support because mod_http plugin was not imported successfully", color='red')
+        config.rst2_http_server_support = False
     getboolean("rst2_pure_document")
     getboolean("rst2_format_headlines")
     # getboolean("rst2_warnofdrags")
