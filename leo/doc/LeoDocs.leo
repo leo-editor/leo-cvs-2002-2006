@@ -1655,7 +1655,7 @@
 <v t="edream.110203163054.1157"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050" a="E"><vh>FAQ</vh>
+<v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
@@ -1743,7 +1743,7 @@
 <v t="edream.120903151103"><vh>Importing files</vh>
 <v t="edream.120903151103.1"><vh>How can I import many files at once?</vh></v>
 </v>
-<v t="edream.110203163054.1071" a="E"><vh>Other topics</vh>
+<v t="edream.110203163054.1071"><vh>Other topics</vh>
 <v t="edream.110203163054.1072"><vh>How can I cut and paste nodes between different copies of Leo</vh></v>
 <v t="edream.110203163054.1073"><vh>How can I add support in Leo for a new language?</vh>
 <v t="edream.110203163054.1074"><vh>code</vh>
@@ -1792,7 +1792,7 @@
 </v>
 </v>
 <v t="edream.110203163054.1108"><vh>How can I create a template .leo file?</vh></v>
-<v t="ekr.20040411074926" a="TV"><vh>How can I use Leo to develop Leo itself?</vh></v>
+<v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo itself?</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.1158"><vh>Sample Code</vh>
@@ -1867,50 +1867,50 @@
 </v>
 <v t="ekr.20040403175746" a="E"><vh>Scripting chapter using the rst plugin</vh>
 <v t="ekr.20040403171740" a="E"><vh>@rst scripting.html</vh>
-<v t="ekr.20040403183229" a="E"><vh>Overview</vh>
+<v t="ekr.20040403183229"><vh>Overview</vh>
 <v t="ekr.20040403183229.1"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403175011" a="E"><vh>g.top(): the commander of the top window</vh>
+<v t="ekr.20040403175011"><vh>g.top(): the commander of the top window</vh>
 <v t="ekr.20040403175011.1"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.3" a="E"><vh>g.es(): write to the log pane</vh>
+<v t="ekr.20040403173920.3"><vh>g.es(): write to the log pane</vh>
 <v t="ekr.20040403175257"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403175157.1" a="E"><vh>app.windowList: the list of all open frames</vh>
+<v t="ekr.20040403175157.1"><vh>app.windowList: the list of all open frames</vh>
 <v t="ekr.20040403175157.2"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.6" a="E"><vh>Getting and setting headline and body text</vh>
+<v t="ekr.20040403173920.6"><vh>Getting and setting headline and body text</vh>
 <v t="ekr.20040403180217"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.9" a="E"><vh>Traversing outlines</vh>
-<v t="ekr.20040403183934" a="E"><vh>@rst</vh>
-<v t="ekr.20040403173920.10" a="E"><vh>c.allNodes_iter</vh>
+<v t="ekr.20040403173920.9"><vh>Traversing outlines</vh>
+<v t="ekr.20040403183934"><vh>@rst</vh>
+<v t="ekr.20040403173920.10"><vh>c.allNodes_iter</vh>
 <v t="ekr.20040403185643"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.13" a="E"><vh>p.children_iter</vh>
+<v t="ekr.20040403173920.13"><vh>p.children_iter</vh>
 <v t="ekr.20040403185803"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.14" a="E"><vh>p.parents_iter and p.self_and_parents_iter</vh>
+<v t="ekr.20040403173920.14"><vh>p.parents_iter and p.self_and_parents_iter</vh>
 <v t="ekr.20040403185803.1"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.15" a="E"><vh>p.siblings_iter and p.following_siblings_iter</vh>
+<v t="ekr.20040403173920.15"><vh>p.siblings_iter and p.following_siblings_iter</vh>
 <v t="ekr.20040403185803.2"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.16" a="E"><vh>p.subtree_iter and p.self_and_subtree_iter</vh>
+<v t="ekr.20040403173920.16"><vh>p.subtree_iter and p.self_and_subtree_iter</vh>
 <v t="ekr.20040403185803.3"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20040403173920.17" a="E"><vh>Updating the screen</vh>
+<v t="ekr.20040403173920.17"><vh>Updating the screen</vh>
 <v t="ekr.20040403183934.1"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.18" a="E"><vh>Invoking commands from scripts</vh>
+<v t="ekr.20040403173920.18"><vh>Invoking commands from scripts</vh>
 <v t="ekr.20040403183934.2"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.19" a="E"><vh>Getting and setting preferences</vh>
+<v t="ekr.20040403173920.19"><vh>Getting and setting preferences</vh>
 <v t="ekr.20040403183934.3"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.21" a="E"><vh>Functions for finding and changing text from scripts</vh>
+<v t="ekr.20040403173920.21"><vh>Functions for finding and changing text from scripts</vh>
 <v t="ekr.20040403184306.1" a="E"><vh>@rst</vh>
 <v t="ekr.20040403191729" a="E"><vh>g.findAll</vh>
 <v t="ekr.20040403173920.22" a="E"><vh>@rst</vh></v>
@@ -1920,21 +1920,24 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040403173920.24" a="E"><vh>Running Leo in batch mode</vh>
+<v t="ekr.20040403173920.24"><vh>Running Leo in batch mode</vh>
 <v t="ekr.20040403184306.2"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.25" a="E"><vh>Functions defined in leoGlobals.py</vh>
+<v t="ekr.20040403173920.25"><vh>Functions defined in leoGlobals.py</vh>
 <v t="ekr.20040403184306.3"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.5" a="E"><vh>Redirecting output from scripts</vh>
+<v t="ekr.20040403173920.5"><vh>Redirecting output from scripts</vh>
 <v t="ekr.20040403183718"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.26" a="E"><vh>Summary of the vnode and position classes</vh>
 <v t="ekr.20040403184306.4" a="E"><vh>@rst</vh>
+<v t="ekr.20040411151245" a="E"><vh>Iterators</vh>
+<v t="ekr.20040411151245.1" a="TV"><vh>@rst</vh></v>
+</v>
 <v t="ekr.20040403173920.27" a="E"><vh>Getters</vh>
 <v t="ekr.20040403192653"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.28" a="E"><vh>Setters</vh>
+<v t="ekr.20040403173920.28"><vh>Setters</vh>
 <v t="ekr.20040403192653.1"><vh>@rst</vh></v>
 </v>
 </v>
@@ -12348,8 +12351,7 @@ leoGlobals.py contains many "utility" functions and other names.  The following 
 
 Most scripts will use methods of the position class to access information in an outline.
 The following section summarizes the most useful methods that your scripts can use.
-For a complete list, see the @file leoNodes.py tree of LeoPy.leo.
-**N.B.** Both the position and vnode classes support similar methods.  However, iterators exist only in the position class.</t>
+For a complete list, see the @file leoNodes.py tree of LeoPy.leo.</t>
 <t tx="ekr.20040403185643">@ignore
 @wrap
 
@@ -12572,5 +12574,22 @@ The benefits of the new workflow:
 - LeoPy.leo runs with the _old_ code, so it is much easier to fix syntax errors or exceptions in the _new_ code: just fix the problem and save LeoPy.leo _without_ closing LeoPy.leo., then restart test.leo. Tests are run on new code; editing is done on old, stable code.
 
 - test.leo is the perfect place to develop test.  I can create and organize those tests and when I am done, test.leo is a log of my work.</t>
+<t tx="ekr.20040411151245"></t>
+<t tx="ekr.20040411151245.1">@ignore
+@nocolor
+@wrap
+
+Iterators exist only in the position class:
+
+.. code-block:: Python
+
+	c.allNodes_iter            # returns all positions in c's outline.
+	p.children_iter            # returns all children of p.
+	p.parents_iter             # returns all parents of p.
+	p.self_and_parents_iter    # returns p and all parents of p.
+	p.siblings_iter            # returns all siblings of p, including p.
+	p.following_siblings_iter  # returns all siblings following p.
+	p.subtree_iter             # returns all positions in p's subtree, excluding p.
+	p.self_and_subtree_iter    # returns all positions in p's subtree, including p.</t>
 </tnodes>
 </leo_file>

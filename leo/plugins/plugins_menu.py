@@ -8,17 +8,15 @@
 
 ## To do: add Revert button to each dialog.
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 import ConfigParser,glob,os,sys
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
-Tk = Tkinter
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	#@	@+others
 	#@+node:class Plugin
@@ -42,7 +40,7 @@ if Tkinter: # Register the handlers...
 				self.name = self.mod.__name__
 				self.doc = self.mod.__doc__
 				self.version = self.mod.__dict__.get("__version__") # "<unknown>")
-				# if self.version: print self.version,shortFileName(filename)
+				# if self.version: print self.version,g.shortFileName(filename)
 			except: return
 		
 			#@	<< Check if this can be configured >>
@@ -132,12 +130,12 @@ if Tkinter: # Register the handlers...
 			#@nl
 			#@	<< create the frame from the configuration data >>
 			#@+node:<< create the frame from the configuration data >>
-			root = app.root
+			root = g.app.root
 			
 			#@<< Create the top level and the main frame >>
 			#@+node:<< Create the top level and the main frame >>
 			self.top = top = Tk.Toplevel(root)
-			app.gui.attachLeoIcon(self.top)
+			g.app.gui.attachLeoIcon(self.top)
 			top.title("Properties of "+ plugin.name)
 			top.resizable(0,0) # neither height or width is resizable.
 				
@@ -188,7 +186,7 @@ if Tkinter: # Register the handlers...
 			#@-node:<< Create Ok, Cancel and Apply buttons >>
 			#@nl
 			
-			app.gui.center_dialog(top) # Do this after packing.
+			g.app.gui.center_dialog(top) # Do this after packing.
 			top.grab_set() # Make the dialog a modal dialog.
 			top.focus_force() # Get all keystrokes.
 			root.wait_window(top)
@@ -241,9 +239,9 @@ if Tkinter: # Register the handlers...
 			version and description of a plugin.
 			"""
 		
-			root = app.root
+			root = g.app.root
 			self.top = top = Tk.Toplevel(root)
-			app.gui.attachLeoIcon(self.top)
+			g.app.gui.attachLeoIcon(self.top)
 			top.title("About " + name)
 			top.resizable(0,0) # neither height or width is resizable.
 			
@@ -274,7 +272,7 @@ if Tkinter: # Register the handlers...
 			#@-node:<< Create the close button >>
 			#@nl
 			
-			app.gui.center_dialog(top) # Do this after packing.
+			g.app.gui.center_dialog(top) # Do this after packing.
 			top.grab_set() # Make the dialog a modal dialog.
 			top.focus_force() # Get all keystrokes.
 			root.wait_window(top)
@@ -288,7 +286,7 @@ if Tkinter: # Register the handlers...
 		c = keywords.get("c")
 		old_path = sys.path[:] # Make a _copy_ of the path.
 	
-		path = os.path.join(app.loadDir,"..","plugins")
+		path = os.path.join(g.app.loadDir,"..","plugins")
 		sys.path = path
 		
 		if os.path.exists(path):
@@ -326,14 +324,14 @@ if Tkinter: # Register the handlers...
 	#@-node:createPluginsMenu
 	#@-others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
-		registerHandler("create-optional-menus",createPluginsMenu)
+	if g.app.gui.guiName() == "tkinter":
+		leoPlugins.registerHandler("create-optional-menus",createPluginsMenu)
 		
 		__version__ = "1.2"
-		plugin_signon(__name__)
+		g.plugin_signon(__name__)
 #@nonl
 #@-node:@file plugins_menu.py
 #@-leo

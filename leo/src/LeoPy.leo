@@ -4205,7 +4205,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107064101.1"><vh>4.2 Projects</vh>
+<v t="ekr.20040107064101.1" a="TV"><vh>4.2 Projects</vh>
 <v t="ekr.20040326032652"><vh> Notes</vh>
 <v t="ekr.20040301192211"><vh> What I did</vh>
 <v t="ekr.20040311124726"><vh>Features of 4.2</vh></v>
@@ -5797,6 +5797,68 @@
 </v>
 <v t="ekr.20040412061129"><vh>4/12</vh>
 <v t="ekr.20040412061129.1"><vh>Created Dump Outline command</vh></v>
+<v t="ekr.20040409083211"><vh>(Fixed problems deleting cloned nodes &amp; trees) </vh>
+<v t="ekr.20040409083211.1"><vh>tracebacks</vh></v>
+<v t="ekr.20040409160021"><vh>Notes</vh></v>
+<v t="ekr.20040409130322"><vh>commands &amp; fileCommands methods...</vh>
+<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
+<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1865" a="M"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="ekr.20040324082713"><vh>&lt;&lt; Put tnodeList and unKnownAttributes &gt;&gt;</vh>
+<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1866"><vh>&lt;&lt; Write the head text &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1193"><vh>c.deleteOutline</vh></v>
+<v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
+<v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
+<v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
+<v t="ekr.20040323155951"><vh>&lt;&lt; do full tests &gt;&gt;</vh>
+<v t="ekr.20040314035615"><vh>assert consistency of threadNext &amp; threadBack links</vh></v>
+<v t="ekr.20040314035615.1"><vh>assert consistency of next and back links</vh></v>
+<v t="ekr.20040314035615.2"><vh>assert consistency of parent and chiild links</vh></v>
+<v t="ekr.20040323155951.1"><vh>assert consistency of directParents and parent</vh></v>
+<v t="ekr.20040323161837"><vh>assert consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040323162707"><vh>assert that clones actually share subtrees</vh></v>
+<v t="ekr.20040314043623"><vh>assert consistency of vnodeList</vh></v>
+</v>
+<v t="ekr.20040314043900"><vh>&lt;&lt;print summary message &gt;&gt;</vh></v>
+<v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040412060927"><vh>c.dumpOutline</vh></v>
+</v>
+<v t="ekr.20040312145256"><vh>v.dump</vh></v>
+<v t="ekr.20040409130322.2"><vh>position methods ...</vh>
+<v t="ekr.20040310062332"><vh>p.Link/Unlink methods</vh>
+<v t="ekr.20040310062332.1"><vh>p.invalidOutline</vh></v>
+<v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
+<v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
+<v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
+<v t="ekr.20040310062332.5" a="M"><vh>p.unlink</vh></v>
+</v>
+<v t="ekr.20040303175026.2"><vh>p.doDelete</vh></v>
+<v t="ekr.20031218072017.4146"><vh>p.lastVisible &amp; oldLastVisible</vh></v>
+<v t="ekr.20040310153624"><vh>p.dump &amp; p.vnodeListIds</vh></v>
+<v t="ekr.20040228094013.1"><vh>p.utils...</vh>
+<v t="ekr.20040117171654"><vh>p.copy</vh></v>
+<v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
+<v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040409203454"><vh>p.restoreLinksInTree</vh></v>
+<v t="ekr.20040409203454.1"><vh>p.deleteLinksInTree &amp; allies</vh>
+<v t="ekr.20040410170806"><vh>p.deleteLinksInSubtree</vh></v>
+<v t="ekr.20040410170806.1"><vh>p.adjustParentLinksInSubtree</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040409163052"><vh>Undo</vh>
+<v t="ekr.20031218072017.2034"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2041"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040414073612"><vh>4/14</vh>
+<v t="ekr.20040414073612.1"><vh>Fixed several minor bugs in Tangle logic</vh></v>
 </v>
 </v>
 </v>
@@ -6328,7 +6390,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
+<v t="ekr.20031218072017.2604" a="E"><vh>Core classes...</vh>
 <v t="ekr.20031218072017.2605" tnodeList="ekr.20031218072017.2605,ekr.20031218072017.2606,ekr.20031218072017.1934,ekr.20031218072017.1935,ekr.20040411081633,ekr.20031218072017.1936,ekr.20031218072017.1937,ekr.20031218072017.1624,ekr.20031218072017.1938,ekr.20031218072017.1939,ekr.20031218072017.2607"><vh>@file leo.py </vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
@@ -6861,7 +6923,7 @@
 <v t="ekr.20031218072017.3443"><vh>registerHandler</vh></v>
 <v t="ekr.20031218072017.3444"><vh>registerExclusiveHandler</vh></v>
 </v>
-<v t="ekr.20031218072017.3446" tnodeList="ekr.20031218072017.3446,ekr.20031218072017.2411,ekr.20031218072017.3447,ekr.20031218072017.3449,ekr.20031218072017.3450,ekr.20031218072017.3451,ekr.20031218072017.3452,ekr.20031218072017.3453,ekr.20031218072017.3454,ekr.20031218072017.3455,ekr.20031218072017.3456,ekr.20031218072017.3457,ekr.20031218072017.3458,ekr.20031218072017.3459,ekr.20031218072017.3460,ekr.20031218072017.3461,ekr.20031218072017.3462,ekr.20031218072017.3463,ekr.20031218072017.3464,ekr.20031218072017.3465,ekr.20031218072017.3466,ekr.20031218072017.1356,ekr.20031218072017.1357,ekr.20031218072017.1358,ekr.20031218072017.1359,ekr.20031218072017.3467,ekr.20031218072017.3468,ekr.20031218072017.3469,ekr.20031218072017.3470,ekr.20031218072017.3471,ekr.20031218072017.3472,ekr.20031218072017.3473,ekr.20031218072017.3474,ekr.20031218072017.3475,ekr.20031218072017.3476,ekr.20031218072017.3477,ekr.20031218072017.3478,ekr.20031218072017.3479,ekr.20031218072017.3480,ekr.20031218072017.3481,ekr.20031218072017.3483,ekr.20031218072017.3482,ekr.20031218072017.3484,ekr.20031218072017.3485,ekr.20031218072017.3486,ekr.20031218072017.3487,ekr.20031218072017.3490,ekr.20031218072017.3491,ekr.20031218072017.3494,ekr.20031218072017.3493,ekr.20031218072017.3495,ekr.20031218072017.3496,ekr.20031218072017.3497,ekr.20031218072017.3492,ekr.20031218072017.3498,ekr.20031218072017.3499,ekr.20031218072017.3500,ekr.20031218072017.3501,ekr.20031218072017.3502,ekr.20031218072017.3503,ekr.20031218072017.3504,ekr.20031218072017.1488,ekr.20031218072017.1151,ekr.20031218072017.1152,ekr.20031218072017.1153,ekr.20031218072017.1154,ekr.20031218072017.1155,ekr.20031218072017.3506,ekr.20031218072017.3507,ekr.20031218072017.3508,ekr.20031218072017.3509,ekr.20031218072017.3510,ekr.20031218072017.3511,ekr.20031218072017.3512,ekr.20031218072017.3513,ekr.20031218072017.3514,ekr.20031218072017.3515,ekr.20031218072017.3516,ekr.20031218072017.3517,ekr.20031218072017.3518,ekr.20031218072017.3519,ekr.20031218072017.3520,ekr.20031218072017.3521,ekr.20031218072017.3522,ekr.20031218072017.3523,ekr.20031218072017.3524,ekr.20031218072017.3524,ekr.20031218072017.3525,ekr.20031218072017.3526,ekr.20031218072017.3527,ekr.20031218072017.3529,ekr.20031218072017.3530,ekr.20031218072017.3531,ekr.20031218072017.3532,ekr.20031218072017.3533,ekr.20031218072017.3534,ekr.20031218072017.3535,ekr.20031218072017.3536,ekr.20031218072017.3537,ekr.20031218072017.3539,ekr.20031218072017.3540,ekr.20031218072017.3541,ekr.20031218072017.3542,ekr.20031218072017.3543,ekr.20031218072017.3545,ekr.20031218072017.3546,ekr.20031218072017.3547,ekr.20031218072017.3548,ekr.20031218072017.3549,ekr.20031218072017.3546,ekr.20031218072017.3550,ekr.20031218072017.3551,ekr.20031218072017.3555,ekr.20031218072017.3557,ekr.20031218072017.3556,ekr.20031218072017.3553,ekr.20031218072017.3552,ekr.20031218072017.3554,ekr.20031218072017.3553,ekr.20031218072017.3558,ekr.20031218072017.3559,ekr.20031218072017.3553,ekr.20031218072017.3560,ekr.20031218072017.3561,ekr.20031218072017.3562,ekr.20031218072017.3563,ekr.20031218072017.2368,ekr.20031218072017.3564,ekr.20031218072017.3565,ekr.20031218072017.3566,ekr.20031218072017.3567,ekr.20031218072017.3568,ekr.20031218072017.3570,ekr.20031218072017.3571,ekr.20031218072017.3569,ekr.20031218072017.3572,ekr.20031218072017.3573,ekr.20031218072017.3574,ekr.20031218072017.3575,ekr.20031218072017.3576,ekr.20031218072017.3577,ekr.20031218072017.3578,ekr.20031218072017.3579,ekr.20031218072017.3580,ekr.20031218072017.3581,ekr.20031218072017.3582,ekr.20031218072017.3583,ekr.20031218072017.3584,ekr.20031218072017.3585,ekr.20031218072017.3586,ekr.20031218072017.3587,ekr.20031218072017.3588,ekr.20031218072017.3589,ekr.20031218072017.3590,ekr.20031218072017.3591,ekr.20031218072017.3592,ekr.20031218072017.3593,ekr.20031218072017.3594,ekr.20031218072017.1259,ekr.20031218072017.3595,ekr.20031218072017.3596,ekr.20031218072017.3597,ekr.20031218072017.3598,ekr.20031218072017.1360,ekr.20031218072017.1361,ekr.20031218072017.1362,ekr.20031218072017.1363,ekr.20031218072017.1364,ekr.20031218072017.1365,ekr.20031218072017.1366,ekr.20031218072017.1367,ekr.20031218072017.1368,ekr.20031218072017.1369,ekr.20031218072017.1370,ekr.20031218072017.1371,ekr.20031218072017.1372,ekr.20031218072017.1373,ekr.20031218072017.1374,ekr.20031218072017.3599,ekr.20031218072017.3600,ekr.20031218072017.3601,ekr.20031218072017.3602"><vh>@file leoTangle.py</vh>
+<v t="ekr.20031218072017.3446" a="E" tnodeList="ekr.20031218072017.3446,ekr.20031218072017.2411,ekr.20031218072017.3447,ekr.20031218072017.3449,ekr.20031218072017.3450,ekr.20031218072017.3451,ekr.20031218072017.3452,ekr.20031218072017.3453,ekr.20031218072017.3454,ekr.20031218072017.3455,ekr.20031218072017.3456,ekr.20031218072017.3457,ekr.20031218072017.3458,ekr.20031218072017.3459,ekr.20031218072017.3460,ekr.20031218072017.3461,ekr.20031218072017.3462,ekr.20031218072017.3463,ekr.20031218072017.3464,ekr.20031218072017.3465,ekr.20031218072017.3466,ekr.20031218072017.1356,ekr.20031218072017.1357,ekr.20031218072017.1358,ekr.20031218072017.1359,ekr.20031218072017.3467,ekr.20031218072017.3468,ekr.20031218072017.3469,ekr.20031218072017.3470,ekr.20031218072017.3471,ekr.20031218072017.3472,ekr.20031218072017.3473,ekr.20031218072017.3474,ekr.20031218072017.3475,ekr.20031218072017.3476,ekr.20031218072017.3477,ekr.20031218072017.3478,ekr.20031218072017.3479,ekr.20031218072017.3480,ekr.20031218072017.3481,ekr.20031218072017.3483,ekr.20031218072017.3482,ekr.20031218072017.3484,ekr.20031218072017.3485,ekr.20031218072017.3486,ekr.20031218072017.3487,ekr.20031218072017.3490,ekr.20031218072017.3491,ekr.20031218072017.3494,ekr.20031218072017.3493,ekr.20031218072017.3495,ekr.20031218072017.3496,ekr.20031218072017.3497,ekr.20031218072017.3492,ekr.20031218072017.3498,ekr.20031218072017.3499,ekr.20031218072017.3500,ekr.20031218072017.3501,ekr.20031218072017.3502,ekr.20031218072017.3503,ekr.20031218072017.3504,ekr.20031218072017.1488,ekr.20031218072017.1151,ekr.20031218072017.1152,ekr.20031218072017.1153,ekr.20031218072017.1154,ekr.20031218072017.1155,ekr.20031218072017.3506,ekr.20031218072017.3507,ekr.20031218072017.3508,ekr.20031218072017.3509,ekr.20031218072017.3510,ekr.20031218072017.3511,ekr.20031218072017.3512,ekr.20031218072017.3513,ekr.20031218072017.3514,ekr.20031218072017.3515,ekr.20031218072017.3516,ekr.20031218072017.3517,ekr.20031218072017.3518,ekr.20031218072017.3519,ekr.20031218072017.3520,ekr.20031218072017.3521,ekr.20031218072017.3522,ekr.20031218072017.3523,ekr.20031218072017.3524,ekr.20031218072017.3524,ekr.20031218072017.3525,ekr.20031218072017.3526,ekr.20031218072017.3527,ekr.20031218072017.3529,ekr.20031218072017.3530,ekr.20031218072017.3531,ekr.20031218072017.3532,ekr.20031218072017.3533,ekr.20031218072017.3534,ekr.20031218072017.3535,ekr.20031218072017.3536,ekr.20031218072017.3537,ekr.20031218072017.3539,ekr.20031218072017.3540,ekr.20031218072017.3541,ekr.20031218072017.3542,ekr.20031218072017.3543,ekr.20031218072017.3545,ekr.20031218072017.3546,ekr.20031218072017.3547,ekr.20031218072017.3548,ekr.20031218072017.3549,ekr.20031218072017.3546,ekr.20031218072017.3550,ekr.20031218072017.3551,ekr.20031218072017.3555,ekr.20031218072017.3557,ekr.20031218072017.3556,ekr.20031218072017.3553,ekr.20031218072017.3552,ekr.20031218072017.3554,ekr.20031218072017.3553,ekr.20031218072017.3558,ekr.20031218072017.3559,ekr.20031218072017.3553,ekr.20031218072017.3560,ekr.20031218072017.3561,ekr.20031218072017.3562,ekr.20031218072017.3563,ekr.20031218072017.2368,ekr.20031218072017.3564,ekr.20031218072017.3565,ekr.20031218072017.3566,ekr.20031218072017.3567,ekr.20031218072017.3568,ekr.20031218072017.3570,ekr.20031218072017.3571,ekr.20031218072017.3569,ekr.20031218072017.3572,ekr.20031218072017.3573,ekr.20031218072017.3574,ekr.20031218072017.3575,ekr.20031218072017.3576,ekr.20031218072017.3577,ekr.20031218072017.3578,ekr.20031218072017.3579,ekr.20031218072017.3580,ekr.20031218072017.3581,ekr.20031218072017.3582,ekr.20031218072017.3583,ekr.20031218072017.3584,ekr.20031218072017.3585,ekr.20031218072017.3586,ekr.20031218072017.3587,ekr.20031218072017.3588,ekr.20031218072017.3589,ekr.20031218072017.3590,ekr.20031218072017.3591,ekr.20031218072017.3592,ekr.20031218072017.3593,ekr.20031218072017.3594,ekr.20031218072017.1259,ekr.20031218072017.3595,ekr.20031218072017.3596,ekr.20031218072017.3597,ekr.20031218072017.3598,ekr.20031218072017.1360,ekr.20031218072017.1361,ekr.20031218072017.1362,ekr.20031218072017.1363,ekr.20031218072017.1364,ekr.20031218072017.1365,ekr.20031218072017.1366,ekr.20031218072017.1367,ekr.20031218072017.1368,ekr.20031218072017.1369,ekr.20031218072017.1370,ekr.20031218072017.1371,ekr.20031218072017.1372,ekr.20031218072017.1373,ekr.20031218072017.1374,ekr.20031218072017.3599,ekr.20031218072017.3600,ekr.20031218072017.3601,ekr.20031218072017.3602"><vh>@file leoTangle.py</vh>
 <v t="ekr.20031218072017.2411"><vh>&lt;&lt; About Tangle and Untangle &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3447"><vh>&lt;&lt; constants &amp; synonyms &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3448"><vh>node classes</vh>
@@ -6888,14 +6950,14 @@
 <v t="ekr.20031218072017.3464"><vh>root_attributes.__repr__</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3465"><vh>class tangleCommands methods</vh>
+<v t="ekr.20031218072017.3465" a="E"><vh>class tangleCommands methods</vh>
 <v t="ekr.20031218072017.3466"><vh>tangle.__init__</vh></v>
 <v t="ekr.20031218072017.1356"><vh>tangle.init_ivars &amp; init_directive_ivars</vh>
 <v t="ekr.20031218072017.1357"><vh>&lt;&lt; init tangle ivars &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1358"><vh>&lt;&lt; init untangle ivars &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1359"><vh>&lt;&lt; init directive ivars &gt;&gt; (tangle)</vh></v>
 </v>
-<v t="ekr.20031218072017.3467"><vh>top level</vh>
+<v t="ekr.20031218072017.3467" a="E"><vh>top level</vh>
 <v t="ekr.20031218072017.3468"><vh>cleanup</vh>
 <v t="ekr.20031218072017.3469"><vh>&lt;&lt; call tangle_done.run() or untangle_done.run() &gt;&gt;</vh></v>
 </v>
@@ -6920,7 +6982,7 @@
 <v t="ekr.20031218072017.3487"><vh>&lt;&lt; set end to the next root in the unit &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3488"><vh>tangle</vh>
+<v t="ekr.20031218072017.3488" a="E"><vh>tangle</vh>
 <v t="ekr.20031218072017.3489"><vh>Pass 1</vh>
 <v t="ekr.20031218072017.3490"><vh>handle_newline</vh></v>
 <v t="ekr.20031218072017.3491"><vh>skip_body</vh>
@@ -6943,7 +7005,7 @@
 <v t="ekr.20031218072017.3503"><vh>skip_doc</vh></v>
 <v t="ekr.20031218072017.3504"><vh>skip_headline</vh></v>
 </v>
-<v t="ekr.20031218072017.3505"><vh>Pass 2</vh>
+<v t="ekr.20031218072017.3505" a="E"><vh>Pass 2</vh>
 <v t="ekr.20031218072017.1488"><vh>oblank, oblanks, os, otab, otabs (Tangle)</vh></v>
 <v t="ekr.20031218072017.1151"><vh>tangle.put_all_roots</vh>
 <v t="ekr.20031218072017.1152"><vh>&lt;&lt;Get root specific attributes&gt;&gt;</vh></v>
@@ -6968,11 +7030,11 @@
 <v t="ekr.20031218072017.3517"><vh>&lt;&lt; Output leading white space except for blank lines &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.3518"><vh>put_part_node</vh></v>
-<v t="ekr.20031218072017.3519"><vh>put_section</vh>
+<v t="ekr.20031218072017.3519" a="E"><vh>put_section</vh>
 <v t="ekr.20031218072017.3520"><vh>&lt;&lt; Calculate the new value of tangle_indent &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3521"><vh>&lt;&lt; Set 'newline_flag' if the line ends with the reference &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3522"><vh>&lt;&lt;put all parts of the section definition&gt;&gt;</vh>
-<v t="ekr.20031218072017.3523"><vh>&lt;&lt; Put the section name in a comment &gt;&gt;</vh>
+<v t="ekr.20031218072017.3522" a="E"><vh>&lt;&lt;put all parts of the section definition&gt;&gt;</vh>
+<v t="ekr.20031218072017.3523" a="E"><vh>&lt;&lt; Put the section name in a comment &gt;&gt;</vh>
 <v t="ekr.20031218072017.3524"><vh>&lt;&lt; put ( n of m ) &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.3525"><vh>&lt;&lt; Put the ending comment &gt;&gt;</vh></v>
@@ -9354,65 +9416,7 @@
 </v>
 <v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
 <v t="ekr.20040207170503"><vh>double-paste in searchbox</vh></v>
-</v>
-<v t="ekr.20040409083211" a="ETV"><vh>(Fixed problems deleting cloned nodes &amp; trees) </vh>
-<v t="ekr.20040409083211.1"><vh>tracebacks</vh></v>
-<v t="ekr.20040409160021"><vh>Notes</vh></v>
-<v t="ekr.20040409130322"><vh>commands &amp; fileCommands methods...</vh>
-<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
-<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1865" a="M"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
-<v t="ekr.20040324082713"><vh>&lt;&lt; Put tnodeList and unKnownAttributes &gt;&gt;</vh>
-<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1866"><vh>&lt;&lt; Write the head text &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1193"><vh>c.deleteOutline</vh></v>
-<v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
-<v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
-<v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040323155951"><vh>&lt;&lt; do full tests &gt;&gt;</vh>
-<v t="ekr.20040314035615"><vh>assert consistency of threadNext &amp; threadBack links</vh></v>
-<v t="ekr.20040314035615.1"><vh>assert consistency of next and back links</vh></v>
-<v t="ekr.20040314035615.2"><vh>assert consistency of parent and chiild links</vh></v>
-<v t="ekr.20040323155951.1"><vh>assert consistency of directParents and parent</vh></v>
-<v t="ekr.20040323161837"><vh>assert consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
-<v t="ekr.20040323162707"><vh>assert that clones actually share subtrees</vh></v>
-<v t="ekr.20040314043623"><vh>assert consistency of vnodeList</vh></v>
-</v>
-<v t="ekr.20040314043900"><vh>&lt;&lt;print summary message &gt;&gt;</vh></v>
-<v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040412060927"><vh>c.dumpOutline</vh></v>
-</v>
-<v t="ekr.20040312145256"><vh>v.dump</vh></v>
-<v t="ekr.20040409130322.2"><vh>position methods ...</vh>
-<v t="ekr.20040310062332"><vh>p.Link/Unlink methods</vh>
-<v t="ekr.20040310062332.1"><vh>p.invalidOutline</vh></v>
-<v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
-<v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
-<v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
-<v t="ekr.20040310062332.5" a="M"><vh>p.unlink</vh></v>
-</v>
-<v t="ekr.20040303175026.2"><vh>p.doDelete</vh></v>
-<v t="ekr.20031218072017.4146"><vh>p.lastVisible &amp; oldLastVisible</vh></v>
-<v t="ekr.20040310153624"><vh>p.dump &amp; p.vnodeListIds</vh></v>
-<v t="ekr.20040228094013.1"><vh>p.utils...</vh>
-<v t="ekr.20040117171654"><vh>p.copy</vh></v>
-<v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
-<v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040409203454"><vh>p.restoreLinksInTree</vh></v>
-<v t="ekr.20040409203454.1"><vh>p.deleteLinksInTree &amp; allies</vh>
-<v t="ekr.20040410170806"><vh>p.deleteLinksInSubtree</vh></v>
-<v t="ekr.20040410170806.1"><vh>p.adjustParentLinksInSubtree</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040409163052"><vh>Undo</vh>
-<v t="ekr.20031218072017.2034"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2041"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20040414051834"><vh>Mouse / Paste Anomalies  </vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -38794,14 +38798,13 @@ EDWARD K. REAM (REAM) SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESSED OR IMPLIE
 <t tx="ekr.20031218072017.2558">System requirements for leo.py
 ------------------------------
 
-leo.py requires Python 2.1 and tcl/tk 8.3 or above.
+leo.py requires Python 2.2 or above and tcl/tk 8.4 or above.
 
 	Download Python from http://python.org/ 
 	Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
 
 Warning: When building Tcl on Linux, do not specify "--enable-threads" .
-Only use Tcl with the default "threads not enabled" case.
-</t>
+Only use Tcl with the default "threads not enabled" case.</t>
 <t tx="ekr.20031218072017.2559">
 Installing the leo.py on Linux
 ------------------------------
@@ -38896,15 +38899,15 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="ekr.20031218072017.2563">Metadata-Version: 1.0
 Name: leo
-Version: 4.1-final
+Version: 4.2-a1
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
 Author-email: edreamleo@charter.net
 License: Python
 Description: Leo is an outline-oriented editor written in 100% pure Python.
-		Leo works on any platform that supports Python 2.1 or 2.2 and the Tk toolkit.
-		This version of Leo was developed with Python 2.2.1 and Tk 8.3.2.
+		Leo works on any platform that supports Python 2.2 or above and the Tk toolkit.
+		This version of Leo was developed with Python 2.3.3 and Tk 8.4.3.
 		You may download Python from http://python.org/ and
 		tcl/Tk from http://tcl.activestate.com/software/tcltk/
 		Leo features a multi-window outlining editor, Python colorizing,
@@ -38921,6 +38924,18 @@ Platform: Windows, Linux, Macintosh
 Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
+
+Leo 4.2 alpha 1            April 14, 2004
+
+This is a "semi-public" release of the new 4.2 code base.  I am releasing this code now to create a snapshot.  In particular, I shall use this snapshot to begin development work on the Macintosh.  This will allow me fix long-standing *nix bugs.
+
+This main feature of this release is that Leo represents clones as nodes that
+share trees of vnodes. To make this work Leo introduces _positions_. A position
+is a location in the traversal of an outline.
+
+This code appears stable.  I have been using the 4.2 code base for several weeks for all my work with no significant problems.  Nevertheless, this _is_ alpha (or even pre-alpha) quality code.  Use at your own risk.  Make frequent backups.
+
+See the "4.2 Projects" node in LeoPy.leo for details of what has been done so far.  I shall be updating documentation more fully for the first beta release.
 
 Leo 4.1 Final              February 20, 2004
 
@@ -39072,7 +39087,7 @@ setup (
 if sys.argv[1] == "sdist":
 	print "setup complete"</t>
 <t tx="ekr.20031218072017.2571">name="leo",
-version="4.1-final",
+version="4.2-alpha-1",
 author="Edward K. Ream",
 author_email="edream@tds.net",
 url="http://personalpages.tds.net/~edream/front.html",
@@ -39082,8 +39097,8 @@ licence="Python", # [sic], not license
 platforms=["Windows, Linux, Macintosh"],
 long_description =
 """Leo is an outline-oriented editor written in 100% pure Python.
-Leo works on any platform that supports Python 2.1 or 2.2 and the Tk toolkit.
-This version of Leo was developed with Python 2.2.1 and Tk 8.3.2.
+Leo works on any platform that supports Python 2.2 or above and the Tk toolkit.
+This version of Leo was developed with Python 2.3.3 and Tk 8.4.3.
 
 Download Python from http://python.org/
 Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
@@ -39398,7 +39413,7 @@ rm -f  $LEO_RUN_SCRIPT_OUTPUT
 
 def getSignOnLine (self):
 	c = self
-	return "Leo 4.2 alpha 1, build %s, March 25, 2004" % c.getBuildNumber()
+	return "Leo 4.2 alpha 1, build %s, April 14, 2004" % c.getBuildNumber()
 	
 def initVersion (self):
 	c = self
@@ -51334,7 +51349,7 @@ def tangleTree(self,p,report_flag):
 				any_root_flag = true
 				self.tanglePass2() # self.p invalid in pass 2.
 			self.cleanup()
-			p.modeAfterTree()
+			p.moveToNodeAfterTree()
 			if self.path_warning_given: break # Fatal error.
 
 	if self.tangling and report_flag and not any_root_flag:
@@ -52134,7 +52149,7 @@ else:
 self.onl() # Always output a newline.</t>
 <t tx="ekr.20031218072017.3524">if sections &gt; 1:
 	self.oblank()
-	self.os("(%d of %d)" % count,sections)</t>
+	self.os("(%d of %d)" % (count,sections))</t>
 <t tx="ekr.20031218072017.3525">@ We do not produce an ending comment unless we are ending the last part of the section,and the comment is clearer if we don't say(n of m).
 @c
 
@@ -66952,5 +66967,38 @@ Most code now works.  However, moving a node right destroyed part of the outline
 		p.dump()</t>
 <t tx="ekr.20040412061129"></t>
 <t tx="ekr.20040412061129.1"></t>
+<t tx="ekr.20040414051834">@nocolor
+
+By: Bill Drissel - drissel
+ Mouse / Paste Anomalies   
+2004-04-13 19:43  
+
+ Configuration: Running Xserver (XFree86 under Cygwin) on PC (W2000); controlling Linux Red Hat; buncha windows up including one Leo window and many xterms and Xemacs.
+
+A: means action, R: means result
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; locate mouse symbol in text
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; up arrow to locate Ibeam in text
+R: Joy! colorizes, marks headline and saves!
+
+A: hilite headline text; type on KB
+R: keystrokes replace hilited text
+
+A: hilite text in Xemacs window; hilite headline; middle click
+R: hilited text appended to headline rather than replacing
+
+This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
+
+Regards,
+Bill Drissel
+ 
+</t>
+<t tx="ekr.20040414073612"></t>
+<t tx="ekr.20040414073612.1"></t>
 </tnodes>
 </leo_file>

@@ -4,15 +4,14 @@
 
 #@@language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	#@	@+others
 	#@+node:on_idle
@@ -22,7 +21,7 @@ if Tkinter: # Register the handlers...
 	def on_idle (tag,keywords):
 	
 		import os
-		a = app
+		a = g.app
 		for dict in a.openWithFiles:
 			path = dict.get("path")
 			c = dict.get("c")
@@ -45,40 +44,40 @@ if Tkinter: # Register the handlers...
 							s=f.read()
 							f.close()
 						except:
-							es("can not open " + shortFileName(path))
+							g.es("can not open " + g.shortFileName(path))
 							break
 						#@-node:<< set s to the file text >>
 						#@nl
 						
 						# Convert body and s to whatever encoding is in effect.
 						body = v.bodyString()
-						body = toEncodedString(body,encoding,reportErrors=true)
-						s = toEncodedString(s,encoding,reportErrors=true) # 10/13/03
+						body = g.toEncodedString(body,encoding,reportErrors=true)
+						s = g.toEncodedString(s,encoding,reportErrors=true) # 10/13/03
 						
 						conflict = body != old_body and body != s
 						
 						# Set update if we should update the outline from the file.
 						if conflict:
 							# See how the user wants to resolve the conflict.
-							es("conflict in " + shortFileName(path),color="red")
+							g.es("conflict in " + g.shortFileName(path),color="red")
 							message = "Replace changed outline with external changes?"
-							result = app.gui.runAskYesNoDialog("Conflict!",message)
+							result = g.app.gui.runAskYesNoDialog("Conflict!",message)
 							update = result.lower() == "yes"
 						else:
 							update = s != body
 						
 						if update:
-							es("updated from: " + shortFileName(path),color="blue")
+							g.es("updated from: " + g.shortFileName(path),color="blue")
 							v.setBodyStringOrPane(s,encoding) # 10/16/03
 							c.selectVnode(v)
 							dict["body"] = s
 						elif conflict:
-							es("not updated from: " + shortFileName(path),color="blue")
+							g.es("not updated from: " + g.shortFileName(path),color="blue")
 						#@nonl
 						#@-node:<< update v's body text >>
 						#@nl
 				except:
-					es_exception() ## testing
+					g.es_exception() ## testing
 					pass
 	#@nonl
 	#@-node:on_idle
@@ -120,27 +119,27 @@ if Tkinter: # Register the handlers...
 			else: # David McNab's table.
 				table = ("X&Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)),
 			
-			top().frame.menu.createOpenWithMenuFromTable(table)
+			g.top().frame.menu.createOpenWithMenuFromTable(table)
 			#@nonl
 			#@-node:<< create the Open With menu >>
 			#@nl
 			# Enable the idle-time hook so we can check temp files created by Open With.
 			from leoGlobals import enableIdleTimeHook
-			enableIdleTimeHook(idleTimeDelay=500)
+			g.enableIdleTimeHook(idleTimeDelay=500)
 	#@-node:create_open_with_menu
 	#@-others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 
-		app.hasOpenWithMenu = true
-		registerHandler("idle", on_idle)
-		registerHandler(("start2","open2","command2"), create_open_with_menu)
+		g.app.hasOpenWithMenu = true
+		leoPlugins.registerHandler("idle", on_idle)
+		leoPlugins.registerHandler(("start2","open2","command2"), create_open_with_menu)
 	
 		__version__ = "1.4" # Set version for the plugin handler.
-		plugin_signon(__name__)
+		g.plugin_signon(__name__)
 #@nonl
 #@-node:@file open_with.py
 #@-leo

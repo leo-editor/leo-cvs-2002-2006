@@ -4,15 +4,16 @@
 
 #@@language python
 
-from leoPlugins import *
-from leoGlobals import *
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+try: import Tkinter as Tk
+except ImportError: Tk = None
+
 import os
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	#@	@+others
 	#@+node:onSelect
@@ -25,16 +26,16 @@ if Tkinter: # Register the handlers...
 			#@		<< Select Image >>
 			#@+node:<< Select Image >>
 			# Display the image file in the text pane, if you can find the file
-			a = app
+			a = g.app
 			c = keywords.get("c")
 			body = c.frame.body
 			
 			if os.path.isfile(filename):
 				try:
 					# Note that Tkinter only understands GIF
-					photo = Tkinter.PhotoImage(master=a.root, file=filename)
+					photo = Tk.PhotoImage(master=a.root, file=filename)
 				except:
-					es("error: cannot load image")
+					g.es("error: cannot load image")
 					return
 				# Nicely display the image at the center top and push the text below.
 				a.gsphoto = photo # This is soooo important.
@@ -44,7 +45,7 @@ if Tkinter: # Register the handlers...
 				padding = max(0,padding)
 				a.gsimage = body.bodyCtrl.image_create("1.0",image=photo,padx=padding)
 			else:
-				es("warning: missing image file")
+				g.es("warning: missing image file")
 			#@nonl
 			#@-node:<< Select Image >>
 			#@nl
@@ -53,7 +54,7 @@ if Tkinter: # Register the handlers...
 	#@+node:onUnselect
 	def onUnselect (tag,keywords):
 	
-		a = app
+		a = g.app
 		old_v = keywords.get("old_v")
 		if old_v:
 			h = old_v.headString()
@@ -61,13 +62,13 @@ if Tkinter: # Register the handlers...
 				#@			<< Unselect Image >>
 				#@+node:<< Unselect Image >>
 				# Erase image if it was previously displayed
-				a = app ; c = keywords.get("c")
+				a = g.app ; c = keywords.get("c")
 				
 				if a.gsimage:
 					try:
 						 c.frame.body.bodyCtrl.delete(a.gsimage)
 					except:
-						es("info: no image to erase")
+						g.es("info: no image to erase")
 				
 				# And forget about it
 				a.gsimage = None
@@ -81,15 +82,15 @@ if Tkinter: # Register the handlers...
 	#@-node:onUnselect
 	#@-others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 		
-		registerHandler("select2", onSelect)
-		registerHandler("unselect1", onUnselect)
+		leoPlugins.registerHandler("select2", onSelect)
+		leoPlugins.registerHandler("unselect1", onUnselect)
 		
 		__version__ = "1.2" # Set version for the plugin handler.
-		plugin_signon(__name__)
+		g.plugin_signon(__name__)
 #@-node:@file image.py
 #@-leo

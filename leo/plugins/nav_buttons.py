@@ -4,19 +4,17 @@
 
 #@@language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 from leoTkinterDialog import tkinterListBoxDialog
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
-Tk = Tkinter
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
 import os
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	#@	@+others
 	#@+node:class commanderInfoClass
@@ -104,13 +102,13 @@ if Tkinter: # Register the handlers...
 		#@+node:createImage
 		def createImage (self,path):
 			
-			path = os.path.join(app.loadDir,path)
+			path = os.path.join(g.app.loadDir,path)
 			path = os.path.normpath(path)
 			
 			try:
-				image = Tkinter.PhotoImage(master=app.root,file=path)
+				image = Tk.PhotoImage(master=g.app.root,file=path)
 			except:
-				es("can not load icon: " + shortFileName(path))
+				g.es("can not load icon: " + g.shortFileName(path))
 				image = None
 			return image
 		
@@ -156,7 +154,7 @@ if Tkinter: # Register the handlers...
 			else:
 				# Create and run the dialog.
 				title = "Marks"
-				label = "Marks: " + shortFileName(c.mFileName)
+				label = "Marks: " + g.shortFileName(c.mFileName)
 				d = marksDialog(c,title,label)
 				self.marksDialog = d
 				d.root.wait_window(d.top)
@@ -172,7 +170,7 @@ if Tkinter: # Register the handlers...
 			else:
 				# Create and run the dialog.]
 				title = "Recent Nodes"
-				label = "Recent nodes: " + shortFileName(c.mFileName)
+				label = "Recent nodes: " + g.shortFileName(c.mFileName)
 				d = recentSectionsDialog(c,self.nav_buttons,title,label)
 				self.recentSectionsDialog = d
 				d.root.wait_window(d.top)
@@ -250,7 +248,7 @@ if Tkinter: # Register the handlers...
 			"""Update the marks dialog."""
 			
 			c = keywords.get("c")
-			# trace()
+			# g.trace()
 			info = self.commanderInfo.get(c)
 			if info and info.marksDialog:
 				info.marksDialog.fillbox()
@@ -480,20 +478,20 @@ if Tkinter: # Register the handlers...
 	
 	globalInfo = globalInfoClass()
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 
-		registerHandler("after-create-leo-frame", globalInfo.addNavWidgets)
-		registerHandler("select2",globalInfo.updateRecentSections)
-		registerHandler("command2",globalInfo.updateMarksAfterCommand)
-		registerHandler(("set-mark","clear-mark"),globalInfo.updateMarks)
-		registerHandler("close-frame",globalInfo.destroyFrame)
-		registerHandler("destroy-all-global-windows",globalInfo.destroyAllFrames)
+		leoPlugins.registerHandler("after-create-leo-frame", globalInfo.addNavWidgets)
+		leoPlugins.registerHandler("select2",globalInfo.updateRecentSections)
+		leoPlugins.registerHandler("command2",globalInfo.updateMarksAfterCommand)
+		leoPlugins.registerHandler(("set-mark","clear-mark"),globalInfo.updateMarks)
+		leoPlugins.registerHandler("close-frame",globalInfo.destroyFrame)
+		leoPlugins.registerHandler("destroy-all-global-windows",globalInfo.destroyAllFrames)
 
 		__version__ = "1.2"
-		plugin_signon(__name__)
+		g.plugin_signon(__name__)
 #@nonl
 #@-node:@file nav_buttons.py
 #@-leo

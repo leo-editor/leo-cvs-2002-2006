@@ -4,8 +4,9 @@
 
 #@@language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 if 1:
 	directives = "markup", # A tuple with one string.
@@ -16,7 +17,7 @@ else:
 #@+node:addPluginDirectives
 def addPluginDirectives (tag,keywords):
 	
-	"""Add all new directives to globalDirectivesList"""
+	"""Add all new directives to g.globalDirectiveList"""
 	
 	global directives
 
@@ -24,11 +25,11 @@ def addPluginDirectives (tag,keywords):
 		s = ""
 		for d in directives:
 			s += '@' + d + ' '
-		es(s,color="blue")
+		g.es(s,color="blue")
 
 	for d in directives:
-		if d not in globalDirectiveList:
-			globalDirectiveList.append(d)
+		if d not in g.globalDirectiveList:
+			g.globalDirectiveList.append(d)
 #@nonl
 #@-node:addPluginDirectives
 #@+node:scanPluginDirectives
@@ -46,18 +47,18 @@ def scanPluginDirectives (tag, keywords):
 			# Point k at whatever follows the directive.
 			k = dict[d]
 			k += 1 + len(d) # Skip @directive
-			k = skip_ws(s,k) # Skip whitespace
-			# trace(`d`,`k`)
+			k = g.skip_ws(s,k) # Skip whitespace
+			# g.trace(`d`,`k`)
 			pluginsList.append((d,v,s,k),)
 #@-node:scanPluginDirectives
 #@-others
 
 # Register the handlers...
-registerHandler("start1",addPluginDirectives)
-registerHandler("scan-directives",scanPluginDirectives)
+leoPlugins.registerHandler("start1",addPluginDirectives)
+leoPlugins.registerHandler("scan-directives",scanPluginDirectives)
 
 __version__ = "1.1"
-plugin_signon(__name__)
+g.plugin_signon(__name__)
 #@nonl
 #@-node:@file add_directives.py
 #@-leo

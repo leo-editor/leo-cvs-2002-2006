@@ -13,12 +13,12 @@ the marked node.
 __name__ = "Node Navigator"
 __version__ = "0.3" 
 
-from leoPlugins import * 
-from leoGlobals import * 
+import leoPlugins 
+import leoGlobals as g
+from leoGlobals import true,false 
 
-try:    import Tkinter 
-except: Tkinter = None 
-Tk = Tkinter 
+try: import Tkinter as Tk 
+except ImportError: Tk = None
 
 # Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform. 
 USE_FIXED_SIZES = 1 
@@ -34,18 +34,18 @@ class Navigator:
 		self.c = c = keywords['c'] 
 		toolbar = self.c.frame.iconFrame 
 		# Main container 
-		self.frame = Tkinter.Frame(toolbar) 
+		self.frame = Tk.Frame(toolbar) 
 		self.frame.pack(side="left")
 		# Marks
 		marks = ["Marks"] 
-		self.mark_value = Tkinter.StringVar() 
-		self.marks = Tkinter.OptionMenu(self._getSizer(self.frame,29,70),self.mark_value,*marks)
+		self.mark_value = Tk.StringVar() 
+		self.marks = Tk.OptionMenu(self._getSizer(self.frame,29,70),self.mark_value,*marks)
 		self.mark_value.set(marks[0]) 
 		self.marks.pack(side="right",fill="both",expand=1)
 		# Recent.
 		recent = ["Recent"]
-		self.recent_value = Tkinter.StringVar() 
-		self.recent = Tkinter.OptionMenu(self._getSizer(self.frame,29,70),self.recent_value,*recent) 
+		self.recent_value = Tk.StringVar() 
+		self.recent = Tk.OptionMenu(self._getSizer(self.frame,29,70),self.recent_value,*recent) 
 		self.recent_value.set(recent[0]) 
 		self.recent.pack(side="left",fill="both",expand=1)
 		# Recreate the menus immediately.
@@ -58,7 +58,7 @@ class Navigator:
 		
 		"""Return a sizer object to force a Tk widget to be the right size""" 
 		if USE_FIXED_SIZES: 
-			sizer = Tkinter.Frame(parent,height=height,width=width) 
+			sizer = Tk.Frame(parent,height=height,width=width) 
 			sizer.pack_propagate(0) # don't shrink 
 			sizer.pack(side="right") 
 			return sizer 
@@ -130,16 +130,16 @@ class Navigator:
 #@-node:class Navigator
 #@-others
 
-if Tkinter: 
-	if app.gui is None: 
-		app.createTkGui(__file__) 
+if Tk: 
+	if g.app.gui is None: 
+		g.app.createTkGui(__file__) 
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 		nav = Navigator() 
-		registerHandler("after-create-leo-frame", nav.addWidgets) 
-		registerHandler(("set-mark","clear-mark"),nav.updateMarks)
-		registerHandler("select2",nav.updateRecent)
-		plugin_signon("nodenavigator")
+		leoPlugins.registerHandler("after-create-leo-frame", nav.addWidgets) 
+		leoPlugins.registerHandler(("set-mark","clear-mark"),nav.updateMarks)
+		leoPlugins.registerHandler("select2",nav.updateRecent)
+		g.plugin_signon("nodenavigator")
 #@nonl
 #@-node:@file nodenavigator.py
 #@-leo

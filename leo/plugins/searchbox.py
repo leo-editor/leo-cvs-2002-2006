@@ -31,15 +31,13 @@ Still to do:
 
 __version__ = "0.3"
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 import leoFind
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
-Tk = Tkinter
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
 #@<< vars >>
 #@+node:<< vars >>
@@ -63,6 +61,7 @@ OPTION_LIST = [
 	("Case sensitive", ["search_body_flag", "search_headline_flag"]), 
 ]
 
+# dict is new in Python 2.2.
 OPTION_DICT = dict(OPTION_LIST)
 #@nonl
 #@-node:<< vars >>
@@ -76,7 +75,7 @@ class SearchBox:
 	def _getSizer(self, parent, height, width):
 		"""Return a sizer object to force a Tk widget to be the right size"""
 		if USE_FIXED_SIZES: 
-			sizer = Tkinter.Frame(parent, height=height, width=width)
+			sizer = Tk.Frame(parent, height=height, width=width)
 			sizer.pack_propagate(0) # don't shrink 
 			sizer.pack(side="right")
 			return sizer
@@ -90,17 +89,17 @@ class SearchBox:
 		self.c = keywords['c'] 
 		toolbar = self.c.frame.iconFrame
 		# Button.
-		self.go = Tkinter.Button(self._getSizer(toolbar, 25, 32), text="GO", command=self.doSearch)
+		self.go = Tk.Button(self._getSizer(toolbar, 25, 32), text="GO", command=self.doSearch)
 		self.go.pack(side="right", fill="both", expand=1)
 		# Search options.
 		options = [name for name, flags in OPTION_LIST]
-		self.option_value = Tkinter.StringVar() 
-		self.options = Tkinter.OptionMenu(
+		self.option_value = Tk.StringVar() 
+		self.options = Tk.OptionMenu(
 			self._getSizer(toolbar, 29, 130), self.option_value, *options)
 		self.option_value.set(options[0]) 
 		self.options.pack(side="right", fill="both", expand=1)
 		# Text entry.
-		self.search = Tkinter.Entry(self._getSizer(toolbar, 24, 130))
+		self.search = Tk.Entry(self._getSizer(toolbar, 24, 130))
 		self.search.pack(side="right", padx=3, fill="both", expand=1)
 		self.search.bind("<Return>", self.onKey)
 		# Store a list of the last searches.
@@ -116,11 +115,11 @@ class SearchBox:
 		# Remove the old find frame so its options don't compete with ours.
 		search_mode = self.option_value.get() 
 		new_find = QuickFind(text,search_mode)
-		old_find, app.findFrame = app.findFrame, new_find
+		old_find, g.app.findFrame = g.app.findFrame, new_find
 		# Do the search.
 		self.c.findNext()
 		# Restore the find frame.
-		app.findFrame = old_find
+		g.app.findFrame = old_find
 		# Remember this list 
 		self.updateRecentList(text, search_mode) 
 		if 0: # This doesn't work yet: the user can't see the match.
@@ -129,7 +128,7 @@ class SearchBox:
 	#@-node:doSearch
 	#@+node:onBackSpace
 	def onBackSpace (self,event=None):
-		trace()
+		g.trace()
 	#@-node:onBackSpace
 	#@+node:onKey
 	def onKey (self,event=None): 
@@ -152,7 +151,7 @@ class SearchBox:
 				break
 		else:
 			print name, self.search_list 
-			es("Recent search item not found! Looks like a bug ...", color="red")
+			g.es("Recent search item not found! Looks like a bug ...", color="red")
 	#@nonl
 	#@-node:searchRecent
 	#@+node:updateRecentList
@@ -173,7 +172,7 @@ class SearchBox:
 		# Now update the menu 
 		for name, mode in self.search_list:
 			menu.add_command(
-				label=name,command=Tkinter._setit(self.option_value,name,self.searchRecent))
+				label=name,command=Tk._setit(self.option_value,name,self.searchRecent))
 	#@nonl
 	#@-node:updateRecentList
 	#@-others
@@ -224,7 +223,7 @@ class QuickFind(leoFind.leoFind):
 		c = self.c ; t = self.s_text	
 		t.delete("1.0","end")
 		t.insert("end",s)
-		t.mark_set("insert",choose(c.reverse_flag,"end","1.0"))
+		t.mark_set("insert",g.choose(c.reverse_flag,"end","1.0"))
 		return t
 	#@-node:init_s_text
 	#@+node:gui_search
@@ -237,16 +236,16 @@ class QuickFind(leoFind.leoFind):
 #@-node:class QuickFind
 #@-others
 
-if Tkinter:
+if Tk:
 	search = SearchBox()
 	
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
-		# es("Starting searchbox", color="orange")
-		registerHandler("after-create-leo-frame", search.addWidgets)
-		plugin_signon(__name__)
+	if g.app.gui.guiName() == "tkinter":
+		# g.es("Starting searchbox", color="orange")
+		leoPlugins.registerHandler("after-create-leo-frame", search.addWidgets)
+		g.plugin_signon(__name__)
 #@nonl
 #@-node:@file searchbox.py
 #@-leo

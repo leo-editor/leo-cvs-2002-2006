@@ -728,7 +728,7 @@ class baseTangleCommands:
 					any_root_flag = true
 					self.tanglePass2() # self.p invalid in pass 2.
 				self.cleanup()
-				p.modeAfterTree()
+				p.moveToNodeAfterTree()
 				if self.path_warning_given: break # Fatal error.
 	
 		if self.tangling and report_flag and not any_root_flag:
@@ -1870,7 +1870,7 @@ class baseTangleCommands:
 							#@+node:<< put ( n of m ) >>
 							if sections > 1:
 								self.oblank()
-								self.os("(%d of %d)" % count,sections)
+								self.os("(%d of %d)" % (count,sections))
 							#@nonl
 							#@-node:<< put ( n of m ) >>
 							#@nl
@@ -1883,7 +1883,7 @@ class baseTangleCommands:
 							#@+node:<< put ( n of m ) >>
 							if sections > 1:
 								self.oblank()
-								self.os("(%d of %d)" % count,sections)
+								self.os("(%d of %d)" % (count,sections))
 							#@nonl
 							#@-node:<< put ( n of m ) >>
 							#@nl

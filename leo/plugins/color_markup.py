@@ -4,18 +4,17 @@
 
 #@@language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
-import string  # zfill does not exist in Python 2.2.1
+import os,string  # zfill does not exist in Python 2.2.1
 import tkColorChooser
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	#@	@+others
 	#@+node:initAnyMarkup
@@ -29,13 +28,13 @@ if Tkinter: # Register the handlers...
 		colorer,v = [keywords.get(key) for key in keys]
 	
 		c = colorer.c
-		if not c or not v or not top(): return
+		if not c or not v or not g.top(): return
 	
 		# underline means hyperlinks
 		c.frame.body.tag_configure("http",underline=1) # EKR: 11/4/03
 		c.frame.body.tag_configure("https",underline=1) # EKR: 11/4/03
-		# trace()
-		dict = scanDirectives(c,p=v) # v arg is essential.
+		# g.trace()
+		dict = g.scanDirectives(c,p=v) # v arg is essential.
 		pluginsList = dict.get("pluginsList")
 		
 		if pluginsList:
@@ -60,18 +59,18 @@ if Tkinter: # Register the handlers...
 		global colorCount ; colorCount += 1
 		
 		c = colorer.c
-		dict = scanDirectives(c,p=v) # v arg is essential.
+		dict = g.scanDirectives(c,p=v) # v arg is essential.
 		pluginsList = dict.get("pluginsList")
 		
 		if pluginsList:
 			for d,v,s2,k in pluginsList:
 				if d == "markup":
-					# trace(`colorCount`,`d`)
-					if match_word(s2,k,"wiki"):
+					# g.trace(`colorCount`,`d`)
+					if g.match_word(s2,k,"wiki"):
 						doWikiText(colorer,v,s,i,j,colortag)
 						return true # We have colored the text.
 				
-		# trace(`colorCount`,"no markup")
+		# g.trace(`colorCount`,"no markup")
 		return None # We have not colored the text.
 	#@nonl
 	#@-node:colorWikiMarkup
@@ -108,7 +107,7 @@ if Tkinter: # Register the handlers...
 				if tag =="picture":
 					colorer.tag("elide",n1,n2+len(delim2)) # Elide everything.
 					filename = s[n1+len(delim1):n2]
-					filename = os.path.join(app.loadDir,filename)
+					filename = os.path.join(g.app.loadDir,filename)
 					filename = os.path.normpath(filename)
 					inserted += insertWikiPicture(colorer,filename,n2+len(delim2))
 				elif tag == "color":
@@ -134,7 +133,7 @@ if Tkinter: # Register the handlers...
 								colorer.tag(name,n+1,n2)
 								colorer.tag("elide",n2,n2+len(delim2))
 							except: # an invalid color name: elide nothing.
-								pass # es_exception()
+								pass # g.es_exception()
 					#@nonl
 					#@-node:<< parse and handle color field >>
 					#@nl
@@ -177,28 +176,28 @@ if Tkinter: # Register the handlers...
 		
 		Returns the number of characters actually inserted"""
 		
-		# trace(`colorer.color_pass`)
+		# g.trace(`colorer.color_pass`)
 		if colorer.color_pass == 0:
 			colorer.redoColoring = true # schedule a two-pass recoloring.
 			return 0
-			
+	
 		if colorer.color_pass == 2:
 			return 0 # The second redo pass.
 			
-		# trace(`filename`,`v`)
+		# g.trace(`filename`,`v`)
 		if not os.path.exists(filename):
 			return 0
 	
 		try:
 			# Create the image
-			photo = Tkinter.PhotoImage(master=app.root, file=filename)
+			photo = Tk.PhotoImage(master=g.app.root, file=filename)
 			image = colorer.body.bodyCtrl.image_create(colorer.index(i),image=photo,padx=0)
 			
 			# Keep references so images stay on the canvas.
 			colorer.image_references.append((photo,image,colorer.line_index,i),)
 			return 1
 		except:
-			es_exception()
+			g.es_exception()
 			return 0
 	#@nonl
 	#@-node:insertWikiPicture
@@ -229,8 +228,8 @@ if Tkinter: # Register the handlers...
 				import webbrowser
 				webbrowser.open(url)
 			except:
-				es("exception opening " + url)
-				es_exception()
+				g.es("exception opening " + url)
+				g.es_exception()
 	#@-node:onBodydclick1 & allies
 	#@+node:getUrl
 	def getUrl(c, *tags):
@@ -257,7 +256,7 @@ if Tkinter: # Register the handlers...
 		if	(tag=="open2" or tag=="start2" or
 			(tag=="command2" and keywords.get("label")=="new")):
 	
-			c = top()
+			c = g.top()
 			
 			editBodyMenuName = "Edit Body..."
 			wikiMenuName = "&Wiki Tags..."
@@ -282,7 +281,7 @@ if Tkinter: # Register the handlers...
 	#@-node:createWikiMenu
 	#@+node:doWikiBold
 	def doWikiBold(event=None):
-		c = top()
+		c = g.top()
 		v = c.currentVnode()
 		if not v: return
 	
@@ -292,7 +291,7 @@ if Tkinter: # Register the handlers...
 	#@-node:doWikiBold
 	#@+node:doWikiItalic
 	def doWikiItalic(event=None):
-		c = top()
+		c = g.top()
 		v = c.currentVnode()
 		if not v: return
 	
@@ -303,7 +302,7 @@ if Tkinter: # Register the handlers...
 	def doWikiColor(event=None):
 		global wikiColoredText
 		
-		c = top()
+		c = g.top()
 		v = c.currentVnode()
 		if not v: return
 	
@@ -314,7 +313,7 @@ if Tkinter: # Register the handlers...
 	def doWikiChooseColor(event=None):
 		global wikiColoredText
 		
-		c = top()
+		c = g.top()
 		v = c.currentVnode()
 		if not v: return
 		
@@ -327,7 +326,7 @@ if Tkinter: # Register the handlers...
 	def doWikiPicture(event=None):
 		import tkFileDialog
 	
-		c = top()
+		c = g.top()
 		v = c.currentVnode()
 		if not v: return
 	
@@ -353,7 +352,7 @@ if Tkinter: # Register the handlers...
 			# we need to review where the selection now ends
 			start,end = body.bodyCtrl.tag_ranges("sel")
 			body.bodyCtrl.insert(end, rightTag)
-			app.gui.setTextSelection(body.bodyCtrl, start + "-" + `len(leftTag)`  + "c",
+			g.app.gui.setTextSelection(body.bodyCtrl, start + "-" + `len(leftTag)`  + "c",
 									 end + "+" + `len(rightTag)` + "c")
 			newSel = body.getTextSelection()
 			c.frame.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
@@ -386,23 +385,23 @@ if Tkinter: # Register the handlers...
 	#@-node:insertWikiMarkup
 	#@-others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 		
 		print "wiki markup enabled"
 		
 		# default value for color-tagged wiki text
 		wikiColoredText = "blue"
 
-		registerHandler("color-optional-markup", colorWikiMarkup)
-		registerHandler("init-color-markup", initAnyMarkup)
-		#registerHandler("bodykey1", onBodykey1)
-		registerHandler("bodydclick1", onBodydclick1)
-		registerHandler(("start2","open2","command2"), createWikiMenu)
+		leoPlugins.registerHandler("color-optional-markup", colorWikiMarkup)
+		leoPlugins.registerHandler("init-color-markup", initAnyMarkup)
+		#leoPlugins.registerHandler("bodykey1", onBodykey1)
+		leoPlugins.registerHandler("bodydclick1", onBodydclick1)
+		leoPlugins.registerHandler(("start2","open2","command2"), createWikiMenu)
 	
 		__version__ = "1.4" # DS: 10/29/03.  EKR: 11/4/03: mods for 4.1.
-		plugin_signon(__name__)
+		g.plugin_signon(__name__)
 #@-node:@file color_markup.py
 #@-leo

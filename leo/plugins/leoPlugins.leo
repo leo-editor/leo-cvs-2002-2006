@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1783" clone_windows="0"/>
 <globals body_outline_ratio="0.42888165038">
-	<global_window_position top="13" left="337" height="921" width="951"/>
+	<global_window_position top="14" left="269" height="921" width="951"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1065,7 +1065,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins</vh>
+<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
 <v t="edream.110203113231.667"><vh>Commands</vh>
 <v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
 <v t="edream.110203113231.669" tnodeList="edream.110203113231.669,edream.110203113231.670,edream.110203113231.671,edream.110203113231.672,edream.110203113231.673,edream.110203113231.674,edream.110203113231.675,edream.110203113231.676"><vh>@file import_cisco_config.py</vh>
@@ -1924,32 +1924,35 @@
 <v t="ekr.20040331153923.13"><vh>addScheduleMenu</vh></v>
 </v>
 </v>
-<v t="ekr.20040408161258" a="E"><vh>rst plugins</vh>
+<v t="ekr.20040408161258"><vh>rst2 plugin</vh>
 <v t="ekr.20040408192158" a="E"><vh>Documentation for the rST plugin using rst</vh>
 <v t="ekr.20040408192158.1" a="E"><vh>@rst ../doc/rstplugin.html</vh>
-<v t="ekr.20040408192158.2" a="E"><vh>Overview</vh>
+<v t="ekr.20040408192158.2"><vh>Overview</vh>
 <v t="ekr.20040408192158.3"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040408192158.4" a="E"><vh>Formatting</vh>
+<v t="ekr.20040408192158.4"><vh>Formatting</vh>
 <v t="ekr.20040408192158.5"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040409051841" a="E"><vh>Embedding documentation in @file trees</vh>
+<v t="ekr.20040409051841.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040408192158.6" a="E"><vh>The code-block directive</vh>
 <v t="ekr.20040408192158.7"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040408192158.8" a="E"><vh>Cascading style sheets</vh>
-<v t="ekr.20040408192158.9" a="TV"><vh>@rst</vh></v>
+<v t="ekr.20040408192158.9"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
 <v t="ekr.20040331071319" a="E" tnodeList="ekr.20040331071319,ekr.20040331071319.2,ekr.20040331071319.3,ekr.20040331071319.4,ekr.20040331071319.5,ekr.20040331071319.6,ekr.20040331071319.7,ekr.20040408160625.1,ekr.20040403202850,ekr.20040403202850.1,ekr.20040403202850.2,ekr.20040331071319.8"><vh>@file rst2.py</vh>
 <v t="ekr.20040331071319.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
-<v t="ekr.20040331071319.3" a="E"><vh>onIconDoubleClick</vh>
+<v t="ekr.20040331071319.3"><vh>onIconDoubleClick</vh>
 <v t="ekr.20040331071319.4" a="E"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
 <v t="ekr.20040331071319.5"><vh>&lt;&lt; define code-block &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040331071319.6"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040331071319.7" a="E"><vh>writeTreeAsRst</vh>
+<v t="ekr.20040331071319.7"><vh>writeTreeAsRst</vh>
 <v t="ekr.20040408160625.1"><vh>&lt;&lt; set encoding &gt;&gt;</vh></v>
 <v t="ekr.20040403202850"><vh>&lt;&lt; set code_dir &gt;&gt;</vh></v>
 <v t="ekr.20040403202850.1"><vh>&lt;&lt; handle an rst node &gt;&gt;</vh></v>
@@ -16369,6 +16372,7 @@ OPTION_LIST = [
 	("Case sensitive", ["search_body_flag", "search_headline_flag"]), 
 ]
 
+# dict is new in Python 2.2.
 OPTION_DICT = dict(OPTION_LIST)</t>
 <t tx="ekr.20040108060748">"""Add a quick search to the toolbar in Leo
 
@@ -18486,7 +18490,7 @@ import os
 
 # Register the handlers...
 leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
-__version__ = "2.0"
+__version__ = "2.1"
 g.plugin_signon(__name__)</t>
 <t tx="ekr.20040331071319.2">@ Change log:
 
@@ -23194,8 +23198,7 @@ Subnodes of the rst root nodes may have headlines that contain just @rst. Such
 node should contain rst markup, possibly including the code-block directive
 defined by this plugin to format blocks of code.
 
-*Kludge.* All @rst nodes should start with the @ignore directive. This plugin
-also will strip leading @nocolor and @wrap directives.
+**Important:** All @rst nodes should start with the @ignore directive. This allows @rst to be embedded in @file-nosent trees: see the next section for details. This plugin strips leading @ignore, @nocolor and @wrap directives.  Such directives do not appear in the output.
 
 The root node may contain any rST directives.  In particular, to create a table of contents put::
 
@@ -23228,19 +23231,20 @@ generates sections from headlines.</t>
 
 This plugin defines a code-block rST directive if the SilverCity syntax coloring module has been installed. This directive takes one argument, a language name.  For example::
 
-	.. code-block:: Python
-	
-		import leoGlobals as g
-		from leoGlobals import true,false
+    .. code-block:: Python
+    
+        import leoGlobals as g
+        from leoGlobals import true,false
 
 This directive syntax colors the code in the indented code block that follows the directive.  The result looks like this:
 
 .. code-block:: Python
-	
-	import leoGlobals as g
-	from leoGlobals import true,false
+    
+    import leoGlobals as g
+    from leoGlobals import true,false
 
-See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for many examples of how to use this directive.</t>
+See the tree called "Scripting chapter using the rst plugin" in LeoDocs.leo for many examples of how to use this directive.
+</t>
 <t tx="ekr.20040408192158.8"></t>
 <t tx="ekr.20040408192158.9">@ignore
 @nocolor
@@ -23258,10 +23262,43 @@ silver_city.css.
 
 The latter two style sheets are imported at the end of the default.css.
 
-**N.B.**: You can use cascading style sheets to do things that otherwise wouldn't be possible with "plain" rST.  For instance, the background color of this page was specified in a body style.
+**N.B.** You can use cascading style sheets to do things that otherwise wouldn't be possible with "plain" rST.  For instance, the background color of this page was specified in a body style.
 
 -------------
 
 |leo|</t>
+<t tx="ekr.20040409051841"></t>
+<t tx="ekr.20040409051841.1">As stated earlier, you must put an @ignore directive in any @rst node (except the root @rst node) whose rST text you want to contribute to the output.  This strange-looking convention allows you to embed documentation in @file-nosent trees *without* that documentation being included in the file derived from the @file-nosent tree.
+
+For example, consider the following outline, in which all the @rst nodes (except the root @rst node) contain @others directives::
+
+    @rst spamDocs.html
+        @file-nosent spam.py
+            code node 1
+                @rst
+            code node 2
+                @rst
+            code node 3
+                @rst
+
+The rst2 plugin will ouput all the reStructuredText contained in the three @rst nodes to spamDocs.html, but the contents of those @rst nodes will not become part of spam.py.  *Note:* The @ignore directive is valid only in @file-nosent trees, which is why we must use @file-noset to generate spam.py.
+
+It would be also be possible to use cloned nodes to embed code nodes in .html files.  This would allow you to use regular @file trees to generate derived files.  For example, suppose all similarly named code nodes are clones of each other::
+
+    @rst spamDocs.html
+        code node 1
+            @rst
+        code node 2
+            @rst
+        code node 3
+            @rst
+
+    @file-nosent spam.py
+        code node 1
+        code node 2
+        code node 3
+
+The disadvantage of this organization is that you must update spamDocs.html by hand to keep it up-to-date with spam.py.
+</t>
 </tnodes>
 </leo_file>

@@ -7,12 +7,12 @@
 __name__ = "Row/Column indicators"
 __version__ = "0.1" 
 
-from leoPlugins import * 
-from leoGlobals import * 
+import leoPlugins 
+import leoGlobals as g
+from leoGlobals import true,false 
 
-try:    import Tkinter 
-except: Tkinter = None 
-Tk = Tkinter
+try: import Tkinter as Tk
+except ImportError: Tk = None 
 
 #@+others
 #@+node:class rowColClass
@@ -25,17 +25,19 @@ class rowColClass:
 	def __init__ (self):
 		
 		self.lastStatusRow, self.lastStatusCol = -1,-1
+		self.c = None # Will be set later.  Needed for idle handling.
 	#@nonl
 	#@-node:__init__
 	#@+node:addWidgets
 	def addWidgets (self,tag,keywords):
-		
-		self.c = keywords['c']
+	
+		self.c = c = keywords.get("c")
+		assert(c)
 	
 		toolbar = self.c.frame.iconFrame
 	
 		# Main container 
-		self.rowColFrame = f = Tkinter.Frame(toolbar) 
+		self.rowColFrame = f = Tk.Frame(toolbar) 
 		f.pack(side="left")
 		
 		text = "line 0, col 0"
@@ -45,38 +47,38 @@ class rowColClass:
 		
 		# Update the row/column indicators immediately to reserve a place.
 		self.updateRowColWidget()
+		
+		g.enableIdleTimeHook()
 	#@nonl
 	#@-node:addWidgets
 	#@+node:updateRowColWidget
-	def updateRowColWidget (self):
+	### There seems to be no way of undoing the idle-time hook!
+	### And one idle-time hook interferes with other hooks!
+	
+	def updateRowColWidget (self,*args,**keys):
 		
-		c = self.c ; body = c.frame.body.bodyCtrl ; gui = app.gui
-		tab_width = c.frame.tab_width
-		
-		# New for Python 2.3: may be called during shutdown.
-		if app.killed:
+		c = self.c
+	
+		# This is called at idle-time, and there can be problems when closing the window.
+		if g.app.killed or not c or c != g.top():
 			return
+	
+		body = c.frame.body.bodyCtrl ; gui = g.app.gui
+		tab_width = c.frame.tab_width
 	
 		index = body.index("insert")
 		row,col = gui.getindex(body,index)
 		
 		if col > 0:
-			if 0: # new code
-				s = c.frame.body.getRange(index1,index2)
-			else:
-				s = body.get("%d.0" % (row),index)
-			s = toUnicode(s,app.tkEncoding)
-			col = computeWidth(s,tab_width)
+			s = body.get("%d.0" % (row),index)
+			s = g.toUnicode(s,g.app.tkEncoding)
+			col = g.computeWidth(s,tab_width)
 	
 		if row != self.lastStatusRow or col != self.lastStatusCol:
 			s = "line %d, col %d " % (row,col)
 			self.rowColLabel.configure(text=s)
 			self.lastStatusRow = row
 			self.lastStatusCol = col
-			
-		# Reschedule this routine 100 ms. later.
-		# Don't use after_idle: it hangs Leo.
-		self.rowColFrame.after(100,self.updateRowColWidget)
 	#@nonl
 	#@-node:updateRowColWidget
 	#@-others
@@ -84,15 +86,16 @@ class rowColClass:
 #@-node:class rowColClass
 #@-others
 
-if Tkinter: 
+if Tk: 
 
-	if app.gui is None: 
-		app.createTkGui(__file__)
+	if g.app.gui is None: 
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
-		rowCol = rowColClass() 
-		registerHandler("after-create-leo-frame",rowCol.addWidgets) 
-		plugin_signon("rowcol")
+	if g.app.gui.guiName() == "tkinter":
+		rowCol = rowColClass()
+		leoPlugins.registerHandler("after-create-leo-frame",rowCol.addWidgets)
+		leoPlugins.registerHandler("idle",rowCol.updateRowColWidget) 
+		g.plugin_signon("rowcol")
 #@nonl
 #@-node:@file rowcol.py
 #@-leo
