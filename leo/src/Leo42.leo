@@ -4803,12 +4803,10 @@
 <v t="ekr.20040311165928" a="M"><vh>Search for root/currentVnode SHOWS WHAT NEEDS TO BE CHANGED</vh></v>
 <v t="ekr.20040312081427.1"><vh>Create visNext/vixBack iterators</vh></v>
 <v t="ekr.20040312073921.3"><vh>Use iterators: search for .threadnext</vh></v>
-<v t="ekr.20040312021644"><vh>Test all commands</vh></v>
 </v>
 <v t="ekr.20040310085820"><vh>Write script to use p proxy methods</vh></v>
 <v t="ekr.20040311165107"><vh>Move vnodeList into tnodes.</vh></v>
 <v t="ekr.20040302084553.2"><vh>Clean up setDirty logic</vh></v>
-<v t="ekr.20040308151706"><vh>Fix and test the script to replace x by g.x</vh></v>
 <v t="ekr.20040311124726.2"><vh>Re-enable p.__getattr__ DO THIS LAST</vh></v>
 <v t="ekr.20040310100905"><vh>Bugs and feature requests</vh>
 <v t="ekr.20040311022923"><vh>Make sentinel name in @-node optional</vh></v>
@@ -5348,8 +5346,8 @@
 <v t="ekr.20040304165432.1"><vh>findFunctionsInTree</vh></v>
 <v t="ekr.20040304163522"><vh>findDefs</vh></v>
 <v t="ekr.20040304164949"><vh>prependNamesInTree(v,nameList,"g.")</vh>
-<v t="ekr.20040304173234"><vh>&lt;&lt; print before and after &gt;&gt;</vh></v>
 <v t="ekr.20040304173234.1"><vh>&lt;&lt; look for name followed by '(' &gt;&gt;</vh></v>
+<v t="ekr.20040304173234"><vh>&lt;&lt; print before and after &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="ekr.20040301071824"><vh>Link/Unlink/Insert methods (vnode) (used by file read logic)</vh>
@@ -5910,7 +5908,7 @@
 </v>
 </v>
 <v t="ekr.20031218072017.3103"><vh>computeWindowTitle</vh></v>
-<v t="ekr.20031218072017.3104"><vh>Debugging, Dumping, Timing, Tracing &amp; Sherlock</vh>
+<v t="ekr.20031218072017.3104" a="E"><vh>Debugging, Dumping, Timing, Tracing &amp; Sherlock</vh>
 <v t="ekr.20031218072017.3105"><vh>alert</vh></v>
 <v t="ekr.20031218072017.3106"><vh>angleBrackets &amp; virtual_event_name</vh></v>
 <v t="ekr.20031218072017.3107"><vh>callerName</vh></v>
@@ -7510,8 +7508,8 @@
 <v t="ekr.20031218072017.1141"><vh>tree.moveUpDown</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20031218072017.2620" a="TV" tnodeList="ekr.20031218072017.2620,ekr.20031218072017.2621,ekr.20031218072017.2622,ekr.20031218072017.2623,ekr.20031218072017.2624,ekr.20031218072017.2626,ekr.20031218072017.1812,ekr.20031218072017.1813,ekr.20031218072017.1814,ekr.20031218072017.1815,ekr.20031218072017.1816,ekr.20031218072017.1817,ekr.20031218072017.1818,ekr.20031218072017.1819,ekr.20031218072017.2627,ekr.20031218072017.2628,ekr.20031218072017.2629,ekr.20031218072017.2630,ekr.20031218072017.2631,ekr.20031218072017.2632,ekr.20031218072017.2633,ekr.20031218072017.2634,ekr.20031218072017.2635,ekr.20031218072017.2636,ekr.20031218072017.2637,ekr.20031218072017.2638,ekr.20031218072017.2639,ekr.20031218072017.2015,ekr.20031218072017.2016,ekr.20031218072017.2017,ekr.20031218072017.2018,ekr.20031218072017.2641,ekr.20031218072017.2642,ekr.20031218072017.2019,ekr.20031218072017.2020,ekr.20031218072017.2021,ekr.20031218072017.2022,ekr.20031218072017.2643,ekr.20031218072017.2644,ekr.20031218072017.2645,ekr.20031218072017.1811,ekr.20031218072017.2647,ekr.20031218072017.2648,ekr.20031218072017.2649,ekr.20031218072017.2650,ekr.20031218072017.2651,ekr.20031218072017.2652,ekr.20031218072017.2653,ekr.20031218072017.2654,ekr.20031218072017.2655,ekr.20031218072017.2656,ekr.20031218072017.2657,ekr.20031218072017.2658,ekr.20031218072017.2659,ekr.20031218072017.2660,ekr.20031218072017.2661,ekr.20031218072017.2662,ekr.20031218072017.2663,ekr.20031218072017.2664,ekr.20031218072017.2665,ekr.20031218072017.2666,ekr.20031218072017.2668,ekr.20031218072017.2669,ekr.20031218072017.2670,ekr.20031218072017.2671,ekr.20031218072017.2674,ekr.20031218072017.2676,ekr.20031218072017.2677,ekr.20031218072017.2678,ekr.20031218072017.2679,ekr.20031218072017.2680,ekr.20031218072017.2681,ekr.20031218072017.2672,ekr.20031218072017.2673,ekr.20031218072017.2675,ekr.20031218072017.2682,ekr.20031218072017.2683,ekr.20031218072017.2686,ekr.20031218072017.2687,ekr.20031218072017.2685,ekr.20031218072017.2684,ekr.20031218072017.2688,ekr.20031218072017.2689,ekr.20031218072017.2667,ekr.20031218072017.2691,ekr.20031218072017.2692,ekr.20031218072017.2693,ekr.20031218072017.2694,ekr.20031218072017.2695,ekr.20031218072017.2696,ekr.20031218072017.2697,ekr.20031218072017.2698,ekr.20031218072017.2699,ekr.20031218072017.2700,ekr.20031218072017.2701,ekr.20031218072017.2703,ekr.20031218072017.2704,ekr.20031218072017.2705,ekr.20031218072017.2387,ekr.20031218072017.2388,ekr.20031218072017.2389,ekr.20031218072017.2394,ekr.20031218072017.2395,ekr.20031218072017.2396,ekr.20031218072017.2391,ekr.20031218072017.2390,ekr.20031218072017.2392,ekr.20031218072017.2393,ekr.20031218072017.2397,ekr.20031218072017.2398,ekr.20031218072017.2399,ekr.20031218072017.2400,ekr.20031218072017.2706,ekr.20031218072017.2707,ekr.20031218072017.2710,ekr.20031218072017.2711,ekr.20031218072017.2326,ekr.20031218072017.2712,ekr.20031218072017.2713,ekr.20031218072017.2328,ekr.20031218072017.2714,ekr.20031218072017.2715,ekr.20031218072017.2716,ekr.20031218072017.2322,ekr.20031218072017.2323,ekr.20031218072017.2324,ekr.20031218072017.2325,ekr.20031218072017.2326,ekr.20031218072017.2327,ekr.20031218072017.2328,ekr.20031218072017.2330,ekr.20031218072017.2718,ekr.20031218072017.2719,ekr.20031218072017.2720,ekr.20031218072017.2721,ekr.20031218072017.2023,ekr.20031218072017.2024,ekr.20031218072017.2025,ekr.20031218072017.2026,ekr.20031218072017.2722,ekr.20040128174042,ekr.20031218072017.2723,ekr.20031218072017.2724,ekr.20031218072017.2725,ekr.20031218072017.2726,ekr.20031218072017.2727,ekr.20031218072017.2728,ekr.20031218072017.2729,ekr.20031218072017.2730,ekr.20031218072017.2731,ekr.20031218072017.2732,ekr.20031218072017.2733,ekr.20031218072017.2736,ekr.20031218072017.2734,ekr.20031218072017.2735,ekr.20031218072017.2737,ekr.20031218072017.2738,ekr.20031218072017.2739,ekr.20031218072017.2740,ekr.20031218072017.2741,ekr.20031218072017.2742,ekr.20031218072017.2743,ekr.20031218072017.2744,ekr.20031218072017.2745,ekr.20031218072017.2746,ekr.20031218072017.2748,ekr.20031218072017.2749,ekr.20031218072017.2750,ekr.20031218072017.2751,ekr.20031218072017.2752,ekr.20031218072017.2753,ekr.20031218072017.2754,ekr.20031218072017.2755,ekr.20031218072017.2757,ekr.20031218072017.2007,ekr.20031218072017.2758,ekr.20031218072017.2759,ekr.20031218072017.2760,ekr.20031218072017.2761,ekr.20031218072017.2762,ekr.20031218072017.2763,ekr.20031218072017.1752,ekr.20031218072017.2765,ekr.20031218072017.2766,ekr.20031218072017.2767,ekr.20031218072017.2768,ekr.20031218072017.2769,ekr.20031218072017.1954,ekr.20031218072017.2771,ekr.20031218072017.2772,ekr.20031218072017.2773,ekr.20031218072017.1753,ekr.20031218072017.1754,ekr.20031218072017.1755,ekr.20031218072017.2775,ekr.20031218072017.2776,ekr.20031218072017.2777,ekr.20031218072017.2778,ekr.20031218072017.2779,ekr.20031218072017.2780,ekr.20031218072017.2781,ekr.20031218072017.2782,ekr.20031218072017.2783,ekr.20031218072017.2784,ekr.20031218072017.2786,ekr.20031218072017.2787,ekr.20031218072017.2788,ekr.20031218072017.2789,ekr.20031218072017.2001,ekr.20031218072017.2790,ekr.20031218072017.2791,ekr.20031218072017.2792,ekr.20031218072017.2793,ekr.20031218072017.2113,ekr.20031218072017.2114,ekr.20031218072017.2115,ekr.20031218072017.2116,ekr.20031218072017.2117,ekr.20031218072017.2118,ekr.20031218072017.2119,ekr.20031218072017.2121,ekr.20031218072017.2122,ekr.20031218072017.2123,ekr.20031218072017.2124,ekr.20031218072017.2125,ekr.20031218072017.2126,ekr.20031218072017.2127,ekr.20031218072017.2128,ekr.20031218072017.2129,ekr.20031218072017.2131,ekr.20031218072017.2132,ekr.20031218072017.2133,ekr.20031218072017.2134,ekr.20031218072017.2106,ekr.20031218072017.2107,ekr.20031218072017.2108,ekr.20031218072017.2109,ekr.20031218072017.1746,ekr.20031218072017.1747,ekr.20031218072017.1748,ekr.20031218072017.1749,ekr.20031218072017.1750,ekr.20031218072017.1751,ekr.20031218072017.2136,ekr.20031218072017.2137,ekr.20031218072017.2138,ekr.20031218072017.1921,ekr.20031218072017.1922"><vh>@file leoAtFile.py </vh>
+<v t="ekr.20040312122501"><vh>Active</vh>
+<v t="ekr.20031218072017.2620" tnodeList="ekr.20031218072017.2620,ekr.20031218072017.2621,ekr.20031218072017.2622,ekr.20031218072017.2623,ekr.20031218072017.2624,ekr.20031218072017.2626,ekr.20031218072017.1812,ekr.20031218072017.1813,ekr.20031218072017.1814,ekr.20031218072017.1815,ekr.20031218072017.1816,ekr.20031218072017.1817,ekr.20031218072017.1818,ekr.20031218072017.1819,ekr.20031218072017.2627,ekr.20031218072017.2628,ekr.20031218072017.2629,ekr.20031218072017.2630,ekr.20031218072017.2631,ekr.20031218072017.2632,ekr.20031218072017.2633,ekr.20031218072017.2634,ekr.20031218072017.2635,ekr.20031218072017.2636,ekr.20031218072017.2637,ekr.20031218072017.2638,ekr.20031218072017.2639,ekr.20031218072017.2015,ekr.20031218072017.2016,ekr.20031218072017.2017,ekr.20031218072017.2018,ekr.20031218072017.2641,ekr.20031218072017.2642,ekr.20031218072017.2019,ekr.20031218072017.2020,ekr.20031218072017.2021,ekr.20031218072017.2022,ekr.20031218072017.2643,ekr.20031218072017.2644,ekr.20031218072017.2645,ekr.20031218072017.1811,ekr.20031218072017.2647,ekr.20031218072017.2648,ekr.20031218072017.2649,ekr.20031218072017.2650,ekr.20031218072017.2651,ekr.20031218072017.2652,ekr.20031218072017.2653,ekr.20031218072017.2654,ekr.20031218072017.2655,ekr.20031218072017.2656,ekr.20031218072017.2657,ekr.20031218072017.2658,ekr.20031218072017.2659,ekr.20031218072017.2660,ekr.20031218072017.2661,ekr.20031218072017.2662,ekr.20031218072017.2663,ekr.20031218072017.2664,ekr.20031218072017.2665,ekr.20031218072017.2666,ekr.20031218072017.2668,ekr.20031218072017.2669,ekr.20031218072017.2670,ekr.20031218072017.2671,ekr.20031218072017.2674,ekr.20031218072017.2676,ekr.20031218072017.2677,ekr.20031218072017.2678,ekr.20031218072017.2679,ekr.20031218072017.2680,ekr.20031218072017.2681,ekr.20031218072017.2672,ekr.20031218072017.2673,ekr.20031218072017.2675,ekr.20031218072017.2682,ekr.20031218072017.2683,ekr.20031218072017.2686,ekr.20031218072017.2687,ekr.20031218072017.2685,ekr.20031218072017.2684,ekr.20031218072017.2688,ekr.20031218072017.2689,ekr.20031218072017.2667,ekr.20031218072017.2691,ekr.20031218072017.2692,ekr.20031218072017.2693,ekr.20031218072017.2694,ekr.20031218072017.2695,ekr.20031218072017.2696,ekr.20031218072017.2697,ekr.20031218072017.2698,ekr.20031218072017.2699,ekr.20031218072017.2700,ekr.20031218072017.2701,ekr.20031218072017.2703,ekr.20031218072017.2704,ekr.20031218072017.2705,ekr.20031218072017.2387,ekr.20031218072017.2388,ekr.20031218072017.2389,ekr.20031218072017.2394,ekr.20031218072017.2395,ekr.20031218072017.2396,ekr.20031218072017.2391,ekr.20031218072017.2390,ekr.20031218072017.2392,ekr.20031218072017.2393,ekr.20031218072017.2397,ekr.20031218072017.2398,ekr.20031218072017.2399,ekr.20031218072017.2400,ekr.20031218072017.2706,ekr.20031218072017.2707,ekr.20031218072017.2710,ekr.20031218072017.2711,ekr.20031218072017.2326,ekr.20031218072017.2712,ekr.20031218072017.2713,ekr.20031218072017.2328,ekr.20031218072017.2714,ekr.20031218072017.2715,ekr.20031218072017.2716,ekr.20031218072017.2322,ekr.20031218072017.2323,ekr.20031218072017.2324,ekr.20031218072017.2325,ekr.20031218072017.2326,ekr.20031218072017.2327,ekr.20031218072017.2328,ekr.20031218072017.2330,ekr.20031218072017.2718,ekr.20031218072017.2719,ekr.20031218072017.2720,ekr.20031218072017.2721,ekr.20031218072017.2023,ekr.20031218072017.2024,ekr.20031218072017.2025,ekr.20031218072017.2026,ekr.20031218072017.2722,ekr.20040128174042,ekr.20031218072017.2723,ekr.20031218072017.2724,ekr.20031218072017.2725,ekr.20031218072017.2726,ekr.20031218072017.2727,ekr.20031218072017.2728,ekr.20031218072017.2729,ekr.20031218072017.2730,ekr.20031218072017.2731,ekr.20031218072017.2732,ekr.20031218072017.2733,ekr.20031218072017.2736,ekr.20031218072017.2734,ekr.20031218072017.2735,ekr.20031218072017.2737,ekr.20031218072017.2738,ekr.20031218072017.2739,ekr.20031218072017.2740,ekr.20031218072017.2741,ekr.20031218072017.2742,ekr.20031218072017.2743,ekr.20031218072017.2744,ekr.20031218072017.2745,ekr.20031218072017.2746,ekr.20031218072017.2748,ekr.20031218072017.2749,ekr.20031218072017.2750,ekr.20031218072017.2751,ekr.20031218072017.2752,ekr.20031218072017.2753,ekr.20031218072017.2754,ekr.20031218072017.2755,ekr.20031218072017.2757,ekr.20031218072017.2007,ekr.20031218072017.2758,ekr.20031218072017.2759,ekr.20031218072017.2760,ekr.20031218072017.2761,ekr.20031218072017.2762,ekr.20031218072017.2763,ekr.20031218072017.1752,ekr.20031218072017.2765,ekr.20031218072017.2766,ekr.20031218072017.2767,ekr.20031218072017.2768,ekr.20031218072017.2769,ekr.20031218072017.1954,ekr.20031218072017.2771,ekr.20031218072017.2772,ekr.20031218072017.2773,ekr.20031218072017.1753,ekr.20031218072017.1754,ekr.20031218072017.1755,ekr.20031218072017.2775,ekr.20031218072017.2776,ekr.20031218072017.2777,ekr.20031218072017.2778,ekr.20031218072017.2779,ekr.20031218072017.2780,ekr.20031218072017.2781,ekr.20031218072017.2782,ekr.20031218072017.2783,ekr.20031218072017.2784,ekr.20031218072017.2786,ekr.20031218072017.2787,ekr.20031218072017.2788,ekr.20031218072017.2789,ekr.20031218072017.2001,ekr.20031218072017.2790,ekr.20031218072017.2791,ekr.20031218072017.2792,ekr.20031218072017.2793,ekr.20031218072017.2113,ekr.20031218072017.2114,ekr.20031218072017.2115,ekr.20031218072017.2116,ekr.20031218072017.2117,ekr.20031218072017.2118,ekr.20031218072017.2119,ekr.20031218072017.2121,ekr.20031218072017.2122,ekr.20031218072017.2123,ekr.20031218072017.2124,ekr.20031218072017.2125,ekr.20031218072017.2126,ekr.20031218072017.2127,ekr.20031218072017.2128,ekr.20031218072017.2129,ekr.20031218072017.2131,ekr.20031218072017.2132,ekr.20031218072017.2133,ekr.20031218072017.2134,ekr.20031218072017.2106,ekr.20031218072017.2107,ekr.20031218072017.2108,ekr.20031218072017.2109,ekr.20031218072017.1746,ekr.20031218072017.1747,ekr.20031218072017.1748,ekr.20031218072017.1749,ekr.20031218072017.1750,ekr.20031218072017.1751,ekr.20031218072017.2136,ekr.20031218072017.2137,ekr.20031218072017.2138,ekr.20031218072017.1921,ekr.20031218072017.1922"><vh>@file leoAtFile.py </vh>
 <v t="ekr.20031218072017.2621"><vh>&lt;&lt; global atFile constants &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2622"><vh>&lt;&lt; class baseAtFile methods &gt;&gt;</vh>
 <v t="ekr.20031218072017.2623"><vh>atFile.__init__ &amp; initIvars</vh></v>
@@ -8588,9 +8586,32 @@
 <v t="ekr.20031218072017.3051"><vh>xmlEscape</vh></v>
 </v>
 </v>
+</v>
+</v>
 <v t="ekr.20040312094553.1"><vh>To do next</vh>
-<v t="ekr.20040312092455.2" a="M"><vh>Enable and test atFile read logic</vh></v>
-<v t="ekr.20040312092455.3" a="M"><vh>Think unit tests!</vh></v>
+<v t="ekr.20040312120107"><vh>Define p.link/unlink in terms of v.link/unlink ??</vh>
+<v t="ekr.20040310062332"><vh>Link/Unlink methods (position)</vh>
+<v t="ekr.20040310062332.1"><vh>p.invalidOutline</vh></v>
+<v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
+<v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
+<v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
+<v t="ekr.20040310062332.5"><vh>p.unlink</vh></v>
+</v>
+</v>
+<v t="ekr.20040312021644"><vh>Test all commands</vh></v>
+<v t="ekr.20040312092455.2"><vh>Enable and test atFile read logic</vh></v>
+<v t="ekr.20040312092455.3"><vh>Think mini tests!</vh></v>
+</v>
+<v t="ekr.20040308151706" a="ETV"><vh>(Fix and test the script to replace x by g.x)</vh>
+<v t="ekr.20040304163125" a="E"><vh>Script to find and replace all functions in leoGlobals.py</vh>
+<v t="ekr.20040304165432"><vh>findNode &amp; findTopLevelNode</vh></v>
+<v t="ekr.20040304165432.1"><vh>findFunctionsInTree</vh></v>
+<v t="ekr.20040304163522"><vh>findDefs</vh></v>
+<v t="ekr.20040304164949" a="E"><vh>prependNamesInTree(v,nameList,"g.")</vh>
+<v t="ekr.20040304173234.1"><vh>&lt;&lt; look for name followed by '(' &gt;&gt;</vh></v>
+<v t="ekr.20040304173234"><vh>&lt;&lt; print before and after &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -17147,7 +17168,7 @@ elif childIndex &lt; 0:
 		aList = [v.numberOfChildren()]
 	child = v.firstChild()
 	while child:
-		aList.append(createTopologyList(c,child,useHeadlines))
+		aList.append(g.createTopologyList(c,child,useHeadlines))
 		child = child.next()
 	return aList</t>
 <t tx="ekr.20031218072017.823"></t>
@@ -22486,14 +22507,14 @@ if i &lt; n and s[i] == '*' :
 		if root_node:
 			dict["root"]=0 # value not immportant
 		else:
-			g.es(angleBrackets("*") + "= requires @root in the headline")</t>
+			g.es(g.angleBrackets("*") + "= requires @root in the headline")</t>
 <t tx="ekr.20031218072017.1263"># os.rename may fail on some Unix flavors if src and dst are on different filesystems.
 
 def utils_rename(src,dst):
 
 	"""Platform-independent rename."""
 	
-	head,tail=os_path_split(dst)
+	head,tail=g.os_path_split(dst)
 	if head and len(head) &gt; 0:
 		g.makeAllNonExistentDirectories(head)
 	
@@ -24226,9 +24247,9 @@ def set_delims_from_language(language):
 	"""
 
 	tag = "@language"
-	# g.trace(`get_line(s,i)`)
+	# g.trace(`g.get_line(s,i)`)
 	assert(i != None)
-	assert(match_word(s,i,tag))
+	assert(g.match_word(s,i,tag))
 	i += len(tag) ; i = g.skip_ws(s, i)
 	# Get the argument.
 	j = i ; i = g.skip_c_id(s,i)
@@ -25522,7 +25543,7 @@ def es(s,*args,**keys):
 	if not s: return
 	
 	# Make sure the following concatenation doesn't fail.
-	assert(isUnicode(self.t.bodyString)) # 9/28/03
+	assert(g.isUnicode(self.t.bodyString)) # 9/28/03
 	s = g.toUnicode(s,encoding) # 9/28/03
 
 	body = self.t.bodyString + s
@@ -28646,7 +28667,7 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 		else:
 			changed = false ; result = []
 			text = v.t.bodyString
-			assert(isUnicode(text))
+			assert(g.isUnicode(text))
 			lines = string.split(text, '\n')
 			for line in lines:
 				s = g.optimizeLeadingWhitespace(line,tabWidth)
@@ -28687,7 +28708,7 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 		else:
 			result = [] ; changed = false
 			text = v.t.bodyString
-			assert(isUnicode(text))
+			assert(g.isUnicode(text))
 			lines = string.split(text, '\n')
 			for line in lines:
 				i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
@@ -32343,7 +32364,7 @@ def OnBoxClick(self,event=None):
 	
 def OnHeadlineRightClick(self,event=None):
 	"""Callback injected into vnode or position class."""
-	#trace()
+	#g.trace()
 	try:
 		v = self ; c = v.c
 		if not g.doHook("headrclick1",c=c,v=v,event=event):
@@ -35011,7 +35032,7 @@ These have the potential to introduce subtle bugs for several reasons:
 	
 	encoding = keys.get("encoding")
 
-	uargs = [toUnicodeFileEncoding(arg,encoding) for arg in args]
+	uargs = [g.toUnicodeFileEncoding(arg,encoding) for arg in args]
 
 	path = os.path.join(*uargs)
 	
@@ -35870,7 +35891,7 @@ def OnHyperLinkLeave (self,v):
 	
 	It is NOT an error to use this method."""
 	
-	g.trace("nullGui",callerName(2))
+	g.trace("nullGui",g.callerName(2))
 	pass</t>
 <t tx="ekr.20031218072017.2231">def setScript (self,script=None,scriptFileName=None):
 
@@ -36172,7 +36193,7 @@ I imported as @file a python file, and there's a line with a line-continuation b
 
 	"""Creates a child node c of parent for the class, and children of c for each def in the class."""
 
-	# g.trace(get_line(s,i))
+	# g.trace(g.get_line(s,i))
 	classIndent = self.getLeadingIndent(s,i)
 	&lt;&lt; set classname and headline, or return i &gt;&gt;
 	i = g.skip_line(s,i) # Skip the class line.
@@ -36258,7 +36279,7 @@ if s2:
 
 	"""Creates a node of parent for the def."""
 
-	# g.trace(get_line(s,i))
+	# g.trace(g.get_line(s,i))
 	&lt;&lt; set headline or return i &gt;&gt;
 	&lt;&lt; skip the Python def &gt;&gt;
 	# Create the def node.
@@ -36317,7 +36338,7 @@ self.createHeadline(parent,prefix + body,headline)
 	done = false ; start = i
 	while not done and i &lt; len(s):
 		progress = i
-		# g.trace(get_line(s,i))
+		# g.trace(g.get_line(s,i))
 		ch = s[i]
 		if ch == '\n':
 			backslashNewline = i &gt; 0 and g.match(s,i-1,"\\\n")
@@ -36367,7 +36388,7 @@ def scanPythonText (self,s,parent):
 	self.methodsSeen = false
 	while i &lt; len(s):
 		progress = i
-		# g.trace(get_line(s,i))
+		# g.trace(g.get_line(s,i))
 		ch = s[i]
 		if ch == '\n' or ch == '\r': i = g.skip_nl(s,i)
 		elif ch == '#': i = g.skip_to_end_of_line(s,i)
@@ -38514,7 +38535,7 @@ while v and v != after:
 	if not v.t.isVisited():
 		v.t.setVisited()
 		nodes += 1
-		lines += len(splitLines(v.bodyString()))
+		lines += len(g.splitLines(v.bodyString()))
 	v = v.threadNext()
 	
 pages = ((nodes * 10) + lines) / 60
@@ -38541,7 +38562,7 @@ g.checkTopologyOfAllClones()</t>
 <t tx="ekr.20031218072017.2434">if 0:
 	checkForMismatchedJoinedNodes()
 	
-	print g.createTopologyList(c=top(),root=top().currentVnode().parent(),useHeadlines=false)
+	print g.createTopologyList(c=g.top(),root=g.top().currentVnode().parent(),useHeadlines=false)
 	
 	checkTopologiesOfLinkedNodes()
 	
@@ -44677,7 +44698,7 @@ def idle_colorize(self,p):
 		self.colorize(p,self.incremental)</t>
 <t tx="ekr.20031218072017.2803">def getCwebWord (self,s,i):
 	
-	# g.trace(get_line(s,i))
+	# g.trace(g.get_line(s,i))
 	if not g.match(s,i,"@"):
 		return None
 	
@@ -48066,7 +48087,7 @@ def findNextMatch(self):
 		if c.whole_word_flag:
 			index = t.index(g.choose(c.reverse_flag,pos,newpos))
 			&lt;&lt; continue if not whole word match &gt;&gt;
-		#trace("found:",pos,newpos,v)
+		#g.trace("found:",pos,newpos,v)
 		gui.setTextSelection(t,pos,newpos)
 		return pos, newpos</t>
 <t tx="ekr.20031218072017.3078">index = gui.moveIndexBackward(newpos,len(c.find_text))
@@ -48093,8 +48114,8 @@ first  = gui.getCharAtIndex    (t,pos)
 last   = gui.getCharBeforeIndex(t,newpos)
 after  = gui.getCharAtIndex    (t,newpos)
 
-#trace("before,first",before,first,is_c_id(before),is_c_id(first))
-#trace("after,last",  after,last,  g.is_c_id(after), g.is_c_id(last))
+#g.trace("before,first",before,first,g.is_c_id(before),g.is_c_id(first))
+#g.trace("after,last",  after,last,  g.is_c_id(after), g.is_c_id(last))
 
 if g.is_c_id(before) and g.is_c_id(first):
 	continue
@@ -48763,7 +48784,7 @@ def makeAllNonExistentDirectories (dir):
 	# Split dir into all its component parts.
 	paths = []
 	while len(dir) &gt; 0:
-		head,tail=os_path_split(dir)
+		head,tail=g.os_path_split(dir)
 		if len(tail) == 0:
 			paths.append(head)
 			break
@@ -49082,7 +49103,7 @@ def esDiffTime(message, start):
 	result = []
 	for item in theList:
 		if type(item) == types.ListType:
-			result.extend(flattenList(item))
+			result.extend(g.flattenList(item))
 		else:
 			result.append(item)
 	return result</t>
@@ -49350,7 +49371,7 @@ def skip_php_braces(s,i):
 	If found, i points to the end. Otherwise, i &gt;= len(s)
 	The end keyword matches begin, case, class, record, and try."""
 
-	assert(match_c_word(s,i,"begin"))
+	assert(g.match_c_word(s,i,"begin"))
 	level = 1 ; i = g.skip_c_id(s,i) # Skip the opening begin.
 	while i &lt; len(s):
 		ch = s[i]
@@ -49485,7 +49506,7 @@ def skip_pp_if(s,i):
 
 def skip_pp_part(s,i):
 
-	# g.trace(get_line(s,i))
+	# g.trace(g.get_line(s,i))
 
 	delta = 0
 	while i &lt; len(s):
@@ -49733,7 +49754,7 @@ def skip_pascal_braces(s,i):
 def skip_ws_and_nl(s,i):
 
 	n = len(s)
-	while i &lt; n and (is_ws(s[i]) or g.is_nl(s,i)):
+	while i &lt; n and (g.is_ws(s[i]) or g.is_nl(s,i)):
 		i += 1
 	return i</t>
 <t tx="ekr.20031218072017.3195"># These two routines preserve the state of trailing newlines.
@@ -50290,9 +50311,9 @@ if g.match(s,i,lb):
 		if self.isModuleStart(s,i):
 			break
 		else: i = g.skip_line(s,i)
-	self.createHeadline(parent,s[j:i],angleBrackets(" @ "))
+	self.createHeadline(parent,s[j:i],g.angleBrackets(" @ "))
 	
-# g.trace(`get_line(s,i)`)</t>
+# g.trace(`g.get_line(s,i)`)</t>
 <t tx="ekr.20031218072017.3234">if type=="cweb":
 	assert(self.isModuleStart(s,i))
 	start = i
@@ -50817,7 +50838,7 @@ if i &lt; len(s):
 	i = 0 ; start = 0
 	while i &lt; len(s):
 		progress = i
-		ch = s[i] ; # g.trace(get_line(s,i))
+		ch = s[i] ; # g.trace(g.get_line(s,i))
 		if ch == ';':
 			i = g.skip_line(s,i)
 		elif ch == '(':
@@ -50918,7 +50939,7 @@ def scanJavaText (self,s,parent,outerFlag): # true if at outer level.
 	&lt;&lt; define scanJavaText vars &gt;&gt;
 	# if not outerFlag: g.trace("inner:" + `s`)
 	while i &lt; len(s):
-		# g.trace(`get_line(s,i)`)
+		# g.trace(`g.get_line(s,i)`)
 		ch = s[i]
 		# These cases skip tokens.
 		if ch == '/':
@@ -50960,9 +50981,9 @@ elif (outerFlag and (class_seen or interface_seen)) or (not outerFlag and lparen
 	# g.trace("outerFlag:"+`outerFlag`)
 	# g.trace("lparen:"`lparen`)
 	# g.trace("class_seen:"+`class_seen`)
-	# g.trace("scan_start:"+get_line_after(s,scan_start))
-	# g.trace("func_start:"+get_line_after(s,function_start))
-	# g.trace("s:"+get_line(s,i))
+	# g.trace("scan_start:"+g.get_line_after(s,scan_start))
+	# g.trace("func_start:"+g.get_line_after(s,function_start))
+	# g.trace("s:"+g.get_line(s,i))
 
 	# Point i _after_ the last character of the method.
 	i += 1
@@ -51040,7 +51061,7 @@ else:
 	ref_name = g.angleBrackets(" " + self.methodName + " " + kind + " ")
 	parent.appendStringToBody(leader + ref_name + "\n")</t>
 <t tx="ekr.20031218072017.3275"># These mark the points in the present function.
-# g.trace("recursive scan:" + `get_line(s,brace_ip1+ 1)`)
+# g.trace("recursive scan:" + `g.get_line(s,brace_ip1+ 1)`)
 oldMethodName = self.methodName
 self.methodName = headline
 self.scanJavaText(s[brace_ip1+1:brace_ip2], # Don't include either brace.
@@ -51112,7 +51133,7 @@ def scanPascalText (self,s,parent):
 	i = g.skip_pascal_begin_end(s,i)
 	if g.match_c_word(s,i,"end"):
 		i = g.skip_c_id(s,i)
-elif (match_c_word(s,i,"function")  or g.match_c_word(s,i,"procedure") or
+elif (g.match_c_word(s,i,"function")  or g.match_c_word(s,i,"procedure") or
 	g.match_c_word(s,i,"constructor") or g.match_c_word(s,i,"destructor")):
 
 	# line = g.get_line(s,i) ; g.trace(`line`)
@@ -51216,7 +51237,7 @@ else:
 
 def convertCodePartToWeb (self,s,i,v,result):
 
-	# g.trace(get_line(s,i))
+	# g.trace(g.get_line(s,i))
 	c = self.c ; nl = self.output_newline
 	lb = g.choose(self.webType=="cweb","@&lt;","&lt;&lt;")
 	rb = g.choose(self.webType=="cweb","@&gt;","&gt;&gt;")
@@ -51306,7 +51327,7 @@ else:
 	
 	nl = self.output_newline
 
-	# g.trace(get_line(s,i))
+	# g.trace(g.get_line(s,i))
 	if g.match_word(s,i,"@doc"):
 		i = g.skip_line(s,i)
 	elif g.match(s,i,"@ ") or g.match(s,i,"@\t") or g.match(s,i,"@*"):
@@ -51343,12 +51364,12 @@ def convertVnodeToWeb (self,v):
 	i = 0 ; result = "" ; docSeen = false
 	while i &lt; len(s):
 		progress = i
-		# g.trace(get_line(s,i))
+		# g.trace(g.get_line(s,i))
 		i = g.skip_ws_and_nl(s,i)
 		if self.isDocStart(s,i) or g.match_word(s,i,"@doc"):
 			i,result = self.convertDocPartToWeb(s,i,result)
 			docSeen = true
-		elif (match_word(s,i,"@code") or g.match_word(s,i,"@root") or
+		elif (g.match_word(s,i,"@code") or g.match_word(s,i,"@root") or
 			g.match_word(s,i,"@c") or g.match(s,i,lb)):
 			&lt;&lt; Supply a missing doc part &gt;&gt;
 			i,result = self.convertCodePartToWeb(s,i,v,result)
@@ -51370,7 +51391,7 @@ def convertVnodeToWeb (self,v):
 
 def copyPart (self,s,i,result):
 
-	# g.trace(get_line(s,i))
+	# g.trace(g.get_line(s,i))
 	lb = g.choose(self.webType=="cweb","@&lt;","&lt;&lt;")
 	rb = g.choose(self.webType=="cweb","@&gt;","&gt;&gt;")
 	type = self.webType
@@ -51379,7 +51400,7 @@ def copyPart (self,s,i,result):
 		i = g.skip_nl(s,i) ; i = g.skip_ws(s,i)
 		if self.isDocStart(s,i):
 			return i, result
-		if (match_word(s,i,"@doc") or
+		if (g.match_word(s,i,"@doc") or
 			g.match_word(s,i,"@c") or
 			g.match_word(s,i,"@root") or
 			g.match_word(s,i,"@code")): # 2/25/03
@@ -51527,7 +51548,7 @@ elif start_delim:
 	c = self.c
 	i = g.find_line_start(s,i)
 	while i &lt; len(s):
-		# g.trace(`get_line(s,i)`)
+		# g.trace(`g.get_line(s,i)`)
 		j = g.skip_ws(s,i) # Bug fix: 2/14/03
 		if g.is_nl(s,j) or g.match(s,j,"#"): # Bug fix: 2/14/03
 			i = g.skip_line(s,i) # ignore blank lines and comment lines.
@@ -51565,7 +51586,7 @@ def isModuleStart (self,s,i):
 <t tx="ekr.20031218072017.3310">def massageBody (self,s,methodKind):
 	
 	# g.trace(`s`)
-	# g.trace(`get_line(s,0)`)
+	# g.trace(`g.get_line(s,0)`)
 	c = self.c
 	if self.treeType == "@file":
 		if self.fileType == ".py": # 7/31/02: was "py"
@@ -51573,7 +51594,7 @@ def isModuleStart (self,s,i):
 		else:
 			newBody, comment = self.skipLeadingComments(s)
 			newBody = self.undentBody(newBody)
-			newLine = g.choose(is_nl(newBody,0),"\n","\n\n")
+			newLine = g.choose(g.is_nl(newBody,0),"\n","\n\n")
 			if len(comment) &gt; 0:
 				return comment + "\n@c" + newLine + newBody
 			else:
@@ -51586,12 +51607,12 @@ def isModuleStart (self,s,i):
 		intro = lb + " " + self.methodName + " " + methodKind + " " + rb
 		if self.fileType == ".py": # 7/31/02: was "py"
 			newBody = self.undentBody(s)
-			newLine = g.choose(is_nl(newBody,0),"\n","\n\n")
+			newLine = g.choose(g.is_nl(newBody,0),"\n","\n\n")
 			return intro + newLine + newBody
 		else:
 			newBody, comment = self.skipLeadingComments(s)
 			newBody = self.undentBody(newBody)
-			newLine = g.choose(is_nl(newBody,0),"\n","\n\n")
+			newLine = g.choose(g.is_nl(newBody,0),"\n","\n\n")
 			if len(comment) &gt; 0:
 				return comment + "\n" + intro + newLine + newBody
 			else:
@@ -51602,7 +51623,7 @@ def isModuleStart (self,s,i):
 	
 	Also removes leading and trailing whitespace."""
 
-	# g.trace(`get_line(s,0)`)
+	# g.trace(`g.get_line(s,0)`)
 	s = string.strip(s)
 	s = string.replace(s,"\n"," ")
 	s = string.replace(s,"\r"," ")
@@ -51651,7 +51672,7 @@ while i &lt; len(s):
 	else: i = g.skip_line(s,i)</t>
 <t tx="ekr.20031218072017.3314">i = 0
 while i &lt; len(s):
-	# g.trace(`get_line(s,i)`)
+	# g.trace(`g.get_line(s,i)`)
 	if g.match(s,i,lb):
 		i += 2 ; j = i ; k = g.find_on_line(s,j,rb)
 		if k &gt; -1:
@@ -51669,7 +51690,7 @@ while i &lt; len(s):
 
 	Returns (body, comment)"""
 
-	# g.trace(`get_line(s,0)`)
+	# g.trace(`g.get_line(s,0)`)
 	s_original = s
 	s = string.lstrip(s)
 	i = 0 ; comment = ""
@@ -53463,7 +53484,7 @@ def handle_newline(self,s,i):
 	kind, end = self.token_type(s,i,dont_report_errors)
 	# token_type will not skip whitespace in noweb mode.
 	i = g.skip_ws(s,i)
-	# g.trace(`kind` + "," + `get_line(s,i)`)
+	# g.trace(`kind` + "," + `g.get_line(s,i)`)
 
 	if kind == plain_line:
 		pass
@@ -53638,7 +53659,7 @@ code = doc = None</t>
 
 def skip_code(self,s,i):
 
-	# g.trace(`get_line(s,i)`)
+	# g.trace(`g.get_line(s,i)`)
 	code1 = i
 	nl_i = i # For error messages
 	done = false # true when end of code part seen.
@@ -53698,7 +53719,7 @@ else:
 	i = j</t>
 <t tx="ekr.20031218072017.3503">def skip_doc(self,s,i):
 
-	# g.trace(`get_line(s,i)`)
+	# g.trace(`g.get_line(s,i)`)
 	# Skip @space, @*, @doc, @chapter and @section directives.
 	doc1 = i
 	while i &lt; len(s):
@@ -53708,7 +53729,7 @@ else:
 			i = g.skip_ws(s,i+2) ; doc1 = i
 		elif g.match(s,i,"@\n"):
 			i += 1 ; doc1 = i
-		elif (match_word(s,i,"@doc") or
+		elif (g.match_word(s,i,"@doc") or
 			  g.match_word(s,i,"@chapter") or
 			  g.match_word(s,i,"@section")):
 			doc1 = i = g.skip_line(s,i)
@@ -53746,7 +53767,7 @@ Most of the differences bewteen noweb mode and CWEB mode are handled by token_ty
 
 def put_code(self,s,no_first_lws_flag):
 
-	# g.trace(`get_line(s,0)`)
+	# g.trace(`g.get_line(s,0)`)
 	i = 0
 	if i &lt; len(s):
 		i = self.put_newline(s,i,no_first_lws_flag)
@@ -53813,7 +53834,7 @@ else: self.os("@") ; i += 1</t>
 
 def put_doc(self,s):
 
-	# g.trace(`get_line(s,0)`)
+	# g.trace(`g.get_line(s,0)`)
 	width = self.page_width
 	words = 0 ; word_width = 0 ; line_width = 0
 	# 8/1/02: can't use choose here!
@@ -53893,7 +53914,7 @@ while g.is_ws_or_nl(s,i):
 		if line_width &lt; width: self.os(ch)
 		i += 1
 	else:
-		assert(is_nl(s,i))
+		assert(g.is_nl(s,i))
 		self.onl()
 		if use_single_comment:
 			# New code: 5/31/00
@@ -54256,7 +54277,7 @@ def st_enter_root_name(self,name,code,doc):
 		for part in section.parts.values():
 			assert(part.of == section.of)
 			s += "\n----- part " + `part.part` + " of " + `part.of` + " -----\n"
-			s += `get_line(part.code,0)`
+			s += `g.get_line(part.code,0)`
 	s += "\n--------------------"
 	return s</t>
 <t tx="ekr.20031218072017.3540">@ This routine enters names and their code parts into the given table. The 'part' and 'of' parameters are taken from the "(part n of m)" portion of the line that introduces the section definition in the C code.
@@ -54276,7 +54297,7 @@ def ust_enter (self,name,part,of,code,nl_flag,is_root_flag):
 		self.ust[name] = u
 	section = self.ust[name]
 	section.parts[part]=u # Parts may be defined in any order.
-	# g.trace("section name: [" + name + "](" + `part` + " of " + `of` + ")..."+`get_line(code,0)`)</t>
+	# g.trace("section name: [" + name + "](" + `part` + " of " + `of` + ")..."+`g.get_line(code,0)`)</t>
 <t tx="ekr.20031218072017.3541">i = g.skip_blank_lines(code,0)
 if i &gt; 0:
 	code = code[i:]
@@ -54297,7 +54318,7 @@ def ust_lookup (self,name,part_number,is_root_flag,update_flag):
 		if section.parts.has_key(part_number):
 			part = section.parts[part_number]
 			if update_flag: part.update_flag = true
-			# g.trace("found:" + name + " (" + `part_number` + ")...\n" + `get_line(part.code,0)`)
+			# g.trace("found:" + name + " (" + `part_number` + ")...\n" + `g.get_line(part.code,0)`)
 			return part, true
 
 	# g.trace("not found:" + name + " (" + `part_number` + ")...\n")
@@ -54393,7 +54414,7 @@ def massage_block_comment (self,s):
 	j = i ; i = g.skip_to_end_of_line(s,i)
 	result = s[j:i]
 	while i &lt; len(s):
-		assert(is_nl(s,i))
+		assert(g.is_nl(s,i))
 		newlines += 1
 		# Replace the first newline with a blank.
 		result += ' ' ; i += 1
@@ -54421,8 +54442,8 @@ def forgiving_compare (self,name,part,s1,s2):
 
 	if 0:
 		g.trace(`name`+":"+`part`+
-			  "\n1:"+`get_line(s1,0)`+
-			  "\n2:"+ `get_line(s2,0)`)
+			  "\n1:"+`g.get_line(s1,0)`+
+			  "\n2:"+ `g.get_line(s2,0)`)
 	s1 = g.toUnicode(s1,self.encoding) # 4/4/03
 	s2 = g.toUnicode(s2,self.encoding) # 4/4/03
 	&lt;&lt; Define forgiving_compare vars &gt;&gt;
@@ -54676,7 +54697,7 @@ i = g.skip_leading_ws(s,i,indent,c.tab_width) # skip indent leading white space.
 Tangle increases the indentation by one tab if the section reference is not the first non-whitespace item on the line,so self code must do the same.
 @c
 
-# g.trace(`get_line(s,i)`)
+# g.trace(`g.get_line(s,i)`)
 result,junk,kind,name,part,of,end,nl_flag = self.is_sentinel_line_with_data(s,i)
 assert(result==true)
 &lt;&lt; terminate the previous part of this section if it exists &gt;&gt;
@@ -54859,7 +54880,7 @@ if ucode: ucode = ucode[i:]</t>
 
 def compare_section_names (self,s1,s2):
 
-	# g.trace(`get_line(s1,0)` + ":" + `get_line(s2,0)`)
+	# g.trace(`g.get_line(s1,0)` + ":" + `g.get_line(s2,0)`)
 	if g.match(s1,0,"&lt;&lt;") or g.match(s1,0,"@&lt;"):
 		# Use a forgiving compare of the two section names.
 		delim = g.choose(self.use_cweb_flag,"@&gt;","&gt;&gt;")
@@ -54922,7 +54943,7 @@ def is_escaped (self,s,i):
 	elif g.match(s,i,"&lt;&lt;"):
 		i, kind, end = self.skip_noweb_section_name(s,i)
 
-	# g.trace(`kind` + ":" + `get_line(s,end)`)
+	# g.trace(`kind` + ":" + `g.get_line(s,end)`)
 	return i, kind, end</t>
 <t tx="ekr.20031218072017.3584">@ This function returns true if i points to a line a sentinel line of one of the following forms:
 
@@ -55197,7 +55218,7 @@ def skip_section_name(self,s,i):
 		&lt;&lt; set token_type for CWEB mode &gt;&gt;
 	if kind == at_other :
 		&lt;&lt; set kind for directive &gt;&gt;
-	# g.trace(`kind` + ":" + `get_line(s,i)`)
+	# g.trace(`kind` + ":" + `g.get_line(s,i)`)
 	return kind, end
 </t>
 <t tx="ekr.20031218072017.3600">if g.match(s,i,"&lt;&lt;"):
@@ -56930,7 +56951,7 @@ def runAskYesNoCancelDialog(self,title,
 	pass</t>
 <t tx="ekr.20031218072017.3746">def oops(self):
 	
-	g.trace("unitTestGui",callerName(2))
+	g.trace("unitTestGui",g.callerName(2))
 	
 	if 0: # Fail the unit test.
 		assert 0,"call to undefined method in unitTestMethod class"</t>
@@ -57569,7 +57590,7 @@ ivars = [
 def init(self,c):
 
 	self.c = c
-	#trace(`c.tab_width`)
+	#g.trace(`c.tab_width`)
 
 	for var in self.ivars:
 		val = getattr(c,var)
@@ -61838,7 +61859,7 @@ if 0: # testing
 else:
 	gvFile = open('/tmp/leo.dot','w')
 	gvFile.write('digraph foo {\n')
-	gvFile.write(toEncodedString(s,encoding))
+	gvFile.write(g.toEncodedString(s,encoding))
 	gvFile.write('}\n')
 	gvFile.close()</t>
 <t tx="ekr.20031218072017.4249">@
@@ -66820,9 +66841,9 @@ elif childIndex &lt; 0:
 		changed = true
 	c.endUpdate(changed)
 	return changed</t>
-<t tx="ekr.20040304163125">try: true;false
-except NameError: true,false = 1,0
-import leoGlobals as g
+<t tx="ekr.20040304163125">import leoGlobals as g
+from leoGlobals import true,false
+import string
 
 c = g.top()
 
@@ -66835,14 +66856,17 @@ if 0:
 	nameList.sort() ; g.enl()
 	for name in nameList: g.es(name)
 	
-g.es("%d functions in leoGlobals.py" % len(nameList))
+s = "%d functions in leoGlobals.py" % len(nameList)
+print s ; g.es(s)
 	
 if 1:
 	v = findTopLevelNode(c,"Code")
-	# v = c.currentVnode() # massage this script itself!
-	g.enl() ; g.enl()
-	count = prependNamesInTree(v,nameList,"g.")
-	g.es("%d --- done --- " % count)
+else:
+	v = c.currentVnode() # massage this script itself!
+g.enl() ; g.enl()
+count = prependNamesInTree(v,nameList,"g.",replace=false) # Just prints if replace==false.
+s = "%d --- done --- " % count
+print s ; g.es(s)
 </t>
 <t tx="ekr.20040304163522">def findDefs(body):
 	
@@ -66861,18 +66885,23 @@ if 1:
 					return [] # Disallow other class methods.
 				names.append(name)
 	return names</t>
-<t tx="ekr.20040304164949">def prependNamesInTree(v,nameList,prefix):
+<t tx="ekr.20040304164949">def prependNamesInTree(v,nameList,prefix,replace=false):
 	assert(len(prefix) &gt; 0)
+	ch1 = string.letters + '_'
+	ch2 = string.letters + string.digits + '_'
+	def_s = "def " ; def_n = len(def_s)
+	prefix_n = len(prefix)
 	after = v.nodeAfterTree()
 	total = 0
 	while v and v != after:
 		count = 0 ; s = v.bodyString()
+		printFlag = false
 		if s:
 			for name in nameList:
 				i = 0 ; n = len(name)
 				while 1:
 					&lt;&lt; look for name followed by '(' &gt;&gt;
-			if count:
+			if count and replace:
 				if 0:
 					&lt;&lt; print before and after &gt;&gt;
 				v.setBodyStringOrPane(s)
@@ -66911,19 +66940,32 @@ print v.bodyString()
 print "-"*10,"after..."
 print s</t>
 <t tx="ekr.20040304173234.1">i = s.find(name,i)
-if i == -1: break
-elif i &gt; 0 and s[i-1] not in ('\n',' ','\t',';','(','='):
-	# Not a word match.
-	i += n
+if i == -1:
+	break
+elif g.match(s,i-1,'.'):
+	i += n # Already an attribute.
+elif g.match(s,i-prefix_n,prefix):
+	i += n # Already preceded by the prefix.
+elif g.match(s,i-def_n,def_s):
+	i += n # preceded by "def"
+elif i &gt; 0 and s[i-1] in ch1:
+	i += n # Not a word match.
+elif i+n &lt; len(s) and s[i+n] in ch2:
+	i += n # Not a word match.
 else:
 	j = i + n
 	j = g.skip_ws(s,j)
 	if j &gt;= len(s) or s[j] != '(':
-		i = j
+		i += n
 	else: # Replace name by prefix+name
 		s = s[:i] + prefix + name + s[i+n:]
 		i += n ; count += 1
-		# g.es('.',newline=false)</t>
+		# g.es('.',newline=false)
+		if 1:
+			if not printFlag:
+				printFlag = true
+				# print v.headString()
+			print g.get_line(s,i-n)</t>
 <t tx="ekr.20040305084926"></t>
 <t tx="ekr.20040305161150">Otherwise the tree-drawing code will change the position!</t>
 <t tx="ekr.20040305161150.1"></t>
@@ -67511,9 +67553,17 @@ hasFirstChild = hasChildren</t>
 			p.moveToBack()
 		
 	return false</t>
-<t tx="ekr.20040308151706">- Should match words correctly.
+<t tx="ekr.20040308151706">@nocolor
 
-- Test on leoPlugins.leo.</t>
+Changes since the last cvs update:
+	
+- Disables changes if not a complete word.
+- Disables changes if preceeded by prefix:
+	- Running this script twice is now safe.
+- Disables changes if preceeded by "def " or "."
+- Added replace parameter for safety.
+
+@color</t>
 <t tx="ekr.20040308151706.1"></t>
 <t tx="ekr.20040308153521"></t>
 <t tx="ekr.20040309041436.1"></t>
@@ -67866,5 +67916,7 @@ def clearAllVisited (self):
 <t tx="ekr.20040312094553"></t>
 <t tx="ekr.20040312094553.1"></t>
 <t tx="ekr.20040312101356"></t>
+<t tx="ekr.20040312120107"></t>
+<t tx="ekr.20040312122501"></t>
 </tnodes>
 </leo_file>
