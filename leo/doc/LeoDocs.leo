@@ -1520,7 +1520,7 @@
 <v t="EKR.20040524104904.160"><vh>Configuring Leo</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.161" a="E"><vh>Chapter 6: Leo and Literate Programming</vh>
+<v t="EKR.20040524104904.161"><vh>Chapter 6: Leo and Literate Programming</vh>
 <v t="EKR.20040524104904.162"><vh>Why I like Literate Programming</vh>
 <v t="EKR.20040524104904.163"><vh>Literate programming creates a new design dimension</vh></v>
 <v t="EKR.20040524104904.164"><vh>Design and coding happen at the highest possible level</vh></v>
@@ -1542,7 +1542,7 @@
 <v t="EKR.20040524104904.179"><vh>Outlines create new design dimensions</vh></v>
 <v t="EKR.20040524104904.180"><vh>Leo improves tangling and adds untangling</vh></v>
 </v>
-<v t="EKR.20040524104904.181" a="TV"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
+<v t="EKR.20040524104904.181"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
 </v>
 <v t="EKR.20040524104904.182"><vh>Chapter 7: Scripting Leo with Python</vh>
 <v t="EKR.20040524104904.183"><vh>Overview of Leo's code</vh></v>
@@ -1591,7 +1591,7 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
+<v t="EKR.20040524104904.211" a="TV"><vh>Chapter 8: Customizing Leo</vh>
 <v t="EKR.20040524104904.212"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
 <v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>

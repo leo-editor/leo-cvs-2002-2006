@@ -10172,6 +10172,515 @@ def getScript (c,p,useSelectedText=True):
 #@nonl
 #@-node:EKR.20040614071102.1:g.getScript
 #@-node:ekr.20041013101851:(Use entire script when executing script buttons)
+#@+node:ekr.20041017044831:(Disabled changes to comment delims in @@language and @@comment sentinels)
+#@+node:ekr.20041017050700:This file wasn't being read correctly
+@language c
+
+/*@+leo-ver=4*/
+/*@+node:@file cat.c*/
+
+/*@@language C*/
+#ifdef COMMENT
+/*@@comment /* */*/
+#endif /* COMMENT */
+/*@@path C:\Vlib\Src*/
+/*@@tabwidth 4*/
+/*@@markup wiki*/
+
+
+/*@+doc*/
+/*
+ * Copies STDIN to STDOUT.
+ * The basis for all filters.
+*/
+/*@-doc*/
+/*@@code*/
+/*@<< Header >>*/
+/*@+node:<< Header >>*/
+
+#include <stdio.h>
+#include <easy.h>
+
+void filecopy(FILE *fp);
+/*@-node:<< Header >>*/
+/*@nl*/
+/*@<< Main >>*/
+/*@+node:<< Main >>*/
+
+void main(int argc, char *argv[])
+begin
+FILE *fp,
+    *fopen();
+
+   if(argc == 1) then
+      filecopy(stdin);
+   orelse
+      while(--argc > 0)
+      begin
+         if((fp = fopen(*++argv, "r")) == NULL) then
+            fprintf( stderr,"cat: can't open %s\n", *argv);
+            exit(1);
+         orelse
+            filecopy(fp);
+            fclose(fp);
+         endif
+      endwhile
+   endif
+   exit(0);
+end
+/*@-node:<< Main >>*/
+/*@nl*/
+/*@<< File Copy >>*/
+/*@+node:<< File Copy >>*/
+
+void filecopy(FILE *fp)
+begin
+int c;
+   while( (c = getc(fp)) != EOF)
+      putc(c, stdout);
+end
+/*@-node:<< File Copy >>*/
+/*@nl*/
+/*@-node:@file cat.c*/
+/*@-leo*/
+#@-node:ekr.20041017050700:This file wasn't being read correctly
+#@+node:ekr.20041017094552:Posting re POSSIBLE fix
+@nocolor
+
+I think I have found the problem.   The readDirective method is changing the comment delimiters as the result of seeing the sentinels corresponding to @language or @comment directives.
+
+But in general this makes no sense!  Comment delimiters should be set once and for all in the @+leo sentinel: there is no compiler in the world that tolerates mixed comment delimiters.  BTW, the way to set javascript "inner" comments is to use @delims, not @comment.  N.B.  The @language and @comment delimiters _will_ have an effect, and that effect is in the _write_ logic, not the read logic.  The effect is to set the comment delims in the @+leo sentinel.
+
+The quick fix is to comment out code in readDirective, like this:
+
+@color
+
+if 0: # New in 4.2.1: never change comment delims here...
+....if g.match_word(s,i,"@language"):
+........<< handle @language >>
+....elif g.match_word(s,i,"@comment"):
+........<< handle @comment >>
+
+@nocolor
+
+Does anyone have any idea why it may have been useful?
+
+I'm kinda freaked out by this.  The number of file reading and writing options in the various versions of Leo has definitely passed the point at which I can understand them all myself.  Fortunately (I think), the new atFile code has simplified matters.
+
+I just hope that the transition to the new code isn't going to be too painful.  Leo now requires gnx's for all nodes, which is a step in the right direction.  Alas, Leo actually doesn't read thin derived files that were written with gnx's disabled.  My _guess_ is that this has always been a hole in the read logic and that hardly anyone fell into the hole because use_gnx was the default.  The new code plugs this code by making sure all nodes get written with gnx's.
+
+In short, my advice is to comment out the code as shown above and see what happens. This is a _speculative_ fix, although all unit tests pass (so much for unit tests :-)  Please let me know if this "fix" causes problems.  If so, the problems should tell me what, if anything, I was thinking about when I wrote the code above ;-)
+#@nonl
+#@-node:ekr.20041017094552:Posting re POSSIBLE fix
+#@+node:ekr.20041005105605.106:readDirective (@@)
+def readDirective (self,s,i):
+    
+    """Read an @@sentinel."""
+    
+    at = self
+    assert(g.match(s,i,"@")) # The first '@' has already been eaten.
+    
+    # g.trace(g.get_line(s,i))
+    
+    if g.match_word(s,i,"@raw"):
+        at.raw = True
+    elif g.match_word(s,i,"@end_raw"):
+        at.raw = False
+        
+    e = at.endSentinelComment
+    s2 = s[i:]
+    if len(e) > 0:
+        k = s.rfind(e,i)
+        if k != -1:
+            s2 = s[i:k] + '\n'
+        
+    start = at.startSentinelComment
+    if start and len(start) > 0 and start[-1] == '@':
+        s2 = s2.replace('@@','@')
+        
+    if 0: # New in 4.2.1: never change comment delims here...
+        if g.match_word(s,i,"@language"):
+            << handle @language >>
+        elif g.match_word(s,i,"@comment"):
+            << handle @comment >>
+
+    at.out.append(s2)
+#@nonl
+#@+node:ekr.20041005105605.107:<< handle @language >>
+# Skip the keyword and whitespace.
+i += len("@language")
+i = g.skip_ws(s,i)
+j = g.skip_c_id(s,i)
+language = s[i:j]
+
+delim1,delim2,delim3 = g.set_delims_from_language(language)
+
+g.trace(g.get_line(s,i))
+g.trace(delim1,delim2,delim3)
+
+# Returns a tuple (single,start,end) of comment delims
+if delim1:
+    at.startSentinelComment = delim1
+    at.endSentinelComment = "" # Must not be None.
+elif delim2 and delim3:
+    at.startSentinelComment = delim2
+    at.endSentinelComment = delim3
+else:
+    line = g.get_line(s,i)
+    g.es("Ignoring bad @@language sentinel: %s" % line,color="red")
+#@nonl
+#@-node:ekr.20041005105605.107:<< handle @language >>
+#@+node:ekr.20041005105605.108:<< handle @comment >>
+j = g.skip_line(s,i)
+line = s[i:j]
+delim1,delim2,delim3 = g.set_delims_from_string(line)
+
+#g.trace(g.get_line(s,i))
+#g.trace(delim1,delim2,delim3)
+
+# Returns a tuple (single,start,end) of comment delims
+if delim1:
+    self.startSentinelComment = delim1
+    self.endSentinelComment = "" # Must not be None.
+elif delim2 and delim3:
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
+else:
+    line = g.get_line(s,i)
+    g.es("Ignoring bad @comment sentinel: %s" % line,color="red")
+#@nonl
+#@-node:ekr.20041005105605.108:<< handle @comment >>
+#@-node:ekr.20041005105605.106:readDirective (@@)
+#@+node:ekr.20041005105605.99:readLastDocLine
+def readLastDocLine (self,tag):
+    
+    """Read the @c line that terminates the doc part.
+    tag is @doc or @."""
+    
+    at = self
+    end = at.endSentinelComment
+    start = at.startSentinelComment
+    s = ''.join(at.docOut)
+    
+    # Remove the @doc or @space.  We'll add it back at the end.
+    if g.match(s,0,tag):
+        s = s[len(tag):]
+    else:
+        at.readError("Missing start of doc part")
+        return
+
+    if end:
+        # 9/3/04: Remove leading newline.
+        if s[0] == '\n': s = s[1:]
+        # Remove opening block delim.
+        if g.match(s,0,start):
+            s = s[len(start):]
+        else:
+            at.readError("Missing open block comment")
+            g.trace(s)
+            return
+        # Remove trailing newline.
+        if s[-1] == '\n': s = s[:-1]
+        # Remove closing block delim.
+        if s[-len(end):] == end:
+            s = s[:-len(end)]
+        else:
+            at.readError("Missing close block comment")
+            g.trace(s)
+            g.trace(end)
+            g.trace(start)
+            return
+
+    at.out.append(tag + s)
+    at.docOut = []
+    
+#@nonl
+#@-node:ekr.20041005105605.99:readLastDocLine
+#@-node:ekr.20041017044831:(Disabled changes to comment delims in @@language and @@comment sentinels)
+#@+node:ekr.20041018190736:(Fixed problems with spawnv option of openWith)
+#@+node:ekr.20041018190736.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2805807
+By: Ivan
+
+In baseCommands.openWith(), the case for "openType == 'os.spawnv'" appears to
+be broken. The two problems I see are that it actually invokes os.spawnl, and
+that it does not allow the passing of a variable length list of parameters.
+
+@color
+
+# Replace the body of the os.spawnv case:
+
+filename = g.os_path_basename(arg)
+command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
+apply(os.spawnl,(os.P_NOWAIT,arg,filename,path)))
+ 
+# with:
+    
+filename = os.path.basename(arg[0])
+vtuple = arg[1:]
+vtuple.append(path)
+command = "os.spawnv("+arg[0]+","+`vtuple`+")"
+apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
+
+# This requires calls on openWith like
+openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
+#@nonl
+#@-node:ekr.20041018190736.1:Report
+#@+node:ekr.20031218072017.4116:createOpenWithMenuFromTable
+@ Entries in the table passed to createOpenWithMenuFromTable are
+tuples of the form (commandName,shortcut,data).
+
+- command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
+- shortcut is a string describing a shortcut, just as for createMenuItemsFromTable.
+- data is a tuple of the form (command,arg,ext).
+
+Leo executes command(arg+path) where path is the full path to the temp file.
+If ext is not None, the temp file has the given extension.
+Otherwise, Leo computes an extension based on the @language directive in effect.
+@c
+
+def createOpenWithMenuFromTable (self,table):
+
+    g.app.openWithTable = table # Override any previous table.
+    # Delete the previous entry.
+    parent = self.getMenu("File")
+    label = self.getRealMenuName("Open &With...")
+    amp_index = label.find("&")
+    label = label.replace("&","")
+    try:
+        index = parent.index(label)
+        parent.delete(index)
+    except:
+        try:
+            index = parent.index("Open With...")
+            parent.delete(index)
+        except: return
+    # Create the "Open With..." menu.
+    openWithMenu = Tk.Menu(parent,tearoff=0)
+    self.setMenu("Open With...",openWithMenu)
+    parent.insert_cascade(index,label=label,menu=openWithMenu,underline=amp_index)
+    # Populate the "Open With..." menu.
+    shortcut_table = []
+    for triple in table:
+        if len(triple) == 3: # 6/22/03
+            shortcut_table.append(triple)
+        else:
+            g.es("createOpenWithMenuFromTable: invalid data",color="red")
+            return
+            
+    # for i in shortcut_table: print i
+    self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=True)
+#@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
+#@+node:ekr.20031218072017.2823:openWith and allies
+def openWith(self,data=None):
+
+    """This routine handles the items in the Open With... menu.
+
+    These items can only be created by createOpenWithMenuFromTable().
+    Typically this would be done from the "open2" hook.
+    
+    New in 4.3: The "os.spawnv" now works. You may specify arguments to spawnv
+    using a list, e.g.:
+        
+    openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
+    """
+    
+    c = self ; v = c.currentVnode()
+    if not data or len(data) != 3: return # 6/22/03
+    try:
+        openType,arg,ext=data
+        if not g.doHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext):
+            << set ext based on the present language >>
+            << create or reopen temp file, testing for conflicting changes >>
+            << execute a command to open path in external editor >>
+        g.doHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
+    except:
+        g.es("exception in openWith")
+        g.es_exception()
+
+    return "break"
+#@+node:ekr.20031218072017.2824:<< set ext based on the present language >>
+if not ext:
+    theDict = g.scanDirectives(c)
+    language = theDict.get("language")
+    ext = g.app.language_extension_dict.get(language)
+    # print language,ext
+    if ext == None:
+        ext = "txt"
+    
+if ext[0] != ".":
+    ext = "."+ext
+    
+# print "ext",ext
+#@nonl
+#@-node:ekr.20031218072017.2824:<< set ext based on the present language >>
+#@+node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
+theDict = None ; path = None
+<< set dict and path if a temp file already refers to v.t >>
+if path:
+    << create or recreate temp file as needed >>
+else:
+    path = c.createOpenWithTempFile(v,ext)
+
+if not path:
+    return # An error has occured.
+#@nonl
+#@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to v.t >>
+searchPath = c.openWithTempFilePath(v,ext)
+
+if g.os_path_exists(searchPath):
+    for theDict in g.app.openWithFiles:
+        if v == theDict.get("v") and searchPath == theDict.get("path"):
+            path = searchPath
+            break
+#@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to v.t >>
+#@+node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+@ We test for changes in both v and the temp file:
+
+- If only v's body text has changed, we recreate the temp file.
+- If only the temp file has changed, do nothing here.
+- If both have changed we must prompt the user to see which code to use.
+@c
+
+encoding = theDict.get("encoding")
+old_body = theDict.get("body")
+new_body = v.bodyString()
+new_body = g.toEncodedString(new_body,encoding,reportErrors=True)
+
+old_time = theDict.get("time")
+try:
+    new_time = g.os_path_getmtime(path)
+except:
+    new_time = None
+    
+body_changed = old_body != new_body
+temp_changed = old_time != new_time
+
+if body_changed and temp_changed:
+    << Raise dialog about conflict and set result >>
+    if result == "cancel": return
+    rewrite = result == "outline"
+else:
+    rewrite = body_changed
+        
+if rewrite:
+    path = c.createOpenWithTempFile(v,ext)
+else:
+    g.es("reopening: " + g.shortFileName(path),color="blue")
+#@nonl
+#@+node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+message = (
+    "Conflicting changes in outline and temp file\n\n" +
+    "Do you want to use the code in the outline or the temp file?\n\n")
+
+result = g.app.gui.runAskYesNoCancelDialog(
+    "Conflict!", message,
+    yesMessage = "Outline",
+    noMessage = "File",
+    defaultButton = "Cancel")
+#@nonl
+#@-node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+#@-node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+#@-node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
+#@+node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+try:
+    if arg == None: arg = ""
+    shortPath = path # g.shortFileName(path)
+    if openType == "os.system":
+        command = "os.system(%s)" % (arg+shortPath)
+        os.system(arg+path)
+    elif openType == "os.startfile":
+        command = "os.startfile(%s)" % (arg+shortPath)
+        os.startfile(arg+path)
+    elif openType == "exec":
+        command = "exec(%s)" % (arg+shortPath)
+        exec arg+path in {} # 12/11/02
+    elif openType == "os.spawnl":
+        filename = g.os_path_basename(arg)
+        command = "os.spawnl(%s,%s,%s)" % (arg,filename,shortPath)
+        apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
+    elif openType == "os.spawnv":
+        if 1: # New code allows args to spawnv.
+            filename = os.path.basename(arg[0]) 
+            vtuple = arg[1:] 
+            vtuple.append(path)
+            command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple)) 
+        else:
+            filename = g.os_path_basename(arg)
+            command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
+            apply(os.spawnl,(os.P_NOWAIT,arg,(filename,path)))
+    else:
+        command="bad command:"+str(openType)
+    # This seems a bit redundant.
+    # g.es(command)
+except:
+    g.es("exception executing: "+command)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+#@+node:ekr.20031218072017.2830:createOpenWithTempFile
+def createOpenWithTempFile (self, v, ext):
+    
+    c = self
+    path = c.openWithTempFilePath(v,ext)
+    try:
+        if g.os_path_exists(path):
+            g.es("recreating:  " + g.shortFileName(path),color="red")
+        else:
+            g.es("creating:  " + g.shortFileName(path),color="blue")
+        theFile = open(path,"w")
+        # 3/7/03: convert s to whatever encoding is in effect.
+        s = v.bodyString()
+        theDict = g.scanDirectives(c,p=v)
+        encoding = theDict.get("encoding",None)
+        if encoding == None:
+            encoding = g.app.config.default_derived_file_encoding
+        s = g.toEncodedString(s,encoding,reportErrors=True) 
+        theFile.write(s)
+        theFile.flush()
+        theFile.close()
+        try:    time = g.os_path_getmtime(path)
+        except: time = None
+        # g.es("time: " + str(time))
+        # 4/22/03: add body and encoding entries to dict for later comparisons.
+        theDict = {"body":s, "c":c, "encoding":encoding, "f":theFile, "path":path, "time":time, "v":v}
+        << remove previous entry from app.openWithFiles if it exists >> # 4/22/03
+        g.app.openWithFiles.append(theDict)
+        return path
+    except:
+        theFile = None
+        g.es("exception creating temp file",color="red")
+        g.es_exception()
+        return None
+#@nonl
+#@+node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+for d in g.app.openWithFiles[:]: # 6/30/03
+    v2 = d.get("v")
+    if v.t == v2.t:
+        print "removing previous entry in g.app.openWithFiles for",v
+        g.app.openWithFiles.remove(d)
+#@nonl
+#@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+#@-node:ekr.20031218072017.2830:createOpenWithTempFile
+#@+node:ekr.20031218072017.2832:openWithTempFilePath
+def openWithTempFilePath (self,v,ext):
+    
+    """Return the path to the temp file corresponding to v and ext."""
+
+    name = "LeoTemp_" + str(id(v.t)) + '_' + g.sanitize_filename(v.headString()) + ext
+    name = g.toUnicode(name,g.app.tkEncoding) # 10/20/03
+
+    td = g.os_path_abspath(tempfile.gettempdir())
+    path = g.os_path_join(td,name)
+    
+    # print "openWithTempFilePath",path
+    return path
+#@nonl
+#@-node:ekr.20031218072017.2832:openWithTempFilePath
+#@-node:ekr.20031218072017.2823:openWith and allies
+#@-node:ekr.20041018190736:(Fixed problems with spawnv option of openWith)
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl
