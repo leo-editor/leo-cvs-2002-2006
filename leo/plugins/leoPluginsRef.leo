@@ -3,14 +3,14 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3584" clone_windows="0"/>
 <globals body_outline_ratio="0.545150501672">
-	<global_window_position top="12" left="434" height="897" width="870"/>
+	<global_window_position top="52" left="281" height="897" width="870"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
 <v t="edream.110203113231"
-marks="pap.20041006194759,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></v>
+marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></v>
 <v t="ekr.20050111093726"><vh>Unit testing notes</vh></v>
 <v t="ekr.20041211035618"><vh>Scripts, buttons &amp; settings</vh>
 <v t="ekr.20050217093214"><vh>@settings</vh>
@@ -41,19 +41,19 @@ marks="pap.20041006194759,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></
 <v t="ekr.20050306072156"><vh>About exceptions</vh></v>
 </v>
 <v t="ekr.20050306071629"><vh>Template for plugin that overrides commander methods</vh>
-<v t="ekr.20050306071629.1" a="E"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050306071629.1"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
 <v t="ekr.20050306071629.2"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050306071629.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20050306071629.4" a="E"><vh>init</vh></v>
+<v t="ekr.20050306071629.4"><vh>init</vh></v>
 <v t="ekr.20050306071540"><vh>onStart2</vh></v>
 </v>
 <v t="ekr.20050303051035.2"><vh>Template for Tk plugin with per-commander controller class</vh>
-<v t="ekr.20050303051035.3" a="E"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050303051035.3"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
 <v t="ekr.20050303051035.4"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050303051035.5"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20050303051101"><vh>init</vh></v>
 <v t="ekr.20050303051150"><vh>onCreate</vh></v>
-<v t="ekr.20050303051222" a="E"><vh>class pluginController</vh>
+<v t="ekr.20050303051222"><vh>class pluginController</vh>
 <v t="ekr.20050303051222.1"><vh>__init__</vh></v>
 </v>
 </v>
@@ -160,7 +160,7 @@ marks="pap.20041006194759,pap.20041006193013,"><vh>@thin pluginsNotes.txt</vh></
 </v>
 <v t="ekr.20041030092101"><vh>Dyna plugins by e</vh>
 <v t="ekr.20041030092835"><vh>v138 highlights</vh></v>
-<v t="ekr.20041030091736.1" a="E"><vh> dyna plugins 138</vh>
+<v t="ekr.20041030091736.1"><vh> dyna plugins 138</vh>
 <v t="ekr.20041030091736.2"><vh>&lt;&lt; insertAplug &gt;&gt;</vh></v>
 <v t="ekr.20041030091736.3"><vh>@thin dyna_menu.py</vh></v>
 <v t="ekr.20041030091736.75"><vh>@thin exSButton.py</vh></v>
@@ -197,7 +197,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 </v>
 <v t="ekr.20040722135402"><vh>Enhancing the icon and status areas</vh>
 <v t="edream.110203113231.758"><vh>@thin nav_buttons.py</vh></v>
-<v t="EKR.20040517075915" a="E" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.8,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.11,EKR.20040517075915.12,ekr.20050111095936"><vh>@file-noref newButtons.py</vh>
+<v t="EKR.20040517075915" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.8,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.11,EKR.20040517075915.12,ekr.20050111095936"><vh>@file-noref newButtons.py</vh>
 <v t="EKR.20040517075915.1"><vh>Helper classes</vh>
 <v t="EKR.20040517075915.2"><vh>class FlatOptionMenu</vh></v>
 <v t="EKR.20040517075915.3"><vh>class Node</vh></v>
@@ -218,7 +218,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
 <v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
 <v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
-<v t="rogererens.20041013082304" a="E"><vh>@thin UNL.py</vh></v>
+<v t="rogererens.20041013082304"><vh>@thin UNL.py</vh></v>
 </v>
 <v t="ekr.20040915073259"><vh>Enhancing windows</vh>
 <v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
@@ -237,7 +237,7 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="edream.110203113231.921"><vh>@thin redefine_put.py</vh></v>
 </v>
 <v t="EKR.20040517075715"><vh>External editors &amp; Open With</vh>
-<v t="EKR.20040517075715.1" a="E"><vh>@thin mod_tempfname.py</vh></v>
+<v t="EKR.20040517075715.1"><vh>@thin mod_tempfname.py</vh></v>
 <v t="EKR.20040517080049.4"><vh>@thin open_shell.py</vh></v>
 <v t="EKR.20040517075715.4"><vh>@thin open_with.py</vh></v>
 <v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
@@ -274,32 +274,8 @@ marks="ekr.20041017043622.4,ekr.20041017043622.10,ekr.20041017043622.13,"><vh>@t
 <v t="ekr.20040915085351"><vh>@thin at_produce.py</vh></v>
 <v t="ktenney.20041211072654.1"><vh>@thin at_view.py</vh></v>
 <v t="edream.110203113231.876"><vh>@thin read_only_nodes.py</vh></v>
-<v t="edream.111803100242"><vh>@thin rst.py</vh></v>
 <v t="ekr.20040910070811.1"><vh>@thin run_nodes.py</vh></v>
 <v t="ekr.20040828103325"><vh>@thin startfile.py</vh></v>
-<v t="ekr.20040408161258"><vh>rst2 plugin</vh>
-<v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
-<v t="ekr.20040408192158.1"><vh>@rst ../doc/rstplugin.html</vh>
-<v t="ekr.20040408192158.2"><vh>Overview</vh>
-<v t="ekr.20040408192158.3"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040408192158.4"><vh>Formatting</vh>
-<v t="ekr.20040408192158.5"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040409051841"><vh>Embedding documentation in @file trees</vh>
-<v t="ekr.20040409051841.1"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040408192158.6"><vh>The code-block directive</vh>
-<v t="ekr.20040408192158.7"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040408192158.8"><vh>Cascading style sheets</vh>
-<v t="ekr.20040408192158.9"><vh>@rst</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
-</v>
-<v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
 </v>
 <v t="ekr.20041009112303"><vh>Plugins manager &amp; menu</vh>
 <v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
@@ -313,7 +289,7 @@ marks="EKR.20040517080555.4,"><vh>@thin plugins_menu.py</vh></v>
 </v>
 </v>
 <v t="pap.20041006184225"
-marks="pap.20041006193013,pap.20041006194759,"><vh>@thin plugin_manager.py</vh></v>
+marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.20041008200028,"><vh>@thin plugin_manager.py</vh></v>
 </v>
 <v t="ekr.20050111122605"><vh>Servers</vh>
 <v t="EKR.20040517080250"><vh>http plugin</vh>
@@ -322,8 +298,7 @@ marks="pap.20041006193013,pap.20041006194759,"><vh>@thin plugin_manager.py</vh><
 </v>
 </v>
 <v t="ekr.20041001210557"><vh>Scripting</vh>
-<v t="EKR.20040613213623" a="E"
-expanded="ekr.20050302082838.1,EKR.20040618091543.2,"><vh>@thin mod_scripting.py</vh></v>
+<v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
 </v>
 <v t="edream.110203113231.930"><vh>Spell Checking</vh>
 <v t="ekr.20040809165421"><vh>Read me or suffer</vh></v>
@@ -353,6 +328,103 @@ expanded="ekr.20050302082838.1,EKR.20040618091543.2,"><vh>@thin mod_scripting.py
 <v t="ekr.20041107165824"><vh>temacs &amp; usetemacs</vh>
 <v t="mork.20041013092542.1"><vh>@thin usetemacs.py</vh></v>
 <v t="mork.20041030164547"><vh>@thin temacs.py</vh></v>
+</v>
+<v t="ekr.20050306081349"><vh>Text formatting</vh>
+<v t="edream.111803100242"><vh>@thin rst.py</vh></v>
+<v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
+<v t="ekr.20040331071919"><vh>Leo to AsciiDoc</vh>
+<v t="ekr.20050128070307"><vh>@url http://www.marshallresearch.com/michael-dawson/os/leo.html</vh></v>
+<v t="ekr.20040331071919.38"><vh>Leo 2 AsciiDoc Users Guide</vh>
+<v t="ekr.20040331071919.2"><vh>About this document</vh>
+<v t="ekr.20040331071919.3" a="E"><vh>License</vh>
+<v t="ekr.20040331071919.4"><vh>License document</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.39"><vh>Installation</vh></v>
+<v t="ekr.20040331071919.40" a="E"><vh>Operation</vh>
+<v t="ekr.20040331071919.41" a="E"><vh>Directives</vh>
+<v t="ekr.20040331071919.42"><vh>Configuration</vh></v>
+</v>
+<v t="ekr.20040331071919.43" a="E"><vh>Markup</vh>
+<v t="ekr.20040331071919.44" a="E"><vh>Standard AsciiDoc Markup</vh>
+<v t="ekr.20040331071919.45"><vh>Headings</vh></v>
+<v t="ekr.20040331071919.46"><vh>Lists</vh></v>
+<v t="ekr.20040331071919.47"><vh>URLs</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20040331071919.1" a="E"><vh>Leo 2 AsciiDoc Developers Guide</vh>
+<v t="ekr.20040331071919.2"><vh>About this document</vh>
+<v t="ekr.20040331071919.3" a="E"><vh>License</vh>
+<v t="ekr.20040331071919.4"><vh>License document</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.5"><vh>Version, Requirements</vh></v>
+<v t="ekr.20040331071919.6"><vh>The General Approach</vh>
+<v t="ekr.20040331071919.7"><vh>Markup Added</vh></v>
+</v>
+<v t="ekr.20040331071919.8"><vh>@root mod_leo2ascd.py</vh>
+<v t="ekr.20040331071919.9"><vh>&lt;&lt; Key Functions &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.10"><vh>&lt;&lt; Declarations and Utilities &gt;&gt;</vh>
+<v t="ekr.20040331071919.11"><vh>&lt;&lt; The Code -- Declarations and Utilities &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331071919.12" a="E"><vh>&lt;&lt; Write the outline tree as AsciiDoc file &gt;&gt;</vh>
+<v t="ekr.20040331071919.13"><vh>&lt;&lt; Write a node &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.14"><vh>Other programs</vh></v>
+<v t="ekr.20040331071919.15" a="E"><vh>&lt;&lt;Appendix: AsciiDoc &gt;&gt;</vh>
+<v t="ekr.20040331071919.16"><vh>&lt;&lt; Configuration file &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.17"><vh>&lt;&lt; Patches &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331071919.18" a="E"><vh>&lt;&lt;Appendix: DocBook&gt;&gt;</vh>
+<v t="ekr.20040331071919.19"><vh>&lt;&lt; Tool Chain &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.20"><vh>&lt;&lt; Make File &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.21"><vh>&lt;&lt; Style Sheets &gt;&gt;</vh>
+<v t="ekr.20040331071919.22"><vh>&lt;&lt; General &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.23"><vh>&lt;&lt; Customize &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.24"><vh>&lt;&lt; HTML: One File &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.25"><vh>&lt;&lt; HTML: Individual Pages &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.26"><vh>&lt;&lt; HTML: base css style sheet &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.27"><vh>&lt;&lt; HTML: css style sheet &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.28"><vh>&lt;&lt; HTML: common &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.29"><vh>&lt;&lt; PDF &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.30" a="E"><vh>&lt;&lt;Appendix: XEmacs Text Editor&gt;&gt;</vh>
+<v t="ekr.20040331071919.31"><vh>&lt;&lt; Open_With Plugin &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.32"><vh>&lt;&lt; Open_Tree Plugin &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.33"><vh>&lt;&lt; Filename modification &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.34"><vh>&lt;&lt; Kill Temporary Buffers &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.35"><vh>&lt;&lt; MMM-mode &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.36"><vh>&lt;&lt; Insert indexterm &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.37"><vh>&lt;&lt; Indent Leo comments &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040408161258"><vh>rst2 plugin</vh>
+<v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
+<v t="ekr.20040408192158.1"><vh>@rst ../doc/rstplugin.html</vh>
+<v t="ekr.20040408192158.2"><vh>Overview</vh>
+<v t="ekr.20040408192158.3"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040408192158.4"><vh>Formatting</vh>
+<v t="ekr.20040408192158.5"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040409051841"><vh>Embedding documentation in @file trees</vh>
+<v t="ekr.20040409051841.1"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040408192158.6"><vh>The code-block directive</vh>
+<v t="ekr.20040408192158.7"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040408192158.8"><vh>Cascading style sheets</vh>
+<v t="ekr.20040408192158.9"><vh>@rst</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20040722134535"><vh>Experimental/unfinished</vh>
@@ -659,86 +731,13 @@ expanded="ekr.20050302082838.1,EKR.20040618091543.2,"><vh>@thin mod_scripting.py
 </v>
 <v t="ekr.20050227071948.33" annotate="540c0100003764373130303238353530383730373236393666373236393734373937313031323836333631366536653666373436313734363530613534366235303639363336623663363535363631373230613731303236663731303334643066323736323535303436653666363436353731303532383638303236663731303635353034363636393663363537313037363235353032363236373731303832383638303236663731303935353030373130613632353530393631373236333638363537343739373036353731306232383638303236663731306335353035346637343638363537323731306436323535303236363637373130653238363830323666373130663638306136323735326571002e"><vh>@thin cleo.py</vh></v>
 </v>
-<v t="ekr.20050303080042" a="E"><vh>footprints</vh>
+<v t="ekr.20050303080042"><vh>footprints</vh>
 <v t="ekr.20050303080236"><vh>To do</vh></v>
 <v t="ekr.20050303080042.1" tnodeList="ekr.20050303080042.1"><vh>@nosent footprints.ini</vh></v>
-<v t="pap.20041020001240" a="E"
-expanded="pap.20041020001240.55,"><vh>@thin footprints.py</vh></v>
+<v t="pap.20041020001240"><vh>@thin footprints.py</vh></v>
 </v>
 <v t="ekr.20050301083306"><vh>@thin mod_read_dir_outline.py</vh></v>
-<v t="ekr.20050301095332"
-expanded="ekr.20050301095332.17,"><vh>@thin mod_labels.py</vh></v>
-<v t="ekr.20040331071919"><vh>Leo to AsciiDoc</vh>
-<v t="ekr.20050128070307"><vh>@url http://www.marshallresearch.com/michael-dawson/os/leo.html</vh></v>
-<v t="ekr.20040331071919.38"><vh>Leo 2 AsciiDoc Users Guide</vh>
-<v t="ekr.20040331071919.2"><vh>About this document</vh>
-<v t="ekr.20040331071919.3"><vh>License</vh>
-<v t="ekr.20040331071919.4"><vh>License document</vh></v>
-</v>
-</v>
-<v t="ekr.20040331071919.39"><vh>Installation</vh></v>
-<v t="ekr.20040331071919.40"><vh>Operation</vh>
-<v t="ekr.20040331071919.41"><vh>Directives</vh>
-<v t="ekr.20040331071919.42"><vh>Configuration</vh></v>
-</v>
-<v t="ekr.20040331071919.43"><vh>Markup</vh>
-<v t="ekr.20040331071919.44"><vh>Standard AsciiDoc Markup</vh>
-<v t="ekr.20040331071919.45"><vh>Headings</vh></v>
-<v t="ekr.20040331071919.46"><vh>Lists</vh></v>
-<v t="ekr.20040331071919.47"><vh>URLs</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040331071919.1"><vh>Leo 2 AsciiDoc Developers Guide</vh>
-<v t="ekr.20040331071919.2"><vh>About this document</vh>
-<v t="ekr.20040331071919.3"><vh>License</vh>
-<v t="ekr.20040331071919.4"><vh>License document</vh></v>
-</v>
-</v>
-<v t="ekr.20040331071919.5"><vh>Version, Requirements</vh></v>
-<v t="ekr.20040331071919.6"><vh>The General Approach</vh>
-<v t="ekr.20040331071919.7"><vh>Markup Added</vh></v>
-</v>
-<v t="ekr.20040331071919.8"><vh>&lt;&lt; The Code &gt;&gt;</vh>
-<v t="ekr.20040331071919.9"><vh>&lt;&lt; Key Functions &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.10"><vh>&lt;&lt; Declarations and Utilities &gt;&gt;</vh>
-<v t="ekr.20040331071919.11"><vh>&lt;&lt; The Code -- Declarations and Utilities &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040331071919.12"><vh>&lt;&lt; Write the outline tree as AsciiDoc file &gt;&gt;</vh>
-<v t="ekr.20040331071919.13"><vh>&lt;&lt; Write a node &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040331071919.14"><vh>Other programs</vh></v>
-<v t="ekr.20040331071919.15"><vh>&lt;&lt;Appendix: AsciiDoc &gt;&gt;</vh>
-<v t="ekr.20040331071919.16"><vh>&lt;&lt; Configuration file &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.17"><vh>&lt;&lt; Patches &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040331071919.18"><vh>&lt;&lt;Appendix: DocBook&gt;&gt;</vh>
-<v t="ekr.20040331071919.19"><vh>&lt;&lt; Tool Chain &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.20"><vh>&lt;&lt; Make File &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.21"><vh>&lt;&lt; Style Sheets &gt;&gt;</vh>
-<v t="ekr.20040331071919.22"><vh>&lt;&lt; General &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.23"><vh>&lt;&lt; Customize &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.24"><vh>&lt;&lt; HTML: One File &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.25"><vh>&lt;&lt; HTML: Individual Pages &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.26"><vh>&lt;&lt; HTML: base css style sheet &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.27"><vh>&lt;&lt; HTML: css style sheet &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.28"><vh>&lt;&lt; HTML: common &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.29"><vh>&lt;&lt; PDF &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040331071919.30"><vh>&lt;&lt;Appendix: XEmacs Text Editor&gt;&gt;</vh>
-<v t="ekr.20040331071919.31"><vh>&lt;&lt; Open_With Plugin &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.32"><vh>&lt;&lt; Open_Tree Plugin &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.33"><vh>&lt;&lt; Filename modification &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.34"><vh>&lt;&lt; Kill Temporary Buffers &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.35"><vh>&lt;&lt; MMM-mode &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.36"><vh>&lt;&lt; Insert indexterm &gt;&gt;</vh></v>
-<v t="ekr.20040331071919.37"><vh>&lt;&lt; Indent Leo comments &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
+<v t="ekr.20050301095332"><vh>@thin mod_labels.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -8305,5 +8304,6 @@ If a plugin catches exceptions during startup it should do one of the following:
     
 - raise the exception again.
 - provide an init function at the top level that reports the failure.</t>
+<t tx="ekr.20050306081349"></t>
 </tnodes>
 </leo_file>
