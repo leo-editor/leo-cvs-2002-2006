@@ -11286,7 +11286,7 @@ def setTopGeometry(self,w,h,x,y):
 #@-node:ekr.20041007081134.2:(Fixed unbounded recursion with --script)
 #@+node:ekr.20041013101851:(Use entire script when executing script buttons)
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True):
+def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
 
     """This executes body text as a Python script.
     
@@ -11305,7 +11305,9 @@ def executeScript(self,p=None,script=None,useSelectedText=True):
         sys.path.insert(0,c.frame.openDirectory)
         script += '\n' # Make sure we end the script properly.
         try:
-            exec script in {} # Use {} to get a pristine environment!
+            p = c.currentPosition()
+            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+            exec script in d # Use {} to get a pristine environment!
             << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
@@ -11505,7 +11507,7 @@ if not item[-1] is None:
     item = data[-2]
 #@-node:ekr.20041007080346.1:Report 2 from e
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True):
+def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
 
     """This executes body text as a Python script.
     
@@ -11524,7 +11526,9 @@ def executeScript(self,p=None,script=None,useSelectedText=True):
         sys.path.insert(0,c.frame.openDirectory)
         script += '\n' # Make sure we end the script properly.
         try:
-            exec script in {} # Use {} to get a pristine environment!
+            p = c.currentPosition()
+            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+            exec script in d # Use {} to get a pristine environment!
             << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
@@ -22135,12 +22139,10 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-C:\prog\Leo Stuff\oldLeoFiles.leo
-C:\prog\leoCVS\leo\test\test.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\config\leoSettings.leo
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
-c:\prog\leoCVS\leo\plugins\leoPlugins.leo
+/Users/edream/leoCVS/leo/config/leoSettings.leo
+/Users/edream/leoCVS/leo/doc/LeoDocs.leo
+/Users/edream/leoCVS/leo/plugins/leoPlugins.leo
+/Users/edream/leoCVS/leo/src/LeoPy.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -23685,7 +23687,7 @@ def es_exception (full=True,c=None,color="red"):
 #@nonl
 #@-node:ekr.20031218072017.3112:es_exception
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True):
+def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
 
     """This executes body text as a Python script.
     
@@ -23704,7 +23706,9 @@ def executeScript(self,p=None,script=None,useSelectedText=True):
         sys.path.insert(0,c.frame.openDirectory)
         script += '\n' # Make sure we end the script properly.
         try:
-            exec script in {} # Use {} to get a pristine environment!
+            p = c.currentPosition()
+            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+            exec script in d # Use {} to get a pristine environment!
             << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
@@ -24473,7 +24477,7 @@ def es_exception (full=True,c=None,color="red"):
 #@nonl
 #@-node:ekr.20031218072017.3112:es_exception
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True):
+def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
 
     """This executes body text as a Python script.
     
@@ -24492,7 +24496,9 @@ def executeScript(self,p=None,script=None,useSelectedText=True):
         sys.path.insert(0,c.frame.openDirectory)
         script += '\n' # Make sure we end the script properly.
         try:
-            exec script in {} # Use {} to get a pristine environment!
+            p = c.currentPosition()
+            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+            exec script in d # Use {} to get a pristine environment!
             << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
@@ -28644,7 +28650,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         return False, None
 #@nonl
 #@-node:ekr.20031218072017.2052:g.openWithFileName
-#@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@+node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
 # All output to the log stream eventually comes here.
 def put (self,s,color=None):
     
@@ -28662,15 +28668,6 @@ def putnl (self):
         << put newline to log control >>
     else:
         << put newline to logWaiting and print newline >>
-        
-def forceLogUpdate (self,s):
-    if sys.platform == "darwin": # Does not work on MacOS X.
-        
-        print s, # Don't add a newline.
-    else:
-        self.frame.tree.disableRedraw = True
-        self.logCtrl.update_idletasks()
-        self.frame.tree.disableRedraw = False
 #@nonl
 #@+node:EKR.20040423082910:<< put s to log control >>
 if 0:
@@ -28720,7 +28717,22 @@ print "Null tkinter log"
 print
 #@nonl
 #@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
-#@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@+node:ekr.20050208133438:forceLogUpdate
+def forceLogUpdate (self,s):
+
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        try:
+            print s, # Don't add a newline.
+        except UnicodeError:
+            # g.app may not be inited during scripts!
+            print g.toEncodedString(s,'utf-8')
+    else:
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        self.frame.tree.disableRedraw = False
+#@nonl
+#@-node:ekr.20050208133438:forceLogUpdate
+#@-node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
 #@+node:ekr.20031218072017.1474:es, enl, ecnl
 def ecnl():
     g.ecnls(1)
@@ -29121,7 +29133,7 @@ w.update_idletasks()
 #@nonl
 #@-node:ekr.20041225063637.12:<< put s to w >>
 #@-node:ekr.20041225063637.11:class logClass
-#@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@+node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
 # All output to the log stream eventually comes here.
 def put (self,s,color=None):
     
@@ -29139,15 +29151,6 @@ def putnl (self):
         << put newline to log control >>
     else:
         << put newline to logWaiting and print newline >>
-        
-def forceLogUpdate (self,s):
-    if sys.platform == "darwin": # Does not work on MacOS X.
-        
-        print s, # Don't add a newline.
-    else:
-        self.frame.tree.disableRedraw = True
-        self.logCtrl.update_idletasks()
-        self.frame.tree.disableRedraw = False
 #@nonl
 #@+node:EKR.20040423082910:<< put s to log control >>
 if 0:
@@ -29197,7 +29200,22 @@ print "Null tkinter log"
 print
 #@nonl
 #@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
-#@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@+node:ekr.20050208133438:forceLogUpdate
+def forceLogUpdate (self,s):
+
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        try:
+            print s, # Don't add a newline.
+        except UnicodeError:
+            # g.app may not be inited during scripts!
+            print g.toEncodedString(s,'utf-8')
+    else:
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        self.frame.tree.disableRedraw = False
+#@nonl
+#@-node:ekr.20050208133438:forceLogUpdate
+#@-node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
 #@-node:ekr.20050201175325:(g.es called print on the Mac)
 #@-node:ekr.20050202062110:(Fixed print problems on the Mac)
 #@+node:ekr.20050202092849:leoTest.runTests now makes copies of all positions
@@ -29402,7 +29420,7 @@ def getValFromDict (self,d,setting,requestedType,found):
 #@-node:ekr.20041121143823:getValFromDict
 #@-node:ekr.20041117083141:get & allies (g.app.config)
 #@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None,useSelectedText=True):
+def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
 
     """This executes body text as a Python script.
     
@@ -29421,7 +29439,9 @@ def executeScript(self,p=None,script=None,useSelectedText=True):
         sys.path.insert(0,c.frame.openDirectory)
         script += '\n' # Make sure we end the script properly.
         try:
-            exec script in {} # Use {} to get a pristine environment!
+            p = c.currentPosition()
+            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+            exec script in d # Use {} to get a pristine environment!
             << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
@@ -30175,7 +30195,7 @@ def selectNextVnode(self):
     return v
 #@nonl
 #@-node:ekr.20031218072017.3081:selectNextVnode
-#@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@+node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
 # All output to the log stream eventually comes here.
 def put (self,s,color=None):
     
@@ -30193,15 +30213,6 @@ def putnl (self):
         << put newline to log control >>
     else:
         << put newline to logWaiting and print newline >>
-        
-def forceLogUpdate (self,s):
-    if sys.platform == "darwin": # Does not work on MacOS X.
-        
-        print s, # Don't add a newline.
-    else:
-        self.frame.tree.disableRedraw = True
-        self.logCtrl.update_idletasks()
-        self.frame.tree.disableRedraw = False
 #@nonl
 #@+node:EKR.20040423082910:<< put s to log control >>
 if 0:
@@ -30251,7 +30262,22 @@ print "Null tkinter log"
 print
 #@nonl
 #@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
-#@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@+node:ekr.20050208133438:forceLogUpdate
+def forceLogUpdate (self,s):
+
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        try:
+            print s, # Don't add a newline.
+        except UnicodeError:
+            # g.app may not be inited during scripts!
+            print g.toEncodedString(s,'utf-8')
+    else:
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        self.frame.tree.disableRedraw = False
+#@nonl
+#@-node:ekr.20050208133438:forceLogUpdate
+#@-node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
 #@-node:ekr.20050127083933:(Fix url problems)
 #@+node:ekr.20050126102846:Fix Unicode problems
 #@+node:ekr.20050126102846.1:Report
@@ -30714,7 +30740,7 @@ def es(s,*args,**keys):
             # print s,
 #@nonl
 #@-node:ekr.20031218072017.1474:es, enl, ecnl
-#@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@+node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
 # All output to the log stream eventually comes here.
 def put (self,s,color=None):
     
@@ -30732,15 +30758,6 @@ def putnl (self):
         << put newline to log control >>
     else:
         << put newline to logWaiting and print newline >>
-        
-def forceLogUpdate (self,s):
-    if sys.platform == "darwin": # Does not work on MacOS X.
-        
-        print s, # Don't add a newline.
-    else:
-        self.frame.tree.disableRedraw = True
-        self.logCtrl.update_idletasks()
-        self.frame.tree.disableRedraw = False
 #@nonl
 #@+node:EKR.20040423082910:<< put s to log control >>
 if 0:
@@ -30790,7 +30807,22 @@ print "Null tkinter log"
 print
 #@nonl
 #@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
-#@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@+node:ekr.20050208133438:forceLogUpdate
+def forceLogUpdate (self,s):
+
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        try:
+            print s, # Don't add a newline.
+        except UnicodeError:
+            # g.app may not be inited during scripts!
+            print g.toEncodedString(s,'utf-8')
+    else:
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        self.frame.tree.disableRedraw = False
+#@nonl
+#@-node:ekr.20050208133438:forceLogUpdate
+#@-node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
 #@-node:ekr.20050206201921:(Leo now prints unicode characters properly in the log pane)
 #@+node:ekr.20050208051804:(Fixed various problems with Unicode filenames)
 #@+node:ekr.20050208054635:Report

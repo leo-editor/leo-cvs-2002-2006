@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6601" clone_windows="0"/>
 <globals body_outline_ratio="0.494382022472">
-	<global_window_position top="81" left="370" height="738" width="827"/>
+	<global_window_position top="24" left="81" height="738" width="827"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -33,7 +33,8 @@
 <v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
 <v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
 </v>
-<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709"
+expanded="ekr.20040721114839,ekr.20040707210849,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -969,7 +970,7 @@
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1085,11 +1086,11 @@
 <v t="ekr.20050105084757.1"><vh>@test g.utils_remove</vh></v>
 <v t="ekr.20050105091547"><vh>@test g.utils_rename</vh></v>
 </v>
-<v t="ekr.20040712101754.7" a="E"><vh>Import/Export tests</vh>
+<v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10" a="E"><vh>importTests</vh>
-<v t="ekr.20040712101754.11" a="E"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.10"><vh>importTests</vh>
+<v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
 </v>
@@ -1112,8 +1113,8 @@
 <v t="ekr.20040712101754.15"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.24" a="E"><vh>exportTests</vh>
-<v t="ekr.20040712101754.25" a="E"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.24"><vh>exportTests</vh>
+<v t="ekr.20040712101754.25"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.26"><vh>exportHeadlines</vh>
 <v t="ekr.20040712101754.27"><vh>dialog</vh></v>
 </v>
@@ -1138,9 +1139,9 @@
 <v t="ekr.20050105095743"><vh>@test atFile.replaceTargetFileIfDifferent (identical)</vh></v>
 <v t="ekr.20050105100227"><vh>@test atFile.replaceTargetFileIfDifferent (no target file)</vh></v>
 </v>
-<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
-<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38" a="E"><vh>editBodyTests</vh>
+<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.40"><vh>extractSection</vh>
 <v t="ekr.20040712101754.41"><vh>before</vh></v>
@@ -1161,9 +1162,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.53" a="E"><vh>@suite Reformat Paragraph Tests</vh>
+<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
 <v t="ekr.20040712101754.54"><vh>What I did</vh></v>
-<v t="ekr.20040712101754.55" a="E"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
 <v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
 <v t="ekr.20040712101754.58"><vh>before</vh></v>
@@ -1331,7 +1332,7 @@
 <v t="ekr.20040712101754.173"><vh>wikiTest3</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.187" a="E"><vh>Position tests...</vh>
+<v t="ekr.20040712101754.187"><vh>Position tests...</vh>
 <v t="ekr.20040712101754.188"><vh>@test p.iters and v.iters</vh>
 <v t="ekr.20040712101754.189"><vh>child1</vh>
 <v t="ekr.20040712101754.190"><vh>a</vh>
@@ -1392,7 +1393,7 @@
 <v t="ekr.20040712101754.184"><vh>@test consistency of p.v.t.vnodeList &amp; v.parents for cloned nodes</vh></v>
 <v t="ekr.20040712101754.185"><vh>@test that cloned nodes actually share subtrees</vh></v>
 </v>
-<v t="ekr.20050208051418" a="E"><vh>Unicode tests</vh>
+<v t="ekr.20050208051418"><vh>Unicode tests</vh>
 <v t="ekr.20050206090416"><vh>@test open non-existent non-ascii directory</vh></v>
 <v t="ekr.20050208051418.1"><vh>@test can't open message in g.openWithFileName</vh></v>
 <v t="ekr.20050208051854"><vh>@test atFile.printError</vh></v>
@@ -1533,10 +1534,11 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050203084930" a="E"><vh>Test settings...</vh>
+<v t="ekr.20050203084930"><vh>Test settings...</vh>
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
 </v>
+<v t="ekr.20050208135429"><vh>@test pre-definition of g in scripts</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
@@ -1567,44 +1569,6 @@
 <v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
-</v>
-<v t="ekr.20050208051418" a="E"><vh>Unicode tests</vh>
-<v t="ekr.20050206090416"><vh>@test open non-existent non-ascii directory</vh></v>
-<v t="ekr.20050208051418.1" a="TV"><vh>@test can't open message in g.openWithFileName</vh></v>
-<v t="ekr.20050208051854"><vh>@test atFile.printError</vh></v>
-<v t="ekr.20050206201145"><vh>@test % operator with unicode</vh></v>
-<v t="ekr.20050208073718"><vh>@test open file with chinese characters in path &amp; file</vh></v>
-<v t="ekr.20050208111037"><vh>@test failure to convert unicode characters to ascii</vh></v>
-<v t="ekr.20050208104202"><vh>@test of round-tripping toUnicode &amp; toEncodedString</vh></v>
-</v>
-<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
-<v t="ekr.20050106123646"><vh>unused</vh>
-<v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
-<v t="ekr.20050106094854.1"><vh>__init__</vh></v>
-<v t="ekr.20050106094854.2"><vh> fail</vh></v>
-<v t="ekr.20050106094854.3"><vh>setUp</vh></v>
-<v t="ekr.20050106094854.4"><vh>tearDown</vh></v>
-<v t="ekr.20050106094854.5"><vh>runTest</vh></v>
-<v t="ekr.20050106094854.6"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106094747"><vh>addTestRoutinesInCommanderToSuite</vh>
-<v t="ekr.20050106095223"><vh>findTestsInCommander</vh></v>
-</v>
-</v>
-<v t="ekr.20050106080318.1"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
-<v t="ekr.20050106080318.2"><vh>__init__</vh></v>
-<v t="ekr.20050106080318.3"><vh> fail</vh></v>
-<v t="ekr.20050106080318.4"><vh>setUp</vh></v>
-<v t="ekr.20050106080318.5"><vh>tearDown</vh></v>
-<v t="ekr.20050106080318.6"><vh>runTest</vh></v>
-<v t="ekr.20050106080318.7"><vh>shortDescription</vh></v>
-</v>
-<v t="ekr.20050106080318"><vh>addTestRoutinesInModuleToSuite</vh></v>
-<v t="ekr.20050106081120.2"><vh>findTestsInModule</vh>
-<v t="ekr.20050106124235"><vh>&lt;&lt; print classes, methods &amp; functions &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
-<v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -10924,10 +10888,11 @@ if not spellpyx or not spellFrame:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\unittest\chinese脖folder\chinese脖test.leo
-/Users/edream/leoCVS/leo/test/test.leo
+<t tx="ekr.20041121151002.1">/Users/edream/leoCVS/leo/plugins/leoPlugins.leo
 /Users/edream/leoCVS/leo/config/leoSettings.leo
-C:\prog\leoCVS\leo\test\test.leo</t>
+/Users/edream/leoCVS/leo/test/test.leo
+/Users/edream/leoCVS/leo/doc/LeoDocs.leo
+/Users/edream/leoCVS/leo/src/LeoPy.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -13462,7 +13427,7 @@ s = "testᾹ(U+1FB9: Greek Capital Letter Alpha With Macron)"
 
 s2 = 'test: %s' % s</t>
 <t tx="ekr.20050208051418"></t>
-<t tx="ekr.20050208051418.1">import leoGlobals as g
+<t tx="ekr.20050208051418.1"># import leoGlobals as g
 old_c = g.top()
 filename = "testᾹ(U+1FB9: Greek Capital Letter Alpha With Macron)"
 ok,frame = g.openWithFileName(filename,old_c)
@@ -13527,5 +13492,11 @@ assert not ok, 'toUnicodeWithErrorCode returns True for %s with ascii encoding' 
 s = u'炰'
 s3,ok = g.toEncodedStringWithErrorCode(s,encoding)
 assert not ok, 'toEncodedStringWithErrorCode returns True for %s with ascii encoding' % s</t>
+<t tx="ekr.20050208135429"># print g.listToString(dir())
+
+for ivar in ('c','g','p'):
+    assert ivar in dir()
+
+assert hasattr(g.app,'tkEncoding')</t>
 </tnodes>
 </leo_file>
