@@ -10,7 +10,7 @@
 from leoGlobals import *
 from leoUtils import *
 import leoColor, leoCompare, leoDialog, leoFontPanel, leoNodes, leoPrefs
-import traceback,Tkinter, tkFileDialog, tkFont
+import traceback,Tkinter,tkFileDialog,tkFont
 
 # Needed for menu commands
 import leoCommands, leoNodes, leoTree
@@ -185,15 +185,17 @@ class LeoFrame:
 	#@+body
 	def setTabWidth (self, w):
 		
-		# EKR 2/28/02: made code size platform dependent.
-		if sys.platform=="win32": # Windows
-			font = tkFont.Font(family="Courier",size=9)
-		else:
-			font = tkFont.Font(family="Courier",size=12)
-			
-		# print "frame.setTabWidth:" + `w`
-		tabw = font.measure(" " * abs(w)) # 7/2/02
-		self.body.configure(tabs=tabw)
+		try: # 8/11/02: This can fail when called from scripts.
+			# 2/28/02: made code size platform dependent.
+			if sys.platform=="win32": # Windows
+				font = tkFont.Font(family="Courier",size=9)
+			else:
+				font = tkFont.Font(family="Courier",size=12)
+				
+			# print "frame.setTabWidth:" + `w`
+			tabw = font.measure(" " * abs(w)) # 7/2/02
+			self.body.configure(tabs=tabw)
+		except: pass
 	#@-body
 	#@-node:5:C=5:frame.setTabWidth
 	#@+node:6:C=6:createMenuBar

@@ -706,6 +706,7 @@ class config:
 		#@+node:1::<< set prefs ivars >>
 		#@+body
 		val = config.getIntPref("tab_width")
+		
 		if val: c.tab_width = val
 		c.frame.setTabWidth(c.tab_width)
 		
