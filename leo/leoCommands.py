@@ -1578,7 +1578,7 @@ class Commands:
 		c.endUpdate()
 	#@-body
 	#@-node:6::initAllCloneBits
-	#@+node:7::initJoinedClonedBits
+	#@+node:7::c.initJoinedClonedBits (changed in 3.11.1)
 	#@+body
 	# Initializes all clone bits in the all nodes joined to v.
 	
@@ -1588,11 +1588,11 @@ class Commands:
 	
 		c.beginUpdate()
 		if 1: # update range...
+			mark = v.shouldBeClone() # 4/29/03: only calculate mark once!
 			
 			#@<< init clone bit for v >>
 			#@+node:1::<< init clone bit for v >>
 			#@+body
-			mark = v.shouldBeClone()
 			if not mark and v.isCloned():
 				v.clearClonedBit()
 			elif mark and not v.isCloned():
@@ -1606,7 +1606,6 @@ class Commands:
 				#@<< init clone bit for v >>
 				#@+node:1::<< init clone bit for v >>
 				#@+body
-				mark = v.shouldBeClone()
 				if not mark and v.isCloned():
 					v.clearClonedBit()
 				elif mark and not v.isCloned():
@@ -1617,7 +1616,7 @@ class Commands:
 				v = v.getJoinList()
 		c.endUpdate()
 	#@-body
-	#@-node:7::initJoinedClonedBits
+	#@-node:7::c.initJoinedClonedBits (changed in 3.11.1)
 	#@+node:8::validateOutline
 	#@+body
 	# Makes sure all nodes are valid.
@@ -1849,12 +1848,13 @@ class Commands:
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@-body
 	#@-node:1::c.dragAfter
-	#@+node:2::c.dragCloneToNthChildOf
+	#@+node:2::c.dragCloneToNthChildOf (changed in 3.11.1)
 	#@+body
 	def dragCloneToNthChildOf (self,v,parent,n):
 	
 		c = self
 		c.beginUpdate()
+		trace("v,parent,n:"+v.headString()+","+parent.headString()+","+`n`)
 		clone = v.clone(v) # Creates clone & dependents, does not set undo.
 		if not c.checkMoveWithParentWithWarning(clone,parent,true):
 			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
@@ -1867,6 +1867,7 @@ class Commands:
 		c.endEditing()
 		clone.setDirty()
 		clone.moveToNthChildOf(parent,n)
+		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
 		c.undoer.setUndoParams("Drag & Clone",clone,
 			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
 		clone.setDirty()
@@ -1875,7 +1876,7 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:2::c.dragCloneToNthChildOf
+	#@-node:2::c.dragCloneToNthChildOf (changed in 3.11.1)
 	#@+node:3::c.dragToNthChildOf
 	#@+body
 	def dragToNthChildOf(self,v,parent,n):
@@ -2217,14 +2218,16 @@ class Commands:
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
 	#@-node:11::promote
-	#@+node:12::c.dragCloneAfter
+	#@+node:12::c.dragCloneAfter (changed in 3.11.1)
 	#@+body
 	def dragCloneAfter (self,v,after):
 	
 		c = self
 		c.beginUpdate()
 		clone = v.clone(v) # Creates clone & dependents, does not set undo.
+		trace("v,after:"+v.headString()+","+after.headString())
 		if not c.checkMoveWithParentWithWarning(clone,after.parent(),true):
+			trace("invalid clone move")
 			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
 			c.endUpdate(false) # Nothing has changed.
 			return
@@ -2235,6 +2238,7 @@ class Commands:
 		c.endEditing()
 		clone.setDirty()
 		clone.moveAfter(after)
+		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
 		c.undoer.setUndoParams("Drag & Clone",clone,
 			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
 		clone.setDirty()
@@ -2243,7 +2247,7 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:12::c.dragCloneAfter
+	#@-node:12::c.dragCloneAfter (changed in 3.11.1)
 	#@-node:14::Moving, Dragging, Promote, Demote, Sort (commands)
 	#@+node:15::Selecting & Updating (commands)
 	#@+node:1::editVnode (calls tree.editLabel)
