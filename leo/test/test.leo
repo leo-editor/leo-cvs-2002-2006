@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6008" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6011" clone_windows="0"/>
 <globals body_outline_ratio="0.474537037037">
 	<global_window_position top="10" left="283" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -395,7 +395,7 @@
 </v>
 </v>
 <v t="ekr.20041013062906.1"><vh>Tests of error reporting in scripts</vh>
-<v t="ekr.20041012101530" a="E"><vh>Test reporting of SyntaxError</vh>
+<v t="ekr.20041012101530"><vh>Test reporting of SyntaxError</vh>
 <v t="ekr.20041012101634"><vh>syntax error</vh></v>
 </v>
 <v t="ekr.20041012101720"><vh>Test reporting of IndexError</vh>
@@ -407,7 +407,7 @@
 <v t="ekr.20041012102030"><vh>Test reporting of IndexError in another file</vh></v>
 </v>
 </v>
-<v t="ekr.20040312021734" a="E"><vh>Scripts</vh>
+<v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -722,7 +722,7 @@
 <v t="ekr.20040723065047"><vh>Test</vh></v>
 </v>
 <v t="ekr.20040717121014"><vh>tellGnxScript</vh></v>
-<v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
+<v t="ekr.20040706071823" a="E"><vh>test of Python's parser module</vh></v>
 <v t="ekr.20040804104924"><vh>Test of p.__hash__</vh>
 <v t="ekr.20040804105026"><vh>a</vh>
 <v t="ekr.20040804104328"><vh>Script</vh></v>
@@ -744,7 +744,7 @@
 <v t="ekr.20040918093738.4"><vh>test</vh></v>
 </v>
 </v>
-<v t="ekr.20041013101029" a="ETV"><vh>headfind</vh>
+<v t="ekr.20041013101029"><vh>headfind</vh>
 <v t="ekr.20041013101029.1"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041001161303"><vh>print all laoded plugins</vh></v>
@@ -1233,6 +1233,7 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
+<v t="ekr.20041017100700" a="TV"><vh>Test of autocompleter</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1886,7 +1887,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2017,7 +2018,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10133,5 +10134,12 @@ changing these lines with "- " (and at first line), I imported flattened outline
 and "there you go" a index-driven Leo version. :)
 
 bill p</t>
+<t tx="ekr.20041017100700">@language python
+
+# Type a period to autocomplete
+leoTest
+
+# Type an open paren to bring up calltip.
+leoTest.findAllAtFileNodes</t>
 </tnodes>
 </leo_file>

@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="11731" clone_windows="0"/>
 <globals body_outline_ratio="0.452928870293">
-	<global_window_position top="12" left="284" height="860" width="988"/>
+	<global_window_position top="95" left="266" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1231,7 +1231,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1520,7 +1520,7 @@
 <v t="EKR.20040524104904.160"><vh>Configuring Leo</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.161"><vh>Chapter 6: Leo and Literate Programming</vh>
+<v t="EKR.20040524104904.161" a="E"><vh>Chapter 6: Leo and Literate Programming</vh>
 <v t="EKR.20040524104904.162"><vh>Why I like Literate Programming</vh>
 <v t="EKR.20040524104904.163"><vh>Literate programming creates a new design dimension</vh></v>
 <v t="EKR.20040524104904.164"><vh>Design and coding happen at the highest possible level</vh></v>
@@ -1542,7 +1542,7 @@
 <v t="EKR.20040524104904.179"><vh>Outlines create new design dimensions</vh></v>
 <v t="EKR.20040524104904.180"><vh>Leo improves tangling and adds untangling</vh></v>
 </v>
-<v t="EKR.20040524104904.181"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
+<v t="EKR.20040524104904.181" a="TV"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
 </v>
 <v t="EKR.20040524104904.182"><vh>Chapter 7: Scripting Leo with Python</vh>
 <v t="EKR.20040524104904.183"><vh>Overview of Leo's code</vh></v>
@@ -3924,7 +3924,7 @@ My experience shows that organizational crutches such as printed listings, table
 
 4. Leo shows that traditional literate programming encourages a too creative approach to programming. A dictionary is a better model for programs than a novel. Literate outlines provide a more regular organization, while providing space for the most lengthy discussions when those discussions are required.
 
-In short, Leo shows that the phrase "literate programming" is a misnomer. Indeed, chunks or sections, the atoms of literate programming, have little to do with literature. Outlines eliminate the need for narrative. One can use chunks or sections to write narrative prose, but Leo demonstrates that one is under no obligation to do so.</t>
+In short, Leo shows that the phrase "literate programming" is a misnomer. Indeed, chunks or sections, the atoms of literate programming, have little to do with literature. Outlines eliminate the need for narrative. One can use chunks or sections to write narrative prose, but Leo demonstrates that one is under no obligation to do so.  Printed listings can be important when producing textbooks and other printed material.</t>
 <t tx="EKR.20040524104904.182">@nocolor
 @language python
 

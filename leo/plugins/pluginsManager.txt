@@ -52,7 +52,7 @@
 
 # Handles autocompletion when the user types '.' or '(' characters.
     # FIXME: Thread doesn't shut down properly.  Causes unit tests to fail.
-    # autocompleter.py
+autocompleter.py
 
 # Allows coloring of wiki-style markup.
     # NOTE: requires add_directives.py plugin.
@@ -253,6 +253,7 @@
 # Enable or disable plugins using a proper plugins manager rather than this file!
 #pluginsTest.py
 #xsltWithNodes.py
+table.py
 
 	plugin_manager.py
 #@nonl

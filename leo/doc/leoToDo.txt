@@ -3460,6 +3460,13 @@ a big problem with modern editors, but it _would_ be nicer...
 --Rich
 #@-node:ekr.20031218072017.735:Option: case insensitive keywords
 #@-node:ekr.20031218072017.734:Rewrite colorizer to use jEdit language descriptionfiles
+#@+node:ekr.20041016134312.1:Allow multiple @language directives in a single node
+@killcolor
+
+Treat @language like @color: ambiguous nodes (nodes containing more than one
+@language directive) should not affect descendent nodes.
+#@nonl
+#@-node:ekr.20041016134312.1:Allow multiple @language directives in a single node
 #@+node:ekr.20041002112001:Use threaded Colorizer
 #@-node:ekr.20041002112001:Use threaded Colorizer
 #@+node:ekr.20040217153407.3:Emacs-style keystroke handling (see status_line plugin)
@@ -3472,6 +3479,10 @@ a big problem with modern editors, but it _would_ be nicer...
 #@+node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040628085831:@import, etc.
+#@+node:ekr.20041016134312.2:Create a proper Weave command
+Use noweb and TeX
+#@nonl
+#@-node:ekr.20041016134312.2:Create a proper Weave command
 #@-node:ekr.20040919101448:Important 5
 #@+node:ekr.20041001182730:Easy
 #@+node:ekr.20040831092540:Allow uA's to be stored as plain strings
