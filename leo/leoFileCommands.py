@@ -19,7 +19,7 @@ class BadLeoFile:
 class fileCommands:
 
 	#@+others
-	#@+node:1::ctor leoFileCommands
+	#@+node:1::leoFileCommands._init_
 	#@+body
 	def __init__(self,commands):
 	
@@ -49,7 +49,7 @@ class fileCommands:
 		self.openDirectory = None
 		self.usingClipboard = false
 	#@-body
-	#@-node:1::ctor leoFileCommands
+	#@-node:1::leoFileCommands._init_
 	#@+node:2::Reading
 	#@+node:1::createVnode
 	#@+body
@@ -328,33 +328,35 @@ class fileCommands:
 		app().findFrame.init(c)
 	#@-body
 	#@-node:5:C=1:getFindPanelSettings
-	#@+node:6::getGlobals
+	#@+node:6:C=2:getGlobals
 	#@+body
 	def getGlobals (self):
 	
 		self.getTag("<globals")
-		#
+	
 		self.getTag("body_outline_ratio=\"")
 		self.ratio = self.getDouble() ; self.getDquote() ; self.getTag(">")
-		#
+	
 		self.getTag("<global_window_position")
-		top,left,height,width = self.getPosition() ; self.getTag("/>")
-		# trace("t,l,h,w:" + `top` + ":" + `left` + ":" + `height` + ":" + `width`)
-		top = min(top,50) ; left = min(left,50)
-		# Setting the heigth and width doesn't work properly.
-		if 1:
-			g = "+%d%+d" % (left, top)
-		else:
-			g = "%dx%d%+d%+d" % (width, height, left, top)
+		y,x,h,w = self.getPosition() ; self.getTag("/>")
+		# print ("y,x,h,w:" + `y` + "," + `x` + "," + `h` + "," + `w`)
+		
+		# Bug fix: 7/15/02: use max, not min!!!
+		y = max(y,0) ; x = max(x,0)
+		g = "%dx%d%+d%+d" % (w,h,x,y)
 		self.frame.top.geometry(g)
-		#
+		# 7/15/02: Redraw the window before writing into it.
+		self.frame.top.deiconify()
+		self.frame.top.lift()
+		self.frame.top.update()
+	
 		self.getTag("<global_log_window_position")
 		self.getPosition() ; self.getTag("/>") # no longer used.
-		#
+	
 		self.getTag("</globals>")
 	#@-body
-	#@-node:6::getGlobals
-	#@+node:7:C=2:getLeoFile (Leo2)
+	#@-node:6:C=2:getGlobals
+	#@+node:7:C=3:getLeoFile (Leo2)
 	#@+body
 	def getLeoFile (self,frame,atFileNodesFlag):
 	
@@ -425,7 +427,7 @@ class fileCommands:
 		self.tnodesDict = {}
 		return ok, self.ratio
 	#@-body
-	#@-node:7:C=2:getLeoFile (Leo2)
+	#@-node:7:C=3:getLeoFile (Leo2)
 	#@+node:8::getLeoHeader
 	#@+body
 	def getLeoHeader (self):
@@ -449,7 +451,7 @@ class fileCommands:
 				break
 	#@-body
 	#@-node:8::getLeoHeader
-	#@+node:9:C=3:getLeoOutline (from clipboard)
+	#@+node:9:C=4:getLeoOutline (from clipboard)
 	#@+body
 	# This method reads a Leo outline from string s in clipboard format.
 	def getLeoOutline (self,s):
@@ -473,7 +475,7 @@ class fileCommands:
 		self.usingClipboard = false
 		return v
 	#@-body
-	#@-node:9:C=3:getLeoOutline (from clipboard)
+	#@-node:9:C=4:getLeoOutline (from clipboard)
 	#@+node:10::getPosition
 	#@+body
 	def getPosition (self):
@@ -493,7 +495,7 @@ class fileCommands:
 		return top, left, height, width
 	#@-body
 	#@-node:10::getPosition
-	#@+node:11:C=4:getPrefs
+	#@+node:11:C=5:getPrefs
 	#@+body
 	def getPrefs (self):
 	
@@ -573,7 +575,7 @@ class fileCommands:
 		# Override .leo file's preferences if settings are in leoConfig.txt.
 		config.setCommandsIvars(c)
 	#@-body
-	#@-node:11:C=4:getPrefs
+	#@-node:11:C=5:getPrefs
 	#@+node:12::getSize
 	#@+body
 	def getSize (self):
@@ -711,7 +713,7 @@ class fileCommands:
 		self.getTag("</vnodes>")
 	#@-body
 	#@-node:17::getVnodes
-	#@+node:18:C=5:getXmlVersionTag
+	#@+node:18:C=6:getXmlVersionTag
 	#@+body
 	#@+at
 	#  Parses the xml version string, and sets the xml version string.
@@ -733,7 +735,7 @@ class fileCommands:
 		self.getTag(prolog_postfix_string)
 
 	#@-body
-	#@-node:18:C=5:getXmlVersionTag
+	#@-node:18:C=6:getXmlVersionTag
 	#@+node:19::skipWs
 	#@+body
 	def skipWs (self):
@@ -787,7 +789,7 @@ class fileCommands:
 		c.atFileCommands.readAll(c.currentVnode(), true) # partialFlag
 	#@-body
 	#@-node:5::readAtFileNodes
-	#@+node:6:C=6:fileCommands.readOutlineOnly
+	#@+node:6:C=7:fileCommands.readOutlineOnly
 	#@+body
 	def readOutlineOnly (self,file,fileName):
 	
@@ -797,7 +799,7 @@ class fileCommands:
 		self.fileIndex = 0
 		
 		#@<< Set the default directory >>
-		#@+node:1:C=7:<< Set the default directory >>
+		#@+node:1:C=8:<< Set the default directory >>
 		#@+body
 		#@+at
 		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
@@ -810,7 +812,7 @@ class fileCommands:
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@-body
-		#@-node:1:C=7:<< Set the default directory >>
+		#@-node:1:C=8:<< Set the default directory >>
 
 		c.beginUpdate()
 		ok, ratio = self.getLeoFile(self.frame, false) # readAtFileNodes
@@ -827,8 +829,8 @@ class fileCommands:
 		self.fileBuffer = ""
 		return ok
 	#@-body
-	#@-node:6:C=6:fileCommands.readOutlineOnly
-	#@+node:7:C=8:fileCommands.open
+	#@-node:6:C=7:fileCommands.readOutlineOnly
+	#@+node:7:C=9:fileCommands.open
 	#@+body
 	def open(self,file,fileName):
 	
@@ -839,7 +841,7 @@ class fileCommands:
 		self.fileIndex = 0
 		
 		#@<< Set the default directory >>
-		#@+node:1:C=7:<< Set the default directory >>
+		#@+node:1:C=8:<< Set the default directory >>
 		#@+body
 		#@+at
 		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
@@ -852,7 +854,7 @@ class fileCommands:
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@-body
-		#@-node:1:C=7:<< Set the default directory >>
+		#@-node:1:C=8:<< Set the default directory >>
 
 		# esDiffTime("open:read all", t)
 		es("reading: " + fileName)
@@ -873,7 +875,7 @@ class fileCommands:
 		# esDiffTime("open: exit",t)
 		return ok
 	#@-body
-	#@-node:7:C=8:fileCommands.open
+	#@-node:7:C=9:fileCommands.open
 	#@+node:8::xmlUnescape
 	#@+body
 	def xmlUnescape(self,s):
@@ -1046,7 +1048,7 @@ class fileCommands:
 			self.put(self.xmlEscape(s))
 	#@-body
 	#@-node:3::putEscapedString
-	#@+node:4:C=9:putFindSettings
+	#@+node:4:C=10:putFindSettings
 	#@+body
 	def putFindSettings (self):
 	
@@ -1088,7 +1090,7 @@ class fileCommands:
 		#
 		self.put("</find_panel_settings>") ; self.put_nl()
 	#@-body
-	#@-node:4:C=9:putFindSettings
+	#@-node:4:C=10:putFindSettings
 	#@+node:5::putGlobals
 	#@+body
 	def putGlobals (self):
@@ -1108,11 +1110,10 @@ class fileCommands:
 		self.put(">") ; self.put_nl()
 		
 		#@<< put the position of this frame >>
-		#@+node:2::<< put the position of this frame >>
+		#@+node:2:C=11:<< put the position of this frame >>
 		#@+body
-		width = self.frame.top.winfo_width()
-		height = self.frame.top.winfo_height()
-		left, top = 10, 10 ##
+		width,height,left,top = get_window_info(self.frame.top)
+		# print ("t,l,h,w:" + `top` + ":" + `left` + ":" + `height` + ":" + `width`)
 		
 		self.put_tab()
 		self.put("<global_window_position")
@@ -1122,7 +1123,7 @@ class fileCommands:
 		self.put(" width=") ; self.put_in_dquotes(`width`)
 		self.put("/>") ; self.put_nl()
 		#@-body
-		#@-node:2::<< put the position of this frame >>
+		#@-node:2:C=11:<< put the position of this frame >>
 
 		
 		#@<< put the position of the log window >>
@@ -1176,7 +1177,7 @@ class fileCommands:
 		return s
 	#@-body
 	#@-node:7::putLeoOutline (to clipboard)
-	#@+node:8:C=10:putPrefs
+	#@+node:8:C=12:putPrefs
 	#@+body
 	def putPrefs (self):
 	
@@ -1260,8 +1261,8 @@ class fileCommands:
 
 		self.put("</preferences>") ; self.put_nl()
 	#@-body
-	#@-node:8:C=10:putPrefs
-	#@+node:9:C=11:putProlog
+	#@-node:8:C=12:putPrefs
+	#@+node:9:C=13:putProlog
 	#@+body
 	def putProlog (self):
 	
@@ -1284,7 +1285,7 @@ class fileCommands:
 			self.put("<leo_file>") ; self.put_nl()
 
 	#@-body
-	#@-node:9:C=11:putProlog
+	#@-node:9:C=13:putProlog
 	#@+node:10::putPostlog
 	#@+body
 	def putPostlog (self):
@@ -1514,7 +1515,7 @@ class fileCommands:
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
 	#@-body
 	#@-node:10::writeOutlineOnly
-	#@+node:11:C=12:write_LEO_file
+	#@+node:11:C=14:write_LEO_file
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
@@ -1642,7 +1643,7 @@ class fileCommands:
 
 			return false
 	#@-body
-	#@-node:11:C=12:write_LEO_file
+	#@-node:11:C=14:write_LEO_file
 	#@-node:3::Writing
 	#@-others
 #@-body

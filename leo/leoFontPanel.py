@@ -287,7 +287,7 @@ class leoFontPanel:
 		c.redraw()
 	#@-body
 	#@-node:7::on...BoxChanged
-	#@+node:8::onOk, onCancel, onRevert
+	#@+node:8:C=1:leoFont.onOk, onCancel, onRevert
 	#@+body
 	def onOk (self):
 		c = self.commands
@@ -327,12 +327,21 @@ class leoFontPanel:
 		#@-body
 		#@-node:1::<< update the configuration settings >>
 
-		self.top.destroy()
+		if 1: # Hide the window, preserving its position.
+			self.top.withdraw()
+		else: # works.
+			self.commands.frame.fontPanel=None
+			self.top.destroy()
 	
 	def onCancel (self):
+		c = self.commands
 		self.onRevert()
 		self.showSettings()
-		self.top.destroy()
+		if 1: # Hide the window, preserving its position.
+			self.top.withdraw()
+		else: # works.
+			self.commands.frame.fontPanel=None
+			self.top.destroy()
 		
 	def onRevert (self):
 		c = self.commands
@@ -343,7 +352,7 @@ class leoFontPanel:
 		self.revertIvars()
 		# Don't call update here.
 	#@-body
-	#@-node:8::onOk, onCancel, onRevert
+	#@-node:8:C=1:leoFont.onOk, onCancel, onRevert
 	#@+node:9::onSizeEntryKey
 	#@+body
 	def onSizeEntryKey (self,event=None):
@@ -391,6 +400,7 @@ class leoFontPanel:
 		Tk = Tkinter ; c = self.commands
 		self.top = top = Tk.Toplevel(app().root)
 		top.title("Fonts for " + shortFileName(c.frame.title))
+		top.protocol("WM_DELETE_WINDOW", self.onOk)
 		self.create_outer()
 		
 		# This must be done _after_ the dialog has been built!

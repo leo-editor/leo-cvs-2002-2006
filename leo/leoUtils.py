@@ -148,7 +148,25 @@ def create_temp_name ():
 #@-body
 #@-node:4::create_temp_name
 #@+node:5::Dialog utilites...
-#@+node:1::center_dialog
+#@+node:1::get_window_info
+#@+body
+# WARNING: Call this routine _after_ creating a dialog.
+# (This routine inhibits the grid and pack geometry managers.)
+
+def get_window_info (top):
+	
+	top.update_idletasks() # Required to get proper info.
+
+	# Get the information about top and the screen.
+	g = top.geometry() # g = "WidthxHeight+XOffset+YOffset"
+	dim,x,y = string.split(g,'+')
+	w,h = string.split(dim,'x')
+	w,h,x,y = int(w),int(h),int(x),int(y)
+	
+	return w,h,x,y
+#@-body
+#@-node:1::get_window_info
+#@+node:2::center_dialog
 #@+body
 # Center the dialog on the screen.
 # WARNING: Call this routine _after_ creating a dialog.
@@ -156,15 +174,9 @@ def create_temp_name ():
 
 def center_dialog(top):
 
-	top.update_idletasks() # Required to get proper info.
-
-	# Get the information about top and the screen.
 	sw = top.winfo_screenwidth()
 	sh = top.winfo_screenheight()
-	g = top.geometry() # g = "WidthxHeight+XOffset+YOffset"
-	dim,x,y = string.split(g,'+')
-	w,h = string.split(dim,'x')
-	w,h,x,y = int(w),int(h),int(x),int(y)
+	w,h,x,y = get_window_info(top)
 	
 	# Set the new window coordinates, leaving w and h unchanged.
 	x = (sw - w)/2
@@ -173,8 +185,8 @@ def center_dialog(top):
 	
 	return w,h,x,y
 #@-body
-#@-node:1::center_dialog
-#@+node:2:C=4:create_labeled_frame
+#@-node:2::center_dialog
+#@+node:3:C=4:create_labeled_frame
 #@+body
 # Returns frames w and f.
 # Typically the caller would pack w into other frames, and pack content into f.
@@ -217,7 +229,7 @@ def create_labeled_frame (parent,
 
 	return w,f
 #@-body
-#@-node:2:C=4:create_labeled_frame
+#@-node:3:C=4:create_labeled_frame
 #@-node:5::Dialog utilites...
 #@+node:6::Dumping, Tracing & Sherlock
 #@+node:1::dump

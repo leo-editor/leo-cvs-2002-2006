@@ -107,13 +107,21 @@ class leoTree:
 		self.vnode_alloc_list = [] # List of all vnodes ever allocated in this tree.
 		self.active = false # true if tree is active
 		
-		# Font: default, use system default.
-		# Setting self.font will affect the next redraw.
-		t = Tkinter.Text()
-		self.fontName = fn = t.cget("font")
-		self.font = tkFont.Font(font=fn)
-		#print `self.fontName`
-		#print `self.font`
+		# We use the system defaults below if self.font == None.
+		config = app().config
+		self.font = config.getFontFromParams(
+			"headline_text_font_family", "headline_text_font_size",
+			"headline_text_font_slant",  "headline_text_font_weight")
+	
+		# self.font and self.fontName must exist for self.getFont.
+		if self.font:
+			self.fontName = config.getWindowPref("headline_text_font_family")
+		else:
+			# Get the name and font from the system defaults.
+			t = Tkinter.Text()
+			self.fontName = fn = t.cget("font")
+			self.font = tkFont.Font(font=fn)
+		assert(self.font)
 		
 		# Controlling redraws
 		self.updateCount = 0 # self.redraw does nothing unless this is zero.
@@ -194,12 +202,12 @@ class leoTree:
 		return None
 	#@-body
 	#@-node:7:C=4:tree.findVnodeWithIconId
-	#@+node:8::getFont/setFont
+	#@+node:8::getFont/setFont (used by leoFontPanel)
 	#@+body
 	def getFont (self):
 	
 		return self.font
-	
+			
 	def setFont (self, font=None, fontName=None):
 		
 		if fontName:
@@ -209,7 +217,7 @@ class leoTree:
 			self.fontName = None
 			self.font = font
 	#@-body
-	#@-node:8::getFont/setFont
+	#@-node:8::getFont/setFont (used by leoFontPanel)
 	#@+node:9::Drawing
 	#@+node:1::About drawing and updating
 	#@+body
@@ -344,6 +352,7 @@ class leoTree:
 			v.edit_text.destroy()
 		v.edit_text = t = Tkinter.Text(self.canvas,
 			font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
+	
 		t.insert("end", v.headString())
 		
 		#@<< configure the text depending on state >>

@@ -1047,17 +1047,17 @@ class leoColorPanel:
 	#@+body
 	def run (self):
 		
-		c = self.commands
-		
-		#@<< create color panel >>
-		#@+node:1::<< create color panel >>
-		#@+body
-		Tk = Tkinter
+		c = self.commands ; Tk = Tkinter
 		config = app().config
 		
 		self.top = top = Tk.Toplevel(app().root)
 		top.title("Syntax colors for " + shortFileName(c.frame.title))
+		top.protocol("WM_DELETE_WINDOW", self.onOk)
+	
 		
+		#@<< create color panel >>
+		#@+node:1::<< create color panel >>
+		#@+body
 		outer = Tk.Frame(top,bd=2,relief="groove")
 		outer.pack(anchor="n",pady=2,ipady=1,expand=1,fill="x")
 		
@@ -1128,14 +1128,22 @@ class leoColorPanel:
 		np.run(name,color)
 	#@-body
 	#@-node:4::showColorName
-	#@+node:5::onOk, onCancel, onRevert
+	#@+node:5:C=9:colorPanel.onOk, onCancel, onRevert
 	#@+body
 	def onOk (self):
-		self.top.destroy()
+		if 1: # Hide the window, preserving its position.
+			self.top.withdraw()
+		else: # works.
+			self.commands.frame.colorPanel = None
+			self.top.destroy()
 		
 	def onCancel (self):
 		self.onRevert()
-		self.top.destroy()
+		if 1: # Hide the window, preserving its position.
+			self.top.withdraw()
+		else: # works.
+			self.commands.frame.colorPanel = None
+			self.top.destroy()
 		
 	def onRevert (self):
 		for option_name,old_val in self.changed_options:
@@ -1143,7 +1151,7 @@ class leoColorPanel:
 		self.changed_options = []
 		self.commands.recolor()
 	#@-body
-	#@-node:5::onOk, onCancel, onRevert
+	#@-node:5:C=9:colorPanel.onOk, onCancel, onRevert
 	#@+node:6::update
 	#@+body
 	def update (self,name,val):
@@ -1220,6 +1228,7 @@ class leoColorNamePanel:
 	
 		self.top = top = Tk.Toplevel(app().root)
 		top.title("Color names for " + `name`)
+		top.protocol("WM_DELETE_WINDOW", self.onOk)
 	
 		
 		#@<< create color name panel >>
@@ -1229,21 +1238,19 @@ class leoColorNamePanel:
 		outer = Tk.Frame(top,bd=2,relief="groove")
 		outer.pack(fill="both",expand=1)
 		
-		upper = Tk.Frame(outer,height="6i")
+		upper = Tk.Frame(outer)
 		upper.pack(fill="both",expand=1)
 		
-		lt = Tk.Frame(upper)
-		lt.pack(side="left",fill="both",expand=1)
-		
-		rt = Tk.Frame(upper) 
-		rt.pack(side="right",pady="2i") # A kludge to expand the listbox!
+		# A kludge to give vertical space to the listbox!
+		spacer = Tk.Frame(upper) 
+		spacer.pack(side="right",pady="2i") 
 		
 		lower = Tk.Frame(outer)
 		# padx=20 gives more room to the Listbox!
 		lower.pack(padx=40) # Not expanding centers the buttons.
 		
 		# Create and populate the listbox.
-		self.box = box = Tk.Listbox(lt)
+		self.box = box = Tk.Listbox(upper) # height doesn't seem to work.
 		box.bind("<Double-Button-1>", self.onApply)
 		
 		if color not in colorNamesList:
@@ -1260,8 +1267,6 @@ class leoColorNamePanel:
 		
 		bar.config(command=box.yview)
 		box.config(yscrollcommand=bar.set)
-		
-		self.select(color)
 			
 		# Create the row of buttons.
 		for text,command in (
@@ -1275,6 +1280,7 @@ class leoColorNamePanel:
 		#@-body
 		#@-node:1::<< create color name panel >>
 
+		self.select(color)
 		
 		center_dialog(top) # Do this _after_ building the dialog!
 		# top.resizable(0,0)

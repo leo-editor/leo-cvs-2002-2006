@@ -6,122 +6,198 @@
 
 from leoGlobals import *
 from leoUtils import *
-import exceptions, os, sys, traceback, ConfigParser
-
-
-#@<< Define names of settings >>
-#@+node:1::<< Define names of settings >>
-#@+body
-#@+at
-#  Used only by open.  Update just writes whatever is in the various dicts.
-
-#@-at
-#@@c
-
-# Config section... (Not used in the code)
-
-boolConfigNames = ( "read_only" )
-stringConfigNames = ( "xml_version_string" )
-
-# Find section...
-boolFindNames = (
-	"batch",
-	"ignore_case",
-	"mark_changes",
-	"mark_finds",
-	"pattern_match",
-	"reverse",
-	"search_body",
-	"search_headline",
-	"suboutline_only",
-	"whole_word", "wrap" )
-
-stringFindNames = (
-	"change_string",
-	"find_string" )
-
-# Prefs section...
-boolPrefsNames = (
-	"output_doc_chunks",
-	"run_tangle_done.py",
-	"run_untangle_done.py",
-	"tangle_outputs_header" )
-	
-intPrefsNames = (
-	"page_width",
-	"tab_width" )
-
-stringPrefsNames = (
-	"default_tangle_directory",
-	"default_target_language" )
-	
-# Syntax coloring section...
-boolColoringNames = (
-	"color_directives_in_plain_text",
-	"underline_undefined_section_names",
-	"use_hyperlinks" )
-	
-stringColoringNames = (
-	# Tk color values also allowed.
-	"comment_color",
-	"cweb_section_name_color",
-	"directive_color",
-	"doc_part_color",
-	"keyword_color",
-	"leo_keyword_color",
-	"section_name_color",
-	"section_name_brackets_color",
-	"string_color",
-	"undefined_section_name_color" )
-	
-# Window section...
-boolWindowNames = ( "body_pane_wraps" )
-
-intWindowNames = (
-	"additional_body_text_border ",
-	"body_text_font_size",
-	"headline_text_font_size",
-	"log_text_font_size" )
-
-floatWindowNames = (
-	"initial_vertical_ratio",
-	"initial_horizontal_ratio" )
-	
-stringWindowNames = (
-	"body_text_font_family",
-	"body_text_font_slant",
-	"body_text_font_weight",
-	
-	"headline_text_font_family",
-	"headline_text_font_slant",
-	"headline_text_font_weight",
-
-	"initial_splitter_orientation", # "horizontal" or "vertical"
-	"initial_window_height",
-	"initial_window_left",
-	"initial_window_top",
-	"initial_window_width",
-	
-	"log_text_font_family",
-	"log_text_font_slant",
-	"log_text_font_weight",
-	
-	"split_bar_color",
-	"split_bar_relief",
-	"split_bar_width" )
-#@-body
-#@-node:1::<< Define names of settings >>
-
-
-#@<< define default tables for settings >>
-#@+node:2::<< define default tables for settings >>
-#@-node:2::<< define default tables for settings >>
-
+import exceptions, os, sys, traceback, ConfigParser, tkFont
 
 class config:
+	
+	#@<< Define names of settings >>
+	#@+node:1:C=1:<< Define names of settings >>
+	#@+body
+	#@+at
+	#  Used only by open.  Update just writes whatever is in the various dicts.
+
+	#@-at
+	#@@c
+	
+	# Config section... (Not used in the code)
+	
+	boolConfigNames = ( "read_only" )
+	stringConfigNames = ( "xml_version_string" )
+	
+	# Find section...
+	boolFindNames = (
+		"batch",
+		"ignore_case",
+		"mark_changes",
+		"mark_finds",
+		"pattern_match",
+		"reverse",
+		"search_body",
+		"search_headline",
+		"suboutline_only",
+		"whole_word", "wrap" )
+	
+	stringFindNames = (
+		"change_string",
+		"find_string" )
+	
+	# Prefs section...
+	boolPrefsNames = (
+		"output_doc_chunks",
+		"run_tangle_done.py",
+		"run_untangle_done.py",
+		"tangle_outputs_header" )
+		
+	intPrefsNames = (
+		"page_width",
+		"tab_width" )
+	
+	stringPrefsNames = (
+		"default_tangle_directory",
+		"default_target_language" )
+		
+	# Syntax coloring section...
+	boolColoringNames = (
+		"color_directives_in_plain_text",
+		"underline_undefined_section_names",
+		"use_hyperlinks" )
+		
+	stringColoringNames = (
+		# Tk color values also allowed.
+		"comment_color",
+		"cweb_section_name_color",
+		"directive_color",
+		"doc_part_color",
+		"keyword_color",
+		"leo_keyword_color",
+		"section_name_color",
+		"section_name_brackets_color",
+		"string_color",
+		"undefined_section_name_color" )
+		
+	# Window section...
+	boolWindowNames = ( "body_pane_wraps" )
+	
+	intWindowNames = (
+		"additional_body_text_border ",
+		"body_text_font_size",
+		"headline_text_font_size",
+		"log_text_font_size" )
+	
+	floatWindowNames = (
+		"initial_vertical_ratio",
+		"initial_horizontal_ratio" )
+		
+	stringWindowNames = (
+		"body_text_font_family",
+		"body_text_font_slant",
+		"body_text_font_weight",
+		
+		"headline_text_font_family",
+		"headline_text_font_slant",
+		"headline_text_font_weight",
+	
+		"initial_splitter_orientation", # "horizontal" or "vertical"
+		"initial_window_height",
+		"initial_window_left",
+		"initial_window_top",
+		"initial_window_width",
+		
+		"log_text_font_family",
+		"log_text_font_slant",
+		"log_text_font_weight",
+		
+		"split_bar_color",
+		"split_bar_relief",
+		"split_bar_width" )
+	#@-body
+	#@-node:1:C=1:<< Define names of settings >>
+
+	
+	#@<< define default tables for settings >>
+	#@+node:2:C=2:<< define default tables for settings >>
+	#@+body
+	defaultConfigDict = {
+		"read_only" : 1,
+		"xml_version_string" : "UTF-8" } # By default, we write leo.py 2.x files.
+	
+	defaultRecentFiles = {}
+	for i in xrange(0,10):
+		defaultRecentFiles ["file" + `i`] = None
+	
+	defaultFindDict = {
+		"change_string" : None,
+		"find_string" : None,
+		"batch" : 0,
+		"ignore_case" : 0,
+		"mark_changes" : 0,
+		"mark_finds" : 0,
+		"pattern_match" : 0,
+		"reverse" : 0,
+		"search_body" : 1,
+		"search_headline" : 0,
+		"suboutline_only" : 0,
+		"whole_word" : 1,
+		"wrap" : 0 }
+	
+	defaultPrefsDict = {
+		"default_tangle_directory" : None,
+		"default_target_language" : "Python",
+		"tab_width" : 4,
+		"page_width" : 132,
+		"output_doc_chunks" : 1,
+		"tangle_outputs_header" : 1,
+		"run_tangle_done.py" : 0,
+		"run_untangle_done.py" : 0 }
+	
+	defaultColorsDict = {
+		"color_directives_in_plain_text" : 1,
+		"underline_undefined_section_names" : 1,
+		"use_hyperlinks" : 0,
+		"comment_color" : "firebrick3",
+		"cweb_section_name_color" : "red",
+		"directive_color" : "blue",
+		"doc_part_color" : "firebrick3",
+		"keyword_color" : "blue",
+		"leo_keyword_color" : "#00aa00",
+		"section_name_color" : "red",
+		"section_name_brackets_color" : "blue",
+		"string_color" : "#00aa00",
+		"undefined_section_name_color" : "red" }
+		
+	defaultBodyFontSize = choose(sys.platform=="win32",9,12)
+	
+	defaultWindowDict = {
+		"body_pane_wraps" : 1,
+		"additional_body_text_border" : 0,
+		"body_text_font_family" : "Courier",
+		"body_text_font_size" : defaultBodyFontSize,
+		"body_text_font_slant" : "roman",
+		"body_text_font_weight" : "normal",
+		"headline_text_font_family" : None,
+		"headline_text_font_size" : 12,
+		"headline_text_font_slant" : "roman",
+		"headline_text_font_weight" : "normal",
+		"log_text_font_family" : None,
+		"log_text_font_size" : 12,
+		"log_text_font_slant" : "roman",
+		"log_text_font_weight" : "normal",
+		"initial_window_height" : 20, # In grid units.  These are just a guess.
+		"initial_window_width" :  60,
+		"initial_window_left" : 10,
+		"initial_window_top" : 10,
+		"initial_splitter_orientation" : "vertical",
+		"initial_vertical_ratio" : 0.5,
+		"initial_horizontal_ratio" : 0.3,
+		"split_bar_color" : "LightSteelBlue2",
+		"split_bar_relief" : "groove",
+		"split_bar_width" : 7 }
+	#@-body
+	#@-node:2:C=2:<< define default tables for settings >>
+
 
 	#@+others
-	#@+node:3:C=1:config.__init__
+	#@+node:3:C=3:config.__init__
 	#@+body
 	def __init__ (self):
 		
@@ -160,7 +236,7 @@ class config:
 	
 		# Initialize settings in each section.
 		self.config = None # The current instance of ConfigParser
-		self.read_only = false
+		self.read_only = true # Make _sure_ we don't alter an illegal leoConfig.txt file!
 		self.xml_version_string = None
 		self.findDict = {}
 		self.prefsDict = {}
@@ -171,32 +247,37 @@ class config:
 		# Initialize the ivars from the config file.
 		self.open()
 	#@-body
-	#@-node:3:C=1:config.__init__
+	#@-node:3:C=3:config.__init__
 	#@+node:4::get...FromDict & setDict
 	#@+body
-	def getBoolFromDict (self,name,dict):
-		val = self.getIntFromDict(name,dict)
+	def getBoolFromDict (self,name,dict,defaultDict):
+		val = self.getIntFromDict(name,dict,defaultDict)
 		if val and val != None and val != 0: val = 1
 		return val
 	
-	def getFloatFromDict (self,name,dict):
-		val = self.getFromDict(name,dict)
+	def getFloatFromDict (self,name,dict,defaultDict):
+		val = self.getFromDict(name,dict,defaultDict)
 		if val:
 			try: val = float(val)
 			except: val = None
 		return val
 	
-	def getFromDict (self,name,dict):
+	def getFromDict (self,name,dict,defaultDict):
 		if name in dict:
 			val = dict[name]
+			if val == "ignore":
+				val = None
+			return val
+		elif name in defaultDict:
+			val = defaultDict[name]
 			if val == "ignore":
 				val = None
 			return val
 		else:
 			return None
 	
-	def getIntFromDict (self,name,dict):
-		val = self.getFromDict(name,dict)
+	def getIntFromDict (self,name,dict,defaultDict):
+		val = self.getFromDict(name,dict,defaultDict)
 		if val:
 			try: val = int(val)
 			except: val = None
@@ -218,12 +299,12 @@ class config:
 	#@+node:5::get/setFindPref
 	#@+body
 	def getBoolFindPref (self,name):
-		return self.getIntFromDict(name,self.findDict)
+		return self.getIntFromDict(name,self.findDict,self.defaultFindDict)
 	
 	# Basic getters and setters.
 	
 	def getFindPref (self,name):
-		return self.getFromDict(name,self.findDict)
+		return self.getFromDict(name,self.findDict,self.defaultFindDict)
 	
 	def setFindPref (self,name,val):
 		self.setDict(name,val,self.findDict)
@@ -231,26 +312,54 @@ class config:
 	getStringFindPref = getFindPref
 	#@-body
 	#@-node:5::get/setFindPref
-	#@+node:6::get/setPref
+	#@+node:6:C=4:getFontFromParams
+	#@+body
+	# A convenience method that computes a font from font parameters.
+	# Arguments are the names of settings to be use.
+	# We return None if there is no family setting so we can use system default fonts.
+	# We default to size=12, slant="roman", weight="normal"
+	
+	def getFontFromParams(self,family,size,slant,weight):
+		
+		family = self.getWindowPref(family)
+		if not family:
+			return None
+		
+		size = self.getIntWindowPref(size)
+		if size == None: size = 12
+		
+		slant = self.getWindowPref(slant)
+		if not slant: slant = "roman"
+		
+		weight = self.getWindowPref(weight)
+		if not weight: weight = "normal"
+		
+		font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
+		return font
+	
+
+	#@-body
+	#@-node:6:C=4:getFontFromParams
+	#@+node:7::get/setPref
 	#@+body
 	def getBoolPref (self,name):
-		return self.getBoolFromDict(name,self.prefsDict)
+		return self.getBoolFromDict(name,self.prefsDict,self.defaultPrefsDict)
 	
 	def getIntPref (self,name):
-		return self.getIntFromDict(name,self.prefsDict)
+		return self.getIntFromDict(name,self.prefsDict,self.defaultPrefsDict)
 		
 	# Basic getters and setters.
 	
 	def getPref (self,name):
-		return self.getFromDict(name,self.prefsDict)
+		return self.getFromDict(name,self.prefsDict,self.defaultPrefsDict)
 	
 	def setPref (self,name,val):
 		self.setDict(name,val,self.prefsDict)
 		
 	getStringPref = getPref
 	#@-body
-	#@-node:6::get/setPref
-	#@+node:7:C=2:get/setRecentFiles
+	#@-node:7::get/setPref
+	#@+node:8:C=5:get/setRecentFiles
 	#@+body
 	def getRecentFiles (self):
 		
@@ -261,46 +370,46 @@ class config:
 		self.recentFiles = files
 
 	#@-body
-	#@-node:7:C=2:get/setRecentFiles
-	#@+node:8::get/setColors
+	#@-node:8:C=5:get/setRecentFiles
+	#@+node:9::get/setColors
 	#@+body
 	def getBoolColorsPref (self,name):
-		return self.getBoolFromDict(name,self.colorsDict)
+		return self.getBoolFromDict(name,self.colorsDict,self.defaultColorsDict)
 		
 	# Basic getters and setters.
 	
 	def getColorsPref (self,name):
-		return self.getFromDict(name,self.colorsDict)
+		return self.getFromDict(name,self.colorsDict,self.defaultColorsDict)
 	
 	def setColorsPref (self,name,val):
 		self.setDict(name,val,self.colorsDict)
 		
 	getStringColorsPref = getColorsPref
 	#@-body
-	#@-node:8::get/setColors
-	#@+node:9::get/setWindowPrefs
+	#@-node:9::get/setColors
+	#@+node:10::get/setWindowPrefs
 	#@+body
 	def getBoolWindowPref (self,name):
-		return self.getBoolFromDict(name,self.windowDict)
+		return self.getBoolFromDict(name,self.windowDict,self.defaultWindowDict)
 		
 	def getFloatWindowPref (self,name):
-		return self.getIntFromDict(name,self.windowDict)
+		return self.getFloatFromDict(name,self.windowDict,self.defaultWindowDict)
 		
 	def getIntWindowPref (self,name):
-		return self.getIntFromDict(name,self.windowDict)
+		return self.getIntFromDict(name,self.windowDict,self.defaultWindowDict)
 		
 	# Basic getters and setters.
 	
 	def getWindowPref (self,name):
-		return self.getFromDict(name,self.windowDict)
+		return self.getFromDict(name,self.windowDict,self.defaultWindowDict)
 	
 	def setWindowPref (self,name,val):
 		self.setDict(name,val,self.windowDict)
 		
 	getStringWindowPref = getWindowPref
 	#@-body
-	#@-node:9::get/setWindowPrefs
-	#@+node:10::open
+	#@-node:10::get/setWindowPrefs
+	#@+node:11::open
 	#@+body
 	def open (self):
 		
@@ -350,9 +459,9 @@ class config:
 			dict = self.prefsDict
 			
 			self.setAllDicts(dict,section,
-				bools=boolPrefsNames,
-				ints=intPrefsNames,
-				strings=stringPrefsNames)
+				bools=self.boolPrefsNames,
+				ints=self.intPrefsNames,
+				strings=self.stringPrefsNames)
 
 			#@-body
 			#@-node:3::<< get prefs >>
@@ -365,8 +474,8 @@ class config:
 			dict = self.findDict
 			
 			self.setAllDicts(dict,section,
-				bools=boolFindNames,
-				strings=stringFindNames)
+				bools=self.boolFindNames,
+				strings=self.stringFindNames)
 
 			#@-body
 			#@-node:4::<< get find prefs >>
@@ -379,8 +488,8 @@ class config:
 			dict = self.colorsDict
 			
 			self.setAllDicts(dict,section,
-				bools=boolColoringNames,
-				strings=stringColoringNames)
+				bools=self.boolColoringNames,
+				strings=self.stringColoringNames)
 			#@-body
 			#@-node:5::<< get syntax coloring prefs >>
 
@@ -392,8 +501,10 @@ class config:
 			dict = self.windowDict
 			
 			self.setAllDicts(dict,section,
-				bools=boolWindowNames, floats=floatWindowNames,
-				ints=intWindowNames, strings=stringWindowNames)
+				bools=self.boolWindowNames,
+				floats=self.floatWindowNames,
+				ints=self.intWindowNames,
+				strings=self.stringWindowNames)
 			#@-body
 			#@-node:6::<< get window prefs >>
 
@@ -414,8 +525,8 @@ class config:
 			pass
 		self.config = None
 	#@-body
-	#@-node:10::open
-	#@+node:11::setAllDicts
+	#@-node:11::open
+	#@+node:12::setAllDicts
 	#@+body
 	def setAllDicts (self, dict, section,
 		bools=(),floats=(),ints=(),strings=()):
@@ -438,8 +549,8 @@ class config:
 			
 		# print "setAllDicts:" + `dict`
 	#@-body
-	#@-node:11::setAllDicts
-	#@+node:12::setCommandsFindIvars
+	#@-node:12::setAllDicts
+	#@+node:13:C=6:setCommandsFindIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -494,8 +605,8 @@ class config:
 
 		app().findFrame.init(c)
 	#@-body
-	#@-node:12::setCommandsFindIvars
-	#@+node:13::setCommandsIvars
+	#@-node:13:C=6:setCommandsFindIvars
+	#@+node:14:C=7:setCommandsIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -545,8 +656,8 @@ class config:
 		#@-body
 		#@-node:1::<< set prefs ivars >>
 	#@-body
-	#@-node:13::setCommandsIvars
-	#@+node:14::setConfigFindIvars
+	#@-node:14:C=7:setCommandsIvars
+	#@+node:15:C=8:setConfigFindIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -569,8 +680,8 @@ class config:
 		self.setFindPref("find_string",c.find_text)
 
 	#@-body
-	#@-node:14::setConfigFindIvars
-	#@+node:15::setConfigIvars
+	#@-node:15:C=8:setConfigFindIvars
+	#@+node:16:C=9:setConfigIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -606,8 +717,8 @@ class config:
 		self.setFindPref("find_string",c.find_text)
 
 	#@-body
-	#@-node:15::setConfigIvars
-	#@+node:16::update
+	#@-node:16:C=9:setConfigIvars
+	#@+node:17::update
 	#@+body
 	# Rewrites the entire config file from ivars.
 	# This is called when a .leo file is written and when the preferences panel changes.
@@ -681,8 +792,8 @@ class config:
 			traceback.print_exc()
 		self.config = None
 	#@-body
-	#@-node:16::update
-	#@+node:17::update_section
+	#@-node:17::update
+	#@+node:18::update_section
 	#@+body
 	def update_section (self,config,section,dict):
 		
@@ -696,7 +807,7 @@ class config:
 			val = dict [name]
 			config.set(section,name,val)
 	#@-body
-	#@-node:17::update_section
+	#@-node:18::update_section
 	#@-others
 #@-body
 #@-node:0::@file leoConfig.py

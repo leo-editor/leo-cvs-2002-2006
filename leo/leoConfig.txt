@@ -1,5 +1,5 @@
 # leoConfig.txt: configuration file for Leo.
-# 7/11/2002 by Edward K. Ream
+# 7/15/2002 by Edward K. Ream
 #
 # Leo looks for this file using the directory in sys.leo_config_directory.
 # 	(You would typically set this attribute in sitecustomize.py).
@@ -28,11 +28,12 @@
 read_only = 1
 #	WARNING: Clearing the read_only attribute will cause Leo to remove
 #	all comments and alter order of attributes when rewriting this file!!
+#	Syntax errors in this file set read_only = 1.
 
 xml_version_string = ISO-8859-1
 #	The version used at the start of .leo files.
-#	Use UTF-8 to make files compatible with older versions of Leo.
-
+#	Default is UTF-8
+#	Use UTF-8 to write leo.py 2.x files.
 
 # -----------------------------------------------------------------------------
 # The list of files in the "Recent Files" menu at startup.
@@ -43,7 +44,6 @@ file1 = c:\prog\leocvs\leo\leopy.leo
 file0 = c:\prog\leocvs\leo\leodocs.leo
 #	Paths to recent files.
 #	Valid option names: file0 through file9.
-
 
 # -----------------------------------------------------------------------------
 # The initial settings of the Find/Change panel.
@@ -71,7 +71,6 @@ search_headline = 0
 suboutline_only = 0
 whole_word = 1
 wrap = 0
-
 
 # -----------------------------------------------------------------------------
 # The initial settings of the Preferences panel.
@@ -103,11 +102,10 @@ tangle_outputs_header = 1
 # 	1/0: Explicit Tangle commands output file header.
 
 run_tangle_done.py = 0
-# 	1/0: Run tangle_done.py after explitic Tangle commands.
+# 	1/0: Run tangle_done.py after explicit Tangle commands.
 
 run_untangle_done.py = 0
-# 	1/0: Run tangle_done.py after explicit Unangle commands.
-
+# 	1/0: Run tangle_done.py after explicit Untangle commands.
 
 # -----------------------------------------------------------------------------
 # Syntax coloring options and colors.
@@ -118,7 +116,7 @@ color_directives_in_plain_text = 1
 # 	1/0: Color Leo directives for @language plain
 
 underline_undefined_section_names = 1
-# 	1/0: Undeline undefined section names
+# 	1/0: Underline undefined section names
 #	Only functional if use_hyperlinks = 0
 
 use_hyperlinks = 0
@@ -132,10 +130,6 @@ use_hyperlinks = 0
 # 	For example, #00aa00 is the dark green used by IDLE.
 # 	For Tk color names see: http://www.tcl.tk/man/tcl8.3/TkCmd/colors.htm
 # 	These names are case sensitive, for example: BlanchedAlmond
-
-# You can add your own names here...
-
-
 
 comment_color = firebrick3
 #	The color of comments in code parts.
@@ -169,19 +163,10 @@ string_color = #00aa00
 undefined_section_name_color = red
 #	The color of name in <<name>> when name is undefined.
 
-
-
 # -----------------------------------------------------------------------------
 # Options that affect the appearance of windows.
-# Many of these options use Tk pixel units.  Examples:
-#
-#	  5      5 pixels
-#	 10c    10 centimeters
-#	  8i     8 inches
-#	 30m    30 millimeters
-#	300p   300 points (1/72 inch)
-#
-# See also: http://www.tcl.tk/man/tcl8.3/TkLib/GetPixels.htm
+# Options that require pixel values can be any Python expression that yields an int.
+# Warning: the number of pixels per inch varies...
 
 [window options]
 
@@ -189,82 +174,97 @@ body_pane_wraps = 1
 #	0/1: Wrap body text if 1.
 
 additional_body_text_border = 0
-#	Additional border in body text pane, in Tk pixel units.
+#	Additional border in body text pane, in pixels (must be an integer).
 
-
-# The following options affect text in the body, outline and log panes...
-
+# ----- body pane options...
 
 body_text_font_family = Courier
 #	Font family for body text.
+#	Default is default font for Tk.Text widgets.
+#	Invalid font names are translated to a font in a system-dependent way.
 
 body_text_font_size = 9
-#	Size of body text. Must be an integer. Default is system default size.
-#	12 may be better for Linux.
+#	Size of body text. Must be an integer.
+#	Default is 9 on Windows, 12 on Linux and all others.
 
 body_text_font_slant = roman
-#	The Tk -slant setting: roman, italic.  Default is roman.
+#	The Tk -slant setting: roman or italic.  Default is roman.
 
 body_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.
 
+# ----- outline pane options...
 
 headline_text_font_family =
 #	Font family for headline text.
+#	Default is default font for Tk.Text widgets.
+#	Invalid font names are translated to a font in a system-dependent way.
 
-headline_text_font_size =
-#	Size of headline text. Must be an integer. Default is system default size.
+headline_text_font_size = 9
+#	Size of headline text. Must be an integer.
+#	Default is 12
 
 headline_text_font_slant = roman
-#	The Tk -slant setting: roman, italic. Default is roman.
+#	The Tk -slant setting: roman or italic. Default is roman.
 
 headline_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.
 
+# ----- log pane options...
 
 log_text_font_family =
 #	Font family for text in the log pane.
+#	Default is default font for Tk.Text widgets.
+#	Invalid font names are translated to a font in a system-dependent way.
 
 log_text_font_size =
-#	Size of text in the log pane. Must be an integer. Default is system default size.
+#	Size of text in the log pane. Must be an integer.
+#	Default is 12
 
 log_text_font_slant = roman
-#	The Tk -slant setting: roman, italic. Default is roman.
+#	The Tk -slant setting: roman or italic. Default is roman.
 
 log_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.
 
+# ----- Options for new windows...
+# (Leo now properly opens windows for existing files where they were last positioned.
 
-# The following options affect all windows when they first appear...
-
-
-initial_window_height = 7i
-#	Height of window, in Tk pixel units.
+initial_window_height = 20
+#	Height of window, Tk grid units (must be an integer).
+#	Grid units must be specified because Leo windows are gridded.
 	
-initial_window_width = 8i
-#	Width window, in Tk pixel units.
+initial_window_width = 60
+#	Width window, in Tk grid units (must be an integer).
+#	Grid units must be specified because Leo windows are gridded.
 
 initial_window_left = 10
-#	Distance from left of screen of window, in Tk pixel units.
+#	Distance from left of screen of window, in pixels (must be an integer).
 
 initial_window_top = 10
-#	Distance from top of screen of window, in Tk pixel units.
+#	Distance from top of screen of window, in in pixels (must be an integer).
+
+# ----- Options for newly opened windows...
 
 initial_splitter_orientation = vertical
+#	valid values: h or horizontal or v or vertical.
+#	(Actually, anything but h or horizontal is considered vertical.)
+#	This is not saved in .leo files, so it applies to all windows.
 #	vertical: body pane below outline and log panes.
 #	horizontal: body pane to left of outline and log panes.
 
 initial_vertical_ratio = 0.5
 #	tree pane/body pane size when spitting pane vertically.
+#	Applies only to new windows. Overridden by ratio in .leo files.
 #	Valid values: 0.0 to 1.0.
 
 initial_horizontal_ratio = 0.3
 #	tree pane/body pane size when spitting pane horizontally.
+#	Applies only to new windows. Overridden by ratio in .leo files.
 #	Valid values: 0.0 to 1.0.
 
-
-# The following options affect the bar that separates panes in the Leo window...
-
+# ----- Options for the bar that separates panes in the Leo window...
+# (Leo should save these to .leo files, and it doesn't)
 
 split_bar_color = LightSteelBlue2
 #	The color of the split bar.
@@ -275,4 +275,4 @@ split_bar_relief = groove
 #	Valid values: raised, sunken, flat, ridge, solid, groove.
 	
 split_bar_width = 7
-#	The width of the split bar, in Tk pixel units.
+#	The width of the split bar, in pixels (must be an integer).

@@ -74,7 +74,7 @@ def init_sherlock (args):
 	# leoUtils.trace("argv", "sys.argv: " + `sys.argv`)
 #@-body
 #@-node:4::init_sherlock
-#@+node:5::open
+#@+node:5:C=1:open (leo.py)
 #@+body
 def open(fileName=None,*args):
 	
@@ -88,7 +88,7 @@ def open(fileName=None,*args):
 	root = Tkinter.Tk()
 	
 	#@<< set the icon image >>
-	#@+node:1:C=1:<< set the icon image >>
+	#@+node:1:C=2:<< set the icon image >>
 	#@+body
 	if 0: # not yet
 		fullname = r"c:\prog\LeoPy\Icons\box05.GIF"
@@ -100,7 +100,7 @@ def open(fileName=None,*args):
 		trace(`image`)
 		root.iconbitmap(image)
 	#@-body
-	#@-node:1:C=1:<< set the icon image >>
+	#@-node:1:C=2:<< set the icon image >>
 
 	root.title("Leo Main Window")
 	root.withdraw()
@@ -113,6 +113,7 @@ def open(fileName=None,*args):
 	# Create the first Leo window
 	frame1 = leoFrame.LeoFrame()
 	frame1.top.withdraw()
+	frame1.top.update()
 	# Now open the second Leo window
 	fileName = os.path.join(os.getcwd(), fileName)
 	fileName = os.path.normpath(fileName)
@@ -130,8 +131,8 @@ def open(fileName=None,*args):
 	init_sherlock(args)
 	root.mainloop()
 #@-body
-#@-node:5::open
-#@+node:6:C=2:reload_all
+#@-node:5:C=1:open (leo.py)
+#@+node:6:C=3:reload_all
 #@+body
 def reload_all ():
 
@@ -158,8 +159,8 @@ def reload_all ():
 		from leoGlobals import *
 		from leoUtils import *
 #@-body
-#@-node:6:C=2:reload_all
-#@+node:7:C=3:run
+#@-node:6:C=3:reload_all
+#@+node:7:C=4:run (leo.py)
 #@+body
 def run(*args):
 
@@ -167,7 +168,7 @@ def run(*args):
 	root = Tkinter.Tk()
 	
 	#@<< set the icon image >>
-	#@+node:1:C=1:<< set the icon image >>
+	#@+node:1:C=2:<< set the icon image >>
 	#@+body
 	if 0: # not yet
 		fullname = r"c:\prog\LeoPy\Icons\box05.GIF"
@@ -179,7 +180,7 @@ def run(*args):
 		trace(`image`)
 		root.iconbitmap(image)
 	#@-body
-	#@-node:1:C=1:<< set the icon image >>
+	#@-node:1:C=2:<< set the icon image >>
 
 	root.title("Leo Main Window")
 	root.withdraw()
@@ -195,7 +196,7 @@ def run(*args):
 	init_sherlock(args)
 	root.mainloop()
 #@-body
-#@-node:7:C=3:run
+#@-node:7:C=4:run (leo.py)
 #@-others
 
 

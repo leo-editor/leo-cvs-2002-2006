@@ -57,7 +57,9 @@ class LeoPrefs:
 		#@-body
 		#@-node:1::<< Set ivars >>
 
+		self.commands = c
 		self.top = top = Tk.Toplevel()
+		c.frame.prefsPanel = self
 		head,tail = os.path.split(c.frame.title)
 		self.top.title("Prefs for " + tail)
 		
@@ -181,6 +183,7 @@ class LeoPrefs:
 		#@-body
 		#@-node:5::<< Create the Ok, Cancel & Revert buttons >>
 
+		center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0) # neither height or width is resizable.
 		self.top.protocol("WM_DELETE_WINDOW", self.OnClosePrefsFrame)
 		self.init(c)
@@ -320,15 +323,23 @@ class LeoPrefs:
 		# trace()
 		app().config.setConfigIvars(self.commands)
 		app().config.update()
-		self.top.destroy()
+		if 1: # Hide the window, preserving its position.
+			self.top.withdraw()
+		else: # works.
+			self.commands.frame.prefsPanel = None
+			self.top.destroy()
 	#@-body
 	#@-node:3:C=5:OnClosePrefsFrame
-	#@+node:4::onOK, onCancel, onRevert
+	#@+node:4:C=6:prefs.onOK, onCancel, onRevert
 	#@+body
 	def onOK (self):
 		app().config.setConfigIvars(self.commands)
 		app().config.update()
-		self.top.destroy()
+		if 1: # Hide the window, preserving its position.
+			self.top.withdraw()
+		else: # works.
+			self.commands.frame.prefsPanel = None
+			self.top.destroy()
 		
 	def onCancel (self):
 		c = self.commands
@@ -352,7 +363,11 @@ class LeoPrefs:
 
 		self.init(c)
 		self.set_ivars(c)
-		self.top.destroy()
+		if 1: # Hide the window, preserving its position.
+			self.top.withdraw()
+		else: # works.
+			self.commands.frame.prefsPanel = None
+			self.top.destroy()
 	
 	def onRevert (self):
 		c = self.commands
@@ -377,7 +392,7 @@ class LeoPrefs:
 		self.init(c)
 		self.set_ivars(c)
 	#@-body
-	#@-node:4::onOK, onCancel, onRevert
+	#@-node:4:C=6:prefs.onOK, onCancel, onRevert
 	#@-node:3::Event handlers
 	#@-others
 #@-body
