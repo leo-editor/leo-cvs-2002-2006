@@ -1135,6 +1135,7 @@ class LeoFrame:
 			("Expand To Level &6","Alt+6",self.OnExpandToLevel6),
 			("Expand To Level &7","Alt+7",self.OnExpandToLevel7),
 			("Expand To Level &8","Alt+8",self.OnExpandToLevel8),
+			# ("Expand To Level &9","Alt+9",self.OnExpandToLevel9),
 			("-",None,None),
 			("Expand &All","Alt+9",self.OnExpandAll),
 			("Expand N&ode","Alt+]",self.OnExpandNode))

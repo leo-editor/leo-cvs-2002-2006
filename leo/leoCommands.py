@@ -1186,7 +1186,21 @@ class Commands:
 		c.endUpdate()
 	#@-body
 	#@-node:3::contractParent
-	#@+node:4::expandAllSubheads
+	#@+node:4::expandAllHeadlines
+	#@+body
+	def expandAllHeadlines(self):
+	
+		c = self ; v = root = c.rootVnode()
+		c.beginUpdate()
+		while v:
+			c.expandSubtree(v)
+			v = v.next()
+		c.selectVnode(root)
+		c.endUpdate()
+		c.expansionLevel = 0 # Reset expansion level.
+	#@-body
+	#@-node:4::expandAllHeadlines
+	#@+node:5::expandAllSubheads
 	#@+body
 	def expandAllSubheads (self):
 	
@@ -1202,8 +1216,8 @@ class Commands:
 		c.selectVnode(v)
 		c.endUpdate()
 	#@-body
-	#@-node:4::expandAllSubheads
-	#@+node:5::expandLevel1..9
+	#@-node:5::expandAllSubheads
+	#@+node:6::expandLevel1..9
 	#@+body
 	def expandLevel1 (self): self.expandToLevel(1)
 	def expandLevel2 (self): self.expandToLevel(2)
@@ -1216,8 +1230,8 @@ class Commands:
 	def expandLevel9 (self): self.expandToLevel(9)
 	
 	#@-body
-	#@-node:5::expandLevel1..9
-	#@+node:6::expandNextLevel
+	#@-node:6::expandLevel1..9
+	#@+node:7::expandNextLevel
 	#@+body
 	def expandNextLevel (self):
 	
@@ -1231,8 +1245,8 @@ class Commands:
 		self.expandToLevel(c.expansionLevel + 1)
 	
 	#@-body
-	#@-node:6::expandNextLevel
-	#@+node:7::expandNode
+	#@-node:7::expandNextLevel
+	#@+node:8::expandNode
 	#@+body
 	def expandNode (self):
 		
@@ -1243,8 +1257,8 @@ class Commands:
 		c.endUpdate()
 	
 	#@-body
-	#@-node:7::expandNode
-	#@+node:8::expandPrevLevel
+	#@-node:8::expandNode
+	#@+node:9::expandPrevLevel
 	#@+body
 	def expandPrevLevel (self):
 	
@@ -1258,7 +1272,7 @@ class Commands:
 		self.expandToLevel(max(1,c.expansionLevel - 1))
 	
 	#@-body
-	#@-node:8::expandPrevLevel
+	#@-node:9::expandPrevLevel
 	#@-node:1::Commands
 	#@+node:2::Utilities
 	#@+node:1::contractSubtree
