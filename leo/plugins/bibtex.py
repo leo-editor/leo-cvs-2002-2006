@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:timo.20050213160555:@thin /home/timo/leo/plugins/bibtex.py
+#@+node:timo.20050213160555:@thin bibtex.py
 """Manage BibTeX files with Leo.
 
 Create a bibliographic database by putting '@bibtex filename' in a headline.
@@ -20,18 +20,19 @@ into a @bibtex tree.
 
 # By Timo Honkasalo: contributed under the same license as Leo.py itself.
 
-
-
 #@<< about this plugin >>
 #@+node:timo.20050213160555.1:<<about this plugin >>
 #@+at 
 #@nonl
 # This plugin can be used to manage BibTeX files with Leo.
 # 
-# Create a bibliographic database by putting '@bibtex filename' in a headline. Entries are added as nodes, with '@entrytype key' 
-# as the headline, and the contents of the entry in body text. The plugin will automatically insert a template for the entry in 
-# the body pane when a new entry is created (hooked to pressing enter when typing the headline text). The templates are defined in 
-# dictionary 'templates' in the <<globals>> section, by default containing all required fields for every entry.
+# Create a bibliographic database by putting '@bibtex filename' in a headline. 
+# Entries are added as nodes, with '@entrytype key' as the headline, and the 
+# contents of the entry in body text. The plugin will automatically insert a 
+# template for the entry in the body pane when a new entry is created (hooked 
+# to pressing enter when typing the headline text). The templates are defined 
+# in dictionary 'templates' in the <<globals>> section, by default containing 
+# all required fields for every entry.
 # 
 # The file is written by double-clicking the node. Thus the following outline:
 # 
@@ -76,9 +77,12 @@ into a @bibtex tree.
 # nodes --- if the headline doesn't start with '@', the headline and body text
 # are ignored, but the child nodes are parsed as usual.
 # 
-# BibTeX files can be imported by creating an empty node with '@bibtex filename'
-# in the headline. Double-clicking it will read the file 'filename' and parse it
-# into a @bibtex tree. No syntax checking is made, 'filename' is expected to be a valid BibTeX file.
+# BibTeX files can be imported by creating an empty node with '@bibtex 
+# filename'
+# in the headline. Double-clicking it will read the file 'filename' and parse 
+# it
+# into a @bibtex tree. No syntax checking is made, 'filename' is expected to 
+# be a valid BibTeX file.
 #@-at
 #@-node:timo.20050213160555.1:<<about this plugin >>
 #@nl
@@ -111,11 +115,14 @@ __version__ = "0.4" # Set version for the plugin handler.
 # 0.4
 # ---
 # 
-# - Some changes in writeTreeAsBibTex (better format), added entrytypes in globals.
+# - Some changes in writeTreeAsBibTex (better format), added entrytypes in 
+# globals.
 # - Greatly simplified and enhanced the performance of readBibTexFileIntoTree.
-# - Fixed parsing of files in readBibTexFileIntoTree: they are now split at '\n@' (whitespace stripped) instead of '@', so that 
-# fields may contain '@' (like a 'mailto' field most likely would).
-# - Changed <<write template>> to move cursor to the entry point of first field (16 columns right).
+# - Fixed parsing of files in readBibTexFileIntoTree: they are now split at 
+# '\n@' (whitespace stripped) instead of '@', so that fields may contain '@' 
+# (like a 'mailto' field most likely would).
+# - Changed <<write template>> to move cursor to the entry point of first 
+# field (16 columns right).
 # - Bugfix: templates now include commas after each field
 #   Timo Honkasalo 2005/03/02
 #@-at
@@ -160,11 +167,13 @@ entrytypes.append('@string')
 #@nonl
 # To do list (in approximate order of importance):
 # 
-# - Translating between non-ascii characters and LaTeX code when reading/writing
+# - Translating between non-ascii characters and LaTeX code when 
+# reading/writing
 # - Checking for duplicate keys
 # - Checking for missing commas when writing the file
 # - Customisable config file (for defining the templates)
-# - Easy access to the tree as a Python object for scripting (maybe Pybliographer)
+# - Easy access to the tree as a Python object for scripting (maybe 
+# Pybliographer)
 # - Import/write in BibTeXml format
 # - Sorting by chosen fields
 # - Import/write in other bibliographic formats
@@ -327,5 +336,5 @@ if not g.app.unitTesting:
     leoPlugins.registerHandler("headkey2",onHeadKey)
     g.plugin_signon(__name__)
 #@nonl
-#@-node:timo.20050213160555:@thin /home/timo/leo/plugins/bibtex.py
+#@-node:timo.20050213160555:@thin bibtex.py
 #@-leo
