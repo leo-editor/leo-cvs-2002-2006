@@ -217,7 +217,7 @@ class baseUndoer:
             if verbose:
                 print "%s registered as %s handler for %s" % (func.__name__,kind,undoName)
         except KeyError:
-            s = "Bad key: $s for %s: %s" % (kind,undoName,repr(func))
+            s = "Bad key: %s for %s: %s" % (kind,undoName,repr(func))
             g.trace(s) ; g.es(s, color="red")
     #@nonl
     #@-node:EKR.20040526094429:registerUndoHandlers & registerHandler
