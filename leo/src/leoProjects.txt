@@ -28977,6 +28977,7 @@ def openWriteFile (self,root):
 		
 	if valid:
 		try:
+			root.clearOrphan() # Bug fix: 5/25/04.
 			self.outputFileName = self.targetFileName + ".tmp"
 			self.outputFile = open(self.outputFileName,'wb')
 			if self.outputFile is None:
@@ -33895,6 +33896,78 @@ def matchHeadline (self,pattern):
 #@-node:ekr.20031218072017.3353:matchHeadline
 #@-node:ekr.20031218072017.3346:v.Comparisons
 #@-node:EKR.20040520075421.4:(Allow @thin as an abbreviation for @file-thin)
+#@+node:EKR.20040520075421.5:(Got rid of spurious "Not written x.tmp" message after write errors)
+#@+node:EKR.20040525084847:Notes
+@nocolor
+
+This happens after write errors such as orphan nodes.
+
+The error persists even after the error is corrected.j
+
+The fix was to do: root.clearOrphan() in atFile.openWriteFile.  This method is used by both old and new style files.
+#@nonl
+#@-node:EKR.20040525084847:Notes
+#@+node:ekr.20031218072017.2720:atFile.openWriteFile
+# Open files.  Set root.orphan and root.dirty flags and return on errors.
+
+def openWriteFile (self,root):
+	
+	# g.trace(root)
+
+	try:
+		self.scanAllDirectives(root)
+		valid = self.errors == 0
+	except:
+		self.writeError("exception in atFile.scanAllDirectives")
+		g.es_exception()
+		valid = false
+
+	if valid:
+		try:
+			fn = self.targetFileName
+			self.shortFileName = fn # name to use in status messages.
+			self.targetFileName = g.os_path_join(self.default_directory,fn)
+			self.targetFileName = g.os_path_normpath(self.targetFileName)
+			path = g.os_path_dirname(self.targetFileName)
+			if not path or not g.os_path_exists(path):
+				self.writeError("path does not exist: " + path)
+				valid = false
+		except:
+			self.writeError("exception creating path:" + fn)
+			g.es_exception()
+			valid = false
+
+	if valid and g.os_path_exists(self.targetFileName):
+		try:
+			if not os.access(self.targetFileName,os.W_OK):
+				self.writeError("can not create: read only: " + self.targetFileName)
+				valid = false
+		except:
+			pass # os.access() may not exist on all platforms.
+		
+	if valid:
+		try:
+			root.clearOrphan() # Bug fix: 5/25/04.
+			self.outputFileName = self.targetFileName + ".tmp"
+			self.outputFile = open(self.outputFileName,'wb')
+			if self.outputFile is None:
+				self.writeError("can not create " + self.outputFileName)
+				valid = false
+		except:
+			g.es("exception creating:" + self.outputFileName)
+			g.es_exception()
+			valid = false
+			self.outputFile = None # 3/22/04
+
+	if not valid:
+		root.setOrphan()
+		root.setDirty()
+		self.outputFile = None # 1/29/04
+	
+	return valid
+#@nonl
+#@-node:ekr.20031218072017.2720:atFile.openWriteFile
+#@-node:EKR.20040520075421.5:(Got rid of spurious "Not written x.tmp" message after write errors)
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@+node:EKR.20040512081330:In progress

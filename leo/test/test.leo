@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4252" clone_windows="0"/>
 <globals body_outline_ratio="0.427922814983">
-	<global_window_position top="35" left="370" height="881" width="861"/>
+	<global_window_position top="47" left="305" height="881" width="861"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -20,7 +20,7 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="ekr.20040303062846.2" a="TV"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20040303062846.2"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040303063549"><vh>Unit Tests (Tests must be run from inside this tree!)</vh>
 <v t="ekr.20040309101454"><vh> To do</vh></v>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
@@ -647,12 +647,15 @@
 <v t="EKR.20040523110004.8"><vh>f</vh></v>
 </v>
 <v t="EKR.20040520104329"><vh>@thin c:\prog\test\thinCloneTest.txt</vh></v>
-<v t="EKR.20040524050419" a="E" tnodeList="EKR.20040524050419,EKR.20040524050419.1,EKR.20040524050419.2"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
+<v t="EKR.20040524050419" tnodeList="EKR.20040524050419,EKR.20040524050419.1,EKR.20040524050419.2"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
 <v t="EKR.20040524050419.1" a="E"><vh>Organizer node</vh>
 <v t="EKR.20040524050419.2"><vh>&lt;&lt; defined in grandchild &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="EKR.20040524050438" a="E"><vh>@thin c:\prog\test\grandChildTest.txt</vh></v>
+<v t="EKR.20040524050438"><vh>@thin c:\prog\test\grandChildTest.txt</vh></v>
+<v t="EKR.20040525083635" a="ETV" tnodeList="EKR.20040525083635,EKR.20040525083635.1"><vh>@file c:\prog\test\orphanMessageTest.txt</vh>
+<v t="EKR.20040525083635.1"><vh>orphan</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1913,6 +1916,8 @@ print font.cget("family"), font.cget("weight")</t>
 last line</t>
 <t tx="EKR.20040524050419.1">Organizer line</t>
 <t tx="EKR.20040524050419.2">grandChild line</t>
+<t tx="EKR.20040525083635">@others</t>
+<t tx="EKR.20040525083635.1"></t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
