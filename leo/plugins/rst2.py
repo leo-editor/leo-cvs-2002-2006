@@ -92,13 +92,10 @@ def onIconDoubleClick(tag,keywords):
                 else:
                     writer='latex' ; enc="iso-8859-1"
                 
+                syntax = False
                 if writer == 'html':
                     try:
                         import SilverCity
-                    except:
-                        g.es('SilverCity not present so no syntax highlighting')
-                        syntax = False
-                    else:
                         #@        << define code-block >>
                         #@+node:ekr.20040331071319.5:<< define code-block >>
                         def code_block(name,arguments,options,content,lineno,content_offset,block_text,state,state_machine):
@@ -134,12 +131,12 @@ def onIconDoubleClick(tag,keywords):
                         #@nonl
                         #@-node:ekr.20040331071319.5:<< define code-block >>
                         #@nl
-                        syntax = True     
-                else:
-                    syntax = False
-                    
+                        syntax = True
+                    except ImportError:
+                        g.es('SilverCity not present so no syntax highlighting')
+                
                 rstFile = StringIO.StringIO()
-                writeTreeAsRst(rstFile, fname, p, c, syntax)
+                writeTreeAsRst(rstFile,fname,p,c,syntax=syntax)
                 rstText = rstFile.getvalue()
                 
                 # This code snipped has been taken from code contributed by Paul Paterson 2002-12-05.
@@ -187,7 +184,7 @@ def writeFullFileName (fname):
 #@nonl
 #@-node:ekr.20040811064922:writeFullFileName
 #@+node:ekr.20040331071319.7:writeTreeAsRst
-def writeTreeAsRst(rstFile,fname,p,c,syntax):
+def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
     
     'Write the tree under position p to the file rstFile (fname is the filename)'
     
