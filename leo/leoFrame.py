@@ -2433,20 +2433,24 @@ class LeoFrame:
 	def OnOpenPythonWindow(self,event=None):
 	
 		try:
-			if 0: # Python 2.2 warns that import * must be at the module level.
-				from leoApp import *
-				from leoGlobals import *
-				from leoUtils import *
 			import idle
 			if app().idle_imported:
 				reload(idle)
 			app().idle_imported = true
 		except:
-			es("Can not import idle")
-			es("Please add \Python2x\Tools\idle to sys.paths")
-			traceback.print_exc()
+			try:
+				executable_dir = os.path.dirname(sys.executable)
+				idle_dir=os.path.join(executable_dir, "tools/idle")
+				sys.path.append(idle_dir)
+				# Try again
+				import idle
+				app().idle_imported = true
+			except:
+				es("Can not import idle")
+				es("Please add \Python2x\Tools\idle to sys.paths")
+				traceback.print_exc()
 	
-		return "break" # inhibit further command processing
+		return "break" # inhibit further command processing.
 	#@-body
 	#@-node:7:C=41:OnOpenPythonWindow
 	#@-node:4::Window Menu

@@ -38,6 +38,8 @@ def go (self,name=None):
 
 	cmp = leoCompare(
 		commands = None,
+		
+		appendOutput = true,
 
 		ignoreBlankLines = true,
 		ignoreFirstLine1 = false,
@@ -89,6 +91,8 @@ class leoCompare:
 	
 		# Keyword arguments are much convenient and more clear for scripts.
 		commands = None,
+		
+		appendOutput = false,
 	
 		ignoreBlankLines = true,
 		ignoreFirstLine1 = false,
@@ -110,6 +114,8 @@ class leoCompare:
 			
 		# It is more convenient for the leoComparePanel to set these directly.
 		self.commands = commands
+		
+		self.appendOutput = appendOutput
 	
 		self.ignoreBlankLines = ignoreBlankLines
 		self.ignoreFirstLine1 = ignoreFirstLine1
@@ -278,67 +284,126 @@ class leoCompare:
 	def compare_open_files (self, f1, f2, name1, name2):
 	
 		lines1 = 0 ; lines2 = 0 ; mismatches = 0
-		printTrailing = true
+		printTrailing = true ;
+		sentinelComment1 = sentinelComment2 = None
 		if self.outputFileName:
 			self.openOutputFile()
+			self.show("1: " + name1)
+			self.show("2: " + name2)
+			self.show("")
+		s1 = s2 = None
+		
+		#@<< handle opening lines >>
+		#@+node:1::<< handle opening lines >>
+		#@+body
+		if self.ignoreSentinelLines:
+			
+			s1 = f1.readline() ; lines1 += 1
+			s2 = f2.readline() ; lines2 += 1
+			# Note: isLeoHeader may return None.
+			sentinelComment1 = self.isLeoHeader(s1)
+			sentinelComment2 = self.isLeoHeader(s2)
+			if not sentinelComment1: self.show("no @+leo line for " + name1)
+			if not sentinelComment2: self.show("no @+leo line for " + name2)
+				
 		if self.ignoreFirstLine1:
-			s1 = f1.readline() ; lines1 += 1
+			if s1 == None:
+				f1.readline() ; lines1 += 1
+			s1 = None
+		
 		if self.ignoreFirstLine2:
-			s2 = f2.readline() ; lines2 += 1
+			if s2 == None:
+				f2.readline() ; lines2 += 1
+			s2 = None
+		#@-body
+		#@-node:1::<< handle opening lines >>
+
 		while 1:
-			s1 = f1.readline() ; lines1 += 1
-			s2 = f2.readline() ; lines2 += 1
-			if self.ignoreLeadingWhitespace:
-				s1 = string.lstrip(s1)
-				s2 = string.lstrip(s2)
-			if self.ignoreBlankLines:
-				
-				#@<< ignore blank lines >>
-				#@+node:1::<< ignore blank lines >>
-				#@+body
-				while 1:
-					s = string.rstrip(s1)
-					if len(s) == 0:
-						s1 = f1.readline()
-						lines1 += 1
-						if len(s1) == 0: break # end of file
-					else: break
-				
-				while 1:
-					s = string.rstrip(s2)
-					if len(s) == 0:
-						s2 = f2.readline()
-						lines2 += 1
-						if len(s1) == 0: break # end of file
-					else: break
-				#@-body
-				#@-node:1::<< ignore blank lines >>
+			if s1 == None:
+				s1 = f1.readline() ; lines1 += 1
+			if s2 == None:
+				s2 = f2.readline() ; lines2 += 1
+			
+			#@<< ignore blank lines and/or sentinels >>
+			#@+node:2::<< ignore blank lines and/or sentinels >>
+			#@+body
+			# Completely empty strings denotes end-of-file.
+			if s1 and len(s1) > 0:
+				if self.ignoreBlankLines and len(string.strip(s1)) == 0:
+					s1 = None ; continue
+					
+				if self.ignoreSentinelLines and sentinelComment1 and self.isSentinel(s1,sentinelComment1):
+					s1 = None ; continue
+			
+			if s2 and len(s2) > 0:
+				if self.ignoreBlankLines and len(string.strip(s2)) == 0:
+					s2 = None ; continue
+			
+				if self.ignoreSentinelLines and sentinelComment2 and self.isSentinel(s2,sentinelComment2):
+					s2 = None ; continue
+
+			#@-body
+			#@-node:2::<< ignore blank lines and/or sentinels >>
 
 			n1 = len(s1) ; n2 = len(s2)
-			if n1==0 and n2 != 0: self.show("eof on" + name1)
-			if n2==0 and n1 != 0: self.show("eof on" + name2)
+			if n1==0 and n2 != 0: self.show("1.eof***:")
+			if n2==0 and n1 != 0: self.show("2.eof***:")
 			if n1==0 or n2==0: break
 			match = self.compare_lines(s1,s2)
 			if not match: mismatches += 1
-			if match and self.printMatches:
-				if self.printBothMatches:
-					self.dump(string.rjust("1." + `lines1`,6) + ' :',s1)
-					self.dump(string.rjust("2." + `lines2`,6) + ' :',s2)
-				else:
-					self.dump(string.rjust(`lines1`,6) + ' :',s1)
-			if not match and self.printMisMatches:
-				self.dump(string.rjust("1." + `lines1`,6) + '*:',s1)
-				self.dump(string.rjust("2." + `lines2`,6) + '*:',s2)
-				if self.limitCount > 0 and mismatches > self.limitCount:
-					self.show("limit count exceeded")
+			
+			#@<< print matches and/or mismatches >>
+			#@+node:3::<< print matches and/or mismatches >>
+			#@+body
+			if self.limitCount == 0 or mismatches <= self.limitCount:
+			
+				if match and self.printMatches:
+					
+					if self.printBothMatches:
+						self.dump(string.rjust("1." + `lines1`,6) + ' :',s1)
+						self.dump(string.rjust("2." + `lines2`,6) + ' :',s2)
+					else:
+						self.dump(string.rjust(       `lines1`,6) + ' :',s1)
+				
+				if not match and self.printMismatches:
+					
+					self.dump(string.rjust("1." + `lines1`,6) + '*:',s1)
+					self.dump(string.rjust("2." + `lines2`,6) + '*:',s2)
+			#@-body
+			#@-node:3::<< print matches and/or mismatches >>
+
+			
+			#@<< warn if mismatch limit reached >>
+			#@+node:4::<< warn if mismatch limit reached >>
+			#@+body
+			if self.limitCount > 0 and mismatches >= self.limitCount:
+				
+				if printTrailing:
+					self.show("")
+					self.show("limit count reached")
+					self.show("")
 					printTrailing = false
-					break
-		if self.printTrailingMismatches and printTrailing:
-			if n1 > 0: self.dumpToEndOfFile("1.",f1,lines1)
-			if n2 > 0: self.dumpToEndOfFile("2.",f2,lines2)
+			#@-body
+			#@-node:4::<< warn if mismatch limit reached >>
+
+			s1 = s2 = None # force a read of both lines.
+		
+		#@<< handle reporting after at least one eof is seen >>
+		#@+node:5::<< handle reporting after at least one eof is seen >>
+		#@+body
+		if n1 > 0: 
+			lines1 += self.dumpToEndOfFile("1.",f1,s1,lines1,printTrailing)
+			
+		if n2 > 0:
+			lines2 += self.dumpToEndOfFile("2.",f2,s2,lines2,printTrailing)
+		
+		self.show("")
 		self.show("lines1:" + `lines1`)
 		self.show("lines2:" + `lines2`)
 		self.show("mismatches:" + `mismatches`)
+		#@-body
+		#@-node:5::<< handle reporting after at least one eof is seen >>
+
 		if self.outputFile:
 			self.outputFile.close()
 			self.outputFile = None
@@ -356,7 +421,6 @@ class leoCompare:
 			self.show("filecmp.cmp returns:")
 			if val: self.show(`val` + " (equal)")
 			else:   self.show(`val` + " (not equal)")
-	
 		return val
 	#@-body
 	#@-node:6::filecmp
@@ -399,22 +463,51 @@ class leoCompare:
 	#@-node:2::dump
 	#@+node:3::dumpToEndOfFile
 	#@+body
-	def dumpToEndOfFile (self,tag,f,line):
+	def dumpToEndOfFile (self,tag,f,s,line,printTrailing):
 	
 		trailingLines = 0
 		while 1:
-			s = f.readline()
+			if not s:
+				s = f.readline()
 			if len(s) == 0: break
 			trailingLines += 1
-			if self.dumpTrailingMismatches:
-				tag = string.rjust(tag + `line`,6) + "+:"
-				self.dump(tag,s)
+			if self.printTrailingMismatches and printTrailing:
+				tag2 = string.rjust(tag + `line`,6) + "+:"
+				self.dump(tag2,s)
+			s = None
 	
-		self.show("file " + tag, " has " + trailingLines + " trailing lines")
+		self.show(tag + `trailingLines` + " trailing lines")
 		return trailingLines
 	#@-body
 	#@-node:3::dumpToEndOfFile
-	#@+node:4::openOutput
+	#@+node:4:C=1:isLeoHeader & isSentinel
+	#@+body
+	#@+at
+	#  These methods are based on atFile.scanHeader().  They are simpler because we only care about the starting sentinel comment: 
+	# any line starting with the starting sentinel comment is presumed to be a sentinel line.
+
+	#@-at
+	#@@c
+	
+	def isLeoHeader (self,s):
+		
+		from leoUtils import skip_ws
+		tag = "@+leo"
+		j = string.find(s,tag)
+		if j > 0:
+			i = skip_ws(s,0)
+			if i < j: return s[i:j]
+			else: return None
+		else: return None
+			
+	def isSentinel (self,s,sentinelComment):
+		
+		from leoUtils import skip_ws, match
+		i = skip_ws(s,0)
+		return match(s,i,sentinelComment)
+	#@-body
+	#@-node:4:C=1:isLeoHeader & isSentinel
+	#@+node:5::openOutput
 	#@+body
 	def openOutputFile (self):
 		
@@ -424,15 +517,19 @@ class leoCompare:
 				self.show("output directory not found: " + dir)
 			else:
 				try:
-					self.show("writing to " + self.outputFileName)
-					self.outputFile = open(self.outputFileName,"w")
+					if self.appendOutput:
+						self.show("appending to " + self.outputFileName)
+						self.outputFile = open(self.outputFileName,"a")
+					else:
+						self.show("writing to " + self.outputFileName)
+						self.outputFile = open(self.outputFileName,"w")
 				except:
 					self.outputFile = None
 					self.show("exception opening output file")
 					traceback.print_exc()
 	#@-body
-	#@-node:4::openOutput
-	#@+node:5::show
+	#@-node:5::openOutput
+	#@+node:6::show
 	#@+body
 	def show (self,s):
 		
@@ -445,8 +542,8 @@ class leoCompare:
 			print s
 			print
 	#@-body
-	#@-node:5::show
-	#@+node:6::showIvars
+	#@-node:6::show
+	#@+node:7::showIvars
 	#@+body
 	def showIvars (self):
 		
@@ -469,7 +566,7 @@ class leoCompare:
 		self.show("printMismatches:"         + `self.printMismatches`)
 		self.show("printTrailingMismatches:" + `self.printTrailingMismatches`)
 	#@-body
-	#@-node:6::showIvars
+	#@-node:7::showIvars
 	#@-node:7::utils...
 	#@-others
 	
@@ -513,7 +610,7 @@ class leoComparePanel:
 		return fileName
 	#@-body
 	#@-node:1::browser
-	#@+node:2:C=1:comparePanel.__init__
+	#@+node:2::comparePanel.__init__
 	#@+body
 	def __init__ (self,c,cmp):
 	
@@ -531,6 +628,8 @@ class leoComparePanel:
 		self.useOutputFileVar = Tk.IntVar()
 		
 		# These all correspond to ivars in leoCompare.
+		self.appendOutputVar             = Tk.IntVar()
+	
 		self.ignoreBlankLinesVar         = Tk.IntVar()
 		self.ignoreFirstLine1Var         = Tk.IntVar()
 		self.ignoreFirstLine2Var         = Tk.IntVar()
@@ -558,8 +657,8 @@ class leoComparePanel:
 		# The default file name in the "output file name" browsers.
 		self.defaultOutputFileName = "CompareResults.txt"
 	#@-body
-	#@-node:2:C=1:comparePanel.__init__
-	#@+node:3:C=2:finishCreate
+	#@-node:2::comparePanel.__init__
+	#@+node:3::finishCreate
 	#@+body
 	# Initialize ivars to values I like.
 	# To do: set all these from config parameters.
@@ -568,8 +667,8 @@ class leoComparePanel:
 		
 		# File names.
 		for i,name in (
-			(0,"C:/prog/test/tangleTest/args.c"),
-			(1,"C:/prog/test/tangleTestCB/args.c"),
+			(0,"C:/prog/test/leoAtFile.py"),
+			(1,"C:/prog/test/Copy of leoAtFile.py"),
 			(2,"C:/prog/test/CompareResults.txt") ):
 	
 			e = self.browseEntries[i]
@@ -578,6 +677,9 @@ class leoComparePanel:
 	
 		self.useOutputFileVar.set(1)
 		self.makeWhitespaceVisibleVar.set(0)
+		
+		# Extension and append options.
+		self.appendOutputVar.set(0)
 		
 		# Print options.
 		self.printMatchesVar.set(1)
@@ -591,8 +693,8 @@ class leoComparePanel:
 		# Whitespace options.
 		self.ignoreBlankLinesVar.set(1)
 	#@-body
-	#@-node:3:C=2:finishCreate
-	#@+node:4:C=3:run
+	#@-node:3::finishCreate
+	#@+node:4::run
 	#@+body
 	def run (self):
 		
@@ -667,12 +769,16 @@ class leoComparePanel:
 		#@+node:3::<< create the extension row >>
 		#@+body
 		b = Tk.Checkbutton(row4,anchor="w",var=self.limitToExtensionVar,
-			text="Limit directory compares extension:")
+			text="Limit directory compares to type:")
 		b.pack(side="left",padx=4)
 		
 		self.extensionEntry = e = Tk.Entry(row4,width=6)
 		e.pack(side="left",padx=2)
 		e.insert(0,".py")
+		
+		b = Tk.Checkbutton(row4,anchor="w",var=self.appendOutputVar,
+			text="Append output to output file")
+		b.pack(side="left",padx=4)
 		#@-body
 		#@-node:3::<< create the extension row >>
 
@@ -752,8 +858,8 @@ class leoComparePanel:
 		top.resizable(0,0)
 		self.finishCreate()
 	#@-body
-	#@-node:4:C=3:run
-	#@+node:5:C=4:setIvarsFromWidgets
+	#@-node:4::run
+	#@+node:5::setIvarsFromWidgets
 	#@+body
 	def setIvarsFromWidgets (self):
 	
@@ -795,13 +901,14 @@ class leoComparePanel:
 		else:
 			cmp.limitToExtension = None
 			
-		cmp.makeWhitespaceVisible = self.makeWhitespaceVisibleVar.get()
+		cmp.appendOutput = self.appendOutputVar.get()
 		
 		# Whitespace options.
 		cmp.ignoreBlankLines         = self.ignoreBlankLinesVar.get()
 		cmp.ignoreInteriorWhitespace = self.ignoreInteriorWhitespaceVar.get()
 		cmp.ignoreLeadingWhitespace  = self.ignoreLeadingWhitespaceVar.get()
 		cmp.ignoreSentinelLines      = self.ignoreSentinelLinesVar.get()
+		cmp.makeWhitespaceVisible    = self.makeWhitespaceVisibleVar.get()
 		
 		# Print options.
 		cmp.printMatches            = self.printMatchesVar.get()
@@ -823,8 +930,8 @@ class leoComparePanel:
 		
 		return result
 	#@-body
-	#@-node:5:C=4:setIvarsFromWidgets
-	#@+node:6:C=5:Event handlers...
+	#@-node:5::setIvarsFromWidgets
+	#@+node:6::Event handlers...
 	#@+node:1::onBrowse...
 	#@+body
 	def onBrowse1 (self):
@@ -897,7 +1004,7 @@ class leoComparePanel:
 		b.configure(state=state)
 	#@-body
 	#@-node:4::onPrintMatchedLines
-	#@-node:6:C=5:Event handlers...
+	#@-node:6::Event handlers...
 	#@-others
 	
 	#@-body
