@@ -488,26 +488,32 @@ class tkinterGui(leoGui):
 		Use tk's wm_iconbitmap function if available (tk 8.3.4 or greater).
 		Otherwise, try to use the Python Imaging Library and the tkIcon package."""
 	
-		if self.bitmap:
+		if self.bitmap != None:
 			# We don't need PIL or tkicon: this is tk 8.3.4 or greater.
-			w.wm_iconbitmap(self.bitmap)
-		else:
-			#@		<< try to use the PIL and tkIcon packages to draw the icon >>
-			#@+node:<< try to use the PIL and tkIcon packages to draw the icon >>
-			#@+at 
-			#@nonl
-			# This code requires Fredrik Lundh's PIL and tkIcon packages:
-			# 
-			# Download PIL    from 
-			# http://www.pythonware.com/downloads/index.htm#pil
-			# Download tkIcon from http://www.effbot.org/downloads/#tkIcon
-			# 
-			# Many thanks to Jonathan M. Gilligan for suggesting this code.
-			#@-at
-			#@@c
-			
 			try:
+				w.wm_iconbitmap(self.bitmap)
+			except:
+				self.bitmap = None
+		
+		if self.bitmap == None:
+			try:
+				#@			<< try to use the PIL and tkIcon packages to draw the icon >>
+				#@+node:<< try to use the PIL and tkIcon packages to draw the icon >>
+				#@+at 
+				#@nonl
+				# This code requires Fredrik Lundh's PIL and tkIcon packages:
+				# 
+				# Download PIL    from 
+				# http://www.pythonware.com/downloads/index.htm#pil
+				# Download tkIcon from http://www.effbot.org/downloads/#tkIcon
+				# 
+				# Many thanks to Jonathan M. Gilligan for suggesting this 
+				# code.
+				#@-at
+				#@@c
+				
 				import Image,tkIcon,_tkicon
+				
 				# Wait until the window has been drawn once before attaching the icon in OnVisiblity.
 				def visibilityCallback(event,self=self,w=w):
 					try: self.leoIcon.attach(w.winfo_id())
@@ -522,12 +528,12 @@ class tkinterGui(leoGui):
 						self.leoIcon = self.createLeoIcon(icon_image)
 					else: # Assumes 64x64
 						self.leoIcon = tkIcon.Icon(icon_image)
+				#@nonl
+				#@-node:<< try to use the PIL and tkIcon packages to draw the icon >>
+				#@nl
 			except:
 				# traceback.print_exc()
 				self.leoIcon = None
-			#@nonl
-			#@-node:<< try to use the PIL and tkIcon packages to draw the icon >>
-			#@nl
 	#@nonl
 	#@-node:attachLeoIcon & createLeoIcon
 	#@+node:createLeoIcon
