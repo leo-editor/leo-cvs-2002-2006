@@ -235,23 +235,15 @@ class leoGui:
     #@-node:ekr.20031218072017.3731:app.gui file dialogs
     #@+node:ekr.20031218072017.3732:app.gui panels
     # New in 4.3: it is not an error to call these...
-    def createColorPanel(self,c):
-        """Create Color panel."""
         
     def createComparePanel(self,c):
         """Create Compare panel."""
         
     def createFindPanel(self,c):
         """Create a hidden Find panel."""
-    
-    def createFontPanel(self,c):
-        """Create a Font panel."""
         
     def createLeoFrame(self,title):
         """Create a new Leo frame."""
-        
-    def createPrefsPanel(self,c):
-        """Create a Prefs panel."""
     #@nonl
     #@-node:ekr.20031218072017.3732:app.gui panels
     #@+node:ekr.20031218072017.3733:app.gui utils

@@ -13,13 +13,10 @@
 #@+node:ekr.20041228050845:<< imports >>
 import leoGlobals as g
 import leoGui
-import leoTkinterColorPanels
 import leoTkinterComparePanel
 import leoTkinterDialog
 import leoTkinterFind
-import leoTkinterFontPanel
 import leoTkinterFrame
-import leoTkinterPrefs
 import tkFont
 import Tkinter as Tk
 import tkFileDialog
@@ -248,10 +245,6 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
     #@+node:ekr.20031218072017.4058:app.gui.Tkinter panels
-    def createColorPanel(self,c):
-        """Create a Tkinter color picker panel."""
-        return leoTkinterColorPanels.leoTkinterColorPanel(c)
-        
     def createComparePanel(self,c):
         """Create a Tkinter color picker panel."""
         return leoTkinterComparePanel.leoTkinterComparePanel(c)
@@ -261,19 +254,11 @@ class tkinterGui(leoGui.leoGui):
         panel = leoTkinterFind.leoTkinterFind(c)
         panel.top.withdraw()
         return panel
-    
-    def createFontPanel(self,c):
-        """Create a Tkinter font panel."""
-        return leoTkinterFontPanel.leoTkinterFontPanel(c)
         
     def createLeoFrame(self,title):
         """Create a new Leo frame."""
         gui = self
         return leoTkinterFrame.leoTkinterFrame(title,gui)
-    
-    def createPrefsPanel(self,c):
-        """Create a Tkinter find panel."""
-        return leoTkinterPrefs.leoTkinterPrefs(c)
     #@nonl
     #@-node:ekr.20031218072017.4058:app.gui.Tkinter panels
     #@+node:ekr.20031218072017.4059:app.gui.Tkinter.utils

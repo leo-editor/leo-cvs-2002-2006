@@ -648,8 +648,7 @@ class leoTkinterTree (leoFrame.leoTree):
     def getFont (self):
     
         return self.font
-            
-    # Called by leoFontPanel.
+    
     def setFont (self,font=None, fontName=None):
         
         # ESSENTIAL: retain a link to font.
