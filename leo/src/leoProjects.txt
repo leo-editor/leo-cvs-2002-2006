@@ -2,13 +2,16 @@
 #@+node:EKR.20040429143933:@thin leoProjects.txt
 #@+at 
 #@nonl
-# This part of the tree shows views of the outline related to specific projects or tasks.  I put such headlines in parentheses, 
-# and that is just my convention.
+# This part of the tree shows views of the outline related to specific 
+# projects or tasks.  I put such headlines in parentheses, and that is just my 
+# convention.
 # 
-# I create a new view by cloning headlines that relate to its task, and moving the cloned headlines under the task headline.  This 
-# greatly increases my focus.  Any changes made in a task view to clone headlines affect the other clones scattered throughout the 
-# outline.  In particular, all @file nodes containing changed clones become marked as dirty, so they will be written when the 
-# entire outline is saved.
+# I create a new view by cloning headlines that relate to its task, and moving 
+# the cloned headlines under the task headline.  This greatly increases my 
+# focus.  Any changes made in a task view to clone headlines affect the other 
+# clones scattered throughout the outline.  In particular, all @file nodes 
+# containing changed clones become marked as dirty, so they will be written 
+# when the entire outline is saved.
 #@-at
 #@@c
 
@@ -5589,8 +5592,8 @@ def moveToParent (self):
 Improved status_line.py in leoPlugins.leo
 #@nonl
 #@-node:ekr.20041002160323:What I did
-#@+node:ekr.20031218072017.3941:Birth & Death (tkFrame)
-#@+node:ekr.20031218072017.1801:f.__init__
+#@+node:ekr.20031218072017.3941: Birth & Death (tkFrame)
+#@+node:ekr.20031218072017.1801:__init__ (tkFrame)
 def __init__(self,title,gui):
 
     # Init the base class.
@@ -5599,6 +5602,7 @@ def __init__(self,title,gui):
     self.title = title
     leoTkinterFrame.instances += 1
     self.c = None # Set in finishCreate.
+    self.iconBar = None
 
     << set the leoTkinterFrame ivars >>
 #@+node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
@@ -5619,8 +5623,6 @@ self.statusText = None
 self.statusLabel = None 
 self.findPanel = None
 
-self.componentsDict = {}
-
 # Used by event handlers...
 self.redrawCount = 0
 self.draggedItem = None
@@ -5628,38 +5630,147 @@ self.controlKeyIsDown = False # For control-drags
 self.revertHeadline = None # Previous headline text for abortEditLabel.
 #@nonl
 #@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
-#@-node:ekr.20031218072017.1801:f.__init__
-#@+node:ekr.20031218072017.3942:f.__repr__
+#@-node:ekr.20031218072017.1801:__init__ (tkFrame)
+#@+node:ekr.20031218072017.3942:__repr__ (tkFrame)
 def __repr__ (self):
 
     return "<leoTkinterFrame: %s>" % self.title
-#@-node:ekr.20031218072017.3942:f.__repr__
-#@+node:ekr.20041221122440:f.component
+#@-node:ekr.20031218072017.3942:__repr__ (tkFrame)
+#@+node:ekr.20041221122440:f.component & components
 def component (self,name):
     
     return self.componentsDict.get(name)
+    
+def components (self):
+
+    return self.componentsDict.keys()
 #@nonl
-#@-node:ekr.20041221122440:f.component
-#@+node:ekr.20031218072017.3943:Creating the frame
+#@-node:ekr.20041221122440:f.component & components
+#@+node:ekr.20031218072017.2176:f.finishCreate
+def finishCreate (self,c):
+    
+    frame = self ; frame.c = c ; gui = g.app.gui
+    
+    # This must be done after creating the commander.
+    self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
+    << create the toplevel and outer frames >>
+    << create the icon bar >>
+    << create the splitters and their subframes >>
+    << create the status line >>
+    << create the first tree node >>
+    << create the menu bar >>
+    g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
+    g.app.windowList.append(frame)
+    c.initVersion()
+    c.signOnWithVersion()
+    self.body.createBindings(frame)
+#@nonl
+#@+node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
+frame.top = top = Tk.Toplevel()
+gui.attachLeoIcon(top)
+top.title(frame.title)
+top.minsize(30,10) # In grid units.
+
+frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
+frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
+
+frame.top.bind("<Activate>", frame.OnActivateLeoEvent) # Doesn't work on windows.
+frame.top.bind("<Deactivate>", frame.OnDeactivateLeoEvent) # Doesn't work on windows.
+
+frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
+frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
+
+# Create the outer frame, the 'hull' component.
+self.outerFrame = outerFrame = Tk.Frame(top)
+self.outerFrame.pack(expand=1,fill="both")
+self.componentClass(c,'hull',self.outerFrame)
+#@nonl
+#@-node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
+#@+node:ekr.20041224120552:<< create the icon bar >>
+self.iconBarComponentName = 'iconBar'
+iconBar = self.iconBarClass(c,outerFrame)
+
+self.iconBar = self.componentClass(c,
+    self.iconBarComponentName,outerFrame,
+    iconBar,iconBar.pack,iconBar.unpack)
+
+self.iconBar.show()
+#@nonl
+#@-node:ekr.20041224120552:<< create the icon bar >>
+#@+node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
+self.createLeoSplitters(outerFrame)
+
+# Create the canvas, tree, log and body.
+frame.canvas = self.createCanvas(self.split2Pane1)
+frame.tree   = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
+frame.log    = leoTkinterLog(frame,self.split2Pane2)
+frame.body   = leoTkinterBody(frame,self.split1Pane2)
+
+self.componentClass(c,'tree',self.split2Pane1, frame.tree, self.packTree, self.unpackTree)
+self.componentClass(c,'log', self.split2Pane2, frame.log,  self.packLog,  self.unpackLog)
+self.componentClass(c,'body',self.split1Pane2, frame.body, self.packBody, self.unpackBody)
+
+# Yes, this an "official" ivar: this is a kludge.
+frame.bodyCtrl = frame.body.bodyCtrl
+
+# Configure.
+frame.setTabWidth(c.tab_width)
+frame.tree.setColorFromConfig()
+self.reconfigurePanes()
+self.body.setFontFromConfig()
+self.body.setColorFromConfig()
+#@nonl
+#@-node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
+#@+node:ekr.20031218072017.2180:<< create the first tree node >>
+t = leoNodes.tnode()
+v = leoNodes.vnode(c,t)
+p = leoNodes.position(v,[])
+v.initHeadString("NewHeadline")
+
+p.moveToRoot()
+c.beginUpdate()
+c.selectVnode(p)
+c.redraw()
+c.frame.getFocus()
+c.editPosition(p)
+c.endUpdate(False)
+#@-node:ekr.20031218072017.2180:<< create the first tree node >>
+#@+node:ekr.20041225103412:<< create the status line >>
+self.statusLineComponentName = 'statusLine'
+statusLine = self.statusLineClass(c,outerFrame)
+self.statusLine = self.componentClass(c,
+    self.statusLineComponentName,
+    statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
+self.statusLine.show() # Show status line by default.
+#@nonl
+#@-node:ekr.20041225103412:<< create the status line >>
+#@+node:ekr.20041225103412.1:<< create the menu bar >>
+self.menu = leoTkinterMenu.leoTkinterMenu(frame)
+v = c.currentVnode()
+if not g.doHook("menu1",c=c,p=v,v=v):
+    frame.menu.createMenuBar(self)
+#@nonl
+#@-node:ekr.20041225103412.1:<< create the menu bar >>
+#@-node:ekr.20031218072017.2176:f.finishCreate
 #@+node:ekr.20031218072017.3944:f.createCanvas & helpers
-def createCanvas (self,parentFrame):
+def createCanvas (self,parentFrame,pack=True):
     
     c = self.c
     
     scrolls = c.config.getBool('outline_pane_scrolls_horizontally')
     scrolls = g.choose(scrolls,1,0)
     
-    if Pmw:
-        canvas = self.createPmwTreeCanvas(parentFrame,scrolls)
+    if use_Pmw and Pmw:
+        canvas = self.createPmwTreeCanvas(parentFrame,scrolls,pack)
     else:
-        canvas = self.createTkTreeCanvas(parentFrame,scrolls)
+        canvas = self.createTkTreeCanvas(parentFrame,scrolls,pack)
         
     self.canvas = canvas
 
     return canvas
 #@nonl
 #@+node:ekr.20041221071131:createPmwTreeCanvas
-def createPmwTreeCanvas (self,parentFrame,hScrollMode):
+def createPmwTreeCanvas (self,parentFrame,hScrollMode,pack):
     
     hscrollmode = g.choose(hScrollMode,'dynamic','none')
     
@@ -5668,7 +5779,8 @@ def createPmwTreeCanvas (self,parentFrame,hScrollMode):
         hscrollmode=hscrollmode,
         vscrollmode='dynamic')
 
-    scrolledCanvas.pack(side='top',expand=1,fill="both")
+    if pack:
+        scrolledCanvas.pack(side='top',expand=1,fill="both")
 
     self.treeBar = scrolledCanvas.component('vertscrollbar')
     
@@ -5679,7 +5791,7 @@ def createPmwTreeCanvas (self,parentFrame,hScrollMode):
 #@nonl
 #@-node:ekr.20041221071131:createPmwTreeCanvas
 #@+node:ekr.20041221071131.1:createTkTreeCanvas
-def createTkTreeCanvas (self,parentFrame,scrolls):
+def createTkTreeCanvas (self,parentFrame,scrolls,pack):
     
     frame = self ; c = frame.c
     
@@ -5703,7 +5815,8 @@ def createTkTreeCanvas (self,parentFrame,scrolls):
         treeXBar['command'] = canvas.xview 
         treeXBar.pack(side="bottom", fill="x")
     
-    canvas.pack(expand=1,fill="both")
+    if pack:
+        canvas.pack(expand=1,fill="both")
 
     canvas.bind("<Button-1>", frame.OnActivateTree)
 
@@ -5760,11 +5873,100 @@ else: # Use plain click.
 #@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
 #@-node:ekr.20041221071131.1:createTkTreeCanvas
 #@-node:ekr.20031218072017.3944:f.createCanvas & helpers
+#@+node:ekr.20041221123325:createLeoSplitters & helpers
+def createLeoSplitters (self,parentFrame):
+    
+    c = self.c
+    
+    if use_Pmw and Pmw:
+        << create Pmw splitters and their components >>
+    else:
+        # Splitter 1 is the main splitter containing splitter2 and the body pane.
+        f1,bar1,split1Pane1,split1Pane2 = self.createLeoTkSplitter(
+            parentFrame,self.splitVerticalFlag,'splitter1')
+
+        self.f1,self.bar1 = f1,bar1
+        self.split1Pane1,self.split1Pane2 = split1Pane1,split1Pane2
+
+        # Splitter 2 is the secondary splitter containing the tree and log panes.
+        f2,bar2,split2Pane1,split2Pane2 = self.createLeoTkSplitter(
+            split1Pane1,not self.splitVerticalFlag,'splitter2')
+
+        self.f2,self.bar2 = f2,bar2
+        self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
+#@nonl
+#@+node:ekr.20041223130032:<< create Pmw splitters and their components >>
+# Create splitter1 and its components.
+splitter1 = self.createLeoPmwSplitter(parentFrame,self.splitVerticalFlag,'splitter1')
+self.split1Pane1 = splitter2Frame = splitter1.add('splitter2Frame',min=50,size=300)
+self.split1Pane2 = splitter1.add('body',min=50,size=300)
+
+# Create splitter2 and its components.
+splitter2 = self.createLeoPmwSplitter(splitter2Frame,not self.splitVerticalFlag,'splitter2')
+self.split2Pane1 = splitter2.add('outline',min=50,size=300)
+self.split2Pane2 = splitter2.add('log',min=50,size=50)
+
+# Set the colors of the separator and handle after adding the dynamic frames.
+for splitter in (splitter1,splitter2):
+    bar = splitter.component('separator-1')
+    bar.configure(background='LightSteelBlue2')
+    handle = splitter.component('handle-1')
+    handle.configure(background='SteelBlue2')
+#@nonl
+#@-node:ekr.20041223130032:<< create Pmw splitters and their components >>
+#@+node:ekr.20041221195402:Pmw...
+#@+node:ekr.20041221073427:createLeoPmwSplitter
+def createLeoPmwSplitter (self,parent,verticalFlag,name):
+    
+    c = self.c
+    
+    orient = g.choose(verticalFlag,'vertical','horizontal')
+    command = g.choose(name=='splitter1',
+        self.onPmwResizeSplitter1,self.onPmwResizeSplitter2)
+
+    panedFrame = Pmw.PanedWidget(parent,
+        orient=orient,
+        separatorthickness = 6, # default is 2
+        handlesize = 8,         # default is 8
+        command = command)
+
+    panedFrame.pack(expand=1,fill='both')
+    
+    self.componentClass(c,name,panedFrame,panedFrame)
+
+    return panedFrame
+#@nonl
+#@-node:ekr.20041221073427:createLeoPmwSplitter
+#@+node:ekr.20031218072017.3946:resizePanesToRatio
+def resizePanesToRatio(self,ratio,ratio2):
+    
+    if use_Pmw and Pmw:
+        # g.trace(ratio,ratio2)
+        self.ratio = ratio
+        self.secondary_ratio = ratio2
+        splitter1 = self.component('splitter1').getObject()
+        splitter2 = self.component('splitter2').getObject()
+
+        if self.splitVerticalFlag:
+            # Use ratio to set splitter2 height.
+            size = ratio * float(splitter1.winfo_height())
+            splitter1.configurepane('splitter2Frame',size=int(size))
+            # Use ratio2 to set outline width.
+            size = ratio2 * float(splitter2.winfo_width())
+            splitter2.configurepane('outline',size=int(size))
+        else:
+            # Use ratio to set splitter2 width.
+            size = ratio * float(splitter1.winfo_width())
+            splitter1.configurepane('splitter2Frame',size=int(size))
+            # Use ratio2 to set outline height.
+            size = ratio2 * float(splitter2.winfo_height())
+            splitter2.configurepane('outline',size=int(size))
+#@nonl
+#@-node:ekr.20031218072017.3946:resizePanesToRatio
 #@+node:ekr.20041221075743:onPmwResizeSplitter1/2
 @ These methods cause problems because Pmw.PanedWidget's calls these methods way too often.
 
 We don't need to remember changes to pane sizes, for several reasons:
-    
 1. The initial secondary ratio is always set by leoFrame.initialRatios().
     - Remembering this ratio implies a change to the file format and is not worth the cost.
     - The user can set these initial ratios with user options.
@@ -5790,200 +5992,47 @@ def onPmwResizeSplitter2 (self,sizes):
             # g.trace(self.secondary_ratio)
 #@nonl
 #@-node:ekr.20041221075743:onPmwResizeSplitter1/2
-#@+node:ekr.20031218072017.2176:f.finishCreate
-def finishCreate (self,c):
-    
-    frame = self ; frame.c = c ; gui = g.app.gui
-    
-    # This must be done after creating the commander.
-    self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
-    << create the toplevel frame >>
-    << create all the subframes >>
-    << create the first tree node >>
-    self.menu = leoTkinterMenu.leoTkinterMenu(frame)
-    v = c.currentVnode()
-    if not g.doHook("menu1",c=c,p=v,v=v):
-        frame.menu.createMenuBar(self)
-    g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
-    g.app.windowList.append(frame)
-    c.initVersion()
-    c.signOnWithVersion()
-    self.body.createBindings(frame)
-#@nonl
-#@+node:ekr.20031218072017.2177:<< create the toplevel frame >>
-frame.top = top = Tk.Toplevel()
-gui.attachLeoIcon(top)
-top.title(frame.title)
-top.minsize(30,10) # In grid units.
-
-frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
-frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
-
-frame.top.bind("<Activate>", frame.OnActivateLeoEvent) # Doesn't work on windows.
-frame.top.bind("<Deactivate>", frame.OnDeactivateLeoEvent) # Doesn't work on windows.
-
-frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
-frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
-#@nonl
-#@-node:ekr.20031218072017.2177:<< create the toplevel frame >>
-#@+node:ekr.20031218072017.2178:<< create all the subframes >>
-# Create the outer frame.
-self.outerFrame = outerFrame = Tk.Frame(top)
-self.outerFrame.pack(expand=1,fill="both")
-
-self.createIconBar()
-self.createLeoSplitters(outerFrame)
-
-# Create the canvas, tree, log and body.
-frame.canvas   = self.createCanvas(self.split2Pane1)
-frame.tree     = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
-frame.log      = leoTkinterLog(frame,self.split2Pane2)
-frame.body     = leoTkinterBody(frame,self.split1Pane2)
-
-# Yes, this an "official" ivar: this is a kludge.
-frame.bodyCtrl = frame.body.bodyCtrl
-
-# Configure.
-frame.setTabWidth(c.tab_width)
-frame.tree.setColorFromConfig()
-self.reconfigurePanes()
-self.body.setFontFromConfig()
-self.body.setColorFromConfig()
-#@nonl
-#@-node:ekr.20031218072017.2178:<< create all the subframes >>
-#@+node:ekr.20031218072017.2180:<< create the first tree node >>
-t = leoNodes.tnode()
-v = leoNodes.vnode(c,t)
-p = leoNodes.position(v,[])
-v.initHeadString("NewHeadline")
-
-p.moveToRoot()
-c.beginUpdate()
-c.selectVnode(p)
-c.redraw()
-c.frame.getFocus()
-c.editPosition(p)
-c.endUpdate(False)
-#@-node:ekr.20031218072017.2180:<< create the first tree node >>
-#@-node:ekr.20031218072017.2176:f.finishCreate
-#@+node:ekr.20031218072017.3945:Creating the splitter
+#@-node:ekr.20041221195402:Pmw...
+#@+node:ekr.20041221185246:Tk...
 @ The key invariants used throughout this code:
 
 1. self.splitVerticalFlag tells the alignment of the main splitter and
 2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
 
 Only the general-purpose divideAnySplitter routine doesn't know about these invariants.  So most of this code is specialized for Leo's window.  OTOH, creating a single splitter window would be much easier than this code.
-#@+node:ekr.20041221123325:createLeoSplitters & helpers
-def createLeoSplitters (self,parentFrame):
-    
-    if Pmw:
-        # Create splitter1 and its components.
-        splitter1 = self.createLeoPmwSplitter(parentFrame,self.splitVerticalFlag,'splitter1')
-        self.componentsDict['splitter1'] = splitter1
-
-        self.split1Pane1 = splitter2Frame = splitter1.add('splitter2Frame',min=50,size=300)
-
-        self.split1Pane2 = splitter1.add('body',min=50,size=300)
-        self.componentsDict['body'] = self.split1Pane2
-        
-        # Create splitter2 and its components.
-        splitter2 = self.createLeoPmwSplitter(splitter2Frame,not self.splitVerticalFlag,'splitter2')
-        self.componentsDict['splitter2'] = splitter2
-    
-        self.split2Pane1 = splitter2.add('outline',min=50,size=300)
-        self.componentsDict['outline'] = self.split2Pane1
-
-        self.split2Pane2 = splitter2.add('log',min=50,size=50)
-        self.componentsDict['log'] = self.split2Pane2
-
-        # Add convenience items.
-        self.componentsDict['bar1'] = self.bar1 = splitter1.component('separator-1')
-        self.componentsDict['bar2'] = self.bar2 = splitter2.component('separator-1')
-        
-        # Set the colors of the separator and handle.
-        # This must be done after the dynamic frames have been added.
-        for splitter in (splitter1,splitter2):
-            bar = splitter.component('separator-1')
-            bar.configure(background='LightSteelBlue2')
-            handle = splitter.component('handle-1')
-            handle.configure(background='SteelBlue2')
-    else:
-        # Splitter 1 is the main splitter containing splitter2 and the body pane.
-        f1,bar1,split1Pane1,split1Pane2 = self.createLeoTkSplitter(parentFrame, self.splitVerticalFlag)
-        self.f1,self.bar1 = f1,bar1
-        self.split1Pane1,self.split1Pane2 = split1Pane1,split1Pane2
-        
-        # Splitter 2 is the secondary splitter containing the tree and log panes.
-        f2,bar2,split2Pane1,split2Pane2 = self.createLeoTkSplitter(split1Pane1, not self.splitVerticalFlag)
-        self.f2,self.bar2 = f2,bar2
-        self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
 #@nonl
-#@+node:ekr.20041221073427:createLeoPmwSplitter
-def createLeoPmwSplitter (self,parent,verticalFlag,name):
-    
-    orient = g.choose(verticalFlag,'vertical','horizontal')
-    command = g.choose(name=='splitter1',
-        self.onPmwResizeSplitter1,self.onPmwResizeSplitter2)
-
-    panedFrame = Pmw.PanedWidget(parent,
-        orient=orient,
-        separatorthickness = 6, # default is 2
-        handlesize = 8, # default is 8
-        command = command)
-
-    panedFrame.pack(expand = 1, fill='both')
-
-    return panedFrame
-#@nonl
-#@-node:ekr.20041221073427:createLeoPmwSplitter
 #@+node:ekr.20041221073427.1:createLeoTkSplitter
-def createLeoTkSplitter (self,parent,verticalFlag):
+def createLeoTkSplitter (self,parent,verticalFlag,componentName):
+    
+    c = self.c
 
     # Create the frames.
     f = Tk.Frame(parent,bd=0,relief="flat")
     f.pack(expand=1,fill="both",pady=1)
     
-    pane1 = Tk.Frame(f)
-    pane2 = Tk.Frame(f)
-    bar =   Tk.Frame(f,bd=2,relief="raised",bg="LightSteelBlue2")
+    f1 = Tk.Frame(f)
+    f2 = Tk.Frame(f)
+    bar = Tk.Frame(f,bd=2,relief="raised",bg="LightSteelBlue2")
 
     # Configure and place the frames.
     self.configureBar(bar,verticalFlag)
     self.bindBar(bar,verticalFlag)
-    self.placeSplitter(bar,pane1,pane2,verticalFlag)
-
-    return f, bar, pane1, pane2
-#@-node:ekr.20041221073427.1:createLeoTkSplitter
-#@-node:ekr.20041221123325:createLeoSplitters & helpers
-#@+node:ekr.20041221195402:Pmw only...
-#@+node:ekr.20031218072017.3946:resizePanesToRatio
-def resizePanesToRatio(self,ratio,ratio2):
+    self.placeSplitter(bar,f1,f2,verticalFlag)
     
-    if Pmw:
-        # g.trace(ratio,ratio2)
-        self.ratio = ratio
-        self.secondary_ratio = ratio2
-        splitter1 = self.componentsDict.get('splitter1')
-        splitter2 = self.componentsDict.get('splitter2')
+    # Define the splitter, bar and outer frame components.
+    # It would be useless to define placed components here.
+    # N.B. All frames managed by the placer must descend from splitterFrame1 or splitterFrame2
+    self.componentClass(self.c,componentName,f)
+    if componentName == 'splitter1':
+        self.componentClass(c,'splitter1Frame',f)
+        self.componentClass(c,'splitBar1',bar)
+    else:
+        self.componentClass(c,'splitter2Frame',f)
+        self.componentClass(c,'splitBar2',bar)
 
-        if self.splitVerticalFlag:
-            # Use ratio to set splitter2 height.
-            size = ratio * float(splitter1.winfo_height())
-            splitter1.configurepane('splitter2Frame',size=int(size))
-            # Use ratio2 to set outline width.
-            size = ratio2 * float(splitter2.winfo_width())
-            splitter2.configurepane('outline',size=int(size))
-        else:
-            # Use ratio to set splitter2 width.
-            size = ratio * float(splitter1.winfo_width())
-            splitter1.configurepane('splitter2Frame',size=int(size))
-            # Use ratio2 to set outline height.
-            size = ratio2 * float(splitter2.winfo_height())
-            splitter2.configurepane('outline',size=int(size))
+    return f, bar, f1, f2
 #@nonl
-#@-node:ekr.20031218072017.3946:resizePanesToRatio
-#@-node:ekr.20041221195402:Pmw only...
-#@+node:ekr.20041221185246:Tk only...
+#@-node:ekr.20041221073427.1:createLeoTkSplitter
 #@+node:ekr.20031218072017.3947:bindBar
 def bindBar (self, bar, verticalFlag):
 
@@ -5992,6 +6041,7 @@ def bindBar (self, bar, verticalFlag):
 
     else:
         bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
+#@nonl
 #@-node:ekr.20031218072017.3947:bindBar
 #@+node:ekr.20031218072017.3949:divideAnySplitter
 # This is the general-purpose placer for splitters.
@@ -6072,7 +6122,7 @@ def onDragSplitterBar (self, event, verticalFlag):
 #@+node:ekr.20031218072017.3952:placeSplitter
 def placeSplitter (self,bar,pane1,pane2,verticalFlag):
 
-    if Pmw:
+    if use_Pmw and Pmw:
         return
 
     if verticalFlag:
@@ -6089,256 +6139,34 @@ def placeSplitter (self,bar,pane1,pane2,verticalFlag):
         bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 #@nonl
 #@-node:ekr.20031218072017.3952:placeSplitter
-#@-node:ekr.20041221185246:Tk only...
-#@-node:ekr.20031218072017.3945:Creating the splitter
-#@+node:ekr.20031218072017.3953:Creating the icon area
-#@+node:ekr.20031218072017.3954:createIconBar
-def createIconBar (self):
+#@+node:ekr.20031218072017.998:Scrolling callbacks (frame)
+def setCallback (self,*args,**keys):
     
-    """Create an empty icon bar in the packer's present position"""
+    """Callback to adjust the scrollbar.
+    
+    Args is a tuple of two floats describing the fraction of the visible area."""
 
-    if not self.iconFrame:
-        self.iconFrame = Tk.Frame(self.outerFrame,height="5m",bd=2,relief="groove")
-        self.iconFrame.pack(fill="x",pady=2)
-#@nonl
-#@-node:ekr.20031218072017.3954:createIconBar
-#@+node:ekr.20031218072017.3955:hideIconBar
-def hideIconBar (self):
-    
-    """Hide the icon bar by unpacking it.
-    
-    A later call to showIconBar will repack it in a new location."""
-    
-    if self.iconFrame:
-        self.iconFrame.pack_forget()
-#@-node:ekr.20031218072017.3955:hideIconBar
-#@+node:ekr.20031218072017.3956:clearIconBar
-def clearIconBar(self):
-    
-    """Destroy all the widgets in the icon bar"""
-    
-    f = self.iconFrame
-    if not f: return
-    
-    for slave in f.pack_slaves():
-        slave.destroy()
+    # g.trace(self.tree.redrawCount,args)
 
-    f.configure(height="5m") # The default height.
-    g.app.iconWidgetCount = 0
-    g.app.iconImageRefs = []
-#@-node:ekr.20031218072017.3956:clearIconBar
-#@+node:ekr.20031218072017.3957:showIconBar
-def showIconBar(self):
-    
-    """Show the icon bar by repacking it"""
+    apply(self.treeBar.set,args,keys)
 
-    self.iconFrame.pack(fill="x",pady=2)
-#@nonl
-#@-node:ekr.20031218072017.3957:showIconBar
-#@+node:ekr.20031218072017.3958:addIconButton
-def addIconButton(self,text=None,imagefile=None,image=None,command=None,bg=None):
-    
-    """Add a button containing text or a picture to the icon bar.
-    
-    Pictures take precedence over text"""
-    
-    f = self.iconFrame
-    if not imagefile and not image and not text: return
-
-    # First define n.	
-    try:
-        g.app.iconWidgetCount += 1
-        n = g.app.iconWidgetCount
-    except:
-        n = g.app.iconWidgetCount = 1
-
-    if not command:
-        def command(n=n):
-            print "command for widget %s" % (n)
-
-    if imagefile or image:
-        << create a picture >>
-    elif text:
-        w = min(6,len(text))
-        b = Tk.Button(f,text=text,width=w,relief="groove",bd=2,command=command)
-        b.pack(side="left", fill="y")
-        return b
+    if self.tree.allocateOnlyVisibleNodes:
+        self.tree.setVisibleArea(args)
         
-    return None
+def yviewCallback (self,*args,**keys):
+    
+    """Tell the canvas to scroll"""
+    
+    # g.trace(vyiewCallback",args,keys)
+
+    if self.tree.allocateOnlyVisibleNodes:
+        self.tree.allocateNodesBeforeScrolling(args)
+
+    apply(self.canvas.yview,args,keys)
 #@nonl
-#@+node:ekr.20031218072017.3959:<< create a picture >>
-try:
-    if imagefile:
-        # Create the image.  Throws an exception if file not found
-        imagefile = g.os_path_join(g.app.loadDir,imagefile)
-        imagefile = g.os_path_normpath(imagefile)
-        image = Tk.PhotoImage(master=g.app.root,file=imagefile)
-        
-        # Must keep a reference to the image!
-        try:
-            refs = g.app.iconImageRefs
-        except:
-            refs = g.app.iconImageRefs = []
-    
-        refs.append((imagefile,image),)
-    
-    if not bg:
-        bg = f.cget("bg")
-
-    b = Tk.Button(f,image=image,relief="flat",bd=0,command=command,bg=bg)
-    b.pack(side="left",fill="y")
-    return b
-    
-except:
-    g.es_exception()
-    return None
-#@nonl
-#@-node:ekr.20031218072017.3959:<< create a picture >>
-#@-node:ekr.20031218072017.3958:addIconButton
-#@-node:ekr.20031218072017.3953:Creating the icon area
-#@+node:ekr.20031218072017.3960:Creating the status area
-
-
-#@+node:ekr.20031218072017.3961:createStatusLine
-def createStatusLine (self):
-    
-    if self.statusFrame and self.statusLabel:
-        return
-    
-    self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
-    statusFrame.pack(fill="x",pady=1)
-    
-    text = "line 0, col 0"
-    width = len(text) + 4
-    self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
-    self.statusLabel.pack(side="left",padx=1)
-    
-    bg = statusFrame.cget("background")
-    self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
-    self.statusText.pack(side="left",expand=1,fill="x")
-
-    # Register an idle-time handler to update the row and column indicators.
-    self.statusFrame.after_idle(self.updateStatusRowCol)
-#@nonl
-#@-node:ekr.20031218072017.3961:createStatusLine
-#@+node:ekr.20031218072017.3962:clearStatusLine
-def clearStatusLine (self):
-    
-    t = self.statusText
-    if not t: return
-    
-    t.configure(state="normal")
-    t.delete("1.0","end")
-    t.configure(state="disabled")
-#@nonl
-#@-node:ekr.20031218072017.3962:clearStatusLine
-#@+node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-def disableStatusLine (self,background=None):
-    
-    t = self.statusText
-    if t:
-        if not background:
-            background = self.statusFrame.cget("background")
-        t.configure(state="disabled",background=background)
-    self.statusIsEnabled = False
-    
-def enableStatusLine (self,background="white"):
-    
-    t = self.statusText
-    if t:
-        t.configure(state="normal",background=background)
-        t.focus_set()
-    self.statusIsEnabled = True
-        
-def statusLineIsEnabled(self):
-    return self.statusIsEnabled
-#@nonl
-#@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-#@+node:ekr.20041026132435:getStatusLine
-def getStatusLine (self):
-    
-    t = self.statusText
-    if t:
-        return t.get("1.0","end")
-    else:
-        return ""
-#@-node:ekr.20041026132435:getStatusLine
-#@+node:ekr.20031218072017.3963:putStatusLine
-def putStatusLine (self,s,color=None):
-    
-    t = self.statusText ; tags = self.statusColorTags
-    if not t: return
-
-    t.configure(state="normal")
-    
-    if "black" not in self.log.colorTags:
-        tags.append("black")
-        
-    if color and color not in tags:
-        tags.append(color)
-        t.tag_config(color,foreground=color)
-
-    if color:
-        t.insert("end",s)
-        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-        t.tag_config("black",foreground="black")
-        t.tag_add("black","end")
-    else:
-        t.insert("end",s)
-    
-    t.configure(state="disabled")
-#@nonl
-#@-node:ekr.20031218072017.3963:putStatusLine
-#@+node:EKR.20040424154804:setFocusStatusLine
-def setFocusStatusLine (self):
-    
-    t = self.statusText
-    if t:
-        t.focus_set()
-#@nonl
-#@-node:EKR.20040424154804:setFocusStatusLine
-#@+node:ekr.20031218072017.1733:updateStatusRowCol
-def updateStatusRowCol (self):
-    
-    c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
-    gui = g.app.gui
-    if not lab: return
-
-    # New for Python 2.3: may be called during shutdown.
-    if g.app.killed:
-        return
-
-    if 0: # New code
-        index = c.frame.body.getInsertionPoint()
-        row,col = c.frame.body.indexToRowColumn(index)
-        index1 = c.frame.body.rowColumnToIndex(row,0)
-    else:
-        index = body.index("insert")
-        row,col = gui.getindex(body,index)
-    
-    if col > 0:
-        if 0: # new code
-            s = c.frame.body.getRange(index1,index2)
-        else:
-            s = body.get("%d.0" % (row),index)
-        s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
-        col = g.computeWidth (s,self.tab_width)
-
-    if row != self.lastStatusRow or col != self.lastStatusCol:
-        s = "line %d, col %d " % (row,col)
-        lab.configure(text=s)
-        self.lastStatusRow = row
-        self.lastStatusCol = col
-
-    if 0: # The caller is now responsible for rescheduling.
-        self.statusFrame.after(500,self.updateStatusRowCol)
-        
-    if c.frame.statusLineIsEnabled():
-        c.frame.setFocusStatusLine()
-#@nonl
-#@-node:ekr.20031218072017.1733:updateStatusRowCol
-#@-node:ekr.20031218072017.3960:Creating the status area
-#@-node:ekr.20031218072017.3943:Creating the frame
+#@-node:ekr.20031218072017.998:Scrolling callbacks (frame)
+#@-node:ekr.20041221185246:Tk...
+#@-node:ekr.20041221123325:createLeoSplitters & helpers
 #@+node:ekr.20031218072017.3964:Destroying the frame
 #@+node:ekr.20031218072017.1975:destroyAllObjects
 def destroyAllObjects (self):
@@ -6411,149 +6239,7 @@ def destroySelf (self):
 #@nonl
 #@-node:ekr.20031218072017.1974:destroySelf
 #@-node:ekr.20031218072017.3964:Destroying the frame
-#@-node:ekr.20031218072017.3941:Birth & Death (tkFrame)
-#@+node:ekr.20031218072017.3960:Creating the status area
-
-
-#@+node:ekr.20031218072017.3961:createStatusLine
-def createStatusLine (self):
-    
-    if self.statusFrame and self.statusLabel:
-        return
-    
-    self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
-    statusFrame.pack(fill="x",pady=1)
-    
-    text = "line 0, col 0"
-    width = len(text) + 4
-    self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
-    self.statusLabel.pack(side="left",padx=1)
-    
-    bg = statusFrame.cget("background")
-    self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
-    self.statusText.pack(side="left",expand=1,fill="x")
-
-    # Register an idle-time handler to update the row and column indicators.
-    self.statusFrame.after_idle(self.updateStatusRowCol)
-#@nonl
-#@-node:ekr.20031218072017.3961:createStatusLine
-#@+node:ekr.20031218072017.3962:clearStatusLine
-def clearStatusLine (self):
-    
-    t = self.statusText
-    if not t: return
-    
-    t.configure(state="normal")
-    t.delete("1.0","end")
-    t.configure(state="disabled")
-#@nonl
-#@-node:ekr.20031218072017.3962:clearStatusLine
-#@+node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-def disableStatusLine (self,background=None):
-    
-    t = self.statusText
-    if t:
-        if not background:
-            background = self.statusFrame.cget("background")
-        t.configure(state="disabled",background=background)
-    self.statusIsEnabled = False
-    
-def enableStatusLine (self,background="white"):
-    
-    t = self.statusText
-    if t:
-        t.configure(state="normal",background=background)
-        t.focus_set()
-    self.statusIsEnabled = True
-        
-def statusLineIsEnabled(self):
-    return self.statusIsEnabled
-#@nonl
-#@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-#@+node:ekr.20041026132435:getStatusLine
-def getStatusLine (self):
-    
-    t = self.statusText
-    if t:
-        return t.get("1.0","end")
-    else:
-        return ""
-#@-node:ekr.20041026132435:getStatusLine
-#@+node:ekr.20031218072017.3963:putStatusLine
-def putStatusLine (self,s,color=None):
-    
-    t = self.statusText ; tags = self.statusColorTags
-    if not t: return
-
-    t.configure(state="normal")
-    
-    if "black" not in self.log.colorTags:
-        tags.append("black")
-        
-    if color and color not in tags:
-        tags.append(color)
-        t.tag_config(color,foreground=color)
-
-    if color:
-        t.insert("end",s)
-        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-        t.tag_config("black",foreground="black")
-        t.tag_add("black","end")
-    else:
-        t.insert("end",s)
-    
-    t.configure(state="disabled")
-#@nonl
-#@-node:ekr.20031218072017.3963:putStatusLine
-#@+node:EKR.20040424154804:setFocusStatusLine
-def setFocusStatusLine (self):
-    
-    t = self.statusText
-    if t:
-        t.focus_set()
-#@nonl
-#@-node:EKR.20040424154804:setFocusStatusLine
-#@+node:ekr.20031218072017.1733:updateStatusRowCol
-def updateStatusRowCol (self):
-    
-    c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
-    gui = g.app.gui
-    if not lab: return
-
-    # New for Python 2.3: may be called during shutdown.
-    if g.app.killed:
-        return
-
-    if 0: # New code
-        index = c.frame.body.getInsertionPoint()
-        row,col = c.frame.body.indexToRowColumn(index)
-        index1 = c.frame.body.rowColumnToIndex(row,0)
-    else:
-        index = body.index("insert")
-        row,col = gui.getindex(body,index)
-    
-    if col > 0:
-        if 0: # new code
-            s = c.frame.body.getRange(index1,index2)
-        else:
-            s = body.get("%d.0" % (row),index)
-        s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
-        col = g.computeWidth (s,self.tab_width)
-
-    if row != self.lastStatusRow or col != self.lastStatusCol:
-        s = "line %d, col %d " % (row,col)
-        lab.configure(text=s)
-        self.lastStatusRow = row
-        self.lastStatusCol = col
-
-    if 0: # The caller is now responsible for rescheduling.
-        self.statusFrame.after(500,self.updateStatusRowCol)
-        
-    if c.frame.statusLineIsEnabled():
-        c.frame.setFocusStatusLine()
-#@nonl
-#@-node:ekr.20031218072017.1733:updateStatusRowCol
-#@-node:ekr.20031218072017.3960:Creating the status area
+#@-node:ekr.20031218072017.3941: Birth & Death (tkFrame)
 #@-node:EKR.20040424151321:(Improved status line)
 #@+node:ekr.20041004095703:(Added support for readFromString to fileLikeObject)
 #@+node:ekr.20040331083824.1:g.fileLikeObject
@@ -14114,150 +13800,6 @@ for text,value in right_data:
 #@nonl
 #@-node:ekr.20031218072017.369:<< Create the Target Language frame >> frame
 #@-node:ekr.20041024090552:(Bernhard Mulder: Added support for Ada)
-#@+node:ekr.20041026103240:(Created input modes in status area)
-#@+node:ekr.20031218072017.3960:Creating the status area
-
-
-#@+node:ekr.20031218072017.3961:createStatusLine
-def createStatusLine (self):
-    
-    if self.statusFrame and self.statusLabel:
-        return
-    
-    self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
-    statusFrame.pack(fill="x",pady=1)
-    
-    text = "line 0, col 0"
-    width = len(text) + 4
-    self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
-    self.statusLabel.pack(side="left",padx=1)
-    
-    bg = statusFrame.cget("background")
-    self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
-    self.statusText.pack(side="left",expand=1,fill="x")
-
-    # Register an idle-time handler to update the row and column indicators.
-    self.statusFrame.after_idle(self.updateStatusRowCol)
-#@nonl
-#@-node:ekr.20031218072017.3961:createStatusLine
-#@+node:ekr.20031218072017.3962:clearStatusLine
-def clearStatusLine (self):
-    
-    t = self.statusText
-    if not t: return
-    
-    t.configure(state="normal")
-    t.delete("1.0","end")
-    t.configure(state="disabled")
-#@nonl
-#@-node:ekr.20031218072017.3962:clearStatusLine
-#@+node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-def disableStatusLine (self,background=None):
-    
-    t = self.statusText
-    if t:
-        if not background:
-            background = self.statusFrame.cget("background")
-        t.configure(state="disabled",background=background)
-    self.statusIsEnabled = False
-    
-def enableStatusLine (self,background="white"):
-    
-    t = self.statusText
-    if t:
-        t.configure(state="normal",background=background)
-        t.focus_set()
-    self.statusIsEnabled = True
-        
-def statusLineIsEnabled(self):
-    return self.statusIsEnabled
-#@nonl
-#@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-#@+node:ekr.20041026132435:getStatusLine
-def getStatusLine (self):
-    
-    t = self.statusText
-    if t:
-        return t.get("1.0","end")
-    else:
-        return ""
-#@-node:ekr.20041026132435:getStatusLine
-#@+node:ekr.20031218072017.3963:putStatusLine
-def putStatusLine (self,s,color=None):
-    
-    t = self.statusText ; tags = self.statusColorTags
-    if not t: return
-
-    t.configure(state="normal")
-    
-    if "black" not in self.log.colorTags:
-        tags.append("black")
-        
-    if color and color not in tags:
-        tags.append(color)
-        t.tag_config(color,foreground=color)
-
-    if color:
-        t.insert("end",s)
-        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-        t.tag_config("black",foreground="black")
-        t.tag_add("black","end")
-    else:
-        t.insert("end",s)
-    
-    t.configure(state="disabled")
-#@nonl
-#@-node:ekr.20031218072017.3963:putStatusLine
-#@+node:EKR.20040424154804:setFocusStatusLine
-def setFocusStatusLine (self):
-    
-    t = self.statusText
-    if t:
-        t.focus_set()
-#@nonl
-#@-node:EKR.20040424154804:setFocusStatusLine
-#@+node:ekr.20031218072017.1733:updateStatusRowCol
-def updateStatusRowCol (self):
-    
-    c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
-    gui = g.app.gui
-    if not lab: return
-
-    # New for Python 2.3: may be called during shutdown.
-    if g.app.killed:
-        return
-
-    if 0: # New code
-        index = c.frame.body.getInsertionPoint()
-        row,col = c.frame.body.indexToRowColumn(index)
-        index1 = c.frame.body.rowColumnToIndex(row,0)
-    else:
-        index = body.index("insert")
-        row,col = gui.getindex(body,index)
-    
-    if col > 0:
-        if 0: # new code
-            s = c.frame.body.getRange(index1,index2)
-        else:
-            s = body.get("%d.0" % (row),index)
-        s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
-        col = g.computeWidth (s,self.tab_width)
-
-    if row != self.lastStatusRow or col != self.lastStatusCol:
-        s = "line %d, col %d " % (row,col)
-        lab.configure(text=s)
-        self.lastStatusRow = row
-        self.lastStatusCol = col
-
-    if 0: # The caller is now responsible for rescheduling.
-        self.statusFrame.after(500,self.updateStatusRowCol)
-        
-    if c.frame.statusLineIsEnabled():
-        c.frame.setFocusStatusLine()
-#@nonl
-#@-node:ekr.20031218072017.1733:updateStatusRowCol
-#@-node:ekr.20031218072017.3960:Creating the status area
-#@-node:ekr.20041026103240:(Created input modes in status area)
 #@+node:ekr.20041025145856:(Added keyboard shortcuts to find panel)
 #@+node:ekr.20041025145856.1:What I did
 @killcolor
