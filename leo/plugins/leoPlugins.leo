@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1432" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-	<global_window_position top="89" left="392" height="750" width="859"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1438" clone_windows="0"/>
+<globals body_outline_ratio="0.45200000000000001">
+	<global_window_position top="73" left="343" height="750" width="859"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1225,7 +1225,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.790" a="E"><vh>External editors &amp; Open With</vh>
+<v t="edream.110203113231.790"><vh>External editors &amp; Open With</vh>
 <v t="edream.120303095057.1" tnodeList="edream.120303095057.1,edream.120303095910,edream.120303095910.1"><vh>@file mod_tempfname.py</vh>
 <v t="edream.120303095910"><vh>onStart</vh></v>
 <v t="edream.120303095910.1"><vh>openWithTempFilePath</vh></v>
@@ -1244,8 +1244,8 @@
 <v t="edream.110203113231.800"><vh>open_in_vim</vh></v>
 </v>
 <v t="edream.110203113231.797" tnodeList="edream.110203113231.797"><vh>@file xemacs.py</vh></v>
-<v t="edream.110203113231.803" a="E"><vh>Word export</vh>
-<v t="edream.110203113231.804" a="E" tnodeList="edream.110203113231.804,edream.110203113231.805,edream.110203113231.806,edream.110203113231.807,edream.110203113231.808,edream.110203113231.809"><vh>@file word_export.py</vh>
+<v t="edream.110203113231.803"><vh>Word export</vh>
+<v t="edream.110203113231.804" tnodeList="edream.110203113231.804,edream.110203113231.805,edream.110203113231.806,edream.110203113231.807,edream.110203113231.808,edream.110203113231.809"><vh>@file word_export.py</vh>
 <v t="edream.110203113231.805"><vh>getConfiguration</vh></v>
 <v t="edream.110203113231.806"><vh>getWordConnection</vh></v>
 <v t="edream.110203113231.807"><vh>doPara</vh></v>
@@ -1511,9 +1511,9 @@
 </v>
 </v>
 </v>
-<v t="edream.120603093808" a="V" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
-<v t="ekr.20040107092135" a="E"><vh>Quick search</vh>
-<v t="ekr.20040107092135.2" a="E" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
+<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="ekr.20040107092135" a="EV"><vh>New plugins:  very cool</vh>
+<v t="ekr.20040107092135.2" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
 <v t="ekr.20040108054555.14"><vh>&lt;&lt; vars &gt;&gt;</vh></v>
 <v t="ekr.20040107092135.3"><vh>class SearchBox</vh>
 <v t="ekr.20040108054555.4"><vh>_getSizer</vh></v>
@@ -1532,12 +1532,13 @@
 </v>
 <v t="ekr.20040108060748"><vh>&lt;&lt; doc string &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040108062655" a="E" tnodeList="ekr.20040108062655,ekr.20040108062655.2,ekr.20040108062655.3,ekr.20040108062655.4,ekr.20040108062655.5,ekr.20040108062655.6"><vh>@file nodenavigator.py</vh>
-<v t="ekr.20040108062655.2" a="E"><vh>class Navigator</vh>
+<v t="ekr.20040108062655" tnodeList="ekr.20040108062655,ekr.20040108062655.2,ekr.20040108062655.3,ekr.20040108062655.4,ekr.20040108062655.5,ekr.20040108062655.6,ekr.20040108091136"><vh>@file nodenavigator.py</vh>
+<v t="ekr.20040108062655.2"><vh>class Navigator</vh>
 <v t="ekr.20040108062655.3"><vh>addWidgets</vh></v>
 <v t="ekr.20040108062655.4"><vh>_getSizer</vh></v>
 <v t="ekr.20040108062655.5"><vh>onSelect</vh></v>
 <v t="ekr.20040108062655.6"><vh>updateMarks</vh></v>
+<v t="ekr.20040108091136"><vh>updateRecent</vh></v>
 </v>
 </v>
 </v>
@@ -15566,7 +15567,7 @@ add_directives.py
 open_with.py
 color_markup.py
 image.py
-nav_buttons.py
+# nav_buttons.py
 plugins_menu.py
 # New from Paul Paterson.
 nodenavigator.py
@@ -15651,7 +15652,7 @@ if Tkinter and app.gui.guiName() == "tkinter":
 		last_key = keycode
 	else:
 		last_key = None</t>
-<t tx="ekr.20040107092135"></t>
+<t tx="ekr.20040107092135">These were written by Paul Paterson.  EKR added the Recent Menu.</t>
 <t tx="ekr.20040107092135.2">&lt;&lt; doc string &gt;&gt;
 
 __version__ = "0.3"
@@ -15895,6 +15896,7 @@ if Tkinter:
 		es("Activating NodeNavigator", color="orange") 
 		registerHandler("after-create-leo-frame", nav.addWidgets) 
 		registerHandler(("set-mark","clear-mark"),nav.updateMarks)
+		registerHandler("select2",nav.updateRecent)
 		plugin_signon("nodenavigator") 
 </t>
 <t tx="ekr.20040108062655.2">class Navigator: 
@@ -15908,46 +15910,53 @@ if Tkinter:
 	# Main container 
 	self.frame = Tkinter.Frame(toolbar) 
 	self.frame.pack(side="left")
-	# Navigation 
+	# Marks
 	marks = ["Marks"] 
 	self.mark_value = Tkinter.StringVar() 
-	self.marks = Tkinter.OptionMenu(self._getSizer(self.frame, 29, 130), self.mark_value, *marks) 
+	self.marks = Tkinter.OptionMenu(self._getSizer(self.frame, 29, 70), self.mark_value, *marks) # was 29,130
 	self.mark_value.set(marks[0]) 
-	self.marks.pack(side="right", fill="both", expand=1) 
-	# Options
-	options = ["Hoist", "Go to"]
-	self.option_value = Tkinter.StringVar() 
-	self.options = Tkinter.OptionMenu(self._getSizer(self.frame, 29, 75), self.option_value, *options) 
-	self.option_value.set(options[0]) 
-	self.options.pack(side="left", fill="both", expand=1) 
-	 #
-	self.vnodeList = []
-
-</t>
-<t tx="ekr.20040108062655.4">def _getSizer(self, parent, height, width): 
+	self.marks.pack(side="right",fill="both",expand=1)
+	# Recent.
+	recent = ["Recent"]
+	self.recent_value = Tkinter.StringVar() 
+	self.recent = Tkinter.OptionMenu(self._getSizer(self.frame, 29, 70), self.recent_value, *recent) 
+	self.recent_value.set(recent[0]) 
+	self.recent.pack(side="left",fill="both",expand=1)
+	if 0:
+		# Options
+		options = ["Hoist", "Go to"]
+		self.option_value = Tkinter.StringVar() 
+		self.options = Tkinter.OptionMenu(self._getSizer(self.frame, 29, 75), self.option_value, *options) 
+		self.option_value.set(options[0]) 
+		self.options.pack(side="left", fill="both", expand=1) 
+	# self.vnodeList = []</t>
+<t tx="ekr.20040108062655.4">def _getSizer(self, parent, height, width):
+	
 	"""Return a sizer object to force a Tk widget to be the right size""" 
 	if USE_FIXED_SIZES: 
-		sizer = Tkinter.Frame(parent, height=height, width=width) 
+		sizer = Tkinter.Frame(parent,height=height,width=width) 
 		sizer.pack_propagate(0) # don't shrink 
 		sizer.pack(side="right") 
 		return sizer 
 	else: 
-		return parent 
-
-</t>
-<t tx="ekr.20040108062655.5">def onSelect(self, vnode): 
+		return parent </t>
+<t tx="ekr.20040108062655.5">def onSelect(self, vnode):
 	"""Do the navigation"""
-	es("Selected %s" % vnode)
+	# es("Selected %s" % vnode)
 	c = top()
 	c.selectVnode(vnode)
-	name = vnode.headString()
-	if len(name) &gt; 15:
-		name = "%s ..." % name[:15]
-	self.mark_value.set(name)
-	if self.option_value.get() == "Hoist":
-		c.dehoist()
-		c.hoist()
-</t>
+	
+	if 0: # No longer used.
+		name = vnode.headString()
+		if len(name) &gt; 15:
+			name = "%s ..." % name[:15]
+		self.mark_value.set(name)
+	
+	if 0: # no longer used.
+		if self.option_value.get() == "Hoist":
+			trace()
+			c.dehoist()
+			c.hoist()</t>
 <t tx="ekr.20040108062655.6">def updateMarks(self, tag, keywords):
 	"""Update the marks list"""        
 	c = keywords.get("c")
@@ -15955,27 +15964,45 @@ if Tkinter:
 
 	# Clear old marks menu
 	menu = self.marks["menu"]
-	if self.vnodeList:
-		menu.delete(1, "end")
-
-	# Temporary storage
-	self.vnodeList = []
-	self.tnodeList = []
+	if menu:
+		menu.delete(0,"end")
 
 	def getCaller(v):
 		"""Return a callback"""
 		return lambda : self.onSelect(v)
 
 	# Find all marked nodes
+	vnodes = [] ; tnodes = []
 	while v:
-		if v.isMarked() and v.t not in self.tnodeList:
+		if v.isMarked() and v.t not in tnodes:
 			name = v.headString().strip()
-			menu.add_command(label=name,
-							 command=getCaller(v))
-			self.tnodeList.append(v.t)
-			self.vnodeList.append(v)
-		v = v.threadNext()
+			menu.add_command(label=name,command=getCaller(v))
+			tnodes.append(v.t)
+			vnodes.append(v)
+		v = v.threadNext()</t>
+<t tx="ekr.20040108091136">def updateRecent(self, tag, keywords):
+	"""Update the marks list"""        
+	c = keywords.get("c")
+	v = c.rootVnode()
 
+	# Clear old marks menu
+	try:
+		menu = self.recent["menu"]
+		menu.delete(0,"end")
+	except: return
+
+	def getCaller(v):
+		"""Return a callback"""
+		return lambda : self.onSelect(v)
+
+	# Make sure the node still exists.
+	# Insert only the last cloned node.
+	vnodes = [] ; tnodes = []
+	for v in c.visitedList:
+		if v.exists(c) and v.t not in tnodes:
+			menu.add_command(label=v.headString(),command=getCaller(v))
+			tnodes.append(v.t)
+			vnodes.append(v)
 </t>
 </tnodes>
 </leo_file>
