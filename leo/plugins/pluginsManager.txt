@@ -221,7 +221,7 @@ rowcol.py
     
 # vim handler.
     # Recommended: use mod_tempfname.py.
-    # vim.py
+vim.py
 
 # A plugin to add many emacs-like commands to Leo.
 # Much of this plugin deserves to move into Leo's core.

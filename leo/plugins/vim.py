@@ -26,12 +26,14 @@ import os
 
 # This command is used to communicate with the vim server. If you use gvim
 # you can leave the command as is, you do not need to change it to "gvim ..."
-# Note: _vim_cmd must end with a space.
 
-if not g.app.unitTesting:
-    _vim_cmd = "vim --servername LEO "
-else: # Works for xp with vim in the folder indicated.
+if 1:
+    # Works for xp with vim in the folder indicated.
     _vim_cmd = r"c:\vim\vim61\gvim --servername LEO"
+    
+else: 
+    _vim_cmd = "vim --servername LEO"
+   
 
 #@+others
 #@+node:EKR.20040517075715.11:open_in_vim

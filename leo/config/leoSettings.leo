@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="95" clone_windows="0"/>
 <globals body_outline_ratio="0.71017699115">
-	<global_window_position top="44" left="172" height="452" width="543"/>
+	<global_window_position top="44" left="172" height="703" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -43,7 +43,7 @@
 <v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
 </v>
 <v t="ekr.20041119034357.11" a="E"><vh>directory options</vh>
-<v t="ekr.20041119041304" a="TV"><vh>@bool create_nonexistent_directories = False</vh></v>
+<v t="ekr.20041119041304"><vh>@bool create_nonexistent_directories = False</vh></v>
 <v t="ekr.20041119041304.1"><vh>@string relative_path_base_directory = .</vh></v>
 </v>
 <v t="ekr.20041119034357.12"><vh>derived files options</vh>
@@ -51,10 +51,10 @@
 <v t="ekr.20041119041747.1"><vh>@string trailing_body_newlines = one</vh></v>
 <v t="ekr.20041119041747.4"><vh>@bool write_strips_blank_lines = True</vh></v>
 </v>
-<v t="ekr.20041119034357.15"><vh>unicode encoding options</vh>
-<v t="ekr.20041119042929.9"><vh>@encoding default_derived_file_encoding = UTF-8</vh></v>
-<v t="ekr.20041119042929.10"><vh>@encoding new_leo_file_encoding = UTF-8</vh></v>
-<v t="ekr.20041119042929.11"><vh>@encoding tk_encoding = None</vh></v>
+<v t="ekr.20041119034357.15" a="E"><vh>unicode encoding options</vh>
+<v t="ekr.20041119042929.9"><vh>@string default_derived_file_encoding = UTF-8</vh></v>
+<v t="ekr.20041119042929.10"><vh>@string new_leo_file_encoding = UTF-8</vh></v>
+<v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
 <v t="ekr.20041119034357.10"><vh>@page Command options</vh>
@@ -185,7 +185,7 @@
 </v>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 </v>
-<v t="ekr.20041213105954"><vh>Window options</vh>
+<v t="ekr.20041213105954" a="E"><vh>Window options</vh>
 <v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
@@ -214,8 +214,8 @@
 <v t="ekr.20041119050749.17"><vh>@bool look_for_control_drag_on_mouse_down = True</vh></v>
 <v t="ekr.20041119050749.18"><vh>@bool outline_pane_scrolls_horizontally = False</vh></v>
 </v>
-<v t="ekr.20041213105954.2"><vh>@page Splitter options</vh>
-<v t="ekr.20041119034357.68"><vh>@relief split_bar_relief = groove</vh></v>
+<v t="ekr.20041213105954.2" a="E"><vh>@page Splitter options</vh>
+<v t="ekr.20041119034357.68" a="TV"><vh>@string split_bar_relief = groove</vh></v>
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
 </v>
