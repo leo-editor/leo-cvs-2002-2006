@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1223" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1222" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="4" left="205" height="24" width="80"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -23,7 +23,7 @@
 </v>
 <v t="T7"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="T8" a="C"><vh>Acknowledgements</vh></v>
-<v t="T9" a="V"><vh>What people are saying about Leo</vh>
+<v t="T9" a="E"><vh>What people are saying about Leo</vh>
 <v t="T10"><vh>Alex Abacus</vh></v>
 <v t="T11"><vh>Steve Allen</vh></v>
 <v t="T12"><vh>Shakeeb Alireza</vh></v>
@@ -46,7 +46,7 @@
 <v t="T29"><vh>Kent Tenney</vh></v>
 <v t="T30"><vh>Jim Vickroy</vh></v>
 </v>
-<v t="T31"><vh>Release Notes</vh>
+<v t="T31" a="E"><vh>Release Notes</vh>
 <v t="T32"><vh>Warnings</vh></v>
 <v t="T33"><vh>Installation notes</vh>
 <v t="T34" a="C"><vh>System requirements</vh></v>
@@ -60,8 +60,8 @@
 <v t="T41" a="C"><vh>Quick start</vh></v>
 </v>
 <v t="T42" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
-<v><vh>Latest version</vh>
-<v t="T43"><vh>leo.py 3.9</vh>
+<v a="E"><vh>Latest version</vh>
+<v t="T43" a="EV"><vh>leo.py 3.9</vh>
 <v><vh>Fixed bugs</vh>
 <v t="T44"><vh>Fixed bug in atFile.scanAllDirectives involving @language</vh></v>
 <v t="T45"><vh>Correctly colors Pascal's "private" and "uses" keywords</vh></v>
@@ -1847,9 +1847,8 @@
 <v t="T1219"><vh>.cvs.leo format</vh></v>
 <v t="T1220"><vh>@cvs</vh></v>
 </v>
-<v t="T1221"><vh>Mac status report</vh></v>
-<v t="T1222"><vh>tk is the future of Leo</vh></v>
-<v t="T1223"><vh>Why I like Python</vh></v>
+<v t="T1221"><vh>tk is the future of Leo</vh></v>
+<v t="T1222"><vh>Why I like Python</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2196,7 +2195,12 @@ This is one of the most interesting versions of Leo ever released:
     @file, @root or @path, including all nonexistent parent directories.
   - The usual assortment of bug fixes.
 
-See the children of this node for full details.</t>
+See the children of this node for full details.
+
+P.S. Here is what Travers A. Hough recently said about Leo:
+
+"When first I opened Leo, it was out of curiosity.  But having used it...I'LL NEVER GO BACK. THEY'LL HAVE TO PRY LEO OUT OF MY COLD, DEAD FINGERS! Seriously, it should be renamed "Crack Cocaine" because it's that addictive. I'm ready to start a 12-Step group."
+</t>
 <t tx="T44">Cweb prefs panel setting was overriding @language python (!)</t>
 <t tx="T45">@language pascal
 @color
@@ -16009,26 +16013,7 @@ Edward</t>
 It may be desirable to use @cvs trees instead of @file tree.  When Leo writes a @cvs tree to a .leo file it writes only the headline of the tree; it writes none of the headlines below the @cvs tree and writes none of the body text of the tree.  This is suspiciously like the infamous "Archive" command, and it may be a good idea nevertheless in the context of CVS.  With @cvs, the .leo file becomes just a dummy file, so it would not be common to check .leo files in or out.
 
 Implementing this command can be done easily.  The question is, does it make sense to do so?</t>
-<t tx="T1221">Farewell to the Mac?
-
-I still have hopes that Leo2 will someday work on the Mac.  However, I decline to create a new Mac-only version of Leo, nor will I revise previous versions of Leo for the Mac.  My reasons for this decision, taken after much thought, are as follows.
-
-The present Mac versions can not, and should not, be brought up to date.  There are two Mac versions.  The first is written in C, the second in Objective C (using Yellow Box, aka Cocoa).  Neither version supports Leo2 @file nodes.  Neither version contains the latest Tangle/Untangle code, which is written in a strange mixture of C and C++.
-
-Upgrading either of these versions would amount to a total rewrite.  It is tempting to revise them so that they could read and write the present XML file format.  Alas, that would hardly suffice.  The tangle and untangle code would have to be completely revised.  All the Leo2 code would have to be transliterated back to C or Objective C.  Indeed, every line of code would need a hard look.
-
-Revising Mac code would be foolish.  Any work maintaining Mac code would detract from job of improving Leo.  What I want is fewer versions of Leo, not more.  My goal is to provide a single, cross-platform version of Leo.  Maintaining Mac code works against that goal.
-
-What about wxWindows and wxPython?  Alas, wxWindows is too buggy, the Mac version of wxWindows is unacceptable, and wxPython does not exist on the Mac.  Moreover, wxPython is not nearly as safe as Python;  erroneous code often causes crashes inside wxWindows.  The C++ code in wxWindows makes wxPython unreliable.
-
-I am committed to using the highest level tools and most portable tools.  The combination of Python and tkinter (the Python interface to Tk) appears to be the best, most stable and most portable platform on which to build Leo.  Indeed, IDLE, the Python IDE/Debugger, is written in Python + tkinter.  Alas, Tk does not work well on the Mac.  I can justify no further work on the Mac until it does.
-
-This posting uses the word 'alas' three times, not counting the last one ;-)  I am indeed sorry about the present state of affairs; I have loved the Mac for a long time.  I hope that the best tools will be ported to the Mac, and I wonder whether that will happen.
-
-Edward K. Ream
-November 4, 2001
-</t>
-<t tx="T1222">The more I look at Tk, the more convinced I am that Python + Tk (aka tkinter) is, by far, the best way to go with Leo.py.  I now have Open Source code for tree widgets and splitter windows, and have intensely studied how to modify that code for use in Leo.  It is clear, even at this early date, that this code will provide a very pleasant base on which to build Leo.
+<t tx="T1221">The more I look at Tk, the more convinced I am that Python + Tk (aka tkinter) is, by far, the best way to go with Leo.py.  I now have Open Source code for tree widgets and splitter windows, and have intensely studied how to modify that code for use in Leo.  It is clear, even at this early date, that this code will provide a very pleasant base on which to build Leo.
 
 The tree code is based on code in IDLE, the Python IDE.  This code is simple, good and plenty fast enough. The tree code draws directly to a Tk canvas object.  The look and feel matches Windows exactly.  It would be trivial to use Mac triangle icons instead of the Windows plus and minus icons.  It would also be trivial to modify the look and feel for Linux.
 
@@ -16053,7 +16038,7 @@ In short, using Tk for Leo.py will be fast enough and will greatly increase what
 
 Edward K. Ream
 November 4, 2001</t>
-<t tx="T1223">I've known for a while that Python was interesting; I attended a Python conference last year and added Python support to Leo.  But last week I got that Python is something truly remarkable.  I wanted to convert Leo from wxWindows to wxPython, so I began work on c2py, a Python script that would help convert from C++ syntax to Python.  While doing so, I had an Aha experience.  Python is more than an incremental improvement over Smalltalk or C++ or objective-C; it is "something completely different".  The rest of this post tries to explain this difference.
+<t tx="T1222">I've known for a while that Python was interesting; I attended a Python conference last year and added Python support to Leo.  But last week I got that Python is something truly remarkable.  I wanted to convert Leo from wxWindows to wxPython, so I began work on c2py, a Python script that would help convert from C++ syntax to Python.  While doing so, I had an Aha experience.  Python is more than an incremental improvement over Smalltalk or C++ or objective-C; it is "something completely different".  The rest of this post tries to explain this difference.
 
 Clarity: no clutter, easy prototyping
 -------------------------------------

@@ -146,6 +146,7 @@ class atFile:
 		
 		# Support of @raw
 		self.raw = false # true: in @raw mode
+		self.sentinels = true # true: output sentinels while expanding refs.
 		#@-body
 		#@-node:1::<< initialize atFile ivars >>
 	#@-body
@@ -210,6 +211,8 @@ class atFile:
 	#@-at
 	#@@c
 	def putOpenLeoSentinel(self,s):
+		
+		if not self.sentinels: return # Handle @nosentinelsfile.
 	
 		self.os(self.startSentinelComment)
 		self.os(s)
@@ -281,6 +284,8 @@ class atFile:
 	#@-at
 	#@@c
 	def putSentinel(self,s):
+		
+		if not self.sentinels: return # Handle @nosentinelsfile.
 	
 		self.newline_pending = false # discard any pending newline.
 		self.onl() ; self.putIndent(self.indent) # Start of sentinel.
@@ -445,8 +450,12 @@ class atFile:
 		# Bug fix: 10/16/02
 		if v.isAtFileNode():
 			name = v.atFileNodeName()
-		else:
+		elif v.isAtRawFileNode():
 			name = v.atRawFileNodeName()
+		elif v.isAtNoSentinelsFileNode():
+			name = v.atNoSentinelsFileNodeName()
+		else:
+			name = ""
 		
 		dir = choose(name,os.path.dirname(name),None)
 		if dir and len(dir) > 0 and os.path.isabs(dir):
@@ -2787,9 +2796,10 @@ class atFile:
 	#@+body
 	# This is the entry point to the write code.  root should be an @file vnode.
 	
-	def write(self,root):
+	def write(self,root,nosentinels=false):
 	
 		c = self.commands
+		self.sentinels = not nosentinels
 		
 		#@<< initialize >>
 		#@+node:1::<< initialize >>
@@ -2804,12 +2814,22 @@ class atFile:
 		#@-node:1::<< initialize >>
 
 		try:
-			self.targetFileName = root.atFileNodeName()
+			
+			#@<< open the file; return on error >>
+			#@+node:2::<< open the file; return on error >>
+			#@+body
+			if nosentinels:
+				self.targetFileName = root.atNoSentinelsFileNodeName()
+			else:
+				self.targetFileName = root.atFileNodeName()
 			ok = self.openWriteFile(root)
 			if not ok: return
+			#@-body
+			#@-node:2::<< open the file; return on error >>
+
 			
 			#@<< write then entire @file tree >>
-			#@+node:2::<< write then entire @file tree >>
+			#@+node:3::<< write then entire @file tree >>
 			#@+body
 			# unvisited nodes will be orphans, except in cweb trees.
 			root.clearVisitedInTree()
@@ -2895,12 +2915,12 @@ class atFile:
 			#@-body
 			#@-node:3::<< put all @last lines in root >>
 			#@-body
-			#@-node:2::<< write then entire @file tree >>
+			#@-node:3::<< write then entire @file tree >>
 
 			self.closeWriteFile()
 			
 			#@<< warn about @ignored and orphans >>
-			#@+node:3::<< Warn about @ignored and orphans  >>
+			#@+node:4::<< Warn about @ignored and orphans  >>
 			#@+body
 			# 10/26/02: Always warn, even when language=="cweb"
 			
@@ -2914,11 +2934,11 @@ class atFile:
 				v = v.threadNext()
 			
 			#@-body
-			#@-node:3::<< Warn about @ignored and orphans  >>
+			#@-node:4::<< Warn about @ignored and orphans  >>
 
 			
 			#@<< finish writing >>
-			#@+node:4::<< finish writing >>
+			#@+node:5::<< finish writing >>
 			#@+body
 			#@+at
 			#  We set the orphan and dirty flags if there are problems writing 
@@ -2938,11 +2958,10 @@ class atFile:
 				root.clearDirty()
 				self.replaceTargetFileIfDifferent()
 			#@-body
-			#@-node:4::<< finish writing >>
+			#@-node:5::<< finish writing >>
 
 		except:
 			self.handleWriteException()
-	
 	#@-body
 	#@-node:14::atFile.write
 	#@+node:15::atFile.rawWrite
@@ -3166,6 +3185,11 @@ class atFile:
 			elif v.isAtRawFileNode():
 				if v.isDirty() or partialFlag:
 					self.rawWrite(v)
+					written = true
+				v = v.nodeAfterTree()
+			elif v.isAtNoSentinelsFileNode():
+				if v.isDirty() or partialFlag:
+					self.write(v,nosentinels=true)
 					written = true
 				v = v.nodeAfterTree()
 			elif v.isAtFileNode():

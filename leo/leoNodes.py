@@ -638,7 +638,7 @@ class vnode:
 	#@-node:9::v.OnIconClick
 	#@-node:7::v.Callbacks
 	#@+node:8::Comparisons (vnode)
-	#@+node:1::atFile/RawFile/SilentFile/NodeName
+	#@+node:1::at/../NodeName
 	#@+body
 	#@+at
 	#  Returns the filename following @file or @rawfile, in the receivers's 
@@ -649,6 +649,9 @@ class vnode:
 
 	def atFileNodeName (self):
 		return self.afterHeadlineMatch("@file")
+		
+	def atNoSentinelsFileNodeName (self):
+		return self.afterHeadlineMatch("@nosentinelsfile")
 		
 	def atRawFileNodeName (self):
 		return self.afterHeadlineMatch("@rawfile")
@@ -664,13 +667,17 @@ class vnode:
 		else:
 			return ""
 	#@-body
-	#@-node:1::atFile/RawFile/SilentFile/NodeName
-	#@+node:2::isAtFile/RawFile/SilentFile/Node
+	#@-node:1::at/../NodeName
+	#@+node:2::isAt/../Node
 	#@+body
 	# Returns true if the receiver's headline starts with @file.
-	
 	def isAtFileNode (self):
 		s = self.atFileNodeName()
+		return len(s) > 0
+		
+	# Returns true if the receiver's headline starts with @rawfile.
+	def isAtNoSentinelsFileNode (self):
+		s = self.atNoSentinelsFileNodeName()
 		return len(s) > 0
 		
 	# Returns true if the receiver's headline starts with @rawfile.
@@ -684,7 +691,7 @@ class vnode:
 		return len(s) > 0
 	
 	#@-body
-	#@-node:2::isAtFile/RawFile/SilentFile/Node
+	#@-node:2::isAt/../Node
 	#@+node:3::isAtIgnoreNode
 	#@+body
 	#@+at
