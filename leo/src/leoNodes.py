@@ -861,23 +861,6 @@ class baseVnode (object):
         return self.c.currentVnode()
     #@nonl
     #@-node:ekr.20031218072017.3379:v.currentVnode (and c.currentPosition 4.2)
-    #@+node:ekr.20031218072017.3380:v.edit_text TO BE DELETED
-    def edit_text (self):
-    
-        v = self ; c = v.c ; p = c.currentPosition()
-        
-        g.trace("ooooops")
-        #import traceback ; traceback.print_stack()
-        
-        pairs = self.c.frame.tree.getEditTextDict(v)
-        for p2,t2 in pairs:
-            if p.equal(p2):
-                # g.trace("found",t2)
-                return t2
-                
-        return None
-    #@nonl
-    #@-node:ekr.20031218072017.3380:v.edit_text TO BE DELETED
     #@+node:ekr.20031218072017.3381:v.findRoot (4.2)
     def findRoot (self):
         
@@ -1708,18 +1691,11 @@ class position (object):
     #@+node:ekr.20040306220230.1:p.edit_text
     def edit_text (self):
         
-        p = self
+        # New in 4.3 beta 3: let the tree classes do all the work.
         
-        if self.c:
-            # New in 4.2: the dictionary is a list of pairs(p,v)
-            pairs = self.c.frame.tree.getEditTextDict(p.v)
-            for p2,t2 in pairs:
-                if p.equal(p2):
-                    # g.trace("found",t2)
-                    return t2
-            return None
-        else:
-            return None
+        p = self ; c = p.c
+        
+        return c.frame.tree.edit_text(p)
     #@nonl
     #@-node:ekr.20040306220230.1:p.edit_text
     #@+node:ekr.20040323160302:p.directParents
@@ -2052,11 +2028,10 @@ class position (object):
     
         s = g.toUnicode(s,encoding)
         if p == c.currentPosition():
+            # 7/23/04: Revert to previous code, but force an empty selection.
+            c.frame.body.setSelectionAreas(s,None,None)
+            c.frame.body.setTextSelection(None)
             # This code destoys all tags, so we must recolor.
-            if 1: # 7/13/04: The old way makes no sense.
-                c.frame.body.setTextSelection(None)
-            else:
-                c.frame.body.setSelectionAreas(s,None,None)
             c.recolor()
             
         # Keep the body text in the tnode up-to-date.
