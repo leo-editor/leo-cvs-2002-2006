@@ -2248,30 +2248,46 @@ for d in g.app.openWithFiles[:]:
 #@nonl
 #@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
 #@-node:ekr.20031218072017.2830:createOpenWithTempFile
-#@+node:ekr.20031218072017.2832:openWithTempFilePath
+#@+node:ekr.20031218072017.2832:c.openWithTempFilePath
 def openWithTempFilePath (self,p,ext):
     
     """Return the path to the temp file corresponding to p and ext."""
-
-    name = "LeoTemp_%s_%s%s" % (
-        str(id(p.v.t)),
-        g.sanitize_filename(p.headString()),
-        ext)
-
-    name = g.toUnicode(name,g.app.tkEncoding)
-
-    if 1:
-        td = g.os_path_abspath(tempfile.gettempdir())
-    else:
-        td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
-
-    path = g.os_path_join(td,name)
     
-    g.trace(path)
-
-    return path
+    if 0: # new code: similar to code in mod_tempfname.py plugin.
+        try:
+            # At least in Windows, user name may contain special characters
+            # which would require escaping quotes.
+            leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+        except:
+            leoTempDir = "LeoTemp"
+            g.es("Could not retrieve your user name.")
+            g.es("Temporary files will be stored in: %s" % leoTempDir)
+        
+        td = os.path.join(os.path.abspath(tempfile.gettempdir()),leoTempDir)
+        if not os.path.exists(td):
+            os.mkdir(td)
+        
+        name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+        path = os.path.join(td,name)
+        return path
+    else: # Original code.
+        name = "LeoTemp_%s_%s%s" % (
+            str(id(p.v.t)),
+            g.sanitize_filename(p.headString()),
+            ext)
+    
+        name = g.toUnicode(name,g.app.tkEncoding)
+    
+        if 1:
+            td = g.os_path_abspath(tempfile.gettempdir())
+        else:
+            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+    
+        path = g.os_path_join(td,name)
+    
+        return path
 #@nonl
-#@-node:ekr.20031218072017.2832:openWithTempFilePath
+#@-node:ekr.20031218072017.2832:c.openWithTempFilePath
 #@-node:ekr.20031218072017.2823:openWith and allies
 #@-node:ekr.20041018190736:(Fixed problems with spawnv option of openWith)
 #@+node:ekr.20041020104517:(Fixed bug in  Remove Sentinels command)
@@ -15024,6 +15040,7 @@ def completeFileName (fileName):
     return fileName
 #@nonl
 #@-node:ekr.20041124083125:completeFileName (leo.py)
+#@+node:ekr.20050304072744:compute directories...
 #@+node:ekr.20041117155521:computeGlobalConfigDir
 def computeGlobalConfigDir():
     
@@ -15110,6 +15127,7 @@ def computeLoadDir():
         return None
 #@nonl
 #@-node:ekr.20031218072017.1937:computeLoadDir
+#@-node:ekr.20050304072744:compute directories...
 #@+node:ekr.20041117151301.1:startupEncoding
 def startupEncoding ():
     
@@ -20725,8 +20743,8 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -24219,6 +24237,7 @@ def completeFileName (fileName):
     return fileName
 #@nonl
 #@-node:ekr.20041124083125:completeFileName (leo.py)
+#@+node:ekr.20050304072744:compute directories...
 #@+node:ekr.20041117155521:computeGlobalConfigDir
 def computeGlobalConfigDir():
     
@@ -24305,6 +24324,7 @@ def computeLoadDir():
         return None
 #@nonl
 #@-node:ekr.20031218072017.1937:computeLoadDir
+#@-node:ekr.20050304072744:compute directories...
 #@+node:ekr.20041117151301.1:startupEncoding
 def startupEncoding ():
     
@@ -32992,30 +33012,46 @@ for d in g.app.openWithFiles[:]:
 #@nonl
 #@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
 #@-node:ekr.20031218072017.2830:createOpenWithTempFile
-#@+node:ekr.20031218072017.2832:openWithTempFilePath
+#@+node:ekr.20031218072017.2832:c.openWithTempFilePath
 def openWithTempFilePath (self,p,ext):
     
     """Return the path to the temp file corresponding to p and ext."""
-
-    name = "LeoTemp_%s_%s%s" % (
-        str(id(p.v.t)),
-        g.sanitize_filename(p.headString()),
-        ext)
-
-    name = g.toUnicode(name,g.app.tkEncoding)
-
-    if 1:
-        td = g.os_path_abspath(tempfile.gettempdir())
-    else:
-        td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
-
-    path = g.os_path_join(td,name)
     
-    g.trace(path)
-
-    return path
+    if 0: # new code: similar to code in mod_tempfname.py plugin.
+        try:
+            # At least in Windows, user name may contain special characters
+            # which would require escaping quotes.
+            leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+        except:
+            leoTempDir = "LeoTemp"
+            g.es("Could not retrieve your user name.")
+            g.es("Temporary files will be stored in: %s" % leoTempDir)
+        
+        td = os.path.join(os.path.abspath(tempfile.gettempdir()),leoTempDir)
+        if not os.path.exists(td):
+            os.mkdir(td)
+        
+        name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+        path = os.path.join(td,name)
+        return path
+    else: # Original code.
+        name = "LeoTemp_%s_%s%s" % (
+            str(id(p.v.t)),
+            g.sanitize_filename(p.headString()),
+            ext)
+    
+        name = g.toUnicode(name,g.app.tkEncoding)
+    
+        if 1:
+            td = g.os_path_abspath(tempfile.gettempdir())
+        else:
+            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+    
+        path = g.os_path_join(td,name)
+    
+        return path
 #@nonl
-#@-node:ekr.20031218072017.2832:openWithTempFilePath
+#@-node:ekr.20031218072017.2832:c.openWithTempFilePath
 #@-node:ekr.20031218072017.2823:openWith and allies
 #@+node:ekr.20031218072017.4116:createOpenWithMenuFromTable
 @ Entries in the table passed to createOpenWithMenuFromTable are
@@ -35024,10 +35060,324 @@ def popSentinelStack (self,expectedKind):
 #@-node:ekr.20041005105605.113:badEndSentinel, push/popSentinelStack
 #@-node:ekr.20041005105605.74:scanText4 & allies
 #@-node:ekr.20050209094854:(Investigated disappearing node body text)
+#@+node:ekr.20050304072744.1:(Further problems specifying .leoID.txt)
+#@+node:ekr.20031218072017.1978:app.setLeoID
+def setLeoID (self,verbose=True):
+
+    tag = ".leoID.txt"
+    homeDir = g.app.homeDir
+    globalConfigDir = g.app.globalConfigDir
+    loadDir = g.app.loadDir
+
+    << return if we can set self.leoID from sys.leoID >>
+    << return if we can set self.leoID from "leoID.txt" >>
+
+    << put up a dialog requiring a valid id >>
+    << attempt to create leoID.txt >>
+#@nonl
+#@+node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+# This would be set by in Python's sitecustomize.py file.
+
+# 7/2/04: Use hasattr & getattr to suppress pychecker warning.
+# We also have to use a "non-constant" attribute to suppress another warning!
+
+nonConstantAttr = "leoID"
+
+if hasattr(sys,nonConstantAttr):
+    g.app.leoID = getattr(sys,nonConstantAttr)
+    if verbose:
+        g.es("leoID = " + g.app.leoID, color="orange")
+    return
+else:
+    g.app.leoID = None
+#@nonl
+#@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+#@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+for theDir in (homeDir,globalConfigDir,loadDir):
+    try:
+        fn = g.os_path_join(theDir,tag)
+        f = open(fn,'r')
+        s = f.readline()
+        f.close()
+        if s and len(s) > 0:
+            g.app.leoID = s
+            if verbose:
+                g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+            return
+        elif verbose:
+            g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+    except IOError:
+        g.app.leoID = None
+    except Exception:
+        g.app.leoID = None
+        g.es('Unexpected exception in app.setLeoID',color='red')
+        g.es_esception()
+        
+dirs = []
+
+for theDir in (globalConfigDir,homeDir):
+    if theDir not in dirs:
+        dirs.append(theDir)
+
+g.es("%s not found in %s" % (tag,repr(dirs)),color="red")
+#@nonl
+#@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+#@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+# New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
+
+# Create an emergency gui and a Tk root window.
+g.app.createTkGui("startup")
+
+# Bug fix: 2/6/05: put result in g.app.leoID.
+g.app.leoID = g.app.gui.runAskLeoIDDialog()
+g.app.gui = None
+
+# g.trace(g.app.leoID)
+g.es("leoID = %s" % (repr(g.app.leoID)),color="blue")
+#@nonl
+#@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+#@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+dirs = []
+
+for theDir in (homeDir,globalConfigDir,loadDir):
+    cant = "can not create %s in %s" % (tag,theDir)
+    try:
+        fn = g.os_path_join(theDir,tag)
+        f = open(fn,'w')
+        if f:
+            f.write(g.app.leoID)
+            f.close()
+            if g.os_path_exists(fn):
+                g.es("created %s in %s" % (tag,theDir), color="red")
+                return
+            else:
+                g.es(cant,color='red')
+    except IOError:
+        g.es(cant,color='red')
+
+    if theDir not in dirs:
+        dirs.append(theDir)
+#@nonl
+#@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+#@-node:ekr.20031218072017.1978:app.setLeoID
+#@+node:ekr.20050304072744:compute directories...
+#@+node:ekr.20041117155521:computeGlobalConfigDir
+def computeGlobalConfigDir():
+    
+    # None of these suppresses warning about sys.leo_config_directory
+    # __pychecker__ = '--no-objattrs --no-modulo1 --no-moddefvalue'
+    
+    import leoGlobals as g
+    
+    encoding = startupEncoding()
+
+    try:
+        theDir = sys.leo_config_directory
+    except AttributeError:
+        theDir = g.os_path_join(g.app.loadDir,"..","config")
+        
+    if theDir:
+        theDir = g.os_path_abspath(theDir)
+        
+    if (
+        not theDir or
+        not g.os_path_exists(theDir,encoding) or
+        not g.os_path_isdir(theDir,encoding)
+    ):
+        theDir = None
+    
+    return theDir
+#@nonl
+#@-node:ekr.20041117155521:computeGlobalConfigDir
+#@+node:ekr.20041117151301:computeHomeDir
+def computeHomeDir():
+    
+    """Returns the user's home directory."""
+    
+    import leoGlobals as g
+
+    encoding = startupEncoding()
+    # dotDir = g.os_path_abspath('./',encoding)
+    home = os.getenv('HOME',default=None)
+    if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
+	    # Get the indirect reference to the true home.
+	    home = os.getenv(home[1:-1],default=None)
+    
+    home = g.os_path_abspath(home,encoding)
+    
+    if (
+        not home or
+        not g.os_path_exists(home,encoding) or
+        not g.os_path_isdir(home,encoding)
+    ):
+        home = None
+
+    return home
+#@nonl
+#@-node:ekr.20041117151301:computeHomeDir
+#@+node:ekr.20031218072017.1937:computeLoadDir
+def computeLoadDir():
+    
+    """Returns the directory containing leo.py."""
+    
+    import leoGlobals as g
+
+    try:
+        import leo
+        encoding = startupEncoding()
+        path = g.os_path_abspath(leo.__file__,encoding)
+        if path:
+            loadDir = g.os_path_dirname(path,encoding)
+        else: loadDir = None
+            
+        if (
+            not loadDir or
+            not g.os_path_exists(loadDir,encoding) or
+            not g.os_path_isdir(loadDir,encoding)
+        ):
+            loadDir = os.getcwd()
+            print "Using emergency loadDir:",repr(loadDir)
+        
+        loadDir = g.os_path_abspath(loadDir,encoding)
+        # g.es("load dir: %s" % (loadDir),color="blue")
+        return loadDir
+    except:
+        print "Exception getting load directory"
+        import traceback ; traceback.print_exc()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.1937:computeLoadDir
+#@-node:ekr.20050304072744:compute directories...
+#@-node:ekr.20050304072744.1:(Further problems specifying .leoID.txt)
+#@+node:ekr.20050303104141:(Made sure file names get sanitized correctly)
+#@+node:ekr.20050303104141.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3028085
+By: randomandy
+
+I was unable to get the vim plugin working on my Leo. After digging around I
+finally discovered that it was an issue with the openWithTempFilePath() method.
+
+The method tries to create a temp directory using the username. But in Windows
+at least, user names may contain special characters which cause the tempdir
+mkdir to choke. There may be some way to escape some quotes, but my attempt
+at it was unsuccessful. I'm sure the layers of quote nesting there don't help
+the odds any.
+
+So what I chose to do instead was to just sanitize the directory name being
+created with from the user name. (The base path is already sanitized at the
+end.) That solved it for my case.  My user name has a period and spaces.
+@color
+
+def openWithTempFilePath (self,v,ext):
+
+    """Return the path to the temp file corresponding to v and ext.
+
+    Replaces the Commands method."""    
+
+    try:
+        #This allows a loophole
+        #leoTempDir = getpass.getuser() + "_" + "Leo"
+                   
+        #At least in Windows, user name may contain special characters
+        #which would require escaping quotes. Not wanting to deal with
+        #layers of nested quotes, I chose to just sanitize the directory
+        #name.     
+        leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+    except:
+        leoTempDir = "LeoTemp"
+        g.es("Could not retrieve your user name.")
+        g.es("Temporary files will be stored in: %s" % leoTempDir)
+
+    td = os.path.join(os.path.abspath(tempfile.gettempdir()), leoTempDir)
+    if not os.path.exists(td):
+        os.mkdir(td)
+
+    name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+    path = os.path.join(td,name)
+    return path
+#@nonl
+#@-node:ekr.20050303104141.1:Report
+#@+node:ekr.20050304092903:Notes
+@killcolor
+
+This is apparently a fix to the mod_tempfname plugin.
+#@nonl
+#@-node:ekr.20050304092903:Notes
+#@+node:ekr.20031218072017.2832:c.openWithTempFilePath
+def openWithTempFilePath (self,p,ext):
+    
+    """Return the path to the temp file corresponding to p and ext."""
+    
+    if 0: # new code: similar to code in mod_tempfname.py plugin.
+        try:
+            # At least in Windows, user name may contain special characters
+            # which would require escaping quotes.
+            leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+        except:
+            leoTempDir = "LeoTemp"
+            g.es("Could not retrieve your user name.")
+            g.es("Temporary files will be stored in: %s" % leoTempDir)
+        
+        td = os.path.join(os.path.abspath(tempfile.gettempdir()),leoTempDir)
+        if not os.path.exists(td):
+            os.mkdir(td)
+        
+        name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+        path = os.path.join(td,name)
+        return path
+    else: # Original code.
+        name = "LeoTemp_%s_%s%s" % (
+            str(id(p.v.t)),
+            g.sanitize_filename(p.headString()),
+            ext)
+    
+        name = g.toUnicode(name,g.app.tkEncoding)
+    
+        if 1:
+            td = g.os_path_abspath(tempfile.gettempdir())
+        else:
+            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+    
+        path = g.os_path_join(td,name)
+    
+        return path
+#@nonl
+#@-node:ekr.20031218072017.2832:c.openWithTempFilePath
+#@-node:ekr.20050303104141:(Made sure file names get sanitized correctly)
 #@-node:ekr.20050225104239.1:Bugs
 #@+node:ekr.20050225104239.2:Features
 #@-node:ekr.20050225104239.2:Features
-#@+node:ekr.20050227125015:Plugins
+#@+node:ekr.20050227125015:Plugins & hooks
+#@+node:ekr.20050301111302:(Added support for mod_labels plugin)
+#@+node:ekr.20050301105854:copyAllTempBodyStringsToTnodes
+def  copyAllTempBodyStringsToTnodes (self,root,thinFile):
+    
+    c = self.c
+    for p in root.self_and_subtree_iter():
+        try: s = p.v.t.tempBodyString
+        except: s = ""
+        old_body = p.bodyString()
+        if s != old_body:
+            if 0: # For debugging.
+                print ; print "changed: " + p.headString()
+                print ; print "new:",s
+                print ; print "old:",p.bodyString()
+            if thinFile:
+                p.v.setTnodeText(s)
+                if p.v.isDirty():
+                    p.setAllAncestorAtFileNodesDirty()
+            else:
+                p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+
+            if not thinFile or (thinFile and p.v.isDirty()):
+                # New in Leo 4.3: support for mod_labels plugin:
+                c.mod_label_controller.add_label(p,"before change:",old_body)
+                g.es("changed: " + p.headString(),color="blue")
+                p.setMarked()
+#@nonl
+#@-node:ekr.20050301105854:copyAllTempBodyStringsToTnodes
+#@-node:ekr.20050301111302:(Added support for mod_labels plugin)
 #@+node:ekr.20050227080938:(Converted cleo.py to 4.3 code base)
 #@+node:ekr.20040117170612:p.__getattr__  ON:  must be ON if use_plugins
 if 1: # Good for compatibility, bad for finding conversion problems.
@@ -35234,7 +35584,469 @@ def setUnselectedHeadlineColors (self,p):
 #@-node:ekr.20040803072955.141:setUnselectedHeadlineColors
 #@-node:ekr.20040803072955.134:tree.set...LabelState
 #@-node:ekr.20050227080938:(Converted cleo.py to 4.3 code base)
-#@-node:ekr.20050227125015:Plugins
+#@+node:ekr.20050303061941:(Changes to hooks)
+#@+node:ekr.20050303062008:Notes
+@killcolor
+
+How it used to work:
+    
+- openWithFileName called 'open1' and 'open2' hooks.
+
+- newLeoCommanderAndFrame called 'after-create-leo-frame' _after_ calling frame.finishCreate.
+
+mod_scripting plugin doesn't create blue buttons if newLeoCommanderAndFrame always calls open1 and open2 hooks.
+    - Changing 'open2' to 'open1' in mod_scripting creates other problems.
+
+Conclusions:
+
+1. 'open1' and 'open2' hooks _must_ stay as they are.
+    - That is newLeoCommanderAndFrame must NOT call 'open1' and 'open2' hooks!
+
+2. The 'after-create-leo-frame' hook isn't useful for plugins that want to insert menus.
+    - In particular, it can not be used to register a 'create-optional-menus' hook.
+
+What I did:
+
+Warning: All the following items (except the first) have a (slight?) chance of impacting existing code.
+
+- Added 'onCreate' hook in newLeoCommanderAndFrame.  This is called just _before_ calling frame.finishCreate.
+
+- newLeoCommanderAndFrame calls 'onCreate' and 'after-create-leo-frame' hooks only if not g.app.initing.  This ensures that plugins won't be bothered with these hooks being while reading leoSettings.leo files.
+
+- Leo clears g.app.initing before calling createFrame in leo.py.  This ensures that 'open1', 'open2', 'onCreate' and 'after-create-leo-frame' hooks get called for the initial window.  (Hopefully this will fix some problems that 'e' mentioned.)
+
+- createFrame in leo.py calls a 'new' hook if createFrame doesn't call g.openWithFileName.  This ensures that a 'new' hook always gets called if an 'open1' and 'open2' hook doesn't get called.
+#@nonl
+#@-node:ekr.20050303062008:Notes
+#@+node:ekr.20031218072017.1623:new
+def new (self):
+
+    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
+    
+    # 5/16/03: Needed for plugins.
+    g.doHook("new",old_c=self,new_c=c)
+
+    # Use the config params to set the size and location of the window.
+    frame.setInitialWindowGeometry()
+    frame.deiconify()
+    frame.lift()
+    frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
+    
+    c.beginUpdate()
+    if 1: # within update
+        t = leoNodes.tnode()
+        v = leoNodes.vnode(c,t)
+        p = leoNodes.position(v,[])
+        v.initHeadString("NewHeadline")
+        v.moveToRoot()
+        c.editPosition(p)
+    c.endUpdate()
+
+    frame.body.setFocus()
+    return c # For unit test.
+#@nonl
+#@-node:ekr.20031218072017.1623:new
+#@+node:ekr.20031218072017.2052:g.openWithFileName
+def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Create a full, normalized, Unicode path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
+
+    # If the file is already open just bring its window to the front.
+    theList = app.windowList
+    for frame in theList:
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
+            app.setLog(frame.log,"openWithFileName")
+            # g.es("This window already open")
+            return True, frame
+    try:
+        # Open the file in binary mode to allow 0x1a in bodies & headlines.
+        theFile = open(fileName,'rb')
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        frame.openDirectory = g.os_path_dirname(fileName)
+        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        return True, frame
+    except IOError:
+        # Do not use string + here: it will fail for non-ascii strings!
+        if not g.app.unitTesting:
+            g.es("can not open: %s" % (fileName), color="blue")
+        return False, None
+    except Exception:
+        g.es("exceptions opening: %s" % (fileName),color="red")
+        g.es_exception()
+        return False, None
+#@nonl
+#@-node:ekr.20031218072017.2052:g.openWithFileName
+#@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
+def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
+    
+    """Create a commander and its view frame for the Leo main window."""
+    
+    gui = self
+    
+    import leoCommands
+    
+    if not fileName: fileName = ""
+    << compute the window title >>
+
+    # Create an unfinished frame to pass to the commanders.
+    frame = gui.createLeoFrame(title)
+    
+    # Create the commander and its subcommanders.
+    c = leoCommands.Commands(frame,fileName)
+    
+    if not g.app.initing:
+        g.doHook("onCreate",c=c)
+    
+    frame.finishCreate(c)
+    
+    # Finish initing the subcommanders.
+    c.undoer.clearUndoState() # Menus must exist at this point.
+    
+    if updateRecentFiles:
+        c.updateRecentFiles(fileName)
+    
+    if not g.app.initing:
+        g.doHook("after-create-leo-frame",c=c)
+
+    return c,frame
+#@nonl
+#@+node:ekr.20031218072017.2189:<< compute the window title >>
+# Set the window title and fileName
+if fileName:
+    title = g.computeWindowTitle(fileName)
+else:
+    s = "untitled"
+    n = g.app.numberOfWindows
+    if n > 0:
+        s += str(n)
+    title = g.computeWindowTitle(s)
+    g.app.numberOfWindows = n+1
+
+#@-node:ekr.20031218072017.2189:<< compute the window title >>
+#@-node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
+#@+node:ekr.20031218072017.1624:createFrame (leo.py)
+def createFrame (fileName):
+    
+    """Create a LeoFrame during Leo's startup process."""
+    
+    import leoGlobals as g
+
+    # Try to create a frame for the file.
+    if fileName:
+        if g.os_path_exists(fileName):
+            ok, frame = g.openWithFileName(fileName,None)
+            if ok:
+                return frame.c,frame
+    
+    # Create a _new_ frame & indicate it is the startup window.
+    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
+    frame.setInitialWindowGeometry()
+    frame.startupWindow = True
+    # 3/2/05: Call the 'new' hook for compatibility with plugins.
+    g.doHook("new",old_c=None,new_c=c)
+
+    # Report the failure to open the file.
+    if fileName:
+        g.es("File not found: " + fileName)
+
+    return c,frame
+#@-node:ekr.20031218072017.1624:createFrame (leo.py)
+#@+node:ekr.20031218072017.2176:f.finishCreate
+def finishCreate (self,c):
+    
+    frame = self ; frame.c = c ; gui = g.app.gui
+    
+    # This must be done after creating the commander.
+    self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
+    << create the toplevel and outer frames >>
+    << create the icon bar >>
+    << create the splitters and their subframes >>
+    << create the status line >>
+    << create the first tree node >>
+    << create the menu bar >>
+    g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
+    g.app.windowList.append(frame)
+    c.initVersion()
+    c.signOnWithVersion()
+    self.body.createBindings(frame)
+#@nonl
+#@+node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
+frame.top = top = Tk.Toplevel()
+gui.attachLeoIcon(top)
+top.title(frame.title)
+top.minsize(30,10) # In grid units.
+
+frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
+frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
+
+# These don't work on Windows. Because of bugs in window managers,
+# there is NO WAY to know which window is on top!
+frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
+frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
+
+frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
+frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
+
+# Create the outer frame, the 'hull' component.
+self.outerFrame = outerFrame = Tk.Frame(top)
+self.outerFrame.pack(expand=1,fill="both")
+self.componentClass(c,'hull',self.outerFrame)
+#@nonl
+#@-node:ekr.20031218072017.2177:<< create the toplevel and outer frames >>
+#@+node:ekr.20041224120552:<< create the icon bar >>
+self.iconBarComponentName = 'iconBar'
+iconBar = self.iconBarClass(c,outerFrame)
+self.iconFrame = iconBar.iconFrame
+
+self.iconBar = self.componentClass(c,
+    self.iconBarComponentName,iconBar.iconFrame,
+    iconBar,iconBar.pack,iconBar.unpack)
+
+self.iconBar.show()
+#@nonl
+#@-node:ekr.20041224120552:<< create the icon bar >>
+#@+node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
+self.createLeoSplitters(outerFrame)
+
+# Create the canvas, tree, log and body.
+frame.canvas = self.createCanvas(self.split2Pane1)
+frame.tree   = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
+frame.log    = leoTkinterLog(frame,self.split2Pane2)
+frame.body   = leoTkinterBody(frame,self.split1Pane2)
+
+self.componentClass(c,'tree',self.split2Pane1, frame.tree, self.packTree, self.unpackTree)
+self.componentClass(c,'log', self.split2Pane2, frame.log,  self.packLog,  self.unpackLog)
+self.componentClass(c,'body',self.split1Pane2, frame.body, self.packBody, self.unpackBody)
+
+# Yes, this an "official" ivar: this is a kludge.
+frame.bodyCtrl = frame.body.bodyCtrl
+
+# Configure.
+frame.setTabWidth(c.tab_width)
+frame.tree.setColorFromConfig()
+self.reconfigurePanes()
+self.body.setFontFromConfig()
+self.body.setColorFromConfig()
+#@nonl
+#@-node:ekr.20031218072017.2178:<< create the splitters and their subframes >>
+#@+node:ekr.20031218072017.2180:<< create the first tree node >>
+t = leoNodes.tnode()
+v = leoNodes.vnode(c,t)
+p = leoNodes.position(v,[])
+v.initHeadString("NewHeadline")
+
+p.moveToRoot()
+c.beginUpdate()
+c.selectVnode(p)
+c.redraw()
+c.frame.getFocus()
+c.editPosition(p)
+c.endUpdate(False)
+#@-node:ekr.20031218072017.2180:<< create the first tree node >>
+#@+node:ekr.20041225103412:<< create the status line >>
+self.statusLineComponentName = 'statusLine'
+statusLine = self.statusLineClass(c,outerFrame)
+
+# Create offical ivars in the frame class.
+self.statusFrame = statusLine.statusFrame
+self.statusLabel = statusLine.labelWidget
+self.statusText  = statusLine.textWidget
+
+self.statusLine = self.componentClass(c,
+    self.statusLineComponentName,
+    statusLine.statusFrame,statusLine,statusLine.pack,statusLine.unpack)
+self.statusLine.show() # Show status line by default.
+#@nonl
+#@-node:ekr.20041225103412:<< create the status line >>
+#@+node:ekr.20041225103412.1:<< create the menu bar >>
+self.menu = leoTkinterMenu.leoTkinterMenu(frame)
+v = c.currentVnode()
+if not g.doHook("menu1",c=c,p=v,v=v):
+    frame.menu.createMenuBar(self)
+#@nonl
+#@-node:ekr.20041225103412.1:<< create the menu bar >>
+#@-node:ekr.20031218072017.2176:f.finishCreate
+#@+node:ekr.20031218072017.3785:createMenusFromTables
+def createMenusFromTables (self):
+
+    c = self.c
+    << create the file menu >>
+    << create the edit menu >>
+    << create the outline menu >>
+    g.doHook("create-optional-menus",c=c)
+    << create the window menu >>
+    << create the help menu >>
+#@nonl
+#@+node:ekr.20031218072017.3790:<< create the file menu >>
+fileMenu = self.createNewMenu("&File")
+
+self.createMenuEntries(fileMenu,self.fileMenuTopTable,init=True)
+self.createNewMenu("Open &With...","File")
+self.createMenuEntries(fileMenu,self.fileMenuTop2Table,init=True)
+<< create the recent files submenu >>
+self.add_separator(fileMenu)
+<< create the read/write submenu >>
+<< create the tangle submenu >>
+<< create the untangle submenu >>
+<< create the import submenu >>
+<< create the export submenu >>
+self.add_separator(fileMenu)
+self.createMenuEntries(fileMenu,self.fileMenuTop3MenuTable,init=True)
+#@nonl
+#@+node:ekr.20031218072017.3791:<< create the recent files submenu >>
+self.createNewMenu("Recent &Files...","File")
+c.recentFiles = c.config.getRecentFiles()
+
+if 0: # Not needed, and causes problems in wxWindows...
+    self.createRecentFilesMenuItems()
+#@nonl
+#@-node:ekr.20031218072017.3791:<< create the recent files submenu >>
+#@+node:ekr.20031218072017.3792:<< create the read/write submenu >>
+readWriteMenu = self.createNewMenu("&Read/Write...","File")
+
+self.createMenuEntries(readWriteMenu,self.fileMenuReadWriteMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3792:<< create the read/write submenu >>
+#@+node:ekr.20031218072017.3793:<< create the tangle submenu >>
+tangleMenu = self.createNewMenu("&Tangle...","File")
+
+self.createMenuEntries(tangleMenu,self.fileMenuTangleMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3793:<< create the tangle submenu >>
+#@+node:ekr.20031218072017.3794:<< create the untangle submenu >>
+untangleMenu = self.createNewMenu("&Untangle...","File")
+
+self.createMenuEntries(untangleMenu,self.fileMenuUntangleMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3794:<< create the untangle submenu >>
+#@+node:ekr.20031218072017.3795:<< create the import submenu >>
+importMenu = self.createNewMenu("&Import...","File")
+
+self.createMenuEntries(importMenu,self.fileMenuImportMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3795:<< create the import submenu >>
+#@+node:ekr.20031218072017.3796:<< create the export submenu >>
+exportMenu = self.createNewMenu("&Export...","File")
+
+self.createMenuEntries(exportMenu,self.fileMenuExportMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3796:<< create the export submenu >>
+#@-node:ekr.20031218072017.3790:<< create the file menu >>
+#@+node:ekr.20031218072017.3786:<< create the edit menu >>
+editMenu = self.createNewMenu("&Edit")
+
+self.createMenuEntries(editMenu,self.editMenuTopTable,init=True)
+
+<< create the edit body submenu >>
+<< create the edit headline submenu >>
+<< create the find submenu >>
+
+self.createMenuEntries(editMenu,self.editMenuTop2Table,init=True)
+#@nonl
+#@+node:ekr.20031218072017.3787:<< create the edit body submenu >>
+editBodyMenu = self.createNewMenu("Edit &Body...","Edit")
+
+self.createMenuEntries(editBodyMenu,self.editMenuEditBodyTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3787:<< create the edit body submenu >>
+#@+node:ekr.20031218072017.3788:<< create the edit headline submenu >>
+editHeadlineMenu = self.createNewMenu("Edit &Headline...","Edit")
+
+self.createMenuEntries(editHeadlineMenu,self.editMenuEditHeadlineTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3788:<< create the edit headline submenu >>
+#@+node:ekr.20031218072017.3789:<< create the find submenu >>
+findMenu = self.createNewMenu("&Find...","Edit")
+
+self.createMenuEntries(findMenu,self.editMenuFindMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3789:<< create the find submenu >>
+#@-node:ekr.20031218072017.3786:<< create the edit menu >>
+#@+node:ekr.20031218072017.3797:<< create the outline menu >>
+outlineMenu = self.createNewMenu("&Outline")
+
+self.createMenuEntries(outlineMenu,self.outlineMenuTopMenuTable,init=True)
+
+<< create check submenu >>
+<< create expand/contract submenu >>
+<< create move submenu >>
+<< create mark submenu >>
+<< create goto submenu >>
+#@nonl
+#@+node:ekr.20040711140738.1:<< create check submenu >>
+checkOutlineMenu = self.createNewMenu("Chec&k...","Outline")
+
+self.createMenuEntries(checkOutlineMenu,self.outlineMenuCheckOutlineMenuTable,init=True)
+#@nonl
+#@-node:ekr.20040711140738.1:<< create check submenu >>
+#@+node:ekr.20031218072017.3798:<< create expand/contract submenu >>
+expandMenu = self.createNewMenu("&Expand/Contract...","Outline")
+
+self.createMenuEntries(expandMenu,self.outlineMenuExpandContractMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3798:<< create expand/contract submenu >>
+#@+node:ekr.20031218072017.3799:<< create move submenu >>
+moveSelectMenu = self.createNewMenu("&Move...","Outline")
+
+self.createMenuEntries(moveSelectMenu,self.outlineMenuMoveMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3799:<< create move submenu >>
+#@+node:ekr.20031218072017.3800:<< create mark submenu >>
+markMenu = self.createNewMenu("M&ark/Unmark...","Outline")
+
+self.createMenuEntries(markMenu,self.outlineMenuMarkMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3800:<< create mark submenu >>
+#@+node:ekr.20031218072017.3801:<< create goto submenu >>
+gotoMenu = self.createNewMenu("&Go To...","Outline")
+
+self.createMenuEntries(gotoMenu,self.outlineMenuGoToMenuTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3801:<< create goto submenu >>
+#@-node:ekr.20031218072017.3797:<< create the outline menu >>
+#@+node:ekr.20031218072017.3802:<< create the window menu >>
+windowMenu = self.createNewMenu("&Window")
+
+self.createMenuEntries(windowMenu,self.windowMenuTopTable,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3802:<< create the window menu >>
+#@+node:ekr.20031218072017.3803:<< create the help menu >>
+helpMenu = self.createNewMenu("&Help")
+
+self.createMenuEntries(helpMenu,self.helpMenuTopTable,init=True)
+
+if sys.platform=="win32":
+    self.createMenuEntries(helpMenu,self.helpMenuTop2Table,init=True)
+
+self.createMenuEntries(helpMenu,self.helpMenuTop3Table,init=True)
+#@nonl
+#@-node:ekr.20031218072017.3803:<< create the help menu >>
+#@-node:ekr.20031218072017.3785:createMenusFromTables
+#@-node:ekr.20050303061941:(Changes to hooks)
+#@-node:ekr.20050227125015:Plugins & hooks
 #@+node:ekr.20050225155947:Docs
 #@+node:ekr.20050202052911.2:Documentation of tnodeLists & potential problems
 #@+node:ekr.20050225075604:The basic design

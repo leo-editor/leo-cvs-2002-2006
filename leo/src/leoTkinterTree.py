@@ -1055,7 +1055,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if where != theDict.get("where","beforeHeadline"):
             return h,w
-            
+    
         # g.trace(where,x,y,theDict)
         
         #@    << set offsets and pads >>
