@@ -1977,6 +1977,11 @@ class LeoFrame:
 		# trace()
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Paste"))
+		
+		# 10/23/02: Make sure the event sticks.
+		c = self.commands ; v = c.currentVnode()
+		c.tree.onHeadChanged(v)
+	
 	#@-body
 	#@-node:5::frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+node:6::OnDelete
