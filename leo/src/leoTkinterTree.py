@@ -782,47 +782,48 @@ class leoTkinterTree (leoFrame.leoTree):
             self.bindings.append((t,id3,"<Key>"),)
             self.bindings.append((t,id4,"<Control-t>"),)
         
-        #@    << highlight text widget on enter events >>
-        #@+node:ekr.20040709194954:<< highlight text widget on enter events >>
-        if 0: # Define a rect to colorize.
-        
-            color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
-            self.canvas.itemconfig(color_rect,fill="",outline="")
-        
-            def enterRect(event,id=color_rect):
-                if self.lastClickFrameId:
-                    self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
-                self.lastClickFrameId = id
-                color = "LightSteelBlue1"
-                self.canvas.itemconfig(id,fill=color,outline=color)
+        if 0: # I like underlining only when the cursor is outside the text widget.
+            #@        << highlight text widget on enter events >>
+            #@+node:ekr.20040709194954:<< highlight text widget on enter events >>
+            if 0: # Define a rect to colorize.
             
-            bind_enter = t.bind( '<Enter>', enterRect, '+' )
-            self.bindings.append((t,bind_enter,"<Enter>"),)
+                color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+                self.canvas.itemconfig(color_rect,fill="",outline="")
             
-        if 1: # Colorize only the headline.
-        
-            def enterRect(event,p=p,t=t):
-                t2 = self.lastColoredText
-                if t2:
-                    if 1: # deunderline
-                        t2.tag_delete('underline')
-                    else: # color
-                        t2.configure(background="white")
-                if p == self.editPosition():
-                    self.lastColoredText = None
-                else:
-                    self.lastColoredText = t
-                    if 1: # underline
-                        t.tag_add('underline','1.0', 'end')
-                        t.tag_configure('underline',underline = True)
-                    else: #color
-                        t.configure(background="LightSteelBlue1")
+                def enterRect(event,id=color_rect):
+                    if self.lastClickFrameId:
+                        self.canvas.itemconfig(self.lastClickFrameId,fill="",outline="")
+                    self.lastClickFrameId = id
+                    color = "LightSteelBlue1"
+                    self.canvas.itemconfig(id,fill=color,outline=color)
+                
+                bind_enter = t.bind( '<Enter>', enterRect, '+' )
+                self.bindings.append((t,bind_enter,"<Enter>"),)
+                
+            if 1: # Colorize only the headline.
             
-            bind_enter = t.bind( '<Enter>', enterRect, '+' )
-            self.bindings.append((t,bind_enter,"<Enter>"),)
-        #@nonl
-        #@-node:ekr.20040709194954:<< highlight text widget on enter events >>
-        #@nl
+                def enterRect(event,p=p,t=t):
+                    t2 = self.lastColoredText
+                    if t2:
+                        if 1: # deunderline
+                            t2.tag_delete('underline')
+                        else: # color
+                            t2.configure(background="white")
+                    if p == self.editPosition():
+                        self.lastColoredText = None
+                    else:
+                        self.lastColoredText = t
+                        if 1: # underline
+                            t.tag_add('underline','1.0', 'end')
+                            t.tag_configure('underline',underline = True)
+                        else: #color
+                            t.configure(background="LightSteelBlue1")
+                
+                bind_enter = t.bind( '<Enter>', enterRect, '+' )
+                self.bindings.append((t,bind_enter,"<Enter>"),)
+            #@nonl
+            #@-node:ekr.20040709194954:<< highlight text widget on enter events >>
+            #@nl
             
         id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t,tag="textBox")
         self.canvas.tag_lower(id)
@@ -1076,7 +1077,7 @@ class leoTkinterTree (leoFrame.leoTree):
         id_click = self.canvas.tag_bind(click_rect, "<1>", p.OnBoxClick)
         self.tagBindings.append((click_rect,id_click,"<1>"),)
         
-        if 1: # A major change to the user interface.
+        if 0: # A major change to the user interface.
             
             # Define a slighly smaller rect to colorize.
             color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
