@@ -614,7 +614,7 @@ class LeoFrame:
 		windowMenu.add_command(label="Toggle Active Pane",
 			accelerator="Ctrl-T",command=self.OnToggleActivePane)
 		windowMenu.add_command(label="Toggle Split Direction",
-			command=self.OnToggleSplitDirection, state="disabled") #
+			command=self.OnToggleSplitDirection)
 		windowMenu.add_separator()
 		
 		windowMenu.add_command(label="Cascade",
@@ -2369,20 +2369,21 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:2:C=32:OnToggleActivePane
-	#@+node:3::OnToggleSplitDirection
+	#@+node:3:C=33:OnToggleSplitDirection
 	#@+body
 	def OnToggleSplitDirection(self,event=None):
 	
-		self.notYet("Toggle Split Direction")
-		return "break" # inhibit further command processing
+		if 1: # Until undo/redo bugs fixed
+			self.notYet("Toggle Split Direction")
+			return "break" # inhibit further command processing
 	
 		self.splitVerticalFlag = not self.splitVerticalFlag
 		self.resizePanesToRatio(0.5)
 		self.body.focus_set()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:3::OnToggleSplitDirection
-	#@+node:4:C=33:OnCascade
+	#@-node:3:C=33:OnToggleSplitDirection
+	#@+node:4:C=34:OnCascade
 	#@+body
 	def OnCascade(self,event=None):
 		
@@ -2406,7 +2407,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 
 	#@-body
-	#@-node:4:C=33:OnCascade
+	#@-node:4:C=34:OnCascade
 	#@+node:5::OnMinimizeAll
 	#@+body
 	def OnMinimizeAll(self,event=None):
@@ -2423,7 +2424,7 @@ class LeoFrame:
 			frame.top.iconify()
 	#@-body
 	#@-node:5::OnMinimizeAll
-	#@+node:6:C=34:OnOpenPythonWindow
+	#@+node:6:C=35:OnOpenPythonWindow
 	#@+body
 	def OnOpenPythonWindow(self,event=None):
 	
@@ -2441,10 +2442,10 @@ class LeoFrame:
 			es("Please add \Python2x\Tools\idle to sys.paths")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=34:OnOpenPythonWindow
+	#@-node:6:C=35:OnOpenPythonWindow
 	#@-node:4::Window Menu
 	#@+node:5::Help Menu
-	#@+node:1:C=35:OnAbout (version number)
+	#@+node:1:C=36:OnAbout (version number)
 	#@+body
 	def OnAbout(self,event=None):
 	
@@ -2461,7 +2462,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=35:OnAbout (version number)
+	#@-node:1:C=36:OnAbout (version number)
 	#@+node:2::OnLeoDocumentation
 	#@+body
 	def OnLeoDocumentation (self,event=None):
@@ -2477,7 +2478,7 @@ class LeoFrame:
 	#@-node:2::OnLeoDocumentation
 	#@-node:5::Help Menu
 	#@-node:14:C=13:Menu Command Handlers
-	#@+node:15::Splitter stuff
+	#@+node:15:C=37:Splitter stuff
 	#@+node:1::createSplitter
 	#@+body
 	# Create a splitter window and panes into which the caller packs widgets.
@@ -2608,7 +2609,7 @@ class LeoFrame:
 		pass
 	#@-body
 	#@-node:5::onDropSplitterBar, onDropHSplitBar, onDropVSplitBar
-	#@-node:15::Splitter stuff
+	#@-node:15:C=37:Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

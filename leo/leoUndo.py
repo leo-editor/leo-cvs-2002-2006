@@ -391,13 +391,13 @@ class undoer:
 					u.v.moveToRoot(c.tree.rootVnode) # 5/27/02
 					if parent: # We could assert(parent)
 						parent.moveAfter(u.v)
-				c.initJoinedCloneBit(u.v) # 7/6/02
+				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
 				
 			elif type == "Drag":
 			
 				u.v.moveToNthChildOf(u.parent,u.n)
-				c.initJoinedCloneBit(u.v) # 7/6/02
+				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
 			#@-body
 			#@-node:4:C=3:<< redo move & drag cases >>
@@ -597,7 +597,7 @@ class undoer:
 					if parent: # We could assert(parent)
 						parent.moveAfter(u.v)
 				
-				c.initJoinedCloneBit(u.v) # 7/6/02
+				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
 			#@-body
 			#@-node:4:C=5:<< undo move  & drag cases >>

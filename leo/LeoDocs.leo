@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1"><vh>Short summary</vh></v>
+<v t="T1" a="V"><vh>Short summary</vh></v>
 <v t="T2"><vh>About LEO's panes and icons (for newbies)</vh>
 <v t="T3"><vh>This node contains text</vh></v>
 <v t="T4" a="M"><vh>This headline is marked</vh></v>
@@ -30,7 +30,7 @@
 </v>
 <v a="E"><vh>Latest versions</vh>
 <v t="T12"><vh>Warnings</vh></v>
-<v t="T13" a="CMV"><vh>leo.py 2.5 Many improvements</vh>
+<v t="T13" a="CM"><vh>leo.py 2.5 Many improvements</vh>
 <v t="T14"><vh>New &amp; improved commands</vh>
 <v t="T15" a="M"><vh>Tabs and spaces</vh>
 <v t="T16" a="M"><vh>Added Convert All Blanks and Convert All Tabs commands</vh></v>
@@ -1428,17 +1428,12 @@
 
 Leo is:
 
-A programmers, outlining editor and a flexible browser.
-
-A literate programming tool, compatible with noweb and CWEB.
-
-A data organizer and project manager. Leo provides multiple views of a project within a single outline.
-
-Fully scriptable using Python and saves its files in XML format.
-
-Portable. Leo.py is 100% pure Python and will run on any platform supporting Python and Tk/tcl.
- 
-Open Software, distributed under the Python License.</t>
+1. a programmer's editor, an outlining editor and a flexible browser.
+2. a literate programming tool, compatible with noweb and CWEB.
+3. a data organizer and project manager. Leo provides multiple views of a project within a single outline.
+4. fully scriptable using Python and saves its files in XML format.
+5. portable. Leo.py is 100% pure Python and will run on any platform supporting Python and Tk/tcl.
+6. Open Software, distributed under the Python License.</t>
 <t tx="T2">@nocolor
 
 * Leo's main window contains two panes, an outline pane on top and a body pane below.

@@ -16,9 +16,8 @@ configuration file called leoConfig.txt.
 Leo acts as before if this file does not exist.
 An option in leoConfig.txt specifies whether leoConfig.txt is read-only.
 
-3. The Preferences panel is now a modal dialog andit contains Ok,
-Cancel and Revert buttons.
-This makes it clear what preferences are being set.
+3. The Preferences panel is now a modal dialog containing Ok, Cancel and
+Revert buttons.  This makes it clear what preferences are being set.
 
 4. At long last, cut and paste work properly in all situations.
 You can cut and paste between Leo and other applications,
@@ -30,13 +29,6 @@ or between two different copies of Leo.
 Fixed several bugs in the Import commands.
 Leo will no longer abort reading if it detects an invalid directory name
 in the Default Tangle Directory in the Preferences panel.
-
-leo.py is almost complete.  The only remaining tasks on my list are:
-
-1. Make the Set Font... and Set Colors... commands functional.
-This will be easy now that leoConfig.txt exists.
-
-2. Fix the Javadoc bug.
 
 
 leo.py version 2.4                             June 20, 2002
