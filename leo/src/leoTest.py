@@ -165,69 +165,41 @@ class testUtils:
 
     #@    @+others
     #@+node:EKR.20040623223148.1:compareOutlines
-    def compareOutlines (self,root1,root2):
+    def compareOutlines (self,root1,root2,compareHeadlines=True):
         
         """Compares two outlines, making sure that their topologies,
         content and join lists are equivent"""
         
-        v1,v2 = root1,root2
-        after1 = v1.nodeAfterTree()
-        after2 = v2.nodeAfterTree()
-        v1 = v1.firstChild()
-        v2 = v2.firstChild()
-        ok = True
-        while v2 and v1 != after1 and v2 != after2:
+        p2 = root2.copy() ; ok = True
+        for p1 in root1.self_and_subtree_iter():
             ok = (
-                v1.numberOfChildren() == v2.numberOfChildren() and
-                v1.headString() == v2.headString() and
-                v1.bodyString() == v2.bodyString() and
-                v1.isCloned()   == v2.isCloned()
+                p1 and p2 and 
+                p1.numberOfChildren() == p2.numberOfChildren() and
+                (not compareHeadlines or p1.headString() == p2.headString()) and
+                p1.bodyString() == p2.bodyString() and
+                p1.isCloned()   == p2.isCloned()
             )
             if not ok: break
-            v1 = v1.threadNext()
-            v2 = v2.threadNext()
+            p2.moveToThreadNext()
     
-        ok = ok and ((not v1 and not v2) or (v1 == after1 and v2 == after2))
         if not ok:
-            g.trace(v1,v2)
+            g.trace("p1",p1.bodyString())
+            g.trace("p2",p2.bodyString())
         return ok
     #@nonl
     #@-node:EKR.20040623223148.1:compareOutlines
     #@+node:EKR.20040623223148.2:Finding nodes...
     #@+node:EKR.20040623223148.3:fundChildrenOf
-    def findChildrenOf (self,headline):
+    def findChildrenOf (self,root):
         
-        u = self ; c = g.top() ; v = c.currentPosition()
-        
-        root = u.findRootNode(v)
-        parent = u.findNodeInTree(root,headline)
-        
-        v = parent.firstChild()
-        vList = []
-        while v:
-            vList.append(v)
-            v = v.next()
-        return vList
-    #@nonl
+        return [p.copy() for p in root.children_iter()]
     #@-node:EKR.20040623223148.3:fundChildrenOf
-    #@+node:EKR.20040623223148.4:findSubnodesOf TO DO: Replace this
-    def findSubnodesOf (self,headline):
+    #@+node:EKR.20040623223148.4:findSubnodesOf
+    def findSubnodesOf (self,root):
         
-        u = self ; c = g.top() ; v = c.currentVnode()
-        
-        root = u.findRootNode(v)
-        parent = u.findNodeInTree(root,headline)
-        
-        v = parent.firstChild()
-        vList = []
-        after = parent.nodeAfterTree()
-        while v and v != after:
-            vList.append(v)
-            v = v.threadNext()
-    
-        return vList
+        return [p.copy() for p in root.subtree_iter()]
     #@nonl
-    #@-node:EKR.20040623223148.4:findSubnodesOf TO DO: Replace this
+    #@-node:EKR.20040623223148.4:findSubnodesOf
     #@+node:EKR.20040623223148.5:findNodeInRootTree
     def findRootNode (self,p):
     
@@ -335,7 +307,28 @@ def fail ():
     g.app.unitTestDict["fail"] = g.callerName(2)
 #@nonl
 #@-node:EKR.20040623200709.15: fail
-#@+node:ekr.20040707140849.5:leoTest.runAtFileTest
+#@+node:ekr.20040707154621:leoTest.runLeoTest
+def runLeoTest(path,verbose=False,full=False):
+    
+    c = g.top() ; frame = None ; ok = False
+    old_gui = g.app.gui
+    
+    try:
+        ok, frame = g.openWithFileName(path,c,enableLog=False)
+        assert(ok and frame)
+        errors = frame.c.checkOutline(verbose=verbose,unittest=True,full=full)
+        assert(errors == 0)
+        ok = True
+    finally:
+        g.app.gui = old_gui
+        if frame and frame.c != c:
+            g.app.closeLeoWindow(frame.c.frame)
+
+    if not ok: raise
+#@nonl
+#@-node:ekr.20040707154621:leoTest.runLeoTest
+#@+node:ekr.20040708145036:Specific to particular unit tests...
+#@+node:ekr.20040707140849.5:at-File test code (leoTest.py)
 def runAtFileTest(c,p):
     
     """Common code for testing output of @file, @thin, etc."""
@@ -384,27 +377,7 @@ def runAtFileTest(c,p):
         #@nl
         raise
 #@nonl
-#@-node:ekr.20040707140849.5:leoTest.runAtFileTest
-#@+node:ekr.20040707154621:leoTest.runLeoTest
-def runLeoTest(path,verbose=False,full=False):
-    
-    c = g.top() ; frame = None ; ok = False
-    old_gui = g.app.gui
-    
-    try:
-        ok, frame = g.openWithFileName(path,c,enableLog=False)
-        assert(ok and frame)
-        errors = frame.c.checkOutline(verbose=verbose,unittest=True,full=full)
-        assert(errors == 0)
-        ok = True
-    finally:
-        g.app.gui = old_gui
-        if frame and frame.c != c:
-            g.app.closeLeoWindow(frame.c.frame)
-
-    if not ok: raise
-#@nonl
-#@-node:ekr.20040707154621:leoTest.runLeoTest
+#@-node:ekr.20040707140849.5:at-File test code (leoTest.py)
 #@+node:ekr.20040708074710:Reformat Paragraph test code (leoTest.py)
 # DTHEIN 2004.01.11: Added unit tests for reformatParagraph
 #@nonl
@@ -801,6 +774,138 @@ class reformatParagraphTestCase(unittest.TestCase):
 #@nonl
 #@-node:ekr.20040708074710.2:class reformatParagraphTestCase
 #@-node:ekr.20040708074710:Reformat Paragraph test code (leoTest.py)
+#@+node:ekr.20040708111644:Edit Body test code (leoTest.py)
+#@+node:ekr.20040707140849.11: makeEditBodySuite
+def makeEditBodySuite():
+    
+    """Create an Edit Body test for every descendant of testParentHeadline.."""
+    
+    c = g.top() ; p = c.currentPosition()
+    u = testUtils()
+    data_p = u.findNodeInTree(p,"editBodyTests")
+    assert(data_p)
+    temp_p = u.findNodeInTree(data_p,"tempNode")
+    assert(temp_p)
+    
+    # Create the suite and add all test cases.
+    suite = unittest.makeSuite(unittest.TestCase)
+
+    for p in data_p.children_iter():
+        if p.headString()=="tempNode": continue # TempNode now in data tree.
+        before = u.findNodeInTree(p,"before")
+        after  = u.findNodeInTree(p,"after")
+        sel    = u.findNodeInTree(p,"selection")
+        ins    = u.findNodeInTree(p,"insert")
+        if before and after:
+            test = editBodyTestCase(c,p,before,after,sel,ins,temp_p)
+            suite.addTest(test)
+        else:
+            print 'missing "before" or "after" for', p.headString()
+
+    return suite
+#@nonl
+#@-node:ekr.20040707140849.11: makeEditBodySuite
+#@+node:ekr.20040707140849.12:class editBodyTestCase
+class editBodyTestCase(unittest.TestCase):
+    
+    """Data-driven unit tests for Leo's edit body commands."""
+    
+    #@    @+others
+    #@+node:ekr.20040707140849.13:__init__
+    def __init__ (self,c,parent,before,after,sel,ins,temp_v):
+        
+        # Init the base class.
+        unittest.TestCase.__init__(self)
+        
+        self.u = testUtils()
+    
+        self.c = c
+        self.parent = parent.copy()
+        self.before = before.copy()
+        self.after  = after.copy()
+        self.sel    = sel.copy() # Two lines giving the selection range in tk coordinates.
+        self.ins    = ins.copy() # One line giveing the insert point in tk coordinate.
+        self.temp_v = temp_v.copy()
+    #@nonl
+    #@-node:ekr.20040707140849.13:__init__
+    #@+node:ekr.20040707140849.14:editBody
+    def editBody (self):
+        
+        c = self.c ; u = self.u
+    
+        # Compute the result in temp_v.bodyString()
+        commandName = self.parent.headString()
+        # g.trace(commandName)
+        command = getattr(c,commandName)
+        command()
+        
+        if 1:
+            assert(u.compareOutlines(self.temp_v,self.after,compareHeadlines=False))
+            c.undoer.undo()
+            assert(u.compareOutlines(self.temp_v,self.before,compareHeadlines=False))
+            c.undoer.redo()
+            assert(u.compareOutlines(self.temp_v,self.after,compareHeadlines=False))
+            c.undoer.undo()
+            assert(u.compareOutlines(self.temp_v,self.before,compareHeadlines=False))
+    #@-node:ekr.20040707140849.14:editBody
+    #@+node:ekr.20040707140849.16:tearDown
+    def tearDown (self):
+        
+        c = self.c ; temp_v = self.temp_v
+        
+        c.selectVnode(temp_v)
+        temp_v.setTnodeText("",g.app.tkEncoding)
+        temp_v.clearDirty()
+    
+        # Delete all children of temp node.
+        while temp_v.firstChild():
+            temp_v.firstChild().doDelete(temp_v)
+    #@nonl
+    #@-node:ekr.20040707140849.16:tearDown
+    #@+node:ekr.20040707140849.17:setUp
+    # Warning: this is Tk-specific code.
+    
+    def setUp(self,*args,**keys):
+        
+        c = self.c ; temp_v = self.temp_v
+        
+        # Delete all children of temp node.
+        while temp_v.firstChild():
+            temp_v.firstChild().doDelete(temp_v)
+    
+        text = self.before.bodyString()
+        
+        temp_v.setTnodeText(text,g.app.tkEncoding)
+        c.selectVnode(self.temp_v) # 7/8/04
+        
+        t = c.frame.body.bodyCtrl
+        if self.sel:
+            s = str(self.sel.bodyString()) # Can't be unicode.
+            lines = s.split('\n')
+            g.app.gui.setTextSelection(t,lines[0],lines[1])
+    
+        if self.ins:
+            s = str(self.ins.bodyString()) # Can't be unicode.
+            lines = s.split('\n')
+            g.trace(lines)
+            g.app.gui.setInsertPoint(t,lines[0])
+            
+        if not self.sel and not self.ins:
+            g.app.gui.setInsertPoint(t,"1.0")
+            g.app.gui.setTextSelection(t,"1.0","1.0")
+    #@nonl
+    #@-node:ekr.20040707140849.17:setUp
+    #@+node:ekr.20040707140849.18:runTest
+    def runTest(self):
+    
+        self.editBody()
+    #@nonl
+    #@-node:ekr.20040707140849.18:runTest
+    #@-others
+#@nonl
+#@-node:ekr.20040707140849.12:class editBodyTestCase
+#@-node:ekr.20040708111644:Edit Body test code (leoTest.py)
+#@-node:ekr.20040708145036:Specific to particular unit tests...
 #@-others
 #@nonl
 #@-node:EKR.20040623200709:@thin ../src/leoTest.py
