@@ -1225,7 +1225,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.790"><vh>External editors &amp; Open With</vh>
+<v t="edream.110203113231.790" a="E"><vh>External editors &amp; Open With</vh>
 <v t="edream.120303095057.1" tnodeList="edream.120303095057.1,edream.120303095910,edream.120303095910.1"><vh>@file mod_tempfname.py</vh>
 <v t="edream.120303095910"><vh>onStart</vh></v>
 <v t="edream.120303095910.1"><vh>openWithTempFilePath</vh></v>
@@ -1244,8 +1244,8 @@
 <v t="edream.110203113231.800"><vh>open_in_vim</vh></v>
 </v>
 <v t="edream.110203113231.797" tnodeList="edream.110203113231.797"><vh>@file xemacs.py</vh></v>
-<v t="edream.110203113231.803"><vh>Word export</vh>
-<v t="edream.110203113231.804" tnodeList="edream.110203113231.804,edream.110203113231.805,edream.110203113231.806,edream.110203113231.807,edream.110203113231.808,edream.110203113231.809"><vh>@file word_export.py</vh>
+<v t="edream.110203113231.803" a="E"><vh>Word export</vh>
+<v t="edream.110203113231.804" a="E" tnodeList="edream.110203113231.804,edream.110203113231.805,edream.110203113231.806,edream.110203113231.807,edream.110203113231.808,edream.110203113231.809"><vh>@file word_export.py</vh>
 <v t="edream.110203113231.805"><vh>getConfiguration</vh></v>
 <v t="edream.110203113231.806"><vh>getWordConnection</vh></v>
 <v t="edream.110203113231.807"><vh>doPara</vh></v>
@@ -1511,19 +1511,19 @@
 </v>
 </v>
 </v>
-<v t="edream.120603093808" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
-<v t="ekr.20040107092135" a="E"><vh>Quick search</vh>
+<v t="edream.120603093808" a="V" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="ekr.20040107092135"><vh>Quick search</vh>
 <v t="ekr.20040107092135.1"><vh>report</vh></v>
 <v t="ekr.20040107104213"><vh>changes made</vh></v>
-<v t="ekr.20040107112230" a="V"><vh>to do</vh></v>
+<v t="ekr.20040107112230"><vh>to do</vh></v>
 <v t="ekr.20040107092135.2" tnodeList="ekr.20040107092135.2,ekr.20040107092135.3,ekr.20040107092135.4,ekr.20040107092135.5,ekr.20040107110154,ekr.20040107111307,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
-<v t="ekr.20040107092135.3" a="E"><vh>class SearchBox</vh>
+<v t="ekr.20040107092135.3"><vh>class SearchBox</vh>
 <v t="ekr.20040107092135.4"><vh>addWidgets</vh></v>
 <v t="ekr.20040107092135.5"><vh>doSearch</vh></v>
 <v t="ekr.20040107110154"><vh>onKey</vh></v>
 <v t="ekr.20040107111307"><vh>onBackSpace</vh></v>
 </v>
-<v t="ekr.20040107092135.6" a="E"><vh>class quickFind</vh>
+<v t="ekr.20040107092135.6"><vh>class quickFind</vh>
 <v t="ekr.20040107092135.7"><vh>__init__</vh></v>
 <v t="ekr.20040107092135.8"><vh>set_ivars</vh></v>
 <v t="ekr.20040107103252"><vh>init_s_text</vh></v>
@@ -6826,8 +6826,10 @@ class node:
 from leoPlugins import *
 from leoGlobals import *
 
-try:    import tkFileDialog
-except: tkFileDialog = None
+try:
+	import tkFileDialog
+except ImportError:
+	tkFileDialog = None
 
 &lt;&lt; about this plugin &gt;&gt;
 
@@ -6845,7 +6847,8 @@ if tkFileDialog:
 			create_import_cisco_menu)
 
 		__version__ = "1.3" 
-		plugin_signon(__name__)</t>
+		plugin_signon(__name__)
+</t>
 <t tx="edream.110203113231.670">@ This plugin adds a menu item under the File-&gt;Import menu to import
 Cisco configuration files.
 
@@ -7806,8 +7809,10 @@ plugin_signon(__name__)</t>
 
 from leoPlugins import *
 from leoGlobals import *
-try:    import Tkinter
-except: Tkinter = None
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
 import os
 
 if Tkinter: # Register the handlers...
@@ -7883,8 +7888,10 @@ from leoPlugins import *
 from leoGlobals import *
 from leoTkinterDialog import tkinterListBoxDialog
 
-try:    import Tkinter
-except: Tkinter = None
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
 Tk = Tkinter
 
 import os
@@ -8309,8 +8316,10 @@ for v in c.visitedList:
 from leoPlugins import *
 from leoGlobals import *
 
-try:    import Tkinter
-except: Tkinter = None
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
 
 if Tkinter: # Register the handlers...
 
@@ -8530,8 +8539,8 @@ from leoPlugins import *
 from leoGlobals import *
 try:
 	import win32com.client # From win32 extensions: http://www.python.org/windows/win32/
-	client = win32.com.client
-except:
+	client = win32com.client
+except ImportError:
 	client = None
 import ConfigParser
 
@@ -8607,8 +8616,8 @@ if client: # Register the handlers...
 		doPara(word, "%s %s" % (thishead, h), "%s %d" % (header_style, min(level, maxlevel)))
 		writeNodeAndTree(word, header_style, level+1, maxlevel, usesections, thishead, child)
 </t>
-<t tx="edream.110203113231.809">def cmd_Export(event):
-	
+<t tx="edream.110203113231.809">def cmd_Export(event=None):
+
 	"""Export the current node to Word"""
 
 	try:
@@ -8997,8 +9006,10 @@ plugin_signon(__name__)
 from leoPlugins import *
 from leoGlobals import *
 
-try:    import Tkinter
-except: Tkinter = None
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
 
 if Tkinter: # Register the handlers...
 
@@ -9042,8 +9053,10 @@ from leoPlugins import *
 from leoGlobals import *
 import ConfigParser,glob,os,sys
 
-try:    import Tkinter
-except: Tkinter = None
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
 Tk = Tkinter
 
 if Tkinter: # Register the handlers...
@@ -9296,8 +9309,10 @@ self.button.pack(side="bottom")</t>
 from leoPlugins import *
 from leoGlobals import *
 
-try:    import Tkinter
-except: Tkinter = None
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
 
 import os
 
@@ -9604,8 +9619,10 @@ import ftplib, urllib, urlparse, os, cStringIO
 from formatter import AbstractFormatter, DumbWriter
 from htmllib import HTMLParser
 
-try:    import tkFileDialog
-except: tkFileDialog = None
+try:
+	import tkFileDialog
+except ImportError:
+	tkFileDialog = None
 
 if tkFileDialog: # Register the handlers...
 
@@ -9625,6 +9642,7 @@ if tkFileDialog: # Register the handlers...
 	
 		__version__ = "1.5" # Set version for the plugin handler.
 		plugin_signon(__name__)
+
 </t>
 <t tx="edream.110203113231.877">@ Dear Leo users,
 
@@ -10124,10 +10142,10 @@ plugin_signon(__name__)</t>
 from leoPlugins import *
 from leoGlobals import *
 
-try:    import Tkinter
-except: Tkinter = None
-
-
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
 
 if Tkinter: # Register the handlers...
 
@@ -10196,8 +10214,10 @@ plugin_signon(__name__)</t>
 from leoPlugins import *
 from leoGlobals import *
 
-try:    import Tkinter
-except: Tkinter = None
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
 
 if Tkinter: # Register the handlers...
 
@@ -10331,8 +10351,10 @@ from leoPlugins import *
 from leoGlobals import *
 import leoTkinterFind
 
-try:    import Tkinter
-except: Tkinter = None
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
 Tk = Tkinter
 
 import ConfigParser,os,popen2,re,sys,traceback
@@ -11064,7 +11086,7 @@ try:
 	import Tkinter
 	from Tkinter import *
 	import os,re,xmlrpclib
-except:
+except ImportError:
 	Tkinter = None
 	
 Tk = Tkinter
@@ -11371,8 +11393,10 @@ Made changes for 4.1 app.gui architecture. (More work needed).</t>
 from leoPlugins import *
 from leoGlobals import *
 
-try:    import Tkinter
-except: Tkinter = None
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
 
 import string  # zfill does not exist in Python 2.2.1
 import tkColorChooser
@@ -11398,7 +11422,8 @@ if Tkinter: # Register the handlers...
 		registerHandler(("start2","open2","command2"), createWikiMenu)
 	
 		__version__ = "1.4" # DS: 10/29/03.  EKR: 11/4/03: mods for 4.1.
-		plugin_signon(__name__)</t>
+		plugin_signon(__name__)
+</t>
 <t tx="edream.110403140857.9">def initAnyMarkup (tag,keywords):
 	
 	"""initialize colorer.markup_string
@@ -15279,7 +15304,7 @@ def onIconDoubleClick(tag,keywords):
 </t>
 <t tx="edream.111803100242.4">try:
 	import docutils
-except:
+except ImportError:
 	docutils = None
 	es('HTML/LaTeX generation requires docutils')
 
@@ -15533,7 +15558,8 @@ color_markup.py
 image.py
 nav_buttons.py
 plugins_menu.py
-searchbox.py</t>
+searchbox.py
+# word_export.py</t>
 <t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
 <t tx="edream.120703082844">@language python
 
@@ -15658,8 +15684,10 @@ from leoGlobals import *
 import leoFind
 # import leoTkinterFind
 
-try:	import Tkinter
-except: Tkinter = None
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
 Tk = Tkinter
 
 @others
