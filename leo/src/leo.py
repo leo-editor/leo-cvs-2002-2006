@@ -114,7 +114,7 @@ def run(fileName=None,*args,**keywords):
     g.clear_stats()
     #@    << start psycho >>
     #@+node:ekr.20040411081633:<< start psycho >>
-    if g.app.use_psyco:
+    if g.app and g.app.use_psyco:
         try:
             import psyco
             if 0:

@@ -222,7 +222,7 @@ from __future__ import generators # To make the code work in Python 2.2.
 
 import leoGlobals as g
 
-if g.app.use_psyco:
+if g.app and g.app.use_psyco:
     # print "enabled psyco classes",__file__
     try: from psyco.classes import *
     except ImportError: pass

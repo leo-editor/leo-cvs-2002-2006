@@ -10,7 +10,7 @@
 #@+node:ekr.20041005105605.2:<< imports >>
 import leoGlobals as g
 
-if g.app.use_psyco:
+if g.app and g.app.use_psyco:
     # print "enabled psyco classes",__file__
     try: from psyco.classes import *
     except ImportError: pass
