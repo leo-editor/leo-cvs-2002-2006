@@ -15983,7 +15983,7 @@ except:
 if g.os_path_exists(fileName):
     try:
         if not os.access(fileName,os.W_OK):
-            self.writeError("can not create: read only: " + self.targetFileName)
+            g.es("can not create: read only: " + fileName)
             return False
     except:
         pass # os.access() may not exist on all platforms.
@@ -22835,7 +22835,7 @@ except:
 if g.os_path_exists(fileName):
     try:
         if not os.access(fileName,os.W_OK):
-            self.writeError("can not create: read only: " + self.targetFileName)
+            g.es("can not create: read only: " + fileName)
             return False
     except:
         pass # os.access() may not exist on all platforms.
@@ -26321,7 +26321,7 @@ except:
 if g.os_path_exists(fileName):
     try:
         if not os.access(fileName,os.W_OK):
-            self.writeError("can not create: read only: " + self.targetFileName)
+            g.es("can not create: read only: " + fileName)
             return False
     except:
         pass # os.access() may not exist on all platforms.
@@ -41851,7 +41851,7 @@ except:
 if g.os_path_exists(fileName):
     try:
         if not os.access(fileName,os.W_OK):
-            self.writeError("can not create: read only: " + self.targetFileName)
+            g.es("can not create: read only: " + fileName)
             return False
     except:
         pass # os.access() may not exist on all platforms.
@@ -45054,6 +45054,16 @@ else:
 #@nonl
 #@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
 #@-node:ekr.20040701194847:(Suppressed more pychecker errors)
+#@+node:ekr.20040701212305:(Fixed still more pychecker errors)
+@killcolor
+
+(fixed) C:\prog\leoCVS\leo\src\leoFrame.py:1221: No class attribute (insertPOint) found
+(fixed) C:\prog\leoCVS\leo\src\leoGui.py:330: No class attribute (oop) found
+
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:2047: No class attribute (targetFileName) found
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:2047: No class attribute (writeError) found
+#@nonl
+#@-node:ekr.20040701212305:(Fixed still more pychecker errors)
 #@-node:ekr.20040701065235:in 4.2 b2
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
