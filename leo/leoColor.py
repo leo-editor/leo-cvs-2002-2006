@@ -558,8 +558,8 @@ class colorizer:
 		self.comment_string = None # Set by scanColorDirectives on @comment
 		# For incremental coloring.
 		self.tags = (
-			"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
-			"link", "name", "nameBrackets", "pp", "string", "tab")
+			"blank","comment","cwebName","docPart","keyword","leoKeyword",
+			"link","name","nameBrackets","pp","string","tab")
 		self.incremental = false
 		self.lines = []
 		self.states = []
@@ -791,6 +791,9 @@ class colorizer:
 			
 			if self.language == "plain": # 9/12/02
 				delim1,delim2,delim3 = None,None,None
+			elif self.language == "cweb": # 11/14/02: Use C comments, not cweb sentinel comments.
+				print "using cweb delims"
+				delim1,delim2,delim3 = set_delims_from_language("c")
 			elif self.comment_string: # 8/11/02
 				delim1,delim2,delim3 = set_delims_from_string(self.comment_string)
 			else:
@@ -804,11 +807,13 @@ class colorizer:
 			# A strong case can be made for making this code as fast as possible.
 			# Whether this is compatible with general language descriptions remains to be seen.
 			self.has_string = self.language != "plain"
-			self.has_pp_directives = self.language in ["c","cweb","latex"]
+			self.has_pp_directives = self.language in ("c","cweb","latex")
 			
 			# The list of languages for which keywords exist.
 			# Eventually we might just use language_delims_dict.keys()
-			languages = ["c","cweb","html","java","latex", "pascal","perl","perlpod","python","tcltk","php"]
+			languages = [
+				"c","cweb","html","java","latex",
+				"pascal","perl","perlpod","php","python","tcltk"]
 			
 			self.keywords = []
 			if self.language == "cweb":
@@ -1018,7 +1023,7 @@ class colorizer:
 	#@+body
 	def colorizeLine (self,s,n,state):
 	
-		# print state,s
+		# print "inc,state,s:",`self.incremental`,state,s
 	
 		if self.incremental:
 			self.removeTagsFromLine(n)
@@ -1030,7 +1035,6 @@ class colorizer:
 			i,state = func(s,i,n)
 	
 		return state
-	
 	#@-body
 	#@+node:1::continueBlockComment
 	#@+body
@@ -1255,6 +1259,8 @@ class colorizer:
 			#@<< handle single-line comment >>
 			#@+node:3::<< handle single-line comment >>
 			#@+body
+			# print "single-line comment n,i,s:",`n`,`i`,`s`
+			
 			self.body.tag_add("comment", index(n,i), index(n,"end"))
 			i = len(s)
 			#@-body
