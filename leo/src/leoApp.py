@@ -30,6 +30,7 @@ class LeoApp:
 		self.idleTimeHook = false # true: the global idleTimeHookHandler will reshedule itself.
 		self.loadDir = None # The directory from which Leo was loaded.
 		self.log = None # The LeoFrame containing the present log.
+		self.logIsLocked = false # true: no changes to log are allowed.
 		self.logWaiting = [] # List of messages waiting to go to a log.
 		self.menuWarningsGiven = false # true: supress warnings in menu code.
 		self.numberOfWindows = 0 # Number of opened windows.
@@ -128,7 +129,7 @@ class LeoApp:
 			# print "veto",veto
 			if veto: return false
 	
-		a.log = None # no log until we reactive a window.
+		app().setLog(None) # no log until we reactive a window.
 		
 		doHook("close-frame",c=c) # This may remove frame from the window list.
 		
@@ -144,7 +145,7 @@ class LeoApp:
 			w = a.windowList[0]
 			w.top.deiconify()
 			w.top.lift()
-			a.log = w
+			a.setLog(w)
 		else:
 			a.finishQuit()
 	
@@ -259,7 +260,7 @@ class LeoApp:
 		# Make a copy of the list: it may change in the loop.
 		openWithFiles = a.openWithFiles
 	
-		for dict in openWithFiles:
+		for dict in openWithFiles[:]: # 6/30/03
 			c = dict.get("c")
 			if c.frame == frame:
 				a.destroyOpenWithFileWithDict(dict)
@@ -473,20 +474,38 @@ class LeoApp:
 		
 		a = self
 		
-		a.quitting += 1
+		a.quitting = true
 		
 		while a.windowList:
 			w = a.windowList[0]
 			if not a.closeLeoWindow(w):
 				break
-				
-		a.quitting -= 1 # If we get here the quit has been disabled.
+	
+		a.quitting = false # If we get here the quit has been disabled.
 	
 	
 	
 	#@-body
 	#@-node:11::app.onQuit
-	#@+node:12::app.writeWaitingLog
+	#@+node:12::app.setLog, lockLog, unlocklog
+	#@+body
+	def setLog (self,log,tag=""):
+		"""set the frame to which log messages will go"""
+		
+		# print "setLog:",tag,"locked:",self.logIsLocked,`log`
+		if not self.logIsLocked:
+			self.log = log
+			
+	def lockLog(self):
+		"""Disable changes to the log"""
+		self.logIsLocked = true
+		
+	def unlockLog(self):
+		"""Enable changes to the log"""
+		self.logIsLocked = false
+	#@-body
+	#@-node:12::app.setLog, lockLog, unlocklog
+	#@+node:13::app.writeWaitingLog
 	#@+body
 	def writeWaitingLog (self):
 	
@@ -496,7 +515,7 @@ class LeoApp:
 			self.logWaiting = []
 	
 	#@-body
-	#@-node:12::app.writeWaitingLog
+	#@-node:13::app.writeWaitingLog
 	#@-others
 
 

@@ -121,7 +121,7 @@ def createAppObject(root):
 	return app
 #@-body
 #@-node:2::createAppObject
-#@+node:3::createFrame
+#@+node:3::createFrame (works)
 #@+body
 def createFrame (app,fileName):
 	
@@ -149,11 +149,11 @@ def createFrame (app,fileName):
 		if ok:
 			app.windowList.remove(frame1)
 			frame1.top.destroy() # force the window to go away now.
-			app.log = frame2 # Sets the log stream for es()
+			app.setLog(frame2,"createFrame") # Sets the log stream for es()
 			return frame2
 		else:
 			frame1.top.deiconify()
-			app.log = frame1
+			app.setLog(frame1,"createFrame")
 			es("File not found: " + fileName)
 			fileName = ensure_extension(fileName, ".leo")
 			frame1.mFileName = fileName
@@ -170,7 +170,7 @@ def createFrame (app,fileName):
 		frame1.startupWindow = true
 		return frame1
 #@-body
-#@-node:3::createFrame
+#@-node:3::createFrame (works)
 #@+node:4::initSherlock
 #@+body
 def initSherlock (app,args):

@@ -133,7 +133,7 @@ class baseLeoFrame:
 		v = c.currentVnode()
 		if not doHook("menu1",c=c,v=v):
 			self.createMenuBar(top)
-		app().log = self # the LeoFrame containing the log
+		app().setLog(self,"frame.__init__") # the LeoFrame containing the log
 		app().windowList.append(self)
 		# Sign on.
 		color = app().config.getWindowPref("log_error_color")
@@ -695,11 +695,11 @@ class baseLeoFrame:
 	
 		try:
 			c = self.commands ; v = c.currentVnode()
-			app().log = self
+			app().setLog(self,"OnActivateBody")
 			self.tree.OnDeactivate()
-			# trace(`app().log`)
 		except:
 			es_event_exception("activate body")
+	
 	
 	
 	#@-body
@@ -709,16 +709,14 @@ class baseLeoFrame:
 	def OnActivateLeoEvent(self,event=None):
 	
 		try:
-			app().log = self
-			# trace(`app().log`)
+			app().setLog(self,"OnActivateLeoEvent")
 		except:
 			es_event_exception("activate Leo")
 	
 	def OnDeactivateLeoEvent(self,event=None):
 	
 		try:
-			app().log = None
-			# trace(`app().log`)
+			app().setLog(None,"OnDeactivateLeoEvent")
 		except:
 			es_event_exception("deactivate Leo")
 	#@-body
@@ -728,9 +726,8 @@ class baseLeoFrame:
 	def OnActivateLog (self,event=None):
 	
 		try:
-			app().log = self
+			app().setLog(self,"OnActivateLog")
 			self.tree.OnDeactivate()
-			# trace(`app().log`)
 		except:
 			es_event_exception("activate log")
 	#@-body
@@ -740,10 +737,9 @@ class baseLeoFrame:
 	def OnActivateTree (self,event=None):
 	
 		try:
-			app().log = self
+			app().setLog(self,"OnActivateTree")
 			self.tree.undimEditLabel()
 			self.tree.canvas.focus_set()
-			# trace(`app().log`)
 		except:
 			es_event_exception("activate tree")
 	
@@ -942,7 +938,7 @@ class baseLeoFrame:
 	
 	def put (self,s,color=None):
 		# print `app().quitting`,`self.log`
-		if app().quitting > 0: return
+		if app().quitting: return
 		if self.log:
 			if type(s) == type(u""): # 3/18/03
 				s = toEncodedString(s,app().tkEncoding)
@@ -968,7 +964,7 @@ class baseLeoFrame:
 			print s
 	
 	def putnl (self):
-		if app().quitting > 0: return
+		if app().quitting: return
 		if self.log:
 			self.log.insert("end",'\n')
 			self.log.see("end")
@@ -1805,7 +1801,7 @@ class baseLeoFrame:
 	def doCommand (self,command,label,event=None):
 		
 		# A horrible kludge: set app().log to cover for a possibly missing activate event.
-		app().log = self
+		app().setLog(self,"doCommand")
 	
 		if label == "cantredo": label = "redo"
 		if label == "cantundo": label = "undo"
@@ -1822,6 +1818,7 @@ class baseLeoFrame:
 		doHook("command2",c=c,v=v,label=label)
 				
 		return "break" # Inhibit all other handlers.
+	
 	#@-body
 	#@-node:5::frame.doCommand
 	#@+node:6::get/set/destroyMenu
@@ -1925,10 +1922,10 @@ class baseLeoFrame:
 			ok, frame = self.OpenWithFileName(fileName)
 			
 			if ok and closeFlag:
-				app().log = frame # Sets the log stream for es()
 				app().windowList.remove(self)
 				self.top.destroy() # force the window to go away now.
 				
+	
 	
 	#@-body
 	#@-node:2::frame.OnOpen
@@ -2131,7 +2128,7 @@ class baseLeoFrame:
 			#@<< remove previous entry from a.openWithFiles if it exists >>
 			#@+node:1::<< remove previous entry from a.openWithFiles if it exists >>
 			#@+body
-			for dict in a.openWithFiles:
+			for dict in a.openWithFiles[:]: # 6/30/03
 				v2 = dict.get("v")
 				if v.t == v2.t:
 					print "removing previous entry in a.openWithFiles for",v
@@ -2184,7 +2181,7 @@ class baseLeoFrame:
 			fn = os.path.normpath(fn)
 			if fileName == fn:
 				frame.top.deiconify()
-				app().log = frame
+				app().setLog(frame,"OpenWithFileName")
 				# es("This window already open")
 				return true, frame
 				
@@ -2196,8 +2193,10 @@ class baseLeoFrame:
 				frame = LeoFrame(fileName)
 				if not doHook("open1",
 					old_c=self,new_c=frame.commands,fileName=fileName):
-					app().log = frame # 5/12/03
+					app().setLog(frame,"OpenWithFileName") # 5/12/03
+					app().lockLog() # 6/30/03
 					frame.commands.fileCommands.open(file,fileName) # closes file.
+					app().unlockLog() # 6/30/03
 				frame.openDirectory=os.path.dirname(fileName)
 				frame.updateRecentFiles(fileName)
 				doHook("open2",
@@ -2396,7 +2395,7 @@ class baseLeoFrame:
 			if ok and closeFlag:
 				app().windowList.remove(self)
 				self.destroy() # force the window to go away now.
-				app().log = frame # Sets the log stream for es()
+				app().setLog(frame,"OnOpenRecentFile") # Sets the log stream for es()
 		doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
 	#@-body
 	#@-node:1::frame.OnOpenRecentFile
@@ -4482,7 +4481,7 @@ class baseLeoFrame:
 	def OnMenuClick (self):
 		
 		# A horrible kludge: set app().log to cover for a possibly missing activate event.
-		app().log = self
+		app().setLog(self,"OnMenuClick")
 		
 		# Allow the user first crack at updating menus.
 		c = self.commands ; v = c.currentVnode() # 2/8/03
@@ -4490,6 +4489,7 @@ class baseLeoFrame:
 			self.updateFileMenu()
 			self.updateEditMenu()
 			self.updateOutlineMenu()
+	
 	
 	#@-body
 	#@-node:1::frame.OnMenuClick (enables and disables all menu items)

@@ -2344,22 +2344,10 @@ def es(s,*args,**keys):
 #@+node:4::top
 #@+body
 #@+at
-#  11/6/02: app().log is now set correctly when there are multiple windows.
+#  frame.doCommand and frame.OnMenuClick now set app().log, so top() will be 
+# reliable after any command is executed.
 # 
-# Before 11/6/02, app().log depended on activate events, and was not 
-# reliable.  The following routines now set app().log:
-# 
-# - frame.doCommand
-# - frame.OnMenuClick
-# 
-# Thus, top() will be reliable after any command is executed.  Creating a new 
-# window and opening a .leo file also set app().log correctly, so it appears 
-# that all holes have now been plugged.
-# 
-# Note 1: doHook calls top(), so the wrong hook function might be dispatched 
-# if this routine does not return the proper value.
-# 
-# Note 2: The value of top() may change during a new or open command, which 
+# Note 1: The value of top() may change during a new or open command, which 
 # may change the routine used to execute the "command1" and "command2" hooks.  
 # This is not a bug, and hook routines must be aware of this fact.
 
@@ -2367,18 +2355,14 @@ def es(s,*args,**keys):
 #@@c
 
 def top():
-
-	# 11/6/02: app().log is now set correctly when there are multiple windows.
-	a = app()
-	if a:
-		frame = a.log # the current frame
-		if frame:
-			return frame.commands
-		else:
-			return None
-	else:
+	
+	"""Return the commander of the topmost window"""
+	
+	# Warning: may be called during startup or shutdown when nothing exists.
+	try:
+		return app().log.commands
+	except:
 		return None
-
 #@-body
 #@-node:4::top
 #@+node:5::trace is defined below
