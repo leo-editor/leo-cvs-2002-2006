@@ -2,6 +2,10 @@
 #@+node:ekr.20031218072017.3749:@thin leoMenu.py
 """Gui-independent menu handling for Leo."""
 
+#@@language python
+#@@tabwidth -4
+#@@pagewidth 80
+
 import leoGlobals as g
 import string
 import sys
@@ -102,11 +106,12 @@ class leoMenu:
         self.editMenuTop2Table = (
             ("&Go To Line Number","Alt+G",c.goToLineNumber),
             ("&Execute Script","Alt+Shift+E",c.executeScript),
-            ("Set Fon&t...",None,c.fontPanel), # To be replaced by general settings dialog.
-            ("Set &Colors...",None,c.colorPanel), # To be replaced by general settings dialog.
+            # ("Set Fon&t...",None,c.fontPanel), # To be replaced by general settings dialog.
+            # ("Set &Colors...",None,c.colorPanel), # To be replaced by general settings dialog.
             (label,"Alt+V",c.viewAllCharacters),
-            ("-",None,None),
-            ("Prefere&nces",None,c.preferences)) # To be replaced by general settings dialog.
+            # ("-",None,None),
+            ("Prefere&nces",None,c.preferences)
+        )
         #@nonl
         #@-node:ekr.20031218072017.3757:<< define editMenuTop2Table >>
         #@nl

@@ -1,5 +1,9 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3897:@thin leoTkinterFind.py
+#@@language python
+#@@tabwidth -4
+#@@pagewidth 80
+
 import leoGlobals as g
 import leoFind
 
@@ -79,12 +83,12 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     #@    @+others
     #@+node:ekr.20031218072017.3898:Birth & death
     #@+node:ekr.20031218072017.3899:__init__
-    def __init__(self,c,resizeable=False):
+    def __init__(self,c,resizeable=False,title=None):
     
         # g.trace("leoTkinterFind",c)
         
         # Init the base classes...
-        leoFind.leoFind.__init__(self,c)
+        leoFind.leoFind.__init__(self,c,title=title)
         leoTkinterDialog.leoTkinterDialog.__init__(self,self.title,resizeable)
     
         #@    << create the tkinter intVars >>

@@ -4,8 +4,11 @@
 
 These classes should be overridden to create frames for a particular gui."""
 
-import leoGlobals as g
+#@@language python
+#@@tabwidth -4
+#@@pagewidth 80
 
+import leoGlobals as g
 import leoColor
 import leoMenu
 import leoUndo

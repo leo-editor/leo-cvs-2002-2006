@@ -3,10 +3,9 @@
 #@+node:ekr.20031218072017.3939:@thin leoTkinterFrame.py
 #@@first
 
-# To do: Use config params for window height, width and bar color, relief and width.
-
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 #@<< imports >>
 #@+node:ekr.20041221070525:<< imports >>

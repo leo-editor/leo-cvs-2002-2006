@@ -2,6 +2,7 @@
 #@+node:ekr.20031218072017.3320:@thin leoNodes.py
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 #@<< About the vnode and tnode classes >>
 #@+node:ekr.20031218072017.2412:<< About the vnode and tnode classes >>

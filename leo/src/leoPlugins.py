@@ -15,6 +15,10 @@ After startup:
 - The first non-None return is sent back to Leo.
 """
 
+#@@language python
+#@@tabwidth -4
+#@@pagewidth 80
+
 import leoGlobals as g
 
 handlers = {}

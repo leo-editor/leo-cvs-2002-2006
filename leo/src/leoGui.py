@@ -10,6 +10,10 @@ Leo's core calls this class to allocate all gui objects.
 
 Plugins may define their own gui classes by setting g.app.gui."""
 
+#@@language python
+#@@tabwidth -4
+#@@pagewidth 80
+
 import leoGlobals as g
 import leoFrame # for null gui.
 

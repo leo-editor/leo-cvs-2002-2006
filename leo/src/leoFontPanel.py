@@ -2,6 +2,7 @@
 #@+node:ekr.20031218072017.3652:@thin leoFontPanel.py
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 import leoGlobals as g
     

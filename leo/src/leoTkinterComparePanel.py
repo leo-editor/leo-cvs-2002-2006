@@ -1,9 +1,10 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3838:@thin leoTkinterComparePanel.py
+"""Leo's base compare class."""
+
 #@@language python
 #@@tabwidth -4
-
-"""Leo's base compare class."""
+#@@pagewidth 80
 
 import leoGlobals as g
 import leoCompare

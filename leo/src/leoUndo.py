@@ -2,6 +2,7 @@
 #@+node:ekr.20031218072017.3603:@thin leoUndo.py
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 # Undo manager for leo.py.
 

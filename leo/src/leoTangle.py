@@ -2,6 +2,7 @@
 #@+node:ekr.20031218072017.3446:@thin leoTangle.py
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 # Tangle and Untangle.
 import leoGlobals as g

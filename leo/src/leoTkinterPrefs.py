@@ -2,6 +2,7 @@
 #@+node:ekr.20031218072017.4122:@thin leoTkinterPrefs.py
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 import leoGlobals as g
 import leoPrefs
@@ -19,6 +20,8 @@ class leoTkinterPrefs (leoPrefs.leoPrefs,leoTkinterDialog.leoTkinterDialog):
     def __init__ (self,c):
         
         """Ctor for the leoTkinterPrefs class."""
+        
+        g.trace('tkinterPrefs')
         
         # Init the base class
         leoPrefs.leoPrefs.__init__(self,c)

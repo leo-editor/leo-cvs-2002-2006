@@ -2,6 +2,7 @@
 #@+node:ekr.20031218072017.3630:@thin leoCompare.py
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 """Leo's base compare class."""
 

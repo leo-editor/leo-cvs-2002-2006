@@ -1,5 +1,9 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3822:@thin leoTkinterColorPanels.py
+#@@language python
+#@@tabwidth -4
+#@@pagewidth 80
+
 import leoGlobals as g
 import leoColorPanel
 

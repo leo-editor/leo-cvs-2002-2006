@@ -4,6 +4,7 @@
 
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 #@<< imports >>
 #@+node:ekr.20041005105605.2:<< imports >>

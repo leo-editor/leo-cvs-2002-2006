@@ -2,6 +2,10 @@
 #@+node:ekr.20031218072017.4100:@thin leoTkinterMenu.py
 """Tkinter menu handling for Leo."""
 
+#@@language python
+#@@tabwidth -4
+#@@pagewidth 80
+
 import leoGlobals as g
 import leoMenu
 import Tkinter as Tk

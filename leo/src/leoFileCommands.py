@@ -2,6 +2,7 @@
 #@+node:ekr.20031218072017.3018:@thin leoFileCommands.py
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 import leoGlobals as g
 

@@ -2,16 +2,13 @@
 #@+node:EKR.20040429143933:@thin leoProjects.txt
 #@+at 
 #@nonl
-# This part of the tree shows views of the outline related to specific 
-# projects or tasks.  I put such headlines in parentheses, and that is just my 
-# convention.
+# This part of the tree shows views of the outline related to specific projects or tasks.  I put such headlines in parentheses, 
+# and that is just my convention.
 # 
-# I create a new view by cloning headlines that relate to its task, and moving 
-# the cloned headlines under the task headline.  This greatly increases my 
-# focus.  Any changes made in a task view to clone headlines affect the other 
-# clones scattered throughout the outline.  In particular, all @file nodes 
-# containing changed clones become marked as dirty, so they will be written 
-# when the entire outline is saved.
+# I create a new view by cloning headlines that relate to its task, and moving the cloned headlines under the task headline.  This 
+# greatly increases my focus.  Any changes made in a task view to clone headlines affect the other clones scattered throughout the 
+# outline.  In particular, all @file nodes containing changed clones become marked as dirty, so they will be written when the 
+# entire outline is saved.
 #@-at
 #@@c
 
@@ -13877,12 +13874,12 @@ def callback (self, event):
 #@-node:ekr.20041025152343:class underlinedTkButton
 #@+node:ekr.20031218072017.3898:Birth & death
 #@+node:ekr.20031218072017.3899:__init__
-def __init__(self,c,resizeable=False):
+def __init__(self,c,resizeable=False,title=None):
 
     # g.trace("leoTkinterFind",c)
     
     # Init the base classes...
-    leoFind.leoFind.__init__(self,c)
+    leoFind.leoFind.__init__(self,c,title=title)
     leoTkinterDialog.leoTkinterDialog.__init__(self,self.title,resizeable)
 
     << create the tkinter intVars >>

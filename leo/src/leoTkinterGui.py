@@ -5,6 +5,12 @@
 
 """Leo's Tkinter Gui module."""
 
+#@@language python
+#@@tabwidth -4
+#@@pagewidth 80
+
+#@<< imports >>
+#@+node:ekr.20041228050845:<< imports >>
 import leoGlobals as g
 import leoGui
 import leoTkinterColorPanels
@@ -20,6 +26,9 @@ import Tkinter as Tk
 import tkFileDialog
 import string
 import sys
+#@nonl
+#@-node:ekr.20041228050845:<< imports >>
+#@nl
 
 class tkinterGui(leoGui.leoGui):
     

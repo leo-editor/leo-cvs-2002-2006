@@ -2,6 +2,7 @@
 #@+node:ekr.20031218072017.3812:@thin leoPrefs.py
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 import leoGlobals as g
     
@@ -29,6 +30,8 @@ class leoPrefs:
     #@+node:ekr.20031218072017.3814:Birth
     #@+node:ekr.20031218072017.3815:prefs.__init__
     def __init__ (self,c):
+        
+        g.trace('prefs')
     
         self.c = c
     

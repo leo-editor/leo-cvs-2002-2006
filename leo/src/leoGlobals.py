@@ -7,6 +7,7 @@
 
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 from __future__ import generators # To make the code work in Python 2.2.
 
@@ -1112,7 +1113,8 @@ def print_dict(d,tag=None):
     keys.sort()
     n = 6
     for key in keys:
-        n = max(n,len(key))
+        if type(key) == type(''):
+            n = max(n,len(key))
     if tag:
         print '%s...' % tag
     for key in keys:
@@ -1125,7 +1127,8 @@ def dictToString(d,tag=None):
     keys.sort()
     n = 6
     for key in keys:
-        n = max(n,len(key))
+        if type(key) == type(''):
+            n = max(n,len(key))
     lines = ["%*s: %s" % (n,key,d.get(key)) for key in keys]
     s = '\n'.join(lines)
     if tag:
@@ -3427,6 +3430,9 @@ class Bunch:
     
     def __init__(self,**keywords):
         self.__dict__.update (keywords)
+        
+    def __repr__(self):
+        return self.toString()
 
     def ivars(self):
         return self.__dict__.keys()

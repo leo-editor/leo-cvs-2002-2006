@@ -8,6 +8,7 @@ The code is based on code found in Python's IDLE program."""
 
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 #@<< about drawing >>
 #@+node:ekr.20040803072955.1:  << About drawing >>

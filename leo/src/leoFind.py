@@ -2,6 +2,7 @@
 #@+node:ekr.20031218072017.3052:@thin leoFind.py
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 import leoGlobals as g
 
@@ -61,20 +62,26 @@ class leoFind:
 
     #@    @+others
     #@+node:ekr.20031218072017.3053:leoFind.__init__
-    def __init__ (self,c):
+    def __init__ (self,c,title=None):
     
         self.c = c
-        #@    << compute self.title >>
-        #@+node:ekr.20041121145452:<< compute self.title >>
-        if not c.mFileName:
-            s = "untitled"
+        
+        # Spell checkers use this class, so we can't always compute a title.
+        if title:
+            self.title = title
         else:
-            path,s = g.os_path_split(c.mFileName)
-            
-        self.title = "Find/Change for %s" %  s
-        #@nonl
-        #@-node:ekr.20041121145452:<< compute self.title >>
-        #@nl
+            #@        << compute self.title >>
+            #@+node:ekr.20041121145452:<< compute self.title >>
+            if not c.mFileName:
+                s = "untitled"
+            else:
+                path,s = g.os_path_split(c.mFileName)
+                
+            self.title = "Find/Change for %s" %  s
+            #@nonl
+            #@-node:ekr.20041121145452:<< compute self.title >>
+            #@nl
+    
         #@    << init the gui-independent ivars >>
         #@+node:ekr.20031218072017.3054:<< init the gui-independent ivars >>
         self.wrapVnode = None
