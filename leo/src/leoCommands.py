@@ -907,15 +907,14 @@ class baseCommands:
             ("Pascal files","*.pas"),
             ("Python files","*.py") ]
     
-        fileName = g.app.gui.runOpenFileDialog(
+        names = g.app.gui.runOpenFileDialog(
             title="Import To @root",
             filetypes=types,
-            defaultextension=".py")
+            defaultextension=".py",
+            multiple=True)
     
-        if fileName and len(fileName) > 0:
-            paths = [fileName] # alas, askopenfilename returns only a single name.
-            c.importCommands.importFilesCommand (paths,"@root")
-    
+        if names:
+            c.importCommands.importFilesCommand (names,"@root")
     #@-node:ekr.20031218072017.2852:importAtRoot
     #@+node:ekr.20031218072017.2853:importAtFile
     def importAtFile (self):
@@ -932,14 +931,14 @@ class baseCommands:
             ("Pascal files","*.pas"),
             ("Python files","*.py") ]
     
-        fileName = g.app.gui.runOpenFileDialog(
+        names = g.app.gui.runOpenFileDialog(
             title="Import To @file",
             filetypes=types,
-            defaultextension=".py")
+            defaultextension=".py",
+            multiple=True)
     
-        if fileName and len(fileName) > 0:
-            paths = [fileName] # alas, askopenfilename returns only a single name.
-            c.importCommands.importFilesCommand (paths,"@file")
+        if names:
+            c.importCommands.importFilesCommand (names,"@file")
     #@nonl
     #@-node:ekr.20031218072017.2853:importAtFile
     #@+node:ekr.20031218072017.2854:importCWEBFiles
@@ -952,14 +951,14 @@ class baseCommands:
             ("Text files", "*.txt"),
             ("All files", "*")]
     
-        fileName = g.app.gui.runOpenFileDialog(
+        names = g.app.gui.runOpenFileDialog(
             title="Import CWEB Files",
             filetypes=filetypes,
-            defaultextension=".w")
+            defaultextension=".w",
+            multiple=True)
     
-        if fileName and len(fileName) > 0:
-            paths = [fileName] # alas, askopenfilename returns only a single name.
-            c.importCommands.importWebCommand(paths,"cweb")
+        if names:
+            c.importCommands.importWebCommand(names,"cweb")
     #@-node:ekr.20031218072017.2854:importCWEBFiles
     #@+node:ekr.20031218072017.2855:importFlattenedOutline
     def importFlattenedOutline (self):
@@ -968,13 +967,13 @@ class baseCommands:
         
         types = [("Text files","*.txt"), ("All files","*")]
     
-        fileName = g.app.gui.runOpenFileDialog(
+        names = g.app.gui.runOpenFileDialog(
             title="Import MORE Text",
             filetypes=types,
-            defaultextension=".py")
+            defaultextension=".py",
+            multiple=True)
     
-        if fileName and len(fileName) > 0:
-            paths = [fileName] # alas, askopenfilename returns only a single name.
+        if names:
             c.importCommands.importFlattenedOutline(paths)
     #@-node:ekr.20031218072017.2855:importFlattenedOutline
     #@+node:ekr.20031218072017.2856:importNowebFiles
@@ -987,15 +986,14 @@ class baseCommands:
             ("Text files", "*.txt"),
             ("All files", "*")]
     
-        fileName = g.app.gui.runOpenFileDialog(
+        names = g.app.gui.runOpenFileDialog(
             title="Import Noweb Files",
             filetypes=filetypes,
-            defaultextension=".nw")
+            defaultextension=".nw",
+            multiple=True)
     
-        if fileName and len(fileName) > 0:
-            paths = [fileName] # alas, askopenfilename returns only a single name.
-            c.importCommands.importWebCommand(paths,"noweb")
-    
+        if names:
+            c.importCommands.importWebCommand(names,"noweb")
     #@-node:ekr.20031218072017.2856:importNowebFiles
     #@+node:ekr.20031218072017.2857:outlineToCWEB
     def outlineToCWEB (self):
@@ -1053,15 +1051,14 @@ class baseCommands:
             ("Pascal files","*.pas"),
             ("Python files","*.py") ]
     
-        fileName = g.app.gui.runOpenFileDialog(
+        names = g.app.gui.runOpenFileDialog(
             title="Remove Sentinels",
             filetypes=types,
             defaultextension=".py")
     
-        if fileName and len(fileName) > 0:
-            # alas, askopenfilename returns only a single name.
-            c.importCommands.removeSentinelsCommand (fileName)
-    
+        if names:
+            c.importCommands.removeSentinelsCommand (names)
+    #@nonl
     #@-node:ekr.20031218072017.2859:removeSentinels
     #@+node:ekr.20031218072017.2860:weave
     def weave (self):

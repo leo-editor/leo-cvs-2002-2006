@@ -93,19 +93,23 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3210:createOutline
     #@+node:ekr.20031218072017.1810:importDerivedFiles
-    def importDerivedFiles (self,parent,fileName):
+    def importDerivedFiles (self,parent,paths):
         
         c = self.c ; at = c.atFileCommands
         current = c.currentVnode()
         
         c.beginUpdate()
-        v = parent.insertAfter()
-        v.initHeadString("Imported @file " + fileName)
-        c.undoer.setUndoParams("Import",v,select=current)
-        at.read(v,importFileName=fileName)
-        c.selectVnode(v)
-        v.expand()
+        
+        for fileName in paths:
+            v = parent.insertAfter()
+            v.initHeadString("Imported @file " + fileName)
+            c.undoer.setUndoParams("Import",v,select=current)
+            at.read(v,importFileName=fileName)
+            c.selectVnode(v)
+            v.expand()
+    
         c.endUpdate()
+    #@nonl
     #@-node:ekr.20031218072017.1810:importDerivedFiles
     #@+node:ekr.20031218072017.3212:importFilesCommand
     def importFilesCommand (self,files,treeType):
@@ -368,11 +372,11 @@ class baseLeoImportCommands:
     
         c = self.c ; current = c.currentVnode()
         if current == None: return
-        if len(files) < 1: return
+        if not files: return
         self.webType = webType
+    
         c.beginUpdate()
-        for i in xrange(len(files)):
-            fileName = files[i]
+        for fileName in files:
             v = self.createOutlineFromWeb(fileName,current)
             v.contract()
             v.setDirty()
@@ -2418,74 +2422,76 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.1148:outlineToWeb
     #@+node:ekr.20031218072017.3300:removeSentinelsCommand
-    def removeSentinelsCommand (self,fileName):
+    def removeSentinelsCommand (self,paths):
     
         self.setEncoding()
-        path, self.fileName = g.os_path_split(fileName) # path/fileName
-        #@    << Read file into s >>
-        #@+node:ekr.20031218072017.3301:<< Read file into s >>
-        try:
-            file = open(fileName)
-            s = file.read()
-            s = g.toUnicode(s,self.encoding)
-            file.close()
-        except:
-            g.es("Can not open " + fileName, color="blue")
-            import leoTest ; leoTest.fail()
-            return
-        #@nonl
-        #@-node:ekr.20031218072017.3301:<< Read file into s >>
-        #@nl
-        #@    << set delims from the header line >>
-        #@+node:ekr.20031218072017.3302:<< set delims from the header line >>
-        # Skip any non @+leo lines.
-        i = 0
-        while i < len(s) and not g.find_on_line(s,i,"@+leo"):
-            i = g.skip_line(s,i)
-        
-        # Get the comment delims from the @+leo sentinel line.
-        at = self.c.atFileCommands
-        j = g.skip_line(s,i) ; line = s[i:j]
-        
-        valid,new_df,start_delim,end_delim = at.parseLeoSentinel(line)
-        if not valid:
-            g.es("invalid @+leo sentinel in " + fileName)
-            return
-        
-        if end_delim:
-            line_delim = None
-        else:
-            line_delim,start_delim = start_delim,None
-        #@nonl
-        #@-node:ekr.20031218072017.3302:<< set delims from the header line >>
-        #@nl
-        # g.trace("line: '%s', start: '%s', end: '%s'" % (line_delim,start_delim,end_delim))
-        s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
-        ext = g.app.config.remove_sentinels_extension
-        if ext == None or len(ext) == 0:
-            ext = ".txt"
-        if ext[0] == '.':
-            newFileName = g.os_path_join(path,fileName+ext)
-        else:
-            head,ext2 = g.os_path_splitext(fileName) 
-            newFileName = g.os_path_join(path,head+ext+ext2)
-        # g.trace(repr(s))
-        #@    << Write s into newFileName >>
-        #@+node:ekr.20031218072017.1149:<< Write s into newFileName >>
-        try:
-            mode = g.app.config.output_newline
-            mode = g.choose(mode=="platform",'w','wb')
-            file = open(newFileName,mode)
-            s = g.toEncodedString(s,self.encoding,reportErrors=True)
-            file.write(s)
-            file.close()
-            g.es("created: " + newFileName)
-        except:
-            g.es("exception creating: " + newFileName)
-            g.es_exception()
-        #@nonl
-        #@-node:ekr.20031218072017.1149:<< Write s into newFileName >>
-        #@nl
+    
+        for fileName in paths:
+            path, self.fileName = g.os_path_split(fileName) # path/fileName
+            #@        << Read file into s >>
+            #@+node:ekr.20031218072017.3301:<< Read file into s >>
+            try:
+                file = open(fileName)
+                s = file.read()
+                s = g.toUnicode(s,self.encoding)
+                file.close()
+            except:
+                g.es("Can not open " + fileName, color="blue")
+                import leoTest ; leoTest.fail()
+                return
+            #@nonl
+            #@-node:ekr.20031218072017.3301:<< Read file into s >>
+            #@nl
+            #@        << set delims from the header line >>
+            #@+node:ekr.20031218072017.3302:<< set delims from the header line >>
+            # Skip any non @+leo lines.
+            i = 0
+            while i < len(s) and not g.find_on_line(s,i,"@+leo"):
+                i = g.skip_line(s,i)
+            
+            # Get the comment delims from the @+leo sentinel line.
+            at = self.c.atFileCommands
+            j = g.skip_line(s,i) ; line = s[i:j]
+            
+            valid,new_df,start_delim,end_delim = at.parseLeoSentinel(line)
+            if not valid:
+                g.es("invalid @+leo sentinel in " + fileName)
+                return
+            
+            if end_delim:
+                line_delim = None
+            else:
+                line_delim,start_delim = start_delim,None
+            #@nonl
+            #@-node:ekr.20031218072017.3302:<< set delims from the header line >>
+            #@nl
+            # g.trace("line: '%s', start: '%s', end: '%s'" % (line_delim,start_delim,end_delim))
+            s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
+            ext = g.app.config.remove_sentinels_extension
+            if ext == None or len(ext) == 0:
+                ext = ".txt"
+            if ext[0] == '.':
+                newFileName = g.os_path_join(path,fileName+ext)
+            else:
+                head,ext2 = g.os_path_splitext(fileName) 
+                newFileName = g.os_path_join(path,head+ext+ext2)
+            # g.trace(repr(s))
+            #@        << Write s into newFileName >>
+            #@+node:ekr.20031218072017.1149:<< Write s into newFileName >>
+            try:
+                mode = g.app.config.output_newline
+                mode = g.choose(mode=="platform",'w','wb')
+                file = open(newFileName,mode)
+                s = g.toEncodedString(s,self.encoding,reportErrors=True)
+                file.write(s)
+                file.close()
+                g.es("created: " + newFileName)
+            except:
+                g.es("exception creating: " + newFileName)
+                g.es_exception()
+            #@nonl
+            #@-node:ekr.20031218072017.1149:<< Write s into newFileName >>
+            #@nl
     #@nonl
     #@-node:ekr.20031218072017.3300:removeSentinelsCommand
     #@+node:ekr.20031218072017.3303:removeSentinelLines
