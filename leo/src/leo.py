@@ -105,11 +105,11 @@ def isValidPython():
 	from leoGlobals import true,false
 	
 	message = """
-Leo requires Python 2.1 or higher.
-You may download Python 2.1 and Python 2.2 from http://python.org/download/
+Leo requires Python 2.2 or higher.
+You may download Python 2.2 and Python 2.3 from http://python.org/download/
 """
 	try:
-		if not g.CheckVersion(sys.version, "2.1"):
+		if not g.CheckVersion(sys.version, "2.2"):
 			g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
 			return false
 		else:
