@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5916" clone_windows="0"/>
-<globals body_outline_ratio="0.572077185017">
-	<global_window_position top="63" left="168" height="864" width="913"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5921" clone_windows="0"/>
+<globals body_outline_ratio="0.481481481481">
+	<global_window_position top="45" left="251" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -637,9 +637,13 @@
 </v>
 </v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="ekr.20040723064143.1"><vh>To do</vh>
+<v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
+<v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
+</v>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754" a="TV"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1" a="M"><vh>-input</vh></v>
@@ -727,7 +731,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2"><vh>Test Leo files...</vh>
+<v t="ekr.20040712101754.2" a="E"><vh>Test Leo files...</vh>
 <v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
 <v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
 <v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
@@ -989,11 +993,14 @@
 <v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
 <v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
+<v t="ekr.20040723062819"><vh>Syntax Checks...</vh>
 <v t="EKR.20040612095237"><vh>@test checkPythonCode (bad syntax)</vh>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
 </v>
 <v t="ekr.20040715154319"><vh>@test checkPythonCode (bad tabnanny)</vh>
 <v t="EKR.20040610194209.1" a="M"><vh>TabNanny data (bad)</vh></v>
+</v>
+<v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
 </v>
 </v>
 <v t="ekr.20040712101754.274" a="M"><vh>@suite run all doctests in leo*.py</vh></v>
@@ -1078,11 +1085,10 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
 </v>
+<v t="ekr.20040707081532.1" a="M"><vh>Do @test</vh></v>
 </v>
 <v t="ekr.20040721153143"><vh>Main testing scripts</vh>
-<v t="ekr.20040707081532.1" a="M"><vh>Do @test</vh></v>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040721114839.1"><vh>runTimeit</vh></v>
 <v t="ekr.20040721145258.1"><vh>Run gc</vh></v>
@@ -1108,7 +1114,12 @@
 </v>
 <v t="ekr.20040716062608"><vh>Perfect Import Script</vh></v>
 </v>
-<v t="ekr.20040721144323" a="TV"><vh>To do: bind keystrokes to "button" scripts</vh></v>
+<v t="ekr.20040723065021"><vh>stripBlankLines</vh>
+<v t="ekr.20040723065047"><vh>Test</vh></v>
+</v>
+<v t="ekr.20040723095151"><vh>Tk tests</vh></v>
+<v t="ekr.20040724111702"><vh>Tk test 2</vh></v>
+<v t="ekr.20040724171040"><vh>Tk test 3</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1635,9 +1646,7 @@ import unittest
 
 c = g.top()
 
-c.checkPythonCode(unittest=True)
-
-result = g.app.unitTestDict.get("checkPythonCode")
+result = c.checkPythonCode(unittest=True,ignoreAtIgnore=False)
 
 assert result=="error", "checkPythonCode returns: %s" % result
 </t>
@@ -5219,7 +5228,9 @@ if suite:
 
 c = g.top()
 
-c.checkAllPythonCode()</t>
+result = c.checkAllPythonCode(unittest=True,ignoreAtIgnore=True)
+
+assert result=="ok", "checkPythonCode returns: %s" % result</t>
 <t tx="ekr.20040713070526">@language python 
 
 import leoGlobals as g
@@ -8694,9 +8705,7 @@ import unittest
 
 c = g.top()
 
-c.checkPythonCode(unittest=True)
-
-result = g.app.unitTestDict.get("checkPythonCode")
+result = c.checkPythonCode(unittest=True,ignoreAtIgnore=False)
 
 assert result=="error", "checkPythonCode returns: %s" % result</t>
 <t tx="ekr.20040716062608"># Run this script to import a file.
@@ -8780,19 +8789,19 @@ This should be the last line (no newline following!)
 #@-leo
 </t>
 <t tx="ekr.20040716092802">def compareIgnoringNodeNames (self,s1,s2,delims,verbose=False):
-    
+
     # Compare text containing sentinels, but ignore differences in @+-nodes.
-    
+
     ## if marker[-1] == '@': marker = marker[:-1]
-    
+
     delim1,delim2,delim3 = delims
-    
+
     lines1 = g.splitLines(s1)
     lines2 = g.splitLines(s2)
     if len(lines1) != len(lines2):
         if verbose: g.trace("Different number of lines")
         return False
-        
+
     for i in xrange(len(lines2)):
         line1 = lines1[i]
         line2 = lines2[i]
@@ -8824,12 +8833,12 @@ This should be the last line (no newline following!)
 <t tx="ekr.20040716140617.1">def runPerfectImportTest(c,p,
     testing=False,verbose=False,
     ignoreSentinelsInCompare=False):
-    
+
     # The contents of the "-input" and "-input-after" nodes define the changes.
 
     c = g.top() ; p = c.currentPosition()
     u = testUtils()
-    
+
     input           = u.findNodeInTree(p,"-input")              # i file: before the change.
     input_ins       = u.findNodeInTree(p,"-input-after")        # j file: after the change.
     output_sent     = u.findNodeInTree(p,"-output-sent")        # fat file -&gt; i file.
@@ -8841,10 +8850,10 @@ This should be the last line (no newline following!)
     # Create the output nodes containing sentinels from the original input.
     u.writeNodesToNode(c,input,output_sent,sentinels=True)
     u.writeNodesToNode(c,input_ins,out_after_sent,sentinels=True)
-    
+
     mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
     delims = g.comment_delims_from_extension("foo.py")
-    
+
     fat_lines = g.splitLines(output_sent.bodyString())
     i_lines,mapping = mu.create_mapping(fat_lines,delims)
     if input_ins.hasChildren():
@@ -8853,18 +8862,18 @@ This should be the last line (no newline following!)
         j_lines = mu.removeSentinelsFromLines(lines,delims)
     else:
         j_lines = g.splitLines(input_ins.bodyString()) 
-    
+
     # For viewing...
     ilines.scriptSetBodyString(''.join(i_lines))
     jlines.scriptSetBodyString(''.join(j_lines))
     if ilines.bodyString() != input.bodyString():
         if not ignoreSentinelsInCompare:
             print "i_lines != input !"
-    
+
     # Put the resulting lines (with sentinels) into the -result node.
     lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
     result.scriptSetBodyString(''.join(lines))
-    
+
     if ignoreSentinelsInCompare:
         sList = []
         for s in (result.bodyString(),out_after_sent.bodyString()):
@@ -9154,16 +9163,16 @@ node 1: line 2
 node 2: line 2
 </t>
 <t tx="ekr.20040716143229">def writeNodeToNode (self,c,input,output,sentinels=True):
-    
+
     """Do an atFile.write the input tree to the body text of the output node."""
-    
+
     s = self.writeNodeToString(c,input,sentinels)
 
     output.scriptSetBodyString (s)</t>
 <t tx="ekr.20040716144017"># See the node called "About the Perfect Import tests" in leoTests.py for how to set up these tests.
 </t>
 <t tx="ekr.20040716144643">def writeNodesToNode (self,c,input,output,sentinels=True):
-    
+
     result = []
     for p in input.self_and_subtree_iter():
         s = self.writeNodeToString(c,p,sentinels)
@@ -9171,12 +9180,12 @@ node 2: line 2
     result = ''.join(result)
     output.scriptSetBodyString (result)</t>
 <t tx="ekr.20040717070500">def writeNodeToString (self,c,input,sentinels):
-    
+
     """Return an atFile.write of the input tree to a string."""
-    
+
     df = c.atFileCommands.new_df
     nodeIndices = g.app.nodeIndices
-    
+
     # Assign input.v.t.fileIndex
     nodeIndices.setTimestamp()
     for p in input.self_and_subtree_iter():
@@ -9184,7 +9193,7 @@ node 2: line 2
             id,time,n = p.v.t.fileIndex
         except TypeError:
             p.v.t.fileIndex = nodeIndices.getNewIndex()
-    
+
     # Write the file to a string.
     df.write(input,thinFile=True,nosentinels= not sentinels,toString=True)
     s = df.stringOutput
@@ -9270,7 +9279,6 @@ try:
     i += 1
 except OverflowError:
     pass</t>
-<t tx="ekr.20040721144323"></t>
 <t tx="ekr.20040721145258.1">import leoTest
 reload(leoTest)
 
@@ -9297,5 +9305,106 @@ for p in c.allNodes_iter():
 
     next = p.next()
     assert not p.isAncestorOf(next)</t>
+<t tx="ekr.20040723062819"></t>
+<t tx="ekr.20040723064143.1">@ignore
+@nocolor
+
+- Unit tests for undo/redo.
+
+- Unit tests for tangle/untangle commands.
+
+- Unit tests for Find commands.
+
+- Unit tests for dialogs.</t>
+<t tx="ekr.20040723064143.2">@ - Support toString in asis methods
+</t>
+<t tx="ekr.20040723064143.3"></t>
+<t tx="ekr.20040723065021">import leoGlobals as g
+c = g.top()
+
+print '-' * 60
+
+# Tag the start of the command.
+c.undoer.setUndoParams("Change All",c.currentPosition())
+
+n = 0 ; total = 0
+for p in c.currentPosition().self_and_subtree_iter():
+    total += 1
+    body = p.bodyString()
+    s = g.stripBlankLines(body)
+    if s != body:
+        n += 1
+        p.setBodyStringOrPane(s,g.app.tkEncoding)
+        c.undoer.setUndoParams("Change",p,
+            oldText=body,newText=s,oldSel=None, newSel=None)
+
+# Tag the end of the command.
+c.undoer.setUndoParams("Change All",c.currentPosition()) 
+
+print "%d nodes changed (%d total)" % (n,total)
+</t>
+<t tx="ekr.20040723065047">@ignore
+a
+  b
+  
+c  
+  
+last
+  </t>
+<t tx="ekr.20040723095151">import Tkinter as Tk
+import leoGlobals as g
+
+root = Tk.Tk()
+c = Tk.Canvas(root)
+c.pack()
+id = c.create_text( 20, 20, text='move this!' )
+
+c.coords( id, 40, 40 )
+
+print c.coords( id )
+</t>
+<t tx="ekr.20040724111702">import Tkinter as Tk
+
+root = Tk.Tk()
+lab = Tk.Label(root,text="MyLabel")
+lab.pack()
+t = Tk.Text(root)
+t.pack()
+
+ltags = lab.bindtags()
+
+def itworks( event ):
+    print 'itworks'
+
+lab.bind('&lt;Button-1&gt;', itworks )
+
+print ltags
+ttags = t.bindtags()
+
+print ttags
+t.bindtags( ltags )
+</t>
+<t tx="ekr.20040724171040">import Tkinter as Tk
+
+root = Tk.Tk()
+c = Tk.Canvas(root,background='white')
+print c.bindtags()
+
+if 0:
+    c.pack(expand=1,fill='both')
+    f = Tk.Frame(c)
+    c.create_window(0,0,window=f,anchor='nw')
+    f.pack_configure(fill='both',expand=1)
+    body = olCreateControl(self,frame,f)
+    c.on = False 
+    sel = lambda event, c = c, body = body:select(event,c,body)
+    ai = lambda event, c = c, body = body, colorizer = frame.body:add_item(event,c,body,colorizer.getColorizer())
+    c.bind("&lt;Key&gt;",watcher,'+')
+    c.bind("&lt;Key&gt;",sel,'+')
+    c.bind("&lt;Key&gt;",ai,'+')
+    ctags = c.bindtags()
+    btags = body.bindtags()
+    btags =(ctags[0],btags[0],btags[1],btags[2],btags[3])
+    body.bindtags(btags)</t>
 </tnodes>
 </leo_file>

@@ -3343,7 +3343,7 @@ def __init__(self,c,frame,canvas):
     # Miscellaneous info.
     self.iconimages = {} # Image cache set by getIconImage().
     self.active = False # True if tree is active
-    self._editPosition = None
+    self._editPosition = None # returned by leoTree.editPosition()
     self.lineyoffset = 0 # y offset for this headline.
     self.disableRedraw = False # True: reschedule a redraw for later.
     self.lastClickFrameId = None # id of last entered clickBox.
@@ -4707,96 +4707,6 @@ def OnIconDoubleClick(self,event=None):
 #@-node:ekr.20031218072017.1956:tree.injectCallbacks (class method)
 #@+node:ekr.20031218072017.2336:Event handers (tree)
 @ Important note: most hooks are created in the vnode callback routines, _not_ here.
-#@+node:ekr.20031218072017.2337:OnActivate
-def OnActivate (self,p,event=None):
-
-    try:
-        c = self.c ; gui = g.app.gui
-        << activate this window >>
-    except:
-        g.es_event_exception("activate tree")
-#@nonl
-#@+node:ekr.20031218072017.2338:<< activate this window >>
-current = c.currentPosition()
-
-if p == current:
-    if self.active:
-        self.editLabel(p)
-    else:
-        self.undimEditLabel()
-        gui.set_focus(c,self.canvas) # Essential for proper editing.
-else:
-    self.select(p)
-    g.app.findFrame.handleUserClick(p) # 4/3/04
-    if p.v.t.insertSpot != None: # 9/1/02
-        c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
-        c.frame.bodyCtrl.see(p.v.t.insertSpot)
-    else:
-        c.frame.bodyCtrl.mark_set("insert","1.0")
-    gui.set_focus(c,c.frame.bodyCtrl)
-
-self.active = True
-#@nonl
-#@-node:ekr.20031218072017.2338:<< activate this window >>
-#@-node:ekr.20031218072017.2337:OnActivate
-#@+node:ekr.20031218072017.2339:OnBoxClick
-# Called on click in box and double-click in headline.
-
-def OnBoxClick (self,p):
-    
-    # g.trace(p)
-
-    # Note: "boxclick" hooks handled by vnode callback routine.
-    c = self.c ; gui = g.app.gui
-
-    if p.isExpanded(): p.contract()
-    else:              p.expand()
-
-    self.active = True
-    self.select(p)
-    g.app.findFrame.handleUserClick(p) # 4/3/04
-    gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
-    self.redraw()
-#@nonl
-#@-node:ekr.20031218072017.2339:OnBoxClick
-#@+node:ekr.20031218072017.2345:tree.OnCtontrolT
-# This works around an apparent Tk bug.
-
-def OnControlT (self,event=None):
-
-    # If we don't inhibit further processing the Tx.Text widget switches characters!
-    return "break"
-#@nonl
-#@-node:ekr.20031218072017.2345:tree.OnCtontrolT
-#@+node:ekr.20031218072017.2340:tree.OnDeactivate (caused double-click problem)
-def OnDeactivate (self,event=None):
-    
-    """Deactivate the tree pane, dimming any headline being edited."""
-
-    tree = self ; c = self.c
-    focus = g.app.gui.get_focus(c.frame)
-
-    # Bug fix: 7/13/03: Only do this as needed.
-    # Doing this on every click would interfere with the double-clicking.
-    if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
-        try:
-            # g.trace(focus)
-            tree.endEditLabel()
-            tree.dimEditLabel()
-        except:
-            g.es_event_exception("deactivate tree")
-#@nonl
-#@-node:ekr.20031218072017.2340:tree.OnDeactivate (caused double-click problem)
-#@+node:ekr.20031218072017.2341:tree.findVnodeWithIconId
-def findVnodeWithIconId (self,id):
-    
-    # Due to an old bug, id may be a tuple.
-    try:
-        return self.icon_id_dict.get(id[0])
-    except:
-        return self.icon_id_dict.get(id)
-#@nonl
-#@-node:ekr.20031218072017.2341:tree.findVnodeWithIconId
 #@+node:EKR.20040608110312:Dragging (tk tree)
 #@+node:ekr.20031218072017.2342:tree.OnContinueDrag
 def OnContinueDrag(self,p,event):
@@ -5083,6 +4993,96 @@ elif changed:
 #@-node:ekr.20031218072017.1340:<< update the screen >>
 #@-node:ekr.20031218072017.1335:idle_head_key
 #@-node:ekr.20031218072017.1332:headline key handlers (tree)
+#@+node:ekr.20031218072017.2337:OnActivate
+def OnActivate (self,p,event=None):
+
+    try:
+        c = self.c ; gui = g.app.gui
+        << activate this window >>
+    except:
+        g.es_event_exception("activate tree")
+#@nonl
+#@+node:ekr.20031218072017.2338:<< activate this window >>
+current = c.currentPosition()
+
+if p == current:
+    if self.active:
+        self.editLabel(p)
+    else:
+        self.undimEditLabel()
+        gui.set_focus(c,self.canvas) # Essential for proper editing.
+else:
+    self.select(p)
+    g.app.findFrame.handleUserClick(p) # 4/3/04
+    if p.v.t.insertSpot != None: # 9/1/02
+        c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+        c.frame.bodyCtrl.see(p.v.t.insertSpot)
+    else:
+        c.frame.bodyCtrl.mark_set("insert","1.0")
+    gui.set_focus(c,c.frame.bodyCtrl)
+
+self.active = True
+#@nonl
+#@-node:ekr.20031218072017.2338:<< activate this window >>
+#@-node:ekr.20031218072017.2337:OnActivate
+#@+node:ekr.20031218072017.2339:OnBoxClick
+# Called on click in box and double-click in headline.
+
+def OnBoxClick (self,p):
+    
+    # g.trace(p)
+
+    # Note: "boxclick" hooks handled by vnode callback routine.
+    c = self.c ; gui = g.app.gui
+
+    if p.isExpanded(): p.contract()
+    else:              p.expand()
+
+    self.active = True
+    self.select(p)
+    g.app.findFrame.handleUserClick(p) # 4/3/04
+    gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
+    self.redraw()
+#@nonl
+#@-node:ekr.20031218072017.2339:OnBoxClick
+#@+node:ekr.20031218072017.2341:tree.findVnodeWithIconId
+def findVnodeWithIconId (self,id):
+    
+    # Due to an old bug, id may be a tuple.
+    try:
+        return self.icon_id_dict.get(id[0])
+    except:
+        return self.icon_id_dict.get(id)
+#@nonl
+#@-node:ekr.20031218072017.2341:tree.findVnodeWithIconId
+#@+node:ekr.20031218072017.2345:tree.OnCtontrolT
+# This works around an apparent Tk bug.
+
+def OnControlT (self,event=None):
+
+    # If we don't inhibit further processing the Tx.Text widget switches characters!
+    return "break"
+#@nonl
+#@-node:ekr.20031218072017.2345:tree.OnCtontrolT
+#@+node:ekr.20031218072017.2340:tree.OnDeactivate (caused double-click problem)
+def OnDeactivate (self,event=None):
+    
+    """Deactivate the tree pane, dimming any headline being edited."""
+
+    tree = self ; c = self.c
+    focus = g.app.gui.get_focus(c.frame)
+
+    # Bug fix: 7/13/03: Only do this as needed.
+    # Doing this on every click would interfere with the double-clicking.
+    if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
+        try:
+            # g.trace(focus)
+            tree.endEditLabel()
+            tree.dimEditLabel()
+        except:
+            g.es_event_exception("deactivate tree")
+#@nonl
+#@-node:ekr.20031218072017.2340:tree.OnDeactivate (caused double-click problem)
 #@+node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
 def OnIconClick (self,p,event):
     
@@ -10077,6 +10077,23 @@ def expandAllAncestors (self,p):
 
 #@-node:ekr.20031218072017.4161:tree.expandAllAncestors
 #@+node:ekr.20031218072017.4157:Selecting & editing (tree)
+#@+node:ekr.20040725044521.1:tree.edit_text
+def edit_text (self,p):
+    
+    c = self.c
+    
+    if c:
+        # New in 4.2: the dictionary is a list of pairs(p,v)
+        pairs = self.getEditTextDict(p.v)
+        for p2,t2 in pairs:
+            if p.equal(p2):
+                # g.trace("found",t2)
+                return t2
+        return None
+    else:
+        return None
+#@nonl
+#@-node:ekr.20040725044521.1:tree.edit_text
 #@+node:ekr.20031218072017.4158:dimEditLabel, undimEditLabel
 # Convenience methods so the caller doesn't have to know the present edit node.
 
@@ -13520,6 +13537,23 @@ def setEditPosition(self,p):
 #@nonl
 #@-node:ekr.20031218072017.3716:Getters/Setters (tree)
 #@+node:ekr.20031218072017.4157:Selecting & editing (tree)
+#@+node:ekr.20040725044521.1:tree.edit_text
+def edit_text (self,p):
+    
+    c = self.c
+    
+    if c:
+        # New in 4.2: the dictionary is a list of pairs(p,v)
+        pairs = self.getEditTextDict(p.v)
+        for p2,t2 in pairs:
+            if p.equal(p2):
+                # g.trace("found",t2)
+                return t2
+        return None
+    else:
+        return None
+#@nonl
+#@-node:ekr.20040725044521.1:tree.edit_text
 #@+node:ekr.20031218072017.4158:dimEditLabel, undimEditLabel
 # Convenience methods so the caller doesn't have to know the present edit node.
 
@@ -16643,7 +16677,7 @@ def __init__(self,c,frame,canvas):
     # Miscellaneous info.
     self.iconimages = {} # Image cache set by getIconImage().
     self.active = False # True if tree is active
-    self._editPosition = None
+    self._editPosition = None # returned by leoTree.editPosition()
     self.lineyoffset = 0 # y offset for this headline.
     self.disableRedraw = False # True: reschedule a redraw for later.
     self.lastClickFrameId = None # id of last entered clickBox.
@@ -18292,7 +18326,7 @@ def __init__(self,c,frame,canvas):
     # Miscellaneous info.
     self.iconimages = {} # Image cache set by getIconImage().
     self.active = False # True if tree is active
-    self._editPosition = None
+    self._editPosition = None # returned by leoTree.editPosition()
     self.lineyoffset = 0 # y offset for this headline.
     self.disableRedraw = False # True: reschedule a redraw for later.
     self.lastClickFrameId = None # id of last entered clickBox.
@@ -18586,38 +18620,14 @@ def OnIconDoubleClick(self,event=None):
 #@-node:ekr.20031218072017.4141:tree.Birth & death (Tkinter)
 #@-node:ekr.20040326101817:Birth & death...
 #@+node:ekr.20040326101817.1:edit_text mods...
-#@+node:ekr.20031218072017.3380:v.edit_text TO BE DELETED
-def edit_text (self):
-
-    v = self ; c = v.c ; p = c.currentPosition()
-    
-    g.trace("ooooops")
-    #import traceback ; traceback.print_stack()
-    
-    pairs = self.c.frame.tree.getEditTextDict(v)
-    for p2,t2 in pairs:
-        if p.equal(p2):
-            # g.trace("found",t2)
-            return t2
-            
-    return None
-#@nonl
-#@-node:ekr.20031218072017.3380:v.edit_text TO BE DELETED
 #@+node:ekr.20040306220230.1:p.edit_text
 def edit_text (self):
     
-    p = self
+    # New in 4.3 beta 3: let the tree classes do all the work.
     
-    if self.c:
-        # New in 4.2: the dictionary is a list of pairs(p,v)
-        pairs = self.c.frame.tree.getEditTextDict(p.v)
-        for p2,t2 in pairs:
-            if p.equal(p2):
-                # g.trace("found",t2)
-                return t2
-        return None
-    else:
-        return None
+    p = self ; c = p.c
+    
+    return c.frame.tree.edit_text(p)
 #@nonl
 #@-node:ekr.20040306220230.1:p.edit_text
 #@+node:ekr.20031218072017.1005:drawText (bind)
@@ -19521,6 +19531,23 @@ def yoffsetTree(self,p,p1):
 #@-node:ekr.20031218072017.4149:tree.yoffset
 #@-node:ekr.20031218072017.4144:Drawing (tkTree)
 #@+node:ekr.20031218072017.4157:Selecting & editing (tree)
+#@+node:ekr.20040725044521.1:tree.edit_text
+def edit_text (self,p):
+    
+    c = self.c
+    
+    if c:
+        # New in 4.2: the dictionary is a list of pairs(p,v)
+        pairs = self.getEditTextDict(p.v)
+        for p2,t2 in pairs:
+            if p.equal(p2):
+                # g.trace("found",t2)
+                return t2
+        return None
+    else:
+        return None
+#@nonl
+#@-node:ekr.20040725044521.1:tree.edit_text
 #@+node:ekr.20031218072017.4158:dimEditLabel, undimEditLabel
 # Convenience methods so the caller doesn't have to know the present edit node.
 
@@ -25943,16 +25970,32 @@ def putCodeLine (self,s,i):
 
     j = g.skip_line(s,i)
     line = s[i:j]
-    
-    # 1/29/04: Don't put leading indent if the line is empty!
-    if line and not at.raw:
-        at.putIndent(at.indent)
 
-    if line[-1:]=="\n":
-        at.os(line[:-1])
-        at.onl()
+    # g.app.config.write_strips_blank_lines
+    if 0: # 7/22/04: Don't put any whitespace in otherwise blank lines.
+        if line.strip(): # The line has non-empty content.
+            if not at.raw:
+                at.putIndent(at.indent)
+        
+            if line[-1:]=="\n":
+                at.os(line[:-1])
+                at.onl()
+            else:
+                at.os(line)
+        elif line and line[-1] == '\n':
+            at.onl()
+        else:
+            g.trace("Can't happen: completely empty line")
     else:
-        at.os(line)
+        # 1/29/04: Don't put leading indent if the line is empty!
+        if line and not at.raw:
+            at.putIndent(at.indent)
+    
+        if line[-1:]=="\n":
+            at.os(line[:-1])
+            at.onl()
+        else:
+            at.os(line)
 #@nonl
 #@-node:ekr.20031218072017.2134:putCodeLine
 #@+node:ekr.20031218072017.2106:putRefLine & allies
@@ -43575,16 +43618,32 @@ def putCodeLine (self,s,i):
 
     j = g.skip_line(s,i)
     line = s[i:j]
-    
-    # 1/29/04: Don't put leading indent if the line is empty!
-    if line and not at.raw:
-        at.putIndent(at.indent)
 
-    if line[-1:]=="\n":
-        at.os(line[:-1])
-        at.onl()
+    # g.app.config.write_strips_blank_lines
+    if 0: # 7/22/04: Don't put any whitespace in otherwise blank lines.
+        if line.strip(): # The line has non-empty content.
+            if not at.raw:
+                at.putIndent(at.indent)
+        
+            if line[-1:]=="\n":
+                at.os(line[:-1])
+                at.onl()
+            else:
+                at.os(line)
+        elif line and line[-1] == '\n':
+            at.onl()
+        else:
+            g.trace("Can't happen: completely empty line")
     else:
-        at.os(line)
+        # 1/29/04: Don't put leading indent if the line is empty!
+        if line and not at.raw:
+            at.putIndent(at.indent)
+    
+        if line[-1:]=="\n":
+            at.os(line[:-1])
+            at.onl()
+        else:
+            at.os(line)
 #@nonl
 #@-node:ekr.20031218072017.2134:putCodeLine
 #@+node:ekr.20031218072017.2106:putRefLine & allies
@@ -48783,7 +48842,7 @@ def getExistingVnode (self,tref,headline):
 #@-node:ekr.20040326063413:getExistingVnode
 #@-node:ekr.20040704102411:(Fixed bug when reading  4.1 files with topology errors)
 #@-node:ekr.20040701065235:in 4.2 b2
-#@+node:ekr.20040706080316:in 4.2 b3
+#@+node:ekr.20040706080316:Projects: 4.2 b3
 #@+node:ekr.20040705194708:(Cleaned up recognition of @file nodes)
 #@+node:ekr.20031218072017.3152:g.scanAtFileOptions (used in 3.x read code)
 def scanAtFileOptions (h,err_flag=False):
@@ -51055,7 +51114,7 @@ def importFilesCommand (self,files,treeType,
             v = self.createOutline(fileName,current)
             if v: # createOutline may fail.
                 if perfectImport and treeType == "@file": # Can't correct @root trees.
-                    self.perfectImport(fileName,v,testing=testing,verbose=verbose)
+                    self.perfectImport(fileName,v,testing=testing,verbose=verbose,verify=False)
                 else:
                     g.es("imported " + fileName,color="blue")
                 v.contract()
@@ -51681,11 +51740,10 @@ def setBodyStringOrPane (self,s,encoding="utf-8"):
 
     s = g.toUnicode(s,encoding)
     if p == c.currentPosition():
+        # 7/23/04: Revert to previous code, but force an empty selection.
+        c.frame.body.setSelectionAreas(s,None,None)
+        c.frame.body.setTextSelection(None)
         # This code destoys all tags, so we must recolor.
-        if 1: # 7/13/04: The old way makes no sense.
-            c.frame.body.setTextSelection(None)
-        else:
-            c.frame.body.setSelectionAreas(s,None,None)
         c.recolor()
         
     # Keep the body text in the tnode up-to-date.
@@ -52661,16 +52719,32 @@ def putCodeLine (self,s,i):
 
     j = g.skip_line(s,i)
     line = s[i:j]
-    
-    # 1/29/04: Don't put leading indent if the line is empty!
-    if line and not at.raw:
-        at.putIndent(at.indent)
 
-    if line[-1:]=="\n":
-        at.os(line[:-1])
-        at.onl()
+    # g.app.config.write_strips_blank_lines
+    if 0: # 7/22/04: Don't put any whitespace in otherwise blank lines.
+        if line.strip(): # The line has non-empty content.
+            if not at.raw:
+                at.putIndent(at.indent)
+        
+            if line[-1:]=="\n":
+                at.os(line[:-1])
+                at.onl()
+            else:
+                at.os(line)
+        elif line and line[-1] == '\n':
+            at.onl()
+        else:
+            g.trace("Can't happen: completely empty line")
     else:
-        at.os(line)
+        # 1/29/04: Don't put leading indent if the line is empty!
+        if line and not at.raw:
+            at.putIndent(at.indent)
+    
+        if line[-1:]=="\n":
+            at.os(line[:-1])
+            at.onl()
+        else:
+            at.os(line)
 #@nonl
 #@-node:ekr.20031218072017.2134:putCodeLine
 #@+node:ekr.20031218072017.2106:putRefLine & allies
@@ -53843,23 +53917,12 @@ g.es(s,color="red")
 #@nonl
 #@-node:ekr.20040314044652:<< give test failed message >>
 #@-node:ekr.20031218072017.2072:c.checkOutline
-#@+node:ekr.20040412060927:c.dumpOutline
-def dumpOutline (self):
+#@+node:ekr.20040723094220:Check Outline commands & allies
+#@+node:ekr.20040723094220.1:checkAllPythonCode
+def checkAllPythonCode(self,unittest=False,ignoreAtIgnore=True):
     
-    """ Dump all nodes in the outline."""
-    
-    c = self
+    c = self ; count = 0 ; result = "ok"
 
-    for p in c.allNodes_iter():
-        p.dump()
-#@nonl
-#@-node:ekr.20040412060927:c.dumpOutline
-#@+node:ekr.20040712144216:Check Outline commands & allies
-#@+node:ekr.20040712045933.2:checkAllPythonCode
-def checkAllPythonCode(self,unittest=False):
-    
-    c = self ; count = 0
-    
     for p in c.all_positions_iter():
         
         count += 1
@@ -53867,29 +53930,38 @@ def checkAllPythonCode(self,unittest=False):
             << print dots >>
 
         if g.scanForAtLanguage(c,p) == "python":
-            # Ignore @ignore for unit tests.
-            if unittest or not g.scanForAtIgnore(c,p):
-                c.checkPythonNode(p)
+            if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
+                try:
+                    c.checkPythonNode(p,unittest)
+                except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                    result = "error" # Continue to check.
+                except:
+                    return "surprise" # abort
+                if unittest and result != "ok":
+                    print "Syntax error in %s" % p.headString()
+                    return result # End the unit test: it has failed.
             
     if not unittest:
         g.es("Check complete",color="blue")
+        
+    return result
 #@nonl
-#@+node:ekr.20040712150530:<< print dots >>
+#@+node:ekr.20040723094220.2:<< print dots >>
 if count % 100 == 0:
     g.es('.',newline=False)
 
 if count % 2000 == 0:
     g.enl()
 #@nonl
-#@-node:ekr.20040712150530:<< print dots >>
-#@-node:ekr.20040712045933.2:checkAllPythonCode
-#@+node:ekr.20040712045933.1:checkPythonCode
-def checkPythonCode (self,unittest=False):
+#@-node:ekr.20040723094220.2:<< print dots >>
+#@-node:ekr.20040723094220.1:checkAllPythonCode
+#@+node:ekr.20040723094220.3:checkPythonCode
+def checkPythonCode (self,unittest=False,ignoreAtIgnore=True):
     
-    c = self ; count = 0
+    c = self ; count = 0 ; result = "ok"
     
-    if unittest:
-        g.app.unitTestDict["checkPythonCode"] = "ok"
+    if not unittest:
+        g.es("checking all Python code   ")
     
     for p in c.currentPosition().self_and_subtree_iter():
         
@@ -53898,28 +53970,30 @@ def checkPythonCode (self,unittest=False):
             << print dots >>
 
         if g.scanForAtLanguage(c,p) == "python":
-            # Ignore @ignore for unit tests.
-            if unittest or not g.scanForAtIgnore(c,p):
+            if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
                 try:
                     c.checkPythonNode(p,unittest)
                 except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
-                    g.app.unitTestDict["checkPythonCode"] = "error"
+                    result = "error" # Continue to check.
                 except:
-                    g.app.unitTestDict["checkPythonCode"] = "surprise"
+                    return "surprise" # abort
 
     if not unittest:
         g.es("Check complete",color="blue")
+        
+    # We _can_ return a result for unit tests because we aren't using doCommand.
+    return result
 #@nonl
-#@+node:ekr.20040712150822:<< print dots >>
+#@+node:ekr.20040723094220.4:<< print dots >>
 if count % 100 == 0:
     g.es('.',newline=False)
 
 if count % 2000 == 0:
     g.enl()
 #@nonl
-#@-node:ekr.20040712150822:<< print dots >>
-#@-node:ekr.20040712045933.1:checkPythonCode
-#@+node:ekr.20040712045933.3:checkPythonNode
+#@-node:ekr.20040723094220.4:<< print dots >>
+#@-node:ekr.20040723094220.3:checkPythonCode
+#@+node:ekr.20040723094220.5:checkPythonNode
 def checkPythonNode (self,p,unittest=False):
 
     c = self
@@ -53940,8 +54014,8 @@ def checkPythonNode (self,p,unittest=False):
 
     c.tabNannyNode(p,h,body,unittest)
 #@nonl
-#@-node:ekr.20040712045933.3:checkPythonNode
-#@+node:ekr.20040711135244.18:tabNannyNode
+#@-node:ekr.20040723094220.5:checkPythonNode
+#@+node:ekr.20040723094220.6:tabNannyNode
 # This code is based on tabnanny.check.
 
 def tabNannyNode (self,p,headline,body,unittest=False):
@@ -53977,8 +54051,19 @@ def tabNannyNode (self,p,headline,body,unittest=False):
         g.trace("unexpected exception")
         g.es_exception()
         if unittest: raise
-#@-node:ekr.20040711135244.18:tabNannyNode
-#@-node:ekr.20040712144216:Check Outline commands & allies
+#@-node:ekr.20040723094220.6:tabNannyNode
+#@-node:ekr.20040723094220:Check Outline commands & allies
+#@+node:ekr.20040412060927:c.dumpOutline
+def dumpOutline (self):
+    
+    """ Dump all nodes in the outline."""
+    
+    c = self
+
+    for p in c.allNodes_iter():
+        p.dump()
+#@nonl
+#@-node:ekr.20040412060927:c.dumpOutline
 #@+node:ekr.20040711135959.1:Pretty Print commands
 #@+node:ekr.20040712053025:prettyPrintAllPythonCode
 def prettyPrintAllPythonCode (self,dump=False):
@@ -56381,7 +56466,7 @@ def importFilesCommand (self,files,treeType,
             v = self.createOutline(fileName,current)
             if v: # createOutline may fail.
                 if perfectImport and treeType == "@file": # Can't correct @root trees.
-                    self.perfectImport(fileName,v,testing=testing,verbose=verbose)
+                    self.perfectImport(fileName,v,testing=testing,verbose=verbose,verify=False)
                 else:
                     g.es("imported " + fileName,color="blue")
                 v.contract()
@@ -56666,1061 +56751,755 @@ self.extension_dict = {
     "w"     : "cweb" }
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@-node:EKR.20040506075328.3:(Perfect Import)
-#@+node:ekr.20040718050922:(Added write_strips_blank_lines and trailing_body_newlines options)
-#@+node:ekr.20040721094203:Mulder comments re whitespace
+#@+node:ekr.20040722210735:(Investigated write logic to see how it handles whitespace)
+#@+node:ekr.20040722211908:Notes
 @killcolor
 
-https://sourceforge.net/forum/message.php?msg_id=2674828
-By: bwmulder
+Apparently the code already intends to strip whitespace.  However, the old code has a bug that prevents this from happening.
 
-If I understand correctly, there are two different problems:
+Warning: changing from the old to the new code will change virtually every file.  I'm not sure I want to do this.  Maybe this is where the option should be implemented?
 
-- Trailing whitespaces
-- Left indented comments
-
-1. Before commenting on these, a question:
-
-If I write something like
-....a=b
-....if a:
-........@others
-
-[four spaces indentation]
-
-I sometimes see tab characters before the lines inserted for '@others'.
-
-It seems that Leo remembers 'two levels of indentation', and then
-fabricates this indentation using tab characters.
-
-I think it might be more robust if Leo remembered the actual
-characters in front of @others and would use them for indentation.
-
-I suspect that many indentation errors I had with Leo could have been
-avoided had not Leo had its own ideas on how to do indentation.
-
-Maybe Leo could use the exact sequence of characters in front of
-@others for all inserted lines?
-
-2. I do not care much about trailing whitespaces. Most of the time
-they are invisible, but sometimes they are very misleading (trailing in python or C).
-
-As far as I am concerned, Leo need never produce trailing whitespaces.
-
-Maybe we need special machinerie if sources have trailing whitespaces
-and the sources are not under our control. 
-
-Not sure if everybody would be happy if we essentially ban all trailing
-whitespaces.
-
-3. Unindented commentlines could be dealt with by using indentation to
-indicate structure.
-
-Of course, this might break the correspondance Leo structure / Python
-structure, which is very ugly.
-
-4. One possible alternative might be a new directive which indicates outindent:
-
-@outindent <number>.
-
-This would apply to the next comment block.
-
-To me, 4. looks a little bit less ugly than 3.
-
-5. As indicated in a different post, I suspect that Leo has a problem
-if almost every node in an outline is changed. Profiling should point
-to the culprit.
-
-> 2. Have Leo strip whitespace from otherwise blank lines, and hope
-that that solves all problems in Perfect Import. This is solving the
-problem in the atFile code. The problem is that if we apply settings
-in general we will get massive changes to derived files. In most
-programming settings these changes might be welcome, but the problem
-is actually making these changes. My first few attempts met with
-abject failure.
-
-Are you saying that you could not remove trailing blanks? What kind of
-problems did you run into?
-
-Summary:
-- Use actual characters in front of @others or <<>> for indentation.
-- Don't write trailing whitespaces
-- Introduce directive for left-indendet comments.
-- Profile to find out what slows Leo down if many nodes change.
-
-#@-node:ekr.20040721094203:Mulder comments re whitespace
-#@+node:ekr.20040720065022: Notes
-@nocolor
-
-Leo can't represent some files using nodes!
-
-I call this the "unindented blank line" problem.
-
-Example:
-
-@color
-
-class aClass:
-    def spam(): pass
-# comment line
-    def eggs(): pass
-    
-@nocolor
-
-Leo's import code can't handle this:
-    
-- If the import code putsthe comment line in a node, the line won't be output with the proper indentation!!
-
-- Having the comment line stop the scanning of aClass is even worse.
-
-- This usually shows up with an unindented blank line instead of the comment line.
+What about blank lines in doc parts?
 #@nonl
-#@-node:ekr.20040720065022: Notes
-#@+node:ekr.20031218072017.1416:app.__init__
-def __init__(self):
-
-    # These ivars are the global vars of this program.
-    self.afterHandler = None
-    self.batchMode = False # True: run in batch mode.
-    self.commandName = None # The name of the command being executed.
-    self.config = None # The leoConfig instance.
-    self.count = 0 # General purpose debugging count.
-    self.copies = 0 # Number of calls to position.copy
-    self.debug = False # True: enable extra debugging tests (not used at present).
-        # WARNING: this could greatly slow things down.
-    self.disableSave = False
-    self.globalWindows = []
-    self.gui = None # The gui class.
-    self.hasOpenWithMenu = False # True: open with plugin has been loaded.
-    self.hookError = False # True: suppress further calls to hooks.
-    self.hookFunction = None # Application wide hook function.
-    self.idle_imported = False # True: we have done an import idle
-    self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
-    self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
-    self.initing = True # True: we are initiing the app.
-    self.killed = False # True: we are about to destroy the root window.
-    self.leoID = None # The id part of gnx's.
-    self.loadDir = None # The directory from which Leo was loaded.
-    self.loadedPlugins = [] # List of loaded plugins that have signed on.
-    self.log = None # The LeoFrame containing the present log.
-    self.logIsLocked = False # True: no changes to log are allowed.
-    self.logWaiting = [] # List of messages waiting to go to a log.
-    self.menuWarningsGiven = False # True: supress warnings in menu code.
-    self.nodeIndices = None # Singleton node indices instance.
-    self.numberOfWindows = 0 # Number of opened windows.
-    self.openWithFiles = [] # List of data used by Open With command.
-    self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
-    self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
-    self.positions = 0 # Count of the number of positions generated.
-    self.quitting = False # True if quitting.  Locks out some events.
-    self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
-    self.root = None # The hidden main window. Set later.
-    self.searchDict = {} # For communication between find/change scripts.
-    self.scriptDict = {} # For communication between Execute Script command and scripts.
-    self.trace = False # True: enable debugging traces.
-    self.trace_list = [] # "Sherlock" argument list for tracing().
-    self.tkEncoding = "utf-8"
-    self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
-    self.unitTestDict = {} # For communication between unit tests and code.
-    self.use_gnx = True # True: generate gnx's instead of tnode indices.
-    self.windowList = [] # Global list of all frames.  Does not include hidden root window.
-
-    # Global panels.  Destroyed when Leo ends.
-    self.findFrame = None
-    self.pythonFrame = None
+#@-node:ekr.20040722211908:Notes
+#@+node:ekr.20031218072017.2134:putCodeLine
+def putCodeLine (self,s,i):
     
-    << Define global constants >>
-    << Define global data structures >>
-#@nonl
-#@+node:ekr.20031218072017.1417:<< define global constants >>
-self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-
-# New in leo.py 3.0
-self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
-self.prolog_postfix_string = "?>"
-
-# leo.py 3.11
-self.use_unicode = True # True: use new unicode logic.
-#@-node:ekr.20031218072017.1417:<< define global constants >>
-#@+node:ekr.20031218072017.368:<< define global data structures >> app
-# Internally, lower case is used for all language names.
-self.language_delims_dict = {
-    "actionscript" : "// /* */", #jason 2003-07-03
-    "c" : "// /* */", # C, C++ or objective C.
-    "csharp" : "// /* */",	# C#
-    "css" : "/* */", # 4/1/04
-    "cweb" : "@q@ @>", # Use the "cweb hack"
-    "elisp" : ";",
-    "forth" : "_\\_ _(_ _)_", # Use the "REM hack"
-    "fortran" : "C",
-    "fortran90" : "!",
-    "html" : "<!-- -->",
-    "java" : "// /* */",
-    "latex" : "%",
-    "pascal" : "// { }",
-    "perl" : "#",
-    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
-    "php" : "//",
-    "plain" : "#", # We must pick something.
-    "python" : "#",
-    "rapidq" : "'", # fil 2004-march-11
-    "rebol" : ";",  # jason 2003-07-03
-    "shell" : "#",  # shell scripts
-    "tcltk" : "#",
-    "unknown" : "#" } # Set when @comment is seen.
-
-self.language_extension_dict = {
-    "actionscript" : "as", #jason 2003-07-03
-    "c" : "c",
-    "css" : "css", # 4/1/04
-    "cweb" : "w",
-    "elisp" : "el",
-    "forth" : "forth",
-    "fortran" : "f",
-    "fortran90" : "f",
-    "html" : "html",
-    "java" : "java",
-    "latex" : "tex", # 1/8/04
-    "noweb" : "nw",
-    "pascal" : "p",
-    "perl" : "perl",
-    "perlpod" : "perl",
-    "php" : "php",
-    "plain" : "txt",
-    "python" : "py",
-    "rapidq" : "bas", # fil 2004-march-11
-    "rebol" : "r",    # jason 2003-07-03
-    "shell" : "sh",   # DS 4/1/04
-    "tex" : "tex",
-    "tcltk" : "tcl",
-    "unknown" : "txt" } # Set when @comment is seen.
+    """Put a normal code line."""
     
-self.extension_dict = {
-    "as"    : "actionscript",
-    "bas"   : "rapidq",
-    "c"     : "c",
-    "css"   : "css",
-    "el"    : "elisp",
-    "forth" : "forth",
-    "f"     : "fortran90", # or fortran ?
-    "html"  : "html",
-    "java"  : "java",
-    "noweb" : "nw",
-    "p"     : "pascal",
-    "perl"  : "perl",
-    "php"   : "php",
-    "py"    : "python",
-    "r"     : "rebol",
-    "sh"    : "shell",
-    "tex"   : "tex",
-    "txt"   : "plain",
-    "tcl"   : "tcltk",
-    "w"     : "cweb" }
-#@-node:ekr.20031218072017.368:<< define global data structures >> app
-#@-node:ekr.20031218072017.1416:app.__init__
-#@+node:ekr.20031218072017.2404:<< define defaultsDict >>
-@ This contains only the "interesting" defaults.
-Ints and bools default to 0, floats to 0.0 and strings to "".
-@c
-
-defaultBodyFontSize = g.choose(sys.platform=="win32",9,12)
-defaultLogFontSize  = g.choose(sys.platform=="win32",8,12)
-defaultTreeFontSize = g.choose(sys.platform=="win32",9,12)
-
-# Defaults for ivars are specified in the ctor, _not_ here.
-
-defaultsDict = {
-    # compare options...
-    "ignore_blank_lines" : 1,
-    "limit_count" : 9,
-    "print_mismatching_lines" : 1,
-    "print_trailing_lines" : 1,
-    # find/change options...
-    "search_body" : 1,
-    "whole_word" : 1,
-    # Prefs panel.
-    "default_target_language" : "Python",
-    "tab_width" : -4,
-    "page_width" : 132,
-    "output_doc_chunks" : 1,
-    "tangle_outputs_header" : 1,
-    # Syntax coloring options...
-    # Defaults for colors are handled by leoColor.py.
-    "color_directives_in_plain_text" : 1,
-    "underline_undefined_section_names" : 1,
-    # Window options...
-    "allow_clone_drags" : 1,
-    "body_pane_wraps" : 1,
-    "body_text_font_family" : "Courier",
-    "body_text_font_size" : defaultBodyFontSize,
-    "body_text_font_slant" : "roman",
-    "body_text_font_weight" : "normal",
-    "enable_drag_messages" : 1,
-    "headline_text_font_size" : defaultTreeFontSize,
-    "headline_text_font_slant" : "roman",
-    "headline_text_font_weight" : "normal",
-    "log_text_font_size" : defaultLogFontSize,
-    "log_text_font_slant" : "roman",
-    "log_text_font_weight" : "normal",
-    "initial_window_height" : 600, # 7/24/03: In pixels.
-    "initial_window_width" :  800, # 7/24/03: In pixels.
-    "initial_window_left" : 10,
-    "initial_window_top" : 10,
-    "initial_splitter_orientation" : "vertical",
-    "initial_vertical_ratio" : 0.5,
-    "initial_horizontal_ratio" : 0.3,
-    "initial_horizontal_secondary_ratio" : 0.5,
-    "initial_vertical_secondary_ratio" : 0.7,
-    "outline_pane_scrolls_horizontally" : 0,
-    "split_bar_color" : "LightSteelBlue2",
-    "split_bar_relief" : "groove",
-    "split_bar_width" : 7 }
-#@nonl
-#@-node:ekr.20031218072017.2404:<< define defaultsDict >>
-#@+node:ekr.20031218072017.3004:<< initialize ivars that may be set by config options >>
-# Defaults for these ivaars are specified here, _not_ in defaultsDict.
-
-self.at_root_bodies_start_in_doc_mode = True # For compatibility with previous versions.
-self.config = None # The current instance of ConfigParser
-self.config_encoding = "utf-8" # Encoding used for leoConfig.txt.
-self.create_nonexistent_directories = False
-self.default_derived_file_encoding = "utf-8"
-self.new_leo_file_encoding = "UTF-8" # Upper case for compatibility with previous versions.
-self.output_initial_comment = "" # "" or None for compatibility with previous versions.
-self.output_newline = "nl"
-self.read_only = True # Make sure we don't alter an illegal leoConfig.txt file!
-self.redirect_execute_script_output_to_log_pane = False
-self.relative_path_base_directory = "!"
-self.remove_sentinels_extension = ".txt"
-self.save_clears_undo_buffer = False
-self.stylesheet = None
-self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
-self.trailing_body_newlines = "asis"
-self.use_plugins = False # Should never be True here!
-self.use_psyco = False
-self.undo_granularity = "word" # "char","word","line","node"
-self.write_strips_blank_lines = False
-
-# TO BE REMOVED:
-self.write_old_format_derived_files = False # Use new format if leoConfig.txt does not exist.
-#@nonl
-#@-node:ekr.20031218072017.3004:<< initialize ivars that may be set by config options >>
-#@+node:ekr.20031218072017.1421:<< get config options >>
-@ Rewritten 10/11/02 as follows:
-
-1. We call initConfigParam and initBooleanConfigParam to get the values.
-
-The general purpose code will enter all these values into configDict.  This allows update() to write the configuration section without special case code.  configDict is not accessible by the user.  Rather, for greater speed the user access these values via the ivars of this class.
-
-2. We pass the ivars themselves as params so that default initialization is done in the ctor, as would normally be expected.
-@c
-
-self.at_root_bodies_start_in_doc_mode = self.initBooleanConfigParam(
-    "at_root_bodies_start_in_doc_mode",self.at_root_bodies_start_in_doc_mode)
+    at = self
     
-encoding = self.initConfigParam(
-    "config_encoding",self.config_encoding)
-    
-if g.isValidEncoding(encoding):
-    self.config_encoding = encoding
-else:
-    g.es("bad config_encoding: " + encoding)
-    
-self.create_nonexistent_directories = self.initBooleanConfigParam(
-    "create_nonexistent_directories",self.create_nonexistent_directories)
-    
-encoding = self.initConfigParam(
-    "default_derived_file_encoding",self.default_derived_file_encoding)
+    # Put @verbatim sentinel if required.
+    k = g.skip_ws(s,i)
+    if g.match(s,k,self.startSentinelComment + '@'):
+        self.putSentinel("@verbatim")
 
-if g.isValidEncoding(encoding):
-    self.default_derived_file_encoding = encoding
-else:
-    g.es("bad default_derived_file_encoding: " + encoding)
-    
-encoding = self.initConfigParam(
-    "new_leo_file_encoding",
-    self.new_leo_file_encoding)
+    j = g.skip_line(s,i)
+    line = s[i:j]
 
-if g.isValidEncoding(encoding):
-    self.new_leo_file_encoding = encoding
-else:
-    g.es("bad new_leo_file_encoding: " + encoding)
-
-self.output_initial_comment = self.initConfigParam(
-    "output_initial_comment",self.output_initial_comment)
-
-self.output_newline = self.initConfigParam(
-    "output_newline",self.output_newline)
-
-self.read_only = self.initBooleanConfigParam(
-    "read_only",self.read_only)
-
-self.relative_path_base_directory = self.initConfigParam(
-    "relative_path_base_directory",self.relative_path_base_directory)
-    
-self.redirect_execute_script_output_to_log_pane = self.initBooleanConfigParam(
-    "redirect_execute_script_output_to_log_pane",
-    self.redirect_execute_script_output_to_log_pane)
-    
-self.remove_sentinels_extension = self.initConfigParam(
-    "remove_sentinels_extension",self.remove_sentinels_extension)
-
-self.save_clears_undo_buffer = self.initBooleanConfigParam(
-    "save_clears_undo_buffer",self.save_clears_undo_buffer)
-    
-self.stylesheet = self.initConfigParam(
-    "stylesheet",self.stylesheet)
-    
-encoding = self.initConfigParam(
-    "tk_encoding",self.tkEncoding)
-    
-if encoding and len(encoding) > 0: # May be None.
-    if g.isValidEncoding(encoding):
-        self.tkEncoding = encoding
-    else:
-        g.es("bad tk_encoding: " + encoding)
+    # g.app.config.write_strips_blank_lines
+    if 0: # 7/22/04: Don't put any whitespace in otherwise blank lines.
+        if line.strip(): # The line has non-empty content.
+            if not at.raw:
+                at.putIndent(at.indent)
         
-# New in 4.2
-self.trailing_body_newlines = self.initConfigParam(
-    "trailing_body_newlines",self.trailing_body_newlines)
-
-# TO BE REMOVED
-g.app.use_gnx = self.initBooleanConfigParam(
-    "use_gnx",g.app.use_gnx)
-    
-self.use_plugins = self.initBooleanConfigParam(
-    "use_plugins",self.use_plugins)
-
-self.use_psyco = self.initBooleanConfigParam(
-    "use_psyco",self.use_psyco)
-    
-self.undo_granularity = self.initConfigParam(
-    "undo_granularity",self.undo_granularity)
-    
-# TO BE REMOVED
-self.write_old_format_derived_files = self.initBooleanConfigParam(
-    "write_old_format_derived_files",self.write_old_format_derived_files)
-
-# New in 4.2
-self.write_strips_blank_lines = self.initBooleanConfigParam(
-    "write_strips_blank_lines",self.write_strips_blank_lines)
-    
-#g.trace("write_strips_blank_lines",self.write_strips_blank_lines)
-#g.trace("trailing_body_newlines",self.trailing_body_newlines)
-#@nonl
-#@-node:ekr.20031218072017.1421:<< get config options >>
-#@+node:ekr.20040720075446.1:(Handle write_strips_blank_lines option)
-#@-node:ekr.20040720075446.1:(Handle write_strips_blank_lines option)
-#@+node:ekr.20040720103642.1:Script to do trailing_body_newlines = "one" VERY DANGEROUS
-import leoGlobals as g
-
-c = g.top() ; current = c.currentPosition()
-
-count = 0
-
-for p in c.all_positions_iter():
-    
-    s = p.bodyString().rstrip()
-    if s:
-        s = p.bodyString().rstrip() + '\n'
-        if s != p.bodyString():
-            # Do NOT set anything dirty here!
-            ## p.v.t.setTnodeText(s)
-            count += 1
-
-print "%d nodes converted" % count
-print "You MUST do Write All Nodes AND Save this file to complete conversion"
-#@nonl
-#@-node:ekr.20040720103642.1:Script to do trailing_body_newlines = "one" VERY DANGEROUS
-#@+node:ekr.20040720075446:(Handle trailing_body_newlines option)
-#@+node:ekr.20040720105309:Notes
-@killcolor
-
-My first idea was to do this in the body text setters.  However, this converts everything when reading any .leo file, and that is _very_ slow.  It also appears to be very dangerous.
-#@nonl
-#@-node:ekr.20040720105309:Notes
-#@+node:ekr.20031218072017.2772:readEndNode (4.x)
-def readEndNode (self,s,i,middle=False):
-    
-    """Handle end-of-node processing for @-others and @-ref sentinels."""
-
-    at = self ; c = self.c
-    
-    # End raw mode.
-    at.raw = False
-    
-    # Set the temporary body text.
-    s = ''.join(at.out)
-    s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
-
-    if at.importing:
-        at.t.bodyString = s
-    elif middle: 
-        pass # Middle sentinels never alter text.
-    else:
-        if hasattr(at.t,"tempBodyString") and s != at.t.tempBodyString:
-            old = at.t.tempBodyString
-        elif at.t.hasBody() and s != at.t.getBody():
-            old = at.t.getBody()
-        else:
-            old = None
-        if old:
-            if at.perfectImportRoot:
-                << bump at.correctedLines and tell about the correction >>
-                p.setMarked()
-                at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
-                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-                at.c.setChanged(True)
+            if line[-1:]=="\n":
+                at.os(line[:-1])
+                at.onl()
             else:
-                g.es("Warning: updating changed text",color="blue")
-                #g.es("old...\n%s\n" % old)
-                #g.es("new...\n%s\n" % s)
-                # Just set the dirty bit. Ancestors will be marked dirty later.
-                at.t.setDirty()
-                if 1: # We must avoid the full setChanged logic here!
-                    c.changed = True
-                else: # Far too slow for mass changes.
-                    at.c.setChanged(True)
-        at.t.tempBodyString = s
-
-    # Indicate that the tnode has been set in the derived file.
-    at.t.setVisited()
-
-    # End the previous node sentinel.
-    at.indent = at.indentStack.pop()
-    at.out = at.outStack.pop()
-    at.t = at.tStack.pop()
-    if at.thinFile and not at.importing:
-        at.lastThinNode = at.thinNodeStack.pop()
-
-    at.popSentinelStack(endNode)
+                at.os(line)
+        elif line and line[-1] == '\n':
+            at.onl()
+        else:
+            g.trace("Can't happen: completely empty line")
+    else:
+        # 1/29/04: Don't put leading indent if the line is empty!
+        if line and not at.raw:
+            at.putIndent(at.indent)
+    
+        if line[-1:]=="\n":
+            at.os(line[:-1])
+            at.onl()
+        else:
+            at.os(line)
 #@nonl
-#@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
-# Report the number of corrected nodes.
-at.correctedLines += 1
+#@-node:ekr.20031218072017.2134:putCodeLine
+#@-node:ekr.20040722210735:(Investigated write logic to see how it handles whitespace)
+#@+node:ekr.20040723054701:(Fixed new bug in p.setBodyStringOrPane)
+#@+node:ekr.20040723054701.1:Notes
+@nocolor
 
-found = False
-for p in at.perfectImportRoot.self_and_subtree_iter():
-    if p.v.t == at.t:
-        found = True ; break
+A recent change omitted the call to setSelectionAreas.  This was wrong: it fails to update the body pane, so the change doesn't take.
 
-if found:
-    if 0: # Not needed: we mark all corrected nodes.
-        g.es("Correcting %s" % p.headString(),color="blue")
-    if 0: # For debugging.
-        print ; print '-' * 40
-        print "old",len(old)
-        for line in g.splitLines(old):
-            #line = line.replace(' ','< >').replace('\t','<TAB>')
-            print repr(str(line))
-        print ; print '-' * 40
-        print "new",len(s)
-        for line in g.splitLines(s):
-            #line = line.replace(' ','< >').replace('\t','<TAB>')
-            print repr(str(line))
-        print ; print '-' * 40
-else:
-    # This should never happen.
-    g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")
+The new code calls setSelectionAreas to update the body pane and setTextSelection to force an empty selection.
 #@nonl
-#@-node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
-#@-node:ekr.20031218072017.2772:readEndNode (4.x)
-#@+node:ekr.20031218072017.1485:setTnodeText
-# This sets the text in the tnode from the given string.
+#@-node:ekr.20040723054701.1:Notes
+#@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
+def setBodyStringOrPane (self,s,encoding="utf-8"):
 
-def setTnodeText (self,s,encoding="utf-8"):
-    
-    """Set the body text of a tnode to the given string."""
-    
-    s = g.toUnicode(s,encoding,reportErrors=True)
-    
-    if 0: # DANGEROUS:  This automatically converts everything when reading files.
+    p = self ; v = p.v ; c = p.c
+    if not c or not v: return
 
-        option = g.app.config.trailing_body_newlines
+    s = g.toUnicode(s,encoding)
+    if p == c.currentPosition():
+        # 7/23/04: Revert to previous code, but force an empty selection.
+        c.frame.body.setSelectionAreas(s,None,None)
+        c.frame.body.setTextSelection(None)
+        # This code destoys all tags, so we must recolor.
+        c.recolor()
         
-        if option == "one":
-            s = s.rstrip() + '\n'
-        elif option == "zero":
-            s = s.rstrip()
-    
-    self.bodyString = s
+    # Keep the body text in the tnode up-to-date.
+    if v.t.bodyString != s:
+        v.setTnodeText(s)
+        v.t.setSelection(0,0)
+        p.setDirty()
+        if not c.isChanged():
+            c.setChanged(True)
+
+setBodyTextOrPane = setBodyStringOrPane # Compatibility with old scripts
 #@nonl
-#@-node:ekr.20031218072017.1485:setTnodeText
-#@+node:ekr.20031218072017.1319:(Key handlers)
-@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
-#@+node:ekr.20031218072017.1320:body key handlers
-@ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
+#@-node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
+#@+node:ekr.20031218072017.4037:setSelectionAreas (tkinterBody)
+def setSelectionAreas (self,before,sel,after):
+    
+    """Replace the body text by before + sel + after and
+    set the selection so that the sel text is selected."""
 
-1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if so.  This is the clean and safe way.
+    t = self.bodyCtrl ; gui = g.app.gui
+    t.delete("1.0","end")
 
-2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
+    if before: t.insert("1.0",before)
+    sel_start = t.index("end-1c") # 10/24/03: -1c
+
+    if sel: t.insert("end",sel)
+    sel_end = t.index("end")
+
+    if after:
+        # A horrible Tk kludge.  Remove a trailing newline so we don't keep extending the text.
+        if after[-1] == '\n':
+            after = after[:-1]
+        t.insert("end",after)
+
+    gui.setTextSelection(t,sel_start,sel_end)
+    # g.trace(sel_start,sel_end)
+    
+    return t.index(sel_start), t.index(sel_end)
+#@nonl
+#@-node:ekr.20031218072017.4037:setSelectionAreas (tkinterBody)
+#@-node:ekr.20040723054701:(Fixed new bug in p.setBodyStringOrPane)
+#@+node:ekr.20040723093558.2:(Created g.stripBlankLines and regularizeTrailingNewlines)
+# These are the heart of a two new commands.
+#@nonl
+#@+node:ekr.20040723093558.1:stripBlankLines
+def stripBlankLines(s):
+    
+    lines = g.splitLines(s)
+
+    for i in xrange(len(lines)):
+
+        line = lines[i]
+        j = g.skip_ws(line,0)
+        if j >= len(line):
+            lines[i] = ''
+            # g.trace("%4d %s" % (i,repr(lines[i])))
+        elif line[j] == '\n':
+            lines[i] = '\n'
+            # g.trace("%4d %s" % (i,repr(lines[i])))
+            
+    return ''.join(lines)
+#@-node:ekr.20040723093558.1:stripBlankLines
+#@+node:ekr.20040723093558:regularizeTrailingNewlines
+@
+
+The caller should call g.stripBlankLines before calling this routine if desired.
+
+This routine does _not_ simply call rstrip(): that would delete all trailing whitespace-only lines, and in some cases that would change the meaning of program or data.
+
 @c
+
+def regularizeTrailingNewlines(s,kind):
+    
+    """Kind is 'asis', 'zero' or 'one'."""
+    
+    pass
+#@nonl
+#@-node:ekr.20040723093558:regularizeTrailingNewlines
+#@-node:ekr.20040723093558.2:(Created g.stripBlankLines and regularizeTrailingNewlines)
+#@+node:ekr.20040723094220.7:(Improved and simplified Syntax Checking commands)
+#@+node:ekr.20040711135959.2:Check Outline submenu...
+#@+node:ekr.20031218072017.2072:c.checkOutline
+def checkOutline (self,verbose=True,unittest=False,full=True):
+    
+    """Report any possible clone errors in the outline.
+    
+    Remove any unused tnodeLists."""
+    
+    c = self ; count = 1 ; errors = 0
+    if full and not unittest:
+        g.es("all tests enabled: this may take awhile",color="blue")
+
+    p = c.rootPosition()
+    << assert equivalence of lastVisible methods >>
+    for p in c.allNodes_iter():
+        try:
+            count += 1
+            << remove unused tnodeList >>
+            if full: # Unit tests usually set this false.
+                << do full tests >>
+        except AssertionError,message:
+            errors += 1
+            << give test failed message >>
+    if verbose or not unittest:
+        << print summary message >>
+    return errors
+#@nonl
+#@+node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+if 0:
+    g.app.debug = True
+
+    p1 = p.oldLastVisible()
+    p2 = p.lastVisible()
+    
+    if p1 != p2:
+        print "oldLastVisible",p1
+        print "   lastVisible",p2
+    
+    assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
+    assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
+    
+    g.app.debug = False
+#@nonl
+#@-node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+#@+node:ekr.20040313150633:<< remove unused tnodeList >>
+# Empty tnodeLists are not errors.
+v = p.v
+
+# New in 4.2: tnode list is in tnode.
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode():
+    if 0:
+        s = "deleting tnodeList for " + repr(v)
+        print ; print s ; g.es(s,color="blue")
+    delattr(v.t,"tnodeList")
+#@nonl
+#@-node:ekr.20040313150633:<< remove unused tnodeList >>
+#@+node:ekr.20040323155951:<< do full tests >>
+if not unittest:
+    if count % 100 == 0:
+        g.es('.',newline=False)
+    if count % 2000 == 0:
+        g.enl()
 
 @others
 #@nonl
-#@+node:ekr.20031218072017.1321:idle_body_key
-def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
-    
-    """Update the body pane at idle time."""
+#@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+threadBack = p.threadBack()
+threadNext = p.threadNext()
 
-    # g.trace(ch,ord(ch))
-    c = self.c
-    if not c: return "break"
-    if not p: return "break"
-    if p != c.currentPosition(): return "break"
+if threadBack:
+    assert p == threadBack.threadNext(), "p==threadBack.threadNext"
 
-    if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
-        return "break" # The hook claims to have handled the event.
-    body = p.bodyString()
-    if not newSel:
-        newSel = c.frame.body.getTextSelection()
-    if oldText != None:
-        s = oldText
-    else:
-        s = c.frame.body.getAllText()
-    << return if nothing has changed >>
-    << set removeTrailing >>
-    if ch in ('\t','\n','\r',chr(8)):
-        d = g.scanDirectives(c,p) # Support @tab_width directive properly.
-        tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
-        if ch in ('\n','\r'):
-            << Do auto indent >>
-        elif ch == '\t' and tab_width < 0:
-            << convert tab to blanks >>
-        elif ch in (chr(8)) and tab_width < 0:
-            << handle backspace with negative tab_width >>
-    << set s to widget text, removing trailing newlines if necessary >>
-    if undoType: # 11/6/03: set oldText properly when oldText param exists.
-        if not oldText: oldText = body
-        newText = s
-        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
-    p.v.setTnodeText(s)
-    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
-    << recolor the body >>
-    if not c.changed:
-        c.setChanged(True)
-    << redraw the screen if necessary >>
-    g.doHook("bodykey2",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
-    return "break"
-#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
-# 6/22/03: Make sure we handle delete key properly.
-if ch not in ('\n','\r',chr(8)):
-
-    if s == body:
-        return "break"
-
-    # Do nothing for control characters.
-    if (ch == None or len(ch) == 0) and body == s[:-1]:
-        return "break"
+if threadNext:
+    assert p == threadNext.threadBack(), "p==threadNext.threadBack"
 #@nonl
-#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
-#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
-@ Tk will add a newline only if:
-1. A real change has been made to the Tk.Text widget, and
-2. the change did _not_ result in the widget already containing a newline.
+#@-node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+#@+node:ekr.20040314035615.1:assert consistency of next and back links
+back = p.back()
+next = p.next()
 
-It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
-@c
-new = s ; old = body
-
-if len(new) == 0 or new[-1] != '\n':
-    # There is no newline to remove.  Probably will never happen.
-    removeTrailing = False
-elif len(old) == 0:
-    # Ambigous case.  Formerly always returned False.
-    if new == "\n\n":
-        removeTrailing = True # Handle a very strange special case.
-    else:
-        removeTrailing = ch not in ('\r','\n')
-elif old == new[:-1]:
-    # A single trailing character has been added.
-    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
-else:
-    # The text didn't have a newline, and now it does.
-    # Moveover, some other change has been made to the text,
-    # So at worst we have misrepresented the user's intentions slightly.
-    removeTrailing = True
-
-if 0:
-    print removeTrailing
-    print repr(ch)
-    print repr(oldText)
-    print repr(old)
-    print repr(new)
-#@nonl
-#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
-#@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
-# Do nothing if we are in @nocolor mode or if we are executing a Change command.
-if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
-    # Get the previous line.
-    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-    # Add the leading whitespace to the present line.
-    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
-    if s and len(s) > 0 and s[-1]==':':
-        # For Python: increase auto-indent after colons.
-        if self.colorizer.scanColorDirectives(p) == "python":
-            width += abs(tab_width)
-    if g.app.config.getBoolWindowPref("smart_auto_indent"):
-        # Added Nov 18 by David McNab, david@rebirthing.co.nz
-        # Determine if prev line has unclosed parens/brackets/braces
-        brackets = [width]
-        tabex = 0
-        for i in range(0, len(s)):
-            if s[i] == '\t':
-                tabex += tab_width - 1
-            if s[i] in '([{':
-                brackets.append(i+tabex + 1)
-            elif s[i] in '}])' and len(brackets) > 1:
-                brackets.pop()
-        width = brackets.pop()
-        # end patch by David McNab
-    ws = g.computeLeadingWhitespace (width,tab_width)
-    if ws and len(ws) > 0:
-        c.frame.bodyCtrl.insert("insert", ws)
-        removeTrailing = False # bug fix: 11/18
-#@nonl
-#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
-#@+node:ekr.20031218072017.1325:<< convert tab to blanks >>
-# Do nothing if we are executing a Change command.
-if undoType != "Change":
-    
-    # Get the characters preceeding the tab.
-    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-    
-    if 1: # 6/26/03: Convert tab no matter where it is.
-
-        w = g.computeWidth(prev,tab_width)
-        w2 = (abs(tab_width) - (w % abs(tab_width)))
-        # g.trace("prev w:",w,"prev chars:",prev)
-        c.frame.bodyCtrl.delete("insert -1c")
-        c.frame.bodyCtrl.insert("insert",' ' * w2)
-    
-    else: # Convert only leading tabs.
-    
-        # Get the characters preceeding the tab.
-        prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-
-        # Do nothing if there are non-whitespace in prev:
-        all_ws = True
-        for ch in prev:
-            if ch != ' ' and ch != '\t':
-                all_ws = False
-        if all_ws:
-            w = g.computeWidth(prev,tab_width)
-            w2 = (abs(tab_width) - (w % abs(tab_width)))
-            # g.trace("prev w:",w,"prev chars:",prev)
-            c.frame.bodyCtrl.delete("insert -1c")
-            c.frame.bodyCtrl.insert("insert",' ' * w2)
-#@nonl
-#@-node:ekr.20031218072017.1325:<< convert tab to blanks >>
-#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
-# Get the preceeding characters.
-prev   =c.frame.bodyCtrl.get("insert linestart","insert")
-allPrev=c.frame.bodyCtrl.get("1.0","insert")
-n = len(allPrev)
-try:
-    oldAllPrev = body[:n]
-    assert(allPrev==oldAllPrev)
-    deletedChar = body[n:n+1]
-except (IndexError,AssertionError):
-    deletedChar = None
-
-if deletedChar in (u' ',' '):
-    n = len(prev) ; w = abs(tab_width)
-    n2 = n % w # Delete up to n2 - 1 spaces.
-    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
-        count = 0
-        while n2 > 0:
-            n2 -= 1
-            ch = prev[n-count-1]
-            # g.trace(count,repr(ch))
-            if ch in (u' ',' '): count += 1
-            else: break
-        # g.trace(count,(n%w))
-        if count > 0:
-            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
-#@nonl
-#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
-#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
-s = c.frame.body.getAllText()
-if len(s) > 0 and s[-1] == '\n' and removeTrailing:
-    s = s[:-1]
-    
-# Major change: 6/12/04
-if s == body:
-    # print "no real change"
-    return "break"
-#@nonl
-#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
-#@+node:ekr.20031218072017.1327:<< recolor the body >>
-self.frame.scanForTabWidth(p)
-
-incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
-self.frame.body.recolor_now(p,incremental=incremental)
-
-self.forceFullRecolorFlag = False
-#@nonl
-#@-node:ekr.20031218072017.1327:<< recolor the body >>
-#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
-redraw_flag = False
-
-c.beginUpdate()
-
-# Update dirty bits.
-if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-    redraw_flag = True
-    
-# Update icons.
-val = p.computeIcon()
-
-# 7/8/04: During unit tests the node may not have been drawn,
-# So p.v.iconVal may not exist yet.
-if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
-    p.v.iconVal = val
-    redraw_flag = True
-
-c.endUpdate(redraw_flag) # redraw only if necessary
-#@nonl
-#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
-#@-node:ekr.20031218072017.1321:idle_body_key
-#@+node:ekr.20031218072017.1329:onBodyChanged (called from core)
-# Called by command handlers that have already changed the text.
-
-def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
-    
-    """Handle a change to the body pane."""
-    
-    c = self.c
-    if not p:
-        p = c.currentPosition()
-
-    if not oldSel:
-        oldSel = c.frame.body.getTextSelection()
-
-    self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
-#@nonl
-#@-node:ekr.20031218072017.1329:onBodyChanged (called from core)
-#@+node:ekr.20031218072017.1330:onBodyKey
-def onBodyKey (self,event):
-    
-    """Handle any key press event in the body pane."""
-
-    c = self.c ; ch = event.char 
-    oldSel = c.frame.body.getTextSelection()
-    
-    p = c.currentPosition()
-
-    # g.trace(repr(ch))
-
-    if 0: # won't work when menu keys are bound.
-        self.handleStatusLineKey(event)
+if back:
+    assert p == back.next(), "p==back.next"
         
-    # g.trace(p)
-        
-    # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
-    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
-
-#@+node:ekr.20040105223536:handleStatusLineKey
-def handleStatusLineKey (self,event):
+if next:
+    assert p == next.back(), "p==next.back"
+#@nonl
+#@-node:ekr.20040314035615.1:assert consistency of next and back links
+#@+node:ekr.20040314035615.2:assert consistency of parent and child links
+if p.hasParent():
+    n = p.childIndex()
+    assert p == p.parent().moveToNthChild(n), "p==parent.moveToNthChild"
     
-    c = self.c ; frame = c.frame
-    ch = event.char ; keysym = event.keysym
-    keycode = event.keycode ; state = event.state
+for child in p.children_iter():
+    assert p == child.parent(), "p==child.parent"
 
-    if 1: # ch and len(ch)>0:
-        << trace the key event >>
+if p.hasNext():
+    assert p.next().parent() == p.parent(), "next.parent==parent"
+    
+if p.hasBack():
+    assert p.back().parent() == p.parent(), "back.parent==parent"
+#@nonl
+#@-node:ekr.20040314035615.2:assert consistency of parent and child links
+#@+node:ekr.20040323155951.1:assert consistency of directParents and parent
+if p.hasParent():
+    t = p.parent().v.t
+    for v in p.directParents():
+        try:
+            assert v.t == t
+        except:
+            print "p",p
+            print "p.directParents",p.directParents()
+            print "v",v
+            print "v.t",v.t
+            print "t = p.parent().v.t",t
+            raise AssertionError,"v.t == t"
+#@-node:ekr.20040323155951.1:assert consistency of directParents and parent
+#@+node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+if p.isCloned():
+    parents = p.v.t.vnodeList
+    for child in p.children_iter():
+        vparents = child.directParents()
+        assert len(parents) == len(vparents), "len(parents) == len(vparents)"
+        for parent in parents:
+            assert parent in vparents, "parent in vparents"
+        for parent in vparents:
+            assert parent in parents, "parent in parents"
+#@nonl
+#@-node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+#@+node:ekr.20040323162707:assert that clones actually share subtrees
+if p.isCloned() and p.hasChildren():
+    childv = p.firstChild().v
+    assert childv == p.v.t._firstChild, "childv == p.v.t._firstChild"
+    assert id(childv) == id(p.v.t._firstChild), "id(childv) == id(p.v.t._firstChild)"
+    for v in p.v.t.vnodeList:
+        assert v.t._firstChild == childv, "v.t._firstChild == childv"
+        assert id(v.t._firstChild) == id(childv), "id(v.t._firstChild) == id(childv)"
+#@nonl
+#@-node:ekr.20040323162707:assert that clones actually share subtrees
+#@+node:ekr.20040314043623:assert consistency of vnodeList
+vnodeList = p.v.t.vnodeList
+    
+for v in vnodeList:
+    
+    try:
+        assert v.t == p.v.t
+    except AssertionError:
+        print "p",p
+        print "v",v
+        print "p.v",p.v
+        print "v.t",v.t
+        print "p.v.t",p.v.t
+        raise AssertionError, "v.t == p.v.t"
+
+    if p.v.isCloned():
+        assert v.isCloned(), "v.isCloned"
+        assert len(vnodeList) > 1, "len(vnodeList) > 1"
+    else:
+        assert not v.isCloned(), "not v.isCloned"
+        assert len(vnodeList) == 1, "len(vnodeList) == 1"
+#@nonl
+#@-node:ekr.20040314043623:assert consistency of vnodeList
+#@-node:ekr.20040323155951:<< do full tests >>
+#@+node:ekr.20040314043900:<<print summary message >>
+if full:
+    print
+    g.enl()
+
+s = "%d nodes checked, %d errors" % (count,errors)
+if errors or verbose:
+    print s ; g.es(s,color="red")
+elif verbose:
+    g.es(s,color="green")
+#@nonl
+#@-node:ekr.20040314043900:<<print summary message >>
+#@+node:ekr.20040314044652:<< give test failed message >>
+s = "test failed: %s %s" % (message,repr(p))
+print s ; print
+g.es(s,color="red")
+#@nonl
+#@-node:ekr.20040314044652:<< give test failed message >>
+#@-node:ekr.20031218072017.2072:c.checkOutline
+#@+node:ekr.20040723094220:Check Outline commands & allies
+#@+node:ekr.20040723094220.1:checkAllPythonCode
+def checkAllPythonCode(self,unittest=False,ignoreAtIgnore=True):
+    
+    c = self ; count = 0 ; result = "ok"
+
+    for p in c.all_positions_iter():
+        
+        count += 1
+        if not unittest:
+            << print dots >>
+
+        if g.scanForAtLanguage(c,p) == "python":
+            if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
+                try:
+                    c.checkPythonNode(p,unittest)
+                except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                    result = "error" # Continue to check.
+                except:
+                    return "surprise" # abort
+                if unittest and result != "ok":
+                    print "Syntax error in %s" % p.headString()
+                    return result # End the unit test: it has failed.
+            
+    if not unittest:
+        g.es("Check complete",color="blue")
+        
+    return result
+#@nonl
+#@+node:ekr.20040723094220.2:<< print dots >>
+if count % 100 == 0:
+    g.es('.',newline=False)
+
+if count % 2000 == 0:
+    g.enl()
+#@nonl
+#@-node:ekr.20040723094220.2:<< print dots >>
+#@-node:ekr.20040723094220.1:checkAllPythonCode
+#@+node:ekr.20040723094220.3:checkPythonCode
+def checkPythonCode (self,unittest=False,ignoreAtIgnore=True):
+    
+    c = self ; count = 0 ; result = "ok"
+    
+    if not unittest:
+        g.es("checking all Python code   ")
+    
+    for p in c.currentPosition().self_and_subtree_iter():
+        
+        count += 1
+        if not unittest:
+            << print dots >>
+
+        if g.scanForAtLanguage(c,p) == "python":
+            if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
+                try:
+                    c.checkPythonNode(p,unittest)
+                except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                    result = "error" # Continue to check.
+                except:
+                    return "surprise" # abort
+
+    if not unittest:
+        g.es("Check complete",color="blue")
+        
+    # We _can_ return a result for unit tests because we aren't using doCommand.
+    return result
+#@nonl
+#@+node:ekr.20040723094220.4:<< print dots >>
+if count % 100 == 0:
+    g.es('.',newline=False)
+
+if count % 2000 == 0:
+    g.enl()
+#@nonl
+#@-node:ekr.20040723094220.4:<< print dots >>
+#@-node:ekr.20040723094220.3:checkPythonCode
+#@+node:ekr.20040723094220.5:checkPythonNode
+def checkPythonNode (self,p,unittest=False):
+
+    c = self
+    
+    h = p.headString()
+    body = g.getScript(c,p.copy(),oneNodeOnly=True)
+    if not body: return
 
     try:
-        status = self.keyStatus
+        compiler.parse(body + '\n')
+    except SyntaxError:
+        if unittest:
+            raise
+        else:
+            g.es("Syntax error in: %s" % h,color="blue")
+            g.es_exception(full=False,color="black")
+            p.setMarked()
+
+    c.tabNannyNode(p,h,body,unittest)
+#@nonl
+#@-node:ekr.20040723094220.5:checkPythonNode
+#@+node:ekr.20040723094220.6:tabNannyNode
+# This code is based on tabnanny.check.
+
+def tabNannyNode (self,p,headline,body,unittest=False):
+
+    """Check indentation using tabnanny."""
+
+    try:
+        # readline = g.readLinesGenerator(body).next
+        readline = g.readLinesClass(body).next
+        tabnanny.process_tokens(tokenize.generate_tokens(readline))
+
+    except tokenize.TokenError, msg:
+        if unittest:
+            raise
+        else:
+            g.es("Token error in %s" % headline,color="blue")
+            g.es(str(msg))
+            p.setMarked()
+
+    except tabnanny.NannyNag, nag:
+        if unittest:
+            raise
+        else:
+            badline = nag.get_lineno()
+            line    = nag.get_line()
+            message = nag.get_msg()
+            g.es("Indentation error in %s, line %d" % (headline, badline),color="blue")
+            g.es(message)
+            g.es("offending line:\n%s" % repr(str(line))[1:-1])
+            p.setMarked()
+        
     except:
-        status = [] ; frame.clearStatusLine()
+        g.trace("unexpected exception")
+        g.es_exception()
+        if unittest: raise
+#@-node:ekr.20040723094220.6:tabNannyNode
+#@-node:ekr.20040723094220:Check Outline commands & allies
+#@+node:ekr.20040412060927:c.dumpOutline
+def dumpOutline (self):
     
-    for sym,name in (
-        ("Alt_L","Alt"),("Alt_R","Alt"),
-        ("Control_L","Control"),("Control_R","Control"),
-        ("Escape","Esc"),
-        ("Shift_L","Shift"), ("Shift_R","Shift")):
-        if keysym == sym:
-            if name not in status:
-                status.append(name)
-                frame.putStatusLine(name + ' ')
-            break
+    """ Dump all nodes in the outline."""
+    
+    c = self
+
+    for p in c.allNodes_iter():
+        p.dump()
+#@nonl
+#@-node:ekr.20040412060927:c.dumpOutline
+#@+node:ekr.20040711135959.1:Pretty Print commands
+#@+node:ekr.20040712053025:prettyPrintAllPythonCode
+def prettyPrintAllPythonCode (self,dump=False):
+
+    c = self ; pp = c.prettyPrinter(c)
+
+    for p in c.all_positions_iter():
+        
+        # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+        if g.scanForAtLanguage(c,p) == "python":
+
+            pp.prettyPrintNode(p,dump=dump)
+            
+    pp.endUndo()
+#@nonl
+#@-node:ekr.20040712053025:prettyPrintAllPythonCode
+#@+node:ekr.20040712053025.1:prettyPrintPythonCode
+def prettyPrintPythonCode (self,p=None,dump=False):
+
+    c = self
+    
+    if p: root = p.copy()
+    else: root = c.currentPosition();
+    
+    pp = c.prettyPrinter(c)
+    
+    for p in root.self_and_subtree_iter():
+        
+        # Unlike scanDirectives, scanForAtLanguage ignores @comment.
+        if g.scanForAtLanguage(c,p) == "python":
+    
+            pp.prettyPrintNode(p,dump=dump)
+          
+    pp.endUndo()
+#@nonl
+#@-node:ekr.20040712053025.1:prettyPrintPythonCode
+#@+node:ekr.20040711135244.5:class prettyPrinter
+class prettyPrinter:
+    
+    @others
+#@nonl
+#@+node:ekr.20040711135244.6:__init__
+def __init__ (self,c):
+    
+    self.changed = False
+    self.line = 0
+    self.lines = []
+    self.col = 0
+    self.array = []
+    self.parenLevel = 0
+    self.bracketLevel = 0
+    self.c = c
+    self.p = c.currentPosition()
+    self.prevName = None
+#@nonl
+#@-node:ekr.20040711135244.6:__init__
+#@+node:ekr.20040713093048:clear
+def clear (self):
+    self.lines = []
+#@nonl
+#@-node:ekr.20040713093048:clear
+#@+node:ekr.20040713064323:dumpLines
+def dumpLines (self,p,lines):
+
+    encoding = g.app.tkEncoding
+    
+    print ; print '-'*10, p.headString()
+    
+    if 1:
+        for line in lines:
+            line2 = g.toEncodedString(line,encoding,reportErrors=True)
+            print line2, # Don't add a trailing newline!
     else:
-        status = [] ; frame.clearStatusLine()
-
-    self.keyStatus = status
+        for i in xrange(len(lines)):
+            line = g.toEncodedString(line,encoding,reportErrors=True)
+            print "%3d" % i, repr(lines[i])
 #@nonl
-#@+node:ekr.20040105223536.1:<< trace the key event >>
-try:    self.keyCount += 1
-except: self.keyCount  = 1
+#@-node:ekr.20040713064323:dumpLines
+#@+node:ekr.20040711135244.7:dumpToken
+def dumpToken (self,token5tuple):
 
-printable = g.choose(ch == keysym and state < 4,"printable","")
+    t1,t2,t3,t4,t5 = token5tuple
+    srow,scol = t3 ; erow,ecol = t4
+    line = str(t5) # can fail
+    name = token.tok_name[t1].lower()
+    val = str(t2) # can fail
 
-print "%4d %s %d %s %x %s" % (
-    self.keyCount,repr(ch),keycode,keysym,state,printable)
+    startLine = self.line != srow
+    if startLine:
+        print "----- line",srow,repr(line)
+    self.line = srow
+
+    print "%10s (%2d,%2d) %-8s" % (name,scol,ecol,repr(val))
 #@nonl
-#@-node:ekr.20040105223536.1:<< trace the key event >>
-#@-node:ekr.20040105223536:handleStatusLineKey
-#@-node:ekr.20031218072017.1330:onBodyKey
-#@+node:ekr.20031218072017.1331:onBodyWillChange
-# Called by command handlers that change the text just before idle time.
-
-def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
+#@-node:ekr.20040711135244.7:dumpToken
+#@+node:ekr.20040711135244.8:get
+def get (self):
     
-    """Queue the body changed idle handler."""
+    return self.lines
+#@nonl
+#@-node:ekr.20040711135244.8:get
+#@+node:ekr.20040711135244.4:prettyPrintNode
+def prettyPrintNode(self,p,dump):
+
+    pp = self ; c = self.c
+    h = p.headString()
+    s = p.bodyString()
+    if not s: return
+    
+    readlines = g.readLinesGenerator(s).next
+
+    try:
+        pp.clear()
+        for token5tuple in tokenize.generate_tokens(readlines):
+            pp.putToken(token5tuple)
+        lines = pp.get()
+
+    except tokenize.TokenError:
+        g.es("Error pretty-printing %s.  Not changed." % h, color="blue")
+        return
+
+    if dump:
+        pp.dumpLines(p,lines)
+    else:
+        pp.replaceBody(p,lines)
+#@nonl
+#@-node:ekr.20040711135244.4:prettyPrintNode
+#@+node:ekr.20040711135244.9:put
+def put (self,s,strip=True):
+    
+    """Put s to self.array, and strip trailing whitespace if strip is True."""
+    
+    if self.array and strip:
+        prev = self.array[-1]
+        if len(self.array) == 1:
+            if prev.rstrip():
+                # Stripping trailing whitespace doesn't strip leading whitespace.
+                self.array[-1] = prev.rstrip()
+        else:
+            # The previous entry isn't leading whitespace, so we can strip whitespace.
+            self.array[-1] = prev.rstrip()
+
+    self.array.append(s)
+#@nonl
+#@-node:ekr.20040711135244.9:put
+#@+node:ekr.20040711135244.10:putNormalToken
+def putNormalToken (self,token5tuple):
+
+    a = self.array
+    t1,t2,t3,t4,t5 = token5tuple
+    srow,scol = t3 ; erow,ecol = t4
+    line = t5
+    name = token.tok_name[t1].lower()
+    val = t2
+    startLine = self.line != srow
+    self.line = srow
+
+    if startLine:
+        ws = line[0:scol]
+        if ws: a.append(ws)
+
+    # g.trace(name,repr(val))
+    if name in ("nl","newline","endmarker"):
+        if name in ("nl","newline"):
+            a.append('\n')
+        self.lines.append(''.join(a))
+        self.array = []
+    elif name == "op":
+        self.putOperator(val)
+    elif name == "name":
+        a.append("%s " % val)
+        if self.prevName == "def": # A personal idiosyncracy.
+            a.append(' ') # Retain the blank before '('.
+        self.prevName = val
+    elif name == "number":
+        a.append(val)
+    elif name in ("comment","string"):
+        # These may span lines, so duplicate the end-of-line logic.
+        lines = g.splitLines(val)
+        for line in lines:
+            a.append(line)
+            if line and line[-1] == '\n':
+                self.lines.append(''.join(a))
+                self.array = []
+    elif name == "errortoken":
+        a.append(val)
+        if val == '@':
+            # Preserve whitespace after @.
+            i = g.skip_ws(line,scol+1)
+            ws = line[scol+1:i]
+            if ws: a.append(ws)
+    elif name == "indent":
+        a.append(val)
+    elif name == "dedent":
+        pass
+    else:
+        print "unknown: %s" % (name)
+#@nonl
+#@-node:ekr.20040711135244.10:putNormalToken
+#@+node:ekr.20040711135244.11:putOperator
+def putOperator (self,val):
+    
+    if val == '(':
+        self.parenLevel += 1
+        self.put(val)
+    elif val == ')':
+        self.parenLevel -= 1
+        self.put(val)
+    elif val == '=':
+        if self.parenLevel > 0: self.put('=')
+        else:                   self.put(' = ')
+    elif val == ',':
+        if self.parenLevel > 0: self.put(',')
+        else:                   self.put(', ')
+    elif val == ';':
+        self.put(" ; ")
+    else:
+        self.put(val)
+#@nonl
+#@-node:ekr.20040711135244.11:putOperator
+#@+node:ekr.20040711135244.12:putToken
+def putToken (self,token5tuple):
+    
+    if 1:
+        self.putNormalToken(token5tuple)
+    else:
+        self.dumpToken(token5tuple)
+#@nonl
+#@-node:ekr.20040711135244.12:putToken
+#@+node:ekr.20040713070356:replaceBody
+def replaceBody (self,p,lines):
     
     c = self.c
-
-    if not oldSel:
-        oldSel = c.frame.body.getTextSelection()
-
-    if not p:
-        p = c.currentPosition()
-
-    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
-#@nonl
-#@-node:ekr.20031218072017.1331:onBodyWillChange
-#@-node:ekr.20031218072017.1320:body key handlers
-#@+node:ekr.20031218072017.1332:headline key handlers (tree)
-@ The <Key> event generates the event before the headline text is changed(!), so we register an idle-event handler to do the work later.
-@c
-
-@others
-#@nonl
-#@+node:ekr.20031218072017.1333:onHeadChanged
-def onHeadChanged (self,p):
     
-    """Handle a change to headline text."""
+    sel = c.frame.body.getInsertionPoint()
+    oldBody = p.bodyString()
+    body = string.join(lines,'')
     
-    self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
-
-#@-node:ekr.20031218072017.1333:onHeadChanged
-#@+node:ekr.20031218072017.1334:OnHeadlineKey
-def OnHeadlineKey (self,p,event):
+    p.setBodyStringOrPane(body)
     
-    """Handle a key event in a headline."""
+    if not self.changed:
 
-    ch = event.char
-    self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
-
-
-#@-node:ekr.20031218072017.1334:OnHeadlineKey
-#@+node:ekr.20031218072017.1335:idle_head_key
-def idle_head_key (self,p,ch=None):
+        # Tag the start of the command.
+        c.undoer.setUndoParams("Pretty Print",self.p) 
+        self.changed = True
     
-    """Update headline text at idle time."""
+    self.c.undoer.setUndoParams("Change",p,
+        oldText=oldBody,newText=body,oldSel=sel, newSel=sel)
+#@nonl
+#@-node:ekr.20040713070356:replaceBody
+#@+node:ekr.20040713091855:endUndo
+def endUndo (self):
     
-    c = self.c ; v = p.v
-
-    if not p or not p.edit_text() or p != c.currentPosition():
-        return "break"
-        
-    edit_text = p.edit_text()
-    index = edit_text.index("insert")
-
-    if g.doHook("headkey1",c=c,p=p,ch=ch):
-        return "break" # The hook claims to have handled the event.
-        
-    << set head to vnode text >>
-    done = ch in ('\r','\n')
-    if done:
-        << set the widget text to head >>
-    << set s to the widget text >>
-    changed = s != head
-    if changed:
-        c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-        << update v and all nodes joined to v >>
-    if done or changed:
-        << reconfigure v and all nodes joined to v >>
-        << update the screen >>
-
-    g.doHook("headkey2",c=c,p=p,ch=ch)
-    return "break"
-#@nonl
-#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
-head = p.headString()
-if head == None:
-    head = u""
-head = g.toUnicode(head,"utf-8")
-#@nonl
-#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
-#@+node:EKR.20040614075003:<< set the widget text to head >>
-edit_text.delete("1.0","end")
-edit_text.insert("end",head)
-edit_text.mark_set("insert",index)
-#@nonl
-#@-node:EKR.20040614075003:<< set the widget text to head >>
-#@+node:ekr.20031218072017.1336:<< set s to the widget text >>
-s = edit_text.get("1.0","end")
-
-# Don't truncate if the user is hitting return.
-# That should just end editing.
-if 1:
-    # Truncate headline text to workaround Tk problems...
-    # Another kludge: remove one or two trailing newlines before warning of truncation.
-    if s and s[-1] == '\n': s = s[:-1]
-    if s and s[-1] == '\n': s = s[:-1]
-    i = s.find('\n')
-    if i > -1:
-        # g.trace(i,len(s),repr(s))
-        g.es("Truncating headline to one line",color="blue")
-        s = s[:i]
-    if len(s) > 250:
-        g.es("Truncating headline to 250 characters",color="blue")
-        s = s[:250]
-
-s = g.toUnicode(s,g.app.tkEncoding)
-
-if not s:
-    s = u""
+    c = self.c
     
-if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
-    s = s.replace('\n','')
-    s = s.replace('\r','')
-#@nonl
-#@-node:ekr.20031218072017.1336:<< set s to the widget text >>
-#@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
-c.beginUpdate()
-if 1: # update...
-    # Update changed bit.
-    if not c.changed:
-        c.setChanged(True)
-    # Update all dirty bits.
-    if not p.isDirty():
-        p.setDirty()
-    # Update v.
-    v.initHeadString(s)
-    edit_text.delete("1.0","end")
-    edit_text.insert("end",s)
-    edit_text.mark_set("insert",index)
-c.endUpdate(False) # do not redraw now.
-#@nonl
-#@-node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
-#@+node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
-# Reconfigure v's headline.
-if done:
-    self.setDisabledLabelState(p)
+    if self.changed:
 
-edit_text.configure(width=self.headWidth(v))
+        # Tag the end of the command.
+        c.undoer.setUndoParams("Pretty Print",self.p)
 #@nonl
-#@-node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
-#@+node:ekr.20031218072017.1340:<< update the screen >>
-if done:
-    c.beginUpdate()
-    self.endEditLabel()
-    c.endUpdate()
-
-elif changed:
-    # Update v immediately.  Joined nodes are redrawn later by endEditLabel.
-    # Redrawing the whole screen now messes up the cursor in the headline.
-    self.drawIcon(p) # just redraw the icon.
-#@nonl
-#@-node:ekr.20031218072017.1340:<< update the screen >>
-#@-node:ekr.20031218072017.1335:idle_head_key
-#@-node:ekr.20031218072017.1332:headline key handlers (tree)
-#@-node:ekr.20031218072017.1319:(Key handlers)
-#@-node:ekr.20040720075446:(Handle trailing_body_newlines option)
-#@-node:ekr.20040718050922:(Added write_strips_blank_lines and trailing_body_newlines options)
-#@-node:ekr.20040706080316:in 4.2 b3
+#@-node:ekr.20040713091855:endUndo
+#@-node:ekr.20040711135244.5:class prettyPrinter
+#@-node:ekr.20040711135959.1:Pretty Print commands
+#@-node:ekr.20040711135959.2:Check Outline submenu...
+#@-node:ekr.20040723094220.7:(Improved and simplified Syntax Checking commands)
+#@-node:ekr.20040706080316:Projects: 4.2 b3
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
 #@nonl

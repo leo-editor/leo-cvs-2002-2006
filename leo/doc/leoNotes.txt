@@ -2943,8 +2943,23 @@ def convertTreeToSharedNodes(self):
 		v._parent = None
 #@nonl
 #@-node:ekr.20040301201418:c.convertTreeToSharedNodes (for conversion)
-#@+node:ekr.20040301213345: conversion routines for 4.2
-#@-node:ekr.20040301213345: conversion routines for 4.2
+#@+node:ekr.20031218072017.3380:v.edit_text
+def edit_text (self):
+
+    v = self ; c = v.c ; p = c.currentPosition()
+    
+    g.trace("ooooops")
+    #import traceback ; traceback.print_stack()
+    
+    pairs = self.c.frame.tree.getEditTextDict(v)
+    for p2,t2 in pairs:
+        if p.equal(p2):
+            # g.trace("found",t2)
+            return t2
+            
+    return None
+#@nonl
+#@-node:ekr.20031218072017.3380:v.edit_text
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

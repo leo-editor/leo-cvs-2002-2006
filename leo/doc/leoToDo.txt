@@ -4,19 +4,11 @@
 
 #@+all
 #@+node:EKR.20040430163619:To do: 4.2
-#@+node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
-
-
-#@-node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
-#@+node:EKR.20040628085831:1. Features: 3
-#@+node:ekr.20040718033104:@shadow
-#@-node:ekr.20040718033104:@shadow
-#@+node:ekr.20040718032616:@import
-#@-node:ekr.20040718032616:@import
-#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040628085831:1. Features: 3
-#@+node:ekr.20040716055314:2. Bugs 4
+#@+node:ekr.20040716055314:Bugs
+#@+node:ekr.20040723050756:Make sure executing scripts don't interfere with tnodeList
+#@-node:ekr.20040723050756:Make sure executing scripts don't interfere with tnodeList
+#@+node:ekr.20040722163555:Make sure there is no whitespace in blank lines
+#@-node:ekr.20040722163555:Make sure there is no whitespace in blank lines
 #@+node:ekr.20040630214448.1:(Use inspect module to improve Go To Line Number)
 #@+node:ekr.20040706115641:Report 2
 @killcolor
@@ -643,7 +635,17 @@ Both forms of empty tags should always be accepted because it is officially
 identical in meaning for xml.
 #@nonl
 #@-node:ekr.20040702064435:(Fix problem with xml parsing)
-#@-node:ekr.20040716055314:2. Bugs 4
+#@+node:ekr.20040723050246:Speed up file read code:  long delay after reading Leo file
+#@-node:ekr.20040723050246:Speed up file read code:  long delay after reading Leo file
+#@+node:ekr.20040723100430:Is there a performance bug in the Activate logic?
+#@-node:ekr.20040723100430:Is there a performance bug in the Activate logic?
+#@-node:ekr.20040716055314:Bugs
+#@+node:ekr.20040722132104:Write script to report underindented lines
+#@-node:ekr.20040722132104:Write script to report underindented lines
+#@+node:ekr.20040722132104.1:Write support stuff to write files to nodes for testing
+#@-node:ekr.20040722132104.1:Write support stuff to write files to nodes for testing
+#@+node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
+#@-node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
 #@+node:EKR.20040422132037:Linux bugs 4
 @nocolor
 #@nonl
@@ -810,379 +812,6 @@ This last anomaly seems to persist regardless of how the headline is hilited and
 #@nonl
 #@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
 #@-node:EKR.20040422132037:Linux bugs 4
-#@+node:ekr.20040718033104.1:Finish: 2
-#@+node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-Also add corresponding commands.
-#@nonl
-#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-#@+node:ekr.20040317184631:Design
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2477913
-By: edream
-
-A better design for user icons
-
-Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
-to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
-than a list of tuples.  Each of these "subsidiary" dictionaries could have the
-following keys:
-
-"type"
-
-"file", "icon" or "url".  At present my prototype code uses "file" to specify
-the location of an icon.
-
-"where":
-
-"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
-where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
-means before the plus/minus box.  "beforeIcon" means before the standard icon.
-
-"height":
-
-the height of the icon to use when calculating the line height.  Default: get
-from the icon itself, if possible.
-
-"width":
-
-the width of the icon to use when calculating where to put the following element.
-Default: get from the icon, if possible.
-
-"xoffset"
-
-Leo draws the icon at x + xoffset, where x is determined by the where param
-above.  Default 0.
-
-"xpad"
-
-The amount of extra space following the icon.  Default 0.
-
-"yoffset"
-
-Leo draws the icon at y + yoffset.  Default 0.
-
-"ypad"
-
-The amount of extra vertical space to add to the line height.  Default 0.
-
-These offset and pad values are integer pixel values and may be positive or
-negative.
-
-"lineHeight"  NOT USED.
-
-Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-
-Edward
-
-P.S.  Other gui's might not be able to support all these options.  That's ok.
-The drawing code in gui plugins should degrade gracefully.
-
-EKR
-#@nonl
-#@-node:ekr.20040317184631:Design
-#@+node:ekr.20040317184631.2:Changes
-@nocolor
-
-"lineHeight"
-
-This key won't be used.
-
-t.unknownAttributes["lineYOffset"] 
-
-An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
-#@nonl
-#@-node:ekr.20040317184631.2:Changes
-#@+node:ekr.20040317184631.1:To do
-@nocolor
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-#@nonl
-#@-node:ekr.20040317184631.1:To do
-#@+node:ekr.20031218072017.4140:<< drawing constants >>
-box_padding = 5 # extra padding between box and icon
-box_width = 9 + box_padding
-icon_width = 20
-icon_padding = 2
-text_indent = 4 # extra padding between icon and tex
-child_indent = 28 # was 20
-hline_y = 7 # Vertical offset of horizontal line
-root_left = 7 + box_width
-root_top = 2
-hiding = True # True if we don't reallocate items
-line_height = 17 + 2 # To be replaced by Font height
-#@nonl
-#@-node:ekr.20031218072017.4140:<< drawing constants >>
-#@+node:ekr.20040317094609:drawUserIcons
-def drawUserIcons(self,p,where,x,y):
-    
-    """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
-    
-    h,w = 0,0 ; t = p.v.t
-    
-    if not hasattr(t,"unknownAttributes"):
-        return h,w
-    
-    iconsList = t.unknownAttributes.get("icons")
-    if not iconsList:
-        return h,w
-    
-    try:
-        for dict in iconsList:
-            h2,w2 = self.drawUserIcon(where,x+w,y,dict)
-            h = max(h,h2) ; w += w2
-    except:
-        g.es_exception()
-
-    return h,w
-#@nonl
-#@-node:ekr.20040317094609:drawUserIcons
-#@+node:ekr.20040317095510:drawUserIcon
-def drawUserIcon (self,where,x,y,dict):
-    
-    h,w = 0,0
-
-    if where != dict.get("where","beforeHeadline"):
-        return h,w
-        
-    # g.trace(where,x,y,dict)
-    
-    << set offsets and pads >>
-    type = dict.get("type")
-    if type == "icon":
-        s = dict.get("icon")
-        << draw the icon in string s >>
-    elif type == "file":
-        file = dict.get("file")
-        << draw the icon at file >>
-    elif type == "url":
-        url = dict.get("url")
-        << draw the icon at url >>
-        
-    # Allow user to specify height, width explicitly.
-    h = dict.get("height",h)
-    w = dict.get("width",w)
-
-    return h,w
-#@nonl
-#@+node:ekr.20040317173849:<< set offsets and pads >>
-xoffset = dict.get("xoffset")
-try:    xoffset = int(xoffset)
-except: xoffset = 0
-
-yoffset = dict.get("yoffset")
-try:    yoffset = int(yoffset)
-except: yoffset = 0
-
-xpad = dict.get("xpad")
-try:    xpad = int(xpad)
-except: xpad = 0
-
-ypad = dict.get("ypad")
-try:    ypad = int(ypad)
-except: ypad = 0
-#@nonl
-#@-node:ekr.20040317173849:<< set offsets and pads >>
-#@+node:ekr.20040317095153:<< draw the icon in string s >>
-pass
-#@nonl
-#@-node:ekr.20040317095153:<< draw the icon in string s >>
-#@+node:ekr.20040317095153.1:<< draw the icon at url >>
-pass
-#@nonl
-#@-node:ekr.20040317095153.1:<< draw the icon at url >>
-#@+node:ekr.20040317100702:<< draw the icon at file >>
-try:
-    image = self.iconimages[file]
-    # Get the image from the cache if possible.
-except KeyError:
-    try:
-        fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
-        fullname = g.os_path_normpath(fullname)
-        image = Tk.PhotoImage(master=self.canvas,file=fullname)
-        self.iconimages[fullname] = image
-    except:
-        #g.es("Exception loading: " + fullname)
-        #g.es_exception()
-        image = None
-        
-if image:
-    id = self.canvas.create_image(x+xoffset,y+yoffset,anchor="nw",image=image)
-    self.canvas.lift(id)
-    h = image.height() + yoffset + ypad
-    w = image.width()  + xoffset + xpad
-#@nonl
-#@-node:ekr.20040317100702:<< draw the icon at file >>
-#@-node:ekr.20040317095510:drawUserIcon
-#@+node:ekr.20031218072017.4147:tree.getIconImage
-def getIconImage (self, name):
-
-    # Return the image from the cache if possible.
-    if self.iconimages.has_key(name):
-        return self.iconimages[name]
-        
-    try:
-        fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
-        fullname = g.os_path_normpath(fullname)
-        image = Tk.PhotoImage(master=self.canvas,file=fullname)
-        self.iconimages[name] = image
-        return image
-    except:
-        g.es("Exception loading: " + fullname)
-        g.es_exception()
-        return None
-#@nonl
-#@-node:ekr.20031218072017.4147:tree.getIconImage
-#@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv,toString=False):
-    
-    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
-    
-    result = []
-    attrDict = torv.unknownAttributes
-    if type(attrDict) != type({}):
-        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
-        return
-
-    for key in attrDict.keys():
-        try:
-            val = attrDict[key]
-            s = pickle.dumps(val,bin=True)
-            attr = ' %s="%s"' % (key,binascii.hexlify(s))
-            self.put(attr)
-
-        except pickle.PicklingError:
-            # New in 4.2 beta 1: keep going after error.
-            g.es("ignoring non-pickleable attribute %s in %s" % (
-                key,torv),color="blue")
-#@nonl
-#@-node:EKR.20040526202501:putUnknownAttributes
-#@-node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:EKR.20040601133022.1:(Finish the new undo)
-#@+node:EKR.20040606195417.5:To do
-@nocolor
-
-- (done) Create u.saveNode, u.saveNodeAndChildren, u.saveListOfNodes.
-- Create u.appendSavedNode.
-- Use u.appendSavedNode in Change All command.
-- Unit tests.
-#@nonl
-#@-node:EKR.20040606195417.5:To do
-#@+node:EKR.20040528075307:u.saveTree
-def saveTree (self,p,treeInfo=None):
-    
-    """Create all info needed to handle a general undo operation."""
-
-    # WARNING: read this before doing anything "clever"
-    << about u.saveTree >>
-    
-    u = self ; topLevel = (treeInfo == None)
-    if topLevel: treeInfo = []
-
-    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
-    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    treeInfo.append(data)
-
-    # Recursively add info for the subtree.
-    child = p.firstChild()
-    while child:
-        self.saveTree(child,treeInfo)
-        child = child.next()
-
-    # if topLevel: g.trace(treeInfo)
-    return treeInfo
-#@+node:EKR.20040530114124:<< about u.saveTree >>
-@ 
-The old code made a free-standing copy of the tree using v.copy and t.copy.  This looks "elegant" and is WRONG.  The problem is that it can not handle clones properly, especially when some clones were in the "undo" tree and some were not.   Moreover, it required complex adjustments to t.vnodeLists.
-
-Instead of creating new nodes, the new code creates all information needed to properly restore the vnodes and tnodes.  It creates a list of tuples, on tuple for each vnode in the tree.  Each tuple has the form,
-
-(vnodeInfo, tnodeInfo) where vnodeInfo and tnodeInfo are dicts contain all info needed to recreate the nodes.  The v.createUndoInfoDict and t.createUndoInfoDict methods correspond to the old v.copy and t.copy methods.
-
-Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the createUndoInfoDict info, but quite a bit uglier.
-#@-node:EKR.20040530114124:<< about u.saveTree >>
-#@-node:EKR.20040528075307:u.saveTree
-#@+node:EKR.20040606195417.2:u.saveNodeAndChildren
-def saveNodeAndChildren (self,p):
-    
-    """Create all info needed for a node and all its immediate children."""
-
-    u = self
-    treeInfo = []
-
-    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
-    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    treeInfo.append(data)
-
-    # Add info for all children.
-    child = p.firstChild()
-    while child:
-        data = (child.v,child.v.createUndoInfo(),child.v.t.createUndoInfo())
-        treeInfo.append(data)
-        child = child.next()
-
-    return treeInfo
-
-#@-node:EKR.20040606195417.2:u.saveNodeAndChildren
-#@+node:EKR.20040606195417.1:u.saveNode
-def saveNode (self,p):
-    
-    """Create all info for a single vnode."""
-    
-    u = self
-
-    treeInfo = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    return treeInfo
-#@nonl
-#@-node:EKR.20040606195417.1:u.saveNode
-#@+node:EKR.20040606195417.3:u.saveListOfNodes
-def saveListOfNodes (self,listOfVnodes):
-    
-    """Create all info for a list of vnodes."""
-    
-    u = self ; treeInfo = []
-
-    for v in listOfVnodes:
-        data = (v,v.createUndoInfo(),v.t.createUndoInfo())
-        treeInfo.append(data)
-
-    return treeInfo
-#@nonl
-#@-node:EKR.20040606195417.3:u.saveListOfNodes
-#@-node:EKR.20040601133022.1:(Finish the new undo)
-#@-node:ekr.20040718033104.1:Finish: 2
 #@+node:EKR.20040609155110:Docs
 #@+node:EKR.20040503091612:Dangers of @file-thin: converting to @file-thin
 Using @ignore with @file-thin is asking for trouble.
@@ -2599,7 +2228,7 @@ def __init__(self,c,frame,canvas):
     # Miscellaneous info.
     self.iconimages = {} # Image cache set by getIconImage().
     self.active = False # True if tree is active
-    self._editPosition = None
+    self._editPosition = None # returned by leoTree.editPosition()
     self.lineyoffset = 0 # y offset for this headline.
     self.disableRedraw = False # True: reschedule a redraw for later.
     self.lastClickFrameId = None # id of last entered clickBox.
@@ -2974,6 +2603,23 @@ if scroll:
 #@-node:ekr.20040324090957.1:<< Erase and redraw the entire tree >>
 #@-node:ekr.20031218072017.1015:idle_redraw
 #@+node:ekr.20031218072017.4157:Selecting & editing (tree)
+#@+node:ekr.20040725044521.1:tree.edit_text
+def edit_text (self,p):
+    
+    c = self.c
+    
+    if c:
+        # New in 4.2: the dictionary is a list of pairs(p,v)
+        pairs = self.getEditTextDict(p.v)
+        for p2,t2 in pairs:
+            if p.equal(p2):
+                # g.trace("found",t2)
+                return t2
+        return None
+    else:
+        return None
+#@nonl
+#@-node:ekr.20040725044521.1:tree.edit_text
 #@+node:ekr.20031218072017.4158:dimEditLabel, undimEditLabel
 # Convenience methods so the caller doesn't have to know the present edit node.
 
@@ -3311,7 +2957,7 @@ self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
 #@+node:ekr.20040707060750:RsT plugin should say where files get written
 #@-node:ekr.20040707060750:RsT plugin should say where files get written
 #@-node:ekr.20040706080747:Plugins
-#@+node:ekr.20040323195916.1:Tests & pychecker
+#@+node:ekr.20040323195916.1:Unit tests & pychecker
 @nocolor
 
 - Unit tests for node iterators.
@@ -3326,9 +2972,6 @@ self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
 
 - Create unit tests for all dialogs.
 
-- Test all changed code:
-	- Make a list of the code that has changed.
-
 - Run profiler on code.
 #@nonl
 #@+node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
@@ -3336,166 +2979,6 @@ self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
 #@+node:EKR.20040621184626:Finish unit tests for @asis
 @ - Support toString in asis methods
 #@-node:EKR.20040621184626:Finish unit tests for @asis
-#@+node:ekr.20040701120647:Pychecker stuff...
-#@+node:ekr.20040701152235:Fix shawdow warnings ?
-@killcolor
-
-cmp,dict,dir,file,id,type are all global functions.
-#@+node:ekr.20040701152235.2:leoApp
-c:\prog\leoCVS\leo\src\leoApp.py:209: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:224: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:368: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:401: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.2:leoApp
-#@+node:ekr.20040701152235.3:leoPlugins
-C:\prog\leoCVS\leo\src\leoPlugins.py:40: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:53: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:67: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:72: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:74: (file) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.3:leoPlugins
-#@+node:ekr.20040701152235.4:leoColor
-C:\prog\leoCVS\leo\src\leoColor.py:1948: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoColor.py:2059: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.4:leoColor
-#@+node:ekr.20040701152235.5:leoNodes
-C:\prog\leoCVS\leo\src\leoNodes.py:578: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1372: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1394: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1411: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1412: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1419: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1443: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1446: (id) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.5:leoNodes
-#@+node:ekr.20040701152235.6:leoCompare
-C:\prog\leoCVS\leo\src\leoCompare.py:44: (cmp) shadows builtin
-C:\prog\leoCVS\leo\src\leoCompare.py:397: (cmp) shadows builtin
-C:\prog\leoCVS\leo\src\leoCompare.py:468: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.6:leoCompare
-#@+node:ekr.20040701152235.8:leoFind
-c:\prog\leoCVS\leo\src\leoFind.py:864: (type) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.8:leoFind
-#@+node:ekr.20040701152235.9:leoMenu
-c:\prog\leoCVS\leo\src\leoMenu.py:656: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoMenu.py:700: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.9:leoMenu
-#@+node:ekr.20040701152235.10:leoTkinterTree
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:162: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:167: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:586: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:639: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:783: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:844: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:883: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:893: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:911: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:949: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1390: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1588: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1590: (id) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.10:leoTkinterTree
-#@+node:ekr.20040701152235.11:leoTkinterFrame
-C:\prog\leoCVS\leo\src\leoTkinterFrame.py:807: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1233: (file) shadows builtin
-
-c:\prog\leoCVS\leo\src\leoFrame.py:522: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoFrame.py:566: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.11:leoTkinterFrame
-#@+node:ekr.20040701152235.12:leoTkinterPrefs
-c:\prog\leoCVS\leo\src\leoTkinterPrefs.py:295: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.12:leoTkinterPrefs
-#@+node:ekr.20040701152235.13:leoTkinterGui
-c:\prog\leoCVS\leo\src\leoTkinterGui.py:78: (file) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.13:leoTkinterGui
-#@+node:ekr.20040701152235.14:leoAtFile
-C:\prog\leoCVS\leo\src\leoAtFile.py:336: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:473: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:490: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:549: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:551: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2142: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2157: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2278: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2280: (dir) shadows builtin
-#@-node:ekr.20040701152235.14:leoAtFile
-#@+node:ekr.20040701152235.15:leoFileCommands
-C:\prog\leoCVS\leo\src\leoFileCommands.py:90: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:866: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:990: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1191: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1228: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1269: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1318: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1756: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:2018: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.15:leoFileCommands
-#@+node:ekr.20040701152235.16:leoImport
-C:\prog\leoCVS\leo\src\leoImport.py:52: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:273: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:473: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1626: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1648: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1650: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2303: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2348: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2371: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2398: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2426: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2476: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2727: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2792: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.16:leoImport
-#@+node:ekr.20040701152235.17:leoTangle
-c:\prog\leoCVS\leo\src\leoTangle.py:540: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:541: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:666: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:718: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:911: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:924: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:2038: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3563: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3656: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3667: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3780: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3865: (type) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.17:leoTangle
-#@+node:ekr.20040701152235.18:leoCommands
-C:\prog\leoCVS\leo\src\leoCommands.py:324: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:340: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:346: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:465: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:468: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:480: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:495: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:734: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1238: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1677: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1721: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1770: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1800: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.18:leoCommands
-#@-node:ekr.20040701152235:Fix shawdow warnings ?
-#@+node:ekr.20040701123332:To do: redirect output (for unit tests)
-- Redirect output to a file-like-object, then check the contents of that object.
-#@nonl
-#@-node:ekr.20040701123332:To do: redirect output (for unit tests)
 #@+node:ekr.20031218072017.2606:<< Import pychecker >>
 @color
 
@@ -3511,8 +2994,7 @@ if 0: # Set to 1 for lint-like testing.
         pass
 #@nonl
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
-#@-node:ekr.20040701120647:Pychecker stuff...
-#@-node:ekr.20040323195916.1:Tests & pychecker
+#@-node:ekr.20040323195916.1:Unit tests & pychecker
 #@+node:ekr.20040629110559:Cool Mac stuff
 #@+node:ekr.20040629111136:Native Max OS X Leo app
 
@@ -5830,6 +5312,385 @@ for line in lines[j+1:k+1]:
 #@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
 #@-node:EKR.20040506075328:new_df.writeOpenFile
 #@-node:EKR.20040507095329.1:(Must do) More flexible atFile classes
+#@+node:EKR.20040628085831:(Must do) @import, etc.
+#@+node:ekr.20040718033104:@shadow
+#@-node:ekr.20040718033104:@shadow
+#@+node:ekr.20040718032616:@import
+#@-node:ekr.20040718032616:@import
+#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@-node:EKR.20040628085831:(Must do) @import, etc.
+#@+node:EKR.20040601133022.1:(Finish the new undo)
+#@+node:EKR.20040606195417.5:To do
+@nocolor
+
+- (done) Create u.saveNode, u.saveNodeAndChildren, u.saveListOfNodes.
+- Create u.appendSavedNode.
+- Use u.appendSavedNode in Change All command.
+- Unit tests.
+#@nonl
+#@-node:EKR.20040606195417.5:To do
+#@+node:EKR.20040528075307:u.saveTree
+def saveTree (self,p,treeInfo=None):
+    
+    """Create all info needed to handle a general undo operation."""
+
+    # WARNING: read this before doing anything "clever"
+    << about u.saveTree >>
+    
+    u = self ; topLevel = (treeInfo == None)
+    if topLevel: treeInfo = []
+
+    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
+    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    treeInfo.append(data)
+
+    # Recursively add info for the subtree.
+    child = p.firstChild()
+    while child:
+        self.saveTree(child,treeInfo)
+        child = child.next()
+
+    # if topLevel: g.trace(treeInfo)
+    return treeInfo
+#@+node:EKR.20040530114124:<< about u.saveTree >>
+@ 
+The old code made a free-standing copy of the tree using v.copy and t.copy.  This looks "elegant" and is WRONG.  The problem is that it can not handle clones properly, especially when some clones were in the "undo" tree and some were not.   Moreover, it required complex adjustments to t.vnodeLists.
+
+Instead of creating new nodes, the new code creates all information needed to properly restore the vnodes and tnodes.  It creates a list of tuples, on tuple for each vnode in the tree.  Each tuple has the form,
+
+(vnodeInfo, tnodeInfo) where vnodeInfo and tnodeInfo are dicts contain all info needed to recreate the nodes.  The v.createUndoInfoDict and t.createUndoInfoDict methods correspond to the old v.copy and t.copy methods.
+
+Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the createUndoInfoDict info, but quite a bit uglier.
+#@-node:EKR.20040530114124:<< about u.saveTree >>
+#@-node:EKR.20040528075307:u.saveTree
+#@+node:EKR.20040606195417.2:u.saveNodeAndChildren
+def saveNodeAndChildren (self,p):
+    
+    """Create all info needed for a node and all its immediate children."""
+
+    u = self
+    treeInfo = []
+
+    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
+    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    treeInfo.append(data)
+
+    # Add info for all children.
+    child = p.firstChild()
+    while child:
+        data = (child.v,child.v.createUndoInfo(),child.v.t.createUndoInfo())
+        treeInfo.append(data)
+        child = child.next()
+
+    return treeInfo
+
+#@-node:EKR.20040606195417.2:u.saveNodeAndChildren
+#@+node:EKR.20040606195417.1:u.saveNode
+def saveNode (self,p):
+    
+    """Create all info for a single vnode."""
+    
+    u = self
+
+    treeInfo = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    return treeInfo
+#@nonl
+#@-node:EKR.20040606195417.1:u.saveNode
+#@+node:EKR.20040606195417.3:u.saveListOfNodes
+def saveListOfNodes (self,listOfVnodes):
+    
+    """Create all info for a list of vnodes."""
+    
+    u = self ; treeInfo = []
+
+    for v in listOfVnodes:
+        data = (v,v.createUndoInfo(),v.t.createUndoInfo())
+        treeInfo.append(data)
+
+    return treeInfo
+#@nonl
+#@-node:EKR.20040606195417.3:u.saveListOfNodes
+#@-node:EKR.20040601133022.1:(Finish the new undo)
+#@+node:EKR.20040602153716:(Finish drawUserIcons)
+#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+Also add corresponding commands.
+#@nonl
+#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+#@+node:ekr.20040317184631:Design
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2477913
+By: edream
+
+A better design for user icons
+
+Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
+to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
+than a list of tuples.  Each of these "subsidiary" dictionaries could have the
+following keys:
+
+"type"
+
+"file", "icon" or "url".  At present my prototype code uses "file" to specify
+the location of an icon.
+
+"where":
+
+"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
+where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
+means before the plus/minus box.  "beforeIcon" means before the standard icon.
+
+"height":
+
+the height of the icon to use when calculating the line height.  Default: get
+from the icon itself, if possible.
+
+"width":
+
+the width of the icon to use when calculating where to put the following element.
+Default: get from the icon, if possible.
+
+"xoffset"
+
+Leo draws the icon at x + xoffset, where x is determined by the where param
+above.  Default 0.
+
+"xpad"
+
+The amount of extra space following the icon.  Default 0.
+
+"yoffset"
+
+Leo draws the icon at y + yoffset.  Default 0.
+
+"ypad"
+
+The amount of extra vertical space to add to the line height.  Default 0.
+
+These offset and pad values are integer pixel values and may be positive or
+negative.
+
+"lineHeight"  NOT USED.
+
+Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+
+Edward
+
+P.S.  Other gui's might not be able to support all these options.  That's ok.
+The drawing code in gui plugins should degrade gracefully.
+
+EKR
+#@nonl
+#@-node:ekr.20040317184631:Design
+#@+node:ekr.20040317184631.2:Changes
+@nocolor
+
+"lineHeight"
+
+This key won't be used.
+
+t.unknownAttributes["lineYOffset"] 
+
+An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
+#@nonl
+#@-node:ekr.20040317184631.2:Changes
+#@+node:ekr.20040317184631.1:To do
+@nocolor
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+#@nonl
+#@-node:ekr.20040317184631.1:To do
+#@+node:ekr.20031218072017.4140:<< drawing constants >>
+box_padding = 5 # extra padding between box and icon
+box_width = 9 + box_padding
+icon_width = 20
+icon_padding = 2
+text_indent = 4 # extra padding between icon and tex
+child_indent = 28 # was 20
+hline_y = 7 # Vertical offset of horizontal line
+root_left = 7 + box_width
+root_top = 2
+hiding = True # True if we don't reallocate items
+line_height = 17 + 2 # To be replaced by Font height
+#@nonl
+#@-node:ekr.20031218072017.4140:<< drawing constants >>
+#@+node:ekr.20040317094609:drawUserIcons
+def drawUserIcons(self,p,where,x,y):
+    
+    """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
+    
+    h,w = 0,0 ; t = p.v.t
+    
+    if not hasattr(t,"unknownAttributes"):
+        return h,w
+    
+    iconsList = t.unknownAttributes.get("icons")
+    if not iconsList:
+        return h,w
+    
+    try:
+        for dict in iconsList:
+            h2,w2 = self.drawUserIcon(where,x+w,y,dict)
+            h = max(h,h2) ; w += w2
+    except:
+        g.es_exception()
+
+    return h,w
+#@nonl
+#@-node:ekr.20040317094609:drawUserIcons
+#@+node:ekr.20040317095510:drawUserIcon
+def drawUserIcon (self,where,x,y,dict):
+    
+    h,w = 0,0
+
+    if where != dict.get("where","beforeHeadline"):
+        return h,w
+        
+    # g.trace(where,x,y,dict)
+    
+    << set offsets and pads >>
+    type = dict.get("type")
+    if type == "icon":
+        s = dict.get("icon")
+        << draw the icon in string s >>
+    elif type == "file":
+        file = dict.get("file")
+        << draw the icon at file >>
+    elif type == "url":
+        url = dict.get("url")
+        << draw the icon at url >>
+        
+    # Allow user to specify height, width explicitly.
+    h = dict.get("height",h)
+    w = dict.get("width",w)
+
+    return h,w
+#@nonl
+#@+node:ekr.20040317173849:<< set offsets and pads >>
+xoffset = dict.get("xoffset")
+try:    xoffset = int(xoffset)
+except: xoffset = 0
+
+yoffset = dict.get("yoffset")
+try:    yoffset = int(yoffset)
+except: yoffset = 0
+
+xpad = dict.get("xpad")
+try:    xpad = int(xpad)
+except: xpad = 0
+
+ypad = dict.get("ypad")
+try:    ypad = int(ypad)
+except: ypad = 0
+#@nonl
+#@-node:ekr.20040317173849:<< set offsets and pads >>
+#@+node:ekr.20040317095153:<< draw the icon in string s >>
+pass
+#@nonl
+#@-node:ekr.20040317095153:<< draw the icon in string s >>
+#@+node:ekr.20040317095153.1:<< draw the icon at url >>
+pass
+#@nonl
+#@-node:ekr.20040317095153.1:<< draw the icon at url >>
+#@+node:ekr.20040317100702:<< draw the icon at file >>
+try:
+    image = self.iconimages[file]
+    # Get the image from the cache if possible.
+except KeyError:
+    try:
+        fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
+        fullname = g.os_path_normpath(fullname)
+        image = Tk.PhotoImage(master=self.canvas,file=fullname)
+        self.iconimages[fullname] = image
+    except:
+        #g.es("Exception loading: " + fullname)
+        #g.es_exception()
+        image = None
+        
+if image:
+    id = self.canvas.create_image(x+xoffset,y+yoffset,anchor="nw",image=image)
+    self.canvas.lift(id)
+    h = image.height() + yoffset + ypad
+    w = image.width()  + xoffset + xpad
+#@nonl
+#@-node:ekr.20040317100702:<< draw the icon at file >>
+#@-node:ekr.20040317095510:drawUserIcon
+#@+node:ekr.20031218072017.4147:tree.getIconImage
+def getIconImage (self, name):
+
+    # Return the image from the cache if possible.
+    if self.iconimages.has_key(name):
+        return self.iconimages[name]
+        
+    try:
+        fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
+        fullname = g.os_path_normpath(fullname)
+        image = Tk.PhotoImage(master=self.canvas,file=fullname)
+        self.iconimages[name] = image
+        return image
+    except:
+        g.es("Exception loading: " + fullname)
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.4147:tree.getIconImage
+#@+node:EKR.20040526202501:putUnknownAttributes
+def putUnknownAttributes (self,torv,toString=False):
+    
+    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
+    
+    result = []
+    attrDict = torv.unknownAttributes
+    if type(attrDict) != type({}):
+        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+        return
+
+    for key in attrDict.keys():
+        try:
+            val = attrDict[key]
+            s = pickle.dumps(val,bin=True)
+            attr = ' %s="%s"' % (key,binascii.hexlify(s))
+            self.put(attr)
+
+        except pickle.PicklingError:
+            # New in 4.2 beta 1: keep going after error.
+            g.es("ignoring non-pickleable attribute %s in %s" % (
+                key,torv),color="blue")
+#@nonl
+#@-node:EKR.20040526202501:putUnknownAttributes
+#@-node:EKR.20040602153716:(Finish drawUserIcons)
 #@+node:EKR.20040424151321:(Status line experiments) TO DO: create status line class
 #@+node:ekr.20031218072017.3941: frame.Birth & Death
 #@+node:ekr.20031218072017.1801:f.__init__
@@ -6836,6 +6697,161 @@ http://www.reportlab.com
 
 import xml.sax
 #@-node:ekr.20031218072017.736:Use xml parser to read .leo files
+#@+node:ekr.20040701152235:Fix shawdow warnings ?
+@killcolor
+
+cmp,dict,dir,file,id,type are all global functions.
+#@+node:ekr.20040701152235.2:leoApp
+c:\prog\leoCVS\leo\src\leoApp.py:209: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoApp.py:224: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoApp.py:368: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoApp.py:401: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.2:leoApp
+#@+node:ekr.20040701152235.3:leoPlugins
+C:\prog\leoCVS\leo\src\leoPlugins.py:40: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:53: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:67: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:72: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:74: (file) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.3:leoPlugins
+#@+node:ekr.20040701152235.4:leoColor
+C:\prog\leoCVS\leo\src\leoColor.py:1948: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoColor.py:2059: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.4:leoColor
+#@+node:ekr.20040701152235.5:leoNodes
+C:\prog\leoCVS\leo\src\leoNodes.py:578: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1372: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1394: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1411: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1412: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1419: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1443: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1446: (id) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.5:leoNodes
+#@+node:ekr.20040701152235.6:leoCompare
+C:\prog\leoCVS\leo\src\leoCompare.py:44: (cmp) shadows builtin
+C:\prog\leoCVS\leo\src\leoCompare.py:397: (cmp) shadows builtin
+C:\prog\leoCVS\leo\src\leoCompare.py:468: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.6:leoCompare
+#@+node:ekr.20040701152235.8:leoFind
+c:\prog\leoCVS\leo\src\leoFind.py:864: (type) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.8:leoFind
+#@+node:ekr.20040701152235.9:leoMenu
+c:\prog\leoCVS\leo\src\leoMenu.py:656: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoMenu.py:700: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.9:leoMenu
+#@+node:ekr.20040701152235.10:leoTkinterTree
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:162: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:167: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:586: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:639: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:783: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:844: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:883: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:893: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:911: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:949: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:1390: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:1588: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:1590: (id) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.10:leoTkinterTree
+#@+node:ekr.20040701152235.11:leoTkinterFrame
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:807: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1233: (file) shadows builtin
+
+c:\prog\leoCVS\leo\src\leoFrame.py:522: (type) shadows builtin
+c:\prog\leoCVS\leo\src\leoFrame.py:566: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.11:leoTkinterFrame
+#@+node:ekr.20040701152235.12:leoTkinterPrefs
+c:\prog\leoCVS\leo\src\leoTkinterPrefs.py:295: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.12:leoTkinterPrefs
+#@+node:ekr.20040701152235.13:leoTkinterGui
+c:\prog\leoCVS\leo\src\leoTkinterGui.py:78: (file) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.13:leoTkinterGui
+#@+node:ekr.20040701152235.14:leoAtFile
+C:\prog\leoCVS\leo\src\leoAtFile.py:336: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:473: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:490: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:549: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:551: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2142: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2157: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2278: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2280: (dir) shadows builtin
+#@-node:ekr.20040701152235.14:leoAtFile
+#@+node:ekr.20040701152235.15:leoFileCommands
+C:\prog\leoCVS\leo\src\leoFileCommands.py:90: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:866: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:990: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1191: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1228: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1269: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1318: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1756: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:2018: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.15:leoFileCommands
+#@+node:ekr.20040701152235.16:leoImport
+C:\prog\leoCVS\leo\src\leoImport.py:52: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:273: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:473: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:1626: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:1648: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:1650: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2303: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2348: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2371: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2398: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2426: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2476: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2727: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2792: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.16:leoImport
+#@+node:ekr.20040701152235.17:leoTangle
+c:\prog\leoCVS\leo\src\leoTangle.py:540: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:541: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:666: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:718: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:911: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:924: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:2038: (type) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3563: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3656: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3667: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3780: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3865: (type) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.17:leoTangle
+#@+node:ekr.20040701152235.18:leoCommands
+C:\prog\leoCVS\leo\src\leoCommands.py:324: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:340: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:346: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:465: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:468: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:480: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:495: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:734: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1238: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1677: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1721: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1770: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1800: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.18:leoCommands
+#@-node:ekr.20040701152235:Fix shawdow warnings ?
 #@+node:ekr.20040329182535:plugins
 #@+node:ekr.20040130185920.1:** Add incremental search to search plugin (make find panel smaller)
 #@-node:ekr.20040130185920.1:** Add incremental search to search plugin (make find panel smaller)
