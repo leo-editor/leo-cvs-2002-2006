@@ -126,7 +126,7 @@ class leoDialog:
 		center = Tk.Frame(frame)
 		center.pack()
 		underline = choose(text=="OK",0,-1) # Underline character 0 if "OK", else no underlining.
-		ok = Tk.Button(center,width=6,text=text,bd=4, # default button
+		ok = Tk.Button(center,width=6,text=text,bd=4, # bd=4 represents default button
 			underline=underline,command=self.okButton)
 		ok.pack(side="left",padx=5,pady=10)
 		self.center() # Do this after packing.

@@ -202,13 +202,9 @@ class LeoFind:
 		buttons2.pack(anchor="n", expand=1, fill="x")
 		
 		# Create the first row of buttons
-		findButton   =Tk.Button     (buttons,width=8,text="Find",command=self.findButton)
-		findAllButton=Tk.Button     (buttons,width=8,text="Find All",command=self.findAllButton)
-		
-		if 0: # Now in left column.
-			reverseBox   =Tk.Checkbutton(buttons,width=8,text="Reverse",variable=self.reverse_flag)
-			reverseBox.bind("<1>", self.resetWrap)
-		
+		findButton   =Tk.Button(buttons,width=8,text="Find",command=self.findButton,
+			bd=4) # bd=4 represents default button
+		findAllButton=Tk.Button(buttons,width=8,text="Find All",command=self.findAllButton)
 		
 		findButton.pack   (pady="1m",padx="1m",side="left")
 		# reverseBox.pack   (pady="1m",          side="left",expand=1)
@@ -230,6 +226,7 @@ class LeoFind:
 		self.change_text.bind("<1>", self.resetWrap)
 		self.find_text.bind  ("<Key>", self.resetWrap)
 		self.change_text.bind("<Key>", self.resetWrap)
+		self.top.bind("<Return>", self.OnReturnKey) # 1/30/03
 	#@-body
 	#@-node:2::find.__init__ (creates find panel)
 	#@+node:3::find.init
@@ -287,7 +284,22 @@ class LeoFind:
 		self.top.withdraw()
 	#@-body
 	#@-node:6::OnCloseFindEvent
-	#@+node:7::Top Level Commands
+	#@+node:7::OnReturnKey
+	#@+body
+	def OnReturnKey (self,event):
+		
+		# Remove the newly inserted newline from the search & change strings.
+		for text in (self.find_text,self.change_text):
+			ch = text.get("insert - 1c")
+			if ch in ('\r','\n'):
+				text.delete("insert - 1c")
+	
+		# Do the default command.
+		self.findNextCommand(top())
+		return "break"
+	#@-body
+	#@-node:7::OnReturnKey
+	#@+node:8::Top Level Commands
 	#@+node:1::changeButton
 	#@+body
 
@@ -412,8 +424,8 @@ class LeoFind:
 		c.setIvarsFromFind()
 	#@-body
 	#@-node:11::setup_command
-	#@-node:7::Top Level Commands
-	#@+node:8::Utilities
+	#@-node:8::Top Level Commands
+	#@+node:9::Utilities
 	#@+node:1::batchChange
 	#@+body
 	#@+at
@@ -1010,7 +1022,7 @@ class LeoFind:
 	#@-body
 	#@-node:9::showSuccess
 	#@-node:11::Initializing & finalizing & selecting
-	#@-node:8::Utilities
+	#@-node:9::Utilities
 	#@-others
 #@-body
 #@-node:0::@file leoFind.py
