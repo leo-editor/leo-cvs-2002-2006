@@ -661,7 +661,10 @@ class Commands:
 			result.append(lines[i])
 			
 		# Wrap the lines, decreasing the page width by indent.
-		wrapped_lines = wrap_lines(lines[firstLine:lastLine],pageWidth-indents[1])
+		# DTHEIN 3-NOV-2002: pass in length of first line so hanging indent lines are
+		#                    allowed their full length.
+		wrapped_lines = \
+		    wrap_lines(lines[firstLine:lastLine],pageWidth-indents[1],pageWidth-indents[0])
 		lineCount = len(wrapped_lines)
 		
 		# Add the leading whitespace to the wrapped lines.

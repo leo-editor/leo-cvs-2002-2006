@@ -2032,11 +2032,19 @@ def scanDirectives(c,v=None):
 
 #@-at
 #@@c
+# DTHEIN 3-NOV-2002: handle indented first line (normal or hanging indent)
 
-def wrap_lines (lines,pageWidth):
+def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	
 	if pageWidth < 10:
 		pageWidth = 10
+		
+	# DTHEIN 3-NOV-2002: First line is special
+	if not firstLineWidth:
+		firstLineWidth = pageWidth
+	if firstLineWidth < 10:
+		firstLineWidth = 10
+	outputLineWidth = firstLineWidth
 
 	# trace(`lines`)
 	result = [] # The lines of the result.
@@ -2044,12 +2052,12 @@ def wrap_lines (lines,pageWidth):
 	for s in lines:
 		i = 0
 		while i < len(s):
-			assert(len(line) < pageWidth)
+			assert(len(line) < outputLineWidth)
 			j = skip_ws(s,i)   # ;   ws = s[i:j]
 			k = skip_non_ws(s,j) ; word = s[j:k]
 			assert(k>i)
 			i = k
-			if 1 + len(word) + len(line) < pageWidth:
+			if 1 + len(word) + len(line) < outputLineWidth:
 				if len(word) > 0:
 					
 					#@<< place blank and word on the present line >>
@@ -2073,6 +2081,7 @@ def wrap_lines (lines,pageWidth):
 				# End the previous line.
 				if len(line) > 0:
 					result.append(line)
+					outputLineWidth = pageWidth # DTHEIN 3-NOV-2002: width for remaining lines
 					
 				# Discard the whitespace and put the word on a new line.
 				line = word
@@ -2080,6 +2089,7 @@ def wrap_lines (lines,pageWidth):
 				# Careful: the word may be longer than pageWidth.
 				if len(line) >= pageWidth:
 					result.append(line)
+					outputLineWidth = pageWidth # DTHEIN 3-NOV-2002: width for remaining lines
 					line = ""
 				
 				#@-body
