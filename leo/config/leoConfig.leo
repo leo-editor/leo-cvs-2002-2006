@@ -26,9 +26,9 @@
 <v t="edream.110203150636.10"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.11"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.12"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
-<v t="edream.110203150636.13" a="TV"><vh>&lt;&lt; None &gt;&gt;</vh></v>
+<v t="edream.110203150636.13"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203150636.14"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
+<v t="edream.110203150636.14" a="TV"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.15"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="edream.110203150636.16"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="edream.110203150636.17"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
@@ -642,7 +642,7 @@ default_tangle_directory =
 default_target_language = Python
 # 	The default language if no @language or @comment is in effect.
 
-tab_width = 4
+tab_width = -4
 # 	The width of tabs on the screen.
 # 	This setting is also used when writing doc parts.
 # 	Valid values: A nonzero positive or negative integer.
