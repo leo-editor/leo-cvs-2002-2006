@@ -2104,32 +2104,48 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         c = self.c
         
-        # Crucial: disable the callback if we later change our minds.
-        self.wantedWidget = widget
-        g.app.wantedCommander = c
         # g.trace(c.shortFileName())
     
         if widget and not g.app.unitTesting:
             # Messing with focus may be dangerous in unit tests.
             if later:
                 # Queue up the call (just once) for later.
-                def setFocusCallback(c=c,widget=widget):
+                def setFocusCallback(c=c):
                     self.wantedCallbackScheduled = False
-                    if (
-                        widget == c.frame.wantedWidget
-                        and c == g.app.wantedCommander
-                        and not g.app.unitTesting
-                    ):
+                    if c == g.app.wantedCommander and c.frame.wantedWidget:
+                        # g.trace(c.frame.wantedWidget)
+                        g.app.gui.set_focus(
+                            g.app.wantedCommander,
+                            c.frame.wantedWidget,
+                            tag='frame.setFocus')
+                    self.wantedWidget = None
+                    g.app.wantedCommander = None
+                    
+                    #if (
+                    #    widget == c.frame.wantedWidget
+                    #    and c == g.app.wantedCommander
+                    #    and not g.app.unitTesting
+                    #):
                         # g.trace(repr(c.shortFileName()))
-                        g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+                        # g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+                   
+                    
+                # Crucial: This may change what the callback does.
+                self.wantedWidget = widget
+                g.app.wantedCommander = c
                 if not self.wantedCallbackScheduled:
+                    # g.trace(tag,c.shortFileName())
                     self.wantedCallbackScheduled = True
                     # We don't have to wait so long now that we don't call this so often.
-                    # The difference between 500 msec. and 200 msec. is significant.
-                    self.outerFrame.after(200,setFocusCallback)
+                    # The difference between 500 msec. and 100 msec. is significant.
+                    self.outerFrame.after(100,setFocusCallback)
             else:
                 # g.trace(tag,c.shortFileName())
                 g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+                # Crucial: cancel any previous callback.
+                # It may be re-enabled later, but that doesn't matter.
+                self.wantedWidget = None
+                g.app.wantedCommander = None
     #@nonl
     #@-node:ekr.20050120092028.1:set_focus (tkFrame)
     #@-node:ekr.20050120083053:Delayed Focus (tkFrame)
@@ -3272,7 +3288,7 @@ class leoTkinterLog (leoFrame.leoLog):
             
             self.logCtrl.see("end")
                 
-            self.forceLogUpdate()
+            self.forceLogUpdate(s)
             #@nonl
             #@-node:EKR.20040423082910:<< put s to log control >>
             #@nl
@@ -3296,12 +3312,7 @@ class leoTkinterLog (leoFrame.leoLog):
             #@+node:EKR.20040423082910.2:<< put newline to log control >>
             self.logCtrl.insert("end",'\n')
             self.logCtrl.see("end")
-            
-            self.frame.tree.disableRedraw = True
-            self.logCtrl.update_idletasks()
-            #self.frame.outerFrame.update_idletasks() # 4/23/04
-            #self.frame.top.update_idletasks()
-            self.frame.tree.disableRedraw = False
+            self.forceLogUpdate('\n')
             #@nonl
             #@-node:EKR.20040423082910.2:<< put newline to log control >>
             #@nl
@@ -3315,12 +3326,12 @@ class leoTkinterLog (leoFrame.leoLog):
             #@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
             #@nl
             
-    def forceLogUpdate (self):
-        if sys.platform != "darwin": # Does not work on darwin.
+    def forceLogUpdate (self,s):
+        if sys.platform == "darwin": # Does not work on MacOS X.
+            print s, # Don't add a newline.
+        else:
             self.frame.tree.disableRedraw = True
             self.logCtrl.update_idletasks()
-            #self.frame.outerFrame.update_idletasks() # 4/23/04
-            #self.frame.top.update_idletasks()
             self.frame.tree.disableRedraw = False
     #@nonl
     #@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
