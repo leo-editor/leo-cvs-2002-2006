@@ -70,9 +70,9 @@ class leoMenu:
 			("Edit &Headline","Ctrl+H",c.editHeadline),
 			("&End Edit Headline","Escape",f.endEditLabelCommand),
 			("&Abort Edit Headline","Shift-Escape",f.abortEditLabelCommand),
-			("Insert Headline Time/&Date","Shift+Ctrl+H",f.insertHeadlineTime))
-			# 5/16/03 EKR: I dislike this command.
-			#("Toggle Angle Brackets","Ctrl+B",c.toggleAngleBrackets)
+			("Insert Headline Time/&Date","Shift+Ctrl+H",f.insertHeadlineTime),
+			# 2/16/04: restore Toggle Angle Brackets command without any default shortcut.
+			("Toggle Angle Brackets",None,c.toggleAngleBrackets))
 		#@nonl
 		#@-node:<< define editMenuEditHeadlineTable >>
 		#@nl
