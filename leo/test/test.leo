@@ -92,7 +92,7 @@
 <v t="ekr.20040303063549.61"><vh>wikiTest2</vh></v>
 <v t="ekr.20040303063549.62"><vh>wikiTest3</vh></v>
 </v>
-<v t="ekr.20040303063549.63"><vh>editBodyTests</vh>
+<v t="ekr.20040303063549.63" a="E"><vh>editBodyTests</vh>
 <v t="ekr.20040303063549.64"><vh>dedentBody</vh>
 <v t="ekr.20040303063549.65"><vh>before</vh></v>
 <v t="ekr.20040303063549.66"><vh>after</vh></v>
@@ -653,9 +653,10 @@
 </v>
 </v>
 <v t="EKR.20040524050438"><vh>@thin c:\prog\test\grandChildTest.txt</vh></v>
-<v t="EKR.20040525083635" a="ETV" tnodeList="EKR.20040525083635,EKR.20040525083635.1"><vh>@file c:\prog\test\orphanMessageTest.txt</vh>
+<v t="EKR.20040525083635" tnodeList="EKR.20040525083635,EKR.20040525083635.1"><vh>@file c:\prog\test\orphanMessageTest.txt</vh>
 <v t="EKR.20040525083635.1"><vh>orphan</vh></v>
 </v>
+<v t="EKR.20040526094831" a="TV"><vh>Test of undo registration</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1918,6 +1919,27 @@ last line</t>
 <t tx="EKR.20040524050419.2">grandChild line</t>
 <t tx="EKR.20040525083635">@others</t>
 <t tx="EKR.20040525083635.1"></t>
+<t tx="EKR.20040526094831">import leoGlobals as g
+from leoGlobals import true,false
+
+def redoBletch(self):
+	g.trace()
+	
+def undoBletch(self):
+	g.trace()
+	
+c = g.top() ; u = c.undoer
+p = c.currentPosition()
+
+if 0:
+	# bad functions
+	u.registerUndoHandlers("Bletch","abc","xyz")
+else:
+	u.registerUndoHandlers("Bletch",undoBletch,redoBletch)
+	
+	u.setUndoParams("Bletch",p)
+	u.undo()
+	u.redo()</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
