@@ -584,6 +584,7 @@ class leoLog:
 		
 		self.frame = frame
 		self.c = frame.c
+		self.enabled = true
 		self.newlines = 0
 	
 		self.logCtrl = self.createControl(parentFrame)
@@ -606,6 +607,15 @@ class leoLog:
 		self.oops()
 	#@nonl
 	#@-node:leoLog.createControl
+	#@+node:leoLog.enable & disable
+	def enable (self,enabled=true):
+		
+		self.enabled = enabled
+		
+	def disable (self):
+		
+		self.enabled = false
+	#@-node:leoLog.enable & disable
 	#@+node:leoLog.oops
 	def oops (self):
 		
@@ -1329,12 +1339,6 @@ class nullLog (leoLog):
 	def createControl (self,parentFrame):
 		pass
 		
-	def disable (self):
-		self.enabled = false
-		
-	def enable (self):
-		self.enabled = true
-
 	def oops(self):
 		trace("nullLog:", callerName(2))
 		
