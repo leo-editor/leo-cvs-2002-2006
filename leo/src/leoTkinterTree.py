@@ -1971,9 +1971,6 @@ class leoTkinterTree (leoFrame.leoTree):
             yview=body.yview()
             insertSpot = c.frame.body.getInsertionPoint()
             
-            # Remember the old body text
-            old_body = body.get("1.0","end")
-            
             if old_p and old_p != p:
                 # g.trace("different node")
                 self.endEditLabel()
@@ -1985,7 +1982,6 @@ class leoTkinterTree (leoFrame.leoTree):
             #@nonl
             #@-node:ekr.20031218072017.1021:<< unselect the old node >> (changed in 4.2)
             #@nl
-        else: old_body = u""
     
         g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
         
@@ -1994,14 +1990,11 @@ class leoTkinterTree (leoFrame.leoTree):
             #@+node:ekr.20031218072017.1022:<< select the new node >>
             frame.setWrap(p)
             
-            # Delete only if necessary: this may reduce flicker slightly.
-            s = p.v.t.bodyString
-            s = g.toUnicode(s,"utf-8")
-            old_body = g.toUnicode(old_body,"utf-8")
-            if old_body != s:
-                body.delete("1.0","end")
-                body.insert("1.0",s)
-                
+            # 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+            s = g.toUnicode(p.v.t.bodyString,"utf-8")
+            body.delete("1.0","end")
+            body.insert("1.0",s)
+            
             # We must do a full recoloring: we may be changing context!
             self.frame.body.recolor_now(p)
             

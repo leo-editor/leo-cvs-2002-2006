@@ -1512,12 +1512,10 @@ class leoTkinterBody (leoFrame.leoBody):
         
             if s == body:
                 return "break"
-            
+        
             # Do nothing for control characters.
             if (ch == None or len(ch) == 0) and body == s[:-1]:
                 return "break"
-            
-        # print repr(ch),len(body),len(s)
         #@nonl
         #@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
         #@nl
@@ -1541,24 +1539,28 @@ class leoTkinterBody (leoFrame.leoBody):
         
         if len(new) == 0 or new[-1] != '\n':
             # There is no newline to remove.  Probably will never happen.
-            # g.trace("False: no newline to remove")
             removeTrailing = False
         elif len(old) == 0:
-            # Ambigous case.
-            # g.trace("False: empty old")
-            removeTrailing = ch != '\n' # False
+            # Ambigous case.  Formerly always returned False.
+            if new == "\n\n":
+                removeTrailing = True # Handle a very strange special case.
+            else:
+                removeTrailing = ch not in ('\r','\n')
         elif old == new[:-1]:
             # A single trailing character has been added.
-            # g.trace("False: only changed trailing.")
-            removeTrailing = False
+            removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
         else:
             # The text didn't have a newline, and now it does.
             # Moveover, some other change has been made to the text,
-            # So at worst we have misreprented the user's intentions slightly.
-            # g.trace("True")
+            # So at worst we have misrepresented the user's intentions slightly.
             removeTrailing = True
-            
-        # g.trace(ch,removeTrailing)
+        
+        if 0:
+            print removeTrailing
+            print repr(ch)
+            print repr(oldText)
+            print repr(old)
+            print repr(new)
         #@nonl
         #@-node:ekr.20031218072017.1323:<< set removeTrailing >>
         #@nl
@@ -1671,6 +1673,11 @@ class leoTkinterBody (leoFrame.leoBody):
         s = c.frame.body.getAllText()
         if len(s) > 0 and s[-1] == '\n' and removeTrailing:
             s = s[:-1]
+            
+        # Major change: 6/12/04
+        if s == body:
+            # print "no real change"
+            return "break"
         #@nonl
         #@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
         #@nl
