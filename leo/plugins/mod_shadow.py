@@ -5,11 +5,18 @@
 #@<<docstring>>
 #@+node:bwmulder.20041017125718.1:<< docstring >>
 """
+INTERMEDIATE VERSION: I AM WAITING FOR
+TEST FRAMEWORK FOR PLUGINS.
+
+Use a subfolder for files with Leo comments.
+
 Adapted for post 4.2 (cvs versoin).
 
 This code has not been testing much. Please use with caution.
 
-Use a Leo subfolder for files with Leo comments.
+This plugin allows you to use Leo with files which contain no
+Leo comments, and still have information flow in both directions:
+from the file into Leo, and from Leo into the file.
 
 To start using this plugin:
     - Go to the directories where the sources are.
@@ -23,12 +30,14 @@ To start using this plugin:
     After starting, Leo will copy the files from the Leo subfolder to the old
     location after removing all sentinels.
     
+    After this initial setup, changes in Leo will be reflected both in the file
+    in the Leo subfolder, and the file without sentinels.
+    
+    Conversely, changes in the file without sentinels will flow back to the file
+    in the leo subfolder, and show up in Leo.
+    
 You can change the name of the shadow subfolder, default Leo, via the mod_shadow.ini
 configuration file.
-
-Still to do:
-    - fix bug (insertion at end of file insertions are ignored).
-    - maybe: fix bad inserts at beginning of node (instead of end of previous node).
 """
 #@-node:bwmulder.20041017125718.1:<< docstring >>
 #@nl
@@ -258,6 +267,13 @@ class sourcereader:
     def atEnd (self):
        return self.index>=self.length 
     #@-node:bwmulder.20041017125718.12:atEnd
+    #@+node:bwmulder.20050102143357:clone
+    def clone(self):
+        sr = sourcereader(self.lines)
+        sr.i = self.i
+        return sr
+    #@nonl
+    #@-node:bwmulder.20050102143357:clone
     #@-others
 #@-node:bwmulder.20041017125718.6:class sourcereader
 #@+node:bwmulder.20041017125718.13:class sourcewriter
@@ -437,50 +453,87 @@ class sentinel_squasher:
        return resultlines, mapping 
     #@-node:bwmulder.20041017125718.23:create_back_mapping
     #@+node:bwmulder.20041017125718.24:copy_sentinels
-    def copy_sentinels (self,writer_new_sourcefile,reader_leo_file,mapping,startline,endline):
-       """
-       
-       Sentinels are NEVER deleted by this script. They are changed as
-       a result of user actions in the Leo.
-    
-       If code is replaced, or deleted, then we must make sure that the
-       sentinels are still in the Leo file.
-    
-       Taking lines from reader_leo_file, we copy lines to writer_new_sourcefile, 
-       if those lines contain sentinels.
-    
-       We copy all sentinels up to, but not including, mapped[endline].
-       
-       We copy only the sentinels *after* the current position of reader_leo_file.
-       
-       We have two options to detect sentinel lines:
+    def copy_sentinels (self,writer_new_sourcefile,reader_leo_file,mapping,startline,endline, sentinels_to_copy):
+        """
+        
+        Sentinels are NEVER deleted by this script. They are changed as
+        a result of user actions in the Leo.
+        
+        If code is replaced, or deleted, then we must make sure that the
+        sentinels are still in the Leo file.
+        
+        Taking lines from reader_leo_file, we copy lines to writer_new_sourcefile, 
+        if those lines contain sentinels.
+        
+        We copy all sentinels up to, but not including, mapped[endline].
+        
+        We copy only the sentinels *after* the current position of reader_leo_file.
+        
+        We have two options to detect sentinel lines:
           1. We could detect sentinel lines by examining the lines of the leo file.
           2. We can check for gaps in the mapping.
          
-       Since there is a complication in the detection of sentinels (@verbatim), we
-       are choosing the 2. approach. This also avoids duplication of code.
-       ???This has to be verified later???
-       """
-       
-       old_mapped_line = mapping[startline]
-       unmapped_line = startline+1
-       
-       while unmapped_line<=endline:
-          mapped_line = mapping[unmapped_line]
-          if old_mapped_line+1!=mapped_line:
-             reader_leo_file.sync(old_mapped_line+1)
-             # There was a gap. This gap must have consisted of sentinels, which have
-             # been deleted.
-             # Copy those sentinels.
-             while reader_leo_file.index()<mapped_line:
-                line = reader_leo_file.get()
-                if testing:
-                   print "Copy sentinels:", line, 
-                writer_new_sourcefile.push(line)
-          old_mapped_line = mapped_line 
-          unmapped_line+=1
-       reader_leo_file.sync(mapping[endline])
+        Since there is a complication in the detection of sentinels (@verbatim), we
+        are choosing the 2. approach. This also avoids duplication of code.
+        ???This has to be verified later???
+        """
+        
+        old_mapped_line = mapping[startline]
+        unmapped_line = startline+1
+        
+        sentinels_copied = 0
+        while unmapped_line<=endline:
+            mapped_line = mapping[unmapped_line]
+            if old_mapped_line+1!=mapped_line:
+                reader_leo_file.sync(old_mapped_line+1)
+                # There was a gap. This gap must have consisted of sentinels, which have
+                # been deleted.
+                # Copy those sentinels.
+                while reader_leo_file.index()<mapped_line:
+                    line = reader_leo_file.get()
+                    if sentinels_to_copy> 0:
+                        if testing:
+                            print "Copy sentinel:", line
+                        writer_new_sourcefile.push(line)
+                    elif sentinels_to_copy == 0:
+                        self.uncopied_sentinels.append(line)
+                        if testing:
+                            print "Delay Copy sentinels:", line,
+                sentinels_to_copy -= 1
+                sentinels_copied += 1
+                old_mapped_line = mapped_line 
+            unmapped_line+=1
+        reader_leo_file.sync(mapping[endline])
+        return sentinels_copied
+        
+    #@nonl
     #@-node:bwmulder.20041017125718.24:copy_sentinels
+    #@+node:bwmulder.20050102142213.1:copy_all_but_last_sentinel_block
+    def copy_all_but_last_sentinel_block (self,writer_new_sourcefile,reader_leo_file,mapping,startline,endline):
+        """
+        Copy all but the last sentinel block.
+        
+        Put the last sentinel block into self.uncopied_sentinels
+        """
+        self.uncopied_sentinels = []
+        if testing:
+            print "copy_all_but_last_sentinel_block: dry run"
+        nr_sentinel_blocks = self.copy_sentinels(g.nullObject(), reader_leo_file.clone(), mapping, startline, endline, -1)
+        if testing:
+            print "copy_all_but_last_sentinel_block: Actual copy",nr_sentinel_blocks -1
+        self.copy_sentinels(writer_new_sourcefile, reader_leo_file, mapping, startline, endline, nr_sentinel_blocks -1)
+    #@nonl
+    #@-node:bwmulder.20050102142213.1:copy_all_but_last_sentinel_block
+    #@+node:bwmulder.20050102142213.2:copy_delayed_sentinel_block
+    def copy_delayed_sentinel_block(self, writer_new_sourcefile):
+        if testing:
+            if self.uncopied_sentinels:
+                print "Copying uncopied sentinels"
+        for line in self.uncopied_sentinels:
+            writer_new_sourcefile.push(line)
+        self.uncopied_sentinels = []
+    #@nonl
+    #@-node:bwmulder.20050102142213.2:copy_delayed_sentinel_block
     #@+node:bwmulder.20041017125718.25:pull_source
     def pull_source (self,sourcefile,targetfile):
         """
@@ -489,6 +542,7 @@ class sentinel_squasher:
         This is the heart of the script.
         """
         if testing: g.trace(sourcefile, targetfile)
+        import pdb; pdb.set_trace() 
         #@    << init vars >>
         #@+node:ekr.20041110094810:<< init vars >>
         marker = marker_from_extension(sourcefile)
@@ -529,6 +583,12 @@ class sentinel_squasher:
         
         # Check that all ranges returned by get_opcodes() are contiguous
         i2_internal_old, i2_modified_old = -1,-1
+        
+        self.uncopied_sentinels = []
+        # The copying of the last sentinel block is delayed: if
+        # an insert follows, then the insert is done before the sentinel
+        # block is copied.
+        # This way, the insertion can happen *inside* the sentinels, not outside.
         #@nonl
         #@-node:ekr.20041110094810:<< init vars >>
         #@nl
@@ -597,6 +657,7 @@ class sentinel_squasher:
                 #@+node:ekr.20041110095546.1:<< handle 'equal' op >>
                 # nothing is to be done. Leave the Leo file alone.
                 
+                self.copy_delayed_sentinel_block(writer_new_sourcefile)
                 # Copy the lines from the leo file to the new sourcefile.
                 # This loop copies both text and sentinels.
                 while reader_leo_file.index()<=mapping[i2_internal_file-1]:
@@ -611,8 +672,8 @@ class sentinel_squasher:
                 reader_internal_file.sync(i2_internal_file)
                 reader_modified_file.sync(i2_modified_file)
                 
-                # now we must copy the sentinels which might follow the lines which were equal.       
-                self.copy_sentinels(writer_new_sourcefile,reader_leo_file,mapping,i2_internal_file-1,i2_internal_file)
+                # now we must copy the sentinels which might follow the lines which were equal.
+                self.copy_all_but_last_sentinel_block(writer_new_sourcefile,reader_leo_file,mapping,i2_internal_file-1,i2_internal_file)
                 #@nonl
                 #@-node:ekr.20041110095546.1:<< handle 'equal' op >>
                 #@nl
@@ -633,6 +694,8 @@ class sentinel_squasher:
                 # line.
                 #@-at
                 #@@c
+                self.copy_delayed_sentinel_block(writer_new_sourcefile)
+                
                 while reader_modified_file.index()<i2_modified_file:
                    line = reader_modified_file.get()
                    if testing:
@@ -640,7 +703,7 @@ class sentinel_squasher:
                    writer_new_sourcefile.push(line)
                 
                 # Take care of the sentinels which might be between the changed code.         
-                self.copy_sentinels(writer_new_sourcefile,reader_leo_file,mapping,i1_internal_file,i2_internal_file)
+                self.copy_all_but_last_sentinel_block(writer_new_sourcefile,reader_leo_file,mapping,i1_internal_file,i2_internal_file)
                 reader_internal_file.sync(i2_internal_file)
                 #@nonl
                 #@-node:ekr.20041110095546.2:<< handle 'replace' op >>
@@ -652,6 +715,8 @@ class sentinel_squasher:
                 # However, we NEVER delete sentinels, so they must be copied over.
                 
                 # sync the readers
+                self.copy_delayed_sentinel_block(writer_new_sourcefile)
+                
                 if testing:
                     print "delete: syncing modified file from ", reader_modified_file.i, " to ", i1_modified_file 
                     print "delete: syncing internal file from ", reader_internal_file.i, " to ", i1_internal_file
@@ -659,13 +724,14 @@ class sentinel_squasher:
                 reader_modified_file.sync(i2_modified_file)
                 reader_internal_file.sync(i2_internal_file)
                 
-                self.copy_sentinels(writer_new_sourcefile,reader_leo_file,mapping,i1_internal_file,i2_internal_file)
+                self.copy_all_but_last_sentinel_block(writer_new_sourcefile,reader_leo_file,mapping,i1_internal_file,i2_internal_file)
                 #@nonl
                 #@-node:ekr.20041110095546.3:<< handle 'delete' op >>
                 #@nl
             elif tag=='insert':
                 #@            << handle 'insert' op >>
                 #@+node:ekr.20041110095546.4:<< handle 'insert' op >>
+                
                 while reader_modified_file.index()<i2_modified_file:
                    line = reader_modified_file.get()
                    if testing:
@@ -673,15 +739,17 @@ class sentinel_squasher:
                    writer_new_sourcefile.push(line)
                 
                 # Since (only) lines are inserted, we do not have to reposition any reader.
-                #@nonl
+                self.copy_delayed_sentinel_block(writer_new_sourcefile)
+                
                 #@-node:ekr.20041110095546.4:<< handle 'insert' op >>
                 #@nl
             else: assert 0
         #@    << copy the sentinels at the end of the file >>
         #@+node:ekr.20041110095546.6:<< copy the sentinels at the end of the file >>
+        self.copy_delayed_sentinel_block(writer_new_sourcefile)
+        
         while reader_leo_file.index()<reader_leo_file.size():
             writer_new_sourcefile.push(reader_leo_file.get())
-        #@nonl
         #@-node:ekr.20041110095546.6:<< copy the sentinels at the end of the file >>
         #@nl
         written = write_if_changed(writer_new_sourcefile.getlines(),targetfile,sourcefile)
@@ -841,7 +909,12 @@ def openForWrite (self,filename,wb):
 #@-node:bwmulder.20041017131319:openForWrite
 #@+node:bwmulder.20041018075528:gotoLineNumberOpen
 def gotoLineNumberOpen (self,filename):
-
+    """
+    Open a file for "goto linenumber" command and check if a shadow file exists.
+    Construct a line mapping. This line_mapping instance variable is empty if
+    no shadow file exist, otherwise it contains a mapping 
+    shadow file number -> real file number.
+    """
     try:
         dir, simplename = os.path.split(filename)
         shadow_filename = os.path.join(dir,shadow_subdir,simplename)
@@ -909,12 +982,12 @@ def replaceTargetFileIfDifferent (self):
 
     finally:
         if self.writing_to_shadow_directory:
-        assert self.targetFileName == self.shadow_filename 
-        assert self.outputFileName == self.shadow_filename+'.tmp'
+            assert self.targetFileName == self.shadow_filename 
+            assert self.outputFileName == self.shadow_filename+'.tmp'
         else:
             assert self.targetFileName == targetFileName
             assert self.outputFileName == outputFileName
-        # We need to check what's going on if the targetFileName or the outputFileName is changed.
+            # We need to check what's going on if the targetFileName or the outputFileName is changed.
         
         # Not sure if this finally clause is needed or not
         self.targetFileName = targetFileName
