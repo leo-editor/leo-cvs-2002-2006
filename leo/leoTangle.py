@@ -2175,7 +2175,7 @@ class tangleCommands:
 			section.root_attributes = root_attributes(self)
 			#@-body
 			#@-node:2::<<remember root node attributes>>
- # Stephen Schaefer, 9/2/02
+# Stephen Schaefer, 9/2/02
 		return len(section.parts) # part number
 	#@-body
 	#@-node:4:C=17:st_enter
