@@ -2501,7 +2501,6 @@ class atFile:
             assert isThinDerivedFile, 'not thin'
             assert end == '', 'invalid end: %s' % repr(end)
             assert at.encoding == 'utf-8', 'bad encoding: %s' % repr(at.encoding)
-    #@nonl
     #@-node:ekr.20050211111552:test_parseLeoSentinel
     #@-node:ekr.20041005105605.120:parseLeoSentinel
     #@+node:ekr.20041005105605.127:readError
@@ -4378,6 +4377,7 @@ class atFile:
     #@+node:ekr.20050107085710:test_atFile_rename
     def test_atFile_rename (self):
     
+        __pychecker__ = '--no-reimport'
         import os
         at = c.atFileCommands
     
@@ -4422,6 +4422,7 @@ class atFile:
     #@+node:ekr.20050107090156:test_atFile_remove
     def test_atFile_remove(self,**keys):
         
+        __pychecker__ = '--no-reimport'
         import os
         at = c.atFileCommands
         exists = g.os_path_exists

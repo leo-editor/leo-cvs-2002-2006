@@ -436,6 +436,8 @@ class tkinterGui(leoGui.leoGui):
         
         if c:
             c.frame.widgetWantsFocus(widget,True,tag=tag)
+            
+    widgetWantsFocus = widget_wants_focus
     #@nonl
     #@-node:ekr.20050210082320:widget_wants_focus (tk.gui)
     #@-node:ekr.20031218072017.4064:Focus

@@ -1997,6 +1997,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3992:leoHelp
     def leoHelp (self):
         
+        frame = self ; c = frame.c
+        
         theFile = g.os_path_join(g.app.loadDir,"..","doc","sbooks.chm")
     
         if g.os_path_exists(theFile):
@@ -2144,6 +2146,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 # It may be re-enabled later, but that doesn't matter.
                 self.wantedWidget = None
                 g.app.wantedCommander = None
+        else:
+            # Cancel any previous request.
+            self.wantedWidget = None
+            g.app.wantedCommander = None
     #@nonl
     #@-node:ekr.20050120092028.1:set_focus (tkFrame)
     #@-node:ekr.20050120083053:Delayed Focus (tkFrame)

@@ -483,11 +483,11 @@ class parserBaseClass:
 #@nl
 
 #@+others
-#@+node:ekr.20041119203941:class config
-class baseConfig:
-    """The base class for Leo's configuration handler."""
-    #@    << baseConfig data >>
-    #@+node:ekr.20041122094813:<<  baseConfig data >>
+#@+node:ekr.20041119203941:class configClass
+class configClass:
+    """A class to manage configuration settings."""
+    #@    << class data >>
+    #@+node:ekr.20041122094813:<<  class data >>
     #@+others
     #@+node:ekr.20041117062717.1:defaultsDict
     #@+at 
@@ -611,7 +611,7 @@ class baseConfig:
     # Keys are setting names, values are type names.
     warningsDict = {} # Used by get() or allies.
     #@nonl
-    #@-node:ekr.20041122094813:<<  baseConfig data >>
+    #@-node:ekr.20041122094813:<<  class data >>
     #@nl
     #@    @+others
     #@+node:ekr.20041117083202:Birth...
@@ -624,6 +624,11 @@ class baseConfig:
         self.globalConfigFile = None # Set in initSettingsFiles
         self.homeFile = None # Set in initSettingsFiles
         self.inited = False
+        
+        # Inited later...
+        self.panes = None
+        self.sc = None
+        self.tree = None
     
         self.initDicts()
         self.initIvarsFromSettings()
@@ -1176,23 +1181,353 @@ class baseConfig:
     #@-node:ekr.20041117083857.1:readSettings
     #@-node:ekr.20041117093246:Scanning @settings
     #@-others
-    
-class config (baseConfig):
-    """A class to manage configuration settings."""
-    pass
 #@nonl
-#@-node:ekr.20041119203941:class config
+#@-node:ekr.20041119203941:class configClass
+#@+node:ekr.20041225063637.96:class settingsDialogParserClass (parserBaseClass)
+class settingsDialogParserClass (parserBaseClass):
+    
+    '''A class that traverses the settings tree creating
+    a list of widgets to show in the settings dialog.'''
+    
+    #@    @+others
+    #@+node:ekr.20041225063637.97:ctor
+    # There is no need to call the base class ctor.
+    __pychecker__ = '--no-callinit'
+    
+    def __init__ (self,c,p,dialogController):
+        
+        self.c = c
+        self.root = p.copy()
+        self.widgets = [] # A list of widgets to create in the setter pane.
+    
+        # Keys are canonicalized names.
+        self.dispatchDict = {
+            'bool':         self.set,
+            'color':        self.set,
+            'directory':    self.doDirectory,
+            'font':         self.doFont,
+            'if':           self.doIf,
+            'ifgui':        None,
+            'ifplatform':   None,
+            'ignore':       None,
+            'int':          self.set,
+            'ints':         self.doInts,
+            'float':        self.set,
+            'font':         self.doFont,
+            'path':         self.doPath,
+            'page':         self.doPage,
+            'ratio':        self.set,
+            'recentfiles':  self.doRecentFiles,
+            'shortcut':     None,
+            'shortcuts':    self.doShortcuts,
+            'string':       self.set,
+            'strings':      self.doStrings,
+        }
+    #@nonl
+    #@-node:ekr.20041225063637.97:ctor
+    #@+node:ekr.20041225063637.98:set
+    def set (self,p,kind,name,val):
+        
+        self.widgets.append((p.copy(),kind,name,val),)
+    #@nonl
+    #@-node:ekr.20041225063637.98:set
+    #@+node:ekr.20041225063637.99:visitNode
+    def visitNode (self,p):
+        
+        """Visit a node, and possibly append a widget description to self.widgets."""
+        
+        munge = g.app.config.munge
+        h = p.headString().strip() or ''
+        kind,name,val = self.parseHeadline(h)
+        
+        # g.trace(kind,name,val)
+    
+        f = self.dispatchDict.get(munge(kind))
+        if f is not None:
+            try:
+                f(p,kind,name,val)
+            except TypeError:
+                g.es_exception()
+                print "*** no handler",kind
+    #@nonl
+    #@-node:ekr.20041225063637.99:visitNode
+    #@+node:ekr.20041225063637.100:kind handlers
+    # Most of the work is done by base class methods.
+    #@nonl
+    #@+node:ekr.20041225063637.101:doFont
+    def doFont (self,p,kind,name,val):
+    
+        d = self.parseFont(p)
+        # g.trace("\n\nfont dict...\n%s" % g.dictToString(d))
+        self.set(p,kind,name,d)
+    #@nonl
+    #@-node:ekr.20041225063637.101:doFont
+    #@+node:ekr.20041225063637.102:doPage
+    def doPage(self,p,kind,name,val):
+        
+        """Create a widget for each setting in the subtree."""
+    
+        for p in p.subtree_iter():
+            self.visitNode(p)
+    #@nonl
+    #@-node:ekr.20041225063637.102:doPage
+    #@+node:ekr.20041225063637.103:doRecentFiles & doBodyPaneList
+    def doBodyPaneList (self,p,kind,name,val):
+    
+        s = p.bodyString()
+        lines = g.splitLines(s)
+    
+        vals = []
+        for line in lines:
+            line = line.strip()
+            if line and not g.match(line,0,'#'):
+                vals.append(line)
+                    
+        self.set(p,kind,name,vals)
+    
+    doRecentFiles = doBodyPaneList
+    #@-node:ekr.20041225063637.103:doRecentFiles & doBodyPaneList
+    #@+node:ekr.20041225063637.104:doShortcuts
+    def doShortcuts(self,p,kind,name,val):
+    
+        s = p.bodyString()
+        lines = g.splitLines(s)
+    
+        vals = []
+        for line in lines:
+            line = line.strip()
+            if line and not g.match(line,0,'#'):
+                name,val = self.parseShortcutLine(line)
+                if val is not None:
+                    vals.append((name,val),)
+                    
+        self.set(p,kind,name,vals)
+    #@nonl
+    #@-node:ekr.20041225063637.104:doShortcuts
+    #@-node:ekr.20041225063637.100:kind handlers
+    #@-others
+#@-node:ekr.20041225063637.96:class settingsDialogParserClass (parserBaseClass)
+#@+node:ekr.20041225063637.78:class settingsTree (leoTkinterTree)
+class settingsTree (leoTkinterTree.leoTkinterTree):
+
+    #@    @+others
+    #@+node:ekr.20041225063637.79:ctor
+    def __init__(self,c,frame,canvas,controller):
+        
+        # Init the base class.
+        leoTkinterTree.leoTkinterTree.__init__(self,c,frame,canvas)
+        
+        self.controller = controller
+        self.old_p = None
+    #@nonl
+    #@-node:ekr.20041225063637.79:ctor
+    #@+node:ekr.20041225063637.80:Selecting & editing...
+    # This code is different because this class has a different current position.
+    
+    #@+node:ekr.20041225123250:configureTextState
+    def configureTextState (self,p):
+        
+        if p:
+            t = self.getTextWidget(p)
+            if t:
+                if p.isCurrentPosition():
+                    self.setSelectColors(t)
+                else:
+                    self.setUnselectColors(t)
+    #@nonl
+    #@+node:ekr.20041225063637.89:setSelectColors
+    def setSelectColors (self,textWidget): 
+        
+        c = self.c
+    
+        fg = c.config.getColor("headline_text_selected_foreground_color") or 'black'
+        bg = c.config.getColor("headline_text_selected_background_color") or 'white'
+    
+        try:
+            textWidget.configure(state="disabled",
+            highlightthickness=0,fg=fg,bg=bg,
+            selectforeground=fg,selectbackground=bg)
+        except:
+            g.es_exception()
+    #@nonl
+    #@-node:ekr.20041225063637.89:setSelectColors
+    #@+node:ekr.20041225063637.90:setUnselectColors
+    def setUnselectColors (self,textWidget): 
+        
+        c = self.c
+        
+        fg = c.config.getColor("headline_text_unselected_foreground_color") or 'black'
+        bg = c.config.getColor("headline_text_unselected_background_color") or 'white'
+    
+        try:
+            textWidget.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
+        except:
+            g.es_exception()
+    #@nonl
+    #@-node:ekr.20041225063637.90:setUnselectColors
+    #@-node:ekr.20041225123250:configureTextState
+    #@+node:ekr.20041225063637.81:endEditLabel
+    def endEditLabel (self):
+        
+        pass # Editing is not allowed.
+    #@nonl
+    #@-node:ekr.20041225063637.81:endEditLabel
+    #@+node:ekr.20041225063637.82:editLabel
+    def editLabel (self,p):
+        
+        pass # Editing is not allowed.
+    #@nonl
+    #@-node:ekr.20041225063637.82:editLabel
+    #@+node:ekr.20041225063637.83:tree.select
+    def select (self,p,updateBeadList=True):
+    
+        old_p = self.old_p
+    
+        # Unselect the old
+        if old_p:
+            t = self.getTextWidget(old_p)
+            if t: self.setUnselectColors(t)
+    
+        # Select the new
+        t = self.getTextWidget(p)
+        if t: self.setSelectColors(t)
+        
+        # N.B. Do not change the commander's notion of the present position.
+        self.old_p = p
+    
+        self.controller.onTreeClick(p)
+    #@nonl
+    #@-node:ekr.20041225063637.83:tree.select
+    #@+node:ekr.20041225063637.91:getTextWidget
+    def getTextWidget (self,p):
+        
+        # The data is create in newText.
+        data = self.visibleText.get(p.v)
+        if data:
+            data = data[0] # A list of one element.
+            # g.trace(len(data),data)
+            p2,t,theId = data
+            return t
+        else:
+            return None
+    #@nonl
+    #@-node:ekr.20041225063637.91:getTextWidget
+    #@-node:ekr.20041225063637.80:Selecting & editing...
+    #@+node:ekr.20041225063637.92:Event handlers...
+    #@+node:ekr.20041225063637.93:expandAllAncestors
+    def expandAllAncestors (self,p):
+        
+        # This would be harmful because p is always c.currentPosition().
+    
+        return False # redraw_flag
+    #@nonl
+    #@-node:ekr.20041225063637.93:expandAllAncestors
+    #@+node:ekr.20041225063637.94:onClickBoxClick
+    def onClickBoxClick (self,event):
+        
+        tree = self
+    
+        p = self.eventToPosition(event)
+        if not p: return
+    
+        # g.trace(p.isExpanded(),p.headString())
+    
+        if p.isExpanded(): p.contract()
+        else:              p.expand()
+    
+        tree.active = True
+        tree.redraw()
+        tree.select(p)
+    #@nonl
+    #@-node:ekr.20041225063637.94:onClickBoxClick
+    #@-node:ekr.20041225063637.92:Event handlers...
+    #@+node:ekr.20041225063637.95:drawTopTree
+    def drawTopTree (self):
+        
+        """Draw the settings tree, i.e., the tree rooted at self.controller.settingsPosition()."""
+        
+        c = self.c ; canvas = self.canvas
+        p = self.controller.settingsPosition()
+        self.redrawing = True
+        # Recycle all widgets.
+        self.recycleWidgets()
+        # Clear all ids so invisible id's don't confuse eventToPosition & findPositionWithIconId
+        self.ids = {}
+        self.iconIds = {}
+        self.generation += 1
+        self.drag_p = None # Disable drags across redraws.
+        self.dragging = False
+        self.prevPositions = g.app.positions
+        
+        # Draw only the settings tree
+        self.drawTree(p,self.root_left,self.root_top,0,0)
+    
+        canvas.lower("lines")  # Lowest.
+        canvas.lift("textBox") # Not the Tk.Text widget: it should be low.
+        canvas.lift("userIcon")
+        canvas.lift("plusBox")
+        canvas.lift("clickBox")
+        canvas.lift("iconBox") # Higest.
+        self.redrawing = False
+    #@nonl
+    #@-node:ekr.20041225063637.95:drawTopTree
+    #@-others
+#@nonl
+#@-node:ekr.20041225063637.78:class settingsTree (leoTkinterTree)
+#@+node:ekr.20041119203941.3:class settingsTreeParser (parserBaseClass)
+class settingsTreeParser (parserBaseClass):
+    
+    '''A class that inits settings found in an @settings tree.
+    
+    Used by read settings logic.'''
+    
+    #@    @+others
+    #@+node:ekr.20041119204103:ctor
+    def __init__ (self,c):
+    
+        # Init the base class.
+        parserBaseClass.__init__(self,c)
+    #@nonl
+    #@-node:ekr.20041119204103:ctor
+    #@+node:ekr.20041119204714:visitNode
+    def visitNode (self,p):
+        
+        """Init any settings found in node p."""
+        
+        # g.trace(p.headString())
+        
+        munge = g.app.config.munge
+    
+        kind,name,val = self.parseHeadline(p.headString())
+        kind = munge(kind)
+    
+        if kind == "settings":
+            pass
+        elif kind not in self.control_types and val in (u'None',u'none','None','none','',None):
+            # None is valid for all data types.
+            self.set(p,kind,name,None)
+        elif kind in self.control_types or kind in self.basic_types:
+            f = self.dispatchDict.get(kind)
+            try:
+                f(p,kind,name,val)
+            except TypeError:
+                g.es_exception()
+                print "*** no handler",kind
+        elif name:
+            # self.error("unknown type %s for setting %s" % (kind,name))
+            # Just assume the type is a string.
+            self.set(p,kind,name,val)
+    #@nonl
+    #@-node:ekr.20041119204714:visitNode
+    #@-others
+#@nonl
+#@-node:ekr.20041119203941.3:class settingsTreeParser (parserBaseClass)
 #@+node:ekr.20041225063637.10:class settingsController
 class settingsController:
     
     #@    @+others
     #@+node:ekr.20041225063637.13: ctor
     def __init__ (self,c,replaceBody=True):
-        
-        if not Pmw:
-            s = 'Setting dialog requires Pmw: see http://pmw.sourceforge.net'
-            print s ; g.es(s,color='blue')
-            return
     
         #@    << init ivars >>
         #@+node:ekr.20050123194330:<< init ivars >>
@@ -1295,14 +1630,18 @@ class settingsController:
         #@-node:ekr.20050129111522:<< define Tk color names >>
         #@nl
     
+        if not Pmw:
+            s = 'Setting dialog requires Pmw: see http://pmw.sourceforge.net'
+            print s ; g.es(s,color='red')
+            return
+        
         self._settingsPosition = p = self.createSettingsTree()
         self.parser = settingsDialogParserClass(c,p,self)
-    
         #@    << set background color for widgets >>
         #@+node:ekr.20050121105232:<< set background color for widgets >>
         if 0:
             # Get the color from the background color of the body text widget.
-            commonBackground = c.frame.body.bodyCtrl.cget('background')
+            self.commonBackground = c.frame.body.bodyCtrl.cget('background')
             
         else:
             # 'LightSteelBlue1' # too blue.
@@ -1310,275 +1649,270 @@ class settingsController:
             # 'gray90' # Possible: very light.
             # '#f2fdff' # Same as log window.  Too cute.
             
-            commonBackground = 'gray90'
-            
-        self.commonBackground = commonBackground
+            self.commonBackground = 'gray90'
         #@nonl
         #@-node:ekr.20050121105232:<< set background color for widgets >>
         #@nl
         c.disableCommandsMessage = 'All commands disabled while settings dialog is open'
         if self.replaceBody:
-            #@        << replace the body pane with the outer dialog frame >>
-            #@+middle:ekr.20041225073207:When replacing body & tree panes...
-            #@+node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
-            body = c.frame.component('body')
-            packer = body.getPacker()
-            unpacker = body.getUnpacker()
-            
-            # The new frame must be a child of splitter1Frame.
-            parentFrame = c.frame.component('splitter1Frame').getFrame()
-            self.top = interior = Tk.Frame(parentFrame,background=commonBackground)
-            
-            c.frame.componentClass(c,'settingDialogFrame',interior,self,packer,unpacker)
-            c.frame.replaceBodyPaneWithComponent('settingDialogFrame')
-            #@nonl
-            #@-node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
-            #@-middle:ekr.20041225073207:When replacing body & tree panes...
-            #@nl
-            #@        << replace tree pane with settings tree >>
-            #@+middle:ekr.20041225073207:When replacing body & tree panes...
-            #@+node:ekr.20041225090725:<< replace tree pane with settings tree >>
-            tree = c.frame.component('tree')
-            
-            # The new frame must be a child of splitter2Frame.
-            splitter2Frame = c.frame.component('splitter2Frame').getFrame()
-            
-            # Create a Pmw scrolled canvas.
-            scrolledTreeCanvas = Pmw.ScrolledCanvas(splitter2Frame,
-                hscrollmode='none',borderframe=3)
-            
-            treeCanvas = scrolledTreeCanvas.component('canvas')
-            treeCanvas.configure(background='white')
-            
-            # Set canvas.name ivar for chapters.py plugin.
-            # This must be a tab number.  The number '1' should work well enough.
-            treeCanvas.name = '1'
-            
-            # Create the settingsTree component.
-            c.frame.componentClass(c,'settingsTree',scrolledTreeCanvas,self,
-                tree.getPacker(),tree.getUnpacker())
-            
-            c.frame.replaceTreePaneWithComponent('settingsTree')
-            
-            self.tree = settingsTree(c,c.frame,treeCanvas,self)
-            self.tree.setColorFromConfig()
-            #@nonl
-            #@-node:ekr.20041225090725:<< replace tree pane with settings tree >>
-            #@-middle:ekr.20041225073207:When replacing body & tree panes...
-            #@nl
-            #@        << add buttons and label to interior >>
-            #@+middle:ekr.20041225073207:When replacing body & tree panes...
-            #@+node:ekr.20041225074713:<< add buttons and label to interior >>
-            # Put the label on the same line as the buttons.
-            labelButtonFrame = Tk.Frame(interior,background=commonBackground)
-            labelButtonFrame.pack(side='top',expand=0,fill='x',pady=4)
-            buttonFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
-            buttonFrame.pack(side='left',padx=10)
-            labelFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
-            labelFrame.pack(side='left')
-            self.setterLabel = label = Tk.Label(labelFrame,anchor='w',background=commonBackground)
-            label.pack(side='right')
-            
-            w = 6
-            for name in self.buttonNames:
-                w = max(w,len(name))
-            
-            for name in self.buttonNames:
-            
-                def buttonCallback(name=name):
-                    self.onAnyButton(name)
-            
-                b = Tk.Button(buttonFrame,text=name,command=buttonCallback,width=w)
-                b.pack(side='left',padx=4)
-            #@nonl
-            #@-node:ekr.20041225074713:<< add buttons and label to interior >>
-            #@-middle:ekr.20041225073207:When replacing body & tree panes...
-            #@nl
-            #@        << add setterCanvas to interior >>
-            #@+middle:ekr.20041225073207:When replacing body & tree panes...
-            #@+node:ekr.20041225073207.1:<< add setterCanvas to interior>>
-            self.sc = sc = Pmw.ScrolledCanvas(interior,
-                hscrollmode='dynamic',vscrollmode='dynamic',
-                canvas_background = commonBackground,
-                borderframe=1,
-                # A fixed size here works best.
-                # Pmw does not handle the changes to the canvas very well.
-                usehullsize = 1,
-                hull_height = 400,
-                hull_width = 800,
-            )
-            
-            sc.pack(side='top',expand=1,fill="both")
-            #@nonl
-            #@-node:ekr.20041225073207.1:<< add setterCanvas to interior>>
-            #@-middle:ekr.20041225073207:When replacing body & tree panes...
-            #@nl
+            self.replaceBodyWithDialog()
             self.log = g.app.log
             self.tree.redraw_now() # To allocate widgets.
             self.tree.select(p)
         else:
-            #@        << create the dialog d >>
-            #@+middle:ekr.20041225073207.3:When using separate dialog...
-            #@+node:ekr.20041225063637.14:<< create the dialog d >>
-            self.dialog = d = Pmw.Dialog(
-                c.frame.top,
-                title=title,
-                buttons=self.buttonNames,
-                # It's too upsetting to have a dialog go away on a return key.
-                # defaultbutton = 'OK',
-                command = self.onAnyButton
-            )
-            
-            self.top = hull = d.component('hull')
-            hull.minsize(800,800)
-            
-            interior = d.interior()
-            
-            if 0: # Do immediately
-                g.app.gui.attachLeoIcon(hull)
-            else: # Do at idle time.
-                def setIcont(top=hull):
-                    g.app.gui.attachLeoIcon(top)
-                hull.after_idle(setIcont)
-            #@nonl
-            #@-node:ekr.20041225063637.14:<< create the dialog d >>
-            #@-middle:ekr.20041225073207.3:When using separate dialog...
-            #@nl
-            #@        << create paneFrame, a paned widget >>
-            #@+middle:ekr.20041225073207.3:When using separate dialog...
-            #@+node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
-            self.paneFrame = paneFrame = Pmw.PanedWidget(interior,
-                separatorthickness = 4, # default is 2
-                handlesize = 8, # default is 8
-                command = self.onPaneResize
-            )
-            paneFrame.pack(expand = 1, fill='both')
-            
-            for name,minsize,size,label,isSetterLabel in (
-                ("splitter2",50,300,None,False),
-                ("setter",50,300,"",False),
-                ("comments",50,200,None,False),
-            ):
-                self.panes[name] = pane = paneFrame.add(name,min=minsize,size=size)
-                if label is not None:
-                    label = label = Tk.Label(pane,text=label,background=commonBackground)
-                    label.pack(side = 'top', expand = 0)
-                    if isSetterLabel:
-                        self.setterLabel = label
-            
-            # Set the colors of the separator and handle.
-            for i in (1,2):
-                bar = paneFrame.component('separator-%d' % i)
-                bar.configure(background='LightSteelBlue2')
-                handle = paneFrame.component('handle-%d' % i)
-                handle.configure(background='SteelBlue2')
-            
-            # g.printDict(self.panes)
-            #@nonl
-            #@-node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
-            #@-middle:ekr.20041225073207.3:When using separate dialog...
-            #@nl
-            #@        << create paneFrame2, a second paned widget >>
-            #@+middle:ekr.20041225073207.3:When using separate dialog...
-            #@+node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
-            splitter2 = self.panes.get('splitter2')
-            
-            self.paneFrame2 = paneFrame2 = Pmw.PanedWidget(splitter2,
-                separatorthickness = 4, # default is 2
-                handlesize = 8, # default is 8
-                orient='horizontal',
-                command = self.onPaneResize
-            )
-            paneFrame2.pack(expand = 1, fill='both')
-            
-            for name,minsize,size, in (
-                ('outline',50,500),
-                ('log',50,300),
-            ):
-                self.panes[name] = pane = paneFrame2.add(name,min=minsize,size=size)
-                
-            # Set the colors of the separator and handle.
-            i = 1
-            bar = paneFrame2.component('separator-%d' % i)
-            bar.configure(background='LightSteelBlue2')
-            handle = paneFrame2.component('handle-%d' % i)
-            handle.configure(background='SteelBlue2')
-            #@nonl
-            #@-node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
-            #@-middle:ekr.20041225073207.3:When using separate dialog...
-            #@nl
-            #@        << create outline and log panes in paneFrame2 >>
-            #@+middle:ekr.20041225073207.3:When using separate dialog...
-            #@+node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
-            outline = self.panes.get('outline')
-            
-            # Create the widget.
-            self.scrolledTreeCanvas = scrolledTreeCanvas = Pmw.ScrolledCanvas(outline,
-                hscrollmode='none',borderframe=3)
-                
-            # Configure the canvas component.
-            scrolledTreeCanvas.pack(side='top',expand=1,fill="both")
-            
-            treeCanvas = scrolledTreeCanvas.component('canvas')
-            treeCanvas.configure(background='white')
-            
-            # Create the tree.
-            self.tree = tree = settingsTree(c,c.frame,treeCanvas,self)
-            
-            logPane = self.panes.get('log')
-            self.logText = logText = Tk.Text(logPane)
-            logText.pack(expand=1,fill="both")
-            #@nonl
-            #@-node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
-            #@-middle:ekr.20041225073207.3:When using separate dialog...
-            #@nl
-            #@        << put setterCanvas in paneFrame's setter pane>>
-            #@+middle:ekr.20041225073207.3:When using separate dialog...
-            #@+node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
-            # Create the widget in the 'setter' pane.
-            setter = self.panes.get('setter')
-            
-            self.sc = sc = Pmw.ScrolledCanvas(setter,
-                hscrollmode='none',vscrollmode='dynamic',
-                labelpos = 'n',label_text = '')
-                
-            sc.pack(side='top',expand=1,fill="both")
-            
-            setterCanvas = sc.component('canvas')
-            self.setterLabel = sc.component('label')
-            
-            # setterCanvas.configure(background='LightSteelBlue1')
-            #@nonl
-            #@-node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
-            #@-middle:ekr.20041225073207.3:When using separate dialog...
-            #@nl
-            #@        << put a Text widget in the comment pane >>
-            #@+middle:ekr.20041225073207.3:When using separate dialog...
-            #@+node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
-            commentFrame = self.paneFrame.pane('comments')
-            
-            self.commentWidget = commentWidget = Pmw.ScrolledText(commentFrame)
-            commentWidget.pack(expand=1,fill="both")
-            
-            self.commentText = text = commentWidget.component('text')
-            
-            background = commentFrame.cget('background')
-            text.configure(background=background,borderwidth=0)
-            #@nonl
-            #@-node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
-            #@-middle:ekr.20041225073207.3:When using separate dialog...
-            #@nl
+            d = self.createStandAloneDialog()
             self.log = self.logClass(self.logText)
             self.tree.redraw_now() # To allocate widgets.
             self.tree.select(p)
             self.center()
+            g.app.gui.widgetWantsFocus(None,None)
             if self.modal: d.activate()
     #@nonl
-    #@+node:ekr.20041225073207:When replacing body & tree panes...
-    #@-node:ekr.20041225073207:When replacing body & tree panes...
-    #@+node:ekr.20041225073207.3:When using separate dialog...
-    #@-node:ekr.20041225073207.3:When using separate dialog...
     #@-node:ekr.20041225063637.13: ctor
+    #@+node:ekr.20050212153515:replaceBodyWithDialog
+    def replaceBodyWithDialog (self):
+        
+        c = self.c ; title = self.title
+        bg = self.commonBackground
+        
+        #@    << replace the body pane with the outer dialog frame >>
+        #@+node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
+        body = c.frame.component('body')
+        packer = body.getPacker()
+        unpacker = body.getUnpacker()
+        
+        # The new frame must be a child of splitter1Frame.
+        parentFrame = c.frame.component('splitter1Frame').getFrame()
+        self.top = interior = Tk.Frame(parentFrame,background=bg)
+        
+        c.frame.componentClass(c,'settingDialogFrame',interior,self,packer,unpacker)
+        c.frame.replaceBodyPaneWithComponent('settingDialogFrame')
+        #@nonl
+        #@-node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
+        #@nl
+        #@    << replace tree pane with settings tree >>
+        #@+node:ekr.20041225090725:<< replace tree pane with settings tree >>
+        tree = c.frame.component('tree')
+        
+        # The new frame must be a child of splitter2Frame.
+        splitter2Frame = c.frame.component('splitter2Frame').getFrame()
+        
+        # Create a Pmw scrolled canvas.
+        scrolledTreeCanvas = Pmw.ScrolledCanvas(splitter2Frame,
+            hscrollmode='none',borderframe=3)
+        
+        treeCanvas = scrolledTreeCanvas.component('canvas')
+        treeCanvas.configure(background='white')
+        
+        # Set canvas.name ivar for chapters.py plugin.
+        # This must be a tab number.  The number '1' should work well enough.
+        treeCanvas.name = '1'
+        
+        # Create the settingsTree component.
+        c.frame.componentClass(c,'settingsTree',scrolledTreeCanvas,self,
+            tree.getPacker(),tree.getUnpacker())
+        
+        c.frame.replaceTreePaneWithComponent('settingsTree')
+        
+        self.tree = settingsTree(c,c.frame,treeCanvas,self)
+        self.tree.setColorFromConfig()
+        #@nonl
+        #@-node:ekr.20041225090725:<< replace tree pane with settings tree >>
+        #@nl
+        #@    << add buttons and label to interior >>
+        #@+node:ekr.20041225074713:<< add buttons and label to interior >>
+        # Put the label on the same line as the buttons.
+        labelButtonFrame = Tk.Frame(interior,background=bg)
+        labelButtonFrame.pack(side='top',expand=0,fill='x',pady=4)
+        buttonFrame = Tk.Frame(labelButtonFrame,background=bg)
+        buttonFrame.pack(side='left',padx=10)
+        labelFrame = Tk.Frame(labelButtonFrame,background=bg)
+        labelFrame.pack(side='left')
+        self.setterLabel = label = Tk.Label(labelFrame,anchor='w',background=bg)
+        label.pack(side='right')
+        
+        w = 6
+        for name in self.buttonNames:
+            w = max(w,len(name))
+        
+        for name in self.buttonNames:
+        
+            def buttonCallback(name=name):
+                self.onAnyButton(name)
+        
+            b = Tk.Button(buttonFrame,text=name,command=buttonCallback,width=w)
+            b.pack(side='left',padx=4)
+        #@nonl
+        #@-node:ekr.20041225074713:<< add buttons and label to interior >>
+        #@nl
+        #@    << add setterCanvas to interior >>
+        #@+node:ekr.20041225073207.1:<< add setterCanvas to interior>>
+        self.sc = sc = Pmw.ScrolledCanvas(interior,
+            hscrollmode='dynamic',vscrollmode='dynamic',
+            canvas_background = bg,
+            borderframe=1,
+            # A fixed size here works best.
+            # Pmw does not handle the changes to the canvas very well.
+            usehullsize = 1,
+            hull_height = 400,
+            hull_width = 800,
+        )
+        
+        sc.pack(side='top',expand=1,fill="both")
+        #@nonl
+        #@-node:ekr.20041225073207.1:<< add setterCanvas to interior>>
+        #@nl
+    #@nonl
+    #@-node:ekr.20050212153515:replaceBodyWithDialog
+    #@+node:ekr.20050212153646:createStandAloneDialog
+    def createStandAloneDialog (self):
+        
+        c = self.c ; title = self.title
+        bg = self.commonBackground
+        
+        #@    << create the dialog d >>
+        #@+node:ekr.20041225063637.14:<< create the dialog d >>
+        self.dialog = d = Pmw.Dialog(
+            c.frame.top,
+            title=title,
+            buttons=self.buttonNames,
+            # It's too upsetting to have a dialog go away on a return key.
+            # defaultbutton = 'OK',
+            command = self.onAnyButton
+        )
+        
+        self.top = hull = d.component('hull')
+        hull.minsize(800,800)
+        
+        interior = d.interior()
+        
+        if 0: # Do immediately
+            g.app.gui.attachLeoIcon(hull)
+        else: # Do at idle time.
+            def setIcont(top=hull):
+                g.app.gui.attachLeoIcon(top)
+            hull.after_idle(setIcont)
+        #@nonl
+        #@-node:ekr.20041225063637.14:<< create the dialog d >>
+        #@nl
+        #@    << create paneFrame, a paned widget >>
+        #@+node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
+        self.paneFrame = paneFrame = Pmw.PanedWidget(interior,
+            separatorthickness = 4, # default is 2
+            handlesize = 8, # default is 8
+            command = self.onPaneResize
+        )
+        paneFrame.pack(expand = 1, fill='both')
+        
+        for name,minsize,size,label,isSetterLabel in (
+            ("splitter2",50,300,None,False),
+            ("setter",50,300,"",False),
+            ("comments",50,200,None,False),
+        ):
+            self.panes[name] = pane = paneFrame.add(name,min=minsize,size=size)
+            if label is not None:
+                label = Tk.Label(pane,text=label,background=bg)
+                label.pack(side = 'top', expand = 0)
+                if isSetterLabel:
+                    self.setterLabel = label
+        
+        # Set the colors of the separator and handle.
+        for i in (1,2):
+            bar = paneFrame.component('separator-%d' % i)
+            bar.configure(background='LightSteelBlue2')
+            handle = paneFrame.component('handle-%d' % i)
+            handle.configure(background='SteelBlue2')
+        
+        # g.printDict(self.panes)
+        #@nonl
+        #@-node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
+        #@nl
+        #@    << create paneFrame2, a second paned widget >>
+        #@+node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
+        splitter2 = self.panes.get('splitter2')
+        
+        self.paneFrame2 = paneFrame2 = Pmw.PanedWidget(splitter2,
+            separatorthickness = 4, # default is 2
+            handlesize = 8, # default is 8
+            orient='horizontal',
+            command = self.onPaneResize
+        )
+        paneFrame2.pack(expand = 1, fill='both')
+        
+        for name,minsize,size, in (
+            ('outline',50,500),
+            ('log',50,300),
+        ):
+            self.panes[name] = pane = paneFrame2.add(name,min=minsize,size=size)
+            
+        # Set the colors of the separator and handle.
+        i = 1
+        bar = paneFrame2.component('separator-%d' % i)
+        bar.configure(background='LightSteelBlue2')
+        handle = paneFrame2.component('handle-%d' % i)
+        handle.configure(background='SteelBlue2')
+        #@nonl
+        #@-node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
+        #@nl
+        #@    << create outline and log panes in paneFrame2 >>
+        #@+node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
+        outline = self.panes.get('outline')
+        
+        # Create the widget.
+        self.scrolledTreeCanvas = scrolledTreeCanvas = Pmw.ScrolledCanvas(outline,
+            hscrollmode='none',borderframe=3)
+            
+        # Configure the canvas component.
+        scrolledTreeCanvas.pack(side='top',expand=1,fill="both")
+        
+        treeCanvas = scrolledTreeCanvas.component('canvas')
+        treeCanvas.configure(background='white')
+        
+        # Create the tree.
+        self.tree = tree = settingsTree(c,c.frame,treeCanvas,self)
+        
+        logPane = self.panes.get('log')
+        self.logText = logText = Tk.Text(logPane)
+        logText.pack(expand=1,fill="both")
+        #@nonl
+        #@-node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
+        #@nl
+        #@    << put setterCanvas in paneFrame's setter pane>>
+        #@+node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
+        # Create the widget in the 'setter' pane.
+        setter = self.panes.get('setter')
+        
+        self.sc = sc = Pmw.ScrolledCanvas(setter,
+            hscrollmode='none',vscrollmode='dynamic',
+            labelpos = 'n',label_text = '')
+            
+        sc.pack(side='top',expand=1,fill="both")
+        
+        setterCanvas = sc.component('canvas')
+        self.setterLabel = sc.component('label')
+        
+        # setterCanvas.configure(background='LightSteelBlue1')
+        #@nonl
+        #@-node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
+        #@nl
+        #@    << put a Text widget in the comment pane >>
+        #@+node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
+        commentFrame = self.paneFrame.pane('comments')
+        
+        self.commentWidget = commentWidget = Pmw.ScrolledText(commentFrame)
+        commentWidget.pack(expand=1,fill="both")
+        
+        self.commentText = text = commentWidget.component('text')
+        
+        background = commentFrame.cget('background')
+        text.configure(background=background,borderwidth=0)
+        #@nonl
+        #@-node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
+        #@nl
+        
+        return d
+    #@nonl
+    #@-node:ekr.20050212153646:createStandAloneDialog
     #@+node:ekr.20041225063637.21:createSettingsTree & helpers
     def createSettingsTree (self):
         
@@ -1614,7 +1948,9 @@ class settingsController:
                     else:
                         p = root_p.copy()
                 else:
-                    p = last_p.insertAfter()
+                    # Pychecker caught the bug: last_p is None here the first time.
+                    pass
+                    ### p = last_p.insertAfter()
                 
                 if root2:
                     root2.copyTreeFromSelfTo(p)  # replace p by root2.
@@ -1864,7 +2200,7 @@ class settingsController:
     
         f = Tk.Frame(parent,background=bg)
         Tk.Entry(f,textvariable=var,background=bg).pack(side='left')
-        Tk.Label(f,text=name,background=self.bg).pack(side='left')
+        Tk.Label(f,text=name,background=bg).pack(side='left')
         
         def floatCallback():
             val2 = var.get()
@@ -2396,6 +2732,7 @@ class settingsController:
         
         """Create a setter pane for position p."""
         
+        c = self.c
         sc = self.sc ; interior = sc.interior()
         
         if updateDicts:
@@ -2416,6 +2753,7 @@ class settingsController:
         self.sc.resizescrollregion()
         self.sc.yview('moveto',0)
         self.updateSetterLabel(p)
+        g.app.gui.widgetWantsFocus(None,None)
     #@nonl
     #@-node:ekr.20041225063637.60:updateSetter
     #@+node:ekr.20041225063637.62:updateSetterLabel
@@ -2801,344 +3139,6 @@ class settingsController:
     #@-others
 #@nonl
 #@-node:ekr.20041225063637.10:class settingsController
-#@+node:ekr.20041225063637.96:class settingsDialogParserClass (parserBaseClass)
-class settingsDialogParserClass (parserBaseClass):
-    
-    '''A class that traverses the settings tree creating
-    a list of widgets to show in the settings dialog.'''
-    
-    #@    @+others
-    #@+node:ekr.20041225063637.97:ctor
-    def __init__ (self,c,p,dialogController):
-        
-        # There is no need to call the base class ctor.
-        
-        self.c = c
-        self.root = p.copy()
-        self.widgets = [] # A list of widgets to create in the setter pane.
-    
-        # Keys are canonicalized names.
-        self.dispatchDict = {
-            'bool':         self.set,
-            'color':        self.set,
-            'directory':    self.doDirectory,
-            'font':         self.doFont,
-            'if':           self.doIf,
-            'ifgui':        None,
-            'ifplatform':   None,
-            'ignore':       None,
-            'int':          self.set,
-            'ints':         self.doInts,
-            'float':        self.set,
-            'font':         self.doFont,
-            'path':         self.doPath,
-            'page':         self.doPage,
-            'ratio':        self.set,
-            'recentfiles':  self.doRecentFiles,
-            'shortcut':     None,
-            'shortcuts':    self.doShortcuts,
-            'string':       self.set,
-            'strings':      self.doStrings,
-        }
-    #@nonl
-    #@-node:ekr.20041225063637.97:ctor
-    #@+node:ekr.20041225063637.98:set
-    def set (self,p,kind,name,val):
-        
-        self.widgets.append((p.copy(),kind,name,val),)
-    #@nonl
-    #@-node:ekr.20041225063637.98:set
-    #@+node:ekr.20041225063637.99:visitNode
-    def visitNode (self,p):
-        
-        """Visit a node, and possibly append a widget description to self.widgets."""
-        
-        munge = g.app.config.munge
-        h = p.headString().strip() or ''
-        kind,name,val = self.parseHeadline(h)
-        
-        # g.trace(kind,name,val)
-    
-        f = self.dispatchDict.get(munge(kind))
-        if f is not None:
-            try:
-                f(p,kind,name,val)
-            except TypeError:
-                g.es_exception()
-                print "*** no handler",kind
-    #@nonl
-    #@-node:ekr.20041225063637.99:visitNode
-    #@+node:ekr.20041225063637.100:kind handlers
-    # Most of the work is done by base class methods.
-    #@nonl
-    #@+node:ekr.20041225063637.101:doFont
-    def doFont (self,p,kind,name,val):
-    
-        d = self.parseFont(p)
-        # g.trace("\n\nfont dict...\n%s" % g.dictToString(d))
-        self.set(p,kind,name,d)
-    #@nonl
-    #@-node:ekr.20041225063637.101:doFont
-    #@+node:ekr.20041225063637.102:doPage
-    def doPage(self,p,kind,name,val):
-        
-        """Create a widget for each setting in the subtree."""
-    
-        for p in p.subtree_iter():
-            self.visitNode(p)
-    #@nonl
-    #@-node:ekr.20041225063637.102:doPage
-    #@+node:ekr.20041225063637.103:doRecentFiles & doBodyPaneList
-    def doBodyPaneList (self,p,kind,name,val):
-    
-        s = p.bodyString()
-        lines = g.splitLines(s)
-    
-        vals = []
-        for line in lines:
-            line = line.strip()
-            if line and not g.match(line,0,'#'):
-                vals.append(line)
-                    
-        self.set(p,kind,name,vals)
-    
-    doRecentFiles = doBodyPaneList
-    #@-node:ekr.20041225063637.103:doRecentFiles & doBodyPaneList
-    #@+node:ekr.20041225063637.104:doShortcuts
-    def doShortcuts(self,p,kind,name,val):
-    
-        s = p.bodyString()
-        lines = g.splitLines(s)
-    
-        vals = []
-        for line in lines:
-            line = line.strip()
-            if line and not g.match(line,0,'#'):
-                name,val = self.parseShortcutLine(line)
-                if val is not None:
-                    vals.append((name,val),)
-                    
-        self.set(p,kind,name,vals)
-    #@nonl
-    #@-node:ekr.20041225063637.104:doShortcuts
-    #@-node:ekr.20041225063637.100:kind handlers
-    #@-others
-#@-node:ekr.20041225063637.96:class settingsDialogParserClass (parserBaseClass)
-#@+node:ekr.20041225063637.78:class settingsTree (leoTkinterTree)
-class settingsTree (leoTkinterTree.leoTkinterTree):
-
-    #@    @+others
-    #@+node:ekr.20041225063637.79:ctor
-    def __init__(self,c,frame,canvas,controller):
-        
-        # Init the base class.
-        leoTkinterTree.leoTkinterTree.__init__(self,c,frame,canvas)
-        
-        self.controller = controller
-        self.old_p = None
-    #@nonl
-    #@-node:ekr.20041225063637.79:ctor
-    #@+node:ekr.20041225063637.80:Selecting & editing...
-    # This code is different because this class has a different current position.
-    
-    #@+node:ekr.20041225123250:configureTextState
-    def configureTextState (self,p):
-        
-        if p:
-            t = self.getTextWidget(p)
-            if t:
-                if p.isCurrentPosition():
-                    self.setSelectColors(t)
-                else:
-                    self.setUnselectColors(t)
-    #@nonl
-    #@+node:ekr.20041225063637.89:setSelectColors
-    def setSelectColors (self,textWidget): 
-        
-        c = self.c
-    
-        fg = c.config.getColor("headline_text_selected_foreground_color") or 'black'
-        bg = c.config.getColor("headline_text_selected_background_color") or 'white'
-    
-        try:
-            textWidget.configure(state="disabled",
-            highlightthickness=0,fg=fg,bg=bg,
-            selectforeground=fg,selectbackground=bg)
-        except:
-            g.es_exception()
-    #@nonl
-    #@-node:ekr.20041225063637.89:setSelectColors
-    #@+node:ekr.20041225063637.90:setUnselectColors
-    def setUnselectColors (self,textWidget): 
-        
-        c = self.c
-        
-        fg = c.config.getColor("headline_text_unselected_foreground_color") or 'black'
-        bg = c.config.getColor("headline_text_unselected_background_color") or 'white'
-    
-        try:
-            textWidget.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
-        except:
-            g.es_exception()
-    #@nonl
-    #@-node:ekr.20041225063637.90:setUnselectColors
-    #@-node:ekr.20041225123250:configureTextState
-    #@+node:ekr.20041225063637.81:endEditLabel
-    def endEditLabel (self):
-        
-        pass # Editing is not allowed.
-    #@nonl
-    #@-node:ekr.20041225063637.81:endEditLabel
-    #@+node:ekr.20041225063637.82:editLabel
-    def editLabel (self,p):
-        
-        pass # Editing is not allowed.
-    #@nonl
-    #@-node:ekr.20041225063637.82:editLabel
-    #@+node:ekr.20041225063637.83:tree.select
-    def select (self,p,updateBeadList=True):
-    
-        old_p = self.old_p
-    
-        # Unselect the old
-        if old_p:
-            t = self.getTextWidget(old_p)
-            if t: self.setUnselectColors(t)
-    
-        # Select the new
-        t = self.getTextWidget(p)
-        if t: self.setSelectColors(t)
-        
-        # N.B. Do not change the commander's notion of the present position.
-        self.old_p = p
-    
-        self.controller.onTreeClick(p)
-    #@nonl
-    #@-node:ekr.20041225063637.83:tree.select
-    #@+node:ekr.20041225063637.91:getTextWidget
-    def getTextWidget (self,p):
-        
-        # The data is create in newText.
-        data = self.visibleText.get(p.v)
-        if data:
-            data = data[0] # A list of one element.
-            # g.trace(len(data),data)
-            p2,t,theId = data
-            return t
-        else:
-            return None
-    #@nonl
-    #@-node:ekr.20041225063637.91:getTextWidget
-    #@-node:ekr.20041225063637.80:Selecting & editing...
-    #@+node:ekr.20041225063637.92:Event handlers...
-    #@+node:ekr.20041225063637.93:expandAllAncestors
-    def expandAllAncestors (self,p):
-        
-        # This would be harmful because p is always c.currentPosition().
-    
-        return False # redraw_flag
-    #@nonl
-    #@-node:ekr.20041225063637.93:expandAllAncestors
-    #@+node:ekr.20041225063637.94:onClickBoxClick
-    def onClickBoxClick (self,event):
-        
-        tree = self
-    
-        p = self.eventToPosition(event)
-        if not p: return
-    
-        # g.trace(p.isExpanded(),p.headString())
-    
-        if p.isExpanded(): p.contract()
-        else:              p.expand()
-    
-        tree.active = True
-        tree.redraw()
-        tree.select(p)
-    #@nonl
-    #@-node:ekr.20041225063637.94:onClickBoxClick
-    #@-node:ekr.20041225063637.92:Event handlers...
-    #@+node:ekr.20041225063637.95:drawTopTree
-    def drawTopTree (self):
-        
-        """Draw the settings tree, i.e., the tree rooted at self.controller.settingsPosition()."""
-        
-        c = self.c ; canvas = self.canvas
-        p = self.controller.settingsPosition()
-        self.redrawing = True
-        # Recycle all widgets.
-        self.recycleWidgets()
-        # Clear all ids so invisible id's don't confuse eventToPosition & findPositionWithIconId
-        self.ids = {}
-        self.iconIds = {}
-        self.generation += 1
-        self.drag_p = None # Disable drags across redraws.
-        self.dragging = False
-        self.prevPositions = g.app.positions
-        
-        # Draw only the settings tree
-        self.drawTree(p,self.root_left,self.root_top,0,0)
-    
-        canvas.lower("lines")  # Lowest.
-        canvas.lift("textBox") # Not the Tk.Text widget: it should be low.
-        canvas.lift("userIcon")
-        canvas.lift("plusBox")
-        canvas.lift("clickBox")
-        canvas.lift("iconBox") # Higest.
-        self.redrawing = False
-    #@nonl
-    #@-node:ekr.20041225063637.95:drawTopTree
-    #@-others
-#@nonl
-#@-node:ekr.20041225063637.78:class settingsTree (leoTkinterTree)
-#@+node:ekr.20041119203941.3:class settingsTreeParser (parserBaseClass)
-class settingsTreeParser (parserBaseClass):
-    
-    '''A class that inits settings found in an @settings tree.
-    
-    Used by read settings logic.'''
-    
-    #@    @+others
-    #@+node:ekr.20041119204103:ctor
-    def __init__ (self,c):
-    
-        # Init the base class.
-        parserBaseClass.__init__(self,c)
-    #@nonl
-    #@-node:ekr.20041119204103:ctor
-    #@+node:ekr.20041119204714:visitNode
-    def visitNode (self,p):
-        
-        """Init any settings found in node p."""
-        
-        # g.trace(p.headString())
-        
-        munge = g.app.config.munge
-    
-        kind,name,val = self.parseHeadline(p.headString())
-        kind = munge(kind)
-    
-        if kind == "settings":
-            pass
-        elif kind not in self.control_types and val in (u'None',u'none','None','none','',None):
-            # None is valid for all data types.
-            self.set(p,kind,name,None)
-        elif kind in self.control_types or kind in self.basic_types:
-            f = self.dispatchDict.get(kind)
-            try:
-                f(p,kind,name,val)
-            except TypeError:
-                g.es_exception()
-                print "*** no handler",kind
-        elif name:
-            # self.error("unknown type %s for setting %s" % (kind,name))
-            # Just assume the type is a string.
-            self.set(p,kind,name,val)
-    #@nonl
-    #@-node:ekr.20041119204714:visitNode
-    #@-others
-#@nonl
-#@-node:ekr.20041119203941.3:class settingsTreeParser (parserBaseClass)
 #@-others
 #@nonl
 #@-node:ekr.20041117062700:@thin leoConfig.py

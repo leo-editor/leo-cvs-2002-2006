@@ -6,6 +6,8 @@
 
 import leoGlobals as g
 import leoTest # Support for unit tests.
+
+import re
 import string
 
 class baseLeoImportCommands:
@@ -380,9 +382,9 @@ class baseLeoImportCommands:
             if level > 0:
                 if level < level1 or level > lastLevel + 1:
                     return False # improper level.
-                elif level > lastLevel and plusFlag == False:
+                elif level > lastLevel and not plusFlag:
                     return False # parent of this node has no children.
-                elif level == lastLevel and plusFlag == True:
+                elif level == lastLevel and plusFlag:
                     return False # last node has missing child.
                 else:
                     lastLevel = level
@@ -2064,7 +2066,6 @@ class baseLeoImportCommands:
     
         """Creates a child of parent for each class and function definition seen."""
     
-        import re
         #@    << Append file if not pure PHP >>
         #@+node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
         # If the file does not begin with <?php or end with ?> then

@@ -22,7 +22,8 @@ if 0: # Set to 1 for lint-like testing.
         import pychecker.checker
         # This works.  We may want to set options here...
         # from pychecker import Config 
-        print ; print "Warning: pychecker.checker running..." ; print
+        # print pychecker
+        print ; print "Warning (in leo.py): pychecker.checker running..." ; print
     except:
         print ; print 'Can not import pychecker' ; print
 #@nonl
@@ -103,7 +104,7 @@ def run(fileName=None,*args,**keywords):
     #@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
     #@nl
     g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
-    g.app.config = leoConfig.config()
+    g.app.config = leoConfig.configClass()
     fileName = completeFileName(fileName)
     reportDirectories(verbose)
     g.app.config.readSettingsFiles(fileName,verbose) # Must be done after setting g.app.config.

@@ -620,7 +620,7 @@ class baseUndoer:
         #@-at
         #@@c
         
-        granularity = self.granularity
+        granularity = u.granularity
         
         old_d = u.peekBead(u.bead)
         old_p = old_d and old_d.get('v')
@@ -745,6 +745,8 @@ class baseUndoer:
     
         if 0: # Problems with punctuation within words.
             return new_ch in word_chars and not old_ch in word_chars
+            
+        else: return False # Keeps Pychecker happy.
     #@nonl
     #@-node:ekr.20050126081529:recognizeStartOfTypingWord
     #@-node:ekr.20031218072017.1490:setUndoTypingParams & recognizeStartOfTypingWord

@@ -2813,7 +2813,7 @@ class baseTangleCommands:
                 
                 # g.trace(g.get_line(s,i))
                 result,junk,kind,name,part,of,end,nl_flag = self.is_sentinel_line_with_data(s,i)
-                assert(result==True)
+                assert(result)
                 #@<< terminate the previous part of this section if it exists >>
                 #@+node:ekr.20031218072017.3567:<< terminate the previous part of this section if it exists >>
                 #@+at 

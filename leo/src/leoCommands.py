@@ -29,9 +29,13 @@ import parser # needed only for weird Python 2.2 parser errors.
 import string
 import sys
 import tempfile
+
 import tabnanny # for Check Python command
-import token    # for Check Python command
 import tokenize # for Check Python command
+
+# The following import _is_ used.
+__pychecker__ = '--no-import'
+import token    # for Check Python command
 #@nonl
 #@-node:ekr.20040712045933:<< imports  >>
 #@nl
@@ -192,7 +196,7 @@ class baseCommands:
     #@+node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     def getSignOnLine (self):
         c = self
-        return "Leo 4.3 alpha 2, build %s, January 30, 2005" % c.getBuildNumber()
+        return "Leo 4.3 alpha 2, build %s, February 12, 2005" % c.getBuildNumber()
     #@-node:ekr.20040629121554.1:getSignOnLine (Contains hard-coded version info)
     #@+node:ekr.20040629121554.2:initVersion
     def initVersion (self):
@@ -313,9 +317,10 @@ class baseCommands:
         #@@c
             
         closeFlag = (
-            c.frame.startupWindow==True and # The window was open on startup
-            c.changed==False and c.frame.saved==False and # The window has never been changed
+            c.frame.startupWindow and # The window was open on startup
+            not c.changed and not c.frame.saved and # The window has never been changed
             g.app.numberOfWindows == 1) # Only one untitled window has ever been opened
+        #@nonl
         #@-node:ekr.20031218072017.2822:<< Set closeFlag if the only open window is empty >>
         #@nl
     
@@ -710,8 +715,8 @@ class baseCommands:
         #@@c
             
         closeFlag = (
-            c.frame.startupWindow==True and # The window was open on startup
-            c.changed==False and c.frame.saved==False and # The window has never been changed
+            c.frame.startupWindow and # The window was open on startup
+            not c.changed and not c.frame.saved and # The window has never been changed
             g.app.numberOfWindows == 1) # Only one untitled window has ever been opened
         #@nonl
         #@-node:ekr.20031218072017.2082:<< Set closeFlag if the only open window is empty >>
@@ -2662,6 +2667,8 @@ class baseCommands:
                 c.undoer.clearUndoState()
                 g.es('Undo stack cleared',color='red')
                 return val
+            else:
+                return None
     #@nonl
     #@-node:EKR.20040610130943:pasteOutlineRetainingClones
     #@-node:ekr.20031218072017.1548:Cut & Paste Outlines
@@ -4528,6 +4535,7 @@ class baseCommands:
         c = self
         name = 'leoSettings.leo'
         homeDir = g.app.homeDir
+        loadDir = g.app.loadDir
         configDir = g.app.globalConfigDir
     
         # Look in configDir first.

@@ -11,6 +11,9 @@
 
 from __future__ import generators # To make the code work in Python 2.2.
 
+# This module must do strange things with imports.
+__pychecker__ = '--no-import --no-reimportself --no-reimport '
+
 #@<< imports >>
 #@+node:ekr.20050208101229:<< imports >>
 
@@ -20,9 +23,15 @@ if 0: # Don't import this here: it messes up Leo's startup code.
     import leoTest
 
 import exceptions
+import filecmp
+import operator
 import os
+import pdb
+import re
+import sre  # Unicode-aware regular expressions
 import string
 import sys
+import tempfile
 import time
 import traceback
 import types
@@ -219,27 +228,27 @@ def get_directives_dict(s,root=None):
     Returns a dict containing pointers to the start of each directive"""
 
     if root: root_node = root[0]
-    dict = {}
+    theDict = {}
     i = 0 ; n = len(s)
     while i < n:
         if s[i] == '@' and i+1 < n:
-            #@            << set dict for @ directives >>
-            #@+node:ekr.20031218072017.1261:<< set dict for @ directives >>
+            #@            << set theDict for @ directives >>
+            #@+node:ekr.20031218072017.1261:<< set theDict for @ directives >>
             j = g.skip_c_id(s,i+1)
             word = s[i+1:j]
             if word in g.globalDirectiveList:
-                if dict.has_key(word):
+                if theDict.has_key(word):
                     # Ignore second value.
                     pass
                     # g.es("Warning: conflicting values for %s" % (word), color="blue")
                 else:
-                    dict [word] = i
+                    theDict [word] = i
             #@nonl
-            #@-node:ekr.20031218072017.1261:<< set dict for @ directives >>
+            #@-node:ekr.20031218072017.1261:<< set theDict for @ directives >>
             #@nl
         elif root and g.match(s,i,"<<"):
-            #@            << set dict["root"] for noweb * chunks >>
-            #@+node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+            #@            << set theDict["root"] for noweb * chunks >>
+            #@+node:ekr.20031218072017.1262:<< set theDict["root"] for noweb * chunks >>
             #@+at 
             #@nonl
             # The following looks for chunk definitions of the form < < * > > 
@@ -255,14 +264,14 @@ def get_directives_dict(s,root=None):
                     # < < * > > = implies that @root should appear in the headline.
                     i += 3
                     if root_node:
-                        dict["root"]=0 # value not immportant
+                        theDict["root"]=0 # value not immportant
                     else:
                         g.es(g.angleBrackets("*") + "= requires @root in the headline")
             #@nonl
-            #@-node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+            #@-node:ekr.20031218072017.1262:<< set theDict["root"] for noweb * chunks >>
             #@nl
         i = g.skip_line(s,i)
-    return dict
+    return theDict
 #@nonl
 #@-node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
 #@+node:ekr.20031218072017.1386:getOutputNewline
@@ -290,14 +299,14 @@ def getOutputNewline (c=None,name=None):
 #@nonl
 #@-node:ekr.20031218072017.1386:getOutputNewline
 #@+node:ekr.20031218072017.1387:scanAtEncodingDirective
-def scanAtEncodingDirective(s,dict):
+def scanAtEncodingDirective(s,theDict):
     
-    """Scan the @encoding directive at s[dict["encoding"]:].
+    """Scan the @encoding directive at s[theDict["encoding"]:].
 
     Returns the encoding name or None if the encoding name is invalid.
     """
 
-    k = dict["encoding"]
+    k = theDict["encoding"]
     i = g.skip_to_end_of_line(s,k)
     j = len("@encoding")
     encoding = s[k+j:i].strip()
@@ -310,14 +319,14 @@ def scanAtEncodingDirective(s,dict):
 #@nonl
 #@-node:ekr.20031218072017.1387:scanAtEncodingDirective
 #@+node:ekr.20031218072017.1388:scanAtLineendingDirective
-def scanAtLineendingDirective(s,dict):
+def scanAtLineendingDirective(s,theDict):
     
-    """Scan the @lineending directive at s[dict["lineending"]:].
+    """Scan the @lineending directive at s[theDict["lineending"]:].
 
     Returns the actual lineending or None if the name of the lineending is invalid.
     """
 
-    k = dict["lineending"]
+    k = theDict["lineending"]
     i = g.skip_to_end_of_line(s,k)
     j = len("@lineending")
     j = g.skip_ws(s,j)
@@ -333,14 +342,14 @@ def scanAtLineendingDirective(s,dict):
 #@nonl
 #@-node:ekr.20031218072017.1388:scanAtLineendingDirective
 #@+node:ekr.20031218072017.1389:scanAtPagewidthDirective
-def scanAtPagewidthDirective(s,dict,issue_error_flag=False):
+def scanAtPagewidthDirective(s,theDict,issue_error_flag=False):
     
-    """Scan the @pagewidth directive at s[dict["pagewidth"]:].
+    """Scan the @pagewidth directive at s[theDict["pagewidth"]:].
 
     Returns the value of the width or None if the width is invalid.
     """
     
-    k = dict["pagewidth"]
+    k = theDict["pagewidth"]
     j = i = k + len("@pagewidth")
     i, val = g.skip_long(s,i)
     if val != None and val > 0:
@@ -353,14 +362,14 @@ def scanAtPagewidthDirective(s,dict,issue_error_flag=False):
         return None
 #@-node:ekr.20031218072017.1389:scanAtPagewidthDirective
 #@+node:ekr.20031218072017.1390:scanAtTabwidthDirective
-def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
+def scanAtTabwidthDirective(s,theDict,issue_error_flag=False):
     
-    """Scan the @tabwidth directive at s[dict["tabwidth"]:].
+    """Scan the @tabwidth directive at s[theDict["tabwidth"]:].
 
     Returns the value of the width or None if the width is invalid.
     """
     
-    k = dict["tabwidth"]
+    k = theDict["tabwidth"]
     i = k + len("@tabwidth")
     i, val = g.skip_long(s, i)
     if val != None and val != 0:
@@ -465,7 +474,7 @@ def scanDirectives(c,p=None):
     pluginsList = [] # 5/17/03: a list of items for use by plugins.
     for p in p.self_and_parents_iter():
         s = p.v.t.bodyString
-        dict = g.get_directives_dict(s)
+        theDict = g.get_directives_dict(s)
         #@        << Test for @comment and @language >>
         #@+node:ekr.20031218072017.1393:<< Test for @comment and @language >>
         # 1/23/05: Any previous @language or @comment prevents processing up the tree.
@@ -474,39 +483,39 @@ def scanDirectives(c,p=None):
         if old.has_key("comment") or old.has_key("language"):
             pass
         
-        elif dict.has_key("comment"):
-            k = dict["comment"]
+        elif theDict.has_key("comment"):
+            k = theDict["comment"]
             delim1,delim2,delim3 = g.set_delims_from_string(s[k:])
         
-        elif dict.has_key("language"):
-            k = dict["language"]
+        elif theDict.has_key("language"):
+            k = theDict["language"]
             language,delim1,delim2,delim3 = g.set_language(s,k)
         #@nonl
         #@-node:ekr.20031218072017.1393:<< Test for @comment and @language >>
         #@nl
         #@        << Test for @encoding >>
         #@+node:ekr.20031218072017.1394:<< Test for @encoding >>
-        if not old.has_key("encoding") and dict.has_key("encoding"):
+        if not old.has_key("encoding") and theDict.has_key("encoding"):
             
-            e = g.scanAtEncodingDirective(s,dict)
+            e = g.scanAtEncodingDirective(s,theDict)
             if e:
                 encoding = e
         #@-node:ekr.20031218072017.1394:<< Test for @encoding >>
         #@nl
         #@        << Test for @lineending >>
         #@+node:ekr.20031218072017.1395:<< Test for @lineending >>
-        if not old.has_key("lineending") and dict.has_key("lineending"):
+        if not old.has_key("lineending") and theDict.has_key("lineending"):
             
-            e = g.scanAtLineendingDirective(s,dict)
+            e = g.scanAtLineendingDirective(s,theDict)
             if e:
                 lineending = e
         #@-node:ekr.20031218072017.1395:<< Test for @lineending >>
         #@nl
         #@        << Test for @pagewidth >>
         #@+node:ekr.20031218072017.1396:<< Test for @pagewidth >>
-        if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+        if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
             
-            w = g.scanAtPagewidthDirective(s,dict)
+            w = g.scanAtPagewidthDirective(s,theDict)
             if w and w > 0:
                 page_width = w
         #@nonl
@@ -514,9 +523,9 @@ def scanDirectives(c,p=None):
         #@nl
         #@        << Test for @path >>
         #@+node:ekr.20031218072017.1397:<< Test for @path >>
-        if not path and not old.has_key("path") and dict.has_key("path"):
+        if not path and not old.has_key("path") and theDict.has_key("path"):
         
-            k = dict["path"]
+            k = theDict["path"]
             #@    << compute relative path from s[k:] >>
             #@+node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
             j = i = k + len("@path")
@@ -544,9 +553,9 @@ def scanDirectives(c,p=None):
         #@nl
         #@        << Test for @tabwidth >>
         #@+node:ekr.20031218072017.1399:<< Test for @tabwidth >>
-        if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+        if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
             
-            w = g.scanAtTabwidthDirective(s,dict)
+            w = g.scanAtTabwidthDirective(s,theDict)
             if w and w != 0:
                 tab_width = w
         #@nonl
@@ -556,16 +565,16 @@ def scanDirectives(c,p=None):
         #@+node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
         if not old.has_key("wrap") and not old.has_key("nowrap"):
             
-            if dict.has_key("wrap"):
+            if theDict.has_key("wrap"):
                 wrap = True
-            elif dict.has_key("nowrap"):
+            elif theDict.has_key("nowrap"):
                 wrap = False
         #@nonl
         #@-node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
         #@nl
         g.doHook("scan-directives",c=c,p=p,v=p,s=s,
-            old_dict=old,dict=dict,pluginsList=pluginsList)
-        old.update(dict)
+            old_dict=old,dict=theDict,pluginsList=pluginsList)
+        old.update(theDict)
 
     if path == None: path = g.getBaseDirectory(c=c)
 
@@ -598,8 +607,8 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     fileName = g.os_path_normpath(g.os_path_abspath(fileName))
 
     # If the file is already open just bring its window to the front.
-    list = app.windowList
-    for frame in list:
+    theList = app.windowList
+    for frame in theList:
         if munge(fileName) == munge(frame.c.mFileName):
             frame.bringToFront()
             app.setLog(frame.log,"openWithFileName")
@@ -739,9 +748,7 @@ def callerName (n=1):
 def pdb ():
     
     """Fall into pdb."""
-    
-    import pdb
-    
+
     pdb.set_trace()
 #@nonl
 #@-node:ekr.20041105091148:pdb
@@ -814,7 +821,7 @@ def es_exception (full=True,c=None,color="red"):
             print line
             
     if g.app.debugSwitch > 1:
-        import pdb ; pdb.set_trace()
+        pdb.set_trace()
 
     return fileName,n
 #@nonl
@@ -904,7 +911,6 @@ def plugin_date (plugin_mod,format=None):
 def file_date (theFile,format=None):
     if theFile and len(theFile)and g.os_path_exists(theFile):
         try:
-            import time
             n = g.os_path_getmtime(theFile)
             if format == None:
                 format = "%m/%d/%y %H:%M:%S"
@@ -952,8 +958,6 @@ class redirectClass:
     #@+node:ekr.20041012082437.3:redirect
     def redirect (self,stdout=1):
     
-        import sys
-    
         if g.app.batchMode:
             # Redirection is futile in batch mode.
             return
@@ -967,8 +971,6 @@ class redirectClass:
     #@-node:ekr.20041012082437.3:redirect
     #@+node:ekr.20041012082437.4:undirect
     def undirect (self,stdout=1):
-    
-        import sys
     
         if self.old:
             if stdout:
@@ -1166,8 +1168,7 @@ def listToString(aList,tag=None):
 #@-node:ekr.20041126060136:print_list & listToString
 #@+node:ekr.20041122153823:print_stack (printStack)
 def print_stack():
-    
-    import traceback
+
     traceback.print_stack()
     
 printStack = print_stack
@@ -1416,10 +1417,17 @@ def printDiffTime(message, start):
 # Returns a temporary file name.
 
 def create_temp_name ():
+    
+    # mktemp is deprecated, but we can't get rid of it
+    # because mkstemp does not exist in Python 2.2.1.
+    __pychecker__ = '--no-deprecate'
+    
+    try:
+        temp = tempfile.mkstemp()
+    except AttributeError:
+        # g.trace('tempfile.mkstemp does not exist')
+        temp = tempfile.mktemp()
 
-    import tempfile
-    temp = tempfile.mktemp()
-    # g.trace(temp)
     return temp
 #@nonl
 #@-node:ekr.20031218072017.3117:create_temp_name
@@ -1494,7 +1502,6 @@ def update_file_if_changed(file_name,temp_name):
     Otherwise, we just delete temp_name. Both files should be closed."""
 
     if g.os_path_exists(file_name):
-        import filecmp
         if filecmp.cmp(temp_name, file_name):
             kind = 'unchanged'
             ok = g.utils_remove(temp_name)
@@ -1528,6 +1535,7 @@ def utils_remove (fileName,verbose=True):
 #@+node:ekr.20050107084901:test_utils_remove
 def test_utils_remove():
 
+    __pychecker__ = '--no-reimport'
     import os
     exists = g.os_path_exists
     
@@ -1611,6 +1619,7 @@ def utils_rename(src,dst,mode=None,verbose=True):
 #@+node:ekr.20050107085710.1:test_utils_rename
 def test_utils_rename(**keys):
 
+    __pychecker__ = '--no-reimport '
     import os
     exists = g.os_path_exists
     
@@ -1680,25 +1689,25 @@ def getBaseDirectory(c=None):
 #@+node:ekr.20031218072017.3119:makeAllNonExistentDirectories
 # This is a generalization of os.makedir.
 
-def makeAllNonExistentDirectories (dir):
+def makeAllNonExistentDirectories (theDir):
 
     """Attempt to make all non-existent directories"""
 
     if not app.config.create_nonexistent_directories:
         return None
 
-    dir1 = dir = g.os_path_normpath(dir)
+    dir1 = theDir = g.os_path_normpath(theDir)
 
-    # Split dir into all its component parts.
+    # Split theDir into all its component parts.
     paths = []
-    while len(dir) > 0:
-        head,tail=g.os_path_split(dir)
+    while len(theDir) > 0:
+        head,tail=g.os_path_split(theDir)
         if len(tail) == 0:
             paths.append(head)
             break
         else:
             paths.append(tail)
-            dir = head
+            theDir = head
     path = ""
     paths.reverse()
     for s in paths:
@@ -2053,6 +2062,9 @@ def doHook(tag,*args,**keywords):
 #@-node:ekr.20031218072017.1596:g.doHook
 #@+node:ekr.20031218072017.1318:g.plugin_signon
 def plugin_signon(module_name,verbose=False):
+    
+    # The things we do to keep pychecker happy... 
+    m = g.Bunch(__name__='',__version__='')
     
     exec("import %s ; m = %s" % (module_name,module_name))
     
@@ -2520,7 +2532,6 @@ def scanError(s):
 # A quick and dirty sscanf.  Understands only %s and %d.
 
 def scanf (s,pat):
-    import re
     count = pat.count("%s") + pat.count("%d")
     pat = pat.replace("%s","(\S+)")
     pat = pat.replace("%d","(\d+)")
@@ -2734,8 +2745,6 @@ def skip_pascal_string(s,i):
 #@-at
 #@@c
 def skip_heredoc_string(s,i):
-    
-    import re
     
     j = i
     assert(g.match(s,i,"<<<"))
@@ -3394,12 +3403,15 @@ def test_failure_with_ascii_encodings():
 #@-node:ekr.20050208112123:test_failure_with_ascii_encodings
 #@-node:ekr.20031218072017.1502:toUnicode & toEncodedString (and tests)
 #@+node:ekr.20031218072017.1503:getpreferredencoding from 2.3a2
+# Suppress warning about redefining getpreferredencoding
+__pychecker__ = '--no-reuseattr'
+
 try:
     # Use Python's version of getpreferredencoding if it exists.
     # It is new in Python 2.3.
     import locale
     getpreferredencoding = locale.getpreferredencoding
-except:
+except Exception:
     # Use code copied from locale.py in Python 2.3alpha2.
     if sys.platform in ('win32', 'darwin', 'mac'):
         #@        << define getpreferredencoding using _locale >>
@@ -3422,8 +3434,11 @@ except:
         #@        << define getpreferredencoding for *nix >>
         #@+node:ekr.20031218072017.1505:<< define getpreferredencoding for *nix >>
         # On Unix, if CODESET is available, use that.
+        
+        __pychecker__ = '--no-noeffect' # Note: this is at the top level!
+        
         try:
-            local.CODESET
+            locale.CODESET # Bug fix, 2/12/05
         except NameError:
             # Fall back to parsing environment variables :-(
             def getpreferredencoding(do_setlocale = True):
@@ -3451,6 +3466,8 @@ except:
         #@nonl
         #@-node:ekr.20031218072017.1505:<< define getpreferredencoding for *nix >>
         #@nl
+        
+__pychecker__ = '--reuseattr'
 #@-node:ekr.20031218072017.1503:getpreferredencoding from 2.3a2
 #@-node:ekr.20031218072017.1498:Unicode utils...
 #@+node:EKR.20040612114220:Utility classes, functions & objects...
@@ -3524,7 +3541,6 @@ virtual_event_name = angleBrackets
 #@@c
 
 def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
-    import sre  # Unicode-aware regular expressions
     #
     # tokenize the stringCompare flags
     compareFlag = string.split( stringCompare, '.' )
@@ -3615,8 +3631,6 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 #         point.isok = True
 #@-at
 #@@c
-
-import operator
 
 class Bunch (object):
     
@@ -3792,7 +3806,7 @@ class mulderUpdateAlgorithm:
         lines = file(filename).readlines()
         delims = g.comment_delims_from_extension(filename)
         
-        return removeSentinelsFromLines(lines,delims)
+        return self.removeSentinelsFromLines(lines,delims)
         
     def removeSentinelsFromLines (self,lines,delims):
     
@@ -3835,7 +3849,7 @@ class mulderUpdateAlgorithm:
         lines = file(filename).readlines()
         delims = g.comment_delims_from_extension(filename)
     
-        return getSentinelsFromLines(lines,delims)
+        return self.getSentinelsFromLines(lines,delims)
         
     def getSentinelsFromLines (self,lines,delims):
         
@@ -3851,7 +3865,7 @@ class mulderUpdateAlgorithm:
         #@    << init propagateDiffsToSentinelsFile vars >>
         #@+node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
         # Get the sentinel comment delims.
-        delims = self.comment_delims_from_extension(sourcefilename)
+        delims = g.comment_delims_from_extension(sourcefilename)
         if not delims:
             return
         
@@ -4149,7 +4163,7 @@ class mulderUpdateAlgorithm:
                         count += 1
                         backupname = "%s.~%s~" % (targetfilename,count)
                     os.rename(targetfilename, backupname)
-                    if testing:
+                    if self.testing:
                         print "backup file in ", backupname
                 #@nonl
                 #@-node:EKR.20040504160820.1:<< make backup file >>
@@ -4163,12 +4177,12 @@ class mulderUpdateAlgorithm:
     #@-node:EKR.20040504160820:write_if_changed
     #@-others
     
-def doMulderUpdateAlgorithm(sourcefilename,targetfilename):
-
-    mu = mulderUpdateAlgorithm()
-
-    mu.pull_source(sourcefilename,targetfilename)
-    mu.copy_time(targetfilename,sourcefilename)
+#def doMulderUpdateAlgorithm(sourcefilename,targetfilename):
+#
+#    mu = mulderUpdateAlgorithm()
+#
+#    mu.pull_source(sourcefilename,targetfilename)
+#    mu.copy_time(targetfilename,sourcefilename)
 #@nonl
 #@-node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
 #@+node:ekr.20031219074948.1:class nullObject
@@ -4356,11 +4370,6 @@ def test_g_getScript_strips_returns():
     assert script.find('\r\n') == -1
 #@nonl
 #@-node:ekr.20050211100535:test_g_getScript_strips_returns
-#@+node:ekr.20050211120242.1:test_g_getScript_strips_lws
-def test_g_getScript_strips_lws():
-    pass # Not ready yet.
-#@nonl
-#@-node:ekr.20050211120242.1:test_g_getScript_strips_lws
 #@-node:EKR.20040614071102.1:g.getScript & tests
 #@+node:ekr.20041219095213:import wrappers
 #@+at 

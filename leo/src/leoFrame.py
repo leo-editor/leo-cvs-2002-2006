@@ -13,6 +13,8 @@ import leoColor
 import leoMenu
 import leoUndo
 
+import re
+
 #@<< About handling events >>
 #@+node:ekr.20031218072017.2410:<< About handling events >>
 #@+at 
@@ -933,7 +935,7 @@ class leoTree:
                 #@@c
                 
                 urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
-                import re
+                
                 # 4/21/03: Add http:// if required.
                 if not re.match('^([a-z]{3,}:)',url):
                     url = 'http://' + url

@@ -111,6 +111,10 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         #@-node:ekr.20031218072017.3900:<< create the tkinter intVars >>
         #@nl
         
+        # These are created later.
+        self.find_ctrl = None
+        self.change_ctrl = None 
+        
         self.createTopFrame() # Create the outer tkinter dialog frame.
         self.createFrame()
         self.init(c) # New in 4.3: init only once.
