@@ -3260,7 +3260,7 @@ class leoTkinterLog (leoFrame.leoLog):
             g.es_event_exception("activate log")
     #@nonl
     #@-node:ekr.20031218072017.4045:tkLog.onActivateLog
-    #@+node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
+    #@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
     # All output to the log stream eventually comes here.
     def put (self,s,color=None):
         
@@ -3346,7 +3346,7 @@ class leoTkinterLog (leoFrame.leoLog):
             self.frame.tree.disableRedraw = False
     #@nonl
     #@-node:ekr.20050208133438:forceLogUpdate
-    #@-node:ekr.20031218072017.1473:tkLog.put & putnl & helpers
+    #@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
     #@+node:ekr.20041222043017:tkLog.restoreAllState
     def restoreAllState (self,d):
         
