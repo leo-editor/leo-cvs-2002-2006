@@ -277,13 +277,14 @@ class def_node:
 #@nonl
 #@-node:ekr.20031218072017.3458:class def_node
 #@+node:ekr.20031218072017.3461:class root_attributes (Stephen P. Schaefer)
-#@+doc 
+#@+at 
 #@nonl
 # Stephen P. Schaefer, 9/2/2002
 # Collect the root node specific attributes in an
 # easy-to-use container.
-#@-doc
-#@@code
+#@-at
+#@@c
+
 class root_attributes:
     #@    @+others
     #@+node:ekr.20031218072017.3462:root_attributes.__init__
