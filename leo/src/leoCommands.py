@@ -77,6 +77,8 @@ class baseCommands:
         self._topPosition     = self.nullPosition()
         
         # per-document info...
+        self.disableCommandsMessage = ''
+            # The presence of this message disables all commands.
         self.hookFunction = None
         self.openDirectory = None
         
@@ -107,10 +109,11 @@ class baseCommands:
         self.beadPointer = -1 # present item in the list.
         self.visitedList = [] # list of vnodes for the Nodes dialog.
         
-        # 4.1: for hoist/dehoist commands.
-        self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects drawing routines and find commands.
-        
-        self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
+        # For hoist/dehoist commands.
+        self.hoistStack = []
+            # Stack of nodes to be root of drawn tree.
+            # Affects drawing routines and find commands.
+        self.recentFiles = [] # List of recent files
         #@nonl
         #@-node:ekr.20031218072017.2813:<< initialize ivars >>
         #@nl
@@ -150,6 +153,11 @@ class baseCommands:
     
         # A horrible kludge: set g.app.log to cover for a possibly missing activate event.
         g.app.setLog(c.frame.log,"doCommand")
+        
+        # The presence of this message disables all commands.
+        if c.disableCommandsMessage:
+            g.es(c.disableCommandsMessage,color='blue')
+            return 'break' # Inhibit all other handlers.
     
         if label == "cantredo": label = "redo"
         if label == "cantundo": label = "undo"
