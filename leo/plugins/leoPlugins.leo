@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1010" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1039" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="54" left="139" height="828" width="846"/>
+	<global_window_position top="54" left="337" height="828" width="846"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -801,7 +801,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.618" a="EV"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110203113231.618" a="E"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -956,27 +956,55 @@
 <v t="edream.110203113231.743"><vh>scanPluginDirectives</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.744"><vh>Drawing, graphics &amp; styled text</vh>
-<v t="edream.110203113231.745" a="M" tnodeList="edream.110203113231.745,edream.110203113231.746,edream.110203113231.747,edream.110203113231.748,edream.110203113231.749,edream.110203113231.750,edream.110203113231.751,edream.110203113231.752"><vh>@file color_markup.py</vh>
-<v t="edream.110203113231.746"><vh>initAnyMarkup</vh></v>
-<v t="edream.110203113231.747"><vh>colorWikiMarkup</vh></v>
-<v t="edream.110203113231.748"><vh>doWikiText</vh>
-<v t="edream.110203113231.749"><vh>&lt;&lt; set first to a tuple describing the first tag to be handled &gt;&gt;</vh></v>
-<v t="edream.110203113231.750"><vh>&lt;&lt; handle the tag using n1,n2,delim1,delim2 &gt;&gt;</vh>
-<v t="edream.110203113231.751"><vh>&lt;&lt; parse and handle color field &gt;&gt;</vh></v>
+<v t="edream.110203113231.744" a="E"><vh>Drawing, graphics &amp; styled text</vh>
+<v t="edream.110403140857" a="E"><vh>Wiki plugin 1.4 (color_markup)(requires add-directives plugin)</vh>
+<v t="edream.110403140857.1" a="E"><vh>Plugin documentation</vh>
+<v t="edream.110403140857.2"><vh>Installation</vh></v>
+<v t="edream.110403140857.3"><vh>Use</vh>
+<v t="edream.110403140857.4"><vh>Supported markups</vh></v>
+<v t="edream.110403140857.5"><vh>Example</vh>
+<v t="edream.110403140857.6"><vh>a subnode</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.752"><vh>insertWikiPicture</vh></v>
+<v t="edream.110403140857.7"><vh>Release notes</vh></v>
 </v>
-<v t="edream.110203113231.753" a="M" tnodeList="edream.110203113231.753,edream.110203113231.754,edream.110203113231.755,edream.110203113231.756,edream.110203113231.757"><vh>@file image.py</vh>
-<v t="edream.110203113231.754"><vh>onSelect</vh>
+<v t="edream.110403140857.8" a="E" tnodeList="edream.110403140857.8,edream.110403140857.9,edream.110403140857.10,edream.110403140857.11,edream.110403140857.12,edream.110403140857.13,edream.110403140857.14,edream.110403140857.15,edream.110403140857.16,edream.110403140857.17,edream.110403140857.18,edream.110403140857.20,edream.110403140857.21,edream.110403140857.22,edream.110403140857.23,edream.110403140857.24,edream.110403140857.25,edream.110403140857.26,edream.110403140857.27,edream.110403140857.28"><vh>@file color_markup.py</vh>
+<v t="edream.110403140857.9"><vh>initAnyMarkup</vh></v>
+<v t="edream.110403140857.10"><vh>colorWikiMarkup</vh></v>
+<v t="edream.110403140857.11"><vh>doWikiText</vh>
+<v t="edream.110403140857.12"><vh>&lt;&lt; set first to a tuple describing the first tag to be handled &gt;&gt;</vh></v>
+<v t="edream.110403140857.13"><vh>&lt;&lt; handle the tag using n1,n2,delim1,delim2 &gt;&gt;</vh>
+<v t="edream.110403140857.14"><vh>&lt;&lt; parse and handle color field &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110403140857.15"><vh>insertWikiPicture</vh></v>
+<v t="edream.110403140857.16" a="MV"><vh>onBodykey1 (not ready)</vh></v>
+<v t="edream.110403140857.17" a="E"><vh>onBodydclick1 &amp; allies</vh>
+<v t="edream.110403140857.18"><vh>getUrl</vh></v>
+</v>
+<v t="edream.110403140857.19" a="E"><vh>Menu handling</vh>
+<v t="edream.110403140857.20"><vh>createWikiMenu</vh></v>
+<v t="edream.110403140857.21"><vh>doWikiBold</vh></v>
+<v t="edream.110403140857.22"><vh>doWikiItalic</vh></v>
+<v t="edream.110403140857.23"><vh>doWikiColor</vh></v>
+<v t="edream.110403140857.24"><vh>doWikiChooseColor</vh></v>
+<v t="edream.110403140857.25" a="M"><vh>doWikiPicture (not ready)</vh></v>
+<v t="edream.110403140857.26" a="E"><vh>insertWikiMarkup</vh>
+<v t="edream.110403140857.27"><vh>&lt;&lt; apply markup to selection &gt;&gt;</vh></v>
+<v t="edream.110403140857.28"><vh>&lt;&lt; handle no selection &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.753" tnodeList="edream.110203113231.753,edream.110203113231.754,edream.110203113231.755,edream.110203113231.756,edream.110203113231.757"><vh>@file image.py</vh>
+<v t="edream.110203113231.754" a="E"><vh>onSelect</vh>
 <v t="edream.110203113231.755"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203113231.756"><vh>onUnselect</vh>
 <v t="edream.110203113231.757"><vh>&lt;&lt; Unselect Image &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.758" a="M" tnodeList="edream.110203113231.758,edream.110203113231.759,edream.110203113231.760,edream.110203113231.761,edream.110203113231.762,edream.110203113231.763,edream.110203113231.764,edream.110203113231.766,edream.110203113231.767,edream.110203113231.768,edream.110203113231.769,edream.110203113231.770,edream.110203113231.771,edream.110203113231.772,edream.110203113231.773,edream.110203113231.774,edream.110203113231.775,edream.110203113231.776,edream.110203113231.777,edream.110203113231.778,edream.110203113231.779,edream.110203113231.780,edream.110203113231.781,edream.110203113231.782,edream.110203113231.783,edream.110203113231.784,edream.110203113231.785,edream.110203113231.786,edream.110203113231.787,edream.110203113231.788,edream.110203113231.789"><vh>@file nav_buttons.py</vh>
+<v t="edream.110203113231.758" tnodeList="edream.110203113231.758,edream.110203113231.759,edream.110203113231.760,edream.110203113231.761,edream.110203113231.762,edream.110203113231.763,edream.110203113231.764,edream.110203113231.766,edream.110203113231.767,edream.110203113231.768,edream.110203113231.769,edream.110203113231.770,edream.110203113231.771,edream.110203113231.772,edream.110203113231.773,edream.110203113231.774,edream.110203113231.775,edream.110203113231.776,edream.110203113231.777,edream.110203113231.778,edream.110203113231.779,edream.110203113231.780,edream.110203113231.781,edream.110203113231.782,edream.110203113231.783,edream.110203113231.784,edream.110203113231.785,edream.110203113231.786,edream.110203113231.787,edream.110203113231.788,edream.110203113231.789"><vh>@file nav_buttons.py</vh>
 <v t="edream.110203113231.759"><vh>class commanderInfoClass</vh>
 <v t="edream.110203113231.760"><vh>__init__ (commanderInfoClass)</vh></v>
 <v t="edream.110203113231.761"><vh>addWidgets</vh>
@@ -1078,7 +1106,7 @@
 </v>
 <v t="edream.110203113231.831"><vh>Menus</vh>
 <v t="edream.110203113231.832"><vh> Plugins menu</vh>
-<v t="edream.110203113231.833" a="M" tnodeList="edream.110203113231.833,edream.110203113231.834,edream.110203113231.835,edream.110203113231.836,edream.110203113231.837,edream.110203113231.838,edream.110203113231.839,edream.110203113231.840,edream.110203113231.841,edream.110203113231.842,edream.110203113231.843,edream.110203113231.844,edream.110203113231.845,edream.110203113231.846,edream.110203113231.847,edream.110203113231.848,edream.110203113231.849,edream.110203113231.850,edream.110203113231.851,edream.110203113231.852,edream.110203113231.853,edream.110203113231.854,edream.110203113231.855"><vh>@file plugins_menu.py</vh>
+<v t="edream.110203113231.833" tnodeList="edream.110203113231.833,edream.110203113231.834,edream.110203113231.835,edream.110203113231.836,edream.110203113231.837,edream.110203113231.838,edream.110203113231.839,edream.110203113231.840,edream.110203113231.841,edream.110203113231.842,edream.110203113231.843,edream.110203113231.844,edream.110203113231.845,edream.110203113231.846,edream.110203113231.847,edream.110203113231.848,edream.110203113231.849,edream.110203113231.850,edream.110203113231.851,edream.110203113231.852,edream.110203113231.853,edream.110203113231.854,edream.110203113231.855"><vh>@file plugins_menu.py</vh>
 <v t="edream.110203113231.834"><vh>class Plugin</vh>
 <v t="edream.110203113231.835"><vh>__init__</vh>
 <v t="edream.110203113231.836"><vh>&lt;&lt; Check if this can be configured &gt;&gt;</vh></v>
@@ -1110,10 +1138,10 @@
 <v t="edream.110203113231.855"><vh>&lt;&lt; add items to the plugins menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.856" a="M"><vh>@file test.py</vh>
+<v t="edream.110203113231.856"><vh>@file test.py</vh>
 <v t="edream.110203113231.857"><vh>applyConfiguration</vh></v>
 <v t="edream.110203113231.858"><vh>cmd_fn1/2/3</vh></v>
-<v t="edream.110203113231.859"><vh>onSelect</vh>
+<v t="edream.110203113231.859" a="E"><vh>onSelect</vh>
 <v t="edream.110203113231.860"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203113231.861"><vh>onUnselect</vh>
@@ -1191,7 +1219,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.915"><vh>Overriding functions, methods &amp; classes</vh>
+<v t="edream.110203113231.915" a="E"><vh>Overriding functions, methods &amp; classes</vh>
 <v t="edream.110203113231.916" tnodeList="edream.110203113231.916,edream.110203113231.917,edream.110203113231.918"><vh>@file __overrideClasses.py</vh>
 <v t="edream.110203113231.917"><vh>&lt;&lt; override the LeoFrame class &gt;&gt;</vh></v>
 <v t="edream.110203113231.918"><vh>&lt;&lt; override methods of the LeoApp class &gt;&gt;</vh></v>
@@ -1204,17 +1232,17 @@
 <v t="edream.110203113231.923"><vh>newPut and newPutNl</vh></v>
 </v>
 <v t="edream.110203113231.924" tnodeList="edream.110203113231.924"><vh>@file redirect_to_log.py</vh></v>
-<v t="edream.110203113231.925" tnodeList="edream.110203113231.925,edream.110203113231.926,edream.110203113231.927,edream.110203113231.928,edream.110203113231.929"><vh>@file script_io_to_body.py</vh>
+<v t="edream.110203113231.925" a="E" tnodeList="edream.110203113231.925,edream.110203113231.926,edream.110203113231.927,edream.110203113231.928,edream.110203113231.929"><vh>@file script_io_to_body.py</vh>
 <v t="edream.110203113231.926"><vh>onStart</vh></v>
 <v t="edream.110203113231.927"><vh>newExecuteScript</vh></v>
 <v t="edream.110203113231.928"><vh>newPut and newPutNl</vh></v>
 <v t="edream.110203113231.929"><vh>newEs, etc.</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.930"><vh>Spell Checking</vh>
+<v t="edream.110203113231.930" a="E"><vh>Spell Checking</vh>
 <v t="edream.110203113231.931"><vh>@silentfile mod_spelling.txt</vh></v>
 <v t="edream.110203113231.932" tnodeList="edream.110203113231.932"><vh>@file mod_spelling.ini</vh></v>
-<v t="edream.110203113231.933" a="M" tnodeList="edream.110203113231.933,edream.110203113231.935,edream.110203113231.936,edream.110203113231.937,edream.110203113231.938,edream.110203113231.940,edream.110203113231.941,edream.110203113231.942,edream.110203113231.943,edream.110203113231.944,edream.110203113231.945,edream.110203113231.946,edream.110203113231.947,edream.110203113231.948,edream.110203113231.950,edream.110203113231.951,edream.110203113231.952,edream.110203113231.953,edream.110203113231.954,edream.110203113231.955,edream.110203113231.956,edream.110203113231.957,edream.110203113231.959,edream.110203113231.960,edream.110203113231.961,edream.110203113231.962,edream.110203113231.963,edream.110203113231.964,edream.110203113231.966,edream.110203113231.967,edream.110203113231.968,edream.110203113231.969,edream.110203113231.970,edream.110203113231.972,edream.110203113231.973,edream.110203113231.974,edream.110203113231.975,edream.110203113231.976,edream.110203113231.977,edream.110203113231.978,edream.110203113231.979,edream.110203113231.980,edream.110203113231.981"><vh>@file mod_spelling.py</vh>
+<v t="edream.110203113231.933" a="EM" tnodeList="edream.110203113231.933,edream.110203113231.935,edream.110203113231.936,edream.110203113231.937,edream.110203113231.938,edream.110203113231.940,edream.110203113231.941,edream.110203113231.942,edream.110203113231.943,edream.110203113231.944,edream.110203113231.945,edream.110203113231.946,edream.110203113231.947,edream.110203113231.948,edream.110203113231.950,edream.110203113231.951,edream.110203113231.952,edream.110203113231.953,edream.110203113231.954,edream.110203113231.955,edream.110203113231.956,edream.110203113231.957,edream.110203113231.959,edream.110203113231.960,edream.110203113231.961,edream.110203113231.962,edream.110203113231.963,edream.110203113231.964,edream.110203113231.966,edream.110203113231.967,edream.110203113231.968,edream.110203113231.969,edream.110203113231.970,edream.110203113231.972,edream.110203113231.973,edream.110203113231.974,edream.110203113231.975,edream.110203113231.976,edream.110203113231.977,edream.110203113231.978,edream.110203113231.979,edream.110203113231.980,edream.110203113231.981"><vh>@file mod_spelling.py</vh>
 <v t="edream.110203113231.934"><vh>Functions</vh>
 <v t="edream.110203113231.935"><vh>createSpellMenu</vh></v>
 <v t="edream.110203113231.936"><vh>onSelect</vh></v>
@@ -1233,7 +1261,7 @@
 <v t="edream.110203113231.946"><vh>processWord</vh></v>
 <v t="edream.110203113231.947"><vh>updateDictionary</vh></v>
 </v>
-<v t="edream.110203113231.948"><vh>class spellDialog</vh>
+<v t="edream.110203113231.948" a="E"><vh>class spellDialog</vh>
 <v t="edream.110203113231.949"><vh>Birth &amp; death</vh>
 <v t="edream.110203113231.950"><vh>spell.__init__</vh>
 <v t="edream.110203113231.951"><vh>&lt;&lt; set self.dictionary &gt;&gt;</vh></v>
@@ -1254,14 +1282,14 @@
 <v t="edream.110203113231.963"><vh>onHideButton</vh></v>
 <v t="edream.110203113231.964"><vh>onRedoButton &amp; onUndoButton</vh></v>
 </v>
-<v t="edream.110203113231.965"><vh>Commands</vh>
+<v t="edream.110203113231.965" a="E"><vh>Commands</vh>
 <v t="edream.110203113231.966"><vh>add</vh></v>
 <v t="edream.110203113231.967"><vh>change</vh></v>
 <v t="edream.110203113231.968"><vh>checkSpelling</vh></v>
 <v t="edream.110203113231.969"><vh>find</vh></v>
 <v t="edream.110203113231.970"><vh>ignore</vh></v>
 </v>
-<v t="edream.110203113231.971"><vh>Helpers</vh>
+<v t="edream.110203113231.971" a="E"><vh>Helpers</vh>
 <v t="edream.110203113231.972"><vh>closePipes</vh></v>
 <v t="edream.110203113231.973"><vh>fillbox</vh></v>
 <v t="edream.110203113231.974"><vh>findNextMisspelledWord</vh>
@@ -9584,186 +9612,6 @@ if 1: # Register the handlers...
 			pluginsList.append((d,v,s,k),)
 </t>
 <t tx="edream.110203113231.744"></t>
-<t tx="edream.110203113231.745">"""Handle coloring for markup in doc parts and Python triple-double-quoted strings"""
-
-from leoPlugins import *
-from leoGlobals import *
-import string  # zfill does not exist in Python 2.2.1
-
-try:    import Tkinter
-except: Tkinter = None
-
-@others
-
-if Tkinter and 1: # Register the handlers...
-
-	if app.gui is None:
-		app.createTkGui(__file__)
-
-	if app.gui.guiName() == "tkinter":
-		
-		print "wiki markup enabled"
-
-		registerHandler("color-optional-markup", colorWikiMarkup)
-		registerHandler("init-color-markup", initAnyMarkup)
-	
-		__version__ = "1.1"
-		plugin_signon(__name__)</t>
-<t tx="edream.110203113231.746">def initAnyMarkup (tag,keywords):
-	
-	"""initialize colorer.markup_string
-	
-	The colorer completely recolors the body pane when this changes"""
-	
-	keys = ("colorer","v")
-	colorer,v = [keywords.get(key) for key in keys]
-
-	c = colorer.commands
-	if not c or not v or not top(): return
-
-	# trace()
-	dict = scanDirectives(c,v=v) # v arg is essential.
-	pluginsList = dict.get("pluginsList")
-	
-	if pluginsList:
-		for d,v,s,k in pluginsList:
-			if d == "markup":
-				kind = s[k:]
-				if kind:
-					colorer.markup_string = kind
-					return
-					
-	colorer.markup_string = "unknown" # default</t>
-<t tx="edream.110203113231.747">colorCount = 0
-
-def colorWikiMarkup (tag,keywords):
-
-	keys = ("colorer","v","s","i","j","colortag")
-	colorer,v,s,i,j,colortag = [keywords.get(key) for key in keys]
-
-	global colorCount ; colorCount += 1
-	
-	c = colorer.commands
-	dict = scanDirectives(c,v=v) # v arg is essential.
-	pluginsList = dict.get("pluginsList")
-	
-	if pluginsList:
-		for d,v,s2,k in pluginsList:
-			if d == "markup":
-				# trace(`colorCount`,`d`)
-				if match_word(s2,k,"wiki"):
-					doWikiText(colorer,v,s,i,j,colortag)
-					return true # We have colored the text.
-			
-	# trace(`colorCount`,"no markup")
-	return None # We have not colored the text.</t>
-<t tx="edream.110203113231.748">def doWikiText (colorer,v,s,i,end,colortag):
-
-	firsti = i ; inserted = 0
-
-	while i &lt; end:
-		&lt;&lt; set first to a tuple describing the first tag to be handled &gt;&gt;
-		if first:
-			tag,n1,n2,delim1,delim2 = first
-			i = n2 + len(delim2)
-			&lt;&lt; handle the tag using n1,n2,delim1,delim2 &gt;&gt;
-		else: i = end
-		
-	colorer.tag(colortag,firsti,end+inserted)</t>
-<t tx="edream.110203113231.749">first = None
-
-for tag,delim1,delim2 in (
-	("bold","__","__"),
-	("italic","''","''"),
-	("picture","{picture file=","}"),
-	("color","~~","~~")):
-	n1 = s.find(delim1,i,end)
-	if n1 &gt; -1:
-		n2 = s.find(delim2,n1+len(delim1),end)
-		if n2 &gt; -1:
-			if not first or (first and n1 &lt; first[1]):
-				first = tag,n1,n2,delim1,delim2
-</t>
-<t tx="edream.110203113231.750">if tag =="picture":
-	colorer.tag("elide",n1,n2+len(delim2)) # Elide everything.
-	filename = s[n1+len(delim1):n2]
-	filename = os.path.join(app().loadDir,filename)
-	filename = os.path.normpath(filename)
-	inserted += insertWikiPicture(colorer,filename,n2+len(delim2))
-elif tag == "color":
-	&lt;&lt; parse and handle color field &gt;&gt;
-else:
-	# look for nested bold or italic.
-	if tag == "bold":
-		delim3,delim4 = "''","''" # Look for nested italic.
-	else:
-		delim3,delim4 = "__","__" # Look for nested bold.
-	n3 = s.find(delim3,n1+len(delim1),n2) ; n4 = -1
-	if n3 &gt; -1:
-		n4 = s.find(delim4,n3+len(delim3),n2+len(delim2))
-	if n3 &gt; -1 and n4 &gt; -1:
-		colorer.tag("elide",n1,n1+len(delim1))
-		colorer.tag("elide",n2,n2+len(delim2))
-		colorer.tag("elide",n3,n3+len(delim3))
-		colorer.tag("elide",n4,n4+len(delim4))
-		colorer.tag(tag,n1+len(delim1),n3)
-		colorer.tag("bolditalic",n3+len(delim3),n4)
-		colorer.tag(tag,n4+len(delim4),n2)
-	else:
-		# No nested tag.
-		colorer.tag("elide",n1,n1+len(delim1))
-		colorer.tag("elide",n2,n2+len(delim2))
-		colorer.tag(tag,n1+len(delim1),n2)</t>
-<t tx="edream.110203113231.751"># Parse the color value.
-j = n1+len(delim1)
-n = s.find(":",j,n2)
-if n2 &gt; n &gt; j &gt; -1:
-	name = s[j:n]
-	if name[0] == '#' and len(name) &gt; 1:
-		name = '#' + string.zfill(name[1:],6)
-	if name in colorer.color_tags_list:
-		colorer.tag("elide",n1,n+1)
-		colorer.tag(name,n+1,n2)
-		colorer.tag("elide",n2,n2+len(delim2))
-	else:
-		try:
-			# print "entering", name
-			colorer.body.tag_configure(name,foreground=name)
-			colorer.color_tags_list.append(name)
-			colorer.tag("elide",n1,n+1)
-			colorer.tag(name,n+1,n2)
-			colorer.tag("elide",n2,n2+len(delim2))
-		except: # an invalid color name: elide nothing.
-			pass # es_exception()</t>
-<t tx="edream.110203113231.752">def insertWikiPicture (colorer,filename,i):
-	
-	"""Try to insert a picture with the give filename.
-	
-	Returns the number of characters actually inserted"""
-	
-	# trace(`colorer.color_pass`)
-	if colorer.color_pass == 0:
-		colorer.redoColoring = true # schedule a two-pass recoloring.
-		return 0
-		
-	if colorer.color_pass == 2:
-		return 0 # The second redo pass.
-		
-	# trace(`filename`,`v`)
-	if not os.path.exists(filename):
-		return 0
-
-	try:
-		# Create the image
-		photo = Tkinter.PhotoImage(master=app().root, file=filename)
-		image = colorer.c.bodyCtrl.image_create(colorer.index(i),image=photo,padx=0) # 10/27/03
-
-		# Keep references so images stay on the canvas.
-		colorer.image_references.append((photo,image,colorer.line_index,i),)
-		return 1
-	except:
-		es_exception()
-		return 0</t>
 <t tx="edream.110203113231.753">"""Handle images in body text"""
 
 from leoPlugins import *
@@ -9812,7 +9660,7 @@ if os.path.isfile(filename):
 	bodyWidth = body.winfo_width()
 	padding = int((bodyWidth - photoWidth - 16) / 2)
 	padding = max(0,padding)
-	a.gsimage = body.image_create("1.0",image=photo,padx=padding)
+	a.gsimage = body.bodyCtrl.image_create("1.0",image=photo,padx=padding)
 else:
 	es("warning: missing image file")</t>
 <t tx="edream.110203113231.756">def onUnselect (tag,keywords):
@@ -11365,7 +11213,7 @@ if os.path.isfile(filename):
 	bodyWidth = body.winfo_width()
 	padding = int((bodyWidth - photoWidth - 16) / 2)
 	padding = max(0,padding)
-	a.gsimage = body.image_create("1.0",image=photo,padx=padding)
+	a.gsimage = body.bodyCtrl.image_create("1.0",image=photo,padx=padding)
 else:
 	es("warning: missing image file")</t>
 <t tx="edream.110203113231.861">def onUnselect (tag,keywords):
@@ -12370,7 +12218,7 @@ def newExecuteScript(self,event=None,v=None):
 		v = c.currentVnode() 
 
 	# Assume any selected body text is a script.
-	start,end = getTextSelection(body)
+	start,end = body.getTextSelection() # EKR: 11/04/03
 	if start and end and start != end: # 7/7/03
 		s = body.get(start,end)
 	else:
@@ -12935,14 +12783,14 @@ def onUndoButton (self):
 	
 	selection = self.getSuggestion()
 	if selection:
-		start,end = oldSel = getTextSelection(t)
+		start,end = oldSel = t.getTextSelection()
 		if start:
 			if t.compare(start, "&gt;", end):
 				start,end = end,start
 			t.delete(start,end)
 			t.insert(start,selection)
 			setTextSelection(t,start,start + "+%dc" % (len(selection)))
-			newSel = getTextSelection(t)
+			newSel = t.getTextSelection()
 
 			# update node, undo status, dirty flag, changed mark &amp; recolor
 			c.beginUpdate()
@@ -12982,7 +12830,7 @@ def onUndoButton (self):
 		self.body.focus_set()
 					
 		# Copy the working selection range to the body pane
-		start,end = getTextSelection (self.work)
+		start,end = self.work.getTextSelection()
 		setTextSelection (self.body,start,end)
 	else:
 		es("no more misspellings")
@@ -13132,7 +12980,7 @@ if self.dictionary.has_key(word.lower()):
 	
 	"""Enable or disable buttons in the Check Spelling dialog."""
 	
-	start,end = getTextSelection(self.body)
+	start,end = self.body.getTextSelection()
 	state = choose(self.suggestions and start,"normal","disabled")
 	
 	self.changeButton.configure(state=state)
@@ -13405,5 +13253,454 @@ def getPluginNames(self):
 	
     """Return a list of the files needed by a plugin"""
     return ("%s1.py" % name, "%s2.py" % name)</t>
+<t tx="edream.110403140857"></t>
+<t tx="edream.110403140857.1"></t>
+<t tx="edream.110403140857.2">@
+--How to install the wiki markup plugin--
+
+1) first make sure that the "add_directives" plugin is enabled. This plugin turns on support for @markup directives, and it can be found in leoPlugins.leo under the section "Plugins &amp; scripts" -&gt; Directives. In particular:
+	a) check that the plugin code is enabled. You should have a line like (note the "if 1"):
+		if 1: # Register the handlers...
+	b) generate the plugin file. Right click with the mouse on the outline heading "@file add_directives.py" and select "Write @file nodes".
+
+2) enable the "color_markup.py" plugin:
+	a) check that the plugin code is enabled. You should have a line like (note the "if 1"):
+		if Tkinter and 1: # Register the handlers...
+	b) generate the plugin file. Right click with the mouse on the outline heading "@file color_markup.py" and select "Write @file nodes".
+</t>
+<t tx="edream.110403140857.3">@
+--How to use the wiki markup plugin--
+
+Make sure first that both the add_directives and color_markup plugins are installed and enabled (see the Installation node for details). Make also sure that coloring is not disabled for your outline (i.e. you should not have @nocolor in an ancestor node).
+	
+Important: coloring via wiki markups is only supported in doc parts and Python triple-double-quoted strings (not in Python triple-single-quoted strings!).
+
+To use the wiki markup, write
+
+@markup wiki # turn on the wiki markup
+@            # start a doc part
+(here goes your marked-up text, see below)
+
+To disable the wiki markup, write
+
+@markup      # turn off the wiki markup
+
+You can now use the markups either selecting the Wiki menu entries (or the corresponding keyboard shortcuts) found in the Edit-&gt;Edit Body-&gt;Wiki Tags menu, or manually inserting the tags yourself. 
+
+If you use the menus, you can either select a word and choose the appropriate menu entry to appy styling to that word, or you can just choose a menu entry (e.g. "Bold") and start writing text with the correspongin style. Select the menu entry again to return to normal text.
+
+See the "Supported markups" for the currently supported markups.
+
+See also the "Example" subnode. If you have the add_directives and color_markup plugins enabled, you should see the text in that node displayed as styled text.</t>
+<t tx="edream.110403140857.4">@
+The currently supported markups are:
+
+''text''                   # write text in italics
+__text__                   # write text in bold
+~~&lt;color&gt;:text~~           # write text in the color specified by &lt;color&gt; (e.g. blue, grey, etc)
+{picture file=&lt;filename&gt;}  # load the picture indicated by &lt;filename&gt;
+http://url                 # URL support: double clicking on the url will open it in the default browser.
+https://url                # URL support: double clicking on the url will open it in the default browser.
+
+Note 1: italics and bold markups can be nested, e.g.
+
+''__text__''               # write text in italics and bold
+
+Just remember to terminate the tags in the order they were opened.
+
+Note 2: URLs must be terminated by a space.
+
+By default, once the text has been markup up, the actual tags (e.g. __ for bold) are not displayed anymore. You can choose to display them selecting "Show Invisibles" from the Edit menu.
+</t>
+<t tx="edream.110403140857.5">@color
+@markup wiki
+@doc (this turns on a doc section; a '@ ' would do too)
+
+This should be ''italic'' text
+This should be __bold__ text
+This text should be ~~pink:colored in pink~~, ~~blue:this one in blue~~.
+This text should be ''__both bold and italic__''.
+Leo's homepage is at http://webpages.charter.net/edreamleo/front.html 
+
+You can also have wiki markups in python triple-double-quoted strings:
+
+@c
+
+def __dummy():
+	"""This is a __very important__ function."""
+	return None
+</t>
+<t tx="edream.110403140857.6">@
+Wiki markups are supported ''in subnodes too''.</t>
+<t tx="edream.110403140857.7">@
+Version 1.2.1, October 29, 2003.
+
+Added documentation.
+Added menu entries to tag selected text and to start/end wiki tagging.
+
+Version 1.3, October 29, 2003.
+
+Fixed bug in the creation of the wiki menu.
+Added support for clickable http tags.
+
+Version 1.4, November 4, 2003.
+Put import tkinter in a try/except block.
+Made changes for 4.1 app.gui architecture. (More work needed).</t>
+<t tx="edream.110403140857.8">"""Handle coloring for markup in doc parts and Python triple-double-quoted strings"""
+
+from leoPlugins import *
+from leoGlobals import *
+
+try:    import Tkinter
+except: Tkinter = None
+
+import string  # zfill does not exist in Python 2.2.1
+import tkColorChooser
+
+@others
+
+if Tkinter and 1: # Register the handlers...
+
+	if app.gui is None:
+		app.createTkGui(__file__)
+
+	if app.gui.guiName() == "tkinter":
+		
+		print "wiki markup enabled"
+		
+		# default value for color-tagged wiki text
+		wikiColoredText = "blue"
+
+		registerHandler("color-optional-markup", colorWikiMarkup)
+		registerHandler("init-color-markup", initAnyMarkup)
+		#registerHandler("bodykey1", onBodykey1)
+		registerHandler("bodydclick1", onBodydclick1)
+		registerHandler(("start2","open2","command2"), createWikiMenu)
+	
+		__version__ = "1.4" # DS: 10/29/03.  EKR: 11/4/03: mods for 4.1.
+		plugin_signon(__name__)</t>
+<t tx="edream.110403140857.9">def initAnyMarkup (tag,keywords):
+	
+	"""initialize colorer.markup_string
+	
+	The colorer completely recolors the body pane when this changes"""
+	
+	keys = ("colorer","v")
+	colorer,v = [keywords.get(key) for key in keys]
+
+	c = colorer.commands
+	if not c or not v or not top(): return
+
+	# underline means hyperlinks
+	c.body.configureColor("http",underline=1) # EKR: 11/4/03
+	c.body.configureColor("https",underline=1) # EKR: 11/4/03
+	# trace()
+	dict = scanDirectives(c,v=v) # v arg is essential.
+	pluginsList = dict.get("pluginsList")
+	
+	if pluginsList:
+		for d,v,s,k in pluginsList:
+			if d == "markup":
+				kind = s[k:]
+				if kind:
+					colorer.markup_string = kind
+					return
+					
+	colorer.markup_string = "unknown" # default</t>
+<t tx="edream.110403140857.10">colorCount = 0
+
+def colorWikiMarkup (tag,keywords):
+
+	keys = ("colorer","v","s","i","j","colortag")
+	colorer,v,s,i,j,colortag = [keywords.get(key) for key in keys]
+
+	global colorCount ; colorCount += 1
+	
+	c = colorer.commands
+	dict = scanDirectives(c,v=v) # v arg is essential.
+	pluginsList = dict.get("pluginsList")
+	
+	if pluginsList:
+		for d,v,s2,k in pluginsList:
+			if d == "markup":
+				# trace(`colorCount`,`d`)
+				if match_word(s2,k,"wiki"):
+					doWikiText(colorer,v,s,i,j,colortag)
+					return true # We have colored the text.
+			
+	# trace(`colorCount`,"no markup")
+	return None # We have not colored the text.</t>
+<t tx="edream.110403140857.11">def doWikiText (colorer,v,s,i,end,colortag):
+
+	firsti = i ; inserted = 0
+
+	while i &lt; end:
+		&lt;&lt; set first to a tuple describing the first tag to be handled &gt;&gt;
+		if first:
+			tag,n1,n2,delim1,delim2 = first
+			i = n2 + len(delim2)
+			&lt;&lt; handle the tag using n1,n2,delim1,delim2 &gt;&gt;
+		else: i = end
+		
+	colorer.tag(colortag,firsti,end+inserted)</t>
+<t tx="edream.110403140857.12">first = None
+
+for tag,delim1,delim2 in (
+	("bold","__","__"),
+	("italic","''","''"),
+	("picture","{picture file=","}"),
+	("color","~~","~~"),
+	("http","http://"," "),
+	("https","https://"," ")):
+	n1 = s.find(delim1,i,end)
+	if n1 &gt; -1:
+		n2 = s.find(delim2,n1+len(delim1),end)
+		if n2 &gt; -1:
+			if not first or (first and n1 &lt; first[1]):
+				first = tag,n1,n2,delim1,delim2
+</t>
+<t tx="edream.110403140857.13">if tag =="picture":
+	colorer.tag("elide",n1,n2+len(delim2)) # Elide everything.
+	filename = s[n1+len(delim1):n2]
+	filename = os.path.join(app().loadDir,filename)
+	filename = os.path.normpath(filename)
+	inserted += insertWikiPicture(colorer,filename,n2+len(delim2))
+elif tag == "color":
+	&lt;&lt; parse and handle color field &gt;&gt;
+elif tag == "http" or tag == "https":
+	colorer.tag(tag,n1,n2)
+else:
+	# look for nested bold or italic.
+	if tag == "bold":
+		delim3,delim4 = "''","''" # Look for nested italic.
+	else:
+		delim3,delim4 = "__","__" # Look for nested bold.
+	n3 = s.find(delim3,n1+len(delim1),n2) ; n4 = -1
+	if n3 &gt; -1:
+		n4 = s.find(delim4,n3+len(delim3),n2+len(delim2))
+	if n3 &gt; -1 and n4 &gt; -1:
+		colorer.tag("elide",n1,n1+len(delim1))
+		colorer.tag("elide",n2,n2+len(delim2))
+		colorer.tag("elide",n3,n3+len(delim3))
+		colorer.tag("elide",n4,n4+len(delim4))
+		colorer.tag(tag,n1+len(delim1),n3)
+		colorer.tag("bolditalic",n3+len(delim3),n4)
+		colorer.tag(tag,n4+len(delim4),n2)
+	else:
+		# No nested tag.
+		colorer.tag("elide",n1,n1+len(delim1))
+		colorer.tag("elide",n2,n2+len(delim2))
+		colorer.tag(tag,n1+len(delim1),n2)</t>
+<t tx="edream.110403140857.14"># Parse the color value.
+j = n1+len(delim1)
+n = s.find(":",j,n2)
+if n2 &gt; n &gt; j &gt; -1:
+	name = s[j:n]
+	if name[0] == '#' and len(name) &gt; 1:
+		name = '#' + string.zfill(name[1:],6)
+	if name in colorer.color_tags_list:
+		colorer.tag("elide",n1,n+1)
+		colorer.tag(name,n+1,n2)
+		colorer.tag("elide",n2,n2+len(delim2))
+	else:
+		try:
+			# print "entering", name
+			colorer.body.tag_configure(name,foreground=name)
+			colorer.color_tags_list.append(name)
+			colorer.tag("elide",n1,n+1)
+			colorer.tag(name,n+1,n2)
+			colorer.tag("elide",n2,n2+len(delim2))
+		except: # an invalid color name: elide nothing.
+			pass # es_exception()</t>
+<t tx="edream.110403140857.15">def insertWikiPicture (colorer,filename,i):
+	
+	"""Try to insert a picture with the give filename.
+	
+	Returns the number of characters actually inserted"""
+	
+	# trace(`colorer.color_pass`)
+	if colorer.color_pass == 0:
+		colorer.redoColoring = true # schedule a two-pass recoloring.
+		return 0
+		
+	if colorer.color_pass == 2:
+		return 0 # The second redo pass.
+		
+	# trace(`filename`,`v`)
+	if not os.path.exists(filename):
+		return 0
+
+	try:
+		# Create the image
+		photo = Tkinter.PhotoImage(master=app().root, file=filename)
+		image = colorer.body.bodyCtrl.image_create(colorer.index(i),image=photo,padx=0)
+		
+		# Keep references so images stay on the canvas.
+		colorer.image_references.append((photo,image,colorer.line_index,i),)
+		return 1
+	except:
+		es_exception()
+		return 0</t>
+<t tx="edream.110403140857.16">def onBodykey1(tag,keywords):
+	c = keywords.get("c")
+	body = c.body
+	idx = body.index("insert")
+	line,char = map(int, idx.split('.'))
+	elideRange = body.bodyCtrl.tag_prevrange("elide", idx) # EKR: 11/4/03
+	if elideRange:
+		elideLine,elideStart = map(int, elideRange[0].split('.'))
+		elideLine,elideEnd   = map(int, elideRange[1].split('.'))
+		if line==elideLine and elideStart&lt;char&lt;=elideEnd:
+			pass
+			# print "XXX: tag!"
+			# body.mark_set("insert", "elide+1c")
+	return 0 # do not override
+</t>
+<t tx="edream.110403140857.17">def onBodydclick1(tag,keywords):
+	"""Handle double clicks on a hyperlink."""
+
+	c = keywords.get("c")
+	url = getUrl(c, "http", "https")
+	if url:
+		try:
+			import webbrowser
+			webbrowser.open(url)
+		except:
+			es("exception opening " + url)
+			es_exception()
+</t>
+<t tx="edream.110403140857.18">def getUrl(c, *tags):
+	"""See if the current text belongs to a hyperlink tag and, if so, return the url."""
+	
+	body = c.body
+	selStart,selEnd = body.getTextSelection() # EKR: 11/4/03
+	for tag in tags:
+		hyperlink = body.bodyCtrl.tag_prevrange(tag,selEnd) # EKR: 11/4/03
+		if hyperlink:
+			hyperStart,hyperEnd = hyperlink
+			if selStart==selEnd: 
+				# kludge: only react on single chars, not on selections
+				if body.compare(hyperStart,"&lt;=",selStart) and body.compare(selStart,"&lt;=",hyperEnd):
+					url = body.get(hyperStart,hyperEnd)
+					return url
+	return None</t>
+<t tx="edream.110403140857.19"></t>
+<t tx="edream.110403140857.20">def createWikiMenu(tag, keywords):
+	"""Create menu entries under Edit-&gt;Edit Body to insert wiki tags."""
+
+	if	(tag=="open2" or tag=="start2" or
+		(tag=="command2" and keywords.get("label")=="new")):
+
+		c = top()
+		
+		editBodyMenuName = "Edit Body..."
+		wikiMenuName = "&amp;Wiki Tags..."
+		if c.frame.getMenu(wikiMenuName):
+			return # wiki menu already created
+
+		editBodyMenu = c.frame.getMenu(editBodyMenuName)
+		separator = (("-", None, None),)
+		c.frame.createMenuEntries(editBodyMenu, separator)
+		
+		wikiMenu = c.frame.createNewMenu(wikiMenuName, editBodyMenuName)
+		newEntries = (
+			("&amp;Bold", "Alt+Shift+B", doWikiBold),
+			("&amp;Italic", "Alt+Shift+I", doWikiItalic),
+			#("Insert Pict&amp;ure...", "Alt+Shift+U", doWikiPicture),
+			("C&amp;olor", "Alt+Shift+O", doWikiColor),
+			("Choose Co&amp;lor...", "Alt+Shift+L", doWikiChooseColor),
+			)
+		
+		c.frame.createMenuEntries(wikiMenu, newEntries)
+
+</t>
+<t tx="edream.110403140857.21">def doWikiBold(event=None):
+	c = top()
+	v = c.currentVnode()
+	if not v: return
+
+	insertWikiMarkup(c,v,"__","__")
+	return</t>
+<t tx="edream.110403140857.22">def doWikiItalic(event=None):
+	c = top()
+	v = c.currentVnode()
+	if not v: return
+
+	insertWikiMarkup(c,v,"''","''")
+	return
+</t>
+<t tx="edream.110403140857.23">def doWikiColor(event=None):
+	global wikiColoredText
+	
+	c = top()
+	v = c.currentVnode()
+	if not v: return
+
+	insertWikiMarkup(c,v,"~~%s:" % wikiColoredText,"~~")
+	return
+</t>
+<t tx="edream.110403140857.24">def doWikiChooseColor(event=None):
+	global wikiColoredText
+	
+	c = top()
+	v = c.currentVnode()
+	if not v: return
+	
+	rgb,val = tkColorChooser.askcolor(color=wikiColoredText)
+	if val:
+		wikiColoredText = val
+		doWikiColor()
+</t>
+<t tx="edream.110403140857.25">def doWikiPicture(event=None):
+	import tkFileDialog
+
+	c = top()
+	v = c.currentVnode()
+	if not v: return
+
+	name = tkFileDialog.askopenfilename(
+		title="Insert Picture",
+		filetypes=[("All files", "*")]
+		)
+	if name == "":	return
+	
+	insertWikiMarkup(c,v,"{picture file=%s}" % name,"")
+	return</t>
+<t tx="edream.110403140857.26">def insertWikiMarkup(c,v,leftTag,rightTag):
+	body = c.body
+	oldSel = body.bodyCtrl.tag_ranges("sel")
+	if oldSel:
+		&lt;&lt; apply markup to selection &gt;&gt;
+	else:
+		&lt;&lt; handle no selection &gt;&gt;
+
+	body.focus_set()</t>
+<t tx="edream.110403140857.27">start,end = oldSel
+body.insert(start, leftTag)
+# we need to review where the selection now ends
+start,end = body.bodyCtrl.tag_ranges("sel")
+body.insert(end, rightTag)
+setTextSelection(body, start + "-" + `len(leftTag)`  + "c",
+						 end + "+" + `len(rightTag)` + "c")
+newSel = body.getTextSelection()
+c.frame.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
+</t>
+<t tx="edream.110403140857.28"># Note: this does not currently handle mixed nested tags,
+# e.g. &lt;b&gt;&lt;i&gt;text&lt;/b&gt;&lt;/i&gt;. One should always close the
+# tags in the order they were opened, as in &lt;b&gt;&lt;i&gt;text&lt;/i&gt;&lt;/b&gt;.
+oldSel = body.getTextSelection() # EKR: 11/04/03
+nextChars = body.get(oldSel[0], "%s+%dc" % (oldSel[0],len(rightTag)))
+if nextChars == rightTag:
+	# if the next chars are the right tag, just move beyond it
+	newPos = "%s+%dc" % (oldSel[0],len(rightTag))
+else:
+	# insert a pair of tags and set cursor between the tags
+	body.insert("insert", leftTag)
+	body.insert("insert", rightTag)
+	newPos = "%s+%dc" % (oldSel[0],len(leftTag))
+setTextSelection(body, newPos, newPos)
+newSel = body.getTextSelection()
+c.frame.onBodyChanged(v,"Typing",oldSel=oldSel,newSel=newSel)
+</t>
 </tnodes>
 </leo_file>
