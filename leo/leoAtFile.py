@@ -236,9 +236,6 @@ class atFile:
 		def getDefaultId (self):
 			return self.defaultId
 			
-		def getDefaultLoc (self):
-			return self.defaultLoc
-			
 		def setDefaultId (self,id):
 			self.defaultId = id
 		
@@ -479,7 +476,7 @@ class atFile:
 			if len(end) == 0:
 				s = string.strip(s[:-1])
 			else:
-				k = s.rfind(end,i)
+				k = s.rfind(end)
 				s = string.strip(s[:k]) # works even if k == -1
 			#@-body
 			#@-node:1::<< remove the comment delims from s >>
