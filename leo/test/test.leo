@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2157" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2164" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="57" left="246" height="835" width="858"/>
+	<global_window_position top="56" left="188" height="835" width="858"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0">
+<preferences>
 </preferences>
 <find_panel_settings>
 	<find_string></find_string>
@@ -20,7 +20,7 @@
 <v t="edream.110203161858.4"><vh>How to get screenshots</vh></v>
 </v>
 <v t="edream.110203161858.5" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
-<v t="edream.110203161858.6" a="E"><vh>Tests...</vh>
+<v t="edream.110203161858.6"><vh>Tests...</vh>
 <v t="edream.110203161858.7"><vh>4.0 tests</vh>
 <v t="edream.110203161858.8"><vh>unicode test for find all</vh>
 <v t="edream.110203161858.9"><vh>a</vh></v>
@@ -169,9 +169,9 @@
 <v t="edream.110203161858.109"><vh>Settings...</vh>
 <v t="edream.110203161858.110"><vh>Redirect test</vh></v>
 </v>
-<v t="edream.110203161858.111" a="E"><vh>Test Files...</vh>
+<v t="edream.110203161858.111"><vh>Test Files...</vh>
 <v t="edream.110203161858.18" a=""><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
-<v t="edream.110203161858.112" a="V" tnodeList="edream.110203161858.112,edream.110203161858.113,edream.110203161858.113"><vh>@file c:\prog\test\atRawTest.txt</vh>
+<v t="edream.110203161858.112" tnodeList="edream.110203161858.112,edream.110203161858.113,edream.110203161858.113"><vh>@file c:\prog\test\atRawTest.txt</vh>
 <v t="edream.110203161858.113"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.114" tnodeList="edream.110203161858.114"><vh>@file c:\prog\test\delimsTest.txt</vh></v>
@@ -2617,6 +2617,7 @@
 </v>
 <v t="edream.110203161858.2105"><vh>4.1 tests</vh>
 <v t="edream.110203161858.2106"><vh>Extract tests</vh></v>
+<v t="edream.110403110104"><vh>Extract tests2</vh></v>
 <v t="edream.110203161858.2107"><vh>reformatParagraph test</vh></v>
 <v t="edream.110203161858.2108" tnodeList="edream.110203161858.2108"><vh>@file c:\prog\test\UnicodeFileNames\Chineses\test.txt</vh></v>
 <v t="edream.110203161858.2109"><vh>@last ?&gt; problems</vh>
@@ -2635,7 +2636,7 @@
 </v>
 <v t="edream.110203161858.2119"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2120"><vh>Bug reports</vh>
-<v t="edream.110203161858.2121" a="E"><vh>Colorizer</vh>
+<v t="edream.110203161858.2121"><vh>Colorizer</vh>
 <v t="edream.110203161858.2122"><vh> Report</vh></v>
 </v>
 </v>
@@ -2676,11 +2677,27 @@
 <v t="edream.110203161858.2152"><vh>moveOutlineUp</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.2153" a="E"><vh>Drivers</vh>
+<v t="edream.110203161858.2153"><vh>Drivers</vh>
 <v t="edream.110203161858.2154"><vh>run color tests</vh></v>
 <v t="edream.110203161858.2155"><vh>run edit body tests</vh></v>
 <v t="edream.110203161858.2156"><vh>run outline tests</vh></v>
 </v>
+</v>
+<v t="edream.110503093114"><vh>Binary file test</vh>
+<v t="edream.110403171311" tnodeList="edream.110403171311"><vh>@file c:\prog\test\binaryText.txt</vh></v>
+</v>
+<v t="edream.110503055320"><vh>Node only options</vh>
+<v t="edream.110503055320.1"><vh>Search only this node in "node only" mode</vh>
+<v t="edream.110503055320.2"><vh>NewHeadline</vh></v>
+</v>
+<v t="edream.110503055556"><vh>More </vh></v>
+</v>
+<v t="edream.110503134336"><vh>eval tests</vh></v>
+<v t="edream.110503161232"><vh>find script</vh></v>
+<v t="edream.110503215752" a="E"><vh>Find scripts to convert @doc comments to doc strings</vh>
+<v t="edream.110503231822"><vh>Find script</vh></v>
+<v t="edream.110503231822.1"><vh>Change script</vh></v>
+<v t="edream.110503215752.1" a="V"><vh>re tests</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4146,12 +4163,11 @@ self.language_extension_dict = {
 		
 	doHook("destroy-all-global-windows")
 </t>
-<t tx="edream.110203161858.121">@ Try to remove temp files created with the Open With command.  This may fail if the files are still open.
+<t tx="edream.110203161858.121">def destroyAllOpenWithFiles (self):
 
-We can't use es here because the log stream no longer exists.
-@c 
-
-def destroyAllOpenWithFiles (self):
+	"""Try to remove temp files created with the Open With command.  This may fail if the files are still open.
+	
+	We can't use es here because the log stream no longer exists."""
 	
 	a = self
 
@@ -5477,12 +5493,11 @@ if not single:
 	del out[:]
 	out.append(s)
 </t>
-<t tx="edream.110203161858.202">@ This method is the read code.
+<t tx="edream.110203161858.202">def scanText (self,file,v,out,endSentinelKind,nextLine=None):
 
-scanText reads lines from the file until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels.
-
-@c
-def scanText (self,file,v,out,endSentinelKind,nextLine=None):
+	"""This method is the read code.
+	
+	scanText reads lines from the file until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels."""
 
 	a = app() ; c = self.commands ; config = a.config
 	lastLines = [] # The lines after @-leo
@@ -5856,9 +5871,9 @@ if end and len(end) &gt; 0:
 
 	s = self.nodeSentinelText(v)
 	self.putSentinel("@-node:" + s)</t>
-<t tx="edream.110203161858.233">@ root is an ancestor of v, or root == v.  We call putCloseSentinel for v up to, but not including, root.
-@c
-def putCloseSentinels(self,root,v):
+<t tx="edream.110203161858.233">def putCloseSentinels(self,root,v):
+
+	"""root is an ancestor of v, or root == v.  We call putCloseSentinel for v up to, but not including, root."""
 
 	self.putCloseNodeSentinel(v)
 	while 1:
@@ -5866,9 +5881,9 @@ def putCloseSentinels(self,root,v):
 		assert(v) # root must be an ancestor of v.
 		if  v == root: break
 		self.putCloseNodeSentinel(v)</t>
-<t tx="edream.110203161858.234">@ This method is the same as putSentinel except we don't put an opening newline and leading whitespace.
-@c
-def putOpenLeoSentinel(self,s):
+<t tx="edream.110203161858.234">def putOpenLeoSentinel(self,s):
+
+	"""This method is the same as putSentinel except we don't put an opening newline and leading whitespace."""
 	
 	if not self.sentinels:
 		return # Handle @nosentinelsfile.
@@ -5886,9 +5901,9 @@ def putOpenLeoSentinel(self,s):
 	else:
 		self.onl() # End of sentinel.
 </t>
-<t tx="edream.110203161858.235">@ This method puts an open node sentinel for node v.
-@c
-def putOpenNodeSentinel(self,v):
+<t tx="edream.110203161858.235">def putOpenNodeSentinel(self,v):
+
+	"""This method puts an open node sentinel for node v."""
 
 	if v.isAtFileNode() and v != self.root:
 		self.writeError("@file not valid in: " + v.headString())
@@ -33997,5 +34012,16 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 suite = leoTest.makeOutlineSuite("outlineTests")
 runner = unittest.TextTestRunner()
 runner.run(suite)</t>
-</tnodes>
-</leo_file>
+<t tx="edream.110403110104">line 1
+&lt;&lt; sec1 &gt;&gt;
+sec1
+	sec1 indented
+line after</t>
+<t tx="edream.110403171311">if 1: # Executing this script inserts a 0x1a character into the body text. (Causes problems on read).
+
+	from leoGlobals import *
+	c = top() ; body = c.frame.body ;v = c.currentVnode()
+	s = body.getAllText()
+	s = s + chr(0x1a)
+	print s
+	v.setBodyStringOrPane(s)
