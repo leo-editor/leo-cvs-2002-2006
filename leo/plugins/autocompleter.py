@@ -53,23 +53,40 @@ pats['c']      = re.compile(r'\w+'+ space + end)
 pat = re.compile(r'(\b[^.\s]+?\.[^.\s]+?\W)')
 
 lang = None
+scanning = False # A lockout.
 #@-node:EKR.20040605183135.1:<< autocompleter globals >>
 #@nl
 #@<< changes made by EKR >>
 #@+node:EKR.20040605192854:<< changes made by EKR >>
 #@+at
 # 
-# (done) Tkinter -> Tk
-# (done) Tk.INSERT -> "insert", etc.
-# (done) g -> g1 (in one function)
-# (done) import leoGlobals as g
-# (done) os.path.x -> g.os_path_x
-# (done) l -> label
-# (done) lis -> aList
-# (done) vnd -> v
-# (done) removed whitespace around parens, square brackets and commas.
+# Style changes...
 # 
-# (todo) x -> g.x for x in leoGlobals
+# Tkinter -> Tk
+# Tk.INSERT -> "insert", etc.
+# g -> g1 (in one function)
+# import leoGlobals as g
+# os.path.x -> g.os_path_x
+# l -> label
+# lis -> aList
+# vnd -> v
+# xsl -> s
+# removed whitespace around parens, square brackets and commas.
+# 
+# Substantive changes...
+# 
+# 1.  We must NOT create two threads for scanning at the same time.  Doing so 
+# creates conflicts in the lang global, and perhaps in other places.  
+# Therefore, I removed the "start2" hook.
+# 
+# 2.  Created the setLanguageFromBody function, and called this inside 
+# scanText if lang is not defined.  scanText returns if lang is still not 
+# defined.  This probably will never happen now that only one scanning thread 
+# is likely to be running.
+# 
+# 3.  Now that lang is properly defined, scanText should just reuturn if 
+# pats[lang] does not exist.  This is not an error: it just means that lang is 
+# not supported.  There is no point in using the Python pattern in that case.
 #@-at
 #@nonl
 #@-node:EKR.20040605192854:<< changes made by EKR >>
@@ -138,146 +155,7 @@ def createBindings (self,frame):
 #@nonl
 #@-node:EKR.20040605182632.1:createBindings
 #@-node:EKR.20040605184409:Overridden methods in leoTkinterBody
-#@+node:EKR.20040605182632.2:watcher
-def watcher (event):
-	
-	global lang
-
-	if event.char in ('.', '('):
-		c = g.top()
-		body = c.frame.body.bodyCtrl
-		txt = body.get('1.0', "end")
-		lang = c.frame.body.getColorizer().language
-		scanText(txt)
-#@nonl
-#@-node:EKR.20040605182632.2:watcher
-#@+node:EKR.20040605182632.3:scanText
-ripout = string.punctuation + string.whitespace+'\n'
-ripout = ripout.replace('_', '')
-
-def scanText (txt):
-	
-	# g.trace(len(txt))
-
-	if useauto:
-		g1 = pat.findall(txt)
-		if g1 : 
-			for z in g1:
-				pieces = z.split('.')
-				a, b = pieces[0] , pieces[1]
-				b = b.strip(ripout)
-				if watchwords.has_key(a):
-					watchwords[a].add(b)
-				else:
-					watchwords[a] = sets.Set([b])
-
-	if usecall:
-		pat2 = pats['python']
-		if lang != None:
-			if pats.has_key(lang):
-				pat2 = pats[lang]
-		g2 = pat2.findall(txt)
-		if g2 : 
-			for z in g2:
-				if isinstance(z, tuple):
-					z = z[0]
-				pieces2 = z.split('(')
-				pieces2[0] = pieces2[0].split()[-1]
-				a, b = pieces2[0] , pieces2[1]
-				if calltips.has_key(lang):
-					if calltips[lang].has_key(a):
-						calltips[lang][a].add(z)
-					else:
-						calltips[lang][a] = sets.Set([z])
-				else:
-					calltips[lang] = {}
-					calltips[lang][a] = sets.Set([z]) 
-#@nonl
-#@-node:EKR.20040605182632.3:scanText
-#@+node:EKR.20040605182632.4:scan & initialScan (hooks)
-#@+node:EKR.20040605184657:initialScan
-def initialScan (tag,keywords):
-
-	threading.Thread(target=scan).start()
-#@nonl
-#@-node:EKR.20040605184657:initialScan
-#@+node:EKR.20040605184409.1:scan
-def scan ():
-	global lang, usecall, useauto, pat
-	pth = g.os_path_split(g.app.loadDir)
-	ini_path = pth[0] + r"/plugins/autocompleter.ini" 
-	if g.os_path_exists(ini_path):
-		#@		<< get config settings >>
-		#@+node:EKR.20040605184409.2:<< get config settings >>
-		cp = ConfigParser.ConfigParser()
-		cp.read(ini_path)
-		ac = None
-		
-		for z in cp.sections():
-			if z.strip() == 'autocompleter':
-				ac = z
-				continue
-			ipats = r'' + cp.get(z, 'pat').strip()
-			z = z.strip()
-			pats[z] = re.compile(ipats)
-		
-		if cp.has_section(ac):
-			if cp.has_option(ac, 'useauto'):
-				useauto = int(cp.get(ac, 'useauto'))
-			if cp.has_option(ac, 'usecalltips'):
-				usecall = int(cp.get(ac, 'usecalltips'))
-			if cp.has_option(ac, 'autopattern'):
-				pat = re.compile(cp.get(ac, 'autopattern'))
-		#@nonl
-		#@-node:EKR.20040605184409.2:<< get config settings >>
-		#@nl
-
-	bankpath = pth[0] + r"/plugins/autocompleter/"
-	for z in pats:
-		bpath = bankpath +z + '.ato' 
-		if g.os_path_exists(bpath):
-			f = open(bpath)
-			lang = z
-			for x in f:
-				scanText(x)
-			f.close()
-
-	if 'Chapters' in g.app.loadedPlugins:
-		import Chapters
-		it = Chapters.walkChapters()
-		for x in it:
-			lang = None
-			setLanguage(x)
-			scanText(x.bodyString())
-	else:
-		c = g.top() # ekr
-		v = c.rootVnode()
-		while v:
-			setLanguage(v) 
-			scanText(v.bodyString())
-			v = v.threadNext()
-#@nonl
-#@-node:EKR.20040605184409.1:scan
-#@-node:EKR.20040605182632.4:scan & initialScan (hooks)
-#@+node:EKR.20040605182632.5:reducer
-def reducer (aList,pat):
-
-	return [x for x in aList if x.startswith(pat)]
-#@nonl
-#@-node:EKR.20040605182632.5:reducer
-#@+node:EKR.20040605182632.6:unbind
-def unbind (canvas,body):
-
-	canvas.on = False
-	body.unbind("<Control_L>")
-	body.unbind("<Control_R>")
-	body.unbind("<Alt-Up>")
-	body.unbind("<Alt-Down>")
-	body.unbind("<Alt_L>")
-	body.unbind("<Alt_R>")
-#@nonl
-#@-node:EKR.20040605182632.6:unbind
-#@+node:EKR.20040605184409.3:Event handlers
+#@+node:EKR.20040605184409.3:Event handlers...
 #@+node:EKR.20040605182632.7:moveSelItem
 def moveSelItem (event,canvas):
 	
@@ -358,7 +236,7 @@ def remove (event,canvas,body,scrllistbx):
 #@+node:EKR.20040605182632.10:add_item
 def add_item (event,canvas,body,colorizer):
 	
-	g.trace()
+	# g.trace()
 
 	if not event.char in('.' , '(') or canvas.on : return None
 	ind = body.index('insert-1c wordstart')
@@ -396,7 +274,12 @@ def add_item (event,canvas,body,colorizer):
 		#@+node:EKR.20040605184409.5:<< handle '(' >>
 		language = colorizer.language
 		
-		g.trace(language,calltips.has_key(language),calltips[language].has_key(txt))
+		if 0:
+			g.trace(language,calltips.has_key(language),calltips[language].has_key(txt))
+			g.trace(txt)
+			d = calltips[language]
+			for key in d.keys():
+				print key # ,d[key]
 		
 		if calltips.has_key(language):
 			if calltips[language].has_key(txt):
@@ -415,7 +298,9 @@ def add_item (event,canvas,body,colorizer):
 		#@nl
 
 	if b :
-		rmv = lambda event,canvas=canvas,body=body,scrllistbx=b: remove(event,canvas,body,scrllistbx)
+		event = Tk.Event() ; event.keysym = ''
+		rmv = lambda event=event,canvas=canvas,body=body,scrllistbx=b : remove(event,canvas,body,scrllistbx)
+
 		b.configure(selectioncommand = rmv)
 		body.bind("<Control_L>", rmv)
 		body.bind("<Control_R>", rmv)
@@ -423,12 +308,147 @@ def add_item (event,canvas,body,colorizer):
 		body.bind("<Alt-Down>", lambda event,canvas=canvas: moveSelItem(event,canvas))
 		body.bind("<Alt_L>", rmv)
 		body.bind("<Alt_R>", rmv)
+#@nonl
 #@-node:EKR.20040605182632.10:add_item
-#@-node:EKR.20040605184409.3:Event handlers
+#@-node:EKR.20040605184409.3:Event handlers...
+#@+node:EKR.20040605182632.4:Scanning...
+#@+node:EKR.20040605182632.3:scanText
+ripout = string.punctuation + string.whitespace+'\n'
+ripout = ripout.replace('_', '')
+
+def scanText (txt):
+	
+	global lang # EKR
+
+	if useauto:
+		g1 = pat.findall(txt)
+		if g1 : 
+			for z in g1:
+				pieces = z.split('.')
+				a, b = pieces[0] , pieces[1]
+				b = b.strip(ripout)
+				if watchwords.has_key(a):
+					watchwords[a].add(b)
+				else:
+					watchwords[a] = sets.Set([b])
+
+	if usecall:
+		if not lang: # EKR: new code.
+			# Threads make setting lang tricky.
+			setLanguageFromBody()
+			# assert(lang)
+			if not lang: return
+		try: # EKR: New code
+			pat2 = pats[lang]
+		except KeyError:
+			# This is _not_ an error, it just means the language is not supported.
+			# g.trace("no dict for",lang)
+			return
+		g2 = pat2.findall(txt)
+		# if g2: g.trace(lang,g2)
+		if g2 : 
+			for z in g2:
+				if isinstance(z, tuple):
+					z = z[0]
+				pieces2 = z.split('(')
+				pieces2[0] = pieces2[0].split()[-1]
+				a, b = pieces2[0] , pieces2[1]
+				if calltips.has_key(lang):
+					if calltips[lang].has_key(a):
+						calltips[lang][a].add(z)
+					else:
+						calltips[lang][a] = sets.Set([z])
+				else:
+					calltips[lang] = {}
+					calltips[lang][a] = sets.Set([z])
+				
+#@nonl
+#@-node:EKR.20040605182632.3:scanText
+#@+node:EKR.20040605184657:initialScan
+def initialScan (tag,keywords):
+	
+	if keywords.has_key('c'):
+		c = keywords['c']
+	elif keywords.has_key('new_c'):
+		c = keywords['new_c']
+		
+	# It is imperative that this only one scanning thread be running at any one time.
+	# Otherwise, the threads can clash over setting the lang global.
+
+	def scan(c=c):
+		global scanning
+		if not scanning:
+			scanning = True
+			doScan(c)
+			scanning = False
+
+	threading.Thread(target=scan).start()
+#@nonl
+#@-node:EKR.20040605184657:initialScan
+#@+node:EKR.20040605184409.1:doScan
+def doScan (c):
+
+	global lang, usecall, useauto, pat
+	
+	# g.trace(c)
+	
+	pth = g.os_path_split(g.app.loadDir)
+	ini_path = pth[0] + r"/plugins/autocompleter.ini" 
+	if g.os_path_exists(ini_path):
+		#@		<< get config settings >>
+		#@+node:EKR.20040605184409.2:<< get config settings >>
+		cp = ConfigParser.ConfigParser()
+		cp.read(ini_path)
+		ac = None
+		
+		for z in cp.sections():
+			if z.strip() == 'autocompleter':
+				ac = z
+				continue
+			ipats = r'' + cp.get(z, 'pat').strip()
+			z = z.strip()
+			pats[z] = re.compile(ipats)
+		
+		if cp.has_section(ac):
+			if cp.has_option(ac, 'useauto'):
+				useauto = int(cp.get(ac, 'useauto'))
+			if cp.has_option(ac, 'usecalltips'):
+				usecall = int(cp.get(ac, 'usecalltips'))
+			if cp.has_option(ac, 'autopattern'):
+				pat = re.compile(cp.get(ac, 'autopattern'))
+		#@nonl
+		#@-node:EKR.20040605184409.2:<< get config settings >>
+		#@nl
+
+	bankpath = pth[0] + r"/plugins/autocompleter/"
+	for z in pats:
+		bpath = bankpath +z + '.ato' 
+		if g.os_path_exists(bpath):
+			f = open(bpath)
+			lang = str(z)
+			g.trace("z",z)
+			for x in f:
+				scanText(x)
+			f.close()
+
+	if 'Chapters' in g.app.loadedPlugins:
+		import Chapters
+		it = Chapters.walkChapters()
+		for x in it:
+			setLanguage(x)
+			scanText(x.bodyString())
+	else:
+		v = c.rootVnode()
+		while v:
+			setLanguage(v) 
+			scanText(v.bodyString())
+			v = v.threadNext()
+
+#@-node:EKR.20040605184409.1:doScan
+#@-node:EKR.20040605182632.4:Scanning...
+#@+node:EKR.20040607074710:Utilities...
 #@+node:EKR.20040605182906:calculatePlace
 def calculatePlace (body,cwidg,canvas,f):
-	
-	g.trace()
 
 	label = Tk.Label(body)
 	body.window_create("insert",window=label)
@@ -450,20 +470,79 @@ def calculatePlace (body,cwidg,canvas,f):
 	canvas.i = canvas.create_window(x,y,window=f,anchor='nw')
 #@nonl
 #@-node:EKR.20040605182906:calculatePlace
+#@+node:EKR.20040605182632.5:reducer
+def reducer (aList,pat):
+
+	return [x for x in aList if x.startswith(pat)]
+#@nonl
+#@-node:EKR.20040605182632.5:reducer
 #@+node:EKR.20040605182906.1:setLanguage
 def setLanguage (v):
 	
-	global lang
+	c = v.c
+	
+	global lang ; lang = None
 
 	while v:
-		xs1 = v.bodyString()
-		dict = g.get_directives_dict(xs1)
+		s = v.bodyString()
+		dict = g.get_directives_dict(s)
 		if dict.has_key('language'):
-			lang = g.set_language(xs1, dict['language'])[0]
+			lang = g.set_language(s, dict['language'])[0]
 			break
 		v = v.parent()
+
+	if not lang:
+		lang = c.target_language
+		
+	lang = str(lang)
+	
+	try:
+		assert(lang)
+	except AssertionError:
+		g.trace(lang)
+		g.trace(c.target_language)
 #@nonl
 #@-node:EKR.20040605182906.1:setLanguage
+#@+node:EKR.20040607085953:setLanguageFromBody
+def setLanguageFromBody ():
+	
+	c = g.top() ; global lang
+
+	lang = c.frame.body.getColorizer().language
+	if not lang:
+		lang = c.target_language
+	lang = str(lang)
+	assert(lang)
+#@nonl
+#@-node:EKR.20040607085953:setLanguageFromBody
+#@+node:EKR.20040605182632.6:unbind
+def unbind (canvas,body):
+
+	canvas.on = False
+	body.unbind("<Control_L>")
+	body.unbind("<Control_R>")
+	body.unbind("<Alt-Up>")
+	body.unbind("<Alt-Down>")
+	body.unbind("<Alt_L>")
+	body.unbind("<Alt_R>")
+#@nonl
+#@-node:EKR.20040605182632.6:unbind
+#@+node:EKR.20040605182632.2:watcher
+def watcher (event):
+	
+	global lang
+
+	if event.char in ('.', '('):
+
+		c = g.top()
+
+		body = c.frame.body.bodyCtrl
+		txt = body.get('1.0', "end")
+		
+		scanText(txt)
+#@nonl
+#@-node:EKR.20040605182632.2:watcher
+#@-node:EKR.20040607074710:Utilities...
 #@-others
 
 if Tk and Pmw:
@@ -471,10 +550,14 @@ if Tk and Pmw:
 	# Override some of Leo's core functions.
 	leoTkinterFrame.leoTkinterBody.createControl = createControl
 	leoTkinterFrame.leoTkinterBody.createBindings = createBindings
+	
+	# It is imperative that this only one scanning thread be running at any one time.
+	# Otherwise, the threads can clash over setting the lang global.
+	# Therefore, we must remove the "start2" hook.
 
-	leoPlugins.registerHandler(('start2','open2'),initialScan)
+	leoPlugins.registerHandler('open2',initialScan)
 
-	__version__ = ".125a" # Mods made by EKR.
+	__version__ = ".126" # Mods made by EKR.
 	__name__ = 'autocompleter'
 	g.plugin_signon(__name__)
 #@nonl
