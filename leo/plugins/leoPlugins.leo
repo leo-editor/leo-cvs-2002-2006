@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1420" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1422" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="27" left="308" height="856" width="795"/>
+	<global_window_position top="41" left="372" height="856" width="795"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -30,7 +30,7 @@
 <v t="edream.110203113231.7"><vh>Hooks should never blindly Python scripts</vh></v>
 <v t="edream.110203113231.8"><vh>NEVER use this kind of code in a hook!!</vh></v>
 </v>
-<v t="edream.110203113231.9" a="V"><vh>Unfinished projects</vh>
+<v t="edream.110203113231.9"><vh>Unfinished projects</vh>
 <v t="edream.110203113231.10"><vh>(Settings menu)</vh>
 <v t="edream.110203113231.11"><vh>To do</vh></v>
 <v t="edream.110203113231.12"><vh>Design of Settings menu</vh></v>
@@ -1480,6 +1480,9 @@
 </v>
 </v>
 </v>
+</v>
+<v t="edream.112103081013" a="EMV" tnodeList="edream.112103081013,edream.112103081013.1"><vh>@file ___script_leo.py</vh>
+<v t="edream.112103081013.1"><vh>&lt;&lt; create null gui &gt;&gt;</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -15304,5 +15307,48 @@ Also BTW... I have been using Python for some time now but I don't know if i
 can handle plug-in development at this stage.  :-)
 
 (But I might be up to refining the html/script environment further. )</t>
+<t tx="edream.112103081013">"""Run Leo non-interactively if sys.arg contains -script x.py."""
+
+from leoPlugins import *
+from leoGlobals import *
+
+import leoFrame,leoGui
+
+# Todo:
+#  - Do _not_ load plugins when loading files (is this a problem??)
+#  - check sys.argv for -script arg.
+#  - execute script and exit.
+
+### Backslashes not handled properly in executeScript!!
+
+script = """
+from leoGlobals import *
+path = r"c:\\prog\\test\\sortText.leo"
+path = r"c:\\prog\\leoCVS\\leo\\plugins\\leoPlugins.leo"
+flag,frame = openWithFileName(path)
+if frame:
+	c = frame.c
+	print c
+	v = c.rootVnode()
+	while v:
+		print v.headString()
+		v = v.next()
+"""
+
+if 0: # Register the handlers...
+
+	@others
+
+	if app.gui is None:
+		&lt;&lt; create null gui &gt;&gt;
+		__version__ = "0.1" # Set version for the plugin handler.
+		plugin_signon(__name__)
+	else:
+		s = "Can't run Leo in batch mode: previous gui installed"
+		print s ; es(s,color="red")</t>
+<t tx="edream.112103081013.1">app.gui = leoGui.nullGui("nullGui")
+app.root = app.gui.createRootWindow()
+app.gui.finishCreate()
+app.gui.setScript(script)</t>
 </tnodes>
 </leo_file>
