@@ -219,8 +219,8 @@ class leoDialog:
 	
 		center = Tk.Frame(top)
 		center.pack(side="top",padx=30)
-		ok = Tk.Button(center,width=6,text="OK",bd=4, # default button
-			underline=0,command=self.okLeoIDButton)
+		self.ok_button = ok = Tk.Button(center,width=6,text="OK",bd=4, # default button
+			underline=0,command=self.okLeoIDButton,state="disabled")
 		ok.pack(side="left",padx=5,pady=10)
 		self.center() # Do this after packing.
 		top.grab_set() # Make the dialog a modal dialog.
@@ -341,7 +341,7 @@ class leoDialog:
 	#@+body
 	def okLeoIDButton(self):
 		s = self.id_entry.get().strip()
-		if len(s) == 0:
+		if len(s) < 4:  # Require at least 4 characters in an id.
 			return
 		self.leoID = s
 		self.top.destroy() # terminates wait_window
@@ -388,14 +388,14 @@ class leoDialog:
 		#@<< eliminate non-numbers >>
 		#@+node:1::<< eliminate non-numbers >>
 		#@+body
-		t = self.number_entry
-		s = t.get().strip()
+		e = self.number_entry
+		s = e.get().strip()
 		i = 0 ; ok = true
 		while i < len(s):
 			ch = s[i]
 			if ch not in string.digits:
-				t.delete(`i`)
-				s = t.get()
+				e.delete(`i`)
+				s = e.get()
 				ok = false
 			else:
 				i += 1
@@ -414,20 +414,33 @@ class leoDialog:
 		#@<< eliminate invalid characters >>
 		#@+node:2::<< eliminate invalid characters >>
 		#@+body
-		t = self.id_entry
-		s = t.get().strip()
+		e = self.id_entry
+		s = e.get().strip()
 		i = 0 ; ok = true
 		while i < len(s):
 			ch = s[i]
 			if ch not in string.letters and ch not in string.digits:
-				t.delete(`i`)
-				s = t.get()
+				e.delete(`i`)
+				s = e.get()
 				ok = false
 			else:
 				i += 1
 		if not ok: return
 		#@-body
 		#@-node:2::<< eliminate invalid characters >>
+
+		
+		#@<< enable the ok button if there are 4 or more valid characters >>
+		#@+node:3::<< enable the ok button if there are 4 or more valid characters >>
+		#@+body
+		e = self.id_entry
+		b = self.ok_button
+		if len(e.get().strip()) >= 4:
+			b.configure(state="normal")
+		else:
+			b.configure(state="disabled")
+		#@-body
+		#@-node:3::<< enable the ok button if there are 4 or more valid characters >>
 
 		ch=string.lower(event.char)
 		if ch=='\n' or ch=='\r': self.okLeoIDButton() # The default
