@@ -322,7 +322,7 @@ class atFile:
             #@+node:ekr.20040929105133.18:<< warn on read-only file >>
             # os.access() may not exist on all platforms.
             try:
-                read_only = not os.access(fn,os.W_OK):
+                read_only = not os.access(fn,os.W_OK)
             except AttributeError:
                 read_only = False 
                 
@@ -467,7 +467,7 @@ class atFile:
     
         if read_new:
             lastLines = at.scanText4(theFile,root)
-        else
+        else:
             lastLines = at.scanText3(theFile,root,[],endLeo)
             
         root.v.t.setVisited() # Disable warning about set nodes.
@@ -2276,17 +2276,18 @@ class atFile:
         return p
     #@nonl
     #@-node:ekr.20040929105133.47:createImportedNode
-    #@+node:ekr.20040929105133.8:parseLeoSentinel
+    #@+node:ekr.20041001080852:parseLeoSentinel
     def parseLeoSentinel (self,s):
         
         at = self
         new_df = False ; valid = True ; n = len(s)
+        derivedFileIsThin = False
         encoding_tag = "-encoding="
         version_tag = "-ver="
         tag = "@+leo"
         thin_tag = "-thin"
         #@    << set the opening comment delim >>
-        #@+node:ekr.20040929105133.9:<< set the opening comment delim >>
+        #@+node:ekr.20041001080852.1:<< set the opening comment delim >>
         # s contains the tag
         i = j = g.skip_ws(s,0)
         
@@ -2299,14 +2300,14 @@ class atFile:
         else:
             valid = False
         #@nonl
-        #@-node:ekr.20040929105133.9:<< set the opening comment delim >>
+        #@-node:ekr.20041001080852.1:<< set the opening comment delim >>
         #@nl
         #@    << make sure we have @+leo >>
-        #@+node:ekr.20040929105133.10:<< make sure we have @+leo >>
+        #@+node:ekr.20041001080852.2:<< make sure we have @+leo >>
         #@+at 
         #@nonl
         # REM hack: leading whitespace is significant before the @+leo.  We do 
-        # this so that sentinelKind3/4 need not skip whitespace following 
+        # this so that sentinelKind need not skip whitespace following 
         # self.startSentinelComment.  This is correct: we want to be as 
         # restrictive as possible about what is recognized as a sentinel.  
         # This minimizes false matches.
@@ -2320,10 +2321,10 @@ class atFile:
             i += len(tag)
         else: valid = False
         #@nonl
-        #@-node:ekr.20040929105133.10:<< make sure we have @+leo >>
+        #@-node:ekr.20041001080852.2:<< make sure we have @+leo >>
         #@nl
         #@    << read optional version param >>
-        #@+node:ekr.20040929105133.11:<< read optional version param >>
+        #@+node:ekr.20041001080852.3:<< read optional version param >>
         new_df = g.match(s,i,version_tag)
         
         if new_df:
@@ -2337,17 +2338,18 @@ class atFile:
                 pass # version = s[j:i]
             else:
                 valid = False
-        #@-node:ekr.20040929105133.11:<< read optional version param >>
+        #@-node:ekr.20041001080852.3:<< read optional version param >>
         #@nl
         #@    << read optional thin param >>
-        #@+node:ekr.20040929105133.12:<< read optional thin param >>
+        #@+node:ekr.20041001080852.4:<< read optional thin param >>
         if g.match(s,i,thin_tag):
             i += len(tag)
+            derivedFileIsThin = True
         #@nonl
-        #@-node:ekr.20040929105133.12:<< read optional thin param >>
+        #@-node:ekr.20041001080852.4:<< read optional thin param >>
         #@nl
         #@    << read optional encoding param >>
-        #@+node:ekr.20040929105133.13:<< read optional encoding param >>
+        #@+node:ekr.20041001080852.5:<< read optional encoding param >>
         # Set the default encoding
         at.encoding = g.app.config.default_derived_file_encoding
         
@@ -2377,21 +2379,21 @@ class atFile:
                     g.es("bad encoding in derived file:",encoding)
             else:
                 valid = False
-        #@-node:ekr.20040929105133.13:<< read optional encoding param >>
+        #@-node:ekr.20041001080852.5:<< read optional encoding param >>
         #@nl
         #@    << set the closing comment delim >>
-        #@+node:ekr.20040929105133.14:<< set the closing comment delim >>
+        #@+node:ekr.20041001080852.6:<< set the closing comment delim >>
         # The closing comment delim is the trailing non-whitespace.
         i = j = g.skip_ws(s,i)
         while i < n and not g.is_ws(s[i]) and not g.is_nl(s,i):
             i += 1
         end = s[j:i]
         #@nonl
-        #@-node:ekr.20040929105133.14:<< set the closing comment delim >>
+        #@-node:ekr.20041001080852.6:<< set the closing comment delim >>
         #@nl
-        return valid,new_df,start,end
+        return valid,new_df,start,end,derivedFileIsThin
     #@nonl
-    #@-node:ekr.20040929105133.8:parseLeoSentinel
+    #@-node:ekr.20041001080852:parseLeoSentinel
     #@+node:ekr.20040929105133.106:readError
     def readError(self,message):
     
@@ -2420,7 +2422,7 @@ class atFile:
     
     
     #@-node:ekr.20040929105133.55:readLine
-    #@+node:ekr.20040929105133.30:scanHeader (3.x and 4.x)
+    #@+node:ekr.20041001080926:scanHeader  (3.x and 4.x)
     def scanHeader(self,theFile,fileName):
         
         """Scan the @+leo sentinel.
@@ -2434,9 +2436,9 @@ class atFile:
         at = self
         firstLines = [] # The lines before @+leo.
         tag = "@+leo"
-        valid = True ; new_df = False
+        valid = True ; new_df = False ; derivedFileIsThin = False
         #@    << skip any non @+leo lines >>
-        #@+node:ekr.20040929105133.31:<< skip any non @+leo lines >>
+        #@+node:ekr.20041001080926.1:<< skip any non @+leo lines >>
         #@+at 
         #@nonl
         # Queue up the lines before the @+leo.  These will be used to add as 
@@ -2444,7 +2446,7 @@ class atFile:
         # ignored (because empty @first directives are ignored). NOTE: the 
         # function now returns a list of the lines before @+leo.
         # 
-        # We can not call sentinelKind3/4 here because that depends on the 
+        # We can not call sentinelKind here because that depends on the 
         # comment delimiters we set here.  @first lines are written 
         # "verbatim", so nothing more needs to be done!
         #@-at
@@ -2459,19 +2461,19 @@ class atFile:
             
         n = len(s)
         valid = n > 0
-        #@-node:ekr.20040929105133.31:<< skip any non @+leo lines >>
+        #@-node:ekr.20041001080926.1:<< skip any non @+leo lines >>
         #@nl
         if valid:
-            valid,new_df,start,end = at.parseLeoSentinel(s)
+            valid,new_df,start,end,derivedFileIsThin = at.parseLeoSentinel(s)
         if valid:
             at.startSentinelComment = start
             at.endSentinelComment = end
         else:
             at.error("Bad @+leo sentinel in " + fileName)
         # g.trace("start,end",repr(at.startSentinelComment),repr(at.endSentinelComment))
-        return firstLines, new_df
+        return firstLines,new_df,derivedFileIsThin
     #@nonl
-    #@-node:ekr.20040929105133.30:scanHeader (3.x and 4.x)
+    #@-node:ekr.20041001080926:scanHeader  (3.x and 4.x)
     #@+node:ekr.20040929105133.121:skipIndent
     # Skip past whitespace equivalent to width spaces.
     
@@ -2726,7 +2728,7 @@ class atFile:
     #@+node:ekr.20040929105133.244:write
     # This is the entry point to the write code.  root should be an @file vnode.
     
-    def write(self,root,nosentinels=False,thinFile=False,toString=False):
+    def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=False):
         
         """Write a 4.x derived file."""
         
@@ -2750,7 +2752,7 @@ class atFile:
             return
     
         try:
-            at.writeOpenFile(root)
+            at.writeOpenFile(root,oneNodeOnly=oneNodeOnly)
             if toString:
                 at.closeWriteFile()
                 # Major bug: failure to clear this wipes out headlines!
@@ -2883,7 +2885,7 @@ class atFile:
                 if at.targetFileName:
                     at.targetFileName = g.os_path_join(self.default_directory,at.targetFileName)
                     at.targetFileName = g.os_path_normpath(at.targetFileName)
-                    if not g.os_path_exists(at.targetFileName)
+                    if not g.os_path_exists(at.targetFileName):
                         at.openFileForWriting(at.targetFileName,toString)
                         if at.outputFile:
                             #@                        << write the @file node >>
@@ -2923,7 +2925,7 @@ class atFile:
     #@+node:ekr.20040929105133.247:writeOpenFile
     # New in 4.3: must be inited before calling this method.
     
-    def writeOpenFile(self,root):
+    def writeOpenFile(self,root,oneNodeOnly=False):
     
         """Do all writes except asis writes."""
         
@@ -2963,7 +2965,7 @@ class atFile:
         at.putOpenLeoSentinel("@+leo-ver=4")
         at.putInitialComment()
         at.putOpenNodeSentinel(root)
-        at.putBody(root)
+        at.putBody(root,oneNodeOnly=oneNodeOnly)
         at.putCloseNodeSentinel(root)
         at.putSentinel("@-leo")
         root.setVisited()
@@ -3008,6 +3010,8 @@ class atFile:
     #@-node:ekr.20040929105133.32:Writing (top level)
     #@+node:ekr.20040929105133.241:Writing 4.x
     #@+node:ekr.20040929105133.257:putBody
+    # oneNodeOnly is used by c.checkPythonNode.
+    
     def putBody(self,p,putCloseSentinel=True,oneNodeOnly=False):
         
         """ Generate the body enclosed in sentinel lines."""
