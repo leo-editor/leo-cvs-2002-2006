@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="13163" clone_windows="0"/>
-<globals body_outline_ratio="0.547777777778">
-	<global_window_position top="16" left="252" height="900" width="1023"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="13327" clone_windows="0"/>
+<globals body_outline_ratio="0.616666666667">
+	<global_window_position top="48" left="237" height="900" width="1023"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -39,7 +39,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -52,164 +52,20 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
-<v t="ekr.20050221104844"><vh>4.3-a3</vh>
-<v t="ekr.20050221104844.2"><vh>Bugs</vh>
-<v t="ekr.20050221104844.3"><vh>Fixed crasher in Tangle</vh></v>
-<v t="ekr.20050221104844.12"><vh>Applied patch to rst2 plugin</vh></v>
-<v t="ekr.20050221104844.14"><vh>Revised searchbox plugin so it works with Leo 4.3</vh></v>
-<v t="ekr.20050221104844.27"><vh>Fixed bugs in nav_buttons and nodenavigator plugins</vh></v>
-<v t="ekr.20050221104844.45"><vh>Made sure Leo asks for leoID at most once</vh></v>
-<v t="ekr.20050221104844.54"><vh>Fixed botch in g.pdb</vh></v>
-<v t="ekr.20050222100936"><vh>Fixed crasher when executing a script if the script was selected text in a new window</vh></v>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="ekr.20050313101229" a="ETV"><vh>4.3-a4</vh>
+<v t="ekr.20050313101229.2"><vh>Fixed bugs...</vh>
+<v t="ekr.20050313101229.69" a="E"><vh>Fix colorizer bug for initial @nocolor in @root nodes</vh></v>
+<v t="ekr.20050313101229.74" a="E"><vh>Fixed @wrap bug</vh></v>
+<v t="ekr.20050313101229.77" a="E"><vh>Fixed change-all bug</vh></v>
 </v>
-<v t="ekr.20050221104844.57"><vh>New features</vh>
-<v t="ekr.20050221104844.58"><vh>Added sets.py to distribution</vh></v>
-<v t="ekr.20050221104844.59"><vh>Added color='suppress' hack to g.es</vh></v>
+<v t="ekr.20050313103448"><vh>New features...</vh>
+<v t="ekr.20050313101229.95" a="E"><vh>Created Add Comments and Delete Comments commands</vh></v>
+<v t="ekr.20050313101229.94"><vh>Deprecated new_c key in hooks, added c key</vh></v>
+<v t="ekr.20050313103448.1"><vh>Added the 'before-create-leo-frame' hook</vh></v>
+<v t="ekr.20050313101229.101" a="E"><vh>Added support for mod_labels plugin</vh></v>
 </v>
-</v>
-<v t="ekr.20050126100405"><vh>4.3-a2</vh>
-<v t="ekr.20050130112336.1"><vh>To do: Improve how Leo handles recent files</vh></v>
-<v t="ekr.20050209141626.3"><vh>Bugs fixed...</vh>
-<v t="ekr.20050209141626.4"><vh>Fixed very old bug in Undo Insert Node </vh></v>
-<v t="ekr.20050209141626.8"><vh>Made sure to remove duplicates from recent files</vh></v>
-<v t="ekr.20050209141626.12"><vh>Fixed indentation problems in leoTkinterFind.py</vh></v>
-<v t="ekr.20050209141626.13"><vh>Changed leoConfig.txt to leoSettings.leo in Help menu, etc.</vh></v>
-<v t="ekr.20050209141626.16"><vh>Investigated recent files problems</vh></v>
-<v t="ekr.20050209141626.23"><vh>Improved queuing of log messages</vh></v>
-<v t="ekr.20050209141626.42"><vh>Fixed crasher in Change All command</vh></v>
-<v t="ekr.20050209141626.43"><vh>Fixed crasher in script button</vh></v>
-<v t="ekr.20050209141626.46"><vh>Fixed print problems on the Mac</vh></v>
-<v t="ekr.20050209141626.53"><vh>leoTest.runTests now makes copies of all positions</vh></v>
-<v t="ekr.20050209141626.54"><vh>Fixed problems with unit test file paths</vh></v>
-<v t="ekr.20050209141626.55"><vh>Made local config settings work again</vh></v>
-<v t="ekr.20050209141626.91"><vh>Fix problems searching for nothing but whitespace</vh></v>
-<v t="ekr.20050210101318"><vh>Fixed problems with typing return in the Find panel</vh></v>
-<v t="ekr.20050209141626.101"><vh>Buttons no longer work in toolbars when settings dialog is open</vh></v>
-<v t="ekr.20050209141626.102"><vh>Fixed bug in delayed focus logic</vh></v>
-<v t="ekr.20050209141626.105"><vh>Made sure Leo asks for leoID at most once</vh></v>
-<v t="ekr.20050209141626.113"><vh>Leo now prints unicode characters properly in the log pane</vh></v>
-<v t="ekr.20050209141626.114"><vh>Fixed various problems with opening files with Unicode filenames</vh></v>
-<v t="ekr.20050211095754"><vh>Fixed bug reading encoding field in derived files</vh></v>
-<v t="ekr.20050212054743"><vh>Allow indented code blocks to be run using Execute Script command</vh></v>
-<v t="ekr.20050212144116"><vh>Fixed problems found by pychecker</vh></v>
-</v>
-<v t="ekr.20050209141626.150"><vh>New features...</vh>
-<v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
-<v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
-</v>
-<v t="ekr.20050209141626.185"><vh>Added support for top-level init function in plugins</vh></v>
-<v t="ekr.20050209141626.190"><vh>Changed name of Paste Retaining Clones to Paste Node As Clone</vh></v>
-<v t="ekr.20050209141626.193"><vh>Added leoPlugins.leo to Help menu</vh></v>
-<v t="ekr.20050209141626.194"><vh>Script buttons can request to be removed</vh></v>
-<v t="ekr.20050209141626.195"><vh>Improved documentation in several nodes in leoSettings.leo</vh></v>
-<v t="ekr.20050209141626.196"><vh>Predefined c,g &amp; p in scripts, unit tests &amp; test routines</vh></v>
-<v t="ekr.20050209141626.198"><vh>Changed name of Preferences command to Settings</vh></v>
-</v>
-</v>
-<v t="ekr.20050122090311"><vh>4.3-a1</vh>
-<v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
-<v t="ekr.20050123110009"><vh>@settings trees and leoSettings.leo</vh>
-<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
-<v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
-</v>
-<v t="ekr.20050123092834.520"><vh>Rewrote Leo's read/write logic</vh></v>
-<v t="ekr.20050123115804"><vh>Added Plugins Manager plugin</vh></v>
-<v t="ekr.20050123115804.1"><vh>You can install third-party extensions in Leo's extensions directory</vh></v>
-</v>
-<v t="ekr.20050123092834.1"><vh>Fixed bugs...</vh>
-<v t="ekr.20050123101208"><vh> Major bugs: these bugs corrupted derived files!</vh>
-<v t="ekr.20050123092834.432"><vh>Fixed double doc part bug</vh></v>
-<v t="ekr.20050123092834.497"><vh>Fixed bug in how Leo writes thin derived files</vh></v>
-</v>
-<v t="ekr.20050123092834.2"><vh>Commands</vh>
-<v t="ekr.20050123092834.6"><vh>Fixed problems with spawnv option of openWith</vh></v>
-<v t="ekr.20050123092834.19"><vh>Fixed bug in  Remove Sentinels command</vh></v>
-<v t="ekr.20050123092834.27"><vh>Fixed bug re Paste Node As Clone</vh></v>
-<v t="ekr.20050123092834.42"><vh>Fixed Pretty Print commands for Python 2.4</vh></v>
-<v t="ekr.20050123092834.71"><vh>Fixed crasher in Import Derived Files command</vh></v>
-<v t="ekr.20050123092834.510"><vh>Search commands are now restricted to hoisted area</vh></v>
-</v>
-<v t="ekr.20050123100706.1"><vh>Distribution</vh>
-<v t="ekr.20050123092834.491"><vh>Fixed file association in leoDist.leo</vh></v>
-</v>
-<v t="ekr.20050123092834.165"><vh>Files</vh>
-<v t="ekr.20050123092834.492"><vh>g.import wrappers return module if it is in sys.modules</vh></v>
-<v t="ekr.20050123092834.166"><vh>Disabled changes to comment delims in @@language and @@comment sentinels</vh></v>
-<v t="ekr.20050123092834.176"><vh>Made sure files that differ only in line ending get written if @lineending is in effect</vh></v>
-<v t="ekr.20050123092834.196"><vh>Fixed bug:  @nosent wrote sentinels!</vh></v>
-<v t="ekr.20050123092834.422"><vh>Fixed bug in replaceTargetFileIfDifferent</vh></v>
-<v t="ekr.20050123092834.424"><vh>Made sure that @ignore forces writing of inner @thin trees</vh></v>
-<v t="ekr.20050123092834.431"><vh>Fixed crasher when attempting to write a derived file to an invalid path</vh></v>
-<v t="ekr.20050123092834.434"><vh>Fixed Python 2.4 deprecation warning when saving .leo files</vh></v>
-<v t="ekr.20050123092834.499"><vh>Fixed crasher in getOutputNewline</vh></v>
-<v t="ekr.20050123092834.544"><vh>Always use os.rename in utils_rename</vh></v>
-<v t="ekr.20050123151338"><vh>Fixed bugs handling @language &amp; @comment in atFile.scanAllDirectives &amp; g.scanDirectives)</vh></v>
-</v>
-<v t="ekr.20050123103303"><vh>Gui</vh>
-<v t="ekr.20050123092834.502"><vh>Put the scrollWheel workaround in createTkTreeCanvas</vh></v>
-</v>
-<v t="ekr.20050123100706.2"><vh>Menus</vh>
-<v t="ekr.20050123092834.81"><vh>Fixed problems with Control-E</vh></v>
-<v t="ekr.20050123092834.490"><vh>Better handling of duplicate menu shortcuts</vh></v>
-</v>
-<v t="ekr.20050123092834.159"><vh>Nodes</vh>
-<v t="ekr.20050123092834.160"><vh>Fixed crash after cutting an imported node</vh></v>
-<v t="ekr.20050123092834.163"><vh>Removed invalid assert in lastVisible</vh></v>
-<v t="ekr.20050123093854.1"><vh>Fixed bugs in tnodes_iter and unique_tnodes_iter</vh></v>
-</v>
-<v t="ekr.20050123111723"><vh>Plugins</vh>
-<v t="ekr.20050123092834.1047"><vh>Fixed two bugs in Plugins Manager plugin</vh></v>
-<v t="ekr.20050123092834.1052"><vh>Fixed bug re referencing destroyed ivars</vh></v>
-<v t="ekr.20050123092834.1057"><vh>Fixed bug in registerOneHandler</vh></v>
-<v t="ekr.20050123092834.506"><vh>Fixed conflict between settings panel and chapters plugin</vh></v>
-</v>
-<v t="ekr.20050123092834.526"><vh>Pychecker</vh></v>
-<v t="ekr.20050123092834.438"><vh>Scripting</vh>
-<v t="ekr.20050123092834.439"><vh>Fixed unbounded recursion with --script and redirected output</vh></v>
-<v t="ekr.20050123092834.474"><vh>Script buttons now execute the entire script</vh></v>
-<v t="ekr.20050123092834.480"><vh>Fixed error reporting in executeScript when the error happens outside the script</vh></v>
-</v>
-<v t="ekr.20050123092834.486"><vh>Startup</vh>
-<v t="ekr.20050123092834.487"><vh>Non-existent command-line file becomes name of new Leo wiindow</vh></v>
-<v t="ekr.20050123092834.1011"><vh>computeHomeDir now handles references to other vars</vh></v>
-</v>
-</v>
-<v t="ekr.20050123092834.896"><vh>New or improved features...</vh>
-<v t="ekr.20050123110009"><vh>@settings trees and leoSettings.leo</vh>
-<v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
-<v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
-</v>
-<v t="ekr.20050123103303.1"><vh>Code</vh>
-<v t="ekr.20050123092834.520"><vh>Rewrote Leo's read/write logic</vh></v>
-<v t="ekr.20050123092834.173"><vh>Added g.cantImport</vh></v>
-<v t="ekr.20050123092834.901"><vh>Added g.fileLikeObject.readline</vh></v>
-<v t="ekr.20050123092834.928"><vh>Added support for g.app.debugSwitch in es_exception</vh></v>
-<v t="ekr.20050123092834.984"><vh>Restored drawing/event hooks</vh></v>
-<v t="ekr.20050123092834.1004"><vh>Added p=p param to all hooks containing v=v</vh></v>
-<v t="ekr.20050123092834.565"><vh>Implemented delayed focus scheme</vh></v>
-</v>
-<v t="ekr.20050123103521"><vh>Commands</vh>
-<v t="ekr.20050123092834.897"><vh>Added 'Expand Or Go Right' and 'Contract or Go Left' commands</vh></v>
-<v t="ekr.20050123092834.908"><vh>Added keyboard shortcuts to find panel</vh></v>
-<v t="ekr.20050123092834.1005"><vh>Find panels are now associated with individual Leo windows</vh></v>
-<v t="ekr.20050123105026"><vh>Find panels are now inited from @settings nodes</vh></v>
-<v t="ekr.20050123092834.961"><vh>Improved Go To Line Number and Execute Script commands</vh></v>
-<v t="ekr.20050123092834.1018"><vh>Improved support for relative path names</vh></v>
-<v t="ekr.20050123092834.1043"><vh>Implemented 'Undo Clear Recent Files'</vh></v>
-<v t="ekr.20050123092834.517"><vh>Removed old-style write commands</vh></v>
-</v>
-<v t="ekr.20050123092834.1044"><vh>Plugins &amp; extensions</vh>
-<v t="ekr.20050123115804"><vh>Added Plugins Manager plugin</vh></v>
-<v t="ekr.20050123115804.1"><vh>You can install third-party extensions in Leo's extensions directory</vh></v>
-<v t="ekr.20050123112151"><vh>Improved doHandlersForTag</vh></v>
-<v t="ekr.20050123092834.1013"><vh>Leo now associates modules with hook handlers</vh></v>
-</v>
-<v t="ekr.20050123103753"><vh>Syntax Coloring &amp; languages</vh>
-<v t="ekr.20050123092834.903"><vh>Added support for Ada</vh></v>
-<v t="ekr.20050123092834.929"><vh>Added support for Forth</vh></v>
-</v>
-</v>
+<v t="ekr.20050313101229.100" a="E"><vh>Revised plugins for the 4.3 code base</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
@@ -1753,6 +1609,7 @@
 <v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
 <v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
 <v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
+<v t="ekr.20050313102319"><vh>Adding and deleting comments in body text</vh></v>
 <v t="EKR.20040524104904.115"><vh>Creating nodes from body text</vh></v>
 <v t="EKR.20040524104904.116"><vh>Converting leading blanks and tabs in body text</vh></v>
 <v t="EKR.20040524104904.117"><vh>Executing Python scripts in body text</vh></v>
@@ -2384,7 +2241,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="TV"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414172212"><vh>@rst frontMatter.html</vh>
 <v t="ekr.20040414172218.2"><vh>Preface</vh>
 <v t="ekr.20040414172336"><vh>@rst</vh></v>
@@ -16945,5 +16802,155 @@ If necessary, set the file name to Leo.pkg.  This will create Leo.pkg.
 6. Quit PackageMaker.  Choose 'yes' when prompted to save LeoPackage.pmsp.</t>
 <t tx="ekr.20050306090601"></t>
 <t tx="ekr.20050307112705">Python's docutils module 'reports' syntax errors in rst markup by crashing.  Obviously, this is not great, but it's not really the fault of the rst plugins.  You can isolate rst syntax errors by reducing your input files until they work again, then adding sections until you get a crash.</t>
+<t tx="ekr.20050313101229">Leo 4.3 alpha 4                 March 15, 2005
+
+Leo 4.3 is the culmination of more than five months of work. This alpha 4
+focuses on plugins: all known plugins are now in leoPlugins.leo. Most plugins
+now work with the 4.3 code base. Warning: not all plugins have been tested
+thorougly.
+
+This alpha 4 release also adds the requently-requested Add Comments and Delete
+Comments commands to Leo's Edit Body menu.
+
+The defining features of Leo 4.3:
+
+1. Leo now stores options in @settings trees, that is, outlines whose headline
+is '@settings'. When opening a .leo file, Leo looks for @settings trees not only
+in the outline being opened but also in various leoSettings.leo files.
+
+The key design goal of @settings trees was that Leo's user options must be
+infinitely flexible. That goal has been accomplished. Indeed, users can create
+arbitrarily complex user options with @settings trees. Leo settings outlines
+are, in fact, infinitely more flexible and powerful than any scheme based on
+flat text.  Readers of Python's configParser shootout take note!
+
+2. The Settings command temporarily replaces the outline pane with an outline
+showing all the @settings trees in effect. The Settings command also replaces
+the body pane with a "settings pane". This settings pane allows you to change
+the settings selected in the outline pane using standard gui widgets. The
+settings pane is dynamically created from nodes in the settings tree; it is as
+extensible as the @settings tree itself.
+
+3. Leo's read/write code in leoAtFile.py has been rewritten to support user-
+defined tangling and untangling.  This is a major cleanup of Leo's core.
+
+4. Leo now boasts a wonderful new Plugins Manager plugin. This plugin enables
+and disables plugins automatically. You never have to mess with
+pluginsManager.txt again! This plugin also tells you everything you need to know
+about each plugin. Finally, this plugin also lets you download plugins from
+Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
+
+5. You can install third-party extensions in Leo's extensions directory. Leo
+will attempt to import such extensions from the extensions directory if normal
+imports fail. Leo is distributed with Pmw (Python Mega Widgets), path.py and
+sets.py in this directory.</t>
+<t tx="ekr.20050313101229.2"></t>
+<t tx="ekr.20050313101229.69">Nodes containing the @root directive did not honor @nocolor directives.</t>
+<t tx="ekr.20050313101229.74">http://sourceforge.net/forum/message.php?msg_id=3035471
+
+Leo was not inserting a visible horizontal scrollbar when @nowrap was in effect.</t>
+<t tx="ekr.20050313101229.77">http://sourceforge.net/forum/message.php?msg_id=3042593
+
+Leo now properly redraws the screen after a Change All command.</t>
+<t tx="ekr.20050313101229.94">Several hooks use the 'new_c' key in the keywords dictionary. Plugin writers had
+to remember whether to get the commander using keywords.get('c') or
+keywords.get('new_c') or both. This was needlessly confusing.
+
+All hooks that use the 'new_c' key now use also include the 'c' key. The 'new_c'
+key is deprectated; plugins should use the 'c' key instead. 
+
+None of the plugins presently in leoPlugins.leo use the 'new_c' key, but the
+'new_c' key still exists for compatibility.
+
+The following plugins were affected by this change:
+
+ConceptualSort.py
+URLloader.py
+UASearch.py
+arrows.py
+autocompleter.py
+base64Packager.py
+cleo.py
+dyna_menu.py
+macros.py
+mod_read_dir_outline.py
+mod_scripting.py
+multifile.py
+nodebar.py
+nodenavigator.py
+open_with.py
+scheduler.py
+read_only_nodes.py
+templates.py</t>
+<t tx="ekr.20050313101229.95">The Add Comments command puts comments around a block of code. This command uses
+single-line comments if the language in effect for the node supports single-line
+comments.
+
+The Delete Comments command deletes the comments specified by the Add Comments command.</t>
+<t tx="ekr.20050313101229.100">Fixed problems in the following plugins. See the &lt;&lt; version history &gt;&gt; section
+in each plugin for details.
+
+autocompleter.py
+cleo.py
+mod_scripting.py
+mod_tempfname.py
+templates.py
+vim.py
+xemacs.py
+
+Replaced the 'new_c' key by the 'c' key in the following plugins:
+
+ConceptualSort.py
+URLloader.py
+UASearch.py
+arrows.py
+autocompleter.py
+base64Packager.py
+cleo.py
+dyna_menu.py
+macros.py
+mod_read_dir_outline.py
+mod_scripting.py
+multifile.py
+nodebar.py
+nodenavigator.py
+open_with.py
+scheduler.py
+read_only_nodes.py
+templates.py
+
+Replaced the 'start2' hook by the 'new' hook in the following plugins: (This was
+made possible now that 'new' is called when opening a new window if the
+'open1/2' hooks are not called.
+
+URLloader.py
+UASearch.py
+at_produce.py
+autocompleter.py
+color_markup.py
+fastGotoNode.py
+groupOperations.py
+import_cisco_config.py
+multifile.py
+nodebar.py
+open_with.py
+read_only_nodes.py
+scheduler.py
+table.py
+usetemacs.py
+xsltWithNodes.py</t>
+<t tx="ekr.20050313101229.101">atFile.copyAllTempBodyStringsToTnodes calls:
+
+    c.mod_label_controller.add_label(p,"before change:",old_body)</t>
+<t tx="ekr.20050313102319">The Add Comments command puts comments around a block of code. This command uses
+single-line comments if the language in effect for the node supports single-line
+comments.
+
+The Delete Comments command deletes the comments specified by the Add Comments
+command.</t>
+<t tx="ekr.20050313103448"></t>
+<t tx="ekr.20050313103448.1">Leo calls the 'before-create-leo-frame' hook just before calling frame.onCreate.
+Similarly, Leo calls the 'after-create-leo-frame' just after calling
+frame.onCreate.</t>
 </tnodes>
 </leo_file>
