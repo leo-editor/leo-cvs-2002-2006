@@ -34,7 +34,14 @@ class baseCommands:
         self.atFileCommands = leoAtFile.atFile(self)
         self.importCommands = leoImport.leoImportCommands(self)
         self.tangleCommands = leoTangle.tangleCommands(self)
-        self.undoer = leoUndo.undoer(self)
+        
+        if 0 and g.debugGC:
+            print
+            print "*** using Null undoer ***"
+            print
+            self.undoer = leoUndo.nullUndoer(self)
+        else:
+            self.undoer = leoUndo.undoer(self)
     
     def initIvars(self):
     
@@ -157,8 +164,6 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2817: doCommand
     #@+node:ekr.20031218072017.2582: version & signon stuff
-        
-        
     #@+node:ekr.20040629121554:getBuildNumber
     def getBuildNumber(self):
         c = self
@@ -168,7 +173,7 @@ class baseCommands:
     #@+node:ekr.20040629121554.1:getSignOnLine
     def getSignOnLine (self):
         c = self
-        return "Leo 4.2 beta 2, build %s, July 2, 2004" % c.getBuildNumber()
+        return "Leo 4.2 beta 2, build %s, July 5, 2004" % c.getBuildNumber()
     #@-node:ekr.20040629121554.1:getSignOnLine
     #@+node:ekr.20040629121554.2:initVersion
     def initVersion (self):
@@ -4246,6 +4251,8 @@ class baseCommands:
     canExtractSectionNames = canExtract
             
     def canExtractSection (self):
+        
+        __pychecker__ = '--no-implicitreturns' # Suppress bad warning.
     
         c = self ; body = c.frame.body
         if not body: return False
