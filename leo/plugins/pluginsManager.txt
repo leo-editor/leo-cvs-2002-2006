@@ -35,7 +35,7 @@ base64Packager.py
 #groupOperations.py
 multifile.py
 #xsltWithNodes.py
-cleo.py
+#cleo.py
 mod_read_dir_outline.py
 #footprints.py
 #mod_labels.py
@@ -52,6 +52,10 @@ autocompleter.py
 UASearch.py
 URLloader.py
 read_only_nodes.py
+color_markup.py
+import_cisco_config.py
+table.py
+TabbedLog.py
 plugin_manager.py
 
 UNL.py

@@ -1,3 +1,4 @@
+__version__ = ".5" # Set version for the plugin handler.
 # << Declarations and Utilities >> (1 of 3)
 
 # << Declarations and Utilities >> (2 of 3)
@@ -404,28 +405,25 @@ def CreateAscMenu(tag,keywords):
 
     """Create the Outline to AsciiDoc menu item in the Export menu."""
 
+    c = keywords.get('c')
+    if not c: return
 
-    if  (tag=="open2" or
-        (tag=="start2") or
-        (tag=="command2" and keywords.get("label")=="new")):
+    exportMenu = c.frame.menu.getMenu('export')
+    newEntries = (
+        ("-", None, None),
+        ("Export all to &AsciiDoc","Alt+Shift+A",WriteAll),
+        ("Export current tree to AsciiDoc","Alt+Shift+T",WriteTreeOfCurrentNode),
+        ("Log all root and ascfile to log pane","Alt+Shift+L",WriteAllRoots),
+    )
 
-        c = g.top()
-        exportMenu = c.frame.menu.getMenu('export')
-        newEntries = (
-            ("-", None, None),
-            ("Export all to &AsciiDoc","Alt+Shift+A",WriteAll),
-            ("Export current tree to AsciiDoc","Alt+Shift+T",WriteTreeOfCurrentNode),
-            ("Log all root and ascfile to log pane","Alt+Shift+L",WriteAllRoots)
-            )
-
-        c.frame.menu.createMenuEntries(exportMenu, newEntries)
-
+    c.frame.menu.createMenuEntries(exportMenu, newEntries)
 
 if 1:
-    leoPlugins.registerHandler(("start2","open2","command2"), CreateAscMenu)
-
-    __version__ = ".4" # Set version for the plugin handler.
-    g.plugin_signon(__name__)
+    def init():
+        ok = True
+        leoPlugins.registerHandler('new','open2'), CreateAscMenu)
+        g.plugin_signon(__name__)
+        return ok
 else:
     WriteTreeOfCurrentNode()
 # -- end -- << Key Functions >>

@@ -5,8 +5,6 @@
 #@@language python
 #@@tabwidth -4
 
-__version__ = "1.4" # Set version for the plugin handler.
-
 #@<< imports >>
 #@+node:ekr.20050101090207.8:<< imports >>
 import leoGlobals as g
@@ -15,6 +13,20 @@ import leoPlugins
 Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 #@nonl
 #@-node:ekr.20050101090207.8:<< imports >>
+#@nl
+
+__version__ = '1.5'
+#@<< version history >>
+#@+node:ekr.20050311110052:<< version history >>
+#@@killcolor
+
+#@+at
+# 
+# 1.5 EKR:
+#     - Use only 'new' and 'open2' hooks to create menu.
+#@-at
+#@nonl
+#@-node:ekr.20050311110052:<< version history >>
 #@nl
 
 #@+others
@@ -30,7 +42,7 @@ def init():
         if g.app.gui.guiName() == "tkinter":
             g.app.hasOpenWithMenu = True
             leoPlugins.registerHandler("idle", on_idle)
-            leoPlugins.registerHandler(("start2","open2","new"), create_open_with_menu)
+            leoPlugins.registerHandler(('new','open2'), create_open_with_menu)
             g.plugin_signon(__name__)
             
     return ok
@@ -122,9 +134,8 @@ def on_idle (tag,keywords):
 def create_open_with_menu (tag,keywords):
 
     c = keywords.get('c')
-    if not c:
-        print 'can not create Open With menu for %s' % c.shortFileName()
-        return
+    if not c: return
+
     idle_arg = "c:/python22/tools/idle/idle.py -e "
     
     if  1: # Default table.

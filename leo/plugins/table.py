@@ -10,6 +10,9 @@ a dialog with the data presented as in a table for the user to see it.
 Requires Pmw and the tktable widget at http://sourceforge.net/projects/tktable
 """
 
+#@@language python
+#@@tabwidth -4
+
 #@<< imports >>
 #@+node:ekr.20041017035937.1:<< imports >>
 import leoGlobals as g
@@ -27,12 +30,36 @@ import weakref
 #@-node:ekr.20041017035937.1:<< imports >>
 #@nl
 
-#@@language python
-#@@tabwidth -4
+__version__ = ".13"
+#@<< version history >>
+#@+node:ekr.20050311103711:<< version history >>
+#@@killcolor
+
+#@+at
+# 
+# .13 EKR:
+#     - Added init function.
+#     - Use only 'new' and 'open2' hooks.
+#@-at
+#@nonl
+#@-node:ekr.20050311103711:<< version history >>
+#@nl
 
 haveseen = weakref.WeakKeyDictionary()
 
 #@+others
+#@+node:ekr.20050311103711.1:init
+def init ():
+    
+    ok = Pmw and Tk and tktab # Ok for unit testing.
+    
+    if ok: 
+        leoPlugins.registerHandler(('new','open2'),addMenu )
+        g.plugin_signon( __name__ )
+        
+    return ok
+#@nonl
+#@-node:ekr.20050311103711.1:init
 #@+node:ekr.20041017035937.2:class CSVVisualizer
 class CSVVisualizer:
     
@@ -188,22 +215,17 @@ def createBBox( parent, csvv, tab ):
 #@+node:ekr.20041017035937.13:addMenu
 def addMenu( tag, keywords ):
 
-    c = g.top()
-    if haveseen.has_key( c ):
+    c = keywords.get(c)
+    if not c or haveseen.has_key( c ):
         return
 
     haveseen[ c ] = None
     men = c.frame.menu
     men = men.getMenu( 'Outline' )
     men.add_command( label = "Edit Node With Table", command = lambda c = c: viewTable( c ) )
+#@nonl
 #@-node:ekr.20041017035937.13:addMenu
 #@-others
-
-if Pmw and Tk and tktab: # Ok for unit testing.
-
-    leoPlugins.registerHandler( ('start2' , 'open2', "new") , addMenu )
-    __version__ = ".125"
-    g.plugin_signon( __name__ )
 #@nonl
 #@-node:ekr.20041017035937:@thin table.py
 #@-leo

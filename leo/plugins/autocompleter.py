@@ -115,6 +115,8 @@ __version__ = ".73"
 # .73 EKR:
 #     - Changed 'new_c' logic to 'c' logic in initialScan.
 #     - Added init function.
+# .74 EKR:
+#     - Changed 'start2' hook to 'new' hook.
 #@-at
 #@nonl
 #@-node:ekr.20041017102904:<<version history>>
@@ -295,7 +297,7 @@ def init ():
     
     if ok:
         leoTkinterFrame.leoTkinterBody.createControl = newCreateControl 
-        leoPlugins.registerHandler(('start2','open2'),initialScan)   
+        leoPlugins.registerHandler(('new','open2'),initialScan)   
         g.plugin_signon(__name__)
         
     return ok

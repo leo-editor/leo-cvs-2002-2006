@@ -56,23 +56,49 @@ tkFileDialog = g.importExtension('tkFileDialog',pluginName=__name__,verbose=True
 #@-at
 #@-node:edream.110203113231.670:<< about this plugin >>
 #@nl
+__version__ = "1.4"
+#@<< version history >>
+#@+node:ekr.20050311102853:<< version history >>
+#@@killcolor
+
+#@+at
+# 
+# 1.4 EKR:
+#     - Added init function.
+#     - Use only 'new' and 'open2' hooks.
+#@-at
+#@nonl
+#@-node:ekr.20050311102853:<< version history >>
+#@nl
 
 #@+others
+#@+node:ekr.20050311102853.1:init
+def init ():
+    
+    ok = tkFileDialog is not None
+    
+    if ok:
+
+        if g.app.gui is None:
+            g.app.createTkGui(__file__)
+    
+        if g.app.gui.guiName() == "tkinter":
+            leoPlugins.registerHandler(('new','open2'),create_import_cisco_menu)
+            g.plugin_signon(__name__)
+#@nonl
+#@-node:ekr.20050311102853.1:init
 #@+node:edream.110203113231.671:create_import_cisco_menu
 def create_import_cisco_menu(tag, keywords):
-
-    if	(tag=="open2" or
-        (tag=="start2" and not keywords.has_key('c')) or
-        (tag=="command2" and keywords.get("label")=="new")):
-
-        c = g.top()
+    
+    c = keywords.get('c')
+    if c:
         importMenu = c.frame.menu.getMenu('import')
+        
         newEntries = (
             ("-", None, None),
             ("Import C&isco Configuration", "Shift+Ctrl+I", importCiscoConfig))
         
         c.frame.menu.createMenuEntries(importMenu, newEntries)
-#@nonl
 #@-node:edream.110203113231.671:create_import_cisco_menu
 #@+node:edream.110203113231.672:importCiscoConfig
 def importCiscoConfig(event=None):
@@ -215,20 +241,6 @@ def importCiscoConfig(event=None):
 #@nonl
 #@-node:edream.110203113231.672:importCiscoConfig
 #@-others
-
-if tkFileDialog:
-
-    if g.app.gui is None:
-        g.app.createTkGui(__file__)
-
-    if g.app.gui.guiName() == "tkinter":
-
-        # Register the handlers...
-        leoPlugins.registerHandler(("start2","open2","command2"),
-            create_import_cisco_menu)
-
-        __version__ = "1.3" 
-        g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.669:@thin import_cisco_config.py
 #@-leo

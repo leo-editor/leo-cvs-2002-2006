@@ -29,7 +29,7 @@ except ImportError:
 #@nonl
 #@-node:ekr.20050311091110.1:<< imports >>
 #@nl
-__version__ = "1.6" # Set version for the plugin handler.
+__version__ = '1.7'
 #@<< version history >>
 #@+node:ekr.20050311091110:<< version history >>
 #@@killcolor
@@ -38,6 +38,9 @@ __version__ = "1.6" # Set version for the plugin handler.
 # 1.6 EKR:
 #     - Changed 'new_c' logic to 'c' logic.
 #     - Added init function.
+# 
+# 1.7 EKR:
+#     - Use 'new' and 'open2' hooks.
 #@-at
 #@nonl
 #@-node:ekr.20050311091110:<< version history >>
@@ -55,9 +58,10 @@ def init ():
             g.app.createTkGui(__file__)
     
         if g.app.gui.guiName() == "tkinter":
-            leoPlugins.registerHandler(("start2","open2"), on_open2)
+            leoPlugins.registerHandler(('new','open2'), on_open)
             leoPlugins.registerHandler("bodykey1", on_bodykey1)
             leoPlugins.registerHandler("headkey2", on_headkey2)
+
             if 0: # doesn't work: the cursor stops blinking.
                 leoPlugins.registerHandler("select1", on_select1)
                 leoPlugins.registerHandler("select2", on_select2)
@@ -392,15 +396,12 @@ def insert_read_only_node (c,v,name):
         return changed
 #@nonl
 #@-node:edream.110203113231.894:insert_read_only_node (FTP version)
-#@+node:edream.110203113231.896:on_open2
+#@+node:edream.110203113231.896:on_open
 #  scan the outline and process @read-only nodes.
-def on_open2 (tag,keywords):
-    
-    
-    if tag == "start2":
-        c = g.top()
-    else:
-        c = keywords.get("c")
+def on_open (tag,keywords):
+
+    c = keywords.get("c")
+    if not c: return
 
     v = c.rootVnode()
     g.es("scanning for @read-only nodes...",color="blue")
@@ -417,7 +418,8 @@ def on_open2 (tag,keywords):
                     c.setChanged(changed)
         v = v.threadNext()
     c.endUpdate()
-#@-node:edream.110203113231.896:on_open2
+#@nonl
+#@-node:edream.110203113231.896:on_open
 #@+node:edream.110203113231.897:on_bodykey1
 # override the body key handler if we are in an @read-only node.
 

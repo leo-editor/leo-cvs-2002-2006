@@ -57,7 +57,7 @@ __version__ = "0.4"
 #     - Converted to outline.
 #     - Style improvements.
 #     - Changes for 4.2 code base in hit().
-#     - Use 'new2' instead of 'start2' hook.
+#     - Use 'new' instead of 'start2' hook.
 # 0.4 EKR:
 #     - Changed 'new_c' logic to 'c' logic.
 #@-at

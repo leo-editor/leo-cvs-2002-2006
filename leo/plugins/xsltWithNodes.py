@@ -74,7 +74,7 @@ import cStringIO
 #@nonl
 #@-node:mork.20041025101943:<<future directions>>
 #@nl
-__version__ = '0.4'
+__version__ = '0.5'
 #@<< version history >>
 #@+node:mork.20041025113211:<< version history >>
 #@@killcolor
@@ -91,6 +91,9 @@ __version__ = '0.4'
 # 0.4 EKR:
 #     - Added init function.
 #     - Use g.importExtension to import Tkinter.
+# 0.5 EKR:
+#     - Remove 'start2' hook & haveseen dict.
+#     - Use keywords.get('c') instead of g.top().
 #@-at
 #@nonl
 #@-node:mork.20041025113211:<< version history >>
@@ -103,7 +106,7 @@ def init():
     ok = Ft and Tk
 
     if ok:
-        leoPlugins.registerHandler(('start2','open2',"new"),addMenu)
+        leoPlugins.registerHandler(('open2',"new"),addMenu)
         g.plugin_signon(__name__)
 
     return ok
@@ -294,12 +297,10 @@ def styleNodeSelected( c ):
 
 #@-node:mork.20041010125444.1:styleNodeSelected
 #@+node:mork.20041010100633:addMenu
-haveseen = weakref.WeakKeyDictionary()
 def addMenu( tag, keywords ):
-    c = g.top()
-    if haveseen.has_key( c ):
-        return
-    haveseen[ c ] = None
+    c = keywords.get('c')
+    if not c: return
+
     men = c.frame.menu
     men = men.getMenu( 'Outline' )
     xmen = Tk.Menu( men , tearoff = False)
@@ -681,5 +682,6 @@ def addMenu( tag, keywords ):
 #@nonl
 #@-node:mork.20041025100716:examples/tests
 #@-others
+#@nonl
 #@-node:mork.20041010095009:@thin xsltWithNodes.py
 #@-leo

@@ -139,7 +139,7 @@ transferFromPI = Tkinter.PhotoImage( data = transferFrom )
 #@-node:mork.20041021094915:<< images >>
 #@nl
 
-__version__ = ".1"
+__version__ = ".3"
 #@<<version history>>
 #@+node:mork.20041021120027:<<version history>>
 #@@killcolor
@@ -158,6 +158,9 @@ __version__ = ".1"
 # .2 EKR:
 #     - Use g.importExtension to import Pmw and sets.
 #     - Added init function.
+# .3 EKR:
+#     - Removed start2 hook.
+#     - Use keywords to get c, not g.top().
 #@-at
 #@nonl
 #@-node:mork.20041021120027:<<version history>>
@@ -169,7 +172,7 @@ def init ():
     
     ok = Tkinter and sets
     if ok:
-        leoPlugins.registerHandler( ('start2' , 'open2', "new") , addMenu ) 
+        leoPlugins.registerHandler( ('open2', "new"),addMenu ) 
         g.plugin_signon(__name__)
     return ok
 #@nonl
@@ -479,8 +482,8 @@ def drawArrowImages( pos , image, canvas ):
 #@+node:mork.20041018131258.36:addMenu
 def addMenu( tag , keywords):
     global movers
-    c = g.top()
-    if c in movers.keys(): return None
+    c = keywords.get('c')
+    if not c or c in movers.keys(): return
     las = Lassoer( c )
     movers[ c ] = las
     table = (( "Mark RoundUp Spot" , None , placeInsertNode ) , )
@@ -503,7 +506,7 @@ def addMenu( tag , keywords):
     imenu.config( postcommand = lambda nm = imenu : listTops( nm ) ) 
     imenu.lassoer = las
     leoPlugins.registerHandler(  "after-redraw-outline", drawImages )         
-    return None
+    return
 #@nonl
 #@-node:mork.20041018131258.36:addMenu
 #@+node:mork.20041019171725:getMoveCommands

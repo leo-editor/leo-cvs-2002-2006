@@ -8,7 +8,7 @@ It requires the TabbedLog plugin.
 #@@language python
 #@@tabwidth -4
 
-__version__ = ".3"
+__version__ = ".4"
 #@<< Change log >>
 #@+node:ekr.20040831115918:<< Change log >>
 #@+at
@@ -18,6 +18,8 @@ __version__ = ".3"
 # .3 EKR:
 #     - Changed 'new_c' logic to 'c' logic.
 #     - Added init function.
+# .4 EKR:
+#     - Removed 'start2' hook and haveseen dict.
 #@-at
 #@nonl
 #@-node:ekr.20040831115918:<< Change log >>
@@ -38,8 +40,6 @@ import weakref
 #@-node:ekr.20040831115918.1:<< imports >>
 #@nl
 
-haveseen = weakref.WeakKeyDictionary()
-
 #@+others
 #@+node:ekr.20050311090939.7:init
 def init ():
@@ -47,7 +47,7 @@ def init ():
     ok = Tk and Pmw and TabbedLog # Ok for unit test: adds tabbed pane to log.
     
     if ok:
-        leoPlugins.registerHandler(('start2','new','open2'), addURLPane)
+        leoPlugins.registerHandler(('new','open2'), addURLPane)
         g.plugin_signon( __name__ )
         
     return ok
@@ -57,8 +57,8 @@ def init ():
 def addURLPane( tag, keywords ):
 
     c = keywords.get('c')
-    if not c or haveseen.has_key( c ): return
-    haveseen[ c ] = True
+    if not c: return
+
     x = TabbedLog.getPane( "URLLoad", c )
     ef = Pmw.EntryField( x, labelpos = 'n', label_text = 'URL:' )
     e = ef.component( 'entry' )

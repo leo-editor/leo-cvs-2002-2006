@@ -10,7 +10,8 @@
 import leoGlobals as g
 import leoPlugins
 
-Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+Tk =             g.importExtension('Tkinter',       pluginName=__name__,verbose=True)
+tkColorChooser = g.importExtension('tkColorChooser',pluginName=__name__,verbose=True)
 
 import os
 import string  # zfill does not exist in Python 2.2.1
@@ -18,7 +19,50 @@ import string  # zfill does not exist in Python 2.2.1
 #@-node:ekr.20050101090207.3:<< imports >>
 #@nl
 
+__version__ = "1.5"
+#@<< version history >>
+#@+node:ekr.20050311104330:<< version history >>
+#@@killcolor
+#@+at
+# 
+# Initial version DS: 10/29/03.
+# 
+# EKR: 11/4/03: mods for 4.1.
+# 
+# 1.5 EKR:
+#     - Use only 'new' and 'open2' hooks.
+#     - imported tkColorChooser.
+#@-at
+#@nonl
+#@-node:ekr.20050311104330:<< version history >>
+#@nl
+
 #@+others
+#@+node:ekr.20050311104330.1:init
+def init ():
+    
+    ok = Tk and tkColorChooser # Ok for unit tests.
+    
+    if ok: 
+        if g.app.gui is None:
+            g.app.createTkGui(__file__)
+    
+        if g.app.gui.guiName() == "tkinter":
+            print "wiki markup enabled"
+
+            # default value for color-tagged wiki text
+            global wikiColoredText
+            wikiColoredText = "blue"
+            leoPlugins.registerHandler("color-optional-markup", colorWikiMarkup)
+            leoPlugins.registerHandler("init-color-markup", initAnyMarkup)
+            #leoPlugins.registerHandler("bodykey1", onBodykey1)
+            leoPlugins.registerHandler("bodydclick1", onBodydclick1)
+            leoPlugins.registerHandler(('new','open2'), createWikiMenu)
+            g.plugin_signon(__name__)
+
+    return ok
+#@nonl
+#@-node:ekr.20050311104330.1:init
 #@+node:edream.110403140857.9:initAnyMarkup
 def initAnyMarkup (tag,keywords):
     
@@ -256,33 +300,32 @@ def getUrl(c, *tags):
 #@+node:edream.110403140857.19:Menu handling
 #@+node:edream.110403140857.20:createWikiMenu
 def createWikiMenu(tag, keywords):
+    
     """Create menu entries under Edit->Edit Body to insert wiki tags."""
+    
+    c = keywords.get('c')
+    if not c: return
 
-    if	(tag=="open2" or tag=="start2" or
-        (tag=="command2" and keywords.get("label")=="new")):
+    editBodyMenuName = "Edit Body..."
+    wikiMenuName = "&Wiki Tags..."
+    if c.frame.menu.getMenu(wikiMenuName):
+        return # wiki menu already created
 
-        c = g.top()
-        
-        editBodyMenuName = "Edit Body..."
-        wikiMenuName = "&Wiki Tags..."
-        if c.frame.menu.getMenu(wikiMenuName):
-            return # wiki menu already created
-
-        editBodyMenu = c.frame.menu.getMenu(editBodyMenuName)
-        separator = (("-", None, None),)
-        c.frame.menu.createMenuEntries(editBodyMenu, separator)
-        
-        wikiMenu = c.frame.menu.createNewMenu(wikiMenuName, editBodyMenuName)
-        newEntries = (
-            ("&Bold", "Alt+Shift+B", doWikiBold),
-            ("&Italic", "Alt+Shift+I", doWikiItalic),
-            #("Insert Pict&ure...", "Alt+Shift+U", doWikiPicture),
-            ("C&olor", "Alt+Shift+O", doWikiColor),
-            ("Choose Co&lor...", "Alt+Shift+L", doWikiChooseColor),
-            )
-        
-        c.frame.menu.createMenuEntries(wikiMenu, newEntries)
-
+    editBodyMenu = c.frame.menu.getMenu(editBodyMenuName)
+    separator = (("-", None, None),)
+    c.frame.menu.createMenuEntries(editBodyMenu, separator)
+    
+    wikiMenu = c.frame.menu.createNewMenu(wikiMenuName, editBodyMenuName)
+    newEntries = (
+        ("&Bold", "Alt+Shift+B", doWikiBold),
+        ("&Italic", "Alt+Shift+I", doWikiItalic),
+        #("Insert Pict&ure...", "Alt+Shift+U", doWikiPicture),
+        ("C&olor", "Alt+Shift+O", doWikiColor),
+        ("Choose Co&lor...", "Alt+Shift+L", doWikiChooseColor),
+        )
+    
+    c.frame.menu.createMenuEntries(wikiMenu, newEntries)
+#@nonl
 #@-node:edream.110403140857.20:createWikiMenu
 #@+node:edream.110403140857.21:doWikiBold
 def doWikiBold(event=None):
@@ -316,6 +359,7 @@ def doWikiColor(event=None):
 #@-node:edream.110403140857.23:doWikiColor
 #@+node:edream.110403140857.24:doWikiChooseColor
 def doWikiChooseColor(event=None):
+    
     global wikiColoredText
     
     c = g.top()
@@ -326,6 +370,7 @@ def doWikiChooseColor(event=None):
     if val:
         wikiColoredText = val
         doWikiColor()
+
 #@-node:edream.110403140857.24:doWikiChooseColor
 #@+node:edream.110403140857.25:doWikiPicture (not ready)
 def doWikiPicture(event=None):
@@ -390,27 +435,6 @@ def insertWikiMarkup(c,v,leftTag,rightTag):
 #@-node:edream.110403140857.26:insertWikiMarkup
 #@-node:edream.110403140857.19:Menu handling
 #@-others
-
-if Tk: # Ok for unit tests.
-
-    if g.app.gui is None:
-        g.app.createTkGui(__file__)
-
-    if g.app.gui.guiName() == "tkinter":
-        
-        print "wiki markup enabled"
-        
-        # default value for color-tagged wiki text
-        wikiColoredText = "blue"
-
-        leoPlugins.registerHandler("color-optional-markup", colorWikiMarkup)
-        leoPlugins.registerHandler("init-color-markup", initAnyMarkup)
-        #leoPlugins.registerHandler("bodykey1", onBodykey1)
-        leoPlugins.registerHandler("bodydclick1", onBodydclick1)
-        leoPlugins.registerHandler(("start2","open2","command2"), createWikiMenu)
-    
-        __version__ = "1.4" # DS: 10/29/03.  EKR: 11/4/03: mods for 4.1.
-        g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110403140857.8:@thin color_markup.py
 #@-leo

@@ -11,7 +11,7 @@ __version__ = "1.3"
 # 1.2 EKR:
 #     - Converted to outline.
 #     - Use g.angleBrackets to enclose lines with < < and > >.
-#     - Use new2 instead of start2 hook.
+#     - Use new instead of start2 hook.
 #     - onCreate creates a new class for each commander.
 #     - Removed all globals.
 # 1.3 EKR:

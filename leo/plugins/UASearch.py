@@ -7,7 +7,7 @@ A plugin for searching unknownAttributes (uA's).
 #@@language python
 #@@tabwidth -4
 
-__version__ = ".2"
+__version__ = ".3"
 #@<< version history >>
 #@+node:ekr.20040915075530.1:<< version history >>
 #@+at
@@ -22,6 +22,7 @@ __version__ = ".2"
 # 0.3 EKR:
 #     - Changed 'new_c' logic to 'c' logic.
 #     - Added init function.
+#     - Removed 'start2' hook and haveseen dict.
 #@-at
 #@nonl
 #@-node:ekr.20040915075530.1:<< version history >>
@@ -42,8 +43,6 @@ import weakref
 #@-node:ekr.20040915075530.2:<< imports >>
 #@nl
 
-haveseen = weakref.WeakKeyDictionary()
-
 #@+others
 #@+node:ekr.20050311090939.6:init
 def init ():
@@ -51,8 +50,7 @@ def init ():
     ok = TabbedLog and Tk # Ok for unit tests: adds menu.
     
     if ok:
-        nbs = weakref.WeakKeyDictionary()
-        leoPlugins.registerHandler( ('start2','new','open2') ,addPMenu)
+        leoPlugins.registerHandler(('new','open2'),addPMenu)
         g.plugin_signon( __name__ )
 
     return ok
@@ -61,8 +59,8 @@ def init ():
 #@+node:ekr.20040915075530.3:addPMenu
 def addPMenu( tag, keywords ):
     c = keywords.get('c')
-    if not c or haveseen.has_key( c ): return  
-    haveseen[ c ] = True  
+    if not c: return  
+
     x = TabbedLog.getPane( "UASearch", c )
     ef = Pmw.EntryField( x, labelpos = 'w', label_text = 'uaname:' )
     e = ef.component( 'entry' )

@@ -147,11 +147,10 @@ moverightPI = Tk.PhotoImage( data = moveright )
 #@nonl
 #@-node:mork.20041023210407:<<images2>>
 #@nl
-__version__ = ".6"
+__version__ = ".7"
 #@<<version>>
 #@+node:mork.20041023091529:<<version>>
 #@+at
-# 
 # 
 # .1 made initial icons
 # 
@@ -181,6 +180,9 @@ __version__ = ".6"
 # .6 EKR:
 #     - Changed 'new_c' logic to 'c' logic.
 #     - Added init function.
+# .7 EKR:
+#     - Removed 'start2' hook.
+#     - Removed haveseen dict.  It is no longer needed.
 #@-at
 #@nonl
 #@-node:mork.20041023091529:<<version>>
@@ -240,7 +242,7 @@ def init():
             g.app.createTkGui(__file__)
     
         if g.app.gui.guiName() == "tkinter":
-            leoPlugins.registerHandler( ('start2','open2',"new") , addNodeBar )
+            leoPlugins.registerHandler(('open2',"new"),addNodeBar )
             g.plugin_signon(__name__)
             
     return load_ok
@@ -262,14 +264,11 @@ def determineFrame( c ):
 #@nonl
 #@-node:mork.20041026090227:determineFrame
 #@+node:mork.20041022160305:addNodeBar
-haveseen = weakref.WeakKeyDictionary()
 def addNodeBar( tag, keywords ):
     '''Add nodebar to new frame'''
     c = keywords.get( 'c' )
-    if not c or haveseen.has_key( c ):
-        return
-    haveseen[ c ] = None
-    
+    if not c: return
+
     frame = determineFrame( c )
     mbox = Tk.Frame( frame )
     mbox.pack( side = 'bottom' , fill = 'x' )
@@ -277,7 +276,6 @@ def addNodeBar( tag, keywords ):
         mbox.pack_configure( before = z )
         
     def goToChild( c = c ):
-        
         pos = c.currentPosition()
         if pos.hasChildren():
             c.selectPosition( pos.nthChild( 0 ) )

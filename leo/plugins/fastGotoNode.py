@@ -39,7 +39,7 @@ import os
 #@nonl
 #@-node:mork.20041018091414.2:<< imports >>
 #@nl
-__version__ = ".100"
+__version__ = ".101"
 #@<< version history >>
 #@+node:ekr.20050226120947.1:<< version history >>
 #@@killcolor
@@ -48,6 +48,9 @@ __version__ = ".100"
 # 
 # .100 EKR:
 #     - Added init functions.
+# .101 EKR:
+#     - Removed 'start2' hook.
+#     - Get c from keywords, not g.top().
 #@-at
 #@nonl
 #@-node:ekr.20050226120947.1:<< version history >>
@@ -58,7 +61,7 @@ __version__ = ".100"
 def init ():
     
     calculateMenuSize()
-    registerHandler( ('start2' , 'open2', 'new') , registerPopupMenu )
+    registerHandler( ('open2', 'new') , registerPopupMenu )
     plugin_signon(__name__)
     
     pth = os.path.split( app.loadDir )
@@ -514,9 +517,13 @@ def jumpto( vnode, c):
 #@-node:mork.20041018091414.18:jumpto
 #@+node:mork.20041018091414.19:registerPopupMenu
 def registerPopupMenu( tag, keywords):
-    c = top()
+    
+    c = keywords.get('c')
+    if not c: return
+
     def popper( event , c = c ):
         pop( event, c )
+
     c.frame.top.bind( binder , popper)
 #@-node:mork.20041018091414.19:registerPopupMenu
 #@+node:mork.20041018091414.20:calculateMenuSize

@@ -62,7 +62,7 @@ svs = []
 #@-node:ekr.20040331153923.2:<< define scheduler data >>
 #@nl
 
-__version__ = "0.3"
+__version__ = "0.4"
 #@<< version history >>
 #@+node:ekr.20050311090939:<< version history >>
 #@@killcolor
@@ -76,12 +76,34 @@ __version__ = "0.3"
 # 
 # 0.3 EKR:
 #     - Changed 'new_c' logic to 'c' logic.
+# 
+# 0.4 EKR:
+#     - Added init function.
+#     - Use only 'new' and 'open2' hooks.
+#     - Changed 'lambda c=g.top():' to 'lambda c=c:' in addScheduleMenu.
 #@-at
 #@nonl
 #@-node:ekr.20050311090939:<< version history >>
 #@nl
 
 #@+others
+#@+node:ekr.20050311102853.2:init
+def init ():
+    
+    ok = Tk is not None # Ok for unit testing: creates new menu.
+    
+    if ok: 
+        global sc,sd,lk
+        sc = sched.scheduler(time.time,time.sleep)
+        lk = threading.Condition(threading.RLock())
+        sd = Schedule()
+        sd.start()
+        leoPlugins.registerHandler(('open2','new'),addScheduleMenu)
+        g.plugin_signon(__name__)
+        
+    return ok
+#@nonl
+#@-node:ekr.20050311102853.2:init
 #@+node:ekr.20040331153923.3:wait_sleep
 def wait_sleep(i):
     lk.acquire()
@@ -343,19 +365,21 @@ we record them'''
 #@-node:ekr.20040331153923.12:doCommand
 #@+node:ekr.20040331153923.13:addScheduleMenu
 def addScheduleMenu(tag,keywords):
+    
+    c = keywords.get('c')
+    if not c: return
 
-    men = keywords['c'].frame.menu
-
-    if not men or men in haveseen:
-        return None
+    men = c.frame.menu
+    if men in haveseen:
+        return
 
     haveseen.append(men)
     name = 'Schedule'
     men.createNewMenu(name)
     
     table = (
-        ('Begin Recording',None,lambda c = g.top(): startRecord(c)),
-        ('End Recording',None,lambda c = g.top(): endRecord(c)),
+        ('Begin Recording',None,lambda c=c: startRecord(c)),
+        ('End Recording',None,lambda c=c: endRecord(c)),
         ('Schedule Message',None,createMessage),
         ('View Queue',None,viewQueue))
 
@@ -363,15 +387,6 @@ def addScheduleMenu(tag,keywords):
 #@nonl
 #@-node:ekr.20040331153923.13:addScheduleMenu
 #@-others
-
-if Tk: # Ok for unit testing: creates new menu.
-    global sd
-    sc = sched.scheduler(time.time,time.sleep)
-    lk = threading.Condition(threading.RLock())
-    sd = Schedule()
-    sd.start()
-    leoPlugins.registerHandler(('start2','open2','new'),addScheduleMenu)
-    g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040331153923:@thin scheduler.py
 #@-leo

@@ -58,7 +58,7 @@ leocommandnames = None
 #@nonl
 #@-node:mork.20041013092542.2:<< globals >>
 #@nl
-__version__ = '.55'
+__version__ = '.56'
 #@<<version history>>
 #@+node:mork.20041101132349:<<version history>>
 #@+at 
@@ -117,8 +117,9 @@ __version__ = '.55'
 #     graph!
 #     --added Leo Commands to Temacs Help, good to see which Leo commands you 
 # can execute.
-# 
-# 
+# .56 EKR:
+#     - Removed 'start2' hook and haveseen dict.
+#     - Added init function.
 #@-at
 #@-node:mork.20041101132349:<<version history>>
 #@nl
@@ -263,6 +264,34 @@ __version__ = '.55'
 #@nl
 
 #@+others
+#@+node:ekr.20050311155753:init
+def init ():
+    
+    ok = temacs and Tk and not g.app.unitTesting
+    
+    if ok:
+
+        if g.app.gui is None: 
+            g.app.createTkGui(__file__)
+    
+        if g.app.gui.guiName() == "tkinter":
+            #@            << override createBindings and onBodyKey >>
+            #@+node:ekr.20041106100326.2:<< override createBindings and onBodyKey >>
+            orig_Bindings = leoTkinterFrame.leoTkinterBody.createBindings
+            leoTkinterFrame.leoTkinterBody.createBindings = initialise() #createBindings
+            
+            orig_OnBodyKey = leoTkinterFrame.leoTkinterBody.onBodyKey
+            leoTkinterFrame.leoTkinterBody.onBodyKey = modifyOnBodyKey
+            #@nonl
+            #@-node:ekr.20041106100326.2:<< override createBindings and onBodyKey >>
+            #@nl
+            loadConfig()
+            g.plugin_signon(__name__)
+            leoPlugins.registerHandler( ('open2', "new") , addMenu )
+            
+    return ok
+#@nonl
+#@-node:ekr.20050311155753:init
 #@+node:mork.20041013092542.3:utTailEnd
 def utTailEnd( buffer , frame ):
     '''A method that Emacs will call with its _tailEnd method'''
@@ -344,17 +373,14 @@ def seeHelp():
 #@+node:mork.20041013092542.5:addMenu
 def addMenu( tag, keywords ):
     '''Adds the Temacs Help option to Leos Help menu'''
-    c = g.top()
-    if haveseen.has_key( c ):
-        return
-    haveseen[ c ] = None
-    men = c.frame.menu
-    men = men.getMenu( 'Help' )
+    
+    c = keywords.get('c')
+    if not c: return
+
+    men = c.frame.menu.getMenu( 'Help' )
     men.add_separator()
     men.add_command( label = 'Temacs Help', command = seeHelp )
-
-    
-
+#@nonl
 #@-node:mork.20041013092542.5:addMenu
 #@+node:mork.20041101124927:modifyOnBodyKey
 def modifyOnBodyKey( self, event ):
@@ -617,7 +643,7 @@ def initialise():
         frame.bodyCtrl.delete = wD
 
     return createBindings
-    
+#@nonl
 #@-node:mork.20041104145603:initialise
 #@+node:mork.20041204141826:addLeoCommands
 def addLeoCommands( c, emacs ):
@@ -829,27 +855,6 @@ def addLeoCommands( c, emacs ):
 
 #@-node:mork.20041204141826:addLeoCommands
 #@-others
-
-if temacs and Tk and not g.app.unitTesting:
-
-    if g.app.gui is None: 
-        g.app.createTkGui(__file__)
-
-    if g.app.gui.guiName() == "tkinter":
-        #@        << override createBindings and onBodyKey >>
-        #@+node:ekr.20041106100326.2:<< override createBindings and onBodyKey >>
-        orig_Bindings = leoTkinterFrame.leoTkinterBody.createBindings
-        leoTkinterFrame.leoTkinterBody.createBindings = initialise() #createBindings
-        
-        orig_OnBodyKey = leoTkinterFrame.leoTkinterBody.onBodyKey
-        leoTkinterFrame.leoTkinterBody.onBodyKey = modifyOnBodyKey
-        #@nonl
-        #@-node:ekr.20041106100326.2:<< override createBindings and onBodyKey >>
-        #@nl
-        loadConfig()
-        g.plugin_signon(__name__)
-        leoPlugins.registerHandler( ('start2' , 'open2', "new") , addMenu )
-        
 
 #@<<exampleTemacsExtension.py>>
 #@+node:mork.20041102091309:<<exampleTemacsExtension.py>>

@@ -52,7 +52,7 @@ except ImportError:
 #@-node:ekr.20050226114732.1:<< imports >>
 #@nl
 
-__version__ = ".4"
+__version__ = ".5"
 #@<< version history >>
 #@+node:ekr.20050226115130:<< version history >>
 #@@killcolor
@@ -65,6 +65,9 @@ __version__ = ".4"
 # 
 # 0.4 EKR:
 #     - Changed 'new_c' logic to 'c' logic.
+# 
+# 0.5 EKR:
+#     - Use 'new' and 'open2' hooks to call addMenu.
 #@-at
 #@nonl
 #@-node:ekr.20050226115130:<< version history >>
@@ -84,13 +87,7 @@ def init ():
         g.globalDirectiveList.append( 'multiprefix' ) 
         registerHandler( 'save1' , start )
         registerHandler( 'save2', stop )
-        #registerHandler( 'create-optional-menus', addMenu )
-            # -- cant explain but this stops save1 and save2 from operating
-        registerHandler( 'start2', addMenu )
-            #registerHandler( 'open1', addMenu )
-            # -- cant explain but this stops save1 and save2 from operating
-        registerHandler( 'new', addMenu )
-
+        registerHandler(('new', 'start2'),addMenu )
         g.plugin_signon(__name__)  
 
     return ok
@@ -106,8 +103,9 @@ def decoratedOpenWriteFile( self,root,toString):
 #@nonl
 #@-node:mork.20041018204908.3:decoratedOpenWriteFile
 #@+node:mork.20041018204908.4:start
-def start( tag , keywords ):       
-    c = keywords[ 'c' ]
+def start( tag , keywords ):
+ 
+    c = keywords.get('c')
     if not haveseen.has_key( c ): 
         ndf = c.atFileCommands.new_df
         haveseen[ c ] = ndf.openWriteFile
@@ -138,6 +136,7 @@ def scanForMultiPath():
 #@-node:mork.20041018204908.5:scanForMultiPath
 #@+node:mork.20041018204908.6:stop
 def stop( tag, keywords ):
+
     multi = scanForMultiPath()  
     for z in multi.keys():
         paths = multi[ z ]
@@ -151,6 +150,7 @@ def stop( tag, keywords ):
             except:
                 g.es( "multifile:\nCant write %s to %s" % ( z,x ), color = "red" )  
     files.clear()
+#@nonl
 #@-node:mork.20041018204908.6:stop
 #@+node:mork.20041019091317:addMenu
 haveseen = weakref.WeakKeyDictionary()
