@@ -37,7 +37,7 @@ class baseCommands:
     """The base class for Leo's main commander."""
     #@    @+others
     #@+node:ekr.20031218072017.2811: c.Birth & death
-    #@+node:ekr.20031218072017.2812:c.__init__, initIvars
+    #@+node:ekr.20031218072017.2812:c.__init__ &  initIvars
     def __init__(self,frame,fileName):
     
         self.frame = frame
@@ -57,7 +57,8 @@ class baseCommands:
             self.undoer = leoUndo.nullUndoer(self)
         else:
             self.undoer = leoUndo.undoer(self)
-    
+    #@nonl
+    #@+node:ekr.20040731071037:initIvars
     def initIvars(self):
     
         #@    << initialize ivars >>
@@ -75,6 +76,7 @@ class baseCommands:
         self.changed = False # True if any data has been changed since the last save.
         self.loading = False # True if we are loading a file: disables c.setChanged()
         self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
+        self.promptingForClose = False # To lock out additional closing dialogs.
         
         # For tangle/untangle
         self.tangle_errrors = 0
@@ -105,7 +107,8 @@ class baseCommands:
         #@nl
         self.setIvarsFromFind()
     #@nonl
-    #@-node:ekr.20031218072017.2812:c.__init__, initIvars
+    #@-node:ekr.20040731071037:initIvars
+    #@-node:ekr.20031218072017.2812:c.__init__ &  initIvars
     #@+node:ekr.20031218072017.2814:c.__repr__ & __str__
     def __repr__ (self):
         
