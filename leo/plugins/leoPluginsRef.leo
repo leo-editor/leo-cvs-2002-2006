@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2659" clone_windows="0"/>
-<globals body_outline_ratio="0.448425624321">
-	<global_window_position top="12" left="384" height="927" width="846"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2976" clone_windows="0"/>
+<globals body_outline_ratio="0.600862998921">
+	<global_window_position top="21" left="437" height="927" width="834"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,9 +12,196 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203113231"
-expanded="ekr.20040918165144,EKR.20040611044600,bwmulder.20040601212737,bwmulder.20040601212737.9,"><vh>@thin pluginsNotes.txt</vh></v>
-<v t="edream.110203113231.618"><vh>Plugins</vh>
+<v t="edream.110203113231"><vh>@thin pluginsNotes.txt</vh></v>
+<v t="ekr.20040918165427"><vh>To do in 4.3</vh>
+<v t="ekr.20040918165144"><vh>4.3 Prototypes as plugins</vh>
+<v t="EKR.20040611044600"><vh>Mulder undo</vh>
+<v t="bwmulder.20040601212737"><vh>basic_undo.py</vh>
+<v t="bwmulder.20040601212737.1"><vh>class passthrough</vh>
+<v t="bwmulder.20040601212737.2"><vh>__init__</vh></v>
+<v t="bwmulder.20040601212737.3"><vh>__set__</vh></v>
+<v t="bwmulder.20040601212737.4"><vh>__get__</vh></v>
+</v>
+<v t="bwmulder.20040601212737.5"><vh>class scalar_monitor</vh>
+<v t="bwmulder.20040601212737.6"><vh>__init__</vh></v>
+<v t="bwmulder.20040601212737.7"><vh>__set__</vh></v>
+<v t="bwmulder.20040601212737.8"><vh>__get__</vh></v>
+</v>
+<v t="bwmulder.20040601212737.9"><vh>class list_monitor</vh>
+<v t="bwmulder.20040605231305"><vh>__init__</vh></v>
+<v t="bwmulder.20040601212737.10"><vh>set_monitor_object</vh></v>
+<v t="bwmulder.20040601212737.11"><vh>__setitem__</vh></v>
+<v t="bwmulder.20040601212737.12"><vh>__delitem__</vh></v>
+<v t="bwmulder.20040601212737.13"><vh>append</vh></v>
+<v t="bwmulder.20040602152548"><vh>pop</vh></v>
+</v>
+<v t="bwmulder.20040601212737.14"><vh>class list_monitor_in_instance</vh>
+<v t="bwmulder.20040601212737.15"><vh>__init__</vh></v>
+<v t="bwmulder.20040601212737.16"><vh>__set__</vh></v>
+<v t="bwmulder.20040601212737.17"><vh>__get__</vh></v>
+</v>
+<v t="bwmulder.20040602153618"><vh>class dict_monitor</vh>
+<v t="bwmulder.20040605231401"><vh>__init__</vh></v>
+<v t="bwmulder.20040602153642"><vh>set_monitor_object</vh></v>
+<v t="bwmulder.20040602153723"><vh>__setitem__</vh></v>
+<v t="bwmulder.20040602153835"><vh>__delitem__</vh></v>
+</v>
+<v t="bwmulder.20040602154259"><vh>class  dict_monitor_in_instance</vh>
+<v t="bwmulder.20040602154259.1"><vh>__init__</vh></v>
+<v t="bwmulder.20040602154259.2"><vh>__set__</vh></v>
+<v t="bwmulder.20040602154259.3"><vh>__get__</vh></v>
+</v>
+<v t="bwmulder.20040601212737.18"><vh>class monitor</vh>
+<v t="bwmulder.20040601212737.19"><vh>__init__</vh></v>
+<v t="bwmulder.20040601214251"><vh>scalars</vh>
+<v t="bwmulder.20040601212737.20"><vh>monitor_scalar</vh></v>
+<v t="bwmulder.20040601212737.24"><vh>scalar_set</vh></v>
+<v t="bwmulder.20040601212737.25"><vh>scalar_modify</vh></v>
+</v>
+<v t="bwmulder.20040601215339"><vh>lists</vh>
+<v t="bwmulder.20040601212737.21"><vh>monitor_list_attribute_in_class</vh></v>
+<v t="bwmulder.20040601212737.26"><vh>list_create</vh></v>
+<v t="bwmulder.20040601212737.27"><vh>list_set</vh></v>
+<v t="bwmulder.20040601212737.28"><vh>list_del</vh></v>
+<v t="bwmulder.20040601212737.29"><vh>list_append</vh></v>
+</v>
+<v t="bwmulder.20040602165344"><vh>dicts</vh>
+<v t="bwmulder.20040602165402"><vh>monitor_dict_attribute_in_class</vh></v>
+<v t="bwmulder.20040602165506"><vh>dict_create</vh></v>
+<v t="bwmulder.20040602165513"><vh>dict_set</vh></v>
+<v t="bwmulder.20040602165553"><vh>dict_del</vh></v>
+</v>
+<v t="bwmulder.20040601215339.1"><vh>switching on and off</vh>
+<v t="bwmulder.20040601212737.22"><vh>enable</vh></v>
+<v t="bwmulder.20040602164627"><vh>enable_put_in_removed_functions</vh></v>
+<v t="bwmulder.20040602154259.4"><vh>enable_category</vh></v>
+<v t="bwmulder.20040602161525"><vh>disable_category</vh></v>
+<v t="bwmulder.20040601212737.23"><vh>disable</vh></v>
+<v t="bwmulder.20040603081718"><vh>remove_overrides_in_list_and_dict_monitor</vh></v>
+</v>
+</v>
+<v t="bwmulder.20040601222230"><vh>class basic_undomechanism</vh>
+<v t="bwmulder.20040601222230.1"><vh>__init__</vh></v>
+<v t="bwmulder.20040602171606"><vh>reset</vh></v>
+<v t="bwmulder.20040601222230.2"><vh>scalars</vh>
+<v t="bwmulder.20040601222230.3"><vh>scalar_set</vh></v>
+<v t="bwmulder.20040601222230.4"><vh>scalar_set_undo</vh></v>
+<v t="bwmulder.20040601222230.5"><vh>scalar_set_redo</vh></v>
+<v t="bwmulder.20040601222230.6"><vh>scalar_modify</vh></v>
+<v t="bwmulder.20040601222431"><vh>scalar_modify_undo</vh></v>
+</v>
+<v t="bwmulder.20040602075341"><vh>lists</vh>
+<v t="bwmulder.20040602084701.1"><vh>creation</vh>
+<v t="bwmulder.20040602175523"><vh>list_assignment_replace</vh></v>
+<v t="bwmulder.20040602175523.1"><vh>list_assignment_replace_undo</vh></v>
+<v t="bwmulder.20040602175740"><vh>list_assignment_replace_redo</vh></v>
+<v t="bwmulder.20040602183806"><vh>list_assignment_new</vh></v>
+<v t="bwmulder.20040602183814"><vh>list_assignment_new_undo</vh></v>
+<v t="bwmulder.20040602183911"><vh>list_assignment_new_redo</vh></v>
+<v t="bwmulder.20040602075341.1"><vh>list_create</vh></v>
+<v t="bwmulder.20040602084701.2"><vh>list_create_undo</vh></v>
+<v t="bwmulder.20040602084701.3"><vh>list_create_redo</vh></v>
+</v>
+<v t="bwmulder.20040602084701.4"><vh>setting</vh>
+<v t="bwmulder.20040602085955"><vh>list_set</vh></v>
+<v t="bwmulder.20040602085955.1"><vh>list_set_undo</vh></v>
+</v>
+<v t="bwmulder.20040602085955.2"><vh>deletion</vh>
+<v t="bwmulder.20040602085955.3"><vh>list_del</vh></v>
+<v t="bwmulder.20040602085955.4"><vh>list_del_undo</vh></v>
+<v t="bwmulder.20040602085955.5"><vh>list_del_redo</vh></v>
+</v>
+<v t="bwmulder.20040602151709"><vh>append</vh>
+<v t="bwmulder.20040602152051"><vh>list_append</vh></v>
+<v t="bwmulder.20040602152051.1"><vh>list_append_undo</vh></v>
+<v t="bwmulder.20040602152051.2"><vh>list_append_redo</vh></v>
+</v>
+<v t="bwmulder.20040602152548.1"><vh>pop</vh>
+<v t="bwmulder.20040602152548.2"><vh>list_pop</vh></v>
+</v>
+</v>
+<v t="bwmulder.20040602171032"><vh>dictionaries</vh>
+<v t="bwmulder.20040602171032.1"><vh>creation</vh>
+<v t="bwmulder.20040602175801"><vh>dictionary creation</vh></v>
+<v t="bwmulder.20040602171032.2"><vh>dict_create</vh></v>
+<v t="bwmulder.20040602171032.3"><vh>dict_create_undo</vh></v>
+<v t="bwmulder.20040602171032.4"><vh>dict_create_redo</vh></v>
+</v>
+<v t="bwmulder.20040602171032.5"><vh>setting</vh>
+<v t="bwmulder.20040602171032.6"><vh>dict_set</vh></v>
+<v t="bwmulder.20040602171032.7"><vh>dict_set_undo</vh></v>
+</v>
+<v t="bwmulder.20040602171032.8"><vh>deletion</vh>
+<v t="bwmulder.20040602171032.9"><vh>dict_del</vh></v>
+<v t="bwmulder.20040602171032.10"><vh>dict_del_undo</vh></v>
+<v t="bwmulder.20040602171032.11"><vh>dict_del_redo</vh></v>
+</v>
+</v>
+<v t="bwmulder.20040601224447"><vh>the undo machinery</vh>
+<v t="bwmulder.20040603211921"><vh>queries</vh>
+<v t="bwmulder.20040601224447.5"><vh>canUndo</vh></v>
+<v t="bwmulder.20040601224447.6"><vh>canRedo</vh></v>
+<v t="bwmulder.20040603212552"><vh>commands</vh></v>
+<v t="bwmulder.20040603212612"><vh>commands_to_undo</vh></v>
+<v t="bwmulder.20040603212713"><vh>commands_to_redo</vh></v>
+<v t="bwmulder.20040604165011"><vh>steps_stored</vh></v>
+<v t="bwmulder.20040605220919"><vh>print_commands</vh></v>
+</v>
+<v t="bwmulder.20040601224447.2"><vh>mark</vh></v>
+<v t="bwmulder.20040601224447.3"><vh>undo</vh></v>
+<v t="bwmulder.20040601224447.4"><vh>redo</vh></v>
+<v t="bwmulder.20040603212934"><vh>rollback</vh></v>
+<v t="bwmulder.20040601222649"><vh>run_commands</vh></v>
+</v>
+</v>
+</v>
+<v t="bwmulder.20040602221559"><vh>basic_undo_test.py</vh>
+<v t="bwmulder.20040602223236"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="bwmulder.20040602223236.1"><vh>class tracer</vh>
+<v t="bwmulder.20040602223236.2"><vh>__getattr__</vh></v>
+<v t="bwmulder.20040602223906"><vh>catchall</vh></v>
+</v>
+<v t="bwmulder.20040602224231"><vh>class delegator</vh>
+<v t="bwmulder.20040602224413"><vh>__init__</vh></v>
+<v t="bwmulder.20040602224332"><vh>__getattr__</vh></v>
+<v t="bwmulder.20040602231914"><vh>catchall</vh></v>
+<v t="bwmulder.20040602231934"><vh>enable_category</vh></v>
+</v>
+<v t="bwmulder.20040602225640"><vh>class basic_scalar_test</vh>
+<v t="bwmulder.20040602230124"><vh>test_scalar_basic</vh></v>
+<v t="bwmulder.20040604184443"><vh>test_linked_list</vh></v>
+</v>
+<v t="bwmulder.20040605104941"><vh>class basic_list_test</vh>
+<v t="bwmulder.20040605105746"><vh>test_lists_basic</vh></v>
+<v t="bwmulder.20040605174728"><vh>test_lists_replace</vh></v>
+</v>
+<v t="bwmulder.20040605180204"><vh>class basic_dict_test</vh>
+<v t="bwmulder.20040605180225"><vh>test_dicts_basic</vh></v>
+<v t="bwmulder.20040605180245"><vh>test_dicts_replace</vh></v>
+</v>
+<v t="bwmulder.20040602230426"><vh>test_main</vh></v>
+</v>
+</v>
+<v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
+<v t="ekr.20040722115324"><vh>Create a configurable pretty printer plugin</vh></v>
+<v t="ekr.20040918165144.1"><vh>Draw config dialog</vh></v>
+<v t="ekr.20040918165144.2"><vh>Parse jEdit description files</vh></v>
+<v t="ekr.20040918165144.3"><vh>Convert to Python indices</vh></v>
+<v t="ekr.20040918165144.4"><vh>Convert to new Undo</vh></v>
+<v t="ekr.20040918165144.5"><vh>New syntax coloring (threaded)</vh></v>
+<v t="ekr.20040918165144.6"><vh>Check Import feature</vh></v>
+<v t="ekr.20040918165144.7"><vh>Emacs-style keystroke handling</vh></v>
+<v t="ekr.20040918165144.8"><vh>Maybe:  add translation feature to g.es</vh></v>
+<v t="ekr.20040918165144.9"><vh>Write script to find args to g.es()</vh></v>
+<v t="ekr.20040918165144.10"><vh>New atFile organization (user tangle/untangle)</vh></v>
+<v t="ekr.20040918165350"><vh>Create status line class</vh></v>
+</v>
+<v t="ekr.20040918165427.2"><vh>** Add incremental search to search plugin (make find panel smaller)</vh></v>
+<v t="ekr.20040918165427.4"><vh>Autocompletion dictionary files</vh></v>
+<v t="ekr.20040918165427.5"><vh>Leo to docbook xml plugin: Leo2AsciiDoc</vh></v>
+<v t="ekr.20040918165427.6"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
+</v>
+<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
 <v t="ekr.20040919094459"><vh> PLEASE follow this style guide</vh>
 <v t="ekr.20040919081244"><vh>@thin style_guide.py</vh></v>
 </v>
@@ -102,7 +289,7 @@ expanded="ekr.20040918165144,EKR.20040611044600,bwmulder.20040601212737,bwmulder
 <v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
 </v>
 </v>
-<v t="ekr.20040916153817"><vh> Dyna plugins</vh>
+<v t="ekr.20040916153817"><vh>Dyna plugins</vh>
 <v t="ekr.20040916153817.1"><vh>@thin dyna_menu.py</vh></v>
 <v t="ekr.20040916153817.66"><vh>@thin exSButton.py</vh></v>
 <v t="ekr.20040916153817.70"><vh>@thin dynacommon.py</vh></v>
@@ -119,6 +306,7 @@ expanded="ekr.20040918165144,EKR.20040611044600,bwmulder.20040601212737,bwmulder
 <v t="edream.110203113231.921"><vh>@thin redefine_put.py</vh></v>
 </v>
 <v t="ekr.20040722135402"><vh>Enhancing the icon and status areas</vh>
+<v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
 <v t="EKR.20040517075915" tnodeList="EKR.20040517075915,EKR.20040517075915.1,EKR.20040517075915.2,EKR.20040517075915.3,EKR.20040517075915.4,EKR.20040517075915.5,EKR.20040517075915.6,EKR.20040517075915.7,EKR.20040517075915.8,EKR.20040517075915.9,EKR.20040517075915.10,EKR.20040517075915.11,EKR.20040517075915.12,EKR.20040517075915.13"><vh>@file-noref newButtons.py</vh>
 <v t="EKR.20040517075915.1"><vh>Helper classes</vh>
 <v t="EKR.20040517075915.2"><vh>class FlatOptionMenu</vh></v>
@@ -137,10 +325,17 @@ expanded="ekr.20040918165144,EKR.20040611044600,bwmulder.20040601212737,bwmulder
 <v t="EKR.20040517075915.13"><vh>main code</vh></v>
 </v>
 <v t="ekr.20040331072607"><vh>@thin hoist.py</vh></v>
-<v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
 <v t="ekr.20040108062655"><vh>@thin nodenavigator.py</vh></v>
-<v t="ekr.20040108095351"><vh>@thin rowcol.py</vh></v>
 <v t="ekr.20040107092135.2"><vh>@thin searchbox.py</vh></v>
+<v t="ekr.20041002162608"><vh>Status Line</vh>
+<v t="ekr.20041002162608.1"><vh>Notes</vh>
+<v t="ekr.20041002163806" a="M"><vh>*** How to use Tk bindtags</vh></v>
+<v t="ekr.20041002162608.2"><vh>Delay body display so alt+arrow keys aren't slowed</vh></v>
+<v t="ekr.20041002162608.5"><vh>Request for meta key (see bindtags)</vh></v>
+<v t="ekr.20041002162608.6" a="M"><vh>How to detect changes in text</vh></v>
+</v>
+<v t="ekr.20040201060959"><vh>@thin status_line.py</vh></v>
+</v>
 </v>
 <v t="ekr.20040722135402.1"><vh>Enhancing the body pane</vh>
 <v t="EKR.20040517080517.1"><vh>@thin arrows.py</vh></v>
@@ -182,7 +377,6 @@ expanded="ekr.20040918165144,EKR.20040611044600,bwmulder.20040601212737,bwmulder
 <v t="ekr.20040916084945"><vh>@thin macros.py</vh></v>
 <v t="ekr.20040828122150"><vh>@thin pie_menus.py</vh></v>
 <v t="ekr.20040331153923"><vh>@thin scheduler.py</vh></v>
-<v t="ekr.20040201060959"><vh>@thin status_line.py</vh></v>
 <v t="ekr.20040915144649"><vh>chapters.py</vh>
 <v t="ekr.20040915144649.1"><vh>About .2</vh></v>
 <v t="ekr.20040915144649.2"
@@ -347,7 +541,7 @@ marks="ekr.20040915145407.9,ekr.20040915145407.16,"><vh>@thin chapters.py</vh></
 <v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
 <v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
 <v t="EKR.20040517075715.13"><vh>Word export</vh>
-<v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
+<v t="EKR.20040517075715.14" a="E"><vh>@thin word_export.py</vh></v>
 <v t="EKR.20040517075715.20" tnodeList="EKR.20040517075715.20"><vh>@file-nosent word_export.ini</vh></v>
 </v>
 </v>
@@ -357,15 +551,6 @@ marks="ekr.20040915145407.9,ekr.20040915145407.16,"><vh>@thin chapters.py</vh></
 <v t="ekr.20040331151007"><vh>@thin niceNosent.py</vh></v>
 </v>
 <v t="EKR.20040517080555"><vh>Menus &amp; translations</vh>
-<v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
-<v t="EKR.20040517080555.2"><vh>@thin plugins_menu.py</vh></v>
-<v t="EKR.20040517080555.25"><vh>@thin pluginsTest.py</vh></v>
-<v t="EKR.20040517080555.32"><vh>Notes re plugins menu</vh>
-<v t="EKR.20040517080555.33"><vh> Changes made by E.K.Ream</vh></v>
-<v t="EKR.20040517080555.34"><vh> Design</vh></v>
-<v t="EKR.20040517080555.35"><vh> Initial suggestion from Paul Paterson</vh></v>
-</v>
-</v>
 <v t="ekr.20040828105233"><vh>@thin chinese_menu.py</vh></v>
 <v t="EKR.20040517080202.3"><vh>@thin french_fm.py</vh></v>
 <v t="EKR.20040517080555.36"><vh>@thin scripts_menu.py</vh></v>
@@ -401,15 +586,54 @@ marks="ekr.20040910070811.10,"><vh>@thin run_nodes.py</vh></v>
 </v>
 <v t="ekr.20040915085351"><vh>@thin at_produce.py</vh></v>
 </v>
+<v t="ekr.20041009112303"><vh>Plugins manager &amp; menu</vh>
+<v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
+<v t="EKR.20040517080555.2"
+expanded="EKR.20040517080555.3,EKR.20040517080555.23,"><vh>@thin plugins_menu.py</vh></v>
+<v t="EKR.20040517080555.25"
+expanded="EKR.20040517080555.28,EKR.20040517080555.30,"><vh>@thin pluginsTest.py</vh></v>
+<v t="EKR.20040517080555.32"><vh>Notes re plugins menu</vh>
+<v t="EKR.20040517080555.33"><vh> Changes made by E.K.Ream</vh></v>
+<v t="EKR.20040517080555.34"><vh> Design</vh></v>
+<v t="EKR.20040517080555.35"><vh> Initial suggestion from Paul Paterson</vh></v>
+</v>
+</v>
+<v t="ekr.20041010104051"><vh>(Changes)</vh>
+<v t="pap.20041006194759"><vh>getDetails</vh></v>
+<v t="pap.20041008224625"><vh>showPlugin</vh></v>
+<v t="pap.20041006212131"><vh>getName</vh></v>
+<v t="pap.20041006215108.1"><vh>ManagerDialog._init__</vh>
+<v t="ekr.20041010110321"><vh>&lt;&lt; create top level window &gt;&gt;</vh></v>
+<v t="ekr.20041010110321.1"><vh>&lt;&lt; create frames &gt;&gt;</vh></v>
+<v t="pap.20041006223915.1"><vh>&lt;&lt; create pluginView &gt;&gt;</vh></v>
+<v t="pap.20041006223915"><vh>&lt;&lt; create PluginList &gt;&gt;</vh></v>
+<v t="pap.20041006223915.2"><vh>&lt;&lt; create local buttons &gt;&gt;</vh></v>
+<v t="pap.20041009020000"><vh>&lt;&lt; create remote buttons &gt;&gt;</vh></v>
+<v t="pap.20041006224808"><vh>&lt;&lt; create message bar &gt;&gt;</vh></v>
+</v>
+<v t="pap.20041009233937.1"><vh>ListReportDialog.__init__</vh>
+<v t="ekr.20041010111700"><vh>&lt;&lt; create the top level frames &gt;&gt;</vh></v>
+<v t="pap.20041009234256"><vh>&lt;&lt; create the ScrolledListBox &gt;&gt;</vh></v>
+<v t="pap.20041009234256.1"><vh>&lt;&lt; create the OptionMenu &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="pap.20041006184225"
+expanded="pap.20041008224318,pap.20041006192557,"><vh>@thin plugin_manager.py</vh></v>
+</v>
+<v t="ekr.20041001210557"><vh>Scripting</vh>
+<v t="EKR.20040613213623" a="E"><vh>@thin mod_scripting.py</vh></v>
+</v>
 <v t="edream.110203113231.930"><vh>Spell Checking</vh>
 <v t="ekr.20040809165421"><vh>Read me or suffer</vh></v>
 <v t="edream.110203113231.932"><vh>@thin mod_spelling.ini</vh></v>
+<v t="ekr.20041009165858"><vh>@thin spellpyx.ini</vh></v>
 <v t="edream.110203113231.933"><vh>@thin mod_spelling.py</vh></v>
-<v t="ekr.20040809151600"><vh>spellpyx</vh>
+<v t="ekr.20040809151600" a="E"><vh>spellpyx</vh>
 <v t="ekr.20040809165421.1"><vh>Installing this plugin</vh></v>
 <v t="ekr.20040809151600.4"><vh>Notes: e</vh></v>
 <v t="ekr.20040809151600.1"
-marks="ekr.20040915052810,"><vh>@thin spellpyx.py</vh></v>
+marks="ekr.20040915052810,"
+expanded="ekr.20040809151600.10,ekr.20040809151600.11,ekr.20040809151600.16,ekr.20040809151600.17,"><vh>@thin spellpyx.py</vh></v>
 <v t="ekr.20040809151600.52"><vh>aspell-1.1</vh>
 <v t="ekr.20040809160744"><vh>Notes: e</vh></v>
 <v t="ekr.20040809161108"><vh>Notes: Gary Bishop</vh></v>
@@ -426,8 +650,11 @@ marks="ekr.20040915052810,"><vh>@thin spellpyx.py</vh></v>
 </v>
 </v>
 </v>
-<v t="EKR.20040517090508" a="E"><vh>Enable plugins by changing pluginsManager.txt</vh>
-<v t="edream.120603093808" a="ETV"><vh>@thin pluginsManager.txt</vh></v>
+<v t="EKR.20040517090508"><vh>Enable plugins by changing pluginsManager.txt</vh>
+<v t="edream.120603093808" a="E"><vh>@thin pluginsManager.txt</vh></v>
+</v>
+<v t="ekr.20040929104807" a="E"><vh>4.3 prototype plugins</vh>
+<v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -900,6 +1127,1073 @@ Traceback (most recent call last):
   File "c:\prog\leoCVS\leo\src\leoFileCommands.py", line 145, in createVnode
     p.v.unknownAttributes = attrDict
 NameError: global name 'p' is not defined</t>
+<t tx="EKR.20040611044600"></t>
+<t tx="bwmulder.20040601212737">"""
+Define a general purpose monitor module.
+
+Can be used for classes derived from "object" to intercept assignment to instance attributes.
+
+For lists and dictionaries, it also offers drop-in replacements which monitor all changes to those list and mappings.
+
+This module also includes a basic undo / redo mechanism.
+
+For this undo / redo mechanism, it is important that the undo / redo steps do not trigger any monitoring calls. 
+This module should fullfill that requirement.
+
+For scalars, we put "scalar_monitor" into the attribute slot to intercept accesses to the attribute. The values
+themselves live in a differnt, "private" attribute. These private attributes are accessed directly for the
+undo / redo steps.
+
+For dictionaries and lists, we extend the base types. The undo / redo mechanism 
+uses the methods of the basic type.
+
+If you assign a list or a dictionary to a monitored attribute, the list or mapping is automatically converted to
+a monitored list or mapping (but only one level deep).
+
+[Question: do we need a convenience function which does this recursively?]
+"""
+
+@language python
+@tabwidth -4
+
+@others
+</t>
+<t tx="bwmulder.20040601212737.1">class passthrough(object):
+    """
+    Instances of this class are used to disable monitoring.
+    The values are just passed through.
+    """
+    @others
+
+</t>
+<t tx="bwmulder.20040601212737.2">def __init__(self, private_attributename):
+   self.private_attributename = private_attributename
+</t>
+<t tx="bwmulder.20040601212737.3">def __set__( self, instance, value):
+   setattr(instance, self.private_attributename, value)
+</t>
+<t tx="bwmulder.20040601212737.4">def __get__(self, instance, owner):
+   return getattr(instance, self.private_attributename)
+</t>
+<t tx="bwmulder.20040601212737.5">   
+class scalar_monitor(object):
+    """
+   Monitor a scalar attribute.
+   A scalar attribute is an attribute whose values do not have internal structure.
+   Used for Integers and references.
+    """
+    @others
+</t>
+<t tx="bwmulder.20040601212737.6">def __init__(self, external_attributename, monitor_object):
+    self.external_attributename = external_attributename
+    self.private_attributename = '__' + external_attributename
+    self.monitor_object = monitor_object
+</t>
+<t tx="bwmulder.20040601212737.7">def __set__( self, instance, value):
+    private_attributename = self.private_attributename
+    external_attributename = self.external_attributename
+    try:
+        oldvalue = getattr(instance, private_attributename)
+    except AttributeError:
+        self.monitor_object.scalar_set(instance, private_attributename, external_attributename)
+    else:
+        if oldvalue != value:
+            self.monitor_object.scalar_modify(instance, private_attributename, external_attributename, oldvalue)
+    setattr(instance, private_attributename, value)
+
+</t>
+<t tx="bwmulder.20040601212737.8">def __get__(self, instance, owner):
+   return getattr(instance, self.private_attributename)
+
+</t>
+<t tx="bwmulder.20040601212737.9">class list_monitor(list):
+    """
+    Monitor changes to a list.
+    
+    Calls a "monitor_object" whenever changes are made to a list.
+    
+    You can use this class whenever you want to track changes to a list.
+    """
+    @others
+</t>
+<t tx="bwmulder.20040601212737.10">def set_monitor_object(self, monitor_object):
+    """
+    All changes to this list will trigger calls to monitor_object methods
+    """
+    self.monitor_object = monitor_object
+
+</t>
+<t tx="bwmulder.20040601212737.11">def __setitem__( self, key, value):
+    """
+    Intercept the l[key]=value operations.
+    Also covers slice assignment.
+    """
+    try:
+        oldvalue = self.__getitem__(key)
+    except KeyError:
+        self.monitor_object.list_create(self, key)
+    else:
+        self.monitor_object.list_set(self, key, oldvalue)
+    list.__setitem__(self, key, value)
+</t>
+<t tx="bwmulder.20040601212737.12">def __delitem__( self, key):
+   oldvalue = list.__getitem__(self, key)
+   self.monitor_object.list_del(self, key, oldvalue)
+   list.__delitem__(self, key)
+</t>
+<t tx="bwmulder.20040601212737.13">def append(self, value):
+   self.monitor_object.list_append(self)
+   list.append(self, value)
+
+
+</t>
+<t tx="bwmulder.20040601212737.14">class list_monitor_in_instance(object):
+    """
+    Monitor instance attributes which contain a list as a value.
+
+    Assignments to this attributes, which must be lists, are replaced by instances of 'list_monitor'.
+   """
+    @others
+</t>
+<t tx="bwmulder.20040601212737.15">def __init__(self, external_attributename, monitor_object):
+    self.external_attributename = external_attributename
+    self.internal_attributename = '__' + external_attributename
+    self.monitor_object = monitor_object
+</t>
+<t tx="bwmulder.20040601212737.16">def __set__(self, instance, value):
+    """Intercept assignments to the external attribute"""
+    assert isinstance(value, type([]))
+    if isinstance(value, list_monitor):
+        newvalue = value
+        # if the value is already a list monitor, assume that this value
+        # is already monitored. Do not create a new value.
+    else:
+        newvalue = list_monitor(value, self.monitor_object)
+    internal_attributename = self.internal_attributename
+    try:
+        oldvalue = getattr(instance, internal_attributename)
+    except AttributeError:
+        self.monitor_object.list_assignment_new(instance, internal_attributename)
+    else:
+        self.monitor_object.list_assignment_replace(instance, internal_attributename, oldvalue)
+    setattr(instance, self.internal_attributename, newvalue)
+
+</t>
+<t tx="bwmulder.20040601212737.17">def __get__(self, instance, owner):
+   try:
+      return instance.__dict__[self.internal_attributename]
+   except KeyError: 
+      return instance.__dict__[self.external_attributename]
+
+</t>
+<t tx="bwmulder.20040601212737.18">class monitor:
+    """
+   Monitor changes to (new style) classes.
+
+   To use:
+      1. 
+            a) Call monitor_scalar(klass, external_attributename, internal_attributename)
+                    for each scalar attribute you want to monitor.
+
+                A scalar attribute is an attribute without internal structure (int and reference).
+
+                The normal Python comparison operation (=) is used to check if a new value is stored
+                in an instance attribute.
+                
+            b) Call monitor_list(klass, external_attributename, internal_attributename) for each
+               list attribute you want to monitor.
+                
+           c) Call monitor_dict(klass, external_attributename, internal_attributename) for each
+               dict attribute you want to monitor.
+         
+      2. 
+            Call enable / disable to enable / disable monitoring.
+
+   This is an abstract class.
+   
+   Concrete subclasses are the classes "tracer" and "basic_undomechanism". The latter does most
+   (almost all) of the work of a (fairly) general undo mechanism.
+
+   Limitations:
+   
+      Assumes that instance attributes are used consistently with certain types.
+      
+   """
+    @others
+</t>
+<t tx="bwmulder.20040601212737.19">def __init__(self):
+   self.monitored_scalar_attributes = []
+   self.monitored_list_attributes = []
+   self.monitored_dict_attributes = []
+   self.removed_functions = []
+   
+   self.monitor_object = self
+   # See enable_category.
+   
+   # Overwriting this one attribute allows
+   # Clients of this module to implemente tracing of all
+   # calls to this module.
+   
+</t>
+<t tx="bwmulder.20040601212737.20">def monitor_scalar(self, klass, external_attributename):
+   """
+   Put in a hook so that we can monitor modications to instances of classref'
+   with respect to the attribute "attributename".
+
+   It is assumed that the attribute only contains scalar objects. A scalar
+   object is an object which is unstructured, and not shared.
+   """
+   self.monitored_scalar_attributes.append(
+      (klass, external_attributename))
+</t>
+<t tx="bwmulder.20040601212737.21">def monitor_list_attribute_in_class(self, klass, external_attributename):
+   self.monitored_list_attributes.append(
+      (klass, external_attributename))
+</t>
+<t tx="bwmulder.20040601212737.22">def enable(self):
+    for l, klass in ((self.monitored_scalar_attributes, scalar_monitor),
+             (self.monitored_list_attributes, list_monitor_in_instance),
+             (self.monitored_dict_attributes, dict_monitor_in_instance)):
+        self.enable_category(l, klass)
+        
+    self.enable_put_in_removed_functions()
+    
+
+</t>
+<t tx="bwmulder.20040601212737.23">def disable(self):
+    """
+    Disable monitoring (temporarily).
+    """
+    for l, klass in ((self.monitored_scalar_attributes, scalar_monitor),
+                     (self.monitored_list_attributes, list_monitor_in_instance),
+                     (self.monitored_dict_attributes, dict_monitor_in_instance)):
+        self.disable_category(l, klass)
+    
+    self.remove_overrides_in_list_and_dict_monitor()
+    
+</t>
+<t tx="bwmulder.20040601212737.24">def scalar_set(self, instance, private_attributename, external_attributename):
+   raise notImplementedError
+</t>
+<t tx="bwmulder.20040601212737.25">def scalar_modify(self, instance, private_attributename, external_attributename, oldvalue):
+   raise notImplementedError
+</t>
+<t tx="bwmulder.20040601212737.26">def list_create(self, array, key, value):
+   raise notImplementedError
+</t>
+<t tx="bwmulder.20040601212737.27">def list_set(self, array, key, value):
+   raise notImplementedError
+</t>
+<t tx="bwmulder.20040601212737.28">def list_del(self, array, key, oldvalue):
+   raise notImplementedError
+</t>
+<t tx="bwmulder.20040601212737.29">def list_append(self, array, value):
+   raise notImplementedError
+</t>
+<t tx="bwmulder.20040601214251"></t>
+<t tx="bwmulder.20040601215339"></t>
+<t tx="bwmulder.20040601215339.1">@doc
+Delayed activation of the monitor mechanism is probably useful.
+
+Not clear of switching off and on is useful, though.</t>
+<t tx="bwmulder.20040601222230">class basic_undomechanism(monitor):
+    """
+    This class provides the basic operations for undoable operations.
+    
+    Records a list of changes which it will undo or redo one by one.
+    
+    The granularity of the undo / redo operations is determined by calls to
+    the 'mark' procedure. Only immediately after the 'mark' call can undo be called.
+    Redo can only be called after calling undo.
+    
+    'rollback' is a special case of undo: it is not redoable. The envisioned usage of
+    this facility is in error recovery: if a command does not go through, you can call
+    this command to undo all your changes (and leave the application in a consistent state).
+    
+    Uses the monitor_scalar, monitor_list_attribute_in_class and monitor_dict_attribute_in_class
+    methods to make assignment to instance variables undoable.
+    
+    Call 'enable' to activate the undo mechanism, 'disable' to temporarily
+    stop the undo mechanism from collecting information about changes.
+    
+    The individual changes are bundled into "_commands'. The boundaries of
+    these _commands are marked by a call to the procedure "mark".
+    
+    The procedure 'reset' can be called externally to erase all undo information.
+    
+    Individual lists and dictionaries can also be monitored for change with the
+    list_monitor and dict_monitor classes.
+    
+    Possible optimizations later: special handling for string attributes.
+    """
+    @others</t>
+<t tx="bwmulder.20040601222230.1">def __init__(self):
+
+    monitor.__init__(self)
+    self.reset()
+    </t>
+<t tx="bwmulder.20040601222230.2"></t>
+<t tx="bwmulder.20040601222230.3">def scalar_set(self, instance, private_attributename, external_attributename):
+   self._steps.append((self.scalar_set_undo, (instance, private_attributename)))
+    
+
+</t>
+<t tx="bwmulder.20040601222230.4">def scalar_set_undo(self, instance, private_attributename):
+
+    """Undo the changes done by the assignment of an instance"""
+    newvalue = getattr(instance, private_attributename)
+    delattr(instance, private_attributename)
+    return self.scalar_set_redo, (instance, private_attributename, newvalue)
+</t>
+<t tx="bwmulder.20040601222230.5">def scalar_set_redo(self, instance, private_attributename, newvalue):
+
+    setattr(instance, private_attributename, newvalue)
+    return self.scalar_set_undo, (instance, private_attributename)
+</t>
+<t tx="bwmulder.20040601222230.6">def scalar_modify(self, instance, private_attributename, external_attributename, oldvalue):
+
+  self._steps.append((self.scalar_modify_undo, (instance, private_attributename, oldvalue)))
+</t>
+<t tx="bwmulder.20040601222431">def scalar_modify_undo(self, instance, private_attributename, oldvalue):
+
+    new_value = getattr(instance, private_attributename)
+    setattr(instance, private_attributename, oldvalue)
+    return self.scalar_modify_undo, (instance, private_attributename, new_value)</t>
+<t tx="bwmulder.20040601222649">def run_commands(self, steps):
+    
+    """
+    Run the undo / redo _steps.
+    Returns the list of steps to redo / undo the steps just made.
+    """
+
+    steps.reverse()
+    return [func(*args) for func, args in steps]
+</t>
+<t tx="bwmulder.20040601224447"></t>
+<t tx="bwmulder.20040601224447.2">def mark(self):
+    
+    """Mark the end of the current commmand."""
+
+    if self._steps:
+        self._commands[self._index+1:] = [self._steps, None]
+        self._index += 1
+        self._steps = []</t>
+<t tx="bwmulder.20040601224447.3">def undo(self):
+
+    assert self.canUndo()
+    self._commands[self._index] = self.run_commands(self._commands[self._index])
+    self._index -= 1
+    
+</t>
+<t tx="bwmulder.20040601224447.4">def redo(self):
+
+    assert self.canRedo()
+    self._commands[self._index+1] = self.run_commands(self._commands[self._index+1])
+    self._index += 1</t>
+<t tx="bwmulder.20040601224447.5">def canUndo(self):
+    
+    return self._commands[self._index] is not None and len(self._steps) == 0
+</t>
+<t tx="bwmulder.20040601224447.6">def canRedo(self):
+    return self._commands[self._index+1] is not None and len(self._steps) == 0</t>
+<t tx="bwmulder.20040602075341"></t>
+<t tx="bwmulder.20040602075341.1">def list_create(self, array, key):
+    self._steps.append((self.list_create_undo, (array, key)))
+
+</t>
+<t tx="bwmulder.20040602084701.1"></t>
+<t tx="bwmulder.20040602084701.2">def list_create_undo(self, array, key):
+    value = list.__getitem__(array, key)
+    list.__delitem__(array, key)
+    return self.list_create_redo, (array, key, value)
+
+</t>
+<t tx="bwmulder.20040602084701.3">def list_create_redo(self, array, key, value):
+    list.__setitem__(array, key, value)
+    return self.list_create_undo, (array, key)</t>
+<t tx="bwmulder.20040602084701.4"></t>
+<t tx="bwmulder.20040602085955">def list_set(self, array, key, oldvalue):
+    self._steps.append((self.list_set_undo, (array, key, oldvalue)))
+
+</t>
+<t tx="bwmulder.20040602085955.1">def list_set_undo(self, array, key, value):
+    oldvalue = list.__getitem__(array, key)
+    list.__setitem__(array, key, value)
+    return self.list_set_undo, (array, key, oldvalue)
+</t>
+<t tx="bwmulder.20040602085955.2"></t>
+<t tx="bwmulder.20040602085955.3">def list_del(self, array, key, oldvalue):
+   self._steps.append((self.list_del_undo, (array, key, oldvalue)))
+   
+</t>
+<t tx="bwmulder.20040602085955.4">def list_del_undo(self, array, key, oldvalue):
+    if type(key) == type(1):
+        list.__setitem__(array, slice(key, key), [oldvalue])
+    else:
+        list.__setitem__(array, key, oldvalue)
+    return self.list_del_redo, (array, key, oldvalue)
+</t>
+<t tx="bwmulder.20040602085955.5">def list_del_redo(self, array, key, oldvalue):
+    oldvalue = list.__getitem__(array, key)
+    list.__delitem__(array, key)
+    return self.list_del_undo, (array, key, oldvalue)
+</t>
+<t tx="bwmulder.20040602151709"></t>
+<t tx="bwmulder.20040602152051">def list_append(self, array):
+    self._steps.append((self.list_append_undo, (array,)))
+    
+
+
+</t>
+<t tx="bwmulder.20040602152051.1">def list_append_undo(self, array):
+    oldvalue = list.pop(array)
+    return self.list_append_redo, (array, oldvalue)
+</t>
+<t tx="bwmulder.20040602152051.2">def list_append_redo(self, array, oldvalue):
+    list.append(array, oldvalue)
+    return self.list_append_undo, (array,)</t>
+<t tx="bwmulder.20040602152548">def pop(self):
+    oldvalue = list.pop(self)
+    self.monitor_object.list_pop(self, oldvalue)
+</t>
+<t tx="bwmulder.20040602152548.1"></t>
+<t tx="bwmulder.20040602152548.2">def list_pop(self, array, oldvalue):
+    self._steps.append((self.list_append_redo, (array, oldvalue)))
+</t>
+<t tx="bwmulder.20040602153618">class dict_monitor(dict):
+    """
+    Overwrite dictionaries so that we can monitor them.
+    """
+    @others
+</t>
+<t tx="bwmulder.20040602153642">def set_monitor_object(self, monitor_object):
+    """
+    All changes to this dictionary will trigger calls to monitor_object methods
+    """
+    self.monitor_object = monitor_object
+
+</t>
+<t tx="bwmulder.20040602153723">def __setitem__( self, key, value):
+    """
+    Intercept the l[key]=value operations.
+    Also covers slice assignment.
+    """
+    try:
+        oldvalue = self.__getitem__(key)
+    except KeyError:
+        self.monitor_object.dict_create(self, key, value)
+    else:
+        self.monitor_object.dict_set(self, key, oldvalue)
+    dict.__setitem__(self, key, value)
+</t>
+<t tx="bwmulder.20040602153835">def __delitem__( self, key):
+   oldvalue = dict.__getitem__(self, key)
+   self.monitor_object.dict_del(self, key, oldvalue)
+   dict.__delitem__(self, key)
+</t>
+<t tx="bwmulder.20040602154259">class dict_monitor_in_instance(object):
+    """
+    Monitor instance attributes which contain a list as a value.
+
+    Assignments to this attributes, which must be lists, are replaced by instances of 'list_monitor'.
+   """
+    @others
+</t>
+<t tx="bwmulder.20040602154259.1">def __init__(self, external_attributename, monitor_object):
+    self.external_attributename = external_attributename
+    self.internal_attributename = '__' + external_attributename
+    self.monitor_object = monitor_object
+</t>
+<t tx="bwmulder.20040602154259.2">def __set__(self, instance, value):
+    """Intercept assignments to the external attribute"""
+    assert isinstance(value, type({}))
+    if isinstance(value, dict_monitor):
+        newvalue = value
+        # if the value is already a dict_monitor,
+        # assume that the value is already monitored.
+    else:
+        newvalue = dict_monitor(value, self.monitor_object)
+    internal_attributename = self.internal_attributename
+    try:
+        oldvalue = getattr(instance, internal_attributename)
+    except AttributeError:
+        self.monitor_object.list_assignment_new(instance, internal_attributename)
+    else:
+        self.monitor_object.list_assignment_replace(instance, internal_attributename, oldvalue)
+    setattr(instance, self.internal_attributename, newvalue)
+</t>
+<t tx="bwmulder.20040602154259.3">def __get__(self, instance, owner):
+   try:
+      return instance.__dict__[self.internal_attributename]
+   except KeyError: 
+      return instance.__dict__[self.external_attributename]
+
+</t>
+<t tx="bwmulder.20040602154259.4">def enable_category(self, l, monitor_class):
+   for klass, external_attributename in l:
+      setattr(klass, external_attributename, monitor_class(
+         external_attributename, self.monitor_object))
+    </t>
+<t tx="bwmulder.20040602161525">def disable_category(self, l, monitor_class):
+   for klass, external_attributename in l:
+      setattr(klass, external_attributename, passthrough (internal_attributename))
+    
+</t>
+<t tx="bwmulder.20040602164627">def enable_put_in_removed_functions(self):
+    """
+    Reinstate the functions which were removed from list_monitor and dict_monitor.
+    """
+    for klass, attribute, function in self.removed_functions:
+        setattr(klass, attribute, function)
+</t>
+<t tx="bwmulder.20040602165344"></t>
+<t tx="bwmulder.20040602165402">def monitor_dict_attribute_in_class(self, klass, external_attributename):
+   self.monitored_dict_attributes.append(
+      (klass, external_attributename))
+</t>
+<t tx="bwmulder.20040602165506">def dict_create(self, array, key, value):
+   raise notImplementedError
+</t>
+<t tx="bwmulder.20040602165513">def dict_set(self, array, key, value):
+   raise notImplementedError
+</t>
+<t tx="bwmulder.20040602165553">def dict_del(self, array, key, oldvalue):
+   raise notImplementedError
+</t>
+<t tx="bwmulder.20040602171032"></t>
+<t tx="bwmulder.20040602171032.1"></t>
+<t tx="bwmulder.20040602171032.2">def dict_create(self, dictionary, key, value):
+    self._steps.append((self.dict_create_undo, (dictionary, key)))
+
+</t>
+<t tx="bwmulder.20040602171032.3">def dict_create_undo(self, dictionary, key):
+    value = dict.__getitem__(dictionary, key)
+    dict.__delitem__(dictionary, key)
+    return self.dict_create_redo, (dictionary, key, value)
+
+</t>
+<t tx="bwmulder.20040602171032.4">def dict_create_redo(self, dictionary, key, value):
+    dict.__setitem__(dictionary, key, value)
+    return self.dict_create_undo, (dictionary, key,)
+</t>
+<t tx="bwmulder.20040602171032.5"></t>
+<t tx="bwmulder.20040602171032.6">def dict_set(self, dictionary, key, oldvalue):
+    self._steps.append((self.dict_set_undo, (dictionary, key, oldvalue)))
+
+</t>
+<t tx="bwmulder.20040602171032.7">def dict_set_undo(self, dictionary, key, value):
+    oldvalue = dict.__getitem__(dictionary, key)
+    dict.__setitem__(dictionary, key, value)
+    return self.dict_set_undo, (dictionary, key, oldvalue)
+</t>
+<t tx="bwmulder.20040602171032.8"></t>
+<t tx="bwmulder.20040602171032.9">def dict_del(self, dictionary, key, oldvalue):
+   self._steps.append((self.dict_del_undo, (dictionary, key, oldvalue)))
+   
+</t>
+<t tx="bwmulder.20040602171032.10">def dict_del_undo(self, dictionary, key, oldvalue ):
+    dict.__setitem__(dictionary, key, oldvalue)
+    return self.dict_del_redo, (dictionary, key, oldvalue)
+</t>
+<t tx="bwmulder.20040602171032.11">def dict_del_redo(self, dictionary, key, oldvalue ):
+    oldvalue = dict.__getitem__(dictionary, key)
+    dict.__delitem__(dictionary, key)
+    return self.dict_del_undo, (dictionary, key, oldvalue)
+</t>
+<t tx="bwmulder.20040602171606">def reset(self):
+
+    self._steps = []
+    self._commands = [None, None]
+    self._index = 0
+    
+
+
+</t>
+<t tx="bwmulder.20040602175523">def list_assignment_replace(self, instance, attributename, oldvalue):
+    self._steps.append((self.list_assignment_replace_undo, (instance, attributename, oldvalue)))</t>
+<t tx="bwmulder.20040602175523.1">def list_assignment_replace_undo(self, instance, attributename, oldvalue):
+    newvalue = getattr(instance, attributename)
+    setattr(instance, attributename, oldvalue)
+    return self.list_assignment_replace_redo, (instance, attributename, newvalue)</t>
+<t tx="bwmulder.20040602175740">def list_assignment_replace_redo(self, instance, attributename, newvalue):
+    oldvalue = getattr(instance, attributename)
+    setattr(instance, attributename, newvalue)
+    return self.list_assignment_replace_undo, (instance, attributename, oldvalue)
+</t>
+<t tx="bwmulder.20040602175801"># Dictionary monitors are are really handled like
+# list monitors.
+# For now, just use the same methods.
+dict_assignment_new = list_assignment_new
+dict_assignment_new_undo = list_assignment_new_undo
+dict_assignment_new_redo = list_assignment_new_redo
+
+dict_assignment_replace      = list_assignment_replace
+dict_assignment_replace_undo = list_assignment_replace_undo
+dict_assignment_replace_redo = list_assignment_replace_redo</t>
+<t tx="bwmulder.20040602183806">def list_assignment_new(self, instance, attributename):
+    self._steps.append((self.list_assignment_new_undo, (instance, attributename)))</t>
+<t tx="bwmulder.20040602183814">def list_assignment_new_undo(self, instance, attributename):
+    newvalue = getattr(instance, attributename)
+    delattr(instance, attributename)
+    return self.list_assignment_new_redo, (instance, attributename, newvalue)</t>
+<t tx="bwmulder.20040602183911">def list_assignment_new_redo(self, instance, attributename, newvalue):
+    setattr(instance, attributename, newvalue)
+    return self.list_assignment_new_undo, (instance, attributename)
+</t>
+<t tx="bwmulder.20040602221559">&lt;&lt; imports &gt;&gt;
+
+undo_tracing = False
+
+@others
+
+if __name__ == '__main__':
+    test_main()</t>
+<t tx="bwmulder.20040602223236">from basic_undo import monitor, basic_undomechanism, list_monitor, dict_monitor
+import unittest
+from test import test_support
+</t>
+<t tx="bwmulder.20040602223236.1">class tracer(monitor):
+    
+    # The output format could be improved, but this is only for testing.
+    """Simple class which can be used to trace all calls made from a monitor."""
+
+    @others
+
+</t>
+<t tx="bwmulder.20040602223236.2">def __getattr__(self, attributename):
+    self.attributename = attributename
+    return self.catchall</t>
+<t tx="bwmulder.20040602223906">def catchall(self, *args, **kwrds):
+
+    print "Tracer:", self.attributename, ":", args, kwds</t>
+<t tx="bwmulder.20040602224231">class delegator(object):
+    """
+    Simple class to print all arguments passed to a monitor.
+    Allows you to watch the undoer in action...
+    """
+    @others</t>
+<t tx="bwmulder.20040602224332">def __getattr__(self, attributename):
+    self.attributename = attributename
+    return self.catchall</t>
+<t tx="bwmulder.20040602224413">def __init__(self):
+    
+    self.undoer = basic_undomechanism()
+    self.undoer.monitor_object = self
+    
+
+</t>
+<t tx="bwmulder.20040602225640">class basic_scalar_test_class(object):
+    """Simple class for the basic_scalar_test"""
+    pass
+
+class basic_scalar_test(unittest.TestCase):
+    @others</t>
+<t tx="bwmulder.20040602230124">def test_scalar_basic(self):
+    """
+    Some basic testing for the scalar undoer.
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    m.monitor_scalar(basic_scalar_test_class, "x")
+    m.enable()
+    # command 1
+    c = basic_scalar_test_class()
+    c.x = "First value"
+    m.mark()
+    # command 2	
+    c.x = "second value"
+    m.mark()
+    # command 3
+    c.x = "third value"
+    m.mark()
+    # command 4
+    # Check that the second assignment can be undone
+    assert c.x == "third value", c.x
+    m.undo()
+    # command 2
+    assert c.x == "second value"
+    m.undo()
+    # command 1
+    assert c.x == "First value", c.x
+    m.undo()
+    assert not hasattr(c, "x")
+</t>
+<t tx="bwmulder.20040602230426">def test_main():
+
+    test_support.run_unittest(
+        basic_scalar_test,
+        basic_list_test,					
+        basic_dict_test)</t>
+<t tx="bwmulder.20040602231914">def catchall(self, *args, **kwrds):
+    print "delegator:", self.attributename, ":", args, kwrds
+    getattr(self.undoer, self.attributename) (*args, **kwrds)
+</t>
+<t tx="bwmulder.20040602231934">def enable_category(self, l, monitor_class):
+    
+   for klass, external_attributename, internal_attributename in l:
+      setattr(klass, external_attributename, monitor_class(
+         external_attributename, internal_attributename, self))
+    
+
+</t>
+<t tx="bwmulder.20040603081718">def remove_overrides_in_list_and_dict_monitor(self):
+    """
+    Deletes all function definitions in list_monitor and dict_monitor.
+    The net effect of this is that instances of these classes should
+    behave like regular lists and dictionaries.
+    """	
+    import inspect
+    for klass in (list_monitor, dict_monitor):
+        for attribute in dir(klass):
+            try:
+                entity = getattr(klass, attribute)
+            except AttributeError:
+                pass
+            else:
+                if inspect.isfunction(entity):
+                    delattr(klass, attribute)
+                    self.removed_functions.append(klass, attribute, entity)</t>
+<t tx="bwmulder.20040603211921"></t>
+<t tx="bwmulder.20040603212552">def commands(self):
+
+    return len(self._commands) - 2</t>
+<t tx="bwmulder.20040603212612">def commands_to_undo(self):
+
+    return self._index</t>
+<t tx="bwmulder.20040603212713">def commands_to_redo(self):
+    return self.commands() - self._index</t>
+<t tx="bwmulder.20040603212934">def rollback(self):
+
+    self.run_commands(self._steps)
+</t>
+<t tx="bwmulder.20040604165011">def steps_stored(self):
+    """
+    Return the total number of steps stored in the undoer.
+    """
+    result = 0
+    for command in self._commands[1:-1]:
+        result += len(command)
+    return result</t>
+<t tx="bwmulder.20040604184443">def test_linked_list(self):
+    """
+    Shows that the basic undo mechanism can be used to undo the construction of a linked list.
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+
+    # Create a linked list and check that the link operations can be undone.
+    class root_class(object):
+        pass
+        
+    class x(object):
+        def __init__(self, name, next=None):
+            self.name = name
+            self.next = next
+    
+    def p(root):
+        result = []
+        r = root.root
+        while r:
+            result.append(r.name)
+            r = r.next
+        return result
+            
+    undoer = basic_undomechanism()
+    
+    m.monitor_scalar(root_class, "root")
+    m.monitor_scalar(x, "name")
+    m.monitor_scalar(x, "next")
+    m.enable()
+    
+    root = root_class()
+    root.root = x("first")
+    root.root.next = x("second")
+    m.mark()
+    root.root.next.next = x("third")
+    root.root.next.next.next = x("fourth")
+    m.mark()
+    assert p(root) == ["first", "second", "third", "fourth"]
+    m.undo()
+    assert  p(root) == ["first", "second"]
+    m.redo()
+    assert p(root) ==["first", "second", "third", "fourth"]
+    
+    # now try a few things with dictionaries.
+    m.monitor_dict_attribute_in_class(root_class, "d")
+    m.enable()
+    root.d = {}
+    m.mark()
+    root.d = {'Some dict': 1}
+    m.mark()
+    root.d[1] = 2
+    assert root.d == {'Some dict': 1, 1: 2}, root.d
+    m.mark()
+    m.undo()
+    assert root.d == {'Some dict': 1}, root.d
+    m.undo()
+    assert root.d == {}, root.d
+    
+    
+    </t>
+<t tx="bwmulder.20040605104941">class basic_list_test_class(object):
+    """Simple class to test the list undoer"""
+    pass
+
+class basic_list_test(unittest.TestCase):
+    """
+    Test the basic operations of the list class
+    """
+    @others
+        
+</t>
+<t tx="bwmulder.20040605105746">def test_lists_basic(self):
+    """
+    Some basic testing for the list undoer.
+    
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    m.monitor_list_attribute_in_class(basic_list_test_class, "a")
+    m.enable()
+    c = basic_list_test_class()
+    c.a = [1, 2, 3]
+    c.a = c.a
+    m.mark()
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    c.a.append(5)
+    m.mark()
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == [1, 2, 3, 5], c.a
+    m.undo()
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    assert c.a == [1, 2, 3], c.a
+    m.redo()
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == [1, 2, 3, 5], c.a
+    m.undo()
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    m.undo()
+    assert m.commands_to_undo() == 0, m.commands_to_undo()
+    assert m.commands_to_redo() == 2, m.commands_to_redo()
+    assert not hasattr(c, "a"), "A should not exist here"
+    assert m.steps_stored() == 3, m.steps_stored()
+    m.redo()
+    m.redo()
+    assert c.a == [1, 2, 3, 5], c.a
+    del c.a[2]
+    assert c.a == [1, 2, 5], c.a # 1
+    m.mark()
+    m.undo()
+    assert c.a == [1, 2, 3, 5], c.a # 2
+    m.redo()
+    assert c.a == [1, 2, 5], c.a # 3
+    x = c.a.pop()
+    m.mark()
+    assert c.a == [1, 2]
+    m.undo()
+    assert c.a == [1, 2, 5]
+
+    
+
+    
+
+
+</t>
+<t tx="bwmulder.20040605174728">def test_lists_replace(self):
+    """
+    
+    Test that list assignment works for an instance attribute that is put under the
+    undo mechanism.
+    
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    c = basic_list_test_class()
+    m.monitor_list_attribute_in_class(basic_list_test_class, "a")
+    m.enable()
+    c.a = [1, 2, 3]
+    m.mark()
+    m.undo()
+    assert not hasattr(c,"a")
+    m.redo()
+    c.a.append(4)
+    c.a.append(5)
+    assert c.a == [1, 2, 3, 4, 5]
+    m.mark()
+    m.undo()
+    assert c.a == [1, 2, 3]
+    m.redo()
+    assert c.a == [1, 2, 3, 4, 5]
+    b = list_monitor(('a', 'b', 'c'), m)
+    m.enable()
+    b.append('d')
+    assert b == ['a', 'b', 'c', 'd']
+    m.mark()
+    m.undo()
+    assert b == ['a', 'b', 'c']
+    m.redo()
+    assert b == ['a', 'b', 'c', 'd']
+    
+    
+</t>
+<t tx="bwmulder.20040605180204">class basic_dict_test_class(object):
+    """Simple class to test the list undoer"""
+    pass
+
+class basic_dict_test(unittest.TestCase):
+    """
+    Test the basic operations of the list class
+    """
+    @others
+        
+
+</t>
+<t tx="bwmulder.20040605180225">def test_dicts_basic(self):
+    """
+    Some basic testing for the dict undoer.
+    
+    """
+    trace_commands = False
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    m.monitor_dict_attribute_in_class(basic_dict_test_class, "a")
+    m.enable()
+    c = basic_dict_test_class()
+    c.a = {1:1, 2:2, 3:3}
+    c.a = c.a
+    m.mark()
+    if trace_commands:  print; m.print_commands(1)
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    c.a[5] = 5
+    m.mark()
+    if trace_commands: m.print_commands(2)
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 1
+    m.undo()
+    if trace_commands: m.print_commands(3)
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 2
+    m.redo()
+    if trace_commands: m.print_commands(4)
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 3
+    m.undo()
+    if trace_commands: m.print_commands(5)
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 4
+    m.undo()
+    if trace_commands: m.print_commands(6)
+    assert m.commands_to_undo() == 0, m.commands_to_undo()
+    assert m.commands_to_redo() == 2, m.commands_to_redo()
+    assert not hasattr(c, "a"), "A should not exist here"
+    assert m.steps_stored() == 3, m.steps_stored()
+    m.redo()
+    if trace_commands: m.print_commands(7)
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 5
+    m.redo()
+    if trace_commands: m.print_commands(8)
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 6
+    del c.a[5]
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 7
+    m.mark()
+    if trace_commands: m.print_commands(9)
+    m.undo()
+    if trace_commands: m.print_commands(10)
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 8
+    m.redo()
+    if trace_commands: m.print_commands(11)
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 9
+    del c.a[2]
+    m.mark()
+    if trace_commands: m.print_commands(12)
+    assert c.a == {1:1, 3:3}, c.a # 10
+    m.undo()
+    if trace_commands: m.print_commands(13)
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 11</t>
+<t tx="bwmulder.20040605180245">def test_dicts_replace(self):
+    """
+    
+    Test that dict assignment works for an instance attribute that is put under the
+    undo mechanism.
+    
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    c = basic_dict_test_class()
+    m.monitor_dict_attribute_in_class(basic_dict_test_class, "a")
+    m.enable()
+    c.a = {1:1, 2:2, 3:3}
+    m.mark()
+    m.undo()
+    assert not hasattr(c,"a")
+    m.redo()
+    c.a[4] = 4
+    c.a[5] = 5
+    assert c.a == {1:1, 2:2, 3:3, 4:4, 5:5}, c.a # 1
+    m.mark()
+    m.undo()
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 2
+    m.redo()
+    assert c.a ==  {1:1, 2:2, 3:3, 4:4, 5:5}, c.a # 3
+    b = dict_monitor({'a':'a', 'b':'b', 'c':'c'}, m)
+    m.enable()
+    b['d'] = 'd'
+    assert b == {'a':'a', 'b':'b', 'c':'c', 'd':'d'}, b # 4
+    m.mark()
+    m.undo()
+    assert b == {'a':'a', 'b':'b', 'c':'c'}, b # 5
+    m.redo()
+    assert b == {'a':'a', 'b':'b', 'c':'c', 'd':'d'}, b # 6
+    
+    </t>
+<t tx="bwmulder.20040605220919">def print_commands(self, comment):
+    """
+    rint a readable list of all commands
+    """
+    print "===== Commands: %s ========" % comment
+    i = 0
+    while i &lt; len(self._commands):
+        print "Command", i
+        steps = self._commands[i]
+        if steps:
+            for step in steps:
+                function, args = step
+                print "  ",function.__name__, args
+        if i == self._index:
+            print "---------------------"
+        i += 1
+    print "========================"
+</t>
+<t tx="bwmulder.20040605231305">def __init__(self, value, monitor):
+    list.__init__(self, value)
+    self.set_monitor_object(monitor)
+</t>
+<t tx="bwmulder.20040605231401">def __init__(self, value, monitor):
+    dict.__init__(self, value)
+    self.set_monitor_object(monitor)
+</t>
 <t tx="edream.110203113231.233">@ To do:
     
      WARNING: problems with locking out event handlers could cause Leo to drop Text!
@@ -5718,6 +7012,7 @@ Currently the script works for C and python files. It looks at the
 file extension to determine if C or python type annotations are
 used. Maybe this information can be centralized.
 </t>
+<t tx="ekr.20040722115324"></t>
 <t tx="ekr.20040722134535"></t>
 <t tx="ekr.20040722135402"></t>
 <t tx="ekr.20040722135402.1"></t>
@@ -6077,9 +7372,9 @@ spellpyx.py use the file aspell.pyd.  You can use files aspell.pyx and setup.py 
 
 mod_spelling.py is the older spell checker.  It is slower, but will work with all versions of Python and most recent versions of Aspell.  Warning: you must _remove_ aspell.pyd if you are going to use mod_spelling.py.  I have not been able to get mod_spelling.py to work with Leo 4.2.
 
-Both spelling plugins use the files mod_spelling.ini and mod_spelling.txt.  mod_spelling.ini contains a few configuration settings.
+Both spelling plugins use a configuration files and a dictionary.  The configuration files are mod_spelling.ini and spellpyx.ini respectively.  The .ini files contain a few configuration settings.  One of these settings is the name of the dictionary.  By default, the names of the dictionary are mod_spelling.txt and spellpyx.txt.
 
-mod_spelling.txt is the local dictionary.  It would be quite dangerous to refer to this file in an @asis node here: only the plugin code should typically change this file.  You may, of course, edit mod_spelling.txt yourself: just make sure that Leo isn't running when you do this.</t>
+It would be quite dangerous to create a dictionary in an @asis node here: only the plugin code should typically change this file.  You may, of course, edit mod_spelling.txt and spellpyx.txt yourself: just make sure that Leo isn't running when you do this.</t>
 <t tx="ekr.20040809165421.1">- Set aspell_dir to the top-level Aspell directory.
 - Copy aspell.pyd to this directory
 
@@ -7222,6 +8517,329 @@ ul.auto-toc {
 @import url(silver_city.css);
 
 </t>
+<t tx="ekr.20040918165144">@
+Each can be done without impacting other code.
+Each can be done relatively easily: one week or less</t>
+<t tx="ekr.20040918165144.1"></t>
+<t tx="ekr.20040918165144.2"></t>
+<t tx="ekr.20040918165144.3"></t>
+<t tx="ekr.20040918165144.4"></t>
+<t tx="ekr.20040918165144.5"></t>
+<t tx="ekr.20040918165144.6"></t>
+<t tx="ekr.20040918165144.7"></t>
+<t tx="ekr.20040918165144.8"></t>
+<t tx="ekr.20040918165144.9"></t>
+<t tx="ekr.20040918165144.10"></t>
+<t tx="ekr.20040918165350"></t>
+<t tx="ekr.20040918165427"></t>
+<t tx="ekr.20040918165427.2"></t>
+<t tx="ekr.20040918165427.4">@nocolor
+
+Developers
+By: jasonic ( Jason Cunliffe ) 
+ @dictionary   
+2003-08-21 07:51
+
+Auto-completion dictionary files would be excellent.
+Ideally each Leo language extension could just point to a separate .dict file. 
+
+Hopefully we can build some Leo plugin utilities to generate these .dict files by parsing any file you'd like to use a 'source' for Leo dictionary. They might need manual cleanup, but vcould be big timesaver, especially for XML formats and the like. Great to be able to sahre these easily. 
+
+Interesting uses for Leo dictionaries beyond just autocompletion. 
+I am thinking they might open the door to some powerful macro/template behavior. 
+
+For example, you load a special dictionary to help certain kinds of repetitive formatted content. CSS and XSLT could be good candidates, but also any kind of mild databases or lists. Documentation.
+
+So first we need basic dicts for Leo supported languages: Python, Perl, Javascript etc..
+
+Then we need to consider that any Leo Node could have its own dictionary defined inline..
+
+@dictionary filepath-to-custom-leo-dict
+
+With collaborative LeoN this would be very useful because connected Leo sessions could invoke each other's dictionaries!!
+
+- Jason  
+</t>
+<t tx="ekr.20040918165427.5">http://sourceforge.net/forum/message.php?msg_id=2388444
+By: mdawson
+
+I use DocBook XML for my computer documentation, and lately for
+publishing just about any text document.  Naturally, I wanted an
+easy way to use DocBook to publish Leo outlines.
+
+I've written a small Leo module, called Leo2AsciiDoc, that enables
+automatic publication of a plain text Leo outline to HTML or PDF, or
+as a web site or man page.  Stuart Rackham's AsciiDoc program (in
+Python) is what makes this possible.
+    Leo2AsciiDoc exports a Leo outline to a text file, from whence
+it can be converted to DocBook XML by AsciiDoc, and then
+automatically published via DocBook to HTML or PDF.
+
+One Leo outline can contain any number of documents, or web sites
+(via DocBook Website).
+
+I'm also learning Literate Programming, and am happy to be able to
+automatically publish (via make) a program's source and
+documentation from Leo.
+
+An example of the product is the paged HTML documentation for the
+module at:
+    http://devguide.leo.marshallresearch.ca
+
+The web page for Leo2AsciiDoc is
+at:
+    http://leo.marshallresearch.ca
+
+That web site is produced from a Leo outline.
+
+    ----------------------------------------
+    Michael Dawson</t>
+<t tx="ekr.20040918165427.6"></t>
 <t tx="ekr.20040919094459"></t>
+<t tx="ekr.20040929104807"># These will be folded into Leo's core after thorough testing</t>
+<t tx="ekr.20041001210557"></t>
+<t tx="ekr.20041002162608"></t>
+<t tx="ekr.20041002162608.1">@killcolor</t>
+<t tx="ekr.20041002162608.2">We need a delay on body display so alt+arrow keys arent slowed down while navigating.
+
+EKR: Alt-Up and Alt-Down are bound to Go To Next/Prev visible. The idea is that
+if we don't display the body text these keys will work faster.</t>
+<t tx="ekr.20041002162608.5">How about a Emacs style meta-key(Esc?) followed by up or down? or F1/F2 ? anything to escape having to hold down three keys at the same time -- which seems to be common to other shortcut combinations too. so if you could put this in as an option in the preferences -- to turn on or off meta-key binding, that would let people choose what they prefer...</t>
+<t tx="ekr.20041002162608.6">http://sourceforge.net/forum/message.php?msg_id=1864564
+By: btheado
+
+WAS:RE: Leo 3.10 comments
+edream wrote:
+
+&gt;This is due to apparent glitches in the Tk event dispatching. The problem is
+that pressing a control or alt or shift key _all by themselves_ will generate
+keypress events that are passed on to Leo's key handlers
+
+This should be easy to make simpler--just bind an empty script to &lt;Alt-KeyPress&gt;,
+&lt;Shift-KeyPress&gt;, etc.  Tk chooses the most specific event it can find, so the
+more general &lt;KeyPress&gt; handler will not fire.
+
+On a broader note, when programming the text widget in Tcl/Tk, watching key
+events is not the easiest way to detect changes in the text.  The only way the
+text in a text widget can change is if either the delete or the insert subcommands
+(methods) are called.  Any keypresses that end up changing text will have called
+one of these subcommands.
+
+So the simplest way to detect changes is to just intercept the calls to insert
+and delete.  In Tcl/Tk intercepting these calls is pretty straightforward. 
+I don't know if the same is true in Tkinter.
+
+Also note the text widget in Tk8.4 (http://www.tcl.tk/man/tcl8.4/TkCmd/text.htm#M72)
+has a built-in way of seeing if the text has changed
+
+Brian Theado</t>
+<t tx="ekr.20041002163806">http://sourceforge.net/forum/message.php?msg_id=1864584
+By: btheado
+
+If you don't already know about Tk's bindtags command, then check it out.  It
+should make things like this easy.  It basically allows you to dynamically add
+and remove a whole group of bindings all at once without affecting any other
+bindings.
+
+i.e. if you have a window called .text:
+
+# Enter escape mode
+bind .text &lt;Esc&gt; {
+    # add EscapeMode to .text's list of bindings by
+    # using the bindtags command (not shown)
+}
+
+bind EscapeMode &lt;Up&gt; {
+    # Add special escape mode up handling code here
+    break
+}
+bind EscapeMode &lt;Down&gt; {
+    # Add special escape mode down handling code
+    break
+}
+etc.
+
+# Leave escape mode
+bind EscapeMode &lt;Esc&gt; {
+    # remove EscapeMode from .text's list of bindings
+    # by using the bindtags command (not shown)
+}
+
+See (http://wiki.tcl.tk/bindtags) for a page with more information about bindtags
+and a link to the bindtags man page.
+
+I just wanted you to be aware of this functionality if and when you do tackle
+this.  I have found Tk's event handling, bindtags functionality very powerful,
+easy to use, and quite elegant for the coding I've done.
+
+Brian Theado</t>
+<t tx="ekr.20041009112303"></t>
+<t tx="ekr.20041010104051"></t>
+<t tx="ekr.20041010110321">root = g.app.root
+self.top = top = Tk.Toplevel(root)
+g.app.gui.attachLeoIcon(self.top)
+top.title("Plugin Manager")</t>
+<t tx="ekr.20041010110321.1">self.frame = frame = Tk.Frame(top)
+frame.pack(side="top", fill='both', expand=1, padx=5, pady=5)   
+
+self.upper = Tk.Frame(frame)
+self.upper.pack(side="top", fill='both', expand=1, padx=5, pady=5)
+ 
+self.lower = Tk.Frame(frame)
+self.lower.pack(side="top", fill='x', expand=0, padx=5)</t>
+<t tx="ekr.20041010111700">root = g.app.root
+self.top = top = Tk.Toplevel(root)
+g.app.gui.attachLeoIcon(self.top)
+top.title(title)
+
+self.frame = frame = Tk.Frame(top)
+frame.pack(side="top", fill='both', expand=1, padx=5, pady=5)</t>
+<t tx="pap.20041006194759">def getDetails(self, text):
+    """Get the details of the plugin
+    
+    We look for
+        __version__
+        hooks
+        config
+        commands
+        
+    """
+    self.is_plugin = self.hasImport(text, "leoPlugins") 
+    self.version = self.getPattern(text, r'__version__\s*=\s*"(.*?)"', "-")
+    self.description = self.getPattern(text, r'"""(.*?)"""', "Unknown")
+    self.commands = sets.Set(self.getPatterns(text, "def cmd_(\w*?)\("))
+    self.handlers = sets.Set(self.getPatterns(text, r'registerHandler\("(.*?)"'))
+    if 1: # Just look for the matching .ini file.
+        ini_file_name = g.os_path_join(
+            g.app.loadDir,"..","plugins",self.getName(self.filename)+".ini")
+        ini_file_name = g.os_path_abspath(ini_file_name)
+        self.has_config = g.os_path_exists(ini_file_name)
+        # g.trace(self.has_config,ini_file_name)
+    else:
+        self.has_config = self.hasImport(text, "ConfigParser") 
+    self.hash = sha.sha(text).hexdigest()
+    self.can_read = True
+    self.priority = self.getPattern(text, r'__plugin_priority__\s*=\s*(.*?)$', "-")
+    self.has_toplevel = self.hasPattern(text, "def topLevelMenu") 
+</t>
+<t tx="pap.20041006212131">def getName(self, location):
+
+    """Determine the plugin name from the location"""
+    
+    # return os.path.split(os.path.splitext(location)[0])[1]
+    head,ext = g.os_path_splitext(location)
+    path,name = g.os_path_split(head)
+    return name</t>
+<t tx="pap.20041006215108.1">def __init__(self):
+    """Initialise the dialog"""
+    
+    &lt;&lt; create top level window &gt;&gt;
+    self.initLocalCollection()
+    &lt;&lt; create frames &gt;&gt;
+    &lt;&lt; create pluginView &gt;&gt;
+    &lt;&lt; create PluginList &gt;&gt;
+    &lt;&lt; create local buttons &gt;&gt;
+    &lt;&lt; create remote buttons &gt;&gt;
+    &lt;&lt; create message bar &gt;&gt;
+    self.plugin_list.populateList("All")
+    
+    top.grab_set() # Make the dialog a modal dialog.
+    top.focus_force() # Get all keystrokes.
+    root.wait_window(top)</t>
+<t tx="pap.20041006223915">self.notebook = notebook = Pmw.NoteBook(self.upper)
+notebook.pack(side="left", fill='both', expand=1, padx=5, pady=5)
+
+self.local_list_page = local_list_page = notebook.add('Installed Plugins')
+self.remote_list_page = remote_list_page = notebook.add('CVS Plugins')
+notebook.tab('Installed Plugins').focus_set()
+#notebook.setnaturalsize()
+
+self.plugin_list = LocalPluginList(local_list_page, self.plugin_view, self.local)
+self.plugin_list.pack(side="top", fill='both', expand=1)
+self.remote_plugin_list = RemotePluginList(remote_list_page, self.plugin_view, None)
+self.remote_plugin_list.pack(side="top", fill='both', expand=1)</t>
+<t tx="pap.20041006223915.1">self.plugin_view = PluginView(self.upper)
+self.plugin_view.pack(side="right", fill='both', expand=1, padx=5, pady=5)</t>
+<t tx="pap.20041006223915.2">self.buttonBox = Pmw.ButtonBox(
+    self.local_list_page,
+    labelpos = 'nw',
+    frame_borderwidth = 2,
+    frame_relief = 'groove')
+
+# Add some buttons to the ButtonBox.
+self.buttonBox.add('Enable', command = self.enablePlugin)
+self.buttonBox.add('Disable', command = self.disablePlugin)
+#self.buttonBox.add('Check for Updates', command = self.checkUpdates)
+self.buttonBox.add('Check Conflicts', command = self.checkConflicts)
+
+self.buttonBox.pack(side="top", padx=5)</t>
+<t tx="pap.20041006224808">self.messagebar = Pmw.MessageBar(self.lower,
+        entry_width = 40,
+        entry_relief='groove',
+        labelpos = 'w',
+        label_text = 'Status:')
+
+self.messagebar.pack(side="top", fill='x', expand=1, padx=5, pady=1)
+</t>
+<t tx="pap.20041008224625">def showPlugin(self, plugin):
+    """Show a plugin"""
+    self.name.setentry(plugin.name)
+    self.version.setentry(plugin.version)
+    self.filename.setentry(g.os_path_abspath(plugin.filename)) # EKR
+    self.status.setentry(plugin.enabled)
+    self.has_ini.setentry(
+        g.choose(plugin.has_config,"Yes","No"))
+    self.has_toplevel.setentry(
+        g.choose(plugin.has_toplevel,"Yes","No"))
+    self.priority.setentry(plugin.priority)
+    self.description.settext(plugin.description.strip())
+    self.commands.setlist(plugin.commands)
+    self.handlers.setlist(plugin.handlers)
+    self.requires.setlist(plugin.requires)</t>
+<t tx="pap.20041009020000">self.buttonBox = Pmw.ButtonBox(
+    self.remote_list_page,
+    labelpos = 'nw',
+    frame_borderwidth = 2,
+    frame_relief = 'groove')
+
+# Add some buttons to the ButtonBox.
+self.buttonBox.add('Install', command = self.installPlugin)
+self.buttonBox.add('View', command = self.viewPlugin)
+self.buttonBox.add('Check for Updates', command = self.checkUpdates)
+
+self.buttonBox.pack(side="top", padx=5)</t>
+<t tx="pap.20041009233937.1">def __init__(self, title, name, list_data, width=300):
+    """Initialize the dialog"""
+    
+    &lt;&lt; create the top level frames &gt;&gt;
+    filter_options = self.getFilterOptions(list_data)
+    self.list_data = list_data
+    &lt;&lt; create the ScrolledListBox &gt;&gt;
+    &lt;&lt; create the OptionMenu &gt;&gt;
+        
+    top.grab_set() # Make the dialog a modal dialog.
+    top.focus_force() # Get all keystrokes.
+    root.wait_window(top)
+</t>
+<t tx="pap.20041009234256">self.box = Pmw.ScrolledListBox(frame,
+        labelpos='nw',
+        label_text=name,
+        listbox_height = 6,
+        usehullsize = 1,
+        hull_width = width,
+        hull_height = 200,
+        items = list_data,
+)
+
+self.box.pack(side="bottom", fill='both', expand=1)    </t>
+<t tx="pap.20041009234256.1">self.filter = Pmw.OptionMenu(frame,
+        labelpos = 'w',
+        label_text = 'Filter:',
+        items = filter_options,
+        menubutton_width = 16,
+        command=self.populateList,
+)    
+
+self.filter.pack(side="top")</t>
 </tnodes>
 </leo_file>
