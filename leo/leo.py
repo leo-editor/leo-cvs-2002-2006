@@ -197,6 +197,7 @@ def run(*args):
 	# Create the first Leo window
 	frame = leoFrame.LeoFrame()
 	frame.top.deiconify() # 7/19/02
+	frame.commands.redraw() # 9/1/02
 	frame.startupWindow = leoGlobals.true
 	init_sherlock(args)
 	root.mainloop()
