@@ -26,7 +26,8 @@ import exceptions
 import filecmp
 import operator
 import os
-import pdb
+if 0: # Do NOT import pdb here!  We shall defined pdb as a _function_ below.
+    import pdb
 import re
 import sre  # Unicode-aware regular expressions
 import string
@@ -744,14 +745,25 @@ def callerName (n=1):
         g.es_exception()
         return "<no caller name>"
 #@-node:ekr.20031218072017.3107:callerName
-#@+node:ekr.20041105091148:pdb
+#@+node:ekr.20041105091148:g.pdb
 def pdb ():
     
     """Fall into pdb."""
 
+    import pdb # Required: we have just defined pdb as a function!
+
     pdb.set_trace()
+
+def test_g_pdb():
+    
+    # Note: not a valid unit test.
+    # It would succeed even if the import statment above were removed.
+    
+    def aFunction(): pass
+    
+    assert type(g.pdb)==type(aFunction), 'wrong type for g.pdb: %' % type(g.pdb)
 #@nonl
-#@-node:ekr.20041105091148:pdb
+#@-node:ekr.20041105091148:g.pdb
 #@+node:ekr.20031218072017.3108:Dumps
 #@+node:ekr.20031218072017.3109:dump
 def dump(s):
@@ -821,6 +833,7 @@ def es_exception (full=True,c=None,color="red"):
             print line
             
     if g.app.debugSwitch > 1:
+        import pdb # Be careful: g.pdb may or may not have been defined.
         pdb.set_trace()
 
     return fileName,n

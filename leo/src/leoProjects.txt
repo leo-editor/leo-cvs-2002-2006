@@ -11711,6 +11711,7 @@ def es_exception (full=True,c=None,color="red"):
             print line
             
     if g.app.debugSwitch > 1:
+        import pdb # Be careful: g.pdb may or may not have been defined.
         pdb.set_trace()
 
     return fileName,n
@@ -22343,6 +22344,7 @@ def es_exception (full=True,c=None,color="red"):
             print line
             
     if g.app.debugSwitch > 1:
+        import pdb # Be careful: g.pdb may or may not have been defined.
         pdb.set_trace()
 
     return fileName,n
@@ -23135,6 +23137,7 @@ def es_exception (full=True,c=None,color="red"):
             print line
             
     if g.app.debugSwitch > 1:
+        import pdb # Be careful: g.pdb may or may not have been defined.
         pdb.set_trace()
 
     return fileName,n
@@ -33063,6 +33066,27 @@ def doHandlersForTag (tag,keywords):
 #@nonl
 #@-node:ekr.20031218072017.3442:doHandlersForTag
 #@-node:ekr.20050219080830:(Fixed bugs in nav_buttons and nodenavigator plugins)
+#@+node:ekr.20050220024410:Fixed botch in g.pdb
+#@+node:ekr.20041105091148:g.pdb
+def pdb ():
+    
+    """Fall into pdb."""
+
+    import pdb # Required: we have just defined pdb as a function!
+
+    pdb.set_trace()
+
+def test_g_pdb():
+    
+    # Note: not a valid unit test.
+    # It would succeed even if the import statment above were removed.
+    
+    def aFunction(): pass
+    
+    assert type(g.pdb)==type(aFunction), 'wrong type for g.pdb: %' % type(g.pdb)
+#@nonl
+#@-node:ekr.20041105091148:g.pdb
+#@-node:ekr.20050220024410:Fixed botch in g.pdb
 #@-node:ekr.20050214092455.1:Bugs
 #@+node:ekr.20050214092455.2:New features
 #@+node:ekr.20050214092455.3:Added sets.py to distribution
