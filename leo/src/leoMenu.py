@@ -219,8 +219,6 @@ class leoMenu:
             ("&Clone Node","Ctrl+`",c.clone),
             ("Sort Childre&n",None,c.sortChildren), # Conflicted with Hoist.
             ("&Sort Siblings","Alt-A",c.sortSiblings),
-            ("Chec&k Outline",None,c.checkOutline),
-            ("Du&mp Outline",None,c.dumpOutline),
             ("-",None,None),
             ("&Hoist",None,c.hoist),
             ("D&e-Hoist",None,f.c.dehoist),
@@ -228,6 +226,25 @@ class leoMenu:
             
         # Ampersand bindings:  c,d,e,h,i,k,m,n,o,p,r,s,u
         #@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
+        #@nl
+        #@<< define outlineMenuCheckOutlineMenuTable >>
+        #@+node:ekr.20040711140738:<< define outlineMenuCheckOutlineMenuTable >>
+        self.outlineMenuCheckOutlineMenuTable = (
+        
+            ("Check &Outline",None,c.checkOutline),
+            ("&Dump Outline",None,c.dumpOutline),
+            ("-",None,None),
+            ("Check &All Python Code",None,c.checkAllPythonCode),
+            ("&Check Python &Code",None,c.checkPythonCode),
+            ("-",None,None),
+            ("Pretty P&rint All Python Code",None,c.prettyPrintAllPythonCode),
+            ("&Pretty Print Python Code",None,c.prettyPrintPythonCode),
+            
+        )
+        
+        # shortcuts used: a,c,d,o,p,r
+        #@nonl
+        #@-node:ekr.20040711140738:<< define outlineMenuCheckOutlineMenuTable >>
         #@nl
         #@<< define outlineMenuExpandContractMenuTable >>
         #@+node:ekr.20031218072017.3769:<< define outlineMenuExpandContractMenuTable >>
@@ -1014,6 +1031,14 @@ class leoMenu:
         
         self.createMenuEntries(outlineMenu,self.outlineMenuTopMenuTable)
         
+        #@<< create check outline submenu >>
+        #@+node:ekr.20040711140738.1:<< create check outline submenu >>
+        checkOutlineMenu = self.createNewMenu("Chec&k Outline...","Outline")
+        
+        self.createMenuEntries(checkOutlineMenu,self.outlineMenuCheckOutlineMenuTable)
+        #@nonl
+        #@-node:ekr.20040711140738.1:<< create check outline submenu >>
+        #@nl
         #@<< create expand/contract submenu >>
         #@+node:ekr.20031218072017.3798:<< create expand/contract submenu >>
         expandMenu = self.createNewMenu("&Expand/Contract...","Outline")
