@@ -3,6 +3,7 @@
 #@@nocolor
 
 #@+all
+#@+node:ekr.20050217094008:4.3 a3
 #@+node:ekr.20050214055018:Mac stuff
 #@+node:ekr.20050214055018.1:Make .leo files double-clickable (and document how to do this)
 http://sourceforge.net/forum/message.php?msg_id=2980056
@@ -101,6 +102,7 @@ Guenther.
 #@+node:ekr.20050214055018.5:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
 #@-node:ekr.20050214055018.5:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
 #@-node:ekr.20050214055018:Mac stuff
+#@-node:ekr.20050217094008:4.3 a3
 #@+node:ekr.20050126101301:4.3 a4
 #@+node:ekr.20050212040628:First: Always use a file-like object for writing!!
 #@-node:ekr.20050212040628:First: Always use a file-like object for writing!!
@@ -139,6 +141,22 @@ This will slow down reading a bit, but that can't be helped.
 #@-node:ekr.20050209094854:First: Remove unreferenced clone nodes when reading thin derived files
 #@+node:ekr.20050202052911.2:First: Full documentation of tnodeLists & potential problems
 #@-node:ekr.20050202052911.2:First: Full documentation of tnodeLists & potential problems
+#@+node:ekr.20050217083136:Fix bug:  see gcg.leo
+#@+node:ekr.20050217083136.1:Email
+I wrote in the leo help forum that html comment -->after >> bugging me when i  save my .leo file.
+
+@delim javascript didn't resolve the problem when i reload my xml text 
+section is always  succeded by -->.
+
+You have proposed to have a glance to my .leo file
+I send you this gcg.leo file by mail perhaps have you a moment to elucidate 
+this problem.
+
+Sébastien BRICE
+Équipe recherche & dévellopement SEDRE
+INRIA LORRAINE
+#@-node:ekr.20050217083136.1:Email
+#@-node:ekr.20050217083136:Fix bug:  see gcg.leo
 #@+node:ekr.20050207063254:Plugins...
 #@+node:ekr.20050209095131:Get spellpyx plugin working (Need this to check leoDocs.leo)
 #@-node:ekr.20050209095131:Get spellpyx plugin working (Need this to check leoDocs.leo)
@@ -601,6 +619,10 @@ By: jasonic
 Very hadny very cool but does not seem be much docs anywhere on this.
 #@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
 #@-node:ekr.20050211080215:Docs
+#@+node:ekr.20050217080914:Rework Leo posting
+#@+node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
+#@-node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
+#@-node:ekr.20050217080914:Rework Leo posting
 #@-node:ekr.20050126101301:4.3 a4
 #@+node:ekr.20050104083128:4.3 b1 drawing and uA's
 #@+node:ekr.20041231102453:Design new uA scheme

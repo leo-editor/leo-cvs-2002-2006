@@ -2041,6 +2041,7 @@ def createOpenWithMenuFromTable (self,table):
             
     # for i in shortcut_table: print i
     self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=True)
+#@nonl
 #@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
 #@+node:ekr.20031218072017.2823:openWith and allies
 def openWith(self,data=None):
@@ -2056,17 +2057,19 @@ def openWith(self,data=None):
     openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
     """
     
-    c = self ; v = c.currentVnode()
-    if not data or len(data) != 3: return # 6/22/03
+    c = self ; p = c.currentPosition()
+    if not data or len(data) != 3:
+        g.trace('bad data')
+        return
     try:
         openType,arg,ext=data
-        if not g.doHook("openwith1",c=c,p=v,v=v,openType=openType,arg=arg,ext=ext):
+        if not g.doHook("openwith1",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext):
             << set ext based on the present language >>
             << create or reopen temp file, testing for conflicting changes >>
             << execute a command to open path in external editor >>
-        g.doHook("openwith2",c=c,p=v,v=v,openType=openType,arg=arg,ext=ext)
-    except:
-        g.es("exception in openWith")
+        g.doHook("openwith2",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext)
+    except Exception:
+        g.es("unexpected exception in c.openWith")
         g.es_exception()
 
     return "break"
@@ -2087,35 +2090,35 @@ if ext[0] != ".":
 #@-node:ekr.20031218072017.2824:<< set ext based on the present language >>
 #@+node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
 theDict = None ; path = None
-<< set dict and path if a temp file already refers to v.t >>
+<< set dict and path if a temp file already refers to p.v.t >>
 if path:
     << create or recreate temp file as needed >>
 else:
-    path = c.createOpenWithTempFile(v,ext)
+    path = c.createOpenWithTempFile(p,ext)
 
 if not path:
     return # An error has occured.
 #@nonl
-#@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to v.t >>
-searchPath = c.openWithTempFilePath(v,ext)
+#@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
+searchPath = c.openWithTempFilePath(p,ext)
 
 if g.os_path_exists(searchPath):
     for theDict in g.app.openWithFiles:
-        if v == theDict.get("v") and searchPath == theDict.get("path"):
+        if p.v == theDict.get('v') and searchPath == theDict.get("path"):
             path = searchPath
             break
-#@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to v.t >>
+#@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
 #@+node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
-@ We test for changes in both v and the temp file:
+@ We test for changes in both p and the temp file:
 
-- If only v's body text has changed, we recreate the temp file.
+- If only p's body text has changed, we recreate the temp file.
 - If only the temp file has changed, do nothing here.
 - If both have changed we must prompt the user to see which code to use.
 @c
 
 encoding = theDict.get("encoding")
 old_body = theDict.get("body")
-new_body = v.bodyString()
+new_body = p.bodyString()
 new_body = g.toEncodedString(new_body,encoding,reportErrors=True)
 
 old_time = theDict.get("time")
@@ -2135,7 +2138,7 @@ else:
     rewrite = body_changed
         
 if rewrite:
-    path = c.createOpenWithTempFile(v,ext)
+    path = c.createOpenWithTempFile(p,ext)
 else:
     g.es("reopening: " + g.shortFileName(path),color="blue")
 #@nonl
@@ -2158,8 +2161,14 @@ try:
     if arg == None: arg = ""
     shortPath = path # g.shortFileName(path)
     if openType == "os.system":
-        command = "os.system(%s)" % (arg+shortPath)
-        os.system(arg+path)
+        if 1:
+            # This works, _provided_ that arg does not contain blanks.  Sheesh.
+            command = 'os.system(%s)' % (arg+shortPath)
+            os.system(arg+shortPath)
+        else:
+            # XP does not like this format!
+            command = 'os.system("%s" "%s")' % (arg,shortPath)
+            os.system('"%s" "%s"' % (arg,shortPath))
     elif openType == "os.startfile":
         command = "os.startfile(%s)" % (arg+shortPath)
         os.startfile(arg+path)
@@ -2168,7 +2177,7 @@ try:
         exec arg+path in {} # 12/11/02
     elif openType == "os.spawnl":
         filename = g.os_path_basename(arg)
-        command = "os.spawnl(%s,%s,%s)" % (arg,filename,shortPath)
+        command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
         apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
     elif openType == "os.spawnv":
         if 1: # New code allows args to spawnv.
@@ -2183,27 +2192,26 @@ try:
             apply(os.spawnv,(os.P_NOWAIT,arg,(filename,path)))
     else:
         command="bad command:"+str(openType)
-    # This seems a bit redundant.
-    # g.es(command)
-except:
+    g.trace(command)
+except Exception:
     g.es("exception executing: "+command)
     g.es_exception()
 #@nonl
 #@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
 #@+node:ekr.20031218072017.2830:createOpenWithTempFile
-def createOpenWithTempFile (self, v, ext):
+def createOpenWithTempFile (self,p,ext):
     
     c = self
-    path = c.openWithTempFilePath(v,ext)
+    path = c.openWithTempFilePath(p,ext)
     try:
         if g.os_path_exists(path):
             g.es("recreating:  " + g.shortFileName(path),color="red")
         else:
             g.es("creating:  " + g.shortFileName(path),color="blue")
         theFile = open(path,"w")
-        # 3/7/03: convert s to whatever encoding is in effect.
-        s = v.bodyString()
-        theDict = g.scanDirectives(c,p=v)
+        # Convert s to whatever encoding is in effect.
+        s = p.bodyString()
+        theDict = g.scanDirectives(c,p=p)
         encoding = theDict.get("encoding",None)
         if encoding == None:
             encoding = c.config.default_derived_file_encoding
@@ -2214,38 +2222,52 @@ def createOpenWithTempFile (self, v, ext):
         try:    time = g.os_path_getmtime(path)
         except: time = None
         # g.es("time: " + str(time))
-        # 4/22/03: add body and encoding entries to dict for later comparisons.
-        theDict = {"body":s, "c":c, "encoding":encoding, "f":theFile, "path":path, "time":time, "v":v}
-        << remove previous entry from app.openWithFiles if it exists >> # 4/22/03
+        # New in 4.3: theDict now contains both 'p' and 'v' entries, of the expected type.
+        theDict = {
+            "body":s, "c":c, "encoding":encoding,
+            "f":theFile, "path":path, "time":time,
+            "p":p, "v":p.v }
+        << remove previous entry from app.openWithFiles if it exists >>
         g.app.openWithFiles.append(theDict)
         return path
     except:
+        if theFile:
+            theFile.close()
         theFile = None
         g.es("exception creating temp file",color="red")
         g.es_exception()
         return None
 #@nonl
 #@+node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
-for d in g.app.openWithFiles[:]: # 6/30/03
-    v2 = d.get("v")
-    if v.t == v2.t:
-        print "removing previous entry in g.app.openWithFiles for",v
+for d in g.app.openWithFiles[:]:
+    p2 = d.get("p")
+    if p.v.t == p2.v.t:
+        print "removing previous entry in g.app.openWithFiles for",p.headString()
         g.app.openWithFiles.remove(d)
 #@nonl
 #@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
 #@-node:ekr.20031218072017.2830:createOpenWithTempFile
 #@+node:ekr.20031218072017.2832:openWithTempFilePath
-def openWithTempFilePath (self,v,ext):
+def openWithTempFilePath (self,p,ext):
     
-    """Return the path to the temp file corresponding to v and ext."""
+    """Return the path to the temp file corresponding to p and ext."""
 
-    name = "LeoTemp_" + str(id(v.t)) + '_' + g.sanitize_filename(v.headString()) + ext
-    name = g.toUnicode(name,g.app.tkEncoding) # 10/20/03
+    name = "LeoTemp_%s_%s%s" % (
+        str(id(p.v.t)),
+        g.sanitize_filename(p.headString()),
+        ext)
 
-    td = g.os_path_abspath(tempfile.gettempdir())
+    name = g.toUnicode(name,g.app.tkEncoding)
+
+    if 1:
+        td = g.os_path_abspath(tempfile.gettempdir())
+    else:
+        td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+
     path = g.os_path_join(td,name)
     
-    # print "openWithTempFilePath",path
+    g.trace(path)
+
     return path
 #@nonl
 #@-node:ekr.20031218072017.2832:openWithTempFilePath
@@ -3257,8 +3279,14 @@ try:
     if arg == None: arg = ""
     shortPath = path # g.shortFileName(path)
     if openType == "os.system":
-        command = "os.system(%s)" % (arg+shortPath)
-        os.system(arg+path)
+        if 1:
+            # This works, _provided_ that arg does not contain blanks.  Sheesh.
+            command = 'os.system(%s)' % (arg+shortPath)
+            os.system(arg+shortPath)
+        else:
+            # XP does not like this format!
+            command = 'os.system("%s" "%s")' % (arg,shortPath)
+            os.system('"%s" "%s"' % (arg,shortPath))
     elif openType == "os.startfile":
         command = "os.startfile(%s)" % (arg+shortPath)
         os.startfile(arg+path)
@@ -3267,7 +3295,7 @@ try:
         exec arg+path in {} # 12/11/02
     elif openType == "os.spawnl":
         filename = g.os_path_basename(arg)
-        command = "os.spawnl(%s,%s,%s)" % (arg,filename,shortPath)
+        command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
         apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
     elif openType == "os.spawnv":
         if 1: # New code allows args to spawnv.
@@ -3282,9 +3310,8 @@ try:
             apply(os.spawnv,(os.P_NOWAIT,arg,(filename,path)))
     else:
         command="bad command:"+str(openType)
-    # This seems a bit redundant.
-    # g.es(command)
-except:
+    g.trace(command)
+except Exception:
     g.es("exception executing: "+command)
     g.es_exception()
 #@nonl
@@ -10047,7 +10074,7 @@ def error(self,message):
 
     self.errors += 1
 #@-node:ekr.20041005105605.220:atFile.error
-#@+node:ekr.20050206085258:atFile.printError & test_printError
+#@+node:ekr.20050206085258:atFile.printError & test
 def printError (self,message):
 
     '''Print an error message that may contain non-ascii characters.'''
@@ -10060,14 +10087,14 @@ def printError (self,message):
         except UnicodeError:
             print g.toEncodedString(message,g.app.tkEncoding)
             
-def test_printError(self,**keys):
+def test_atFile_printError(self,**keys):
 
     at = c.atFileCommands
     at.errors = 0
     at.printError(
         "test of printError: Ᾱ(U+1FB9: Greek Capital Letter Alpha With Macron)")
 #@nonl
-#@-node:ekr.20050206085258:atFile.printError & test_printError
+#@-node:ekr.20050206085258:atFile.printError & test
 #@+node:ekr.20041005105605.221:exception
 def exception (self,message):
     
@@ -12931,8 +12958,8 @@ def utils_remove (fileName,verbose=True):
             g.es_exception()
         return False
 #@nonl
-#@+node:ekr.20050107084901:test_utils_remove
-def test_utils_remove():
+#@+node:ekr.20050107084901:test_g_utils_remove
+def test_g_utils_remove():
 
     __pychecker__ = '--no-reimport'
     import os
@@ -12952,7 +12979,7 @@ def test_utils_remove():
     assert exists(path)
     assert g.utils_remove(path,verbose=True)
     assert not exists(path)
-#@-node:ekr.20050107084901:test_utils_remove
+#@-node:ekr.20050107084901:test_g_utils_remove
 #@-node:ekr.20050104123726.3:g.utils_remove & test
 #@+node:ekr.20031218072017.1263:g.utils_rename & test
 << about os.rename >>
@@ -13007,8 +13034,8 @@ there may be no way to implement an atomic rename when dst names an existing
 file.
 #@nonl
 #@-node:ekr.20050104123726.1:<< about os.rename >>
-#@+node:ekr.20050107085710.1:test_utils_rename
-def test_utils_rename(**keys):
+#@+node:ekr.20050107085710.1:test_g_utils_rename
+def test_g_utils_rename(**keys):
 
     __pychecker__ = '--no-reimport '
     import os
@@ -13029,7 +13056,7 @@ def test_utils_rename(**keys):
     assert g.utils_remove(path,verbose=True)
     assert not exists(path)
 #@nonl
-#@-node:ekr.20050107085710.1:test_utils_rename
+#@-node:ekr.20050107085710.1:test_g_utils_rename
 #@-node:ekr.20031218072017.1263:g.utils_rename & test
 #@+node:ekr.20050104124903:g.utils_chmod
 def utils_chmod (fileName,mode,verbose=True):
@@ -13439,7 +13466,7 @@ def error(self,message):
 
     self.errors += 1
 #@-node:ekr.20041005105605.220:atFile.error
-#@+node:ekr.20050206085258:atFile.printError & test_printError
+#@+node:ekr.20050206085258:atFile.printError & test
 def printError (self,message):
 
     '''Print an error message that may contain non-ascii characters.'''
@@ -13452,14 +13479,14 @@ def printError (self,message):
         except UnicodeError:
             print g.toEncodedString(message,g.app.tkEncoding)
             
-def test_printError(self,**keys):
+def test_atFile_printError(self,**keys):
 
     at = c.atFileCommands
     at.errors = 0
     at.printError(
         "test of printError: Ᾱ(U+1FB9: Greek Capital Letter Alpha With Macron)")
 #@nonl
-#@-node:ekr.20050206085258:atFile.printError & test_printError
+#@-node:ekr.20050206085258:atFile.printError & test
 #@+node:ekr.20041005105605.221:exception
 def exception (self,message):
     
@@ -16475,13 +16502,6 @@ def doHook(tag,*args,**keywords):
     if not f:
         import leoPlugins
         g.app.hookFunction = f = leoPlugins.doPlugins
-
-    if 0: # Don't use trace here!
-        if 1:
-            old_c = keywords.get('old_c')
-            if old_c: print 'doHook %24s %s' % (tag,old_c.shortFileName())
-        else:
-            if tag != "idle": print 'doHook %24s old_c: %s' % (tag,c and c.shortFileName())
         
     try:
         # Pass the hook to the hook handler.
@@ -17051,7 +17071,7 @@ self.target_language = "python" # 8/11/02: Required if leoConfig.txt does not ex
 # These are defined here, and updated by the tree.select()
 self.beadList = [] # list of vnodes for the Back and Forward commands.
 self.beadPointer = -1 # present item in the list.
-self.visitedList = [] # list of vnodes for the Nodes dialog.
+self.visitedList = [] # list of positions for the Nodes dialog.
 
 # For hoist/dehoist commands.
 self.hoistStack = []
@@ -21083,7 +21103,7 @@ self.target_language = "python" # 8/11/02: Required if leoConfig.txt does not ex
 # These are defined here, and updated by the tree.select()
 self.beadList = [] # list of vnodes for the Back and Forward commands.
 self.beadPointer = -1 # present item in the list.
-self.visitedList = [] # list of vnodes for the Nodes dialog.
+self.visitedList = [] # list of positions for the Nodes dialog.
 
 # For hoist/dehoist commands.
 self.hoistStack = []
@@ -21134,6 +21154,7 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
@@ -26533,13 +26554,6 @@ def doHook(tag,*args,**keywords):
     if not f:
         import leoPlugins
         g.app.hookFunction = f = leoPlugins.doPlugins
-
-    if 0: # Don't use trace here!
-        if 1:
-            old_c = keywords.get('old_c')
-            if old_c: print 'doHook %24s %s' % (tag,old_c.shortFileName())
-        else:
-            if tag != "idle": print 'doHook %24s old_c: %s' % (tag,c and c.shortFileName())
         
     try:
         # Pass the hook to the hook handler.
@@ -26617,13 +26631,6 @@ def doHook(tag,*args,**keywords):
     if not f:
         import leoPlugins
         g.app.hookFunction = f = leoPlugins.doPlugins
-
-    if 0: # Don't use trace here!
-        if 1:
-            old_c = keywords.get('old_c')
-            if old_c: print 'doHook %24s %s' % (tag,old_c.shortFileName())
-        else:
-            if tag != "idle": print 'doHook %24s old_c: %s' % (tag,c and c.shortFileName())
         
     try:
         # Pass the hook to the hook handler.
@@ -29285,7 +29292,7 @@ correctly.
 -Tyndal
 
 #@-node:ekr.20050208054635:Report
-#@+node:ekr.20050206085258:atFile.printError & test_printError
+#@+node:ekr.20050206085258:atFile.printError & test
 def printError (self,message):
 
     '''Print an error message that may contain non-ascii characters.'''
@@ -29298,14 +29305,14 @@ def printError (self,message):
         except UnicodeError:
             print g.toEncodedString(message,g.app.tkEncoding)
             
-def test_printError(self,**keys):
+def test_atFile_printError(self,**keys):
 
     at = c.atFileCommands
     at.errors = 0
     at.printError(
         "test of printError: Ᾱ(U+1FB9: Greek Capital Letter Alpha With Macron)")
 #@nonl
-#@-node:ekr.20050206085258:atFile.printError & test_printError
+#@-node:ekr.20050206085258:atFile.printError & test
 #@+node:ekr.20031218072017.1498:Unicode utils...
 #@+node:ekr.20031218072017.1499:isUnicode
 def isUnicode(s):
@@ -32455,6 +32462,607 @@ def test_g_create_temp_file():
 #@-node:ekr.20050216052031:test_g_create_temp_file
 #@-node:ekr.20031218072017.3117:create_temp_file & test
 #@-node:ekr.20050216052031.1:(Fixed crash in Tangle)
+#@+node:ekr.20050217085134:Applied patch to rst2 plugin
+#@+node:ekr.20050217085134.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=2999651
+By: nobody
+
+I was pleasantly surprised to discover the reST2 plug-in working under 4.3a2
+(this is one the first thing I try as I'd like to use Leo as an editor
+for that).
+
+As mentioned in early threads, it still needs @rst for each node to be included
+in the reST rendering process. So I put @rst test.html and then a child with
+@rst and some reST code and it worked !!
+
+Then I tried to to get a simple rst file using @rst test but the plugin complained:
+
+[snip]
+
+  File "C:\dn_apps\Leo\plugins\rst2.py", line 164, in onIconDoubleClick
+    writeTreeAsRst(rstFile,fname,p,c)
+TypeError: writeTreeAsRst() takes exactly 5 arguments (4 given)
+
+So I looked at the rst2.py and found a way to get it working but I would need
+someone to verify it :
+
+line 164, replaced   writeTreeAsRst(rstFile,fname,p,c)  by
+
+syntax = False
+writeTreeAsRst(rstFile,fname,p,c,syntax)
+
+And it worked!
+#@-node:ekr.20050217085134.1:Report
+#@-node:ekr.20050217085134:Applied patch to rst2 plugin
+#@+node:ekr.20050217080914.2:Revised searchbox.py so it works with Leo 4.3
+#@-node:ekr.20050217080914.2:Revised searchbox.py so it works with Leo 4.3
+#@+node:ekr.20050218022720:(xemacs plugin goes crazy)
+# This appears to be a bug in python-mode.el.
+#@nonl
+#@+node:ekr.20031218072017.2823:openWith and allies
+def openWith(self,data=None):
+
+    """This routine handles the items in the Open With... menu.
+
+    These items can only be created by createOpenWithMenuFromTable().
+    Typically this would be done from the "open2" hook.
+    
+    New in 4.3: The "os.spawnv" now works. You may specify arguments to spawnv
+    using a list, e.g.:
+        
+    openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
+    """
+    
+    c = self ; p = c.currentPosition()
+    if not data or len(data) != 3:
+        g.trace('bad data')
+        return
+    try:
+        openType,arg,ext=data
+        if not g.doHook("openwith1",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext):
+            << set ext based on the present language >>
+            << create or reopen temp file, testing for conflicting changes >>
+            << execute a command to open path in external editor >>
+        g.doHook("openwith2",c=c,p=p,v=p.v,openType=openType,arg=arg,ext=ext)
+    except Exception:
+        g.es("unexpected exception in c.openWith")
+        g.es_exception()
+
+    return "break"
+#@+node:ekr.20031218072017.2824:<< set ext based on the present language >>
+if not ext:
+    theDict = g.scanDirectives(c)
+    language = theDict.get("language")
+    ext = g.app.language_extension_dict.get(language)
+    # print language,ext
+    if ext == None:
+        ext = "txt"
+    
+if ext[0] != ".":
+    ext = "."+ext
+    
+# print "ext",ext
+#@nonl
+#@-node:ekr.20031218072017.2824:<< set ext based on the present language >>
+#@+node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
+theDict = None ; path = None
+<< set dict and path if a temp file already refers to p.v.t >>
+if path:
+    << create or recreate temp file as needed >>
+else:
+    path = c.createOpenWithTempFile(p,ext)
+
+if not path:
+    return # An error has occured.
+#@nonl
+#@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
+searchPath = c.openWithTempFilePath(p,ext)
+
+if g.os_path_exists(searchPath):
+    for theDict in g.app.openWithFiles:
+        if p.v == theDict.get('v') and searchPath == theDict.get("path"):
+            path = searchPath
+            break
+#@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to p.v.t >>
+#@+node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+@ We test for changes in both p and the temp file:
+
+- If only p's body text has changed, we recreate the temp file.
+- If only the temp file has changed, do nothing here.
+- If both have changed we must prompt the user to see which code to use.
+@c
+
+encoding = theDict.get("encoding")
+old_body = theDict.get("body")
+new_body = p.bodyString()
+new_body = g.toEncodedString(new_body,encoding,reportErrors=True)
+
+old_time = theDict.get("time")
+try:
+    new_time = g.os_path_getmtime(path)
+except:
+    new_time = None
+    
+body_changed = old_body != new_body
+temp_changed = old_time != new_time
+
+if body_changed and temp_changed:
+    << Raise dialog about conflict and set result >>
+    if result == "cancel": return
+    rewrite = result == "outline"
+else:
+    rewrite = body_changed
+        
+if rewrite:
+    path = c.createOpenWithTempFile(p,ext)
+else:
+    g.es("reopening: " + g.shortFileName(path),color="blue")
+#@nonl
+#@+node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+message = (
+    "Conflicting changes in outline and temp file\n\n" +
+    "Do you want to use the code in the outline or the temp file?\n\n")
+
+result = g.app.gui.runAskYesNoCancelDialog(c,
+    "Conflict!", message,
+    yesMessage = "Outline",
+    noMessage = "File",
+    defaultButton = "Cancel")
+#@nonl
+#@-node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+#@-node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+#@-node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
+#@+node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+try:
+    if arg == None: arg = ""
+    shortPath = path # g.shortFileName(path)
+    if openType == "os.system":
+        if 1:
+            # This works, _provided_ that arg does not contain blanks.  Sheesh.
+            command = 'os.system(%s)' % (arg+shortPath)
+            os.system(arg+shortPath)
+        else:
+            # XP does not like this format!
+            command = 'os.system("%s" "%s")' % (arg,shortPath)
+            os.system('"%s" "%s"' % (arg,shortPath))
+    elif openType == "os.startfile":
+        command = "os.startfile(%s)" % (arg+shortPath)
+        os.startfile(arg+path)
+    elif openType == "exec":
+        command = "exec(%s)" % (arg+shortPath)
+        exec arg+path in {} # 12/11/02
+    elif openType == "os.spawnl":
+        filename = g.os_path_basename(arg)
+        command = "os.spawnl(%s,%s,%s)" % (arg,filename,path)
+        apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
+    elif openType == "os.spawnv":
+        if 1: # New code allows args to spawnv.
+            filename = os.path.basename(arg[0]) 
+            vtuple = arg[1:] 
+            vtuple.append(path)
+            command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple)) # Bug fix: 1/21/05
+        else:
+            filename = g.os_path_basename(arg)
+            command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
+            apply(os.spawnv,(os.P_NOWAIT,arg,(filename,path)))
+    else:
+        command="bad command:"+str(openType)
+    g.trace(command)
+except Exception:
+    g.es("exception executing: "+command)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+#@+node:ekr.20031218072017.2830:createOpenWithTempFile
+def createOpenWithTempFile (self,p,ext):
+    
+    c = self
+    path = c.openWithTempFilePath(p,ext)
+    try:
+        if g.os_path_exists(path):
+            g.es("recreating:  " + g.shortFileName(path),color="red")
+        else:
+            g.es("creating:  " + g.shortFileName(path),color="blue")
+        theFile = open(path,"w")
+        # Convert s to whatever encoding is in effect.
+        s = p.bodyString()
+        theDict = g.scanDirectives(c,p=p)
+        encoding = theDict.get("encoding",None)
+        if encoding == None:
+            encoding = c.config.default_derived_file_encoding
+        s = g.toEncodedString(s,encoding,reportErrors=True) 
+        theFile.write(s)
+        theFile.flush()
+        theFile.close()
+        try:    time = g.os_path_getmtime(path)
+        except: time = None
+        # g.es("time: " + str(time))
+        # New in 4.3: theDict now contains both 'p' and 'v' entries, of the expected type.
+        theDict = {
+            "body":s, "c":c, "encoding":encoding,
+            "f":theFile, "path":path, "time":time,
+            "p":p, "v":p.v }
+        << remove previous entry from app.openWithFiles if it exists >>
+        g.app.openWithFiles.append(theDict)
+        return path
+    except:
+        if theFile:
+            theFile.close()
+        theFile = None
+        g.es("exception creating temp file",color="red")
+        g.es_exception()
+        return None
+#@nonl
+#@+node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+for d in g.app.openWithFiles[:]:
+    p2 = d.get("p")
+    if p.v.t == p2.v.t:
+        print "removing previous entry in g.app.openWithFiles for",p.headString()
+        g.app.openWithFiles.remove(d)
+#@nonl
+#@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+#@-node:ekr.20031218072017.2830:createOpenWithTempFile
+#@+node:ekr.20031218072017.2832:openWithTempFilePath
+def openWithTempFilePath (self,p,ext):
+    
+    """Return the path to the temp file corresponding to p and ext."""
+
+    name = "LeoTemp_%s_%s%s" % (
+        str(id(p.v.t)),
+        g.sanitize_filename(p.headString()),
+        ext)
+
+    name = g.toUnicode(name,g.app.tkEncoding)
+
+    if 1:
+        td = g.os_path_abspath(tempfile.gettempdir())
+    else:
+        td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+
+    path = g.os_path_join(td,name)
+    
+    g.trace(path)
+
+    return path
+#@nonl
+#@-node:ekr.20031218072017.2832:openWithTempFilePath
+#@-node:ekr.20031218072017.2823:openWith and allies
+#@+node:ekr.20031218072017.4116:createOpenWithMenuFromTable
+@ Entries in the table passed to createOpenWithMenuFromTable are
+tuples of the form (commandName,shortcut,data).
+
+- command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
+- shortcut is a string describing a shortcut, just as for createMenuItemsFromTable.
+- data is a tuple of the form (command,arg,ext).
+
+Leo executes command(arg+path) where path is the full path to the temp file.
+If ext is not None, the temp file has the given extension.
+Otherwise, Leo computes an extension based on the @language directive in effect.
+@c
+
+def createOpenWithMenuFromTable (self,table):
+
+    g.app.openWithTable = table # Override any previous table.
+    # Delete the previous entry.
+    parent = self.getMenu("File")
+    label = self.getRealMenuName("Open &With...")
+    amp_index = label.find("&")
+    label = label.replace("&","")
+    try:
+        index = parent.index(label)
+        parent.delete(index)
+    except:
+        try:
+            index = parent.index("Open With...")
+            parent.delete(index)
+        except: return
+    # Create the "Open With..." menu.
+    openWithMenu = Tk.Menu(parent,tearoff=0)
+    self.setMenu("Open With...",openWithMenu)
+    parent.insert_cascade(index,label=label,menu=openWithMenu,underline=amp_index)
+    # Populate the "Open With..." menu.
+    shortcut_table = []
+    for triple in table:
+        if len(triple) == 3: # 6/22/03
+            shortcut_table.append(triple)
+        else:
+            g.es("createOpenWithMenuFromTable: invalid data",color="red")
+            return
+            
+    # for i in shortcut_table: print i
+    self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=True)
+#@nonl
+#@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
+#@-node:ekr.20050218022720:(xemacs plugin goes crazy)
+#@+node:ekr.20050219080830:(Fixed bugs in nav_buttons and nodenavigator plugins)
+#@+node:ekr.20050219080830.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3005140
+By: ktenney
+
+- perform a search which marks a number of nodes
+
+- select "Outline -> Mark/Unmark -> Unmark All"
+
+- Several marks are still listed in in the nodenavigator "Marks" list.
+  (They are not marked in the outline.)
+#@nonl
+#@-node:ekr.20050219080830.1:Report
+#@+node:ekr.20050219174745:What I did
+@killcolor
+
+- The p.set/clearMark methods now call the hook _after_ changing the marked status.
+  This fixes the apparent bug in nodenavigator.py.
+
+- Rewrote nav_buttons.py.  The old code was a mess; the new code is clean.
+
+- Changed the vnodeList ivar in leoTkinterDialog to positionList.
+
+- Rewrote c.unmarkAll to make clear that it is using positions.
+    - Added test_c_unmark_all test routine.
+#@nonl
+#@-node:ekr.20050219174745:What I did
+#@+node:ekr.20031218072017.2922:Mark...
+#@+node:ekr.20031218072017.2923:markChangedHeadlines
+def markChangedHeadlines (self): 
+
+    c = self ; v = c.rootVnode()
+    c.beginUpdate()
+    while v:
+        if v.isDirty()and not v.isMarked():
+            v.setMarked()
+            c.setChanged(True)
+        v = v.threadNext()
+    c.endUpdate()
+    g.es("done",color="blue")
+#@-node:ekr.20031218072017.2923:markChangedHeadlines
+#@+node:ekr.20031218072017.2924:markChangedRoots
+def markChangedRoots (self):
+
+    c = self ; v = c.rootVnode()
+    c.beginUpdate()
+    while v:
+        if v.isDirty()and not v.isMarked():
+            s = v.bodyString()
+            flag, i = g.is_special(s,0,"@root")
+            if flag:
+                v.setMarked()
+                c.setChanged(True)
+        v = v.threadNext()
+    c.endUpdate()
+    g.es("done",color="blue")
+#@nonl
+#@-node:ekr.20031218072017.2924:markChangedRoots
+#@+node:ekr.20031218072017.2925:markAllAtFileNodesDirty
+def markAllAtFileNodesDirty (self):
+
+    c = self ; v = c.rootVnode()
+    c.beginUpdate()
+    while v:
+        if v.isAtFileNode()and not v.isDirty():
+            v.setDirty()
+            v = v.nodeAfterTree()
+        else: v = v.threadNext()
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2925:markAllAtFileNodesDirty
+#@+node:ekr.20031218072017.2926:markAtFileNodesDirty
+def markAtFileNodesDirty (self):
+
+    c = self
+    v = c.currentVnode()
+    if not v: return
+    after = v.nodeAfterTree()
+    c.beginUpdate()
+    while v and v != after:
+        if v.isAtFileNode() and not v.isDirty():
+            v.setDirty()
+            v = v.nodeAfterTree()
+        else: v = v.threadNext()
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2926:markAtFileNodesDirty
+#@+node:ekr.20031218072017.2927:markClones
+def markClones (self):
+
+    c = self ; current = v = c.currentVnode()
+    if not v: return
+    if not v.isCloned(): return
+    
+    v = c.rootVnode()
+    c.beginUpdate()
+    while v:
+        if v.t == current.t:
+            v.setMarked()
+        v = v.threadNext()
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2927:markClones
+#@+node:ekr.20031218072017.2928:markHeadline
+def markHeadline (self):
+
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    c.beginUpdate()
+    if p.isMarked():
+        p.clearMarked()
+    else:
+        p.setMarked()
+        p.setDirty()
+        if 0: # 4/3/04: Marking a headline is a minor operation.
+            c.setChanged(True)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2928:markHeadline
+#@+node:ekr.20031218072017.2929:markSubheads
+def markSubheads(self):
+
+    c = self ; v = c.currentVnode()
+    if not v: return
+
+    child = v.firstChild()
+    c.beginUpdate()
+    while child:
+        if not child.isMarked():
+            child.setMarked()
+            child.setDirty()
+            c.setChanged(True)
+        child = child.next()
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2929:markSubheads
+#@+node:ekr.20031218072017.2930:unmarkAll & test
+def unmarkAll(self):
+
+    c = self
+    c.beginUpdate()
+    for p in c.allNodes_iter():
+        if p.isMarked():
+            p.clearMarked()
+            p.setDirty()
+            c.setChanged(True)
+    c.endUpdate()
+#@nonl
+#@+node:ekr.20050219170523:test_c_unmark_all
+def test_c_unmark_all(self):
+    
+    marked = [p.copy() for p in c.allNodes_iter() if p.isMarked()]
+    
+    c.unmarkAll()
+
+    for p in c.allNodes_iter():
+        assert not p.isMarked(), 'marked after Unmark All %s' % p
+        
+    # Restore marks.
+    c.beginUpdate()
+    for p in c.allNodes_iter():
+        for p2 in marked:
+            if p.isEqual(p2):
+                p.setMarked()
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20050219170523:test_c_unmark_all
+#@-node:ekr.20031218072017.2930:unmarkAll & test
+#@-node:ekr.20031218072017.2922:Mark...
+#@+node:ekr.20031218072017.3391:v.clearMarked
+def clearMarked (self):
+
+    self.statusBits &= ~ self.markedBit
+#@-node:ekr.20031218072017.3391:v.clearMarked
+#@+node:ekr.20031218072017.3398:v.setMarked & initMarkedBit
+def setMarked (self):
+
+    self.statusBits |= self.markedBit
+
+def initMarkedBit (self):
+
+    self.statusBits |= self.markedBit
+#@-node:ekr.20031218072017.3398:v.setMarked & initMarkedBit
+#@+node:ekr.20040306220634.9: Status bits (position)
+# Clone bits are no longer used.
+# Dirty bits are handled carefully by the position class.
+
+def clearMarked  (self):
+    self.v.clearMarked()
+    g.doHook("clear-mark",c=self.c,p=self,v=self)
+
+def clearOrphan  (self): return self.v.clearOrphan()
+def clearVisited (self): return self.v.clearVisited()
+
+def contract (self): return self.v.contract()
+def expand   (self): return self.v.expand()
+
+def initExpandedBit    (self): return self.v.initExpandedBit()
+def initMarkedBit      (self): return self.v.initMarkedBit()
+def initStatus (self, status): return self.v.initStatus()
+    
+def setMarked (self):
+    self.v.setMarked()
+    g.doHook("set-mark",c=self.c,p=self,v=self)
+
+def setOrphan   (self): return self.v.setOrphan()
+def setSelected (self): return self.v.setSelected()
+def setVisited  (self): return self.v.setVisited()
+#@nonl
+#@-node:ekr.20040306220634.9: Status bits (position)
+#@+node:ekr.20031218072017.1596:g.doHook
+@ This global function calls a hook routine.  Hooks are identified by the tag param.
+Returns the value returned by the hook routine, or None if the there is an exception.
+
+We look for a hook routine in three places:
+1. g.top().hookFunction
+2. app.hookFunction
+3. leoPlugins.doPlugins()
+We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
+@c
+
+def doHook(tag,*args,**keywords):
+    
+    if g.app.killed or g.app.hookError or (g.app.gui and g.app.gui.isNullGui):
+        return None
+        
+    if args:
+        # A minor error in Leo's core.
+        print "***ignoring args param.  tag = %s" % tag
+
+    if not g.app.config.use_plugins:
+        if tag == "start1":
+            s = "Plugins disabled: use_plugins is 0 in a leoSettings.leo file."
+            print s ; g.es(s,color="blue")
+        return None
+
+    # New in 4.2.  We call the idle-time handlers for all open windows.
+    c = keywords.get("c")
+            
+    # Get the hook handler function.  Usually this is doPlugins.
+    f = (c and c.hookFunction) or g.app.hookFunction
+    if not f:
+        import leoPlugins
+        g.app.hookFunction = f = leoPlugins.doPlugins
+        
+    try:
+        # Pass the hook to the hook handler.
+        return f(tag,keywords)
+    except Exception:
+        g.es_exception()
+        g.app.hookError = True # Supress this function.
+        g.app.idleTimeHook = False # Supress idle-time hook
+        return None # No return value
+#@nonl
+#@-node:ekr.20031218072017.1596:g.doHook
+#@+node:ekr.20031218072017.3442:doHandlersForTag
+def doHandlersForTag (tag,keywords):
+    
+    """Execute all handlers for a given tag, in alphabetical order.
+    
+    All exceptions are caught by the caller, doHook."""
+
+    global handlers
+
+    if g.app.killed:
+        return None
+
+    if handlers.has_key(tag):
+        bunches = handlers.get(tag)
+        # Execute hooks in some random order.
+        # Return if one of them returns a non-None result.
+        for bunch in bunches:
+            val = callTagHandler(bunch,tag,keywords)
+            if val is not None:
+                return val
+
+    if handlers.has_key("all"):
+        bunches = handlers.get('all')
+        for bunch in bunches:
+            callTagHandler(bunch.fn,tag,keywords)
+
+    return None
+#@nonl
+#@-node:ekr.20031218072017.3442:doHandlersForTag
+#@-node:ekr.20050219080830:(Fixed bugs in nav_buttons and nodenavigator plugins)
 #@-node:ekr.20050214092455.1:Bugs
 #@+node:ekr.20050214092455.2:New features
 #@+node:ekr.20050214092455.3:Added sets.py to distribution

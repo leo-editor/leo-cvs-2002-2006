@@ -180,6 +180,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
                 
         # for i in shortcut_table: print i
         self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=True)
+    #@nonl
     #@-node:ekr.20031218072017.4116:createOpenWithMenuFromTable
     #@+node:ekr.20031218072017.4117:defineMenuCallback (tk)
     def defineMenuCallback(self,command,name):
