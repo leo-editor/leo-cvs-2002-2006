@@ -53,6 +53,7 @@ def run(fileName=None,*args,**keywords):
 	app.config = leoConfig.config()
 	# Load plugins. Plugins may create app.gui.
 	doHook("start1")
+	if app.killed: return # 10/15/03: allows the plugin to kill the app.
 	# Create the default gui if needed.
 	if app.gui == None: app.createTkGui()
 	# Initialize tracing and statistics.
