@@ -1,0 +1,1249 @@
+#@+leo-ver=4
+#@+node:EKR.20040502195524:@file-thin ../scripts/leoScripts.txt
+#@+others
+#@+node:EKR.20040502195524.1:Fnd/change scripts
+# Note:  the initScriptFind script makes setting up Find/Change scripts very easy.
+#@nonl
+#@+node:EKR.20040502195524.2:Routines that execute script-find and script-change
+#@+node:EKR.20040502195524.3:doFind...Script
+def doFindScript (self):
+
+	g.app.searchDict["type"] = "find"
+	self.runFindScript()
+
+def doFindAllScript (self):
+
+	"""The user has just pressed the Find All button with script-find radio button checked.
+
+	N.B. Only this code is executed."""
+
+	g.app.searchDict["type"] = "findAll"
+	while 1:
+		self.runFindScript()
+		if not g.app.searchDict.get("continue"):
+			break
+
+def runFindScript (self):
+
+	c = self.c
+	try:
+		exec c.find_text in {} # Use {} to get a pristine environment.
+	except:
+		g.es("exception executing find script")
+		g.es_exception(full=false)
+		g.app.searchDict["continue"] = false # 2/1/04
+#@-node:EKR.20040502195524.3:doFind...Script
+#@+node:EKR.20040502195524.4:doChange...Script
+def doChangeScript (self):
+
+	g.app.searchDict["type"] = "change"
+	self.runChangeScript()
+
+def doChangeAllScript (self):
+
+	"""The user has just pressed the Change All button with script-change box checked.
+
+	N.B. Only this code is executed."""
+
+	g.app.searchDict["type"] = "changeAll"
+	while 1:
+		self.runChangeScript()
+		if not g.app.searchDict.get("continue"):
+			break
+
+def runChangeScript (self):
+
+	c = self.c
+	try:
+		assert(c.script_change_flag) # 2/1/04
+		exec c.change_text in {} # Use {} to get a pristine environment.
+	except:
+		g.es("exception executing change script")
+		g.es_exception(full=false)
+		g.app.searchDict["continue"] = false # 2/1/04
+#@nonl
+#@-node:EKR.20040502195524.4:doChange...Script
+#@-node:EKR.20040502195524.2:Routines that execute script-find and script-change
+#@+node:EKR.20040502195524.5:Find script to check for dubious leading whitespace
+# Initialize Leo's find panel using the named children of this node.
+import leoGlobals as g
+from leoGlobals import true,false
+
+g.app.searchDict = {} # Clear dict.get("v") logic.
+g.initScriptFind("Find script")
+
+c = g.top()
+c.selectVnode(c.rootPosition())
+c.redraw()
+#@nonl
+#@+node:EKR.20040502195524.6:Find script
+import leoGlobals as g
+from leoGlobals import true,false
+
+c = g.top() ; v = c.currentVnode()
+last_v = g.app.searchDict.get("v")
+if last_v and v == last_v:
+	v = v.threadNext()
+found = false
+while v:
+	lines = v.bodyString().split('\n')
+	for s in lines:
+		i = g.skip_ws(s,0)
+		leading = s[0:i]
+		if leading:
+			blanks, tabs = 0,0
+			for ch in leading:
+				if ch == ' ':
+					blanks += 1
+				if ch == '\t':
+					tabs += 1 ; break
+			if blanks > 0 and tabs > 0:
+				# g.trace(leading)
+				g.es("blanks precede leading tab: " + v.headString())
+				found = true ; break
+	if found: break
+	v = v.threadNext()
+if found:
+	g.app.searchDict["v"] = v
+	c.selectVnode(v)
+	c.redraw()
+else:
+	g.es("done",color="blue")
+	g.app.searchDict["v"] = None
+g.app.searchDict["continue"] = false
+#@nonl
+#@-node:EKR.20040502195524.6:Find script
+#@+node:EKR.20040502195524.7:test
+if 1:
+ 	dubious line
+#@nonl
+#@-node:EKR.20040502195524.7:test
+#@-node:EKR.20040502195524.5:Find script to check for dubious leading whitespace
+#@+node:EKR.20040502195524.8:Find script to clean whitespace
+# Initialize Leo's find panel using the named children of this node.
+import leoGlobals as g
+from leoGlobals import true,false
+
+g.app.searchDict = {} # Clear dict.get("v") logic.
+g.initScriptFind("Find script","Change script")
+
+c = g.top()
+c.selectVnode(c.rootPosition())
+c.redraw()
+#@nonl
+#@+node:EKR.20040502195524.9:Find script
+import leoGlobals as g
+from leoGlobals import true,false
+
+c = g.top() ; v = c.currentVnode() ; d = g.app.searchDict
+findAll = d.get("type") == "findAll"
+
+if findAll and c.suboutline_only_flag:
+	after = v.nodeAfterTree()
+else:
+	after = None
+
+found = false ; count = 0
+while v and v != after and not found:
+	s = v.bodyString()
+	lines = s.split('\n')
+	for line in lines:
+		if line and not line.strip():
+			if findAll:
+				g.es(v.headString()) ; count += 1
+			else:
+				c.frame.tree.expandAllAncestors(v)
+				c.selectVnode(v)
+				c.redraw() # Necessary to make the new node visible.
+				if not findAll:
+					g.es("found node with whitespace to clean")
+				found = true 
+			break
+	v = v.threadNext()
+
+if not found:
+	if findAll:
+		g.es("found %d nodes" % (count), color="blue")
+	else:
+		g.es("not found")
+#@-node:EKR.20040502195524.9:Find script
+#@+node:EKR.20040502195524.10:Change script
+import leoGlobals as g
+from leoGlobals import true,false
+
+c = g.top() ; d = g.app.searchDict
+changeAll = d.get("type") == "changeAll"
+count = d.get("count",0)
+if changeAll:
+	v = d.get("v")
+	if v:
+		v = v.threadNext()
+		after = d.get("after")
+		if v == after: v = None
+	else:
+		v = c.currentVnode()
+		d["count"] = 0
+		after = g.choose(c.suboutline_only_flag,v.nodeAfterTree(),None)
+		d["after"] = after
+	d["v"] = v ; d["continue"] = v != None
+else:
+	v = c.currentVnode()
+
+if v:
+	s = oldText = v.bodyString()
+	lines = s.split('\n')
+	lines = [line.rstrip() for line in lines]
+	s = '\n'.join(lines)
+	if s != oldText:
+		v.setBodyStringOrPane(s,encoding=g.app.tkEncoding)
+		if changeAll:
+			g.es(v.headString()) ; d["count"] = count + 1
+		else:
+			c.frame.body.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.
+			c.frame.body.setInsertPointToStartOfLine(0)
+else:
+	if changeAll:
+		g.es("found %d nodes" % (count), color="blue")
+	else:
+		g.es("done")
+#@nonl
+#@-node:EKR.20040502195524.10:Change script
+#@-node:EKR.20040502195524.8:Find script to clean whitespace
+#@+node:EKR.20040502195524.11:Find scripts to convert @doc comments to doc strings
+# Initialize Leo's find panel using the named children of this node.
+import leoGlobals as g
+from leoGlobals import true,false
+
+g.app.searchDict = {} # Clear dict.get("v") logic.
+g.initScriptFind("Find script","Change script")
+
+# Start searching at the top.
+c = g.top()
+c.selectVnode(c.rootPosition())
+#@nonl
+#@+node:EKR.20040502195524.12:Find script
+import leoGlobals as g
+from leoGlobals import true,false
+
+import re
+
+docPart = re.compile("""^(@$|@ |@doc)(.*)$
+^@c[ \t]*(.*?)$
+^(def[ \t]*.*?:.*?)$
+(.*)""", re.MULTILINE | re.DOTALL)
+
+c = g.top() ; d = g.app.searchDict
+v = c.currentVnode()
+# Move past previously matched node.
+last_v = d.get("v")
+if last_v:
+	if v == last_v: v = last_v.threadNext()
+	d["v"] = None
+d["m"] = None ; d["c"] = c
+while v:
+	m = docPart.match(v.bodyString())
+	if m:
+		d["m"] = m ; d["v"] = v
+		c.frame.tree.expandAllAncestors(v)
+		c.selectVnode(v)
+		c.redraw() # Necessary to make the new node visible.
+		break
+	v = v.threadNext()
+if not d.get("v"):
+	g.es("no @doc part found",color="blue")
+#@nonl
+#@-node:EKR.20040502195524.12:Find script
+#@+node:EKR.20040502195524.13:Change script
+import leoGlobals as g
+from leoGlobals import true,false
+
+def replaceDocPart(m,body):
+	# Warning: m.group(0) is the _whole_ match.
+	directive = m.group(1)
+	doc = m.group(2)
+	blanks = m.group(3).strip()
+	if blanks: blanks += "\n\n"
+	else: blanks = ""
+	defLine = m.group(4)
+	rest = m.group(5)
+	docList = doc.split('\n')
+	doc = string.join(docList,"\n\t")
+	if body.hasTextSelection():  # If text is selected only that text becomes the doc part.
+		sel = body.getSelectedText()
+		i = doc.find(sel)
+		if i > -1:
+			doc = doc[:i] + doc[i + len(sel):] # Remove selected text.
+			return directive + doc.rstrip() + "\n@c\n\n" + defLine + '\n\n\t"""' + sel + '"""\n' + rest
+		else:
+			g.es("selection should be in @doc part")
+			return None # This disables any replacement.
+	else:
+		return blanks + defLine + '\n\n\t"""' + doc.strip() + '"""\n' + rest
+		
+d = g.app.searchDict ; c = d.get("c") ; v = d.get("v") ; m = d.get("m")
+if c and v and m:
+	body = c.frame.body
+	oldText = v.bodyString()
+	s = replaceDocPart(m,body)
+	if s: # Don't make a replacement if there was an error.
+		v.setBodyStringOrPane(s,encoding=g.app.tkEncoding)
+		body.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.
+#@nonl
+#@-node:EKR.20040502195524.13:Change script
+#@+node:EKR.20040502195524.14:re tests
+import leoGlobals as g
+from leoGlobals import true,false
+import re
+
+s = """@doc line 0
+line 1d
+line 2
+#@@c
+
+# a comment
+
+def abc(self): xx
+
+after 1
+after 2"""
+
+pat = re.compile("""^(@$|@ |@doc)(.*?)$
+^@c[ \t]*(.*?)$
+^(def[ \t]*.*?:.*?)$
+(.*)""", re.MULTILINE | re.DOTALL)
+
+m = pat.match(s)
+print "---"
+if m:
+	print "doc:   ", m.group(2).strip()
+	print "blanks:", m.group(3).strip()
+	print "def:   ", m.group(4).strip()
+	print "rest:  ", m.group(5).strip()
+else:
+	print "no match"
+#@-node:EKR.20040502195524.14:re tests
+#@+node:EKR.20040502195524.15:early find script
+# This script was a breakthrough.
+# Executing this script initializes the Find text from the given script string.
+# To do: get the script from a named child of this node.
+import leoGlobals as g
+from leoGlobals import true,false
+
+script = """
+import leoGlobals as g
+from leoGlobals import true,false
+c = g.top() ; v = c.currentVnode()
+print v
+v = v.threadNext()
+c.selectVnode(v)"""
+
+g.app.searchDict = {} # Communication between search & change scripts
+c = g.top()
+c.script_search_flag = true
+c.find_text = script
+g.app.findFrame.init(c)
+c.frame.OnFindPanel()
+#@nonl
+#@-node:EKR.20040502195524.15:early find script
+#@-node:EKR.20040502195524.11:Find scripts to convert @doc comments to doc strings
+#@-node:EKR.20040502195524.1:Fnd/change scripts
+#@+node:EKR.20040502195524.16:Other scripts
+#@+node:EKR.20040502195524.17:Script to find and replace all functions in leoGlobals.py
+import leoGlobals as g
+from leoGlobals import true,false
+import string
+c = g.top()
+
+#@+others
+#@+node:EKR.20040502195524.19:findFunctionsInTree
+def findFunctionsInTree(p):
+	
+	nameList = []
+	for p in p.self_and_subtree_iter():
+		names = findDefs(p.bodyString())
+		if names:
+			for name in names:
+				if name not in nameList:
+					nameList.append(name)
+	return nameList
+#@nonl
+#@-node:EKR.20040502195524.19:findFunctionsInTree
+#@+node:EKR.20040502195524.20:findDefs
+def findDefs(body):
+	
+	lines = body.split('\n')
+	names = []
+	for s in lines:
+		i = g.skip_ws(s,0)
+		if g.match(s,i,"class"):
+			return [] # The classes are defined in a single node.
+		if g.match(s,i,"def"):
+			i = g.skip_ws(s,i+3)
+			j = g.skip_c_id(s,i)
+			if j > i:
+				name = s[i:j]
+				if g.match(name,0,"__init__"): 
+					return [] # Disallow other class methods.
+				names.append(name)
+	return names
+#@nonl
+#@-node:EKR.20040502195524.20:findDefs
+#@+node:EKR.20040502195524.21:prependNamesInTree
+def prependNamesInTree(p,nameList,prefix,replace=false):
+	
+	c = p.c
+	
+	assert(len(prefix) > 0)
+	ch1 = string.letters + '_'
+	ch2 = string.letters + string.digits + '_'
+	def_s = "def " ; def_n = len(def_s)
+	prefix_n = len(prefix)
+	total = 0
+	c.beginUpdate()
+	for p in p.self_and_subtree_iter():
+		count = 0 ; s = p.bodyString()
+		printFlag = false
+		if s:
+			for name in nameList:
+				i = 0 ; n = len(name)
+				while 1:
+					#@					<< look for name followed by '(' >>
+					#@+node:EKR.20040502195524.22:<< look for name followed by '(' >>
+					i = s.find(name,i)
+					if i == -1:
+						break
+					elif g.match(s,i-1,'.'):
+						i += n # Already an attribute.
+					elif g.match(s,i-prefix_n,prefix):
+						i += n # Already preceded by the prefix.
+					elif g.match(s,i-def_n,def_s):
+						i += n # preceded by "def"
+					elif i > 0 and s[i-1] in ch1:
+						i += n # Not a word match.
+					elif i+n < len(s) and s[i+n] in ch2:
+						i += n # Not a word match.
+					else:
+						j = i + n
+						j = g.skip_ws(s,j)
+						if j >= len(s) or s[j] != '(':
+							i += n
+						else: # Replace name by prefix+name
+							s = s[:i] + prefix + name + s[i+n:]
+							i += n ; count += 1
+							# g.es('.',newline=false)
+							if 1:
+								if not printFlag:
+									printFlag = true
+									# print p.headString()
+								print g.get_line(s,i-n)
+					#@nonl
+					#@-node:EKR.20040502195524.22:<< look for name followed by '(' >>
+					#@nl
+			if count and replace:
+				if 0:
+					#@					<< print before and after >>
+					#@+node:EKR.20040502195524.23:<< print before and after >>
+					print "-"*10,count,p.headString()
+					print "before..."
+					print p.bodyString()
+					print "-"*10,"after..."
+					print s
+					#@nonl
+					#@-node:EKR.20040502195524.23:<< print before and after >>
+					#@nl
+				p.setBodyStringOrPane(s)
+				p.setDirty()
+		g.es("%3d %s" % (count,p.headString()))
+		total += count
+	c.endUpdate()
+	return total
+#@nonl
+#@-node:EKR.20040502195524.21:prependNamesInTree
+#@-others
+
+if 1:
+	#@	<< set nameList to the list of functions in leoGlobals.py >>
+	#@+node:EKR.20040502195524.18:<< set nameList to the list of functions in leoGlobals.py >>
+	nameList = (
+	'alert',
+	'angleBrackets',
+	'appendToList',
+	'callerName',
+	'CheckVersion',
+	'choose',
+	'clearAllIvars',
+	'clear_stats',
+	'collectGarbage',
+	'computeLeadingWhitespace',
+	'computeWidth',
+	'computeWindowTitle',
+	'createTopologyList',
+	'create_temp_name',
+	'disableIdleTimeHook',
+	'doHook',
+	'dump',
+	'ecnl',
+	'ecnls',
+	'enableIdleTimeHook',
+	'enl',
+	'ensure_extension',
+	'es',
+	'esDiffTime',
+	'es_error',
+	'es_event_exception',
+	'es_exception',
+	'escaped',
+	'executeScript',
+	'file_date',
+	'findNodeAnywhere',
+	'findTopLevelNode',
+	'findNodeInTree',
+	'findReference',
+	'find_line_start',
+	'find_on_line',
+	'flattenList',
+	'funcToMethod',
+	'getBaseDirectory',
+	'getOutputNewline',
+	'getTime',
+	'get_Sherlock_args',
+	'get_directives_dict',
+	'get_leading_ws',
+	'get_line',
+	'get_line_after',
+	'getpreferredencoding',
+	'idleTimeHookHandler',
+	'importFromPath',
+	'initScriptFind',
+	'init_sherlock',
+	'init_trace',
+	'isUnicode',
+	'isValidEncoding',
+	'is_c_id',
+	'is_nl',
+	'is_special',
+	'is_ws',
+	'is_ws_or_nl',
+	'joinLines',
+	'listToString',
+	'makeAllNonExistentDirectories',
+	'makeDict',
+	'match',
+	'match_c_word',
+	'match_ignoring_case',
+	'match_word',
+	'module_date',
+	'openWithFileName',
+	'optimizeLeadingWhitespace',
+	'os_path_abspath',
+	'os_path_basename',
+	'os_path_dirname',
+	'os_path_exists',
+	'os_path_getmtime',
+	'os_path_isabs',
+	'os_path_isdir',
+	'os_path_isfile',
+	'os_path_join',
+	'os_path_norm',
+	'os_path_normcase',
+	'os_path_normpath',
+	'os_path_split',
+	'os_path_splitext',
+	'pause',
+	'plugin_date',
+	'plugin_signon',
+	'printDiffTime',
+	'printGc',
+	'printGcRefs',
+	'printGlobals',
+	'printLeoModules',
+	'print_bindings',
+	'print_stats',
+	'readlineForceUnixNewline',
+	'redirectStderr',
+	'redirectStdout',
+	'removeLeadingWhitespace',
+	'removeTrailingWs',
+	'reportBadChars',
+	'restoreStderr',
+	'restoreStdout',
+	'sanitize_filename',
+	'scanAtEncodingDirective',
+	'scanAtFileOptions',
+	'scanAtLineendingDirective',
+	'scanAtPagewidthDirective',
+	'scanAtRootOptions',
+	'scanAtTabwidthDirective',
+	'scanDirectives',
+	'scanError',
+	'scanf',
+	'set_delims_from_language',
+	'set_delims_from_string',
+	'set_language',
+	'shortFileName',
+	'skip_blank_lines',
+	'skip_block_comment',
+	'skip_braces',
+	'skip_c_id',
+	'skip_heredoc_string',
+	'skip_leading_ws',
+	'skip_leading_ws_with_indent',
+	'skip_line',
+	'skip_long',
+	'skip_matching_delims',
+	'skip_nl',
+	'skip_non_ws',
+	'skip_parens',
+	'skip_pascal_begin_end',
+	'skip_pascal_block_comment',
+	'skip_pascal_braces',
+	'skip_pascal_string',
+	'skip_php_braces',
+	'skip_pp_directive',
+	'skip_pp_if',
+	'skip_pp_part',
+	'skip_python_string',
+	'skip_string',
+	'skip_to_char',
+	'skip_to_end_of_line',
+	'skip_to_semicolon',
+	'skip_typedef',
+	'skip_ws',
+	'skip_ws_and_nl',
+	'splitLines',
+	'stat',
+	'stdErrIsRedirected',
+	'stdOutIsRedirected',
+	'toEncodedString',
+	'toUnicode',
+	'toUnicodeFileEncoding',
+	'top',
+	'trace',
+	'trace_tag',
+	'update_file_if_changed',
+	'utils_rename',
+	'windows',
+	'wrap_lines')
+	#@nonl
+	#@-node:EKR.20040502195524.18:<< set nameList to the list of functions in leoGlobals.py >>
+	#@nl
+else:
+	p = g.findNodeAnywhere("@file leoGlobals.py")
+	nameList = findFunctionsInTree(p)
+
+	nameList.sort() ; g.enl()
+	for name in nameList: g.es("'%s'," % name)
+	
+	s = "%d functions in leoGlobals.py" % len(nameList)
+	print s ; g.es(s)
+
+if 0:
+	p = g.findTopLevelNode(c,"Code")
+	g.enl() ; g.enl()
+	count = prependNamesInTree(p,nameList,"g.",replace=true) # Just prints if replace==false.
+	s = "%d --- done --- " % count
+	print s ; g.es(s)
+#@nonl
+#@-node:EKR.20040502195524.17:Script to find and replace all functions in leoGlobals.py
+#@+node:EKR.20040502195524.24:Clear all timestamps
+# About the only time you should run this script is when:
+# - changing the format of timestamps in nodeIndices.setTimestamp or
+# - when making a retroactive change to leoID.txt.
+
+import leoGlobals as g
+from leoGlobals import true,false
+
+if 0: # This is usually a very bad idea.
+
+	c = g.top() ; v = c.rootVnode()
+	while v:
+		v.t.fileIndex = None
+		v = v.threadNext()
+		
+	g.es("all timestamps cleared")
+#@nonl
+#@-node:EKR.20040502195524.24:Clear all timestamps
+#@+node:EKR.20040502195524.25:Create a graphviz file
+# Warning: changes by EKR have not been properly tested!
+import leoGlobals as g
+from leoGlobals import true,false
+
+import re
+
+#@<< about this script >>
+#@+node:EKR.20040502195524.26:<<about this script>>
+#@+at
+# 
+# http://sourceforge.net/forum/message.php?msg_id=2337165
+# 
+# Here's a simple script to create a graphviz .DOT file from a Leo outline. 
+# The
+# output is in /tmp/leo.dot. You then need to run "dot" (part of the graphviz
+# package) on the .dot file to produce a graph in whatever format you want 
+# (JPEG,
+# PNG, Postscript, etc).
+# 
+# It's really simple and it doesn't seem to work on leodocs.leo because of 
+# some
+# unicode issues. But anyway, here it is, maybe someone can improve on it.
+# 
+# This code is hereby released as public domain - do whatever you want with 
+# it,
+# but hopefully, improve it and post it back here :-)
+#@-at
+#@nonl
+#@-node:EKR.20040502195524.26:<<about this script>>
+#@nl
+
+#@+others
+#@+node:EKR.20040502195524.27:rPrint
+def rPrint(node,level):
+
+	indent = "%*s" % (4*level,"")
+	print indent + str(node.headString())
+	child = node.firstChild()
+	while(child):
+		rPrint(child,level+1)
+		child = child.next()
+
+#@-node:EKR.20040502195524.27:rPrint
+#@+node:EKR.20040502195524.28:newLineize
+def newLineize(s):
+
+	return re.sub('"',"'",re.sub(r"\s", r"\n", s))
+
+#@-node:EKR.20040502195524.28:newLineize
+#@+node:EKR.20040502195524.29:graphvizString
+def graphvizString(node):
+
+	result = []
+	child = node.firstChild()
+	while child:
+		result.append('"%s" -> "%s";\n%s' % (
+			newLineize(node.headString()),
+			newLineize(child.headString()),
+			graphvizString(child)))
+		child = child.next()
+	return ''.join(result)
+#@-node:EKR.20040502195524.29:graphvizString
+#@-others
+
+c = g.top() ; v = c.rootVnode()
+
+s = []
+while v:
+	s.append(graphvizString(v))
+	v = v.next()
+s = ''.join(s)
+
+# Look for an @encoding directive.
+dict = g.scanDirectives(c,c.rootVnode())
+encoding = dict.get("encoding",None)
+if encoding is None:
+	encoding = g.app.config.default_derived_file_encoding
+
+if 0: # testing
+	print s
+else:
+	gvFile = open('/tmp/leo.dot','w')
+	gvFile.write('digraph foo {\n')
+	gvFile.write(g.toEncodedString(s,encoding))
+	gvFile.write('}\n')
+	gvFile.close()
+#@nonl
+#@-node:EKR.20040502195524.25:Create a graphviz file
+#@+node:EKR.20040502195524.30:Count pages
+import leoGlobals as g
+from leoGlobals import true,false
+
+import leoTest
+
+u = leoTest.testUtils()
+nodes = 0 ; lines = 0
+c = g.top()
+c.clearAllVisited()
+if 0:
+	v = u.findNodeAnywhere(c,"Code")
+else:
+	root = u.findRootNode (c.currentVnode())
+	v = u.findNodeInTree(root,"Code")
+
+after = v.nodeAfterTree()
+# g.trace(v,after)
+
+while v and v != after:
+	if not v.t.isVisited():
+		v.t.setVisited()
+		nodes += 1
+		lines += len(g.splitLines(v.bodyString()))
+	v = v.threadNext()
+	
+pages = ((nodes * 10) + lines) / 60
+print "nodes,lines,pages",nodes,lines,pages
+g.es("nodes,lines,pages",nodes,lines,pages)
+#@nonl
+#@-node:EKR.20040502195524.30:Count pages
+#@+node:EKR.20040502195524.31:Count separate nodes (tnodes)
+import leoGlobals as g
+c = g.top()
+
+p = g.findTopLevelNode("Code")
+tnodes = {} ; count = 0
+for p in p.self_and_subtree_iter():
+	tnodes[p.v.t]=p.v.t
+	count += 1
+	
+s = "%4s: %d vnodes, %d distinct" % ("Code",count,len(tnodes.keys()))
+print s ; g.es(s)
+
+tnodes = {} ; count = 0
+for p in c.allNodes_iter():
+	tnodes[p.v.t]=p.v.t
+	count += 1
+		
+s = "%4s: %d vnodes, %d distinct" % ("All",count,len(tnodes.keys()))
+print s ; g.es(s)
+#@nonl
+#@-node:EKR.20040502195524.31:Count separate nodes (tnodes)
+#@+node:EKR.20040502195524.32:Count total, visible nodes
+import leoGlobals as g
+c = g.top()
+
+total,visible = 0,0
+
+if 0: # old way:
+	v = c.rootVnode()
+	while v:
+		total += 1
+		v = v.threadNext()
+	
+	v = c.rootVnode()
+	while v:
+		visible += 1
+		v = v.visNext()
+else:
+	for p in c.allNodes_iter():
+		total += 1
+	
+	p = c.rootPosition()
+	while p:
+		visible += 1
+		p.moveToVisNext()
+	
+print "total,visible",total,visible
+#@nonl
+#@-node:EKR.20040502195524.32:Count total, visible nodes
+#@+node:EKR.20040502195524.33:Find script to change OnX to x in body (didn't quite work :-)
+# Script to change OnXXX to xxx in all body text.
+if 0:
+	import leoGlobals as g
+	from leoGlobals import true,false
+
+	c = g.top() ; v = c.currentVnode()
+	v = v.threadNext()
+	after = v.nodeAfterTree()
+	count = 0
+	while v and v != after:
+		while 1:
+			s = v.bodyString()
+			if not s: break
+			i = s.find("c.On")
+			if i == -1: break
+			c = s[i+4].lower()
+			s = s[:i] + 'c.' + c + s[i+5:]
+			v.setBodyStringOrPane(s)
+			count += 1
+		v = v.threadNext()
+	print count
+#@nonl
+#@-node:EKR.20040502195524.33:Find script to change OnX to x in body (didn't quite work :-)
+#@+node:EKR.20040502195524.34:Find scripts to change OnX to x in headline
+if 0: # Script to change OnXxx to xxx in all headlines
+	import leoGlobals as g
+	from leoGlobals import true,false
+
+	c = g.top() ; v = c.currentVnode()
+	after = v.nodeAfterTree()
+	while v and v != after:
+		h = v.headString()
+		if g.match(h,0,"On") and len(h) > 2:
+			h = h[2].lower() + h[3:]
+			print h
+			v.setHeadString(h)
+		v = v.threadNext()
+		
+# Script to change OnXXX to xxx in all body text.
+if 0:
+	import leoGlobals as g
+	from leoGlobals import true,false
+
+	c = g.top() ; v = c.currentVnode()
+	after = v.nodeAfterTree()
+	while v and v != after:
+		s = v.bodyString()
+		if s:
+			i = s.find("def ")
+			if i > -1:
+				c = s[i+6].lower()
+				s = s[:i] + "def " + c + s[i+7:]
+				print v.headString()
+				v.setBodyStringOrPane(s)
+		v = v.threadNext()
+#@nonl
+#@-node:EKR.20040502195524.34:Find scripts to change OnX to x in headline
+#@+node:EKR.20040502195213:Get statistics using dis module
+# routines to gather static statistics about opcodes based on dis module.
+import leoGlobals as g
+from leoGlobals import true,false
+
+import compiler,dis,os,string,sys,types
+
+#@+others
+#@+node:EKR.20040502195213.1:go
+def go():
+	
+	dir = "c:/prog/leoCVS/leo/"
+	modules = getModules(dir)
+	stats = [0] * 256
+	try:
+		# Importing these might start leo itself and hang idle.
+		modules.remove("leo")
+		modules.remove("openLeo")
+		modules.remove("openEkr")
+		modules.remove("setup")
+	except: pass
+	# print modules
+	
+	for m in modules:
+		try:
+			print "module:", m
+			exec("import " + m)
+			a = eval(m)
+			any(a,stats)
+		except:
+			import traceback ; traceback.print_exc()
+			print "----- no matching class in", m
+			
+	g.print_stats(stats)
+#@nonl
+#@-node:EKR.20040502195213.1:go
+#@+node:EKR.20040502195213.2:getFiles
+def getFiles (dir):
+	
+	from leoGlobals import os_path_join,os_path_split,os_path_splitext
+
+	# Generate the list of modules.
+	allFiles = os.listdir(dir)
+	files = []
+	for f in allFiles:
+		head,tail = g.os_path_split(f)
+		root,ext = g.os_path_splitext(tail)
+		if ext==".py":
+			files.append(g.os_path_join(dir,f))
+			
+	return files
+#@nonl
+#@-node:EKR.20040502195213.2:getFiles
+#@+node:EKR.20040502195213.3:getModules
+def getModules (dir):
+	
+	"""Return the list of Python files in dir."""
+	
+	from leoGlobals import os_path_split,os_path_splitext
+	
+	files = []
+	
+	try:
+		allFiles = os.listdir(dir)
+		for f in allFiles:
+			head,tail = g.os_path_split(f)
+			fn,ext = g.os_path_splitext(tail)
+			if ext==".py":
+				files.append(fn)
+	except: pass
+			
+	return files
+#@nonl
+#@-node:EKR.20040502195213.3:getModules
+#@+node:EKR.20040502195213.4:any
+def any(x,stats,printName = 0):
+	# based on dis.dis()
+	"""Gathers statistics for classes, methods, functions, or code."""
+	if not x:
+		return
+	if type(x) is types.InstanceType:
+		x = x.__class__
+	if hasattr(x, 'im_func'):
+		x = x.im_func
+	if hasattr(x, 'func_code'):
+		x = x.func_code
+	if hasattr(x, '__dict__'):
+		items = x.__dict__.items()
+		items.sort()
+		for name, x1 in items:
+			if type(x1) in (types.MethodType,
+							types.FunctionType,
+							types.CodeType):
+				if printName: print name
+				try:
+					any(x1,stats)
+				except TypeError, msg:
+					print "Sorry:", msg
+	elif hasattr(x, 'co_code'):
+		code(x,stats)
+	else:
+		raise TypeError, \
+			  "don't know how to disassemble %s objects" % \
+			  type(x).__name__
+#@nonl
+#@-node:EKR.20040502195213.4:any
+#@+node:EKR.20040502195213.5:code
+def code (co, stats):
+	"""Gather static count statistics for a code object."""
+
+	codeList = co.co_code
+	# Count the number of occurances of each opcode.
+	i = 0 ;  n = len(codeList)
+	while i < n:
+		c = codeList[i]
+		op = ord(c)
+		stats[op] += 1
+		i = i+1
+		if op >= dis.HAVE_ARGUMENT:
+			i = i+2
+#@nonl
+#@-node:EKR.20040502195213.5:code
+#@+node:EKR.20040502195213.6:print_stats
+def print_stats (stats):
+
+	stats2 = [] ; total = 0
+	for i in xrange(0,256):
+		if stats[i] > 0:
+			stats2.append((stats[i],i))
+		total += stats[i]
+
+	stats2.sort()
+	stats2.reverse()
+	for stat,i in stats2:
+		print string.rjust(repr(stat),6), dis.opname[i]
+	print "total", total
+#@nonl
+#@-node:EKR.20040502195213.6:print_stats
+#@-others
+#@nonl
+#@-node:EKR.20040502195213:Get statistics using dis module
+#@+node:EKR.20040502195213.7:findDosFile
+import leoGlobals as g
+import fnmatch, os
+
+def findDosFile(pattern, dirname):
+	
+	"""Check for crlf in files"""
+
+	files = os.listdir(dirname)
+	names = fnmatch.filter(files, pattern)
+	for name in names:
+		path = g.os_path_join(dirname, name)
+		if g.os_path_isfile(path):
+			bytes = open(path, 'rb').read()
+			count = bytes.count('\r\n')
+			if '\0' not in bytes and count:
+				print "%4d %s" % (count,path)
+
+dir = "c:\prog\leoCvs\leo"
+print ; findDosFile("*",dir)
+#@nonl
+#@-node:EKR.20040502195213.7:findDosFile
+#@-node:EKR.20040502195524.16:Other scripts
+#@+node:EKR.20040502195524.35:Recursive import script
+# An example of running this script:
+import leoGlobals as g
+from leoGlobals import true,false
+
+#@+others
+#@+node:EKR.20040502195524.36:importFiles
+def importFiles (dir,type=None,kind="@file",recursive=false):
+	
+	c = g.top() ; v = c.currentVnode()
+
+	# Check the params.
+	if kind != "@file" and kind != "@root":
+		g.es("kind must be @file or @root: " + kind)
+		return
+
+	if not g.os_path_exists(dir):
+		g.es("directory does not exist: " + dir)
+		return
+	
+	c.beginUpdate()
+	root = createLastChildOf(v,"imported files")
+	try:
+		importDir (dir,type,kind,recursive,root)
+		root.contract()
+	except:
+		g.es_exception()
+	c.endUpdate()
+#@-node:EKR.20040502195524.36:importFiles
+#@+node:EKR.20040502195524.37:importDir
+def importDir (dir,types,kind,recursive,root):
+	
+	c = g.top() # Get the commander.
+	g.es("dir: " + dir,color="blue")
+	
+	try:
+		files = os.listdir(dir)
+		files2 = [] ; dirs =[]
+		for f in files:
+			path = g.os_path_join(dir,f)
+			if g.os_path_isfile(path):
+				name, ext = g.os_path_splitext(f)
+				if not types or ext in types:
+					files2.append(path)
+			elif recursive:
+				dirs.append(path)
+		if len(files2) > 0 or len(dirs) > 0:
+			child = createLastChildOf(root,dir)
+			c.selectVnode(child)
+		if len(files2) > 0:
+			c.importCommands.importFilesCommand(files2,kind)
+		if len(dirs) > 0:
+			dirs.sort()
+			for dir in dirs:
+				importDir(dir,types,kind,recursive,child)
+	except:
+		g.es("exception in importFiles script")
+		g.es_exception()
+#@-node:EKR.20040502195524.37:importDir
+#@+node:EKR.20040502195524.38:createLastChildOf
+def createLastChildOf (v,headline):
+	
+	child = v.insertAsLastChild()
+	child.initHeadString(headline)
+	return child
+#@-node:EKR.20040502195524.38:createLastChildOf
+#@-others
+
+types = (".py",) #,".c",".html",".txt")
+
+dir = "c:/Zope-2.6.2-src/lib/python"
+dir = "c:/Zope-2.6.2-src/lib/Components"
+
+importFiles(dir,types,recursive=true)
+
+g.es("done",color="blue")
+#@nonl
+#@-node:EKR.20040502195524.35:Recursive import script
+#@+node:EKR.20040502195524.39:Testing scripts
+#@+node:EKR.20040502195524.40:Script to clean unused tnodeLists
+import leoGlobals as g
+from leoGlobals import true,false
+
+c = g.top()
+v = c.rootVnode()
+while v:
+	# 12/13/03: Empty tnodeLists are not errors because they never get written to the .leo file.
+	# New in 4.2: tnode list is in tnode.
+	if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode():
+		g.es("deleting tnodeList for ",v,color="blue")
+		delattr(v.t,"tnodeList")
+		c.setChanged(true)
+	v = v.threadNext()
+g.es("tnodeList script complete")
+#@nonl
+#@-node:EKR.20040502195524.40:Script to clean unused tnodeLists
+#@+node:EKR.20040502195524.41:Script to check topology of all clones
+import leoGlobals as g
+from leoGlobals import true,false
+
+g.checkTopologyOfAllClones()
+#@nonl
+#@-node:EKR.20040502195524.41:Script to check topology of all clones
+#@+node:EKR.20040502195524.42:Scripts for checking clones
+if 0:
+	checkForMismatchedJoinedNodes()
+	
+	print g.createTopologyList(c=g.top(),root=g.top().currentVnode().parent(),useHeadlines=false)
+	
+	checkTopologiesOfLinkedNodes()
+	
+	checkForPossiblyBrokenLinks()
+#@nonl
+#@+node:EKR.20040502195524.43:checkForMismatchedJoinedNodes
+def checkForMismatchedJoinedNodes (c=None):
+	
+	"""Checks outline for possible broken join lists"""
+
+	if not c: c = g.top()
+	d = {} # Keys are tnodes, values are headlines.
+	v = c.rootVnode()
+	while v:
+		aTuple = d.get(v.t)
+		if aTuple:
+			head,body = aTuple
+			if v.headString()!= head:
+				g.es("headline mismatch in joined nodes",v)
+			if v.bodyString()!= body:
+				g.es("body mismatch in joined nodes",v)
+		else:
+			d[v.t] = (v.headString(),v.bodyString())
+		v = v.threadNext()
+
+	g.es("end of checkForMismatchedJoinedNodes")
+#@-node:EKR.20040502195524.43:checkForMismatchedJoinedNodes
+#@+node:EKR.20040502195524.44:checkForPossiblyBrokenLinks
+def checkForPossiblyBrokenLinks (c=None):
+	
+	"""Checks outline for possible broken join lists"""
+	
+	if not c: c = g.top()
+	d = {} # Keys are headlines, values are (tnodes,parent) tuples
+	v = c.rootVnode()
+	while v:
+		h = v.headString()
+		parent = v.parent()
+		aTuple = d.get(h)
+		if aTuple:
+			t,p = aTuple
+			if (t != v.t and p and parent and p.t != parent.t and
+				p.headString() == parent.headString() and
+				len(h) > 1 and h != "NewHeadline"):
+				g.es("different tnodes with same headline and parent headlines: " + v.headString())
+		else:
+			d[h] = (v.t,parent)
+		v = v.threadNext()
+#@-node:EKR.20040502195524.44:checkForPossiblyBrokenLinks
+#@+node:EKR.20040502195524.45:checkTopologiesOfLinkedNodes
+def checkTopologiesOfLinkedNodes(c=None):
+	
+	if not c: c = g.top()
+	d = {} # Keys are tnodes, values are topology lists.
+	v = c.rootVnode()
+	count = 0
+	while v:
+		top1 = g.createTopologyList(c=c,root=v)
+		top2 = d.get(v.t)
+		if top2:
+			count += 1
+			if top1 != top1:
+				g.es("mismatched topologies for two vnodes with the same tnode!",v)
+		else:
+			d[v.t] = top1
+		v = v.threadNext()
+	g.es("end of checkTopologiesOfLinkedNodes. Checked %d nodes: " % count)
+#@nonl
+#@-node:EKR.20040502195524.45:checkTopologiesOfLinkedNodes
+#@+node:EKR.20040502195524.46:checkLinksOfNodesWithSameTopologies (to do)
+#@+at 
+#@nonl
+# Nodes with the same topologies should be joined PROVIDED:
+# 	- Topologies are non-trivial.
+# 	- Topologies include tnodes somehow.
+# 	- Topologies include headlines somehow.
+#@-at
+#@-node:EKR.20040502195524.46:checkLinksOfNodesWithSameTopologies (to do)
+#@-node:EKR.20040502195524.42:Scripts for checking clones
+#@-node:EKR.20040502195524.39:Testing scripts
+#@-others
+#@nonl
+#@-node:EKR.20040502195524:@file-thin ../scripts/leoScripts.txt
+#@-leo
