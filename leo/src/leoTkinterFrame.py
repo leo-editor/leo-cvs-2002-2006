@@ -2739,7 +2739,7 @@ class leoTkinterBody (leoFrame.leoBody):
         self.bodyCtrl.after_idle(function,*args,**keys)
     #@nonl
     #@-node:ekr.20031218072017.4005:Idle time...
-    #@+node:ekr.20031218072017.4006:Indices
+    #@+node:ekr.20031218072017.4006:Indices (leoTkinterBody)
     #@+node:ekr.20031218072017.4007:adjustIndex
     def adjustIndex (self,index,offset):
         
@@ -2783,7 +2783,7 @@ class leoTkinterBody (leoFrame.leoBody):
         return self.bodyCtrl.index(index)
     #@nonl
     #@-node:ekr.20031218072017.4012:tkIndex (internal use only)
-    #@-node:ekr.20031218072017.4006:Indices
+    #@-node:ekr.20031218072017.4006:Indices (leoTkinterBody)
     #@+node:ekr.20031218072017.4013:Insert point
     #@+node:ekr.20031218072017.495:getInsertionPoint & getBeforeInsertionPoint
     def getBeforeInsertionPoint (self):

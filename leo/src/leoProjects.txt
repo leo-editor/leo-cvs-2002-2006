@@ -2186,7 +2186,7 @@ try:
             vtuple = arg[1:] 
             vtuple.append(path)
             command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
-            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple)) # Bug fix: 1/21/05
+            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
         else:
             filename = g.os_path_basename(arg)
             command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
@@ -3320,7 +3320,7 @@ try:
             vtuple = arg[1:] 
             vtuple.append(path)
             command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
-            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple)) # Bug fix: 1/21/05
+            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
         else:
             filename = g.os_path_basename(arg)
             command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
@@ -20696,8 +20696,8 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -32907,7 +32907,7 @@ try:
             vtuple = arg[1:] 
             vtuple.append(path)
             command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
-            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple)) # Bug fix: 1/21/05
+            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple))
         else:
             filename = g.os_path_basename(arg)
             command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
@@ -35205,102 +35205,6 @@ def computeLoadDir():
 #@-node:ekr.20031218072017.1937:computeLoadDir
 #@-node:ekr.20050304072744:compute directories...
 #@-node:ekr.20050304072744.1:(Further problems specifying .leoID.txt)
-#@+node:ekr.20050303104141:(Made sure file names get sanitized correctly)
-#@+node:ekr.20050303104141.1:Report
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=3028085
-By: randomandy
-
-I was unable to get the vim plugin working on my Leo. After digging around I
-finally discovered that it was an issue with the openWithTempFilePath() method.
-
-The method tries to create a temp directory using the username. But in Windows
-at least, user names may contain special characters which cause the tempdir
-mkdir to choke. There may be some way to escape some quotes, but my attempt
-at it was unsuccessful. I'm sure the layers of quote nesting there don't help
-the odds any.
-
-So what I chose to do instead was to just sanitize the directory name being
-created with from the user name. (The base path is already sanitized at the
-end.) That solved it for my case.  My user name has a period and spaces.
-@color
-
-def openWithTempFilePath (self,v,ext):
-
-    """Return the path to the temp file corresponding to v and ext.
-
-    Replaces the Commands method."""    
-
-    try:
-        #This allows a loophole
-        #leoTempDir = getpass.getuser() + "_" + "Leo"
-                   
-        #At least in Windows, user name may contain special characters
-        #which would require escaping quotes. Not wanting to deal with
-        #layers of nested quotes, I chose to just sanitize the directory
-        #name.     
-        leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
-    except:
-        leoTempDir = "LeoTemp"
-        g.es("Could not retrieve your user name.")
-        g.es("Temporary files will be stored in: %s" % leoTempDir)
-
-    td = os.path.join(os.path.abspath(tempfile.gettempdir()), leoTempDir)
-    if not os.path.exists(td):
-        os.mkdir(td)
-
-    name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
-    path = os.path.join(td,name)
-    return path
-#@nonl
-#@-node:ekr.20050303104141.1:Report
-#@+node:ekr.20050304092903:Notes
-@killcolor
-
-This is apparently a fix to the mod_tempfname plugin.
-#@nonl
-#@-node:ekr.20050304092903:Notes
-#@+node:ekr.20031218072017.2832:c.openWithTempFilePath
-def openWithTempFilePath (self,p,ext):
-    
-    """Return the path to the temp file corresponding to p and ext."""
-    
-    if 0: # new code: similar to code in mod_tempfname.py plugin.
-        try:
-            # At least in Windows, user name may contain special characters
-            # which would require escaping quotes.
-            leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
-        except:
-            leoTempDir = "LeoTemp"
-            g.es("Could not retrieve your user name.")
-            g.es("Temporary files will be stored in: %s" % leoTempDir)
-        
-        td = os.path.join(os.path.abspath(tempfile.gettempdir()),leoTempDir)
-        if not os.path.exists(td):
-            os.mkdir(td)
-        
-        name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
-        path = os.path.join(td,name)
-        return path
-    else: # Original code.
-        name = "LeoTemp_%s_%s%s" % (
-            str(id(p.v.t)),
-            g.sanitize_filename(p.headString()),
-            ext)
-    
-        name = g.toUnicode(name,g.app.tkEncoding)
-    
-        if 1:
-            td = g.os_path_abspath(tempfile.gettempdir())
-        else:
-            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
-    
-        path = g.os_path_join(td,name)
-    
-        return path
-#@nonl
-#@-node:ekr.20031218072017.2832:c.openWithTempFilePath
-#@-node:ekr.20050303104141:(Made sure file names get sanitized correctly)
 #@+node:ekr.20050308021443:(Fixed crasher in atFile read logic when mod_labels plugin not enabled!)
 #@+node:ekr.20050308021443.1:Report
 @killcolor
@@ -35498,7 +35402,7 @@ def setWrap (self,p):
 #@nonl
 #@-node:ekr.20031218072017.1540:f.setWrap
 #@-node:ekr.20050307194326:(Fixed @wrap bug)
-#@+node:ekr.20050311100936:(Fixed change-all bug)
+#@+node:ekr.20050311100936:(Fixed two change-all bugs)
 #@+node:ekr.20050312095900:What I did
 @killcolor
 
@@ -35510,6 +35414,17 @@ This is a global constraint on all calls to c.endUpdate.  I've made a note of it
 
 Fixed similar problem with the Mark Changed Headlines and Mark Changed Roots
 commands. While I was at it, I converted the code to use c.allNodes_iter().
+
+-------------
+
+A second bug: the current headline wasn't being updated.
+
+Fixed this by _removing_ the calls to:
+
+    c.frame.tree.onHeadChanged(v)
+    c.frame.body.onBodyChanged(v,"Can't Undo")
+
+in changeAll.  Apparently these were interfering with later redraws.
 #@nonl
 #@-node:ekr.20050312095900:What I did
 #@+node:ekr.20050311100936.1:Report
@@ -35543,6 +35458,118 @@ sense I could make of the situation. In that event, given the naivety mentioned
 above, any nudging towards the right direction would be most welcome.
 #@nonl
 #@-node:ekr.20050311100936.1:Report
+#@+node:ekr.20050314044242.1:Report 2
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3045823
+By: nobody
+
+Running with latest CVS version. Start Leo. It displays an empty outline with
+"NewHeader". Press CTRL-F. Replace "e" with "ZZZ". Select "Plain search", unselect
+"whole word", select "entire outline", select "search headline text", unselect
+"search body text". Click "Change All". The headline remains unchanged  even
+though the log window says it changed 3 instances.
+
+Add a new node. Leave the title "NewHeadline". Click on the first node. Do the
+same change operation again. The second headline (unmarked) gets changed; the
+first headline (the marked current node) remains unchanged, even though the
+log window says it changed 6 occurrences (it really only changed 3).
+#@nonl
+#@-node:ekr.20050314044242.1:Report 2
+#@+node:ekr.20031218072017.2293:batchChange
+@ This routine performs a single batch change operation, updating the head or body string of v and leaving the result in s_ctrl.  We update the body if we are changing the body text of c.currentVnode().
+
+s_ctrl contains the found text on entry and contains the changed text on exit.  pos and pos2 indicate the selection.  The selection will never be empty. NB: we can not assume that self.v is visible.
+@c
+
+def batchChange (self,pos1,pos2,count):
+
+    c = self.c ; v = self.v ; st = self.s_ctrl ; gui = g.app.gui
+    # Replace the selection with self.change_text
+    if gui.compareIndices(st,pos1, ">", pos2):
+        pos1,pos2=pos2,pos1
+    gui.replaceSelectionRangeWithText(st,pos1,pos2,self.change_text)
+    s = gui.getAllText(st)
+    # Update the selection.
+    insert=g.choose(self.reverse,pos1,pos1+'+'+str(len(self.change_text))+'c')
+    gui.setSelectionRange(st,insert,insert)
+    gui.setInsertPoint(st,insert)
+    # Update the node
+    if self.in_headline:
+        << set the undo head params >>
+        v.initHeadString(s)
+    else:
+        << set the undo body typing params >>
+        v.setBodyStringOrPane(s)
+    # Set mark, changed and dirty bits.
+    if self.mark_changes:
+        v.setMarked()
+    if not c.isChanged():
+        c.setChanged(True)
+    v.setDirty()
+#@nonl
+#@+node:ekr.20031218072017.2294:<< set the undo head params >>
+sel = None
+if len(s) > 0 and s[-1]=='\n': s = s[:-1]
+if s != v.headString():
+
+    if count == 1:
+        c.undoer.setUndoParams("Change All",v) # Tag the start of the Change all.
+
+    # 11/23/03
+    c.undoer.setUndoParams("Change Headline",v,
+        oldText=v.headString(), newText=s,
+        oldSel=sel, newSel=sel)
+#@nonl
+#@-node:ekr.20031218072017.2294:<< set the undo head params >>
+#@+node:ekr.20031218072017.2295:<< set the undo body typing params >>
+sel = c.frame.body.getInsertionPoint()
+
+if len(s) > 0 and s[-1]=='\n': s = s[:-1]
+
+if s != v.bodyString():
+    if count == 1:
+        c.undoer.setUndoParams("Change All",v) # Tag the start of the Change all.
+
+    # 11/5/03: use setUndoParams to avoid incremental undo.
+    c.undoer.setUndoParams("Change",v,
+        oldText=v.bodyString(), newText=s,
+        oldSel=sel, newSel=sel)
+#@nonl
+#@-node:ekr.20031218072017.2295:<< set the undo body typing params >>
+#@-node:ekr.20031218072017.2293:batchChange
+#@+node:ekr.20031218072017.3069:changeAll
+def changeAll(self):
+
+    c = self.c ; st = self.s_ctrl ; gui = g.app.gui
+    if not self.checkArgs():
+        return
+    self.initInHeadline()
+    data = self.save()
+    self.initBatchCommands()
+    count = 0
+    c.beginUpdate()
+    while 1:
+        pos1, pos2 = self.findNextMatch()
+        if pos1:
+            count += 1
+            self.batchChange(pos1,pos2,count)
+            line = gui.getLineContainingIndex(st,pos1)
+            self.printLine(line,allFlag=True)
+        else: break
+    
+    # Make sure the headline and body text are updated.
+    v = c.currentVnode()
+    if 0: # No longer needed, and interferes with later redraw!
+        c.frame.tree.onHeadChanged(v)
+        c.frame.body.onBodyChanged(v,"Can't Undo")
+    if count > 0:
+        # A change was made.  Tag the end of the Change All command.
+        c.undoer.setUndoParams("Change All",v)
+    g.es("changed: %d instances" % (count))
+    self.restore(data)
+    c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.3069:changeAll
 #@+node:ekr.20040803072955.58:redraw_now
 # Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
 
@@ -35672,37 +35699,6 @@ if self.drag_p:
 #@nonl
 #@-node:ekr.20040803072955.60:<< return if disabled, or quitting or dragging >>
 #@-node:ekr.20040803072955.59:idle_redraw
-#@+node:ekr.20031218072017.3069:changeAll
-def changeAll(self):
-
-    c = self.c ; st = self.s_ctrl ; gui = g.app.gui
-    if not self.checkArgs():
-        return
-    self.initInHeadline()
-    data = self.save()
-    self.initBatchCommands()
-    count = 0
-    c.beginUpdate()
-    while 1:
-        pos1, pos2 = self.findNextMatch()
-        if pos1:
-            count += 1
-            self.batchChange(pos1,pos2,count)
-            line = gui.getLineContainingIndex(st,pos1)
-            self.printLine(line,allFlag=True)
-        else: break
-    # Make sure the headline and body text are updated.
-    v = c.currentVnode()
-    c.frame.tree.onHeadChanged(v)
-    c.frame.body.onBodyChanged(v,"Can't Undo")
-    if count > 0:
-        # A change was made.  Tag the end of the Change All command.
-        c.undoer.setUndoParams("Change All",v)
-    g.es("changed: %d instances" % (count))
-    self.restore(data)
-    c.endUpdate() # Bug fix.  Redraw after all console output.
-#@nonl
-#@-node:ekr.20031218072017.3069:changeAll
 #@+node:ekr.20031218072017.2923:markChangedHeadlines
 def markChangedHeadlines (self): 
 
@@ -35732,7 +35728,7 @@ def markChangedRoots (self):
     c.endUpdate()
 #@nonl
 #@-node:ekr.20031218072017.2924:markChangedRoots
-#@-node:ekr.20050311100936:(Fixed change-all bug)
+#@-node:ekr.20050311100936:(Fixed two change-all bugs)
 #@-node:ekr.20050225104239.1:Bugs
 #@+node:ekr.20050225104239.2:Features
 #@+node:ekr.20050309082255:removed all reloads from test.leo
@@ -35857,6 +35853,102 @@ def deleteComments (self):
 #@-node:ekr.20050312111805.1:(Added Add/Delete Comments commands)
 #@-node:ekr.20050225104239.2:Features
 #@+node:ekr.20050227125015:Plugins & hooks
+#@+node:ekr.20050303104141:(Made sure file names get sanitized correctly)
+#@+node:ekr.20050303104141.1:Report
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=3028085
+By: randomandy
+
+I was unable to get the vim plugin working on my Leo. After digging around I
+finally discovered that it was an issue with the openWithTempFilePath() method.
+
+The method tries to create a temp directory using the username. But in Windows
+at least, user names may contain special characters which cause the tempdir
+mkdir to choke. There may be some way to escape some quotes, but my attempt
+at it was unsuccessful. I'm sure the layers of quote nesting there don't help
+the odds any.
+
+So what I chose to do instead was to just sanitize the directory name being
+created with from the user name. (The base path is already sanitized at the
+end.) That solved it for my case.  My user name has a period and spaces.
+@color
+
+def openWithTempFilePath (self,v,ext):
+
+    """Return the path to the temp file corresponding to v and ext.
+
+    Replaces the Commands method."""    
+
+    try:
+        #This allows a loophole
+        #leoTempDir = getpass.getuser() + "_" + "Leo"
+                   
+        #At least in Windows, user name may contain special characters
+        #which would require escaping quotes. Not wanting to deal with
+        #layers of nested quotes, I chose to just sanitize the directory
+        #name.     
+        leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+    except:
+        leoTempDir = "LeoTemp"
+        g.es("Could not retrieve your user name.")
+        g.es("Temporary files will be stored in: %s" % leoTempDir)
+
+    td = os.path.join(os.path.abspath(tempfile.gettempdir()), leoTempDir)
+    if not os.path.exists(td):
+        os.mkdir(td)
+
+    name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+    path = os.path.join(td,name)
+    return path
+#@nonl
+#@-node:ekr.20050303104141.1:Report
+#@+node:ekr.20050304092903:Notes
+@killcolor
+
+This is apparently a fix to the mod_tempfname plugin.
+#@nonl
+#@-node:ekr.20050304092903:Notes
+#@+node:ekr.20031218072017.2832:c.openWithTempFilePath
+def openWithTempFilePath (self,p,ext):
+    
+    """Return the path to the temp file corresponding to p and ext."""
+    
+    if 0: # new code: similar to code in mod_tempfname.py plugin.
+        try:
+            # At least in Windows, user name may contain special characters
+            # which would require escaping quotes.
+            leoTempDir = g.sanitize_filename(getpass.getuser()) + "_" + "Leo"
+        except:
+            leoTempDir = "LeoTemp"
+            g.es("Could not retrieve your user name.")
+            g.es("Temporary files will be stored in: %s" % leoTempDir)
+        
+        td = os.path.join(os.path.abspath(tempfile.gettempdir()),leoTempDir)
+        if not os.path.exists(td):
+            os.mkdir(td)
+        
+        name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+        path = os.path.join(td,name)
+        return path
+    else: # Original code.
+        name = "LeoTemp_%s_%s%s" % (
+            str(id(p.v.t)),
+            g.sanitize_filename(p.headString()),
+            ext)
+    
+        name = g.toUnicode(name,g.app.tkEncoding)
+    
+        if 1:
+            td = g.os_path_abspath(tempfile.gettempdir())
+        else:
+            td = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','temp'))
+    
+        path = g.os_path_join(td,name)
+    
+        return path
+#@nonl
+#@-node:ekr.20031218072017.2832:c.openWithTempFilePath
+#@-node:ekr.20050303104141:(Made sure file names get sanitized correctly)
 #@+node:ekr.20050301111302:(Added support for mod_labels plugin)
 #@+node:ekr.20050301105854:copyAllTempBodyStringsToTnodes
 def  copyAllTempBodyStringsToTnodes (self,root,thinFile):
@@ -36760,6 +36852,19 @@ Traceback (most recent call last):
 AttributeError: 'vnode' object has no attribute 'c'
 #@nonl
 #@-node:ekr.20050311111530:Fixed crash in autocompleter(leoNodes) during unit test
+#@+node:ekr.20050312141953:(Fixed emacs & vim plugins)
+#@+node:ekr.20050312141953.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3044258
+By: nobody
+
+The current cvs has broken the emacs/vim plugins. They open the node but the
+changes aren't written back to leo.
+
+EKR:  See << version history >> in each plugin for full details.
+#@nonl
+#@-node:ekr.20050312141953.1:Report
+#@-node:ekr.20050312141953:(Fixed emacs & vim plugins)
 #@-node:ekr.20050227125015:Plugins & hooks
 #@+node:ekr.20050225155947:Docs
 #@+node:ekr.20050202052911.2:Documentation of tnodeLists & potential problems
