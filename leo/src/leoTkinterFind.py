@@ -109,8 +109,6 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         self.createTopFrame() # Create the outer tkinter dialog frame.
         self.createFrame()
         self.init(c) # New in 4.3: init only once.
-        
-        # g.trace(self.top)
     #@nonl
     #@-node:ekr.20031218072017.3899:__init__
     #@+node:ekr.20031218072017.3901:destroySelf
@@ -368,7 +366,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     #@nonl
     #@-node:ekr.20031218072017.2059:find.init
     #@-node:ekr.20031218072017.3898:Birth & death
-    #@+node:ekr.20031218072017.1460:find.update_ivars
+    #@+node:ekr.20031218072017.1460:tkFind.update_ivars
     def update_ivars (self):
         
         """Called just before doing a find to update ivars from the find panel."""
@@ -388,15 +386,30 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         self.node_only       = g.choose(search_scope == "node-only",1,0)
         self.selection       = g.choose(search_scope == "selection-only",1,0) # 11/9/03
     
-        s = self.find_ctrl.get("1.0","end - 1c") # Remove trailing newline
+        # New in 4.3: The caller is responsible for removing most trailing cruft.
+        # Among other things, this allows Leo to search for a single trailing space.
+        s = self.find_ctrl.get("1.0","end")
         s = g.toUnicode(s,g.app.tkEncoding)
+        if s and s[-1] in ('\r','\n'):
+            s = s[:-1]
         self.find_text = s
     
-        s = self.change_ctrl.get("1.0","end - 1c") # Remove trailing newline
+        s = self.change_ctrl.get("1.0","end")
+        if s and s[-1] in ('\r','\n'):
+            s = s[:-1]
         s = g.toUnicode(s,g.app.tkEncoding)
         self.change_text = s
     #@nonl
-    #@-node:ekr.20031218072017.1460:find.update_ivars
+    #@-node:ekr.20031218072017.1460:tkFind.update_ivars
+    #@+node:ekr.20050204090259:tkFind.adjust_find_text
+    def adjust_find_text(self,s):
+        
+        w = self.find_ctrl
+        
+        w.delete("1.0","end")
+        w.insert("end",s)
+    #@nonl
+    #@-node:ekr.20050204090259:tkFind.adjust_find_text
     #@+node:ekr.20031218072017.3906:onCloseWindow
     def onCloseWindow(self,event=None):
     
@@ -409,16 +422,27 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         """Bring the tkinter Find Panel to the front."""
         
         c = self.c ; t = self.find_ctrl ; gui = g.app.gui
-        
-        g.trace()
                 
         self.top.withdraw() # Helps bring the window to the front.
         self.top.deiconify()
         self.top.lift()
     
         gui.set_focus(c,t,tag='bringToFront')
-        gui.setTextSelection (t,"1.0","end") # Thanks Rich.
-    #@nonl
+        
+        # Apparently, the text can not be adjusted unless the widget has focus...
+        s = t.get('1.0','end')
+        if s and s[-1] in ('\n','\r'):
+            t.delete('end-1c','end')
+    
+        # New in 4.3: don't highlight the stupid added trailing newline!
+        gui.setTextSelection (t,"1.0","end-1c") # Thanks Rich.
+        
+        def setFocusCallback():
+            # g.trace()
+            gui.set_focus(c,t,tag='tkFind.bringToFront')
+        
+        # We must do this after other callbacks.  Sheesh.
+        self.top.after(500,setFocusCallback)
     #@-node:ekr.20031218072017.3907:bringToFront
     #@+node:EKR.20040603221140:selectAll
     def selectAll (self,event=None):

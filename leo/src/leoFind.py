@@ -323,6 +323,7 @@ class leoFind:
             c.endEditing()
     
         self.update_ivars()
+        self.adjust_ivars()
     
         return c
     #@nonl
@@ -340,10 +341,40 @@ class leoFind:
             c.endEditing()
     
         self.update_ivars()
+        self.adjust_ivars()
     #@nonl
     #@-node:ekr.20031218072017.3066:setup_command
     #@-node:ekr.20031218072017.3055:Top Level Commands
     #@+node:ekr.20031218072017.3067:Find/change utils
+    #@+node:ekr.20050204084635:find.adjust_ivars
+    def adjust_ivars (self):
+        
+        '''New in 4.3.
+        
+        Adjust ivars, particularly the find and change text.
+        This is called just before executing a command and
+        just after calling update_ivars.
+        
+        Plugins may replace this code as desired.'''
+        
+        if 0:
+            # The TkFind class now removes tailing newlines.
+        
+            ft = self.find_text
+            if not ft: return
+        
+            # Remove a trailing newline unless that is all there is.
+            if len(ft) > 1 and ft[-1] in ('\n','\r'):
+                ft = ft[:-1]
+                self.adjust_find_text(ft)
+                if 0:
+                    g.es('before:',repr(self.find_text))
+                    g.es(' after:',repr(ft))
+                self.find_text = ft
+        
+            return
+    #@nonl
+    #@-node:ekr.20050204084635:find.adjust_ivars
     #@+node:ekr.20031218072017.2293:batchChange
     #@+at 
     #@nonl
@@ -1028,6 +1059,10 @@ class leoFind:
         self.oops()
     
     def gui_search (self,t,*args,**keys):
+        self.oops()
+       
+    # New in 4.3: allows base class to adjust controls. 
+    def adjust_find_text(self,s):
         self.oops()
     
     def oops(self):
