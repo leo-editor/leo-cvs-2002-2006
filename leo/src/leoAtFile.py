@@ -4758,20 +4758,21 @@ class baseNewDerivedFile(oldDerivedFile):
         #@@c
         
         tag = "@last"
-        lines = root.v.t.bodyString.split('\n')
+        
+        # 4/17/04 Use g.splitLines to preserve trailing newlines.
+        lines = g.splitLines(root.v.t.bodyString)
         n = len(lines) ; j = k = n - 1
-        # Don't write an empty last line.
-        if j >= 0 and len(lines[j])==0:
-            j = k = n - 2
+        
         # Scan backwards for @last directives.
         while j >= 0:
             line = lines[j]
             if g.match(line,0,tag): j -= 1
             else: break
+            
         # Write the @last lines.
         for line in lines[j+1:k+1]:
             i = len(tag) ; i = g.skip_ws(line,i)
-            self.os(line[i:]) ; self.onl()
+            self.os(line[i:])
         #@nonl
         #@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
         #@nl
