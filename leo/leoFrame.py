@@ -101,6 +101,7 @@ class LeoFrame:
 			icon_image = Image.open(icon_file_name)
 			self.icon = tkIcon.Icon(icon_image)
 		except:
+			# es_exception()
 			self.icon = None
 		#@-body
 		#@-node:2::<< attach LeoDoc icon with tkIcon >>

@@ -659,6 +659,9 @@ class Commands:
 				leading_ws[i] = ws = get_leading_ws(lines[firstLine+i])
 				indents[i] = computeWidth(ws,tabWidth)
 		indents[1] = max(indents)
+		# 11/17/02: Bug fix suggested by D.T.Hein.
+		if 1 == (lastLine - firstLine):
+			leading_ws[1] = leading_ws[0]
 	
 	    # Put the leading unchanged lines.
 		for i in range(0,firstLine):
