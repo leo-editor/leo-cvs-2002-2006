@@ -31,6 +31,8 @@
 if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
     try:
         import pychecker.checker
+        # from pychecker import Config
+        print ; print "Warning: pychecker.checker running..." ; print
     except: pass
 #@nonl
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
