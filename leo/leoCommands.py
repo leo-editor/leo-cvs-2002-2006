@@ -624,9 +624,13 @@ class Commands:
 			assert(0 < tabWidth)
 			assert(tabWidth < pageWidth)
 	
+		# If active selection, then don't attempt a reformat
+		selStart, selEnd = getTextSelection(t)
+		if selStart != selEnd: return
+	
 		# find the paragraph range
 		data = bound_paragraph(t)
-		print `data`
+		if 0: print `data`
 		if not data: return
 		start, end, endsWithNL, wsFirst, wsSecond = data
 		
@@ -651,8 +655,8 @@ class Commands:
 		textLen = pageWidth - indentLenSecond
 	
 		# make into one big string
-		print `start`,`end`
-		print `lines`
+		if 0: print `start`,`end`
+		if 0: print `lines`
 		
 		firstLine = int(float(start)) - 1 # subtract 1 to get on zero basis
 		lastLine = int(float(end)) - 1
@@ -743,6 +747,7 @@ class Commands:
 		t.see("insert")
 	
 		return
+	
 	#@-body
 	#@-node:13::reformatParagraph
 	#@+node:14::updateBodyPane (handles undo)
