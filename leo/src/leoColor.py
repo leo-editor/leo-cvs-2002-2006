@@ -1964,6 +1964,7 @@ class baseColorizer:
 			#@nl
 	
 		return self.language # For use by external routines.
+	#@nonl
 	#@-node:ekr.20031218072017.1377:scanColorDirectives
 	#@+node:ekr.20031218072017.2802:color.schedule & idle_colorize (not used)
 	# At present these are not used.

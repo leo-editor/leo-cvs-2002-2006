@@ -381,6 +381,29 @@ class baseUndoer:
 			u.realUndoMenuLabel = realLabel
 	#@nonl
 	#@-node:ekr.20031218072017.3614:setRedoType, setUndoType
+	#@+node:ekr.20031218072017.3616:setUndoTypes
+	def setUndoTypes (self):
+		
+		u = self
+		# g.trace(u.bead,len(u.beads))
+	
+		# Set the undo type and undo menu label.
+		d = u.peekBead(u.bead)
+		if d:
+			u.setUndoType(d["undoType"])
+		else:
+			u.setUndoType("Can't Undo")
+	
+		# Set only the redo menu label.
+		d = u.peekBead(u.bead+1)
+		if d:
+			u.setRedoType(d["undoType"])
+		else:
+			u.setRedoType("Can't Redo")
+	#@nonl
+	#@-node:ekr.20031218072017.3616:setUndoTypes
+	#@-node:ekr.20031218072017.3608:State routines...
+	#@+node:EKR.20040606195417:Top-level entries
 	#@+node:ekr.20031218072017.3615:setUndoParams
 	#@+at 
 	#@nonl
@@ -602,41 +625,6 @@ class baseUndoer:
 		return d
 	#@nonl
 	#@-node:ekr.20031218072017.1490:setUndoTypingParams
-	#@+node:ekr.20031218072017.3616:setUndoTypes
-	def setUndoTypes (self):
-		
-		u = self
-		# g.trace(u.bead,len(u.beads))
-	
-		# Set the undo type and undo menu label.
-		d = u.peekBead(u.bead)
-		if d:
-			u.setUndoType(d["undoType"])
-		else:
-			u.setUndoType("Can't Undo")
-	
-		# Set only the redo menu label.
-		d = u.peekBead(u.bead+1)
-		if d:
-			u.setRedoType(d["undoType"])
-		else:
-			u.setRedoType("Can't Redo")
-	#@nonl
-	#@-node:ekr.20031218072017.3616:setUndoTypes
-	#@-node:ekr.20031218072017.3608:State routines...
-	#@+node:EKR.20040530121329:u.restoreTree
-	def restoreTree (self,treeInfo):
-		
-		"""Use the tree info to restore all vnode and tnode data,
-		including all links."""
-		
-		# This effectively relinks all vnodes.
-		
-		for v,vInfo,tInfo in treeInfo:
-			v.restoreUndoInfo(vInfo)
-			v.t.restoreUndoInfo(tInfo)
-	#@nonl
-	#@-node:EKR.20040530121329:u.restoreTree
 	#@+node:EKR.20040528075307:u.saveTree
 	def saveTree (self,p,treeInfo=None):
 		
@@ -668,7 +656,7 @@ class baseUndoer:
 		#@-node:EKR.20040530114124:<< about u.saveTree >>
 		#@nl
 		
-		u = self ; c = u.c ; topLevel = (treeInfo == None)
+		u = self ; topLevel = (treeInfo == None)
 		if topLevel: treeInfo = []
 	
 		# Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
@@ -684,6 +672,67 @@ class baseUndoer:
 		# if topLevel: g.trace(treeInfo)
 		return treeInfo
 	#@-node:EKR.20040528075307:u.saveTree
+	#@+node:EKR.20040530121329:u.restoreTree
+	def restoreTree (self,treeInfo):
+		
+		"""Use the tree info to restore all vnode and tnode data,
+		including all links."""
+		
+		# This effectively relinks all vnodes.
+		
+		for v,vInfo,tInfo in treeInfo:
+			v.restoreUndoInfo(vInfo)
+			v.t.restoreUndoInfo(tInfo)
+	#@nonl
+	#@-node:EKR.20040530121329:u.restoreTree
+	#@+node:EKR.20040606195417.1:u.saveNode
+	def saveNode (self,p):
+		
+		"""Create all info for a single vnode."""
+		
+		u = self
+	
+		treeInfo = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+		return treeInfo
+	#@nonl
+	#@-node:EKR.20040606195417.1:u.saveNode
+	#@+node:EKR.20040606195417.2:u.saveNodeAndChildren
+	def saveTree (self,p):
+		
+		"""Create all info needed for a node and all its immediate children."""
+	
+		u = self
+		treeInfo = []
+	
+		# Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
+		data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+		treeInfo.append(data)
+	
+		# Add info for all children.
+		child = p.firstChild()
+		while child:
+			data = (child.v,child.v.createUndoInfo(),child.v.t.createUndoInfo())
+			treeInfo.append(data)
+			child = child.next()
+	
+		return treeInfo
+	
+	#@-node:EKR.20040606195417.2:u.saveNodeAndChildren
+	#@+node:EKR.20040606195417.3:u.saveListOfNodes
+	def saveListOfNodes (self,listOfVnodes):
+		
+		"""Create all info for a list of vnodes."""
+		
+		u = self ; treeInfo = []
+	
+		for v in listOfVnodes:
+			data = (v,v.createUndoInfo(),v.t.createUndoInfo())
+			treeInfo.append(data)
+	
+		return treeInfo
+	#@nonl
+	#@-node:EKR.20040606195417.3:u.saveListOfNodes
+	#@-node:EKR.20040606195417:Top-level entries
 	#@+node:ekr.20031218072017.2030:redo & allies
 	def redo (self):
 	
