@@ -55,7 +55,7 @@ class baseFileCommands:
 		# For writing
 		self.read_only = false
 		self.outputFile = None # File for normal writing
-		self.outputString = None # String for pasting
+		self.outputList = None # List of strings for pasting
 		self.openDirectory = None
 		self.usingClipboard = false
 		# New in 3.12
@@ -1127,8 +1127,8 @@ class baseFileCommands:
 			if self.outputFile:
 				s = toEncodedString(s,self.leo_file_encoding,reportErrors=true)
 				self.outputFile.write(s)
-			elif self.outputString != None: # Write to a string
-				self.outputString += s
+			elif self.outputList != None: # Write to a list.
+				self.outputList.append(s) # 1/8/04: avoid using string concatenation here!
 	
 	def put_dquote (self):
 		self.put('"')
@@ -1157,7 +1157,6 @@ class baseFileCommands:
 		while n > 0:
 			self.put("\t")
 			n -= 1
-	#@nonl
 	#@-node:put (basic)(leoFileCommands)
 	#@+node:putClipboardHeader
 	def putClipboardHeader (self):
@@ -1308,7 +1307,7 @@ class baseFileCommands:
 	
 	def putLeoOutline (self):
 	
-		self.outputString = "" ; self.outputFile = None
+		self.outputList = [] ; self.outputFile = None
 		self.usingClipboard = true
 		self.assignFileIndices() # 6/11/03: Must do this for 3.x code.
 		self.putProlog()
@@ -1316,8 +1315,8 @@ class baseFileCommands:
 		self.putVnodes()
 		self.putTnodes()
 		self.putPostlog()
-		s = self.outputString
-		self.outputString = None
+		s = ''.join(self.outputList) # 1/8/04: convert the list to a string.
+		self.outputList = []
 		self.usingClipboard = false
 		return s
 	#@nonl
