@@ -1,10 +1,55 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040613213623:@thin mod_scripting.py
-"""Script buttons & menus.
+#@<< docstring >>
+#@+node:ekr.20050130155124:<< docstring >>
+"""A plugin to create script buttons and @button, @plugin and @script nodes.
 
-Based on ideas from e's dynabutton plugin."""
+This plugin puts two buttons in the icon area: a button called 'run Script' and
+a button called 'script Button'.  See below for more details.
 
-__version__ = "0.6"
+This plugin optionally scans for @button nodes, @plugin nodes and @script nodes
+whenever a .leo file is opened. @button nodes create script buttons, @plugin
+nodes cause plugins to be loaded and @script nodes cause the script to be
+executed just after the window has been opened.
+
+These @button, @plugin and @script nodes may be security risks. This plugin
+scans for such nodes only if the corresponding atButtonNodes, atPluginNodes,
+atScriptNodes constants are set to True in this plugin.
+
+The 'run Script' button is simply another way of doing the Execute Script
+command: it executes the selected text of the presently selected node, or the
+entire text if no text is selected.
+
+The 'script Button' button creates another button in the icon area every time
+you push it. The name of the button is the headline of the presently selected
+node. Hitting this _new_ button executes the button's script.
+
+For example, to run a script on any part of an outline do the following:
+
+1.  Select the node containing the script.
+2.  Press the scriptButton button.  This will create a new button, call it X.
+3.  Select the node on which you want to run the script.
+4.  Push button X.
+
+That's all.
+
+You can delete a script button by right-clicking on it.
+
+Notes:
+    
+- This plugin is based on ideas from e's dynabutton plugin.
+    
+- The bindLate option in this file determines whether changing the text of the
+node will affect what script gets executed when a script button is pressed. The
+default (recommended) setting is True, in which case the script that gets
+executed is the present contents of the node used to create the script button.
+If bindLate is False, the original script is used whenever you press the script
+button."""
+#@nonl
+#@-node:ekr.20050130155124:<< docstring >>
+#@nl
+
+__version__ = "0.6.1"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
@@ -17,6 +62,8 @@ __version__ = "0.6"
 #     - Added patch by Davide Salomoni: added start2 hook and related code.
 # 0.5 EKR:
 #     - Use g.importExtention to import Tk.
+# 0.6.1 EKR:
+#     - Add much better docstring.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
