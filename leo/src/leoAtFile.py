@@ -2713,6 +2713,7 @@ class baseOldDerivedFile:
 			
 		if valid:
 			try:
+				root.clearOrphan() # Bug fix: 5/25/04.
 				self.outputFileName = self.targetFileName + ".tmp"
 				self.outputFile = open(self.outputFileName,'wb')
 				if self.outputFile is None:
