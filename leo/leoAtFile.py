@@ -55,17 +55,18 @@ class atFile:
 	endOthers		= 15 # @-others
 	startAt			= 16 # @+at
 	startBody		= 17 # @+body
-	startDelims		= 18 # @delims
-	startDirective	= 19 # @@
-	startDoc		= 20 # @+doc
-	startLeo		= 21 # @+leo
-	startNode		= 22 # @+node
-	startOthers		= 23 # @+others
-	startNewline = 24 # @newline 9/27/02
-	startNoNewline = 25 # @nonewline 9/27/02
-	startRef		= 26 # @< < ... > >
-	startVerbatim	= 27 # @verbatim
-	startVerbatimAfterRef = 28 # @verbatimAfterRef
+	startComment = 18 # @comment 10/16/02
+	startDelims		= 19 # @delims
+	startDirective	= 20 # @@
+	startDoc		= 21 # @+doc
+	startLeo		= 22 # @+leo
+	startNode		= 23 # @+node
+	startOthers		= 24 # @+others
+	startNewline = 25 # @newline 9/27/02
+	startNoNewline = 26 # @nonewline 9/27/02
+	startRef		= 27 # @< < ... > >
+	startVerbatim	= 28 # @verbatim
+	startVerbatimAfterRef = 29 # @verbatimAfterRef
 	
 	#@-body
 	#@-node:1::<< atFile constants >>
@@ -306,6 +307,7 @@ class atFile:
 	#@@c
 
 	sentinelDict = {
+		"@comment" : startComment, # 10/16/02
 		"@newline" : startNewline,
 		"@nonewline" : startNoNewline,
 		"@verbatim": startVerbatim,
@@ -419,8 +421,13 @@ class atFile:
 		# An absolute path in an @file node over-rides everything else.
 		# A relative path gets appended to the relative path by the open logic.
 		
-		name = v.atFileNodeName()
-		dir = os.path.dirname(name)
+		# Bug fix: 10/16/02
+		if v.isAtFileNode():
+			name = v.atFileNodeName()
+		else:
+			name = v.atRawFileNodeName()
+		
+		dir = choose(name,os.path.dirname(name),None)
 		if dir and len(dir) > 0 and os.path.isabs(dir):
 			if os.path.exists(dir):
 				self.default_directory = dir
@@ -1548,7 +1555,7 @@ class atFile:
 				
 				#@<< scan @delims >>
 				#@+node:7::unpaired sentinels
-				#@+node:1::<< scan @delims >>
+				#@+node:3::<< scan @delims >>
 				#@+body
 				assert(match(s,i,"@delims"));
 				
@@ -1586,14 +1593,14 @@ class atFile:
 				
 				
 				#@-body
-				#@-node:1::<< scan @delims >>
+				#@-node:3::<< scan @delims >>
 				#@-node:7::unpaired sentinels
 
 			elif kind == atFile.startDirective:
 				
 				#@<< scan @@ >>
 				#@+node:7::unpaired sentinels
-				#@+node:4::<< scan @@ >>
+				#@+node:1::<< scan @@ >>
 				#@+body
 				assert(match(s,i,"@"))
 				
@@ -1614,7 +1621,7 @@ class atFile:
 						out.append(s[i:k] + '\n')
 				
 				#@-body
-				#@-node:4::<< scan @@ >>
+				#@-node:1::<< scan @@ >>
 				#@-node:7::unpaired sentinels
 
 			elif kind == atFile.startDoc:
@@ -1801,7 +1808,7 @@ class atFile:
 				
 				#@<< scan @ref >>
 				#@+node:7::unpaired sentinels
-				#@+node:2::<< scan @ref >>
+				#@+node:4::<< scan @ref >>
 				#@+body
 				#@+at
 				#  The sentinel contains an @ followed by a section name in 
@@ -1823,14 +1830,14 @@ class atFile:
 				out.append(line)
 				
 				#@-body
-				#@-node:2::<< scan @ref >>
+				#@-node:4::<< scan @ref >>
 				#@-node:7::unpaired sentinels
 
 			elif kind == atFile.startVerbatim:
 				
 				#@<< scan @verbatim >>
 				#@+node:7::unpaired sentinels
-				#@+node:3::<< scan @verbatim >>
+				#@+node:5::<< scan @verbatim >>
 				#@+body
 				assert(match(s,i,"verbatim"))
 				
@@ -1842,7 +1849,23 @@ class atFile:
 				out.append(s[i:])
 				
 				#@-body
-				#@-node:3::<< scan @verbatim >>
+				#@-node:5::<< scan @verbatim >>
+				#@-node:7::unpaired sentinels
+
+			elif kind == atFile.startComment:
+				
+				#@<< scan @comment >>
+				#@+node:7::unpaired sentinels
+				#@+node:2::<< scan @comment >>
+				#@+body
+				assert(match(s,i,"comment"))
+				
+				# We need do nothing more to ignore the comment line!
+				
+				
+				
+				#@-body
+				#@-node:2::<< scan @comment >>
 				#@-node:7::unpaired sentinels
 
 			elif ( kind == atFile.endAt or kind == atFile.endBody or
@@ -2636,6 +2659,14 @@ class atFile:
 
 			if 1: # write the entire file
 				self.putOpenLeoSentinel("@+leo")
+				
+				#@<< put optional @comment sentinel line >>
+				#@+node:3::<< put optional @comment sentinel line >>
+				#@+body
+				pass
+				#@-body
+				#@-node:3::<< put optional @comment sentinel line >>
+
 				self.putOpenNodeSentinel(root)
 				self.putBodyPart(root)
 				root.setVisited()
@@ -2643,7 +2674,7 @@ class atFile:
 				self.putSentinel("@-leo")
 				
 				#@<< put all @last lines in root >>
-				#@+node:6::<< put all @last lines in root >>
+				#@+node:7::<< put all @last lines in root >>
 				#@+body
 				#@+at
 				#  Write any @last lines.  These lines are also converted to 
@@ -2669,7 +2700,7 @@ class atFile:
 					i = len(tag) ; i = skip_ws(line,i)
 					self.os(line[i:]) ; self.onl()
 				#@-body
-				#@-node:6::<< put all @last lines in root >>
+				#@-node:7::<< put all @last lines in root >>
 
 			if self.outputFile:
 				if self.suppress_newlines and self.newline_pending:
@@ -2680,7 +2711,7 @@ class atFile:
 				self.outputFile = None
 			
 			#@<< Warn about @ignored and orphans >>
-			#@+node:3::<< Warn about @ignored and orphans  >>
+			#@+node:4::<< Warn about @ignored and orphans  >>
 			#@+body
 			next = root.nodeAfterTree()
 			v = root
@@ -2691,7 +2722,7 @@ class atFile:
 					self.writeError("@ignore node: " + v.headString())
 				v = v.threadNext()
 			#@-body
-			#@-node:3::<< Warn about @ignored and orphans  >>
+			#@-node:4::<< Warn about @ignored and orphans  >>
 
 			if self.errors > 0 or self.root.isOrphan():
 				root.setOrphan()
@@ -2703,7 +2734,7 @@ class atFile:
 				root.clearDirty()
 				
 				#@<< Replace the target with the temp file if different >>
-				#@+node:4::<< Replace the target with the temp file if different >>
+				#@+node:5::<< Replace the target with the temp file if different >>
 				#@+body
 				assert(self.outputFile == None)
 				
@@ -2742,12 +2773,12 @@ class atFile:
 							" to " + self.targetFileName)
 						es_exception()
 				#@-body
-				#@-node:4::<< Replace the target with the temp file if different >>
+				#@-node:5::<< Replace the target with the temp file if different >>
 
 		except:
 			
 			#@<< handle all exceptions during the write >>
-			#@+node:5::<< handle all exceptions during the write >>
+			#@+node:6::<< handle all exceptions during the write >>
 			#@+body
 			es("exception writing:" + self.targetFileName)
 			es_exception()
@@ -2763,7 +2794,7 @@ class atFile:
 					es("exception deleting:" + self.outputFileName)
 					es_exception()
 			#@-body
-			#@-node:5::<< handle all exceptions during the write >>
+			#@-node:6::<< handle all exceptions during the write >>
 	#@-body
 	#@-node:9::atFile.write
 	#@+node:10::atFile.rawWrite
