@@ -601,6 +601,8 @@ class Commands:
 	# deal with the Tk.Text widget!
 	# (Yes, other Edit Body commands could certainly be simplified as well.)
 	# 
+	# 3. Look for @pagewidth directives.
+	# 
 
 	#@-at
 	#@@c
@@ -608,18 +610,14 @@ class Commands:
 	def reformatParagraph(self):
 		"""Reformat a text paragraph in a Tk.Text widget
 	
-	Wraps the concatenated text to pageWidth.  Leading
-	tabs are sized to tabWidth.  First and second line
-	of original text is used to determine leading
-	whitespace in reformatted text.  Hanging indentation
-	is honored.
+	Wraps the concatenated text to pageWidth.  Leading tabs are sized to tabWidth.
+	First and second line of original text is used to determine leading whitespace
+	in reformatted text.  Hanging indentation is honored.
 	
-	Paragraph is bound by start of body, end of body, 
-	blank lines, and lines starting with "@".  Paragraph
-	is selected by position of current insertion cursor.
+	Paragraph is bound by start of body, end of body, blank lines, and lines
+	starting with "@".  Paragraph is selected by position of current insertion
+	cursor."""
 	
-	Returns None.
-	"""
 		c = self ; body = c.frame.body
 		pageWidth = c.page_width
 		tabWidth = c.tab_width
@@ -642,25 +640,30 @@ class Commands:
 		
 		# EKR: bound_paragraph should only find the boundaries of the paragraph.
 		# EKR: use computeWidth utility to properly measure leading whitespace.
-		indents = [0,0]
+		indents = [0,0,0]
 		for i in (0,1):
 			if firstLine + i < len(lines):
 				ws = get_leading_ws(lines[firstLine+i])
 				indents[i] = computeWidth(ws,tabWidth)
-		indent = max(indents)
+		indents[2] = max(indents)
 	
 	    # Put the leading unchanged lines.
 		for i in range(0,firstLine):
 			result.append(lines[i])
 			
 		# EKR: wrap the lines, decreasing the page width by indent.
-		wrapped_lines = wrap_lines(lines[firstLine:lastLine],pageWidth-indent)
+		wrapped_lines = wrap_lines(lines[firstLine:lastLine],pageWidth-indents[2])
 		lineCount = len(wrapped_lines)
 		
 		# EKR: Add the leading whitespace to the wrapped lines.
-		leading_ws = computeLeadingWhitespace(indent,tabWidth)
+		leading_ws = [0,0,0]
+		for i in (0,1,2):
+			leading_ws[i] = computeLeadingWhitespace(indents[i],tabWidth)
+			
+		i = 0
 		for line in wrapped_lines:
-			result.append(leading_ws + line)
+			result.append(leading_ws[i] + line)
+			if i < 2: i += 1
 	
 		# Put the trailing unchanged lines.
 		for i in range(lastLine,len(lines)):
@@ -676,7 +679,6 @@ class Commands:
 				break
 	
 		# Set the new insert at the start of the next paragraph.
-		# EKR: very ugly.
 		lastLine = firstLine + lineCount
 		if not endsWithNL:
 			insPos = str(lastLine) + ".0lineend"
@@ -693,7 +695,7 @@ class Commands:
 				insPos = str(lastLine) + ".0"
 		setTextSelection(body,insPos,insPos)
 	
-		# Make sure we can see the new insert cursor
+		# Make sure we can see the new cursor.
 		body.see("insert")
 	#@-body
 	#@-node:13::reformatParagraph

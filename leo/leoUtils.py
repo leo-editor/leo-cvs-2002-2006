@@ -1921,21 +1921,20 @@ def wrap_lines (lines,pageWidth):
 			k = skip_non_ws(s,j) ; word = s[j:k]
 			assert(k>i)
 			i = k
-			if len(ws) + len(word) + len(line) < pageWidth:
+			if 1 + len(word) + len(line) < pageWidth:
 				if len(word) > 0:
 					
-					#@<< place ws and word on the present line >>
-					#@+node:1::<< place ws and word on the present line >>
+					#@<< place blank and word on the present line >>
+					#@+node:1::<< place blank and word on the present line >>
 					#@+body
 					if len(line) == 0:
 						# Just add the word to the start of the line.
 						line = word
 					else:
-						# Add the word, preceeded by at least one blank.
-						if len(ws) == 0: ws = ' '
-						line = string.join((line,ws,word),'')
+						# Add the word, preceeded by a blank.
+						line = string.join((line,' ',word),'')
 					#@-body
-					#@-node:1::<< place ws and word on the present line >>
+					#@-node:1::<< place blank and word on the present line >>
 
 				else: pass # discard the trailing whitespace.
 			else:
@@ -1950,7 +1949,7 @@ def wrap_lines (lines,pageWidth):
 				# Discard the whitespace and put the word on a new line.
 				line = word
 				
-				# Careful: the word may be longer than a line.
+				# Careful: the word may be longer than pageWidth.
 				if len(line) >= pageWidth:
 					result.append(line)
 					line = ""
