@@ -166,7 +166,7 @@ class leoGui:
 		"""Create and run an askOkCancelNumber dialog ."""
 		self.oops()
 	
-	def runAskYesNoDialog(selftitle,message=None):
+	def runAskYesNoDialog(self,title,message=None):
 		"""Create and run an askYesNo dialog."""
 		self.oops()
 	
