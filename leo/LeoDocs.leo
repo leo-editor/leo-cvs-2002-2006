@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1254" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="-3" left="138" height="26" width="85"/>
+	<global_window_position top="0" left="138" height="26" width="85"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -2298,7 +2298,7 @@ This version of Leo corrects bugs, improves Leo's documentation and adds many ne
 - Converted leoConfig.py to use @root-code
 - New at_root_bodies_start_in_doc_mode option in leoConfig.py.
   Specifies whether @root trees work like @root-code or @root-doc.
-- New synonms: @file-asis = @silentfile
+- New synonyms: @file-asis = @silentfile
   @file-nosent = @nosentinelsfile ; @file-noref = @rawfile.
 - Leo now supports navigation of menus using underlined menus.
 - Added an easy way to replace any Leo method by a function.

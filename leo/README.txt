@@ -19,7 +19,7 @@ This version of Leo corrects bugs, improves Leo's documentation and adds many ne
 - Converted leoConfig.py to use @root-code
 - New at_root_bodies_start_in_doc_mode option in leoConfig.py.
   Specifies whether @root trees work like @root-code or @root-doc.
-- New synonms: @file-asis = @silentfile
+- New synonyms: @file-asis = @silentfile
   @file-nosent = @nosentinelsfile ; @file-noref = @rawfile.
 - Leo now supports navigation of menus using underlined menus.
 - Added an easy way to replace any Leo method by a function.
