@@ -2985,85 +2985,85 @@ class baseCommands:
         return errors
     #@nonl
     #@-node:ekr.20031218072017.2072:c.checkOutline
-    #@+node:ekr.20040412060927:c.dumpOutline
-    def dumpOutline (self):
+    #@+node:ekr.20040723094220:Check Outline commands & allies
+    #@+node:ekr.20040723094220.1:checkAllPythonCode
+    def checkAllPythonCode(self,unittest=False,ignoreAtIgnore=True):
         
-        """ Dump all nodes in the outline."""
-        
-        c = self
+        c = self ; count = 0 ; result = "ok"
     
-        for p in c.allNodes_iter():
-            p.dump()
-    #@nonl
-    #@-node:ekr.20040412060927:c.dumpOutline
-    #@+node:ekr.20040712144216:Check Outline commands & allies
-    #@+node:ekr.20040712045933.2:checkAllPythonCode
-    def checkAllPythonCode(self,unittest=False):
-        
-        c = self ; count = 0
-        
         for p in c.all_positions_iter():
             
             count += 1
             if not unittest:
                 #@            << print dots >>
-                #@+node:ekr.20040712150530:<< print dots >>
+                #@+node:ekr.20040723094220.2:<< print dots >>
                 if count % 100 == 0:
                     g.es('.',newline=False)
                 
                 if count % 2000 == 0:
                     g.enl()
                 #@nonl
-                #@-node:ekr.20040712150530:<< print dots >>
+                #@-node:ekr.20040723094220.2:<< print dots >>
                 #@nl
     
             if g.scanForAtLanguage(c,p) == "python":
-                # Ignore @ignore for unit tests.
-                if unittest or not g.scanForAtIgnore(c,p):
-                    c.checkPythonNode(p)
+                if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
+                    try:
+                        c.checkPythonNode(p,unittest)
+                    except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                        result = "error" # Continue to check.
+                    except:
+                        return "surprise" # abort
+                    if unittest and result != "ok":
+                        print "Syntax error in %s" % p.headString()
+                        return result # End the unit test: it has failed.
                 
         if not unittest:
             g.es("Check complete",color="blue")
+            
+        return result
     #@nonl
-    #@-node:ekr.20040712045933.2:checkAllPythonCode
-    #@+node:ekr.20040712045933.1:checkPythonCode
-    def checkPythonCode (self,unittest=False):
+    #@-node:ekr.20040723094220.1:checkAllPythonCode
+    #@+node:ekr.20040723094220.3:checkPythonCode
+    def checkPythonCode (self,unittest=False,ignoreAtIgnore=True):
         
-        c = self ; count = 0
+        c = self ; count = 0 ; result = "ok"
         
-        if unittest:
-            g.app.unitTestDict["checkPythonCode"] = "ok"
+        if not unittest:
+            g.es("checking all Python code   ")
         
         for p in c.currentPosition().self_and_subtree_iter():
             
             count += 1
             if not unittest:
                 #@            << print dots >>
-                #@+node:ekr.20040712150822:<< print dots >>
+                #@+node:ekr.20040723094220.4:<< print dots >>
                 if count % 100 == 0:
                     g.es('.',newline=False)
                 
                 if count % 2000 == 0:
                     g.enl()
                 #@nonl
-                #@-node:ekr.20040712150822:<< print dots >>
+                #@-node:ekr.20040723094220.4:<< print dots >>
                 #@nl
     
             if g.scanForAtLanguage(c,p) == "python":
-                # Ignore @ignore for unit tests.
-                if unittest or not g.scanForAtIgnore(c,p):
+                if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
                     try:
                         c.checkPythonNode(p,unittest)
                     except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
-                        g.app.unitTestDict["checkPythonCode"] = "error"
+                        result = "error" # Continue to check.
                     except:
-                        g.app.unitTestDict["checkPythonCode"] = "surprise"
+                        return "surprise" # abort
     
         if not unittest:
             g.es("Check complete",color="blue")
+            
+        # We _can_ return a result for unit tests because we aren't using doCommand.
+        return result
     #@nonl
-    #@-node:ekr.20040712045933.1:checkPythonCode
-    #@+node:ekr.20040712045933.3:checkPythonNode
+    #@-node:ekr.20040723094220.3:checkPythonCode
+    #@+node:ekr.20040723094220.5:checkPythonNode
     def checkPythonNode (self,p,unittest=False):
     
         c = self
@@ -3084,8 +3084,8 @@ class baseCommands:
     
         c.tabNannyNode(p,h,body,unittest)
     #@nonl
-    #@-node:ekr.20040712045933.3:checkPythonNode
-    #@+node:ekr.20040711135244.18:tabNannyNode
+    #@-node:ekr.20040723094220.5:checkPythonNode
+    #@+node:ekr.20040723094220.6:tabNannyNode
     # This code is based on tabnanny.check.
     
     def tabNannyNode (self,p,headline,body,unittest=False):
@@ -3121,8 +3121,19 @@ class baseCommands:
             g.trace("unexpected exception")
             g.es_exception()
             if unittest: raise
-    #@-node:ekr.20040711135244.18:tabNannyNode
-    #@-node:ekr.20040712144216:Check Outline commands & allies
+    #@-node:ekr.20040723094220.6:tabNannyNode
+    #@-node:ekr.20040723094220:Check Outline commands & allies
+    #@+node:ekr.20040412060927:c.dumpOutline
+    def dumpOutline (self):
+        
+        """ Dump all nodes in the outline."""
+        
+        c = self
+    
+        for p in c.allNodes_iter():
+            p.dump()
+    #@nonl
+    #@-node:ekr.20040412060927:c.dumpOutline
     #@+node:ekr.20040711135959.1:Pretty Print commands
     #@+node:ekr.20040712053025:prettyPrintAllPythonCode
     def prettyPrintAllPythonCode (self,dump=False):
