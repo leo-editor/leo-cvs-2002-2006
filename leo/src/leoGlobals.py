@@ -2941,7 +2941,8 @@ def joinLines (aList):
 #@nonl
 #@-node:splitLines & joinLines
 #@+node:initScriptFind
-def initScriptFind(findHeadline,changeHeadline,firstNode=None):
+def initScriptFind(findHeadline,changeHeadline,firstNode=None,
+	script_search=true,script_change=true):
 	
 	import leoTest
 	# from leoGlobals import *
@@ -2949,15 +2950,30 @@ def initScriptFind(findHeadline,changeHeadline,firstNode=None):
 	# Find the scripts.
 	c = top() ; v = c.currentVnode()
 	u = leoTest.testUtils()
-	find_v   = u.findNodeInTree(v,"Find script")
-	change_v = u.findNodeInTree(v,"Change script")
+	find_v = u.findNodeInTree(v,findHeadline)
+	if find_v:
+		find_text = find_v.bodyString()
+	else:
+		es("no Find script node",color="red")
+		return
+	change_v = u.findNodeInTree(v,changeHeadline)
+	if change_v:
+		change_text = change_v.bodyString()
+	else:
+		change_text = ""
 	# print `find_v`,`change_v`
 	
 	# Initialize the find panel.
-	c.script_search_flag = true
-	c.script_change_flag = true
-	c.find_text   = find_v.bodyString().strip() + "\n"
-	c.change_text = change_v.bodyString().strip() + "\n"
+	c.script_search_flag = script_search
+	c.script_change_flag = script_change
+	if script_search:
+		c.find_text = find_text.strip() + "\n"
+	else:
+		c.find_text = find_text
+	if script_change:
+		c.change_text = change_text.strip() + "\n"
+	else:
+		c.change_text = change_text
 	app.findFrame.init(c)
 	c.findPanel()
 #@nonl
