@@ -166,34 +166,38 @@ class baseFileCommands:
 	#@nonl
 	#@-node:ekr.20040326063413:getExistingVnode
 	#@+node:ekr.20031218072017.1557:finishPaste
-	# This method finishes pasting the outline from the clipboard.
-	def finishPaste(self):
+	def finishPaste(self,reassignIndices=true):
+		
+		"""Finish pasting an outline from the clipboard.
+		
+		Retain clone links if reassignIndices is False."""
 	
 		c = self.c
 		current = c.currentPosition()
 		c.beginUpdate()
-		#@	<< reassign tnode indices and clear all clone links >>
-		#@+node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
-		#@+at 
-		#@nonl
-		# putLeoOutline calls assignFileIndices (when copying nodes) so that 
-		# vnode can be associated with tnodes.
-		# However, we must _reassign_ the indices here so that no "false 
-		# clones" are created.
-		#@-at
-		#@@c
-		
-		current.clearVisitedInTree()
-		
-		for p in current.self_and_subtree_iter():
-			t = p.v.t
-			if not t.isVisited():
-				t.setVisited()
-				self.maxTnodeIndex += 1
-				t.setFileIndex(self.maxTnodeIndex)
-		#@nonl
-		#@-node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
-		#@nl
+		if reassignIndices:
+			#@		<< reassign tnode indices and clear all clone links >>
+			#@+node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
+			#@+at 
+			#@nonl
+			# putLeoOutline calls assignFileIndices (when copying nodes) so 
+			# that vnode can be associated with tnodes.
+			# However, we must _reassign_ the indices here so that no "false 
+			# clones" are created.
+			#@-at
+			#@@c
+			
+			current.clearVisitedInTree()
+			
+			for p in current.self_and_subtree_iter():
+				t = p.v.t
+				if not t.isVisited():
+					t.setVisited()
+					self.maxTnodeIndex += 1
+					t.setFileIndex(self.maxTnodeIndex)
+			#@nonl
+			#@-node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
+			#@nl
 		c.selectVnode(current)
 		c.endUpdate()
 		return current
@@ -646,11 +650,30 @@ class baseFileCommands:
 	#@-node:ekr.20031218072017.1970:getLeoHeader
 	#@+node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
 	# This method reads a Leo outline from string s in clipboard format.
-	def getLeoOutline (self,s):
+	def getLeoOutline (self,s,reassignIndices=true):
 	
 		self.usingClipboard = true
 		self.fileBuffer = s ; self.fileIndex = 0
 		self.tnodesDict = {}
+		
+		if not reassignIndices:
+			#@		<< recreate tnodesDict >>
+			#@+node:EKR.20040610134756:<< recreate tnodesDict >>
+			nodeIndices = g.app.nodeIndices
+			
+			for t in self.c.all_tnodes_iter():
+				tref = t.fileIndex
+				if nodeIndices.isGnx(tref):
+					tref = nodeIndices.toString(tref)
+				self.tnodesDict[tref] = t
+				
+			if 0:
+				print '-'*40
+				for key in self.tnodesDict.keys():
+					print key,self.tnodesDict[key]
+			#@nonl
+			#@-node:EKR.20040610134756:<< recreate tnodesDict >>
+			#@nl
 	
 		try:
 			self.getXmlVersionTag() # leo.py 3.0
@@ -660,7 +683,7 @@ class baseFileCommands:
 			self.getVnodes()
 			self.getTnodes()
 			self.getTag("</leo_file>")
-			v = self.finishPaste()
+			v = self.finishPaste(reassignIndices)
 		except BadLeoFile:
 			v = None
 	
@@ -669,7 +692,6 @@ class baseFileCommands:
 		self.usingClipboard = false
 		self.tnodesDict = {}
 		return v
-	#@nonl
 	#@-node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
 	#@+node:ekr.20031218072017.3025:getPosition
 	def getPosition (self):
@@ -813,24 +835,8 @@ class baseFileCommands:
 		#@-node:ekr.20031218072017.1564:<< handle unknown attributes >>
 		#@nl
 		if t:
-			if self.usingClipboard:
-				#@			<< handle read from clipboard >>
-				#@+node:ekr.20031218072017.1563:<< handle read from clipboard >>
-				if t:
-					s = self.getEscapedString()
-					t.setTnodeText(s,encoding=self.leo_file_encoding)
-					# g.trace(index,len(s))
-				#@nonl
-				#@-node:ekr.20031218072017.1563:<< handle read from clipboard >>
-				#@nl
-			else:
-				#@			<< handle read from file >>
-				#@+node:ekr.20031218072017.1562:<< handle read from file >>
-				s = self.getEscapedString()
-				t.setTnodeText(s,encoding=self.leo_file_encoding)
-				#@nonl
-				#@-node:ekr.20031218072017.1562:<< handle read from file >>
-				#@nl
+			s = self.getEscapedString()
+			t.setTnodeText(s,encoding=self.leo_file_encoding)
 		else:
 			g.es("no tnode with index: %s.  The text will be discarded" % str(index))
 		self.getTag("</t>")

@@ -213,6 +213,7 @@ class leoMenu:
 			("C&ut Node","Shift+Ctrl+X",c.cutOutline),
 			("C&opy Node","Shift+Ctrl+C",c.copyOutline),
 			("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
+			("Paste &Retaining Clones",None,c.pasteOutlineRetainingClones),
 			("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
 			("-",None,None),
 			("&Insert Node","Ctrl+I",c.insertHeadline),
@@ -226,8 +227,7 @@ class leoMenu:
 			("D&e-Hoist",None,f.c.dehoist),
 			("-",None,None))
 			
-		# Ampersand bindings:  c,d,e,h,i,k,m,n,o,p,s,u
-		#@nonl
+		# Ampersand bindings:  c,d,e,h,i,k,m,n,o,p,r,s,u
 		#@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
 		#@nl
 		#@<< define outlineMenuExpandContractMenuTable >>
@@ -453,6 +453,7 @@ class leoMenu:
 			enable(menu,"Cut Node",c.canCutOutline())
 			enable(menu,"Delete Node",c.canDeleteHeadline())
 			enable(menu,"Paste Node",c.canPasteOutline())
+			enable(menu,"Paste Retaining Clones",c.canPasteOutline())
 			enable(menu,"Clone Node",c.canClone()) # 1/31/04
 			enable(menu,"Sort Siblings",c.canSortSiblings())
 			enable(menu,"Hoist",c.canHoist())

@@ -2440,7 +2440,7 @@ class baseCommands:
 	#@+node:ekr.20031218072017.1551:pasteOutline
 	# To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
 	
-	def pasteOutline(self):
+	def pasteOutline(self,reassignIndices=true):
 	
 		c = self ; current = c.currentPosition()
 		
@@ -2452,7 +2452,7 @@ class baseCommands:
 		isLeo = g.match(s,0,g.app.prolog_prefix_string)
 	
 		if isLeo:
-			p = c.fileCommands.getLeoOutline(s)
+			p = c.fileCommands.getLeoOutline(s,reassignIndices)
 		else:
 			p = c.importCommands.convertMoreStringToOutlineAfter(s,current)
 			
@@ -2475,6 +2475,14 @@ class baseCommands:
 			g.es("The clipboard is not a valid " + g.choose(isLeo,"Leo","MORE") + " file")
 	#@nonl
 	#@-node:ekr.20031218072017.1551:pasteOutline
+	#@+node:EKR.20040610130943:pasteOutlineRetainingClones
+	def pasteOutlineRetainingClones (self):
+		
+		c = self
+		
+		return c.pasteOutline(reassignIndices=false)
+	#@nonl
+	#@-node:EKR.20040610130943:pasteOutlineRetainingClones
 	#@-node:ekr.20031218072017.1548:Cut & Paste Outlines
 	#@+node:ekr.20031218072017.2072:c.checkOutline
 	def checkOutline (self,verbose=true,unittest=false):
