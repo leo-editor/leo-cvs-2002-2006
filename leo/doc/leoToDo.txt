@@ -5,155 +5,11 @@
 #@+all
 #@+node:ekr.20050202052911.2:Figure out what is going on with tnodeLists (!!!)
 #@-node:ekr.20050202052911.2:Figure out what is going on with tnodeLists (!!!)
-#@+node:ekr.20050128065405:Study Leo2Ascii
-@killcolor
-
-I know it involves a boatload of supporting software, but I'd like to remind folks of Michael Dawson's Leo2Ascii (http://www.marshallresearch.com/michael-dawson/os/leo.html). 
-The output is particularly handsome. Perhaps there's somening in his design we can learn from?
-#@+node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
-#@-node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
-#@-node:ekr.20050128065405:Study Leo2Ascii
-#@+node:ekr.20050119072551:4.3 a2
-#@+node:ekr.20050128092443:Add g.app.config.reloadAllSettings
-@killcolor
-
-> I...change the @settings node to
-@string server = mail.otherisp.net
-
-the script doesn't print  -mail.otherisp.net-
-until I restart Leo.
-
-I see.  Thanks for this clarification.  What you want to do is a) clear all the settings, b) reload all the settings files.
-
-There probably should be a g.app.config.reloadAllSettings method, but there isn't yet.
-
-You could simulate this in a script, but clearly this is a convenience method that would be good to have.  I'll do it for a2.
-
-Edward
-#@-node:ekr.20050128092443:Add g.app.config.reloadAllSettings
-#@+node:ekr.20050126100631:Finish undo experiments
-Is it possible to ignore backspaces?
-#@nonl
-#@-node:ekr.20050126100631:Finish undo experiments
-#@+node:ekr.20050125111252:Fix bugs...
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2958470
-By: nobody
-
-From: Rich
-System: 
-Leo 4.3 alpha 1, build  1.208 , January 24, 2005
-Python 2.3.4, Tk 8.4.3, win32
-
-Plugins/UNL gives a nice bit of info about UNLs. "Plugins/Hoist" &
-"Plugins/mod_scripting" should do the same. (Actually, _all_ plugins should
-have verbose info for the first-time user.)
-
-------------------------------------------
-Opened a new .leo file. It asked for an ID, and said it saved it. Closed the
-new leo file & tried opening "Leo\config\leoSettings.leo". _It_ is asking for
-a leoID !!
-
-------------------------------------------
-Documentation problem in "Leo\config\leoSettings.leo", headline == 
-"@bool write_strips_blank_lines = True"
-and in "@settings-->Window options-->@page Outline pane options-->@bool
-allow_clone_drags = False"
-and "@settings-->Window options-->@page Outline pane options-->@bool
-enable_drag_messages = False"
-
-The body text shows 1: & 0: as selections, not True/False.
-
-------------------------------------------
-Documentation in "Leo\config\leoSettings.leo", path == "@settings-->@page Find/Change
-panel options-->Checkboxes-->@bool script_change = None"
-
-?? What's a 'script change' ? That is, all the @bool nodes under "Checkboxes"
-could use descriptions.
-
-------------------------------------------
-Path == "@settings-->Colors-->@page Syntax colors & options" 
-It would be nice if there were spaces before & after the "=" to allow easier
-double-click selection of just the colors.
-
-------------------------------------------
-I opened a new .leo file, and the cursor was flashing in the text box. I started
-typing "@language", and found that the first character is in the text box, and
-the rest is in the headline!! This is user-hostile, in my opinion.
-
-(Still exploring)
---Rich
-
-#@+node:ekr.20050126102846:Fix Unicode problems
-#@+node:ekr.20050126102846.1:Report
-http://sourceforge.net/forum/message.php?msg_id=2959696
-By: tyndal
-
-Windows XP japanese. Leo 4.3a1, Leo4.2.1, Python2.3.4
-
-I was just trying to open an example file whose filename is in japanese. It
-worked mostly fine in Leo 4.2, (the only problem is that filename displayed
-in the log window has garbage characters in it, though it might be because the
-default font doesnt display japanese, since the window title shows fine) the
-but in 4.3a1 it fails.. there are 4 different cases i tried opening the same
-file, just renamed or moved as appropriate.
-
-1. standard case -- file with ascii name in ascii
-directory.&#12288;(c:/temp/file.leo)
-2. subfolder case  -- put in subfolder with japanese name
-(c:/temp/&#12486;&#12473;&#12488;/file.leo)
-3. filename case -- renamed file to japanese name, original folder
-(c:/temp/&#12486;&#12473;&#12488;.leo)
-4. filefolder case -- put in subfolder with japanese name
-(c:/temp/&#12486;&#12473;&#12488;/&#12486;&#12473;&#12488;.leo)
-
-If i try double clicking on the leo file, only case 1 will open the file correctly,
-the other cases, the hourglass shows briefly, then disappears, seeming to the
-user as if nothing happend (no leo opens, etc)
-
-If i try opening the files from file->open, they all result in the same error.
-The title of the window shows the filename correctly, however, the leo window
-is reduced to only showing the file menu, the bar with the dehoist and hoist
-buttons, and the status bar a the bottom (the log, headlines, and text area
-arent visible). If i drag the corner of the window, i can see the 3 areas, but
-there is nothing in the headline or text area.. in the log area the output is
-the following:
-
-------- 
-Leo Log Window...
-Leo 4.3 alpha 1, build  1.208 , January 24, 2005
-Python 2.3.4, Tk 8.4.3, win32
-
-exception executing command
-Traceback (most recent call last):
-  File "F:\Programs\Leo\src\leoCommands.py", line 170, in doCommand
-    command()
-  File "F:\Programs\Leo\src\leoCommands.py", line 328, in open
-    ok, frame = g.openWithFileName(fileName,c)
-  File "F:\Programs\Leo\src\leoGlobals.py", line 638, in openWithFileName
-    print "exceptions opening:", fileName
-UnicodeEncodeError: 'ascii' codec can't encode characters in position 8-10:
-ordinal not in range(128)
-
-------- 
-
-Also, upon a new instance of leo (no other instances open, blank leo window),
-if i try to open case 2, 3, or 4, and then open a regular leo file (ex test.leo
-in the test directory of leo, aka the file that shows up at the open dialog)
-the log window is blank. dont know if it is the same bug, or a separate bug.
-	
-Note: the filenames are in japanese, i dont know what encoding they will show
-up in the forum post, so check UTF8 and the other 3 japanese encodings if necessary
-(shift jis, euc, and iso-2002-jp)
-
-Thanks,
--Tyndal
-#@-node:ekr.20050126102846.1:Report
-#@-node:ekr.20050126102846:Fix Unicode problems
-#@+node:ekr.20050125172204:Remove unused files
-#@-node:ekr.20050125172204:Remove unused files
-#@+node:ekr.20050125075513:Fix Pmw problems
+#@+node:ekr.20050119072551:4.3 a2 TO DO
+#@+node:ekr.20050206095417:Test unicode fixes
+#@-node:ekr.20050206095417:Test unicode fixes
+#@+node:ekr.20050206042705:Distribution
+#@+node:ekr.20050125075513:Distribute Pmw in extensions folder
 #@+node:ekr.20050125040057.1:Document that Pmw is required for some extensions
 #@-node:ekr.20050125040057.1:Document that Pmw is required for some extensions
 #@+node:ekr.20050125075513.1:Fix crash in plugins manager plugin
@@ -197,269 +53,66 @@ TclError: bad window path name ".11727296.12134160.12133760.12134280.12133640.14
 #@-node:ekr.20050125075513.1:Fix crash in plugins manager plugin
 #@+node:ekr.20050125040057:Distribute Pmw in extensions folder
 #@-node:ekr.20050125040057:Distribute Pmw in extensions folder
-#@-node:ekr.20050125075513:Fix Pmw problems
-#@+node:ekr.20050125075757:Fix plugin problems
-#@+node:ekr.20050125075757.1:Report
+#@-node:ekr.20050125075513:Distribute Pmw in extensions folder
+#@+node:ekr.20050201175949:Make .leo files double-clickable (and document how to do this)
+#@-node:ekr.20050201175949:Make .leo files double-clickable (and document how to do this)
+#@+node:ekr.20041130125213.1:(Create Mac package for Leo)
+#@+node:ekr.20041130125213.2:Requests & follow up
 @killcolor
 
-http://sourceforge.net/forum/message.php?msg_id=2957679
-Dany
+http://sourceforge.net/forum/message.php?msg_id=2859149
+By: genthaler
 
-Here are my preliminary tests :
+I'd really like to have Mac OS X packages available as a download option, rather
+than doing it by hand every time a new version comes out. What do I have to
+do to make this happen?
 
-- mod_http didn't work with 2.4 (ok with 2.3.4)
+http://sourceforge.net/forum/message.php?msg_id=2859156
+By: genthaler
 
-- @clip, @view, @strip don't work (2.3.4 or 2.4) but maybe I don't know how
-to use them
+BTW, I wasn't the first to do this and publish it - heres a link to an older
+version - http://www.wordtech-software.com/leo.html
+ 
+http://sourceforge.net/forum/message.php?msg_id=2859153
+By: genthaler
 
-- open_shell didn't work but it was easy to fix
-   (system path from c:\windows to c:\winnt)
+On Mac OS X, it's quite easy to have a double-clickable application bundle with
+its own private Python and TclTk frameworks, but it's huge; about 20MB unpacked
+IIRC. More sensible to use the OS's version, but that requires Tkinter to be
+installed in /System/Library/Frameworks/Python.framework, and that requires
+an installer package and admin privileges.
 
-- word_export : doesn't work (I have a non-English version of Word so that might
-explain it)
+Günther
 
-I have to do some more testings for the other plugins.
-#@nonl
-#@-node:ekr.20050125075757.1:Report
-#@-node:ekr.20050125075757:Fix plugin problems
-#@+node:ekr.20050127083933:Fix url/find problems
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2962084
-By: nobody
-
-Two problems:
-
-1. A @url node with spaces in it doesn't seem to work on Linux when I double-click
-the node to open the link target. In my case, the link target is a file on the
-local filesystem with spaces in the filename.
-
-So, I have to change all spaces in the @url headline to %20. This works, but
-I wanted to do this change operation all at once using Leo's find/replace dialog.
-This leads to the next problem:
-
-2. Search/Replace on headline text seems broken. I've selected "plain search",
-"wrap around", "node only", and "search headline text", and in the "find" field
-I enter an empty space " " and in the "Change" field I enter "%20". Just clicking
-"Change all" doesn't work. Clicking the headline text and making it editable,
-then marking the whole headline text and selecting "Change, Then Find" seems
-to sometimes kind of work, but unreliably. Also, if I "undo" a change operation
-on the headline text, the length of the headline text field is not correctly
-reverted to its previous state.
-
-Basically it seems that headline text is not properly handled by undo nor by
-find/change.
-#@nonl
-#@-node:ekr.20050127083933:Fix url/find problems
-#@+node:ekr.20050127090442.1:Fix redirect script
-redirect script IO to log pane setting isn't working, 
-#@nonl
-#@-node:ekr.20050127090442.1:Fix redirect script
-#@+node:ekr.20050128081226:buttons work in toolbars when settings dialog is open
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2963722
-By: paulpaterson
-
-When in settings all commands are disabled but toolbar buttons (eg hoist, script
-button) do seem to function to some extent.
-
-#@-node:ekr.20050128081226:buttons work in toolbars when settings dialog is open
-#@+node:ekr.20050128081550:Paste Retaing clones can't be undone
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2963304
-By: grahamh
-
-Leo 4.3 alpha 1, build  1.208 , January 24, 2005
-Python 2.3.4, Tk 8.4.7-1, Debian GNU/Linux 3.0
-
-(Please excuse my leo-newbieness)
-
-Is this a bug?:
-
-Create a new headline "Head1", insert some body text.
-Click Outline/Copy Node.
-Type some more body text in "Head1" and change its name to "Head1a".
-Create another headline "Head2".
-Click Outline/Paste Retaining Clones.
-Your changes to "Head1" are destroyed (bug 1).
-Undo does NOT undo the destruction (bug 2)
-
-Hope this helps, Graham
-#@-node:ekr.20050128081550:Paste Retaing clones can't be undone
-#@+node:ekr.20050124110206:Priorities
-@killcolor
-
-- Update quotes.
-- Good stopping place for settings dialog.
-- Undo
-- New uA design
-- Resolve Pmw distribution:
-    - Distribute Pmw with Leo -or-
-    - Code Plugins Manager and Settings dialog in plain Tk.
-#@nonl
-#@-node:ekr.20050124110206:Priorities
-#@-node:ekr.20050125111252:Fix bugs...
-#@+node:ekr.20050123144622:Config: find a good stopping point
-#@+node:ekr.20041118135306.1:Unit tests for settings dialog
-@killcolor
-
-- Create unit tests for essential features.
-    - There are too many cases to test by hand.
-    - Make sure proper values from Prefs panel are used in Tangle/Untangle commands.
-#@nonl
-#@-node:ekr.20041118135306.1:Unit tests for settings dialog
-#@+node:ekr.20050122091016:Minor
-- move findCorrespondingNode into leoNodes class.
-
-- Fix bug: findSettingsRoot doesn't work if no summary node.
-
-- findSettingsPostion should honor if-gui and if-platform nodes.
-#@nonl
-#@-node:ekr.20050122091016:Minor
-#@+node:ekr.20041228090344:Major
-- Cancel should revert all settings.
-    (Revert doesn't work after a node changes:this is confusing and dangerous.)
-
-- Support generalized widget settings (see child node)
-
-- Copy expansion state when writing @settings trees.
-
-- Handle undo/redo properly.
-#@nonl
-#@+node:ekr.20050122083704:Config improvements
-@killcolor
-
-- Allow searching while in config dialog.
-- Allow adding, deleting, rearranging nodes while in config dialog.
-- Allow adding, deleting, rearranging recent files.
-- Support @if-platform, @if-gui.
-- Document, test and use @ints, @strings
-- Support @fixedRecentFiles.
-#@nonl
-#@-node:ekr.20050122083704:Config improvements
-#@+node:ekr.20041123100100:support @fixed-recent-files in Leo's core
-The config classes do nothing special.
-
-The core must put fixed files first in the menu.
-#@nonl
-#@-node:ekr.20041123100100:support @fixed-recent-files in Leo's core
-#@+node:ekr.20041228100139:Support for general component settings
-@list name
-    - name specifies the component to configure.
-    - parser creates a list of name,kind,value tuples from the body.
-
-Leo's core would support one 'name' for:
-    each Tk widget,
-    each Pmw megawidget,
-    each megawidget component.
-
-Examples:
-    headline:
-        @list outline_canvas_settings
-    body:
-        height,int,1
-        text,string,my widget
-
-g.setGeneralTkSetting(widget,setting_name) would do the following:
-    - get the setting_name and the associated list of tuples/bunches from the config class.
-    - safely set the widget's setting using the settings list as is done in the prototype code.
-#@nonl
-#@-node:ekr.20041228100139:Support for general component settings
-#@-node:ekr.20041228090344:Major
-#@+node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
-#@+node:EKR.20040606193323:Report
-@nocolor
-
-Open discussion
-http://sourceforge.net/forum/message.php?msg_id=2603738
-
-I always set tabs to -4 in the config. when you open the prefs it says 4 but
-there is a checkmark for convert tabs to space. open a new leo, open prefs. its
-not checked! open another leo, its checked.
-
-The problem is that tab_width is usually stored in leoConfig.txt, not the .leo file.
-I'm going to ignore this problem for now...
-#@nonl
-#@-node:EKR.20040606193323:Report
-#@+node:ekr.20031218072017.2062:getPrefs
-# Note: Leo 4.3 does not write these settings to local .leo files.
-# Instead, corresponding settings are contained in leoConfig.leo files.
-
-def getPrefs (self):
-
-    c = self.c
-    
-    if self.getOpenTag("<preferences"):
-        return # <preferences/> seen
-
-    table = (
-        ("allow_rich_text",None,None), # Ignored.
-        ("tab_width","tab_width",self.getLong),
-        ("page_width","page_width",self.getLong),
-        ("tangle_bat","tangle_batch_flag",self.getBool),
-        ("untangle_bat","untangle_batch_flag",self.getBool),
-        ("output_doc_chunks","output_doc_flag",self.getBool),
-        ("noweb_flag",None,None), # Ignored.
-        ("extended_noweb_flag",None,None), # Ignored.
-        ("defaultTargetLanguage","target_language",self.getTargetLanguage),
-        ("use_header_flag","use_header_flag",self.getBool))
-    
-    done = False
-    while 1:
-        found = False
-        for tag,var,f in table:
-            if self.matchTag("%s=" % tag):
-                if var:
-                    self.getDquote() ; val = f() ; self.getDquote()
-                    setattr(c,var,val)
-                else:
-                    self.getDqString()
-                found = True ; break
-        if not found:
-            if self.matchTag("/>"):
-                done = True ; break
-            if self.matchTag(">"):
-                break
-            else: # New in 4.1: ignore all other tags.
-                self.getUnknownTag()
-
-    if not done:
-        while 1:
-            if self.matchTag("<defaultDirectory>"):
-                # New in version 0.16.
-                c.tangle_directory = self.getEscapedString()
-                self.getTag("</defaultDirectory>")
-                if not g.os_path_exists(c.tangle_directory):
-                    g.es("default tangle directory not found:" + c.tangle_directory)
-            elif self.matchTag("<TSyntaxMemo_options>"):
-                self.getEscapedString() # ignored
-                self.getTag("</TSyntaxMemo_options>")
-            else: break
-        self.getTag("</preferences>")
-#@nonl
-#@+node:ekr.20031218072017.2063:getTargetLanguage
-def getTargetLanguage (self):
-    
-    # Must match longer tags before short prefixes.
-    for name in g.app.language_delims_dict.keys():
-        if self.matchTagWordIgnoringCase(name):
-            language = name.replace("/","")
-            # self.getDquote()
-            return language
-            
-    return "c" # default
-#@nonl
-#@-node:ekr.20031218072017.2063:getTargetLanguage
-#@-node:ekr.20031218072017.2062:getPrefs
-#@-node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
-#@+node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
-# These should always be available.
-#@nonl
-#@-node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
-#@-node:ekr.20050123144622:Config: find a good stopping point
+#@-node:ekr.20041130125213.2:Requests & follow up
+#@-node:ekr.20041130125213.1:(Create Mac package for Leo)
+#@-node:ekr.20050206042705:Distribution
 #@+node:ekr.20050119072551.1:Docs
+#@+node:ekr.20050206120754:Improve documentation in leoSettings.leo
+@killcolor
+
+Documentation problem in "Leo\config\leoSettings.leo", headline == 
+"@bool write_strips_blank_lines = True"
+and in "@settings-->Window options-->@page Outline pane options-->@bool
+allow_clone_drags = False"
+and "@settings-->Window options-->@page Outline pane options-->@bool
+enable_drag_messages = False"
+
+The body text shows 1: & 0: as selections, not True/False.
+
+------------------------------------------
+
+Documentation in "Leo\config\leoSettings.leo", path == "@settings-->@page Find/Change
+panel options-->Checkboxes-->@bool script_change = None"
+
+?? What's a 'script change' ? That is, all the @bool nodes under "Checkboxes"
+could use descriptions.
+
+------------------------------------------
+Path == "@settings-->Colors-->@page Syntax colors & options" 
+It would be nice if there were spaces before & after the "=" to allow easier
+double-click selection of just the colors.
+#@-node:ekr.20050206120754:Improve documentation in leoSettings.leo
 #@+node:ekr.20050110094511.1:Improve docs as suggested by JasonC.
 @killcolor
 
@@ -705,117 +358,6 @@ folder to make it available to Python
 - Randall Voth
 
 #@-node:ekr.20050127094324:To run Leo on Macintosh OS X 10.3
-#@-node:ekr.20050119072551.1:Docs
-#@+node:ekr.20050127094933:Comment about ports
-@killcolor
-
-https://sourceforge.net/forum/message.php?msg_id=2961304
-By: jasonic
-
-Your response is symptomatic one of the best features of Leo - its author!
-Thanks for re-reading/thinking this through so pro-structively...
-
-Indeed, there was irony in my sugestion, and Python lessons are always welcome!
-
-I was first really introdcuced to Python dicts and namespaces working with Zope
-about 4 years ago. There it soon became clear to us that one could easily end
-up with a situation where it was necessary to map nested namespaces into dicts
-and backa again  to create a simple smart context interface.
-
-Typically when grappling with a problem longing for clean template or lookup
-dict which could access or wrap the inner ones undertandibly.
-
-In my opinion Zope's templates have always been really confusign and nasty to
-work with, creating a major obstacle to extending its audience. They just seem
-to get more and more complicated. Crudely put Plone and Zope sites almsot all
-look and feel the same. Why is that?
-
-I now wonder how different all of that might have been if Leo had been there
-c.1999?
-
-
-ekr> - In the meantime, the documentation for uA's should suggest using file
-names as uA keys.
-
-My concern about doing that is that with version changes or filename changes
-or conflicts etc, it allows the Leo file too easily broken.
-
-Ok it puts the responsibility fairly on the plugin developer. But the ironic
-point of the question was to explore a strategy which Leo could use to map namespaces
-instad of individual ad-hoc developers.
-
-Otherwise one risks trying out someplugin and cluttering up the uA tags in an
-Outline with experimental or outdated misnamed junk data.
-
-Instead don't we want Leo to provide a nice LeoNodeDict namespace mechanism
-we can read from and write to ?
-
-'leoPorts' we might call them. I am influenced here by the lovely AREXX inter-process
-commmuncation address 'ports' used on Amigas c.1988
-
-http://w3.goodnews.net/~ehoffman/AREXX.txt
-
-http://www.monkeyhouse.eclipse.co.uk/amiga/python/
-
-leoPorts namespaces coudl perhaps work like that...
-
-UNLs fit nicely into this idea, and uA could be refigured to with a registered
-leoPORT namespace.
-Effectively a dict lookup mapping an application to a unique name but not necessarily
-the filename.
-
-I am not describing thsi wvery well.. Time to go read up and refresh myself
-on Leo and AREXX.
-
-Jason
- 
-#@-node:ekr.20050127094933:Comment about ports
-#@-node:ekr.20050119072551:4.3 a2
-#@+node:ekr.20050126101301:4.3 a3 Mac stuff
-#@+node:ekr.20041214132052.1:Mac packages
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2881302
-By: genthaler  Günther
-
-I'm happy to provide scripts, icons, whatever. The application bundles I've
-created previously should really provide enough of a pattern to do the job.
-What I was referring to, is what other scripts/tools I would have to integrate
-with. I'm not familiar enough with the SF way of doing things to know what I
-should provide, access to CVS etc. I also don't know whether you bundle things
-up a home and post them on SF, or if you do the compile/archive on the SF boxen.
-#@nonl
-#@-node:ekr.20041214132052.1:Mac packages
-#@+node:ekr.20041130125213.1:(Create Mac package for Leo)
-#@+node:ekr.20041130125213.2:Requests & follow up
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2859149
-By: genthaler
-
-I'd really like to have Mac OS X packages available as a download option, rather
-than doing it by hand every time a new version comes out. What do I have to
-do to make this happen?
-
-http://sourceforge.net/forum/message.php?msg_id=2859156
-By: genthaler
-
-BTW, I wasn't the first to do this and publish it - heres a link to an older
-version - http://www.wordtech-software.com/leo.html
- 
-http://sourceforge.net/forum/message.php?msg_id=2859153
-By: genthaler
-
-On Mac OS X, it's quite easy to have a double-clickable application bundle with
-its own private Python and TclTk frameworks, but it's huge; about 20MB unpacked
-IIRC. More sensible to use the OS's version, but that requires Tkinter to be
-installed in /System/Library/Frameworks/Python.framework, and that requires
-an installer package and admin privileges.
-
-Günther
-
-#@-node:ekr.20041130125213.2:Requests & follow up
-#@-node:ekr.20041130125213.1:(Create Mac package for Leo)
 #@+node:ekr.20041018195347.1:Improve MacOS Docs
 I just succeeded at installing Leo under os x (10.2.8) by folliwing  
 your instructions with modification.  It would be nice to get the  
@@ -871,6 +413,120 @@ available.
 /c
 #@nonl
 #@-node:ekr.20041018195347.1:Improve MacOS Docs
+#@-node:ekr.20050119072551.1:Docs
+#@-node:ekr.20050119072551:4.3 a2 TO DO
+#@+node:ekr.20050126101301:4.3 a3 Plugins & config...
+#@+node:ekr.20050128065405:Study Leo2Ascii
+@killcolor
+
+I know it involves a boatload of supporting software, but I'd like to remind folks of Michael Dawson's Leo2Ascii (http://www.marshallresearch.com/michael-dawson/os/leo.html). 
+The output is particularly handsome. Perhaps there's somening in his design we can learn from?
+#@+node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
+#@-node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
+#@-node:ekr.20050128065405:Study Leo2Ascii
+#@+node:ekr.20041228090344:Config improvements
+- Cancel should revert all settings.
+    (Revert doesn't work after a node changes:this is confusing and dangerous.)
+
+- Support generalized widget settings (see child node)
+
+- Copy expansion state when writing @settings trees.
+
+- Handle undo/redo properly.
+#@nonl
+#@+node:ekr.20050122091016:Minor
+- move findCorrespondingNode into leoNodes class.
+
+- Fix bug: findSettingsRoot doesn't work if no summary node.
+
+- findSettingsPostion should honor if-gui and if-platform nodes.
+#@nonl
+#@-node:ekr.20050122091016:Minor
+#@+node:ekr.20050122083704:Config improvements
+@killcolor
+
+- Allow searching while in config dialog.
+- Allow adding, deleting, rearranging nodes while in config dialog.
+- Allow adding, deleting, rearranging recent files.
+- Support @if-platform, @if-gui.
+- Document, test and use @ints, @strings
+- Support @fixedRecentFiles.
+#@nonl
+#@-node:ekr.20050122083704:Config improvements
+#@+node:ekr.20041123100100:support @fixed-recent-files in Leo's core
+The config classes do nothing special.
+
+The core must put fixed files first in the menu.
+#@nonl
+#@-node:ekr.20041123100100:support @fixed-recent-files in Leo's core
+#@+node:ekr.20041228100139:Support for general component settings
+@list name
+    - name specifies the component to configure.
+    - parser creates a list of name,kind,value tuples from the body.
+
+Leo's core would support one 'name' for:
+    each Tk widget,
+    each Pmw megawidget,
+    each megawidget component.
+
+Examples:
+    headline:
+        @list outline_canvas_settings
+    body:
+        height,int,1
+        text,string,my widget
+
+g.setGeneralTkSetting(widget,setting_name) would do the following:
+    - get the setting_name and the associated list of tuples/bunches from the config class.
+    - safely set the widget's setting using the settings list as is done in the prototype code.
+#@nonl
+#@-node:ekr.20041228100139:Support for general component settings
+#@+node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
+# These should always be available.
+#@nonl
+#@-node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
+#@-node:ekr.20041228090344:Config improvements
+#@+node:ekr.20050128092443:Add g.app.config.reloadAllSettings
+@killcolor
+
+> I...change the @settings node to
+@string server = mail.otherisp.net
+
+the script doesn't print  -mail.otherisp.net-
+until I restart Leo.
+
+I see.  Thanks for this clarification.  What you want to do is a) clear all the settings, b) reload all the settings files.
+
+There probably should be a g.app.config.reloadAllSettings method, but there isn't yet.
+
+You could simulate this in a script, but clearly this is a convenience method that would be good to have.  I'll do it for a2.
+
+Edward
+#@-node:ekr.20050128092443:Add g.app.config.reloadAllSettings
+#@+node:ekr.20050125075757:Fix plugin problems
+#@+node:ekr.20050125075757.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2957679
+Dany
+
+Here are my preliminary tests :
+
+- mod_http didn't work with 2.4 (ok with 2.3.4)
+
+- @clip, @view, @strip don't work (2.3.4 or 2.4) but maybe I don't know how
+to use them
+
+- open_shell didn't work but it was easy to fix
+   (system path from c:\windows to c:\winnt)
+
+- word_export : doesn't work (I have a non-English version of Word so that might
+explain it)
+
+I have to do some more testings for the other plugins.
+#@nonl
+#@-node:ekr.20050125075757.1:Report
+#@-node:ekr.20050125075757:Fix plugin problems
 #@+node:EKR.20040422132037.7:Problems with run script command on Mac x11
 Jon Schull <jschull@softlock.com>  
 Date:  2003/12/30 Tue PM 05:50:51 EST 
@@ -948,7 +604,7 @@ Information Technology
 Rochester Institute of Technology
 schull@digitalgoods.com 585-738-6696
 #@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
-#@-node:ekr.20050126101301:4.3 a3 Mac stuff
+#@-node:ekr.20050126101301:4.3 a3 Plugins & config...
 #@+node:ekr.20041228084018.1:4.3.a4 plugins
 Edit and commit all plugins.
 #@nonl
