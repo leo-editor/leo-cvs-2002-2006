@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2291" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="65" left="384" height="784" width="842"/>
+	<global_window_position top="103" left="338" height="784" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2852,7 +2852,7 @@
 <v t="edream.121103175314"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="edream.121103175121" a="EV"><vh>importTests</vh>
+<v t="edream.121103175121" a="V"><vh>importTests</vh>
 <v t="edream.121103114537.1"><vh>importAtRoot</vh>
 <v t="edream.121103114537.2"><vh>dialog</vh></v>
 </v>
@@ -2862,7 +2862,7 @@
 <v t="edream.121103115910.7"><vh>importNowebFiles</vh>
 <v t="edream.121103121417"><vh>dialog</vh></v>
 </v>
-<v t="edream.121103115910.6" a="E"><vh>importFlattenedOutline</vh>
+<v t="edream.121103115910.6"><vh>importFlattenedOutline</vh>
 <v t="edream.121103121417.1"><vh>dialog</vh></v>
 </v>
 <v t="edream.121103115910.5"><vh>importCWEBFiles</vh>

@@ -22,9 +22,9 @@
 </v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7" a=""><vh>Acknowledgements</vh></v>
-<v t="edream.110203163054.8" a="E"><vh>What people are saying about Leo</vh>
-<v t="edream.110203163054.9" a="EM"><vh>Quote of the Month</vh>
-<v t="edream.121503192354.1" a="V"><vh>John Benson (not yet)</vh></v>
+<v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
+<v t="edream.110203163054.9" a="M"><vh>Quote of the Month</vh>
+<v t="edream.121503192354.1"><vh>John Benson (not yet)</vh></v>
 <v t="edream.120703081642"><vh>Anon</vh></v>
 <v t="edream.120503073304"><vh>From Michael Dawson</vh></v>
 <v t="edream.110203163054.10"><vh>From David Nichols</vh></v>
@@ -65,7 +65,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -85,8 +85,8 @@
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
-<v t="edream.121403160546"><vh>4.1 final</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="edream.121403160546" a="V"><vh>4.1 final</vh>
 <v t="edream.121403165221"><vh>Bugs fixed in this release</vh></v>
 <v t="edream.121403161017"><vh>Bug fixed in previous 4.1 releases</vh></v>
 <v t="edream.121403161017.1"><vh>New code-level features</vh></v>
@@ -1495,6 +1495,7 @@
 <v t="edream.110203163054.1027"><vh>Unicode settings</vh></v>
 </v>
 <v t="edream.110203163054.1028"><vh>XML file format</vh>
+<v t="edream.031216084930"><vh>Summary of the file format</vh></v>
 <v t="edream.110203163054.1029"><vh>&lt;?xml ... ?&gt;</vh></v>
 <v t="edream.110203163054.1030"><vh>&lt;leo_file&gt; ... &lt;/leo_file&gt;</vh>
 <v t="edream.110203163054.1031"><vh>&lt;leo_header ... /&gt;</vh></v>
@@ -3693,6 +3694,17 @@
 <v t="edream.110803170826"><vh>Count pages</vh></v>
 </vnodes>
 <tnodes>
+<t tx="edream.031216084930">The heart of the file format is the &lt;vnodes&gt; element containing possibly nested &lt;v&gt; elements, and the &lt;tnodes&gt; element containing a list of (non-nested) &lt;t&gt; elements.  &lt;v&gt; elements refer to &lt;t&gt; elements using "t" attributes in &lt;v&gt; elements corresponding to "tx" attributes in &lt;t&gt; elements.
+
+&lt;v&gt; and &lt;t&gt; elements in .leo files correspond directly to vnodes and tnodes in memory when Leo is running.  For full information about these see @file leoNodes.py in LeoPy.leo.  For full information about exactly what Leo is doing when reading and writing files, see @file leoFileCommands.py in LeoPy.leo.
+
+New in 4.0:  &lt;v&gt; elements corresponding to @file nodes now contain tnodeList attributes that are a list of gnx's.  The tnodeList attribute allows the read code in @file leoAtFile.py to recreate the order in which nodes should appear in the outline.  The tnodeList attribute is a list of gnx's: global node indices.  See the nodeIndices class in leoNodes.py for details.  A gnx has the form id.timestamp.n where .n is elided unless two nodes would have the same id.timestamp field.
+
+The following sections of Users Guide:Customizing Leo contain new conventions that allow plugins to extend this format by adding attributes to &lt;v&gt; and &lt;t&gt; elments:
+
+- Extending the format of .leo files
+- Attaching temporary attributes to vnodes and tnodes
+- Recommended conventions for plugins</t>
 <t tx="edream.110203163054">@nocolor
 
 Leo is:

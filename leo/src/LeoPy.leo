@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4006" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="43" left="337" height="870" width="818"/>
+	<global_window_position top="49" left="430" height="870" width="818"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -14,7 +14,11 @@
 <vnodes>
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.120103054230"><vh>December 2003</vh>
+<v t="edream.031217104401"><vh>12/17</vh>
+<v t="edream.031217104401.1"><vh>Unittests for import don't alter test.leo</vh></v>
+</v>
 <v t="edream.121503100333"><vh>12/15</vh>
+<v t="edream.031215201735"><vh>Supported default font sizes for all panes</vh></v>
 <v t="edream.121503182208"><vh>Changed format of timestamps</vh></v>
 <v t="edream.121503192250"><vh>Changed *.* to * in dialogs</vh></v>
 <v t="edream.121503192250.1"><vh>Released 4.1 rc1</vh></v>
@@ -783,50 +787,6 @@
 </v>
 </v>
 <v t="edream.110203160744.419"><vh> To do...</vh>
-<v t="edream.110203160744.420"><vh>To do: 4.2</vh>
-<v t="edream.121103150801"><vh>Urgent: improve the config manager</vh></v>
-<v t="edream.120603055749"><vh>gui interface for plugins manager</vh></v>
-<v t="edream.120303071612"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
-<v t="edream.121303054612"><vh>Better support for TeX coloring</vh></v>
-<v t="edream.110203160744.425"><vh>Best minor improvements</vh>
-<v t="edream.110203160744.426"><vh>Use @file extension by default if no @language</vh></v>
-<v t="edream.110203160744.427"><vh>Secondary icons: use for marks?</vh></v>
-<v t="edream.110203160744.2439"><vh>(Use pywin extensions to improve cut/paste between apps)</vh>
-<v t="edream.110203160744.1293" a=""><vh>updateEditMenu</vh></v>
-<v t="edream.110203160744.3684" a=""><vh> tkinterGui.__init__</vh></v>
-<v t="edream.110203160744.2287" a=""><vh>tkBody.createBindings</vh></v>
-<v t="edream.110903195011" a=""><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
-<v t="edream.110203160744.1146" a=""><vh>Cut/Copy/Paste body text</vh>
-<v t="edream.110203160744.1147"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
-<v t="edream.110203160744.1148"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
-<v t="edream.110203160744.1149" a=""><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
-</v>
-<v t="edream.110203160744.2396" a=""><vh>Clipboard (tkGui)</vh>
-<v t="edream.111303093945"><vh>replaceClipboardWith</vh></v>
-<v t="edream.111303093945.1"><vh>getTextFromClipboard</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203160744.428"><vh>Cleanup</vh>
-<v t="edream.110203160744.429"><vh>Cleanup Pychecker stuff</vh></v>
-<v t="edream.110203160744.430"><vh>Cleanup undo logic</vh></v>
-</v>
-<v t="edream.120203105455"><vh> Next</vh>
-<v t="edream.110203160744.2445"><vh>Find in status area</vh></v>
-<v t="edream.110203160744.2457"><vh>Scroll improvement</vh></v>
-<v t="edream.120103072109"><vh>More intelligent untangling of clones</vh></v>
-<v t="edream.112403065048"><vh>Put tips in LeoDocs.leo</vh></v>
-</v>
-<v t="edream.110903125318"><vh>Later</vh>
-<v t="edream.120103074439"><vh>button context menu in body panel</vh></v>
-<v t="edream.120103060252"><vh>Study SPE editor</vh></v>
-<v t="edream.110703160555"><vh>Use Emacs style input to avoid difficult key combinations</vh></v>
-<v t="edream.111303073523.6"><vh>Should mouse up cancel a drag?</vh></v>
-<v t="edream.110703024557"><vh>What does the scripts menu do ?</vh></v>
-<v t="edream.110503100058"><vh>Add option to allow incremental screen redraws? And shared tnodes?</vh></v>
-</v>
-<v t="edream.121103044318"><vh>Cleanup</vh></v>
-</v>
 <v t="edream.110203160744.436"><vh>  Schedule</vh></v>
 <v t="edream.110203160744.437"><vh> Help wanted</vh>
 <v t="edream.110203160744.438"><vh>Add more unit tests to leoTests.py</vh></v>
@@ -1066,7 +1026,50 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538" a="E"><vh>To do: 4.1 final</vh></v>
+<v t="edream.110203160744.420"><vh>To do: 4.2</vh>
+<v t="edream.121103150801"><vh>Urgent: improve the config manager</vh></v>
+<v t="edream.120603055749"><vh>gui interface for plugins manager</vh></v>
+<v t="edream.120303071612"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
+<v t="edream.121303054612"><vh>Better support for TeX coloring</vh></v>
+<v t="edream.110203160744.425"><vh>Best minor improvements</vh>
+<v t="edream.110203160744.426"><vh>Use @file extension by default if no @language</vh></v>
+<v t="edream.110203160744.427"><vh>Secondary icons: use for marks?</vh></v>
+<v t="edream.110203160744.2439"><vh>(Use pywin extensions to improve cut/paste between apps)</vh>
+<v t="edream.110203160744.1293" a=""><vh>updateEditMenu</vh></v>
+<v t="edream.110203160744.3684" a=""><vh> tkinterGui.__init__</vh></v>
+<v t="edream.110203160744.2287" a=""><vh>tkBody.createBindings</vh></v>
+<v t="edream.110903195011" a=""><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
+<v t="edream.110203160744.1146" a=""><vh>Cut/Copy/Paste body text</vh>
+<v t="edream.110203160744.1147"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
+<v t="edream.110203160744.1148"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
+<v t="edream.110203160744.1149" a=""><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
+</v>
+<v t="edream.110203160744.2396" a=""><vh>Clipboard (tkGui)</vh>
+<v t="edream.111303093945"><vh>replaceClipboardWith</vh></v>
+<v t="edream.111303093945.1"><vh>getTextFromClipboard</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203160744.428"><vh>Cleanup</vh>
+<v t="edream.110203160744.429"><vh>Cleanup Pychecker stuff</vh></v>
+<v t="edream.110203160744.430"><vh>Cleanup undo logic</vh></v>
+</v>
+<v t="edream.120203105455"><vh> Next</vh>
+<v t="edream.110203160744.2445"><vh>Find in status area</vh></v>
+<v t="edream.110203160744.2457"><vh>Scroll improvement</vh></v>
+<v t="edream.120103072109"><vh>More intelligent untangling of clones</vh></v>
+<v t="edream.112403065048"><vh>Put tips in LeoDocs.leo</vh></v>
+</v>
+<v t="edream.110903125318"><vh>Later</vh>
+<v t="edream.120103074439"><vh>button context menu in body panel</vh></v>
+<v t="edream.120103060252"><vh>Study SPE editor</vh></v>
+<v t="edream.110703160555"><vh>Use Emacs style input to avoid difficult key combinations</vh></v>
+<v t="edream.111303073523.6"><vh>Should mouse up cancel a drag?</vh></v>
+<v t="edream.110703024557"><vh>What does the scripts menu do ?</vh></v>
+<v t="edream.110503100058"><vh>Add option to allow incremental screen redraws? And shared tnodes?</vh></v>
+</v>
+<v t="edream.121103044318"><vh>Cleanup</vh></v>
+</v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
 <v t="edream.110203160744.603"><vh>(Translation problems)</vh>
@@ -3943,9 +3946,17 @@
 </v>
 </v>
 </v>
+<v t="edream.031215201735.1"><vh>rc2 projects</vh>
+<v t="edream.121503182328"><vh>(Created defaults for log/tree font sizes)</vh>
+<v t="edream.031215194720"><vh>Request</vh></v>
+<v t="edream.110203160744.2948" a=""><vh>&lt;&lt; define defaultsDict &gt;&gt;</vh></v>
+<v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
+</v>
+<v t="edream.031216175224"><vh>(Verified that setTextSelection works)</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.2458"><vh>Code</vh>
+</v>
+<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -7149,11 +7160,6 @@
 </v>
 </v>
 </v>
-<v t="edream.121503182328" a="V"><vh>(Created defaults for log/tree font sizes)</vh>
-<v t="edream.031215194720"><vh>Request</vh></v>
-<v t="edream.110203160744.2948" a=""><vh>&lt;&lt; define defaultsDict &gt;&gt;</vh></v>
-<v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="edream.031215194720">@nocolor
@@ -7162,6 +7168,32 @@
 
 Excellent! Could you do the same for the log and the headline panes as well? (I've just downloaded rc1 from the files section and only sets None for the body pane)
 </t>
+<t tx="edream.031215201735"></t>
+<t tx="edream.031215201735.1"></t>
+<t tx="edream.031216175224">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2337033
+By: rodrigo_b
+
+c.initAllCloneBitsInTree(v) worked as desired
+
+@color
+
+#test
+
+from leoGlobals import *
+top().frame.body.setTextSelection(None) # does not work at all
+
+@nocolor
+
+len(None) -&gt; len of a object without length, and the TkFrame method is void
+if the argument is None.
+I solved the issue playing with the bodyCtrl but I think you should take a look
+to see if the setTextSelection methods do what you want them to do.
+
+RodrigoB.</t>
+<t tx="edream.031217104401"></t>
+<t tx="edream.031217104401.1"></t>
 <t tx="edream.110203160744">@ignore
 @nocolor
 
@@ -56809,14 +56841,6 @@ elif undoType == "De-Hoist":
 
 - These commands eat one too many characters.
 - The selection is not set properly afterwards.</t>
-<t tx="edream.110403112538">@nocolor
-
-Unit tests:
-
-- (done by hand) batch mode.
-	Have script create a file, fail if the file does not exist.
-
-- Read/write commands.</t>
 <t tx="edream.110403150047">def OnCheckOutline (self):
 	
 	self.c.checkOutline()</t>
@@ -60467,7 +60491,12 @@ class undoer (baseUndoer):
 - Have the nullGui create a nullUndoer by default
 	But allow the possibility of leaving the full undoer in place.
 
-- More checks in CheckOutline command</t>
+- More checks in CheckOutline command.
+
+- (done by hand) batch mode.
+	Have script create a file, fail if the file does not exist.
+
+- Unit tests for read/write commands.</t>
 <t tx="edream.112303042302"># Traces _always_ get printed.</t>
 <t tx="edream.112303052021"></t>
 <t tx="edream.112303052021.1">This "real" test exposed several problems:
@@ -61411,9 +61440,9 @@ def destroySelf (self):
 	if not self.wasChanged:
 		c.setChanged (false)
 		
-	# Delete all children of temp node.
-	while temp_v.firstChild():
-		temp_v.firstChild().doDelete(temp_v)
+	if 1: # Delete all children of temp node.
+		while temp_v.firstChild():
+			temp_v.firstChild().doDelete(temp_v)
 
 	c.selectVnode(self.old_v)</t>
 <t tx="edream.121103112429.4">def setUp(self,*args,**keys):
@@ -61422,18 +61451,22 @@ def destroySelf (self):
 	
 	temp_v.t.setTnodeText('',app.tkEncoding)
 
-	c.selectVnode(temp_v)
+	# Create a node under temp_v.
+	child = temp_v.insertAsLastChild()
+	assert(child)
+	child.setHeadString("import test: " + self.v.headString())
+	c.selectVnode(child)
+
+	assert(d)
+	s = d.bodyString()
+	lines = s.split('\n')
+	name = lines[0]
+	val = lines[1]
+	self.fileName = val
+	dict = {name: val}
+	self.gui = leoGui.unitTestGui(dict,trace=false)
 	
-	if d: # Use unitTestDialog.
-		s = d.bodyString()
-		lines = s.split('\n')
-		name = lines[0]
-		val = lines[1]
-		self.fileName = val
-		dict = {name: val}
-		self.gui = leoGui.unitTestGui(dict,trace=false)
-	else:
-		self.gui = None</t>
+	</t>
 <t tx="edream.121103112429.5">def runTest(self):
 	
 	# """Import Export Test Case"""

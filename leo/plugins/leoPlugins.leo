@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1432" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="45" left="494" height="856" width="709"/>
+	<global_window_position top="30" left="426" height="856" width="709"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -13,6 +13,9 @@
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203113231"><vh>Diary</vh>
+<v t="edream.031217094146"><vh>12/17</vh>
+<v t="edream.031216103123"><vh>Fix problems in plugins</vh></v>
+</v>
 <v t="edream.120603100522"><vh>12/6/03 Removed compile-time enable/disable code</vh></v>
 <v t="edream.112103192146"><vh>11/21</vh>
 <v t="edream.112303075625"><vh>Added wxVersion to signon</vh></v>
@@ -970,8 +973,9 @@
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
-<v t="edream.110203113231.618" a="V"><vh>Plugins &amp; scripts</vh>
-<v t="edream.110203113231.619"><vh>Contributed scripts</vh>
+<v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
+<v t="edream.031217101015"><vh>Contributed scripts</vh>
+<v t="edream.110203113231.619"><vh>From Bernhard Mulder</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
 <v t="edream.110203113231.622"><vh>filesize</vh></v>
@@ -1024,6 +1028,13 @@
 <v t="edream.110203113231.665"><vh>write_body_escaped</vh></v>
 </v>
 <v t="edream.110203113231.666"><vh>leotree</vh></v>
+</v>
+</v>
+<v t="edream.031217101015.1"><vh>From RodrigoB</vh>
+<v t="edream.120703082844" tnodeList="edream.120703082844,edream.120703082844.1,edream.120703082844.2"><vh>@file mod_updown.py</vh>
+<v t="edream.120703082844.1"><vh>0nStart2</vh></v>
+<v t="edream.120703082844.2"><vh>OnBodyKey</vh></v>
+</v>
 </v>
 </v>
 <v t="edream.110203113231.667"><vh>Commands</vh>
@@ -1120,7 +1131,7 @@
 </v>
 </v>
 <v t="edream.110203113231.740"><vh>Directives</vh>
-<v t="edream.110203113231.741" a="M" tnodeList="edream.110203113231.741,edream.110203113231.742,edream.110203113231.743"><vh>@file add_directives.py</vh>
+<v t="edream.110203113231.741" tnodeList="edream.110203113231.741,edream.110203113231.742,edream.110203113231.743"><vh>@file add_directives.py</vh>
 <v t="edream.110203113231.742"><vh>addPluginDirectives</vh></v>
 <v t="edream.110203113231.743"><vh>scanPluginDirectives</vh></v>
 </v>
@@ -1137,7 +1148,7 @@
 </v>
 <v t="edream.110403140857.7"><vh>Release notes</vh></v>
 </v>
-<v t="edream.110403140857.8" a="M" tnodeList="edream.110403140857.8,edream.110403140857.9,edream.110403140857.10,edream.110403140857.11,edream.110403140857.12,edream.110403140857.13,edream.110403140857.14,edream.110403140857.15,edream.110403140857.16,edream.110403140857.17,edream.110403140857.18,edream.110403140857.20,edream.110403140857.21,edream.110403140857.22,edream.110403140857.23,edream.110403140857.24,edream.110403140857.25,edream.110403140857.26,edream.110403140857.27,edream.110403140857.28"><vh>@file color_markup.py</vh>
+<v t="edream.110403140857.8" tnodeList="edream.110403140857.8,edream.110403140857.9,edream.110403140857.10,edream.110403140857.11,edream.110403140857.12,edream.110403140857.13,edream.110403140857.14,edream.110403140857.15,edream.110403140857.16,edream.110403140857.17,edream.110403140857.18,edream.110403140857.20,edream.110403140857.21,edream.110403140857.22,edream.110403140857.23,edream.110403140857.24,edream.110403140857.25,edream.110403140857.26,edream.110403140857.27,edream.110403140857.28"><vh>@file color_markup.py</vh>
 <v t="edream.110403140857.9"><vh>initAnyMarkup</vh></v>
 <v t="edream.110403140857.10"><vh>colorWikiMarkup</vh></v>
 <v t="edream.110403140857.11"><vh>doWikiText</vh>
@@ -1165,7 +1176,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.753" a="M" tnodeList="edream.110203113231.753,edream.110203113231.754,edream.110203113231.755,edream.110203113231.756,edream.110203113231.757"><vh>@file image.py</vh>
+<v t="edream.110203113231.753" tnodeList="edream.110203113231.753,edream.110203113231.754,edream.110203113231.755,edream.110203113231.756,edream.110203113231.757"><vh>@file image.py</vh>
 <v t="edream.110203113231.754"><vh>onSelect</vh>
 <v t="edream.110203113231.755"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
@@ -1173,7 +1184,7 @@
 <v t="edream.110203113231.757"><vh>&lt;&lt; Unselect Image &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.758" a="M" tnodeList="edream.110203113231.758,edream.110203113231.759,edream.110203113231.760,edream.110203113231.761,edream.110203113231.762,edream.110203113231.763,edream.110203113231.764,edream.110203113231.766,edream.110203113231.767,edream.110203113231.768,edream.110203113231.769,edream.110203113231.770,edream.110203113231.771,edream.110203113231.772,edream.110203113231.773,edream.110203113231.774,edream.110203113231.775,edream.110203113231.776,edream.110203113231.777,edream.110203113231.778,edream.110203113231.779,edream.110203113231.780,edream.110203113231.781,edream.110203113231.782,edream.110203113231.783,edream.110203113231.784,edream.110203113231.785,edream.110203113231.786,edream.110203113231.787,edream.110203113231.788,edream.110203113231.789"><vh>@file nav_buttons.py</vh>
+<v t="edream.110203113231.758" tnodeList="edream.110203113231.758,edream.110203113231.759,edream.110203113231.760,edream.110203113231.761,edream.110203113231.762,edream.110203113231.763,edream.110203113231.764,edream.110203113231.766,edream.110203113231.767,edream.110203113231.768,edream.110203113231.769,edream.110203113231.770,edream.110203113231.771,edream.110203113231.772,edream.110203113231.773,edream.110203113231.774,edream.110203113231.775,edream.110203113231.776,edream.110203113231.777,edream.110203113231.778,edream.110203113231.779,edream.110203113231.780,edream.110203113231.781,edream.110203113231.782,edream.110203113231.783,edream.110203113231.784,edream.110203113231.785,edream.110203113231.786,edream.110203113231.787,edream.110203113231.788,edream.110203113231.789"><vh>@file nav_buttons.py</vh>
 <v t="edream.110203113231.759"><vh>class commanderInfoClass</vh>
 <v t="edream.110203113231.760"><vh>__init__ (commanderInfoClass)</vh></v>
 <v t="edream.110203113231.761"><vh>addWidgets</vh>
@@ -1219,7 +1230,7 @@
 <v t="edream.120303095910"><vh>onStart</vh></v>
 <v t="edream.120303095910.1"><vh>openWithTempFilePath</vh></v>
 </v>
-<v t="edream.110203113231.791" a="EM" tnodeList="edream.110203113231.791,edream.110203113231.792,edream.110203113231.793,edream.110203113231.794,edream.110203113231.795,edream.110203113231.796"><vh>@file open_with.py</vh>
+<v t="edream.110203113231.791" tnodeList="edream.110203113231.791,edream.110203113231.792,edream.110203113231.793,edream.110203113231.794,edream.110203113231.795,edream.110203113231.796"><vh>@file open_with.py</vh>
 <v t="edream.110203113231.792"><vh>on_idle</vh>
 <v t="edream.110203113231.793"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
 <v t="edream.110203113231.794"><vh>&lt;&lt; set s to the file text &gt;&gt;</vh></v>
@@ -1274,7 +1285,7 @@
 </v>
 <v t="edream.110203113231.831"><vh>Menus</vh>
 <v t="edream.110203113231.832"><vh> Plugins menu</vh>
-<v t="edream.110203113231.833" a="M" tnodeList="edream.110203113231.833,edream.110203113231.834,edream.110203113231.835,edream.110203113231.836,edream.110203113231.837,edream.110203113231.838,edream.110203113231.839,edream.110203113231.840,edream.110203113231.841,edream.110203113231.842,edream.110203113231.843,edream.110203113231.844,edream.110203113231.845,edream.110203113231.846,edream.110203113231.847,edream.110203113231.848,edream.110203113231.849,edream.110203113231.850,edream.110203113231.851,edream.110203113231.852,edream.110203113231.853,edream.110203113231.854,edream.110203113231.855"><vh>@file plugins_menu.py</vh>
+<v t="edream.110203113231.833" tnodeList="edream.110203113231.833,edream.110203113231.834,edream.110203113231.835,edream.110203113231.836,edream.110203113231.837,edream.110203113231.838,edream.110203113231.839,edream.110203113231.840,edream.110203113231.841,edream.110203113231.842,edream.110203113231.843,edream.110203113231.844,edream.110203113231.845,edream.110203113231.846,edream.110203113231.847,edream.110203113231.848,edream.110203113231.849,edream.110203113231.850,edream.110203113231.851,edream.110203113231.852,edream.110203113231.853,edream.110203113231.854,edream.110203113231.855"><vh>@file plugins_menu.py</vh>
 <v t="edream.110203113231.834"><vh>class Plugin</vh>
 <v t="edream.110203113231.835"><vh>__init__</vh>
 <v t="edream.110203113231.836"><vh>&lt;&lt; Check if this can be configured &gt;&gt;</vh></v>
@@ -1322,7 +1333,7 @@
 <v t="edream.110203113231.866"><vh> Initial suggestion from Paul Paterson</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.867" a="E" tnodeList="edream.110203113231.867,edream.110203113231.868,edream.110203113231.869,edream.110203113231.870,edream.110203113231.871"><vh>@file scripts_menu.py</vh>
+<v t="edream.110203113231.867" tnodeList="edream.110203113231.867,edream.110203113231.868,edream.110203113231.869,edream.110203113231.870,edream.110203113231.871"><vh>@file scripts_menu.py</vh>
 <v t="edream.110203113231.868"><vh>createScriptsMenu</vh>
 <v t="edream.110203113231.869"><vh>&lt;&lt; Return if no scripts exist anywhere &gt;&gt;</vh></v>
 <v t="edream.110203113231.870"><vh>&lt;&lt; Create top-level entries for every script in top_scripts &gt;&gt;</vh></v>
@@ -1367,7 +1378,7 @@
 <v t="edream.110203113231.899"><vh>on_select1</vh></v>
 <v t="edream.110203113231.900"><vh>on_select2</vh></v>
 </v>
-<v t="edream.111803100242" a="M" tnodeList="edream.111803100242,edream.111803100242.1,edream.111803100242.2,edream.111803100242.3,edream.111803100242.4,edream.111803100242.5,edream.111803100242.6,edream.111803100242.7,edream.111803100242.8"><vh>@file rst.py</vh>
+<v t="edream.111803100242" tnodeList="edream.111803100242,edream.111803100242.1,edream.111803100242.2,edream.111803100242.3,edream.111803100242.4,edream.111803100242.5,edream.111803100242.6,edream.111803100242.7,edream.111803100242.8"><vh>@file rst.py</vh>
 <v t="edream.111803100242.1"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
 <v t="edream.111803100242.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
 <v t="edream.111803100242.3"><vh>onIconDoubleClick</vh>
@@ -1500,13 +1511,56 @@
 </v>
 </v>
 </v>
-<v t="edream.120603093808" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
-<v t="edream.120703082844" tnodeList="edream.120703082844,edream.120703082844.1,edream.120703082844.2"><vh>@file mod_updown.py</vh>
-<v t="edream.120703082844.1"><vh>0nStart2</vh></v>
-<v t="edream.120703082844.2"><vh>OnBodyKey</vh></v>
-</v>
+<v t="edream.120603093808" a="V" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 </vnodes>
 <tnodes>
+<t tx="edream.031216103123">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2336153
+By: dsalomoni
+
+- redefine_put.py:
+
+Traceback (most recent call last):
+  File "/user/davides/Software/leo-4.1-rc1/src/leoGlobals.py", line 1977, in
+doHook
+    return app.hookFunction(tag,keywords)
+  File "/user/davides/Software/leo-4.1-rc1/src/leoPlugins.py", line 27,
+in doPlugins
+    return doHandlersForTag(tag,keywords)
+  File "/user/davides/Software/leo-4.1-rc1/src/leoPlugins.py", line 94,
+in doHandlersForTag
+    ret = handle_fn(tag,keywords)
+  File "/user/davides/Software/leo-4.1-rc1/plugins/redefine_put.py", line 22,
+in onStart
+    funcToMethod(newPut,leoFrame.LeoFrame,"put")
+AttributeError: 'module' object has no attribute 'LeoFrame'
+
+** Changed LeoFrame to leoTkinterLog
+
+- trace_gc.py:
+
+Traceback (most recent call last):
+  File "/user/davides/Software/leo-4.1-rc1/src/leoGlobals.py", line 1977, in
+doHook
+    return app.hookFunction(tag,keywords)
+  File "/user/davides/Software/leo-4.1-rc1/src/leoPlugins.py", line 27,
+in doPlugins
+    return doHandlersForTag(tag,keywords)
+  File "/user/davides/Software/leo-4.1-rc1/src/leoPlugins.py", line 94,
+in doHandlersForTag
+    ret = handle_fn(tag,keywords)
+  File "/user/davides/Software/leo-4.1-rc1/plugins/trace_gc.py", line 17, in
+printIdleGC
+    global count ; count += 1
+NameError: global name 'count' is not defined
+
+** Used gcCount (in plugin) rather than count in leoGlobals.py.</t>
+<t tx="edream.031217094146"></t>
+<t tx="edream.031217101015"># These are experimental scripts.
+
+@ignore</t>
+<t tx="edream.031217101015.1"></t>
 <t tx="edream.110203113231">@nocolor</t>
 <t tx="edream.110203113231.1">Updated color_markup.py to use c.body.bodyCtrl.</t>
 <t tx="edream.110203113231.2">- Made open_with.py gui-independent by calling app.gui dialog routines.
@@ -7584,18 +7638,20 @@ if 0: # Force a shutdown at any other time, even "idle" time.
 from leoPlugins import *
 from leoGlobals import *
 
+import leoGlobals
+leoGlobals.debugGC = true # Force debugging on.
+
 def printIdleRefs(tag,keywords):
 	printGcRefs(verbose=false)
+	
+gcCount = 0
 
 def printIdleGC(tag,keywords):
 	
 	# Calling printGc is too expensive to do on every idle call.
-	# Note: printGc only works if debugGc is true in leoGlobals.py.
-	# At present, this code does _not_ set that constant.
 	if tag == "idle":
-		global count ; count += 1
-		if (count % 20) == 0:
-			# collectGarbage() # Has no effect.
+		global gcCount ; gcCount += 1
+		if (gcCount % 20) == 0:
 			printGc(tag,onlyPrintChanges=true)
 	else:
 		printGc(tag,onlyPrintChanges=false)
@@ -7608,7 +7664,7 @@ else: # Very precise.
 if 0: # Another idea.
 	registerHandler("command2", printIdleRefs)
 
-__version__ = "1.2"
+__version__ = "1.3"
 plugin_signon(__name__)</t>
 <t tx="edream.110203113231.736">"""Trace keystrokes in the outline and body panes"""
 
@@ -10049,48 +10105,57 @@ plugin_signon(__name__)</t>
 from leoPlugins import *
 from leoGlobals import *
 
-@others
+try:    import Tkinter
+except: Tkinter = None
 
-# Register the handlers...
-registerHandler("start2", onStart)
 
-__version__ = "1.2"
-plugin_signon(__name__)</t>
+
+if Tkinter: # Register the handlers...
+
+	@others
+
+	# Register the handlers...
+	registerHandler("start2", onStart)
+	
+	__version__ = "1.2"
+	plugin_signon(__name__)</t>
 <t tx="edream.110203113231.922">@ This code illustrates how to redefine _any_ method of Leo.
 Python makes this is almost too easy :-)
 @c
 
 def onStart (tag,keywords):
 
-	import leoFrame
+	import leoTkinterFrame
+	log = leoTkinterFrame.leoTkinterLog
 	
 	# Replace frame.put with newPut.
-	funcToMethod(newPut,leoFrame.LeoFrame,"put")
+	funcToMethod(newPut,log,"put")
 	
 	# Replace frame.putnl with newPutNl.
-	funcToMethod(newPutNl,leoFrame.LeoFrame,"putnl")
-</t>
+	funcToMethod(newPutNl,log,"putnl")</t>
 <t tx="edream.110203113231.923"># Contrived examples of how to redefine frame.put and frame.putnl
 
 # Same as frame.put except converts everything to upper case.
 def newPut (self,s,color="black"):
-	# print "newPut",s,
+	print "newPut",s,
 	if app().quitting &gt; 0: return
 	s = s.upper()
-	if self.log:
-			self.log.insert("end",s)
-			self.log.see("end")
-			self.log.update_idletasks()
+	t = self.logCtrl
+	if t:
+			t.insert("end",s)
+			t.see("end")
+			t.update_idletasks()
 	else: print s,
 
 # Same as frame.putnl except writes two newlines.
 def newPutNl (self):
-	# print "newPutNl"
+	print "newPutNl"
 	if app().quitting &gt; 0: return
-	if self.log:
-		self.log.insert("end","\n\n")
-		self.log.see("end")
-		self.log.update_idletasks()
+	t = self.logCtrl
+	if t:
+		t.insert("end","\n\n")
+		t.see("end")
+		t.update_idletasks()
 	else: print</t>
 <t tx="edream.110203113231.924">"""Send all output to the log pane"""
 
@@ -15448,8 +15513,7 @@ open_with.py
 color_markup.py
 image.py
 nav_buttons.py
-plugins_menu.py
-# mod_updown.py</t>
+plugins_menu.py</t>
 <t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
 <t tx="edream.120703082844">@language python
 

@@ -579,18 +579,22 @@ class importExportTestCase(unittest.TestCase):
 		
 		temp_v.t.setTnodeText('',app.tkEncoding)
 	
-		c.selectVnode(temp_v)
+		# Create a node under temp_v.
+		child = temp_v.insertAsLastChild()
+		assert(child)
+		child.setHeadString("import test: " + self.v.headString())
+		c.selectVnode(child)
+	
+		assert(d)
+		s = d.bodyString()
+		lines = s.split('\n')
+		name = lines[0]
+		val = lines[1]
+		self.fileName = val
+		dict = {name: val}
+		self.gui = leoGui.unitTestGui(dict,trace=false)
 		
-		if d: # Use unitTestDialog.
-			s = d.bodyString()
-			lines = s.split('\n')
-			name = lines[0]
-			val = lines[1]
-			self.fileName = val
-			dict = {name: val}
-			self.gui = leoGui.unitTestGui(dict,trace=false)
-		else:
-			self.gui = None
+		
 	#@nonl
 	#@-node:setUp
 	#@+node:shortDescription
@@ -617,9 +621,9 @@ class importExportTestCase(unittest.TestCase):
 		if not self.wasChanged:
 			c.setChanged (false)
 			
-		# Delete all children of temp node.
-		while temp_v.firstChild():
-			temp_v.firstChild().doDelete(temp_v)
+		if 1: # Delete all children of temp node.
+			while temp_v.firstChild():
+				temp_v.firstChild().doDelete(temp_v)
 	
 		c.selectVnode(self.old_v)
 	#@nonl
