@@ -414,7 +414,7 @@ class fileCommands:
 		self.getTag("</globals>")
 	#@-body
 	#@-node:6::getGlobals (changed for 4.0)
-	#@+node:7::getLeoFile
+	#@+node:7::getLeoFile (calls setAllJoinLinks, initAllCloneBits)
 	#@+body
 	# The caller should enclose this in begin/endUpdate.
 	
@@ -495,7 +495,7 @@ class fileCommands:
 			self.tnodesDict = {}
 		return ok, self.ratio
 	#@-body
-	#@-node:7::getLeoFile
+	#@-node:7::getLeoFile (calls setAllJoinLinks, initAllCloneBits)
 	#@+node:8::getLeoHeader
 	#@+body
 	def getLeoHeader (self):
@@ -1008,6 +1008,7 @@ class fileCommands:
 		# trace(root)
 	
 		if root: # Only update the subtree.
+			v = root # 6/3/03
 			after = root.nodeAfterTree()
 			while v and v != after:
 				if v not in v.t.joinList:
