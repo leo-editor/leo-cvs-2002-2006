@@ -29,6 +29,7 @@ class LeoApp:
         self.debug = False # True: enable extra debugging tests (not used at present).
             # WARNING: this could greatly slow things down.
         self.disableSave = False
+        self.failedPlugins = [] # List of loaded plugins that have failed to load.
         self.globalWindows = []
         self.gui = None # The gui class.
         self.hasOpenWithMenu = False # True: open with plugin has been loaded.
