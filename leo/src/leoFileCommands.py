@@ -742,7 +742,7 @@ class baseFileCommands:
             v = self.finishPaste(reassignIndices)
         except invalidPaste:
             v = None
-            g.es("Invalid Paste Retaining Clones",color="blue")
+            g.es("Invalid Paste As Clone",color="blue")
         except BadLeoFile:
             v = None
             g.es("The clipboard is not valid ",color="blue")
