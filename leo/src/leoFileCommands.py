@@ -1712,7 +1712,6 @@ class baseFileCommands:
 		if not g.doHook("save1",c=c,v=v,fileName=fileName):
 			c.beginUpdate()
 			c.endEditing()# Set the current headline text.
-			self.compactFileIndices()
 			self.setDefaultDirectoryForNewFiles(fileName)
 			if self.write_Leo_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
@@ -1732,7 +1731,6 @@ class baseFileCommands:
 		if not g.doHook("save1",c=c,v=v,fileName=fileName):
 			c.beginUpdate()
 			c.endEditing() # Set the current headline text.
-			self.compactFileIndices()
 			self.setDefaultDirectoryForNewFiles(fileName)
 			if self.write_Leo_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
@@ -1748,12 +1746,12 @@ class baseFileCommands:
 		if not g.doHook("save1",c=c,v=v,fileName=fileName):
 			c.beginUpdate()
 			c.endEditing()# Set the current headline text.
-			self.compactFileIndices()
 			self.setDefaultDirectoryForNewFiles(fileName)
 			if self.write_Leo_file(fileName,false): # outlineOnlyFlag
 				g.es("saved: " + g.shortFileName(fileName))
 			c.endUpdate()
 		g.doHook("save2",c=c,v=v,fileName=fileName)
+	#@nonl
 	#@-node:ekr.20031218072017.3044:saveTo
 	#@+node:ekr.20031218072017.3045:setDefaultDirectoryForNewFiles
 	def setDefaultDirectoryForNewFiles (self,fileName):
@@ -1774,6 +1772,7 @@ class baseFileCommands:
 	
 		c = self.c ; config = g.app.config
 	
+		self.assignFileIndices()
 		if not outlineOnlyFlag:
 			#@		<< write all @file nodes >>
 			#@+node:ekr.20040324080359:<< write all @file nodes >>
@@ -2006,6 +2005,7 @@ class baseFileCommands:
 		
 		c = self.c
 	
+		self.assignFileIndices() # 4/3/04
 		changedFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=true)
 		assert(changedFiles != None)
 		if changedFiles:
@@ -2020,6 +2020,7 @@ class baseFileCommands:
 		
 		c = self.c
 	
+		self.assignFileIndices() # 4/3/04
 		changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
 		if changedFiles:
 			g.es("auto-saving outline",color="blue")
@@ -2033,6 +2034,7 @@ class baseFileCommands:
 	
 		if v:
 			at = c.atFileCommands
+			self.assignFileIndices() # 4/3/04
 			changedFiles = at.writeMissing(v)
 			assert(changedFiles != None)
 			if changedFiles:
@@ -2045,7 +2047,6 @@ class baseFileCommands:
 	
 		c = self.c
 		c.endEditing()
-		self.compactFileIndices()
 		self.write_Leo_file(self.mFileName,true) # outlineOnlyFlag
 	#@nonl
 	#@-node:ekr.20031218072017.3050:writeOutlineOnly
