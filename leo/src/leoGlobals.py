@@ -4047,6 +4047,26 @@ def optimizeLeadingWhitespace (line,tab_width):
     return s
 #@nonl
 #@-node:ekr.20031218072017.3201:optimizeLeadingWhitespace
+#@+node:ekr.20040723093558:regularizeTrailingNewlines
+#@+at
+# 
+# The caller should call g.stripBlankLines before calling this routine if 
+# desired.
+# 
+# This routine does _not_ simply call rstrip(): that would delete all trailing 
+# whitespace-only lines, and in some cases that would change the meaning of 
+# program or data.
+# 
+#@-at
+#@@c
+
+def regularizeTrailingNewlines(s,kind):
+    
+    """Kind is 'asis', 'zero' or 'one'."""
+    
+    pass
+#@nonl
+#@-node:ekr.20040723093558:regularizeTrailingNewlines
 #@+node:ekr.20031218072017.3202:removeLeadingWhitespace
 # Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
 
@@ -4117,6 +4137,24 @@ def skip_leading_ws_with_indent(s,i,tab_width):
     return i, count
 #@nonl
 #@-node:ekr.20031218072017.3205:skip_leading_ws_with_indent
+#@+node:ekr.20040723093558.1:stripBlankLines
+def stripBlankLines(s):
+    
+    lines = g.splitLines(s)
+
+    for i in xrange(len(lines)):
+
+        line = lines[i]
+        j = g.skip_ws(line,0)
+        if j >= len(line):
+            lines[i] = ''
+            # g.trace("%4d %s" % (i,repr(lines[i])))
+        elif line[j] == '\n':
+            lines[i] = '\n'
+            # g.trace("%4d %s" % (i,repr(lines[i])))
+            
+    return ''.join(lines)
+#@-node:ekr.20040723093558.1:stripBlankLines
 #@-node:ekr.20031218072017.3197:Whitespace...
 #@-others
 #@-node:ekr.20031218072017.3093:@thin leoGlobals.py
