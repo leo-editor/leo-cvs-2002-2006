@@ -879,6 +879,9 @@ def skip_pascal_string(s,i):
 #@-at
 #@@c
 def skip_heredoc_string(s,i):
+	
+	import re
+	
 	j = i
 	assert(match(s,i,"<<<"))
 	m = re.match("\<\<\<([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)", s[i:])
@@ -886,11 +889,13 @@ def skip_heredoc_string(s,i):
 		i += 3
 		return i
 
-	delim = m.group(1)
-	i = skip_to_end_of_line(s,i)
+	# 14-SEP-2002 DTHEIN: needed to add \n to find word, not just string
+	delim = m.group(1) + '\n' 
+	
+	i = skip_line(s,i) # 14-SEP-2002 DTHEIN: look after \n, not before
 	n = len(s)
 	while i < n and not match(s,i,delim):
-		i = skip_to_end_of_line(s,i)
+		i = skip_line(s,i) # 14-SEP-2002 DTHEIN: move past \n
 		
 	if i >= n:
 		scanError("Run on string: " + s[j:i])
