@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="46" left="190" height="25" width="84"/>
+	<global_window_position top="3" left="178" height="25" width="84"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -16,7 +16,7 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -29,8 +29,8 @@
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
-<v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T16" a="V"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
+<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
@@ -605,6 +605,16 @@ run_untangle_done.py = 0
 <t tx="T16">@c
 
 [syntax coloring options]
+
+color_cweb_doc_parts_with_latex = 1
+#	1: @space, @* and @** sections in cweb mode are colored black with LaTeX keywords highlighted.
+#	0: @space, @* and @** sections in cweb mode are colored as comments (default is red).
+#	Note: in either case, _noweb_ section references and defintions are colored as usualy.
+
+color_cweb_comments_with_latex = 1
+#	1: C language comments in cweb mode are colored black with LaTeX keywords highlighted.
+#	0: C language comments in cweb mode are colored as comments (default red).
+#	Note: in either case, _noweb_ section references and defintions are colored as usualy.
 
 color_directives_in_plain_text = 1
 # 	1/0: Color Leo directives for @language plain

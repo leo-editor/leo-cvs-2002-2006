@@ -584,8 +584,11 @@ class colorizer:
 		self.keywords = None
 		self.lb = None
 		self.rb = None
-		self.latex_cweb_docs = true
-		self.latex_cweb_comments = true
+		
+		config = app().config
+		self.latex_cweb_docs     = config.getBoolColorsPref("color_cweb_doc_parts_with_latex")
+		self.latex_cweb_comments = config.getBoolColorsPref("color_cweb_comments_with_latex")
+		# print "docs,comments",`self.latex_cweb_docs`,`self.latex_cweb_comments`
 		#@-body
 		#@-node:1::<< ivars for communication between colorAllDirectives and its allies >>
 
