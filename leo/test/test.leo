@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4252" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="10" left="268" height="881" width="861"/>
+	<global_window_position top="24" left="52" height="881" width="861"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -566,6 +566,7 @@
 <v t="EKR.20040523112430.8"><vh>f</vh></v>
 </v>
 </v>
+<v t="EKR.20040608095146"><vh>Recent tests</vh>
 <v t="EKR.20040504083716.44"><vh>perfect import unit tests</vh>
 <v t="EKR.20040504083716.45"><vh>@   file test_sentinels.py</vh>
 <v t="EKR.20040504083716.47"><vh>class sentinel_test</vh>
@@ -634,7 +635,14 @@
 <v t="EKR.20040604143253.1" a="E"><vh>@thin removeSentTest.txt</vh></v>
 </v>
 <v t="EKR.20040604170105"><vh>Mini test of Remove sentinels</vh></v>
-<v t="EKR.20040605200750" a="TV"><vh>autocompleter test</vh></v>
+<v t="EKR.20040606204316"><vh>test of @first</vh>
+<v t="EKR.20040606204316.1"><vh>@thin atFirstTest.txt</vh></v>
+</v>
+<v t="EKR.20040605200750"><vh>autocompleter test</vh></v>
+<v t="EKR.20040608092841"><vh>test of indent/undent with negative tab width</vh></v>
+<v t="EKR.20040608095146.1" a="M" tnodeList="EKR.20040608095146.1"><vh>@file login_process.cfm</vh></v>
+</v>
+<v t="EKR.20040608105916" a="TV"><vh>Tests of clone dragging</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2116,7 +2124,45 @@ c = g.top()
 print os.getcwd()
 name = g.os_path_join("test","removeSentTest.txt")
 c.importCommands.removeSentinelsCommand(name)</t>
-<t tx="EKR.20040605200750">string.join</t>
+<t tx="EKR.20040605200750">string.join
+
+__add__
+
+'a'.__add__
+
+
+def test(a,b): pass
+
+v.copyTree(self,root)</t>
+<t tx="EKR.20040606204316"></t>
+<t tx="EKR.20040608092841">@tabwidth -4
+
+	a
+	b</t>
+<t tx="EKR.20040608095146"></t>
+<t tx="EKR.20040608095146.1">@ignore
+@language html
+
+&lt;!--- Get all records from the database that match this users credentials ---&gt;
+&lt;cfquery name="qLoginVerify" datasource="xxxx"&gt;
+SELECT user_name, user_pass, course_dir
+FROM login
+WHERE user_name = '#user_name#'
+AND user_pass = '#user_pass#'
+AND course_dir = '#course_dir#'
+&lt;/cfquery&gt;
+
+&lt;cfif qLoginVerify.RecordCount&gt;
+&lt;!--- This user has logged in correctly; 
+change the value of the session.allowin value ---&gt;
+&lt;cfset session.allowin = session.directoryshort&gt;
+&lt;/cfif&gt;
+
+&lt;!--- now redirect to "index.cfm", which will go to login if problem ---&gt;
+
+&lt;cflocation url="#session.location#"&gt;
+</t>
+<t tx="EKR.20040608105916"></t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -3332,7 +3378,7 @@ runner.run(suite)
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 from leoGlobals import true,false
 c = g.top()
 
@@ -3369,7 +3415,8 @@ d2 = {
 a["icons"] = [d1,d2] # [d1,d2]
 a["lineYOffset"] = 3
 
-c.redraw()</t>
+c.redraw()
+</t>
 <t tx="ekr.20040317173327">import leoGlobals as g
 from leoGlobals import true,false
 c = g.top()

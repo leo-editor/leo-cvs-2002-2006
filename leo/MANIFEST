@@ -64,13 +64,17 @@ doc\LeoDocs.leo
 doc\PKG-INFO.TXT
 doc\README.TXT
 doc\leoDiary.txt
+doc\leoFAQ.txt
+doc\leoLeaps.txt
 doc\leoNotes.txt
 doc\leoToDo.txt
+doc\leoUsersGuide.txt
 plugins\__overrideClasses.py
 plugins\__wx_gui.py
 plugins\add_directives.py
 plugins\arrows.py
 plugins\at_folder.py
+plugins\autocompleter.py
 plugins\color_markup.py
 plugins\dump_globals.py
 plugins\empty_leo_file.py

@@ -23,7 +23,7 @@
 	plugins_menu.py
 	rowcol.py
 	# status_line.py
-	# word_export.py
+	word_export.py
 	# xemacs.py
 	
 # Other plugins...
@@ -39,6 +39,7 @@
 	searchbox.py
 	# newButtons.py
 	# wordcompleter.py
+	# mod_spelling.py
 	
 # New from Bernhard Mulder
 	# mod_http.py
@@ -52,7 +53,8 @@
 	rClick.py
 	# niceNosent.py
 	# scheduler.py
-	autocompleter.py
+	# autocompleter.py
+	# fastgotonode.py
 #@nonl
 #@-node:edream.120603093808:@file-thin pluginsManager.txt
 #@-leo

@@ -144,12 +144,15 @@ ok:
   File c:\prog\leoCVS\leo\dist\preSetup.py
   File c:\prog\leoCVS\leo\dist\createLeoDist.py
   File c:\prog\leoCVS\leo\dist\postSetup.py
- 
+
   SetOutPath $INSTDIR\doc
   File c:\prog\leoCVS\leo\doc\LeoDocs.leo
   File c:\prog\leoCVS\leo\doc\leoDiary.txt
   File c:\prog\leoCVS\leo\doc\leoNotes.txt
   File c:\prog\leoCVS\leo\doc\leoToDo.txt
+  File c:\prog\leoCVS\leo\doc\leoUsersGuide.txt
+  File c:\prog\leoCVS\leo\doc\leoFAQ.txt
+  File c:\prog\leoCVS\leo\doc\leoLeaps.txt
   File c:\prog\leoCVS\leo\doc\README.TXT
   File c:\prog\leoCVS\leo\doc\INSTALL.TXT
   File c:\prog\leoCVS\leo\doc\PKG-INFO.TXT
@@ -159,7 +162,7 @@ ok:
   File c:\prog\leoCVS\leo\Icons\*.*
   
   SetOutPath $INSTDIR\examples
- 
+
   SetOutPath $INSTDIR\plugins
   File c:\prog\leoCVS\leo\plugins\leoPlugins.leo
   File c:\prog\leoCVS\leo\plugins\*.py

@@ -81,8 +81,8 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="EKR.20040601084317"><vh>4.2 a3</vh>
-<v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
+<v t="EKR.20040601084317" a="E"><vh>4.2 a3</vh>
+<v t="EKR.20040601084317.2" a="E"><vh>Bug fixes</vh>
 <v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
 <v t="EKR.20040601101430"><vh>Fixed Change Headline command</vh></v>
 <v t="EKR.20040601084317.99"><vh>Eliminated spurious "Not written x.tmp" message after write errors</vh></v>
@@ -104,8 +104,8 @@
 </v>
 </v>
 <v t="edream.110203163054.117" a="E"><vh>leo.py versions</vh>
-<v t="EKR.20040601084317"><vh>4.2 a3</vh>
-<v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
+<v t="EKR.20040601084317" a="E"><vh>4.2 a3</vh>
+<v t="EKR.20040601084317.2" a="E"><vh>Bug fixes</vh>
 <v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
 <v t="EKR.20040601101430"><vh>Fixed Change Headline command</vh></v>
 <v t="EKR.20040601084317.99"><vh>Eliminated spurious "Not written x.tmp" message after write errors</vh></v>
@@ -366,8 +366,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.118" a="E"><vh>3.x releases</vh>
-<v t="edream.110203163054.119" a="E"><vh>3.12 final</vh>
+<v t="edream.110203163054.118"><vh>3.x releases</vh>
+<v t="edream.110203163054.119"><vh>3.12 final</vh>
 <v t="edream.110203163054.120"><vh>Bug fixes (major)</vh>
 <v t="edream.110203163054.121"><vh>Fixed major undo bug</vh></v>
 <v t="edream.110203163054.122"><vh>Fixed huge performance bug when handling read errors</vh></v>
@@ -423,8 +423,8 @@
 <v t="edream.110203163054.169"><vh>Updated Marks window in Mark Find and Mark Changes commands</vh></v>
 <v t="edream.110203163054.170"><vh>Use "file in directory" format for entries in Recent Files list</vh></v>
 </v>
-<v t="edream.110203163054.171" a="E"><vh>Hooks</vh>
-<v t="edream.110203163054.172" a="TV"><vh>About hooks</vh></v>
+<v t="edream.110203163054.171"><vh>Hooks</vh>
+<v t="edream.110203163054.172"><vh>About hooks</vh></v>
 <v t="edream.110203163054.173"><vh>Added "clear-mark" and "set-mark" hooks</vh></v>
 <v t="edream.110203163054.174"><vh>Added hooks to customize popup menus</vh></v>
 <v t="edream.110203163054.175"><vh>Added new hooks so that plugins may extend popup menus </vh></v>
@@ -1124,8 +1124,8 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
-<v t="EKR.20040524104904.1"><vh>@file-thin leoUsersGuide.txt</vh></v>
+<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
+<v t="EKR.20040524104904.1" a="E"><vh>@file-thin leoUsersGuide.txt</vh></v>
 </v>
 <v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="EKR.20040524105011"><vh>@file-thin leoFAQ.txt</vh></v>
@@ -1477,7 +1477,7 @@ The following people reported bugs, answered questions, and made suggestions for
 
 The following people have written code for Leo: Dave Hein wrote code to support PHP, to handle Tk version numbers properly and to open the Python window properly on Linux.  Marcus A. Martin wrote code to support LaTex. Bernhard Mulder proposed a new way of untangling derived files.  Paul Paterson wrote the first implementation of plugins and the spell checking plugin.  Steven P. Schaefer eliminated problems with end-of-line on Linux and fixed bugs in how directives were handled in @root trees.
 
-The following deserve special mention: David Brock wrote TSyntaxMemo.  The late Bob Fitzwater kept me focused on design. Donald Knuth invented literate programming and the CWEB language. Joe Orr created Leo stylesheets for Leo; see http://www.jserv.com/jk_orr/xml/leo.htm. Joe Orr also created an outstanding set of tutorials for Leo; see http://www.evisa.com/e/sb.htm. John K. Ousterhout created tcl/Tk. Neal Norwitz wrote PyChecker.  Marc-Antoine Parent urged me to use XML for Leo's file format and helped improve it. Paul Paterson suggested the plugin architecture and suggested an approach to spell checking.  Norman Ramsey created noweb and gave permission to quote from the noweb web documentation. Rich Ries has contributed a huge number of suggestions. Steven P. Schaefer pointed out major security problems lurking in hooks.  Gil Shwartz helped with unicode support.  Phil Straus has been a great friend and constant support. Guido van Rossum created Python, Tkinter and the Python License. Dave Winer created MORE. Dan Winkler helped support Leo on the Mac.
+The following deserve special mention: David Brock wrote TSyntaxMemo.  The late Bob Fitzwater kept me focused on design. Donald Knuth invented literate programming and the CWEB language. Will Munslow wrote stylesheets for Leo so Leo and Microsoft Word can talk to each other. Joe Orr created Leo stylesheets for Leo; see http://www.jserv.com/jk_orr/xml/leo.htm. Joe Orr also created an outstanding set of tutorials for Leo; see http://www.evisa.com/e/sb.htm. John K. Ousterhout created tcl/Tk. Neal Norwitz wrote PyChecker.  Marc-Antoine Parent urged me to use XML for Leo's file format and helped improve it. Paul Paterson suggested the plugin architecture and suggested an approach to spell checking.  Norman Ramsey created noweb and gave permission to quote from the noweb web documentation. Rich Ries has contributed a huge number of suggestions. Steven P. Schaefer pointed out major security problems lurking in hooks.  Gil Shwartz helped with unicode support.  Phil Straus has been a great friend and constant support. Guido van Rossum created Python, Tkinter and the Python License. Dave Winer created MORE. Dan Winkler helped support Leo on the Mac.
 
 Special thanks to my family. My brother, David Speed Ream, tested Leo and made many useful suggestions. Rebecca, James and Linda make it all worthwhile. It was during a conversation with Rebecca that I realized that MORE could be used as a prototype for Leo. That was a crucial first step.</t>
 <t tx="edream.110203163054.8">@nocolor

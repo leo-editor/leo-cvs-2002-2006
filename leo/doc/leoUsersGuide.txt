@@ -861,6 +861,12 @@ def spam():
 #@+node:EKR.20040524104904.79:More about directives
 The following sections discuss directives that have not been discussed previously.  Unless otherwise noted, these directives are valid anywhere in an outline.
 #@nonl
+#@+node:EKR.20040608091134:@all directive copies all nodes in @thin trees
+The @all directive is valid only in @thin trees.  This directive is similar to @others, but it is less restrictive: it dumps _all_ nodes to the derived file, including @ignore nodes and nodes that in an @others tree would be considered to be orphan nodes.
+
+The @all directive is required for files such as @thin leoProjects.txt in LeoPy.leo.  leoProjects.txt contains so-called project nodes.  It doesn't have an meaning as a program file:  it is simply a collection of unrelated data.  @others would not work at all: it would complain about lots of orphan nodes.
+#@nonl
+#@-node:EKR.20040608091134:@all directive copies all nodes in @thin trees
 #@+node:EKR.20040524104904.80:@color and @nocolor control syntax coloring
 Syntax coloring is on by default in all body text. Leo formats comments and documentation parts in red, directives and C keywords in blue, strings and character constants in gray and all other text in code parts in black.
 
@@ -1257,6 +1263,22 @@ When @verbose is in effect Tangle outputs all comments. When @terse is in effect
 #@nonl
 #@-node:EKR.20040524104904.98:@verbose, @terse, @quiet and @silent directives control comments in @root trees
 #@-node:EKR.20040524104904.93:Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling
+#@+node:EKR.20040608091134.1:Appendix 3 to Chapter 4: Using @thin instead of @file
+In most respects @file-thin (or equivalently, @thin) works just like @file as far as writing code is concerned.  In fact, you can convert from @file to @thin simply by opening an outline, changing @file to @thin, and saving the outline.
+
+Here are the differences between @file and @thin:
+
+- Leo does not save the information contained in the @thin tree in the .leo file.  
+
+- Files derived from @thin (so-called "thin" derived files) contain all information needed to recreate the @thin tree in the outline.  In particular, @+node and @-node sentinels use gnx's to uniquely identify nodes.
+
+- The @all directive is valid only in @thin trees.  This directive is similar to @others, but it is less restrictive: it dumps _all_ nodes to the derived file, including @ignore nodes and nodes that in an @others tree would be considered to be orphan nodes.
+
+The @all directive is required for files such as @thin leoProjects.txt in LeoPy.leo.  leoProjects.txt contains so-called project nodes.  It doesn't have an meaning as a program file:  it is simply a collection of unrelated data.  @others would not work at all: it would complain about lots of orphan nodes.
+
+The great advantage of using @thin is that people can collaborate without having to continually update .leo files:  collaborators only need to commit thin derived files to cvs.
+#@nonl
+#@-node:EKR.20040608091134.1:Appendix 3 to Chapter 4: Using @thin instead of @file
 #@-node:EKR.20040524104904.49:Chapter 4: Writing Programs in Leo
 #@+node:EKR.20040524104904.99:Chapter 5: Using Leo's Commands
 @nocolor

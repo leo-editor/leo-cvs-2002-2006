@@ -22,6 +22,10 @@ include doc/LeoDocs.leo
 include doc/leoDiary.txt
 include doc/leoNotes.txt
 include doc/leoToDo.txt
+include doc/leoUsersGuide.txt
+include doc/leoFAQ.txt
+include doc/leoLeaps.txt
+
 include doc/README.TXT
 include doc/INSTALL.TXT
 include doc/PKG-INFO.TXT
