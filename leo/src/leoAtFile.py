@@ -413,20 +413,20 @@ class atFile:
         at.readOpenFile(root,at.inputFile,fileName)
         at.inputFile.close()
         root.clearDirty() # May be set dirty below.
-        after = root.nodeAfterTree()
-        #@    << warn about non-empty unvisited nodes >>
-        #@+node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
-        for p in root.self_and_subtree_iter():
-        
-            # g.trace(p)
-            try: s = p.v.t.tempBodyString
-            except: s = ""
-            if s and not p.v.t.isVisited():
-                at.error("Not in derived file: %s" % p.headString())
-                p.v.t.setVisited() # One message is enough.
-        #@nonl
-        #@-node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
-        #@nl
+        if not at.thinFile:
+            #@        << warn about non-empty unvisited nodes >>
+            #@+node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
+            for p in root.self_and_subtree_iter():
+            
+                # g.trace(p)
+                try: s = p.v.t.tempBodyString
+                except: s = ""
+                if s and not p.v.t.isVisited():
+                    at.error("Not in derived file: %s" % p.headString())
+                    p.v.t.setVisited() # One message is enough.
+            #@nonl
+            #@-node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
+            #@nl
         if at.errors == 0 and not at.importing:
             #@        << copy all tempBodyStrings to tnodes >>
             #@+node:ekr.20041005105605.24:<< copy all tempBodyStrings to tnodes >>
@@ -1414,6 +1414,9 @@ class atFile:
     def findChild4 (self,headline):
         
         """Return the next tnode in at.root.t.tnodeList."""
+        
+        # Note: tnodeLists are used _only_ when reading @file (not @thin) nodes.
+        # tnodeLists compensate (a hack) for not having gnx's in derived files! 
     
         at = self ; v = at.root.v
     
