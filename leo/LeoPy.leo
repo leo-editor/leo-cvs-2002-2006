@@ -5157,7 +5157,7 @@
 <v t="T1196" a="C"><vh>tree.yoffset</vh></v>
 <v t="T1247" a="C"><vh>tree.numberOfVisibleNodes</vh></v>
 </v>
-<v a="E"><vh>Event handers</vh>
+<v><vh>Event handers</vh>
 <v t="T1223" a="C"><vh>OnActivate</vh></v>
 <v t="T2167"><vh>OnBoxClick</vh></v>
 <v t="T2168"><vh>OnDeactivate</vh></v>
@@ -5175,18 +5175,18 @@
 </v>
 <v t="T887" a="C"><vh>tree.OnHeadlineKey, onHeadlineChanged, idle_head_key</vh></v>
 <v t="T1246" a="C"><vh>tree.OnIconClick</vh></v>
-<v t="T1217" a="CV"><vh>tree.OnPopup</vh>
+<v t="T1217" a="C"><vh>tree.OnPopup</vh>
 <v t="T1218"><vh>&lt;&lt; create the menu &gt;&gt;</vh>
 <v t="T1219"><vh>&lt;&lt; set isAtRoot and isAtFile if v's tree contains @root or @file nodes &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="T1229" a="C"><vh>Selecting &amp; editing (tree)</vh>
+<v t="T1229" a="CE"><vh>Selecting &amp; editing (tree)</vh>
 <v t="T1230"><vh>dimEditLabel, undimEditLabel</vh></v>
 <v t="T1207" a="C"><vh>editLabel</vh></v>
 <v t="T1208" a="C"><vh>endEditLab (es here helps set focus properly!)</vh></v>
 <v t="T1192" a="C"><vh>tree.select</vh></v>
-<v t="T888" a="C"><vh>tree.set...LabelState</vh></v>
+<v t="T888" a="CV"><vh>tree.set...LabelState</vh></v>
 <v t="T1231" a="C"><vh>tree.scanForTabWidth</vh>
 <v t="T1232"><vh>&lt;&lt; set w and break on @tabwidth &gt;&gt;</vh></v>
 </v>
@@ -16083,6 +16083,7 @@ def setSelectedLabelState (self,v): # selected, not editing
 	if self.bodyKeepsFocus:
 		self.setDisabledLabelState(v)
 	elif v and v.edit_text:
+		# Not used at present.
 		v.edit_text.configure(state="disabled",highlightthickness=0,fg="white",bg="DarkBlue")
 
 def setUnselectedLabelState (self,v): # not selected.

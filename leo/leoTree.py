@@ -1323,6 +1323,7 @@ class leoTree:
 		if self.bodyKeepsFocus:
 			self.setDisabledLabelState(v)
 		elif v and v.edit_text:
+			# Not used at present.
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="white",bg="DarkBlue")
 	
 	def setUnselectedLabelState (self,v): # not selected.
