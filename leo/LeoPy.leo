@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2004" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="27" left="201" height="24" width="84"/>
+	<global_window_position top="37" left="38" height="24" width="84"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -14,7 +14,8 @@
 <vnodes>
 <v t="T1"><vh>Diary</vh>
 <v><vh>Aug 2002</vh>
-<v t="T2"><vh>8/11 Fixed bug leoFileCommands.readOutlineOnly</vh></v>
+<v><vh>8/11 Fixed crasher when leoConfig.txt does not exist</vh></v>
+<v t="T2"><vh>8/11 Fixed bug in leoFileCommands.readOutlineOnly</vh></v>
 <v t="T3"><vh>8/11 Wrote importFiles script in leoImport.leo</vh></v>
 <v><vh>8/11 Released 3.4</vh></v>
 <v><vh>8/11 Syntax colorer now honors @comment</vh></v>
@@ -769,7 +770,7 @@
 <v t="T480"><vh>Why I like Python</vh></v>
 </v>
 </v>
-<v t="T481" a="EV"><vh>To do</vh>
+<v t="T481" a="E"><vh>To do</vh>
 <v><vh>After 3.4</vh>
 <v><vh>Right-click deletes items in Recent Files submenu ?</vh></v>
 <v><vh>nested @file directives??</vh></v>
@@ -2592,6 +2593,20 @@
 <v t="T1314" a="C"><vh>save</vh></v>
 </v>
 </v>
+<v><vh>(scanAllDirectives crash when leoConfig.txt is missing)</vh>
+<v t="T909" a="C"><vh>c.__init__</vh>
+<v t="T910"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
+</v>
+<v t="T584" a="C"><vh>atFile.scanAllDirectives (calls writeError on errors)</vh>
+<v t="T585" a="C"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
+<v t="T586"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
+<v t="T587"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
+<v t="T588"><vh>&lt;&lt; Test for @path &gt;&gt;</vh></v>
+<v t="T589" a="C"><vh>&lt;&lt; Test for @pagewidth and @tabwidth &gt;&gt;</vh></v>
+<v t="T590"><vh>&lt;&lt; Set current directory &gt;&gt;</vh></v>
+<v t="T591" a="M"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
+</v>
+</v>
 <v t="T1315"><vh>(Unicode)</vh>
 <v t="T1316"><vh>@file c:/prog/test/unicodeTest.txt</vh>
 <v t="T1317"><vh>New ä ÃHeadlineß</vh></v>
@@ -2619,7 +2634,7 @@
 <v t="T1321" a="C"><vh>setTnodeText</vh></v>
 </v>
 </v>
-<v t="T1322"><vh>Code</vh>
+<v t="T1322" a="V"><vh>Code</vh>
 <v t="T1271" a="C"><vh> OnAbout (version number)</vh></v>
 <v t="T1323"><vh> Overview of code</vh></v>
 <v t="T1324"><vh> Scripts &amp; Batch Files (Change version in setup.py)</vh>
@@ -2783,7 +2798,7 @@
 <v t="T1439"><vh>sentinelName</vh></v>
 <v t="T1440"><vh>skipSentinelStart</vh></v>
 </v>
-<v><vh>Utilites</vh>
+<v a="E"><vh>Utilites</vh>
 <v t="T584" a="C"><vh>atFile.scanAllDirectives (calls writeError on errors)</vh>
 <v t="T585" a="C"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
 <v t="T586"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
@@ -3236,13 +3251,13 @@
 </v>
 <v t="T1630"><vh>@file leoFileCommands.py</vh>
 <v t="T1631"><vh>leoFileCommands._init_</vh></v>
-<v><vh>Reading</vh>
+<v a="E"><vh>Reading</vh>
 <v t="T1632"><vh>createVnode</vh></v>
 <v t="T1633"><vh>finishPaste (creating join lists could be a problem)</vh>
 <v t="T1634"><vh>&lt;&lt; Create join lists of all pasted vnodes &gt;&gt;</vh></v>
 <v t="T1635"><vh>&lt;&lt; Recompute clone bits for pasted vnodes &gt;&gt;</vh></v>
 </v>
-<v><vh>get routines</vh>
+<v a="E"><vh>get routines</vh>
 <v t="T1318" a="C"><vh>get &amp; match (basic)(leoFileCommands)</vh></v>
 <v t="T1636"><vh>getClipboardHeader</vh></v>
 <v t="T1637"><vh>getCloneWindows</vh></v>
@@ -15761,7 +15776,7 @@ self.tangle_directory = ""
 self.use_header_flag = false
 self.output_doc_flag = false
 # Default Target Language
-self.target_language = None # c_language
+self.target_language = python_language # 8/11/02: Required if leoConfig.txt does not exist.
 
 self.setIvarsFromFind()</t>
 <t tx="T911">def resizePanesToRatio(self,ratio):

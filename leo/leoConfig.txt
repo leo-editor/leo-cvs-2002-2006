@@ -63,9 +63,9 @@ initial_window_top = 10
 split_bar_relief = groove
 
 [recent files]
-file2 = c:\prog\LeoCVS\leo\LeoDocs.leo
-file1 = C:\prog\leoCVS\leo\nsis.leo
-file0 = c:\prog\leoCVS\leo\LeoPy.leo
+file2 = C:\prog\leoCVS\leo\nsis.leo
+file1 = c:\prog\leoCVS\leo\LeoPy.leo
+file0 = c:\prog\LeoCVS\leo\LeoDocs.leo
 
 [prefs panel options]
 output_doc_chunks = 1
