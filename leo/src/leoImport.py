@@ -94,11 +94,10 @@ class baseLeoImportCommands:
 		self.setEncoding()
 		# trace(`self.fileName`) ; trace(`self.fileType`)
 		# All file types except the following just get copied to the parent node.
-		# 08-SEP-2002 DTHEIN: Added php
-		# 9/9/02: E.K.Ream.  Allow upper case, add cxx.
 		# Note: we should _not_ import header files using this code.
-		appendFileFlag = string.lower(ext) not in [
-			".c", ".cpp", ".cxx", ".java", ".pas", ".py", ".pyw", ".php"]
+		ext = ext.lower()
+		appendFileFlag = ext not in (
+			".c", ".cpp", ".cxx", ".java", ".pas", ".py", ".pyw", ".php")
 		
 		#@<< Read file into s >>
 		#@+node:1::<< Read file into s >>
@@ -127,7 +126,7 @@ class baseLeoImportCommands:
 	
 		if appendFileFlag:
 			v.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
-		elif ext == ".c" or ext == ".cpp":
+		elif ext in (".c", ".cpp", ".cxx"):
 			self.scanCText(s,v)
 		elif ext == ".java":
 			self.scanJavaText(s,v,true) #outer level
