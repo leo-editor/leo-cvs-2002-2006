@@ -2335,7 +2335,10 @@ class leoImportCommands:
 			i = skip_nl(s,i) ; i = skip_ws(s,i)
 			if self.isDocStart(s,i):
 				return i, result
-			if match_word(s,i,"@doc") or match_word(s,i,"@c") or match_word(s,i,"@root"):
+			if (match_word(s,i,"@doc") or
+				match_word(s,i,"@c") or
+				match_word(s,i,"@root") or
+				match_word(s,i,"@code")): # 2/25/03
 				return i, result
 			elif (match(s,i,"<<") and # must be on separate lines.
 				find_on_line(s,i,">>=") > -1):
@@ -2608,7 +2611,7 @@ class leoImportCommands:
 	#@+body
 	def weave (self,filename):
 		
-		c = self.commands ; v = c.currentVnode() ; a = app()
+		c = self.commands ; v = c.currentVnode()
 		nl = self.output_newline
 		if not v: return
 		self.setEncoding()
@@ -2882,7 +2885,7 @@ class leoImportCommands:
 		else:
 			self.encoding = app().tkEncoding # 2/25/03
 	
-		print self.encoding
+		# print self.encoding
 	
 	#@-body
 	#@-node:8::setEncoding
