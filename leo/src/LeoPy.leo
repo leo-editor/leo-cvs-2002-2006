@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3994" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4003" clone_windows="0"/>
 <globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="34" left="377" height="870" width="816"/>
+	<global_window_position top="34" left="375" height="870" width="818"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -15,6 +15,8 @@
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.120103054230"><vh>December 2003</vh>
 <v t="edream.121303061952"><vh>12/13</vh>
+<v t="edream.121303193923"><vh>Completed move code in leoTest.py</vh></v>
+<v t="edream.121303093557"><vh>Moved encoding messages so they don't appear in batch mode</vh></v>
 <v t="edream.121303065449"><vh>Autoclean outline on save &amp; executeScript does not set tnodeList</vh></v>
 <v t="edream.121303061952.1"><vh>Patched scanPythonClass to put class docstrings in class nodes</vh></v>
 </v>
@@ -410,6 +412,13 @@
 <v t="edream.111803072614"><vh>October 2003</vh></v>
 </v>
 <v t="edream.110203160744.192"><vh>FAQ for comp.prog.literate</vh></v>
+<v t="edream.121403165120"><vh>ANN: Leo 4.1 rc1: An outlining editor</vh></v>
+<v t="edream.121403161542"><vh>Previous announcements</vh>
+<v t="edream.120503083057"><vh>ANN: Leo 4.1 beta 5: An outlining editor</vh></v>
+<v t="edream.110203160744.209"><vh>4.0.x announcements</vh>
+<v t="edream.110203160744.208"><vh>ANN: Leo 4.0.4: An outlining editor</vh></v>
+<v t="edream.110203160744.214"><vh>ANN: Leo 4.0 final: An outlining editor</vh></v>
+</v>
 <v t="edream.110203160744.193"><vh>3.x announcements</vh>
 <v t="edream.110203160744.194"><vh>ANN to comp.lang.python: ANN: Leo 3.3 outlining editor</vh></v>
 <v t="edream.110203160744.195"><vh>ANN: Leo 3.5 (and 3.4) outlining editor</vh></v>
@@ -426,10 +435,6 @@
 <v t="edream.110203160744.206"><vh>ANN: Leo 3.12 outlining editor</vh></v>
 <v t="edream.110203160744.207"><vh>ANN: Leo 3.12 outlining editor (c.l.py)</vh></v>
 </v>
-<v t="edream.120503083057"><vh>ANN: Leo 4.1 beta 5: An outlining editor</vh></v>
-<v t="edream.110203160744.209"><vh>4.0.x announcements</vh>
-<v t="edream.110203160744.208"><vh>ANN: Leo 4.0.4: An outlining editor</vh></v>
-<v t="edream.110203160744.214"><vh>ANN: Leo 4.0 final: An outlining editor</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.215"><vh>Distribution checklist</vh>
@@ -1053,7 +1058,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538" a="EV"><vh>To do: 4.1 final</vh></v>
+<v t="edream.110403112538" a="E"><vh>To do: 4.1 final</vh></v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
 <v t="edream.110203160744.603"><vh>(Translation problems)</vh>
@@ -2208,7 +2213,7 @@
 <v t="edream.110203160744.1566"><vh>&lt;&lt; reassign all tnode indices &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1567" a=""><vh>putLeoOutline (to clipboard)</vh></v>
-<v t="edream.110203160744.1568" a=""><vh>v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)</vh></v>
+<v t="edream.110203160744.1568" a=""><vh>v.copyTreeWithNewTnodes (new after 3.11.1)</vh></v>
 <v t="edream.110203160744.1569" a=""><vh>putTnodes</vh>
 <v t="edream.110203160744.1570"><vh>&lt;&lt; write only those tnodes that were referenced &gt;&gt;</vh></v>
 </v>
@@ -2783,6 +2788,7 @@
 </v>
 <v t="edream.110203160744.2146"><vh>(Calling forceShutdown in an "idle" hook)</vh>
 <v t="edream.110203160744.1583" a=""><vh>run &amp; allies</vh>
+<v t="edream.121303093024"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
 <v t="edream.110203160744.1584"><vh>isValidPython</vh></v>
 <v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
 <v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
@@ -2896,6 +2902,7 @@
 </v>
 <v t="edream.110203160744.3806"><vh>(Use gnx's in .leo files)</vh>
 <v t="edream.110203160744.1583" a=""><vh>run &amp; allies</vh>
+<v t="edream.121303093024"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
 <v t="edream.110203160744.1584"><vh>isValidPython</vh></v>
 <v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
 <v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
@@ -3316,6 +3323,7 @@
 </v>
 <v t="edream.112203144820.2"><vh>(Adding batch-script logic to startup code)</vh>
 <v t="edream.110203160744.1583" a=""><vh>run &amp; allies</vh>
+<v t="edream.121303093024"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
 <v t="edream.110203160744.1584"><vh>isValidPython</vh></v>
 <v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
 <v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
@@ -3619,7 +3627,7 @@
 <v t="edream.110203160744.3019" a=""><vh>trace_tag</vh></v>
 </v>
 </v>
-<v t="edream.112303174924.1"><vh>beta 6 projects</vh>
+<v t="edream.112303174924.1"><vh>rc1 projects</vh>
 <v t="edream.120703082927"><vh>(Added dialog to Import Derived File)</vh>
 <v t="edream.110203160744.1120" a="M"><vh>importDerivedFile</vh></v>
 </v>
@@ -3909,7 +3917,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2458"><vh>Code</vh>
+<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -4151,9 +4159,10 @@
 </v>
 </v>
 <v t="edream.110203160744.2630"><vh>Core classes...</vh>
-<v t="edream.110203160744.2631" tnodeList="edream.110203160744.2631,edream.110203160744.2632,edream.110203160744.1583,edream.110203160744.1584,edream.110203160744.1585,edream.110203160744.1586,edream.112203144820,edream.112203144820.1,edream.110203160744.2633"><vh>@file leo.py </vh>
+<v t="edream.110203160744.2631" tnodeList="edream.110203160744.2631,edream.110203160744.2632,edream.110203160744.1583,edream.121303093024,edream.110203160744.1584,edream.110203160744.1585,edream.110203160744.1586,edream.112203144820,edream.112203144820.1,edream.110203160744.2633"><vh>@file leo.py </vh>
 <v t="edream.110203160744.2632"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="edream.110203160744.1583" a="M"><vh>run &amp; allies</vh>
+<v t="edream.121303093024"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
 <v t="edream.110203160744.1584"><vh>isValidPython</vh></v>
 <v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
 <v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
@@ -5737,7 +5746,7 @@
 <v t="edream.110203160744.1784"><vh>v.cloneTree</vh></v>
 <v t="edream.110203160744.3317"><vh>v.copyCloneBitsTo</vh></v>
 <v t="edream.110203160744.1785"><vh>v.copyTree</vh></v>
-<v t="edream.110203160744.1568" a=""><vh>v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)</vh></v>
+<v t="edream.110203160744.1568" a=""><vh>v.copyTreeWithNewTnodes (new after 3.11.1)</vh></v>
 <v t="edream.110203160744.1786"><vh>v.createDependents</vh></v>
 <v t="edream.110203160744.1787"><vh>v.destroyDependents</vh></v>
 <v t="edream.110203160744.3318"><vh>v.destroyTree (does nothing!)(Called only from destroy dependents)</vh></v>
@@ -6283,7 +6292,7 @@
 <v t="edream.112103084652.2"><vh>oops</vh></v>
 <v t="edream.112103154310"><vh>setScript</vh></v>
 </v>
-<v t="edream.121103110000" a=""><vh>class unitTestGui</vh>
+<v t="edream.121103110000"><vh>class unitTestGui</vh>
 <v t="edream.121103111146"><vh> test.gui.__init__&amp; destroySelf</vh></v>
 <v t="edream.121103110123"><vh>dialogs (unitTestGui)</vh></v>
 <v t="edream.121103120745"><vh>dummy routines</vh></v>
@@ -7009,33 +7018,20 @@
 <v t="edream.110203160744.879" a=""><vh>tree.moveUpDown</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3717"><vh>Unit Testing &amp; leoTest.py</vh>
-<v t="edream.121103110000" a=""><vh>class unitTestGui</vh>
-<v t="edream.121103111146"><vh> test.gui.__init__&amp; destroySelf</vh></v>
-<v t="edream.121103110123"><vh>dialogs (unitTestGui)</vh></v>
-<v t="edream.121103120745"><vh>dummy routines</vh></v>
-<v t="edream.121103110000.1"><vh>oops</vh></v>
-<v t="edream.121103115441"><vh>simulateDialog</vh></v>
-</v>
-<v t="edream.112303032011"><vh>To do</vh>
-<v t="edream.121103044856.1"><vh>Support for unit testing</vh></v>
-<v t="edream.121103044856.2"><vh>Test all commands &amp; plugins</vh></v>
-<v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
-</v>
-<v t="edream.110203160744.3743" tnodeList="edream.110203160744.3743,edream.121103212042,edream.110203160744.3744,edream.110203160744.3746,edream.110203160744.3747,edream.110203160744.3748,edream.110203160744.3749,edream.110203160744.3750,edream.110203160744.3751,edream.110203160744.3755,edream.110203160744.3756,edream.110203160744.3757,edream.110203160744.3758,edream.110203160744.3759,edream.110203160744.3760,edream.110203160744.3761,edream.110203160744.3762,edream.110203160744.3763,edream.110203160744.3764,edream.110203160744.3765,edream.110203160744.3766,edream.110203160744.3767,edream.110203160744.3768,edream.110203160744.3769,edream.110203160744.3770,edream.110203160744.3771,edream.110203160744.3772,edream.110203160744.3773,edream.110203160744.3774,edream.110203160744.3775,edream.110203160744.3776,edream.110203160744.3777,edream.110203160744.3779,edream.110203160744.3781,edream.110203160744.3782,edream.110203160744.3783,edream.110203160744.3784,edream.110203160744.3785,edream.110203160744.3786,edream.110203160744.3787,edream.121103112414.1,edream.121103112429,edream.121103112429.1,edream.121103112429.2,edream.121103112429.3,edream.121103112429.4,edream.121103112429.5,edream.110203160744.3789,edream.110203160744.3790,edream.110203160744.3791,edream.110203160744.3792,edream.110203160744.3794,edream.110203160744.3793,edream.110203160744.3795,edream.110203160744.3797,edream.110203160744.3798,edream.110203160744.3799,edream.110203160744.3800,edream.110203160744.3801,edream.110203160744.3802,edream.110203160744.3803,edream.110203160744.3804,edream.110903064923,edream.110903065210,edream.110903065210.1,edream.110903065210.3,edream.110903065210.4,edream.110903065210.5"><vh>@file leoTest.py</vh>
-<v t="edream.121103212042"><vh>fail</vh></v>
-<v t="edream.110203160744.3744"><vh> testUtils</vh>
+<v t="edream.110203160744.3717"><vh>Unit Testing</vh>
+<v t="edream.112303032011"><vh>To do</vh></v>
+<v t="edream.110203160744.3743" tnodeList="edream.110203160744.3743,edream.110203160744.3744,edream.110203160744.3746,edream.110203160744.3748,edream.110203160744.3749,edream.110203160744.3750,edream.121303184719,edream.110203160744.3751,edream.121103212042,edream.110203160744.3755,edream.110203160744.3756,edream.110203160744.3757,edream.110203160744.3758,edream.110203160744.3759,edream.110203160744.3760,edream.110203160744.3761,edream.110203160744.3762,edream.110203160744.3763,edream.110203160744.3764,edream.110203160744.3765,edream.110203160744.3766,edream.110203160744.3767,edream.110203160744.3768,edream.110203160744.3769,edream.110203160744.3770,edream.110203160744.3771,edream.110203160744.3772,edream.110203160744.3773,edream.110203160744.3774,edream.110203160744.3781,edream.110203160744.3782,edream.110203160744.3783,edream.110203160744.3784,edream.110203160744.3785,edream.110203160744.3786,edream.110203160744.3787,edream.110203160744.3789,edream.110203160744.3790,edream.110203160744.3791,edream.110203160744.3792,edream.110203160744.3794,edream.110203160744.3793,edream.110203160744.3795,edream.121103112414.1,edream.121103112429,edream.121103112429.1,edream.121103112429.2,edream.121103112429.5,edream.121103112429.4,edream.121303194432,edream.121103112429.3,edream.110903064923,edream.110903065210,edream.110903065210.1,edream.110903065210.3,edream.110903065210.4,edream.110903065210.5,edream.110203160744.3797,edream.110203160744.3798,edream.110203160744.3799,edream.110203160744.3800,edream.110203160744.3801,edream.110203160744.3802,edream.110203160744.3803,edream.121403091108,edream.121403091250,edream.121403091250.1,edream.121403091250.2,edream.121403091250.3,edream.121403091250.4,edream.121403092737,edream.121403091250.5"><vh>@file leoTest.py</vh>
+<v t="edream.110203160744.3744"><vh> class testUtils</vh>
 <v t="edream.110203160744.3745"><vh>compareNodeAndFile TODO</vh></v>
 <v t="edream.110203160744.3746"><vh>compareOutlines</vh></v>
-<v t="edream.110203160744.3747"><vh>createTestsForSubnodes (doesn't work)</vh></v>
 <v t="edream.110203160744.3748"><vh>findChildrenOf &amp; findSubnodesOf</vh></v>
 <v t="edream.110203160744.3749"><vh>findNodeInRootTree, findNodeInTree, findNodeAnywhere</vh></v>
 <v t="edream.110203160744.3750"><vh>numberOfNodesInOutline, numberOfClonesInOutline</vh></v>
+<v t="edream.121303184719"><vh>replaceOutline</vh></v>
 <v t="edream.110203160744.3751"><vh>validateOutline TODO</vh></v>
 </v>
+<v t="edream.121103212042"><vh> fail</vh></v>
 <v t="edream.110203160744.3752"><vh> Unfinished Tests</vh>
-<v t="edream.110203160744.3753"><vh>class commandsTests</vh></v>
-<v t="edream.110203160744.3754"><vh>class menuTests</vh></v>
 <v t="edream.110203160744.3755"><vh>Node tests...</vh>
 <v t="edream.110203160744.3756"><vh>class cloneTests</vh>
 <v t="edream.110203160744.3757"><vh>testCone</vh></v>
@@ -7060,15 +7056,8 @@
 <v t="edream.110203160744.3774"><vh>testDirtyBits</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3775"><vh>class undoTests</vh>
-<v t="edream.110203160744.3776"><vh>testUndoMoveLeft</vh></v>
-<v t="edream.110203160744.3777"><vh>testRedoMoveLeft</vh></v>
 </v>
-<v t="edream.110203160744.3778"><vh>File tests</vh>
-<v t="edream.110203160744.3779"><vh>class fileTests</vh></v>
-</v>
-</v>
-<v t="edream.110203160744.3780"><vh>Color tests</vh>
+<v t="edream.110203160744.3780"><vh>Colorizer tests</vh>
 <v t="edream.110203160744.3781"><vh> makeColorSuite</vh></v>
 <v t="edream.110203160744.3782"><vh>class colorTestCase</vh>
 <v t="edream.110203160744.3783"><vh>__init__</vh></v>
@@ -7076,16 +7065,6 @@
 <v t="edream.110203160744.3785"><vh>setUp</vh></v>
 <v t="edream.110203160744.3786"><vh>tearDown</vh></v>
 <v t="edream.110203160744.3787"><vh>runTest</vh></v>
-</v>
-</v>
-<v t="edream.121103112414"><vh>Import/Export tests</vh>
-<v t="edream.121103112414.1"><vh>makeImportExportSuite</vh></v>
-<v t="edream.121103112429"><vh>class importExportTestCase</vh>
-<v t="edream.121103112429.1"><vh>__init__</vh></v>
-<v t="edream.121103112429.2"><vh>importExport</vh></v>
-<v t="edream.121103112429.3"><vh>tearDown</vh></v>
-<v t="edream.121103112429.4"><vh>setUp</vh></v>
-<v t="edream.121103112429.5"><vh>runTest</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.3788"><vh>Edit body tests</vh>
@@ -7098,15 +7077,15 @@
 <v t="edream.110203160744.3795"><vh>runTest</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3796" a="M"><vh>Outline tests (FINISH)</vh>
-<v t="edream.110203160744.3797"><vh> makeOutlineSuite</vh></v>
-<v t="edream.110203160744.3798"><vh>class outlineTestCase</vh>
-<v t="edream.110203160744.3799"><vh>__init__</vh></v>
-<v t="edream.110203160744.3800"><vh>outlineCommand</vh></v>
-<v t="edream.110203160744.3801"><vh>runTest</vh></v>
-<v t="edream.110203160744.3802"><vh>setUp</vh></v>
-<v t="edream.110203160744.3803"><vh>tearDown</vh></v>
-<v t="edream.110203160744.3804"><vh>undo  TODO</vh></v>
+<v t="edream.121103112414"><vh>Import/Export tests</vh>
+<v t="edream.121103112414.1"><vh>makeImportExportSuite</vh></v>
+<v t="edream.121103112429"><vh>class importExportTestCase</vh>
+<v t="edream.121103112429.1"><vh>__init__</vh></v>
+<v t="edream.121103112429.2"><vh>importExport</vh></v>
+<v t="edream.121103112429.5"><vh>runTest</vh></v>
+<v t="edream.121103112429.4"><vh>setUp</vh></v>
+<v t="edream.121303194432"><vh>shortDescription</vh></v>
+<v t="edream.121103112429.3"><vh>tearDown</vh></v>
 </v>
 </v>
 <v t="edream.110903064812"><vh>LeoFiles tests</vh>
@@ -7116,6 +7095,27 @@
 <v t="edream.110903065210.3"><vh>runTest</vh></v>
 <v t="edream.110903065210.4"><vh>setUp</vh></v>
 <v t="edream.110903065210.5"><vh>tearDown</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.3796"><vh>Outline tests</vh>
+<v t="edream.110203160744.3797"><vh> makeOutlineSuite</vh></v>
+<v t="edream.110203160744.3798"><vh>class outlineTestCase</vh>
+<v t="edream.110203160744.3799"><vh>__init__</vh></v>
+<v t="edream.110203160744.3800"><vh>outlineCommand</vh></v>
+<v t="edream.110203160744.3801"><vh>runTest</vh></v>
+<v t="edream.110203160744.3802"><vh>setUp</vh></v>
+<v t="edream.110203160744.3803"><vh>tearDown</vh></v>
+</v>
+</v>
+<v t="edream.121403091001"><vh>Plugins tests</vh>
+<v t="edream.121403091108"><vh> makePluginsSuite</vh></v>
+<v t="edream.121403091250"><vh>class pluginTestCase</vh>
+<v t="edream.121403091250.1"><vh>__init__</vh></v>
+<v t="edream.121403091250.2"><vh>pluginTest</vh></v>
+<v t="edream.121403091250.3"><vh>runTest</vh></v>
+<v t="edream.121403091250.4"><vh>setUp</vh></v>
+<v t="edream.121403092737"><vh>shortDescription</vh></v>
+<v t="edream.121403091250.5"><vh>tearDown</vh></v>
 </v>
 </v>
 </v>
@@ -24850,7 +24850,6 @@ encoding = self.initConfigParam(
 	
 if isValidEncoding(encoding):
 	self.config_encoding = encoding
-	es("leoConfig.txt encoding: " + encoding, color="blue")
 else:
 	es("bad config_encoding: " + encoding)
 	
@@ -27507,6 +27506,8 @@ clonedAtFileNodes: 9
 	if script:
 		createNullGuiWithScript(script)
 		fileName = None
+	else:
+		&lt;&lt; print encoding info &gt;&gt;
 	# Load plugins. Plugins may create app.gui.
 	doHook("start1")
 	if app.killed: return # Support for app.forceShutdown.
@@ -27529,6 +27530,7 @@ clonedAtFileNodes: 9
 	frame.body.setFocus()
 	app.initing = false # "idle" hooks may now call app.forceShutdown.
 	app.gui.runMainLoop()
+
 </t>
 <t tx="edream.110203160744.1584">def isValidPython():
 	
@@ -31941,7 +31943,7 @@ c.endUpdate(false)</t>
 
 def getSignOnLine (self):
 	c = self
-	return "Leo 4.1 beta 5, build %s, December 5, 2003" % c.getBuildNumber()
+	return "Leo 4.1 rc1, build %s, December 15, 2003" % c.getBuildNumber()
 	
 def initVersion (self):
 	c = self
@@ -38964,7 +38966,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="edream.110203160744.2491">Metadata-Version: 1.0
 Name: leo
-Version: 4.1-beta-5
+Version: 4.1-rc1
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -38990,62 +38992,23 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 beta 5                   December 5, 2003
+Leo 4.1 Release Candidate 1              December 15, 2003
 
-For the first time in months there are no serious bugs outstanding.
+There are no known bugs in this version of Leo.
 
-Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
+The highlights of this release:
 
-Warning: Use the __wx_gui.py plugin with _extreme_ caution until further notice:
-bugs in this plugin could cause body text to be lost when changing nodes.
-
-Beta 5:
-  * Leo runs in batch mode when invoked with --script aScriptFile.py
-    - Created "null gui" classes that do not use any gui code.
-  * Leo supports Unicode characters (e.g. Chinese) in path and file names.
-  * Fixed several long-standing bugs:
-    - Fixed several minor problems with the Extract Section and Import commands.
-    - Fixed problem that prevent the Find panel from working on the Mac.
-    - Improved @url handling so that @url file:\\path\x.leo works properly.
-    - Improved support for @lineending platform.
-    - Leo honors outline/body pane ratio when opening .leo files.
-    - Leo now ensures that newly-opened windows fit entirely on the screen.
-    - Fixed a crasher when Undoing a Change All command when searching headlines.
-  - Fixed other bugs resulting from the 4.1 reorg:
-    - Fixed problem loading plugins on Linux.
-    - Fixed crashers in the Extract Section and Extract commands.
-    - Fixed a crasher when writing a file containing an undefined section.
-    - Removed duplicate bindings in popup menus.
-    - Made sure to show Leo's windows in wx gui plugin.
-
-Beta 4:
-  - Fixed several "reorg" bugs, some of which affected plugins.
-  - Allow @directives and section references when executing scripts!
-  - More than one section reference may now appear on the same line.
-  - Use "utf-8" encoding for filenames under MacOS (Darwin)
-  - Allow command or cmnd prefix for menu shortcuts under Darwin.
-	  
-Beta 3:
-  - Completed the reorg, making _many_ changes to the code base.
-  - Fixed a LaTeX coloring bug
-
-Beta 2:
-  - Fixed a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
-
-Beta 1:
-  * Script-based find/change commands.
-  - Hoist &amp; DeHoist commands for viewing parts of an outline.
-  - Check Outline command finds user clone mistakes.
-  * New configuration settings:
-    - use_gnx specifies whether .leo files use integers as indices:
-      use_gnx = 0 makes .leo files compatible with previous versions of Leo.
-      use_gnx = 1 makes .leo files cvs-friendly
-    - config_encoding specifies the encoding of leoConfig.txt.
-  * Several significant code-level changes:
-    - The 4.1 code base has been reorganized to support gui plugins.
-    - An example wx_gui plugin is partly functional.
-    - Created a flexible framework for creating &amp; running regression tests.
-    - app.forceShutdown now works when called from plugins.</t>
+- Leo runs in batch mode when invoked with --script aScriptFile.py
+- Leo supports Unicode characters (e.g. Chinese) in path and file names.
+- @directives and section references are now valid when executing scripts.
+- @ignored and orphan nodes now valid in @file-nosent trees.
+- Script-based find/change commands.
+- Check Outline command.
+- Hoist &amp; DeHoist commands.
+- A new gui-agnostic architecture: useful for batch mode and unit tests.
+- Several new configuration settings.
+- Many new unit tests.
+- A host of bug fixes.</t>
 <t tx="edream.110203160744.2493"># The manifest template: specifies all files to be included in the distribution.
 
 # Note: these are glob patterns!  Be careful:  .. may not work.
@@ -39174,7 +39137,7 @@ setup (
 if sys.argv[1] == "sdist":
 	print "setup complete"</t>
 <t tx="edream.110203160744.2499">name="leo",
-version="4.1-beta-5",
+version="4.1-rc1",
 author="Edward K. Ream",
 author_email="edream@tds.net",
 url="http://personalpages.tds.net/~edream/front.html",
@@ -41893,8 +41856,7 @@ def setEncoding (self):
 		elif encoding and len(encoding) &gt; 0:
 			trace("ignoring invalid " + src + " encoding: " + `encoding`)
 			
-	color = choose(self.tkEncoding=="ascii","red","blue")
-	es("Text encoding: " + self.tkEncoding, color=color)</t>
+	color = choose(self.tkEncoding=="ascii","red","blue")</t>
 <t tx="edream.110203160744.2642">def setLeoID (self):
 	
 	app = self
@@ -41908,7 +41870,8 @@ def setEncoding (self):
 <t tx="edream.110203160744.2643"># This would be set by in Python's sitecustomize.py file.
 try:
 	app.leoID = sys.leoID
-	es("leoID = " + app.leoID, color="orange")
+	if not app.batchMode:
+		es("leoID = " + app.leoID, color="orange")
 	return
 except:
 	app.leoID = None</t>
@@ -56131,15 +56094,7 @@ def yoffsetTree(self,v,v1):
 			return self.line_height
 
 	return self.line_height</t>
-<t tx="edream.110203160744.3717">@nocolor
-
-Run the unit tests from test/test.leo, like this:
-
-- update the tests here
-- save this file (LeoPy.leo)
-- run the tests in test.leo using the Execute Script command.
-
-@color</t>
+<t tx="edream.110203160744.3717"># Run the unit tests in test.leo using the Execute Script command.</t>
 <t tx="edream.110203160744.3721">if 0:
 	checkForMismatchedJoinedNodes()
 	
@@ -56213,15 +56168,19 @@ Run the unit tests from test/test.leo, like this:
 	- Topologies include tnodes somehow.
 	- Topologies include headlines somehow.
 </t>
-<t tx="edream.110203160744.3743">"""Unit tests for Leo"""
+<t tx="edream.110203160744.3743">"""
+
+Unit tests for Leo.
+
+Run the unit tests in test.leo using the Execute Script command.
+
+"""
 
 from leoGlobals import *
-import unittest
 
 import leoColor,leoCommands,leoFrame,leoGui,leoNodes
-import Tkinter
-import os,sys
-Tk = Tkinter
+
+import glob,os,sys,unittest
 
 @others</t>
 <t tx="edream.110203160744.3744">class testUtils:
@@ -56234,34 +56193,27 @@ Tk = Tkinter
 	
 	"""Compares two outlines, making sure that their topologies,
 	content and join lists are equivent"""
-
+	
 	v1,v2 = root1,root2
 	after1 = v1.nodeAfterTree()
 	after2 = v2.nodeAfterTree()
-	while v1 and v2 and v1 != after1 and v2 != after2:
-		if v1.numberOfChildren() != v2.numberOfChildren():
-			return false
-		if v1.headString() != v2.headString():
-			return false
-		if v1.bodyString() != v2.bodyString():
-			return false
-		if v1.isCloned() != v2.isCloned():
-			return false
+	v1 = v1.firstChild()
+	v2 = v2.firstChild()
+	ok = true
+	while v2 and v1 != after1 and v2 != after2:
+		ok = (
+		v1.numberOfChildren() == v2.numberOfChildren() and
+		v1.headString() == v2.headString() and
+		v1.bodyString() == v2.bodyString() and
+		v1.isCloned()   == v2.isCloned()   )
+		if not ok: break
 		v1 = v1.threadNext()
 		v2 = v2.threadNext()
-	return v1 == None and v2 == None</t>
-<t tx="edream.110203160744.3747">if 0: # Doesn't work
 
-	def createTestsForSubnodes(self,name,testClass):
-	
-		u = self
-		suite = unittest.makeSuite(unittest.TestCase)
-		vList = u.findSubnodesOf(name)
-		for v in vList:
-			h = v.headString()
-			test = testClass(v)
-			suite.addTest(test)
-		return suite,vList</t>
+	ok = ok and v1 == after1 and v2 == after2
+	if not ok:
+		trace(v1,v2)
+	return ok</t>
 <t tx="edream.110203160744.3748">def findChildrenOf (self,headline):
 	
 	u = self ; c = top() ; v = c.currentVnode()
@@ -56337,8 +56289,6 @@ def numberOfClonesInOutline (self,root):
 	"""Checks an outline for consistency"""
 	pass</t>
 <t tx="edream.110203160744.3752"></t>
-<t tx="edream.110203160744.3753"></t>
-<t tx="edream.110203160744.3754"></t>
 <t tx="edream.110203160744.3755">import leoNodes
 
 class leoNodeError(Exception):
@@ -56426,22 +56376,6 @@ class leoNodeError(Exception):
 	"""Test that dirty bits are set, especially in anscestor nodes and cloned nodes"""
 	pass
 </t>
-<t tx="edream.110203160744.3775">class undoTests(unittest.TestCase):
-	
-	"""test that undo works properly, especially when clones are involved"""
-	
-	@others</t>
-<t tx="edream.110203160744.3776">def testUndoMoveLeft(self):
-	pass
-</t>
-<t tx="edream.110203160744.3777">def testRedoMoveLeft(self):
-	pass</t>
-<t tx="edream.110203160744.3778"></t>
-<t tx="edream.110203160744.3779">class fileTests(unittest.TestCase):
-	
-	"""Unit tests for Leo's file operations."""
-	
-	@others</t>
 <t tx="edream.110203160744.3780"></t>
 <t tx="edream.110203160744.3781">def makeColorSuite(testParentHeadline,tempHeadline):
 	
@@ -56629,7 +56563,7 @@ def setUp(self,*args,**keys):
 
 	self.editBody()</t>
 <t tx="edream.110203160744.3796"></t>
-<t tx="edream.110203160744.3797">def makeOutlineSuite(testParentHeadline):
+<t tx="edream.110203160744.3797">def makeOutlineSuite(testParentHeadline,unused=None):
 	
 	"""Create an outline test for every descendant of testParentHeadline.."""
 	
@@ -56640,10 +56574,12 @@ def setUp(self,*args,**keys):
 	# Create the suite and add all test cases.
 	suite = unittest.makeSuite(unittest.TestCase)
 	for v in vList:
-		v1 = v.firstChild()
-		v2 = v1.next()
-		test = outlineTestCase(c,v,v1,v2,temp_v)
-		suite.addTest(test)
+		before = u.findNodeInTree(v,"before")
+		after  = u.findNodeInTree(v,"after")
+		ref    = u.findNodeInTree(v,"ref")
+		if before and after and ref:
+			test = outlineTestCase(c,v,before,after,ref)
+			suite.addTest(test)
 
 	return suite
 </t>
@@ -56652,42 +56588,68 @@ def setUp(self,*args,**keys):
 	"""Data-driven unit tests for Leo's outline commands."""
 	
 	@others</t>
-<t tx="edream.110203160744.3799">def __init__ (self,c,parent,v1,v2,temp_v):
+<t tx="edream.110203160744.3799">def __init__ (self,c,parent,before,after,ref):
 	
 	# Init the base class.
 	unittest.TestCase.__init__(self)
 
 	self.c = c
 	self.parent = parent
-	self.v1 = v1
-	self.v2 = v2
-	self.temp_v = temp_v
+	self.before = before
+	self.after = after
+	self.ref    = ref
 	
-	self.old_v = c.currentVnode()</t>
+	self.old_v = c.currentVnode()
+	
+	self.u = testUtils()</t>
 <t tx="edream.110203160744.3800">def outlineCommand (self):
-
-	# Compute the result in temp_v.bodyString()
-	commandName = self.parent.headString()
-	command = getattr(self.c,commandName)
-	command()
 	
-	# Compare the computed result to the reference result.
-	u = testUtils()
-	u.compareOutlines(self.v1,self.v2)
-</t>
+	c = self.c ; u = self.u ; tree = c.frame.tree
+	
+	move = u.findNodeInTree(self.before,"move")
+	assert(move)
+	
+	c.selectVnode(move)
+	
+	commandName = self.parent.headString()
+	command = getattr(c,commandName)
+	command()
+
+	assert(u.compareOutlines(self.before,self.after))
+	c.undoer.undo()
+	assert(u.compareOutlines(self.before,self.ref))
+	c.undoer.redo()
+	assert(u.compareOutlines(self.before,self.after))
+	c.undoer.undo()
+	assert(u.compareOutlines(self.before,self.ref))</t>
 <t tx="edream.110203160744.3801">def runTest(self):
 
 	self.outlineCommand()</t>
 <t tx="edream.110203160744.3802">def setUp(self,*args,**keys):
 
-	pass</t>
+	assert(self.before)
+	assert(self.after)
+	assert(self.ref)
+	assert(self.u.compareOutlines(self.before,self.ref))
+	
+	# Batch mode bugs: meaning of move may depend on visibility.
+	self.parent.parent().expand()
+	self.parent.expand()
+	self.before.expand()
+	self.after.expand()</t>
 <t tx="edream.110203160744.3803">def tearDown (self):
 
-	self.undo()
+	c = self.c ; u = self.u
+
+	if not u.compareOutlines(self.before,self.ref):
+		u.replaceOutline(c,self.before,self.ref)
+
+	self.before.contract()
+	self.after.contract()
+	self.parent.contract()
+	self.parent.parent().contract()
+
 	self.c.selectVnode(self.old_v)</t>
-<t tx="edream.110203160744.3804">def undo (self):
-	
-	pass</t>
 <t tx="edream.110203160744.3805"></t>
 <t tx="edream.110203160744.3806"></t>
 <t tx="edream.110203160744.3807"></t>
@@ -56802,15 +56764,12 @@ elif undoType == "De-Hoist":
 - The selection is not set properly afterwards.</t>
 <t tx="edream.110403112538">@nocolor
 
-Document recent changes:
-	- pluginsManager.text
-	- Import Derived File command now puts up a dialog.
-	- @ignored and orphan nodes now valid in @file-nosent trees.
-	- Created app.unitTestDict for communication between tests and between tests and code.
-
 Unit tests:
-	- For all plugins.
-	- For read/write commands.</t>
+
+- Import tests.
+- (done by hand) batch mode.
+	Have script create a file, fail if the file does not exist.
+- Read/write commands.</t>
 <t tx="edream.110403150047">def OnCheckOutline (self):
 	
 	self.c.checkOutline()</t>
@@ -57014,7 +56973,6 @@ Leo will execute a "default change script" when the Script Change checkbox is ch
 	c.findPanel()</t>
 <t tx="edream.110603185434">A useful little utility to set up script-find/change.</t>
 <t tx="edream.110703024557"></t>
-<t tx="edream.110703024557.1"></t>
 <t tx="edream.110703040104"></t>
 <t tx="edream.110703040104.1"></t>
 <t tx="edream.110703095626"></t>
@@ -57088,7 +57046,7 @@ LeoDocs.leo:  Users Guide
 
 nodes,lines,pages, 379, 44606, 967</t>
 <t tx="edream.110903064812"></t>
-<t tx="edream.110903064923">def makeTestLeoFilesSuite(testParentHeadline,tempNode=None):
+<t tx="edream.110903064923">def makeTestLeoFilesSuite(testParentHeadline,unused=None):
 	
 	"""Create a .leo file test for every descendant of testParentHeadline.."""
 	
@@ -59855,12 +59813,14 @@ def update (self):
 	def __init__ (self,frame=None,parentFrame=None):
 		
 		leoLog.__init__(self,frame,parentFrame) # Init the base class.
-		if app.batchMode:
-			if app.log: self.enabled = app.log.enabled
-			else:       self.enabled = true
-			app.log = self
-		else:
-			self.enabled = true
+		
+		if 0: # No longer needed: use base enable/disable methods.
+			if app.batchMode:
+				if app.log: self.enabled = app.log.enabled
+				else:       self.enabled = true
+				app.log = self
+			else:
+				self.enabled = true
 		# trace("nullLog",self.enabled)
 		
 	def createControl (self,parentFrame):
@@ -60454,20 +60414,13 @@ class undoer (baseUndoer):
 <t tx="edream.112203191210.1"></t>
 <t tx="edream.112303032011">@nocolor
 
-- Have all tests start with test: in the headline.
+- Have log classes increment a count.
+	Can be used to ensure that messages did or did not occcur.
 
-- Create makeGeneralCommandTestSuite
-	- Support the following children:
-		dialog, before, after, etc.
-		input, output,
-		trace, etc.
+- Have the nullGui create a nullUndoer by default
+	But allow the possibility of leaving the full undoer in place.
 
-- Change selection &amp; insert to tk selection &amp; tk insert
-	- use these only if app.gui.guiName() == "tkinter"
-
-- Test outline commands.
-	- Call undo after each command
-</t>
+- More checks in CheckOutline command</t>
 <t tx="edream.112303042302"># Traces _always_ get printed.</t>
 <t tx="edream.112303052021"></t>
 <t tx="edream.112303052021.1">This "real" test exposed several problems:
@@ -61296,19 +61249,6 @@ Do we need a nullConfig class?
 Script-find/change:
 	- Create a utility to preprocess script (for use with find/change scripts)
 	- Backslashes not handled properly in executeScript!!</t>
-<t tx="edream.121103044856.1">- Have log classes increment a count.
-	Can be used to ensure that messages did or did not occcur.
-
-- Make changes to a null-gui test outine.
-	Have the nullLog routine test app.unitTestDict.get("disableLog")
-
-- Have the nullGui create a nullUndoer by default
-	But allow the possibility of leaving the full undoer in place.</t>
-<t tx="edream.121103044856.2">- Test batch find/change commands.
-
-- Script to run pychecker on all plugin .py files.
-
-- (?) Use menu table in leoMenu.py to get list of all commands.</t>
 <t tx="edream.121103110000">class unitTestGui(leoGui):
 	
 	"""gui class for use by unit tests."""
@@ -61393,8 +61333,10 @@ def destroySelf (self):
 	
 	self.gui = None
 	self.wasChanged = c.changed
+	self.fileName = ""
 
 	self.old_v = c.currentVnode()
+
 </t>
 <t tx="edream.121103112429.2">def importExport (self):
 	
@@ -61440,11 +61382,14 @@ def destroySelf (self):
 		lines = s.split('\n')
 		name = lines[0]
 		val = lines[1]
+		self.fileName = val
 		dict = {name: val}
 		self.gui = leoGui.unitTestGui(dict,trace=false)
 	else:
 		self.gui = None</t>
 <t tx="edream.121103112429.5">def runTest(self):
+	
+	# """Import Export Test Case"""
 
 	self.importExport()</t>
 <t tx="edream.121103115441">def simulateDialog (self,key,defaultVal=None):
@@ -61609,5 +61554,144 @@ def disable (self):
 	
 	self.enabled = false
 </t>
+<t tx="edream.121303093024">es("leoConfig.txt encoding: " + app.config.config_encoding, color="blue")
+es("Text encoding: " + app.tkEncoding, color="blue")</t>
+<t tx="edream.121303093557"></t>
+<t tx="edream.121303184719">def replaceOutline (self,c,outline1,outline2):
+	
+	u = self
+	
+	"""Replace outline1 by a copy of outline 2 if not equal."""
+	
+	trace()
+	
+	copy = outline2.copyTreeWithNewTnodes()
+	copy.linkAfter(outline1)
+	outline1.doDelete(newVnode=copy)
+</t>
+<t tx="edream.121303193923">Found a batch-mode bug: the meaning of moves depends on whether nodes are expanded.  This won't be good in batch mode.</t>
+<t tx="edream.121303194432">def shortDescription (self):
+	
+	try:
+		return "ImportExportTestCase: %s %s" % (self.v.headString(),self.fileName)
+	except:
+		return "ImportExportTestCase"</t>
+<t tx="edream.121403091001"></t>
+<t tx="edream.121403091108">def makePluginsSuite(verbose=false,*args,**keys):
+	
+	"""Create an plugins test for every .py file in the plugins directory."""
+	
+	plugins_path = os_path_join(app.loadDir,"..","plugins")
+	
+	files = glob.glob(os_path_join(plugins_path,"*.py"))
+	files = [os_path_abspath(file) for file in files]
+	files.sort()
+
+	# Create the suite and add all test cases.
+	suite = unittest.makeSuite(unittest.TestCase)
+	
+	for file in files:
+		test = pluginTestCase(file,verbose)
+		suite.addTest(test)
+
+	return suite
+</t>
+<t tx="edream.121403091250">class pluginTestCase(unittest.TestCase):
+	
+	"""Unit tests for one Leo plugin."""
+	
+	@others</t>
+<t tx="edream.121403091250.1">def __init__ (self,fileName,verbose):
+	
+	# Init the base class.
+	unittest.TestCase.__init__(self)
+
+	self.fileName = fileName
+	self.verbose = verbose</t>
+<t tx="edream.121403091250.2">def pluginTest (self):
+	
+	# Duplicate the import logic in leoPlugins.py.
+	
+	fileName = toUnicode(self.fileName,app.tkEncoding)
+	path = os_path_join(app.loadDir,"..","plugins")
+	
+	if self.verbose:
+		trace(str(shortFileName(fileName)))
+
+	module = importFromPath(fileName,path)
+	assert(module)
+	
+	# Run any unit tests in the module itself.
+	if hasattr(module,"unitTest"):
+		
+		if self.verbose:
+			trace("Executing unitTest in %s..." % str(shortFileName(fileName)))
+
+		module.unitTest()</t>
+<t tx="edream.121403091250.3">def runTest(self):
+
+	self.pluginTest()</t>
+<t tx="edream.121403091250.4">def setUp(self,*args,**keys):
+
+	pass</t>
+<t tx="edream.121403091250.5">def tearDown (self):
+
+	pass</t>
+<t tx="edream.121403092737">def shortDescription (self):
+	
+	return "pluginTestCase: " + self.fileName</t>
+<t tx="edream.121403161542"></t>
+<t tx="edream.121403165120">Leo 4.1 release candidate 1 is now available at: http://sourceforge.net/projects/leo/
+
+The highlights of this release:
+
+- Leo runs in batch mode when invoked with --script aScriptFile.py
+- Leo supports Unicode characters (e.g. Chinese) in path and file names.
+- @directives and section references are now valid when executing scripts.
+- @ignored and orphan nodes now valid in @file-nosent trees.
+- Script-based find/change commands.
+- Check Outline command.
+- Hoist &amp; DeHoist commands.
+- A new gui-agnostic architecture: useful for batch mode and unit tests.
+- Several new configuration settings.
+- Many new unit tests.
+- A host of bug fixes.
+
+Quotes of the month
+-------------------
+"I like Leo more the more I use it...It's an unexpected pleasure to
+see my (linearly written) code outlined in Leo. I can't wait to use
+Leo to start a new project, going from outline to code...Thanks again
+for providing the computing community with such a fine piece of
+software." -- Jim Shapiro, Ph.D.
+
+"If you think you have used all possible programmer's editors, but
+have not yet tried Leo, you are wrong...I rate Leo as a 'must have'
+for Python programmers. The code makes for a good read."
+-- John Tobler  http://weblogs.asp.net/Jtobler/
+
+What is Leo?
+------------
+- A programmer's editor, an outlining editor and a flexible browser.
+- A literate programming tool, compatible with noweb and CWEB.
+- A data organizer and project manager. Leo provides multiple views
+   of projects within a single outline.
+- Fully scriptable using Python. Leo saves its files in XML format.
+- Portable. leo.py is 100% pure Python.
+- Open Software, distributed under the Python License.
+
+Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
+Leo works on Linux, Windows and MacOs X.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Wiki:     http://leo.hd1.org/
+
+Edward K. Ream
+December 15, 2003</t>
 </tnodes>
 </leo_file>

@@ -970,7 +970,7 @@
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110203113231.618" a="V"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -1219,7 +1219,7 @@
 <v t="edream.120303095910"><vh>onStart</vh></v>
 <v t="edream.120303095910.1"><vh>openWithTempFilePath</vh></v>
 </v>
-<v t="edream.110203113231.791" a="M" tnodeList="edream.110203113231.791,edream.110203113231.792,edream.110203113231.793,edream.110203113231.794,edream.110203113231.795,edream.110203113231.796"><vh>@file open_with.py</vh>
+<v t="edream.110203113231.791" a="EM" tnodeList="edream.110203113231.791,edream.110203113231.792,edream.110203113231.793,edream.110203113231.794,edream.110203113231.795,edream.110203113231.796"><vh>@file open_with.py</vh>
 <v t="edream.110203113231.792"><vh>on_idle</vh>
 <v t="edream.110203113231.793"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
 <v t="edream.110203113231.794"><vh>&lt;&lt; set s to the file text &gt;&gt;</vh></v>
@@ -1322,7 +1322,7 @@
 <v t="edream.110203113231.866"><vh> Initial suggestion from Paul Paterson</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.867" tnodeList="edream.110203113231.867,edream.110203113231.868,edream.110203113231.869,edream.110203113231.870,edream.110203113231.871"><vh>@file scripts_menu.py</vh>
+<v t="edream.110203113231.867" a="E" tnodeList="edream.110203113231.867,edream.110203113231.868,edream.110203113231.869,edream.110203113231.870,edream.110203113231.871"><vh>@file scripts_menu.py</vh>
 <v t="edream.110203113231.868"><vh>createScriptsMenu</vh>
 <v t="edream.110203113231.869"><vh>&lt;&lt; Return if no scripts exist anywhere &gt;&gt;</vh></v>
 <v t="edream.110203113231.870"><vh>&lt;&lt; Create top-level entries for every script in top_scripts &gt;&gt;</vh></v>
@@ -1500,8 +1500,8 @@
 </v>
 </v>
 </v>
-<v t="edream.120603093808" a="V" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
-<v t="edream.120703082844" a="E" tnodeList="edream.120703082844,edream.120703082844.1,edream.120703082844.2"><vh>@file mod_updown.py</vh>
+<v t="edream.120603093808" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120703082844" tnodeList="edream.120703082844,edream.120703082844.1,edream.120703082844.2"><vh>@file mod_updown.py</vh>
 <v t="edream.120703082844.1"><vh>0nStart2</vh></v>
 <v t="edream.120703082844.2"><vh>OnBodyKey</vh></v>
 </v>
@@ -9926,7 +9926,11 @@ import os
 registerHandler("icondclick1",onIconDoubleClick)
 
 __version__ = "1.1"
-plugin_signon(__name__)</t>
+plugin_signon(__name__)
+
+def unitTest ():
+	pass
+</t>
 <t tx="edream.110203113231.911">@ This plugin starts a file with the name of a headline.
 
 

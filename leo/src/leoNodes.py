@@ -1660,7 +1660,7 @@ class baseVnode:
 			
 		return new_v
 	#@-node:v.copyTree
-	#@+node:v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)
+	#@+node:v.copyTreeWithNewTnodes (new after 3.11.1)
 	def copyTreeWithNewTnodes (self):
 		
 		"""Return a copy of self with all new tnodes"""
@@ -1685,7 +1685,7 @@ class baseVnode:
 		# Return the root of the new tree.
 		return new_v
 	#@nonl
-	#@-node:v.copyTreeWithNewTnodes (new after 3.11.1) (not used at present)
+	#@-node:v.copyTreeWithNewTnodes (new after 3.11.1)
 	#@+node:v.createDependents
 	# This method creates all nodes that depend on the receiver.
 	def createDependents (self):
