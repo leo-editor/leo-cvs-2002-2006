@@ -4456,8 +4456,8 @@ class LeoFrame:
 	def put (self,s,color=None):
 		if app().quitting > 0: return
 		if self.log:
-			if type(s) == type(""): # 3/18/03
-				s = toUnicode(s,app().tkEncoding)
+			if type(s) == type(u""): # 3/18/03
+				s = toEncodedString(s,app().tkEncoding)
 			if color:
 				if color not in self.logColorTags:
 					self.logColorTags.append(color)
@@ -4475,8 +4475,8 @@ class LeoFrame:
 		else:
 			a.logWaiting.append((s),) # 2/16/03
 			print "Null log"
-			if type(s) == type(""): # 3/18/03
-				s = toUnicode(s,"ascii")
+			if type(s) == type(u""): # 3/18/03
+				s = toEncodedString(s,"ascii")
 			print s
 	
 	def putnl (self):
