@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2294" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2297" clone_windows="0"/>
 <globals body_outline_ratio="0.46811224489795916">
-	<global_window_position top="89" left="349" height="784" width="842"/>
+	<global_window_position top="59" left="288" height="784" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203161858" a="E"><vh>Distribution checklist</vh>
+<v t="edream.110203161858"><vh>Distribution checklist</vh>
 <v t="edream.110203161858.5" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="edream.110203161858.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
@@ -237,9 +237,6 @@
 <v t="edream.120903112952.1"><vh>orphan node</vh></v>
 </v>
 <v t="edream.120903113034.1"><vh>@ignore</vh></v>
-</v>
-<v t="edream.121303091808"><vh>Batch test</vh>
-<v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 </v>
 </v>
 </v>
@@ -2788,8 +2785,11 @@
 <v t="edream.110803170022"><vh>Count pages</vh></v>
 <v t="edream.120203185502"><vh>PyUno script</vh></v>
 </v>
-<v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
-<v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
+<v t="edream.121303091808" a="V"><vh>Batch test</vh>
+<v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
+</v>
+<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2124"><vh>tempNode</vh></v>
 <v t="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
 <v t="edream.110203161858.2127"><vh>C</vh></v>
@@ -2898,7 +2898,7 @@
 <v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
-<v t="edream.110203161858.2153" a="EV"><vh>Run all tests</vh></v>
+<v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
 </v>
 </vnodes>
 <tnodes>

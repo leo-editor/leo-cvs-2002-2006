@@ -436,7 +436,7 @@
 <v t="ekr.20031218072017.340"><vh>October 2003</vh></v>
 </v>
 <v t="ekr.20031218072017.341"><vh>FAQ for comp.prog.literate</vh></v>
-<v t="ekr.20031218072017.342"><vh>ANN: Leo 4.1 rc2: An outlining editor</vh></v>
+<v t="ekr.20031218072017.342"><vh>ANN: Leo 4.1 rc3: An outlining editor</vh></v>
 <v t="ekr.20031218072017.343"><vh>Previous announcements</vh>
 <v t="ekr.20031218072017.344"><vh>ANN: Leo 4.1 beta 5: An outlining editor</vh></v>
 <v t="ekr.20031218072017.345"><vh>4.0.x announcements</vh>
@@ -3968,6 +3968,42 @@
 </v>
 <v t="ekr.20031218072017.2405"><vh>(Verified that setTextSelection works)</vh></v>
 </v>
+<v t="ekr.20031219100030"><vh>rc3 projects</vh>
+<v t="ekr.20031219071829"><vh>(Fixed serious problem reading 3.x files)</vh>
+<v t="ekr.20031218072017.2663" a=""><vh>scanText (3.x)</vh>
+<v t="ekr.20031218072017.2664"><vh>&lt;&lt; put the next line into s &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2665"><vh>&lt;&lt; set kind, nextKind &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2666"><vh>&lt;&lt; Set lineIndent, linep and leading_ws &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2667"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2668"><vh>&lt;&lt; handle the line in s &gt;&gt;</vh>
+<v t="ekr.20031218072017.2669"><vh>&lt;&lt; append non-sentinel line &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2670"><vh>&lt;&lt; handle common sentinels &gt;&gt;</vh>
+<v t="ekr.20031218072017.2671"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2672"><vh>&lt;&lt; scan old ref &gt;&gt; (3.0)</vh></v>
+<v t="ekr.20031218072017.2673"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2674"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2675"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2676"><vh>&lt;&lt; scan @+node &gt;&gt;</vh>
+<v t="ekr.20031218072017.2677"><vh>&lt;&lt; Set childIndex &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2678"><vh>&lt;&lt; Set cloneIndex &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2679"><vh>&lt;&lt; Set headline and ref &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2680"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2681"><vh>&lt;&lt; look for sentinels that may follow a reference &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2682"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2683"><vh>&lt;&lt; handle rare sentinels &gt;&gt;</vh>
+<v t="ekr.20031218072017.2684"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2685"><vh>&lt;&lt; scan @@ &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2686"><vh>&lt;&lt; scan @comment &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2687"><vh>&lt;&lt; scan @delims &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2688"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2689"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
@@ -7181,40 +7217,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031219071829"><vh>(Fixed serious problem reading 3.x files)</vh>
-<v t="ekr.20031218072017.2663" a=""><vh>scanText (3.x)</vh>
-<v t="ekr.20031218072017.2664"><vh>&lt;&lt; put the next line into s &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2665"><vh>&lt;&lt; set kind, nextKind &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2666"><vh>&lt;&lt; Set lineIndent, linep and leading_ws &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2667"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2668"><vh>&lt;&lt; handle the line in s &gt;&gt;</vh>
-<v t="ekr.20031218072017.2669"><vh>&lt;&lt; append non-sentinel line &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2670"><vh>&lt;&lt; handle common sentinels &gt;&gt;</vh>
-<v t="ekr.20031218072017.2671"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2672"><vh>&lt;&lt; scan old ref &gt;&gt; (3.0)</vh></v>
-<v t="ekr.20031218072017.2673"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2674"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2675"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2676"><vh>&lt;&lt; scan @+node &gt;&gt;</vh>
-<v t="ekr.20031218072017.2677"><vh>&lt;&lt; Set childIndex &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2678"><vh>&lt;&lt; Set cloneIndex &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2679"><vh>&lt;&lt; Set headline and ref &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2680"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2681"><vh>&lt;&lt; look for sentinels that may follow a reference &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2682"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2683"><vh>&lt;&lt; handle rare sentinels &gt;&gt;</vh>
-<v t="ekr.20031218072017.2684"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2685"><vh>&lt;&lt; scan @@ &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2686"><vh>&lt;&lt; scan @comment &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2687"><vh>&lt;&lt; scan @delims &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2688"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2689"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20031218072017">@ignore
@@ -8186,9 +8188,9 @@ Edward K. Ream   email:  edreamleo@charter.net
 Leo: Literate Editor with Outlines
 Leo: http://webpages.charter.net/edreamleo/front.html
 --------------------------------------------------------------------</t>
-<t tx="ekr.20031218072017.342">Leo 4.1 release candidate 2 is now available at: http://sourceforge.net/projects/leo/
+<t tx="ekr.20031218072017.342">Leo 4.1 release candidate 3 is now available at: http://sourceforge.net/projects/leo/
 
-This release fixes minor bugs in Leo and its plugins.
+This release fixes a serious problem that prevented Leo from reading 3.x derived files.
 
 The highlights version 4.1:
 ---------------------------
@@ -8239,7 +8241,7 @@ CVS:      http://sourceforge.net/cvs/?group_id=3458
 Wiki:     http://leo.hd1.org/
 
 Edward K. Ream
-December 15, 2003</t>
+December 19, 2003</t>
 <t tx="ekr.20031218072017.343"></t>
 <t tx="ekr.20031218072017.344">Leo 4.1 beta 5 is now available at: http://sourceforge.net/projects/leo/
 
@@ -35181,10 +35183,11 @@ def OnHyperLinkLeave (self,v):
 		assert(self.c is None)
 		self.title = title
 		
-	def __getattr__(self,attr):
-
-		trace("nullFrame",attr)
-		return nullObject()
+	if 0: # This causes no end of problems.
+		
+		def __getattr__(self,attr):
+			trace("nullFrame",attr)
+			return nullObject()
 
 	def finishCreate(self,c):
 
@@ -40238,9 +40241,9 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 Release Candidate 3              December 18, 2003
+Leo 4.1 Release Candidate 3              December 19, 2003
 
-This release fixes minor bugs in Leo and its plugins.
+This release fixes a serious bug in the logic that reads old-style derived files.
 
 There are no known bugs in this version of Leo.
 
@@ -59568,6 +59571,7 @@ if 0: # This would work if all tk wrapper routines were prefixed with tk_
 
 	return self.bodyCtrl.bbox(index)</t>
 <t tx="ekr.20031218072017.4002"># Could have been replaced by the __getattr__ routine above...
+# 12/19/03: no: that would cause more problems.
 
 def tag_add (self,tagName,index1,index2):
 	self.bodyCtrl.tag_add(tagName,index1,index2)
@@ -61960,13 +61964,17 @@ class nullObject:
 	def __delattr__(self,attr):     return self
 	def __getattr__(self,attr):     return self
 	def __setattr__(self,attr,val): return self</t>
-<t tx="ekr.20031219075221">def __getattr__(self,attr):
+<t tx="ekr.20031219075221">if 0: # This causes no end of problems.
 
-	trace("nullGui",attr)
-	return nullObject()</t>
+	def __getattr__(self,attr):
+
+		trace("nullGui",attr)
+		return nullObject()</t>
 <t tx="ekr.20031219082559">@nocolor
 
-- The nullGui class needs more work.  Unit tests are failing.</t>
+- The nullGui class needs more work.  Unit tests are failing.
+  It may be that nullObject &amp; __getattr __ methods create more problems than they solve.</t>
 <t tx="ekr.20031219082957">The nullGui class is not ready for prime time yet.</t>
+<t tx="ekr.20031219100030"></t>
 </tnodes>
 </leo_file>

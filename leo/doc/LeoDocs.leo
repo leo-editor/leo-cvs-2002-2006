@@ -23,7 +23,8 @@
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7" a=""><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
-<v t="edream.110203163054.9" a="M"><vh>Quote of the Month</vh>
+<v t="edream.110203163054.9" a="M"><vh>Quotes of the Month</vh>
+<v t="ekr.20031219090156"><vh>Anon (not yet)</vh></v>
 <v t="edream.121503192354.1"><vh>John Benson (not yet)</vh></v>
 <v t="edream.120703081642"><vh>Anon</vh></v>
 <v t="edream.120503073304"><vh>From Michael Dawson</vh></v>
@@ -24542,5 +24543,14 @@ If the encoding used in a derived file is not "utf-8" it is represented in the @
 #@+leo-encoding=iso-8859-1.
 
 The "utf-8" encoding is used by default.  The "utf-8" encoding is a "lossless" encoding (it can represent all unicode code points), so encoding and decoding to and from utf-8 plain strings will never cause a problem.  When reading or writing a character not in a "lossy" encoding (such as iso-8859-1), Leo converts such characters to '?' and issues a warning. </t>
+<t tx="ekr.20031219090156">Wow, wow, and wow. I just started using Leo about a month ago (I had looked
+at it about a year ago but didn't quite "get it" yet). Now I finally understand
+how to use clones and I realized that this is exactly how I want to organize
+my information. Multiple views on my data, fully interlinkable just like my
+thoughts.
+
+The excellent ideas which are already implemented and the new ideas mentioned
+above make this a very exciting time for Leo. Thanks for a great tool, and I'm
+sure I'm not alone when I say I look forward to great things with Leo!</t>
 </tnodes>
 </leo_file>
