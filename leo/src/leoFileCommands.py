@@ -63,8 +63,9 @@ class fileCommands:
 		self.usingClipboard = false
 		# New in 4.0
 		self.a = app()
+		self.copiedTree = None
 		self.nodeIndices = self.a.nodeIndices
-		self.tnodesDict = {} # New in 4.0: this dict is only initialized here!
+		self.tnodesDict = {} # In 4.0 this dict is only initialized here!
 	
 	#@-body
 	#@-node:1::leoFileCommands._init_
@@ -1022,7 +1023,7 @@ class fileCommands:
 	#@+node:3::Writing
 	#@+node:1::assignAllGnx
 	#@+body
-	def assignAllGnx (self):
+	def assignAllGnx (self,root=None):
 		
 		"""Assign a gnx to tnodes that don't have one"""
 		
@@ -1040,14 +1041,18 @@ class fileCommands:
 	#@-node:1::assignAllGnx
 	#@+node:2::assignFileIndices
 	#@+body
-	def assignFileIndices (self):
+	def assignFileIndices (self,root=None):
 		
 		"""Assign a gnx or file index to all tnodes"""
 		
+		c=self.commands
+		
+		if root == None: root = c.rootVnode()
+		
 		if self.a.use_gnx:
-			self.assignAllGnx()
+			self.assignAllGnx(root=root)
 		else:
-			c=self.commands ; v = c.rootVnode()
+			v = root
 			while v:
 				t = v.t
 				# 8/28/99.  Write shared tnodes even if they are empty.
@@ -1066,10 +1071,12 @@ class fileCommands:
 		
 		"""Assign a gnx or file index to all tnodes, compacting all file indices"""
 		
+		c = self.commands ; root = c.rootVnode()
+		
 		if self.a.use_gnx:
-			self.assignAllGnx()
+			self.assignAllGnx(root=root)
 		else:
-			c = self.commands ; v = c.rootVnode()
+			v = root
 			self.maxTnodeIndex = 0
 			while v: # Clear all indices.
 				v.t.setFileIndex(0)
@@ -1312,7 +1319,7 @@ class fileCommands:
 	
 		self.outputString = "" ; self.outputFile = None
 		self.usingClipboard = true
-		# self.assignFileIndices() // The caller does this.
+		# self.assignFileIndices() // New in 4.0: putVnodes does this after copying the tree.
 		self.putProlog()
 		self.putClipboardHeader()
 		self.putVnodes()
@@ -1427,44 +1434,54 @@ class fileCommands:
 	#@-node:10::putPostlog
 	#@+node:11::putTnodes
 	#@+body
-	#@+at
-	#  This method puts all tnodes in index order.  All tnode indices must 
-	# have been assigned at this point.
-
-	#@-at
-	#@@c
 	def putTnodes (self):
+		
+		"""Puts all tnodes as required for copy or save commands"""
 	
 		c=self.commands
-		tnodes = {}
-		if self.usingClipboard: # write the current tree.
-			v = c.currentVnode() ; after = v.nodeAfterTree()
-		else: # write everything
-			v = c.rootVnode() ; after = None
+	
+		if self.usingClipboard: 
+			v = self.copiedTree # write only the copied tree.
+		else: 
+			v = c.rootVnode() # write everything.
 	
 		self.put("<tnodes>") ; self.put_nl()
-		if self.a.use_gnx:
+		# All tnode indices must have been assigned at this point.
+		if self.usingClipboard:
+			
+			#@<< write all tnodes >>
+			#@+node:1::<< write all tnodes >>
+			#@+body
+			# All vnodes will have distinct tnodes when copying trees.
+			while v:
+				self.putTnode(v.t)
+				v = v.threadNext()
+			#@-body
+			#@-node:1::<< write all tnodes >>
+
+		elif self.a.use_gnx:
 			
 			#@<< write all visited tnodes >>
-			#@+node:1::<< write all visited tnodes >>
+			#@+node:2::<< write all visited tnodes >>
 			#@+body
 			# putVnodes sets the visited bit in all tnodes that should be written.
-			while v and v != after:
+			while v:
 				t = v.t
 				if t.isVisited():
 					self.putTnode(t)
 					t.clearVisited() # Don't write the tnode again.
 				v = v.threadNext()
 			#@-body
-			#@-node:1::<< write all visited tnodes >>
+			#@-node:2::<< write all visited tnodes >>
 
 		else:
 			
 			#@<< write only those tnodes that were referenced >>
-			#@+node:2::<< write only those tnodes that were referenced >>
+			#@+node:3::<< write only those tnodes that were referenced >>
 			#@+body
 			# Populate tnodes
-			while v and v != after:
+			tnodes = {}
+			while v:
 				index = v.t.fileIndex
 				if index > 0 and not tnodes.has_key(index):
 					tnodes[index] = v.t
@@ -1475,10 +1492,10 @@ class fileCommands:
 			for index in keys:
 				t = tnodes[index]
 				assert(t)
-				# New for Leo2: write only those tnodes whose vnodes were written.
+				# Write only those tnodes whose vnodes were written.
 				if t.isVisited(): self.putTnode(t)
 			#@-body
-			#@-node:2::<< write only those tnodes that were referenced >>
+			#@-node:3::<< write only those tnodes that were referenced >>
 
 		self.put("</tnodes>") ; self.put_nl()
 	#@-body
@@ -1517,9 +1534,13 @@ class fileCommands:
 	
 		self.put("<vnodes>") ; self.put_nl()
 		if self.usingClipboard:
+			# Bug fix for 4.0: Put a _copy_ of the selected tree so we don't link tnodes!
+			old_v = c.currentVnode()
+			new_v = old_v.copyTreeWithNewTnodes()
+			self.assignFileIndices(new_v)
 			self.putVnode(
-				c.currentVnode(), # Write only current tree.
-				None) # Don't write top vnode status bit.
+				new_v,None) # Don't write top vnode status bit.
+			self.copiedTree = new_v
 		else: 
 			v = c.rootVnode()
 			while v:

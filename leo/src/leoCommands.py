@@ -147,7 +147,7 @@ class Commands:
 	
 		c = self
 		c.endEditing()
-		c.fileCommands.assignFileIndices()
+		# c.fileCommands.assignFileIndices() # Now done after copying the tree.
 		s = c.fileCommands.putLeoOutline()
 		# trace(`s`)
 		app().root.clipboard_clear()
@@ -1541,7 +1541,7 @@ class Commands:
 	def initAllCloneBits (self):
 		
 		"""Initialize all clone bits in the entire outline"""
-		trace()
+		# trace()
 	
 		c=self
 		c.clearAllVisited()

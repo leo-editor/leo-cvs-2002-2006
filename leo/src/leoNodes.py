@@ -1941,7 +1941,44 @@ class vnode:
 		assert(new_v == None)
 	#@-body
 	#@-node:1::v.copyTree
-	#@+node:2::joinTreeTo
+	#@+node:2::v.copyTreeWithNewTnodes
+	#@+body
+	#@+at
+	#  This method copies all subtrees of oldRoot to the subtrees of newRoot.  
+	# The caller is responsible for copying the headline text from oldRoot to newRoot.
+	# 
+	# This method must be given the new root as well as the old:  the 
+	# wxWindows classes do not allow us to create an unattached outline.
+
+	#@-at
+	#@@c
+
+	def copyTreeWithNewTnodes (self):
+		
+		"""Return a copy of self with all new tnodes"""
+		
+		c = self.commands
+		# trace(`self`)
+		
+		# Create the root node.
+		old_v = self
+		new_v = vnode(c,tnode())
+		new_v.t.headString = old_v.t.headString
+		new_v.t.bodyString = old_v.t.bodyString
+		
+		# Recursively create all descendents.
+		old_child = old_v.firstChild() ; n = 0
+		while old_child:
+			new_child = old_child.copyTreeWithNewTnodes()
+			new_child.linkAsNthChild (new_v, n)
+			n += 1
+			old_child = old_child.next()
+			
+		# Return the root of the new tree.
+		return new_v
+	#@-body
+	#@-node:2::v.copyTreeWithNewTnodes
+	#@+node:3::joinTreeTo
 	#@+body
 	#@+at
 	#  This function joins all nodes in the receiver and tree2.  This code 
@@ -1968,8 +2005,8 @@ class vnode:
 			child2 = child2.next()
 		assert(child2 == None)
 	#@-body
-	#@-node:2::joinTreeTo
-	#@+node:3::shouldBeClone
+	#@-node:3::joinTreeTo
+	#@+node:4::shouldBeClone
 	#@+body
 	#@+at
 	#  The receiver is a clone if and only it is structurally _dissimilar_ to 
@@ -2003,8 +2040,8 @@ class vnode:
 		# trace("false",v)
 		return false
 	#@-body
-	#@-node:3::shouldBeClone
-	#@+node:4::validateOutlineWithParent
+	#@-node:4::shouldBeClone
+	#@+node:5::validateOutlineWithParent
 	#@+body
 	# This routine checks the structure of the receiver's tree.
 	
@@ -2054,7 +2091,7 @@ class vnode:
 			child = child.next()
 		return result
 	#@-body
-	#@-node:4::validateOutlineWithParent
+	#@-node:5::validateOutlineWithParent
 	#@-node:2::Public helper functions
 	#@+node:3::Private helper functions
 	#@+node:1::cloneTree
