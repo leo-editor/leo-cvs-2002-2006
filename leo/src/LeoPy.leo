@@ -13,8 +13,13 @@
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203160744" a="E"><vh> Diary</vh>
-<v t="edream.110203160744.1" a="E"><vh>November 2003</vh>
-<v t="edream.112303052021" a="V"><vh>11/23 Released 4.1 beta 5 to cvs only</vh>
+<v t="edream.120103054230" a="E"><vh>December 2003</vh>
+<v t="edream.120103054230.1" a="E"><vh>12/01</vh>
+<v t="edream.120103054230.2"><vh>Update recent files in newLeoCommanderAndFrame</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.1"><vh>November 2003</vh>
+<v t="edream.112303052021"><vh>11/23 Released 4.1 beta 5 to cvs only</vh>
 <v t="edream.112303114341"><vh>Replaced app.batchLog with app.log</vh></v>
 <v t="edream.112303110845"><vh>Fixed Undo Change All (in headlines) problem</vh></v>
 <v t="edream.112303105347"><vh>Added defensive code to prevent crash in colorizer</vh></v>
@@ -3180,7 +3185,7 @@
 <v t="edream.110203160744.1109"><vh>openRecentFile</vh>
 <v t="edream.110203160744.1110"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.1106"><vh>updateRecentFiles</vh></v>
+<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
 </v>
 </v>
 <v t="edream.111203143619.1"><vh>(Created base classes for all panels)</vh>
@@ -4223,7 +4228,7 @@
 <v t="edream.110203160744.1109"><vh>openRecentFile</vh>
 <v t="edream.110203160744.1110"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.1106"><vh>updateRecentFiles</vh></v>
+<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
 </v>
 <v t="edream.110203160744.1112"><vh>Read/Write submenu</vh>
 <v t="edream.110203160744.1113"><vh>readOutlineOnly</vh></v>
@@ -5777,7 +5782,7 @@
 <v t="edream.112103084652"><vh>class leoGui</vh>
 <v t="edream.110203160744.3535"><vh>app.gui Birth &amp; death</vh>
 <v t="edream.110203160744.3528"><vh> leoGui.__init__</vh></v>
-<v t="edream.110203160744.1846"><vh>newLeoCommanderAndFrame (gui-independent)</vh>
+<v t="edream.110203160744.1846" a=""><vh>newLeoCommanderAndFrame (gui-independent)</vh>
 <v t="edream.110203160744.1847"><vh>&lt;&lt; compute the window title &gt;&gt;</vh></v>
 </v>
 <v t="edream.111303091843"><vh>stubs</vh>
@@ -6703,6 +6708,13 @@
 </v>
 </v>
 </v>
+</v>
+<v t="edream.112403065048"><vh>Tip</vh></v>
+<v t="edream.112403065412" a="EV"><vh>(Recent files bug)</vh>
+<v t="edream.110203160744.1846" a=""><vh>newLeoCommanderAndFrame (gui-independent)</vh>
+<v t="edream.110203160744.1847"><vh>&lt;&lt; compute the window title &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -20963,20 +20975,25 @@ except:
 	app.onQuit()</t>
 <t tx="edream.110203160744.1106">def updateRecentFiles (self,fileName):
 	
-	if not fileName or len(fileName) == 0:
-		return
+	"""Create the RecentFiles menu.  May be called with Null fileName."""
+	
+	# trace(fileName)
 	
 	# Update the recent files list in all windows.
-	normFileName = os_path_norm(fileName)
-	for frame in app.windowList:
-		c = frame.c
-		# Remove all versions of the file name.
-		for name in c.recentFiles:
-			if normFileName == os_path_norm(name):
-				c.recentFiles.remove(name)
-		c.recentFiles.insert(0,fileName)
-		# Recreate the Recent Files menu.
-		frame.menu.createRecentFilesMenuItems()
+	if fileName:
+		normFileName = os_path_norm(fileName)
+		for frame in app.windowList:
+			c = frame.c
+			# Remove all versions of the file name.
+			for name in c.recentFiles:
+				if normFileName == os_path_norm(name):
+					c.recentFiles.remove(name)
+			c.recentFiles.insert(0,fileName)
+			# Recreate the Recent Files menu.
+			frame.menu.createRecentFilesMenuItems()
+	else: # 12/01/03
+		for frame in app.windowList:
+			frame.menu.createRecentFilesMenuItems()
 		
 	# Update the config file.
 	app.config.setRecentFiles(self.recentFiles) # Use self, _not_ c.
@@ -28878,12 +28895,11 @@ except:
 			c,frame = app.gui.newLeoCommanderAndFrame(fileName)
 			if not doHook("open1",
 				old_c=old_c,new_c=c,fileName=fileName):
-				app.setLog(frame.log,"OpenWithFileName") # 5/12/03
+				app.setLog(frame.log,"openWithFileName") # 5/12/03
 				app.lockLog() # 6/30/03
 				frame.c.fileCommands.open(file,fileName) # closes file.
 				app.unlockLog() # 6/30/03
 			frame.openDirectory = os_path_dirname(fileName)
-			frame.c.updateRecentFiles(fileName)
 			doHook("open2",
 				old_c=old_c,new_c=frame.c,fileName=fileName)
 			return true, frame
@@ -28900,8 +28916,7 @@ except:
 		else:
 			es("exceptions opening: " + fileName,color="red")
 			es_exception()
-		return false, None
-</t>
+		return false, None</t>
 <t tx="edream.110203160744.1707">@nocolor
  cuttin' and pastin'   
 2003-07-01 21:02
@@ -30884,6 +30899,8 @@ self.recentFiles = [] # 4.1: moved to commands class.  List of recent files</t>
 	
 	# Finish initing the subcommanders.
 	c.undoer.clearUndoState() # Menus must exist at this point.
+	
+	c.updateRecentFiles(fileName) # 12/01/03
 	
 	doHook("after-create-leo-frame",c=c)
 	return c,frame</t>
@@ -56378,6 +56395,8 @@ elif undoType == "De-Hoist":
 <t tx="edream.110403112538">@nocolor
 
 - Support enable/disable in base leoLog class.
+
+- nullFrame class must have option to add nullUndoer (don't do this by default).
 	
 Do we need a nullConfig class?
 
@@ -60301,5 +60320,48 @@ Python 2.2.1, Tk 8.3.2
 <t tx="edream.112303120320"></t>
 <t tx="edream.112303174924"></t>
 <t tx="edream.112303174924.1"></t>
+<t tx="edream.112403065048">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2300457
+By: nobody ( Nobody/Anonymous ) 
+ Have discoverd &amp; started using LEO 2 days ago   
+2003-11-23 04:44  
+
+ I really like the concept, literate prog, and i find it delivers.
+
+I have easily made some code with it for some other languages and have found that the "@first" directive is the key to output useable code in unsupported languages.
+...as example, for a BASIC language compiler: 
+-&gt;body of a "@file" header:
+-----------------------------Snippet
+@first $IFDEF LEOHEADER
+@delims '
+@c
+$ENDIF
+-----------------------------End of snippet
+So this would enable a basic compiler to "jump" over the "true" LEO-header-lines; wich gives you:
+-----------------------Derived file begins with:
+$IFDEF LEOHEADER &lt;-conditionnal compilation directive 
+#@+leo-ver=4 &lt;-these lines not compiled
+#@+node:@file QParser005.INC
+#@@first
+#@delims ' 
+'@@c
+$ENDIF &lt;-... Until here!
+&lt;rest of derived code file ... &gt;
+-----------------------end of snippet
+The thing it does is mostly changing the comment symbol to " ' " apostrophe... making comments parseable by a BASIC (or other language.)
+
+The thing that I really like is the fact that LEO untangles my code if I change it externally, in an IDE or editor of some kind! 
+
+hope this helps, if you have any tricks to share for adding compatibility / productivity using LEO, please tell me!
+
+--
+bolt
+ 
+</t>
+<t tx="edream.112403065412"></t>
+<t tx="edream.120103054230"></t>
+<t tx="edream.120103054230.1"></t>
+<t tx="edream.120103054230.2">This fixes several related bugs:  updateRecentFiles was not being called except when openWithFileName was called.</t>
 </tnodes>
 </leo_file>

@@ -71,6 +71,8 @@ class leoGui:
 		# Finish initing the subcommanders.
 		c.undoer.clearUndoState() # Menus must exist at this point.
 		
+		c.updateRecentFiles(fileName) # 12/01/03
+		
 		doHook("after-create-leo-frame",c=c)
 		return c,frame
 	#@nonl

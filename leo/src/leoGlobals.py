@@ -738,12 +738,11 @@ def openWithFileName(fileName,old_c=None):
 			c,frame = app.gui.newLeoCommanderAndFrame(fileName)
 			if not doHook("open1",
 				old_c=old_c,new_c=c,fileName=fileName):
-				app.setLog(frame.log,"OpenWithFileName") # 5/12/03
+				app.setLog(frame.log,"openWithFileName") # 5/12/03
 				app.lockLog() # 6/30/03
 				frame.c.fileCommands.open(file,fileName) # closes file.
 				app.unlockLog() # 6/30/03
 			frame.openDirectory = os_path_dirname(fileName)
-			frame.c.updateRecentFiles(fileName)
 			doHook("open2",
 				old_c=old_c,new_c=frame.c,fileName=fileName)
 			return true, frame
@@ -761,6 +760,7 @@ def openWithFileName(fileName,old_c=None):
 			es("exceptions opening: " + fileName,color="red")
 			es_exception()
 		return false, None
+#@nonl
 #@-node:openWithFileName (leoGlobals)
 #@+node:wrap_lines
 #@+at 

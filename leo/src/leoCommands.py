@@ -601,20 +601,25 @@ class baseCommands:
 	#@+node:updateRecentFiles
 	def updateRecentFiles (self,fileName):
 		
-		if not fileName or len(fileName) == 0:
-			return
+		"""Create the RecentFiles menu.  May be called with Null fileName."""
+		
+		# trace(fileName)
 		
 		# Update the recent files list in all windows.
-		normFileName = os_path_norm(fileName)
-		for frame in app.windowList:
-			c = frame.c
-			# Remove all versions of the file name.
-			for name in c.recentFiles:
-				if normFileName == os_path_norm(name):
-					c.recentFiles.remove(name)
-			c.recentFiles.insert(0,fileName)
-			# Recreate the Recent Files menu.
-			frame.menu.createRecentFilesMenuItems()
+		if fileName:
+			normFileName = os_path_norm(fileName)
+			for frame in app.windowList:
+				c = frame.c
+				# Remove all versions of the file name.
+				for name in c.recentFiles:
+					if normFileName == os_path_norm(name):
+						c.recentFiles.remove(name)
+				c.recentFiles.insert(0,fileName)
+				# Recreate the Recent Files menu.
+				frame.menu.createRecentFilesMenuItems()
+		else: # 12/01/03
+			for frame in app.windowList:
+				frame.menu.createRecentFilesMenuItems()
 			
 		# Update the config file.
 		app.config.setRecentFiles(self.recentFiles) # Use self, _not_ c.
