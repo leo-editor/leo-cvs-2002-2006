@@ -4,74 +4,14 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.0.4                         October 29, 2003
+Leo 4.1 alpha 1                   November 2, 2003
 
-- Fixed a problem with the titles in Font and Color panels.
-- Worked around a Unicode assert failure in the colorizer.
-- Fixed crasher in OnEndEditHeadline.
-- Fixed import problems in leoPlugins.leo.
-- @first and @last sentinels no longer contain corresponding text.
-  This fixes a problem that affected PHP comment delimiters.
+1. Implements the use_gnx setting:
+	1: tnode indices in .leo files have the form id.timestamp.n (n optional)
+       Strongly recommended when using cvs.
+ 	0: tnode indices in .leo files are integers.
+       For compatibility with Leo 3.x file format.
 
-Leo 4.0.3                         October 25, 2003
+N.B.  It is possible to convert between 3.x and 4.1 file formats by changing the use_gnx setting.  This is tricky, and the present code appears to work.  However, problems might remain: that's why this is an alpha version.
 
-- Fixes several problems with the auto_save and plugin menu plugins.
-- Fixes a problem with the Go To Line Number command.
-
-Note: This version does _not_ support Unicode file names or directory names.
-
-Leo 4.0.2                         October 23, 2003
-
-- Fixes a crasher in reportBadChars when a .leo file contains a character that
-  can not be represented in the encoding specified in the first line of the
-  .leo file.
-- Leo now sends full tracebacks to the log window when Leo takes an unexpected
- exception.
-- Leo now issues a more informative message when the @comment directive
-  inhibits the Untangle command.
-
-Leo 4.0.1                         October 22, 2003
-	
-- Fixes several crashers.
-- Fixes indentation for section references that are preceded by something
-  other than whitespace.
-- Removes debugging traces when reading and writing unknown attributes.
-- Removes some improperly cloned nodes from LeoDocs.leo.
-- Adds the checkTopologyOfAllClones script.
-- Fixes some problems with plugins.
-
-Leo 4.0 final                     October 17, 2003
-
-More than a year in the making, Leo 4.0 is finally here.
-
-Highlights of 4.0 final:
------------------------
-
-** Improved and simplified format of derived files.
-	- Eliminated child indices, extraneous blank lines and @body sentinels.
-	- Eliminated @node sentinels that indicate outline structure.
-	- New @nl and @nonl sentinels indicate where newlines are and aren't.
-	- These changes will largely eliminate unwanted cvs conflicts.
-
-** Greatly improved error handling.
-	- Reading derived files _never_ alter outline structure or links.
-	- Read errors leave the outline completely unchanged.
-	- Broken clone links are gone forever.
-	- As a result, 4.0 is much safer than all previous versions.
-
-** Full compatibility will previous versions of Leo.
-	- Leo 4.0 reads all derived files properly, regardless of version.
-	- Leo writes new-format derived files by default, and this default may be changed.
-	- New commands in the read/write menu allow you to explicitly specify the format of derived files.
-
-* New commands:
-	- Write 3.x Derived File and Write 4.x Derived File.
-	- Import Derived File.
-	- Clear Recent Files.
-
-* Dozens of other improvements, including:
-	- Better Unicode support.
-	- New configuration settings.
-	- Several new plugins.
-
-See the notes for the various beta releases for full details.
+2. Moves gui-dependent code out of Leo's core.  Known bug: the Extract command eat an extra character.  This will be fixed soon.
