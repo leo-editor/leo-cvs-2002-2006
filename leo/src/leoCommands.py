@@ -2,6 +2,7 @@
 #@+node:ekr.20031218072017.2810:@thin leoCommands.py
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 from __future__ import generators # To make the code work in Python 2.2.
 
@@ -15,6 +16,7 @@ if g.app.use_psyco:
     except ImportError: pass
 
 import leoAtFile
+import leoConfig
 import leoFileCommands
 import leoImport
 import leoNodes
@@ -64,7 +66,7 @@ class baseCommands:
             self.undoer = leoUndo.undoer(self)
     #@nonl
     #@-node:ekr.20031218072017.2812:c.__init__
-    #@+node:ekr.20040731071037:initIvars
+    #@+node:ekr.20040731071037:c.initIvars
     def initIvars(self):
     
         c = self
@@ -113,8 +115,9 @@ class baseCommands:
         #@-node:ekr.20031218072017.2813:<< initialize ivars >>
         #@nl
         self.config = configSettings(c)
+        g.app.config.setIvarsFromSettings(c)
     #@nonl
-    #@-node:ekr.20040731071037:initIvars
+    #@-node:ekr.20040731071037:c.initIvars
     #@+node:ekr.20031218072017.2814:c.__repr__ & __str__
     def __repr__ (self):
         
@@ -1699,14 +1702,21 @@ class baseCommands:
     #@+node:ekr.20031218072017.2086:preferences
     def preferences(self):
         
-        """Show the Preferences Panel, creating it if necessary."""
+        '''Replace the body pane by the preferences setters.'''
         
-        c = self ; frame = c.frame
+        c = self
+        
+        if 1: # New code
+            leoConfig.settingsController(c,replaceBody=True)
     
-        if not frame.prefsPanel:
-            frame.prefsPanel = g.app.gui.createPrefsPanel(c)
-            
-        frame.prefsPanel.bringToFront()
+        else: # Old code...
+            # Show the Preferences Panel, creating it if necessary.
+            frame = c.frame
+        
+            if not frame.prefsPanel:
+                frame.prefsPanel = g.app.gui.createPrefsPanel(c)
+                
+            frame.prefsPanel.bringToFront()
     #@nonl
     #@-node:ekr.20031218072017.2086:preferences
     #@-node:ekr.20031218072017.2862:Edit top level
@@ -5513,12 +5523,14 @@ class configSettings:
     #@nonl
     #@-node:ekr.20041118053731:Getters
     #@+node:ekr.20041118195812:Setters...
-    #@+node:ekr.20041117062717.20:setConfigIvars
+    #@+node:ekr.20041117062717.20:setConfigIvars  (Not used: Called only from prefs code)
     # Sets config ivars from c.
     def setConfigIvars (self):
         
         c = self.c
         config = g.app.config
+        
+        g.trace()
         
         if c.target_language and g.app.language_delims_dict.get(c.target_language):
             language = c.target_language
@@ -5544,7 +5556,7 @@ class configSettings:
         self.setPref("script_search",str(c.script_search_flag))
         self.setPref("search_body",str(c.search_body_flag))
         self.setPref("search_headline",str(c.search_headline_flag))
-        self.setPref("selection_only",str(c.selection_only_flag)) # 11/9/03
+        self.setPref("selection_only",str(c.selection_only_flag))
         self.setPref("suboutline_only",str(c.suboutline_only_flag))
         self.setPref("wrap",str(c.wrap_flag))
         self.setPref("whole_word",str(c.whole_word_flag))
@@ -5552,7 +5564,7 @@ class configSettings:
         self.setPref("change_string",c.change_text)
         self.setPref("find_string",c.find_text)
     #@nonl
-    #@-node:ekr.20041117062717.20:setConfigIvars
+    #@-node:ekr.20041117062717.20:setConfigIvars  (Not used: Called only from prefs code)
     #@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
     def setRecentFiles (self,files):
         
