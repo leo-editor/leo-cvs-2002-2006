@@ -4,12 +4,15 @@
 
 Based on ideas from e's dynabutton plugin."""
 
-__version__ = "0.3"
+__version__ = "0.4"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
 # 
 # 0.3 EKR: Don't mess with button sizes or fonts on MacOs/darwin
+# 
+# 0.4 EKR:
+# - Added support for @button, @script and @plugin.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -42,6 +45,8 @@ atPluginNodes = False
     # True: dynamically loads plugins in @plugins nodes when a window is created.
 atScriptNodes = False
     # True: dynamically executes script in @script nodes when a window is created.  DANGEROUS!
+maxButtonSize = 12
+    # Maximum length of button names.
 
 #@+others
 #@+node:EKR.20040618091629:Utilities for callbacks
@@ -127,7 +132,8 @@ def createStandardButtons(c,d):
             h = h[len(tag):].strip()
         if not h: return
         text = h
-        statusMessage = "Run script: %s" % h
+        statusMessage = "Run script: %s" % text
+        buttonText = text[:maxButtonSize]
     
         #@    << define callbacks for addScriptButton >>
         #@+node:EKR.20040613231552:<< define callbacks for addScriptButton >>
@@ -143,12 +149,7 @@ def createStandardButtons(c,d):
                 # New in 4.2.1: always use the entire body string.
                 script = g.getScript(c,p,useSelectedText=False)
             if script:
-                try:
-                    exec script.strip() + '\n' in {}
-                except:
-                    g.es("Exception executing script button")
-                    g.es_exception(full=False,c=c)
-                c.frame.putStatusLine("Finished!")
+                c.executeScript(script=script)
             else:
                 g.es("No script selected",color="blue")
             
@@ -161,12 +162,12 @@ def createStandardButtons(c,d):
         #@-node:EKR.20040613231552:<< define callbacks for addScriptButton >>
         #@nl
         
-        # Create the button.
-        b = c.frame.addIconButton(text=text)
+        # Create the button: limit the text to twelve characters.
+        b = c.frame.addIconButton(text=buttonText)
         global data ; d = data.get(c,{})
         d [key] = b
         if sys.platform == "win32":
-            width = int(len(h) * 0.9)
+            width = int(len(buttonText) * 0.9)
             b.configure(width=width,font=('verdana',7,'bold'),bg='MistyRose1')
         b.configure(command=commandCallback)
         b.bind('<3>',deleteButtonCallback)
@@ -177,7 +178,7 @@ def createStandardButtons(c,d):
     #@nl
     
     for key,text,statusLine,command,bg in (
-        ("execButton","run Script","Execute script in: %s" % c.currentPosition().headString(),
+        ("execButton","run Script","Run script: %s" % c.currentPosition().headString(),
             execCommand,'MistyRose1'),
         ("addScriptButton","script Button","Add script button",
             addScriptButtonCommand,"#ffffcc")
@@ -222,8 +223,10 @@ def createDynamicButton (c,p,d):
     assert(g.match(text,0,tag))
     text = text[len(tag):].strip()
     key = text
-    script = p.bodyString()
-    statusLine = "status line for %s" % text
+    script = g.getScript(c,p,useSelectedText=False)
+    buttonText = text[:maxButtonSize]
+
+    statusLine = "Script button: %s" % text
     bg = 'LightSteelBlue1'
     
     #@    << define callbacks for dynamic buttons >>
@@ -243,7 +246,7 @@ def createDynamicButton (c,p,d):
     #@-node:ekr.20041001185413:<< define callbacks for dynamic buttons >>
     #@nl
     
-    b = c.frame.addIconButton(text=text)
+    b = c.frame.addIconButton(text=buttonText)
     d [key] = b
     if sys.platform == "win32":
         width = int(len(text) * 0.9)
@@ -252,7 +255,6 @@ def createDynamicButton (c,p,d):
     b.bind('<3>',deleteButtonCallback)
     b.bind('<Enter>', mouseEnterCallback)
     b.bind('<Leave>', mouseLeaveCallback)
-#@nonl
 #@-node:ekr.20041001184024:createDynamicButton
 #@+node:ekr.20041001202905:loadPlugin
 def loadPlugin (c,p):
