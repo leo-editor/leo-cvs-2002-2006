@@ -1388,7 +1388,7 @@ def enl():
 		log.es_newlines += 1
 		log.putnl()
 
-def es(s):
+def es(s,newline=true):
 	if s == None or len(s) == 0: return
 	log = app().log
 	if log:
@@ -1397,10 +1397,12 @@ def es(s):
 		for ch in s:
 			if ch == '\n': log.es_newlines += 1
 			else: log.es_newlines = 0
-		ecnl() # only valid here
-	else:
-		# print "Null log:",
+		if newline:
+			ecnl() # only valid here
+	elif newline:
 		print s
+	else:
+		print s,
 #@-body
 #@-node:3::es, enl, ecnl
 #@+node:4::top
