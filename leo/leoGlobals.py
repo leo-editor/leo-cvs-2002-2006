@@ -152,11 +152,10 @@ def windows():
 
 leoIcon = None
 
-import Image,_tkicon
-import tkIcon
-
 def attachLeoIcon (w):
 	try:
+		import Image,_tkicon
+		import tkIcon
 		global leoIcon
 		
 		f = onVisibility
@@ -169,7 +168,7 @@ def attachLeoIcon (w):
 			icon_image = Image.open(icon_file_name)
 			if 1: # Doesn't resize.
 				leoIcon = createLeoIcon(icon_image)
-			else: # Stupid code: assumes 64x64
+			else: # Assumes 64x64
 				leoIcon = tkIcon.Icon(icon_image)
 			
 	except:
@@ -183,25 +182,31 @@ def attachLeoIcon (w):
 
 def createLeoIcon (icon):
 	
-	i = icon ; m = None
-	# create transparency mask
-	if i.mode == "P":
-		try:
-			t = i.info["transparency"]
-			m = i.point(lambda i, t=t: i==t, "1")
-		except KeyError: pass
-	elif i.mode == "RGBA":
-		# get transparency layer
-		m = i.split()[3].point(lambda i: i == 0, "1")
-	if not m:
-		m = Image.new("1", i.size, 0) # opaque
-	# clear unused parts of the original image
-	i = i.convert("RGB")
-	i.paste((0, 0, 0), (0, 0), m)
-	# create icon
-	m = m.tostring("raw", ("1", 0, 1))
-	c = i.tostring("raw", ("BGRX", 0, -1))
-	return _tkicon.new(i.size, c, m)
+	try:
+		import Image,_tkicon
+		import tkIcon
+		
+		i = icon ; m = None
+		# create transparency mask
+		if i.mode == "P":
+			try:
+				t = i.info["transparency"]
+				m = i.point(lambda i, t=t: i==t, "1")
+			except KeyError: pass
+		elif i.mode == "RGBA":
+			# get transparency layer
+			m = i.split()[3].point(lambda i: i == 0, "1")
+		if not m:
+			m = Image.new("1", i.size, 0) # opaque
+		# clear unused parts of the original image
+		i = i.convert("RGB")
+		i.paste((0, 0, 0), (0, 0), m)
+		# create icon
+		m = m.tostring("raw", ("1", 0, 1))
+		c = i.tostring("raw", ("BGRX", 0, -1))
+		return _tkicon.new(i.size, c, m)
+	except:
+		return None
 #@-body
 #@-node:1::createLeoIcon
 #@+node:2::onVisibility
@@ -212,14 +217,16 @@ def createLeoIcon (icon):
 def onVisibility (w,event):
 
 	global leoIcon
-	
-	if leoIcon and w and event and event.widget == w:
-		if 1: # Allows us not to resize the icon.
-			leoIcon.attach(w.winfo_id())
-		else:
-			leoIcon.attach(w)
-		
 
+	try:
+		import Image,_tkicon
+		import tkIcon
+		if leoIcon and w and event and event.widget == w:
+			if 1: # Allows us not to resize the icon.
+				leoIcon.attach(w.winfo_id())
+			else:
+				leoIcon.attach(w)
+	except: pass
 #@-body
 #@-node:2::onVisibility
 #@-node:1::attachLeoIcon & allies
