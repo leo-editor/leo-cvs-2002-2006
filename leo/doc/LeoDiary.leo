@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1459" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1542" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="155" left="383" height="600" width="800"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -13,7 +13,114 @@
 </find_panel_settings>
 <vnodes>
 <v t="ekr.20040403120433" a="E"><vh>Diary</vh>
-<v t="ekr.20040403120534" a="TV"><vh>2003</vh>
+<v t="ekr.20041023132837.1" a="TV"><vh>2004</vh>
+<v t="ekr.20041023132837.2"><vh>June 2004</vh>
+<v t="ekr.20041023132837.3"><vh>6/3</vh>
+<v t="ekr.20041023132837.4"><vh>Dimmed selection-only radio button in Find Panel</vh></v>
+</v>
+</v>
+<v t="ekr.20041023132837.5"><vh>May 2004</vh>
+<v t="ekr.20041023132837.6"><vh>5/19</vh>
+<v t="ekr.20041023132837.7"><vh>Fixed @file read bug</vh></v>
+<v t="ekr.20041023132837.8"><vh>Removed leoPluginsRef.leo from manifest.in</vh></v>
+</v>
+<v t="ekr.20041023132837.9"><vh>5/18 Released 4.2 a2</vh></v>
+<v t="ekr.20041023132837.10"><vh>5/3 Made sure file indices are always assigned when writing files.</vh></v>
+</v>
+<v t="ekr.20041023132837.11"><vh>March 2004</vh>
+<v t="ekr.20041023132837.12"><vh>4/30</vh>
+<v t="ekr.20041023132837.13"><vh>Convert all plugins to g. style</vh></v>
+<v t="ekr.20041023132837.14"><vh>Modified g. conversion script so it can be run anywhere</vh></v>
+</v>
+<v t="ekr.20041023132837.15"><vh>4/27</vh>
+<v t="ekr.20041023132837.16"><vh>Added unit tests for batch mode</vh></v>
+<v t="ekr.20041023132837.17"><vh>Added useNullUndoer option to nullFrame class</vh></v>
+</v>
+<v t="ekr.20041023132837.18"><vh>4/26</vh>
+<v t="ekr.20041023132837.19"><vh>Removed v.iterators</vh></v>
+<v t="ekr.20041023132837.20"><vh>Disambiguted clones while selecting</vh></v>
+<v t="ekr.20041023132837.21"><vh>Added code to restore top and current positions</vh></v>
+<v t="ekr.20041023132837.22"><vh>Fixed bug in find.changeSelection</vh></v>
+<v t="ekr.20041023132837.23"><vh>Converted vnodes, tnodes and positions to new-style classes</vh></v>
+<v t="ekr.20041023132837.24"><vh>Removed verbose option from setAllAncestorAtFileNodesDirty</vh></v>
+<v t="ekr.20041023132837.25"><vh>Eliminated calls to p.__cmp__(None)</vh></v>
+<v t="ekr.20041023132837.26"><vh>Converted vnode,tnode,position classes to new-style classes</vh></v>
+<v t="ekr.20041023132837.27"><vh>Improved the speed of isAnyAtFileNode</vh></v>
+</v>
+<v t="ekr.20041023132837.28"><vh>4/25 Released 4.2 a1</vh>
+<v t="ekr.20041023132837.29"><vh>Fix three major performance bugs</vh></v>
+<v t="ekr.20041023132837.30"><vh>Removed all  back quotes</vh></v>
+</v>
+<v t="ekr.20041023132837.31"><vh>3/22</vh>
+<v t="ekr.20041023132837.32"><vh>Replaced joinList by vnodeList</vh></v>
+</v>
+<v t="ekr.20041023132837.33"><vh>3/14</vh>
+<v t="ekr.20041023132837.34"><vh>Added asserts when g.app.debug is true</vh></v>
+<v t="ekr.20041023132837.35"><vh>HUGE AHA: greatly simplified p.nodeAfter and p.threadNext</vh></v>
+</v>
+<v t="ekr.20041023132837.36"><vh>3/12</vh>
+<v t="ekr.20041023132837.37"><vh>Fixed nasty bug in p.linkAsRoot</vh></v>
+<v t="ekr.20041023132837.38"><vh>Fixed and tested the script to replace x by g.x</vh></v>
+<v t="ekr.20041023132837.39"><vh>Added c.allNodes_iter</vh></v>
+<v t="ekr.20041023132837.40"><vh>Replaced porv by p</vh></v>
+<v t="ekr.20041023132837.41"><vh>Removed g.sharedNodes ivar and related code</vh></v>
+</v>
+<v t="ekr.20041023132837.42"><vh>3/11</vh>
+<v t="ekr.20041023132837.43"><vh>Got Save To command working</vh></v>
+<v t="ekr.20041023132837.44"><vh>Added new iters</vh></v>
+<v t="ekr.20041023132837.45"><vh>Added copy param to all position iterators</vh></v>
+</v>
+<v t="ekr.20041023132837.46"><vh>3/9 All calls to tag_bind must use a copy of position</vh></v>
+<v t="ekr.20041023132837.47"><vh>3/6 Realized that position proxies are now efficient</vh></v>
+<v t="ekr.20041023132837.48"><vh>3/4 Realized that iterators make the position class safe</vh></v>
+<v t="ekr.20041023132837.49"><vh>3/5</vh>
+<v t="ekr.20041023132837.50"><vh>Replaced x by g.x for all x in leoGlobals</vh></v>
+<v t="ekr.20041023132837.51"><vh>Replaced app proxy class from leoGlobals by app global var</vh></v>
+<v t="ekr.20041023132837.52"><vh>Replaced true,false by True,False</vh></v>
+</v>
+</v>
+<v t="ekr.20041023132837.53"><vh>February 2004</vh>
+<v t="ekr.20041023132837.54"><vh>2/16</vh>
+<v t="ekr.20041023132837.55"><vh>Restored Toggle Angle Bracket command (without shortcut)</vh></v>
+<v t="ekr.20041023132837.56"><vh>Changed Undo/Redo messages</vh></v>
+</v>
+<v t="ekr.20041023132837.57"><vh>2/1</vh>
+<v t="ekr.20041023132837.58"><vh>Fixed bugs in Script-Find/change and improved documentation</vh></v>
+</v>
+</v>
+<v t="ekr.20041023132837.59"><vh>January 2004</vh>
+<v t="ekr.20041023132837.60"><vh>1/30</vh>
+<v t="ekr.20041023132837.61"><vh>Added script to look for blanks preceding tabs in leading whitespace</vh></v>
+<v t="ekr.20041023132837.62"><vh>Fixed several bugs</vh></v>
+</v>
+<v t="ekr.20041023132837.63"><vh>1/29</vh>
+<v t="ekr.20041023132837.64"><vh>Only mark ancestor @file nodes dirty when creating,moving,changing nodes</vh></v>
+<v t="ekr.20041023132837.65"><vh>fixed bugs: see 4.1 rc4 projects for details</vh></v>
+</v>
+<v t="ekr.20041023132837.66"><vh>1/26</vh>
+<v t="ekr.20041023132837.67"><vh>Properly handle exceptions in commands</vh></v>
+<v t="ekr.20041023132837.68"><vh>Eliminated control-v bug on various platforms</vh></v>
+<v t="ekr.20041023132837.69"><vh>Added Dave Hein's Reformat Paragraph code.</vh></v>
+<v t="ekr.20041023132837.70"><vh>Fixed Move Up bug involving clones</vh></v>
+</v>
+<v t="ekr.20041023132837.71"><vh>1/8</vh>
+<v t="ekr.20041023132837.72"><vh>Esc hides the Find panel</vh></v>
+<v t="ekr.20041023132837.73"><vh>Return in Find panel simuatest the Find button</vh></v>
+<v t="ekr.20041023132837.74"><vh>Fixed huge performance bug in cut/copy nodes.</vh></v>
+<v t="ekr.20041023132837.75"><vh>Improved sample code for batch mode in LeoDocs.leo</vh></v>
+<v t="ekr.20041023132837.76"><vh>Removed a complex assert in colorizer</vh></v>
+<v t="ekr.20041023132837.77"><vh>Change file extenstion for LaTeX files from .latext to .tex</vh></v>
+</v>
+<v t="ekr.20041023132837.78"><vh>1/6 Enable drawing after exceptions</vh></v>
+<v t="ekr.20041023132837.79"><vh>1/5</vh>
+<v t="ekr.20041023132837.80"><vh>Import now creates @root-code</vh></v>
+<v t="ekr.20041023132837.81"><vh>Added sys.platform to signon message in log pane</vh></v>
+<v t="ekr.20041023132837.82"><vh>Added test/test.leo to all distributions</vh></v>
+<v t="ekr.20041023132837.83"><vh>Added LP link to Leo's site</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040403120534"><vh>2003</vh>
 <v t="ekr.20040403120534.1"><vh>December 2003</vh>
 <v t="ekr.20040403120534.2"><vh>12/19</vh>
 <v t="ekr.20040403120534.3"><vh>Released 4.1 rc3</vh></v>
@@ -6170,5 +6277,218 @@ Still to do:
 		file commands,
 		find commands,
 		tangle/untangle commands</t>
+<t tx="ekr.20041023132837.1"></t>
+<t tx="ekr.20041023132837.2"></t>
+<t tx="ekr.20041023132837.3"></t>
+<t tx="ekr.20041023132837.4"></t>
+<t tx="ekr.20041023132837.5"></t>
+<t tx="ekr.20041023132837.6"></t>
+<t tx="ekr.20041023132837.7">atFile.scanAllDirectives was overriding the delim computed by scanHeader.
+
+The fix was to add a reading param to scanAllDirectives that suppresses the scan for delims.</t>
+<t tx="ekr.20041023132837.8"></t>
+<t tx="ekr.20041023132837.9"></t>
+<t tx="ekr.20041023132837.10">- Moved call to assignFileIndices into write_Leo_file.
+- Called assignFileIndices in writeAtFileNodes, writeDirtyAtFileNodes, writeMissingAtFileNodes</t>
+<t tx="ekr.20041023132837.11">Otherwise the tree-drawing code will change the position!</t>
+<t tx="ekr.20041023132837.12"></t>
+<t tx="ekr.20041023132837.13">What I did:
+
+1. Converted the following ivars by hand:
+
+app -&gt; g.app
+globalDirectiveList -&gt; g.globalDirectiveList
+
+2.  Replaced Tkinter by tk:
+
+try: import Tkinter as Tk
+except ImportError: Tk = None
+
+3. Replaced "from leoPlugins import *" by import leoPlugins.
+	- Replaced registerHandler by leoPlugins.registerHandler.</t>
+<t tx="ekr.20041023132837.14">@nocolor 
+
+Create the list of functions in leoGlobals.py.
+	OR:  create the list by importing leoGlobals.py and looking at g.__dict__
+Put this list in the script.</t>
+<t tx="ekr.20041023132837.15"></t>
+<t tx="ekr.20041023132837.16"></t>
+<t tx="ekr.20041023132837.17"></t>
+<t tx="ekr.20041023132837.18"></t>
+<t tx="ekr.20041023132837.19"></t>
+<t tx="ekr.20041023132837.20">See notes in project.  This was very clever code.</t>
+<t tx="ekr.20041023132837.21">- created convertStackToPosition.
+- created getExistingVnode.
+- Major hack to getVnode.
+</t>
+<t tx="ekr.20041023132837.22">Moved a call to c.frame.tree.drawIcon(v) so that the icon will, in fact, be redrawn.
+
+This was apparently an old bug.</t>
+<t tx="ekr.20041023132837.23">This requires Python 2.2, as does iterators.</t>
+<t tx="ekr.20041023132837.24">The setDirty logic is now about as clean as it can be.</t>
+<t tx="ekr.20041023132837.25">- Changed readAll so it uses c.nullPosition by default.
+- Test p is None in scanDirectives.
+
+These two changes _might_ be enough to ensure the arg to p.__cmp__ is always a position in Leo's _core_.  However, user code is a different matter!
+
+The coding style is to use: "if p is None:" rather than "if p == None:".  However, there is no way to enforce that style, so I have left the test against None in p.__cmp__.
+
+Use the p.equal method when speed is crucial.</t>
+<t tx="ekr.20041023132837.26"></t>
+<t tx="ekr.20041023132837.27">This is a time-critical routine.</t>
+<t tx="ekr.20041023132837.28"></t>
+<t tx="ekr.20041023132837.29">1. Reduced copies of positions in drawTree.
+
+Allocated copies in drawTree rather than in drawBox, drawIcon and drawText.  This reduces the number of copies by one third.
+
+2. Eliminated extraneous positions in fileCommands read logic.
+
+This was due to calling v.setMarked rather than v.initMarked, which calls c.doHook.  I don't know why this allocates so many positions, and it does.
+
+3. Sped up fileCommands write logic by 30% (or more?)
+
+This was a weird one.  p.__cmp__ is up to 10 times slower than p.equal.  I don't think there is any recursive code in p.__cmp__, and I suppose there might be...</t>
+<t tx="ekr.20041023132837.30"></t>
+<t tx="ekr.20041023132837.31"></t>
+<t tx="ekr.20041023132837.32"></t>
+<t tx="ekr.20041023132837.33"></t>
+<t tx="ekr.20041023132837.34">These assert that the old or simple ways of computing positions and levels are equivalent to the optimized ways.
+
+These assertions significantly slow down moves.  This shows that the optimized code truly is essential.</t>
+<t tx="ekr.20041023132837.35"></t>
+<t tx="ekr.20041023132837.36"></t>
+<t tx="ekr.20041023132837.37">The code set a _next field to a position instead of a vnode.</t>
+<t tx="ekr.20041023132837.38">Changes since the last cvs update:
+	
+- Disables changes if not a complete word.
+- Disables changes if preceded by prefix:
+	- Running this script twice is now safe.
+- Disables changes if preceded by "def " or "."
+- Added replace parameter for safety.
+</t>
+<t tx="ekr.20041023132837.39"></t>
+<t tx="ekr.20041023132837.40"></t>
+<t tx="ekr.20041023132837.41">Removed all code governed by "if not g.sharedNodes".
+</t>
+<t tx="ekr.20041023132837.42"></t>
+<t tx="ekr.20041023132837.43">I started the transition to "pure" position code.
+
+That is, I started eliminating code in "not g.sharedNodes" parts.  I did this because doing things "both ways" doesn't make any sense: much easier to change code.</t>
+<t tx="ekr.20041023132837.44">self_and_siblings_iter()
+self_and_parents_iter()
+</t>
+<t tx="ekr.20041023132837.45">This allows the user to choose a "safe mode".  It is off by default.</t>
+<t tx="ekr.20041023132837.46"></t>
+<t tx="ekr.20041023132837.47">We _can_ make the Leo compatible with old scripts !!!
+
+1. Iterators replace most calls to next(), threadNext() etc., so any _other_ calls to there routines do _not_ have to be efficient:
+
+2. In other words, iterators are the place to "optimize" tree traversals.
+
+3. I added proxies to the position class so that p.x() is valid almost anywhere that v.x() is valid.
+
+The only exceptions is that the v.linkX and v.unlink routines should only be called explicitly from the position class.
+
+4.  I shall define porv.setCurrentVnode() and porv.currentVnode () in terms of porv.setCurrentPosition and porv.currentPosition.
+
+This will deal with positions or vnodes as appropriate.
+
+5. Added t ivar to position class:  self.t = self.v.t
+
+Therefore, almost all code should continue to work!
+</t>
+<t tx="ekr.20041023132837.48"></t>
+<t tx="ekr.20041023132837.49"></t>
+<t tx="ekr.20041023132837.50"></t>
+<t tx="ekr.20041023132837.51"></t>
+<t tx="ekr.20041023132837.52"></t>
+<t tx="ekr.20041023132837.53"></t>
+<t tx="ekr.20041023132837.54"></t>
+<t tx="ekr.20041023132837.55">Changed leoConfig.leo, and the popup menu.
+
+By: sbeards ( Scott Beardsley ) 
+ BUG: Toggle brackets via Ctrl+B   
+2004-02-11 17:21  
+
+The ToggleAngleBrackets keyboard command (Ctrl+B) doesn't seem to be working at all. </t>
+<t tx="ekr.20041023132837.56">Changed Undo/Redo messages:
+
+- Insert Outline to Insert Node.
+- Delete Outline to Delete Node.
+- Clone to Clone Node.
+
+This is a real code change: it affects the undo/redo logic.
+
+BTW, some way should be found to translate these (and all other text as well!!).</t>
+<t tx="ekr.20041023132837.57"></t>
+<t tx="ekr.20041023132837.58"></t>
+<t tx="ekr.20041023132837.59">
+</t>
+<t tx="ekr.20041023132837.60"></t>
+<t tx="ekr.20041023132837.61"></t>
+<t tx="ekr.20041023132837.62">- Fixed Dan Winkler's bug with CashRegister.ss.
+
+- Possibly fixed the "Zope Sprint" bug.
+
+- Ensure trailing newline in scripts.
+
+- Fixed indent problem in leoTkinterGui.py.
+
+- Fixed several problems in the Convert All Blanks/Tabs commands.
+
+- Give shorter message when saving a read-only file fails.
+  This is a bit of a kludge.  Only time will tell if it works acceptably.
+
+- Leo no longer writes "empty" attributes like a="".  This arose because Leo no longer writes cloned attributes.
+
+- Added some code to save and restore the "top" vnode, but this really is useless at present: the "top" vnode is a function of the scroll state, and that is a Tk-dependent value.  The only proper way of computing the top node would be to look at the scroll state, and this I don't care to do now.
+
+</t>
+<t tx="ekr.20041023132837.63"></t>
+<t tx="ekr.20041023132837.64">This is correct and more accurate.
+
+- Created v.setAllAncestorAtFileNodesDirty.
+
+- Call v.setAllAncestorAtFileNodesDirty instead of v.setDirty.
+
+- "Duplicate" calls to v.setAllAncestorAtFileNodesDirty are needed just as with v.setDirty.
+
+- This change affects drags, moves, clones, insert, delete, sorting.</t>
+<t tx="ekr.20041023132837.65"></t>
+<t tx="ekr.20041023132837.66"></t>
+<t tx="ekr.20041023132837.67">c.doCommand calls tree.redrawAfterException on exceptions.  This works because doCommand is itself _not_ contained in any begin/endUpdate pair, so setting self.updateCount = 0 in tree.redrawAfterException will work.</t>
+<t tx="ekr.20041023132837.68">Changed:
+
+if sys.platform not in ("linux1","linux2"):
+
+to:
+
+if sys.platform not in ("darwin",freebsd4","freebsd5","linux1","linux2"):
+
+in:
+
+&lt; &lt; set bind_shortcut and menu_shortcut using accel &gt; &gt;</t>
+<t tx="ekr.20041023132837.69"></t>
+<t tx="ekr.20041023132837.70">The fix was to insert code to test for a special case.
+
+I wonder what this code would look like in the shared-tnode world?
+</t>
+<t tx="ekr.20041023132837.71"></t>
+<t tx="ekr.20041023132837.72"></t>
+<t tx="ekr.20041023132837.73">This is so handy.</t>
+<t tx="ekr.20041023132837.74"></t>
+<t tx="ekr.20041023132837.75"></t>
+<t tx="ekr.20041023132837.76">The assertion
+
+assert(i == new_len)
+
+in &lt; &lt; initialize new states &gt; &gt; has caused no end of troubles.  The new code eliminates the assertion by brute force.  It has never been clear why the assert has failed, and it does so rarely.  However, the very worst that can happen is that some lines aren't colored properly, so it's not a big deal.</t>
+<t tx="ekr.20041023132837.77"></t>
+<t tx="ekr.20041023132837.78">Created tree.enableDrawingAfterException and called it in es_exception.</t>
+<t tx="ekr.20041023132837.79"></t>
+<t tx="ekr.20041023132837.80"></t>
+<t tx="ekr.20041023132837.81"></t>
+<t tx="ekr.20041023132837.82"></t>
+<t tx="ekr.20041023132837.83"></t>
 </tnodes>
 </leo_file>

@@ -1,4 +1,0 @@
-#@+leo-ver=4-thin
-#@+node:ekr.20031218072017:@thin ../doc/leoDiary.txt
-#@-node:ekr.20031218072017:@thin ../doc/leoDiary.txt
-#@-leo
