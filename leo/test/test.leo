@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5950" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5952" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
-	<global_window_position top="45" left="364" height="864" width="907"/>
+	<global_window_position top="111" left="192" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -666,7 +666,7 @@
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
@@ -720,6 +720,9 @@
 <v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040831095833"><vh>importDerivedFile</vh>
+<v t="ekr.20040831095833.1"><vh>dialog</vh></v>
 </v>
 <v t="ekr.20040712101754.16"><vh>importNowebFiles</vh>
 <v t="ekr.20040712101754.17"><vh>dialog</vh></v>
@@ -1124,7 +1127,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040707081532.1" a="TV"><vh>Do @test</vh></v>
+<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -9328,9 +9331,7 @@ g.app.tracePositions = tracePositions
 c.frame.tree.trace = traceDrawing
 c.frame.tree.verbose = True</t>
 <t tx="ekr.20040804104328"></t>
-<t tx="ekr.20040804104924"># I'm not sure this works!
-
-import leoGlobals as g
+<t tx="ekr.20040804104924">import leoGlobals as g
 
 c = g.top()
 
@@ -9363,5 +9364,8 @@ import pdb ; pdb.set_trace()
 
 print "after"</t>
 <t tx="ekr.20040805102453"></t>
+<t tx="ekr.20040831095833"></t>
+<t tx="ekr.20040831095833.1">openFileDialog
+c:\\prog\\leoCvs\\leo\\src\\leo.py</t>
 </tnodes>
 </leo_file>
