@@ -314,179 +314,7 @@ class baseLeoTree:
 	
 	#@-body
 	#@-node:4::drawIcon (tag_bind)
-	#@+node:5::drawNode & force_draw_node
-	#@+body
-	def drawNode(self,v,x,y):
-	
-		"""Draw horizontal line from vertical line to icon"""
-	
-		self.canvas.create_line(x, y+7, x+box_width, y+7,tag="lines",fill="gray50") # stipple="gray25")
-	
-		if self.inVisibleArea(y):
-			return self.force_draw_node(v,x,y)
-		else:
-			return self.line_height
-		
-	def force_draw_node(self,v,x,y):
-	
-		self.allocatedNodes += 1
-		if v.firstChild():
-			self.drawBox(v,x,y)
-		icon_height = self.drawIcon(v,x+box_width,y)
-		text_height = self.drawText(v,x+box_width+icon_width,y)
-		return max(icon_height, text_height)
-	#@-body
-	#@-node:5::drawNode & force_draw_node
-	#@+node:6::drawText (bind)
-	#@+body
-	# draws text for v at x,y
-	
-	def drawText(self,v,x,y):
-		
-		x += text_indent
-	
-		t = Tkinter.Text(self.canvas,
-			font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
-		self.edit_text_dict[v] = t # Remember which text widget belongs to v.
-		
-		# Remember the widget so deleteBindings can delete it.
-		self.widgets.append(t) # Fixes a _huge_ memory leak.
-	
-		t.insert("end", v.headString())
-		
-		#@<< configure the text depending on state >>
-		#@+node:1::<< configure the text depending on state >>
-		#@+body
-		if v == self.currentVnode:
-			# trace("editVnode",self.editVnode)
-			if v == self.editVnode:
-				self.setNormalLabelState(v) # 7/7/03
-			else:
-				self.setDisabledLabelState(v) # selected, disabled
-		else:
-			self.setUnselectedLabelState(v) # unselected
-		#@-body
-		#@-node:1::<< configure the text depending on state >>
-
-	
-		id1 = t.bind("<1>", v.OnHeadlineClick)
-		id2 = t.bind("<3>", v.OnHeadlineRightClick) # 9/11/02.
-		if 0: # 6/15/02: Bill Drissel objects to this binding.
-			t.bind("<Double-1>", v.OnBoxClick)
-		id3 = t.bind("<Key>", v.OnHeadlineKey)
-		id4 = t.bind("<Control-t>",self.OnControlT)
-			# 10/16/02: Stamp out the erroneous control-t binding.
-			
-		# Remember the bindings so deleteBindings can delete them.
-		self.bindings.append((t,id1,"<1>"),)
-		self.bindings.append((t,id2,"<3>"),)
-		self.bindings.append((t,id3,"<Key>"),)
-		self.bindings.append((t,id4,"<Control-t>"),)
-	
-		id = self.canvas.create_window(x,y,anchor="nw",window=t)
-		self.canvas.tag_lower(id)
-	
-		return self.line_height
-	#@-body
-	#@-node:6::drawText (bind)
-	#@+node:7::drawTree
-	#@+body
-	def drawTree(self,v,x,y,h,level):
-		
-		# Recursive routine, stat() not useful.
-		yfirst = ylast = y
-		if level==0: yfirst += 10
-		while v:
-			# trace(`x` + ", " + `y` + ", " + `v`)
-			h = self.drawNode(v,x,y)
-			y += h ; ylast = y
-			if v.isExpanded() and v.firstChild():
-				y = self.drawTree(v.firstChild(),x+child_indent,y,h,level+1)
-			v = v.next()
-		
-		#@<< draw vertical line >>
-		#@+node:1::<< draw vertical line >>
-		#@+body
-		id = self.canvas.create_line(
-			x, yfirst-hline_y+4,
-			x, ylast+hline_y-h,
-			fill="gray50", # stipple="gray50"
-			tag="lines")
-		
-		self.canvas.tag_lower(id)
-		#@-body
-		#@-node:1::<< draw vertical line >>
-
-		return y
-	#@-body
-	#@-node:7::drawTree
-	#@+node:8::endUpdate
-	#@+body
-	def endUpdate (self, flag=true):
-	
-		assert(self.updateCount > 0)
-		self.updateCount -= 1
-		if flag and self.updateCount == 0:
-			self.redraw()
-	#@-body
-	#@-node:8::endUpdate
-	#@+node:9::headWidth
-	#@+body
-	#@+at
-	#  Returns the proper width of the entry widget for the headline. This has 
-	# been a problem.
-
-	#@-at
-	#@@c
-
-	def headWidth(self,v):
-	
-		return max(10,5 + len(v.headString()))
-	#@-body
-	#@-node:9::headWidth
-	#@+node:10::inVisibleArea & inExpandedVisibleArea
-	#@+body
-	def inVisibleArea (self,y1):
-		
-		if self.allocateOnlyVisibleNodes:
-			if self.visibleArea:
-				vis1,vis2 = self.visibleArea
-				y2 = y1 + self.line_height
-				return y2 >= vis1 and y1 <= vis2
-			else: return false
-		else:
-			return true # This forces all nodes to be allocated on all redraws.
-			
-	def inExpandedVisibleArea (self,y1):
-		
-		if self.expandedVisibleArea:
-			vis1,vis2 = self.expandedVisibleArea
-			y2 = y1 + self.line_height
-			return y2 >= vis1 and y1 <= vis2
-		else:
-			return false
-	#@-body
-	#@-node:10::inVisibleArea & inExpandedVisibleArea
-	#@+node:11::lastVisible
-	#@+body
-	# Returns the last visible node of the screen.
-	
-	def lastVisible (self):
-	
-		v = self.rootVnode
-		while v:
-			last = v
-			if v.firstChild():
-				if v.isExpanded():
-					v = v.firstChild()
-				else:
-					v = v.nodeAfterTree()
-			else:
-				v = v.threadNext()
-		return last
-	#@-body
-	#@-node:11::lastVisible
-	#@+node:12::Drawing routines (tree)...
+	#@+node:5::Drawing routines (tree)...
 	#@+node:1::redraw
 	#@+body
 	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
@@ -579,7 +407,179 @@ class baseLeoTree:
 			print "idle_second_redraw allocated:",self.redrawCount, self.allocatedNodes
 	#@-body
 	#@-node:5::idle_second_redraw
-	#@-node:12::Drawing routines (tree)...
+	#@-node:5::Drawing routines (tree)...
+	#@+node:6::drawNode & force_draw_node
+	#@+body
+	def drawNode(self,v,x,y):
+	
+		"""Draw horizontal line from vertical line to icon"""
+	
+		self.canvas.create_line(x, y+7, x+box_width, y+7,tag="lines",fill="gray50") # stipple="gray25")
+	
+		if self.inVisibleArea(y):
+			return self.force_draw_node(v,x,y)
+		else:
+			return self.line_height
+		
+	def force_draw_node(self,v,x,y):
+	
+		self.allocatedNodes += 1
+		if v.firstChild():
+			self.drawBox(v,x,y)
+		icon_height = self.drawIcon(v,x+box_width,y)
+		text_height = self.drawText(v,x+box_width+icon_width,y)
+		return max(icon_height, text_height)
+	#@-body
+	#@-node:6::drawNode & force_draw_node
+	#@+node:7::drawText (bind)
+	#@+body
+	# draws text for v at x,y
+	
+	def drawText(self,v,x,y):
+		
+		x += text_indent
+	
+		t = Tkinter.Text(self.canvas,
+			font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
+		self.edit_text_dict[v] = t # Remember which text widget belongs to v.
+		
+		# Remember the widget so deleteBindings can delete it.
+		self.widgets.append(t) # Fixes a _huge_ memory leak.
+	
+		t.insert("end", v.headString())
+		
+		#@<< configure the text depending on state >>
+		#@+node:1::<< configure the text depending on state >>
+		#@+body
+		if v == self.currentVnode:
+			# trace("editVnode",self.editVnode)
+			if v == self.editVnode:
+				self.setNormalLabelState(v) # 7/7/03
+			else:
+				self.setDisabledLabelState(v) # selected, disabled
+		else:
+			self.setUnselectedLabelState(v) # unselected
+		#@-body
+		#@-node:1::<< configure the text depending on state >>
+
+	
+		id1 = t.bind("<1>", v.OnHeadlineClick)
+		id2 = t.bind("<3>", v.OnHeadlineRightClick) # 9/11/02.
+		if 0: # 6/15/02: Bill Drissel objects to this binding.
+			t.bind("<Double-1>", v.OnBoxClick)
+		id3 = t.bind("<Key>", v.OnHeadlineKey)
+		id4 = t.bind("<Control-t>",self.OnControlT)
+			# 10/16/02: Stamp out the erroneous control-t binding.
+			
+		# Remember the bindings so deleteBindings can delete them.
+		self.bindings.append((t,id1,"<1>"),)
+		self.bindings.append((t,id2,"<3>"),)
+		self.bindings.append((t,id3,"<Key>"),)
+		self.bindings.append((t,id4,"<Control-t>"),)
+	
+		id = self.canvas.create_window(x,y,anchor="nw",window=t)
+		self.canvas.tag_lower(id)
+	
+		return self.line_height
+	#@-body
+	#@-node:7::drawText (bind)
+	#@+node:8::drawTree
+	#@+body
+	def drawTree(self,v,x,y,h,level):
+		
+		# Recursive routine, stat() not useful.
+		yfirst = ylast = y
+		if level==0: yfirst += 10
+		while v:
+			# trace(`x` + ", " + `y` + ", " + `v`)
+			h = self.drawNode(v,x,y)
+			y += h ; ylast = y
+			if v.isExpanded() and v.firstChild():
+				y = self.drawTree(v.firstChild(),x+child_indent,y,h,level+1)
+			v = v.next()
+		
+		#@<< draw vertical line >>
+		#@+node:1::<< draw vertical line >>
+		#@+body
+		id = self.canvas.create_line(
+			x, yfirst-hline_y+4,
+			x, ylast+hline_y-h,
+			fill="gray50", # stipple="gray50"
+			tag="lines")
+		
+		self.canvas.tag_lower(id)
+		#@-body
+		#@-node:1::<< draw vertical line >>
+
+		return y
+	#@-body
+	#@-node:8::drawTree
+	#@+node:9::endUpdate
+	#@+body
+	def endUpdate (self, flag=true):
+	
+		assert(self.updateCount > 0)
+		self.updateCount -= 1
+		if flag and self.updateCount == 0:
+			self.redraw()
+	#@-body
+	#@-node:9::endUpdate
+	#@+node:10::headWidth
+	#@+body
+	#@+at
+	#  Returns the proper width of the entry widget for the headline. This has 
+	# been a problem.
+
+	#@-at
+	#@@c
+
+	def headWidth(self,v):
+	
+		return max(10,5 + len(v.headString()))
+	#@-body
+	#@-node:10::headWidth
+	#@+node:11::inVisibleArea & inExpandedVisibleArea
+	#@+body
+	def inVisibleArea (self,y1):
+		
+		if self.allocateOnlyVisibleNodes:
+			if self.visibleArea:
+				vis1,vis2 = self.visibleArea
+				y2 = y1 + self.line_height
+				return y2 >= vis1 and y1 <= vis2
+			else: return false
+		else:
+			return true # This forces all nodes to be allocated on all redraws.
+			
+	def inExpandedVisibleArea (self,y1):
+		
+		if self.expandedVisibleArea:
+			vis1,vis2 = self.expandedVisibleArea
+			y2 = y1 + self.line_height
+			return y2 >= vis1 and y1 <= vis2
+		else:
+			return false
+	#@-body
+	#@-node:11::inVisibleArea & inExpandedVisibleArea
+	#@+node:12::lastVisible
+	#@+body
+	# Returns the last visible node of the screen.
+	
+	def lastVisible (self):
+	
+		v = self.rootVnode
+		while v:
+			last = v
+			if v.firstChild():
+				if v.isExpanded():
+					v = v.firstChild()
+				else:
+					v = v.nodeAfterTree()
+			else:
+				v = v.threadNext()
+		return last
+	#@-body
+	#@-node:12::lastVisible
 	#@+node:13::setLineHeight
 	#@+body
 	def setLineHeight (self,font):
@@ -1052,7 +1052,8 @@ class baseLeoTree:
 		#@-body
 		#@-node:6::<< set s to widget text, removing trailing newlines if necessary >>
 
-		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel,oldYview=oldYview)
+		if undoType:
+			c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel,oldYview=oldYview)
 		v.t.setTnodeText(s)
 		v.t.insertSpot = c.body.index("insert")
 		
