@@ -8,16 +8,39 @@
 # File names may be indented as desired.
 
 #@+others
+#@+node:ekr.20041113105336:Enabled plugins
+# Icon area: order is important.
+rowcol.py
+mod_scripting.py
+hoist.py
+
+# Plugin_manager.py needs plugins_menu.py
+plugins_menu.py
+plugin_manager.py
+
+# Other plugins: order not so important.
+add_directives.py
+image.py
+rClick.py
+mod_tempfname.py
+open_with.py
+rst2.py
+# spellpyx.py
+#@nonl
+#@-node:ekr.20041113105336:Enabled plugins
+#@+node:ekr.20041113105527.1:Documentation for plugins
+#@@killcolor
+#@nonl
 #@+node:ekr.20040722122459.4:Commands &  directives
 # Allows plugins to add their own directives.
     # Required by the syntax check unit test.
-    add_directives.py
-    
+    # add_directives.py
+
 # FileAction nodes specify scripts to be run when Leo writes dirty @file, @thin etc. nodes
     # FileActions.py
     
 # Use Python's anydbm module to store Leo files.
-#Library.py
+    # Library.py
 
 # Automatically executes Save commands every so often.
     # mod_autosave.py
@@ -26,7 +49,16 @@
     # mod_timestamp.py
     
 # Overrides pretty printing class.
-#pretty_print.py
+    # pretty_print.py
+
+# Puts the View Table command in the Outline menu.
+    # table.py
+
+# Supports template nodes.
+    # templates.py
+
+# Adds XSLT-Node Command submen item to the Outline menu.
+    # xsltWithNodes.py
 #@nonl
 #@-node:ekr.20040722122459.4:Commands &  directives
 #@+node:ekr.20040722122459:Debugging & testing
@@ -54,19 +86,19 @@
     # arrows.py
 
 # Handles autocompletion when the user types '.' or '(' characters.
-#autocompleter.py
+    # autocompleter.py
 
 # Allows coloring of wiki-style markup.
     # NOTE: requires add_directives.py plugin.
-    color_markup.py
+    # color_markup.py
 
 # Allows images within body panes.
-    image.py
+    # image.py
 
 # newButtons.py
     
 # Allows right clicks in the body pane.
-    rClick.py
+    # rClick.py
     
 # Sends output from the Execute Script command to the end of the body pane.
     # script_io_to_body.py
@@ -74,7 +106,7 @@
 #@-node:ekr.20040722122459.3:Enhance the body pane
 #@+node:ekr.20040722122459.2:Enhance the icon or status areas
 # Creates Hoist and De-Hoist buttons.
-    hoist.py
+    # hoist.py
     
 # Automatically add nodes for common tasks.
     # newButtons.py
@@ -86,19 +118,22 @@
     # rowcol.py
     
 # Creates a search box and a "go" button in the icon area.
-#searchbox.py
+    # searchbox.py
     
 # Creates a status line at the bottom of the body pane.
-#status_line.py
+    # status_line.py
 #@nonl
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040915073259.3:Enhance windows
 # Adds tabs to Leo outline.
-    ## NOT READY YET: NOT CONVERTED FULLY FROM 4.1 CODE BASE
-#chapters.py
+    # chapters.py
 
 # Maximizes all new windows. (Windows platform only).
     # maximizeNewWindows.py
+
+# Adds icons for common commands.
+# Settings specify where the icons go.
+    # nodebar.py
     
 # Sends all output to the log pane.
     # redirect_to_log.py
@@ -161,23 +196,19 @@
     
 # schedule commands for later execution."""
     # scheduler.py
-    
-# New from Paul Paterson.
-    # I'm not sure what the status of this is.
-    # wordcompleter.py
 #@nonl
 #@-node:ekr.20040722121404:Experimental plugins
 #@+node:ekr.20040722134535.1:External editors & Open With
 # Opens temporary files with a filename that begins with the headline text,
 # located in a "username_Leo" subdirectory of the temporary directory.
     # Recommended for use with the open_with, vim or xemacs plugins.
-    mod_tempfname.py
+    # mod_tempfname.py
 
 # Opens a windows shell.
     # open_shell.py
 
 # Creates the Open With menu.
-    open_with.py
+    # open_with.py
     
 # Launches (starts) a file with the name of the headline on double-clicking it.
     # startfile.py
@@ -185,10 +216,14 @@
 # vim handler.
     # Recommended: use mod_tempfname.py.
     # vim.py
+
+# A plugin to add many emacs-like commands to Leo.
+# Much of this plugin deserves to move into Leo's core.
+    # usetemacs.py
     
 # Formats and exports the selected outline to Word.
 # Do this using the Plugins:Word Export:Export menu item.
-#word_export.py
+    # word_export.py
     
 # xemacs handler
     # Recommended: use mod_tempfname.py.
@@ -218,7 +253,7 @@
     # french_fm.py
     
 # Creates the plugins menu.
-    plugins_menu.py
+    # plugins_menu.py
     
 # Creates a scripts menu.
     # scripts_menu.py
@@ -236,7 +271,7 @@
     # ** requires docutils: http://docutils.sourceforge.net/
     # ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
     # See also, rst3.py
-    rst2.py
+    # rst2.py
     
 # Double clicking the icon of an @run <command> node will launch <command>
     # The '#' character terminates the command.
@@ -245,23 +280,18 @@
     # Child @in nodes are ignored.
     # All other child nodes contribute body text as an argument to the command.
     # @in or @input nodes (anywhere) can be used to send input to the running process.
-#run_nodes.py
+    # run_nodes.py
     
 # Lauches (starts) a file with the name of the headline on double-clicking it.
     # This does not work on Linux because os.startfile does not exist.
     # startfile.py
 #@-node:ekr.20040722140829:New kinds of nodes
 #@+node:ekr.20041009112303.1:Plugins manager and menu
-# Enable or disable plugins using a proper plugins manager rather than this file!
-#pluginsTest.py
-#xsltWithNodes.py
-#table.py
-#templates.py
-#nodebar.py
-#usetemacs.py
+# Enables or disables plugins using a proper plugins manager rather than this file!
+    # plugin_manager.py
 
-	plugin_manager.py
-#@nonl
+# Test file for plugin_manager.py
+    # pluginsTest.py
 #@-node:ekr.20041009112303.1:Plugins manager and menu
 #@+node:ekr.20041001210557.1:Scripting
 # Adds "run Script" and "scriptButton" buttons to the icon area.
@@ -273,23 +303,19 @@
 #     @plugin and @script are potentially HIGHLY dangerous.
 #     @plugin and @script are enabled by constants in mod_scripting.py.
 
-    mod_scripting.py
+    # mod_scripting.py
 #@-node:ekr.20041001210557.1:Scripting
 #@+node:ekr.20040810065413:Spell checking
-# Both these plugins check spelling.
-    # Both share the same code base.
-    # Both use mod_spelling.ini and mod_spelling.txt.
-
-# Older, slower, can be used with all versions of Python.
-    # It's unclear whether this works with Leo 4.2
+# Older, slower, spell checker can be used with all versions of Python.
+    # Does not work with Leo 4.2.
     # mod_spelling.py
     
-# Newer, faster.  Requires aspell.pyd configured for Python and aspell.
-# The present version of aspell.py
-# NOTE:  works only with Python 2.3.
-    spellpyx.py
+# Recommended.  Requires aspell.pyd configured for Python and aspell.
+# The present version of aspell works only with Python 2.3.
+    # spellpyx.py
 #@nonl
 #@-node:ekr.20040810065413:Spell checking
+#@-node:ekr.20041113105527.1:Documentation for plugins
 #@-others
 #@nonl
 #@-node:edream.120603093808:@thin pluginsManager.txt
