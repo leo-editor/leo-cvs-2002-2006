@@ -613,15 +613,16 @@ class baseFileCommands:
             #@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
             #@nl
         except BadLeoFile, message:
-            #@        << raise an alert >>
-            #@+node:ekr.20031218072017.1556:<< raise an alert >>
-            # All other exceptions are Leo bugs.
-            
-            g.es_exception()
-            g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
-            #@nonl
-            #@-node:ekr.20031218072017.1556:<< raise an alert >>
-            #@nl
+            if not silent:
+                #@            << raise an alert >>
+                #@+node:ekr.20031218072017.1556:<< raise an alert >>
+                # All other exceptions are Leo bugs.
+                
+                g.es_exception()
+                g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
+                #@nonl
+                #@-node:ekr.20031218072017.1556:<< raise an alert >>
+                #@nl
             ok = False
     
         c.frame.tree.redraw_now(scroll=False)
