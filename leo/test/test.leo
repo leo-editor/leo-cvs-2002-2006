@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6024" clone_windows="0"/>
-<globals body_outline_ratio="0.37962962963">
-	<global_window_position top="27" left="273" height="864" width="907"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6144" clone_windows="0"/>
+<globals body_outline_ratio="0.475694444444">
+	<global_window_position top="26" left="171" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -418,8 +418,8 @@
 <v t="ekr.20041112155634"><vh>checkOneHook</vh></v>
 </v>
 </v>
-<v t="ekr.20040312021734" a="E"><vh>Scripts &amp; buttons</vh>
-<v t="ekr.20041113113555" a="TV"><vh>@button spell check</vh></v>
+<v t="ekr.20040312021734"><vh>Scripts &amp; buttons</vh>
+<v t="ekr.20041113113555"><vh>@button spell check</vh></v>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1292,6 +1292,24 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
+<v t="ekr.20041114121805.1" a="ETV"><vh>Configurator script</vh>
+<v t="ekr.20041114121805.2"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20041114165932"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20041114124739.23"><vh>class configDialog</vh>
+<v t="ekr.20041114124739.24" a="E"><vh>ctor</vh></v>
+<v t="ekr.20041114124739.25" a="E"><vh>createTopLevel</vh></v>
+<v t="ekr.20041114121805.3" a="E"><vh>createConfigDialog</vh>
+<v t="ekr.20041114133543"><vh>&lt;&lt; create the frame &gt;&gt;</vh></v>
+<v t="ekr.20041114170646"><vh>&lt;&lt; compute maximum width w of all labels &gt;&gt;</vh></v>
+<v t="ekr.20041114133543.1"><vh>&lt;&lt; define markAsDirty callback &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041114164307"><vh>Callbacks for buttons</vh>
+<v t="ekr.20041114164307.1"><vh>quit</vh></v>
+<v t="ekr.20041114121805.5"><vh>save</vh></v>
+</v>
+<v t="ekr.20041114134217"><vh>setDirties</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1912,7 +1930,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2043,7 +2061,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10736,5 +10754,157 @@ else:
     if spellpyx:
         createMenu()
         check()</t>
+<t tx="ekr.20041114121805.1"># A script based on Configurator.py.  This is not yet a plugin.
+# This may be the start of the real 4.3 code.
+
+@language python
+@tabwidth -4
+
+&lt;&lt; imports &gt;&gt;
+__version__ = 0.1
+&lt;&lt; version history &gt;&gt;
+
+@others
+
+# To do:
+# - Create a dialog in an open-window hook to bind c properly.
+# - Disable writing of leoConfig.txt outside this code.
+# - Replace the notebook with a tree widget?
+
+if Tk and Pmw:
+    c = g.top()
+    fileName = g.os_path_join(g.app.loadDir,"..","config","leoConfig.txt")
+    if os.path.exists(fileName):
+        d = configDialog(c,fileName)</t>
+<t tx="ekr.20041114121805.2">import leoGlobals as g
+
+try:
+    import Tkinter as Tk
+except ImportError:
+    Tk = g.cantImport("Tk",__name__)
+
+try:
+    import Pmw as Pmw
+except ImportError:
+    Pmw = g.cantImport("Pmw",__name__)
+
+import ConfigParser
+import os
+import sets
+import sys</t>
+<t tx="ekr.20041114121805.3">def createConfigDialog (self,top):
+
+    cfp = self.cfp
+    fileName = self.fileName
+    &lt;&lt; create the frame &gt;&gt;
+    cfp.read(fileName)
+    sections = cfp.sections()
+    sections.sort()
+    for section in sections:
+        page = notebook.add(section)
+        sf = Pmw.ScrolledFrame(page)
+        sf.pack(fill='both',expand=1)
+        self.dirties[section] = sets.Set()
+        options = cfp.options(section)
+        options.sort()
+        &lt;&lt; compute maximum width w of all labels &gt;&gt;
+        for option in options:
+            val = cfp.get(section,option)
+            ef = Pmw.EntryField(sf.interior(),labelpos='w',label_text=option,value=val)
+            ef.component('entry').configure(background='white',foreground='blue')
+            ef.component('label').configure(width=w,anchor="e",padx=6)
+            &lt;&lt; define markAsDirty callback &gt;&gt;
+            ef.configure(modifiedcommand=markAsDirty)
+            ef.pack(side='top',fill='x',expand=1,pady = 2,ipadx="1in")</t>
+<t tx="ekr.20041114121805.5">def save (self):
+    
+    cfp = self.cfp
+    
+    if not self.isDirty:
+        g.es("not changed: %s"%self.fileName,color="blue")
+        return 
+    else:
+        g.es("writing %s"%self.fileName,color="blue")
+
+    for d in self.dirties:
+        s = self.dirties[d]
+        for sd in s:
+            l = sd.component('label')
+            lt = l.cget('text')
+            cfp.set(d,lt,sd.getvalue())
+
+    self.isDirty = False
+    self.setDirties()
+    theFile = file(self.fileName,'w')
+    cfp.write(theFile)
+    theFile.close()</t>
+<t tx="ekr.20041114124739.23">class configDialog:
+
+    """The dialog to change configuration settings."""
+
+    @others</t>
+<t tx="ekr.20041114124739.24">def __init__ (self,c,fileName):
+    
+    """Initialise the config dialog"""
+    
+    # Init Ivars...
+    self.c = c 
+    self.cfp = ConfigParser.ConfigParser()
+    self.dirties ={}
+    self.fileName = g.os_path_normpath(g.os_path_abspath(fileName))
+    self.isDirty = False 
+    self.root = root = g.app.root 
+    self.top = top = self.createTopLevel(root,self.fileName)
+
+    # Create the dialog.
+    self.createConfigDialog(top)
+
+    top.grab_set() # Make the dialog a modal dialog.
+    top.focus_force() # Get all keystrokes.
+    root.wait_window(top)</t>
+<t tx="ekr.20041114124739.25">def createTopLevel (self,root,fileName):
+
+    top = Tk.Toplevel(root)
+    g.app.gui.attachLeoIcon(top)
+    top.title("Config Manager for %s"%fileName)
+
+    return top</t>
+<t tx="ekr.20041114133543">tlf = Tk.Frame(top)
+tlf.pack(side='bottom')
+
+buttons = Tk.Frame(tlf)
+buttons.pack(side="bottom")
+
+b = Tk.Button(buttons,text='Save',command=self.save)
+b.pack(side='left')
+
+b = Tk.Button(buttons,text='Quit',command=self.quit)
+b.pack(side='right')
+
+notebook = Pmw.NoteBook(top,borderwidth=2,pagemargin=0)
+notebook.pack(fill='both',expand=1,ipadx="2in",ipady="1.5in")</t>
+<t tx="ekr.20041114133543.1">def markAsDirty (self=self,section=section,ef=ef):
+
+    self.isDirty = True
+    s = self.dirties[section]
+    s.add(ef)</t>
+<t tx="ekr.20041114134217">def setDirties (self):
+    
+    self.dirties ={}
+    
+    for section in self.cfp.sections():
+        self.dirties[section] = sets.Set()</t>
+<t tx="ekr.20041114164307"></t>
+<t tx="ekr.20041114164307.1">def quit (self,event=None):
+    self.top.destroy()</t>
+<t tx="ekr.20041114165932">@killcolor
+@
+
+0.1 EKR:
+    - Initial script based on Configurator.py.
+    - This will soon be made into a plugin.</t>
+<t tx="ekr.20041114170646">w = 5
+for option in options:
+    w = max(w,len(option))</t>
 </tnodes>
 </leo_file>
