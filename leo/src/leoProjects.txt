@@ -14163,11 +14163,10 @@ def callback (self, event):
 def __init__(self,c,resizeable=False):
 
     # g.trace("leoTkinterFind",c)
-    title = "Find/Change for %s" %  g.shortFileName(c.frame.title)
     
     # Init the base classes...
     leoFind.leoFind.__init__(self,c)
-    leoTkinterDialog.leoTkinterDialog.__init__(self,title,resizeable)
+    leoTkinterDialog.leoTkinterDialog.__init__(self,self.title,resizeable)
 
     << create the tkinter intVars >>
     
@@ -16100,7 +16099,8 @@ def onClickBoxClick (self,event):
         # This disables any call that would configure old text widgets.
         self.redraw()
         self.select(p)
-        c.frame.findPanel.handleUserClick(p)
+        if c.frame.findPanel:
+            c.frame.findPanel.handleUserClick(p)
         gui.set_focus(c,c.frame.bodyCtrl)
     g.doHook("boxclick2",c=c,p=p,v=p,event=event)
 #@nonl
@@ -16121,7 +16121,8 @@ def onIconBoxClick (self,event):
         if event:
             self.onDrag(event)
         tree.select(p)
-        c.frame.findPanel.handleUserClick(p) # 4/3/04
+        if c.frame.findPanel:
+            c.frame.findPanel.handleUserClick(p)
     g.doHook("iconclick2",c=c,p=p,v=p,event=event)
         
     return "break" # disable expanded box handling.

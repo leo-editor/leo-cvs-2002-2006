@@ -1630,7 +1630,8 @@ class leoTkinterTree (leoFrame.leoTree):
             # This disables any call that would configure old text widgets.
             self.redraw()
             self.select(p)
-            c.frame.findPanel.handleUserClick(p)
+            if c.frame.findPanel:
+                c.frame.findPanel.handleUserClick(p)
             gui.set_focus(c,c.frame.bodyCtrl)
         g.doHook("boxclick2",c=c,p=p,v=p,event=event)
     #@nonl
@@ -1652,7 +1653,8 @@ class leoTkinterTree (leoFrame.leoTree):
             if event:
                 self.onDrag(event)
             tree.select(p)
-            c.frame.findPanel.handleUserClick(p) # 4/3/04
+            if c.frame.findPanel:
+                c.frame.findPanel.handleUserClick(p)
         g.doHook("iconclick2",c=c,p=p,v=p,event=event)
             
         return "break" # disable expanded box handling.
@@ -2101,7 +2103,8 @@ class leoTkinterTree (leoFrame.leoTree):
             else:
                 # g.trace("not current")
                 self.select(p)
-                c.frame.findPanel.handleUserClick(p)
+                if c.frame.findPanel:
+                    c.frame.findPanel.handleUserClick(p)
                 if p.v.t.insertSpot != None:
                     c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
                     c.frame.bodyCtrl.see(p.v.t.insertSpot)

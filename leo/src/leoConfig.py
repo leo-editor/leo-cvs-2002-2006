@@ -50,29 +50,29 @@ class baseConfig:
         # Window options...
         "allow_clone_drags" : ("bool",True),
         "body_pane_wraps" : ("bool",True),
-        "body_text_font_family" : ("tk-font-family","Courier"),
-        "body_text_font_size" : ("tk-font-size",defaultBodyFontSize),
-        "body_text_font_slant" : ("tk-font-slant","roman"),
-        "body_text_font_weight" : ("tk-font-weight","normal"),
+        "body_text_font_family" : ("family","Courier"),
+        "body_text_font_size" : ("int",defaultBodyFontSize),
+        "body_text_font_slant" : ("slant","roman"),
+        "body_text_font_weight" : ("weight","normal"),
         "enable_drag_messages" : ("bool",True),
-        "headline_text_font_size" : ("tk-font-size",defaultLogFontSize),
-        "headline_text_font_slant" : ("tk-font-slant","roman"),
-        "headline_text_font_weight" : ("tk-font-weight","normal"),
-        "log_text_font_size" : ("tk-font-size",defaultLogFontSize),
-        "log_text_font_slant" : ("tk-font-slant","roman"),
-        "log_text_font_weight" : ("tk-font-weight","normal"),
-        "initial_window_height" : ("tk-pixel",600),
-        "initial_window_width" :  ("tk-pixel",800),
-        "initial_window_left" : ("tk-pixel",10),
-        "initial_window_top" : ("tk-pixel",10),
-        "initial_splitter_orientation" : ("tk-orientation","vertical"),
-        "initial_vertical_ratio" : ("float",0.5),
-        "initial_horizontal_ratio" : ("float",0.3),
-        "initial_horizontal_secondary_ratio" : ("float",0.5),
-        "initial_vertical_secondary_ratio" : ("float",0.7),
+        "headline_text_font_size" : ("int",defaultLogFontSize),
+        "headline_text_font_slant" : ("slant","roman"),
+        "headline_text_font_weight" : ("weight","normal"),
+        "log_text_font_size" : ("int",defaultLogFontSize),
+        "log_text_font_slant" : ("slant","roman"),
+        "log_text_font_weight" : ("weight","normal"),
+        "initial_window_height" : ("int",600),
+        "initial_window_width" :  ("int",800),
+        "initial_window_left" : ("int",10),
+        "initial_window_top" : ("int",10),
+        "initial_splitter_orientation" : ("orientation","vertical"),
+        "initial_vertical_ratio" : ("ratio",0.5),
+        "initial_horizontal_ratio" : ("ratio",0.3),
+        "initial_horizontal_secondary_ratio" : ("ratio",0.5),
+        "initial_vertical_secondary_ratio" : ("ratio",0.7),
         "outline_pane_scrolls_horizontally" : ("bool",False),
-        "split_bar_color" : ("tk-color","LightSteelBlue2"),
-        "split_bar_relief" : ("tk-relief","groove"),
+        "split_bar_color" : ("color","LightSteelBlue2"),
+        "split_bar_relief" : ("relief","groove"),
         "split_bar_width" : ("int",7),
     }
     #@nonl
@@ -120,6 +120,7 @@ class baseConfig:
     keysDict = {}
     rawKeysDict = {}
     dictList = [ivarsDict,encodingIvarsDict,defaultsDict]
+    localOptionsDict = {} # Keys are commanders.  Values are optionsDicts.
     #@    @+others
     #@+node:ekr.20041117083202:Birth...
     #@+node:ekr.20041117062717.2:ctor & init
@@ -244,29 +245,49 @@ class baseConfig:
     #@-node:ekr.20041117083857:initSettingsFiles
     #@-node:ekr.20041117083202:Birth...
     #@+node:ekr.20041117081009:Getters...
-    #@+node:ekr.20041117083141:get
-    def get (self,c,setting,type):
+    #@+node:ekr.20041117083141:get & allies
+    def get (self,c,setting,theType):
         
         """Get the setting and make sure its type matches the expected type."""
         
         found = False
-        for d in self.dictList:
-            data = d.get(setting)
-            if data:
-                found = True
-                theType,val = data
-                if val not in (u'None',u'none','None','none','',None):
-                    # g.trace(theType,repr(val))
-                    return val
+        if c:
+            d = self.localOptionsDict.get(c)
+            if d:
+                val,found = self.getValFromDict(d,setting,theType,found)
+                if val is not None: return val
     
+        for d in self.dictList:
+            val,found = self.getValFromDict(d,setting,theType,found)
+            if val is not None: return val
+                    
         if 0: # Good for debugging leoSettings.leo.
             # Don't warn if None was specified.
             if not found and self.inited:
                 g.trace("Not found:",setting)
     
-        return None 
+        return None
     #@nonl
-    #@-node:ekr.20041117083141:get
+    #@+node:ekr.20041121143823:getValFromDict
+    def getValFromDict (self,d,setting,theType,found):
+    
+        data = d.get(setting)
+        if data:
+            found = True
+            dType,val = data
+            
+            if 0: # not ready yet.
+                if dType != type:
+                    g.trace("Expected type %s, got %s for setting %s" % (theType,dType,setting))
+    
+            if val not in (u'None',u'none','None','none','',None):
+                # g.trace(theType,repr(val))
+                return val,found
+    
+        return None,found
+    #@nonl
+    #@-node:ekr.20041121143823:getValFromDict
+    #@-node:ekr.20041117083141:get & allies
     #@+node:ekr.20041117081009.3:getBool
     def getBool (self,c,setting):
         

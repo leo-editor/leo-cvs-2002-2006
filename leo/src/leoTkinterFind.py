@@ -82,11 +82,10 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     def __init__(self,c,resizeable=False):
     
         # g.trace("leoTkinterFind",c)
-        title = "Find/Change for %s" %  g.shortFileName(c.frame.title)
         
         # Init the base classes...
         leoFind.leoFind.__init__(self,c)
-        leoTkinterDialog.leoTkinterDialog.__init__(self,title,resizeable)
+        leoTkinterDialog.leoTkinterDialog.__init__(self,self.title,resizeable)
     
         #@    << create the tkinter intVars >>
         #@+node:ekr.20031218072017.3900:<< create the tkinter intVars >>

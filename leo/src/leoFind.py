@@ -64,6 +64,17 @@ class leoFind:
     def __init__ (self,c):
     
         self.c = c
+        #@    << compute self.title >>
+        #@+node:ekr.20041121145452:<< compute self.title >>
+        if not c.mFileName:
+            s = "untitled"
+        else:
+            path,s = g.os_path_split(c.mFileName)
+            
+        self.title = "Find/Change for %s" %  s
+        #@nonl
+        #@-node:ekr.20041121145452:<< compute self.title >>
+        #@nl
         #@    << init the gui-independent ivars >>
         #@+node:ekr.20031218072017.3054:<< init the gui-independent ivars >>
         self.wrapVnode = None
