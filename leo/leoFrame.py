@@ -1510,7 +1510,7 @@ class LeoFrame:
 					os.startfile(arg+path)
 				elif openType == "exec":
 					command    = "exec("+arg+path+")"
-					exec(arg+path)
+					exec arg+path in {} # 12/11/02
 				elif openType == "os.spawnl":
 					filename = os.path.basename(arg)
 					command = "os.spawnl("+arg+","+filename+','+ path+")"
