@@ -1887,29 +1887,27 @@ class baseOldDerivedFile:
 	#@+node:sentinelName
 	# Returns the name of the sentinel for warnings.
 	
-	sentinelNameDict = {
-		noSentinel: "<no sentinel>",
-		startAt:     "@+at",     endAt:     "@-at",
-		startBody:   "@+body",   endBody:   "@-body", # 3.x only.
-		startDoc:    "@+doc",    endDoc:    "@-doc",
-		startLeo:    "@+leo",    endLeo:    "@-leo",
-		startNode:   "@+node",   endNode:   "@-node",
-		startOthers: "@+others", endOthers: "@-others",
-		startAfterRef:  "@afterref", # 4.x
-		startComment:   "@comment",
-		startDelims:    "@delims",
-		startDirective: "@@",
-		startNl:        "@nl",   # 4.x
-		startNonl:      "@nonl", # 4.x
-		startRef:       "@<<",
-		startVerbatim:  "@verbatim",
-		startVerbatimAfterRef: "@verbatimAfterRef" } # 3.x only.
-	
 	def sentinelName(self, kind):
-		if self.sentinelNameDict.has_key(kind):
-			return self.sentinelNameDict[kind]
-		else:
-			return "<unknown sentinel!>"
+	
+		sentinelNameDict = {
+			noSentinel:  "<no sentinel>",
+			startAt:     "@+at",     endAt:     "@-at",
+			startBody:   "@+body",   endBody:   "@-body", # 3.x only.
+			startDoc:    "@+doc",    endDoc:    "@-doc",
+			startLeo:    "@+leo",    endLeo:    "@-leo",
+			startNode:   "@+node",   endNode:   "@-node",
+			startOthers: "@+others", endOthers: "@-others",
+			startAfterRef:  "@afterref", # 4.x
+			startComment:   "@comment",
+			startDelims:    "@delims",
+			startDirective: "@@",
+			startNl:        "@nl",   # 4.x
+			startNonl:      "@nonl", # 4.x
+			startRef:       "@<<",
+			startVerbatim:  "@verbatim",
+			startVerbatimAfterRef: "@verbatimAfterRef" } # 3.x only.
+	
+		return sentinelNameDict.get(kind,"<unknown sentinel!>")
 	#@nonl
 	#@-node:sentinelName
 	#@+node:skipSentinelStart
