@@ -66,20 +66,23 @@ def createButtons (tag, keys):
         
             deleteButton(c,buttonName)
             
-        def commandCallback(event=None,c=c,p=p,script=script,statusMessage=statusMessage):
+        def commandCallback(event=None,c=c,p=p.copy(),script=script,statusMessage=statusMessage):
             
             global bindLate
+            
+            if script is None: script = ""
+            # g.trace(bindLate,len(script))
             
             # N.B. p and script are bound at the time this callback is created.
             c.frame.clearStatusLine()
             c.frame.putStatusLine("Executing %s..." % statusMessage)
-            if 0: # A bad idea.
-                # We want to be able to bring the script to the data.
-                # If the script should be the selected node, it should select itself.
-                c.selectVnode(p)
             if bindLate:
                 script = g.getScript(c,p)
-            c.executeScript(p=p,script=script)
+            try:
+                exec script.strip() + '\n' in {}
+            except:
+                g.es("Exception executing script button")
+                g.es_exception(full=False,c=c)
             c.frame.putStatusLine("Finished!")
             
         def mouseEnterCallback(event=None,c=c,statusMessage=statusMessage):
