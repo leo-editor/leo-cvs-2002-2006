@@ -11,20 +11,28 @@
 #@+node:1::<< How Leo implements unlimited undo >>
 #@+body
 #@+at
-#  Only leo.py supports unlimited undo.  Unlimited undo is straightforward; it merely requires that all commands that affect the 
-# outline or body text must be undoable. In other words, everything that affects the outline or body text must be remembered.
+#  Only leo.py supports unlimited undo.  Unlimited undo is straightforward; it 
+# merely requires that all commands that affect the outline or body text must 
+# be undoable. In other words, everything that affects the outline or body 
+# text must be remembered.
 # 
-# We may think of all the actions that may be Undone or Redone as a string of beads (undo nodes). Undoing an operation moves 
-# backwards to the next bead; redoing an operation moves forwards to the next bead. A bead pointer points to the present bead. The 
-# bead pointer points in front of the first bead when Undo is disabled.  The bead pointer points at the last bead when Redo is 
-# disabled. An undo node is a Python dictionary containing all information needed to undo or redo the operation.
+# We may think of all the actions that may be Undone or Redone as a string of 
+# beads (undo nodes). Undoing an operation moves backwards to the next bead; 
+# redoing an operation moves forwards to the next bead. A bead pointer points 
+# to the present bead. The bead pointer points in front of the first bead when 
+# Undo is disabled.  The bead pointer points at the last bead when Redo is 
+# disabled. An undo node is a Python dictionary containing all information 
+# needed to undo or redo the operation.
 # 
-# The Undo command uses the present bead to undo the action, then moves the bead pointer backwards. The Redo command uses the bead 
-# after the present bead to redo the action, then moves the bead pointer forwards. All undoable operations call setUndoParams() to 
-# create a new bead. The list of beads does not branch; all undoable operations (except the Undo and Redo commands themselves) 
-# delete any beads following the newly created bead.
+# The Undo command uses the present bead to undo the action, then moves the 
+# bead pointer backwards. The Redo command uses the bead after the present 
+# bead to redo the action, then moves the bead pointer forwards. All undoable 
+# operations call setUndoParams() to create a new bead. The list of beads does 
+# not branch; all undoable operations (except the Undo and Redo commands 
+# themselves) delete any beads following the newly created bead.
 # 
-# I did not invent this model of unlimited undo.  I first came across it in the documentation for Apple's Yellow Box classes.
+# I did not invent this model of unlimited undo.  I first came across it in 
+# the documentation for Apple's Yellow Box classes.
 
 #@-at
 #@-body
@@ -58,7 +66,8 @@ class undoer:
 	#@+node:1::clearUndoState & clearIvars
 	#@+body
 	#@+at
-	#  This method clears then entire Undo state.  All non-undoable commands should call this method.
+	#  This method clears then entire Undo state.  All non-undoable commands 
+	# should call this method.
 
 	#@-at
 	#@@c
@@ -215,8 +224,9 @@ class undoer:
 	#@+node:6::setUndoParams
 	#@+body
 	#@+at
-	#  This routine saves enough information so an operation can be undone and redone.  We do nothing when called from the 
-	# undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+	#  This routine saves enough information so an operation can be undone and 
+	# redone.  We do nothing when called from the undo/redo logic because the 
+	# Undo and Redo commands merely reset the bead pointer.
 
 	#@-at
 	#@@c
@@ -249,10 +259,12 @@ class undoer:
 	#@+node:7::setUndoTypingParams
 	#@+body
 	#@+at
-	#  This routine saves enough information so a typing operation can be undone and redone..  We do nothing when called from the 
-	# undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+	#  This routine saves enough information so a typing operation can be 
+	# undone and redone..  We do nothing when called from the undo/redo logic 
+	# because the Undo and Redo commands merely reset the bead pointer.
 	# 
-	# This is called with the following undo Types: "Typing", "Cut", "Paste", "Delete", "Change"
+	# This is called with the following undo Types: "Typing", "Cut", "Paste", 
+	# "Delete", "Change"
 
 	#@-at
 	#@@c
@@ -378,7 +390,7 @@ class undoer:
 
 			
 			#@<< redo move & drag cases >>
-			#@+node:4:C=3:<< redo move & drag cases >>
+			#@+node:4::<< redo move & drag cases >>
 			#@+body
 			elif type in ["Drag","Move Down","Move Left","Move Right","Move Up"]:
 			
@@ -401,7 +413,7 @@ class undoer:
 				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:4:C=3:<< redo move & drag cases >>
+			#@-node:4::<< redo move & drag cases >>
 
 			
 			#@<< redo promote and demote cases >>
@@ -497,6 +509,11 @@ class undoer:
 				
 				# trace(`u.newText`)
 				u.v.setHeadStringOrHeadline(u.newText)
+				# 9/24/02: update all joined headlines.
+				v2 = u.v.joinList
+				while v2 and v2 != u.v:
+					v2.setHeadString(u.newText)
+					v2 = v2.joinList
 				c.selectVnode(u.v)
 			#@-body
 			#@-node:8::<< redo typing cases >>
@@ -510,7 +527,7 @@ class undoer:
 		u.setUndoTypes()
 	#@-body
 	#@-node:4:C=2:redo
-	#@+node:5:C=4:undo
+	#@+node:5:C=3:undo
 	#@+body
 	#@+at
 	#  This function and its allies undo the operation described by the undo parmaters.
@@ -550,8 +567,9 @@ class undoer:
 			#@+node:2::<< undo delete cases >>
 			#@+body
 			#@+at
-			#  Deleting a clone is _not_ the same as undoing a clone: the clone may have been moved, so there is no necessary 
-			# relationship between the two nodes.
+			#  Deleting a clone is _not_ the same as undoing a clone: the 
+			# clone may have been moved, so there is no necessary relationship 
+			# between the two nodes.
 
 			#@-at
 			#@@c
@@ -590,7 +608,7 @@ class undoer:
 
 			
 			#@<< undo move & drag cases >>
-			#@+node:4:C=5:<< undo move  & drag cases >>
+			#@+node:4:C=4:<< undo move  & drag cases >>
 			#@+body
 			elif type in ["Drag", "Move Down","Move Left","Move Right","Move Up"]:
 			
@@ -608,15 +626,16 @@ class undoer:
 				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:4:C=5:<< undo move  & drag cases >>
+			#@-node:4:C=4:<< undo move  & drag cases >>
 
 			
 			#@<< undo promote and demote cases >>
 			#@+node:5::<< undo promote and demote cases >>
 			#@+body
 			#@+at
-			#  Promote and demote operations are the hard to undo, because they involve relinking a list of nodes. We pass the 
-			# work off to routines dedicated to the task.
+			#  Promote and demote operations are the hard to undo, because 
+			# they involve relinking a list of nodes. We pass the work off to 
+			# routines dedicated to the task.
 
 			#@-at
 			#@@c
@@ -657,8 +676,9 @@ class undoer:
 			#@+node:7::<< undo sort cases >>
 			#@+body
 			#@+at
-			#  Sort operations are the hard to undo, because they involve relinking a list of nodes. We pass the work off to 
-			# routines dedicated to the task.
+			#  Sort operations are the hard to undo, because they involve 
+			# relinking a list of nodes. We pass the work off to routines 
+			# dedicated to the task.
 
 			#@-at
 			#@@c
@@ -713,6 +733,11 @@ class undoer:
 				
 				# trace(`u.oldText`)
 				u.v.setHeadStringOrHeadline(u.oldText)
+				# 9/24/02: update all joined headlines.
+				v2 = u.v.joinList
+				while v2 and v2 != u.v:
+					v2.setHeadString(u.oldText)
+					v2 = v2.joinList
 				c.selectVnode(u.v)
 			#@-body
 			#@-node:8::<< undo typing cases >>
@@ -725,7 +750,7 @@ class undoer:
 		u.bead -= 1
 		u.setUndoTypes()
 	#@-body
-	#@-node:5:C=4:undo
+	#@-node:5:C=3:undo
 	#@+node:6::Undo helpers
 	#@+node:1::findSharedVnode
 	#@+body
@@ -739,7 +764,7 @@ class undoer:
 		return None
 	#@-body
 	#@-node:1::findSharedVnode
-	#@+node:2:C=6:undoDemote
+	#@+node:2:C=5:undoDemote
 	#@+body
 	# undoes the previous demote operation.
 	def undoDemote (self):
@@ -761,8 +786,8 @@ class undoer:
 		c.selectVnode(u.v)
 		c.endUpdate()
 	#@-body
-	#@-node:2:C=6:undoDemote
-	#@+node:3:C=7:undoPromote
+	#@-node:2:C=5:undoDemote
+	#@+node:3:C=6:undoPromote
 	#@+body
 	# Undoes the previous promote operation.
 	def undoPromote (self):
@@ -785,21 +810,23 @@ class undoer:
 		c.selectVnode(v1)
 		c.endUpdate()
 	#@-body
-	#@-node:3:C=7:undoPromote
-	#@+node:4:C=8:undoReplace
+	#@-node:3:C=6:undoPromote
+	#@+node:4:C=7:undoReplace
 	#@+body
 	#@+at
-	#  This routine implements undo by properly replacing v's tree by the oldv tree.  For redo, just call this routine with these 
-	# two variables interchanged.
+	#  This routine implements undo by properly replacing v's tree by the oldv 
+	# tree.  For redo, just call this routine with these two variables interchanged.
 	# 
-	# This routine shows how to implement undo for any kind of operation, no matter how complex.  Just do:
+	# This routine shows how to implement undo for any kind of operation, no 
+	# matter how complex.  Just do:
 	# 
 	# 	v_copy = c.copyTree(v)
 	# 	< < make arbitrary changes to v's tree > >
 	# 	c.undoer.setUndoParams("Op Name",v,select=current,oldTree=v_copy)
 	# 
-	# This way is far more elegant than calling v.destroyDependents and v.createDependents.  This is the way it is written in "The 
-	# Book." Yes, entire trees are copied, but in the most general case that is necessary.
+	# This way is far more elegant than calling v.destroyDependents and 
+	# v.createDependents.  This is the way it is written in "The Book." Yes, 
+	# entire trees are copied, but in the most general case that is necessary.
 
 	#@-at
 	#@@c
@@ -833,7 +860,7 @@ class undoer:
 			v.setClonedBit()
 		c.initAllCloneBits()
 	#@-body
-	#@-node:4:C=8:undoReplace
+	#@-node:4:C=7:undoReplace
 	#@+node:5::undoSortChildren
 	#@+body
 	def undoSortChildren (self):
