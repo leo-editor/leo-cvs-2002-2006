@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3031" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="64" left="365" height="836" width="829"/>
+	<global_window_position top="29" left="528" height="836" width="632"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -62,7 +62,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -82,8 +82,8 @@
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="edream.110603185805" a="V"><vh>4.1 beta 5</vh>
+<v t="edream.110203163054.63"><vh>Latest version</vh>
+<v t="edream.110603185805" a=""><vh>4.1 beta 5</vh>
 <v t="edream.110603190234.1"><vh>Code-level features</vh>
 <v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
 <v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
@@ -968,7 +968,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.735"><vh>Users Guide</vh>
+<v t="edream.110203163054.735" a="V"><vh>Users Guide</vh>
 <v t="edream.110203163054.736"><vh>An overview of Leo</vh></v>
 <v t="edream.110203163054.737"><vh>Front material</vh>
 <v t="edream.110203163054.738"><vh>Title Page &amp; Summary</vh></v>
@@ -9716,9 +9716,9 @@ The Select All command selects all text in the body pane.
 <t tx="edream.110203163054.830">The Shift Left and Shift Right commands shift selected lines in the body text left or right one tab position. The entire line is shifted if any characters of the line are selected.</t>
 <t tx="edream.110203163054.831">The Extract, Extract Section and Extract Section Names commands create child nodes whose headline is the first line of the selected body text.
 
-The Extract command creates a new node whose headline is the first line of selected body text and whose body is all following lines of body text.  All selected text is deleted from the original body text. This command is enabled only if the first line contains a section name (enclosed in angle brackets) on a line by itself.
+The Extract command creates a new node whose headline is the first line of selected body text and whose body is all other lines of selected text.  All selected text is deleted from the original body text. This command is enabled only if the first line contains a section name (enclosed in angle brackets) on a line by itself.
 
-The Extract Section command creates a new node whose headline is the first line of selected text and whose body is @code followed by all the other lines of selected text.  All selected text lines except the first line are deleted from the original body text. This command is enabled only if the first line contains a section name (enclosed in angle brackets), on a line by itself.
+The Extract Section command creates a new node whose headline is the first line of selected text and whose body is @code followed by all the other lines of selected text.  All selected text lines except the first line are deleted from the original body text. 
 
 The Extract Section Names command creates one or more child nodes, one for each section name (enclosed in angle brackets) in the selected body text.  The headline of each created node is the section name and the body text of each created node is just @code followed by a newline.</t>
 <t tx="edream.110203163054.832">New in leo.py v2.5.
