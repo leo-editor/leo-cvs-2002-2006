@@ -19,6 +19,7 @@ class leoDialog:
 		self.top = None
 		self.email = None
 		self.url = None
+		self.text = None
 	#@-body
 	#@-node:1::dialog.__init__
 	#@+node:2:C=1:aboutLeo
@@ -43,7 +44,7 @@ class leoDialog:
 	
 		frame.pack(padx=6,pady=4)
 		
-		text = Tk.Text(frame,height=height,width=width,bd=0,bg=frame.cget("background"))
+		self.text = text = Tk.Text(frame,height=height,width=width,bd=0,bg=frame.cget("background"))
 		text.pack(pady=10)
 		
 		try:
@@ -66,9 +67,13 @@ class leoDialog:
 		
 		text.tag_config("url",underline=1,justify="center",spacing1="10")
 		text.tag_bind("url","<Button-1>",self.onAboutLeoUrl)
+		text.tag_bind("url","<Enter>",self.setArrowCursor)
+		text.tag_bind("url","<Leave>",self.setDefaultCursor)
 	
 		text.tag_config("email",underline=1,justify="center",spacing1="10")
 		text.tag_bind("email","<Button-1>",self.onAboutLeoEmail)
+		text.tag_bind("email","<Enter>",self.setArrowCursor)
+		text.tag_bind("email","<Leave>",self.setDefaultCursor)
 	
 		text.configure(state="disabled")
 	
@@ -273,6 +278,19 @@ class leoDialog:
 		return "break"
 	#@-body
 	#@-node:2::OnOkCancelKey, OnYesNoKey, OnYesNoCancelKey
+	#@+node:3::setArrowCursor, setDefaultCursor
+	#@+body
+	def setArrowCursor (self,event=None):
+		
+		if self.text:
+			self.text.configure(cursor="arrow")
+		
+	def setDefaultCursor (self,event=None):
+		
+		if self.text:
+			self.text.configure(cursor="xterm")
+	#@-body
+	#@-node:3::setArrowCursor, setDefaultCursor
 	#@-node:8::Event handlers & command handlers
 	#@-others
 #@-body
