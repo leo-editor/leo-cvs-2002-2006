@@ -36,6 +36,8 @@ def doTests(all):
     
     c = g.top() ; p1 = p = c.currentPosition()
     
+    g.app.unitTestDict["fail"] = False
+    
     if all: iter = c.all_positions_iter()
     else:   iter = p.self_and_subtree_iter()
 
@@ -910,7 +912,7 @@ class editBodyTestCase(unittest.TestCase):
 #@-node:ekr.20040708111644:Edit Body test code (leoTest.py)
 #@+node:ekr.20040708173707:Import/Export test code (leoTest.py)
 #@+node:ekr.20040707140849.27:makeImportExportSuite
-def makeImportExportSuite(parentHeadline):
+def makeImportExportSuite(parentHeadline,doImport):
     
     """Create an Import/Export test for every descendant of testParentHeadline.."""
     
@@ -929,7 +931,7 @@ def makeImportExportSuite(parentHeadline):
         if p == temp: continue
         dialog = u.findNodeInTree(p,"dialog")
         assert(dialog)
-        test = importExportTestCase(c,p,dialog,temp)
+        test = importExportTestCase(c,p,dialog,temp,doImport)
         suite.addTest(test)
 
     return suite
@@ -941,7 +943,7 @@ class importExportTestCase(unittest.TestCase):
     
     #@    @+others
     #@+node:ekr.20040707140849.29:__init__
-    def __init__ (self,c,v,dialog,temp_v):
+    def __init__ (self,c,v,dialog,temp_v,doImport):
         
         # Init the base class.
         unittest.TestCase.__init__(self)
@@ -954,9 +956,10 @@ class importExportTestCase(unittest.TestCase):
         self.gui = None
         self.wasChanged = c.changed
         self.fileName = ""
+        self.doImport = doImport
     
         self.old_v = c.currentVnode()
-    
+    #@nonl
     #@-node:ekr.20040707140849.29:__init__
     #@+node:ekr.20040707140849.30:importExport
     def importExport (self):
@@ -999,6 +1002,8 @@ class importExportTestCase(unittest.TestCase):
         lines = s.split('\n')
         name = lines[0]
         val = lines[1]
+        if self.doImport and type(val) != type([]):
+            val = [val]
         self.fileName = val
         dict = {name: val}
         self.gui = leoGui.unitTestGui(dict,trace=False)

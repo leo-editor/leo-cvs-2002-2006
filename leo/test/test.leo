@@ -165,6 +165,57 @@
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040707091428"><vh>Unit Tests</vh>
+<v t="ekr.20040710120700"><vh>File Tests</vh>
+<v t="ekr.20040707140849.35"><vh>Test Leo files...</vh>
+<v t="ekr.20040707140849.39"><vh>@test test.leo</vh></v>
+<v t="ekr.20040707140849.40"><vh>@test LeoPy.leo</vh></v>
+<v t="ekr.20040707140849.41"><vh>@test leoPlugins.leo</vh></v>
+<v t="ekr.20040707140849.42"><vh>@test LeoDocs.leo</vh></v>
+</v>
+<v t="ekr.20040707140849.26"><vh>Import/Export tests</vh>
+<v t="ekr.20040708173308.1"><vh>@suite Import tests</vh></v>
+<v t="ekr.20040708173549"><vh>@suite Export tests</vh></v>
+<v t="ekr.20040303063549.90"><vh>importTests</vh>
+<v t="ekr.20040708174345"><vh>tempNode</vh></v>
+<v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
+<v t="ekr.20040303063549.92"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.93"><vh>importAtFile</vh>
+<v t="ekr.20040303063549.94"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.95"><vh>importNowebFiles</vh>
+<v t="ekr.20040303063549.96"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.97"><vh>importFlattenedOutline</vh>
+<v t="ekr.20040303063549.98"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.99"><vh>importCWEBFiles</vh>
+<v t="ekr.20040303063549.100"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.88"><vh>removeSentinels</vh>
+<v t="ekr.20040303063549.89"><vh>dialog</vh></v>
+</v>
+</v>
+<v t="ekr.20040303063549.77"><vh>exportTests</vh>
+<v t="ekr.20040708174345.1"><vh>tempNode</vh></v>
+<v t="ekr.20040303063549.78"><vh>exportHeadlines</vh>
+<v t="ekr.20040303063549.79"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.80"><vh>flattenOutline</vh>
+<v t="ekr.20040303063549.81"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.82"><vh>weave</vh>
+<v t="ekr.20040303063549.83"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.84"><vh>outlineToNoweb</vh>
+<v t="ekr.20040303063549.85"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.86"><vh>outlineToCWEB</vh>
+<v t="ekr.20040303063549.87"><vh>dialog</vh></v>
+</v>
+</v>
+</v>
+</v>
 <v t="ekr.20040708205640"><vh>Non-file tests</vh>
 <v t="ekr.20040707140849.10"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040708113527"><vh>editBodyTests</vh>
@@ -359,49 +410,6 @@
 <v t="ekr.20040707083523.20"><vh>wikiTest3</vh></v>
 </v>
 </v>
-<v t="ekr.20040707140849.26"><vh>Import/Export tests</vh>
-<v t="ekr.20040708173308.1"><vh>@suite Import tests</vh></v>
-<v t="ekr.20040708173549"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040303063549.90"><vh>importTests</vh>
-<v t="ekr.20040708174345"><vh>tempNode</vh></v>
-<v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
-<v t="ekr.20040303063549.92"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.93"><vh>importAtFile</vh>
-<v t="ekr.20040303063549.94"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.95"><vh>importNowebFiles</vh>
-<v t="ekr.20040303063549.96"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.97"><vh>importFlattenedOutline</vh>
-<v t="ekr.20040303063549.98"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.99"><vh>importCWEBFiles</vh>
-<v t="ekr.20040303063549.100"><vh>dialog</vh></v>
-</v>
-</v>
-<v t="ekr.20040303063549.77"><vh>exportTests</vh>
-<v t="ekr.20040708174345.1"><vh>tempNode</vh></v>
-<v t="ekr.20040303063549.78"><vh>exportHeadlines</vh>
-<v t="ekr.20040303063549.79"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.80"><vh>flattenOutline</vh>
-<v t="ekr.20040303063549.81"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.82"><vh>weave</vh>
-<v t="ekr.20040303063549.83"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.84"><vh>outlineToNoweb</vh>
-<v t="ekr.20040303063549.85"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.86"><vh>outlineToCWEB</vh>
-<v t="ekr.20040303063549.87"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.88"><vh>removeSentinels</vh>
-<v t="ekr.20040303063549.89"><vh>dialog</vh></v>
-</v>
-</v>
-</v>
 <v t="ekr.20040707093334"><vh>Mini tests...</vh>
 <v t="ekr.20040311125054"><vh>@test p.t == p.v.t</vh></v>
 <v t="ekr.20040310145919"><vh>@test python keywords</vh></v>
@@ -458,12 +466,6 @@
 <v t="ekr.20040707091428.18"><vh>@test hasThreadNextBack</vh></v>
 <v t="ekr.20040707091428.19"><vh>@test vnode list</vh></v>
 </v>
-</v>
-<v t="ekr.20040707140849.35"><vh>Test Leo files...</vh>
-<v t="ekr.20040707140849.39"><vh>@test test.leo</vh></v>
-<v t="ekr.20040707140849.40"><vh>@test LeoPy.leo</vh></v>
-<v t="ekr.20040707140849.41"><vh>@test leoPlugins.leo</vh></v>
-<v t="ekr.20040707140849.42"><vh>@test LeoDocs.leo</vh></v>
 </v>
 <v t="ekr.20040707150427"><vh>Unfinished tests...</vh>
 <v t="ekr.20040707140849.43"><vh>Outline tests (Sometimes fails)</vh>
@@ -864,7 +866,6 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
 <v t="ekr.20040709094228" a="TV"><vh>select drag problems</vh></v>
-<v t="ekr.20040709102625"><vh>Test multiple imports</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -5698,7 +5699,7 @@ import leoTest ; reload(leoTest)
 
 @others
 
-suite = leoTest.makeImportExportSuite("importTests")
+suite = leoTest.makeImportExportSuite("importTests",doImport=True)
 
 g.app.scriptDict['suite'] = suite</t>
 <t tx="ekr.20040708173549"># Create unit tests in g.app.scriptDict["suite"]
@@ -5710,7 +5711,7 @@ import leoTest ; reload(leoTest)
 
 @others
 
-suite = leoTest.makeImportExportSuite("exportTests")
+suite = leoTest.makeImportExportSuite("exportTests",doImport=False)
 
 g.app.scriptDict['suite'] = suite</t>
 <t tx="ekr.20040708174345"></t>
@@ -5813,6 +5814,6 @@ assert errors == 0, "Check Outline reported %d errors" % errors</t>
 <t tx="ekr.20040708215633.3"></t>
 <t tx="ekr.20040709094228">a bcdef.hij
 lmn</t>
-<t tx="ekr.20040709102625"></t>
+<t tx="ekr.20040710120700"></t>
 </tnodes>
 </leo_file>
