@@ -11,23 +11,29 @@ Window sizes are now in pixels rather than grid units, so you must resize existi
 Highlights of this version:
 
 * Plugged a huge memory leak.
+* Fixed a major bug involving undo.
 * Added Icon & Status areas to Leo window for use by plugins.
-* New plugins:
+* Important new plugins:
+  - The file leoPlugins.leo now contains all plugins.
   - add_directives.py allows plugins to define new directives.
   - color_markup.py supports wiki-styled markup.
+  - mod_spelling.py checks spelling (requires aspell to be installed).
   - nav_buttons.py creates browser-style navigation plugins in the icon area.
   - plugins_menu.py creates a Plugins menu items for all loaded plugins.
   - scripts_menu.py creates a Scripts menu for all scripts in scripts folder.
-  - spell checking using aspell.
+  - spell
   - trace_gc traces all changes to memory at idle time.
 * Other enhancements:
-  - Redesigned the Find panel. Non-functional options are dimmed.
+  - Redesigned the Find panel.   Non-functional options are dimmed.
   - Added @wrap and @nowrap directives.
   - Added Write Dirty @file Nodes command.
   - Added several new "stub hooks".
   - Hyperlinks are now enabled by default.
   - Leo now loads plugins in alphabetical order.
   - Leo now remembers the size and location of Leo windows.
+  - Undo now restores the insert point or the selection range after most commands.
+  - Added apply button to Font panel.
+  - Improved the reporting of characters that do not exist in the present encoding.
 * The usual assortment of bug fixes and minor improvements.
   - There are no known bugs in this version of Leo.
 
