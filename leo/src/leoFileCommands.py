@@ -34,9 +34,12 @@ xml_language_names = (
 class BadLeoFile(Exception):
     def __init__(self, message):
         self.message = message
-        Exception.__init__(self,message) # 4/26/03: initialize the base class.
+        Exception.__init__(self,message) # Init the base class.
     def __str__(self):
         return "Bad Leo File:" + self.message
+        
+class invalidPaste(Exception):
+    pass
 
 class baseFileCommands:
     """A base class for the fileCommands subcommander."""
@@ -62,6 +65,7 @@ class baseFileCommands:
         self.descendentExpandedList = []
         self.descendentMarksList = []
         self.fileFormatNumber = 0
+        self.forbiddenTnodes = []
         self.descendentUnknownAttributesDictList = []
         self.ratio = 0.5
         self.fileBuffer = None ; self.fileIndex = 0
@@ -189,8 +193,8 @@ class baseFileCommands:
         current = c.currentPosition()
         c.beginUpdate()
         if reassignIndices:
-            #@        << reassign tnode indices and clear all clone links >>
-            #@+node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
+            #@        << reassign tnode indices >>
+            #@+node:ekr.20031218072017.1558:<< reassign tnode indices >>
             #@+at 
             #@nonl
             # putLeoOutline calls assignFileIndices (when copying nodes) so 
@@ -209,7 +213,7 @@ class baseFileCommands:
                     self.maxTnodeIndex += 1
                     t.setFileIndex(self.maxTnodeIndex)
             #@nonl
-            #@-node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
+            #@-node:ekr.20031218072017.1558:<< reassign tnode indices >>
             #@nl
         c.selectVnode(current)
         c.endUpdate()
@@ -726,7 +730,9 @@ class baseFileCommands:
             #@+node:EKR.20040610134756:<< recreate tnodesDict >>
             nodeIndices = g.app.nodeIndices
             
-            for t in self.c.all_tnodes_iter():
+            self.tnodesDict = {}
+            
+            for t in self.c.all_unique_tnodes_iter():
                 tref = t.fileIndex
                 if nodeIndices.isGnx(tref):
                     tref = nodeIndices.toString(tref)
@@ -745,12 +751,16 @@ class baseFileCommands:
             self.getXmlStylesheetTag() # 10/25/02
             self.getTag("<leo_file>") # <leo_file/> is not valid.
             self.getClipboardHeader()
-            self.getVnodes()
+            self.getVnodes(reassignIndices)
             self.getTnodes()
             self.getTag("</leo_file>")
             v = self.finishPaste(reassignIndices)
+        except invalidPaste:
+            v = None
+            g.es("Invalid Paste Retaining Clones",color="blue")
         except BadLeoFile:
             v = None
+            g.es("The clipboard is not valid ",color="blue")
     
         # Clean up.
         self.fileBuffer = None ; self.fileIndex = 0
@@ -940,9 +950,9 @@ class baseFileCommands:
         # A slight change: we require a tnodes element.  But Leo always writes this.
         if self.getOpenTag("<tnodes>"):
             return # <tnodes/> seen.
-            
+        
         while self.matchTag("<t"):
-            self.getTnode()
+                self.getTnode()
     
         self.getTag("</tnodes>")
     #@-node:ekr.20031218072017.1560:getTnodes
@@ -994,7 +1004,24 @@ class baseFileCommands:
                 #@nl
             elif self.matchTag("t="):
                 # New for 4.1.  Read either "Tnnn" or "gnx".
-                tref = self.getDqString()
+                tref = index = self.getDqString()
+                if self.usingClipboard:
+                    #@                << raise invalidPaste if the tnode is in self.forbiddenTnodes >>
+                    #@+node:ekr.20041023110111:<< raise invalidPaste if the tnode is in self.forbiddenTnodes >>
+                    # Bug fix in 4.3 a1: make sure we have valid paste.
+                    theId,time,n = g.app.nodeIndices.scanGnx(index,0)
+                    if not time and index[0] == "T":
+                        index = index[1:]
+                        
+                    index = self.canonicalTnodeIndex(index)
+                    t = self.tnodesDict.get(index)
+                    
+                    if t in self.forbiddenTnodes:
+                        g.trace(t)
+                        raise invalidPaste
+                    #@nonl
+                    #@-node:ekr.20041023110111:<< raise invalidPaste if the tnode is in self.forbiddenTnodes >>
+                    #@nl
             elif self.matchTag("vtag=\"V"):
                 self.getIndex() ; self.getDquote() # ignored
             elif self.matchTag("tnodeList="):
@@ -1078,21 +1105,35 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
     #@+node:ekr.20031218072017.1565:getVnodes
-    def getVnodes (self):
+    def getVnodes (self,reassignIndices=True):
     
         c = self.c
     
         if self.getOpenTag("<vnodes>"):
             return # <vnodes/> seen.
             
+        self.forbiddenTnodes = []
+        back = parent = None # This routine _must_ work on vnodes!
+        self.currentVnodeStack = []
+        self.topVnodeStack = []
+            
         if self.usingClipboard:
             oldRoot = c.rootPosition()
             oldCurrent = c.currentPosition()
+            if not reassignIndices:
+                #@            << set self.forbiddenTnodes to tnodes than must not be pasted >>
+                #@+node:ekr.20041023105832:<< set self.forbiddenTnodes to tnodes than must not be pasted >>
+                self.forbiddenTnodes = []
+                
+                for p in oldCurrent.self_and_parents_iter():
+                    if p.v.t not in self.forbiddenTnodes:
+                        self.forbiddenTnodes.append(p.v.t)
+                        
+                # g.trace("forbiddenTnodes",self.forbiddenTnodes)
+                #@nonl
+                #@-node:ekr.20041023105832:<< set self.forbiddenTnodes to tnodes than must not be pasted >>
+                #@nl
     
-        back = parent = None # This routine _must_ work on vnodes!
-        
-        self.currentVnodeStack = []
-        self.topVnodeStack = []
         while self.matchTag("<v"):
             append1 = not self.usingClipboard and len(self.currentVnodeStack) == 0
             append2 = not self.usingClipboard and len(self.topVnodeStack) == 0
