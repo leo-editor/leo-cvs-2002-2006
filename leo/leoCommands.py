@@ -1854,7 +1854,7 @@ class Commands:
 	
 		c = self
 		c.beginUpdate()
-		trace("v,parent,n:"+v.headString()+","+parent.headString()+","+`n`)
+		# trace("v,parent,n:"+v.headString()+","+parent.headString()+","+`n`)
 		clone = v.clone(v) # Creates clone & dependents, does not set undo.
 		if not c.checkMoveWithParentWithWarning(clone,parent,true):
 			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
@@ -2225,7 +2225,7 @@ class Commands:
 		c = self
 		c.beginUpdate()
 		clone = v.clone(v) # Creates clone & dependents, does not set undo.
-		trace("v,after:"+v.headString()+","+after.headString())
+		# trace("v,after:"+v.headString()+","+after.headString())
 		if not c.checkMoveWithParentWithWarning(clone,after.parent(),true):
 			trace("invalid clone move")
 			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
