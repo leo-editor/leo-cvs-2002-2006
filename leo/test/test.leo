@@ -1721,8 +1721,8 @@ doc test</t>
 @encoding iso-8859-1</t>
 <t tx="T127">ref line 1
 ref line 2</t>
-<t tx="T128">@first   first line1
-@first   last line2
+<t tx="T128">@first first line1
+@first first line2
 @ This is a doc part
 line 2
 line 3
@@ -1745,7 +1745,7 @@ after at-others
 <t tx="T131">@ Doc part
 doc part line 2
 @c
-node 1 line 1
+	indented node 1 line 1
 node 2 line 2</t>
 <t tx="T132"></t>
 <t tx="T133">node 2 line 1

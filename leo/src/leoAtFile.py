@@ -463,7 +463,7 @@ class baseAtFile:
 	
 	# this function scans the lines in the list 'out' for @last directives
 	# and appends the corresponding line from 'lastLines' to each @last 
-	# directive found.  NOTE: the @first directives must be the very last
+	# directive found.  NOTE: the @last directives must be the very last
 	# lines in 'out'.
 	def completeLastDirectives(self,out,lastLines):
 	

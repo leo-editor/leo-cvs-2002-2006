@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4313" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="18" left="339" height="928" width="890"/>
+	<global_window_position top="21" left="360" height="928" width="890"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -7011,7 +7011,7 @@
 <v t="T4023"><vh>setFileIndex</vh></v>
 </v>
 </v>
-<v t="T4024"><vh>class vnode</vh>
+<v t="T4024" a="E"><vh>class vnode</vh>
 <v t="T1675" a="C"><vh>&lt;&lt; vnode constants &gt;&gt;  ### Warning: changes meaning of visitedBit</vh></v>
 <v t="T4025"><vh>Birth &amp; death</vh>
 <v t="T4026"><vh>v.__cmp__ (not used)</vh></v>
@@ -7684,7 +7684,7 @@
 </v>
 </v>
 <v t="T4286" a="E"><vh>@file leoAtFile.py </vh>
-<v t="T4287" a="V"><vh>&lt;&lt; atFile constants &gt;&gt;</vh></v>
+<v t="T4287"><vh>&lt;&lt; atFile constants &gt;&gt;</vh></v>
 <v t="T4288"><vh>Birth &amp; death</vh>
 <v t="T2331" a="CE"><vh>atFile.__init__&amp; initIvars</vh>
 <v t="T2332"><vh>&lt;&lt; init atFile ivars &gt;&gt;</vh></v>
@@ -7702,9 +7702,9 @@
 <v t="T4297"><vh>&lt;&lt; set self.targetFileName &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T2969" a="C"><vh>Reading</vh>
+<v t="T2969" a="CE"><vh>Reading</vh>
 <v t="T2970"><vh>completeFirstDirectives (Dave Hein)</vh></v>
-<v t="T2971"><vh>completeLastDirectives (Dave Hein)</vh></v>
+<v t="T2971" a="V"><vh>completeLastDirectives (Dave Hein)</vh></v>
 <v t="T2972"><vh>createNthChild (3.0)</vh>
 <v t="T2973"><vh>&lt;&lt; check the headlines &gt;&gt;</vh></v>
 </v>
@@ -7721,7 +7721,7 @@
 <v t="T2568"><vh>&lt;&lt; Append s to out &gt;&gt;</vh></v>
 <v t="T2569"><vh>&lt;&lt; Remove a closing block delim from out &gt;&gt;</vh></v>
 </v>
-<v t="T2319" a="CE"><vh>scanHeader</vh>
+<v t="T2319" a="C"><vh>scanHeader</vh>
 <v t="T2320"><vh>&lt;&lt; skip any non @+leo lines &gt;&gt;</vh></v>
 <v t="T2321"><vh>&lt;&lt; make sure we have @+leo &gt;&gt;</vh></v>
 <v t="T2322"><vh>&lt;&lt; read optional version param &gt;&gt;</vh></v>
@@ -37502,7 +37502,7 @@ def completeFirstDirectives(self,out,firstLines):
 
 # this function scans the lines in the list 'out' for @last directives
 # and appends the corresponding line from 'lastLines' to each @last 
-# directive found.  NOTE: the @first directives must be the very last
+# directive found.  NOTE: the @last directives must be the very last
 # lines in 'out'.
 def completeLastDirectives(self,out,lastLines):
 
