@@ -1890,18 +1890,25 @@ class baseFileCommands:
         #@nl
         #@    << Put tnodeList and unKnownAttributes >>
         #@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
-        # Write tnodeList only for @file nodes.
+        # Write the tnodeList only for @file nodes.
         # New in 4.2: tnode list is in tnode.
         
         if 0: # Debugging.
-            if v.isAnyAtFileNode() and not v.isAtThinFileNode():
+            if v.isAnyAtFileNode():
                 if hasattr(v.t,"tnodeList"):
                     g.trace(v.headString(),len(v.t.tnodeList))
                 else:
                     g.trace(v.headString(),"no tnodeList")
         
         if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
-            fc.putTnodeList(v) # New in 4.0
+            if isThin:
+                if g.app.unitTesting:
+                    g.app.unitTestDict["warning"] = True
+                g.es("deleting tnode list for %s" % p.headString(),color="blue")
+                # This is safe: cloning can't change the type of this node!
+                delattr(v.t,"tnodeList")
+            else:
+                fc.putTnodeList(v) # New in 4.0
         
         if hasattr(v,"unknownAttributes"): # New in 4.0
             self.putUnknownAttributes(v)
