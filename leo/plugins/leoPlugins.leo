@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1448" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1457" clone_windows="0"/>
 <globals body_outline_ratio="0.43466666666666665">
-	<global_window_position top="10" left="143" height="921" width="957"/>
+	<global_window_position top="42" left="156" height="921" width="957"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -973,7 +973,7 @@
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
-<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" a="MV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 <v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
 <v t="edream.031217101015"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.619"><vh>From Bernhard Mulder</vh>
@@ -1513,22 +1513,20 @@
 </v>
 </v>
 <v t="ekr.20040107092135" a="E"><vh>New plugins:  very cool</vh>
-<v t="ekr.20040111053758" a="V"><vh>Description of rst2 by Steve Zatz</vh></v>
-<v t="ekr.20040109221855" a="E" tnodeList="ekr.20040109221855,ekr.20040109221855.1,ekr.20040109221855.2,ekr.20040109221855.3,ekr.20040109221855.4,ekr.20040109221855.5,ekr.20040109221855.6,ekr.20040109221855.7,ekr.20040109225409,ekr.20040109221855.8"><vh>@file rst2.py</vh>
-<v t="ekr.20040109221855.1"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
-<v t="ekr.20040109221855.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
-<v t="ekr.20040109221855.3" a="E"><vh>onIconDoubleClick</vh>
-<v t="ekr.20040109221855.4" a="E"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
-<v t="ekr.20040109221855.5"><vh>&lt;&lt; convert rST to HTML/LaTeX &gt;&gt;</vh></v>
+<v t="ekr.20040109080300"><vh> Changes made by EKR</vh></v>
+<v t="ekr.20040111053758"><vh> Description of rst2 by Steve Zatz</vh></v>
+<v t="ekr.20040118081748" a="E" tnodeList="ekr.20040118081748,ekr.20040118081748.1,ekr.20040118081748.2,ekr.20040118081748.3,ekr.20040118081748.4,ekr.20040118081748.5,ekr.20040118081748.6,ekr.20040118081748.7,ekr.20040118081748.8"><vh>@file rst2.py</vh>
+<v t="ekr.20040118081748.1" a="M"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
+<v t="ekr.20040118081748.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
+<v t="ekr.20040118081748.3" a="E"><vh>onIconDoubleClick</vh>
+<v t="ekr.20040118081748.4" a="E"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
+<v t="ekr.20040118081748.5"><vh>&lt;&lt; define code-block &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040109221855.6"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
+<v t="ekr.20040118081748.6"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040109221855.7" a="E"><vh>writeTreeAsRst</vh>
-<v t="ekr.20040109225409"><vh>&lt;&lt; write rst node &gt;&gt;</vh></v>
+<v t="ekr.20040118081748.7"><vh>writeTreeAsRst</vh></v>
+<v t="ekr.20040118081748.8"><vh>underline</vh></v>
 </v>
-<v t="ekr.20040109221855.8"><vh>underline</vh></v>
-</v>
-<v t="ekr.20040109080300"><vh>Changes made by EKR</vh></v>
 <v t="ekr.20040107092135.2" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
 <v t="ekr.20040108054555.14"><vh>&lt;&lt; vars &gt;&gt;</vh></v>
 <v t="ekr.20040107092135.3"><vh>class SearchBox</vh>
@@ -15593,11 +15591,15 @@ image.py
 # nav_buttons.py
 plugins_menu.py
 rowcol.py
+# New from Steve Zatz
+# ** requires docutils: http://docutils.sourceforge.net/
+# ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
+# rst2.py
 # New from Paul Paterson.
 nodenavigator.py
 searchbox.py
 # word_export.py
-xemacs.py</t>
+# xemacs.py</t>
 <t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
 <t tx="edream.120703082844">@language python
 
@@ -16097,234 +16099,6 @@ if Tkinter:
 
 - Call updatedRowColWidget immediately from addWidgets.
   This seems to be necessary to reserve the proper place in the icon area.</t>
-<t tx="ekr.20040109221855">"""If a headline starts with @rst &lt;filename&gt;, double-clicking on it will 
-write a file in outline order, with the headlines converted to reStructuredText 
-section headings.
-
-If the name of the &lt;filename&gt; has the extension .html, .htm or .tex, and if you have
-docutils installed, it will generate HTML or LaTeX, respectively."""
-
-# By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
-
-# EKR: The code now lets other plugins handle @folder and @url nodes.
-
-# Some hacks by S Zatz to create the ability to combine program code and documentation
-# using @rst nodes that results combined code/documentation HTML output.
-# See the 'about this plugin' section for more information
-
-from leoPlugins import *
-from leoGlobals import *
-
-import os
-
-&lt;&lt; about this plugin &gt;&gt;
-&lt;&lt; change log &gt;&gt;
-
-@others
-
-if 1: # Register the handlers...
-    registerHandler("icondclick1",onIconDoubleClick)
-    
-    __version__ = "1.5" # Set version for the plugin handler.
-    plugin_signon(__name__)</t>
-<t tx="ekr.20040109221855.1">@ This plugin writes out @rst nodes as a reStructuredText file.
-
-If the filename ends in .html, .htm or .tex and if you have docutils_ (a Python
-module) installed, then it will be written as HTML or LaTeX, respectively. The HTML converter is far
-from bug-free, but remember, docutils is alpha software. (Perhaps a future
-version will allow automatic translation to other formats, like OpenOffice.org
-as well).
-
-Headlines are translated into reStructuredText headlines, e.g. underlined
-depending on the level and empty line separated from body text otherwise, text
-is written as it is. The "#" character is not used for underlining, so it may
-be used for a title as in::
-
-    #####
-    Title
-    #####
-
-Otherwise, section underlining is discouraged, since it is automatically generated.
-
-.. _docutils: http://docutils.sourceforge.net
-
---------------------------------------------------------
-
-S Zatz modifications
-
-Assumes Leo outlines are in the form
-
-@rst somefilename.[txt/html/tex]
-..@file-nosent somefilename.py
-....code node
-......@rst
-......another code node
-........@rst
-......more code
-........@rst
-
-and so on
-
-Double-clicking on a @rst somefilename.ext node generates a reST-structured [txt/html/tex] file that combines
-program code nodes with reST documentation from @rst nodes that have no associated filename.
-
-Double-clicking on a plain (no file name) @rst node opens two text editor windows -- one with program code and the other with the associated reST documentation from the @rst node</t>
-<t tx="ekr.20040109221855.2">@ Change log:
-
-- New tree types: @rst has been added.
-
-- EKR: The code now lets other plugins handle @folder and @url nodes.
-
-- HTML generation: @rst nodes can now generate HTML, if Python docutils_ are
-  installed. Simply give the filename an extension .htm or .html. You can try
-  this out by renaming the filename in this @rst tree.
-
-- underlines: I changed the order of the underline characters again. The "&gt;" is
-  doesn't really look good as an underline in my opinion, so I moved it to a very
-  low level.
-
-- JD 2003-03-10 (rev 1.3): some more corrections to the unicode-&gt; encoding translation.
-  No only check for missing docutils (doesn't mask other errors any more).
-
-- JD 2003-03-11 (rev 1.4): separated out the file launching code to a different pluging.
-
-- 2003-11-02 Added generation of LaTeX files, just make the extension of the filename '.tex'. --Timo Honkasalo
-
-- 2003-12-24 S Zatz modifications to introduce concept of plain @rst nodes to improve program documentation</t>
-<t tx="ekr.20040109221855.3"># by Josef Dalcolmo 2003-01-13
-#
-# this does not check for proper filename syntax.
-# path is the current dir, or the place @folder points to
-# this should probably be changed to @path or so.
-
-def onIconDoubleClick(tag,keywords):
-
-    v = keywords.get("v")
-    c = keywords.get("c")
-    h = v.headString().strip()
-    if match_word(h,0,"@rst"):
-        if len(h) &gt; 5:
-            fname = h[5:]
-            ext = os.path.splitext(fname)[1].lower()
-            if ext in ('.htm','.html','.tex'):
-                &lt;&lt; write rST as HTML/LaTeX &gt;&gt;
-            else:
-                &lt;&lt; write rST file &gt;&gt;
-        else:
-            # Opens @rst node and parent code node
-            # For convenience should probably add @ignore, @nocolor and @wrap directives if @rst node doesn't have them
-            c.openWith(("os.startfile", None, ".txt"))
-            c.selectVnode(v.parent())
-            c.openWith(("os.startfile", None, ".tp"))
-</t>
-<t tx="ekr.20040109221855.4">try:
-    import docutils
-except:
-    docutils = None
-    es('HTML/LaTeX generation requires docutils')
-
-if docutils:
-    import StringIO
-    rstFile = StringIO.StringIO()
-    writeTreeAsRst(rstFile, fname, v, c)
-    rstText = rstFile.getvalue()
-    # Set the writer and encoding for the converted file
-    if ext in ('.html','.htm'):
-        writer='html'
-        enc="utf-8"
-    else:
-        writer='latex'
-        enc="iso-8859-1"
-    &lt;&lt; convert rST to HTML/LaTeX &gt;&gt;
-    convertedFile = file(fname,'w')
-    convertedFile.write(output)
-    convertedFile.close()
-    rstFile.close()
-    es('written: '+str(fname))</t>
-<t tx="ekr.20040109221855.5"># this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
-from docutils.core import Publisher
-from docutils.io import StringOutput, StringInput
-
-pub = Publisher()
-# Initialize the publisher
-pub.source = StringInput(source=rstText)
-pub.destination = StringOutput(pub.settings, encoding=enc)
-pub.set_reader('standalone', None, 'restructuredtext')
-pub.set_writer(writer)
-output = pub.publish()</t>
-<t tx="ekr.20040109221855.6">rstFile = file(fname,'w')
-writeTreeAsRst(rstFile, fname, v, c)
-rstFile.close()
-es('written: '+str(fname))</t>
-<t tx="ekr.20040109221855.7">def writeTreeAsRst(rstFile, fname, vnode, c):
-    'Writes the tree under vnode to the file rstFile (fname is the filename)'
-    # we don't write a title, so the titlepage can be customized
-    # use '#' for title under/overline
-    # 3/7/03
-    dict = scanDirectives(c,v=vnode)
-    encoding = dict.get("encoding",None)
-    if encoding == None:
-        encoding = app().config.default_derived_file_encoding
-    # 3/7/03
-    s = toEncodedString(fname,encoding,reportErrors=true)
-    rstFile.write('.. filename: '+s+'\n')
-    rstFile.write('\n')
-    # 3/7/03
-    s = vnode.bodyString()
-    s = toEncodedString(s,encoding,reportErrors=true)
-    rstFile.write(s+'\n')		# write body of titlepage
-    rstFile.write('\n')
-    
-    toplevel = vnode.level()+1 #Dec 20
-    h = vnode.headString()
-    stopHere = vnode.nodeAfterTree()
-    v = vnode.threadNext()
-    # repeat for all nodes in this tree
-    while v != stopHere:
-        # 3/7/03
-        h = v.headString().strip()
-        # we get the parent of the @rst node, which is assumed to hold program code
-        if match_word(h,0,"@rst"):
-			&lt;&lt; write rst node &gt;&gt;
-        v = v.threadNext()</t>
-<t tx="ekr.20040109221855.8"># note the first character is intentionally unused, to serve as the underline
-# character in a title (in the body of the @rst node)
-
-def underline(h,level):
-    str = """#=+*^~"'`-:&gt;&lt;_"""[level]
-    return str*max(len(h),4)+'\n'</t>
-<t tx="ekr.20040109225409">v_p = v.parent()
-h_p = v_p.headString()
-h_p = toEncodedString(h_p,encoding,reportErrors=true)
-s_p = v_p.bodyString()
-s_p = toEncodedString(s_p,encoding,reportErrors=true)
-rstFile.write(h_p+'\n')
-rstFile.write(underline(h_p,v.level()-toplevel))
-rstFile.write('\n')
-if s_p.strip():
-    #using a class directive to give program code blocks a different look than other literal blocks
-    rstFile.write('**code**:\n\n.. class:: code\n..\n\n::\n\n')
-    s_p = s_p.split('\n')
-    for linenum,linetext in enumerate(s_p[:-1]):
-        if "@others" in linetext: #deleting lines with @other directive from output
-            continue
-        # hack to word wrap long code lines
-        if len(linetext) &gt; 100:
-            x = linetext[100:]
-            y = x.split(' ',1)
-            if len(y) == 1:
-                linetext = linetext[:100]+y[0]
-            else:
-                linetext = linetext[:100]+y[0]+'\n\t    '+y[1]
-        rstFile.write('\t%2d  %s\n'%(linenum+1,linetext))
-rstFile.write('\n')
-# 3/7/03
-s = v.bodyString()
-s = toEncodedString(s,encoding,reportErrors=true)
-# next line is an total hack to take care of @ignore, @nocolor, @wrap in the @rst nodes
-s = s.split('\n',3)[3]
-rstFile.write('**comments**:\n%s\n'%s)
-rstFile.write('\n')</t>
 <t tx="ekr.20040111053758">@nocolor
 
 I now have a version of the plugin that produces HTML output that has syntax
@@ -16404,5 +16178,290 @@ Literate Programming but in my mind this is practical Literate Programming.
 Frankly, I think this is all a minor miracle but maybe I've lost perspective.
 
 Steve Zatz</t>
+<t tx="ekr.20040118081748">"""If a headline starts with @rst &lt;filename&gt;, double-clicking on it will 
+write a file in outline order, with the headlines converted to reStructuredText 
+section headings.
+
+If the name of the &lt;filename&gt; has the extension .html, .htm or .tex, and if you have
+docutils installed, it will generate HTML or LaTeX, respectively."""
+
+# By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
+
+# EKR: The code now lets other plugins handle @folder and @url nodes.
+
+# S. Zatz: some modifications to create the ability to combine program code and documentation
+# using @rst nodes (with no file name) in orde to produce combined code/documentation HTML output.
+# See the 'about this plugin' section for more information
+
+from leoPlugins import *
+from leoGlobals import *
+
+import os
+#import reST_HTML
+
+&lt;&lt; about this plugin &gt;&gt;
+&lt;&lt; change log &gt;&gt;
+
+@others
+
+# Register the handlers...
+registerHandler("icondclick1",onIconDoubleClick)
+__version__ = "2.0"
+plugin_signon(__name__)
+
+
+</t>
+<t tx="ekr.20040118081748.1">@ This plugin writes out @rst nodes as a reStructuredText file.
+
+If the filename ends in .html, .htm or .tex and if you have docutils_ (a Python
+module) installed, then it will be written as HTML or LaTeX, respectively. The HTML converter is far
+from bug-free, but remember, docutils is alpha software. (Perhaps a future
+version will allow automatic translation to other formats, like OpenOffice.org
+as well).
+
+Headlines are translated into reStructuredText headlines, e.g. underlined
+depending on the level and empty line separated from body text otherwise, text
+is written as it is. The "#" character is not used for underlining, so it may
+be used for a title as in::
+
+    #####
+    Title
+    #####
+
+Otherwise, section underlining is discouraged, since it is automatically generated.
+
+.. _docutils: http://docutils.sourceforge.net
+
+--------------------------------------------------------
+
+S Zatz modifications
+
+Assumes Leo outlines are in the form
+
+@rst somefilename.[txt/html/tex]
+..@file-nosent somefilename.py
+....code node
+......@rst
+......another code node
+........@rst
+......more code
+........@rst
+
+and so on
+
+If you want a table of contents, put the following:  '.. contents:: Table of Contents'
+on its own line in the body of the root '@rst somefilename.[txt/html/tex]' node.
+(Maybe this should be done in the plugin?)
+
+Double-clicking on a @rst somefilename.ext node generates a reST-structured [txt/html/tex] file that combines
+program code nodes with reST documentation from @rst nodes that have no associated filename.
+
+Note: if the SilverCity lexing package is present then code is presented with syntax highlighting.  For the
+HTML output to look OK you need the following cascading style sheets:
+    1) default.css -&gt; docutils default style sheet
+    2) leo_rst.css -&gt; contains some style 'improvements' mostly based on Gunnar Schwant's DocFactory
+    3) silver_city.css -&gt; if SilverCity is present, this is the style sheet that supports syntax highlighting
+The latter two style sheets are imported at the end of the default.css.  Since I know only enough css to be dangerous,
+would be great to have someone clean this up.  I am following David Goodger request that the default docutils
+style sheet be kept intact with modifications done via imported style sheets.
+</t>
+<t tx="ekr.20040118081748.2">@ Change log:
+
+- New tree types: @rst has been added.
+
+- EKR: The code now lets other plugins handle @folder and @url nodes.
+
+- HTML generation: @rst nodes can now generate HTML, if Python docutils_ are
+  installed. Simply give the filename an extension .htm or .html. You can try
+  this out by renaming the filename in this @rst tree.
+
+- underlines: I changed the order of the underline characters again. The "&gt;" is
+  doesn't really look good as an underline in my opinion, so I moved it to a very
+  low level.
+
+- JD 2003-03-10 (rev 1.3): some more corrections to the unicode-&gt; encoding translation.
+  No only check for missing docutils (doesn't mask other errors any more).
+
+- JD 2003-03-11 (rev 1.4): separated out the file launching code to a different pluging.
+
+- 2003-11-02 Added generation of LaTeX files, just make the extension of the filename '.tex'. --Timo Honkasalo
+
+- 2003-12-24 S Zatz modifications to introduce concept of plain @rst nodes to improve program documentation
+
+- 2004-01-17 S Zatz allow whitespace in paths.</t>
+<t tx="ekr.20040118081748.3"># by Josef Dalcolmo 2003-01-13
+#
+# this does not check for proper filename syntax.
+# path is the current dir, or the place @folder points to
+# this should probably be changed to @path or so.
+
+def onIconDoubleClick(tag,keywords):
+
+	v = keywords.get("v")
+	c = keywords.get("c")
+	h = v.headString().strip()
+
+	if match_word(h,0,"@rst"):
+		if len(h) &gt; 5:
+			fname = h[5:]
+			ext = os.path.splitext(fname)[1].lower()
+			if ext in ('.htm','.html','.tex'):
+				&lt;&lt; write rST as HTML/LaTeX &gt;&gt;
+			else:
+				&lt;&lt; write rST file &gt;&gt;
+		else:
+			pass
+			# if the headline only contains @rst then open the node and its parent in text editor
+			# this works for me but needs to be generalized and should probably be a component
+			# of the open_with plugin
+			#c.openWith(("os.startfile", None, ".txt"))
+			#c.selectVnode(v.parent())
+			#c.openWith(("os.startfile", None, ".tp"))
+
+
+</t>
+<t tx="ekr.20040118081748.4">try:
+	import docutils
+except:
+	es('HTML/LaTeX generation requires docutils',color="blue")
+	return
+else:
+	from docutils.core import Publisher
+	from docutils.io import StringOutput, StringInput
+	import StringIO
+	
+# Set the writer and encoding for the converted file
+if ext in ('.html','.htm'):
+	writer='html'
+	enc="utf-8"
+else:
+	writer='latex'
+	enc="iso-8859-1"
+
+if writer == 'html':
+	try:
+		import SilverCity
+	except:
+		es('SilverCity not present so no syntax highlighting')
+		syntax = False
+	else:
+		&lt;&lt; define code-block &gt;&gt;
+		syntax = True     
+else:
+	syntax = False
+	
+rstFile = StringIO.StringIO()
+writeTreeAsRst(rstFile, fname, v, c, syntax)
+rstText = rstFile.getvalue()
+
+# this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
+pub = Publisher()
+pub.source = StringInput(source=rstText)
+pub.destination = StringOutput(pub.settings, encoding=enc)
+pub.set_reader('standalone', None, 'restructuredtext')
+pub.set_writer(writer)
+output = pub.publish(argv=[]) # 1/18/04
+
+convertedFile = file(fname,'w')
+convertedFile.write(output)
+convertedFile.close()
+rstFile.close()
+es('written: '+str(fname))</t>
+<t tx="ekr.20040118081748.5"># See Syntax-highlighted code blocks for docutils by Kevin Schluff in ASPN Python Cookbook
+# this code defines a new "code-block" directive for docutils
+import docutils.parsers.rst
+
+def code_block(name, arguments, options, content, lineno, content_offset, block_text, state, state_machine):
+	language = arguments[0]
+	module = getattr(SilverCity, language)
+	generator = getattr(module, language+"HTMLGenerator")
+	io = StringIO.StringIO()
+	generator().generate_html(io, '\n'.join(content))
+	html = '&lt;div class="code-block"&gt;\n%s\n&lt;/div&gt;\n'%io.getvalue()
+	raw = docutils.nodes.raw('',html, format='html') #(self, rawsource='', text='', *children, **attributes):
+	return [raw]
+
+code_block.arguments = (1,0,0)
+code_block.options = {'language' : docutils.parsers.rst.directives.unchanged}
+code_block.content = 1
+  
+# Need to register the directive with docutils
+docutils.parsers.rst.directives.register_directive('code-block', code_block)
+
+</t>
+<t tx="ekr.20040118081748.6">rstFile = file(fname,'w')
+writeTreeAsRst(rstFile, fname, v, c)
+rstFile.close()
+es('written: '+str(fname))</t>
+<t tx="ekr.20040118081748.7">def writeTreeAsRst(rstFile, fname, vnode, c, syntax):
+	'Writes the tree under vnode to the file rstFile (fname is the filename)'
+	# we don't write a title, so the titlepage can be customized
+	# use '#' for title under/overline
+	directives = scanDirectives(c, v=vnode) # changed name because don't want to use keyword dict
+	
+	encoding = directives.get("encoding",None)
+	if encoding == None:
+		encoding = app().config.default_derived_file_encoding
+	
+	if syntax:
+		lang_dict = {'python':'Python', 'ruby':'Ruby', 'perl':'Perl', 'c':'CPP'}
+		language = directives['language']
+		# SilverCity modules have first letter in caps
+		if language in lang_dict:
+			code_dir = '**code**:\n\n.. code-block:: %s\n\n'%lang_dict[language]
+		else:
+			code_dir = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
+	else:
+		code_dir = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
+
+	s = toEncodedString(fname,encoding,reportErrors=true)
+	rstFile.write('.. filename: '+s+'\n')
+	rstFile.write('\n')
+
+	s = vnode.bodyString()
+	s = toEncodedString(s,encoding,reportErrors=true)
+	rstFile.write(s+'\n')		# write body of titlepage
+	rstFile.write('\n')
+	
+	toplevel = vnode.level()+1 #Dec 20
+	h = vnode.headString()
+	stopHere = vnode.nodeAfterTree()
+	v = vnode.threadNext()
+	# repeat for all nodes in this tree
+	while v != stopHere:
+		h = v.headString().strip()
+		if match_word(h,0,"@rst"):
+			s = v.bodyString()
+			s = toEncodedString(s,encoding,reportErrors=true)
+			# next line is an total hack to take care of @ignore, @nocolor, @wrap in the @rst nodes
+			s = s.split('\n',3)[3]
+			rstFile.write('**comments**:\n%s\n'%s)
+			rstFile.write('\n')
+		else:
+			if match_word(h,0,"@file-nosent"):
+				h = h[13:]
+			h = toEncodedString(h,encoding,reportErrors=true)
+			s = v.bodyString()
+			s = toEncodedString(s,encoding,reportErrors=true)
+			rstFile.write(h+'\n')
+			rstFile.write(underline(h,v.level()-toplevel))
+			rstFile.write('\n')
+			if s.strip():
+				rstFile.write(code_dir)
+				s = s.split('\n')
+				for linenum,linetext in enumerate(s[:-1]):
+					if "@others" in linetext: #deleting lines with @other directive from output
+						continue
+					rstFile.write('\t%2d  %s\n'%(linenum+1,linetext))
+			rstFile.write('\n')
+			
+		v = v.threadNext()</t>
+<t tx="ekr.20040118081748.8"># note the first character is intentionally unused, to serve as the underline
+# character in a title (in the body of the @rst node)
+
+def underline(h,level):
+	str = """#=+*^~"'`-:&gt;&lt;_"""[level]
+	return str*max(len(h),4)+'\n'
+</t>
 </tnodes>
 </leo_file>
