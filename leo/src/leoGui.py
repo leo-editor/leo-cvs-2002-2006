@@ -95,6 +95,7 @@ class leoGui:
 		
 		# Finish creating the frame (kludge: sets c.body so it can create the outline.)
 		frame.finishCreate(c)
+		c.log = c.frame.log # Kludge: should replace c.log by abstract log routines.
 		
 		# Finish initing the subcommanders.
 		c.undoer.clearUndoState() # Menus must exist at this point.
