@@ -635,8 +635,8 @@
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"
 marks="ekr.20040716140617.1,"
-expanded="ekr.20040710184602,"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040712101754" a="TV"><vh>Unit Tests</vh>
+expanded="ekr.20040708145036,ekr.20040716140617,"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1" a="M"><vh>-input</vh></v>
@@ -684,7 +684,7 @@ expanded="ekr.20040710184602,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10"><vh>importTests</vh>
+<v t="ekr.20040712101754.10" a="E"><vh>importTests</vh>
 <v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
@@ -701,7 +701,7 @@ expanded="ekr.20040710184602,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.22"><vh>removeSentinels</vh>
 <v t="ekr.20040712101754.23"><vh>dialog</vh></v>
 </v>
-<v t="ekr.20040712101754.14"><vh>importAtFile</vh>
+<v t="ekr.20040712101754.14" a="E"><vh>importAtFile</vh>
 <v t="ekr.20040712101754.15"><vh>dialog</vh></v>
 </v>
 </v>
@@ -992,7 +992,7 @@ expanded="ekr.20040710184602,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="EKR.20040610194209.1" a="M"><vh>TabNanny data (bad)</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.274" a="M"><vh>@suite run all doctests in leo*.py</vh></v>
+<v t="ekr.20040712101754.274" a="MTV"><vh>@suite run all doctests in leo*.py</vh></v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
 <v t="ekr.20040712101754.214"><vh>Outline tests (Sometimes fails)</vh>
 <v t="ekr.20040712101754.215"><vh>test of p.copyTreeAfter and p.copyTreeFromSelfTo</vh>
@@ -1076,9 +1076,9 @@ expanded="ekr.20040710184602,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
 </v>
-<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+<v t="ekr.20040707081532.1" a="E"><vh>Do @test</vh></v>
 </v>
-<v t="EKR.20040608095146" a="E"><vh>Perfect import stuff...</vh>
+<v t="EKR.20040608095146"><vh>Perfect import stuff...</vh>
 <v t="EKR.20040504083716"><vh>Mulder Update script</vh>
 <v t="EKR.20040504083716.39"><vh>sync</vh>
 <v t="EKR.20040504153320"><vh>&lt;&lt; compute sourcetime and targettime &gt;&gt;</vh></v>
@@ -1092,13 +1092,14 @@ expanded="ekr.20040710184602,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040717070500"><vh>writeNodeToString</vh></v>
 </v>
 <v t="ekr.20040716092802"><vh>testUtils.compareIgnoringNodeNames</vh></v>
-<v t="ekr.20040716140617"><vh>Perfect Import test code (leoTest.py)</vh>
+<v t="ekr.20040716140617" a="E"><vh>Perfect Import test code (leoTest.py)</vh>
 <v t="ekr.20040717074817"><vh>About the Perfect Import tests</vh></v>
 <v t="ekr.20040716140617.1" a="M"><vh>runPerfectImportTest</vh></v>
 </v>
 </v>
 <v t="ekr.20040716062608" a="E"><vh>Perfect Import Script</vh></v>
 </v>
+<v t="ekr.20040719155722"><vh>Script for doctest</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1766,7 +1767,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -1904,7 +1905,7 @@ print s ; g.es(s)</t>
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -5272,6 +5273,9 @@ def spam (self):
         
     ''' Another ' triple'   quoted string:
         It should remain untouched.'''
+        
+    "yet another\
+    multi-line string"
         
 class eggs:
     
@@ -8766,11 +8770,13 @@ This should be the last line (no newline following!)
 #@-node:ekr.20040716081019:-input-after
 #@-leo
 </t>
-<t tx="ekr.20040716092802">def compareIgnoringNodeNames (self,s1,s2,marker,verbose=False):
+<t tx="ekr.20040716092802">def compareIgnoringNodeNames (self,s1,s2,delims,verbose=False):
     
     # Compare text containing sentinels, but ignore differences in @+-nodes.
     
-    if marker[-1] == '@': marker = marker[:-1]
+    ## if marker[-1] == '@': marker = marker[:-1]
+    
+    delim1,delim2,delim3 = delims
     
     lines1 = g.splitLines(s1)
     lines2 = g.splitLines(s2)
@@ -8787,20 +8793,20 @@ This should be the last line (no newline following!)
             n1 = g.skip_ws(line1,0)
             n2 = g.skip_ws(line2,0)
             if (
-                not g.match(line1,n1,marker) or
-                not g.match(line2,n2,marker)
+                not g.match(line1,n1,delim1) or
+                not g.match(line2,n2,delim1)
             ):
                 if verbose: g.trace("Mismatched non-sentinel lines")
                 return False
-            n1 += len(marker)
-            n2 += len(marker)
+            n1 += len(delim1)
+            n2 += len(delim1)
             if g.match(line1,n1,"@+node") and g.match(line2,n2,"@+node"):
                 continue
             if g.match(line1,n1,"@-node") and g.match(line2,n2,"@-node"):
                 continue
             else:
                 if verbose:
-                    g.trace("Mismatched sentinel lines",marker)
+                    g.trace("Mismatched sentinel lines",delim1)
                     g.trace("line1:",repr(line1))
                     g.trace("line2:",repr(line2))
                 return False
@@ -8828,14 +8834,14 @@ This should be the last line (no newline following!)
     u.writeNodesToNode(c,input_ins,out_after_sent,sentinels=True)
     
     mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
-    marker = mu.marker_from_extension("foo.py")
+    delims = g.comment_delims_from_extension("foo.py")
     
     fat_lines = g.splitLines(output_sent.bodyString())
-    i_lines,mapping = mu.create_mapping(fat_lines,marker)
+    i_lines,mapping = mu.create_mapping(fat_lines,delims)
     if input_ins.hasChildren():
         # Get the lines by stripping sentinels from -output-after-sent node.
         lines = g.splitLines(out_after_sent.bodyString()) 
-        j_lines = mu.removeSentinelsFromLines(lines,marker)
+        j_lines = mu.removeSentinelsFromLines(lines,delims)
     else:
         j_lines = g.splitLines(input_ins.bodyString()) 
     
@@ -8854,14 +8860,14 @@ This should be the last line (no newline following!)
         sList = []
         for s in (result.bodyString(),out_after_sent.bodyString()):
             lines = g.splitLines(s)
-            lines = mu.removeSentinelsFromLines(lines,marker)
+            lines = mu.removeSentinelsFromLines(lines,delims)
             sList.append(''.join(lines))
         return sList[0] == sList[1]
     else:
         return u.compareIgnoringNodeNames(
             result.bodyString(),
             out_after_sent.bodyString(),
-            marker,verbose=True)</t>
+            delims,verbose=True)</t>
 <t tx="ekr.20040716140926"># See the node called "About the Perfect Import tests" in leoTests.py for details.
 
 @ignore # Suppress Check Python Code warnings.
@@ -9208,5 +9214,11 @@ p = c.currentPosition()
 
 print "gnx", p.v.t.fileIndex, p.headString()</t>
 <t tx="ekr.20040717144213"></t>
+<t tx="ekr.20040719155722">import leoGlobals as g
+
+mu = g.mulderUpdateAlgorithm()
+
+delims = ('#',None,None)
+g.es(mu.is_sentinel("#@+node",delims))</t>
 </tnodes>
 </leo_file>

@@ -2120,6 +2120,36 @@ if dict.has_key("root") and not self.rootMode:
 #@-node:ekr.20031218072017.1379:<< Test for @root, @root-doc or @root-code >>
 #@-node:ekr.20031218072017.1377:scanColorDirectives
 #@+node:ekr.20031218072017.1380:Directive utils...
+#@+node:EKR.20040504150046.4:g.comment_delims_from_extension
+def comment_delims_from_extension(filename):
+    
+    """
+    Return the comment delims corresponding to the filename's extension.
+
+    >>> g.comment_delims_from_extension(".py")
+    ('#', None, None)
+
+    >>> g.comment_delims_from_extension(".c")
+    ('//', '/*', '*/')
+    
+    >>> g.comment_delims_from_extension(".html")
+    (None, '<!--', '-->')
+
+    """
+
+    root, ext = os.path.splitext(filename)
+    if ext == '.tmp':
+        root, ext = os.path.splitext(root)
+        
+    language = g.app.extension_dict.get(ext[1:])
+    if ext:
+        
+        return g.set_delims_from_language(language)
+    else:
+        g.trace("unknown extension %s" % ext)
+        return None,None,None
+#@nonl
+#@-node:EKR.20040504150046.4:g.comment_delims_from_extension
 #@+node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
 #@+node:ekr.20031218072017.1382:set_delims_from_language
 # Returns a tuple (single,start,end) of comment delims
@@ -8615,7 +8645,28 @@ self.language_extension_dict = {
     "tex" : "tex",
     "tcltk" : "tcl",
     "unknown" : "txt" } # Set when @comment is seen.
-#@nonl
+    
+self.extension_dict = {
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    "perl"  : "perl",
+    "php"   : "php",
+    "py"    : "python",
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@-node:ekr.20031218072017.1416:app.__init__
 #@+node:ekr.20031218072017.2072:c.checkOutline
@@ -11414,7 +11465,28 @@ self.language_extension_dict = {
     "tex" : "tex",
     "tcltk" : "tcl",
     "unknown" : "txt" } # Set when @comment is seen.
-#@nonl
+    
+self.extension_dict = {
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    "perl"  : "perl",
+    "php"   : "php",
+    "py"    : "python",
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@-node:ekr.20031218072017.1416:app.__init__
 #@+node:ekr.20040117171654:p.copy
@@ -12751,7 +12823,28 @@ self.language_extension_dict = {
     "tex" : "tex",
     "tcltk" : "tcl",
     "unknown" : "txt" } # Set when @comment is seen.
-#@nonl
+    
+self.extension_dict = {
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    "perl"  : "perl",
+    "php"   : "php",
+    "py"    : "python",
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@-node:ekr.20031218072017.1416:app.__init__
 #@+node:ekr.20040305162628.1:p.Iterators
@@ -32739,7 +32832,28 @@ self.language_extension_dict = {
     "tex" : "tex",
     "tcltk" : "tcl",
     "unknown" : "txt" } # Set when @comment is seen.
-#@nonl
+    
+self.extension_dict = {
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    "perl"  : "perl",
+    "php"   : "php",
+    "py"    : "python",
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@+node:ekr.20031218072017.369:<< Create the Target Language frame >> frame
 # Frame and title
@@ -39881,7 +39995,28 @@ self.language_extension_dict = {
     "tex" : "tex",
     "tcltk" : "tcl",
     "unknown" : "txt" } # Set when @comment is seen.
-#@nonl
+    
+self.extension_dict = {
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    "perl"  : "perl",
+    "php"   : "php",
+    "py"    : "python",
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
 #@-node:ekr.20031218072017.368:<< define global data structures >> app
 #@+node:ekr.20031218072017.2387:old_df.scanAllDirectives
 @ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node p, no @color or @nocolor directives are examined in any ancestor of p.
@@ -44201,6 +44336,36 @@ else:
 #@-node:EKR.20040625104908.1:<< handle @comment >>
 #@-node:ekr.20031218072017.2779:readDirective
 #@+node:ekr.20031218072017.1380:Directive utils...
+#@+node:EKR.20040504150046.4:g.comment_delims_from_extension
+def comment_delims_from_extension(filename):
+    
+    """
+    Return the comment delims corresponding to the filename's extension.
+
+    >>> g.comment_delims_from_extension(".py")
+    ('#', None, None)
+
+    >>> g.comment_delims_from_extension(".c")
+    ('//', '/*', '*/')
+    
+    >>> g.comment_delims_from_extension(".html")
+    (None, '<!--', '-->')
+
+    """
+
+    root, ext = os.path.splitext(filename)
+    if ext == '.tmp':
+        root, ext = os.path.splitext(root)
+        
+    language = g.app.extension_dict.get(ext[1:])
+    if ext:
+        
+        return g.set_delims_from_language(language)
+    else:
+        g.trace("unknown extension %s" % ext)
+        return None,None,None
+#@nonl
+#@-node:EKR.20040504150046.4:g.comment_delims_from_extension
 #@+node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
 #@+node:ekr.20031218072017.1382:set_delims_from_language
 # Returns a tuple (single,start,end) of comment delims
@@ -45719,6 +45884,36 @@ else:
 #@-node:EKR.20040625104908.1:<< handle @comment >>
 #@-node:ekr.20031218072017.2779:readDirective
 #@+node:ekr.20031218072017.1380:Directive utils...
+#@+node:EKR.20040504150046.4:g.comment_delims_from_extension
+def comment_delims_from_extension(filename):
+    
+    """
+    Return the comment delims corresponding to the filename's extension.
+
+    >>> g.comment_delims_from_extension(".py")
+    ('#', None, None)
+
+    >>> g.comment_delims_from_extension(".c")
+    ('//', '/*', '*/')
+    
+    >>> g.comment_delims_from_extension(".html")
+    (None, '<!--', '-->')
+
+    """
+
+    root, ext = os.path.splitext(filename)
+    if ext == '.tmp':
+        root, ext = os.path.splitext(root)
+        
+    language = g.app.extension_dict.get(ext[1:])
+    if ext:
+        
+        return g.set_delims_from_language(language)
+    else:
+        g.trace("unknown extension %s" % ext)
+        return None,None,None
+#@nonl
+#@-node:EKR.20040504150046.4:g.comment_delims_from_extension
 #@+node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
 #@+node:ekr.20031218072017.1382:set_delims_from_language
 # Returns a tuple (single,start,end) of comment delims

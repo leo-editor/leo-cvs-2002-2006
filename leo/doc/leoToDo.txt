@@ -4,6 +4,10 @@
 
 #@+all
 #@+node:EKR.20040430163619:To do: 4.2
+#@+node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
+
+
+#@-node:ekr.20040720073339:Remove use_gnx and write_old_format_derived_files options
 #@+node:EKR.20040628085831:1. Features: 3
 #@+node:ekr.20040718033104:@shadow
 #@-node:ekr.20040718033104:@shadow
@@ -3757,9 +3761,6 @@ if g.isValidEncoding(encoding):
 else:
     g.es("bad default_derived_file_encoding: " + encoding)
     
-self.load_derived_files_immediately = self.initBooleanConfigParam(
-    "load_derived_files_immediately",self.load_derived_files_immediately)
-    
 encoding = self.initConfigParam(
     "new_leo_file_encoding",
     self.new_leo_file_encoding)
@@ -3803,11 +3804,13 @@ if encoding and len(encoding) > 0: # May be None.
     else:
         g.es("bad tk_encoding: " + encoding)
         
-# g.trace("config.self.tkEncoding",self.tkEncoding)
+# New in 4.2
+self.trailing_body_newlines = self.initConfigParam(
+    "trailing_body_newlines",self.trailing_body_newlines)
 
+# TO BE REMOVED
 g.app.use_gnx = self.initBooleanConfigParam(
     "use_gnx",g.app.use_gnx)
-# g.trace("g.app.use_gnx",g.app.use_gnx)
     
 self.use_plugins = self.initBooleanConfigParam(
     "use_plugins",self.use_plugins)
@@ -3818,8 +3821,17 @@ self.use_psyco = self.initBooleanConfigParam(
 self.undo_granularity = self.initConfigParam(
     "undo_granularity",self.undo_granularity)
     
+# TO BE REMOVED
 self.write_old_format_derived_files = self.initBooleanConfigParam(
     "write_old_format_derived_files",self.write_old_format_derived_files)
+
+# New in 4.2
+self.write_strips_blank_lines = self.initBooleanConfigParam(
+    "write_strips_blank_lines",self.write_strips_blank_lines)
+    
+#g.trace("write_strips_blank_lines",self.write_strips_blank_lines)
+#g.trace("trailing_body_newlines",self.trailing_body_newlines)
+#@nonl
 #@-node:ekr.20031218072017.1421:<< get config options >>
 #@+node:ekr.20031218072017.1490:setUndoTypingParams
 @ This routine saves enough information so a typing operation can be undone and redone.
