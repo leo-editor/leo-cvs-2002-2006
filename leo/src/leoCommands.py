@@ -586,7 +586,7 @@ class baseCommands:
 		if not doHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag):
 			ok, frame = openWithFileName(fileName,c)
 			if ok and closeFlag:
-				app.destroyWindow(self)
+				app.destroyWindow(c.frame) # 12/12/03
 				app.setLog(frame.log,"openRecentFile") # Sets the log stream for es()
 	
 		doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
