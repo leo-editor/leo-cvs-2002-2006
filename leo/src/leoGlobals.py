@@ -1687,17 +1687,15 @@ def printGc(message=None,onlyPrintChanges=false):
 #@+node:printGcRefs
 def printGcRefs (verbose=true):
 
-	import leoFrame
-
 	refs = gc.get_referrers(app.windowList[0])
 	print '-' * 30
-	
-	
+
 	if verbose:
 		print "refs of", app.windowList[0]
 		for ref in refs:
 			print type(ref)
 			if 0:
+				import leoFrame
 				if type(ref) == type({}):
 					keys = ref.keys()
 					keys.sort()
@@ -2347,7 +2345,6 @@ def skip_parens(s,i):
 def skip_pascal_begin_end(s,i):
 
 	assert(match_c_word(s,i,"begin"))
-	i1 = i # for traces
 	level = 1 ; i = skip_c_id(s,i) # Skip the opening begin.
 	while i < len(s):
 		ch = s[i]
@@ -2366,7 +2363,6 @@ def skip_pascal_begin_end(s,i):
 			if name in ["begin", "case", "class", "record", "try"]:
 				level += 1
 		else: i += 1
-	# trace(`s[i1:i]`)
 	return i
 #@nonl
 #@-node:skip_pascal_begin_end

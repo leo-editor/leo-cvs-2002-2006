@@ -34,8 +34,9 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 #@-node:<< Import pychecker >>
 #@nl
 
-from leoGlobals import *
-import leoApp,leoConfig,leoDialog,leoFrame,leoGui
+from leoGlobals import app,es,true,false
+from leoGlobals import clear_stats,CheckVersion,doHook,init_sherlock,openWithFileName
+import leoApp,leoConfig,leoDialog,leoFrame
 import os,string,sys,traceback
 
 #@+others

@@ -88,6 +88,7 @@ def importDerivedFileNode(root,c,headline):
 	v.initHeadString(headline)
 	v.t.setVisited() # Suppress warning about unvisited node.
 	return v
+#@nonl
 #@-node:<< global functions >>
 #@nl
 
