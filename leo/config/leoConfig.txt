@@ -217,8 +217,8 @@ expandtolevel8 = Alt+8
 [recent files]
 file3 = c:\prog\leoCVS\leo\doc\LeoDocs.leo
 file2 = c:\prog\leoCVS\leo\config\leoConfig.leo
-file1 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file0 = C:\prog\oldCVS\leo\src\LeoPy.leo
+file1 = C:\prog\oldCVS\leo\src\LeoPy.leo
+file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
 file7 = C:\prog\oldCVS\leo\plugins\leoPlugins.leo
 file6 = C:\Documents and Settings\default\My Documents\ekr.leo
 file5 = C:\prog\leoCVS\leo\test\test.leo
@@ -233,10 +233,10 @@ search_headline = 0
 node_only = 0
 batch = 0
 search_body = 1
-find_string = trace
-pattern_match = False
+find_string = createRecentFilesMenuItems
+pattern_match = 0
 wrap = 0
 mark_finds = 0
-suboutline_only = False
+suboutline_only = 0
 reverse = 0
 

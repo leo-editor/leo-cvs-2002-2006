@@ -347,7 +347,7 @@ class baseConfig:
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for s in findFrame.intKeys:
 			val = config.getBoolFindPref(s)
-			if val: 
+			if val != None: # 10/2/03
 				setattr(c,s+"_flag",val)
 				# trace(s+"_flag",val)
 				

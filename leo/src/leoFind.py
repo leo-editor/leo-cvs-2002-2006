@@ -327,9 +327,9 @@ class leoFind (leoFindBase):
 			setattr(c, key + "_flag", val)
 			# trace(key,val)
 	
-		# Set ivars from radio buttons.
-		c.pattern_match_flag   = self.dict["radio-find-type"].get()    == "pattern-search"
-		c.suboutline_only_flag = self.dict["radio-search-scope"].get() == "suboutline-only"
+		# Set ivars from radio buttons. 10/2/01: convert these to 1 or 0.
+		c.pattern_match_flag   = choose(self.dict["radio-find-type"].get()    == "pattern-search",1,0)
+		c.suboutline_only_flag = choose(self.dict["radio-search-scope"].get() == "suboutline-only",1,0)
 	
 		s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
 		s = toUnicode(s,app.tkEncoding) # 2/25/03

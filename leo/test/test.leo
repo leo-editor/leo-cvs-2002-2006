@@ -264,7 +264,7 @@
 <v t="T163"><vh>Ý</vh></v>
 </v>
 <v t="T164"><vh>Script to find which modules define names</vh></v>
-<v t="T165"><vh>4.0 Test files</vh>
+<v t="T165" a="V"><vh>4.0 Test files</vh>
 <v t="T166"><vh>Script to compare 3.x and 4.x derived files</vh></v>
 <v t="T167"><vh>Test Files...</vh>
 <v t="T168" a="C"><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
@@ -2731,7 +2731,6 @@
 <v t="T2174"><vh>profile</vh></v>
 </v>
 </v>
-<v a="V"><vh>classImportTest</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
