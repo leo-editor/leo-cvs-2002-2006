@@ -855,6 +855,8 @@ class leoFind:
 	
 		c = self.c ; gui = g.app.gui
 		in_headline,v,t,insert,start,end = data
+		
+		c.frame.bringToFront() # Needed on the Mac
 	
 		# Don't try to reedit headline.
 		c.selectVnode(v)
@@ -869,7 +871,7 @@ class leoFind:
 			gui.makeIndexVisible(t,insert)
 			gui.set_focus(c,t)
 	
-		c.frame.bringToFront() # Needed on the Mac
+		
 	#@nonl
 	#@-node:restore
 	#@+node:save
@@ -895,6 +897,8 @@ class leoFind:
 		"insert" and "sel" points set properly."""
 	
 		c = self.c ; v = self.v ; gui = g.app.gui
+		
+		c.frame.bringToFront() # Needed on the Mac
 	
 		c.beginUpdate()
 		if 1: # range of update...
@@ -919,7 +923,7 @@ class leoFind:
 		gui.set_focus(c,t)
 		if c.wrap_flag and not self.wrapVnode:
 			self.wrapVnode = self.v
-		c.frame.bringToFront() # Needed on the Mac
+		
 	#@nonl
 	#@-node:showSuccess
 	#@+node:Must be overridden in subclasses
