@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="95" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="44" left="172" height="703" width="911"/>
+	<global_window_position top="37" left="146" height="703" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -57,14 +57,14 @@
 <v t="ekr.20041119042929.11"><vh>@string tk_encoding = None</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.10" a="E"><vh>@page Command options</vh>
+<v t="ekr.20041119034357.10"><vh>@page Command options</vh>
 <v t="ekr.20041119034357.14"><vh>@bool at_root_bodies_start_in_doc_mode = True</vh></v>
 <v t="ekr.20041119041019"><vh>@bool redirect_execute_script_output_to_log_pane = False</vh></v>
 <v t="ekr.20041119041019.1"><vh>@string remove_sentinels_extension = .txt</vh></v>
 <v t="ekr.20041119041019.2"><vh>@bool save_clears_undo_buffer = False</vh></v>
 <v t="ekr.20041119050749.10"><vh>@string headline_time_format_string = %m/%d</vh></v>
 <v t="ekr.20041119050749.11"><vh>@bool headline_gmt_time = False</vh></v>
-<v t="ekr.20050126083026" a="TV"><vh>@string undo_granularity = None</vh></v>
+<v t="ekr.20050126083026"><vh>@string undo_granularity = None</vh></v>
 </v>
 <v t="ekr.20041119034357.16"><vh>@page Compare panel options</vh>
 <v t="ekr.20041119034357.17"><vh>files &amp; directories</vh>
@@ -125,6 +125,9 @@
 <v t="ekr.20041119034357.34"><vh>@bool tangle_outputs_header = True</vh></v>
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
+</v>
+<v t="ekr.20050203090810" a="TV"><vh>@page For unit tests</vh>
+<v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
 </v>
 <v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
@@ -1034,5 +1037,12 @@ char granularity: start a new undo unit for each character typed.
 
 Leo used char granularity for all version prior to 4.3. char granularity is not
 recommended; it is clumsy and wasteful of computer memory.</t>
+<t tx="ekr.20050203085250">This is not used in Leo, except in unit tests.
+
+Please do not change this; it would make a unit test fail.</t>
+<t tx="ekr.20050203090810">Please do not change any of these settings.
+
+Doing so would make unit tests fail.
+</t>
 </tnodes>
 </leo_file>
