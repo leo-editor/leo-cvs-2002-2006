@@ -3,6 +3,7 @@
 #@@language python
 
 from leoGlobals import *
+
 import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
 
 class baseCommands:
@@ -110,14 +111,13 @@ class baseCommands:
 	#@+node:copyOutline
 	def copyOutline(self):
 	
+		# Copying an outline has no undo consequences.
 		c = self
 		c.endEditing()
-		c.fileCommands.assignFileIndices() # Revert to 3.11.1 code.
+		c.fileCommands.assignFileIndices()
 		s = c.fileCommands.putLeoOutline()
-		# trace(`s`)
-		app.root.clipboard_clear()
-		app.root.clipboard_append(s)
-		# Copying an outline has no undo consequences.
+		app.gui.replaceClipboardWith(s)
+	#@nonl
 	#@-node:copyOutline
 	#@+node:pasteOutline
 	#@+at 
@@ -131,10 +131,13 @@ class baseCommands:
 	
 		c = self ; current = c.currentVnode()
 		
-		try:
-			s = app.root.selection_get(selection="CLIPBOARD")
-		except:
-			s = None # This should never happen.
+		s = app.gui.getTextFromClibboard()
+		
+		if 0: # old code
+			try:
+				s = app.root.selection_get(selection="CLIPBOARD")
+			except:
+				s = None # This should never happen.
 	
 		if not s or not c.canPasteOutline(s):
 			return # This should never happen.
@@ -216,8 +219,8 @@ class baseCommands:
 		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
 		v_copy = c.undoer.saveTree(v)
-		oldText = getAllText(c.body)
-		oldSel = getTextSelection(c.body)
+		oldText = c.body.getAllText()
+		oldSel = c.body.getTextSelection()
 		count = 0
 		while v and v != next:
 			if v == current:
@@ -239,8 +242,8 @@ class baseCommands:
 			v.setDirty()
 			v = v.threadNext()
 		if count > 0:
-			newText = getAllText(c.body)
-			newSel = getTextSelection(c.body)
+			newText = c.body.getAllText()
+			newSel = c.body.getTextSelection()
 			c.undoer.setUndoParams("Convert All Blanks",
 				current,select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
@@ -257,8 +260,8 @@ class baseCommands:
 		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
 		v_copy = c.undoer.saveTree(v)
-		oldText = getAllText(c.body)
-		oldSel = getTextSelection(c.body)
+		oldText = c.body.getAllText()
+		oldSel = c.body.getTextSelection()
 		count = 0
 		while v and v != next:
 			if v == current:
@@ -281,8 +284,8 @@ class baseCommands:
 			v.setDirty()
 			v = v.threadNext()
 		if count > 0:
-			newText = getAllText(c.body)
-			newSel = getTextSelection(c.body) # 7/11/03
+			newText = c.body.getAllText()
+			newSel = c.body.getTextSelection() # 7/11/03
 			c.undoer.setUndoParams("Convert All Tabs",
 				current,select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
@@ -316,8 +319,8 @@ class baseCommands:
 			result = string.join(result,'\n')
 			undoType = choose(setUndoParams,"Convert Blanks",None)
 			c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-			setTextSelection(c.body,"1.0","1.0")
-			
+			c.body.selectAllText()
+	
 		return changed
 	#@-node:convertBlanks
 	#@+node:convertTabs
@@ -348,7 +351,7 @@ class baseCommands:
 			result = string.join(result,'\n')
 			undoType = choose(setUndoParams,"Convert Tabs",None)
 			c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-			setTextSelection(c.body,"1.0","1.0")
+			c.body.selectAllText()
 			
 		return changed
 	#@nonl
@@ -395,8 +398,8 @@ class baseCommands:
 		junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
 		# Create copy for undo.
 		v_copy = c.undoer.saveTree(v)
-		oldText = getAllText(c.body)
-		oldSel = getTextSelection(c.body)
+		oldText = c.body.getAllText()
+		oldSel = c.body.getTextSelection()
 		#@	<< Set headline for extract >>
 		#@+node:<< Set headline for extract >>
 		headline = string.strip(headline)
@@ -421,8 +424,8 @@ class baseCommands:
 			c.createLastChildNode(v,headline,body)
 			undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
 			c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview)
-			newText = getAllText(c.body)
-			newSel = getTextSelection(c.body) # 7/11/03
+			newText = c.body.getAllText()
+			newSel = c.body.getTextSelection() # 7/11/03
 			c.undoer.setUndoParams("Extract",
 				v,select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
@@ -443,8 +446,8 @@ class baseCommands:
 		v_copy = c.undoer.saveTree(v)
 		# trace("v:     " + `v`)
 		# trace("v_copy:" + `v_copy`)
-		oldText = getAllText(c.body)
-		oldSel = getTextSelection(c.body)
+		oldText = c.body.getAllText()
+		oldSel = c.body.getTextSelection()
 		#@	<< Set headline for extractSection >>
 		#@+node:<< Set headline for extractSection >>
 		while len(headline) > 0 and headline[0] == '/':
@@ -473,8 +476,8 @@ class baseCommands:
 			c.createLastChildNode(v,headline,body)
 			undoType = None # Set undo params later.
 			c.updateBodyPane(head,line1,tail,undoType,oldSel,oldYview)
-			newText = getAllText(c.body)
-			newSel = getTextSelection(c.body)
+			newText = c.body.getAllText()
+			newSel = c.body.getTextSelection()
 			c.undoer.setUndoParams("Extract Section",v,
 				select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
@@ -491,8 +494,8 @@ class baseCommands:
 		# Create copy for undo.
 		v_copy = c.undoer.saveTree(v)
 		# No change to body or selection of this node.
-		oldText = newText = getAllText(c.body)
-		i, j = oldSel = newSel = self.getBodySelection()
+		oldText = newText = c.body.getAllText()
+		i, j = oldSel = newSel = c.body.getTextSelection()
 		c.beginUpdate()
 		if 1: # update range...
 			found = false
@@ -528,59 +531,80 @@ class baseCommands:
 			oldText=oldText,newText=newText,
 			oldSel=oldSel,newSel=newSel)
 		# Restore the selection.
-		setTextSelection(c.body,i,j)
-		set_focus(c,c.body)
+		c.body.setTextSelection(oldSel)
+		c.body.setFocus()
 	#@nonl
 	#@-node:extractSectionNames
-	#@+node:getBodyLines
-	def getBodyLines (self):
+	#@+node:findBoundParagraph
+	def findBoundParagraph (self):
 		
 		c = self
-		oldYview = c.frame.body.yview()
-		i, j = oldSel = getTextSelection(c.body)
-		# if selection was made from back to front, then i and j are reversed
-		if i and j and i != j: # 7/7/03
-			# Convert all lines containing any part of the selection.
-			if c.body.compare(i,">",j): i,j = j,i
-			i = c.body.index(i + "linestart")
-			# 12-SEP-2002 DTHEIN: don't include following line in selection
-			endSel = j # position of last character of selection
-			trailingNewline = ""
-			line,col = j.split(".")
-			if col == "0":  # DTHEIN: selection ends at start of next line
-				endSel = c.body.index(j + "- 1 chars")
-				trailingNewline = '\n'
-			else: # DTHEIN: selection ends in the midst of a line
-				endSel = c.body.index(j + "lineend")
-				j = endSel
-			head = c.body.get("1.0",i)
-			head = toUnicode(head,app.tkEncoding) # 9/28/03
-			tail = c.body.get(j,"end")
-			tail = toUnicode(tail,app.tkEncoding) # 9/28/03
-		else: # Convert the entire text.
-			i = "1.0" ; j = "end" ; head = tail = ""
-			endSel = c.body.index(j + "- 1 chars") # 14-SEP-2002 DTHEIN
-			trailingNewline = ""
-		if i == endSel:
-			head = tail = None ; lines = []
-		else:
-			lines = c.body.get(i,endSel)
-			lines = toUnicode(lines,app.tkEncoding) # 9/28/03
-			lines = string.split(lines, '\n')
-			lines[-1] += trailingNewline # DTHEIN: add newline if needed
-		return head,lines,tail,oldSel,oldYview
-	#@nonl
-	#@-node:getBodyLines
-	#@+node:getBodySelection
-	def getBodySelection (self):
+		head,ins,tail = c.body.getInsertLines()
+	
+		if not ins or ins.isspace() or ins[0] == '@':
+			return None,None,None
+			
+		head_lines = splitLines(head)
+		tail_lines = splitLines(tail)
+	
+		if 0:
+			#@		<< trace head_lines, ins, tail_lines >>
+			#@+node:<< trace head_lines, ins, tail_lines >>
+			print ; print "head_lines"
+			for line in head_lines: print `line`
+			print ; print "ins", `ins`
+			print ; print "tail_lines"
+			for line in tail_lines: print `line`
+			#@nonl
+			#@-node:<< trace head_lines, ins, tail_lines >>
+			#@nl
+	
+		# Scan backwards.
+		i = len(head_lines)
+		while i > 0:
+			i -= 1
+			line = head_lines[i]
+			if len(line) == 0 or line.isspace() or line[0] == '@':
+				i += 1 ; break
+	
+		pre_para_lines = head_lines[:i]
+		para_head_lines = head_lines[i:]
+	
+		# Scan forwards.
+		i = 0
+		while i < len(tail_lines):
+			line = tail_lines[i]
+			if len(line) == 0 or line.isspace() or line[0] == '@':
+				break
+			i += 1
+			
+		para_tail_lines = tail_lines[:i]
+		post_para_lines = tail_lines[i:]
+		
+		head = joinLines(pre_para_lines)
+		result = para_head_lines 
+		result.extend([ins])
+		result.extend(para_tail_lines)
+		tail = joinLines(post_para_lines)
+	
+		return head,result,tail # string, list, string
+	#@-node:findBoundParagraph
+	#@+node:getBodyLines
+	def getBodyLines (self):
 	
 		c = self
-		i, j = getTextSelection(c.body)
-		if i and j and c.body.compare(i,">",j):
-			i,j = j,i
-		return i, j
+		oldVview = c.body.getYScrollPosition()
+		oldSel   = c.body.getTextSelection()
+		head,lines,tail = c.body.getSelectionLines()
+	
+		if not lines:
+			lines = c.body.getAllText()
+	
+		lines = string.split(lines,'\n')
+	
+		return head,lines,tail,oldSel,oldVview
 	#@nonl
-	#@-node:getBodySelection
+	#@-node:getBodyLines
 	#@+node:indentBody
 	def indentBody (self):
 	
@@ -599,142 +623,120 @@ class baseCommands:
 	#@-node:indentBody
 	#@+node:reformatParagraph
 	def reformatParagraph(self):
+	
 		"""Reformat a text paragraph in a Tk.Text widget
 	
-	Wraps the concatenated text to present page width setting.
-	Leading tabs are sized to present tab width setting.
-	First and second line of original text is used to determine leading whitespace
-	in reformatted text.  Hanging indentation is honored.
+	Wraps the concatenated text to present page width setting. Leading tabs are
+	sized to present tab width setting. First and second line of original text is
+	used to determine leading whitespace in reformatted text. Hanging indentation
+	is honored.
 	
 	Paragraph is bound by start of body, end of body, blank lines, and lines
-	starting with "@".  Paragraph is selected by position of current insertion
+	starting with "@". Paragraph is selected by position of current insertion
 	cursor."""
 	
-		c = self ; body = c.frame.body
-		head,lines,tail,oldSel,oldYview = self.getBodyLines()
-		result = []
+		c = self ; v = c.currentVnode()
 	
+		if c.body.hasTextSelection():
+			es("Text selection inhibits Reformat Paragraph",color="blue")
+			return
+	
+		#@	<< compute vars for reformatParagraph >>
+		#@+node:<< compute vars for reformatParagraph >>
 		dict = scanDirectives(c)
 		pageWidth = dict.get("pagewidth")
 		tabWidth  = dict.get("tabwidth")
-		# trace(`tabWidth`+","+`pageWidth`)
-	
-		# If active selection, then don't attempt a reformat.
-		selStart, selEnd = getTextSelection(body)
-		if selStart != selEnd: return
-	
-		# Find the paragraph range.
-		data = bound_paragraph(body)
-		if data:
-			start, end, endsWithNL = data
-			firstLine = int(float(start)) - 1 # subtract 1 to get on zero basis
-			lastLine = int(float(end)) - 1
-		else: return
 		
-		# Compute the leading whitespace.
-		indents = [0,0] ; leading_ws = ["",""] # Bug fix: 11/16/02
-		for i in (0,1):
-			if firstLine + i < len(lines):
-				# Use the original, non-optimized leading whitespace.
-				leading_ws[i] = ws = get_leading_ws(lines[firstLine+i])
-				indents[i] = computeWidth(ws,tabWidth)
-		indents[1] = max(indents)
-		# 11/17/02: Bug fix suggested by D.T.Hein.
-		if 1 == (lastLine - firstLine):
-			leading_ws[1] = leading_ws[0]
-	
-		# Put the leading unchanged lines.
-		for i in range(0,firstLine):
-			result.append(lines[i])
-			
-		# Wrap the lines, decreasing the page width by indent.
-		wrapped_lines = wrap_lines(
-			lines[firstLine:lastLine],
-			pageWidth-indents[1],
-			pageWidth-indents[0])
-		lineCount = len(wrapped_lines)
-			
-		i = 0
-		for line in wrapped_lines:
-			result.append(leading_ws[i] + line)
-			if i < 1: i += 1
-	
-		# Put the trailing unchanged lines.
-		for i in range(lastLine,len(lines)):
-			result.append(lines[i])
-	
-		# Replace the text if it changed.
-		for i in range(firstLine,lineCount+firstLine):
-			if i >= lastLine or lines[i] != result[i]:
-				result = string.join(result,'\n')
-				c.updateBodyPane(head,result,tail,"Reformat Paragraph",oldSel,oldYview) # Handles undo
-				break
-	
-		#@	<< Set the new insert at the start of the next paragraph >>
-		#@+node:<< Set the new insert at the start of the next paragraph >>
-		lastLine = firstLine + lineCount
-		if not endsWithNL:
-			insPos = str(lastLine) + ".0lineend"
-		else:
-			endPos = body.index("end")
-			endLine = int(float(endPos))
-			lastLine += 1
-			insPos = str(lastLine) + ".0"
-			while lastLine < endLine:
-				s = body.get(insPos,insPos + "lineend")
-				s = toUnicode(s,app.tkEncoding) # 9/28/03
-				if s and (0 < len(s)) and not s.isspace():
-					break;
-				lastLine += 1
-				insPos = str(lastLine) + ".0"
-		setTextSelection(body,insPos,insPos)
+		original = c.body.getAllText()
+		oldSel   = c.body.getTextSelection()
+		oldYview = c.body.getYScrollPosition()
+		head,lines,tail = c.findBoundParagraph()
 		#@nonl
-		#@-node:<< Set the new insert at the start of the next paragraph >>
+		#@-node:<< compute vars for reformatParagraph >>
 		#@nl
-	
-		# Make sure we can see the new cursor.
-		body.see("insert-5l")
+		if lines:
+			#@		<< compute the leading whitespace >>
+			#@+node:<< compute the leading whitespace >>
+			indents = [0,0] ; leading_ws = ["",""]
+			
+			for i in (0,1):
+				if i < len(lines):
+					# Use the original, non-optimized leading whitespace.
+					leading_ws[i] = ws = get_leading_ws(lines[i])
+					indents[i] = computeWidth(ws,tabWidth)
+					
+			indents[1] = max(indents)
+			if len(lines) == 1:
+				leading_ws[1] = leading_ws[0]
+			#@nonl
+			#@-node:<< compute the leading whitespace >>
+			#@nl
+			#@		<< compute the result of wrapping all lines >>
+			#@+node:<< compute the result of wrapping all lines >>
+			# Remember whether the last line ended with a newline.
+			lastLine = lines[-1]
+			trailingNL = lastLine and lastLine[-1] == '\n'
+			
+			# Remove any trailing newlines for wraplines.
+			lines = [line[:-1] for line in lines[:-1]]
+			if lastLine and trailingNL:
+				lastLine = lastLine[:-1]
+			lines.extend([lastLine])
+			
+			# Wrap the lines, decreasing the page width by indent.
+			result = wrap_lines(lines,
+				pageWidth-indents[1],
+				pageWidth-indents[0])
+			
+			# Convert the result to a string.
+			result = '\n'.join(result)
+			if trailingNL:
+				result += '\n'
+			#@nonl
+			#@-node:<< compute the result of wrapping all lines >>
+			#@nl
+			#@		<< update the body, selection & undo state >>
+			#@+node:<< update the body, selection & undo state >>
+			changed = original != head + result + tail
+			undoType = choose(changed,"Reformat Paragraph",None)
+			
+			sel_start, sel_end = self.body.setSelectionAreas(head,result,tail)
+			
+			c.frame.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
+			
+			# Advance the selection to the next paragraph.
+			newSel = sel_end, sel_end
+			c.body.setTextSelection(newSel)
+			#@nonl
+			#@-node:<< update the body, selection & undo state >>
+			#@nl
+	#@nonl
 	#@-node:reformatParagraph
 	#@+node:updateBodyPane (handles undo)
 	def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview):
 		
 		c = self ; v = c.currentVnode()
-		# trace(v)
-		# Update the text and set start, end.
-		c.body.delete("1.0","end")
-		# The caller must do rstrip.head if appropriate.
-		if head and len(head) > 0:
-			c.body.insert("end",head)
-			start = c.body.index("end-1c")
-		else: start = "1.0"
-		if middle and len(middle) > 0:
-			c.body.insert("end",middle)
-			end = c.body.index("end-1c")
-		else: end = start
-		if tail and len(tail) > 0:
-			tail = string.rstrip(tail)
-		if tail and len(tail) > 0:
-			c.body.insert("end",tail)
-		# Activate the body key handler by hand.
+	
+		# Update the text and notify the event handler.
+		self.body.setSelectionAreas(head,middle,tail)
+		self.body.setTextSelection(oldSel)
 		c.frame.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
-		# Update the changed mark.
-		if not c.isChanged():
-			c.setChanged(true)
-		# Update the icon.
+	
+		# Update the changed mark and icon.
+		c.setChanged(true)
 		c.beginUpdate()
 		if not v.isDirty():
 			v.setDirty()
 		c.endUpdate()
-		# Update the selection.
-		# trace(`start` + "," + `end`)
-		setTextSelection(c.body,start,end)
+	
+		# Scroll as necessary.
 		if oldYview:
-			first,last=oldYview
-			c.body.yview("moveto",first)
+			self.body.setYScrollPosition(oldYview)
 		else:
-			c.body.see("insert")
-		set_focus(c,c.body)
-		c.recolor() # 7/5/02
+			self.body.makeInsertPointVisible()
+	
+		c.body.setFocus()
+		c.recolor()
 	#@nonl
 	#@-node:updateBodyPane (handles undo)
 	#@+node:canContractAllHeadlines
@@ -850,9 +852,9 @@ class baseCommands:
 	def canExtract (self):
 	
 		c = self
-		if c.body:
-			i, j = getTextSelection(c.body)
-			return i and j and c.body.compare(i, "!=", j)
+		if c.bodyCtrl:
+			i, j = c.body.getTextSelection()
+			return i and j and c.bodyCtrl.compare(i, "!=", j)
 		else:
 			return false
 	
@@ -863,7 +865,7 @@ class baseCommands:
 	#@+node:canFindMatchingBracket
 	def canFindMatchingBracket (self):
 		
-		c = self ; body = c.body
+		c = self ; body = c.bodyCtrl
 		brackets = "()[]{}"
 		c1 = body.get("insert -1c")
 		c2 = body.get("insert")
@@ -968,10 +970,9 @@ class baseCommands:
 	
 		c = self
 		if s == None:
-			try:
-				s = app.root.selection_get(selection="CLIPBOARD")
-			except:
-				return false
+			s = app.gui.getTextFromClibboard()
+		if not s:
+			return false
 	
 		# trace(s)
 		if match(s,0,app.prolog_prefix_string):
@@ -1021,8 +1022,8 @@ class baseCommands:
 	def canShiftBodyLeft (self):
 	
 		c = self
-		if c.body:
-			s = c.body.GetValue()
+		if c.bodyCtrl:
+			s = c.bodyCtrl.GetValue()
 			return len(s) > 0
 		else:
 			return false
@@ -1030,8 +1031,8 @@ class baseCommands:
 	def canShiftBodyRight (self):
 	
 		c = self
-		if c.body:
-			s = c.body.GetValue()
+		if c.bodyCtrl:
+			s = c.bodyCtrl.GetValue()
 			return len(s) > 0
 		else:
 			return false
@@ -1289,7 +1290,7 @@ class baseCommands:
 	
 		return self.frame.rootVnode()
 	#@-node:rootVnode
-	#@+node:setChanged
+	#@+node:c.setChanged
 	def setChanged (self,changedFlag):
 	
 		c = self
@@ -1305,16 +1306,15 @@ class baseCommands:
 				v = v.threadNext()
 		# Update all derived changed markers.
 		c.changed = changedFlag
-		s = c.frame.getTitle() # s = c.frame.top.title()
+		s = c.frame.getTitle()
 		if len(s) > 2 and not c.loading: # don't update while loading.
 			if changedFlag:
 				# import traceback ; traceback.print_stack()
-				if s [0] != '*': c.frame.top.title("* " + s)
+				if s [0] != '*': c.frame.setTitle("* " + s)
 			else:
-				if s[0:2]=="* ": c.frame.top.title(s[2:])
-	
-	
-	#@-node:setChanged
+				if s[0:2]=="* ": c.frame.setTitle(s[2:])
+	#@nonl
+	#@-node:c.setChanged
 	#@+node:c.checkMoveWithParentWithWarning
 	# Returns false if any node of tree is a clone of parent or any of parents ancestors.
 	
@@ -2147,8 +2147,7 @@ class baseCommands:
 		c = self
 		c.frame.endEditLabel()
 		c.frame.select(v,updateBeadList)
-		# trace(v)
-		set_focus(c,c.body)
+		c.body.setFocus()
 		self.editing = false
 	#@nonl
 	#@-node:c.selectVnode (calls tree.select)
