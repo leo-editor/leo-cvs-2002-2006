@@ -3829,15 +3829,8 @@ def getScript (c,p,oneNodeOnly=False):
             # Force Python comment delims.
             df.startSentinelComment = "#"
             df.endSentinelComment = None
-            if 1: # new code: using generalized string-write logic.
-                df.write(p.copy(),nosentinels=False,toString=True,oneNodeOnly=oneNodeOnly)
-                script = df.stringOutput
-            else: # old code: works
-                # Write the "derived file" into fo.
-                fo = g.fileLikeObject()
-                # nosentinels=False makes it much easier to find the proper line.
-                df.write(p.copy(),nosentinels=False,scriptFile=fo) 
-                script = fo.get()
+            df.write(p.copy(),nosentinels=False,toString=True,oneNodeOnly=oneNodeOnly)
+            script = df.stringOutput
             assert(p)
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
