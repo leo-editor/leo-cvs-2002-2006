@@ -47,7 +47,7 @@ else:
     newAtFile = False
 
 #@+others
-#@+node:ekr.20040721114839:Support @profile, @suite, @profile, @timer
+#@+node:ekr.20040721114839:Support @profile, @suite, @test, @timer
 #@+node:ekr.20040707071542.2:isSuiteNode and isTestNode
 def isSuiteNode (p):
     h = p.headString().lower()
@@ -224,7 +224,7 @@ def runTimerOnNode (p,count):
         t.print_exc()
 #@nonl
 #@-node:ekr.20040721115051.1:runTimerOnNode Not used
-#@-node:ekr.20040721114839:Support @profile, @suite, @profile, @timer
+#@-node:ekr.20040721114839:Support @profile, @suite, @test, @timer
 #@+node:ekr.20040721144439:run gc
 #@+node:ekr.20040721145855:runGC
 lastObjectCount = 0
@@ -1283,6 +1283,7 @@ class importExportTestCase(unittest.TestCase):
         self.temp_v = temp_v
     
         self.gui = None
+        self.oldGui = None
         self.wasChanged = c.changed
         self.fileName = ""
         self.doImport = doImport
@@ -1353,8 +1354,9 @@ class importExportTestCase(unittest.TestCase):
             theDict = {name: fileName}
     
         g.app.unitTesting = True
+        self.oldGui = g.app.gui
         self.gui = leoGui.unitTestGui(theDict,trace=False)
-    
+    #@nonl
     #@-node:ekr.20040707140849.32:setUp
     #@+node:ekr.20040707140849.33:shortDescription
     def shortDescription (self):
@@ -1383,6 +1385,8 @@ class importExportTestCase(unittest.TestCase):
         if 1: # Delete all children of temp node.
             while temp_v.firstChild():
                 temp_v.firstChild().doDelete(temp_v)
+                
+        g.app.gui = self.oldGui
     
         c.selectVnode(self.old_v)
         g.app.unitTesting = False
