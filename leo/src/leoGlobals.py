@@ -456,9 +456,11 @@ def getOutputNewline (lineending = None):
 		s = lineending
 	else:
 		s = app.config.output_newline
-	s = string.lower(s)
-	if s in ( "nl","lf","platform"): s = '\n'
+
+	s = s.lower()
+	if s in ( "nl","lf"): s = '\n'
 	elif s == "cr": s = '\r'
+	elif s == "platform": s = os.linesep  # 12/2/03: emakital
 	elif s == "crlf": s = "\r\n"
 	else: s = '\n' # Default for erroneous values.
 	return s
@@ -700,8 +702,8 @@ def scanDirectives(c,v=None):
 		"wrap"      : wrap }
 
 #@-node:scanDirectives (utils)
-#@+node:openWithFileName (leoGlobals)
-def openWithFileName(fileName,old_c=None):
+#@+node:openWithFileName
+def openWithFileName(fileName,old_c):
 	
 	"""Create a Leo Frame for the indicated fileName if the file exists."""
 
@@ -725,7 +727,7 @@ def openWithFileName(fileName,old_c=None):
 		fn = os_path_normpath(fn)
 		if fileName == fn:
 			frame.deiconify()
-			app.setLog(frame.log,"OpenWithFileName")
+			app.setLog(frame.log,"openWithFileName")
 			# es("This window already open")
 			return true, frame
 			
@@ -736,15 +738,13 @@ def openWithFileName(fileName,old_c=None):
 		file = open(fileName,'rb')
 		if file:
 			c,frame = app.gui.newLeoCommanderAndFrame(fileName)
-			if not doHook("open1",
-				old_c=old_c,new_c=c,fileName=fileName):
-				app.setLog(frame.log,"openWithFileName") # 5/12/03
-				app.lockLog() # 6/30/03
+			if not doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+				app.setLog(frame.log,"openWithFileName")
+				app.lockLog()
 				frame.c.fileCommands.open(file,fileName) # closes file.
-				app.unlockLog() # 6/30/03
+				app.unlockLog()
 			frame.openDirectory = os_path_dirname(fileName)
-			doHook("open2",
-				old_c=old_c,new_c=frame.c,fileName=fileName)
+			doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
 			return true, frame
 		else:
 			es("can not open: " + fileName,color="red")
@@ -761,7 +761,7 @@ def openWithFileName(fileName,old_c=None):
 			es_exception()
 		return false, None
 #@nonl
-#@-node:openWithFileName (leoGlobals)
+#@-node:openWithFileName
 #@+node:wrap_lines
 #@+at 
 #@nonl
