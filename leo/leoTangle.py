@@ -1276,7 +1276,7 @@ class tangleCommands:
 		except UnicodeError: # 8/9/02
 			xml_encoding = app().config.xml_version_string
 			s = s.encode(xml_encoding)
-			self.outputFile.write(s)
+			self.output_file.write(s) # 8/14/02
 	
 	def otab (self):
 		self.otabs(1)
@@ -3615,7 +3615,7 @@ class tangleCommands:
 
 				if len(path) > 0:
 					dir = os.path.dirname(path)
-					if dir and len(dir) > 0 and os.isabs(dir):
+					if dir and len(dir) > 0 and os.path.isabs(dir):
 						if os.path.exists(dir):
 							self.tangle_directory = dir
 							# trace("@path dir:" + `dir`)

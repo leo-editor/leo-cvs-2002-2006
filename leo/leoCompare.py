@@ -275,7 +275,7 @@ class leoCompare:
 		# self.show("compare_open_files")
 		lines1 = 0 ; lines2 = 0 ; mismatches = 0 ; printTrailing = true
 		sentinelComment1 = sentinelComment2 = None
-		if self.openOutputFile:
+		if self.openOutputFile():
 			self.show("1: " + name1)
 			self.show("2: " + name2)
 			self.show("")

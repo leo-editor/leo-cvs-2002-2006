@@ -1,3 +1,17 @@
+leo.py 3.5                                    August 14, 2002
+
+The many bugs were reported in 3.4 show that leo.py is being heavily used.  This version corrects all known bugs and adds some new features:
+
+- Added new entries in the help menu,
+  (Including a link to Joe Orr's excellent ScreenBook tutorial).
+- Added configuration options for horizontal scrollbars.
+- Added an importFiles script for mass imports.
+- Added better warnings for read-only files.
+- Removed all '\r' characters when reading derived files.
+- Fixed crasher in Read Outline Only command.
+- Fixed crasher when leoConfig.txt did not exist.
+- Many small improvements and bug fixes.
+
 leo.py 3.4                                     August 11, 2002
 
 This version contains many small improvements and bug fixes:

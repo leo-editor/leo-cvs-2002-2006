@@ -362,9 +362,6 @@ class atFile:
 		
 		self.default_directory = None # 8/2: will be set later.
 		
-		
-		path_directory = None # 8/13: set when @file contains a path, possibly a partial path.
-		
 		delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 		#@-body
 		#@-node:1:C=5:<< Set ivars >>
