@@ -1182,6 +1182,8 @@ class Commands:
 	
 		c = self ; v = c.currentVnode()
 		if not v: return
+		
+		# trace(`v`)
 	
 		child = v.firstChild()
 		c.beginUpdate()

@@ -889,6 +889,7 @@ class LeoFrame:
 				command(event)
 			except:
 				es("exception executing command")
+				print "exception executing command"
 				es_exception()
 		
 			handleLeoHook("command2",label=label)
@@ -3040,10 +3041,9 @@ class LeoFrame:
 		
 		url = "http://personalpages.tds.net/~edream/front.html"
 		try:
-			webbrowser.open(url)
+			webbrowser.open_new(url)
 		except:
 			es("not found: " + url)
-	
 	#@-body
 	#@-node:3::OnLeoHome
 	#@+node:4::OnLeoHelp
@@ -3072,7 +3072,7 @@ class LeoFrame:
 						url = "http://prdownloads.sourceforge.net/leo/sbooks.chm?download"
 						import webbrowser
 						os.chdir(app().loadDir)
-						webbrowser.open(url)
+						webbrowser.open_new(url)
 				except:
 					es("exception dowloading sbooks.chm")
 					es_exception()
@@ -3109,10 +3109,9 @@ class LeoFrame:
 	
 		url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
 		try:
-			webbrowser.open(url)
+			webbrowser.open_new(url)
 		except:
 			es("not found: " + url)
-	
 	#@-body
 	#@-node:5::OnLeoTutorial (version number)
 	#@+node:6::OnLeoConfig, OnApplyConfig
