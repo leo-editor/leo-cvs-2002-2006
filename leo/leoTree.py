@@ -1346,6 +1346,7 @@ class leoTree:
 			self.editVnode = None
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
 			self.redraw_now() # force a redraw of joined and ancestor headlines.
+		self.commands.body.focus_force() # 10/14/02
 			
 	def endEditLabelCommand (self):
 	
@@ -1354,6 +1355,7 @@ class leoTree:
 			self.select(v)
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
 			self.redraw_now() # force a redraw of joined headlines.
+		self.commands.body.focus_force() # 10/14/02
 	#@-body
 	#@-node:4::endEditLabel & endEditLabelCommand
 	#@+node:5::tree.select

@@ -2948,8 +2948,11 @@ class atFile:
 					written = true
 				v = v.nodeAfterTree()
 			else: v = v.threadNext()
-		if partialFlag and not written:
-			es("no @file nodes in the selected tree")
+		if partialFlag: # This is the Write @file Nodes command.
+			if written:
+				es("finished")
+			else:
+				es("no @file nodes in the selected tree")
 	#@-body
 	#@-node:11::writeAll
 	#@-node:6::Writing
