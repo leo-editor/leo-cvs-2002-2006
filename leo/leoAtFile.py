@@ -362,7 +362,8 @@ class atFile:
 		
 		# trace("parent,headline,gnx:",`parent`,`headline`,`gnx`)
 	
-		v = parent.insertAsLastChild(leoNodes.tnode())
+		t = leoNodes.tnode()
+		v = parent.insertAsLastChild(t)
 		v.initHeadString(headline)
 		return v
 	#@-body
@@ -1993,19 +1994,9 @@ class atFile:
 	#@+node:8::putSentinelAndGnx (4.0)
 	#@+body
 	def putSentinelAndGnx (self,vt,s):
-		
-		x = self.nodeIndices
 	
-		try:
-			gnx = vt.gnx
-		except:
-			gnx = None
-			
-		if gnx == None:
-			vt.gnx = x.getNewIndex()
-	
-		self.putSentinel(s + ' ' + x.toString(vt.gnx))
-	
+		gnx = vt.getGnx()
+		self.putSentinel(s + ' ' + self.nodeIndices.toString(gnx))
 	#@-body
 	#@-node:8::putSentinelAndGnx (4.0)
 	#@+node:9::sentinelKind

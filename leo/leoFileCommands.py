@@ -68,7 +68,7 @@ class fileCommands:
 	#@+node:2::Reading
 	#@+node:1::createVnode
 	#@+body
-	def createVnode(self,parent,back,tref,headline):
+	def createVnode(self,parent,back,tref,headline,gnx=None):
 		
 		# tick()
 	
@@ -82,11 +82,11 @@ class fileCommands:
 			if not t:
 				t = self.newTnode(tref)
 		if back: # create v after back.
-			v = back.insertAfter(t)
+			v = back.insertAfter(t,gnx)
 		elif parent: # create v as the parent's first child.
-			v = parent.insertAsNthChild(0,t)
+			v = parent.insertAsNthChild(0,t,gnx)
 		else: # create a root vnode
-			v = leoNodes.vnode(c, t)
+			v = leoNodes.vnode(c,t,gnx)
 			v.moveToRoot()
 			c.tree.rootVnode = v
 		v.initHeadString(headline,encoding=self.leo_file_encoding)
@@ -756,7 +756,7 @@ class fileCommands:
 		# Create a single dummy vnode to carry status bits.
 		if not self.dummy_v:
 			self.dummy_t = leoNodes.tnode(0,"")
-			self.dummy_v = leoNodes.vnode(c, self.dummy_t)
+			self.dummy_v = leoNodes.vnode(c,self.dummy_t)
 			self.dummy_v.initHeadString("dummy")
 		self.dummy_v.statusBits=0
 		currentVnodeFlag = false # true if the 'V' attribute seen.

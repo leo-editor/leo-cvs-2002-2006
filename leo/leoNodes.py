@@ -250,17 +250,20 @@ class tnode:
 	#@+body
 	# All params have defaults, so t = tnode() is valid.
 	
-	def __init__ (self, index = 0, bodyString = None):
+	def __init__ (self,index=0,bodyString=None,gnx=None):
 	
 		self.bodyString = choose(bodyString, bodyString, "")
 		self.joinHead = None # The head of the join list while a file is being read.
 		self.statusBits = 0 # status bits
-		self.fileIndex = index # The immutable file index for self tnode.
 		self.selectionStart = 0 # The start of the selected body text.
 		self.selectionLength = 0 # The length of the selected body text.
-		self.cloneIndex = 0 # Zero for @file nodes
 		self.insertSpot = None # Location of previous insert point.
 		self.scrollBarSpot = None # Previous value of scrollbar position.
+		if 1: # To be deleted?
+			self.fileIndex = index # The immutable file index for self tnode.
+			self.cloneIndex = 0 # Zero for @file nodes
+		if gnx != None:
+			self.gnx = gnx
 	#@-body
 	#@-node:2::t.__init__
 	#@+node:3::t.__del__
@@ -280,14 +283,30 @@ class tnode:
 	#@-body
 	#@-node:4::t.destroy
 	#@+node:5::Getters
-	#@+node:1::hasBody
+	#@+node:1::t.getGnx
+	#@+body
+	def getGnx(self):
+		
+		try:
+			gnx = self.gnx
+		except:
+			gnx = None
+			
+		if gnx == None:
+			gnx = self.gnx = app().nodeIndices.getNewIndex()
+			
+		return gnx
+	
+	#@-body
+	#@-node:1::t.getGnx
+	#@+node:2::hasBody
 	#@+body
 	def hasBody (self):
 	
 		return self.bodyString and len(self.bodyString) > 0
 	#@-body
-	#@-node:1::hasBody
-	#@+node:2::loadBodyPaneFromTnode
+	#@-node:2::hasBody
+	#@+node:3::loadBodyPaneFromTnode
 	#@+body
 	def loadBodyPaneFromTnode(self, body):
 	
@@ -298,8 +317,8 @@ class tnode:
 		else:
 			body.delete(1,"end")
 	#@-body
-	#@-node:2::loadBodyPaneFromTnode
-	#@+node:3::Status bits
+	#@-node:3::loadBodyPaneFromTnode
+	#@+node:4::Status bits
 	#@+node:1::isDirty
 	#@+body
 	def isDirty (self):
@@ -321,7 +340,7 @@ class tnode:
 		return (self.statusBits & self.visitedBit) != 0
 	#@-body
 	#@-node:3::isVisited
-	#@-node:3::Status bits
+	#@-node:4::Status bits
 	#@-node:5::Getters
 	#@+node:6::Setters
 	#@+node:1::Setting body text
@@ -456,7 +475,7 @@ class vnode:
 	#@+others
 	#@+node:2::v.__init__
 	#@+body
-	def __init__ (self, commands, t):
+	def __init__ (self,commands,t,gnx=None):
 	
 		assert(t and commands)
 		
@@ -483,9 +502,12 @@ class vnode:
 		if 0: # These links are harmful: they prevent old tree items from being recycled properly.
 			self.box_id = None
 			self.edit_text_id = None # The editable text field for this vnode.
+		
 		#@-body
 		#@-node:1::<< initialize vnode data members >>
 
+		if gnx != None:
+			self.gnx = gnx
 		if app().deleteOnClose:
 			self.commands.tree.vnode_alloc_list.append(self)
 	#@-body
@@ -1049,14 +1071,30 @@ class vnode:
 	
 	#@-body
 	#@-node:4::findRoot
-	#@+node:5::getJoinList
+	#@+node:5::v.getGnx
+	#@+body
+	def getGnx(self):
+		
+		try:
+			gnx = self.gnx
+		except:
+			gnx = None
+			
+		if gnx == None:
+			gnx = self.gnx = app().nodeIndices.getNewIndex()
+			
+		return gnx
+	
+	#@-body
+	#@-node:5::v.getGnx
+	#@+node:6::getJoinList
 	#@+body
 	def getJoinList (self):
 	
 		return self.joinList
 	#@-body
-	#@-node:5::getJoinList
-	#@+node:6::headString
+	#@-node:6::getJoinList
+	#@+node:7::headString
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1069,8 +1107,8 @@ class vnode:
 	
 	
 	#@-body
-	#@-node:6::headString
-	#@+node:7::isAncestorOf
+	#@-node:7::headString
+	#@+node:8::isAncestorOf
 	#@+body
 	def isAncestorOf (self, v):
 	
@@ -1083,15 +1121,15 @@ class vnode:
 			v = v.parent()
 		return false
 	#@-body
-	#@-node:7::isAncestorOf
-	#@+node:8::isRoot
+	#@-node:8::isAncestorOf
+	#@+node:9::isRoot
 	#@+body
 	def isRoot (self):
 	
 		return not self.parent() and not self.back()
 	#@-body
-	#@-node:8::isRoot
-	#@+node:9::Status Bits
+	#@-node:9::isRoot
+	#@+node:10::Status Bits
 	#@+node:1::isCloned
 	#@+body
 	def isCloned (self):
@@ -1169,8 +1207,8 @@ class vnode:
 		return self.statusBits
 	#@-body
 	#@-node:10::status
-	#@-node:9::Status Bits
-	#@+node:10::Structure Links
+	#@-node:10::Status Bits
+	#@+node:11::Structure Links
 	#@+node:1::back
 	#@+body
 	# Compatibility routine for scripts
@@ -1308,7 +1346,7 @@ class vnode:
 		return v
 	#@-body
 	#@-node:10::visNext
-	#@-node:10::Structure Links
+	#@-node:11::Structure Links
 	#@-node:10::Getters
 	#@+node:11::Setters
 	#@+node:1::Head and body text
@@ -1781,13 +1819,13 @@ class vnode:
 	#@-node:1::doDelete
 	#@+node:2::insertAfter
 	#@+body
-	def insertAfter (self, t = None):
+	def insertAfter (self,t=None,gnx=None):
 	
 		"""Inserts a new vnode after the receiver"""
 		
 		# tick()
 		if not t: t = tnode()
-		v = vnode(self.commands,t)
+		v = vnode(self.commands,t,gnx)
 		v.mHeadString = "NewHeadline"
 		v.iconVal = 0
 		v.linkAfter(self)
@@ -1796,7 +1834,7 @@ class vnode:
 	#@-node:2::insertAfter
 	#@+node:3::insertAsLastChild
 	#@+body
-	def insertAsLastChild (self,t = None):
+	def insertAsLastChild (self,t=None,gnx=None):
 	
 		"""Inserts a new vnode as the last child of the receiver"""
 		
@@ -1804,19 +1842,19 @@ class vnode:
 		n = self.numberOfChildren()
 		if not t:
 			t = tnode()
-		return self.insertAsNthChild(n,t)
+		return self.insertAsNthChild(n,t,gnx)
 	#@-body
 	#@-node:3::insertAsLastChild
 	#@+node:4::insertAsNthChild
 	#@+body
-	def insertAsNthChild (self, n, t=None):
+	def insertAsNthChild (self,n,t=None,gnx=None):
 	
 		"""Inserts a new node as the the nth child of the receiver.
 		The receiver must have at least n-1 children"""
 		
 		# tick() ; # trace(`n` + `self`)
 		if not t: t = tnode()
-		v = vnode(self.commands,t)
+		v = vnode(self.commands,t,gnx)
 		v.mHeadString = "NewHeadline"
 		v.iconVal = 0
 		v.linkAsNthChild(self,n)
@@ -2342,7 +2380,7 @@ class vnode:
 	#@+body
 	# Links the receiver after v.
 	
-	def linkAfter (self, v):
+	def linkAfter (self,v):
 		
 		# tick() ; # trace(`v`)
 		self.mParent = v.mParent
