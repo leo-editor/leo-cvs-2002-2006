@@ -693,7 +693,8 @@
 <v t="EKR.20040612150543"><vh>Test of better error messages in Execute Script command</vh>
 <v t="EKR.20040612215136"><vh>Contains error</vh></v>
 </v>
-<v t="EKR.20040613162717" a="TV"><vh>Report newlines</vh></v>
+<v t="EKR.20040613162717"><vh>Report newlines</vh></v>
+<v t="EKR.20040615070332" a="TV"><vh>Test print</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2718,6 +2719,12 @@ try:
 
 except IOError:
     print "can not open",path</t>
+<t tx="EKR.20040615070332">x = 'stuff\n\f'
+f = file( 'LPT1:', 'w' )
+f.write( x )
+f.flush()
+f.close()
+</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>

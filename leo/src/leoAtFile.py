@@ -2302,12 +2302,13 @@ class baseOldDerivedFile:
             # 5/19/04: don't override comment delims when reading!
             #@        << Set comment strings from delims >>
             #@+node:ekr.20031218072017.2400:<< Set comment strings from delims >>
-            # Use single-line comments if we have a choice.
-            # 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
             if scripting:
                 # Force Python language.
                 delim1,delim2,delim3 = g.set_delims_from_language("python")
                 self.language = "python"
+                
+            # Use single-line comments if we have a choice.
+            # 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
             
             if delim1:
                 self.startSentinelComment = delim1
