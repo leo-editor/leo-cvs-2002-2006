@@ -1229,7 +1229,7 @@ class LeoFrame:
 		#@+body
 		# Written by Paul A. Paterson.  Revised by Edward K. Ream.
 		
-		if 1: # app().use_gnx: # This code will make its official debut in 4.0.
+		if app().use_gnx: # This code will make its official debut in 4.0.
 		
 			import ConfigParser, glob
 		
@@ -1460,32 +1460,27 @@ class LeoFrame:
 					#@<< Create widgets for each section and option >>
 					#@+node:2::<< Create widgets for each section and option >>
 					#@+body
-					# Add a label telling what this dialog is.
-					if 0: # now in top-level title
-						f = Tk.Frame(top, relief="sunken")
-						Tk.Label(f, text="Properties of "+ plugin.name).pack(side="top")
-						f.pack(side="top")
-					
 					# Create all the entry boxes on the screen to allow the user to edit the properties
 					sections = config.sections()
 					sections.sort()
 					for section in sections:
 						# Create a frame for the section.
-						f = Tk.Frame(top, relief="sunken")
-						f.pack(side="top")
+						f = Tk.Frame(top, relief="groove",bd=2)
+						f.pack(side="top",padx=5,pady=5)
 						Tk.Label(f, text=section.capitalize()).pack(side="top")
-					
+						# Create an inner frame for the options.
+						b = Tk.Frame(f)
+						b.pack(side="top",padx=2,pady=2)
 						# Create a Tk.Label and Tk.Entry for each option.
 						options = config.options(section)
 						options.sort()
+						row = 0
 						for option in options:
-							### EKR: To do: make this a grid so we can put the labels nearer the entry widgets.
-							b = Tk.Frame(f, borderwidth=4)
-							b.pack(side="top")
-							Tk.Label(b, text=option, width=20, justify="right").pack(side="left", padx=20)
 							e = Tk.Entry(b)
 							e.insert(0, config.get(section, option))
-							e.pack(side="right", padx=10)
+							Tk.Label(b, text=option).grid(row=row, col=0, sticky="e", pady=4)
+							e.grid(row=row, col=1, sticky="ew", pady = 4)
+							row += 1
 							self.entries.append((section, option, e))
 					#@-body
 					#@-node:2::<< Create widgets for each section and option >>
@@ -1494,14 +1489,15 @@ class LeoFrame:
 					#@<< Create Ok, Cancel and Apply buttons >>
 					#@+node:3::<< Create Ok, Cancel and Apply buttons >>
 					#@+body
-					buttonbox = Tk.Frame(top, borderwidth=5)
-					buttonbox.pack(side="bottom")
+					box = Tk.Frame(top, borderwidth=5)
+					box.pack(side="bottom")
 					
-					Tk.Button(buttonbox, text="OK", command=self.onOk).pack(side="left", padx=5)
-					Tk.Button(buttonbox, text="Cancel", command=top.destroy).pack(side="left", padx=5)
-					
+					list = [("OK",self.onOk),("Cancel",top.destroy)]
 					if plugin.hasapply:
-						Tk.Button(buttonbox, text="Apply", command=self.onApply).pack(side="left", padx=5)
+						list.append(("Apply",self.onApply),)
+					
+					for text,f in list:
+						Tk.Button(box,text=text,width=6,command=f).pack(side="left",padx=5)
 					#@-body
 					#@-node:3::<< Create Ok, Cancel and Apply buttons >>
 
