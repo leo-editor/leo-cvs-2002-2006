@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3822" clone_windows="0"/>
-<globals body_outline_ratio="0.444976076555">
-	<global_window_position top="63" left="296" height="836" width="832"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3831" clone_windows="0"/>
+<globals body_outline_ratio="0.6495215311">
+	<global_window_position top="21" left="215" height="836" width="831"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -68,7 +68,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -80,8 +80,8 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20040414084511" a="E"><vh>4.2 a1</vh>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="ekr.20040414084511"><vh>4.2 a1</vh>
 <v t="edream.110203163054.890"><vh>Chapter 7: Scripting Leo with Python</vh>
 <v t="edream.110203163054.891"><vh>Overview</vh></v>
 <v t="edream.110203163054.892"><vh>Basic scripts</vh>
@@ -127,9 +127,8 @@
 <v t="edream.110203163054.907"><vh>Setters</vh></v>
 </v>
 </v>
-<v t="ekr.20040403175746" a="TV"><vh>Scripting chapter using the rst plugin</vh>
 <v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
-<v t="ekr.20040403183229"><vh>Overview</vh>
+<v t="ekr.20040403183229" a="E"><vh>Overview</vh>
 <v t="ekr.20040403183229.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403175011"><vh>g.top(): the commander of the top window</vh>
@@ -191,17 +190,16 @@
 <v t="ekr.20040403173920.5"><vh>Redirecting output from scripts</vh>
 <v t="ekr.20040403183718"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.26"><vh>Summary of the vnode and position classes</vh>
-<v t="ekr.20040403184306.4"><vh>@rst</vh>
+<v t="ekr.20040403173920.26" a="E"><vh>Summary of the vnode and position classes</vh>
+<v t="ekr.20040403184306.4" a="E"><vh>@rst</vh>
 <v t="ekr.20040411151245"><vh>Iterators</vh>
 <v t="ekr.20040411151245.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.27"><vh>Getters</vh>
 <v t="ekr.20040403192653"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.28"><vh>Setters</vh>
+<v t="ekr.20040403173920.28" a="E"><vh>Setters</vh>
 <v t="ekr.20040403192653.1"><vh>@rst</vh></v>
-</v>
 </v>
 </v>
 </v>
@@ -1159,7 +1157,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.735"><vh>Users Guide</vh>
+<v t="edream.110203163054.735" a="E"><vh>Users Guide</vh>
 <v t="edream.110203163054.736"><vh>An overview of Leo</vh></v>
 <v t="edream.110203163054.737"><vh>Front material</vh>
 <v t="edream.110203163054.738"><vh>Title Page &amp; Summary</vh></v>
@@ -1946,9 +1944,31 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040403175746"><vh>Scripting chapter using the rst plugin</vh>
+<v t="ekr.20040414161647" a="E"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
+<v t="ekr.20040414163815" a="E"><vh>Table of Contents</vh>
+<v t="ekr.20040414163815.1"><vh>@rst</vh></v>
+</v>
+</v>
+<v t="ekr.20040414172212" a="E"><vh>@rst frontMatter.html</vh>
+<v t="ekr.20040414172218.2" a="E"><vh>Preface</vh>
+<v t="ekr.20040414172336" a="TV"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040414172218.3"><vh>Leo's Design Goals</vh>
+<v t="ekr.20040414172336.2"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040414172218.4"><vh>Acknowledgements</vh>
+<v t="ekr.20040414172617" a="E"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040414172218.5"><vh>Copyright</vh>
+<v t="ekr.20040414172617.1"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040414174439"><vh>DISCLAIMER OF LIABILITY</vh>
+<v t="ekr.20040414174439.1"><vh>@rst</vh></v>
+</v>
+</v>
 <v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
-<v t="ekr.20040403183229"><vh>Overview</vh>
+<v t="ekr.20040403183229" a="E"><vh>Overview</vh>
 <v t="ekr.20040403183229.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403175011"><vh>g.top(): the commander of the top window</vh>
@@ -2010,15 +2030,15 @@
 <v t="ekr.20040403173920.5"><vh>Redirecting output from scripts</vh>
 <v t="ekr.20040403183718"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.26"><vh>Summary of the vnode and position classes</vh>
-<v t="ekr.20040403184306.4"><vh>@rst</vh>
+<v t="ekr.20040403173920.26" a="E"><vh>Summary of the vnode and position classes</vh>
+<v t="ekr.20040403184306.4" a="E"><vh>@rst</vh>
 <v t="ekr.20040411151245"><vh>Iterators</vh>
 <v t="ekr.20040411151245.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.27"><vh>Getters</vh>
 <v t="ekr.20040403192653"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.28"><vh>Setters</vh>
+<v t="ekr.20040403173920.28" a="E"><vh>Setters</vh>
 <v t="ekr.20040403192653.1"><vh>@rst</vh></v>
 </v>
 </v>
@@ -12030,19 +12050,26 @@ for p in c.allNodes_iter():
 
 g.es("%8s" % "positions",positions)
 g.es("%8s" % "vnodes",len(tnodes.keys()))</t>
-<t tx="ekr.20040403171740">##########################################
-|leo| Chapter 7: Scripting Leo with Python
-##########################################
+<t tx="ekr.20040403171740">####################################
+Chapter 7: Scripting Leo with Python
+####################################
 
-This chapter documents scripting for Leo using Python.
+|prev| |leo| |next|
 
 .. contents::
 
-.. _front:                http://webpages.charter.net/edreamleo/front.html
+.. _front:     http://webpages.charter.net/edreamleo/front.html
+.. _chapter6:  http://webpages.charter.net/edreamleo/design.html
+.. _chapter8:  http://webpages.charter.net/edreamleo/customizing.html
+
+.. |prev| image:: arrow_lt.gif
+	:target: chapter6_
+
+.. |next| image:: arrow_rt.gif
+	:target: chapter8_
 
 .. |leo|   image:: leo.gif
-	:target: front_
-</t>
+	:target: front_</t>
 <t tx="ekr.20040403173920.3"></t>
 <t tx="ekr.20040403173920.5"></t>
 <t tx="ekr.20040403173920.6"></t>
@@ -12155,9 +12182,6 @@ g.es prints multiple arguments separated by commas.
 .. code-block:: Python
 
     g.es(g.top())</t>
-<t tx="ekr.20040403175746">@nocolor
-
-Double-click the @rst scripting.html node to generate the file</t>
 <t tx="ekr.20040403180217">@ignore
 @wrap
 
@@ -12228,11 +12252,12 @@ A **shared subtree** is a tree of vnodes shared by multiple cloned nodes.  There
 
 Leo's code uses position objects very much like vnodes were used in pre-4.2 versions of Leo.  In particular:
 
-- In Leo 4.2 the c.currentVnode and c.rootVnode methods return _positions_, not vnodes.
+- In Leo 4.2 the c.currentVnode and c.rootVnode methods return *positions* not vnodes.
 - position objects support all the common vnode methods that were used in scripts prior to Leo 4.2.
 
 As a result, most scripts written before Leo 4.2 will continue to work in Leo 4.2.
-*Aside*: the preferred way of get the position of the root node and the presently select node is c.rootPosition and c.currentPosition respectively.  The c.currentVnode and c.rootVnode methods exist only for compatibility with old code.</t>
+*Aside*: the preferred way of get the position of the root node and the presently select node is c.rootPosition and c.currentPosition respectively.  The c.currentVnode and c.rootVnode methods exist only for compatibility with old code.
+</t>
 <t tx="ekr.20040403183718">@ignore
 @wrap
 
@@ -12428,11 +12453,11 @@ leoGlobals.py contains many "utility" functions and other names.  The following 
     for name in names:
         g.es(name)</t>
 <t tx="ekr.20040403184306.4">@ignore
-@wrap
 
 Most scripts will use methods of the position class to access information in an outline.
 The following section summarizes the most useful methods that your scripts can use.
-For a complete list, see the @file leoNodes.py tree of LeoPy.leo.</t>
+For a complete list, see the @file leoNodes.py tree of LeoPy.leo.
+</t>
 <t tx="ekr.20040403185643">@ignore
 @wrap
 
@@ -12599,7 +12624,6 @@ Returning bools representing property bits.
     p.isVisible()
     p.isVisited()</t>
 <t tx="ekr.20040403192653.1">@ignore
-@wrap
 
 This section lists the most useful methods for setting data or properties of positions.
 
@@ -12627,9 +12651,10 @@ Many commands use this bits for tree traversal, so these bits do not persist.
     p.clearVisited()
     p.setVisited()
 
------------
+-----------------
 
-|leo|</t>
+|prev| |leo| |next|
+</t>
 <t tx="ekr.20040411074926">There is a trick that makes it very easy to develop Leo using Leo itself.  The trick is to create a workflow that separates editing from testing.
 
 Putting test code in LeoPy.leo would waste a lot of time.  To run tests you would have to exit Leo and reload LeoPy. A much quicker way is to put all test code in a test.leo file.  So to change and test code, do the following:
@@ -12673,5 +12698,136 @@ Iterators exist only in the position class:
 	p.subtree_iter             # returns all positions in p's subtree, excluding p.
 	p.self_and_subtree_iter    # returns all positions in p's subtree, including p.</t>
 <t tx="ekr.20040414084511"></t>
+<t tx="ekr.20040414161647">@nocolor
+@ignore
+
+Double-click the @rst x.html nodes to generate the files</t>
+<t tx="ekr.20040414162124">###################
+Leo's Users Guide
+###################
+
+|leo| |next|
+
+.. _front:                                     http://webpages.charter.net/edreamleo/front.html
+.. _Front Matter:                              http://webpages.charter.net/edreamleo/frontMatter.html
+.. _FAQ:                                       http://webpages.charter.net/edreamleo/FAQ.html
+.. _Chapter 1\: Introducing Leo:               http://webpages.charter.net/edreamleo/intro.html
+.. _Chapter 2\: Installing Leo:                http://webpages.charter.net/edreamleo/Install.html
+.. _Chapter 3\: Using Leo's Outlines:          http://webpages.charter.net/edreamleo/outlines.html
+.. _Chapter 4\: Writing Programs in Leo:       http://webpages.charter.net/edreamleo/directives.html
+.. _Chapter 5\: Using Leo's Commands:          http://webpages.charter.net/edreamleo/commands.html
+.. _Chapter 6\: Leo and Literate Programming:  http://webpages.charter.net/edreamleo/design.html
+.. _Chapter 7\: Scripting Leo with Python:     http://webpages.charter.net/edreamleo/scripting.html
+.. _Chapter 8\: Customizing Leo:               http://webpages.charter.net/edreamleo/customizing.html
+.. _Chapter 9\: History of Leo:                http://webpages.charter.net/edreamleo/history.html
+.. _Chapter 10\: Theory of Operation:          http://webpages.charter.net/edreamleo/theory.html
+.. _Appendices:                                http://webpages.charter.net/edreamleo/appendices.html
+
+.. |leo|  image:: leo.gif
+	:target: front_
+
+.. |next| image:: arrow_rt.gif
+	:target: `front Matter`_
+</t>
+<t tx="ekr.20040414163815"></t>
+<t tx="ekr.20040414163815.1">@ignore
+
+- `Front Matter`_
+- FAQ_
+- `Chapter 1: Introducing Leo`_
+- `Chapter 2: Installing Leo`_
+- `Chapter 3: Using Leo's Outlines`_
+- `Chapter 4: Writing Programs in Leo`_
+- `Chapter 5: Using Leo's Commands`_
+- `Chapter 6: Leo and Literate Programming`_
+- `Chapter 7: Scripting Leo with Python`_
+- `Chapter 8: Customizing Leo`_
+- `Chapter 9: History of Leo`_
+- `Chapter 10: Theory of Operation`_
+- `Appendices`_
+
+------------
+
+|leo| |next|
+</t>
+<t tx="ekr.20040414172212">############
+Front Matter
+############
+
+|prev| |leo| |next|
+
+.. contents::
+
+.. _front:   http://webpages.charter.net/edreamleo/front.html
+.. _toc:     http://webpages.charter.net/edreamleo/leo_TOC.html
+.. _FAQ:     http://webpages.charter.net/edreamleo/FAQ.html
+
+.. |leo|  image:: leo.gif
+	:target: front_
+
+.. |prev| image:: arrow_lt.gif
+	:target: toc_
+
+.. |next| image:: arrow_rt.gif
+	:target: FAQ_</t>
+<t tx="ekr.20040414172218.2"></t>
+<t tx="ekr.20040414172218.3"></t>
+<t tx="ekr.20040414172218.4"></t>
+<t tx="ekr.20040414172218.5"></t>
+<t tx="ekr.20040414172336">@ignore
+
+Leo creates a better way of programming by making clear the relationships between parts of programs. The larger the program, the more valuable Leo becomes. I would never willing program without Leo again.
+
+Leo has hundreds of users. They use Leo to create programs in all kinds of languages, from assembly language, C and C++ to Java, Python and Tk. They use Leo to build and maintain web sites and to manage large amounts of other data. Leo's users have extended Leo in directions I never imagined. See the Acknowledgments below.
+
+Inventing and building Leo, and completely re-visioning Leo to add @file trees has been the happiest and most creative part of my professional life. Leo grew out of my attempts to understand and use Donald Knuth's CWEB system of "literate programming". Chapter 6 discusses how Leo relates to traditional literate programming. Chapter 8 contains a history of Leo and a detailed account of how I invented Leo2.</t>
+<t tx="ekr.20040414172336.2">@ignore
+
+This is what I wanted when I started this project.
+
+1. A tool that I could use successfully. I had tried flat literate programming and failed to produce a program that I could understand. The design of my own literate programs were a mystery to me. With the insight gained with two years experience with literate outlines, I believe I could now probably create flat literate outlines with some success. But how would I do that? By mentally simulating a literate outline! So although it would be possible for me to use flat literate programming tools, it would never be easy or natural.
+
+Using literate outlines instantly transformed how I program. No longer was I confused about what I had done or what remained to do. No longer did I need to remember section names. No longer did I have to search for where functions and variables were defined. March 5, 1996, the day I started using MORE as a prototype of a literate outliner, changed my programming life forever. Within an hour of writing code in MORE, I knew that literate outlines would work, and work spectacularly well.
+
+2. A way to ignore formatting. Printed listings, no matter how "beautiful", simply do not convey the structure of complex programs as well as an on-screen outline. What matters is how a program is represented on screen. I have been using Leo since early 1996. Not once have I had any inclination to look at a printed listing in order to understand my program better.
+
+3. An outliner as good as MORE. I accomplished this by borrowing a large part of MORE's screen design. Consider this the sincerest form of flattery.
+
+I did make one real change to MORE's design. MORE shows body text in multiple separate windows within the main outline pane; Leo shows body text in a single body pane. Leo's approach simplifies switching between nodes: one simply selects a new headline and the body text appears in the body pane. With MORE, one has to explicitly open the body pane for each individual headline, which can be clumsy.
+However, MORE's approach does have some advantages. First, when opening body text in MORE, the subsidiary window becomes as large as necessary to show the entire body text, up to the limit of the size of the containing window. With Leo, the body pane stays fixed unless one resizes it. This is the reason Leo has several shortcuts for resizing the body pane.
+
+MORE leaves lots of open windows around when doing a search or change command; MORE could be called a slob in this regard. However, MORE's way does have one benefit: one can see all the places where the search command found a match just be looking at all the open windows. With Leo this can not be done so directly; one must mark headlines to see where one has been. This is the main reason why Leo has a Find Next Marked Headline command. Without this command one must resort to something like expanding all headlines.
+Leo and MORE have superb outlining facilities; each provides true outline objects and a full range of outline operations. Leo attempts to fix the one clumsy feature of MORE, the need to explicitly open body text. On the whole, I believe that Leo is slightly easier to use than MORE, especially for programming.
+
+4. A self-contained programming system.  Leo's Tangle command provides basic support for literate programming.  Leo's Untangle command is a novel addition to literate programming.  The automatic tangling and untangling of @file trees is another major step forward.  Finally, Leo's many import and export commands ensure that Leo is compatible with noweb and CWEB.
+
+5. A fun tool.  In Chapter 6 I list several highbrow reasons for liking literate programming. I know somebody gets what literate programming is all about when he or she says how much fun literate programming is. Clearly, Leo has succeeded admirably in this regard. I would never again willingly program without a literate outliner.</t>
+<t tx="ekr.20040414172617">@ignore
+
+Leo owes much of its visual design to MORE, possibly the most elegant computer program ever written. Leo's clone nodes are inspired by MORE.
+
+The following people have made generous donations to the Leo project: Robert Low, Nic Cave-Lynch.
+
+The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Niklas Frykholm, Fred Gansevles, Jonathan M. Gilligan, Thomas Guettler, Zak Greant, Thomas Guettler, Romain Guy, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, James Kerwin, Nicola Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli,  Marcus A. Martin, Gidion May, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Paul Paterson, Davide Salomoni, Sean Shaleh Perry, Tim Peters, Scott Powell, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Aharon Robbins, Guido van Rossum, David Rowe, Steven Schaefer, Wolfram Schwenzer, Gil Shwartz, Paul Snively, Phil Straus, Jurjen Stellingwerff,  Jeffrey Thompson, Gabriel Valiente, Tom van Vleck, Jim Vickroy, Tony Vignaux, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
+
+The following people have written code for Leo: Dave Hein wrote code to support PHP, to handle Tk version numbers properly and to open the Python window properly on Linux.  Marcus A. Martin wrote code to support LaTex. Bernhard Mulder proposed a new way of untangling derived files.  Paul Paterson wrote the first implementation of plugins and the spell checking plugin.  Steven P. Schaefer eliminated problems with end-of-line on Linux and fixed bugs in how directives were handled in @root trees.
+
+The following deserve special mention: David Brock wrote TSyntaxMemo.  The late Bob Fitzwater kept me focused on design. Donald Knuth invented literate programming and the CWEB language. Joe Orr created Leo stylesheets for Leo; see http://www.jserv.com/jk_orr/xml/leo.htm. Joe Orr also created an outstanding set of tutorials for Leo; see http://www.evisa.com/e/sb.htm. John K. Ousterhout created tcl/Tk. Neal Norwitz wrote PyChecker.  Marc-Antoine Parent urged me to use XML for Leo's file format and helped improve it. Paul Paterson suggested the plugin architecture and suggested an approach to spell checking.  Norman Ramsey created noweb and gave permission to quote from the noweb web documentation. Rich Ries has contributed a huge number of suggestions. Steven P. Schaefer pointed out major security problems lurking in hooks.  Gil Shwartz helped with unicode support.  Phil Straus has been a great friend and constant support. Guido van Rossum created Python, Tkinter and the Python License. Dave Winer created MORE. Dan Winkler helped support Leo on the Mac.
+
+Special thanks to my family. My brother, David Speed Ream, tested Leo and made many useful suggestions. Rebecca, James and Linda make it all worthwhile. It was during a conversation with Rebecca that I realized that MORE could be used as a prototype for Leo. That was a crucial first step.</t>
+<t tx="ekr.20040414172617.1">@ignore
+
+All parts of Leo are distributed under the following copyright.  This is intended to be the same as the Python license, namely that Leo is absolutely free, even for commercial use, including resale.  There is no GNU-like "copyleft" restriction.  This license is compatible with the GPL.
+	
+Copyright 1997-2004 by Edward K. Ream.  All Rights Reserved.
+Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appears in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the names of Edward K. Ream or Leo may not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission from Edward K. Ream.</t>
+<t tx="ekr.20040414174439"></t>
+<t tx="ekr.20040414174439.1">@ignore
+
+**EDWARD K. REAM (REAM) SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESSED OR IMPLIED, WITH RESPECT TO THIS COMPUTER SOFTWARE, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS RO A PARTICULAR PURPOSE.  IN NO EVENT SHALL REAM BE LIABLE FOR ANY LOSS OF PROFIT OR ANY COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER DAMAGES.**
+
+----------------
+
+|prev| |leo| |next|</t>
 </tnodes>
 </leo_file>
