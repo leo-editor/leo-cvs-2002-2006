@@ -3614,7 +3614,7 @@ class baseCommands:
 		# Doing so would add unwanted leading tabs.
 		version = c.getSignOnLine() + "\n\n"
 		copyright = (
-			"Copyright 1999-2003 by Edward K. Ream\n" +
+			"Copyright 1999-2004 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
 			"Leo is distributed under the Python License")
 		url = "http://webpages.charter.net/edreamleo/front.html"
