@@ -1692,9 +1692,14 @@ class baseFileCommands:
 				es_exception()
 				return false
 				
-		if self.read_only:
-			es_error("read only: " + fileName)
-			return false
+		# 1/29/03: self.read_only is not valid for Save As and Save To commands.
+		if os_path_exists(fileName):
+			try:
+				if not os.access(fileName,os.W_OK):
+					self.writeError("can not create: read only: " + self.targetFileName)
+					return false
+			except:
+				pass # os.access() may not exist on all platforms.
 	
 		try:
 			#@		<< create backup file >>
@@ -1709,7 +1714,7 @@ class baseFileCommands:
 					# os.rename(fileName,backupName)
 					utils_rename(fileName,backupName)
 				except:
-					es("exception creating " + backupName)
+					es("exception creating backup file: " + backupName)
 					es_exception()
 					backupName = None
 			else:
@@ -1727,8 +1732,9 @@ class baseFileCommands:
 					try:
 						os.unlink(backupName)
 					except:
-						es("exception deleting " + backupName)
+						es("exception deleting backup file:" + backupName)
 						es_exception()
+						return false # 1/29/04: Make sure we indicate failure.
 				#@-node:<< delete backup file >>
 				#@nl
 				return false
@@ -1767,17 +1773,17 @@ class baseFileCommands:
 				try:
 					os.unlink(fileName)
 				except:
-					es("exception deleting " + fileName)
+					es("exception deleting: " + fileName)
 					es_exception()
 					
 			if backupName:
 				es("restoring " + fileName + " from " + backupName)
 				try:
-					# os.rename(backupName, fileName)
 					utils_rename(backupName, fileName)
 				except:
 					es("exception renaming " + backupName + " to " + fileName)
 					es_exception()
+			#@nonl
 			#@-node:<< erase filename and rename backupName to fileName >>
 			#@nl
 			return false
@@ -1795,8 +1801,9 @@ class baseFileCommands:
 				try:
 					os.unlink(backupName)
 				except:
-					es("exception deleting " + backupName)
+					es("exception deleting backup file:" + backupName)
 					es_exception()
+					return false # 1/29/04: Make sure we indicate failure.
 			#@-node:<< delete backup file >>
 			#@nl
 			return true
@@ -1809,17 +1816,17 @@ class baseFileCommands:
 				try:
 					os.unlink(fileName)
 				except:
-					es("exception deleting " + fileName)
+					es("exception deleting: " + fileName)
 					es_exception()
 					
 			if backupName:
 				es("restoring " + fileName + " from " + backupName)
 				try:
-					# os.rename(backupName, fileName)
 					utils_rename(backupName, fileName)
 				except:
 					es("exception renaming " + backupName + " to " + fileName)
 					es_exception()
+			#@nonl
 			#@-node:<< erase filename and rename backupName to fileName >>
 			#@nl
 			return false
@@ -1845,7 +1852,6 @@ class baseFileCommands:
 		c = self.c
 	
 		changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
-		trace(changedFiles)
 		if changedFiles:
 			es("auto-saving outline",color="blue")
 			c.save() # Must be done to set or clear tnodeList.
