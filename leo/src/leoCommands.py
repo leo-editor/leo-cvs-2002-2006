@@ -3019,6 +3019,7 @@ class baseCommands:
                     except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
                         result = "error" # Continue to check.
                     except:
+                        import traceback ; traceback.print_exc()
                         return "surprise" # abort
                     if unittest and result != "ok":
                         print "Syntax error in %s" % p.headString()
@@ -3036,7 +3037,7 @@ class baseCommands:
         c = self ; count = 0 ; result = "ok"
         
         if not unittest:
-            g.es("checking all Python code   ")
+            g.es("checking Python code   ")
         
         for p in c.currentPosition().self_and_subtree_iter():
             
@@ -3077,7 +3078,8 @@ class baseCommands:
         c = self
         
         h = p.headString()
-        body = g.getScript(c,p.copy(),oneNodeOnly=True)
+        # We must call getScript so that we can ignore directives and section references.
+        body = g.getScript(c,p.copy())
         if not body: return
     
         try:
