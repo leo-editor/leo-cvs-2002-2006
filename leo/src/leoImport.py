@@ -102,10 +102,29 @@ class baseLeoImportCommands:
         c.beginUpdate()
         
         for fileName in paths:
+            #@        << set isThin if fileName is a thin derived file >>
+            #@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+            fileName = g.os_path_normpath(fileName)
+            
+            try:
+                theFile = open(fileName,'rb')
+                junk,read_new,isThin = at.scanHeader(theFile,fileName)
+                theFile.close()
+            
+            except IOError:
+                isThin = False
+            #@nonl
+            #@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
+            #@nl
             v = parent.insertAfter()
-            v.initHeadString("Imported @file " + fileName)
-            c.undoer.setUndoParams("Import",v,select=current)
-            at.read(v,importFileName=fileName)
+            if isThin:
+                v.initHeadString("@thin " + fileName)
+                c.undoer.setUndoParams("Import",v,select=current)
+                at.read(v,thinFile=True)
+            else:
+                v.initHeadString("Imported @file " + fileName)
+                c.undoer.setUndoParams("Import",v,select=current)
+                at.read(v,importFileName=fileName)
             c.selectVnode(v)
             v.expand()
     
@@ -783,7 +802,7 @@ class baseLeoImportCommands:
                 df.file = fo # Strange, that this is needed.  Should be cleaned up.
                 for line in write_lines:
                     fo.write(line)
-                firstLines,junk = c.atFileCommands.scanHeader(fo,df.targetFileName)
+                firstLines,junk,junk = c.atFileCommands.scanHeader(fo,df.targetFileName)
                 # To do: pass params to readEndNode.
                 df.readOpenFile(root,fo,firstLines,perfectImportRoot=root)
                 n = df.correctedLines
@@ -2606,7 +2625,7 @@ class baseLeoImportCommands:
             at = self.c.atFileCommands
             j = g.skip_line(s,i) ; line = s[i:j]
             
-            valid,new_df,start_delim,end_delim = at.parseLeoSentinel(line)
+            valid,new_df,start_delim,end_delim,derivedFileIsThin = at.parseLeoSentinel(line)
             if not valid:
                 g.es("invalid @+leo sentinel in " + fileName)
                 return
