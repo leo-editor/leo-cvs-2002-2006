@@ -3685,7 +3685,7 @@ New in 4.0: Leo can now read and write "foreign" attributes in <v> and <t> eleme
 
 - When writing a file, Leo will write "foreign" attributes if  a vnode or tnode contains an unknownAttributes ivar.
 
-- The only "native" attributes that Leo expects to find are the "tx" attribute in <t> elements and the "a", "t", "vtag" and "tnodeList" attributes of <v> elements.  Everything else is a foreign attribute.
+- The only "native" attributes that Leo expects to find are the "tx" attribute in <t> elements and the "a", "t", "vtag" and "tnodeList" attributes of <v> elements.  Everything else is a foreign attribute.  New in 4.2: The "descendentTnodeUnknownAttributes" attribute is a native attribute of <v> elements.
 
 - Leo performs the usual xml escapes on these strings when reading or writing the unknownAttributes ivars.
 
@@ -3708,6 +3708,16 @@ Another way:
 		v.unknownAttributes = {"vnodeIcon" : pathToIcon}
 
 See the section called "Recommended conventions for plugins" for advice about how to avoid potential conflicts in naming new attributes.
+
+New in 4.2:
+
+All members of these dictionaries should be "pickleable".  That is, Leo uses Python's Pickle module to encode all values in these dictionaries.  Leo will discard any attributes that can not be pickled.  This should not be a major problem to plugins.  For example, instead of putting a tnode into these dictionaries, a plugin could put the tnode's gnx (a string) in the dictionary.
+
+Leo writes only t.unknownAttributes when writing @thin trees to the .leo file.  Leo puts (the encoding of) these elements into an attribute called descendentTnodeUnknownAttributes.  This attribute is part of the <v> element representing the @thin node.
+
+The reason Leo does _not_ write v.unknownAttributes in @thin trees is that only tnodes have gnx's in thin derived files.  In effect, vnodes are anonymous.  We could attempt to get around this by identifying vnodes by their corresponding tnodes, but that's not a general solution and it is, in effect, equivalent to writing only t.unknownAttributes.  So it seems pointless to "pretend" to be writing v.unknownAttributes.
+
+The effect of this is to make all vnodes identical, as far as using unknownAttributes is concerned.  This won't work in all cases.  For example, a plugin that creates an arbitrary directed graph between vnodes must distinguish between joined vnodes.  In that case, the plugin should confine itself to @file trees, or just vnodes in .leo files, for that matter.
 #@nonl
 #@-node:EKR.20040524104904.242:Extending the format of .leo files
 #@+node:EKR.20040524104904.243:Attaching temporary attributes to vnodes and tnodes

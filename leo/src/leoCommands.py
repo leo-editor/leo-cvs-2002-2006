@@ -163,7 +163,7 @@ class baseCommands:
     
     def getSignOnLine (self):
         c = self
-        return "Leo 4.2 alpha 3, build %s, June 1, 2004" % c.getBuildNumber()
+        return "Leo 4.2 beta 1, build %s, July 1, 2004" % c.getBuildNumber()
         
     def initVersion (self):
         c = self
@@ -2568,8 +2568,9 @@ class baseCommands:
                 
                 # New in 4.2: tnode list is in tnode.
                 if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode():
-                    s = "deleting tnodeList for " + repr(v)
-                    print s ; g.es(s,color="blue")
+                    if 0:
+                        s = "deleting tnodeList for " + repr(v)
+                        print ; print s ; g.es(s,color="blue")
                     delattr(v.t,"tnodeList")
                 #@nonl
                 #@-node:ekr.20040313150633:<< remove unused tnodeList >>

@@ -4,6 +4,10 @@
 
 #@+all
 #@+node:EKR.20040617105034:To do before 4.2 beta 2: feature complete
+#@+node:EKR.20040629084516:Use multiple sandboxes to test how Leo handles cvs conflicts
+#@-node:EKR.20040629084516:Use multiple sandboxes to test how Leo handles cvs conflicts
+#@+node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
+#@-node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
 #@+node:EKR.20040628091308:Install Leo in site-packages directory
 #@-node:EKR.20040628091308:Install Leo in site-packages directory
 #@+node:EKR.20040628085831:Features ~10

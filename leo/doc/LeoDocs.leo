@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="10380" clone_windows="0"/>
-<globals body_outline_ratio="0.427033492823">
+<leo_header file_format="2" tnodes="0" max_tnode_index="10897" clone_windows="0"/>
+<globals body_outline_ratio="0.456937799043">
 	<global_window_position top="43" left="218" height="836" width="973"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -80,30 +80,135 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="EKR.20040601084317" a="TV"><vh>4.2 a3</vh>
-<v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
-<v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
-<v t="EKR.20040601101430"><vh>Fixed Change Headline command</vh></v>
-<v t="EKR.20040601084317.99"><vh>Eliminated spurious "Not written x.tmp" message after write errors</vh></v>
-<v t="EKR.20040601084317.142"><vh>Fixed problems saving unknownAttribute field</vh></v>
-<v t="EKR.20040601102115"><vh>Fixed unicode problem in the Dump Outline command</vh></v>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="EKR.20040628095213"><vh>4.2 beta 1</vh>
+<v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
+<v t="EKR.20040628100535"><vh>Fixed bugs</vh>
+<v t="EKR.20040628095213.3"><vh>Made "end1" and "ilde"events work again</vh></v>
+<v t="EKR.20040628095213.23"><vh>Put drawing hooks back in</vh></v>
+<v t="EKR.20040628095213.56"><vh>Fixed syntax colouring Bug in html mode</vh></v>
+<v t="EKR.20040628095213.60"><vh>Colorizing fixes</vh></v>
+<v t="EKR.20040628095213.113"><vh>Fixed Select All bug</vh></v>
+<v t="EKR.20040628095213.121"><vh>Fixed bugs in @tab_width: support backspace with negative tab width</vh></v>
+<v t="EKR.20040628095213.143"><vh>Fixed bugs in Remove Sentinel command</vh></v>
+<v t="EKR.20040628095213.160"><vh>Eliminated spurious error messages in Import Derived File command</vh></v>
+<v t="EKR.20040628095213.192"><vh>Removed gnx in headlines when importing thin derived files</vh></v>
+<v t="EKR.20040628095213.202"><vh>Fixed bugs reading 4.1 files</vh></v>
+<v t="EKR.20040628095213.213"><vh>Fixed Open With bug</vh></v>
+<v t="EKR.20040628095213.225"><vh>Fixed Go To Line Number command</vh></v>
+<v t="EKR.20040628095213.246"><vh>Fixed crash when importing Borland wstring.cpp</vh></v>
+<v t="EKR.20040628095213.279"><vh>Fixed bug in insertBodyTime</vh></v>
+<v t="EKR.20040628095213.297"><vh>Fixed bug when pasting large text into headlines</vh></v>
+<v t="EKR.20040628095213.308"><vh>Fixed bug in delete command</vh></v>
+<v t="EKR.20040628095213.312"><vh>Fixed oops: nullGui setIdleTimeHook</vh></v>
+<v t="EKR.20040628095213.324"><vh>Fixed problems with trailing newlines and spurious changed bit</vh></v>
+<v t="EKR.20040628095213.346"><vh>Fixed headline key handling</vh></v>
+<v t="EKR.20040628095213.348"><vh>Fixed Problems executing script</vh></v>
+<v t="EKR.20040628095213.354"><vh>Fixed problem with PHP and @last</vh></v>
+<v t="EKR.20040628095213.366"><vh>Fixed bug when writing unknownAttributes</vh></v>
+<v t="EKR.20040628095213.368"><vh>Fixed bugs opening a second file</vh></v>
+<v t="EKR.20040628095213.404"><vh>Fixed bug: @last silently failed when extra lines exist</vh></v>
+<v t="EKR.20040628095213.407"><vh>Fixed hang when dragging from one clone copy to another</vh></v>
+<v t="EKR.20040628095213.412"><vh>Fixed crash in Write Missing</vh></v>
+<v t="EKR.20040628095213.442"><vh>Fixed bug in getScript</vh></v>
+<v t="EKR.20040628095213.444"><vh>Fixed problems with @all</vh></v>
+<v t="EKR.20040628095213.499"><vh>Fixed double print in Execute Script command</vh></v>
+<v t="EKR.20040628095213.512"><vh>Fixed bug reading leo.nsi</vh></v>
 </v>
-<v t="EKR.20040601101227"><vh>New Features</vh>
-<v t="EKR.20040601101227.1"><vh>Leo ignores all directives in @all trees</vh></v>
-<v t="EKR.20040601101430.1"><vh>@+-middle sentinels allow sections to be defined in grandchildren</vh></v>
-<v t="EKR.20040601101510"><vh>@clone sentinel allows siblings to be cloned</vh></v>
-<v t="EKR.20040601101547"><vh>Created @thin, @nosent, @noref and @asis abbreviations</vh>
-<v t="EKR.20040524104904.92"><vh>Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees</vh></v>
+<v t="EKR.20040628100535.1"><vh>Added new features</vh>
+<v t="EKR.20040628095213.52" a="E"><vh>Allowed &lt;/leo_header&gt; tag</vh></v>
+<v t="EKR.20040628095213.109"><vh>Replaced the word "Leo" with Leo icon in Find/Compare/Prefs windows</vh></v>
+<v t="EKR.20040628095213.110"><vh>Improved Import command slightly</vh></v>
+<v t="EKR.20040628095213.197"><vh>Added 3 files to distribution lists</vh></v>
+<v t="EKR.20040628095213.198" a="E"><vh>Supported @tabwidth in indent/dedent</vh></v>
+<v t="EKR.20040628095213.264"><vh>Import now creates absolute path</vh></v>
+<v t="EKR.20040628095213.269"><vh>Created @killcolor directive</vh></v>
+<v t="EKR.20040628095213.282" a="E"><vh>Added Paste Retaining Clones command</vh></v>
+<v t="EKR.20040628095213.311"><vh>Made mass code changes to test.leo, leoPy.leo and leoPlugins.leo</vh></v>
+<v t="EKR.20040628095213.314"><vh>Added readLineGenerator &amp; readLineClass to leoGlobals</vh></v>
+<v t="EKR.20040628095213.334" a="E"><vh>Much better error handling in executeScript</vh></v>
+<v t="EKR.20040628095213.377" a="E"><vh>Recovered nodes when reading .leo files containing topology errors</vh></v>
+<v t="EKR.20040628095213.391"><vh>Generalized write-to-string logic</vh></v>
+<v t="EKR.20040628095213.408"><vh>Added case_sensitiveLanguage to colorizer</vh></v>
+<v t="EKR.20040628095213.425"><vh>Write entire @thin tree on write errors</vh></v>
+<v t="EKR.20040628095213.485" a="E"><vh>Handled inner @language and @comment properly</vh></v>
+<v t="EKR.20040628095213.490" a="E"><vh>Better reporting of body text conflicts</vh></v>
+<v t="EKR.20040628095213.493" a="E"><vh>Improved error handling for unknownAttributes</vh></v>
+<v t="EKR.20040628095213.501" a="E"><vh>Read and write all t.unknownAttributes in top vnode of an @thin tree</vh></v>
 </v>
-<v t="EKR.20040601084317.102"><vh>Made undo extensible</vh></v>
-<v t="EKR.20040601102703"><vh>Started work on simple new undo scheme</vh></v>
-<v t="EKR.20040601084317.161"><vh>Created new c, p, v iterators</vh></v>
+<v t="EKR.20040628095213.513"><vh>(Changed install script as suggested by Scott Beardsley)</vh>
+<v t="EKR.20040628095213.514"><vh>Report1</vh>
+<v t="EKR.20040628095213.515"><vh>(done) Use @first #!/bin/sh</vh></v>
+<v t="EKR.20040628095213.516"><vh>(done) bin dir is not created</vh></v>
 </v>
-<v t="EKR.20040601102808"><vh>Known bugs</vh></v>
+<v t="EKR.20040628095213.517"><vh>(done) Report 2</vh></v>
+</v>
 </v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
+<v t="EKR.20040628095213"><vh>4.2 beta 1</vh>
+<v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
+<v t="EKR.20040628100535"><vh>Fixed bugs</vh>
+<v t="EKR.20040628095213.3"><vh>Made "end1" and "ilde"events work again</vh></v>
+<v t="EKR.20040628095213.23"><vh>Put drawing hooks back in</vh></v>
+<v t="EKR.20040628095213.56"><vh>Fixed syntax colouring Bug in html mode</vh></v>
+<v t="EKR.20040628095213.60"><vh>Colorizing fixes</vh></v>
+<v t="EKR.20040628095213.113"><vh>Fixed Select All bug</vh></v>
+<v t="EKR.20040628095213.121"><vh>Fixed bugs in @tab_width: support backspace with negative tab width</vh></v>
+<v t="EKR.20040628095213.143"><vh>Fixed bugs in Remove Sentinel command</vh></v>
+<v t="EKR.20040628095213.160"><vh>Eliminated spurious error messages in Import Derived File command</vh></v>
+<v t="EKR.20040628095213.192"><vh>Removed gnx in headlines when importing thin derived files</vh></v>
+<v t="EKR.20040628095213.202"><vh>Fixed bugs reading 4.1 files</vh></v>
+<v t="EKR.20040628095213.213"><vh>Fixed Open With bug</vh></v>
+<v t="EKR.20040628095213.225"><vh>Fixed Go To Line Number command</vh></v>
+<v t="EKR.20040628095213.246"><vh>Fixed crash when importing Borland wstring.cpp</vh></v>
+<v t="EKR.20040628095213.279"><vh>Fixed bug in insertBodyTime</vh></v>
+<v t="EKR.20040628095213.297"><vh>Fixed bug when pasting large text into headlines</vh></v>
+<v t="EKR.20040628095213.308"><vh>Fixed bug in delete command</vh></v>
+<v t="EKR.20040628095213.312"><vh>Fixed oops: nullGui setIdleTimeHook</vh></v>
+<v t="EKR.20040628095213.324"><vh>Fixed problems with trailing newlines and spurious changed bit</vh></v>
+<v t="EKR.20040628095213.346"><vh>Fixed headline key handling</vh></v>
+<v t="EKR.20040628095213.348"><vh>Fixed Problems executing script</vh></v>
+<v t="EKR.20040628095213.354"><vh>Fixed problem with PHP and @last</vh></v>
+<v t="EKR.20040628095213.366"><vh>Fixed bug when writing unknownAttributes</vh></v>
+<v t="EKR.20040628095213.368"><vh>Fixed bugs opening a second file</vh></v>
+<v t="EKR.20040628095213.404"><vh>Fixed bug: @last silently failed when extra lines exist</vh></v>
+<v t="EKR.20040628095213.407"><vh>Fixed hang when dragging from one clone copy to another</vh></v>
+<v t="EKR.20040628095213.412"><vh>Fixed crash in Write Missing</vh></v>
+<v t="EKR.20040628095213.442"><vh>Fixed bug in getScript</vh></v>
+<v t="EKR.20040628095213.444"><vh>Fixed problems with @all</vh></v>
+<v t="EKR.20040628095213.499"><vh>Fixed double print in Execute Script command</vh></v>
+<v t="EKR.20040628095213.512"><vh>Fixed bug reading leo.nsi</vh></v>
+</v>
+<v t="EKR.20040628100535.1"><vh>Added new features</vh>
+<v t="EKR.20040628095213.52" a="E"><vh>Allowed &lt;/leo_header&gt; tag</vh></v>
+<v t="EKR.20040628095213.109"><vh>Replaced the word "Leo" with Leo icon in Find/Compare/Prefs windows</vh></v>
+<v t="EKR.20040628095213.110"><vh>Improved Import command slightly</vh></v>
+<v t="EKR.20040628095213.197"><vh>Added 3 files to distribution lists</vh></v>
+<v t="EKR.20040628095213.198" a="E"><vh>Supported @tabwidth in indent/dedent</vh></v>
+<v t="EKR.20040628095213.264"><vh>Import now creates absolute path</vh></v>
+<v t="EKR.20040628095213.269"><vh>Created @killcolor directive</vh></v>
+<v t="EKR.20040628095213.282" a="E"><vh>Added Paste Retaining Clones command</vh></v>
+<v t="EKR.20040628095213.311"><vh>Made mass code changes to test.leo, leoPy.leo and leoPlugins.leo</vh></v>
+<v t="EKR.20040628095213.314"><vh>Added readLineGenerator &amp; readLineClass to leoGlobals</vh></v>
+<v t="EKR.20040628095213.334" a="E"><vh>Much better error handling in executeScript</vh></v>
+<v t="EKR.20040628095213.377" a="E"><vh>Recovered nodes when reading .leo files containing topology errors</vh></v>
+<v t="EKR.20040628095213.391"><vh>Generalized write-to-string logic</vh></v>
+<v t="EKR.20040628095213.408"><vh>Added case_sensitiveLanguage to colorizer</vh></v>
+<v t="EKR.20040628095213.425"><vh>Write entire @thin tree on write errors</vh></v>
+<v t="EKR.20040628095213.485" a="E"><vh>Handled inner @language and @comment properly</vh></v>
+<v t="EKR.20040628095213.490" a="E"><vh>Better reporting of body text conflicts</vh></v>
+<v t="EKR.20040628095213.493" a="E"><vh>Improved error handling for unknownAttributes</vh></v>
+<v t="EKR.20040628095213.501" a="E"><vh>Read and write all t.unknownAttributes in top vnode of an @thin tree</vh></v>
+</v>
+<v t="EKR.20040628095213.513"><vh>(Changed install script as suggested by Scott Beardsley)</vh>
+<v t="EKR.20040628095213.514"><vh>Report1</vh>
+<v t="EKR.20040628095213.515"><vh>(done) Use @first #!/bin/sh</vh></v>
+<v t="EKR.20040628095213.516"><vh>(done) bin dir is not created</vh></v>
+</v>
+<v t="EKR.20040628095213.517"><vh>(done) Report 2</vh></v>
+</v>
+</v>
 <v t="EKR.20040601084317"><vh>4.2 a3</vh>
 <v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
 <v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
@@ -1124,8 +1229,8 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
-<v t="EKR.20040524104904.1"><vh>@file-thin leoUsersGuide.txt</vh></v>
+<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
+<v t="EKR.20040524104904.1" a="TV"><vh>@file-thin leoUsersGuide.txt</vh></v>
 </v>
 <v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="EKR.20040524105011"><vh>@file-thin leoFAQ.txt</vh></v>
@@ -1377,6 +1482,47 @@ Notes:
 2. Within @asis trees only, if a headline starts with @@, Leo writes everything in the headline following the @@ just before the corresponding body text.
 
 3. Files derived from @asis trees contain _nothing_ not contained in body text (or @@ headlines).  In particular, if body text does not end in a newline, the first line from the next node will concatenated to the last line of the preceding node.</t>
+<t tx="EKR.20040524104904.242">New in 4.0: Leo can now read and write "foreign" attributes in &lt;v&gt; and &lt;t&gt; elements in .leo files:
+
+- When reading a .leo file, Leo will create t.unknownAttributes or v.unknownAttributes ivars for any tnode and vnode object whose corresponding &lt;v&gt; or &lt;t&gt; element in the .leo file contains a foreign attribute.
+
+- The unknownAttributes ivars are a dictionary whose keys are the attribute names and whose values are strings.
+
+- When writing a file, Leo will write "foreign" attributes if  a vnode or tnode contains an unknownAttributes ivar.
+
+- The only "native" attributes that Leo expects to find are the "tx" attribute in &lt;t&gt; elements and the "a", "t", "vtag" and "tnodeList" attributes of &lt;v&gt; elements.  Everything else is a foreign attribute.  New in 4.2: The "descendentTnodeUnknownAttributes" attribute is a native attribute of &lt;v&gt; elements.
+
+- Leo performs the usual xml escapes on these strings when reading or writing the unknownAttributes ivars.
+
+Plugins may cause Leo to write such foreign attributes simply by attaching unknownAttributes ivars to a vnode or tnode.  For example:
+
+	v.unknownAttributes = {"vnodeIcon" : pathToIcon}
+
+It would be best not to delete other foreign attributes, so the following would be preferred:
+
+	if hasattr(v,"unknownAttributes"):
+		v.unknownAttributes["vnodeIcon"] = pathToIcon
+	else:
+		v.unknownAttributes = {"vnodeIcon" : pathToIcon}
+
+Another way:
+
+	try:
+		v.unknownAttributes["vnodeIcon"] = pathToIcon
+	except AttributeError:
+		v.unknownAttributes = {"vnodeIcon" : pathToIcon}
+
+See the section called "Recommended conventions for plugins" for advice about how to avoid potential conflicts in naming new attributes.
+
+New in 4.2:
+
+All members of these dictionaries should be "pickleable".  That is, Leo uses Python's Pickle module to encode all values in these dictionaries.  Leo will discard any attributes that can not be pickled.  This should not be a major problem to plugins.  For example, instead of putting a tnode into these dictionaries, a plugin could put the tnode's gnx (a string) in the dictionary.
+
+Leo writes only t.unknownAttributes when writing @thin trees to the .leo file.  Leo puts (the encoding of) these elements into an attribute called descendentTnodeUnknownAttributes.  This attribute is part of the &lt;v&gt; element representing the @thin node.
+
+The reason Leo does _not_ write v.unknownAttributes in @thin trees is that only tnodes have gnx's in thin derived files.  In effect, vnodes are anonymous.  We could attempt to get around this by identifying vnodes by their corresponding tnodes, but that's not a general solution and it is, in effect, equivalent to writing only t.unknownAttributes.  So it seems pointless to "pretend" to be writing v.unknownAttributes.
+
+The effect of this is to make all vnodes identical, as far as using unknownAttributes is concerned.  This won't work in all cases.  For example, a plugin that creates an arbitrary directed graph between vnodes must distinguish between joined vnodes.  In that case, the plugin should confine itself to @file trees, or just vnodes in .leo files, for that matter.</t>
 <t tx="EKR.20040601084317">Leo 4.2 alpha 3           June 1, 2004
 
 This version fixes completes the essential features of version 4.2.  All known incompletions and bugs involving shared nodes and Leo's new file format have been fixed.  BTW, this version of Leo completes Leaps 201 and 202.
@@ -1434,6 +1580,264 @@ At present only the u.saveTree method exists.  Coming soon, u.saveNode, u.saveNo
 <t tx="EKR.20040601102808">See the to-do list in LeoPy.leo for a list of known bugs in this version.
 
 None of these bugs is serious:  I consider this version to be suitable for day-to-day work.</t>
+<t tx="EKR.20040628095213">Leo 4.2 beta 1           July 1, 2004
+
+Beta 1 completes all fundamental work in the 4.2 code base. All essential code
+is complete. Dozens of bugs have been fixed since the Alpha 3 release about a
+month ago.
+
+The highlights of Leo 4.2:
+
+- @thin trees make Leo much more friendly to cvs. Files derived from @thin can
+be committed to cvs and updated from cvs without having to commit or update the
+corresponding .leo file. There is no longer any need to keep .leo files and
+derived files in synch.
+
+- Leo's data structures have been reorganized. As a result, all outline
+operations are much faster. To support this organization, scripts that traverse
+Leo's data structures must now use a positions rather than vnodes. Old scripts
+that appear to use vnodes will still work because methods like c.currentVnode
+that appear to return vnodes actually return positions.
+</t>
+<t tx="EKR.20040628095213.3">@nocolor
+
+- Leo calls g.enableIdleTimeHook at end of startup code.
+	- This means that g.idleTimeHookHandler gets called periodically, even if no hooks have been defined.
+	- g.enableIdleTime hook now calls g.app.gui.setIdleTimeHook at most once.
+
+- app.forceShutdown now calls "end1" hook before calling app.finishQuit.
+	- This ensures that the "end1" hook always gets called once.
+	- app.finishQuit calls doHook("end1",...) only if it hasn't been called before.
+		- This isn't necessary, but it makes traces in doHook less confusing.
+
+- idleTimeHookHandler now calls the idle-time hook for all open windows.
+	- So having multiple windows open should not affect idle-time hooks.
+
+** Warning: new convention required to workaround apparent Tk problems.
+	- "idle" hooks should return if g.app.killed is True.</t>
+<t tx="EKR.20040628095213.23">@color
+
+Added the following hooks:
+
+tag argument                                               keys in keywords
+(hook name)           overrides    when called           dictionary argument
+---------             ---------    -----------           -------------------
+
+"draw-outline-box"       yes   start of drawBox          tree,p,v,x,y (note 6)
+"draw-outline-icon"      yes   start of tree.drawIcon    tree,p,v,x,y (note 6)
+"draw-outline-node"      yes   start of tree.drawNode    tree,p,v,x,y (note 6)
+"draw-outline-text-box"  yes   start of tree.drawText    tree,p,v,x,y (note 6)
+"draw-sub-outline"       yes   start of tree.drawTree    tree,p,v,x,y,h,level,hoistFlag (note 6)</t>
+<t tx="EKR.20040628095213.52"></t>
+<t tx="EKR.20040628095213.56"></t>
+<t tx="EKR.20040628095213.60">Added support for RapidQ, css, shell scripts and PHP.</t>
+<t tx="EKR.20040628095213.109">http://sourceforge.net/forum/message.php?msg_id=2429098
+By: nobody
+
+The Leo icon can eliminate the need for the word Leo.
+
+What I did:
+
+- Eliminate Leo in name of Find panel.
+- Derived leoTkinterPrefs from leoTkinterDialog: creates icon.
+- Derived leoComparePanel from leoTkinterDialog: creates icon.
+- Eliminated the -t option when opening Idle: the idle window is now called "Python Shell"</t>
+<t tx="EKR.20040628095213.110">- Added @language html when importing ".htm" and ".html" files.
+- Added @nocolor when importing ".txt" and ".text" files
+</t>
+<t tx="EKR.20040628095213.113">When in headline, the Select All command selected the body text.</t>
+<t tx="EKR.20040628095213.121">- idle_body_key must call g.scanDirectives in order to support @tab_width.
+	- This must be done for tabs and newlines.
+
+- Fixed bug in g.scanDirectives that was rejecting negative tabwidth values.
+	- This bug did not exist in the other versions of scanDirectives.
+
+- With a negative tabwidth, a backspace now computes what spaces are equivalent to a tab and delete all of those.  This is easy to do!
+</t>
+<t tx="EKR.20040628095213.143"></t>
+<t tx="EKR.20040628095213.160"></t>
+<t tx="EKR.20040628095213.192"></t>
+<t tx="EKR.20040628095213.197">doc\leoUsersGuide.txt
+doc\leoFAQ.txt
+doc\leoLeaps.txt</t>
+<t tx="EKR.20040628095213.198">The old code used at c.tab_width.  It should also look for @tabwidth directives.
+
+This was not good when @tabwidth -4 was in effect.</t>
+<t tx="EKR.20040628095213.202">atFile.scanHeader was not handling -encoding fields properly.</t>
+<t tx="EKR.20040628095213.213"></t>
+<t tx="EKR.20040628095213.225"></t>
+<t tx="EKR.20040628095213.246"># namespace not handled very well.</t>
+<t tx="EKR.20040628095213.264"></t>
+<t tx="EKR.20040628095213.269"></t>
+<t tx="EKR.20040628095213.279">I inserted "import time", and while I was at it I improved the error checking.</t>
+<t tx="EKR.20040628095213.282">- By default, finishPaste command reassigns all indices in copied nodes.
+- Created pasteOutlineRetainingClones.
+- Added reassignIndices arg to pasteOutline, getLeoOutline and finishPaste.
+- Added &lt;&lt; recreate tnodesDict &gt;&gt; in getLeoOutline.
+- Simplified getTnode slightly: the "if t" code is the same for both kinds of reads.</t>
+<t tx="EKR.20040628095213.297">The code now limits what can be pasted to a maximum of one line or a about 250 characters.</t>
+<t tx="EKR.20040628095213.308"></t>
+<t tx="EKR.20040628095213.311">@nocolor
+
+What I did:
+    
+- Removed from leoGlobals import true,false
+- Replaced true,false with True,False
+- Properly import Tkinter as follows:
+
+try: import Tkinter as Tk
+except ImportError: Tk = None
+
+- Removed all assignments: Tk = Tkinter
+- Converted leading tabs to spaces</t>
+<t tx="EKR.20040628095213.312"></t>
+<t tx="EKR.20040628095213.314"></t>
+<t tx="EKR.20040628095213.324">- Set removeTrailing to True unless ch is a newline.
+
+This allows Alt-f to work properly.
+
+- Return "break" after the "final" text has been computed if nothing has changed.
+
+This suppresses spurious newlines.
+
+A new idea:  Make sure the text _does_ have a newline at all times.  I'm not sure this will work...
+
+- ALWAYS set the text in select.  This prevents some weird problems with trailling newlines.</t>
+<t tx="EKR.20040628095213.334">- The string passed to exec now includes sentinels.
+
+goToLineNumber needs sentinels to work properly.
+
+- es_exception now gets the error line number from the traceback.
+
+- Added new keyword arguments to goToLineNumber.
+
+- Created goToScriptLineNumber, which just calls goToLineNumber.</t>
+<t tx="EKR.20040628095213.346">Hitting return in middle of a headline didn't work.</t>
+<t tx="EKR.20040628095213.348"></t>
+<t tx="EKR.20040628095213.354"></t>
+<t tx="EKR.20040628095213.366"></t>
+<t tx="EKR.20040628095213.368"></t>
+<t tx="EKR.20040628095213.377">Changed getVnode so it checks for v = None after calling getExistingVnode.  Creating the node seems to work in this case: I wouldn't bet my life that it works in all cases.</t>
+<t tx="EKR.20040628095213.391">- Added toString to most write methods.
+- Retained scriptFile option for compatibility with plugins.</t>
+<t tx="EKR.20040628095213.404"></t>
+<t tx="EKR.20040628095213.407"></t>
+<t tx="EKR.20040628095213.408"></t>
+<t tx="EKR.20040628095213.412"></t>
+<t tx="EKR.20040628095213.425"></t>
+<t tx="EKR.20040628095213.442">This only happened after previous write error.
+
+The fix was to init self.errors in openWriteFile.
+
+The whole atFile logic is pretty gruesome.  It's got to be cleaned up.</t>
+<t tx="EKR.20040628095213.444">- Allow indented @all.
+    - Changed to g.is_special
+    - Changed leoColor.doAtKeyword
+    
+- Fixed bug in is_special that broke p.isAtAllNode.</t>
+<t tx="EKR.20040628095213.485">There was a small hole in the format of derived files.  Leo assumed that comment delimiters do not change within any particular derived file.  This assumption is not necessarily true in files like leoProjects.txt.
+
+What I did:
+
+- putDirective and readDirective now check for @langauge and @comment, and change comment delims appropriately.
+
+This is slightly dubious: after all, an @langauge directive in the middle of most derived files will cause havoc.  However, one could say that this is the users problem :-)
+
+BTW, this doesn't really solve all problems in @all trees: Leo can still get mightily confused about comment delims if the user doesn't put proper @language directives in @all trees.
+</t>
+<t tx="EKR.20040628095213.490">readEndNode uses the existing tempBodyString attribute to determine if the body text has changed.  If so, we mark the tnode dirty.  The code in 
+
+top_df.read.&lt;&lt; copy all tempBodyStrings to tnodes &gt;&gt;
+
+propagates the dirty marks to all ancestor @file nodes.  This can't be done in readEndNode because no positions are available at that time.</t>
+<t tx="EKR.20040628095213.493"></t>
+<t tx="EKR.20040628095213.499"></t>
+<t tx="EKR.20040628095213.501">Leo now writes t.unknownAttributes to the .leo file when writing the &lt;v&gt; element corresponding to the root of an @thin tree.  Leo will do this by writing a new xml attribute, descendentTnodeUnknownAttributes, in &lt;v&gt; element.
+
+Leo will only write t.unknownAttributes, not v.unknownAttributes.  This is because only tnodes have gnx's in thin derived files.  In effect, vnodes are anonymous.  We could attempt to get around this by identifying vnodes by their corresponding tnodes, but that's not a general solution and it is, in effect, equivalent to writing only t.unknownAttributes.  This being so, it seems pointless to "pretend" to be writing v.unknownAttributes.
+
+The effect of this is to make all vnodes identical, as far as using unknownAttributes is concerned.  As I've stated in the past, this won't do if, for example, a plugin is trying create an arbitrary directed graph between vnodes.  In that case, the plugin should confine itself to @file trees, or just vnodes in .leo files, for that matter.</t>
+<t tx="EKR.20040628095213.512">The problem was setting endSentinelComment to None instead of "" in readDirective.
+
+The code is pretty fragile; it should handle either None or "", but in fact it requires "".</t>
+<t tx="EKR.20040628095213.513"></t>
+<t tx="EKR.20040628095213.514">@nocolor
+
+By: Scott Beardsley - sbeards
+ install script broken in leo-4.2-a3   
+2004-06-10 12:19  
+
+Two issues with the install script...
+
+
+</t>
+<t tx="EKR.20040628095213.515">1) Will not run when using non-borne shells
+Install script should probably contain an @first directive.
+
+The first three lines are currently:
+#@+leo-ver=4-thin
+#@+node:EKR.20040519082027.33:@file-thin ../install
+#!/bin/sh
+
+In shell scripts however the '#!/bin/sh' should *always* be on the first line. Otherwise you get messages in csh like:
+
+%./install
+LEO_PREFIX=/usr/local: Command not found.
+LEO_RUN_SCRIPT_SOURCE=./scripts/install/leo-script.txt: Command not found.
+LEO_PREFIX: Undefined variable.
+</t>
+<t tx="EKR.20040628095213.516">2) bin dir is not created (for this I modified step 2 a tad)
+
+################################
+# Step 2
+# Make the directory structure
+################################
+if [ ! -d $LEO_LIB_DIR ]; then
+...echo ""
+...echo Making directory structure $LEO_LIB_DIR
+
+...RESULTS=`mkdir -p -m755 $LEO_LIB_DIR 2&gt;&amp;1`
+...if [ $? -ne 0 ]; then
+    ..echo Failure making directory $LEO_LIB_DIR!
+    ..exit 0;
+...fi
+fi
+
+if [ ! -d $LEO_PREFIX/bin ]; then
+...echo ""
+...echo Making directory structure $LEO_PREFIX/bin
+...RESULTS=`mkdir -p -m755 $LEO_PREFIX/bin 2&gt;&amp;1`
+...if [ $? -ne 0 ]; then
+    ..echo Failure making directory $LEO_PREFIX/bin!
+    ..exit 0;
+...fi
+fi
+</t>
+<t tx="EKR.20040628095213.517">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2618344
+By: sbeards
+
+Another minor issue:
+
+3) leo executable will error out on files with spaces
+
+when attempting to open a leo file that has spaces in the filename (ie leo /tmp/foobar.leo) you'll get the following error in the log pane:
+
+File not found: /tmp/foo
+
+To fix change line 131 in install script:
+
+echo "python ${LEO_PREFIX}/lib/leo/src/leo.py \"\$1\"" &gt; $LEO_RUN_SCRIPT_OUTPUT
+
+(Note: added escaped double quotes around $1)
+
+If you don't want to reinstall just add double-quotes around the $1 in the leo
+executable (defaults to /usr/local/bin/leo).
+
+</t>
+<t tx="EKR.20040628100535">@killcolor</t>
+<t tx="EKR.20040628100535.1"></t>
 <t tx="edream.110203163054">@nocolor
 
 Leo is:
