@@ -2441,7 +2441,7 @@ def is_special(s,i,directive):
     assert (directive and directive [0] == '@' )
 
     # 10/23/02: all directives except @others must start the line.
-    skip_flag = directive == "@others"
+    skip_flag = directive in ("@others","@all")
     while i < len(s):
         if g.match_word(s,i,directive):
             return True, i
@@ -3675,32 +3675,35 @@ def makeDict(**keys):
 #@nonl
 #@-node:ekr.20031218072017.3144:g,makeDict
 #@+node:ekr.20040331083824.1:g.fileLikeObject
+# Note: we could use StringIo for this.
+
 class fileLikeObject:
+
+    """Define a file-like object for redirecting writes to a string.
     
-    """Define a file-like object for redirecting i/o."""
-    
-    # Used by Execute Script command and rClick plugin.
-    
-    def __init__(self): self.s = ""
-    def clear (self):   self.s = ""
-    def close (self):   pass
-    def flush (self):   pass
-        
+    The caller is responsible for handling newlines correctly."""
+
+    def __init__(self): self.list = []
+    def clear (self):   self.list = []
+
+    def close (self): pass
+    def flush (self): pass
+
     def get (self):
-        return self.s
-        
+        return string.join(self.list,'')
+
     def write (self,s):
-        if s:
-            self.s = self.s + s
+        if s: self.list.append(s)
 #@nonl
 #@-node:ekr.20040331083824.1:g.fileLikeObject
 #@+node:EKR.20040614071102.1:g.getScript
 def getScript (c,p):
-    
+
     if not p: p = c.currentPosition()
     old_body = p.bodyString()
     
     try:
+        script = None
         if c.frame.body.hasTextSelection():
             # Temporarily replace v's body text with just the selected text.
             s = c.frame.body.getSelectedText()
@@ -3715,13 +3718,17 @@ def getScript (c,p):
             # Force Python comment delims.
             df.startSentinelComment = "#"
             df.endSentinelComment = None
-            # Write the "derived file" into fo.
-            fo = g.fileLikeObject()
-            # nosentinels=False makes it much easier to find the proper line.
-            df.write(p.copy(),nosentinels=False,scriptFile=fo) 
+            if 1: # new code: using generalized string-write logic.
+                df.write(p.copy(),nosentinels=False,toString=True)
+                script = df.stringOutput
+            else: # old code: works
+                # Write the "derived file" into fo.
+                fo = g.fileLikeObject()
+                # nosentinels=False makes it much easier to find the proper line.
+                df.write(p.copy(),nosentinels=False,scriptFile=fo) 
+                script = fo.get()
             assert(p)
-            script = fo.get()
-            g.app.scriptDict["script2"]=s
+            g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
         s = "unexpected exception"
