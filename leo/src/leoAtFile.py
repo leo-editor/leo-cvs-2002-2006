@@ -4059,7 +4059,7 @@ class baseNewDerivedFile(oldDerivedFile):
 				at.putSentinel("@ws")
 				at.indent = oldIndent
 		else:
-			at.os(s[k:j]) ; at.onl()
+			at.os(s[i:j]) ; at.onl() # 10/21/03: changed s[k:j] to s[i:j].
 			at.indent += delta # Align the @nonl with the following line.
 			at.putSentinel("@nonl")
 			at.indent -= delta # Let the caller set at.indent permanently.
