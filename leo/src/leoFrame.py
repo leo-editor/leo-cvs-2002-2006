@@ -2935,9 +2935,8 @@ class baseLeoFrame:
 		if n==1:
 			v = root ; n2 = 1 ; found = true
 		elif n >= len(lines):
-			v = root.lastNode()
+			v = root ; found = false
 			n2 = v.bodyString().count('\n')
-			found = false
 		elif root.isAtSilentFileNode():
 			
 			#@<< count outline lines, setting v,n2,found >>
@@ -2964,24 +2963,27 @@ class baseLeoFrame:
 
 		else:
 			# To do: choose a "suitable line" for searching.
-			vnodeName,n2 = self.convertLineToVnodeAndLine(lines,n,root)
+			vnodeName,childIndex,n2 = self.convertLineToVnodeNameIndexLine(lines,n,root)
 			found = true
 			if not vnodeName:
 				es("invalid derived file: " + fileName)
 				return
 			
-			#@<< set v to the node whose headline is vnodeName >>
-			#@+node:5::<< set v to the node whose headline is vnodeName >>
+			#@<< set v to the node given by vnodeName and childIndex >>
+			#@+node:5::<< set v to the node given by vnodeName and childIndex >>
 			#@+body
 			after = root.nodeAfterTree()
-			while v and v != after and not v.matchHeadline(vnodeName):
+			while v and v != after:
+				if v.matchHeadline(vnodeName):
+					if childIndex == 0 or v.childIndex() + 1 == childIndex:
+						break
 				v = v.threadNext()
 			
 			if not v or v == after:
-				es("vnode not found in outline: " + vnodeName)
+				es("not found: %s" % vnodeName )
 				return
 			#@-body
-			#@-node:5::<< set v to the node whose headline is vnodeName >>
+			#@-node:5::<< set v to the node given by vnodeName and childIndex >>
 
 		# To do: search for the "suitable line".
 		
@@ -3002,32 +3004,33 @@ class baseLeoFrame:
 		if found:
 			c.frame.body.mark_set("insert",str(n2)+".0 linestart")
 		else:
-			c.frame.body.mark_set("insert","end-1line")
-			es(root.headString() + " has " + `len(lines)` + " lines.")
+			c.frame.body.mark_set("insert","end-1c")
+			es("%d lines" % len(lines), color="blue")
 		#@-body
 		#@-node:7::<< put the cursor on line n2 of the body text >>
 	#@-body
-	#@+node:8::convertLineToVnodeAndLine
+	#@+node:8::convertLineToVnodeNameIndexLine
 	#@+body
 	#@+at
-	#  This routine converts a line number, n, in a derived file to a vnode 
-	# and offset within the vnode
-	# 
-	# We count "real" lines in the derived files, ignoring all sentinels that 
+	#  We count "real" lines in the derived files, ignoring all sentinels that 
 	# do not arise from source lines.  When the indicated line is found, we 
 	# scan backwards for an @+body line, get the vnode's name from that line 
 	# and set v to the indicated vnode.  This will fail if vnode names have 
 	# been changed, and that can't be helped.
 	# 
-	# Returns vnodeName,n2,found
+	# Returns (vnodeName,offset)
+	# 
 	# vnodeName: the name found in the previous @+body sentinel.
 	# offset: the offset within v of the desired line.
 
 	#@-at
 	#@@c
 
-	def convertLineToVnodeAndLine (self,lines,n,root):
+	def convertLineToVnodeNameIndexLine (self,lines,n,root):
 		
+		"""Convert a line number n to a vnode name, child index and line number."""
+		
+		childIndex = 0
 		
 		#@<< set delim, leoLine from the @+leo line >>
 		#@+node:1::<< set delim, leoLine from the @+leo line >>
@@ -3096,11 +3099,13 @@ class baseLeoFrame:
 
 		if nodeSentinelLine == -1:
 			# The line precedes the first @+node sentinel
-			return root.headString(),1
+			# trace("before first line")
+			return root.headString(),0,1
 		s = lines[nodeSentinelLine]
+		# trace(s)
 		
-		#@<< set vnodeName from s >>
-		#@+node:3::<< set vnodeName from s >>
+		#@<< set vnodeName and childIndex from s >>
+		#@+node:3::<< set vnodeName and childIndex from s >>
 		#@+body
 		# vnode name is everything following the third ':'
 		
@@ -3108,8 +3113,12 @@ class baseLeoFrame:
 		vnodeName = None
 		i = 0 ; colons = 0
 		while i < len(s) and colons < 3:
-			if s[i] == ':': colons += 1
+			if s[i] == ':':
+				colons += 1
+				if colons == 1 and i+1 < len(s) and s[i+1] in string.digits:
+					junk,childIndex = skip_long(s,i+1)
 			i += 1
+		
 		vnodeName = s[i:].strip()
 		# trace("vnodeName:"+`vnodeName`)
 		
@@ -3118,12 +3127,13 @@ class baseLeoFrame:
 		if not vnodeName:
 			es("bad @+node sentinel")
 		#@-body
-		#@-node:3::<< set vnodeName from s >>
+		#@-node:3::<< set vnodeName and childIndex from s >>
 
-		return vnodeName,offset
+		# trace("childIndex,offset",childIndex,offset,vnodeName)
+		return vnodeName,childIndex,offset
 	#@-body
-	#@-node:8::convertLineToVnodeAndLine
-	#@+node:9::skipToMatchingSentinel
+	#@-node:8::convertLineToVnodeNameIndexLine
+	#@+node:9::skipToMatchingNodeSentinel
 	#@+body
 	def skipToMatchingNodeSentinel (self,lines,n,delim):
 		
@@ -3145,12 +3155,14 @@ class baseLeoFrame:
 				if match(s,i,start):
 					level += 1
 				elif match(s,i,end):
-					if level == 0: return n
+					if level == 0: break
 					else: level -= 1
 			n += delta # bug fix: 1/30/02
+			
+		# trace(n)
 		return n
 	#@-body
-	#@-node:9::skipToMatchingSentinel
+	#@-node:9::skipToMatchingNodeSentinel
 	#@-node:6::OnGoToLineNumber & allies
 	#@+node:7::OnSelectAll
 	#@+body
