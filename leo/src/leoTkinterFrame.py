@@ -637,10 +637,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
             lab.configure(text=s)
             self.lastStatusRow = row
             self.lastStatusCol = col
-            
-        # Reschedule this routine 100 ms. later.
-        # Don't use after_idle: it hangs Leo.
-        self.statusFrame.after(100,self.updateStatusRowCol)
+    
+        if 0: # The caller is now responsible for rescheduling.
+            self.statusFrame.after(500,self.updateStatusRowCol)
     #@nonl
     #@-node:ekr.20031218072017.1733:updateStatusRowCol
     #@-node:ekr.20031218072017.3960:Creating the status area
