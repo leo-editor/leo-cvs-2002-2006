@@ -372,7 +372,7 @@ class LeoApp:
     #@nonl
     #@-node:ekr.20031218072017.2618:app.setEncoding
     #@+node:ekr.20031218072017.1978:app.setLeoID
-    def setLeoID (self):
+    def setLeoID (self,verbose=True):
     
         tag = ".leoID.txt"
         homeDir = g.app.homeDir
@@ -390,7 +390,7 @@ class LeoApp:
         
         if hasattr(sys,nonConstantAttr):
             g.app.leoID = getattr(sys,nonConstantAttr)
-            if not g.app.batchMode:
+            if verbose:
                 g.es("leoID = " + g.app.leoID, color="orange")
             return
         else:
@@ -409,10 +409,12 @@ class LeoApp:
                     f.close()
                     if s and len(s) > 0:
                         g.app.leoID = s
-                        g.es("leoID = " + g.app.leoID, color="red")
+                        if verbose:
+                            g.es("leoID = " + g.app.leoID, color="red")
                         return
                     else:
-                        g.es("empty " + tag + " in " + theDir, color = "red")
+                        if verbose:
+                            g.es("empty " + tag + " in " + theDir, color = "red")
             except:
                 g.app.leoID = None
                 
