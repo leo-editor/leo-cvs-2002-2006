@@ -1096,14 +1096,11 @@ class baseCommands:
         
         We execute the selected text, or the entire body text if no text is selected."""
         
-        error = False
-        c = self ; s = None
+        c = self ; error = False ; s = None ; script1 = script
     
-        if script:
-            s = script
-        else:
-            #@        << get script into s >>
-            #@+node:ekr.20031218072017.2142:<< get script into s >>
+        if not script:
+            #@        << get script into script >>
+            #@+node:ekr.20031218072017.2142:<< get script into script >>
             try:
                 try:
                     if not p:
@@ -1127,11 +1124,12 @@ class baseCommands:
                         df.endSentinelComment = None
                         # Write the "derived file" into fo.
                         fo = g.fileLikeObject()
-                        df.write(p.copy(),nosentinels=True,scriptFile=fo)
+                        # nosentinels=False makes it much easier to find the proper line.
+                        df.write(p.copy(),nosentinels=False,scriptFile=fo) 
                         assert(p)
-                        s = fo.get()
+                        script = fo.get()
                         g.app.scriptDict["script2"]=s
-                        error = len(s) == 0
+                        error = len(script) == 0
                 except:
                     s = "unexpected exception"
                     print s ; g.es(s)
@@ -1139,7 +1137,7 @@ class baseCommands:
             finally:
                 p.v.setTnodeText(old_body)
             #@nonl
-            #@-node:ekr.20031218072017.2142:<< get script into s >>
+            #@-node:ekr.20031218072017.2142:<< get script into script >>
             #@nl
         #@    << redirect output if redirect_execute_script_output_to_log_pane >>
         #@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
@@ -1150,81 +1148,110 @@ class baseCommands:
         #@nonl
         #@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
         #@nl
-        s = s.strip()
-        if s:
-            s += '\n' # Make sure we end the script properly.
+        script = script.strip()
+        if script:
+            script += '\n' # Make sure we end the script properly.
             try:
-                exec s in {} # Use {} to get a pristine environment!
-                if not script:
+                exec script in {} # Use {} to get a pristine environment!
+                if not script1:
                     g.es("end of script",color="purple")
             except:
                 g.es("exception executing script")
-                g.es_exception(full=False,c=c)
-                c.frame.tree.redrawAfterException() # 1/26/04
+                n = g.es_exception(full=False,c=c)
+                if n is not None:
+                    #@                << dump the lines of script near the error >>
+                    #@+node:EKR.20040612215018:<< dump the lines of script near the error >>
+                    lines = g.splitLines(script)
+                    
+                    s = '-' * 20
+                    print s; g.es(s)
+                    
+                    if 1:
+                        # Just print the error line.
+                        s = "line %d: %s" % (n,lines[n-1])
+                        print s, ; g.es(s,newline=False)
+                    else:
+                        i = max(0,n-2)
+                        j = min(n+2,len(lines))
+                        # g.trace(n,i,j)
+                        while i < j:
+                            ch = g.choose(i==n-1,'*',' ')
+                            s = "%s line %d: %s" % (ch,i+1,lines[i])
+                            print s, ; g.es(s,newline=False)
+                            i += 1
+                    #@nonl
+                    #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+                    #@nl
+                    if p and not script1:
+                        c.goToScriptLineNumber(p,script,n)
+                c.frame.tree.redrawAfterException()
         elif not error:
             g.es("no script selected",color="blue")
             
-        # 4/3/04: The force a redraw _after_ all messages have been output.
+        # Force a redraw _after_ all messages have been output.
         c.redraw() 
     #@nonl
     #@-node:ekr.20031218072017.2140:executeScript
     #@+node:ekr.20031218072017.2864:goToLineNumber & allies
-    def goToLineNumber (self):
+    def goToLineNumber (self,root=None,lines=None,n=None):
     
-        c = self ; p = c.currentPosition()
-        #@    << set root to the nearest ancestor @file node >>
-        #@+node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
-        fileName = None
-        for p in p.self_and_parents_iter():
-            fileName = p.anyAtFileNodeName()
-            if fileName: break
-        
-        # New in 4.2: Search the entire tree for joined nodes.
-        if not fileName:
-            p1 = c.currentPosition()
-            for p in c.all_positions_iter():
-                if p.v.t == p1.v.t and p != p1:
-                    # Found a joined position.
-                    for p in p.self_and_parents_iter():
-                        fileName = p.anyAtFileNodeName()
-                        if fileName: break
+        c = self ; p = c.currentPosition() ; root1 = root
+        if root is None:
+            #@        << set root to the nearest ancestor @file node >>
+            #@+node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
+            fileName = None
+            for p in p.self_and_parents_iter():
+                fileName = p.anyAtFileNodeName()
                 if fileName: break
             
-        if fileName:
-            # g.trace(fileName,p)
-            root = p.copy()
-        else:
-            g.es("Go to line number: ancestor must be @file node", color="blue")
-            return
-        #@nonl
-        #@-node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
-        #@nl
-        #@    << read the file into lines >>
-        #@+node:ekr.20031218072017.2866:<< read the file into lines >>
-        # 1/26/03: calculate the full path.
-        d = g.scanDirectives(c)
-        path = d.get("path")
-        
-        fileName = g.os_path_join(path,fileName)
-        
-        try:
-            file=open(fileName)
-            lines = file.readlines()
-            file.close()
-        except:
-            g.es("not found: " + fileName)
-            return
+            # New in 4.2: Search the entire tree for joined nodes.
+            if not fileName:
+                p1 = c.currentPosition()
+                for p in c.all_positions_iter():
+                    if p.v.t == p1.v.t and p != p1:
+                        # Found a joined position.
+                        for p in p.self_and_parents_iter():
+                            fileName = p.anyAtFileNodeName()
+                            if fileName: break
+                    if fileName: break
+                
+            if fileName:
+                # g.trace(fileName,p)
+                root = p.copy()
+            else:
+                g.es("Go to line number: ancestor must be @file node", color="blue")
+                return
+            #@nonl
+            #@-node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
+            #@nl
+        if lines is None:
+            #@        << read the file into lines >>
+            #@+node:ekr.20031218072017.2866:<< read the file into lines >>
+            # 1/26/03: calculate the full path.
+            d = g.scanDirectives(c)
+            path = d.get("path")
             
-        #@-node:ekr.20031218072017.2866:<< read the file into lines >>
-        #@nl
-        #@    << get n, the line number, from a dialog >>
-        #@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
-        n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
-        if n == -1:
-            return
-        #@nonl
-        #@-node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
-        #@nl
+            fileName = g.os_path_join(path,fileName)
+            
+            try:
+                file=open(fileName)
+                lines = file.readlines()
+                file.close()
+            except:
+                g.es("not found: " + fileName)
+                return
+                
+            #@-node:ekr.20031218072017.2866:<< read the file into lines >>
+            #@nl
+        if n is None:
+            #@        << get n, the line number, from a dialog >>
+            #@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
+            n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
+            if n == -1:
+                return
+            #@nonl
+            #@-node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
+            #@nl
         if n==1:
             p = root ; n2 = 1 ; found = True
         elif n >= len(lines):
@@ -1351,8 +1378,10 @@ class baseCommands:
                                 print s ; g.es(s, color="red")
                             ok = False
                     else:
-                        s = "Invalid computed tnodeIndex: %d" % tnodeIndex
-                        print s ; g.es(s, color = "red") ; ok = False
+                        if root1 is None: # Kludge: disable this message when called by goToScriptLineNumber.
+                            s = "Invalid computed tnodeIndex: %d" % tnodeIndex
+                            print s ; g.es(s, color = "red")
+                        ok = False
                     #@nonl
                     #@-node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
                     #@nl
@@ -1570,6 +1599,15 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
     #@-node:ekr.20031218072017.2864:goToLineNumber & allies
+    #@+node:EKR.20040612232221:goToScriptLineNumber
+    def goToScriptLineNumber (self,root,script,n):
+    
+        c = self
+        
+        lines = g.splitLines(script)
+        c.goToLineNumber(root=root,lines=lines,n=n)
+    #@nonl
+    #@-node:EKR.20040612232221:goToScriptLineNumber
     #@+node:ekr.20031218072017.2088:fontPanel
     def fontPanel(self):
         
