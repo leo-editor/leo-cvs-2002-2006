@@ -1657,7 +1657,7 @@ def update_file_if_changed(file_name,temp_name):
 			try:
 				# 10/6/02: retain the access mode of the previous file,
 				# removing any setuid, setgid, and sticky bits.
-				mode = (os.stat(filename))[0] & 0777
+				mode = (os.stat(file_name))[0] & 0777
 			except:
 				mode = None
 			try: # Replace file with temp file.

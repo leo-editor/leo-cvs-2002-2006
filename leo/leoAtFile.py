@@ -2638,9 +2638,8 @@ class atFile:
 						try:
 							# 10/6/02: retain the access mode of the previous file,
 							# removing any setuid, setgid, and sticky bits.
-							mode = (os.stat(filename))[0] & 0777
-						except:  # does not exist on all platforms.
-							# traceback.print_exc()
+							mode = (os.stat(self.targetFileName))[0] & 0777
+						except:
 							mode = None
 						try: # Replace target file with temp file.
 							os.remove(self.targetFileName)
