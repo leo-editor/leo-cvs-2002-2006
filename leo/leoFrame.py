@@ -2591,18 +2591,16 @@ class LeoFrame:
 			executable_dir = os.path.dirname(sys.executable)
 			idle_dir=os.path.join(executable_dir,"Tools","idle")
 			if idle_dir not in sys.path:
-				if 0: # This message would be misleading: idle will reset sys.path.
-					es("appending " + `idle_dir` + " to sys.path")
 				sys.path.append(idle_dir)
+			# Set argv so idle will rerun leopy.leo as a script.
+			sys.argv = [os.path.join(app().loadDir,"leo.py")]
 			try:
-				# Set argv so idle will rerun leopy.leo as a script.
-				sys.argv = [os.path.join(app().loadDir,"leopy.leo")]
 				import idle # Must do this even if we have done so before.
-				if app().idle_imported:
-					reload(idle)
-				app().idle_imported = true
 			except:
-				es("app().idle_imported exception")
+				from idlelib import idle # This may be better on Linux.
+			if app().idle_imported:
+				reload(idle)
+			app().idle_imported = true
 		except:
 			try:
 				es("Can not import idle")

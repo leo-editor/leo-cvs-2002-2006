@@ -268,7 +268,7 @@ class leoCompare:
 		return s1 == s2
 	#@-body
 	#@-node:4::compare_lines
-	#@+node:5:C=2:compare_open_files
+	#@+node:5::compare_open_files
 	#@+body
 	def compare_open_files (self, f1, f2, name1, name2):
 	
@@ -392,7 +392,7 @@ class leoCompare:
 		#@-body
 		#@-node:5::<< handle reporting after at least one eof is seen >>
 	#@-body
-	#@-node:5:C=2:compare_open_files
+	#@-node:5::compare_open_files
 	#@+node:6::filecmp
 	#@+body
 	def filecmp (self,f1,f2):
@@ -447,7 +447,7 @@ class leoCompare:
 		self.show(out)
 	#@-body
 	#@-node:2::dump
-	#@+node:3:C=3:dumpToEndOfFile
+	#@+node:3::dumpToEndOfFile
 	#@+body
 	def dumpToEndOfFile (self,tag,f,s,line,printTrailing):
 	
@@ -465,7 +465,7 @@ class leoCompare:
 		self.show(tag + `trailingLines` + " trailing lines")
 		return trailingLines
 	#@-body
-	#@-node:3:C=3:dumpToEndOfFile
+	#@-node:3::dumpToEndOfFile
 	#@+node:4::isLeoHeader & isSentinel
 	#@+body
 	#@+at
@@ -493,7 +493,7 @@ class leoCompare:
 		return match(s,i,sentinelComment)
 	#@-body
 	#@-node:4::isLeoHeader & isSentinel
-	#@+node:5:C=4:openOutputFile
+	#@+node:5:C=2:openOutputFile
 	#@+body
 	def openOutputFile (self):
 		
@@ -521,7 +521,7 @@ class leoCompare:
 				self.show("exception opening output file")
 				traceback.print_exc()
 	#@-body
-	#@-node:5:C=4:openOutputFile
+	#@-node:5:C=2:openOutputFile
 	#@+node:6::show
 	#@+body
 	def show (self,s):
@@ -648,7 +648,7 @@ class leoComparePanel:
 		self.defaultOutputFileName = "CompareResults.txt"
 	#@-body
 	#@-node:2::comparePanel.__init__
-	#@+node:3:C=5:finishCreate
+	#@+node:3:C=3:finishCreate
 	#@+body
 	# Initialize ivars from config parameters.
 	
@@ -730,7 +730,7 @@ class leoComparePanel:
 		b = config.getBoolComparePref("make_whitespace_visible")
 		self.makeWhitespaceVisibleVar.set(b)
 	#@-body
-	#@-node:3:C=5:finishCreate
+	#@-node:3:C=3:finishCreate
 	#@+node:4::run
 	#@+body
 	def run (self):
@@ -902,7 +902,7 @@ class leoComparePanel:
 		self.cmp.show(s)
 	#@-body
 	#@-node:5::show
-	#@+node:6:C=6:setIvarsFromWidgets
+	#@+node:6:C=4:setIvarsFromWidgets
 	#@+body
 	def setIvarsFromWidgets (self):
 	
@@ -964,7 +964,7 @@ class leoComparePanel:
 		else:
 			cmp.limitCount = 0
 	#@-body
-	#@-node:6:C=6:setIvarsFromWidgets
+	#@-node:6:C=4:setIvarsFromWidgets
 	#@+node:7::Event handlers...
 	#@+node:1::onBrowse...
 	#@+body
