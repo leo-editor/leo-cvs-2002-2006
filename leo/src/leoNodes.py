@@ -271,34 +271,56 @@ class baseTnode (object):
 	__str__ = __repr__
 	#@nonl
 	#@-node:ekr.20031218072017.3323:t.__repr__ & t.__str__
-	#@+node:EKR.20040528074559:t.copy
-	def copy (self,copyLinks=true):
+	#@+node:EKR.20040530121847.1:For undo
+	#@+node:EKR.20040530120245:t.createUndoInfo
+	def createUndoInfo (self,copyLinks=true):
 		
-		"""Create an exact copy of a tnode."""
+		"""Create a dict containing all info needed to recreate a vnode."""
 		
-		t = self ; new_t = tnode()
+		t = self ; d = {}
 		
 		# Essential fields.
-		new_t.cloneIndex   = t.cloneIndex
-		new_t.fileIndex    = t.fileIndex
-		new_t.headString   = t.headString
-		new_t.bodyString   = t.bodyString
-		new_t.vnodeList    = t.vnodeList[:] # Must be updated by caller.
-		new_t.statusBits   = t.statusBits
-		new_t._firstChild  = g.choose(copyLinks,t._firstChild,None)
+		d ["t"] = t
+		d ["headString"] = t.headString
+		d ["bodyString"] = t.bodyString
+		d ["vnodeList"]  = t.vnodeList[:]
+		d ["statusBits"] = t.statusBits
+		d ["firstChild"] = t._firstChild
 	
-		try: new_t.unknownAttributes = t.unknownAttributes
+		try: d ["unknownAttributes"] = t.unknownAttributes
 		except: pass
+		
+		if 0: # These neve change, so no need to save/restore them.
+			# In fact, it would be wrong to undo changes made to them!
+			d ["cloneIndex"]  = t.cloneIndex
+			d ["fileIndex"]  = t.fileIndex
 	
 		if 0: # probably not needed for undo.
-			new_t.insertSpot      = t.insertSpot
-			new_t.scrollBarSpot   = t.scrollBarSpot
-			new_t.selectionLength = t.selectionLength
-			new_t.selectionStart  = t.selectionStart
-			
-		# g.trace(new_t)
-		return new_t
-	#@-node:EKR.20040528074559:t.copy
+			d ["insertSpot"]      = t.insertSpot
+			d ["scrollBarSpot"]   = t.scrollBarSpot
+			d ["selectionLength"] = t.selectionLength
+			d ["selectionStart"]  = t.selectionStart
+	
+		return d
+	#@-node:EKR.20040530120245:t.createUndoInfo
+	#@+node:EKR.20040530121847.2:t.restoreUndoInfo
+	def restoreUndoInfo (self,d):
+		
+		t = d ["t"] ; assert(t == self)
+	
+		t.headString  = d ["headString"]
+		t.bodyString  = d ["bodyString"]
+		t.vnodeList   = d ["vnodeList"]
+		t.statusBits  = d ["statusBits"]
+		t._firstChild = d ["firstChild"]
+	
+		try:
+			t.unknownAttributes = d ["unknownAttributes"]
+		except KeyError:
+			pass
+	#@nonl
+	#@-node:EKR.20040530121847.2:t.restoreUndoInfo
+	#@-node:EKR.20040530121847.1:For undo
 	#@+node:ekr.20031218072017.3325:Getters
 	#@+node:ekr.20031218072017.3326:hasBody
 	def hasBody (self):
@@ -482,35 +504,6 @@ class baseVnode (object):
 	__str__ = __repr__
 	#@nonl
 	#@-node:ekr.20031218072017.3345:v.__repr__ & v.__str__
-	#@+node:EKR.20040528075936:v.copy
-	def copy (self,copyLinks=true):
-		
-		"""Create an exact copy of a vnode, including a copy of its tnode."""
-		
-		v = self
-		new_t = v.t.copy(copyLinks=copyLinks)
-		new_v = vnode(v.c,new_t)
-	
-		# Update all vnodes.
-		for v2 in new_t.vnodeList:
-			v2.t = new_t
-	
-		# Copy all ivars.
-		new_v.statusBits = v.statusBits
-		
-		if copyLinks:
-			new_v._parent = v._parent
-			new_v._next   = v._next
-			new_v._back   = v._back
-		else:
-			new_v._parent = new_v._next = new_v._back = None
-		
-		try: new_v.unknownAttributes = t.unknownAttributes
-		except: pass
-	
-		return new_v
-	#@nonl
-	#@-node:EKR.20040528075936:v.copy
 	#@+node:ekr.20040312145256:v.dump
 	def dumpLink (self,link):
 		return g.choose(link,link,"<none>")
@@ -524,10 +517,17 @@ class baseVnode (object):
 		else:
 			print "self    ",v.dumpLink(v)
 			print "len(vnodeList)",len(v.t.vnodeList)
+	
 		print "_back   ",v.dumpLink(v._back)
 		print "_next   ",v.dumpLink(v._next)
 		print "_parent ",v.dumpLink(v._parent)
 		print "t._child",v.dumpLink(v.t._firstChild)
+		
+		if 1:
+			print "t",v.dumpLink(v.t)
+			print "vnodeList"
+			for v in v.t.vnodeList:
+				print v
 	#@nonl
 	#@-node:ekr.20040312145256:v.dump
 	#@-node:ekr.20031218072017.3342:Birth & death
@@ -1224,101 +1224,50 @@ class baseVnode (object):
 			# Don't set the dirty bit: it would just be annoying.
 	#@-node:ekr.20031218072017.3404:v.trimTrailingLines
 	#@-node:ekr.20031218072017.3384:Setters
-	#@+node:EKR.20040528111420:Used by Undo
-	#@+node:EKR.20040528070309.1:v.copyTree
-	def copyTree (self):
+	#@+node:EKR.20040528111420:For undo
+	#@+node:EKR.20040530115450:v.createUndoInfo
+	def createUndoInfo (self):
 		
-		"""Returns a free-standing copy of a vnode and all its descendents.
+		"""Create a dict containing all info needed to recreate a vnode for undo."""
 		
-		New in 4.2: we also make a copy of each tnode."""
+		v = self ; d = {}
 		
-		c = self.c ; old_v = self
+		# Copy all ivars.
+		d ["v"] = v
+		d ["statusBits"] = v.statusBits
+		d ["parent"] = v._parent
+		d ["next"] = v._next
+		d ["back"] = v._back
+		# The tnode never changes so there is no need to save it here.
+		
+		try: d ["unknownAttributes"] = v.unknownAttributes
+		except: pass
 	
-		new_v = old_v.copy(copyLinks=false)
-	
-		# Recursively copy and link all children.
-		old_child = old_v.firstChild()
-		n = 0
-		while old_child:
-			new_child = old_child.copyTree()
-			new_child.linkAsNthChild(new_v,n)
-			old_child = old_child.next()
-			n += 1
-			
-		# g.trace(new_v)
-		return new_v
-	
-	
-	#@-node:EKR.20040528070309.1:v.copyTree
-	#@+node:EKR.20040528111420.1:v.swapIntoTree, v.swapLinks
-	def swapIntoTree (self,v2):
-		
-		"""Link a vnode into the tree in place of v2."""
-		
-		v1 = self
-	
-		# Set the links in v1.
-		v1._next = v2._next
-		v1._back = v2._back 
-		v1._parent = v2._parent
-		
-		# Set links in other nodes to v1.
-		if v1._next: v1._next._back = v1
-		if v1._back: v1._back._next = v1
-		if v1._parent and v2 == v1._parent.t._firstChild:
-			v1._parent.t._firstChild = v1
-	
-	def swapLinks (self,v2): # not used.
-		
-		"""Swap the next/back links of two vnodes."""
-		
-		v1 = self
-		
-		v1._next,   v2._next   = v2._next,  v1._next
-		v1._back,   v2._back   = v2._back,  v1._back
-		v1._parent, v2._parent = v2._parent,v1._parent
+		return d
 	#@nonl
-	#@-node:EKR.20040528111420.1:v.swapIntoTree, v.swapLinks
-	#@+node:EKR.20040528151551.4:v.updateVnodeListsFrom
-	def updateVnodeListsFrom (self,v2):
+	#@-node:EKR.20040530115450:v.createUndoInfo
+	#@+node:EKR.20040530121847:v.restoreUndoInfo
+	def restoreUndoInfo (self,d):
 		
-		"""Update the vnodeLists in self's after making self's tree from v2."""
+		"""Restore all ivars saved in dict d."""
 		
-		v1 = self
+		v = d ["v"] ; assert(v == self)
+	
+		v.statusBits = d ["statusBits"]
+		v._parent    = d ["parent"] 
+		v._next      = d ["next"] 
+		v._back      = d ["back"]
 		
-		# Create correspondences between elements of v1 and v2.
-		nodes1 = [v for v in v1.vnode_iter()]
-		nodes2 = [v for v in v2.vnode_iter()]
-		print len(nodes1),len(nodes2)
-		assert(len(nodes1) == len(nodes2))
-		
-		dict2to1 = {}
-		for i in xrange(len(nodes2)):
-			dict2to1[nodes2[i]]=nodes1[1]
-		
-		# Create a list of all vnodes in all of vnodeLists in v2's tree.
-		if 0: # not needed.
-			v2List = []
-			for v in v2.unique_vnode_iter():
-				for v3 in v.t.vnodeList:
-					if v3 not in v2List:
-						v2List.append(v3)
-					
-		# Update all vnodeLists in v1's tree.
-		for v in v1.unique_vnode_iter():
-			for v3 in v.t.vnodeList:
-				if v3 in nodes2:
-					v.t.vnodeList.remove(v3)
-					v4 = dict2to1.get(v3)
-					assert(v4)
-					v.t.vnodeList.append(v4)
-			
+		try:
+			v.unknownAttributes = d ["unknownAttributes"]
+		except KeyError:
+			pass
 	#@nonl
-	#@-node:EKR.20040528151551.4:v.updateVnodeListsFrom
-	#@-node:EKR.20040528111420:Used by Undo
+	#@-node:EKR.20040530121847:v.restoreUndoInfo
+	#@-node:EKR.20040528111420:For undo
 	#@+node:EKR.20040528151551:v.Iterators
-	#@+node:EKR.20040528151551.2:vnode_iter
-	def vnode_iter(self):
+	#@+node:EKR.20040528151551.2:self_subtree_iter
+	def subtree_iter(self):
 	
 		"""Return all nodes of self's tree in outline order."""
 		
@@ -1326,18 +1275,17 @@ class baseVnode (object):
 	
 		if v:
 			yield v
-			if v.t._firstChild:
-				for v1 in v.t._firstChild.vnode_iter():
+			child = v.t._firstChild
+			while child:
+				for v1 in child.subtree_iter():
 					yield v1
-			v = v._next
-			while v:
-				for v in v.vnode_iter():
-					yield v
-				v = v._next
+				child = child.next()
+				
+	self_and_subtree_iter = subtree_iter
 	#@nonl
-	#@-node:EKR.20040528151551.2:vnode_iter
-	#@+node:EKR.20040528151551.3:unique_vnode_iter
-	def unique_vnode_iter(self,marks=None):
+	#@-node:EKR.20040528151551.2:self_subtree_iter
+	#@+node:EKR.20040528151551.3:unique_subtree_iter
+	def unique_subtree_iter(self,marks=None):
 	
 		"""Return all vnodes in self's tree, discarding duplicates """
 		
@@ -1349,15 +1297,17 @@ class baseVnode (object):
 			marks[v] = v
 			yield v
 			if v.t._firstChild:
-				for v1 in v.t._firstChild.unique_vnode_iter(marks):
+				for v1 in v.t._firstChild.unique_subtree_iter(marks):
 					yield v1
 			v = v._next
 			while v:
-				for v in v.unique_vnode_iter(marks):
+				for v in v.unique_subtree_iter(marks):
 					yield v
 				v = v._next
+				
+	self_and_unique_subtree_iter = unique_subtree_iter
 	#@nonl
-	#@-node:EKR.20040528151551.3:unique_vnode_iter
+	#@-node:EKR.20040528151551.3:unique_subtree_iter
 	#@-node:EKR.20040528151551:v.Iterators
 	#@-others
 	
@@ -1629,6 +1579,7 @@ class position (object):
 				return self.v.t
 			else:
 				# Only called when normal lookup fails.
+				print "unknown attribute",attr
 				raise AttributeError
 	#@nonl
 	#@-node:ekr.20040117170612:p.__getattr__  ON:  must be ON if use_plugins
@@ -1656,7 +1607,7 @@ class position (object):
 		p = self
 		
 		if p.v:
-			return "<pos %d lvl: %d [%d] %s>" % (id(p),p.level(),len(p.stack),p.v.headString())
+			return "<pos %d lvl: %d [%d] %s>" % (id(p),p.level(),len(p.stack),p.cleanHeadString())
 		else:
 			return "<pos %d        [%d] None>" % (id(p),len(p.stack))
 			
@@ -1671,9 +1622,7 @@ class position (object):
 	def dump (self,label=""):
 		
 		p = self
-	
 		print '-'*10,label,p
-	
 		if p.v:
 			p.v.dump() # Don't print a label
 			
@@ -2335,7 +2284,49 @@ class position (object):
 	#@@c
 	
 	#@+others
-	#@+node:ekr.20040305171133:allNodes_iter
+	#@+node:EKR.20040529103843:p.tnodes_iter & unique_tnodes_iter
+	def tnodes_iter(self):
+		
+		"""Return all tnode's in a positions subtree."""
+		
+		p = self
+		for p in p.self_and_subtree_iter():
+			yield p.v
+			
+	def unique_tnodes_iter(self):
+		
+		"""Return all unique tnode's in a positions subtree."""
+		
+		p = self
+		marks = {}
+		for p in p.self_and_subtree_iter():
+			if p.v not in marks:
+				marks[p.v] = p.v
+				yield p.v
+	#@nonl
+	#@-node:EKR.20040529103843:p.tnodes_iter & unique_tnodes_iter
+	#@+node:EKR.20040529103945:p.vnodes_iter & unique_vnodes_iter
+	def vnodes_iter(self):
+		
+		"""Return all vnode's in a positions subtree."""
+		
+		p = self
+		for p in p.self_and_subtree_iter():
+			yield p.v
+			
+	def unique_vnodes_iter(self):
+		
+		"""Return all unique vnode's in a positions subtree."""
+		
+		p = self
+		marks = {}
+		for p in p.self_and_subtree_iter():
+			if p.v not in marks:
+				marks[p.v] = p.v
+				yield p.v
+	#@nonl
+	#@-node:EKR.20040529103945:p.vnodes_iter & unique_vnodes_iter
+	#@+node:ekr.20040305171133:p.allNodes_iter
 	class allNodes_iter_class:
 	
 		"""Returns a list of positions in the entire outline."""
@@ -2374,103 +2365,8 @@ class position (object):
 		
 		return self.allNodes_iter_class(self,copy)
 	#@nonl
-	#@-node:ekr.20040305171133:allNodes_iter
-	#@+node:EKR.20040527065806:all_vnodes_iter
-	class all_vnodes_iter_class:
-	
-		"""Returns a list all vnodes in a position's subtree."""
-	
-		#@	@+others
-		#@+node:EKR.20040527065917.1:__init__ & __iter__
-		def __init__(self,p,all):
-		
-			self.first = p.copy()
-			if all: self.after = None
-			else:   self.after = p.nodeAfterTree()
-			self.p = None
-			self.marks = {}
-			
-		def __iter__(self):
-		
-			return self
-		#@nonl
-		#@-node:EKR.20040527065917.1:__init__ & __iter__
-		#@+node:EKR.20040527065917.2:next
-		def next(self):
-			
-			if self.first:
-				self.p = self.first
-				self.first = None
-				
-			else:
-				self.p.moveToThreadNext()
-				while self.p and self.p != self.after and self.marks.get(self.p.v):
-					self.p.moveToThreadNext()
-		
-			if self.p and self.p != self.after:
-				self.marks[self.p.v] = self.p.v
-				return self.p.v
-			else:
-				raise StopIteration
-		#@nonl
-		#@-node:EKR.20040527065917.2:next
-		#@-others
-	
-	def all_vnodes_iter (self,all=false):
-		
-		return self.all_vnodes_iter_class(self,all)
-		
-	distinct_vnodes_iter = all_vnodes_iter
-	#@nonl
-	#@-node:EKR.20040527065806:all_vnodes_iter
-	#@+node:EKR.20040527065806.1:all_tnodes_iter
-	class all_tnodes_iter_class:
-	
-		"""Returns a list all tnodes in a position's subtree."""
-	
-		#@	@+others
-		#@+node:EKR.20040527065917.4:__init__ & __iter__
-		def __init__(self,p,all):
-		
-			self.first = p.copy()
-			if all: self.after = None
-			else:   self.after = p.nodeAfterTree()
-			self.p = None
-			self.marks = {}
-		
-		def __iter__(self):
-		
-			return self
-		#@nonl
-		#@-node:EKR.20040527065917.4:__init__ & __iter__
-		#@+node:EKR.20040527065917.5:next
-		def next(self):
-			
-			if self.first:
-				self.p = self.first
-				self.first = None
-			else:
-				self.p.moveToThreadNext()
-				while self.p and self.p != self.after and self.marks.get(self.p.v.t):
-					self.p.moveToThreadNext()
-		
-			if self.p and self.p != self.after:
-				self.marks[self.p.v.t] = self.p.v.t
-				return self.p.v.t
-			else:
-				raise StopIteration
-		#@nonl
-		#@-node:EKR.20040527065917.5:next
-		#@-others
-	
-	def all_tnodes_iter (self,all=false):
-		
-		return self.all_tnodes_iter_class(self,all)
-		
-	distinct_tnodes_iter = all_tnodes_iter
-	#@nonl
-	#@-node:EKR.20040527065806.1:all_tnodes_iter
-	#@+node:ekr.20040305173559:subtree_iter
+	#@-node:ekr.20040305171133:p.allNodes_iter
+	#@+node:ekr.20040305173559:p.subtree_iter
 	class subtree_iter_class:
 	
 		"""Returns a list of positions in a subtree, possibly including the root of the subtree."""
@@ -2523,8 +2419,8 @@ class position (object):
 		
 		return self.subtree_iter_class(self,copy,includeSelf=true)
 	#@nonl
-	#@-node:ekr.20040305173559:subtree_iter
-	#@+node:ekr.20040305172211.1:children_iter
+	#@-node:ekr.20040305173559:p.subtree_iter
+	#@+node:ekr.20040305172211.1:p.children_iter
 	class children_iter_class:
 	
 		"""Returns a list of children of a position."""
@@ -2567,8 +2463,8 @@ class position (object):
 		
 		return self.children_iter_class(self,copy)
 	#@nonl
-	#@-node:ekr.20040305172211.1:children_iter
-	#@+node:ekr.20040305172855:parents_iter
+	#@-node:ekr.20040305172211.1:p.children_iter
+	#@+node:ekr.20040305172855:p.parents_iter
 	class parents_iter_class:
 	
 		"""Returns a list of positions of a position."""
@@ -2620,8 +2516,8 @@ class position (object):
 		
 		return self.parents_iter_class(self,copy,includeSelf=true)
 	#@nonl
-	#@-node:ekr.20040305172855:parents_iter
-	#@+node:ekr.20040305173343:siblings_iter
+	#@-node:ekr.20040305172855:p.parents_iter
+	#@+node:ekr.20040305173343:p.siblings_iter
 	class siblings_iter_class:
 	
 		"""Returns a list of siblings of a position."""
@@ -2676,7 +2572,7 @@ class position (object):
 		
 		return self.siblings_iter_class(self,copy,following=true)
 	#@nonl
-	#@-node:ekr.20040305173343:siblings_iter
+	#@-node:ekr.20040305173343:p.siblings_iter
 	#@-others
 	#@nonl
 	#@-node:ekr.20040305162628.1:p.Iterators
