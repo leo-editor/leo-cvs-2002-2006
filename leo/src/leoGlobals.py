@@ -1558,8 +1558,8 @@ def utils_remove (fileName,verbose=True):
             g.es_exception()
         return False
 #@nonl
-#@+node:ekr.20050107084901:test_utils_remove
-def test_utils_remove():
+#@+node:ekr.20050107084901:test_g_utils_remove
+def test_g_utils_remove():
 
     __pychecker__ = '--no-reimport'
     import os
@@ -1579,7 +1579,7 @@ def test_utils_remove():
     assert exists(path)
     assert g.utils_remove(path,verbose=True)
     assert not exists(path)
-#@-node:ekr.20050107084901:test_utils_remove
+#@-node:ekr.20050107084901:test_g_utils_remove
 #@-node:ekr.20050104123726.3:g.utils_remove & test
 #@+node:ekr.20031218072017.1263:g.utils_rename & test
 #@<< about os.rename >>
@@ -1642,8 +1642,8 @@ def utils_rename(src,dst,mode=None,verbose=True):
             g.es_exception()
         return False
 #@nonl
-#@+node:ekr.20050107085710.1:test_utils_rename
-def test_utils_rename(**keys):
+#@+node:ekr.20050107085710.1:test_g_utils_rename
+def test_g_utils_rename(**keys):
 
     __pychecker__ = '--no-reimport '
     import os
@@ -1664,7 +1664,7 @@ def test_utils_rename(**keys):
     assert g.utils_remove(path,verbose=True)
     assert not exists(path)
 #@nonl
-#@-node:ekr.20050107085710.1:test_utils_rename
+#@-node:ekr.20050107085710.1:test_g_utils_rename
 #@-node:ekr.20031218072017.1263:g.utils_rename & test
 #@+node:ekr.20050104124903:g.utils_chmod
 def utils_chmod (fileName,mode,verbose=True):
@@ -2068,13 +2068,6 @@ def doHook(tag,*args,**keywords):
     if not f:
         import leoPlugins
         g.app.hookFunction = f = leoPlugins.doPlugins
-
-    if 0: # Don't use trace here!
-        if 1:
-            old_c = keywords.get('old_c')
-            if old_c: print 'doHook %24s %s' % (tag,old_c.shortFileName())
-        else:
-            if tag != "idle": print 'doHook %24s old_c: %s' % (tag,c and c.shortFileName())
         
     try:
         # Pass the hook to the hook handler.
