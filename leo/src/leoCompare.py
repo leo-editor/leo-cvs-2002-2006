@@ -2,7 +2,7 @@
 #@+node:@file leoCompare.py
 #@@language python
 
-# The code for Leo's Compare Panel and the compare class.
+"""Leo's Compare Panel and the compare class."""
 
 from leoGlobals import *
 import difflib,filecmp,os,string
