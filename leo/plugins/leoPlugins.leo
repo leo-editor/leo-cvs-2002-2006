@@ -1653,7 +1653,19 @@
 </v>
 <v t="ekr.20040201060959" tnodeList="ekr.20040201060959"><vh>@file status_line.py</vh></v>
 </v>
-<v t="edream.120603093808" a="MTV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="ekr.20040205071616" a="TV"><vh>mnplugins.py</vh>
+<v t="ekr.20040205071616.1"><vh>mnstamp</vh></v>
+<v t="ekr.20040205071616.2"><vh>mnOKstamp</vh></v>
+<v t="ekr.20040205071616.3"><vh>onStart</vh></v>
+<v t="ekr.20040205071616.4"><vh>setHeadOK</vh></v>
+<v t="ekr.20040205071616.5"><vh>insertBodystamp</vh></v>
+<v t="ekr.20040205071616.6"><vh>is_subnodesOK</vh></v>
+<v t="ekr.20040205071616.7"><vh>onRclick</vh></v>
+<v t="ekr.20040205071616.8"><vh>insertOKcmd</vh></v>
+<v t="ekr.20040205071616.9"><vh>insertUser</vh></v>
+<v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
+</v>
+<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.031216103123">@nocolor
@@ -17548,5 +17560,149 @@ if Tkinter: # Register the handlers...
 <t tx="ekr.20040201061422"></t>
 <t tx="ekr.20040201061422.1"></t>
 <t tx="ekr.20040201061422.2">This creates a status area at the bottom of the Leo Window.  Plugins may write to this area using the status area convenience routines in leoTkinterFrame.py.</t>
+<t tx="ekr.20040205071616">"""
+mnplugins.py
+
+mnplugins shows how to :
+define new Commands  "insertOK" + "insertUser"
+create Usermenu with new Commands
+
+new Commands:
+insertOK: 
+    insert 'OK' in headline and a stamp in the first bodyline
+    are there childnodes without 'OK' verhindern OK in actual node
+    (insertOK on iconrclick2 too)
+
+insertUser : Shift-F6
+	insert a &lt;user/date/time&gt; stamp at the current location in bodytext
+	
+"""
+
+from leoPlugins import *
+from leoGlobals import *
+
+import leoCommands
+import time
+
+OKFLAG='OK '  # Space required.
+
+@others
+
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
+Tk = Tkinter
+
+if Tkinter: 
+
+	if app.gui is None:
+		app.createTkGui(__file__)
+
+	if app.gui.guiName() == "tkinter":
+		registerHandler("start1", onStart)
+		registerHandler("create-optional-menus",create_UserMenu)
+		registerHandler("iconrclick2", onRclick)
+
+		__version__ = "0.1"
+		plugin_signon(__name__)
+		es('mnplug OK+Commands+Menu aktiv',color='green')
+		
+</t>
+<t tx="ekr.20040205071616.1">def mnstamp():
+
+	lt=time.localtime(time.time())
+	mndatetime=time.strftime('%y%m%d %H:%M',(lt))
+	return '### '+app.leoID+mndatetime
+
+
+</t>
+<t tx="ekr.20040205071616.2">def mnOKstamp():
+
+	lt=time.localtime(time.time())
+	mndatetime=time.strftime('%y%m%d %H:%M',(lt))
+	return '###'+OKFLAG+app.leoID+mndatetime
+</t>
+<t tx="ekr.20040205071616.3">def onStart (tag,keywords):
+
+	# insert function insertUser as method of class Commands at runtime
+	funcToMethod(insertUser,leoCommands.Commands)
+	funcToMethod(insertOKcmd,leoCommands.Commands)
+
+</t>
+<t tx="ekr.20040205071616.4">def setHeadOK(v):
+
+	s = OKFLAG + v.headString()
+	v.setHeadStringOrHeadline(s)
+
+</t>
+<t tx="ekr.20040205071616.5">def insertBodystamp(c,v):
+
+	stamp=mnOKstamp()+'\n'
+
+	# insertAtBegin - ??!! workaround ??!! 
+	# insertPointFormat is  ('row.column')
+	
+	oldip=c.frame.body.getInsertionPoint()
+	newip=str(int(string.split(oldip,'.')[0])+1)+'.'+string.split(oldip,'.')[1]
+
+	c.frame.body.setInsertionPoint('0.0')
+	c.frame.body.insertAtInsertPoint(stamp)
+	c.frame.body.setInsertionPoint(newip)
+	c.frame.body.onBodyChanged(v,"Typing")</t>
+<t tx="ekr.20040205071616.6">def is_subnodesOK(v):
+
+	if not v.hasChildren():
+		return true
+	else:
+		ok = false
+		child=v.firstChild()
+		while child:
+			s=child.headString()
+			ok=s[0:len(OKFLAG)]==OKFLAG
+			if not ok:break
+			child=child.next()
+	return ok
+
+</t>
+<t tx="ekr.20040205071616.7">def onRclick(tag,keywords):
+	
+	"""Handle right click in body pane."""
+
+	c=keywords.get('c')
+	insertOKcmd(c)</t>
+<t tx="ekr.20040205071616.8">def insertOKcmd(self,event=None):
+
+	c=self; v=c.currentVnode()  
+	
+	if is_subnodesOK(v) :
+		setHeadOK(v)
+		insertBodystamp(c,v)
+	else: 
+		es('OK in child missing')</t>
+<t tx="ekr.20040205071616.9">def insertUser (self,event=None):
+	
+	"""Handle the Insert User command."""
+
+	c = self ; v = c.currentVnode()
+	
+	oldSel = c.frame.body.getTextSelection()
+	c.frame.body.deleteTextSelection() # Works if nothing is selected.
+	
+	s = mnstamp()
+	
+	c.frame.body.insertAtInsertPoint(s)
+	c.frame.body.onBodyChanged(v,"Typing",oldSel=oldSel)</t>
+<t tx="ekr.20040205071616.10">def create_UserMenu (tag,keywords):
+
+	c = keywords.get("c")
+	
+	c.pluginsMenu = c.frame.menu.createNewMenu("UserMenu")
+
+	table = [
+		("insUser", 'Shift+F6', c.insertUser),
+		("insOK",'Ctrl+Shift+O',c.insertOKcmd)]
+
+	c.frame.menu.createMenuEntries(c.pluginMenu,table)</t>
 </tnodes>
 </leo_file>

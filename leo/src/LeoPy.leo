@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4164" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4166" clone_windows="0"/>
 <globals body_outline_ratio="0.49671772428884026">
-	<global_window_position top="10" left="340" height="914" width="919"/>
+	<global_window_position top="10" left="315" height="914" width="919"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -476,8 +476,9 @@
 <v t="ekr.20031218072017.340"><vh>October 2003</vh></v>
 </v>
 <v t="ekr.20031218072017.341"><vh>FAQ for comp.prog.literate</vh></v>
-<v t="ekr.20031218072017.342"><vh>ANN: Leo 4.1 rc3: An outlining editor</vh></v>
+<v t="ekr.20040203100534"><vh>ANN: Leo 4.1 rc4: An outlining editor</vh></v>
 <v t="ekr.20031218072017.343"><vh>Previous announcements</vh>
+<v t="ekr.20031218072017.342"><vh>ANN: Leo 4.1 rc3: An outlining editor</vh></v>
 <v t="ekr.20031218072017.344"><vh>ANN: Leo 4.1 beta 5: An outlining editor</vh></v>
 <v t="ekr.20031218072017.345"><vh>4.0.x announcements</vh>
 <v t="ekr.20031218072017.346"><vh>ANN: Leo 4.0.4: An outlining editor</vh></v>
@@ -511,12 +512,14 @@
 <v t="ekr.20031218072017.365"><vh>How to...</vh>
 <v t="ekr.20031218072017.366"><vh>How to add and remove files from CVS repository</vh></v>
 <v t="ekr.20031218072017.367"><vh>How to add support for a new language</vh>
+<v t="ekr.20040206073310"><vh>Notes</vh></v>
 <v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
 <v t="ekr.20031218072017.369"><vh>&lt;&lt; Create the Target Language frame &gt;&gt; frame</vh></v>
 <v t="ekr.20031218072017.370"><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
 <v t="ekr.20031218072017.371"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
 <v t="ekr.20031218072017.372"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.373"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
+<v t="ekr.20040206072057"><vh>&lt;&lt; csharp keywords &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.374"><vh>&lt;&lt; elisp keywords&gt;&gt;</vh></v>
 <v t="ekr.20031218072017.375"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.376"><vh>&lt;&lt; java keywords &gt;&gt;</vh></v>
@@ -1314,16 +1317,6 @@
 <v t="ekr.20040118101339.1"><vh>Plugins to add</vh>
 <v t="ekr.20040130185920.1"><vh>Add incremental search to search plugin</vh></v>
 <v t="ekr.20040125114744"><vh>Michael Dawson: Leo to docbook xml plugin</vh></v>
-</v>
-<v t="ekr.20040129080202"><vh>Mac/Linux  bugs</vh>
-<v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
-<v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
-<v t="ekr.20040117112808.1"><vh>small bug in install script</vh></v>
-<v t="ekr.20040117112213"><vh>config problem on Linux</vh></v>
-<v t="ekr.20040115162445.1"><vh>Backspace problems on Linux</vh>
-<v t="ekr.20040115162445.2"><vh>Dave Hein: fix</vh></v>
-</v>
-<v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
 </v>
 <v t="ekr.20040203075059"><vh>use pos linestart + 1 liness to go to next line??</vh></v>
 </v>
@@ -3285,6 +3278,7 @@
 <v t="ekr.20031218072017.371"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
 <v t="ekr.20031218072017.372"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.373"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
+<v t="ekr.20040206072057"><vh>&lt;&lt; csharp keywords &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.374"><vh>&lt;&lt; elisp keywords&gt;&gt;</vh></v>
 <v t="ekr.20031218072017.375"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.376"><vh>&lt;&lt; java keywords &gt;&gt;</vh></v>
@@ -4634,7 +4628,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -5271,13 +5265,14 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2794" tnodeList="ekr.20031218072017.2794,ekr.20031218072017.1595,ekr.20031218072017.2795,ekr.20031218072017.2796,ekr.20031218072017.371,ekr.20031218072017.372,ekr.20031218072017.373,ekr.20031218072017.374,ekr.20031218072017.375,ekr.20031218072017.376,ekr.20031218072017.377,ekr.20031218072017.378,ekr.20031218072017.379,ekr.20031218072017.381,ekr.20031218072017.383,ekr.20031218072017.380,ekr.20031218072017.382,ekr.20031218072017.1605,ekr.20031218072017.1606,ekr.20031218072017.1607,ekr.20031218072017.1608,ekr.20031218072017.2798,ekr.20031218072017.2799,ekr.20031218072017.2800,ekr.20031218072017.2801,ekr.20031218072017.1880,ekr.20031218072017.1602,ekr.20031218072017.1603,ekr.20031218072017.370,ekr.20031218072017.1881,ekr.20031218072017.1882,ekr.20031218072017.1883,ekr.20031218072017.1884,ekr.20031218072017.1885,ekr.20031218072017.1886,ekr.20031218072017.1887,ekr.20031218072017.1890,ekr.20031218072017.1891,ekr.20031218072017.1888,ekr.20031218072017.1889,ekr.20031218072017.1892,ekr.20031218072017.1618,ekr.20031218072017.1893,ekr.20031218072017.1614,ekr.20031218072017.1615,ekr.20031218072017.1616,ekr.20031218072017.1894,ekr.20031218072017.1613,ekr.20031218072017.1620,ekr.20031218072017.1895,ekr.20031218072017.1896,ekr.20031218072017.1898,ekr.20031218072017.1899,ekr.20031218072017.1900,ekr.20031218072017.1901,ekr.20031218072017.1902,ekr.20031218072017.1904,ekr.20031218072017.1903,ekr.20031218072017.1617,ekr.20031218072017.1619,ekr.20031218072017.1905,ekr.20031218072017.1907,ekr.20031218072017.1612,ekr.20031218072017.1909,ekr.20031218072017.1910,ekr.20031218072017.1911,ekr.20031218072017.1912,ekr.20031218072017.1913,ekr.20031218072017.1914,ekr.20031218072017.1915,ekr.20031218072017.1604,ekr.20031218072017.1377,ekr.20031218072017.1378,ekr.20031218072017.1379,ekr.20031218072017.2802,ekr.20031218072017.2803,ekr.20031218072017.1944,ekr.20031218072017.2804,ekr.20031218072017.2805,ekr.20031218072017.2806,ekr.20031218072017.1609,ekr.20031218072017.2807,ekr.20031218072017.2808,ekr.20031218072017.1610,ekr.20031218072017.2809,ekr.20031218072017.2218,ekr.20031218072017.2219,ekr.20031218072017.2220,ekr.20031218072017.2221"><vh>@file leoColor.py</vh>
+<v t="ekr.20031218072017.2794" tnodeList="ekr.20031218072017.2794,ekr.20031218072017.1595,ekr.20031218072017.2795,ekr.20031218072017.2796,ekr.20031218072017.371,ekr.20031218072017.372,ekr.20031218072017.373,ekr.20040206072057,ekr.20031218072017.374,ekr.20031218072017.375,ekr.20031218072017.376,ekr.20031218072017.377,ekr.20031218072017.378,ekr.20031218072017.379,ekr.20031218072017.381,ekr.20031218072017.383,ekr.20031218072017.380,ekr.20031218072017.382,ekr.20031218072017.1605,ekr.20031218072017.1606,ekr.20031218072017.1607,ekr.20031218072017.1608,ekr.20031218072017.2798,ekr.20031218072017.2799,ekr.20031218072017.2800,ekr.20031218072017.2801,ekr.20031218072017.1880,ekr.20031218072017.1602,ekr.20031218072017.1603,ekr.20031218072017.370,ekr.20031218072017.1881,ekr.20031218072017.1882,ekr.20031218072017.1883,ekr.20031218072017.1884,ekr.20031218072017.1885,ekr.20031218072017.1886,ekr.20031218072017.1887,ekr.20031218072017.1890,ekr.20031218072017.1891,ekr.20031218072017.1888,ekr.20031218072017.1889,ekr.20031218072017.1892,ekr.20031218072017.1618,ekr.20031218072017.1893,ekr.20031218072017.1614,ekr.20031218072017.1615,ekr.20031218072017.1616,ekr.20031218072017.1894,ekr.20031218072017.1613,ekr.20031218072017.1620,ekr.20031218072017.1895,ekr.20031218072017.1896,ekr.20031218072017.1898,ekr.20031218072017.1899,ekr.20031218072017.1900,ekr.20031218072017.1901,ekr.20031218072017.1902,ekr.20031218072017.1904,ekr.20031218072017.1903,ekr.20031218072017.1617,ekr.20031218072017.1619,ekr.20031218072017.1905,ekr.20031218072017.1907,ekr.20031218072017.1612,ekr.20031218072017.1909,ekr.20031218072017.1910,ekr.20031218072017.1911,ekr.20031218072017.1912,ekr.20031218072017.1913,ekr.20031218072017.1914,ekr.20031218072017.1915,ekr.20031218072017.1604,ekr.20031218072017.1377,ekr.20031218072017.1378,ekr.20031218072017.1379,ekr.20031218072017.2802,ekr.20031218072017.2803,ekr.20031218072017.1944,ekr.20031218072017.2804,ekr.20031218072017.2805,ekr.20031218072017.2806,ekr.20031218072017.1609,ekr.20031218072017.2807,ekr.20031218072017.2808,ekr.20031218072017.1610,ekr.20031218072017.2809,ekr.20031218072017.2218,ekr.20031218072017.2219,ekr.20031218072017.2220,ekr.20031218072017.2221"><vh>@file leoColor.py</vh>
 <v t="ekr.20031218072017.1595"><vh>&lt;&lt; define leo keywords &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2795"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2796"><vh>class colorizer</vh>
 <v t="ekr.20031218072017.371"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
 <v t="ekr.20031218072017.372"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.373"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
+<v t="ekr.20040206072057"><vh>&lt;&lt; csharp keywords &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.374"><vh>&lt;&lt; elisp keywords&gt;&gt;</vh></v>
 <v t="ekr.20031218072017.375"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.376"><vh>&lt;&lt; java keywords &gt;&gt;</vh></v>
@@ -7938,6 +7933,20 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040205063350"><vh>(Fix clone bug)</vh>
+<v t="ekr.20040205063350.1"><vh>Report</vh></v>
+</v>
+<v t="ekr.20040129080202" a="ETV"><vh>Mac/Linux  bugs</vh>
+<v t="ekr.20040206061812"><vh>"idle" bug</vh></v>
+<v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
+<v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
+<v t="ekr.20040117112808.1"><vh>small bug in install script</vh></v>
+<v t="ekr.20040117112213"><vh>config problem on Linux</vh></v>
+<v t="ekr.20040115162445.1"><vh>Backspace problems on Linux</vh>
+<v t="ekr.20040115162445.2"><vh>Dave Hein: fix</vh></v>
+</v>
+<v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20031218072017">@ignore
@@ -8819,10 +8828,12 @@ OSS world.
 <t tx="ekr.20031218072017.334"></t>
 <t tx="ekr.20031218072017.335"></t>
 <t tx="ekr.20031218072017.336">@pagewidth 70</t>
-<t tx="ekr.20031218072017.337">4.1 b5: setup-b5: 195,  b5.zip: 128
+<t tx="ekr.20031218072017.337">4.1rc3 setup-rc4: 870  rc4.zip: 630
+4.1 b5: setup-b5: 195,  b5.zip: 128
 4.0.4:  setup: 340, zip 385
 4.0 leo-4.0.zip 382
-3.12 leosetup 953,3.12.zip 592
+3.12 leosetup 953,
+3.12.zip 592
 3.11.zip 102
 3.10.zip 1193</t>
 <t tx="ekr.20031218072017.338"></t>
@@ -10082,6 +10093,7 @@ but with the name of your new language instead of "Python".
 self.language_delims_dict = {
 	"actionscript" : "// /* */", #jason 2003-07-03
 	"c" : "// /* */", # C, C++ or objective C.
+	"csharp" : "// /* */",	# C#
 	"cweb" : "@q@ @&gt;", # Use the "cweb hack"
 	"elisp" : ";",
 	"forth" : "_\\_ _(_ _)_", # Use the "REM hack"
@@ -10123,8 +10135,7 @@ self.language_extension_dict = {
 	"shell" : "txt",
 	"tex" : "tex",
 	"tcltk" : "tcl",
-	"unknown" : "txt" } # Set when @comment is seen.
-</t>
+	"unknown" : "txt" } # Set when @comment is seen.</t>
 <t tx="ekr.20031218072017.369"># Frame and title
 w,target = gui.create_labeled_frame (outer,caption="Default Target Language")
 w.pack(padx=2,pady=2,expand=1,fill="x")
@@ -10139,12 +10150,12 @@ rt.pack(side="right")
 left_data = [
 	("ActionScript", "actionscript"),
 	("C/C++","c"),
+	("C#",   "csharp"),
 	("CWEB", "cweb"),
 	("elisp","elisp"),
 	("HTML", "html"),
 	("Java", "java"),
-	("LaTeX", "latex"),
-	("Pascal", "pascal")]
+	("LaTeX", "latex")]
 
 for text,value in left_data:
 	button = Tk.Radiobutton(lt,anchor="w",text=text,
@@ -10153,6 +10164,7 @@ for text,value in left_data:
 
 # Right column of radio buttons.
 right_data = [
+	("Pascal", "pascal"),
 	("Perl", "perl"),
 	("Perl+POD", "perlpod"),
 	("PHP", "php"),
@@ -10164,8 +10176,7 @@ right_data = [
 for text,value in right_data:
 	button = Tk.Radiobutton(rt,anchor="w",text=text,
 		variable=self.lang_var,value=value,command=self.set_lang)
-	button.pack(fill="x")
-</t>
+	button.pack(fill="x")</t>
 <t tx="ekr.20031218072017.370"># Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
 
 if self.language == "cweb": # Use C comments, not cweb sentinel comments.
@@ -10190,12 +10201,12 @@ elif self.language in ("elisp","html"):
 	self.string_delims = ('"')
 else:
 	self.string_delims = ("'",'"')
-self.has_pp_directives = self.language in ("c","cweb","latex")
+self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
 
 # The list of languages for which keywords exist.
 # Eventually we might just use language_delims_dict.keys()
 languages = [
-	"actionscript","c","cweb","elisp","html","java","latex",
+	"actionscript","c","csharp","cweb","elisp","html","java","latex",
 	"pascal","perl","perlpod","php","python","rebol","tcltk"]
 
 self.keywords = []
@@ -10223,6 +10234,7 @@ else:
 <t tx="ekr.20031218072017.371">&lt;&lt; actionscript keywords &gt;&gt;
 &lt;&lt; c keywords &gt;&gt;
 cweb_keywords = c_keywords
+&lt;&lt; csharp keywords &gt;&gt;
 &lt;&lt; elisp keywords&gt;&gt;
 &lt;&lt; html keywords &gt;&gt;
 &lt;&lt; java keywords &gt;&gt;
@@ -10247,7 +10259,7 @@ perlpod_keywords = perl_keywords
 	"short","signed","sizeof","static","struct","switch",
 	"typedef","union","unsigned","void","volatile","while",
 	# C++ keywords
-	"asm","bool","catch","class","const_cast",
+	"asm","bool","catch","class","const","const_cast",
 	"delete","dynamic_cast","explicit","false","friend",
 	"inline","mutable","namespace","new","operator",
 	"private","protected","public","reinterpret_cast","static_cast",
@@ -66063,5 +66075,134 @@ What I did:
 - Added a check for newpos is None in search.</t>
 <t tx="ekr.20040203075059">This might be the best way to reliably have Tk move to the next line!
 </t>
+<t tx="ekr.20040203100534">Leo 4.1 release candidate 4 is now available at
+http://sourceforge.net/projects/leo/
+
+This release fixes numerous bugs reported since 4.1 rc3 and makes
+several other improvements, including several nifty new plugins.
+
+The highlights version 4.1:
+---------------------------
+- Leo runs in batch mode when invoked with --script aScriptFile.py
+- Leo supports Unicode characters (e.g. Chinese) in path and file names.
+- @directives and section references are now valid when executing scripts.
+- @ignored and orphan nodes now valid in @file-nosent trees.
+- Script-based find/change commands.
+- Check Outline command.
+- Hoist &amp; DeHoist commands.
+- A new gui-agnostic architecture: useful for batch mode and unit tests.
+- Several new configuration settings.
+- Many new unit tests.
+- A host of bug fixes.
+
+Quotes of the month
+-------------------
+
+I'm a newbie to Leo(a couple of weeks) and I feel addicted to
+programming again...in fact it has resurrected a dead project of mine :)
+The outline has proven most liberating in terms of testing ideas out.
+Thanks a lot! -- anon
+
+"Wow, wow, and wow. I just started using Leo about a month ago..Now I
+finally understand how to use clones and I realized that this is
+exactly how I want to organize my information.  Multiple views on my
+data, fully interlinkable just like my thoughts...Thanks for a great
+tool! -- anon
+
+"I *LIKE* it; I was amazed at how [different the Leo] experience was
+compared to flat-filing. It was almost Forth-like in the way that it
+was possible to work top-down or bottom-up at will (I believe this is
+the key to its strength, btw)." --Tarvin Rhodes
+
+What is Leo?
+------------
+- A programmer's editor, an outlining editor and a flexible browser.
+- A literate programming tool, compatible with noweb and CWEB.
+- A data organizer and project manager. Leo provides multiple views
+   of projects within a single outline.
+- Fully scriptable using Python. Leo saves its files in XML format.
+- Portable. leo.py is 100% pure Python.
+- Open Software, distributed under the Python License.
+
+Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
+Leo works on Linux, Windows and MacOs X.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Wiki:     http://leo.hd1.org/
+
+Edward K. Ream
+February 3, 2004</t>
+<t tx="ekr.20040205063350"></t>
+<t tx="ekr.20040205063350.1">@nocolor
+
+By: sbeards ( Scott Beardsley ) 
+ BUG: Paste node under cloned parent   
+2004-02-04 17:45  
+
+ Summary: When pasting a node into the outline where any parent is cloned all child nodes (after the point at which you pasted the new node) will change into cloned nodes.
+
+Steps to reproduce:
+1. Create a parent node (named 'cloned').
+2. Create two children nodes (one named 'dummy' and another named 'bottom') under the parent node 'cloned'.
+3. Move the 'bottom' node below the 'dummy' node.
+4. Clone node 'cloned'.
+5. Copy node 'dummy'.
+6. Paste node 'dummy' in between 'dummy' and 'bottom'.
+7. After pasting you'll see that 'bottom' is now marked as a cloned node.
+
+Impact: Although this should be fixed I don't see it as a major bug. This bug mainly seems to impact the readability of the outline. It doesn't seem to cause any other impact to the status of the parent clone.
+
+Additional Notes:
+1. It seems that the delete node code undoes this problem. When deleting _any_ child node the clone is removed from 'bottom'. Very funky behaviour.
+2. If there are any additional nodes under 'bottom' they will be marked as clones also.
+
+Environment:
+Leo 4.1 rc3,4
+Python 2.3.3
+Tk 8.4.4
+W2K, Linux (Slackware 9.1)
+
+Scott  
+
+</t>
+<t tx="ekr.20040206061812">@nocolor
+
+By: ejoy ( Zhang Le ) 
+ RE: "idle" hook not work (mod_autosave)   
+2004-02-06 03:00  
+
+ I tested it on an windows machine and it worked fine. However, on my FreeBSD 4.8 box it does not work. I am sure I have seen the "auto save enabled" message and can set the interval from plugin menu. No matter how I choose the interval (3 for example), no saving action is done.
+
+Does anyone have the same problem as me?  
+</t>
+<t tx="ekr.20040206072057">csharp_keywords = (
+	"abstract","as",
+	"base","bool","break","byte",
+	"case","catch","char","checked","class","const","continue",
+	"decimal","default","delegate","do","double",
+	"else","enum","event","explicit","extern",
+	"false","finally","fixed","float","for","foreach",
+	"get","goto",
+	"if","implicit","in","int","interface","internal","is",
+	"lock","long",
+	"namespace","new","null",
+	"object","operator","out","override",
+	"params","partial","private","protected","public",
+	"readonly","ref","return",
+	"sbyte","sealed","set","short","sizeof","stackalloc",
+	"static","string","struct","switch",
+	"this","throw","true","try","typeof",
+	"uint","ulong","unchecked","unsafe","ushort","using",
+	"value","virtual","void","volatile",
+	"where","while",
+	"yield")</t>
+<t tx="ekr.20040206073310">@nocolor
+
+2/6/04 Jeff Nowland: Added support for c#</t>
 </tnodes>
 </leo_file>

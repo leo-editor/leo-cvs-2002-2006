@@ -24,10 +24,9 @@
 <v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
 <v t="edream.110203163054.9" a="M"><vh>Quotes of the Month</vh>
-<v t="ekr.20040129074732"><vh>Annon: (not yet)</vh></v>
-<v t="ekr.20040118085921"><vh>Tarvin Rhodes (not yet)</vh></v>
-<v t="ekr.20031219090156"><vh>Anon (not yet)</vh></v>
-<v t="edream.121503192354.1"><vh>John Benson (not yet)</vh></v>
+<v t="ekr.20040129074732"><vh>Anon</vh></v>
+<v t="ekr.20040118085921"><vh>Tarvin Rhodes</vh></v>
+<v t="ekr.20031219090156"><vh>Anon</vh></v>
 <v t="edream.120703081642"><vh>Anon</vh></v>
 <v t="edream.120503073304"><vh>From Michael Dawson</vh></v>
 <v t="edream.110203163054.10"><vh>From David Nichols</vh></v>
@@ -40,6 +39,7 @@
 <v t="edream.110203163054.16"><vh>Alex Abacus</vh></v>
 <v t="edream.110203163054.17"><vh>Steve Allen</vh></v>
 <v t="edream.110203163054.18"><vh>Shakeeb Alireza</vh></v>
+<v t="edream.121503192354.1"><vh>John Benson</vh></v>
 <v t="edream.110203163054.19"><vh>Bruce M. Bolden</vh></v>
 <v t="edream.110203163054.20"><vh>Serge Brisson</vh></v>
 <v t="edream.110203163054.21"><vh>Korakot Chaovavanich </vh></v>
@@ -89,7 +89,8 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20040131040356" a="TV"><vh>4.1 rc4</vh>
+<v t="ekr.20040205065800" a="TV"><vh>To do: make changes</vh></v>
+<v t="ekr.20040131040356"><vh>4.1 rc4</vh>
 <v t="ekr.20040201114855"><vh>New plugins in 4.1 rc4</vh>
 <v t="ekr.20040201114855.42"><vh>mod_http.py plugin: Bernhard Mulder</vh></v>
 <v t="ekr.20040201114855.91"><vh>newButtons.py plugin: Paul Paterson</vh></v>
@@ -24999,5 +25000,47 @@ This changes the comment symbol to " ' " apostrophe... making comments parseable
 by a BASIC (or other language.)</t>
 <t tx="ekr.20040201120903">Adds a status line to the bottom of Leo windows.</t>
 <t tx="ekr.20040203084228">The Change All command was looping when the find pattern was '\n'.</t>
+<t tx="ekr.20040205065800">By: rogererens ( Roger Erens ) 
+ RE: Documentation for 4.1rc3   
+2004-02-04 10:04  
+
+ Not specifically for 4.1rc3, but I noticed these inaccuracies in the documentation:
+
++ Notes
++ Notes on LeoDocs.leo
+- Setting the headline and body text of the presently selected node
+in LeoDocs/Users Guide/Chapter 7/Basic scripts/Setting the headline and body text of the presently selected node:
+
+v.setBodyStringOrPane(body) # set body text of v to s.
+v.setHeadStringOrHeadline(head) # set headline text of v to s.
+
+should be
+
+v.setBodyStringOrPane(body) # set body text of v to body.
+v.setHeadStringOrHeadline(head) # set headline text of v to head.
+
+- createOpenWithMenuFromTable
+in LeoDocs/Users Guide/Chapter 5/The File Menu/Commuicating with external editors/Open With command/createOpenWithMenuFromTable node:
+
+\- path is the full path name of the temporary file to be passed to the external editor.
+
+is obsolete. I also think that this sentence
+
+When the user selects the Open With item corresponding to the table item Leo executes command(arg+path) where path is the full path to the temp file.
+
+is out of date because of its reference to path. This is also stated in the @doc part in LeoPy.leo.
+- Open with...
+Open with... uses a command like "os.startfile" to open temporary files.
+It is stated that you can edit the temporary file with the editor as named in the "Open with..." submenu.
+However, the temporary files are edited with the application that is associated with their extension. In my case I always fire up vim with .txt-files.
+Hence the menu item would be better called something like "Open as..." with submenu items like ".doc file" or ".txt file"
+Or, use something else instead of "os.startfile" to really use the intended editor.
+- importing file of unknown type into @file
+this leads to the appearing of an @ignore directive at the first line of the bodytext. However, the Users Guide/Appendices/Directives/@ignores node states that this directive is not valid in @file trees??
+- Save To
+Save To is not described in Users Guide, Chapter 5, File Menu
+
+Probably it's the same as 'Save as'  
+</t>
 </tnodes>
 </leo_file>
