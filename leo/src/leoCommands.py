@@ -2737,6 +2737,7 @@ class baseCommands:
     
         c.beginUpdate()
         if 1: # inside update...
+            old_p = p.copy()
             if (
                 # 1/31/04: Make sure new node is visible when hoisting.
                 (hasChildren and isExpanded) or
@@ -2745,7 +2746,8 @@ class baseCommands:
                 p = p.insertAsNthChild(0)
             else:
                 p = p.insertAfter()
-            c.undoer.setUndoParams(op_name,p,select=p)
+            c.undoer.setUndoParams(op_name,p,select=old_p)
+                # Bug fix!!: 1/25/05 (was: select=p)
             c.selectVnode(p)
             c.editPosition(p)
             p.setAllAncestorAtFileNodesDirty()
