@@ -55,6 +55,14 @@ def run(fileName=None,*args,**keywords):
 	if script:
 		createNullGuiWithScript(script)
 		fileName = None
+	else:
+		#@		<< print encoding info >>
+		#@+node:<< print encoding info >>
+		es("leoConfig.txt encoding: " + app.config.config_encoding, color="blue")
+		es("Text encoding: " + app.tkEncoding, color="blue")
+		#@nonl
+		#@-node:<< print encoding info >>
+		#@nl
 	# Load plugins. Plugins may create app.gui.
 	doHook("start1")
 	if app.killed: return # Support for app.forceShutdown.
@@ -77,6 +85,7 @@ def run(fileName=None,*args,**keywords):
 	frame.body.setFocus()
 	app.initing = false # "idle" hooks may now call app.forceShutdown.
 	app.gui.runMainLoop()
+
 #@-node:run & allies
 #@+node:isValidPython
 def isValidPython():
