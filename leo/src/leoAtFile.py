@@ -2788,7 +2788,8 @@ class atFile:
 								es("exception in os.chmod(%s)" % (self.targetFileName))
 						es("writing: " + self.shortFileName)
 					except:
-						self.writeError("exception renaming: %s to: " % (self.outputFileName,self.targetFileName))
+						# 6/28/03
+						self.writeError("exception renaming: %s to: %s" % (self.outputFileName,self.targetFileName))
 						es_exception()
 				except:
 					self.writeError("exception removing:" + self.targetFileName)

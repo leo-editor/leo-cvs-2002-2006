@@ -973,7 +973,7 @@ class leoCoreFrame:
 			self.log.see("end")
 			self.log.update_idletasks()
 		else:
-			a.logWaiting.append(('\n',"black"),) # 2/16/03
+			app().logWaiting.append(('\n',"black"),) # 6/28/03
 			print "Null log"
 			print
 	#@-body
@@ -4173,7 +4173,7 @@ class leoCoreFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.12 beta 1, Build " + build + ", June 27, 2003\n\n"
+		version = "leo.py 3.12 beta 1, Build " + build + ", June 28, 2003\n\n"
 		copyright = (
 			"Copyright 1999-2003 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +

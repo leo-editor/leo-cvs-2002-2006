@@ -2192,11 +2192,11 @@ def doHook(tag,*args,**keywords):
 #@-node:2::doHook
 #@+node:3::plugin_signon
 #@+body
-def plugin_signon(module_name):
+def plugin_signon(module_name,verbose=false):
 	
 	exec("import %s ; m = %s" % (module_name,module_name))
 	
-	if 0: # Verbose
+	if verbose:
 		es("...%s.py v%s: %s" % (
 			m.__name__, m.__version__, plugin_date(m)))
 

@@ -4,31 +4,28 @@ leo.py is available at:  http://sourceforge.net/projects/leo/
 leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
 
-leo.py 3.12 beta 1                       June 27, 2003
+leo.py 3.12 beta 1                       June 28, 2003
 
 Highlights of this version:
 
 * Plugged a huge memory leak.
 * Added Icon & Status areas to Leo window for use by plugins.
 * Important new plugins:
-	- add_directives.py allows plugins can define new directives.
-	- color_markup.py supports wiki-styled markup.
-	- nav_buttons.py creates browser-style navigation plugins in the icon area.
-	- plugins_menu.py creates a Plugins menu items for all loaded plugins.
-	- scripts_menu.py creates a Scripts menu for all scripts in scripts folder.
-	- trace_gc traces all changes to memory at idle time.
+  - add_directives.py allows plugins to define new directives.
+  - color_markup.py supports wiki-styled markup.
+  - nav_buttons.py creates browser-style navigation plugins in the icon area.
+  - plugins_menu.py creates a Plugins menu items for all loaded plugins.
+  - scripts_menu.py creates a Scripts menu for all scripts in scripts folder.
+  - trace_gc traces all changes to memory at idle time.
 * Other enhancements:
-	- Redesigned the Font panel.   Non-functional options are dimmed.
-	- Added @wrap and @nowrap directives.
-	- Added Write Dirty @file Nodes command.
-	- Added several new "stub hooks".
- 	- Hyperlinks are now enabled by default.
-	- Leo now loads plugins in alphabetical order.
-	- Leo now remembers the size and location of Leo windows.
-	- Fixed numerous minor bugs.
-* Coming soon:
-	- A new spell checking plugin.
-	- Unit test code in leoTest.py.
+  - Redesigned the Find panel.   Non-functional options are dimmed.
+  - Added @wrap and @nowrap directives.
+  - Added Write Dirty @file Nodes command.
+  - Added several new "stub hooks".
+   - Hyperlinks are now enabled by default.
+  - Leo now loads plugins in alphabetical order.
+  - Leo now remembers the size and location of Leo windows.
+  - Fixed numerous minor bugs.
 
 leo.py 3.11.1                       May 1, 2003
 

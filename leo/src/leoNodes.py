@@ -1173,7 +1173,7 @@ class vnode:
 	#@+body
 	def setHeadString (self,s,encoding="utf-8"):
 	
-		self.initHeadString(s)
+		self.initHeadString(s,encoding) # 6/28/03
 		self.setDirty()
 	
 	def initHeadString (self,s,encoding="utf-8"):
