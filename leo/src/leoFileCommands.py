@@ -1601,7 +1601,7 @@ class baseFileCommands:
 				fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
 				
 			# g.trace(v.t)
-			if not isThin:
+			if not isThin or self.usingClipboard:
 				v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 		else:
 			g.trace(v.t.fileIndex,v)
@@ -1613,15 +1613,17 @@ class baseFileCommands:
 		#@	<< Put attribute bits >>
 		#@+node:ekr.20031218072017.1865:<< Put attribute bits >>
 		attr = ""
-		if p.v.isExpanded():          attr += "E"
-		if p.v.isMarked():            attr += "M"
-		if p.v.isOrphan():            attr += "O"
+		if p.v.isExpanded(): attr += "E"
+		if p.v.isMarked():   attr += "M"
+		if p.v.isOrphan():   attr += "O"
+		
 		if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
 			# Almost 30% of the entire writing time came from here!!!
 			if p.equal(self.topPosition):     attr += "T" # was a bottleneck
 			if p.equal(self.currentPosition): attr += "V" # was a bottleneck
 		
 		if attr: fc.put(' a="%s"' % attr)
+		#@nonl
 		#@-node:ekr.20031218072017.1865:<< Put attribute bits >>
 		#@nl
 		#@	<< Put tnodeList and unKnownAttributes >>
@@ -1671,9 +1673,9 @@ class baseFileCommands:
 		#@-node:ekr.20031218072017.1866:<< Write the head text >>
 		#@nl
 	
-		# New in 4.2: don't write child nodes of @file-thin trees.
+		# New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
 		if p.hasChildren():
-			if isThin and not p.isOrphan():
+			if isThin and not p.isOrphan() and not self.usingClipboard:
 				# g.trace("skipping child vnodes for", p.headString())
 				pass
 			else:
@@ -1954,6 +1956,7 @@ class baseFileCommands:
 			#@-node:ekr.20040324080819.3:<< close the output file >>
 			#@nl
 			#@		<< delete backup file >>
+			#@+middle:ekr.20040324080359.2:<< create the output file >>
 			#@+node:ekr.20031218072017.3048:<< delete backup file >>
 			if backupName and g.os_path_exists(backupName):
 				try:
@@ -1970,6 +1973,7 @@ class baseFileCommands:
 					g.es_exception()
 					return false
 			#@-node:ekr.20031218072017.3048:<< delete backup file >>
+			#@-middle:ekr.20040324080359.2:<< create the output file >>
 			#@nl
 			return true
 		else: # This probably will never happen because errors should raise exceptions.
