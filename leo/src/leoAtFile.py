@@ -4049,7 +4049,7 @@ class baseNewDerivedFile(oldDerivedFile):
                 old = at.t.getBody()
             else:
                 old = None
-            if old:
+            if old and not g.app.unitTesting:
                 if at.perfectImportRoot:
                     #@                << bump at.correctedLines and tell about the correction >>
                     #@+node:ekr.20040717133944:<< bump at.correctedLines and tell about the correction >>
