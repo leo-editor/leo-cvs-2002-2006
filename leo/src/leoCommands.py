@@ -4544,25 +4544,24 @@ class baseCommands:
     #@+node:ekr.20031218072017.2943:leoConfig
     def leoConfig (self):
     
-        # 4/21/03 new code suggested by fBechmann@web.de
         c = self
-        loadDir = g.app.loadDir
+        name = 'leoSettings.leo'
+        homeDir = g.app.homeDir
         configDir = g.app.globalConfigDir
     
         # Look in configDir first.
-        fileName = g.os_path_join(configDir, "leoConfig.leo")
+        fileName = g.os_path_join(configDir,name)
     
+        # Look in homeDir second.
         ok, frame = g.openWithFileName(fileName,c)
         if not ok:
             if configDir == loadDir:
-                g.es("leoConfig.leo not found in " + loadDir)
+                g.es("%s not found in %s" % (name,configDir))
             else:
-                # Look in loadDir second.
-                fileName = g.os_path_join(loadDir,"leoConfig.leo")
-    
+                fileName = g.os_path_join(homeDir,name)
                 ok, frame = g.openWithFileName(fileName,c)
                 if not ok:
-                    g.es("leoConfig.leo not found in " + configDir + " or " + loadDir)
+                    g.es("%s not found in %s or %s" % (name,configDir,homeDir))
     #@nonl
     #@-node:ekr.20031218072017.2943:leoConfig
     #@-node:ekr.20031218072017.2938:Help Menu
