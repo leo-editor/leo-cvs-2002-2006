@@ -604,7 +604,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		g.clearAllIvars(body.colorizer)
 		g.clearAllIvars(body)
 		g.clearAllIvars(tree)
-		g.clearAllIvars(tree)
 	
 		# This must be done last.
 		frame.destroyAllPanels()
