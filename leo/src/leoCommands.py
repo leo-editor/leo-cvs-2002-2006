@@ -1233,7 +1233,8 @@ class baseCommands:
                         # Found a joined position.
                         for p in p.self_and_parents_iter():
                             fileName = p.anyAtFileNodeName()
-                            if fileName: break
+                            # New in 4.2 b3: ignore @all nodes.
+                            if fileName and not p.isAtAllNode(): break
                     if fileName: break
                 
             if fileName:
