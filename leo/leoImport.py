@@ -2688,8 +2688,9 @@ class leoImportCommands:
 		i = find_line_start(s,i)
 		while i < len(s):
 			# trace(`get_line(s,i)`)
-			if is_nl(s,i) or match(s,i,"#"):
-				i = skip_line(s,i) # ignore blank lines and comments.
+			j = skip_ws(s,i) # Bug fix: 3/14/03
+			if is_nl(s,j) or match(s,j,"#"): # Bug fix: 3/14/03
+				i = skip_line(s,i) # ignore blank lines and comment lines.
 			else:
 				i, width = skip_leading_ws_with_indent(s,i,c.tab_width)
 				# trace("returns:" + `width`)
