@@ -1240,7 +1240,7 @@ class leoImportCommands:
 		#@<< Append any unused text to the parent's body text >>
 		#@+node:7::<< Append any unused text to the parent's body text >>
 		#@+body
-		parent.appendStringToBody(s[scan_start:])
+		parent.appendStringToBody(s[scan_start:endOfCode])
 
 		#@-body
 		#@-node:7::<< Append any unused text to the parent's body text >>
