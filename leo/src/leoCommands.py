@@ -163,7 +163,7 @@ class baseCommands:
         return "break" # Inhibit all other handlers.
     #@nonl
     #@-node:ekr.20031218072017.2817: doCommand
-    #@+node:ekr.20031218072017.2582: version & signon stuff
+    #@+node:ekr.20031218072017.2582:  Version & signon stuff
     #@+node:ekr.20040629121554:getBuildNumber
     def getBuildNumber(self):
         c = self
@@ -196,7 +196,7 @@ class baseCommands:
         g.enl()
     #@nonl
     #@-node:ekr.20040629121554.3:signOnWithVersion
-    #@-node:ekr.20031218072017.2582: version & signon stuff
+    #@-node:ekr.20031218072017.2582:  Version & signon stuff
     #@+node:ekr.20040312090934:c.iterators
     #@+node:EKR.20040529091232:c.all_positions_iter == allNodes_iter
     def allNodes_iter(self,copy=False):
@@ -2542,13 +2542,13 @@ class baseCommands:
     #@-node:EKR.20040610130943:pasteOutlineRetainingClones
     #@-node:ekr.20031218072017.1548:Cut & Paste Outlines
     #@+node:ekr.20031218072017.2072:c.checkOutline
-    def checkOutline (self,verbose=True,unittest=False):
+    def checkOutline (self,verbose=True,unittest=False,full=True):
         
         """Report any possible clone errors in the outline.
         
         Remove any unused tnodeLists."""
         
-        c = self ; count = 1 ; errors = 0 ; full = True
+        c = self ; count = 1 ; errors = 0
         if full and not unittest:
             g.es("all tests enabled: this may take awhile",color="blue")
     
@@ -2589,127 +2589,125 @@ class baseCommands:
                 #@nonl
                 #@-node:ekr.20040313150633:<< remove unused tnodeList >>
                 #@nl
-                if not unittest: # this would be very slow.
-                    if full: # For testing only.
-                        #@                    << do full tests >>
-                        #@+node:ekr.20040323155951:<< do full tests >>
-                        if count % 100 == 0:
-                            g.es('.',newline=False)
-                        if count % 2000 == 0:
-                            g.enl()
-                        
-                        #@+others
-                        #@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
-                        threadBack = p.threadBack()
-                        threadNext = p.threadNext()
-                        
-                        if threadBack:
-                            assert p == threadBack.threadNext(), "p==threadBack.threadNext"
-                        
-                        if threadNext:
-                            assert p == threadNext.threadBack(), "p==threadNext.threadBack"
-                        #@nonl
-                        #@-node:ekr.20040314035615:assert consistency of threadNext & threadBack links
-                        #@+node:ekr.20040314035615.1:assert consistency of next and back links
-                        back = p.back()
-                        next = p.next()
-                        
-                        if back:
-                            assert p == back.next(), "p==back.next"
-                                
-                        if next:
-                            assert p == next.back(), "p==next.back"
-                        #@nonl
-                        #@-node:ekr.20040314035615.1:assert consistency of next and back links
-                        #@+node:ekr.20040314035615.2:assert consistency of parent and child links
-                        if p.hasParent():
-                            n = p.childIndex()
-                            assert p == p.parent().moveToNthChild(n), "p==parent.moveToNthChild"
+                if full: # Unit tests usually set this false.
+                    #@                << do full tests >>
+                    #@+node:ekr.20040323155951:<< do full tests >>
+                    if count % 100 == 0:
+                        g.es('.',newline=False)
+                    if count % 2000 == 0:
+                        g.enl()
+                    
+                    #@+others
+                    #@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+                    threadBack = p.threadBack()
+                    threadNext = p.threadNext()
+                    
+                    if threadBack:
+                        assert p == threadBack.threadNext(), "p==threadBack.threadNext"
+                    
+                    if threadNext:
+                        assert p == threadNext.threadBack(), "p==threadNext.threadBack"
+                    #@nonl
+                    #@-node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+                    #@+node:ekr.20040314035615.1:assert consistency of next and back links
+                    back = p.back()
+                    next = p.next()
+                    
+                    if back:
+                        assert p == back.next(), "p==back.next"
                             
-                        for child in p.children_iter():
-                            assert p == child.parent(), "p==child.parent"
+                    if next:
+                        assert p == next.back(), "p==next.back"
+                    #@nonl
+                    #@-node:ekr.20040314035615.1:assert consistency of next and back links
+                    #@+node:ekr.20040314035615.2:assert consistency of parent and child links
+                    if p.hasParent():
+                        n = p.childIndex()
+                        assert p == p.parent().moveToNthChild(n), "p==parent.moveToNthChild"
                         
-                        if p.hasNext():
-                            assert p.next().parent() == p.parent(), "next.parent==parent"
-                            
-                        if p.hasBack():
-                            assert p.back().parent() == p.parent(), "back.parent==parent"
-                        #@nonl
-                        #@-node:ekr.20040314035615.2:assert consistency of parent and child links
-                        #@+node:ekr.20040323155951.1:assert consistency of directParents and parent
-                        if p.hasParent():
-                            t = p.parent().v.t
-                            for v in p.directParents():
-                                try:
-                                    assert v.t == t
-                                except:
-                                    print "p",p
-                                    print "p.directParents",p.directParents()
-                                    print "v",v
-                                    print "v.t",v.t
-                                    print "t = p.parent().v.t",t
-                                    raise AssertionError,"v.t == t"
-                        #@-node:ekr.20040323155951.1:assert consistency of directParents and parent
-                        #@+node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
-                        if p.isCloned():
-                            parents = p.v.t.vnodeList
-                            for child in p.children_iter():
-                                vparents = child.directParents()
-                                assert len(parents) == len(vparents), "len(parents) == len(vparents)"
-                                for parent in parents:
-                                    assert parent in vparents, "parent in vparents"
-                                for parent in vparents:
-                                    assert parent in parents, "parent in parents"
-                        #@nonl
-                        #@-node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
-                        #@+node:ekr.20040323162707:assert that clones actually share subtrees
-                        if p.isCloned() and p.hasChildren():
-                            childv = p.firstChild().v
-                            assert childv == p.v.t._firstChild, "childv == p.v.t._firstChild"
-                            assert id(childv) == id(p.v.t._firstChild), "id(childv) == id(p.v.t._firstChild)"
-                            for v in p.v.t.vnodeList:
-                                assert v.t._firstChild == childv, "v.t._firstChild == childv"
-                                assert id(v.t._firstChild) == id(childv), "id(v.t._firstChild) == id(childv)"
-                        #@nonl
-                        #@-node:ekr.20040323162707:assert that clones actually share subtrees
-                        #@+node:ekr.20040314043623:assert consistency of vnodeList
-                        vnodeList = p.v.t.vnodeList
-                            
-                        for v in vnodeList:
-                            
+                    for child in p.children_iter():
+                        assert p == child.parent(), "p==child.parent"
+                    
+                    if p.hasNext():
+                        assert p.next().parent() == p.parent(), "next.parent==parent"
+                        
+                    if p.hasBack():
+                        assert p.back().parent() == p.parent(), "back.parent==parent"
+                    #@nonl
+                    #@-node:ekr.20040314035615.2:assert consistency of parent and child links
+                    #@+node:ekr.20040323155951.1:assert consistency of directParents and parent
+                    if p.hasParent():
+                        t = p.parent().v.t
+                        for v in p.directParents():
                             try:
-                                assert v.t == p.v.t
-                            except AssertionError:
+                                assert v.t == t
+                            except:
                                 print "p",p
+                                print "p.directParents",p.directParents()
                                 print "v",v
-                                print "p.v",p.v
                                 print "v.t",v.t
-                                print "p.v.t",p.v.t
-                                raise AssertionError, "v.t == p.v.t"
+                                print "t = p.parent().v.t",t
+                                raise AssertionError,"v.t == t"
+                    #@-node:ekr.20040323155951.1:assert consistency of directParents and parent
+                    #@+node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+                    if p.isCloned():
+                        parents = p.v.t.vnodeList
+                        for child in p.children_iter():
+                            vparents = child.directParents()
+                            assert len(parents) == len(vparents), "len(parents) == len(vparents)"
+                            for parent in parents:
+                                assert parent in vparents, "parent in vparents"
+                            for parent in vparents:
+                                assert parent in parents, "parent in parents"
+                    #@nonl
+                    #@-node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+                    #@+node:ekr.20040323162707:assert that clones actually share subtrees
+                    if p.isCloned() and p.hasChildren():
+                        childv = p.firstChild().v
+                        assert childv == p.v.t._firstChild, "childv == p.v.t._firstChild"
+                        assert id(childv) == id(p.v.t._firstChild), "id(childv) == id(p.v.t._firstChild)"
+                        for v in p.v.t.vnodeList:
+                            assert v.t._firstChild == childv, "v.t._firstChild == childv"
+                            assert id(v.t._firstChild) == id(childv), "id(v.t._firstChild) == id(childv)"
+                    #@nonl
+                    #@-node:ekr.20040323162707:assert that clones actually share subtrees
+                    #@+node:ekr.20040314043623:assert consistency of vnodeList
+                    vnodeList = p.v.t.vnodeList
                         
-                            if p.v.isCloned():
-                                assert v.isCloned(), "v.isCloned"
-                                assert len(vnodeList) > 1, "len(vnodeList) > 1"
-                            else:
-                                assert not v.isCloned(), "not v.isCloned"
-                                assert len(vnodeList) == 1, "len(vnodeList) == 1"
-                        #@nonl
-                        #@-node:ekr.20040314043623:assert consistency of vnodeList
-                        #@-others
-                        #@-node:ekr.20040323155951:<< do full tests >>
-                        #@nl
+                    for v in vnodeList:
+                        
+                        try:
+                            assert v.t == p.v.t
+                        except AssertionError:
+                            print "p",p
+                            print "v",v
+                            print "p.v",p.v
+                            print "v.t",v.t
+                            print "p.v.t",p.v.t
+                            raise AssertionError, "v.t == p.v.t"
+                    
+                        if p.v.isCloned():
+                            assert v.isCloned(), "v.isCloned"
+                            assert len(vnodeList) > 1, "len(vnodeList) > 1"
+                        else:
+                            assert not v.isCloned(), "not v.isCloned"
+                            assert len(vnodeList) == 1, "len(vnodeList) == 1"
+                    #@nonl
+                    #@-node:ekr.20040314043623:assert consistency of vnodeList
+                    #@-others
+                    #@-node:ekr.20040323155951:<< do full tests >>
+                    #@nl
             except AssertionError,message:
                 errors += 1
                 #@            << give test failed message >>
                 #@+node:ekr.20040314044652:<< give test failed message >>
-                if 1: # errors == 1:
-                    s = "test failed: %s %s" % (message,repr(p))
-                    print s ; print
-                    g.es(s,color="red")
+                s = "test failed: %s %s" % (message,repr(p))
+                print s ; print
+                g.es(s,color="red")
                 #@nonl
                 #@-node:ekr.20040314044652:<< give test failed message >>
                 #@nl
-        if not unittest:
+        if verbose or not unittest:
             #@        << print summary message >>
             #@+node:ekr.20040314043900:<<print summary message >>
             if full:
