@@ -143,6 +143,7 @@ class baseLeoImportCommands:
 			for i in xrange(len(files)):
 				fileName = files[i]
 				v = self.createOutline(fileName,current)
+				self.perfectImport(fileName,v)
 				if v: # 8/11/02: createOutline may fail.
 					g.es("imported " + fileName)
 					v.contract()
@@ -651,6 +652,67 @@ class baseLeoImportCommands:
 	#@-node:ekr.20031218072017.3240:cstLookup
 	#@-node:ekr.20031218072017.3236:Symbol table
 	#@-node:ekr.20031218072017.3224:importWebCommand & allies
+	#@+node:EKR.20040506075328.2:perfectImport
+	def perfectImport (self,fileName,p):
+		
+		return ### not ready yet.
+	
+		g.trace(fileName,p)
+		
+		#@	<< write p to a virtual thin derived file s >>
+		#@+node:EKR.20040506105049:<< write p to a virtual thin derived file s >>
+		try:
+			df = self.c.atFileCommands.new_df
+			df.targetFileName = "<virtual-file>"
+			df.outputFile = fo = g.fileLikeObject()
+			df.writeOpenFile(p)
+			s = fo.get()
+		except:
+			g.es("Exception in Perfect Import (write)")
+			g.es_exception()
+			s = None
+		#@-node:EKR.20040506105049:<< write p to a virtual thin derived file s >>
+		#@nl
+		if not s: return
+		
+		mu = g.mulderUpdateAlgorithm(testing=true)
+		marker = mu.marker_from_extension(fileName)
+	
+		fat_lines = s.splitlines(true) # Keep line endings.
+		
+		i_lines,mapping = mu.create_mapping(fat_lines,marker)
+		j_lines = file(fileName).readlines()
+		
+		if i_lines != j_lines:
+			g.trace("correcting import")
+			write_lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
+			#@		<< replace root's tree using write_lines >>
+			#@+node:EKR.20040506115229:<< replace root's tree using write_lines >>
+			if 0: # Not ready yet.
+			
+				# Remove all of root's tree.
+				while p.hasChildren():
+					child = p.firstChild()
+					child.doDelete(p)
+					
+				p.setBodyStringOrPane("")
+			
+				try:
+					df = self.c.atFileCommands.new_df
+					df.targetFileName = "<virtual-file>"
+					df.inputFile = fo = g.fileLikeObject()
+					fo.set(string.join(write_lines))
+					df.readOpenFile(p)
+				except:
+					g.es("Exception in Perfect Import (read)")
+					g.es_exception()
+					s = None
+			#@nonl
+			#@-node:EKR.20040506115229:<< replace root's tree using write_lines >>
+			#@nl
+		else:
+			g.trace("imported lines are perfect")
+	#@-node:EKR.20040506075328.2:perfectImport
 	#@+node:ekr.20031218072017.3241:Scanners for createOutline
 	#@+node:ekr.20031218072017.2256:Python scanners
 	#@+node:ekr.20031218072017.2257:scanPythonClass
