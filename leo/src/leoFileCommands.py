@@ -688,7 +688,7 @@ class fileCommands:
 				if t:
 					s = self.getEscapedString()
 					t.setTnodeText(s,encoding=self.leo_file_encoding)
-					trace(`index`,`len(s)`)
+					# trace(`index`,`len(s)`)
 				#@-body
 				#@-node:2::<< handle read from clipboard >>
 

@@ -256,9 +256,6 @@ class leoTree:
 	#@+body
 	def drawBox (self,v,x,y):
 		
-		if doHook("draw-outine-box",tree=self,v=v,x=x,y=y):
-			return
-	
 		y += 7 # draw the box at x, y+7
 	
 		iconname = choose(v.isExpanded(),"minusnode.gif", "plusnode.gif")
@@ -279,9 +276,6 @@ class leoTree:
 	# Draws icon for v at x,y
 	
 	def drawIcon(self,v,x,y):
-	
-		hook_val = doHook("draw-outline-icon",tree=self,v=v,x=x,y=y)
-		if hook_val != None: return hook_val
 	
 		v.iconx, v.icony = x,y
 		y += 2 # draw icon at y + 2
@@ -319,9 +313,6 @@ class leoTree:
 	def drawNode(self,v,x,y):
 	
 		"""Draw horizontal line from vertical line to icon"""
-		
-		hook_val = doHook("draw-outline-node",tree=self,v=v,x=x,y=y)
-		if hook_val != None: return hook_val
 	
 		self.canvas.create_line(x, y+7, x+box_width, y+7,tag="lines",fill="gray50") # stipple="gray25")
 	
@@ -345,9 +336,6 @@ class leoTree:
 	# draws text for v at x,y
 	
 	def drawText(self,v,x,y):
-		
-		hook_val = doHook("draw-outline-text-box",tree=self,v=v,x=x,y=y)
-		if hook_val != None: return hook_val
 		
 		x += text_indent
 	
@@ -394,9 +382,6 @@ class leoTree:
 	#@+node:7::drawTree
 	#@+body
 	def drawTree(self,v,x,y,h,level):
-		
-		hook_val = doHook("draw-sub-outline",tree=self,v=v,x=x,y=y,h=h,level=level)
-		if hook_val != None: return hook_val
 		
 		# Recursive routine, stat() not useful.
 		yfirst = ylast = y
@@ -541,7 +526,7 @@ class leoTree:
 			if self.trace:
 				self.redrawCount += 1
 				print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
-			doHook("after_redraw-outline")
+			doHook("after_redraw-outline",c=self.commands)
 	
 		self.canvas['cursor'] = oldcursor
 		self.redrawScheduled = false
