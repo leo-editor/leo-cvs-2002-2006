@@ -186,32 +186,27 @@ class tkinterGui(leoGui.leoGui):
     #@nonl
     #@-node:ekr.20031218072017.4056:app.gui.Tkinter dialogs
     #@+node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
+    # We no longer specify default extensions so that we can open and save files without extensions.
+    
     def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
     
         """Create and run an Tkinter open file dialog ."""
         
-        # askopenfilenames only exists in Python 2.3 or later.
-        # Not only that, askopenfilenames apparently doesn't work with Tk versions earlier than 8.4.
-        
-        # if multiple and g.CheckVersion(sys.version,"2.3") and g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4"):
-        if multiple and g.CheckVersion(sys.version,"2.3"):
-            try:
-                files = tkFileDialog.askopenfilenames(
-                    title=title, filetypes=filetypes)
+        if multiple:
+            # askopenfilenames requires Pythone 2.3 and Tk 8.4.
+            if (
+                g.CheckVersion(sys.version,"2.3") and
+                g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4")
+            ):
+                files = tkFileDialog.askopenfilenames(title=title,filetypes=filetypes)
                 return list(files)
-            except:
-                # Work around an apparent Linux bug in askopenfilenames.
-                theFile = tkFileDialog.askopenfilename(
-                    title=title, filetypes=filetypes)
+            else:
+                # Get one file and return it as a list.
+                theFile = tkFileDialog.askopenfilename(title=title,filetypes=filetypes)
                 return [theFile]
         else:
-            theFile = tkFileDialog.askopenfilename(
-                title=title, filetypes=filetypes)
-            if multiple: return [theFile]
-            else:        return theFile
-        
-            # DTHEIN 2004.01.31: remove default extension on open,
-            # so that we can open files without extensions
+            # Return a single file name as a string.
+            return tkFileDialog.askopenfilename(title=title, filetypes=filetypes)
     
     def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
     
@@ -221,8 +216,6 @@ class tkinterGui(leoGui.leoGui):
             initialfile=initialfile,
             title=title,
             filetypes=filetypes)
-        # EKR: 2004.01.31: remove default extensions on save too.
-        # defaultextension=defaultextension)
     #@nonl
     #@-node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
     #@+node:ekr.20031218072017.4058:app.gui.Tkinter panels
