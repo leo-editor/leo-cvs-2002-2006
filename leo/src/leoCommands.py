@@ -1069,7 +1069,8 @@ class baseCommands:
         names = g.app.gui.runOpenFileDialog(
             title="Remove Sentinels",
             filetypes=types,
-            defaultextension=".py")
+            defaultextension=".py",
+            multiple=True)
     
         if names:
             c.importCommands.removeSentinelsCommand (names)
