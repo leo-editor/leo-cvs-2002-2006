@@ -2711,6 +2711,7 @@ class baseOldDerivedFile:
         
         self.toStringFlag = toString
         self.errors = 0 # Bug fix: 6/25/04.
+        self.root = root # Bug fix: 7/30/04: needed by error logic.
     
         try:
             self.scanAllDirectives(root)
