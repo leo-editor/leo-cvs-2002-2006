@@ -16,6 +16,7 @@ include config/leoConfig.txt
 # This must be in the leo directory, not the dist directory.
 include createLeoDist.py
 include dist/leo.nsi
+include dist/leoDistRef.leo
 include dist/preSetup.py
 include dist/postSetup.py
 
@@ -35,7 +36,7 @@ exclude plugins/leoPluginsRef.leo
 exclude plugins/*.pyc
 
 include src/LeoPy.leo
-exclude src/leoPyRef.leo
+# Exclude LeoPyRef.leo.
 include src/leo*.py
 include src/leoProjects.txt
 

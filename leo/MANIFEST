@@ -55,6 +55,7 @@ Icons\uninst.ico
 config\leoConfig.leo
 config\leoConfig.txt
 dist\leo.nsi
+dist\leoDistRef.leo
 dist\postSetup.py
 dist\preSetup.py
 doc\INSTALL.TXT
