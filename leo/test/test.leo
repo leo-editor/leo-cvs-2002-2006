@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2123" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="32" left="114" height="835" width="843"/>
+	<global_window_position top="42" left="175" height="835" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -2635,8 +2635,8 @@
 <v t="T2120"><vh>Script to compare 3.x and 4.x derived files</vh></v>
 </v>
 <v t="T2121"><vh>Test of app.forceShutdown</vh></v>
-<v t="T2122" a="EV"><vh>Distribution checklist for 4.0</vh>
-<v t="T2123"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+<v t="T2122" a="EV"><vh>Distribution checklist for 4.0.1</vh>
+<v t="T2123"><vh>Pychecker</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2657,6 +2657,8 @@ Version numbers
 	- Update version number in Help menu.
 	- Update version number in setup.py (@ignore'd!!)
 @color
+
+# Note: paths are hard-coded into nsi script, so trying to generalize this is useless.
 
 if 1: # Save all files and tangle leoConfig.leo
 	from leoGlobals import importFromPath
@@ -33710,7 +33712,11 @@ print ; print "end of compare"</t>
 
 from leoGlobals import app
 app.forceShutdown()</t>
-<t tx="T2122">Create Release on SourceForge
+<t tx="T2122">@color
+# **** Scan all folders &amp; files before uploading.
+@nocolor
+
+Create Release on SourceForge
 
 Uploads
     - Upload leodocs.zip
@@ -33723,6 +33729,8 @@ Announcements
 	- Announce to comp.lang.python
 	- Announce to comp.programming.literate
 	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
-<t tx="T2123"></t>
+<t tx="T2123">C:/prog/leoCVS/leo/src\leoAtFile.py:852: Parameter (root) not used
+C:/prog/leoCVS/leo/src\leoConfig.py:80: No module attribute (leo_config_directory) found
+C:/prog/leoCVS/leo/src\leoFileCommands.py:429: Parameter (frame) not used</t>
 </tnodes>
 </leo_file>

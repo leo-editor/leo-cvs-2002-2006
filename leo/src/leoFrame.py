@@ -83,7 +83,7 @@ class baseLeoFrame:
 		return self.ver[10:-1] # Strip off "$Reversion" and the trailing "$"
 	
 	def getSignOnLine (self):
-		return "Leo 4.0, build %s, October 17, 2003" % self.getBuildNumber()
+		return "Leo 4.0.1, build %s, October 22, 2003" % self.getBuildNumber()
 		
 	def initVersion (self):
 		self.ver = "$Revision$" # CVS will update this.

@@ -4,6 +4,19 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
+Leo 4.0.1                         October 22, 2003
+
+This is a bug fix release:
+	
+- Fixes several crashers.
+- Fixes indentation for section references that are preceded by something
+  other than whitespace.
+- Removes debugging traces when reading and writing unknown attributes.
+- Removes some improperly cloned nodes from LeoDocs.leo.
+- Adds the checkTopologyOfAllClones script.
+- Fixes some problems with plugins.
+
+
 Leo 4.0 final                     October 17, 2003
 
 More than a year in the making, Leo 4.0 is finally here.
