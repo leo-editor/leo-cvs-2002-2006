@@ -472,9 +472,11 @@ class undoer:
 			#@<< redo typing cases >>
 			#@+node:8::<< redo typing cases >>
 			#@+body
+			# DTHEIN 27-OCT-2002: added reformat paragraph
 			elif type in [ "Typing",
 				"Change",
 				"Convert Blanks", "Convert Tabs",
+				"Reformat Paragraph",
 				"Cut", "Paste", "Delete",
 				"Indent", "Undent" ]:
 			
@@ -696,9 +698,11 @@ class undoer:
 			#@<< undo typing cases >>
 			#@+node:8::<< undo typing cases >>
 			#@+body
+			# DTHEIN 27-OCT-2002: added reformat paragraph
 			elif type in [ "Typing",
 				"Change",
 				"Convert Blanks", "Convert Tabs",
+				"Reformat Paragraph",
 				"Cut", "Paste", "Delete",
 				"Indent", "Undent" ]:
 			
