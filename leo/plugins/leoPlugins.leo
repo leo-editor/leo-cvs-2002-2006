@@ -1965,8 +1965,8 @@
 <v t="ekr.20040419105219.1"><vh>writing derived files</vh></v>
 <v t="ekr.20040419105219.2"><vh>reading derived files</vh></v>
 </v>
-<v t="ekr.20040422072343" a="TV" tnodeList="ekr.20040422072343,ekr.20040422081253,ekr.20040422072343.1,ekr.20040422072343.2,ekr.20040422072343.3,ekr.20040422072343.4,ekr.20040422072343.5,ekr.20040422072343.6,ekr.20040422072343.7,ekr.20040422072343.8,ekr.20040422073911,ekr.20040422072343.13,ekr.20040422072343.14,ekr.20040422072343.15,ekr.20040422072343.16,ekr.20040422072343.10,ekr.20040422072343.11,ekr.20040422072343.12"><vh>@file rClick.py</vh>
-<v t="ekr.20040422081253"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20040422072343" a="E" tnodeList="ekr.20040422072343,ekr.20040422081253,ekr.20040422072343.1,ekr.20040422072343.2,ekr.20040422072343.3,ekr.20040422072343.4,ekr.20040422072343.5,ekr.20040422072343.6,ekr.20040422072343.7,ekr.20040422072343.8,ekr.20040422073911,ekr.20040422072343.13,ekr.20040422072343.14,ekr.20040422072343.15,ekr.20040422072343.16,ekr.20040422072343.10,ekr.20040422072343.11,ekr.20040422072343.12"><vh>@file rClick.py</vh>
+<v t="ekr.20040422081253" a="MTV"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20040422072343.1"><vh>rc_help</vh></v>
 <v t="ekr.20040422072343.2"><vh>rc_dbody</vh></v>
 <v t="ekr.20040422072343.3"><vh>rc_nl</vh></v>
@@ -23653,7 +23653,7 @@ else:
 0.4: Maxim Krikun
 	- added context-dependent commands:
 	   open url, jump to reference, pydoc help
-	- replaced rc_help with context-dependent pydoc help; 
+	- replaced rc_help with context-dependent pydoc help;
 	- rc_help was not working for me :(
 0.5: EKR:
 	- Style changes.
