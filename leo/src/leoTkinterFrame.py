@@ -2009,9 +2009,10 @@ class leoTkinterBody (leoFrame.leoBody):
 	#@-node:ekr.20031218072017.4017:Menus
 	#@+node:ekr.20031218072017.4018:Selection
 	#@+node:ekr.20031218072017.4019:deleteTextSelection
-	def deleteTextSelection (self):
+	def deleteTextSelection (self,t=None):
 		
-		t = self.bodyCtrl
+		if t is None:
+			t = self.bodyCtrl
 		sel = t.tag_ranges("sel")
 		if len(sel) == 2:
 			start,end = sel
