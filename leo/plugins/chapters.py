@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.66"
+__version__ = "0.67"
 #@<< version history >>
 #@+node:ekr.20041103051117:<< version history >>
 #@@killcolor
@@ -81,6 +81,9 @@ __version__ = "0.66"
 # 
 # .66 EKR: use notebooks.get(c) throughout.
 #     - c may not exist during unit testing.  Not a complete fix, not tested!
+# 
+# .67 EKR:
+#     - Added 'silent' keywords to newGetLeoFile and newOpen.
 #@-at
 #@nonl
 #@-node:ekr.20041103051117:<< version history >>
@@ -889,7 +892,7 @@ def walkChapters( c = None, ignorelist = [], chapname = False):
 #@+node:mork.20040926105355.28:newGetLeoFile
 oldGetLeoFile =  leoFileCommands.fileCommands.getLeoFile
 
-def newGetLeoFile(self, fileName,readAtFileNodesFlag=True ):
+def newGetLeoFile(self, fileName,readAtFileNodesFlag=True,silent=False):
     if iscStringIO:
         def dontSetReadOnly( self, name, value ):
             if name == 'read_only': return
@@ -898,7 +901,7 @@ def newGetLeoFile(self, fileName,readAtFileNodesFlag=True ):
                 self.__dict__[ name ] = value
         self.read_only = False
         self.__class__.__setattr__ = dontSetReadOnly
-    rt = oldGetLeoFile(self,fileName,readAtFileNodesFlag)
+    rt = oldGetLeoFile(self,fileName,readAtFileNodesFlag,silent)
     if iscStringIO:
         del self.__class__.__setattr__       
     return rt
@@ -907,7 +910,7 @@ def newGetLeoFile(self, fileName,readAtFileNodesFlag=True ):
 #@+node:mork.20040926105355.29:newOpen
 oldOpen = leoFileCommands.fileCommands.open
 
-def newOpen( self,file,fileName,readAtFileNodesFlag=True):
+def newOpen( self,file,fileName,readAtFileNodesFlag=True,silent=False):
 
     global iscStringIO
     c = self.c
@@ -921,7 +924,7 @@ def newOpen( self,file,fileName,readAtFileNodesFlag=True):
         iscStringIO = False
         return True
 
-    return oldOpen(self,file,fileName,readAtFileNodesFlag)
+    return oldOpen(self,file,fileName,readAtFileNodesFlag,silent)
 #@nonl
 #@-node:mork.20040926105355.29:newOpen
 #@+node:mork.20040926105355.9:openChaptersFile
