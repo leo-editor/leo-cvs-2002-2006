@@ -842,20 +842,21 @@ def es_exception (full=True,c=None,color="red"):
 
     typ,val,tb = sys.exc_info()
 
-    g.trace(full,typ,tb)
+    # g.trace(full,typ,tb)
     
+    fileName,n = g.getLastTracebackFileAndLineNumber()
+
     if full or g.app.debugSwitch > 0:
         lines = traceback.format_exception(typ,val,tb)
     else:
         lines = traceback.format_exception_only(typ,val)
-        lines = lines[-1:] # Usually only one line, but more for Syntax errors!
+        if 0: # We might as well print the entire SyntaxError message.
+            lines = lines[-1:] # Usually only one line, but more for Syntax errors!
 
     for line in lines:
         g.es_error(line,color=color)
         if not g.stdErrIsRedirected():
             print line
-
-    fileName,n = g.getLastTracebackFileAndLineNumber()
 
     if g.app.debugSwitch > 1:
         import pdb # Be careful: g.pdb may or may not have been defined.

@@ -1215,14 +1215,12 @@ class baseCommands:
                 #@nonl
                 #@-node:EKR.20040627100424:<< unredirect output >>
                 #@nl
-                g.es("exception executing script ")
+                g.es("exception executing script",color='blue')
                 if 0:
                     print 'script...'
                     for line in g.splitLines(script):
                         print repr(line)
-                fileName,n = g.es_exception(full=False,c=c)
-                if fileName not in (None,"<string>"):
-                    g.es("exception in file %s, line: %d" % (fileName,n))
+                fileName,n = g.es_exception(full=True,c=c)
                 if p and not script1 and fileName == "<string>":
                     c.goToScriptLineNumber(p,script,n)
                 #@            << dump the lines near the error >>
@@ -1241,18 +1239,18 @@ class baseCommands:
                     # Just print the error line.
                     try:
                         s = "%s line %d: %s" % (fileName,n,lines[n-1])
-                        print s, ; g.es(s,newline=False)
+                        g.es(s,newline=False)
                     except IndexError:
                         s = "%s line %d" % (fileName,n)
-                        print s, ; g.es(s,newline=False)
-                else:
+                        g.es(s,newline=False)
+                else: # Print surrounding lines.
                     i = max(0,n-2)
                     j = min(n+2,len(lines))
                     # g.trace(n,i,j)
                     while i < j:
                         ch = g.choose(i==n-1,'*',' ')
                         s = "%s line %d: %s" % (ch,i+1,lines[i])
-                        print s, ; g.es(s,newline=False)
+                        g.es(s,newline=False)
                         i += 1
                 #@nonl
                 #@-node:EKR.20040612215018:<< dump the lines near the error >>
