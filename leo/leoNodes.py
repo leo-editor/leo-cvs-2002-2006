@@ -500,14 +500,18 @@ class vnode:
 		except: pass
 	#@-body
 	#@-node:3::v.__del__
-	#@+node:4::vnode.__repr__
+	#@+node:4::v.__repr__ & v.__str__
 	#@+body
 	def __repr__ (self):
 	
-		return "v: " + `self.mHeadString`
+		return "<v %d:%s>" % (id(self),`self.mHeadString`)
+		
+	def __str__ (self):
+	
+		return "<v %d:%s>" % (id(self),`self.mHeadString`)
 	#@-body
-	#@-node:4::vnode.__repr__
-	#@+node:5::vnode.__cmp__ (not used)
+	#@-node:4::v.__repr__ & v.__str__
+	#@+node:5::v.__cmp__ (not used)
 	#@+body
 	if 0: # not used
 		def __cmp__(self,other):
@@ -515,7 +519,7 @@ class vnode:
 			trace(`self` + "," + `other`)
 			return not (self is other) # Must return 0, 1 or -1
 	#@-body
-	#@-node:5::vnode.__cmp__ (not used)
+	#@-node:5::v.__cmp__ (not used)
 	#@+node:6::v.destroy
 	#@+body
 	#@+at
