@@ -77,32 +77,50 @@ class baseLeoFrame:
 		#@nonl
 		#@-node:<< set the LeoFrame ivars >>
 		#@nl
-	#@nonl
+		
+		self.initVersion()
 	#@-node:f.__init__
+	#@+node:f.version & signon stuff
+	def getBuildNumber(self):
+		return self.ver[10:-1] # Strip off "$Reversion" and the trailing "$"
+	
+	def getSignOnLine (self):
+		return "Leo 4.0 beta 3 build %s, October 7, 2003" % self.getBuildNumber()
+		
+	def initVersion (self):
+		self.ver = "$Revision$" # CVS will update this.
+		
+	def signOnWithVersion (self):
+	
+		frame = self
+		color = app.config.getWindowPref("log_error_color")
+		signon = frame.getSignOnLine()
+		n1,n2,n3,junk,junk=sys.version_info
+		tkLevel = frame.top.getvar("tk_patchLevel")
+		
+		es("Leo Log Window...",color=color)
+		es(signon)
+		es("Python %d.%d.%d, Tk %s" % (n1,n2,n3,tkLevel))
+		enl()
+	#@nonl
+	#@-node:f.version & signon stuff
 	#@+node:f.finishCreate
 	def finishCreate (self,c):
 		
-		Tk = Tkinter
-		frame = self ; frame.commands = c
+		frame = self ; frame.commands = c ; Tk = Tkinter
+		
+		# Create the toplevel.
 		frame.top = top = Tk.Toplevel()
-		
-		if 0: # No longer needed now that Leo never creates more than one Leo frame on startup.
-			top.withdraw()
-	
 		attachLeoIcon(top)
-		
-		if sys.platform=="win32":
-			frame.hwnd = top.frame()
-			# trace("__init__", "frame.__init__: frame.hwnd:" + `frame.hwnd`)
-	
 		top.title(frame.title)
-		top.minsize(30,10) # In grid units. This doesn't work as I expect.
+		top.minsize(30,10) # In grid units.
 	
+		# Create all the subframes.
 		frame.createLeoFrame(top)
 		c.body = frame.body ## To be deleted.
-		
 		frame.tree = leoTree.leoTree(c,frame,frame.canvas)
 		frame.setTabWidth(c.tab_width)
+	
 		#@	<< create the first tree node >>
 		#@+node:<< create the first tree node >>
 		t = leoNodes.tnode()
@@ -119,18 +137,13 @@ class baseLeoFrame:
 		#@-node:<< create the first tree node >>
 		#@nl
 		v = c.currentVnode()
+		
 		if not doHook("menu1",c=c,v=v):
 			frame.createMenuBar(top)
 		app.setLog(frame,"frame.__init__") # the LeoFrame containing the log
 		app.windowList.append(frame)
-		# Sign on.
-		color = app.config.getWindowPref("log_error_color")
-		es("Leo Log Window...",color=color)
-		es("Leo 4.0 beta 2, ",newline=0)
-		n1,n2,n3,junk,junk=sys.version_info
-		ver1 = "Python %d.%d.%d" % (n1,n2,n3)
-		ver2 = ", Tk " + frame.top.getvar("tk_patchLevel")
-		es(ver1 + ver2) ; enl()
+		
+		self.signOnWithVersion()
 		
 		frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
 		frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
@@ -158,7 +171,6 @@ class baseLeoFrame:
 			frame.tree.canvas.bind("<MouseWheel>", frame.OnMouseWheel)
 			
 		# print_bindings("canvas",frame.tree.canvas)
-	#@nonl
 	#@-node:f.finishCreate
 	#@+node:f.__repr__
 	def __repr__ (self):
@@ -3568,9 +3580,7 @@ class baseLeoFrame:
 		
 		# Don't use triple-quoted strings or continued strings here.
 		# Doing so would add unwanted leading tabs.
-		ver = "$Revision$" # CVS will update this.
-		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 4.0 beta 2, Build " + build + ", October 3, 2003\n\n"
+		version = self.getSignOnLine() + "\n\n"
 		copyright = (
 			"Copyright 1999-2003 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
