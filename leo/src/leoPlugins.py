@@ -16,6 +16,7 @@ After startup:
 """
 
 import leoGlobals as g
+import leoTest # Support for unit tests.
 
 handlers = {}
 
@@ -57,9 +58,9 @@ def loadHandlers(loadAllFlag=False):
                 if s and not g.match(s,0,"#"):
                     enabled_files.append(g.os_path_join(plugins_path,s))
             file.close()
-        except:
+        except IOError:
             g.es("Can not open: " + manager_path)
-            import leoTest ; leoTest.fail()
+            leoTest.fail()
             return
         #@nonl
         #@-node:ekr.20031218072017.3441:<< set enabled_files from pluginsManager.txt >>

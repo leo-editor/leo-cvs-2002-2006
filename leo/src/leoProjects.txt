@@ -34269,9 +34269,9 @@ try:
     s = file.read()
     s = g.toUnicode(s,self.encoding)
     file.close()
-except:
+except IOError:
     g.es("can not open " + fileName)
-    import leoTest ; leoTest.fail()
+    leoTest.fail()
     return None
 #@nonl
 #@-node:ekr.20031218072017.3211:<< Read file into s >>
@@ -35032,9 +35032,9 @@ try:
     s = file.read()
     s = g.toUnicode(s,self.encoding)
     file.close()
-except:
+except IOError:
     g.es("Can not open " + fileName, color="blue")
-    import leoTest ; leoTest.fail()
+    leoTest.fail()
     return
 #@nonl
 #@-node:ekr.20031218072017.3301:<< Read file into s >>
@@ -37440,9 +37440,9 @@ try:
     s = file.read()
     s = g.toUnicode(s,self.encoding)
     file.close()
-except:
+except IOError:
     g.es("can not open " + fileName)
-    import leoTest ; leoTest.fail()
+    leoTest.fail()
     return None
 #@nonl
 #@-node:ekr.20031218072017.3211:<< Read file into s >>
@@ -50754,9 +50754,9 @@ try:
     s = file.read()
     s = g.toUnicode(s,self.encoding)
     file.close()
-except:
+except IOError:
     g.es("Can not open " + fileName, color="blue")
-    import leoTest ; leoTest.fail()
+    leoTest.fail()
     return
 #@nonl
 #@-node:ekr.20031218072017.3301:<< Read file into s >>
@@ -50929,9 +50929,9 @@ try:
     s = file.read()
     s = g.toUnicode(s,self.encoding)
     file.close()
-except:
+except IOError:
     g.es("can not open " + fileName)
-    import leoTest ; leoTest.fail()
+    leoTest.fail()
     return None
 #@nonl
 #@-node:ekr.20031218072017.3211:<< Read file into s >>
