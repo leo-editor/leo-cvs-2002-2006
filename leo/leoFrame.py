@@ -425,8 +425,7 @@ class LeoFrame:
 			("Save","Ctrl+S",self.OnSave),
 			("Save As","Shift+Ctrl+S",self.OnSaveAs),
 			("Save To",None,self.OnSaveTo),
-			("Revert To Saved",None,self.OnRevert),
-			("Reload Leo",None,unloadAll))
+			("Revert To Saved",None,self.OnRevert))
 				
 		self.createMenuEntries(fileMenu,table)
 		#@-body
