@@ -539,78 +539,65 @@ class baseVnode (object):
     #@-node:ekr.20040312145256:v.dump
     #@-node:ekr.20031218072017.3342:Birth & death
     #@+node:ekr.20031218072017.3346:v.Comparisons
-    #@+node:ekr.20040328055931:afterHeadlineFileTypeName
-    def afterHeadlineFileTypeName(self,s):
+    #@+node:ekr.20040705201018:findAtFileName (new in 4.2 b3)
+    def findAtFileName (self,names):
         
+        """Return the name following one of the names in nameList.
+        Return an empty string."""
+    
         h = self.headString()
-    
-        if s != "@file" and g.match_word(h,0,s):
-            # No options are valid.
-            return s,string.strip(h[len(s):])
-    
-        elif g.match(h,0,"@file"):
-            i,atFileType,junk = g.scanAtFileOptions(h)
-            return atFileType,h[i:].strip()
-    
-        else:
-            return None,None
-    #@nonl
-    #@-node:ekr.20040328055931:afterHeadlineFileTypeName
-    #@+node:ekr.20031218072017.3347:afterHeadlineMatch
-    def afterHeadlineMatch(self,s):
         
-        atFileType,fileName = self.afterHeadlineFileTypeName(s)
-        if s == atFileType:
-            return fileName
+        if not g.match(h,0,'@'):
+            return ""
+        
+        i = g.skip_id(h,1,'-')
+        word = h[:i]
+        if word in names and g.match_word(h,0,word):
+            name = h[i:].strip()
+            # g.trace(word,name)
+            return name
         else:
             return ""
     #@nonl
-    #@-node:ekr.20031218072017.3347:afterHeadlineMatch
+    #@-node:ekr.20040705201018:findAtFileName (new in 4.2 b3)
     #@+node:ekr.20031218072017.3350:anyAtFileNodeName
     def anyAtFileNodeName (self):
         
         """Return the file name following an @file node or an empty string."""
-        
-        # New in 4.2: do the fastest possible tests.
-        h = self.headString()
     
-        if g.match(h,0,"@file"):
-            type,name = self.afterHeadlineFileTypeName("@file")
-            if type and name: return name
-            else:             return ""
-        else:
-            # New, shorter names are now preferred.
-            names = [
-                "@thin", "@asis", "@noref", "@nosent",
-                "@thinfile", "@silentfile", "@rawfile", "@nosentinelsfile" ]
-            for name in names:
-                if g.match(h,0,name):
-                    return self.afterHeadlineMatch(name)
-            return ""
+        names = (
+            "@file",
+            "@thin",   "@file-thin",   "@thinfile",
+            "@asis",   "@file-asis",   "@silentfile",
+            "@noref",  "@file-noref",  "@rawfile",
+            "@nosent", "@file-nosent", "@nosentinelsfile")
+    
+        return self.findAtFileName(names)
     #@nonl
     #@-node:ekr.20031218072017.3350:anyAtFileNodeName
     #@+node:ekr.20031218072017.3348:at...FileNodeName
-    #@+at 
-    #@nonl
-    # Returns the filename following @file or @rawfile, in the receivers's 
-    # headline, or the empty string if the receiver is not an @file node.
-    #@-at
-    #@@c
+    # These return the filename following @xxx, in v.headString.
+    # Return the the empty string if v is not an @xxx node.
     
     def atFileNodeName (self):
-        return self.afterHeadlineMatch("@file")
+        names = ("@file"),
+        return self.findAtFileName(names)
     
     def atNoSentinelsFileNodeName (self):
-        return self.afterHeadlineMatch("@nosentinelsfile")
+        names = ("@nosent", "@file-nosent", "@nosentinelsfile")
+        return self.findAtFileName(names)
     
     def atRawFileNodeName (self):
-        return self.afterHeadlineMatch("@rawfile")
+        names = ("@noref", "@file-noref", "@rawfile")
+        return self.findAtFileName(names)
         
     def atSilentFileNodeName (self):
-        return self.afterHeadlineMatch("@silentfile")
+        names = ("@asis", "@file-asis", "@silentfile")
+        return self.findAtFileName(names)
         
     def atThinFileNodeName (self):
-        return self.afterHeadlineMatch("@thinfile") or self.afterHeadlineMatch("@thin")
+        names = ("@thin", "@file-thin", "@thinfile")
+        return self.findAtFileName(names)
         
     # New names, less confusing
     atNoSentFileNodeName  = atNoSentinelsFileNodeName
@@ -627,7 +614,7 @@ class baseVnode (object):
         return flag
     #@nonl
     #@-node:EKR.20040430152000:isAtAllNode
-    #@+node:ekr.20040326031436:isAnyAtFileNode
+    #@+node:ekr.20040326031436:isAnyAtFileNode good
     def isAnyAtFileNode (self):
         
         """Return True if v is any kind of @file or related node."""
@@ -638,7 +625,7 @@ class baseVnode (object):
         h = self.headString()
         return h and h[0] == '@' and self.anyAtFileNodeName()
     #@nonl
-    #@-node:ekr.20040326031436:isAnyAtFileNode
+    #@-node:ekr.20040326031436:isAnyAtFileNode good
     #@+node:ekr.20040325073709:isAt...FileNode
     def isAtFileNode (self):
         return g.choose(self.atFileNodeName(),True,False)
@@ -1668,7 +1655,7 @@ class position (object):
     
     # Utilities.
     def matchHeadline (self,pattern): return self.v.matchHeadline(pattern)
-    def afterHeadlineMatch (self,s): return self.v.afterHeadlineMatch(s)
+    ## def afterHeadlineMatch (self,s): return self.v.afterHeadlineMatch(s)
     #@nonl
     #@-node:ekr.20040306211032:p.Comparisons
     #@+node:ekr.20040306212151:p.Extra Attributes
