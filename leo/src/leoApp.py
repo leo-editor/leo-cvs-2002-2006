@@ -2,10 +2,12 @@
 #@+leo-ver=4
 #@+node:@file leoApp.py
 #@@first
+
 #@@language python
 
 from leoGlobals import *
-import leoConfig,leoDialog,leoFind,leoGui,leoNodes
+import leoConfig,leoNodes
+import leoGui,leoTkinterGui # Tk is the default gui.
 import locale,os,sys
 
 class LeoApp:
@@ -31,7 +33,9 @@ class LeoApp:
 		self.idle_imported = false # true: we have done an import idle
 		self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
 		self.idleTimeHook = false # true: the global idleTimeHookHandler will reshedule itself.
+		self.initing = true # True: we are initiing the app.
 		self.killed = false # true: we are about to destroy the root window.
+		self.leoID = None # The id part of gnx's.
 		self.loadDir = None # The directory from which Leo was loaded.
 		self.log = None # The LeoFrame containing the present log.
 		self.logIsLocked = false # true: no changes to log are allowed.
@@ -47,7 +51,8 @@ class LeoApp:
 		self.root = None # The hidden main window. Set later.
 		self.trace_list = [] # "Sherlock" argument list for tracing().
 		self.tkEncoding = "utf-8"
-		self.unicodeErrorGiven = false # true: suppres unicode tracebacks.
+		self.unicodeErrorGiven = true # true: suppres unicode tracebacks.
+		self.use_gnx = true # True: generate gnx's instead of tnode indices.
 		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 	
 		# Global panels.  Destroyed when Leo ends.
@@ -144,8 +149,8 @@ class LeoApp:
 			# Pick a window to activate so we can set the log.
 			w = app.windowList[0]
 			w.deiconify()
-			w.top.lift()
-			app.setLog(w)
+			w.lift()
+			app.setLog(w.log)
 		else:
 			app.finishQuit()
 	
@@ -161,7 +166,7 @@ class LeoApp:
 			if fileName:
 				s = "creating default tkinterGui from " + shortFileName(fileName)
 			trace(s) ; es(s, color = "red")
-		app.gui = leoGui.tkinterGui()
+		app.gui = leoTkinterGui.tkinterGui()
 		app.root = app.gui.createRootWindow()
 		app.gui.finishCreate()
 	#@nonl
@@ -170,7 +175,7 @@ class LeoApp:
 	def destroyAllGlobalWindows (self):
 		
 		for w in self.globalWindows:
-			w.top.destroy()
+			w.destroySelf()
 			
 		self.globalWindows = []
 		
@@ -200,59 +205,6 @@ class LeoApp:
 		app.openWithFiles = []
 	#@nonl
 	#@-node:app.destroyAllOpenWithFiles
-	#@+node:app.destroyAllWindowObjects
-	# Objects must not be "destroyed" more than once; only this method calls destroy routines.
-	
-	def destroyAllWindowObjects (self,frame):
-	
-		"""Clear all links to objects in a Leo window."""
-		
-		# print "app.destroyAllNodes", frame
-		
-		# Do this first.
-		#@	<< clear all vnodes and tnodes in the tree >>
-		#@+node:<< clear all vnodes and tnodes in the tree>>
-		# Using a dict here is essential for adequate speed.
-		vList = [] ; tDict = {}
-		
-		v = frame.commands.rootVnode()
-		while v:
-			vList.append(v)
-			if v.t:
-				key = id(v.t)
-				if not tDict.has_key(key):
-					tDict[key] = v.t
-			v = v.threadNext()
-			
-		for key in tDict.keys():
-			clearAllIvars(tDict[key])
-		
-		for v in vList:
-			clearAllIvars(v)
-		
-		vList = [] ; tDict = {} # Remove these references immediately.
-		#@nonl
-		#@-node:<< clear all vnodes and tnodes in the tree>>
-		#@nl
-		
-		# Destroy all subcommanders & the commander.
-		clearAllIvars(frame.commands.atFileCommands)
-		clearAllIvars(frame.commands.fileCommands)
-		clearAllIvars(frame.commands.importCommands)
-		clearAllIvars(frame.commands.tangleCommands)
-		clearAllIvars(frame.commands.undoer)
-		clearAllIvars(frame.commands)
-	
-		# Destroy the all ivars in the Leo frame and all helper classes.
-		frame.clearAllIvars()
-		
-		# Finally, destroy the frame itself.
-		frame.destroyAllPanels()
-		clearAllIvars(frame)
-		
-		# Note: pointers to frame still exist in the caller!
-	#@nonl
-	#@-node:app.destroyAllWindowObjects
 	#@+node:app.destroyOpenWithFilesForFrame
 	def destroyOpenWithFilesForFrame (self,frame):
 		
@@ -288,17 +240,14 @@ class LeoApp:
 	#@+node:app.destroyWindow
 	def destroyWindow (self,frame):
 		
-		app = self ; top = frame.top # Remember this.
+		app = self
 			
 		app.destroyOpenWithFilesForFrame(frame)
-		
-		# 8/27/03: Recycle only if more than one window open
-		if len(app.windowList) > 1:
-			app.destroyAllWindowObjects(frame)
 	
 		app.windowList.remove(frame)
 	
-		top.destroy() # force the window to go away now.
+		# force the window to go away now.
+		frame.destroySelf() 
 	#@nonl
 	#@-node:app.destroyWindow
 	#@+node:app.finishQuit
@@ -331,6 +280,9 @@ class LeoApp:
 		"""Forces an immediate shutdown of Leo at any time.
 		
 		In particular, may be called from plugins during startup."""
+		
+		self.log = None # Disable writeWaitingLog
+		self.killed = true
 		
 		for w in self.windowList[:]:
 			self.destroyWindow(w)
@@ -372,6 +324,112 @@ class LeoApp:
 	
 	
 	#@-node:app.onQuit
+	#@+node:app.setEncoding
+	#@+at 
+	#@nonl
+	# According to Martin v. Löwis, getdefaultlocale() is broken, and cannot 
+	# be fixed. The workaround is to copy the getpreferredencoding() function 
+	# from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
+	#@-at
+	#@@c
+	
+	def setEncoding (self):
+		
+		# 10/20/03: moved from gui class to app class.
+	
+		for (encoding,src) in (
+			(self.config.tkEncoding,"config"),
+			#(locale.getdefaultlocale()[1],"locale"),
+			(getpreferredencoding(),"locale"),
+			(sys.getdefaultencoding(),"sys"),
+			("utf-8","default")):
+		
+			if isValidEncoding (encoding): # 3/22/03
+				self.tkEncoding = encoding
+				# trace(self.tkEncoding,src)
+				break
+			elif encoding and len(encoding) > 0:
+				trace("ignoring invalid " + src + " encoding: " + `encoding`)
+				
+		color = choose(self.tkEncoding=="ascii","red","blue")
+		es("Text encoding: " + self.tkEncoding, color=color)
+	#@nonl
+	#@-node:app.setEncoding
+	#@+node:app.setLeoID
+	def setLeoID (self):
+		
+		tag = ".leoID.txt"
+		loadDir = app.loadDir
+		configDir = app.config.configDir
+		#@	<< return if we can set self.leoID from sys.leoID >>
+		#@+node:<< return if we can set self.leoID from sys.leoID>>
+		# This would be set by in Python's sitecustomize.py file.
+		try:
+			app.leoID = sys.leoID
+			es("leoID = " + app.leoID, color="orange")
+			return
+		except:
+			app.leoID = None
+		#@nonl
+		#@-node:<< return if we can set self.leoID from sys.leoID>>
+		#@nl
+		#@	<< return if we can set self.leoID from "leoID.txt" >>
+		#@+node:<< return if we can set self.leoID from "leoID.txt" >>
+		for dir in (configDir,loadDir):
+			try:
+				fn = os.path.join(dir, tag)
+				f = open(fn,'r')
+				if f:
+					s = f.readline()
+					f.close()
+					if s and len(s) > 0:
+						app.leoID = s
+						es("leoID = " + app.leoID, color="red")
+						return
+					else:
+						es("empty " + tag + " in " + dir, color = "red")
+			except:
+				app.leoID = None
+		
+		if configDir == loadDir:
+			es(tag + " not found in " + loadDir, color="red")
+		else:
+			es(tag + " not found in " + configDir + " or " + loadDir, color="red")
+		
+		#@-node:<< return if we can set self.leoID from "leoID.txt" >>
+		#@nl
+		#@	<< put up a dialog requiring a valid id >>
+		#@+node:<< put up a dialog requiring a valid id >>
+		app.gui.runAskLeoIDDialog() # New in 4.1: get an id for gnx's.  Plugins may set app.leoID.
+		trace(app.leoID)
+		
+		es("leoID = " + `app.leoID`, color="blue")
+		#@nonl
+		#@-node:<< put up a dialog requiring a valid id >>
+		#@nl
+		#@	<< attempt to create leoID.txt >>
+		#@+node:<< attempt to create leoID.txt >>
+		for dir in (configDir,loadDir):
+			try:
+				# Look in configDir first.
+				fn = os.path.join(dir, tag)
+				f = open(fn,'w')
+				if f:
+					f.write(app.leoID)
+					f.close()
+					es("created leoID.txt in " + dir, color="red")
+					return
+			except: pass
+			
+		if configDir == loadDir:
+			es("can not create leoID.txt in " + loadDir, color="red")
+		else:
+			es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
+		
+		#@-node:<< attempt to create leoID.txt >>
+		#@nl
+	#@nonl
+	#@-node:app.setLeoID
 	#@+node:app.setLog, lockLog, unlocklog
 	def setLog (self,log,tag=""):
 		"""set the frame to which log messages will go"""
