@@ -29,10 +29,10 @@
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
-<v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
+<v t="T16" a="V"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T19" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -673,6 +673,10 @@ section_name_color = red
 
 section_name_brackets_color = blue
 #	The color of the double angle brackets in &lt; &lt; name &gt; &gt;
+
+show_invisibles_space_background_color = Gray90
+show_invisibles_tab_background_color   = Gray80
+#	The colors to be used to represent spaces and tabs when Show Invisibles mode is in effect.
 
 string_color = #00aa00
 #	The color of strings and their delimiters.

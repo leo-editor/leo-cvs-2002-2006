@@ -1106,8 +1106,15 @@ class colorizer:
 					
 			# 8/4/02: we only create tags for whitespace when showing invisibles.
 			if self.showInvisibles:
-				body.tag_config("blank",background="Gray90")
-				body.tag_config("tab",background="Gray80")
+				for name,option_name,default_color in (
+					("blank","show_invisibles_space_background_color","Gray90"),
+					("tab",  "show_invisibles_tab_background_color",  "Gray80")):
+					option_color = config.getColorsPref(option_name)
+					color = choose(option_color,option_color,default_color)
+					try:
+						body.tag_config(name,background=color)
+					except: # Recover after a user error.
+						body.tag_config(name,background=default_color)
 				
 			# 11/15/02: Colors for latex characters.  Should be user options...
 			
