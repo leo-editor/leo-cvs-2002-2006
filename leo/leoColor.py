@@ -1259,7 +1259,7 @@ class colorizer:
 		j = string.find(s,'"""',i)
 		return self.continuePythonString(s,i,j,n,"string3d")
 	
-	def continueSinglePythonString (self,s,i,j,n):
+	def continueSinglePythonString (self,s,i,n):
 		j = string.find(s,"'''",i)
 		return self.continuePythonString(s,i,j,n,"string3s")
 	
