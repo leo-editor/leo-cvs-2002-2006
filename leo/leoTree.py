@@ -148,6 +148,8 @@ class leoTree:
 		self.initing = false # true: opening file.
 		
 		# Drag and drop
+		self.dragging = false # true: presently dragging.
+		self.controlDrag = false # true: control was down when drag started.
 		self.oldcursor = None # To reset cursor after drag
 		self.drag_id = None # To reset bindings after drag
 		
@@ -940,7 +942,7 @@ class leoTree:
 	#@+body
 	def OnContinueDrag(self,v,event):
 		
-		# es("tree.OnContinueDrag" + `v`)
+		# trace(`v`)
 		assert(v == self.drag_v)
 		
 		c = self.commands 
@@ -979,7 +981,7 @@ class leoTree:
 				if 0: # This doesn't work, because we haven't had a mouse down event in the new node.
 					# Pretend the expanded node is what we are dragging!
 					self.drag_id = vdrag.icon_id
-					# es("OnDrag expanding:" + `vdrag` + " " + `self.drag_id`)
+					# es("OnContinueDrag expanding:" + `vdrag` + " " + `self.drag_id`)
 					if self.drag_id:
 						canvas.tag_bind(self.drag_id, "<B1-Motion>", v.OnDrag)
 						canvas.tag_bind(self.drag_id, "<Any-ButtonRelease-1>", v.OnEndDrag)
@@ -1032,11 +1034,22 @@ class leoTree:
 	
 	def OnDrag(self,v,event):
 		
+		c = self.commands
 		assert(v == self.drag_v)
 	
-		if event:
+		if not event:
+			return
+	
+		if not self.dragging:
+			# 11/25/02: Only do this once: greatly speeds drags.
 			self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
-			self.OnContinueDrag(v,event)
+			self.dragging = true
+			self.controlDrag = c.frame.controlKeyIsDown
+			if self.controlDrag:
+				es("dragged node will be cloned")
+			else:
+				es("dragged node will be moved")
+		self.OnContinueDrag(v,event)
 	#@-body
 	#@-node:8::tree.OnDrag
 	#@+node:9::tree.OnEndDrag
@@ -1063,12 +1076,19 @@ class leoTree:
 			#@-node:1::<< set vdrag, childFlag >>
 
 			if vdrag and vdrag != v:
-				if childFlag:
-					c.dragToNthChildOf(v,vdrag,0)
-				else:
-					c.dragAfter(v,vdrag)
+				if self.controlDrag: # Clone v and move the clone.
+					if childFlag:
+						c.dragCloneToNthChildOf(v,vdrag,0)
+					else:
+						c.dragCloneAfter(v,vdrag)
+				else: # Just drag v.
+					if childFlag:
+						c.dragToNthChildOf(v,vdrag,0)
+					else:
+						c.dragAfter(v,vdrag)
 			else:
-				if v and vdrag == None: es("not dragged: " + v.headString())
+				if v and self.dragging:
+					es("not dragged: " + v.headString())
 				if 0: # Don't undo the scrolling we just did!
 					self.idle_scrollTo(v)
 		
@@ -1079,6 +1099,9 @@ class leoTree:
 			canvas.tag_unbind(self.drag_id , "<B1-Motion>")
 			canvas.tag_unbind(self.drag_id , "<Any-ButtonRelease-1>")
 			self.drag_id = None
+			
+		self.dragging = false
+	
 	#@-body
 	#@-node:9::tree.OnEndDrag
 	#@+node:10::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
@@ -1212,8 +1235,8 @@ class leoTree:
 			if id:
 				self.drag_id = id
 				self.drag_v = v
-				canvas.tag_bind(id, "<B1-Motion>", v.OnDrag)
-				canvas.tag_bind(id, "<Any-ButtonRelease-1>", v.OnEndDrag)
+				canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
+				canvas.tag_bind(id,"<Any-ButtonRelease-1>", v.OnEndDrag)
 				self.oldcursor = self.canvas['cursor']
 				self.canvas['cursor'] = "hand2" # "center_ptr"
 	

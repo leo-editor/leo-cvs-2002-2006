@@ -19,7 +19,16 @@ import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
 class Commands:
 
 	#@+others
-	#@+node:1::c.__init__
+	#@+node:1::c.__del__
+	#@+body
+	def __del__ (self):
+	
+		# Can't trace while destroying.
+		# print "c.__del__"
+		pass
+	#@-body
+	#@-node:1::c.__del__
+	#@+node:2::c.__init__
 	#@+body
 	def __init__(self,frame):
 	
@@ -72,16 +81,7 @@ class Commands:
 		#@-body
 		#@-node:1::<< initialize ivars >>
 	#@-body
-	#@-node:1::c.__init__
-	#@+node:2::c.__del__
-	#@+body
-	def __del__ (self):
-	
-		# Can't trace while destroying.
-		# print "c.__del__"
-		pass
-	#@-body
-	#@-node:2::c.__del__
+	#@-node:2::c.__init__
 	#@+node:3::c.__repr__
 	#@+body
 	def __repr__ (self):
@@ -108,7 +108,20 @@ class Commands:
 		self.tangleCommands = None
 	#@-body
 	#@-node:4::c.destroy
-	#@+node:5::c.setIvarsFromPrefs
+	#@+node:5::c.setIvarsFromFind
+	#@+body
+	# This should be called whenever we need to use find values:
+	# i.e., before reading or writing
+	
+	def setIvarsFromFind (self):
+	
+		c = self ; find = app().findFrame
+		if find:
+			find.set_ivars(c)
+	
+	#@-body
+	#@-node:5::c.setIvarsFromFind
+	#@+node:6::c.setIvarsFromPrefs
 	#@+body
 	#@+at
 	#  This should be called whenever we need to use preference:
@@ -123,20 +136,7 @@ class Commands:
 	
 		pass
 	#@-body
-	#@-node:5::c.setIvarsFromPrefs
-	#@+node:6::c.setIvarsFromFind
-	#@+body
-	# This should be called whenever we need to use find values:
-	# i.e., before reading or writing
-	
-	def setIvarsFromFind (self):
-	
-		c = self ; find = app().findFrame
-		if find:
-			find.set_ivars(c)
-	
-	#@-body
-	#@-node:6::c.setIvarsFromFind
+	#@-node:6::c.setIvarsFromPrefs
 	#@+node:7::Cut & Paste Outlines
 	#@+node:1::cutOutline
 	#@+body
@@ -1572,7 +1572,7 @@ class Commands:
 		c.editVnode(v)
 	#@-body
 	#@-node:3::c.insertHeadline
-	#@+node:4::clone (Commands)
+	#@+node:4::c.clone
 	#@+body
 	def clone (self):
 	
@@ -1588,7 +1588,7 @@ class Commands:
 				c.undoer.setUndoParams("Clone",clone)
 		c.endUpdate() # updates all icons
 	#@-body
-	#@-node:4::clone (Commands)
+	#@-node:4::c.clone
 	#@+node:5::c.copyTree
 	#@+body
 	# This creates a free-floating copy of v's tree for undo.
@@ -1946,7 +1946,61 @@ class Commands:
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@-body
 	#@-node:2::c.dragToNthChildOf
-	#@+node:3::c.sortChildren, sortSiblings
+	#@+node:3::c.dragCloneAfter
+	#@+body
+	def dragCloneAfter (self,v,after):
+	
+		c = self
+		c.beginUpdate()
+		clone = v.clone(v) # Creates clone & dependents, does not set undo.
+		if not c.checkMoveWithParentWithWarning(clone,after.parent(),true):
+			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+			c.endUpdate(false) # Nothing has changed.
+			return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.endEditing()
+		clone.setDirty()
+		clone.moveAfter(after)
+		c.undoer.setUndoParams("Drag & Clone",clone,
+			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+		clone.setDirty()
+		c.selectVnode(clone)
+		c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+	#@-body
+	#@-node:3::c.dragCloneAfter
+	#@+node:4::c.dragCloneToNthChildOf
+	#@+body
+	def dragCloneToNthChildOf (self,v,parent,n):
+	
+		c = self
+		c.beginUpdate()
+		clone = v.clone(v) # Creates clone & dependents, does not set undo.
+		if not c.checkMoveWithParentWithWarning(clone,parent,true):
+			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+			c.endUpdate(false) # Nothing has changed.
+			return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.endEditing()
+		clone.setDirty()
+		clone.moveToNthChildOf(parent,n)
+		c.undoer.setUndoParams("Drag & Clone",clone,
+			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+		clone.setDirty()
+		c.selectVnode(clone)
+		c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+	#@-body
+	#@-node:4::c.dragCloneToNthChildOf
+	#@+node:5::c.sortChildren, sortSiblings
 	#@+body
 	def sortChildren(self):
 	
@@ -2002,8 +2056,8 @@ class Commands:
 			c.setChanged(true)
 		c.endUpdate()
 	#@-body
-	#@-node:3::c.sortChildren, sortSiblings
-	#@+node:4::demote
+	#@-node:5::c.sortChildren, sortSiblings
+	#@+node:6::demote
 	#@+body
 	def demote(self):
 	
@@ -2034,8 +2088,8 @@ class Commands:
 		c.undoer.setUndoParams("Demote",v,lastChild=last)
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:4::demote
-	#@+node:5::moveOutlineDown
+	#@-node:6::demote
+	#@+node:7::moveOutlineDown
 	#@+body
 	#@+at
 	#  Moving down is more tricky than moving up; we can't move v to be a 
@@ -2090,8 +2144,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:5::moveOutlineDown
-	#@+node:6::moveOutlineLeft
+	#@-node:7::moveOutlineDown
+	#@+node:8::moveOutlineLeft
 	#@+body
 	def moveOutlineLeft(self):
 	
@@ -2117,8 +2171,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:6::moveOutlineLeft
-	#@+node:7::moveOutlineRight
+	#@-node:8::moveOutlineLeft
+	#@+node:9::moveOutlineRight
 	#@+body
 	def moveOutlineRight(self):
 	
@@ -2147,8 +2201,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:7::moveOutlineRight
-	#@+node:8::moveOutlineUp
+	#@-node:9::moveOutlineRight
+	#@+node:10::moveOutlineUp
 	#@+body
 	def moveOutlineUp(self):
 	
@@ -2196,8 +2250,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:8::moveOutlineUp
-	#@+node:9::promote
+	#@-node:10::moveOutlineUp
+	#@+node:11::promote
 	#@+body
 	def promote(self):
 	
@@ -2220,7 +2274,7 @@ class Commands:
 		c.undoer.setUndoParams("Promote",v,lastChild=last)
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:9::promote
+	#@-node:11::promote
 	#@-node:15::Moving, Dragging, Promote, Demote, Sort
 	#@+node:16::Selecting & Updating (commands)
 	#@+node:1::editVnode (calls tree.editLabel)

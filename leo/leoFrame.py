@@ -86,6 +86,7 @@ class LeoFrame:
 		self.activeFrame = None
 		self.draggedItem = None
 		self.recentFiles = [] # List of recent files
+		self.controlKeyIsDown = false # For control-drags
 		#@-body
 		#@-node:1::<< set the LeoFrame ivars >>
 
@@ -140,6 +141,8 @@ class LeoFrame:
 		self.top.bind("<Button-1>", self.OnActivateLeoEvent)
 		self.top.bind("<Activate>", self.OnActivateLeoEvent) # Doesn't work on windows.
 		self.top.bind("<Deactivate>", self.OnDeactivateLeoEvent) # Doesn't work on windows.
+		self.top.bind("<Control-KeyPress>",self.OnControlKeyDown)
+		self.top.bind("<Control-KeyRelease>",self.OnControlKeyUp)
 		self.tree.canvas.bind("<Button-1>", self.OnActivateTree)
 		self.body.bind("<Button-1>", self.OnActivateBody)
 		self.body.bind("<Double-Button-1>", self.OnBodyDoubleClick)
@@ -504,7 +507,19 @@ class LeoFrame:
 		# trace(`app().log`)
 	#@-body
 	#@-node:5::OnActivateTree
-	#@+node:6::OnMouseWheel (Tomaz Ficko)
+	#@+node:6::frame.OnControlKeyUp/Down
+	#@+body
+	def OnControlKeyDown (self,event=None):
+		
+		self.controlKeyIsDown = true
+		
+	def OnControlKeyUp (self,event=None):
+	
+		self.controlKeyIsDown = false
+	
+	#@-body
+	#@-node:6::frame.OnControlKeyUp/Down
+	#@+node:7::OnMouseWheel (Tomaz Ficko)
 	#@+body
 	# Contributed by Tomaz Ficko.  This works on some systems.
 	# On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
@@ -516,8 +531,8 @@ class LeoFrame:
 		else:
 			self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
 	#@-body
-	#@-node:6::OnMouseWheel (Tomaz Ficko)
-	#@+node:7::frame.OnVisibility
+	#@-node:7::OnMouseWheel (Tomaz Ficko)
+	#@+node:8::frame.OnVisibility
 	#@+body
 	# Handle the "visibility" event and attempt to attach the Leo icon.
 	# This code must be executed whenever the window is redrawn.
@@ -529,7 +544,7 @@ class LeoFrame:
 			# print "OnVisibility"
 			self.icon.attach(self.top)
 	#@-body
-	#@-node:7::frame.OnVisibility
+	#@-node:8::frame.OnVisibility
 	#@-node:3::Event handlers
 	#@+node:4::Menus, Commands & Shortcuts
 	#@+node:1::canonicalizeShortcut

@@ -1633,11 +1633,11 @@ class vnode:
 	#@-node:11::Setters
 	#@+node:12::Moving, Inserting, Deleting, Cloning
 	#@+node:1::Entry Points (vnode)
-	#@+node:1::vnode::clone
+	#@+node:1::v.clone
 	#@+body
 	# Creates a clone of back and insert it as the next sibling of back.
 	
-	def clone (self, back):
+	def clone (self,back):
 	
 		clone = self.cloneTree(back)
 		clone.createDependents()
@@ -1650,7 +1650,7 @@ class vnode:
 			v = v.joinList
 		return clone
 	#@-body
-	#@-node:1::vnode::clone
+	#@-node:1::v.clone
 	#@+node:2::doDelete
 	#@+body
 	#@+at

@@ -46,7 +46,7 @@ optionalIvars = (
 	"lastChild",
 	"parent","oldParent",
 	"back","oldBack",
-	"n","oldN",
+	"n","oldN","oldV",
 	"oldText","newText",
 	"oldSel","newSel",
 	"sort","select",
@@ -469,7 +469,7 @@ class undoer:
 	#@-body
 	#@-node:8::setUndoTypes
 	#@-node:4::State routines...
-	#@+node:5::redo
+	#@+node:5::u.redo
 	#@+body
 	def redo (self):
 		
@@ -488,7 +488,7 @@ class undoer:
 			#@<< redo clone cases >>
 			#@+node:1::<< redo clone cases >>
 			#@+body
-			if redoType == "Clone":
+			if redoType in ("Clone","Drag & Clone"):
 			
 				if u.back:
 					u.v.linkAfter(u.back)
@@ -504,6 +504,7 @@ class undoer:
 					u.v.setClonedBit()
 				c.initAllCloneBits()
 				c.selectVnode(u.v)
+			
 			#@-body
 			#@-node:1::<< redo clone cases >>
 
@@ -691,8 +692,8 @@ class undoer:
 		u.bead += 1
 		u.setUndoTypes()
 	#@-body
-	#@-node:5::redo
-	#@+node:6::undo
+	#@-node:5::u.redo
+	#@+node:6::u.undo
 	#@+body
 	#@+at
 	#  This function and its allies undo the operation described by the undo parmaters.
@@ -725,6 +726,12 @@ class undoer:
 				c.selectVnode(u.v)
 				c.deleteHeadline()
 				c.selectVnode(u.back)
+				
+			elif undoType == "Drag & Clone":
+				
+				c.selectVnode(u.v)
+				c.deleteHeadline()
+				c.selectVnode(u.oldV)
 			#@-body
 			#@-node:1::<< undo clone cases >>
 
@@ -791,6 +798,7 @@ class undoer:
 				
 				c.initJoinedCloneBits(u.v) # 7/6/02
 				c.selectVnode(u.v)
+			
 			#@-body
 			#@-node:4::<< undo move  & drag cases >>
 
@@ -940,7 +948,7 @@ class undoer:
 		u.bead -= 1
 		u.setUndoTypes()
 	#@-body
-	#@-node:6::undo
+	#@-node:6::u.undo
 	#@+node:7::Undo helpers
 	#@+node:1::findSharedVnode
 	#@+body
