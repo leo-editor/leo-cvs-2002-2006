@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3978" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="24" left="381" height="872" width="774"/>
+	<global_window_position top="26" left="358" height="872" width="774"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1040,7 +1040,6 @@
 <v t="edream.111303073523.5"><vh>Reorg stuff</vh></v>
 </v>
 </v>
-<v t="edream.112103080619" a="M"><vh>Crasher pasting a node</vh></v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
 <v t="edream.110203160744.603"><vh>(Translation problems)</vh>
@@ -3293,7 +3292,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2458" a="E"><vh>Code</vh>
+<v t="edream.110203160744.2458"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -5930,7 +5929,7 @@
 </v>
 </v>
 <v t="edream.110203160744.3681" tnodeList="edream.110203160744.3681,edream.110203160744.2260,edream.110203160744.1693,edream.110203160744.1694,edream.110203160744.1875,edream.110203160744.1876,edream.110203160744.1880,edream.110203160744.1881,edream.110203160744.1882,edream.110203160744.1883,edream.110203160744.1884,edream.110203160744.2270,edream.110203160744.2271,edream.110203160744.2272,edream.110203160744.1523,edream.110203160744.2273,edream.110203160744.2274,edream.110203160744.2276,edream.110203160744.2277,edream.110203160744.1525,edream.110203160744.1526,edream.110203160744.1527,edream.110203160744.1528,edream.110203160744.1529,edream.110203160744.1530,edream.110203160744.1531,edream.110203160744.1532,edream.110203160744.1533,edream.110203160744.1534,edream.110203160744.1535,edream.110203160744.1877,edream.110203160744.1878,edream.110203160744.1591,edream.110203160744.1879,edream.110203160744.2262,edream.110203160744.2263,edream.110203160744.2264,edream.110203160744.1629,edream.110203160744.2265,edream.110203160744.1520,edream.110203160744.2267,edream.110203160744.1683,edream.110203160744.1684,edream.110203160744.1685,edream.110203160744.1686,edream.110203160744.1687,edream.110203160744.1688,edream.110203160744.1689,edream.110203160744.1690,edream.110203160744.1691,edream.110203160744.1147,edream.110203160744.1148,edream.110203160744.1149,edream.111103193348.1,edream.111303101154,edream.110203160744.1697,edream.111303101634,edream.110203160744.1256,edream.110203160744.1253,edream.110203160744.1258,edream.110203160744.1257,edream.110203160744.1255,edream.110203160744.1270,edream.110203160744.1271,edream.110203160744.1272,edream.110203160744.736,edream.110203160744.1850,edream.110203160744.2284,edream.110203160744.2286,edream.110203160744.2287,edream.110203160744.2288,edream.110203160744.2289,edream.110203160744.1301,edream.110203160744.1302,edream.110203160744.1303,edream.110203160744.1304,edream.110203160744.1305,edream.110203160744.1306,edream.110203160744.1307,edream.110203160744.1308,edream.110203160744.1309,edream.110203160744.1310,edream.110203160744.1311,edream.110203160744.1312,edream.110203160744.3710,edream.111003083003,edream.111003083003.1,edream.111003075626,edream.111003102135,edream.110203160744.2297,edream.110203160744.2305,edream.110203160744.2306,edream.111103092404,edream.111103053839,edream.110203160744.2308,edream.110203160744.2309,edream.110203160744.2310,edream.110203160744.2312,edream.110203160744.333,edream.111103063445,edream.110203160744.2317,edream.111103082046,edream.111003102120,edream.111103084151.1,edream.110203160744.2314,edream.110203160744.2315,edream.110203160744.2316,edream.110203160744.2319,edream.110203160744.2320,edream.110203160744.2299,edream.110203160744.2300,edream.111103093034,edream.110203160744.2148,edream.110203160744.2301,edream.110203160744.2302,edream.110203160744.2303,edream.111103085737.2,edream.111103065437,edream.111103070349,edream.110203160744.2304,edream.110203160744.2321,edream.110203160744.2332,edream.110203160744.2333,edream.110203160744.2334,edream.110203160744.2335,edream.110203160744.2336,edream.110203160744.2337,edream.110203160744.2338,edream.110203160744.1455,edream.110203160744.2339"><vh>@file leoTkinterFrame.py</vh>
-<v t="edream.110203160744.2260" a="E"><vh>class leoTkinterFrame</vh>
+<v t="edream.110203160744.2260"><vh>class leoTkinterFrame</vh>
 <v t="edream.110203160744.1874"><vh> frame.Birth &amp; Death</vh>
 <v t="edream.110203160744.1693" a=""><vh>f.__init__</vh>
 <v t="edream.110203160744.1694"><vh>&lt;&lt; set the leoTkinterFrame ivars &gt;&gt;</vh></v>
@@ -5978,7 +5977,7 @@
 <v t="edream.110203160744.1879" a=""><vh>destroySelf</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.2261" a="E"><vh>Configuration</vh>
+<v t="edream.110203160744.2261"><vh>Configuration</vh>
 <v t="edream.110203160744.2262"><vh>configureBar</vh></v>
 <v t="edream.110203160744.2263"><vh>configureBarsFromConfig</vh></v>
 <v t="edream.110203160744.2264"><vh>reconfigureFromConfig</vh></v>
@@ -6542,7 +6541,7 @@
 </v>
 </v>
 </v>
-<v t="edream.112103084204" a="E"><vh>(Created null classes)</vh>
+<v t="edream.112103084204"><vh>(Created null classes)</vh>
 <v t="edream.112103083853" a=""><vh>class nullBody</vh>
 <v t="edream.112103141343.1"><vh> nullBody.__init__</vh></v>
 <v t="edream.112103153646"><vh>Utils (internal use)</vh>
@@ -6581,8 +6580,8 @@
 <v t="edream.112103141351"><vh>hyperlink callbacks...</vh></v>
 </v>
 <v t="edream.112103083614" a=""><vh>class nullFrame</vh></v>
-<v t="edream.112103084652.1" a="V"><vh>class nullGui</vh>
-<v t="edream.112103163330" a="E"><vh>Birth &amp; death</vh>
+<v t="edream.112103084652.1" a=""><vh>class nullGui</vh>
+<v t="edream.112103163330"><vh>Birth &amp; death</vh>
 <v t="edream.112103154736"><vh> nullGui.__init__</vh></v>
 <v t="edream.112103085124"><vh>createLeoFrame</vh></v>
 <v t="edream.112103163330.1"><vh>createRootWindow</vh></v>
@@ -6593,7 +6592,7 @@
 <v t="edream.112103154310"><vh>setScript</vh></v>
 </v>
 <v t="edream.112103100651" a=""><vh>class nullLog</vh></v>
-<v t="edream.112103100651.1" a="E"><vh>class nullTree</vh>
+<v t="edream.112103100651.1" a=""><vh>class nullTree</vh>
 <v t="edream.112103160822.1"><vh> nullTree.__init__</vh></v>
 <v t="edream.112103160822"><vh>oops</vh></v>
 <v t="edream.112103161526"><vh>Dummy operations...</vh>
@@ -6606,6 +6605,9 @@
 <v t="edream.112103160840.6"><vh>select</vh></v>
 </v>
 </v>
+<v t="edream.112103193136"><vh>(Duplicate bindings with clear leoConfig.txt)</vh></v>
+<v t="edream.112103080619" a="M"><vh>Crasher pasting a node</vh></v>
+<v t="edream.112203121638" a="V"><vh>Notes from val</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203160744">@ignore
@@ -20600,7 +20602,6 @@ closeFlag = (
 	c = self ; v = c.currentVnode()
 	if not data or len(data) != 3: return # 6/22/03
 	try:
-		# print "OnOpenWith:",`data`
 		openType,arg,ext=data
 		if not doHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext):
 			&lt;&lt; set ext based on the present language &gt;&gt;
@@ -20608,7 +20609,7 @@ closeFlag = (
 			&lt;&lt; execute a command to open path in external editor &gt;&gt;
 		doHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
 	except:
-		es("exception in OnOpenWith")
+		es("exception in openWith")
 		es_exception()
 
 	return "break"</t>
@@ -55053,7 +55054,7 @@ def initInHeadline (self):
 	
 	if c.search_headline_flag and c.search_body_flag:
 		# Do not change this line without careful thought and extensive testing!
-		self.in_headline = (v == c.frame.editVnode())
+		self.in_headline = (v == c.frame.tree.editVnode())
 	else:
 		self.in_headline = c.search_headline_flag</t>
 <t tx="edream.110203160744.3676"># For incremental searches
@@ -55067,7 +55068,6 @@ def initInteractiveCommands(self):
 		c.frame.tree.setEditVnode(v)
 		t = v.edit_text()
 		sel = None
-		# trace(`pos` + ":" + `self.in_headline` + ":" + `v==c.frame.editVnode()` + ":" + `v`)
 	else:
 		t = c.frame.bodyCtrl
 		sel = gui.getTextSelection(t)
@@ -56177,9 +56177,18 @@ elif undoType == "De-Hoist":
 - The selection is not set properly afterwards.</t>
 <t tx="edream.110403112538">@nocolor
 
-** Extract section crash (lost data!)
+Batch-mode:
+	- Allow scripts to suppress output from nullLog.
+	- Disable edit body/headline commands in batch mode.
+	- Move batch plugin into Leo's core.
+	- Create v.scriptSetBodyString
 
-- Create a utility to preprocess script (for use with find/change scripts)
+Script-find/change:
+	- Create a utility to preprocess script (for use with find/change scripts)
+
+email re pychecker
+
+** Extract section crash (lost data!)
 
 - Print the wxWindows version number in the wxLeo log pane on signon.
 
@@ -59170,7 +59179,14 @@ AssertionError
 <t tx="edream.112103083853">class nullBody (leoBody):
 
 	@others</t>
-<t tx="edream.112103084204"></t>
+<t tx="edream.112103084204">@nocolor
+
+To do:
+	
+- leoLog can optionally be silent.
+
+
+@color</t>
 <t tx="edream.112103084652">class leoGui:
 	
 	"""The base class of all gui classes.
@@ -59880,5 +59896,43 @@ def idle_scrollTo(self,v):
 	pass</t>
 <t tx="edream.112103163330.2">def finishCreate (self):
 	pass</t>
+<t tx="edream.112103193136">@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2298869
+By: billp9619
+
+Right clicking on a  headline causes a bunch of error messages as follows. 
+
+Leo Log Window...
+Leo 4.1 beta 4, build  1.40 , November 20, 2003
+Python 2.2.1, Tk 8.3.2
+
+leoConfig.txt encoding: iso-8859-1
+Text encoding: cp1252
+leoID = billp9619
+duplicate shortcut:, Shift+Ctrl+W, &lt;Control-W&gt;, &amp;Write @file Nodes
+duplicate shortcut:, Shift+Ctrl+T, &lt;Control-T&gt;, &amp;Tangle
+duplicate shortcut:, Shift+Ctrl+U, &lt;Control-U&gt;, &amp;Untangle
+duplicate shortcut:, Shift+Ctrl+X, &lt;Control-X&gt;, Cut Node
+duplicate shortcut:, Shift+Ctrl+C, &lt;Control-C&gt;, Copy Node
+duplicate shortcut:, Shift+Ctrl+V, &lt;Control-V&gt;, &amp;Paste Node
+duplicate shortcut:, Shift+Ctrl+BkSp, &lt;Shift-Control-BackSpace&gt;, &amp;Delete Node
+duplicate shortcut:, Ctrl+I, &lt;Control-i&gt;, &amp;Insert Node
+duplicate shortcut:, Ctrl+`, &lt;Control-quoteleft&gt;, &amp;Clone Node
+duplicate shortcut:, Alt-A, &lt;Alt-a&gt;, &amp;Sort Siblings
+duplicate shortcut:, Alt+0, &lt;Alt-Key-0&gt;, Contract Parent
+</t>
+<t tx="edream.112203121638">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2296831
+By: val
+
+Recently, the research projects such as HP's Dynamo, Transmeta's Crusoe
+(with Linus Torvalds), Sun's MAJC have demonstrated a high performance of 'code
+morphing' or 'code translation'.  E.g., HP's Dynamo has a user-mode interpreter
+of binary code that generates an optimized code for hardware (PA-8000) by code
+reusing, caching, reassembling.  They claim ~20% better performance than compiled
+code.  I think Sun's JIT compilers for Java byte code and Psyco (Python bytecode
+run-time interpreter for x86) is a step in the similar direction.</t>
 </tnodes>
 </leo_file>

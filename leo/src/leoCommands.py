@@ -232,7 +232,6 @@ class baseCommands:
 		c = self ; v = c.currentVnode()
 		if not data or len(data) != 3: return # 6/22/03
 		try:
-			# print "OnOpenWith:",`data`
 			openType,arg,ext=data
 			if not doHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext):
 				#@			<< set ext based on the present language >>
@@ -364,7 +363,7 @@ class baseCommands:
 				#@nl
 			doHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
 		except:
-			es("exception in OnOpenWith")
+			es("exception in openWith")
 			es_exception()
 	
 		return "break"

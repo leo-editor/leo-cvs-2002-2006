@@ -774,7 +774,7 @@ class leoFind:
 		
 		if c.search_headline_flag and c.search_body_flag:
 			# Do not change this line without careful thought and extensive testing!
-			self.in_headline = (v == c.frame.editVnode())
+			self.in_headline = (v == c.frame.tree.editVnode())
 		else:
 			self.in_headline = c.search_headline_flag
 	#@nonl
@@ -791,7 +791,6 @@ class leoFind:
 			c.frame.tree.setEditVnode(v)
 			t = v.edit_text()
 			sel = None
-			# trace(`pos` + ":" + `self.in_headline` + ":" + `v==c.frame.editVnode()` + ":" + `v`)
 		else:
 			t = c.frame.bodyCtrl
 			sel = gui.getTextSelection(t)
