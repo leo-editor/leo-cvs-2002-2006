@@ -232,6 +232,46 @@ class baseColorizer:
         "when","while"]
     #@nonl
     #@-node:ekr.20031218072017.374:elisp keywords
+    #@+node:ekr.20041107093834:forth keywords
+    # Default forth keywords: extended by leo-forthwords.txt.
+    forth_keywords = [
+        "variable", "constant", "code", "end-code",
+        "dup", "2dup", "swap", "2swap", "drop", "2drop",
+        "r>", ">r", "2r>", "2>r",
+        "if", "else", "then",
+        "begin", "again", "until", "while", "repeat",
+        "v-for", "v-next", "exit",
+        "meta", "host", "target", "picasm", "macro",
+        "needs", "include",
+        "'", "[']",
+        ":", ";",
+        "@", "!", ",", "1+", "+", "-",
+        "<", "<=", "=", ">=", ">",
+        "invert", "and", "or", 
+        ]
+    
+    # Forth words which define other words: extended by leo-forthdefwords.txt.
+    forth_definingwords = [
+        ":", "variable", "constant", "code",
+        ]
+    
+    # Forth words which start strings: extended by leo-forthstringwords.txt.
+    forth_stringwords = [
+        's"', '."', '"', '."',
+        'abort"',
+        ]
+    
+    # Forth words to be rendered in boldface: extended by leo-forthboldwords.txt.
+    forth_boldwords = [ ]
+    
+    # Forth words to be rendered in italics: extended by leo-forthitalicwords.txt.
+    forth_italicwords = [ ]
+    
+    # Forth bold-italics words: extemded leo-forthbolditalicwords.txt if present
+    # Note: on some boxen, bold italics may show in plain bold.
+    forth_bolditalicwords = [ ]
+    #@nonl
+    #@-node:ekr.20041107093834:forth keywords
     #@+node:ekr.20031218072017.375:html keywords
     # No longer used by syntax colorer.
     html_keywords = []
@@ -840,6 +880,35 @@ class baseColorizer:
         self.image_references = []
         #@-node:ekr.20031218072017.1608:<< define fonts and data for wiki tags >>
         #@nl
+        #@    << extend forth words from files >>
+        #@+node:ekr.20041107094252:<< extend forth words from files >>
+        # Associate files with lists: probably no need to edit this.
+        forth_items = (
+            (self.forth_definingwords, "leo-forthdefwords.txt", "defining words"),
+            (self.forth_keywords, "leo-forthwords.txt", "words"),
+            (self.forth_stringwords, "leo-forthstringwords.txt", "string words"),
+            (self.forth_boldwords, "leo-forthboldwords.txt", "bold words"),
+            (self.forth_bolditalicwords, "leo-forthbolditalicwords.txt", "bold-italic words"),
+            (self.forth_italicwords, "leo-forthitalicwords.txt", "italic words"),
+        )
+        
+        # Add entries from files (if they exist) and to the corresponding wordlists.
+        for (lst, path, typ) in forth_items:
+            try:
+                extras = []
+                for line in file(path).read().strip().split("\n"):
+                    line = line.strip()
+                    if line and line[0] != '\\':
+                        extras.append(line)
+                if extras:
+                    print "Found extra forth %s" % typ + ": " + " ".join(extras)
+                    lst.extend(extras)
+            except IOError:
+                # print "Not found",path
+                pass
+        #@nonl
+        #@-node:ekr.20041107094252:<< extend forth words from files >>
+        #@nl
     #@nonl
     #@-node:ekr.20031218072017.1605:color.__init__
     #@+node:ekr.20031218072017.2801:colorize & recolor_range
@@ -1020,6 +1089,9 @@ class baseColorizer:
                     if self.language==name: 
                         # g.trace("setting keywords for",name)
                         self.keywords = getattr(self, name + "_keywords")
+            
+            # For forth.
+            nextForthWordIsNew = False
             
             # Color plain text unless we are under the control of @nocolor.
             # state = g.choose(self.flag,"normal","nocolor")
