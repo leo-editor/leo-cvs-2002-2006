@@ -775,9 +775,15 @@ class atFile:
 		
 		self.indent = 0 ; out = []
 		lastLines = self.scanText(file,root,out,atFile.endLeo)
-		
-		self.completeFirstDirectives(out,firstLines)
-		self.completeLastDirectives(out,lastLines)
+		# 18-SEP-2002 DTHEIN: update the bodyString directly, because
+		# out no longer holds body text of node.
+		if root.t.hasBody:
+			bodyLines = root.t.bodyString.split('\n')
+			self.completeFirstDirectives(bodyLines,firstLines)
+			self.completeLastDirectives(bodyLines,lastLines)
+			bodyText = '\n'.join(bodyLines)
+			bodyText = bodyText.replace('\r', '')
+			root.t.setTnodeText(bodyText)
 
 		#@-body
 		#@-node:2::<< Scan the file buffer  >>
@@ -833,9 +839,15 @@ class atFile:
 			
 			self.indent = 0 ; out = []
 			lastLines = self.scanText(file,root,out,atFile.endLeo)
-			
-			self.completeFirstDirectives(out,firstLines)
-			self.completeLastDirectives(out,lastLines)
+			# 18-SEP-2002 DTHEIN: update the bodyString directly, because
+			# out no longer holds body text of node.
+			if root.t.hasBody:
+				bodyLines = root.t.bodyString.split('\n')
+				self.completeFirstDirectives(bodyLines,firstLines)
+				self.completeLastDirectives(bodyLines,lastLines)
+				bodyText = '\n'.join(bodyLines)
+				bodyText = bodyText.replace('\r', '')
+				root.t.setTnodeText(bodyText)
 
 			#@-body
 			#@-node:2::<< Scan the file buffer  >>
@@ -1192,7 +1204,8 @@ class atFile:
 			# quit if no leading lines to apply
 			if j >= len(firstLines): break
 			# make the new @first directive
-			out[k] = tag + " " + firstLines[j] ; j += 1
+			#18-SEP-2002 DTHEIN: remove trailing newlines because they are inserted later
+			out[k] = tag + " " + firstLines[j].rstrip() ; j += 1
 
 	#@-body
 	#@-node:7::completeFirstDirectives (Dave Hein)
@@ -1220,7 +1233,8 @@ class atFile:
 			# quit if no trailing lines to apply
 			if j < -len(lastLines): break
 			# make the new @last directive
-			out[k] = tag + " " + lastLines[j] ; j -= 1
+			#18-SEP-2002 DTHEIN: remove trailing newlines because they are inserted later
+			out[k] = tag + " " + lastLines[j].rstrip() ; j -= 1
 
 	#@-body
 	#@-node:8::completeLastDirectives (Dave Hein)
