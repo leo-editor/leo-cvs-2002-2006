@@ -1137,16 +1137,15 @@ class colorizer:
 			#@+body
 			# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
 			
-			if self.language == "plain": # 9/12/02
-				delim1,delim2,delim3 = None,None,None
-			elif self.language == "cweb": # 11/14/02: Use C comments, not cweb sentinel comments.
+			if self.language == "cweb": # Use C comments, not cweb sentinel comments.
 				delim1,delim2,delim3 = set_delims_from_language("c")
-			elif self.comment_string: # 8/11/02
+			elif self.comment_string:
 				delim1,delim2,delim3 = set_delims_from_string(self.comment_string)
+			elif self.language == "plain": # 1/30/03
+				delim1,delim2,delim3 = None,None,None
 			else:
 				delim1,delim2,delim3 = set_delims_from_language(self.language)
 			
-			# 8/1/02: this now works as expected.
 			self.single_comment_start = delim1
 			self.block_comment_start = delim2
 			self.block_comment_end = delim3
