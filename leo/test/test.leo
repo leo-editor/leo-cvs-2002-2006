@@ -32,6 +32,9 @@
 </v>
 <v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
 </v>
+<v t="bwmulder.20050108100437" a="ETV"><vh>how to run tests</vh>
+<v t="bwmulder.20050108100437.1" a="E"><vh>posting from Edwad</vh></v>
+</v>
 <v t="EKR.20040623200709"
 marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
@@ -925,8 +928,8 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
-<v t="ekr.20040723064143.1" a="M"><vh>To do...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="ekr.20040723064143.1" a="EM"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
@@ -1494,7 +1497,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050107093251"><vh>Unit testing for plugins (do this separately!)</vh>
+<v t="ekr.20050107093251" a="E"><vh>Unit testing for plugins (do this separately!)</vh>
 <v t="ekr.20050105112238"><vh>@suite plugins tests</vh>
 <v t="ekr.20050105153808"><vh> To do</vh></v>
 <v t="ekr.20050105141608"><vh>Notes</vh>
@@ -2200,6 +2203,21 @@ for n in xrange(1):
                 canvas.create_line(x,y,x+1,y+1,fill=color,width=1)
         top.update()
 print "done"</t>
+<t tx="bwmulder.20050108100437">@nocolor</t>
+<t tx="bwmulder.20050108100437.1">Running unit tests from test.leo is very easy, provided you have enabled the mod_scripting plugin. When this plugin is enabled Leo will create a blue 'script button' in the icon bar called 'unit test'. 
+ 
+- To run all unit tests, select the node in test.leo called 'Unit testing...', then click the 'unit test' button. 
+ 
+- To run a single test, select an @test node and click the 'unit test' button. 
+ 
+- To run a suite of tests, select an @suite node and click the 'unit test' button. 
+ 
+- To run any other collection of tests, create an outline containing those @test or @suite nodes, select the root of that tree and click the 'unit test' button. 
+ 
+That's all. See the docstring for mod_scripting for more details about script buttons. You can see this docstring using the plugin_manager plugin if you have it installed. 
+ 
+Several nodes in the tree @thin ../src/leoTest.py (in test.leo) contain support code for @test, @suite, etc. so if you want all the gory details you can read the code. It's not complicated: Leo creates UnitTest classes automatically whose run method is the body of the @suite or @test node. 
+</t>
 <t tx="ekr.20040302091705">import leoGlobals as g
 
 class position:
