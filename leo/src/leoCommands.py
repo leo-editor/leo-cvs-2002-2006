@@ -5446,13 +5446,12 @@ class configSettings:
     #@nonl
     #@+node:ekr.20041118104240:initIvar
     def initIvar(self,ivarName):
-    
-        data = g.app.config.ivarsDict.get(ivarName)
         
-        if data:
-            theType,val = data
-        else:
-            theType,val = None,None
+        munge = g.app.config.canonicalizeSettingName
+    
+        data = g.app.config.ivarsDict.get(munge(ivarName))
+        
+        ivarName,theType,val = data
     
         # g.trace(ivarName,val)
     
@@ -5461,18 +5460,16 @@ class configSettings:
     #@-node:ekr.20041118104240:initIvar
     #@+node:ekr.20041118104414:initEncoding
     def initEncoding (self,encodingName):
+        
+        munge = g.app.config.canonicalizeSettingName
     
-        data = g.app.config.ivarsDict.get(encodingName)
+        data = g.app.config.encodingIvarsDict.get(munge(encodingName))
     
-        if data:
-            theType,encoding = data
-        else:
-            encoding = "utf-8" ##  This probably should be none until late in the init process.
-            theType = None
+        ivarName,theType,encoding = data
     
-        # g.trace(encodingName,encoding)
+        # g.trace(ivarName,encodingName,encoding)
     
-        setattr(self,encodingName,encoding)
+        setattr(self,ivarName,encoding)
     
         if encoding and not g.isValidEncoding(encoding):
             g.es("bad %s: %s" % (encodingName,encoding))

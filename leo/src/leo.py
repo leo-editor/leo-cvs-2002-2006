@@ -54,7 +54,8 @@ def run(fileName=None,*args,**keywords):
     g.app.setLeoID() # Force the user to set g.app.leoID.
     import leoNodes ; g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
     import leoConfig ; g.app.config = leoConfig.config()
-    g.app.config.readSettingsFiles() # Must be done after setting g.app.config.
+    fileName = completeFileName(fileName)
+    g.app.config.readSettingsFiles(fileName) # Must be done after setting g.app.config.
     g.app.setEncoding()
     script = getBatchScript()
     if script:
@@ -127,6 +128,24 @@ You may download Python from http://python.org/download/
         return False
 #@nonl
 #@-node:ekr.20031218072017.1936:isValidPython
+#@+node:ekr.20041124083125:completeFileName
+def completeFileName (fileName):
+    
+    import leoGlobals as g
+    
+    if not fileName:
+        return None
+        
+    # This does not depend on config settings.
+    fileName = g.os_path_join(os.getcwd(),fileName)
+    fileName = g.os_path_normabs(fileName)
+    head,ext = g.os_path_splitext(fileName)
+    if not ext:
+        fileName = fileName + ".leo"
+
+    return fileName
+#@nonl
+#@-node:ekr.20041124083125:completeFileName
 #@+node:ekr.20041117155521:computeGlobalConfigDir
 def computeGlobalConfigDir():
     
@@ -235,10 +254,6 @@ def createFrame (fileName):
 
     # Try to create a frame for the file.
     if fileName:
-        fileName = g.os_path_join(os.getcwd(),fileName)
-        fileName = g.os_path_normpath(fileName)
-        head,ext = g.os_path_splitext(fileName)
-        if not ext:fileName = fileName + ".leo"
         if g.os_path_exists(fileName):
             ok, frame = g.openWithFileName(fileName,None)
             if ok:

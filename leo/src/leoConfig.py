@@ -30,88 +30,95 @@ class baseConfig:
     defaultLogFontSize  = g.choose(sys.platform=="win32",8,12)
     defaultTreeFontSize = g.choose(sys.platform=="win32",9,12)
     
-    defaultsDict = {
+    defaultsDict = {}
+    
+    defaultsData = (
         # compare options...
-        "ignore_blank_lines" : ("bool",True),
-        "limit_count" : ("int",9),
-        "print_mismatching_lines" : ("bool",True),
-        "print_trailing_lines" : ("bool",True),
+        ("ignore_blank_lines","bool",True),
+        ("limit_count","int",9),
+        ("print_mismatching_lines","bool",True),
+        ("print_trailing_lines","bool",True),
         # find/change options...
-        "search_body" : ("bool",True),
-        "whole_word" : ("bool",True),
+        ("search_body","bool",True),
+        ("whole_word","bool",True),
         # Prefs panel.
-        "default_target_language" : ("language","Python"),
-        "tab_width" : ("int",-4),
-        "page_width" : ("int",132),
-        "output_doc_chunks" : ("bool",True),
-        "tangle_outputs_header" : ("bool",True),
+        ("default_target_language","language","Python"),
+        ("tab_width","int",-4),
+        ("page_width","int",132),
+        ("output_doc_chunks","bool",True),
+        ("tangle_outputs_header","bool",True),
         # Syntax coloring options...
         # Defaults for colors are handled by leoColor.py.
-        "color_directives_in_plain_text" : ("bool",True),
-        "underline_undefined_section_names" : ("bool",True),
+        ("color_directives_in_plain_text","bool",True),
+        ("underline_undefined_section_names","bool",True),
         # Window options...
-        "allow_clone_drags" : ("bool",True),
-        "body_pane_wraps" : ("bool",True),
-        "body_text_font_family" : ("family","Courier"),
-        "body_text_font_size" : ("size",defaultBodyFontSize),
-        "body_text_font_slant" : ("slant","roman"),
-        "body_text_font_weight" : ("weight","normal"),
-        "enable_drag_messages" : ("bool",True),
-        "headline_text_font_size" : ("size",defaultLogFontSize),
-        "headline_text_font_slant" : ("slant","roman"),
-        "headline_text_font_weight" : ("weight","normal"),
-        "log_text_font_size" : ("size",defaultLogFontSize),
-        "log_text_font_slant" : ("slant","roman"),
-        "log_text_font_weight" : ("weight","normal"),
-        "initial_window_height" : ("int",600),
-        "initial_window_width" :  ("int",800),
-        "initial_window_left" : ("int",10),
-        "initial_window_top" : ("int",10),
-        "initial_splitter_orientation" : ("orientation","vertical"),
-        "initial_vertical_ratio" : ("ratio",0.5),
-        "initial_horizontal_ratio" : ("ratio",0.3),
-        "initial_horizontal_secondary_ratio" : ("ratio",0.5),
-        "initial_vertical_secondary_ratio" : ("ratio",0.7),
-        "outline_pane_scrolls_horizontally" : ("bool",False),
-        "split_bar_color" : ("color","LightSteelBlue2"),
-        "split_bar_relief" : ("relief","groove"),
-        "split_bar_width" : ("int",7),
-    }
+        ("allow_clone_drags","bool",True),
+        ("body_pane_wraps","bool",True),
+        ("body_text_font_family","family","Courier"),
+        ("body_text_font_size","size",defaultBodyFontSize),
+        ("body_text_font_slant","slant","roman"),
+        ("body_text_font_weight","weight","normal"),
+        ("enable_drag_messages","bool",True),
+        ("headline_text_font_size","size",defaultLogFontSize),
+        ("headline_text_font_slant","slant","roman"),
+        ("headline_text_font_weight","weight","normal"),
+        ("log_text_font_size","size",defaultLogFontSize),
+        ("log_text_font_slant","slant","roman"),
+        ("log_text_font_weight","weight","normal"),
+        ("initial_window_height","int",600),
+        ("initial_window_width","int",800),
+        ("initial_window_left","int",10),
+        ("initial_window_top","int",10),
+        ("initial_splitter_orientation","orientation","vertical"),
+        ("initial_vertical_ratio","ratio",0.5),
+        ("initial_horizontal_ratio","ratio",0.3),
+        ("initial_horizontal_secondary_ratio","ratio",0.5),
+        ("initial_vertical_secondary_ratio","ratio",0.7),
+        ("outline_pane_scrolls_horizontally","bool",False),
+        ("split_bar_color","color","LightSteelBlue2"),
+        ("split_bar_relief","relief","groove"),
+        ("split_bar_width","int",7),
+    )
     #@nonl
     #@-node:ekr.20041117062717.1:defaultsDict
     #@+node:ekr.20041118062709:define encodingIvarsDict
-    encodingIvarsDict = {
-        "default_derived_file_encoding" : ("unicode-encoding","utf-8"),
-        "new_leo_file_encoding" : ("unicode-encoding","UTF-8"),
+    encodingIvarsDict = {}
+    
+    encodingIvarsData = (
+        ("default_derived_file_encoding","unicode-encoding","utf-8"),
+        ("new_leo_file_encoding","unicode-encoding","UTF-8"),
             # Upper case for compatibility with previous versions.
-        "tkEncoding" : ("unicode-encoding",None),
+        ("tkEncoding","unicode-encoding",None),
             # Defaults to None so it doesn't override better defaults.
-    }
+    )
+    #@nonl
     #@-node:ekr.20041118062709:define encodingIvarsDict
     #@+node:ekr.20041117072055:ivarsDict
     # Each of these settings sets the ivar with the same name.
-    ivarsDict = {
-        "at_root_bodies_start_in_doc_mode" : ("bool",True),
+    ivarsDict = {}
+    
+    ivarsData = (
+        ("at_root_bodies_start_in_doc_mode","bool",True),
             # For compatibility with previous versions.
-        "create_nonexistent_directories" : ("bool",False),
-        "output_initial_comment" : ("string",""),
+        ("create_nonexistent_directories","bool",False),
+        ("output_initial_comment","string",""),
             # "" for compatibility with previous versions.
-        "output_newline" : ("newline-type","nl"),
-        "read_only" : ("bool",True),
+        ("output_newline","newline-type","nl"),
+        ("read_only","bool",True),
             # Make sure we don't alter an illegal leoConfig.txt file!
-        "redirect_execute_script_output_to_log_pane" : ("bool",False),
-        "relative_path_base_directory" : ("directory","!"),
-        "remove_sentinels_extension" : ("string",".txt"),
-        "save_clears_undo_buffer" : ("bool",False),
-        "stylesheet" : ("string",None),
-        "trailing_body_newlines" : ("newline-type","asis"),
-        "use_plugins" : ("bool",False),
+        ("redirect_execute_script_output_to_log_pane","bool",False),
+        ("relative_path_base_directory","directory","!"),
+        ("remove_sentinels_extension","string",".txt"),
+        ("save_clears_undo_buffer","bool",False),
+        ("stylesheet","string",None),
+        ("trailing_body_newlines","newline-type","asis"),
+        ("use_plugins","bool",False),
             # Should never be True here!
-        "use_psyco" : ("bool",False),
-        "undo_granularity" : ("undo_granularity","word"),
+        ("use_psyco","bool",False),
+        ("undo_granularity","undo_granularity","word"),
             # "char","word","line","node"
-        "write_strips_blank_lines" : ("bool",False),
-    }
+        ("write_strips_blank_lines","bool",False),
+    )
     #@nonl
     #@-node:ekr.20041117072055:ivarsDict
     #@-others
@@ -139,6 +146,15 @@ class baseConfig:
     #@+node:ekr.20041117062717.2:ctor & init
     def __init__ (self):
     
+        for key,type,val in self.defaultsData:
+            self.defaultsDict[self.munge(key)] = type,val
+            
+        for key,type,val in self.ivarsData:
+            self.ivarsDict[self.munge(key)] = key,type,val
+    
+        for key,type,val in self.encodingIvarsData:
+            self.encodingIvarsDict[self.munge(key)] = key,type,val
+    
         self.init()
     
     def init (self):
@@ -153,21 +169,20 @@ class baseConfig:
         self.initSettingsFiles()
         self.initRecentFiles()
         self.initRawKeysDict()
+        
+        self.use_plugins = True ### Testing??
     #@nonl
     #@-node:ekr.20041117062717.2:ctor & init
     #@+node:ekr.20041117065611.1:initEncoding
     def initEncoding (self,encodingName):
         
-        data = self.ivarsDict.get(encodingName)
-        if data:
-            theType,encoding = data
-        else:
-            encoding = "utf-8" ##  This probably should be none until late in the init process.
-            theType = None
+        data = self.encodingIvarsDict.get(self.munge(encodingName))
+        ivarName,theType,encoding = data
     
-        # g.trace(encodingName,encoding)
-    
-        setattr(self,encodingName,encoding)
+        # g.trace(ivarName,encodingName,encoding)
+        
+        if ivarName:
+            setattr(self,ivarName,encoding)
     
         if encoding and not g.isValidEncoding(encoding):
             g.es("bad %s: %s" % (encodingName,encoding))
@@ -176,12 +191,8 @@ class baseConfig:
     #@+node:ekr.20041117065611:initIvar
     def initIvar(self,ivarName):
         
-        data = self.ivarsDict.get(ivarName)
-        
-        if data:
-            theType,val = data
-        else:
-            theType,val = None,None
+        data = self.ivarsDict.get(self.munge(ivarName))
+        ivarName,theType,val = data
     
         # g.trace(ivarName,val)
     
@@ -196,8 +207,6 @@ class baseConfig:
             
         for ivar in self.ivarsDict.keys():
             self.initIvar(ivar)
-            
-        self.use_plugins = True ### Testing only.
     #@nonl
     #@-node:ekr.20041117065611.2:initIvarsFromSettings
     #@+node:ekr.20041117062717.24:initRawKeysDict
@@ -214,22 +223,12 @@ class baseConfig:
                 print self.rawKeysDict[key]
     #@nonl
     #@-node:ekr.20041117062717.24:initRawKeysDict
-    #@+node:ekr.20041117083202.2:initRecentFiles (revise)
-    if 0:
-        # Something like this must be done.
-        def initRecentFiles (self):
-            try:
-                for i in xrange(10):
-                    f = self.get(section,"file" + str(i),raw=1)
-                    f = g.toUnicode(f,"utf-8")
-                    self.recentFiles.append(f)
-            except: pass
-        
+    #@+node:ekr.20041117083202.2:initRecentFiles
     def initRecentFiles (self):
     
         self.recentFiles = []
     #@nonl
-    #@-node:ekr.20041117083202.2:initRecentFiles (revise)
+    #@-node:ekr.20041117083202.2:initRecentFiles
     #@+node:ekr.20041117083857:initSettingsFiles
     def initSettingsFiles (self):
         
@@ -273,7 +272,7 @@ class baseConfig:
             val,found = self.getValFromDict(d,setting,theType,found)
             if val is not None: return val
                     
-        if 0: # Good for debugging leoSettings.leo.
+        if 1: # Good for debugging leoSettings.leo.
             # Don't warn if None was specified.
             if not found and self.inited:
                 g.trace("Not found:",setting)
@@ -283,7 +282,7 @@ class baseConfig:
     #@+node:ekr.20041121143823:getValFromDict
     def getValFromDict (self,d,setting,requestedType,found):
     
-        data = d.get(self.canonicalizeSettingName(setting))
+        data = d.get(self.munge(setting))
         if data:
             found = True
             if len(data) == 2:
@@ -319,10 +318,11 @@ class baseConfig:
                     #@-node:ekr.20041122164849.1:<< give warning the first time (setting,dType) is seen >>
                     #@nl
             if val not in (u'None',u'none','None','none','',None):
+                # g.trace(setting,val)
                 return val,found
-    
+                
+        # Do NOT warn if not found here.  It may be in another dict.
         return None,found
-    #@nonl
     #@-node:ekr.20041121143823:getValFromDict
     #@-node:ekr.20041117083141:get & allies
     #@+node:ekr.20041117081009.3:getBool
@@ -563,7 +563,7 @@ class baseConfig:
         frame.log.enable(False)
         g.app.setLog(frame.log,"openWithFileName")
         g.app.lockLog()
-        frame.c.fileCommands.open(theFile,path) # closes theFile.
+        frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False) # closes theFile.
         g.app.unlockLog()
         frame.openDirectory = g.os_path_dirname(path)
         g.app.gui = oldGui
@@ -571,15 +571,20 @@ class baseConfig:
     #@nonl
     #@-node:ekr.20041117085625:openSettingsFile
     #@+node:ekr.20041120064303:readSettingsFiles
-    def readSettingsFiles (self):
+    def readSettingsFiles (self,fileName):
         
         # Init settings from leoSettings.leo files.
-        for path in (self.globalConfigFile, self.homeFile):
+        for path,setOptionsFlag in (
+            (self.globalConfigFile,False),
+            (self.homeFile,False),
+            (fileName,True),
+        ):
             if path:
-                g.es("reading settings in %s" % path,color="blue")
+                if 1: # A print statement here is clearest.
+                    print "reading settings in %s" % path
                 c = self.openSettingsFile(path)
                 if c:
-                    d = self.readSettings(c,settingsFile=True)
+                    d = self.readSettings(c)
                     if d:
                         if 0:
                             #@                        << print d >>
@@ -594,11 +599,14 @@ class baseConfig:
                             #@nonl
                             #@-node:ekr.20041120113116:<< print d >>
                             #@nl
-                        self.dictList.insert(0,d)
+                        if setOptionsFlag:
+                            self.localOptionsDict[c] = d
+                        else:
+                            self.dictList.insert(0,d)
                     else:
                         g.es("No @settings tree in %s",color="red")
                     g.app.destroyWindow(c.frame)
-                    
+    
         self.inited = True
     #@nonl
     #@-node:ekr.20041120064303:readSettingsFiles
@@ -606,35 +614,35 @@ class baseConfig:
     # Called to read all leoSettings.leo file.
     # Also called when opening an .leo file to read @settings tree.
     
-    def readSettings (self,c,settingsFile=True):
+    def readSettings (self,c):
         
         """Read settings from a file that may contain an @settings tree."""
         
-        # g.trace(c)
+        # g.trace(c.mFileName)
         
         parser = settingsTreeParser(c)
         d = parser.traverse()
-        
-        if not settingsFile:
-            # g.trace("local settings:",d)
-            self.localOptionsDict[c] = d
     
         return d
     #@nonl
     #@-node:ekr.20041117083857.1:readSettings
     #@-node:ekr.20041117093246:Scanning @settings
     #@+node:ekr.20041123084849:Utilities (config)
-    #@+node:ekr.20041123070429:canonicalizeSettingName
+    #@+node:ekr.20041123070429:canonicalizeSettingName (munge)
     def canonicalizeSettingName (self,name):
         
-        if name:
-            name = name.lower()
-            name = name.replace('-','')
-            return name
-        else:
+        if name is None:
             return None
+    
+        name = name.lower()
+        for ch in ('-','_',' ','\n'):
+            name = name.replace(ch,'')
+            
+        return g.choose(name,name,None)
+        
+    munge = canonicalizeSettingName
     #@nonl
-    #@-node:ekr.20041123070429:canonicalizeSettingName
+    #@-node:ekr.20041123070429:canonicalizeSettingName (munge)
     #@+node:ekr.20041120074536:settingsRoot
     def settingsRoot (self,c):
     
@@ -905,6 +913,12 @@ class parserBaseClass:
     #@nonl
     #@-node:ekr.20041122095745:doType
     #@-node:ekr.20041120094940:kind handlers
+    #@+node:ekr.20041124063257:munge
+    def munge(self,s):
+        
+        return g.app.config.canonicalizeSettingName(s)
+    #@nonl
+    #@-node:ekr.20041124063257:munge
     #@+node:ekr.20041119204700.2:oops
     def oops (self):
         print ("parserBaseClass oops:",
@@ -914,23 +928,23 @@ class parserBaseClass:
     #@+node:ekr.20041119205148:parseHeadline
     def parseHeadline (self,s):
         
-        """Return the kind of @settings node indicated by p's headline."""
-        
+        """Parse a headline of the form @kind:name=val
+        Return (kind,name,val)."""
+    
         kind = name = val = None
     
         if g.match(s,0,'@'):
             i = g.skip_id(s,1,chars='-')
             kind = s[1:i]
-            
             if kind:
-                i = g.skip_ws(s,i)
-                j = g.skip_id(s,i)
-                name = s[i:j]
-                if name:
-                    i = g.skip_ws(s,j)
-                    if g.match(s,i,'='):
-                        i = g.skip_ws(s,i+1)
-                        val = s[i:]
+                # name is everything up to '='
+                j = s.find('=',i)
+                if j == -1:
+                    name = self.munge(s[i:])
+                else:
+                    name = self.munge(s[i:j])
+                    # val is everything after the '='
+                    val = s[j+1:].strip()
     
         # g.trace("%50s %10s %s" %(name,kind,val))
         return kind,name,val
@@ -999,21 +1013,25 @@ class parserBaseClass:
         
         c = self.c
         
-        # g.trace("%10s %15s %s" %(kind,val,name))
+        # g.trace("settingsParser %10s %15s %s" %(kind,val,name))
         
         d = self.settingsDict
     
-        data = d.get(name)
+        data = d.get(self.munge(name))
         if data:
-            if len(data) == 2:
-                path2 = None ; theType2,val2 = data
-            else:
-                path2,theType2,val2 = data
+            if len(data) == 2: path2 = None
+            else: path2 = data[0]
             if c.mFileName != path2:
                 g.es("over-riding setting: %s from %s" % (name,path2))
     
         # N.B.  We can't use c here: it may not exist later.
-        d[name] = c.mFileName,kind,val
+        d[self.munge(name)] = c.mFileName,kind,val
+        
+        data = g.app.config.ivarsDict.get(self.munge(name))
+        if data:
+            ivarName = data[0]
+            # g.trace("g.app.%s = %s" % (ivarName,val))
+            setattr(g.app.config,ivarName,val)
     #@nonl
     #@-node:ekr.20041120094940.9:set (settingsParser)
     #@+node:ekr.20041119204700.1:traverse

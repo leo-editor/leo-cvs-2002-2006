@@ -559,7 +559,7 @@ class baseFileCommands:
     #@+node:ekr.20031218072017.1553:getLeoFile
     # The caller should enclose this in begin/endUpdate.
     
-    def getLeoFile (self,fileName,atFileNodesFlag=True):
+    def getLeoFile (self,fileName,readAtFileNodesFlag=True):
     
         c = self.c
         c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
@@ -622,7 +622,9 @@ class baseFileCommands:
     
         c.frame.tree.redraw_now(scroll=False)
         
-        if ok and atFileNodesFlag:
+        # g.trace(readAtFileNodesFlag,c.mFileName)
+        
+        if ok and readAtFileNodesFlag:
             c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
     
         if not c.currentPosition():
@@ -1243,49 +1245,8 @@ class baseFileCommands:
         c.frame.body.onBodyChanged(current,undoType=None)
     #@nonl
     #@-node:ekr.20031218072017.3029:readAtFileNodes
-    #@+node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
-    def readOutlineOnly (self,theFile,fileName):
-    
-        c = self.c
-        # Read the entire file into the buffer
-        self.fileBuffer = theFile.read() ; theFile.close()
-        self.fileIndex = 0
-        #@    << Set the default directory >>
-        #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
-        #@+at 
-        #@nonl
-        # The most natural default directory is the directory containing the 
-        # .leo file that we are about to open.  If the user has specified the 
-        # "Default Directory" preference that will over-ride what we are about 
-        # to set.
-        #@-at
-        #@@c
-        
-        theDir = g.os_path_dirname(fileName)
-        
-        if len(theDir) > 0:
-            c.openDirectory = theDir
-        #@nonl
-        #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
-        #@nl
-        c.beginUpdate()
-        ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=False)
-        c.endUpdate()
-        c.frame.deiconify()
-        vflag,junk,secondary_ratio = self.frame.initialRatios()
-        c.frame.resizePanesToRatio(ratio,secondary_ratio)
-        if 0: # 1/30/04: this is useless.
-            # This should be done after the pane size has been set.
-            if self.topPosition:
-                c.frame.tree.setTopPosition(self.topPosition)
-                c.redraw()
-        # delete the file buffer
-        self.fileBuffer = ""
-        return ok
-    #@nonl
-    #@-node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
-    #@+node:ekr.20031218072017.2297:fileCommands.open
-    def open(self,theFile,fileName):
+    #@+node:ekr.20031218072017.2297:open
+    def open(self,theFile,fileName,readAtFileNodesFlag=True):
     
         c = self.c ; frame = c.frame
         # Read the entire file into the buffer
@@ -1311,7 +1272,7 @@ class baseFileCommands:
         #@nl
         self.topPosition = None
         c.beginUpdate()
-        ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=True)
+        ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag)
         frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
         if 0: # 1/30/04: this is useless.
             if self.topPosition: 
@@ -1321,7 +1282,48 @@ class baseFileCommands:
         self.fileBuffer = ""
         return ok
     #@nonl
-    #@-node:ekr.20031218072017.2297:fileCommands.open
+    #@-node:ekr.20031218072017.2297:open
+    #@+node:ekr.20031218072017.3030:readOutlineOnly
+    def readOutlineOnly (self,theFile,fileName):
+    
+        c = self.c
+        # Read the entire file into the buffer
+        self.fileBuffer = theFile.read() ; theFile.close()
+        self.fileIndex = 0
+        #@    << Set the default directory >>
+        #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+        #@+at 
+        #@nonl
+        # The most natural default directory is the directory containing the 
+        # .leo file that we are about to open.  If the user has specified the 
+        # "Default Directory" preference that will over-ride what we are about 
+        # to set.
+        #@-at
+        #@@c
+        
+        theDir = g.os_path_dirname(fileName)
+        
+        if len(theDir) > 0:
+            c.openDirectory = theDir
+        #@nonl
+        #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+        #@nl
+        c.beginUpdate()
+        ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=False)
+        c.endUpdate()
+        c.frame.deiconify()
+        vflag,junk,secondary_ratio = self.frame.initialRatios()
+        c.frame.resizePanesToRatio(ratio,secondary_ratio)
+        if 0: # 1/30/04: this is useless.
+            # This should be done after the pane size has been set.
+            if self.topPosition:
+                c.frame.tree.setTopPosition(self.topPosition)
+                c.redraw()
+        # delete the file buffer
+        self.fileBuffer = ""
+        return ok
+    #@nonl
+    #@-node:ekr.20031218072017.3030:readOutlineOnly
     #@+node:ekr.20031218072017.3031:xmlUnescape
     def xmlUnescape(self,s):
     

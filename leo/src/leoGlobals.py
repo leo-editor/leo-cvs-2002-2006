@@ -571,7 +571,7 @@ def scanDirectives(c,p=None):
 #@-node:ekr.20031218072017.1391:scanDirectives (utils)
 #@-node:ekr.20031218072017.1380:Directive utils...
 #@+node:ekr.20031218072017.2052:g.openWithFileName
-def openWithFileName(fileName,old_c,enableLog=True):
+def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     
     """Create a Leo Frame for the indicated fileName if the file exists."""
 
@@ -607,9 +607,8 @@ def openWithFileName(fileName,old_c,enableLog=True):
             if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
                 app.setLog(frame.log,"openWithFileName")
                 app.lockLog()
-                frame.c.fileCommands.open(theFile,fileName) # closes file.
+                frame.c.fileCommands.open(theFile,fileName,readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
                 app.unlockLog()
-                g.app.config.readSettings(c,settingsFile=False)
                 for frame in g.app.windowList:
                     # The recent files list has been updated by menu.updateRecentFiles.
                     frame.c.config.setRecentFiles(frame.c.recentFiles)

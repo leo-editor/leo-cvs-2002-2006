@@ -7738,8 +7738,8 @@ if headString:
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-#@+node:ekr.20031218072017.2297:fileCommands.open
-def open(self,theFile,fileName):
+#@+node:ekr.20031218072017.2297:open
+def open(self,theFile,fileName,readAtFileNodesFlag=True):
 
     c = self.c ; frame = c.frame
     # Read the entire file into the buffer
@@ -7748,7 +7748,7 @@ def open(self,theFile,fileName):
     << Set the default directory >>
     self.topPosition = None
     c.beginUpdate()
-    ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=True)
+    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag)
     frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
     if 0: # 1/30/04: this is useless.
         if self.topPosition: 
@@ -7768,8 +7768,8 @@ if len(theDir) > 0:
     c.openDirectory = theDir
 #@nonl
 #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
-#@-node:ekr.20031218072017.2297:fileCommands.open
-#@+node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
+#@-node:ekr.20031218072017.2297:open
+#@+node:ekr.20031218072017.3030:readOutlineOnly
 def readOutlineOnly (self,theFile,fileName):
 
     c = self.c
@@ -7778,7 +7778,7 @@ def readOutlineOnly (self,theFile,fileName):
     self.fileIndex = 0
     << Set the default directory >>
     c.beginUpdate()
-    ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=False)
+    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=False)
     c.endUpdate()
     c.frame.deiconify()
     vflag,junk,secondary_ratio = self.frame.initialRatios()
@@ -7802,7 +7802,7 @@ if len(theDir) > 0:
     c.openDirectory = theDir
 #@nonl
 #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
-#@-node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
+#@-node:ekr.20031218072017.3030:readOutlineOnly
 #@-node:ekr.20040129133809.8:top node not saved
 #@-node:ekr.20031218072017.663:Bug: can't be fixed
 #@+node:ekr.20040105064959:Bugs: can wait
