@@ -1125,6 +1125,7 @@ class colorizer:
 				body.tag_configure("latexModeKeyword",foreground="blue",background="seashell1")
 				body.tag_configure("latexBackground",foreground="black",background="white")
 				body.tag_configure("latexKeyword",foreground="blue",background="white")
+			
 			#@-body
 			#@-node:1::<< configure tags >>
 
@@ -1436,7 +1437,23 @@ class colorizer:
 	
 		return state
 	#@-body
-	#@+node:1::continueBlockComment
+	#@+node:1::doWikiText
+	#@+body
+	def doWikiText (self,s,i,defaultTag):
+	
+		j = s.find("__",i) ; k = -1
+		if j > -1:
+			k = s.find("__",j+2)
+		if k > -1:
+			self.tag("string",i,k)
+			self.tag("elide",j,j+2)
+			self.tag("elide",k,k+2)
+			self.tag("bold",j+2,k)
+		else:
+			self.tag("string",i,"end")
+	#@-body
+	#@-node:1::doWikiText
+	#@+node:2::continueBlockComment
 	#@+body
 	def continueBlockComment (self,s,i):
 		
@@ -1460,8 +1477,8 @@ class colorizer:
 			i = j + k
 			return i,"normal"
 	#@-body
-	#@-node:1::continueBlockComment
-	#@+node:2::continueSingle/DoubleString
+	#@-node:2::continueBlockComment
+	#@+node:3::continueSingle/DoubleString
 	#@+body
 	def continueDoubleString (self,s,i):
 		return self.continueString(s,i,'"',"doubleString")
@@ -1489,8 +1506,8 @@ class colorizer:
 		state = choose(continueFlag,continueState,"normal")
 		return i,state
 	#@-body
-	#@-node:2::continueSingle/DoubleString
-	#@+node:3::continueDocPart
+	#@-node:3::continueSingle/DoubleString
+	#@+node:4::continueDocPart
 	#@+body
 	def continueDocPart (self,s,i):
 		
@@ -1566,8 +1583,8 @@ class colorizer:
 
 		return i,state
 	#@-body
-	#@-node:3::continueDocPart
-	#@+node:4::continueNocolor
+	#@-node:4::continueDocPart
+	#@+node:5::continueNocolor
 	#@+body
 	def continueNocolor (self,s,i):
 	
@@ -1593,8 +1610,8 @@ class colorizer:
 				i += 1
 			return i,"nocolor"
 	#@-body
-	#@-node:4::continueNocolor
-	#@+node:5::continueSingle/DoublePythonString
+	#@-node:5::continueNocolor
+	#@+node:6::continueSingle/DoublePythonString
 	#@+body
 	def continueDoublePythonString (self,s,i):
 		j = s.find('"""',i)
@@ -1615,8 +1632,8 @@ class colorizer:
 			self.tag("string",i,j+3)
 			return j+3,"normal"
 	#@-body
-	#@-node:5::continueSingle/DoublePythonString
-	#@+node:6::doAtKeyword: NOT for cweb keywords
+	#@-node:6::continueSingle/DoublePythonString
+	#@+node:7::doAtKeyword: NOT for cweb keywords
 	#@+body
 	# Handles non-cweb keyword.
 	
@@ -1645,8 +1662,8 @@ class colorizer:
 		else:
 			return j,"normal"
 	#@-body
-	#@-node:6::doAtKeyword: NOT for cweb keywords
-	#@+node:7::doLatexLine
+	#@-node:7::doAtKeyword: NOT for cweb keywords
+	#@+node:8::doLatexLine
 	#@+body
 	# Colorize the line from i to j.
 	
@@ -1663,8 +1680,8 @@ class colorizer:
 				self.tag("latexModeBackground",i,i+1)
 				i += 1
 	#@-body
-	#@-node:7::doLatexLine
-	#@+node:8::doNormalState
+	#@-node:8::doLatexLine
+	#@+node:9::doNormalState
 	#@+body
 	## To do: rewrite using dynamically generated tables.
 	
@@ -1986,8 +2003,8 @@ class colorizer:
 	#@-node:2::Vaid only in latex mode
 	#@+node:3::Valid when not in latex_mode
 	#@-node:3::Valid when not in latex_mode
-	#@-node:8::doNormalState
-	#@+node:9::doNowebSecRef
+	#@-node:9::doNormalState
+	#@+node:10::doNowebSecRef
 	#@+body
 	def doNowebSecRef (self,s,i):
 	
@@ -2031,8 +2048,8 @@ class colorizer:
 			self.tag("nameBrackets",j,j+k)
 			return j + k
 	#@-body
-	#@-node:9::doNowebSecRef
-	#@+node:10::removeAllTags & removeTagsFromLines
+	#@-node:10::doNowebSecRef
+	#@+node:11::removeAllTags & removeTagsFromLines
 	#@+body
 	def removeAllTags (self):
 	
@@ -2049,7 +2066,7 @@ class colorizer:
 			self.body.tag_remove(tag,self.index(0),self.index("end"))
 	
 	#@-body
-	#@-node:10::removeAllTags & removeTagsFromLines
+	#@-node:11::removeAllTags & removeTagsFromLines
 	#@-node:3::colorizeLine & allies
 	#@-node:4::colorizeAnyLanguage & allies
 	#@+node:5::scanColorDirectives
