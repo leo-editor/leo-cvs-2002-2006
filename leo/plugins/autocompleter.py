@@ -34,17 +34,17 @@ import threading
 try:
     import Pmw 
 except ImportError:
-    Pmw = g.cantImport("Pmw")
+    Pmw = g.cantImport("Pmw",__name__)
 
 try:
     import Tkinter as Tk 
 except ImportError:
-    Tk = g.cantImport("Tk")
+    Tk = g.cantImport("Tk",__name__)
     
 try:
     import weakref 
 except ImportError:
-    weakref = g.cantImport("weakref")
+    weakref = g.cantImport("weakref",__name__)
 #@nonl
 #@-node:ekr.20041017043622.26:<< imports >>
 #@nl

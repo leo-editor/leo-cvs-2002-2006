@@ -40,12 +40,12 @@ import sys
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tkinter")
+    Tk = g.cantImport("Tkinter",__name__)
     
 try:
     import Pmw
 except ImportError:
-    Tk = g.cantImport("Pmw")
+    Tk = g.cantImport("Pmw",__name__)
 
 import fnmatch
 import re

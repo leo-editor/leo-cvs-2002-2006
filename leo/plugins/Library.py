@@ -59,17 +59,17 @@ import weakref
 try:
     import Pmw
 except ImportError:
-    Pmw = g.cantImport("Pmw")
+    Pmw = g.cantImport("Pmw",__name__)
 
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk")
+    Tk = g.cantImport("Tk",__name__)
     
 try:
     import zlib
 except ImportError:
-    zlib = g.cantImport("zlib")
+    zlib = g.cantImport("zlib",__name__)
 #@nonl
 #@-node:ekr.20041003172238.3:<< imports >>
 #@nl

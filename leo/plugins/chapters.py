@@ -27,12 +27,12 @@ try:
     import tkFileDialog
     import tkFont
 except ImportError:
-    Tk = g.cantImport("Tk")
+    Tk = g.cantImport("Tk",__name__)
 
 try:
     import Pmw
 except:
-    Pmw = g.cantImport("Pmw" )
+    Pmw = g.cantImport("Pmw",__name__)
 
 import zipfile
 import time

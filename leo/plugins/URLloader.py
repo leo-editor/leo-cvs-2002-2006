@@ -29,17 +29,17 @@ import weakref
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk")
+    Tk = g.cantImport("Tk",__name__)
 
 try:
     import Pmw
 except ImportError:
-    Pmw = g.cantImport("Pmw")
+    Pmw = g.cantImport("Pmw",__name__)
 
 try:
     import TabbedLog
 except ImportError:
-    TabbedLog = g.cantImport("TabbedLog")
+    TabbedLog = g.cantImport("TabbedLog",__name__)
 #@nonl
 #@-node:ekr.20040831115918.1:<< URLloader imports >>
 #@nl

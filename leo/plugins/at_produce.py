@@ -54,12 +54,12 @@ import time
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk")
+    Tk = g.cantImport("Tk",__name__)
     
 try:
     import weakref
 except ImportError:
-    weakref = g.cantImport("weakref")
+    weakref = g.cantImport("weakref",__name__)
 #@-node:ekr.20040915085715:<< imports >>
 #@nl
 

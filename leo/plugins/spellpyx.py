@@ -53,11 +53,11 @@ import leoTkinterFind
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk")
+    Tk = g.cantImport("Tk",__name__)
   
 aspell = g.importFromPath("aspell",aspell_dir,verbose=False)
 if not aspell:
-    g.cantImport("aspell from %s" % aspell_dir)
+    g.cantImport("aspell",__name__)
     
 import ConfigParser
 import os

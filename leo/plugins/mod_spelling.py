@@ -16,7 +16,7 @@ import leoPlugins
 import leoTkinterFind
 
 try: import Tkinter as Tk
-except ImportError: Tk = g.cantImport("Tkinter")
+except ImportError: Tk = g.cantImport("Tkinter",__name__)
 
 import ConfigParser
 import os

@@ -13,7 +13,7 @@ import leoPlugins
 try:
     import Tkinter as Tk
 except  ImportError:
-    Tk = g.cantImport("Tk")
+    Tk = g.cantImport("Tk",__name__)
 #@nonl
 #@-node:ekr.20041002154511:<< imports >>
 #@nl

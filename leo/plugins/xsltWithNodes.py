@@ -29,12 +29,12 @@ try:
     from Ft.Xml import InputSource 
     from Ft.Xml.Xslt.Processor import Processor
 except ImportError:
-    Ft = g.cantImport("Ft")
+    Ft = g.cantImport("Ft",__name__)
 
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk")
+    Tk = g.cantImport("Tk",__name__)
 
 import weakref 
 import cStringIO 

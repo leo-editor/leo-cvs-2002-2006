@@ -19,22 +19,22 @@ import leoNodes
 try:
     import Pmw
 except ImportError:
-    Pmw = g.cantImport("Pmw")
+    Pmw = g.cantImport("Pmw",__name__)
 
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk")
+    Tk = g.cantImport("Tk",__name__)
     
 try:
     import tktable as tktab
 except ImportError:
-    tktab = g.cantImport("tktable")
+    tktab = g.cantImport("tktable",__name__)
 
 try:
     import weakref
 except ImportError:
-    weakref = g.cantImport("weakref")
+    weakref = g.cantImport("weakref",__name__)
 
 import csv
 import cStringIO

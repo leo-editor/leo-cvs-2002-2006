@@ -5,20 +5,29 @@
 #@@language python
 #@@tabwidth -4
 
+#@<< imports >>
+#@+node:ekr.20041019075507:<< imports >>
+
 import leoGlobals as g
 
-try: import Tkinter as Tk
-except ImportError: Tk = g.cantImport("Tk")
+try:
+    import Tkinter as Tk
+except ImportError:
+    Tk = g.cantImport("Tk",__name__)
 
-try: import Pmw as P
-except ImportError: P = g.cantImport("Pmw")
+try:
+    import Pmw as Pmw
+except ImportError:
+    Pmw = g.cantImport("Pmw",__name__)
 
 import sys
 import ConfigParser as cp
 import sets
 import os
+#@-node:ekr.20041019075507:<< imports >>
+#@nl
 
-if Tk and P and not g.app.unitTesting:
+if Tk and Pmw and not g.app.unitTesting:
 
     if 1: # Standalone doesn't work well
         fileName = r"c:\prog\leoCVS\leo\config\leoConfig.txt"
@@ -37,8 +46,8 @@ if Tk and P and not g.app.unitTesting:
         b.pack( side = 'left' )
         b2 = Tk.Button( tlf ,text = 'Quit' , command = sys.exit ) 
         b2.pack( side = 'right' )
-        P.initialise( tl )
-        nb = P.NoteBook( tl )
+        Pmw.initialise( tl )
+        nb = Pmw.NoteBook( tl )
         nb.pack( fill = 'both', expand = 1 )
         cfp = cp.ConfigParser()
         cfp.read(fileName) # sys.argv[ 1 ] )
@@ -57,7 +66,7 @@ if Tk and P and not g.app.unitTesting:
         
         for z in cfp.sections():
             i = nb.add( z )
-            sf = P.ScrolledFrame( i )
+            sf = Pmw.ScrolledFrame( i )
             sf.pack( fill = 'both', expand = 1 )
             c = sf.interior()
             dirties[ z ] = sets.Set()
@@ -65,7 +74,7 @@ if Tk and P and not g.app.unitTesting:
             opts.sort()
             for x in opts:
                 val = cfp.get( z, x )
-                ef = P.EntryField( c , labelpos = 'w', label_text = x, value = val )
+                ef = Pmw.EntryField( c , labelpos = 'w', label_text = x, value = val )
                 ef.component( 'entry' ).configure(background='white',foreground= 'blue')
                 def markAsDirty( section = z, ef = ef):
                     s = dirties[ section ]
