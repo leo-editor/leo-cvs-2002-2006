@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4403" clone_windows="0"/>
 <globals body_outline_ratio="0.6473214285714286">
-	<global_window_position top="19" left="249" height="896" width="975"/>
+	<global_window_position top="14" left="275" height="896" width="975"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2718,7 +2718,9 @@
 <v t="ekr.20031218072017.1757"><vh>(Clone mark bug)</vh>
 <v t="ekr.20031218072017.1758"><vh>Report</vh></v>
 <v t="ekr.20031218072017.1759"><vh>Insert, Delete &amp; Clone (Commands)</vh>
-<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh></v>
+<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh>
+<v t="ekr.20040311025616"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20031218072017.1193"><vh>c.deleteOutline</vh></v>
 <v t="ekr.20031218072017.1761"><vh>c.insertHeadline</vh></v>
 <v t="ekr.20031218072017.1762"><vh>c.clone</vh></v>
@@ -2727,7 +2729,7 @@
 <v t="ekr.20031218072017.1765"><vh>c.validateOutline</vh></v>
 </v>
 <v t="ekr.20031218072017.1766"><vh>Move... (Commands)</vh>
-<v t="ekr.20031218072017.1767"><vh>demote TEST</vh></v>
+<v t="ekr.20031218072017.1767"><vh>demote</vh></v>
 <v t="ekr.20031218072017.1768"><vh>moveOutlineDown</vh>
 <v t="ekr.20031218072017.1769"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
 </v>
@@ -2736,7 +2738,7 @@
 <v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
 <v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.1774"><vh>promote TEST</vh></v>
+<v t="ekr.20031218072017.1774"><vh>promote</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.1775"><vh>(Drag settings)</vh>
@@ -3256,7 +3258,7 @@
 </v>
 <v t="ekr.20031218072017.2048"><vh>v.isAncestorOf</vh></v>
 <v t="ekr.20031218072017.1766"><vh>Move... (Commands)</vh>
-<v t="ekr.20031218072017.1767"><vh>demote TEST</vh></v>
+<v t="ekr.20031218072017.1767"><vh>demote</vh></v>
 <v t="ekr.20031218072017.1768"><vh>moveOutlineDown</vh>
 <v t="ekr.20031218072017.1769"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
 </v>
@@ -3265,7 +3267,7 @@
 <v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
 <v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.1774"><vh>promote TEST</vh></v>
+<v t="ekr.20031218072017.1774"><vh>promote</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2049"><vh>(Fixed bugs in Extract commands)</vh></v>
@@ -4429,7 +4431,7 @@
 <v t="ekr.20031218072017.2948"><vh>c.dragCloneAfter</vh></v>
 </v>
 <v t="ekr.20031218072017.1766"><vh>Move... (Commands)</vh>
-<v t="ekr.20031218072017.1767"><vh>demote TEST</vh></v>
+<v t="ekr.20031218072017.1767"><vh>demote</vh></v>
 <v t="ekr.20031218072017.1768"><vh>moveOutlineDown</vh>
 <v t="ekr.20031218072017.1769"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
 </v>
@@ -4438,10 +4440,12 @@
 <v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
 <v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.1774"><vh>promote TEST</vh></v>
+<v t="ekr.20031218072017.1774"><vh>promote</vh></v>
 </v>
 <v t="ekr.20031218072017.1759"><vh>Insert, Delete &amp; Clone (Commands)</vh>
-<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh></v>
+<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh>
+<v t="ekr.20040311025616"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20031218072017.1193"><vh>c.deleteOutline</vh></v>
 <v t="ekr.20031218072017.1761"><vh>c.insertHeadline</vh></v>
 <v t="ekr.20031218072017.1762"><vh>c.clone</vh></v>
@@ -4576,7 +4580,9 @@
 </v>
 <v t="ekr.20031218072017.2028"><vh>Hoist &amp; dehoist &amp; enablers</vh></v>
 <v t="ekr.20031218072017.1759"><vh>Insert, Delete &amp; Clone (Commands)</vh>
-<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh></v>
+<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh>
+<v t="ekr.20040311025616"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20031218072017.1193"><vh>c.deleteOutline</vh></v>
 <v t="ekr.20031218072017.1761"><vh>c.insertHeadline</vh></v>
 <v t="ekr.20031218072017.1762"><vh>c.clone</vh></v>
@@ -4706,7 +4712,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040228154544"><vh>(Transition to 4.2)</vh>
+<v t="ekr.20040228154544" a="TV"><vh>(Transition to 4.2)</vh>
 <v t="ekr.20040117181936"><vh>To do</vh>
 <v t="ekr.20040309090503"><vh>Convert c.currentVnode to c.currentPosition</vh></v>
 <v t="ekr.20040309092859"><vh>Eliminate the need for v = porv.v</vh></v>
@@ -4715,6 +4721,7 @@
 <v t="ekr.20040308151706"><vh>Fix and test the script to replace x by g.x</vh></v>
 <v t="ekr.20040309091227"><vh>Scan for g.sharedNodes &amp; eliminate DO THIS LAST</vh></v>
 <v t="ekr.20040310100905"><vh>Bugs and feature requests</vh>
+<v t="ekr.20040311022923"><vh>Make sentinel name in @-node optional</vh></v>
 <v t="ekr.20040310091144"><vh>Window position: possible bug</vh></v>
 <v t="ekr.20040310092400"><vh>Allow &lt;/leo_header&gt;</vh></v>
 <v t="ekr.20040310092400.1"><vh>Use calltips in outline pane</vh></v>
@@ -4907,6 +4914,23 @@
 </v>
 <v t="ekr.20031218072017.3612"><vh>getBead, peekBead, setBead</vh></v>
 <v t="ekr.20031218072017.3615"><vh>setUndoParams</vh></v>
+</v>
+<v t="ekr.20040310104639"><vh>(Get move working)</vh>
+<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh>
+<v t="ekr.20040311025616"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1766"><vh>Move... (Commands)</vh>
+<v t="ekr.20031218072017.1767"><vh>demote</vh></v>
+<v t="ekr.20031218072017.1768"><vh>moveOutlineDown</vh>
+<v t="ekr.20031218072017.1769"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1770"><vh>moveOutlineLeft</vh></v>
+<v t="ekr.20031218072017.1771"><vh>moveOutlineRight</vh></v>
+<v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
+<v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1774"><vh>promote</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20040308151706.1"><vh>4.2 Code</vh>
@@ -6009,7 +6033,7 @@
 <v t="ekr.20031218072017.2221"><vh>hyperlink callbacks...</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2810" tnodeList="ekr.20031218072017.2810,ekr.20031218072017.2812,ekr.20031218072017.2813,ekr.20031218072017.2814,ekr.20031218072017.2815,ekr.20031218072017.2816,ekr.20040301201418,ekr.20040301213056,ekr.20031218072017.2817,ekr.20031218072017.2582,ekr.20031218072017.1623,ekr.20031218072017.2821,ekr.20031218072017.2822,ekr.20031218072017.2823,ekr.20031218072017.2824,ekr.20031218072017.2825,ekr.20031218072017.2826,ekr.20031218072017.2827,ekr.20031218072017.2828,ekr.20031218072017.2829,ekr.20031218072017.2830,ekr.20031218072017.2831,ekr.20031218072017.2832,ekr.20031218072017.2833,ekr.20031218072017.2834,ekr.20031218072017.2835,ekr.20031218072017.2836,ekr.20031218072017.2837,ekr.20031218072017.2080,ekr.20031218072017.2081,ekr.20031218072017.2082,ekr.20031218072017.2083,ekr.20031218072017.2839,ekr.20031218072017.1839,ekr.20031218072017.1809,ekr.20031218072017.2014,ekr.20031218072017.2842,ekr.20031218072017.2843,ekr.20031218072017.2844,ekr.20031218072017.2846,ekr.20031218072017.2847,ekr.20031218072017.2848,ekr.20031218072017.2850,ekr.20031218072017.2851,ekr.20031218072017.2852,ekr.20031218072017.2853,ekr.20031218072017.2854,ekr.20031218072017.2855,ekr.20031218072017.2856,ekr.20031218072017.2857,ekr.20031218072017.2858,ekr.20031218072017.2859,ekr.20031218072017.2860,ekr.20031218072017.2863,ekr.20031218072017.2140,ekr.20031218072017.2141,ekr.20031218072017.2142,ekr.20031218072017.2143,ekr.20031218072017.2864,ekr.20031218072017.2865,ekr.20031218072017.2866,ekr.20031218072017.2867,ekr.20031218072017.2868,ekr.20031218072017.2869,ekr.20031218072017.2870,ekr.20031218072017.2871,ekr.20031218072017.2872,ekr.20031218072017.2873,ekr.20031218072017.2874,ekr.20031218072017.2875,ekr.20031218072017.2876,ekr.20031218072017.2877,ekr.20031218072017.2878,ekr.20031218072017.2879,ekr.20031218072017.2880,ekr.20031218072017.2881,ekr.20031218072017.2882,ekr.20031218072017.2088,ekr.20031218072017.2090,ekr.20031218072017.2883,ekr.20031218072017.2086,ekr.20031218072017.1704,ekr.20031218072017.1705,ekr.20031218072017.1821,ekr.20031218072017.1822,ekr.20031218072017.1823,ekr.20031218072017.1824,ekr.20031218072017.1706,ekr.20031218072017.1707,ekr.20031218072017.1708,ekr.20031218072017.1709,ekr.20031218072017.1710,ekr.20031218072017.1711,ekr.20031218072017.1825,ekr.20031218072017.1826,ekr.20031218072017.1827,ekr.20031218072017.1828,ekr.20031218072017.1829,ekr.20031218072017.1830,ekr.20031218072017.1831,ekr.20031218072017.1832,ekr.20031218072017.1833,ekr.20031218072017.1834,ekr.20031218072017.1835,ekr.20031218072017.1836,ekr.20031218072017.1837,ekr.20031218072017.1838,ekr.20031218072017.2886,ekr.20031218072017.2290,ekr.20031218072017.2888,ekr.20031218072017.2889,ekr.20031218072017.2890,ekr.20031218072017.2891,ekr.20031218072017.2892,ekr.20031218072017.2893,ekr.20031218072017.1549,ekr.20031218072017.1550,ekr.20031218072017.1551,ekr.20031218072017.2072,ekr.20031218072017.2028,ekr.20031218072017.1760,ekr.20031218072017.1193,ekr.20031218072017.1761,ekr.20031218072017.1762,ekr.20031218072017.1763,ekr.20031218072017.1764,ekr.20031218072017.1765,ekr.20031218072017.1188,ekr.20031218072017.1189,ekr.20031218072017.1190,ekr.20031218072017.2896,ekr.20031218072017.2897,ekr.20031218072017.2900,ekr.20031218072017.2901,ekr.20031218072017.2902,ekr.20031218072017.2903,ekr.20031218072017.2904,ekr.20031218072017.2905,ekr.20031218072017.2906,ekr.20031218072017.2907,ekr.20031218072017.2908,ekr.20031218072017.2910,ekr.20031218072017.2911,ekr.20031218072017.2912,ekr.20031218072017.1628,ekr.20031218072017.1627,ekr.20031218072017.2914,ekr.20031218072017.2915,ekr.20031218072017.2916,ekr.20031218072017.2917,ekr.20031218072017.2918,ekr.20031218072017.2919,ekr.20031218072017.2920,ekr.20031218072017.2921,ekr.20031218072017.2923,ekr.20031218072017.2924,ekr.20031218072017.2925,ekr.20031218072017.2926,ekr.20031218072017.2927,ekr.20031218072017.2928,ekr.20031218072017.2929,ekr.20031218072017.2930,ekr.20031218072017.1767,ekr.20031218072017.1768,ekr.20031218072017.1769,ekr.20031218072017.1770,ekr.20031218072017.1771,ekr.20031218072017.1772,ekr.20031218072017.1773,ekr.20031218072017.1774,ekr.20031218072017.2092,ekr.20031218072017.2932,ekr.20031218072017.2933,ekr.20031218072017.2934,ekr.20031218072017.2936,ekr.20031218072017.2935,ekr.20031218072017.2937,ekr.20031218072017.2939,ekr.20031218072017.2940,ekr.20031218072017.2941,ekr.20031218072017.2942,ekr.20031218072017.2943,ekr.20031218072017.2944,ekr.20031218072017.2353,ekr.20031218072017.2946,ekr.20031218072017.2947,ekr.20031218072017.2948,ekr.20031218072017.2950,ekr.20031218072017.2951,ekr.20031218072017.2952,ekr.20031218072017.2953,ekr.20031218072017.2954,ekr.20040131170659,ekr.20031218072017.2956,ekr.20031218072017.2957,ekr.20031218072017.2958,ekr.20031218072017.2959,ekr.20031218072017.2960,ekr.20031218072017.2961,ekr.20031218072017.2962,ekr.20031218072017.2963,ekr.20031218072017.2964,ekr.20031218072017.2287,ekr.20031218072017.2965,ekr.20031218072017.2966,ekr.20031218072017.2967,ekr.20040303165342,ekr.20031218072017.2968,ekr.20031218072017.2969,ekr.20031218072017.2970,ekr.20031218072017.2971,ekr.20031218072017.2972,ekr.20031218072017.2973,ekr.20031218072017.2974,ekr.20031218072017.2975,ekr.20031218072017.2976,ekr.20031218072017.2977,ekr.20031218072017.2978,ekr.20031218072017.2979,ekr.20031218072017.2980,ekr.20031218072017.2981,ekr.20031218072017.2983,ekr.20031218072017.2984,ekr.20031218072017.2985,ekr.20031218072017.2986,ekr.20031218072017.2987,ekr.20031218072017.2988,ekr.20031218072017.2989,ekr.20031218072017.2991,ekr.20031218072017.2992,ekr.20031218072017.2993,ekr.20031218072017.2994,ekr.20031218072017.2995,ekr.20031218072017.2996,ekr.20031218072017.2997,ekr.20031218072017.2998,ekr.20031218072017.2999,ekr.20031218072017.3000"><vh>@file leoCommands.py</vh>
+<v t="ekr.20031218072017.2810" tnodeList="ekr.20031218072017.2810,ekr.20031218072017.2812,ekr.20031218072017.2813,ekr.20031218072017.2814,ekr.20031218072017.2815,ekr.20031218072017.2816,ekr.20040301201418,ekr.20040301213056,ekr.20031218072017.2817,ekr.20031218072017.2582,ekr.20031218072017.1623,ekr.20031218072017.2821,ekr.20031218072017.2822,ekr.20031218072017.2823,ekr.20031218072017.2824,ekr.20031218072017.2825,ekr.20031218072017.2826,ekr.20031218072017.2827,ekr.20031218072017.2828,ekr.20031218072017.2829,ekr.20031218072017.2830,ekr.20031218072017.2831,ekr.20031218072017.2832,ekr.20031218072017.2833,ekr.20031218072017.2834,ekr.20031218072017.2835,ekr.20031218072017.2836,ekr.20031218072017.2837,ekr.20031218072017.2080,ekr.20031218072017.2081,ekr.20031218072017.2082,ekr.20031218072017.2083,ekr.20031218072017.2839,ekr.20031218072017.1839,ekr.20031218072017.1809,ekr.20031218072017.2014,ekr.20031218072017.2842,ekr.20031218072017.2843,ekr.20031218072017.2844,ekr.20031218072017.2846,ekr.20031218072017.2847,ekr.20031218072017.2848,ekr.20031218072017.2850,ekr.20031218072017.2851,ekr.20031218072017.2852,ekr.20031218072017.2853,ekr.20031218072017.2854,ekr.20031218072017.2855,ekr.20031218072017.2856,ekr.20031218072017.2857,ekr.20031218072017.2858,ekr.20031218072017.2859,ekr.20031218072017.2860,ekr.20031218072017.2863,ekr.20031218072017.2140,ekr.20031218072017.2141,ekr.20031218072017.2142,ekr.20031218072017.2143,ekr.20031218072017.2864,ekr.20031218072017.2865,ekr.20031218072017.2866,ekr.20031218072017.2867,ekr.20031218072017.2868,ekr.20031218072017.2869,ekr.20031218072017.2870,ekr.20031218072017.2871,ekr.20031218072017.2872,ekr.20031218072017.2873,ekr.20031218072017.2874,ekr.20031218072017.2875,ekr.20031218072017.2876,ekr.20031218072017.2877,ekr.20031218072017.2878,ekr.20031218072017.2879,ekr.20031218072017.2880,ekr.20031218072017.2881,ekr.20031218072017.2882,ekr.20031218072017.2088,ekr.20031218072017.2090,ekr.20031218072017.2883,ekr.20031218072017.2086,ekr.20031218072017.1704,ekr.20031218072017.1705,ekr.20031218072017.1821,ekr.20031218072017.1822,ekr.20031218072017.1823,ekr.20031218072017.1824,ekr.20031218072017.1706,ekr.20031218072017.1707,ekr.20031218072017.1708,ekr.20031218072017.1709,ekr.20031218072017.1710,ekr.20031218072017.1711,ekr.20031218072017.1825,ekr.20031218072017.1826,ekr.20031218072017.1827,ekr.20031218072017.1828,ekr.20031218072017.1829,ekr.20031218072017.1830,ekr.20031218072017.1831,ekr.20031218072017.1832,ekr.20031218072017.1833,ekr.20031218072017.1834,ekr.20031218072017.1835,ekr.20031218072017.1836,ekr.20031218072017.1837,ekr.20031218072017.1838,ekr.20031218072017.2886,ekr.20031218072017.2290,ekr.20031218072017.2888,ekr.20031218072017.2889,ekr.20031218072017.2890,ekr.20031218072017.2891,ekr.20031218072017.2892,ekr.20031218072017.2893,ekr.20031218072017.1549,ekr.20031218072017.1550,ekr.20031218072017.1551,ekr.20031218072017.2072,ekr.20031218072017.2028,ekr.20031218072017.1760,ekr.20040311025616,ekr.20031218072017.1193,ekr.20031218072017.1761,ekr.20031218072017.1762,ekr.20031218072017.1763,ekr.20031218072017.1764,ekr.20031218072017.1765,ekr.20031218072017.1188,ekr.20031218072017.1189,ekr.20031218072017.1190,ekr.20031218072017.2896,ekr.20031218072017.2897,ekr.20031218072017.2900,ekr.20031218072017.2901,ekr.20031218072017.2902,ekr.20031218072017.2903,ekr.20031218072017.2904,ekr.20031218072017.2905,ekr.20031218072017.2906,ekr.20031218072017.2907,ekr.20031218072017.2908,ekr.20031218072017.2910,ekr.20031218072017.2911,ekr.20031218072017.2912,ekr.20031218072017.1628,ekr.20031218072017.1627,ekr.20031218072017.2914,ekr.20031218072017.2915,ekr.20031218072017.2916,ekr.20031218072017.2917,ekr.20031218072017.2918,ekr.20031218072017.2919,ekr.20031218072017.2920,ekr.20031218072017.2921,ekr.20031218072017.2923,ekr.20031218072017.2924,ekr.20031218072017.2925,ekr.20031218072017.2926,ekr.20031218072017.2927,ekr.20031218072017.2928,ekr.20031218072017.2929,ekr.20031218072017.2930,ekr.20031218072017.1767,ekr.20031218072017.1768,ekr.20031218072017.1769,ekr.20031218072017.1770,ekr.20031218072017.1771,ekr.20031218072017.1772,ekr.20031218072017.1773,ekr.20031218072017.1774,ekr.20031218072017.2092,ekr.20031218072017.2932,ekr.20031218072017.2933,ekr.20031218072017.2934,ekr.20031218072017.2936,ekr.20031218072017.2935,ekr.20031218072017.2937,ekr.20031218072017.2939,ekr.20031218072017.2940,ekr.20031218072017.2941,ekr.20031218072017.2942,ekr.20031218072017.2943,ekr.20031218072017.2944,ekr.20031218072017.2353,ekr.20031218072017.2946,ekr.20031218072017.2947,ekr.20031218072017.2948,ekr.20031218072017.2950,ekr.20031218072017.2951,ekr.20031218072017.2952,ekr.20031218072017.2953,ekr.20031218072017.2954,ekr.20040131170659,ekr.20031218072017.2956,ekr.20031218072017.2957,ekr.20031218072017.2958,ekr.20031218072017.2959,ekr.20031218072017.2960,ekr.20031218072017.2961,ekr.20031218072017.2962,ekr.20031218072017.2963,ekr.20031218072017.2964,ekr.20031218072017.2287,ekr.20031218072017.2965,ekr.20031218072017.2966,ekr.20031218072017.2967,ekr.20040303165342,ekr.20031218072017.2968,ekr.20031218072017.2969,ekr.20031218072017.2970,ekr.20031218072017.2971,ekr.20031218072017.2972,ekr.20031218072017.2973,ekr.20031218072017.2974,ekr.20031218072017.2975,ekr.20031218072017.2976,ekr.20031218072017.2977,ekr.20031218072017.2978,ekr.20031218072017.2979,ekr.20031218072017.2980,ekr.20031218072017.2981,ekr.20031218072017.2983,ekr.20031218072017.2984,ekr.20031218072017.2985,ekr.20031218072017.2986,ekr.20031218072017.2987,ekr.20031218072017.2988,ekr.20031218072017.2989,ekr.20031218072017.2991,ekr.20031218072017.2992,ekr.20031218072017.2993,ekr.20031218072017.2994,ekr.20031218072017.2995,ekr.20031218072017.2996,ekr.20031218072017.2997,ekr.20031218072017.2998,ekr.20031218072017.2999,ekr.20031218072017.3000"><vh>@file leoCommands.py</vh>
 <v t="ekr.20031218072017.2811"><vh> c.Birth &amp; death</vh>
 <v t="ekr.20031218072017.2812"><vh>c.__init__, initIvars</vh>
 <v t="ekr.20031218072017.2813"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
@@ -6187,7 +6211,9 @@
 <v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh></v>
 <v t="ekr.20031218072017.2028"><vh>Hoist &amp; dehoist &amp; enablers</vh></v>
 <v t="ekr.20031218072017.1759"><vh>Insert, Delete &amp; Clone (Commands)</vh>
-<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh></v>
+<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh>
+<v t="ekr.20040311025616"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20031218072017.1193"><vh>c.deleteOutline</vh></v>
 <v t="ekr.20031218072017.1761"><vh>c.insertHeadline</vh></v>
 <v t="ekr.20031218072017.1762"><vh>c.clone</vh></v>
@@ -6244,7 +6270,7 @@
 <v t="ekr.20031218072017.2930"><vh>unmarkAll</vh></v>
 </v>
 <v t="ekr.20031218072017.1766"><vh>Move... (Commands)</vh>
-<v t="ekr.20031218072017.1767"><vh>demote TEST</vh></v>
+<v t="ekr.20031218072017.1767"><vh>demote</vh></v>
 <v t="ekr.20031218072017.1768"><vh>moveOutlineDown</vh>
 <v t="ekr.20031218072017.1769"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
 </v>
@@ -6253,7 +6279,7 @@
 <v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
 <v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.1774"><vh>promote TEST</vh></v>
+<v t="ekr.20031218072017.1774"><vh>promote</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2931"><vh>Window Menu</vh>
@@ -8568,20 +8594,6 @@
 </v>
 <v t="ekr.20031218072017.1141"><vh>tree.moveUpDown</vh></v>
 </v>
-</v>
-</v>
-<v t="ekr.20040310104639" a="TV"><vh>(Get move working) TEST</vh>
-<v t="ekr.20031218072017.1766"><vh>Move... (Commands)</vh>
-<v t="ekr.20031218072017.1767"><vh>demote TEST</vh></v>
-<v t="ekr.20031218072017.1768"><vh>moveOutlineDown</vh>
-<v t="ekr.20031218072017.1769"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1770"><vh>moveOutlineLeft</vh></v>
-<v t="ekr.20031218072017.1771"><vh>moveOutlineRight</vh></v>
-<v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
-<v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1774"><vh>promote TEST</vh></v>
 </v>
 </v>
 </vnodes>
@@ -29623,39 +29635,30 @@ a clone.)
 --eric k
 </t>
 <t tx="ekr.20031218072017.1759"></t>
-<t tx="ekr.20031218072017.1760"># Returns false if any node of tree is a clone of parent or any of parents ancestors.
-
-def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
-
-	clone_message = "Illegal move or drag: no clone may contain a clone of itself"
-	drag_message  = "Illegal drag: Can't drag a node into its own tree"
-
-	# 10/25/02: Create dictionaries for faster checking.
-	parents = {} ; clones = {}
-	while parent:
-		parents [parent.t] = parent.t
-		if parent.isCloned():
-			clones [parent.t] = parent.t
-		parent = parent.parent()
+<t tx="ekr.20031218072017.1760">def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
 	
-	# 10/25/02: Scan the tree only once.
-	v = root ; next = root.nodeAfterTree()
-	while v and v != next:
-		ct = clones.get(v.t)
-		if ct != None and ct == v.t:
-			if warningFlag:
-				g.alert(clone_message)
-			return false
-		v = v.threadNext()
+	"""Return false if root or any of root's descedents is a clone of
+	parent or any of parents ancestors."""
 
-	pt = parents.get(root.t)
-	if pt == None:
+	message = "Illegal move or drag: no clone may contain a clone of itself"
+
+	# g.trace("root",root,"parent",parent)
+	if g.sharedNodes:
+		clonedTnodes = {}
+		for ancestor in parent.parents_iter(includeSelf=true):
+			if ancestor.isCloned():
+				t = ancestor.v.t
+				clonedTnodes[t] = t
+		if not clonedTnodes:
+			return true
+		for p in root.subtree_iter():
+			if p.isCloned() and clonedTnodes.get(p.v.t):
+				if warningFlag:
+					g.alert(message)
+				return false
 		return true
 	else:
-		if warningFlag:
-			g.alert(drag_message)
-		return false
-</t>
+		&lt;&lt; old code &gt;&gt;</t>
 <t tx="ekr.20031218072017.1761"># Inserts a vnode after the current vnode.  All details are handled by the vnode class.
 
 def insertHeadline (self,op_name="Insert Node"):
@@ -29801,7 +29804,6 @@ def validateOutline (self):
 		child = child.next()
 	c.beginUpdate()
 	if 1: # update range...
-		c.mInhibitOnTreeChanged = true
 		c.endEditing()
 		while porv.hasNext():
 			child = porv.next()
@@ -29810,7 +29812,6 @@ def validateOutline (self):
 		c.selectVnode(porv)
 		porv.setAllAncestorAtFileNodesDirty()
 		c.setChanged(true)
-		c.mInhibitOnTreeChanged = false
 		c.initAllCloneBits()
 	c.endUpdate()
 	c.undoer.setUndoParams("Demote",porv,lastChild=last)
@@ -56191,16 +56192,21 @@ def undoDemote (self):
 		ins = u.porv.copy()
 		last = u.lastChild
 		assert(p.hasFirstChild)
+		child = p.firstChild()
 		c.beginUpdate()
 		if 1: # update...
 			# Do not undemote children up to last.
-			lastSeen = g.choose(last,false,true)
-			for child in p.children_iter():
-				if lastSeen:
-					child.moveAfter(ins)
-					ins = child.copy()
-				elif child == last:
-					lastSeen = true
+			# Do not use an iterator here.
+			if last:
+				while child and child != last:
+					child = child.next()
+				if child:
+					child = child.next()
+			while child:
+				next = child.next()
+				child.moveAfter(ins)
+				ins = child
+				child = next
 			c.selectVnode(p)
 		c.endUpdate()
 	else:
@@ -56211,11 +56217,17 @@ def undoPromote (self):
 	u = self ; c = u.c ; p = u.porv
 
 	if g.sharedNodes:
+		next = p.next()
+		last = u.lastChild
+		assert(next)
 		c.beginUpdate()
 		if 1: # update...
-			for sib in p.getNext().siblings_iter(following=true):
-				if sib == u.lastChild: break
-				sib.moveToLastChildOf(p)
+			while next: # don't use an iterator here.
+				p2 = next
+				next = p2.next()
+				n = p.numberOfChildren()
+				p2.moveToNthChildOf(p,n)
+				if p2 == last: break
 			c.selectVnode(p)
 		c.endUpdate()
 	else:
@@ -67883,7 +67895,7 @@ def subtree_iter (self):
 <t tx="ekr.20040305173559.1">def __init__(self,p):
 	
 	self.first = p.copy()
-	self.after = p.copy().moveToNodeAfterTree()
+	self.after = p.nodeAfterTree()
 	self.p = None
 	
 def __iter__(self):
@@ -68634,5 +68646,31 @@ def dump (self,p,label=""):
 		for v in p.v.t.vnodeList:
 			print v
 	print</t>
+<t tx="ekr.20040311022923"></t>
+<t tx="ekr.20040311025616"># 10/25/02: Create dictionaries for faster checking.
+parents = {} ; clones = {}
+while parent:
+	parents [parent.t] = parent.t
+	if parent.isCloned():
+		clones [parent.t] = parent.t
+	parent = parent.parent()
+
+# 10/25/02: Scan the tree only once.
+v = root ; next = root.nodeAfterTree()
+while v and v != next:
+	ct = clones.get(v.t)
+	if ct != None and ct == v.t:
+		if warningFlag:
+			g.alert(message)
+		return false
+	v = v.threadNext()
+
+pt = parents.get(root.t)
+if pt == None:
+	return true
+else:
+	if warningFlag:
+		g.alert(message)
+	return false</t>
 </tnodes>
 </leo_file>
