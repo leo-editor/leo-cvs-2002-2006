@@ -336,7 +336,7 @@ class Commands:
 	def convertBlanks (self):
 	
 		c = self ; v = current = c.currentVnode()
-		head, lines, tail = c.getBodyLines()
+		head,lines,tail,oldSel,oldYview = c.getBodyLines()
 		result = [] ; changed = false
 	
 		# DTHEIN 3-NOV-2002: use the relative @tabwidth, not the global one
@@ -356,8 +356,9 @@ class Commands:
 	
 		if changed:
 			result = string.join(result,'\n')
-			c.updateBodyPane(head,result,tail,"Convert Blanks") # Handles undo
+			c.updateBodyPane(head,result,tail,"Convert Blanks",oldSel,oldYview) # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
+	
 	#@-body
 	#@-node:3::convertBlanks
 	#@+node:4::convertTabs
@@ -365,7 +366,7 @@ class Commands:
 	def convertTabs (self):
 	
 		c = self
-		head, lines, tail = self.getBodyLines()
+		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		result = [] ; changed = false
 		
 		# DTHEIN 3-NOV-2002: use the relative @tabwidth, not the global one
@@ -387,7 +388,7 @@ class Commands:
 	
 		if changed:
 			result = string.join(result,'\n')
-			c.updateBodyPane(head,result,tail,"Convert Tabs") # Handles undo
+			c.updateBodyPane(head,result,tail,"Convert Tabs",oldSel,oldYview) # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
 	#@-body
 	#@-node:4::convertTabs
@@ -413,7 +414,7 @@ class Commands:
 	def dedentBody (self):
 	
 		c = self
-		head, lines, tail = self.getBodyLines()
+		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		result = [] ; changed = false
 		for line in lines:
 			i, width = skip_leading_ws_with_indent(line,0,c.tab_width)
@@ -422,7 +423,7 @@ class Commands:
 			result.append(s)
 		if changed:
 			result = string.join(result,'\n')
-			c.updateBodyPane(head,result,tail,"Undent")
+			c.updateBodyPane(head,result,tail,"Undent",oldSel,oldYview)
 	#@-body
 	#@-node:6::dedentBody
 	#@+node:7::extract
@@ -430,7 +431,7 @@ class Commands:
 	def extract(self):
 	
 		c = self ; current = v = c.currentVnode()
-		head, lines, tail = self.getBodyLines()
+		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		if not lines: return
 		headline = lines[0] ; del lines[0]
 		junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
@@ -459,7 +460,7 @@ class Commands:
 			head = string.rstrip(head)
 		c.beginUpdate()
 		c.createLastChildNode(v,headline,body)
-		c.updateBodyPane(head,None,tail,"Can't Undo")
+		c.updateBodyPane(head,None,tail,"Can't Undo",oldSel,oldYview)
 		c.undoer.setUndoParams("Extract",v,select=current,oldTree=v_copy)
 		c.endUpdate()
 	#@-body
@@ -469,7 +470,7 @@ class Commands:
 	def extractSection(self):
 	
 		c = self ; current = v = c.currentVnode()
-		head, lines, tail = self.getBodyLines()
+		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		if not lines: return
 		headline = lines[0] ; del lines[0]
 		junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
@@ -501,7 +502,7 @@ class Commands:
 			head = string.rstrip(head)
 		c.beginUpdate()
 		c.createLastChildNode(v,headline,body)
-		c.updateBodyPane(head,line1,tail,"Can't Undo")
+		c.updateBodyPane(head,line1,tail,"Can't Undo",oldSel,oldYview)
 		c.undoer.setUndoParams("Extract Section",v,select=current,oldTree=v_copy)
 		c.endUpdate()
 	#@-body
@@ -511,7 +512,7 @@ class Commands:
 	def extractSectionNames(self):
 	
 		c = self ; current = v = c.currentVnode()
-		head, lines, tail = self.getBodyLines()
+		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		if not lines: return
 		# Save the selection.
 		i, j = self.getBodySelection()
@@ -554,9 +555,11 @@ class Commands:
 	def getBodyLines (self):
 		
 		c = self
+		oldYview = c.frame.body.yview()
 		i, j = getTextSelection(c.body)
-		# 12-SEP-2002 DTHEIN
-		# i is index to first character in the selection
+		oldSel = (i,j) # 11/21/02: for undo.
+			# 12-SEP-2002 DTHEIN
+			# i is index to first character in the selection
 		# j is index to first character following the selection
 		# if selection was made from back to front, then i and j are reversed
 		if i and j: # Convert all lines containing any part of the selection.
@@ -584,7 +587,7 @@ class Commands:
 			lines = c.body.get(i,endSel)
 			lines = string.split(lines, '\n')
 			lines[-1] += trailingNewline # DTHEIN: add newline if needed
-		return head, lines, tail
+		return head,lines,tail,oldSel,oldYview
 	#@-body
 	#@-node:10::getBodyLines
 	#@+node:11::getBodySelection
@@ -603,7 +606,7 @@ class Commands:
 	def indentBody (self):
 	
 		c = self
-		head, lines, tail = self.getBodyLines()
+		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		result = [] ; changed = false
 		for line in lines:
 			i, width = skip_leading_ws_with_indent(line,0,c.tab_width)
@@ -612,7 +615,7 @@ class Commands:
 			result.append(s)
 		if changed:
 			result = string.join(result,'\n')
-			c.updateBodyPane(head,result,tail,"Indent")
+			c.updateBodyPane(head,result,tail,"Indent",oldSel,oldYview)
 	#@-body
 	#@-node:12::indentBody
 	#@+node:13::reformatParagraph
@@ -631,7 +634,7 @@ class Commands:
 	
 		c = self ; body = c.frame.body
 		x = body.index("current")
-		head, lines, tail = self.getBodyLines()
+		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		result = []
 	
 		dict = scanDirectives(c)
@@ -685,7 +688,7 @@ class Commands:
 		for i in range(firstLine,lineCount+firstLine):
 			if i >= lastLine or lines[i] != result[i]:
 				result = string.join(result,'\n')
-				c.updateBodyPane(head,result,tail,"Reformat Paragraph") # Handles undo
+				c.updateBodyPane(head,result,tail,"Reformat Paragraph",oldSel,oldYview) # Handles undo
 				break
 	
 		
@@ -717,7 +720,7 @@ class Commands:
 	#@-node:13::reformatParagraph
 	#@+node:14::updateBodyPane (handles undo)
 	#@+body
-	def updateBodyPane (self,head,middle,tail,undoType):
+	def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview):
 		
 		c = self ; v = c.currentVnode()
 		# Update the text and set start, end.
@@ -739,7 +742,7 @@ class Commands:
 		if tail and len(tail) > 0:
 			c.body.insert("end",tail)
 		# Activate the body key handler by hand.
-		c.tree.onBodyChanged(v,undoType)
+		c.tree.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
 		# Update the changed mark.
 		if not c.isChanged():
 			c.setChanged(true)
@@ -751,7 +754,11 @@ class Commands:
 		# Update the selection.
 		# trace(`start` + "," + `end`)
 		setTextSelection(c.body,start,end)
-		c.body.see("insert")
+		if oldYview:
+			first,last=oldYview
+			c.body.yview("moveto",first)
+		else:
+			c.body.see("insert")
 		c.body.focus_force()
 		c.recolor() # 7/5/02
 	#@-body

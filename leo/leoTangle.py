@@ -3813,7 +3813,7 @@ class tangleCommands:
 
 	def scanAllDirectives(self,v,require_path_flag,issue_error_flag):
 	
-		c = self.commands ; config = app().config
+		c = self.commands
 		# trace(`v`)
 		old = {} ; print_mode_changed = false
 		self.init_directive_ivars()

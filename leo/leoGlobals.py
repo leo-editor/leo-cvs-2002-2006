@@ -2452,7 +2452,32 @@ def convertStringToXMLCharRef(s,xml_encoding):
 	return s2
 #@-body
 #@-node:1::convertChar/String/ToXMLCharRef
-#@+node:2::convertUnicodeToString
+#@+node:2::convertStringToUnicode
+#@+body
+# Converts s to a string type, returns non-None unicode u on an error.
+# This should be called whenever getting text from a Tk.Text widget.
+
+def convertStringToUnicode (s):
+	
+	if not s: s = ""
+
+	try:
+		encoding = app().config.xml_version_string
+		if type(s) == types.StringType:
+			# This can fail, e.g., if character > 256 used in Latin-1 encoding.
+			s = unicode(s)
+		u = None
+	except:
+		es_nonEncodingChars(s,encoding)
+		u = replaceNonEncodingChars(s,"?",encoding)
+		s = u.encode(xml_encoding)
+
+	# result is always a unicode string.
+	assert(type(s)==types.UnicodeType)
+	return s,u
+#@-body
+#@-node:2::convertStringToUnicode
+#@+node:3::convertUnicodeToString
 #@+body
 # Converts s to a string type, returns non-None unicode u on an error.
 # This should be called whenever getting text from a Tk.Text widget.
@@ -2476,8 +2501,8 @@ def convertUnicodeToString (s):
 	assert(type(s)==types.StringType)
 	return s,u
 #@-body
-#@-node:2::convertUnicodeToString
-#@+node:3::es_nonEncodingChar, returnNonEncodingChar
+#@-node:3::convertUnicodeToString
+#@+node:4::es_nonEncodingChar, returnNonEncodingChar
 #@+body
 def es_nonEncodingChars(s,xml_encoding):
 
@@ -2502,8 +2527,8 @@ def returnNonEncodingChar(c,xml_encoding):
 		else:
 			return c
 #@-body
-#@-node:3::es_nonEncodingChar, returnNonEncodingChar
-#@+node:4::replaceNonEncodingChar/s
+#@-node:4::es_nonEncodingChar, returnNonEncodingChar
+#@+node:5::replaceNonEncodingChar/s
 #@+body
 def replaceNonEncodingChar(c,c2,xml_encoding):
 
@@ -2531,7 +2556,7 @@ def replaceNonEncodingChars(s,c2,xml_encoding):
 		s2 += replaceNonEncodingChar(c,c2,xml_encoding)
 	return s2
 #@-body
-#@-node:4::replaceNonEncodingChar/s
+#@-node:5::replaceNonEncodingChar/s
 #@-node:10::Unicode...
 #@-others
 #@-body

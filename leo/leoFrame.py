@@ -2112,16 +2112,19 @@ class LeoFrame:
 			v = c.currentVnode() 
 	
 		# Assume any selected body text is a script.
-		if self.getFocus() == body:
-			start,end = getTextSelection(body)
-			if start and end:
-				s = body.get(start,end)
-				s = s.strip()
-				
-		# 11/20/02: Otherwise, the script is v's entire body text.
-		if s == None or len(s) == 0:
+		start,end = getTextSelection(body)
+		if start and end:
+			s = body.get(start,end)
+		else:
 			s = body.get("1.0","end")
-			s = s.strip()
+		if s == None:
+			s = ""
+			
+		s = s.strip()
+		
+		# Neither of these helps with the unicode problems.
+		# s,u = convertUnicodeToString(s)
+		# s,u = convertStringToUnicode(s)
 	
 		# trace(`s`)
 		if s and len(s) > 0:
@@ -2130,6 +2133,7 @@ class LeoFrame:
 				# 11/18/02: don't pollute the exec environment with Leo globals.
 				exec(s,__builtins__,__builtins__)
 			except:
+				es("exception executing script")
 				es_exception(full=false)
 		else:
 			es("no script selected")

@@ -744,19 +744,22 @@ class leoTree:
 	#@@c
 
 	# Called by command handlers that have already changed the text.
-	def onBodyChanged (self,v,undoType):
+	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None):
 		c = self.commands
 		if not v: v = c.currentVnode()
-		oldSel = c.body.index("insert") # trace(`oldSel`)
-		self.idle_body_key(v,oldSel,undoType)
+		if not oldSel:
+			first,last = getTextSelection(c.body)
+			oldSel = (first,last) # trace(`oldSel`)
+		self.idle_body_key(v,oldSel,undoType,oldYview=oldYview)
 		
 	# Called by command handlers that change the text just before idle time.
-	def onBodyWillChange (self,v,undoType):
+	def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
 		c = self.commands
 		if not v: v = c.currentVnode()
-		first,last = getTextSelection(c.body)
-		oldSel = (first,last) # trace(`oldSel`)
-		self.commands.body.after_idle(self.idle_body_key,v,oldSel,undoType)
+		if not oldSel:
+			first,last = getTextSelection(c.body)
+			oldSel = (first,last) # trace(`oldSel`)
+		self.commands.body.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
 	
 	# Bound to any key press..
 	def OnBodyKey (self,event):
@@ -767,7 +770,7 @@ class leoTree:
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
 	
 	# Does the real work of updating the body pane.
-	def idle_body_key (self,v,oldSel,undoType,ch=None):
+	def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None):
 	
 		c = self.commands
 		if not c or not v or v != c.currentVnode():
@@ -908,7 +911,7 @@ class leoTree:
 		s,junk = convertUnicodeToString(s)
 		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
 			s = s[:-1]
-		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel)
+		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel,oldYview=oldYview)
 		v.t.bodyString = s
 		v.t.insertSpot = c.body.index("insert") # 9/1/02
 		# print `v.t.insertSpot`,`v`

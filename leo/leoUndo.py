@@ -297,7 +297,7 @@ class undoer:
 	#@-at
 	#@@c
 
-	def setUndoTypingParams (self,v,undo_type,oldText,newText,oldSel,newSel):
+	def setUndoTypingParams (self,v,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
 	
 		u = self ; c = self.commands
 		if u.redoing or u.undoing: return None
@@ -429,7 +429,10 @@ class undoer:
 
 		u.oldSel = oldSel ; u.newSel = newSel
 		# 11/13/02: Remember the scrolling position.
-		u.yview = c.frame.body.yview()
+		if oldYview:
+			u.yview = oldYview
+		else:
+			u.yview = c.frame.body.yview()
 		# Push params on undo stack, clearing all forward entries.
 		u.bead += 1
 		d = u.setBead(u.bead)

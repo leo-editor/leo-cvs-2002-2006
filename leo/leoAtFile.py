@@ -420,7 +420,7 @@ class atFile:
 
 	def scanAllDirectives(self,v):
 	
-		c = self.commands ; config = app().config
+		c = self.commands
 		
 		#@<< Set ivars >>
 		#@+node:1::<< Set ivars >>
