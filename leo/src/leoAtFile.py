@@ -4462,7 +4462,7 @@ class atFile:
     
         self.errors += 1
     #@-node:ekr.20041005105605.220:atFile.error
-    #@+node:ekr.20050206085258:atFile.printError & test_printError
+    #@+node:ekr.20050206085258:atFile.printError & test
     def printError (self,message):
     
         '''Print an error message that may contain non-ascii characters.'''
@@ -4475,14 +4475,14 @@ class atFile:
             except UnicodeError:
                 print g.toEncodedString(message,g.app.tkEncoding)
                 
-    def test_printError(self,**keys):
+    def test_atFile_printError(self,**keys):
     
         at = c.atFileCommands
         at.errors = 0
         at.printError(
             "test of printError: Ᾱ(U+1FB9: Greek Capital Letter Alpha With Macron)")
     #@nonl
-    #@-node:ekr.20050206085258:atFile.printError & test_printError
+    #@-node:ekr.20050206085258:atFile.printError & test
     #@+node:ekr.20041005105605.221:exception
     def exception (self,message):
         
