@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2803" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2821" clone_windows="0"/>
 <globals body_outline_ratio="0.4370860927152318">
-	<global_window_position top="96" left="353" height="755" width="891"/>
+	<global_window_position top="54" left="366" height="755" width="891"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -13,8 +13,12 @@
 </find_panel_settings>
 <vnodes>
 <v t="ekr.20040303080938"><vh>Diary</vh>
-<v t="ekr.20040309095121"><vh>3/9/04: created more position mini tests</vh></v>
-<v t="ekr.20040303080938.1"><vh>3/3/04: created position tests</vh></v>
+<v t="ekr.20040315210314"><vh>March 2004</vh>
+<v t="ekr.20040315210314.1"><vh>3/15: Created stubs for Find Commands tests</vh></v>
+<v t="ekr.20040315210314.2"><vh>3/15: Convert this file to 4.2 format</vh></v>
+<v t="ekr.20040309095121"><vh>3/9: created more position mini tests</vh></v>
+<v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
+</v>
 </v>
 <v t="ekr.20040303062846"><vh>Unit Testing</vh>
 <v t="ekr.20040303062846.1"><vh>To do</vh></v>
@@ -61,14 +65,13 @@
 <v t="ekr.20040301191933.2"><vh>e</vh></v>
 <v t="ekr.20040302092753.4"><vh>z</vh></v>
 </v>
-<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.9,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
+<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040315202250,ekr.20040315202314,ekr.20040315202314.1,ekr.20040315202347,ekr.20040315202718,ekr.20040315202718.1,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
 <v t="ekr.20040303062846.3"><vh> class testUtils</vh>
 <v t="ekr.20040303062846.4"><vh>compareOutlines</vh></v>
-<v t="ekr.20040303062846.5"><vh>findChildrenOf &amp; findSubnodesOf</vh></v>
+<v t="ekr.20040303062846.5"><vh>findChildrenOf &amp; findSubnodesOf (revise)</vh></v>
 <v t="ekr.20040303062846.6"><vh>findNodeInRootTree, findNodeInTree, findNodeAnywhere</vh></v>
 <v t="ekr.20040303062846.7"><vh>numberOfNodesInOutline, numberOfClonesInOutline</vh></v>
 <v t="ekr.20040303062846.8"><vh>replaceOutline</vh></v>
-<v t="ekr.20040303062846.9"><vh>validateOutline TODO</vh></v>
 </v>
 <v t="ekr.20040303062846.10"><vh> fail</vh></v>
 <v t="ekr.20040303062846.11"><vh>Colorizer tests</vh>
@@ -83,12 +86,21 @@
 </v>
 <v t="ekr.20040303062846.19"><vh>Edit body tests</vh>
 <v t="ekr.20040303062846.20"><vh> makeEditBodySuite</vh></v>
-<v t="ekr.20040303062846.21" a="E"><vh>class editBodyTestCase</vh>
+<v t="ekr.20040303062846.21"><vh>class editBodyTestCase</vh>
 <v t="ekr.20040303062846.22"><vh>__init__</vh></v>
 <v t="ekr.20040303062846.23"><vh>editBody</vh></v>
 <v t="ekr.20040303062846.24"><vh>tearDown</vh></v>
 <v t="ekr.20040303062846.25" a="M"><vh>setUp</vh></v>
 <v t="ekr.20040303062846.26"><vh>runTest</vh></v>
+</v>
+</v>
+<v t="ekr.20040315202201"><vh>Find Command tests</vh>
+<v t="ekr.20040315202250"><vh> makeFindCommandSuite</vh></v>
+<v t="ekr.20040315202314"><vh>class findCommandTestCase</vh>
+<v t="ekr.20040315202314.1"><vh>setUp</vh></v>
+<v t="ekr.20040315202347"><vh>testFindCommand</vh></v>
+<v t="ekr.20040315202718"><vh>testFindWordCommand</vh></v>
+<v t="ekr.20040315202718.1"><vh>testFindIgnoreCaseCommand</vh></v>
 </v>
 </v>
 <v t="ekr.20040303062846.27"><vh>Import/Export tests</vh>
@@ -181,28 +193,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040303063644"><vh>Position tests</vh>
-<v t="ekr.20040303064013"><vh> makePositionSuite</vh></v>
-<v t="ekr.20040303063118"><vh>class positionTestCase</vh>
-<v t="ekr.20040303063118.4"><vh>setUp</vh></v>
-<v t="ekr.20040309105731"><vh>testComparisons</vh></v>
-<v t="ekr.20040312101853"><vh>Consistency tests...</vh>
-<v t="ekr.20040309101454.15"><vh>testConsistencyOfAllNodesThreadNext</vh></v>
-<v t="ekr.20040309101454.17"><vh>testConsistencyOfFirstChildAndChildrenIter</vh></v>
-<v t="ekr.20040309101454.13"><vh>testConsistencyOfLevel</vh></v>
-<v t="ekr.20040303064020.5"><vh>testConsistencyOfNextBack</vh></v>
-<v t="ekr.20040309101454.16"><vh>testConsistencyOfParentAndParentsIter</vh></v>
-<v t="ekr.20040309101454.14"><vh>testConsistencyOfParentChild</vh></v>
-<v t="ekr.20040303064020.7"><vh>testConsistencyOfThreadBackNext</vh></v>
-<v t="ekr.20040303091606"><vh>testHasNextBack</vh></v>
-<v t="ekr.20040303092153"><vh>testHasParentChild</vh></v>
-<v t="ekr.20040303092153.1"><vh>testHasThreadNextBack</vh></v>
-<v t="ekr.20040303064020.6"><vh>testVnodeList</vh></v>
-</v>
-</v>
-</v>
 <v t="ekr.20040303063549" a="TV"><vh>Unit Tests (Tests must be run from inside this tree!)</vh>
 <v t="ekr.20040309101454"><vh> To do</vh></v>
+<v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
 <v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
 <v t="ekr.20040303063549.46"><vh>Actionscript</vh></v>
 <v t="ekr.20040303063549.47"><vh>C</vh></v>
@@ -262,12 +255,13 @@
 <v t="ekr.20040303063549.89"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.120"><vh>fileTests</vh>
+<v t="ekr.20040303063549.120" a="M"><vh>fileTests</vh>
 <v t="ekr.20040303063549.121"><vh>c:\prog\leoCvs\leo\test\test.leo</vh></v>
 <v t="ekr.20040303063549.122"><vh>c:\prog\leoCvs\leo\src\LeoPy.leo</vh></v>
 <v t="ekr.20040303063549.123"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="ekr.20040303063549.124"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
+<v t="ekr.20040315202718.2" a="M"><vh>findTests</vh></v>
 <v t="ekr.20040303063549.90"><vh>importTests</vh>
 <v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
 <v t="ekr.20040303063549.92"><vh>dialog</vh></v>
@@ -369,7 +363,6 @@
 </v>
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010" a="M"><vh>Run all tests except files tests</vh></v>
-<v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
 </v>
 <v t="ekr.20040311111734" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
 <v t="ekr.20040311111734.1"><vh>&lt;&lt; node one &gt;&gt;</vh></v>
@@ -492,7 +485,8 @@ Run the unit tests in test.leo using the Execute Script command.
 
 """
 
-from leoGlobals import *
+import leoGlobals as g
+from leoGlobals import true,false
 
 import leoColor,leoCommands,leoFrame,leoGui,leoNodes,leoTkinterGui
 
@@ -527,11 +521,11 @@ import glob,os,sys,unittest
 
 	ok = ok and v1 == after1 and v2 == after2
 	if not ok:
-		trace(v1,v2)
+		g.trace(v1,v2)
 	return ok</t>
 <t tx="ekr.20040303062846.5">def findChildrenOf (self,headline):
 	
-	u = self ; c = top() ; v = c.currentVnode()
+	u = self ; c = g.top() ; v = c.currentVnode()
 	root = u.findRootNode(v)
 	parent = u.findNodeInTree(root,headline)
 	v = parent.firstChild()
@@ -543,7 +537,7 @@ import glob,os,sys,unittest
 
 def findSubnodesOf (self,headline):
 	
-	u = self ; c = top() ; v = c.currentVnode()
+	u = self ; c = g.top() ; v = c.currentVnode()
 	root = u.findRootNode(v)
 	parent = u.findNodeInTree(root,headline)
 	v = parent.firstChild()
@@ -552,80 +546,72 @@ def findSubnodesOf (self,headline):
 	while v and v != after:
 		vList.append(v)
 		v = v.threadNext()
-	return vList</t>
-<t tx="ekr.20040303062846.6">def findRootNode (self,v):
+	return vList
+</t>
+<t tx="ekr.20040303062846.6">def findRootNode (self,p):
 
 	"""Return the root of v's tree."""
-	while v and v.parent():
-		v = v.parent()
-	return v
-	
-def findNodeInTree(self,v,headline):
+
+	while p and p.hasParent():
+		p.moveToParent()
+	return p
+
+def findNodeInTree(self,p,headline):
 
 	"""Search for a node in v's tree matching the given headline."""
-	c = v.c
-	if not headline: return c.nullPosition() # This is valid.
-	after = v.nodeAfterTree()
-	while v and v != after:
-		if v.headString().strip() == headline.strip():
-			return v
-		v = v.threadNext()
+	
+	c = p.c
+	for p in p.subtree_iter():
+		if p.headString().strip() == headline.strip():
+			return p
 	return c.nullPosition()
 
 def findNodeAnywhere(self,c,headline):
 	
-	if not headline: return c.nullPosition() # This is valid.
-	v = c.rootVnode()
-	while v:
-		if v.headString().strip() == headline.strip():
-			return v
-		v = v.threadNext()
+	for p in c.allNodes_iter():
+		if p.headString().strip() == headline.strip():
+			return p.copy()
 	return c.nullPosition()</t>
-<t tx="ekr.20040303062846.7">def numberOfNodesInOutline (self,root):
+<t tx="ekr.20040303062846.7">def numberOfNodesInOutline (self):
 	
 	"""Returns the total number of nodes in an outline"""
 	
-	n = 0 ; v = root
-	while v:
-		n +=1
-		v = v.threadNext()
+	c = g.top() ; n = 0
+	for p in c.allNodes_iter():
+		n += 1
 	return n
 	
-def numberOfClonesInOutline (self,root):
+def numberOfClonesInOutline (self):
 	
 	"""Returns the number of cloned nodes in an outline"""
 
-	n = 0 ; v = root
-	while v:
+	c = g.top() ; n = 0
+	for p in c.allNodes_iter():
 		if v.isCloned():
 			n += 1
-		v = v.threadNext()</t>
+	return n</t>
 <t tx="ekr.20040303062846.8">def replaceOutline (self,c,outline1,outline2):
 	
 	u = self
 	
 	"""Replace outline1 by a copy of outline 2 if not equal."""
 	
-	trace()
+	g.trace()
 	
 	copy = outline2.copyTreeWithNewTnodes()
 	copy.linkAfter(outline1)
 	outline1.doDelete(newVnode=copy)</t>
-<t tx="ekr.20040303062846.9">def validateOutline (self,root):
-	
-	"""Checks an outline for consistency"""
-	pass</t>
 <t tx="ekr.20040303062846.10">def fail ():
 	
 	"""Mark a unit test as having failed."""
 	
-	app.unitTestDict["fail"] = callerName(2)</t>
+	g.app.unitTestDict["fail"] = callerName(2)</t>
 <t tx="ekr.20040303062846.11"></t>
 <t tx="ekr.20040303062846.12">def makeColorSuite(testParentHeadline,tempHeadline):
 	
 	"""Create a colorizer test for every descendant of testParentHeadline.."""
 	
-	u = testUtils() ; c = top() ; v = c.currentVnode()
+	u = testUtils() ; c = g.top() ; v = c.currentVnode()
 	root = u.findRootNode(v)
 	temp_v = u.findNodeInTree(root,tempHeadline)
 	vList = u.findSubnodesOf(testParentHeadline)
@@ -636,7 +622,8 @@ def numberOfClonesInOutline (self,root):
 		test = colorTestCase(c,v,temp_v)
 		suite.addTest(test)
 
-	return suite</t>
+	return suite
+</t>
 <t tx="ekr.20040303062846.13">class colorTestCase(unittest.TestCase):
 	
 	"""Data-driven unit tests for Leo's colorizer."""
@@ -659,16 +646,16 @@ def numberOfClonesInOutline (self,root):
 	assert(val=="ok")</t>
 <t tx="ekr.20040303062846.16">def setUp(self,*args,**keys):
 
-	# trace(args,keys)
+	# g.trace(args,keys)
 
 	# Initialize the text in the temp node.
 	text = self.v.bodyString()
 	self.c.selectVnode(self.temp_v)
-	self.temp_v.setTnodeText(text,app.tkEncoding)
+	self.temp_v.setTnodeText(text,g.app.tkEncoding)
 	self.c.frame.body.setSelectionAreas(None,text,None)</t>
 <t tx="ekr.20040303062846.17">def tearDown (self):
 	
-	self.temp_v.setTnodeText("",app.tkEncoding)
+	self.temp_v.setTnodeText("",g.app.tkEncoding)
 	self.c.selectVnode(self.old_v)</t>
 <t tx="ekr.20040303062846.18">def runTest(self):
 
@@ -678,7 +665,7 @@ def numberOfClonesInOutline (self,root):
 	
 	"""Create an Edit Body test for every descendant of testParentHeadline.."""
 	
-	u = testUtils() ; c = top() ; v = c.currentVnode()
+	u = testUtils() ; c = g.top() ; v = c.currentVnode()
 	root = u.findRootNode(v)
 	temp_v = u.findNodeInTree(root,tempHeadline)
 	vList = u.findChildrenOf(testParentHeadline)
@@ -696,7 +683,8 @@ def numberOfClonesInOutline (self,root):
 		else:
 			print 'missing "before" or "after" for', v.headString()
 
-	return suite</t>
+	return suite
+</t>
 <t tx="ekr.20040303062846.21">class editBodyTestCase(unittest.TestCase):
 	
 	"""Data-driven unit tests for Leo's edit body commands."""
@@ -733,8 +721,8 @@ def numberOfClonesInOutline (self,root):
 
 	if new_text != ref_text:
 		print ; print "test failed", commandName
-		trace("new",new_text)
-		trace("ref",ref_text)
+		g.trace("new",new_text)
+		g.trace("ref",ref_text)
 		
 	assert(new_text == ref_text)
 	
@@ -751,8 +739,8 @@ def numberOfClonesInOutline (self,root):
 
 		if new_text != ref_text:
 			print ; print "test failed", commandName
-			trace("new",new_text)
-			trace("ref",ref_text)
+			g.trace("new",new_text)
+			g.trace("ref",ref_text)
 		
 		assert(new_text == ref_text)
 		
@@ -762,7 +750,7 @@ def numberOfClonesInOutline (self,root):
 	
 	c = self.c ; temp_v = self.temp_v
 	
-	temp_v.setTnodeText("",app.tkEncoding)
+	temp_v.setTnodeText("",g.app.tkEncoding)
 	temp_v.clearDirty()
 	
 	if not self.wasChanged:
@@ -785,24 +773,24 @@ def setUp(self,*args,**keys):
 
 	text = self.before.bodyString()
 	
-	temp_v.setTnodeText(text,app.tkEncoding)
+	temp_v.setTnodeText(text,g.app.tkEncoding)
 	c.selectVnode(self.temp_v)
 	
 	t = c.frame.body.bodyCtrl
 	if self.sel:
 		s = str(self.sel.bodyString()) # Can't be unicode.
 		lines = s.split('\n')
-		app.gui.setTextSelection(t,lines[0],lines[1])
+		g.app.gui.setTextSelection(t,lines[0],lines[1])
 
 	if self.ins:
 		s = str(self.ins.bodyString()) # Can't be unicode.
 		lines = s.split('\n')
-		trace(lines)
-		app.gui.setInsertPoint(t,lines[0])
+		g.trace(lines)
+		g.app.gui.setInsertPoint(t,lines[0])
 		
 	if not self.sel and not self.ins:
-		app.gui.setInsertPoint(t,"1.0")
-		app.gui.setTextSelection(t,"1.0","1.0")</t>
+		g.app.gui.setInsertPoint(t,"1.0")
+		g.app.gui.setTextSelection(t,"1.0","1.0")</t>
 <t tx="ekr.20040303062846.26">def runTest(self):
 
 	self.editBody()</t>
@@ -811,7 +799,7 @@ def setUp(self,*args,**keys):
 	
 	"""Create an Import/Export test for every descendant of testParentHeadline.."""
 	
-	u = testUtils() ; c = top() ; v = c.currentVnode()
+	u = testUtils() ; c = g.top() ; v = c.currentVnode()
 	root = u.findRootNode(v)
 	temp_v = u.findNodeInTree(root,tempHeadline)
 	vList = u.findChildrenOf(testParentHeadline)
@@ -823,7 +811,8 @@ def setUp(self,*args,**keys):
 		test = importExportTestCase(c,v,dialog,temp_v)
 		suite.addTest(test)
 
-	return suite</t>
+	return suite
+</t>
 <t tx="ekr.20040303062846.29">class importExportTestCase(unittest.TestCase):
 	
 	"""Data-driven unit tests for Leo's edit body commands."""
@@ -850,13 +839,13 @@ def setUp(self,*args,**keys):
 	
 	c = self.c ; v = self.v
 	
-	app.unitTestDict = {}
+	g.app.unitTestDict = {}
 
 	commandName = v.headString()
 	command = getattr(c,commandName) # Will fail if command does not exist.
 	command()
 
-	failedMethod = app.unitTestDict.get("fail")
+	failedMethod = g.app.unitTestDict.get("fail")
 	self.failIf(failedMethod,failedMethod)</t>
 <t tx="ekr.20040303062846.32">def runTest(self):
 	
@@ -867,7 +856,7 @@ def setUp(self,*args,**keys):
 	
 	c = self.c ; temp_v = self.temp_v ; d = self.dialog
 	
-	temp_v.setTnodeText('',app.tkEncoding)
+	temp_v.setTnodeText('',g.app.tkEncoding)
 
 	# Create a node under temp_v.
 	child = temp_v.insertAsLastChild()
@@ -899,7 +888,7 @@ def setUp(self,*args,**keys):
 		self.gui.destroySelf()
 		self.gui = None
 	
-	temp_v.setTnodeText("",app.tkEncoding)
+	temp_v.setTnodeText("",g.app.tkEncoding)
 	temp_v.clearDirty()
 	
 	if not self.wasChanged:
@@ -915,7 +904,7 @@ def setUp(self,*args,**keys):
 	
 	"""Create a .leo file test for every descendant of testParentHeadline.."""
 	
-	u = testUtils() ; c = top()
+	u = testUtils() ; c = g.top()
 	
 	vList = u.findChildrenOf(testParentHeadline)
 
@@ -926,6 +915,7 @@ def setUp(self,*args,**keys):
 		suite.addTest(test)
 
 	return suite
+
 </t>
 <t tx="ekr.20040303062846.38">class leoFileTestCase(unittest.TestCase):
 	
@@ -941,7 +931,7 @@ def setUp(self,*args,**keys):
 	self.c = None # set by setUp.
 	self.fileName = fileName
 	self.gui = None # set by setUp
-	self.openFrames = app.windowList[:]</t>
+	self.openFrames = g.app.windowList[:]</t>
 <t tx="ekr.20040303062846.40">def runTest(self):
 	
 	"""Run the Check Outline command."""
@@ -954,12 +944,12 @@ def setUp(self,*args,**keys):
 	
 
 	c = self.old_c ; fileName = self.fileName
-	assert(os_path_exists(fileName))
+	assert(g.os_path_exists(fileName))
 	
-	self.oldGui = app.gui
-	# app.gui = leoGui.nullGui("nullGui")
+	self.oldGui = g.app.gui
+	# g.app.gui = leoGui.nullGui("nullGui")
 
-	ok, frame = openWithFileName(fileName,c,enableLog=false)
+	ok, frame = g.openWithFileName(fileName,c,enableLog=false)
 	assert(ok)
 	self.c = frame.c</t>
 <t tx="ekr.20040303062846.42">def tearDown (self):
@@ -968,15 +958,15 @@ def setUp(self,*args,**keys):
 
 	frame = self.c.frame
 	if frame not in self.openFrames:
-		app.closeLeoWindow(frame)
+		g.app.closeLeoWindow(frame)
 
-	app.gui = self.oldGui</t>
+	g.app.gui = self.oldGui</t>
 <t tx="ekr.20040303062846.63"></t>
 <t tx="ekr.20040303062846.64">def makeOutlineSuite(testParentHeadline,unused=None):
 	
 	"""Create an outline test for every descendant of testParentHeadline.."""
 	
-	u = testUtils() ; c = top() ; v = c.currentVnode()
+	u = testUtils() ; c = g.top() ; v = c.currentVnode()
 	
 	vList = u.findChildrenOf(testParentHeadline)
 
@@ -1063,10 +1053,10 @@ def setUp(self,*args,**keys):
 	
 	"""Create an plugins test for every .py file in the plugins directory."""
 	
-	plugins_path = os_path_join(app.loadDir,"..","plugins")
+	plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
 	
-	files = glob.glob(os_path_join(plugins_path,"*.py"))
-	files = [os_path_abspath(file) for file in files]
+	files = glob.glob(g.os_path_join(plugins_path,"*.py"))
+	files = [g.os_path_abspath(file) for file in files]
 	files.sort()
 
 	# Create the suite and add all test cases.
@@ -1096,11 +1086,11 @@ def setUp(self,*args,**keys):
 	
 	# Duplicate the import logic in leoPlugins.py.
 	
-	fileName = toUnicode(self.fileName,app.tkEncoding)
-	path = os_path_join(app.loadDir,"..","plugins")
+	fileName = g.toUnicode(self.fileName,g.app.tkEncoding)
+	path = g.os_path_join(g.app.loadDir,"..","plugins")
 	
 	if self.verbose:
-		trace(str(shortFileName(fileName)))
+		g.trace(str(shortFileName(fileName)))
 
 	module = importFromPath(fileName,path)
 	assert(module)
@@ -1109,7 +1099,7 @@ def setUp(self,*args,**keys):
 	if hasattr(module,"unitTest"):
 		
 		if self.verbose:
-			trace("Executing unitTest in %s..." % str(shortFileName(fileName)))
+			g.trace("Executing unitTest in %s..." % str(shortFileName(fileName)))
 
 		module.unitTest()</t>
 <t tx="ekr.20040303062846.76">def runTest(self):
@@ -1117,14 +1107,14 @@ def setUp(self,*args,**keys):
 	self.pluginTest()</t>
 <t tx="ekr.20040303062846.77">def setUp(self,*args,**keys):
 
-	self.oldGui = app.gui
-	# app.gui = leoTkinterGui.tkinterGui()</t>
+	self.oldGui = g.app.gui
+	# g.app.gui = leoTkinterGui.tkinterGui()</t>
 <t tx="ekr.20040303062846.78">def shortDescription (self):
 	
 	return "pluginTestCase: " + self.fileName</t>
 <t tx="ekr.20040303062846.79">def tearDown (self):
 
-	app.gui = self.oldGui</t>
+	g.app.gui = self.oldGui</t>
 <t tx="ekr.20040303062846.80"># DTHEIN 2004.01.11: Added unit tests for reformatParagraph</t>
 <t tx="ekr.20040303062846.81"># DTHEIN 2004.01.11: Added method
 def makeReformatParagraphSuite():
@@ -1162,7 +1152,7 @@ class reformatParagraphTestCase(unittest.TestCase):
 def setUp(self):
 
 	self.u = testUtils()
-	self.c = top()
+	self.c = g.top()
 	self.current_v = self.c.currentVnode()
 	self.old_v = self.c.currentVnode()
 	root = self.u.findRootNode(self.current_v)
@@ -1175,6 +1165,7 @@ def setUp(self):
 	self.wasChanged = self.c.changed
 	
 
+
 </t>
 <t tx="ekr.20040303062846.84"># DTHEIN 2004.01.11: Added method
 def tearDown(self):
@@ -1186,7 +1177,7 @@ def tearDown(self):
 	
 	# clear the temp node and mark it unchanged
 	#
-	temp_v.setTnodeText("",app.tkEncoding)
+	temp_v.setTnodeText("",g.app.tkEncoding)
 	temp_v.clearDirty()
 	
 	if not self.wasChanged:
@@ -1429,7 +1420,7 @@ def copyBeforeToTemp(self):
 	# Copy the test case node text to the temp node
 	#
 	text = self.case_v.bodyString()
-	temp_v.setTnodeText(text,app.tkEncoding)
+	temp_v.setTnodeText(text,g.app.tkEncoding)
 	
 	# create the child node that holds the text
 	#
@@ -1439,7 +1430,7 @@ def copyBeforeToTemp(self):
 	# copy the before text to the temp text
 	#
 	text = self.before_v.bodyString()
-	self.tempChild_v.setTnodeText(text,app.tkEncoding)
+	self.tempChild_v.setTnodeText(text,g.app.tkEncoding)
 	
 	# make the temp child node current, and put the
 	# cursor at the beginning
@@ -1447,8 +1438,8 @@ def copyBeforeToTemp(self):
 	c.selectVnode(self.tempChild_v)
 	c.frame.body.setInsertPointToStartOfLine( 0 )
 	c.frame.body.setTextSelection(None,None)
-	#app.gui.setInsertPoint(t,"1.0")
-	#app.gui.setTextSelection(t,"1.0","1.0")
+	#g.app.gui.setInsertPoint(t,"1.0")
+	#g.app.gui.setTextSelection(t,"1.0","1.0")
 </t>
 <t tx="ekr.20040303062846.103"># DTHEIN 2004.01.11: Added method
 def getCaseDataNodes(self,caseNodeName):
@@ -1463,7 +1454,7 @@ def getRowCol(self):
 	# local variables for class fields, for ease
 	# of reading and ease of typeing.
 	#	
-	c = self.c ; body = c.frame.body.bodyCtrl ; gui = app.gui
+	c = self.c ; body = c.frame.body.bodyCtrl ; gui = g.app.gui
 	tab_width = c.frame.tab_width
 
 	# Get the Tkinter row col position of the insert cursor
@@ -1475,8 +1466,8 @@ def getRowCol(self):
 	#
 	if col &gt; 0:
 		s = body.get("%d.0" % (row),index)
-		s = toUnicode(s,app.tkEncoding)
-		col = computeWidth(s,tab_width)
+		s = g.toUnicode(s,g.app.tkEncoding)
+		col = g.computeWidth(s,tab_width)
 
 	return (row,col)
 </t>
@@ -2267,7 +2258,7 @@ string"""
 
 and if
 
-from leoGlobals import * ; print app().loadDir</t>
+from leoGlobals import * ; print g.app().loadDir</t>
 <t tx="ekr.20040303063549.61"># both color_markup &amp; add_directives plugins must be enabled.
 @markup wiki
 
@@ -2299,7 +2290,7 @@ __abc__
 
 and if
 
-from leoGlobals import * ; print app().loadDir
+from leoGlobals import * ; print g.app().loadDir
 </t>
 <t tx="ekr.20040303063549.62"># both color_markup &amp; add_directives plugins must be enabled.
 
@@ -2906,5 +2897,55 @@ c = g.top() ; p = c.currentPosition()
 p = p.firstChild()
 assert(p.headString()=="File Conversion")
 print p.convertTreeToString()</t>
+<t tx="ekr.20040315202201"></t>
+<t tx="ekr.20040315202250">def makeFindCommandSuite(arg=None,all=true,verbose=false):
+	
+	return unittest.makeSuite(findCommandTestCase,'test')</t>
+<t tx="ekr.20040315202314">class findCommandTestCase(unittest.TestCase):
+	
+	"""Unit tests for Leo's find commands."""
+	
+	@others</t>
+<t tx="ekr.20040315202314.1">def setUp(self,*args,**keys):
+	
+	import leoGlobals as g
+	
+	u = testUtils()
+	
+	self.c = c = g.top()
+
+	self.verbose = true
+	
+	self.root = c.rootPosition()
+	
+	self.find_p = u.findNodeAnywhere(c,"findTests")
+	
+	assert(self.find_p)
+	
+	c.selectPosition(self.find_p)
+</t>
+<t tx="ekr.20040315202347">def testFindCommand (self):
+	
+	g.trace(self.find_p)</t>
+<t tx="ekr.20040315202718">def testFindWordCommand (self):
+	
+	pass</t>
+<t tx="ekr.20040315202718.1">def testFindIgnoreCaseCommand (self):
+	
+	pass</t>
+<t tx="ekr.20040315202718.2">import unittest
+import leoTest
+reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
+
+suite = leoTest.makeFindCommandSuite()
+runner = unittest.TextTestRunner()
+runner.run(suite)
+</t>
+<t tx="ekr.20040315210314"></t>
+<t tx="ekr.20040315210314.1"></t>
+<t tx="ekr.20040315210314.2">@nocolor
+
+- Used iterators in test utils.
+- Used "import leoGlobals as g" style.</t>
 </tnodes>
 </leo_file>
