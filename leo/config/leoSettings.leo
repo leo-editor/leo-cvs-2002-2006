@@ -2,7 +2,7 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="95" clone_windows="0"/>
-<globals body_outline_ratio="0.71017699115">
+<globals body_outline_ratio="0.5">
 	<global_window_position top="44" left="172" height="703" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -535,7 +535,7 @@ False: use local time.
 <t tx="ekr.20041119034357.44">True:  auto-indent aligns with open ({[ brackets
 
 False: auto-indent increases indentation by one tab for Python only.</t>
-<t tx="ekr.20041119034357.45">body_text_font_family = Courier New
+<t tx="ekr.20041119034357.45">body_text_font_family = None
 body_text_font_size = None
 body_text_font_slant = None
 body_text_font_weight = None
@@ -1012,7 +1012,7 @@ Therefore, @if-platform and @ifPlatformare equivalent to @ifplatform.</t>
 # 
 # Default size is 12 for Linux, 8 otherwise.
 
-log_text_font_family = Courier New
+log_text_font_family = None
 log_text_font_size = None
 log_text_font_slant = roman
 log_text_font_weight = normal

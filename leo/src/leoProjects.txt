@@ -16804,6 +16804,8 @@ self._rootPosition    = self.nullPosition()
 self._topPosition     = self.nullPosition()
 
 # per-document info...
+self.disableCommandsMessage = ''
+    # The presence of this message disables all commands.
 self.hookFunction = None
 self.openDirectory = None
 
@@ -16834,10 +16836,11 @@ self.beadList = [] # list of vnodes for the Back and Forward commands.
 self.beadPointer = -1 # present item in the list.
 self.visitedList = [] # list of vnodes for the Nodes dialog.
 
-# 4.1: for hoist/dehoist commands.
-self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects drawing routines and find commands.
-
-self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
+# For hoist/dehoist commands.
+self.hoistStack = []
+    # Stack of nodes to be root of drawn tree.
+    # Affects drawing routines and find commands.
+self.recentFiles = [] # List of recent files
 #@nonl
 #@-node:ekr.20031218072017.2813:<< initialize ivars >>
 #@-node:ekr.20040731071037:c.initIvars
@@ -20920,6 +20923,8 @@ self._rootPosition    = self.nullPosition()
 self._topPosition     = self.nullPosition()
 
 # per-document info...
+self.disableCommandsMessage = ''
+    # The presence of this message disables all commands.
 self.hookFunction = None
 self.openDirectory = None
 
@@ -20950,10 +20955,11 @@ self.beadList = [] # list of vnodes for the Back and Forward commands.
 self.beadPointer = -1 # present item in the list.
 self.visitedList = [] # list of vnodes for the Nodes dialog.
 
-# 4.1: for hoist/dehoist commands.
-self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects drawing routines and find commands.
-
-self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
+# For hoist/dehoist commands.
+self.hoistStack = []
+    # Stack of nodes to be root of drawn tree.
+    # Affects drawing routines and find commands.
+self.recentFiles = [] # List of recent files
 #@nonl
 #@-node:ekr.20031218072017.2813:<< initialize ivars >>
 #@-node:ekr.20040731071037:c.initIvars
@@ -21090,6 +21096,7 @@ def __init__ (self,c,replaceBody=True):
     self.parser = settingsDialogParserClass(c,p,self)
 
     << set background color for widgets >>
+    c.disableCommandsMessage = 'All commands disabled while settings dialog is open'
     if self.replaceBody:
         << replace the body pane with the outer dialog frame >>
         << replace tree pane with settings tree >>
@@ -22102,6 +22109,561 @@ def updateRecentFiles (self,fileName):
 #@nonl
 #@-node:ekr.20031218072017.2083:c.updateRecentFiles
 #@-node:ekr.20041231104531:(Made sure recent files have correct capitalization)
+#@+node:ekr.20050123143229.1:(Print setting changes to log)
+#@+node:ekr.20041225063637.65:writeChangedVars & helpers
+def writeChangedVars (self):
+    
+    """Create per-file changes lists from diffs between what has been inited and written.
+    
+    Call writeChangedList to update each file from items in this list."""
+
+    changedList = []
+    fDict = self.fileValueDict
+    iDict = self.initValueDict
+    munge = g.app.config.munge
+    
+    for key in iDict.keys():
+
+        iData = iDict.get(key)
+        ip,iname,ikind,ival,getValueCallback = iData
+        newVal = getValueCallback()
+        fData = fDict.get(key)
+        if fData:
+            fp,fname,fkind,fval,junk = fData
+            assert(ip==fp and iname==fname and ikind==fkind)
+            changed = fval != newVal ; oldVal = fval
+        else:
+            changed = ival != newVal ; oldVal = ival
+            fval = '<none>'
+
+        if changed:
+            # print "write","key","ival",ival,"fval",fval
+            if type(oldVal) == type({}):
+                s = "write  %s" % (iname)
+                print s ; g.es(s,color='blue')
+            else:
+                s = "write  %10s -> %10s %s" % (str(oldVal),str(newVal),iname)
+                print s ; g.es(s,color='blue')
+            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
+            changedList.append((ip,iname,ikind,oldVal,newVal),)
+            
+    self.writeChangedList(changedList,"write")
+#@nonl
+#@+node:ekr.20041225063637.66:updateConfig
+def updateConfig(self,c,changes):
+    
+    """Update the core config settings from the changes list."""
+    
+    munge = g.app.config.munge
+
+    for data in changes:
+        p,name,kind,oldval,val = data
+        if munge(kind) == 'font':
+            for key in ('family','size','slant','weight'):
+                data2 = val.get(key)
+                if data2:
+                    name2,val2 = data2
+                    kind2 = g.choose(key=='size','int','string')
+                    g.app.config.set(c,name2,kind2,val2)
+            # Update the visible fonts: c may not be the same as self.c.
+            for c2 in (c,self.c):
+                c2.frame.body.setFontFromConfig()
+                c2.frame.body.colorizer.setFontFromConfig()
+                c2.frame.log.setFontFromConfig()
+                c2.frame.tree.setFontFromConfig()
+                c2.redraw()
+        elif munge(kind) == "color":
+            # g.trace("setting colors")
+            g.app.config.set(c,name,kind,val)
+            for c2 in (c,self.c):
+                c2.frame.tree.setColorFromConfig()
+                c2.frame.log.setColorFromConfig()
+                c2.frame.body.setColorFromConfig()
+        elif munge(name) == "recentfiles":
+            c.setRecentFiles(val)
+        else:
+            g.app.config.set(c,name,kind,val)
+#@nonl
+#@-node:ekr.20041225063637.66:updateConfig
+#@+node:ekr.20041225063637.67:updateOneNode & helper
+def updateOneNode (self,c,data):
+    
+    """Update the node in c corresponding to p = data[0]."""
+    
+    p,name,kind,oldVal,val = data
+    munge = g.app.config.munge
+    name = name.strip() ; kind = munge(kind.strip())
+
+    # Root 1 is the root of the dialog's outline.
+    p1 = p
+    root1 = self.findSettingsRoot(p1).copy()
+    c1 = root1.c
+    
+    # Root is the root of the settings outline in the file.
+    root2 = g.app.config.settingsRoot(c) # c is NOT self.c
+    # g.trace(root2.c.mFileName)
+    p2 = self.findCorrespondingNode(root1,root2,p1)
+    if p2:
+        c2 = p2.c ; filename = c2.mFileName
+    else:
+        g.trace("can't happen: can't find node in",root2.c.mFileName)
+        c2 = None ; filename = None
+
+    # Update the outline in the dialog and the target file.
+    for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
+        if p:
+            # g.trace("updating %s in %s" % (name,where))
+            if kind in ('shortcuts','recentfiles'):
+                # Put the values in the body.
+                p.initHeadString("@%s %s" % (kind,name))
+                body = '\n'.join(val)
+                p.setBodyStringOrPane(body)
+            elif kind == 'font':
+                body = self.computeBodyFromFontDict(p,val)
+                p.setBodyStringOrPane(body)
+            else:
+                # Put everything in the headline.
+                p.initHeadString("@%s %s = %s" % (kind,name,val))
+#@nonl
+#@+node:ekr.20041225063637.68:computeBodyFromFontDict
+def computeBodyFromFontDict(self,p,d):
+
+    lines = []
+    comments = d.get('comments')
+    if comments:
+        comment_lines = g.splitLines(comments)
+        comment_lines = ["# %s" % (line) for line in comment_lines]
+        lines.extend(comment_lines)
+        lines.extend('\n\n')
+        
+    for key in ('family','size','slant','weight'):
+        data = d.get(key)
+        if data:
+            name,val = data
+            if val in (None,'<none>'):
+                val = "None"
+            line = "%s = %s\n" % (name,val)
+            lines.extend(line)
+
+    body = ''.join(lines)
+    return body
+#@nonl
+#@-node:ekr.20041225063637.68:computeBodyFromFontDict
+#@-node:ekr.20041225063637.67:updateOneNode & helper
+#@+node:ekr.20041225063637.69:writeChangedList
+def writeChangedList (self,changedList,tag):
+    
+    if not changedList: return
+    
+    filesInfoDict = self.filesInfoDict
+    if 0:
+        << dump all the dicts in filesInfoDict >>
+
+    # Accumulate the changes for each file in a 'changes' list for each root.
+    for data in changedList:
+        p,name,kind,oldVal,newVal = data
+        # print "%6s %6s %10s -> %10s %s" % (tag,kind,str(oldVal),str(newVal),name)
+        root = self.findSettingsRoot(p)
+        d = filesInfoDict.get(root)
+        changes = d.get('changes')
+        changes.append(data)
+        d['changes'] = changes
+
+    for root in filesInfoDict.keys():
+        d = filesInfoDict.get(root)
+        # Keys are 'c','changes','path','islocal' (unused)
+        c = d.get('c')
+        changes = d.get('changes')
+        path = d.get('path')
+        # isLocal = rootDict.get('isLocal')
+        if changes:
+            self.writeChangesToFile(c,changes,path)
+            self.updateConfig(c,changes)
+        d['changes'] = []
+#@nonl
+#@+node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+for key in filesInfoDict.keys():
+    print ; print
+    print "key",key
+    g.printDict(filesInfoDict.get(key))
+print ; print
+#@nonl
+#@-node:ekr.20041225063637.70:<< dump all the dicts in filesInfoDict >>
+#@-node:ekr.20041225063637.69:writeChangedList
+#@+node:ekr.20041225063637.71:writeChangesToFile
+def writeChangesToFile (self,c,changes,path):
+
+    # Write the individual changes.
+    for data in changes:
+        self.updateOneNode(c,data)
+
+    if c.mFileName:
+        self.es("writing " + g.shortFilename(path))
+        # Save the file corresponding to c.
+        # Non-local files aren't open otherwise!
+        c.fileCommands.save(c.mFileName)
+        c.redraw() # This should work for non-local files too.
+        self.tree.redraw()
+    else:
+        print "no settings saved.  local file not named."
+#@nonl
+#@-node:ekr.20041225063637.71:writeChangesToFile
+#@-node:ekr.20041225063637.65:writeChangedVars & helpers
+#@-node:ekr.20050123143229.1:(Print setting changes to log)
+#@+node:ekr.20050123143229:(Disabled all commands while in settings dialog)
+#@+node:ekr.20031218072017.2817: doCommand
+def doCommand (self,command,label,event=None):
+
+    """Execute the given command, invoking hooks and catching exceptions.
+    
+    The code assumes that the "command1" hook has completely handled the command if
+    g.doHook("command1") returns False.
+    This provides a simple mechanism for overriding commands."""
+    
+    c = self ; p = c.currentPosition()
+
+    # A horrible kludge: set g.app.log to cover for a possibly missing activate event.
+    g.app.setLog(c.frame.log,"doCommand")
+    
+    # The presence of this message disables all commands.
+    if c.disableCommandsMessage:
+        g.es(c.disableCommandsMessage,color='blue')
+        return 'break' # Inhibit all other handlers.
+
+    if label == "cantredo": label = "redo"
+    if label == "cantundo": label = "undo"
+    g.app.commandName = label
+
+    if not g.doHook("command1",c=c,p=p,v=p,label=label):
+        try:
+            command()
+        except:
+            g.es("exception executing command")
+            print "exception executing command"
+            g.es_exception(c=c)
+            c.frame.tree.redrawAfterException() # 1/26/04
+    
+    c = g.top() # 6/17/04: The command can change the commander.
+    if c:
+        p = c.currentPosition()
+        g.doHook("command2",c=c,p=p,v=p,label=label)
+            
+    return "break" # Inhibit all other handlers.
+#@nonl
+#@-node:ekr.20031218072017.2817: doCommand
+#@+node:ekr.20041225063637.13: ctor
+def __init__ (self,c,replaceBody=True):
+    
+    if not Pmw:
+        g.trace("Setting dialog requires Pmw",color='blue')
+        return
+    
+    self.alterComments = None # position for which to alter comments.
+    self.alteredCommentsString = None
+    self.c = c
+    self.buttonNames = ('OK', 'Cancel','Apply','Revert')
+    self.colorSettingDict = {} # Contains entries for all changed colors.
+    self.commentWidget = None
+    self.initValueDict = {} # Initial value of settings in present pane.
+    self.fileValueDict = {} # Values of settings written to file.
+    self.filesInfoDict = {} # Info about all settings file in the settings outline.
+        # Keys are positions, values are dicts giving info for a setting file.
+    self.fontRefs = {} # A dict to retain references to fonts.
+    self.modal = False
+    self.old_p = c.currentPosition()
+    self.old_root = c.rootPosition()
+    self.p = None # Used to revert settings.
+    self.replaceBody = replaceBody
+    self.setterLabel = None
+    self.suppressComments = None # position for which to suppress comments.
+    self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
+    self._settingsPosition = p = self.createSettingsTree()
+    self.parser = settingsDialogParserClass(c,p,self)
+
+    << set background color for widgets >>
+    c.disableCommandsMessage = 'All commands disabled while settings dialog is open'
+    if self.replaceBody:
+        << replace the body pane with the outer dialog frame >>
+        << replace tree pane with settings tree >>
+        << add buttons and label to interior >>
+        << add setterCanvas to interior >>
+        self.log = g.app.log
+        self.tree.redraw_now() # To allocate widgets.
+        self.tree.select(p)
+    else:
+        << create the dialog d >>
+        << create paneFrame, a paned widget >>
+        << create paneFrame2, a second paned widget >>
+        << create outline and log panes in paneFrame2 >>
+        << put setterCanvas in paneFrame's setter pane>>
+        << put a Text widget in the comment pane >>
+        self.log = self.logClass(self.logText)
+        self.tree.redraw_now() # To allocate widgets.
+        self.tree.select(p)
+        self.center()
+        if self.modal: d.activate()
+#@nonl
+#@+node:ekr.20050121105232:<< set background color for widgets >>
+if 0:
+    # Get the color from the background color of the body text widget.
+    commonBackground = c.frame.body.bodyCtrl.cget('background')
+    
+else:
+    # 'LightSteelBlue1' # too blue.
+    # 'gray80' # too dark.
+    # 'gray90' # Possible: very light.
+    # '#f2fdff' # Same as log window.  Too cute.
+    
+    commonBackground = 'gray90'
+    
+self.commonBackground = commonBackground
+#@nonl
+#@-node:ekr.20050121105232:<< set background color for widgets >>
+#@+node:ekr.20041225073207:When replacing body & tree panes...
+#@+node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
+body = c.frame.component('body')
+packer = body.getPacker()
+unpacker = body.getUnpacker()
+
+# The new frame must be a child of splitter1Frame.
+parentFrame = c.frame.component('splitter1Frame').getFrame()
+self.top = interior = Tk.Frame(parentFrame,background=commonBackground)
+
+c.frame.componentClass(c,'settingDialogFrame',interior,self,packer,unpacker)
+c.frame.replaceBodyPaneWithComponent('settingDialogFrame')
+#@nonl
+#@-node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
+#@+node:ekr.20041225074713:<< add buttons and label to interior >>
+# Put the label on the same line as the buttons.
+labelButtonFrame = Tk.Frame(interior,background=commonBackground)
+labelButtonFrame.pack(side='top',expand=0,fill='x',pady=4)
+buttonFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
+buttonFrame.pack(side='left',padx=10)
+labelFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
+labelFrame.pack(side='left')
+self.setterLabel = label = Tk.Label(labelFrame,anchor='w',background=commonBackground)
+label.pack(side='right')
+
+w = 6
+for name in self.buttonNames:
+    w = max(w,len(name))
+
+for name in self.buttonNames:
+
+    def buttonCallback(name=name):
+        self.onAnyButton(name)
+
+    b = Tk.Button(buttonFrame,text=name,command=buttonCallback,width=w)
+    b.pack(side='left',padx=4)
+#@nonl
+#@-node:ekr.20041225074713:<< add buttons and label to interior >>
+#@+node:ekr.20041225073207.1:<< add setterCanvas to interior>>
+self.sc = sc = Pmw.ScrolledCanvas(interior,
+    hscrollmode='dynamic',vscrollmode='dynamic',
+    canvas_background = commonBackground,
+    borderframe=1,
+    # A fixed size here works best.
+    # Pmw does not handle the changes to the canvas very well.
+    usehullsize = 1,
+    hull_height = 400,
+    hull_width = 800,
+)
+
+sc.pack(side='top',expand=1,fill="both")
+#@nonl
+#@-node:ekr.20041225073207.1:<< add setterCanvas to interior>>
+#@+node:ekr.20041225090725:<< replace tree pane with settings tree >>
+tree = c.frame.component('tree')
+
+# The new frame must be a child of splitter2Frame.
+splitter2Frame = c.frame.component('splitter2Frame').getFrame()
+
+# Create a Pmw scrolled canvas.
+scrolledTreeCanvas = Pmw.ScrolledCanvas(splitter2Frame,
+    hscrollmode='none',borderframe=3)
+
+treeCanvas = scrolledTreeCanvas.component('canvas')
+treeCanvas.configure(background='white')
+
+# Set canvas.name ivar for chapters.py plugin.
+# This must be a tab number.  The number '1' should work well enough.
+treeCanvas.name = '1'
+
+# Create the settingsTree component.
+c.frame.componentClass(c,'settingsTree',scrolledTreeCanvas,self,
+    tree.getPacker(),tree.getUnpacker())
+
+c.frame.replaceTreePaneWithComponent('settingsTree')
+
+self.tree = settingsTree(c,c.frame,treeCanvas,self)
+self.tree.setColorFromConfig()
+#@nonl
+#@-node:ekr.20041225090725:<< replace tree pane with settings tree >>
+#@-node:ekr.20041225073207:When replacing body & tree panes...
+#@+node:ekr.20041225073207.3:When using separate dialog...
+#@+node:ekr.20041225063637.14:<< create the dialog d >>
+self.dialog = d = Pmw.Dialog(
+    c.frame.top,
+    title=title,
+    buttons=self.buttonNames,
+    # It's too upsetting to have a dialog go away on a return key.
+    # defaultbutton = 'OK',
+    command = self.onAnyButton
+)
+
+self.top = hull = d.component('hull')
+hull.minsize(800,800)
+
+interior = d.interior()
+
+if 0: # Do immediately
+    g.app.gui.attachLeoIcon(hull)
+else: # Do at idle time.
+    def setIcont(top=hull):
+        g.app.gui.attachLeoIcon(top)
+    hull.after_idle(setIcont)
+#@nonl
+#@-node:ekr.20041225063637.14:<< create the dialog d >>
+#@+node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
+self.paneFrame = paneFrame = Pmw.PanedWidget(interior,
+    separatorthickness = 4, # default is 2
+    handlesize = 8, # default is 8
+    command = self.onPaneResize
+)
+paneFrame.pack(expand = 1, fill='both')
+
+self.panes = {}
+for name,minsize,size,label,isSetterLabel in (
+    ("splitter2",50,300,None,False),
+    ("setter",50,300,"",False),
+    ("comments",50,200,None,False),
+):
+    self.panes[name] = pane = paneFrame.add(name,min=minsize,size=size)
+    if label is not None:
+        label = label = Tk.Label(pane,text=label,background=commonBackground)
+        label.pack(side = 'top', expand = 0)
+        if isSetterLabel:
+            self.setterLabel = label
+
+# Set the colors of the separator and handle.
+for i in (1,2):
+    bar = paneFrame.component('separator-%d' % i)
+    bar.configure(background='LightSteelBlue2')
+    handle = paneFrame.component('handle-%d' % i)
+    handle.configure(background='SteelBlue2')
+
+# g.printDict(self.panes)
+#@nonl
+#@-node:ekr.20041225063637.15:<< create paneFrame, a paned widget >>
+#@+node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
+splitter2 = self.panes.get('splitter2')
+
+self.paneFrame2 = paneFrame2 = Pmw.PanedWidget(splitter2,
+    separatorthickness = 4, # default is 2
+    handlesize = 8, # default is 8
+    orient='horizontal',
+    command = self.onPaneResize
+)
+paneFrame2.pack(expand = 1, fill='both')
+
+for name,minsize,size, in (
+    ('outline',50,500),
+    ('log',50,300),
+):
+    self.panes[name] = pane = paneFrame2.add(name,min=minsize,size=size)
+    
+# Set the colors of the separator and handle.
+i = 1
+bar = paneFrame2.component('separator-%d' % i)
+bar.configure(background='LightSteelBlue2')
+handle = paneFrame2.component('handle-%d' % i)
+handle.configure(background='SteelBlue2')
+#@nonl
+#@-node:ekr.20041225063637.16:<< create paneFrame2, a second paned widget >>
+#@+node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
+outline = self.panes.get('outline')
+
+# Create the widget.
+self.scrolledTreeCanvas = scrolledTreeCanvas = Pmw.ScrolledCanvas(outline,
+    hscrollmode='none',borderframe=3)
+    
+# Configure the canvas component.
+scrolledTreeCanvas.pack(side='top',expand=1,fill="both")
+
+treeCanvas = scrolledTreeCanvas.component('canvas')
+treeCanvas.configure(background='white')
+
+# Create the tree.
+self.tree = tree = settingsTree(c,c.frame,treeCanvas,self)
+
+logPane = self.panes.get('log')
+self.logText = logText = Tk.Text(logPane)
+logText.pack(expand=1,fill="both")
+#@nonl
+#@-node:ekr.20041225063637.17:<< create outline and log panes in paneFrame2 >>
+#@+node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
+# Create the widget in the 'setter' pane.
+setter = self.panes.get('setter')
+
+self.sc = sc = Pmw.ScrolledCanvas(setter,
+    hscrollmode='none',vscrollmode='dynamic',
+    labelpos = 'n',label_text = '')
+    
+sc.pack(side='top',expand=1,fill="both")
+
+setterCanvas = sc.component('canvas')
+self.setterLabel = sc.component('label')
+
+# setterCanvas.configure(background='LightSteelBlue1')
+#@nonl
+#@-node:ekr.20041225063637.18:<< put setterCanvas in paneFrame's setter pane>>
+#@+node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
+commentFrame = self.paneFrame.pane('comments')
+
+self.commentWidget = commentWidget = Pmw.ScrolledText(commentFrame)
+commentWidget.pack(expand=1,fill="both")
+
+self.commentText = text = commentWidget.component('text')
+
+background = commentFrame.cget('background')
+text.configure(background=background,borderwidth=0)
+#@nonl
+#@-node:ekr.20041225063637.19:<< put a Text widget in the comment pane >>
+#@-node:ekr.20041225073207.3:When using separate dialog...
+#@-node:ekr.20041225063637.13: ctor
+#@+node:ekr.20041225063637.51:onAnyButton
+def onAnyButton(self,name):
+    
+    c = self.c
+    endDialog = name in (None,"OK","Cancel")
+    
+    # g.trace(name)
+    
+    dispatchDict = {
+        "Apply":    self.writeChangedVars,
+        "Cancel":   None, # Do nothing.
+        "OK":       self.writeChangedVars,
+        "Revert":   self.revert,
+    }
+    
+    f = dispatchDict.get(name)
+    if f: f()
+        
+    if self.replaceBody:
+        if endDialog:
+            c.frame.replaceTreePaneWithComponent('tree')
+            c.frame.replaceBodyPaneWithComponent('body')
+            c.disableCommandsMessage = '' # Re-enable all commands.
+    else:
+        if endDialog:
+            self.dialog.destroy()
+            c.disableCommandsMessage = '' # Re-enable all commands.
+        else:
+            self.dialog.withdraw()
+            self.dialog.deiconify()
+#@nonl
+#@-node:ekr.20041225063637.51:onAnyButton
+#@-node:ekr.20050123143229:(Disabled all commands while in settings dialog)
 #@-node:ekr.20041115111203:Config...
 #@+node:ekr.20041228052527.2:New features...
 #@+node:ekr.20040930064232.2:(Added new expand/contract or go commands)

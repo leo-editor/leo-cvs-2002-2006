@@ -3,16 +3,6 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20050102180943.1:4.3 a1
-#@+node:ekr.20050123143229:Disable all commands while in settings dialog
-#@-node:ekr.20050123143229:Disable all commands while in settings dialog
-#@+node:ekr.20050123143229.1:Print setting changes to log
-#@-node:ekr.20050123143229.1:Print setting changes to log
-#@+node:ekr.20050123122012:Finish release notes and announcements
-- Add quotes, etc.
-#@nonl
-#@-node:ekr.20050123122012:Finish release notes and announcements
-#@-node:ekr.20050102180943.1:4.3 a1
 #@+node:ekr.20050119072551:4.3 a2 undo & dist
 #@+node:ekr.20050104083249:Undo
 #@+node:ekr.20041011092930:Fix undo bug
@@ -1565,7 +1555,7 @@ It is possible to do pretty much anything you want but you will have to provide 
 #@-node:ekr.20041228092223.1:Used tabbed log for find dialog?
 #@-node:ekr.20041228074125:Drawing...
 #@-node:ekr.20050104083128:4.3 b1 drawing and uA's
-#@+node:ekr.20041228073219:4.3.n
+#@+node:ekr.20041228073219:4.3.n...
 #@+node:ekr.20040919182750.1:4.3.1 better handling of whitespace
 #@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
 add python -t to test suite to catch mixed tab & space in derived files.
@@ -4553,7 +4543,7 @@ Scott
 #@-node:ekr.20031218072017.737:Leo & data bases
 #@-node:ekr.20031218072017.412:Zope postings
 #@-node:ekr.20041228084018.5:4.3.8 zodb
-#@-node:ekr.20041228073219:4.3.n
+#@-node:ekr.20041228073219:4.3.n...
 #@+node:ekr.20041228094138:4.4  LeoN and collaboration
 This may not be so big a project.  LeoN already exists.
 #@nonl
