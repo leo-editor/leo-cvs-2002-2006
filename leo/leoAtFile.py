@@ -2610,21 +2610,25 @@ class atFile:
 	#@-node:8::putIndent
 	#@+node:9::atFile.checkForLeoCustomize
 	#@+body
-	def checkForLeoCustomize (self):
-		
-		fn = os.path.basename(self.targetFileName)
-		if fn == "leoCustomize.py":
-			import leoDialog
-			d = leoDialog.leoDialog()
-			result = d.askYesNo(
-				"Create leoCustomize.py?",
-				"You are about to create or change leoCustomize.py.\n" +
-				"Are you sure you trust the code in this file?")
-			if result!="yes":
-				es("not written: leoCustomize.py")
-				return false
-		return true
+	def checkForLeoCustomize (self,v=None):
 	
+		import leoDialog
+		d = leoDialog.leoDialog()
+		if v:
+			if v.atFileNodeName() == "leoCustomize.py":
+				d.askOk("Security Alert!",
+					"@ignore not in effect for @node leoCustomize.py!")
+			return None
+		else:
+			fn = os.path.basename(self.targetFileName)
+			if fn == "leoCustomize.py":
+				result = d.askYesNo("Security Alert!",
+					"You are about to create or change leoCustomize.py.\n" +
+					"Are you sure you trust the code in this file?")
+				if result!="yes":
+					es("not written: leoCustomize.py")
+					return false
+			return true
 	#@-body
 	#@-node:9::atFile.checkForLeoCustomize
 	#@+node:10::atFile.closeWriteFile
@@ -3189,6 +3193,8 @@ class atFile:
 				if v.isDirty() or partialFlag:
 					self.write(v)
 					written = true
+				else:
+					self.checkForLeoCustomize(v)
 				v = v.nodeAfterTree()
 			else: v = v.threadNext()
 		if partialFlag: # This is the Write @file Nodes command.
