@@ -113,9 +113,12 @@ class LeoFrame:
 		v = leoNodes.vnode(c,t)
 		v.initHeadString("NewHeadline")
 		v.moveToRoot()
+		
+		c.beginUpdate()
 		c.tree.redraw()
 		c.tree.canvas.focus_get()
 		c.editVnode(v)
+		c.endUpdate(false)
 		#@-body
 		#@-node:2::<< create the first tree node >>
 
@@ -132,10 +135,10 @@ class LeoFrame:
 		self.body.bind("<Double-Button-1>", self.OnBodyDoubleClick)
 		self.log.bind("<Button-1>", self.OnActivateLog)
 		self.body.bind("<Key>", self.tree.OnBodyKey)
-		# self.body.bind("<Control-d>", self.OnMoveDown) # Makes control-d problem worse!!
 		self.body.bind(virtual_event_name("Cut"), self.OnCut)
 		self.body.bind(virtual_event_name("Copy"), self.OnCopy)
 		self.body.bind(virtual_event_name("Paste"), self.OnPaste)
+
 	#@-body
 	#@-node:1:C=1:frame.__init__
 	#@+node:2:C=3:frame.__del__

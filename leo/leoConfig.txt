@@ -332,9 +332,12 @@ initial_window_top = 10
 initial_splitter_orientation = v
 #	valid values: h or horizontal or v or vertical.
 #	(Actually, anything but h or horizontal is considered vertical.)
-#	This is not saved in .leo files, so it applies to all windows.
 #	vertical: body pane below outline and log panes.
 #	horizontal: body pane to left of outline and log panes.
+#	Note This is _not_ saved in .leo files, but the body/outline ratio _is_ saved.
+#	This will lead to confusing results when this file is read only:
+#	1. Changes to orientation caused by Toggle Split Direction are not changed, but
+#	2. Changes to body/outline ratio _are_ changed.
 
 initial_vertical_ratio = 0.5
 #	tree pane/body pane size when spitting pane vertically.

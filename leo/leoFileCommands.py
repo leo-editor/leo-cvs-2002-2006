@@ -358,12 +358,13 @@ class fileCommands:
 	#@-node:6:C=3:getGlobals
 	#@+node:7:C=4:getLeoFile (Leo2)
 	#@+body
-	def getLeoFile (self,frame,atFileNodesFlag):
+	# The caller should enclose this in begin/endUpdate.
+	
+	def getLeoFile (self,frame,fileName,atFileNodesFlag):
 	
 		c=self.commands
 		self.mFileName = frame.mFileName
 		self.tnodesDict = {} ; ok = true
-		c.beginUpdate()
 		try:
 			c.tree.initing = true # inhibit endEditLabel from marking the file changed.
 			self.getXmlVersionTag() # leo.py 3.0
@@ -372,6 +373,8 @@ class fileCommands:
 			self.getGlobals()
 			self.getPrefs()
 			self.getFindPanelSettings()
+			c.frame.resizePanesToRatio(self.ratio) # Causes window to appear.
+			es("reading: " + fileName)
 			self.getVnodes()
 			self.getTnodes()
 			self.getCloneWindows()
@@ -422,7 +425,6 @@ class fileCommands:
 		if not c.tree.currentVnode:
 			c.tree.currentVnode = c.tree.rootVnode
 		c.selectVnode(c.tree.currentVnode) # load body pane
-		c.endUpdate() # redraw recomputes all icons.
 		c.tree.initing = false # Enable changes in endEditLabel
 		self.tnodesDict = {}
 		return ok, self.ratio
@@ -862,14 +864,13 @@ class fileCommands:
 		#@-node:1:C=10:<< Set the default directory >>
 
 		# esDiffTime("open:read all", t)
-		es("reading: " + fileName)
+	
 		c.beginUpdate()
 		if 1: # inside update...
 			c.loading = true # disable c.changed
-			ok, ratio = self.getLeoFile(self.frame, true) # readAtFileNodes
+			ok, ratio = self.getLeoFile(self.frame,fileName,true) # readAtFileNodes
 			c.loading = false # reenable c.changed
 			c.setChanged(false)
-			c.frame.resizePanesToRatio(ratio)
 			# This should be done after the pane size has been set.
 			top = c.tree.topVnode
 			if 0: # This can't be done directly.
@@ -1198,26 +1199,6 @@ class fileCommands:
 		#@<< put prefs that may exist in leoConfig.txt >>
 		#@+node:1::<< put prefs that may exist in leoConfig.txt >>
 		#@+body
-		if config.configsExist: # 7/18/02
-			config.setPref("tab_width",`c.tab_width`)
-			config.setPref("page_width",`c.page_width`)
-			config.setPref("run_tangle_done.py",`c.tangle_batch_flag`)
-			config.setPref("run_untangle_done.py",`c.untangle_batch_flag`)
-			config.setPref("output_doc_chunks",`c.output_doc_flag`)
-			config.setPref("tangle_outputs_header",`c.use_header_flag`)
-		else:
-			self.put(" tab_width=") ; self.put_in_dquotes(`c.tab_width`)
-			self.put(" page_width=") ; self.put_in_dquotes(`c.page_width`)
-			self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
-			self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
-			self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
-			self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
-		
-		# New in version 0.15
-		
-		#@<< put language prefs >>
-		#@+node:1::<< put language prefs >>
-		#@+body
 		dict = config.languageNameDict
 		
 		if c.target_language and dict.has_key(c.target_language):
@@ -1225,19 +1206,28 @@ class fileCommands:
 		else:
 			language = "Plain"
 		
-		if config.configsExist:
+		if config.configsExist and not config.read_only: # 8/6/02
+			config.setPref("tab_width",`c.tab_width`)
+			config.setPref("page_width",`c.page_width`)
+			config.setPref("run_tangle_done.py",`c.tangle_batch_flag`)
+			config.setPref("run_untangle_done.py",`c.untangle_batch_flag`)
+			config.setPref("output_doc_chunks",`c.output_doc_flag`)
+			config.setPref("tangle_outputs_header",`c.use_header_flag`)
 			config.setPref("default_target_language",language)
 		else:
+			self.put(" tab_width=") ; self.put_in_dquotes(`c.tab_width`)
+			self.put(" page_width=") ; self.put_in_dquotes(`c.page_width`)
+			self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
+			self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
+			self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
+			self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
 			self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
-		#@-body
-		#@-node:1::<< put language prefs >>
-
 		
 		self.put(">") ; self.put_nl()
 		# New in version 0.16
 		
 		#@<< put default directory >>
-		#@+node:2::<< put default directory >>
+		#@+node:1::<< put default directory >>
 		#@+body
 		if config.configsExist:
 			config.setPref("default_tangle_directory",c.tangle_directory)
@@ -1248,7 +1238,7 @@ class fileCommands:
 			self.put("</defaultDirectory>")
 			self.put_nl()
 		#@-body
-		#@-node:2::<< put default directory >>
+		#@-node:1::<< put default directory >>
 		#@-body
 		#@-node:1::<< put prefs that may exist in leoConfig.txt >>
 
