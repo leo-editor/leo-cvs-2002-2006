@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2596" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2674" clone_windows="0"/>
 <globals body_outline_ratio="0.38383838383838381">
-	<global_window_position top="37" left="164" height="755" width="1071"/>
+	<global_window_position top="66" left="253" height="755" width="860"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -380,12 +380,100 @@
 <v t="ekr.20040303080010"><vh>Run all tests except files tests</vh></v>
 </v>
 <v t="ekr.20040303215834"><vh>Test of position  comparisons</vh></v>
-<v t="ekr.20040304082053" a="TV"><vh>__iter__ tests</vh>
-<v t="ekr.20040304090931"><vh>__init__</vh></v>
-<v t="ekr.20040304090931.1"><vh>__iter__</vh></v>
-<v t="ekr.20040304091204"><vh>next</vh></v>
+<v t="ekr.20040305165016" a="ETV"><vh>new iter tests</vh>
+<v t="ekr.20040305165846"><vh>class position (for testing only)</vh>
+<v t="ekr.20040305165846.1"><vh> ctor &amp; other special methods...</vh>
+<v t="ekr.20040305165846.2"><vh>p.__init__</vh></v>
+<v t="ekr.20040305165846.3"><vh>p.__cmp__</vh></v>
+<v t="ekr.20040305165846.4"><vh>p.__getattr__ (not used)</vh></v>
+<v t="ekr.20040305165846.5"><vh>p.__nonzero__</vh></v>
+<v t="ekr.20040305165846.6"><vh>p.__str__ and p.__repr__</vh></v>
 </v>
-<v t="ekr.20040304091615"><vh>Node after tree</vh></v>
+<v t="ekr.20040305165846.7"><vh>&lt;&lt; about the position class &gt;&gt;</vh></v>
+<v t="ekr.20040305165846.8"><vh>Dirty bits</vh>
+<v t="ekr.20040305165846.9"><vh>p.isDirty</vh></v>
+<v t="ekr.20040305165846.10"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
+<v t="ekr.20040305165846.11"><vh>p.setAncestorAtFileNodeDirty</vh></v>
+<v t="ekr.20040305165846.12"><vh>p.setAncestorsOfClonedNodesInTreeDirty</vh></v>
+<v t="ekr.20040305165846.13"><vh>p.setDirty</vh></v>
+</v>
+<v t="ekr.20040305174003"><vh>Iterators</vh>
+<v t="ekr.20040305174003.1"><vh>allNodes_iter</vh>
+<v t="ekr.20040305174003.2"><vh>__init__ &amp; __iter__</vh></v>
+<v t="ekr.20040305174003.3"><vh>next</vh></v>
+</v>
+<v t="ekr.20040305174003.4"><vh>subtree_iter</vh>
+<v t="ekr.20040305174003.5"><vh>__init__ &amp; __iter__</vh></v>
+<v t="ekr.20040305174003.6"><vh>next</vh></v>
+</v>
+<v t="ekr.20040305174003.7"><vh>children_iter</vh>
+<v t="ekr.20040305174003.8"><vh>__init__ &amp; __iter__</vh></v>
+<v t="ekr.20040305174003.9"><vh>next</vh></v>
+</v>
+<v t="ekr.20040305174003.10"><vh>parents_iter</vh>
+<v t="ekr.20040305174003.11"><vh>__init__ &amp; __iter__</vh></v>
+<v t="ekr.20040305174003.12"><vh>next</vh></v>
+</v>
+<v t="ekr.20040305174003.13"><vh>siblings_iter</vh>
+<v t="ekr.20040305174003.14"><vh>__init__ &amp; __iter__</vh></v>
+<v t="ekr.20040305174003.15"><vh>next</vh></v>
+</v>
+</v>
+<v t="ekr.20040305165846.19"><vh>Moving, Inserting, Deleting, Cloning, Sorting (position)  TEST</vh>
+<v t="ekr.20040305165846.20"><vh>Entry Points (positon)</vh>
+<v t="ekr.20040305165846.21"><vh>p.doDelete TEST</vh></v>
+<v t="ekr.20040305165846.22"><vh>p.insertAfter TEST</vh></v>
+<v t="ekr.20040305165846.23"><vh>p.insertAsLastChild</vh></v>
+<v t="ekr.20040305165846.24"><vh>p.insertAsNthChild TEST</vh></v>
+<v t="ekr.20040305165846.25"><vh>p.moveToRoot TEST</vh></v>
+<v t="ekr.20040305165846.26"><vh>p.clone TEST</vh></v>
+<v t="ekr.20040305165846.27"><vh>p.copyTreeWithNewTnodes: used by unit tests TO DO</vh></v>
+<v t="ekr.20040305165846.28"><vh>p.moveAfter TEST</vh></v>
+<v t="ekr.20040305165846.29"><vh>p.moveToNthChildOf TEST</vh></v>
+<v t="ekr.20040305165846.30"><vh>p.sortChildren TEST</vh></v>
+<v t="ekr.20040305165846.31"><vh>p.validateOutlineWithParent</vh>
+<v t="ekr.20040305165846.32"><vh>&lt;&lt; validate parent ivar &gt;&gt;</vh></v>
+<v t="ekr.20040305165846.33"><vh>&lt;&lt; validate childIndex ivar &gt;&gt;</vh></v>
+<v t="ekr.20040305165846.34"><vh>&lt;&lt; validate x ivar &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040305165846.35"><vh>p.invalidOutline</vh></v>
+</v>
+<v t="ekr.20040305165846.36"><vh>position dummy methods: TO BE DELETED</vh></v>
+</v>
+<v t="ekr.20040305165846.37"><vh>p.childIndex</vh></v>
+<v t="ekr.20040305165846.38"><vh>p.getX</vh></v>
+<v t="ekr.20040305165846.39"><vh>p.hasX </vh>
+<v t="ekr.20040305165846.40"><vh>hasThreadNext (the only complex hasX method)</vh></v>
+</v>
+<v t="ekr.20040305165846.41"><vh>p.moveToX</vh>
+<v t="ekr.20040305165846.42"><vh>p.moveToBack</vh></v>
+<v t="ekr.20040305165846.43"><vh>p.moveToFirstChild (pushes stack for cloned nodes)</vh></v>
+<v t="ekr.20040305165846.44"><vh>p.moveToLastChild (pushes stack for cloned nodes)</vh></v>
+<v t="ekr.20040305165846.45"><vh>p.moveToLastNode (new cheap code)</vh>
+<v t="ekr.20040305165846.46"><vh>&lt;&lt; simulate repeated "lookahead" calls to p.moveToThreadNext() &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040305165846.47"><vh>p.moveToNext</vh></v>
+<v t="ekr.20040305165846.48"><vh>p.moveToNodeAfterTree</vh></v>
+<v t="ekr.20040305165846.49"><vh>p.moveToNthChild (pushes stack for cloned nodes)</vh></v>
+<v t="ekr.20040305165846.50"><vh>p.moveToParent (pops stack when multiple parents)</vh></v>
+<v t="ekr.20040305165846.51"><vh>p.moveToThreadBack (new cheap code)</vh>
+<v t="ekr.20040305165846.52"><vh>p.checkNextThreadNextLevel</vh></v>
+</v>
+<v t="ekr.20040305165846.53"><vh>p.moveToThreadNext</vh></v>
+<v t="ekr.20040305165846.54"><vh>p.moveToVisBack</vh></v>
+<v t="ekr.20040305165846.55"><vh>p.moveToVisNext</vh></v>
+</v>
+<v t="ekr.20040305165846.56"><vh>p.utils...</vh>
+<v t="ekr.20040305165846.57"><vh>p.copy</vh></v>
+<v t="ekr.20040305165846.58"><vh>p.isVisible</vh></v>
+<v t="ekr.20040305165846.59"><vh>p.level</vh></v>
+<v t="ekr.20040305165846.60" a="E"><vh>p.vParentWithStack</vh>
+<v t="ekr.20040305165846.61"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20040305171318"><vh>last node</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20040126105605"></t>
@@ -2774,62 +2862,984 @@ p = leoNodes.position(v,[])
 p2 = p.copy()
 print p == p2
 </t>
-<t tx="ekr.20040304082053">from leoGlobals import *
+<t tx="ekr.20040305165016">try: True;False
+except NameError: True,False = 1,0
+import leoGlobals as g
 import leoNodes
+position = leoNodes.position
+g.sharedNodes = False
 
-# WARNING: only tested with sharedNodes = false
-sharedNodes = false
+@others
 
-# Many other iterator classes might be useful...
-class all_vnodes_iter:
-	"""Returns a list of all vnodes in the subtree passed to the ctor.
+current = g.top().currentVnode()
+child1 = current.firstChild()
+child2 = child1.firstChild()
+pos = position(current,[]) # default position.
+
+if 1:
+	print '-'*10, "parents"
+	pos = position(child2,[]) # a hack.
+	for v in pos.parents_iter(): print v
+if 0:
+	print '-'*10, "subtree"
+	for v in pos.subtree_iter(): print v
+if 0:
+	print '-'*10, "children"
+	pos = position(child1,[]) # a hack.
+	for v in pos.children_iter(): print v
+if 0:
+	print '-'*10, "siblings"
+	for v in pos.siblings_iter(): print v
+if 0:
+	print '-'*10, "all nodes"
+	for v in pos.allNodes_iter(): print v</t>
+<t tx="ekr.20040305165846"># Warning: this code implies substantial changes to code that uses them, both core and scripts.
+
+class position:
 	
-	Returns a list of all vnodes in the entire tree by default."""
+	"""A class representing a position in a traversal of a tree containing shared tnodes."""
+
+	&lt;&lt; about the position class &gt;&gt;
+	
+	@others</t>
+<t tx="ekr.20040305165846.1"></t>
+<t tx="ekr.20040305165846.2">def __init__ (self,v,stack):
+
+	"""Create a new position."""
+	
+	if v: self.c = v.c
+	else: self.c = g.top()
+
+	self.v = v
+	self.stack = stack[:] # Creating a copy here is safest and best.</t>
+<t tx="ekr.20040305165846.3">def __cmp__(self,other):
+	
+	"""Return True if two postions are equivalent."""
+
+	p1 = self ; p2 = other
+	
+	assert(p1 is not None)
+	
+	# g.trace(repr(p1),repr(p2))
+	
+	if p2 == None: return 1 # Special case. Not equal.
+	
+	if p1.v != p2.v or len(p1.stack) != len(p2.stack):
+		return 1 # Not equal
+		
+	for i in xrange(len(p1.stack)):
+		if p1.stack[i] != p2.stack[i]:
+			return 1 # Not equal
+			
+	return 0 # Equal</t>
+<t tx="ekr.20040305165846.4"># Most position methods are simply proxies for the corresponding vnode method.
+
+# This is safe and saves a _lot_ of code.
+
+if 0: # The position class is no longer a proxy for the vnode class.
+
+	def __getattr__ (self,attr):
+		return getattr(self.v,attr)</t>
+<t tx="ekr.20040305165846.5">@
+The test "if p" is the _only_ correct way to test whether a position p is valid.
+In particular, tests like "if p is None" or "if p is not None" will not work properly.
+@c
+
+def __nonzero__ ( self):
+	
+	"""Return True if a position is valid."""
+
+	return self.v is not None</t>
+<t tx="ekr.20040305165846.6">def __str__ (self):
+	
+	p = self
+	
+	if p.v:
+		return "&lt;pos(%d) %s&gt;" % (len(p.stack),p.v.headString())
+	else:
+		return "&lt;pos None&gt;"
+		
+__repr__ = __str__</t>
+<t tx="ekr.20040305165846.7">@ This class provides tree traversal methods that operate on positions, not vnodes.  Positions encapsulate the notion of present position within a traversal.
+
+Positions consist of a vnode and a stack of parent nodes used to determine the next parent when a vnode has mutliple parents.
+
+Calling, e.g., p.moveToThreadNext() results in p being an invalid position.  That is, p represents the position following the last node of the outline.  The test "if p" is the _only_ correct way to test whether a position p is valid.  In particular, tests like "if p is None" or "if p is not None" will not work properly.
+
+The only changes to vnodes and tnodes needed to implement shared tnodes are:
+
+- The firstChild field becomes part of tnodes.
+- t.vnodes contains a list of all vnodes sharing the tnode.
+
+The advantages of using shared tnodes:
+
+- Leo no longer needs to create or destroy "dependent" trees when changing descendents of cloned trees.
+- There is no need for join links and no such things as joined nodes.
+
+These advantages are extremely important: Leo is now scalable to very large outlines.
+
+An important complication is the need to avoid creating temporary positions while traversing trees:
+- Several routines use p.vParentWithStack to avoid having to call tempPosition.moveToParent().
+  These include p.level, p.isVisible, p.hasThreadNext and p.vThreadNext.
+- p.moveToLastNode and p.moveToThreadBack use new algorithms that don't use temporary data.
+- Several lookahead routines compute whether a position exists without computing the actual position.</t>
+<t tx="ekr.20040305165846.8"></t>
+<t tx="ekr.20040305165846.9">def isDirty (self):
+	
+	p = self
+	return p.v and p.v.isDirty()
+</t>
+<t tx="ekr.20040305165846.10">def setAllAncestorAtFileNodesDirty (self):
+
+	p = self ; c = p.c
+	changed = False
+	c.beginUpdate()
+	if p.setAncestorAtFileNodeDirty():
+		changed = True
+	c.endUpdate(changed)
+	return changed</t>
+<t tx="ekr.20040305165846.11">@ This is called from the key-event handler, so we must not force a redraw of the screen here. We avoid redraw in most cases by passing redraw_flag to c.endUpdate().
+
+This is called from v.setDirty, so we avoid further calls to v.setDirty here.  The caller, that is, v.setDirty itself, handles all clones.
+
+@c
+def setAncestorAtFileNodeDirty(self):
+
+	# Look up the tree for an ancestor @file node.
+	p = self.copy() ; c = p.c
+	redraw_flag = False
+	c.beginUpdate()
+	if 1: # update...
+		while p:
+			if not p.v.isDirty() and p.v.isAnyAtFileNode():
+				redraw_flag = True
+				p.v.t.setDirty() # Do not call v.setDirty here!
+			p.moveToParent()
+	c.endUpdate(redraw_flag) # A crucial optimization: does nothing if inside nested begin/endUpdate.
+	return redraw_flag # Allow caller to do the same optimization.</t>
+<t tx="ekr.20040305165846.12">def setAncestorsOfClonedNodesInTreeDirty(self):
+
+	"""This marks v dirty and all cloned nodes in v's tree."""
+
+	p = self
+	
+	if not p:
+		return False
+	else:
+		return p.setAncestorAtFileNodeDirty()</t>
+<t tx="ekr.20040305165846.13"># Ensures that all ancestor @file nodes are marked dirty.
+# It is much safer to do it this way.
+
+def setDirty (self):
+
+	p = self ; c = p.c
+	changed = False
+	
+	c.beginUpdate()
+	if 1: # update...
+		if not p.v.t.isDirty():
+			p.v.t.setDirty()
+			changed = True
+		# This must be called even if p.v is already dirty.
+		if p.setAncestorAtFileNodeDirty():
+			changed = True
+	c.endUpdate(changed)
+
+	return changed</t>
+<t tx="ekr.20040305165846.19">if g.sharedNodes:
+	
+	@others</t>
+<t tx="ekr.20040305165846.20"></t>
+<t tx="ekr.20040305165846.21">@ This is the main delete routine.  It deletes the receiver's entire tree from the screen.  Because of the undo command we never actually delete vnodes or tnodes.
+@c
+
+def doDelete (self,newPosition):
+
+	"""Unlinks p.v from the outline.  May be undone.
+	
+	Returns newPosition."""
+
+	p = self ; c = p.c
+
+	p.setDirty() # Mark @file nodes dirty!
+	p.v.unlink()
+	c.selectVnode(newPosition)
+	
+	return newPosition</t>
+<t tx="ekr.20040305165846.22">def insertAfter (self,t=None):
+
+	"""Inserts a new vnode after self.
+	
+	Returns the newly created position."""
+	
+	p = self.copy() ; c = p.c
+
+	if not t:
+		t = tnode(headString="NewHeadline")
+
+	v = vnode(c,t)
+	v.iconVal = 0
+	v.linkAfter(p.v)
+
+	p.v = v
+	return p</t>
+<t tx="ekr.20040305165846.23">def insertAsLastChild (self,t=None):
+
+	"""Inserts a new vnode as the last child of self.
+	
+	Returns the newly created position."""
+	
+	p = self
+	n = p.numberOfChildren()
+
+	if not t:
+		t = tnode(headString="NewHeadline")
+	
+	return p.insertAsNthChild(n,t)</t>
+<t tx="ekr.20040305165846.24">def insertAsNthChild (self,n,t=None):
+
+	"""Inserts a new node as the the nth child of self.
+	self must have at least n-1 children.
+	
+	Returns the newly created position."""
+	
+	p = self.copy()
+
+	if not t:
+		t = tnode(headString="NewHeadline")
+	
+	v = vnode(self.c,t)
+	v.iconVal = 0
+	v.linkAsNthChild(p.v,n)
+	
+	p.v = v
+	return p
+</t>
+<t tx="ekr.20040305165846.25">def moveToRoot (self, oldRoot = None):
+
+	"""Moves self to the root position.
+	
+	Returns the root position."""
+
+	p = self.copy()
+	p.v.unlink()
+	p.v.linkAsRoot(oldRoot)
+	
+	return p</t>
+<t tx="ekr.20040305165846.26"># Creates a clone of back and insert it as the next sibling of back.
+
+def clone (self,back):
+	
+	"""Create a clone of back.
+	
+	Returns the newly created position."""
+	
+	p = self.copy()
+	
+	clone = vnode(self.c,back.v.t)
+	clone.linkAfter(back.v)
+	
+	p.v = clone
+	return p
+</t>
+<t tx="ekr.20040305165846.27">def copyTreeWithNewTnodes (self):
+	
+	"""Return a copy of self with all new tnodes"""
+	
+	c = self.c
+	
+	# Create the root node.
+	old_v = self
+	new_v = vnode(c,tnode())
+	new_v.t.headString = old_v.t.headString
+	new_v.t.bodyString = old_v.t.bodyString
+	
+	# Recursively create all descendents.
+	old_child = old_v.firstChild() ; n = 0
+	while old_child:
+		new_child = old_child.copyTreeWithNewTnodes()
+		new_child.linkAsNthChild (new_v, n)
+		n += 1
+		old_child = old_child.next()
+		
+	# Return the root of the new tree.
+	return new_v</t>
+<t tx="ekr.20040305165846.28"># Used by scripts
+
+def moveAfter (self,a):
+
+	"""Moves self after position a.
+	
+	Returns the newly created position."""
+
+	p = self.copy() ; c = p.c
+
+	p.v.unlink()
+	p.v.linkAfter(a.v)
+	
+	# Moving a node after another node can create a new root node.
+	if not a.hasParent() and not a.hasBack():
+		c.frame.tree.setRootPosition(a)
+		
+	return p</t>
+<t tx="ekr.20040305165846.29"># Compatibility routine for scripts
+
+def moveToNthChildOf (self, pv, n):
+
+	"""Moves the receiver to the nth child of vnode pv.
+	
+	Returns the newly created position."""
+
+	p = self.copy() ; c = p.c
+
+	p.v.unlink()
+	p.v.linkAsNthChild(pv, n)
+	
+	# Moving a node can create a new root node.
+	if not pv.parent() and not pv.back():
+		c.frame.tree.setRootVnode(pv)
+		
+	return p</t>
+<t tx="ekr.20040305165846.30">def sortChildren (self):
+
+	# Create a list of (headline,position) tuples
+	p = self.copy() ; pairs = []
+	if not p.hasFirstChild(): return
+	child = p.getFirstChild()
+	while child:
+		pairs.append((string.lower(child.headString()),child))
+		child.moveToNext()
+
+	# Sort the list on the headlines.
+	pairs.sort()
+
+	# Move the children.
+	index = 0
+	for headline,child in pairs:
+		child.moveToNthChildOf(p,index)
+		index += 1</t>
+<t tx="ekr.20040305165846.31"># This routine checks the structure of the receiver's tree.
+
+def validateOutlineWithParent (self,pv):
+	
+	p = self
+	result = True # optimists get only unpleasant surprises.
+	parent = p.getParent()
+	childIndex = p.childIndex()
+	&lt;&lt; validate parent ivar &gt;&gt;
+	&lt;&lt; validate childIndex ivar &gt;&gt;
+	&lt;&lt; validate x ivar &gt;&gt;
+
+	# Recursively validate all the children.
+	child = p.getFirstChild()
+	while child:
+		r = child.validateOutlineWithParent(p)
+		if not r: result = False
+		child.moveToNext()
+	return result</t>
+<t tx="ekr.20040305165846.32">if parent != pv:
+	p.invalidOutline( "Invalid parent link: " + parent.v.description() )</t>
+<t tx="ekr.20040305165846.33">if pv:
+	if childIndex &lt; 0:
+		p.invalidOutline ( "missing childIndex" + childIndex )
+	elif childIndex &gt;= pv.numberOfChildren():
+		p.invalidOutline ( "missing children entry for index: " + childIndex )
+elif childIndex &lt; 0:
+	p.invalidOutline ( "negative childIndex" + childIndex )</t>
+<t tx="ekr.20040305165846.34">if not p.v.t and pv:
+	self.invalidOutline ( "Empty t" )</t>
+<t tx="ekr.20040305165846.35">def invalidOutline (self, message):
+
+	s = "invalid outline: " + message + "\n"
+	parent = self.getParent()
+
+	if parent:
+		s += repr(parent)
+	else:
+		s += repr(self)
+
+	g.alert(s)</t>
+<t tx="ekr.20040305165846.36">if 1: # These will eventually go away.
+
+	# Called from undo...
+	def addTreeToJoinLists (self): pass
+	def joinTreeTo  (self, tree2): pass
+	def unjoinTree         (self): pass
+	
+	# Called only from commands...
+	def createDependents   (self): pass
+	def destroyDependents  (self): pass</t>
+<t tx="ekr.20040305165846.37">def childIndex(self):
+	
+	p = self
+	
+	if not p.hasParent(): return 0
+	
+	# Point v at the first sibling
+	v = p.v
+	while v and v._back:
+		v = v._back
+		
+	# Now count.
+	n = 0
+	while v:
+		if v == p.v: return n
+		v = v._next
+		n += 1
+	assert(False)</t>
+<t tx="ekr.20040305165846.38"># These methods are useful abbreviations.
+# Warning: they make copies of positions, so they should be used _sparingly_
+
+def getBack          (self): return self.copy().moveToBack()
+def getFirstChild    (self): return self.copy().moveToFirstChild()
+def getLastChild     (self): return self.copy().moveToLastChild()
+def getLastNode      (self): return self.copy().moveToLastNode()
+def getNext          (self): return self.copy().moveToNext()
+def getNodeAfterTree (self): return self.copy().moveToNodeAfterTree()
+def getNthChild    (self,n): return self.copy().moveToNthChild(n)
+def getParent        (self): return self.copy().moveToParent()
+def getThreadBack    (self): return self.copy().moveToThreadBack()
+def getThreadNext    (self): return self.copy().moveToThreadNext()
+def getVisBack       (self): return self.copy().moveToVisBack()
+def getVisNext       (self): return self.copy().moveToVisNext()
+
+@
+It might be feasible to use these methods during the transition to 4.2.
+However, using these routines is in general a bad idea.
+@c
+
+if 0: # WARNING: defining the "old" names here is dangerous!
+	back          = getBack
+	firstChild    = getFirstChild
+	lastChild     = getLastChild
+	lastNode      = getLastNode
+	next          = getNext
+	nodeAfterTree = getNodeAfterTree
+	nthChild      = getNthChild
+	parent        = getParent
+	threadBack    = getThreadBack
+	threadNext    = getThreadNext
+	visBack       = getVisBack
+	visNext       = getVisNext</t>
+<t tx="ekr.20040305165846.39">def hasBack(self):
+	return self.v and self.v._back
+	
+def hasChildren(self):
+	return self.v and self.v.t and self.v.t._firstChild
+	
+hasFirstChild = hasChildren
+	
+def hasNext(self):
+	return self.v and self.v._next
+	
+def hasParent(self):
+	return self.v and (self.v._parent or len(self.stack) &gt; 0)
+	
+def hasThreadBack(self):
+	return self.hasParent() or self.hasBack() # Much cheaper than computing the actual value.
+	
+hasVisBack = hasThreadBack</t>
+<t tx="ekr.20040305165846.40">def hasThreadNext(self):
+
+	p = self ; v = p.v
+	if not p.v: return False
+
+	if v.t._firstChild or v._next:
+		return True
+	else:
+		n = len(p.stack)-1
+		v,n = p.vParentWithStack(v,p.stack,n)
+		while v:
+			if v._next:
+				return True
+			v,n = p.vParentWithStack(v,p.stack,n)
+		return False
+
+hasVisNext = hasThreadNext</t>
+<t tx="ekr.20040305165846.41">@
+These routines change self to a new position "in place".
+That is, these methods must _never_ call p.copy().
+
+When moving to a nonexistent position, these routines simply set p.v = None,
+leaving the p.stack unchanged. This allows the caller to "undo" the effect of
+the invalid move by simply restoring the previous value of p.v.
+
+These routines all return self on exit so the following kind of code will work:
+	after = p.copy().moveToNodeAfterTree()</t>
+<t tx="ekr.20040305165846.42">def moveToBack (self):
+	
+	"""Move self to its previous sibling."""
+	
+	p = self
+
+	p.v = p.v and p.v._back
+	
+	return p</t>
+<t tx="ekr.20040305165846.43">def moveToFirstChild (self):
+
+	"""Move a position to it's first child's position."""
+	
+	p = self
+
+	if p:
+		child = p.v.t._firstChild
+		if child:
+			if p.v.isCloned():
+				p.stack.append(p.v)
+			p.v = child
+		else:
+			p.v = None
+		
+	return p</t>
+<t tx="ekr.20040305165846.44">def moveToLastChild (self):
+	
+	"""Move a position to it's last child's position."""
+	
+	p = self
+
+	if p:
+		if p.v.t._firstChild:
+			child = p.v.lastChild()
+			if p.v.isCloned():
+				p.stack.append(p.v)
+			p.v = child
+		else:
+			p.v = None
+			
+	return p</t>
+<t tx="ekr.20040305165846.45">def moveToLastNode (self):
+	
+	"""Move a position to last node of its tree without calling p.copy()."""
+	
+	p = self
+
+	if p:
+		if p.v._next:
+			# Let p.moveToThreadBack do the heavy lifting.
+			p.moveToNext()
+			p.moveToThreadBack()
+		else:
+			&lt;&lt; simulate repeated "lookahead" calls to p.moveToThreadNext() &gt;&gt;
+				
+	return p</t>
+<t tx="ekr.20040305165846.46">while 1:
+	assert(p)
+	if p.v.t._firstChild:
+		p.moveToFirstChild()
+	elif p.v._next:
+		p.moveToNext()
+	else:
+		# Look ahead. We are about to call p.moveToParent().
+		if p.level() == 1:
+			break
+		p.moveToParent()</t>
+<t tx="ekr.20040305165846.47">def moveToNext (self):
+	
+	"""Move a position to its next sibling."""
+	
+	p = self
+	
+	p.v = p.v and p.v._next
+	
+	return p</t>
+<t tx="ekr.20040305165846.48">def moveToNodeAfterTree (self):
+	
+	"""Move a position to the node after the position's tree."""
+	
+	p = self
+	
+	while p:
+		if p.v._next:
+			p.moveToNext()
+			break
+		p.moveToParent()
+
+	return p</t>
+<t tx="ekr.20040305165846.49">def moveToNthChild (self, n):
+	
+	p = self
+	
+	if p:
+		child = p.v.nthChild(n)
+		if child:
+			if p.v.isCloned():
+				p.stack.append(p.v)
+			p.v = child
+		else:
+			p.v = None
+			
+	return p</t>
+<t tx="ekr.20040305165846.50">def moveToParent (self):
+	
+	"""Move a position to its parent position."""
+	
+	p = self
+
+	if p.v._parent:
+		p.v = p.v._parent
+	elif p.stack:
+		p.v = p.stack.pop()
+	else:
+		p.v = None
+		
+	return p</t>
+<t tx="ekr.20040305165846.51">def moveToThreadBack (self):
+	
+	"""Move a position to it's threadBack position without calling p.copy()."""
+
+	p = self
+
+	if p:
+		if p.v._back:
+			p.moveToBack()
+			if p.v.t._firstChild:
+				level1 = p.level()
+				p.moveToFirstChild()
+				assert(p.level() == level1 + 1)
+				while p.checkNextThreadNextLevel(level1):
+					p.moveToThreadNext()
+		else:
+			p.moveToParent()
+
+	return p</t>
+<t tx="ekr.20040305165846.52">def checkNextThreadNextLevel(self,level1):
+	
+	"""Return True if p.getThreadNext().level() &gt; level1.
+
+	Do not alter p or call p.copy()."""
+
+	p = self ; level = p.level()
+	assert(p)
+	assert(level &gt; level1)
+
+	if p.v.t._firstChild:
+		return True # Level increasing.
+	elif p.v._next:
+		return True # Level unchanged.
+	else:
+		n = len(p.stack)-1
+		v,n = p.vParentWithStack(p.v,p.stack,n)
+		assert(v)
+		level -= 1
+		if level == level1: return False 
+		while v:
+			assert(level &gt; level1)
+			if v._next: return True
+			v,n = p.vParentWithStack(v,p.stack,n)
+			assert(v)
+			level -= 1
+			if level == level1: return False</t>
+<t tx="ekr.20040305165846.53">def moveToThreadNext (self):
+	
+	"""Move a position to the next a position in threading order."""
+	
+	p = self
+
+	if p:
+		if p.v.t._firstChild:
+			p.moveToFirstChild()
+		elif p.v._next:
+			p.moveToNext()
+		else:
+			p.moveToParent()
+			while p:
+				if p.v._next:
+					p.moveToNext()
+					break #found
+				p.moveToParent()
+			# not found found.
+				
+	return p</t>
+<t tx="ekr.20040305165846.54">def moveToVisBack (self):
+	
+	"""Move a position to the position of the previous visible node."""
+
+	p = self
+	
+	if p:
+		p.moveToThreadBack()
+		while p and not p.isVisible(): # v.isVisible no longer exists.
+			p.moveToThreadBack()
+			
+	return p</t>
+<t tx="ekr.20040305165846.55">def moveToVisNext (self):
+	
+	"""Move a position to the position of the next visible node."""
+
+	p = self
+	
+	if p:
+		p.moveToThreadNext()
+		while p and not p.isVisible(): # v.isVisible no longer exists.
+			p.moveToThreadNext()
+			
+	return p</t>
+<t tx="ekr.20040305165846.56"></t>
+<t tx="ekr.20040305165846.57"># Using this routine can generate huge numbers of temporary positions during a tree traversal.
+
+def copy (self):
+	
+	""""Return an independent copy of a position."""
+
+	return position(self.v,self.stack)</t>
+<t tx="ekr.20040305165846.58">def isVisible (self):
+	
+	"""Return True if all of a position's parents are expanded."""
+	
+	# Note: v.isVisible no longer exists.
+	
+	p = self
+	if not p:
+		return False
+		
+	# Avoid calling p.copy() or copying the stack.
+	v = p.v ; n = len(p.stack)-1
+
+	v,n = p.vParentWithStack(v,p.stack,n)
+	while v:
+		if not v.isExpanded():
+			return False
+		v,n = p.vParentWithStack(v,p.stack,n)
+
+	return True</t>
+<t tx="ekr.20040305165846.59">def level(self):
+	
+	p = self ; level = 0
+	
+	if not p:
+		return level
+	
+	# Avoid calling p.copy() or copying the stack.
+	v = p.v ; n = len(p.stack)-1
+
+	while 1:
+		assert(p)
+		v,n = p.vParentWithStack(v,p.stack,n)
+		# g.trace(level,"len(stack): %2d" % n,v)
+		if v:
+			level += 1
+		else:
+			return level</t>
+<t tx="ekr.20040305165846.60"># A crucial utility method.
+# The p.level(), p.isVisible() and p.hasThreadNext() methods show how to use this method.
+
+&lt;&lt; about the vParentWithStack utility method &gt;&gt;
+
+def vParentWithStack(self,v,stack,n):
+	
+	"""A utility that allows the computation of p.v without calling p.copy().
+	
+	v,stack[:n] correspond to p.v,p.stack for some intermediate position p.
+
+	Returns (v,n) such that v,stack[:n] correpond to the parent position of p."""
+
+	if not v:
+		return None,n
+	elif v._parent:
+		return v._parent,n # don't change stack.
+	elif stack and n &gt;= 0:
+		return self.stack[n],n-1 # simulate popping the stack.
+	else:
+		return None,n</t>
+<t tx="ekr.20040305165846.61">@ 
+This method allows us to simulate calls to p.parent() without generating any intermediate data.
+
+For example, the code below will compute the same values for list1 and list2:
+
+# The first way depends on the call to p.copy:
+list1 = []
+p=p.copy() # odious.
+while p:
+	p = p.moveToParent()
+	if p: list1.append(p.v)
+# The second way uses p.vParentWithStack to avoid all odious intermediate data.
+
+list2 = []
+n = len(p.stack)-1
+v,n = p.vParentWithStack(v,p.stack,n)
+while v:
+	list2.append(v)
+	v,n = p.vParentWithStack(v,p.stack,n)
+
+</t>
+<t tx="ekr.20040305171318"></t>
+<t tx="ekr.20040305174003">@others</t>
+<t tx="ekr.20040305174003.1">class allNodes_iter_class:
+
+	"""Returns a list of positions in the entire outline."""
 
 	@others
 
-c = top()
-if sharedNodes: current = c.currentPosition() 
-else:           current = c.currentVnode()
+def allNodes_iter (self):
+	return self.allNodes_iter_class(self)</t>
+<t tx="ekr.20040305174003.2">def __init__(self,p):
 
-print '-'*20
-for v in all_vnodes_iter(current):
-	print v.headString()
-	first = false</t>
-<t tx="ekr.20040304090931">def __init__(self,porv=None):
-	c = top()
-	self. first = true # Hack so we return the first node properly.
-	if porv is None:
-		if sharedNodes:
-			self.p = c.rootPosition()
-			self.after = leoNodes.position(None,[])
-		else:
-			self.p = c.rootVnode()
-			self.after = None
+	if g.sharedNodes:
+		self.first = p.c.rootPosition()
 	else:
-		self.p = porv
-		if sharedNodes:
-			self.after = porv.copy().moveToNodeAfterTree()
-		else:
-			self.after = self.p.nodeAfterTree()</t>
-<t tx="ekr.20040304090931.1">def __iter__(self):
+		self.first = p.c.rootVnode()
+
+	self.p = None
+	
+def __iter__(self):
 	return self</t>
-<t tx="ekr.20040304091204">def next(self):
-	if not self.p: raise StopIteration
+<t tx="ekr.20040305174003.3">def next(self):
+	
 	if self.first:
-		self.first = false
-		if sharedNodes: return self.p.v
-		else:           return self.p
-	if sharedNodes:
-		self.p = self.p.moveToThreadNext()
-		if not self.p or self.p == self.after:
-			raise StopIteration
-		return self.p.v
+		self.p = self.first
+		self.first = None
+
+	elif self.p:
+		if g.sharedNodes:
+			self.p.moveToThreadNext()
+		else:
+			self.p = self.p.threadNext()
+
+	if self.p: return self.p
+	else: raise StopIteration</t>
+<t tx="ekr.20040305174003.4">class subtree_iter_class:
+
+	"""Returns a list of positions in a subtree, including the root of the subtree."""
+
+	@others
+
+def subtree_iter (self):
+	return self.subtree_iter_class(self)</t>
+<t tx="ekr.20040305174003.5">def __init__(self,p):
+	
+	if g.sharedNodes:
+		self.first = p.copy()
+		self.after = p.copy().moveToNodeAfterTree()
 	else:
-		self.p = self.p.threadNext()
-		if not self.p or self.p == self.after:
-			raise StopIteration
-		return self.p</t>
-<t tx="ekr.20040304091615"></t>
+		self.first = p.v
+		self.after = p.v and p.v.nodeAfterTree()
+
+	self.p = None
+	
+def __iter__(self):
+	return self
+</t>
+<t tx="ekr.20040305174003.6">def next(self):
+	
+	if self.first:
+		self.p = self.first
+		self.first = None
+
+	elif self.p:
+		if g.sharedNodes:
+			self.p.moveToThreadNext()
+		else:
+			self.p = self.p.threadNext()
+
+	if self.p and self.p != self.after:
+		return self.p
+	else:
+		raise StopIteration
+</t>
+<t tx="ekr.20040305174003.7">class children_iter_class:
+
+	"""Returns a list of positions in the entire outline."""
+
+	@others
+
+def children_iter (self):
+	return self.children_iter_class(self)</t>
+<t tx="ekr.20040305174003.8">def __init__(self,p):
+
+	if g.sharedNodes:
+		self.first = p.copy().moveToFirstChild()
+	else:
+		self.first = p.v and p.v.firstChild()
+
+	self.p = None
+
+def __iter__(self):
+	return self</t>
+<t tx="ekr.20040305174003.9">def next(self):
+	
+	if self.first:
+		self.p = self.first
+		self.first = None
+
+	elif self.p:
+		if g.sharedNodes:
+			self.p.moveToNext()
+		else:
+			self.p = self.p.next()
+
+	if self.p: return self.p
+	else: raise StopIteration</t>
+<t tx="ekr.20040305174003.10">class parents_iter_class:
+
+	"""Returns a list of positions in the entire outline."""
+
+	@others
+
+def parents_iter (self):
+	return self.parents_iter_class(self)</t>
+<t tx="ekr.20040305174003.11">def __init__(self,p):
+
+	if g.sharedNodes:
+		self.first = p.copy().moveToParent()
+	else:
+		self.first = p.v and p.v.parent()
+		
+	self.p = None
+
+def __iter__(self):
+	return self</t>
+<t tx="ekr.20040305174003.12">def next(self):
+	
+	if self.first:
+		self.p = self.first
+		self.first = None
+
+	elif self.p:
+		if g.sharedNodes:
+			self.p.moveToParent()
+		else:
+			self.p = self.p.parent()
+
+	if self.p: return self.p
+	else: raise StopIteration</t>
+<t tx="ekr.20040305174003.13">class siblings_iter_class:
+
+	"""Returns a list of positions in the entire outline."""
+
+	@others
+
+def siblings_iter (self):
+	return self.siblings_iter_class(self)</t>
+<t tx="ekr.20040305174003.14">def __init__(self,p):
+
+	if g.sharedNodes:
+		p = p.copy()
+		while p.hasBack():
+			p.moveToBack()
+		self.first = p
+	else:
+		v = p.v
+		while v.back():
+			v = v.back()
+		self.first = v
+
+	self.p = None
+
+def __iter__(self):
+	return self</t>
+<t tx="ekr.20040305174003.15">def next(self):
+	
+	if self.first:
+		self.p = self.first
+		self.first = None
+
+	elif self.p:
+		if g.sharedNodes:
+			self.p.moveToNext()
+		else:
+			self.p = self.p.next()
+
+	if self.p: return self.p
+	else: raise StopIteration</t>
 </tnodes>
 </leo_file>
