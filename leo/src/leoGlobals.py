@@ -2095,19 +2095,19 @@ def choose(cond, a, b): # warning: evaluates all arguments
     else: return b
 #@nonl
 #@-node:ekr.20031218072017.3147:choose
-#@+node:ekr.20031218072017.1474:es, enl, ecnl
+#@+node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
 def ecnl():
     g.ecnls(1)
 
 def ecnls(n):
     log = app.log
-    if log:
+    if log and not log.isNull:
         while log.newlines < n:
             g.enl()
 
 def enl():
     log = app.log
-    if log:
+    if log and not log.isNull:
         log.newlines += 1
         log.putnl()
 
@@ -2128,7 +2128,7 @@ def es(s,*args,**keys):
     else:
         log = app.log
         if log and not log.isNull:
-            # print 'g.es',log,s
+            # print 'g.es',s
             log.put(s,color=color)
             for ch in s:
                 if ch == '\n': log.newlines += 1
@@ -2142,7 +2142,7 @@ def es(s,*args,**keys):
             app.logWaiting.append((s,color),)
             # print s,
 #@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl
+#@-node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
 #@+node:ekr.20031218072017.3148:top
 #@+at 
 #@nonl
