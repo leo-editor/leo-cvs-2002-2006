@@ -298,10 +298,12 @@ class baseAtFile:
 		
 		at = self ; c = at.c
 		at.errors = 0
-		at.scanDefaultDirectory(root)
-		if at.errors: return
+		importing = importFileName is not None
 		#@	<< set fileName from root and importFileName >>
 		#@+node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
+		at.scanDefaultDirectory(root,importing=importing)
+		if at.errors: return
+		
 		if importFileName:
 			fileName = importFileName
 		elif root.isAnyAtFileNode():
@@ -347,12 +349,13 @@ class baseAtFile:
 		firstLines,read_new = at.scanHeader(file,fileName)
 		df = g.choose(read_new,at.new_df,at.old_df)
 		# g.trace(g.choose(df==at.new_df,"new","old"))
-		# import traceback ; traceback.print_stack()
 		#@	<< copy ivars to df >>
 		#@+node:ekr.20031218072017.1816:<< copy ivars to df >>
 		# Telling what kind of file we are reading.
 		df.importing = importFileName != None
 		df.raw = false
+		if importing and df == at.new_df:
+			thinFile = true
 		df.thinFile = thinFile
 		
 		# Set by scanHeader.
@@ -440,7 +443,7 @@ class baseAtFile:
 	#@nonl
 	#@-node:ekr.20031218072017.2639:top_df.readLine
 	#@+node:ekr.20031218072017.2627:top_df.scanDefaultDirectory
-	def scanDefaultDirectory(self,p):
+	def scanDefaultDirectory(self,p,importing=false):
 		
 		"""Set default_directory ivar by looking for @path directives."""
 	
@@ -539,7 +542,7 @@ class baseAtFile:
 							at.default_directory = g.makeAllNonExistentDirectories(dir)
 		#@-node:ekr.20031218072017.2632:<< Set current directory >>
 		#@nl
-		if not at.default_directory:
+		if not at.default_directory and not importing:
 			# This should never happen: c.openDirectory should be a good last resort.
 			g.trace()
 			at.error("No absolute directory specified anywhere.")
@@ -2282,11 +2285,11 @@ class baseOldDerivedFile:
 						else: # 9/25/02
 							self.default_directory = g.makeAllNonExistentDirectories(dir)
 		
-		if not self.default_directory and not scripting:
+		if not self.default_directory and not scripting and not importing:
 			# This should never happen: c.openDirectory should be a good last resort.
+			g.trace()
 			self.error("No absolute directory specified anywhere.")
 			self.default_directory = ""
-		#@nonl
 		#@-node:ekr.20031218072017.2399:<< Set current directory >>
 		#@nl
 		if not importing and not reading:
@@ -3624,6 +3627,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.completeLastDirectives(lines,lastLines)
 		s = '\n'.join(lines).replace('\r', '')
 		root.v.t.tempBodyString = s
+	#@nonl
 	#@-node:ekr.20031218072017.2757:new_df.readOpenFile
 	#@+node:ekr.20031218072017.2007:findChild 4.x
 	def findChild (self,headline):
@@ -4035,7 +4039,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.indent = at.indentStack.pop()
 		at.out = at.outStack.pop()
 		at.t = at.tStack.pop()
-		if at.thinFile:
+		if at.thinFile and not at.importing:
 			at.lastThinNode = at.thinNodeStack.pop()
 	
 		at.popSentinelStack(endNode)
