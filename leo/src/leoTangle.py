@@ -850,13 +850,15 @@ class baseTangleCommands:
 		if self.print_mode in ("quiet","silent"):
 			es("@" + self.print_mode +  " inhibits Untangle for " + path, color="blue")
 			return
+		#@nonl
 		#@-node:<< return if @silent or unknown language >>
 		#@nl
 		#@	<< Read the file into file_buf >>
-		#@+node:<< Read the file into file_buf  >>
+		#@+node:<< Read the file into file_buf  >> in untangleRoot
 		f = None
 		try:
 			path = os.path.join(self.tangle_directory,path)
+			path = toUnicode(path,app.tkEncoding) # 10/20/03
 			f = open(path)
 			if f:
 				file_buf = f.read()
@@ -867,8 +869,7 @@ class baseTangleCommands:
 			es_exception()
 			self.cleanup()
 			return
-		#@nonl
-		#@-node:<< Read the file into file_buf  >>
+		#@-node:<< Read the file into file_buf  >> in untangleRoot
 		#@nl
 		es("@root " + path)
 		# Pass 1: Scan the C file, creating the UST
@@ -1399,6 +1400,7 @@ class baseTangleCommands:
 			# trace(`section.name`)
 			file_name = os.path.join(self.tangle_directory,section.name)
 			file_name = os.path.normpath(file_name)
+			file_name = toUnicode(file_name,app.tkEncoding) # 10/20/03
 			temp_name = create_temp_name()
 			if not temp_name:
 				es("Can not create temp file")
@@ -3665,7 +3667,7 @@ class baseTangleCommands:
 			#@-node:<< Test for print modes directives >>
 			#@nl
 			#@		<< Test for @path >>
-			#@+node:<< Test for @path >>
+			#@+node:<< Test for @path >> in tangleScanAllDirectives
 			if require_path_flag and not old.has_key("path") and dict.has_key("path"):
 			
 				k = dict["path"]
@@ -3693,6 +3695,7 @@ class baseTangleCommands:
 					base = getBaseDirectory() # May return "".
 					if dir and len(dir) > 0:
 						dir = os.path.join(base,dir)
+						dir = toUnicode(dir,app.tkEncoding) # 10/20/03
 						if os.path.isabs(dir):
 							#@				<< handle absolute @path >>
 							#@+node:<< handle absolute @path >>
@@ -3717,7 +3720,7 @@ class baseTangleCommands:
 				elif issue_error_flag and not self.path_warning_given:
 					self.path_warning_given = true # supress future warnings
 					self.error("ignoring empty @path")
-			#@-node:<< Test for @path >>
+			#@-node:<< Test for @path >> in tangleScanAllDirectives
 			#@nl
 			#@		<< Test for @pagewidth >>
 			#@+node:<< Test for @pagewidth >>
@@ -3807,6 +3810,7 @@ class baseTangleCommands:
 				if dir2 and len(dir2) > 0:
 					# print "base,dir:",`base`,`dir`
 					dir = os.path.join(base,dir2)
+					dir = toUnicode(dir,app.tkEncoding) # 10/20/03
 					if os.path.isabs(dir): # Errors may result in relative or invalid path.
 						#@				<< handle absolute path >>
 						#@+node:<< handle absolute path >>
