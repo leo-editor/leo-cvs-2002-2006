@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6657" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6658" clone_windows="0"/>
 <globals body_outline_ratio="0.583222370173">
 	<global_window_position top="56" left="179" height="751" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -594,7 +594,7 @@
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
 </v>
-<v t="ekr.20040312021734" a="TV"><vh>Scripts</vh>
+<v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1621,6 +1621,10 @@
 </v>
 <v t="ekr.20050218015346.21"><vh>getAllPlugins</vh></v>
 <v t="ekr.20050218015346.22"><vh>removeLeadingWs</vh></v>
+</v>
+<v t="ekr.20050219075759" a="TV"><vh>Scripts demonstrating how to do anything with Leo menus</vh>
+<v t="ekr.20050219071503"><vh>Test of createMenuItemsFromTable</vh></v>
+<v t="ekr.20050219073752.1"><vh>Add a menu item after Open With</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -13994,5 +13998,19 @@ The address children contained the actual data (removed for privacy)</t>
 <t tx="ekr.20050219054351">@killcolor
 </t>
 <t tx="ekr.20050219054351.1"></t>
+<t tx="ekr.20050219071503">def callback(*args,**keys): g.trace()
+
+table = (("Test",None,callback),)
+
+c.frame.menu.createMenuItemsFromTable('File',table)</t>
+<t tx="ekr.20050219073752.1">def callback(*args,**keys):
+    g.trace('after Open With')
+
+# Get the actual Tkinter menu.
+fileMenu = c.frame.menu.getMenu('File')
+
+# Now use raw Tkinter calls to insert the menu.
+fileMenu.insert(3,'command',label='Test',command=callback)</t>
+<t tx="ekr.20050219075759"></t>
 </tnodes>
 </leo_file>
