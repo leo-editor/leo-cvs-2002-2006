@@ -1025,26 +1025,6 @@ class baseCommands:
 		if script:
 			s = script
 		else:
-			#@		<< define class fileLikeObject >>
-			#@+node:<< define class fileLikeObject >>
-			if 0: # Now defined in leoGlobals.py
-			
-				class fileLikeObject:
-					
-					def __init__(self): self.s = ""
-					def clear (self):   self.s = ""
-					def close (self):   pass
-					def flush (self):   pass
-						
-					def get (self):
-						return self.s
-						
-					def write (self,s):
-						if s:
-							self.s = self.s + s
-			#@nonl
-			#@-node:<< define class fileLikeObject >>
-			#@nl
 			#@		<< get script into s >>
 			#@+node:<< get script into s >>
 			try:
@@ -1107,6 +1087,9 @@ class baseCommands:
 				c.frame.tree.redrawAfterException() # 1/26/04
 		elif not error:
 			g.es("no script selected",color="blue")
+			
+		# 4/3/04: The force a redraw _after_ all messages have been output.
+		c.redraw() 
 	#@nonl
 	#@-node:executeScript
 	#@+node:goToLineNumber & allies
@@ -2408,8 +2391,15 @@ class baseCommands:
 			p = c.rootPosition()
 			#@		<< assert equivalence of lastVisible methods >>
 			#@+node:<< assert equivalence of lastVisible methods >>
-			assert p.oldLastVisible()==p.lastVisible(), "oldLastVisible==lastVisible"
-			#@nonl
+			p1 = p.oldLastVisible()
+			p2 = p.lastVisible()
+			
+			if p1 != p2:
+				print "oldLastVisible",p1
+				print "   lastVisible",p2
+			
+			assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
+			assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
 			#@-node:<< assert equivalence of lastVisible methods >>
 			#@nl
 			for p in c.allNodes_iter():
@@ -2608,9 +2598,11 @@ class baseCommands:
 	#@nonl
 	#@-node:c.checkMoveWithParentWithWarning
 	#@+node:c.deleteOutline
-	# Deletes the current vnode and dependent nodes. Does nothing if the outline would become empty.
-	
 	def deleteOutline (self,op_name="Delete Node"):
+		
+		"""Deletes the current position.
+		
+		Does nothing if the outline would become empty."""
 	
 		c = self ; p = c.currentPosition()
 		if not p: return
@@ -2620,13 +2612,13 @@ class baseCommands:
 		else:              newNode = p.next()
 		if not newNode: return
 	
-		c.endEditing()# Make sure we capture the headline for Undo.
+		c.endEditing() # Make sure we capture the headline for Undo.
 		c.beginUpdate()
-		p.setAllAncestorAtFileNodesDirty() # 1/12/04
-		# Reinsert v after back, or as the first child of parent, or as the root.
-		c.undoer.setUndoParams(op_name,p,select=newNode)
-		p.doDelete(newNode) # doDelete destroys dependents.
-		c.setChanged(true)
+		if 1: # update...
+			p.setAllAncestorAtFileNodesDirty()
+			c.undoer.setUndoParams(op_name,p,select=newNode)
+			p.doDelete(newNode)
+			c.setChanged(true)
 		c.endUpdate()
 		c.validateOutline()
 	#@nonl
@@ -2683,6 +2675,9 @@ class baseCommands:
 	def validateOutline (self):
 	
 		c = self
+		
+		if not g.app.debug:
+			return true
 	
 		root = c.rootPosition()
 		parent = c.nullPosition()
@@ -3195,7 +3190,8 @@ class baseCommands:
 		else:
 			v.setMarked()
 			v.setDirty()
-			c.setChanged(true)
+			if 0: # 4/3/04: Marking a headline is a minor operation.
+				c.setChanged(true)
 		c.endUpdate()
 	#@nonl
 	#@-node:markHeadline
