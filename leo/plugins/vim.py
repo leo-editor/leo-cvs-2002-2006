@@ -1,41 +1,97 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040517075715.10:@thin vim.py
-"""vim handler"""
+#@<< docstring >>
+#@+node:ekr.20050226184411:<< docstring >>
+'''A plugin that communicates with VIM.
+
+To use this plugin do the following:
+
+- Start VIM as server:
+    
+    vim --servername "LEO"
+    
+The name of the server *must* be "LEO". If you wish to use a different server
+with LEO, change the variable _vim_cmd below. If you want Leo to start the VIM
+server uncomment the corresponding line below.
+
+- By default, double clickin on a node's icon opens that node in VIM. You can
+open nodes in VIM with a single-click if you set useDoubleClick = False.
+However, that interfere's with Leo's dragging logic.
+
+- Leo will update the node in the outline when you save the file in VIM.
+'''
+#@nonl
+#@-node:ekr.20050226184411:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
 
+__version__ = "1.5"
+#@<< version history >>
+#@+node:ekr.20050226184411.1:<< version history >>
+#@@killcolor
+
+#@+at
+# 
 # Contributed by Andrea Galimberti.
 # Edited by Felix Breuer.
-
-#  To use this plugin do the following:
-#
-# - Start VIM as server: vim --servername "LEO"
-#   The name of the server *must* be "LEO".
-#   If you wish to use a different server with LEO, change the
-#   variable _vim_cmd below. If you want Leo to start the VIM server
-#   uncomment the corresponding line below.
-#
-# - Single-click on a node's icon to open that node in VIM.
-#
-# - Leo will update the node in the outline when you save the file in VIM.
-
+# 
+# 1.5 EKR:
+#     - Added new sections.
+#     - Move most comments into docstring.
+#     - Added useDoubleClick variable.
+#     - Added init function.
+#     - Init _vim_cmd depending on sys.platform.
+#@-at
+#@nonl
+#@-node:ekr.20050226184411.1:<< version history >>
+#@nl
+#@<< imports >>
+#@+node:ekr.20050226184411.2:<< imports >>
 import leoGlobals as g
 import leoPlugins
 import os
+import sys
+#@nonl
+#@-node:ekr.20050226184411.2:<< imports >>
+#@nl
+
+useDoubleClick = True # True: double-click opens VIM.  False: single-click opens VIM.
 
 # This command is used to communicate with the vim server. If you use gvim
 # you can leave the command as is, you do not need to change it to "gvim ..."
 
-if 1:
-    # Works for xp with vim in the folder indicated.
+if sys.platform == 'win32':
+    # Works on XP with vim in the folder indicated.
     _vim_cmd = r"c:\vim\vim61\gvim --servername LEO"
-    
 else: 
     _vim_cmd = "vim --servername LEO"
    
-
 #@+others
+#@+node:ekr.20050226184624:init
+def init ():
+    
+    ok = True # Safe for unit testing.
+    
+    if g.app.unitTesting:
+        print '\nvim plugin installed: double-clicking icons will start vim.'
+
+    # Register the handlers...
+    if useDoubleClick: # Open on double click
+        leoPlugins.registerHandler("icondclick2", open_in_vim)
+    else: # Open on single click: interferes with dragging.
+        leoPlugins.registerHandler("iconclick2", open_in_vim,val=True)
+    
+    # Enable the os.system call if you want to start a (g)vim server.
+    if g.app.unitTesting:
+        os.system(_vim_cmd)
+    
+    g.plugin_signon(__name__)
+    
+    return ok
+#@nonl
+#@-node:ekr.20050226184624:init
 #@+node:EKR.20040517075715.11:open_in_vim
 def open_in_vim (tag,keywords,val=None):
     
@@ -79,25 +135,6 @@ def open_in_vim (tag,keywords,val=None):
     return val
 #@-node:EKR.20040517075715.11:open_in_vim
 #@-others
-
-if 1 and not g.app.unitTesting: # Ok for unit testing, but you might want to disable it.
-    
-    if g.app.unitTesting:
-        print '\nvim plugin installed: double-clicking icons will start vim.'
-
-    # Register the handlers...
-    if 1: # Open on double click
-        leoPlugins.registerHandler("icondclick2", open_in_vim)
-    else: # Open on single click: interferes with dragging.
-        leoPlugins.registerHandler("iconclick2", open_in_vim,val=True)
-    
-    # Enable the os.system call if you want to start a (g)vim server.
-    if g.app.unitTesting:
-        os.system(_vim_cmd)
-
-    __version__ = "1.4" # Set version for the plugin handler.
-    g.plugin_signon(__name__)
-    
 #@nonl
 #@-node:EKR.20040517075715.10:@thin vim.py
 #@-leo
