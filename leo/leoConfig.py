@@ -377,7 +377,7 @@ class config:
 	
 	def initBooleanConfigParam (self,name,defaultVal):
 		try:
-			val = self.config.getboolean(self.configSection,name,raw=1) # 2/4/03
+			val = self.config.getboolean(self.configSection,name)
 		except:
 			val = defaultVal
 		return val
