@@ -1695,46 +1695,66 @@ def printGcRefs (verbose=true):
 #@-others
 #@-node:ekr.20031218072017.1588:Garbage Collection
 #@+node:ekr.20031218072017.3139:Hooks & plugins (leoGlobals)
-#@+node:ekr.20031218072017.1315:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
+#@+node:ekr.20031218072017.1315:idle time functions (leoGlobals)
+#@+node:EKR.20040602125018:enableIdleTimeHook
 #@+at 
 #@nonl
 # Enables the "idle" hook.
 # After enableIdleTimeHook is called, Leo will call the "idle" hook
-# approximately every idleTimeDelay milliseconds.
+# approximately every g.idleTimeDelay milliseconds.
 #@-at
 #@@c
+
 def enableIdleTimeHook(idleTimeDelay=100):
-	app.idleTimeHook = true
-	app.idleTimeDelay = idleTimeDelay # Delay in msec.
-	app.gui.setIdleTimeHook(idleTimeHookHandler)
-	
+
+	if not g.app.idleTimeHook:
+		s = "idle-time hooks enabled"
+		# print s ; g.es(s)
+		g.app.idleTimeHook = true
+		g.app.idleTimeDelay = idleTimeDelay # Delay in msec.
+		
+		# Start idle-time processing only after the first idle-time event.
+		g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+		g.app.afterHandler = g.idleTimeHookHandler
+#@nonl
+#@-node:EKR.20040602125018:enableIdleTimeHook
+#@+node:EKR.20040602125018.1:disableIdleTimeHook
 # Disables the "idle" hook.
 def disableIdleTimeHook():
-	app.idleTimeHook = false
 	
+	g.app.idleTimeHook = false
+#@nonl
+#@-node:EKR.20040602125018.1:disableIdleTimeHook
+#@+node:EKR.20040602125018.2:idleTimeHookHandler
 # An internal routine used to dispatch the "idle" hook.
 trace_count = 0
+
 def idleTimeHookHandler(*args,**keys):
 	
-	if 0:
+	if 0: # Do not use g.trace here!
 		global trace_count ; trace_count += 1
-		if trace_count % 10 == 0: g.trace(trace_count)
+		if trace_count % 10 == 0:
+			for w in g.app.windowList:
+				c = w.c
+				print "idleTimeHookHandler",trace_count,c
 
 	# New for Python 2.3: may be called during shutdown.
-	if app.killed: return
-	c = g.top()
-	if c: v = c.currentVnode()
-	else: v = None
-	g.doHook("idle",c=c,v=v)
+	if g.app.killed: return
+	
+	for w in g.app.windowList:
+		c = w.c ; v = c.currentVnode()
+		g.doHook("idle",c=c,v=v)
+
 	# Requeue this routine after 100 msec.  Faster requeues overload the system.
-	if app.idleTimeHook:
-		app.gui.setIdleTimeHookAfterDelay(app.idleTimeDelay,idleTimeHookHandler)
-		app.afterHandler = idleTimeHookHandler
+	if g.app.idleTimeHook:
+		g.app.gui.setIdleTimeHookAfterDelay(g.app.idleTimeDelay,g.idleTimeHookHandler)
+		# g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+		g.app.afterHandler = g.idleTimeHookHandler
 	else:
-		app.afterHandler = None
-#@nonl
-#@-node:ekr.20031218072017.1315:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
-#@+node:ekr.20031218072017.1596:frame.doHook
+		g.app.afterHandler = None
+#@-node:EKR.20040602125018.2:idleTimeHookHandler
+#@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
+#@+node:ekr.20031218072017.1596:g.doHook
 #@+at 
 #@nonl
 # This global function calls a hook routine.  Hooks are identified by the tag 
@@ -1752,12 +1772,18 @@ def idleTimeHookHandler(*args,**keys):
 #@@c
 
 def doHook(tag,*args,**keywords):
-
-	c = g.top() # c may be None during startup.
 	
-	if app.killed or app.hookError:
+	if g.app.killed or g.app.hookError:
 		return None
-	elif not app.config.use_plugins:
+	
+	# New in 4.2.  We call the idle-time handlers for all open windows.
+	c = keywords.get("c")
+	
+	if 0: # Don't use trace here!
+		if tag != "idle":
+			print "doHook",tag,c
+
+	if not g.app.config.use_plugins:
 		if tag == "start1":
 			g.es("Plugins disabled: use_plugins is 0",color="blue")
 		return None
@@ -1766,28 +1792,28 @@ def doHook(tag,*args,**keywords):
 			return c.hookFunction(tag,keywords)
 		except:
 			g.es("exception in c.hookFunction for " + c.frame.getTitle())
-	elif app.hookFunction:
+	elif g.app.hookFunction:
 		try:
-			return app.hookFunction(tag,keywords)
+			return g.app.hookFunction(tag,keywords)
 		except:
 			g.es("exception in app.hookFunction")
 	else:
 		import leoPlugins
 		try:
-			app.hookFunction = leoPlugins.doPlugins
+			g.app.hookFunction = leoPlugins.doPlugins
 			return app.hookFunction(tag,keywords)
 		except:
-			app.hookFunction = None
+			g.app.hookFunction = None
 			g.es("exception in plugin")
 
 	# Handle all exceptions.
 	g.es_exception()
-	app.hookError = true # Supress this function.
-	app.idleTimeHook = false # Supress idle-time hook
+	g.app.hookError = true # Supress this function.
+	g.app.idleTimeHook = false # Supress idle-time hook
 	return None # No return value
 #@nonl
-#@-node:ekr.20031218072017.1596:frame.doHook
-#@+node:ekr.20031218072017.1318:plugin_signon
+#@-node:ekr.20031218072017.1596:g.doHook
+#@+node:ekr.20031218072017.1318:g.plugin_signon
 def plugin_signon(module_name,verbose=false):
 	
 	exec("import %s ; m = %s" % (module_name,module_name))
@@ -1800,7 +1826,7 @@ def plugin_signon(module_name,verbose=false):
 		
 	app.loadedPlugins.append(module_name)
 #@nonl
-#@-node:ekr.20031218072017.1318:plugin_signon
+#@-node:ekr.20031218072017.1318:g.plugin_signon
 #@-node:ekr.20031218072017.3139:Hooks & plugins (leoGlobals)
 #@+node:ekr.20031218072017.2278:importFromPath
 def importFromPath (name,path):
