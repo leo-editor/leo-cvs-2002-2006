@@ -266,11 +266,11 @@ pascal_keywords = (
 	"false","file","for","forward","function","finally",
 	"goto","if","in","is","label","library",
 	"mod","message","nil","not","nodefault""of","or","on",
-	"procedure","program","packed","pascal"
+	"procedure","program","packed","pascal",
 	"private","protected","public","published",
 	"record","repeat","raise","read","register",
 	"set","string","shl","shr","stdcall",
-	"then","to","true","type","try","until","unit","uses"
+	"then","to","true","type","try","until","unit","uses",
 	"var","virtual","while","with","xor"
 	# object pascal
 	"asm","absolute","abstract","assembler","at","automated",
