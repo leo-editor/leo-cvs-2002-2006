@@ -91,12 +91,12 @@
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
 <v t="ekr.20040131040356" a="TV"><vh>4.1 rc4</vh>
 <v t="ekr.20040201114855"><vh>New plugins in 4.1 rc4</vh>
-<v t="ekr.20040201114855.42" a="E"><vh>mod_http.py plugin: Bernhard Mulder</vh></v>
-<v t="ekr.20040201114855.91" a="E"><vh>newButtons.py plugin: Paul Paterson</vh></v>
-<v t="ekr.20040201114855.29" a="E"><vh>nodenavigator.py plugin: Paul Paterson</vh></v>
-<v t="ekr.20040201114855.36" a="E"><vh>rowcol.py: EKR</vh></v>
+<v t="ekr.20040201114855.42"><vh>mod_http.py plugin: Bernhard Mulder</vh></v>
+<v t="ekr.20040201114855.91"><vh>newButtons.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201114855.29"><vh>nodenavigator.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201114855.36"><vh>rowcol.py: EKR</vh></v>
 <v t="ekr.20040201114855.3"><vh>rst2.py plugin: Steve Zatz</vh></v>
-<v t="ekr.20040201114855.13" a="E"><vh>searchbox.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201114855.13"><vh>searchbox.py plugin: Paul Paterson</vh></v>
 <v t="ekr.20040201120903"><vh>status_line.py plugin: EKR</vh></v>
 </v>
 <v t="ekr.20040131041015"><vh>New features in 4.1 rc4</vh>
@@ -108,7 +108,7 @@
 <v t="ekr.20040131040544.2"><vh>Added message when plugins are disabled</vh></v>
 <v t="ekr.20040201061329"><vh>Created status_line.py plugin</vh></v>
 <v t="ekr.20040201114855.105"><vh>Simplified operation of script-find/change &amp; improved documentation</vh>
-<v t="edream.110603190322.6" a="E"><vh> Script Find and Script Change</vh>
+<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
 <v t="edream.111803060152.1"><vh>How it works</vh></v>
 <v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
 <v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
@@ -1224,6 +1224,7 @@
 <v t="edream.110203163054.199"><vh>@lineending directive specifies line endings</vh></v>
 <v t="edream.110203163054.811"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
 <v t="edream.110203163054.383"><vh>@raw and @end_raw directives delimit raw text</vh></v>
+<v t="edream.110203163054.296"><vh>@root options</vh></v>
 <v t="edream.110203163054.812"><vh>@wrap and @nowrap directives control line wrapping in the body pane</vh></v>
 </v>
 <v t="edream.110203163054.355"><vh>About cweb mode </vh></v>
@@ -3862,9 +3863,11 @@ to ask questions or suggest improvements.  That way other people can share in th
 
 Leo owes much of its visual design to MORE, possibly the most elegant computer program ever written. Leo's clone nodes are inspired by MORE.
 
+The following people have made generous donations to the Leo project: Robert Low, Nic Cave-Lynch.
+
 The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Niklas Frykholm, Fred Gansevles, Jonathan M. Gilligan, Thomas Guettler, Zak Greant, Thomas Guettler, Romain Guy, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, James Kerwin, Nicola Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli,  Marcus A. Martin, Gidion May, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Paul Paterson, Davide Salomoni, Sean Shaleh Perry, Tim Peters, Scott Powell, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Aharon Robbins, Guido van Rossum, David Rowe, Steven Schaefer, Wolfram Schwenzer, Gil Shwartz, Paul Snively, Phil Straus, Jurjen Stellingwerff,  Jeffrey Thompson, Gabriel Valiente, Tom van Vleck, Jim Vickroy, Tony Vignaux, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
 
-The following people have written code for Leo: Dave Hein wrote code to support PHP, to handle Tk version numbers properly and to open the Python window properly on Linux.  Marcus A. Martin wrote code to support LaTex. Paul Paterson wrote the first implementation of plugins and the spell checking plugin.  Steven P. Schaefer eliminated problems with end-of-line on Linux and fixed bugs in how directives were handled in @root trees.
+The following people have written code for Leo: Dave Hein wrote code to support PHP, to handle Tk version numbers properly and to open the Python window properly on Linux.  Marcus A. Martin wrote code to support LaTex. Bernhard Mulder proposed a new way of untangling derived files.  Paul Paterson wrote the first implementation of plugins and the spell checking plugin.  Steven P. Schaefer eliminated problems with end-of-line on Linux and fixed bugs in how directives were handled in @root trees.
 
 The following deserve special mention: David Brock wrote TSyntaxMemo.  The late Bob Fitzwater kept me focused on design. Donald Knuth invented literate programming and the CWEB language. Joe Orr created Leo stylesheets for Leo; see http://www.jserv.com/jk_orr/xml/leo.htm. Joe Orr also created an outstanding set of tutorials for Leo; see http://www.evisa.com/e/sb.htm. John K. Ousterhout created tcl/Tk. Neal Norwitz wrote PyChecker.  Marc-Antoine Parent urged me to use XML for Leo's file format and helped improve it. Paul Paterson suggested the plugin architecture and suggested an approach to spell checking.  Norman Ramsey created noweb and gave permission to quote from the noweb web documentation. Rich Ries has contributed a huge number of suggestions. Steven P. Schaefer pointed out major security problems lurking in hooks.  Gil Shwartz helped with unicode support.  Phil Straus has been a great friend and constant support. Guido van Rossum created Python, Tkinter and the Python License. Dave Winer created MORE. Dan Winkler helped support Leo on the Mac.
 
@@ -6060,19 +6063,17 @@ These are straightforward (and surprisingly useful) commands.  Please report any
 
 Also improved messages and fixed a major performance bug: tree.numberOfVisibleNodes was being called repeatedly!</t>
 <t tx="edream.110203163054.295">The Node Only checkbox takes precedence over Suboutline Only if they are both checked.</t>
-<t tx="edream.110203163054.296">For the first time Leo allows you to choose whether body text in @root trees will start in code mode or doc mode by default.  Ever since I created @file trees I've regretted the choice of making doc mode the default.  Just last week I realized I'm not stuck with that old choice.
+<t tx="edream.110203163054.296">New in Leo 3.10:  Leo allows you to choose whether body text in @root trees will start in code mode or doc mode by default.
 
-1. @root-doc filename and @root-code filename specify that body text is assumed to start in doc mode or code mode respectively.  The options (-doc and -code) must follow @root immediately with no intervening whitespace.  In effect, @root-code and @root-doc are two new directives.  (They aren't syntax colored yet: they will be today or tomorrow.)
+@root-doc filename and @root-code filename specify that body text is assumed to start in doc mode or code mode respectively.  The options (-doc and -code) must follow @root immediately with no intervening whitespace.  In effect, @root-code and @root-doc are two new directives.
 
-2. These @root options override the new at_root_bodies_start_in_doc_mode option in leoConfig.py.  This option affects only @root trees without options.  Such "plain" @root trees are now deprecated, which only means that it is now better style to use either @root-code or @root-doc.  The reason is simple: the meaning of plain @root trees will depend on the at_root_bodies_start_in_doc_mode option, and that isn't good.
+These @root options override the new at_root_bodies_start_in_doc_mode option in leoConfig.py.  This option affects only @root trees without options.  Such "plain" @root trees are now deprecated, which only means that it is now better style to use either @root-code or @root-doc.  The reason is simple: the meaning of plain @root trees will depend on the at_root_bodies_start_in_doc_mode option, and that isn't good.
 
-3. By default, at_root_bodies_start_in_doc_mode = 1 for compatibility for old @root trees.  I actually don't think this option is good for much; I created it before I created @root-doc and @root-code, and I decided it wouldn't hurt to leave it in.  Anyway, you now have complete flexibility about how @root works, and in particular you can make @root work just like @file.</t>
+By default, at_root_bodies_start_in_doc_mode = 1 for compatibility for old @root trees.  I actually don't think this option is good for much; I created it before I created @root-doc and @root-code, and I decided it wouldn't hurt to leave it in.  Anyway, you now have complete flexibility about how @root works, and in particular you can make @root work just like @file.</t>
 <t tx="edream.110203163054.297"></t>
 <t tx="edream.110203163054.298">@file-asis is a synonym for @silentfile.
 @file-nosent is a synonym for @nosentinelsfile.
-@file-noref is a synonym ffor @norefsfile.
-
-</t>
+@file-noref is a synonym ffor @norefsfile.</t>
 <t tx="edream.110203163054.299">Completed a major revision of the menu handling code to handle underlined menus.  As is typical on Windows, you specify the underlined character by preceding it with an ampersand character.</t>
 <t tx="edream.110203163054.300">Created a new icon and improved the code that loads it.</t>
 <t tx="edream.110203163054.301">This is the funcToMethod function in customizeLeo.py.</t>
@@ -6272,7 +6273,8 @@ New in 3.11: Leo looks in the plugins folder for .py files. Leo tries to
 import all such files at startup ("start2") time.
 
 New in 4.1: Leo enables only plugins whose name appears in pluginsManager.txt.
-Leo loads no plugins if pluginsManager.txt does not exist in the plugins directory.
+Leo loads plugins in the order in which they appear in pluginsManager.txt. Leo
+loads no plugins if pluginsManager.txt does not exist in the plugins directory.
 
 What is hook code?
 
@@ -6848,6 +6850,12 @@ In short, you can get any combination of sentinels/no sentinels and references/n
 @nosentinelsfile   no                   yes
         @rawfile   yes                  no
      @silentfile   no                   no
+
+New in Leo 3.10:
+
+@file-asis is a synonym for @silentfile.
+@file-nosent is a synonym for @nosentinelsfile.
+@file-noref is a synonym for @rawfile.
 </t>
 <t tx="edream.110203163054.360">leo.py 3.8                               October 29, 2002
 
@@ -9562,7 +9570,7 @@ The @language directive specifies the comment delimiters and string types used b
 @language x
 
 @nocolor
-where x is one of the following: c, c++, html, java, objective-c, pascal, perl, perlpod, plain, python and shell. Shell files have comments that start with #. Case is ignored in the language specifiers, but not in the @language itself. Thus, the following are equivalent:
+where x is one of the following: actionscript, c, c++, cweb, elisp, html, java, latex, objective-c, pascal, perl, perlpod, plain, python, rebol, shell or tcltk. Shell files have comments that start with #. Case is ignored in the language specifiers, but not in the @language itself. Thus, the following are equivalent:
 @color
 
 @language html
@@ -9775,7 +9783,9 @@ The Save, Save As and Save A Copy As commands save the topmost Leo window to a f
 
 The Revert command reloads a file, discarding any changes made to the file since it was last saved.
 
-New in Leo 2.5: The Recent Files... command brings up a submenu containing a list of recently opened files.  Choosing an item in this submenu opens the selected file or brings it to the front. Leo adds files to this submenu even if leoConfig.txt is missing or read-only, but those additions will not be remembered unless leoConfig.txt is present and writable.  New in Leo 4.0: The Clear Recent Files command deletes all entries in the Recent Files submenu except the most recent file.  The files themselves are not affected, just the menu entries.
+New in Leo 2.5: The Recent Files... command brings up a submenu containing a list of recently opened files.  Choosing an item in this submenu opens the selected file or brings it to the front. Leo adds files to this submenu even if leoConfig.txt is missing or read-only, but those additions will not be remembered unless leoConfig.txt is present and writable.
+
+New in Leo 4.0: The Clear Recent Files command deletes all entries in the Recent Files submenu except the most recent file.  The files themselves are not affected, just the menu entries.
 
 The following four file commands are located in the File:Read/Write submenu.
 
@@ -9816,6 +9826,7 @@ If you like you can use the Go To Next Marked command to find each changed node.
 <t tx="edream.110203163054.824">Note: the following describe the import and export commands found in leo.py.  This documentation notes differences with the Windows version of Leo.
 
 The Import to @file command creates an @file node from a file.  The Import to @root command creates an @root node from a file.  These commands do not attempt to do perfect translations; they merely automate the bulk of the drudgery.  The Import to @root command is called Import Files in the Borland/Windows version of Leo.  The Import to @file command does not exist in the Borland/Windows version of Leo.
+
 The Import CWEB Files command creates an @file node from a CWEB file.  This command does not exist in the Borland/Windows version of Leo.
 
 The Import noweb Files command creates an @file node from a CWEB file.  The Borland/Windows version of this command creates an @root node.
@@ -9870,6 +9881,8 @@ Section definitions must appear in the node containing the script or in descende
 
 The Execute Script command sets app.scriptDict["script1"] to the value of the script before preprocessing, and sets app.scriptDict["script2"] to the value of the script after preprocessing.  Scripts may examine and change app.scriptDict as they please.</t>
 <t tx="edream.110203163054.834">The Edit menu contains four commands for searching and replacing text.  The Find and Find Again commands search through the outline for text and the Change and Change, Then Find commands change selected text.
+
+New in Leo 4.1:  The Esc key dismisses the dialog.  Pressing the enter key is the same a pressing the Find button.
 
 The following check boxes options appear in the search dialog and control the operations of the find and change commands.
 </t>
@@ -24687,7 +24700,7 @@ Tarvin Rhodes
 </t>
 <t tx="ekr.20040129074732">Im a newbie to Leo( a couple of weeks ) and I feel addicted to programming again...in fact it has resurrected a dead project of mine :) The Outline has proven most liberating in terms of testing ideas out...Thanks alot!  
 </t>
-<t tx="ekr.20040131040356">Leo 4.1 Release Candidate 4              February 2, 2004
+<t tx="ekr.20040131040356">Leo 4.1 Release Candidate 4              February 3, 2004
 
 This release fixes numerous bugs reported since 4.1 rc3 and makes several other
 minor improvements, including several nifty new plugins.
@@ -24704,6 +24717,7 @@ The highlights of Leo 4.1:
 - A new gui-agnostic architecture: useful for batch mode and unit tests.
 - Several new configuration settings.
 - Many new unit tests.
+- Excellent new plugins.
 - A host of bug fixes.</t>
 <t tx="ekr.20040131040356.1"></t>
 <t tx="ekr.20040131040356.2">See previous release notes for more details:
