@@ -4743,7 +4743,8 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 		elif self.matchTag(">"):
 			break
 		else: # New for 4.0: allow unknown attributes.
-			attr,val = self.getUnknownTag()
+			# New in 4.2: allow pickle'd and hexlify'ed values.
+			attr,val = self.getUnknownAttribute()
 			attrDict[attr] = val
 	# Headlines are optional.
 	if self.matchTag("<vh>"):
@@ -4895,21 +4896,8 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
-	<< put unknown vnode attributes >>
+	self.putUnknownAttributes(v)
 #@nonl
-#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-attrDict = v.unknownAttributes
-keys = attrDict.keys()
-for key in keys:
-	val = attrDict[key]
-	attr = ' %s="%s"' % (key,self.xmlEscape(val))
-	self.put(attr)
-	if 0: # For debugging.
-		s = "putting unknown attribute for " + v.headString()
-		print s ;  g.es(s, color="red")
-		print attr, g.es(attr)
-#@nonl
-#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
 headString = p.v.headString()
@@ -8458,7 +8446,6 @@ def __init__ (self,c):
 	u = self ; u.c = c
 	
 	# Ivars to transition to new undo scheme...
-	
 	u.debug = false # true: enable debugging code in new undo scheme.
 	u.debug_print = false # true: enable print statements in debug code.
 	u.new_undo = true # true: enable new debug code.
@@ -8469,7 +8456,6 @@ def __init__ (self,c):
 
 	# State ivars...
 	u.undoType = "Can't Undo"
-	
 	# These must be set here, _not_ in clearUndoState.
 	u.redoMenuLabel = "Can't Redo"
 	u.undoMenuLabel = "Can't Undo"
@@ -8477,15 +8463,125 @@ def __init__ (self,c):
 	u.realUndoMenuLabel = "Can't Undo"
 	u.undoing = false # true if executing an Undo command.
 	u.redoing = false # true if executing a Redo command.
+	
+	# New in 4.2...
+	<< Define optional ivars >>
+	<< define redoDispatchDict >>
+	<< define undoDispatchDict >>
+	u.updateSetChangedFlag = true
+	u.redrawFlag = true
 #@nonl
 #@+node:ekr.20031218072017.3607:clearIvars
 def clearIvars (self):
 	
-	self.p = None # The position/node being operated upon for undo and redo.
-	for ivar in optionalIvars:
-		setattr(self,ivar,None)
+	u = self
+	
+	u.p = None # The position/node being operated upon for undo and redo.
+	for ivar in u.optionalIvars:
+		setattr(u,ivar,None)
 #@nonl
 #@-node:ekr.20031218072017.3607:clearIvars
+#@+node:ekr.20031218072017.3604:<< Define optional ivars >>
+# New in 4.2: this is now an ivar, not a global, and it's a list, not a tuple.
+
+u.optionalIvars = [
+	"lastChild",
+	"parent","oldParent",
+	"back","oldBack",
+	"n","oldN","oldV",
+	"oldText","newText",
+	"oldSel","newSel",
+	"sort","select",
+	"oldTree","newTree", # Added newTree 10/14/03
+	"yview",
+	# For incremental undo typing...
+	"leading","trailing",
+	"oldMiddleLines","newMiddleLines",
+	"oldNewlines","newNewlines" ]
+#@nonl
+#@-node:ekr.20031218072017.3604:<< Define optional ivars >>
+#@+node:EKR.20040526072519:<< define redoDispatchDict >>
+u.redoDispatchDict = {
+	"Change":             u.redoTyping,
+	"Change All":         u.redoChangeAll,
+	"Change Headline":    u.redoChangeHeadline,
+	"Clone Node":         u.redoClone,
+	"Convert All Blanks": u.redoReplaceNodesContents,
+	"Convert All Tabs":   u.redoReplaceNodesContents,
+	"Convert Blanks":     u.redoTyping,
+	"Convert Tabs":       u.redoTyping,
+	"Cut":                u.redoTyping,
+	"Cut Node":           u.redoDeleteNode,
+	"De-Hoist":           u.redoDehoist,
+	"Delete":             u.redoTyping,
+	"Delete Node":        u.redoDeleteNode,
+	"Demote":             u.redoDemote,
+	"Drag":               u.redoMoveNode,
+	"Drag & Clone":       u.redoClone,
+	"Extract":            u.redoReplaceNodes,
+	"Extract Names":      u.redoReplaceNodes,
+	"Extract Section":    u.redoReplaceNodes,
+	"Hoist":              u.redoHoist,
+	"Import":             u.redoInsertNodes,
+	"Indent":             u.redoTyping,
+	"Insert Node":        u.redoInsertNodes,
+	"Move Down":          u.redoMoveNode,
+	"Move Left":          u.redoMoveNode,
+	"Move Right":         u.redoMoveNode,
+	"Move Up":            u.redoMoveNode,
+	"Paste":              u.redoTyping,
+	"Paste Node":         u.redoInsertNodes,
+	"Promote":            u.redoPromote,
+	"Read @file Nodes":   u.redoReplaceNodes,
+	"Reformat Paragraph": u.redoTyping,
+	"Sort Children":      u.redoSortChildren,
+	"Sort Siblings":      u.redoSortSiblings,
+	"Sort Top Level":     u.redoSortTopLevel,
+	"Typing":             u.redoTyping,
+	"Undent":             u.redoTyping }
+#@nonl
+#@-node:EKR.20040526072519:<< define redoDispatchDict >>
+#@+node:EKR.20040526075238:<< define undoDispatchDict >>
+u.undoDispatchDict = {
+	"Change":             u.undoTyping,
+	"Change All":         u.undoChangeAll,
+	"Change Headline":    u.undoChangeHeadline,
+	"Clone Node":         u.undoClone,
+	"Convert All Blanks": u.undoReplaceNodesContents,
+	"Convert All Tabs":   u.undoReplaceNodesContents,
+	"Convert Blanks":     u.undoTyping,
+	"Convert Tabs":       u.undoTyping,
+	"Cut":                u.undoTyping,
+	"Cut Node":           u.undoDeleteNode,
+	"De-Hoist":           u.undoDehoist,
+	"Delete":             u.undoTyping,
+	"Delete Node":        u.undoDeleteNode,
+	"Demote":             u.undoDemote,
+	"Drag":               u.undoMoveNode,
+	"Drag & Clone":       u.undoDragClone, # redo uses redoClone.
+	"Extract":            u.undoReplaceNodes,
+	"Extract Names":      u.undoReplaceNodes,
+	"Extract Section":    u.undoReplaceNodes,
+	"Hoist":              u.undoHoist,
+	"Import":             u.undoInsertNodes,
+	"Indent":             u.undoTyping,
+	"Insert Node":        u.undoInsertNodes,
+	"Move Down":          u.undoMoveNode,
+	"Move Left":          u.undoMoveNode,
+	"Move Right":         u.undoMoveNode,
+	"Move Up":            u.undoMoveNode,
+	"Paste":              u.undoTyping,
+	"Paste Node":         u.undoInsertNodes,
+	"Promote":            u.undoPromote,
+	"Read @file Nodes":   u.undoReplaceNodes,
+	"Reformat Paragraph": u.undoTyping,
+	"Sort Children":      u.undoSortChildren,
+	"Sort Siblings":      u.undoSortSiblings,
+	"Sort Top Level":     u.undoSortTopLevel,
+	"Typing":             u.undoTyping,
+	"Undent":             u.undoTyping }
+#@nonl
+#@-node:EKR.20040526075238:<< define undoDispatchDict >>
 #@-node:ekr.20031218072017.3606:undo.__init__ & clearIvars
 #@+node:ekr.20031218072017.1421:<< get config options >>
 @ Rewritten 10/11/02 as follows:
@@ -8620,7 +8716,7 @@ if oldText == newText:
 #@-node:ekr.20040324061854:<< return if there is nothing to do >>
 #@+node:ekr.20040324061854.1:<< init the undo params >>
 # Clear all optional params.
-for ivar in optionalIvars:
+for ivar in u.optionalIvars:
 	setattr(u,ivar,None)
 
 # Set the params.

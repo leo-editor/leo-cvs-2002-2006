@@ -9397,6 +9397,7 @@ def undoTyping (self):
 #@-node:EKR.20040526090701.4:undoTyping
 #@-node:ekr.20031218072017.2039:undo & allies
 #@+node:ekr.20031218072017.3612:getBead, peekBead, setBead
+#@+node:EKR.20040526150818:getBeed
 def getBead (self,n):
 	
 	u = self
@@ -9422,7 +9423,9 @@ def getBead (self,n):
 			u.oldText = old_d["newText"]
 			# g.trace(u.oldText)
 	return d
-	
+#@nonl
+#@-node:EKR.20040526150818:getBeed
+#@+node:EKR.20040526150818.1:peekBeed
 def peekBead (self,n):
 	
 	u = self
@@ -9431,7 +9434,9 @@ def peekBead (self,n):
 	d = u.beads[n]
 	# g.trace(n,len(u.beads),d)
 	return d
-
+#@nonl
+#@-node:EKR.20040526150818.1:peekBeed
+#@+node:EKR.20040526150818.2:setBeed
 def setBead (self,n,keywords=None):
 
 	u = self ; d = {}
@@ -9457,6 +9462,8 @@ def setBead (self,n,keywords=None):
 				# g.trace(u.oldText)
 	# g.trace(d)
 	return d
+#@nonl
+#@-node:EKR.20040526150818.2:setBeed
 #@-node:ekr.20031218072017.3612:getBead, peekBead, setBead
 #@+node:ekr.20031218072017.3615:setUndoParams
 @ This routine saves enough information so an operation can be undone and redone.  We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
@@ -10079,7 +10086,8 @@ def putTnode (self,t):
 		self.put_in_dquotes("T" + str(t.fileIndex))
 
 	if hasattr(t,"unknownAttributes"):
-		<< put unknown tnode attributes >>
+		self.putUnknownAttributes(t)
+
 	self.put(">")
 
 	# g.trace(t)
@@ -10088,19 +10096,6 @@ def putTnode (self,t):
 
 	self.put("</t>") ; self.put_nl()
 #@nonl
-#@+node:ekr.20031218072017.1578:<< put unknown tnode attributes >>
-attrDict = t.unknownAttributes
-keys = attrDict.keys()
-for key in keys:
-	val = attrDict[key]
-	attr = ' %s="%s"' % (key,self.xmlEscape(val))
-	self.put(attr)
-	if 1: # For debugging.
-		s = "putting unknown tnode attribute"
-		print s ;  g.es(s, color="red")
-		print attr, g.es(attr)
-#@nonl
-#@-node:ekr.20031218072017.1578:<< put unknown tnode attributes >>
 #@-node:ekr.20031218072017.1577:putTnode
 #@+node:ekr.20031218072017.2002:putTnodeList (4.0,4.2)
 def putTnodeList (self,v):
@@ -10245,21 +10240,8 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
-	<< put unknown vnode attributes >>
+	self.putUnknownAttributes(v)
 #@nonl
-#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-attrDict = v.unknownAttributes
-keys = attrDict.keys()
-for key in keys:
-	val = attrDict[key]
-	attr = ' %s="%s"' % (key,self.xmlEscape(val))
-	self.put(attr)
-	if 0: # For debugging.
-		s = "putting unknown attribute for " + v.headString()
-		print s ;  g.es(s, color="red")
-		print attr, g.es(attr)
-#@nonl
-#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
 headString = p.v.headString()
@@ -10439,7 +10421,8 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 		elif self.matchTag(">"):
 			break
 		else: # New for 4.0: allow unknown attributes.
-			attr,val = self.getUnknownTag()
+			# New in 4.2: allow pickle'd and hexlify'ed values.
+			attr,val = self.getUnknownAttribute()
 			attrDict[attr] = val
 	# Headlines are optional.
 	if self.matchTag("<vh>"):
@@ -10582,7 +10565,8 @@ def getTnode (self):
 		elif self.matchTag("rtf=\"0\""): pass # ignored
 		elif self.matchTag(">"):         break
 		else: # New for 4.0: allow unknown attributes.
-			attr,val = self.getUnknownTag()
+			# New in 4.2: allow pickle'd and hexlify'ed values.
+			attr,val = self.getUnknownAttribute()
 			attrDict[attr] = val
 			
 	if g.app.use_gnx:
@@ -10795,7 +10779,8 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 		elif self.matchTag(">"):
 			break
 		else: # New for 4.0: allow unknown attributes.
-			attr,val = self.getUnknownTag()
+			# New in 4.2: allow pickle'd and hexlify'ed values.
+			attr,val = self.getUnknownAttribute()
 			attrDict[attr] = val
 	# Headlines are optional.
 	if self.matchTag("<vh>"):
@@ -14040,7 +14025,8 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 		elif self.matchTag(">"):
 			break
 		else: # New for 4.0: allow unknown attributes.
-			attr,val = self.getUnknownTag()
+			# New in 4.2: allow pickle'd and hexlify'ed values.
+			attr,val = self.getUnknownAttribute()
 			attrDict[attr] = val
 	# Headlines are optional.
 	if self.matchTag("<vh>"):
@@ -16376,21 +16362,8 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
-	<< put unknown vnode attributes >>
+	self.putUnknownAttributes(v)
 #@nonl
-#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-attrDict = v.unknownAttributes
-keys = attrDict.keys()
-for key in keys:
-	val = attrDict[key]
-	attr = ' %s="%s"' % (key,self.xmlEscape(val))
-	self.put(attr)
-	if 0: # For debugging.
-		s = "putting unknown attribute for " + v.headString()
-		print s ;  g.es(s, color="red")
-		print attr, g.es(attr)
-#@nonl
-#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
 headString = p.v.headString()
@@ -19609,21 +19582,8 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
-	<< put unknown vnode attributes >>
+	self.putUnknownAttributes(v)
 #@nonl
-#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-attrDict = v.unknownAttributes
-keys = attrDict.keys()
-for key in keys:
-	val = attrDict[key]
-	attr = ' %s="%s"' % (key,self.xmlEscape(val))
-	self.put(attr)
-	if 0: # For debugging.
-		s = "putting unknown attribute for " + v.headString()
-		print s ;  g.es(s, color="red")
-		print attr, g.es(attr)
-#@nonl
-#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
 headString = p.v.headString()
@@ -19771,7 +19731,8 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 		elif self.matchTag(">"):
 			break
 		else: # New for 4.0: allow unknown attributes.
-			attr,val = self.getUnknownTag()
+			# New in 4.2: allow pickle'd and hexlify'ed values.
+			attr,val = self.getUnknownAttribute()
 			attrDict[attr] = val
 	# Headlines are optional.
 	if self.matchTag("<vh>"):
@@ -20365,21 +20326,8 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
-	<< put unknown vnode attributes >>
+	self.putUnknownAttributes(v)
 #@nonl
-#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-attrDict = v.unknownAttributes
-keys = attrDict.keys()
-for key in keys:
-	val = attrDict[key]
-	attr = ' %s="%s"' % (key,self.xmlEscape(val))
-	self.put(attr)
-	if 0: # For debugging.
-		s = "putting unknown attribute for " + v.headString()
-		print s ;  g.es(s, color="red")
-		print attr, g.es(attr)
-#@nonl
-#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
 headString = p.v.headString()
@@ -21656,7 +21604,8 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 		elif self.matchTag(">"):
 			break
 		else: # New for 4.0: allow unknown attributes.
-			attr,val = self.getUnknownTag()
+			# New in 4.2: allow pickle'd and hexlify'ed values.
+			attr,val = self.getUnknownAttribute()
 			attrDict[attr] = val
 	# Headlines are optional.
 	if self.matchTag("<vh>"):
@@ -21808,21 +21757,8 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
-	<< put unknown vnode attributes >>
+	self.putUnknownAttributes(v)
 #@nonl
-#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-attrDict = v.unknownAttributes
-keys = attrDict.keys()
-for key in keys:
-	val = attrDict[key]
-	attr = ' %s="%s"' % (key,self.xmlEscape(val))
-	self.put(attr)
-	if 0: # For debugging.
-		s = "putting unknown attribute for " + v.headString()
-		print s ;  g.es(s, color="red")
-		print attr, g.es(attr)
-#@nonl
-#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
 headString = p.v.headString()
@@ -26473,21 +26409,8 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
-	<< put unknown vnode attributes >>
+	self.putUnknownAttributes(v)
 #@nonl
-#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-attrDict = v.unknownAttributes
-keys = attrDict.keys()
-for key in keys:
-	val = attrDict[key]
-	attr = ' %s="%s"' % (key,self.xmlEscape(val))
-	self.put(attr)
-	if 0: # For debugging.
-		s = "putting unknown attribute for " + v.headString()
-		print s ;  g.es(s, color="red")
-		print attr, g.es(attr)
-#@nonl
-#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
 headString = p.v.headString()
@@ -28579,21 +28502,8 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
-	<< put unknown vnode attributes >>
+	self.putUnknownAttributes(v)
 #@nonl
-#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-attrDict = v.unknownAttributes
-keys = attrDict.keys()
-for key in keys:
-	val = attrDict[key]
-	attr = ' %s="%s"' % (key,self.xmlEscape(val))
-	self.put(attr)
-	if 0: # For debugging.
-		s = "putting unknown attribute for " + v.headString()
-		print s ;  g.es(s, color="red")
-		print attr, g.es(attr)
-#@nonl
-#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
 headString = p.v.headString()
@@ -31536,21 +31446,8 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
-	<< put unknown vnode attributes >>
+	self.putUnknownAttributes(v)
 #@nonl
-#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-attrDict = v.unknownAttributes
-keys = attrDict.keys()
-for key in keys:
-	val = attrDict[key]
-	attr = ' %s="%s"' % (key,self.xmlEscape(val))
-	self.put(attr)
-	if 0: # For debugging.
-		s = "putting unknown attribute for " + v.headString()
-		print s ;  g.es(s, color="red")
-		print attr, g.es(attr)
-#@nonl
-#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
 headString = p.v.headString()
@@ -32325,21 +32222,8 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
-	<< put unknown vnode attributes >>
+	self.putUnknownAttributes(v)
 #@nonl
-#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
-attrDict = v.unknownAttributes
-keys = attrDict.keys()
-for key in keys:
-	val = attrDict[key]
-	attr = ' %s="%s"' % (key,self.xmlEscape(val))
-	self.put(attr)
-	if 0: # For debugging.
-		s = "putting unknown attribute for " + v.headString()
-		print s ;  g.es(s, color="red")
-		print attr, g.es(attr)
-#@nonl
-#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
 headString = p.v.headString()

@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4252" clone_windows="0"/>
 <globals body_outline_ratio="0.427922814983">
-	<global_window_position top="47" left="305" height="881" width="861"/>
+	<global_window_position top="30" left="218" height="881" width="861"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -656,7 +656,9 @@
 <v t="EKR.20040525083635" tnodeList="EKR.20040525083635,EKR.20040525083635.1"><vh>@file c:\prog\test\orphanMessageTest.txt</vh>
 <v t="EKR.20040525083635.1"><vh>orphan</vh></v>
 </v>
-<v t="EKR.20040526094831" a="TV"><vh>Test of undo registration</vh></v>
+<v t="EKR.20040526094831"><vh>Test of undo registration</vh></v>
+<v t="EKR.20040526193608"><vh>Tests of pickle &amp; hexlify</vh></v>
+<v t="EKR.20040526200017" a="ETV" myPlugin="7d710055016171014930310a732e"><vh>Test of unknownAttributes</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1941,6 +1943,38 @@ else:
 u.setUndoParams("Bletch",p)
 
 # Selecting "Undo Bletch" will enable "Redo Bletch", etc.</t>
+<t tx="EKR.20040526193608">import pickle
+import binascii
+
+import leoGlobals as g
+from leoGlobals import true,false
+
+d = { "a":True }
+
+print '-' * 40
+
+s = pickle.dumps(d,bin=true)
+s2 = binascii.hexlify(s)
+print `s`,s2
+
+s3 = binascii.unhexlify(s2)
+d2 = cPickle.loads(s3)
+
+print `d2`
+print d == d2, d is d2</t>
+<t tx="EKR.20040526200017">import leoGlobals as g
+from leoGlobals import true,false
+
+c = g.top() ; p = c.currentPosition()
+
+
+d = { "a":True }
+
+if 1:
+	# Warning: executing this in the a2 code base will cause any save operation to fail.
+	p.v.unknownAttributes = { "myPlugin" : d }
+	
+print repr(p.v.unknownAttributes)</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
