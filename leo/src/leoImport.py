@@ -4,6 +4,7 @@
 #@@tabwidth -4
 
 import leoGlobals as g
+import leoTest # Support for unit tests.
 import string
 
 class baseLeoImportCommands:
@@ -53,9 +54,9 @@ class baseLeoImportCommands:
             s = file.read()
             s = g.toUnicode(s,self.encoding)
             file.close()
-        except:
+        except IOError:
             g.es("can not open " + fileName)
-            import leoTest ; leoTest.fail()
+            leoTest.fail()
             return None
         #@nonl
         #@-node:ekr.20031218072017.3211:<< Read file into s >>
@@ -284,9 +285,9 @@ class baseLeoImportCommands:
             s = g.toUnicode(s,self.encoding)
             array = string.split(s,"\n")
             file.close()
-        except:
+        except IOError:
             g.es("Can not open " + fileName, color="blue")
-            import leoTest ; leoTest.fail()
+            leoTest.fail()
             return
         #@-node:ekr.20031218072017.3221:<< Read the file into array >>
         #@nl
@@ -662,7 +663,7 @@ class baseLeoImportCommands:
     #@-node:ekr.20031218072017.3236:Symbol table
     #@-node:ekr.20031218072017.3224:importWebCommand & allies
     #@+node:EKR.20040506075328.2:perfectImport
-    def perfectImport (self,fileName,p,testing=False,verbose=False):
+    def perfectImport (self,fileName,p,testing=False,verbose=False,convertBlankLines=True,verify=True):
         
         #@    << about this algorithm >>
         #@+node:ekr.20040717112739:<< about this algorithm >>
@@ -714,26 +715,26 @@ class baseLeoImportCommands:
             #@nonl
             #@-node:ekr.20040716065356:<< clear all dirty bits >>
             #@nl
-        #@    << Assign file indices in p's tree >>
-        #@+node:ekr.20040716064333:<< Assign file indices in p's tree >>
+        #@    << Assign file indices >>
+        #@+node:ekr.20040716064333:<< Assign file indices  >>
         nodeIndices = g.app.nodeIndices
         
         nodeIndices.setTimestamp()
         
-        for p2 in p.self_and_subtree_iter():
+        for p2 in root.self_and_subtree_iter():
             try: # Will fail for None or any pre 4.1 file index.
                 id,time,n = p2.v.t.fileIndex
             except TypeError:
                 p2.v.t.fileIndex = nodeIndices.getNewIndex()
         #@nonl
-        #@-node:ekr.20040716064333:<< Assign file indices in p's tree >>
+        #@-node:ekr.20040716064333:<< Assign file indices  >>
         #@nl
-        #@    << Write p to to string s >>
-        #@+node:ekr.20040716064333.1:<< Write p to to string s >>
-        df.write(p,thinFile=True,toString=True)
+        #@    << Write root's tree to to string s >>
+        #@+node:ekr.20040716064333.1:<< Write root's tree to to string s >>
+        df.write(root,thinFile=True,toString=True)
         s = df.stringOutput
         if not s: return
-        #@-node:ekr.20040716064333.1:<< Write p to to string s >>
+        #@-node:ekr.20040716064333.1:<< Write root's tree to to string s >>
         #@nl
     
         # Set up the data for the algorithm.
@@ -745,7 +746,8 @@ class baseLeoImportCommands:
         
         # Correct write_lines using the algorihm.
         if i_lines != j_lines:
-            g.es("Running Perfect Import",color="blue")
+            if verbose:
+                g.es("Running Perfect Import",color="blue")
             write_lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
             if 0: # For testing.
                 #@            << put the corrected fat lines in a new node >>
@@ -774,14 +776,17 @@ class baseLeoImportCommands:
             
             try:
                 df.correctedLines = 0
-                df.targetFileName = fileName = "<perfectImport string-file>"
+                df.targetFileName = "<perfectImport string-file>"
                 df.inputFile = fo = g.fileLikeObject()
                 df.file = fo # Strange, that this is needed.  Should be cleaned up.
                 for line in write_lines:
                     fo.write(line)
-                firstLines,junk = c.atFileCommands.scanHeader(fo,fileName)
+                firstLines,junk = c.atFileCommands.scanHeader(fo,df.targetFileName)
+                # To do: pass params to readEndNode.
                 df.readOpenFile(root,fo,firstLines,perfectImportRoot=root)
-                g.es("The %d marked nodes have been corrected" % df.correctedLines,color="blue")
+                n = df.correctedLines
+                if verbose:
+                    g.es("%d marked node%s corrected" % (n,g.choose(n==1,'','s')),color="blue")
             except:
                 g.es("Exception in Perfect Import",color="red")
                 g.es_exception()
@@ -789,7 +794,81 @@ class baseLeoImportCommands:
             #@nonl
             #@-node:ekr.20040717113036:<< correct root's tree using write_lines >>
             #@nl
-            c.redraw()
+        if verify:
+            #@        << verify that writing the tree would produce the original file >>
+            #@+node:ekr.20040718035658:<< verify that writing the tree would produce the original file >>
+            try:
+                # Read the original file into before_lines.
+                before = file(fileName)
+                before_lines = before.readlines()
+                before.close()
+                
+                # Write the tree into after_lines.
+                df.write(root,thinFile=True,toString=True)
+                after_lines1 = g.splitLines(df.stringOutput)
+                
+                # Strip sentinels from after_lines and compare.
+                after_lines = mu.removeSentinelsFromLines(after_lines1,marker)
+                
+                # A major kludge: Leo can not represent unindented blank lines in indented nodes!
+                # We ignore the problem here by stripping whitespace from blank lines.
+                # We shall need output options to handle such lines.
+                if convertBlankLines:
+                    mu.stripWhitespaceFromBlankLines(before_lines)
+                    mu.stripWhitespaceFromBlankLines(after_lines)
+                if before_lines == after_lines:
+                    if verbose:
+                        g.es("Perfect Import verified",color="blue")
+                else:
+                    leoTest.fail()
+                    if verbose:
+                        g.es("Perfect Import failed verification test!",color="red")
+                        #@            << dump the files >>
+                        #@+node:ekr.20040718045423:<< dump the files >>
+                        print len(before_lines),len(after_lines)
+                        
+                        if len(before_lines)==len(after_lines):
+                            for i in xrange(len(before_lines)):
+                                extra = 3
+                                if before_lines[i] != after_lines[i]:
+                                    j = max(0,i-extra)
+                                    print '-' * 20
+                                    while j < i + extra + 1:
+                                        leader = g.choose(i == j,"* ","  ")
+                                        print "%s%3d" % (leader,j), repr(before_lines[j])
+                                        print "%s%3d" % (leader,j), repr(after_lines[j])
+                                        j += 1
+                        else:
+                            for i in xrange(min(len(before_lines),len(after_lines))):
+                                if before_lines[i] != after_lines[i]:
+                                    extra = 3
+                                    print "first mismatch at line %d" % i
+                                    print "printing %d lines after mismatch"
+                                    print "before..."
+                                    for j in xrange(i+1+extra):
+                                        print "%3d" % j, repr(before_lines[j])
+                                    print
+                                    print "after..."
+                                    for k in xrange(1+extra):
+                                        print "%3d" % (i+k), repr(after_lines[i+k])
+                                    print
+                                    print "with sentinels"
+                                    j = 0 ; k = 0
+                                    while k < i + 1 + extra:
+                                        print "%3d" % k,repr(after_lines1[j])
+                                        if not mu.is_sentinel(after_lines1[j],marker):
+                                            k += 1
+                                        j += 1
+                                    break
+                        #@nonl
+                        #@-node:ekr.20040718045423:<< dump the files >>
+                        #@nl
+            except IOError:
+                g.es("Can not reopen %s!" % fileName,color="red")
+                leoTest.fail()
+            #@nonl
+            #@-node:ekr.20040718035658:<< verify that writing the tree would produce the original file >>
+            #@nl
     #@nonl
     #@-node:EKR.20040506075328.2:perfectImport
     #@+node:ekr.20031218072017.3241:Scanners for createOutline
@@ -2507,9 +2586,9 @@ class baseLeoImportCommands:
                 s = file.read()
                 s = g.toUnicode(s,self.encoding)
                 file.close()
-            except:
+            except IOError:
                 g.es("Can not open " + fileName, color="blue")
-                import leoTest ; leoTest.fail()
+                leoTest.fail()
                 return
             #@nonl
             #@-node:ekr.20031218072017.3301:<< Read file into s >>
