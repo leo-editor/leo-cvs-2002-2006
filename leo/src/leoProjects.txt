@@ -5779,9 +5779,10 @@ frame.bodyCtrl = frame.body.bodyCtrl
 
 # Configure.  N.B. There may be Tk bugs here that make the order significant!
 frame.setTabWidth(c.tab_width)
-frame.tree.setTreeColorsFromConfig()
+frame.tree.setColorFromConfig()
 self.reconfigurePanes()
 self.body.setFontFromConfig()
+self.body.setColorFromConfig()
 
 if 0: # No longer done automatically.
 
@@ -6775,6 +6776,7 @@ def __init__ (self,frame,parentFrame):
     # Note: self.logCtrl is None for nullLog's.
     self.logCtrl = self.createControl(parentFrame)
     self.setFontFromConfig()
+    self.setColorFromConfig()
 #@nonl
 #@-node:ekr.20031218072017.3695:leoLog.__init__
 #@+node:ekr.20031218072017.2232:class nullLog
@@ -6811,11 +6813,14 @@ def putnl (self):
         g.rawPrint("")
 #@nonl
 #@-node:ekr.20041012083237.3:put and putnl
-#@+node:ekr.20041012083237.4:setFontFromConfig
+#@+node:ekr.20041012083237.4:setColorFromConfig & setFontFromConfig
 def setFontFromConfig (self):
     pass
+    
+def setColorFromConfig (self):
+    pass
 #@nonl
-#@-node:ekr.20041012083237.4:setFontFromConfig
+#@-node:ekr.20041012083237.4:setColorFromConfig & setFontFromConfig
 #@-node:ekr.20031218072017.2232:class nullLog
 #@+node:ekr.20031218072017.2222:class nullFrame
 class nullFrame (leoFrame):

@@ -35,7 +35,7 @@
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
 <v t="ekr.20041120180154" a="E"><vh>Types</vh>
-<v t="ekr.20041120181045.1" a="TV"><vh>@type orientation: string = vertical, horizontal</vh></v>
+<v t="ekr.20041120181045.1"><vh>@type orientation: string = vertical, horizontal</vh></v>
 </v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
 <v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
@@ -137,12 +137,12 @@
 <v t="ekr.20041119034357.27"><vh>@shortcuts override defaults</vh></v>
 <v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
 </v>
-<v t="ekr.20041213105007" a="E"><vh>@page Fonts</vh>
+<v t="ekr.20041213105007"><vh>@page Fonts</vh>
 <v t="ekr.20041213105508"><vh>@font log font</vh></v>
 <v t="ekr.20041119034357.45" a="E"><vh>@font body text font</vh></v>
 <v t="ekr.20041119051246.4" a="E"><vh>@font outline font</vh></v>
 </v>
-<v t="ekr.20041213105007.1"><vh>Colors</vh>
+<v t="ekr.20041213105007.1" a="E"><vh>Colors</vh>
 <v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
@@ -155,16 +155,16 @@
 <v t="ekr.20041119034357.49"><vh>@color body_text_background_color = None</vh></v>
 <v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
 </v>
-<v t="ekr.20041119051246.1"><vh>@page Outline pane colors</vh>
-<v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = white</vh></v>
-<v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = black</vh></v>
-<v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = gray80</vh></v>
-<v t="ekr.20041119050749.7"><vh>@color headline_text_selected_foreground_color = black</vh></v>
-<v t="ekr.20041119051901"><vh>@color headline_text_editing_background_color = white</vh></v>
-<v t="ekr.20041119050749.8"><vh>@color headline_text_editing_foreground_color = black</vh></v>
-<v t="ekr.20041119050749.9"><vh>@color headline_text_editing_selection_foreground_color = white</vh></v>
-<v t="ekr.20041119051901.1"><vh>@color headline_text_editing_selection_background_color = DarkBlue</vh></v>
-<v t="ekr.20041119050749.12"><vh>@color outline_pane_background_color = None</vh></v>
+<v t="ekr.20041119051246.1" a="E"><vh>@page Outline pane colors</vh>
+<v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = </vh></v>
+<v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = None</vh></v>
+<v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = None</vh></v>
+<v t="ekr.20041119050749.7"><vh>@color headline_text_selected_foreground_color = None</vh></v>
+<v t="ekr.20041119051901"><vh>@color headline_text_editing_background_color = None</vh></v>
+<v t="ekr.20041119050749.8"><vh>@color headline_text_editing_foreground_color = None</vh></v>
+<v t="ekr.20041119050749.9"><vh>@color headline_text_editing_selection_foreground_color = None</vh></v>
+<v t="ekr.20041119051901.1"><vh>@color headline_text_editing_selection_background_color = None</vh></v>
+<v t="ekr.20041119050749.12" a="TV"><vh>@color outline_pane_background_color = None</vh></v>
 </v>
 <v t="ekr.20041119034357.70"><vh>@page Syntax colors &amp; options</vh>
 <v t="ekr.20041119034357.78"><vh>@color comment_color=firebrick3</vh></v>
@@ -879,12 +879,10 @@ Setting this setting to 0 allows Leo to be used on Aqua.
 0: Only clicks in a node's plus/minus box expands or contracts the node.
 
 </t>
-<t tx="ekr.20041119050749.6">Foreground color of unselected headline text.
-
-Background color must also be specified for either setting to take effect.</t>
+<t tx="ekr.20041119050749.6">Foreground color of unselected headline text.</t>
 <t tx="ekr.20041119050749.7">Foreground color of selected headline text that is not being edited.
 
-Background color must also be specified for either setting to take effect.</t>
+DodgerBlue4</t>
 <t tx="ekr.20041119050749.8">Foreground color of unselected headline text in a headline that is being edited.
 
 Background color must also be specified for either setting to take effect.</t>
@@ -908,7 +906,9 @@ Thu, 30 Jan 2003 16:57:12
 <t tx="ekr.20041119050749.11">True:  use gmt time when inserting time into headlines.
 
 False: use local time.</t>
-<t tx="ekr.20041119050749.12">Background color of outline pane itself.</t>
+<t tx="ekr.20041119050749.12">Background color of outline pane itself.
+
+LavenderBlush1</t>
 <t tx="ekr.20041119050749.17">This option controls the interpretation of the control key when dragging nodes in the outline pane.
 
 True: A drag is a control-drag if the control key is down at the start of the drag.
@@ -918,10 +918,10 @@ False: A drag is a control-drag if the control key is down at the end of the dra
 <t tx="ekr.20041119051246.1"></t>
 <t tx="ekr.20041119051246.2">Background color of unselected headline text.
 
-Foreground color must also be specified for either setting to take effect.</t>
+LavenderBlush1</t>
 <t tx="ekr.20041119051246.3">Background color of selected headline text that is not being edited.
 
-Foreground color must also be specified for either setting to take effect.</t>
+LavenderBlush2</t>
 <t tx="ekr.20041119051246.4">headline_text_font_family = None
 headline_text_font_size = None
 headline_text_font_slant = roman
