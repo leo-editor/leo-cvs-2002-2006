@@ -89,7 +89,7 @@ class baseFileCommands:
 		keys = attrDict.keys()
 		if keys:
 			v.unknownAttributes = attrDict
-			if 1: # For debugging.
+			if 0: # For debugging.
 				s = "unknown attributes for " + v.headString()
 				print s ; es(s, color = "blue")
 				for key in keys:
@@ -606,7 +606,7 @@ class baseFileCommands:
 				
 				for name in app.language_delims_dict.keys():
 					if self.matchTagWordIgnoringCase(name):
-						language = name.replace("/","") # Bug fix: 1020/03
+						language = name.replace("/","") # Bug fix: 10/20/03
 						self.getDquote()
 						break
 				
@@ -674,7 +674,7 @@ class baseFileCommands:
 		keys = attrDict.keys()
 		if keys:
 			t.unknownAttributes = attrDict
-			if 1: # For debugging.
+			if 0: # For debugging.
 				s = "unknown attributes for tnode"
 				print s ; es(s, color = "blue")
 				for key in keys:
@@ -1408,7 +1408,7 @@ class baseFileCommands:
 				val = attrDict[key]
 				attr = ' %s="%s"' % (key,self.xmlEscape(val))
 				self.put(attr)
-				if 1: # For debugging.
+				if 0: # For debugging.
 					s = "putting unknown tnode attribute"
 					print s ;  es(s, color="red")
 					print attr, es(attr)
@@ -1525,7 +1525,7 @@ class baseFileCommands:
 				val = attrDict[key]
 				attr = ' %s="%s"' % (key,self.xmlEscape(val))
 				self.put(attr)
-				if 1: # For debugging.
+				if 0: # For debugging.
 					s = "putting unknown attribute for " + v.headString()
 					print s ;  es(s, color="red")
 					print attr, es(attr)
