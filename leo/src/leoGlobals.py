@@ -1527,10 +1527,8 @@ def utils_remove (fileName,verbose=True):
 #@nonl
 #@+node:ekr.20050107084901:test_utils_remove
 def test_utils_remove():
-    
-    import leoGlobals as g
+
     import os
-    
     exists = g.os_path_exists
     
     path = g.os_path_join(g.app.testDir,'xyzzy')
@@ -1611,11 +1609,9 @@ def utils_rename(src,dst,mode=None,verbose=True):
         return False
 #@nonl
 #@+node:ekr.20050107085710.1:test_utils_rename
-def test_utils_rename():
+def test_utils_rename(**keys):
 
-    import leoGlobals as g
     import os
-    
     exists = g.os_path_exists
     
     path = g.os_path_join(g.app.testDir,'xyzzy')
@@ -3361,9 +3357,7 @@ def toUnicodeWithErrorCode (s,encoding):
 #@-node:ekr.20050208095723:toUnicodeWithErrorCode
 #@+node:ekr.20050208104358:test_round_trip_toUnicode_toEncodedString
 def test_round_trip_toUnicode_toEncodedString ():
-
-    import leoGlobals as g
-    
+   
     for s,encoding in (
         ('a',    'utf-8'),
         ('a',    'ascii'),
@@ -3387,8 +3381,6 @@ def test_round_trip_toUnicode_toEncodedString ():
 #@+node:ekr.20050208112123:test_failure_with_ascii_encodings
 def test_failure_with_ascii_encodings():
 
-    import leoGlobals as g
-    
     encoding = 'ascii'
     
     s = '炰'
@@ -4302,31 +4294,41 @@ def funcToMethod(f,theClass,name=None):
     # g.trace(name)
 #@nonl
 #@-node:ekr.20031218072017.3126:g.funcToMethod
-#@+node:EKR.20040614071102.1:g.getScript
-def getScript (c,p,useSelectedText=True):
+#@+node:EKR.20040614071102.1:g.getScript & tests
+def getScript (c,p,useSelectedText=True,script=None):
 
     if not p: p = c.currentPosition()
     old_body = p.bodyString()
 
     try:
-        script = ''
-        # Allow p not to be the present position.
-        if p == c.currentPosition():
-            if useSelectedText and c.frame.body.hasTextSelection():
-                # Temporarily replace v's body text with just the selected text.
-                s = c.frame.body.getSelectedText()
-                p.v.setTnodeText(s)
-            else:
-                s = c.frame.body.getAllText()
+        if script:
+            s = script
         else:
-            s = p.bodyString()
+            script = ''
+            # Allow p not to be the present position.
+            if p == c.currentPosition():
+                if useSelectedText and c.frame.body.hasTextSelection():
+                    # Temporarily replace v's body text with just the selected text.
+                    s = c.frame.body.getSelectedText()
+                    p.v.setTnodeText(s)
+                else:
+                    s = c.frame.body.getAllText()
+            else:
+                s = p.bodyString()
+                
+        # New in 4.3: Remove extra leading whitespace so the user may execute indented code.
+        s = g.removeExtraLws(s,c.tab_width)
     
         if s.strip():
             g.app.scriptDict["script1"]=s
             at = c.atFileCommands
-            at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
-            script = at.stringOutput
-            # g.trace(script)
+            # New in 4.3: Selecting text executes _only_ the selected text.
+            # This removes some indentation problems, but not all of them.
+            if useSelectedText and c.frame.body.hasTextSelection():
+                script = s
+            else:
+                at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
+                script = at.stringOutput
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
@@ -4336,9 +4338,30 @@ def getScript (c,p,useSelectedText=True):
         script = ''
 
     p.v.setTnodeText(old_body)
-    return script
+    
+    # g.trace(repr(c.atFileCommands.output_newline))
+    if c.atFileCommands.output_newline == 'crlf':
+        return script.replace("\r\n","\n") # 1/11/05
+    else:
+        return script
 #@nonl
-#@-node:EKR.20040614071102.1:g.getScript
+#@+node:ekr.20050211100535:test_g_getScript_strips_returns
+def test_g_getScript_strips_returns():
+
+    old_output_newline = c.atFileCommands.output_newline
+    c.atFileCommands.output_newline = 'crlf'
+    script = g.getScript(c,p)
+    c.atFileCommands.output_newline = old_output_newline
+    
+    assert script.find('\r\n') == -1
+#@nonl
+#@-node:ekr.20050211100535:test_g_getScript_strips_returns
+#@+node:ekr.20050211120242.1:test_g_getScript_strips_lws
+def test_g_getScript_strips_lws():
+    pass # Not ready yet.
+#@nonl
+#@-node:ekr.20050211120242.1:test_g_getScript_strips_lws
+#@-node:EKR.20040614071102.1:g.getScript & tests
 #@+node:ekr.20041219095213:import wrappers
 #@+at 
 #@nonl
@@ -4565,6 +4588,45 @@ def removeLeadingWhitespace (s,first_ws,tab_width):
     return s
 #@nonl
 #@-node:ekr.20031218072017.3202:removeLeadingWhitespace
+#@+node:ekr.20050211120242.2:g.removeExtraLws & tests
+def removeExtraLws (s,tab_width):
+    
+    '''Remove extra indentation from one or more lines.'''
+    
+    lines = g.splitLines(s)
+
+    # Find the first non-blank line and compute w, the width of its leading whitespace.
+    for s in lines:
+       if s.strip():
+            lws = g.get_leading_ws(s)
+            w = g.computeWidth(lws,tab_width)
+            # g.trace('w',w)
+            break
+    else: return s
+    
+    result = [g.removeLeadingWhitespace(line,w,tab_width) for line in lines]
+    result = ''.join(result)
+    
+    if 0:
+        g.trace('lines...')
+        for line in g.splitLines(result):
+            print repr(line)
+
+    return result
+#@nonl
+#@+node:ekr.20050211120837:test_g_removeExtraLws
+def test_g_removeExtraLws():
+    
+    for s,expected in (
+        (' a\n b\n c', 'a\nb\nc'),
+        (' \n  A\n    B\n  C\n', '\nA\n  B\nC\n'),
+    ):
+        result = g.removeExtraLws(s,c.tab_width)
+        assert result == expected, '\ns: %s\nexpected: %s\nresult:   %s' % (
+            repr(s),repr(expected),repr(result))
+#@nonl
+#@-node:ekr.20050211120837:test_g_removeExtraLws
+#@-node:ekr.20050211120242.2:g.removeExtraLws & tests
 #@+node:ekr.20031218072017.3203:removeTrailingWs
 # Warning: string.rstrip also removes newlines!
 
