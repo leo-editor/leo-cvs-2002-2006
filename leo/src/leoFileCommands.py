@@ -772,6 +772,9 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.3025:getPosition
     #@+node:ekr.20031218072017.2062:getPrefs
+    # Note: Leo 4.3 does not write these settings to local .leo files.
+    # Instead, corresponding settings are contained in leoConfig.leo files.
+    
     def getPrefs (self):
     
         c = self.c
