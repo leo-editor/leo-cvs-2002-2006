@@ -1065,7 +1065,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="edream.110203113231.667"><vh>Commands</vh>
 <v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
 <v t="edream.110203113231.669" tnodeList="edream.110203113231.669,edream.110203113231.670,edream.110203113231.671,edream.110203113231.672,edream.110203113231.673,edream.110203113231.674,edream.110203113231.675,edream.110203113231.676"><vh>@file import_cisco_config.py</vh>
@@ -1924,30 +1924,30 @@
 <v t="ekr.20040331153923.13"><vh>addScheduleMenu</vh></v>
 </v>
 </v>
-<v t="ekr.20040408161258"><vh>rst2 plugin</vh>
-<v t="ekr.20040408192158" a="E"><vh>Documentation for the rST plugin using rst</vh>
-<v t="ekr.20040408192158.1" a="E"><vh>@rst ../doc/rstplugin.html</vh>
+<v t="ekr.20040408161258" a="E"><vh>rst2 plugin</vh>
+<v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
+<v t="ekr.20040408192158.1"><vh>@rst ../doc/rstplugin.html</vh>
 <v t="ekr.20040408192158.2"><vh>Overview</vh>
 <v t="ekr.20040408192158.3"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040408192158.4"><vh>Formatting</vh>
 <v t="ekr.20040408192158.5"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040409051841" a="E"><vh>Embedding documentation in @file trees</vh>
+<v t="ekr.20040409051841"><vh>Embedding documentation in @file trees</vh>
 <v t="ekr.20040409051841.1"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040408192158.6" a="E"><vh>The code-block directive</vh>
+<v t="ekr.20040408192158.6"><vh>The code-block directive</vh>
 <v t="ekr.20040408192158.7"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040408192158.8" a="E"><vh>Cascading style sheets</vh>
+<v t="ekr.20040408192158.8"><vh>Cascading style sheets</vh>
 <v t="ekr.20040408192158.9"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20040331071319" a="E" tnodeList="ekr.20040331071319,ekr.20040331071319.2,ekr.20040331071319.3,ekr.20040331071319.4,ekr.20040331071319.5,ekr.20040331071319.6,ekr.20040331071319.7,ekr.20040408160625.1,ekr.20040403202850,ekr.20040403202850.1,ekr.20040403202850.2,ekr.20040331071319.8"><vh>@file rst2.py</vh>
+<v t="ekr.20040331071319" tnodeList="ekr.20040331071319,ekr.20040331071319.2,ekr.20040331071319.3,ekr.20040331071319.4,ekr.20040331071319.5,ekr.20040331071319.6,ekr.20040331071319.7,ekr.20040408160625.1,ekr.20040403202850,ekr.20040403202850.1,ekr.20040403202850.2,ekr.20040331071319.8"><vh>@file rst2.py</vh>
 <v t="ekr.20040331071319.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
 <v t="ekr.20040331071319.3"><vh>onIconDoubleClick</vh>
-<v t="ekr.20040331071319.4" a="E"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
+<v t="ekr.20040331071319.4"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
 <v t="ekr.20040331071319.5"><vh>&lt;&lt; define code-block &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040331071319.6"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
@@ -1960,6 +1960,10 @@
 </v>
 <v t="ekr.20040331071319.8"><vh>underline</vh></v>
 </v>
+</v>
+<v t="ekr.20040419105219" a="ETV" tnodeList="ekr.20040419105219,ekr.20040419105219.1,ekr.20040419105219.2"><vh>@file lineNumbers.py</vh>
+<v t="ekr.20040419105219.1"><vh>writing derived files</vh></v>
+<v t="ekr.20040419105219.2"><vh>reading derived files</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -16093,6 +16097,9 @@ g.plugin_signon(__name__)</t>
 	searchbox.py
 	# newButtons.py
 	# wordcompleter.py
+	
+# New in 4.2
+	lineNumbers.py
 
 # New from Bernhard Mulder
 	# mod_http.py
@@ -23300,5 +23307,52 @@ It would be also be possible to use cloned nodes to embed code nodes in .html fi
 
 The disadvantage of this organization is that you must update spamDocs.html by hand to keep it up-to-date with spam.py.
 </t>
+<t tx="ekr.20040419105219">"""Adds #line directives in perl and perlpod programs."""
+
+@ Over-ride two methods in leoAtFile.py to write #line directives after node sentinels.
+This allows compilers to give locations of errors in relation to the node name rather than the filename.
+Currently supports only perl and perlpod.
+
+Use and distribute under the same terms as Leo.
+Original code by Mark Ng &lt;markn@cs.mu.oz.au&gt;
+@c
+
+import leoGlobals as g
+import leoAtFile
+import re
+
+linere = re.compile("^#line 1 \".*\"$")
+
+@others
+
+__version__ = "0.2"
+	# 0.1: Mark Ng
+	# 0.2: EKR: Convert to new coding conventions.
+
+g.plugin_signon(__name__)</t>
+<t tx="ekr.20040419105219.1">oldOpenNodeSentinel = leoAtFile.newDerivedFile.putOpenNodeSentinel
+
+def putLineNumberDirective(self, v):
+
+	oldOpenNodeSentinel(self,v)
+	
+	if self.language in ("perl","perlpod"):
+		# line = "line 1 \"node:" + self.nodeSentinelText(v)	+ " (" + self.shortFileName + ")"		+ "\""  # no need '#'
+		line = 'line 1 "node:%s (%s)"' % (self.nodeSentinelText(v),self.shortFileName)
+		self.putSentinel(line)
+		
+g.funcToMethod(putLineNumberDirective,	
+	leoAtFile.newDerivedFile,"putOpenNodeSentinel")</t>
+<t tx="ekr.20040419105219.2">readNormalLine = leoAtFile.newDerivedFile.readNormalLine
+
+def skipLineNumberDirective(self, s, i):
+
+	if linere.search(s): 
+		return  # Skipt the line.
+	else:		
+		readNormalLine(self,s,i)
+
+g.funcToMethod(skipLineNumberDirective,
+	leoAtFile.newDerivedFile,"readNormalLine")</t>
 </tnodes>
 </leo_file>
