@@ -15,7 +15,7 @@ import tempfile
 
 Tk = Tkinter
 
-class leoCoreFrame:
+class baseLeoFrame:
 	instances = 0
 
 	#@+others
@@ -4898,7 +4898,7 @@ class leoCoreFrame:
 	#@-others
 
 
-class LeoFrame (leoCoreFrame):
+class LeoFrame (baseLeoFrame):
 	pass
 
 #@-body

@@ -110,8 +110,8 @@
 <v t="T64"><vh>@file ../test/missing_test.txt</vh></v>
 </v>
 </v>
-<v t="T65" a="V"><vh>Spell test </vh>
-<v t="T66"><vh>node two</vh></v>
+<v t="T65" a="E"><vh>Spell test </vh>
+<v t="T66" a="V"><vh>node two</vh></v>
 <v t="T67"><vh>node two no misspellings</vh></v>
 </v>
 </vnodes>
@@ -563,8 +563,9 @@ line tooo changed 9</t>
 hello there jkk this is werg
 		
 the cht sat on the marh
-the cat was sitting phew, another day. by zz z z
-two</t>
+the cat was sitting phew, another day. by zz z z 
+two initabc
+</t>
 <t tx="T67">everything good.</t>
 </tnodes>
 </leo_file>

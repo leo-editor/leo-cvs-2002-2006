@@ -52,7 +52,7 @@ def importFiles (dir, type = None, kind = "@file"):
 #@-node:2::<< scripts >>
 
 
-class leoImportCommands:
+class baseLeoImportCommands:
 
 	#@+others
 	#@+node:1::import.__init__
@@ -3018,6 +3018,10 @@ class leoImportCommands:
 	#@-node:10::undentBody
 	#@-node:5::Utilities
 	#@-others
+
+	
+class leoImportCommands (baseLeoImportCommands):
+	pass
 #@-body
 #@-node:0::@file leoImport.py
 #@-leo

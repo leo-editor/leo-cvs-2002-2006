@@ -7,7 +7,7 @@ from leoGlobals import *
 import leoFind
 import ConfigParser,exceptions,os,string,sys,tkFont
 
-class config:
+class baseConfig:
 	
 	#@<< define defaultsDict >>
 	#@+node:1::<< define defaultsDict >>
@@ -758,6 +758,10 @@ class config:
 	#@-body
 	#@-node:6::update_section
 	#@-others
+
+	
+class config (baseConfig):
+	pass
 #@-body
 #@-node:0::@file leoConfig.py
 #@-leo

@@ -26,7 +26,7 @@ from leoGlobals import *
 import leoColor,leoNodes
 import filecmp,os,os.path,time
 
-class atFile:
+class baseAtFile:
 	
 	#@<< atFile constants >>
 	#@+node:1::<< atFile constants >>
@@ -3458,6 +3458,9 @@ class atFile:
 	#@-node:8::Writing
 	#@-others
 
+	
+class atFile (baseAtFile):
+	pass
 
 
 #@@last #last1

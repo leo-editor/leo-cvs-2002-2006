@@ -16,7 +16,7 @@ from leoGlobals import *
 # Import the subcommanders.
 import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
 
-class Commands:
+class baseCommands:
 
 	#@+others
 	#@+node:1::Birth & death
@@ -2342,6 +2342,8 @@ class Commands:
 	#@-others
 
 
+class Commands (baseCommands):
+	pass
 #@-body
 #@-node:0::@file leoCommands.py
 #@-leo

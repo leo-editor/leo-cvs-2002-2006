@@ -390,7 +390,7 @@ class root_attributes:
 #@-node:3::node classes
 #@+node:4::class tangleCommands methods
 #@+body
-class tangleCommands:
+class baseTangleCommands:
 
 	#@+others
 	#@+node:1::tangle.__init__
@@ -4282,6 +4282,10 @@ class tangleCommands:
 	#@-node:18::token_type
 	#@-node:8::utility methods
 	#@-others
+
+	
+class tangleCommands (baseTangleCommands):
+	pass
 #@-body
 #@-node:4::class tangleCommands methods
 #@-others

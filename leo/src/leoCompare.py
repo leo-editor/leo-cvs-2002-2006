@@ -62,7 +62,7 @@ def go ():
 #@-node:2::go
 #@+node:3::class leoCompare
 #@+body
-class leoCompare:
+class baseLeoCompare:
 
 	#@+others
 	#@+node:1::compare.__init__
@@ -554,11 +554,15 @@ class leoCompare:
 	#@-node:7::showIvars
 	#@-node:7::utils...
 	#@-others
+
+	
+class leoCompare (baseLeoCompare):
+	pass
 #@-body
 #@-node:3::class leoCompare
 #@+node:4::class leoComparePanel
 #@+body
-class leoComparePanel:
+class baseLeoComparePanel:
 
 	#@+others
 	#@+node:1::browser
@@ -1035,6 +1039,10 @@ class leoComparePanel:
 	#@-node:4::onPrintMatchedLines
 	#@-node:7::Event handlers...
 	#@-others
+
+	
+class leoComparePanel (baseLeoComparePanel):
+	pass
 #@-body
 #@-node:4::class leoComparePanel
 #@-others

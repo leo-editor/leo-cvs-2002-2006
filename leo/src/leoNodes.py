@@ -229,7 +229,7 @@ import types
 #@+others
 #@+node:3::class tnode
 #@+body
-class tnode:
+class baseTnode:
 	
 	#@<< tnode constants >>
 	#@+node:1::<< tnode constants >>
@@ -405,11 +405,15 @@ class tnode:
 	#@-node:4::setFileIndex
 	#@-node:4::Setters
 	#@-others
+
+	
+class tnode (baseTnode):
+	pass
 #@-body
 #@-node:3::class tnode
 #@+node:4::class vnode
 #@+body
-class vnode:
+class baseVnode:
 	
 	#@<< vnode constants >>
 	#@+node:1::<< vnode constants >>  ### Warning: changes meaning of visitedBit
@@ -2328,6 +2332,10 @@ class vnode:
 	#@-node:3::Private helper functions
 	#@-node:9::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
 	#@-others
+
+	
+class vnode (baseVnode):
+	pass
 #@-body
 #@-node:4::class vnode
 #@-others

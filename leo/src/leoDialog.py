@@ -13,10 +13,10 @@ Tk = Tkinter
 #@+others
 #@+node:1::class leoDialog
 #@+body
-class leoDialog:
+class baseLeoDialog:
 	
 	"""A base class for all Leo dialogs"""
-	
+
 
 	#@+others
 	#@+node:1::__init__ (leoDialog)
@@ -165,6 +165,9 @@ class leoDialog:
 	#@-node:7::run
 	#@-others
 
+	
+class leoDialog (baseLeoDialog):
+	pass
 
 #@-body
 #@-node:1::class leoDialog

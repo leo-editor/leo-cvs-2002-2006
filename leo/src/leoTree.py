@@ -107,7 +107,7 @@ line_height = 17 + 2 # To be replaced by Font height
 #@-node:2::<< drawing constants >>
 
 
-class leoTree:
+class baseLeoTree:
 
 	#@+others
 	#@+node:3::Birth & death
@@ -2174,6 +2174,10 @@ class leoTree:
 	#@-body
 	#@-node:8::tree.moveUpDown
 	#@-others
+
+	
+class leoTree (baseLeoTree):
+	pass
 #@-body
 #@-node:0::@file leoTree.py
 #@-leo

@@ -18,7 +18,7 @@ ivars = [
 	"tangle_directory", "page_width", "tab_width",
 	"target_language" ]
 
-class LeoPrefs:
+class baseLeoPrefs:
 
 	#@+others
 	#@+node:1::prefs.__init__
@@ -398,6 +398,10 @@ class LeoPrefs:
 	#@-node:3::prefs.onOK, onCancel, onRevert
 	#@-node:3::Event handlers
 	#@-others
+
+	
+class LeoPrefs (baseLeoPrefs):
+	pass
 #@-body
 #@-node:0::@file leoPrefs.py
 #@-leo

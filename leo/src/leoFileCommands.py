@@ -30,7 +30,7 @@ class BadLeoFile(Exception):
 	def __str__(self):
 		return "Bad Leo File:" + self.message
 
-class fileCommands:
+class baseFileCommands:
 
 	#@+others
 	#@+node:1::leoFileCommands._init_
@@ -1857,6 +1857,10 @@ class fileCommands:
 	#@-node:12::write_LEO_file
 	#@-node:3::Writing
 	#@-others
+
+	
+class fileCommands (baseFileCommands):
+	pass
 #@-body
 #@-node:0::@file leoFileCommands.py
 #@-leo

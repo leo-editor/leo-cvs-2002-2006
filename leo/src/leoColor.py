@@ -515,7 +515,7 @@ colorNamesList = (
 #@+others
 #@+node:4::class leoColorPanel
 #@+body
-class leoColorPanel:
+class baseLeoColorPanel:
 
 	#@+others
 	#@+node:1::colorPanel.__init__
@@ -696,11 +696,16 @@ class leoColorPanel:
 	#@-body
 	#@-node:6::update
 	#@-others
+
+	
+class leoColorPanel (baseLeoColorPanel):
+	pass
+
 #@-body
 #@-node:4::class leoColorPanel
 #@+node:5::class leoColorNamePanel
 #@+body
-class leoColorNamePanel:
+class baseLeoColorNamePanel:
 
 	#@+others
 	#@+node:1::namePanel.__init__
@@ -851,11 +856,15 @@ class leoColorNamePanel:
 	#@-body
 	#@-node:5::select
 	#@-others
+
+	
+class leoColorNamePanel(baseLeoColorNamePanel):
+	pass
 #@-body
 #@-node:5::class leoColorNamePanel
 #@+node:6::class colorizer
 #@+body
-class colorizer:
+class baseColorizer:
 
 	#@+others
 	#@+node:1::color.__init__
@@ -2482,6 +2491,10 @@ class colorizer:
 	#@-node:5::skip_string
 	#@-node:12::Utils
 	#@-others
+
+	
+class colorizer (baseColorizer):
+	pass
 #@-body
 #@-node:6::class colorizer
 #@-others

@@ -61,7 +61,7 @@ optionalIvars = (
 from leoGlobals import *
 import types
 
-class undoer:
+class baseUndoer:
 
 	#@+others
 	#@+node:3::undo.__init__ & clearIvars
@@ -1263,6 +1263,10 @@ class undoer:
 	#@-node:8::undoSortTopLevel
 	#@-node:7::Undo helpers
 	#@-others
+
+	
+class undoer (baseUndoer):
+	pass
 #@-body
 #@-node:0::@file leoUndo.py
 #@-leo
