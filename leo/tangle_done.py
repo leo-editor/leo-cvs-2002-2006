@@ -34,10 +34,7 @@ def run (root_list):
 #@@c
 
 def convertRSTfilesToHTML(root_list):
-
-	# Leo will report the execption if docutils is not installed.
-	from docutils.core import Publisher 
-	from docutils.io import FileInput,StringOutput,StringInput 
+	
 	import os
 	
 	for root in root_list: 
@@ -49,6 +46,10 @@ def convertRSTfilesToHTML(root_list):
 			#@<< Convert root to corresponding .html file >>
 			#@+node:1::<< Convert root to corresponding .html file >>
 			#@+body
+			# Leo will report the execption if docutils is not installed.
+			from docutils.core import Publisher 
+			from docutils.io import FileInput,StringOutput,StringInput 
+			
 			# Read .rst file into s.
 			f = open(root,"r")
 			s = f.read()
