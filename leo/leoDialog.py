@@ -193,7 +193,7 @@ class leoDialog:
 		cancel.pack(side="left",padx=5,pady=10)
 		self.center() # Do this after packing.
 		top.grab_set() # Make the dialog a modal dialog.
-		top.focus_force() # Get all keystrokes.
+		txt.focus_force() # Get all keystrokes.
 		root.wait_window(top)
 		return self.number
 	#@-body
