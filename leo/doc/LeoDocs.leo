@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="10897" clone_windows="0"/>
 <globals body_outline_ratio="0.456937799043">
-	<global_window_position top="43" left="218" height="836" width="973"/>
+	<global_window_position top="67" left="208" height="836" width="973"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -68,7 +68,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -80,8 +80,8 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
-<v t="EKR.20040628095213" a="E"><vh>4.2 beta 1</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="EKR.20040628095213" a="TV"><vh>4.2 beta 1 &amp; beta 2</vh>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
 <v t="ekr.20040629164557"><vh>New coding conventions in 4.2</vh></v>
 <v t="EKR.20040628100535"><vh>Fixed bugs</vh>
@@ -147,7 +147,7 @@
 </v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
-<v t="EKR.20040628095213"><vh>4.2 beta 1</vh>
+<v t="EKR.20040628095213"><vh>4.2 beta 1 &amp; beta 2</vh>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
 <v t="ekr.20040629164557"><vh>New coding conventions in 4.2</vh></v>
 <v t="EKR.20040628100535"><vh>Fixed bugs</vh>
@@ -2005,7 +2005,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.1653" a="TV"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
+<v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
 <v t="edream.110203163054.1654"><vh>100's administering Leaps (and LeoCon)</vh>
 <v t="edream.110203163054.1655"><vh>Leap 102: LeoCon 1</vh></v>
 </v>
@@ -2021,7 +2021,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="E"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
 <v t="ekr.20040414163815"><vh>Table of Contents</vh>
 <v t="ekr.20040414163815.1"><vh>@rst</vh></v>
@@ -5131,7 +5131,9 @@ Many thanks to Jonathan M. Gilligan for suggesting this code.</t>
 
 - When writing a file, Leo will write "foreign" attributes if  a vnode or tnode contains an unknownAttributes ivar.
 
-- The only "native" attributes that Leo expects to find are the "tx" attribute in &lt;t&gt; elements and the "a", "t", "vtag" and "tnodeList" attributes of &lt;v&gt; elements.  Everything else is a foreign attribute.  New in 4.2: The "descendentTnodeUnknownAttributes" attribute is a native attribute of &lt;v&gt; elements.
+- The only "native" attributes that Leo expects to find are the "tx" attribute in &lt;t&gt; elements and the "a", "t", "vtag" and "tnodeList" attributes of &lt;v&gt; elements.  Everything else is a foreign attribute.
+
+New in 4.2: The "marks", "expanded" and "descendentTnodeUnknownAttributes" attributes are "native" attribute of &lt;v&gt; elements.
 
 - Leo performs the usual xml escapes on these strings when reading or writing the unknownAttributes ivars.
 
@@ -6654,7 +6656,16 @@ Here are the differences between @file and @thin:
 The @all directive is required for files such as @thin leoProjects.txt in LeoPy.leo.  leoProjects.txt contains so-called project nodes.  It doesn't have an meaning as a program file:  it is simply a collection of unrelated data.  @others would not work at all: it would complain about lots of orphan nodes.
 
 The great advantage of using @thin is that people can collaborate without having to continually update .leo files:  collaborators only need to commit thin derived files to cvs.</t>
-<t tx="EKR.20040628095213">Leo 4.2 beta 1           June 30, 2004
+<t tx="EKR.20040628095213">Leo 4.2 beta 2           July 2, 2004
+Leo 4.2 beta 1           June 30, 2004
+
+The highlights of 4.2 beta 2:
+
+- Leo now writes the entire contents of @ignore'd @thin trees to the .leo file.
+This change ensures that users can create and remove @ignore directives without
+any chance of losing data inadvertantly
+
+- Leo now saves and restores marks and the expansion state of nodes in @thin trees.
 
 Beta 1 completes all fundamental work in the 4.2 code base. All essential code
 is complete. Dozens of bugs have been fixed since the Alpha 3 release about a
