@@ -1565,9 +1565,10 @@ def createUnitTestsFromDoctests (modules,verbose=True):
         try:
             test = doctest.DocTestSuite(module)
             suite.addTest(test)
+            n = test.countTestCases()
             created = True
             if verbose:
-                print "Adding doctests for ",module
+                print "Adding %2d doctests for %s" % (n,module.__name__)
         except ValueError:
             pass # No tests found.
 
