@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4261" clone_windows="0"/>
 <globals body_outline_ratio="0.414301929625">
-	<global_window_position top="28" left="234" height="881" width="1011"/>
+	<global_window_position top="30" left="169" height="881" width="1011"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -239,7 +239,7 @@
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all tests except files tests</vh></v>
 </v>
-<v t="ekr.20040303071432"><vh>Mini tests, scripts &amp; experiments</vh>
+<v t="ekr.20040303071432" a="TV"><vh>Mini tests, scripts &amp; experiments</vh>
 <v t="ekr.20040312101720"><vh>Experiments</vh>
 <v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
 <v t="ekr.20040323075614"><vh>Test of using an iterator inside a list comprehension</vh></v>
@@ -389,6 +389,7 @@
 </v>
 <v t="EKR.20040517074600.13"><vh>Print default font</vh></v>
 </v>
+<v t="EKR.20040613162717"><vh>Report newlines script</vh></v>
 </v>
 <v t="EKR.20040531110157"><vh>at-file thin tests</vh>
 <v t="EKR.20040520104329"><vh>@thin c:\prog\test\thinCloneTest.txt</vh></v>
@@ -644,6 +645,13 @@
 <v t="EKR.20040610132739"><vh>copied</vh></v>
 </v>
 </v>
+<v t="EKR.20040615070332"><vh>Test print</vh></v>
+<v t="EKR.20040612150543"><vh>Test of better error messages in Execute Script command</vh>
+<v t="EKR.20040612215136"><vh>Contains error</vh></v>
+</v>
+<v t="EKR.20040617160303"><vh>Test @last: IGNORED</vh>
+<v t="EKR.20040617160303.1" a="M" tnodeList="EKR.20040617160303.1"><vh>@file atLastTest.txt</vh></v>
+</v>
 </v>
 <v t="EKR.20040612095237"><vh>Prototypes of new commands</vh>
 <v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
@@ -694,11 +702,6 @@
 </v>
 <v t="EKR.20040611083703"><vh>Using a generator instead of readLinesClass</vh></v>
 </v>
-<v t="EKR.20040612150543"><vh>Test of better error messages in Execute Script command</vh>
-<v t="EKR.20040612215136"><vh>Contains error</vh></v>
-</v>
-<v t="EKR.20040613162717"><vh>Report newlines</vh></v>
-<v t="EKR.20040615070332" a="TV"><vh>Test print</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2738,6 +2741,11 @@ except IOError:
     print "Can not open",port</t>
 <t tx="EKR.20040615144735"></t>
 <t tx="EKR.20040615144810">d</t>
+<t tx="EKR.20040617160303">@ignore</t>
+<t tx="EKR.20040617160303.1">line 1
+@last a
+@last b
+@last ?&gt;</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -3955,7 +3963,7 @@ runner.run(suite)
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 

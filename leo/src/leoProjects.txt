@@ -43317,6 +43317,204 @@ def canonicalTnodeIndex(self,index):
 #@nonl
 #@-node:ekr.20031218072017.2004:canonicalTnodeIndex
 #@-node:EKR.20040615105613:(Recovered nodes when reading .leo files containing topology errors)
+#@+node:EKR.20040617072908:(Fixed problem with PHP and @last)
+#@+node:EKR.20040617155244:Reports
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2612510
+By: sbeards
+
+Yes, number 3 and 4 in the previous post are still problems in 4.2a3.
+#@+node:EKR.20040617072908.2:@last fails with multiple newlines
+The ending ?> will not exist in the derived file when multiple newlines exist after the @last directive.
+Test body text:
+@last ?>\n\n
+
+Test derived file output:
+#@verbatim
+#@+leo-ver=4
+#@verbatim
+#@+node:@file test.txt
+#@verbatim
+#@@last
+
+#@verbatim
+#@-node:@file test.txt
+#@verbatim
+#@-leo
+#@nonl
+#@-node:EKR.20040617072908.2:@last fails with multiple newlines
+#@+node:EKR.20040617072908.3:@last always end with a newline character
+When using @last the last character in a derived file is always a newline, when
+using @file or @file-nosent and I think always).
+
+This will only be a problem in special cases when you do not want the derived
+file to end in a newline (when generating binary files maybe?).
+#@-node:EKR.20040617072908.3:@last always end with a newline character
+#@-node:EKR.20040617155244:Reports
+#@+node:ekr.20031218072017.2128:putBody (4.x)
+def putBody(self,p,putCloseSentinel=True):
+    
+    """ Generate the body enclosed in sentinel lines."""
+
+    at = self ; s = p.bodyString()
+    
+    p.v.t.setVisited() # Suppress orphans check.
+    p.v.setVisited() # Make sure v is never expanded again.
+    if not at.thinFile:
+        p.v.t.setWriteBit() # Mark the tnode to be written.
+        
+    if not at.thinFile and not s: return
+    inCode = True
+    << Make sure all lines end in a newline >>
+    i = 0
+    while i < len(s):
+        next_i = g.skip_line(s,i)
+        assert(next_i > i)
+        kind = at.directiveKind(s,i)
+        << handle line at s[i] >>
+        i = next_i
+    if not inCode:
+        at.putEndDocLine()
+    if at.sentinels and not trailingNewlineFlag:
+        at.putSentinel("@nonl")
+#@nonl
+#@+node:EKR.20040429084140:<< Make sure all lines end in a newline >>
+# 11/20/03: except in nosentinel mode.
+# 1/30/04: and especially in scripting mode.
+# If we add a trailing newline, we'll generate an @nonl sentinel below.
+
+if s:
+    trailingNewlineFlag = s and s[-1] == '\n'
+    if (at.sentinels or at.scripting) and not trailingNewlineFlag:
+        s = s + '\n'
+else:
+    trailingNewlineFlag = True # don't need to generate an @nonl
+#@nonl
+#@-node:EKR.20040429084140:<< Make sure all lines end in a newline >>
+#@+node:ekr.20031218072017.2129:<< handle line at s[i]  >> (4.x)
+if kind == noDirective:
+    if inCode:
+        hasRef,n1,n2 = at.findSectionName(s,i)
+        if hasRef and not at.raw:
+            at.putRefLine(s,i,n1,n2,p)
+        else:
+            at.putCodeLine(s,i)
+    else:
+        at.putDocLine(s,i)
+elif kind in (docDirective,atDirective):
+    assert(not at.pending)
+    at.putStartDocLine(s,i,kind)
+    inCode = False
+elif kind in (cDirective,codeDirective):
+    # Only @c and @code end a doc part.
+    if not inCode:
+        at.putEndDocLine() 
+    at.putDirective(s,i)
+    inCode = True
+elif kind == allDirective:
+    if inCode: at.putAtAllLine(s,i,p)
+    else: at.putDocLine(s,i)
+elif kind == othersDirective:
+    if inCode: at.putAtOthersLine(s,i,p)
+    else: at.putDocLine(s,i) # 12/7/03
+elif kind == rawDirective:
+    at.raw = True
+    at.putSentinel("@@raw")
+elif kind == endRawDirective:
+    at.raw = False
+    at.putSentinel("@@end_raw")
+    i = g.skip_line(s,i)
+elif kind == miscDirective:
+    at.putDirective(s,i)
+else:
+    assert(0) # Unknown directive.
+#@nonl
+#@-node:ekr.20031218072017.2129:<< handle line at s[i]  >> (4.x)
+#@-node:ekr.20031218072017.2128:putBody (4.x)
+#@+node:EKR.20040506075328:new_df.writeOpenFile
+def writeOpenFile(self,root,nosentinels=False,scriptFile=None,thinFile=False):
+    
+    at = self ; c = at.c
+    
+    << init atFile ivars for writing >>
+    root.clearAllVisitedInTree() # Clear both vnode and tnode bits.
+    root.clearVisitedInTree()
+
+    << put all @first lines in root >>
+
+    # Put the main part of the file.
+    at.putOpenLeoSentinel("@+leo-ver=4")
+    at.putInitialComment()
+    at.putOpenNodeSentinel(root)
+    at.putBody(root)
+    at.putCloseNodeSentinel(root)
+    at.putSentinel("@-leo")
+    root.setVisited()
+    
+    << put all @last lines in root >>
+    
+    if not scriptFile and not nosentinels:
+        at.warnAboutOrphandAndIgnoredNodes()
+#@nonl
+#@+node:EKR.20040506075328.1:<< init atFile ivars for writing >>
+# Set flags telling what kind of writing we are doing.
+at.sentinels = not nosentinels
+at.thinFile = thinFile
+at.scripting = scriptFile is not None
+at.raw = False
+
+# Init other ivars.
+at.errors = 0
+c.setIvarsFromPrefs()
+at.root = root
+at.root.v.t.tnodeList = []
+
+c.endEditing() # Capture the current headline.
+#@nonl
+#@-node:EKR.20040506075328.1:<< init atFile ivars for writing >>
+#@+node:ekr.20031218072017.2118:<< put all @first lines in root >> (4.x)
+@ Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines preceding the @+leo sentinel.
+@c
+
+s = root.v.t.bodyString
+tag = "@first"
+i = 0
+while g.match(s,i,tag):
+    i += len(tag)
+    i = g.skip_ws(s,i)
+    j = i
+    i = g.skip_to_end_of_line(s,i)
+    # Write @first line, whether empty or not
+    line = s[j:i]
+    self.os(line) ; self.onl()
+    i = g.skip_nl(s,i)
+#@nonl
+#@-node:ekr.20031218072017.2118:<< put all @first lines in root >> (4.x)
+#@+node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
+@ Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines following the @-leo sentinel.
+@c
+
+tag = "@last"
+
+# 4/17/04 Use g.splitLines to preserve trailing newlines.
+lines = g.splitLines(root.v.t.bodyString)
+n = len(lines) ; j = k = n - 1
+
+# Scan backwards for @last directives.
+while j >= 0:
+    line = lines[j]
+    if g.match(line,0,tag): j -= 1
+    else: break
+    
+# Write the @last lines.
+for line in lines[j+1:k+1]:
+    i = len(tag) ; i = g.skip_ws(line,i)
+    self.os(line[i:])
+#@nonl
+#@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
+#@-node:EKR.20040506075328:new_df.writeOpenFile
+#@-node:EKR.20040617072908:(Fixed problem with PHP and @last)
 #@-node:EKR.20040617083707:6/17/04
 #@-node:EKR.20040610102329:In 4.2 a4
 #@-node:EKR.20040517090500:May 2004

@@ -5,1099 +5,7 @@
 #@+all
 #@+node:EKR.20040612172916:Make sure people use cvs to get latest plugins
 #@-node:EKR.20040612172916:Make sure people use cvs to get latest plugins
-#@+node:EKR.20040430163619:To do: 4.2
-#@+node:EKR.20040617083816:Ask for bugs not on to-do list
-#@-node:EKR.20040617083816:Ask for bugs not on to-do list
-#@+node:EKR.20040611081747:To do First
-#@+node:ekr.20031218072017.791:(Finish Check Tabs, Check Python Syntax and PrettyPrint Python commands)
-@
-
-- Put readLinesClass in leoGlobals.py or find similar code in an existing Python module.
-- Create and test the actual commands.
-#@nonl
-#@+node:EKR.20040611074752:use standard alternative for readLinesClass or put in leoGlobals
-#@-node:EKR.20040611074752:use standard alternative for readLinesClass or put in leoGlobals
-#@-node:ekr.20031218072017.791:(Finish Check Tabs, Check Python Syntax and PrettyPrint Python commands)
-#@+node:EKR.20040610125924:(Fix install script)
-#@+node:EKR.20040610125924.1:Report
-@nocolor
-
-By: Scott Beardsley - sbeards
- install script broken in leo-4.2-a3   
-2004-06-10 12:19  
-
-Two issues with the install script...
-
-1) Will not run when using non-borne shells
-Install script should probably contain an @first directive.
-
-The first three lines are currently:
-#@verbatim
-#@+leo-ver=4-thin
-#@verbatim
-#@+node:EKR.20040519082027.33:@file-thin ../install
-#!/bin/sh
-
-In shell scripts however the '#!/bin/sh' should *always* be on the first line. Otherwise you get messages in csh like:
-
-%./install
-LEO_PREFIX=/usr/local: Command not found.
-LEO_RUN_SCRIPT_SOURCE=./scripts/install/leo-script.txt: Command not found.
-LEO_PREFIX: Undefined variable.
-
-2) bin dir is not created (for this I modified step 2 a tad)
-
-################################
-# Step 2
-# Make the directory structure
-################################
-if [ ! -d $LEO_LIB_DIR ]; then
-...echo ""
-...echo Making directory structure $LEO_LIB_DIR
-
-...RESULTS=`mkdir -p -m755 $LEO_LIB_DIR 2>&1`
-...if [ $? -ne 0 ]; then
-......echo Failure making directory $LEO_LIB_DIR!
-......exit 0;
-...fi
-fi
-
-if [ ! -d $LEO_PREFIX/bin ]; then
-...echo ""
-...echo Making directory structure $LEO_PREFIX/bin
-...RESULTS=`mkdir -p -m755 $LEO_PREFIX/bin 2>&1`
-...if [ $? -ne 0 ]; then
-......echo Failure making directory $LEO_PREFIX/bin!
-......exit 0;
-...fi
-fi
-#@-node:EKR.20040610125924.1:Report
-#@+node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
-self.fileMenuTop3MenuTable = (
-    ("E&xit","Ctrl-Q",g.app.onQuit),)
-#@nonl
-#@-node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
-#@+node:ekr.20031218072017.1723:createMenuEntries
-@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
-
-Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
-@c
-
-def createMenuEntries (self,menu,table,openWith=False,dontBind=False):
-    
-    for label,accel,command in table:
-        if label == None or command == None or label == "-":
-            self.add_separator(menu)
-        else:
-            << set name to the label for doCommand >>
-            << set accel to the shortcut for name >>
-            << set bind_shortcut and menu_shortcut using accel >>
-            << define callback function >>
-            << set realLabel, amp_index and menu_shortcut >>
-    
-            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
-                command=callback,underline=amp_index)
-                
-            if 0: # testing
-                dontBind = True
-
-            if bind_shortcut and not dontBind:
-                << handle bind_shorcut >>
-#@nonl
-#@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
-name = label.strip().lower()
-
-# Remove special characters from command names.
-name2 = ""
-for ch in name:
-    if ch in string.ascii_letters or ch in string.digits:
-        name2 = name2 + ch
-name = name2
-#@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
-#@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-config = g.app.config
-rawKey,accel2 = config.getShortcut(name)
-
-# 7/19/03: Make sure "None" overrides the default shortcut.
-if accel2 == None or len(accel2) == 0:
-    pass # Use default shortcut, if any.
-elif accel2.lower() == "none":
-    accel = None # Remove the default shortcut.
-else:
-    accel = accel2 # Override the default shortcut.
-#@nonl
-#@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
-#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
-
-# Kludge: disable the shortcuts for cut, copy, paste.
-# This has already been bound in leoTkinterFrame.__init__
-# 2/13/03: A _possible_ fix for the Linux control-v bug.
-
-if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
-    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
-        bind_shortcut = None
-#@nonl
-#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
-#@+node:ekr.20031218072017.1727:<< define callback function >>
-if openWith:
-    callback = self.defineOpenWithMenuCallback(command)
-else:
-    callback = self.defineMenuCallback(command,name)
-#@nonl
-#@-node:ekr.20031218072017.1727:<< define callback function >>
-#@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-realLabel = self.getRealMenuName(label)
-
-# A bad hack:  this does not allow for translations!
-# We need a way of specifying shortcuts, & bindings and translations all in the same place.
-
-amp_index = -1
-if rawKey:
-    amp_index = rawKey.find("&")
-if amp_index == -1:
-    amp_index = realLabel.find("&")
-
-realLabel = realLabel.replace("&","")
-
-if 0: # trace
-    if rawKey and rawKey.lower().startswith("exit"):
-        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
-
-if not menu_shortcut:
-    menu_shortcut = ""
-#@nonl
-#@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
-#@+node:ekr.20031218072017.1729:<< handle bind_shorcut >>
-if bind_shortcut in self.menuShortcuts:
-    if not g.app.menuWarningsGiven:
-        g.es("duplicate shortcut:", accel, bind_shortcut, label,color="red")
-        print "duplicate shortcut:", accel, bind_shortcut, label
-else:
-    self.menuShortcuts.append(bind_shortcut)
-    try:
-        self.frame.body.bind(bind_shortcut,callback)
-        self.bind(bind_shortcut,callback)
-    except: # could be a user error
-        if not g.app.menuWarningsGiven:
-            print "exception binding menu shortcut..."
-            print bind_shortcut
-            g.es_exception()
-            g.app.menuWarningsGive = True
-#@nonl
-#@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
-#@-node:ekr.20031218072017.1723:createMenuEntries
-#@-node:EKR.20040610125924:(Fix install script)
-#@+node:ekr.20040105103517:Importing @file issues
-#@+node:ekr.20040129094501:Reports
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2355533
-By: sbeards
-
-So, here is a summary of these issues.
-
-Scott
-#@nonl
-#@+node:ekr.20040129100453:Imported @files have an extra newline in the body
-This is a bit more complicated than I first thought. We found that this issue
-does not cause a "cannot send headers" warning for a PHP file. This problem
-is caused when you have more than one character after the ?> (a newline or any
-other character will do it). I must have had some other problem with my source
-file.
-
-Further, Leo does _not_ add a newline at the end of the body text for imported
-files. When there is a newline at the end of the source file Leo acts as TextPad
-acts (shows the last valid cursor position as the beginning of the line after
-the last line). When there is no newline at the end of the source file Leo will
-show the last valid cursor position as the end of the last line. This is the
-expected behavior.
-#@nonl
-#@-node:ekr.20040129100453:Imported @files have an extra newline in the body
-#@+node:ekr.20040129100453.1:@last fails with multiple newlines
-The ending ?> will not exist in the derived file when multiple newlines exist
-after the @last directive.
-Test body text:
-@last
-
-Test derived file output:
-#@verbatim
-#@+leo-ver=4
-#@verbatim
-#@+node:@file test.txt
-#@verbatim
-#@@last
-                                                                           
-#@verbatim
-#@-node:@file test.txt
-#@verbatim
-#@-leo
-#@-node:ekr.20040129100453.1:@last fails with multiple newlines
-#@+node:ekr.20040129100453.2:derived files with @last always end with a newline character
-When using @last the last character in a derived file is always a newline
-(when using @file or @file-nosent and maybe always?).
-
-This will only be a problem in special cases when you do not want the derived
-file to end in a newline (when generating binary files maybe?).
-#@nonl
-#@-node:ekr.20040129100453.2:derived files with @last always end with a newline character
-#@-node:ekr.20040129094501:Reports
-#@+node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
-# If the file does not begin with <?php or end with ?> then
-# it is simply appended like a generic import would do.
-
-s.strip() # Remove inadvertent whitespace.
-
-if (
-    not (
-        s.startswith("<?P") or
-        s.startswith("<?p") or
-        s.startswith("<?=") or
-        s.startswith("<?\n") or
-        s.startswith("<?\r") or
-        s.startswith("<? ") or
-        s.startswith("<?\t")
-    ) or not (
-        s.endswith("?>\n") or
-        s.endswith("?>\r") or
-        s.endswith("?>\r\n")
-    )
-):
-    g.es("File seems to be mixed HTML and PHP; importing as plain text file.")
-    parent.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
-    return
-#@nonl
-#@-node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
-#@+node:ekr.20031218072017.3242:scanPHPText (Dave Hein)
-# 08-SEP-2002 DTHEIN: Added for PHP import support.
-#
-# PHP uses both # and // as line comments, and /* */ as block comments
-
-def scanPHPText (self,s,parent):
-
-    """Creates a child of parent for each class and function definition seen."""
-
-    import re
-    << Append file if not pure PHP >>
-
-    << define scanPHPText vars >>
-    # 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
-    parent.appendStringToBody("@first ")	
-    parent.appendStringToBody(s[:startOfCode])
-    scan_start = i = startOfCode
-    while i < endOfCode:
-        # line = g.get_line(s,i) ; g.trace(line)
-        ch = s[i]
-        # These cases skip tokens.
-        if ch == '/' or ch == '#':
-            << handle possible PHP comments >>
-        elif ch == '<':
-            << handle possible heredoc string >>
-        elif ch == '"' or ch == '\'':
-            i = g.skip_string(s,i)
-        # These cases help determine where functions start.
-        # FIXME: probably want to capture 'var's as class member data
-        elif ch == 'f' or ch =='c':
-            << handle possible class or function >>
-        elif class_start and (ch == '}'):
-            << handle end of class >>
-        else: i += 1
-    << Append any unused text to the parent's body text >>
-    # 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
-    parent.appendStringToBody("@last ")	
-    parent.appendStringToBody(s[endOfCode:])
-#@nonl
-#@+node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
-# If the file does not begin with <?php or end with ?> then
-# it is simply appended like a generic import would do.
-
-s.strip() # Remove inadvertent whitespace.
-
-if (
-    not (
-        s.startswith("<?P") or
-        s.startswith("<?p") or
-        s.startswith("<?=") or
-        s.startswith("<?\n") or
-        s.startswith("<?\r") or
-        s.startswith("<? ") or
-        s.startswith("<?\t")
-    ) or not (
-        s.endswith("?>\n") or
-        s.endswith("?>\r") or
-        s.endswith("?>\r\n")
-    )
-):
-    g.es("File seems to be mixed HTML and PHP; importing as plain text file.")
-    parent.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
-    return
-#@nonl
-#@-node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
-#@+node:ekr.20031218072017.3244:<< define scanPHPText vars >>
-scan_start = 0
-class_start = 0
-function_start = 0
-i = 0
-class_body = ""
-class_node = ""
-phpClassName = re.compile("class\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
-phpFunctionName = re.compile("function\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
-
-# 14-SEP-2002 DTHEIN: added these 2 variables to allow use of @first/last
-startOfCode = s.find("\n") + 1 # this should be the line containing the initial <?php
-endOfCode = s.rfind("?>") # this should be the line containing the last ?>
-#@-node:ekr.20031218072017.3244:<< define scanPHPText vars >>
-#@+node:ekr.20031218072017.3245:<< handle possible heredoc string >>
-if g.match(s,i,"<<<"):
-    i = g.skip_heredoc_string(s,i)
-else:
-    i += 1
-#@-node:ekr.20031218072017.3245:<< handle possible heredoc string >>
-#@+node:ekr.20031218072017.3246:<< handle possible PHP comments >>
-if g.match(s,i,"//"):
-    i = g.skip_line(s,i)
-elif g.match(s,i,"#"):
-    i = g.skip_line(s,i)
-elif g.match(s,i,"/*"):
-    i = g.skip_block_comment(s,i)
-else:
-    i += 1
-#@nonl
-#@-node:ekr.20031218072017.3246:<< handle possible PHP comments >>
-#@+node:ekr.20031218072017.3247:<< handle possible class or function >>
-@ In PHP, all functions are typeless and start with the keyword "function;  all classes start with the keyword class.
-
-Functions can be nested, but we don't handle that right now (I don't think it is a common practice anyway).
-@c
-if g.match(s,i,"function "):
-    #we want to make the function a subnode of either the @file node or a class node
-    # 1. get the function name
-    # 2. make a reference in the parent
-    # 3. create the child node, and dump the function in it.
-    function_start = i
-    m = phpFunctionName.match(s[i:])
-    if (None == m): # function keyword without function name
-        i += len("function ")
-    else:
-        headline = g.angleBrackets(" function " + m.group(1) + " ")
-        # find the end of the function
-        openingBrace = s.find('{',i)
-        function_end = g.skip_php_braces(s,openingBrace)
-        function_end = g.skip_to_end_of_line(s,function_end - 1) + 1 # include the line end
-        # Insert skipped text into parent's body.
-        if class_start:
-            class_body += s[scan_start:function_start]
-        else:
-            parent.appendStringToBody(s[scan_start:function_start])
-        # Append the headline to the parent's body.
-        if class_start:
-            class_body += (headline + "\n")
-        else:
-            parent.appendStringToBody(headline + "\n")
-        # Backup to capture leading whitespace (for undent purposes)
-        while (function_start > 0) and (s[function_start - 1] in [" ", "\t"]):
-            function_start -= 1
-        # Get the body and undent it
-        function_body = s[function_start:function_end]
-        function_body = self.undentBody(function_body)
-        if self.treeType != "@file":
-            function_body = "@code\n\n" + function_body
-        # Create the new node
-        if class_start:
-            self.createHeadline(class_node,function_body,headline)
-        else:
-            self.createHeadline(parent,function_body,headline)
-        i = function_end
-        scan_start = i
-        function_end = 0
-        function_start = 0 #done with this function
-        function_body = ""
-        
-elif g.match(s,i,"class "):
-    # we want to make the class a subnode of the @file node
-    # 1. get the class name
-    # 2. make a reference in the parent
-    # 3. create the child node and dump the function in it
-    class_start = i
-    class_body = ""
-    m = phpClassName.match(s[i:])
-    if (None == m): # class keyword without class name
-        i += len("class ")
-    else:
-        # Insert skipped text into parent's body.
-        parent.appendStringToBody(s[scan_start:class_start])
-        # create the headline name
-        headline = g.angleBrackets(" class " + m.group(1) + " ")
-        # find the place to start looking for methods (functions)
-        openingBrace = s.find('{',i)
-        # find the end of the class
-        class_end = g.skip_php_braces(s,openingBrace)
-        class_end = g.skip_to_end_of_line(s,class_end - 1) + 1 # include the line end
-        # Append the headline to the parent's body.
-        parent.appendStringToBody(headline + "\n")
-        # Backup to capture leading whitespace (for undent purposes)
-        while (class_start > 0) and (s[class_start - 1] in [" ", "\t"]):
-            class_start -= 1
-        scan_start = class_start
-        # Create the new node
-        class_node = self.createHeadline(parent,"",headline)
-        i = openingBrace
-    
-else:
-    i += 1
-#@nonl
-#@-node:ekr.20031218072017.3247:<< handle possible class or function >>
-#@+node:ekr.20031218072017.3248:<< handle end of class >>
-# Capture the rest of the body
-class_body += s[scan_start:class_end]
-# insert the class node's body
-if self.treeType != "@file":
-    class_body = "@code\n\n" + class_body
-class_body = self.undentBody(class_body)
-class_node.appendStringToBody(class_body)
-# reset the indices
-i = class_end
-scan_start = i
-class_end = 0
-class_start = 0 #done with this class
-class_body=""
-#@-node:ekr.20031218072017.3248:<< handle end of class >>
-#@+node:ekr.20031218072017.3249:<< Append any unused text to the parent's body text >>
-parent.appendStringToBody(s[scan_start:endOfCode])
-#@-node:ekr.20031218072017.3249:<< Append any unused text to the parent's body text >>
-#@-node:ekr.20031218072017.3242:scanPHPText (Dave Hein)
-#@-node:ekr.20040105103517:Importing @file issues
-#@+node:EKR.20040612094712:(Check problem with prefs panel)
-@nocolor
-
-The "Replace Tabs With Spaces" setting may not be reliable.
-#@nonl
-#@-node:EKR.20040612094712:(Check problem with prefs panel)
-#@+node:EKR.20040612081353:Remove app.use_gnx??
-@
-
-This implies:
-    
-- Deprecating old-style file formats.
-- Removing commands that write old-style formats.
-#@nonl
-#@-node:EKR.20040612081353:Remove app.use_gnx??
-#@-node:EKR.20040611081747:To do First
-#@+node:EKR.20040611070048:Feature complete by Beta 2
-#@-node:EKR.20040611070048:Feature complete by Beta 2
-#@+node:EKR.20040422132037:Mac/Linux: 7
-@nocolor
-#@nonl
-#@+node:EKR.20040422132037.2:Install Leo in the site-packages directory
-#@-node:EKR.20040422132037.2:Install Leo in the site-packages directory
-#@+node:EKR.20040422132037.3:small bug in install script
-@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=2370629
-By: tyndal
-
-I found a small bug in the leo install script.
-It doesnt check to see that the $LEO_PREFIX/bin exists before trying to install
-the "leo" script into it, giving an error.
-
-you just need to make a small check similar to the one for the lib directory..
-(i've included it below)
-
-Thanks,
--Tyndal
-
-#------------------------------
-echo ""
-echo Making directory structure $LEO_PREFIX/bin
-
-RESULTS=`mkdir -p $LEO_PREFIX/bin 2>&1`
-if [ $? -ne 0 ]; then
-    echo Failure making directory $LEO_PREFIX/bin
-    exit 0;
-fi
-#
-#-----------------------------
-#@-node:EKR.20040422132037.3:small bug in install script
-#@+node:EKR.20040422132037.4:config problem on Linux
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2373816
-By: sbeards
-
-A related issue is that leoConfig.txt gets auto-tangled and overwritten on startup.
-This will be a problem if Leo is run by a non-root user or the file is not readable.
-For example, I get the following traceback after starting Leo (when leoConfig.txt
-is read-only):
-
-Traceback (most recent call last):
-  File "/usr/local/share/leo-4.1-rc3/src/leoConfig.py", line 672, in update
-    cf = open(self.configFileName,mode)
-IOError: [Errno 13] Permission denied:
-'/usr/local/share/leo-4.1-rc3/src/../config/leoConfig.txt'
-
-Is there a reason leoConfig.txt gets auto-tangled on startup? Is there anyway
-to disable this? Is this by design?
-#@-node:EKR.20040422132037.4:config problem on Linux
-#@+node:EKR.20040422132037.5:Backspace problems on Linux
-Shift+Ctrl+BkSp doesn't delete node   
-#@nonl
-#@+node:EKR.20040422132037.6:Dave Hein: fix
-By: dthein ( Dave Hein ) 
- RE: BUG: Shift+Ctrl+BkSp doesn't delete node   
-2004-01-15 03:30  
-
- OK, the cause of the keymapping problem is a issue with the X11 keyboard mapping, not with Tk.
-
-If you have this problem on your system, issue the command:
-
-xmodmap -pke 
-
-and look in the results for the line for keycode 22. I'll bet it shows something like:
-
-keycode 22 = BackSpace Terminate_Server
-
-That second token ("Terminate_Server") is what is supposed to be mapped to Shift-Backspace. You want this second token to be either not present or to be BackSpace.
-
-To fix this, create a file (e.g. .Xmodmap) and give it the content:
-
-keycode 22 = BackSpace
-
-then run the command:
-
-xmodmap .Xmodmap
-
-And you'll have fixed the problem.
-
-Now, on my system this also disables the ability to terminate the X server using Ctrl-Alt-BackSpace ... this is because of some conflict with xdb (xdb is the newer keyboard mapping facility in XFree86 ... xmodmap is the old original X11 keyboard mapping facility). I'm still working on that.
-
-I'm also not able to get xmodmap to make this change during X11 startup (again because of conflicts with xdb). But I'm working on that as well.
-#@nonl
-#@-node:EKR.20040422132037.6:Dave Hein: fix
-#@-node:EKR.20040422132037.5:Backspace problems on Linux
-#@+node:EKR.20040422132037.7:Bug: vpython and mac
-Jon Schull <jschull@softlock.com>  
-Date:  2003/12/30 Tue PM 05:50:51 EST 
-To:  edreamleo@charter.net 
-Subject:  Leo, Mac OS X 10.3, and VPython 
-             
-I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
-have some observations and a suggestion.
-
-Observations.
-		Leo runs under X11 as well as under OS X.
-		My X11 python configuration was created using the recipe at XXX 
-(which enables vpython).
-		The OS X configuration is vanilla MacPython from MacPython.org, along 
-with AquaTclTk batteries included XXX.
-		In both environments I can run leo under python leo.py and under idle.
-		Under OS X we get font smoothing, but we can't run visual python 
-programs (python crashes;  this is a known incompatibility with 
-MacPython.)
-	
-		Under X11 we can run visual python programs like this one
-			#box.py
-			from visual import *
-			box()
-			
-    And we can even run them under leo (under X11). HOWEVER, when the 
-visual python program is terminated, leo vanishes (leo and the vp 
-program apparently run in the same space)
-	
-	Under x11, we can keep leo alive by putting the vp program in its own 
-space:
-	
-		os.popen3('/sw/bin/python /Users/jis/box.py')
-	
-	However,  this doesn't let us see the output of stderr and stdout.  
-Those text streams are available...
-		
-		def do(cmd='ls'):
-			from os import popen3
-			pIn,pOut,pErr=0,1,2
-			popenResults=popen3(cmd)
-			print popenResults[pOut].read()
-			print popenResults[pErr].read()
-		
-		import os	
-		do('/sw/bin/python /Users/jis/box.py')
-		
-	...but only when the vpython program terminates.
-	
-	Here's the good news:  if we execute our vp program with 
-/sw/bin/idle.py rather than with python, we get to see the program 
-output in real time (under idle, under X11).
-	
-		import os	
-		os.chdir('/sw/lib/python2.3/idlelib')
-		os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
-		
-		#this runs as an executed script in leo, and produces a live idle 
-with real time ongoing output.
-	
-	Now, while idle is running, leo sits in suspended animation.  But when 
-the vpython program terminates, we are left in idle, and when idle is 
-terminated, leo becomes active again.
-	
-	It would be even better if leo were not suspended (using os.spawn, 
-perhaps) but the real point is that I would really really like leo's 
-"Execute script" command to execute code this way and spare me having 
-to  hard-write the path to box.py.  It ought to be possible to 
-eliminate os.chdir as well.
-
-------------------
-Jon Schull, Ph.D.
-Associate Professor
-Information Technology
-Rochester Institute of Technology
-schull@digitalgoods.com 585-738-6696
-#@-node:EKR.20040422132037.7:Bug: vpython and mac
-#@+node:EKR.20040422132037.8:Mouse / Paste Anomalies
-@nocolor
-
-By: Bill Drissel - drissel
-2004-04-13 19:43  
-
-Xserver (XFree86 under Cygwin) on PC (W2000); controlling Linux Red Hat;
-buncha windows up including one Leo window and many xterms and Xemacs.
-
-A: means action, R: means result
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click
-R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; locate mouse symbol in text
-R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
-
-A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; up arrow to locate Ibeam in text
-R: Joy! colorizes, marks headline and saves!
-
-A: hilite headline text; type on KB
-R: keystrokes replace hilited text
-
-A: hilite text in Xemacs window; hilite headline; middle click
-R: hilited text appended to headline rather than replacing
-
-This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
-#@nonl
-#@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
-#@+node:EKR.20040512090759:Leo.app for MacOS X
-@nocolor
-
-Hi Ed,
-
-
-I've created a Leo.app that I'm using reasonably successfully. Hopefully 
-you'll be able to take the pattern for a Mac OS X binary download option!
-
-
-http://idisk.mac.com/genthaler-Public/Leo.zip
-(WebDAV)
-
-Regards,
-
-Günther
-#@nonl
-#@-node:EKR.20040512090759:Leo.app for MacOS X
-#@-node:EKR.20040422132037:Mac/Linux: 7
-#@+node:EKR.20040610190953:Finish/Cleanup
-#@+node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-Also add corresponding commands.
-#@nonl
-#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-#@+node:ekr.20040317184631:Design
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2477913
-By: edream
-
-A better design for user icons
-
-Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
-to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
-than a list of tuples.  Each of these "subsidiary" dictionaries could have the
-following keys:
-
-"type"
-
-"file", "icon" or "url".  At present my prototype code uses "file" to specify
-the location of an icon.
-
-"where":
-
-"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
-where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
-means before the plus/minus box.  "beforeIcon" means before the standard icon.
-
-"height":
-
-the height of the icon to use when calculating the line height.  Default: get
-from the icon itself, if possible.
-
-"width":
-
-the width of the icon to use when calculating where to put the following element.
-Default: get from the icon, if possible.
-
-"xoffset"
-
-Leo draws the icon at x + xoffset, where x is determined by the where param
-above.  Default 0.
-
-"xpad"
-
-The amount of extra space following the icon.  Default 0.
-
-"yoffset"
-
-Leo draws the icon at y + yoffset.  Default 0.
-
-"ypad"
-
-The amount of extra vertical space to add to the line height.  Default 0.
-
-These offset and pad values are integer pixel values and may be positive or
-negative.
-
-"lineHeight"  NOT USED.
-
-Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-
-Edward
-
-P.S.  Other gui's might not be able to support all these options.  That's ok.
-The drawing code in gui plugins should degrade gracefully.
-
-EKR
-#@nonl
-#@-node:ekr.20040317184631:Design
-#@+node:ekr.20040317184631.2:Changes
-@nocolor
-
-"lineHeight"
-
-This key won't be used.
-
-t.unknownAttributes["lineYOffset"] 
-
-An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
-#@nonl
-#@-node:ekr.20040317184631.2:Changes
-#@+node:ekr.20040317184631.1:To do
-@nocolor
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-#@nonl
-#@-node:ekr.20040317184631.1:To do
-#@+node:ekr.20031218072017.4140:<< drawing constants >>
-box_padding = 5 # extra padding between box and icon
-box_width = 9 + box_padding
-icon_width = 20
-icon_padding = 2
-text_indent = 4 # extra padding between icon and tex
-child_indent = 28 # was 20
-hline_y = 7 # Vertical offset of horizontal line
-root_left = 7 + box_width
-root_top = 2
-hiding = True # True if we don't reallocate items
-line_height = 17 + 2 # To be replaced by Font height
-#@nonl
-#@-node:ekr.20031218072017.4140:<< drawing constants >>
-#@+node:ekr.20040317094609:drawUserIcons
-def drawUserIcons(self,p,where,x,y):
-    
-    """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
-    
-    h,w = 0,0 ; t = p.v.t
-    
-    if not hasattr(t,"unknownAttributes"):
-        return h,w
-    
-    iconsList = t.unknownAttributes.get("icons")
-    if not iconsList:
-        return h,w
-    
-    try:
-        for dict in iconsList:
-            h2,w2 = self.drawUserIcon(where,x+w,y,dict)
-            h = max(h,h2) ; w += w2
-    except:
-        g.es_exception()
-
-    return h,w
-#@nonl
-#@-node:ekr.20040317094609:drawUserIcons
-#@+node:ekr.20040317095510:drawUserIcon
-def drawUserIcon (self,where,x,y,dict):
-    
-    h,w = 0,0
-
-    if where != dict.get("where","beforeHeadline"):
-        return h,w
-        
-    # g.trace(where,x,y,dict)
-    
-    << set offsets and pads >>
-    type = dict.get("type")
-    if type == "icon":
-        s = dict.get("icon")
-        << draw the icon in string s >>
-    elif type == "file":
-        file = dict.get("file")
-        << draw the icon at file >>
-    elif type == "url":
-        url = dict.get("url")
-        << draw the icon at url >>
-        
-    # Allow user to specify height, width explicitly.
-    h = dict.get("height",h)
-    w = dict.get("width",w)
-
-    return h,w
-#@nonl
-#@+node:ekr.20040317173849:<< set offsets and pads >>
-xoffset = dict.get("xoffset")
-try:    xoffset = int(xoffset)
-except: xoffset = 0
-
-yoffset = dict.get("yoffset")
-try:    yoffset = int(yoffset)
-except: yoffset = 0
-
-xpad = dict.get("xpad")
-try:    xpad = int(xpad)
-except: xpad = 0
-
-ypad = dict.get("ypad")
-try:    ypad = int(ypad)
-except: ypad = 0
-#@nonl
-#@-node:ekr.20040317173849:<< set offsets and pads >>
-#@+node:ekr.20040317095153:<< draw the icon in string s >>
-pass
-#@nonl
-#@-node:ekr.20040317095153:<< draw the icon in string s >>
-#@+node:ekr.20040317095153.1:<< draw the icon at url >>
-pass
-#@nonl
-#@-node:ekr.20040317095153.1:<< draw the icon at url >>
-#@+node:ekr.20040317100702:<< draw the icon at file >>
-try:
-    image = self.iconimages[file]
-    # Get the image from the cache if possible.
-except KeyError:
-    try:
-        fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
-        fullname = g.os_path_normpath(fullname)
-        image = Tk.PhotoImage(master=self.canvas,file=fullname)
-        self.iconimages[fullname] = image
-    except:
-        #g.es("Exception loading: " + fullname)
-        #g.es_exception()
-        image = None
-        
-if image:
-    id = self.canvas.create_image(x+xoffset,y+yoffset,anchor="nw",image=image)
-    self.canvas.lift(id)
-    h = image.height() + yoffset + ypad
-    w = image.width()  + xoffset + xpad
-#@nonl
-#@-node:ekr.20040317100702:<< draw the icon at file >>
-#@-node:ekr.20040317095510:drawUserIcon
-#@+node:ekr.20031218072017.4147:tree.getIconImage
-def getIconImage (self, name):
-
-    # Return the image from the cache if possible.
-    if self.iconimages.has_key(name):
-        return self.iconimages[name]
-        
-    try:
-        fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
-        fullname = g.os_path_normpath(fullname)
-        image = Tk.PhotoImage(master=self.canvas, file=fullname)
-        self.iconimages[name] = image
-        return image
-    except:
-        g.es("Exception loading: " + fullname)
-        g.es_exception()
-        return None
-#@nonl
-#@-node:ekr.20031218072017.4147:tree.getIconImage
-#@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv):
-    
-    import binascii,pickle
-    
-    attrDict = torv.unknownAttributes
-    if type(attrDict) != type({}):
-        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
-        return
-        
-    attrs = []
-    for key in attrDict.keys():
-        val = attrDict[key]
-        try:
-            s = pickle.dumps(val,bin=True)
-        except pickle.PicklingError:
-            g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
-            g.es(key,val)
-            return
-        attr = ' %s="%s"' % (key,binascii.hexlify(s))
-        if 0: # This is not general enough
-            attr = ' %s="%s"' % (key,self.xmlEscape(val))
-        attrs.append(attr)
-
-    for attr in attrs:
-        self.put(attr)
-#@nonl
-#@-node:EKR.20040526202501:putUnknownAttributes
-#@-node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:EKR.20040601133022.1:(Finish the new undo)
-#@+node:EKR.20040606195417.5:To do
-@nocolor
-
-- (done) Create u.saveNode, u.saveNodeAndChildren, u.saveListOfNodes.
-- Create u.appendSavedNode.
-- Use u.appendSavedNode in Change All command.
-- Unit tests.
-#@nonl
-#@-node:EKR.20040606195417.5:To do
-#@+node:EKR.20040528075307:u.saveTree
-def saveTree (self,p,treeInfo=None):
-    
-    """Create all info needed to handle a general undo operation."""
-
-    # WARNING: read this before doing anything "clever"
-    << about u.saveTree >>
-    
-    u = self ; topLevel = (treeInfo == None)
-    if topLevel: treeInfo = []
-
-    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
-    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    treeInfo.append(data)
-
-    # Recursively add info for the subtree.
-    child = p.firstChild()
-    while child:
-        self.saveTree(child,treeInfo)
-        child = child.next()
-
-    # if topLevel: g.trace(treeInfo)
-    return treeInfo
-#@+node:EKR.20040530114124:<< about u.saveTree >>
-@ 
-The old code made a free-standing copy of the tree using v.copy and t.copy.  This looks "elegant" and is WRONG.  The problem is that it can not handle clones properly, especially when some clones were in the "undo" tree and some were not.   Moreover, it required complex adjustments to t.vnodeLists.
-
-Instead of creating new nodes, the new code creates all information needed to properly restore the vnodes and tnodes.  It creates a list of tuples, on tuple for each vnode in the tree.  Each tuple has the form,
-
-(vnodeInfo, tnodeInfo) where vnodeInfo and tnodeInfo are dicts contain all info needed to recreate the nodes.  The v.createUndoInfoDict and t.createUndoInfoDict methods correspond to the old v.copy and t.copy methods.
-
-Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the createUndoInfoDict info, but quite a bit uglier.
-#@-node:EKR.20040530114124:<< about u.saveTree >>
-#@-node:EKR.20040528075307:u.saveTree
-#@+node:EKR.20040606195417.2:u.saveNodeAndChildren
-def saveTree (self,p):
-    
-    """Create all info needed for a node and all its immediate children."""
-
-    u = self
-    treeInfo = []
-
-    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
-    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    treeInfo.append(data)
-
-    # Add info for all children.
-    child = p.firstChild()
-    while child:
-        data = (child.v,child.v.createUndoInfo(),child.v.t.createUndoInfo())
-        treeInfo.append(data)
-        child = child.next()
-
-    return treeInfo
-
-#@-node:EKR.20040606195417.2:u.saveNodeAndChildren
-#@+node:EKR.20040606195417.1:u.saveNode
-def saveNode (self,p):
-    
-    """Create all info for a single vnode."""
-    
-    u = self
-
-    treeInfo = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    return treeInfo
-#@nonl
-#@-node:EKR.20040606195417.1:u.saveNode
-#@+node:EKR.20040606195417.3:u.saveListOfNodes
-def saveListOfNodes (self,listOfVnodes):
-    
-    """Create all info for a list of vnodes."""
-    
-    u = self ; treeInfo = []
-
-    for v in listOfVnodes:
-        data = (v,v.createUndoInfo(),v.t.createUndoInfo())
-        treeInfo.append(data)
-
-    return treeInfo
-#@nonl
-#@-node:EKR.20040606195417.3:u.saveListOfNodes
-#@-node:EKR.20040601133022.1:(Finish the new undo)
-#@+node:ekr.20031218072017.848:Cleanup Pychecker stuff
-#@+node:EKR.20040603144102:What I did
-@nocolor
-
-- except type1,type2: does not work!  It should be except (type1,type2):
-- removed "text" arg from undoReplace
-#@-node:EKR.20040603144102:What I did
-#@+node:EKR.20040603143011:Undo
-(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:40: Imported module (types) not used
-(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:211: Using a conditional statement with a constant value ((hasattr, u, (func, __name__)))
-(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:212: Local variable (AssertionError) not used
-(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:212: Setting exception to builtin (AssertionError), consider () around exceptions
-(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:221: Format string argument count (3) doesn't match arguments (2)
-
-(ignore) C:/prog/leoCVS/leo/src\leoUndo.py:1132: Parameter (newNewlines) not used
-(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:1250: Parameter (text) not used
-
-(dummy args) C:/prog/leoCVS/leo/src\leoUndo.py:1389: Parameter (n) not used
-(dummy args) C:/prog/leoCVS/leo/src\leoUndo.py:1392: Parameter (n) not used
-(dummy args) C:/prog/leoCVS/leo/src\leoUndo.py:1395: Parameter (n) not used
-#@-node:EKR.20040603143011:Undo
-#@-node:ekr.20031218072017.848:Cleanup Pychecker stuff
-#@-node:EKR.20040610190953:Finish/Cleanup
-#@+node:EKR.20040603115948:New Features: 3
+#@+node:EKR.20040617105034:To do before beta 2: (feature complete)
 #@+node:EKR.20040506075328.3:(Perfect Import)
 #@+node:EKR.20040506091116: Notes
 @nocolor
@@ -2414,7 +1322,610 @@ print "actual  :",textResult
 #@-node:ekr.20040323084434:(Add granularity setting for undo)
 #@+node:EKR.20040503160843:@directory-import (Generalization of @import)
 #@-node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040603115948:New Features: 3
+#@+node:ekr.20031218072017.791:(Finish Check Tabs, Check Python Syntax and PrettyPrint Python commands)
+@
+
+- Put readLinesClass in leoGlobals.py or find similar code in an existing Python module.
+- Create and test the actual commands.
+#@nonl
+#@+node:EKR.20040611074752:use standard alternative for readLinesClass or put in leoGlobals
+#@-node:EKR.20040611074752:use standard alternative for readLinesClass or put in leoGlobals
+#@-node:ekr.20031218072017.791:(Finish Check Tabs, Check Python Syntax and PrettyPrint Python commands)
+#@+node:EKR.20040602153716:(Finish drawUserIcons)
+#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+Also add corresponding commands.
+#@nonl
+#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+#@+node:ekr.20040317184631:Design
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2477913
+By: edream
+
+A better design for user icons
+
+Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
+to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
+than a list of tuples.  Each of these "subsidiary" dictionaries could have the
+following keys:
+
+"type"
+
+"file", "icon" or "url".  At present my prototype code uses "file" to specify
+the location of an icon.
+
+"where":
+
+"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
+where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
+means before the plus/minus box.  "beforeIcon" means before the standard icon.
+
+"height":
+
+the height of the icon to use when calculating the line height.  Default: get
+from the icon itself, if possible.
+
+"width":
+
+the width of the icon to use when calculating where to put the following element.
+Default: get from the icon, if possible.
+
+"xoffset"
+
+Leo draws the icon at x + xoffset, where x is determined by the where param
+above.  Default 0.
+
+"xpad"
+
+The amount of extra space following the icon.  Default 0.
+
+"yoffset"
+
+Leo draws the icon at y + yoffset.  Default 0.
+
+"ypad"
+
+The amount of extra vertical space to add to the line height.  Default 0.
+
+These offset and pad values are integer pixel values and may be positive or
+negative.
+
+"lineHeight"  NOT USED.
+
+Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+
+Edward
+
+P.S.  Other gui's might not be able to support all these options.  That's ok.
+The drawing code in gui plugins should degrade gracefully.
+
+EKR
+#@nonl
+#@-node:ekr.20040317184631:Design
+#@+node:ekr.20040317184631.2:Changes
+@nocolor
+
+"lineHeight"
+
+This key won't be used.
+
+t.unknownAttributes["lineYOffset"] 
+
+An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
+#@nonl
+#@-node:ekr.20040317184631.2:Changes
+#@+node:ekr.20040317184631.1:To do
+@nocolor
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+#@nonl
+#@-node:ekr.20040317184631.1:To do
+#@+node:ekr.20031218072017.4140:<< drawing constants >>
+box_padding = 5 # extra padding between box and icon
+box_width = 9 + box_padding
+icon_width = 20
+icon_padding = 2
+text_indent = 4 # extra padding between icon and tex
+child_indent = 28 # was 20
+hline_y = 7 # Vertical offset of horizontal line
+root_left = 7 + box_width
+root_top = 2
+hiding = True # True if we don't reallocate items
+line_height = 17 + 2 # To be replaced by Font height
+#@nonl
+#@-node:ekr.20031218072017.4140:<< drawing constants >>
+#@+node:ekr.20040317094609:drawUserIcons
+def drawUserIcons(self,p,where,x,y):
+    
+    """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
+    
+    h,w = 0,0 ; t = p.v.t
+    
+    if not hasattr(t,"unknownAttributes"):
+        return h,w
+    
+    iconsList = t.unknownAttributes.get("icons")
+    if not iconsList:
+        return h,w
+    
+    try:
+        for dict in iconsList:
+            h2,w2 = self.drawUserIcon(where,x+w,y,dict)
+            h = max(h,h2) ; w += w2
+    except:
+        g.es_exception()
+
+    return h,w
+#@nonl
+#@-node:ekr.20040317094609:drawUserIcons
+#@+node:ekr.20040317095510:drawUserIcon
+def drawUserIcon (self,where,x,y,dict):
+    
+    h,w = 0,0
+
+    if where != dict.get("where","beforeHeadline"):
+        return h,w
+        
+    # g.trace(where,x,y,dict)
+    
+    << set offsets and pads >>
+    type = dict.get("type")
+    if type == "icon":
+        s = dict.get("icon")
+        << draw the icon in string s >>
+    elif type == "file":
+        file = dict.get("file")
+        << draw the icon at file >>
+    elif type == "url":
+        url = dict.get("url")
+        << draw the icon at url >>
+        
+    # Allow user to specify height, width explicitly.
+    h = dict.get("height",h)
+    w = dict.get("width",w)
+
+    return h,w
+#@nonl
+#@+node:ekr.20040317173849:<< set offsets and pads >>
+xoffset = dict.get("xoffset")
+try:    xoffset = int(xoffset)
+except: xoffset = 0
+
+yoffset = dict.get("yoffset")
+try:    yoffset = int(yoffset)
+except: yoffset = 0
+
+xpad = dict.get("xpad")
+try:    xpad = int(xpad)
+except: xpad = 0
+
+ypad = dict.get("ypad")
+try:    ypad = int(ypad)
+except: ypad = 0
+#@nonl
+#@-node:ekr.20040317173849:<< set offsets and pads >>
+#@+node:ekr.20040317095153:<< draw the icon in string s >>
+pass
+#@nonl
+#@-node:ekr.20040317095153:<< draw the icon in string s >>
+#@+node:ekr.20040317095153.1:<< draw the icon at url >>
+pass
+#@nonl
+#@-node:ekr.20040317095153.1:<< draw the icon at url >>
+#@+node:ekr.20040317100702:<< draw the icon at file >>
+try:
+    image = self.iconimages[file]
+    # Get the image from the cache if possible.
+except KeyError:
+    try:
+        fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
+        fullname = g.os_path_normpath(fullname)
+        image = Tk.PhotoImage(master=self.canvas,file=fullname)
+        self.iconimages[fullname] = image
+    except:
+        #g.es("Exception loading: " + fullname)
+        #g.es_exception()
+        image = None
+        
+if image:
+    id = self.canvas.create_image(x+xoffset,y+yoffset,anchor="nw",image=image)
+    self.canvas.lift(id)
+    h = image.height() + yoffset + ypad
+    w = image.width()  + xoffset + xpad
+#@nonl
+#@-node:ekr.20040317100702:<< draw the icon at file >>
+#@-node:ekr.20040317095510:drawUserIcon
+#@+node:ekr.20031218072017.4147:tree.getIconImage
+def getIconImage (self, name):
+
+    # Return the image from the cache if possible.
+    if self.iconimages.has_key(name):
+        return self.iconimages[name]
+        
+    try:
+        fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
+        fullname = g.os_path_normpath(fullname)
+        image = Tk.PhotoImage(master=self.canvas, file=fullname)
+        self.iconimages[name] = image
+        return image
+    except:
+        g.es("Exception loading: " + fullname)
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.4147:tree.getIconImage
+#@+node:EKR.20040526202501:putUnknownAttributes
+def putUnknownAttributes (self,torv):
+    
+    import binascii,pickle
+    
+    attrDict = torv.unknownAttributes
+    if type(attrDict) != type({}):
+        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+        return
+        
+    attrs = []
+    for key in attrDict.keys():
+        val = attrDict[key]
+        try:
+            s = pickle.dumps(val,bin=True)
+        except pickle.PicklingError:
+            g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
+            g.es(key,val)
+            return
+        attr = ' %s="%s"' % (key,binascii.hexlify(s))
+        if 0: # This is not general enough
+            attr = ' %s="%s"' % (key,self.xmlEscape(val))
+        attrs.append(attr)
+
+    for attr in attrs:
+        self.put(attr)
+#@nonl
+#@-node:EKR.20040526202501:putUnknownAttributes
+#@-node:EKR.20040602153716:(Finish drawUserIcons)
+#@+node:EKR.20040601133022.1:(Finish the new undo)
+#@+node:EKR.20040606195417.5:To do
+@nocolor
+
+- (done) Create u.saveNode, u.saveNodeAndChildren, u.saveListOfNodes.
+- Create u.appendSavedNode.
+- Use u.appendSavedNode in Change All command.
+- Unit tests.
+#@nonl
+#@-node:EKR.20040606195417.5:To do
+#@+node:EKR.20040528075307:u.saveTree
+def saveTree (self,p,treeInfo=None):
+    
+    """Create all info needed to handle a general undo operation."""
+
+    # WARNING: read this before doing anything "clever"
+    << about u.saveTree >>
+    
+    u = self ; topLevel = (treeInfo == None)
+    if topLevel: treeInfo = []
+
+    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
+    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    treeInfo.append(data)
+
+    # Recursively add info for the subtree.
+    child = p.firstChild()
+    while child:
+        self.saveTree(child,treeInfo)
+        child = child.next()
+
+    # if topLevel: g.trace(treeInfo)
+    return treeInfo
+#@+node:EKR.20040530114124:<< about u.saveTree >>
+@ 
+The old code made a free-standing copy of the tree using v.copy and t.copy.  This looks "elegant" and is WRONG.  The problem is that it can not handle clones properly, especially when some clones were in the "undo" tree and some were not.   Moreover, it required complex adjustments to t.vnodeLists.
+
+Instead of creating new nodes, the new code creates all information needed to properly restore the vnodes and tnodes.  It creates a list of tuples, on tuple for each vnode in the tree.  Each tuple has the form,
+
+(vnodeInfo, tnodeInfo) where vnodeInfo and tnodeInfo are dicts contain all info needed to recreate the nodes.  The v.createUndoInfoDict and t.createUndoInfoDict methods correspond to the old v.copy and t.copy methods.
+
+Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the createUndoInfoDict info, but quite a bit uglier.
+#@-node:EKR.20040530114124:<< about u.saveTree >>
+#@-node:EKR.20040528075307:u.saveTree
+#@+node:EKR.20040606195417.2:u.saveNodeAndChildren
+def saveTree (self,p):
+    
+    """Create all info needed for a node and all its immediate children."""
+
+    u = self
+    treeInfo = []
+
+    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
+    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    treeInfo.append(data)
+
+    # Add info for all children.
+    child = p.firstChild()
+    while child:
+        data = (child.v,child.v.createUndoInfo(),child.v.t.createUndoInfo())
+        treeInfo.append(data)
+        child = child.next()
+
+    return treeInfo
+
+#@-node:EKR.20040606195417.2:u.saveNodeAndChildren
+#@+node:EKR.20040606195417.1:u.saveNode
+def saveNode (self,p):
+    
+    """Create all info for a single vnode."""
+    
+    u = self
+
+    treeInfo = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    return treeInfo
+#@nonl
+#@-node:EKR.20040606195417.1:u.saveNode
+#@+node:EKR.20040606195417.3:u.saveListOfNodes
+def saveListOfNodes (self,listOfVnodes):
+    
+    """Create all info for a list of vnodes."""
+    
+    u = self ; treeInfo = []
+
+    for v in listOfVnodes:
+        data = (v,v.createUndoInfo(),v.t.createUndoInfo())
+        treeInfo.append(data)
+
+    return treeInfo
+#@nonl
+#@-node:EKR.20040606195417.3:u.saveListOfNodes
+#@-node:EKR.20040601133022.1:(Finish the new undo)
+#@-node:EKR.20040617105034:To do before beta 2: (feature complete)
+#@+node:EKR.20040430163619:To do: 4.2
+#@+node:EKR.20040617083816:Ask for bugs not on to-do list
+#@-node:EKR.20040617083816:Ask for bugs not on to-do list
+#@+node:EKR.20040422132037:Mac/Linux: 7
+@nocolor
+#@nonl
+#@+node:EKR.20040422132037.2:Install Leo in the site-packages directory
+#@-node:EKR.20040422132037.2:Install Leo in the site-packages directory
+#@+node:EKR.20040422132037.3:small bug in install script
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2370629
+By: tyndal
+
+I found a small bug in the leo install script.
+It doesnt check to see that the $LEO_PREFIX/bin exists before trying to install
+the "leo" script into it, giving an error.
+
+you just need to make a small check similar to the one for the lib directory..
+(i've included it below)
+
+Thanks,
+-Tyndal
+
+#------------------------------
+echo ""
+echo Making directory structure $LEO_PREFIX/bin
+
+RESULTS=`mkdir -p $LEO_PREFIX/bin 2>&1`
+if [ $? -ne 0 ]; then
+    echo Failure making directory $LEO_PREFIX/bin
+    exit 0;
+fi
+#
+#-----------------------------
+#@-node:EKR.20040422132037.3:small bug in install script
+#@+node:EKR.20040422132037.4:config problem on Linux
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2373816
+By: sbeards
+
+A related issue is that leoConfig.txt gets auto-tangled and overwritten on startup.
+This will be a problem if Leo is run by a non-root user or the file is not readable.
+For example, I get the following traceback after starting Leo (when leoConfig.txt
+is read-only):
+
+Traceback (most recent call last):
+  File "/usr/local/share/leo-4.1-rc3/src/leoConfig.py", line 672, in update
+    cf = open(self.configFileName,mode)
+IOError: [Errno 13] Permission denied:
+'/usr/local/share/leo-4.1-rc3/src/../config/leoConfig.txt'
+
+Is there a reason leoConfig.txt gets auto-tangled on startup? Is there anyway
+to disable this? Is this by design?
+#@-node:EKR.20040422132037.4:config problem on Linux
+#@+node:EKR.20040422132037.5:Backspace problems on Linux
+Shift+Ctrl+BkSp doesn't delete node   
+#@nonl
+#@+node:EKR.20040422132037.6:Dave Hein: fix
+By: dthein ( Dave Hein ) 
+ RE: BUG: Shift+Ctrl+BkSp doesn't delete node   
+2004-01-15 03:30  
+
+ OK, the cause of the keymapping problem is a issue with the X11 keyboard mapping, not with Tk.
+
+If you have this problem on your system, issue the command:
+
+xmodmap -pke 
+
+and look in the results for the line for keycode 22. I'll bet it shows something like:
+
+keycode 22 = BackSpace Terminate_Server
+
+That second token ("Terminate_Server") is what is supposed to be mapped to Shift-Backspace. You want this second token to be either not present or to be BackSpace.
+
+To fix this, create a file (e.g. .Xmodmap) and give it the content:
+
+keycode 22 = BackSpace
+
+then run the command:
+
+xmodmap .Xmodmap
+
+And you'll have fixed the problem.
+
+Now, on my system this also disables the ability to terminate the X server using Ctrl-Alt-BackSpace ... this is because of some conflict with xdb (xdb is the newer keyboard mapping facility in XFree86 ... xmodmap is the old original X11 keyboard mapping facility). I'm still working on that.
+
+I'm also not able to get xmodmap to make this change during X11 startup (again because of conflicts with xdb). But I'm working on that as well.
+#@nonl
+#@-node:EKR.20040422132037.6:Dave Hein: fix
+#@-node:EKR.20040422132037.5:Backspace problems on Linux
+#@+node:EKR.20040422132037.7:Bug: vpython and mac
+Jon Schull <jschull@softlock.com>  
+Date:  2003/12/30 Tue PM 05:50:51 EST 
+To:  edreamleo@charter.net 
+Subject:  Leo, Mac OS X 10.3, and VPython 
+             
+I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
+have some observations and a suggestion.
+
+Observations.
+		Leo runs under X11 as well as under OS X.
+		My X11 python configuration was created using the recipe at XXX 
+(which enables vpython).
+		The OS X configuration is vanilla MacPython from MacPython.org, along 
+with AquaTclTk batteries included XXX.
+		In both environments I can run leo under python leo.py and under idle.
+		Under OS X we get font smoothing, but we can't run visual python 
+programs (python crashes;  this is a known incompatibility with 
+MacPython.)
+	
+		Under X11 we can run visual python programs like this one
+			#box.py
+			from visual import *
+			box()
+			
+    And we can even run them under leo (under X11). HOWEVER, when the 
+visual python program is terminated, leo vanishes (leo and the vp 
+program apparently run in the same space)
+	
+	Under x11, we can keep leo alive by putting the vp program in its own 
+space:
+	
+		os.popen3('/sw/bin/python /Users/jis/box.py')
+	
+	However,  this doesn't let us see the output of stderr and stdout.  
+Those text streams are available...
+		
+		def do(cmd='ls'):
+			from os import popen3
+			pIn,pOut,pErr=0,1,2
+			popenResults=popen3(cmd)
+			print popenResults[pOut].read()
+			print popenResults[pErr].read()
+		
+		import os	
+		do('/sw/bin/python /Users/jis/box.py')
+		
+	...but only when the vpython program terminates.
+	
+	Here's the good news:  if we execute our vp program with 
+/sw/bin/idle.py rather than with python, we get to see the program 
+output in real time (under idle, under X11).
+	
+		import os	
+		os.chdir('/sw/lib/python2.3/idlelib')
+		os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
+		
+		#this runs as an executed script in leo, and produces a live idle 
+with real time ongoing output.
+	
+	Now, while idle is running, leo sits in suspended animation.  But when 
+the vpython program terminates, we are left in idle, and when idle is 
+terminated, leo becomes active again.
+	
+	It would be even better if leo were not suspended (using os.spawn, 
+perhaps) but the real point is that I would really really like leo's 
+"Execute script" command to execute code this way and spare me having 
+to  hard-write the path to box.py.  It ought to be possible to 
+eliminate os.chdir as well.
+
+------------------
+Jon Schull, Ph.D.
+Associate Professor
+Information Technology
+Rochester Institute of Technology
+schull@digitalgoods.com 585-738-6696
+#@-node:EKR.20040422132037.7:Bug: vpython and mac
+#@+node:EKR.20040422132037.8:Mouse / Paste Anomalies
+@nocolor
+
+By: Bill Drissel - drissel
+2004-04-13 19:43  
+
+Xserver (XFree86 under Cygwin) on PC (W2000); controlling Linux Red Hat;
+buncha windows up including one Leo window and many xterms and Xemacs.
+
+A: means action, R: means result
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; locate mouse symbol in text
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; up arrow to locate Ibeam in text
+R: Joy! colorizes, marks headline and saves!
+
+A: hilite headline text; type on KB
+R: keystrokes replace hilited text
+
+A: hilite text in Xemacs window; hilite headline; middle click
+R: hilited text appended to headline rather than replacing
+
+This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
+#@nonl
+#@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
+#@+node:EKR.20040512090759:Leo.app for MacOS X
+@nocolor
+
+Hi Ed,
+
+
+I've created a Leo.app that I'm using reasonably successfully. Hopefully 
+you'll be able to take the pattern for a Mac OS X binary download option!
+
+
+http://idisk.mac.com/genthaler-Public/Leo.zip
+(WebDAV)
+
+Regards,
+
+Günther
+#@nonl
+#@-node:EKR.20040512090759:Leo.app for MacOS X
+#@-node:EKR.20040422132037:Mac/Linux: 7
+#@+node:EKR.20040610190953:Finish/Cleanup
+#@-node:EKR.20040610190953:Finish/Cleanup
 #@+node:EKR.20040609155110:Docs, etc
 #@+node:ekr.20040323195916:Documentation
 @nocolor
@@ -4118,20 +3629,21 @@ while g.match(s,i,tag):
 @c
 
 tag = "@last"
-lines = root.v.t.bodyString.split('\n')
+
+# 4/17/04 Use g.splitLines to preserve trailing newlines.
+lines = g.splitLines(root.v.t.bodyString)
 n = len(lines) ; j = k = n - 1
-# Don't write an empty last line.
-if j >= 0 and len(lines[j])==0:
-    j = k = n - 2
+
 # Scan backwards for @last directives.
 while j >= 0:
     line = lines[j]
     if g.match(line,0,tag): j -= 1
     else: break
+    
 # Write the @last lines.
 for line in lines[j+1:k+1]:
     i = len(tag) ; i = g.skip_ws(line,i)
-    self.os(line[i:]) ; self.onl()
+    self.os(line[i:])
 #@nonl
 #@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
 #@-node:EKR.20040506075328:new_df.writeOpenFile
@@ -4907,6 +4419,15 @@ def updateStatusRowCol (self):
 #@-node:ekr.20031218072017.1733:updateStatusRowCol
 #@-node:ekr.20031218072017.3960:Creating the status area
 #@-node:EKR.20040424151321:(Status line experiments) TO DO: create status line class
+#@+node:EKR.20040612081353:Remove app.use_gnx and related config settings
+@
+
+This implies:
+    
+- Deprecating old-style file formats.
+- Removing commands that write old-style formats.
+#@nonl
+#@-node:EKR.20040612081353:Remove app.use_gnx and related config settings
 #@+node:EKR.20040603092958.1:Add new options for handling newlines in body text
 @nocolor
 
