@@ -1960,7 +1960,7 @@ def toUnicodeFileEncoding(path,encoding):
 #@-node:ekr.20031218072017.2160:toUnicodeFileEncoding
 #@-node:ekr.20031218072017.2145:os.path wrappers (leoGlobals.py)
 #@+node:ekr.20031218072017.3151:Scanning...
-#@+node:ekr.20031218072017.3152:g.scanAtFileOptions
+#@+node:ekr.20031218072017.3152:g.scanAtFileOptions (used in 3.x read code)
 def scanAtFileOptions (h,err_flag=False):
     
     assert(g.match(h,0,"@file"))
@@ -2027,7 +2027,7 @@ def scanAtFileOptions (h,err_flag=False):
 
     return i,atFileType,optionsList
 #@nonl
-#@-node:ekr.20031218072017.3152:g.scanAtFileOptions
+#@-node:ekr.20031218072017.3152:g.scanAtFileOptions (used in 3.x read code)
 #@+node:ekr.20031218072017.3154:scanAtRootOptions
 def scanAtRootOptions (s,i,err_flag=False):
     
@@ -2596,6 +2596,19 @@ def skip_c_id(s,i):
     return i
 #@nonl
 #@-node:ekr.20031218072017.3186:skip_c_id
+#@+node:ekr.20040705195048:skip_id
+def skip_id(s,i,chars=None):
+
+    n = len(s)
+    while i < n:
+        ch = s[i]
+        if ch in string.ascii_letters or ch in string.digits or ch == '_':
+            i += 1
+        elif chars and ch in chars:
+            i += 1
+        else: break
+    return i
+#@-node:ekr.20040705195048:skip_id
 #@+node:ekr.20031218072017.3187:skip_line, skip_to_end_of_line
 #@+at 
 #@nonl
