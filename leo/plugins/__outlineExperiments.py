@@ -1936,8 +1936,6 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         p = self.drag_p
         if not p: return
-        
-        # if self.trace: g.trace(p.headString())
     
         try:
             if event:
@@ -1966,7 +1964,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
                     # Queue up another event to keep scrolling while the cursor is outside the canvas.
                     lo, hi = frame.treeBar.get()
                     if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
-                        canvas.after_idle(self.onContinueDrag,p,None) # Don't propagate the event.
+                        canvas.after_idle(self.onContinueDrag,None) # Don't propagate the event.
                 #@nonl
                 #@-node:ekr.20040723104427.11:<< scroll the canvas as needed >>
                 #@nl
