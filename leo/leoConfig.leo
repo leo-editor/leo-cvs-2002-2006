@@ -20,7 +20,7 @@
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
@@ -173,9 +173,9 @@ stylesheet =
 
 use_customizeLeo_dot_py = 1
 
-#	1: Leo calls code "hooks" in configureLeo.py.
+#	1: Leo calls code "hooks" in customizeLeo.py.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
-#   0: (The default) Leo calls NO hooks in configureLeo.py.
+#   0: (The default) Leo calls NO hooks in customizeLeo.py.
 #
 #	Very important SECURITY WARNINGS:
 #
