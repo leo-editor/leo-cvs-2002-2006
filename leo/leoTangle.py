@@ -1687,6 +1687,8 @@ class tangleCommands:
 
 						line_width += word_width
 					else:
+						# 11-SEP-2002 DTHEIN: Fixed linewrapping bug in
+						# tab-then-comment sequencing
 						self.onl()
 						if use_single_comment:
 							self.os(self.single_comment_string) ; self.otab()
