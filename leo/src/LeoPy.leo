@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3811" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3812" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="57" left="509" height="872" width="731"/>
+	<global_window_position top="50" left="387" height="872" width="731"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -792,9 +792,13 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538"><vh>To do: 4.1 beta 2</vh>
+<v t="edream.110403112538" a="MV"><vh>To do: 4.1 beta 2</vh>
+<v t="edream.110703024332"><vh>Clean up pychecker stuff</vh>
+<v t="edream.110703024332.1"><vh>Pychecker report</vh></v>
+</v>
 <v t="edream.110203160744.424" a="M"><vh>(Search selected text only) TO DO</vh></v>
 <v t="edream.110203160744.2421"><vh>Fix bugs</vh>
+<v t="edream.110703024557"><vh>What does the scripts menu do ?</vh></v>
 <v t="edream.110203160744.3805" a="M"><vh>(Make sure that finishPaste nodes never have join lists)</vh>
 <v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
 <v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
@@ -845,6 +849,8 @@
 </v>
 <v t="edream.110203160744.2420"><vh>Support Unicode file names (see other to-do list)</vh></v>
 <v t="edream.110303152216.2"><vh>gui &amp; plugin stuff</vh>
+<v t="edream.110703041224"><vh>*** Use tk names for corresponding body methods</vh></v>
+<v t="edream.110703041224.1"><vh>*** Review all of plugin code</vh></v>
 <v t="edream.110503104603"><vh>Move createMenuBar to leoFrame class in leoFrame.py</vh></v>
 <v t="edream.110503061633.2"><vh>Create base find class</vh>
 <v t="edream.110203160744.2186" a=""><vh>find.createFrame</vh>
@@ -871,8 +877,9 @@
 <v t="edream.110303152216.3"><vh>Remove instances of bodyCtrl from non-gui code (undo, etc)</vh></v>
 </v>
 <v t="edream.110503100058"><vh>Add option to allow incremental screen redraws? And shared tnodes?</vh></v>
+<v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
 </v>
-<v t="edream.110203160744.601" a="V"><vh>(Project Views)</vh>
+<v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
 <v t="edream.110203160744.603"><vh>(Translation problems)</vh>
 <v t="edream.110203160744.604"><vh> Report</vh></v>
@@ -2274,6 +2281,7 @@
 <v t="edream.110203160744.1513"><vh>About getdefaultlocale</vh></v>
 </v>
 </v>
+<v t="edream.110703040104"><vh>3.x projects...</vh>
 <v t="edream.110203160744.1514"><vh>3.11.1 projects</vh>
 <v t="edream.110203160744.1515"><vh>(Control-dragging bug)</vh>
 <v t="edream.110203160744.1516"><vh> Report</vh></v>
@@ -3031,6 +3039,8 @@
 <v t="edream.110203160744.1297" a=""><vh>enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler</vh></v>
 </v>
 </v>
+</v>
+<v t="edream.110703040104.1"><vh>4.0.x projects</vh>
 <v t="edream.110203160744.1840"><vh>4.0 Projects</vh>
 <v t="edream.110203160744.1841"><vh>(4.0: bad tnodeList index following cut/paste of @root tree)</vh>
 <v t="edream.110203160744.1842" a=""><vh>findChild</vh></v>
@@ -3909,6 +3919,7 @@
 <v t="edream.110203160744.2142"><vh>Report</vh></v>
 <v t="edream.110203160744.2143" a=""><vh>putDirective  (handles @delims) 4,x</vh>
 <v t="edream.110203160744.2144"><vh>&lt;&lt; handle @delims &gt;&gt;</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -8203,18 +8214,6 @@
 </v>
 <v t="edream.110203160744.3726"><vh>Unused</vh>
 <v t="edream.110203160744.3727"><vh>class leoTestFrame (not used at present)</vh></v>
-<v t="edream.110203160744.3728"><vh>class colorTests (static, works)</vh>
-<v t="edream.110203160744.3729"><vh>color</vh></v>
-<v t="edream.110203160744.3730"><vh>setUp</vh></v>
-<v t="edream.110203160744.3731"><vh>tearDown</vh></v>
-<v t="edream.110203160744.3732"><vh>testC</vh></v>
-<v t="edream.110203160744.3733"><vh>testHTML1</vh></v>
-<v t="edream.110203160744.3734"><vh>testHTML2</vh></v>
-<v t="edream.110203160744.3735"><vh>testPHP</vh></v>
-<v t="edream.110203160744.3736"><vh>testPython1</vh></v>
-<v t="edream.110203160744.3737"><vh>testPython2</vh></v>
-<v t="edream.110203160744.3738"><vh>testRebol</vh></v>
-</v>
 <v t="edream.110203160744.3739"><vh>Color tests that create new frames for tests</vh>
 <v t="edream.110203160744.3740"><vh>color (creates new frames for tests)</vh></v>
 <v t="edream.110203160744.3741"><vh>setUp</vh></v>
@@ -33911,7 +33910,7 @@ c.endUpdate(false)</t>
 	return self.ver[10:-1] # Strip off "$Reversion" and the trailing "$"
 
 def getSignOnLine (self):
-	return "Leo 4.1 alpha 1, build %s, November 2, 2003" % self.getBuildNumber()
+	return "Leo 4.1 beta 1, build %s, November 7, 2003" % self.getBuildNumber()
 	
 def initVersion (self):
 	self.ver = "$Revision$" # CVS will update this.
@@ -39272,6 +39271,7 @@ def setFirstVisibleIndex (self,index): self.oops()
 def getFirstVisibleIndex (self):       self.oops()
 def scrollUp (self):                   self.oops()
 def scrollDown (self):                 self.oops()
+
 </t>
 <t tx="edream.110203160744.2283">def oops (self):
 
@@ -41895,7 +41895,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="edream.110203160744.2491">Metadata-Version: 1.0
 Name: leo
-Version: 4.1 alpha 1
+Version: 4.1 beta 1
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -41921,17 +41921,29 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 alpha 1                   November 2, 2003
+Leo 4.1 beta 1                   November 7, 2003
 
-1. Implements the use_gnx setting:
-	1: tnode indices in .leo files have the form id.timestamp.n (n optional)
-       Strongly recommended when using cvs.
- 	0: tnode indices in .leo files are integers.
-       For compatibility with Leo 3.x file format.
+This is the first official release of the reorganized 4.1 code base.  The code appears solid, and has not been widely tested.  Please use caution when using this code.
 
-N.B.  It is possible to convert between 3.x and 4.1 file formats by changing the use_gnx setting.  This is tricky, and the present code appears to work.  However, problems might remain: that's why this is an alpha version.
+Highlights of 4.1:
+-----------------
 
-2. Moves gui-dependent code out of Leo's core.  Known bug: the Extract command eat an extra character.  This will be fixed soon.</t>
+* Leo 4.1 includes several new commands:
+  - script-based find/change commands: very powerful and flexible.
+  - Hoist &amp; DeHoist commands for viewing parts of an outline.
+  - Check Outline command finds user clone mistakes.
+* New configuration settings:
+  - use_gnx specifies whether .leo files use integers as indices:
+    use_gnx = 0 makes .leo files compatible with previous versions of Leo.
+    use_gnx = 1 makes .leo files cvs-friendly
+  - config_encoding specifies the encoding of leoConfig.txt.
+* Several significant code-level changes:
+  - The 4.1 code base has been reorganized to support gui plugins.
+    An example wx_gui plugin is partly functional.
+  - Created a flexible framework for creating &amp; running regression tests.
+    This framework takes full advantage of outlines to organize tests.
+  - app.forceShutdown now works when called from plugins.
+- Fixed several long-standing bugs.  More fixes are coming.</t>
 <t tx="edream.110203160744.2493"># The manifest template: specifies all files to be included in the distribution.
 
 # Note: these are glob patterns!  Be careful:  .. may not work.
@@ -42056,7 +42068,7 @@ setup (
 if sys.argv[1] == "sdist":
 	print "setup complete"</t>
 <t tx="edream.110203160744.2499">name="leo",
-version="4.1 alpha 1",
+version="4.1 beta 1",
 author="Edward K. Ream",
 author_email="edream@tds.net",
 url="http://personalpages.tds.net/~edream/front.html",
@@ -59208,298 +59220,6 @@ def yoffsetTree(self,v,v1):
 		self.commands = self.c = c
 		c.body = self.body
 		c.log = self.log</t>
-<t tx="edream.110203160744.3728">if 0:
-	"""Unit tests for Leo's colorizer."""
-
-	class colorTests(unittest.TestCase):
-		
-		@others</t>
-<t tx="edream.110203160744.3729">offset = 0
-
-def color (self,language,text):
-	
-	# trace(language)
-	
-	# Set the title and the location of the test frame.
-	self.frame.setTitle("Test of " + language)
-	colorTests.offset += 30
-	geom = "%dx%d%+d%+d" % (600,700,30+colorTests.offset,30+colorTests.offset)
-	self.frame.setTopGeometry(geom)
-
-	# Initialize the text.
-	self.v.t.setTnodeText(text,app.tkEncoding)
-	self.frame.body.setSelectionAreas(None,text,None)
-
-	# Run the colorizer on the text.
-	self.colorizer.language = language
-	val = self.colorizer.colorize(self.v,self.body,incremental=false)
-	assert(val=="ok")</t>
-<t tx="edream.110203160744.3730">def setUp(self,*args,**keys):
-	
-	# print `args`,`keys`
-	# trace(args,keys)
-	
-	# Similar to code in app.gui.newLeoCommanderAndFrame.
-	title = "leoTestFrame"
-	fileName = "leoTestFileName.txt"
-	import leoTkinterFrame
-	self.frame = frame = leoTkinterFrame.leoTkinterFrame(title) # leoTestFrame(title)
-	c = leoCommands.Commands(frame,fileName)
-	frame.finishCreate(c)
-	# frame.deiconify()
-	
-	# Put in some data.
-	self.t = t = leoNodes.tnode()
-	self.v = leoNodes.vnode(c,t)
-	self.body = self.frame.body
-	c.undoer.clearUndoState() # Menus must exist at this point.
-
-	self.colorizer = leoColor.colorizer(c)</t>
-<t tx="edream.110203160744.3731">def tearDown (self):
-	
-	if 1:
-		app.closeLeoWindow(self.frame)
-		self.frame = None
-
-	self.colorizer = None
-	self.c = self.t = self.v = None</t>
-<t tx="edream.110203160744.3732">if 0:
-	def testC (self):
-	
-		"""Test coloring for C."""
-		
-		self.color("c","""abc""")</t>
-<t tx="edream.110203160744.3733">def testHTML1(self):
-	
-	"""Test coloring for HTML."""
-	
-	# Don't put @ in the first column
-	s = """@language html\n@color
-
-&lt;HTML&gt;
-&lt;!-- Author: Edward K. Ream, edream@tds.net --&gt;
-&lt;HEAD&gt;
-  &lt;META NAME="GENERATOR" CONTENT="Microsoft FrontPage 4.0"&gt;
-  &lt;TITLE&gt; Leo's Home Page &lt;/TITLE&gt;
-  &lt;META NAME="description" CONTENT="This page describes Leo.
-Leo adds powerful outlines to the noweb and CWEB literate programming languages."&gt;
-  &lt;META NAME="keywords" CONTENT="LEO, LITERATE PROGRAMMING, OUTLINES, CWEB,
-NOWEB, OUTLINES, EDWARD K. REAM, DONALD E. KNUTH, SILVIO LEVY, OPEN SOFTWARE"&gt;
-&lt;/HEAD&gt;
-&lt;!-- Last Modified: May 12, 2002 --&gt;
-&lt;BODY BGCOLOR="#fffbdc"&gt;
-
-&lt;H1 ALIGN=CENTER&gt;&lt;a NAME="top"&gt;&lt;/a&gt;&lt;IMG SRC="Blank.gif" width=
-"32" height="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;IMG SRC="leo.gif" 
-WIDTH="32" HEIGHT="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;a href="leo_TOC.html#top"&gt;&lt;IMG SRC=
-"arrow_rt.gif" WIDTH="32" HEIGHT="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;/a&gt; &amp;nbsp;&lt;/H1&gt;
-
-&lt;H1 ALIGN=CENTER&gt; Leo's Home Page&lt;/H1&gt;
-
-&lt;p align="center"&gt;&lt;a href="http://www.python.org/"&gt;&lt;img border="0" src="PythonPowered.gif" width="110" height="44"&gt; &lt;/a&gt; &lt;A HREF="http://sourceforge.net/"&gt;&lt;IMG SRC="http://sourceforge.net/sflogo.php?group_id=3458&amp;type=1" NATURALSIZEFLAG="0" ALT="SourceForge Logo"&gt;&lt;/A&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;
-&lt;A HREF="http://sourceforge.net/project/?group_id=3458"&gt;Leo at SourceForge&lt;/A&gt;&amp;nbsp;&amp;nbsp;
-&lt;a href="icons.html"&gt;&lt;img border="0" src="LeoCodeGray.gif" width="77" height="42"&gt;&lt;/a&gt;&amp;nbsp;&amp;nbsp;
-&lt;a href="icons.html"&gt;&lt;img border="0" src="LeoProse.gif" width="81" height="42"&gt;&lt;/a&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
-
-&lt;H3&gt;&lt;A NAME="anchor127554"&gt;&lt;/A&gt;Summary&lt;/H3&gt;
-
-&lt;UL&gt;
-  &lt;LI&gt;Leo is a &lt;i&gt; programmer's editor&lt;/i&gt;  and a flexible &lt;i&gt;browser&lt;/i&gt; for
-	projects, programs, classes or data. Leo clarifies design, coding, debugging, testing
-  and maintenance.
-  &lt;LI&gt;Leo is an &lt;i&gt;outlining editor&lt;/i&gt;. Outlines clarify the big picture while
-	providing unlimited space for details.
-  &lt;LI&gt;Leo
-	is a &lt;a HREF="http://www.literateprogramming.com/"&gt;&lt;i&gt;literate
-	programming&lt;/i&gt;&lt;/a&gt; tool, compatible with &lt;A HREF="http://www.eecs.harvard.edu/~nr/noweb/"&gt;noweb&lt;/A&gt;
-	and &lt;a HREF="http://www-cs-faculty.stanford.edu/~knuth/cweb.html"&gt;CWEB&lt;/a&gt;.
-	Leo enhances any text-based
-programming language, from assembly language and C to Java, Python and XML.
-  &lt;LI&gt;Leo is also a &lt;i&gt;data organizer&lt;/i&gt;. A single Leo outline can generate complex
-	data spanning many different files.&amp;nbsp; Leo has been used to manage web sites.
-  &lt;LI&gt;Leo is a &lt;i&gt; project manager&lt;/i&gt;. Leo provides multiple views
-of a project within a single outline. Leo naturally represents tasks that remain
-	up-to-date.
-  &lt;LI&gt;Leo is fully &lt;i&gt; scriptable&lt;/i&gt; using &lt;A HREF="http://www.python.org/"&gt;Python&lt;/A&gt;
-  and saves its files in &lt;A HREF="http://www.w3.org/XML/"&gt;XML&lt;/A&gt; format.
-  &lt;LI&gt;Leo is &lt;i&gt;portable&lt;/i&gt;.&amp;nbsp; Leo.py is 100% pure Python and will run on
-	any platform supporting &lt;A HREF="http://www.python.org/"&gt;Python&lt;/A&gt;
-	and &lt;a href="http://tcl.activestate.com/"&gt;Tk/tcl&lt;/a&gt;, including Windows,
-	Linux and MacOS X.&amp;nbsp; Leo.exe runs on any Windows platform.
-  &lt;LI&gt;Leo is &lt;a href="http://www.opensource.org/"&gt; &lt;i&gt; Open Software&lt;/i&gt;&lt;/a&gt;, distributed under
-	the &lt;a href="http://www.python.org/doc/Copyright.html"&gt; Python License&lt;/a&gt;.
-&lt;/UL&gt;
-
-&lt;H3&gt;More Information and downloads&lt;/H3&gt;
-
-&lt;ul&gt;
-  &lt;LI&gt;An excellent &lt;a href="http://www.3dtree.com/ev/e/sbooks/leo/sbframetoc_ie.htm"&gt;online
-	tutorial&lt;/a&gt; and &lt;A HREF="http://www.jserv.com/jk_orr/xml/leo.htm"&gt;Leo resource
-  page&lt;/A&gt;, both written by &lt;a href="http://www.jserv.com/jk_orr"&gt;Joe Orr&lt;/a&gt;.
-  &lt;LI&gt;My brother's &lt;a href="SpeedReam.html"&gt;slashdot
-	article about Leo&lt;/a&gt;, the best description about why Leo is special.
-  &lt;LI&gt;&lt;A HREF="testimonials.html#anchor104391"&gt;What people are saying about Leo&lt;/A&gt;
-  &lt;LI&gt;&lt;A HREF="leo_TOC.html#anchor964914"&gt;Complete users guide&lt;/A&gt;
-	and
-	&lt;A HREF="intro.html#anchor887874"&gt;tutorial introduction&lt;/A&gt;  with
-  screen shots.
-  &lt;li&gt;&lt;a href="FAQ.html"&gt;FAQ&lt;/a&gt; and &lt;a href="http://sourceforge.net/forum/?group_id=3458"&gt;help and discussion
-	forums&lt;/a&gt;, preferable to &lt;A HREF="mailto:edream@tds.net"&gt;email&lt;/A&gt; so others may join
-	in.&lt;/li&gt;
-  &lt;li&gt;&lt;a href="icons.html"&gt;Icons&lt;/a&gt; for bragging about Leo.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;a href="http://sourceforge.net/project/showfiles.php?group_id=3458"&gt;Download
-	Leo&lt;/a&gt; from &lt;A HREF="http://sourceforge.net/project/?group_id=3458"&gt;Leo's SourceForge
-site&lt;/A&gt;.
-
-&lt;P ALIGN=left&gt;Leo's author is &lt;A HREF="http://personalpages.tds.net/~edream/index.html"&gt;Edward
-  K. Ream&lt;/A&gt; email: &lt;A HREF="mailto:edream@tds.net"&gt;edream@tds.net&lt;/A&gt; voice: (608) 231-0766
-
-&lt;HR ALIGN=LEFT&gt;
-
-&lt;p align="center"&gt;
-
-&lt;IMG SRC="Blank.gif" ALIGN="left" NATURALSIZEFLAG=
-"3" width="34" height="34"&gt;&lt;IMG SRC="leo.gif" ALIGN="left" NATURALSIZEFLAG=
-"3" width="32" height="32"&gt;&lt;a HREF="leo_TOC.html"&gt;&lt;IMG SRC="arrow_rt.gif" WIDTH="32"
-HEIGHT="32" ALIGN="left" NATURALSIZEFLAG="3"&gt;
-
-&lt;/BODY&gt;
-&lt;/HTML&gt;"""
-	
-	self.color("html",s)</t>
-<t tx="edream.110203160744.3734">def testHTML2 (self):
-	
-	# Don't put @ in the first column
-	s = """@language html\n@color
-
-&lt;? xml version="1.0"&gt;
-&lt;!-- test --&gt;
-&lt;project name="Converter" default="dist"&gt;
-&lt;/project&gt;"""
-
-	self.color("html",s)</t>
-<t tx="edream.110203160744.3735">def testPHP (self):
-	
-	# Don't put @ in the first column
-	s = """@language php\n@color\n@ doc\n@c
-
-and or
-array
-array()
-this is a test.
-__CLASS__
-&lt;?php and or array() ?&gt;"""
-
-	self.color("php",s)</t>
-<t tx="edream.110203160744.3736">def testPython1(self):
-	
-	"""Test python coloring 1."""
-	
-	# Don't put @ in the first column
-	s = '''@language python\n@color
-
-"""python
-string"""d
-
-'this\
-is'''
-
-	self.color("python",s)</t>
-<t tx="edream.110203160744.3737">if 0: 
-	def testPython2(self):
-	
-		s = """# This creates a free-floating copy of v's tree for undo.
-	The copied trees must use different tnodes than the original."""
-	
-	def copyTree(self,root):
-	
-		c = self
-		# Create the root vnode.
-		result = v = leoNodes.vnode(c,root.t)
-		# Copy the headline and icon values v.copyNode(root,v)
-		# Copy the rest of tree.
-		v.copyTree(root,v)
-		# Replace all tnodes in v by copies.
-		assert(v.nodeAfterTree() == None)
-		while v:
-			v.t = leoNodes.tnode(0, v.t.bodyString)
-			v = v.threadNext()
-		return result
-	
-		self.color("python",s)</t>
-<t tx="edream.110203160744.3738">def testRebol (self):
-	
-	# Don't put @ in the first column
-	s = """@language rebol\n@color
-
-; a comment
-about abs absolute add alert alias all alter and and~ any append arccosine arcsine arctangent array ask at  
-back bind boot-prefs break browse build-port build-tag  
-call caret-to-offset catch center-face change change-dir charset checksum choose clean-path clear clear-fields close comment complement compose compress confirm continue-post context copy cosine create-request crypt cvs-date cvs-version  
-debase decode-cgi decode-url decompress deflag-face dehex delete demo desktop detab dh-compute-key dh-generate-key dh-make-key difference dirize disarm dispatch divide do do-boot do-events do-face do-face-alt does dsa-generate-key dsa-make-key dsa-make-signature dsa-verify-signature  
-echo editor either else emailer enbase entab exclude exit exp extract 
-fifth find find-key-face find-window flag-face first flash focus for forall foreach forever form forskip fourth free func function  
-get get-modes get-net-info get-style  
-halt has head help hide hide-popup  
-if import-email in inform input insert insert-event-func intersect 
-join 
-last launch launch-thru layout license list-dir load load-image load-prefs load-thru log-10 log-2 log-e loop lowercase  
-make make-dir make-face max maximum maximum-of min minimum minimum-of mold multiply  
-negate net-error next not now  
-offset-to-caret open open-events or or~ 
-parse parse-email-addrs parse-header parse-header-date parse-xml path-thru pick poke power prin print probe protect protect-system  
-q query quit  
-random read read-io read-net read-thru reboot recycle reduce reform rejoin remainder remold remove remove-event-func rename repeat repend replace request request-color request-date request-download request-file request-list request-pass request-text resend return reverse rsa-encrypt rsa-generate-key rsa-make-key 
-save save-prefs save-user scroll-para second secure select send send-and-check set set-modes set-font set-net set-para set-style set-user set-user-name show show-popup sine size-text skip sort source split-path square-root stylize subtract switch  
-tail tangent textinfo third throw throw-on-error to to-binary to-bitset to-block to-char to-date to-decimal to-email to-event to-file to-get-word to-hash to-hex to-idate to-image to-integer to-issue to-list to-lit-path to-lit-word to-local-file to-logic to-money to-none to-pair to-paren to-path to-rebol-file to-refinement to-set-path to-set-word to-string to-tag to-time to-tuple to-url to-word trace trim try  
-unfocus union unique uninstall unprotect unset until unview update upgrade uppercase usage use  
-vbug view view-install view-prefs  
-wait what what-dir while write write-io  
-xor xor~  
-action! any-block! any-function! any-string! any-type! any-word!  
-binary! bitset! block!  
-char!  
-datatype! date! decimal! 
-email! error! event!  
-file! function!  
-get-word!  
-hash!  
-image! integer! issue!  
-library! list! lit-path! lit-word! logic!  
-money!  
-native! none! number!  
-object! op!  
-pair! paren! path! port!  
-refinement! routine!  
-series! set-path! set-word! string! struct! symbol!  
-tag! time! tuple!  
-unset! url!  
-word!  
-any-block? any-function? any-string? any-type? any-word?  
-binary? bitset? block?  
-char? connected? crypt-strength? 
-datatype? date? decimal? dir?  
-email? empty? equal? error? even? event? exists? exists-key?
-file? flag-face? found? function?  
-get-word? greater-or-equal? greater?  
-hash? head?  
-image? in-window? index? info? input? inside? integer? issue?  
-length? lesser-or-equal? lesser? library? link-app? link? list? lit-path? lit-word? logic?  
-modified? money?  
-native? negative? none? not-equal? number?  
-object? odd? offset? op? outside?  
-pair? paren? path? port? positive?  
-refinement? routine?  
-same? screen-offset? script? series? set-path? set-word? size? span? strict-equal? strict-not-equal? string? struct?  
-tag? tail? time? tuple? type?  
-unset? url?  
-value? view? 
-within? word?  
-zero?"""
-
-	self.color("rebol",s)</t>
 <t tx="edream.110203160744.3739"></t>
 <t tx="edream.110203160744.3740">def color (self):
 	
@@ -60080,16 +59800,7 @@ elif undoType == "De-Hoist":
 
 - These commands eat one too many characters.
 - The selection is not set properly afterwards.</t>
-<t tx="edream.110403112538">@nocolor
-
-** What does the scripts menu do ???
-
-- Better tests of Undo Change All
-
-* Convert all plugins to 4.1 architecture.
-	- use tk spelling for body routines.
-
-- More checks in CheckOutline command</t>
+<t tx="edream.110403112538">@nocolor</t>
 <t tx="edream.110403150047">def OnCheckOutline (self,event=None):
 	
 	self.commands.checkOutline()</t>
@@ -60282,5 +59993,40 @@ Leo will execute a "default change script" when the Script Change checkbox is ch
 	app.findFrame.init(c)
 	c.frame.OnFindPanel()</t>
 <t tx="edream.110603185434">A useful little utility to set up script-find/change.</t>
+<t tx="edream.110703024332"></t>
+<t tx="edream.110703024332.1">C:/prog/leoCVS/leo/src\leo.py:43: Parameter (keywords) not used
+
+C:/prog/leoCVS/leo/src\leoApp.py:161: Parameter (fileName) not used
+C:/prog/leoCVS/leo/src\leoApp.py:369: No module attribute (leoID) found
+
+C:/prog/leoCVS/leo/src\leoAtFile.py:4607: Using a conditional statement with a constant value (unknown directive)
+
+C:/prog/leoCVS/leo/src\leoColor.py:709: Function returns a value and also implicitly returns None
+C:/prog/leoCVS/leo/src\leoColor.py:720: Function returns a value and also implicitly returns None
+
+C:/prog/leoCVS/leo/src\leoCommands.py:7: Imported module (leoNodes) not used
+
+C:/prog/leoCVS/leo/src\leoConfig.py:7: Imported module (exceptions) not used
+C:/prog/leoCVS/leo/src\leoConfig.py:80: No module attribute (leo_config_directory) found
+
+C:/prog/leoCVS/leo/src\leoTkinterFind.py:94: No class attribute (change_text) found
+C:/prog/leoCVS/leo/src\leoTkinterFind.py:94: No class attribute (find_text) found
+C:/prog/leoCVS/leo/src\leoTkinterFind.py:101: No class attribute (findNextCommand) found
+C:/prog/leoCVS/leo/src\leoTkinterFind.py:412: No class attribute (find) found
+
+C:/prog/leoCVS/leo/src\leoTkinterFrame.py:201: No class attribute (top) found
+C:/prog/leoCVS/leo/src\leoTkinterFrame.py:213: Local variable (config) not used
+C:/prog/leoCVS/leo/src\leoTkinterFrame.py:293: No class attribute (body) found
+C:/prog/leoCVS/leo/src\leoTkinterFrame.py:4930: Overridden method (setTextSelection) doesnt match signature in class (leoFrame.leoBody)
+
+C:/prog/leoCVS/leo/src\leoTkinterGui.py:192: Overridden method (runAskLeoIDDialog) doesnt match signature in class (leoGui.leoGui)
+C:/prog/leoCVS/leo/src\leoTkinterGui.py:212: Overridden method (runAskYesNoCancelDialog) doesnt match signature in class (leoGui.leoGui)
+C:/prog/leoCVS/leo/src\leoTkinterGui.py:248: Overridden method (runColorPanel) doesnt match signature in class (leoGui.leoGui)</t>
+<t tx="edream.110703024557"></t>
+<t tx="edream.110703024557.1"></t>
+<t tx="edream.110703040104"></t>
+<t tx="edream.110703040104.1"></t>
+<t tx="edream.110703041224"></t>
+<t tx="edream.110703041224.1"></t>
 </tnodes>
 </leo_file>

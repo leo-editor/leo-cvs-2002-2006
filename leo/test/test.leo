@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2164" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2166" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="48" left="92" height="835" width="858"/>
+	<global_window_position top="1" left="319" height="671" width="841"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -15,38 +15,19 @@
 <v t="edream.110203161858"><vh>Distribution checklist</vh>
 <v t="edream.110203161858.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
-<v t="edream.110203161858.2"><vh>Notes</vh>
+<v t="edream.110203161858.2" a="V"><vh>Notes</vh>
 <v t="edream.110203161858.3"><vh>Quote from Alex Martelli</vh></v>
 <v t="edream.110203161858.4"><vh>How to get screenshots</vh></v>
+<v t="edream.110203161858.103"><vh>Python related...</vh>
+<v t="edream.110203161858.104"><vh>Assignment tests</vh></v>
+<v t="edream.110203161858.105"><vh>alloc tests</vh></v>
+<v t="edream.110203161858.106"><vh>Use xml.sax</vh></v>
+<v t="edream.110203161858.107"><vh>New import</vh></v>
+<v t="edream.110203161858.108"><vh>Singleton sequences</vh></v>
+</v>
 </v>
 <v t="edream.110203161858.5" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
-<v t="edream.110203161858.6"><vh>Tests...</vh>
-<v t="edream.110203161858.7"><vh>4.0 tests</vh>
-<v t="edream.110203161858.8"><vh>unicode test for find all</vh>
-<v t="edream.110203161858.9"><vh>a</vh></v>
-<v t="edream.110203161858.10"><vh>Ý</vh></v>
-</v>
-<v t="edream.110203161858.11"><vh>Orphan test</vh>
-<v t="edream.110203161858.12" tnodeList="edream.110203161858.12"><vh>@file orphanTest.txt</vh>
-<v t="edream.110203161858.13"><vh>Orphan node</vh></v>
-</v>
-</v>
-<v t="edream.110203161858.14"><vh>Test sentinelName</vh></v>
-<v t="edream.110203161858.15"><vh>Test of report bad chars</vh></v>
-<v t="edream.110203161858.16"><vh>Test of indentation</vh>
-<v t="edream.110203161858.17" tnodeList="edream.110203161858.17,edream.110203161858.18,edream.110203161858.19,edream.110203161858.21,edream.110203161858.22,edream.110203161858.24,edream.110203161858.18"><vh>@file c:\prog\test\gnxText.txt</vh>
-<v t="edream.110203161858.18" a=""><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
-<v t="edream.110203161858.19"><vh>&lt;&lt; ref2 &gt;&gt;</vh></v>
-<v t="edream.110203161858.20"><vh>Organizer node</vh>
-<v t="edream.110203161858.21"><vh>node 1</vh>
-<v t="edream.110203161858.22"><vh>&lt;&lt; indented ref &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.23"><vh>empty node</vh></v>
-</v>
-<v t="edream.110203161858.24"><vh>Node 2</vh></v>
-</v>
-</v>
-</v>
+<v t="edream.110203161858.6" a="E"><vh>Tests...</vh>
 <v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
 <v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
 <v t="edream.110203161858.27"><vh>wrap node</vh></v>
@@ -102,6 +83,12 @@
 </v>
 <v t="edream.110203161858.62"><vh>@lineending and @encoding tests</vh></v>
 <v t="edream.110203161858.63"><vh>@url file:///C:/prog/test/sortText.leo</vh></v>
+<v t="edream.110203161858.86"><vh>tab width tests</vh>
+<v t="edream.110203161858.87"><vh>2</vh></v>
+<v t="edream.110203161858.88"><vh>4</vh></v>
+<v t="edream.110203161858.89"><vh>6</vh></v>
+<v t="edream.110203161858.90"><vh>8</vh></v>
+</v>
 </v>
 <v t="edream.110203161858.64"><vh>Incremental colorizer tests</vh>
 <v t="edream.110203161858.65"><vh>(Fixed syntax coloring bugs when language/comments change)</vh>
@@ -132,23 +119,6 @@
 <v t="edream.110203161858.83"><vh>Status line</vh>
 <v t="edream.110203161858.84"><vh>put message</vh></v>
 <v t="edream.110203161858.85"><vh>clear</vh></v>
-<v t="edream.110203161858.86"><vh>tab width tests</vh>
-<v t="edream.110203161858.87"><vh>2</vh></v>
-<v t="edream.110203161858.88"><vh>4</vh></v>
-<v t="edream.110203161858.89"><vh>6</vh></v>
-<v t="edream.110203161858.90"><vh>8</vh></v>
-</v>
-</v>
-<v t="edream.110203161858.91"><vh>Test of recent sections &amp; clones</vh>
-<v t="edream.110203161858.92" a=""><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="edream.110203161858.93" a=""><vh>hyper link test</vh>
-<v t="edream.110203161858.92" a=""><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="edream.110203161858.94"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.93" a=""><vh>hyper link test</vh>
-<v t="edream.110203161858.92" a=""><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="edream.110203161858.95"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
-</v>
 </v>
 <v t="edream.110203161858.96"><vh>Icon bar</vh>
 <v t="edream.110203161858.97"><vh>add some buttons</vh></v>
@@ -159,17 +129,7 @@
 <v t="edream.110203161858.102"><vh>show (puts at bottom)</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.103"><vh>Python related...</vh>
-<v t="edream.110203161858.104"><vh>Assignment tests</vh></v>
-<v t="edream.110203161858.105"><vh>alloc tests</vh></v>
-<v t="edream.110203161858.106"><vh>Use xml.sax</vh></v>
-<v t="edream.110203161858.107"><vh>New import</vh></v>
-<v t="edream.110203161858.108"><vh>Singleton sequences</vh></v>
-</v>
-<v t="edream.110203161858.109"><vh>Settings...</vh>
-<v t="edream.110203161858.110"><vh>Redirect test</vh></v>
-</v>
-<v t="edream.110203161858.111"><vh>Test Files...</vh>
+<v t="edream.110203161858.111" a="E"><vh>Test Files...</vh>
 <v t="edream.110203161858.18" a=""><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
 <v t="edream.110203161858.112" tnodeList="edream.110203161858.112,edream.110203161858.113,edream.110203161858.113"><vh>@file c:\prog\test\atRawTest.txt</vh>
 <v t="edream.110203161858.113"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
@@ -2610,12 +2570,33 @@
 </v>
 </v>
 <v t="edream.110203161858.2101"><vh>Test of app.forceShutdown</vh></v>
+<v t="edream.110203161858.7"><vh>~4.0 tests</vh>
+<v t="edream.110203161858.8"><vh>unicode test for find all</vh>
+<v t="edream.110203161858.9"><vh>a</vh></v>
+<v t="edream.110203161858.10"><vh>Ý</vh></v>
 </v>
-<v t="edream.110203161858.2102"><vh>Scripts...</vh>
-<v t="edream.110203161858.2103"><vh>Script to find which modules define names</vh></v>
-<v t="edream.110203161858.2104"><vh>Script to compare 3.x and 4.x derived files</vh></v>
+<v t="edream.110203161858.11"><vh>Orphan test</vh>
+<v t="edream.110203161858.12" tnodeList="edream.110203161858.12"><vh>@file orphanTest.txt</vh>
+<v t="edream.110203161858.13"><vh>Orphan node</vh></v>
 </v>
-<v t="edream.110203161858.2105"><vh>4.1 tests</vh>
+</v>
+<v t="edream.110203161858.14"><vh>Test sentinelName</vh></v>
+<v t="edream.110203161858.15"><vh>Test of report bad chars</vh></v>
+<v t="edream.110203161858.16"><vh>Test of indentation</vh>
+<v t="edream.110203161858.17" tnodeList="edream.110203161858.17,edream.110203161858.18,edream.110203161858.19,edream.110203161858.21,edream.110203161858.22,edream.110203161858.24,edream.110203161858.18"><vh>@file c:\prog\test\gnxText.txt</vh>
+<v t="edream.110203161858.18" a=""><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
+<v t="edream.110203161858.19"><vh>&lt;&lt; ref2 &gt;&gt;</vh></v>
+<v t="edream.110203161858.20"><vh>Organizer node</vh>
+<v t="edream.110203161858.21"><vh>node 1</vh>
+<v t="edream.110203161858.22"><vh>&lt;&lt; indented ref &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.23"><vh>empty node</vh></v>
+</v>
+<v t="edream.110203161858.24"><vh>Node 2</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203161858.2105"><vh>~4.1 tests</vh>
 <v t="edream.110203161858.2106"><vh>Extract tests</vh></v>
 <v t="edream.110403110104"><vh>Extract tests2</vh></v>
 <v t="edream.110203161858.2107"><vh>reformatParagraph test</vh></v>
@@ -2636,6 +2617,11 @@
 <v t="edream.110203161858.2117"><vh>@nonl in @doc parts</vh>
 <v t="edream.110203161858.2118" a="M" tnodeList="edream.110203161858.2118"><vh>@file c:\prog\test\docTest.txt</vh></v>
 </v>
+</v>
+</v>
+<v t="edream.110203161858.2102"><vh>Scripts...</vh>
+<v t="edream.110203161858.2103"><vh>Script to find which modules define names</vh></v>
+<v t="edream.110203161858.2104"><vh>Script to compare 3.x and 4.x derived files</vh></v>
 </v>
 <v t="edream.110203161858.2119"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2120"><vh>Bug reports</vh>
@@ -2686,17 +2672,14 @@
 <v t="edream.110203161858.2156"><vh>run outline tests</vh></v>
 </v>
 </v>
-<v t="edream.110503055320"><vh>Node only options</vh>
-<v t="edream.110503055320.1"><vh>Search only this node in "node only" mode</vh>
-<v t="edream.110503055320.2"><vh>NewHeadline</vh></v>
-</v>
-<v t="edream.110503055556"><vh>More </vh></v>
-</v>
-<v t="edream.110503215752" a="V"><vh>Find scripts to convert @doc comments to doc strings</vh>
+<v t="edream.110503215752"><vh>Find scripts to convert @doc comments to doc strings</vh>
 <v t="edream.110503231822"><vh>Find script</vh></v>
 <v t="edream.110503231822.1"><vh>Change script</vh></v>
 <v t="edream.110503215752.1"><vh>re tests</vh></v>
 <v t="edream.110503161232"><vh>early find script</vh></v>
+</v>
+<v t="edream.110703023327" a="E"><vh>Distribution checklist for 4.1 beta 1</vh>
+<v t="edream.110703023327.2"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -3768,11 +3751,6 @@ a
 a
 	b
 		c	d</t>
-<t tx="edream.110203161858.91"></t>
-<t tx="edream.110203161858.92">This is section a.</t>
-<t tx="edream.110203161858.93">&lt;&lt; section a &gt;&gt;</t>
-<t tx="edream.110203161858.94"></t>
-<t tx="edream.110203161858.95"></t>
 <t tx="edream.110203161858.96"></t>
 <t tx="edream.110203161858.97">from leoGlobals import *
 
@@ -3978,10 +3956,6 @@ s = {"x":1, "y":2},
 
 for i in s:
 	print `i`</t>
-<t tx="edream.110203161858.109"></t>
-<t tx="edream.110203161858.110">from leoGlobals import *
-print app.config.redirect_execute_script_output_to_log_pane
-print "test"</t>
 <t tx="edream.110203161858.111">@ignore
 
 ## @encoding iso-8859-1
@@ -33878,7 +33852,6 @@ abc
 
 """ {picture file=../Icons/Leodoc.GIF} """ # xyz
 
-
 """ continued
 string"""
 
@@ -34025,16 +33998,6 @@ line after</t>
 	s = s + chr(0x1a)
 	print s
 	v.setBodyStringOrPane(s)</t>
-<t tx="edream.110503055320"></t>
-<t tx="edream.110503055320.1">a
-
-aa</t>
-<t tx="edream.110503055320.2">This node should not be searched.
-
-a
-
-aa</t>
-<t tx="edream.110503055556">a</t>
 <t tx="edream.110503093114">@ignore</t>
 <t tx="edream.110503161232"># This script was a breakthrough.
 # Executing this script initializes the Find text from the given script string.
@@ -34134,5 +34097,48 @@ if m:
 	oldText = v.bodyString()
 	v.setBodyStringOrPane(s,encoding=app.tkEncoding)
 	c.frame.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.</t>
+<t tx="edream.110703023327">@nocolor
+Documentation
+	- Update readme.txt
+	- Update LeoDocs.leo
+	- Update web site.
+Version numbers
+	- Update version number in Help menu.
+	- Update version number in setup.py (@ignore'd!!)
+@color
+
+if 1: # Save all files and tangle leoConfig.leo
+	from leoGlobals import importFromPath
+	preSetup = importFromPath("preSetup","c:\prog\leoCvs\leo")
+	preSetup.setup()
+
+if 1: # Replace config settings and create .zip file.
+	import os
+	os.system(r"c:\python22\python c:\prog\leoCvs\leo\setup.py sdist --formats=zip")
+
+@nocolor
+Create and test leosetup.exe.
+	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
+	- Test created leosetup.exe file.
+	- test the files created in c:\program files\leo
+
+@color
+# **** Scan all folders &amp; files before uploading.
+@nocolor
+
+Create Release on SourceForge
+
+Uploads
+    - Upload leodocs.zip
+	- Upload leosetup.exe
+	- Upload leo-x-y.zip
+	- Upload sbook.chm if it has been changed.
+Announcements
+	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
+	- Announce to Leo's SourceForce site.
+	- Announce to comp.lang.python
+	- Announce to comp.programming.literate
+	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
+<t tx="edream.110703023327.2"></t>
 </tnodes>
 </leo_file>

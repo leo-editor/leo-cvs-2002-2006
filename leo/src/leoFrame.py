@@ -82,6 +82,7 @@ class leoBody:
 	def getFirstVisibleIndex (self):       self.oops()
 	def scrollUp (self):                   self.oops()
 	def scrollDown (self):                 self.oops()
+	
 	#@-node:Body abstractions
 	#@+node:leoBody.oops
 	def oops (self):

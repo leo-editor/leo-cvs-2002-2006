@@ -352,7 +352,7 @@ class baseLeoTkinterFrame:
 		return self.ver[10:-1] # Strip off "$Reversion" and the trailing "$"
 	
 	def getSignOnLine (self):
-		return "Leo 4.1 alpha 1, build %s, November 2, 2003" % self.getBuildNumber()
+		return "Leo 4.1 beta 1, build %s, November 7, 2003" % self.getBuildNumber()
 		
 	def initVersion (self):
 		self.ver = "$Revision$" # CVS will update this.
