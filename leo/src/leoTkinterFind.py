@@ -175,13 +175,14 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		for widget in (self.find_text, self.change_text):
 			widget.bind ("<1>",  self.resetWrap)
 			widget.bind("<Key>", self.resetWrap)
+			widget.bind("<Control-a>",self.selectAll)
+			#widget.bind(g.virtual_event_name("SelectAll"),self.selectAll)
 		
 		for widget in (outer, self.find_text, self.change_text):
 			widget.bind("<Key-Return>", self.findButton)
 			widget.bind("<Key-Escape>", self.onCloseWindow)
 		
 		self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
-	#@nonl
 	#@-node:ekr.20031218072017.3902:find.createFrame
 	#@+node:ekr.20031218072017.2059:find.init
 	def init (self,c):
@@ -282,6 +283,17 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		gui.setTextSelection (t,"1.0","end") # Thanks Rich.
 	#@nonl
 	#@-node:ekr.20031218072017.3907:bringToFront
+	#@+node:EKR.20040603221140:selectAll
+	def selectAll (self,event=None):
+	
+		try:
+			w = self.frame.focus_get()
+			g.app.gui.setTextSelection(w,"1.0","end")
+			return "break"
+		except:
+			pass
+	#@nonl
+	#@-node:EKR.20040603221140:selectAll
 	#@+node:ekr.20031218072017.3908:Tkinter wrappers (leoTkinterFind)
 	def gui_search (self,t,*args,**keys):
 		return t.search(*args,**keys)
