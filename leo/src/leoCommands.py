@@ -88,7 +88,7 @@ class baseCommands:
         self.promptingForClose = False # To lock out additional closing dialogs.
         
         # For tangle/untangle
-        self.tangle_errrors = 0
+        self.tangle_errors = 0
         
         # Global options
         self.page_width = 132
