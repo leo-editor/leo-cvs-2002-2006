@@ -123,7 +123,7 @@ class LeoFrame:
 		# Sign on.
 		color = app().config.getWindowPref("log_error_color")
 		es("Leo Log Window...",color=color)
-		es("Leo 3.11b4, ",newline=0)
+		es("Leo 3.11, ",newline=0)
 		n1,n2,n3,junk,junk=sys.version_info
 		ver1 = "Python %d.%d.%d" % (n1,n2,n3)
 		ver2 = ", Tk " + self.top.getvar("tk_patchLevel")
@@ -4205,13 +4205,13 @@ class LeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.11 beta 4, Build " + build + ", March 31, 2003\n\n"
+		version = "leo.py 3.11, Build " + build + ", April 26, 2003\n\n"
 		copyright = (
 			"Copyright 1999-2003 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
 			"Leo is distributed under the Python License")
-		url = "http://personalpages.tds.net/~edream/front.html"
-		email = "edream@tds.net"
+		url = "http://webpages.charter.net/edreamleo/front.html"
+		email = "edreamleo@charter.net"
 	
 		if 1: # Much better looking and includes icon.
 			import leoDialog

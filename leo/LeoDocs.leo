@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1348" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1363" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="12" left="133" height="26" width="88"/>
+	<global_window_position top="27" left="168" height="26" width="88"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -22,9 +22,9 @@
 </v>
 <v t="T6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="T7" a="C"><vh>Acknowledgements</vh></v>
-<v t="T8" a="E"><vh>What people are saying about Leo</vh>
-<v a="EM"><vh>Quote of the Month</vh>
-<v t="T9" a="V"><vh>From Dan Winkler</vh></v>
+<v t="T8"><vh>What people are saying about Leo</vh>
+<v a="M"><vh>Quote of the Month</vh>
+<v t="T9"><vh>From Dan Winkler</vh></v>
 </v>
 <v t="T10"><vh>Annonymous</vh></v>
 <v t="T11"><vh> Speed Ream's slashdot article (Why Leo is interesting)</vh></v>
@@ -59,7 +59,7 @@
 <v t="T40"><vh>Dan Winkler 1</vh></v>
 <v t="T41"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="T42"><vh>Release Notes</vh>
+<v t="T42" a="E"><vh>Release Notes</vh>
 <v t="T43"><vh>Warnings</vh></v>
 <v t="T44"><vh>Installation notes</vh>
 <v t="T45" a="C"><vh>System requirements</vh></v>
@@ -80,1775 +80,1755 @@
 <v t="T58" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="E"><vh>Latest version</vh>
-<v t="T59" a="CM"><vh>3.11 beta 4</vh>
-<v t="T60"><vh>New in 3 beta 4</vh>
-<v t="T61"><vh>Bugs</vh>
-<v t="T62" a="M"><vh>Fixed huge performance bug in v.unjoinNode</vh></v>
-<v t="T63" a="E"><vh>Fixed several problems with noweb mode</vh></v>
-<v t="T64"><vh>Removed duplicate redraws when renaming nodes</vh></v>
-<v t="T65"><vh>Fixed minor import bugs</vh></v>
-<v t="T66"><vh>Full recolor after paste</vh></v>
-<v t="T67"><vh>Fixed bugs in promote/demote</vh></v>
-<v t="T68" a="E"><vh>Fixed several problems revealed by French plugin</vh></v>
-<v t="T69"><vh>Installer now creates plugins directory</vh></v>
+<v t="T59" a="CV"><vh>3.11</vh>
+<v t="T60"><vh>New in 3.11 final</vh>
+<v t="T61"><vh>Bug fixes</vh>
+<v t="T62"><vh>Added call to c.redraw() in fileCommands.readAtFileNodes</vh></v>
+<v t="T63"><vh>Added getpreferredencoding to leoGlobals.py</vh></v>
+<v t="T64"><vh>Eliminated caught exception in frame.setTabWidth</vh></v>
+<v t="T65"><vh>Fixed bug in skip_long</vh></v>
+<v t="T66"><vh>Fixed bug that prevented email line in About Leo from working</vh></v>
+<v t="T67"><vh>Fixed unicode bugs when Tangling and Untangling</vh></v>
+<v t="T68"><vh>Fixed various bugs reported by Pychecker</vh></v>
+<v t="T69"><vh>Removed all __del__ methods</vh></v>
 </v>
-<v t="T70"><vh>Improvements</vh>
-<v t="T71"><vh>Tangle now supports output_newline option</vh></v>
-<v t="T72"><vh>Put file name first in window title</vh></v>
-<v t="T73" a="E"><vh>Improved scrolling when moving right</vh></v>
-<v t="T74"><vh>Added support for body/headline_gmt_time settings</vh></v>
-<v t="T75"><vh>Allow color param when queuing messages to log pane</vh></v>
-<v t="T76" a="E"><vh>Plugins</vh></v>
+<v t="T70"><vh>New and improved features and commands</vh>
+<v t="T71"><vh>Added patch by Davide Salomoni to OnIconDoubleClick</vh></v>
+<v t="T72"><vh>Added support for @lineending directive</vh></v>
+<v t="T73"><vh>Added thin_at_file_trees &amp; load_derived_files_immediately options</vh></v>
 </v>
-<v t="T77"><vh>Unicode</vh>
-<v t="T78"><vh>Added calls to toEncodedString before all calls to write</vh></v>
-<v t="T79"><vh>Check for valid encoding when setting app().tkEncoding</vh></v>
+</v>
+<v t="T74"><vh>** Leo now uses unicode internally</vh>
+<v t="T75"><vh>Added calls to toEncodedString before all calls to write</vh></v>
+<v t="T76"><vh>Check for valid encoding when setting app().tkEncoding</vh></v>
+<v t="T77"><vh>How Leo handles unicode</vh></v>
+<v t="T78" a="C"><vh>Unicode settings</vh></v>
+<v t="T79"><vh>Unicode theory of operation</vh></v>
 <v t="T80"><vh>Use app().tkEncoding when writing to log pane</vh></v>
 </v>
-</v>
-<v t="T81"><vh>** Leo now uses unicode internally</vh>
-<v t="T82" a="C"><vh>How Leo handles unicode</vh></v>
-<v t="T83" a="C"><vh>Unicode settings</vh></v>
-<v t="T84" a="C"><vh>Unicode theory of operation</vh></v>
-</v>
-<v t="T85"><vh>** Improved hooks &amp; a new plugin architecture</vh>
-<v t="T86" a="C"><vh>New plugin architecture</vh>
-<v t="T87"><vh>@file plugins/mod_open_with.py</vh>
-<v t="T88"><vh>on_idle</vh>
-<v t="T89"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
-<v t="T90"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
-<v t="T91"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
+<v t="T81"><vh>** Improved hooks &amp; a new plugin architecture</vh>
+<v t="T82"><vh>New plugin architecture</vh>
+<v t="T83"><vh>@file plugins/mod_open_with.py</vh>
+<v t="T84"><vh>on_idle</vh>
+<v t="T85"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
+<v t="T86"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
+<v t="T87"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T92"><vh>create_open_with_menu</vh>
-<v t="T93"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
+<v t="T88"><vh>create_open_with_menu</vh>
+<v t="T89"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="T94"><vh>Major reorganization of hooks</vh>
-<v t="T95" a="C"><vh>About hooks</vh></v>
+<v t="T90"><vh>Major reorganization of hooks</vh>
+<v t="T91"><vh>About hooks</vh></v>
 </v>
-<v t="T96"><vh>Added several new plugins</vh></v>
-<v t="T97"><vh>Improved Open With plugin</vh></v>
-<v t="T98"><vh>Added logic to retain log output until a log exists</vh></v>
+<v t="T92"><vh>Added several new plugins</vh></v>
+<v t="T93"><vh>Improved Open With plugin</vh></v>
+<v t="T94"><vh>Added logic to retain log output until a log exists</vh></v>
 </v>
-<v t="T99"><vh>New configuration options</vh>
-<v t="T83" a="C"><vh>Unicode settings</vh></v>
-<v t="T100"><vh>Colors for Show Invisibibles command</vh></v>
-<v t="T101"><vh>look_for_control_drag_on_mouse_down option</vh></v>
-<v t="T102"><vh>body_insertion_cursor_color setting</vh></v>
-<v t="T103"><vh>time/date settings</vh></v>
+<v t="T95"><vh>New configuration options &amp; plugins</vh>
+<v t="T96" a="E"><vh>Plugins</vh></v>
+<v t="T78" a="C"><vh>Unicode settings</vh></v>
+<v t="T97"><vh>Colors for Show Invisibibles command</vh></v>
+<v t="T98"><vh>look_for_control_drag_on_mouse_down option</vh></v>
+<v t="T99"><vh>body_insertion_cursor_color setting</vh></v>
+<v t="T100"><vh>time/date settings</vh></v>
 </v>
-<v t="T104"><vh>New commands</vh>
-<v t="T105"><vh>Toggle Angle Brackets</vh></v>
-<v t="T106"><vh>Insert Body/Headline Time/Date</vh></v>
-<v t="T107"><vh>Go To First/last Node</vh></v>
-<v t="T108"><vh>Go To Parent</vh></v>
-<v t="T109"><vh>Go To Next/Previous Sibling</vh></v>
-<v t="T110"><vh>Write Missing @file Nodes</vh></v>
+<v t="T101"><vh>New commands</vh>
+<v t="T102"><vh>Toggle Angle Brackets</vh></v>
+<v t="T103"><vh>Insert Body/Headline Time/Date</vh></v>
+<v t="T104"><vh>Go To First/last Node</vh></v>
+<v t="T105"><vh>Go To Parent</vh></v>
+<v t="T106"><vh>Go To Next/Previous Sibling</vh></v>
+<v t="T107"><vh>Write Missing @file Nodes</vh></v>
 </v>
-<v t="T111"><vh>Improved commands</vh>
-<v t="T112"><vh>Major improvements to expand/contract commands</vh></v>
-<v t="T113"><vh>Leo now allows multiple writes of cloned nodes</vh></v>
-<v t="T114"><vh>The Sort Siblings command can now sort top-level nodes</vh></v>
-<v t="T115"><vh>Changed locks on customizeLeo.py</vh></v>
+<v t="T108"><vh>Improved commands</vh>
+<v t="T109"><vh>Added support for body/headline_gmt_time settings</vh></v>
+<v t="T110"><vh>Tangle now supports output_newline option</vh></v>
+<v t="T111"><vh>Major improvements to expand/contract commands</vh></v>
+<v t="T112"><vh>Leo now allows multiple writes of cloned nodes</vh></v>
+<v t="T113"><vh>The Sort Siblings command can now sort top-level nodes</vh></v>
+<v t="T114"><vh>Changed locks on customizeLeo.py</vh></v>
 </v>
-<v t="T116"><vh>Other improvements</vh>
-<v t="T117"><vh>Leo scrolls partially visible headlines into full view</vh></v>
-<v t="T118"><vh>Allowed @comment with @language plain</vh></v>
-<v t="T119"><vh>The Find button is now default button in the Find panel</vh></v>
-<v t="T120"><vh>Improved syntax coloring for html and xml</vh>
-<v t="T121"><vh>example of syntax coloring for html</vh></v>
+<v t="T115"><vh>Other improvements</vh>
+<v t="T116"><vh>Allow color param when queuing messages to log pane</vh></v>
+<v t="T117" a="E"><vh>Improved scrolling when moving right</vh></v>
+<v t="T118"><vh>Put file name first in window title</vh></v>
+<v t="T119"><vh>Leo scrolls partially visible headlines into full view</vh></v>
+<v t="T120"><vh>Allowed @comment with @language plain</vh></v>
+<v t="T121"><vh>The Find button is now default button in the Find panel</vh></v>
+<v t="T122"><vh>Improved syntax coloring for html and xml</vh>
+<v t="T123"><vh>example of syntax coloring for html</vh></v>
 </v>
-<v t="T122"><vh>Improved Prefs panel</vh></v>
-<v t="T123"><vh>Removed setup.py from distributed files</vh></v>
+<v t="T124"><vh>Improved Prefs panel</vh></v>
+<v t="T125"><vh>Removed setup.py from distributed files</vh></v>
 </v>
-<v t="T124"><vh>Bug fixes</vh>
-<v t="T125"><vh>Eliminated potential hang in Open With command</vh></v>
-<v t="T126"><vh>Fixed long-standing control-v bug on Linux</vh></v>
-<v t="T127"><vh>Fixed 2 line number bugs</vh></v>
-<v t="T128"><vh>Fixed bug involving nested comments in sentinel lines</vh></v>
-<v t="T129"><vh>Fixed configuration bug.</vh></v>
-<v t="T130"><vh>Fixed crasher in undo logic</vh></v>
-<v t="T131"><vh>Fixed drag problem</vh></v>
-<v t="T132"><vh>Fixed problem with block comments</vh></v>
-<v t="T133"><vh>Fixed syntax coloring bugs</vh></v>
-<v t="T134"><vh>Udated recent files menu when saving a new .leo file</vh></v>
-<v t="T135"><vh>Worked around bugs in Python 2.3 a1</vh></v>
-</v>
-</v>
-<v t="T136" a="C"><vh>3.10</vh>
-<v t="T137"><vh>Fixed bugs</vh>
-<v t="T138"><vh>Allowed abbreviated xml tags.</vh></v>
-<v t="T139"><vh>Changed shortcut to Find Previous so Alt - F4 closes Leo</vh></v>
-<v t="T140"><vh>Changed url of help file</vh></v>
-<v t="T141"><vh>Fixed @nsf bug reported by Travers A. Hough</vh></v>
-<v t="T142"><vh>Fixed a bug in Untangle</vh></v>
-<v t="T143"><vh>Fixed bug in Python importer</vh></v>
-<v t="T144"><vh>Fixed bug involving redrawing screen initially</vh></v>
-<v t="T145"><vh>Fixed bugs involving @nosentinelsfile</vh></v>
-<v t="T146"><vh>Fixed crashers in colorizeAnyLanguage</vh></v>
-<v t="T147"><vh>Fixed environment bug in Execute Script command</vh></v>
-<v t="T148"><vh>Fixed major memory leak</vh></v>
-<v t="T149"><vh>Fixed path problem in paths passed to tangle_done.py</vh></v>
-<v t="T150"><vh>Fixed problems with Open With code in customizeLeo.py</vh></v>
-<v t="T151"><vh>Fixed Recent Files command</vh></v>
-<v t="T152"><vh>Fixed reversion involving @comment &amp; @language together</vh></v>
-<v t="T153"><vh>Fixed undo bug</vh></v>
-</v>
-<v t="T154"><vh>Added features</vh>
-<v t="T155"><vh>New Mark Clones and Go To Next Clone commands.</vh></v>
-<v t="T156"><vh>New Export Headlines command</vh></v>
-<v t="T157"><vh>Control-dragging a node now clones it</vh></v>
-<v t="T158"><vh>New "Node Only checkbox in the Find/Change panel</vh></v>
-<v t="T159"><vh>@root options</vh></v>
-<v t="T160"><vh>Converted leoConfig.py to use @root-code</vh></v>
-<v t="T161"><vh>Added @file options</vh></v>
-<v t="T162"><vh>Added support for underlined menu items</vh></v>
-<v t="T163"><vh>Improved Leo's window icon</vh></v>
-<v t="T164"><vh>Added easy way of replacing any Leo code</vh></v>
-<v t="T165"><vh>Added convenience routines to redirect stderr and stdout</vh></v>
-<v t="T166"><vh>Added "event1" and "event2" hooks</vh></v>
-<v t="T167"><vh>Added  contributed code to support @read-only nodes</vh></v>
-</v>
-<v t="T168"><vh>Known bugs</vh>
-<v t="T169"><vh>Bugs in undoReplace logic</vh></v>
+<v t="T126"><vh>Bug fixes</vh>
+<v t="T127"><vh>Eliminated potential hang in Open With command</vh></v>
+<v t="T128"><vh>Fixed 2 line number bugs</vh></v>
+<v t="T129"><vh>Fixed bug involving nested comments in sentinel lines</vh></v>
+<v t="T130"><vh>Fixed bugs in promote/demote</vh></v>
+<v t="T131"><vh>Fixed configuration bug.</vh></v>
+<v t="T132"><vh>Fixed crasher in undo logic</vh></v>
+<v t="T133"><vh>Fixed drag problem</vh></v>
+<v t="T134" a="M"><vh>Fixed huge performance bug in v.unjoinNode</vh></v>
+<v t="T135"><vh>Fixed long-standing control-v bug on Linux</vh></v>
+<v t="T136"><vh>Fixed minor import bugs</vh></v>
+<v t="T137"><vh>Fixed problem with block comments</vh></v>
+<v t="T138" a="E"><vh>Fixed several problems revealed by French plugin</vh></v>
+<v t="T139" a="E"><vh>Fixed several problems with noweb mode</vh></v>
+<v t="T140"><vh>Fixed syntax coloring bugs</vh></v>
+<v t="T141"><vh>Full recolor after paste</vh></v>
+<v t="T142"><vh>Installer now creates plugins directory</vh></v>
+<v t="T143"><vh>Removed duplicate redraws when renaming nodes</vh></v>
+<v t="T144"><vh>Udated recent files menu when saving a new .leo file</vh></v>
+<v t="T145"><vh>Worked around bugs in Python 2.3 a1</vh></v>
 </v>
 </v>
 </v>
 <v><vh>leo.py versions</vh>
-<v t="T59" a="C"><vh>3.11 beta 4</vh>
-<v t="T60"><vh>New in 3 beta 4</vh>
-<v t="T61"><vh>Bugs</vh>
-<v t="T62"><vh>Fixed huge performance bug in v.unjoinNode</vh></v>
-<v t="T63"><vh>Fixed several problems with noweb mode</vh></v>
-<v t="T64"><vh>Removed duplicate redraws when renaming nodes</vh></v>
-<v t="T65"><vh>Fixed minor import bugs</vh></v>
-<v t="T66"><vh>Full recolor after paste</vh></v>
-<v t="T67"><vh>Fixed bugs in promote/demote</vh></v>
-<v t="T68"><vh>Fixed several problems revealed by French plugin</vh></v>
-<v t="T69"><vh>Installer now creates plugins directory</vh></v>
+<v t="T59" a="C"><vh>3.11</vh>
+<v t="T60"><vh>New in 3.11 final</vh>
+<v t="T61"><vh>Bug fixes</vh>
+<v t="T62"><vh>Added call to c.redraw() in fileCommands.readAtFileNodes</vh></v>
+<v t="T63"><vh>Added getpreferredencoding to leoGlobals.py</vh></v>
+<v t="T64"><vh>Eliminated caught exception in frame.setTabWidth</vh></v>
+<v t="T65"><vh>Fixed bug in skip_long</vh></v>
+<v t="T66"><vh>Fixed bug that prevented email line in About Leo from working</vh></v>
+<v t="T67"><vh>Fixed unicode bugs when Tangling and Untangling</vh></v>
+<v t="T68"><vh>Fixed various bugs reported by Pychecker</vh></v>
+<v t="T69"><vh>Removed all __del__ methods</vh></v>
 </v>
-<v t="T70"><vh>Improvements</vh>
-<v t="T71"><vh>Tangle now supports output_newline option</vh></v>
-<v t="T72"><vh>Put file name first in window title</vh></v>
-<v t="T73"><vh>Improved scrolling when moving right</vh></v>
-<v t="T74"><vh>Added support for body/headline_gmt_time settings</vh></v>
-<v t="T75"><vh>Allow color param when queuing messages to log pane</vh></v>
-<v t="T76"><vh>Plugins</vh></v>
+<v t="T70"><vh>New and improved features and commands</vh>
+<v t="T71"><vh>Added patch by Davide Salomoni to OnIconDoubleClick</vh></v>
+<v t="T72"><vh>Added support for @lineending directive</vh></v>
+<v t="T73"><vh>Added thin_at_file_trees &amp; load_derived_files_immediately options</vh></v>
 </v>
-<v t="T77"><vh>Unicode</vh>
-<v t="T78"><vh>Added calls to toEncodedString before all calls to write</vh></v>
-<v t="T79"><vh>Check for valid encoding when setting app().tkEncoding</vh></v>
+</v>
+<v t="T74"><vh>** Leo now uses unicode internally</vh>
+<v t="T75"><vh>Added calls to toEncodedString before all calls to write</vh></v>
+<v t="T76"><vh>Check for valid encoding when setting app().tkEncoding</vh></v>
+<v t="T77"><vh>How Leo handles unicode</vh></v>
+<v t="T78" a="C"><vh>Unicode settings</vh></v>
+<v t="T79"><vh>Unicode theory of operation</vh></v>
 <v t="T80"><vh>Use app().tkEncoding when writing to log pane</vh></v>
 </v>
-</v>
-<v t="T81"><vh>** Leo now uses unicode internally</vh>
-<v t="T82" a="C"><vh>How Leo handles unicode</vh></v>
-<v t="T83" a="C"><vh>Unicode settings</vh></v>
-<v t="T84" a="C"><vh>Unicode theory of operation</vh></v>
-</v>
-<v t="T85"><vh>** Improved hooks &amp; a new plugin architecture</vh>
-<v t="T86" a="C"><vh>New plugin architecture</vh>
-<v t="T87"><vh>@file plugins/mod_open_with.py</vh>
-<v t="T88"><vh>on_idle</vh>
-<v t="T89"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
-<v t="T90"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
-<v t="T91"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
+<v t="T81"><vh>** Improved hooks &amp; a new plugin architecture</vh>
+<v t="T82"><vh>New plugin architecture</vh>
+<v t="T83"><vh>@file plugins/mod_open_with.py</vh>
+<v t="T84"><vh>on_idle</vh>
+<v t="T85"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
+<v t="T86"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
+<v t="T87"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T92"><vh>create_open_with_menu</vh>
-<v t="T93"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
+<v t="T88"><vh>create_open_with_menu</vh>
+<v t="T89"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="T94"><vh>Major reorganization of hooks</vh>
-<v t="T95" a="C"><vh>About hooks</vh></v>
+<v t="T90"><vh>Major reorganization of hooks</vh>
+<v t="T91"><vh>About hooks</vh></v>
 </v>
-<v t="T96"><vh>Added several new plugins</vh></v>
-<v t="T97"><vh>Improved Open With plugin</vh></v>
-<v t="T98"><vh>Added logic to retain log output until a log exists</vh></v>
+<v t="T92"><vh>Added several new plugins</vh></v>
+<v t="T93"><vh>Improved Open With plugin</vh></v>
+<v t="T94"><vh>Added logic to retain log output until a log exists</vh></v>
 </v>
-<v t="T99"><vh>New configuration options</vh>
-<v t="T83" a="C"><vh>Unicode settings</vh></v>
-<v t="T100"><vh>Colors for Show Invisibibles command</vh></v>
-<v t="T101"><vh>look_for_control_drag_on_mouse_down option</vh></v>
-<v t="T102"><vh>body_insertion_cursor_color setting</vh></v>
-<v t="T103"><vh>time/date settings</vh></v>
+<v t="T95"><vh>New configuration options &amp; plugins</vh>
+<v t="T96"><vh>Plugins</vh></v>
+<v t="T78" a="C"><vh>Unicode settings</vh></v>
+<v t="T97"><vh>Colors for Show Invisibibles command</vh></v>
+<v t="T98"><vh>look_for_control_drag_on_mouse_down option</vh></v>
+<v t="T99"><vh>body_insertion_cursor_color setting</vh></v>
+<v t="T100"><vh>time/date settings</vh></v>
 </v>
-<v t="T104"><vh>New commands</vh>
-<v t="T105"><vh>Toggle Angle Brackets</vh></v>
-<v t="T106"><vh>Insert Body/Headline Time/Date</vh></v>
-<v t="T107"><vh>Go To First/last Node</vh></v>
-<v t="T108"><vh>Go To Parent</vh></v>
-<v t="T109"><vh>Go To Next/Previous Sibling</vh></v>
-<v t="T110"><vh>Write Missing @file Nodes</vh></v>
+<v t="T101"><vh>New commands</vh>
+<v t="T102"><vh>Toggle Angle Brackets</vh></v>
+<v t="T103"><vh>Insert Body/Headline Time/Date</vh></v>
+<v t="T104"><vh>Go To First/last Node</vh></v>
+<v t="T105"><vh>Go To Parent</vh></v>
+<v t="T106"><vh>Go To Next/Previous Sibling</vh></v>
+<v t="T107"><vh>Write Missing @file Nodes</vh></v>
 </v>
-<v t="T111"><vh>Improved commands</vh>
-<v t="T112"><vh>Major improvements to expand/contract commands</vh></v>
-<v t="T113"><vh>Leo now allows multiple writes of cloned nodes</vh></v>
-<v t="T114"><vh>The Sort Siblings command can now sort top-level nodes</vh></v>
-<v t="T115"><vh>Changed locks on customizeLeo.py</vh></v>
+<v t="T108"><vh>Improved commands</vh>
+<v t="T109"><vh>Added support for body/headline_gmt_time settings</vh></v>
+<v t="T110"><vh>Tangle now supports output_newline option</vh></v>
+<v t="T111"><vh>Major improvements to expand/contract commands</vh></v>
+<v t="T112"><vh>Leo now allows multiple writes of cloned nodes</vh></v>
+<v t="T113"><vh>The Sort Siblings command can now sort top-level nodes</vh></v>
+<v t="T114"><vh>Changed locks on customizeLeo.py</vh></v>
 </v>
-<v t="T116"><vh>Other improvements</vh>
-<v t="T117"><vh>Leo scrolls partially visible headlines into full view</vh></v>
-<v t="T118"><vh>Allowed @comment with @language plain</vh></v>
-<v t="T119"><vh>The Find button is now default button in the Find panel</vh></v>
-<v t="T120"><vh>Improved syntax coloring for html and xml</vh>
-<v t="T121"><vh>example of syntax coloring for html</vh></v>
+<v t="T115"><vh>Other improvements</vh>
+<v t="T116"><vh>Allow color param when queuing messages to log pane</vh></v>
+<v t="T117"><vh>Improved scrolling when moving right</vh></v>
+<v t="T118"><vh>Put file name first in window title</vh></v>
+<v t="T119"><vh>Leo scrolls partially visible headlines into full view</vh></v>
+<v t="T120"><vh>Allowed @comment with @language plain</vh></v>
+<v t="T121"><vh>The Find button is now default button in the Find panel</vh></v>
+<v t="T122"><vh>Improved syntax coloring for html and xml</vh>
+<v t="T123"><vh>example of syntax coloring for html</vh></v>
 </v>
-<v t="T122"><vh>Improved Prefs panel</vh></v>
-<v t="T123"><vh>Removed setup.py from distributed files</vh></v>
+<v t="T124"><vh>Improved Prefs panel</vh></v>
+<v t="T125"><vh>Removed setup.py from distributed files</vh></v>
 </v>
-<v t="T124"><vh>Bug fixes</vh>
-<v t="T125"><vh>Eliminated potential hang in Open With command</vh></v>
-<v t="T126"><vh>Fixed long-standing control-v bug on Linux</vh></v>
-<v t="T127"><vh>Fixed 2 line number bugs</vh></v>
-<v t="T128"><vh>Fixed bug involving nested comments in sentinel lines</vh></v>
-<v t="T129"><vh>Fixed configuration bug.</vh></v>
-<v t="T130"><vh>Fixed crasher in undo logic</vh></v>
-<v t="T131"><vh>Fixed drag problem</vh></v>
-<v t="T132"><vh>Fixed problem with block comments</vh></v>
-<v t="T133"><vh>Fixed syntax coloring bugs</vh></v>
-<v t="T134"><vh>Udated recent files menu when saving a new .leo file</vh></v>
-<v t="T135"><vh>Worked around bugs in Python 2.3 a1</vh></v>
-</v>
-</v>
-<v t="T136" a="C"><vh>3.10</vh>
-<v t="T137"><vh>Fixed bugs</vh>
-<v t="T138"><vh>Allowed abbreviated xml tags.</vh></v>
-<v t="T139"><vh>Changed shortcut to Find Previous so Alt - F4 closes Leo</vh></v>
-<v t="T140"><vh>Changed url of help file</vh></v>
-<v t="T141"><vh>Fixed @nsf bug reported by Travers A. Hough</vh></v>
-<v t="T142"><vh>Fixed a bug in Untangle</vh></v>
-<v t="T143"><vh>Fixed bug in Python importer</vh></v>
-<v t="T144"><vh>Fixed bug involving redrawing screen initially</vh></v>
-<v t="T145"><vh>Fixed bugs involving @nosentinelsfile</vh></v>
-<v t="T146"><vh>Fixed crashers in colorizeAnyLanguage</vh></v>
-<v t="T147"><vh>Fixed environment bug in Execute Script command</vh></v>
-<v t="T148"><vh>Fixed major memory leak</vh></v>
-<v t="T149"><vh>Fixed path problem in paths passed to tangle_done.py</vh></v>
-<v t="T150"><vh>Fixed problems with Open With code in customizeLeo.py</vh></v>
-<v t="T151"><vh>Fixed Recent Files command</vh></v>
-<v t="T152"><vh>Fixed reversion involving @comment &amp; @language together</vh></v>
-<v t="T153"><vh>Fixed undo bug</vh></v>
-</v>
-<v t="T154"><vh>Added features</vh>
-<v t="T155"><vh>New Mark Clones and Go To Next Clone commands.</vh></v>
-<v t="T156"><vh>New Export Headlines command</vh></v>
-<v t="T157"><vh>Control-dragging a node now clones it</vh></v>
-<v t="T158"><vh>New "Node Only checkbox in the Find/Change panel</vh></v>
-<v t="T159"><vh>@root options</vh></v>
-<v t="T160"><vh>Converted leoConfig.py to use @root-code</vh></v>
-<v t="T161"><vh>Added @file options</vh></v>
-<v t="T162"><vh>Added support for underlined menu items</vh></v>
-<v t="T163"><vh>Improved Leo's window icon</vh></v>
-<v t="T164"><vh>Added easy way of replacing any Leo code</vh></v>
-<v t="T165"><vh>Added convenience routines to redirect stderr and stdout</vh></v>
-<v t="T166"><vh>Added "event1" and "event2" hooks</vh></v>
-<v t="T167"><vh>Added  contributed code to support @read-only nodes</vh></v>
-</v>
-<v t="T168"><vh>Known bugs</vh>
-<v t="T169"><vh>Bugs in undoReplace logic</vh></v>
+<v t="T126"><vh>Bug fixes</vh>
+<v t="T127"><vh>Eliminated potential hang in Open With command</vh></v>
+<v t="T128"><vh>Fixed 2 line number bugs</vh></v>
+<v t="T129"><vh>Fixed bug involving nested comments in sentinel lines</vh></v>
+<v t="T130"><vh>Fixed bugs in promote/demote</vh></v>
+<v t="T131"><vh>Fixed configuration bug.</vh></v>
+<v t="T132"><vh>Fixed crasher in undo logic</vh></v>
+<v t="T133"><vh>Fixed drag problem</vh></v>
+<v t="T134"><vh>Fixed huge performance bug in v.unjoinNode</vh></v>
+<v t="T135"><vh>Fixed long-standing control-v bug on Linux</vh></v>
+<v t="T136"><vh>Fixed minor import bugs</vh></v>
+<v t="T137"><vh>Fixed problem with block comments</vh></v>
+<v t="T138"><vh>Fixed several problems revealed by French plugin</vh></v>
+<v t="T139"><vh>Fixed several problems with noweb mode</vh></v>
+<v t="T140"><vh>Fixed syntax coloring bugs</vh></v>
+<v t="T141"><vh>Full recolor after paste</vh></v>
+<v t="T142"><vh>Installer now creates plugins directory</vh></v>
+<v t="T143"><vh>Removed duplicate redraws when renaming nodes</vh></v>
+<v t="T144"><vh>Udated recent files menu when saving a new .leo file</vh></v>
+<v t="T145"><vh>Worked around bugs in Python 2.3 a1</vh></v>
 </v>
 </v>
-<v t="T170"><vh>leo.py 3.9</vh>
+<v t="T146"><vh>3.10</vh>
 <v><vh>Fixed bugs</vh>
-<v t="T171"><vh>Fixed bug involving @language</vh></v>
-<v t="T172"><vh>Correctly colors Pascal's "private" and "uses" keywords</vh></v>
-<v t="T173"><vh>Fixed a major bug in top()</vh></v>
-<v t="T174"><vh>Fixed bugs when importing Java files.</vh></v>
+<v t="T147"><vh>Allowed abbreviated xml tags.</vh></v>
+<v t="T148"><vh>Changed shortcut to Find Previous so Alt - F4 closes Leo</vh></v>
+<v t="T149"><vh>Changed url of help file</vh></v>
+<v t="T150"><vh>Fixed @nsf bug reported by Travers A. Hough</vh></v>
+<v t="T151"><vh>Fixed a bug in Untangle</vh></v>
+<v t="T152"><vh>Fixed bug in Python importer</vh></v>
+<v t="T153"><vh>Fixed bug involving redrawing screen initially</vh></v>
+<v t="T154"><vh>Fixed bugs involving @nosentinelsfile</vh></v>
+<v t="T155"><vh>Fixed crashers in colorizeAnyLanguage</vh></v>
+<v t="T156"><vh>Fixed environment bug in Execute Script command</vh></v>
+<v t="T157"><vh>Fixed major memory leak</vh></v>
+<v><vh>Fixed path problem in paths passed to tangle_done.py</vh></v>
+<v><vh>Fixed problems with Open With code in customizeLeo.py</vh></v>
+<v t="T158"><vh>Fixed Recent Files command</vh></v>
+<v t="T159"><vh>Fixed reversion involving @comment &amp; @language together</vh></v>
+<v t="T160"><vh>Fixed undo bug</vh></v>
+</v>
+<v><vh>Added features</vh>
+<v t="T161"><vh>New Mark Clones and Go To Next Clone commands.</vh></v>
+<v t="T162"><vh>New Export Headlines command</vh></v>
+<v t="T163"><vh>Control-dragging a node now clones it</vh></v>
+<v t="T164"><vh>New "Node Only checkbox in the Find/Change panel</vh></v>
+<v t="T165"><vh>@root options</vh></v>
+<v><vh>Converted leoConfig.py to use @root-code</vh></v>
+<v t="T166"><vh>Added @file options</vh></v>
+<v t="T167"><vh>Added support for underlined menu items</vh></v>
+<v t="T168"><vh>Improved Leo's window icon</vh></v>
+<v t="T169"><vh>Added easy way of replacing any Leo code</vh></v>
+<v t="T170"><vh>Added convenience routines to redirect stderr and stdout</vh></v>
+<v t="T171"><vh>Added "event1" and "event2" hooks</vh></v>
+<v><vh>Added  contributed code to support @read-only nodes</vh></v>
+</v>
+<v><vh>Known bugs</vh>
+<v t="T172"><vh>Bugs in undoReplace logic</vh></v>
+</v>
+</v>
+<v t="T173"><vh>leo.py 3.9</vh>
+<v><vh>Fixed bugs</vh>
+<v t="T174"><vh>Fixed bug involving @language</vh></v>
+<v t="T175"><vh>Correctly colors Pascal's "private" and "uses" keywords</vh></v>
+<v t="T176"><vh>Fixed a major bug in top()</vh></v>
+<v t="T177"><vh>Fixed bugs when importing Java files.</vh></v>
 <v><vh>Convert All Blanks/Tabs  commands honor @tabwidth directives</vh></v>
 </v>
-<v t="T175"><vh>New documentation for leo.py 3.9</vh>
+<v t="T178"><vh>New documentation for leo.py 3.9</vh>
 <v><vh>Major performance improvements</vh>
-<v t="T176"><vh>Incremental syntax coloring speeds redraws</vh></v>
-<v t="T177"><vh>Incremental undo reduces memory usages significantly</vh></v>
+<v t="T179"><vh>Incremental syntax coloring speeds redraws</vh></v>
+<v t="T180"><vh>Incremental undo reduces memory usages significantly</vh></v>
 </v>
-<v t="T178"><vh>Major configuration improvements</vh>
-<v t="T179" a="C"><vh>Chapter 8: Customizing Leo</vh>
-<v t="T180" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="T181"><vh>Using plugins and hooks</vh>
-<v t="T86" a="C"><vh>New plugin architecture</vh>
-<v t="T87"><vh>@file plugins/mod_open_with.py</vh>
-<v t="T88"><vh>on_idle</vh>
-<v t="T89"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
-<v t="T90"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
-<v t="T91"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T92"><vh>create_open_with_menu</vh>
-<v t="T93"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
+<v t="T181"><vh>Major configuration improvements</vh>
+<v t="T182" a="C"><vh>Chapter 8: Customizing Leo</vh>
+<v t="T183" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="T184"><vh>Using plugins and hooks</vh>
+<v t="T185"><vh>New plugin architecture</vh>
+<v t="T186"><vh>@file plugins/mod_open_with.py</vh>
+<v t="T187"><vh>on_idle</vh>
+<v t="T188"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
+<v t="T189"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
+<v t="T190"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
 </v>
 </v>
-</v>
-<v t="T95" a="C"><vh>About hooks</vh></v>
-<v t="T182"><vh>SECURITY WARNINGS</vh>
-<v t="T183"><vh>The danger of trusting code in shared .leo files</vh></v>
-<v t="T184"><vh>NEVER use this kind of code in a hook!!</vh></v>
-<v t="T185"><vh>Don't use rexec !!</vh>
-<v t="T186"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
-<v t="T187"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
-<v t="T188"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
+<v t="T191"><vh>create_open_with_menu</vh>
+<v t="T192"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T189"><vh>Convenience routines for plugins</vh>
-<v t="T190"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
-<v t="T191"><vh>Convenience methods to create, destroy and modify menus</vh>
-<v t="T192"><vh>createMenuItemsFromTable</vh></v>
-<v t="T193"><vh>createNewMenu</vh></v>
-<v t="T194" a="C"><vh>createOpenWithMenuFromTable</vh></v>
-<v t="T195"><vh>deleteMenu</vh></v>
-<v t="T196"><vh>deleteMenuItem</vh></v>
-<v t="T197"><vh>Example: how to create a menu</vh></v>
+</v>
+<v t="T193"><vh>About hooks</vh></v>
+<v t="T194"><vh>SECURITY WARNINGS</vh>
+<v t="T195"><vh>The danger of trusting code in shared .leo files</vh></v>
+<v t="T196"><vh>NEVER use this kind of code in a hook!!</vh></v>
+<v t="T197"><vh>Don't use rexec !!</vh>
+<v t="T198"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
+<v t="T199"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
+<v t="T200"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T198"><vh>Translating menus into other languages</vh></v>
+<v t="T201"><vh>Convenience routines for plugins</vh>
+<v t="T202"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
+<v t="T203"><vh>Convenience methods to create, destroy and modify menus</vh>
+<v t="T204"><vh>createMenuItemsFromTable</vh></v>
+<v t="T205"><vh>createNewMenu</vh></v>
+<v t="T206" a="C"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="T207"><vh>deleteMenu</vh></v>
+<v t="T208"><vh>deleteMenuItem</vh></v>
+<v t="T209"><vh>Example: how to create a menu</vh></v>
+</v>
+</v>
+<v t="T210"><vh>Translating menus into other languages</vh></v>
 </v>
 <v t="T57" a="C"><vh>Putting the Leo icon in Leo windows</vh></v>
 </v>
-<v t="T199" a="C"><vh>More flexible creation of non-existent directories</vh></v>
+<v t="T211" a="C"><vh>More flexible creation of non-existent directories</vh></v>
 </v>
 <v><vh>New commands &amp; features</vh>
-<v t="T200" a="C"><vh>@url</vh></v>
+<v t="T212" a="C"><vh>@url</vh></v>
 <v><vh>Execute Script command</vh></v>
-<v t="T201" a="C"><vh>Go To Line Number command</vh></v>
-<v t="T199" a="C"><vh>More flexible creation of non-existent directories</vh></v>
-<v t="T202"><vh>Much better support for cweb</vh>
-<v t="T203" a="C"><vh>About cweb mode </vh></v>
+<v t="T213" a="C"><vh>Go To Line Number command</vh></v>
+<v t="T211" a="C"><vh>More flexible creation of non-existent directories</vh></v>
+<v t="T214"><vh>Much better support for cweb</vh>
+<v t="T215" a="C"><vh>About cweb mode </vh></v>
 </v>
-<v t="T204" a="C"><vh>Open With command</vh>
-<v t="T194" a="C"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="T216" a="C"><vh>Open With command</vh>
+<v t="T206" a="C"><vh>createOpenWithMenuFromTable</vh></v>
 </v>
-<v t="T205" a="C"><vh>Optional Emacs-style auto-indent</vh></v>
+<v t="T217" a="C"><vh>Optional Emacs-style auto-indent</vh></v>
 <v t="T57" a="C"><vh>Putting the Leo icon in Leo windows</vh></v>
-<v t="T206" a="C"><vh>Reformat Paragraph command</vh></v>
+<v t="T218" a="C"><vh>Reformat Paragraph command</vh></v>
 </v>
-<v t="T207" a="C"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+<v t="T219" a="C"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 </v>
 </v>
-<v t="T208"><vh>leo.py 3.8</vh>
+<v t="T220"><vh>leo.py 3.8</vh>
 <v><vh>Fixed bugs</vh>
 <v><vh>Crashers</vh>
-<v t="T209"><vh>Fixed another crasher in scanAllDirectives</vh></v>
-<v t="T210"><vh>Fixed assert failure in putBodyPart</vh></v>
-<v t="T211"><vh>Fixed crasher in scanAllDirectives</vh></v>
+<v t="T221"><vh>Fixed another crasher in scanAllDirectives</vh></v>
+<v t="T222"><vh>Fixed assert failure in putBodyPart</vh></v>
+<v t="T223"><vh>Fixed crasher in scanAllDirectives</vh></v>
 </v>
 <v><vh>Bugs involving paths &amp; derived files</vh>
-<v t="T212"><vh>Fixed relative path bugs in tangle.scanAllDirectives</vh></v>
-<v t="T213"><vh>Fixed @delims "round trip" bug</vh></v>
-<v t="T214"><vh>Fixed cweb sentinel bug</vh></v>
-<v t="T215"><vh>Fixed import to @root problems</vh></v>
+<v t="T224"><vh>Fixed relative path bugs in tangle.scanAllDirectives</vh></v>
+<v t="T225"><vh>Fixed @delims "round trip" bug</vh></v>
+<v t="T226"><vh>Fixed cweb sentinel bug</vh></v>
+<v t="T227"><vh>Fixed import to @root problems</vh></v>
 <v><vh>Leo generates @@ sentinels only for real Leo directives</vh></v>
 </v>
 <v><vh>Minor syntax coloring bugs</vh>
 <v><vh>Colorizer now recognizes comments after preprocessor directives</vh></v>
 <v><vh>Syntax color perl's alarm function</vh></v>
-<v t="T216"><vh>Fixed block-comment bug in Java and HTML</vh></v>
+<v t="T228"><vh>Fixed block-comment bug in Java and HTML</vh></v>
 </v>
 <v><vh>Minor user interface bugs</vh>
-<v t="T217"><vh>Worked around Control-T bug</vh></v>
-<v t="T218"><vh>Fixed bug involving menu pastes in headlines</vh></v>
+<v t="T229"><vh>Worked around Control-T bug</vh></v>
+<v t="T230"><vh>Fixed bug involving menu pastes in headlines</vh></v>
 </v>
 <v><vh>fixed Unicode bug in setBodyStringOrPane</vh></v>
 </v>
-<v t="T219"><vh>New &amp; changed features</vh>
-<v t="T220"><vh>New @rawfile &amp; @silentfile trees</vh>
-<v t="T207" a="C"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+<v t="T231"><vh>New &amp; changed features</vh>
+<v t="T232"><vh>New @rawfile &amp; @silentfile trees</vh>
+<v t="T219" a="C"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 </v>
-<v t="T221"><vh>New @raw, @end_raw and @quiet directives</vh>
-<v t="T222" a="C"><vh>@raw and @end_raw directives delimit raw text</vh></v>
-<v t="T223" a="C"><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
+<v t="T233"><vh>New @raw, @end_raw and @quiet directives</vh>
+<v t="T234" a="C"><vh>@raw and @end_raw directives delimit raw text</vh></v>
+<v t="T235" a="C"><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
 </v>
-<v t="T224"><vh>Much better support for CWEB</vh>
-<v t="T203" a="C"><vh>About cweb mode </vh></v>
+<v t="T236"><vh>Much better support for CWEB</vh>
+<v t="T215" a="C"><vh>About cweb mode </vh></v>
 </v>
-<v t="T225"><vh>Allow @comment and @language to coexist</vh></v>
+<v t="T237"><vh>Allow @comment and @language to coexist</vh></v>
 <v><vh>Configuration settings and commands</vh>
-<v t="T226"><vh>Added stylesheet option to support &lt;?xml-stylesheet...?&gt; line</vh></v>
-<v t="T227"><vh>Added Configuration Commands to help menu</vh></v>
-<v t="T228"><vh>Added output_initial_comment option</vh></v>
-<v t="T229"><vh>Added output_newline option</vh></v>
-<v t="T230"><vh>Changed path_directive_creates_directories to create_nonexistent_directories</vh></v>
+<v t="T238"><vh>Added stylesheet option to support &lt;?xml-stylesheet...?&gt; line</vh></v>
+<v t="T239"><vh>Added Configuration Commands to help menu</vh></v>
+<v t="T240"><vh>Added output_initial_comment option</vh></v>
+<v t="T241"><vh>Added output_newline option</vh></v>
+<v t="T242"><vh>Changed path_directive_creates_directories to create_nonexistent_directories</vh></v>
 </v>
 <v><vh>Minor changes</vh>
 <v><vh>Added support for forth language comments</vh></v>
 <v><vh>All export commands now use output_newline option</vh></v>
-<v t="T231"><vh>Changed names of commands in help menu and corresponding entries in leoConfig.leo</vh></v>
-<v t="T232"><vh>Created es_exception</vh></v>
-<v t="T233"><vh>Created reloadAll in leoGlobals.py</vh></v>
-<v t="T234"><vh>Forced focus to body pane after ending headline edit</vh></v>
-<v t="T235"><vh>Use // as single-line comment in Java</vh></v>
-<v t="T236"><vh>wrote "finished" after write @file nodes command</vh></v>
+<v t="T243"><vh>Changed names of commands in help menu and corresponding entries in leoConfig.leo</vh></v>
+<v t="T244"><vh>Created es_exception</vh></v>
+<v t="T245"><vh>Created reloadAll in leoGlobals.py</vh></v>
+<v t="T246"><vh>Forced focus to body pane after ending headline edit</vh></v>
+<v t="T247"><vh>Use // as single-line comment in Java</vh></v>
+<v t="T248"><vh>wrote "finished" after write @file nodes command</vh></v>
 </v>
 </v>
-<v t="T237"><vh>Coming soon: Leo 4.0, a major improvement</vh></v>
+<v t="T249"><vh>Coming soon: Leo 4.0, a major improvement</vh></v>
 </v>
-<v t="T238"><vh>leo.py 3.7</vh>
+<v t="T250"><vh>leo.py 3.7</vh>
 <v><vh>Fixed Bugs</vh>
 <v><vh>Language and syntax coloring bugs</vh>
-<v t="T239" a="C"><vh>Fixed @comment bug</vh></v>
+<v t="T251" a="C"><vh>Fixed @comment bug</vh></v>
 <v><vh>Fixed colorizing for "while" in C</vh></v>
-<v t="T240"><vh>Fixed @language plain # bug</vh></v>
-<v t="T241"><vh>Fixed @language plain single-quote bug</vh></v>
+<v t="T252"><vh>Fixed @language plain # bug</vh></v>
+<v t="T253"><vh>Fixed @language plain single-quote bug</vh></v>
 </v>
-<v t="T242"><vh>Bugs in Edit body commands</vh></v>
+<v t="T254"><vh>Bugs in Edit body commands</vh></v>
 <v><vh>Bugs relating to tangling and derived files</vh>
-<v t="T243"><vh>Fixed major bug in @file read code</vh></v>
-<v t="T244"><vh>Fixed minor read bug</vh></v>
-<v t="T239" a="C"><vh>Fixed @comment bug</vh></v>
+<v t="T255"><vh>Fixed major bug in @file read code</vh></v>
+<v t="T256"><vh>Fixed minor read bug</vh></v>
+<v t="T251" a="C"><vh>Fixed @comment bug</vh></v>
 <v><vh>Fixed a bug that affected wrapping in doc parts</vh></v>
 </v>
 <v><vh>Other bugs</vh>
-<v t="T245"><vh>Fixed reversion in Tangle/Untangle code</vh></v>
-<v t="T246"><vh>Fixed undo cloned headline bug</vh></v>
-<v t="T247"><vh>Fixed Find previous bug</vh></v>
-<v t="T248"><vh>Fixed tab problems</vh></v>
-<v t="T249"><vh>Leo now remembers insert point always</vh></v>
-<v t="T250"><vh>Removed setup.py from binary distribution</vh></v>
+<v t="T257"><vh>Fixed reversion in Tangle/Untangle code</vh></v>
+<v t="T258"><vh>Fixed undo cloned headline bug</vh></v>
+<v t="T259"><vh>Fixed Find previous bug</vh></v>
+<v t="T260"><vh>Fixed tab problems</vh></v>
+<v t="T261"><vh>Leo now remembers insert point always</vh></v>
+<v t="T262"><vh>Removed setup.py from binary distribution</vh></v>
 </v>
 </v>
-<v t="T251"><vh>Improvements</vh>
+<v t="T263"><vh>Improvements</vh>
 <v><vh>Many new user options</vh>
 <v><vh>General configuration options</vh>
-<v t="T252"><vh>path_directive_creates_directories</vh></v>
-<v t="T253"><vh>relative_path_base_directory</vh></v>
-<v t="T254"><vh>remove_sentinels_extension</vh></v>
-<v t="T255"><vh>write_clone_indices</vh></v>
+<v t="T264"><vh>path_directive_creates_directories</vh></v>
+<v t="T265"><vh>relative_path_base_directory</vh></v>
+<v t="T266"><vh>remove_sentinels_extension</vh></v>
+<v t="T267"><vh>write_clone_indices</vh></v>
 </v>
-<v t="T256"><vh>Secondary pane ratios</vh></v>
-<v t="T257"><vh>User-configurable colors</vh></v>
-<v t="T258"><vh>User-configurable shortcuts for commands</vh></v>
+<v t="T268"><vh>Secondary pane ratios</vh></v>
+<v t="T269"><vh>User-configurable colors</vh></v>
+<v t="T270"><vh>User-configurable shortcuts for commands</vh></v>
 </v>
-<v t="T259"><vh>Improved support for Unicode</vh></v>
-<v t="T260"><vh>End of cursed newlines</vh></v>
+<v t="T271"><vh>Improved support for Unicode</vh></v>
+<v t="T272"><vh>End of cursed newlines</vh></v>
 <v><vh>Code is now compatible with Python 2.1</vh></v>
-<v t="T261"><vh>Better file and path handling</vh></v>
-<v t="T262"><vh>Better support for Perl+pod</vh></v>
-<v t="T263"><vh>New End Edit Headline and Abort Edit Headline commands</vh></v>
-<v t="T264"><vh>Allow reads and writes of cloned @file nodes</vh></v>
+<v t="T273"><vh>Better file and path handling</vh></v>
+<v t="T274"><vh>Better support for Perl+pod</vh></v>
+<v t="T275"><vh>New End Edit Headline and Abort Edit Headline commands</vh></v>
+<v t="T276"><vh>Allow reads and writes of cloned @file nodes</vh></v>
 <v><vh>Leo now closes an empty window when opening a recent file</vh></v>
-<v t="T265"><vh>Improved derived files</vh></v>
-<v t="T266"><vh>Improved enabling of menu items in popup menus</vh></v>
+<v t="T277"><vh>Improved derived files</vh></v>
+<v t="T278"><vh>Improved enabling of menu items in popup menus</vh></v>
 <v><vh>About Leo dialog is now non-modal</vh></v>
 </v>
 </v>
-<v t="T267"><vh>leo.py 3.6</vh>
-<v t="T268"><vh>Known bug: problems with Python window</vh></v>
+<v t="T279"><vh>leo.py 3.6</vh>
+<v t="T280"><vh>Known bug: problems with Python window</vh></v>
 <v><vh>Bug fixes</vh>
 <v><vh>Fixed problems with opening and writing leoConfig.txt on Linux</vh></v>
-<v t="T269"><vh>Fixed problems renaming files on Linux</vh></v>
-<v t="T270"><vh>Fixed missing headline bug on startup</vh></v>
-<v t="T271"><vh>Improved call to os.path.join in leoApp.finishCreate</vh></v>
-<v t="T272"><vh>Improved how directories are handled in @root trees</vh></v>
-<v t="T273"><vh>Dave Hein: fixed Tk 8.4 problem in Prefs Panel</vh></v>
-<v t="T274"><vh>Dave Hein: added CheckVersion to leoUtils.py</vh></v>
+<v t="T281"><vh>Fixed problems renaming files on Linux</vh></v>
+<v t="T282"><vh>Fixed missing headline bug on startup</vh></v>
+<v t="T283"><vh>Improved call to os.path.join in leoApp.finishCreate</vh></v>
+<v t="T284"><vh>Improved how directories are handled in @root trees</vh></v>
+<v t="T285"><vh>Dave Hein: fixed Tk 8.4 problem in Prefs Panel</vh></v>
+<v t="T286"><vh>Dave Hein: added CheckVersion to leoUtils.py</vh></v>
 <v><vh>Dave Hein: the Python window now works on Linux.</vh></v>
-<v t="T275"><vh>Steven P. Schaefer: Improved handling of directives in @root trees</vh></v>
-<v t="T276"><vh>Steven P. Schaefer: Fixed cursed newline bug for Linux</vh></v>
+<v t="T287"><vh>Steven P. Schaefer: Improved handling of directives in @root trees</vh></v>
+<v t="T288"><vh>Steven P. Schaefer: Fixed cursed newline bug for Linux</vh></v>
 </v>
 <v><vh>Improvements to existing features</vh>
-<v t="T277"><vh>Leo now remembers scrollbar position and insert point of previously visited nodes</vh></v>
+<v t="T289"><vh>Leo now remembers scrollbar position and insert point of previously visited nodes</vh></v>
 <v><vh>Body pane now gets focus after Go Back/Next</vh></v>
-<v t="T278"><vh>Improved all commands in Help menu</vh></v>
-<v t="T279"><vh>Removed most error messages in atFile::read logic</vh></v>
+<v t="T290"><vh>Improved all commands in Help menu</vh></v>
+<v t="T291"><vh>Removed most error messages in atFile::read logic</vh></v>
 <v><vh>Added shortcuts for Read/Write @file Nodes commands</vh></v>
 <v><vh>Tomaz Ficko: Added support for MouseWheel (Linux only)</vh></v>
 </v>
 <v><vh>New features</vh>
-<v t="T280"><vh>Added Match Brackets command</vh></v>
-<v t="T281"><vh>Added PHP support</vh></v>
-<v t="T282"><vh>Added LaTex support</vh></v>
+<v t="T292"><vh>Added Match Brackets command</vh></v>
+<v t="T293"><vh>Added PHP support</vh></v>
+<v t="T294"><vh>Added LaTex support</vh></v>
 </v>
 </v>
-<v t="T283"><vh>leo.py 3.5</vh>
+<v t="T295"><vh>leo.py 3.5</vh>
 <v><vh>Bug fixes</vh>
-<v t="T284"><vh>Called cf.flush in leoConfig.update</vh></v>
+<v t="T296"><vh>Called cf.flush in leoConfig.update</vh></v>
 <v><vh>Fixed crasher in leoFileCommands.readOutlineOnly</vh></v>
 <v><vh>Fixed crasher when leoConfig.txt did not exist</vh></v>
-<v t="T285"><vh>Fixed cursed newline bug in leoAtFile</vh></v>
-<v t="T286"><vh>Rewrote scanAllDirectives routines to handle relative paths</vh></v>
+<v t="T297"><vh>Fixed cursed newline bug in leoAtFile</vh></v>
+<v t="T298"><vh>Rewrote scanAllDirectives routines to handle relative paths</vh></v>
 <v><vh>Suppressed erroneous tangle warning about relative paths</vh></v>
 </v>
 <v><vh>Improvements</vh>
-<v t="T287"><vh>Added configuration settings for horizontal scrollbars</vh></v>
+<v t="T299"><vh>Added configuration settings for horizontal scrollbars</vh></v>
 <v><vh>Added commands to the help menu</vh></v>
-<v t="T288"><vh>Added logic to test for read-only files</vh></v>
-<v t="T289"><vh>Added importFiles script</vh></v>
+<v t="T300"><vh>Added logic to test for read-only files</vh></v>
+<v t="T301"><vh>Added importFiles script</vh></v>
 </v>
 </v>
-<v t="T290"><vh>leo.py 3.4</vh>
+<v t="T302"><vh>leo.py 3.4</vh>
 <v><vh>Configuration settings and leoConfig.leo</vh>
-<v t="T291"><vh>Added comments to leoConfig.txt about split direction and ratio</vh></v>
-<v t="T292"><vh>Added save_clears_undo_buffer config option</vh></v>
-<v t="T293"><vh>Corrected spelling of limit_directory_search_extenstion </vh></v>
-<v t="T294"><vh>Created leoConfig.leo</vh></v>
-<v t="T295"><vh>Fixed a major config bug. This fixes font problems</vh></v>
-<v t="T296"><vh>Improved Recent Files menu</vh></v>
-<v t="T297"><vh>Leo honors pane ratio stored in .leo files</vh></v>
+<v t="T303"><vh>Added comments to leoConfig.txt about split direction and ratio</vh></v>
+<v t="T304"><vh>Added save_clears_undo_buffer config option</vh></v>
+<v t="T305"><vh>Corrected spelling of limit_directory_search_extenstion </vh></v>
+<v t="T306"><vh>Created leoConfig.leo</vh></v>
+<v t="T307"><vh>Fixed a major config bug. This fixes font problems</vh></v>
+<v t="T308"><vh>Improved Recent Files menu</vh></v>
+<v t="T309"><vh>Leo honors pane ratio stored in .leo files</vh></v>
 <v><vh>Leo writes prefs if leoConfig.txt is read-only</vh></v>
 <v><vh>Made leoConfig.txt be read/write by default</vh></v>
 <v><vh>Toggle Split Direction now updates leoConfig.txt</vh></v>
 </v>
 <v><vh>Documentation for code in leo.py that may be of wider interest</vh>
-<v t="T298" a="C"><vh>Code hidden in leo.py</vh>
-<v t="T299"><vh>c2py.py</vh></v>
-<v t="T300"><vh>disStats.py</vh></v>
-<v t="T301"><vh>Tkinter utilities</vh></v>
-<v t="T302"><vh>Font dialog</vh></v>
-<v t="T303"><vh>Syntax coloring code</vh></v>
-<v t="T304"><vh>Tree code</vh></v>
+<v t="T310" a="C"><vh>Code hidden in leo.py</vh>
+<v t="T311"><vh>c2py.py</vh></v>
+<v t="T312"><vh>disStats.py</vh></v>
+<v t="T313"><vh>Tkinter utilities</vh></v>
+<v t="T314"><vh>Font dialog</vh></v>
+<v t="T315"><vh>Syntax coloring code</vh></v>
+<v t="T316"><vh>Tree code</vh></v>
 </v>
 </v>
 <v><vh>Fixed bugs</vh>
-<v t="T305"><vh>Fixed another clone bug: created setAncestorsOfClonedNodesInTreeDirty</vh></v>
+<v t="T317"><vh>Fixed another clone bug: created setAncestorsOfClonedNodesInTreeDirty</vh></v>
 <v><vh>Fixed bugs that delayed writing of find and prefs panels</vh></v>
-<v t="T306"><vh>Fixed revert problems in font panel</vh></v>
-<v t="T307"><vh>Fixed several unicode bugs</vh></v>
-<v t="T308"><vh>Fixed wandering insertion point bug</vh></v>
+<v t="T318"><vh>Fixed revert problems in font panel</vh></v>
+<v t="T319"><vh>Fixed several unicode bugs</vh></v>
+<v t="T320"><vh>Fixed wandering insertion point bug</vh></v>
 </v>
 <v><vh>Minor improvements</vh>
 <v><vh>Syntax colorer now honors @comment</vh></v>
-<v t="T309"><vh>Added @ignore to "raw" imported files</vh></v>
+<v t="T321"><vh>Added @ignore to "raw" imported files</vh></v>
 <v><vh>Added log message for Remove Sentinels command</vh></v>
-<v t="T310"><vh>Improved highlighting of whitespace</vh></v>
-<v t="T311"><vh>Remove Sentinels command now uses .txt extension instead of .tmp</vh></v>
+<v t="T322"><vh>Improved highlighting of whitespace</vh></v>
+<v t="T323"><vh>Remove Sentinels command now uses .txt extension instead of .tmp</vh></v>
 </v>
 </v>
-<v t="T312"><vh>leo.py 3.3</vh>
-<v t="T313"><vh>Added support for Unicode</vh></v>
-<v t="T314"><vh>Improved the Import commands &amp; fixed Javadoc problem</vh></v>
-<v t="T315"><vh>Fixed crasher when Tangling</vh></v>
-<v t="T316"><vh>Fixed problems with negative tab widths</vh></v>
-<v t="T317"><vh>Fixed numerous problems related to configuration settings</vh></v>
+<v t="T324"><vh>leo.py 3.3</vh>
+<v t="T325"><vh>Added support for Unicode</vh></v>
+<v t="T326"><vh>Improved the Import commands &amp; fixed Javadoc problem</vh></v>
+<v t="T327"><vh>Fixed crasher when Tangling</vh></v>
+<v t="T328"><vh>Fixed problems with negative tab widths</vh></v>
+<v t="T329"><vh>Fixed numerous problems related to configuration settings</vh></v>
 </v>
-<v t="T318"><vh>leo.py 3.2</vh>
-<v t="T319"><vh>Nested @others directives now valid</vh>
-<v t="T320"><vh>@file test.txt</vh>
-<v t="T321"><vh>class a</vh>
-<v t="T322"><vh>a::one</vh></v>
-<v t="T323"><vh>a:two</vh></v>
+<v t="T330"><vh>leo.py 3.2</vh>
+<v t="T331"><vh>Nested @others directives now valid</vh>
+<v t="T332"><vh>@file test.txt</vh>
+<v t="T333"><vh>class a</vh>
+<v t="T334"><vh>a::one</vh></v>
+<v t="T335"><vh>a:two</vh></v>
 </v>
-<v t="T324"><vh>class b</vh>
-<v t="T325"><vh>b::one</vh></v>
-<v t="T326"><vh>b:two</vh></v>
+<v t="T336"><vh>class b</vh>
+<v t="T337"><vh>b::one</vh></v>
+<v t="T338"><vh>b:two</vh></v>
 </v>
 </v>
 </v>
-<v t="T327"><vh>Improved Import command</vh></v>
-<v t="T328"><vh>Reassigned shortcuts in the Outline-Move/Select menu</vh></v>
-<v t="T329"><vh>Fixed crasher in the Preferences Panel</vh></v>
+<v t="T339"><vh>Improved Import command</vh></v>
+<v t="T340"><vh>Reassigned shortcuts in the Outline-Move/Select menu</vh></v>
+<v t="T341"><vh>Fixed crasher in the Preferences Panel</vh></v>
 <v><vh>Improved syntax coloring of continued C strings</vh></v>
-<v t="T330"><vh>Made many changes to Color Panel</vh></v>
-<v t="T331"><vh>Added email address &amp; URL to About Leo dialog</vh></v>
-<v t="T332"><vh>added disStats.py</vh></v>
+<v t="T342"><vh>Made many changes to Color Panel</vh></v>
+<v t="T343"><vh>Added email address &amp; URL to About Leo dialog</vh></v>
+<v t="T344"><vh>added disStats.py</vh></v>
 </v>
-<v t="T333"><vh>leo.py 3.1</vh>
-<v t="T334"><vh>Added compare panel</vh></v>
-<v t="T335"><vh>Added new settings to leoConfig.txt</vh></v>
-<v t="T336"><vh>Changed precedence scheme for preferences</vh></v>
-<v t="T337"><vh>Fixed @tabwidth, @pagewidth and @language directives</vh></v>
-<v t="T338"><vh>Flatten Outline now escapes only the first non-blank character of each line.</vh></v>
-<v t="T339"><vh>Open Python Window command adds path to IDLE automatically</vh></v>
+<v t="T345"><vh>leo.py 3.1</vh>
+<v t="T346"><vh>Added compare panel</vh></v>
+<v t="T347"><vh>Added new settings to leoConfig.txt</vh></v>
+<v t="T348"><vh>Changed precedence scheme for preferences</vh></v>
+<v t="T349"><vh>Fixed @tabwidth, @pagewidth and @language directives</vh></v>
+<v t="T350"><vh>Flatten Outline now escapes only the first non-blank character of each line.</vh></v>
+<v t="T351"><vh>Open Python Window command adds path to IDLE automatically</vh></v>
 <v><vh>Python 2.2 required dialog tells where to download Python 2.2 and Tk 8.3</vh></v>
 </v>
-<v t="T340"><vh>leo.py 3.0</vh>
-<v t="T341"><vh>Optional new file format</vh></v>
+<v t="T352"><vh>leo.py 3.0</vh>
+<v t="T353"><vh>Optional new file format</vh></v>
 <v><vh>New features (in approximate order of importance)</vh>
-<v t="T342"><vh>Added many settings to leoConfig.txt file</vh>
-<v t="T343"><vh>New windows now open using config params.</vh></v>
+<v t="T354"><vh>Added many settings to leoConfig.txt file</vh>
+<v t="T355"><vh>New windows now open using config params.</vh></v>
 </v>
-<v t="T344"><vh>Added autoscrolling in the outline pane</vh></v>
-<v t="T345"><vh>Color panel</vh></v>
-<v t="T346"><vh>Font panel</vh></v>
-<v t="T347"><vh>Leo now opens windows at the position in which they were saved</vh></v>
-<v t="T348"><vh>Added Toggle Split Direction</vh></v>
-<v t="T349"><vh>Improved syntax coloring for @comment directives</vh></v>
+<v t="T356"><vh>Added autoscrolling in the outline pane</vh></v>
+<v t="T357"><vh>Color panel</vh></v>
+<v t="T358"><vh>Font panel</vh></v>
+<v t="T359"><vh>Leo now opens windows at the position in which they were saved</vh></v>
+<v t="T360"><vh>Added Toggle Split Direction</vh></v>
+<v t="T361"><vh>Improved syntax coloring for @comment directives</vh></v>
 <v><vh>Leo warns and aborts if not Python 2.2 or above</vh></v>
 <v><vh>All panels now have labeled frames and grooved borders</vh></v>
-<v t="T350"><vh>Leo directives are now colored green by default</vh></v>
-<v t="T351"><vh>Print a traceback message for all serious exceptions</vh></v>
-<v t="T352"><vh>@comment supports comments starting with REM</vh></v>
+<v t="T362"><vh>Leo directives are now colored green by default</vh></v>
+<v t="T363"><vh>Print a traceback message for all serious exceptions</vh></v>
+<v t="T364"><vh>@comment supports comments starting with REM</vh></v>
 </v>
 <v><vh>Fixed bugs (one crasher)</vh>
-<v t="T353"><vh>Fixed crasher in atFile.scanAllDirectives</vh></v>
-<v t="T354"><vh>Fixed syntax coloring bug involving Leo directives</vh></v>
-<v t="T355"><vh>Windows now open without visual problems</vh></v>
-<v t="T356"><vh>Made Convert Tabs, Convert All Blanks and Convert All Tabs undoable</vh></v>
-<v t="T357"><vh>Made Prefs panel non-modal</vh></v>
+<v t="T365"><vh>Fixed crasher in atFile.scanAllDirectives</vh></v>
+<v t="T366"><vh>Fixed syntax coloring bug involving Leo directives</vh></v>
+<v t="T367"><vh>Windows now open without visual problems</vh></v>
+<v t="T368"><vh>Made Convert Tabs, Convert All Blanks and Convert All Tabs undoable</vh></v>
+<v t="T369"><vh>Made Prefs panel non-modal</vh></v>
 </v>
 </v>
-<v t="T358"><vh>leo.py 2.5.1 Many improvements</vh>
-<v t="T359"><vh>New &amp; improved commands</vh>
-<v t="T360"><vh>Tabs and spaces</vh>
-<v t="T361"><vh>Added Convert All Blanks and Convert All Tabs commands</vh></v>
-<v t="T362"><vh>Added Convert Tabs command</vh></v>
-<v t="T363"><vh>Tab widths work</vh></v>
-<v t="T364"><vh>Negative tab width converts tabs to spaces</vh></v>
+<v t="T370"><vh>leo.py 2.5.1 Many improvements</vh>
+<v t="T371"><vh>New &amp; improved commands</vh>
+<v t="T372"><vh>Tabs and spaces</vh>
+<v t="T373"><vh>Added Convert All Blanks and Convert All Tabs commands</vh></v>
+<v t="T374"><vh>Added Convert Tabs command</vh></v>
+<v t="T375"><vh>Tab widths work</vh></v>
+<v t="T376"><vh>Negative tab width converts tabs to spaces</vh></v>
 </v>
-<v t="T365"><vh>Improved Preferences panel</vh></v>
-<v t="T180" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="T366"><vh>Cut and Paste now works properly in all situations</vh></v>
-<v t="T367"><vh>Added Recent Files menu</vh></v>
+<v t="T377"><vh>Improved Preferences panel</vh></v>
+<v t="T183" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="T378"><vh>Cut and Paste now works properly in all situations</vh></v>
+<v t="T379"><vh>Added Recent Files menu</vh></v>
 <v><vh>All Extract and Import commands are now undoable</vh></v>
 <v><vh>Made Cascade and Minimize All commands functional</vh></v>
 </v>
 <v><vh>Significant bug fixes</vh>
-<v t="T368"><vh>Fixed several bugs in the Import commands</vh></v>
-<v t="T369"><vh>Invalid directories no longer cause read errors</vh></v>
+<v t="T380"><vh>Fixed several bugs in the Import commands</vh></v>
+<v t="T381"><vh>Invalid directories no longer cause read errors</vh></v>
 </v>
 <v><vh>Fixed crashers</vh>
-<v t="T370"><vh>Fixed crasher when saving a new file</vh></v>
-<v t="T371"><vh>Fixed crashers in Remove Sentinels command</vh></v>
-<v t="T372"><vh>Fixed crasher in Import commands</vh></v>
+<v t="T382"><vh>Fixed crasher when saving a new file</vh></v>
+<v t="T383"><vh>Fixed crashers in Remove Sentinels command</vh></v>
+<v t="T384"><vh>Fixed crasher in Import commands</vh></v>
 </v>
 <v><vh>Fixed minor bugs &amp; improvements</vh>
 <v><vh>Recolored body text after extract commands</vh></v>
-<v t="T373"><vh>Fixed bug involving missing clone mark after Move Right command</vh></v>
-<v t="T374"><vh>Changed defaultextension from "x" to ".x" in dialogs.</vh></v>
-<v t="T375"><vh>Fixed minor bug in Save and Save As commands</vh></v>
-<v t="T376"><vh>Fixed minor problems with documentation</vh></v>
+<v t="T385"><vh>Fixed bug involving missing clone mark after Move Right command</vh></v>
+<v t="T386"><vh>Changed defaultextension from "x" to ".x" in dialogs.</vh></v>
+<v t="T387"><vh>Fixed minor bug in Save and Save As commands</vh></v>
+<v t="T388"><vh>Fixed minor problems with documentation</vh></v>
 <v><vh>Renamed Font to Set Font... and Syntax Coloring... to Set Colors...</vh></v>
 </v>
 </v>
-<v t="T377"><vh>leo.py 2.4</vh>
-<v t="T378"><vh>Fixed several bugs</vh></v>
-<v t="T379"><vh>Added better error recovery when writing .leo files</vh></v>
-<v t="T380" a="C"><vh>Dragging headlines</vh></v>
+<v t="T389"><vh>leo.py 2.4</vh>
+<v t="T390"><vh>Fixed several bugs</vh></v>
+<v t="T391"><vh>Added better error recovery when writing .leo files</vh></v>
+<v t="T392" a="C"><vh>Dragging headlines</vh></v>
 <v t="T56" a="C"><vh>How to associate leo.py with .leo files on Windows</vh></v>
 </v>
-<v t="T381"><vh>leo.py 2.3</vh></v>
-<v t="T382"><vh>leo.py 2.2 Bug fixes and documentation revised</vh></v>
-<v t="T383"><vh>2.1 Import &amp; Export commands</vh>
-<v t="T384"><vh>Import and Export commands</vh></v>
-<v t="T385"><vh>Fixed moves up to root position</vh></v>
-<v t="T386"><vh>Improved the syntax colorer</vh></v>
+<v t="T393"><vh>leo.py 2.3</vh></v>
+<v t="T394"><vh>leo.py 2.2 Bug fixes and documentation revised</vh></v>
+<v t="T395"><vh>2.1 Import &amp; Export commands</vh>
+<v t="T396"><vh>Import and Export commands</vh></v>
+<v t="T397"><vh>Fixed moves up to root position</vh></v>
+<v t="T398"><vh>Improved the syntax colorer</vh></v>
 </v>
-<v t="T387"><vh>2.0 Untangle, Unlimited Undo/Redo, Syntax Coloring, etc.</vh>
-<v t="T388"><vh>Format change: no blank lines between sentinels in derived files</vh></v>
-<v t="T389"><vh>Unlimited Undo and Redo</vh></v>
+<v t="T399"><vh>2.0 Untangle, Unlimited Undo/Redo, Syntax Coloring, etc.</vh>
+<v t="T400"><vh>Format change: no blank lines between sentinels in derived files</vh></v>
+<v t="T401"><vh>Unlimited Undo and Redo</vh></v>
 <v><vh>Drawing and syntax coloring</vh>
-<v t="T390"><vh>Syntax coloring works for all languages</vh></v>
-<v t="T391"><vh>Fixed minor syntax coloring bugs</vh></v>
-<v t="T392"><vh>Headlines given more space</vh></v>
+<v t="T402"><vh>Syntax coloring works for all languages</vh></v>
+<v t="T403"><vh>Fixed minor syntax coloring bugs</vh></v>
+<v t="T404"><vh>Headlines given more space</vh></v>
 <v><vh>Suppressed auto-indent for Python in @nocolor mode</vh></v>
 </v>
-<v t="T393"><vh>Tangle/Untangle</vh>
-<v t="T394"><vh>Fixed old bugs in Untangle</vh></v>
-<v t="T395"><vh>@c now is the same as @code</vh></v>
-<v t="T396"><vh>Untangle only trims trailing lines from updated nodes</vh></v>
+<v t="T405"><vh>Tangle/Untangle</vh>
+<v t="T406"><vh>Fixed old bugs in Untangle</vh></v>
+<v t="T407"><vh>@c now is the same as @code</vh></v>
+<v t="T408"><vh>Untangle only trims trailing lines from updated nodes</vh></v>
 </v>
-<v t="T397"><vh>Fixed Linux-specific bugs</vh></v>
+<v t="T409"><vh>Fixed Linux-specific bugs</vh></v>
 </v>
-<v t="T398"><vh>1.0 New commands and bug fixes</vh>
-<v t="T399"><vh>Unfinished commands</vh></v>
-<v t="T400"><vh>How to copy an outline from Borland Leo to Leo.py</vh></v>
-<v t="T401"><vh>Fixed bugs</vh></v>
-<v t="T402"><vh>Remaining minor problems</vh></v>
+<v t="T410"><vh>1.0 New commands and bug fixes</vh>
+<v t="T411"><vh>Unfinished commands</vh></v>
+<v t="T412"><vh>How to copy an outline from Borland Leo to Leo.py</vh></v>
+<v t="T413"><vh>Fixed bugs</vh></v>
+<v t="T414"><vh>Remaining minor problems</vh></v>
 </v>
-<v t="T403"><vh>0.08 Find, Change and Tangle commands &amp; major bugs fixed</vh>
-<v t="T404"><vh>About the Find and Change commands</vh></v>
-<v t="T405"><vh>About the Tangle command</vh></v>
-<v t="T406"><vh>About hyperlinking</vh></v>
-<v t="T407"><vh>Fixed significant bugs</vh></v>
-<v t="T408"><vh>Other improvements</vh></v>
-<v t="T409"><vh>Improved memory management</vh></v>
-<v t="T410"><vh>The trace function (Sherlock tracing)</vh></v>
-<v t="T411"><vh>Improved directory and file name handling</vh></v>
-<v t="T412"><vh>Improvements that will be propagated back to LeoCB</vh></v>
+<v t="T415"><vh>0.08 Find, Change and Tangle commands &amp; major bugs fixed</vh>
+<v t="T416"><vh>About the Find and Change commands</vh></v>
+<v t="T417"><vh>About the Tangle command</vh></v>
+<v t="T418"><vh>About hyperlinking</vh></v>
+<v t="T419"><vh>Fixed significant bugs</vh></v>
+<v t="T420"><vh>Other improvements</vh></v>
+<v t="T421"><vh>Improved memory management</vh></v>
+<v t="T422"><vh>The trace function (Sherlock tracing)</vh></v>
+<v t="T423"><vh>Improved directory and file name handling</vh></v>
+<v t="T424"><vh>Improvements that will be propagated back to LeoCB</vh></v>
 </v>
-<v t="T413"><vh>0.07 Stability and scripting</vh>
-<v t="T414"><vh>Thorough testing</vh></v>
-<v t="T415"><vh>Removed many irritations.  Some remain</vh></v>
-<v t="T416"><vh>Fixed bug that can drop data</vh></v>
-<v t="T417"><vh>Added Python window and scripting support</vh></v>
-<v t="T418"><vh>Added Script to convert from Leo 1 to Leo 2</vh></v>
-<v t="T419"><vh>Added Leo Documentation command</vh></v>
-<v t="T420"><vh>Added Auto indent</vh></v>
+<v t="T425"><vh>0.07 Stability and scripting</vh>
+<v t="T426"><vh>Thorough testing</vh></v>
+<v t="T427"><vh>Removed many irritations.  Some remain</vh></v>
+<v t="T428"><vh>Fixed bug that can drop data</vh></v>
+<v t="T429"><vh>Added Python window and scripting support</vh></v>
+<v t="T430"><vh>Added Script to convert from Leo 1 to Leo 2</vh></v>
+<v t="T431"><vh>Added Leo Documentation command</vh></v>
+<v t="T432"><vh>Added Auto indent</vh></v>
 </v>
-<v t="T421"><vh>0.06 Minor changes for Linux</vh></v>
-<v t="T422"><vh>0.05 The first functional version</vh>
-<v t="T423"><vh>Testing &amp; Performance</vh></v>
-<v t="T424"><vh>Installing and Running leo.py</vh></v>
+<v t="T433"><vh>0.06 Minor changes for Linux</vh></v>
+<v t="T434"><vh>0.05 The first functional version</vh>
+<v t="T435"><vh>Testing &amp; Performance</vh></v>
+<v t="T436"><vh>Installing and Running leo.py</vh></v>
 <v><vh>Files &amp; Folders</vh></v>
-<v t="T425"><vh>Functional Commands and Features</vh></v>
-<v t="T426"><vh>Non-Functional Commands and Features</vh></v>
-<v t="T427"><vh>Bugs, Problems and Code Quality</vh></v>
-<v t="T428"><vh>New Things To Do</vh></v>
+<v t="T437"><vh>Functional Commands and Features</vh></v>
+<v t="T438"><vh>Non-Functional Commands and Features</vh></v>
+<v t="T439"><vh>Bugs, Problems and Code Quality</vh></v>
+<v t="T440"><vh>New Things To Do</vh></v>
 </v>
 </v>
 <v><vh>Borland PC versions</vh>
-<v t="T429"><vh>Borland 2.7 Major bug fix: please upgrade</vh></v>
-<v t="T430"><vh>Borland 2.6 Major changes: please upgrade</vh>
-<v t="T431"><vh>Format change: no blank lines between sentinels in derived files</vh></v>
-<v t="T432"><vh>Eliminated spurious read errors</vh></v>
-<v t="T433"><vh>@c now is the same as @code</vh></v>
-<v t="T434"><vh>Fixed old bugs in Untangle</vh></v>
-<v t="T435"><vh>Compatibility with leo.py v2.0</vh></v>
-<v t="T436"><vh>Changed "Batch" check box to "Show Context"</vh></v>
-<v t="T437"><vh>Can not ensure .leo extension</vh></v>
+<v t="T441"><vh>Borland 2.7 Major bug fix: please upgrade</vh></v>
+<v t="T442"><vh>Borland 2.6 Major changes: please upgrade</vh>
+<v t="T443"><vh>Format change: no blank lines between sentinels in derived files</vh></v>
+<v t="T444"><vh>Eliminated spurious read errors</vh></v>
+<v t="T445"><vh>@c now is the same as @code</vh></v>
+<v t="T446"><vh>Fixed old bugs in Untangle</vh></v>
+<v t="T447"><vh>Compatibility with leo.py v2.0</vh></v>
+<v t="T448"><vh>Changed "Batch" check box to "Show Context"</vh></v>
+<v t="T449"><vh>Can not ensure .leo extension</vh></v>
 </v>
-<v t="T438"><vh>version 2.5: Fixed several serious bugs</vh></v>
-<v t="T439"><vh>version 2.4: The new Leo2 (Do not use this version)</vh>
-<v t="T440"><vh>Fixed clone bugs</vh></v>
-<v t="T441"><vh>.leo files now contain all data</vh></v>
-<v t="T442"><vh>Replaced archive command</vh></v>
-<v t="T443"><vh>Automatic update of @file trees</vh></v>
-<v t="T444"><vh>Errors while reading</vh></v>
-<v t="T445"><vh>Errors while writing</vh></v>
-<v t="T446"><vh>Drawbacks of @file trees</vh></v>
+<v t="T450"><vh>version 2.5: Fixed several serious bugs</vh></v>
+<v t="T451"><vh>version 2.4: The new Leo2 (Do not use this version)</vh>
+<v t="T452"><vh>Fixed clone bugs</vh></v>
+<v t="T453"><vh>.leo files now contain all data</vh></v>
+<v t="T454"><vh>Replaced archive command</vh></v>
+<v t="T455"><vh>Automatic update of @file trees</vh></v>
+<v t="T456"><vh>Errors while reading</vh></v>
+<v t="T457"><vh>Errors while writing</vh></v>
+<v t="T458"><vh>Drawbacks of @file trees</vh></v>
 </v>
-<v t="T447"><vh>version 2.3: Do not use this version</vh>
-<v t="T448"><vh>@first directive</vh></v>
-<v t="T449"><vh>Archive Entire Outline command</vh></v>
-<v t="T450"><vh>Fixed @c syntax coloring</vh></v>
-<v t="T451"><vh>Fixed bugs in the find command</vh></v>
-<v t="T452"><vh>Fixed bug involving @file dirty bits</vh></v>
-<v t="T453"><vh>The Log window is now part of the Leo window</vh></v>
+<v t="T459"><vh>version 2.3: Do not use this version</vh>
+<v t="T460"><vh>@first directive</vh></v>
+<v t="T461"><vh>Archive Entire Outline command</vh></v>
+<v t="T462"><vh>Fixed @c syntax coloring</vh></v>
+<v t="T463"><vh>Fixed bugs in the find command</vh></v>
+<v t="T464"><vh>Fixed bug involving @file dirty bits</vh></v>
+<v t="T465"><vh>The Log window is now part of the Leo window</vh></v>
 </v>
-<v t="T454"><vh>version 2.2 (beta)</vh></v>
-<v t="T455"><vh>version 2.1 (beta)</vh></v>
+<v t="T466"><vh>version 2.2 (beta)</vh></v>
+<v t="T467"><vh>version 2.1 (beta)</vh></v>
 <v><vh>1.x versions</vh>
-<v t="T456"><vh>Changes made in version 1.15</vh></v>
-<v t="T457"><vh>Changes made in version 1.14</vh></v>
-<v t="T458"><vh>Changes made in version 1.13</vh></v>
-<v t="T459"><vh>Changes made in version 1.12</vh></v>
-<v t="T460"><vh>Changes made in version 1.11</vh>
-<v t="T461" a="C"><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
-<v t="T462" a="C"><vh>Untangling: updating an outline</vh></v>
+<v t="T468"><vh>Changes made in version 1.15</vh></v>
+<v t="T469"><vh>Changes made in version 1.14</vh></v>
+<v t="T470"><vh>Changes made in version 1.13</vh></v>
+<v t="T471"><vh>Changes made in version 1.12</vh></v>
+<v t="T472"><vh>Changes made in version 1.11</vh>
+<v t="T473" a="C"><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
+<v t="T474" a="C"><vh>Untangling: updating an outline</vh></v>
 </v>
-<v t="T463"><vh>Changes made in version 1.10</vh></v>
-<v t="T464"><vh>Changes made in version 1.9</vh>
-<v t="T465"><vh>New Execute Script command</vh></v>
-<v t="T466"><vh>Python window improved</vh></v>
+<v t="T475"><vh>Changes made in version 1.10</vh></v>
+<v t="T476"><vh>Changes made in version 1.9</vh>
+<v t="T477"><vh>New Execute Script command</vh></v>
+<v t="T478"><vh>Python window improved</vh></v>
 </v>
-<v t="T467"><vh>Changes made in version 1.8</vh></v>
-<v t="T468"><vh>Changes made in version 1.7</vh></v>
-<v t="T469"><vh>Changes made in version 1.6</vh></v>
-<v t="T470"><vh>Changes made in version 1.5</vh></v>
-<v t="T471"><vh>Changes made in version 1.4</vh>
-<v t="T472"><vh>Outline To Noweb command</vh></v>
-<v t="T473"><vh>find/change Python scripts</vh></v>
-<v t="T474"><vh>v.commands() Python method</vh></v>
+<v t="T479"><vh>Changes made in version 1.8</vh></v>
+<v t="T480"><vh>Changes made in version 1.7</vh></v>
+<v t="T481"><vh>Changes made in version 1.6</vh></v>
+<v t="T482"><vh>Changes made in version 1.5</vh></v>
+<v t="T483"><vh>Changes made in version 1.4</vh>
+<v t="T484"><vh>Outline To Noweb command</vh></v>
+<v t="T485"><vh>find/change Python scripts</vh></v>
+<v t="T486"><vh>v.commands() Python method</vh></v>
 </v>
-<v t="T475"><vh>Changes made in version 1.3</vh></v>
-<v t="T476"><vh>Changes made in version 1.2</vh></v>
-<v t="T477"><vh>Changes made in version 1.1</vh></v>
-<v t="T478"><vh>Changes made in version 1.0</vh></v>
-<v t="T479"><vh>Changes made in version 0.19</vh>
-<v t="T480"><vh>Fixed directory bug</vh></v>
-<v t="T481"><vh>Added @language HTML, perl and perlpod</vh></v>
-<v t="T482"><vh>Eliminated @noweb &amp; replaced @cweb with @language cweb</vh></v>
-<v t="T203" a="C"><vh>About cweb mode </vh></v>
-<v t="T483"><vh>Improved syntax coloring</vh></v>
-<v t="T484"><vh>Improved Print command</vh></v>
-<v t="T485"><vh>Improved how Untangle handles block comments</vh></v>
-<v t="T486"><vh>Eliminated clone windows (but not clone nodes!)</vh></v>
-<v t="T487"><vh>Eliminated Extended noweb Syntax</vh></v>
+<v t="T487"><vh>Changes made in version 1.3</vh></v>
+<v t="T488"><vh>Changes made in version 1.2</vh></v>
+<v t="T489"><vh>Changes made in version 1.1</vh></v>
+<v t="T490"><vh>Changes made in version 1.0</vh></v>
+<v t="T491"><vh>Changes made in version 0.19</vh>
+<v t="T492"><vh>Fixed directory bug</vh></v>
+<v t="T493"><vh>Added @language HTML, perl and perlpod</vh></v>
+<v t="T494"><vh>Eliminated @noweb &amp; replaced @cweb with @language cweb</vh></v>
+<v t="T215" a="C"><vh>About cweb mode </vh></v>
+<v t="T495"><vh>Improved syntax coloring</vh></v>
+<v t="T496"><vh>Improved Print command</vh></v>
+<v t="T497"><vh>Improved how Untangle handles block comments</vh></v>
+<v t="T498"><vh>Eliminated clone windows (but not clone nodes!)</vh></v>
+<v t="T499"><vh>Eliminated Extended noweb Syntax</vh></v>
 </v>
 <v><vh>Changes made in version 0.18</vh>
-<v t="T488"><vh>File format extended</vh></v>
-<v t="T489"><vh>Fixed bug in languages without block comments</vh></v>
-<v t="T490"><vh>Added @header and @noheader directives</vh></v>
-<v t="T491"><vh>Added @language fortran90</vh></v>
-<v t="T492"><vh>Added @language perlpod</vh></v>
+<v t="T500"><vh>File format extended</vh></v>
+<v t="T501"><vh>Fixed bug in languages without block comments</vh></v>
+<v t="T502"><vh>Added @header and @noheader directives</vh></v>
+<v t="T503"><vh>Added @language fortran90</vh></v>
+<v t="T504"><vh>Added @language perlpod</vh></v>
 </v>
-<v t="T493"><vh>Changes made in version 0.17</vh>
-<v t="T494"><vh>Support for noweb &lt;&lt;*&gt;&gt; convention</vh></v>
-<v t="T495"><vh>new @cweb, @noweb, @path, @tabwidth and @pagewidth directives</vh></v>
-<v t="T496"><vh>CWEB mode now has a chance of working</vh></v>
-<v t="T497"><vh>Reduced default screen size</vh></v>
+<v t="T505"><vh>Changes made in version 0.17</vh>
+<v t="T506"><vh>Support for noweb &lt;&lt;*&gt;&gt; convention</vh></v>
+<v t="T507"><vh>new @cweb, @noweb, @path, @tabwidth and @pagewidth directives</vh></v>
+<v t="T508"><vh>CWEB mode now has a chance of working</vh></v>
+<v t="T509"><vh>Reduced default screen size</vh></v>
 </v>
-<v t="T498"><vh>Changes made in version 0.16</vh>
-<v t="T499"><vh>Bug fixes</vh></v>
-<v t="T500"><vh>Fixed crasher involving switching windows</vh></v>
-<v t="T501"><vh>new @language directive</vh></v>
-<v t="T502"><vh>@language and @comment directives can be inherited</vh></v>
-<v t="T503"><vh>Untangle can now handle non-C files</vh></v>
-<v t="T504"><vh>Untangle now removes trailing blank lines</vh></v>
-<v t="T505"><vh>new @verbose, @terse and @silent directives</vh></v>
-<v t="T506"><vh>Default directories</vh></v>
-<v t="T507"><vh>Import Files command now handles Pascal , Python and Java files.</vh></v>
-<v t="T508"><vh>Toggle Active Pane command</vh></v>
-<v t="T509"><vh>Path delimiters are now '\' instead of '/'</vh></v>
-<v t="T510"><vh>Cleaned up code</vh></v>
-<v t="T511"><vh>Fixed crasher involving empty section names</vh></v>
-<v t="T512"><vh>Untangle warns about sections not in the outline</vh></v>
-<v t="T513"><vh>A limitations involving Untangle</vh></v>
+<v t="T510"><vh>Changes made in version 0.16</vh>
+<v t="T511"><vh>Bug fixes</vh></v>
+<v t="T512"><vh>Fixed crasher involving switching windows</vh></v>
+<v t="T513"><vh>new @language directive</vh></v>
+<v t="T514"><vh>@language and @comment directives can be inherited</vh></v>
+<v t="T515"><vh>Untangle can now handle non-C files</vh></v>
+<v t="T516"><vh>Untangle now removes trailing blank lines</vh></v>
+<v t="T517"><vh>new @verbose, @terse and @silent directives</vh></v>
+<v t="T518"><vh>Default directories</vh></v>
+<v t="T519"><vh>Import Files command now handles Pascal , Python and Java files.</vh></v>
+<v t="T520"><vh>Toggle Active Pane command</vh></v>
+<v t="T521"><vh>Path delimiters are now '\' instead of '/'</vh></v>
+<v t="T522"><vh>Cleaned up code</vh></v>
+<v t="T523"><vh>Fixed crasher involving empty section names</vh></v>
+<v t="T524"><vh>Untangle warns about sections not in the outline</vh></v>
+<v t="T525"><vh>A limitations involving Untangle</vh></v>
 </v>
-<v t="T514" a="C"><vh>Known Bugs &amp; Limitations</vh></v>
+<v t="T526" a="C"><vh>Known Bugs &amp; Limitations</vh></v>
 </v>
 </v>
 </v>
-<v t="T515"><vh>Users Guide</vh>
-<v t="T516"><vh>An overview of Leo</vh></v>
-<v t="T517"><vh>Front material</vh>
-<v t="T518"><vh>Title Page &amp; Summary</vh></v>
-<v t="T519"><vh>Preface</vh></v>
-<v t="T520"><vh>Leo's Design Goals</vh></v>
+<v t="T527"><vh>Users Guide</vh>
+<v t="T528"><vh>An overview of Leo</vh></v>
+<v t="T529"><vh>Front material</vh>
+<v t="T530"><vh>Title Page &amp; Summary</vh></v>
+<v t="T531"><vh>Preface</vh></v>
+<v t="T532"><vh>Leo's Design Goals</vh></v>
 <v t="T7" a="C"><vh>Acknowledgements</vh></v>
-<v t="T521"><vh>Legal Notices: Leo uses the Python license</vh></v>
+<v t="T533"><vh>Legal Notices: Leo uses the Python license</vh></v>
 </v>
 <v><vh>Chapter 1: Introducing Leo</vh>
-<v t="T522"><vh>Overview</vh></v>
-<v t="T523"><vh>Leo's main window</vh></v>
-<v t="T524"><vh>Body text and sections</vh></v>
-<v t="T525"><vh>Outlines organize sections</vh>
-<v t="T526"><vh>removeSentinelsCommand</vh>
-<v t="T527"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
-<v t="T528"><vh>&lt;&lt; set delims from the header line &gt;&gt;</vh></v>
-<v t="T529"><vh>&lt;&lt; Write s into newFileName &gt;&gt;</vh></v>
+<v t="T534"><vh>Overview</vh></v>
+<v t="T535"><vh>Leo's main window</vh></v>
+<v t="T536"><vh>Body text and sections</vh></v>
+<v t="T537"><vh>Outlines organize sections</vh>
+<v t="T538"><vh>removeSentinelsCommand</vh>
+<v t="T539"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
+<v t="T540"><vh>&lt;&lt; set delims from the header line &gt;&gt;</vh></v>
+<v t="T541"><vh>&lt;&lt; Write s into newFileName &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T530"><vh>Clones manage tasks</vh></v>
-<v t="T531"><vh>Outlines generate derived files</vh></v>
+<v t="T542"><vh>Clones manage tasks</vh></v>
+<v t="T543"><vh>Outlines generate derived files</vh></v>
 </v>
-<v t="T532"><vh>Chapter 2: Installing Leo</vh>
+<v t="T544"><vh>Chapter 2: Installing Leo</vh>
 <v t="T45" a="C"><vh>System requirements</vh></v>
 <v t="T47" a="C"><vh>How to install leo.py on Windows</vh></v>
 <v t="T56" a="C"><vh>How to associate leo.py with .leo files on Windows</vh></v>
 <v t="T58" a="C"><vh>Quick start</vh></v>
 </v>
-<v t="T533"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
-<v t="T534" a="C"><vh>Cloning headlines</vh>
-<v t="T535"><vh>read me</vh></v>
-<v t="T536" a="C"><vh>a</vh>
-<v t="T537" a="C"><vh>b</vh>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
+<v t="T545"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
+<v t="T546" a="C"><vh>Cloning headlines</vh>
+<v t="T547"><vh>read me</vh></v>
+<v t="T548" a="C"><vh>a</vh>
+<v t="T549" a="C"><vh>b</vh>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
-</v>
-</v>
-<v t="T541"><vh>g</vh></v>
-<v t="T537" a="C"><vh>b</vh>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
-</v>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
 </v>
+<v t="T553"><vh>g</vh></v>
+<v t="T549" a="C"><vh>b</vh>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
-<v t="T536" a="C"><vh>a</vh>
-<v t="T537" a="C"><vh>b</vh>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
-</v>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
-</v>
-</v>
-<v t="T541"><vh>g</vh></v>
-<v t="T537" a="C"><vh>b</vh>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
-</v>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
 </v>
 </v>
-<v t="T542"><vh>f</vh></v>
+<v t="T548" a="C"><vh>a</vh>
+<v t="T549" a="C"><vh>b</vh>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
-<v t="T543"><vh>Creating and destroying headlines</vh></v>
-<v t="T544"><vh>Cutting, pasting and deleting headlines</vh></v>
-<v t="T380" a="C"><vh>Dragging headlines</vh></v>
-<v t="T545"><vh>Editing body text</vh></v>
-<v t="T546"><vh>Expanding &amp; contracting headlines</vh></v>
-<v t="T547"><vh>Indenting body text automatically</vh>
-<v t="T205" a="C"><vh>Optional Emacs-style auto-indent</vh></v>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
-<v t="T548"><vh>Marking headlines</vh></v>
-<v t="T549"><vh>Moving &amp; Reorganizing headlines</vh></v>
-<v t="T550"><vh>Opening URL's automatically</vh>
-<v t="T200" a="C"><vh>@url</vh></v>
 </v>
-<v t="T551"><vh>Resizing panes</vh></v>
-<v t="T552"><vh>Undoing operations</vh></v>
+<v t="T553"><vh>g</vh></v>
+<v t="T549" a="C"><vh>b</vh>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
-<v t="T553"><vh>Chapter 4: Writing Programs in Leo</vh>
-<v t="T554"><vh>Overview</vh></v>
-<v t="T555"><vh>Sections and section references</vh></v>
-<v t="T556"><vh>Organizing @file trees.</vh>
-<v t="T557"><vh>Examples</vh>
-<v t="T558"><vh>@file f.c</vh>
-<v t="T559"><vh>&lt;&lt; constants &gt;&gt;</vh></v>
-<v t="T560"><vh>&lt;&lt; declarations &gt;&gt;</vh></v>
-<v t="T561"><vh>function 1</vh></v>
-<v t="T562"><vh>function 2</vh></v>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
-<v t="T563"><vh>@file classX.py</vh>
+</v>
+</v>
+<v t="T554"><vh>f</vh></v>
+</v>
+<v t="T555"><vh>Creating and destroying headlines</vh></v>
+<v t="T556"><vh>Cutting, pasting and deleting headlines</vh></v>
+<v t="T392" a="C"><vh>Dragging headlines</vh></v>
+<v t="T557"><vh>Editing body text</vh></v>
+<v t="T558"><vh>Expanding &amp; contracting headlines</vh></v>
+<v t="T559"><vh>Indenting body text automatically</vh>
+<v t="T217" a="C"><vh>Optional Emacs-style auto-indent</vh></v>
+</v>
+<v t="T560"><vh>Marking headlines</vh></v>
+<v t="T561"><vh>Moving &amp; Reorganizing headlines</vh></v>
+<v t="T562"><vh>Opening URL's automatically</vh>
+<v t="T212" a="C"><vh>@url</vh></v>
+</v>
+<v t="T563"><vh>Resizing panes</vh></v>
+<v t="T564"><vh>Undoing operations</vh></v>
+</v>
+<v t="T565"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T566"><vh>Overview</vh></v>
+<v t="T567"><vh>Sections and section references</vh></v>
+<v t="T568"><vh>Organizing @file trees.</vh>
+<v t="T569"><vh>Examples</vh>
+<v t="T570"><vh>@file f.c</vh>
+<v t="T571"><vh>&lt;&lt; constants &gt;&gt;</vh></v>
+<v t="T572"><vh>&lt;&lt; declarations &gt;&gt;</vh></v>
+<v t="T573"><vh>function 1</vh></v>
+<v t="T574"><vh>function 2</vh></v>
+</v>
+<v t="T575"><vh>@file classX.py</vh>
 <v><vh>&lt;&lt; imports for classX &gt;&gt;</vh></v>
-<v t="T564"><vh>Getters</vh>
+<v t="T576"><vh>Getters</vh>
 <v><vh>getter 1</vh></v>
 <v><vh>getter 2</vh></v>
 </v>
-<v t="T565"><vh>Setters</vh>
+<v t="T577"><vh>Setters</vh>
 <v><vh>setter 1</vh></v>
 <v><vh>setter 2</vh></v>
 </v>
 </v>
-<v t="T566"><vh>@file mainClass.py</vh>
+<v t="T578"><vh>@file mainClass.py</vh>
 <v><vh>&lt;&lt;mainClass imports &gt;&gt;</vh></v>
-<v t="T567"><vh>&lt;&lt;class mainClass&gt;&gt;</vh>
+<v t="T579"><vh>&lt;&lt;class mainClass&gt;&gt;</vh>
 <v><vh>method 1</vh></v>
 <v><vh>method 2</vh></v>
 </v>
-<v t="T568"><vh>&lt;&lt;class helperClass&gt;&gt;</vh>
+<v t="T580"><vh>&lt;&lt;class helperClass&gt;&gt;</vh>
 <v><vh>method 1</vh></v>
 <v><vh>method 2</vh></v>
 </v>
 </v>
-<v t="T569"><vh>@file bad</vh>
-<v t="T570"><vh>Methods</vh>
-<v t="T571"><vh>&lt;&lt; section 1 &gt;&gt;</vh>
-<v t="T572"><vh>A</vh></v>
+<v t="T581"><vh>@file bad</vh>
+<v t="T582"><vh>Methods</vh>
+<v t="T583"><vh>&lt;&lt; section 1 &gt;&gt;</vh>
+<v t="T584"><vh>A</vh></v>
 </v>
 </v>
 </v>
 </v>
 </v>
-<v t="T573"><vh>More about directives</vh>
-<v t="T574"><vh>@color and @nocolor control syntax coloring</vh></v>
-<v t="T575"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
-<v t="T576"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
-<v t="T577"><vh>@encoding directive specifies encoding of text</vh></v>
-<v t="T578"><vh>@first and @last directives allow leading and trailing lines in @file trees</vh></v>
-<v t="T579"><vh>@language specifying the target language</vh></v>
-<v t="T580"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
-<v t="T222" a="C"><vh>@raw and @end_raw directives delimit raw text</vh></v>
+<v t="T585"><vh>More about directives</vh>
+<v t="T586"><vh>@color and @nocolor control syntax coloring</vh></v>
+<v t="T587"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
+<v t="T588"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
+<v t="T589"><vh>@encoding directive specifies encoding of text</vh></v>
+<v t="T590"><vh>@first and @last directives allow leading and trailing lines in @file trees</vh></v>
+<v t="T591"><vh>@language specifying the target language</vh></v>
+<v t="T592"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
+<v t="T234" a="C"><vh>@raw and @end_raw directives delimit raw text</vh></v>
 </v>
-<v t="T203" a="C"><vh>About cweb mode </vh></v>
-<v t="T207" a="C"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+<v t="T215" a="C"><vh>About cweb mode </vh></v>
+<v t="T219" a="C"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 <v><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
-<v t="T581"><vh>@root vs. @file trees</vh></v>
-<v t="T582"><vh>Sections and section definitions</vh></v>
-<v t="T583"><vh>Tangling @root trees with the Tangle commands</vh></v>
-<v t="T584"><vh>Untangling @root trees with the Untangle commands</vh></v>
-<v t="T223" a="C"><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
+<v t="T593"><vh>@root vs. @file trees</vh></v>
+<v t="T594"><vh>Sections and section definitions</vh></v>
+<v t="T595"><vh>Tangling @root trees with the Tangle commands</vh></v>
+<v t="T596"><vh>Untangling @root trees with the Untangle commands</vh></v>
+<v t="T235" a="C"><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
 </v>
 </v>
-<v t="T585"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="T597"><vh>Chapter 5: Using Leo's Commands</vh>
 <v><vh> The File Menu</vh>
-<v t="T586"><vh>Loading, Saving and Reverting Files</vh></v>
-<v t="T587"><vh>Communicating with external editors</vh>
-<v t="T204" a="C"><vh>Open With command</vh>
-<v t="T194" a="C"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="T598"><vh>Loading, Saving and Reverting Files</vh></v>
+<v t="T599"><vh>Communicating with external editors</vh>
+<v t="T216" a="C"><vh>Open With command</vh>
+<v t="T206" a="C"><vh>createOpenWithMenuFromTable</vh></v>
 </v>
 </v>
-<v t="T588"><vh>Tangling an outline: Producing Derived Files</vh></v>
-<v t="T462" a="C"><vh>Untangling: updating an outline</vh></v>
-<v t="T589"><vh>Tangling and Untangling: the Interface with the IDE</vh></v>
-<v t="T590"><vh>Importing Files into Leo Outlines</vh></v>
-<v t="T591"><vh>Exporting Files from Leo Outlines</vh></v>
-<v t="T592"><vh>Quitting Leo</vh></v>
+<v t="T600"><vh>Tangling an outline: Producing Derived Files</vh></v>
+<v t="T474" a="C"><vh>Untangling: updating an outline</vh></v>
+<v t="T601"><vh>Tangling and Untangling: the Interface with the IDE</vh></v>
+<v t="T602"><vh>Importing Files into Leo Outlines</vh></v>
+<v t="T603"><vh>Exporting Files from Leo Outlines</vh></v>
+<v t="T604"><vh>Quitting Leo</vh></v>
 </v>
 <v><vh> The Edit Menu</vh>
-<v t="T593"><vh>Undoing changes</vh></v>
-<v t="T594"><vh>Cutting, pasting and selecting text</vh></v>
-<v t="T595"><vh>Shifting body text</vh></v>
-<v t="T596"><vh>Creating nodes from body text</vh></v>
-<v t="T597"><vh>Converting leading blanks and tabs in body text</vh></v>
-<v t="T598"><vh>Executing Python scripts in body text</vh></v>
-<v t="T599"><vh>Finding and changing text</vh>
-<v t="T600"><vh>Batch</vh></v>
-<v t="T601"><vh>Ignore Case</vh></v>
-<v t="T602"><vh>Mark Changes</vh></v>
-<v t="T603"><vh>Mark Matches</vh></v>
-<v t="T604"><vh>Pattern Match</vh></v>
-<v t="T605"><vh>Reverse</vh></v>
-<v t="T606"><vh>Search Body Text</vh></v>
-<v t="T607"><vh>Search Headline Text</vh></v>
-<v t="T608"><vh>Suboutline Only</vh></v>
-<v t="T609"><vh>Whole Word</vh></v>
-<v t="T610"><vh>Wrap Around</vh></v>
+<v t="T605"><vh>Undoing changes</vh></v>
+<v t="T606"><vh>Cutting, pasting and selecting text</vh></v>
+<v t="T607"><vh>Shifting body text</vh></v>
+<v t="T608"><vh>Creating nodes from body text</vh></v>
+<v t="T609"><vh>Converting leading blanks and tabs in body text</vh></v>
+<v t="T610"><vh>Executing Python scripts in body text</vh></v>
+<v t="T611"><vh>Finding and changing text</vh>
+<v t="T612"><vh>Batch</vh></v>
+<v t="T613"><vh>Ignore Case</vh></v>
+<v t="T614"><vh>Mark Changes</vh></v>
+<v t="T615"><vh>Mark Matches</vh></v>
+<v t="T616"><vh>Pattern Match</vh></v>
+<v t="T617"><vh>Reverse</vh></v>
+<v t="T618"><vh>Search Body Text</vh></v>
+<v t="T619"><vh>Search Headline Text</vh></v>
+<v t="T620"><vh>Suboutline Only</vh></v>
+<v t="T621"><vh>Whole Word</vh></v>
+<v t="T622"><vh>Wrap Around</vh></v>
 </v>
-<v t="T611"><vh>Finding locations in outlines corresponding to line in derived files</vh>
-<v t="T201" a="C"><vh>Go To Line Number command</vh></v>
+<v t="T623"><vh>Finding locations in outlines corresponding to line in derived files</vh>
+<v t="T213" a="C"><vh>Go To Line Number command</vh></v>
 </v>
-<v t="T612"><vh>Inserting the date and time</vh></v>
-<v t="T613"><vh>Reformatting paragraphs in body text</vh>
-<v t="T206" a="C"><vh>Reformat Paragraph command</vh></v>
+<v t="T624"><vh>Inserting the date and time</vh></v>
+<v t="T625"><vh>Reformatting paragraphs in body text</vh>
+<v t="T218" a="C"><vh>Reformat Paragraph command</vh></v>
 </v>
-<v t="T614"><vh>Matching brackets and parenthesis</vh></v>
-<v t="T615"><vh>Setting Preferences</vh>
-<v t="T616"><vh>PHP keywords</vh></v>
-<v t="T617"><vh>LaTex keywords</vh></v>
+<v t="T626"><vh>Matching brackets and parenthesis</vh></v>
+<v t="T627"><vh>Setting Preferences</vh>
+<v t="T628"><vh>PHP keywords</vh></v>
+<v t="T629"><vh>LaTex keywords</vh></v>
 </v>
 </v>
 <v><vh> The Outline Menu</vh>
-<v t="T618"><vh> Creating and deleting headlines</vh></v>
-<v t="T619"><vh> Cutting, pasting and deleting headlines</vh></v>
-<v t="T620"><vh> Expanding and contracting headlines</vh></v>
-<v t="T621"><vh> Moving, sorting and reorganizing headlines</vh></v>
-<v t="T622"><vh> Marking headlines</vh></v>
-<v t="T534" a="C"><vh>Cloning headlines</vh>
-<v t="T535"><vh>read me</vh></v>
-<v t="T536" a="C"><vh>a</vh>
-<v t="T537" a="C"><vh>b</vh>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
+<v t="T630"><vh> Creating and deleting headlines</vh></v>
+<v t="T631"><vh> Cutting, pasting and deleting headlines</vh></v>
+<v t="T632"><vh> Expanding and contracting headlines</vh></v>
+<v t="T633"><vh> Moving, sorting and reorganizing headlines</vh></v>
+<v t="T634"><vh> Marking headlines</vh></v>
+<v t="T546" a="C"><vh>Cloning headlines</vh>
+<v t="T547"><vh>read me</vh></v>
+<v t="T548" a="C"><vh>a</vh>
+<v t="T549" a="C"><vh>b</vh>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
-</v>
-</v>
-<v t="T541"><vh>g</vh></v>
-<v t="T537" a="C"><vh>b</vh>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
-</v>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
 </v>
+<v t="T553"><vh>g</vh></v>
+<v t="T549" a="C"><vh>b</vh>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
-<v t="T536" a="C"><vh>a</vh>
-<v t="T537" a="C"><vh>b</vh>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
-</v>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
-</v>
-</v>
-<v t="T541"><vh>g</vh></v>
-<v t="T537" a="C"><vh>b</vh>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
-</v>
-<v t="T538" a="C"><vh>c</vh>
-<v t="T539"><vh>d</vh></v>
-<v t="T540"><vh>e</vh></v>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
 </v>
 </v>
 </v>
-<v t="T542"><vh>f</vh></v>
+<v t="T548" a="C"><vh>a</vh>
+<v t="T549" a="C"><vh>b</vh>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
+</v>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
+</v>
+</v>
+<v t="T553"><vh>g</vh></v>
+<v t="T549" a="C"><vh>b</vh>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
+</v>
+<v t="T550" a="C"><vh>c</vh>
+<v t="T551"><vh>d</vh></v>
+<v t="T552"><vh>e</vh></v>
+</v>
+</v>
+</v>
+<v t="T554"><vh>f</vh></v>
 </v>
 </v>
 <v><vh> The Window Menu</vh>
-<v t="T623"><vh> Resizing panes</vh></v>
-<v t="T624"><vh> Cascading &amp; minimizing windows</vh></v>
-<v t="T625"><vh>Toggling the active pane</vh></v>
-<v t="T626"><vh>Toggling the orientation of the Leo window</vh></v>
+<v t="T635"><vh> Resizing panes</vh></v>
+<v t="T636"><vh> Cascading &amp; minimizing windows</vh></v>
+<v t="T637"><vh>Toggling the active pane</vh></v>
+<v t="T638"><vh>Toggling the orientation of the Leo window</vh></v>
 </v>
 <v><vh>The Help Menu</vh>
-<v t="T627"><vh>Getting Leo's version</vh></v>
-<v t="T628"><vh>Reading documentation</vh></v>
-<v t="T629"><vh>Configuring Leo</vh></v>
+<v t="T639"><vh>Getting Leo's version</vh></v>
+<v t="T640"><vh>Reading documentation</vh></v>
+<v t="T641"><vh>Configuring Leo</vh></v>
 </v>
 </v>
-<v t="T630"><vh>Chapter 6: Leo and Literate Programming</vh>
-<v t="T631"><vh>Why I like Literate Programming</vh>
-<v t="T632"><vh>Literate programming creates a new design dimension</vh></v>
-<v t="T633"><vh>Design and coding happen at the highest possible level</vh></v>
-<v t="T634"><vh>The visual weight of code is separate from its actual length</vh></v>
-<v t="T635"><vh>Sections show relations between snippets of code</vh></v>
-<v t="T636"><vh>Complex section names invite improvements</vh></v>
-<v t="T637"><vh>Sections create a place for extensive comments</vh></v>
-<v t="T638"><vh>Section names eliminate mundane comments</vh></v>
-<v t="T639"><vh>Sections create comments automatically</vh></v>
-<v t="T640"><vh>Literate programming clarifies the shape of functions</vh></v>
-<v t="T641"><vh>I spend less time formatting code</vh></v>
+<v t="T642"><vh>Chapter 6: Leo and Literate Programming</vh>
+<v t="T643"><vh>Why I like Literate Programming</vh>
+<v t="T644"><vh>Literate programming creates a new design dimension</vh></v>
+<v t="T645"><vh>Design and coding happen at the highest possible level</vh></v>
+<v t="T646"><vh>The visual weight of code is separate from its actual length</vh></v>
+<v t="T647"><vh>Sections show relations between snippets of code</vh></v>
+<v t="T648"><vh>Complex section names invite improvements</vh></v>
+<v t="T649"><vh>Sections create a place for extensive comments</vh></v>
+<v t="T650"><vh>Section names eliminate mundane comments</vh></v>
+<v t="T651"><vh>Sections create comments automatically</vh></v>
+<v t="T652"><vh>Literate programming clarifies the shape of functions</vh></v>
+<v t="T653"><vh>I spend less time formatting code</vh></v>
 </v>
-<v t="T642"><vh>How Leo Improves Literate Programming</vh>
-<v t="T643"><vh>Outlines add context</vh></v>
-<v t="T644"><vh>Outlines provide scope for commands</vh></v>
-<v t="T645"><vh>Clones create different views and focus attention</vh></v>
-<v t="T646"><vh>Outlines increase flexibility</vh></v>
-<v t="T647"><vh>Outlines express hierarchy directly</vh></v>
-<v t="T648"><vh>Outlines create new design dimensions</vh></v>
-<v t="T649"><vh>Leo improves tangling and adds untangling</vh></v>
+<v t="T654"><vh>How Leo Improves Literate Programming</vh>
+<v t="T655"><vh>Outlines add context</vh></v>
+<v t="T656"><vh>Outlines provide scope for commands</vh></v>
+<v t="T657"><vh>Clones create different views and focus attention</vh></v>
+<v t="T658"><vh>Outlines increase flexibility</vh></v>
+<v t="T659"><vh>Outlines express hierarchy directly</vh></v>
+<v t="T660"><vh>Outlines create new design dimensions</vh></v>
+<v t="T661"><vh>Leo improves tangling and adds untangling</vh></v>
 </v>
-<v t="T650"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
+<v t="T662"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
 </v>
-<v t="T651"><vh>Chapter 7: Scripting Leo with Python</vh>
-<v t="T652"><vh>Overview</vh></v>
+<v t="T663"><vh>Chapter 7: Scripting Leo with Python</vh>
+<v t="T664"><vh>Overview</vh></v>
 <v><vh>Basic scripts</vh>
-<v t="T653"><vh>Getting commanders and frames</vh></v>
-<v t="T654"><vh>Redirecting output from scripts</vh></v>
-<v t="T655"><vh>Getting the headline and body text of the presently selected node</vh></v>
-<v t="T656"><vh>Setting the headline and body text of the presently selected node</vh></v>
-<v t="T657"><vh>Traversing outlines</vh></v>
-<v t="T658"><vh>Updating the screen</vh></v>
+<v t="T665"><vh>Getting commanders and frames</vh></v>
+<v t="T666"><vh>Redirecting output from scripts</vh></v>
+<v t="T667"><vh>Getting the headline and body text of the presently selected node</vh></v>
+<v t="T668"><vh>Setting the headline and body text of the presently selected node</vh></v>
+<v t="T669"><vh>Traversing outlines</vh></v>
+<v t="T670"><vh>Updating the screen</vh></v>
 </v>
-<v t="T659"><vh>Invoking commands from scripts</vh></v>
-<v t="T660"><vh>Getting preferences</vh></v>
-<v t="T661"><vh>Setting preferences</vh></v>
-<v t="T662"><vh>Functions for finding and changing text from scripts</vh>
-<v t="T663"><vh>Example 1: the findAll function</vh></v>
-<v t="T664"><vh>Example 2: the reFindAll function</vh></v>
+<v t="T671"><vh>Invoking commands from scripts</vh></v>
+<v t="T672"><vh>Getting preferences</vh></v>
+<v t="T673"><vh>Setting preferences</vh></v>
+<v t="T674"><vh>Functions for finding and changing text from scripts</vh>
+<v t="T675"><vh>Example 1: the findAll function</vh></v>
+<v t="T676"><vh>Example 2: the reFindAll function</vh></v>
 </v>
-<v t="T665"><vh>Summary of the vnode class</vh>
-<v t="T666"><vh>Getters</vh></v>
-<v t="T667"><vh>Setters</vh></v>
-<v t="T668"><vh>An example script: children(v)</vh></v>
+<v t="T677"><vh>Summary of the vnode class</vh>
+<v t="T678"><vh>Getters</vh></v>
+<v t="T679"><vh>Setters</vh></v>
+<v t="T680"><vh>An example script: children(v)</vh></v>
 </v>
-<v t="T669"><vh>Functions defined in leoGlobals.py</vh></v>
-<v t="T670"><vh>Appendix to Chapter 7: Scripting the Borland version of Leo</vh>
-<v t="T671"><vh>Installing Python</vh></v>
-<v t="T672"><vh>Leo's Python Window</vh></v>
+<v t="T681"><vh>Functions defined in leoGlobals.py</vh></v>
+<v t="T682"><vh>Appendix to Chapter 7: Scripting the Borland version of Leo</vh>
+<v t="T683"><vh>Installing Python</vh></v>
+<v t="T684"><vh>Leo's Python Window</vh></v>
 <v><vh>Functions</vh>
-<v t="T673"><vh>topCommand</vh></v>
-<v t="T674"><vh>getCommands</vh></v>
-<v t="T675"><vh>getLeoPyWindow</vh></v>
+<v t="T685"><vh>topCommand</vh></v>
+<v t="T686"><vh>getCommands</vh></v>
+<v t="T687"><vh>getLeoPyWindow</vh></v>
 </v>
-<v t="T676"><vh>The Commands class</vh>
-<v t="T677"><vh>Updating the screen</vh></v>
-<v t="T678"><vh>File menu commands</vh></v>
-<v t="T679"><vh>Edit menu commands</vh></v>
-<v t="T680"><vh>Outline menu commands</vh></v>
-<v t="T681"><vh>Window menu commands</vh></v>
-<v t="T682"><vh>Menu enablers</vh></v>
-<v t="T683"><vh>Commands Utilities</vh></v>
+<v t="T688"><vh>The Commands class</vh>
+<v t="T689"><vh>Updating the screen</vh></v>
+<v t="T690"><vh>File menu commands</vh></v>
+<v t="T691"><vh>Edit menu commands</vh></v>
+<v t="T692"><vh>Outline menu commands</vh></v>
+<v t="T693"><vh>Window menu commands</vh></v>
+<v t="T694"><vh>Menu enablers</vh></v>
+<v t="T695"><vh>Commands Utilities</vh></v>
 </v>
-<v t="T684"><vh>The LeoPyWindow class</vh></v>
-<v t="T685"><vh>The Preferences class</vh></v>
-<v t="T686"><vh>The vnode class</vh>
-<v t="T687"><vh>Getters</vh></v>
-<v t="T688"><vh>Setters</vh></v>
-</v>
-</v>
-</v>
-<v t="T179" a="C"><vh>Chapter 8: Customizing Leo</vh>
-<v t="T180" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="T181" a="E"><vh>Using plugins and hooks</vh>
-<v t="T86" a="C"><vh>New plugin architecture</vh>
-<v t="T87"><vh>@file plugins/mod_open_with.py</vh>
-<v t="T88"><vh>on_idle</vh>
-<v t="T89"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
-<v t="T90"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
-<v t="T91"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T92"><vh>create_open_with_menu</vh>
-<v t="T93"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
+<v t="T696"><vh>The LeoPyWindow class</vh></v>
+<v t="T697"><vh>The Preferences class</vh></v>
+<v t="T698"><vh>The vnode class</vh>
+<v t="T699"><vh>Getters</vh></v>
+<v t="T700"><vh>Setters</vh></v>
 </v>
 </v>
 </v>
-<v t="T95" a="C"><vh>About hooks</vh></v>
-<v t="T182"><vh>SECURITY WARNINGS</vh>
-<v t="T183"><vh>The danger of trusting code in shared .leo files</vh></v>
-<v t="T184"><vh>NEVER use this kind of code in a hook!!</vh></v>
-<v t="T185"><vh>Don't use rexec !!</vh>
-<v t="T186"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
-<v t="T187"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
-<v t="T188"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
+<v t="T182" a="C"><vh>Chapter 8: Customizing Leo</vh>
+<v t="T183" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="T184" a="E"><vh>Using plugins and hooks</vh>
+<v t="T185"><vh>New plugin architecture</vh>
+<v t="T186"><vh>@file plugins/mod_open_with.py</vh>
+<v t="T187"><vh>on_idle</vh>
+<v t="T188"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
+<v t="T189"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
+<v t="T190"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T189"><vh>Convenience routines for plugins</vh>
-<v t="T190"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
-<v t="T191"><vh>Convenience methods to create, destroy and modify menus</vh>
-<v t="T192"><vh>createMenuItemsFromTable</vh></v>
-<v t="T193"><vh>createNewMenu</vh></v>
-<v t="T194" a="C"><vh>createOpenWithMenuFromTable</vh></v>
-<v t="T195"><vh>deleteMenu</vh></v>
-<v t="T196"><vh>deleteMenuItem</vh></v>
-<v t="T197"><vh>Example: how to create a menu</vh></v>
+<v t="T191"><vh>create_open_with_menu</vh>
+<v t="T192"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T198"><vh>Translating menus into other languages</vh></v>
+</v>
+<v t="T193"><vh>About hooks</vh></v>
+<v t="T194"><vh>SECURITY WARNINGS</vh>
+<v t="T195"><vh>The danger of trusting code in shared .leo files</vh></v>
+<v t="T196"><vh>NEVER use this kind of code in a hook!!</vh></v>
+<v t="T197"><vh>Don't use rexec !!</vh>
+<v t="T198"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
+<v t="T199"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
+<v t="T200"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T201"><vh>Convenience routines for plugins</vh>
+<v t="T202"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
+<v t="T203"><vh>Convenience methods to create, destroy and modify menus</vh>
+<v t="T204"><vh>createMenuItemsFromTable</vh></v>
+<v t="T205"><vh>createNewMenu</vh></v>
+<v t="T206" a="C"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="T207"><vh>deleteMenu</vh></v>
+<v t="T208"><vh>deleteMenuItem</vh></v>
+<v t="T209"><vh>Example: how to create a menu</vh></v>
+</v>
+</v>
+<v t="T210"><vh>Translating menus into other languages</vh></v>
 </v>
 <v t="T57" a="C"><vh>Putting the Leo icon in Leo windows</vh></v>
 </v>
-<v t="T689"><vh>Chapter 9: History of Leo</vh>
-<v t="T690"><vh>Beginnings</vh></v>
-<v t="T691"><vh>Versions, and more versions</vh></v>
-<v t="T692"><vh>Designing @file trees</vh>
-<v t="T693"><vh>Deciding to do Leo2</vh></v>
-<v t="T694"><vh>A prototype</vh></v>
-<v t="T695"><vh>User interaction</vh></v>
-<v t="T696"><vh>The write code</vh></v>
-<v t="T697"><vh>The read code</vh></v>
-<v t="T698"><vh>The load/save code</vh></v>
-<v t="T699"><vh>Attributes, mirroring and dummy nodes</vh></v>
-<v t="T700"><vh>Clones</vh></v>
-<v t="T701"><vh>Error recovery, at last</vh></v>
+<v t="T701"><vh>Chapter 9: History of Leo</vh>
+<v t="T702"><vh>Beginnings</vh></v>
+<v t="T703"><vh>Versions, and more versions</vh></v>
+<v t="T704"><vh>Designing @file trees</vh>
+<v t="T705"><vh>Deciding to do Leo2</vh></v>
+<v t="T706"><vh>A prototype</vh></v>
+<v t="T707"><vh>User interaction</vh></v>
+<v t="T708"><vh>The write code</vh></v>
+<v t="T709"><vh>The read code</vh></v>
+<v t="T710"><vh>The load/save code</vh></v>
+<v t="T711"><vh>Attributes, mirroring and dummy nodes</vh></v>
+<v t="T712"><vh>Clones</vh></v>
+<v t="T713"><vh>Error recovery, at last</vh></v>
 </v>
 </v>
-<v t="T702"><vh>Chapter 10: Theory of Operation</vh>
-<v t="T703"><vh>Overview</vh></v>
-<v t="T704"><vh>Nodes</vh></v>
-<v t="T705"><vh>Drawing and events</vh></v>
-<v t="T706"><vh>Clones</vh></v>
-<v t="T707"><vh>Find and change commands</vh></v>
-<v t="T708"><vh>Tangle and Untangle commands</vh></v>
-<v t="T84" a="C"><vh>Unicode theory of operation</vh></v>
-<v t="T709"><vh>Unlimited undo</vh></v>
+<v t="T714"><vh>Chapter 10: Theory of Operation</vh>
+<v t="T715"><vh>Overview</vh></v>
+<v t="T716"><vh>Nodes</vh></v>
+<v t="T717"><vh>Drawing and events</vh></v>
+<v t="T718"><vh>Clones</vh></v>
+<v t="T719"><vh>Find and change commands</vh></v>
+<v t="T720"><vh>Tangle and Untangle commands</vh></v>
+<v t="T721"><vh>Unicode theory of operation</vh></v>
+<v t="T722"><vh>Unlimited undo</vh></v>
 </v>
-<v t="T710"><vh>Appendices</vh>
-<v t="T298" a="C"><vh>Code hidden in leo.py</vh>
-<v t="T299"><vh>c2py.py</vh></v>
-<v t="T300"><vh>disStats.py</vh></v>
-<v t="T301"><vh>Tkinter utilities</vh></v>
-<v t="T302"><vh>Font dialog</vh></v>
-<v t="T303"><vh>Syntax coloring code</vh></v>
-<v t="T304"><vh>Tree code</vh></v>
+<v t="T723"><vh>Appendices</vh>
+<v t="T310" a="C"><vh>Code hidden in leo.py</vh>
+<v t="T311"><vh>c2py.py</vh></v>
+<v t="T312"><vh>disStats.py</vh></v>
+<v t="T313"><vh>Tkinter utilities</vh></v>
+<v t="T314"><vh>Font dialog</vh></v>
+<v t="T315"><vh>Syntax coloring code</vh></v>
+<v t="T316"><vh>Tree code</vh></v>
 </v>
-<v t="T711"><vh>Converting @root trees to @file trees</vh></v>
-<v t="T712"><vh>Directives</vh>
-<v t="T713"><vh>@c and @code</vh></v>
-<v t="T714"><vh>@chapter (Macintosh only)</vh></v>
-<v t="T715"><vh>@color</vh></v>
-<v t="T716"><vh>@comment</vh></v>
-<v t="T717"><vh>@delims (not valid in @root or @unit trees)</vh></v>
-<v t="T718"><vh>@doc and @(space)</vh></v>
-<v t="T719"><vh>@file (not valid in @root or @unit trees)</vh></v>
-<v t="T720"><vh>@first (not valid in @root or @unit trees)</vh></v>
-<v t="T721"><vh>@ignore  (not valid in @file trees)</vh></v>
-<v t="T722"><vh>@language</vh></v>
-<v t="T723"><vh>@nocolor</vh></v>
-<v t="T724"><vh>@others (valid only in @file trees)</vh></v>
-<v t="T725"><vh>@pagewidth</vh></v>
-<v t="T726"><vh>@path</vh></v>
-<v t="T727"><vh>@root  (not valid in @file trees)</vh></v>
-<v t="T728"><vh>@section (Macintosh only)</vh></v>
-<v t="T729"><vh>@silent (not valid in @file trees)</vh></v>
-<v t="T730"><vh>@tabwidth</vh></v>
-<v t="T731"><vh>@terse  (not valid in @file trees)</vh></v>
-<v t="T732"><vh>@unit   (not valid in @file trees)</vh></v>
-<v t="T733"><vh>@verbose, @terse and @silent directives</vh></v>
+<v t="T724"><vh>Converting @root trees to @file trees</vh></v>
+<v t="T725"><vh>Directives</vh>
+<v t="T726"><vh>@c and @code</vh></v>
+<v t="T727"><vh>@chapter (Macintosh only)</vh></v>
+<v t="T728"><vh>@color</vh></v>
+<v t="T729"><vh>@comment</vh></v>
+<v t="T730"><vh>@delims (not valid in @root or @unit trees)</vh></v>
+<v t="T731"><vh>@doc and @(space)</vh></v>
+<v t="T732"><vh>@file (not valid in @root or @unit trees)</vh></v>
+<v t="T733"><vh>@first (not valid in @root or @unit trees)</vh></v>
+<v t="T734"><vh>@ignore  (not valid in @file trees)</vh></v>
+<v t="T735"><vh>@language</vh></v>
+<v t="T736"><vh>@nocolor</vh></v>
+<v t="T737"><vh>@others (valid only in @file trees)</vh></v>
+<v t="T738"><vh>@pagewidth</vh></v>
+<v t="T739"><vh>@path</vh></v>
+<v t="T740"><vh>@root  (not valid in @file trees)</vh></v>
+<v t="T741"><vh>@section (Macintosh only)</vh></v>
+<v t="T742"><vh>@silent (not valid in @file trees)</vh></v>
+<v t="T743"><vh>@tabwidth</vh></v>
+<v t="T744"><vh>@terse  (not valid in @file trees)</vh></v>
+<v t="T745"><vh>@unit   (not valid in @file trees)</vh></v>
+<v t="T746"><vh>@verbose, @terse and @silent directives</vh></v>
 </v>
 <v><vh>Error Messages</vh>
-<v t="T734"><vh>Errors while tangling</vh>
-<v t="T735"><vh>Can not re-open temp file</vh></v>
-<v t="T736"><vh>Can not rename temporary file name</vh></v>
-<v t="T737"><vh>@code expects the header: [text of header] to contain a section name</vh></v>
-<v t="T738"><vh>@directive not valid here</vh></v>
-<v t="T739"><vh>Halting Tangle: too many errors</vh></v>
-<v t="T740"><vh>Invalid recursive reference of &lt;&lt; section name &gt;&gt;</vh></v>
-<v t="T461" a="C"><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
-<v t="T741"><vh>No file written because of errors</vh></v>
-<v t="T742"><vh>Run on comment</vh></v>
-<v t="T743"><vh>Run on file name in @root directive</vh></v>
-<v t="T744"><vh>Run on section name</vh></v>
-<v t="T745"><vh>Run on string</vh></v>
-<v t="T746"><vh>Section definition not valid here.</vh></v>
-<v t="T747"><vh>Sections nested too deeply</vh></v>
-<v t="T748"><vh>The outline contains no roots</vh></v>
-<v t="T749"><vh>Undefined section:  &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T750"><vh>Unexpected @directive while putting code</vh></v>
-<v t="T751"><vh>Warning: possible duplicate definition of: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T752"><vh>Warning: &lt;&lt;&lt; section name &gt;&gt;&gt; has been defined but not used</vh></v>
+<v t="T747"><vh>Errors while tangling</vh>
+<v t="T748"><vh>Can not re-open temp file</vh></v>
+<v t="T749"><vh>Can not rename temporary file name</vh></v>
+<v t="T750"><vh>@code expects the header: [text of header] to contain a section name</vh></v>
+<v t="T751"><vh>@directive not valid here</vh></v>
+<v t="T752"><vh>Halting Tangle: too many errors</vh></v>
+<v t="T753"><vh>Invalid recursive reference of &lt;&lt; section name &gt;&gt;</vh></v>
+<v t="T473" a="C"><vh>Multiple parts not allowed for &lt;&lt; section name &gt;&gt;</vh></v>
+<v t="T754"><vh>No file written because of errors</vh></v>
+<v t="T755"><vh>Run on comment</vh></v>
+<v t="T756"><vh>Run on file name in @root directive</vh></v>
+<v t="T757"><vh>Run on section name</vh></v>
+<v t="T758"><vh>Run on string</vh></v>
+<v t="T759"><vh>Section definition not valid here.</vh></v>
+<v t="T760"><vh>Sections nested too deeply</vh></v>
+<v t="T761"><vh>The outline contains no roots</vh></v>
+<v t="T762"><vh>Undefined section:  &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T763"><vh>Unexpected @directive while putting code</vh></v>
+<v t="T764"><vh>Warning: possible duplicate definition of: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T765"><vh>Warning: &lt;&lt;&lt; section name &gt;&gt;&gt; has been defined but not used</vh></v>
 </v>
-<v t="T753"><vh>Errors while untangling</vh>
-<v t="T754"><vh>Incompatible definitions of &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T755"><vh>Missing root part</vh></v>
-<v t="T756"><vh>Missing root section</vh></v>
-<v t="T757"><vh>Missing sentinel line for &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
-<v t="T758"><vh>Unterminated section: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T766"><vh>Errors while untangling</vh>
+<v t="T767"><vh>Incompatible definitions of &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T768"><vh>Missing root part</vh></v>
+<v t="T769"><vh>Missing root section</vh></v>
+<v t="T770"><vh>Missing sentinel line for &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
+<v t="T771"><vh>Unterminated section: &lt;&lt;&lt; section name &gt;&gt;&gt;</vh></v>
 </v>
 <v><vh>Errors while reading @file nodes</vh>
-<v t="T759"><vh>Minor errors</vh></v>
-<v t="T760"><vh>Serious errors</vh></v>
+<v t="T772"><vh>Minor errors</vh></v>
+<v t="T773"><vh>Serious errors</vh></v>
 </v>
-<v t="T761"><vh>Errors while writing @file nodes</vh></v>
+<v t="T774"><vh>Errors while writing @file nodes</vh></v>
 </v>
-<v t="T762"><vh>Formats of Files Derived from @file</vh>
-<v t="T763"><vh>Sentinels in derived files</vh>
-<v t="T764"><vh>The @delims directive </vh></v>
-<v t="T765"><vh>@leo &amp; comment delimiters</vh></v>
-<v t="T766"><vh>@node</vh></v>
-<v t="T767"><vh>@body</vh></v>
-<v t="T768"><vh>@at and @doc &amp; the trailing whitespace convention</vh></v>
-<v t="T769"><vh>@others</vh></v>
-<v t="T770"><vh>@@delims</vh></v>
-<v t="T771"><vh>@@&lt;text&gt;</vh></v>
-<v t="T772"><vh>@verbatim and @verbatimAfterRef</vh></v>
-<v t="T773"><vh>@&lt;&lt;section name&gt;&gt;</vh></v>
+<v t="T775"><vh>Formats of Files Derived from @file</vh>
+<v t="T776"><vh>Sentinels in derived files</vh>
+<v t="T777"><vh>The @delims directive </vh></v>
+<v t="T778"><vh>@leo &amp; comment delimiters</vh></v>
+<v t="T779"><vh>@node</vh></v>
+<v t="T780"><vh>@body</vh></v>
+<v t="T781"><vh>@at and @doc &amp; the trailing whitespace convention</vh></v>
+<v t="T782"><vh>@others</vh></v>
+<v t="T783"><vh>@@delims</vh></v>
+<v t="T784"><vh>@@&lt;text&gt;</vh></v>
+<v t="T785"><vh>@verbatim and @verbatimAfterRef</vh></v>
+<v t="T786"><vh>@&lt;&lt;section name&gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T774"><vh>Future Features</vh></v>
-<v t="T514" a="C"><vh>Known Bugs &amp; Limitations</vh></v>
-<v t="T775"><vh>Reference for @file trees</vh></v>
+<v t="T787"><vh>Future Features</vh></v>
+<v t="T526" a="C"><vh>Known Bugs &amp; Limitations</vh></v>
+<v t="T788"><vh>Reference for @file trees</vh></v>
 <v><vh>Macintosh Notes</vh>
-<v t="T776"><vh>Differences Between the PC and Mac Versions</vh></v>
-<v t="T777"><vh>Transferring Files</vh></v>
+<v t="T789"><vh>Differences Between the PC and Mac Versions</vh></v>
+<v t="T790"><vh>Transferring Files</vh></v>
 </v>
-<v t="T778"><vh>Sherlock</vh></v>
-<v t="T779"><vh>Unicode</vh>
-<v t="T82" a="C"><vh>How Leo handles unicode</vh></v>
-<v t="T83" a="C"><vh>Unicode settings</vh></v>
+<v t="T791"><vh>Sherlock</vh></v>
+<v t="T792"><vh>Unicode</vh>
+<v t="T793"><vh>How Leo handles unicode</vh></v>
+<v t="T794"><vh>Unicode settings</vh></v>
 </v>
-<v t="T780"><vh>XML file format</vh>
-<v t="T781"><vh>&lt;?xml ... ?&gt;</vh></v>
-<v t="T782"><vh>&lt;leo_file&gt; ... &lt;/leo_file&gt;</vh>
-<v t="T783"><vh>&lt;leo_header ... /&gt;</vh></v>
-<v t="T784"><vh>&lt;globals ... &gt; ... &lt;/globals&gt;</vh></v>
-<v t="T785"><vh>&lt;preferences ... &gt; ... &lt;/preferences&gt;</vh></v>
-<v t="T786"><vh>&lt;find_panel_settings ... &gt; ... &lt;/find_panel_settings&gt;</vh></v>
-<v t="T787"><vh>&lt;vnodes&gt;...&lt;/vnodes&gt;</vh>
-<v t="T788"><vh>&lt;v...&gt; ... &lt;/v&gt;</vh></v>
+<v t="T795"><vh>XML file format</vh>
+<v t="T796"><vh>&lt;?xml ... ?&gt;</vh></v>
+<v t="T797"><vh>&lt;leo_file&gt; ... &lt;/leo_file&gt;</vh>
+<v t="T798"><vh>&lt;leo_header ... /&gt;</vh></v>
+<v t="T799"><vh>&lt;globals ... &gt; ... &lt;/globals&gt;</vh></v>
+<v t="T800"><vh>&lt;preferences ... &gt; ... &lt;/preferences&gt;</vh></v>
+<v t="T801"><vh>&lt;find_panel_settings ... &gt; ... &lt;/find_panel_settings&gt;</vh></v>
+<v t="T802"><vh>&lt;vnodes&gt;...&lt;/vnodes&gt;</vh>
+<v t="T803"><vh>&lt;v...&gt; ... &lt;/v&gt;</vh></v>
 </v>
-<v t="T789"><vh>&lt;tnodes&gt; ... &lt;/tnodes&gt;</vh>
-<v t="T790"><vh>&lt;t...&gt; ... &lt;/t&gt;</vh></v>
+<v t="T804"><vh>&lt;tnodes&gt; ... &lt;/tnodes&gt;</vh>
+<v t="T805"><vh>&lt;t...&gt; ... &lt;/t&gt;</vh></v>
 </v>
-<v t="T791"><vh>&lt;clone_windows&gt; ... &lt;/clone_windows&gt;</vh>
-<v t="T792"><vh>&lt;clone_window ...&gt; ... &lt;/clone_window&gt;</vh></v>
+<v t="T806"><vh>&lt;clone_windows&gt; ... &lt;/clone_windows&gt;</vh>
+<v t="T807"><vh>&lt;clone_window ...&gt; ... &lt;/clone_window&gt;</vh></v>
 </v>
 </v>
-<v t="T793"><vh>DTD for Leo's File Format</vh></v>
-<v t="T794"><vh>An example file</vh>
-<v t="T795"><vh>The file itself</vh></v>
+<v t="T808"><vh>DTD for Leo's File Format</vh></v>
+<v t="T809"><vh>An example file</vh>
+<v t="T810"><vh>The file itself</vh></v>
 <v><vh>The outline  from which the example file was created</vh>
-<v t="T796"><vh>Headline 1</vh>
-<v t="T797"><vh>Headline 2</vh>
+<v t="T811"><vh>Headline 1</vh>
+<v t="T812"><vh>Headline 2</vh>
 <v><vh>Headline 3 ( No body text)</vh></v>
 </v>
 </v>
-<v t="T798" a="C"><vh>Headline 4 ( a clone )</vh>
-<v t="T799"><vh>Headline 5</vh></v>
+<v t="T813" a="C"><vh>Headline 4 ( a clone )</vh>
+<v t="T814"><vh>Headline 5</vh></v>
 </v>
-<v t="T798" a="C"><vh>Headline 4 ( a clone )</vh>
-<v t="T799"><vh>Headline 5</vh></v>
-</v>
-</v>
+<v t="T813" a="C"><vh>Headline 4 ( a clone )</vh>
+<v t="T814"><vh>Headline 5</vh></v>
 </v>
 </v>
 </v>
 </v>
-<v t="T800"><vh>FAQ</vh>
+</v>
+</v>
+<v t="T815"><vh>FAQ</vh>
 <v><vh>Learning Leo</vh>
-<v t="T801"><vh>What's the best way to learn to use Leo?</vh></v>
-<v t="T802"><vh>Where are the simple examples?</vh></v>
+<v t="T816"><vh>What's the best way to learn to use Leo?</vh></v>
+<v t="T817"><vh>Where are the simple examples?</vh></v>
 </v>
 <v><vh>Creating and using derived files</vh>
-<v t="T803"><vh>How should I choose between @root and @file trees?</vh></v>
-<v t="T804"><vh>I don't want sentinels in my derived files.  What should I do?</vh>
-<v t="T207" a="C"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+<v t="T818"><vh>How should I choose between @root and @file trees?</vh></v>
+<v t="T819"><vh>I don't want sentinels in my derived files.  What should I do?</vh>
+<v t="T219" a="C"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 </v>
-<v t="T805"><vh>I don't want to Leo to expand sections.  What should I do?</vh>
-<v t="T207" a="C"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
+<v t="T820"><vh>I don't want to Leo to expand sections.  What should I do?</vh>
+<v t="T219" a="C"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 </v>
-<v t="T806"><vh>How can I create Javascript comments?</vh></v>
-<v t="T807"><vh>How do I make derived files start with a shebang line?</vh></v>
-<v t="T808"><vh>I want to use Leo to create cweb files.  What should I do</vh>
-<v t="T203" a="C"><vh>About cweb mode </vh></v>
+<v t="T821"><vh>How can I create Javascript comments?</vh></v>
+<v t="T822"><vh>How do I make derived files start with a shebang line?</vh></v>
+<v t="T823"><vh>I want to use Leo to create cweb files.  What should I do</vh>
+<v t="T215" a="C"><vh>About cweb mode </vh></v>
 </v>
-<v t="T809"><vh>Can @file trees contain material not in the derived file?</vh></v>
+<v t="T824"><vh>Can @file trees contain material not in the derived file?</vh></v>
 </v>
-<v t="T810"><vh>Customizing Leo</vh>
-<v t="T811"><vh>I'm having trouble getting customizeLeo.py to work.  What should I do?</vh></v>
-<v t="T812"><vh>How do I use customizeLeo.py to modify Leo?</vh></v>
-<v t="T813"><vh>How can I add support for a new language? </vh></v>
-<v t="T179" a="C"><vh>Chapter 8: Customizing Leo</vh>
-<v t="T180" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="T181"><vh>Using plugins and hooks</vh>
-<v t="T86" a="C"><vh>New plugin architecture</vh>
-<v t="T87"><vh>@file plugins/mod_open_with.py</vh>
-<v t="T88"><vh>on_idle</vh>
-<v t="T89"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
-<v t="T90"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
-<v t="T91"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T92"><vh>create_open_with_menu</vh>
-<v t="T93"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
+<v t="T825"><vh>Customizing Leo</vh>
+<v t="T826"><vh>I'm having trouble getting customizeLeo.py to work.  What should I do?</vh></v>
+<v t="T827"><vh>How do I use customizeLeo.py to modify Leo?</vh></v>
+<v t="T828"><vh>How can I add support for a new language? </vh></v>
+<v t="T182" a="C"><vh>Chapter 8: Customizing Leo</vh>
+<v t="T183" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="T184"><vh>Using plugins and hooks</vh>
+<v t="T185"><vh>New plugin architecture</vh>
+<v t="T186"><vh>@file plugins/mod_open_with.py</vh>
+<v t="T187"><vh>on_idle</vh>
+<v t="T188"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
+<v t="T189"><vh>&lt;&lt; set s to the new text &gt;&gt;</vh></v>
+<v t="T190"><vh>&lt;&lt; set conflict flag &gt;&gt;</vh></v>
 </v>
 </v>
-</v>
-<v t="T95" a="C"><vh>About hooks</vh></v>
-<v t="T182"><vh>SECURITY WARNINGS</vh>
-<v t="T183"><vh>The danger of trusting code in shared .leo files</vh></v>
-<v t="T184"><vh>NEVER use this kind of code in a hook!!</vh></v>
-<v t="T185"><vh>Don't use rexec !!</vh>
-<v t="T186"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
-<v t="T187"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
-<v t="T188"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
+<v t="T191"><vh>create_open_with_menu</vh>
+<v t="T192"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T189"><vh>Convenience routines for plugins</vh>
-<v t="T190"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
-<v t="T191"><vh>Convenience methods to create, destroy and modify menus</vh>
-<v t="T192"><vh>createMenuItemsFromTable</vh></v>
-<v t="T193"><vh>createNewMenu</vh></v>
-<v t="T194" a="C"><vh>createOpenWithMenuFromTable</vh></v>
-<v t="T195"><vh>deleteMenu</vh></v>
-<v t="T196"><vh>deleteMenuItem</vh></v>
-<v t="T197"><vh>Example: how to create a menu</vh></v>
+</v>
+<v t="T193"><vh>About hooks</vh></v>
+<v t="T194"><vh>SECURITY WARNINGS</vh>
+<v t="T195"><vh>The danger of trusting code in shared .leo files</vh></v>
+<v t="T196"><vh>NEVER use this kind of code in a hook!!</vh></v>
+<v t="T197"><vh>Don't use rexec !!</vh>
+<v t="T198"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
+<v t="T199"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
+<v t="T200"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T198"><vh>Translating menus into other languages</vh></v>
+<v t="T201"><vh>Convenience routines for plugins</vh>
+<v t="T202"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
+<v t="T203"><vh>Convenience methods to create, destroy and modify menus</vh>
+<v t="T204"><vh>createMenuItemsFromTable</vh></v>
+<v t="T205"><vh>createNewMenu</vh></v>
+<v t="T206" a="C"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="T207"><vh>deleteMenu</vh></v>
+<v t="T208"><vh>deleteMenuItem</vh></v>
+<v t="T209"><vh>Example: how to create a menu</vh></v>
+</v>
+</v>
+<v t="T210"><vh>Translating menus into other languages</vh></v>
 </v>
 <v t="T57" a="C"><vh>Putting the Leo icon in Leo windows</vh></v>
 </v>
 </v>
 <v><vh>Other topics</vh>
-<v t="T814"><vh>When should I use clones?</vh></v>
-<v t="T815"><vh>How can I cut and paste nodes between different copies of Leo</vh></v>
-<v t="T816"><vh>How can I add support in Leo for a new language?</vh>
-<v t="T817"><vh>code</vh>
-<v t="T818"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
-<v t="T819"><vh>&lt;&lt; Create the Target Language frame &gt;&gt;</vh></v>
-<v t="T820"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
-<v t="T821" a="C"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
-<v t="T822" a="C"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
-<v t="T823"><vh>&lt;&lt; initialize constant ivars &gt;&gt;</vh></v>
-<v t="T824"><vh>set_delims_from_language</vh></v>
-<v t="T825"><vh>set_language</vh></v>
-<v t="T826"><vh>colorizeAnyLanguage</vh>
-<v t="T827"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
-<v t="T821" a="C"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
+<v t="T829"><vh>When should I use clones?</vh></v>
+<v t="T830"><vh>How can I cut and paste nodes between different copies of Leo</vh></v>
+<v t="T831"><vh>How can I add support in Leo for a new language?</vh>
+<v t="T832"><vh>code</vh>
+<v t="T833"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="T834"><vh>&lt;&lt; Create the Target Language frame &gt;&gt;</vh></v>
+<v t="T835"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
+<v t="T836" a="C"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
+<v t="T837" a="C"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
+<v t="T838"><vh>&lt;&lt; initialize constant ivars &gt;&gt;</vh></v>
+<v t="T839"><vh>set_delims_from_language</vh></v>
+<v t="T840"><vh>set_language</vh></v>
+<v t="T841"><vh>colorizeAnyLanguage</vh>
+<v t="T842"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
+<v t="T836" a="C"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
 <v><vh>Multiline State Handlers</vh>
-<v t="T828"><vh>&lt;&lt; continue doc part &gt;&gt;</vh>
-<v t="T829"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
-<v t="T830"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
+<v t="T843"><vh>&lt;&lt; continue doc part &gt;&gt;</vh>
+<v t="T844"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
+<v t="T845"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
 </v>
-<v t="T831"><vh>&lt;&lt; continue python triple string &gt;&gt;</vh></v>
-<v t="T832"><vh>&lt;&lt; continue block comment &gt;&gt;</vh></v>
-<v t="T833"><vh>&lt;&lt; continue nocolor state &gt;&gt;</vh></v>
+<v t="T846"><vh>&lt;&lt; continue python triple string &gt;&gt;</vh></v>
+<v t="T847"><vh>&lt;&lt; continue block comment &gt;&gt;</vh></v>
+<v t="T848"><vh>&lt;&lt; continue nocolor state &gt;&gt;</vh></v>
 </v>
-<v t="T834"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
-<v t="T835"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
-<v t="T836"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
-<v t="T837"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
-<v t="T838"><vh>&lt;&lt; handle possible section ref or def &gt;&gt;</vh>
-<v t="T839"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
+<v t="T849"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
+<v t="T850"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
+<v t="T851"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+<v t="T852"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
+<v t="T853"><vh>&lt;&lt; handle possible section ref or def &gt;&gt;</vh>
+<v t="T854"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
 </v>
-<v t="T840"><vh>&lt;&lt; handle possible @keyword &gt;&gt;</vh>
-<v t="T841"><vh>&lt;&lt; Handle all cweb control codes &gt;&gt;</vh></v>
-<v t="T842"><vh>&lt;&lt; Handle non-cweb @keywords &gt;&gt;</vh></v>
+<v t="T855"><vh>&lt;&lt; handle possible @keyword &gt;&gt;</vh>
+<v t="T856"><vh>&lt;&lt; Handle all cweb control codes &gt;&gt;</vh></v>
+<v t="T857"><vh>&lt;&lt; Handle non-cweb @keywords &gt;&gt;</vh></v>
 </v>
-<v t="T843"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh></v>
-<v t="T844"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
-<v t="T845"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
-<v t="T846"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
+<v t="T858"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh></v>
+<v t="T859"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
+<v t="T860"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
+<v t="T861"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
 </v>
-<v t="T847"><vh>getPrefs</vh>
-<v t="T822" a="C"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T848"><vh>@root tcl/tk test</vh>
-<v t="T849"><vh>&lt;&lt; stuff &gt;&gt;</vh></v>
+<v t="T862"><vh>getPrefs</vh>
+<v t="T837" a="C"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T850"><vh>How can I create a template .leo file?</vh></v>
-<v t="T851"><vh>Help! I can't seem to generate files after using the Import commands.</vh></v>
+<v t="T863"><vh>@root tcl/tk test</vh>
+<v t="T864"><vh>&lt;&lt; stuff &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T852"><vh>Glossary</vh>
-<v t="T853"><vh>@file node, @others node, @root node, etc.</vh></v>
-<v t="T854"><vh>@file tree, @others tree, @root tree, etc.</vh></v>
-<v t="T855"><vh>Body pane</vh></v>
-<v t="T856"><vh>Body text</vh></v>
-<v t="T857"><vh>Body text box</vh></v>
-<v t="T858"><vh>Child</vh></v>
-<v t="T859"><vh>Chunk</vh></v>
-<v t="T860"><vh>Clone</vh></v>
-<v t="T861"><vh>Clone Arrow</vh></v>
-<v t="T862"><vh>Code section</vh></v>
-<v t="T863"><vh>CWEB</vh></v>
-<v t="T864"><vh>Demote</vh></v>
-<v t="T865"><vh>Derived file</vh></v>
-<v t="T866"><vh>Descendent</vh></v>
-<v t="T867"><vh>Directive</vh></v>
-<v t="T868"><vh>Doc section</vh></v>
-<v t="T869"><vh>Escape convention</vh></v>
-<v t="T870"><vh>Grandchild</vh></v>
-<v t="T871"><vh>Headline</vh></v>
-<v t="T872"><vh>Leo, Leo1 and Leo2</vh></v>
-<v t="T873"><vh>Literate programming</vh></v>
-<v t="T874"><vh>Marking</vh></v>
-<v t="T875"><vh>Named nodes</vh></v>
-<v t="T876"><vh>Node</vh></v>
-<v t="T877"><vh>noweb</vh></v>
-<v t="T878"><vh>Offspring</vh></v>
-<v t="T879"><vh>Organizing node</vh></v>
-<v t="T880"><vh>Orphan node</vh></v>
-<v t="T881"><vh>Outline</vh></v>
-<v t="T882"><vh>Outline pane</vh></v>
-<v t="T883"><vh>Parent</vh></v>
-<v t="T884"><vh>Part</vh></v>
-<v t="T885"><vh>pdf file</vh></v>
-<v t="T886"><vh>Promote</vh></v>
-<v t="T887"><vh>Root</vh></v>
-<v t="T888"><vh>Scope</vh></v>
-<v t="T889"><vh>Section</vh></v>
-<v t="T890"><vh>Section name</vh></v>
-<v t="T891"><vh>Section reference</vh></v>
-<v t="T892"><vh>Sentinels, sentinel lines</vh></v>
-<v t="T893"><vh>Sibling</vh></v>
-<v t="T894"><vh>Status Icon</vh></v>
-<v t="T895"><vh>Tangling</vh></v>
-<v t="T896"><vh>Target language</vh></v>
-<v t="T897"><vh>Tree</vh></v>
-<v t="T898"><vh>Unnamed node</vh></v>
-<v t="T899"><vh>Untangling</vh></v>
-<v t="T900"><vh>Weaving</vh></v>
+<v t="T865"><vh>How can I create a template .leo file?</vh></v>
+<v t="T866"><vh>Help! I can't seem to generate files after using the Import commands.</vh></v>
 </v>
-<v t="T901"><vh>Sample Code</vh>
-<v t="T902"><vh>Hello World using @root</vh>
-<v t="T903"><vh>&lt;&lt; includes &gt;&gt;</vh></v>
-<v t="T904"><vh>&lt;&lt; methods &gt;&gt;</vh></v>
 </v>
-<v t="T905"><vh>Hello World using @file</vh>
-<v t="T906"><vh>@file sampleHello.c</vh>
-<v t="T907"><vh>&lt;&lt; includes &gt;&gt;</vh></v>
-<v t="T908"><vh>main</vh></v>
+<v t="T867"><vh>Glossary</vh>
+<v t="T868"><vh>@file node, @others node, @root node, etc.</vh></v>
+<v t="T869"><vh>@file tree, @others tree, @root tree, etc.</vh></v>
+<v t="T870"><vh>Body pane</vh></v>
+<v t="T871"><vh>Body text</vh></v>
+<v t="T872"><vh>Body text box</vh></v>
+<v t="T873"><vh>Child</vh></v>
+<v t="T874"><vh>Chunk</vh></v>
+<v t="T875"><vh>Clone</vh></v>
+<v t="T876"><vh>Clone Arrow</vh></v>
+<v t="T877"><vh>Code section</vh></v>
+<v t="T878"><vh>CWEB</vh></v>
+<v t="T879"><vh>Demote</vh></v>
+<v t="T880"><vh>Derived file</vh></v>
+<v t="T881"><vh>Descendent</vh></v>
+<v t="T882"><vh>Directive</vh></v>
+<v t="T883"><vh>Doc section</vh></v>
+<v t="T884"><vh>Escape convention</vh></v>
+<v t="T885"><vh>Grandchild</vh></v>
+<v t="T886"><vh>Headline</vh></v>
+<v t="T887"><vh>Leo, Leo1 and Leo2</vh></v>
+<v t="T888"><vh>Literate programming</vh></v>
+<v t="T889"><vh>Marking</vh></v>
+<v t="T890"><vh>Named nodes</vh></v>
+<v t="T891"><vh>Node</vh></v>
+<v t="T892"><vh>noweb</vh></v>
+<v t="T893"><vh>Offspring</vh></v>
+<v t="T894"><vh>Organizing node</vh></v>
+<v t="T895"><vh>Orphan node</vh></v>
+<v t="T896"><vh>Outline</vh></v>
+<v t="T897"><vh>Outline pane</vh></v>
+<v t="T898"><vh>Parent</vh></v>
+<v t="T899"><vh>Part</vh></v>
+<v t="T900"><vh>pdf file</vh></v>
+<v t="T901"><vh>Promote</vh></v>
+<v t="T902"><vh>Root</vh></v>
+<v t="T903"><vh>Scope</vh></v>
+<v t="T904"><vh>Section</vh></v>
+<v t="T905"><vh>Section name</vh></v>
+<v t="T906"><vh>Section reference</vh></v>
+<v t="T907"><vh>Sentinels, sentinel lines</vh></v>
+<v t="T908"><vh>Sibling</vh></v>
+<v t="T909"><vh>Status Icon</vh></v>
+<v t="T910"><vh>Tangling</vh></v>
+<v t="T911"><vh>Target language</vh></v>
+<v t="T912"><vh>Tree</vh></v>
+<v t="T913"><vh>Unnamed node</vh></v>
+<v t="T914"><vh>Untangling</vh></v>
+<v t="T915"><vh>Weaving</vh></v>
+</v>
+<v t="T916"><vh>Sample Code</vh>
+<v t="T917"><vh>Hello World using @root</vh>
+<v t="T918"><vh>&lt;&lt; includes &gt;&gt;</vh></v>
+<v t="T919"><vh>&lt;&lt; methods &gt;&gt;</vh></v>
+</v>
+<v t="T920"><vh>Hello World using @file</vh>
+<v t="T921"><vh>@file sampleHello.c</vh>
+<v t="T922"><vh>&lt;&lt; includes &gt;&gt;</vh></v>
+<v t="T923"><vh>main</vh></v>
 </v>
 </v>
 <v><vh>Examples of using @root trees</vh>
-<v t="T909"><vh>Nodes</vh>
-<v t="T910"><vh>tnode</vh>
-<v t="T911"><vh>tnode.h</vh>
-<v t="T912"><vh>&lt;&lt; tnode data members &gt;&gt;</vh></v>
-<v t="T913"><vh>&lt;&lt; tnode constructors &amp; destructors &gt;&gt;</vh></v>
-<v t="T914"><vh>&lt;&lt; tnode debugging &gt;&gt;</vh></v>
-<v t="T915"><vh>&lt;&lt; tnode getters &gt;&gt;</vh></v>
-<v t="T916"><vh>&lt;&lt; tnode setters &gt;&gt;</vh></v>
+<v t="T924"><vh>Nodes</vh>
+<v t="T925"><vh>tnode</vh>
+<v t="T926"><vh>tnode.h</vh>
+<v t="T927"><vh>&lt;&lt; tnode data members &gt;&gt;</vh></v>
+<v t="T928"><vh>&lt;&lt; tnode constructors &amp; destructors &gt;&gt;</vh></v>
+<v t="T929"><vh>&lt;&lt; tnode debugging &gt;&gt;</vh></v>
+<v t="T930"><vh>&lt;&lt; tnode getters &gt;&gt;</vh></v>
+<v t="T931"><vh>&lt;&lt; tnode setters &gt;&gt;</vh></v>
 </v>
-<v t="T917"><vh>tnode.cpp</vh>
-<v t="T918"><vh>&lt;&lt; tnode includes &gt;&gt;</vh></v>
-<v t="T919"><vh>&lt;&lt; tnode abbreviations &gt;&gt;</vh></v>
+<v t="T932"><vh>tnode.cpp</vh>
+<v t="T933"><vh>&lt;&lt; tnode includes &gt;&gt;</vh></v>
+<v t="T934"><vh>&lt;&lt; tnode abbreviations &gt;&gt;</vh></v>
 </v>
-<v t="T920"><vh>Birth &amp; Death</vh></v>
+<v t="T935"><vh>Birth &amp; Death</vh></v>
 <v><vh>Debugging</vh>
-<v t="T921"><vh>edump</vh></v>
+<v t="T936"><vh>edump</vh></v>
 </v>
 <v><vh>Getters</vh>
 <v><vh>Getting body text and selection</vh>
-<v t="T922"><vh>bodyRTF</vh></v>
-<v t="T923"><vh>bodyCString</vh></v>
-<v t="T924"><vh>bodyCStringLength</vh></v>
-<v t="T925"><vh>bodyString (tnode)</vh></v>
-<v t="T926"><vh>loadBodyPaneFromTnode</vh></v>
-<v t="T927"><vh>selectionLength</vh></v>
-<v t="T928"><vh>selectionStart</vh></v>
+<v t="T937"><vh>bodyRTF</vh></v>
+<v t="T938"><vh>bodyCString</vh></v>
+<v t="T939"><vh>bodyCStringLength</vh></v>
+<v t="T940"><vh>bodyString (tnode)</vh></v>
+<v t="T941"><vh>loadBodyPaneFromTnode</vh></v>
+<v t="T942"><vh>selectionLength</vh></v>
+<v t="T943"><vh>selectionStart</vh></v>
 </v>
 <v><vh>Status bits</vh>
-<v t="T929"><vh>isDirty</vh></v>
-<v t="T930"><vh>isRichTextBit</vh></v>
-<v t="T931"><vh>isVisited</vh></v>
+<v t="T944"><vh>isDirty</vh></v>
+<v t="T945"><vh>isRichTextBit</vh></v>
+<v t="T946"><vh>isVisited</vh></v>
 </v>
-<v t="T932"><vh>cloneIndex</vh></v>
-<v t="T933"><vh>fileIndex</vh></v>
-<v t="T934"><vh>hasBody</vh></v>
-<v t="T935"><vh>joinHead</vh></v>
+<v t="T947"><vh>cloneIndex</vh></v>
+<v t="T948"><vh>fileIndex</vh></v>
+<v t="T949"><vh>hasBody</vh></v>
+<v t="T950"><vh>joinHead</vh></v>
 </v>
 <v><vh>Setters</vh>
 <v><vh>Setting body text</vh>
-<v t="T936"><vh>saveBodyPaneToTnode</vh></v>
-<v t="T937"><vh>setTnodeRTF</vh></v>
-<v t="T938"><vh>setTnodeText</vh></v>
-<v t="T939"><vh>setSelection </vh></v>
+<v t="T951"><vh>saveBodyPaneToTnode</vh></v>
+<v t="T952"><vh>setTnodeRTF</vh></v>
+<v t="T953"><vh>setTnodeText</vh></v>
+<v t="T954"><vh>setSelection </vh></v>
 </v>
 <v><vh>Status bits</vh>
-<v t="T940"><vh>clearDirty</vh></v>
-<v t="T941"><vh>clearRichTextBit</vh></v>
-<v t="T942"><vh>clearVisited</vh></v>
-<v t="T943"><vh>setDirty</vh></v>
-<v t="T944"><vh>setRichTextBit</vh></v>
-<v t="T945"><vh>setVisited</vh></v>
+<v t="T955"><vh>clearDirty</vh></v>
+<v t="T956"><vh>clearRichTextBit</vh></v>
+<v t="T957"><vh>clearVisited</vh></v>
+<v t="T958"><vh>setDirty</vh></v>
+<v t="T959"><vh>setRichTextBit</vh></v>
+<v t="T960"><vh>setVisited</vh></v>
 </v>
-<v t="T946"><vh>setCloneIndex</vh></v>
-<v t="T947"><vh>setFileIndex</vh></v>
-<v t="T948"><vh>setJoinHead</vh></v>
+<v t="T961"><vh>setCloneIndex</vh></v>
+<v t="T962"><vh>setFileIndex</vh></v>
+<v t="T963"><vh>setJoinHead</vh></v>
 </v>
 </v>
-<v t="T949"><vh>vnode</vh>
-<v t="T950"><vh>vnode.h</vh>
-<v t="T951"><vh>&lt;&lt; dvnode data members &gt;&gt;</vh></v>
-<v t="T952"><vh>&lt;&lt; vnode access methods &gt;&gt;</vh></v>
-<v t="T953"><vh>&lt;&lt; vnode comparisons &gt;&gt;</vh></v>
-<v t="T954"><vh>&lt;&lt; vnode constructors &amp; destructors &gt;&gt;</vh></v>
-<v t="T955"><vh>&lt;&lt; vnode data members &gt;&gt;</vh></v>
-<v t="T956"><vh>&lt;&lt; vnode debugging &gt;&gt;</vh></v>
-<v t="T957"><vh>&lt;&lt; vnode file methods &gt;&gt;</vh></v>
-<v t="T958"><vh>&lt;&lt; vnode getters &gt;&gt;</vh></v>
-<v t="T959"><vh>&lt;&lt; vnode private methods &gt;&gt;</vh></v>
-<v t="T960"><vh>&lt;&lt; vnode setters &gt;&gt;</vh></v>
-<v t="T961"><vh>&lt;&lt; vnode tree methods &gt;&gt;</vh></v>
+<v t="T964"><vh>vnode</vh>
+<v t="T965"><vh>vnode.h</vh>
+<v t="T966"><vh>&lt;&lt; dvnode data members &gt;&gt;</vh></v>
+<v t="T967"><vh>&lt;&lt; vnode access methods &gt;&gt;</vh></v>
+<v t="T968"><vh>&lt;&lt; vnode comparisons &gt;&gt;</vh></v>
+<v t="T969"><vh>&lt;&lt; vnode constructors &amp; destructors &gt;&gt;</vh></v>
+<v t="T970"><vh>&lt;&lt; vnode data members &gt;&gt;</vh></v>
+<v t="T971"><vh>&lt;&lt; vnode debugging &gt;&gt;</vh></v>
+<v t="T972"><vh>&lt;&lt; vnode file methods &gt;&gt;</vh></v>
+<v t="T973"><vh>&lt;&lt; vnode getters &gt;&gt;</vh></v>
+<v t="T974"><vh>&lt;&lt; vnode private methods &gt;&gt;</vh></v>
+<v t="T975"><vh>&lt;&lt; vnode setters &gt;&gt;</vh></v>
+<v t="T976"><vh>&lt;&lt; vnode tree methods &gt;&gt;</vh></v>
 </v>
-<v t="T962"><vh>vnode.cpp</vh>
-<v t="T963"><vh>&lt;&lt; vnode includes &gt;&gt;</vh></v>
-<v t="T964"><vh>&lt;&lt; vnode abbreviations &gt;&gt;</vh></v>
+<v t="T977"><vh>vnode.cpp</vh>
+<v t="T978"><vh>&lt;&lt; vnode includes &gt;&gt;</vh></v>
+<v t="T979"><vh>&lt;&lt; vnode abbreviations &gt;&gt;</vh></v>
 </v>
-<v t="T965"><vh>Birth &amp; Death</vh></v>
+<v t="T980"><vh>Birth &amp; Death</vh></v>
 <v><vh>Comparisons</vh>
-<v t="T966"><vh>atFileNodeName</vh></v>
-<v t="T967"><vh>isAtFileNode</vh></v>
-<v t="T968"><vh>isAtIgnoreNode</vh></v>
-<v t="T969"><vh>isAtOthersNode</vh></v>
-<v t="T970"><vh>matchHeadline</vh></v>
+<v t="T981"><vh>atFileNodeName</vh></v>
+<v t="T982"><vh>isAtFileNode</vh></v>
+<v t="T983"><vh>isAtIgnoreNode</vh></v>
+<v t="T984"><vh>isAtOthersNode</vh></v>
+<v t="T985"><vh>matchHeadline</vh></v>
 </v>
 <v><vh>Dumping</vh>
-<v t="T971"><vh>edump</vh></v>
-<v t="T972"><vh>description</vh></v>
+<v t="T986"><vh>edump</vh></v>
+<v t="T987"><vh>description</vh></v>
 </v>
 <v><vh>File Conversion</vh>
-<v t="T973"><vh>convertTreeToString</vh></v>
-<v t="T974"><vh>moreHead</vh></v>
-<v t="T975"><vh>moreBody</vh></v>
+<v t="T988"><vh>convertTreeToString</vh></v>
+<v t="T989"><vh>moreHead</vh></v>
+<v t="T990"><vh>moreBody</vh></v>
 </v>
 <v><vh>Getters</vh>
 <v><vh>Children</vh>
-<v t="T976"><vh>childIndex</vh></v>
-<v t="T977"><vh>firstChild</vh></v>
-<v t="T978"><vh>hasChildren</vh></v>
-<v t="T979"><vh>lastChild</vh></v>
-<v t="T980"><vh>nthChild</vh></v>
-<v t="T981"><vh>numberOfChildren</vh></v>
+<v t="T991"><vh>childIndex</vh></v>
+<v t="T992"><vh>firstChild</vh></v>
+<v t="T993"><vh>hasChildren</vh></v>
+<v t="T994"><vh>lastChild</vh></v>
+<v t="T995"><vh>nthChild</vh></v>
+<v t="T996"><vh>numberOfChildren</vh></v>
 </v>
 <v><vh>Cross-file clones</vh>
-<v t="T982"><vh>xCloneName</vh></v>
-<v t="T983"><vh>xCloneIndex</vh></v>
+<v t="T997"><vh>xCloneName</vh></v>
+<v t="T998"><vh>xCloneIndex</vh></v>
 </v>
 <v><vh>Structure Links</vh>
-<v t="T984"><vh>back</vh></v>
-<v t="T985"><vh>lastNode</vh></v>
-<v t="T986"><vh>level</vh></v>
-<v t="T987"><vh>next</vh></v>
-<v t="T988"><vh>parent</vh></v>
-<v t="T989"><vh>nodeAfterTree</vh></v>
-<v t="T990"><vh>threadBack</vh></v>
-<v t="T991"><vh>threadNext</vh></v>
-<v t="T992"><vh>visBack</vh></v>
-<v t="T993"><vh>visNext</vh></v>
+<v t="T999"><vh>back</vh></v>
+<v t="T1000"><vh>lastNode</vh></v>
+<v t="T1001"><vh>level</vh></v>
+<v t="T1002"><vh>next</vh></v>
+<v t="T1003"><vh>parent</vh></v>
+<v t="T1004"><vh>nodeAfterTree</vh></v>
+<v t="T1005"><vh>threadBack</vh></v>
+<v t="T1006"><vh>threadNext</vh></v>
+<v t="T1007"><vh>visBack</vh></v>
+<v t="T1008"><vh>visNext</vh></v>
 </v>
 <v><vh>Head &amp; Body Strings</vh>
-<v t="T994"><vh>bodyCString</vh></v>
-<v t="T995"><vh>bodyCStringLength</vh></v>
-<v t="T996"><vh>bodyRTF</vh></v>
-<v t="T997"><vh>bodyString</vh></v>
-<v t="T998"><vh>headCString</vh></v>
-<v t="T999"><vh>headCStringLength</vh></v>
-<v t="T1000"><vh>headString</vh></v>
+<v t="T1009"><vh>bodyCString</vh></v>
+<v t="T1010"><vh>bodyCStringLength</vh></v>
+<v t="T1011"><vh>bodyRTF</vh></v>
+<v t="T1012"><vh>bodyString</vh></v>
+<v t="T1013"><vh>headCString</vh></v>
+<v t="T1014"><vh>headCStringLength</vh></v>
+<v t="T1015"><vh>headString</vh></v>
 </v>
 <v><vh>Status Bits</vh>
-<v t="T1001"><vh>isCloned</vh></v>
-<v t="T1002"><vh>isDirty</vh></v>
-<v t="T1003"><vh>isDummy</vh></v>
-<v t="T1004"><vh>isExpanded</vh></v>
-<v t="T1005"><vh>isExpandedBitSet</vh></v>
-<v t="T1006"><vh>isMarked</vh></v>
-<v t="T1007"><vh>isOrphan</vh></v>
-<v t="T1008"><vh>isSelectedBitSet</vh></v>
-<v t="T1009"><vh>isTopBitSet</vh></v>
-<v t="T1010"><vh>isVisible</vh></v>
-<v t="T1011"><vh>isVisited</vh></v>
-<v t="T1012"><vh>status</vh></v>
+<v t="T1016"><vh>isCloned</vh></v>
+<v t="T1017"><vh>isDirty</vh></v>
+<v t="T1018"><vh>isDummy</vh></v>
+<v t="T1019"><vh>isExpanded</vh></v>
+<v t="T1020"><vh>isExpandedBitSet</vh></v>
+<v t="T1021"><vh>isMarked</vh></v>
+<v t="T1022"><vh>isOrphan</vh></v>
+<v t="T1023"><vh>isSelectedBitSet</vh></v>
+<v t="T1024"><vh>isTopBitSet</vh></v>
+<v t="T1025"><vh>isVisible</vh></v>
+<v t="T1026"><vh>isVisited</vh></v>
+<v t="T1027"><vh>status</vh></v>
 </v>
 <v><vh>VCL classes (vnode)</vh>
-<v t="T1013"><vh>findRoot</vh></v>
-<v t="T1014"><vh>commands</vh></v>
-<v t="T1015"><vh>leoForm</vh></v>
-<v t="T1016"><vh>treeNode</vh></v>
-<v t="T1017"><vh>treeNodes</vh></v>
-<v t="T1018"><vh>treeView</vh></v>
+<v t="T1028"><vh>findRoot</vh></v>
+<v t="T1029"><vh>commands</vh></v>
+<v t="T1030"><vh>leoForm</vh></v>
+<v t="T1031"><vh>treeNode</vh></v>
+<v t="T1032"><vh>treeNodes</vh></v>
+<v t="T1033"><vh>treeView</vh></v>
 </v>
-<v t="T1019"><vh>currentVnode (vnode)</vh></v>
-<v t="T1020"><vh>iconVal</vh></v>
-<v t="T1021"><vh>isAncestorOf </vh></v>
-<v t="T1022"><vh>isRoot</vh></v>
-<v t="T1023"><vh>joinList</vh></v>
-<v t="T1024"><vh>selectionStart</vh></v>
-<v t="T1025"><vh>selectionLength</vh></v>
-<v t="T1026"><vh>t</vh></v>
+<v t="T1034"><vh>currentVnode (vnode)</vh></v>
+<v t="T1035"><vh>iconVal</vh></v>
+<v t="T1036"><vh>isAncestorOf </vh></v>
+<v t="T1037"><vh>isRoot</vh></v>
+<v t="T1038"><vh>joinList</vh></v>
+<v t="T1039"><vh>selectionStart</vh></v>
+<v t="T1040"><vh>selectionLength</vh></v>
+<v t="T1041"><vh>t</vh></v>
 </v>
 <v><vh>Setters</vh>
 <v><vh>cross-file clones</vh>
-<v t="T1027"><vh>setXCloneIndex</vh></v>
-<v t="T1028"><vh>setXCloneName</vh></v>
+<v t="T1042"><vh>setXCloneIndex</vh></v>
+<v t="T1043"><vh>setXCloneName</vh></v>
 </v>
 <v><vh>headline and body text</vh>
-<v t="T1029"><vh>appendStringToBody</vh></v>
-<v t="T1030"><vh>setBodyStringOrPane (new for SWIG)</vh></v>
-<v t="T1031"><vh>setHeadString &amp; initHeadString</vh></v>
-<v t="T1032"><vh>setHeadStringOrHeadline (new for SWIG)</vh></v>
-<v t="T1033"><vh>trimTrailingLines</vh></v>
+<v t="T1044"><vh>appendStringToBody</vh></v>
+<v t="T1045"><vh>setBodyStringOrPane (new for SWIG)</vh></v>
+<v t="T1046"><vh>setHeadString &amp; initHeadString</vh></v>
+<v t="T1047"><vh>setHeadStringOrHeadline (new for SWIG)</vh></v>
+<v t="T1048"><vh>trimTrailingLines</vh></v>
 </v>
 <v><vh>icons</vh>
-<v t="T1034"><vh>computeIcon</vh></v>
-<v t="T1035"><vh>setIcon</vh></v>
-<v t="T1036"><vh>setIconVal</vh></v>
-<v t="T1037"><vh>setIconWithVal</vh></v>
+<v t="T1049"><vh>computeIcon</vh></v>
+<v t="T1050"><vh>setIcon</vh></v>
+<v t="T1051"><vh>setIconVal</vh></v>
+<v t="T1052"><vh>setIconWithVal</vh></v>
 </v>
-<v t="T1038"><vh>setJoinList</vh></v>
-<v t="T1039"><vh>setSelection</vh></v>
-<v t="T1040"><vh>setT</vh></v>
-<v t="T1041"><vh>setTreeNode</vh></v>
+<v t="T1053"><vh>setJoinList</vh></v>
+<v t="T1054"><vh>setSelection</vh></v>
+<v t="T1055"><vh>setT</vh></v>
+<v t="T1056"><vh>setTreeNode</vh></v>
 <v><vh>status bits</vh>
-<v t="T1042"><vh>clearClonedBit</vh></v>
-<v t="T1043"><vh>clearDirty &amp; clearDirtyJoined</vh></v>
-<v t="T1044"><vh>clearDummy</vh></v>
-<v t="T1045"><vh>clearMarked</vh></v>
-<v t="T1046"><vh>clearOrphan</vh></v>
-<v t="T1047"><vh>clearVisited</vh></v>
-<v t="T1048"><vh>initClonedBit</vh></v>
-<v t="T1049"><vh>initDirtyBit</vh></v>
-<v t="T1050"><vh>initExpandedBit (new)</vh></v>
-<v t="T1051"><vh>initMarkedBit</vh></v>
-<v t="T1052"><vh>initSelectedBit (new)</vh></v>
-<v t="T1053"><vh>initTopBit (new)</vh></v>
-<v t="T1054"><vh>initStatus</vh></v>
-<v t="T1055"><vh>setAncestorAtFileNodeDirty</vh></v>
-<v t="T1056"><vh>setClonedBit</vh></v>
-<v t="T1057"><vh>setDirty &amp; setDirtyJoined</vh></v>
-<v t="T1058"><vh>setDummy</vh></v>
-<v t="T1059"><vh>setOrphan</vh></v>
-<v t="T1060"><vh>setVisited</vh></v>
-<v t="T1061"><vh>setMarked</vh></v>
+<v t="T1057"><vh>clearClonedBit</vh></v>
+<v t="T1058"><vh>clearDirty &amp; clearDirtyJoined</vh></v>
+<v t="T1059"><vh>clearDummy</vh></v>
+<v t="T1060"><vh>clearMarked</vh></v>
+<v t="T1061"><vh>clearOrphan</vh></v>
+<v t="T1062"><vh>clearVisited</vh></v>
+<v t="T1063"><vh>initClonedBit</vh></v>
+<v t="T1064"><vh>initDirtyBit</vh></v>
+<v t="T1065"><vh>initExpandedBit (new)</vh></v>
+<v t="T1066"><vh>initMarkedBit</vh></v>
+<v t="T1067"><vh>initSelectedBit (new)</vh></v>
+<v t="T1068"><vh>initTopBit (new)</vh></v>
+<v t="T1069"><vh>initStatus</vh></v>
+<v t="T1070"><vh>setAncestorAtFileNodeDirty</vh></v>
+<v t="T1071"><vh>setClonedBit</vh></v>
+<v t="T1072"><vh>setDirty &amp; setDirtyJoined</vh></v>
+<v t="T1073"><vh>setDummy</vh></v>
+<v t="T1074"><vh>setOrphan</vh></v>
+<v t="T1075"><vh>setVisited</vh></v>
+<v t="T1076"><vh>setMarked</vh></v>
 </v>
 </v>
 <v><vh>Moving, Inserting, Deleting, Cloning</vh>
 <v><vh>Entry Points (vnode)</vh>
-<v t="T1062"><vh>clone (vnode)</vh></v>
-<v t="T1063"><vh>createDependents</vh></v>
-<v t="T1064"><vh>doDelete</vh>
-<v t="T1065"><vh>&lt;&lt; dump the dv list &gt;&gt;</vh></v>
+<v t="T1077"><vh>clone (vnode)</vh></v>
+<v t="T1078"><vh>createDependents</vh></v>
+<v t="T1079"><vh>doDelete</vh>
+<v t="T1080"><vh>&lt;&lt; dump the dv list &gt;&gt;</vh></v>
 </v>
-<v t="T1066"><vh>freeDVNodes</vh></v>
-<v t="T1067"><vh>insertAfter</vh></v>
-<v t="T1068"><vh>insertAsLastChild</vh></v>
-<v t="T1069"><vh>insertAsNthChild</vh></v>
-<v t="T1070"><vh>moveAfter</vh></v>
-<v t="T1071"><vh>moveToRoot</vh></v>
-<v t="T1072"><vh>moveToNthChildOf</vh></v>
-<v t="T1073"><vh>restoreOutlineFromDVnodes</vh>
-<v t="T1074"><vh>&lt;&lt; Insert v into the outline &gt;&gt;</vh></v>
-<v t="T1075"><vh>&lt;&lt; Set back and parent fields for the new vnode &gt;&gt;</vh></v>
-<v t="T1076"><vh>&lt;&lt; set icons for all vnodes of the result tree &gt;&gt;</vh></v>
+<v t="T1081"><vh>freeDVNodes</vh></v>
+<v t="T1082"><vh>insertAfter</vh></v>
+<v t="T1083"><vh>insertAsLastChild</vh></v>
+<v t="T1084"><vh>insertAsNthChild</vh></v>
+<v t="T1085"><vh>moveAfter</vh></v>
+<v t="T1086"><vh>moveToRoot</vh></v>
+<v t="T1087"><vh>moveToNthChildOf</vh></v>
+<v t="T1088"><vh>restoreOutlineFromDVnodes</vh>
+<v t="T1089"><vh>&lt;&lt; Insert v into the outline &gt;&gt;</vh></v>
+<v t="T1090"><vh>&lt;&lt; Set back and parent fields for the new vnode &gt;&gt;</vh></v>
+<v t="T1091"><vh>&lt;&lt; set icons for all vnodes of the result tree &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1077"><vh>cloneTree</vh></v>
-<v t="T1078"><vh>copyCloneBitsTo</vh></v>
-<v t="T1079"><vh>copyTree</vh></v>
-<v t="T1080"><vh>destroyDependents</vh></v>
-<v t="T1081"><vh>destroyTree</vh></v>
-<v t="T1082"><vh>invalidOutline</vh></v>
-<v t="T1083"><vh>isJoinedTo</vh></v>
-<v t="T1084"><vh>isOnJoinListOf</vh></v>
-<v t="T1085"><vh>joinNodeTo</vh></v>
-<v t="T1086"><vh>joinTreeTo</vh></v>
-<v t="T1087"><vh>saveOutlineWithLevel</vh>
-<v t="T1088"><vh>&lt;&lt; Set the data fields of dv &gt;&gt;</vh></v>
+<v t="T1092"><vh>cloneTree</vh></v>
+<v t="T1093"><vh>copyCloneBitsTo</vh></v>
+<v t="T1094"><vh>copyTree</vh></v>
+<v t="T1095"><vh>destroyDependents</vh></v>
+<v t="T1096"><vh>destroyTree</vh></v>
+<v t="T1097"><vh>invalidOutline</vh></v>
+<v t="T1098"><vh>isJoinedTo</vh></v>
+<v t="T1099"><vh>isOnJoinListOf</vh></v>
+<v t="T1100"><vh>joinNodeTo</vh></v>
+<v t="T1101"><vh>joinTreeTo</vh></v>
+<v t="T1102"><vh>saveOutlineWithLevel</vh>
+<v t="T1103"><vh>&lt;&lt; Set the data fields of dv &gt;&gt;</vh></v>
 </v>
-<v t="T1089"><vh>shouldBeClone</vh></v>
-<v t="T1090"><vh>unjoinNode</vh>
-<v t="T1091"><vh>&lt;&lt; Set prev to the node that points to this &gt;&gt;</vh></v>
+<v t="T1104"><vh>shouldBeClone</vh></v>
+<v t="T1105"><vh>unjoinNode</vh>
+<v t="T1106"><vh>&lt;&lt; Set prev to the node that points to this &gt;&gt;</vh></v>
 </v>
-<v t="T1092"><vh>unjoinTree</vh></v>
-<v t="T1093"><vh>validateOutlineWithParent</vh>
-<v t="T1094"><vh>&lt;&lt; validate parent ivar &gt;&gt;</vh></v>
-<v t="T1095"><vh>&lt;&lt; validate childIndex ivar &gt;&gt;</vh></v>
-<v t="T1096"><vh>&lt;&lt; validate x ivar &gt;&gt;</vh></v>
+<v t="T1107"><vh>unjoinTree</vh></v>
+<v t="T1108"><vh>validateOutlineWithParent</vh>
+<v t="T1109"><vh>&lt;&lt; validate parent ivar &gt;&gt;</vh></v>
+<v t="T1110"><vh>&lt;&lt; validate childIndex ivar &gt;&gt;</vh></v>
+<v t="T1111"><vh>&lt;&lt; validate x ivar &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -1856,347 +1836,347 @@
 </v>
 <v><vh>Examples of using @file trees</vh>
 <v><vh>atFile</vh>
-<v t="T1097"><vh>@file sampleAtFile.h</vh>
-<v t="T1098"><vh>&lt;&lt; declare public utility functions &gt;&gt;</vh></v>
-<v t="T1099"><vh>&lt;&lt; private atFile data &gt;&gt;</vh></v>
-<v t="T1100"><vh>&lt;&lt; private read methods &gt;&gt;</vh></v>
-<v t="T1101"><vh>&lt;&lt; private sentinel methods &gt;&gt;</vh></v>
-<v t="T1102"><vh>&lt;&lt; private utilities &gt;&gt;</vh></v>
-<v t="T1103"><vh>&lt;&lt; private write methods &gt;&gt;</vh></v>
+<v t="T1112"><vh>@file sampleAtFile.h</vh>
+<v t="T1113"><vh>&lt;&lt; declare public utility functions &gt;&gt;</vh></v>
+<v t="T1114"><vh>&lt;&lt; private atFile data &gt;&gt;</vh></v>
+<v t="T1115"><vh>&lt;&lt; private read methods &gt;&gt;</vh></v>
+<v t="T1116"><vh>&lt;&lt; private sentinel methods &gt;&gt;</vh></v>
+<v t="T1117"><vh>&lt;&lt; private utilities &gt;&gt;</vh></v>
+<v t="T1118"><vh>&lt;&lt; private write methods &gt;&gt;</vh></v>
 </v>
-<v t="T1104"><vh>@file sampleAtFile.cpp</vh>
+<v t="T1119"><vh>@file sampleAtFile.cpp</vh>
 <v><vh>Declarations</vh>
-<v t="T1105"><vh>&lt;&lt; atFile includes &gt;&gt;</vh></v>
-<v t="T1106"><vh>&lt;&lt; atFile abbreviations &gt;&gt;</vh></v>
-<v t="T1107"><vh>&lt;&lt; atFile constants &gt;&gt;</vh></v>
+<v t="T1120"><vh>&lt;&lt; atFile includes &gt;&gt;</vh></v>
+<v t="T1121"><vh>&lt;&lt; atFile abbreviations &gt;&gt;</vh></v>
+<v t="T1122"><vh>&lt;&lt; atFile constants &gt;&gt;</vh></v>
 </v>
 <v><vh>Commands methods</vh>
-<v t="T1108"><vh>Commands::readAtFile</vh></v>
-<v t="T1109"><vh>Commands::writeAtFile</vh></v>
+<v t="T1123"><vh>Commands::readAtFile</vh></v>
+<v t="T1124"><vh>Commands::writeAtFile</vh></v>
 </v>
-<v t="T1110"><vh>atFile ctor</vh></v>
+<v t="T1125"><vh>atFile ctor</vh></v>
 <v><vh>Reading</vh>
-<v t="T1111"><vh>createNthChild</vh></v>
-<v t="T1112"><vh>joinTrees</vh></v>
-<v t="T1113"><vh>read</vh>
-<v t="T1114"><vh>&lt;&lt; Declare read vars &gt;&gt;</vh></v>
-<v t="T1115"><vh>&lt;&lt; read the entire file into fileData &gt;&gt;</vh></v>
-<v t="T1116"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
-<v t="T1117"><vh>&lt;&lt; Issue structure error message &gt;&gt;</vh></v>
-<v t="T1118"><vh>&lt;&lt; Delete root's tree and body text &gt;&gt;</vh></v>
-<v t="T1119"><vh>&lt;&lt; Handle clone bits &gt;&gt;</vh></v>
-<v t="T1120"><vh>&lt;&lt; Join cloned trees &gt;&gt;</vh></v>
-<v t="T1121"><vh>&lt;&lt; Handle all status bits &gt;&gt;</vh></v>
-<v t="T1122"><vh>&lt;&lt; Issue serious error message &gt;&gt;</vh></v>
+<v t="T1126"><vh>createNthChild</vh></v>
+<v t="T1127"><vh>joinTrees</vh></v>
+<v t="T1128"><vh>read</vh>
+<v t="T1129"><vh>&lt;&lt; Declare read vars &gt;&gt;</vh></v>
+<v t="T1130"><vh>&lt;&lt; read the entire file into fileData &gt;&gt;</vh></v>
+<v t="T1131"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
+<v t="T1132"><vh>&lt;&lt; Issue structure error message &gt;&gt;</vh></v>
+<v t="T1133"><vh>&lt;&lt; Delete root's tree and body text &gt;&gt;</vh></v>
+<v t="T1134"><vh>&lt;&lt; Handle clone bits &gt;&gt;</vh></v>
+<v t="T1135"><vh>&lt;&lt; Join cloned trees &gt;&gt;</vh></v>
+<v t="T1136"><vh>&lt;&lt; Handle all status bits &gt;&gt;</vh></v>
+<v t="T1137"><vh>&lt;&lt; Issue serious error message &gt;&gt;</vh></v>
 </v>
-<v t="T1123"><vh>readAll</vh></v>
-<v t="T1124"><vh>scanDoc</vh>
-<v t="T1125"><vh>&lt;&lt; Skip the opening sentinel &gt;&gt;</vh></v>
-<v t="T1126"><vh>&lt;&lt; Skip an opening block delim &gt;&gt;</vh></v>
-<v t="T1127"><vh>&lt;&lt; Append the next comment line to v's body &gt;&gt;</vh></v>
-<v t="T1128"><vh>&lt;&lt; Skip the closing sentinel &gt;&gt;</vh></v>
-<v t="T1129"><vh>&lt;&lt; Remove a closing block delim from v's body &gt;&gt;</vh></v>
+<v t="T1138"><vh>readAll</vh></v>
+<v t="T1139"><vh>scanDoc</vh>
+<v t="T1140"><vh>&lt;&lt; Skip the opening sentinel &gt;&gt;</vh></v>
+<v t="T1141"><vh>&lt;&lt; Skip an opening block delim &gt;&gt;</vh></v>
+<v t="T1142"><vh>&lt;&lt; Append the next comment line to v's body &gt;&gt;</vh></v>
+<v t="T1143"><vh>&lt;&lt; Skip the closing sentinel &gt;&gt;</vh></v>
+<v t="T1144"><vh>&lt;&lt; Remove a closing block delim from v's body &gt;&gt;</vh></v>
 </v>
-<v t="T1130"><vh>scanHeader</vh></v>
-<v t="T1131"><vh>scanText</vh>
-<v t="T1132"><vh>&lt;&lt; Set lineIndent and linep &gt;&gt;</vh></v>
-<v t="T1133"><vh>&lt;&lt; remove indent and append line &gt;&gt;</vh></v>
-<v t="T1134"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
-<v t="T1135"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
+<v t="T1145"><vh>scanHeader</vh></v>
+<v t="T1146"><vh>scanText</vh>
+<v t="T1147"><vh>&lt;&lt; Set lineIndent and linep &gt;&gt;</vh></v>
+<v t="T1148"><vh>&lt;&lt; remove indent and append line &gt;&gt;</vh></v>
+<v t="T1149"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
+<v t="T1150"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
 <v><vh>start sentinels</vh>
-<v t="T1136"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
-<v t="T1137"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
-<v t="T1138"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
-<v t="T1139"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
-<v t="T1140"><vh>&lt;&lt; scan @+node &gt;&gt;</vh>
-<v t="T1141"><vh>&lt;&lt; skip the node sentinel, setting headline, ref and n &gt;&gt;</vh>
-<v t="T1142"><vh>&lt;&lt; Set status bits in dummy vnode &gt;&gt;</vh>
-<v t="T1143"><vh>&lt;&lt; set index from the C=nnn, field &gt;&gt;</vh></v>
+<v t="T1151"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
+<v t="T1152"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
+<v t="T1153"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
+<v t="T1154"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
+<v t="T1155"><vh>&lt;&lt; scan @+node &gt;&gt;</vh>
+<v t="T1156"><vh>&lt;&lt; skip the node sentinel, setting headline, ref and n &gt;&gt;</vh>
+<v t="T1157"><vh>&lt;&lt; Set status bits in dummy vnode &gt;&gt;</vh>
+<v t="T1158"><vh>&lt;&lt; set index from the C=nnn, field &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1144"><vh>&lt;&lt; copy new_ms to child's body &gt;&gt;</vh></v>
-<v t="T1145"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
+<v t="T1159"><vh>&lt;&lt; copy new_ms to child's body &gt;&gt;</vh></v>
+<v t="T1160"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
 </v>
-<v t="T1146"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
+<v t="T1161"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
 </v>
 <v><vh>unpaired sentinels</vh>
-<v t="T1147"><vh>&lt;&lt; scan @ref &gt;&gt;</vh></v>
-<v t="T1148"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
-<v t="T1149"><vh>&lt;&lt; scan @@ &gt;&gt;</vh></v>
+<v t="T1162"><vh>&lt;&lt; scan @ref &gt;&gt;</vh></v>
+<v t="T1163"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
+<v t="T1164"><vh>&lt;&lt; scan @@ &gt;&gt;</vh></v>
 </v>
-<v t="T1150"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
+<v t="T1165"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>Writing</vh>
-<v t="T1151"><vh>putBody</vh></v>
-<v t="T1152"><vh>putBodyPart (removes trailing lines)</vh>
-<v t="T1153"><vh>&lt;&lt; put code/doc parts and sentinels &gt;&gt;</vh></v>
+<v t="T1166"><vh>putBody</vh></v>
+<v t="T1167"><vh>putBodyPart (removes trailing lines)</vh>
+<v t="T1168"><vh>&lt;&lt; put code/doc parts and sentinels &gt;&gt;</vh></v>
 </v>
-<v t="T1154"><vh>putCodePart &amp; allies</vh>
-<v t="T1155"><vh>&lt;&lt; handle the start of a line &gt;&gt;</vh>
-<v t="T1156"><vh>&lt;&lt; compute delta, the width of the whitespace &gt;&gt;</vh></v>
-<v t="T1157"><vh>&lt;&lt; handle @others &gt;&gt;</vh></v>
-<v t="T1158"><vh>&lt;&lt; put @verbatim sentinel if necessary &gt;&gt;</vh></v>
+<v t="T1169"><vh>putCodePart &amp; allies</vh>
+<v t="T1170"><vh>&lt;&lt; handle the start of a line &gt;&gt;</vh>
+<v t="T1171"><vh>&lt;&lt; compute delta, the width of the whitespace &gt;&gt;</vh></v>
+<v t="T1172"><vh>&lt;&lt; handle @others &gt;&gt;</vh></v>
+<v t="T1173"><vh>&lt;&lt; put @verbatim sentinel if necessary &gt;&gt;</vh></v>
 </v>
-<v t="T1159"><vh>&lt;&lt; put the line &gt;&gt;</vh>
-<v t="T1160"><vh>&lt;&lt; put possible section reference &gt;&gt;</vh></v>
+<v t="T1174"><vh>&lt;&lt; put the line &gt;&gt;</vh>
+<v t="T1175"><vh>&lt;&lt; put possible section reference &gt;&gt;</vh></v>
 </v>
-<v t="T1161"><vh>findReference</vh></v>
-<v t="T1162"><vh>inAtOthers</vh></v>
-<v t="T1163"><vh>putAtOthers</vh></v>
-<v t="T1164"><vh>putAtOthersChild</vh></v>
+<v t="T1176"><vh>findReference</vh></v>
+<v t="T1177"><vh>inAtOthers</vh></v>
+<v t="T1178"><vh>putAtOthers</vh></v>
+<v t="T1179"><vh>putAtOthersChild</vh></v>
 </v>
-<v t="T1165"><vh>putDirective</vh></v>
-<v t="T1166"><vh>putDoc</vh>
-<v t="T1167"><vh>&lt;&lt; skip the @&lt;space&gt; or @doc &gt;&gt;</vh></v>
-<v t="T1168"><vh>&lt;&lt; set limit to the end of the doc part &gt;&gt;</vh></v>
+<v t="T1180"><vh>putDirective</vh></v>
+<v t="T1181"><vh>putDoc</vh>
+<v t="T1182"><vh>&lt;&lt; skip the @&lt;space&gt; or @doc &gt;&gt;</vh></v>
+<v t="T1183"><vh>&lt;&lt; set limit to the end of the doc part &gt;&gt;</vh></v>
 </v>
-<v t="T1169"><vh>putDocPart</vh>
-<v t="T1170"><vh>&lt;&lt; copy words, splitting the line if needed &gt;&gt;</vh></v>
+<v t="T1184"><vh>putDocPart</vh>
+<v t="T1185"><vh>&lt;&lt; copy words, splitting the line if needed &gt;&gt;</vh></v>
 </v>
-<v t="T1171"><vh>write</vh>
-<v t="T1172"><vh>&lt;&lt; Open files.  Set orphan flag and return on errors &gt;&gt;</vh>
-<v t="T1173"><vh>&lt;&lt; setOrphan and return if mTargetFileName is bad &gt;&gt;</vh></v>
-<v t="T1174"><vh>&lt;&lt; Open a temp file and set mOutputFileName &gt;&gt;</vh></v>
+<v t="T1186"><vh>write</vh>
+<v t="T1187"><vh>&lt;&lt; Open files.  Set orphan flag and return on errors &gt;&gt;</vh>
+<v t="T1188"><vh>&lt;&lt; setOrphan and return if mTargetFileName is bad &gt;&gt;</vh></v>
+<v t="T1189"><vh>&lt;&lt; Open a temp file and set mOutputFileName &gt;&gt;</vh></v>
 </v>
-<v t="T1175"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
-<v t="T1176"><vh>&lt;&lt; Issue final write error message &gt;&gt;</vh></v>
-<v t="T1177"><vh>&lt;&lt; Replace the target with the temp file if different &gt;&gt;</vh></v>
+<v t="T1190"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="T1191"><vh>&lt;&lt; Issue final write error message &gt;&gt;</vh></v>
+<v t="T1192"><vh>&lt;&lt; Replace the target with the temp file if different &gt;&gt;</vh></v>
 </v>
-<v t="T1178"><vh>writeAll</vh>
-<v t="T1179"><vh>&lt;&lt; Clear all orphan bits &gt;&gt;</vh></v>
+<v t="T1193"><vh>writeAll</vh>
+<v t="T1194"><vh>&lt;&lt; Clear all orphan bits &gt;&gt;</vh></v>
 </v>
-<v t="T1180"><vh>Output</vh>
-<v t="T1181"><vh>putBlanks</vh></v>
-<v t="T1182"><vh>putChar</vh></v>
-<v t="T1183"><vh>putIndent</vh></v>
-<v t="T1184"><vh>putInt</vh></v>
-<v t="T1185"><vh>putString</vh></v>
-<v t="T1186"><vh>putTabs</vh></v>
+<v t="T1195"><vh>Output</vh>
+<v t="T1196"><vh>putBlanks</vh></v>
+<v t="T1197"><vh>putChar</vh></v>
+<v t="T1198"><vh>putIndent</vh></v>
+<v t="T1199"><vh>putInt</vh></v>
+<v t="T1200"><vh>putString</vh></v>
+<v t="T1201"><vh>putTabs</vh></v>
 </v>
 </v>
 <v><vh>Sentinels</vh>
-<v t="T1187"><vh>nodeSentinelText</vh>
-<v t="T1188"><vh>&lt;&lt; append the status-bit characters to s &gt;&gt;</vh></v>
+<v t="T1202"><vh>nodeSentinelText</vh>
+<v t="T1203"><vh>&lt;&lt; append the status-bit characters to s &gt;&gt;</vh></v>
 </v>
-<v t="T1189"><vh>putCloseNodeSentinel</vh></v>
-<v t="T1190"><vh>putCloseSentinels</vh></v>
-<v t="T1191"><vh>putOpenLeoSentinel</vh></v>
-<v t="T1192"><vh>putOpenNodeSentinel</vh></v>
-<v t="T1193"><vh>putOpenSentinels</vh></v>
-<v t="T1194"><vh>putSentinel</vh></v>
-<v t="T1195"><vh>sentinelKind</vh></v>
-<v t="T1196"><vh>sentinelName</vh></v>
-<v t="T1197"><vh>skipSentinelStart</vh></v>
+<v t="T1204"><vh>putCloseNodeSentinel</vh></v>
+<v t="T1205"><vh>putCloseSentinels</vh></v>
+<v t="T1206"><vh>putOpenLeoSentinel</vh></v>
+<v t="T1207"><vh>putOpenNodeSentinel</vh></v>
+<v t="T1208"><vh>putOpenSentinels</vh></v>
+<v t="T1209"><vh>putSentinel</vh></v>
+<v t="T1210"><vh>sentinelKind</vh></v>
+<v t="T1211"><vh>sentinelName</vh></v>
+<v t="T1212"><vh>skipSentinelStart</vh></v>
 </v>
 <v><vh>Utility functions</vh>
-<v t="T1198"><vh>compareFiles</vh></v>
-<v t="T1199"><vh>directiveKind</vh></v>
-<v t="T1200"><vh>isSectionName</vh></v>
-<v t="T1201"><vh>setAncestorAtFileNodeDirty</vh></v>
+<v t="T1213"><vh>compareFiles</vh></v>
+<v t="T1214"><vh>directiveKind</vh></v>
+<v t="T1215"><vh>isSectionName</vh></v>
+<v t="T1216"><vh>setAncestorAtFileNodeDirty</vh></v>
 </v>
 <v><vh>Utilites</vh>
-<v t="T1202"><vh>appendToBody</vh></v>
-<v t="T1203"><vh>atFile::scanAllDirectives</vh>
-<v t="T1204"><vh>&lt;&lt; Set global arguments to default values &gt;&gt;</vh></v>
-<v t="T1205"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
-<v t="T1206"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
-<v t="T1207"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
-<v t="T1208"><vh>&lt;&lt; Remove leading and trailing delims if they exist &gt;&gt;</vh></v>
+<v t="T1217"><vh>appendToBody</vh></v>
+<v t="T1218"><vh>atFile::scanAllDirectives</vh>
+<v t="T1219"><vh>&lt;&lt; Set global arguments to default values &gt;&gt;</vh></v>
+<v t="T1220"><vh>&lt;&lt; Set path from @file node &gt;&gt;</vh></v>
+<v t="T1221"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
+<v t="T1222"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="T1223"><vh>&lt;&lt; Remove leading and trailing delims if they exist &gt;&gt;</vh></v>
 </v>
-<v t="T1209"><vh>&lt;&lt; Test for @pagewidth and @tabwidth &gt;&gt;</vh></v>
-<v t="T1210"><vh>&lt;&lt; Set current directory if possible &gt;&gt;</vh></v>
-<v t="T1211"><vh>&lt;&lt; Set comment Strings from global vars &gt;&gt;</vh></v>
+<v t="T1224"><vh>&lt;&lt; Test for @pagewidth and @tabwidth &gt;&gt;</vh></v>
+<v t="T1225"><vh>&lt;&lt; Set current directory if possible &gt;&gt;</vh></v>
+<v t="T1226"><vh>&lt;&lt; Set comment Strings from global vars &gt;&gt;</vh></v>
 </v>
-<v t="T1212"><vh>error</vh></v>
-<v t="T1213"><vh>skipIndent</vh></v>
-<v t="T1214"><vh>updateCloneIndices</vh></v>
-<v t="T1215"><vh>writeError</vh></v>
+<v t="T1227"><vh>error</vh></v>
+<v t="T1228"><vh>skipIndent</vh></v>
+<v t="T1229"><vh>updateCloneIndices</vh></v>
+<v t="T1230"><vh>writeError</vh></v>
 </v>
 </v>
 </v>
 <v><vh>FileCommands</vh>
-<v t="T1216"><vh>@file sampleFileCommands.cpp</vh>
+<v t="T1231"><vh>@file sampleFileCommands.cpp</vh>
 <v><vh>Declaratons</vh>
-<v t="T1217"><vh>&lt;&lt; File commands includes &gt;&gt;</vh></v>
-<v t="T1218"><vh>&lt;&lt; Declare File commands private functions &gt;&gt;</vh></v>
-<v t="T1219"><vh>&lt;&lt; Declare the EBadLeoFile class &gt;&gt;</vh></v>
+<v t="T1232"><vh>&lt;&lt; File commands includes &gt;&gt;</vh></v>
+<v t="T1233"><vh>&lt;&lt; Declare File commands private functions &gt;&gt;</vh></v>
+<v t="T1234"><vh>&lt;&lt; Declare the EBadLeoFile class &gt;&gt;</vh></v>
 </v>
 <v><vh>Tag List routines</vh>
-<v t="T1220"><vh>deleteTagList</vh></v>
-<v t="T1221"><vh>getVtag</vh></v>
-<v t="T1222"><vh>newVtag</vh></v>
+<v t="T1235"><vh>deleteTagList</vh></v>
+<v t="T1236"><vh>getVtag</vh></v>
+<v t="T1237"><vh>newVtag</vh></v>
 </v>
 <v><vh>Export</vh>
-<v t="T1223"><vh>exportMoreText</vh></v>
-<v t="T1224"><vh>flattenOutline</vh></v>
-<v t="T1225"><vh>flattenOutlineWithFilename</vh></v>
-<v t="T1226"><vh>outlineToNoweb</vh></v>
-<v t="T1227"><vh>convertToNoweb</vh></v>
-<v t="T1228"><vh>convertCodePartToNoweb</vh>
-<v t="T1229"><vh>&lt;&lt; Output the section reference &gt;&gt;</vh>
-<v t="T1230"><vh>&lt;&lt; Set name to the file name p2..p &gt;&gt;</vh></v>
-<v t="T1231"><vh>&lt;&lt; point p1 and p2 at section name in v's headline &gt;&gt;</vh></v>
+<v t="T1238"><vh>exportMoreText</vh></v>
+<v t="T1239"><vh>flattenOutline</vh></v>
+<v t="T1240"><vh>flattenOutlineWithFilename</vh></v>
+<v t="T1241"><vh>outlineToNoweb</vh></v>
+<v t="T1242"><vh>convertToNoweb</vh></v>
+<v t="T1243"><vh>convertCodePartToNoweb</vh>
+<v t="T1244"><vh>&lt;&lt; Output the section reference &gt;&gt;</vh>
+<v t="T1245"><vh>&lt;&lt; Set name to the file name p2..p &gt;&gt;</vh></v>
+<v t="T1246"><vh>&lt;&lt; point p1 and p2 at section name in v's headline &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1232"><vh>convertDocPartToNoweb</vh></v>
-<v t="T1233"><vh>copyPart</vh>
-<v t="T1234"><vh>&lt;&lt; return p if this is a section definition &gt;&gt;</vh></v>
+<v t="T1247"><vh>convertDocPartToNoweb</vh></v>
+<v t="T1248"><vh>copyPart</vh>
+<v t="T1249"><vh>&lt;&lt; return p if this is a section definition &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh>Import</vh>
-<v t="T1235"><vh>convertMoreStringsToOutlineAfter</vh>
-<v t="T1236"><vh>&lt;&lt; Declare the vars for convertMoreStringsToOutlineAfter &gt;&gt;</vh></v>
-<v t="T1237"><vh>&lt;&lt; Link a new vnode v into the outline &gt;&gt;</vh></v>
-<v t="T1238"><vh>&lt;&lt; Set the headline string, skipping over the leader &gt;&gt;</vh></v>
-<v t="T1239"><vh>&lt;&lt; Count the number of following body lines &gt;&gt;</vh></v>
-<v t="T1240"><vh>&lt;&lt; Add the lines to the body text of v &gt;&gt;</vh></v>
+<v t="T1250"><vh>convertMoreStringsToOutlineAfter</vh>
+<v t="T1251"><vh>&lt;&lt; Declare the vars for convertMoreStringsToOutlineAfter &gt;&gt;</vh></v>
+<v t="T1252"><vh>&lt;&lt; Link a new vnode v into the outline &gt;&gt;</vh></v>
+<v t="T1253"><vh>&lt;&lt; Set the headline string, skipping over the leader &gt;&gt;</vh></v>
+<v t="T1254"><vh>&lt;&lt; Count the number of following body lines &gt;&gt;</vh></v>
+<v t="T1255"><vh>&lt;&lt; Add the lines to the body text of v &gt;&gt;</vh></v>
 </v>
-<v t="T1241"><vh>importMoreText</vh>
-<v t="T1242"><vh>&lt;&lt; Read the file into strings &gt;&gt;</vh></v>
+<v t="T1256"><vh>importMoreText</vh>
+<v t="T1257"><vh>&lt;&lt; Read the file into strings &gt;&gt;</vh></v>
 </v>
-<v t="T1243"><vh>moreHeadlineLevel</vh></v>
-<v t="T1244"><vh>stringsAreValidMoreFile</vh></v>
+<v t="T1258"><vh>moreHeadlineLevel</vh></v>
+<v t="T1259"><vh>stringsAreValidMoreFile</vh></v>
 </v>
 <v><vh>Reading</vh>
 <v><vh>fileInfo class</vh>
-<v t="T1245"><vh>&lt;&lt; Declare the fileInfo class &gt;&gt;</vh></v>
-<v t="T1246"><vh>Birth &amp; Death</vh></v>
-<v t="T1247"><vh>createVnode</vh>
-<v t="T1248"><vh>&lt;&lt; Create a root vnode &gt;&gt;</vh></v>
+<v t="T1260"><vh>&lt;&lt; Declare the fileInfo class &gt;&gt;</vh></v>
+<v t="T1261"><vh>Birth &amp; Death</vh></v>
+<v t="T1262"><vh>createVnode</vh>
+<v t="T1263"><vh>&lt;&lt; Create a root vnode &gt;&gt;</vh></v>
 </v>
-<v t="T1249"><vh>finishOutline (alert)</vh>
-<v t="T1250"><vh>&lt;&lt; Set attributes and icons for all nodes &gt;&gt;</vh></v>
-<v t="T1251"><vh>&lt;&lt; Create join lists of all vnodes &gt;&gt;</vh></v>
-<v t="T1252"><vh>&lt;&lt; Set the current node &gt;&gt;</vh></v>
+<v t="T1264"><vh>finishOutline (alert)</vh>
+<v t="T1265"><vh>&lt;&lt; Set attributes and icons for all nodes &gt;&gt;</vh></v>
+<v t="T1266"><vh>&lt;&lt; Create join lists of all vnodes &gt;&gt;</vh></v>
+<v t="T1267"><vh>&lt;&lt; Set the current node &gt;&gt;</vh></v>
 </v>
-<v t="T1253"><vh>finishPaste (creating join lists could be a problem)</vh>
-<v t="T1254"><vh>&lt;&lt; Check number of created tnodes &gt;&gt;</vh></v>
-<v t="T1255"><vh>&lt;&lt; Set attributes and icons for all pasted nodes &gt;&gt;</vh></v>
-<v t="T1256"><vh>&lt;&lt; Create join lists of all pasted vnodes &gt;&gt;</vh></v>
-<v t="T1257"><vh>&lt;&lt; Recompute clone bits for pasted vnodes &gt;&gt;</vh></v>
+<v t="T1268"><vh>finishPaste (creating join lists could be a problem)</vh>
+<v t="T1269"><vh>&lt;&lt; Check number of created tnodes &gt;&gt;</vh></v>
+<v t="T1270"><vh>&lt;&lt; Set attributes and icons for all pasted nodes &gt;&gt;</vh></v>
+<v t="T1271"><vh>&lt;&lt; Create join lists of all pasted vnodes &gt;&gt;</vh></v>
+<v t="T1272"><vh>&lt;&lt; Recompute clone bits for pasted vnodes &gt;&gt;</vh></v>
 </v>
-<v t="T1258"><vh>getT</vh></v>
-<v t="T1259"><vh>newCloneWindow</vh></v>
-<v t="T1260"><vh>newTnode (alert)</vh></v>
-<v t="T1261"><vh>setMaxTnodeIndex</vh></v>
-<v t="T1262"><vh>setNumberOfTnodes</vh></v>
+<v t="T1273"><vh>getT</vh></v>
+<v t="T1274"><vh>newCloneWindow</vh></v>
+<v t="T1275"><vh>newTnode (alert)</vh></v>
+<v t="T1276"><vh>setMaxTnodeIndex</vh></v>
+<v t="T1277"><vh>setNumberOfTnodes</vh></v>
 </v>
 <v><vh>get routines</vh>
-<v t="T1263"><vh>get (basic)</vh></v>
-<v t="T1264"><vh>getClipboardHeader</vh></v>
-<v t="T1265"><vh>getCloneWindows</vh></v>
-<v t="T1266"><vh>getEscapedString (uses large buffer)</vh>
-<v t="T1267"><vh>&lt;&lt; allocate mTextBuf &gt;&gt;</vh></v>
-<v t="T1268"><vh>&lt;&lt; increase the size of mTextBuf &gt;&gt;</vh></v>
+<v t="T1278"><vh>get (basic)</vh></v>
+<v t="T1279"><vh>getClipboardHeader</vh></v>
+<v t="T1280"><vh>getCloneWindows</vh></v>
+<v t="T1281"><vh>getEscapedString (uses large buffer)</vh>
+<v t="T1282"><vh>&lt;&lt; allocate mTextBuf &gt;&gt;</vh></v>
+<v t="T1283"><vh>&lt;&lt; increase the size of mTextBuf &gt;&gt;</vh></v>
 </v>
-<v t="T1269"><vh>getFindPanelSettings</vh>
-<v t="T1270"><vh>&lt;&lt; Set defaults of all flags &gt;&gt;</vh></v>
+<v t="T1284"><vh>getFindPanelSettings</vh>
+<v t="T1285"><vh>&lt;&lt; Set defaults of all flags &gt;&gt;</vh></v>
 </v>
-<v t="T1271"><vh>getGlobals</vh>
-<v t="T1272"><vh>&lt;&lt; set the window position &gt;&gt;</vh></v>
-<v t="T1273"><vh>&lt;&lt; set the log window position &gt;&gt;</vh></v>
+<v t="T1286"><vh>getGlobals</vh>
+<v t="T1287"><vh>&lt;&lt; set the window position &gt;&gt;</vh></v>
+<v t="T1288"><vh>&lt;&lt; set the log window position &gt;&gt;</vh></v>
 </v>
-<v t="T1274"><vh>getLeoFile (reads all @file nodes)</vh></v>
-<v t="T1275"><vh>getLeoHeader</vh></v>
-<v t="T1276"><vh>getLeoOutline</vh></v>
-<v t="T1277"><vh>getPosition</vh></v>
-<v t="T1278"><vh>getPrefs</vh>
-<v t="T1279"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
-<v t="T1280"><vh>&lt;&lt; Set the default directory preference &gt;&gt;</vh></v>
-<v t="T1281"><vh>&lt;&lt; Set the TSyntaxMemo options &gt;&gt;</vh></v>
+<v t="T1289"><vh>getLeoFile (reads all @file nodes)</vh></v>
+<v t="T1290"><vh>getLeoHeader</vh></v>
+<v t="T1291"><vh>getLeoOutline</vh></v>
+<v t="T1292"><vh>getPosition</vh></v>
+<v t="T1293"><vh>getPrefs</vh>
+<v t="T1294"><vh>&lt;&lt; check for syntax coloring prefs &gt;&gt;</vh></v>
+<v t="T1295"><vh>&lt;&lt; Set the default directory preference &gt;&gt;</vh></v>
+<v t="T1296"><vh>&lt;&lt; Set the TSyntaxMemo options &gt;&gt;</vh></v>
 </v>
-<v t="T1282"><vh>getSize</vh></v>
-<v t="T1283"><vh>getTnodes</vh></v>
-<v t="T1284"><vh>getTnode (alert)</vh></v>
-<v t="T1285"><vh>getVnodes</vh></v>
-<v t="T1286"><vh>getVnode</vh>
-<v t="T1287"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
+<v t="T1297"><vh>getSize</vh></v>
+<v t="T1298"><vh>getTnodes</vh></v>
+<v t="T1299"><vh>getTnode (alert)</vh></v>
+<v t="T1300"><vh>getVnodes</vh></v>
+<v t="T1301"><vh>getVnode</vh>
+<v t="T1302"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
 </v>
-<v t="T1288"><vh>skipWs</vh></v>
-<v t="T1289"><vh>skipWsAndNl</vh></v>
+<v t="T1303"><vh>skipWs</vh></v>
+<v t="T1304"><vh>skipWsAndNl</vh></v>
 </v>
-<v t="T1290"><vh>open</vh>
-<v t="T1291"><vh>&lt;&lt; Create the TFileStream and the file buffer &gt;&gt;</vh></v>
-<v t="T1292"><vh>&lt;&lt; Set the default directory &gt;&gt;</vh></v>
-<v t="T1293"><vh>&lt;&lt; Delete the TFileStream and the file buffer &gt;&gt;</vh></v>
+<v t="T1305"><vh>open</vh>
+<v t="T1306"><vh>&lt;&lt; Create the TFileStream and the file buffer &gt;&gt;</vh></v>
+<v t="T1307"><vh>&lt;&lt; Set the default directory &gt;&gt;</vh></v>
+<v t="T1308"><vh>&lt;&lt; Delete the TFileStream and the file buffer &gt;&gt;</vh></v>
 </v>
-<v t="T1294"><vh>readLine</vh>
-<v t="T1295"><vh>&lt;&lt; reallocate mLineBuf &gt;&gt;</vh></v>
-<v t="T1296"><vh>&lt;&lt; fill mFileBuf or set mFileEmptyFlag &gt;&gt;</vh></v>
-<v t="T1297"><vh>&lt;&lt; return the last line, if any &gt;&gt;</vh></v>
+<v t="T1309"><vh>readLine</vh>
+<v t="T1310"><vh>&lt;&lt; reallocate mLineBuf &gt;&gt;</vh></v>
+<v t="T1311"><vh>&lt;&lt; fill mFileBuf or set mFileEmptyFlag &gt;&gt;</vh></v>
+<v t="T1312"><vh>&lt;&lt; return the last line, if any &gt;&gt;</vh></v>
 </v>
-<v t="T1298"><vh>xmlUnescape</vh></v>
+<v t="T1313"><vh>xmlUnescape</vh></v>
 </v>
 <v><vh>Writing</vh>
-<v t="T1299"><vh>assignFileIndices</vh></v>
-<v t="T1300"><vh>compactFileIndices</vh></v>
-<v t="T1301"><vh>shouldCompactOnSave</vh>
-<v t="T1302"><vh>&lt;&lt; Compute the number of tnodes used &gt;&gt;</vh></v>
+<v t="T1314"><vh>assignFileIndices</vh></v>
+<v t="T1315"><vh>compactFileIndices</vh></v>
+<v t="T1316"><vh>shouldCompactOnSave</vh>
+<v t="T1317"><vh>&lt;&lt; Compute the number of tnodes used &gt;&gt;</vh></v>
 </v>
 <v><vh>put routines</vh>
-<v t="T1303"><vh>put (basic)</vh>
-<v t="T1304"><vh>&lt;&lt; put s to the mMemoryStream &gt;&gt;</vh></v>
-<v t="T1305"><vh>&lt;&lt; put s to mFileStream &gt;&gt;</vh></v>
+<v t="T1318"><vh>put (basic)</vh>
+<v t="T1319"><vh>&lt;&lt; put s to the mMemoryStream &gt;&gt;</vh></v>
+<v t="T1320"><vh>&lt;&lt; put s to mFileStream &gt;&gt;</vh></v>
 </v>
-<v t="T1306"><vh>putClipboardHeader</vh>
-<v t="T1307"><vh>&lt;&lt; count the number of tnodes &gt;&gt;</vh></v>
+<v t="T1321"><vh>putClipboardHeader</vh>
+<v t="T1322"><vh>&lt;&lt; count the number of tnodes &gt;&gt;</vh></v>
 </v>
-<v t="T1308"><vh>putCloneWindows</vh>
-<v t="T1309"><vh>&lt;&lt; put position of clone window &gt;&gt;</vh></v>
+<v t="T1323"><vh>putCloneWindows</vh>
+<v t="T1324"><vh>&lt;&lt; put position of clone window &gt;&gt;</vh></v>
 </v>
-<v t="T1310"><vh>putEscapedString</vh></v>
-<v t="T1311"><vh>putFindSettings</vh></v>
-<v t="T1312"><vh>putGlobals</vh>
-<v t="T1313"><vh>&lt;&lt; put the body/outline ratio &gt;&gt;</vh></v>
-<v t="T1314"><vh>&lt;&lt; put the position of this form &gt;&gt;</vh></v>
-<v t="T1315"><vh>&lt;&lt; put the position of the log window &gt;&gt;</vh></v>
+<v t="T1325"><vh>putEscapedString</vh></v>
+<v t="T1326"><vh>putFindSettings</vh></v>
+<v t="T1327"><vh>putGlobals</vh>
+<v t="T1328"><vh>&lt;&lt; put the body/outline ratio &gt;&gt;</vh></v>
+<v t="T1329"><vh>&lt;&lt; put the position of this form &gt;&gt;</vh></v>
+<v t="T1330"><vh>&lt;&lt; put the position of the log window &gt;&gt;</vh></v>
 </v>
-<v t="T1316"><vh>putHeader</vh>
-<v t="T1317"><vh>&lt;&lt; count the number of tnodes and clone windows &gt;&gt;</vh></v>
+<v t="T1331"><vh>putHeader</vh>
+<v t="T1332"><vh>&lt;&lt; count the number of tnodes and clone windows &gt;&gt;</vh></v>
 </v>
-<v t="T1318"><vh>putLeoOutline (writes to clipboard)</vh></v>
-<v t="T1319"><vh>putPrefs</vh>
-<v t="T1320"><vh>&lt;&lt; put syntax coloring prefs &gt;&gt;</vh></v>
-<v t="T1321"><vh>&lt;&lt; put default directory &gt;&gt;</vh></v>
+<v t="T1333"><vh>putLeoOutline (writes to clipboard)</vh></v>
+<v t="T1334"><vh>putPrefs</vh>
+<v t="T1335"><vh>&lt;&lt; put syntax coloring prefs &gt;&gt;</vh></v>
+<v t="T1336"><vh>&lt;&lt; put default directory &gt;&gt;</vh></v>
 </v>
-<v t="T1322"><vh>putProlog</vh></v>
-<v t="T1323"><vh>putPostlog</vh></v>
-<v t="T1324"><vh>putTnodes</vh></v>
-<v t="T1325"><vh>put ( tnode * )</vh></v>
-<v t="T1326"><vh>putVnodes</vh></v>
-<v t="T1327"><vh>put ( vnode * )</vh>
-<v t="T1328"><vh>&lt;&lt; Put tnode index if this vnode has body text &gt;&gt;</vh></v>
-<v t="T1329"><vh>&lt;&lt; Put a vnode tag if this vnode has a clone window &gt;&gt;</vh></v>
-<v t="T1330"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
-<v t="T1331"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T1332"><vh>save</vh></v>
-<v t="T1333"><vh>saveAs</vh></v>
-<v t="T1334"><vh>saveACopyAs</vh></v>
-<v t="T1335"><vh>saveOutlineOnlyTo</vh></v>
-<v t="T1336"><vh>xmlEscape</vh></v>
-<v t="T1337"><vh>write_LEO_file</vh>
-<v t="T1338"><vh>&lt;&lt; Open fileName and buffer it &gt;&gt;</vh></v>
-<v t="T1339"><vh>&lt;&lt; Close the file &gt;&gt;</vh></v>
+<v t="T1337"><vh>putProlog</vh></v>
+<v t="T1338"><vh>putPostlog</vh></v>
+<v t="T1339"><vh>putTnodes</vh></v>
+<v t="T1340"><vh>put ( tnode * )</vh></v>
+<v t="T1341"><vh>putVnodes</vh></v>
+<v t="T1342"><vh>put ( vnode * )</vh>
+<v t="T1343"><vh>&lt;&lt; Put tnode index if this vnode has body text &gt;&gt;</vh></v>
+<v t="T1344"><vh>&lt;&lt; Put a vnode tag if this vnode has a clone window &gt;&gt;</vh></v>
+<v t="T1345"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="T1346"><vh>&lt;&lt; write the head text &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="T1347"><vh>save</vh></v>
+<v t="T1348"><vh>saveAs</vh></v>
+<v t="T1349"><vh>saveACopyAs</vh></v>
+<v t="T1350"><vh>saveOutlineOnlyTo</vh></v>
+<v t="T1351"><vh>xmlEscape</vh></v>
+<v t="T1352"><vh>write_LEO_file</vh>
+<v t="T1353"><vh>&lt;&lt; Open fileName and buffer it &gt;&gt;</vh></v>
+<v t="T1354"><vh>&lt;&lt; Close the file &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
 </v>
-<v t="T1340"><vh>White papers</vh>
-<v t="T1341"><vh>Recovering from Read Errors</vh></v>
+</v>
+</v>
+<v t="T1355"><vh>White papers</vh>
+<v t="T1356"><vh>Recovering from Read Errors</vh></v>
 <v><vh>CVS postings</vh>
-<v t="T1342"><vh>How to use Leo with CVS</vh></v>
-<v t="T1343"><vh>Leo can't mend clone links</vh></v>
-<v t="T1344"><vh>Problems</vh></v>
-<v t="T1345"><vh>.cvs.leo format</vh></v>
-<v t="T1346"><vh>@cvs</vh></v>
+<v t="T1357"><vh>How to use Leo with CVS</vh></v>
+<v t="T1358"><vh>Leo can't mend clone links</vh></v>
+<v t="T1359"><vh>Problems</vh></v>
+<v t="T1360"><vh>.cvs.leo format</vh></v>
+<v t="T1361"><vh>@cvs</vh></v>
 </v>
-<v t="T1347"><vh>tk is the future of Leo</vh></v>
-<v t="T1348"><vh>Why I like Python</vh></v>
+<v t="T1362"><vh>tk is the future of Leo</vh></v>
+<v t="T1363"><vh>Why I like Python</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2854,39 +2834,18 @@ This is the minimum you need to use Leo effectively.
 4. Many command key abbreviations are specified in the Syntax Coloring panel.
 
 See the Appendices for a concise summary of information about Leo.</t>
-<t tx="T59">leo.py 3.11 beta 4                       March 31, 2003
+<t tx="T59">leo.py 3.11                         April 27, 2003
 
-leo.py 3.11 beta 4 is now available at:  http://sourceforge.net/projects/leo/
+leo.py 3.11 is now available at:  http://sourceforge.net/projects/leo/
 leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
 
-This will be the last beta release before 3.11 final.
+This version of Leo contains many important improvements since 3.10,
+especially support for unicode and a new plugin architecture.
 
-- Fixed several minor problems with unicode.
-- Fixed a _huge_ performance bug that slowed moving nodes left.
-- Added several new plugins:
-	- Support for the VIM editor.
-	- A French translation of all menus.
-- Added many minor bug fixes and improvements.
+The Highlights of 3.11:
 
-leo.py 3.11 beta 3                       February 26, 2003
-
-- Added "tk_encoding" setting and related logic.
-  Most people are using non-ascii characters in Leo without problems.
-- Fixed bugs in Outline to Noweb command.
-  This command now respects the "at_root_bodies_start_in_doc_mode" setting.
-
-leo.py 3.11 beta 2                       February 24, 2003
-
-Fixed some unicode problems when the system encoding is not "utf-8".
-
-For all other details, see below.
-
-leo.py 3.11 beta 1                       February 16, 2003
-
-This version of Leo contains a very large number of improvements.  The highlights:
-
-** Leo supports unicode properly.  This solves a lot of problems.
+** Leo supports unicode.
 	- New @encoding directives specifies encoding for derived files.
 	- New settings specify default encodings for .leo and derived files.
 	- Derived files specify encodings used to create them.
@@ -2898,16 +2857,19 @@ This version of Leo contains a very large number of improvements.  The highlight
 	- Write Missing @file Nodes.
 	- Expand/Contract Node.
 - Improved commands:
+	- Fixed a huge performance bug that slowed moving nodes left.
 	- Expand/Contract commands now operate on the selected tree.
 	  ( A major improvement)
 	- Sort Siblings command can now sort top-level nodes.
 	- Leo now allows multiple writes of cloned nodes.
 	  (Useful when different @path directives are in effect.)
 - Other improvements:
+	- New @lineending directive specifies line endings.
 	- Improved syntax coloring for html and xml.
 	- Leo scrolls partially visible headlines into full view.
 	- Added "Replace tabs with spaces" checkbox in Prefs panel.
 - New settings in leoConfig.leo/.txt.
+	- Added "tk_encoding" setting and related logic.
 	- Colors for Show Invisibibles command and body_insertion_cursor
 	- Settings affecting when control-drags start.
 	- Defaults for unicode (see above).
@@ -2916,51 +2878,54 @@ This version of Leo contains a very large number of improvements.  The highlight
 See the children of this node for full details.</t>
 <t tx="T60"></t>
 <t tx="T61"></t>
-<t tx="T62">Every call to v.unjoinNode was calling c.clearAllVistied.
+<t tx="T62">This ensures that the outline is redrawn properly after the Read @file Nodes command.</t>
+<t tx="T63">Browsing the comp.lang.python yesturday I found that there are serious problems with Python's getdefaultlocale() routine.  Martin v. Löwis says "getdefaultlocale() is broken, and cannot be fixed", though he does suggest the following workaround:
 
-Fixing this bug will allow me not to use inodes &amp; locations for the foreseeable future.</t>
-<t tx="T63">- changed copyPart so it returns on @code as well as @c.
-
-- changed convertVnodeToWeb so that it takes acount of the "at_root_bodies_start_in_doc_mode" setting.
-
-- For the most part, directives other than @c, @code, @space, @doc, @others get written to the file as @@directive.  There are minor differences between how this is handled in @root and @file trees. This might be considered a bug, and I am not going to do anything unless someone complains loudly.
-</t>
-<t tx="T64"></t>
-<t tx="T65"></t>
+leoGlobals.py uses locale.getpreferredencoding to define getpreferredencoding if locale.getpreferredencoding exists (it is new in Python 2.3alpha).  Otherwise, Leo uses the code copied from the 2.3a2 version of Python to define getpreferredencoding.  Either way, leoGlobals.py now defines getpreferredencoding and Leo uses getpreferredencoding rather than getdefaultlocale.</t>
+<t tx="T64">After opening the Python window the call to tkFont() threw a (caught) exception on every call to frame.setTabWidth.  The fix was to add the optional root param.</t>
+<t tx="T65">skip_long was throwing an exception if there were no valid digits following a + or - sign.</t>
 <t tx="T66"></t>
-<t tx="T67"></t>
-<t tx="T68">- Translating the "Tangle..." label differently from the "Tangle" one was 
-impossible without modifying leo's source code (same thing for "Untangle..." 
-and "Untangle").
+<t tx="T67">- tangle.scanAllDirectives was not setting self.encoding when handling @encoding.
+- tangle.scanAllDirectives wasn't scanning the @encoding line properly.
+- fixed crashers in Tangle and Untangle logic.</t>
+<t tx="T68">Fixed bug in handleLinesFollowingSentinel:
+c:\prog\LeoCVS\leo\leoAtFile.py:482: No global (i) found
+Removed i arg from rfind.
 
-- Couldn't translate either "Show Invisibles" and "Hide Invisibles". First 
-toggle is OK then an error occurs after the second...</t>
-<t tx="T69">I had forgotten to compile leo.nsi.</t>
+Fixed bug in definition of BadLeoFile:
+c:\prog\LeoCVS\leo\leoFileCommands.py:27: Base class (exceptions.Exception) __init__() not called
+Added call to Exception.__init__(self,message)
+
+Fixed bug in askYesNoCancel
+c:\prog\LeoCVS\leo\leoDialog.py:283: Variable (no) used before being set.
+Disabled defaultButton logic.  New code would have to be thoroughly tested.
+
+Removing unused routine: setDefaultLoc.
+c:\prog\LeoCVS\leo\leoNodes.py:2581: No class attribute (defaultLoc) found
+
+Fixed bug in put: changed a to app()
+c:\prog\leoCvs\leo\leoFrame.py:4973: No global (a) found
+</t>
+<t tx="T69">I had completely misunderstood __del__ methods!  __del__ methods _disable_ the gc's ability to collect circular garbage (!!) and so __del__ methods will _never_ be called (!!)
+
+BTW, when deleting an entire Leo window Leo calls various destroy methods to unlink items.  This allows the garbage collector to collect all data structures.  Because of unlimited undo only these destroy methods have the potential for creating "real" garbage.</t>
 <t tx="T70"></t>
-<t tx="T71"></t>
-<t tx="T72">This makes the file name easier to see in the Windows task bar.
-</t>
-<t tx="T73"></t>
-<t tx="T74">This allows time to be expressed as local time or gmttime.</t>
-<t tx="T75"></t>
-<t tx="T76">The following new plugins are now in LeoPy.leo.
+<t tx="T71">This adds http:\\ to url's if needed.</t>
+<t tx="T72">Leo now supports a new @lineending directive.  This directive allows you to specify the line endings for individual derived files.  This directive will override the output_newline setting in leoConfig.txt.  Note that @lineending _never_ affects the line endings in .leo files themselves:  we must have consistent line endings in .leo files!  See below for more details.
 
-- mod_script_io_to_body.py
-	Redirect output from scripts to end of body pane.
+The valid forms of the new @lineending directive are:
 
-- mod_vim.py
-	Adds support for VIM editor.
-
-- mod_french_fm.py
-	Full translation of all Leo's menus into French.</t>
-<t tx="T77">The following bugs are minor.  The way Leo handles unicode has proven to be correct.
+@lineending nl       (the default, Linux)
+@lineending cr       (Mac)
+@lineending crlf     (Windows)
+@lineending lf       (same as nl, not recommended)
+@lineending platform (same as platform value for output_newline setting in leoConfig.txt)</t>
+<t tx="T73">This will have no effect until version 4.0.</t>
+<t tx="T74">Leo now uses unicode internally for most strings.  This solves a lot of problems.  The children of this node discuss all the details...</t>
+<t tx="T75">This fixes several bugs.</t>
+<t tx="T76">In particular, the locale returned by locale.getdefaultlocale()[1] need not be a valid unicode encoding.
 </t>
-<t tx="T78">This fixes several bugs.</t>
-<t tx="T79">In particular, the locale returned by locale.getdefaultlocale()[1] need not be a valid unicode encoding.
-</t>
-<t tx="T80"></t>
-<t tx="T81">Leo now uses unicode internally for most strings.  This solves a lot of problems.  The children of this node discuss all the details...</t>
-<t tx="T82">Leo now uses unicode internally for most strings.  The highlights:
+<t tx="T77">Leo now uses unicode internally for most strings.  The highlights:
 
 1. Leo converts headline and body text to unicode when reading .leo files and derived files.  Both .leo files and derived files may specify their encoding, with "utf-8" being used by default.  If the encoding used in a derived file is not "utf-8" it is represented in the @+leo sentinel line.  For example:
 
@@ -2981,7 +2946,7 @@ default_derived_file_encoding to anything that makes sense for you.
 4. You may use the @encoding directive to specify the encoding used in a derived file.  You can't mix encodings in a single derived file.
 
 This is all should need to know to use extended character sets on Leo.</t>
-<t tx="T83">leoConfig.py now contains two new settings, with the defaults shown below: 
+<t tx="T78">leoConfig.py now contains two new settings, with the defaults shown below: 
 
 default_derived_file_encoding = UTF-8 
 new_leo_file_encoding = UTF-8 
@@ -2992,7 +2957,7 @@ I do not recommend changing new_leo_file_encoding (see the comments in leoConfig
 
 You may set default_derived_file_encoding to anything that makes sense for you.
 </t>
-<t tx="T84">The following paragraphs discuss code-level details.  You should not need to read this section in order to use Leo.
+<t tx="T79">The following paragraphs discuss code-level details.  You should not need to read this section in order to use Leo.
 
 1. Leo uses unicode objects in vnodes and tnodes to denote headline and body text.  Note that unicode strings have no encoding; only plain strings have encodings. This means that once an (encoded) plain string has been converted to a unicode string it doesn't matter how the unicode string was created.  This is the key that makes Leo's new code robust. 
 
@@ -3010,9 +2975,10 @@ are promoted to unicode objects using the "system encoding". This encoding shoul
 
 - All strings are converted to unicode when Leo reads files or gets text from Tk.Text widgets. 
 - All string literals in Leo's code have only ascii characters.</t>
-<t tx="T85">It is now much easier to customize Leo.  The new scheme is based on plugins (files in the plugins directory) rather than modifying customizeLeo.py.  Many thanks to Paul Paterson for suggesting this scheme and for doing the first implementation.
+<t tx="T80"></t>
+<t tx="T81">It is now much easier to customize Leo.  The new scheme is based on plugins (files in the plugins directory) rather than modifying customizeLeo.py.  Many thanks to Paul Paterson for suggesting this scheme and for doing the first implementation.
 </t>
-<t tx="T86">@nocolor
+<t tx="T82">@nocolor
 
 New in 3.11. Leo now looks in the plugins folder for files whose name matches
 mod_*.py. Leo tries to import all such files at startup ("start2") time. 
@@ -3065,7 +3031,7 @@ It should now be _much_ easier to submit a plugin for inclusion in LeoPy.leo.
 Just send me a .leo file containing @file mod_your_plugin.py. Please have this
 @file node be @ignored: this is more convenient for me. Ideally, your .leo file
 should contain _only_ your plugin code.</t>
-<t tx="T87">@color
+<t tx="T83">@color
 @language python
 @ignore
 
@@ -3080,7 +3046,7 @@ if 1: # Register the handlers...
 	registerHandler("idle", on_idle)
 	registerHandler(("start2","open2","command2"), create_open_with_menu)
 	es("...open with")</t>
-<t tx="T88"># frame.OnOpenWith creates the dict as follows:
+<t tx="T84"># frame.OnOpenWith creates the dict as follows:
 # dict = {"c":c, "v":v, "f":f, "path":path, "time":time}
 
 def on_idle (tag,keywords):
@@ -3098,7 +3064,7 @@ def on_idle (tag,keywords):
 					dict["time"] = time
 					&lt;&lt; update v's body text &gt;&gt;
 			except: pass</t>
-<t tx="T89">&lt;&lt; set s to the new text &gt;&gt;
+<t tx="T85">&lt;&lt; set s to the new text &gt;&gt;
 body = v.bodyString()
 &lt;&lt; set conflict flag &gt;&gt;
 
@@ -3119,7 +3085,7 @@ if update:
 	c.selectVnode(v)
 	v.OpenWithOldBody = s
 </t>
-<t tx="T90">try:
+<t tx="T86">try:
 	# Update v from the changed temp file.
 	f=open(path)
 	s=f.read()
@@ -3128,14 +3094,14 @@ except:
 	es("can not open " + shortFileName(path))
 	break
 </t>
-<t tx="T91">try:
+<t tx="T87">try:
 	# The OpenWithOldBody attribute does not normally exist in vnodes.
 	old_body = v.OpenWithOldBody
 	conflict = body != old_body and body != s
 except:
 	conflict = v.isDirty() and body != s
 </t>
-<t tx="T92">def create_open_with_menu (tag,keywords):
+<t tx="T88">def create_open_with_menu (tag,keywords):
 
 	if  (tag in ("start2","open2") or
 		(tag=="command2" and keywords.get("label")=="new")):
@@ -3146,7 +3112,7 @@ except:
 		from leoGlobals import enableIdleTimeHook
 		enableIdleTimeHook(idleTimeDelay=500)
 </t>
-<t tx="T93">@ Entries in the following table are the tuple (commandName,shortcut,data).
+<t tx="T89">@ Entries in the following table are the tuple (commandName,shortcut,data).
 data is the tuple (command,arg,ext).
 command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
 Leo executes command(arg+path) where path is the full path to the temp file.
@@ -3167,7 +3133,7 @@ else: # David McNab's table.
 
 top().frame.createOpenWithMenuFromTable(table)
 </t>
-<t tx="T94">Simplified and regularized hooks:
+<t tx="T90">Simplified and regularized hooks:
 
 - replaced "event1" and "event2" hooks with 'regular' hooks.
 	* Much easier to understand.
@@ -3189,7 +3155,7 @@ Improved code:
 - the tracing code also checks to make sure that most hooks have c,v keywords.
 - created es_event_exception().
 - put all event handlers in try/except blocks that call es_event_exception on errors.</t>
-<t tx="T95">At startup time Leo looks all files of the form mod_*.py in the plugins
+<t tx="T91">At startup time Leo looks all files of the form mod_*.py in the plugins
 directory. Leo assumes that these files are "plugins" containing Python modules
 that customizes Leo's operation. Leo attempts to import each file.
 
@@ -3308,26 +3274,36 @@ b) the file is not already open.
 
 (5) "@url1" and "@url2" hooks are only executed if "icondclick1" hook returns
 None.</t>
-<t tx="T96">See the Code:Customizing Leo:Plugins folder in LeoPy.leo for full details of all plugins.
+<t tx="T92">See the Code:Customizing Leo:Plugins folder in LeoPy.leo for full details of all plugins.
 
 - Added disabled support for @folder.
 
 - Demoted up/down arrow stuff to a disabled plugin for now.</t>
-<t tx="T97">The idle-time hook now checks for dirty @file nodes that have been modified in an external editor since the last check.  An alert is raised when such conflicting changes are found.
+<t tx="T93">The idle-time hook now checks for dirty @file nodes that have been modified in an external editor since the last check.  An alert is raised when such conflicting changes are found.
 
 Improved sanitize_filename utility (in leoGlobals.py) so that it converts all characters used to denote filenames to underscores.</t>
-<t tx="T98">This allows output from registering hooks to appear in the log pane.</t>
-<t tx="T99"></t>
-<t tx="T100">Added support for the following options:
+<t tx="T94">This allows output from registering hooks to appear in the log pane.</t>
+<t tx="T95"></t>
+<t tx="T96">The following new plugins are now in LeoPy.leo.
+
+- mod_script_io_to_body.py
+	Redirect output from scripts to end of body pane.
+
+- mod_vim.py
+	Adds support for VIM editor.
+
+- mod_french_fm.py
+	Full translation of all Leo's menus into French.</t>
+<t tx="T97">Added support for the following options:
 
 show_invisibles_space_background_color
 show_invisibles_tab_background_color
 </t>
-<t tx="T101">This option controls when the control key is considered to start a control-drag.
+<t tx="T98">This option controls when the control key is considered to start a control-drag.
 
 If look_for_control_drag_on_mouse_down = 1 the the control key must be down when dragging starts.  Otherwise, the control key must be down when dragging ends.</t>
-<t tx="T102">This allows Leo to be used with a black background.</t>
-<t tx="T103">Two new settings in leoConfig.leo/.txt specify the format of the time/date
+<t tx="T99">This allows Leo to be used with a black background.</t>
+<t tx="T100">Two new settings in leoConfig.leo/.txt specify the format of the time/date
 strings inserted by the Insert Body Time/Date and Insert Headline Time/Date
 commands:
 
@@ -3341,11 +3317,11 @@ of the format options. The "%m/%d/%Y %H:%M:%S" format is used by default,
 resulting in a time/date format such as: 1/30/2003 8:31:55
 
 </t>
-<t tx="T104"></t>
-<t tx="T105">- if the headline is bracketed (named) then the &lt;&lt; &gt;&gt; are removed.
+<t tx="T101"></t>
+<t tx="T102">- if the headline is bracketed (named) then the &lt;&lt; &gt;&gt; are removed.
 - if the headline is not bracketed (unnamed) then the &lt;&lt; &gt;&gt; are inserted. 
 </t>
-<t tx="T106">The Insert Body Time/Date and Insert Headline Time/Date commands are in the
+<t tx="T103">The Insert Body Time/Date and Insert Headline Time/Date commands are in the
 Edit Body and Edit Headline menus respectively. They insert the formatted time
 &amp; date into the body or headline text. You must be editing a headline to be
 able to insert the time/date into the headline. If you aren't Leo will say:
@@ -3361,28 +3337,34 @@ These settings are really the format string passed to time.strftime(format).
 See http://www.python.org/doc/current/lib/module-time.html for a complete list
 of the format options. The "%m/%d/%Y %H:%M:%S" format is used by default,
 resulting in a time/date format such as: 1/30/2003 8:31:55</t>
-<t tx="T107">These commands select the first or last node of an outline and make that node visible.</t>
-<t tx="T108">This command selects the parent of the previously selected node and makes that node visible.</t>
-<t tx="T109">These commands select the previous or following sibling of a node and make the newly selected node visible.</t>
-<t tx="T110">This command writes any files (in the presently selected outline) that do not exist.</t>
-<t tx="T111"></t>
-<t tx="T112">The Expand To Level n commands now expand only the nodes in the presently selected outline.  This makes these commands much more useful.
+<t tx="T104">These commands select the first or last node of an outline and make that node visible.</t>
+<t tx="T105">This command selects the parent of the previously selected node and makes that node visible.</t>
+<t tx="T106">These commands select the previous or following sibling of a node and make the newly selected node visible.</t>
+<t tx="T107">This command writes any files (in the presently selected outline) that do not exist.</t>
+<t tx="T108"></t>
+<t tx="T109">This allows time to be expressed as local time or gmttime.</t>
+<t tx="T110"></t>
+<t tx="T111">The Expand To Level n commands now expand only the nodes in the presently selected outline.  This makes these commands much more useful.
 
 With these changes there is no longer any need for the Expand Subheads command.</t>
-<t tx="T113">This can be useful when clones are in the range of different @path directives.</t>
-<t tx="T114"></t>
-<t tx="T115">1. Leo now longer warns when writing customizeLeo.py.
+<t tx="T112">This can be useful when clones are in the range of different @path directives.</t>
+<t tx="T113"></t>
+<t tx="T114">1. Leo now longer warns when writing customizeLeo.py.
 
 2. Inserted a lock that prevents customizeLeo.py from being written unless use_customize_leo_dot_py = 1 in leoConfig.txt.  Leo writes a message to the log if customizeLeo.py is dirty but was not written because of the setting in leoConfig.txt.
 </t>
+<t tx="T115"></t>
 <t tx="T116"></t>
 <t tx="T117"></t>
-<t tx="T118">This allows Leo to syntax color comments with @language plain.
-The @comment directive must follow the @langauge directive.</t>
-<t tx="T119">In other words, the Pressing the Enter key in the Find panel executes the Find Next command.
+<t tx="T118">This makes the file name easier to see in the Windows task bar.
 </t>
-<t tx="T120">The syntax colorer now colors all element tags.  See the example in the child of this node.</t>
-<t tx="T121">@language html
+<t tx="T119"></t>
+<t tx="T120">This allows Leo to syntax color comments with @language plain.
+The @comment directive must follow the @langauge directive.</t>
+<t tx="T121">In other words, the Pressing the Enter key in the Find panel executes the Find Next command.
+</t>
+<t tx="T122">The syntax colorer now colors all element tags.  See the example in the child of this node.</t>
+<t tx="T123">@language html
 @color
 @ignore
 &lt;HTML&gt;
@@ -3477,35 +3459,55 @@ HEIGHT="32" ALIGN="left" NATURALSIZEFLAG="3"&gt;
 &lt;/BODY&gt;
 &lt;/HTML&gt;
 </t>
-<t tx="T122">- Added "Replace tabs with spaces" checkbox.
+<t tx="T124">- Added "Replace tabs with spaces" checkbox.
 
 - The close button is equivalent to the "Cancel" button rather than the "Ok" button.</t>
-<t tx="T123">This was causing great confusion.</t>
-<t tx="T124"></t>
-<t tx="T125"></t>
+<t tx="T125">This was causing great confusion.</t>
 <t tx="T126"></t>
-<t tx="T127">- There was a bug that prevented the command from working properly if the line number preceeded the present line.
+<t tx="T127"></t>
+<t tx="T128">- There was a bug that prevented the command from working properly if the line number preceeded the present line.
 
 - The goto line number option only works on full path names in @file nodes. 
 It does not work for relative paths or in combination with an @path directive.</t>
-<t tx="T128">This problem only arose with languages such as html that have no single-line comment delimiter.
-</t>
-<t tx="T129">Leo did not properly handle configuration settings containing the % character.
+<t tx="T129">This problem only arose with languages such as html that have no single-line comment delimiter.
 </t>
 <t tx="T130"></t>
-<t tx="T131">Double-clicking the icon box used to set the cursor to the hand.
+<t tx="T131">Leo did not properly handle configuration settings containing the % character.
 </t>
-<t tx="T132">In the unusual case that a language has no single-line comment delimiter, Leo will remove the block delimiters from the headline text in node sentinels.  createNthChild must take this into account by doing a second comparison of headlines if the normal comparison fails.  If the second comparison of headlines succeeds we assume that we should use the headline from the outline instead of the derived file.  I believe some kind of kludge like this will also be required for 4.0.</t>
-<t tx="T133">Enabling or disabling @language or @comment now recolors entire text.</t>
-<t tx="T134"></t>
-<t tx="T135">Python 2.3a1 contains a bug in the tkinter code.  This bug has been fixed on Python's cvs site.  Until this bug is fixed in an official Python release Leo must use:
+<t tx="T132"></t>
+<t tx="T133">Double-clicking the icon box used to set the cursor to the hand.
+</t>
+<t tx="T134">Every call to v.unjoinNode was calling c.clearAllVistied.
+
+Fixing this bug will allow me not to use inodes &amp; locations for the foreseeable future.</t>
+<t tx="T135"></t>
+<t tx="T136"></t>
+<t tx="T137">In the unusual case that a language has no single-line comment delimiter, Leo will remove the block delimiters from the headline text in node sentinels.  createNthChild must take this into account by doing a second comparison of headlines if the normal comparison fails.  If the second comparison of headlines succeeds we assume that we should use the headline from the outline instead of the derived file.  I believe some kind of kludge like this will also be required for 4.0.</t>
+<t tx="T138">- Translating the "Tangle..." label differently from the "Tangle" one was 
+impossible without modifying leo's source code (same thing for "Untangle..." 
+and "Untangle").
+
+- Couldn't translate either "Show Invisibles" and "Hide Invisibles". First 
+toggle is OK then an error occurs after the second...</t>
+<t tx="T139">- changed copyPart so it returns on @code as well as @c.
+
+- changed convertVnodeToWeb so that it takes acount of the "at_root_bodies_start_in_doc_mode" setting.
+
+- For the most part, directives other than @c, @code, @space, @doc, @others get written to the file as @@directive.  There are minor differences between how this is handled in @root and @file trees. This might be considered a bug, and I am not going to do anything unless someone complains loudly.
+</t>
+<t tx="T140">Enabling or disabling @language or @comment now recolors entire text.</t>
+<t tx="T141"></t>
+<t tx="T142">I had forgotten to compile leo.nsi.</t>
+<t tx="T143"></t>
+<t tx="T144"></t>
+<t tx="T145">Python 2.3a1 contains a bug in the tkinter code.  This bug has been fixed on Python's cvs site.  Until this bug is fixed in an official Python release Leo must use:
 
 true,false = 1,0
 
 rather than:
 
 true,false = True,False</t>
-<t tx="T136">leo.py 3.10                             December 14, 2002
+<t tx="T146">leo.py 3.10                             December 14, 2002
 
 This version of Leo corrects bugs, improves Leo's documentation and adds many new features:
 
@@ -3544,8 +3546,7 @@ I must say I am very impressed. I have been absolutely seduced by Leo over the
 past few days. I tell you, I can not put it down. I feel like a kid with a
 shiny new bike...I'm already bursting with new ways I'd like to use the tool in
 the future -- Lyn Adams Headley</t>
-<t tx="T137"></t>
-<t tx="T138">The old code did not allow &lt;tag /&gt; in many cases.  The new code reads minimal.leo without complaint.  It is:
+<t tx="T147">The old code did not allow &lt;tag /&gt; in many cases.  The new code reads minimal.leo without complaint.  It is:
 
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;leo_file&gt;
@@ -3557,65 +3558,61 @@ the future -- Lyn Adams Headley</t>
 &lt;tnodes /&gt;
 &lt;/leo_file&gt;
 </t>
-<t tx="T139">Apparently the F4 shortcuts interferes with the Alt-F4 shortcut.</t>
-<t tx="T140">The content formerly on evisa.com, including the Leo tutorials is now on 3dtree.com.</t>
-<t tx="T141">Leo improperly added extra blank lines and tabs in @file-noset trees.</t>
-<t tx="T142">Untangle was warning about a missing section if the section had only an @doc part.</t>
-<t tx="T143">Leo was not handling the class keyword properly.</t>
-<t tx="T144">When leo.py was launched from the command line specifying a non-existent file the message "file not found" was displayed but the outline pane was not drawn properly.</t>
-<t tx="T145">@nosentinelsfile nodes were not being marked dirty properly.
+<t tx="T148">Apparently the F4 shortcuts interferes with the Alt-F4 shortcut.</t>
+<t tx="T149">The content formerly on evisa.com, including the Leo tutorials is now on 3dtree.com.</t>
+<t tx="T150">Leo improperly added extra blank lines and tabs in @file-noset trees.</t>
+<t tx="T151">Untangle was warning about a missing section if the section had only an @doc part.</t>
+<t tx="T152">Leo was not handling the class keyword properly.</t>
+<t tx="T153">When leo.py was launched from the command line specifying a non-existent file the message "file not found" was displayed but the outline pane was not drawn properly.</t>
+<t tx="T154">@nosentinelsfile nodes were not being marked dirty properly.
 
 Also, the message in atFile.writeAll about "no @file node found"  did not include these nodes.  The message was generalized.</t>
-<t tx="T146">While scanning for the initial state we must make sure that i &lt; old_len and i &lt; new_len.
+<t tx="T155">While scanning for the initial state we must make sure that i &lt; old_len and i &lt; new_len.
 
 Leo was not handling Python ''' strings properly.</t>
-<t tx="T147">It is not correct to do:
+<t tx="T156">It is not correct to do:
 
 	exec s in __builtins__
 
 because that pollutes the namespaces of the __builtin__ module.  Correct is simply:
 
   exec s in {}</t>
-<t tx="T148">Previous versions of Leo did not properly recycle bindings in the outline pane.
+<t tx="T157">Previous versions of Leo did not properly recycle bindings in the outline pane.
 
 This was reported by David LeBlanc and fixed with major hints from Chad Netzer.
 </t>
-<t tx="T149"></t>
-<t tx="T150"></t>
-<t tx="T151">The lambda functions for callbacks were not working properly.</t>
-<t tx="T152">The fix was made to atFile.scanAllDirectives() and leoGlobals.scanDirectives()
+<t tx="T158">The lambda functions for callbacks were not working properly.</t>
+<t tx="T159">The fix was made to atFile.scanAllDirectives() and leoGlobals.scanDirectives()
 tangle.scanAllDirectives() was not affected.
 
 # Reversion fix: 12/06/02: We must use elif here, not if.
 elif not old.has_key("language") and dict.has_key("language"):</t>
-<t tx="T153">This bug was created recently by the new underline/realMenuName logic.  We must not set the undo/redoRealMenuName ivars in clearUndoState: that should only be done when actually setting the menu names.</t>
-<t tx="T154"></t>
-<t tx="T155">Both command are enabled only if the presently selected node is a clone.  Mark Clones marks all nodes that are clones of the present node.  Go To Next Clone goes to the next node that is a clone of the present node. A little experimentation convinced me that this command should wrap.  So this command endlessly cycles among the nodes.  Trying to end the this endless cycling would not be easy, as my experience with the Find command shows.
+<t tx="T160">This bug was created recently by the new underline/realMenuName logic.  We must not set the undo/redoRealMenuName ivars in clearUndoState: that should only be done when actually setting the menu names.</t>
+<t tx="T161">Both command are enabled only if the presently selected node is a clone.  Mark Clones marks all nodes that are clones of the present node.  Go To Next Clone goes to the next node that is a clone of the present node. A little experimentation convinced me that this command should wrap.  So this command endlessly cycles among the nodes.  Trying to end the this endless cycling would not be easy, as my experience with the Find command shows.
 
 These are straightforward (and surprisingly useful) commands.  Please report any problems immediately.</t>
-<t tx="T156">This works just like the Flatten Outline command except it writes only headlines.</t>
-<t tx="T157">How did I ever live without this.
+<t tx="T162">This works just like the Flatten Outline command except it writes only headlines.</t>
+<t tx="T163">How did I ever live without this.
 
 Also improved messages and fixed a major performance bug: tree.numberOfVisibleNodes was being called repeatedly!</t>
-<t tx="T158">The Node Only checkbox takes precedence over Suboutline Only if they are both checked.</t>
-<t tx="T159">For the first time Leo allows you to choose whether body text in @root trees will start in code mode or doc mode by default.  Ever since I created @file trees I've regretted the choice of making doc mode the default.  Just last week I realized I'm not stuck with that old choice.
+<t tx="T164">The Node Only checkbox takes precedence over Suboutline Only if they are both checked.</t>
+<t tx="T165">For the first time Leo allows you to choose whether body text in @root trees will start in code mode or doc mode by default.  Ever since I created @file trees I've regretted the choice of making doc mode the default.  Just last week I realized I'm not stuck with that old choice.
 
 1. @root-doc filename and @root-code filename specify that body text is assumed to start in doc mode or code mode respectively.  The options (-doc and -code) must follow @root immediately with no intervening whitespace.  In effect, @root-code and @root-doc are two new directives.  (They aren't syntax colored yet: they will be today or tomorrow.)
 
 2. These @root options override the new at_root_bodies_start_in_doc_mode option in leoConfig.py.  This option affects only @root trees without options.  Such "plain" @root trees are now deprecated, which only means that it is now better style to use either @root-code or @root-doc.  The reason is simple: the meaning of plain @root trees will depend on the at_root_bodies_start_in_doc_mode option, and that isn't good.
 
 3. By default, at_root_bodies_start_in_doc_mode = 1 for compatibility for old @root trees.  I actually don't think this option is good for much; I created it before I created @root-doc and @root-code, and I decided it wouldn't hurt to leave it in.  Anyway, you now have complete flexibility about how @root works, and in particular you can make @root work just like @file.</t>
-<t tx="T160"></t>
-<t tx="T161">@file-asis is a synonym for @silentfile.
+<t tx="T166">@file-asis is a synonym for @silentfile.
 @file-nosent is a synonym for @nosentinelsfile.
 @file-noref is a synonym ffor @norefsfile.
 
 </t>
-<t tx="T162">Completed a major revision of the menu handling code to handle underlined menus.  As is typical on Windows, you specify the underlined character by preceding it with an ampersand character.</t>
-<t tx="T163">Created a new icon and improved the code that loads it.</t>
-<t tx="T164">This is the funcToMethod function in customizeLeo.py.</t>
-<t tx="T165">See the relevant section of customizeLeo.py</t>
-<t tx="T166">"event1" and "event2" are generated for many Leo events. keywords.get("kind") returns one of the following for "event1" and "event2" hooks:
+<t tx="T167">Completed a major revision of the menu handling code to handle underlined menus.  As is typical on Windows, you specify the underlined character by preceding it with an ampersand character.</t>
+<t tx="T168">Created a new icon and improved the code that loads it.</t>
+<t tx="T169">This is the funcToMethod function in customizeLeo.py.</t>
+<t tx="T170">See the relevant section of customizeLeo.py</t>
+<t tx="T171">"event1" and "event2" are generated for many Leo events. keywords.get("kind") returns one of the following for "event1" and "event2" hooks:
 
 "activate",             activate window event   (not uniform across window managers).
 "deactivate"            deactivate window event (not uniform across window managers).
@@ -3629,12 +3626,10 @@ Also improved messages and fixed a major performance bug: tree.numberOfVisibleNo
 "hyperLinkEnter"        Mouse moves over a hyperlink.       Disabled at present.
 "hyperLinkLeave"        Mouse moves away from a hyperlink.  Disabled at present.
 "iconDoubleClick"       The icon box has been double-clicked.</t>
-<t tx="T167"></t>
-<t tx="T168"></t>
-<t tx="T169">The present code properly handles undo/redo for operations that copy trees, but copying trees itself causes problems for further undoes.  I've disabled further undos, as was done previously, but this is a pity.
+<t tx="T172">The present code properly handles undo/redo for operations that copy trees, but copying trees itself causes problems for further undoes.  I've disabled further undos, as was done previously, but this is a pity.
 
 To fix this, we may have to hack on the beads to indicated that a copy has been made.  No doubt about it: copying trees is tricky.</t>
-<t tx="T170">leo.py 3.9                               Nov 23, 2002
+<t tx="T173">leo.py 3.9                               Nov 23, 2002
 
 This is one of the most interesting versions of Leo ever released:
 
@@ -3676,13 +3671,13 @@ P.S. Here is what Travers A. Hough recently said about Leo:
 
 "When first I opened Leo, it was out of curiosity.  But having used it...I'LL NEVER GO BACK. THEY'LL HAVE TO PRY LEO OUT OF MY COLD, DEAD FINGERS! Seriously, it should be renamed "Crack Cocaine" because it's that addictive. I'm ready to start a 12-Step group."
 </t>
-<t tx="T171">The cweb prefs panel setting was overriding @language python (!)</t>
-<t tx="T172">@language pascal
+<t tx="T174">The cweb prefs panel setting was overriding @language python (!)</t>
+<t tx="T175">@language pascal
 @color
 
 private
 uses</t>
-<t tx="T173">app().log is now set correctly when there are multiple windows.  Previously, app().log depended on activate events, and was not reliable.  The following routines now set app().log:
+<t tx="T176">app().log is now set correctly when there are multiple windows.  Previously, app().log depended on activate events, and was not reliable.  The following routines now set app().log:
 
 - frame.doCommand
 - frame.OnMenuClick
@@ -3691,17 +3686,17 @@ Thus, top() will be reliable after any command is executed.  Creating a new wind
 
 Note: The value of top() may change during a new or open command, which may change the routine used to execute the "command1" and "command2" hooks.  This is not a bug, and hook routines must be aware of this fact.
 </t>
-<t tx="T174">Leo no longer massages comments when importing Java files.
+<t tx="T177">Leo no longer massages comments when importing Java files.
 
 There was a bug in massageBody that prevented text from being undented properly.  There was a bug in find_line_start (!!) that caused the start of the _previous_ line to be found if s[i] was a newline.  It's amazing that these bugs were undiscovered for so long.
 
 Treat interface like class.</t>
-<t tx="T175">Version 3.9 contains many new features and commands.  The children of this node document them.</t>
-<t tx="T176">Undo now uses incremental syntax coloring.  This speed up undo tremendously.</t>
-<t tx="T177">Previous versions of Leo stored the complete body text whenever any change was made to the body text.  The present version of undo stores only enough information to undo or redo the typing: typically two lines of text.  This results in about a 90% reduction in the memory used by undo.
+<t tx="T178">Version 3.9 contains many new features and commands.  The children of this node document them.</t>
+<t tx="T179">Undo now uses incremental syntax coloring.  This speed up undo tremendously.</t>
+<t tx="T180">Previous versions of Leo stored the complete body text whenever any change was made to the body text.  The present version of undo stores only enough information to undo or redo the typing: typically two lines of text.  This results in about a 90% reduction in the memory used by undo.
 </t>
-<t tx="T178">These are discussed in the child of this node.</t>
-<t tx="T179">@nocolor
+<t tx="T181">These are discussed in the child of this node.</t>
+<t tx="T182">@nocolor
 
 You may customize Leo in several ways:
 
@@ -3750,7 +3745,7 @@ Hook routines can import any file in Leo's source code and execute routines in t
 IV. Setting app().realMenuNameDict inside hooks to translate menus into other languages.
 
 This is discussed below.</t>
-<t tx="T180">@nocolor
+<t tx="T183">@nocolor
 
 Leo will override settings in .leo files if it finds a file called leoConfig.txt.  Leo works just as before if it does not find a leoConfig.txt file.
 
@@ -3782,7 +3777,7 @@ WARNING: there are problems when Leo does write leoConfig.txt: all comments are 
 3. Provided the read_only option is off, Leo updates leoConfig.txt whenever it saves a .leo file or whenever the Preferences panel is closed without being canceled.  When updating leoConfig.txt, Leo will write only existing settings whose value is not "ignore".
 
 4. When Leo saves a .leo file, Leo will write a Preferences setting to the .leo file only if the setting will not be written when updating leoConfig.txt.  In particular, changes made in the Preferences Panel will become permanent immediately if Leo the read_only option is off.  Otherwise the change will become permanent when any .leo file is saved.</t>
-<t tx="T181">Beginning with version 3.11, you may use plugins to customize how Leo works.  You can
+<t tx="T184">Beginning with version 3.11, you may use plugins to customize how Leo works.  You can
 
 - override or modify any command
 - add or customize menus or
@@ -3794,21 +3789,295 @@ Plugins are permanent: they will not go away when Leo is updated.  You can take
 advantage of the latest CVS updates _without_ having to throw away your modifications.
 
 Important warning: plugins must avoid blindly executing scripts in .leo files.  Doing so could expose all parts of your computer to malicious Python code.  The section called "Security warnings and precautions" discusses how to customize Leo safely and how to avoid several pitfalls.</t>
-<t tx="T182">Naively using hooks can expose you and your .leo files to malicious attacks.  You will be safe as long as you follow these basic principles:
+<t tx="T185">@nocolor
+
+New in 3.11. Leo now looks in the plugins folder for files whose name matches
+mod_*.py. Leo tries to import all such files at startup ("start2") time. 
+
+The child of this node gives an example of the code that creates the Open With
+menu. The following code, appearing at the end of mod_open_with.py, registers
+two different hook functions. The on_idle function is the "idle" hook. The
+create_open_with_menu is the "start2","open2" and "command2" hooks.
+@color
+
+if 1: # Register the handlers... 
+	registerHandler("idle", on_idle) 
+	registerHandler(("start2","open2","command2"), create_open_with_menu) 
+	es("...open with")
+	
+@nocolor
+Plugins may call registerHandler with a hook name like "idle" or a list of hook
+names like ("start2","open2","command2"). Also, you can use the "all" hook name
+to indicate that code will be called for all hooks. This is useful for tracing
+hooks. Plugins may also call registerExclusiveHandler for hooks that should not
+be redefined in other plugins.
+
+mod_open_with.py also contains the on_idle and create_open_with functions that
+actually handle the hook. Such functions have two arguments: tag and keywords.
+You will find many examples of this in LeoPy.leo.
+
+About distribution:
+
+1. LeoPy.leo now contains all the plugins in @ignore'd @file nodes. This way
+Leo won't complain when you open LeoPy.leo.
+
+2. Most plugins actually are disabled: the code that registers the hooks is
+contained in #if 0: blocks. So to create a pluging you have to remove the
+@ignore and you have to change #if 0: to #if 1.
+
+3. Most mod_*.py will never be part of Leo distributions, and the single-click
+installer will create an plugins folder containing just mod_open_with.py.
+
+4. There is no longer a need for a customizeLeo.py file.
+
+About error checking:
+
+At present Leo will disable all hooks if any hook throws an exception. In
+practice this isn't a big deal, but obviously something better could be done. I
+won't do anything until after 3.11b1 goes out.
+
+How to send me your plugins:
+
+It should now be _much_ easier to submit a plugin for inclusion in LeoPy.leo.
+Just send me a .leo file containing @file mod_your_plugin.py. Please have this
+@file node be @ignored: this is more convenient for me. Ideally, your .leo file
+should contain _only_ your plugin code.</t>
+<t tx="T186">@color
+@language python
+@ignore
+
+"""Open With handler"""
+
+from customizeLeo import *
+from leoGlobals import *
+
+@others
+
+if 1: # Register the handlers...
+	registerHandler("idle", on_idle)
+	registerHandler(("start2","open2","command2"), create_open_with_menu)
+	es("...open with")</t>
+<t tx="T187"># frame.OnOpenWith creates the dict as follows:
+# dict = {"c":c, "v":v, "f":f, "path":path, "time":time}
+
+def on_idle (tag,keywords):
+
+	import os
+	a = app()
+	for dict in a.openWithFiles:
+		path = dict.get("path")
+		c = dict.get("c")
+		v = dict.get("v")
+		if path and os.path.exists(path):
+			try:
+				time = os.path.getmtime(path)
+				if time and time != dict.get("time"):
+					dict["time"] = time
+					&lt;&lt; update v's body text &gt;&gt;
+			except: pass</t>
+<t tx="T188">&lt;&lt; set s to the new text &gt;&gt;
+body = v.bodyString()
+&lt;&lt; set conflict flag &gt;&gt;
+
+if conflict:
+	# Report the conflict &amp; set update.
+	import leoDialog
+	d = leoDialog.leoDialog()
+	message = "Conflict in %s.\n\n" % (v.headString())
+	message += "Replace outline with external changes?"
+	update = d.askYesNo("Conflict!",message) == "yes"
+else:
+	update = s != body
+
+if update:
+	h = v.headString()
+	es("changed:" + h)
+	v.setBodyStringOrPane(s)
+	c.selectVnode(v)
+	v.OpenWithOldBody = s
+</t>
+<t tx="T189">try:
+	# Update v from the changed temp file.
+	f=open(path)
+	s=f.read()
+	f.close()
+except:
+	es("can not open " + shortFileName(path))
+	break
+</t>
+<t tx="T190">try:
+	# The OpenWithOldBody attribute does not normally exist in vnodes.
+	old_body = v.OpenWithOldBody
+	conflict = body != old_body and body != s
+except:
+	conflict = v.isDirty() and body != s
+</t>
+<t tx="T191">def create_open_with_menu (tag,keywords):
+
+	if  (tag in ("start2","open2") or
+		(tag=="command2" and keywords.get("label")=="new")):
+	
+		&lt;&lt; create the Open With menu &gt;&gt;
+
+		# Enable the idle-time hook so we can check temp files created by Open With.
+		from leoGlobals import enableIdleTimeHook
+		enableIdleTimeHook(idleTimeDelay=500)
+</t>
+<t tx="T192">@ Entries in the following table are the tuple (commandName,shortcut,data).
+data is the tuple (command,arg,ext).
+command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
+Leo executes command(arg+path) where path is the full path to the temp file.
+If ext is not None, the temp file has the extension ext,
+Otherwise, Leo computes an extension based on what @language directive is in effect.
+@c
+
+idle_arg = "c:/python22/tools/idle/idle.py -e "
+
+if 1: # Default table.
+ table = (
+  ("&amp;Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
+  ("&amp;Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
+  ("Word&amp;Pad","Alt+Shift+T",("os.startfile",None,".txt")))
+else: # David McNab's table.
+ table = (
+  ("X&amp;Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)))
+
+top().frame.createOpenWithMenuFromTable(table)
+</t>
+<t tx="T193">At startup time Leo looks all files of the form mod_*.py in the plugins
+directory. Leo assumes that these files are "plugins" containing Python modules
+that customizes Leo's operation. Leo attempts to import each file.
+
+Each module should register routines that are called at various times during
+execution. Such times are identified by strings known as "tags". The code in in
+one or more plugins corresponding to each tag are known as the "hook" routines
+for that tag. Leo catches exceptions (including syntax errors) in hook
+routines, so it is safe to hack away on this code.
+
+Leo passes two argument to all hook routines: the tag and a keywords dictionary
+containing additional information. For example, keywords["label"] indicates the
+kind of command for "command1" and "command2" hooks.
+
+For some hooks, returning anything other than None "overrides" Leo's default
+action. Hooks have full access to all of Leo's source code. Just import the
+relevant file. For example, top() returns the commander for the topmost Leo
+window.
+
+The following table summarizes the arguments passed to hooks: ( Overrides is
+"yes" if returning anything other than None overrides Leo's normal command or
+event processing.)
+
+tag argument                                              keys in keywords
+(hook name)  overrides       when called                  dictionary argument
+---------    ---------       -----------                  -------------------
+"bodyclick1"   yes      before normal click in body       c,v,event (new)
+"bodyclick2"            after  normal click in body       c,v,event (new)
+"bodydclick1"  yes      before double click in body       c,v,event (new)
+"bodydclick2"           after  double click in body       c,v,event (new)
+"bodykey1"     yes      before body keystrokes            c,v,ch,oldSel,undoType
+"bodykey2"              after  body keystrokes            c,v,ch,oldSel,undoType
+"bodyrclick1"  yes      before right click in body        c,v,event (new)
+"bodyrclick2"           after  right click in body        c,v,event (new)
+"boxclick1"    yes      before click in +- box            c,v,event (new)
+"boxclick2"             after  click in +- box            c,v,event (new)
+"command1"     yes      before each command               c,v,label (note 2)
+"command2"              after  each command               c,v,label (note 2)
+"drag1"        yes      before start of drag              c,v,event (new)
+"drag2"                 after  start of drag              c,v,event (new)
+"dragging1"    yes      before continuing to drag         c,v,event (new)
+"dragging2"             after  continuing to drag         c,v,event (new)
+"end1"                  start of app.quit()
+"enddrag1"     yes      before end of drag                c,v,event (new)
+"enddrag2"              after  end of drag                c,v,event (new)
+"headclick1"   yes      before normal click in headline   c,v,event (new)
+"headclick2"            after  normal click in headline   c,v,event (new)
+"headrclick1"  yes      before right click in headline    c,v,event (new)
+"headrclick2"           after  right click in headline    c,v,event (new)
+"headkey1"     yes      before headline keystrokes        c,v,ch
+"headkey2"              after  headline keystrokes        c,v,ch
+"hypercclick1" yes      before control click in hyperlink c,v,event (new)
+"hypercclick2"          after  control click in hyperlink c,v,event (new)
+"hyperenter1"  yes      before entering hyperlink         c,v,event (new)
+"hyperenter2"           after  entering hyperlink         c,v,event (new)
+"hyperleave1"  yes      before leaving  hyperlink         c,v,event (new)
+"hyperleave2"           after  leaving  hyperlink         c,v,event (new)
+"iconclick1"   yes      before single click in icon box   c,v,event (new)
+"iconclick2"            after  single click in icon box   c,v,event (new)
+"iconrclick1"  yes      before right click in icon box    c,v,event (new)
+"iconrclick2"           after  right click in icon box    c,v,event (new)
+"icondclick1"  yes      before double click in icon box   c,v,event (new)
+"icondclick2"           after  double click in icon box   c,v,event (new)
+"idle"                  periodically (at idle time)       c,v
+"menu1"        yes      before creating menus             c,v (note 3)
+"menu2"        yes      before updating menus             c,v
+"open1"        yes      before opening any file           old_c,new_c,fileName (note 4)
+"open2"                 after  opening any file           old_c,new_c,fileName (note 4)
+"openwith1"    yes      before Open With command          c,v,openType,arg,ext
+"openwith2"             after  Open With command          c,v,openType,arg,ext
+"recentfiles1" yes      before Recent Files command       c,v,fileName,closeFlag
+"recentfiles2"          after  Recent Files command       c,v,fileName,closeFlag
+"save1"        yes      before any Save command           c,v,fileName
+"save2"                 after  any Save command           c,v,fileName
+"select1"      yes      before selecting a vnode          c,new_v,new_v
+"select2"               after  selecting a vnode          c,new_v,old_v
+"start1"       no       after app.finishCreate()
+"start2"                after opening first Leo window    c,v,fileName
+"unselect1"    yes      before unselecting a vnode        c,new_v,old_v (new)
+"unselect2"             after  unselecting a vnode        c,old_v,old_v (new)
+"@url1"        yes      before double-click @url node     c,v (note 5)
+"@url2"                 after  double-click @url node     c,v (note 5)
+
+Notes:
+
+(1) "activate" and "deactivate" hooks: These have been removed because they do
+not work as expected.
+
+(2) "commands" hooks: The label entry in the keywords dict contains the
+"canonicalized" form of the command, that is, the lowercase name of the command
+with all non-alphabetic characters removed.
+
+Commands hooks now set the label for undo and redo commands "undo" and "redo"
+rather than "cantundo" and "cantredo".
+
+(3) "menu1" hook: Setting app().realMenuNameDict in this hook is an easy way of
+translating menu names to other languages. Note: the "new" names created this
+way affect only the actual spelling of the menu items, they do _not_ affect how
+you specify shortcuts in leoConfig.txt, nor do they affect the "official"
+command names passed in app().commandName. For example, suppose you set
+app().realMenuNameDict["Open..."] = "Ouvre".
+
+(4) "open1" and "open2" hooks: These are called with a keywords dict containing
+the following entries:
+
+old_c: The commander of the previously open window.
+new_c: The commander of the newly opened window.
+fileName: The name of the file being opened.
+
+You can use old_c.currentVnode() and new_c.currentVnode() to get the current
+vnode in the old and new windows.
+
+Leo calls the "open1" and "open2" hooks only if the file is already open.
+Leo will also call the "open1" and "open2" hooks if:
+a) a file is opened using the Recent Files menu and
+b) the file is not already open.
+
+(5) "@url1" and "@url2" hooks are only executed if "icondclick1" hook returns
+None.</t>
+<t tx="T194">Naively using hooks can expose you and your .leo files to malicious attacks.  You will be safe as long as you follow these basic principles:
 
 1. Hooks should _never_ blindly execute Python scripts in .leo files. Blindly executing scripts in .leo files runs the extreme risk of executing malicious code if you ever share any .leo file with someone else.  Moreover, using rexec instead of exec WILL NOT PROTECT YOU.  See the children of this node for further discussion of this important topic.
 
 2. Hooks can execute any code safely _provided_ that all code is contained entirely within the plugin file. If you have a nifty customization that you want to do on a particular .leo file, put that code into a plugin.
 
 3. Use only authentic copies of Leo that come from Leo's SourceForge site.</t>
-<t tx="T183">I'd like to thank Stephen Schaefer for gently insisting that we must guard against malicious code in shared .leo files.  Here is a little story Stephen told on Leo's SourceForge site that makes clear what the danger is:
+<t tx="T195">I'd like to thank Stephen Schaefer for gently insisting that we must guard against malicious code in shared .leo files.  Here is a little story Stephen told on Leo's SourceForge site that makes clear what the danger is:
 
 "I foresee a future in which the majority of leo projects come from marginally trusted sources...I see a world of leo documents sent hither and yon - resumes, project proposals, textbooks, magazines, contracts - and as a race of Pandora's, we cannot resist wanting to see "What's in the box?" And are we going to fire up a text editor to make a detailed examination of the ASCII XML? Never! We're going to double click on the cute leo file icon, and leo will fire up in all its raging glory. Just like Word (and its macros) or Excel (and its macros)."
 
 This succinctly illustrates the fundamental problem: when we share "our" .leo files we can _not_ assume that we know what is our "own" documents.  So hooks that naively searches through .leo files looking for scripts to execute is looking for big trouble.
 
 The following node contains an example of the kind of code that is extremely dangerous.</t>
-<t tx="T184">@color
+<t tx="T196">@color
 @ WARNING ***** Using the following routine exposes you to malicious code in .leo files! *****
 
 Do not EVER use code that blindly executes code in .leo files!
@@ -3834,7 +4103,7 @@ if 0: # WRONG: This blindly execute scripts found in an .leo file! NEVER DO THIS
 						es_exception()
 			v = v.threadNext()
 </t>
-<t tx="T185">@color
+<t tx="T197">@color
 @ It would be most foolish to expect rexec to protect you against malicious code contained in .leo files.  Remember that Leo is a repository of source code, so any text operation is potentially malicious.
 
 For example, consider the following script.  This script is valid in rexec mode:
@@ -3851,15 +4120,15 @@ while v:
 
 @ This script will introduce a security hole the .leo file without doing anything prohibited by rexec, and without leaving any traces of the perpetrating script behind.  The damage will become permanent _outside_ this script when the user saves the .leo file.
 </t>
-<t tx="T186">pass</t>
-<t tx="T187">pass</t>
-<t tx="T188">pass</t>
-<t tx="T189">Hooks have full access to all of Leo's source code simply by importing it.
+<t tx="T198">pass</t>
+<t tx="T199">pass</t>
+<t tx="T200">pass</t>
+<t tx="T201">Hooks have full access to all of Leo's source code simply by importing it.
 
 Moreover, several convenience methods have been added to make customizing menus and commands easier.  The following paragraphs discuss these routines and how to use them.
 
 </t>
-<t tx="T190">The following routines enable and disable "idle" hooks.  They are defined in leoGlobals.py.
+<t tx="T202">The following routines enable and disable "idle" hooks.  They are defined in leoGlobals.py.
 
 enableIdleTimeHook(idleTimeDelay=100)
 
@@ -3868,14 +4137,14 @@ Enables the "idle" hook. After this routine is called Leo will call the "idle" h
 disableIdleTimeHook()
 
 Disables the "idle" hook.</t>
-<t tx="T191">The following convenience routines make creating menus easier.
+<t tx="T203">The following convenience routines make creating menus easier.
 
 These are methods of the leoFrame class.  Use top().frame to get the frame object for the presently active Leo window.
 
 The plugins node in LeoPy.leo gives examples of how to use these routines to create custom menus and to add items to the Open With menu.
 
 These convenience methods all do complete error checking and write messages to the log pane and to the console if errors are encountered.</t>
-<t tx="T192">@nocolor
+<t tx="T204">@nocolor
 createMenuItemsFromTable (self,menuName,table,openWith=0)
 
 This method adds items to the menu whose name is menuName.  The table argument describes the entries to be created.  This table is a sequence of items of the form (name,shortcut,command).
@@ -3898,7 +4167,7 @@ top().frame.createMenuItemsFromTable("Window",table)
 
 If the openWith keyword argument is 1 the items are added to a submenu of the Open With menu.  However, it will be more convenient to use the createOpenWithMenuFromTable method to create the Open With menu.
 </t>
-<t tx="T193">createNewMenu (self,menuName,parentName="top")
+<t tx="T205">createNewMenu (self,menuName,parentName="top")
 
 This method creates a new menu:
 
@@ -3907,7 +4176,7 @@ This method creates a new menu:
 
 This method returns the menu object that was created, or None if there was a problem.  Your code need not remember the value returned by this method.  Instead, your code will refer to menus by name.
 </t>
-<t tx="T194">createOpenWithMenuFromTable (self,table)
+<t tx="T206">createOpenWithMenuFromTable (self,table)
 
 This method adds items to submenu of the Open With menu item in the File menu.
 
@@ -3934,13 +4203,13 @@ table = (
 
 top().frame.createOpenWithMenuFromTable(table)
 	</t>
-<t tx="T195">deleteMenu (self,menuName)
+<t tx="T207">deleteMenu (self,menuName)
 
 Deletes the menu whose name is given, including all entries in the menu.</t>
-<t tx="T196">deleteMenuItem (self,itemName,menuName="top")
+<t tx="T208">deleteMenuItem (self,itemName,menuName="top")
 
 Deletes the item whose name is itemName from the menu whose name is menuName.  To delete a menu in the menubar, specify menuName="top".</t>
-<t tx="T197">@nocolor
+<t tx="T209">@nocolor
 The leoFrame class creates the Window menu as follows:
 @color
 
@@ -3959,7 +4228,7 @@ table = (
 
 self.createMenuEntries(windowMenu,table)
 </t>
-<t tx="T198">@nocolor
+<t tx="T210">@nocolor
 
 It is easy for hooks to translate menus into another language.  For example, code similar to the following code would typically be found in the "start2" hook:
 
@@ -3975,12 +4244,12 @@ table = (
 	("Can't Redo", "French Can't Redo"))
 # Call the convenience routine to do the work.
 app().setRealMenuNamesFromTable(table)</t>
-<t tx="T199">Leo creates nonexistent directories only if create_nonexistent_directories = 1 in leoConfig.txt.
+<t tx="T211">Leo creates nonexistent directories only if create_nonexistent_directories = 1 in leoConfig.txt.
 
 Previous versions of Leo created a new directory only if its parent directory already existed.  Now, Leo will create all non-existing directories as required.
 
 For example.  Suppose neither dir1 nor dir2 exists.  Leo will create both dir1 and dir1 when it writes the following @file \root\dir1\dir2\spam.py.</t>
-<t tx="T200">Double-clicking the icon box of a node whose headline has the form:
+<t tx="T212">Double-clicking the icon box of a node whose headline has the form:
 
 @url &lt;any url&gt;
 
@@ -3997,7 +4266,7 @@ Url's should contain no spaces: use %20 to indicate spaces.
 
 You may use any type of url that your browser supports: http,mailto,ftp,file,etc.
 </t>
-<t tx="T201">The present version should be quite usable for its main purpose: tracking
+<t tx="T213">The present version should be quite usable for its main purpose: tracking
 down lines corresponding to error messages. In particular, except for possible
 pathological cases, Leo should always put the cursor in the node containing the
 referenced line. Possible pathologies involve asking Leo to "go to" a sentinel
@@ -4029,7 +4298,7 @@ after all, if you get syntax errors you tend to want to fix them ;-)
 Please do not report bugs in this command, unless the bug involves a
 crash, which would be reported both in Leo's log pane and in the console
 window. This command will probably be improved in 3.10.</t>
-<t tx="T202">At last Leo has a power user of cweb.  Cweb mode is now fully tested and fully functional.  The following improvements have been made to cweb mode:
+<t tx="T214">At last Leo has a power user of cweb.  Cweb mode is now fully tested and fully functional.  The following improvements have been made to cweb mode:
 
 1. Corrected sentinels used in cweb mode.
 
@@ -4045,20 +4314,20 @@ Similarly, Leo colors C comments in cweb mode using LaTeX coloring by default. T
 
 See the child of this node for full details about cweb mode.
 </t>
-<t tx="T203">Cweb mode refers to how Leo tangles an outline when @language cweb is in effect or the cweb option in the Preferences Panel is in effect.
+<t tx="T215">Cweb mode refers to how Leo tangles an outline when @language cweb is in effect or the cweb option in the Preferences Panel is in effect.
 
 Leo treats _all_ cweb code in cweb mode as unevaluated text.  That is, Leo treats cweb control codes, including @&lt;...@&gt;, @&lt;...@&gt;=, @c, @space, @* and @** as "raw" text within cweb mode.  Leo does _not_ expand _cweb_ section references when writing derived files in cweb mode.  However, Leo _does_ expand _noweb_ section references, so you may use noweb sections to organize cweb files! You can create _noweb_ code and doc sections using the @code and @doc directives in place of @c and @space directives.
 
 By default, cweb colors @space, @* and @** sections using the same syntax coloring as for LaTeX.  In addition, cweb colors C // and /*..*/ comments using LaTeX coloring by default.  You may change these defaults using the color_cweb_doc_parts_with_latex and color_cweb_comments_with_latex options in leoConfig.py.</t>
-<t tx="T204">The Open With command allows you to communicate with external editor.  When you select this command Leo creates a temporary file and invokes an external program.  Leo periodically checks whether this temporary file has changed; Leo changes the corresponding node in the outline if so.
+<t tx="T216">The Open With command allows you to communicate with external editor.  When you select this command Leo creates a temporary file and invokes an external program.  Leo periodically checks whether this temporary file has changed; Leo changes the corresponding node in the outline if so.
 
 You must create the entries in the Open With submenu. This would typically be done in a hook routine, using the createOpenWithMenuFromTable routine described in the child of this node.
 
 The @file mod_open_with.py node in LeoPy.leo gives a complete example of handling the Open With menu.</t>
-<t tx="T205">Leo now supports optional Emacs-style auto-indent.  This style of auto-indent aligns newly created lines with unmatched ( [ or { brackets in the previous line. This feature is enabled only if smart_auto_indent = 1 in leoConfig.txt.
+<t tx="T217">Leo now supports optional Emacs-style auto-indent.  This style of auto-indent aligns newly created lines with unmatched ( [ or { brackets in the previous line. This feature is enabled only if smart_auto_indent = 1 in leoConfig.txt.
 
 This code was contributed by David McNab, david@rebirthing.co.nz.</t>
-<t tx="T206">New in leo.py v3.9
+<t tx="T218">New in leo.py v3.9
 
 Whether importing text from an outside source, typing in text, or modifying text, eventually you end up with a block of text in which some lines are too long and some are too short.  The Reformat Paragraph command will rearrange the words in a text paragraph to fill each line as full as possible, up to the @pagewidth setting.
 
@@ -4075,7 +4344,7 @@ NOTE: Lines with hanging indentation are handled so that the hanging indentation
 
   2. This is the second paragraph, and
      it too has a hanging indentation.</t>
-<t tx="T207">An @rawfile tree is a tree whose root headline starts with @rawfile &lt;filename&gt;.  Similarly, for @silentfile and @nosentinelsfile trees.
+<t tx="T219">An @rawfile tree is a tree whose root headline starts with @rawfile &lt;filename&gt;.  Similarly, for @silentfile and @nosentinelsfile trees.
 
 Leo creates files derived from @file and @nosentinelsfile trees in exactly the same way.  The _only_ difference is that files derived from @file trees contain sentinels, while files derived from @nosentinelsfile trees do not.  Therefore, Leo can not update outlines from changed made from files derived from @nosentinelfile trees.
 
@@ -4099,7 +4368,7 @@ In short, you can get any combination of sentinels/no sentinels and references/n
         @rawfile   yes                  no
      @silentfile   no                   no
 </t>
-<t tx="T208">leo.py 3.8                               October 29, 2002
+<t tx="T220">leo.py 3.8                               October 29, 2002
 
 Many major improvements have been made to Leo, all made as the result of user requests:
 
@@ -4122,9 +4391,9 @@ This month Dave Hein and I discovered how to uniquely and permanently identify n
 
 See the children of this node for full details.
 </t>
-<t tx="T209">The warning for "unknown language" had an unbound var.</t>
-<t tx="T210">The new code must check for @raw and @end_raw directives.</t>
-<t tx="T211">The &lt;&lt; Set path from @file node &gt;&gt; code was assuming that v.isAtFileNode() was non-Null.  This is no longer true with @rawfile.  The traceback was:
+<t tx="T221">The warning for "unknown language" had an unbound var.</t>
+<t tx="T222">The new code must check for @raw and @end_raw directives.</t>
+<t tx="T223">The &lt;&lt; Set path from @file node &gt;&gt; code was assuming that v.isAtFileNode() was non-Null.  This is no longer true with @rawfile.  The traceback was:
 
  File "c:\prog\leoCvs\leo\leoAtFile.py", line 424, in scanAllDirectives
     name = v.atFileNodeName()
@@ -4138,7 +4407,7 @@ else:
 	name = v.atRawFileNodeName()
 
 dir = choose(name,os.path.dirname(name),None)</t>
-<t tx="T212">Changes made:
+<t tx="T224">Changes made:
 
 1. Removed unhelpful warnings about non-existent paths.  Only errors are given now.
 2. Added logic to set self.root_name if it has not already been set.  Without this, it is impossible to test for relative filenames in @root directives, and errors happen only after tangling is complete, which is quite confusing.
@@ -4147,31 +4416,31 @@ dir = choose(name,os.path.dirname(name),None)</t>
 5. Set self.tangle_directory ivar to base directory when @root node specifies a relative directory.  This is required so the later code will try to create the proper file.
 6. Renamed the path_directive_creates_directories option to create_nonexistent_directories.  This makes clearer what is going on.
 </t>
-<t tx="T213">Leo now properly handles @delims directives in @file trees.</t>
-<t tx="T214">Leo now properly recognizes all sentinel lines when @language cweb is in effect.</t>
-<t tx="T215">Fixed a bug that caused Leo to say "methods" rather than "functions" when importing C code.
+<t tx="T225">Leo now properly handles @delims directives in @file trees.</t>
+<t tx="T226">Leo now properly recognizes all sentinel lines when @language cweb is in effect.</t>
+<t tx="T227">Fixed a bug that caused Leo to say "methods" rather than "functions" when importing C code.
 
 Leo now adds @root &lt;filename&gt; statement when importing to @root nodes.</t>
-<t tx="T216">Previously, Java only had block comments, and the ending delim wasn't being removed from doc parts.</t>
-<t tx="T217">The present code explicitly eliminates control-T processing in headlines, which means that control-T does not switch panes when editing headline text.  Control-T _does_ switch panes in all other cases.
+<t tx="T228">Previously, Java only had block comments, and the ending delim wasn't being removed from doc parts.</t>
+<t tx="T229">The present code explicitly eliminates control-T processing in headlines, which means that control-T does not switch panes when editing headline text.  Control-T _does_ switch panes in all other cases.
 
 This appears to be another Tk bug.</t>
-<t tx="T218">Only shortcut pastes worked before.</t>
-<t tx="T219">Leo 3.7 significantly offers you several new ways to create derived files.</t>
-<t tx="T220">@rawfile and @silentfile trees are important new addtions to Leo.  They work like @file trees, but are simpler to use.  See the child of this node for full details.</t>
-<t tx="T221">The @raw and @end_raw directives delimit a region of "raw" text.  No section references are recognized within "raw" text, and no additional leading whitespace is generated within "raw" text when writing the derived file.
+<t tx="T230">Only shortcut pastes worked before.</t>
+<t tx="T231">Leo 3.7 significantly offers you several new ways to create derived files.</t>
+<t tx="T232">@rawfile and @silentfile trees are important new addtions to Leo.  They work like @file trees, but are simpler to use.  See the child of this node for full details.</t>
+<t tx="T233">The @raw and @end_raw directives delimit a region of "raw" text.  No section references are recognized within "raw" text, and no additional leading whitespace is generated within "raw" text when writing the derived file.
 
 The @quiet directive is valid only within @root trees.  It suppresses all sentinels except the @+node sentinels used to mark headlines.
 
 See the children of this node for full details.</t>
-<t tx="T222">The @raw and @end_raw directives are valid only within @file trees.  The @raw directive starts a section of "raw" text.  The @end_raw directive ends such a section, as does the end of body text. No section references are recognized within "raw" text, and no additional leading whitespace is generated within "raw" text when writing the derived file.
+<t tx="T234">The @raw and @end_raw directives are valid only within @file trees.  The @raw directive starts a section of "raw" text.  The @end_raw directive ends such a section, as does the end of body text. No section references are recognized within "raw" text, and no additional leading whitespace is generated within "raw" text when writing the derived file.
 </t>
-<t tx="T223">The @verbose, @terse, @quiet and @silent directives determine how the Tangle command outputs comments in @root trees.  Comments written by the user in code sections are always output: these directives control only: a) the comments containing doc sections and b) sentinel comments that delimit the beginning and end of code sections.
+<t tx="T235">The @verbose, @terse, @quiet and @silent directives determine how the Tangle command outputs comments in @root trees.  Comments written by the user in code sections are always output: these directives control only: a) the comments containing doc sections and b) sentinel comments that delimit the beginning and end of code sections.
 
 When @verbose is in effect Tangle outputs all comments. When @terse is in effect, Tangle outputs only those comments necessary for Untangle to work. When @silent is in effect Tangle adds no additional comments.  The @quiet directive is like @silent except that it does output leading sentinels as comments. Like @silent, @quiet inhibits untangling. 
 
 @verbose is the default. If more than one of these directives appear in the same body text the "most verbose" of these options will be in effect.</t>
-<t tx="T224">It is now possible to create CWEB (.w) files from @file trees.  When @language cweb is in effect the following happen:
+<t tx="T236">It is now possible to create CWEB (.w) files from @file trees.  When @language cweb is in effect the following happen:
 
 1. Leo does not recognize @space and @c directives.
 
@@ -4182,27 +4451,27 @@ When @verbose is in effect Tangle outputs all comments. When @terse is in effect
 4. Leo now properly warns about orphan nodes when @langauge cweb was in effect.
 
 See the child of this node for the new documentation that applies to cweb mode.</t>
-<t tx="T225">It is now possible to have both the @comment and @language directives to be in effect at the same time.  To do this, both directives must appear in the same node, and the @comment directive must follow the @language directive.</t>
-<t tx="T226">Leo preserves the &lt;?xml-stylesheet...?&gt; line if it is already present in the .leo file.
+<t tx="T237">It is now possible to have both the @comment and @language directives to be in effect at the same time.  To do this, both directives must appear in the same node, and the @comment directive must follow the @language directive.</t>
+<t tx="T238">Leo preserves the &lt;?xml-stylesheet...?&gt; line if it is already present in the .leo file.
 
 Otherwise, Leo writes a &lt;?xml-stylesheet...?&gt; line only if the stylesheet option is present in the configuration file.  The stylesheet option specifies s in &lt;?xml-stylesheet s?&gt;</t>
-<t tx="T227">The Open LeoConfig.leo command opens the configuration file.  The apply setting command applies any changes to settings made as the result of changing leoConfig.leo.</t>
-<t tx="T228">This option allows a comment to be iserted in derived files just after the initial @+leo line.  The comment will appear in an @comment sentinel.  See leoConfig.leo for full details.</t>
-<t tx="T229">This option allows you to specify the line endings to be used when writing derived files and when exporting files.  See leoConfig.leo for full details.</t>
-<t tx="T230">Changed the path_directive_creates_directories option in leoConfig.leo to create_nonexistent_directories.
+<t tx="T239">The Open LeoConfig.leo command opens the configuration file.  The apply setting command applies any changes to settings made as the result of changing leoConfig.leo.</t>
+<t tx="T240">This option allows a comment to be iserted in derived files just after the initial @+leo line.  The comment will appear in an @comment sentinel.  See leoConfig.leo for full details.</t>
+<t tx="T241">This option allows you to specify the line endings to be used when writing derived files and when exporting files.  See leoConfig.leo for full details.</t>
+<t tx="T242">Changed the path_directive_creates_directories option in leoConfig.leo to create_nonexistent_directories.
 
 The old name was too misleading.  Indeed, this option applies not just to @path directives, but to all situations in which the path name specified in @path directives or @root, @file, @rawfile or @silentfile nodes does not exist.
 
 </t>
-<t tx="T231">The new names are less cluttered than the old.</t>
-<t tx="T232">Leo now prints a summary of any exception taken to the log window, and a full traceback to the console window.</t>
-<t tx="T233">This is taken from Python Cookbook.
+<t tx="T243">The new names are less cluttered than the old.</t>
+<t tx="T244">Leo now prints a summary of any exception taken to the log window, and a full traceback to the console window.</t>
+<t tx="T245">This is taken from Python Cookbook.
 
 This may be of use to people developing Leo, though it's not clear how useful this is with Tk programs.</t>
-<t tx="T234">A small convenience that is actually quite nice to have.</t>
-<t tx="T235">Sentinel lines in Java files now start with //@.</t>
-<t tx="T236">It wasn't always completely clear when the command was complete.</t>
-<t tx="T237">Recently I have discovered a way of creating true, immutable global identifiers (called global tnode indices or gti's for short).  Version 4.0, due late this year or early next, will be the first version of Leo to take full advantage of the opportunities created by gti's.
+<t tx="T246">A small convenience that is actually quite nice to have.</t>
+<t tx="T247">Sentinel lines in Java files now start with //@.</t>
+<t tx="T248">It wasn't always completely clear when the command was complete.</t>
+<t tx="T249">Recently I have discovered a way of creating true, immutable global identifiers (called global tnode indices or gti's for short).  Version 4.0, due late this year or early next, will be the first version of Leo to take full advantage of the opportunities created by gti's.
 
 Gti's will be a way of _permanently_ and _uniquely_ identifying every node (headline and body text) ever created by Leo, even when many people are working on the same .leo and derived files.  For the first time, Leo will be able _reliably_ to associate nodes in .leo files with nodes in derived files.
 
@@ -4226,7 +4495,7 @@ Gti's solve all these problems:
 command. 
 
 I am excited about Leo 4.0.  It promises to revolutionize how people use Leo.</t>
-<t tx="T238">leo.py 3.7                                 October 9, 2002
+<t tx="T250">leo.py 3.7                                 October 9, 2002
 
 Many improvements have been made to Leo.  The highlights:
 
@@ -4247,15 +4516,15 @@ Many improvements have been made to Leo.  The highlights:
 Warning: Leo expects that all characters in derived files and .leo files are contained in the encoding specified by the xml_version_string option in leoConfig.txt.  Characters will be garbled if this restriction is not followed.  This restriction will be removed in the next release.
 
 See the children of this node for full details.</t>
-<t tx="T239">The old code did not handle @comment /* */ in C mode because the */ given in the comment improperly terminated the scanning.
+<t tx="T251">The old code did not handle @comment /* */ in C mode because the */ given in the comment improperly terminated the scanning.
 
 Changed find to rfind when scanning @@ sentinels.</t>
-<t tx="T240">Under certain circumstances # was not properly colored when coloring plain text.</t>
-<t tx="T241">single quote colorized text in plain text mode.  This was due to missing parentheses.</t>
-<t tx="T242">The old code did not properly set the text selection in all cases.
+<t tx="T252">Under certain circumstances # was not properly colored when coloring plain text.</t>
+<t tx="T253">single quote colorized text in plain text mode.  This was due to missing parentheses.</t>
+<t tx="T254">The old code did not properly set the text selection in all cases.
 
 This bug affected the Indent, Unindent, Extract and Extract Section.</t>
-<t tx="T243">Body text was being cleared in a node in an @file tree if the node contained a reference to a section defined in a grandchild.  This was the first serious bug ever reported in the @file read logic.
+<t tx="T255">Body text was being cleared in a node in an @file tree if the node contained a reference to a section defined in a grandchild.  This was the first serious bug ever reported in the @file read logic.
 
 The problem: Body text was being updated as the result of @+node sentinels rather than @+body sentinels.
 This was wrong, as extra @+node sentinels are often generated when no body text is generated. The result is
@@ -4263,21 +4532,21 @@ that the body text was being cleared.
 
 The fix: I simply moved the code that creates body text from the @+node logic to the @+body logic in
 scanText.</t>
-<t tx="T244">The new code resets the error count when reading each derived file, so errors in one file do not cascade to following derived files.</t>
-<t tx="T245">st_enter was not returning part numbers, which would have affected the Untangle command.</t>
-<t tx="T246">The old code undid the changes to only one headline of a group of cloned nodes. This was a serious bug because it would destroy the assumed eqquality between all cloned headlines.</t>
-<t tx="T247">The Find Previous command would get stuck once it found a match.</t>
-<t tx="T248">The original bug report:
+<t tx="T256">The new code resets the error count when reading each derived file, so errors in one file do not cascade to following derived files.</t>
+<t tx="T257">st_enter was not returning part numbers, which would have affected the Untangle command.</t>
+<t tx="T258">The old code undid the changes to only one headline of a group of cloned nodes. This was a serious bug because it would destroy the assumed eqquality between all cloned headlines.</t>
+<t tx="T259">The Find Previous command would get stuck once it found a match.</t>
+<t tx="T260">The original bug report:
 
 "If you set the @tabwidth to something other than the Preference value, you'll see the body displayed appropriately. However, if you do a Ctrl-s to save the leo file, the body is redisplayed using the Preferences setting--of course, clicking on another node and then back to the original node displays with the correct tab setting again."</t>
-<t tx="T249">The old code remembered the insertion point only if it were set as the result of a keystroke.
+<t tx="T261">The old code remembered the insertion point only if it were set as the result of a keystroke.
 </t>
-<t tx="T250">This was too confusing to users.  setup.py is intended only to create official distributions.</t>
-<t tx="T251">These improvements are listed in the approximate order of importance.</t>
-<t tx="T252">path_directive_creates_directories
+<t tx="T262">This was too confusing to users.  setup.py is intended only to create official distributions.</t>
+<t tx="T263">These improvements are listed in the approximate order of importance.</t>
+<t tx="T264">path_directive_creates_directories
 
 Specifies whether to create a directory mentioned in an @file, @root node or @path directive if it does not exist.</t>
-<t tx="T253">relative_path_base_directory 
+<t tx="T265">relative_path_base_directory 
 
 The directory to be used as a prefix for &lt;filename&gt; in @path &lt;filename&gt; and @file &lt;filename&gt; and @root &lt;filename&gt; when &lt;filename&gt; is a relative path.
 
@@ -4288,7 +4557,7 @@ Valid values for this option:
 An absolute path (in platform-dependent format).
 
 Relative paths are not allowed: such paths would be dangerous because their meaning would depend on the changing value of the current working directory.</t>
-<t tx="T254">remove_sentinels_extension
+<t tx="T266">remove_sentinels_extension
 
 Sets the string to be appended to file names resulting from the Remove Sentinels command.  If the value starts with . the extension is appended to the original file name. Otherwise, the extension is appended before the file extension.
 
@@ -4302,12 +4571,12 @@ Example 2:
 	remove_sentinels_extension = .txt
 	Result: x.y.txt
 </t>
-<t tx="T255">write_clone_indices 
+<t tx="T267">write_clone_indices 
 
 Indicates whether derived files will contain clone indices.
 
 Please specify no clone indices if you are going to submit files to Leo's CVS site.</t>
-<t tx="T256">The following options now exist in the &lt;&lt; Options for newly opened windows &gt;&gt; section of LeoConfig.leo.
+<t tx="T268">The following options now exist in the &lt;&lt; Options for newly opened windows &gt;&gt; section of LeoConfig.leo.
 
 initial_horizontal_secondary_ratio
 
@@ -4321,7 +4590,7 @@ The primary panes are the body pane and the secondary pane.
 
 
 </t>
-<t tx="T257">The following options now exist in the &lt;&lt; Window options &gt;&gt; section of LeoConfig.leo.
+<t tx="T269">The following options now exist in the &lt;&lt; Window options &gt;&gt; section of LeoConfig.leo.
 
 body_text_foreground_color
 body_text_background_color
@@ -4365,7 +4634,7 @@ log_text_foreground_color
 log_text_background_color
 
 The foreground and background colors of log text.</t>
-<t tx="T258">The &lt;&lt; Keyboard shortcuts settings &gt;&gt; section of leoConfig.leo allows the user to specify keyboard shortcuts for all commands.
+<t tx="T270">The &lt;&lt; Keyboard shortcuts settings &gt;&gt; section of leoConfig.leo allows the user to specify keyboard shortcuts for all commands.
 
 Notes:
 
@@ -4380,31 +4649,31 @@ sections of leoConfig.leo.  The gist of this documentation is that you must use 
 
 3. At most one shortcut may be associated with a command.  If one really wanted to have two shortcuts, one would have to use two different command names. In particular, there is now only one shortcut for the Find Next command.
 </t>
-<t tx="T259">Leo checks all characters that are entered (via typing or via paste) into headline and body text to see whether they can be represented in the encoding specified by the xml_version_string setting in leoConfig.txt.  Leo issues a message and _disallows_ the entry of the character if it can't be represented in that encoding.
+<t tx="T271">Leo checks all characters that are entered (via typing or via paste) into headline and body text to see whether they can be represented in the encoding specified by the xml_version_string setting in leoConfig.txt.  Leo issues a message and _disallows_ the entry of the character if it can't be represented in that encoding.
 
 This draconian behavior shouldn't be too much of a nuisance, at least temporarily. Note that _all_ characters are valid in the UTF-8 encoding, so the present version of Leo will allow you to specify all characters if you must. But the Latin-1 (iso-8859-1) encoding, being a one-byte encoding, limits you to at most 256 separate characters. 
 
 In 3.8 I plan to allow you to use all Unicode characters, regardless of encoding, by using character references.  This will require some reorganization of the present code, and I don't want to delay 3.7 to handle them.
 
 Warning: The present code does not handle well files (.leo or derived files) that contain characters outside the specified encoding.  At present, your best bet is to remove such characters for now.  Hopefully 3.8 will do a much better job handling characters "foreign" to the specified encoding.</t>
-<t tx="T260">Leo now writes only \n (Linux newlines) in derived files and .leo files.  This was done simply by opening derived files and .leo files in "wb" mode.</t>
-<t tx="T261">1. Leo now supports relative_path_base_directory and path_directive_creates_directories user options.  See the discussion of those options in this document.
+<t tx="T272">Leo now writes only \n (Linux newlines) in derived files and .leo files.  This was done simply by opening derived files and .leo files in "wb" mode.</t>
+<t tx="T273">1. Leo now supports relative_path_base_directory and path_directive_creates_directories user options.  See the discussion of those options in this document.
 
 2. Leo now retains file modes when tangling and writing derived files.</t>
-<t tx="T262">Blank lines now preceed and follow =pod and =cut.
+<t tx="T274">Blank lines now preceed and follow =pod and =cut.
 
 Improvements made to @first and @last directives.</t>
-<t tx="T263">These were added so to resolve the debate about what the Esc key should do.  The user can now bind Esc to either of these commands.</t>
-<t tx="T264">Leo no longer gives an error message when reading or writing cloned @file nodes.</t>
-<t tx="T265">Leo writes derived files a bit differently than before.  These changes are compatible with the Borland version of Leo, provided that xml_version_string = UTF-8 in leoConfig.txt.
+<t tx="T275">These were added so to resolve the debate about what the Esc key should do.  The user can now bind Esc to either of these commands.</t>
+<t tx="T276">Leo no longer gives an error message when reading or writing cloned @file nodes.</t>
+<t tx="T277">Leo writes derived files a bit differently than before.  These changes are compatible with the Borland version of Leo, provided that xml_version_string = UTF-8 in leoConfig.txt.
 
 The changes:
 
 1. Eliminated writing clone indices in derived files.  This reduces the number of spurious changes reported by CVS.  Leo now relies solely on information in .leo files to recreate clone indices.  This is safe because read errors clear clone indices anyway.  You can force clone indices to be written using the write_clone_indices user option in leoConfig.txt.
 
 2. Removed extra newline following @+leo directive.  This is part of an unfinished plan to eliminate all extra blank lines in derived files.  It's not clear whether this plan will ever succeed.</t>
-<t tx="T266">Leo enables the Tangle and Untangle items in popup menus if any descendent of the selected node contains an @root node.  Similarly, Leo enables the Read @file nodes and Write @file nodes items in popup menus if any descendent of the selected node contains an @file node.</t>
-<t tx="T267">leo.py 3.6                                 September 11, 2002
+<t tx="T278">Leo enables the Tangle and Untangle items in popup menus if any descendent of the selected node contains an @root node.  Similarly, Leo enables the Read @file nodes and Write @file nodes items in popup menus if any descendent of the selected node contains an @file node.</t>
+<t tx="T279">leo.py 3.6                                 September 11, 2002
 
 Highlights:
 
@@ -4417,14 +4686,14 @@ Highlights:
 - Discovered a minor bug involving the Python (Idle) window and documented a workaround.
 
 See the children of this node for full details.</t>
-<t tx="T268">The following minor bug can not easily be fixed because it involves an interaction between Leo and Idle.
+<t tx="T280">The following minor bug can not easily be fixed because it involves an interaction between Leo and Idle.
 
 After opening Idle with the Open Python Window command, opening another Leo window shows both the Leo window and a blank, square window.  Closing either of the new windows may cause exceptions, either immediately or later.
 
 The best workaround is simply not to open any new Leo windows after using the Open Python Window command.</t>
-<t tx="T269">os.rename can fail on some Linux systems.</t>
-<t tx="T270">When starting Leo with no arguments the 'NewHeadline' node was not displayed. </t>
-<t tx="T271">Changed:
+<t tx="T281">os.rename can fail on some Linux systems.</t>
+<t tx="T282">When starting Leo with no arguments the 'NewHeadline' node was not displayed. </t>
+<t tx="T283">Changed:
 
 bitmap_name = os.path.join(self.loadDir,"Icons\LeoApp.ico") 
 
@@ -4432,30 +4701,30 @@ to:
 
 bitmap_name = os.path.join(self.loadDir,"Icons","LeoApp.ico") 
 </t>
-<t tx="T272">There were problems handling relative path names in @root and @path directives.</t>
-<t tx="T273">With Tk/Tcl 8.4, the Preferences window is empty (no buttons, fields, labels). 
+<t tx="T284">There were problems handling relative path names in @root and @path directives.</t>
+<t tx="T285">With Tk/Tcl 8.4, the Preferences window is empty (no buttons, fields, labels). 
 
 Tcl 8.4 complains about using "col" in the grid() calls.</t>
-<t tx="T274">This routine does a better job of checking the Tk version than the old code in leoApp.py</t>
-<t tx="T275">Only the last directive was in effect in @root trees.  The new code allows node-by-node control.</t>
-<t tx="T276">This involved calling readlineForceUnixNewline instead of readline in the atFile:read logic.</t>
-<t tx="T277">How did I ever live without this?</t>
-<t tx="T278">The cursor now changes to an arrow when it moves over a link in the About Leo dialog.
+<t tx="T286">This routine does a better job of checking the Tk version than the old code in leoApp.py</t>
+<t tx="T287">Only the last directive was in effect in @root trees.  The new code allows node-by-node control.</t>
+<t tx="T288">This involved calling readlineForceUnixNewline instead of readline in the atFile:read logic.</t>
+<t tx="T289">How did I ever live without this?</t>
+<t tx="T290">The cursor now changes to an arrow when it moves over a link in the About Leo dialog.
 
 The About Leo dialog now includes a build revision number.
 
 Fixed problems with the Leo icon in the About Leo dialog.
 
 Improved download dialog in Tutorial command.</t>
-<t tx="T279">CVS conflict files produce so many error messages that these errors are useless.</t>
-<t tx="T280">The Match Brackets command is enabled if the cursor is next to one of the following characters in the body pane:
+<t tx="T291">CVS conflict files produce so many error messages that these errors are useless.</t>
+<t tx="T292">The Match Brackets command is enabled if the cursor is next to one of the following characters in the body pane:
 
 ( ) [ ] { } &lt; &gt;
 
 This command looks for the matching character, searching backwards through the body text if the cursor is next to ) ] } or &gt; and searching forward through the text otherwise.  If the cursor is between two brackets the search is made for the bracket matching the leftmost bracket.
 
 If a match is found, the entire range of characters delimited by the brackets is highlighted and the cursor is placed just to the left of the matching characters.  Thus, executing this command twice highlights the range of matched characters without changing the cursor.</t>
-<t tx="T281">This code is due to Dave Hein.
+<t tx="T293">This code is due to Dave Hein.
 
 Leo understands the following PHP keywords:
 
@@ -4464,7 +4733,7 @@ Leo understands the following PHP keywords:
 Leo does not yet color the following keywords containing():
 
 array(), die(), echo(), empty(), exit(), include(), include_once(), isset(), list(), print(), require(), require_once(), return()</t>
-<t tx="T282">This code is due to Marcus A. Martin.
+<t tx="T294">This code is due to Marcus A. Martin.
 
 Leo understands the following LaTex keywords: capitalization is significant.  For example, \vert produces a single vertical line and \Vert produces a double vertical line.
 
@@ -4581,7 +4850,7 @@ Leo understands the following LaTex keywords: capitalization is significant.  Fo
 \Xi, \xi,
 
 \zeta</t>
-<t tx="T283">leo.py 3.5                                  August 14, 2002
+<t tx="T295">leo.py 3.5                                  August 14, 2002
 
 Highlights:
 
@@ -4594,12 +4863,12 @@ Highlights:
 - Fixed crasher in Read Outline Only command.
 - Fixed crasher when leoConfig.txt did not exist.
 - Many small improvements and bug fixes.</t>
-<t tx="T284">This may be the cause of truncated leoConfig.txt files on Linux.</t>
-<t tx="T285">Removed '\r' characters when reading.  The write logic is unchanged.</t>
-<t tx="T286">Relative paths should not set the global default paths.  Instead, the relative path is concatenated to the global default path when the file is opened.</t>
-<t tx="T287">Added log_pane_wraps and outline_pane_scrolls_horizontally configuration settings.</t>
-<t tx="T288">Note: b4 contains a fix to b3 in this area:  for writing, we must first test whether the file exists.  Otherwise we may get a false indication that the (non-existent) file is read-only.</t>
-<t tx="T289">Added the importFiles script in leoImport.py. Use this script as follows:
+<t tx="T296">This may be the cause of truncated leoConfig.txt files on Linux.</t>
+<t tx="T297">Removed '\r' characters when reading.  The write logic is unchanged.</t>
+<t tx="T298">Relative paths should not set the global default paths.  Instead, the relative path is concatenated to the global default path when the file is opened.</t>
+<t tx="T299">Added log_pane_wraps and outline_pane_scrolls_horizontally configuration settings.</t>
+<t tx="T300">Note: b4 contains a fix to b3 in this area:  for writing, we must first test whether the file exists.  Otherwise we may get a false indication that the (non-existent) file is read-only.</t>
+<t tx="T301">Added the importFiles script in leoImport.py. Use this script as follows:
 
 - Select the node under which you want the imported files to appear.
 - Open the Python window within Leo.
@@ -4613,7 +4882,7 @@ leoImport.importFiles(dir,type)
 If you want to import all files in a directory, replace the last line with:
 
 leoImport.importFiles(dir)</t>
-<t tx="T290">leo.py 3.4                                     August 11, 2002
+<t tx="T302">leo.py 3.4                                     August 11, 2002
 
 This release contains many small improvements and bug fixes.  The highlights:
 
@@ -4625,7 +4894,7 @@ This release contains many small improvements and bug fixes.  The highlights:
 - The usual minor improvements and bug fixes.
 
 See the children of this node for full details.</t>
-<t tx="T291">The problem is that the ratio is saved in the .leo file and the split direction is not. So if leoConfig.txt is read-only you the Toggle Split Direction command will permanently change the body-outline ratio _without_ permanently changing the split direction itself.
+<t tx="T303">The problem is that the ratio is saved in the .leo file and the split direction is not. So if leoConfig.txt is read-only you the Toggle Split Direction command will permanently change the body-outline ratio _without_ permanently changing the split direction itself.
 
 This basically sucks, and here are my reasons: 
 
@@ -4634,24 +4903,24 @@ This basically sucks, and here are my reasons:
 2. You can make everything work more like you would expect by making leoConfig.txt read-write. 
 
 3. Especially in the case of the split direction, I expect people to have strong preferences one way or the other, so even if leoConfig.txt is read-only it shouldn't be too odious to pick a split direction and live with it.</t>
-<t tx="T292">The undo buffer creates a lot of strings.  On some system this may be a problem.  If save_clears_undo_buffer = 1 the Save command (and only the Save command) will clear the undo buffer.</t>
-<t tx="T293">The new spelling is to limit_directory_search_extension.  Note that this affects the valid entries in leoConfig.txt.</t>
-<t tx="T294">This allows us to create leoConfig.txt more easily, and provides a safe place to permanently store comments when read-write mode is on.</t>
-<t tx="T295">If a setting was missing or "ignore" it could never be set!  This no doubt could have caused a wide variety of symptoms.  In particular, in the distributed leoConfig.txt file it meant that settings for "default" fonts and sizes were never updated!</t>
-<t tx="T296">The new code properly deletes previous entries regardless of case or path separators.</t>
-<t tx="T297">There were a couple of bugs here.
+<t tx="T304">The undo buffer creates a lot of strings.  On some system this may be a problem.  If save_clears_undo_buffer = 1 the Save command (and only the Save command) will clear the undo buffer.</t>
+<t tx="T305">The new spelling is to limit_directory_search_extension.  Note that this affects the valid entries in leoConfig.txt.</t>
+<t tx="T306">This allows us to create leoConfig.txt more easily, and provides a safe place to permanently store comments when read-write mode is on.</t>
+<t tx="T307">If a setting was missing or "ignore" it could never be set!  This no doubt could have caused a wide variety of symptoms.  In particular, in the distributed leoConfig.txt file it meant that settings for "default" fonts and sizes were never updated!</t>
+<t tx="T308">The new code properly deletes previous entries regardless of case or path separators.</t>
+<t tx="T309">There were a couple of bugs here.
 
 Note that the ratio (whichever the direction) is stored in the .leo file.  The initial_splitter_orientation setting in leoConfig.txt applies to _all_ files.  The initial_vertical_ratio and the corresponding initial_horizontal_ratio  apply only to new files, so are essentially useless.
 
 Yes, this is pretty stupid; it's the result of not wanting to add more stuff to Leo's file format.</t>
-<t tx="T298">leo.py 3.1 contains Python code that may be of interest to some Python programmers.  All Python files are derived from LeoPy.leo.
+<t tx="T310">leo.py 3.1 contains Python code that may be of interest to some Python programmers.  All Python files are derived from LeoPy.leo.
 
 See the children of this node for details.</t>
-<t tx="T299">This script does much of the grunt work of converting from C/C++ syntax to Python syntax.  It was surprisingly effective in converting Leo from C++ to Python.  These scripts don't need to be perfect to save a _lot_ of work.  And of course you can always add your own improvements...
+<t tx="T311">This script does much of the grunt work of converting from C/C++ syntax to Python syntax.  It was surprisingly effective in converting Leo from C++ to Python.  These scripts don't need to be perfect to save a _lot_ of work.  And of course you can always add your own improvements...
 
 As written, the script converts an entire Leo tree.  It would be easy to write an entry that would convert plain text files, but it's probably best to import the files to be converted into Leo first.  That way the slow algorithms in c2py.py will work on smaller pieces of text.</t>
-<t tx="T300">This code gathers and prints static statistics about Python bytecode.</t>
-<t tx="T301">The file leoUtils.py contains some small Tkinter utilities:
+<t tx="T312">This code gathers and prints static statistics about Python bytecode.</t>
+<t tx="T313">The file leoUtils.py contains some small Tkinter utilities:
 
 w,h,x,y = get_window_info(top) returns the width, height, x and y positions of the Tkinter window top.
 
@@ -4660,27 +4929,27 @@ center_dialog(top) centers the Tkinter window top on the screen.
 w,f = create_labeled_frame(parent...) creates a labeled Tkinter window as a child of parent.  The caller packs widgets into f to create the frame.
 
 leoUtils.py contains many other routines including an Python version of the Sherlock tracing package.</t>
-<t tx="T302">leoFontPanel.py puts up a Font dialog.  This dialog dispenses with the typical "sample" pane and instead changes text immediately directly on the screen.  Comes with Ok, Cancel and Revert buttons.  IMO, this dialog is much better than the sample Tk/Tkinter font dialogs available on the web.</t>
-<t tx="T303">leoColor.py contains code to syntax color Tk.Text widgets for a variety of languages.  Supporting a new language here is mostly a matter of adding another table of keywords.</t>
-<t tx="T304">Leo supports powerful outlining features, including clones.  Clones are challenging to implement, to say the least.  The vnode and tnode classes, defined in leoNodes.py, represent the underlying data.  vnodes represent nodes on the screen.  vnodes may share text, the tnode class is the "unit of sharing" of such text.  The leoTree class draws the tree and handles events, including dragging nodes around the screen.  The Commands class calls the vnode, tnode and leoTree classes to handle menu commands.  In Smalltalk's model/view/controller terminology, the vnode and tnode classes are model class, the leoTree class is a view class, and the Commands class is a controller class.</t>
-<t tx="T305">Now at last it is clear why Leo hasn't been writing derived files affected by clones.  It's not enough to mark v dirty.  We must mark all the cloned nodes of v's tree dirty as well.
+<t tx="T314">leoFontPanel.py puts up a Font dialog.  This dialog dispenses with the typical "sample" pane and instead changes text immediately directly on the screen.  Comes with Ok, Cancel and Revert buttons.  IMO, this dialog is much better than the sample Tk/Tkinter font dialogs available on the web.</t>
+<t tx="T315">leoColor.py contains code to syntax color Tk.Text widgets for a variety of languages.  Supporting a new language here is mostly a matter of adding another table of keywords.</t>
+<t tx="T316">Leo supports powerful outlining features, including clones.  Clones are challenging to implement, to say the least.  The vnode and tnode classes, defined in leoNodes.py, represent the underlying data.  vnodes represent nodes on the screen.  vnodes may share text, the tnode class is the "unit of sharing" of such text.  The leoTree class draws the tree and handles events, including dragging nodes around the screen.  The Commands class calls the vnode, tnode and leoTree classes to handle menu commands.  In Smalltalk's model/view/controller terminology, the vnode and tnode classes are model class, the leoTree class is a view class, and the Commands class is a controller class.</t>
+<t tx="T317">Now at last it is clear why Leo hasn't been writing derived files affected by clones.  It's not enough to mark v dirty.  We must mark all the cloned nodes of v's tree dirty as well.
 
 However, we only need do this when a node is deleted, and we definitely do _not_ want to do this otherwise, for that would mark far too many nodes dirty.  To get around this, we leave v.setDirty() as it was, and use the new code only in v.setDirtyDeleted.
 
 Note that the undo and redo cases handle this automatically because they call c.doDelete.
 
 So now we can state a rule that should not ever be broken: after doing a Save command, a Write @file Nodes command should always report "unchanged" for all files.</t>
-<t tx="T306">Added setRevertVars to update revert settings.  This is called from __init__ and onOk.</t>
-<t tx="T307">Changed idle_body_key and idle_head_key, leoTangle::os and tnode::setTnodeText.
+<t tx="T318">Added setRevertVars to update revert settings.  This is called from __init__ and onOk.</t>
+<t tx="T319">Changed idle_body_key and idle_head_key, leoTangle::os and tnode::setTnodeText.
 
 We must remove backticks from messages that might contain unicode characters so they will print properly.  There were only a few instances, and they are all error messages that hardly ever get executed, so I hope I was careful putting them in.  I should be able to find them all by looking for '"'.</t>
-<t tx="T308">Repeated double-clicking (without intervening single-click) caused the selection to move to the left.</t>
-<t tx="T309">This is consistent with what the Import commands do for the other file types.  It's also much safer.</t>
-<t tx="T310">This makes selected text look much better and makes Show Invisibles look much better as well.  
+<t tx="T320">Repeated double-clicking (without intervening single-click) caused the selection to move to the left.</t>
+<t tx="T321">This is consistent with what the Import commands do for the other file types.  It's also much safer.</t>
+<t tx="T322">This makes selected text look much better and makes Show Invisibles look much better as well.  
 
 This was not easy to do.  Apparently tag settings interfer with the Tk.Text settings.  I have not found a way to specify the selectbackground color for tags.  The only way I could get things to work is define whitespace tags only when in showInvisibles mode.</t>
-<t tx="T311">.tmp files disappear On Windows XP after Leo exits!</t>
-<t tx="T312">leo.py 3.3                                     August 3, 2002
+<t tx="T323">.tmp files disappear On Windows XP after Leo exits!</t>
+<t tx="T324">leo.py 3.3                                     August 3, 2002
 
 This version of Leo:
 
@@ -4692,12 +4961,12 @@ This version of Leo:
 See the children of this node for details.
 
 Edward K. Ream</t>
-<t tx="T313">It is now possible to use non-Ascii characters in Leo!
+<t tx="T325">It is now possible to use non-Ascii characters in Leo!
 
 Leo uses the xml_version_string setting to encode Unicode characters in .leo files.  This will be UTF-8 by default.  I've also very briefly tested ISO-8859-1.
 
 I am a complete Unicode ignoramous.  It seemed trivial to add Unicode support to Leo, and if there are any fine points that should have been considered I no doubt did not consider them...</t>
-<t tx="T314">The Import command now does a better job of removing excess leading whitespace.
+<t tx="T326">The Import command now does a better job of removing excess leading whitespace.
 
 When importing .java files, Leo now preserves newlines in leading block comments.  This makes the typical weird Java comments look better.  For example,
 
@@ -4715,9 +4984,9 @@ Now gets redered as
 
 The comment will be reconstituted properly when rewritten.
 </t>
-<t tx="T315">This never happened before because all languages had either 1 or 3 delims.  But Java now has only 2 delims to force block comments.</t>
-<t tx="T316">Leo should now handle negative tab widths properly.</t>
-<t tx="T317">- Negative tab widths are now honored properly.
+<t tx="T327">This never happened before because all languages had either 1 or 3 delims.  But Java now has only 2 delims to force block comments.</t>
+<t tx="T328">Leo should now handle negative tab widths properly.</t>
+<t tx="T329">- Negative tab widths are now honored properly.
 
 - Made 'additional_body_text_border' setting functional.
 
@@ -4733,7 +5002,7 @@ The comment will be reconstituted properly when rewritten.
 That is, only the default settings in leoConfig.py were used, not the settings in leoConfig.txt.
 
 - The old code did not use the "page_width" and "tab_width" settings from leoConfig.txt.</t>
-<t tx="T318">leo.py 3.2                                     July 30, 2002
+<t tx="T330">leo.py 3.2                                     July 30, 2002
 
 This version generalizes the @others directive, improves the Import command and fixes several bugs.  See the children of this node for full details.
 
@@ -4750,32 +5019,32 @@ The highlights:
 - The usual minor improvements and bug fixes.
 
 Edward K. Ream</t>
-<t tx="T319">Nested @others directives are now valid, even when no named node intervenes.  This is a significant enhancement to Leo because it is now easier to define multiple classes in a single file.  The leoNode.py file also uses nested @others directives.
+<t tx="T331">Nested @others directives are now valid, even when no named node intervenes.  This is a significant enhancement to Leo because it is now easier to define multiple classes in a single file.  The leoNode.py file also uses nested @others directives.
 
 The outline shown in the child of this node shows the general idea.
 
 The Import command uses nested @others to great effect in Python files containing many classes.  For example, try importing the file Python/Lib/Compiler/ast.py.</t>
-<t tx="T320">@color
+<t tx="T332">@color
 @ignore
 
 # This is the "outer" @others
 @others
 </t>
-<t tx="T321">class a:
+<t tx="T333">class a:
 	# This is an "inner" @others.  No named node intervenes.
 	@others</t>
-<t tx="T322">def one():
+<t tx="T334">def one():
 	pass</t>
-<t tx="T323">def two():
+<t tx="T335">def two():
 	pass</t>
-<t tx="T324">class b:
+<t tx="T336">class b:
 	# This is an "inner" @others.  No named node intervenes.
 	@others</t>
-<t tx="T325">def one():
+<t tx="T337">def one():
 	pass</t>
-<t tx="T326">def two():
+<t tx="T338">def two():
 	pass</t>
-<t tx="T327">The Import command creates nested @others directives when parsing Python classes.
+<t tx="T339">The Import command creates nested @others directives when parsing Python classes.
 
 Fixed two bugs in the Import command:
 
@@ -4788,13 +5057,13 @@ Two other minor improvements:
 1. This is reasonable: we don't wan't people generating files from imported files unless they take some positive action.
 
 2. The Import command now checks that different branches of #if, #else, #endif directives have the same net number of braces, and warns if they do not.  This logic was inserted while trying to fix bug #2 above.</t>
-<t tx="T328">It's too confusing to have arrow keys mean different things in different panes.
+<t tx="T340">It's too confusing to have arrow keys mean different things in different panes.
 
 For one thing, we want to leave the focus in the body pane after the first click in the outline pane, but that means that the arrow keys must still be functional in the _body_ pane!
 
 Alas, all the various combinations of key bindings of arrow keys appear to do something; there are none left to use for moving around in the outline pane.  So we are stuck with poor shortcuts.</t>
-<t tx="T329">Leo could sometimes crash when the user selected Cancel in the Preferences panel.</t>
-<t tx="T330">There were too many problems in the old color panel.
+<t tx="T341">Leo could sometimes crash when the user selected Cancel in the Preferences panel.</t>
+<t tx="T342">There were too many problems in the old color panel.
 
 - Completely revised the Revert logic in the main Color panel.
 - The color name picker now reverts properly.
@@ -4804,9 +5073,9 @@ Alas, all the various combinations of key bindings of arrow keys appear to do so
 - The color picker now shows the value of the present color, not the revert color.
 - Increased the width of name buttons to handle long color names.
 </t>
-<t tx="T331">Thanks to Thomas Guettler for suggesting this.</t>
-<t tx="T332">This script uses the dis module to print static statistics about Python bytecode.  Of no use to anyone but me.</t>
-<t tx="T333">leo.py 3.1                                     July 20, 2002
+<t tx="T343">Thanks to Thomas Guettler for suggesting this.</t>
+<t tx="T344">This script uses the dis module to print static statistics about Python bytecode.  Of no use to anyone but me.</t>
+<t tx="T345">leo.py 3.1                                     July 20, 2002
 
 This version fixes a blunder that affects only leo.py 3.0.  I recommend that all users of 3.0 upgrade to this version.
 
@@ -4823,8 +5092,8 @@ The highlights:
 - The usual minor improvements and bug fixes.
 
 Edward K. Ream</t>
-<t tx="T334">The file comparison window helps people verify that imported files are, in fact, precisely equivalent to the original files.</t>
-<t tx="T335">Here are the new settings in leoCompare.txt:
+<t tx="T346">The file comparison window helps people verify that imported files are, in fact, precisely equivalent to the original files.</t>
+<t tx="T347">Here are the new settings in leoCompare.txt:
 
 # Initial settings of the Compare panel.
 # 	These correspond to the keyword parameters of the leoCompare constructor.
@@ -4908,7 +5177,7 @@ print_mismatching_lines = 1
 
 print_trailing_lines = 1
 #	1: Print lines all lines in one file after an end-of-file is seen on the other file.</t>
-<t tx="T336">The new rules allow leo.py 3.1 to read and write .leo files more like leo.py 2.x when there is no leoConfig.txt file.  The scheme used in leo.py 3.0 meant that preferences were _never_ written to .leo files.  It's advantage was that all defaults were specified in:
+<t tx="T348">The new rules allow leo.py 3.1 to read and write .leo files more like leo.py 2.x when there is no leoConfig.txt file.  The scheme used in leo.py 3.0 meant that preferences were _never_ written to .leo files.  It's advantage was that all defaults were specified in:
 
 	leoConfig.&lt;&lt; define default tables for settings &gt;&gt;
 
@@ -4925,18 +5194,18 @@ In effect, Leo sets and gets various options in the following order of precedenc
 3. Use settings in .leo files if leoConfig.txt does not exist.
 
 4. If leoConfig.txt does not exist, and the .leo file does not specify a setting, use hard-coded settings in the various classes, just as leo.py 2.x did.</t>
-<t tx="T337">The @pagewidth, @tabwidth and @language directives could not have worked while tangling. Apparently nobody has every used these directives in @root trees!</t>
-<t tx="T338">The Flatten Outline command must use an escape convention so that it can distinguish between the "+" and "-" characters that denote a headline and any "+" and "-" characters that start a line of body text.
+<t tx="T349">The @pagewidth, @tabwidth and @language directives could not have worked while tangling. Apparently nobody has every used these directives in @root trees!</t>
+<t tx="T350">The Flatten Outline command must use an escape convention so that it can distinguish between the "+" and "-" characters that denote a headline and any "+" and "-" characters that start a line of body text.
 
 The old version of Flatten Outline inserted a backspace before _all_ "+", "-" and backspace characters.  The new version of Flatten Outline inserts a backspace before such characters only if they are the first non-whitespace character of a line.
 
 This change affects the "file format" used by the Import Flattened Outline command.  If you import a file flattened with the old version of Flatten Outline, the new Import Flattened Outline will remove the inserted backspace only if it is the first non-whitespace character of the line.  In practice, this is unlikely to be a problem: you could just manually convert "\\", "\+" and "\-" to "\", "+" and "-" throughout the imported file.</t>
-<t tx="T339">The Open Python Window command now attempts to add IDLE's location to sys.path if import idle fails.
+<t tx="T351">The Open Python Window command now attempts to add IDLE's location to sys.path if import idle fails.
 
 Bernhard Mulder contributed the code that made this improvement possible.
 
 </t>
-<t tx="T340">leo.py 3.0                                     July 16, 2002
+<t tx="T352">leo.py 3.0                                     July 16, 2002
 
 This version is called 3.0 because it can optionally produce files that can NOT be read by the leo.py 2.x or the Borland version of Leo.  However, by default, leo.py 3.0 DOES produce files that all previous versions of Leo can read.
 
@@ -4958,7 +5227,7 @@ See the children of this node for full details.  The highlights:
 - The usual bug fixes.
 
 At least one more version of leo.py is planned.</t>
-<t tx="T341">You now have a choice: you can configure Leo to please previous versions of Leo or to please XML parsers:
+<t tx="T353">You now have a choice: you can configure Leo to please previous versions of Leo or to please XML parsers:
 
 Leo now uses the xml_version_string configuration setting, if present, to override the UTF-8 setting used in all previous versions of Leo.  The default value of this setting is UTF-8, so by default leo.py will write files that may be read by any previous version of leo.py or the Borland version of Leo.
 
@@ -4967,17 +5236,17 @@ However, xml_version_string = ISO-8859-1 will produce .leo files that are more a
 If the setting does not exist, whatever value is present in the .leo file will be written when the .leo file is written.  For new files, a value of UTF-8 will be used when this setting is not present.
 
 Notice that this also affects what is written to the clipboard.</t>
-<t tx="T342">This version supports many more options than before.  See leoConfig.txt for the full list.
+<t tx="T354">This version supports many more options than before.  See leoConfig.txt for the full list.
 
 Leo looks for leoConfig.txt in the same places as in leo.py 2.5.  If Leo does not find leoConfig.txt, This version will use defaults specified in tables defined in the section
 	&lt;&lt; define default tables for settings &gt;&gt;
 in leoConfig.py.  So it is now convenient to change settings in leo.py itself as well as in leoConfig.txt.</t>
-<t tx="T343">Including the split direction and split ration.
+<t tx="T355">Including the split direction and split ration.
 
 Leo now uses all configuration settings from leoConfig.txt.</t>
-<t tx="T344">If you drag a headline above or below the outline pane the outline pane will scroll automatically.  As before, Leo will cancel the drag if you release a headline anywhere but over another headline's icon.</t>
-<t tx="T345">You can specify colors for each syntax coloring construct using a color wheel or by choosing one of the standard Tk color names.  When a color becomes active Leo writes its value or color name to the log pane for your reference.  This is useful when setting coloring options in leoConfig.txt.</t>
-<t tx="T346">Using this panel should be self-explanatory (what you see is what you get) with the following exceptions:
+<t tx="T356">If you drag a headline above or below the outline pane the outline pane will scroll automatically.  As before, Leo will cancel the drag if you release a headline anywhere but over another headline's icon.</t>
+<t tx="T357">You can specify colors for each syntax coloring construct using a color wheel or by choosing one of the standard Tk color names.  When a color becomes active Leo writes its value or color name to the log pane for your reference.  This is useful when setting coloring options in leoConfig.txt.</t>
+<t tx="T358">Using this panel should be self-explanatory (what you see is what you get) with the following exceptions:
 
 1.  When a font becomes "active", the new font appears in the panes whose check boxes are selected.  A font becomes active when you double-click its name, or check or uncheck any checkbox.
 
@@ -4988,28 +5257,28 @@ It would be much better to have a font become active if you just select its name
 3. Choosing very _small_ values for font sizes may cause Leo's window to _expand_ its width.
 
 4. When you choose OK or Cancel Leo writes the fonts presently active in each pane to the log pane for your reference.  This is useful when setting font options in leoConfig.txt.</t>
-<t tx="T347">This was a supremely irritating bug.</t>
-<t tx="T348">This command switches between vertical and horizontal orientations of the Leo window.  In the vertical orientation, the body pane appears below the pane containing the outline and log panes.  In the horizontal orientation, the body pane appears to the left the pane containing the outline and log panes.
+<t tx="T359">This was a supremely irritating bug.</t>
+<t tx="T360">This command switches between vertical and horizontal orientations of the Leo window.  In the vertical orientation, the body pane appears below the pane containing the outline and log panes.  In the horizontal orientation, the body pane appears to the left the pane containing the outline and log panes.
 
 leoConfig.txt specifies the default direction.  If leoConfig.txt does not exist, or does not specify the direction, the "vertical" orientation is used, just as in previous versions.
 
 By default, the ratio of pane outline pane to the body pane is 0.5 in the vertical orientation and 0.3 in the horizontal orientation.  These two ratios may be changed using leoConfig.txt.</t>
-<t tx="T349">The @comment directive no longer suppresses syntax coloring.  Leo directives (but not doc parts) are colored when @language plain is in effect.  The user can, as always, suppress all coloring by using @nocolor.  The new rules are much more natural than the old, and much less confusing.</t>
-<t tx="T350">The old colorer colored all Leo directives blue, the same color as keywords in whatever language is current. I think the distinction between Leo directives and language keywords is useful.  Of course, you can control syntax coloring yourself by altering leoConfig.txt.</t>
-<t tx="T351">This message is printed to the console, not the log pane.  On windows, this may not always be visible.</t>
-<t tx="T352">Leo will convert underscores in the @comment directives to significant spaces.  For example,
+<t tx="T361">The @comment directive no longer suppresses syntax coloring.  Leo directives (but not doc parts) are colored when @language plain is in effect.  The user can, as always, suppress all coloring by using @nocolor.  The new rules are much more natural than the old, and much less confusing.</t>
+<t tx="T362">The old colorer colored all Leo directives blue, the same color as keywords in whatever language is current. I think the distinction between Leo directives and language keywords is useful.  Of course, you can control syntax coloring yourself by altering leoConfig.txt.</t>
+<t tx="T363">This message is printed to the console, not the log pane.  On windows, this may not always be visible.</t>
+<t tx="T364">Leo will convert underscores in the @comment directives to significant spaces.  For example,
 
 @comment REM_
 
 causes the comment delimiter to be "REM " (Note the trailing space).</t>
-<t tx="T353">This happened sometimes when using @comment.</t>
-<t tx="T354">Leo directives were mostly being colored using the colors for keywords.  This didn't show up because both were colored blue.</t>
-<t tx="T355">Only one window now appears when opening a .leo file, and the window is completely drawn before anything gets written to the log pane.</t>
-<t tx="T356">Added new code for Convert All Blanks and Convert All Tabs.
+<t tx="T365">This happened sometimes when using @comment.</t>
+<t tx="T366">Leo directives were mostly being colored using the colors for keywords.  This didn't show up because both were colored blue.</t>
+<t tx="T367">Only one window now appears when opening a .leo file, and the window is completely drawn before anything gets written to the log pane.</t>
+<t tx="T368">Added new code for Convert All Blanks and Convert All Tabs.
 
 Fixed a bug that resulted in Convert Tabs being undoable.</t>
-<t tx="T357">This makes the panel much more convenient to use.</t>
-<t tx="T358">leo.py version 2.5.1                            July 7, 2002
+<t tx="T369">This makes the panel much more convenient to use.</t>
+<t tx="T370">leo.py version 2.5.1                            July 7, 2002
 
 2.5.1 This version corrects crashers that affect undo/redo move commands.
 Version 2.5 has been withdrawn.
@@ -5033,20 +5302,20 @@ leo.py is almost complete.  The only remaining tasks on my list are:
 
 1. Make the Set Font... and Set Colors... commands functional.  This will be easy now that leoConfig.txt exists.
 2. Fix the Javadoc bug.</t>
-<t tx="T359">The following are listed in the approximate order of their importance.  The marked nodes are particularly important.</t>
-<t tx="T360">Gary Herron suggested this changes.</t>
-<t tx="T361">These commands convert an entire tree.</t>
-<t tx="T362">This command converts leading tabs to blanks in a single node.</t>
-<t tx="T363">Previous versions of Leo ignored the tab width field!  This field is now fully functional.  </t>
-<t tx="T364">Leo converts tabs to blanks as you type when a negative tab width is specified.</t>
-<t tx="T365">The Preferences panel is now a modal dialog.  This solves a number of problems, both for the implementation and for the user.  It is now completely clear which preferences are being set, viz., the preferences for the window on top.  In addition, the Prefs panel now shows the name of the window whose preferences are to be set.
+<t tx="T371">The following are listed in the approximate order of their importance.  The marked nodes are particularly important.</t>
+<t tx="T372">Gary Herron suggested this changes.</t>
+<t tx="T373">These commands convert an entire tree.</t>
+<t tx="T374">This command converts leading tabs to blanks in a single node.</t>
+<t tx="T375">Previous versions of Leo ignored the tab width field!  This field is now fully functional.  </t>
+<t tx="T376">Leo converts tabs to blanks as you type when a negative tab width is specified.</t>
+<t tx="T377">The Preferences panel is now a modal dialog.  This solves a number of problems, both for the implementation and for the user.  It is now completely clear which preferences are being set, viz., the preferences for the window on top.  In addition, the Prefs panel now shows the name of the window whose preferences are to be set.
 
 The Prefs panel now contains OK, Cancel and Revert buttons.  These are useful, and they are possible only because we have a modal dialog.</t>
-<t tx="T366">You may now cut and paste between Leo and other apps, or between two different copies of Leo.</t>
-<t tx="T367">The elements of this submenu are saved in leoConfig.txt, if present.
+<t tx="T378">You may now cut and paste between Leo and other apps, or between two different copies of Leo.</t>
+<t tx="T379">The elements of this submenu are saved in leoConfig.txt, if present.
 
 Leo adds files to this submenu even if leoConfig.txt is missing or read-only, but those additions will not be remembered unless leoConfig.txt is present and writable.</t>
-<t tx="T368">1. Importing the following script
+<t tx="T380">1. Importing the following script
 
 class C:
     def __init__(self):
@@ -5070,17 +5339,17 @@ class A:
 puts the "pass" in a section called &lt;&lt; class A declarations &gt;&gt;.  This is not easy to fix: you will have to correct it by hand.
 
 4. Improved the Import to @root command.  Added @root &lt;filename&gt; to the body text of the root of tree and eliminated @language and @others directives.</t>
-<t tx="T369">This is important, because it means that invalid entries in, say, the Default Tangle Directory preference will no longer abort an attempted read.</t>
-<t tx="T370">This would happen if the Default Tangle Directory did not exist in the Prefs panel.</t>
-<t tx="T371">This command always crashed, perhaps due to a reversion.</t>
-<t tx="T372">The crash happened if the Import command was executed in a new, unsaved file.
+<t tx="T381">This is important, because it means that invalid entries in, say, the Default Tangle Directory preference will no longer abort an attempted read.</t>
+<t tx="T382">This would happen if the Default Tangle Directory did not exist in the Prefs panel.</t>
+<t tx="T383">This command always crashed, perhaps due to a reversion.</t>
+<t tx="T384">The crash happened if the Import command was executed in a new, unsaved file.
 
 The fix was to the directory logic in import.scanAllDirectives.</t>
-<t tx="T373">The bug involves only the clone mark itself: nodes have always been properly joined.</t>
-<t tx="T374">Gary Herron reported this bug and told me how to fix it. This change is to the default file extension field of file dialogs.  It seems to have no effect on Windows. Apparently this makes a difference in Linux...</t>
-<t tx="T375">These commands no longer change the file name associated with a window if the user cancels the Save or Save As dialog.</t>
-<t tx="T376">This involved changing the documentation for the Demote, Insert Headline, Extract Headline, Syntax Coloring... and Font... commands.  Removed documentation for the Open/Close Log Window command.</t>
-<t tx="T377">leo.py version 2.4                             June 20, 2002
+<t tx="T385">The bug involves only the clone mark itself: nodes have always been properly joined.</t>
+<t tx="T386">Gary Herron reported this bug and told me how to fix it. This change is to the default file extension field of file dialogs.  It seems to have no effect on Windows. Apparently this makes a difference in Linux...</t>
+<t tx="T387">These commands no longer change the file name associated with a window if the user cancels the Save or Save As dialog.</t>
+<t tx="T388">This involved changing the documentation for the Demote, Insert Headline, Extract Headline, Syntax Coloring... and Font... commands.  Removed documentation for the Open/Close Log Window command.</t>
+<t tx="T389">leo.py version 2.4                             June 20, 2002
 
 This version fixes some annoying bugs and adds some nice features.  The children of this node contain full details.
 
@@ -5093,27 +5362,27 @@ This version fixes some annoying bugs and adds some nice features.  The children
 4. Improves error recovery when there are errors writing .leo files.
 
 5. Updates this file to match the documentation of Leo's web site.  At long last, Leo's documentation is complete.</t>
-<t tx="T378">1. Fixed a bug in app.finishCreate that caused Leo to take an exception on MacOS X.
+<t tx="T390">1. Fixed a bug in app.finishCreate that caused Leo to take an exception on MacOS X.
 
 2. Leo now properly highlights the headline of a newly created node.  Similarly, the Edit Headline command (control-H) now works properly.
 
 3. Removed a useless assert in st_enter_root_name that could fail under unusual circumstances.</t>
-<t tx="T379">When writing a .leo file, say f.leo, Leo now attempts to create a backup file called f.leo.back.  If there is an error while writing f.leo, Leo will restore f.leo from f.leo.back.  Note that Leo will write derived files correctly even when there is an error writing the .leo file.</t>
-<t tx="T380">New in leo.py v2.4: You may drag an node (including all its descendents) from one place to another in an outline.  To start a drag, press the main (left) mouse button while the cursor is over the icon for a node.  The cursor will change to a hand icon. If you release the mouse button while the hand cursor is above the icon for another node, Leo will move the dragged node after that node.  If you release the mouse button when the hand cursor is not over an icon, Leo will print "not moved" and leave the outline pane as it is.  This can result in the dragged node not being visible on the screen, but it seems less alarming not to force the current node to become visible as that would undo any scrolling that has just been done.
+<t tx="T391">When writing a .leo file, say f.leo, Leo now attempts to create a backup file called f.leo.back.  If there is an error while writing f.leo, Leo will restore f.leo from f.leo.back.  Note that Leo will write derived files correctly even when there is an error writing the .leo file.</t>
+<t tx="T392">New in leo.py v2.4: You may drag an node (including all its descendents) from one place to another in an outline.  To start a drag, press the main (left) mouse button while the cursor is over the icon for a node.  The cursor will change to a hand icon. If you release the mouse button while the hand cursor is above the icon for another node, Leo will move the dragged node after that node.  If you release the mouse button when the hand cursor is not over an icon, Leo will print "not moved" and leave the outline pane as it is.  This can result in the dragged node not being visible on the screen, but it seems less alarming not to force the current node to become visible as that would undo any scrolling that has just been done.
 
 New in leo.py 3.0: If you drag outside the outline pane, the outline pane will scroll automatically.
 
 Leo scrolls the outline pane as the result of mouse-moved events, so to continue scrolling you must keep moving the mouse.  I experimented with scrolling the outline pane whenever the cursor is dragged outside it, but the results were not good.  There was a noticeable delay between releasing the cursors and halting the scrolling.  The present code is simpler and more likely to work on all platforms.
 
 Leo only allows dragging from one icon to another.  In particular, you can't move a node to the first child of another node unless that node is already expanded.   I experimented with automatically open nodes when the cursor moves over an unexpanded node with children.  However, this was confusing and alarming.  It seems best to expand and contract nodes explicitly.</t>
-<t tx="T381">leo.py version 2.3                             June 5, 2002
+<t tx="T393">leo.py version 2.3                             June 5, 2002
 
 This version fixes a minor problem with Leo.
 
 1.  The code that reads and writes @file nodes now uses the directory containing the .leo file as a default when the Default Tangle Directory setting is empty in the Preferences panel.  This is a reasonable default because derived files are most often created in the same directory as the .leo file.  BTW, the Tangle and Untangle commands have used this convention for a long time.
 
 Note: This default allows us to distribute LeoPy.leo without specifying a directory in the Preferences Panel.</t>
-<t tx="T382">leo.py version 2.2                             June 1, 2002
+<t tx="T394">leo.py version 2.2                             June 1, 2002
 
 The version fixes two bugs that happen rarely and can cause loss of data when they do happen.
 
@@ -5122,7 +5391,7 @@ The version fixes two bugs that happen rarely and can cause loss of data when th
 2.  All previous versions of leo.py will crash when saving body text containing unicode characters.  This could occur as the result of cutting and pasting text from another application into the body pane.  Leo.py now writes body text containing unicode characters using Python's u-prefixed notation.  That is, the body text is written as: u'escaped_text'  where escaped text replaces unicode characters not in the ascii character set by escape sequences of the form \uxxxx.  The result contains nothing but ascii characters, so leo.py will have no problem reading it.  Naturally, compilers and other tools may not understand Python's notation, so you may have to convert escaped text to something that your tools can understand.
 
 3.  This file, LeoDocs.leo, now more closely matches the documentation on Leo's web site.</t>
-<t tx="T383">leo.py version 2.1                             May 16, 2002
+<t tx="T395">leo.py version 2.1                             May 16, 2002
 
 This version of Leo adds Import and Export commands and fixes several bugs:
 
@@ -5135,22 +5404,22 @@ I use Import commands mainly for studying other people's code.  Be wary of gener
 3. Fixed several bugs in the syntax colorer.  One of these bugs caused Leo to crash when handling CWEB.
 
 4. Leo now colors strings green.</t>
-<t tx="T384">I use Import commands mainly for studying other people's code.  Be wary of generating source files from trees generated by the Import commands.
+<t tx="T396">I use Import commands mainly for studying other people's code.  Be wary of generating source files from trees generated by the Import commands.
 
 The Remove Sentinels command can "clean" files for publication or walk-throughs.  You can also use the Remove Sentinels command to prepare files for comparisons.  For example, one could study a file, say f.py, as follows:
 
 1. Use the Import Files command to create an @file tree, say @file f2.py, for study.  Changing the name to f2.py ensures that saving the .leo file won't destroy the original file.
 
 2. Use the Remove Sentinels command to create a file f3.py.  Use a file comparison program to ensure that f1.py is identical to f3.py.</t>
-<t tx="T385">Fixed several bugs that caused Leo to hang when moving an outline up before the previous root node.</t>
-<t tx="T386">Fixed a bug that caused Leo to hang when syntax coloring noweb code with the CWEB syntax colorer.
+<t tx="T397">Fixed several bugs that caused Leo to hang when moving an outline up before the previous root node.</t>
+<t tx="T398">Fixed a bug that caused Leo to hang when syntax coloring noweb code with the CWEB syntax colorer.
 
 The syntax colorizer now handles Python triple strings and C preprocessor directives properly.
 
 Leo now colors strings with the same green used by IDLE.  I think this color looks very good.
 
 Improved the syntax coloring for CWEB.</t>
-<t tx="T387">leo.py version 2.0                             March 4, 2002
+<t tx="T399">leo.py version 2.0                             March 4, 2002
 
 leo.py v2.0 and Borland Leo v2.6 are being released simultaneously.  I urge all users of Leo to upgrade to one or both of these versions.  Note: the Untangle commands of both v2.0 and v2.6 should be considered beta quality.  Please report any problems with Untangle ASAP.
 
@@ -5163,7 +5432,7 @@ This is an important milestone in Leo's history, for several reasons:
 3. leo.py v2.0 and Borland Leo v2.6 introduce an optimized format for derived files: both versions remove blank lines from between sentinel lines.  This is an upward compatible change in the format of derived files: leo.py v2.0 and Borland Leo v2.6 can read derived files from all previous versions of Leo, but previous versions of Leo can not read derived files without blanks lines between sentinels.
 
 See the children of this node for full details.</t>
-<t tx="T388">leo.py v2.0 optionally can remove blanks from between sentinel lines in derived files.  This is an upward compatible change in the format of derived files: leo.py v2.0 can read derived files from all previous versions of Leo, but previous versions of Leo can not read derived files without blanks lines.
+<t tx="T400">leo.py v2.0 optionally can remove blanks from between sentinel lines in derived files.  This is an upward compatible change in the format of derived files: leo.py v2.0 can read derived files from all previous versions of Leo, but previous versions of Leo can not read derived files without blanks lines.
 
 Removing blank lines requires a new kind of sentinel, the "verbatimAfterRef" sentinel.  This allows Leo to handle comments following section references that would otherwise be treated as sentinels themselves.  For example:
    
@@ -5177,13 +5446,13 @@ to
 
 Note: leo.py v2.0 can read derived files without blank lines between sentinels regardless of the setting of self.suppress_newlines.
 </t>
-<t tx="T389">leo.py supports unlimited Undo and Redo.  All outline operations and all typing operations may be undone and redone.  Undo state persists even after Saves.  Even the Change All command is undoable.  Only the "Read @file Nodes" command is undoable; it clears the entire undo state. This command raises a dialog to allow the user to cancel.
+<t tx="T401">leo.py supports unlimited Undo and Redo.  All outline operations and all typing operations may be undone and redone.  Undo state persists even after Saves.  Even the Change All command is undoable.  Only the "Read @file Nodes" command is undoable; it clears the entire undo state. This command raises a dialog to allow the user to cancel.
 
 Think of the actions that may be Undone or Redone as a string of beads.  A "bead pointer" points to the present bead.  Performing an operation creates a new bead after the present bead and removes all following beads.  Undoing an operation moves the bead pointer backwards; redoing an operation moves the bead pointer forwards.  The Undo command is disabled when the bead pointer moves in front of the first bead; the Redo command is disabled when the bead pointer points to the last bead.
 
 </t>
-<t tx="T390">leo.py syntax colors all languages mentioned in the Preferences Panel.</t>
-<t tx="T391">1. Show Invisibles command works in @nocolor mode.
+<t tx="T402">leo.py syntax colors all languages mentioned in the Preferences Panel.</t>
+<t tx="T403">1. Show Invisibles command works in @nocolor mode.
 
 2. @unit, @root, @nocolor and @color now terminate doc parts.
 
@@ -5192,19 +5461,19 @@ Think of the actions that may be Undone or Redone as a string of beads.  A "bead
   &lt;&lt;name&gt;&gt;=
   
 This didn't show up if there is a space after the &lt;&lt;.</t>
-<t tx="T392">Leo adds extra space at the end of headlines so that headlines now have enough room to show all text.  This works around an apparent Tk bug.</t>
-<t tx="T393">The Untangle command is beta quality. Please make backups before untangling.</t>
-<t tx="T394">leo.py v2.0 fixes two bugs present in Borland v2.5 and fixed in Borland v2.6:
+<t tx="T404">Leo adds extra space at the end of headlines so that headlines now have enough room to show all text.  This works around an apparent Tk bug.</t>
+<t tx="T405">The Untangle command is beta quality. Please make backups before untangling.</t>
+<t tx="T406">leo.py v2.0 fixes two bugs present in Borland v2.5 and fixed in Borland v2.6:
 
 1. Untangle did not work properly for languages like Perl and Python that do not have block comments. 
 
 2. Untangle did not recognize @ on a line by itself as the start of a doc part.</t>
-<t tx="T395">@c now works the same as @code.  This makes the syntax colorers agree with what the Tangle commands actually do.  Previously, the syntax colorers indicated that everything following an @c was code, while the Tangle commands placed everything following an @c in the doc part!</t>
-<t tx="T396">Previous versions of untangle silently trimmed trailing lines from all nodes, which seems rude.</t>
-<t tx="T397">The font size for code text is now 12 on Linux.
+<t tx="T407">@c now works the same as @code.  This makes the syntax colorers agree with what the Tangle commands actually do.  Previously, the syntax colorers indicated that everything following an @c was code, while the Tangle commands placed everything following an @c in the doc part!</t>
+<t tx="T408">Previous versions of untangle silently trimmed trailing lines from all nodes, which seems rude.</t>
+<t tx="T409">The font size for code text is now 12 on Linux.
 
 Changed code so that the path to the Icons folder is computed correctly on all platforms.</t>
-<t tx="T398">leo.py version 1.0                             February 10, 2002
+<t tx="T410">leo.py version 1.0                             February 10, 2002
 
 Version 1.0 adds many new features and fixes several bugs.  I recommend that all users of leo.py upgrade to this version.  This version deserves the number 1.0; it has no known bugs.
 
@@ -5219,7 +5488,7 @@ Here are the highlights of this release.  See the children of this node for deta
 The Edit Body commands work much more reliably than the similar commands in the Borland version of Leo.  You may now specify Python scripts rather than .bat files in the Preferences panel. Added a way, albeit clumsy, to cut and paste nodes between Borland Leo and leo.py.  When syntax coloring Python text, leo.py increments the auto-indentation by one tab after a trailing colon.  This provides a subtle reminder to add such colons.
 
 4. leo.py handles events and shortcuts properly.  The shortcut for the Insert Node command is now Control-I, as it is in the Borland version of Leo.  Worked around a TK bug that prevented double-clicks from properly selecting words.  leo.py enables and disables all menu items properly.</t>
-<t tx="T399">Removed the Print and Page setup commands because Tk provides no support for printing.  This is not significant: we can use the export commands to create text files.  These text files can then be formatted and printed as desired.
+<t tx="T411">Removed the Print and Page setup commands because Tk provides no support for printing.  This is not significant: we can use the export commands to create text files.  These text files can then be formatted and printed as desired.
 
 The following commands remain unfinished.  They will be finished in this order:
 
@@ -5232,7 +5501,7 @@ The following commands remain unfinished.  They will be finished in this order:
 4. Toggle Split Direction, Cascade and Recent Windows commands.
 
 5. Font Panel and Syntax Coloring commands.</t>
-<t tx="T400">It should be possible to cut a node or tree in Borland Leo and paste it using the Copy Node command in leo.py.  At present, cutting and pasting trees between applications can only be done indirectly.  Do this:
+<t tx="T412">It should be possible to cut a node or tree in Borland Leo and paste it using the Copy Node command in leo.py.  At present, cutting and pasting trees between applications can only be done indirectly.  Do this:
 
 1. Copy the tree in Borland Leo using the Copy Node or Cut Node command.
 2. Paste the tree into empty body text of leo.py using the Paste command from the Edit menu, _not_ the Paste Node command from the Outline menu.
@@ -5240,7 +5509,7 @@ The following commands remain unfinished.  They will be finished in this order:
 4. Move to the tree view, and choose Paste Node.
 
 I hope to make this unpleasantness go away soon.</t>
-<t tx="T401">1. Fixed the Tangle All and Tangle Marked commands.  They always crashed.
+<t tx="T413">1. Fixed the Tangle All and Tangle Marked commands.  They always crashed.
 
 2. The Change command did not work in headlines because of a reversion in how headline text is selected.
 
@@ -5251,13 +5520,13 @@ I hope to make this unpleasantness go away soon.</t>
 5. Removed calls to trace during shutdown.  In general, it is not possible to call app() during shutdown because the app object may no longer exist.
 
 6. @others was not syntax colored properly if it was indented.</t>
-<t tx="T402">1. Adding trailing whitespace to a line in body text does not set the file-dirty mark.  This can never cause a derived file to become "out-of-synch" because the read code does not compare body text.
+<t tx="T414">1. Adding trailing whitespace to a line in body text does not set the file-dirty mark.  This can never cause a derived file to become "out-of-synch" because the read code does not compare body text.
 
 Apparently there is no way to fix this bug because of holes in Tk's event mechanism.  Specifically, tree.idle_body_key has no way to tell directly what keystroke caused it to be entered.
 
 2. Cutting and pasting between applications can only be done indirectly.  See the node called
 "How to copy an outline from Borland Leo to Leo.py".</t>
-<t tx="T403">leo.py version 0.08                             February 3, 2002
+<t tx="T415">leo.py version 0.08                             February 3, 2002
 
 Version 0.08 adds important new features and fixes several bugs.  All users of version 0.07 should upgrade to this version.  This code seems solid, and significant bugs may remain.  Note: this code has been tested only on Windows XP.  Please report any problems with Linux or Macintosh.
 
@@ -5276,7 +5545,7 @@ Here is a summary of new features.  See the children of this node for full detai
 4. Improved Leo's memory management and eliminated several serious bugs.  One bug caused errors while reading @file trees.  Eliminating this is a huge step forward.  This bug exists in the Borland version of Leo and will be fixed soon.
 
 5. Leo now underlines undefined section references.  Added support for hyperlinking, but disabled hyperlinking because it is not very useful without browser navigation buttons.</t>
-<t tx="T404">leo.py handles Find and Change commands much more smoothly than does the Borland version of Leo.  Indeed, I plan to rewrite the Borland code to match the code in leo.py.
+<t tx="T416">leo.py handles Find and Change commands much more smoothly than does the Borland version of Leo.  Indeed, I plan to rewrite the Borland code to match the code in leo.py.
 
 In general, leo.py handles the Find and Change commands more smoothly than does the Borland version of Leo.  Note: the node that "anchors" wrapped searches is the current node when any change is made to the Find panel.  The anchor is recomputed after a wrapped search fails.
 
@@ -5285,7 +5554,7 @@ Changed the meaning of a Find panel setting from "batch" to "context".  This wil
 The "context" option affects only the "Find All" and "Change All" commands.  When this option is in effect, more context information is printed when matches are found.
 
 The "reverse" option affects all Searches and Changes, both those initiated from the Find Panel itself, and those initiated from menu commands.  In particular, F3 will find the previous search if the "reverse" option is in effect.</t>
-<t tx="T405">The Tangle command has passed significant tests, and bugs may remain.  Be warned.
+<t tx="T417">The Tangle command has passed significant tests, and bugs may remain.  Be warned.
 
 leo.py's Tangle command produces output that is slightly different from Leo v2.5. The differences are insignificant; here is the complete list:
 
@@ -5294,14 +5563,14 @@ leo.py's Tangle command produces output that is slightly different from Leo v2.5
 2. Leading whitespace: leo.py produces "optimized" leading whitespace.  leo.py removes blanks if they do not affect the visual appearance of whitespace; this depends on the tab width specified in the Preferences Panel.  Leo v2.5 copies leading whitespace exactly.  The leo.py way is preferable; it will produce output acceptable to Python's tabnanny regardless of tab width used while running Python.
 
 3. Trailing blanks lines in body text: leo.py removes all trailing whitespace.  Leo v2.5 does not.  Conceivably, leo.py might have to change to make the Untangle command work properly.  More likely the leo.py way is just better.</t>
-<t tx="T406">Underlining "live" links clutters the screen too much, and hyperlinks from section references to section definitions isn't very useful without the standard "back" and "forward" buttons typically found in web browsers.  For these reasons, I have disabled hyperlinking.
+<t tx="T418">Underlining "live" links clutters the screen too much, and hyperlinks from section references to section definitions isn't very useful without the standard "back" and "forward" buttons typically found in web browsers.  For these reasons, I have disabled hyperlinking.
 
 To enable hyperlinking, just set:
 
 	self.use_hyperlinks = true
 	
 in color.__init__ in the @file leoColor.py tree.</t>
-<t tx="T407">1. Fixed several bugs involving cloned headlines.  One bug caused cloned headlines not to be updated in synch.  Another bug caused @file trees not to be marked as dirty under certain conditions.
+<t tx="T419">1. Fixed several bugs involving cloned headlines.  One bug caused cloned headlines not to be updated in synch.  Another bug caused @file trees not to be marked as dirty under certain conditions.
 
 Both bugs could have caused read errors while reading @file trees, so fixing these bugs is a big step forward.  I have experienced no read errors since fixing these bugs.  A huge step forward.  This bug exists in the Borland versions of Leo and should be fixed ASAP.
 
@@ -5316,7 +5585,7 @@ Both bugs could have caused read errors while reading @file trees, so fixing the
 6. Made file and path name processing more portable.  Removed all calls to os.chdir().
 
 7. Fixed a bug that caused a control-d to delete a character in the body pane when the Move Down command didn't do anything, i.e., when the presently selected node was the bottom node on the screen.</t>
-<t tx="T408">1. Used Tk.Text widgets in headlines rather than Tk.Entry widgets.  This allows the Find/Change commands to search headlines.  Control-k no longer deletes text following the cursor in headlines.
+<t tx="T420">1. Used Tk.Text widgets in headlines rather than Tk.Entry widgets.  This allows the Find/Change commands to search headlines.  Control-k no longer deletes text following the cursor in headlines.
 
 2. Improved the performance of screen updates and markedly reduced flicker in the body pane.
 
@@ -5329,14 +5598,14 @@ Both bugs could have caused read errors while reading @file trees, so fixing the
 6. The LeoPy folder now contains a dummy file called __init__.py.  This file marks the LeoPy folder as a potential package.
 
 7. Added several new functions to the file leo.py.  These are useful for invoking leo.py from a Python interpreter.  See the section "How to Install &amp; Run Leo" for details.</t>
-<t tx="T409">Previous version of leo.py did not release memory when windows close.  This version does.
+<t tx="T421">Previous version of leo.py did not release memory when windows close.  This version does.
 
 Memory management is remarkably easy in Python/Tk.  Added __del__ routines and corresponding destroy routines to the frame, vnode and tree classes.  The destroy routines eliminate circular references between objects. The __del__ routines do nothing except print debugging traces; we know that all references to an object have been removed when its __del__ routine is called.
 
 Added app.deleteOnClose ivar to control memory management.  When true, Leo deletes all frame objects when a frame closes.  This is always true at present.
 
 Fixed a memory botch: previously a dummy vnode was allocated for every vnode created while reading files.</t>
-<t tx="T410">Starting with this release, you will see trace statements throughout the code.  The trace function is defined in leoUtils.py; trace implements much of the functionality of my Sherlock tracing package.  Traces are more convenient than print statements for two reasons: 1) you don't need explicit trace names and 2) you can disable them without recompiling.
+<t tx="T422">Starting with this release, you will see trace statements throughout the code.  The trace function is defined in leoUtils.py; trace implements much of the functionality of my Sherlock tracing package.  Traces are more convenient than print statements for two reasons: 1) you don't need explicit trace names and 2) you can disable them without recompiling.
 
 In the following examples, suppose that the call to trace appears in function f.
 
@@ -5361,7 +5630,7 @@ If two arguments are supplied to trace, the first argument is the "tracepoint na
 "*" will not match an explicit tracepoint name that starts with a minus sign.  For example,
 
 	trace("-nocolor", self.disable_color)</t>
-<t tx="T411">Rewrote the code that computes file names.  This should have two beneficial effects:
+<t tx="T423">Rewrote the code that computes file names.  This should have two beneficial effects:
 
 Note:  This code has only been tested on Windows XP.
 
@@ -5370,7 +5639,7 @@ Note:  This code has only been tested on Windows XP.
 2. The code no longer calls os.chdir().  The "current application directory" changes only as the result of completing file open and save dialogs.  In particular, @path, @root and @file do not change the current application directory.
 
 3. Used leo.__file__ to get the directory from which leo.py was loaded.  This seems to be reliable, though it has only been tested on Windows XP.</t>
-<t tx="T412">The following features of leo.py will be incorporated into the Borland version 2.6 of Leo:
+<t tx="T424">The following features of leo.py will be incorporated into the Borland version 2.6 of Leo:
 
 1. Improve leading whitespace handling in Tangle.
 
@@ -5381,7 +5650,7 @@ Note:  This code has only been tested on Windows XP.
 4. Always recompute file indices and compute file indices.  This will make derived files produced by v2.6 identical to the files produced by leo.py.
 
 5. Make sure all file names end in .leo.</t>
-<t tx="T413">I urge anyone using leo.py upgrade to this version.  This is the first version of leo.py that has been thoroughly tested.
+<t tx="T425">I urge anyone using leo.py upgrade to this version.  This is the first version of leo.py that has been thoroughly tested.
 
 See the children of this node details about this release.  Here are the highlights:
 
@@ -5400,33 +5669,33 @@ See the children of this node details about this release.  Here are the highligh
 For even more details, see the diary entries for January 6-9 in LeoPy.leo.
 
 See the To Do lists in LeoPy.leo for a list of unfinished features.  The primary unfinished features are the Find/Change commands, preferences settings and the Tangle/Untangle commands.</t>
-<t tx="T414">This is the first version of leo.py that has been heavily tested.  About 70 percent of my work on leo.py has been done using leo.py itself.   I know of no remaining bugs that can cause data to be lost.</t>
-<t tx="T415">I have concentrated on removing all significant irritations encountered while using leo.py.  Far fewer still remain than before.  Among the remaining irritations:
+<t tx="T426">This is the first version of leo.py that has been heavily tested.  About 70 percent of my work on leo.py has been done using leo.py itself.   I know of no remaining bugs that can cause data to be lost.</t>
+<t tx="T427">I have concentrated on removing all significant irritations encountered while using leo.py.  Far fewer still remain than before.  Among the remaining irritations:
 
 1. Syntax coloring happens at "idle time", that is, after all events have been handled.  This means that characters are initially colored black, then changed to another couple after an obvious delay.  The obvious event-handling code does not work.  Perhaps using a "virtual event" may work.
 
 2. Keystrokes that should initiate commands _also_ get passed to widgets.  I am hoping to find a way around this, and it may take a bit of work.  The two biggest offender:  Control-k while editing a headline deletes from the cursor to the end of the headline (in addition to creating a new node!)  Control-i gets passed to the body pane as a tab.
 
 3. The border around the tree pane gets over-written by headlines.  I'm not sure how to fix this: it is certainly a Tk bug.</t>
-<t tx="T416">Fixed a bug that can cause body text to be lost when creating a new node.</t>
-<t tx="T417">Choosing Open Python Window brings up IDLE, the standard Python IDE, from which scripts may be run and debugged.
+<t tx="T428">Fixed a bug that can cause body text to be lost when creating a new node.</t>
+<t tx="T429">Choosing Open Python Window brings up IDLE, the standard Python IDE, from which scripts may be run and debugged.
 
 Note: The path to idle.py must exist in sys.paths.  For Python2.1 on windows, this path will typically be \Python21\Tools\idle  If this path does not exist, a message will be sent to the log pane.  The usual way to add a path to sys.paths is to modify the sitecustomize.py file.
 
 Changed names of several vnode and commands methods to make them compatible with the scripting documentation on Leo's web site.   You may now run any script that runs on Borland Leo on leo.py.
 
 When running scripts from leo.py, you may refer to any method or instance variable (attribute) in the code for leo.py.  If you want to run those scripts on Borland Leo you should restrict yourself to the methods documented in the Scripting chapter of Leo's online documentation.</t>
-<t tx="T418">To convert an @root tree to an @file tree, choose the root of the tree to be converted, then do the following in the Python window:
+<t tx="T430">To convert an @root tree to an @file tree, choose the root of the tree to be converted, then do the following in the Python window:
 
 	import c2py
 	c2py.leo1to2()
 	
 This script makes numerous changes throughout the tree.  It does not, however, change @root to @file, or insert the needed @others directives.  You must do that by hand.</t>
-<t tx="T419">At long last it is possible to open this file, LeoDocs.leo, from the help menu.
+<t tx="T431">At long last it is possible to open this file, LeoDocs.leo, from the help menu.
 
 This command will work only if LeoDocs.leo is located in the directory in which leo.py exists.</t>
-<t tx="T420">The body pane now has auto-indent on at all times.</t>
-<t tx="T421">leo.py version 0.06 (alpha)                     December 20, 2001
+<t tx="T432">The body pane now has auto-indent on at all times.</t>
+<t tx="T433">leo.py version 0.06 (alpha)                     December 20, 2001
 
 This version fixes several minor problems that prevented leo.py from running on Linux.  There is no need to upgrade to this version if leo.py works on your system.  This version is neither more nor less stable than version 0.05.  This file, LeoDocs.leo, has also been improved substantially.
 
@@ -5464,7 +5733,7 @@ As a temporary hack, please set loaddir correctly in the following code at the s
 
 Edward K. Ream
 December 20, 2001</t>
-<t tx="T422">leo.py version 0.05 (alpha)                      December 17, 2001
+<t tx="T434">leo.py version 0.05 (alpha)                      December 17, 2001
 
 This version of Leo marks a major milestone in Leo's history.  leo.py is the first functional version of Leo written completely in Python and Tkinter, Python's interface to the tcl/Tk system.
 
@@ -5475,10 +5744,10 @@ Warning: This version is alpha quality.  Use extreme caution: please save your w
 Please read this node's children before sending bug reports or feature requests.  Send all bug reports to Leo's SourceForge web site at: http://sourceforge.net/projects/leo/
 
 Edward K. Ream</t>
-<t tx="T423">I have been happily using leo.py to develop itself for the last three days without serious problems.  leo.py reads and writes all its source files exactly as does the Borland version.  This is an important test, and significant errors may remain.
+<t tx="T435">I have been happily using leo.py to develop itself for the last three days without serious problems.  leo.py reads and writes all its source files exactly as does the Borland version.  This is an important test, and significant errors may remain.
 
 Performance on a 1.2 Ghz Pentium is good to excellent.  Drawing the screen happens quickly, smoothly and without flicker.  Expanding and contracting nodes is usually excellent, and slows when a many nodes have been expanded.  Syntax coloring appears instantaneous, even with an unsophisticated algorithm.  Loading LeoPy.leo files takes about 3 seconds. This could be improved by using Python's XML classes.</t>
-<t tx="T424">You must have recent versions of Python and tcl/Tk installed on your machine.
+<t tx="T436">You must have recent versions of Python and tcl/Tk installed on your machine.
 Download Python from http://python.org/
 Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
 
@@ -5488,7 +5757,7 @@ The LeoPy folder contains all files in this distribution.  leo.py is the main so
 
 LeoPy.leo is the master source code file; all .py files were derived from LeoPy.leo.  c2py.py and leoCompare.py are tools that should be run from a Python interpreter.
 </t>
-<t tx="T425">Functional Commands and Features
+<t tx="T437">Functional Commands and Features
 
     Open, Save, Save As, Save To commands.
     Read @file Nodes command.
@@ -5499,7 +5768,7 @@ LeoPy.leo is the master source code file; all .py files were derived from LeoPy.
     Cut Node, Copy Node, Paste Node commands.
     Syntax coloring for Python only.
     The @color and @nocolor directives, but these are not inherited yet.</t>
-<t tx="T426">Unfinished Commands and Features:
+<t tx="T438">Unfinished Commands and Features:
 
 	Revert.
 	All Tangle and Untangle commands.
@@ -5534,7 +5803,7 @@ Notes:
 
 9. Headline text is sometimes obscured.
 </t>
-<t tx="T427">leo.py already feels less buggy than the wxWindows versions of Leo.  Rewriting Leo in Python and Tkinter has greatly improved the code. Further improvements are possible.  BTW, work began in earnest on this version of Leo in late October, 2001.  It's been a great month.
+<t tx="T439">leo.py already feels less buggy than the wxWindows versions of Leo.  Rewriting Leo in Python and Tkinter has greatly improved the code. Further improvements are possible.  BTW, work began in earnest on this version of Leo in late October, 2001.  It's been a great month.
 
 The following problems have resisted my initial attempts at solving them.  Any help from Tk experts would be appreciated:
 
@@ -5553,7 +5822,7 @@ The following problems have resisted my initial attempts at solving them.  Any h
 7. Changing the type of leo.py to .pyw doesn't seem to work.
 
 8. A message flash briefly on the screen when leo.py exits, too fast to read. These messages do not appear when invoking leo.py from the Python interpreter.  They probably would be visible in a Linux window.</t>
-<t tx="T428">It will be much easier to make such improvements to leo.py than to previous versions of Leo. Here is my list of new things to do:
+<t tx="T440">It will be much easier to make such improvements to leo.py than to previous versions of Leo. Here is my list of new things to do:
 
 1. Create "hyperlinks" from section references to section definitions.  This will happen in the next release.
 
@@ -5565,12 +5834,12 @@ The following problems have resisted my initial attempts at solving them.  Any h
 
 5. Expand Leo's file format to take advantage of the power of Tk text widgets.
 </t>
-<t tx="T429">Leo Borland version 2.6                             May 15, 2002
+<t tx="T441">Leo Borland version 2.6                             May 15, 2002
 
 This version fixes a bug that can cause errors while reading derived files.  Earlier versions do not ensure that clone indices in derived files are distinct.
 
 I recommend that all users of the Windows version of Leo upgrade to this version.</t>
-<t tx="T430">Leo Borland version 2.6                             March 4, 2002
+<t tx="T442">Leo Borland version 2.6                             March 4, 2002
 
 leo.py v2.0 and Borland Leo v2.6 are being released simultaneously.  I urge all users of Leo to upgrade to one or both of these versions.  This is an important milestone in Leo's history,  For the first time, leo.py (v2.0) and the Borland Leo (v2.6) are functionally identical.  In particular, their respective Tangle commands produce identical output.
 
@@ -5587,14 +5856,14 @@ Borland version 2.6 fixes major problems and contains numerous changes to make i
 5. Adds two very useful commands: Sort Siblings and Contract Parent.
 
 See the Children of this node for full details.</t>
-<t tx="T431">This version of Leo removes blanks from between sentinel lines in derived files.  This version of Leo is fully compatible with leo.py v2.0 in this regard.
+<t tx="T443">This version of Leo removes blanks from between sentinel lines in derived files.  This version of Leo is fully compatible with leo.py v2.0 in this regard.
 
 This is an upward compatible change in the format of derived files: Borland Leo v2.6 can read derived files from all previous versions of Leo, but previous versions of Leo can not read derived files without blanks lines.
 
 Removing blank lines requires a new kind of sentinel, the "verbatimAfterRef" sentinel.  This allows Leo to handle comments following section references that would otherwise be treated as sentinels themselves.  For example:
    
    &lt;&lt; section &gt;&gt; #+others</t>
-<t tx="T432">Whenever a node changes, Leo now ensures that all nodes cloned to it, and all ancestor @file nodes are marked dirty.  This is the cause of spurious read errors.
+<t tx="T444">Whenever a node changes, Leo now ensures that all nodes cloned to it, and all ancestor @file nodes are marked dirty.  This is the cause of spurious read errors.
 
 As a side effect, nodes now become dirty when they move.
 
@@ -5603,24 +5872,24 @@ This change was made in leo.py v0.8.
 It is also vital that @file nodes remain dirty until they are written without errors.  Otherwise, a Save command will succeed without warning, and a later read may cause the dreaded "clones have been cleared" message.
 
 This change was made in leo.py v1.0.</t>
-<t tx="T433">@c now works the same as @code.  This makes the syntax colorers agree with what the Tangle commands actually do.  Previously, the syntax colorers indicated that everything following an @c was code, while the Tangle commands placed everything following an @c in the doc part!</t>
-<t tx="T434">This version fixes two long-standing bugs:
+<t tx="T445">@c now works the same as @code.  This makes the syntax colorers agree with what the Tangle commands actually do.  Previously, the syntax colorers indicated that everything following an @c was code, while the Tangle commands placed everything following an @c in the doc part!</t>
+<t tx="T446">This version fixes two long-standing bugs:
 
 1. Untangle did not work properly for languages like Perl and Python that do not have block comments. 
 
 2. Untangle did not recognize @ on a line by itself as the start of a doc part.</t>
-<t tx="T435">The Tangle commands are now byte-for-byte compatible with leo.py 2.0.  Tangle outputs "optimized" leading whitespace just as leo.py does.  This can be important in Python programs.
+<t tx="T447">The Tangle commands are now byte-for-byte compatible with leo.py 2.0.  Tangle outputs "optimized" leading whitespace just as leo.py does.  This can be important in Python programs.
 
 All the Save commands now recompute clone indices just as in leo.py 2.0.</t>
-<t tx="T436">The "Show Context" checkbox in the Find Panel is presently non-functional.  (In leo.py it affects the messages produced by the Find All and Change All commands.)</t>
-<t tx="T437">Unlike leo.py, the Borland version of Leo can not ensure that saved outlines have .leo extensions.
+<t tx="T448">The "Show Context" checkbox in the Find Panel is presently non-functional.  (In leo.py it affects the messages produced by the Find All and Change All commands.)</t>
+<t tx="T449">Unlike leo.py, the Borland version of Leo can not ensure that saved outlines have .leo extensions.
 
 There are two problems:
 
 1.  The ensureExtension routine is called after the dialog closes.  If this routine changes the file name we could overwrite an existing file!
 
 2.  There appears to be problems with the Borland DefaultExt field.  Setting this field causes crashes.</t>
-<t tx="T438">This version fixes several serious bugs.  All users of Leo2 should upgrade to version 2.5 immediately.
+<t tx="T450">This version fixes several serious bugs.  All users of Leo2 should upgrade to version 2.5 immediately.
 
 1. Eliminated the ill-fated automatic updating feature.  This turns out to be very dangerous and disconcerting.  If one makes changes to the .leo file and does not save those changes, a later update could erase those unsaved changes!
 
@@ -5631,7 +5900,7 @@ There are two problems:
 4. Restored several parts of Leo2(cb).leo that were inadvertently erased due to earlier bugs.  In particular, the outlines for xbuf.c and xbuf.h have now been restored.
 
 One bug remains.  On Windows XP, the cursor is obscured in the Find/Change dialog when it is at the far left of the Find or Change text areas.  This may be a botch in the XP text control itself.  The solution would be to create a border in the text areas, and there is no obvious way to do this using the Borland classes.</t>
-<t tx="T439">Version 2.4 is a major improvement in Leo2.  I urge all users of Leo2 to upgrade to this version.  See the children of this node for full details.
+<t tx="T451">Version 2.4 is a major improvement in Leo2.  I urge all users of Leo2 to upgrade to this version.  See the children of this node for full details.
 
 The "old" Leo2 tried to save space by not writing all information in @file trees.  This was a serious mistake.  The "new" Leo2 saves all information in an outline to the .leo file, including all information in @file trees.
 Once again you may back up a project merely by backing up the project's .leo file.  There is no Archive command, and no need for one.  All .leo files are now safe archives.
@@ -5642,15 +5911,15 @@ The new Leo2 is much safer and more convenient to use than the old Leo2.  Error 
 
 Leo2 updates @file trees automatically when Leo2 is activated.  For example, suppose you change a derived file in another editor, say in an IDE.  Leo2 will update the @file tree when you switch to Leo, provided that you have saved the file in the IDE.  Warning: due to several apparent bugs in the Delphi code, this feature only works if the main Leo window is at least partially visible on the screen (!)
 </t>
-<t tx="T440">Version 2.4 fixes several bugs involving clones.
+<t tx="T452">Version 2.4 fixes several bugs involving clones.
 
 1. Version 2.4 rewrites clone indices when writing derived filed, so node sentinels accurately reflect the clone status of the node.  The node sentinel for the root node no longer contains the maximum clone index.  Leo2 clears the root's clone index on reading and writing so that the root node is not mistakenly joined so another node!
 
 2. Version 2.4 takes more care to recreate clone links properly when reading derived files.  A derived file can be read into a .leo file different from the .leo that wrote the derived file, so Leo2 makes sure that clone links are proper in the .leo file being opened.  A minor drawback: .leo files now are "big", so reading them is a little slower.
 
 Note: Clone links into @file trees work only if the .leo file is "in synch" with the files derived from the @file trees.  Clone links will break if the .leo file and derived files are not in synch.  Typically "backup" .leo files will be out-of-synch with present derived files, so it's best to use "backup" .leo files only in emergencies, for example to revert a project to a previous state.</t>
-<t tx="T441">The "old" Leo2 tried to save space by not writing all information in @file trees.  This was a serious mistake.  The "new" Leo2 saves all information in an outline to the .leo file, including all information in @file trees.  It is once again possible to back up a project merely by backing up the project's .leo file.</t>
-<t tx="T442">The archive command was a backup disaster waiting to happen.  It has been replaced by the following four file commands are located in the File:Read/Write submenu.
+<t tx="T453">The "old" Leo2 tried to save space by not writing all information in @file trees.  This was a serious mistake.  The "new" Leo2 saves all information in an outline to the .leo file, including all information in @file trees.  It is once again possible to back up a project merely by backing up the project's .leo file.</t>
+<t tx="T454">The archive command was a backup disaster waiting to happen.  It has been replaced by the following four file commands are located in the File:Read/Write submenu.
 
 Read Outline Only: reads an outline using only the .leo file, not any files derived from @file nodes.  This command is useful for reverting a project to a previously saved state.
 
@@ -5659,10 +5928,10 @@ Read @file Nodes: updates all @file nodes in an outline.  This ensures that the 
 Write Outline Only: saves an outline without writing any @file trees.  Useful for inserting an @file node into an outline without modifying a derived file with the same name.
 
 Write @file Nodes: forces an update of all @file trees.  Surprisingly useful.</t>
-<t tx="T443">Leo2 updates @file trees automatically when Leo2 is activated.  For example, suppose you change a derived file in another editor, say in an IDE.  Leo2 will update the @file tree when you switch to Leo, provided that you have saved the file in the IDE.
+<t tx="T455">Leo2 updates @file trees automatically when Leo2 is activated.  For example, suppose you change a derived file in another editor, say in an IDE.  Leo2 will update the @file tree when you switch to Leo, provided that you have saved the file in the IDE.
 
 Warning: due to several apparent bugs in the Delphi code, this feature only works if the main Leo window is at least partially visible on the screen (!)</t>
-<t tx="T444">Revised for version 2.4
+<t tx="T456">Revised for version 2.4
 
 Loading and saving .leo files usually keeps the .leo file and derived files "in synch".  However, if you create backup .leo files, it can easily happen that the structure of @file nodes in the backup .leo files no longer matches that structure in the derive files.  Leo2 will detect this condition the next time you next open the old .leo file.  When that happens, Leo2 discards the entire out-of-synch @file tree, and recreates it solely using the derived file.  In the process all marks and clone links from outside the file are lost. Leo2 issues the messages:
 
@@ -5687,20 +5956,20 @@ No error recovery is attempted when automatically updating @file trees.  If an e
 	
 We don't attempt error recovery because error recovery would clear clone links.  For example, suppose we are editing a .leo file, and for some reason we also edit a derived file _without_ saving the .leo file.  Now the files could be out of synch!  So it is best not to press on with an automatic update.
 	</t>
-<t tx="T445">Revised for version 2.4
+<t tx="T457">Revised for version 2.4
 
 If Leo2 detects orphan or ignored nodes while writing an @file node it saves all information in the @file tree in the outline (.leo) file.  No information is lost.  When the .leo file is read again Leo2 will load the information in the @file tree from the .leo file, not the derived file.
 
 As a reminder, Leo2 marks the erroneous @file node as dirty so that saving the .leo file will attempt to rewrite the @file node.  Version 2.4 no longer marks the @file node as "stuck on dirty".  If you save the .leo file the dirty mark will be cleared.  However, the @file node will be dirty every time the file is read until all errors are corrected.
 </t>
-<t tx="T446">@file trees are less flexible than @root trees:
+<t tx="T458">@file trees are less flexible than @root trees:
 
 1.  You can not use section definitions in more than one file.  For example, you can't define declarations in one file to be used in another file.  If you need all the features of noweb you must use @root trees.
 
 2. @file trees use no escape conventions whatever.  A code part in an @file tree contains a section reference if &lt;&lt; precedes &gt;&gt; on the line, regardless of whether &lt;&lt; or &gt;&gt; are contained in strings or comments.  In practice, such "false references" occur infrequently, and the workaround is simply to split the offending line.  Moreover, noweb's escape conventions (@&lt;&lt; and @&gt;&gt;) cause problems in @root trees, so this "drawback" is very minor.
 
 3. Clone links into @file trees work only if the .leo file is "in synch" with the files derived from the @file trees.  In particular, backup .leo files will usually be out of synch with derived files.  Clone links will break otherwise.  To recover from such errors, simply use the "Read Outline Only" command.</t>
-<t tx="T447">Note: 10/19/01: I recommend that all users upgrade to version 2.4.  There are some serious problems with version 2.3.
+<t tx="T459">Note: 10/19/01: I recommend that all users upgrade to version 2.4.  There are some serious problems with version 2.3.
 
 This version of Leo contains some significant improvements.  See the children of this node for details:
 
@@ -5711,7 +5980,7 @@ This version of Leo contains some significant improvements.  See the children of
 3. Fixed several bugs involving the Find command.
 
 4. A new Archive command saves an entire outline (including all @file trees) to a .leo file.  Use this command with caution.  Loading and then saving a .leo file created with the Archive command will revert an entire project to the state it had when the archived .leo file was created.</t>
-<t tx="T448">The @first directive allows you to place lines at the very start of files derived from @file nodes. For example, the body text of @file spam.py might be:
+<t tx="T460">The @first directive allows you to place lines at the very start of files derived from @file nodes. For example, the body text of @file spam.py might be:
 
 @first #! /usr/bin/env python
 
@@ -5723,20 +5992,20 @@ The body text of @file foo.perl might be:
 
 @first #! /usr/bin/env python
 @first # more comments.</t>
-<t tx="T449">The Archive command writes all nodes of an outline to a .leo file, including all parts of @file trees.  All @file trees are marked in such a way that when the archived .leo file is read 1) all @file trees will be restored from the archived outline rather from derived files and 2) all @file trees will be marked dirty so that when the archived .leo file is written all @file nodes will be updated.
+<t tx="T461">The Archive command writes all nodes of an outline to a .leo file, including all parts of @file trees.  All @file trees are marked in such a way that when the archived .leo file is read 1) all @file trees will be restored from the archived outline rather from derived files and 2) all @file trees will be marked dirty so that when the archived .leo file is written all @file nodes will be updated.
 
 Use the Archive command (and the files written by it) with caution: loading and then saving an archived .leo file will back up an entire project to its state when the archive was originally written!</t>
-<t tx="T450">Added support for @c in syntax colorers for Python, Pascal, Perl, Java and HTML.</t>
-<t tx="T451">Fixed a bug in the Change, Then Find command.  The Change, Then Find command would rescan the newly changed text if the "change text" contained the "find text" preceded by other text of length greater or equal to the length of the original "find text".
+<t tx="T462">Added support for @c in syntax colorers for Python, Pascal, Perl, Java and HTML.</t>
+<t tx="T463">Fixed a bug in the Change, Then Find command.  The Change, Then Find command would rescan the newly changed text if the "change text" contained the "find text" preceded by other text of length greater or equal to the length of the original "find text".
 
 For example, changing "blah" to "const blah" would result in rescanning the newly inserted "blah".  This would cause the "Change All" command to hang.
 
 The old code advanced the search point by the length of the "find text."  The new code advances the insertion point by the length of the "change text".
 
 Fixed the Find/Change panel: some captions were cut off.</t>
-<t tx="T452">@file nodes are now marked dirty whenever any change is made in the @file tree, including changes made as the result of changing cloned nodes outside the @file tree.</t>
-<t tx="T453">Made the log window part of the Leo window.  Having the log be part of the leo window is very convenient.</t>
-<t tx="T454">Leo2 readme file
+<t tx="T464">@file nodes are now marked dirty whenever any change is made in the @file tree, including changes made as the result of changing cloned nodes outside the @file tree.</t>
+<t tx="T465">Made the log window part of the Leo window.  Having the log be part of the leo window is very convenient.</t>
+<t tx="T466">Leo2 readme file
 Borland version 2.2, 9/16/01
 
 This version fixes several bugs in Leo2:
@@ -5757,15 +6026,15 @@ While fixing this bug I also improved error and warning messages relating to rea
 4. Added Write @file Nodes command.  The command writes all @file nodes in the selected tree, regardless of whether they have been changed.
 
 5. Made the commands in the Main Leo2 window functional.</t>
-<t tx="T455">Version 2.1 is the first public release of Leo2.  This version appears stable, and should be used with caution.
+<t tx="T467">Version 2.1 is the first public release of Leo2.  This version appears stable, and should be used with caution.
 
 The major feature of Leo2 is that tangling and untangling happen automatically for all code derived from @file nodes.  
 
 Remember to back up all files derived from @file nodes; such files are original source files!  It is no longer possible to back up an entire project by backing up a single .leo file.</t>
-<t tx="T456">Version 1.15 can read @file trees.  Leo warns when reading @file files, and changing @file trees in Leo v1.15 is not recommended.</t>
-<t tx="T457">This version corrects a problem with double-clicking Leo icons under Windows Me.  You may now launch Leo by double-click the icon for any .leo file and you may open any .leo file by double-clicking on it.</t>
-<t tx="T458">This version of Leo corrects a problem with how whitespace was handled in @silent mode.</t>
-<t tx="T459">Barring serious bugs, version 1.12 is likely to be the last Borland/Windows version of Leo for a while.  The wxWindows versions of Leo are usable enough to justify putting all further work into them.
+<t tx="T468">Version 1.15 can read @file trees.  Leo warns when reading @file files, and changing @file trees in Leo v1.15 is not recommended.</t>
+<t tx="T469">This version corrects a problem with double-clicking Leo icons under Windows Me.  You may now launch Leo by double-click the icon for any .leo file and you may open any .leo file by double-clicking on it.</t>
+<t tx="T470">This version of Leo corrects a problem with how whitespace was handled in @silent mode.</t>
+<t tx="T471">Barring serious bugs, version 1.12 is likely to be the last Borland/Windows version of Leo for a while.  The wxWindows versions of Leo are usable enough to justify putting all further work into them.
 
 There are several important improvements in version 1.12:
 
@@ -5781,7 +6050,7 @@ In the derived file, expansions of the sections will be placed on the lines in w
 This "verbatim" expansion only happens in @silent mode, so these kinds of derived files can not be Untangled.
 
 3. Tangle now reports errors more fully and less redundantly.  Errors involving missing or erroneous path names (specified in @root directives, @path directives or the Preferences Panel) are more specific.  These errors are reported only once per Tangle command, and these errors terminate the Tangle command immediately.  This is wise; we don't want to write files to the wrong directory!  Finally, Tangle no longer prints the actual text of a section when giving the "possibly duplicate section definition" error.  This should be helpful: no longer are huge error messages generated.  It should be easy enough to find the relevant section definitions using Leo's find command.</t>
-<t tx="T460">This version corrects a problem that can cause the Import CWEB Files command to hang in an endless loop.
+<t tx="T472">This version corrects a problem that can cause the Import CWEB Files command to hang in an endless loop.
 
 This file also contains improved documentation (see the children of this node) in two sections:
 
@@ -5789,7 +6058,7 @@ This file also contains improved documentation (see the children of this node) i
 
 2.  Added a warning about using Untangle to update cloned nodes.
 (See the last paragraph of the node.)</t>
-<t tx="T461">Sections can be defined in several parts in two ways:
+<t tx="T473">Sections can be defined in several parts in two ways:
 
 1.  Using &lt;&lt; section name &gt;&gt;= in several places with the same section name.
 
@@ -5800,7 +6069,7 @@ As a precaution against mistakenly defining a section in more than one place, it
 This error may always be eliminated by using &lt;&lt; section name &gt;&gt;= instead of @code.
 	
 </t>
-<t tx="T462">The Untangle, Untangle All and Untangle Marked commands are the reverse of the corresponding Tangle commands.  They update an outline based on changes made to one or more derived files.  These are exceptionally useful commands.
+<t tx="T474">The Untangle, Untangle All and Untangle Marked commands are the reverse of the corresponding Tangle commands.  They update an outline based on changes made to one or more derived files.  These are exceptionally useful commands.
 
 For example, suppose you create a new part of the outline and Tangle it for the first time.  When you compile the resulting derived files for the first time, you are likely to get many syntax errors.  You could fix those errors in the outline and Tangle the outline again, but there is a much easier way:  you fix the errors in the derived files using the compiler's editor, then run the untangle command on the part of the outline that created the derived file.  The Untangle command updates the selected outline to match the changes in the derived files.  It's as simple as that.  By the way, the Untangle command marks all the nodes in the outline that it updates, and you can examine all such nodes with the Go To Next Marked command in the Outline menu.
 
@@ -5811,7 +6080,7 @@ Untangle never changes the structure of an outline;  it never inserts, deletes o
 If you change the section name in a sentinel line Untangle will not update the code in the outline (with the old name) that generated the renamed section.  Untangle now warns about sections that appear in a derived file but not in the outline.  Untangle has no trouble with changed section references in derived files; it is only changed sentinel lines that cause problems.
 
 Cloned nodes that generate code in several files may cause problems for Untangle if not all the code is changed the same way in derived files.  If Untangle is run separately on these derived files, Untangle will update all cloned nodes each time it is run, so only the code in the last Untangle run will take effect.  Therefore, the only reliable way to update text in cloned nodes is to make the change in the .leo file rather than the derived files.</t>
-<t tx="T463">Version 1.10 incorporates the following changes:
+<t tx="T475">Version 1.10 incorporates the following changes:
 
 1. The Untangle command no longer updates @doc chunks under any circumstances.  This makes Untangle safe to use when the "Tangle outputs doc chunks" preferences is not selected.  In previous versions the Untangle command would delete all @doc chunks in the outline when a derived file had been Tangled without "Tangle outputs doc chunks".
 
@@ -5820,22 +6089,22 @@ The new version of Untangle is experimental; only one line of code has been adde
 2. The shortcut for the Execute Script command has been changed from Alt-E to Shift-Alt-E to avoid conflicting with the shortcut that brings up the edit menu.
 
 </t>
-<t tx="T464">Version 1.9 contains several improvements that make Leo more Python-friendly:
+<t tx="T476">Version 1.9 contains several improvements that make Leo more Python-friendly:
 
 1. The Execute Script command (Alt-E) in the Edit menu allows you to execute Python scripts directly from body text.
 
 2. Several small changes make the Python window significantly easier to use.
 
 Also, considerable reference (study-only) code has been removed from leo(CB).leo.</t>
-<t tx="T465">It is now possible to execute any Python script directly from any body text.  Just select the script in the body text (including a trailing newline) and use the Execute Script (Alt-E) command from the edit menu.  The script is copied to the Python window and executed as usual.
+<t tx="T477">It is now possible to execute any Python script directly from any body text.  Just select the script in the body text (including a trailing newline) and use the Execute Script (Alt-E) command from the edit menu.  The script is copied to the Python window and executed as usual.
 </t>
-<t tx="T466">Several small changes make the Python window significantly easier to use:
+<t tx="T478">Several small changes make the Python window significantly easier to use:
 
 1. The paste command now works in the Python window whenever the Python window is visible.  This fixes a bug that required a mouse click in either pane before paste would work.
 
 2. It is now possible to execute scripts multi-line scripts pasted into the input pane.  Other changes make it easier (or possible) to terminate continued code.</t>
-<t tx="T467">Fixed a crasher that makes it impossible to tangle outlines containing doc parts in languages like HTML that have no single-line comment delimiter.</t>
-<t tx="T468">Leo v 1.7 accepts a slightly more general file format so that it can read XML generated from external XML tools.  Leo v 1.7 can read all previous .leo files.  Leo's Save commands remain unchanged.
+<t tx="T479">Fixed a crasher that makes it impossible to tangle outlines containing doc parts in languages like HTML that have no single-line comment delimiter.</t>
+<t tx="T480">Leo v 1.7 accepts a slightly more general file format so that it can read XML generated from external XML tools.  Leo v 1.7 can read all previous .leo files.  Leo's Save commands remain unchanged.
 
 Leo still only understands Leo files.  However, Leo now understands a slightly generalized form of Leo files. Specifically:
 
@@ -5843,10 +6112,10 @@ Leo still only understands Leo files.  However, Leo now understands a slightly g
 
 2.  Leo will now accept &lt;tag/&gt; instead of &lt;tag&gt;stuff&lt;/tag&gt; when "stuff" is empty.
 </t>
-<t tx="T469">This version corrects a small bug: the wrong text is selected when the syntax colorer changes.  This is a cosmetic bug only; the selected text will not be replaced when further typing occurs.
+<t tx="T481">This version corrects a small bug: the wrong text is selected when the syntax colorer changes.  This is a cosmetic bug only; the selected text will not be replaced when further typing occurs.
 
 Unless major bugs are found, this will be the last version of Leo for several months.  I want to freeze the code so that I can work on the wxWindows version.</t>
-<t tx="T470">This version is a major milestone in Leo's code.  Improvements were made throughout Leo's code in an attempt to correct an extremely hard-to-find bug that can cause data in body panes to be lost.  Only time will tell if the bug has, in fact, finally been eradicated.
+<t tx="T482">This version is a major milestone in Leo's code.  Improvements were made throughout Leo's code in an attempt to correct an extremely hard-to-find bug that can cause data in body panes to be lost.  Only time will tell if the bug has, in fact, finally been eradicated.
 
 This version also corrects a minor bug; icons in a newly cloned tree were not always drawn properly.  Also, the currently selected headline no longer changes if you click on the + or - icons that expand and contract headlines.  This new behavior is a result of simplifying the event handlers; I won't consider changing this behavior until it is clear that the data loss bug has finally been fixed.
 
@@ -5871,7 +6140,7 @@ Created a new updateSyntaxColorer routine, which is called when moving a node or
 4.  Added asserts to guard against silent data loss, unexpected calls to event handlers, and mismatches between vnodes and their commanders.
 
 6.  Added the mCommands data member to vnodes.  This member ensures that the correct commander is returned by vnode::commands().  The old code got the commander by looking for the current window.  Conceivably this could have caused the wrong commander to be used in some cases.</t>
-<t tx="T471">This version adds the following features:
+<t tx="T483">This version adds the following features:
 
 1. Outline to noweb command.
 2. Python scripts for finding and changing text in Leo outlines.
@@ -5883,11 +6152,11 @@ This may be the last version of Leo for a while; I am about to start work on a c
 Edward K. Ream
 September 19, 2000
 </t>
-<t tx="T472">The "Outline To Noweb" command converts the selected outline to a flat file containing noweb text.  The name of the root section is taken from the @root directive.  &lt;&lt;*&gt;&gt; is used if the @root directive is not followed by any file name.</t>
-<t tx="T473">Leo's Python scripting does not support Leo's Find and Replace commands directly because these commands are interactive.  Calling these commands from a Python script would be clumsy.
+<t tx="T484">The "Outline To Noweb" command converts the selected outline to a flat file containing noweb text.  The name of the root section is taken from the @root directive.  &lt;&lt;*&gt;&gt; is used if the @root directive is not followed by any file name.</t>
+<t tx="T485">Leo's Python scripting does not support Leo's Find and Replace commands directly because these commands are interactive.  Calling these commands from a Python script would be clumsy.
 
 Instead you can use the new find and change scripts to search and replace text.  These scripts use Python's powerful re module.</t>
-<t tx="T474">The commands() method has been added to the Python vnode class.
+<t tx="T486">The commands() method has been added to the Python vnode class.
 
 c=v.commands()
 
@@ -5895,8 +6164,8 @@ This method returns the commander for the window containing v.  This method can 
 
 	v.commands().synchNode()
 	v.commands().Repaint()</t>
-<t tx="T475">This version corrects a problem with the Save As command;  it worked only once!  That is, after the Save As command was executed the window's title would change, but a later Save command would change the file specified before the Save As command was executed.</t>
-<t tx="T476">This version of Leo introduces Python scripting.  This is a major new addition to Leo.  See the new Chapter 7 of this documentation.  Python support still has rough edges; the next release will be cleaner.  Any suggestions for improvements to Leo's support for Python would be appreciated.
+<t tx="T487">This version corrects a problem with the Save As command;  it worked only once!  That is, after the Save As command was executed the window's title would change, but a later Save command would change the file specified before the Save As command was executed.</t>
+<t tx="T488">This version of Leo introduces Python scripting.  This is a major new addition to Leo.  See the new Chapter 7 of this documentation.  Python support still has rough edges; the next release will be cleaner.  Any suggestions for improvements to Leo's support for Python would be appreciated.
 
 Alt-V now toggles the "View All Characters" option.  This is especially useful when editing Python code.
 
@@ -5915,58 +6184,58 @@ Got the Import command for Python working.  I found a bug in Tangle: in @silent 
 The Untangle is now disabled when in @silent mode.  Nothing good can happen in that case!
 
 Fixed a minor problem with the @path directive:  ff a _new_ file has not been saved we issue a warning, not an error if no path has been specified.  We can't really test the @root command for a path because the @root command may be found much later.  Fortunately, this warning will happen very rarely.  It's important, however, to warn that the file may be written to the standard directory if no path is specified in the @root command.  Otherwise, Leo's behavior would be quite confusing.</t>
-<t tx="T477">This version corrects an oversight in the Flatten Outline command.  In order to recreate the outline structure it is not enough to know whether each node has children; you must also know how many children each node has.
+<t tx="T489">This version corrects an oversight in the Flatten Outline command.  In order to recreate the outline structure it is not enough to know whether each node has children; you must also know how many children each node has.
 
 The new version of the Flatten Outline command represents the outline the same way the Export MORE Text does:  a child headline is indented one tab more than its parent headline.</t>
-<t tx="T478">The Tangle commands now examine all nodes, including cloned nodes that have previously been visited.  Previously, such nodes were skipped during tangling.  The new logic allows clones to represent code common to more than one unit. You can always insert an @ignore directive in an ancestor of a cloned node to prevent the node from being processed during tangling.
+<t tx="T490">The Tangle commands now examine all nodes, including cloned nodes that have previously been visited.  Previously, such nodes were skipped during tangling.  The new logic allows clones to represent code common to more than one unit. You can always insert an @ignore directive in an ancestor of a cloned node to prevent the node from being processed during tangling.
 </t>
-<t tx="T479">Version 0.19 fixes some bugs and eliminates some problematic features of Leo.  Also, the role of CWEB mode has been documented more thoroughly.
+<t tx="T491">Version 0.19 fixes some bugs and eliminates some problematic features of Leo.  Also, the role of CWEB mode has been documented more thoroughly.
 
 The PC version of PC is feature complete.  I will release version 1.0 after people have played with this version for a while.
 
 As always, I'll be happy to fix bugs or add urgently needed features.
 </t>
-<t tx="T480">Fixed a bug that could result in Tangle outputting derived files in the wrong directory.
+<t tx="T492">Fixed a bug that could result in Tangle outputting derived files in the wrong directory.
 
 Tangle and Untangle now set the current directory using @path directive if it exists, otherwise the directory specified in the Preferences panel if it exists, otherwise the directory set by the Load or Save commands if it exists.  (The Save As and Save To never alter this directory.) Finally, a check to see if the @root directive specifies a full path.  If so, the current directory is not changed.
 
 If none of these directories exists an error is raised so that no Tangling or Untangling is done.  This error can only occur if Tangling or Untangling a file that has just been created by the New command and never saved with the Save command.</t>
-<t tx="T481">Added the @language html, @language perl and @language perlpod directives, and added HTML, Perl and Perl + POD items in the Preferences panel.
+<t tx="T493">Added the @language html, @language perl and @language perlpod directives, and added HTML, Perl and Perl + POD items in the Preferences panel.
 
 The HTML script is rudimentary at present.  Suggestions for improvement are welcome.</t>
-<t tx="T482">The @cweb and @noweb commands are no longer functional.  The new @language cweb directive replaces @cweb, and the other @language directives effectively replace @noweb.  There is an new CWEB option in the Preference panel.
+<t tx="T494">The @cweb and @noweb commands are no longer functional.  The new @language cweb directive replaces @cweb, and the other @language directives effectively replace @noweb.  There is an new CWEB option in the Preference panel.
 </t>
-<t tx="T483">Leo now parses the @language directive as you type, so if you change the language specified by the @language directive you will see the effect immediately.
+<t tx="T495">Leo now parses the @language directive as you type, so if you change the language specified by the @language directive you will see the effect immediately.
 
 There is no longer a limit of 6 languages that can be syntax colored. Let me know if you would like Leo to support another language.</t>
-<t tx="T484">The Print command is now much more flexible and convenient: it will print any node and all its descendents, whether or not the node contains @unit, @root or @ignore directives.  
+<t tx="T496">The Print command is now much more flexible and convenient: it will print any node and all its descendents, whether or not the node contains @unit, @root or @ignore directives.  
 </t>
-<t tx="T485">Modified massage_block_comment so that it converts the first of a series of newlines to a blank and deletes the rest; Untangle no longer mangles modified @doc sections.
+<t tx="T497">Modified massage_block_comment so that it converts the first of a series of newlines to a blank and deletes the rest; Untangle no longer mangles modified @doc sections.
 
 A more complete solution would be for Tangle to insert a flag for inserted newlines ( say backslash newline) so that Untangle could know which newlines to remove.  I'd like to wait until all Tangle/Untangle code is converted to C++ before doing a more thorough job.
 </t>
-<t tx="T486">Leo no longer supports clone _windows_.  Cloned outlines, however, will remain with Leo forever.  
+<t tx="T498">Leo no longer supports clone _windows_.  Cloned outlines, however, will remain with Leo forever.  
 
 Clone windows were never very useful and were buggy.  Eliminating clone windows has made it possible to handle events more smoothly and powerfully.</t>
-<t tx="T487">The Extended Noweb Syntax option in the Preferences panel is gone.  This option has always been deprecated.</t>
-<t tx="T488">Version 0.18 changes the file format in an upward compatible way.  That is, version 0.18 can read all previous versions of Leo files, but you must have version 0.18 of Leo to read files written by version 0.18.</t>
-<t tx="T489">Fixed a bug that caused @doc section not to be output properly for those languages like Fortran and Perl that do not have block comments.</t>
-<t tx="T490">The @noheader directive suppresses the header line normal written by Tangle at the start of each derived file.  The @noheader directive is especially useful in Perl.  Also added the corresponding "Tangle outputs header line" checkbox in the preferences panel.  This checkbox sets the default which may be over-ridden by the @header or @noheader directives.</t>
-<t tx="T491">@language fortran specifies that comments start with C.
+<t tx="T499">The Extended Noweb Syntax option in the Preferences panel is gone.  This option has always been deprecated.</t>
+<t tx="T500">Version 0.18 changes the file format in an upward compatible way.  That is, version 0.18 can read all previous versions of Leo files, but you must have version 0.18 of Leo to read files written by version 0.18.</t>
+<t tx="T501">Fixed a bug that caused @doc section not to be output properly for those languages like Fortran and Perl that do not have block comments.</t>
+<t tx="T502">The @noheader directive suppresses the header line normal written by Tangle at the start of each derived file.  The @noheader directive is especially useful in Perl.  Also added the corresponding "Tangle outputs header line" checkbox in the preferences panel.  This checkbox sets the default which may be over-ridden by the @header or @noheader directives.</t>
+<t tx="T503">@language fortran specifies that comments start with C.
 @language fortran90 specifies that comments start with !.</t>
-<t tx="T492">@language perlpod specifies the Perl language with block comments being delimited by =pod and =cut</t>
-<t tx="T493">Version 0.17 fixes some bugs and puts some finishing touches on Leo.
+<t tx="T504">@language perlpod specifies the Perl language with block comments being delimited by =pod and =cut</t>
+<t tx="T505">Version 0.17 fixes some bugs and puts some finishing touches on Leo.
 
 The Borland C++ Builder version of Leo is now feature complete; there are no further items on the to-do list.  Yes, I'll be happy to fix bugs or add urgently needed features.
 </t>
-<t tx="T494">Tangle and Untangle now treat &lt;&lt;*&gt;&gt;= as a synonym for @root filename if the _headline_ starts with text of the form @root filename.  This convention allows full compatibility with noweb.
+<t tx="T506">Tangle and Untangle now treat &lt;&lt;*&gt;&gt;= as a synonym for @root filename if the _headline_ starts with text of the form @root filename.  This convention allows full compatibility with noweb.
 </t>
-<t tx="T495">The @path, @tabwidth and @pagewidth directives are new.
+<t tx="T507">The @path, @tabwidth and @pagewidth directives are new.
 
 These directives allow the user to override the defaults specified in the Prefs panel on a file-by-file basis.   For the first time, every option in the Preferences panel may be overridden by a directive.</t>
-<t tx="T496">I fixed several severe bugs involving CWEB mode.  It is now possible to tangle and untangle files when in CWEB mode, though CWEB mode has still not been tested thoroughly.</t>
-<t tx="T497">Reduced the default size of Leo windows so that they can be more easily resized on a small screen.</t>
-<t tx="T498">Version 0.16 is a significant new release of Leo.  All users of the PC version of Leo should upgrade to version 0.16.
+<t tx="T508">I fixed several severe bugs involving CWEB mode.  It is now possible to tangle and untangle files when in CWEB mode, though CWEB mode has still not been tested thoroughly.</t>
+<t tx="T509">Reduced the default size of Leo windows so that they can be more easily resized on a small screen.</t>
+<t tx="T510">Version 0.16 is a significant new release of Leo.  All users of the PC version of Leo should upgrade to version 0.16.
 
 Significant changes have been made to Tangle and Untangle:  these commands should now be able to handle code in almost any language.  The new @language directive specifies the comment and string conventions used when Tangling and Untangling.
 
@@ -5977,7 +6246,7 @@ The Import Files command now handles Pascal, Python and Java files in addition t
 Besides the major changes a number of bug fixes and other minor features have been added.
 
 Acknowledgements:  Thanks to Zak Greant for numerous suggestions and bug fixes, and to Garold Johnson for improving this file.</t>
-<t tx="T499">Version 0.16 fixes all bugs mentioned on the SourceForge site as of April 27, 2000.  These bugs involved problems with
+<t tx="T511">Version 0.16 fixes all bugs mentioned on the SourceForge site as of April 27, 2000.  These bugs involved problems with
 
 @comment &lt;empty&gt;
 @comment 2 delims
@@ -5987,10 +6256,10 @@ Crashes while Tangling
 Problems with Untangle with languages other than C.
 
 Later sections discuss some of these in more detail.</t>
-<t tx="T500">Version 0.16 fixes a crasher related to changing windows.
+<t tx="T512">Version 0.16 fixes a crasher related to changing windows.
 
 This _may_ have been the source of crashes when cutting and pasting outlines, but don't count on it!  Make sure you back up files _before_ cutting and pasting outlines!</t>
-<t tx="T501">The @language directive is new.  The @language directive actually specifies the comment delimiters and string types used by the Tangle and Untangle.
+<t tx="T513">The @language directive is new.  The @language directive actually specifies the comment delimiters and string types used by the Tangle and Untangle.
 
 The form of this directive is
 
@@ -6007,31 +6276,31 @@ but the following is invalid:
 @LANGUAGE html
 
 The @comment directive is now officially deprecated: you should use the @language directive whenever possible.  At present Untangle will not process an @root or @unit node if an @comment directive is in effect.  Why?  Because Untangle can't be sure of properly parsing a derived file if the language of the derived file isn't known.  It might be possible to assume some defaults in this case, but that is not done at present and is not a high priority.</t>
-<t tx="T502">Scanning for @directives is now much faster.  As a result, the @language and @comment directives will be recognized anywhere in an outline.  This means
+<t tx="T514">Scanning for @directives is now much faster.  As a result, the @language and @comment directives will be recognized anywhere in an outline.  This means
 
 1) child nodes will "inherit" @language or @comment directives from ancestors unless over-ridden in the child node and
 
 2) @language and @comment directives need not be placed in @unit or @root nodes.  This is a much more intuitive and powerful way of handling these directives.</t>
-<t tx="T503">Key parts of the untangle logic have been generalized so that they can handle essentially any computer language. The following routines no longer have any C-specific code and have essentially been completely rewritten:
+<t tx="T515">Key parts of the untangle logic have been generalized so that they can handle essentially any computer language. The following routines no longer have any C-specific code and have essentially been completely rewritten:
 
 scan_derived_file (formerly scan_c_file)
 forgiving_compare (formerly c_compare)
 
 Tangle now will properly output comments using the present comment delimiters as specified by either the @language directive or the @comment directive.  As mentioned before, you should use @language instead of @comment wherever possible.</t>
-<t tx="T504">As a side effect of the Untangle command, Leo now removes trailing blank lines from the body text of all nodes being untangled.  This finally crushes a long-standing bug.  If the body text ends with one or more blank lines, the altered body text contains exactly one trailing newline.
+<t tx="T516">As a side effect of the Untangle command, Leo now removes trailing blank lines from the body text of all nodes being untangled.  This finally crushes a long-standing bug.  If the body text ends with one or more blank lines, the altered body text contains exactly one trailing newline.
 
 Nodes that are altered in this way are not marked, nor is the file-changed mark set.  This seems to be the most appropriate action to take:  it would be confusing to prompt the user to save a changed file if the only changes involve trailing whitespace.</t>
-<t tx="T505">The @verbose, @terse and @silent directives determine how Tangle outputs comments.  When @verbose is in effect Tangle outputs all comments.  When @terse is in effect, Tangle outputs only those comments necessary for Untangle to work.  When @silent is in effect Tangle no additional comments.  Note: comments written by the user in code sections are always output: these directives control only:
+<t tx="T517">The @verbose, @terse and @silent directives determine how Tangle outputs comments.  When @verbose is in effect Tangle outputs all comments.  When @terse is in effect, Tangle outputs only those comments necessary for Untangle to work.  When @silent is in effect Tangle no additional comments.  Note: comments written by the user in code sections are always output: these directives control only:
 
 1.  The comments containing doc chunks and
 2.  Sentinel comments that delimit the beginning and end of code chunks.
 
 @verbose is the default.  If more than one of these directives appear in the same body text the "most verbose" of these options will be in effect.</t>
-<t tx="T506">At long last Leo has a useful notion of default directory.  By default, the default directory is the directory containing the .leo file.  This may be over-ridden using the "Tangle Default Directory" option in the Preferences panel.
+<t tx="T518">At long last Leo has a useful notion of default directory.  By default, the default directory is the directory containing the .leo file.  This may be over-ridden using the "Tangle Default Directory" option in the Preferences panel.
 
 The default directory is used whenever a file name in an @root directive contains no path component.
 </t>
-<t tx="T507">The Import Files command looks at the file extension to see how it should handle files.
+<t tx="T519">The Import Files command looks at the file extension to see how it should handle files.
 
 Extension	Language
 .c			C
@@ -6043,13 +6312,13 @@ Extension	Language
 If the extension is not one of the above the Import files commands merely puts the entire file into the body text of a single node.
 
 The Import Files command probably needs quite a bit of work.</t>
-<t tx="T508">Control-T now changes the pane that is currently active.  If the outline pane was active, the body pane becomes active, and vice versa.  This command makes it possible to switch between panes without using the mouse.</t>
-<t tx="T509">In previous versions of leo.leo I used slash instead of backslash as path delimiters.  This should never have worked, but somehow it did.  The present code uses the correct backslash in all @root directives.</t>
-<t tx="T510">Many improvements were made to the code.  See the diary section of leo.leo if you are interested.  In particular, I created args.h and args.c to define arguments.  This cleans up the code quite a bit.</t>
-<t tx="T511">Changed Tangle and Untangle so that empty section names like &lt;&lt; &gt;&gt; and &lt;&lt; &gt;&gt;= are treated as ordinary characters.  No warning is issued, which is debatable.</t>
-<t tx="T512">As mentioned in the main documentation, you must not change sentinel lines in derived files in any way.  In particular, if you change the section name in a sentinel line Untangle will not update the code in the outline (with the old name) that generated the renamed section.  Untangle now warns about sections that appear in a derived file but not in the outline.  Untangle has no trouble with changed section references in derived files; it is only changed sentinel lines that cause problems.
+<t tx="T520">Control-T now changes the pane that is currently active.  If the outline pane was active, the body pane becomes active, and vice versa.  This command makes it possible to switch between panes without using the mouse.</t>
+<t tx="T521">In previous versions of leo.leo I used slash instead of backslash as path delimiters.  This should never have worked, but somehow it did.  The present code uses the correct backslash in all @root directives.</t>
+<t tx="T522">Many improvements were made to the code.  See the diary section of leo.leo if you are interested.  In particular, I created args.h and args.c to define arguments.  This cleans up the code quite a bit.</t>
+<t tx="T523">Changed Tangle and Untangle so that empty section names like &lt;&lt; &gt;&gt; and &lt;&lt; &gt;&gt;= are treated as ordinary characters.  No warning is issued, which is debatable.</t>
+<t tx="T524">As mentioned in the main documentation, you must not change sentinel lines in derived files in any way.  In particular, if you change the section name in a sentinel line Untangle will not update the code in the outline (with the old name) that generated the renamed section.  Untangle now warns about sections that appear in a derived file but not in the outline.  Untangle has no trouble with changed section references in derived files; it is only changed sentinel lines that cause problems.
 </t>
-<t tx="T513">Leo is being used to develop HTML files for web sites.  In this context it is natural to define sections that are shared between files.  Don't expect Untangle to update such sections if you make changes to them in derived files.  The natural place to change sections shared by several roots is in the outline, not in the files derived from the outline.
+<t tx="T525">Leo is being used to develop HTML files for web sites.  In this context it is natural to define sections that are shared between files.  Don't expect Untangle to update such sections if you make changes to them in derived files.  The natural place to change sections shared by several roots is in the outline, not in the files derived from the outline.
 
 If you do change code in a derived file that appears in several derived files, and try to use Untangle to update the code in the outline one of two things will happen:
 
@@ -6058,7 +6327,7 @@ If you do change code in a derived file that appears in several derived files, a
 2) You untangle an @unit node.  Untangle will examine each @root node under the @unit node.  Unless the change is made in the last root examined, Untangle will propagate the change when it first sees it, then go right ahead and undo the change when it sees the next expansion of the node in a derived file.
  
 Untangle tests for inconsistent expansions of a section only within a single derived file.  Such tests are not done between different derived files because we do not want disallow sections with the same names in different roots.</t>
-<t tx="T514">Known bugs and limitations in all versions of Leo.
+<t tx="T526">Known bugs and limitations in all versions of Leo.
 
 1. Untangle has no way of updating a section(chunk) whose name has been changed in the derived file.  Because of the @unit directive, there is not even a way to issue a meaningful warning.
 
@@ -6072,10 +6341,10 @@ Syntax coloring options are not saved to the file.
 
 The Log window has a limited capacity. This mainly affects debugging traces but could affect the output from the Tangle or Untangle commands if you tangled or untangled a large number of files.
 </t>
-<t tx="T515">@nocolor
+<t tx="T527">@nocolor
 
 This outline contains the latest documentation available for Leo.</t>
-<t tx="T516">@nocolor
+<t tx="T528">@nocolor
 
 The following was written by Joe Orr, a user of Leo.  For more details, see http://www.jserv.com/jk_orr/xml/leo.htm
 
@@ -6092,8 +6361,8 @@ You can embed a simple macro language inside of a Leo document to instruct Leo t
 Leo saves its files in XML format. This means that you can easily import and export Leo documents to any number of programs that can understand XML. for example, you can use an XSLT stylesheet to export a Leo file to HTML. And you can import any XML file into Leo using another XSLT stylesheet.
 
 Leo is fully scriptable via Python.</t>
-<t tx="T517">@nocolor</t>
-<t tx="T518">Leo Users Manual
+<t tx="T529">@nocolor</t>
+<t tx="T530">Leo Users Manual
 June 15, 2002
 
 Leo is a programmer's editor and a flexible browser for projects, programs, classes or data. Leo clarifies design, coding, debugging, testing and maintenance.
@@ -6117,12 +6386,12 @@ Leo was designed and built by:
 Edward K. Ream
 email:  edream@tds.net
 voice: (608) 231-0766</t>
-<t tx="T519">Leo creates a better way of programming by making clear the relationships between parts of programs. The larger the program, the more valuable Leo becomes. I would never willing program without Leo again.
+<t tx="T531">Leo creates a better way of programming by making clear the relationships between parts of programs. The larger the program, the more valuable Leo becomes. I would never willing program without Leo again.
 
 Leo has hundreds of users. They use Leo to create programs in all kinds of languages, from assembly language, C and C++ to Java, Python and Tk. They use Leo to build and maintain web sites and to manage large amounts of other data. Leo's users have extended Leo in directions I never imagined. See the Acknowledgments below.
 
 Inventing and building Leo, and completely re-visioning Leo to add @file trees has been the happiest and most creative part of my professional life. Leo grew out of my attempts to understand and use Donald Knuth's CWEB system of "literate programming". Chapter 6 discusses how Leo relates to traditional literate programming. Chapter 8 contains a history of Leo and a detailed account of how I invented Leo2.</t>
-<t tx="T520">This is what I wanted when I started this project.
+<t tx="T532">This is what I wanted when I started this project.
 
 1. A tool that I could use successfully. I had tried flat literate programming and failed to produce a program that I could understand. The design of my own literate programs were a mystery to me. With the insight gained with two years experience with literate outlines, I believe I could now probably create flat literate outlines with some success. But how would I do that? By mentally simulating a literate outline! So although it would be possible for me to use flat literate programming tools, it would never be easy or natural.
 
@@ -6141,7 +6410,7 @@ Leo and MORE have superb outlining facilities; each provides true outline object
 4. A self-contained programming system.  Leo's Tangle command provides basic support for literate programming.  Leo's Untangle command is a novel addition to literate programming.  The automatic tangling and untangling of @file trees is another major step forward.  Finally, Leo's many import and export commands ensure that Leo is compatible with noweb and CWEB.
 
 5. A fun tool.  In Chapter 6 I list several highbrow reasons for liking literate programming. I know somebody gets what literate programming is all about when he or she says how much fun literate programming is. Clearly, Leo has succeeded admirably in this regard. I would never again willingly program without a literate outliner.</t>
-<t tx="T521">COPYRIGHT
+<t tx="T533">COPYRIGHT
 
 All parts of Leo are distributed under the following copyright.  This is intended to be the same as the Python license, namely that Leo is absolutely free, even for commercial use, including resale.  There is no GNU-like "copyleft" restriction.  This license is compatible with the GPL.
 
@@ -6152,7 +6421,7 @@ Permission to use, copy, modify, and distribute this software and its documentat
 DISCLAIMER OF WARRANTIES
 
 EDWARD K. REAM (REAM) SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESSED OR IMPLIED, WITH RESPECT TO THIS COMPUTER SOFTWARE, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS RO A PARTICULAR PURPOSE.  IN NO EVENT SHALL REAM BE LIABLE FOR ANY LOSS OF PROFIT OR ANY COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER DAMAGES.</t>
-<t tx="T522">Leo's main window contains an _outline pane_ and a _body pane_. An _outline_ represents an entire project and is stored in a single .leo file.  An outline consists of _headlines_. Headlines may be expanded and contracted.  Each headline has its own _body text_.  The body pane shows the body text of the presently selected headline. A _node_ is a headline and its body text.
+<t tx="T534">Leo's main window contains an _outline pane_ and a _body pane_. An _outline_ represents an entire project and is stored in a single .leo file.  An outline consists of _headlines_. Headlines may be expanded and contracted.  Each headline has its own _body text_.  The body pane shows the body text of the presently selected headline. A _node_ is a headline and its body text.
 
 _Sections_ group arbitrary text into a meaningful unit. Sections increase the expressive power of any language, from C to Python to XML to English. Outlines may be reorganized freely because the meaning of a section does not usually depend on its position.
 
@@ -6161,7 +6430,7 @@ _Clones_ are parts of an outline that change in unison.  Any change to a clone's
 _Derived files_ are files generated from parts of an outline. An outline may generate many derived files. Conversely, an outline may be updated using changes to derived files.
 
 In short, sections simplify text, clones represent tasks, outlines organize projects and outlines generate derived files.</t>
-<t tx="T523">Leo's main window contains two panes, an outline pane on top and a body pane below.  The outline pane contains a set of headlines.  Headlines fold (expand and contract) like Windows Explorer when you click the + or - icons. Headlines group components (subheadlines) into larger units.
+<t tx="T535">Leo's main window contains two panes, an outline pane on top and a body pane below.  The outline pane contains a set of headlines.  Headlines fold (expand and contract) like Windows Explorer when you click the + or - icons. Headlines group components (subheadlines) into larger units.
 
 The bottom pane contains the body text associated with the selected headline.  The combination of a headline and its associated body text is called a node. Body text can simply be plain text or text in the noweb or CWEB languages. A Leo program is a collection of all the body text of an outline organized by the headline.
 
@@ -6174,7 +6443,7 @@ Leo's outline are much more flexible and powerful than typical class browsers:
 3. Leo allows the user to reorganize outlines freely by adding, deleting and moving nodes.
 
 4. Leo opens an outline as it was when the user last used it, restoring the selected node, the top visible node, and the expansion state of all nodes.</t>
-<t tx="T524">@nocolor
+<t tx="T536">@nocolor
 
 Text in Leo's body pane is simply plain text that may contain section references.  For example, here is part of Leo's source code.
 
@@ -6205,10 +6474,10 @@ There are two ways to define sections.  The first way is to use a section defini
 	&lt;&lt;section name&gt;&gt;=
 
 (notice the equal sign) on a line by itself in body text, followed by the source code that defines the section.   The second way is to create a node with &lt;&lt;section name&gt;&gt; in its headline and the source code that defines the section in its body text.  Either way, the section definition may contain other section references.</t>
-<t tx="T525">Outlines can show relationships between sections. In the example above, a natural way of organizing the outline would as shown in the child of this node.  The removeSentinelsCommand method is defined in one node which has three children, one for each section referenced in the definition of removeSentinelsCommand.
+<t tx="T537">Outlines can show relationships between sections. In the example above, a natural way of organizing the outline would as shown in the child of this node.  The removeSentinelsCommand method is defined in one node which has three children, one for each section referenced in the definition of removeSentinelsCommand.
 
 Furthermore, Leo uses outline structure to delimit derived files and to control the scope of section definitions.  See Chapter 4 for details.</t>
-<t tx="T526">@color
+<t tx="T538">@color
 def removeSentinelsCommand (self,fileName):
 
 	path, self.fileName = os.path.split(fileName) # path/fileName
@@ -6226,14 +6495,14 @@ def removeSentinelsCommand (self,fileName):
 		s = removeSentinelLines(s,line_delim,start_delim,end_delim)
 		newFileName = os.path.join(path,fileName+".tmp")
 		&lt;&lt; Write s into newFileName &gt;&gt;</t>
-<t tx="T527">try:
+<t tx="T539">try:
 	file = open(fileName)
 	s = file.read()
 	file.close()
 except:
 	es("Can not read " + fileName)
 	return</t>
-<t tx="T528">@ This code is similar to atFile::scanHeader.
+<t tx="T540">@ This code is similar to atFile::scanHeader.
 @c
 
 tag = "@+leo"
@@ -6260,13 +6529,13 @@ if j &lt; i:
 	start_delim = line_delim
 	end_delim = s[j:i]
 	line_delim = None</t>
-<t tx="T529">try:
+<t tx="T541">try:
 	file = open(newFileName,"w")
 	file.write(s)
 	file.close()
 except:
 	es("Can not create " + newFileName)</t>
-<t tx="T530">Headlines (and the sections they contain) are the natural building block of tasks. To build tasks from headlines we need another feature of Leo's outlines, namely clones. A clone is a copy of a tree that changes whenever any part of the original tree changes.  Clones are powerful. For example, adding a node to a cloned tree adds the same node to all cloned trees as well.
+<t tx="T542">Headlines (and the sections they contain) are the natural building block of tasks. To build tasks from headlines we need another feature of Leo's outlines, namely clones. A clone is a copy of a tree that changes whenever any part of the original tree changes.  Clones are powerful. For example, adding a node to a cloned tree adds the same node to all cloned trees as well.
 
 We can use an ordinary headline to represent any task as follows.  We create an ordinary headline to represent the task and we label the headline with the name of the task.  Let us call such a headline a task headline. Then, throughout the entire outline, we clone all headlines (sections) that pertain to the task and move the new clones as sub-headlines of the task headline.
 
@@ -6276,42 +6545,42 @@ a) the task headline will remain up-to-date when the project changes, and
 b) we can make changes in the task view and rather than throughout an outline.
 
 In short, task headlines focus our attention on only those parts of a project that relate directly to a task and makes it easy to change code scattered throughout a project.</t>
-<t tx="T531">Leo outlines are stored in a single .leo file. Leo can create many derived files from a single outline.  You can create derived files explicitly using the Tangle command, or automatically when an outline file is saved.  Conversely, Leo can update outlines based on changes to derived files. Again, you can update an outline explicitly using the Untangle command, or automatically when an outline file is opened.  Outline files contain all information contained in derived files.  This redundancy is useful for backing up data and for error recovery.
+<t tx="T543">Leo outlines are stored in a single .leo file. Leo can create many derived files from a single outline.  You can create derived files explicitly using the Tangle command, or automatically when an outline file is saved.  Conversely, Leo can update outlines based on changes to derived files. Again, you can update an outline explicitly using the Untangle command, or automatically when an outline file is opened.  Outline files contain all information contained in derived files.  This redundancy is useful for backing up data and for error recovery.
 
 This introduction has only sketched Leo's capabilities.  Chapter 3 shows how to create and reorganize Leo's outlines. This chapter covers clones, a powerful outline feature found in few other outliners.  Chapter 4 tells you everything you need to write programs in Leo.  Chapter 5 discusses all of Leo's commands.  Chapter 7 discusses scripting Leo with Python.</t>
-<t tx="T532">@nocolor
+<t tx="T544">@nocolor
 
 This chapter tells how to install Leo.</t>
-<t tx="T533">@nocolor
+<t tx="T545">@nocolor
 
 This chapter tells how to use Leo's outline pane.  It introduces terminology and discusses creating, moving, marking, cloning headlines.
 
 This chapter also discusses the control keys that can be used in the body pane.  This material is excerpted from documentation at http://tcl.activestate.com/man/tcl8.4/TkCmd/text.htm</t>
-<t tx="T534">A cloned node is a copy of a node that changes when the original changes. Changes to the children, grandchildren, etc. of a node are simultaneously made to the corresponding nodes contained in all cloned nodes.  Clones are marked by a small arrow  by their leader characters.
+<t tx="T546">A cloned node is a copy of a node that changes when the original changes. Changes to the children, grandchildren, etc. of a node are simultaneously made to the corresponding nodes contained in all cloned nodes.  Clones are marked by a small arrow  by their leader characters.
 
 There is no real distinction between the "original" node and any of its clones.  This makes it possible to update any of the clones and the original node will change as well.  When the second-to-last cloned node is deleted the last cloned node becomes a regular node again.
 
 Clones are useful for making alternate views of a program.  For example, when I begin to fix a bug I clone all the sections of the code that relate to the bug, and place those cloned sections under a new headline whose name is the name of the bug I am fixing.
 
 The children of this headline show some complex clones.  To see how clones work, try moving the node marked f around with the nodes marked a fully expanded.  Not all moves are allowed:  you can't move a cloned node so it would become a child of another clone of itself.</t>
-<t tx="T535">This is a kind of bizarre outline that I use to test clone operations.  Try moving the nodes a through g around and see what happens to the children of the various clones.</t>
-<t tx="T536"></t>
-<t tx="T537"></t>
-<t tx="T538"></t>
-<t tx="T539"></t>
-<t tx="T540"></t>
-<t tx="T541"></t>
-<t tx="T542"></t>
-<t tx="T543">The Insert Node command inserts a new headline into the outline.
+<t tx="T547">This is a kind of bizarre outline that I use to test clone operations.  Try moving the nodes a through g around and see what happens to the children of the various clones.</t>
+<t tx="T548"></t>
+<t tx="T549"></t>
+<t tx="T550"></t>
+<t tx="T551"></t>
+<t tx="T552"></t>
+<t tx="T553"></t>
+<t tx="T554"></t>
+<t tx="T555">The Insert Node command inserts a new headline into the outline.
 
 The Delete Node command deletes a headline and all its children.
 </t>
-<t tx="T544">The Cut Outline, Paste Outline, Copy Outline and Delete Outline commands work on nodes rather than text.  For example, to delete a headline, select the headline and choose the Cut Outline or Delete Outline commands.
+<t tx="T556">The Cut Outline, Paste Outline, Copy Outline and Delete Outline commands work on nodes rather than text.  For example, to delete a headline, select the headline and choose the Cut Outline or Delete Outline commands.
 
 The Cut Outline and Copy Outline copy a text representation of the outline to the clipboard.  This representation is the same as the file format with some information deleted.  You may copy this text representation into a body pane (or into any other text editor) using the Paste command in the Edit menu.
 
 Warning:  In practice, it is almost always wiser to move clones rather than cutting or pasting them.  Cutting and pasting outlines preserves clones, but the links between clones only exist within the part of the outline that was pasted.  Therefore, if you are cutting and pasting an outline containing clones it is best to cut and paste the _entire_ outline.  Alternatively, you can paste part of an outline, then delete all clones.</t>
-<t tx="T545">Body text in leo.py has the following features:
+<t tx="T557">Body text in leo.py has the following features:
 
 Leo auto indents when @nocolor is not in effect.  That is, typing a newline automatically inserts the same leading whitespace present on the previous line.  If the present language is Python (set either in the preferences or with an @language Python command), Leo inserts an additional tab if the previous line ends with a colon.
 
@@ -6364,16 +6633,16 @@ The F18 key (labeled Paste on many Sun workstations) or Control-v inserts the co
 The Delete key deletes the selection, if there is one in the widget. If there is no selection, it deletes the character to the right of the insertion cursor. 
 
 Backspace deletes the selection, if there is one in the widget. If there is no selection, they delete the character to the left of the insertion cursor. </t>
-<t tx="T546">You can expand or contract a headline by clicking in the standard Windows Tree View icon to the left of the status icon.
+<t tx="T558">You can expand or contract a headline by clicking in the standard Windows Tree View icon to the left of the status icon.
 
 Expanding a node shows its immediate children; contracting a node hides all its children.  The Expand All Subheads command expands all of a nodes offspring (children, grandchildren, etc.)</t>
-<t tx="T547">Leo auto indents body text following colons when @language is in effect.
+<t tx="T559">Leo auto indents body text following colons when @language is in effect.
 
 You may use Emacs-style auto-indentation instead.  The child of this node provides full details.</t>
-<t tx="T548">You can mark headlines in several ways: with the various Outline:Mark commands, with the Find or Change commands, or with the Untangle command.  The "Go To Next Marked" command will go to the next marked node, if any.
+<t tx="T560">You can mark headlines in several ways: with the various Outline:Mark commands, with the Find or Change commands, or with the Untangle command.  The "Go To Next Marked" command will go to the next marked node, if any.
 
 The Mark command will unmark the selected headline if it is already marked.</t>
-<t tx="T549">There are a number of ways to move and reorganize headlines.
+<t tx="T561">There are a number of ways to move and reorganize headlines.
 
 The Move Up, Move Down, Move Left and Move Right commands move the currently selected outline.  The Promote command makes all the children of a headline siblings of the headline.  The Demote command makes all the siblings of a headline children of the headline.
 
@@ -6381,19 +6650,19 @@ You can cut and paste any part of a tree.  If a headline contains selected text,
 
 Warning:  In practice, it is almost always wiser to move clones rather than cutting or pasting them.  Cutting and pasting outlines preserves clones, but the links between clones only exist within the part of the outline that was pasted.  Therefore, if you are cutting and pasting an outline containing clones it is best to cut and paste the _entire_ outline.  Alternatively, you can paste part of an outline, then delete all clones.  
 </t>
-<t tx="T550">Double-clicking the icon box of a node whose headline has the form:
+<t tx="T562">Double-clicking the icon box of a node whose headline has the form:
 
 @url &lt;any url&gt;
 
 executes the url in your default web browser.  See the child of this node for full details.</t>
-<t tx="T551">You can change the relative sizes of the outline and body panes by dragging the splitter bar.  The Equal Sized Panes command resizes the panes so that each fills half of the main window.</t>
-<t tx="T552">The outline pane supports one level of undo.
+<t tx="T563">You can change the relative sizes of the outline and body panes by dragging the splitter bar.  The Equal Sized Panes command resizes the panes so that each fills half of the main window.</t>
+<t tx="T564">The outline pane supports one level of undo.
 
 The body pane supports unlimited undo.  However, you can not undo an operation affecting body text after selecting a new headline.  You can undo or redo the last operation involving the outline itself.  You can not undo operations affecting headline text.</t>
-<t tx="T553">@nocolor
+<t tx="T565">@nocolor
 @ignore
 @language python</t>
-<t tx="T554">Important note 1: This chapter tells how to use the noweb markup language.  See the node called About CWEB if you plan to use the CWEB markup language.
+<t tx="T566">Important note 1: This chapter tells how to use the noweb markup language.  See the node called About CWEB if you plan to use the CWEB markup language.
 
 Important note 2: This chapter discusses only the @file directive.
 
@@ -6418,7 +6687,7 @@ The essentials of writing programs in Leo are as follows:
 
 5. Leo creates source files called _derived files_ by expanding all section references in an @file tree.
 </t>
-<t tx="T555">@nocolor
+<t tx="T567">@nocolor
 There are two kinds of sections: code sections and doc sections.  Code sections start with the @c directive.  Within @file trees, the entire body text of a node is a code section by default, so the @c directive can be omitted if there are no doc sections in the body pane.  Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
 
 The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaning of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.
@@ -6488,7 +6757,7 @@ Minor note 2: A line of the form:
 @ %def identifiers
 
 terminates the previous code section and indicates that the preceding code section defines the list of identifiers.  This list contains identifiers separated by whitespace; any sequence of non-white characters may be an identifier.  This construction is used in traditional noweb programming to generate indices.</t>
-<t tx="T556">Lets see how to organize typical outlines.  The only rules we must follow are:
+<t tx="T568">Lets see how to organize typical outlines.  The only rules we must follow are:
 
 - All nodes containing body text must be referenced.
 
@@ -6521,7 +6790,7 @@ When reading an outline, Leo recreates @file trees from derived files. In partic
 Some examples should make all this much clearer.  See the children of this node.
 
 The @ignore directive is not valid in @file trees because derived files contain primary data.  The .leo file also contains a copy of the information in the @file tree, but this information is used for backup and error recovery. As a result, everything in an @file trees must correspond to information the derived file and the @ignore directive may not appear in @file trees.</t>
-<t tx="T557">@file f.c shows how to create a C file.
+<t tx="T569">@file f.c shows how to create a C file.
 
 @file classX.py shows how to create a single Python class.
 
@@ -6529,7 +6798,7 @@ The @ignore directive is not valid in @file trees because derived files contain 
 
 The @file bad tree is invalid.  No named node may "intervene" between an unnamed node containing body text and an @others node.
 </t>
-<t tx="T558">@color
+<t tx="T570">@color
 @ This @file node generates the file f.c.
 
 This body text ensures that the expansions of &lt;&lt; constants &gt;&gt; and &lt;&lt; declarations &gt;&gt; precede the expansions of all unnamed sections. It is good style to name those sections that must appear in a particular place in the derived file. All unnamed sections are placed in the derived file where the @others directive appears. Unnamed sections appear in the derived file the order in which they appear in the outline.
@@ -6540,11 +6809,11 @@ The children of the @file node contain the definitions of all sections, both nam
 &lt;&lt; constants &gt;&gt;
 &lt;&lt; declarations &gt;&gt;
 @others</t>
-<t tx="T559">the constants</t>
-<t tx="T560">the declarations</t>
-<t tx="T561">text of function 1</t>
-<t tx="T562">text of function 2</t>
-<t tx="T563">@color
+<t tx="T571">the constants</t>
+<t tx="T572">the declarations</t>
+<t tx="T573">text of function 1</t>
+<t tx="T574">text of function 2</t>
+<t tx="T575">@color
 @ This @file node generates the file classX.py.
 
 Indentation is significant in languages like Python. When Leo expands a section reference (or an @others directive), Leo adds the leading whitespace of the line containing the section reference to all lines of the reference's expansion. The text of body text need not be indented beyond its natural indentation.
@@ -6555,9 +6824,9 @@ Organizing nodes (nodes with no body text) do not affect the derived file in any
 &lt;&lt; imports for classX &gt;&gt;
 class classX:
 	@others</t>
-<t tx="T564">@ This is an organizing node.  Using this node does not change the indentation in the derived file.</t>
-<t tx="T565">@ This is an organizing node.  Using this node does not change the indentation in the derived file.</t>
-<t tx="T566">@color
+<t tx="T576">@ This is an organizing node.  Using this node does not change the indentation in the derived file.</t>
+<t tx="T577">@ This is an organizing node.  Using this node does not change the indentation in the derived file.</t>
+<t tx="T578">@color
 @ This @file node generates the file mainClass.py.
 
 When two classes appear in the same file, a single @others directive does not suffice. However, no node may contain more than one @others directive.  To get around this limitation we can organize the outline as shown.
@@ -6568,11 +6837,11 @@ The @others directive refers only to unnamed nodes in the descendents of the @ot
 &lt;&lt;mainClass imports&gt;&gt;
 &lt;&lt;class mainClass&gt;&gt;
 &lt;&lt;class helperClass&gt;&gt;</t>
-<t tx="T567">class mainClass:
+<t tx="T579">class mainClass:
 	@others</t>
-<t tx="T568">class helperClass:
+<t tx="T580">class helperClass:
 	@others</t>
-<t tx="T569">@color
+<t tx="T581">@color
 @language python
 @ The following outline is invalid.  Node A is an unnamed node containing body text, and the &lt;&lt;section one&gt;&gt; node intervenes between Node A and the @others node.
 @c
@@ -6580,21 +6849,21 @@ The @others directive refers only to unnamed nodes in the descendents of the @ot
 class classX:
 	@others
 </t>
-<t tx="T570">def bad():
+<t tx="T582">def bad():
 	&lt;&lt; section 1 &gt;&gt;</t>
-<t tx="T571">@ This node is invalid because it intervenes between Node A and the @others node above.
+<t tx="T583">@ This node is invalid because it intervenes between Node A and the @others node above.
 </t>
-<t tx="T572">def spam():
+<t tx="T584">def spam():
 	pass</t>
-<t tx="T573">The following sections discuss directives that have not been discussed previously.  Unless otherwise noted, these directives are valid anywhere in an outline.</t>
-<t tx="T574">Syntax coloring is on by default in all body text. Leo formats comments and documentation parts in red, directives and C keywords in blue, strings and character constants in gray and all other text in code parts in black.
+<t tx="T585">The following sections discuss directives that have not been discussed previously.  Unless otherwise noted, these directives are valid anywhere in an outline.</t>
+<t tx="T586">Syntax coloring is on by default in all body text. Leo formats comments and documentation parts in red, directives and C keywords in blue, strings and character constants in gray and all other text in code parts in black.
 
 The @nocolor directive disables syntax coloring for the body text in which it appears. No syntax coloring is done until an @color directive re-enables syntax coloring.
 
 If a node contains neither the @color nor the @nocolor directive it may inherit the syntax coloring attribute from an ancestor. The nearest ancestor that contains exactly one of the @color or @nocolor directives will control the syntax coloring. Ambiguous nodes, nodes containing both the @color and @nocolor directives, never affect the coloring of their offspring.
 
 Note: the @color or @nocolor directives do not affect the Tangle commands in any way. In particular, the Tangle commands will recognize section definitions as usual even after an @nocolor directive is seen.</t>
-<t tx="T575">Note: the @comment directive is now officially deprecated: you should use the @language directive whenever possible.
+<t tx="T587">Note: the @comment directive is now officially deprecated: you should use the @language directive whenever possible.
 
 Untangle will not process an @root or @unit node if an @comment directive is in effect because Untangle can't be sure of properly parsing a derived file if the language of the derived file isn't known. It might be possible to assume some defaults in this case, but that is not done at present and is not a high priority.
 
@@ -6621,7 +6890,7 @@ New in leo.py 3.0: Leo will convert underscores in the @comment directives to si
 @comment REM_
 
 causes the comment delimiter to be "REM " (Note the trailing space).</t>
-<t tx="T576">@nocolor
+<t tx="T588">@nocolor
 
 The @delims directive changes the comment strings used to mark sentinel lines. This directive is often used to place Javascript text inside XML or HTML files.
 
@@ -6638,7 +6907,7 @@ HTML stuff
 
 @nocolor
 Adding, deleting or changing @@delims sentinels will destroy Leo's ability to read the derived file. Mistakes using the @delims directive have no effect on Leo, though such mistakes will thoroughly mess up a derived file as far as compilers, HTML renderers, etc. are concerned.</t>
-<t tx="T577">You may use the @encoding directive to specify the encoding used in a derived file.  You can't mix encodings in a single derived file.  For example,
+<t tx="T589">You may use the @encoding directive to specify the encoding used in a derived file.  You can't mix encodings in a single derived file.  For example,
 
 @encoding iso-8859-1
 
@@ -6647,7 +6916,7 @@ If the encoding used in a derived file is not "utf-8" it is represented in the @
 #@+leo-encoding=iso-8859-1.
 
 The "utf-8" encoding is used by default.  The "utf-8" encoding is a "lossless" encoding (it can represent all unicode code points), so encoding and decoding to and from utf-8 plain strings will never cause a problem.  When reading or writing a character not in a "lossy" encoding (such as iso-8859-1), Leo converts such characters to '?' and issues a warning. </t>
-<t tx="T578">The @first directive allows you to place lines at the very start of files derived from @file nodes. For example, the body text of @file spam.py might be:
+<t tx="T590">The @first directive allows you to place lines at the very start of files derived from @file nodes. For example, the body text of @file spam.py might be:
 
 	@first #! /usr/bin/env python
 
@@ -6665,7 +6934,7 @@ Similarly, @last directives are recognized only at the end of body text of @file
 	@first &lt;?php
 	...
 	@last ?&gt;</t>
-<t tx="T579">@nocolor
+<t tx="T591">@nocolor
 The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle commands. This directive over-rides the default specified in the Preferences panel. The form of this directive is:
 @color
 
@@ -6682,7 +6951,7 @@ where x is one of the following: c, c++, html, java, objective-c, pascal, perl, 
 but the following is invalid:
 
 @LANGUAGE html</t>
-<t tx="T580">@nocolor
+<t tx="T592">@nocolor
 
 The @path, @pagewidth and @tabwidth directives allow preferences to be set on a file-by-file basis: they override the corresponding defaults in the Preferences panel.
 
@@ -6699,7 +6968,7 @@ An error occurs if no absolute path can be computed according to these rules, or
 The form of the @pagewidth directive is @pagewidth n, where n is a positive integer that indicates the width of tangled pages in columns. This setting only affects how Tangle outputs block comments.
 
 The form of the @tabwidth directive is @tabwidth n, where n is a positive integer that indicates the width of tabs in spaces. This is used by Tangle to output leading whitespace.</t>
-<t tx="T581">@file trees are much easier to use than @root trees:
+<t tx="T593">@file trees are much easier to use than @root trees:
 
 1. @file trees require less markup than @root trees; all sections in @root trees must have names, but @file trees usually contain many unnamed sections. Within @file trees, the @others directive acts like a reference to all unnamed sections.
 
@@ -6723,7 +6992,7 @@ However, @root trees are more flexible than @file trees:
 
 - @c directives are optional at the start of body text in @file trees only.
 Body text without markup is ignored in @root trees; it creates unnamed code sections in @file trees.</t>
-<t tx="T582">@nocolor
+<t tx="T594">@nocolor
 Just as with @file trees, @root trees may contain kinds of sections: code sections and doc sections.  Code sections start with section definition lines (see below) or the @c directive.  Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
 
 The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaning of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.
@@ -6780,7 +7049,7 @@ def putOpenNodeSentinel(self,v):
 
 @nocolor
 The following escape convention applies only in @root trees.  Within a code parts @@ in the first column (and only in the first column) stands for a single @ sign.</t>
-<t tx="T583">@nocolor
+<t tx="T595">@nocolor
 Each @root tree  represents a single derived file.  Tangling is the process of creating derived files from @file or @root trees. Leo tangles @file trees automatically whenever an outline is saved.  The user must tangle @file trees explicitly using one of the Tangle commands.
 
 Leo creates derived files by expanding all section references in an @root node. Leo expands a section reference by substituting the code section itself for the section reference. This is a recursive process: the substituted code section may contain other code references which are themselves expanded, and so on.
@@ -6859,7 +7128,7 @@ The @unit directive insures that:
 2. all sections definitions in A and B are compatible with each other.
 
 Finally, Tangle commands ignore any tree containing an @ignore directive. This ensures that trees that contain cloned nodes or other subsidiary information do not cause the tangle commands to issue spurious error messages. It also ensures that a tree can never contribute a section definition to another part of the outline by mistake.</t>
-<t tx="T584">The Untangle, Untangle All and Untangle Marked commands are the reverse of the corresponding Tangle commands. They update one or more @root nodes based on changes made to the corresponding derived files.
+<t tx="T596">The Untangle, Untangle All and Untangle Marked commands are the reverse of the corresponding Tangle commands. They update one or more @root nodes based on changes made to the corresponding derived files.
 
 For example, suppose you create a new part of the outline and Tangle it for the first time. When you compile derived files for the first you are likely to get many syntax errors. You could fix those errors in the outline and Tangle the outline again, but there is a much easier way: you fix the errors in the derived files using the compiler's editor, then run the untangle command on the part of the outline that created the derived file. The Untangle command updates the selected outline to match the changes in the derived files. It's as simple as that. By the way, the Untangle command marks all the nodes in the outline that it updates, and you can examine all such nodes with the Go To Next Marked command in the Outline menu.
 
@@ -6870,12 +7139,12 @@ Untangle never changes the structure of an outline; it never inserts, deletes or
 If you change the section name in a sentinel line Untangle will not update the code in the outline (with the old name) that generated the renamed section. Untangle now warns about sections that appear in a derived file but not in the outline. Untangle has no trouble with changed section references in derived files; it is only changed sentinel lines that cause problems.
 
 Cloned nodes that generate code in several files may cause problems for Untangle. If Untangle is run separately on these derived files, Untangle will update all cloned nodes each time it is run, so only the code in the last Untangle run will take effect. Therefore, the safe way to update text in cloned nodes is to make the change in the .leo file rather than the derived files.</t>
-<t tx="T585">@nocolor
+<t tx="T597">@nocolor
 
 This chapter is discusses all of Leo's menu commands.  It is organized by menu, and by function within each menu.
 
 A note about typography:  in this chapter command names and menu names will be capitalized, just as they would be in a menu.  This convention allows us to write, for example, the Save A Copy As command, rather than having to use distracting quotation marks, like the "Save A Copy As" command.</t>
-<t tx="T586">The New command creates a new Leo main window.  The Open command opens an existing Leo file and shows it in a main window.  The Close command closes the topmost Leo window, and gives you an opportunity to save your work if you haven't yet done so.
+<t tx="T598">The New command creates a new Leo main window.  The Open command opens an existing Leo file and shows it in a main window.  The Close command closes the topmost Leo window, and gives you an opportunity to save your work if you haven't yet done so.
 
 The Save, Save As and Save A Copy As commands save the topmost Leo window to a file.  The Save As and Save A Copy As commands create a complete copy of a Leo file.  The Save command updates the file without rewriting those parts that have not been changed.  As a result, the Save command is significantly faster than the Save As and Save A Copy As commands.
 
@@ -6892,8 +7161,8 @@ Read @file Nodes: updates all @file nodes in an outline.  This ensures that the 
 Write Outline Only: saves an outline without writing any @file trees.  Useful for inserting an @file node into an outline without modifying a derived file with the same name.
 
 Write @file Nodes: forces an update of all @file trees.  Surprisingly useful.</t>
-<t tx="T587">The Open With command allows you to communicate with external editor.  See the child of this node for full details.</t>
-<t tx="T588">The Tangle, Tangle All and Tangle Marked commands create derived files from portions of an outline.  These commands indent and format the derived files so that they are easy to read and so that it is clear what sections produced the code.  The .c file in the Examples folder shows the code produced by the Tangle commands.
+<t tx="T599">The Open With command allows you to communicate with external editor.  See the child of this node for full details.</t>
+<t tx="T600">The Tangle, Tangle All and Tangle Marked commands create derived files from portions of an outline.  These commands indent and format the derived files so that they are easy to read and so that it is clear what sections produced the code.  The .c file in the Examples folder shows the code produced by the Tangle commands.
 
 The three Tangle commands are identical except for how much of the outline is tangled.  The Tangle command tangles only the selected portion of the outline, the Tangle All command tangles the entire outline, and the Tangle Marked command tangles only marked headlines.
 
@@ -6905,7 +7174,7 @@ By default, Tangle commands look for section definitions only in the suboutline 
 
 The @unit directive changes the default scope of the tangle command, while the @ignore directive causes the tangle commands to ignore a subtree.  For more details, see the discussion of the @unit and @ignore commands in Chapter called "Using noweb, CWEB and directives". 
 </t>
-<t tx="T589">When using the Tangle and Untangle commands there are several issues to be aware of concerning your IDE (Integrated Development Environment). This section applies particularly to the Borland IDE; similar remarks apply to other IDE's.
+<t tx="T601">When using the Tangle and Untangle commands there are several issues to be aware of concerning your IDE (Integrated Development Environment). This section applies particularly to the Borland IDE; similar remarks apply to other IDE's.
 
 Assuming you have added a .cpp file to your project, you update the file with the Tangle command.  When you switch to the IDE you will get a dialog asking whether you want to update the file.  Say yes and rebuild or remake.
 
@@ -6915,7 +7184,7 @@ Now suppose you compile the file and get 20 errors all over the .cpp file. You f
 
 If you like you can use the Go To Next Marked command to find each changed node.
 </t>
-<t tx="T590">Note: the following describe the import and export commands found in leo.py.  This documentation notes differences with the Windows version of Leo.
+<t tx="T602">Note: the following describe the import and export commands found in leo.py.  This documentation notes differences with the Windows version of Leo.
 
 The Import to @file command creates an @file node from a file.  The Import to @root command creates an @root node from a file.  These commands do not attempt to do perfect translations; they merely automate the bulk of the drudgery.  The Import to @root command is called Import Files in the Borland/Windows version of Leo.  The Import to @file command does not exist in the Borland/Windows version of Leo.
 The Import CWEB Files command creates an @file node from a CWEB file.  This command does not exist in the Borland/Windows version of Leo.
@@ -6925,15 +7194,15 @@ The Import noweb Files command creates an @file node from a CWEB file.  The Borl
 The Import Flattened Outline command (called Import MORE Text in the Borland/Windows version of Leo) converts plain text written in MORE format to an outline. This command brings up a dialog which will accept at most one file. If that file contains MORE-format text it creates an outline corresponding to that text.
 
 MORE is a now- defunct Macintosh outliner program. MORE represents outlines as follows. Headlines are denoted by a leading + or - character, preceding by zero or more tabs that denote the level of the headline. Body text follows its headline, with no indentation. The original MORE format did not escape lines in the body text that started with + or -. Leo escapes such characters by preceding +, - or backslash with a backslash.</t>
-<t tx="T591">The Outline To CWEB command creates a CWEB file from the selected outline.
+<t tx="T603">The Outline To CWEB command creates a CWEB file from the selected outline.
 
 The Outline TO noweb command creates a noweb file from the selected outline.
 
 The Flatten Outline command creates a text file in MORE format from the selected outline.  See the previous section for a discussion of the MORE format.
 
 The Remove Sentinels command removes all sentinel lines from a file derived from an @file node.</t>
-<t tx="T592">The Quit command causes Leo to exit.   You may also exit Leo by closing the main window.  In either event you will be prompted to save any file that has been altered but not saved. </t>
-<t tx="T593">For leo.py version 2.0 and above:
+<t tx="T604">The Quit command causes Leo to exit.   You may also exit Leo by closing the main window.  In either event you will be prompted to save any file that has been altered but not saved. </t>
+<t tx="T605">For leo.py version 2.0 and above:
 
 leo.py supports unlimited Undo and Redo.  All outline operations, including the Change All command and all operations and commands that affect body text may be undone and redone.  Only the "Read @file Nodes" command is undoable; it clears the undo state. This command raises a dialog to allow the user to cancel.
 
@@ -6942,59 +7211,59 @@ Think of actions that may be Undone or Redone as a string of beads.  A "bead poi
 For all Borland versions:
 
 The body pane supports unlimited undo.  However, you can not undo an operation affecting body text after selecting a new headline.  You can undo or redo the last operation involving the outline itself.  You can not undo operations affecting headline text.</t>
-<t tx="T594">Leo supports the standard editing commands that appear in the edit menu: Undo, Cut, Copy, Paste and Clear. These commands work with either headline (when a headlines text is being edited) or body text. Text may be cut, copied and pasted between headline text and body text.
+<t tx="T606">Leo supports the standard editing commands that appear in the edit menu: Undo, Cut, Copy, Paste and Clear. These commands work with either headline (when a headlines text is being edited) or body text. Text may be cut, copied and pasted between headline text and body text.
 
 The Select All command selects all text in the body pane.
 </t>
-<t tx="T595">The Shift Left and Shift Right commands shift selected lines in the body text left or right one tab position. The entire line is shifted if any characters of the line are selected.</t>
-<t tx="T596">The Extract, Extract Section and Extract Section Names commands create child nodes whose headline is the first line of the selected body text.
+<t tx="T607">The Shift Left and Shift Right commands shift selected lines in the body text left or right one tab position. The entire line is shifted if any characters of the line are selected.</t>
+<t tx="T608">The Extract, Extract Section and Extract Section Names commands create child nodes whose headline is the first line of the selected body text.
 
 The Extract command creates a new node whose headline is the first line of selected body text and whose body is all following lines of body text.  All selected text is deleted from the original body text. This command is enabled only if the first line contains a section name (enclosed in angle brackets) on a line by itself.
 
 The Extract Section command creates a new node whose headline is the first line of selected text and whose body is @code followed by all the other lines of selected text.  All selected text lines except the first line are deleted from the original body text. This command is enabled only if the first line contains a section name (enclosed in angle brackets), on a line by itself.
 
 The Extract Section Names command creates one or more child nodes, one for each section name (enclosed in angle brackets) in the selected body text.  The headline of each created node is the section name and the body text of each created node is just @code followed by a newline.</t>
-<t tx="T597">New in leo.py v2.5.
+<t tx="T609">New in leo.py v2.5.
 
 The Convert Tabs command converts leading tabs to blanks in a single node.  The Convert Blanks command converts blanks to tabs in a single node.  The Convert All Tabs converts leading tabs to blanks throughout the selected tree.  The Convert All Blanks command converts leading blanks to tabs throughout the selected tree.
 
 All these commands convert between tabs and blanks using the tab width shown in the Preferences panel.</t>
-<t tx="T598">The Execute Script command executes body text as a Python script.  Leo execute the selected text, or the entire body text if no text is selected.
+<t tx="T610">The Execute Script command executes body text as a Python script.  Leo execute the selected text, or the entire body text if no text is selected.
 
 Scripts are executed in a "pristine" environment, that is, with __builtins__ as both the local and global environments.</t>
-<t tx="T599">The Edit menu contains four commands for searching and replacing text.  The Find and Find Again commands search through the outline for text and the Change and Change, Then Find commands change selected text.
+<t tx="T611">The Edit menu contains four commands for searching and replacing text.  The Find and Find Again commands search through the outline for text and the Change and Change, Then Find commands change selected text.
 
 The following check boxes options appear in the search dialog and control the operations of the find and change commands.
 </t>
-<t tx="T600">When checked, the Find and Change commands proceed without stopping.  Output is sent to the log window regarding the progress of the command.
+<t tx="T612">When checked, the Find and Change commands proceed without stopping.  Output is sent to the log window regarding the progress of the command.
 </t>
-<t tx="T601">When checked, the Find and Change commands ignore the case of alphabetic characters when determining matches.
+<t tx="T613">When checked, the Find and Change commands ignore the case of alphabetic characters when determining matches.
 </t>
-<t tx="T602">When checked, the Change command marks all headlines whose headline or body text are changed by the command.
+<t tx="T614">When checked, the Change command marks all headlines whose headline or body text are changed by the command.
 </t>
-<t tx="T603">When checked, the Find and Change commands mark all headlines in which a match is found with the pattern.
+<t tx="T615">When checked, the Find and Change commands mark all headlines in which a match is found with the pattern.
 </t>
-<t tx="T604">When checked, the Find and Change commands treat several characters specially in the find pattern.  The '*' character matches any sequence of zero or more characters.  The '.' character matches any single character. The '^' character at the start of a pattern, or a '$' character at the end of a pattern matches a newline.
+<t tx="T616">When checked, the Find and Change commands treat several characters specially in the find pattern.  The '*' character matches any sequence of zero or more characters.  The '.' character matches any single character. The '^' character at the start of a pattern, or a '$' character at the end of a pattern matches a newline.
 
 Examples:
 The pattern "^abc$" matches lines that only contain "abc".
 The pattern "^a" matches any line starting with "A".
 The pattern "a$" matches any line ending with "a".
 The pattern "^*$" matches any line at all.</t>
-<t tx="T605">When checked, the Find and Change commands search backward through the file.
+<t tx="T617">When checked, the Find and Change commands search backward through the file.
 </t>
-<t tx="T606">When checked, the Find and Change commands search body text.
+<t tx="T618">When checked, the Find and Change commands search body text.
 </t>
-<t tx="T607">When checked, the Find and Change commands search headline text.
+<t tx="T619">When checked, the Find and Change commands search headline text.
 </t>
-<t tx="T608">When checked, the Find and Change commands search only the currently selected headline and its offspring.
+<t tx="T620">When checked, the Find and Change commands search only the currently selected headline and its offspring.
 </t>
-<t tx="T609">When checked, the find pattern must match an entire word.  Words consist of an alphabetic character or underscore, followed by zero or more alphabetic characters, numbers or underscores.
+<t tx="T621">When checked, the find pattern must match an entire word.  Words consist of an alphabetic character or underscore, followed by zero or more alphabetic characters, numbers or underscores.
 </t>
-<t tx="T610">When checked, the Find and Change commands continues at the top of the file when the command reaches the bottom of the file.  For reverse searches, the find or change command continues at the bottom of the file when the command reaches the top of the file.
+<t tx="T622">When checked, the Find and Change commands continues at the top of the file when the command reaches the bottom of the file.  For reverse searches, the find or change command continues at the bottom of the file when the command reaches the top of the file.
 </t>
-<t tx="T611">The Go To Line Number command selects the locations in your outlines corresponding to a line in a derived file.  See the child of this node for full details.</t>
-<t tx="T612">New in leo.py 3.11: Insert Body Time/Date and Insert Headline Time/Date
+<t tx="T623">The Go To Line Number command selects the locations in your outlines corresponding to a line in a derived file.  See the child of this node for full details.</t>
+<t tx="T624">New in leo.py 3.11: Insert Body Time/Date and Insert Headline Time/Date
 commands. These are in the Edit Body and Edit Headline menus respectively.
 These commands insert the formatted time &amp; date into t body or headline text.
 You must be editing a headline to be able to insert the time/date into the
@@ -7011,15 +7280,15 @@ http://www.python.org/doc/current/lib/module-time.html
 If the format specified by either of these two settings is erroneous the
 "%m/%d/%Y %H:%M:%S" format is used by default, resulting in a time/date format
 like 1/30/2003 8:31:55</t>
-<t tx="T613">The Reformat Paragraph command allows you to easily reformat body text.  See the child of this node for full details.</t>
-<t tx="T614">The Match Brackets command is enabled if the cursor is next to one of the following characters in the body pane:
+<t tx="T625">The Reformat Paragraph command allows you to easily reformat body text.  See the child of this node for full details.</t>
+<t tx="T626">The Match Brackets command is enabled if the cursor is next to one of the following characters in the body pane:
 
 ( ) [ ] { } &lt; &gt;
 
 This command looks for the matching character, searching backwards through the body text if the cursor is next to ) ] } or &gt; and searching forward through the text otherwise.  If the cursor is between two brackets the search is made for the bracket matching the leftmost bracket.
 
 If a match is found, the entire range of characters delimited by the brackets is highlighted and the cursor is placed just to the left of the matching characters.  Thus, executing this command twice highlights the range of matched characters without changing the cursor.</t>
-<t tx="T615">New in leo.py 3.11:  The Preferences Panel now contains a checkbox called "Replace tabs with spaces".  It is no longer necessary to type a negative tab width to indicate that tabs are to be converted to spaces.
+<t tx="T627">New in leo.py 3.11:  The Preferences Panel now contains a checkbox called "Replace tabs with spaces".  It is no longer necessary to type a negative tab width to indicate that tabs are to be converted to spaces.
 
 New in leo.py 3.0: The Set Colors command brings up a dialog specifying colors for syntax coloring.  You can specify colors for each syntax coloring construct using a color wheel or by choosing one of the standard Tk color names.  When a color becomes active Leo writes its value or color name to the log pane for your reference.  This is useful when setting coloring options in leoConfig.txt.
 
@@ -7028,14 +7297,14 @@ New in leo.py 3.0:  The Set Font command brings allows you to specify the fonts 
 The Preferences command brings up the preferences dialog. The Page Width option determines where Tangle will break lines. The other two global options control whether the Tangle and Untangle commands will execute a batch file when they are finished. The Default Target Language determines the default syntax coloring and the comment delimiters used by default when Tangling.
 
 New in leo.py 2.5, negative tab widths: Leo converts tabs to blanks as you type when a negative tab width is specified.</t>
-<t tx="T616">Leo understands the following PHP keywords:
+<t tx="T628">Leo understands the following PHP keywords:
 
 &lt;?php, ?&gt;, __CLASS__, __FILE__, __FUNCTION__, __LINE__, and,	as, break, case, cfunction, class, const, continue, declare, default, do, else, elseif,  enddeclare, endfor, endforeach, endif, endswitch, endwhile, eval,  extends, for, foreach, function, global, if, new, old_function, or, static, switch, unset(), use, var, while, xor,
 
 Leo does not yet color the following keywords containing():
 
 array(), die(), echo(), empty(), exit(), include(), include_once(), isset(), list(), print(), require(), require_once(), return()</t>
-<t tx="T617">Leo understands the following LaTex keywords: capitalization is significant.  For example, \vert produces a single vertical line and \Vert produces a double vertical line.
+<t tx="T629">Leo understands the following LaTex keywords: capitalization is significant.  For example, \vert produces a single vertical line and \Vert produces a double vertical line.
 
 \@, \(, \), \{, \},
 
@@ -7150,8 +7419,8 @@ array(), die(), echo(), empty(), exit(), include(), include_once(), isset(), lis
 \Xi, \xi,
 
 \zeta</t>
-<t tx="T618">The Insert Headline command inserts a new headline after the presently selected headline, either as the next sibling or the first child of the presently selected headline if the presently selected headline has children and is expanded.</t>
-<t tx="T619">The Cut Outline, Paste Outline, Copy Outline and Delete Outline commands work on nodes rather than text.  For example, to delete a headline, select the headline and choose the Cut Outline or Delete Outline commands.
+<t tx="T630">The Insert Headline command inserts a new headline after the presently selected headline, either as the next sibling or the first child of the presently selected headline if the presently selected headline has children and is expanded.</t>
+<t tx="T631">The Cut Outline, Paste Outline, Copy Outline and Delete Outline commands work on nodes rather than text.  For example, to delete a headline, select the headline and choose the Cut Outline or Delete Outline commands.
 
 The Cut Outline and Copy Outline copy a text representation of the outline to the clipboard.  This representation is the same as the file format with some information deleted.  You may copy this text representation into a body pane (or into any other text editor) using the Paste command in the Edit menu.
 
@@ -7165,33 +7434,33 @@ To Copy an outline from Borland Leo to leo.py:
 Yes, this is clumsy.  I do not as yet know how to read the System clipboard using Tk, so I use the Tk.Text command to read it for me.  Hopefully this unpleasantness will go away soon.
 
 Warning:  In practice, it is almost always wiser to move clones rather than cutting or pasting them.  Cutting and pasting outlines preserves clones, but the links between clones only exist within the part of the outline that was pasted.  Therefore, if you are cutting and pasting an outline containing clones it is best to cut and paste the _entire_ outline.  Alternatively, you can paste part of an outline, then delete all clones.</t>
-<t tx="T620">The Expand command expands the currently selected node so that all its children are visible.  The Expand All Subheads command expands the currently selected node so that all its offspring are visible.  The Expand All command expands all the nodes of the entire tree.
+<t tx="T632">The Expand command expands the currently selected node so that all its children are visible.  The Expand All Subheads command expands the currently selected node so that all its offspring are visible.  The Expand All command expands all the nodes of the entire tree.
 
 New with leo.py version 1.0 and Borland Leo v2.6:
 
 The Contract Parent contracts the parent node of the present node, making the parent the new present node.</t>
-<t tx="T621">The Move Up, Move Down, Move Left and Move Right commands move the currently selected node in the indicated direction.  The Promote command makes all the children of a node siblings of the node.  The Demote command makes all the siblings that follow a node children of the node.
+<t tx="T633">The Move Up, Move Down, Move Left and Move Right commands move the currently selected node in the indicated direction.  The Promote command makes all the children of a node siblings of the node.  The Demote command makes all the siblings that follow a node children of the node.
 
 The Sort Children command sorts all children of the present node in alphabetical order, based on the headlines of the children.
 
 New in version 1.0 of leo.py and version 2.6 of Borland Leo.
 
 The Sort Siblings command sorts all siblings of the present node in alphabetical order.</t>
-<t tx="T622">The Mark Headline command marks a headline with a red marker  near the leader characters, while the Unmark Headline command removes such a mark.  Only one of these commands appear in the Outline menu at any time: the Mark Headline command appears if the currently selected headline is unmarked.  Otherwise, the Unmark Headline command appears.  The Mark Subheads command marks all offspring of the currently selected node.  The Unmark All command removes the marks from the entire tree.
+<t tx="T634">The Mark Headline command marks a headline with a red marker  near the leader characters, while the Unmark Headline command removes such a mark.  Only one of these commands appear in the Outline menu at any time: the Mark Headline command appears if the currently selected headline is unmarked.  Otherwise, the Unmark Headline command appears.  The Mark Subheads command marks all offspring of the currently selected node.  The Unmark All command removes the marks from the entire tree.
 
 The Mark Changed Items command marks all headlines whose headline or body text has been changed since the file was last saved.  The Mark Changed Roots command marks all changed headlines whose body text contains the @root directive.  This command is especially useful with the Tangle Marked command.</t>
-<t tx="T623">The Equal Sized Panes command adjusts the sizes of the code and body pane of the topmost window so that they are the same height.
+<t tx="T635">The Equal Sized Panes command adjusts the sizes of the code and body pane of the topmost window so that they are the same height.
 </t>
-<t tx="T624">The Cascade command cleans up the screen by cascading all Leo windows.  The Minimize All command minimizes all Leo windows.</t>
-<t tx="T625">This command changes the pane that is currently active.  If the outline pane was active, the body pane becomes active, and vice versa.  This command makes it possible to switch between panes without using the mouse.</t>
-<t tx="T626">New in leo.py 3.0:  The Toggle Split Direction command switches between vertical and horizontal orientations of the Leo window.  In the vertical orientation, the body pane appears below the pane containing the outline and log panes.  In the horizontal orientation, the body pane appears to the left the pane containing the outline and log panes.
+<t tx="T636">The Cascade command cleans up the screen by cascading all Leo windows.  The Minimize All command minimizes all Leo windows.</t>
+<t tx="T637">This command changes the pane that is currently active.  If the outline pane was active, the body pane becomes active, and vice versa.  This command makes it possible to switch between panes without using the mouse.</t>
+<t tx="T638">New in leo.py 3.0:  The Toggle Split Direction command switches between vertical and horizontal orientations of the Leo window.  In the vertical orientation, the body pane appears below the pane containing the outline and log panes.  In the horizontal orientation, the body pane appears to the left the pane containing the outline and log panes.
 
 leoConfig.txt specifies the default direction.  If leoConfig.txt does not exist, or does not specify the direction, the "vertical" orientation is used, just as in previous versions.
 
 By default, the ratio of pane outline pane to the body pane is 0.5 in the vertical orientation and 0.3 in the horizontal orientation.  These two ratios may be changed using leoConfig.txt.</t>
-<t tx="T627">The About Leo command puts up a dialog box showing the version of Leo.
+<t tx="T639">The About Leo command puts up a dialog box showing the version of Leo.
 </t>
-<t tx="T628">The Online Home Page command opens Leo's home page at http://personalpages.tds.net/~edream/front.html.
+<t tx="T640">The Online Home Page command opens Leo's home page at http://personalpages.tds.net/~edream/front.html.
 
 The Open Online Tutorial command opens Joe Orr's excellent ScreenBook tutorial at http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm.
 
@@ -7200,21 +7469,21 @@ The Open Offline Tutorial command opens the file sbooks.chm if it exists in the 
 The Open LeoDocs.leo command opens this file, leoDocs.leo.
 
 </t>
-<t tx="T629">The Open LeoConfig.leo command opens the file leoConfig.leo, the primary source file for the derived file leoConfig.txt.  Use the Tangle All command to update leoConfig.txt from changes made to leoConfig.leo.
+<t tx="T641">The Open LeoConfig.leo command opens the file leoConfig.leo, the primary source file for the derived file leoConfig.txt.  Use the Tangle All command to update leoConfig.txt from changes made to leoConfig.leo.
 
 The Apply Settings command applies the settings in leoConfig.txt.  Leo reads these settings when it begins execution, so the only time you would need to use this command is just after changing leoConfig.txt.</t>
-<t tx="T630">@nocolor
+<t tx="T642">@nocolor
 
 This chapter discusses Leo's relationship with traditional literate programming.</t>
-<t tx="T631">The following sections discuss the main benefits of traditional literate programming. It's worth noting that none of these benefits derives from being able to produce printed output.</t>
-<t tx="T632">Sections add a new dimension to the design and coding process. Choices about what sections do, what they are named, what order they appear in, are choices in a design space different from "normal" programming. This an abstract concept, to be sure. However, the following concrete discussions are really manifestation of working in this new design space.</t>
-<t tx="T633">The names of sections are constrained only by one's design skill, not by any rules of language. You say what you mean, and that becomes both the design and the code. You never have to simulate a concept because concepts become section names.</t>
-<t tx="T634">The visual weight of a web section is simply the length and complexity of the section's name, regardless of how complex the actual definition of the section is. The results of this separation are spectacular. No longer is one reluctant to do extensive error handling (or any other kind of minutia) for fear that it would obscure the essence of the program. Donald Knuth stresses this aspect of literate programming and I fully agree.</t>
-<t tx="T635">Sections can show and enforce relationships between apparently unrelated pieces of code. Comments, macros or functions are other ways to indicate such relationships, but often sections are ideal. Indeed, a natural progression is to create sections as a matter of course. I typically convert a section to a function only when it becomes apparent that a function's greater generality outweighs the inconvenience of having to declare and define the function.</t>
-<t tx="T636">A section name is complex when it implies unwholesome dependencies between the caller (user) of the section and the section itself. Such section names tend to be conspicuous, so that the programmer is lead to revise both the section name and its purpose. Many times my attention has been drawn to a poorly conceived section because I didn't like what its name implied. I have always been able to revise the code to improve the design, either by splitting a section into parts or be simplifying its relation to colleagues.</t>
-<t tx="T637">One of the most surprising thing about literate programming is how severely traditional programming tends to limit comments. In a conventional program the formatting of code must indicate structure, and comments obscure that formatting. Sections in literate programming provide a place for lengthy comments that do not clutter up the code at the place the section is referenced.</t>
-<t tx="T638">The section name often says it all. The reference to the section says everything that the user needs to know, and the section name at the point of definition also eliminates the need for many comments.</t>
-<t tx="T639">@nocolor
+<t tx="T643">The following sections discuss the main benefits of traditional literate programming. It's worth noting that none of these benefits derives from being able to produce printed output.</t>
+<t tx="T644">Sections add a new dimension to the design and coding process. Choices about what sections do, what they are named, what order they appear in, are choices in a design space different from "normal" programming. This an abstract concept, to be sure. However, the following concrete discussions are really manifestation of working in this new design space.</t>
+<t tx="T645">The names of sections are constrained only by one's design skill, not by any rules of language. You say what you mean, and that becomes both the design and the code. You never have to simulate a concept because concepts become section names.</t>
+<t tx="T646">The visual weight of a web section is simply the length and complexity of the section's name, regardless of how complex the actual definition of the section is. The results of this separation are spectacular. No longer is one reluctant to do extensive error handling (or any other kind of minutia) for fear that it would obscure the essence of the program. Donald Knuth stresses this aspect of literate programming and I fully agree.</t>
+<t tx="T647">Sections can show and enforce relationships between apparently unrelated pieces of code. Comments, macros or functions are other ways to indicate such relationships, but often sections are ideal. Indeed, a natural progression is to create sections as a matter of course. I typically convert a section to a function only when it becomes apparent that a function's greater generality outweighs the inconvenience of having to declare and define the function.</t>
+<t tx="T648">A section name is complex when it implies unwholesome dependencies between the caller (user) of the section and the section itself. Such section names tend to be conspicuous, so that the programmer is lead to revise both the section name and its purpose. Many times my attention has been drawn to a poorly conceived section because I didn't like what its name implied. I have always been able to revise the code to improve the design, either by splitting a section into parts or be simplifying its relation to colleagues.</t>
+<t tx="T649">One of the most surprising thing about literate programming is how severely traditional programming tends to limit comments. In a conventional program the formatting of code must indicate structure, and comments obscure that formatting. Sections in literate programming provide a place for lengthy comments that do not clutter up the code at the place the section is referenced.</t>
+<t tx="T650">The section name often says it all. The reference to the section says everything that the user needs to know, and the section name at the point of definition also eliminates the need for many comments.</t>
+<t tx="T651">@nocolor
 
 A typical root starts out with something like.
 @color
@@ -7233,25 +7502,25 @@ In the derived file there is a comment that looks like this:
 @nocolor
 It would be silly to write this comment by hand, though often programmers do just that in order to have a place holder for a mark in the source file. With literate programming the situation is different: the comment indicates that the code came from a particular section; that is, the comment servers a real purpose.
 </t>
-<t tx="T640">These last several paragraphs have discussed comments in detail because the net effect of "putting comments where they belong" is that comments don't clutter the code. Section references hide irrelevant detail, so larger-scale patterns within functions (or declarations) become more apparent. Often just recasting code into web format has created Ahas about my own code, with no special attention to recoding or redesign! Recasting a function as a web raises the real and apparent level of abstraction.</t>
-<t tx="T641">Formatting no longer has to indicate overall design; sections do that. I am less obsessive about formatting code; it simply doesn't matter much whether different sections are formatted consistently because the format of one section has no effect on the look of other sections. Also, I don't worry about most line breaks within documentation parts, or about adding comment delimiters.</t>
-<t tx="T642">Outlines add something brand new to traditional literate programming, namely an explicit mechanism for expressing structure at any level of detail, from largest overall view to smallest detail. The following sections elaborate on this theme.</t>
-<t tx="T643">By far the biggest drawback of conventional literate programming is that there are so many sections; it becomes difficult to understand the relationships, if any, between sections. Using an outline to express a literate programming instantly solves this problem. The programmer is always aware of how sections are related.</t>
-<t tx="T644">Outlines provide a convenient way of expressing the intended scope of commands.  For example, the Tangle command operates only on the presently selected tree. The Extract Section command creates a new section as the last child of the present node.</t>
-<t tx="T645">Clones transform a tree into a directed graph without loops. This is a very powerful data structure. Nothing would be gained by cloning an arbitrary directed graph: in general, the clone would simply become the entire tree. Cloning a tree, however, is very effective.
+<t tx="T652">These last several paragraphs have discussed comments in detail because the net effect of "putting comments where they belong" is that comments don't clutter the code. Section references hide irrelevant detail, so larger-scale patterns within functions (or declarations) become more apparent. Often just recasting code into web format has created Ahas about my own code, with no special attention to recoding or redesign! Recasting a function as a web raises the real and apparent level of abstraction.</t>
+<t tx="T653">Formatting no longer has to indicate overall design; sections do that. I am less obsessive about formatting code; it simply doesn't matter much whether different sections are formatted consistently because the format of one section has no effect on the look of other sections. Also, I don't worry about most line breaks within documentation parts, or about adding comment delimiters.</t>
+<t tx="T654">Outlines add something brand new to traditional literate programming, namely an explicit mechanism for expressing structure at any level of detail, from largest overall view to smallest detail. The following sections elaborate on this theme.</t>
+<t tx="T655">By far the biggest drawback of conventional literate programming is that there are so many sections; it becomes difficult to understand the relationships, if any, between sections. Using an outline to express a literate programming instantly solves this problem. The programmer is always aware of how sections are related.</t>
+<t tx="T656">Outlines provide a convenient way of expressing the intended scope of commands.  For example, the Tangle command operates only on the presently selected tree. The Extract Section command creates a new section as the last child of the present node.</t>
+<t tx="T657">Clones transform a tree into a directed graph without loops. This is a very powerful data structure. Nothing would be gained by cloning an arbitrary directed graph: in general, the clone would simply become the entire tree. Cloning a tree, however, is very effective.
 
 A set of clones becomes essentially a different view of the outline. The set is itself part of the outline, so the outline itself contains an elegant mechanism for representing arbitrarily many views of the same data. It is because of the power of clones that I described MORE in the dedication as possibly the most elegant computer program ever written.
 
 It is easy to create different (and useful) view of a literate outline. For example, I often make clones of all relevant sections of my outline while debugging or adding new features. The clones carry along relevant suboutlines, so essential context is retained, but gathering all the clones together automatically concentrates attention on the problem at hand.</t>
-<t tx="T646">The meaning of a well written literate outline is independent on the order in which sections appear, so outlines may be reorganized at will. In addition, headlines without body text do not affect derived files in any way; such headlines can be inserted freely at any time. In fact, such "nonfunctional" headlines often convey the most information about the structure and design of a large system. Decoupling structure from content in this way is precisely what is needed for flexibility: one can reorganize at will without worrying about changing the meaning of the code.</t>
-<t tx="T647">Hierarchy is often implicit in programming: for example, the grouping of functions into files, or the organization of a single file as a set of functions, etc. An outline directly expresses hierarchy. For example, Leo's tangle or Find and Change commands may be restricted to a particular suboutline. That's a direct expression of an hierarchical constraint or property: I only want to deal with this part of the outline. With outlines, I can do so effortlessly.
+<t tx="T658">The meaning of a well written literate outline is independent on the order in which sections appear, so outlines may be reorganized at will. In addition, headlines without body text do not affect derived files in any way; such headlines can be inserted freely at any time. In fact, such "nonfunctional" headlines often convey the most information about the structure and design of a large system. Decoupling structure from content in this way is precisely what is needed for flexibility: one can reorganize at will without worrying about changing the meaning of the code.</t>
+<t tx="T659">Hierarchy is often implicit in programming: for example, the grouping of functions into files, or the organization of a single file as a set of functions, etc. An outline directly expresses hierarchy. For example, Leo's tangle or Find and Change commands may be restricted to a particular suboutline. That's a direct expression of an hierarchical constraint or property: I only want to deal with this part of the outline. With outlines, I can do so effortlessly.
 
 Traditional literate programming often simulates the hierarchy using "bridge" comments. Those comments are far weaker than explicit structure. Experience with the Print command clearly shows that a clear literate outline can easily become unintelligible when printed, no matter how "beautiful" the typeset printout is.
 
 My experience shows that organizational crutches such as printed listings, tables of contents and indices are much less clear than the corresponding outline. You could say the entire outline is a table of contents!</t>
-<t tx="T648">There are many ways to express a program as a literate outline. Again, the choices made when doing so are choices in another design space. Such choices are important, and add clarity to the entire program, but can only be expressed when the hierarchy is expressed explicitly.</t>
-<t tx="T649">Tangling and untangling are the fundamental operations of literate programming. Any editor that supports literate programming should provide these operations directly. Moreover, Leo automatically untangles @file trees when reading .leo files and tangles @file trees when writing .leo files.  Eliminating the need for explicit tangling and untangling is a huge improvement.</t>
-<t tx="T650">Leo changes the theory and practice of literate programming as follows:
+<t tx="T660">There are many ways to express a program as a literate outline. Again, the choices made when doing so are choices in another design space. Such choices are important, and add clarity to the entire program, but can only be expressed when the hierarchy is expressed explicitly.</t>
+<t tx="T661">Tangling and untangling are the fundamental operations of literate programming. Any editor that supports literate programming should provide these operations directly. Moreover, Leo automatically untangles @file trees when reading .leo files and tangles @file trees when writing .leo files.  Eliminating the need for explicit tangling and untangling is a huge improvement.</t>
+<t tx="T662">Leo changes the theory and practice of literate programming as follows:
 
 1. Leo reduces the need for comments within a program. In particular, bridge or transition phrases are almost always unnecessary in a literate outline. One never needs to say something like, "having just finished with topic x, we turn now to topic y." Literate outlines tend to be far less chatty than flat literate programs.
 
@@ -7262,7 +7531,7 @@ My experience shows that organizational crutches such as printed listings, table
 4. Leo shows that traditional literate programming encourages a too creative approach to programming. A dictionary is a better model for programs than a novel. Literate outlines provide a more regular organization, while providing space for the most lengthy discussions when those discussions are required.
 
 In short, Leo shows that the phrase "literate programming" is a misnomer. Indeed, chunks or sections, the atoms of literate programming, have little to do with literature. Outlines eliminate the need for narrative. One can use chunks or sections to write narrative prose, but Leo demonstrates that one is under no obligation to do so.</t>
-<t tx="T651">@nocolor
+<t tx="T663">@nocolor
 @language python
 
 This chapter documents scripting for Leo.py.  Scripting is always available for leo.py.
@@ -7274,7 +7543,7 @@ This chapter describes only the most useful functions, classes and methods in le
 Therefore, the most complete documentation for scripting is Leo's source code itself, that is, the file LeoPy.leo.  In particular, see the node called "Overview of the Code", the first child of the node called "Code".
 
 You can execute many of the scripts in this chapter by selecting the script and executing the "Execute Script" command.  Note that the print statement will send its output to the console window.</t>
-<t tx="T652">@nocolor
+<t tx="T664">@nocolor
 Leo's source code is a collection classes, along with utility functions in leoGlobals.py.
 
 The _application instance_ is a singleton class representing the entire Leo application.  The ivars (instance variables) of this class represent Leo's global variables.
@@ -7298,7 +7567,7 @@ for w in windows:
 	print w
 	print w.commands
 	print w.commands.rootVnode()</t>
-<t tx="T653">@nocolor
+<t tx="T665">@nocolor
 The top() function returns the Commands object of the top Leo window.
 @color
 
@@ -7324,7 +7593,7 @@ for f in windows:
 	print "commander:", c
 	print "root vnode:", c.rootVnode()
 </t>
-<t tx="T654">@nocolor
+<t tx="T666">@nocolor
 leoGlobal.py defines 6 convenience methods for redirecting stdout and stderr:
 
 - redirectStderr() # Redirect stderr to the current log pane.
@@ -7378,7 +7647,7 @@ if tag == "start1":
 	from leoGlobals import redirectStdout,redirectStderr
 	redirectStdout() # Redirect stdout
 	redirectStderr() # Redirect stderr</t>
-<t tx="T655">@nocolor
+<t tx="T667">@nocolor
 The following script shows how to access the data of a Leo window.
 @color
 
@@ -7389,7 +7658,7 @@ v=c.currentVnode() # get the current vnode.
 print v
 print "head:", v.headString()
 print "body:", v.bodyString()</t>
-<t tx="T656">@nocolor
+<t tx="T668">@nocolor
 The following routines will work whether or not v is the current vnode.  
 @color
 
@@ -7405,7 +7674,7 @@ print "head:", head
 # This won't really anyting because we haven changed body or head.
 v.setBodyStringOrPane(body)     # set body text of v to s.
 v.setHeadStringOrHeadline(head) # set headline text of v to s.</t>
-<t tx="T657">@nocolor
+<t tx="T669">@nocolor
 The following shows how to access all the vnodes of an outline in order.
 @color
 
@@ -7417,7 +7686,7 @@ while v:
 	print v
 	v=v.threadNext()
 </t>
-<t tx="T658">@nocolor
+<t tx="T670">@nocolor
 All of Leo's commands update the screen so as to eliminate flicker.  That is, commands cause the outline pane to be redrawn only once.  This is typically done using c.beginUpdate() and c.endUpdate().
 
 c.beginUpdate() suppresses all drawing in the outline pane until the matching c.endUpdate() is seen.  These methods can be nested; each c.beginUpdate() must have a corresponding c.endUpdate().  c.endUpdate takes an optional parameter.  If this parameter is false, no redrawing is done.  This can sometimes be useful; inner code can tell other code whether redrawing is actually required.
@@ -7439,7 +7708,7 @@ c.beginUpdate()
 # ...code sets flag if the screen needs redrawing.
 flag = 0
 c.endUpdate(flag)</t>
-<t tx="T659">@nocolor
+<t tx="T671">@nocolor
 Leo dispatches commands using the frame.doCommand and "Menu Command Handlers" defined in the node by the same name in leoFrame.py.  This node contains the menu handlers for _all_ of Leo's menu commands, organized by menu and submenu.
 
 I recommend that your scripts use frame.doCommand for the following reasons:
@@ -7475,7 +7744,7 @@ Among these details is this: commanders create subcommanders to handle complex c
 - The undoer class (leoUndo.py) handles the Undo command.
 - All other command are handled by the commander itself (leoCommands.py)
 </t>
-<t tx="T660">@nocolor
+<t tx="T672">@nocolor
 Your scripts may also get one of the following prefs ivars in a commander.
 
 	c.tangle_batch_flag
@@ -7502,7 +7771,7 @@ for ivar in ivars:
 	exec("val=c."+ivar) # do val = c.ivar
 	print "c.%-20s = %s" % (ivar,`val`)
 </t>
-<t tx="T661">@nocolor
+<t tx="T673">@nocolor
 Your scripts may also set preferences by setting one of the following commands ivars: c.tangle_batch_flag, c.untangle_batch_flag, c.use_header_flag, c.output_doc_flag, c.page_width, c.tab_width, c.tangle_directory, c.target_language.
 
 If the prefs panel is open, your script may call f.prefsPanel.init(c) to update the corresponding prefs panel ivars.
@@ -7517,11 +7786,11 @@ if f.prefsPanel:
 	f.prefsPanel.init(c)
 # If your script sets c.tab_width your script may call f.setTabWidth to redraw the screen.
 f.setTabWidth(c.tab_width)</t>
-<t tx="T662">@nocolor
+<t tx="T674">@nocolor
 The file leoFindScript.py contains functions for finding and changing text from within scripts. The children of this node show two examples of using the functions.  See the @file leoFindScript.py tree in LeoPy.leo for full details.
 @color
 </t>
-<t tx="T663">@nocolor
+<t tx="T675">@nocolor
 The findall function returns a list of tuples (v,pos) describing matches in c's entire tree.
 @color
 
@@ -7537,7 +7806,7 @@ for v,pos in result:
 	body = v.bodyString()
 	print '\n%-4d %s' % (pos,v.headString())
 	print get_line_after(body,pos)</t>
-<t tx="T664">@nocolor
+<t tx="T676">@nocolor
 The reFindall function returns a list of tuples (v,mo,pos), where mo is a "Match Object". The reFlags argument are flags to re.search()
 @color
 
@@ -7554,10 +7823,10 @@ for v,mo,pos in result:
 	print '\n%-4d %s' % (pos,v.headString())
 	print get_line_after(body,pos)
 </t>
-<t tx="T665">@nocolor
+<t tx="T677">@nocolor
 Most scripts will use the vnode class methods.  The following section summarizes the most useful methods that your scripts can use.  For a complete list, see the @file leoNodes.py tree of LeoPy.leo.
 @color</t>
-<t tx="T666">@nocolor
+<t tx="T678">@nocolor
 This section lists the most useful vnode methods for getting information from vnodes.
 @color
 
@@ -7596,7 +7865,7 @@ v.isExpanded()
 v.isMarked()
 v.isVisible()
 v.isVisited()</t>
-<t tx="T667">@nocolor
+<t tx="T679">@nocolor
 This section lists the most useful vnode methods that set vnode data or properties.
 @color
 
@@ -7616,7 +7885,7 @@ c.clearAllVisited() # Clears all visited bits in c's tree.
 v.clearVisited()
 v.setVisited()
 </t>
-<t tx="T668">@nocolor
+<t tx="T680">@nocolor
 Here is an example code that uses vnode methods.
 @color
 
@@ -7637,7 +7906,7 @@ c=top() ; v = c.currentVnode()
 siblings = children(v.parent())
 for sib in siblings:
 	print sib</t>
-<t tx="T669">@nocolor
+<t tx="T681">@nocolor
 The file leoGlobals.py contains a large number of "utility" functions.  For a list of all these functions, do the following:
 @color
 
@@ -7675,7 +7944,7 @@ es("Hello",newline=false) ; es(" World")
 @nocolor
 For complete details of all routines defined in leoGlobals.py, see LeoPy.leo.
 </t>
-<t tx="T670">@nocolor
+<t tx="T682">@nocolor
 @language python
 
 This appendix discusses how you can execute Python scripts in the Borland version of Leo.  It lists all the Python functions, classes and methods that are available in the Borland version of Leo.  The Borland version of Leo creates these using an extension module; they don't happen naturally as is the case in leo.py.
@@ -7683,7 +7952,7 @@ This appendix discusses how you can execute Python scripts in the Borland versio
 This appendix uses the same terminology and conventions as does Chapter 7 itself.  That is, c represents a commander, v represents a vnode, and s represents a Python string.  In addition, b represents a boolean value.
 
 </t>
-<t tx="T671">For leo.py:
+<t tx="T683">For leo.py:
 
 leo.py requires Python 2.1 or later.  Scripting is always available for leo.py.
 
@@ -7699,14 +7968,14 @@ leoEval.py  		Manages Leo's Python window.
 wxdb.py				Runs the pdb debugger from Leo's Python window.
 sitecustomize.py	Optional site-specific customization called by 
 					..\Python\Lib\site.py.</t>
-<t tx="T672">Executing the "Open Python Window" command from Leo's Window menu brings up a window with two panes.  You enter Python source code in the top pane.  Pressing return executes the code in the top pane.  Results are sent to the bottom pane.
+<t tx="T684">Executing the "Open Python Window" command from Leo's Window menu brings up a window with two panes.  You enter Python source code in the top pane.  Pressing return executes the code in the top pane.  Results are sent to the bottom pane.
 
 To run the standard pdb debugger inside Leo:
 
 1. import wxdb
 
 2. call the wxdb.run, wxdb.runeval and wxdb.runcall routines.  Output goes to the output pane.  Input comes from a modal dialog.  The only way to close this dialog is by typing the quit.</t>
-<t tx="T673">c = leo.topCommand()
+<t tx="T685">c = leo.topCommand()
 
 The topCommand() function returns the Commands object of the top Leo window.
 
@@ -7715,7 +7984,7 @@ For example:
 	import leo
 	c=leo.topCommand()
 	v=c.rootVnode()</t>
-<t tx="T674">@nocolor
+<t tx="T686">@nocolor
 
 [c] = leo.getCommands()
 
@@ -7732,7 +8001,7 @@ for c in clist[1:]:
     name=c.fileName()
     print 'The root of ', name, ' is ', root.headString()
 </t>
-<t tx="T675">w = leo.getLeoPyWindow()
+<t tx="T687">w = leo.getLeoPyWindow()
 
 The getLeoPyWindow() method returns the interface class for Leo's Python window.  This class contains the following routines:
 
@@ -7741,7 +8010,7 @@ w.readline()
 w.setStatus()
 w.write()
 </t>
-<t tx="T676">@nocolor
+<t tx="T688">@nocolor
 
 The commands class represents the commands for a _particular_ open Leo window.  The following description is organized by the menus in Leo's outline window.  All commands return None; use Commands methods to determine whether an operation may take place _before_ attempting the operation.
 
@@ -7752,7 +8021,7 @@ The Commands class provides almost all the operations for creating, deleting, mo
 Scripts have no access to Leo's interactive Find/Change commands.  It is easy to write scripts that mimic these commands.  Indeed, these scripts will have the full power of Python's patter matching at their disposal.
 
 @color</t>
-<t tx="T677">@nocolor
+<t tx="T689">@nocolor
 
 c.BeginUpdate() suppresses all drawing until the matching c.EndUpdate() is seen.  These methods can be nested and each c.BeginUpdate() must have a corresponding c.EndUpdate().  Wrapping code in calls to c.BeginUpdate() and c.EndUpdate() eliminates screen flicker.
 
@@ -7765,7 +8034,7 @@ c.EndUpdate() calls c.Repaint(), so the typical way to update the screen is simp
 	c.BeginUpdate()
 	# code that alters the screen.
 	c.EndUpdate()</t>
-<t tx="T678">@code
+<t tx="T690">@code
 
 c.new(windowName)
 b=c.open(fileName)
@@ -7794,7 +8063,7 @@ c.importMoreText(fileNames)
 
 c.exportMoreText()  # copies MORE format text to the clipboard
 </t>
-<t tx="T679">@code
+<t tx="T691">@code
 
 c.cut
 c.copy
@@ -7810,7 +8079,7 @@ c.extractSectionNames()
 c.convertBlanks()
 c.ReformatParagraph()
 </t>
-<t tx="T680">@code
+<t tx="T692">@code
 
 c.cutOutline()
 c.copyOutline()
@@ -7860,11 +8129,11 @@ c.unmarkAll()
 c.goToNextDirtyHeadline()
 c.goToNextMarkedHeadline()
 </t>
-<t tx="T681">@code
+<t tx="T693">@code
 
 c.equalSizedPanes()
 </t>
-<t tx="T682">@nocolor
+<t tx="T694">@nocolor
 
 The following routines all return true if the corresponding Menu command should be enabled.  The actual menu commands themselves silently do nothing if they are called when the corresponding canXXX routines returns false.
 
@@ -7902,7 +8171,7 @@ b=canShiftBodyLeft()
 b=canShiftBodyRight()
 b=canUndo()
 b=canUnmarkAll()</t>
-<t tx="T683">@nocolor
+<t tx="T695">@nocolor
 These utilities are important.  There is no need to call them when using Leo's own commands, and they will come in handy when creating your own commands.
 @color
 
@@ -7933,7 +8202,7 @@ c.makeVisible(v) # Expand outline if necessary to make v visible.
 c.selectVnode(v)  # Make v the presently selected vnode.
 c.synchVnode()  # No longer used.  Retained for compatibility with old scripts.
 </t>
-<t tx="T684">@nocolor
+<t tx="T696">@nocolor
 
 This class exists to handle the interaction between the Python interpreter and Leo's Python window.  Scripts would typically not use this class.
 
@@ -7956,7 +8225,7 @@ w.setStatus(n)
 	# n=3: call readline to get stdin input.
 w.write(s)
 	# Writes s to the output pane of the Python window.</t>
-<t tx="T685">@nocolor
+<t tx="T697">@nocolor
 
 This class provides access to the Preference settings and the contents of the log window.
 
@@ -7982,12 +8251,12 @@ p.setDoLeoUnBat(b)
 p.setPageWidth(n)
 p.setTangleOutputsHeaderLine(b)
 p.setTangleOutputsDocChunks(b)</t>
-<t tx="T686">@nocolor
+<t tx="T698">@nocolor
 
 The vnode class represents a node containing headline text, body text and various properties.
 
 @color</t>
-<t tx="T687">@nocolor
+<t tx="T699">@nocolor
 
 This section lists all the methods that return data and properties of vnodes.
 
@@ -8055,7 +8324,7 @@ b=v.isExpanded()
 b=v.isMarked()
 b=v.isVisible()
 b=v.isVisited()</t>
-<t tx="T688">@nocolor
+<t tx="T700">@nocolor
 
 This section lists all vnode methods that set vnode data or properties.
 
@@ -8087,15 +8356,15 @@ The "visited bit" may be used by commands or scripts for any purpose.  Commands 
 v.clearVisited()
 v.setVisited()
 </t>
-<t tx="T689">This chapter discusses the history of Leo and its various incarnations.  A large part of this chapter discusses the process by which I discovered how to implement @file trees.</t>
-<t tx="T690">Leo grew out of my efforts to use Donald Knuth's "CWEB system of Structured documentation."  I had known of literate programming since the mid 1980's, but I never understood how to make it work for me: I was confused about when to create new sections and it was difficult to keep track of all the sections once they were created.
+<t tx="T701">This chapter discusses the history of Leo and its various incarnations.  A large part of this chapter discusses the process by which I discovered how to implement @file trees.</t>
+<t tx="T702">Leo grew out of my efforts to use Donald Knuth's "CWEB system of Structured documentation."  I had known of literate programming since the mid 1980's, but I never understood how to make it work for me: I was confused about when to create new sections and it was difficult to keep track of all the sections once they were created.
 
 In November 1995 I started thinking about literate programming in earnest.  Over the holidays I mused about making literate programs more understandable.  In January 1996 the fog of confusion suddenly cleared.  I summarized my thinking with the phrase, "Webs are outlines in disguise".  I strongly suspected that outline views were the key to literate programming, but many details remained obscure.  It still wasn't clear exactly how to represent webs in an outline.
 
 March 5, 1996, is the most important date in Leo's history.   While returning from a day of skiing, I discussed my thoughts with Rebecca.  During that conversation I realized that I could use the MORE outliner as a prototype for a "literate outliner." I immediately started work on my first literate outline. It quickly became apparent that outlines work: all my old problems with literate programming vanished.   Furthermore, I realized that MORE's outlines could form the basis for Leo's screen design. Rather than opening body text within the outline, as MORE does, I decided to use a separate body pane.
 
 In about a week I hacked a translator called M2Cwhich allowed me to use MORE to write real code.  I would write code in MORE, copy the text to the clipboard in MORE format, then run M2C, which would tangle the outline into C code.  This process was useful, if clumsy.  I called the language used in the outline SWEB, for simplified CWEB.  Much later I converted to the noweb language. noweb is simpler than SWEB, more standard and more general.</t>
-<t tx="T691">Throughout 1996 I created a version of Leo on the Macintosh in plain C and the native Mac Toolbox.   This was a poor choice; I wasted a huge amount of time programming with these primitive tools.  However, this effort convinced me that Leo was a great way to program.
+<t tx="T703">Throughout 1996 I created a version of Leo on the Macintosh in plain C and the native Mac Toolbox.   This was a poor choice; I wasted a huge amount of time programming with these primitive tools.  However, this effort convinced me that Leo was a great way to program.
 
 Late in 1997 I wrote a Print command to typeset an outline. Printing (Weaving) is supposedly a key feature of literate programming.  Imagine my surprise when I realized that such a "beautiful" program listing was almost unintelligible; all the structure inherent in the outline was lost!  I saw clearly that typesetting, no matter how well done, is no substitute for explicit structure.
 
@@ -8106,24 +8375,24 @@ In May of 1999 I began work on the Borland version of Leo for Windows.  This ver
 In May of 2000 I began work an wxWindows version of Leo.  This was supposed to be a cross-platform version.  Alas, after much work I chose to abandon the wxWindows version.  There were too many bugs and too many incompatibilities between platforms.  Something good did come from this effort.  I spent a lot of time adding Python scripting to the wxWindows code and I became familiar with Python and its internals.
 
 In October of 2001 I began work on the leo.py, an Open Software version of leo.py, a version of Leo written in Python and Tk.  At last I have found the proper platform for Leo.  leo.py naturally supports scripting in Python.  The combination of Python and Tk is incredibly powerful, very easy to use, and truly cross platform.  I rewrote Leo in Python in about two months!  For the first time in my career I no longer am anxious while programming; it simply isn't possible to create bad bugs in Python.</t>
-<t tx="T692">The following sections give a pseudo-chronological list of the major Aha's involved in creating Leo2. These Aha's form the real design and theory of operation of Leo. See the "Diary", "Notes" and "Letters to Speed Ream" sections in LeoDocs.leo for a more accurate and less tidy history of Leo2.
+<t tx="T704">The following sections give a pseudo-chronological list of the major Aha's involved in creating Leo2. These Aha's form the real design and theory of operation of Leo. See the "Diary", "Notes" and "Letters to Speed Ream" sections in LeoDocs.leo for a more accurate and less tidy history of Leo2.
 
 I am writing these notes for several reasons.  First, the initial design and coding of Leo2, spanning a period of about 8 weeks, was some of the most creative and rewarding work I have ever done. The result is elegant and simple.  I'm proud of it.  Second, much of the design work is not reflected in the code, because improved design often eliminated code entirely. The final code is so elegant that it obscures the hard work that created it.  Third, you must understand this design in order to understand the implementation of @file trees and their derived files.  Someday someone else may take charge of Leo. That person should know what really makes Leo2 work.</t>
-<t tx="T693">In the summer of 2001 I began work on a project that for a long time I had considered impossible.  I had long considered that "private" file formats such as .leo files were the only way to represent an outline properly and safely.  I'm not sure exactly what changed my mind, but I finally was willing to consider that information embedded in derived files might be useful.  This meant accepting the possibility that sentinel lines might be corrupted.  This was a crucial first step.  If we can trust the user not to corrupt sentinel lines than we can embed almost any kind of information into a derived file.
+<t tx="T705">In the summer of 2001 I began work on a project that for a long time I had considered impossible.  I had long considered that "private" file formats such as .leo files were the only way to represent an outline properly and safely.  I'm not sure exactly what changed my mind, but I finally was willing to consider that information embedded in derived files might be useful.  This meant accepting the possibility that sentinel lines might be corrupted.  This was a crucial first step.  If we can trust the user not to corrupt sentinel lines than we can embed almost any kind of information into a derived file.
 
 There were several motivations for this work.  I wanted to eliminate the need for explicit Tangle and Untangle commands. I thought of this as "Untangle on Read/Tangle on Write."  If tangling and untangling could be made automatic it would save the user a lot of work.  I also wanted to make derived files the primary sources files.  .leo files might be made much smaller derived files contained the primary source information. This hope turned out to be false.
 
 The result of this design work was something I originally called Leo2, though I now usually prefer to talk about @file trees.  Initially most design issues were unresolved or unknown. I resolved to attempt a robust error-recovery scheme, not knowing in advance what that might involve. I also wanted to solve what I thought of as the "cross-file clone" problem: clones that point from a .leo outline into a derived file. With Leo1 cross-file clones do not exist; everything is in the same .leo file. It was clear that Leo2 would have to change some aspects of clones, but all details were fuzzy.
 </t>
-<t tx="T694">The next step was also crucial.  I started to use Leo1 as a prototype to design what the new body pane would look like to the user. In retrospect, using Leo1 as a prototype for Leo2 was just as inspired as using MORE as a prototype for Leo1.  Both prototypes marked the true beginning of their respective projects.  The Leo2 prototype was a mockup in Python of the code for reading and writing derived files. The file LeoDocs.leo contain these first prototype nodes.
+<t tx="T706">The next step was also crucial.  I started to use Leo1 as a prototype to design what the new body pane would look like to the user. In retrospect, using Leo1 as a prototype for Leo2 was just as inspired as using MORE as a prototype for Leo1.  Both prototypes marked the true beginning of their respective projects.  The Leo2 prototype was a mockup in Python of the code for reading and writing derived files. The file LeoDocs.leo contain these first prototype nodes.
 
 Writing the prototype got me thinking about improving noweb.  With my experience with Leo1, I was able to create a new markup language that took advantage of outline structure.  I called the new language  "simplified noweb", though that terminology is obsolete.  I created @file nodes to distinguish between the old and new ways of creating derived files.  In Leo1, the @code directive is simply an abbreviation for a section definition line.  Simplified noweb used @c as an abbreviation for @code.  More importantly, simplified noweb used @c to separate doc parts from code parts without necessarily specifying a section name.  It quickly became apparent that most nodes could be unnamed.  All I needed was the @others directive to specify the location for all such unnamed nodes.
 
 From the start, simplified noweb was a joy to use. Indeed, the @others directive could replace all section definition lines.  Furthermore, I could make @doc directive optional if the body pane started in "code mode".  But this meant that plain body text could become a "literate" program! This was an amazing discovery.  These Aha's got me excited about Leo2. This was important, as it motivated me to do a lot of difficult design work.</t>
-<t tx="T695">In spite of this excitement, I was uneasy. After much "daydreaming" I realized that I was afraid that reading and writing derived files would be interrupted by a long series of alerts. I saw that designing the "user interaction" during reading and writing would be very important. The next Aha was that I could replace a long series of alerts with messages to the log window, followed by a single "summary" alert. Much later I saw how to eliminate alerts entirely.
+<t tx="T707">In spite of this excitement, I was uneasy. After much "daydreaming" I realized that I was afraid that reading and writing derived files would be interrupted by a long series of alerts. I saw that designing the "user interaction" during reading and writing would be very important. The next Aha was that I could replace a long series of alerts with messages to the log window, followed by a single "summary" alert. Much later I saw how to eliminate alerts entirely.
 
 At this time I thought there would be two kinds of "errors" while reading derived files. Warnings would alert the user that something non-serious had happened. True errors would alert the user that data might have been lost. Indeed, if Leo2 saves orphan and ignored nodes in a .leo file under an @file node, then read errors could endanger such nodes. Much later I saw that a robust error recovery scheme demands that @file nodes not contain orphan and @ignored nodes. (More on this subject later.) But if orphan and @ignored nodes are moved out of @file trees, there are no read errors that can cause data loss! So the distinction between warnings and errors finally went away.</t>
-<t tx="T696">I next turned my attention to writing @file nodes.  A huge Aha: I realized that sentinel lines must contain both a leading and a trailing newline.  The general principle is this: the write code must contain absolutely no "conditional" logic, because otherwise the read code could not figure out whether the condition should be true or false.  So derived files contain blank lines between sentinel lines. These "extra" newlines are very useful, because the read (untangle) code can now easily determine exactly where every blank, tab and newline of the derived file came from.  It would be hard to overstate how important this simplifying principle was in practice.
+<t tx="T708">I next turned my attention to writing @file nodes.  A huge Aha: I realized that sentinel lines must contain both a leading and a trailing newline.  The general principle is this: the write code must contain absolutely no "conditional" logic, because otherwise the read code could not figure out whether the condition should be true or false.  So derived files contain blank lines between sentinel lines. These "extra" newlines are very useful, because the read (untangle) code can now easily determine exactly where every blank, tab and newline of the derived file came from.  It would be hard to overstate how important this simplifying principle was in practice.
 
 Much later, with urging from a customer, I realized that the write code could safely remove "extra" newlines between sentinels with a caching scheme in the low level atFile::os() routine. This scheme does not alter the body of the write code in any way: in effect, sentinels still contain leading and trailing "logical" newlines. The read code had to be modified to handle "missing" leading newlines, but this can always be done assuming that sentinels still contain logical leading and trailing newlines!
 
@@ -8133,7 +8402,7 @@ At about this time I designed a clever way of having the write code tell the rea
 Tangle outputs words until the line would become too long, and then it inserts a newline. To preserve all whitespace, tangle always includes the whitespace that terminates a word on the same line as the word itself. Therefore, split lines always end in whitespace. To make this convention work, tangle only has to delete the trailing whitespace of all lines that are followed by a 'real' newline."
 
 </t>
-<t tx="T697">After the write code was working I turned my attention to the read (untangle) code.  Leo's Untangle command  is the most complex and difficult code I have ever written. Imagine my surprise when I realized that the Leo2 read code is essentially trivial! Indeed, the Leo2 untangle code is like an assembler. The read code scans lines of a derived files looking for "opcodes", that is, sentinel lines, and executes some simple code for each separate opcode. The heart of this code is the scanText routine in atFile.cpp.
+<t tx="T709">After the write code was working I turned my attention to the read (untangle) code.  Leo's Untangle command  is the most complex and difficult code I have ever written. Imagine my surprise when I realized that the Leo2 read code is essentially trivial! Indeed, the Leo2 untangle code is like an assembler. The read code scans lines of a derived files looking for "opcodes", that is, sentinel lines, and executes some simple code for each separate opcode. The heart of this code is the scanText routine in atFile.cpp.
 
 The read code was written and debugged in less than two days! It is the most elegant code I have ever written. While perfecting the read code I realized that sentinel lines should show the complete nesting structure found in the outline, even if this information seems redundant. For example, I was tempted to use a single sentinel to represent an @other directive, but finally abandoned this plan in favor of the @+other and @-other sentinels.
 
@@ -8142,20 +8411,20 @@ This redundancy greatly simplified the read code and made the structure of deriv
 The atFile::createNthChild method is a very important: it ensures that nodes will be correctly inserted into the outline. createNthChild must be bullet-proof if the Read code is to be robust. Note that the write code outputs @node sentinels, that is, section definitions, in the order in which sections are referenced in the outline, not the order in which sections appear in the outline. So createNthChild must insert the n'th node of parent p properly even if p contains fewer than n-1 children! The write code ensures that section references are properly nested: @node sentinels are enclosed in @node sentinels for all their ancestors in the @file tree. createNthChild creates dummy siblings as needed, then replaces the dummy siblings later when their actual definitions, that is, @node sentinels, are encountered.
 
 At this point the fundamental read/write code was complete. I found three minor bugs in the code over the next week or so, but it was clear that the read/write code formed a rock-solid base from which to continue design and implementation. This was an entirely unexpected surprise.</t>
-<t tx="T698">At this point I could read and write derived files "by hand", using temporary Read and Write commands. The next step was to integrate the reading and writing of derived files with the loading and saving of .leo files.  From time to time I made minor changes to the drivers for the read/write code to accommodate the Load and Save code, but at no time did I significantly alter the read or write code itself.
+<t tx="T710">At this point I could read and write derived files "by hand", using temporary Read and Write commands. The next step was to integrate the reading and writing of derived files with the loading and saving of .leo files.  From time to time I made minor changes to the drivers for the read/write code to accommodate the Load and Save code, but at no time did I significantly alter the read or write code itself.
 
 The user interaction of the Load and Save commands drove the design and implementation of the load/store code. The most important questions were: "what do we tell the user?", and "what does the user do with the information?" It turns out that the user can't make any complex decision during error recovery because the user doesn't have nearly enough information to make an informed choice. In turn, this means that certain kinds of error recovery schemes are out of the question...</t>
-<t tx="T699">I now turned my attention to "attributes" of nodes.  Most attributes, like user marks, are non-essential. However, clone information is essential; we must never lose clone links. At this time I had a preliminary design for cross-file clones that involved a two part "pointer" consisting of a full path name and an immutable clone index within the derived file. Eventually such pointers completely disappeared, but the immutable clone indices remain.
+<t tx="T711">I now turned my attention to "attributes" of nodes.  Most attributes, like user marks, are non-essential. However, clone information is essential; we must never lose clone links. At this time I had a preliminary design for cross-file clones that involved a two part "pointer" consisting of a full path name and an immutable clone index within the derived file. Eventually such pointers completely disappeared, but the immutable clone indices remain.
 
 My first thought was that it would be good to store all attributes in @node sentinels in the derived file, but experience showed that would be irritating. Indeed, one wants Leo2 to rewrite derived files only if something essential has changed. For example, one doesn't want to rewrite the derived file just because a different node as been selected.
 
 At this point I had another Aha: we can use the .leo file to store all non-essential attributes. For example, this means that the .leo file, not the derived files, will change if we select a new node. In effect, the .leo file mirrors the derived file. The only reason to store nodes in the .leo file under an @file node is to carry these attributes, so Leo2 wrote dummy nodes that do not reference body text.  Much later I saw that dummy nodes were dangerous and that .leo files should contain all information found in derived files.</t>
-<t tx="T700">The concept of mirroring created a huge breakthrough with cross-file clones: Here is an excerpt of an email i sent to my brother Speed:
+<t tx="T712">The concept of mirroring created a huge breakthrough with cross-file clones: Here is an excerpt of an email i sent to my brother Speed:
 
 "I realized this morning that since a .leo file contains dummy vnodes for all nodes in a derived file, those dummy nodes can carry clone info! I changed one line to make sure that the write code always writes clone info in dummy vnodes and voila! Cross-file clones worked!"
 
 All of Leo1's clone code could be used completely unchanged. Everything "just works".</t>
-<t tx="T701">At first I thought we could make sure that the .leo file always correctly mirrors all derived file, but disastrous experience showed that is a completely false hope. Indeed, backup .leo files will almost never mirror derived file correctly. So it became urgent to find a completely fool-proof error recovery scheme.
+<t tx="T713">At first I thought we could make sure that the .leo file always correctly mirrors all derived file, but disastrous experience showed that is a completely false hope. Indeed, backup .leo files will almost never mirror derived file correctly. So it became urgent to find a completely fool-proof error recovery scheme.
 
 I had known for quite a while that error recovery should work "as if" the mirroring nodes were deleted, then recreated afresh. Several failed attempts at an error recovery scheme convinced me that error recovery would actually have to delete all dummy nodes and then do a complete reread. This is what Leo2 does.
 
@@ -8177,8 +8446,8 @@ Leo2 will issue a warning (not an error) if an orphan or @ignored node appears a
 This ends the original history of Leo2. In fact, it took quite a while before Leo recovered properly from all errors. I finally saw that .leo files should duplicate all information in derived files. This allows a .leo file to be used a single backup file and allows maximal error recovery in all situations.  It took several months to stamp out several subtle bugs involving clones that caused spurious read errors. Such errors undermine confidence in Leo and can cause disastrous reversions. See my diary entries for January 2002 in leo.py for details.
 
 </t>
-<t tx="T702">This chapter discusses how Leo's code works, paying particular attention to topics that have caused difficulties in design or implementation.  This information will be of use primarily to those wanting to change Leo's code.  The previous chapter contains a full discussion of how Leo reads and writes @file trees.</t>
-<t tx="T703">This documentation describes leo.py. Other versions of Leo are similar in design; the differences between versions are generally not interesting enough to describe here.
+<t tx="T714">This chapter discusses how Leo's code works, paying particular attention to topics that have caused difficulties in design or implementation.  This information will be of use primarily to those wanting to change Leo's code.  The previous chapter contains a full discussion of how Leo reads and writes @file trees.</t>
+<t tx="T715">This documentation describes leo.py. Other versions of Leo are similar in design; the differences between versions are generally not interesting enough to describe here.
 
 All versions of Leo are organized as a collection of classes.  The general organization of Leo has remained remarkably stable throughout all versions of Leo, although the names of classes are different in different versions. Smalltalk's Model/View/Controller terminology is a good way to organize Leo's classes conceptually.
 
@@ -8196,7 +8465,7 @@ Several classes combine aspects of model, view and controller. For example, the 
 
 We use the following convention throughout this documentation. Any variable named c is a commander, i.e., an instance of the Commands class in leoCommands.py. Variables named v and t are vnodes and tnodes respectively. These classes are defined in leoNode.py.
 </t>
-<t tx="T704">The vnode and tnode classes represent most of the data contained in the outline. These classes are Leo's fundamental Model classes.
+<t tx="T716">The vnode and tnode classes represent most of the data contained in the outline. These classes are Leo's fundamental Model classes.
 
 A vnode (visual node) represents a headline at a particular location on the screen. When a headline is cloned, vnodes must be copied. vnodes persist even if they are not drawn on the screen. Commanders call vnode routines to insert, delete and move headlines.
 
@@ -8213,7 +8482,7 @@ Present versions of Leo recompute these tnodes indices whenever Leo writes any .
 A second kind of node index is the clone index used in @+node sentinels in files derived from @file trees. As with indices in .leo files, indices in derived files are required so that Leo can know unambiguously which nodes are cloned to each other.
 
 It is imperative that clone indices be computed correctly, that is, that tnode @+node sentinels have the same index if and only if the corresponding vnodes are cloned. Early versions of leo.py had several bugs involving these clone indices. Such bugs are extremely serious because they corrupt the derived file and cause read errors when Leo reads the @file tree. Leo must guarantee that clone indices are always recomputed properly. This is not as simple as it might appear at first. In particular, Leo's commands must ensure that @file trees are marked dirty whenever any changed is made that affects cloned nodes within the tree. For example, a change made outside any @file tree may make several @file trees dirty if the change is made to a node with clones in those @file trees.</t>
-<t tx="T705">@nocolor
+<t tx="T717">@nocolor
 
 Leo must redraw the outline pane when commands are executed and as the result of mouse and keyboard events.  The main challenges are eliminating flicker and handling events properly.  These topics are interrelated.
 
@@ -8239,7 +8508,7 @@ The leoTree class redraws all icons automatically when c.redraw() is called.  Th
 Handling events. Besides redrawing the screen, Leo must handle events or commands that change the text in the outline or body panes.  It is surprisingly difficult to ensure that headline and body text corresponds to the vnode and tnode corresponding to presently selected outline, and vice versa. For example, when the user selects a new headline in the outline pane, we must ensure that 1) the vnode and tnode of the previously selected node have up-to-date information and 2) the body pane is loaded from the correct data in the corresponding tnode.  Early versions of Leo attempted to satisfy these conditions when the user switched outline nodes.  Such attempts never worked well; there were too many special cases.  Later versions of Leo, including leo.py, use a much more direct approach.  The event handlers make sure that the vnode and tnode corresponding to the presently selected node are always kept up-to-date.  In particular, every keystroke in the body pane causes the presently selected tnode to be updated immediately.  There is no longer any need for the c.synchVnode method, though that method still exists for compatibility with old scripts.
 
 The leoTree class contains all the event handlers for the body and outline panes.  The actual work is done in the idle_head_key and idle_body_key methods.  These routines are surprisingly complex; they must handle all the tasks mentioned above, as well as others. The idle_head_key and idle_body_key methods should not be called outside the leoTree class.  However, it often happens that code that handles user commands must simulate an event.  That is, the code needs to indicate that headline or body text has changed so that the screen may be redrawn properly.   The leoTree class defines the following simplified event handlers: onBodyChanged, onBodyWillChange, onBodyKey, onHeadChanged and onHeadlineKey.  Commanders and subcommanders call these event handlers to indicate that a command has changed, or will change, the headline or body text.  Calling event handlers rather than c.beginUpdate and c.endUpdate ensures that the outline pane is redrawn only when needed.</t>
-<t tx="T706">The following is a definition of clones from the user's point of view.
+<t tx="T718">The following is a definition of clones from the user's point of view.
 
 Definition 1
 
@@ -8301,7 +8570,7 @@ Inserting or deleting nodes can cause the clone bits of all joined nodes to chan
 
 Leo's XML file format does not contain join lists. This makes it easy to change a Leo file "by hand." If join lists were a part of the file, as they are in the Mac version of Leo, corrupting a join list would corrupt the entire file. It is easy to recreate the join lists when reading a file using a dedicated field in the tnode.  This field is the head of a list of all vnodes that points to the tnode. After reading all nodes, Leo creates this list with one pass through the vnodes.  Leo then convert each list to a circular list with one additional pass through the tnodes.
 </t>
-<t tx="T707">The find and change commands are tricky; there are many details that must be handled properly. This documentation describes the leo.py code. Previous versions of Leo used an inferior scheme.  The following principles govern the LeoFind class:
+<t tx="T719">The find and change commands are tricky; there are many details that must be handled properly. This documentation describes the leo.py code. Previous versions of Leo used an inferior scheme.  The following principles govern the LeoFind class:
 
 1.	Find and Change commands initialize themselves using only the state of the present Leo window. In particular, the Find class must not save internal state information from one invocation to the next. This means that when the user changes the nodes, or selects new text in headline or body text, those changes will affect the next invocation of any Find or Change command. Failure to follow this principle caused all kinds of problems in the Borland and Macintosh codes. There is one exception to this rule: we must remember where interactive wrapped searches start. This principle simplifies the code because most ivars do not persist. However, each command must ensure that the Leo window is left in a state suitable for restarting the incremental (interactive) Find and Change commands. Details of initialization are discussed below.
 
@@ -8312,7 +8581,7 @@ Initialization involves setting the self.c, self.v, self.in_headline, self.wrapp
 
 Using Tk.Text widgets for both headlines and body text results in a huge simplification of the code. Indeed, the searching code does not know whether it is searching headline or body text. The search code knows only that self.s_text is a Tk.Text widget that contains the text to be searched or changed and the insert and sel Tk attributes of self.search_text indicate the range of text to be searched. Searching headline and body text simultaneously is complicated. The selectNextVnode() method handles the many details involved by setting self.s_text and its insert and sel attributes.
 </t>
-<t tx="T708">This section describes Leo's explicit Tangle and Untangle commands.  Such commands operate only on @root and @unit trees.  The previous chapter discusses the implicit Tangle on Write/Untangle on Read processes used to read and write @file trees.
+<t tx="T720">This section describes Leo's explicit Tangle and Untangle commands.  Such commands operate only on @root and @unit trees.  The previous chapter discusses the implicit Tangle on Write/Untangle on Read processes used to read and write @file trees.
 
 The Tangle command translates the selected @root tree into one or more well-formatted C source files. The outline should contain directives, sections references and section definitions, as described in Chapter 4. The Untangle command is essentially the reverse of the Tangle command. The Tangle command creates a derived file from an @root tree; the Untangle command incorporates changes made to derived files back into the @root tree.
 
@@ -8335,16 +8604,34 @@ Untangle operates in two passes. The first pass finds definitions in the derived
 Untangle's second pass enters definitions from the outline into the Tangle Symbol Table, or TST. The second pass simultaneously updates all sections in the outline whose definition in the TST does not match the definition in the UST.  The central coding insight of the Untangle command is that the second pass of Untangle is almost identical to the first pass of Tangle! That is, Tangle and Untangle share key parts of code, namely the skip_body() method and its allies.  Just when skip_body() enters a definition into the symbol table, all the information is present that Untangle needs to update that definition.
 
 </t>
-<t tx="T709">Only leo.py supports unlimited undo.  Unlimited undo is straightforward; it merely requires that all commands that affect the outline or body text must be undoable. In other words, everything that affects the outline or body text must be remembered.
+<t tx="T721">The following paragraphs discuss code-level details.  You should not need to read this section in order to use Leo.
+
+1. Leo uses unicode objects in vnodes and tnodes to denote headline and body text.  Note that unicode strings have no encoding; only plain strings have encodings. This means that once an (encoded) plain string has been converted to a unicode string it doesn't matter how the unicode string was created.  This is the key that makes Leo's new code robust. 
+
+So internally Leo never has to worry about encodings. The only times encoding matter is when encoded strings are converted to and from unicode when Leo reads or writes files (or when the passing strings to and from Tk.Text widgets, but the idea is the same).
+
+2. Python expressions that mix unicode strings u and plain strings s, like:
+
+	u + s 
+or 
+	u == s 
+or 
+	u[5] == s[2:]
+
+are promoted to unicode objects using the "system encoding". This encoding should never be changed, but we can't assume that we know what it is, so for safety we should assume the most restrictive encoding, namely "ascii".  With this assumption, Leo's code can't throw an exception during these promotions provided that: 
+
+- All strings are converted to unicode when Leo reads files or gets text from Tk.Text widgets. 
+- All string literals in Leo's code have only ascii characters.</t>
+<t tx="T722">Only leo.py supports unlimited undo.  Unlimited undo is straightforward; it merely requires that all commands that affect the outline or body text must be undoable. In other words, everything that affects the outline or body text must be remembered.
 
 We may think of all the actions that may be Undone or Redone as a string of beads (undo nodes). Undoing an operation moves backwards to the next bead; redoing an operation moves forwards to the next bead. A bead pointer points to the present bead. The bead pointer points in front of the first bead when Undo is disabled.  The bead pointer points at the last bead when Redo is disabled. An undo node is a Python dictionary containing all information needed to undo or redo the operation.
 
 The Undo command uses the present bead to undo the action, then moves the bead pointer backwards. The Redo command uses the bead after the present bead to redo the action, then moves the bead pointer forwards. All undoable operations call setUndoParams() to create a new bead. The list of beads does not branch; all undoable operations (except the Undo and Redo commands themselves) delete any beads following the newly created bead.
 
 I did not invent this model of unlimited undo.  I first came across it in the documentation for Apple's Yellow Box classes.</t>
-<t tx="T710">@nocolor
+<t tx="T723">@nocolor
 @ignore</t>
-<t tx="T711">To convert an @root tree to an @file tree, choose the root of the tree to be converted, then do the following in the Python window:
+<t tx="T724">To convert an @root tree to an @file tree, choose the root of the tree to be converted, then do the following in the Python window:
 
 	import c2py
 	c2py.leo1to2()
@@ -8366,16 +8653,16 @@ To convert @root trees to @file trees by hand:
 6. If a section is referenced in more than one node (a rare occurence in my code), clone the defining node and move one clone under each referencing node.
 
 7. If a node contains the definitions of several sections, place each different definition in a different node.</t>
-<t tx="T712">@ignore</t>
-<t tx="T713">In @root and @unit trees, the @code directive indicates the start of a code section. The headline must contain a valid section name.
+<t tx="T725">@ignore</t>
+<t tx="T726">In @root and @unit trees, the @code directive indicates the start of a code section. The headline must contain a valid section name.
 
 In @file trees, the @c directive indicates the start of a code section.
 
 </t>
-<t tx="T714">This directive affects only the Weave (Print) command (and possibly the Create CWEB command).  It indicates the start of a chapter.  This puts the chapter title at the top of each page.</t>
-<t tx="T715">Indicates that syntax coloring is enabled for the body text in which it appears and all descendent nodes ( unless over-ridden in the descendent nodes ).</t>
-<t tx="T716">This directive indicates the delimiters to be used by the Tangle command.</t>
-<t tx="T717">@nocolor
+<t tx="T727">This directive affects only the Weave (Print) command (and possibly the Create CWEB command).  It indicates the start of a chapter.  This puts the chapter title at the top of each page.</t>
+<t tx="T728">Indicates that syntax coloring is enabled for the body text in which it appears and all descendent nodes ( unless over-ridden in the descendent nodes ).</t>
+<t tx="T729">This directive indicates the delimiters to be used by the Tangle command.</t>
+<t tx="T730">@nocolor
 
 The @delims directive changes the comment strings used to mark sentinel lines. This directive is often used to place Javascript text inside XML or HTML files.  This directive is valid only in @file trees.  You can use the @comment directive in @unit or @root trees.
 
@@ -8392,18 +8679,18 @@ HTML stuff
 
 @nocolor
 Adding, deleting or changing @@delims sentinels will destroy Leo's ability to read the derived file. Mistakes using the @delims directive have no effect on Leo, though such mistakes will thoroughly mess up a derived file as far as compilers, HTML renderers, etc. are concerned.</t>
-<t tx="T718">In @root and @unit trees, the @doc directive indicates the start of a comment enclosed in the beginning and ending block comment delimiters ( see @comment ).
+<t tx="T731">In @root and @unit trees, the @doc directive indicates the start of a comment enclosed in the beginning and ending block comment delimiters ( see @comment ).
 
 In @file trees, the @(space) (@ followed by a space, tab or newline) indicates the start of an doc part.  @(space) is optional: it is not needed if the body text contains no doc part.
 
 </t>
-<t tx="T719">Strictly speaking, @file is not a directive; it is not valid in body text.
+<t tx="T732">Strictly speaking, @file is not a directive; it is not valid in body text.
 
 A headline that starts with @file &lt;filename&gt; forms the root of an @file tree.  Leo writes all nodes in the tree to the derived file &lt;filename&gt; when any Save command is executed.  The @file tree is recreated from the derived file when the .leo file is opened.
 
 The Leo2 documentation discusses how to write code in @file trees.
 </t>
-<t tx="T720">The @first directive allows you to place lines at the very start of files derived from @file nodes. For example, the body text of @file spam.py might be:
+<t tx="T733">The @first directive allows you to place lines at the very start of files derived from @file nodes. For example, the body text of @file spam.py might be:
 
 	@first #! /usr/bin/env python
 
@@ -8415,8 +8702,8 @@ The body text of @file foo.perl might be:
 
 	@first #! /usr/bin/env python
 	@first # more comments.</t>
-<t tx="T721">This directive causes the Tangle and Untangle commands to ignore this node and all its descendents.</t>
-<t tx="T722">The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle.
+<t tx="T734">This directive causes the Tangle and Untangle commands to ignore this node and all its descendents.</t>
+<t tx="T735">The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle.
 
 The form of this directive is
 
@@ -8433,8 +8720,8 @@ but the following is invalid:
 @LANGUAGE html
 
 The @comment directive is now officially deprecated: you should use the @language directive whenever possible.  At present Untangle will not process an @root or @unit node if an @comment directive is in effect.  Why?  Because Untangle can't be sure of properly parsing a derived file if the language of the derived file isn't known.  It might be possible to assume some defaults in this case, but that is not done at present and is not a high priority.</t>
-<t tx="T723">Indicates that syntax coloring is disabled for the body text in which it appears and all descendent nodes ( unless over-ridden in the descendent nodes ).</t>
-<t tx="T724">The @others directive is valid only in @file trees.  The @others directive causes the expansion of all unnamed nodes to be output to the derived file in the position of the @others directive.
+<t tx="T736">Indicates that syntax coloring is disabled for the body text in which it appears and all descendent nodes ( unless over-ridden in the descendent nodes ).</t>
+<t tx="T737">The @others directive is valid only in @file trees.  The @others directive causes the expansion of all unnamed nodes to be output to the derived file in the position of the @others directive.
 
 For example, a common Python idiom is:
 
@@ -8456,9 +8743,9 @@ class y:
 The named nodes &lt;&lt;members of x&gt;&gt; and &lt;&lt;members of y&gt;&gt; contain only an @others directive.  Define members of the x and y classes as descendents of the nodes containing @Others.
 
 </t>
-<t tx="T725">The @pagewidth directives affects how Tangle outputs block comments:  it specifies the width of output pages in columns.  The form of the @pagewidth directive is @pagewidth n, where n is a positive integer.
+<t tx="T738">The @pagewidth directives affects how Tangle outputs block comments:  it specifies the width of output pages in columns.  The form of the @pagewidth directive is @pagewidth n, where n is a positive integer.
 </t>
-<t tx="T726">The @path directive specifies the directory to be used if an @file or @root directive does not specify a full path name. The form of the @path directive is @path filename, where filename is taken to be everything following @path to the end of the line.
+<t tx="T739">The @path directive specifies the directory to be used if an @file or @root directive does not specify a full path name. The form of the @path directive is @path filename, where filename is taken to be everything following @path to the end of the line.
 
 If the filename in @file pathname or @root pathname is an absolute filename the location of the derived file is specified only by the filename.  Otherwise, if the filename is a relative filename, the location of the derived file is relative to:
 	
@@ -8467,31 +8754,31 @@ If the filename in @file pathname or @root pathname is an absolute filename the 
 3. the directory in which the .leo resides if the .leo file has ever been saved.
 
 An error occurs if no absolute path can be computed according to these rules, or if the filename or directory does not exist.</t>
-<t tx="T727">This directive starts the text that forms a single derived file, after all section references have been replaced by their definitions.
+<t tx="T740">This directive starts the text that forms a single derived file, after all section references have been replaced by their definitions.
 
 By default, only descendents of the @root node are examined for section definitions.  However, if the @root directive is a descendent of a node containing the @unit directive, all descendents of the @unit node are examined for section definitions.</t>
-<t tx="T728">This directive affects only the Weave (Print) command (and possibly the Create CWEB command).  It indicates the start of a section.  This puts the section title at the top of each page.</t>
-<t tx="T729">The @silent causes Tangle to output no comments for doc chunks and no sentinel lines for Untangle. Comments written by the user in code sections are always output.
+<t tx="T741">This directive affects only the Weave (Print) command (and possibly the Create CWEB command).  It indicates the start of a section.  This puts the section title at the top of each page.</t>
+<t tx="T742">The @silent causes Tangle to output no comments for doc chunks and no sentinel lines for Untangle. Comments written by the user in code sections are always output.
 
 </t>
-<t tx="T730">The @tabwidth directives affects how Tangle outputs leading whitespace:  it specifies the width of tabs in spaces.  The form of the @tabwidth directive is @tabwidth n, where n is a positive integer.
+<t tx="T743">The @tabwidth directives affects how Tangle outputs leading whitespace:  it specifies the width of tabs in spaces.  The form of the @tabwidth directive is @tabwidth n, where n is a positive integer.
 </t>
-<t tx="T731">The @terse directive causes Tangle not to output comments for doc chunks.  Tangle will output only those sentinel comments needed by Untangle.  As always, comments written by the user in code sections are output.
+<t tx="T744">The @terse directive causes Tangle not to output comments for doc chunks.  Tangle will output only those sentinel comments needed by Untangle.  As always, comments written by the user in code sections are output.
 
 These directives are not valid in @file trees.</t>
-<t tx="T732">Expands the nodes searched for section definitions when processing an @root directive.
+<t tx="T745">Expands the nodes searched for section definitions when processing an @root directive.
 
 By default, only descendents of the @root node are examined for section definitions.  However, if the @root directive is a descendent of a node containing the @unit directive, all descendents of the @unit node are examined for section definitions.</t>
-<t tx="T733">The @verbose directive causes Tangle to output comments for doc chunks and sentinel comments needed by Untangle.  This is the default behavior if none of the @verbose, @terse or @silent directives are in effect.
+<t tx="T746">The @verbose directive causes Tangle to output comments for doc chunks and sentinel comments needed by Untangle.  This is the default behavior if none of the @verbose, @terse or @silent directives are in effect.
 </t>
-<t tx="T734">The following error messages may be generated by the Tangle commands.  Such errors appear in the log window, which will be opened if necessary.	
+<t tx="T747">The following error messages may be generated by the Tangle commands.  Such errors appear in the log window, which will be opened if necessary.	
 </t>
-<t tx="T735">A file error occurred while trying to reopen the temporary file used during tangling.</t>
-<t tx="T736">A file error occurred while trying to change the name of the temporary file used during tangling.</t>
-<t tx="T737">An @code directive appeared in body text whose header does not contain a section name.</t>
-<t tx="T738">An @directive was seen somewhere other than the start of a line.</t>
-<t tx="T739">Tangle detected more than 20 errors.</t>
-<t tx="T740">A section was defined in terms of itself, either directly or indirectly.  The trace shows the chain of section definitions that resulted in the illegal definition.
+<t tx="T748">A file error occurred while trying to reopen the temporary file used during tangling.</t>
+<t tx="T749">A file error occurred while trying to change the name of the temporary file used during tangling.</t>
+<t tx="T750">An @code directive appeared in body text whose header does not contain a section name.</t>
+<t tx="T751">An @directive was seen somewhere other than the start of a line.</t>
+<t tx="T752">Tangle detected more than 20 errors.</t>
+<t tx="T753">A section was defined in terms of itself, either directly or indirectly.  The trace shows the chain of section definitions that resulted in the illegal definition.
 
 This message is followed by a walkback of the section names that recursively reference the section.  The walkback looks like this:
 
@@ -8499,33 +8786,33 @@ called from &lt;&lt; section name &gt;&gt;
 called from &lt;&lt; section name &gt;&gt;
 ...
 </t>
-<t tx="T741">Tangle did not write a file because errors were found.</t>
-<t tx="T742">A C-language comment was not properly terminated.</t>
-<t tx="T743">The file name in an @root directive was not terminated with the proper delimiter.</t>
-<t tx="T744">A section name was not properly terminated before the end of the line in which it started.
+<t tx="T754">Tangle did not write a file because errors were found.</t>
+<t tx="T755">A C-language comment was not properly terminated.</t>
+<t tx="T756">The file name in an @root directive was not terminated with the proper delimiter.</t>
+<t tx="T757">A section name was not properly terminated before the end of the line in which it started.
 </t>
-<t tx="T745">A C-language string or character constant was not properly terminated.</t>
-<t tx="T746">Something that looks like a section definition was seen in the middle of a line.</t>
-<t tx="T747">A section was defined using more than 100 levels of section definitions (!)
+<t tx="T758">A C-language string or character constant was not properly terminated.</t>
+<t tx="T759">Something that looks like a section definition was seen in the middle of a line.</t>
+<t tx="T760">A section was defined using more than 100 levels of section definitions (!)
 
 You could easily create an outline containing every computer program ever written in less than 50 levels.</t>
-<t tx="T748">The selected outline contained no @root directive.</t>
-<t tx="T749">A reference to an undefined section was encountered.</t>
-<t tx="T750">Tangle outputs 2-character WEB control code in a comment.  This message is given if we find such comments in a code definition.</t>
-<t tx="T751">(The text of the duplicate definition follows.)
+<t tx="T761">The selected outline contained no @root directive.</t>
+<t tx="T762">A reference to an undefined section was encountered.</t>
+<t tx="T763">Tangle outputs 2-character WEB control code in a comment.  This message is given if we find such comments in a code definition.</t>
+<t tx="T764">(The text of the duplicate definition follows.)
 
 The section may have been defined in more than one place.</t>
-<t tx="T752">The indicated section appears in the outline but is never referenced.</t>
-<t tx="T753">The following error messages may be generated by the Untangle commands.  Such errors appear in the log window, which will be opened if necessary.	
+<t tx="T765">The indicated section appears in the outline but is never referenced.</t>
+<t tx="T766">The following error messages may be generated by the Untangle commands.  Such errors appear in the log window, which will be opened if necessary.	
 </t>
-<t tx="T754">Two expansions of &lt;&lt; section name &gt;&gt; were different in the derived file.  This typically arises when the programmer changes one of the expansions but not the other.</t>
-<t tx="T755">No end sentinel line was found for a part of the expansion of the code in the @root node.  This is likely the result of adding, deleting or altering a sentinel line.</t>
-<t tx="T756">No end sentinel line was found for the expansion of the code in the @root node.  This is likely the result of adding, deleting or altering a sentinel line.</t>
-<t tx="T757">The end sentinel name for &lt;&lt; section name &gt;&gt; was expected but not found.  This is likely the result of adding, deleting or altering a sentinel line.</t>
-<t tx="T758">The end of the file was reached before encountering the end sentinel line for
+<t tx="T767">Two expansions of &lt;&lt; section name &gt;&gt; were different in the derived file.  This typically arises when the programmer changes one of the expansions but not the other.</t>
+<t tx="T768">No end sentinel line was found for a part of the expansion of the code in the @root node.  This is likely the result of adding, deleting or altering a sentinel line.</t>
+<t tx="T769">No end sentinel line was found for the expansion of the code in the @root node.  This is likely the result of adding, deleting or altering a sentinel line.</t>
+<t tx="T770">The end sentinel name for &lt;&lt; section name &gt;&gt; was expected but not found.  This is likely the result of adding, deleting or altering a sentinel line.</t>
+<t tx="T771">The end of the file was reached before encountering the end sentinel line for
 	&lt;&lt; section name &gt;&gt;.
 This is likely the result of adding, deleting or altering a sentinel line.</t>
-<t tx="T759">The following are all minor errors, meaning that no data is likely to have been lost.  You can proceed as usual.
+<t tx="T772">The following are all minor errors, meaning that no data is likely to have been lost.  You can proceed as usual.
 
 1. Rereading file.  Clone links into this file will be lost
 
@@ -8546,7 +8833,7 @@ The name of the derived file may have been changed.
 5. Ignoring text after @-leo
 
 Some text follows the trailing @-leo sentinel line.  Make sure this text is not important.</t>
-<t tx="T760">The following are all serious errors, meaning that the data in a derived file has been corrupted.  You should restore the information from a backup .leo file using the Read Outline Only commands, followed by a Write @file Nodes command.
+<t tx="T773">The following are all serious errors, meaning that the data in a derived file has been corrupted.  You should restore the information from a backup .leo file using the Read Outline Only commands, followed by a Write @file Nodes command.
 
  1. Bad @+leo sentinel in &lt;filename&gt;
  2. Bad @delims"
@@ -8562,7 +8849,7 @@ Some text follows the trailing @-leo sentinel line.  Make sure this text is not 
 12. Unexpected end of file. Expecting &lt;sentinel kind&gt; sentinel
 13. Unknown sentinel: &lt;sentinel line&gt;
 </t>
-<t tx="T761">Errors while writing @file nodes are harmless.  No information is lost because all information is written to the .leo file rather than the derived file.
+<t tx="T774">Errors while writing @file nodes are harmless.  No information is lost because all information is written to the .leo file rather than the derived file.
 
 1. Bad @delims directive
 
@@ -8596,7 +8883,7 @@ The path may be specified by the Preferences panel, an @path directive or by a p
 			
 The node given by &lt;headline&gt; contains a reference to &lt;&lt;section name&gt;&gt;, 
 but no named node for &lt;&lt;section name&gt;&gt; exists in the descendents of &lt;headline&gt;	</t>
-<t tx="T762">New for leo.py v2.0 and Borland Leo 2.6:
+<t tx="T775">New for leo.py v2.0 and Borland Leo 2.6:
 
 Leo suppresses blank lines between sentinels by default.  This is an upward compatible change in the format of derived files: leo.py v2.0 can read derived files from all previous versions of Leo, but previous versions of Leo can not read derived files without blanks lines.
 
@@ -8608,12 +8895,12 @@ to
 
 Note: leo.py v2.0 can read derived files without blank lines between sentinels regardless of the setting of self.suppress_newlines.
 </t>
-<t tx="T763">The following sections describe the comment lines embedded in derived files.  It is not necessary to understand this in detail.  All you need to know is this:
+<t tx="T776">The following sections describe the comment lines embedded in derived files.  It is not necessary to understand this in detail.  All you need to know is this:
 
 1. Sentinel lines are comment lines whose first character (following the comment delimiter) is @.
 2. Do not alter sentinel lines in derived files.  Doing so will corrupt the outline structure!
 3. Do not alter blank lines in front of, behind or between sentinels.  Doing so will corrupt the outline structure in older versions of Leo.</t>
-<t tx="T764">The @delims directive changes the comment strings used to mark sentinel lines.  The @delims directive contains one or two delimiters, separated by whitespace.  If only one delim is present it delimits single-line comments.  If two delims are present they delimit block comments. The @delim directive can _not_ be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels.
+<t tx="T777">The @delims directive changes the comment strings used to mark sentinel lines.  The @delims directive contains one or two delimiters, separated by whitespace.  If only one delim is present it delimits single-line comments.  If two delims are present they delimit block comments. The @delim directive can _not_ be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels.
 
 NB: Leo can not revert to previous delimiters automatically; you must change back to previous delimiters using another @delims directive.  For example:
 
@@ -8622,14 +8909,14 @@ Javascript stuff
 @delims &lt;-- --&gt;
 HTML stuff
 </t>
-<t tx="T765">A file produced by an @file node begins with an @+leo sentinel.  The last lines of the file should be the matching @-leo sentinel
+<t tx="T778">A file produced by an @file node begins with an @+leo sentinel.  The last lines of the file should be the matching @-leo sentinel
 
 The comment delimiters that delimit all sentinels are specified by the first line of the file, that is, the @+leo sentinel.  This sentinel has the form:
 
 &lt;opening_delim&gt;@leo&lt;closing_delim&gt;
 
 &lt;closing_delim&gt; may be empty, in which case single-line comments are used.  The Write code generates single-line comments if possible.  Presently, the Write logic generates single line comments for all languages except HTML.  (Block comments can be specified using the @comment directive.)</t>
-<t tx="T766">Suppose the parent node of a node N is P and that P has n children.  The sentinel 
+<t tx="T779">Suppose the parent node of a node N is P and that P has n children.  The sentinel 
 
   @+node:&lt;child_index&gt;:&lt;status_fields&gt;:&lt;headline&gt;
 
@@ -8646,23 +8933,23 @@ The &lt;status_field&gt; field the cloneIndex field of the form: "C=nnn", where 
 The &lt;headline&gt; field contains headline text, not reference text.
 
 The indentation of the expansion is increased by the extra indentation of preceding the reference.  tree level never affects indentation level.</t>
-<t tx="T767">If a node contains significant I(non-whitespace) body text, @+body and @-body sentinels surround the text.  These sentinels are nested within @node directives.
+<t tx="T780">If a node contains significant I(non-whitespace) body text, @+body and @-body sentinels surround the text.  These sentinels are nested within @node directives.
 </t>
-<t tx="T768">@+doc and @-doc delimit doc parts within a node that start with @doc. These sentinels are nested within @body directives.  Similarly, @+at and @-at delimit doc parts within a node that start with @&lt;whitespace&gt;.
+<t tx="T781">@+doc and @-doc delimit doc parts within a node that start with @doc. These sentinels are nested within @body directives.  Similarly, @+at and @-at delimit doc parts within a node that start with @&lt;whitespace&gt;.
 
 We use the following convention to determine where putDocPart has inserted line breaks: A line in a doc part is followed by an inserted newline if and only if the newline if  preceded by whitespace.  To make this convention work, the Write deletes the trailing whitespace of all lines that are followed by a "real" newline.</t>
-<t tx="T769">@+others indicates the start of the expansion of an @+others directive, which continues until the matching @-others. @others sentinels are nested within @body sentinels; the expansion of the @others directive always occurs within the body text of some node N.
+<t tx="T782">@+others indicates the start of the expansion of an @+others directive, which continues until the matching @-others. @others sentinels are nested within @body sentinels; the expansion of the @others directive always occurs within the body text of some node N.
 </t>
-<t tx="T770">The @delims directive inserts @@delims sentinels into the derived file. The new delimiter strings continue in effect until the next @@delims sentinel _in the derived file_ or the end of the derived file.
+<t tx="T783">The @delims directive inserts @@delims sentinels into the derived file. The new delimiter strings continue in effect until the next @@delims sentinel _in the derived file_ or the end of the derived file.
 
 Adding, deleting or changing @@delim _sentinels_ will destroy Leo's ability to read the derived file.  Mistakes in using the @delims _directives_ have no effect on Leo, though such mistakes will thoroughly mess up a derived file as far as compilers, HTML renderers, etc. are concerned.</t>
-<t tx="T771">The @@&lt;text&gt; sentinel represents any line starting with @ in body text except @&lt;whitespace&gt;, @doc and @others. Examples:
+<t tx="T784">The @@&lt;text&gt; sentinel represents any line starting with @ in body text except @&lt;whitespace&gt;, @doc and @others. Examples:
 
   @@nocolor
   @@pagewidth 80
   @@tabwidth 4
   @@code</t>
-<t tx="T772">@verbatim indicates that the next line of the derived file is not a sentinel.  This escape convention allows body text to contain lines that would otherwise be considered sentinel lines.
+<t tx="T785">@verbatim indicates that the next line of the derived file is not a sentinel.  This escape convention allows body text to contain lines that would otherwise be considered sentinel lines.
 
 New for leo.py version 2.0 and Borland Leo version 2.6:
 
@@ -8671,8 +8958,8 @@ New for leo.py version 2.0 and Borland Leo version 2.6:
   &lt;&lt; ref &gt;&gt; #+others
 
 This sentinel is required only when blank lines are suppressed between sentinel lines.</t>
-<t tx="T773">@&lt;&lt;section_name&gt;&gt; represents section reference.  If the reference does not end the line, the sentinel line ending the expansion is followed by the remainder of the reference line.  This allows the Read code to recreate the reference line exactly.</t>
-<t tx="T774">The following is a list of features I'd like to add to Leo.
+<t tx="T786">@&lt;&lt;section_name&gt;&gt; represents section reference.  If the reference does not end the line, the sentinel line ending the expansion is followed by the remainder of the reference line.  This allows the Read code to recreate the reference line exactly.</t>
+<t tx="T787">The following is a list of features I'd like to add to Leo.
 
 Styled text and graphics
 
@@ -8681,7 +8968,7 @@ Except for syntax coloring, there is no way to style text in an outline.  The ul
 Lists of sections
 
 It would be useful to have easily available, possibly as a pop-up menu, a list of the most recently accessed sections, and possibly a full list of all section names as well.</t>
-<t tx="T775">The following documentation applies to @file trees.
+<t tx="T788">The following documentation applies to @file trees.
 
 @file node:			Node whose headline starts with @file filename.
 Named node:			Node whose headline starts with  &lt;&lt;section_name&gt;&gt;.
@@ -8740,7 +9027,7 @@ Typically a single @others directive in the @file node suffices.  For example, t
   @others
 
 Sections may be defined in any descendant of the @file node provided that the method is not a descendant of any definition node.</t>
-<t tx="T776">The following is a list of the major differences between the Macintosh and PC versions of Leo.
+<t tx="T789">The following is a list of the major differences between the Macintosh and PC versions of Leo.
 
 1.  The PC version does not have a Print (Weave) command. This command is under development.
 
@@ -8756,7 +9043,7 @@ Sections may be defined in any descendant of the @file node provided that the me
 
 
 </t>
-<t tx="T777">The commercial Mac and PC versions of Leo will use the same file format, so nothing special will need to be done to transfer files between these two versions.  Transferring information between the commercial PC version and the free Mac version is relatively straightforward.
+<t tx="T790">The commercial Mac and PC versions of Leo will use the same file format, so nothing special will need to be done to transfer files between these two versions.  Transferring information between the commercial PC version and the free Mac version is relatively straightforward.
 
 1. Create a text file in MORE format.
 
@@ -8772,15 +9059,47 @@ On the Mac, load the text file into a text editor.  Select all the text and copy
 
 On the PC, load the text file into a text editor.  Select all the text and copy it to the clipboard.  In Leo, choose the Import More Text command to create the outline.
 </t>
-<t tx="T778">Sherlock is a flexible tracing and measurement package for C, C++ and Objective C.  All parts of Sherlock are in the public domain.
+<t tx="T791">Sherlock is a flexible tracing and measurement package for C, C++ and Objective C.  All parts of Sherlock are in the public domain.
 
 You will see Sherlock macros throughout Leo's C++ code.  The most common of these macros are FTAG, STATB, STATX, TRACEP, TRACEPB and TRACEPX.  These Sherlock macros are not functional in the production version of Leo.
 
 Full documentation for Sherlock can be found at:
 	http://personalpages.tds.net/~edream/sl_index.html</t>
-<t tx="T779">Leo now uses unicode internally for most strings.  This solves a lot of problems.  The children of this node discuss the details...
+<t tx="T792">Leo now uses unicode internally for most strings.  This solves a lot of problems.  The children of this node discuss the details...
 </t>
-<t tx="T780">This Appendix describes Leo's file format.  Most users of Leo can skip this appendix.  This technical information will be of use only to those wanting to process Leo files with special-purpose filters.
+<t tx="T793">Leo now uses unicode internally for most strings.  The highlights:
+
+1. Leo converts headline and body text to unicode when reading .leo files and derived files.  Both .leo files and derived files may specify their encoding, with "utf-8" being used by default.  If the encoding used in a derived file is not "utf-8" it is represented in the @+leo sentinel line.  For example:
+
+#@+leo-encoding=iso-8859-1.
+
+The "utf-8" encoding is a "lossless" encoding (it can represent all unicode code points), so encoding and decoding to and from utf-8 plain strings will never cause a problem.  When reading or writing a character not in a "lossy" encoding, Leo converts such characters to '?' and issues a warning. 
+
+2. When writing .leo files and derived files Leo uses the same encoding used to read the file, again with "utf-8" used as a default.
+
+3. leoConfig.py contains two settings used to specify the default encoding used for .leo and derived files:
+
+default_derived_file_encoding = UTF-8 
+new_leo_file_encoding = UTF-8 
+
+I do not recommend changing new_leo_file_encoding (see the comments in leoConfig.leo) and you may set 
+default_derived_file_encoding to anything that makes sense for you.
+
+4. You may use the @encoding directive to specify the encoding used in a derived file.  You can't mix encodings in a single derived file.
+
+This is all should need to know to use extended character sets on Leo.</t>
+<t tx="T794">leoConfig.py now contains two new settings, with the defaults shown below: 
+
+default_derived_file_encoding = UTF-8 
+new_leo_file_encoding = UTF-8 
+
+These control the default encodings used when writing derived files and .leo files.
+
+I do not recommend changing new_leo_file_encoding (see the comments in leoConfig.leo)
+
+You may set default_derived_file_encoding to anything that makes sense for you.
+</t>
+<t tx="T795">This Appendix describes Leo's file format.  Most users of Leo can skip this appendix.  This technical information will be of use only to those wanting to process Leo files with special-purpose filters.
 
 Leo's uses XML for its file format.  The following sections describe this format in detail.  The last node gives an example, and it will be useful to refer to this example frequently.
 
@@ -8804,15 +9123,15 @@ The format of Leo2 .leo files is very similar to the format of Leo1 .leo files. 
 
 In all other respects Leo1 and Leo2 .leo files are identical. Leo1 can open Leo2 files, but Leo1 ignores all information unique to Leo2.  However,  Leo1 treats @file nodes as regular outline nodes: Leo1 neither reads derived files when outlines (.leo files) are loaded nor writes derived files when outlines are saved.
 </t>
-<t tx="T781">Leo files start out with the following line declaring the format to be formatted as a type of XML.
+<t tx="T796">Leo files start out with the following line declaring the format to be formatted as a type of XML.
 
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 </t>
-<t tx="T782">The &lt;leo_file&gt; tag opens an element that contains the entire file. The &lt;/leo_file&gt; tag at the end of the file ends this element.
+<t tx="T797">The &lt;leo_file&gt; tag opens an element that contains the entire file. The &lt;/leo_file&gt; tag at the end of the file ends this element.
 
 The following sections describe the elements that may appear between the &lt;leo_file&gt; tag and the &lt;/leo_file&gt; tag.  These elements must appear in the order given.  However, the clone_windows element is optional.
 </t>
-<t tx="T783">The file header element specifies information used to parse the file or to allocate data structures needed to read the file.  The header starts with &lt;leo_header and ends with /&gt;  In between are the following four required attribute fields.
+<t tx="T798">The file header element specifies information used to parse the file or to allocate data structures needed to read the file.  The header starts with &lt;leo_header and ends with /&gt;  In between are the following four required attribute fields.
 
 file_format="1" indicates the version number of the file format: 1, 2, 3, etc.
 
@@ -8824,7 +9143,7 @@ clone_windows="0" indicates the number of clone windows specified by the file.
 
 I'll say more about tnodes later.
 </t>
-<t tx="T784">The globals element specifies information relating to the entire file.  This element starts with the following the &lt;globals body_outline_ratio="0.50"&gt; tag and ends with &lt;/globals&gt; tag.
+<t tx="T799">The globals element specifies information relating to the entire file.  This element starts with the following the &lt;globals body_outline_ratio="0.50"&gt; tag and ends with &lt;/globals&gt; tag.
 
 The body_outline_ratio attribute specifies the ratio of the height of the body pane to the total height of the Leo window.  It initializes the position of the splitter separating the outline pane from the body pane.
 
@@ -8834,7 +9153,7 @@ In between the &lt;globals...&gt; tag and the &lt;/globals tag&gt; are the follo
 
 &lt;global_log_window_position top="183" left="446" height="397" width="534"/&gt;
 </t>
-<t tx="T785">The preferences element specifies the preferences that the user can change using the Preferences command.  It starts with the &lt;preferences...&gt; tag and ends with &lt;/preferences&gt; tag.
+<t tx="T800">The preferences element specifies the preferences that the user can change using the Preferences command.  It starts with the &lt;preferences...&gt; tag and ends with &lt;/preferences&gt; tag.
 
 The following three attributes may appear before the &gt; that ends the &lt;preferences...&gt; tag.
 
@@ -8850,7 +9169,7 @@ Following the &lt;preferences...&gt; tag is the following element.
 
 The sss string encodes the settings of the TSyntaxMemo component used for body text.  This string is simply passed to and from TSyntaxMemo and is not used by Leo in any other way.  Future versions of TSyntaxMemo will allow more settings to be encoded, and those settings will appear between the &lt;preferences...&gt; and &lt;/preferences&gt; tags.
 </t>
-<t tx="T786">The find_panel_settings element specifies the settings of the Find panel at the time the file was saved.  This element starts with the &lt;find_panel_settings...&gt; tag and continues until the &lt;/find_panel_settings&gt; tag.
+<t tx="T801">The find_panel_settings element specifies the settings of the Find panel at the time the file was saved.  This element starts with the &lt;find_panel_settings...&gt; tag and continues until the &lt;/find_panel_settings&gt; tag.
 
 Zero or more of the following attributes may appear before the &gt; that terminates the &lt;find_panel_settings...&gt; tag. Leo writes these attributes in the order shown, but they may appear in any order.
 
@@ -8875,11 +9194,11 @@ The following elements appear after the &lt;find_panel_settings&gt; tag and befo
 
 The sss strings indicate the find and change strings in the Find panel.  Either sss string may be empty.  Both sss strings are encoded with the usual XML escapes.
 </t>
-<t tx="T787">The vnodes element specifies the list of so-called vnodes of an outline.  
+<t tx="T802">The vnodes element specifies the list of so-called vnodes of an outline.  
 
 The vnodes element starts with &lt;vnodes...&gt; and ends with &lt;/vnodes&gt;.  In between these tags are one or more v elements.
 </t>
-<t tx="T788">The v element represents a single vnode and has the following form:
+<t tx="T803">The v element represents a single vnode and has the following form:
 
 &lt;v...&gt;&lt;vh&gt;sss&lt;/vh&gt; (zero or more nested v elements) &lt;/v&gt;
 
@@ -8909,11 +9228,11 @@ V	The vnode is the current vnode.
 
 For example, a="CEM"  specifies that the vnode is a clone, is expanded and is marked.
 </t>
-<t tx="T789">The tnodes element specifies the list of tnodes of an outline.
+<t tx="T804">The tnodes element specifies the list of tnodes of an outline.
 
 The tnodes element starts with &lt;tnodes...&gt; and ends with &lt;/tnodes&gt;.  In between these tags are zero or more t elements.  
 </t>
-<t tx="T790">The t element represents a single tnode.  Each tnode represents body text.  Because of cloning, a tnode may be shared among several vnodes.
+<t tx="T805">The t element represents a single tnode.  Each tnode represents body text.  Because of cloning, a tnode may be shared among several vnodes.
 
 tnodes have the following form:
 
@@ -8925,11 +9244,11 @@ The tx="Tnnn" attribute must appear before the &gt; that terminates the &lt;t...
 
 The rtf="1" attribute may appear before the &gt; that terminates the &lt;t...&gt;tag.  If present it specifies that body text is encoded as Rich Text Format.  This attribute is not used at present.
 </t>
-<t tx="T791">The clone_windows element is optional.  If present it specifies the list of cloned windows of an outline.
+<t tx="T806">The clone_windows element is optional.  If present it specifies the list of cloned windows of an outline.
 
 The clone_windows element starts with &lt;clone_windows&gt; and ends with &lt;/clone_windows&gt;.  In between these tags are one or more clone_window elements.  
 </t>
-<t tx="T792">The clone_window element specifies a single clone window to be opened when the file opens.
+<t tx="T807">The clone_window element specifies a single clone window to be opened when the file opens.
 
 The clone_window element has the following form:
 
@@ -8942,7 +9261,7 @@ All attributes and elements shown above are required.
 The vtag attribute must match the vtag attribute in some vnode, and associates the clone window with the vnode.
 
 The global_window_position element specifies the size and position of the clone window.  The top and left attributes specify the position of the clone window in global coordinates.  The height and width attributes specify the size of the clone window.</t>
-<t tx="T793">&lt;!-- This is a comment --&gt;
+<t tx="T808">&lt;!-- This is a comment --&gt;
 &lt;!-- Version 1 of LEO DTD --&gt;
 
 &lt;!DOCTYPE LeoOutlineDocumentType [
@@ -9026,8 +9345,8 @@ The global_window_position element specifies the size and position of the clone 
                 width   CDATA #REQUIRED &gt;
 ]
 </t>
-<t tx="T794">The following node contains the text of an actual leo file.  After that node is a node containing the outline that created the leo file.</t>
-<t tx="T795">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+<t tx="T809">The following node contains the text of an actual leo file.  After that node is a node containing the outline that created the leo file.</t>
+<t tx="T810">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;leo_file&gt;
 &lt;leo_header file_format="1" tnodes="4" max_tnode_index="4" clone_windows="0"/&gt;
 &lt;globals body_outline_ratio="0.499"&gt;
@@ -9061,12 +9380,12 @@ The global_window_position element specifies the size and position of the clone 
 &lt;t tx="T4"&gt;Text of headline 5.&lt;/t&gt;
 &lt;/tnodes&gt;
 &lt;/leo_file&gt;</t>
-<t tx="T796">Text of headline 1.</t>
-<t tx="T797">Text of headline 2.</t>
-<t tx="T798">Text of headline 4.</t>
-<t tx="T799">Text of headline 5.</t>
-<t tx="T800">@nocolor</t>
-<t tx="T801">First, read the introduction to Leo at:
+<t tx="T811">Text of headline 1.</t>
+<t tx="T812">Text of headline 2.</t>
+<t tx="T813">Text of headline 4.</t>
+<t tx="T814">Text of headline 5.</t>
+<t tx="T815">@nocolor</t>
+<t tx="T816">First, read the introduction to Leo at:
   http://personalpages.tds.net/~edream/intro.htm
 
 Then study LeoPy.leo, the source code for leo.py.  The best way to  learn about Leo is to spend 15 or 20 minutes just browsing through the outline, not worrying about details but just seeing how most nodes are organized and how directives and section references are typically used. Then read Chapter 4 to learn the details. 
@@ -9080,10 +9399,10 @@ When studying leo.py, I would suggest paying particular attention to the followi
 3. Most other files show how to use a single @others directive to define one class. 
 
 4. Note in particular that the vast majority of methods are defined in unnamed nodes.</t>
-<t tx="T802">The file LeoDocs.leo contains two "Hello World" programs, using @file trees and @root trees.
+<t tx="T817">The file LeoDocs.leo contains two "Hello World" programs, using @file trees and @root trees.
 
 The file LeoPy.leo contains a large number of other examples, some small, some large and complex.</t>
-<t tx="T803">@file trees and @root trees represent derived files within an outline.  Leo outlines may contain both @root and @file trees, and I recommend using @file trees whenever possible.
+<t tx="T818">@file trees and @root trees represent derived files within an outline.  Leo outlines may contain both @root and @file trees, and I recommend using @file trees whenever possible.
 
 Indeed, @file trees are much easier to use than @root trees:
 
@@ -9098,7 +9417,7 @@ However, @root trees are more flexible than @file trees.
 2. Within @root trees a section may be defined anywhere within the @root tree, regardless of where the section is referenced.  Moreover, the @unit directive expands the scope of section definitions in @root trees so that a section may be referenced in several @root trees.
 
 3. The meaning of section definitions in @root trees are independent of their position within the tree.</t>
-<t tx="T804">You have two options, depending on whether you want to be able to use sections or not.
+<t tx="T819">You have two options, depending on whether you want to be able to use sections or not.
 
 Option 1: Use @nosentinelsfile trees.
 
@@ -9111,7 +9430,7 @@ Files derived from @silentfile trees contain no sentinels.  Moreover, Leo does n
 Leo can't update the outline unless the derived file contains sentinels, so Leo does not update @nosentinelfile trees or @silentfile trees automatically when you change the derived file in an external editor.
 
 For complete details about @nosentinelfile trees and @silentfile trees, see the child of this node.</t>
-<t tx="T805">You have two options, depending on whether you want sentinel lines in your derived file or not.
+<t tx="T820">You have two options, depending on whether you want sentinel lines in your derived file or not.
 
 Option 1: Use @rawfiles trees.
 
@@ -9124,7 +9443,7 @@ Files derived from @silentfile trees contain no sentinels.  Leo creates the deri
 Leo can't update the outline unless the derived file contains sentinels, so Leo does not update @silentfile trees automatically when you change the derived file in an external editor.
 
 For complete details about @rawfile and @silentfile trees, see the child of this node.</t>
-<t tx="T806">Q: I'm writing a Windows Script Component, which is an XML file with a CData section containing javascript.  I can get the XML as I want it by setting the language to html, but how can I get the tangling comments inside the CData section to be java-style comments rather than html ones?
+<t tx="T821">Q: I'm writing a Windows Script Component, which is an XML file with a CData section containing javascript.  I can get the XML as I want it by setting the language to html, but how can I get the tangling comments inside the CData section to be java-style comments rather than html ones?
 
 A: In @file trees you use the @delims directive to change comment delimiters. For example: 
 
@@ -9136,7 +9455,7 @@ HTML stuff
 NB: Leo2 can not revert to previous delimiters automatically; you must change back to previous delimiters using another @delims directive.
 
 In @root trees you can work around this problem using the @silent directive.</t>
-<t tx="T807">Use the @first directive @file or @nosentinelsfile trees.  Use the @silent in @root trees.
+<t tx="T822">Use the @first directive @file or @nosentinelsfile trees.  Use the @silent in @root trees.
 
 The @first directive allows you to place lines at the very start of files derived from @file nodes. For example, the body text of @file spam.py might be:
 
@@ -9151,12 +9470,12 @@ The body text of @file foo.perl might be:
 @first #! /usr/bin/env python
 @first # more comments.
 </t>
-<t tx="T808">Leo has very good support for cweb.  In @file trees can organize any part of cweb code using _noweb_ sections.  You can also use @rawfile, @silentfile or @nosentinelsfile trees to create cweb files.
+<t tx="T823">Leo has very good support for cweb.  In @file trees can organize any part of cweb code using _noweb_ sections.  You can also use @rawfile, @silentfile or @nosentinelsfile trees to create cweb files.
 
 By default, cweb colors @space, @* and @** sections using the same syntax coloring as for LaTeX.  In addition, cweb colors C // and /*..*/ comments using LaTeX coloring by default.  You may change these defaults using the color_cweb_doc_parts_with_latex and color_cweb_comments_with_latex options in leoConfig.py.
 
 See the child of this node for full details.</t>
-<t tx="T809">It is a fundamental part of the design of @file trees that everything in the tree be part of the derived file.  Indeed, the entire tree is recreated from the derived file when the .leo file is read.  Therefore, orphan and @ignore nodes are invalid in @file trees.  This can never change.
+<t tx="T824">It is a fundamental part of the design of @file trees that everything in the tree be part of the derived file.  Indeed, the entire tree is recreated from the derived file when the .leo file is read.  Therefore, orphan and @ignore nodes are invalid in @file trees.  This can never change.
 
 @root trees are more flexible.  Tangle ignores nodes that don't define sections, so you may put anything in those nodes and they won't appear in the derived file.
 
@@ -9167,8 +9486,8 @@ In spite of this increased flexibility, I still highly recommend using @file tre
 ..+ @file myClass
 
 As usual, + denotes a headline.  So you simply create a new node, called myClass, that holds your @file tree and stuff you don't want in the @file tree.</t>
-<t tx="T810">There are many ways to customize Leo.  The child of this node is a clone of Chapter 8: Customizing Leo of Leo's Users Guide.</t>
-<t tx="T811">Here's how to modify customizeLeo.py.
+<t tx="T825">There are many ways to customize Leo.  The child of this node is a clone of Chapter 8: Customizing Leo of Leo's Users Guide.</t>
+<t tx="T826">Here's how to modify customizeLeo.py.
 
 Step 1: Set use_customizeLeo_dot_py = 1 in leoConfig.py.
 
@@ -9186,10 +9505,10 @@ saved: CustomizeLeo.leo
 Step 6: Quit Leo and rerun Leo.  You should see a signon message in Leo's log window.  If not, the new code probably generated an exception.  Correct any errors and try again.
 
 Step 7: Once you have everything working as you wish, go back and undo Step 3.  That is, change @ ignore back to @ignore</t>
-<t tx="T812">Once you can create customizeLeo.py you have two ways of modifying Leo: using hooks and overriding methods.  Hooks are explained in the "About hooks" node, a child node of the node called "Documentation and security warnings". You will find many examples of using hooks in the @file customizeLeo.py tree.
+<t tx="T827">Once you can create customizeLeo.py you have two ways of modifying Leo: using hooks and overriding methods.  Hooks are explained in the "About hooks" node, a child node of the node called "Documentation and security warnings". You will find many examples of using hooks in the @file customizeLeo.py tree.
 
 You can override any of Leo's methods inside a hook using the funcToMethod function, defined in customizeLeo.py. There are one or two examples of doing that in the @file customizeLeo.py tree.  Just search for funcToMethod to find those examples.  The general idea is to use hooks to call funcToMethod any time a .leo file is opened or a new Leo outline is created.</t>
-<t tx="T813">1. What's the best way to go about adding a new @language? 
+<t tx="T828">1. What's the best way to go about adding a new @language? 
 
 In the short term, the instructions are in LeoPy.leo in the Notes:How To:How to add support for a new language section. This section contains clones of all relevant parts of Leo that you will change. 
 
@@ -9203,7 +9522,7 @@ For now, you can only change Leo's source code and submit the changes for inclus
 
  
 </t>
-<t tx="T814">In general, Leo's clones provide an excellent way of solving any organizational problem.  The fundamental principle is this:
+<t tx="T829">In general, Leo's clones provide an excellent way of solving any organizational problem.  The fundamental principle is this:
 	
   Clones create multiple views of data
   
@@ -9212,7 +9531,7 @@ Here is how I use clones to create new views of Leo's source code.  Whenever I h
 I clone all nodes that relate to that task and move the clones under the headline.  Voila.  I now have a new view of Leo's source code, containing all and only those nodes that relate to the task.  It is now trivial to find the parts of code relating to the task. Note that I can change the cloned nodes under the headline task in any way, and the clones under the @file tree also change and the @file node itself is marked dirty so that when I save the .leo file all affected @file trees are also saved. The task headline is a perfect place to place notes about the task: why some approaches didn't work, to-do lists, test data, whatever.  You could even create @file nodes to create test files if you want.
 
 There are situations where you need to use @root trees.  However, those situations are rare.  Most of the time you can use clones to great effect.  For extended examples, look at the (Projects) section in LeoPy.leo.  That section contains a large number of views of Leo itself.</t>
-<t tx="T815">leo.py v2.5 and later does this automatically.
+<t tx="T830">leo.py v2.5 and later does this automatically.
 
 For earlier versions, the workaround is as follows:
 
@@ -9220,7 +9539,7 @@ For earlier versions, the workaround is as follows:
 2. Paste it into to _body_ text with a regular paste command.
 3. Copy the body text with a regular copy or cut command.
 4. Switch to the other copy of Leo, then do Paste Node.</t>
-<t tx="T816">@nocolor
+<t tx="T831">@nocolor
 
 Here are the steps involved in adding a new language.
 
@@ -9275,12 +9594,12 @@ but with the name of your new language instead of "Python".
 5. Create an @root node and verify that you can Tangle it.
 
 </t>
-<t tx="T817"># We put an @color here so it is unambiguous.
+<t tx="T832"># We put an @color here so it is unambiguous.
 
 @ignore
 @language python
 @color</t>
-<t tx="T818"># General constants...
+<t tx="T833"># General constants...
 true = 1
 false = 0 # Better than None
 body_newline = '\n'
@@ -9332,7 +9651,7 @@ tab_width_bits =0x04000
 terse_bits = 	  0x08000
 unit_bits = 	   0x10000
 verbose_bits =	 0x20000</t>
-<t tx="T819"># Frame and title
+<t tx="T834"># Frame and title
 w,target = create_labeled_frame (outer,caption="Default Target Language")
 w.pack(padx=2,pady=2,expand=1,fill="x")
 
@@ -9362,7 +9681,7 @@ for text,value in right_data:
 	button = Tk.Radiobutton(rt,anchor="w",text=text,
 		variable=self.lang_var,value=value,command=self.set_lang)
 	button.pack(fill="x")</t>
-<t tx="T820">leoKeywords = (
+<t tx="T835">leoKeywords = (
 	# Leo 2 directives.
 	"@","@c","@code","@doc","@color","@comment",
 	"@delims","@first","@language","@nocolor","@others",
@@ -9553,7 +9872,7 @@ tcltk_keywords = ( # Only the tcl keywords are here.
 	"unknown",   "unset",     "update",     "uplevel",   "upvar",
 	"variable",  "vwait",
 	"while" )</t>
-<t tx="T821"># Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end
+<t tx="T836"># Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end
 
 (single_comment_start,
 	block_comment_start,
@@ -9580,7 +9899,7 @@ else: # Stupid: no coloring at all in plain text.
 
 lb = choose(language==cweb_language,"@&lt;","&lt;&lt;")
 rb = choose(language==cweb_language,"@&gt;","&gt;&gt;")</t>
-<t tx="T822"># Must match longer tags before short prefixes.
+<t tx="T837"># Must match longer tags before short prefixes.
 language = c_language # default
 
 if self.matchTag("CWEB"):
@@ -9607,7 +9926,7 @@ elif self.matchTag("tcl/tk"):
 # print(`language`)
 
 c.target_language = language</t>
-<t tx="T823"># Language names.
+<t tx="T838"># Language names.
 self.languageNameDict = {
 	c_language: "C",
 	cweb_language: "CWEB",
@@ -9628,7 +9947,7 @@ self.prefsSection = "prefs panel options"
 self.recentFilesSection = "recent files"
 self.colorsSection = "syntax coloring options"
 self.windowSection = "window options"</t>
-<t tx="T824"># Returns a tuple (single,start,end) of comment delims
+<t tx="T839"># Returns a tuple (single,start,end) of comment delims
 
 def set_delims_from_language(language):
 	
@@ -9647,7 +9966,7 @@ def set_delims_from_language(language):
 			return set_delims_from_string(val)
 
 	return None, None, None # Indicate that no change should be made</t>
-<t tx="T825">@  Scans the @language directive that appears at s[i]. 'default' returns default_language.
+<t tx="T840">@  Scans the @language directive that appears at s[i]. 'default' returns default_language.
 
 Returns (language, delim1, delim2, delim3)
 @c
@@ -9686,7 +10005,7 @@ def set_language(s,i,issue_errors_flag,default_language):
 		es("ignoring: " + get_line(s,i))
 
 	return None, None, None, None,</t>
-<t tx="T826">tags = (
+<t tx="T841">tags = (
 	"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
 	"link", "name", "nameBrackets", "pp", "string", "tab")
 
@@ -9757,7 +10076,7 @@ def colorizeAnyLanguage(self,v,body,language,flag):
 			else:
 				&lt;&lt; handle normal character &gt;&gt;
 			assert(progress &lt; i)</t>
-<t tx="T827">config = app().config
+<t tx="T842">config = app().config
 assert(config)
 
 for name in default_colors_dict:
@@ -9795,11 +10114,11 @@ if self.showInvisibles:
 else:
 	body.tag_config("blank",background="white")
 	body.tag_config("tab",background="white")</t>
-<t tx="T828">if language == cweb_language:
+<t tx="T843">if language == cweb_language:
 	&lt;&lt; handle cweb doc part &gt;&gt;
 else:
 	&lt;&lt; handle noweb doc part &gt;&gt;</t>
-<t tx="T829">word = self.getCwebWord(s,i)
+<t tx="T844">word = self.getCwebWord(s,i)
 if word and len(word) &gt; 0:
 	j = i + len(word)
 	if word in ("@&lt;","@(","@c","@d","@f","@p"):
@@ -9820,7 +10139,7 @@ else:
 	if j == -1: j = len(s)
 	body.tag_add("docPart", index(n,i), index(n,j))
 	i = j</t>
-<t tx="T830">if i == 0 and match(s,i,lb):
+<t tx="T845">if i == 0 and match(s,i,lb):
 	# Possible section definition line.
 	state = normalState # rescan the line.
 	continue
@@ -9840,7 +10159,7 @@ else:
 	# The entire line is in the doc part.
 	body.tag_add("docPart", index(n,i), index(n,sLen))
 	i = sLen # skipt the rest of the line.</t>
-<t tx="T831">delim = self.delim
+<t tx="T846">delim = self.delim
 if delim=="'''":
 	j = string.find(s,"'''",i)
 elif delim=='"""':
@@ -9856,7 +10175,7 @@ else:
 	# End the string
 	body.tag_add("string", index(n,i), index(n,j+3))
 	i = j + 3 ; state = normalState ; self.delim = None</t>
-<t tx="T832">j = string.find(s,block_comment_end,i)
+<t tx="T847">j = string.find(s,block_comment_end,i)
 if j == -1:
 	# The entire line is part of the block comment.
 	body.tag_add("comment", index(n,i), index(n,"end"))
@@ -9866,7 +10185,7 @@ else:
 	k = len(block_comment_end)
 	body.tag_add("comment", index(n,i), index(n,j+k))
 	i = j + k ; state = normalState</t>
-<t tx="T833">if i == 0 and ch == '@':
+<t tx="T848">if i == 0 and ch == '@':
 	j = self.skip_id(s,i+1)
 	word = s[i:j]
 	word = string.lower(word)
@@ -9886,7 +10205,7 @@ else:
 		elif ch == '\t':
 			body.tag_add("tab", index(n,i))
 		i += 1</t>
-<t tx="T834">if language == python_language:
+<t tx="T849">if language == python_language:
 	j, state = self.skip_python_string(s,i)
 	body.tag_add("string", index(n,i), index(n,j))
 	i = j
@@ -9894,14 +10213,14 @@ else:
 	j = self.skip_string(s,i)
 	body.tag_add("string", index(n,i), index(n,j))
 	i = j</t>
-<t tx="T835">k = len(block_comment_start)
+<t tx="T850">k = len(block_comment_start)
 body.tag_add("comment", index(n,i), index(n,i+k))
 i += k ; state = blockCommentState</t>
-<t tx="T836">body.tag_add("comment", index(n,i), index(n,"end"))
+<t tx="T851">body.tag_add("comment", index(n,i), index(n,"end"))
 i = sLen</t>
-<t tx="T837">body.tag_add("pp", index(n,i), index(n,"end"))
+<t tx="T852">body.tag_add("pp", index(n,i), index(n,"end"))
 i = sLen</t>
-<t tx="T838">body.tag_add("nameBrackets", index(n,i), index(n,i+2))
+<t tx="T853">body.tag_add("nameBrackets", index(n,i), index(n,i+2))
 
 # See if the line contains the rb
 j = string.find(s,rb+"=",i+2) ; k = 3
@@ -9926,7 +10245,7 @@ else:
 		body.tag_add("name", index(n,i+2), index(n,j))
 	body.tag_add("nameBrackets", index(n,j), index(n,j+k))
 	i = j + k</t>
-<t tx="T839"># Set the bindings to vnode callbacks.
+<t tx="T854"># Set the bindings to vnode callbacks.
 # Create the tag.
 # Create the tag name.
 tagName = "hyper" + `hyperCount`
@@ -9937,12 +10256,12 @@ ref.tagName = tagName
 body.tag_bind(tagName,"&lt;Control-1&gt;",ref.OnHyperLinkControlClick)
 body.tag_bind(tagName,"&lt;Any-Enter&gt;",ref.OnHyperLinkEnter)
 body.tag_bind(tagName,"&lt;Any-Leave&gt;",ref.OnHyperLinkLeave)</t>
-<t tx="T840">word = None
+<t tx="T855">word = None
 if language == cweb_language:
 	&lt;&lt; Handle all cweb control codes &gt;&gt;
 if not word:
 	&lt;&lt; Handle non-cweb @keywords &gt;&gt;</t>
-<t tx="T841">word = self.getCwebWord(s,i)
+<t tx="T856">word = self.getCwebWord(s,i)
 if word:
 	# Color and skip the word.
 	j = i + len(word)
@@ -9960,7 +10279,7 @@ if word:
 			body.tag_add("nameBrackets", index(n,j), index(n,j+2))
 			i = j + 2
 </t>
-<t tx="T842">j = self.skip_id(s,i+1)
+<t tx="T857">j = self.skip_id(s,i+1)
 word = s[i:j]
 word = string.lower(word)
 if i != 0 and word != "@others":
@@ -9982,17 +10301,17 @@ elif word in leoKeywords:
 	i = j
 else:
 	i = j</t>
-<t tx="T843">j = self.skip_id(s,i)
+<t tx="T858">j = self.skip_id(s,i)
 word = s[i:j]
 if word in keywords:
 	body.tag_add("keyword", index(n,i), index(n,j))
 i = j</t>
-<t tx="T844">body.tag_add("blank", index(n,i)) ; i += 1</t>
-<t tx="T845">body.tag_add("tab", index(n,i)) ; i += 1</t>
-<t tx="T846"># body.tag_add("normal", index(n,i))
+<t tx="T859">body.tag_add("blank", index(n,i)) ; i += 1</t>
+<t tx="T860">body.tag_add("tab", index(n,i)) ; i += 1</t>
+<t tx="T861"># body.tag_add("normal", index(n,i))
 i += 1
 </t>
-<t tx="T847">def getPrefs (self):
+<t tx="T862">def getPrefs (self):
 
 	c = self.commands ; config = app().config
 	
@@ -10041,7 +10360,7 @@ i += 1
 	# Override .leo file's preferences if settings are in leoConfig.txt.
 	if config.configsExist:
 		config.setCommandsIvars(c)</t>
-<t tx="T848">@color
+<t tx="T863">@color
 @language tcl/tk
 @root "c:\prog\test\tcltktest.txt"
 
@@ -10054,10 +10373,10 @@ all # 'all' is not a keyword
 // Not a comment
 "A string"
 'A string'</t>
-<t tx="T849">@ This is a tcl/tk doc part
+<t tx="T864">@ This is a tcl/tk doc part
 
 This is code</t>
-<t tx="T850">Question:
+<t tx="T865">Question:
 
 It would be nice if Leo could open empty files. I tend to be "document oriented" rather than "application oriented" in my thinking and prefer "create empty file at location -&gt; open it with program" to "start program -&gt; create new file -&gt; save it at location". 
 
@@ -10083,82 +10402,82 @@ reboot on Windows 98)
 Now you should have a New.. Leo File option in Explorer. This creates a duplicate
 of the file you saved. This can be useful because you could make a template
 Leo file containing some standard nodes that you always have and then save this.</t>
-<t tx="T851">The import commands insert @ignore directives in the top-level node.  This is done so that you won't accidentally overwrite your files after importing them.
+<t tx="T866">The import commands insert @ignore directives in the top-level node.  This is done so that you won't accidentally overwrite your files after importing them.
 
 I suggest changing the filename following @file or @root, and then removing the @ignore directive.  Saving the outline will then create the file.</t>
-<t tx="T852">@nocolor
+<t tx="T867">@nocolor
 @ignore</t>
-<t tx="T853">We often refer to outline nodes by the directives they contain.  For example, an @root node is a node containing an @root directive, an @ignore node is a node containing an @ignore directive, and so on.
+<t tx="T868">We often refer to outline nodes by the directives they contain.  For example, an @root node is a node containing an @root directive, an @ignore node is a node containing an @ignore directive, and so on.
 
 Exception: an @file node is a node whose headline starts with @file.</t>
-<t tx="T854">An @root tree is a tree whose is an @root node.  An @file tree is a tree whose root is an @file node, and so on.</t>
-<t tx="T855">The pane containing the body text of the currently selected headline in the outline pane.</t>
-<t tx="T856">The text in the body pane.  Body text is always associated with a particular headline.</t>
-<t tx="T857">A small blue box in the icon just to the left of a headline that indicates that the node contains body text.</t>
-<t tx="T858">A node directly contained by a node.</t>
-<t tx="T859">Another name for a section or part.</t>
-<t tx="T860">A copy of a tree that changes whenever the original changes.  The original and all clones are treated equally:  no special status is given to the "original" node.</t>
-<t tx="T861">A small red arrow in the icon just to the left of a headline that indicates that the node is a clone of another node.</t>
-<t tx="T862">A section containing code.  Code sections start with @c or @code directives.</t>
-<t tx="T863">A literate programming language invented by Donald Knuth and Silvio Levy.  CWEB produces derived files for the C language.
+<t tx="T869">An @root tree is a tree whose is an @root node.  An @file tree is a tree whose root is an @file node, and so on.</t>
+<t tx="T870">The pane containing the body text of the currently selected headline in the outline pane.</t>
+<t tx="T871">The text in the body pane.  Body text is always associated with a particular headline.</t>
+<t tx="T872">A small blue box in the icon just to the left of a headline that indicates that the node contains body text.</t>
+<t tx="T873">A node directly contained by a node.</t>
+<t tx="T874">Another name for a section or part.</t>
+<t tx="T875">A copy of a tree that changes whenever the original changes.  The original and all clones are treated equally:  no special status is given to the "original" node.</t>
+<t tx="T876">A small red arrow in the icon just to the left of a headline that indicates that the node is a clone of another node.</t>
+<t tx="T877">A section containing code.  Code sections start with @c or @code directives.</t>
+<t tx="T878">A literate programming language invented by Donald Knuth and Silvio Levy.  CWEB produces derived files for the C language.
 
 http://www-cs-faculty.stanford.edu/~knuth/cweb.html</t>
-<t tx="T864">To move right all following siblings of a node so that they become children of a node.</t>
-<t tx="T865">The output file created as the result of tangling a node containing an @root directive. The file consists of the expansion of the text following the @root directive.</t>
-<t tx="T866">An offspring of a node.  That is, a child, grandchild, etc. of a node.</t>
-<t tx="T867">A keyword, preceded by an '@' sign, that is used to control syntax coloring or the Tangle, Untangle or Weave commands.</t>
-<t tx="T868">A section containing only documentation. That is, a section that start with @.  Doc sections are associated with the immediately following code section, if any.</t>
-<t tx="T869">A convention for representing sequences of characters that would otherwise have special meaning.  Leo has only one such convention: in @root trees, @@ in the leftmost column of a code part stands for a single @ character.
+<t tx="T879">To move right all following siblings of a node so that they become children of a node.</t>
+<t tx="T880">The output file created as the result of tangling a node containing an @root directive. The file consists of the expansion of the text following the @root directive.</t>
+<t tx="T881">An offspring of a node.  That is, a child, grandchild, etc. of a node.</t>
+<t tx="T882">A keyword, preceded by an '@' sign, that is used to control syntax coloring or the Tangle, Untangle or Weave commands.</t>
+<t tx="T883">A section containing only documentation. That is, a section that start with @.  Doc sections are associated with the immediately following code section, if any.</t>
+<t tx="T884">A convention for representing sequences of characters that would otherwise have special meaning.  Leo has only one such convention: in @root trees, @@ in the leftmost column of a code part stands for a single @ character.
 
 Note: the markup language Leo uses in body pane is based on noweb.  However, Leo does not support noweb's @&lt;&lt; and @&gt;&gt; escape conventions.  If a line in a code part contains &lt;&lt; followed by &gt;&gt;, then that line does contain a section name, regardless of context.  If the &lt;&lt; and &gt;&gt; characters should not, if fact, delimit a section name, then you must place the &lt;&lt; and &gt;&gt; on separate lines.
 
 Eliminating noweb's escape conventions for &lt;&lt; and &gt;&gt; characters solves some difficult problems when automatically untangling derived files.  Moreover, it is typically easier to split source lines than to use @&lt;&lt; and @&gt;&gt;.  Finally, Leo's Export and Import commands do support the @&lt;&lt; and @&gt;&gt; conventions.</t>
-<t tx="T870">The child of a child of a node.</t>
-<t tx="T871">The organizational unit of an outline.  A node.  Each headline contains headline text and (possibly empty) body text.</t>
-<t tx="T872">Leo stands for Literate Editor with Outlines. That is, Leo supports both literate programming and outlining.
+<t tx="T885">The child of a child of a node.</t>
+<t tx="T886">The organizational unit of an outline.  A node.  Each headline contains headline text and (possibly empty) body text.</t>
+<t tx="T887">Leo stands for Literate Editor with Outlines. That is, Leo supports both literate programming and outlining.
 
 Leo1 denotes all versions of Leo that write version 1 .leo files, that is, all Windows version of Leo prior to version 2.0.  The last version of Leo1, version 1.15, understands enough about Leo2 to issue a warning when opening version 2 files.
 
 Leo2 denotes all versions of Leo that write version 2 .leo files, that is, all versions of leo.py and all Windows versions with version number 2.0 and above.  Only Leo2 can generate derived files from @file trees.</t>
-<t tx="T873">A style of programming that aims at producing the highest quality program listings.  Literate programming languages apply two fundamental operations to text: weaving and tangling.  Leo supports two literate programming languages, CWEB and noweb.
+<t tx="T888">A style of programming that aims at producing the highest quality program listings.  Literate programming languages apply two fundamental operations to text: weaving and tangling.  Leo supports two literate programming languages, CWEB and noweb.
 
 Knuth's book is the best overall introduction to literate programming:
 Literate Programming, by D. E. Knuth ISBN 0-937073-80-6.
 
 More information is available at Knuth's web site:
 http://www-cs-faculty.stanford.edu/%7Eknuth/lp.html</t>
-<t tx="T874">Marking a node by placing a red mark near its leader character. Marks can be placed using the Mark command, as the result of Find and Change commands, or as the result of the Mark Changed Roots and Mark Changed Items command. The Tangle Marked command tangles only those subtrees that are marked.</t>
-<t tx="T875">Within an @file tree, a node that contain a section name, like &lt;&lt;x&gt;&gt;, at the start of its headline text.
+<t tx="T889">Marking a node by placing a red mark near its leader character. Marks can be placed using the Mark command, as the result of Find and Change commands, or as the result of the Mark Changed Roots and Mark Changed Items command. The Tangle Marked command tangles only those subtrees that are marked.</t>
+<t tx="T890">Within an @file tree, a node that contain a section name, like &lt;&lt;x&gt;&gt;, at the start of its headline text.
 
 Within an @file tree, all nodes containing a section reference must have a descendent named node corresponding to the reference.
 
 Within an @root or @unit tree, an @code directive is an abbreviation for &lt;&lt;x&gt;&gt;=, where &lt;&lt; x &gt;&gt; is found in the headline.
 
 </t>
-<t tx="T876">The organizational unit of an outline.  A headline.  The combination of headline text and outline text.
+<t tx="T891">The organizational unit of an outline.  A headline.  The combination of headline text and outline text.
 </t>
-<t tx="T877">A simple literate programming language invented by Norman Ramsey.  noweb can produce derived files for any text-based programming language.
+<t tx="T892">A simple literate programming language invented by Norman Ramsey.  noweb can produce derived files for any text-based programming language.
 
 http://www.eecs.harvard.edu/~nr/noweb/</t>
-<t tx="T878">The children, grandchildren, etc. of a node.</t>
-<t tx="T879">An unnamed node in an @tree that contains no body text.  Such nodes may appear anywhere in an @file tree; they do not affect the derived file in any way.  In particular, organizing nodes do not affect indentation in the derived file.</t>
-<t tx="T880">An unnamed node that is either 1) a descendent of a named node or 2) the descendent of no @others node.
+<t tx="T893">The children, grandchildren, etc. of a node.</t>
+<t tx="T894">An unnamed node in an @tree that contains no body text.  Such nodes may appear anywhere in an @file tree; they do not affect the derived file in any way.  In particular, organizing nodes do not affect indentation in the derived file.</t>
+<t tx="T895">An unnamed node that is either 1) a descendent of a named node or 2) the descendent of no @others node.
 
 Orphan and @ignore nodes are not allowed in @file trees: no derived file is written if an @file node contains an @ignore or orphan node.</t>
-<t tx="T881">1. A visual representation of a hierarchy on the screen.
+<t tx="T896">1. A visual representation of a hierarchy on the screen.
 
 2. The data contained by the hierarchy.
 
 Outlines are composed of headlines representing data.  The combination of a headline and its associated body text is called a node.
 </t>
-<t tx="T882">he pane containing a visual representation of outlines.</t>
-<t tx="T883">The node the directly contains a node.</t>
-<t tx="T884">Another name for a section or chunk.</t>
-<t tx="T885">A file that can be read by Adobe Acrobat.</t>
-<t tx="T886">To move all children of a node left in an outline so that they become siblings of the node.</t>
-<t tx="T887">The first node of the entire outline.  In the PC version of Leo several nodes may be siblings of the root.</t>
-<t tx="T888">The portion of the outline in which a section definition is known. By default the scope of a section definition is the smallest subtree containing both the section and a node containing an @root directive. The @unit directive declares that the subtree containing the @unit directive is the scope for all sections defined in that tree.</t>
-<t tx="T889">A fragment of text that can be incorporated into derived files.  A syntactic unit of body text.
+<t tx="T897">he pane containing a visual representation of outlines.</t>
+<t tx="T898">The node the directly contains a node.</t>
+<t tx="T899">Another name for a section or chunk.</t>
+<t tx="T900">A file that can be read by Adobe Acrobat.</t>
+<t tx="T901">To move all children of a node left in an outline so that they become siblings of the node.</t>
+<t tx="T902">The first node of the entire outline.  In the PC version of Leo several nodes may be siblings of the root.</t>
+<t tx="T903">The portion of the outline in which a section definition is known. By default the scope of a section definition is the smallest subtree containing both the section and a node containing an @root directive. The @unit directive declares that the subtree containing the @unit directive is the scope for all sections defined in that tree.</t>
+<t tx="T904">A fragment of text that can be incorporated into derived files.  A syntactic unit of body text.
 
 There are two kinds of sections: code sections and doc sections. Sections are defined in slightly different ways in @file in @root trees (that's the difference between the two kinds of trees.)
 
@@ -10173,17 +10492,17 @@ Code sections start with the @c directive or section definition lines of the for
 Such lines begin named code sections.  Other code sections are unnamed. Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
 
 The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaining of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.</t>
-<t tx="T890">A name enclosed in &lt;&lt; and &gt;&gt;.  Section names may contain any characters except newlines and "&gt;&gt;".</t>
-<t tx="T891">A section name appearing in a code part. Tangling replaces all references by their definitions.</t>
-<t tx="T892">Comment lines in files derived from @file nodes.  Such lines start with an @ following the opening comment delimiter.  Sentinels embed outline structure into derived files.  Do not alter such lines!  Doing so can corrupt the outline structure.</t>
-<t tx="T893">Nodes with the same parent.  Siblings of the root have no parent.</t>
-<t tx="T894">The icon that appears just to the left of headline text in the outline pane.  This icon shows: a blue body text box if the node contains body text, a red clone arrow if the node is cloned, and a red marker bar if the node is marked.  The icon is outlined in black if the node is dirty, that is, if the node has been changed since the file was last change.
+<t tx="T905">A name enclosed in &lt;&lt; and &gt;&gt;.  Section names may contain any characters except newlines and "&gt;&gt;".</t>
+<t tx="T906">A section name appearing in a code part. Tangling replaces all references by their definitions.</t>
+<t tx="T907">Comment lines in files derived from @file nodes.  Such lines start with an @ following the opening comment delimiter.  Sentinels embed outline structure into derived files.  Do not alter such lines!  Doing so can corrupt the outline structure.</t>
+<t tx="T908">Nodes with the same parent.  Siblings of the root have no parent.</t>
+<t tx="T909">The icon that appears just to the left of headline text in the outline pane.  This icon shows: a blue body text box if the node contains body text, a red clone arrow if the node is cloned, and a red marker bar if the node is marked.  The icon is outlined in black if the node is dirty, that is, if the node has been changed since the file was last change.
 </t>
-<t tx="T895">The process of creating derived files from @root or @file trees.  Leo tangles @file automatically when writing a .leo file.  The user must explicitly tangle @root trees using the Tangle command.  Tangling expands all references in an @root node or @file node.</t>
-<t tx="T896">The language used to syntax color text.  This language determines the default comment delimiters used during tangling and untangling.
+<t tx="T910">The process of creating derived files from @root or @file trees.  Leo tangles @file automatically when writing a .leo file.  The user must explicitly tangle @root trees using the Tangle command.  Tangling expands all references in an @root node or @file node.</t>
+<t tx="T911">The language used to syntax color text.  This language determines the default comment delimiters used during tangling and untangling.
 </t>
-<t tx="T897">Another name for an outline.</t>
-<t tx="T898">A node whose headline text does not start with &lt;&lt; name &gt;&gt;.
+<t tx="T912">Another name for an outline.</t>
+<t tx="T913">A node whose headline text does not start with &lt;&lt; name &gt;&gt;.
 
 Unnamed nodes in @file trees must be a descendent of an @others node and must not be the descendent of any named node.
 
@@ -10194,12 +10513,12 @@ For example, the following tree is invalid:
     unnamed node
 	
 The unnamed node would be an orphan node.</t>
-<t tx="T899">Updating an outline based on changes to derived files.  Untangling allows changes to be propagated from derived files back to the outline.  Especially useful when fixing syntax errors outside Leo.
+<t tx="T914">Updating an outline based on changes to derived files.  Untangling allows changes to be propagated from derived files back to the outline.  Especially useful when fixing syntax errors outside Leo.
 </t>
-<t tx="T900">The process of creating typeset documentation from a noweb or CWEB source file.  Weaving creates documentation. Tangling creates source code files known as derived files.
+<t tx="T915">The process of creating typeset documentation from a noweb or CWEB source file.  Weaving creates documentation. Tangling creates source code files known as derived files.
 
 Leo does not support weaving directly.  If you want to weave a file you can create noweb or CWEB files using Leo's export commands, then use the noweb or CWEB systems to weave those files.</t>
-<t tx="T901">@ The following is part of Leo's actual source code.  The code is written in C++ and uses Borland's Delphi classes.
+<t tx="T916">@ The following is part of Leo's actual source code.  The code is written in C++ and uses Borland's Delphi classes.
 
 For @root trees:  The Tangle command will generate derived files from @root trees.  The Untangle command will update outlines based on changes made to files derived from @root trees.
 
@@ -10216,7 +10535,7 @@ If you actually want to create files you must remove the @ignore directive below
 
 @ignore
 @language c</t>
-<t tx="T902">@ To create the file hello.c in the current directory.
+<t tx="T917">@ To create the file hello.c in the current directory.
 
 1. Remove the @ignore directive from the parent of this node.
 2. Select this headline.
@@ -10229,37 +10548,37 @@ When you look at hello.c you will see that it contains comments starting with //
 &lt;&lt; includes &gt;&gt;
 &lt;&lt; methods &gt;&gt;
 </t>
-<t tx="T903">@code
+<t tx="T918">@code
 
 #include "stdio.h"</t>
-<t tx="T904">@code
+<t tx="T919">@code
 
 void main ( void )
 {
 	printf("Hello World!\n");
 }</t>
-<t tx="T905">@ To create the file hello.c in the current directory.
+<t tx="T920">@ To create the file hello.c in the current directory.
 
 1. Remove the @ignore directive from the parent of this node.
 2. Save this file.  This will create hello.c automatically.
 
 When you look at hello.c you will see that it contains comments starting with //@.  Leave these comments alone!  They are needed to recreate the outline when reading this .leo file.</t>
-<t tx="T906">@ This shows how to use Leo to create source files for Leo2.  
+<t tx="T921">@ This shows how to use Leo to create source files for Leo2.  
 @c
 
 &lt;&lt; includes &gt;&gt;
 @others</t>
-<t tx="T907">#include "stdio.h"</t>
-<t tx="T908">void main ( void )
+<t tx="T922">#include "stdio.h"</t>
+<t tx="T923">void main ( void )
 {
 	printf("Hello World!\n");
 }</t>
-<t tx="T909">@ The vnodes and tnodes classes form the heart of the "model" classes (using the Smalltalk model/view/controller terminology).  That is, the vnode and tnode classes represent nearly all the data contained in the outline.  These two classes also provide a way of hiding the underlying implementation.  For instance, the Delphi classes used to implement outlines (TTreeView, TTreeNode and TTreeNodes) appear only in the implementation of the vnodes and tnodes class.
+<t tx="T924">@ The vnodes and tnodes classes form the heart of the "model" classes (using the Smalltalk model/view/controller terminology).  That is, the vnode and tnode classes represent nearly all the data contained in the outline.  These two classes also provide a way of hiding the underlying implementation.  For instance, the Delphi classes used to implement outlines (TTreeView, TTreeNode and TTreeNodes) appear only in the implementation of the vnodes and tnodes class.
 
 The developer documentation contains an extended discussion of these two classes.  To summarize:  a vnode (visual nodes) represents a headlines _at a particular location on the screen_.  When a headline is cloned, vnodes must be copied.  tnodes, (text nodes) on the other hand, represent body text: a tnode is shared by all vnodes that are clones of each other.  In other words, tnodes are the "unit of sharing" of body text.</t>
-<t tx="T910">@unit
+<t tx="T925">@unit
 </t>
-<t tx="T911">@ tnode.h created May 20, 1999.
+<t tx="T926">@ tnode.h created May 20, 1999.
 
 tnodes represent the body text associated with headlines.
 
@@ -10286,7 +10605,7 @@ public:
 };
 
 #endif // tnode_h_</t>
-<t tx="T912">@code
+<t tx="T927">@code
 
 String * mBodyRTF ;  // The string containing the RTF.
 String * mBodyString ;  // The body text itself.
@@ -10322,15 +10641,15 @@ For @root nodes this field contains the maximum clone index.
 
 long mCloneIndex ;
 </t>
-<t tx="T913">@code
+<t tx="T928">@code
 
 tnode ( long index = 0, char * bodyText = NULL ) ;
 ~tnode () ;</t>
-<t tx="T914">@code
+<t tx="T929">@code
 
 void edump ( bool verboseFlag = FALSE ) ;
 </t>
-<t tx="T915">@code
+<t tx="T930">@code
 
 char * bodyCString ( void ) ;
 long bodyCStringLength ( void ) ;
@@ -10349,7 +10668,7 @@ long refCount ( void ) ;
 int selectionLength ( void ) ;
 int selectionStart ( void ) ;
 </t>
-<t tx="T916">@code
+<t tx="T931">@code
 
 void clearDirty ( void ) ;
 void clearRichTextBit ( void ) ;
@@ -10366,7 +10685,7 @@ void setTnodeRTF ( String s ) ; // For reading from files.
 void setTnodeText ( String s ) ;
 void setVisited ( void ) ;
 </t>
-<t tx="T917">@root "sampleTnode.cpp"
+<t tx="T932">@root "sampleTnode.cpp"
 
 #pragma option -w-par  // suppress warning: "Parameter is never used"
 
@@ -10374,7 +10693,7 @@ void setVisited ( void ) ;
 &lt;&lt; tnode abbreviations &gt;&gt;
 &lt;&lt; tnode methods &gt;&gt;
 </t>
-<t tx="T918">@code
+<t tx="T933">@code
 
 #include &lt;vcl.h&gt;
 #pragma hdrstop
@@ -10384,7 +10703,7 @@ void setVisited ( void ) ;
 
 #include "Leo.h"
 </t>
-<t tx="T919">@code
+<t tx="T934">@code
 
 enum {
     // Not archived...
@@ -10393,7 +10712,7 @@ enum {
 	visitedBit = 0x04
 } ;
 </t>
-<t tx="T920">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T935">&lt;&lt; tnode methods &gt;&gt;=
 
 // Note: all params have defaults, so new tnode() is valid.
 
@@ -10420,7 +10739,7 @@ tnode::~tnode ()
 	delete mBodyRTF ;
 }
 </t>
-<t tx="T921">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T936">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::edump ( bool verboseFlag )
 {
@@ -10431,21 +10750,21 @@ void tnode::edump ( bool verboseFlag )
 
 	}
 }</t>
-<t tx="T922">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T937">&lt;&lt; tnode methods &gt;&gt;=
 
 String tnode::bodyRTF ( void )
 {
 	assert ( mBodyRTF ) ;
 	return *mBodyRTF ;
 }</t>
-<t tx="T923">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T938">&lt;&lt; tnode methods &gt;&gt;=
 
 char * tnode::bodyCString ( void )
 {
 	assert ( mBodyString ) ;
 	return mBodyString -&gt; c_str() ;
 }</t>
-<t tx="T924">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T939">&lt;&lt; tnode methods &gt;&gt;=
 
 long tnode::bodyCStringLength ( void )
 {
@@ -10457,14 +10776,14 @@ long tnode::bodyCStringLength ( void )
 		return strlen( mBodyString -&gt; c_str() );
 	#endif
 }</t>
-<t tx="T925">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T940">&lt;&lt; tnode methods &gt;&gt;=
 
 String tnode::bodyString ( void )
 {
 	assert ( mBodyString ) ;
 	return *mBodyString ;
 }</t>
-<t tx="T926">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T941">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::loadBodyPaneFromTnode ( TSyntaxMemo * syntaxMemo )
 {
@@ -10491,51 +10810,51 @@ void tnode::loadBodyPaneFromTnode ( TSyntaxMemo * syntaxMemo )
 		mSelectionLength = 0 ;
 	}
 }</t>
-<t tx="T927">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T942">&lt;&lt; tnode methods &gt;&gt;=
 
 int tnode::selectionLength ( void )
 {
     return mSelectionLength ;
 }
 </t>
-<t tx="T928">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T943">&lt;&lt; tnode methods &gt;&gt;=
 
 int tnode::selectionStart ( void )
 {
     return mSelectionStart ;
 }
 </t>
-<t tx="T929">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T944">&lt;&lt; tnode methods &gt;&gt;=
 
 bool tnode::isDirty ( void )
 {
     return ( ( mStatusBits &amp; dirtyBit ) != 0 ) ;
 }</t>
-<t tx="T930">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T945">&lt;&lt; tnode methods &gt;&gt;=
 
 bool tnode::isRichTextBit ( void )
 {
     return ( ( mStatusBits &amp; richTextBit ) != 0 ) ;
 }</t>
-<t tx="T931">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T946">&lt;&lt; tnode methods &gt;&gt;=
 
 bool tnode::isVisited ( void )
 {
     return ( ( mStatusBits &amp; visitedBit ) != 0 ) ;
 }</t>
-<t tx="T932">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T947">&lt;&lt; tnode methods &gt;&gt;=
 
 long tnode::cloneIndex ( void )
 {
 	return mCloneIndex ;
 }</t>
-<t tx="T933">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T948">&lt;&lt; tnode methods &gt;&gt;=
 
 long tnode::fileIndex ( void )
 {
 	return mFileIndex ;
 }</t>
-<t tx="T934">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T949">&lt;&lt; tnode methods &gt;&gt;=
 
 bool tnode::hasBody ( void )
 {
@@ -10546,13 +10865,13 @@ bool tnode::hasBody ( void )
 	else
 		return mBodyString -&gt; Length() &gt; 0 ;
 }</t>
-<t tx="T935">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T950">&lt;&lt; tnode methods &gt;&gt;=
 
 vnode * tnode::joinHead ( void )
 {
     return mJoinHead ;
 }</t>
-<t tx="T936">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T951">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::saveBodyPaneToTnode ( TSyntaxMemo * memo )
 {
@@ -10575,7 +10894,7 @@ void tnode::saveBodyPaneToTnode ( TSyntaxMemo * memo )
 	}
 }
 </t>
-<t tx="T937">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T952">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setTnodeRTF ( String s )
 {
@@ -10584,7 +10903,7 @@ void tnode::setTnodeRTF ( String s )
 		mBodyRTF = new String ( s ) ;
 	}
 }</t>
-<t tx="T938">@ This sets the text in the tnode from the given string.
+<t tx="T953">@ This sets the text in the tnode from the given string.
 
 &lt;&lt; tnode methods &gt;&gt;=
 
@@ -10594,7 +10913,7 @@ void tnode::setTnodeText ( String s )
 	mBodyString = new String ( s ) ;
 }
 </t>
-<t tx="T939">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T954">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setSelection ( int start, int length )
 {
@@ -10602,64 +10921,64 @@ void tnode::setSelection ( int start, int length )
 	mSelectionLength = length ;
 }
 </t>
-<t tx="T940">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T955">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::clearDirty ( void )
 {
     mStatusBits &amp;= ~ dirtyBit ;
 }</t>
-<t tx="T941">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T956">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::clearRichTextBit ( void )
 {
 	mStatusBits &amp;= ~richTextBit ;
 }</t>
-<t tx="T942">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T957">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::clearVisited ( void )
 {
     mStatusBits &amp;= ~visitedBit ;
 }</t>
-<t tx="T943">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T958">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setDirty ( void )
 {
     mStatusBits |= dirtyBit ;
 }</t>
-<t tx="T944">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T959">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode:: setRichTextBit ( void )
 {
 	mStatusBits |= richTextBit ;
 }
 </t>
-<t tx="T945">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T960">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setVisited ( void )
 {
 	mStatusBits |= visitedBit ;
 }</t>
-<t tx="T946">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T961">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setCloneIndex ( long index )
 {
 	mCloneIndex = index ;
 }</t>
-<t tx="T947">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T962">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setFileIndex ( long index )
 {
 	mFileIndex = index ;
 }</t>
-<t tx="T948">&lt;&lt; tnode methods &gt;&gt;=
+<t tx="T963">&lt;&lt; tnode methods &gt;&gt;=
 
 void tnode::setJoinHead ( vnode * v )
 {
 	mJoinHead = v ;
 }</t>
-<t tx="T949">@unit
+<t tx="T964">@unit
 </t>
-<t tx="T950">@ vnodes represent all additional data attached to TTreeNodes.
+<t tx="T965">@ vnodes represent all additional data attached to TTreeNodes.
 
 @root "sampleVnode.h"
 
@@ -10699,7 +11018,7 @@ public:
 };
 
 #endif // vnode_h_</t>
-<t tx="T951">@ The following stores all information needed to restore a vnode that is about to be deleted.  Much of this information is held in the TTreeView or TTreeNode classes, so it must be captured before actually deleting any information.
+<t tx="T966">@ The following stores all information needed to restore a vnode that is about to be deleted.  Much of this information is held in the TTreeView or TTreeNode classes, so it must be captured before actually deleting any information.
 
 vnode::doDelete does not delete vnodes, nor does it decrease the refCount field in tnodes, so we save the pointers to these nodes here.
 
@@ -10710,7 +11029,7 @@ long level ;  // The level of the outline relative to the root.
 String headline ;  // The text of the soon-to-be deleted TTreeNode.
 vnode * v ;  // The vnode.  Neither v nor v -&gt; mT will be deleted by doDelete().
 </t>
-<t tx="T952">@code
+<t tx="T967">@code
 
 vnode * next ( void ) ;
 vnode * back ( void ) ;
@@ -10719,17 +11038,17 @@ vnode * threadBack ( void ) ;
 vnode * threadNext ( void ) ;
 vnode * visBack ( void ) ;
 vnode * visNext ( void ) ;</t>
-<t tx="T953">@code
+<t tx="T968">@code
 
 String atFileNodeName ( void ) ;
 bool isAtFileNode ( void ) ;
 bool isAtIgnoreNode ( void ) ;
 bool isAtOthersNode ( void ) ;
 bool matchHeadline ( String pattern ) ;</t>
-<t tx="T954">@code
+<t tx="T969">@code
 
 vnode ( Commands * commands, tnode * t = NULL ) ;</t>
-<t tx="T955">@ The commander for this vnode.  This allows us to determine reliably what the current vnode is, regardless of what window is active.  It also speeds access to the current body pane, tree view, etc.
+<t tx="T970">@ The commander for this vnode.  This allows us to determine reliably what the current vnode is, regardless of what window is active.  It also speeds access to the current body pane, tree view, etc.
 @code
 
 Commands * mCommands ;
@@ -10769,17 +11088,17 @@ unsigned long mXCloneIndex ; // Immutable cloneIndex field within the file.
 
 #endif
 </t>
-<t tx="T956">@code
+<t tx="T971">@code
 
 String description ( void ) ;
 void edump ( bool verboseFlag = FALSE ) ;
 </t>
-<t tx="T957">@code
+<t tx="T972">@code
 
 String convertTreeToString ( void ) ;
 String moreBody ( void ) ;
 String moreHead ( long firstLevel ) ;</t>
-<t tx="T958">@code
+<t tx="T973">@code
 
 // Getters outside this class.
 Commands * commands ( void ) ;
@@ -10833,13 +11152,13 @@ tnode * t ( void ) ;
     String xCloneName ( void ) ;
     long xCloneIndex ( void ) ;
 #endif</t>
-<t tx="T959">@ The following must must not be called externally.
+<t tx="T974">@ The following must must not be called externally.
 @code
 
 vnode * cloneNode ( void ) ;
 void linkNodeAsChildOfAtIndex (vnode * theParent, long index ) ;
 void unlinkNode ( void ) ;</t>
-<t tx="T960">@code
+<t tx="T975">@code
 
 void appendStringToBody ( String s ) ;
 
@@ -10887,7 +11206,7 @@ void setVisited ( void ) ;
 #endif
 
 void trimTrailingLines ( void ) ;</t>
-<t tx="T961">@code
+<t tx="T976">@code
 
 // Entry points...(These call TTreeNode methods)
 vnode * clone ( vnode * v ) ;
@@ -10920,7 +11239,7 @@ void unjoinNode ( void ) ;
 void unjoinTree ( void ) ;
 bool validateOutlineWithParent (vnode *p ) ;
 </t>
-<t tx="T962">@ vnode.w.cpp created May 19, 1999.
+<t tx="T977">@ vnode.w.cpp created May 19, 1999.
 
 @root "sampleVnode.cpp"
 
@@ -10929,7 +11248,7 @@ bool validateOutlineWithParent (vnode *p ) ;
 &lt;&lt; vnode includes &gt;&gt;
 &lt;&lt; vnode abbreviations &gt;&gt;
 &lt;&lt; vnode methods &gt;&gt;</t>
-<t tx="T963">@code
+<t tx="T978">@code
 
 #include &lt;vcl.h&gt;
 #pragma hdrstop
@@ -10944,7 +11263,7 @@ bool validateOutlineWithParent (vnode *p ) ;
 
 #include "Leo.h"
 </t>
-<t tx="T964">@ Define the meaning of vnode status bits.
+<t tx="T979">@ Define the meaning of vnode status bits.
 @code
 
 enum {
@@ -10961,7 +11280,7 @@ enum {
     visitedBit	= 0x80
 } ;
 </t>
-<t tx="T965">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T980">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode::vnode ( Commands * commands, tnode * t )
 {
@@ -10975,7 +11294,7 @@ vnode::vnode ( Commands * commands, tnode * t )
 	mIconVal = -1 ;
 }
 </t>
-<t tx="T966">@ Returns the filename following @file in the receivers's headline, or the empty string if the receiver is not an @file node.
+<t tx="T981">@ Returns the filename following @file in the receivers's headline, or the empty string if the receiver is not an @file node.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -10992,7 +11311,7 @@ String vnode::atFileNodeName ( void )
 	else return "" ;
 }
 </t>
-<t tx="T967">@ Returns TRUE if the receiver's headline starts with @file.
+<t tx="T982">@ Returns TRUE if the receiver's headline starts with @file.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11002,7 +11321,7 @@ bool vnode::isAtFileNode ( void )
 	return s . Length() &gt; 0 ;
 }
 </t>
-<t tx="T968">@ Returns TRUE if the receiver contains @ignore in its body at the start of a line.
+<t tx="T983">@ Returns TRUE if the receiver contains @ignore in its body at the start of a line.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11013,7 +11332,7 @@ bool vnode::isAtIgnoreNode ( void )
 	return is_special (ip, body.Length(), "@ignore");
 }
 </t>
-<t tx="T969">@ Returns TRUE if the receiver contains @others in its body at the start of a line.
+<t tx="T984">@ Returns TRUE if the receiver contains @others in its body at the start of a line.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11024,7 +11343,7 @@ bool vnode::isAtOthersNode ( void )
 	return is_special (ip, body.Length(), "@others");
 }
 </t>
-<t tx="T970">@ Returns TRUE if the headline matches the pattern ignoring whitespace.  The headline may contain characters following the successfully matched pattern.
+<t tx="T985">@ Returns TRUE if the headline matches the pattern ignoring whitespace.  The headline may contain characters following the successfully matched pattern.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11047,21 +11366,21 @@ bool vnode::matchHeadline ( String pattern )
 	}
 }
 </t>
-<t tx="T971">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T986">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::edump ( bool verboseFlag )
 {
     if ( mT )
 		mT -&gt; edump ( verboseFlag ) ;
 }</t>
-<t tx="T972">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T987">&lt;&lt; vnode methods &gt;&gt;=
 
 String vnode::description ( void )
 {
 	return "v: " + this -&gt; headString() ;
 }
 </t>
-<t tx="T973">@ Convert the outline to a string in "MORE" format.
+<t tx="T988">@ Convert the outline to a string in "MORE" format.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11090,7 +11409,7 @@ String vnode::convertTreeToString ( void )
 	return s ;
 }
 </t>
-<t tx="T974">@ Return the headline string in MORE format.
+<t tx="T989">@ Return the headline string in MORE format.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11106,7 +11425,7 @@ String vnode::moreHead ( long firstLevel )
 
 	return s;
 }</t>
-<t tx="T975">@ Return the body string in MORE format.
+<t tx="T990">@ Return the body string in MORE format.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11132,7 +11451,7 @@ String vnode::moreBody ( void )
 	return s ;
 }
 </t>
-<t tx="T976">@ The first child has index 1.
+<t tx="T991">@ The first child has index 1.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11141,7 +11460,7 @@ long vnode::childIndex ( void)
 	assert(mTreeNode);
 	return mTreeNode -&gt; Index ;
 }</t>
-<t tx="T977">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T992">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::firstChild ( void )
 {
@@ -11149,14 +11468,14 @@ vnode * vnode::firstChild ( void )
 	TTreeNode * n = mTreeNode -&gt; getFirstChild() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T978">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T993">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::hasChildren ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; HasChildren ;
 }</t>
-<t tx="T979">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T994">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::lastChild ( void )
 {
@@ -11164,7 +11483,7 @@ vnode * vnode::lastChild ( void )
 	TTreeNode * n = mTreeNode -&gt; GetLastChild() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T980">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T995">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::nthChild ( long n )
 {
@@ -11179,14 +11498,14 @@ vnode * vnode::nthChild ( long n )
 	}
 	return NULL ;
 }</t>
-<t tx="T981">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T996">&lt;&lt; vnode methods &gt;&gt;=
 
 long vnode::numberOfChildren ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; Count ;
 }</t>
-<t tx="T982">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T997">&lt;&lt; vnode methods &gt;&gt;=
 
 #ifdef V_XCLONES
 
@@ -11196,7 +11515,7 @@ String vnode::xCloneName ( void )
 }
 
 #endif</t>
-<t tx="T983">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T998">&lt;&lt; vnode methods &gt;&gt;=
 
 #ifdef V_XCLONES
 
@@ -11206,7 +11525,7 @@ long vnode::xCloneIndex ( void )
 }
 
 #endif</t>
-<t tx="T984">@ Return the previous sibling, or NULL.
+<t tx="T999">@ Return the previous sibling, or NULL.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11216,7 +11535,7 @@ vnode * vnode::back ( void )
 	TTreeNode * n = mTreeNode -&gt; getPrevSibling() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T985">@ This function returns the last node of the receiver's tree.
+<t tx="T1000">@ This function returns the last node of the receiver's tree.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11236,7 +11555,7 @@ vnode * vnode::lastNode ( void )
 	return result;
 }
 </t>
-<t tx="T986">@ This function returns the indentation level of the receiver. The root nodes have level 0, their children have level 1, and so on.
+<t tx="T1001">@ This function returns the indentation level of the receiver. The root nodes have level 0, their children have level 1, and so on.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11245,7 +11564,7 @@ long vnode::level ( void )
 	assert(mTreeNode);
 	return mTreeNode -&gt; Level ;
 }</t>
-<t tx="T987">@ Return the next sibling, or NULL.
+<t tx="T1002">@ Return the next sibling, or NULL.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11255,7 +11574,7 @@ vnode * vnode::next (void)
 	TTreeNode * n = mTreeNode -&gt; getNextSibling() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T988">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1003">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::parent ( void )
 {
@@ -11263,7 +11582,7 @@ vnode * vnode::parent ( void )
 	TTreeNode * n = mTreeNode -&gt; Parent ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T989">@ Return the vnode following the tree whose root is the receiver.
+<t tx="T1004">@ Return the vnode following the tree whose root is the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11278,7 +11597,7 @@ vnode * vnode::nodeAfterTree ( void )
     }
     return next ;
 }</t>
-<t tx="T990">@ Return the previous element of the outline, or NULL if at the start of the outline.
+<t tx="T1005">@ Return the previous element of the outline, or NULL if at the start of the outline.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11288,7 +11607,7 @@ vnode * vnode::threadBack ( void )
 	TTreeNode * n = mTreeNode -&gt; GetPrev() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T991">@ Return the next item in the outline, or NULL if at the end of the outline.
+<t tx="T1006">@ Return the next item in the outline, or NULL if at the end of the outline.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11298,7 +11617,7 @@ vnode * vnode::threadNext ( void )
 	TTreeNode * n = mTreeNode -&gt; GetNext() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T992">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1007">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::visBack ( void )
 {
@@ -11306,7 +11625,7 @@ vnode * vnode::visBack ( void )
 	TTreeNode * n = mTreeNode -&gt; GetPrevVisible() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T993">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1008">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::visNext ( void )
 {
@@ -11314,111 +11633,111 @@ vnode * vnode::visNext ( void )
 	TTreeNode * n = mTreeNode -&gt; GetNextVisible() ;
 	return n ? (vnode *) ( n -&gt; Data ) : NULL ;
 }</t>
-<t tx="T994">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1009">&lt;&lt; vnode methods &gt;&gt;=
 
 char * vnode::bodyCString ( void )
 {
 	assert ( mT ) ;
     return mT -&gt; bodyCString() ;
 }</t>
-<t tx="T995">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1010">&lt;&lt; vnode methods &gt;&gt;=
 
 long vnode::bodyCStringLength ( void )
 {
 	assert ( mT ) ;
     return mT -&gt; bodyCStringLength() ;
 }</t>
-<t tx="T996">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1011">&lt;&lt; vnode methods &gt;&gt;=
 
 String vnode::bodyRTF ( void )
 {
 	assert(mT);
 	return mT -&gt; bodyRTF();
 }</t>
-<t tx="T997">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1012">&lt;&lt; vnode methods &gt;&gt;=
 
 String vnode::bodyString ( void )
 {
 	assert (mT);
     return mT -&gt; bodyString() ;
 }</t>
-<t tx="T998">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1013">&lt;&lt; vnode methods &gt;&gt;=
 
 char * vnode::headCString ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; Text . c_str();
 }</t>
-<t tx="T999">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1014">&lt;&lt; vnode methods &gt;&gt;=
 
 long vnode::headCStringLength ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; Text . Length() ;
 }</t>
-<t tx="T1000">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1015">&lt;&lt; vnode methods &gt;&gt;=
 
 String vnode::headString ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; Text ;
 }</t>
-<t tx="T1001">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1016">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isCloned ( void )
 {
     return ( ( mStatusBits &amp; clonedBit ) != 0 ) ;
 }</t>
-<t tx="T1002">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1017">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isDirty ( void )
 {
     return mT -&gt; isDirty() ;
 }</t>
-<t tx="T1003">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1018">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isDummy ( void )
 {
     return ( ( mStatusBits &amp; dummyBit ) != 0 ) ;
 }</t>
-<t tx="T1004">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1019">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isExpanded ( void )
 {
 	assert(mTreeNode);
 	return mTreeNode -&gt; Expanded ;
 }</t>
-<t tx="T1005">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1020">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isExpandedBitSet ( void )
 {
 	return ( ( mStatusBits &amp; expandedBit ) != 0 ) ;
 }</t>
-<t tx="T1006">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1021">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isMarked ( void )
 {
     return ( ( mStatusBits &amp; markedBit ) != 0 ) ;
 }</t>
-<t tx="T1007">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1022">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isOrphan ( void )
 {
     return ( ( mStatusBits &amp; orphanBit ) != 0 ) ;
 }</t>
-<t tx="T1008">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1023">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isSelectedBitSet ( void )
 {
 	return ( ( mStatusBits &amp; selectedBit ) != 0 ) ;
 }</t>
-<t tx="T1009">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1024">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isTopBitSet ( void )
 {
 	return ( ( mStatusBits &amp; topBit ) != 0 ) ;
 }</t>
-<t tx="T1010">@ Return TRUE if all parents are expanded.
+<t tx="T1025">@ Return TRUE if all parents are expanded.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11427,19 +11746,19 @@ bool vnode::isVisible ( void )
 	assert(mTreeNode);
 	return mTreeNode -&gt; IsVisible ;
 }</t>
-<t tx="T1011">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1026">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isVisited ( void )
 {
     return ( ( mStatusBits &amp; visitedBit ) != 0 ) ;
 }</t>
-<t tx="T1012">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1027">&lt;&lt; vnode methods &gt;&gt;=
 
 short vnode::status ( void )
 {
     return mStatusBits ;
 }</t>
-<t tx="T1013">@ Return the root (the first node) of the tree containing the receiver.  This is called by the commands class.
+<t tx="T1028">@ Return the root (the first node) of the tree containing the receiver.  This is called by the commands class.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11455,7 +11774,7 @@ vnode * vnode::findRoot ( void )
 
     return v ;
 }</t>
-<t tx="T1014">@ This method returns the active form.
+<t tx="T1029">@ This method returns the active form.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11470,7 +11789,7 @@ Commands * vnode::commands ( void )
     	return leoForm -&gt; commands();
 	#endif
 }</t>
-<t tx="T1015">@ This method returns the TLeoForm containing v. We can not assume that this form is the active form.
+<t tx="T1030">@ This method returns the TLeoForm containing v. We can not assume that this form is the active form.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11497,14 +11816,14 @@ TLeoForm * vnode::leoForm ( void )
 	#endif
 }
 </t>
-<t tx="T1016">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1031">&lt;&lt; vnode methods &gt;&gt;=
 
 TTreeNode * vnode::treeNode ( void )
 {
 	assert(mTreeNode);
     return mTreeNode ;
 }</t>
-<t tx="T1017">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1032">&lt;&lt; vnode methods &gt;&gt;=
 
 TTreeNodes * vnode::treeNodes ( void )
 {
@@ -11513,14 +11832,14 @@ TTreeNodes * vnode::treeNodes ( void )
 	assert(treeView &amp;&amp; treeView -&gt; Items);
 	return treeView -&gt; Items ;
 }</t>
-<t tx="T1018">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1033">&lt;&lt; vnode methods &gt;&gt;=
 
 TTreeView * vnode::treeView ( void )
 {
 	assert(mTreeNode &amp;&amp; mTreeNode -&gt; TreeView);
     return (TTreeView *) mTreeNode -&gt; TreeView ;
 }</t>
-<t tx="T1019">@ We can not use this -&gt; treeView() -&gt; Selected because the Selected property will be NULL if the TLeoForm is not the current form.
+<t tx="T1034">@ We can not use this -&gt; treeView() -&gt; Selected because the Selected property will be NULL if the TLeoForm is not the current form.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11529,13 +11848,13 @@ vnode * vnode::currentVnode ( void )
 	assert(mCommands);
 	return mCommands -&gt; currentVnode();
 }</t>
-<t tx="T1020">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1035">&lt;&lt; vnode methods &gt;&gt;=
 
 long vnode::iconVal ( void )
 {
    return mIconVal ;
 }</t>
-<t tx="T1021">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1036">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isAncestorOf ( vnode * v )
 {
@@ -11545,33 +11864,33 @@ bool vnode::isAncestorOf ( vnode * v )
 
     return FALSE ;
 }</t>
-<t tx="T1022">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1037">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isRoot ( TTreeView * treeView )
 {
 	return this -&gt; threadBack() == NULL ;
 }</t>
-<t tx="T1023">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1038">&lt;&lt; vnode methods &gt;&gt;=
 
 vnode * vnode::joinList ( void )
 {
 	return mJoinList ;
 }</t>
-<t tx="T1024">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1039">&lt;&lt; vnode methods &gt;&gt;=
 
 int vnode::selectionStart ( void )
 {
 	return mT -&gt; selectionStart();
 }
 </t>
-<t tx="T1025">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1040">&lt;&lt; vnode methods &gt;&gt;=
 
 int vnode::selectionLength ( void )
 {
 	return mT -&gt; selectionLength();
 }
 </t>
-<t tx="T1026">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1041">&lt;&lt; vnode methods &gt;&gt;=
 
 tnode * vnode::t ( void )
 {
@@ -11579,7 +11898,7 @@ tnode * vnode::t ( void )
 	assert(mT);
 	return mT ;
 }</t>
-<t tx="T1027">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1042">&lt;&lt; vnode methods &gt;&gt;=
 
 #ifdef V_XCLONES
 
@@ -11589,7 +11908,7 @@ void vnode::setXCloneIndex ( long index )
 }
 
 #endif</t>
-<t tx="T1028">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1043">&lt;&lt; vnode methods &gt;&gt;=
 
 #ifdef V_XCLONES
 
@@ -11599,7 +11918,7 @@ void vnode::setXCloneName ( String name )
 }
 
 #endif</t>
-<t tx="T1029">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1044">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::appendStringToBody ( String s )
 {
@@ -11610,7 +11929,7 @@ void vnode::appendStringToBody ( String s )
 	this -&gt; setIcon();
 }
 </t>
-<t tx="T1030">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1045">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setBodyStringOrPane ( String s )
 {
@@ -11631,7 +11950,7 @@ void vnode::setBodyStringOrPane ( String s )
 	t -&gt; setSelection(0,0);  // 9/27/00
 }
 </t>
-<t tx="T1031">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1046">&lt;&lt; vnode methods &gt;&gt;=
 
 void  vnode::setHeadString ( String s )
 {
@@ -11645,7 +11964,7 @@ void  vnode::initHeadString ( String s )
 	assert(mTreeNode);
 	mTreeNode -&gt; Text = s ;
 }</t>
-<t tx="T1032">@ Unlike setBodyStringOrPane, this code will work whether or not the receiver is the presently selected vnode, because the assignment mTreeNode -&gt; Text = s updates the headline.
+<t tx="T1047">@ Unlike setBodyStringOrPane, this code will work whether or not the receiver is the presently selected vnode, because the assignment mTreeNode -&gt; Text = s updates the headline.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11659,7 +11978,7 @@ void vnode::setHeadStringOrHeadline ( String s )
 	this -&gt; setHeadString( s );
 }
 </t>
-<t tx="T1033">@ This trims trailing blank lines from a node.  It is surprising difficult to do this during Untangle.
+<t tx="T1048">@ This trims trailing blank lines from a node.  It is surprising difficult to do this during Untangle.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11686,7 +12005,7 @@ void vnode::trimTrailingLines(void)
 	}
 }
 </t>
-<t tx="T1034">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1049">&lt;&lt; vnode methods &gt;&gt;=
 
 long vnode::computeIcon ( void )
 {
@@ -11701,7 +12020,7 @@ long vnode::computeIcon ( void )
 	return val ;
 }
 </t>
-<t tx="T1035">@ The caller must call commands -&gt; Repaint().
+<t tx="T1050">@ The caller must call commands -&gt; Repaint().
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11719,7 +12038,7 @@ void vnode::setIcon ( void )
 	}
 }
 </t>
-<t tx="T1036">@ Calling setIconVal -1 is the idiom to force the icon to be redrawn.
+<t tx="T1051">@ Calling setIconVal -1 is the idiom to force the icon to be redrawn.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11728,7 +12047,7 @@ void vnode::setIconVal ( long val )
 	mIconVal = val ;
 }
 </t>
-<t tx="T1037">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1052">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setIconWithVal ( long val )
 {
@@ -11739,21 +12058,21 @@ void vnode::setIconWithVal ( long val )
         mTreeNode -&gt; SelectedIndex = val ;
 	}
 }</t>
-<t tx="T1038">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1053">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setJoinList ( vnode * v )
 {
 	assert(mJoinList==NULL);
 	mJoinList = v ;
 }</t>
-<t tx="T1039">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1054">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setSelection ( int start, int length )
 {
 	mT -&gt; setSelection ( start, length );
 }
 </t>
-<t tx="T1040">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1055">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setT (tnode * t )
 {
@@ -11764,21 +12083,21 @@ void vnode::setT (tnode * t )
 	}
 }
 </t>
-<t tx="T1041">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1056">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setTreeNode ( TTreeNode * treeNode )
 {
 	assert(treeNode);
     mTreeNode = treeNode ;
 }</t>
-<t tx="T1042">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1057">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearClonedBit ( void )
 {
     mStatusBits &amp;= ~ clonedBit ;
 	this -&gt; setIcon();
 }</t>
-<t tx="T1043">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1058">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearDirty ( void )
 {
@@ -11799,13 +12118,13 @@ void vnode::clearDirtyJoined ( void )
 		v2 -&gt; setIcon();
 }
 </t>
-<t tx="T1044">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1059">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearDummy ( void )
 {
     mStatusBits &amp;= ~ dummyBit ;
 }</t>
-<t tx="T1045">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1060">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearMarked ( void )
 {
@@ -11813,19 +12132,19 @@ void vnode::clearMarked ( void )
 	this -&gt; setIcon();
 }
 </t>
-<t tx="T1046">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1061">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearOrphan ( void )
 {
     mStatusBits &amp;= ~ orphanBit ;
 }</t>
-<t tx="T1047">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1062">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::clearVisited ( void )
 {
     mStatusBits &amp;= ~ visitedBit ;
 }</t>
-<t tx="T1048">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1063">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initClonedBit ( bool val )
 {
@@ -11834,45 +12153,45 @@ void vnode::initClonedBit ( bool val )
 	else
 		mStatusBits &amp;= ~clonedBit ;
 }</t>
-<t tx="T1049">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1064">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initDirtyBit ( void )
 {
 	mT -&gt; setDirty();
 }
 </t>
-<t tx="T1050">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1065">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initExpandedBit ( void )
 {
     mStatusBits |= expandedBit ;
 }</t>
-<t tx="T1051">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1066">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initMarkedBit ( void )
 {
 	mStatusBits |= markedBit ;
 }</t>
-<t tx="T1052">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1067">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initSelectedBit ( void )
 {
     mStatusBits |= selectedBit ;
 }</t>
-<t tx="T1053">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1068">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initTopBit ( void )
 {
     mStatusBits |= topBit ;
 }</t>
-<t tx="T1054">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1069">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::initStatus ( short status )
 {
 	mStatusBits = status ;
 }
 </t>
-<t tx="T1055">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1070">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setAncestorAtFileNodeDirty ( void )
 {
@@ -11884,7 +12203,7 @@ void vnode::setAncestorAtFileNodeDirty ( void )
 	}
 }
 </t>
-<t tx="T1056">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1071">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setClonedBit ( void )
 {
@@ -11892,7 +12211,7 @@ void vnode::setClonedBit ( void )
 	this -&gt; setIcon();
 }
 </t>
-<t tx="T1057">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1072">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setDirty ( void )
 {
@@ -11922,25 +12241,25 @@ void vnode::setDirtyJoined ( void )
 		v2 -&gt; setDirty();
 }
 </t>
-<t tx="T1058">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1073">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setDummy ( void )
 {
     mStatusBits |= dummyBit ;
 }</t>
-<t tx="T1059">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1074">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setOrphan ( void )
 {
     mStatusBits |= orphanBit ;
 }</t>
-<t tx="T1060">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1075">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setVisited ( void )
 {
     mStatusBits |= visitedBit ;
 }</t>
-<t tx="T1061">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1076">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::setMarked ( void )
 {
@@ -11948,7 +12267,7 @@ void vnode::setMarked ( void )
 	this -&gt; setIcon();
 }
 </t>
-<t tx="T1062">@ Create a clone of back and insert it as the next sibling of back.
+<t tx="T1077">@ Create a clone of back and insert it as the next sibling of back.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11965,7 +12284,7 @@ vnode * vnode::clone ( vnode * back )
 		v -&gt; setClonedBit() ;
 	return clone ;
 }</t>
-<t tx="T1063">@ This method creates all nodes that depend on the receiver.
+<t tx="T1078">@ This method creates all nodes that depend on the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -11988,7 +12307,7 @@ void vnode::createDependents ( void )
 	}
 }
 </t>
-<t tx="T1064">@ This is the main delete routine.  It deletes the receiver's entire tree from the screen.
+<t tx="T1079">@ This is the main delete routine.  It deletes the receiver's entire tree from the screen.
 
 Deleting an outline is actually a tricky operation because of the Undo command.  We don't actually delete vnodes (or reduce the refCount field of tnodes) until the delete operation becomes undoable.  (This can happen even if unlimited undo/redo is ever implemented.)
 
@@ -12024,7 +12343,7 @@ dvnode * vnode::doDelete ( vnode * newVnode )  // delete is a C++ keyword
 	return dv ;
 }
 </t>
-<t tx="T1065">@code
+<t tx="T1080">@code
 
 TRACEP("vnode::doDelete:dumpDVnodes",
 	ecnl(); es("Dump of dvnodes: ");
@@ -12036,7 +12355,7 @@ TRACEP("vnode::doDelete:dumpDVnodes",
 	ecnls(2);
 );
 </t>
-<t tx="T1066">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1081">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::freeDVnodes ( dvnode * dv )
 {
@@ -12047,7 +12366,7 @@ void vnode::freeDVnodes ( dvnode * dv )
 	}
 }
 </t>
-<t tx="T1067">@ This method inserts a new vnode after the receiver.
+<t tx="T1082">@ This method inserts a new vnode after the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12075,7 +12394,7 @@ vnode * vnode::insertAfter ( tnode * t )
 	return v ;
 }
 </t>
-<t tx="T1068">@ This method inserts a new node as the last child of the receiver.
+<t tx="T1083">@ This method inserts a new node as the last child of the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12084,7 +12403,7 @@ vnode * vnode::insertAsLastChild ( tnode * t )
 	long n = this -&gt; numberOfChildren() ;
 	return insertAsNthChild ( n, t ) ;
 }</t>
-<t tx="T1069">@ This method inserts a new vnode as the nth child of the receiver.
+<t tx="T1084">@ This method inserts a new vnode as the nth child of the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12115,7 +12434,7 @@ vnode * vnode::insertAsNthChild ( long index, tnode * t )
 	return v ;
 }
 </t>
-<t tx="T1070">@ This method moves the receiver after node v.
+<t tx="T1085">@ This method moves the receiver after node v.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12140,7 +12459,7 @@ void vnode::moveAfter (vnode * v )
 	this -&gt; createDependents() ;
 }
 </t>
-<t tx="T1071">@ This method moves the receiver before node v.
+<t tx="T1086">@ This method moves the receiver before node v.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12152,7 +12471,7 @@ void vnode::moveToRoot ( void  )
 	this -&gt; createDependents() ;
 }
 </t>
-<t tx="T1072">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1087">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode:: moveToNthChildOf (vnode * parent, long index )
 {
@@ -12174,7 +12493,7 @@ void vnode:: moveToNthChildOf (vnode * parent, long index )
 
 	this -&gt; createDependents() ;
 }</t>
-<t tx="T1073">@ This method restores the tree described by dv in the position described by back and parent.  If back exists, we insert the tree after back.  Otherwise, if parent exists we insert the tree as the first child of parent.  If both back and parent are null the new tree becomes the root vnode.
+<t tx="T1088">@ This method restores the tree described by dv in the position described by back and parent.  If back exists, we insert the tree after back.  Otherwise, if parent exists we insert the tree as the first child of parent.  If both back and parent are null the new tree becomes the root vnode.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12198,7 +12517,7 @@ vnode * vnode::restoreOutlineFromDVnodes ( dvnode * dv, vnode * parent, vnode * 
 	return result ;
 }
 </t>
-<t tx="T1074">@code
+<t tx="T1089">@code
 
 if ( back ) {
 	vnode * next = back -&gt; next();
@@ -12224,7 +12543,7 @@ else {
         treeNodes -&gt; InsertObject( root -&gt; mTreeNode, s, v ) ;
 }
 </t>
-<t tx="T1075">@code
+<t tx="T1090">@code
 
 long delta = dv -&gt; next -&gt; level - dv -&gt; level ;
 
@@ -12245,7 +12564,7 @@ else {
 		parent = back -&gt; parent();
 }
 </t>
-<t tx="T1076">@ New code:  8/8/00
+<t tx="T1091">@ New code:  8/8/00
 @code
 
 vnode * next = result -&gt; nodeAfterTree();
@@ -12254,7 +12573,7 @@ for ( vnode * v = result ; v &amp;&amp; v != next ; v = v -&gt; threadNext() ) {
 	v -&gt; setIcon();
 }
 </t>
-<t tx="T1077">@ This method creates a cloned tree after oldTree.
+<t tx="T1092">@ This method creates a cloned tree after oldTree.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12279,7 +12598,7 @@ vnode * vnode::cloneTree ( vnode * oldTree )
 	return newTree ;
 }
 </t>
-<t tx="T1078">@ This methods propagates clone bits from the receiver's tree to tree2.
+<t tx="T1093">@ This methods propagates clone bits from the receiver's tree to tree2.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12309,7 +12628,7 @@ void vnode::copyCloneBitsTo ( vnode * tree2 )
 	}
 	PERM_ASSERT(child2 == NULL);
 }</t>
-<t tx="T1079">@ This method copies all subtrees of oldRoot to the subtrees of newRoot.  The caller is responsible for copying the headline text from oldRoot to newRoot.
+<t tx="T1094">@ This method copies all subtrees of oldRoot to the subtrees of newRoot.  The caller is responsible for copying the headline text from oldRoot to newRoot.
 
 This method must be given the new root as well as the old:  the Borland classes do not allow us to create an unattached outline.
 
@@ -12342,7 +12661,7 @@ void vnode::copyTree( vnode * oldTree, vnode * newTree )
 	assert ( new_v == NULL ) ;
 }
 </t>
-<t tx="T1080">@ This method destroys all dependent vnodes and TTreeNode's associated with the receiver.
+<t tx="T1095">@ This method destroys all dependent vnodes and TTreeNode's associated with the receiver.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12364,7 +12683,7 @@ void vnode::destroyDependents ( void )
 	}
 }
 </t>
-<t tx="T1081">@ This method destroys (irrevocably deletes) a vnode tree.
+<t tx="T1096">@ This method destroys (irrevocably deletes) a vnode tree.
 
 This code should be called only when it is no longer possible to undo a previous delete.  It is always valid to destroy dependent trees.
 
@@ -12387,7 +12706,7 @@ void vnode::destroyTree ( void )
 	// Destroy the entire tree of TTreeNodes.
 	treeNode -&gt; Delete() ;
 }</t>
-<t tx="T1082">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1097">&lt;&lt; vnode methods &gt;&gt;=
 
 void vnode::invalidOutline ( String message )
 {
@@ -12404,13 +12723,13 @@ void vnode::invalidOutline ( String message )
 	alert ( s . c_str() ) ;
 }
 </t>
-<t tx="T1083">&lt;&lt; vnode methods &gt;&gt;=
+<t tx="T1098">&lt;&lt; vnode methods &gt;&gt;=
 
 bool vnode::isJoinedTo ( vnode * v )
 {
 	return v &amp;&amp; this -&gt; mT == v -&gt; mT ;
 }</t>
-<t tx="T1084">@ This function returns true if the nodes v1 and v2 are on the same join list.
+<t tx="T1099">@ This function returns true if the nodes v1 and v2 are on the same join list.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12435,7 +12754,7 @@ bool vnode::isOnJoinListOf ( vnode *v2)
 	return FALSE;
 }
 </t>
-<t tx="T1085">@ This method joins the receiver to v2 if the two nodes have not already been joined.
+<t tx="T1100">@ This method joins the receiver to v2 if the two nodes have not already been joined.
 
 Joining involves placing each vnode on the others join list.
 
@@ -12475,7 +12794,7 @@ void vnode::joinNodeTo ( vnode * v2 )
 	PERM_ASSERT( v1 -&gt; mJoinList &amp;&amp; v2 -&gt; mJoinList );
 }
 </t>
-<t tx="T1086">@ This function joins all nodes in the receiver and tree2.  This code makes no assumptions about the two trees, and some or all of the nodes may already have been joined.  The PERM_ASSERT's guarantee that both trees have the same topology.
+<t tx="T1101">@ This function joins all nodes in the receiver and tree2.  This code makes no assumptions about the two trees, and some or all of the nodes may already have been joined.  The PERM_ASSERT's guarantee that both trees have the same topology.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12500,7 +12819,7 @@ void vnode::joinTreeTo ( vnode *tree2 )
 	PERM_ASSERT(child2 == NULL);
 }
 </t>
-<t tx="T1087">@ This method is called just before destroying a Tree of TTreeNodes.  It copies the data into the dvnode so the headlines can be restored if the deleted is undone.
+<t tx="T1102">@ This method is called just before destroying a Tree of TTreeNodes.  It copies the data into the dvnode so the headlines can be restored if the deleted is undone.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12523,13 +12842,13 @@ dvnode * vnode::saveOutlineWithLevel ( long level )
 	return root ;
 }
 </t>
-<t tx="T1088">@code
+<t tx="T1103">@code
 
 dv -&gt; next = NULL ;
 dv -&gt; level = level ;
 dv -&gt; headline = v -&gt; headString();
 dv -&gt; v = v ;</t>
-<t tx="T1089">@ This function returns true if the receiver should be a clone.  This can be done _very_ quickly using the receiver's join list.
+<t tx="T1104">@ This function returns true if the receiver should be a clone.  This can be done _very_ quickly using the receiver's join list.
 
 The receiver is a clone if and only it is structurally _dissimilar_ to a node joined to it.  Structurally _similar_ joined nodes have non-null, distinct and joined parents, and have the same child indices.
 
@@ -12557,7 +12876,7 @@ bool vnode::shouldBeClone ( void )
 	return FALSE ;  
 }
 </t>
-<t tx="T1090">@ This code carefully unlinks the receiver from its join list.  We can not simply assume that all such links will eventually be cleared.
+<t tx="T1105">@ This code carefully unlinks the receiver from its join list.  We can not simply assume that all such links will eventually be cleared.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12587,7 +12906,7 @@ void vnode::unjoinNode ( void )
 		#endif
 	}
 }</t>
-<t tx="T1091">@ We guard against any cycles in the join list, which would cause this loop to hang.  It's much better to cause an assert to fail.
+<t tx="T1106">@ We guard against any cycles in the join list, which would cause this loop to hang.  It's much better to cause an assert to fail.
 @code
 
 Commands * commands = this -&gt; commands() ;
@@ -12602,7 +12921,7 @@ for (
 		assert ( 0 ) ;
 	else
 		prev -&gt; setVisited() ;</t>
-<t tx="T1092">@ This function unjoins all nodes of the receiver's tree.
+<t tx="T1107">@ This function unjoins all nodes of the receiver's tree.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12616,7 +12935,7 @@ void vnode::unjoinTree ( void )
 		v = v -&gt; threadNext() ;
 	}
 }</t>
-<t tx="T1093">@ This routine checks the structure of the receiver's tree.
+<t tx="T1108">@ This routine checks the structure of the receiver's tree.
 
 &lt;&lt; vnode methods &gt;&gt;=
 
@@ -12639,11 +12958,11 @@ bool vnode::validateOutlineWithParent ( vnode * p )
 
 	return result ;
 }</t>
-<t tx="T1094">@code
+<t tx="T1109">@code
 
 if ( parent != p )
 	this -&gt; invalidOutline ( "Invalid parent link: " + parent -&gt; description() ) ;</t>
-<t tx="T1095">@code
+<t tx="T1110">@code
 
 if ( p )
 {
@@ -12656,11 +12975,11 @@ if ( p )
 else if ( childIndex &lt; 0 )
 	this -&gt; invalidOutline ( "negative childIndex" + childIndex ) ;
 </t>
-<t tx="T1096">@code
+<t tx="T1111">@code
 
 if ( this -&gt; t() == NULL &amp;&amp; p != NULL )
 	this -&gt; invalidOutline ( "NULL t" ) ;</t>
-<t tx="T1097">#include &lt;stdio.h&gt;
+<t tx="T1112">#include &lt;stdio.h&gt;
 
 class vnode ;
 class Commands ;
@@ -12683,12 +13002,12 @@ private:
 	&lt;&lt; private write methods &gt;&gt;
 };
 </t>
-<t tx="T1098">bool compareFiles ( String path1, String path2 ) ;
+<t tx="T1113">bool compareFiles ( String path1, String path2 ) ;
 short directiveKind (char * ip, char * limit) ;
 bool isSectionName ( char *ip, char *limit, char **end_pp ) ;
 bool matchHeadline ( vnode * v, String pattern ) ;
 void setAncestorAtFileNodeDirty ( vnode * v ) ;</t>
-<t tx="T1099">@ The commander for the current window.
+<t tx="T1114">@ The commander for the current window.
 @c
 
 Commands * mCommands ;
@@ -12730,7 +13049,7 @@ String mEndSentinelComment ;
 
 vnode * mRoot ;
 </t>
-<t tx="T1100">@code
+<t tx="T1115">@code
 
 vnode * createNthChild (long n, vnode * parent, String headline) ;
 void joinTrees ( vnode *tree1, vnode *tree2 ) ;
@@ -12739,7 +13058,7 @@ char * scanHeader ( char * ip, char * limit ) ;
 char * scanText (vnode *v, TMemoryStream *ms,
 	char *ip, char *limit, short endSentinelKind) ;
 void updateCloneIndices ( vnode * root, vnode * next ) ;</t>
-<t tx="T1101">@code
+<t tx="T1116">@code
 
 String nodeSentinelText ( vnode * v ) ;
 
@@ -12756,7 +13075,7 @@ short sentinelKind ( char *ip, char *limit ) ;
 String sentinelName ( short sentinelKind ) ;
 
 char * skipSentinelStart( char *ip, char *limit) ;</t>
-<t tx="T1102">@code
+<t tx="T1117">@code
 
 void appendToBody (TMemoryStream *ms, char *start, char *end);
 void appendToBody (TMemoryStream *ms, String s);
@@ -12764,7 +13083,7 @@ void error ( String message );
 void scanAllDirectives ( vnode * v );
 char * skipIndent (long n, char * ip, char * limit);
 void writeError ( String message );</t>
-<t tx="T1103">@code
+<t tx="T1118">@code
 
 // Top level...
 vnode * findReference (vnode *root, char *ip, char *end_p, char *limit ) ;
@@ -12786,7 +13105,7 @@ void putInt (int n) ;
 char * putLeadingWs ( char * ip, char * limit_p ) ;
 void putString ( String s ) ;
 void putTabs (int n) ;</t>
-<t tx="T1104">// atFile.cpp created June 6, 2001.
+<t tx="T1119">// atFile.cpp created June 6, 2001.
 
 #pragma option -w-par  // no warning: "Parameter is never used"
 #pragma option -w-sig  // no warning: "Conversion may lose significant digits"
@@ -12796,7 +13115,7 @@ void putTabs (int n) ;</t>
 &lt;&lt; atFile constants &gt;&gt;
 
 @others</t>
-<t tx="T1105">#include &lt;vcl.h&gt;
+<t tx="T1120">#include &lt;vcl.h&gt;
 #pragma hdrstop
 
 #include "args.h"
@@ -12817,7 +13136,7 @@ void putTabs (int n) ;</t>
 
 #include "Leo.h"
 </t>
-<t tx="T1106">#define oblank() this -&gt; putBlanks(1)
+<t tx="T1121">#define oblank() this -&gt; putBlanks(1)
 #define oblanks(n) this -&gt; putBlanks(n)
 #define ochar(c) this -&gt; putChar(c)
 #define oint(n) this -&gt; putInt(n)
@@ -12826,7 +13145,7 @@ void putTabs (int n) ;</t>
 #define otab() this -&gt; putTabs(1)
 #define otabs(n) this -&gt; putTabs(n)
 </t>
-<t tx="T1107">@ These constants indicate the kind of at_directives.
+<t tx="T1122">@ These constants indicate the kind of at_directives.
 @c
 
 enum {
@@ -12855,21 +13174,21 @@ enum {
   	startDirective //@@
 };
 </t>
-<t tx="T1108">void Commands::readAtFile ( vnode * v )
+<t tx="T1123">void Commands::readAtFile ( vnode * v )
 {
 	atFile * at = new atFile( this );
 	at -&gt; read ( v ) ;
 	delete at ;
 }
 </t>
-<t tx="T1109">void Commands::writeAtFile ( vnode * v )
+<t tx="T1124">void Commands::writeAtFile ( vnode * v )
 {
 	atFile * at = new atFile( this );
 	at -&gt; write ( v ) ;
 	delete at ;
 }
 </t>
-<t tx="T1110">atFile::atFile( Commands * theCommander )
+<t tx="T1125">atFile::atFile( Commands * theCommander )
 {
 	// Inialize ivars.
 	mCommands = theCommander ;
@@ -12884,7 +13203,7 @@ enum {
 	mRoot = NULL ;
 }
 </t>
-<t tx="T1111">@ Sections appear in the derived file in reference order, not tree order.  Therefore, when we insert the nth child of the parent there is no guarantee that the previous n-1 children have already been inserted. And it won't work just to insert the nth child as the last child if there aren't n-1 previous siblings.  For example, if we insert the third child followed by the second child followed by the first child the second and third children will be out of order.
+<t tx="T1126">@ Sections appear in the derived file in reference order, not tree order.  Therefore, when we insert the nth child of the parent there is no guarantee that the previous n-1 children have already been inserted. And it won't work just to insert the nth child as the last child if there aren't n-1 previous siblings.  For example, if we insert the third child followed by the second child followed by the first child the second and third children will be out of order.
 
 To ensure that nodes are placed in the correct location we create "dummy" children as needed as placeholders.  In the example above, we would insert two dummy children when inserting the third child.  When inserting the other two children we replace the previously inserted dummy child with the actual children.
 
@@ -12923,7 +13242,7 @@ vnode * atFile::createNthChild(long n, vnode * parent, String headline)
     return result ;
 }
 </t>
-<t tx="T1112">@ This function joins all nodes in the two trees which should have the same topology. This code makes no other assumptions about the two trees; some or all of the nodes may already have been joined.
+<t tx="T1127">@ This function joins all nodes in the two trees which should have the same topology. This code makes no other assumptions about the two trees; some or all of the nodes may already have been joined.
 
 There are several differences between this method and the similar vnode:joinTreeTo method.  First, we can not assert that the two trees have the same topology because the derived file could have been edited outside of Leo.  Second, this method also merges the tnodes of all joined nodes.
 @c
@@ -12948,7 +13267,7 @@ void atFile::joinTrees ( vnode *tree1, vnode *tree2 )
 		error("cloned nodes have different topologies");
 }
 </t>
-<t tx="T1113">@ This is the entry point to the read code.  The root vnode should be an @file node.
+<t tx="T1128">@ This is the entry point to the read code.  The root vnode should be an @file node.
 
 If there are structure errors the first time we delete root and its body text, then rescan.  All other errors indicate potentially serious problems with sentinels.
 
@@ -12984,13 +13303,13 @@ void atFile::read ( vnode * root )
 	}
 }
 </t>
-<t tx="T1114">String fileData("");
+<t tx="T1129">String fileData("");
 hashTable * h = NULL ;
 TMemoryStream * ms = NULL ;
 char *buf = NULL ;
 char *ip = NULL ;
 char *limit = NULL ;</t>
-<t tx="T1115">@c
+<t tx="T1130">@c
 
 if ( mTargetFileName . IsEmpty() )
 	error("Missing file name in @file node");
@@ -13008,7 +13327,7 @@ else if ( FileExists ( mTargetFileName ) ) {
 }
 else error ( mTargetFileName + " does not exit ");
 </t>
-<t tx="T1116">indent = 0 ;
+<t tx="T1131">indent = 0 ;
 ip = buf ;
 limit = ip + fileData.Length() ;
 ms = new TMemoryStream() ;  // Must use new.
@@ -13020,15 +13339,15 @@ String s( (char *) ms -&gt; Memory, ms -&gt; Size);
 root -&gt; setBodyStringOrPane(s);
 delete ms ;
 </t>
-<t tx="T1117">es("----- Minor error reading: ");
+<t tx="T1132">es("----- Minor error reading: ");
 es(mRoot -&gt; headCString());
 es(":marks have been cleared."); enl();</t>
-<t tx="T1118">while ( root -&gt; firstChild() )
+<t tx="T1133">while ( root -&gt; firstChild() )
 	root -&gt; firstChild() -&gt; doDelete(root);
 	
 root -&gt; setBodyStringOrPane ( "" ) ;
 </t>
-<t tx="T1119">@code
+<t tx="T1134">@code
 
 mCommands -&gt; clearAllVisited() ;
 
@@ -13058,7 +13377,7 @@ delete h ;
 for (vnode *v = root ; v &amp;&amp; v != next ; v = v -&gt; threadNext() )
 	if ( v -&gt; t() -&gt; isVisited() )
 		v -&gt; initClonedBit(TRUE);</t>
-<t tx="T1120">@code
+<t tx="T1135">@code
 
 h = new hashTable() ;
 
@@ -13080,7 +13399,7 @@ for (vnode *v = root ; v &amp;&amp; v != next ; v = v -&gt; threadNext() )
 }
 
 delete h ;</t>
-<t tx="T1121">vnode *current = NULL ;
+<t tx="T1136">vnode *current = NULL ;
 
 for (vnode *v = root ; v &amp;&amp; v != next ; v = v -&gt; threadNext() )
 {
@@ -13107,10 +13426,10 @@ if ( current ) {
 	#endif
 }
 </t>
-<t tx="T1122">es("----- Serious error reading: ");
+<t tx="T1137">es("----- Serious error reading: ");
 es(mRoot -&gt; headCString()); enl();
 es("----- Outline may be corrupted due to damaged sentinel lines!"); enl();</t>
-<t tx="T1123">@ This method scans all vnodes, calling read for every @file node found.  v should point to the root of the entire tree on entry.
+<t tx="T1138">@ This method scans all vnodes, calling read for every @file node found.  v should point to the root of the entire tree on entry.
 @c
 
 void atFile::readAll ( vnode * root )
@@ -13137,7 +13456,7 @@ void atFile::readAll ( vnode * root )
 }
 
 </t>
-<t tx="T1124">@ This method scans the doc part and appends the text to v's body.  The caller has already appended @&lt;space&gt; or @doc.
+<t tx="T1139">@ This method scans the doc part and appends the text to v's body.  The caller has already appended @&lt;space&gt; or @doc.
 @c
 
 char * atFile::scanDoc (
@@ -13154,16 +13473,16 @@ char * atFile::scanDoc (
 	&lt;&lt; Remove a closing block delim from v's body &gt;&gt;
 	return ip ;
 }</t>
-<t tx="T1125">assert(match(ip, limit, kind == startDoc ? "+doc" : "+at"));
+<t tx="T1140">assert(match(ip, limit, kind == startDoc ? "+doc" : "+at"));
 ip = skip_line(ip, limit); 
 this -&gt; appendToBody(ms, kind == startDoc ? "@doc" : "@");
 </t>
-<t tx="T1126">if ( ! single ) {
+<t tx="T1141">if ( ! single ) {
 	char *ip1 = skip_ws(ip, limit);
 	if (match(ip1, limit, mStartSentinelComment.c_str()))
 		ip = skip_line(ip, limit);
 }</t>
-<t tx="T1127">char *ip2 = skip_to_end_of_line(ip, limit);  // End of line.
+<t tx="T1142">char *ip2 = skip_to_end_of_line(ip, limit);  // End of line.
 
 // Point ip to the start of the real line.
 if ( single ) {
@@ -13189,13 +13508,13 @@ if ( ip2 &lt; limit &amp;&amp; is_nl(*ip2) &amp;&amp; line == trim)
 // Finish the line.
 ip = skip_line(ip, limit);
 </t>
-<t tx="T1128">if ( sentinelKind(ip, limit) == endKind ) {
+<t tx="T1143">if ( sentinelKind(ip, limit) == endKind ) {
 	ip = skipSentinelStart(ip, limit);
 	ip = skip_line(ip, limit);
 }
 else error("Missing " + sentinelName(endKind) + " sentinel");
 </t>
-<t tx="T1129">@ This code will typically only be executed for HTML files.
+<t tx="T1144">@ This code will typically only be executed for HTML files.
 @c
 
 if ( ! single )
@@ -13221,7 +13540,7 @@ if ( ! single )
 	}
 }
 </t>
-<t tx="T1130">@ This method sets mStartSentinelComment and mEndSentinelComment based on the first @+leo sentinel line of the file.  We can not call sentinelKind here because that depends on the comment delimiters we set here.
+<t tx="T1145">@ This method sets mStartSentinelComment and mEndSentinelComment based on the first @+leo sentinel line of the file.  We can not call sentinelKind here because that depends on the comment delimiters we set here.
 @c
 
 char * atFile::scanHeader ( char * ip, char * limit )
@@ -13260,7 +13579,7 @@ char * atFile::scanHeader ( char * ip, char * limit )
 		
 	return ip ;
 }</t>
-<t tx="T1131">@ This method is the heart of the new read code.  It scans text until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels.
+<t tx="T1146">@ This method is the heart of the new read code.  It scans text until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels.
 @c
 
 char * atFile::scanText (
@@ -13299,7 +13618,7 @@ char * atFile::scanText (
 	return ip ;
 }
 </t>
-<t tx="T1132">@ lineIndent is the total indentation on a sentinel line.  The first "indent" portion of that must be removed when recreating text.  linep points to the first "real" character of a line, the character following the "indent" whitespace.
+<t tx="T1147">@ lineIndent is the total indentation on a sentinel line.  The first "indent" portion of that must be removed when recreating text.  linep points to the first "real" character of a line, the character following the "indent" whitespace.
 @c
 
 {
@@ -13321,7 +13640,7 @@ char * atFile::scanText (
 
 	lineIndent = n ;
 }</t>
-<t tx="T1133">@ The sentinelKind routine returned noSentinel, so if the line contains only a newline that newline is not part of a sentinel and it must be appended to make progress.  Otherwise, we don't want to append the trailing newline here because it might be part of a sentinel.
+<t tx="T1148">@ The sentinelKind routine returned noSentinel, so if the line contains only a newline that newline is not part of a sentinel and it must be appended to make progress.  Otherwise, we don't want to append the trailing newline here because it might be part of a sentinel.
 @c
 
 {
@@ -13334,7 +13653,7 @@ char * atFile::scanText (
 	String line (ip1, ip-ip1);
 	this -&gt; appendToBody(ms, line);
 }</t>
-<t tx="T1134">ip = skip_line(ip, limit); // Skip the sentinel.
+<t tx="T1149">ip = skip_line(ip, limit); // Skip the sentinel.
 
 if (kind == endSentinelKind) {
 	if (kind == endLeo) {
@@ -13350,22 +13669,22 @@ else {
 	String expect = sentinelName(endSentinelKind);
 	error( "Ignoring " + name + " sentinel.  Expecting " + expect);
 }</t>
-<t tx="T1135">// Issue the error.
+<t tx="T1150">// Issue the error.
 String name = sentinelName(endSentinelKind);
 error("Unexpected end of file. Expecting " + name + "sentinel" );</t>
-<t tx="T1136">assert(match(ip,limit,"+at"));
+<t tx="T1151">assert(match(ip,limit,"+at"));
 ip = scanDoc(ms, ip, limit, kind);</t>
-<t tx="T1137">assert(match(ip,limit,"+body"));
+<t tx="T1152">assert(match(ip,limit,"+body"));
 ip = skip_line(ip, limit); // Skip the sentinel.
 ip = scanText(v, ms, ip, limit, endBody );
 </t>
-<t tx="T1138">assert(match(ip,limit,"+doc"));
+<t tx="T1153">assert(match(ip,limit,"+doc"));
 ip = scanDoc(ms, ip, limit, kind);
 </t>
-<t tx="T1139">assert(match(ip,limit,"+leo"));
+<t tx="T1154">assert(match(ip,limit,"+leo"));
 ip = skip_line(ip, limit);
 error("Ignoring unexpected @+leo sentinel" );</t>
-<t tx="T1140">{
+<t tx="T1155">{
 	long n = 0 ; // Default for bad index.
 	String headline (""), ref("");
 	tnode dummy_t(0,"");
@@ -13399,7 +13718,7 @@ error("Ignoring unexpected @+leo sentinel" );</t>
 	indent = oldIndent ;
 }
 </t>
-<t tx="T1141">assert(match(ip,limit,"+node:"));
+<t tx="T1156">assert(match(ip,limit,"+node:"));
 ip += 6 ;
 ip = skip_ws(ip, limit);
 
@@ -13450,7 +13769,7 @@ if (match(ip, limit, "&lt;&lt;")) {
 }
 ip = skip_line(hp, limit);
 </t>
-<t tx="T1142">while ( ip &lt; limit &amp;&amp; *ip != ':' &amp;&amp; !is_nl(*ip) )
+<t tx="T1157">while ( ip &lt; limit &amp;&amp; *ip != ':' &amp;&amp; !is_nl(*ip) )
 {
 	long index = 0 ;
 	
@@ -13463,7 +13782,7 @@ ip = skip_line(hp, limit);
 	}
 }
 </t>
-<t tx="T1143">@code
+<t tx="T1158">@code
 
 if ( *ip == '=' ) {
 	++ ip ;
@@ -13476,7 +13795,7 @@ if ( *ip == '=' ) {
 		++ ip ;
 }
 </t>
-<t tx="T1144">String s( (char *) new_ms -&gt; Memory, new_ms -&gt; Size);
+<t tx="T1159">String s( (char *) new_ms -&gt; Memory, new_ms -&gt; Size);
 String body = child -&gt; bodyString();
 
 if ( child -&gt; isDummy() )
@@ -13490,7 +13809,7 @@ else if ( body . Length() &gt; 0 &amp;&amp; body != s )
 // This is reasonable, but maybe not best.
 child -&gt; t() -&gt; setTnodeText ( s );
 </t>
-<t tx="T1145">String fileName = headline.Trim();
+<t tx="T1160">String fileName = headline.Trim();
 long len = fileName.Length();
 if ( len &gt; 5 &amp;&amp; fileName.SubString(1,5) == "@file") {
 	fileName = fileName.SubString(6,len-5);
@@ -13499,7 +13818,7 @@ if ( len &gt; 5 &amp;&amp; fileName.SubString(1,5) == "@file") {
 }
 else error ("Missing @file in root @node sentinel");
 </t>
-<t tx="T1146">@ We must make sure that the generated at-others is properly indented.
+<t tx="T1161">@ We must make sure that the generated at-others is properly indented.
 @c
 
 assert(match(ip,limit,"+others"));
@@ -13514,7 +13833,7 @@ ip = skip_line(ip, limit); // Skip the sentinel.
 }
 ip = scanText(v, ms, ip, limit, endOthers );
 </t>
-<t tx="T1147">@ The sentinel contains an @ followed by a section name in angle brackets.
+<t tx="T1162">@ The sentinel contains an @ followed by a section name in angle brackets.
 
 This code is different from the code for the @@ sentinel: the expansion of the reference does not include a trailing newline.
 @c
@@ -13540,7 +13859,7 @@ assert(match(ip,limit,"&lt;&lt;"));
 	ip = skip_line(ip1, limit);
     this -&gt; appendToBody(ms, line);
 }</t>
-<t tx="T1148">assert(match(ip,limit,"verbatim"));
+<t tx="T1163">assert(match(ip,limit,"verbatim"));
 {
 	// Skip the sentinel.
 	ip = skip_line(ip,limit);
@@ -13551,7 +13870,7 @@ assert(match(ip,limit,"&lt;&lt;"));
 	String line (ip1, ip-ip1);
 	this -&gt; appendToBody(ms, line);
 }</t>
-<t tx="T1149">assert(match(ip,limit,"@"));
+<t tx="T1164">assert(match(ip,limit,"@"));
 {
 	String line("");
 	char *ip1 = ip ;  // The first '@' has already been eaten.
@@ -13573,13 +13892,13 @@ assert(match(ip,limit,"&lt;&lt;"));
 	}
     this -&gt; appendToBody(ms, line);
 }</t>
-<t tx="T1150">{
+<t tx="T1165">{
 	char * ip1 = ip ;
 	ip = skip_line(ip, limit);
 	String line (ip1, ip-ip1);
 	error("Unknown sentinel: " + line);
 }</t>
-<t tx="T1151">@ root is an ancestor of v, or root == v.  This puts the entire expansion of v's body text enclosed in sentinel lines.
+<t tx="T1166">@ root is an ancestor of v, or root == v.  This puts the entire expansion of v's body text enclosed in sentinel lines.
 @c
 
 void atFile::putBody ( vnode * root, vnode * v, long delta )
@@ -13591,7 +13910,7 @@ void atFile::putBody ( vnode * root, vnode * v, long delta )
 		putCloseSentinels(root, v) ;
 	indent -= delta ;
 }</t>
-<t tx="T1152">@ We generate the body part only if it contains something besides whitespace. The check for at-ignore is made in atFile::write.
+<t tx="T1167">@ We generate the body part only if it contains something besides whitespace. The check for at-ignore is made in atFile::write.
 @c
 
 void atFile::putBodyPart ( vnode * v )
@@ -13607,7 +13926,7 @@ void atFile::putBodyPart ( vnode * v )
 	&lt;&lt; put code/doc parts and sentinels &gt;&gt;
 	putSentinel("@-body");
 }</t>
-<t tx="T1153">while (ip &lt; limit) {
+<t tx="T1168">while (ip &lt; limit) {
 	short kind = directiveKind(ip, limit) ;
 	char *ip1 = ip ;
 	switch ( kind ) {
@@ -13629,7 +13948,7 @@ void atFile::putBodyPart ( vnode * v )
 	assert (ip1 &lt; ip);  // We must make progress.
 }
 </t>
-<t tx="T1154">@ This method expands a code part, terminated by any at-directive except at-others.  It expands references and at-others and outputs @verbatim sentinels as needed.
+<t tx="T1169">@ This method expands a code part, terminated by any at-directive except at-others.  It expands references and at-others and outputs @verbatim sentinels as needed.
 @c
 
 char * atFile::putCodePart ( vnode * v, char * ip, char * limit )
@@ -13643,7 +13962,7 @@ char * atFile::putCodePart ( vnode * v, char * ip, char * limit )
 done:
 	return ip ;
 }</t>
-<t tx="T1155">@ The at-others directive is the only directive that is recognized following leading whitespace, so it is just a little tricky to recognize it.
+<t tx="T1170">@ The at-others directive is the only directive that is recognized following leading whitespace, so it is just a little tricky to recognize it.
 @c
 
 &lt;&lt; compute delta, the width of the whitespace &gt;&gt;
@@ -13658,7 +13977,7 @@ else if ( kind1 == noDirective ) {
 	&lt;&lt; put @verbatim sentinel if necessary &gt;&gt;
 }
 else goto done ;</t>
-<t tx="T1156">delta = 0 ;
+<t tx="T1171">delta = 0 ;
 {
 	char * ip2 = ip ;
 	while ( ip2 &lt; limit ) {
@@ -13674,7 +13993,7 @@ else goto done ;</t>
 	}
 }
 </t>
-<t tx="T1157">// This skips all indent and delta whitespace, so putAtOthers must generate it all.
+<t tx="T1172">// This skips all indent and delta whitespace, so putAtOthers must generate it all.
 
 ip = skip_to_end_of_line(ip, limit);  // Bug fix: 7/6/01
 if ( atOthersSeen )
@@ -13684,14 +14003,14 @@ else {
 	putAtOthers(v, delta);
 }
 </t>
-<t tx="T1158">{
+<t tx="T1173">{
 	String s(mStartSentinelComment);
 	s += "@" ;
 	if (match (ip, limit, s.c_str()))
 		putSentinel("verbatim");
 }
 </t>
-<t tx="T1159">putIndent(indent);
+<t tx="T1174">putIndent(indent);
 
 while (ip &lt; limit ) {
     if (*ip == body_newline) {
@@ -13707,7 +14026,7 @@ while (ip &lt; limit ) {
     }
     else ochar(*ip++);
 }</t>
-<t tx="T1160">char *end_p = NULL ;
+<t tx="T1175">char *end_p = NULL ;
 
 if ( isSectionName ( ip, limit, &amp;end_p ) )
 {
@@ -13730,7 +14049,7 @@ if ( isSectionName ( ip, limit, &amp;end_p ) )
 }
 else ochar(*ip++);  // This is _not_ an error.
 </t>
-<t tx="T1161">@ ip points to the start of a reference in root.  We search the descendents of root looking for the matching definition node.  There should be exactly one such node (descendents of other definition nodes are not searched).
+<t tx="T1176">@ ip points to the start of a reference in root.  We search the descendents of root looking for the matching definition node.  There should be exactly one such node (descendents of other definition nodes are not searched).
 @c
 
 vnode * atFile::findReference (
@@ -13746,7 +14065,7 @@ vnode * atFile::findReference (
 	}
 	return NULL ;
 }</t>
-<t tx="T1162">@ Returns TRUE if v should be included in the expansion of the at-others directive in the body text of v's parent. v will not be included if it is a definition node or if its body text contains another at-others or @ignore directive.
+<t tx="T1177">@ Returns TRUE if v should be included in the expansion of the at-others directive in the body text of v's parent. v will not be included if it is a definition node or if its body text contains another at-others or @ignore directive.
 @c
 
 bool atFile::inAtOthers (vnode * v)
@@ -13765,7 +14084,7 @@ bool atFile::inAtOthers (vnode * v)
 	return ! v -&gt; isAtIgnoreNode() &amp;&amp; ! v -&gt; isAtOthersNode() ;
 }
 </t>
-<t tx="T1163">@ The at-others directive is recognized only at the start of the line.  This code must generate all leading whitespace for the opening sentinel.
+<t tx="T1178">@ The at-others directive is recognized only at the start of the line.  This code must generate all leading whitespace for the opening sentinel.
 @c
 
 void atFile::putAtOthers ( vnode * v, long delta )
@@ -13782,7 +14101,7 @@ void atFile::putAtOthers ( vnode * v, long delta )
 	indent -= delta ;
 }
 </t>
-<t tx="T1164">void atFile::putAtOthersChild ( vnode * v )
+<t tx="T1179">void atFile::putAtOthersChild ( vnode * v )
 {
 	putOpenNodeSentinel(v) ;
 		// Insert the expansion of v.
@@ -13798,7 +14117,7 @@ void atFile::putAtOthers ( vnode * v, long delta )
 	putCloseNodeSentinel(v) ;
 }
 </t>
-<t tx="T1165">@ This method outputs the directive or reference at ip in a sentinel.
+<t tx="T1180">@ This method outputs the directive or reference at ip in a sentinel.
 @c
 
 char * atFile::putDirective ( char * ip, char * limit )
@@ -13813,7 +14132,7 @@ char * atFile::putDirective ( char * ip, char * limit )
 	return ip ;
 }
 </t>
-<t tx="T1166">@ This method outputs a doc section terminated by @code or end-of-text.  All other interior directives become part of the doc part.
+<t tx="T1181">@ This method outputs a doc section terminated by @code or end-of-text.  All other interior directives become part of the doc part.
 @c
 
 char * atFile::putDoc ( char *ip, char *limit, short kind )
@@ -13828,7 +14147,7 @@ char * atFile::putDoc ( char *ip, char *limit, short kind )
 	return ip ;
 }
 </t>
-<t tx="T1167">@ Do not skip whitespace following the @doc or @.  It is needed by the read code.
+<t tx="T1182">@ Do not skip whitespace following the @doc or @.  It is needed by the read code.
 @c
 
 if ( kind == docDirective )
@@ -13836,7 +14155,7 @@ if ( kind == docDirective )
 else
 	++ip; // Skip the "@";
 </t>
-<t tx="T1168">@ at-code or the end of body text terminates the doc part.
+<t tx="T1183">@ at-code or the end of body text terminates the doc part.
 @c
 
 char *ip2 = ip ;
@@ -13849,7 +14168,7 @@ while ( ip2 &lt; limit ) {
 
 limit = ip2 ;
 </t>
-<t tx="T1169">@ This method puts a comment part in comments.
+<t tx="T1184">@ This method puts a comment part in comments.
 @c
 
 char * atFile::putDocPart ( char * ip, char * limit )
@@ -13879,7 +14198,7 @@ char * atFile::putDocPart ( char * ip, char * limit )
 	return ip ;
 }
 </t>
-<t tx="T1170">@ We remove trailing whitespace from lines that have _not_ been split so that a newline has been inserted by this routine if and only if it is preceded by whitespace.
+<t tx="T1185">@ We remove trailing whitespace from lines that have _not_ been split so that a newline has been inserted by this routine if and only if it is preceded by whitespace.
 @c
 
 char *line = ip ; // Start of the current line.
@@ -13920,7 +14239,7 @@ if (ip &lt; limit &amp;&amp; is_nl(*ip) ) {
 	ip = skip_nl(ip, limit);
 	onl();  // No an inserted newline and no trailing whitespace.
 }</t>
-<t tx="T1171">@ This is the entry point to the write code.  The root vnode should be an @file node.
+<t tx="T1186">@ This is the entry point to the write code.  The root vnode should be an @file node.
 We set the orphan flag if there are problems writing the file to force Commands::write_LEO_file to the tree to the .leo file.
 @c
 
@@ -13951,7 +14270,7 @@ void atFile::write ( vnode * root )
 	}
 }
 </t>
-<t tx="T1172">@code
+<t tx="T1187">@code
 
 // Set globals from ancestors.
 this -&gt; scanAllDirectives(root);
@@ -13968,7 +14287,7 @@ if ( mOutputStream == NULL ) {
 	mRoot -&gt; setOrphan();
 	return ;
 }</t>
-<t tx="T1173">@code
+<t tx="T1188">@code
 
 
 if ( mTargetFileName . Length() == 0 ) {
@@ -13986,7 +14305,7 @@ if ( index &gt; 0 ) {
 	}
 }
 </t>
-<t tx="T1174">@ We create the temporary file where the target file will eventually be placed:
+<t tx="T1189">@ We create the temporary file where the target file will eventually be placed:
 
 1. In the directory specified in mTargetFileName if it contains a full path.
 2. In the directory specified in an @path directive.
@@ -14023,7 +14342,7 @@ else close (handle);
 
 String s ( (char *) pathname);
 mOutputFileName = s ;</t>
-<t tx="T1175">for ( vnode * v = root ; v &amp;&amp; v != next ; v = v -&gt; threadNext() ) {
+<t tx="T1190">for ( vnode * v = root ; v &amp;&amp; v != next ; v = v -&gt; threadNext() ) {
 	if ( ! v -&gt; isVisited() ) {
 		mRoot -&gt; setOrphan();
 		String s("Orphan node:  ");
@@ -14038,10 +14357,10 @@ mOutputFileName = s ;</t>
 	}
 }
 </t>
-<t tx="T1176">ecnl() ;
+<t tx="T1191">ecnl() ;
 es("----- Not written: ");
 es(mTargetFileName.c_str()); enl();</t>
-<t tx="T1177">if ( compareFiles ( mOutputFileName, mTargetFileName ) ) {
+<t tx="T1192">if ( compareFiles ( mOutputFileName, mTargetFileName ) ) {
 	// Just delete the temp file.
 	remove ( mOutputFileName.c_str() ) ;
 	es("Unchanged: "); es(mTargetFileName.c_str() ); enl();
@@ -14058,7 +14377,7 @@ else {
 	}
 }
 </t>
-<t tx="T1178">@ This method scans all vnodes, calling write for every @file node found.  v should point to the root of the entire tree.
+<t tx="T1193">@ This method scans all vnodes, calling write for every @file node found.  v should point to the root of the entire tree.
 @c
 
 void atFile::writeAll ( vnode * v )
@@ -14076,26 +14395,26 @@ void atFile::writeAll ( vnode * v )
     }
 }
 </t>
-<t tx="T1179">@ We must clear these bits because they may have been set on a previous write.  Calls to atFile::write may set the orphan bits in @file nodes.  If so, write_LEO_file will write the entire @file tree.
+<t tx="T1194">@ We must clear these bits because they may have been set on a previous write.  Calls to atFile::write may set the orphan bits in @file nodes.  If so, write_LEO_file will write the entire @file tree.
 @c
 
 for ( vnode * v2 = v ; v2 ; v2 = v2 -&gt; threadNext() )
 	v2 -&gt; clearOrphan();</t>
-<t tx="T1180">@ These methods write their arguments to the output file.
+<t tx="T1195">@ These methods write their arguments to the output file.
 </t>
-<t tx="T1181">void atFile::putBlanks ( int n )
+<t tx="T1196">void atFile::putBlanks ( int n )
 {
 	while (n-- &gt; 0)
 		ochar(' ');
 }
 </t>
-<t tx="T1182">void atFile::putChar (char c)
+<t tx="T1197">void atFile::putChar (char c)
 {
 	if ( mOutputStream )
 		mOutputStream -&gt; Write( &amp;c, 1 );
 }
 </t>
-<t tx="T1183">@ This methods puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
+<t tx="T1198">@ This methods puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 @c
 
 void atFile::putIndent ( int n )
@@ -14107,26 +14426,26 @@ void atFile::putIndent ( int n )
 	else
 		oblanks ( n ) ;
 }</t>
-<t tx="T1184">void atFile::putInt (int i) 
+<t tx="T1199">void atFile::putInt (int i) 
 {
 	char buf [100];
 	long n = sprintf(buf, "%d", i);
 	if ( n != EOF )
 		putString(buf);
 }</t>
-<t tx="T1185">void atFile::putString ( String s ) 
+<t tx="T1200">void atFile::putString ( String s ) 
 {
 	if ( mOutputStream )
 		mOutputStream -&gt; Write( s.c_str(), s.Length() );
 }
 </t>
-<t tx="T1186">void atFile::putTabs ( int n )
+<t tx="T1201">void atFile::putTabs ( int n )
 {
 	while ( n-- &gt; 0 )
 		ochar('\t');
 }
 </t>
-<t tx="T1187">String atFile::nodeSentinelText ( vnode * v )
+<t tx="T1202">String atFile::nodeSentinelText ( vnode * v )
 {
 	String s("");
 	// A hack: zero indicates the root node so scanText won't create a child.
@@ -14141,7 +14460,7 @@ void atFile::putIndent ( int n )
 	return s ;
 }
 </t>
-<t tx="T1188">@ The cloneIndex field of the @root node is really the maximum clone index.
+<t tx="T1203">@ The cloneIndex field of the @root node is really the maximum clone index.
 
 We make the @file node the top or current node if the top or current node is a descendent of the root.  This minimizes changes to the derived file.
 @c
@@ -14154,13 +14473,13 @@ if ( cloneIndex &gt; 0 ) {
 }
 
 </t>
-<t tx="T1189">void atFile::putCloseNodeSentinel ( vnode * v )
+<t tx="T1204">void atFile::putCloseNodeSentinel ( vnode * v )
 {
 	String s = this -&gt; nodeSentinelText(v);
 	this -&gt; putSentinel( "@-node:" + s);
 }
 </t>
-<t tx="T1190">@ root is an ancestor of v, or root == v.  We call putCloseSentinel for v up to, but not including, root.
+<t tx="T1205">@ root is an ancestor of v, or root == v.  We call putCloseSentinel for v up to, but not including, root.
 @c
 
 void atFile::putCloseSentinels ( vnode * root, vnode * v )
@@ -14173,7 +14492,7 @@ void atFile::putCloseSentinels ( vnode * root, vnode * v )
 		this -&gt; putCloseNodeSentinel(v);
 	}
 }</t>
-<t tx="T1191">@ This method is the same as putSentinel except we don't put an opening newline and leading whitespace.
+<t tx="T1206">@ This method is the same as putSentinel except we don't put an opening newline and leading whitespace.
 @c
 
 void atFile::putOpenLeoSentinel ( String text )
@@ -14183,7 +14502,7 @@ void atFile::putOpenLeoSentinel ( String text )
 	os(mEndSentinelComment);
 	onl(); // Ends of sentinel.
 }</t>
-<t tx="T1192">@ This method puts an open node sentinel for node v.
+<t tx="T1207">@ This method puts an open node sentinel for node v.
 @c
 
 void atFile::putOpenNodeSentinel ( vnode * v )
@@ -14196,7 +14515,7 @@ void atFile::putOpenNodeSentinel ( vnode * v )
 	}
 }
 </t>
-<t tx="T1193">@ root is an ancestor of v, or root == v.  We call putOpenNodeSentinel on all the descendents of root which are the ancestors of v.
+<t tx="T1208">@ root is an ancestor of v, or root == v.  We call putOpenNodeSentinel on all the descendents of root which are the ancestors of v.
 @c
 
 void atFile::putOpenSentinels ( vnode * root, vnode * v )
@@ -14212,7 +14531,7 @@ void atFile::putOpenSentinels ( vnode * root, vnode * v )
 		last = node ;
 	}
 }</t>
-<t tx="T1194">@ All sentinels are eventually output by this method.
+<t tx="T1209">@ All sentinels are eventually output by this method.
 
 Sentinels include both the preceding and following newlines. This rule greatly simplies the code and has several important benefits:
 
@@ -14230,7 +14549,7 @@ void atFile::putSentinel ( String text )
 	os(mEndSentinelComment);
 	onl(); // Ends of sentinel.
 }</t>
-<t tx="T1195">@ This method tells what kind of sentinel appears at ip.  Typically ip will point to the newline before the actual sentinel, but it is also valid for ip to point directly at the start of a sentinel line.
+<t tx="T1210">@ This method tells what kind of sentinel appears at ip.  Typically ip will point to the newline before the actual sentinel, but it is also valid for ip to point directly at the start of a sentinel line.
 @c
 
 #define test(name,start,end)\
@@ -14269,7 +14588,7 @@ short atFile::sentinelKind ( char *ip, char *limit )
 }
 
 #undef test</t>
-<t tx="T1196">@ This method returns the name of the sentinel for warnings.
+<t tx="T1211">@ This method returns the name of the sentinel for warnings.
 @c
 
 String atFile::sentinelName ( short sentinelKind )
@@ -14294,7 +14613,7 @@ String atFile::sentinelName ( short sentinelKind )
 	default: return "&lt;unknown sentinel!&gt;" ;
 	}
 }</t>
-<t tx="T1197">char * atFile::skipSentinelStart( char * ip, char * limit)
+<t tx="T1212">char * atFile::skipSentinelStart( char * ip, char * limit)
 {
 	if (is_nl(*ip))
 		ip = skip_nl(ip, limit) ;
@@ -14304,7 +14623,7 @@ String atFile::sentinelName ( short sentinelKind )
 	assert(ip &lt; limit &amp;&amp; *ip == '@');
 	return ++ip ;
 }</t>
-<t tx="T1198">@ Returns TRUE if two files are identical.
+<t tx="T1213">@ Returns TRUE if two files are identical.
 @c
 
 bool compareFiles ( String path1, String path2 )
@@ -14323,7 +14642,7 @@ bool compareFiles ( String path1, String path2 )
 	if (f2 &gt; -1) FileClose(f2);
 	return result ;
 }</t>
-<t tx="T1199">@ Returns the kind of at-directive or noDirective.
+<t tx="T1214">@ Returns the kind of at-directive or noDirective.
 @c
 
 short directiveKind ( char * ip, char * limit )
@@ -14348,7 +14667,7 @@ short directiveKind ( char * ip, char * limit )
 		return miscDirective ;
 }
 </t>
-<t tx="T1200">@ Returns TRUE if ip points to the start of a section name.  If so, we set end_pp in the caller to the character past the section reference.
+<t tx="T1215">@ Returns TRUE if ip points to the start of a section name.  If so, we set end_pp in the caller to the character past the section reference.
 @c
 
 bool isSectionName ( char *ip, char *limit, char **end_pp )
@@ -14366,7 +14685,7 @@ bool isSectionName ( char *ip, char *limit, char **end_pp )
 	return match(ip, limit, "&gt;&gt;") ;
 }
 </t>
-<t tx="T1201">@ This function sets any ancestor @file node to be dirty.
+<t tx="T1216">@ This function sets any ancestor @file node to be dirty.
 @c
 
 void setAncestorAtFileNodeDirty ( vnode * v )
@@ -14379,7 +14698,7 @@ void setAncestorAtFileNodeDirty ( vnode * v )
 		v = v -&gt; parent();
 	}
 }</t>
-<t tx="T1202">void atFile::appendToBody (TMemoryStream *ms, String s)
+<t tx="T1217">void atFile::appendToBody (TMemoryStream *ms, String s)
 {
 	assert(ms);
 	if ( s . Length() &gt; 0 )
@@ -14394,7 +14713,7 @@ void atFile::appendToBody (TMemoryStream *ms, char *start, char *end)
 		ms -&gt; Write( start, len ) ;
 }
 </t>
-<t tx="T1203">@ This code scans the node v and all of v's ancestors looking for directives.  If found, the corresponding Tangle/Untangle globals are set.
+<t tx="T1218">@ This code scans the node v and all of v's ancestors looking for directives.  If found, the corresponding Tangle/Untangle globals are set.
 
 Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node x, no @owncolor or @nocolor directives are examined in any ancestor of x.
 
@@ -14434,7 +14753,7 @@ void atFile::scanAllDirectives ( vnode * v )
 #undef test
 #undef prev
 </t>
-<t tx="T1204">#if 0 // not used in atFile::scanAllDirectives.
+<t tx="T1219">#if 0 // not used in atFile::scanAllDirectives.
 	// CWEB flag might be useful.
     arg_allow_rich_text = default_allow_rich_text ;
     arg_extended_noweb_flag = default_extended_noweb_flag ;
@@ -14451,7 +14770,7 @@ arg_page_width = default_page_width ;
 arg_tab_width = default_tab_width ;
 arg_present_language = arg_target_language = default_target_language ;
 set_delims_from_language(arg_present_language);</t>
-<t tx="T1205">@ A directory in an @file node over-rides everything else.
+<t tx="T1220">@ A directory in an @file node over-rides everything else.
 @c
 
 String s = v -&gt; atFileNodeName() ;
@@ -14461,7 +14780,7 @@ if ( dir.Length() &gt; 0 ) {
 	if ( ! path_specified )
 		error ( String("Directory \"") + dir + "\" does not exist ");
 }</t>
-<t tx="T1206">if ( prev(comment_bits) || prev(language_bits) )
+<t tx="T1221">if ( prev(comment_bits) || prev(language_bits) )
 	;  // Do nothing more.
 else if (test(comment_bits)) {
 	set_root_delims ( at_comment_ptr, len-(at_comment_ptr-ip) ) ;
@@ -14470,7 +14789,7 @@ else if (test(comment_bits)) {
 }
 else if (test(language_bits))
 	set_language (ip, len, at_language_ptr, 0 /* issue_error_flag */ ) ;</t>
-<t tx="T1207">if (test(path_bits) &amp;&amp; !path_specified &amp;&amp; !prev(path_bits)) {
+<t tx="T1222">if (test(path_bits) &amp;&amp; !path_specified &amp;&amp; !prev(path_bits)) {
 	char * p2 = at_path_ptr + 5 ; // Point past @path
 	ip = skip_to_end_of_line(at_path_ptr, limit);
 	String s(p2, ip - p2 );
@@ -14484,14 +14803,14 @@ else if (test(language_bits))
 	}	
 	else error ("ignoring empty @path") ;
 }</t>
-<t tx="T1208">if ( s . Length() &gt; 2 &amp;&amp; (
+<t tx="T1223">if ( s . Length() &gt; 2 &amp;&amp; (
 		s[1] == '"' &amp;&amp; s[s.Length()] == '"' ||
 		s[1] == '&lt;' &amp;&amp; s[s.Length()] == '&gt;'
 ) ) {
 	s . Delete ( s.Length(), 1 ) ;
 	s . Delete ( 1, 1 ) ;
 }</t>
-<t tx="T1209">if (test(page_width_bits) &amp;&amp; !prev(page_width_bits) ) {
+<t tx="T1224">if (test(page_width_bits) &amp;&amp; !prev(page_width_bits) ) {
 	char * p2 = at_page_width_ptr + 10 ; // Point past @pagewidth
 	val = 0 ;
 	ip = skip_long (p2, limit, &amp; val );
@@ -14515,7 +14834,7 @@ if (test(tab_width_bits) &amp;&amp; !prev(tab_width_bits) ) {
 	else arg_tab_width = val ;
 }
 </t>
-<t tx="T1210">@ This code is executed if no valid path was specified in the @file node or in an @path directive.  We try to set the current directory to the following:
+<t tx="T1225">@ This code is executed if no valid path was specified in the @file node or in an @path directive.  We try to set the current directory to the following:
 
 1. The Tangle Default Directory specified in the Preferences panel.
 2. The mOpenDirectory specified by the Open command.
@@ -14545,7 +14864,7 @@ if ( !path_specified ) {
 	error ("No directory specified by @file, @path or Preferences.");
 }
 </t>
-<t tx="T1211">@ We use single-line comments if we have a choice.
+<t tx="T1226">@ We use single-line comments if we have a choice.
 @c
 
 if ( single_comment_string ) {
@@ -14556,7 +14875,7 @@ else {
 	mStartSentinelComment = start_comment_string ;
 	mEndSentinelComment = end_comment_string ;
 }</t>
-<t tx="T1212">void atFile::error ( String message )
+<t tx="T1227">void atFile::error ( String message )
 {
 	if ( message.Length() &gt; 0 ) {
 		message += "\n" ;
@@ -14565,7 +14884,7 @@ else {
 	++ mErrors ;
 }
 </t>
-<t tx="T1213">@ ip points at the start of a line.  Skip past whitespace equivalent to n spaces.
+<t tx="T1228">@ ip points at the start of a line.  Skip past whitespace equivalent to n spaces.
 @c
 
 char * atFile::skipIndent ( long n, char * ip, char * limit )
@@ -14580,7 +14899,7 @@ char * atFile::skipIndent ( long n, char * ip, char * limit )
 	}
 	return ip ;
 }</t>
-<t tx="T1214">@ Update the cloneIndex field of each vnode of root's subtree. The maximum clone index is stored in the cloneIndex field of root (root should not be cloned).  next points to the node after the tree.
+<t tx="T1229">@ Update the cloneIndex field of each vnode of root's subtree. The maximum clone index is stored in the cloneIndex field of root (root should not be cloned).  next points to the node after the tree.
 @c
 
 void atFile::updateCloneIndices ( vnode * root, vnode * next )
@@ -14598,7 +14917,7 @@ void atFile::updateCloneIndices ( vnode * root, vnode * next )
 			
 	root -&gt; t() -&gt; setCloneIndex(maxIndex) ;
 }</t>
-<t tx="T1215">void atFile::writeError ( String message )
+<t tx="T1230">void atFile::writeError ( String message )
 {
 	if ( mErrors == 0 ) {
 		es("----- Errors in: "); es(mTargetFileName.c_str() ); enl();
@@ -14606,7 +14925,7 @@ void atFile::updateCloneIndices ( vnode * root, vnode * next )
 	error ( message ) ;
 	mRoot -&gt; setOrphan();
 }</t>
-<t tx="T1216">#pragma option -w-par  // suppress warning: "Parameter `param' not used."
+<t tx="T1231">#pragma option -w-par  // suppress warning: "Parameter `param' not used."
 
 &lt;&lt; File commands includes &gt;&gt;
 &lt;&lt; Declare the fileInfo class &gt;&gt;
@@ -14614,7 +14933,7 @@ void atFile::updateCloneIndices ( vnode * root, vnode * next )
 &lt;&lt; Declare File commands private functions &gt;&gt;
 
 @others</t>
-<t tx="T1217">#include &lt;vcl.h&gt;
+<t tx="T1232">#include &lt;vcl.h&gt;
 #pragma hdrstop
 
 #include "args.h"
@@ -14638,13 +14957,13 @@ void atFile::updateCloneIndices ( vnode * root, vnode * next )
 
 #include "Leo.h"
 </t>
-<t tx="T1218">static String convertToNoweb ( vnode * v ) ;
+<t tx="T1233">static String convertToNoweb ( vnode * v ) ;
 static char * convertCodePartToNoweb(
 	vnode *v, char *p, char *limit, String&amp; result) ;
 static char * convertDocPartToNoweb( char *p, char *limit, String&amp; outerResult) ;
 static char * copyPart( char *p, char *limit, String&amp; result) ;</t>
-<t tx="T1219">class EBadLeoFile {} ;</t>
-<t tx="T1220">void Commands::deleteTagList( void )
+<t tx="T1234">class EBadLeoFile {} ;</t>
+<t tx="T1235">void Commands::deleteTagList( void )
 {
 	while ( mTagList ) {
 		tag_list * next = mTagList -&gt; next ;
@@ -14652,7 +14971,7 @@ static char * copyPart( char *p, char *limit, String&amp; result) ;</t>
 		mTagList = next ;
 	}
 }</t>
-<t tx="T1221">vnode * Commands::getVtag ( long vref )
+<t tx="T1236">vnode * Commands::getVtag ( long vref )
 {
 	for ( tag_list * p = mTagList ; p ; p = p -&gt; next )
 		if ( p -&gt; vref == vref )
@@ -14669,7 +14988,7 @@ long Commands::getVtag ( vnode * v )
 
 	return NULL ;
 }</t>
-<t tx="T1222">void Commands::newVtag ( long vtag, vnode * v )
+<t tx="T1237">void Commands::newVtag ( long vtag, vnode * v )
 {
     // Allocate the node.
     tag_list * p = new tag_list();
@@ -14680,7 +14999,7 @@ long Commands::getVtag ( vnode * v )
     p -&gt; next = mTagList ;
     mTagList = p ;
 }</t>
-<t tx="T1223">void Commands::exportMoreText ( void )
+<t tx="T1238">void Commands::exportMoreText ( void )
 {
 	vnode * v = this -&gt; currentVnode();
 	if ( v == NULL ) return ;
@@ -14693,7 +15012,7 @@ long Commands::getVtag ( vnode * v )
 	clipboard -&gt; SetTextBuf( s . c_str() );
 	clipboard -&gt; Close();
 }</t>
-<t tx="T1224">void Commands::flattenOutline ( TStrings * files )
+<t tx="T1239">void Commands::flattenOutline ( TStrings * files )
 {
 	vnode * v = this -&gt; currentVnode() ;
 	if ( v == NULL ) return ;
@@ -14733,7 +15052,7 @@ long Commands::getVtag ( vnode * v )
 	}
 }
 </t>
-<t tx="T1225">void Commands::flattenOutlineWithFilename ( String fileName )
+<t tx="T1240">void Commands::flattenOutlineWithFilename ( String fileName )
 {
 	TStringList * list = new TStringList();
 	list -&gt; Add(fileName);
@@ -14741,7 +15060,7 @@ long Commands::getVtag ( vnode * v )
     delete list ;
 }
 </t>
-<t tx="T1226">void Commands::outlineToNoweb( TStrings * files )
+<t tx="T1241">void Commands::outlineToNoweb( TStrings * files )
 {
 	vnode * v = this -&gt; currentVnode() ;
 	if ( v == NULL ) return ;
@@ -14775,7 +15094,7 @@ long Commands::getVtag ( vnode * v )
 	}
 }
 </t>
-<t tx="T1227">@ This code converts a vnode to noweb text as follows:
+<t tx="T1242">@ This code converts a vnode to noweb text as follows:
 
 Convert @root to &lt; &lt; * &gt; &gt;
 Convert @doc to @
@@ -14824,7 +15143,7 @@ static String convertToNoweb ( vnode * v )
 	return result ;
 }
 </t>
-<t tx="T1228">@ The code part should start either with @code or @root or &lt;&lt; section name &gt;&gt;=
+<t tx="T1243">@ The code part should start either with @code or @root or &lt;&lt; section name &gt;&gt;=
 @c
 
 static char * convertCodePartToNoweb( vnode *v, char *p, char *limit, String&amp; result)
@@ -14836,7 +15155,7 @@ static char * convertCodePartToNoweb( vnode *v, char *p, char *limit, String&amp
 	return p ;
 }
 </t>
-<t tx="T1229">if ( p + 4 &lt; limit &amp;&amp; strn_eq(p, "@code", 5)) {
+<t tx="T1244">if ( p + 4 &lt; limit &amp;&amp; strn_eq(p, "@code", 5)) {
 	p = skip_line(p, limit);
 	char * p1 = NULL, *p2 = NULL ;
 	&lt;&lt; point p1 and p2 at section name in v's headline &gt;&gt;
@@ -14869,7 +15188,7 @@ else if ( p + 1 &lt; limit &amp;&amp; strn_eq(p, "&lt;&lt;", 2)) {
 		result += *p++ ;
 }
 </t>
-<t tx="T1230">if ( p2 &lt; p ) {
+<t tx="T1245">if ( p2 &lt; p ) {
 	char delim = ' ';
 	if ( *p2 == '&lt;' ) { ++ p2 ; delim = '&gt;' ; }
 	if ( *p2 == '"' ) { ++ p2 ; delim = '"' ; }
@@ -14884,7 +15203,7 @@ else if ( p + 1 &lt; limit &amp;&amp; strn_eq(p, "&lt;&lt;", 2)) {
 	}
 }
 </t>
-<t tx="T1231">char * hp = v -&gt; headCString();
+<t tx="T1246">char * hp = v -&gt; headCString();
 char * hlim = hp + v -&gt; headCStringLength();
 
 hp = skip_ws (hp, hlim);
@@ -14901,7 +15220,7 @@ if ( hp + 2 &lt; hlim &amp;&amp; strn_eq(hp, "&lt;&lt;", 2)) {
 	}
 }
 </t>
-<t tx="T1232">static char * convertDocPartToNoweb( char *p, char *limit, String&amp; outerResult)
+<t tx="T1247">static char * convertDocPartToNoweb( char *p, char *limit, String&amp; outerResult)
 {
 	String result("") ;
 	// Ignore anything following @space or @doc.
@@ -14922,7 +15241,7 @@ if ( hp + 2 &lt; hlim &amp;&amp; strn_eq(hp, "&lt;&lt;", 2)) {
 	}
 	return p ;
 }</t>
-<t tx="T1233">@ This code copies characters to result until the end of the present section is seen.
+<t tx="T1248">@ This code copies characters to result until the end of the present section is seen.
 @c
 
 static char * copyPart( char *p, char *limit, String&amp; result)
@@ -14961,7 +15280,7 @@ static char * copyPart( char *p, char *limit, String&amp; result)
 	return p ;
 }
 </t>
-<t tx="T1234">// This code leaves p and the outer p2 unchanged.
+<t tx="T1249">// This code leaves p and the outer p2 unchanged.
 {
 	char * p1 = p ;
 	char * p2 = skip_line (p, limit);
@@ -14972,7 +15291,7 @@ static char * copyPart( char *p, char *limit, String&amp; result)
 		else
 			++ p1 ;
 }</t>
-<t tx="T1235">@ Almost all the time spent in this command is spent here.
+<t tx="T1250">@ Almost all the time spent in this command is spent here.
 @c
 
 vnode * Commands::convertMoreStringsToOutlineAfter
@@ -15002,7 +15321,7 @@ vnode * Commands::convertMoreStringsToOutlineAfter
 
     return theRoot ;
 }</t>
-<t tx="T1236">vnode * theRoot = NULL ;
+<t tx="T1251">vnode * theRoot = NULL ;
 vnode * lastVnode = NULL ;
 vnode * v = NULL ;  // The new vnode.
 long index = 0 ;
@@ -15022,7 +15341,7 @@ if ( count &gt; 0 ) {
 	firstLevel = this -&gt; moreHeadlineLevel ( cs, &amp;junkFlag );
 }
 </t>
-<t tx="T1237">assert(level &gt;= 0 );
+<t tx="T1252">assert(level &gt;= 0 );
 
 if ( lastVnode == NULL )
 	theRoot = v = firstVnode -&gt; insertAfter ( ) ;
@@ -15044,7 +15363,7 @@ else {
 
 lastVnode = v ;
 lastLevel = level ;</t>
-<t tx="T1238">{
+<t tx="T1253">{
 	char * cString = cs ;
 	
 	while ( *cString == '\t' )
@@ -15056,7 +15375,7 @@ lastLevel = level ;</t>
 	v -&gt; treeNode() -&gt; Text = String ( cString ) ;
 }
 </t>
-<t tx="T1239">bodyLines = 0 ;
+<t tx="T1254">bodyLines = 0 ;
 ++ index ;  // Skip the headline.
 
 while ( index &lt; count )
@@ -15075,7 +15394,7 @@ while ( index &lt; count )
     ++ index ;
 }
 </t>
-<t tx="T1240">if ( bodyLines &gt; 0 )
+<t tx="T1255">if ( bodyLines &gt; 0 )
 {
 	String body ( "" ) ;
 
@@ -15088,7 +15407,7 @@ while ( index &lt; count )
 	v -&gt; t() -&gt; setTnodeText ( body ) ;
 }
 </t>
-<t tx="T1241">@ On entry, files contains at most one file to convert.
+<t tx="T1256">@ On entry, files contains at most one file to convert.
 @c
 
 void Commands::importMoreText ( TStrings * files )
@@ -15116,7 +15435,7 @@ void Commands::importMoreText ( TStrings * files )
 		alert ( s . c_str() ) ;
     }
 }</t>
-<t tx="T1242">@ This code is _very_ fast.
+<t tx="T1257">@ This code is _very_ fast.
 @c
 
 try {
@@ -15129,7 +15448,7 @@ catch ( ... )
 	alert ( s . c_str() );
 	return ;
 }</t>
-<t tx="T1243">@ return the headline level of s, or -1 if the string is not a MORE headline.
+<t tx="T1258">@ return the headline level of s, or -1 if the string is not a MORE headline.
 @c
 
 long Commands::moreHeadlineLevel ( char * s, bool * plusFlag )
@@ -15148,7 +15467,7 @@ long Commands::moreHeadlineLevel ( char * s, bool * plusFlag )
     else
         return -1 ;
 }</t>
-<t tx="T1244">bool Commands::stringsAreValidMoreFile ( TStrings * strings )
+<t tx="T1259">bool Commands::stringsAreValidMoreFile ( TStrings * strings )
 {
     long count = strings -&gt; Count ;
 	if ( count &lt; 1 ) return FALSE ;
@@ -15182,7 +15501,7 @@ long Commands::moreHeadlineLevel ( char * s, bool * plusFlag )
 
     return TRUE ;
 }</t>
-<t tx="T1245">@ This class buffers all information from an outline while a file is being read.  The setMaxTnodeIndex method creates the mTnodes array used to associate tnodes with tnode indices.  The createVnode method creates a vnode and also creates its tnode if it has not already been created.  The finishOutline completes the construction of the outline.
+<t tx="T1260">@ This class buffers all information from an outline while a file is being read.  The setMaxTnodeIndex method creates the mTnodes array used to associate tnodes with tnode indices.  The createVnode method creates a vnode and also creates its tnode if it has not already been created.  The finishOutline completes the construction of the outline.
 
 Vnode tags are not part of vnodes:  they are created by this class and destroyed when this class is destroyed.
 @c
@@ -15224,7 +15543,7 @@ public:
 	void setNumberOfTnodes ( long n ) ;
 };
 </t>
-<t tx="T1246">fileInfo::fileInfo ( TLeoForm * leoForm, Commands * commands )
+<t tx="T1261">fileInfo::fileInfo ( TLeoForm * leoForm, Commands * commands )
 {
 	mLeoForm = leoForm ;
 	mCommands = commands ;
@@ -15244,7 +15563,7 @@ fileInfo::~fileInfo ( void )
 	mCommands -&gt; deleteTagList();
 }
 </t>
-<t tx="T1247">vnode * fileInfo::createVnode ( 
+<t tx="T1262">vnode * fileInfo::createVnode ( 
 	vnode * parent, vnode * back, String headline, 
 	short attrib, long tref, long vtag,
 	String xfile, long xindex )
@@ -15282,18 +15601,18 @@ fileInfo::~fileInfo ( void )
 	return v ;
 }
 </t>
-<t tx="T1248">v = mCommands -&gt; rootVnode();
+<t tx="T1263">v = mCommands -&gt; rootVnode();
 assert(v);
 v -&gt; setT(t) ;  // deletes previous root tnode.
 mRootVnode = v ;
 </t>
-<t tx="T1249">void fileInfo::finishOutline ( void )
+<t tx="T1264">void fileInfo::finishOutline ( void )
 {
 	&lt;&lt; Set attributes and icons for all nodes &gt;&gt;
 	&lt;&lt; Create join lists of all vnodes &gt;&gt;
 	&lt;&lt; Set the current node &gt;&gt;
 }</t>
-<t tx="T1250">this -&gt; mCommands -&gt; BeginUpdate();
+<t tx="T1265">this -&gt; mCommands -&gt; BeginUpdate();
 
 for ( vnode * v = mRootVnode ; v ; v = v -&gt; threadNext() )
 {
@@ -15307,7 +15626,7 @@ for ( vnode * v = mRootVnode ; v ; v = v -&gt; threadNext() )
 
 this -&gt; mCommands -&gt; EndUpdate();
 </t>
-<t tx="T1251">@ We can create all join lists in a first pass through all vnodes using the mJoinHead field in each tnode.  The second pass circularizes each list.
+<t tx="T1266">@ We can create all join lists in a first pass through all vnodes using the mJoinHead field in each tnode.  The second pass circularizes each list.
 @c
 
 for ( vnode * v = mRootVnode ; v ; v = v -&gt; threadNext() )
@@ -15344,7 +15663,7 @@ for ( vnode * v = mRootVnode ; v ; v = v -&gt; threadNext() )
 	last -&gt; setJoinList(head);
 }
 </t>
-<t tx="T1252">@ Initializing the current vnode is tricky.  We must not "update" the old current node, namely the new root.
+<t tx="T1267">@ Initializing the current vnode is tricky.  We must not "update" the old current node, namely the new root.
 
 Leo2: we do not set the current node here, because it might be a dummy node. We must wait until we have a complete node so that the event handler will set the body text properly.
 @c
@@ -15360,7 +15679,7 @@ mCommands -&gt; setCurrentVnode ( mCurrentVnode ) ;
     mCommands -&gt; selectVnode ( mCurrentVnode ) ;
 #endif
 </t>
-<t tx="T1253">@ This method finishes pasting the outline from the clipboard.
+<t tx="T1268">@ This method finishes pasting the outline from the clipboard.
 @c
 
 vnode * fileInfo::finishPaste ( void )
@@ -15379,7 +15698,7 @@ vnode * fileInfo::finishPaste ( void )
 	mCommands -&gt; selectVnode ( mCurrentVnode ) ;
 	return mCurrentVnode ;
 }</t>
-<t tx="T1254">if ( mTnodesSeen != mNumberOfTnodes )
+<t tx="T1269">if ( mTnodesSeen != mNumberOfTnodes )
 {
 	String s("Bad tnode count.  Seen: ") ;
 	s += mTnodesSeen ;
@@ -15388,7 +15707,7 @@ vnode * fileInfo::finishPaste ( void )
 	alert( s . c_str() );
 }
 </t>
-<t tx="T1255">for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNext() )
+<t tx="T1270">for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNext() )
 {
 	if ( v -&gt; isExpandedBitSet() )
     	v -&gt; treeNode() -&gt; Expand ( FALSE ) ;
@@ -15400,7 +15719,7 @@ vnode * fileInfo::finishPaste ( void )
 	#endif
 }
 </t>
-<t tx="T1256">@ We can create all join lists in a first pass through all vnodes using the mJoinHead field in each tnode.  The second pass circularizes each list.
+<t tx="T1271">@ We can create all join lists in a first pass through all vnodes using the mJoinHead field in each tnode.  The second pass circularizes each list.
 @c
 
 for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNext() )
@@ -15437,7 +15756,7 @@ for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNe
 	last -&gt; setJoinList(head);
 }
 </t>
-<t tx="T1257">@ This must be done after the join lists have been created.  The saved clone bit is unreliable for pasted nodes.
+<t tx="T1272">@ This must be done after the join lists have been created.  The saved clone bit is unreliable for pasted nodes.
 @c
 
 for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNext() ) {
@@ -15445,7 +15764,7 @@ for ( vnode * v = mCurrentVnode ; v &amp;&amp; v != after ; v = v -&gt; threadNe
 	v -&gt; clearDirty () ;  // Calls setIcon();
 }
 </t>
-<t tx="T1258">@ The entry for tnode i is stored at mTnodes [ i - 1 ].  An index of 0 represents NULL.
+<t tx="T1273">@ The entry for tnode i is stored at mTnodes [ i - 1 ].  An index of 0 represents NULL.
 @c
 
 tnode * fileInfo::getT ( long index )
@@ -15453,7 +15772,7 @@ tnode * fileInfo::getT ( long index )
 	return ( index &lt; 1 || index &gt; mMaxTnodeIndex ) ?
 		NULL : mTnodes [ index - 1 ] ;
 }</t>
-<t tx="T1259">void fileInfo::newCloneWindow (
+<t tx="T1274">void fileInfo::newCloneWindow (
 	long vref, long top, long left, long height, long width )
 {
 #if USE_CLONE_WINDOW
@@ -15479,7 +15798,7 @@ tnode * fileInfo::getT ( long index )
 #endif
 }
 </t>
-<t tx="T1260">tnode * fileInfo::newTnode ( long index )
+<t tx="T1275">tnode * fileInfo::newTnode ( long index )
 {
 	if ( index &lt;= 0 || index &gt; mMaxTnodeIndex ||
 		mTnodes [ index - 1 ] != NULL
@@ -15500,7 +15819,7 @@ tnode * fileInfo::getT ( long index )
 	}
 }
 </t>
-<t tx="T1261">void fileInfo::setMaxTnodeIndex ( long n )
+<t tx="T1276">void fileInfo::setMaxTnodeIndex ( long n )
 {
 	mMaxTnodeIndex = n ;
 	mCommands -&gt; mMaxTnodeIndex = n ;
@@ -15511,11 +15830,11 @@ tnode * fileInfo::getT ( long index )
 	for ( long i = 0 ; i &lt;= n ; ++ i )
 		mTnodes [i] = NULL ;
 }</t>
-<t tx="T1262">void fileInfo::setNumberOfTnodes ( long n )
+<t tx="T1277">void fileInfo::setNumberOfTnodes ( long n )
 {
 	mNumberOfTnodes = n ;
 }</t>
-<t tx="T1263">bool Commands::getBool ( void )
+<t tx="T1278">bool Commands::getBool ( void )
 {
 	skipWs();
 	char c = *mLinePtr++ ;
@@ -15608,7 +15927,7 @@ bool Commands::matchChar ( char c )
 	}
 }
 </t>
-<t tx="T1264">void Commands::getClipboardHeader ( fileInfo * info )
+<t tx="T1279">void Commands::getClipboardHeader ( fileInfo * info )
 {
 	// Set defaults.
 	bool maxIndexSeen = FALSE ;
@@ -15645,7 +15964,7 @@ bool Commands::matchChar ( char c )
 	if ( ! maxIndexSeen )
 		info -&gt; setMaxTnodeIndex ( 0 ) ;
 }</t>
-<t tx="T1265">void Commands::getCloneWindows ( fileInfo * info )
+<t tx="T1280">void Commands::getCloneWindows ( fileInfo * info )
 {
 	// The clone_windows tag is optional.
 	if ( ! matchTag("&lt;clone_windows&gt;") ) return ;
@@ -15663,7 +15982,7 @@ bool Commands::matchChar ( char c )
 	getTag("&lt;/clone_windows&gt;");
 }
 </t>
-<t tx="T1266">String Commands::getEscapedString ( void )
+<t tx="T1281">String Commands::getEscapedString ( void )
 {
 	if ( mTextBuf == NULL ) {
 		&lt;&lt; allocate mTextBuf &gt;&gt;
@@ -15688,11 +16007,11 @@ bool Commands::matchChar ( char c )
 
 	return this -&gt; xmlUnescape ( mTextBuf ) ;
 }</t>
-<t tx="T1267">mTextBufSize = 1000 ;
+<t tx="T1282">mTextBufSize = 1000 ;
 mTextBuf = new char [ mTextBufSize ] ;
 mTextPtr = mTextBuf ;
 mTextLimit = mTextBuf + mTextBufSize ;</t>
-<t tx="T1268">{
+<t tx="T1283">{
 	long offset = mTextPtr - mTextBuf ;
 	char * oldBuf = mTextBuf ;
 
@@ -15712,7 +16031,7 @@ mTextLimit = mTextBuf + mTextBufSize ;</t>
 
 	if ( oldBuf ) delete [] oldBuf ;
 }</t>
-<t tx="T1269">#define match_flag(a, b)\
+<t tx="T1284">#define match_flag(a, b)\
 	if ( matchTag(b) ) { getTag("=\""); a=getBool(); getDoubleQuote(); }
 
 void Commands::getFindPanelSettings ( void )
@@ -15760,7 +16079,7 @@ void Commands::getFindPanelSettings ( void )
 
 #undef match_flag
 </t>
-<t tx="T1270">batch_flag = FALSE ;
+<t tx="T1285">batch_flag = FALSE ;
 wrap_flag = FALSE ;
 whole_word_flag = FALSE ;
 ignore_case_flag = FALSE ;
@@ -15772,7 +16091,7 @@ mark_changes_flag = FALSE ;
 mark_finds_flag = FALSE ;
 reverse_flag = FALSE ;
 </t>
-<t tx="T1271">void Commands::getGlobals ( fileInfo * info )
+<t tx="T1286">void Commands::getGlobals ( fileInfo * info )
 {
 	long top, left, height, width ;
 
@@ -15799,11 +16118,11 @@ reverse_flag = FALSE ;
 	getTag("&lt;/globals&gt;") ;
 }
 </t>
-<t tx="T1272">assert ( mLeoForm ) ;
+<t tx="T1287">assert ( mLeoForm ) ;
 mLeoForm -&gt; SetBounds(left, top, width, height) ;</t>
-<t tx="T1273">if ( SherlockForm )
+<t tx="T1288">if ( SherlockForm )
 	SherlockForm -&gt; SetBounds(left, top, width, height) ;</t>
-<t tx="T1274">double Commands::getLeoFile ( TLeoForm * leoForm )
+<t tx="T1289">double Commands::getLeoFile ( TLeoForm * leoForm )
 {
 	fileInfo * info = new fileInfo( leoForm, this );
 	try {
@@ -15844,7 +16163,7 @@ mLeoForm -&gt; SetBounds(left, top, width, height) ;</t>
 	return ratio ;
 }
 </t>
-<t tx="T1275">void Commands::getLeoHeader ( fileInfo * info )
+<t tx="T1290">void Commands::getLeoHeader ( fileInfo * info )
 {
 	// Set defaults.
 	bool maxIndexSeen = FALSE ;
@@ -15886,7 +16205,7 @@ mLeoForm -&gt; SetBounds(left, top, width, height) ;</t>
 		info -&gt; setMaxTnodeIndex ( 0 ) ;
 }
 </t>
-<t tx="T1276">@ This method reads a Leo outline from string s.
+<t tx="T1291">@ This method reads a Leo outline from string s.
 @c
 
 vnode * Commands::getLeoOutline ( String * s )
@@ -15933,7 +16252,7 @@ vnode * Commands::getLeoOutline ( String * s )
 	return v ;
 }
 </t>
-<t tx="T1277">void Commands::getPosition ( long *top, long *left, long *height, long *width )
+<t tx="T1292">void Commands::getPosition ( long *top, long *left, long *height, long *width )
 {
 	*top = *left = *height = *width = 0 ;
 	// New in version 1.7: attributes may appear in any order.
@@ -15954,7 +16273,7 @@ vnode * Commands::getLeoOutline ( String * s )
 	}
 }
 </t>
-<t tx="T1278">void Commands::getPrefs ( fileInfo * info )
+<t tx="T1293">void Commands::getPrefs ( fileInfo * info )
 {
 	TLeoForm * form = this -&gt; mLeoForm ;
 	PERM_ASSERT(form);
@@ -16038,7 +16357,7 @@ vnode * Commands::getLeoOutline ( String * s )
 	}
 }
 </t>
-<t tx="T1279">// Must match longer tags before short prefixes.
+<t tx="T1294">// Must match longer tags before short prefixes.
 if ( matchTag("CWEB") ) {
 	form -&gt; mTargetLanguage = cweb_language ;
 	getDoubleQuote();
@@ -16078,10 +16397,10 @@ else if ( matchTag("Python") ) {
 
 mSyntaxMemo -&gt; Parser1 = TSMParser ( form -&gt; mTargetLanguage ) ;
 </t>
-<t tx="T1280">mLeoForm -&gt; mDefaultDirectory = getEscapedString();
+<t tx="T1295">mLeoForm -&gt; mDefaultDirectory = getEscapedString();
 SetCurrentDir ( mLeoForm -&gt; mDefaultDirectory ) ;
 </t>
-<t tx="T1281">String s = getEscapedString();
+<t tx="T1296">String s = getEscapedString();
 getTag("&lt;/TSyntaxMemo_options&gt;");
 
 // Update the syntax settigns immediately.
@@ -16091,7 +16410,7 @@ assert(mSyntaxMemoParser1);
 	mSyntaxMemoParser1 -&gt; UpdateEditors();
 #endif
 </t>
-<t tx="T1282">void Commands::getSize ( long *height, long *width )
+<t tx="T1297">void Commands::getSize ( long *height, long *width )
 {
 	*height = *width = 0 ;
 	// New in version 1.7: attributes may appear in any order.
@@ -16106,7 +16425,7 @@ assert(mSyntaxMemoParser1);
 	}
 }
 </t>
-<t tx="T1283">void Commands::getTnodes ( fileInfo * info )
+<t tx="T1298">void Commands::getTnodes ( fileInfo * info )
 {
 	if ( matchTag("&lt;tnodes&gt;") ) {
 		while ( matchTag("&lt;t") )
@@ -16114,7 +16433,7 @@ assert(mSyntaxMemoParser1);
 		getTag ("&lt;/tnodes&gt;");
 	}
 }</t>
-<t tx="T1284">void Commands::getTnode ( fileInfo * info )
+<t tx="T1299">void Commands::getTnode ( fileInfo * info )
 {
 	// we have already matched &lt;t.
 	bool rtf = FALSE ;
@@ -16155,7 +16474,7 @@ assert(mSyntaxMemoParser1);
 	getTag ("&lt;/t&gt;");
 }
 </t>
-<t tx="T1285">void Commands::getVnodes ( fileInfo * info )
+<t tx="T1300">void Commands::getVnodes ( fileInfo * info )
 {
 	vnode * parent = NULL, * back = NULL ;
 
@@ -16172,7 +16491,7 @@ assert(mSyntaxMemoParser1);
 	getTag ("&lt;/vnodes&gt;");
 }
 </t>
-<t tx="T1286">vnode * Commands::getVnode ( fileInfo * info, vnode * parent, vnode * back )
+<t tx="T1301">vnode * Commands::getVnode ( fileInfo * info, vnode * parent, vnode * back )
 {
 	vnode * v = NULL ;  // The newly created vnode.
 	tnode dummy_t(0,"");
@@ -16242,7 +16561,7 @@ assert(mSyntaxMemoParser1);
 	return v ;
 }
 </t>
-<t tx="T1287">// The a=" has already been seen.
+<t tx="T1302">// The a=" has already been seen.
 for (;;) {
 	if      ( matchChar('C') ) dummy.initClonedBit(TRUE);
 	else if ( matchChar('D') ) dummy.setDummy();
@@ -16255,7 +16574,7 @@ for (;;) {
 }
 getDoubleQuote();
 </t>
-<t tx="T1288">void Commands::skipWs ( void )
+<t tx="T1303">void Commands::skipWs ( void )
 {
 	while ( mLinePtr &lt; mLineLimit ) {
 		char c = *mLinePtr ;
@@ -16268,7 +16587,7 @@ getDoubleQuote();
 	if ( mLinePtr &gt;= mLineLimit )
 		throw EBadLeoFile() ;
 }</t>
-<t tx="T1289">@ This routine is part of the read logic, and as such must handle raw '\r' and '\n' characters.  This is an adjustment to help TSyntaxMemo recognize lines properly.
+<t tx="T1304">@ This routine is part of the read logic, and as such must handle raw '\r' and '\n' characters.  This is an adjustment to help TSyntaxMemo recognize lines properly.
 @c
 
 void Commands::skipWsAndNl ( void )
@@ -16287,7 +16606,7 @@ void Commands::skipWsAndNl ( void )
 		throw EBadLeoFile() ;
 }
 </t>
-<t tx="T1290">void Commands::open ( String fileName )
+<t tx="T1305">void Commands::open ( String fileName )
 {
 	mFileName = new String( fileName ) ;  // Do not delete this!
 	mLeoForm -&gt; Caption = fileName ;
@@ -16305,11 +16624,11 @@ void Commands::skipWsAndNl ( void )
 	&lt;&lt; Delete the TFileStream and the file buffer &gt;&gt;
 }
 </t>
-<t tx="T1291">mFileStream = new TFileStream ( fileName, fmOpenRead | fmShareDenyWrite ) ;
+<t tx="T1306">mFileStream = new TFileStream ( fileName, fmOpenRead | fmShareDenyWrite ) ;
 mFileBufSize = 1024 * 16 ;
 mFileBuf = new char [ mFileBufSize ] ;
 </t>
-<t tx="T1292">@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
+<t tx="T1307">@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
 @c
 
 String dir = ExtractFileDir ( fileName ) ;
@@ -16318,7 +16637,7 @@ if ( dir . Length() &gt; 0 ) {
 	SetCurrentDir ( dir ) ;
 }
 </t>
-<t tx="T1293">delete mFileStream ;
+<t tx="T1308">delete mFileStream ;
 mFileStream = NULL ;
 
 delete [] mFileBuf ;
@@ -16326,7 +16645,7 @@ mFileBuf = NULL ;
 
 mFileBufSize = 0 ;
 </t>
-<t tx="T1294">@ This method fills a line buffer from a TFileStream.  There is no maximum size of a line:  we reallocate mLineBuf if needed.  We return FALSE if no more lines remain.  Otherwise, mLinePtr points to the start of the line and mLineLimit points to the character after the newline that ends the line.
+<t tx="T1309">@ This method fills a line buffer from a TFileStream.  There is no maximum size of a line:  we reallocate mLineBuf if needed.  We return FALSE if no more lines remain.  Otherwise, mLinePtr points to the start of the line and mLineLimit points to the character after the newline that ends the line.
 
 8/25/99: This routine now removes all body_ignored_newline characters.
 @c
@@ -16366,7 +16685,7 @@ bool Commands::readLine ( void )
 	}
 }
 </t>
-<t tx="T1295">{
+<t tx="T1310">{
 	unsigned long increment = 10000 ;
 	long offset = mLinePtr - mLineBuf ;
 	char * oldBuf = mLineBuf ;
@@ -16387,7 +16706,7 @@ bool Commands::readLine ( void )
 
 	if ( oldBuf ) delete [] oldBuf ;
 }</t>
-<t tx="T1296">if ( mUsingClipboard ) {
+<t tx="T1311">if ( mUsingClipboard ) {
 	// Get the next line from the memory stream.
 	if ( mMemoryStream &amp;&amp; ! mFileEmptyFlag ) {
 		assert( mFileBufSize &gt; 0 ) ;
@@ -16409,7 +16728,7 @@ else {
 	}
 	else mFileEmptyFlag = TRUE ;
 }</t>
-<t tx="T1297">if ( mLinePtr == mLineBuf ) {
+<t tx="T1312">if ( mLinePtr == mLineBuf ) {
 	mLineLimit = mLinePtr ;
 	return FALSE ;
 }
@@ -16423,7 +16742,7 @@ else {
 	return TRUE ;
 }
 </t>
-<t tx="T1298">String Commands::xmlUnescape ( char * cs )
+<t tx="T1313">String Commands::xmlUnescape ( char * cs )
 {
 	char * cs1 = cs;
 
@@ -16476,7 +16795,7 @@ else {
 	return s2 ;
 }
 </t>
-<t tx="T1299">void Commands::assignFileIndices ( void )
+<t tx="T1314">void Commands::assignFileIndices ( void )
 {
 	for ( vnode * v = this -&gt; rootVnode(); v ; v = v -&gt; threadNext() )
 	{
@@ -16489,7 +16808,7 @@ else {
 		else t -&gt; setFileIndex ( 0 ) ;
 	}
 }</t>
-<t tx="T1300">void Commands::compactFileIndices ( void )
+<t tx="T1315">void Commands::compactFileIndices ( void )
 {
 	mMaxTnodeIndex = 0 ;
 	
@@ -16509,7 +16828,7 @@ else {
 		}
 	}
 }</t>
-<t tx="T1301">@ This method sets policy for when we should compact a file before doing a Save Command.
+<t tx="T1316">@ This method sets policy for when we should compact a file before doing a Save Command.
 @c
 
 bool Commands::shouldCompactOnSave ( void )
@@ -16519,7 +16838,7 @@ bool Commands::shouldCompactOnSave ( void )
 	long tnodesUnused = mMaxTnodeIndex - tnodesUsed ;
 	return ( tnodesUnused &gt; 100 ) ;
 }</t>
-<t tx="T1302">this -&gt; clearAllVisited();
+<t tx="T1317">this -&gt; clearAllVisited();
 
 for ( vnode * v = this -&gt; rootVnode(); v ; v = v -&gt; threadNext() )
 {
@@ -16530,7 +16849,7 @@ for ( vnode * v = this -&gt; rootVnode(); v ; v = v -&gt; threadNext() )
 	}
 }
 </t>
-<t tx="T1303">@ All output eventually comes to put (char *)
+<t tx="T1318">@ All output eventually comes to put (char *)
 @c
 
 void Commands::put ( char * s )
@@ -16594,7 +16913,7 @@ void Commands::put ( double n )
 	put ( String ( n ) ) ;
 }
 </t>
-<t tx="T1304">@ mFileStream will be NULL if there is any file error.
+<t tx="T1319">@ mFileStream will be NULL if there is any file error.
 @c
 
 if ( mMemoryStream == NULL ) return ;
@@ -16609,7 +16928,7 @@ catch (...)
 	String s("Error writing to clipboard") ;
 	alert ( s . c_str() ) ;
 }</t>
-<t tx="T1305">@ mFileStream will be NULL if there is any file error.
+<t tx="T1320">@ mFileStream will be NULL if there is any file error.
 @c
 
 if ( mFileStream == NULL ) return ;
@@ -16625,7 +16944,7 @@ catch (...)
 	String s = String("Error writing to ") + ( * mFileName ) ;
 	alert ( s . c_str() ) ;
 }</t>
-<t tx="T1306">void Commands::putClipboardHeader ( void )
+<t tx="T1321">void Commands::putClipboardHeader ( void )
 {
 	long tnodes = 0;
 	&lt;&lt; count the number of tnodes &gt;&gt;
@@ -16638,7 +16957,7 @@ catch (...)
 			put( mMaxTnodeIndex ); put_double_quote();
 	put("/&gt;"); put_nl();
 }</t>
-<t tx="T1307">this -&gt; clearAllVisited();
+<t tx="T1322">this -&gt; clearAllVisited();
 
 // Count the vnode and tnodes.
 vnode * current = this -&gt; currentVnode() ;
@@ -16654,7 +16973,7 @@ for ( vnode * v = current ; v &amp;&amp; v != after ; v = v -&gt; threadNext() )
 		++tnodes ;
 	}
 }</t>
-<t tx="T1308">void Commands::putCloneWindows ( void )
+<t tx="T1323">void Commands::putCloneWindows ( void )
 {
 #if USE_CLONE_WINDOW
 	if ( mLeoForm == NULL || mLeoForm -&gt; mCloneFormList == NULL ) return ;
@@ -16680,7 +16999,7 @@ for ( vnode * v = current ; v &amp;&amp; v != after ; v = v -&gt; threadNext() )
 #endif
 }
 </t>
-<t tx="T1309">long top = clone -&gt; Top;
+<t tx="T1324">long top = clone -&gt; Top;
 long left = clone -&gt; Left;
 long height = clone -&gt; Height;
 long width = clone -&gt; Width;
@@ -16692,7 +17011,7 @@ put("&lt;global_window_position");
 	put(" width=\"");  put( width ); put_double_quote();
 put("/&gt;"); put_nl();
 </t>
-<t tx="T1310">@ Surprisingly, the call to xmlEscape here is _much_ faster than calling put for each characters of s.c_str().
+<t tx="T1325">@ Surprisingly, the call to xmlEscape here is _much_ faster than calling put for each characters of s.c_str().
 @c
 
 void Commands::putEscapedString ( String s )
@@ -16700,7 +17019,7 @@ void Commands::putEscapedString ( String s )
    put ( this -&gt; xmlEscape ( s ) ) ;
 }
 </t>
-<t tx="T1311">#define put_flag(a,b) if (a) { put(" "); put(b); put("=\"1\""); }
+<t tx="T1326">#define put_flag(a,b) if (a) { put(" "); put(b); put("=\"1\""); }
 
 void Commands::putFindSettings ( void )
 {
@@ -16728,7 +17047,7 @@ void Commands::putFindSettings ( void )
 
 #undef put_flag
 </t>
-<t tx="T1312">void Commands::putGlobals ( void )
+<t tx="T1327">void Commands::putGlobals ( void )
 {
 	long top, left, height, width ;
 
@@ -16739,7 +17058,7 @@ void Commands::putFindSettings ( void )
 		&lt;&lt; put the position of the log window &gt;&gt;
 	put("&lt;/globals&gt;"); put_nl();
 }</t>
-<t tx="T1313">{
+<t tx="T1328">{
 	long treeViewH = mTreeView -&gt; Height ;
 	long richViewH = mSyntaxMemo -&gt; Height ;
 	double ratio = double(treeViewH) / (double) (treeViewH + richViewH) ;
@@ -16755,7 +17074,7 @@ void Commands::putFindSettings ( void )
 	put_double_quote();
 }
 </t>
-<t tx="T1314">top = mLeoForm -&gt; Top ;
+<t tx="T1329">top = mLeoForm -&gt; Top ;
 left = mLeoForm -&gt; Left;
 height = mLeoForm -&gt; Height ;
 width = mLeoForm -&gt; Width ;
@@ -16768,7 +17087,7 @@ put("&lt;global_window_position");
 	put(" width=\"");  put( width ); put_double_quote();
 put("/&gt;"); put_nl();
 </t>
-<t tx="T1315">top = SherlockForm -&gt; Top ;
+<t tx="T1330">top = SherlockForm -&gt; Top ;
 left = SherlockForm -&gt; Left;
 height = SherlockForm -&gt; Height ;
 width = SherlockForm -&gt; Width ;
@@ -16781,7 +17100,7 @@ put("&lt;global_log_window_position");
 	put(" width=\"");  put( width ); put_double_quote();
 put("/&gt;"); put_nl();
 </t>
-<t tx="T1316">void Commands::putHeader ( void )
+<t tx="T1331">void Commands::putHeader ( void )
 {
 	long tnodes = 0, clone_windows = 0 ;
 	#if 0 // These counts are not used in Leo2.
@@ -16796,7 +17115,7 @@ put("/&gt;"); put_nl();
 	put("/&gt;"); put_nl();
 }
 </t>
-<t tx="T1317">this -&gt; clearAllVisited();
+<t tx="T1332">this -&gt; clearAllVisited();
 
 // Count the vnode and tnodes.
 for ( vnode * v = this -&gt; rootVnode(); v ; v = v -&gt; threadNext() ) {
@@ -16823,7 +17142,7 @@ for ( vnode * v = this -&gt; rootVnode(); v ; v = v -&gt; threadNext() ) {
     }
 #endif  // USE_CLONE_WINDOW
 </t>
-<t tx="T1318">@ This method writes a Leo outline to the clipboard.
+<t tx="T1333">@ This method writes a Leo outline to the clipboard.
 @c
 
 bool Commands::putLeoOutline ( TMemoryStream * ms )
@@ -16844,7 +17163,7 @@ bool Commands::putLeoOutline ( TMemoryStream * ms )
 	return ok ;
 }
 </t>
-<t tx="T1319">void Commands::putPrefs ( void )
+<t tx="T1334">void Commands::putPrefs ( void )
 {
 	TLeoForm * form = this -&gt; mLeoForm ;
 	PERM_ASSERT(form);
@@ -16884,7 +17203,7 @@ bool Commands::putLeoOutline ( TMemoryStream * ms )
 	put_nl(); put("&lt;/preferences&gt;"); put_nl();
 }
 </t>
-<t tx="T1320">String key = " defaultTargetLanguage=\"" ;
+<t tx="T1335">String key = " defaultTargetLanguage=\"" ;
 
 switch ( default_target_language ) {
 	case c_language:		put(key); put("C\""); break;
@@ -16899,25 +17218,25 @@ switch ( default_target_language ) {
 	default: put("Plain\"");
 }
 </t>
-<t tx="T1321">if ( mLeoForm -&gt; mDefaultDirectory . Length() &gt; 0 ) {
+<t tx="T1336">if ( mLeoForm -&gt; mDefaultDirectory . Length() &gt; 0 ) {
 	put("&lt;defaultDirectory&gt;");
 	putEscapedString ( mLeoForm -&gt; mDefaultDirectory ) ;
 	put ("&lt;/defaultDirectory&gt;");
 }
 </t>
-<t tx="T1322">void Commands::putProlog ( void )
+<t tx="T1337">void Commands::putProlog ( void )
 {
 	put(prolog_string); put_nl();
 	// internal or external DTD goes here
 	put("&lt;leo_file&gt;"); put_nl();
 }
 </t>
-<t tx="T1323">void Commands::putPostlog ( void )
+<t tx="T1338">void Commands::putPostlog ( void )
 {
 	put("&lt;/leo_file&gt;"); put_nl();
 }
 </t>
-<t tx="T1324">@ This method puts all tnodes in index order.  All tnode indices must have been assigned at this point.
+<t tx="T1339">@ This method puts all tnodes in index order.  All tnode indices must have been assigned at this point.
 @c
 
 void Commands::putTnodes ( void )
@@ -16975,7 +17294,7 @@ void Commands::putTnodes ( void )
 	delete [] tnodes ;
 }
 </t>
-<t tx="T1325">void Commands::put ( tnode * t )
+<t tx="T1340">void Commands::put ( tnode * t )
 {
 	assert(t);
 	String bodyString = t -&gt; bodyString();
@@ -16997,7 +17316,7 @@ void Commands::putTnodes ( void )
 	put("&lt;/t&gt;"); put_nl();
 }
 </t>
-<t tx="T1326">@ This method puts all vnodes by starting the recursion.  put(vnode*) will write all vnodes in the order in which they appear in the outline.
+<t tx="T1341">@ This method puts all vnodes by starting the recursion.  put(vnode*) will write all vnodes in the order in which they appear in the outline.
 @c
 
 void Commands::putVnodes ( void )
@@ -17030,7 +17349,7 @@ void Commands::putVnodes ( void )
 	put("&lt;/vnodes&gt;"); put_nl();
 }
 </t>
-<t tx="T1327">@ When forceFlag is TRUE we generate full vnodes for v's tree.  Otherwise, if dummyFlag is TRUE we generate dummy vnodes only.  In particular, we generate dummy vnodes for all valid, non-ignored @file nodes.
+<t tx="T1342">@ When forceFlag is TRUE we generate full vnodes for v's tree.  Otherwise, if dummyFlag is TRUE we generate dummy vnodes only.  In particular, we generate dummy vnodes for all valid, non-ignored @file nodes.
 
 atFile::write has already set the orphan bit for some nodes, including all invalid @file nodes.  However, we must make a separate check for atIgnored nodes.
 @c
@@ -17071,7 +17390,7 @@ void Commands::put ( vnode * v, vnode * topVnode, bool forceFlag, bool dummyFlag
 	delete at ;
 }
 </t>
-<t tx="T1328">tnode * t = v -&gt; t();
+<t tx="T1343">tnode * t = v -&gt; t();
 
 if ( t &amp;&amp; t -&gt; hasBody() || v -&gt; joinList() != NULL )
 {
@@ -17083,7 +17402,7 @@ if ( t &amp;&amp; t -&gt; hasBody() || v -&gt; joinList() != NULL )
 		alert("error writing file (bad vnode)!  Try using the Save To command");
 	}
 }</t>
-<t tx="T1329">#if USE_CLONE_WINDOW
+<t tx="T1344">#if USE_CLONE_WINDOW
 
 // See if any clone window has this vnode as its master.
 if ( mLeoForm )
@@ -17106,7 +17425,7 @@ if ( mLeoForm )
 
 #endif
 </t>
-<t tx="T1330">@ Dummy vnodes carry all attributes.
+<t tx="T1345">@ Dummy vnodes carry all attributes.
 @c
 
 vnode * current = this -&gt; currentVnode();
@@ -17128,7 +17447,7 @@ if (
 	put_double_quote();
 }
 </t>
-<t tx="T1331">@ Dummy vnodes have no headline text.
+<t tx="T1346">@ Dummy vnodes have no headline text.
 @c
 
 assert(v -&gt; treeNode());
@@ -17140,7 +17459,7 @@ if ( headString . Length() &gt; 0 ) {
     put("&lt;/vh&gt;");
 }
 </t>
-<t tx="T1332">bool Commands::save ( String fileName )
+<t tx="T1347">bool Commands::save ( String fileName )
 {
 	this -&gt; endEditing () ;  // Set the current headline text.
 
@@ -17159,7 +17478,7 @@ if ( headString . Length() &gt; 0 ) {
 	catch ( ... ) {}
 	return FALSE;
 }</t>
-<t tx="T1333">bool Commands::saveAs ( String fileName )
+<t tx="T1348">bool Commands::saveAs ( String fileName )
 {
 	this -&gt; endEditing () ;  // Set the current headline text.
 	this -&gt; compactFileIndices() ;
@@ -17174,7 +17493,7 @@ if ( headString . Length() &gt; 0 ) {
 	catch ( ... ) {}
 	return FALSE;
 }</t>
-<t tx="T1334">bool Commands::saveACopyAs ( String fileName )
+<t tx="T1349">bool Commands::saveACopyAs ( String fileName )
 {
 	try {
     	this -&gt; endEditing () ;  // Set the current headline text.
@@ -17185,7 +17504,7 @@ if ( headString . Length() &gt; 0 ) {
 	catch ( ... ) {}
 	return FALSE;
 }</t>
-<t tx="T1335">bool Commands::saveOutlineOnlyTo ( String fileName )
+<t tx="T1350">bool Commands::saveOutlineOnlyTo ( String fileName )
 {
 	try {
     	this -&gt; endEditing () ;  // Set the current headline text.
@@ -17196,7 +17515,7 @@ if ( headString . Length() &gt; 0 ) {
 	catch ( ... ) {}
 	return FALSE;
 }</t>
-<t tx="T1336">@ Surprisingly, this is a time critical routine.  This code is much faster than creating the result string by concatenations.  It is also much faster to use this routine than calling put() repeatedly for each character of s.c_str().
+<t tx="T1351">@ Surprisingly, this is a time critical routine.  This code is much faster than creating the result string by concatenations.  It is also much faster to use this routine than calling put() repeatedly for each character of s.c_str().
 
 8/25/99:  We enforce the end-of-line convention here by turning bare '\r' or '\n' characters into cr/lf sequences.  This is an adjustment for TSyntaxMemo's difficulty recognizing lines that start with only '\r'.
 @c
@@ -17249,7 +17568,7 @@ String Commands::xmlEscape ( String s )
 	return s2 ; 
 }
 </t>
-<t tx="T1337">@ The caller does any repainting.
+<t tx="T1352">@ The caller does any repainting.
 @c
 
 bool Commands::write_LEO_file ( String fileName, bool outlineOnlyFlag )
@@ -17278,7 +17597,7 @@ bool Commands::write_LEO_file ( String fileName, bool outlineOnlyFlag )
 	return ok ;
 }
 </t>
-<t tx="T1338">delete mFileName ;
+<t tx="T1353">delete mFileName ;
 mFileName = new String( fileName ) ;
 mFileSize = 0 ;
 
@@ -17289,16 +17608,16 @@ catch (...) {
 	mFileStream = NULL ;
 }
 </t>
-<t tx="T1339">if ( mFileStream ) {
+<t tx="T1354">if ( mFileStream ) {
 	mFileStream -&gt; Size = mFileSize ;  // Truncate the file.
 	delete mFileStream ;
 	mFileStream = NULL ;
 }
 </t>
-<t tx="T1340">@nocolor
+<t tx="T1355">@nocolor
 
 These papers discuss topics related to Leo.</t>
-<t tx="T1341">This paper presents my present thoughts about recovering from "read errors", that is, errors encountered while reading @file trees.
+<t tx="T1356">This paper presents my present thoughts about recovering from "read errors", that is, errors encountered while reading @file trees.
 
 Recall that read errors will occur when the .leo file is out of synch with the derived files that it creates.  Read errors break clone links into the derived file, a highly undesirable situation.  Read errors will occur when restoring a project from a backup file.  They can also occur when using CVS if derived files aren't checked out with the .leo file that created them.
 
@@ -17319,7 +17638,7 @@ At present Leo restores the @file tree in the outline from the derived file when
 2. When restoring a project from a backup .leo file, it is natural to have the information in the .leo file take precedence over the derived file.  Ditto when using CVS.
 
 3. The user can "manually" restore information from a derived file using the Read @file Nodes command if  necessary.  This operation, and only this operation, will break clone links.</t>
-<t tx="T1342">Let us consider how to use CVS with Leo.  Our goal is this:
+<t tx="T1357">Let us consider how to use CVS with Leo.  Our goal is this:
 	
 	CVS operations should retain clone links.
 	
@@ -17348,7 +17667,7 @@ I always envisioned that update conflicts would have to be resolved in .leo file
 I believe these rules are correct.  If you disagree with these conclusions please let me know immediately.
 
 Edward</t>
-<t tx="T1343">My last posting is completely wrong.  Leo can not mend clone links for a very simple reason: cloned nodes must have the same structure!  Most read errors come about because Leo has detected that nodes do _not_ have the same structure.
+<t tx="T1358">My last posting is completely wrong.  Leo can not mend clone links for a very simple reason: cloned nodes must have the same structure!  Most read errors come about because Leo has detected that nodes do _not_ have the same structure.
 
 Even if a Mend Clone dialog were put up, the user would have no way of knowing whether any joins made sense.  Joining two nodes with different structure would be disastrous.
 
@@ -17357,14 +17676,14 @@ Mending clones would be possible only if the only differences between trees were
 My next posting will try to make a virtue out of necessity by proposing guidelines for using Leo with CVS.
 
 Edward</t>
-<t tx="T1344">Development work on Leo is about to start using CVS.  This raises a number of questions about how to use Leo projects with CVS.  Resolving these issues is very important; people won't use Leo if it doesn't work well with CVS.
+<t tx="T1359">Development work on Leo is about to start using CVS.  This raises a number of questions about how to use Leo projects with CVS.  Resolving these issues is very important; people won't use Leo if it doesn't work well with CVS.
 	
 1. CVS may not do very well in reporting conflicts involving .leo files.  Indeed, .leo files might almost be considered to be "binary" files as far as CVS is concerned.  Experience will show how serious this problem turns out to be, and I have some ideas about how to help out CVS.
 
 2. Files derived from @root or @file trees contain structure information that should not be edited by hand.  In particular, if CVS reports a conflict, that conflict should be resolved at the outline level, not in the derived file.  Again, it remains to be seen how big a problem this will be, and again I have some ideas about how to make things more smooth.
 
 Note: It will never be possible to update outline _structure_ using the Untangle command.  Indeed, the Untangle command traverses the outline to find body text to update; there is absolutely no way for Untangle to change outline structure.  It _is_ possible to update outline structure by reading @file trees (that was a big reason for creating @file trees!), and there are problems with clones.  See the next section.</t>
-<t tx="T1345">This note addresses problem 1 of my initial posting, namely that .leo files are like "binary" files as far as CVS is concerned.  That is, CVS may have problems providing intelligent diffs of .leo files.
+<t tx="T1360">This note addresses problem 1 of my initial posting, namely that .leo files are like "binary" files as far as CVS is concerned.  That is, CVS may have problems providing intelligent diffs of .leo files.
 
 It would be easy for Leo to write a "diff-friendly" version of a .leo file.  Call such files .cvs.leo files.  .cvs.leo files would be easy for us humans to understand.  I am thinking that people would check .cvs.leo files in and out rather than .leo files.  On checkout, one would then recreate .leo files from .cvs.leo files.  Before checkin, one would create .cvs.leo files from .leo files.
 
@@ -17392,12 +17711,12 @@ Each headline on separate line, starts with + or -.  The + or = depends only on 
 Still unresolved is a way of specifying clones in a bullet-proof way.
 
 Edward</t>
-<t tx="T1346">This note is another approach to handling some of the problems mentioned in my original post.
+<t tx="T1361">This note is another approach to handling some of the problems mentioned in my original post.
 
 It may be desirable to use @cvs trees instead of @file tree.  When Leo writes a @cvs tree to a .leo file it writes only the headline of the tree; it writes none of the headlines below the @cvs tree and writes none of the body text of the tree.  This is suspiciously like the infamous "Archive" command, and it may be a good idea nevertheless in the context of CVS.  With @cvs, the .leo file becomes just a dummy file, so it would not be common to check .leo files in or out.
 
 Implementing this command can be done easily.  The question is, does it make sense to do so?</t>
-<t tx="T1347">The more I look at Tk, the more convinced I am that Python + Tk (aka tkinter) is, by far, the best way to go with Leo.py.  I now have Open Source code for tree widgets and splitter windows, and have intensely studied how to modify that code for use in Leo.  It is clear, even at this early date, that this code will provide a very pleasant base on which to build Leo.
+<t tx="T1362">The more I look at Tk, the more convinced I am that Python + Tk (aka tkinter) is, by far, the best way to go with Leo.py.  I now have Open Source code for tree widgets and splitter windows, and have intensely studied how to modify that code for use in Leo.  It is clear, even at this early date, that this code will provide a very pleasant base on which to build Leo.
 
 The tree code is based on code in IDLE, the Python IDE.  This code is simple, good and plenty fast enough. The tree code draws directly to a Tk canvas object.  The look and feel matches Windows exactly.  It would be trivial to use Mac triangle icons instead of the Windows plus and minus icons.  It would also be trivial to modify the look and feel for Linux.
 
@@ -17422,7 +17741,7 @@ In short, using Tk for Leo.py will be fast enough and will greatly increase what
 
 Edward K. Ream
 November 4, 2001</t>
-<t tx="T1348">I've known for a while that Python was interesting; I attended a Python conference last year and added Python support to Leo.  But last week I got that Python is something truly remarkable.  I wanted to convert Leo from wxWindows to wxPython, so I began work on c2py, a Python script that would help convert from C++ syntax to Python.  While doing so, I had an Aha experience.  Python is more than an incremental improvement over Smalltalk or C++ or objective-C; it is "something completely different".  The rest of this post tries to explain this difference.
+<t tx="T1363">I've known for a while that Python was interesting; I attended a Python conference last year and added Python support to Leo.  But last week I got that Python is something truly remarkable.  I wanted to convert Leo from wxWindows to wxPython, so I began work on c2py, a Python script that would help convert from C++ syntax to Python.  While doing so, I had an Aha experience.  Python is more than an incremental improvement over Smalltalk or C++ or objective-C; it is "something completely different".  The rest of this post tries to explain this difference.
 
 Clarity: no clutter, easy prototyping
 -------------------------------------

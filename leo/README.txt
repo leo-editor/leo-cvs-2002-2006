@@ -1,34 +1,21 @@
 Important note: See INSTALL.TXT for installation instructions.
 
-leo.py 3.11 beta 4                       March 31, 2003
+leo.py 3.11                         April 27, 2003
 
-This will be the last beta release before 3.11 final.
+leo.py 3.11 is now available at:  http://sourceforge.net/projects/leo/
+leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
+leo.py will work on Linux, Windows and MacOs X Jaguar.
 
-- Fixed several minor problems with unicode.
-	The way Leo handles unicode has proven to be correct.
-- Fixed a _huge_ performance bug that slowed moving nodes left.
-- Added several new plugins:
-	- Support for the VIM editor.
-	- A French translation of all menus.
-- Added many minor bug fixes and improvements.
+This version of Leo contains many important improvements since 3.10,
+especially support for unicode and a new plugin architecture.
 
-leo.py 3.11 beta 3                       February 26, 2003
+The Highlights of 3.11:
 
-- Added tk_encoding setting and new logic for determining encoding of strings returned by Tk Text widgets.
-
-leo.py 3.11 beta 2                       February 24, 2003
-
-This version of Leo fixes some unicode problems when the system encoding is not "utf-8".
-
-leo.py 3.11 beta 1                       February 17, 2003
-
-This version of Leo contains a very large number of improvements.  The highlights:
-
-** Leo supports unicode properly.  This solves a lot of problems.
+** Leo supports unicode properly.
 	- New @encoding directives specifies encoding for derived files.
 	- New settings specify default encodings for .leo and derived files.
 	- Derived files specify encodings used to create them.
-** A new plugin architecture for customizing Leo. (A major improvement.)
+** A new plugin architecture for customizing Leo.
 - New commands:
 	- Toggle Angle Brackets.
 	- Insert Time/Date (in headline or body text).
@@ -36,18 +23,20 @@ This version of Leo contains a very large number of improvements.  The highlight
 	- Write Missing @file Nodes.
 	- Expand/Contract Node.
 - Improved commands:
+	- Fixed a huge performance bug that slowed moving nodes left.
 	- Expand/Contract commands now operate on the selected tree.
 	  ( A major improvement)
 	- Sort Siblings command can now sort top-level nodes.
 	- Leo now allows multiple writes of cloned nodes.
 	  (Useful when different @path directives are in effect.)
 - Other improvements:
+	- New @lineending directive specifies line endings.
 	- Improved syntax coloring for html and xml.
 	- Leo scrolls partially visible headlines into full view.
 	- Added "Replace tabs with spaces" checkbox in Prefs panel.
-	- Added install script for Linux.
 - New settings in leoConfig.leo/.txt.
-	- Colors for Show Invisibles command and body_insertion_cursor
+	- Added "tk_encoding" setting and related logic.
+	- Colors for Show Invisibibles command and body_insertion_cursor
 	- Settings affecting when control-drags start.
 	- Defaults for unicode (see above).
 - Many other bug fixes and improvements.
