@@ -101,7 +101,7 @@ def registerOneHandler(tag,fn):
 #@-node:3::registerHandler
 #@+node:4::registerExclusiveHandler
 #@+body
-def registerExclusiveHandler(tag, fn):
+def registerExclusiveHandler(tags, fn):
 	
 	""" Register one or more exclusive handlers"""
 	
