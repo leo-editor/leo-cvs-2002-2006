@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="V"><vh>Short summary</vh></v>
+<v t="T1"><vh>Short summary</vh></v>
 <v t="T2"><vh>About LEO's panes and icons (for newbies)</vh>
 <v t="T3"><vh>This node contains text</vh></v>
 <v t="T4" a="M"><vh>This headline is marked</vh></v>
@@ -21,7 +21,7 @@
 <v><vh>This node contains no text</vh></v>
 </v>
 <v t="T6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
-<v t="T7" a="E"><vh>Release Notes</vh>
+<v t="T7"><vh>Release Notes</vh>
 <v t="T8" a="C"><vh>Acknowledgements</vh></v>
 <v t="T9" a="C"><vh>How to Install &amp; Run Leo</vh>
 <v t="T10" a="C"><vh>The configuration file, leoConfig.txt</vh>
@@ -30,7 +30,7 @@
 </v>
 <v a="E"><vh>Latest versions</vh>
 <v t="T12"><vh>Warnings</vh></v>
-<v t="T13" a="CM"><vh>leo.py 2.5 Many improvements</vh>
+<v t="T13" a="CM"><vh>leo.py 2.5.1 Many improvements</vh>
 <v t="T14"><vh>New &amp; improved commands</vh>
 <v t="T15" a="M"><vh>Tabs and spaces</vh>
 <v t="T16" a="M"><vh>Added Convert All Blanks and Convert All Tabs commands</vh></v>
@@ -68,7 +68,7 @@
 <v t="T39" a="C"><vh>Borland 2.7 Major bug fix: please upgrade</vh></v>
 </v>
 <v><vh>leo.py versions</vh>
-<v t="T13" a="C"><vh>leo.py 2.5 Many improvements</vh>
+<v t="T13" a="C"><vh>leo.py 2.5.1 Many improvements</vh>
 <v t="T14"><vh>New &amp; improved commands</vh>
 <v t="T15"><vh>Tabs and spaces</vh>
 <v t="T16"><vh>Added Convert All Blanks and Convert All Tabs commands</vh></v>
@@ -433,7 +433,7 @@
 </v>
 <v t="T257"><vh>Tangling @root trees with the Tangle commands</vh></v>
 <v t="T258"><vh>Untangling @root trees with the Untangle commands</vh></v>
-<v t="T259"><vh>More about directives</vh>
+<v t="T259" a="CE"><vh>More about directives</vh>
 <v t="T260"><vh>@CWEB and @noweb specify the source language</vh></v>
 <v t="T261"><vh>@color and @nocolor control syntax coloring</vh></v>
 <v t="T262"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
@@ -652,6 +652,16 @@
 <v t="T376"><vh>Tangle and Untangle commands</vh></v>
 <v t="T377"><vh>Unlimited undo</vh></v>
 </v>
+</v>
+<v t="T259" a="CE"><vh>More about directives</vh>
+<v t="T260"><vh>@CWEB and @noweb specify the source language</vh></v>
+<v t="T261"><vh>@color and @nocolor control syntax coloring</vh></v>
+<v t="T262"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
+<v t="T263" a="V"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
+<v t="T264"><vh>@first directive allows preliminary lines in @file trees</vh></v>
+<v t="T265"><vh>@language specifying the target language</vh></v>
+<v t="T266"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
+<v t="T267"><vh>@verbose, @terse and @silent directives control comments in @root trees</vh></v>
 </v>
 <v t="T378"><vh>FAQ</vh>
 <v t="T379"><vh>What's the best way to learn to use Leo?</vh></v>
@@ -1592,7 +1602,13 @@ run_untangle_done.py = 0
 Choice 1: Use the "Read Outline Only" command to recover the outline using only the .leo file.  This is the recommend way because it preserves all clone links.
 
 Choice 2: Use one or move "Read @file Nodes" commands to update the outline from derived files.  This way is will break any clone links from the outline into the </t>
-<t tx="T13">This is a major step forward to completing leo.py.  It adds significant new features and corrects many bugs.  Full details are found in the children of this node.  Here are the highlights, in approximate order of importance:
+<t tx="T13">leo.py version 2.5.1                            July 7, 2002
+
+2.5.1 This version corrects crashers that affect undo/redo move commands.
+Version 2.5 has been withdrawn.
+Anyone using 2.5 should use 2.5.1 instead.
+
+This is a major step forward to completing leo.py.  It adds significant new features and corrects many bugs.  Full details are found in the children of this node.  Here are the highlights, in approximate order of importance:
 
 1. Leo supports tab widths properly, and negative tab widths cause Leo to convert tabs to blanks as you type.  Three new commands appear in the Edit Body menu: Convert Tabs, Convert All Tabs and Convert All Blanks.  Convert All Tabs and Convert All Spaces convert the entire selected tree.
 
@@ -3799,17 +3815,22 @@ If only one delimiter is given, Leo does not write any documentation parts while
 For example, the @comment { } directive could be used to Tangle Pascal files.
 
 The @comment directive is only recognized in @root, @unit or @file nodes, and the @comment directive must precede the first section name or @code directive. An @comment directive in the body text of an @unit directive specifies the current global defaults. An @comment directive in the body text of an @root directive affects comments generated for one root only. Comments in all other roots are governed by the global defaults.</t>
-<t tx="T263">The @delims directive changes the comment strings used to mark sentinel lines. This directive is often used to place Javascript text inside XML or HTML files.
+<t tx="T263">@nocolor
+
+The @delims directive changes the comment strings used to mark sentinel lines. This directive is often used to place Javascript text inside XML or HTML files.
 
 The @delims directive contains one or two delimiters, separated by whitespace. If only one delim is present it delimits single-line comments. If two delims are present they delimit block comments. The @delims directive can not be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels. The @delims directive inserts @@delims sentinels into the derived file. The new delimiter strings continue in effect until the next @@delims sentinel in the derived file or the end of the derived file.
 
 Note: Leo can not revert to previous delimiters automatically; you must change back to previous delimiters using another @delims directive. For example:
 
-	@delims /* */ 
-	Javascript stuff 
-	@delims &lt;-- --&gt; 
-	HTML stuff
+@color
 
+@delims /* */ 
+Javascript stuff 
+@delims &lt;-- --&gt; 
+HTML stuff
+
+@nocolor
 Adding, deleting or changing @@delims sentinels will destroy Leo's ability to read the derived file. Mistakes using the @delims directive have no effect on Leo, though such mistakes will thoroughly mess up a derived file as far as compilers, HTML renderers, etc. are concerned.</t>
 <t tx="T264">The @first directive allows you to place lines at the very start of files derived from @file nodes. For example, the body text of @file spam.py might be:
 
@@ -3823,20 +3844,26 @@ The body text of @file foo.perl might be:
 
 	@first #! /usr/bin/env python
 	@first # more comments.</t>
-<t tx="T265">The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle commands. This directive over-rides the default specified in the Preferences panel. The form of this directive is:
+<t tx="T265">@nocolor
+The @language directive specifies the comment delimiters and string types used by the Tangle and Untangle commands. This directive over-rides the default specified in the Preferences panel. The form of this directive is:
+@color
 
-	@language x
+@language x
 
+@nocolor
 where x is one of the following: c, c++, html, java, objective-c, Pascal, Perl, python and shell. Shell files have comments that start with #. Case is ignored in the language specifiers, but not in the @language itself. Thus, the following are equivalent:
+@color
 
-	@language html
-	@language HTML
-	@language hTmL
+@language html
+@language HTML
+@language hTmL
 
 but the following is invalid:
 
-	@LANGUAGE html</t>
-<t tx="T266">The @path, @pagewidth and @tabwidth directives allow preferences to be set on a file-by-file basis: they override the corresponding defaults in the Preferences panel.
+@LANGUAGE html</t>
+<t tx="T266">@nocolor
+
+The @path, @pagewidth and @tabwidth directives allow preferences to be set on a file-by-file basis: they override the corresponding defaults in the Preferences panel.
 
 The form of the @path directive is @path filename, where filename is taken to be everything following @path to the end of the line. If no path is specified in the @root directory the derived file is written to the directory containing the .leo file. This may be over-ridden using the "Tangle Default Directory" option in the Preferences panel.
 

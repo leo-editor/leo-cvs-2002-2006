@@ -12,7 +12,7 @@ import os, string, sys, time, types
 
 #@+others
 #@+node:1:C=1:@language and @comment directives
-#@+node:1::set_delims_from_language
+#@+node:1:C=2:set_delims_from_language
 #@+body
 # Returns a tuple (single,start,end) of comment delims
 
@@ -29,8 +29,8 @@ def set_delims_from_language(language):
 
 	return None, None, None # Indicate that no change should be made
 #@-body
-#@-node:1::set_delims_from_language
-#@+node:2::set_delims_from_string
+#@-node:1:C=2:set_delims_from_language
+#@+node:2:C=3:set_delims_from_string
 #@+body
 #@+at
 #  Returns (delim1, delim2, delim2), the delims following the @comment directive.
@@ -60,9 +60,15 @@ def set_delims_from_string(s):
 	# Restore defaults if nothing specified
 	if not delims[0]:
 		delims[0], delims[1], delims[2] = "//", "/*", "*/"
+
+	# 7/8/02: The "REM hack": replace underscores by blanks.
+	for i in xrange(0,3):
+		if delims[i]:
+			delims[i] = string.replace(delims[i],'_',' ')
+
 	return delims[0], delims[1], delims[2]
 #@-body
-#@-node:2::set_delims_from_string
+#@-node:2:C=3:set_delims_from_string
 #@+node:3::set_language
 #@+body
 #@+at
@@ -184,7 +190,7 @@ def oldDump(s):
 	return out
 #@-body
 #@-node:1::dump
-#@+node:2:C=2:get_line & get_line_after
+#@+node:2:C=4:get_line & get_line_after
 #@+body
 # Very useful for tracing.
 
@@ -208,7 +214,7 @@ def get_line_after (s,i):
 	return nl + s[i:k]
 
 #@-body
-#@-node:2:C=2:get_line & get_line_after
+#@-node:2:C=4:get_line & get_line_after
 #@+node:3::printBindings
 #@+body
 def print_bindings (name,window):
@@ -220,7 +226,7 @@ def print_bindings (name,window):
 		print `b`
 #@-body
 #@-node:3::printBindings
-#@+node:4:C=3:Sherlock...
+#@+node:4:C=5:Sherlock...
 #@+body
 #@+at
 #  Starting with this release, you will see trace statements throughout the code.  The trace function is defined in leoUtils.py; 
@@ -334,7 +340,7 @@ def trace (s1=None,s2=None):
 			message()
 #@-body
 #@-node:3::trace
-#@-node:4:C=3:Sherlock...
+#@-node:4:C=5:Sherlock...
 #@-node:6::Dumping, Tracing & Sherlock
 #@+node:7::ensure_extension
 #@+body
@@ -349,7 +355,7 @@ def ensure_extension (name, ext):
 		return file + ext
 #@-body
 #@-node:7::ensure_extension
-#@+node:8:C=4:findReference
+#@+node:8:C=6:findReference
 #@+body
 #@+at
 #  We search the descendents of v looking for the definition node matching name.
@@ -369,8 +375,8 @@ def findReference(name,root):
 	return None
 
 #@-body
-#@-node:8:C=4:findReference
-#@+node:9:C=5:Leading & trailing whitespace...
+#@-node:8:C=6:findReference
+#@+node:9:C=7:Leading & trailing whitespace...
 #@+node:1::computeLeadingWhitespace
 #@+body
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
@@ -491,7 +497,7 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 	return i, count
 #@-body
 #@-node:7::skip_leading_ws_with_indent
-#@-node:9:C=5:Leading & trailing whitespace...
+#@-node:9:C=7:Leading & trailing whitespace...
 #@+node:10::List utilities...
 #@+node:1::appendToList
 #@+body
@@ -831,7 +837,7 @@ def escaped(s,i):
 	return (count%2) == 1
 #@-body
 #@-node:1::escaped
-#@+node:2:C=6:find_line_start
+#@+node:2:C=8:find_line_start
 #@+body
 def find_line_start(s,i):
 
@@ -839,7 +845,7 @@ def find_line_start(s,i):
 	if i == -1: return 0
 	else: return i + 1
 #@-body
-#@-node:2:C=6:find_line_start
+#@-node:2:C=8:find_line_start
 #@+node:3::find_on_line
 #@+body
 def find_on_line(s,i,pattern):
@@ -889,7 +895,7 @@ def is_special(s,i,directive):
 	return false, -1
 #@-body
 #@-node:6::is_special
-#@+node:7::is_special_bits
+#@+node:7:C=9:is_special_bits
 #@+body
 #@+at
 #  Returns bits, dict where:
@@ -979,7 +985,7 @@ def is_special_bits(s,root=None):
 		i = skip_line(s,i)
 	return bits, dict
 #@-body
-#@-node:7::is_special_bits
+#@-node:7:C=9:is_special_bits
 #@+node:8::is_ws & is_ws_or_nl
 #@+body
 def is_ws(c):
@@ -1218,7 +1224,7 @@ def esDiffTime(message, start):
 	return time.clock()
 #@-body
 #@-node:17::Timing
-#@+node:18:C=7:Tk.Text selection (utils)
+#@+node:18:C=10:Tk.Text selection (utils)
 #@+node:1::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
@@ -1246,7 +1252,7 @@ def getSelectedText (t):
 		return None
 #@-body
 #@-node:2::getSelectedText
-#@+node:3:C=8:setTextSelection
+#@+node:3:C=11:setTextSelection
 #@+body
 #@+at
 #  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
@@ -1266,8 +1272,8 @@ def setTextSelection (t,start,end):
 	t.tag_remove("sel",end,"end")
 	t.mark_set("insert",end)
 #@-body
-#@-node:3:C=8:setTextSelection
-#@-node:18:C=7:Tk.Text selection (utils)
+#@-node:3:C=11:setTextSelection
+#@-node:18:C=10:Tk.Text selection (utils)
 #@+node:19::update_file_if_changed
 #@+body
 #@+at

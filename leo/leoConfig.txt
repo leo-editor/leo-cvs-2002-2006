@@ -1,5 +1,5 @@
 # leoConfig.txt: configuration file for Leo.
-# 7/5/2002 by Edward K. Ream
+# 7/8/2002 by Edward K. Ream
 
 # Leo looks for this file using the directory in sys.leo_config_directory.
 # (You would typically set this attribute in sitecustomize.py).
@@ -69,6 +69,29 @@ tangle_outputs_header = 1
 
 run_tangle_done.py = 0
 run_untangle_done.py = 0
+
+[leo window options]
+
+# These are the initial settings of newly opened windows.
+# Good values here are needed to make Toggle Split Direction convenient.
+# Defaults are shown.
+
+# Size in inches.  Other valid Tk formats are converted to this format when writing this file.
+initial_window_width = 8i
+initial_window_height = 6i
+
+bar_color = LightSteelBlue2
+bar_relief = raised
+bar_width = 7
+
+# valid values are horizontal or vertical
+initial_splitter_orientation = vertical
+
+# Ratio of tree pane to body pane when spitting pane vertically.
+initial_vertical_ratio = 0.5
+
+# Ratio of tree pane to body pane when spitting pane horizontally.
+initial_horizontal_ratio = 0.3
 
 [font prefs]
 

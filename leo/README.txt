@@ -1,3 +1,13 @@
+leo.py version 2.5.1                           July 7, 2002
+
+This version corrects crashers that affect undo/redo move commands.
+Version 2.5 has been withdrawn.
+
+ANYONE USING 2.5 SHOULD IMMEDIATELY SWITCH TO 2.5.1.
+
+See below for the new features of 2.5.
+
+
 leo.py version 2.5                             July 7, 2002
 
 This version is a major step forward to completing leo.py.

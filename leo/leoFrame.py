@@ -2,6 +2,9 @@
 
 #@+node:0::@file leoFrame.py
 #@+body
+# To do: Use config params for window height, width and bar color, relief and width.
+
+
 #@@language python
 
 from leoGlobals import *
@@ -11,7 +14,7 @@ import Tkinter, tkFileDialog, tkFont
 
 # Needed for menu commands
 import leoCommands, leoNodes, leoTree
-import os, sys
+import os, sys, traceback
 
 class LeoFrame:
 
@@ -47,11 +50,13 @@ class LeoFrame:
 		
 		# Created below
 		self.commands = None
-		self.log = None
-		self.body = None
-		self.tree = None
-		self.treeBar = None # Used by tree.idle_scrollTo
-		self.canvas = None
+		
+		self.tree = None 
+		
+		self.f1 = self.f2 = None
+		self.log = None  ; self.logBar = None
+		self.body = None ; self.bodyBar = None
+		self.canvas = None ; self.treeBar = None
 		self.splitter1 = self.splitter2 = None
 		
 		# Menu bars
@@ -76,70 +81,15 @@ class LeoFrame:
 		top.minsize(30,10) # This doesn't work as I expect.
 		g = "+%d%+d" % (30, 30)
 		top.geometry(g)
-		
-		
-		#@<< create the Leo frame >>
-		#@+node:2::<< create the Leo frame >>
-		#@+body
-		# Create two splitters
-		# Splitter 1 contains splitter2 and the body pane.
-		# Splitter 2 contains the tree and log panes.
-		bar1, split1Pane1, split1Pane2 = self.createSplitter(top, self.splitVerticalFlag)
-		self.bar1, self.split1Pane1, self.split1Pane2 = bar1, split1Pane1, split1Pane2
-		
-		bar2, split2Pane1, split2Pane2 = self.createSplitter(split1Pane1, not self.splitVerticalFlag)
-		self.bar2, self.split2Pane1, self.split2Pane2 = bar2, split2Pane1, split2Pane2
-		
-		# Create the body pane.
-			# Verdana is good looking, but not fixed size.
-			# Courier is fixed size, not great looking.
-			# A light selectbackground value is needed to make syntax coloring look good.
-		
-		# EKR 2/28/02: made code size platform dependent.
-		if sys.platform=="win32": # Windows
-			font = tkFont.Font(family="Courier",size=9)
-		else:
-			font = tkFont.Font(family="Courier",size=12)
-		
-		self.body = body = Tk.Text(split1Pane2,name='body',bd=2,bg="white",relief="flat",
-			setgrid=1,font=font,wrap="word",selectbackground="Gray80")
-		bodyBar = Tk.Scrollbar(split1Pane2,name='bodyBar')
-		body['yscrollcommand'] = bodyBar.set
-		bodyBar['command'] = body.yview
-		bodyBar.pack(side="right", fill="y")
-		body.pack(expand=1, fill="both")
-		
-		# Create the tree pane.
-		self.canvas = tree = Tk.Canvas(split2Pane1,name="tree",bd=0,bg="white",relief="flat")
-			# These do nothing...
-			# selectborderwidth=0,selectforeground="white",selectbackground="white")
-		self.treeBar = treeBar = Tk.Scrollbar(split2Pane1,name="treeBar")
-		tree['yscrollcommand'] = treeBar.set
-		treeBar['command'] = tree.yview
-		
-		treeBar.pack(side="right", fill="y")
-		tree.pack(expand=1,fill="both")
-		
-		# Create the log pane.
-		# -padx is needed to handle overlap of splitter bar
-		self.log = log = Tk.Text(split2Pane2,name="log",setgrid=1,wrap="word",
-			bd=4,bg="white",relief="flat")
-		logBar = Tk.Scrollbar(split2Pane2,name="logBar")
-		log['yscrollcommand'] = logBar.set
-		logBar['command'] = log.yview
-		
-		logBar.pack(side="right", fill="y")
-		log.pack(expand=1, fill="both")
-		#@-body
-		#@-node:2::<< create the Leo frame >>
-
+		c = None # Make sure we don't mess with c yet.
+		self.createBothLeoSplitters(top)
 		self.commands = c = leoCommands.Commands(self)
 		self.tree = leoTree.leoTree(self.commands, self.canvas)
 		c.tree = self.tree
 		self.setTabWidth(c.tab_width)
 		
 		#@<< create the first tree node >>
-		#@+node:3::<< create the first tree node >>
+		#@+node:2::<< create the first tree node >>
 		#@+body
 		t = leoNodes.tnode()
 		v = leoNodes.vnode(c,t)
@@ -149,7 +99,7 @@ class LeoFrame:
 		c.tree.canvas.focus_get()
 		c.editVnode(v)
 		#@-body
-		#@-node:3::<< create the first tree node >>
+		#@-node:2::<< create the first tree node >>
 
 		self.createMenuBar(top)
 		self.createAccelerators(top)
@@ -870,16 +820,16 @@ class LeoFrame:
 			print
 	#@-body
 	#@-node:10:C=8:frame.put, putnl
-	#@+node:11::resizePanesToRatio
+	#@+node:11:C=9:resizePanesToRatio
 	#@+body
 	def resizePanesToRatio(self,ratio):
 	
-		self.divideSplitter(self.splitVerticalFlag, 0.5)
+		self.divideLeoSplitter(self.splitVerticalFlag, ratio)
 
 	#@-body
-	#@-node:11::resizePanesToRatio
+	#@-node:11:C=9:resizePanesToRatio
 	#@+node:12::Event handlers
-	#@+node:1:C=9:frame.OnCloseLeoEvent
+	#@+node:1:C=10:frame.OnCloseLeoEvent
 	#@+body
 	# Called from quit logic and when user closes the window.
 	# Returns true if the close happened.
@@ -948,8 +898,8 @@ class LeoFrame:
 			app().quit()
 		return true
 	#@-body
-	#@-node:1:C=9:frame.OnCloseLeoEvent
-	#@+node:2:C=10:OnActivateLeoEvent
+	#@-node:1:C=10:frame.OnCloseLeoEvent
+	#@+node:2:C=11:OnActivateLeoEvent
 	#@+body
 	def OnActivateLeoEvent(self,event=None):
 	
@@ -957,8 +907,8 @@ class LeoFrame:
 		app().log = self
 
 	#@-body
-	#@-node:2:C=10:OnActivateLeoEvent
-	#@+node:3:C=11:OnActivateBody & OnBodyDoubleClick
+	#@-node:2:C=11:OnActivateLeoEvent
+	#@+node:3:C=12:OnActivateBody & OnBodyDoubleClick
 	#@+body
 	def OnActivateBody (self,event=None):
 	
@@ -973,7 +923,7 @@ class LeoFrame:
 		setTextSelection(self.body,start,end)
 		return "break" # Inhibit all further event processing.
 	#@-body
-	#@-node:3:C=11:OnActivateBody & OnBodyDoubleClick
+	#@-node:3:C=12:OnActivateBody & OnBodyDoubleClick
 	#@+node:4::OnActivateLog
 	#@+body
 	def OnActivateLog (self,event=None):
@@ -992,7 +942,7 @@ class LeoFrame:
 	#@-body
 	#@-node:5::OnActivateTree
 	#@-node:12::Event handlers
-	#@+node:13:C=12:Menu enablers (Frame)
+	#@+node:13:C=13:Menu enablers (Frame)
 	#@+node:1::OnMenuClick (enables and disables all menu items)
 	#@+body
 	# This is the Tk "postcommand" callback.  It should update all menu items.
@@ -1090,8 +1040,8 @@ class LeoFrame:
 		enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
 	#@-body
 	#@-node:5::updateOutlineMenu
-	#@-node:13:C=12:Menu enablers (Frame)
-	#@+node:14:C=13:Menu Command Handlers
+	#@-node:13:C=13:Menu enablers (Frame)
+	#@+node:14:C=14:Menu Command Handlers
 	#@+node:1::File Menu
 	#@+node:1::top level
 	#@+node:1::OnNew
@@ -1112,7 +1062,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnNew
-	#@+node:2:C=14:frame.OnOpen
+	#@+node:2:C=15:frame.OnOpen
 	#@+body
 	def OnOpen(self,event=None):
 	
@@ -1152,8 +1102,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2:C=14:frame.OnOpen
-	#@+node:3:C=15:frame.OpenWithFileName
+	#@-node:2:C=15:frame.OnOpen
+	#@+node:3:C=16:frame.OpenWithFileName
 	#@+body
 	def OpenWithFileName(self, fileName):
 	
@@ -1192,7 +1142,7 @@ class LeoFrame:
 				frame.openDirectory=os.path.dirname(fileName)
 				
 				#@<< make fileName the most recent file of frame >>
-				#@+node:1:C=16:<< make fileName the most recent file of frame >>
+				#@+node:1:C=17:<< make fileName the most recent file of frame >>
 				#@+body
 				# Update the recent files list in all windows.
 				normFileName = os.path.normcase(fileName)
@@ -1215,17 +1165,18 @@ class LeoFrame:
 				app().config.setRecentFiles(frame.recentFiles)
 				app().config.update()
 				#@-body
-				#@-node:1:C=16:<< make fileName the most recent file of frame >>
+				#@-node:1:C=17:<< make fileName the most recent file of frame >>
 
 				return true, frame
 			else:
 				es("can not open" + fileName)
 				return false, None
 		except:
-			es("can not open" + fileName)
+			traceback.print_exc()
+			es("exceptions opening" + fileName)
 			return false, None
 	#@-body
-	#@-node:3:C=15:frame.OpenWithFileName
+	#@-node:3:C=16:frame.OpenWithFileName
 	#@+node:4::OnClose
 	#@+body
 	# Called when File-Close command is chosen.
@@ -1236,7 +1187,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:4::OnClose
-	#@+node:5:C=17:OnSave
+	#@+node:5:C=18:OnSave
 	#@+body
 	def OnSave(self,event=None):
 	
@@ -1266,8 +1217,8 @@ class LeoFrame:
 			c.fileCommands.save(self.mFileName)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:5:C=17:OnSave
-	#@+node:6:C=18:OnSaveAs
+	#@-node:5:C=18:OnSave
+	#@+node:6:C=19:OnSaveAs
 	#@+body
 	def OnSaveAs(self,event=None):
 	
@@ -1290,8 +1241,8 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=18:OnSaveAs
-	#@+node:7:C=19:OnSaveTo
+	#@-node:6:C=19:OnSaveAs
+	#@+node:7:C=20:OnSaveTo
 	#@+body
 	def OnSaveTo(self,event=None):
 	
@@ -1311,8 +1262,8 @@ class LeoFrame:
 			self.commands.fileCommands.saveTo(fileName)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7:C=19:OnSaveTo
-	#@+node:8:C=20:OnRevert
+	#@-node:7:C=20:OnSaveTo
+	#@+node:8:C=21:OnRevert
 	#@+body
 	def OnRevert(self,event=None):
 	
@@ -1342,8 +1293,8 @@ class LeoFrame:
 			self.mFileName = fileName
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:8:C=20:OnRevert
-	#@+node:9:C=21:frame.OnQuit
+	#@-node:8:C=21:OnRevert
+	#@+node:9:C=22:frame.OnQuit
 	#@+body
 	def OnQuit(self,event=None):
 	
@@ -1357,9 +1308,9 @@ class LeoFrame:
 		app().quitting -= 1 # If we get here the quit has been disabled.
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:9:C=21:frame.OnQuit
+	#@-node:9:C=22:frame.OnQuit
 	#@-node:1::top level
-	#@+node:2:C=22:Recent Files submenu
+	#@+node:2:C=23:Recent Files submenu
 	#@+node:1::OnOpenRecentFile1...OnOpenFileN
 	#@+body
 	def OnOpenRecentFile0(self): return self.OnOpenFileN(0)
@@ -1395,9 +1346,9 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:2::OnOpenRecentFile
-	#@-node:2:C=22:Recent Files submenu
+	#@-node:2:C=23:Recent Files submenu
 	#@+node:3::Read/Write submenu
-	#@+node:1:C=23:fileCommands.OnReadOutlineOnly
+	#@+node:1:C=24:fileCommands.OnReadOutlineOnly
 	#@+body
 	def OnReadOutlineOnly (self,event=None):
 	
@@ -1420,7 +1371,7 @@ class LeoFrame:
 			es("can not open:" + fileName)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=23:fileCommands.OnReadOutlineOnly
+	#@-node:1:C=24:fileCommands.OnReadOutlineOnly
 	#@+node:2::OnReadAtFileNodes
 	#@+body
 	def OnReadAtFileNodes (self,event=None):
@@ -1724,7 +1675,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:2::OnRedo
-	#@+node:3:C=24:frame.OnCut, OnCutFrom Menu
+	#@+node:3:C=25:frame.OnCut, OnCutFrom Menu
 	#@+body
 	def OnCut (self,event=None):
 	
@@ -1743,8 +1694,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Cut"))
 	#@-body
-	#@-node:3:C=24:frame.OnCut, OnCutFrom Menu
-	#@+node:4:C=25:frame.OnCopy, OnCopyFromMenu
+	#@-node:3:C=25:frame.OnCut, OnCutFrom Menu
+	#@+node:4:C=26:frame.OnCopy, OnCopyFromMenu
 	#@+body
 	def OnCopy (self,event=None):
 	
@@ -1762,8 +1713,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Copy"))
 	#@-body
-	#@-node:4:C=25:frame.OnCopy, OnCopyFromMenu
-	#@+node:5:C=26:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@-node:4:C=26:frame.OnCopy, OnCopyFromMenu
+	#@+node:5:C=27:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+body
 	def OnPaste (self,event=None):
 	
@@ -1783,8 +1734,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Paste"))
 	#@-body
-	#@-node:5:C=26:frame.OnPaste, OnPasteNode, OnPasteFromMenu
-	#@+node:6:C=27:OnDelete
+	#@-node:5:C=27:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@+node:6:C=28:OnDelete
 	#@+body
 	def OnDelete(self,event=None):
 	
@@ -1795,15 +1746,15 @@ class LeoFrame:
 			c.tree.onBodyChanged(v,"Delete")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=27:OnDelete
-	#@+node:7:C=28:OnSelectAll
+	#@-node:6:C=28:OnDelete
+	#@+node:7:C=29:OnSelectAll
 	#@+body
 	def OnSelectAll(self,event=None):
 	
 		setTextSelection(self.body,"1.0","end")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7:C=28:OnSelectAll
+	#@-node:7:C=29:OnSelectAll
 	#@+node:8::OnEditHeadline
 	#@+body
 	def OnEditHeadline(self,event=None):
@@ -1855,7 +1806,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:10::OnSyntaxColoring (rewrite)
-	#@+node:11:C=29:OnViewAllCharacters
+	#@+node:11:C=30:OnViewAllCharacters
 	#@+body
 	def OnViewAllCharacters (self, event=None):
 	
@@ -1871,8 +1822,8 @@ class LeoFrame:
 		c.tree.recolor_now(v)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:11:C=29:OnViewAllCharacters
-	#@+node:12:C=30:OnPreferences
+	#@-node:11:C=30:OnViewAllCharacters
+	#@+node:12:C=31:OnPreferences
 	#@+body
 	def OnPreferences(self,event=None):
 		
@@ -1885,7 +1836,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:12:C=30:OnPreferences
+	#@-node:12:C=31:OnPreferences
 	#@-node:1::Edit top level
 	#@+node:2::Edit Body submenu
 	#@+node:1::OnConvertBlanks & OnConvertAllBlanks
@@ -2208,14 +2159,14 @@ class LeoFrame:
 	#@-node:17::OnExpandToLevel9
 	#@-node:2::Expand/Contract
 	#@+node:3::Move/Select
-	#@+node:1:C=31:OnMoveDownwn
+	#@+node:1:C=32:OnMoveDownwn
 	#@+body
 	def OnMoveDown(self,event=None):
 	
 		self.commands.moveOutlineDown()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=31:OnMoveDownwn
+	#@-node:1:C=32:OnMoveDownwn
 	#@+node:2::OnMoveLeft
 	#@+body
 	def OnMoveLeft(self,event=None):
@@ -2357,7 +2308,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnEqualSizedPanes
-	#@+node:2:C=32:OnToggleActivePane
+	#@+node:2:C=33:OnToggleActivePane
 	#@+body
 	def OnToggleActivePane (self,event=None):
 	
@@ -2368,22 +2319,36 @@ class LeoFrame:
 			self.body.focus_force()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2:C=32:OnToggleActivePane
-	#@+node:3:C=33:OnToggleSplitDirection
+	#@-node:2:C=33:OnToggleActivePane
+	#@+node:3:C=34:OnToggleSplitDirection
 	#@+body
+	# The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
+	
 	def OnToggleSplitDirection(self,event=None):
-	
-		if 1: # Until undo/redo bugs fixed
-			self.notYet("Toggle Split Direction")
-			return "break" # inhibit further command processing
-	
-		self.splitVerticalFlag = not self.splitVerticalFlag
-		self.resizePanesToRatio(0.5)
-		self.body.focus_set()
+		# Abbreviations.
+		frame = self ; c = frame.commands
+		bar1 = self.bar1 ; bar2 = self.bar2
+		split1Pane1,split1Pane2 = self.split1Pane1,self.split1Pane2
+		split2Pane1,split2Pane2 = self.split2Pane1,self.split2Pane2
+		# Switch directions.
+		verticalFlag = self.splitVerticalFlag = not self.splitVerticalFlag
+		# Reconfigure the bars.
+		bar1.place_forget()
+		bar2.place_forget()
+		self.configureBar(bar1,verticalFlag)
+		self.configureBar(bar2,not verticalFlag)
+		# Make the initial placements again.
+		self.placeSplitter(bar1,split1Pane1,split1Pane2,verticalFlag)
+		self.placeSplitter(bar2,split2Pane1,split2Pane2,not verticalFlag)
+		# Adjust the log and body panes to give more room around the bars.
+		self.reconfigurePanes()
+		# Redraw with an appropriate ratio.
+		ratio = choose(verticalFlag,0.5,0.3)
+		self.resizePanesToRatio(ratio)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:3:C=33:OnToggleSplitDirection
-	#@+node:4:C=34:OnCascade
+	#@-node:3:C=34:OnToggleSplitDirection
+	#@+node:4:C=35:OnCascade
 	#@+body
 	def OnCascade(self,event=None):
 		
@@ -2407,7 +2372,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 
 	#@-body
-	#@-node:4:C=34:OnCascade
+	#@-node:4:C=35:OnCascade
 	#@+node:5::OnMinimizeAll
 	#@+body
 	def OnMinimizeAll(self,event=None):
@@ -2424,7 +2389,7 @@ class LeoFrame:
 			frame.top.iconify()
 	#@-body
 	#@-node:5::OnMinimizeAll
-	#@+node:6:C=35:OnOpenPythonWindow
+	#@+node:6:C=36:OnOpenPythonWindow
 	#@+body
 	def OnOpenPythonWindow(self,event=None):
 	
@@ -2442,10 +2407,10 @@ class LeoFrame:
 			es("Please add \Python2x\Tools\idle to sys.paths")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=35:OnOpenPythonWindow
+	#@-node:6:C=36:OnOpenPythonWindow
 	#@-node:4::Window Menu
 	#@+node:5::Help Menu
-	#@+node:1:C=36:OnAbout (version number)
+	#@+node:1:C=37:OnAbout (version number)
 	#@+body
 	def OnAbout(self,event=None):
 	
@@ -2454,7 +2419,7 @@ class LeoFrame:
 		tkMessageBox.showinfo(
 			"About Leo",
 			"Leo in Python/Tk\n" +
-			"Version 2.5, July 7, 2002\n\n" +
+			"Version 2.5.1, July 7, 2002\n\n" +
 	
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
@@ -2462,7 +2427,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=36:OnAbout (version number)
+	#@-node:1:C=37:OnAbout (version number)
 	#@+node:2::OnLeoDocumentation
 	#@+body
 	def OnLeoDocumentation (self,event=None):
@@ -2477,96 +2442,203 @@ class LeoFrame:
 	#@-body
 	#@-node:2::OnLeoDocumentation
 	#@-node:5::Help Menu
-	#@-node:14:C=13:Menu Command Handlers
-	#@+node:15:C=37:Splitter stuff
-	#@+node:1::createSplitter
+	#@-node:14:C=14:Menu Command Handlers
+	#@+node:15:C=38:Splitter stuff
 	#@+body
-	# Create a splitter window and panes into which the caller packs widgets.
-	# Returns (bar, pane1, pane2)
+	#@+at
+	#  The key invariants used throughout this code:
+	# 
+	# 1. self.splitVerticalFlag tells the alignment of the main splitter and
+	# 2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
+	# 
+	# Only the general-purpose divideAnySplitter routine doesn't know about these invariants.  So most of this code is specialized 
+	# for Leo's window.  OTOH, creating a single splitter window would be much easier than this code.
+
+	#@-at
+	#@-body
+	#@+node:1::bindBar
+	#@+body
+	def bindBar (self, bar, verticalFlag):
+		
+		if verticalFlag == self.splitVerticalFlag:
+			bar.bind("<B1-Motion>", self.onDragMainSplitBar)
+		else:
+			bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
+	#@-body
+	#@-node:1::bindBar
+	#@+node:2::configureBar (use config.bar_width)
+	#@+body
+	def configureBar (self, bar, verticalFlag):
 	
-	# To do:
-	#	height, width could be params
-	#	constrain the minimum size of each pane
-	
-	def createSplitter (self, parent, verticalFlag):
+		if verticalFlag:
+			# Panes arranged vertically; horizontal splitter bar
+			bar.configure(height=7,cursor="sb_v_double_arrow")
+		else:
+			# Panes arranged horizontally; vertical splitter bar
+			bar.configure(width=7,cursor="sb_h_double_arrow")
+	#@-body
+	#@-node:2::configureBar (use config.bar_width)
+	#@+node:3::createBothLeoSplitters (use config.body_font,etc)
+	#@+body
+	def createBothLeoSplitters (self,top):
 	
 		Tk = Tkinter
+		# Splitter 1 is the main splitter containing splitter2 and the body pane.
+		f1,bar1,split1Pane1,split1Pane2 = self.createLeoSplitter(top, self.splitVerticalFlag)
+		self.f1,self.bar1 = f1,bar1
+		self.split1Pane1,self.split1Pane2 = split1Pane1,split1Pane2
+		# Splitter 2 is the secondary splitter containing the tree and log panes.
+		f2,bar2,split2Pane1,split2Pane2 = self.createLeoSplitter(split1Pane1, not self.splitVerticalFlag)
+		self.f2,self.bar2 = f2,bar2
+		self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
+		
+		#@<< set the font for the body pane >>
+		#@+node:1::<< set the font for the body pane >>
+		#@+body
+		# Verdana is good looking, but not fixed size.
+		# Courier is fixed size, not great looking.
+		# A light selectbackground value is needed to make syntax coloring look good.
+		
+		# EKR 2/28/02: made code size platform dependent.
+		if sys.platform=="win32": # Windows
+			font = tkFont.Font(family="Courier",size=9)
+		else:
+			font = tkFont.Font(family="Courier",size=12)
+		#@-body
+		#@-node:1::<< set the font for the body pane >>
+
+		
+		#@<< create the body pane >>
+		#@+node:2::<< create the body pane >>
+		#@+body
+		self.body = body = Tk.Text(split1Pane2,name='body',
+			bd=2,bg="white",relief="flat",
+			setgrid=1,font=font,wrap="word",selectbackground="Gray80")
+		
+		self.bodyBar = bodyBar = Tk.Scrollbar(split1Pane2,name='bodyBar')
+		
+		body['yscrollcommand'] = bodyBar.set
+		bodyBar['command'] = body.yview
+		
+		bodyBar.pack(side="right", fill="y")
+		body.pack(expand=1, fill="both")
+		#@-body
+		#@-node:2::<< create the body pane >>
+
+		
+		#@<< create the tree pane >>
+		#@+node:3::<< create the tree pane >>
+		#@+body
+		self.canvas = tree = Tk.Canvas(split2Pane1,name="tree",
+			bd=0,bg="white",relief="flat")
+		
+		# These do nothing...
+		# selectborderwidth=0,selectforeground="white",selectbackground="white")
+		self.treeBar = treeBar = Tk.Scrollbar(split2Pane1,name="treeBar")
+		
+		tree['yscrollcommand'] = treeBar.set
+		treeBar['command'] = tree.yview
+		
+		treeBar.pack(side="right", fill="y")
+		tree.pack(expand=1,fill="both")
+		#@-body
+		#@-node:3::<< create the tree pane >>
+
+		
+		#@<< create the log pane >>
+		#@+node:4::<< create the log pane >>
+		#@+body
+		self.log = log = Tk.Text(split2Pane2,name="log",
+			setgrid=1,wrap="word",bd=2,bg="white",relief="flat")
+		
+		self.logBar = logBar = Tk.Scrollbar(split2Pane2,name="logBar")
+		
+		log['yscrollcommand'] = logBar.set
+		logBar['command'] = log.yview
+		
+		logBar.pack(side="right", fill="y")
+		log.pack(expand=1, fill="both")
+		#@-body
+		#@-node:4::<< create the log pane >>
+
+		# Give the log and body panes the proper borders.
+		self.reconfigurePanes()
+	#@-body
+	#@-node:3::createBothLeoSplitters (use config.body_font,etc)
+	#@+node:4::createLeoSplitter (use config params)
+	#@+body
+	# Create a splitter window and panes into which the caller packs widgets.
+	# Returns (f, bar, pane1, pane2)
+	
+	# To do: use config.window_height config.window_width
+	# To do: use config.bar_color, config.bar_relief
+	
+	def createLeoSplitter (self, parent, verticalFlag):
+	
+		Tk = Tkinter
+		# Create the frames.
 		f = Tk.Frame(parent,width="8i",height="6.5i",bd=0,bg="white",relief="flat")
 		f.pack(expand=1,fill="both")
+		pane1 = Tk.Frame(f,bd=0,bg="white",relief="flat")
+		pane2 = Tk.Frame(f,bg="white",relief="flat")
+		bar =   Tk.Frame(f,bd=2,relief="raised",bg="LightSteelBlue2")
+		# Configure and place the frames.
+		self.configureBar(bar,verticalFlag)
+		self.bindBar(bar,verticalFlag)
+		self.placeSplitter(bar,pane1,pane2,verticalFlag)
+		
+		return f, bar, pane1, pane2
+	#@-body
+	#@-node:4::createLeoSplitter (use config params)
+	#@+node:5::divideAnySplitter
+	#@+body
+	# This is the general-purpose placer for splitters.
+	# It is the only general-purpose splitter code in Leo.
 	
-		pane1 = Tk.Frame(f)
-		pane2 = Tk.Frame(f)
-		pane1.configure(bd=0,bg="white",relief="flat")
-		pane2.configure(bd=0,bg="white",relief="flat")
+	def divideAnySplitter (self, frac, verticalFlag, bar, pane1, pane2):
 	
 		if verticalFlag:
 			# Panes arranged vertically; horizontal splitter bar
-			bar = Tk.Frame(f,height=7,bd=2,relief="raised",bg="LightSteelBlue2",cursor="sb_v_double_arrow")
-	
-			pane1.place(relx=0.5, rely =   0, anchor="n", relwidth=1.0, relheight=0.5)
-			pane2.place(relx=0.5, rely = 1.0, anchor="s", relwidth=1.0, relheight=0.5)
-			bar.place  (relx=0.5, rely = 0.5, anchor="c", relwidth=1.0)
-	
-			bar.bind("<ButtonPress-1>",   self.onGrabVSplitBar)
-			bar.bind("<B1-Motion>",	      self.onDragVSplitBar)
-			bar.bind("<ButtonRelease-1>", self.onDropVSplitBar)
+			bar.place(rely=frac)
+			pane1.place(relheight=frac)
+			pane2.place(relheight=1-frac)
 		else:
 			# Panes arranged horizontally; vertical splitter bar
-			bar = Tk.Frame(f,width=7,bd=2,relief="raised",bg="LightSteelBlue2",cursor="sb_h_double_arrow")
-			
-			f = 0.65 # give tree pane more room
-			pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=f)
-			pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-f)
-			bar.place  (rely=0.5, relx = f, anchor="c", relheight=1.0)
-		
-			bar.bind("<ButtonPress-1>",		self.onGrabHSplitBar)
-			bar.bind("<ButtonRelease-1>",	self.onDropHSplitBar)
-			bar.bind("<B1-Motion>",			self.onDragHSplitBar)
-	
-		return bar, pane1, pane2
+			bar.place(relx=frac)
+			pane1.place(relwidth=frac)
+			pane2.place(relwidth=1-frac)
 	#@-body
-	#@-node:1::createSplitter
-	#@+node:2::divideSplitter
+	#@-node:5::divideAnySplitter
+	#@+node:6::divideLeoSplitter
 	#@+body
-	def divideSplitter (self, verticalFlag, frac):
-	
-		if verticalFlag:
+	# Divides the main or secondary splitter, using the key invariant.
+	def divideLeoSplitter (self, verticalFlag, frac):
+		if self.splitVerticalFlag == verticalFlag:
+			self.divideLeoSplitter1(frac,verticalFlag)
 			self.ratio = frac # Ratio of body pane to tree pane.
-			# Panes arranged vertically; horizontal splitter bar
-			self.bar1.place(rely=frac)
-			self.split1Pane1.place(relheight=frac)
-			self.split1Pane2.place(relheight=1-frac)
 		else:
-			# Panes arranged horizontally; vertical splitter bar
-			self.bar2.place(relx=frac)
-			self.split2Pane1.place(relwidth=frac)
-			self.split2Pane2.place(relwidth=1-frac)
+			self.divideLeoSplitter2(frac,verticalFlag)
+	
+	# Divides the main splitter.
+	def divideLeoSplitter1 (self, frac, verticalFlag): 
+		self.divideAnySplitter(frac, verticalFlag,
+			self.bar1, self.split1Pane1, self.split1Pane2)
+	
+	# Divides the secondary splitter.
+	def divideLeoSplitter2 (self, frac, verticalFlag): 
+		self.divideAnySplitter (frac, verticalFlag,
+			self.bar2, self.split2Pane1, self.split2Pane2)
 	#@-body
-	#@-node:2::divideSplitter
-	#@+node:3::onGrabSplitterBar, onGrabHSplitBar, onGrabVSplitVar
+	#@-node:6::divideLeoSplitter
+	#@+node:7::onDrag...
 	#@+body
-	def onGrabHSplitBar (self, event):
-		self.onGrabSplitterBar(event, 0)
+	def onDragMainSplitBar (self, event):
+		self.onDragSplitterBar(event,self.splitVerticalFlag)
 		
-	def onGrabVSplitBar (self, event):
-		self.onGrabSplitterBar(event, 1)
-		
-	def onGrabSplitterBar (self, event, verticalFlag):
-		pass
-	#@-body
-	#@-node:3::onGrabSplitterBar, onGrabHSplitBar, onGrabVSplitVar
-	#@+node:4::onDragSplitterBar, onDragHSplitBar, onDragVSplitBar
-	#@+body
-	def onDragHSplitBar (self, event):
-		self.onDragSplitterBar(event, 0)
-		
-	def onDragVSplitBar (self, event):
-		self.onDragSplitterBar(event, 1)
+	def onDragSecondarySplitBar (self, event):
+		self.onDragSplitterBar(event,not self.splitVerticalFlag)
 	
 	def onDragSplitterBar (self, event, verticalFlag):
-	
-		if not self.splitVerticalFlag:
-			return ## disable for now...
 	
 		# x and y are the coordinates of the cursor relative to the bar, not the main window.
 		bar = event.widget
@@ -2593,23 +2665,41 @@ class LeoFrame:
 		# Redraw the splitter as the drag is occuring.
 		frac = float(offset) / wMax
 		# trace(`frac`)
-		self.divideSplitter(verticalFlag, frac)
+		self.divideLeoSplitter(verticalFlag, frac)
 	#@-body
-	#@-node:4::onDragSplitterBar, onDragHSplitBar, onDragVSplitBar
-	#@+node:5::onDropSplitterBar, onDropHSplitBar, onDropVSplitBar
+	#@-node:7::onDrag...
+	#@+node:8::placeSplitter
 	#@+body
-	def onDropHSplitBar (self, event):
-		self.onDropSplitterBar(event, 0)
-		
-	def onDropVSplitBar (self, event):
-		self.onDropSplitterBar(event, 1)
-		
-	# We could call divideSplitter here (instead of On DragSplitterBar) for non-dynamic updates.
-	def onDropSplitterBar (self, event, verticalFlag):
-		pass
+	def placeSplitter (self,bar,pane1,pane2,verticalFlag):
+	
+		if verticalFlag:
+			# Panes arranged vertically; horizontal splitter bar
+			pane1.place(relx=0.5, rely =   0, anchor="n", relwidth=1.0, relheight=0.5)
+			pane2.place(relx=0.5, rely = 1.0, anchor="s", relwidth=1.0, relheight=0.5)
+			bar.place  (relx=0.5, rely = 0.5, anchor="c", relwidth=1.0)
+		else:
+			# Panes arranged horizontally; vertical splitter bar
+			# adj gives tree pane more room when tiling vertically.
+			adj = choose(verticalFlag != self.splitVerticalFlag,0.65,0.5)
+			pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=adj)
+			pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
+			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 	#@-body
-	#@-node:5::onDropSplitterBar, onDropHSplitBar, onDropVSplitBar
-	#@-node:15:C=37:Splitter stuff
+	#@-node:8::placeSplitter
+	#@+node:9::reconfigurePanes (use config bar_width)
+	#@+body
+	def reconfigurePanes (self):
+		
+		# The body pane needs a _much_ bigger border when tiling horizontally.
+		border = choose(self.splitVerticalFlag,2,6)
+		self.body.configure(bd=border)
+		
+		# The log pane needs a slightly bigger border when tiling vertically.
+		border = choose(self.splitVerticalFlag,4,2) 
+		self.log.configure(bd=border)
+	#@-body
+	#@-node:9::reconfigurePanes (use config bar_width)
+	#@-node:15:C=38:Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

@@ -435,7 +435,7 @@ class atFile:
 				pass # Do nothing more.
 			
 			elif self.btest(comment_bits, bits):
-				k = dict["language"]
+				k = dict["comment"] # 7/8/02, not "language!"
 				delim1, delim2, delim3 = set_delims_from_string(s[k:])
 				# @comment effectively disables Untangle.
 				self.presentLanguage = unknown_language
