@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5952" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5954" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
 	<global_window_position top="36" left="296" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -762,12 +762,13 @@
 <v t="ekr.20040712101754.2" a="E"><vh>Test Leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
+<v t="ekr.20040831104758" a="TV"><vh>@test minimalLeoFile3.leo</vh></v>
 <v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
 <v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
 <v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
 <v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
-<v t="ekr.20040831101747" a="TV"><vh>@test line endings of Linux scripts</vh></v>
+<v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
 <v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
@@ -9373,19 +9374,27 @@ c:\\prog\\leoCvs\\leo\\src\\leo.py</t>
 
 import leoGlobals as g
 
-path = r"c:\prog\leoCvs\leo"
-
 def checkLinuxLineEndings(filename):
     
-    s = open(filename).read()
+    s = open(filename,"rb").read()
     cr = 0 ; nl = 0
     for ch in s:
         if ch == '\r': cr += 1
         if ch == '\n': nl += 1
     assert cr == 0, "cr: %d, nl: %d" % (cr,nl)
+    
+path = r"c:\prog\leoCvs\leo" # The source file.
+# path = r"c:\prog\test" # As distributed.
 
 for file in ("install","uninstall"):
     checkLinuxLineEndings(g.os_path_join(path,file))
+</t>
+<t tx="ekr.20040831104758">import leoGlobals as g
+import leoTest
+reload(leoTest)
+
+path = g.os_path_join(g.app.loadDir,"..","test","minimalLeoFile3.leo")
+leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
 </tnodes>
 </leo_file>
