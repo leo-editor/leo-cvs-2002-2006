@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
 #@+leo
 #@+node:0::@file leoGlobals.py
 #@+body
+#@@first
+
 # Global constants, variables and utility functions used throughout Leo.
 
 
@@ -2187,14 +2190,21 @@ def disableIdleTimeHook():
 	
 # An internal routine used to dispatch the "idle" hook.
 def idleTimeHookHandler(*args):
-	a = app() ; c = top()
+	
+	a = app()
+	# New for Python 2.3: may be called during shutdown.
+	if a.killed:
+		return
+	c = top()
 	if c: v = c.currentVnode()
 	else: v = None
 	doHook("idle",c=c,v=v)
 	# Requeue this routine after 100 msec.
 	# Faster requeues overload the system.
 	if a.idleTimeHook:
-		a.root.after(a.idleTimeDelay,idleTimeHookHandler)
+		a.afterHandler = a.root.after(a.idleTimeDelay,idleTimeHookHandler)
+	else:
+		a.afterHandler = None
 #@-body
 #@-node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+node:2::doHook

@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 #@+leo
 #@+node:0::@file leoApp.py
 #@+body
+#@@first
 #@@language python
 
 from leoGlobals import *
@@ -20,6 +22,7 @@ class LeoApp:
 	def __init__(self, root):
 	
 		# These ivars are the global vars of this program.
+		self.afterHandler = None
 		self.commandName = None # The name of the command being executed.
 		self.config = None # The leoConfig instance.
 		self.globalWindows = []
@@ -29,6 +32,7 @@ class LeoApp:
 		self.idle_imported = false # true: we have done an import idle
 		self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
 		self.idleTimeHook = false # true: the global idleTimeHookHandler will reshedule itself.
+		self.killed = false # true: we are about to destroy the root window.
 		self.loadDir = None # The directory from which Leo was loaded.
 		self.log = None # The LeoFrame containing the present log.
 		self.logIsLocked = false # true: no changes to log are allowed.
@@ -294,7 +298,11 @@ class LeoApp:
 		top = frame.top # Remember this.
 			
 		a.destroyOpenWithFilesForFrame(frame)
-		a.destroyAllWindowObjects(frame)
+		
+		# 8/27/03: Recycle only if more than one window open
+		if len(a.windowList) > 1:
+			a.destroyAllWindowObjects(frame)
+	
 		a.windowList.remove(frame)
 	
 		top.destroy() # force the window to go away now.
@@ -443,23 +451,26 @@ class LeoApp:
 	#@+node:10::app.finishQuit
 	#@+body
 	def finishQuit(self):
+		
+		self.killed = true # Disable after events.
+		
+		if self.afterHandler != None:
+			# print "finishQuit: cancelling",self.afterHandler
+			self.root.after_cancel(self.afterHandler)
+			self.afterHandler = None
 	
 		# Wait until everything is quiet before really quitting.
 		doHook("end1")
 	
 		self.destroyAllGlobalWindows()
-		collectGarbage("after destroyAllGlobalWindows")
 		
 		self.destroyAllOpenWithFiles()
-		collectGarbage("after destroyAllOpenWithFiles")
-		
-		if 1: # leaves Python window open.
+	
+		if 0: # Works in Python 2.1 and 2.2.  Leaves Python window open.
 			self.root.destroy()
-			collectGarbage("after self.root.destroy")
 			
-		else: # closes Python window.
+		else: # Works in Python 2.3.  Closes Python window.
 			self.root.quit()
-			collectGarbage("after self.root.quit")
 	#@-body
 	#@-node:10::app.finishQuit
 	#@+node:11::app.get/setRealMenuName & setRealMenuNamesFromTable

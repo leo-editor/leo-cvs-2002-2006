@@ -65,7 +65,7 @@ class baseLeoFrame:
 		self.tree = None
 		self.f1 = self.f2 = None
 		self.log = None  ; self.logBar = None
-		self.body = None ; self.bodyBar = None
+		self.body = None ; self.bodyBar = None ; self.bodyXBar = None
 		self.canvas = None ; self.treeBar = None
 		self.splitter1 = self.splitter2 = None
 		self.icon = None
@@ -241,11 +241,13 @@ class baseLeoFrame:
 		bodyBar['command'] = body.yview
 		bodyBar.pack(side="right", fill="y")
 		
+		# 8/30/03: Always create the horizontal bar.
+		self.bodyXBar = bodyXBar = Tk.Scrollbar(
+			split1Pane2,name='bodyXBar',orient="horizontal")
+		body['xscrollcommand'] = bodyXBar.set
+		bodyXBar['command'] = body.xview
+		
 		if wrap == "none":
-			bodyXBar = Tk.Scrollbar(
-				split1Pane2,name='bodyXBar',orient="horizontal")
-			body['xscrollcommand'] = bodyXBar.set
-			bodyXBar['command'] = body.xview
 			bodyXBar.pack(side="bottom", fill="x")
 			
 		body.pack(expand=1, fill="both")
@@ -602,10 +604,16 @@ class baseLeoFrame:
 		
 		c = self.commands
 		dict = scanDirectives(c,v)
-		if dict:
+		if dict != None:
+			# 8/30/03: Add scroll bars if we aren't wrapping.
 			wrap = dict.get("wrap")
-			wrap = choose(wrap,"word","none")
-			self.body.configure(wrap=wrap)
+			if wrap:
+				self.body.configure(wrap="word")
+				self.bodyXBar.pack_forget()
+			else:
+				self.body.configure(wrap="none")
+				self.bodyXBar.pack(side="bottom",fill="x")
+	
 	#@-body
 	#@-node:9::f.setWrap
 	#@+node:10::reconfigurePanes (use config bar_width)
@@ -1600,8 +1608,10 @@ class baseLeoFrame:
 			("Casca&de",None,self.OnCascade),
 			("&Minimize All",None,self.OnMinimizeAll),
 			("-",None,None),
-			("Open &Compare Window",None,self.OnOpenCompareWindow),
-			("Open &Python Window","Alt+P",self.OnOpenPythonWindow))
+			("Open &Compare Window",None,self.OnOpenCompareWindow))
+			
+			# 
+			# ("Open &Python Window","Alt+P",self.OnOpenPythonWindow))
 		
 		self.createMenuEntries(windowMenu,table)
 		
@@ -4859,6 +4869,10 @@ class baseLeoFrame:
 	def updateStatusRowCol (self):
 		
 		c = self.commands ; body = self.body ; lab = self.statusLabel
+		
+		# New for Python 2.3: may be called during shutdown.
+		if app().killed:
+			return
 	
 		index = body.index("insert")
 		row,col = getindex(body,index)

@@ -2080,7 +2080,7 @@ class baseLeoTree:
 			#@<< select the new node >>
 			#@+node:3::<< select the new node >>
 			#@+body
-			self.commands.frame.setWrap(v)
+			frame.setWrap(v)
 			
 			# Delete only if necessary: this may reduce flicker slightly.
 			s = v.t.bodyString
@@ -2111,7 +2111,7 @@ class baseLeoTree:
 				except: pass
 			
 			#@<< update c.beadList or c.beadPointer >>
-			#@+node:5::<< update c.beadList or c.beadPointer >>
+			#@+node:4::<< update c.beadList or c.beadPointer >>
 			#@+body
 			if updateBeadList:
 				if c.beadPointer > -1:
@@ -2127,11 +2127,11 @@ class baseLeoTree:
 					c.beadList.append(v)
 			
 			#@-body
-			#@-node:5::<< update c.beadList or c.beadPointer >>
+			#@-node:4::<< update c.beadList or c.beadPointer >>
 
 			
 			#@<< update c.visitedList >>
-			#@+node:6::<< update c.visitedList >>
+			#@+node:5::<< update c.visitedList >>
 			#@+body
 			# Make v the most recently visited node on the list.
 			if v in c.visitedList:
@@ -2139,12 +2139,12 @@ class baseLeoTree:
 				
 			c.visitedList.insert(0,v)
 			#@-body
-			#@-node:6::<< update c.visitedList >>
+			#@-node:5::<< update c.visitedList >>
 
 	
 		
 		#@<< set the current node and redraw >>
-		#@+node:4::<< set the current node and redraw >>
+		#@+node:6::<< set the current node and redraw >>
 		#@+body
 		self.currentVnode = v
 		self.setSelectedLabelState(v)
@@ -2152,7 +2152,7 @@ class baseLeoTree:
 		set_focus(c,c.body)
 		
 		#@-body
-		#@-node:4::<< set the current node and redraw >>
+		#@-node:6::<< set the current node and redraw >>
 
 		doHook("select2",c=c,new_v=v,old_v=old_v)
 		doHook("select3",c=c,new_v=v,old_v=old_v)

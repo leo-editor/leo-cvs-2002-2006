@@ -153,12 +153,13 @@ def createFrame (app,fileName):
 		fileName = os.path.normpath(fileName)
 		if os.path.exists(fileName):
 			ok, frame = openWithFileName(fileName) # 7/13/03: the global routine.
-			if ok: return frame
+			if ok:
+				# print fileName
+				return frame
 	
 	# Create a new frame & indicate it is the startup window.
 	frame = leoFrame.LeoFrame()
 	frame.setInitialWindowGeometry()
-	# frame.top.deiconify()
 	frame.startupWindow = true
 	
 	# Report the failure to open the file.
