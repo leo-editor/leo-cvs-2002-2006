@@ -498,8 +498,9 @@ def scanAtLineendingDirective(s,dict):
 		# trace(`e`,`lineending`)
 		return lineending
 	else:
-		es("invalid @lineending directive:"+e,color="red")
+		# es("invalid @lineending directive:"+e,color="red")
 		return None
+#@nonl
 #@-node:scanAtLineendingDirective
 #@+node:scanAtPagewidthDirective
 def scanAtPagewidthDirective(s,dict,issue_error_flag=false):
