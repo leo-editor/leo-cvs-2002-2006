@@ -482,7 +482,7 @@ class baseUndoer:
 		if 1: # range...
 			#@		<< redo clone cases >>
 			#@+node:<< redo clone cases >>
-			if redoType in ("Clone","Drag & Clone"):
+			if redoType in ("Clone Node","Drag & Clone"):
 			
 				if u.back:
 					u.v.linkAfter(u.back)
@@ -517,7 +517,7 @@ class baseUndoer:
 			#@nl
 			#@		<< redo insert cases >>
 			#@+node:<< redo insert cases >>
-			elif redoType in ["Import","Insert Outline","Paste Node"]:
+			elif redoType in ["Import","Insert Node","Paste Node"]:
 			
 				if u.back:
 					u.v.linkAfter(u.back)
@@ -536,7 +536,7 @@ class baseUndoer:
 			#@nl
 			#@		<< redo delete cases >>
 			#@+node:<< redo delete cases >>
-			elif redoType == "Delete Outline" or redoType == "Cut Node":
+			elif redoType == "Delete Node" or redoType == "Cut Node":
 			
 				c.selectVnode(u.v)
 				c.deleteOutline()
@@ -708,12 +708,12 @@ class baseUndoer:
 			#@+node:<< undo clone cases >>
 			# We can immediately delete the clone because clone() can recreate it using only v.
 			
-			if undoType == "Clone":
+			if undoType == "Clone Node":
 				
 				c.selectVnode(u.v)
 				c.deleteOutline()
 				c.selectVnode(u.back)
-				
+			
 			elif undoType == "Drag & Clone":
 				
 				c.selectVnode(u.v)
@@ -732,7 +732,7 @@ class baseUndoer:
 			#@-at
 			#@@c
 			
-			elif undoType == "Delete Outline" or undoType == "Cut Node":
+			elif undoType == "Delete Node" or undoType == "Cut Node":
 				
 				if u.back:
 					u.v.linkAfter(u.back)
@@ -765,7 +765,7 @@ class baseUndoer:
 			#@nl
 			#@		<< undo insert cases >>
 			#@+node:<< undo insert cases >>
-			elif undoType in ["Import","Insert Outline","Paste Node"]:
+			elif undoType in ["Import","Insert Node","Paste Node"]:
 				
 				c.selectVnode(u.v)
 				c.deleteOutline()
