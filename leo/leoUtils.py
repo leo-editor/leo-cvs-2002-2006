@@ -668,12 +668,20 @@ def skip_block_comment (s,i):
 	else: return k + 2
 #@-body
 #@-node:1::skip_block_comment
-#@+node:2::skip_braces
+#@+node:2:C=10:skip_braces
 #@+body
-# Skips from the opening to the matching . If no matching is found i is set to len(s).
+#@+at
+#  Skips from the opening to the matching . If no matching is found i is set to len(s).
+# 
+# This code is called only from the import logic, so we are allowed to try some tricks.  In particular, we assume all braces are 
+# matched in #if blocks.
+
+#@-at
+#@@c
 
 def skip_braces(s,i):
 
+	start = get_line(s,i)
 	assert(match(s,i,'{'))
 	level = 0 ; n = len(s)
 	while i < n:
@@ -687,10 +695,14 @@ def skip_braces(s,i):
 		elif c == '\'' or c == '"': i = skip_string(s,i)
 		elif match(s,i,'//'): i = skip_to_end_of_line(s,i)
 		elif match(s,i,'/*'): i = skip_block_comment(s,i)
+		# 7/29/02: be more careful handling conditional code.
+		elif match_word(s,i,"#if") or match_word(s,i,"#ifdef") or match_word(s,i,"#ifndef"):
+			i,delta = skip_pp_if(s,i)
+			level += delta
 		else: i += 1
 	return i
 #@-body
-#@-node:2::skip_braces
+#@-node:2:C=10:skip_braces
 #@+node:3::skip_parens
 #@+body
 #@+at
@@ -791,7 +803,7 @@ def skip_pascal_string(s,i):
 	return i
 #@-body
 #@-node:6::skip_pascal_string : called by tangle
-#@+node:7::skip_pp_directive
+#@+node:7:C=11:skip_pp_directive
 #@+body
 # Now handles continuation lines and block comments.
 
@@ -806,34 +818,73 @@ def skip_pp_directive(s,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:7::skip_pp_directive
-#@+node:8::skip_pp_if
+#@-node:7:C=11:skip_pp_directive
+#@+node:8:C=12:skip_pp_if
 #@+body
 # Skips an entire if or if def statement, including any nested statements.
 
 def skip_pp_if(s,i):
+	
+	start_line = get_line(s,i) # used for error messages.
+	#trace(start_line)
 
-	assert(match(s,i,'#'))
-	if ( not match_word(s,i,"#if") and
-		not match_word(s,i,"ifdef") and
-		not match_word(s,i,"#ifndef") ): return skip_to_end_of_line(s,i)
+	assert(
+		match_word(s,i,"#if") or
+		match_word(s,i,"#ifdef") or
+		match_word(s,i,"#ifndef"))
 
-	level = 0
+	i = skip_line(s,i)
+	i,delta1 = skip_pp_part(s,i)
+	i = skip_ws(s,i)
+	if match_word(s,i,"#else"):
+		i = skip_line(s,i)
+		i = skip_ws(s,i)
+		i,delta2 = skip_pp_part(s,i)
+		if delta1 != delta2:
+			es("#if and #else parts have different braces: " + start_line)
+	i = skip_ws(s,i)
+	if match_word(s,i,"#endif"):
+		i = skip_line(s,i)
+	else:
+		es("no matching #endif: " + start_line)
+		
+	# trace(`delta1` + ":" + start_line)
+	return i,delta1
+
+#@-body
+#@-node:8:C=12:skip_pp_if
+#@+node:9:C=13:skip_pp_part
+#@+body
+# Skip to an #else or #endif.  The caller has eaten the #if, #ifdef, #ifndef or #else
+
+def skip_pp_part(s,i):
+		
+	start_line = get_line(s,i) # used for error messages.
+	# trace(start_line)
+	
+	delta = 0
 	while i < len(s):
 		c = s[i]
-		if match_word(s,i,"#if") or match_word(s,i,"ifdef") or match_word(s,i,"#ifndef"):
-			level += 1 ; i = skip_to_end_of_line(s,i)
-		elif match_word(s,i,"#endif"):
-			level -= 1 ; i = skip_to_end_of_line(s,i)
-			if level <= 0: return i
+		if 0:
+			if c == '\n':
+				trace(`delta` + ":" + get_line(s,i))
+		if match_word(s,i,"#if") or match_word(s,i,"#ifdef") or match_word(s,i,"#ifndef"):
+			i,delta1 = skip_pp_if(s,i)
+			delta += delta1
+		elif match_word(s,i,"#else") or match_word(s,i,"#endif"):
+			return i,delta
 		elif c == '\'' or c == '"': i = skip_string(s,i)
-		elif match(s,i,"//"): i = skip_to_end_of_line(s,i)
+		elif c == '{':
+			delta += 1 ; i += 1
+		elif c == '}':
+			delta -= 1 ; i += 1
+		elif match(s,i,"//"): i = skip_line # i = skip_to_end_of_line(s,i)
 		elif match(s,i,"/*"): i = skip_block_comment(s,i)
 		else: i += 1
-	return i
+	return i,delta
 #@-body
-#@-node:8::skip_pp_if
-#@+node:9::skip_to_semicolon
+#@-node:9:C=13:skip_pp_part
+#@+node:10::skip_to_semicolon
 #@+body
 # Skips to the next semicolon that is not in a comment or a string.
 
@@ -849,8 +900,8 @@ def skip_to_semicolon(s,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:9::skip_to_semicolon
-#@+node:10::skip_python_string
+#@-node:10::skip_to_semicolon
+#@+node:11::skip_python_string
 #@+body
 def skip_python_string(s,i):
 
@@ -863,8 +914,8 @@ def skip_python_string(s,i):
 	else:
 		return skip_string(s,i)
 #@-body
-#@-node:10::skip_python_string
-#@+node:11::skip_string : called by tangle
+#@-node:11::skip_python_string
+#@+node:12::skip_string : called by tangle
 #@+body
 def skip_string(s,i):
 	
@@ -881,8 +932,8 @@ def skip_string(s,i):
 		i += 1
 	return i
 #@-body
-#@-node:11::skip_string : called by tangle
-#@+node:12::skip_typedef
+#@-node:12::skip_string : called by tangle
+#@+node:13::skip_typedef
 #@+body
 def skip_typedef(s,i):
 
@@ -895,7 +946,7 @@ def skip_typedef(s,i):
 		i = skip_to_semicolon(s,i)
 	return i
 #@-body
-#@-node:12::skip_typedef
+#@-node:13::skip_typedef
 #@-node:13::Scanners: calling scanError
 #@+node:14::Scanners: no error messages
 #@+node:1::escaped
@@ -911,7 +962,7 @@ def escaped(s,i):
 	return (count%2) == 1
 #@-body
 #@-node:1::escaped
-#@+node:2:C=10:find_line_start
+#@+node:2:C=14:find_line_start
 #@+body
 def find_line_start(s,i):
 
@@ -919,7 +970,7 @@ def find_line_start(s,i):
 	if i == -1: return 0
 	else: return i + 1
 #@-body
-#@-node:2:C=10:find_line_start
+#@-node:2:C=14:find_line_start
 #@+node:3::find_on_line
 #@+body
 def find_on_line(s,i,pattern):
@@ -969,7 +1020,7 @@ def is_special(s,i,directive):
 	return false, -1
 #@-body
 #@-node:6::is_special
-#@+node:7:C=11:is_special_bits
+#@+node:7:C=15:is_special_bits
 #@+body
 #@+at
 #  Returns bits, dict where:
@@ -1058,7 +1109,7 @@ def is_special_bits(s,root=None):
 		i = skip_line(s,i)
 	return bits, dict
 #@-body
-#@-node:7:C=11:is_special_bits
+#@-node:7:C=15:is_special_bits
 #@+node:8::is_ws & is_ws_or_nl
 #@+body
 def is_ws(c):
@@ -1299,7 +1350,7 @@ def esDiffTime(message, start):
 	return time.clock()
 #@-body
 #@-node:17::Timing
-#@+node:18:C=12:Tk.Text selection (utils)
+#@+node:18:C=16:Tk.Text selection (utils)
 #@+node:1::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
@@ -1327,7 +1378,7 @@ def getSelectedText (t):
 		return None
 #@-body
 #@-node:2::getSelectedText
-#@+node:3:C=13:setTextSelection
+#@+node:3:C=17:setTextSelection
 #@+body
 #@+at
 #  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
@@ -1347,8 +1398,8 @@ def setTextSelection (t,start,end):
 	t.tag_remove("sel",end,"end")
 	t.mark_set("insert",end)
 #@-body
-#@-node:3:C=13:setTextSelection
-#@-node:18:C=12:Tk.Text selection (utils)
+#@-node:3:C=17:setTextSelection
+#@-node:18:C=16:Tk.Text selection (utils)
 #@+node:19::update_file_if_changed
 #@+body
 #@+at

@@ -337,7 +337,7 @@ class leoImportCommands:
 		c.undoer.setUndoParams("Import",v,select=current)
 		v.initHeadString(fileName)
 		if self.webType=="cweb":
-			v.setBodyStringOrPane("@language cweb")
+			v.setBodyStringOrPane("@ignore\n@language cweb")
 		# Scan the file,creating one section for each function definition.
 		self.scanWebFile(path,v)
 		return v
@@ -800,13 +800,23 @@ class leoImportCommands:
 					#@+node:1::<< create parent_vnode >>
 					#@+body
 					# This must be done after the declaration reference is generated.
-					ref = angleBrackets(" class " + classname + " methods ")
-					class_vnode.appendStringToBody("\t" + ref + "\n\n")
+					if 1: # 7/29/02: new code creates orphans.  Sigh.
 					
-					if self.treeType == "@file":
-						parent_vnode = self.createHeadline(class_vnode,"@others",ref) # 7/6/02
-					else:
+						if self.treeType == "@file":
+							class_vnode.appendStringToBody("\t@others\n")
+						else:
+							ref = angleBrackets(" class " + classname + " methods ")
+							class_vnode.appendStringToBody("\t" + ref + "\n\n")
 						parent_vnode = class_vnode
+					
+					else:  # old code
+						ref = angleBrackets(" class " + classname + " methods ")
+						class_vnode.appendStringToBody("\t" + ref + "\n\n")
+						
+						if self.treeType == "@file":
+							parent_vnode = self.createHeadline(class_vnode,"@others",ref) # 7/6/02
+						else:
+							parent_vnode = class_vnode
 					#@-body
 					#@-node:1::<< create parent_vnode >>
 
@@ -819,13 +829,23 @@ class leoImportCommands:
 					#@+node:1::<< create parent_vnode >>
 					#@+body
 					# This must be done after the declaration reference is generated.
-					ref = angleBrackets(" class " + classname + " methods ")
-					class_vnode.appendStringToBody("\t" + ref + "\n\n")
+					if 1: # 7/29/02: new code creates orphans.  Sigh.
 					
-					if self.treeType == "@file":
-						parent_vnode = self.createHeadline(class_vnode,"@others",ref) # 7/6/02
-					else:
+						if self.treeType == "@file":
+							class_vnode.appendStringToBody("\t@others\n")
+						else:
+							ref = angleBrackets(" class " + classname + " methods ")
+							class_vnode.appendStringToBody("\t" + ref + "\n\n")
 						parent_vnode = class_vnode
+					
+					else:  # old code
+						ref = angleBrackets(" class " + classname + " methods ")
+						class_vnode.appendStringToBody("\t" + ref + "\n\n")
+						
+						if self.treeType == "@file":
+							parent_vnode = self.createHeadline(class_vnode,"@others",ref) # 7/6/02
+						else:
+							parent_vnode = class_vnode
 					#@-body
 					#@-node:1::<< create parent_vnode >>
 
@@ -882,9 +902,10 @@ class leoImportCommands:
 			if is_nl(s,i):
 				i = skip_nl(s,i)
 				indent = self.getPythonIndent(s,i)
-				if indent <= defIndent: break
+				if indent <= defIndent:
+					break
 			elif ch == '#':
-				i = skip_line(s,i)
+				i = skip_to_end_of_line(s,i) # 7/29/02
 			elif ch == '"' or ch == '\'':
 				i = skip_python_string(s,i)
 			else: i += 1
@@ -1000,11 +1021,13 @@ class leoImportCommands:
 					isDef = match_c_word(s,i,"def")
 					if not decls_seen:
 						if self.treeType == "@file":
-							parent.appendStringToBody("@language python\n@others\n")
+							parent.appendStringToBody("@ignore\n@language python\n") # 7/29/02
 						else:
 							parent.appendStringToBody("@root " + self.fileName + "\n\n")
 						i = start = self.scanPythonDecls(s,start,parent,dont_indent_refs)
 						decls_seen = true
+						if self.treeType == "@file": # 7/29/02
+							parent.appendStringToBody("@others\n") # 7/29/02
 					if isDef:
 						i = start = self.scanPythonDef(s,i,start,parent)
 					else:
@@ -1041,7 +1064,7 @@ class leoImportCommands:
 	#@-body
 	#@-node:4::scanPythonText
 	#@-node:1:C=3:Python scanners
-	#@+node:2::scanCText
+	#@+node:2:C=4:scanCText
 	#@+body
 	# Creates a child of parent for each C function definition seen.
 	
@@ -1068,7 +1091,7 @@ class leoImportCommands:
 			if ch == '/':
 				
 				#@<< handle possible C comments >>
-				#@+node:5:C=4:Shared by C and Java
+				#@+node:5:C=5:Shared by C and Java
 				#@+node:1::<< handle possible C comments >>
 				#@+body
 				if match(s,i,"//"):
@@ -1079,7 +1102,7 @@ class leoImportCommands:
 					i += 1
 				#@-body
 				#@-node:1::<< handle possible C comments >>
-				#@-node:5:C=4:Shared by C and Java
+				#@-node:5:C=5:Shared by C and Java
 
 			elif ch == '"' or ch == '\'':
 				i = skip_string(s,i)
@@ -1087,7 +1110,7 @@ class leoImportCommands:
 			elif ch == '=':
 				
 				#@<< handle equal sign in C or Java >>
-				#@+node:5:C=4:Shared by C and Java
+				#@+node:5:C=5:Shared by C and Java
 				#@+node:2::<< handle equal sign in C or Java >>
 				#@+body
 				#@+at
@@ -1104,12 +1127,12 @@ class leoImportCommands:
 					i = skip_braces(s,i)
 				#@-body
 				#@-node:2::<< handle equal sign in C or Java >>
-				#@-node:5:C=4:Shared by C and Java
+				#@-node:5:C=5:Shared by C and Java
 
 			elif ch == '(':
 				
 				#@<< handle open paren in C or Java >>
-				#@+node:5:C=4:Shared by C and Java
+				#@+node:5:C=5:Shared by C and Java
 				#@+node:3::<< handle open paren in C or Java >>
 				#@+body
 				lparen = i
@@ -1123,12 +1146,12 @@ class leoImportCommands:
 				else: lparen = None
 				#@-body
 				#@-node:3::<< handle open paren in C or Java >>
-				#@-node:5:C=4:Shared by C and Java
+				#@-node:5:C=5:Shared by C and Java
 
 			elif ch == ';':
 				
 				#@<< handle semicolon in C or Java >>
-				#@+node:5:C=4:Shared by C and Java
+				#@+node:5:C=5:Shared by C and Java
 				#@+node:4::<< handle semicolon in C or Java >>
 				#@+body
 				#@+at
@@ -1144,7 +1167,7 @@ class leoImportCommands:
 					function_start = i + 1 # The semicolon ends the declaration.
 				#@-body
 				#@-node:4::<< handle semicolon in C or Java >>
-				#@-node:5:C=4:Shared by C and Java
+				#@-node:5:C=5:Shared by C and Java
 
 			# These cases and the default case can create child nodes.
 			elif ch == '#':
@@ -1162,6 +1185,7 @@ class leoImportCommands:
 					#@+body
 					# Scan back to the start of the line.
 					include_start = i = find_line_start(s,i)
+					
 					# Scan to the next line that is neither blank nor and #include.
 					i = skip_pp_directive(s,i)
 					i = skip_nl(s,i)
@@ -1188,7 +1212,7 @@ class leoImportCommands:
 					body = s[include_start:include_end]
 					prefix = choose(self.treeType == "@file","","@code\n\n")
 					self.createHeadline(parent,prefix + body,headline)
-					parent.appendStringToBody("@language c\n")
+					parent.appendStringToBody("@ignore\n@language c\n")
 					# Append any previous text to the parent's body.
 					save_ip = i ; i = scan_start
 					while i < include_start and is_ws_or_nl(s,i):
@@ -1201,7 +1225,9 @@ class leoImportCommands:
 					#@-body
 					#@-node:1::<< create a child node for all #include statements >>
 
-				else: i = skip_pp_directive(s,i)
+				else:
+					j = i
+					i = skip_pp_directive(s,i)
 				#@-body
 				#@-node:2::<< handle # sign >>
 
@@ -1210,7 +1236,7 @@ class leoImportCommands:
 				#@<< handle open curly bracket in C >>
 				#@+node:3::<< handle open curly bracket in C >> (scans function)
 				#@+body
-				i = skip_braces(s,i) # Skip all inner blocks.
+				j = i = skip_braces(s,i) # Skip all inner blocks.
 				# This may fail if #if's contain unmathed curly braces.
 				if (match(s,i,'}') and lparen and name and function_start):
 					# Point i _after_ the last character of the function.
@@ -1268,13 +1294,14 @@ class leoImportCommands:
 					method_seen = true
 					scan_start = function_start = i # Set the start of the _next_ function.
 					lparen = None
-				else: i += 1
+				else:
+					i += 1
 				#@-body
 				#@-node:3::<< handle open curly bracket in C >> (scans function)
 
 			elif is_c_id(ch):
 				
-				#@<< skip c identif ier, typedef, struct, union, namespace >>
+				#@<< skip c identifier, typedef, struct, union, namespace >>
 				#@+node:4::<< skip c identifier, typedef, struct, union, namespace >>
 				#@+body
 				if match_c_word(s,i,"typedef"):
@@ -1358,7 +1385,7 @@ class leoImportCommands:
 			else: i += 1
 		
 		#@<< Append any unused text to the parent's body text >>
-		#@+node:6:C=5:<< Append any unused text to the parent's body text >>
+		#@+node:6:C=6:<< Append any unused text to the parent's body text >>
 		#@+body
 		# Used by C, Java and Pascal parsers.
 		# Do nothing if only whitespace is left.
@@ -1367,11 +1394,11 @@ class leoImportCommands:
 		if i < len(s):
 			parent.appendStringToBody(s[scan_start:])
 		#@-body
-		#@-node:6:C=5:<< Append any unused text to the parent's body text >>
+		#@-node:6:C=6:<< Append any unused text to the parent's body text >>
 	#@-body
-	#@+node:5:C=4:Shared by C and Java
-	#@-node:5:C=4:Shared by C and Java
-	#@-node:2::scanCText
+	#@+node:5:C=5:Shared by C and Java
+	#@-node:5:C=5:Shared by C and Java
+	#@-node:2:C=4:scanCText
 	#@+node:3::scanJavaText
 	#@+body
 	# Creates a child of parent for each Java function definition seen.
@@ -1400,7 +1427,7 @@ class leoImportCommands:
 			if ch == '/':
 				
 				#@<< handle possible C comments >>
-				#@+node:4:C=4:Shared by C and Java
+				#@+node:4:C=5:Shared by C and Java
 				#@+node:1::<< handle possible C comments >>
 				#@+body
 				if match(s,i,"//"):
@@ -1411,14 +1438,14 @@ class leoImportCommands:
 					i += 1
 				#@-body
 				#@-node:1::<< handle possible C comments >>
-				#@-node:4:C=4:Shared by C and Java
+				#@-node:4:C=5:Shared by C and Java
 
 			elif ch == '"' or ch == '\'': i = skip_string(s,i)
 			# These cases help determine where functions start.
 			elif ch == '=':
 				
 				#@<< handle equal sign in C or Java >>
-				#@+node:4:C=4:Shared by C and Java
+				#@+node:4:C=5:Shared by C and Java
 				#@+node:2::<< handle equal sign in C or Java >>
 				#@+body
 				#@+at
@@ -1435,12 +1462,12 @@ class leoImportCommands:
 					i = skip_braces(s,i)
 				#@-body
 				#@-node:2::<< handle equal sign in C or Java >>
-				#@-node:4:C=4:Shared by C and Java
+				#@-node:4:C=5:Shared by C and Java
 
 			elif ch == '(':
 				
 				#@<< handle open paren in C or Java >>
-				#@+node:4:C=4:Shared by C and Java
+				#@+node:4:C=5:Shared by C and Java
 				#@+node:3::<< handle open paren in C or Java >>
 				#@+body
 				lparen = i
@@ -1454,12 +1481,12 @@ class leoImportCommands:
 				else: lparen = None
 				#@-body
 				#@-node:3::<< handle open paren in C or Java >>
-				#@-node:4:C=4:Shared by C and Java
+				#@-node:4:C=5:Shared by C and Java
 
 			elif ch == ';':
 				
 				#@<< handle semicolon in C or Java >>
-				#@+node:4:C=4:Shared by C and Java
+				#@+node:4:C=5:Shared by C and Java
 				#@+node:4::<< handle semicolon in C or Java >>
 				#@+body
 				#@+at
@@ -1475,7 +1502,7 @@ class leoImportCommands:
 					function_start = i + 1 # The semicolon ends the declaration.
 				#@-body
 				#@-node:4::<< handle semicolon in C or Java >>
-				#@-node:4:C=4:Shared by C and Java
+				#@-node:4:C=5:Shared by C and Java
 
 				class_seen = false
 			# These cases can create child nodes.
@@ -1518,7 +1545,7 @@ class leoImportCommands:
 							i += 1
 						if i < function_start:
 							if outerFlag:
-								parent.appendStringToBody("@language java\n")
+								parent.appendStringToBody("@ignore\n@language java\n")
 							decl_headline = angleBrackets(" " + self.methodName + " declarations ")
 							# Append the headline to the parent's body.
 							parent.appendStringToBody(decl_leader + leader + decl_headline + "\n")
@@ -1604,7 +1631,7 @@ class leoImportCommands:
 			else: i += 1
 		
 		#@<< Append any unused text to the parent's body text >>
-		#@+node:5:C=5:<< Append any unused text to the parent's body text >>
+		#@+node:5:C=6:<< Append any unused text to the parent's body text >>
 		#@+body
 		# Used by C, Java and Pascal parsers.
 		# Do nothing if only whitespace is left.
@@ -1613,10 +1640,10 @@ class leoImportCommands:
 		if i < len(s):
 			parent.appendStringToBody(s[scan_start:])
 		#@-body
-		#@-node:5:C=5:<< Append any unused text to the parent's body text >>
+		#@-node:5:C=6:<< Append any unused text to the parent's body text >>
 	#@-body
-	#@+node:4:C=4:Shared by C and Java
-	#@-node:4:C=4:Shared by C and Java
+	#@+node:4:C=5:Shared by C and Java
+	#@-node:4:C=5:Shared by C and Java
 	#@-node:3::scanJavaText
 	#@+node:4::scanPascalText
 	#@+body
@@ -1730,7 +1757,7 @@ class leoImportCommands:
 						while i < start and is_ws_or_nl(s,i):
 							i += 1
 						if i < start:
-							parent.appendStringToBody("@language pascal\n")
+							parent.appendStringToBody("@ignore\n@language pascal\n")
 							headline = angleBrackets(self.methodName + " declarations ")
 							# Append the headline to the parent's body.
 							parent.appendStringToBody(headline + "\n")
@@ -1783,7 +1810,7 @@ class leoImportCommands:
 			else: i += 1
 		
 		#@<< Append any unused text to the parent's body text >>
-		#@+node:2:C=5:<< Append any unused text to the parent's body text >>
+		#@+node:2:C=6:<< Append any unused text to the parent's body text >>
 		#@+body
 		# Used by C, Java and Pascal parsers.
 		# Do nothing if only whitespace is left.
@@ -1792,7 +1819,7 @@ class leoImportCommands:
 		if i < len(s):
 			parent.appendStringToBody(s[scan_start:])
 		#@-body
-		#@-node:2:C=5:<< Append any unused text to the parent's body text >>
+		#@-node:2:C=6:<< Append any unused text to the parent's body text >>
 	#@-body
 	#@-node:4::scanPascalText
 	#@-node:5::Scanners for createOutline
@@ -1994,7 +2021,7 @@ class leoImportCommands:
 		return i, result
 	#@-body
 	#@-node:2::convertDocPartToWeb (handle @ %def)
-	#@+node:3:C=6:convertVnodeToWeb
+	#@+node:3:C=7:convertVnodeToWeb
 	#@+body
 	#@+at
 	#  This code converts a vnode to noweb text as follows:
@@ -2055,8 +2082,8 @@ class leoImportCommands:
 			result += "\n"
 		return result
 	#@-body
-	#@-node:3:C=6:convertVnodeToWeb
-	#@+node:4:C=7:copyPart
+	#@-node:3:C=7:convertVnodeToWeb
+	#@+node:4:C=8:copyPart
 	#@+body
 	# Copies characters to result until the end of the present section is seen.
 	
@@ -2096,8 +2123,8 @@ class leoImportCommands:
 			assert(progress < i)
 		return i, string.rstrip(result)
 	#@-body
-	#@-node:4:C=7:copyPart
-	#@+node:5:C=8:flattenOutline
+	#@-node:4:C=8:copyPart
+	#@+node:5:C=9:flattenOutline
 	#@+body
 	def flattenOutline (self,fileName):
 	
@@ -2119,8 +2146,8 @@ class leoImportCommands:
 			es("file error while flattening the outline")
 			traceback.print_exc()
 	#@-body
-	#@-node:5:C=8:flattenOutline
-	#@+node:6:C=9:outlineToWeb
+	#@-node:5:C=9:flattenOutline
+	#@+node:6:C=10:outlineToWeb
 	#@+body
 	def outlineToWeb (self,fileName,webType):
 	
@@ -2150,13 +2177,13 @@ class leoImportCommands:
 			es("file error in Outline To noweb command")
 			traceback.print_exc()
 	#@-body
-	#@-node:6:C=9:outlineToWeb
+	#@-node:6:C=10:outlineToWeb
 	#@+node:7::removeSentinelsCommand
 	#@+body
 	def removeSentinelsCommand (self,fileName):
 	
 		path, self.fileName = os.path.split(fileName) # path/fileName
-		trace(`self.fileName`)
+		# trace(`self.fileName`)
 		
 		#@<< Read file into s >>
 		#@+node:1::<< Read file into s >>
@@ -2213,9 +2240,10 @@ class leoImportCommands:
 		if valid == false:
 			es("invalid @+leo sentinel in " + fileName)
 		else:
-			trace("line:"+`line_delim`+","+
-				"start:"+`start_delim`+","+
-				"end:"+`end_delim`)
+			if 0:
+				trace("line:"+`line_delim`+","+
+					"start:"+`start_delim`+","+
+					"end:"+`end_delim`)
 			s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
 			newFileName = os.path.join(path,fileName+".tmp")
 			

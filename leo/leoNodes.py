@@ -173,11 +173,210 @@
 from leoGlobals import *
 from leoUtils import *
 
-class vnode:
+
+#@+others
+#@+node:3::class tnode
+#@+body
+class tnode:
 	
-	#@<< vnode members >>
-	#@+node:4::<< vnode members >>
+	#@<< tnode constants >>
+	#@+node:1::<< tnode constants >>
 	#@+body
+	dirtyBit =		0x01
+	richTextBit =	0x02 # Determines whether we use <bt> or <btr> tags.
+	visitedBit =	0x04
+	#@-body
+	#@-node:1::<< tnode constants >>
+
+
+	#@+others
+	#@+node:2::t.__init__
+	#@+body
+	# All params have defaults, so t = tnode() is valid.
+	
+	def __init__ (self, index = 0, bodyString = None):
+	
+		self.bodyString = choose(bodyString, bodyString, "")
+		self.joinHead = None # The head of the join list while a file is being read.
+		self.statusBits = 0 # status bits
+		self.fileIndex = index # The immutable file index for self tnode.
+		self.selectionStart = 0 # The start of the selected body text.
+		self.selectionLength = 0 # The length of the selected body text.
+		self.cloneIndex = 0 # Zero for @file nodes
+	#@-body
+	#@-node:2::t.__init__
+	#@+node:3::t.__del__
+	#@+body
+	def __del__ (self):
+	
+		# Can't trace while destroying.
+		# print "t.__del__"
+		pass
+	#@-body
+	#@-node:3::t.__del__
+	#@+node:4::t.destroy
+	#@+body
+	def destroy (self):
+	
+		self.joinHead = None
+	#@-body
+	#@-node:4::t.destroy
+	#@+node:5::Getters
+	#@+node:1::hasBody
+	#@+body
+	def hasBody (self):
+	
+		return self.bodyString and len(self.bodyString) > 0
+	#@-body
+	#@-node:1::hasBody
+	#@+node:2::loadBodyPaneFromTnode
+	#@+body
+	def loadBodyPaneFromTnode(self, body):
+	
+		s = self.bodyString
+		if s and len(s) > 0:
+			body.delete(1,"end")
+			body.insert(1,s)
+			#body.SetSelection(
+				#self.selectionStart,
+				#self.selectionStart + self.selectionLength)
+		else:
+			body.delete(1,"end")
+			#self.selectionStart = self.selectionLength = 0
+	#@-body
+	#@-node:2::loadBodyPaneFromTnode
+	#@+node:3::Status bits
+	#@+node:1::isDirty
+	#@+body
+	def isDirty (self):
+	
+		return (self.statusBits & self.dirtyBit) != 0
+	#@-body
+	#@-node:1::isDirty
+	#@+node:2::isRichTextBit
+	#@+body
+	def isRichTextBit (self):
+	
+		return (self.statusBits & self.richTextBit) != 0
+	#@-body
+	#@-node:2::isRichTextBit
+	#@+node:3::isVisited
+	#@+body
+	def isVisited (self):
+	
+		return (self.statusBits & self.visitedBit) != 0
+	#@-body
+	#@-node:3::isVisited
+	#@-node:3::Status bits
+	#@-node:5::Getters
+	#@+node:6::Setters
+	#@+node:1::Setting body text
+	#@+node:1::saveBodyPaneToTnode
+	#@+body
+	def saveBodyPaneToTnode (self, body):
+	
+		self.bodyString = body.GetValue()
+		# Set the selection.
+		i, j = body.GetSelection()
+		if i > j:
+			temp = i
+			i = j
+			j = temp
+		self.selectionStart = i
+		self.selectionLength = j - i
+	#@-body
+	#@-node:1::saveBodyPaneToTnode
+	#@+node:2::setTnodeText
+	#@+body
+	# This sets the text in the tnode from the given string.
+	
+	def setTnodeText (self, s):
+	
+		assert(type(s)==type(""))
+		self.bodyString = s
+	#@-body
+	#@-node:2::setTnodeText
+	#@+node:3::setSelection
+	#@+body
+	def setSelection (self, start, length):
+	
+		self.selectionStart = start
+		self.selectionLength = length
+	#@-body
+	#@-node:3::setSelection
+	#@-node:1::Setting body text
+	#@+node:2::Status bits
+	#@+node:1::clearDirty
+	#@+body
+	def clearDirty (self):
+	
+		self.statusBits &= ~ self.dirtyBit
+	#@-body
+	#@-node:1::clearDirty
+	#@+node:2::clearRichTextBit
+	#@+body
+	def clearRichTextBit (self):
+	
+		self.statusBits &= ~ self.richTextBit
+	#@-body
+	#@-node:2::clearRichTextBit
+	#@+node:3::clearVisited
+	#@+body
+	def clearVisited (self):
+	
+		self.statusBits &= ~ self.visitedBit
+	#@-body
+	#@-node:3::clearVisited
+	#@+node:4::setDirty
+	#@+body
+	def setDirty (self):
+	
+		self.statusBits |= self.dirtyBit
+	#@-body
+	#@-node:4::setDirty
+	#@+node:5::setRichTextBit
+	#@+body
+	def setRichTextBit (self):
+	
+		self.statusBits |= self.richTextBit
+	#@-body
+	#@-node:5::setRichTextBit
+	#@+node:6::setVisited
+	#@+body
+	def setVisited (self):
+	
+		self.statusBits |= self.visitedBit
+	#@-body
+	#@-node:6::setVisited
+	#@-node:2::Status bits
+	#@+node:3::setCloneIndex
+	#@+body
+	def setCloneIndex (self, index):
+	
+		self.cloneIndex = index
+	#@-body
+	#@-node:3::setCloneIndex
+	#@+node:4::setFileIndex
+	#@+body
+	def setFileIndex (self, index):
+	
+		self.fileIndex = index
+	#@-body
+	#@-node:4::setFileIndex
+	#@+node:5::setJoinHead
+	#@+body
+	def setJoinHead (self, v):
+	
+		self.joinHead = v
+	#@-body
+	#@-node:5::setJoinHead
+	#@-node:6::Setters
+	#@-others
+#@-body
+#@-node:3::class tnode
+#@+node:4::class vnode
+#@+body
+class vnode:
 	
 	#@<< vnode constants >>
 	#@+node:1::<< vnode constants >>
@@ -198,7 +397,6 @@ class vnode:
 	#@-body
 	#@-node:1::<< vnode constants >>
 
-	
 
 	#@+others
 	#@+node:2:C=1:v.__init__
@@ -1978,214 +2176,9 @@ class vnode:
 	#@-node:3::Private helper functions
 	#@-node:12::Moving, Inserting, Deleting, Cloning
 	#@-others
-	
-	#@-body
-	#@-node:4::<< vnode members >>
-
-
-class tnode:
-	
-	#@<< tnode members >>
-	#@+node:3::<< tnode members >>
-	#@+body
-	
-	#@<< tnode constants >>
-	#@+node:1::<< tnode constants >>
-	#@+body
-	dirtyBit =		0x01
-	richTextBit =	0x02 # Determines whether we use <bt> or <btr> tags.
-	visitedBit =	0x04
-	#@-body
-	#@-node:1::<< tnode constants >>
-
-	
-
-	#@+others
-	#@+node:2::t.__init__
-	#@+body
-	# All params have defaults, so t = tnode() is valid.
-	
-	def __init__ (self, index = 0, bodyString = None):
-	
-		self.bodyString = choose(bodyString, bodyString, "")
-		self.joinHead = None # The head of the join list while a file is being read.
-		self.statusBits = 0 # status bits
-		self.fileIndex = index # The immutable file index for self tnode.
-		self.selectionStart = 0 # The start of the selected body text.
-		self.selectionLength = 0 # The length of the selected body text.
-		self.cloneIndex = 0 # Zero for @file nodes
-	#@-body
-	#@-node:2::t.__init__
-	#@+node:3::t.__del__
-	#@+body
-	def __del__ (self):
-	
-		# Can't trace while destroying.
-		# print "t.__del__"
-		pass
-	#@-body
-	#@-node:3::t.__del__
-	#@+node:4::t.destroy
-	#@+body
-	def destroy (self):
-	
-		self.joinHead = None
-	#@-body
-	#@-node:4::t.destroy
-	#@+node:5::Getters
-	#@+node:1::hasBody
-	#@+body
-	def hasBody (self):
-	
-		return self.bodyString and len(self.bodyString) > 0
-	#@-body
-	#@-node:1::hasBody
-	#@+node:2::loadBodyPaneFromTnode
-	#@+body
-	def loadBodyPaneFromTnode(self, body):
-	
-		s = self.bodyString
-		if s and len(s) > 0:
-			body.delete(1,"end")
-			body.insert(1,s)
-			#body.SetSelection(
-				#self.selectionStart,
-				#self.selectionStart + self.selectionLength)
-		else:
-			body.delete(1,"end")
-			#self.selectionStart = self.selectionLength = 0
-	#@-body
-	#@-node:2::loadBodyPaneFromTnode
-	#@+node:3::Status bits
-	#@+node:1::isDirty
-	#@+body
-	def isDirty (self):
-	
-		return (self.statusBits & self.dirtyBit) != 0
-	#@-body
-	#@-node:1::isDirty
-	#@+node:2::isRichTextBit
-	#@+body
-	def isRichTextBit (self):
-	
-		return (self.statusBits & self.richTextBit) != 0
-	#@-body
-	#@-node:2::isRichTextBit
-	#@+node:3::isVisited
-	#@+body
-	def isVisited (self):
-	
-		return (self.statusBits & self.visitedBit) != 0
-	#@-body
-	#@-node:3::isVisited
-	#@-node:3::Status bits
-	#@-node:5::Getters
-	#@+node:6::Setters
-	#@+node:1::Setting body text
-	#@+node:1::saveBodyPaneToTnode
-	#@+body
-	def saveBodyPaneToTnode (self, body):
-	
-		self.bodyString = body.GetValue()
-		# Set the selection.
-		i, j = body.GetSelection()
-		if i > j:
-			temp = i
-			i = j
-			j = temp
-		self.selectionStart = i
-		self.selectionLength = j - i
-	#@-body
-	#@-node:1::saveBodyPaneToTnode
-	#@+node:2::setTnodeText
-	#@+body
-	# This sets the text in the tnode from the given string.
-	
-	def setTnodeText (self, s):
-	
-		assert(type(s)==type(""))
-		self.bodyString = s
-	#@-body
-	#@-node:2::setTnodeText
-	#@+node:3::setSelection
-	#@+body
-	def setSelection (self, start, length):
-	
-		self.selectionStart = start
-		self.selectionLength = length
-	#@-body
-	#@-node:3::setSelection
-	#@-node:1::Setting body text
-	#@+node:2::Status bits
-	#@+node:1::clearDirty
-	#@+body
-	def clearDirty (self):
-	
-		self.statusBits &= ~ self.dirtyBit
-	#@-body
-	#@-node:1::clearDirty
-	#@+node:2::clearRichTextBit
-	#@+body
-	def clearRichTextBit (self):
-	
-		self.statusBits &= ~ self.richTextBit
-	#@-body
-	#@-node:2::clearRichTextBit
-	#@+node:3::clearVisited
-	#@+body
-	def clearVisited (self):
-	
-		self.statusBits &= ~ self.visitedBit
-	#@-body
-	#@-node:3::clearVisited
-	#@+node:4::setDirty
-	#@+body
-	def setDirty (self):
-	
-		self.statusBits |= self.dirtyBit
-	#@-body
-	#@-node:4::setDirty
-	#@+node:5::setRichTextBit
-	#@+body
-	def setRichTextBit (self):
-	
-		self.statusBits |= self.richTextBit
-	#@-body
-	#@-node:5::setRichTextBit
-	#@+node:6::setVisited
-	#@+body
-	def setVisited (self):
-	
-		self.statusBits |= self.visitedBit
-	#@-body
-	#@-node:6::setVisited
-	#@-node:2::Status bits
-	#@+node:3::setCloneIndex
-	#@+body
-	def setCloneIndex (self, index):
-	
-		self.cloneIndex = index
-	#@-body
-	#@-node:3::setCloneIndex
-	#@+node:4::setFileIndex
-	#@+body
-	def setFileIndex (self, index):
-	
-		self.fileIndex = index
-	#@-body
-	#@-node:4::setFileIndex
-	#@+node:5::setJoinHead
-	#@+body
-	def setJoinHead (self, v):
-	
-		self.joinHead = v
-	#@-body
-	#@-node:5::setJoinHead
-	#@-node:6::Setters
-	#@-others
-	
-	#@-body
-	#@-node:3::<< tnode members >>
+#@-body
+#@-node:4::class vnode
+#@-others
 #@-body
 #@-node:0::@file leoNodes.py
 #@-leo

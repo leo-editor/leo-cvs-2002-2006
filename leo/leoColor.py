@@ -15,7 +15,12 @@ import string, Tkinter, tkColorChooser, traceback
 #@+node:1::<< define colorizer constants >>
 #@+body
 # We only define states that can continue across lines.
-normalState, docState, nocolorState, string3State, blockCommentState = 1,2,3,4,5
+normalState = 1
+blockCommentState = 2
+continueCommentState = 3
+docState = 4
+nocolorState = 5
+string3State = 6
 
 # These defaults are sure to exist.
 default_colors_dict = {
@@ -248,11 +253,96 @@ def index(i,j):
 #@-node:3::<< define colorizer functions >>
 
 
+#@<< define color panel data >>
+#@+node:4::<< define color panel data >>
+#@+body
+colorPanelData = (
+	#Dialog name,                option name,         default color),
+	("Brackets",          "section_name_brackets_color", "blue"),
+	("Comments",          "comment_color",               "red"),
+	("CWEB section names","cweb_section_name_color",     "red"),
+	("Directives",        "directive_color",             "blue"),
+	("Doc parts",         "doc_part_color",              "red"),
+	("Keywords" ,         "keyword_color",               "blue"),
+	("Leo Keywords",      "leo_keyword_color",           "blue"),
+	("Section Names",     "section_name_color",          "red"),
+	("Strings",           "string_color",   "#00aa00"), # Used by IDLE.
+	("Undefined Names",   "undefined_section_name_color","red") )
+
+colorNamesList = (
+	"gray60", "gray70", "gray80", "gray85", "gray90", "gray95",
+	"snow1", "snow2", "snow3", "snow4", "seashell1", "seashell2",
+	"seashell3", "seashell4", "AntiqueWhite1", "AntiqueWhite2", "AntiqueWhite3",
+	"AntiqueWhite4", "bisque1", "bisque2", "bisque3", "bisque4", "PeachPuff1",
+	"PeachPuff2", "PeachPuff3", "PeachPuff4", "NavajoWhite1", "NavajoWhite2",
+	"NavajoWhite3", "NavajoWhite4", "LemonChiffon1", "LemonChiffon2",
+	"LemonChiffon3", "LemonChiffon4", "cornsilk1", "cornsilk2", "cornsilk3",
+	"cornsilk4", "ivory1", "ivory2", "ivory3", "ivory4", "honeydew1", "honeydew2",
+	"honeydew3", "honeydew4", "LavenderBlush1", "LavenderBlush2",
+	"LavenderBlush3", "LavenderBlush4", "MistyRose1", "MistyRose2",
+	"MistyRose3", "MistyRose4", "azure1", "azure2", "azure3", "azure4",
+	"SlateBlue1", "SlateBlue2", "SlateBlue3", "SlateBlue4", "RoyalBlue1",
+	"RoyalBlue2", "RoyalBlue3", "RoyalBlue4", "blue1", "blue2", "blue3", "blue4",
+	"DodgerBlue1", "DodgerBlue2", "DodgerBlue3", "DodgerBlue4", "SteelBlue1",
+	"SteelBlue2", "SteelBlue3", "SteelBlue4", "DeepSkyBlue1", "DeepSkyBlue2",
+	"DeepSkyBlue3", "DeepSkyBlue4", "SkyBlue1", "SkyBlue2", "SkyBlue3",
+	"SkyBlue4", "LightSkyBlue1", "LightSkyBlue2", "LightSkyBlue3",
+	"LightSkyBlue4", "SlateGray1", "SlateGray2", "SlateGray3", "SlateGray4",
+	"LightSteelBlue1", "LightSteelBlue2", "LightSteelBlue3",
+	"LightSteelBlue4", "LightBlue1", "LightBlue2", "LightBlue3",
+	"LightBlue4", "LightCyan1", "LightCyan2", "LightCyan3", "LightCyan4",
+	"PaleTurquoise1", "PaleTurquoise2", "PaleTurquoise3", "PaleTurquoise4",
+	"CadetBlue1", "CadetBlue2", "CadetBlue3", "CadetBlue4", "turquoise1",
+	"turquoise2", "turquoise3", "turquoise4", "cyan1", "cyan2", "cyan3", "cyan4",
+	"DarkSlateGray1", "DarkSlateGray2", "DarkSlateGray3",
+	"DarkSlateGray4", "aquamarine1", "aquamarine2", "aquamarine3",
+	"aquamarine4", "DarkSeaGreen1", "DarkSeaGreen2", "DarkSeaGreen3",
+	"DarkSeaGreen4", "SeaGreen1", "SeaGreen2", "SeaGreen3", "SeaGreen4",
+	"PaleGreen1", "PaleGreen2", "PaleGreen3", "PaleGreen4", "SpringGreen1",
+	"SpringGreen2", "SpringGreen3", "SpringGreen4", "green1", "green2",
+	"green3", "green4", "chartreuse1", "chartreuse2", "chartreuse3",
+	"chartreuse4", "OliveDrab1", "OliveDrab2", "OliveDrab3", "OliveDrab4",
+	"DarkOliveGreen1", "DarkOliveGreen2", "DarkOliveGreen3",
+	"DarkOliveGreen4", "khaki1", "khaki2", "khaki3", "khaki4",
+	"LightGoldenrod1", "LightGoldenrod2", "LightGoldenrod3",
+	"LightGoldenrod4", "LightYellow1", "LightYellow2", "LightYellow3",
+	"LightYellow4", "yellow1", "yellow2", "yellow3", "yellow4", "gold1", "gold2",
+	"gold3", "gold4", "goldenrod1", "goldenrod2", "goldenrod3", "goldenrod4",
+	"DarkGoldenrod1", "DarkGoldenrod2", "DarkGoldenrod3", "DarkGoldenrod4",
+	"RosyBrown1", "RosyBrown2", "RosyBrown3", "RosyBrown4", "IndianRed1",
+	"IndianRed2", "IndianRed3", "IndianRed4", "sienna1", "sienna2", "sienna3",
+	"sienna4", "burlywood1", "burlywood2", "burlywood3", "burlywood4", "wheat1",
+	"wheat2", "wheat3", "wheat4", "tan1", "tan2", "tan3", "tan4", "chocolate1",
+	"chocolate2", "chocolate3", "chocolate4", "firebrick1", "firebrick2",
+	"firebrick3", "firebrick4", "brown1", "brown2", "brown3", "brown4", "salmon1",
+	"salmon2", "salmon3", "salmon4", "LightSalmon1", "LightSalmon2",
+	"LightSalmon3", "LightSalmon4", "orange1", "orange2", "orange3", "orange4",
+	"DarkOrange1", "DarkOrange2", "DarkOrange3", "DarkOrange4", "coral1",
+	"coral2", "coral3", "coral4", "tomato1", "tomato2", "tomato3", "tomato4",
+	"OrangeRed1", "OrangeRed2", "OrangeRed3", "OrangeRed4", "red1", "red2", "red3",
+	"red4", "DeepPink1", "DeepPink2", "DeepPink3", "DeepPink4", "HotPink1",
+	"HotPink2", "HotPink3", "HotPink4", "pink1", "pink2", "pink3", "pink4",
+	"LightPink1", "LightPink2", "LightPink3", "LightPink4", "PaleVioletRed1",
+	"PaleVioletRed2", "PaleVioletRed3", "PaleVioletRed4", "maroon1",
+	"maroon2", "maroon3", "maroon4", "VioletRed1", "VioletRed2", "VioletRed3",
+	"VioletRed4", "magenta1", "magenta2", "magenta3", "magenta4", "orchid1",
+	"orchid2", "orchid3", "orchid4", "plum1", "plum2", "plum3", "plum4",
+	"MediumOrchid1", "MediumOrchid2", "MediumOrchid3", "MediumOrchid4",
+	"DarkOrchid1", "DarkOrchid2", "DarkOrchid3", "DarkOrchid4", "purple1",
+	"purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
+	"MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
+	"thistle4" )
+
+#@-body
+#@-node:4::<< define color panel data >>
+
+
+
+#@+others
+#@+node:5::class colorizer
+#@+body
 class colorizer:
-	
-	#@<< class colorizer methods >>
-	#@+node:5::<< class colorizer methods >>
-	#@+body
+
 	#@+others
 	#@+node:1:C=2:color.__init__
 	#@+body
@@ -313,7 +403,6 @@ class colorizer:
 	def colorizeAnyLanguage(self,v,body,language,flag):
 		
 		#trace(`language`)
-	
 		hyperCount = 0 # Number of hypertext tags
 		self.body = body # For callbacks
 		s = body.get("1.0", "end")
@@ -544,6 +633,37 @@ class colorizer:
 					#@-node:3::Multiline State Handlers
 
 					continue
+				elif state == continueCommentState:
+					
+					#@<< continue string state >>
+					#@+node:3::Multiline State Handlers
+					#@+node:5::<< continue string state >>
+					#@+body
+					# Similar to skip_string.
+					delim = self.delim
+					continueFlag = false
+					j = i
+					while i < sLen and s[i] != delim:
+						if s[i:] == "\\":
+							i = sLen ; continueFlag = true ; break
+						elif s[i] == "\\":
+							i += 2
+						else:
+							i += 1
+					
+					if i >= sLen:
+						i = sLen
+					elif s[i] == delim:
+						i += 1
+					
+					# print "continueString3", `s[j:i]`
+					body.tag_add("string", index(n,j), index(n,i))
+					state = choose(continueFlag, continueCommentState, normalState)
+					#@-body
+					#@-node:5::<< continue string state >>
+					#@-node:3::Multiline State Handlers
+
+					continue
 				elif state == blockCommentState:
 					
 					#@<< continue block comment >>
@@ -570,18 +690,18 @@ class colorizer:
 				if has_string and ch == '"' or ch == "'":
 					
 					#@<< handle string >>
-					#@+node:4::<< handle string >>
+					#@+node:4:C=7:<< handle string >>
 					#@+body
 					if language == python_language:
 						j, state = self.skip_python_string(s,i)
 						body.tag_add("string", index(n,i), index(n,j))
 						i = j
 					else:
-						j = self.skip_string(s,i)
+						j, state = self.skip_string(s,i)
 						body.tag_add("string", index(n,i), index(n,j))
 						i = j
 					#@-body
-					#@-node:4::<< handle string >>
+					#@-node:4:C=7:<< handle string >>
 
 				elif single_comment_start and match(s,i,single_comment_start):
 					
@@ -775,7 +895,7 @@ class colorizer:
 	#@+node:3::Multiline State Handlers
 	#@-node:3::Multiline State Handlers
 	#@-node:4:C=4:colorizeAnyLanguage
-	#@+node:5:C=7:scanColorDirectives
+	#@+node:5:C=8:scanColorDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all of v's ancestors looking for @color and @nocolor directives.
@@ -820,7 +940,7 @@ class colorizer:
 		# trace(`language`)
 		return language
 	#@-body
-	#@-node:5:C=7:scanColorDirectives
+	#@-node:5:C=8:scanColorDirectives
 	#@+node:6::color.schedule
 	#@+body
 	def schedule(self,v,body):
@@ -864,7 +984,7 @@ class colorizer:
 		return word
 	#@-body
 	#@-node:7::getCwebWord
-	#@+node:8:C=8:updateSyntaxColorer
+	#@+node:8:C=9:updateSyntaxColorer
 	#@+body
 	# Returns (flag,language)
 	# flag is true unless an unambiguous @nocolor is seen.
@@ -877,7 +997,7 @@ class colorizer:
 		return flag,language
 
 	#@-body
-	#@-node:8:C=8:updateSyntaxColorer
+	#@-node:8:C=9:updateSyntaxColorer
 	#@+node:9::useSyntaxColoring
 	#@+body
 	# Return true if v unless v is unambiguously under the control of @nocolor.
@@ -926,7 +1046,7 @@ class colorizer:
 
 	#@-body
 	#@-node:1::skip_id
-	#@+node:2::skip_python_string
+	#@+node:2:C=10:skip_python_string
 	#@+body
 	def skip_python_string(self,s,i):
 	
@@ -938,10 +1058,10 @@ class colorizer:
 			else:
 				return k+3, normalState
 		else:
-			return self.skip_string(s,i), normalState
+			return self.skip_string(s,i)
 	#@-body
-	#@-node:2::skip_python_string
-	#@+node:3::skip_string
+	#@-node:2:C=10:skip_python_string
+	#@+node:3:C=11:skip_string
 	#@+body
 	def skip_string(self,s,i):
 	
@@ -950,113 +1070,28 @@ class colorizer:
 		assert(delim == '"' or delim == '\'')
 		n = len(s)
 		while i < n and s[i] != delim:
-			if s[i] == '\\' : i += 2
+			if s[i:] == "\\":
+				return n, continueCommentState
+			elif s[i] == '\\' :
+				i += 2
 			else: i += 1
 	
 		if i >= n:
-			return n
+			return n, normalState
 		elif s[i] == delim:
 			i += 1
-		return i
+		return i,normalState
+
 	#@-body
-	#@-node:3::skip_string
+	#@-node:3:C=11:skip_string
 	#@-node:10::Utils
 	#@-others
-	
-	#@-body
-	#@-node:5::<< class colorizer methods >>
-
-	
-
-#@<< define color panel data >>
-#@+node:4::<< define color panel data >>
-#@+body
-colorPanelData = (
-	#Dialog name,                option name,         default color),
-	("Brackets",          "section_name_brackets_color", "blue"),
-	("Comments",          "comment_color",               "red"),
-	("CWEB section names","cweb_section_name_color",     "red"),
-	("Directives",        "directive_color",             "blue"),
-	("Doc parts",         "doc_part_color",              "red"),
-	("Keywords" ,         "keyword_color",               "blue"),
-	("Leo Keywords",      "leo_keyword_color",           "blue"),
-	("Section Names",     "section_name_color",          "red"),
-	("Strings",           "string_color",   "#00aa00"), # Used by IDLE.
-	("Undefined Names",   "undefined_section_name_color","red") )
-
-colorNamesList = (
-	"gray60", "gray70", "gray80", "gray85", "gray90", "gray95",
-	"snow1", "snow2", "snow3", "snow4", "seashell1", "seashell2",
-	"seashell3", "seashell4", "AntiqueWhite1", "AntiqueWhite2", "AntiqueWhite3",
-	"AntiqueWhite4", "bisque1", "bisque2", "bisque3", "bisque4", "PeachPuff1",
-	"PeachPuff2", "PeachPuff3", "PeachPuff4", "NavajoWhite1", "NavajoWhite2",
-	"NavajoWhite3", "NavajoWhite4", "LemonChiffon1", "LemonChiffon2",
-	"LemonChiffon3", "LemonChiffon4", "cornsilk1", "cornsilk2", "cornsilk3",
-	"cornsilk4", "ivory1", "ivory2", "ivory3", "ivory4", "honeydew1", "honeydew2",
-	"honeydew3", "honeydew4", "LavenderBlush1", "LavenderBlush2",
-	"LavenderBlush3", "LavenderBlush4", "MistyRose1", "MistyRose2",
-	"MistyRose3", "MistyRose4", "azure1", "azure2", "azure3", "azure4",
-	"SlateBlue1", "SlateBlue2", "SlateBlue3", "SlateBlue4", "RoyalBlue1",
-	"RoyalBlue2", "RoyalBlue3", "RoyalBlue4", "blue1", "blue2", "blue3", "blue4",
-	"DodgerBlue1", "DodgerBlue2", "DodgerBlue3", "DodgerBlue4", "SteelBlue1",
-	"SteelBlue2", "SteelBlue3", "SteelBlue4", "DeepSkyBlue1", "DeepSkyBlue2",
-	"DeepSkyBlue3", "DeepSkyBlue4", "SkyBlue1", "SkyBlue2", "SkyBlue3",
-	"SkyBlue4", "LightSkyBlue1", "LightSkyBlue2", "LightSkyBlue3",
-	"LightSkyBlue4", "SlateGray1", "SlateGray2", "SlateGray3", "SlateGray4",
-	"LightSteelBlue1", "LightSteelBlue2", "LightSteelBlue3",
-	"LightSteelBlue4", "LightBlue1", "LightBlue2", "LightBlue3",
-	"LightBlue4", "LightCyan1", "LightCyan2", "LightCyan3", "LightCyan4",
-	"PaleTurquoise1", "PaleTurquoise2", "PaleTurquoise3", "PaleTurquoise4",
-	"CadetBlue1", "CadetBlue2", "CadetBlue3", "CadetBlue4", "turquoise1",
-	"turquoise2", "turquoise3", "turquoise4", "cyan1", "cyan2", "cyan3", "cyan4",
-	"DarkSlateGray1", "DarkSlateGray2", "DarkSlateGray3",
-	"DarkSlateGray4", "aquamarine1", "aquamarine2", "aquamarine3",
-	"aquamarine4", "DarkSeaGreen1", "DarkSeaGreen2", "DarkSeaGreen3",
-	"DarkSeaGreen4", "SeaGreen1", "SeaGreen2", "SeaGreen3", "SeaGreen4",
-	"PaleGreen1", "PaleGreen2", "PaleGreen3", "PaleGreen4", "SpringGreen1",
-	"SpringGreen2", "SpringGreen3", "SpringGreen4", "green1", "green2",
-	"green3", "green4", "chartreuse1", "chartreuse2", "chartreuse3",
-	"chartreuse4", "OliveDrab1", "OliveDrab2", "OliveDrab3", "OliveDrab4",
-	"DarkOliveGreen1", "DarkOliveGreen2", "DarkOliveGreen3",
-	"DarkOliveGreen4", "khaki1", "khaki2", "khaki3", "khaki4",
-	"LightGoldenrod1", "LightGoldenrod2", "LightGoldenrod3",
-	"LightGoldenrod4", "LightYellow1", "LightYellow2", "LightYellow3",
-	"LightYellow4", "yellow1", "yellow2", "yellow3", "yellow4", "gold1", "gold2",
-	"gold3", "gold4", "goldenrod1", "goldenrod2", "goldenrod3", "goldenrod4",
-	"DarkGoldenrod1", "DarkGoldenrod2", "DarkGoldenrod3", "DarkGoldenrod4",
-	"RosyBrown1", "RosyBrown2", "RosyBrown3", "RosyBrown4", "IndianRed1",
-	"IndianRed2", "IndianRed3", "IndianRed4", "sienna1", "sienna2", "sienna3",
-	"sienna4", "burlywood1", "burlywood2", "burlywood3", "burlywood4", "wheat1",
-	"wheat2", "wheat3", "wheat4", "tan1", "tan2", "tan3", "tan4", "chocolate1",
-	"chocolate2", "chocolate3", "chocolate4", "firebrick1", "firebrick2",
-	"firebrick3", "firebrick4", "brown1", "brown2", "brown3", "brown4", "salmon1",
-	"salmon2", "salmon3", "salmon4", "LightSalmon1", "LightSalmon2",
-	"LightSalmon3", "LightSalmon4", "orange1", "orange2", "orange3", "orange4",
-	"DarkOrange1", "DarkOrange2", "DarkOrange3", "DarkOrange4", "coral1",
-	"coral2", "coral3", "coral4", "tomato1", "tomato2", "tomato3", "tomato4",
-	"OrangeRed1", "OrangeRed2", "OrangeRed3", "OrangeRed4", "red1", "red2", "red3",
-	"red4", "DeepPink1", "DeepPink2", "DeepPink3", "DeepPink4", "HotPink1",
-	"HotPink2", "HotPink3", "HotPink4", "pink1", "pink2", "pink3", "pink4",
-	"LightPink1", "LightPink2", "LightPink3", "LightPink4", "PaleVioletRed1",
-	"PaleVioletRed2", "PaleVioletRed3", "PaleVioletRed4", "maroon1",
-	"maroon2", "maroon3", "maroon4", "VioletRed1", "VioletRed2", "VioletRed3",
-	"VioletRed4", "magenta1", "magenta2", "magenta3", "magenta4", "orchid1",
-	"orchid2", "orchid3", "orchid4", "plum1", "plum2", "plum3", "plum4",
-	"MediumOrchid1", "MediumOrchid2", "MediumOrchid3", "MediumOrchid4",
-	"DarkOrchid1", "DarkOrchid2", "DarkOrchid3", "DarkOrchid4", "purple1",
-	"purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
-	"MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
-	"thistle4" )
-
 #@-body
-#@-node:4::<< define color panel data >>
-
-	
+#@-node:5::class colorizer
+#@+node:6:C=12:class leoColorPanel
+#@+body
 class leoColorPanel:
-	
-	#@<< class leoColorPanel methods >>
-	#@+node:6:C=9:<< class leoColorPanel methods >>
-	#@+body
+
 	#@+others
 	#@+node:1::colorPanel.__init__
 	#@+body
@@ -1070,7 +1105,13 @@ class leoColorPanel:
 		self.changed_options = []
 		# For communication with callback.
 		self.buttons = {}
+		self.nameButtons = {}
 		self.option_names = {}
+		# Save colors for revert.  onOk alters this.
+		self.revertColors = {}
+		config = app().config
+		for name,option_name,default_color in colorPanelData:
+			self.revertColors[option_name] = config.getColorsPref(option_name)
 	#@-body
 	#@-node:1::colorPanel.__init__
 	#@+node:2::run
@@ -1106,9 +1147,10 @@ class leoColorPanel:
 			self.buttons[name]=b1 # For callback.
 			self.option_names[name]=option_name # For callback.
 			
-			b2 = Tk.Button(f,width=10,text=option_color)
+			b2 = Tk.Button(f,width=12,text=option_color)
+			self.nameButtons[name]=b2
 			
-			callback = lambda name=name,color=color:self.showColorPicker(name,color)
+			callback = lambda name=name:self.showColorPicker(name)
 			b3 = Tk.Button(f,text="Color Picker...",command=callback)
 		
 			callback = lambda name=name,color=color:self.showColorName(name,color)
@@ -1144,10 +1186,13 @@ class leoColorPanel:
 	#@-node:2::run
 	#@+node:3::showColorPicker
 	#@+body
-	def showColorPicker (self,name,color):
+	def showColorPicker (self,name):
 		
+		option_name = self.option_names[name]
+		color = app().config.getColorsPref(option_name)
 		rgb,val = tkColorChooser.askcolor(color=color)
-		self.update(name,color)
+		if val != None:
+			self.update(name,val)
 	#@-body
 	#@-node:3::showColorPicker
 	#@+node:4::showColorName
@@ -1158,9 +1203,15 @@ class leoColorPanel:
 		np.run(name,color)
 	#@-body
 	#@-node:4::showColorName
-	#@+node:5:C=10:colorPanel.onOk, onCancel, onRevert
+	#@+node:5:C=13:colorPanel.onOk, onCancel, onRevert
 	#@+body
 	def onOk (self):
+		# Update the revert colors
+		config = app().config
+		for name in self.changed_options:
+			option_name = self.option_names[name]
+			self.revertColors[option_name] = config.getColorsPref(option_name)
+		self.changed_options = []
 		if 1: # Hide the window, preserving its position.
 			self.top.withdraw()
 		else: # works.
@@ -1176,44 +1227,53 @@ class leoColorPanel:
 			self.top.destroy()
 		
 	def onRevert (self):
-		for option_name,old_val in self.changed_options:
-			app().config.setColorsPref(option_name,old_val)
+		config = app().config
+		for name in self.changed_options:
+			option_name = self.option_names[name]
+			old_val = self.revertColors[option_name]
+			# Update the current settings.
+			config.setColorsPref(option_name,old_val)
+			# Update the buttons.
+			b = self.buttons[name]
+			b.configure(bg=old_val)
+			b = self.nameButtons[name]
+			b.configure(text=`old_val`)
 		self.changed_options = []
 		self.commands.recolor()
 	#@-body
-	#@-node:5:C=10:colorPanel.onOk, onCancel, onRevert
+	#@-node:5:C=13:colorPanel.onOk, onCancel, onRevert
 	#@+node:6::update
 	#@+body
 	def update (self,name,val):
 		
 		config = app().config
-		es(`val`)
+		# es(str(name) + " = " + str(val))
 		
 		# Put the new color in the button.
 		b = self.buttons[name]
 		b.configure(bg=val)
 		option_name = self.option_names[name]
 		
-		# Save the old value for revert.
-		old = config.getColorsPref(option_name)
-		self.changed_options.append((option_name,old))
+		# Put the new color name or value in the name button.
+		b = self.nameButtons[name]
+		b.configure(text=str(val))
 		
+		# Save the changed option names for revert and cancel.
+		if name not in self.changed_options:
+			self.changed_options.append(name)
+	
 		# Set the new value and recolor.
 		config.setColorsPref(option_name,val)
 		self.commands.recolor()
 	#@-body
 	#@-node:6::update
 	#@-others
-	
-	#@-body
-	#@-node:6:C=9:<< class leoColorPanel methods >>
-
-	
+#@-body
+#@-node:6:C=12:class leoColorPanel
+#@+node:7::class leoColorNamePanel
+#@+body
 class leoColorNamePanel:
-	
-	#@<< class leoColorNamePanel methods >>
-	#@+node:7::<< class leoColorNamePanel methods >>
-	#@+body
+
 	#@+others
 	#@+node:1::namePanel.__init__
 	#@+body
@@ -1253,6 +1313,7 @@ class leoColorNamePanel:
 		
 		assert(name==self.name)
 		assert(color==self.color)
+		self.revertColor = color
 		
 		Tk = Tkinter
 		config = app().config
@@ -1362,9 +1423,11 @@ class leoColorNamePanel:
 	#@-body
 	#@-node:5::select
 	#@-others
-	
-	#@-body
-	#@-node:7::<< class leoColorNamePanel methods >>
+
+
+#@-body
+#@-node:7::class leoColorNamePanel
+#@-others
 #@-body
 #@-node:0::@file leoColor.py
 #@-leo

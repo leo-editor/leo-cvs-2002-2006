@@ -534,15 +534,15 @@ class LeoFrame:
 		moveSelectMenu.add_separator()
 		
 		moveSelectMenu.add_command(label="Go Prev Visible",
-			accelerator="Ctrl+Up",command=self.OnGoPrevVisible)
+			accelerator="Alt-Shift-U",command=self.OnGoPrevVisible)
 		moveSelectMenu.add_command(label="Go Next Visible",
-			accelerator="Ctrl+Down",command=self.OnGoNextVisible)
+			accelerator="Alt-Shift-D",command=self.OnGoNextVisible)
 		moveSelectMenu.add_separator()
 		
 		moveSelectMenu.add_command(label="Go Back",
-			accelerator="Shift+Ctrl+Up",command=self.OnGoBack)
+			accelerator="Alt-Shift+V",command=self.OnGoBack)
 		moveSelectMenu.add_command(label="Go Next",
-			accelerator="Shift+Ctrl+Down",command=self.OnGoNext)
+			accelerator="Alt-Shift-W",command=self.OnGoNext)
 		#@-body
 		#@-node:2::<< create move/select submenu >>
 
@@ -651,12 +651,6 @@ class LeoFrame:
 			("bracketright", self.OnIndent), # "]"
 			("Shift-BackSpace", self.OnDeleteNode),
 			
-			# Note: These keys must be bound _only_ to the body pane!
-			# ("Down", self.OnGoNextVisible),
-			# ("Up", self.OnGoPrevVisible),
-			# ("Shift-Down", self.OnGoBack),
-			# ("Shift-Up", self.OnGoNext),
-			
 			("a", self.OnSelectAll),
 			# "b" unused
 			# ("c", self.OnCopy), # Done in frame.__init__
@@ -718,28 +712,11 @@ class LeoFrame:
 		for accel, command in controlBindings:
 			body.bind("<Control-" + accel + ">", command) # Necessary to override defaults in body.
 			top.bind("<Control-" + accel + ">", command)
-			
-		# These keys must be bound only in the canvas widget.
-		canvasControlBindings = [
-			
-			#@<< canvas control bindings >>
-			#@+node:2::<< canvas control bindings >>
-			#@+body
-			("Down", self.OnGoNextVisible),
-			("Up", self.OnGoPrevVisible),
-			("Shift-Down", self.OnGoNext),
-			("Shift-Up", self.OnGoBack),
-			#@-body
-			#@-node:2::<< canvas control bindings >>
-
-		]
-		for accel, command in canvasControlBindings:
-			canvas.bind("<Control-" + accel + ">", command)
 	
 		altBindings = [
 			
 			#@<< alt key bindings >>
-			#@+node:3::<< alt key bindings >>
+			#@+node:2::<< alt key bindings >>
 			#@+body
 			("equal", self.OnExpandNextLevel),
 			("Key-0", self.OnContractParent),
@@ -778,12 +755,33 @@ class LeoFrame:
 			# "x" unused
 			# "y" unused
 			# "z" unused
-			# Shift-Alt
+			
+			# Shift-Alt...
+			
 			# ("E", self.OnExecuteScript),
 			("S", self.OnColorPanel),
-			("T", self.OnFontPanel)
+			("T", self.OnFontPanel),
+			
+
+			#@+at
+			#  7/29/02: It's too confusing to have arrow keys mean different things in different panes.
+			# 
+			# For one thing, we want to leave the focus in the body pane after the first click in the outline pane, but that means 
+			# that the arrow keys must still be functional in the _body_ pane!
+			# 
+			# Alas, all the various combinations of key bindings of arrow keys appear to do something; there are none left to use 
+			# for moving around in the outline pane.  So we are stuck with poor shortcuts.
+
+			#@-at
+			#@@c
+			
+			# We would love to use arrow keys, and we can't.
+			("D", self.OnGoNextVisible),
+			("U", self.OnGoPrevVisible),
+			("V", self.OnGoBack),
+			("W", self.OnGoNext),
 			#@-body
-			#@-node:3::<< alt key bindings >>
+			#@-node:2::<< alt key bindings >>
 
 		]
 		# Warnings: two sets of actions will be taken for these
@@ -1511,31 +1509,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnFlattenOutline
-	#@+node:2::OnImportAtFile
-	#@+body
-	def OnImportAtFile (self,event=None):
-		
-		types = [
-			("All files","*"),
-			("C/C++ files","*.c"),
-			("C/C++ files","*.cpp"),
-			("C/C++ files","*.h"),
-			("C/C++ files","*.hpp"),
-			("Java files","*.java"),
-			("Pascal files","*.pas"),
-			("Python files","*.py") ]
-				
-		fileName = tkFileDialog.askopenfilename(
-			title="Import To @file",filetypes=types)
-		if fileName and len(fileName) > 0:
-			c = self.commands
-			paths = [fileName] # alas, askopenfilename returns only a single name.
-			c.importCommands.importFilesCommand (paths,"@file")
-	
-		return "break" # inhibit further command processing
-	#@-body
-	#@-node:2::OnImportAtFile
-	#@+node:3::OnImportAtRoot
+	#@+node:2::OnImportAtRoot
 	#@+body
 	def OnImportAtRoot (self,event=None):
 		
@@ -1558,7 +1532,31 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:3::OnImportAtRoot
+	#@-node:2::OnImportAtRoot
+	#@+node:3::OnImportAtFile
+	#@+body
+	def OnImportAtFile (self,event=None):
+		
+		types = [
+			("All files","*"),
+			("C/C++ files","*.c"),
+			("C/C++ files","*.cpp"),
+			("C/C++ files","*.h"),
+			("C/C++ files","*.hpp"),
+			("Java files","*.java"),
+			("Pascal files","*.pas"),
+			("Python files","*.py") ]
+				
+		fileName = tkFileDialog.askopenfilename(
+			title="Import To @file",filetypes=types)
+		if fileName and len(fileName) > 0:
+			c = self.commands
+			paths = [fileName] # alas, askopenfilename returns only a single name.
+			c.importCommands.importFilesCommand (paths,"@file")
+	
+		return "break" # inhibit further command processing
+	#@-body
+	#@-node:3::OnImportAtFile
 	#@+node:4::OnImportCWEBFiles
 	#@+body
 	def OnImportCWEBFiles (self,event=None):
@@ -2461,14 +2459,17 @@ class LeoFrame:
 	
 		import tkMessageBox
 	
-		tkMessageBox.showinfo(
-			"About Leo",
-			"Leo in Python/Tk\n" +
-			"Version 3.1, July 20, 2002\n\n" +
+		tkMessageBox.showinfo("About Leo",
+		# Don't use triple-quoted strings or continued strings here.
+		# Doing so would add unwanted leading tabs.
+		" leo.py 3.2, July 30, 2002\n\n" +
 	
-			"Copyright 1999-2002 by Edward K. Ream\n" +
-			"All Rights Reserved\n" +
-			"Leo is distributed under the Python License")
+		"Copyright 1999-2002 by\n" +
+		"Edward K. Ream, edream@tds.net\n" +
+		"All Rights Reserved\n" +
+		"Leo is distributed under the Python License\n\n" +
+		
+		"http://personalpages.tds.net/~edream/front.html")
 	
 		return "break" # inhibit further command processing
 	#@-body

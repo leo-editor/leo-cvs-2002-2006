@@ -217,6 +217,8 @@ class LeoPrefs:
 		self.revert_output_doc_flag = c.output_doc_flag
 		self.revert_use_header_flag = c.use_header_flag
 		# Default Target Language
+		if c.target_language == None: # 7/29/02
+			c.target_language = python_language
 		self.revert_target_language = c.target_language
 		#@-body
 		#@-node:1::<< remember values for revert >>
@@ -238,6 +240,8 @@ class LeoPrefs:
 		self.output_doc_var.set(c.output_doc_flag)
 		self.use_header_var.set(c.use_header_flag)
 		# Default Target Language
+		if c.target_language == None:
+			c.target_language = python_language # 7/29/02
 		self.lang_var.set(c.target_language)
 		#@-body
 		#@-node:2::<< set widgets >>

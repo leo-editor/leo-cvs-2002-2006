@@ -1810,11 +1810,13 @@ class atFile:
 			return false, -1
 	#@-body
 	#@-node:3::isSectionName
-	#@+node:4::inAtOthers
+	#@+node:4:C=12:inAtOthers
 	#@+body
 	#@+at
-	#  Returns true if v should be included in the expansion of the at-others directive in the body text of v's parent. v will not 
-	# be included if it is a definition node or if its body text contains another at-others or @ignore directive.
+	#  Returns true if v should be included in the expansion of the at-others directive in the body text of v's parent.
+	# 
+	# 7/30/02: v will not be included if it is a definition node or if its body text contains an @ignore directive. Previously, a 
+	# "nested" @others directive would also inhibit the inclusion of v.
 
 	#@-at
 	#@@c
@@ -1828,10 +1830,13 @@ class atFile:
 		isSection, j = self.isSectionName(h,i)
 		if isSection: return false
 		# Return false if v's body contains an @ignore or at-others directive.
-		return not v.isAtIgnoreNode() and not v.isAtOthersNode()
+		if 1: # 7/29/02: New code.  Amazingly, this appears to work!
+			return not v.isAtIgnoreNode()
+		else: # old & reliable code
+			return not v.isAtIgnoreNode() and not v.isAtOthersNode()
 	#@-body
-	#@-node:4::inAtOthers
-	#@+node:5::putAtOthers
+	#@-node:4:C=12:inAtOthers
+	#@+node:5:C=13:putAtOthers
 	#@+body
 	#@+at
 	#  The at-others directive is recognized only at the start of the line.  This code must generate all leading whitespace for 
@@ -1851,8 +1856,8 @@ class atFile:
 		self.putSentinel("@-others")
 		self.indent -= delta
 	#@-body
-	#@-node:5::putAtOthers
-	#@+node:6::putAtOthersChild
+	#@-node:5:C=13:putAtOthers
+	#@+node:6:C=14:putAtOthersChild
 	#@+body
 	def putAtOthersChild(self,v):
 	
@@ -1871,7 +1876,7 @@ class atFile:
 	
 		self.putCloseNodeSentinel(v)
 	#@-body
-	#@-node:6::putAtOthersChild
+	#@-node:6:C=14:putAtOthersChild
 	#@+node:7::putRef
 	#@+body
 	def putRef (self,name,v,s,i,delta):
@@ -1966,7 +1971,7 @@ class atFile:
 		return j
 	#@-body
 	#@-node:6::putDoc
-	#@+node:7:C=12:putDocPart
+	#@+node:7:C=15:putDocPart
 	#@+body
 	# Puts a comment part in comments.
 	
@@ -2034,7 +2039,7 @@ class atFile:
 			self.os(self.endSentinelComment)
 			self.onl() # Note: no trailing whitespace.
 	#@-body
-	#@-node:7:C=12:putDocPart
+	#@-node:7:C=15:putDocPart
 	#@+node:8::putIndent
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
@@ -2050,7 +2055,7 @@ class atFile:
 			self.oblanks(n)
 	#@-body
 	#@-node:8::putIndent
-	#@+node:9:C=13:atFile.write
+	#@+node:9:C=16:atFile.write
 	#@+body
 	#@+at
 	#  This is the entry point to the write code.  root should be an @file vnode. We set the orphan and dirty flags if there are 
@@ -2189,7 +2194,7 @@ class atFile:
 			#@-body
 			#@-node:4::<< Replace the target with the temp file if different >>
 	#@-body
-	#@-node:9:C=13:atFile.write
+	#@-node:9:C=16:atFile.write
 	#@+node:10::writeAll
 	#@+body
 	#@+at

@@ -1,3 +1,19 @@
+leo.py 3.2                                     July 30, 2002
+
+This version generalizes the @others directive, improves the Import command and fixes several bugs.  See the children of this node for full details.
+
+The highlights:
+
+- Nested @others directives are now valid, an important improvement.
+  This simplifies files that define more than one class.
+- Improved the Import command and squashed several bugs lurking there.
+- Made the various Go commands in the Outline-Move/Select menu functional
+  by reassigning keyboard shorts
+- Fixed a crasher in the Prefs Panel.
+- Fixed numerous bugs in the Set Colors command.
+- Fixed syntax coloring of C strings that span multiple lines.
+- The usual minor improvements and bug fixes.
+
 leo.py 3.1                                     July 20, 2002
 
 This version fixes a blunder that affects only leo.py 3.0.
@@ -75,9 +91,9 @@ This version fixes some annoying bugs and adds some nice features:
 - Leo now properly highlights the headline of a newly created node.
 - The Edit Headline command now works properly.
   Double and triple clicking in a headline now works as expected.
-- You can now reorganize drag headdlines around.
+- You can now reorganize drag headlines around.
   You must drag from a node's icon and release on another node's icon.
-- You can now open .leo files in leo.py by double cliking on .leo files,
+- You can now open .leo files in leo.py by double clicking on .leo files,
   provided that you associate leo.py with .leo files.
 - Improved error recovery when there are errors writing .leo files.
 - All parts of LeoDocs.leo now match the documentation on Leo's web site.
@@ -87,7 +103,7 @@ leo.py version 2.3                             June 12, 2002
 This version fixes a minor problem with Leo.
 
 - The code that reads and writes @file nodes now uses the directory containing the
- .leo file as a default when the Default Tangle Directory setting is empty in the Prefrences panel.
+ .leo file as a default when the Default Tangle Directory setting is empty in the Preferences panel.
 - The Tangle and Untangle commands have used this convention for a long time.
 - This default allows us to distribute LeoPy.leo without specifying
   a directory in the Preferences Panel.
