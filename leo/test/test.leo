@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6476" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6484" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="70" left="223" height="804" width="946"/>
+	<global_window_position top="44" left="268" height="804" width="943"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -13,7 +13,7 @@
 <v t="ekr.20041121151002.1"><vh>@recentfiles </vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
-<v t="ekr.20041211044607"><vh>@  int page_width = 80</vh></v>
+<v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041213075902"><vh>@font log font</vh></v>
 <v t="ekr.20041217042849"><vh>@font body font</vh></v>
 <v t="ekr.20041217132317"><vh>@strings[a,b,c] stringsTest = c</vh></v>
@@ -438,6 +438,57 @@
 <v t="ekr.20041029111650"><vh>Test of g.app.debugSwitch</vh></v>
 </v>
 <v t="ekr.20041227081159"><vh>test of tab_width &amp; tab_width ivars</vh></v>
+<v t="ekr.20041222060224"><vh>Tests of component</vh>
+<v t="ekr.20041224104337"><vh>packing &amp; unpacking...</vh>
+<v t="ekr.20041224082127"><vh>iconBar...</vh>
+<v t="ekr.20041224082127.1"><vh>unpack iconBar</vh></v>
+<v t="ekr.20041224082127.2"><vh>pack iconBar</vh></v>
+</v>
+<v t="ekr.20041224081744"><vh>statusLine...</vh>
+<v t="ekr.20041224081744.1"><vh>unpack statusLine</vh></v>
+<v t="ekr.20041224081744.2"><vh>pack statusLine</vh></v>
+</v>
+<v t="ekr.20041224081744.3"><vh>splitter1...</vh>
+<v t="ekr.20041222060224.1"><vh>unpack splitter1</vh></v>
+<v t="ekr.20041222060224.2"><vh>pack splitter1</vh></v>
+</v>
+<v t="ekr.20041224081744.4"><vh>body...</vh>
+<v t="ekr.20041223154332"><vh>unpack body</vh></v>
+<v t="ekr.20041223154332.1"><vh>pack body</vh></v>
+</v>
+<v t="ekr.20041224081829"><vh>log...</vh>
+<v t="ekr.20041223162846"><vh>unpack log</vh></v>
+<v t="ekr.20041223162754"><vh>pack log</vh></v>
+</v>
+<v t="ekr.20041224081829.1"><vh>tree...</vh>
+<v t="ekr.20041223162846.1"><vh>unpack tree</vh></v>
+<v t="ekr.20041223162754.1"><vh>pack tree</vh></v>
+</v>
+<v t="ekr.20041224081833"><vh>hull...</vh>
+<v t="ekr.20041224081833.1"><vh>unpack hull (wipes out icon area!)</vh></v>
+<v t="ekr.20041224081833.2"><vh>pack hull</vh></v>
+</v>
+</v>
+<v t="ekr.20041224095444"><vh>Replacing &amp; restoring</vh>
+<v t="ekr.20041224104031"><vh>Body...</vh>
+<v t="ekr.20041224104031.1"><vh>Replace body</vh></v>
+<v t="ekr.20041224104031.2"><vh>Restore body</vh></v>
+</v>
+<v t="ekr.20041225092227"><vh>Tree...</vh>
+<v t="ekr.20041225092227.1"><vh>Replace tree</vh></v>
+<v t="ekr.20041225092227.2"><vh>Restore  tree</vh></v>
+</v>
+<v t="ekr.20041225102217"><vh>Log...</vh>
+<v t="ekr.20041225102217.1"><vh>Replace log</vh></v>
+<v t="ekr.20041225102217.2"><vh>Restore log</vh></v>
+</v>
+<v t="ekr.20041224115905"><vh>Icon bar</vh>
+<v t="ekr.20041224104416"><vh>Replace icon bar</vh></v>
+<v t="ekr.20041224115905.1"><vh>Restore icon bar</vh></v>
+</v>
+</v>
+<v t="ekr.20041223124541"><vh>Trace components</vh></v>
+</v>
 </v>
 <v t="ekr.20041126132604"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -794,12 +845,15 @@
 <v t="ekr.20041019080125"><vh>Report loaded plugins</vh></v>
 <v t="ekr.20041124144944"><vh>print sys.path</vh></v>
 <v t="ekr.20041126035448"><vh>Script to import a file</vh></v>
+<v t="ekr.20041225104159.1"><vh>Create stand-alone settings dialog</vh></v>
 </v>
-<v t="ekr.20041001211817"><vh>Startup...</vh>
+<v t="ekr.20041001211817" a="TV"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 <v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
+<v t="ekr.20041125145818.1"><vh>@button Settings...</vh></v>
+<v t="ekr.20041230121429"><vh>@button pydoc</vh></v>
 </v>
 <v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
@@ -937,7 +991,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
+<v t="ekr.20040716144017" a="E"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
 <v t="ekr.20040716081019"><vh>-input-after</vh></v>
@@ -984,8 +1038,8 @@
 <v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10"><vh>importTests</vh>
-<v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.10" a="E"><vh>importTests</vh>
+<v t="ekr.20040712101754.11" a="E"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
 </v>
@@ -1008,8 +1062,8 @@
 <v t="ekr.20040712101754.15"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.24"><vh>exportTests</vh>
-<v t="ekr.20040712101754.25"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.24" a="E"><vh>exportTests</vh>
+<v t="ekr.20040712101754.25" a="E"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.26"><vh>exportHeadlines</vh>
 <v t="ekr.20040712101754.27"><vh>dialog</vh></v>
 </v>
@@ -1027,7 +1081,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2"><vh>Test .leo files...</vh>
+<v t="ekr.20040712101754.2" a="E"><vh>Test .leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1044,9 +1098,9 @@
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
-<v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
+<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38" a="E"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.40"><vh>extractSection</vh>
 <v t="ekr.20040712101754.41"><vh>before</vh></v>
@@ -1067,9 +1121,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
+<v t="ekr.20040712101754.53" a="E"><vh>@suite Reformat Paragraph Tests</vh>
 <v t="ekr.20040712101754.54"><vh>What I did</vh></v>
-<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20040712101754.55" a="E"><vh>Reformat Paragraph tests</vh>
 <v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
 <v t="ekr.20040712101754.58"><vh>before</vh></v>
@@ -1257,7 +1311,7 @@
 <v t="ekr.20040712101754.184"><vh>@test consistency of p.v.t.vnodeList &amp; v.parents for cloned nodes</vh></v>
 <v t="ekr.20040712101754.185"><vh>@test that cloned nodes actually share subtrees</vh></v>
 </v>
-<v t="ekr.20040712101754.187"><vh>Position tests...</vh>
+<v t="ekr.20040712101754.187" a="E"><vh>Position tests...</vh>
 <v t="ekr.20040712101754.188"><vh>@test p.iters and v.iters</vh>
 <v t="ekr.20040712101754.189"><vh>child1</vh>
 <v t="ekr.20040712101754.190"><vh>a</vh>
@@ -1329,69 +1383,30 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
-<v t="ekr.20041222060224" a="TV"><vh>Tests of component</vh>
-<v t="ekr.20041224104337"><vh>packing &amp; unpacking...</vh>
-<v t="ekr.20041224082127"><vh>iconBar...</vh>
-<v t="ekr.20041224082127.1"><vh>unpack iconBar</vh></v>
-<v t="ekr.20041224082127.2"><vh>pack iconBar</vh></v>
-</v>
-<v t="ekr.20041224081744"><vh>statusLine...</vh>
-<v t="ekr.20041224081744.1"><vh>unpack statusLine</vh></v>
-<v t="ekr.20041224081744.2"><vh>pack statusLine</vh></v>
-</v>
-<v t="ekr.20041224081744.3"><vh>splitter1...</vh>
-<v t="ekr.20041222060224.1"><vh>unpack splitter1</vh></v>
-<v t="ekr.20041222060224.2"><vh>pack splitter1</vh></v>
-</v>
-<v t="ekr.20041224081744.4"><vh>body...</vh>
-<v t="ekr.20041223154332"><vh>unpack body</vh></v>
-<v t="ekr.20041223154332.1"><vh>pack body</vh></v>
-</v>
-<v t="ekr.20041224081829"><vh>log...</vh>
-<v t="ekr.20041223162846"><vh>unpack log</vh></v>
-<v t="ekr.20041223162754"><vh>pack log</vh></v>
-</v>
-<v t="ekr.20041224081829.1"><vh>tree...</vh>
-<v t="ekr.20041223162846.1"><vh>unpack tree</vh></v>
-<v t="ekr.20041223162754.1"><vh>pack tree</vh></v>
-</v>
-<v t="ekr.20041224081833"><vh>hull...</vh>
-<v t="ekr.20041224081833.1"><vh>unpack hull (wipes out icon area!)</vh></v>
-<v t="ekr.20041224081833.2"><vh>pack hull</vh></v>
-</v>
-</v>
-<v t="ekr.20041224095444"><vh>Replacing &amp; restoring</vh>
-<v t="ekr.20041224104031"><vh>Body...</vh>
-<v t="ekr.20041224104031.1"><vh>Replace body</vh></v>
-<v t="ekr.20041224104031.2"><vh>Restore body</vh></v>
-</v>
-<v t="ekr.20041225092227"><vh>Tree...</vh>
-<v t="ekr.20041225092227.1"><vh>Replace tree</vh></v>
-<v t="ekr.20041225092227.2"><vh>Restore  tree</vh></v>
-</v>
-<v t="ekr.20041225102217"><vh>Log...</vh>
-<v t="ekr.20041225102217.1"><vh>Replace log</vh></v>
-<v t="ekr.20041225102217.2"><vh>Restore log</vh></v>
-</v>
-<v t="ekr.20041224115905"><vh>Icon bar</vh>
-<v t="ekr.20041224104416"><vh>Replace icon bar</vh></v>
-<v t="ekr.20041224115905.1"><vh>Restore icon bar</vh></v>
-</v>
-</v>
-<v t="ekr.20041223124541"><vh>Trace components</vh></v>
-</v>
 <v t="ekr.20041225051328"><vh>Tests of at_view plugin</vh>
 <v t="ekr.20041225051328.1"><vh>@clip</vh></v>
 <v t="ekr.20041225051328.2"><vh>@strip c:/prog/test/atSignTest.txt</vh></v>
 <v t="ekr.20041225051445"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
 </v>
-<v t="ekr.20041225104159"><vh>Settings dialogs</vh>
-<v t="ekr.20041213074603"><vh>To do</vh>
-<v t="ekr.20041220102317"><vh>Support for general component settings</vh></v>
+<v t="ekr.20041228135008"><vh>HTML to Browser</vh>
+<v t="ekr.20041228140714"><vh>&lt;&lt; alternate code doesn't work well for me &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041125145818.1"><vh>@button Settings...</vh></v>
-<v t="ekr.20041225104159.1"><vh>Settings dialog</vh></v>
+<v t="ekr.20041229163210" a="M"><vh> htmlize  (dyna plugin)</vh>
+<v t="ekr.20041229164609"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20041229163210.2"><vh>&lt;&lt; init globals &gt;&gt;</vh></v>
+<v t="ekr.20041229170824"><vh>stripSentinels</vh></v>
+<v t="ekr.20041229165956"><vh>sanitize</vh></v>
+<v t="ekr.20041229163210.3" a="M"><vh>class Parser</vh>
+<v t="ekr.20041229163210.4" a="M"><vh>__init__</vh></v>
+<v t="ekr.20041229163210.5"><vh>format</vh></v>
+<v t="ekr.20041229163210.6"><vh>__call__</vh></v>
 </v>
+<v t="ekr.20041229164609.2"><vh>htmlize</vh>
+<v t="ekr.20041229163210.7"><vh>&lt;&lt; colorize with silvercity &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20041230085841"><vh>test that of standalone imports of leo files</vh></v>
+<v t="ekr.20041230090756"><vh>Script to run in Idle</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -9251,7 +9266,7 @@ except OverflowError:
 reload(leoTest)
 
 leoTest.runGc(disable=True)</t>
-<t tx="ekr.20040721153143"></t>
+<t tx="ekr.20040721153143">@language python</t>
 <t tx="ekr.20040721173532">import leoGlobals as g
 c = g.top()
 
@@ -10785,11 +10800,11 @@ if spellpyx:
     if spellFrame:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
 C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\test\test.leo</t>
@@ -10860,24 +10875,6 @@ for fileName in fileNames:
 <t tx="ekr.20041126132604"></t>
 <t tx="ekr.20041130092210"></t>
 <t tx="ekr.20041211044607"></t>
-<t tx="ekr.20041213074603">@ignore
-@killcolor
-
-Major:
-    - Cancel should revert all settings.
-        (Revert doesn't work after a node changes:this is confusing and dangerous.)
-    - Support generalized widget settings (see child node)
-    - Copy expansion state when writing @settings trees.
-    - Handle undo/redo properly.
-
-Minor:
-    - Remove label in settings pane.
-    - Make sure comment area is always visible.
-    - Disable all commands while in dialog.
-    - Print changes to log.
-    - Unit tests: there are too many cases to test by hand.
-    - move findCorrespondingNode into leoNodes class.
-    - Fix bug: findSettingsRoot doesn't work if no summary node.</t>
 <t tx="ekr.20041213075902"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
 # 
@@ -11028,25 +11025,6 @@ Calling apply() is different from just calling function(args), since in that cas
 
 Deprecated since release 2.3. Use the extended call syntax instead, as described above.
 </t>
-<t tx="ekr.20041220102317">@list name
-    - name specifies the component to configure.
-    - parser creates a list of name,kind,value tuples from the body.
-
-Leo's core would support one 'name' for:
-    each Tk widget,
-    each Pmw megawidget,
-    each megawidget component.
-
-Examples:
-    headline:
-        @list outline_canvas_settings
-    body:
-        height,int,1
-        text,string,my widget
-
-g.setGeneralTkSetting(widget,setting_name) would do the following:
-    - get the setting_name and the associated list of tuples/bunches from the config class.
-    - safely set the widget's setting using the settings list as is done in the prototype code.</t>
 <t tx="ekr.20041220165048"></t>
 <t tx="ekr.20041220172118">@ignore</t>
 <t tx="ekr.20041220172118.1">@nocolor
@@ -11289,7 +11267,6 @@ c.frame.replaceLogPaneWithComponent('newLog')</t>
 c = g.top()
 
 c.frame.replaceLogPaneWithComponent('log')</t>
-<t tx="ekr.20041225104159"></t>
 <t tx="ekr.20041225104159.1">''' Replace the outline and body panes by a settings outline and settings widgets respectively'''
 
 import leoGlobals as g
@@ -11306,5 +11283,417 @@ print c
 print 'use_plugins',c.use_plugins
 print 'tab_width',c.tab_width
 print 'page_width',c.page_width</t>
+<t tx="ekr.20041228135008">@language python
+@tabwidth -4
+
+import leoGlobals as g
+import webbrowser
+
+if 0:
+    &lt;&lt; alternate code doesn't work well for me &gt;&gt;
+
+def showHtml(html):
+    '''Display html in a web browser'''
+    fileName = g.os_path_join(g.app.loadDir,'..','test','leoTemp.html')
+    f = file(fileName,'w')
+    f.write(html)
+    f.close()
+    webbrowser.open(fileName)
+    
+# Display the selected node in the browser.
+c = g.top()
+showHtml('&lt;pre&gt;%s&lt;/pre&gt;' % c.currentPosition().bodyString())
+
+# To do: use a stylesheet to colorize the code.</t>
+<t tx="ekr.20041228140714"># http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/347810
+import BaseHTTPServer
+
+def showHtml(html):
+    """Display html in the default web browser without creating a temp file.
+
+    Instantiates a trivial http server and calls webbrowser.open with a URL
+    to retrieve html from that server.
+    """
+
+    class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+        def do_GET(self):
+            g.trace(html)
+            bufferSize = 1024*1024
+            for i in xrange(0, len(html), bufferSize):
+                self.wfile.write(html[i:i+bufferSize])
+
+    server = BaseHTTPServer.HTTPServer(('127.0.0.1',0), RequestHandler)
+    webbrowser.open('http://127.0.0.1:%s' % server.server_port)
+    server.handle_request()</t>
+<t tx="ekr.20041229163210">'''A script to send the colorized text of a script to the default web browser.
+
+Based on a dynascript by 'e'.'''
+
+@language python
+@tabwidth -4
+
+# To do: show directives if stripdirectives is False.
+
+&lt;&lt; imports &gt;&gt;
+
+hopts = {
+  'stripcomments':  False,
+  'stripsentinals': True,
+  'stripnodesents': False, # False: leave node sentinels.
+  'stripdirectives':False, # Not used.
+  'noNUMBER':       False,
+  'noOP':           False,
+  'noNAME':         True,  
+  'timestring':     '' # time.strftime('%m/%d/%Y %H:%M.%S'),
+}
+
+&lt;&lt; init globals &gt;&gt;
+
+c = g.top() ; p = c.currentPosition()
+
+filename = g.os_path_join(g.app.loadDir,'..','test','leoTemp.html')
+
+@others
+
+htmlize(c,p)</t>
+<t tx="ekr.20041229163210.2">_KEYWORD = token.NT_OFFSET + 1
+_TEXT    = token.NT_OFFSET + 2
+
+_colors = {
+    token.NUMBER:     '#483D8B', #black/darkslateblue
+    token.OP:         '#000080', #black/navy
+    token.STRING:     '#00AA00', #green 00cc66
+    tokenize.COMMENT: '#DD0000', #red cc0033
+    token.NAME:       '#4B0082', #black/indigo
+    token.ERRORTOKEN: '#FF8080', #redred bare null does it
+    _KEYWORD:         '#0066ff', #blue
+    _TEXT:            '#000000', #black /is text fg color too
+    '_LeoDir':        '#228B22', #directive, forest comment
+    '_LeoSen':        '#BC8F8F', #sentinal, tan fade comment
+    'bg':             '#FFFAFA', #snow
+}
+
+if hopts['noNUMBER']: del _colors[token.NUMBER]
+if hopts['noOP']:     del _colors[token.OP]
+if hopts['noNAME']:   del _colors[token.NAME]</t>
+<t tx="ekr.20041229163210.3">class Parser(object):
+    """ prep the source for any language
+        parse and Send colored python source.
+    """
+    @others</t>
+<t tx="ekr.20041229163210.4">def __init__(self,lang,raw,title):
+    """ Store the source text."""
+
+    self.title = title
+    self.raw = raw.strip().expandtabs(4)
+
+    if lang == 'python':
+        cmtdelim = '#'
+    else:
+        d = g.scanDirectives(c, p) 
+        cmtdelim = d.get('delims',['#'])
+        cmtdelim = cmtdelim[0] or cmtdelim[1]
+    
+    self.fnd = re.compile(r"%s@\s*@+."%(cmtdelim,) )
+
+    if hopts['stripsentinals']: 
+        # have to add option to strip all comments as well
+        self.raw = stripSentinels(self.raw)</t>
+<t tx="ekr.20041229163210.5">def format(self,formatter,form):
+    """ Parse and send the colored source."""
+
+    # store line offsets in self.lines
+    self.lines = [0,0]
+    pos = 0
+    while 1:
+        pos = self.raw.find('\n',pos) + 1
+        if not pos: break
+        self.lines.append(pos)
+    self.lines.append(len(self.raw))
+    self.pos = 0
+    text = cStringIO.StringIO(self.raw)
+    sys.stdout.write('&lt;html&gt;&lt;head&gt;&lt;title&gt;')
+    sys.stdout.write('%s &lt;/title&gt;\n'%(sanitize(self.title), ))
+
+    #here would be a good spot for @noindent directive but skip a line
+    s = """&lt;STYLE TYPE="text/css"&gt;&lt;!--
+pre, H1 {color:%s; FONT-SIZE: 80%%; FONT-WEIGHT: bold; }
+Text {background:%s;}
+--&gt;&lt;/STYLE&gt;
+&lt;SCRIPT LANGUAGE="JavaScript"&gt;
+&lt;!-- //
+//--&gt;
+&lt;/SCRIPT&gt;""" % (_colors[_TEXT],_colors['bg'])
+
+    sys.stdout.write(s)
+    sys.stdout.write('&lt;/head&gt;&lt;body text="%s" bgColor="%s"&gt;' % (_colors[_TEXT],_colors['bg']))
+    sys.stdout.write('&lt;H3&gt;# %s&lt;/H3&gt;\n'%self.title)
+    sys.stdout.write('&lt;pre&gt;')  # style
+    sys.stdout.write('&lt;font face="Lucida,Courier New"&gt;')
+    # parse the source and write it
+    try:
+        tokenize.tokenize(text.readline,self)
+    except tokenize.TokenError, ex:
+        msg = ex[0]
+        line = ex[1][0]
+        print "&lt;h3&gt;ERROR: %s&lt;/h3&gt;%s" % (msg, self.raw[self.lines[line]:])
+    sys.stdout.write('&lt;/font&gt;&lt;/pre&gt;')
+    sys.stdout.write('&lt;/body"&gt;&lt;/html&gt;')</t>
+<t tx="ekr.20041229163210.6">def __call__(self, toktype, toktext, (srow,scol), (erow,ecol), line):
+
+    """ Token handler."""
+
+    if 0: print "type", toktype, token.tok_name[toktype], "text",\
+            toktext, "start", srow,scol, "end", erow,ecol, "&lt;br&gt;"
+
+    # calculate new positions
+    oldpos = self.pos
+    newpos = self.lines[srow] + scol
+    self.pos = newpos + len(toktext)
+
+    # handle newlines
+    if toktype in [token.NEWLINE, tokenize.NL]:
+        print
+        return
+
+    style = ''
+    if toktype == tokenize.COMMENT:
+        if toktext.lstrip().startswith('#@'):
+            if self.fnd.findall(toktext):
+                toktype = '_LeoDir'
+            else:
+                toktype = '_LeoSen'
+
+    # Send the original whitespace.
+    if newpos &gt; oldpos:
+        sys.stdout.write(self.raw[oldpos:newpos])
+
+    # Skip indenting tokens.
+    if toktype in [token.INDENT,token.DEDENT]:
+        self.pos = newpos
+        return
+
+    # Map token type to a color group
+    if token.LPAR &lt;= toktype and toktype &lt;= token.OP:
+        toktype = token.OP
+    elif toktype == token.NAME and keyword.iskeyword(toktext):
+        toktype = _KEYWORD
+    if toktype == token.ERRORTOKEN:
+        style = ' style="border: solid 1.5pt #FF0000;"'
+
+    dofont = True
+    try:
+        color = _colors[toktype]
+    except Exception:
+        dofont = False
+
+    if dofont: sys.stdout.write('&lt;font color="%s"%s&gt;' % (color, style))
+    sys.stdout.write(cgi.escape(toktext))
+    if dofont: sys.stdout.write('&lt;/font&gt;')</t>
+<t tx="ekr.20041229163210.7">if lang in [ # Leo may not have all of these yet
+    'csharp', 'c', 'c++', 'cpp', # (C and C++)
+    'css', # (Cascading Style Sheets)
+    'htm', 'html', # HTML/PHP w/ JavaScript, VBScript, Python
+    'plain', #null (No styling)
+    'perlpod', 'perl', # (Perl)
+    #'python', # (Python)
+    'ruby', # (Ruby)
+    'smart_python', # (Python with styled strings)
+    'sql', # (SQL)
+    'xml', # (XML)
+    'xslt', # (XSLT)
+    'yaml', # (YAML)
+    # basic &amp; java? missing. might send java as c?
+    'elisp', 'php', 'java', 'rapidq', 'actionscript', 'css',
+]:
+    if lang in ('htm','html','php','java','rapidq','actionscript', 'css'):
+        lang = 'html'
+    elif lang in ['c','c++','cpp']: lang = 'cpp'
+    elif lang in ['perlpod','perl']: lang = 'perl'
+    elif lang in ['elisp',]: lang = 'perl'
+    if lang in ('plain',None): lang = 'null'
+
+    g.es('writing tmpname', tmpfile )
+    fo = file(tmpfile, 'w')
+    fo.writelines(pars.raw + "\n")
+    fo.close()
+    
+    cmd = g.os_path_join(pypath, 'Scripts', 'source2html.py')
+
+    # Send the output to stdout
+    #" --view %N  %N.html"
+    # --css=file copy silver_city.css where the filename will be
+    # source2html.py --list-generators
+    params = ' --generator=%s --title=%s --css=silver_city.css %s'%(
+       lang, sanitize_(title), tmpfile,)  
+
+    if not g.os_path_exists(cmd):
+        g.es('cant find source2html install silvercity')
+        print 'cant find source2html from silvercity'
+    else:
+        g.es('running silvercity \n', py + cmd + params )
+        out, err = runcmd(py + cmd + params )
+        for x in (out + err).splitlines():
+            print x
+else:
+    print '&lt;i&gt;not a known htmlize supported language&lt;/i&gt;'
+    #might have to do a sequential dump of nodes, or @rst?
+    #is title and first headline set the same for all options?
+    print '&lt;Pre&gt;'    
+    print pars.raw
+    print '&lt;/Pre&gt;'</t>
+<t tx="ekr.20041229164609">import leoGlobals as g
+
+import cgi
+import cStringIO
+import keyword
+import os
+import re
+import sys
+import time
+import token
+import tokenize
+import webbrowser</t>
+<t tx="ekr.20041229164609.2">def htmlize(c,p):
+    lang = g.scanForAtLanguage(c,p)
+    lang = str(lang).lower()
+    source = g.getScript(c,p)
+    timestring = hopts['timestring']
+    # title = "%s Leo %s script %s" % (p.headString()[:75],lang,timestring)
+    title = "%s %s" % (p.headString()[:75],timestring)
+    try:
+        if not source: raise ValueError
+        g.es('output', lang, p.headString())
+        theParser = Parser(lang,source,title)
+        sys.stdout = open(filename,'wb') 
+        if lang == 'python':
+            theParser.format(None,None)
+        else:
+            &lt;&lt; colorize with silvercity &gt;&gt;
+        sys.stdout.close()
+        sys.stdout = sys.__stdout__
+        webbrowser.open(filename, new= 1)
+    except ValueError:
+        g.es('no @path set, unsupported lang or empty script',color='tomato')
+        g.es(lang, p.headString())
+    except Exception:
+        g.es('htmlize malfunction?', color='tomato')
+        g.es_exception(full= True)</t>
+<t tx="ekr.20041229165956">def sanitize(s):
+    
+    """Leo's sanitize_filename is too aggressive and too lax."""
+
+    if not s: return
+
+    res = re.compile(
+        r"""[|\\ /!@=\#\$%,\x5E&amp;\x3F:;.\x22\x27&lt;&gt;`~\*\+\t\n\f\r\b\a]""",
+        re.IGNORECASE | re.VERBOSE)
+
+    # should test for unicode before str()
+    return res.sub('_', str(s.strip())).replace('__','_')[:128]</t>
+<t tx="ekr.20041229170824">def stripSentinels(s):
+
+    '''Strip sentinal lines from s.'''
+    
+    lines = s.splitlines()
+    result = [] ; verbatim = False
+    tag1 = '#@+node:'
+    tag2 = '#@-node:'
+    n = len(tag1)
+
+    for line in lines:
+        s = line.strip()
+        if verbatim:
+            result.append(line)
+            verbatim = False
+        elif s.startswith('#@verbatim'):
+            verbatim = True
+        elif s.startswith(tag1):
+            if not hopts['stripnodesents']:
+                i = line.find(tag1)
+                result.append(line[:i] + '#@+' + line[i+n:].strip())
+        elif s.startswith(tag2):
+            if not hopts['stripnodesents']:
+                i = line.find(tag2)
+                result.append(line[:i] + '#@-' + line[i+n:].strip())
+        elif not s.startswith('#@'):
+            result.append(line)
+
+    return '\n'.join(result)</t>
+<t tx="ekr.20041230085841">import leoGlobals as g
+import glob,sys,traceback
+
+def printModules():
+    mods = sys.modules.keys()
+    mods.sort()
+    for mod in mods: print mod
+
+def leoModules():
+    files = glob.glob(r'%s\*.py' % g.app.loadDir)
+    modules = []
+    for file in files:
+        path,file = g.os_path_split(file)
+        module,ext = g.os_path_splitext(file)
+        if g.match(module,0,'leo'):
+            modules.append(module)
+    return modules
+            
+def delLeoModules():
+    for module in leoModules():
+        if module in sys.modules:
+            del sys.modules[module]
+
+def test():
+    for module in leoModules():
+        print module
+        exec 'import %s' % module in {},{}
+        del sys.modules[module]
+    
+delLeoModules()        
+test()
+# printModules()</t>
+<t tx="ekr.20041230090756">def test():
+    '''Tests whether all files can be imported.'''
+    import glob, os, sys, traceback
+    dir = r'c:\prog\leoCVS\leo\src'
+    files = glob.glob(r'%s\*.py' % dir)
+    modules = []
+    for file in files:
+        path,file = os.path.split(file)
+        module,ext = os.path.splitext(file)
+        if module[:3] == 'leo':
+            modules.append(module)
+    for module in modules:
+        print module
+        try:
+            exec 'import %s' % module in {},{}
+            del sys.modules[module]
+        except:
+            traceback.print_exc()
+            
+def printModules():
+    import sys
+    mods = sys.modules.keys()
+    mods.sort()
+    for mod in mods: print mod
+    
+</t>
+<t tx="ekr.20041230121429">import leoGlobals as g
+import os
+import sys
+import threading
+
+python = sys.executable
+pythonDir,junk = g.os_path_split(python)
+pydoc = g.os_path_join(pythonDir,'Lib','pydoc.py')
+command = '%s %s -g' % (python,pydoc)
+
+# Must exec this in a separate thread.
+
+def go():
+    os.system(command)
+    
+t = threading.Thread(target=go)
+t.start()</t>
 </tnodes>
 </leo_file>
