@@ -2626,7 +2626,7 @@ class atFile:
 				#@+body
 				assert(self.outputFile == None)
 				
-				if os.path.exists(self.targetFileName):
+				if os.path.exists(self.targetFileName): 
 					if filecmp.cmp(self.outputFileName, self.targetFileName):
 						try: # Just delete the temp file.
 							os.remove(self.outputFileName)
@@ -2636,8 +2636,10 @@ class atFile:
 						es("unchanged: " + self.shortFileName)
 					else:
 						try: # 10/3/02: retain the access mode of the previous file.
-							mode = os.access(self.targetFileName)
+							# 10/6/02: add required second param.
+							mode = os.access(self.targetFileName, os.R_OK | os.W_OK | os.X_OK)
 						except:  # does not exist on all platforms.
+							traceback.print_exc()
 							mode = None
 						try: # Replace target file with temp file.
 							os.remove(self.targetFileName)

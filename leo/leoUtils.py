@@ -1655,7 +1655,7 @@ def update_file_if_changed(file_name,temp_name):
 			es("unchanged: " + file_name)
 		else:
 			try: # 10/3/02: retain the access mode of the previous file.
-				mode = os.access(file_name) # does not exist on all platforms.
+				mode = os.access(file_name, os.R_OK | os.W_OK | os.X_OK) # does not exist on all platforms.
 			except:
 				mode = None
 			try: # Replace file with temp file.
