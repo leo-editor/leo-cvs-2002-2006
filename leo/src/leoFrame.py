@@ -18,15 +18,15 @@ class baseLeoFrame:
 	instances = 0
 	#@	@+others
 	#@+node:f.__init__
-	def __init__(self,commander=None,title=None): # new commander arg.
+	def __init__(self,title):
 	
-		trace("LeoFrame",commander,title)
+		# trace("LeoFrame")
 	
-		Tk = Tkinter
+		self.title = title
 		LeoFrame.instances += 1
+	
 		#@	<< set the LeoFrame ivars >>
 		#@+node:<< set the LeoFrame ivars >>
-		self.title = title
 		self.stylesheet = None # The contents of <?xml-stylesheet...?> line.
 		
 		# These are set the first time a panel is opened.
@@ -37,7 +37,6 @@ class baseLeoFrame:
 		self.comparePanel = None
 			
 		self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
-		self.title=title # Title of window, not including dirty mark
 		self.saved=false # True if ever saved
 		self.startupWindow=false # True if initially opened window
 		self.openDirectory = ""
@@ -46,7 +45,6 @@ class baseLeoFrame:
 		self.splitVerticalFlag,self.ratio,self.secondary_ratio = self.initialRatios()
 		
 		# Created in createLeoFrame and its allies.
-		self.commands = None
 		self.tree = None
 		self.f1 = self.f2 = None
 		self.log = None  ; self.logBar = None
@@ -79,25 +77,32 @@ class baseLeoFrame:
 		#@nonl
 		#@-node:<< set the LeoFrame ivars >>
 		#@nl
-		self.top = top = Tk.Toplevel()
+	#@nonl
+	#@-node:f.__init__
+	#@+node:f.finishCreate
+	def finishCreate (self,c):
+		
+		Tk = Tkinter
+		frame = self ; frame.commands = c
+		frame.top = top = Tk.Toplevel()
+		
 		if 0: # No longer needed now that Leo never creates more than one Leo frame on startup.
 			top.withdraw()
+	
 		attachLeoIcon(top)
 		
 		if sys.platform=="win32":
-			self.hwnd = top.frame()
-			# trace("__init__", "frame.__init__: self.hwnd:" + `self.hwnd`)
+			frame.hwnd = top.frame()
+			# trace("__init__", "frame.__init__: frame.hwnd:" + `frame.hwnd`)
 	
-		top.title(title)
+		top.title(frame.title)
 		top.minsize(30,10) # In grid units. This doesn't work as I expect.
+	
+		frame.createLeoFrame(top)
+		c.body = frame.body ## To be deleted.
 		
-		self.createLeoFrame(top)
-		if commander is None:
-			self.commands = c = leoCommands.Commands(self)
-		else:
-			self.commands = c = commander
-		self.tree = leoTree.leoTree(self.commands, self.canvas)
-		self.setTabWidth(c.tab_width)
+		frame.tree = leoTree.leoTree(c,frame,frame.canvas)
+		frame.setTabWidth(c.tab_width)
 		#@	<< create the first tree node >>
 		#@+node:<< create the first tree node >>
 		t = leoNodes.tnode()
@@ -115,71 +120,51 @@ class baseLeoFrame:
 		#@nl
 		v = c.currentVnode()
 		if not doHook("menu1",c=c,v=v):
-			self.createMenuBar(top)
-		app.setLog(self,"frame.__init__") # the LeoFrame containing the log
-		app.windowList.append(self)
+			frame.createMenuBar(top)
+		app.setLog(frame,"frame.__init__") # the LeoFrame containing the log
+		app.windowList.append(frame)
 		# Sign on.
 		color = app.config.getWindowPref("log_error_color")
 		es("Leo Log Window...",color=color)
 		es("Leo 4.0 beta 2, ",newline=0)
 		n1,n2,n3,junk,junk=sys.version_info
 		ver1 = "Python %d.%d.%d" % (n1,n2,n3)
-		ver2 = ", Tk " + self.top.getvar("tk_patchLevel")
+		ver2 = ", Tk " + frame.top.getvar("tk_patchLevel")
 		es(ver1 + ver2) ; enl()
 		
-		self.top.protocol("WM_DELETE_WINDOW", self.OnCloseLeoEvent)
-		self.top.bind("<Button-1>", self.OnActivateLeoEvent)
+		frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
+		frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
 		
-		self.top.bind("<Activate>", self.OnActivateLeoEvent) # Doesn't work on windows.
-		self.top.bind("<Deactivate>", self.OnDeactivateLeoEvent) # Doesn't work on windows.
+		frame.top.bind("<Activate>", frame.OnActivateLeoEvent) # Doesn't work on windows.
+		frame.top.bind("<Deactivate>", frame.OnDeactivateLeoEvent) # Doesn't work on windows.
 	
-		self.top.bind("<Control-KeyPress>",self.OnControlKeyDown)
-		self.top.bind("<Control-KeyRelease>",self.OnControlKeyUp)
+		frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
+		frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
 		
-		self.tree.canvas.bind("<Button-1>", self.OnActivateTree)
-		self.log.bind("<Button-1>", self.OnActivateLog)
+		frame.tree.canvas.bind("<Button-1>", frame.OnActivateTree)
+		frame.log.bind("<Button-1>", frame.OnActivateLog)
 		
-		self.body.bind("<Button-1>", self.OnBodyClick)
-		self.body.bind("<Button-3>", self.OnBodyRClick)
-		self.body.bind("<Double-Button-1>", self.OnBodyDoubleClick)
-		self.body.bind("<Key>", self.tree.OnBodyKey)
+		frame.body.bind("<Button-1>", frame.OnBodyClick)
+		frame.body.bind("<Button-3>", frame.OnBodyRClick)
+		frame.body.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
+		frame.body.bind("<Key>", frame.tree.OnBodyKey)
 	
-		self.body.bind(virtual_event_name("Cut"), self.OnCut)
-		self.body.bind(virtual_event_name("Copy"), self.OnCopy)
-		self.body.bind(virtual_event_name("Paste"), self.OnPaste)
-		
-		# print_bindings("body",self.body)
-		
+		frame.body.bind(virtual_event_name("Cut"), frame.OnCut)
+		frame.body.bind(virtual_event_name("Copy"), frame.OnCopy)
+		frame.body.bind(virtual_event_name("Paste"), frame.OnPaste)
+	
 		# Handle mouse wheel in the outline pane.
 		if sys.platform == "linux2": # This crashes tcl83.dll
-			self.tree.canvas.bind("<MouseWheel>", self.OnMouseWheel)
+			frame.tree.canvas.bind("<MouseWheel>", frame.OnMouseWheel)
 			
-		## Should be in commander...
-		# Remove the initially selected node from the list.
-		c.beadPointer = -1
-		c.beadList = []
-		c.visitedList = []
-		doHook("after-create-leo-frame",c=c)
+		# print_bindings("canvas",frame.tree.canvas)
 	#@nonl
-	#@-node:f.__init__
+	#@-node:f.finishCreate
 	#@+node:f.__repr__
 	def __repr__ (self):
 	
-		return "<leoFrame: %s>" % (self.title)
+		return "<leoFrame: %s>" % self.title
 	#@-node:f.__repr__
-	#@+node:f.get/setWindowTitle
-	def getWindowTitle (self):
-		return self.title
-	
-	def setWindowTitle (self,fileName):
-		
-		path,fn = os.path.split(fileName)
-		if path:
-			self.title = fn + " in " + path
-		else:
-			self.title = fn
-	#@nonl
-	#@-node:f.get/setWindowTitle
 	#@+node:f.clearAllIvars
 	def clearAllIvars(self):
 		
@@ -349,7 +334,7 @@ class baseLeoFrame:
 				#@			<< Put up a file save dialog to set mFileName >>
 				#@+node:<< Put up a file save dialog to set mFileName >>
 				# Make sure we never pass None to the ctor.
-				if not self.title:
+				if not c.title:
 					self.title = ""
 					
 				c.mFileName = tkFileDialog.asksaveasfilename(
@@ -589,7 +574,7 @@ class baseLeoFrame:
 	# Coloring...
 	def getColorizer(self): return self.tree.colorizer
 	def recolor_now(self,v): return self.tree.recolor_now(v)
-	def recolor_range(self,leading,trailing): return self.tree.recolor_range(leading,trailing)
+	def recolor_range(self,v,leading,trailing): return self.tree.recolor_range(v,leading,trailing)
 	def recolor(self,v): return self.tree.recolor(v)
 	def updateSyntaxColorer(self,v): return self.tree.colorizer.updateSyntaxColorer(v)
 	
@@ -605,7 +590,7 @@ class baseLeoFrame:
 	def editVnode(self): return self.tree.editVnode  
 	def endEditLabel(self): return self.tree.endEditLabel()
 	def setEditVnode(self,v): self.tree.editVnode = v
-	def setNormalLabelSTate(self,v): return self.tree.setNormalLabelState(v)
+	def setNormalLabelState(self,v): return self.tree.setNormalLabelState(v)
 	
 	# Focus...
 	def focus_get(self): return self.tree.canvas.focus_get()
@@ -807,6 +792,8 @@ class baseLeoFrame:
 	# On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
 	
 	def OnMouseWheel(self, event=None):
+		
+		trace()
 	
 		try:
 			if event.delta < 1:
@@ -1606,11 +1593,7 @@ class baseLeoFrame:
 	#@+node:OnNew
 	def OnNew (self,event=None):
 	
-		if 0: # Not ready yet.
-			c,frame = app.gui.newLeoCommanderAndFrame()
-		else:
-			frame = LeoFrame(commander=None,title=None)
-			c = frame.commands
+		c,frame = app.gui.newLeoCommanderAndFrame(fileName=None)
 		top = frame.top
 		
 		# 5/16/03: Needed for hooks.
@@ -1918,7 +1901,7 @@ class baseLeoFrame:
 			# 7/2/02: don't change mFileName until the dialog has suceeded.
 			c.mFileName = ensure_extension(fileName, ".leo")
 			self.title = c.mFileName
-			self.top.title(self.setWindowTitle(c.mFileName)) # 3/25/03
+			self.top.title(computeWindowTitle(c.mFileName)) # 3/25/03
 			c.fileCommands.save(c.mFileName)
 			self.updateRecentFiles(c.mFileName)
 	#@nonl
@@ -1942,7 +1925,7 @@ class baseLeoFrame:
 			# 7/2/02: don't change mFileName until the dialog has suceeded.
 			c.mFileName = ensure_extension(fileName, ".leo")
 			self.title = c.mFileName
-			self.top.title(self.setWindowTitle(c.mFileName)) # 3/25/03
+			self.top.title(computeWindowTitle(c.mFileName)) # 3/25/03
 			self.commands.fileCommands.saveAs(c.mFileName)
 			self.updateRecentFiles(c.mFileName)
 	#@nonl
@@ -2078,7 +2061,7 @@ class baseLeoFrame:
 	#@+node:createRecentFilesMenuItems
 	def createRecentFilesMenuItems (self):
 		
-		f = self
+		f = self ; c = f.commands
 		recentFilesMenu = f.getMenu("Recent Files...")
 		
 		# Delete all previous entries.
@@ -2094,7 +2077,7 @@ class baseLeoFrame:
 		i = 3
 		for name in f.recentFiles:
 			callback = lambda f=f,name=name:f.OnOpenRecentFile(name)
-			label = "%d %s" % (i-2,self.setWindowTitle(name))
+			label = "%d %s" % (i-2,computeWindowTitle(name))
 			recentFilesMenu.add_command(label=label,command=callback,underline=0)
 			i += 1
 	#@nonl
@@ -2112,11 +2095,7 @@ class baseLeoFrame:
 			
 		try:
 			file = open(fileName,'r')
-			if 0: # Not ready yet.
-				c,frame = app.gui.newLeoCommanderAndFrame(fileName)
-			else:
-				frame = LeoFrame(commander=None,title=fileName)
-				c = frame.commands
+			c,frame = app.gui.newLeoCommanderAndFrame(fileName)
 			frame.top.deiconify()
 			frame.top.lift()
 			app.root.update() # Force a screen redraw immediately.

@@ -263,6 +263,20 @@ class Bunch:
 		
 		
 #@-node:class Bunch
+#@+node:computeWindowTitle
+def computeWindowTitle (fileName):
+
+	if fileName == None:
+		return "untitled"
+	else:
+		path,fn = os.path.split(fileName)
+		if path:
+			title = fn + " in " + path
+		else:
+			title = fn
+		return title
+#@nonl
+#@-node:computeWindowTitle
 #@+node:set_delims_from_language
 # Returns a tuple (single,start,end) of comment delims
 
@@ -721,11 +735,7 @@ def openWithFileName(fileName,old_c=None):
 	try:
 		file = open(fileName,'r')
 		if file:
-			if 0: # Not ready yet.
-				c,frame = app.gui.newLeoCommanderAndFrame(fileName)
-			else:
-				frame = LeoFrame(commander=None,title=fileName)
-				c = frame.commands
+			c,frame = app.gui.newLeoCommanderAndFrame(fileName)
 			if not doHook("open1",
 				old_c=old_c,new_c=c,fileName=fileName):
 				app.setLog(frame,"OpenWithFileName") # 5/12/03

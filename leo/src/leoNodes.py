@@ -580,7 +580,7 @@ class baseVnode:
 		try:
 			v = self ; c = v.commands
 			if not doHook("icondclick1",c=c,v=v,event=event):
-				c.frame.OnIconDoubleClick(self)
+				c.frame.OnIconDoubleClick(v,event)
 			doHook("icondclick2",c=c,v=v,event=event)
 		except:
 			es_event_exception("icondclick")

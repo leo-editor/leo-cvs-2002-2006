@@ -109,15 +109,18 @@ class baseLeoTree:
 	callbacksInjected = false
 	#@	@+others
 	#@+node:tree.__init__
-	def __init__(self,commands,canvas):
+	def __init__(self,commands,frame,canvas):
 	
 		# Objects associated with this tree.
-		self.colorizer = leoColor.colorizer(commands)
 		self.commands = commands
 		self.canvas = canvas
+		self.frame = frame
+		self.colorizer = leoColor.colorizer(commands)
+		
+		# State info.
 		self.rootVnode = None
 		self.topVnode = None
-		
+	
 		# Miscellaneous info.
 		self.iconimages = {} # Image cache set by getIconImage().
 		self.active = false # true if tree is active
@@ -167,7 +170,7 @@ class baseLeoTree:
 			# Non-incremetal drawing allocates all visible nodes once.
 			
 		if self.allocateOnlyVisibleNodes:
-			self.commands.frame.bar1.bind("<B1-ButtonRelease>", self.redraw)
+			self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw)
 		
 		if not leoTree.callbacksInjected:
 			leoTree.callbacksInjected = true
@@ -602,6 +605,7 @@ class baseLeoTree:
 			return
 	
 		# trace()
+		# print_bindings("canvas",self.canvas)
 	
 		self.expandAllAncestors(self.currentVnode)
 		oldcursor = self.canvas['cursor']
@@ -1123,6 +1127,10 @@ class baseLeoTree:
 	def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
 		
 		"""Update the body pane at idle time."""
+	
+		if 0:
+			if ch: trace(ch,ord(ch))
+			else: trace(`ch`)
 	
 		c = self.commands
 		if not c or not v or v != c.currentVnode():

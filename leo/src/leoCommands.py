@@ -8,13 +8,14 @@ import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
 class baseCommands:
 	"""The base class for Leo's main commander."""
 	#@	@+others
-	#@+node:c.__init__, initIvars, finishCreate: Problems initing before frame is created.
-	def __init__(self,frame):
+	#@+node:c.__init__, initIvars
+	def __init__(self,frame,fileName):
 		
-		trace("Commands",frame)
+		# trace("Commands",fileName)
 	
 		self.frame = frame
-		self.initIvars(frame)
+		self.mFileName = fileName
+		self.initIvars()
 	
 		# initialize the sub-commanders
 		self.fileCommands = leoFileCommands.fileCommands(self)
@@ -23,25 +24,10 @@ class baseCommands:
 		self.tangleCommands = leoTangle.tangleCommands(self)
 			# tangle subcommander uses self.frame.mFilename
 		self.undoer = leoUndo.undoer(self)
-			# undoer subcommander uses self.frame.getMenu
 	
-	def initIvars(self, frame):
+	def initIvars(self):
 		#@	<< initialize ivars >>
 		#@+node:<< initialize ivars >>
-		# Set the window title and fileName
-		title = frame.getWindowTitle()
-		if title:
-			self.mFileName = title
-			self.frame.setWindowTitle(title)
-		else:
-			title = "untitled"
-			n = app.numberOfWindows
-			if n > 0:
-				title += `n`
-			self.frame.setWindowTitle(title)
-			app.numberOfWindows = n+1
-			self.mFileName = ""
-		
 		# per-document info...
 		self.hookFunction = None
 		self.openDirectory = None # 7/2/02
@@ -50,13 +36,6 @@ class baseCommands:
 		self.expansionNode = None # The last node we expanded or contracted.
 		self.changed = false # true if any data has been changed since the last save.
 		self.loading = false # true if we are loading a file: disables c.setChanged()
-		
-		# copies of frame info
-		if frame: # To be moved into c.finishCreate...
-			self.body = frame.body
-			# self.canvas = frame.canvas
-		else:
-			self.body = None
 		
 		# For tangle/untangle
 		self.tangle_errrors = 0
@@ -82,12 +61,8 @@ class baseCommands:
 		#@nonl
 		#@-node:<< initialize ivars >>
 		#@nl
-		
-	def finishCreate(self,frame):
-		trace(frame)
-		self.body = frame.body
 	#@nonl
-	#@-node:c.__init__, initIvars, finishCreate: Problems initing before frame is created.
+	#@-node:c.__init__, initIvars
 	#@+node:c.__repr__ & __str__
 	def __repr__ (self):
 		

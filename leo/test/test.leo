@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2175" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2178" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="41" left="262" height="835" width="981"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -264,9 +264,9 @@
 <v t="T163"><vh>Ý</vh></v>
 </v>
 <v t="T164"><vh>Script to find which modules define names</vh></v>
-<v t="T165"><vh>4.0 Test files</vh>
+<v t="T165" a="E"><vh>4.0 Test files</vh>
 <v t="T166"><vh>Script to compare 3.x and 4.x derived files</vh></v>
-<v t="T167"><vh>Test Files...</vh>
+<v t="T167" a="EV"><vh>Test Files...</vh>
 <v t="T168" a="C"><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
 <v t="T169" tnodeList="169,170,170"><vh>@file c:\prog\test\atRawTest.txt</vh>
 <v t="T170"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
@@ -2718,8 +2718,8 @@
 </v>
 </v>
 </v>
-<v t="T2165" a="E"><vh>Import tests</vh>
-<v t="T2166" a="EV" tnodeList="2166,2167,2168,2169,2170,2171,2172,2173,2174,2175"><vh>@file c:\prog\test\leo.py </vh>
+<v t="T2165"><vh>Import tests</vh>
+<v t="T2166" a="E" tnodeList="2166,2167,2168,2169,2170,2171,2172,2173,2174,2175"><vh>@file c:\prog\test\leo.py </vh>
 <v t="T2167" a="M"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="T2168"><vh>runMainLoop</vh></v>
 <v t="T2169"><vh>run &amp; allies</vh>
@@ -2732,6 +2732,10 @@
 </v>
 <v t="T2175"><vh>profile</vh></v>
 </v>
+</v>
+<v t="T2176"><vh>backspace &amp; del tests</vh></v>
+<v t="T2177" a="E"><vh>Tangle tests</vh>
+<v t="T2178"><vh>@root c:\prog\test\tangleTest.txt</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -33825,5 +33829,10 @@ def profile ():
 	p.strip_dirs()
 	p.sort_stats('cum','file','name')
 	p.print_stats()</t>
+<t tx="T2176"></t>
+<t tx="T2177"></t>
+<t tx="T2178">@root c:\prog\test\tangleTest.txt
+
+This is a test.</t>
 </tnodes>
 </leo_file>

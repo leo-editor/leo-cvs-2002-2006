@@ -544,7 +544,7 @@
 </v>
 </v>
 </v>
-<v t="T460"><vh>External editors &amp; Open With</vh>
+<v t="T460" a="E"><vh>External editors &amp; Open With</vh>
 <v t="T461" tnodeList="461,462,463,464,465,466"><vh>@file open_with.py</vh>
 <v t="T462"><vh>on_idle</vh>
 <v t="T463"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
@@ -559,8 +559,8 @@
 <v t="T468"><vh>open_in_vim</vh></v>
 </v>
 <v t="T469" tnodeList="469"><vh>@file xemacs.py</vh></v>
-<v t="T470"><vh>word export</vh>
-<v t="T471" tnodeList="471,472,473,474,475,476"><vh>@file word_export.py</vh>
+<v t="T470" a="E"><vh>word export</vh>
+<v t="T471" a="V" tnodeList="471,472,473,474,475,476"><vh>@file word_export.py</vh>
 <v t="T472"><vh>getConfiguration</vh></v>
 <v t="T473"><vh>getWordConnection</vh></v>
 <v t="T474"><vh>doPara</vh></v>
@@ -799,7 +799,7 @@
 </v>
 </v>
 </v>
-<v t="T649" a="V"><vh>Plugin manager (demo)</vh>
+<v t="T649"><vh>Plugin manager (demo)</vh>
 <v t="T650"><vh>Notes by Paul Paterson</vh></v>
 <v t="T651" tnodeList="651,652,653,654,655,656,657,658,659,660"><vh>@file leopm_client.py</vh>
 <v t="T652"><vh>class LeoPMClient</vh>
@@ -8239,12 +8239,17 @@ if 0: # Register the handlers...
 from leoPlugins import *
 from leoGlobals import *
 
+# path = "/usr/bin/gnuclient"
+path = r"c:\Program Files\XEmacs\XEmacs-21.4.13\i586-pc-win32\xemacs.exe"
+
 def open_in_emacs (tag,keywords):
 	if top():
-		top().frame.OnOpenWith(("os.spawnl", "/usr/bin/gnuclient", None),) # 6/27/03: add comma.
+		top().frame.OnOpenWith(("os.spawnl", path , None),) # 6/27/03: add comma.
 
 if 0: # Register the handlers...
-	registerHandler(("iconclick2","select2"), open_in_emacs)
+	registerHandler("iconclick2", open_in_emacs)
+	if 0: # This edits _everything_ in xemacs.  That's a bit much for my taste.
+		registerHandler("select2", open_in_emacs)
 	
 	__version__ = "1.2" # Set version for the plugin handler.
 	plugin_signon(__name__)</t>
@@ -8261,7 +8266,7 @@ to export the selected outline to Word."""
 from leoPlugins import *
 from leoGlobals import *
 
-import win32com.client
+import win32com.client # From win32 extensions: http://www.python.org/windows/win32/
 import ConfigParser
 
 @others

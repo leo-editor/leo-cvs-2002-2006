@@ -70,22 +70,21 @@ class baseUndoer:
 		u.debug = false # true: enable debugging code in new undo scheme.
 		u.debug_print = false # true: enable print statements in debug code.
 		u.new_undo = true # true: enable new debug code.
-		
+	
 		# Statistics comparing old and new ways (only if u.debug is on).
 		u.new_mem = 0
 		u.old_mem = 0
-		
+	
 		# State ivars...
 		u.undoType = "Can't Undo"
-		# Bug fix: 12/16/02: These must be set here, _not_ in clearUndoState.
+		
+		# These must be set here, _not_ in clearUndoState.
 		u.redoMenuLabel = "Can't Redo"
 		u.undoMenuLabel = "Can't Undo"
 		u.realRedoMenuLabel = "Can't Redo"
 		u.realUndoMenuLabel = "Can't Undo"
 		u.undoing = false # True if executing an Undo command.
 		u.redoing = false # True if executing a Redo command.
-	
-		u.clearUndoState()
 	#@nonl
 	#@-node:undo.__init__ & clearIvars
 	#@+node:clearIvars

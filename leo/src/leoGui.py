@@ -65,18 +65,44 @@ class leoGui:
 	#@-at
 	#@nonl
 	#@-node:interface to Leo's core
-	#@+node:newLeoCommanderAndFrame
-	def newLeoCommanderAndFrame(self,title=None):
+	#@+node: newLeoCommanderAndFrame
+	def newLeoCommanderAndFrame(self,fileName):
 		
 		"""Create a commander and its view frame for the Leo main window."""
 		
-		c = leoCommands.Commands(title) # title is new arg.
-		trace(c)
-		frame = self.newLeoFrame(c,title) # This code should _not_ create a commander.
-		trace(frame)
-		c.finishCreate(frame)
+		if not fileName: fileName = ""
+		#@	<< compute the window title >>
+		#@+node:<< compute the window title >>
+		# Set the window title and fileName
+		if fileName:
+			title = computeWindowTitle(fileName)
+		else:
+			s = "untitled"
+			n = app.numberOfWindows
+			if n > 0:
+				s += `n`
+			title = computeWindowTitle(s)
+			app.numberOfWindows = n+1
+		
+		#@-node:<< compute the window title >>
+		#@nl
+	
+		# Create an unfinished frame to pass to the commanders.
+		frame = leoFrame.LeoFrame(title)
+		
+		# Create the commander and its subcommanders.
+		c = leoCommands.Commands(frame,fileName)
+		
+		# Finish creating the frame (kludge: sets c.body so it can create the outline.)
+		frame.finishCreate(c)
+		
+		# Finish initing the subcommanders.
+		c.undoer.clearUndoState() # Menus must exist at this point.
+		
+		doHook("after-create-leo-frame",c=c)
 		return c,frame
-	#@-node:newLeoCommanderAndFrame
+	#@nonl
+	#@-node: newLeoCommanderAndFrame
 	#@+node:base-class methods: overridden in subclasses
 	#@+at 
 	#@nonl
@@ -251,16 +277,23 @@ class tkinterGui(leoGui):
 		
 		"""Set the icon to be used in all Leo windows.
 		
-		This code does nothing for Tk versions before 8.3.4."""
+		This code does nothing for Tk versions before 8.4.3."""
 		
 		gui = self
 	
 		try:
 			version = gui.root.getvar("tk_patchLevel")
-			if CheckVersion(version,"8.3.4"):
-				# tk 8.3.4 or greater: load a 16 by 16 icon.
-				bitmap_name = os.path.join(app.loadDir,"..","Icons","LeoApp16.ico")
-				self.bitmap = Tkinter.BitmapImage(bitmap_name)
+			if CheckVersion(version,"8.4.3"):
+				# tk 8.4.3 or greater: load a 16 by 16 icon.
+				path = os.path.join(app.loadDir,"..","Icons")
+				if os.path.exists(path):
+					file = os.path.join(path,"LeoApp16.ico")
+					if os.path.exists(path):
+						self.bitmap = Tkinter.BitmapImage(file)
+					else:
+						es("LeoApp16.ico not in Icons directory", color="red")
+				else:
+					es("Icons directory not found: "+path, color="red")
 		except:
 			print "exception setting bitmap"
 			traceback.print_exc()

@@ -61,10 +61,10 @@ def run(fileName=None,*args,**keywords):
 	init_sherlock(args)
 	clear_stats()
 	# Create the main frame.  Show it and all queued messages.
-	frame = createFrame(fileName)
+	c,frame = createFrame(fileName)
 	if not frame: return
 	app.writeWaitingLog()
-	c = frame.commands ; v = c.currentVnode()
+	v = c.currentVnode()
 	doHook("start2",c=c,v=v,fileName=fileName)
 	frame.commands.redraw()
 	app.gui.set_focus(frame.commands,frame.body)
@@ -125,13 +125,10 @@ def createFrame (fileName):
 			ok, frame = openWithFileName(fileName) # 7/13/03: the global routine.
 			if ok:
 				# print fileName
-				return frame
+				return frame.commands,frame
 	
 	# Create a new frame & indicate it is the startup window.
-	if 0: # Not ready yet.
-		commander,frame = app.gui.newLeoCommanderAndFrame()
-	else:
-		frame = leoFrame.LeoFrame(commander=None,title=None)
+	c,frame = app.gui.newLeoCommanderAndFrame(fileName=None)
 	frame.setInitialWindowGeometry()
 	frame.startupWindow = true
 	
@@ -139,7 +136,7 @@ def createFrame (fileName):
 	if fileName:
 		es("File not found: " + fileName)
 
-	return frame
+	return c,frame
 #@nonl
 #@-node:createFrame (leo.py)
 #@+node:profile
