@@ -2,7 +2,7 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="13163" clone_windows="0"/>
-<globals body_outline_ratio="0.53452685422">
+<globals body_outline_ratio="0.547777777778">
 	<global_window_position top="16" left="252" height="900" width="1023"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -5146,184 +5146,173 @@ top().frame.createOpenWithMenuFromTable(table)
 </t>
 <t tx="EKR.20040524104904.223">@nowrap
 
-At startup time Leo looks all files of the form mod_*.py in the plugins
-directory. Leo assumes that these files are "plugins" containing Python modules
+At startup time Leo looks all files of the form .py in the plugins
+directory. Leo assumes that these files are 'plugins' containing Python modules
 that customizes Leo's operation. Leo attempts to import each file.
 
 Each module should register routines that are called at various times during
-execution. Such times are identified by strings known as "tags". The code in in
-one or more plugins corresponding to each tag are known as the "hook" routines
+execution. Such times are identified by strings known as 'tags'. The code in in
+one or more plugins corresponding to each tag are known as the 'hook' routines
 for that tag. Leo catches exceptions (including syntax errors) in hook
 routines, so it is safe to hack away on this code.
 
 Leo passes two argument to all hook routines: the tag and a keywords dictionary
-containing additional information. For example, keywords["label"] indicates the
-kind of command for "command1" and "command2" hooks.
+containing additional information. For example, keywords.get('label') returns the
+kind of command for 'command1' and 'command2' hooks.
 
-For some hooks, returning anything other than None "overrides" Leo's default
-action. Hooks have full access to all of Leo's source code. Just import the
+Hooks have full access to all of Leo's source code. Just import the
 relevant file. For example, top() returns the commander for the topmost Leo
 window.
 
-The following table summarizes the arguments passed to hooks: ( Overrides is
-"yes" if returning anything other than None overrides Leo's normal command or
+The following table summarizes the arguments passed to hooks: 'Overrides?' is
+'yes' if returning anything other than None overrides Leo's normal command or
 event processing.)
 
-N.B. New in version 4.2: the v, old_v and new_p keyword arguments contain
-_positions_, not vnodes. These keyword arguments are deprecated and may be
-removed in later versions.
+New in version Leo 4.2: the 'v', 'old_v' and 'new_v' keys in the keyword dictionary
+contain _positions_, not vnodes. These keys are deprecated.
 
-tag argument                                              keys in keywords
-(hook name)  overrides       when called                  dictionary argument
----------    ---------       -----------                  -------------------
-"bodyclick1"   yes      before normal click in body       c,p,v,event
-"bodyclick2"            after  normal click in body       c,p,v,event
-"bodydclick1"  yes      before double click in body       c,p,v,event
-"bodydclick2"           after  double click in body       c,p,v,event
-"bodykey1"     yes      before body keystrokes            c,p,v,ch,oldSel,undoType
-"bodykey2"              after  body keystrokes            c,p,v,ch,oldSel,undoType
-"bodyrclick1"  yes      before right click in body        c,p,v,event
-"bodyrclick2"           after  right click in body        c,p,v,event
-"boxclick1"    yes      before click in +- box            c,p,v,event
-"boxclick2"             after  click in +- box            c,p,v,event
-"command1"     yes      before each command               c,p,v,label (note 2)
-"command2"              after  each command               c,p,v,label (note 2)
-"drag1"        yes      before start of drag              c,p,v,event
-"drag2"                 after  start of drag              c,p,v,event
-"dragging1"    yes      before continuing to drag         c,p,v,event
-"dragging2"             after  continuing to drag         c,p,v,event
-"end1"                  start of app.quit()
-"enddrag1"     yes      before end of drag                c,p,v,event
-"enddrag2"              after  end of drag                c,p,v,event
-"headclick1"   yes      before normal click in headline   c,p,v,event
-"headclick2"            after  normal click in headline   c,p,v,event
-"headrclick1"  yes      before right click in headline    c,p,v,event
-"headrclick2"           after  right click in headline    c,p,v,event
-"headkey1"     yes      before headline keystrokes        c,p,v,ch
-"headkey2"              after  headline keystrokes        c,p,v,ch
-"hypercclick1" yes      before control click in hyperlink c,p,v,event
-"hypercclick2"          after  control click in hyperlink c,p,v,event
-"hyperenter1"  yes      before entering hyperlink         c,p,v,event
-"hyperenter2"           after  entering hyperlink         c,p,v,event
-"hyperleave1"  yes      before leaving  hyperlink         c,p,v,event
-"hyperleave2"           after  leaving  hyperlink         c,p,v,event
-"iconclick1"   yes      before single click in icon box   c,p,v,event
-"iconclick2"            after  single click in icon box   c,p,v,event
-"iconrclick1"  yes      before right click in icon box    c,p,v,event
-"iconrclick2"           after  right click in icon box    c,p,v,event
-"icondclick1"  yes      before double click in icon box   c,p,v,event
-"icondclick2"           after  double click in icon box   c,p,v,event
-"idle"                  periodically (at idle time)       c
-"menu1"        yes      before creating menus             c,p,v        (note 3)
-"menu2"        yes      before updating menus             c,p,v
-"open1"        yes      before opening any file           old_c,new_c,fileName (note 4)
-"open2"                 after  opening any file           old_c,new_c,fileName (note 4)
-"openwith1"    yes      before Open With command          c,p,v,openType,arg,ext
-"openwith2"             after  Open With command          c,p,v,openType,arg,ext
-"recentfiles1" yes      before Recent Files command       c,p,v,fileName,closeFlag
-"recentfiles2"          after  Recent Files command       c,p,v,fileName,closeFlag
-"save1"        yes      before any Save command           c,p,v,fileName
-"save2"                 after  any Save command           c,p,v,fileName
-"select1"      yes      before selecting a vnode          c,new_p,old_p,new_v,new_v
-"select2"               after  selecting a vnode          c,new_p,old_p,new_v,old_v
-"select3"               after  selecting a vnode          c,new_p,old_p,new_v,old_v
-"set-mark"     no       when a mark is set                c,p,v
-"start1"       no       after app.finishCreate()
-"start2"                after opening first Leo window    c,p,v,fileName
-"unselect1"    yes      before unselecting a vnode        c,new_p,old_p,new_v,old_v
-"unselect2"             after  unselecting a vnode        c,new_p,old_p,old_v,old_v
-"@url1"        yes      before double-click @url node     c,p,v           (note 5)
-"@url2"                 after  double-click @url node     c,p,v           (note 5)
+New in version Leo 4.3: the 'new_c' key is deprecated.  Use the 'c' key instead.
+
+tag argument               over-                                        keys in keywords
+(hook name)                rides?   when called                         dictionary
+---------                  ------   -----------                         ----------------
+'after-create-leo-frame'            after creating any frame            c
+'after-redraw-outline'              end of tree.redraw                  c (note 6)
+'before-create-leo-frame'           before frame.finishCreate           c
+'bodyclick1'                yes     before normal click in body         c,p,v,event
+'bodyclick2'                        after normal click in body          c,p,v,event
+'bodydclick1'               yes     before double click in body         c,p,v,event
+'bodydclick2'                       after  double click in body         c,p,v,event
+'bodykey1'                  yes     before body keystrokes              c,p,v,ch,oldSel,undoType
+'bodykey2'                          after  body keystrokes              c,p,v,ch,oldSel,undoType
+'bodyrclick1'               yes     before right click in body          c,p,v,event
+'bodyrclick2'                       after  right click in body          c,p,v,event
+'boxclick1'                 yes     before click in +- box              c,p,v,event
+'boxclick2'                         after  click in +- box              c,p,v,event
+'clear-mark'                        when mark is set                    c,p,v
+'close-frame'                       in app.closeLeoWindow               c
+'color-optional-markup'     yes *   (note 7)                            colorer,p,v,s,i,j,colortag (note 7)
+'command1'                  yes     before each command                 c,p,v,label (note 2)
+'command2'                          after  each command                 c,p,v,label (note 2)
+'create-optional-menus'             (note 8)                            c (note 8)
+'create-popup-menu-items'           in tree.OnPopup                     c,p,v,event (new)
+'destroy-all-global-windows'        (note 12)                           None
+'draw-outline-box',         yes     when drawing +- box                 tree,p,v,x,y
+'draw-outline-icon',        yes     when drawing icon                   tree,p,v,x,y
+'draw-outline-node',        yes     when drawing node                   tree,p,v,x,y
+'draw-outline-text-box',    yes     when drawing headline               tree,p,v,x,y
+'drag1'                     yes     before start of drag                c,p,v,event
+'drag2'                             after  start of drag                c,p,v,event
+'dragging1'                 yes     before continuing to drag           c,p,v,event
+'dragging2'                         after  continuing to drag           c,p,v,event
+'enable-popup-menu-items'           in tree.OnPopup                     c,p,v,event
+'end1'                              start of app.quit()                 None
+'enddrag1'                  yes     before end of drag                  c,p,v,event
+'enddrag2'                          after  end of drag                  c,p,v,event
+'headclick1'                yes     before normal click in headline     c,p,v,event
+'headclick2'                        after  normal click in headline     c,p,v,event
+'headrclick1'               yes     before right click in headline      c,p,v,event
+'headrclick2'                       after  right click in headline      c,p,v,event
+'headkey1'                  yes     before headline keystrokes          c,p,v,ch
+'headkey2'                          after  headline keystrokes          c,p,v,ch
+'hypercclick1'              yes     before control click in hyperlink   c,p,v,event
+'hypercclick2'                      after  control click in hyperlink   c,p,v,event
+'hyperenter1'               yes     before entering hyperlink           c,p,v,event
+'hyperenter2'                       after  entering hyperlink           c,p,v,event
+'hyperleave1'               yes     before leaving  hyperlink           c,p,v,event
+'hyperleave2'                       after  leaving  hyperlink           c,p,v,event
+'iconclick1'                yes     before single click in icon box     c,p,v,event
+'iconclick2'                        after  single click in icon box     c,p,v,event
+'iconrclick1'               yes     before right click in icon box      c,p,v,event
+'iconrclick2'                       after  right click in icon box      c,p,v,event
+'icondclick1'               yes     before double click in icon box     c,p,v,event
+'icondclick2'                       after  double click in icon box     c,p,v,event
+'idle'                              periodically (at idle time)         c
+'init-color-markup'                 (note 7)                            colorer,p,v (note 7)
+'menu1'                     yes     before creating menus               c,p,v (note 3)
+'menu2'                     yes     before updating menus               c,p,v
+'new'                               start of New command                c,old_c,new_c (note 9)
+'open1'                     yes     before opening any file             c,old_c,new_c,fileName (note 4)
+'open2'                             after  opening any file             c,old_c,new_c,fileName (note 4)
+'openwith1'                 yes     before Open With command            c,p,v,openType,arg,ext
+'openwith2'                         after  Open With command            c,p,v,openType,arg,ext
+'recentfiles1'              yes     before Recent Files command         c,p,v,fileName,closeFlag
+'recentfiles2'                      after  Recent Files command         c,p,v,fileName,closeFlag
+'redraw-entire-outline'     yes     start of tree.redraw                c (note 6)
+'save1'                     yes     before any Save command             c,p,v,fileName
+'save2'                             after  any Save command             c,p,v,fileName
+'scan-directives'                   in scanDirectives                   c,p,v,s,old_dict,dict,pluginsList (note 10)
+'select1'                   yes     before selecting a position         c,new_p,old_p,new_v,new_v
+'select2'                           after  selecting a position         c,new_p,old_p,new_v,old_v
+'select3'                           after  selecting a position         c,new_p,old_p,new_v,old_v
+'set-mark'                          when a mark is set                  c,p,v
+'show-popup-menu'                   in tree.OnPopup                     c,p,v,event
+'start1'                            after app.finishCreate()            None
+'start2'                            after opening first Leo window      c,p,v,fileName
+'unselect1'                 yes     before unselecting a vnode          c,new_p,old_p,new_v,old_v
+'unselect2'                         after  unselecting a vnode          c,new_p,old_p,old_v,old_v
+'@url1'                     yes     before double-click @url node       c,p,v (note 5)
+'@url2'                             after  double-click @url node       c,p,v(note 5)
 
 Notes:
 
-(1) "activate" and "deactivate" hooks: These have been removed because they do
-not work as expected.
+(1) 'activate' and 'deactivate' hooks have been removed because they do not work
+as expected.
 
-(2) "commands" hooks: The label entry in the keywords dict contains the
-"canonicalized" form of the command, that is, the lowercase name of the command
+(2) 'commands' hooks: The label entry in the keywords dict contains the
+'canonicalized' form of the command, that is, the lowercase name of the command
 with all non-alphabetic characters removed.
 
-Commands hooks now set the label for undo and redo commands "undo" and "redo"
-rather than "cantundo" and "cantredo".
+Commands hooks now set the label for undo and redo commands 'undo' and 'redo'
+rather than 'cantundo' and 'cantredo'.
 
-(3) "menu1" hook: Setting app().realMenuNameDict in this hook is an easy way of
-translating menu names to other languages. Note: the "new" names created this
+(3) 'menu1' hook: Setting app().realMenuNameDict in this hook is an easy way of
+translating menu names to other languages. Note: the 'new' names created this
 way affect only the actual spelling of the menu items, they do _not_ affect how
-you specify shortcuts in leoConfig.txt, nor do they affect the "official"
+you specify shortcuts in leoConfig.txt, nor do they affect the 'official'
 command names passed in app().commandName. For example, suppose you set
-app().realMenuNameDict["Open..."] = "Ouvre".
+app().realMenuNameDict['Open...'] = 'Ouvre'.
 
-(4) "open1" and "open2" hooks: These are called with a keywords dict containing
+(4) 'open1' and 'open2' hooks: These are called with a keywords dict containing
 the following entries:
 
-old_c: The commander of the previously open window.
-new_c: The commander of the newly opened window.
-fileName: The name of the file being opened.
+c:          The commander of the newly opened window.
+old_c:      The commander of the previously open window.
+new_c:      (deprecated: use 'c' instead) The commander of the newly opened window.
+fileName:   The name of the file being opened.
 
-You can use old_c.currentVnode() and new_c.currentVnode() to get the current
+You can use old_c.currentVnode() and c.currentVnode() to get the current
 vnode in the old and new windows.
 
-Leo calls the "open1" and "open2" hooks only if the file is not already open. Leo
-will also call the "open1" and "open2" hooks if: a) a file is opened using the
+Leo calls the 'open1' and 'open2' hooks only if the file is not already open. Leo
+will also call the 'open1' and 'open2' hooks if: a) a file is opened using the
 Recent Files menu and b) the file is not already open.
 
-(5) "@url1" and "@url2" hooks are only executed if "icondclick1" hook returns None.
-
-New in version 3.12:
-
-The following hooks are a new breed of hook, called "stub hooks". Conceptually,
-these hooks are like calls to stub routines that can be filled in by code in
-plugins.
-
-tag argument                                                       keys in keywords
-(hook name)               overrides        when called           dictionary argument
----------                 ---------        -----------           -------------------
-"after-create-leo-frame"     no        after creating any frame  c
-"after-redraw-outline"       no        end of tree.redraw        c (note 6)
-"clear-mark"                 no        when mark is set          c,p,v
-"close-frame"                no        in app.closeLeoWindow     c
-"color-optional-markup"      yes *     (note 7)                  colorer,p,v,s,i,j,colortag (note 7)
-"create-optional-menus"      no        (note 8)                  c (note 8)
-"destroy-all-global-windows" no        (note 12)                 None
-"draw-outline-box",          yes       when drawing +- box       tree,p,v,x,y
-"draw-outline-icon",         yes       when drawing icon         tree,p,v,x,y
-"draw-outline-node",         yes       when drawing node         tree,p,v,x,y
-"draw-outline-text-box",     yes       when drawing headline     tree,p,v,x,y
-"create-popup-menu-items"    no        in tree.OnPopup           c,p,v,event (new)
-"enable-popup-menu-items"    no        in tree.OnPopup           c,p,v,event (new)
-"init-color-markup"          no        (note 7)                  colorer,p,v (note 7)
-"new"                        no        start of New command      old_c,new_c (note 9)
-"onCreate"                   no        before frame.finishCreate c (note 13)
-"redraw-entire-outline"      yes       start of tree.redraw      c (note 6)
-"scan-directives"            no        in scanDirectives         c,p,v,s,old_dict,dict,pluginsList (note 10)
-"set-mark"                   no        when mark is set          c,p,v
-"show-popup-menu"            no        in tree.OnPopup           c,p,v,event
-
-Notes:
+(5) '@url1' and '@url2' hooks are only executed if 'icondclick1' hook returns None.
 
 (6) These hooks are useful for testing.
 
-(7) These stub hooks allow plugins to parse and handle markup withing doc
-parts, comments and Python """ strings. Note that these hooks are _not_ called
-in Python ''' strings. See the color_markup plugin for a complete example of
-how to use these hooks.
+(7) These hooks allow plugins to parse and handle markup withing doc parts,
+comments and Python ''' strings. Note that these hooks are _not_ called in
+Python ''' strings. See the color_markup plugin for a complete example of how to
+use these hooks.
 
-(8) The "create-optional-menus" stub hook is called when Leo is creating menus,
-at the place at which creating new menus is appropriate. Therefore, this hook
-need only create new menus in the correct order, without worrying about the
-placement of the menus in the menu bar. See the plugins_menu and scripts_menu
-plugins for examples of how to use this hook. Leo now executes hooks in
-alphabetical order, so that the Plugins menu will be created before the Scripts
-menu.
+(8) The 'create-optional-menus' hook is called when Leo is creating menus, at
+the place at which creating new menus is appropriate. Therefore, this hook need
+only create new menus in the correct order, without worrying about the placement
+of the menus in the menu bar. See the plugins_menu and scripts_menu plugins for
+examples of how to use this hook. Leo now executes hooks in alphabetical order,
+so that the Plugins menu will be created before the Scripts menu.
 
-(9) The "new" stub hook is called at the beginning of the code that implements
-the New command. This provides a much easier way of recognizing when Leo is
-about to create a new Leo window.
+(9) The 'new' hook is called at the beginning of the code that implements the
+New command. This provides a much easier way of recognizing when Leo is about to
+create a new Leo window.
 
-(10) The "scan-directives" stub hooks is called inside the scanDirectives
+Thke 'new_c' key is deprecated.  Use the 'c' key instead.
+
+(10) The 'scan-directives' hook is called inside the scanDirectives
 global function. The dictionary returned by scanDirectives now contains an item
-whose key is "pluginsList". The value of this item is a list of tuples
+whose key is 'pluginsList'. The value of this item is a list of tuples
 (d,v,s,k) where:
 
 - d is the spelling of the @directive, without the leading @.
@@ -5332,18 +5321,14 @@ whose key is "pluginsList". The value of this item is a list of tuples
 been moved past any whitespace that follows the @directive.
 
 See the add_directives plugins directive for a complete example of how to use
-the "scan-directives" stub hook.
+the 'scan-directives' hook.
 
-(11) The "close-frame" stub hook is called in app.closeLeoWindow just before
+(11) The 'close-frame' hook is called in app.closeLeoWindow just before
 removing the window from app.windowList. The hook code may remove the window
 from app.windowList to prevent app.closeLeoWindow from destroying the window.
 
-(12) Leo calls the "destroy-all-global-windows" hook in app.destroyAllGlobalWindows().
-This hook gives plugins the chance to clean up after themselves when Leo shuts down.
-
-(13) Leo calls the "onCreate" hook just before calling frame.finishCreate. Using
-the "onCreate" hook is the recommended way of creating per-commander plugin
-controller classes.</t>
+(12) Leo calls the 'destroy-all-global-windows' hook in app.destroyAllGlobalWindows().
+This hook gives plugins the chance to clean up after themselves when Leo shuts down.</t>
 <t tx="EKR.20040524104904.224">Naively using hooks can expose you and your .leo files to malicious attacks.  You will be safe as long as you follow these basic principles:
 
 1. Hooks should _never_ blindly execute Python scripts in .leo files. Blindly executing scripts in .leo files runs the extreme risk of executing malicious code if you ever share any .leo file with someone else.  Moreover, using rexec instead of exec WILL NOT PROTECT YOU.  See the children of this node for further discussion of this important topic.
