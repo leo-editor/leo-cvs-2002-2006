@@ -80,6 +80,7 @@ def run(fileName=None,*args,**keywords):
 
 	doHook("start2")
 	frame.commands.redraw()
+	set_focus(frame.commands,frame.body)
 
 	runMainLoop(root)
 #@-body
@@ -133,57 +134,35 @@ def createAppObject(root):
 	return app
 #@-body
 #@-node:2::createAppObject
-#@+node:3::createFrame (works)
+#@+node:3::createFrame (leo.py)
 #@+body
 def createFrame (app,fileName):
 	
 	"""Step 2 of Leo startup process:
 		
-	Create a frame, and optionally read a file into it"""
+	Create a Leo Frame."""
 	
-	# Create the first frame.
-	frame1 = leoFrame.LeoFrame()
-	
+	# Try to create a frame for the file.
 	if fileName:
-		
-		#@<< open frame2. return frame2 or frame1 on failure >>
-		#@+node:1::<< open frame2.  return frame2 or frame1 on failure >>
-		#@+body
-		# Hide the first frame.
-		frame1.top.withdraw()
-		frame1.top.update()
-		
-		fileName = os.path.join(os.getcwd(), fileName)
+		fileName = os.path.join(os.getcwd(),fileName)
 		fileName = os.path.normpath(fileName)
 		if os.path.exists(fileName):
-			ok, frame2 = frame1.OpenWithFileName(fileName)
-		else: ok = 0
-		if ok:
-			app.windowList.remove(frame1)
-			frame1.top.destroy() # force the window to go away now.
-			frame2.top.deiconify()
-			app.setLog(frame2,"createFrame") # Sets the log stream for es()
-			return frame2
-		else:
-			frame1.top.deiconify()
-			app.setLog(frame1,"createFrame")
-			es("File not found: " + fileName)
-			fileName = ensure_extension(fileName, ".leo")
-			frame1.mFileName = fileName
-			frame1.title = fileName
-			frame1.top.title(fileName)
-			return frame1
-		#@-body
-		#@-node:1::<< open frame2.  return frame2 or frame1 on failure >>
+			ok, frame = openWithFileName(fileName) # 7/13/03: the global routine.
+			if ok: return frame
+	
+	# Create a new frame & indicate it is the startup window.
+	frame = leoFrame.LeoFrame()
+	frame.setInitialWindowGeometry()
+	# frame.top.deiconify()
+	frame.startupWindow = true
+	
+	# Report the failure to open the file.
+	if fileName:
+		es("File not found: " + fileName)
 
-	else:
-		# Show the first frame & indicate it is the startup window.
-		frame1.setInitialWindowGeometry()
-		frame1.top.deiconify()
-		frame1.startupWindow = true
-		return frame1
+	return frame
 #@-body
-#@-node:3::createFrame (works)
+#@-node:3::createFrame (leo.py)
 #@+node:4::initSherlock
 #@+body
 def initSherlock (app,args):
