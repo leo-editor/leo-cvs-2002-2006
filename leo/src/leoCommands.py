@@ -335,7 +335,13 @@ class baseCommands:
         """This routine handles the items in the Open With... menu.
     
         These items can only be created by createOpenWithMenuFromTable().
-        Typically this would be done from the "open2" hook."""
+        Typically this would be done from the "open2" hook.
+        
+        New in 4.3: The "os.spawnv" now works. You may specify arguments to spawnv
+        using a list, e.g.:
+            
+        openWith("os.spawnv", ["c:/prog.exe","--parm1","frog","--switch2"], None)
+        """
         
         c = self ; v = c.currentVnode()
         if not data or len(data) != 3: return # 6/22/03
@@ -443,22 +449,34 @@ class baseCommands:
                     if arg == None: arg = ""
                     shortPath = path # g.shortFileName(path)
                     if openType == "os.system":
-                        command  = "os.system("+arg+shortPath+")"
+                        # command  = "os.system("+arg+shortPath+")"
+                        command = "os.system(%s)" % (arg+shortPath)
                         os.system(arg+path)
                     elif openType == "os.startfile":
-                        command    = "os.startfile("+arg+shortPath+")"
+                        # command = "os.startfile("+arg+shortPath+")"
+                        command = "os.startfile(%s)" % (arg+shortPath)
                         os.startfile(arg+path)
                     elif openType == "exec":
-                        command    = "exec("+arg+shortPath+")"
+                        # command    = "exec("+arg+shortPath+")"
+                        command = "exec(%s)" % (arg+shortPath)
                         exec arg+path in {} # 12/11/02
                     elif openType == "os.spawnl":
                         filename = g.os_path_basename(arg)
-                        command = "os.spawnl("+arg+","+filename+','+ shortPath+")"
+                        # command = "os.spawnl("+arg+","+filename+','+ shortPath+")"
+                        command = "os.spawnl(%s,%s,%s)" % (arg,filename,shortPath)
                         apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
                     elif openType == "os.spawnv":
-                        filename = g.os_path_basename(arg)
-                        command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
-                        apply(os.spawnl,(os.P_NOWAIT,arg,(filename,path)))
+                        if 1: # New code
+                            filename = os.path.basename(arg[0]) 
+                            vtuple = arg[1:] 
+                            vtuple.append(path) 
+                            # command = "os.spawnv("+arg[0]+","+repr(vtuple)+")"
+                            command = "os.spawnv(%s,%s)" % (arg[0],repr(vtuple))
+                            apply(os.spawnv,(os.P_NOWAIT,arg[0],vtuple)) 
+                        else:
+                            filename = g.os_path_basename(arg)
+                            command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
+                            apply(os.spawnl,(os.P_NOWAIT,arg,(filename,path)))
                     else:
                         command="bad command:"+str(openType)
                     # This seems a bit redundant.
@@ -475,7 +493,6 @@ class baseCommands:
             g.es_exception()
     
         return "break"
-    #@nonl
     #@+node:ekr.20031218072017.2830:createOpenWithTempFile
     def createOpenWithTempFile (self, v, ext):
         
