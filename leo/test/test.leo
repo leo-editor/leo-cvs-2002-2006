@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2297" clone_windows="0"/>
 <globals body_outline_ratio="0.46811224489795916">
-	<global_window_position top="123" left="222" height="653" width="730"/>
+	<global_window_position top="87" left="368" height="809" width="730"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2785,10 +2785,10 @@
 <v t="edream.110803170022"><vh>Count pages</vh></v>
 <v t="edream.120203185502"><vh>PyUno script</vh></v>
 </v>
-<v t="edream.121303091808"><vh>Batch test</vh>
-<v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
+<v t="edream.121303091808" a="E"><vh>Batch test</vh>
+<v t="edream.112203144347" a="V" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 </v>
-<v t="edream.110203161858.2119" a="V"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124"><vh>tempNode</vh></v>
 <v t="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
@@ -34143,7 +34143,8 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
 suite = leoTest.makeEditBodySuite("editBodyTests","tempNode")
 runner = unittest.TextTestRunner()
-runner.run(suite)</t>
+runner.run(suite)
+</t>
 <t tx="edream.110203161858.2142"></t>
 <t tx="edream.110203161858.2143">line 1
 	line 2
@@ -34370,6 +34371,11 @@ if app.batchMode:
 		print "Disabling log"
 		
 	flag,frame = openWithFileName(path,old_c=None,enableLog=enable)
+	c = frame.c
+	v = c.rootVnode()
+	while v:
+		print v.headString()
+		v = v.threadNext()
 	
 	print app.log
 	
@@ -34377,7 +34383,8 @@ if app.batchMode:
 		print "Enabling log"
 		frame.log.enable()
 		es(frame)
-	print "End of batchScript.py"</t>
+	print "End of batchScript.py"
+</t>
 <t tx="edream.112303064255">before
 &lt;&lt; section &gt;&gt;
 sec line 1

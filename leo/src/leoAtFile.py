@@ -586,9 +586,9 @@ class baseAtFile:
 				#@			<< handle v's tree >>
 				#@+node:<< handle v's tree >>
 				# This code is a little tricky: @ignore not recognised in @silentfile nodes.
-				
 				if v.isDirty() or writeAtFileNodesFlag or v.t in writtenFiles:
 				
+					df.fileChangedFlag = false # 1/9/04
 					if v.isAtSilentFileNode():
 						at.silentWrite(v)
 					elif v.isAtIgnoreNode():
@@ -2657,6 +2657,7 @@ class baseOldDerivedFile:
 	#@+node:atFile.replaceTargetFileIfDifferent
 	def replaceTargetFileIfDifferent (self):
 		
+		trace()
 		assert(self.outputFile == None)
 		
 		self.fileChangedFlag = false
@@ -2724,6 +2725,7 @@ class baseOldDerivedFile:
 			#@nonl
 			#@-node:<< rename the output file to be the target file >>
 			#@nl
+	
 	#@-node:atFile.replaceTargetFileIfDifferent
 	#@+node:atFile.outputStringWithLineEndings
 	# Write the string s as-is except that we replace '\n' with the proper line ending.

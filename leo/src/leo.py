@@ -85,7 +85,7 @@ def run(fileName=None,*args,**keywords):
 	frame.body.setFocus()
 	app.initing = false # "idle" hooks may now call app.forceShutdown.
 	app.gui.runMainLoop()
-
+#@nonl
 #@-node:run & allies
 #@+node:isValidPython
 def isValidPython():

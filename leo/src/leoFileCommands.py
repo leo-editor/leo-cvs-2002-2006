@@ -1845,8 +1845,7 @@ class baseFileCommands:
 		c = self.c
 	
 		changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
-		
-		assert(changedFiles != None)
+		trace(changedFiles)
 		if changedFiles:
 			es("auto-saving outline",color="blue")
 			c.save() # Must be done to set or clear tnodeList.
