@@ -3,19 +3,18 @@
 """
 autocompletion and calltips plugin.  Special characters:
 
-'.' summons the autocompletion.
-'(' summons the calltips
+. summons the autocompletion.
+( summons the calltips
 Escape closes either box.
 Ctrl selects an item.
 alt-up_arrow, alt-down_arrow moves up or down in the list.
-
 This plugin scans the complete outline at startup if autocompletion is enabled.
 
 You many enable or disable features in autocomplete.ini.
 """
 
 #@@language python 
-#@@tabwidth -4
+#@@tabwidth-4
 
 #@<<imports>>
 #@+node:ekr.20041017043622.26:<< imports >>
@@ -49,7 +48,7 @@ except ImportError:
 #@nonl
 #@-node:ekr.20041017043622.26:<< imports >>
 #@nl
-__version__ = ".55"
+__version__ = ".6"
 #@<<version history>>
 #@+node:ekr.20041017102904:<<version history>>
 #@+at
@@ -58,6 +57,7 @@ __version__ = ".55"
 #     -Creates autocompleter box and Calltip box once.
 #     -Broke long functions apart.
 #     -'Esc'now closes autobox and calltip.
+# 
 # .500 EKR:
 #     - Made minor changes based on .425:
 #     -Improved docstring.
@@ -70,10 +70,17 @@ __version__ = ".55"
 #      - Made the calltip identification regex more liberal.
 #      - streamlined some code.
 #      - added DictSet class, experimental in the sense that I haven't had a 
-# bug with it yet.
-#        see <<DictSet>> node, under << globals>>
+# bug with it yet.  see <<DictSet>> node, under << globals>>
 #      - discovered dependency between this and Chapters, auto needs to be 
 # loaded first
+# .60 Lu
+#     - Changed some method names to more acuaretely reflect what they do.  
+# Added more comments.
+#     - processKeyStroke cleaned up.
+#     - added Functionality where any mouse button press, anywhere in Leo will 
+# turn off autobox and calltip label.
+#     - waiting for Chapters( or chapters ) to have its walkChapters def fixed 
+# up, so we can walk the chapters on startup.
 #@-at
 #@nonl
 #@-node:ekr.20041017102904:<<version history>>
@@ -82,12 +89,12 @@ __version__ = ".55"
 #@+node:mork.20041020122041:<<load notes>>
 #@+at 
 # Autocompleter needs to be loaded before Chapters/chapters or the autobox and 
-# the calltip label do
+# the calltip lable do
 # not appear in the correct place.
+# 
 # 
 #@-at
 #@@c 
-#@nonl
 #@-node:mork.20041020122041:<<load notes>>
 #@nl
 useauto = 1
@@ -131,7 +138,7 @@ clabels = weakref.WeakKeyDictionary()
 #@nl
 #@<<patterns>>
 #@+node:ekr.20041017043622.2:<< patterns >>
-#This section defines patterns for calltip recognition.  Autocompleter does not use regexes.
+#This section defines patterns for calltip recognition.  The autocompleter does not use regexes.
 space = r'[ \t\r\f\v ]+'
 end = r'\w+\s*\([^)]*\)'
 
@@ -164,33 +171,28 @@ okchars['_'] = '_'
 #@+node:ekr.20041017043622.3:watcher
 watchitems = ( '.',')' )
 txt_template = '%s%s%s'
-
 def watcher (event):
     
     global lang 
-
     if event.char.isspace() or event.char in watchitems:
         bCtrl = event.widget
-        # This if statement ensures that attributes set in another node
-        # are put in the database.  Of course the user has to type a whitespace
-        # to make sure it happens.  We try to be selective so that we don't burn
+        #This if statement ensures that attributes set in another node
+        #are put in the database.  Of course the user has to type a whitespace
+        # to make sure it happens.  We try to be selective so that we dont burn
         # through the scanText def for every whitespace char entered.  This will
         # help when the nodes become big.
         if event.char.isspace():
-            # Don't do anything if the previous char was a whitespace
-            if bCtrl.get( 'insert -1c' ).isspace():
-                return 
+            if bCtrl.get( 'insert -1c' ).isspace(): return #We dont want to do anything if the previous char was a whitespace
             if bCtrl.get( 'insert -1c wordstart -1c') != '.': return
             
         c = bCtrl.commander
         lang = c.frame.body.getColorizer().language 
-        txt = txt_template % (
-            bCtrl.get( "1.0", Tk.INSERT ), 
-            event.char, 
-            bCtrl.get( Tk.INSERT, "end" )) #We have to add the newest char, its not in the bCtrl yet
+        txt = txt_template %( bCtrl.get( "1.0", 'insert' ), 
+                             event.char, 
+                             bCtrl.get( 'insert', "end" ) ) #We have to add the newest char, its not in the bCtrl yet
 
         scanText(txt)
-#@nonl
+    
 #@-node:ekr.20041017043622.3:watcher
 #@+node:ekr.20041017043622.4:scanText
 def scanText (txt):
@@ -199,7 +201,6 @@ def scanText (txt):
 
     if useauto:
         scanForAutoCompleter(txt)
-
     if usecall:
         scanForCallTip(txt)
 #@-node:ekr.20041017043622.4:scanText
@@ -216,13 +217,12 @@ def scanForAutoCompleter (txt):
             #    watchwords[a].add(b)
             #else:
             #    watchwords[a] = sets.Set([b])
-            watchwords[ a ].add( b )
-                # Use the experimental DictSet class here,
+            watchwords[ a ].add( b ) # we are using the experimental DictSet class here, usage removed the above statements
+            #notice we have cut it down to one line of code here!
 #@nonl
 #@-node:ekr.20041017043622.5:scanForAutoCompleter
 #@+node:ekr.20041017043622.6:scanForCallTip
 def scanForCallTip (txt):
-
     #this function scans text for calltip info
     pat2 = pats['python']
     if lang!=None:
@@ -236,13 +236,19 @@ def scanForCallTip (txt):
             pieces2 = z.split('(')
             pieces2[0] = pieces2[0].split()[-1]
             a, b = pieces2[0], pieces2[1]
-            calltips[ lang ][ a ].add( z )
-                # Use the experimental DictSet here
+            calltips[ lang ][ a ].add( z ) #we are using the experimental DictSet here, usage removed all of the commented code. notice we have cut all this down to one line of code!
+            #if calltips.has_key(lang):
+            #    if calltips[lang].has_key(a):
+            #        calltips[lang][a].add(z)
+            #    else:
+            #        calltips[lang][a] = sets.Set([z]) 
+            #else:
+            #    calltips[lang] ={}
+            #    calltips[lang][a] = sets.Set([z])        
 #@nonl
 #@-node:ekr.20041017043622.6:scanForCallTip
 #@+node:ekr.20041017043622.7:makeAutocompletionList
 def makeAutocompletionList (a,b,glist):
-
     a1 = _reverseFindWhitespace(a)
     if a1:
         b2 = _getCleanString(b)
@@ -252,7 +258,6 @@ def makeAutocompletionList (a,b,glist):
 #@-node:ekr.20041017043622.7:makeAutocompletionList
 #@+node:ekr.20041017043622.8:_getCleanString
 def _getCleanString (s):
-
     '''a helper for autocompletion scanning'''
     if s.isalpha():return s 
 
@@ -263,7 +268,6 @@ def _getCleanString (s):
 #@-node:ekr.20041017043622.8:_getCleanString
 #@+node:ekr.20041017043622.9:_reverseFindWhitespace
 def _reverseFindWhitespace (s):
-
     '''A helper for autocompletion scan'''
     for n, l in enumerate(s):
         n =(n+1)*-1
@@ -272,7 +276,7 @@ def _reverseFindWhitespace (s):
 #@-node:ekr.20041017043622.9:_reverseFindWhitespace
 #@+node:ekr.20041017043622.10:initialScan
 def initialScan (tag,keywords):
-    
+    '''This method walks the node structure to build the in memory database.'''
     c = keywords.get("c")or keywords.get("new_c")
     if haveseen.has_key(c):
         return 
@@ -352,18 +356,24 @@ def readOutline (c):
 #@-node:ekr.20041017043622.13:readOutline
 #@+node:ekr.20041017043622.14:reducer
 def reducer (lis,pat):
-
+    '''This def cuts a list down to only those items that start with the parameter pat, pure utility.'''
     return[x for x in lis if x.startswith(pat)]
 #@-node:ekr.20041017043622.14:reducer
 #@+node:ekr.20041017043622.15:unbind
 def unbind (canvas):
-
-    canvas.on = False
-    map( canvas.unbind, ( "<Control_L>", "<Control_R>", "<Alt-Up>", "<Alt-Down>", "<Alt_L>" , "<Alt_R>" ) )
+    '''This method turns everything off and removes the calltip and autobox from the canvas.'''
+    if canvas.on: #no need to do this stuff, if were not 'on'
+        canvas.on = False
+        canvas.delete( 'autocompleter' )
+        map( canvas.unbind, ( "<Control_L>", "<Control_R>", "<Alt-Up>", "<Alt-Down>", "<Alt_L>" , "<Alt_R>" ) )
+        canvas.unbind_all( '<Button>' )
+        canvas.update_idletasks()
+#@nonl
 #@-node:ekr.20041017043622.15:unbind
 #@+node:ekr.20041017043622.16:moveSelItem
 def moveSelItem (event,c):
-    #c in this def is not a commander but a Tk Canvas
+    '''c in this def is not a commander but a Tk Canvas.
+       This def moves the selection in the autobox up or down.'''
     i = c.sl.curselection()
     if len(i)==0:
         return None 
@@ -384,27 +394,29 @@ def moveSelItem (event,c):
         c.sl.see(i)
         return "break"
 #@-node:ekr.20041017043622.16:moveSelItem
-#@+node:ekr.20041017043622.17:select
-def select (event,c,body):
-    #c in this def is not a commander but a Tk Canvas
-    if not c.on:return None #nothing on, might as well return
-    if event.keysym=="??":
+#@+node:ekr.20041017043622.17:processKeyStroke
+def processKeyStroke (event,c,body):
+    '''c in this def is not a commander but a Tk Canvas.  This def determine what action to take dependent upon
+       the state of the canvas and what information is in the Event'''
+    #if not c.on:return None #nothing on, might as well return
+    if not c.on or event.keysym in ( "??", "Shift_L","Shift_R" ):
         return None 
-    if event.keysym=='Escape':
-        #turn everything off
-        c.delete(c.i)
+    #if event.keysym=='Escape':
+    #    #turn everything off
+    #    unbind( c )
+    #    return None 
+    #if c.which and event.keysym in('parenright','Control_L','Control_R'):
+    #    unbind( c )
+    #    c.on = False 
+    elif testForUnbind( event, c ): #all of the commented out code is being tested in the new testForUnbind def or moved above.
         unbind( c )
-        return None 
-    if c.which and event.keysym in('parenright','Control_L','Control_R'):
-        c.delete(c.i)
-        c.on = False 
-    elif event.keysym in("Shift_L","Shift_R"):
-        #so the user can use capital letters.
-        return None 
-    elif not c.which and event.char in ripout:
-        c.delete(c.i)
-        unbind( c )
-    if c.which==1:
+        return None
+    #elif event.keysym in("Shift_L","Shift_R"):
+    #    #so the user can use capital letters.
+    #    return None 
+    #elif not c.which and event.char in ripout:
+    #    unbind( c )
+    elif c.which==1:
         #no need to add text if its calltip time.
         return None 
     ind = body.index('insert-1c wordstart')
@@ -412,21 +424,30 @@ def select (event,c,body):
     pat = pat.lstrip('.')
     ww = list(c.sl.get(0,'end'))
     lis = reducer(ww,pat)
-    if len(lis)==0:return None 
+    if len(lis)==0:return None #in this section we are selecting which item to select based on what the user has typed.
     i = ww.index(lis[0])
     c.sl.select_clear(0,'end')
     c.sl.select_set(i)
     c.sl.see(i)
 #@nonl
-#@-node:ekr.20041017043622.17:select
-#@+node:ekr.20041017043622.18:remove
-def remove (event,c,body,scrllistbx):
-    
-    #c in this def is not a commander but a Tk Canvas
+#@-node:ekr.20041017043622.17:processKeyStroke
+#@+node:mork.20041023153836:testForUnbind
+def testForUnbind( event, c ):
+    '''c in this case is a Tkinter Canvas.
+      This def checks if the autobox or calltip label needs to be turned off'''
+    if event.keysym in ('parenright','Control_L','Control_R', 'Escape' ):
+        return True
+    elif not c.which and event.char in ripout:
+        return True
+    return False
+#@-node:mork.20041023153836:testForUnbind
+#@+node:ekr.20041017043622.18:processAutoBox
+def processAutoBox(event,c,body,scrllistbx):
+    '''c in this def is not a commander but a Tk Canvas.
+       This method processes the selection from the autobox.'''
     if event.keysym in("Alt_L","Alt_R"):
         return None 
 
-    c.delete(c.i)
     a = scrllistbx.getvalue()
     if len(a)==0:return None 
     try:
@@ -441,10 +462,11 @@ def remove (event,c,body,scrllistbx):
         body.update_idletasks()
     finally:
         unbind( c )
-#@-node:ekr.20041017043622.18:remove
+#@-node:ekr.20041017043622.18:processAutoBox
 #@+node:ekr.20041017043622.19:add_item
 def add_item (event,c,body,colorizer):
-    #c in this def is not a commander but a Tk Canvas
+    '''c in this def is not a commander but a Tk Canvas.
+       This def will add the autobox or the calltip label.'''
     if not event.char in('.','(')or c.on:return None 
     txt = body.get('insert linestart','insert')
     txt = _reverseFindWhitespace(txt)
@@ -459,7 +481,7 @@ def add_item (event,c,body,colorizer):
         f, b = getAutoBox(c,ww)
         calculatePlace(body,c.sl,c,f)
         c.sl.select_set(0)
-        c.which = 0 #indicates its in autocompletion mode
+        c.which = 0 #indicates it's in autocompletion mode
         add_bindings( c, body, b )
         return
     elif event.char=='(':
@@ -472,28 +494,29 @@ def add_item (event,c,body,colorizer):
                 t = '\n'.join(s)
                 ct.configure(text=t)
                 calculatePlace(body,ct,c,ct)
-                c.which = 1 #indicates its in calltip mode
+                c.which = 1 #indicates it's in calltip mode
         else:
             c.on = False 
             return None 
 #@-node:ekr.20041017043622.19:add_item
 #@+node:mork.20041020110810:add_bindings
 def add_bindings( c, body, b ):
-                
+    '''c in this case is a Tk Canvas not a commander.
+       This def adds bindings to the Canvas so it can work with the autobox properly.'''           
     event = Tk.Event()
     event.keysym = ''
-    rmv = lambda event = event , c = c, body = body, scrllistbx = b : remove( event, c, body, scrllistbx )
-    b.configure( selectioncommand = rmv )
+    pab = lambda event = event , c = c, body = body, scrllistbx = b : processAutoBox( event, c, body, scrllistbx )
+    b.configure( selectioncommand = pab )
     msi = lambda event, c = c :moveSelItem( event, c )
-    bindings = ( ( "<Control_L>", rmv ), ( "<Control_R>", rmv ),
+    bindings = ( ( "<Control_L>", pab ), ( "<Control_R>", pab ),
                  ( "<Alt-Up>", msi ), ( "<Alt-Down>", msi ),
-                 ( "<Alt_L>", rmv ), ( "<Alt_R>", rmv ) )
+                 ( "<Alt_L>", pab ), ( "<Alt_R>", pab ) )
     map( lambda b: c.bind( *b ) , bindings )
 #@-node:mork.20041020110810:add_bindings
 #@+node:ekr.20041017043622.20:getAutoBox
 def getAutoBox (c,ww):
-    # a factory method that returns either a new box or one that was created previously
-    #c in this case is a canvas not a commander
+    ''' a factory method that returns either a new box or one that was created previously.
+        c in this case is a canvas not a commander.'''
     if autoboxes.has_key(c):
         f = autoboxes[c]
         configureAutoBox(f.b,ww)
@@ -524,40 +547,44 @@ def configureAutoBox (sl,ww):
 #@-node:ekr.20041017043622.21:configureAutoBox
 #@+node:ekr.20041017043622.22:getCtipLabel
 def getCtipLabel (c):
-    #c in this case is a canvas not a commander.
-    #this def is a factory of Tk Labels for a canvas, saves the
-    #plugin from generating a new one each time a calltip is needed.
+    '''c in this case is a canvas not a commander.
+    This def is a factory of Tk Labels for a canvas, saves the
+    plugin from generating a new one each time a calltip is needed.'''
     if clabels.has_key(c):
         ct = clabels[c]
         return ct 
     ct = Tk.Label(c,background='lightyellow',
-    foreground='black')
+                    foreground='black')
     clabels[c] = ct 
     return ct  
 #@nonl
 #@-node:ekr.20041017043622.22:getCtipLabel
 #@+node:ekr.20041017043622.23:calculatePlace
 def calculatePlace (body,cwidg,c,f):
-    #c in this def is not a commander but a Tk Canvas
-    try:
+     '''c in this def is not a commander but a Tk Canvas.
+       This def determines where the autobox or calltip label goes on the canvas.
+       And then it puts it on the canvas.'''
+     try:
         x, y, lww, lwh = body.bbox('insert -1c')
         x, y = x+lww, y+lwh 
-    except:
+     except:
          x = 1
          y = 1
-    rwidth = cwidg.winfo_reqwidth()
-    rheight = cwidg.winfo_reqheight()
-    if body.winfo_width()<x+rwidth:  
+     rwidth = cwidg.winfo_reqwidth()
+     rheight = cwidg.winfo_reqheight()
+     if body.winfo_width()<x+rwidth:  
         x = x-rwidth 
-    if y>body.winfo_height()/2:
+     if y>body.winfo_height()/2:
         h2 = rheight 
         h3 = h2+lwh 
         y = y-h3 
-    c.i = c.create_window(x,y,window=f,anchor='nw')
+     c.create_window(x,y,window=f,anchor='nw', tag = 'autocompleter' )
+     c.bind_all( '<Button>', c.do_unbind )
 #@-node:ekr.20041017043622.23:calculatePlace
 #@+node:ekr.20041017043622.24:setLanguage
 def setLanguage (vnd):
     global lang 
+    #This def goes up and determines what language is in effect.
     while vnd:
         xs1 = vnd.bodyString()
         dict = g.get_directives_dict(xs1)
@@ -568,37 +595,47 @@ def setLanguage (vnd):
 #@-node:ekr.20041017043622.24:setLanguage
 #@+node:ekr.20041017043622.25:newCreateControl
 def newCreateControl (self,frame,parentFrame):
-    
+    '''This def is a decoration of the createControl def.  We set up the ancestory of the control so we can draw
+       Widgets over the Text editor without disturbing the text.'''
     #creating background
+    #we have to put a canvas behind the Text instance so the autobox can appear in front without disturbing the text.
+    #It might be conceivable that the gridder could be used for this as well.  But I think that would entail a complete
+    #rewrite without as good as results.  For example, I dont think we can calculate the coords of where the autobox
+    #and calltip label should appear.  The grider just says, put item in column x, row y.  Not as good as actual coords.
     c = Tk.Canvas(parentFrame,background='white')
     c.pack(expand=1,fill='both')
     f = Tk.Frame(c)
     c.create_window(0,0,window=f,anchor='nw')
     f.pack_configure(fill='both',expand=1)
-    #finished createing background
+    #finished creating background
     
-    body = orig_CreateControl(self,frame,f)
+    body = orig_CreateControl(self,frame,f)#orig_CreatControl is the method this one decorates
     body.commander = self.c
     c.on = False 
     
-    sel = lambda event, c = c, body = body:select(event,c,body)
-    ai = lambda event, c = c, body = body, colorizer = frame.body:add_item(
-        event,c,body,colorizer.getColorizer())
-    for z in ( watcher, sel, ai ):
+    #These used to be lambdas, but I think this is clearer.
+    def processKeyStrokeHandler( event, c= c, body = body ): processKeyStroke( event, c, body )
+    def addItemHandler( event, c = c, body = body, colorizer = frame.body ): add_item( event, c, body, colorizer.getColorizer() )
+                
+    for z in ( watcher, processKeyStrokeHandler, addItemHandler ):
         c.bind( "<Key>", z, '+' )
-    #set the bindtags for the body, protects the autocompleter from other plugins unbinding events.
+    
+    def do_unbind( event, c = c ): unbind( c ) #This def is for doing the unbind on any <Button> events, it is only in play when an autobox or caltip label is in effect.
+    c.do_unbind = do_unbind
+
+    #set the bindtags for the body, protects the autocompleter from other plugins unbinding this plugins bindings.
     ctags = [ c.bindtags()[ 0 ] , ]
     btags = body.bindtags()
     ctags.extend( btags ) 
     body.bindtags( tuple( ctags ))
+    
     return body  
-#@nonl
+
 #@-node:ekr.20041017043622.25:newCreateControl
 #@+node:ekr.20041017105122.2:onOpenWindow
 def onOpenWindow ():
-    
-    c = keywords.get("c") or keywords.get("new_c")
-
+    #what does this do?
+    c = keywords.get("c")or keywords.get("new_c")
     if haveseen.has_key(c):
         return 
         
