@@ -2672,7 +2672,7 @@ class baseCommands:
 		c.beginUpdate()
 		if 1: # update...
 			clone = p.clone(p)
-			clone.setAllAncestorAtFileNodesDirty() # 1/12/04
+			clone.setAllAncestorAtFileNodesDirty()
 			c.setChanged(true)
 			if c.validateOutline():
 				c.selectVnode(clone)
@@ -4275,7 +4275,7 @@ class baseCommands:
 	def setTopPosition(self,p):
 		
 		"""Set the root positioin."""
-		
+	
 		self._topPosition = p
 		
 	# Define these for compatibiility with old scripts.
