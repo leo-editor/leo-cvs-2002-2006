@@ -4878,13 +4878,13 @@ class baseCommands:
         
         """Return the presently selected position."""
         
-        return self._currentPosition.copy()
+        return self._currentPosition.copy() # Must make the second copy now.
         
     def setCurrentPosition (self,p):
         
         """Set the presently selected position."""
     
-        self._currentPosition = p
+        self._currentPosition = p.copy() # Must make the first copy _now_
         
     # Define these for compatibiility with old scripts.
     currentVnode = currentPosition
