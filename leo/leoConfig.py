@@ -812,7 +812,7 @@ class config:
 
 	#@-body
 	#@-node:17:C=10:setConfigIvars
-	#@+node:18::update
+	#@+node:18:C=11:update
 	#@+body
 	# Rewrites the entire config file from ivars.
 	# This is called when a .leo file is written and when the preferences panel changes.
@@ -830,7 +830,9 @@ class config:
 		config = ConfigParser.ConfigParser()
 		self.config = config
 		try:
-			cf = open(self.configFileName,"w")
+			# 9/1/02: apparently Linux requires w+ and XP requires w.
+			mode = choose(sys.platform=="win32","w","w+")
+			cf = open(self.configFileName,mode)
 			if cf:
 				config.readfp(cf)
 				
@@ -895,7 +897,7 @@ class config:
 			traceback.print_exc()
 		self.config = None
 	#@-body
-	#@-node:18::update
+	#@-node:18:C=11:update
 	#@+node:19::update_section
 	#@+body
 	def update_section (self,config,section,dict):
