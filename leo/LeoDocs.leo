@@ -291,7 +291,7 @@
 </v>
 </v>
 </v>
-<v t="T195" a="V"><vh>Users Guide</vh>
+<v t="T195" a="E"><vh>Users Guide</vh>
 <v t="T196"><vh>An overview of Leo</vh></v>
 <v t="T197"><vh>Front material</vh>
 <v t="T198"><vh>Title Page &amp; Summary</vh></v>
@@ -384,7 +384,7 @@
 <v t="T230"><vh>Resizing panes</vh></v>
 <v t="T231"><vh>Undoing operations</vh></v>
 </v>
-<v t="T232"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T232" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
 <v t="T233"><vh>Overview</vh></v>
 <v t="T234"><vh>Section references clarify code</vh></v>
 <v t="T235"><vh>Defining sections in @file trees</vh></v>
@@ -433,7 +433,7 @@
 </v>
 <v t="T257"><vh>Tangling @root trees with the Tangle commands</vh></v>
 <v t="T258"><vh>Untangling @root trees with the Untangle commands</vh></v>
-<v t="T259"><vh>More about directives</vh>
+<v t="T259" a="E"><vh>More about directives</vh>
 <v t="T260"><vh>@CWEB and @noweb specify the source language</vh></v>
 <v t="T261"><vh>@color and @nocolor control syntax coloring</vh></v>
 <v t="T262"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
@@ -441,7 +441,7 @@
 <v t="T264"><vh>@first directive allows preliminary lines in @file trees</vh></v>
 <v t="T265"><vh>@language specifying the target language</vh></v>
 <v t="T266"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
-<v t="T267"><vh>@verbose, @terse and @silent directives control comments in @root trees</vh></v>
+<v t="T267" a="V"><vh>@verbose, @terse and @silent directives control comments in @root trees</vh></v>
 </v>
 <v t="T162" a="C"><vh>About CWEB   </vh></v>
 </v>
@@ -3861,7 +3861,7 @@ The form of the @pagewidth directive is @pagewidth n, where n is a positive inte
 The form of the @tabwidth directive is @tabwidth n, where n is a positive integer that indicates the width of tabs in spaces. This is used by Tangle to output leading whitespace.</t>
 <t tx="T267">The @verbose, @terse and @silent directives determine how the Tangle command outputs comments in @root trees.  Comments written by the user in code sections are always output: these directives control only: a) the comments containing doc sections and b) sentinel comments that delimit the beginning and end of code sections.
 
-When @verbose is in effect Tangle outputs all comments. When @terse is in effect, Tangle outputs only those comments necessary for Untangle to work. When @silent is in effect Tangle no additional comments.  @verbose is the default. If more than one of these directives appear in the same body text the "most verbose" of these options will be in effect.</t>
+When @verbose is in effect Tangle outputs all comments. When @terse is in effect, Tangle outputs only those comments necessary for Untangle to work. When @silent is in effect Tangle adds no additional comments.  @verbose is the default. If more than one of these directives appear in the same body text the "most verbose" of these options will be in effect.</t>
 <t tx="T268">@nocolor
 
 This chapter is discusses all of Leo's menu commands.  It is organized by menu, and by function within each menu.

@@ -55,7 +55,7 @@ class leoImportCommands:
 			s = file.read()
 			file.close()
 		except:
-			es("Can not read " + fileName)
+			es("can not read " + fileName)
 			return
 		#@-body
 		#@-node:1::<< Read file into s >>
@@ -2115,7 +2115,7 @@ class leoImportCommands:
 				v = v.threadNext()
 			file.close()
 		except:
-			es("File error while flattening the outline")
+			es("file error while flattening the outline")
 	#@-body
 	#@-node:5:C=8:flattenOutline
 	#@+node:6:C=9:outlineToWeb
@@ -2145,7 +2145,7 @@ class leoImportCommands:
 				v = v.threadNext()
 			file.close()
 		except:
-			es("File error in Outline To noweb command")
+			es("file error in Outline To noweb command")
 	#@-body
 	#@-node:6:C=9:outlineToWeb
 	#@+node:7::removeSentinelsCommand
@@ -2163,7 +2163,7 @@ class leoImportCommands:
 			s = file.read()
 			file.close()
 		except:
-			es("Can not read " + fileName)
+			es("can not read " + fileName)
 			return
 		#@-body
 		#@-node:1::<< Read file into s >>
@@ -2208,7 +2208,7 @@ class leoImportCommands:
 		#@-node:2::<< set delims from the header line >>
 
 		if valid == false:
-			es("Invalid @+leo sentinel in " + fileName)
+			es("invalid @+leo sentinel in " + fileName)
 		else:
 			trace("line:"+`line_delim`+","+
 				"start:"+`start_delim`+","+
@@ -2224,7 +2224,7 @@ class leoImportCommands:
 				file.write(s)
 				file.close()
 			except:
-				es("Can not create " + newFileName)
+				es("can not create " + newFileName)
 			#@-body
 			#@-node:3::<< Write s into newFileName >>
 	#@-body

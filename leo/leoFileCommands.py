@@ -554,7 +554,7 @@ class fileCommands:
 				c.tangle_directory = self.getEscapedString()
 				self.getTag("</defaultDirectory>")
 				if not os.path.exists(c.tangle_directory):
-					es("Default tangle directory not found:" + c.tangle_directory)
+					es("default tangle directory not found:" + c.tangle_directory)
 			elif self.matchTag("<TSyntaxMemo_options>"):
 				self.getEscapedString() # ignored
 				self.getTag("</TSyntaxMemo_options>")
@@ -609,7 +609,7 @@ class fileCommands:
 			s = self.getEscapedString()
 			t.setTnodeText(s)
 		else: # No vnode refers to this tnode.
-			es("No tnode with index: " + `index` + ".  The text will be discarded")
+			es("no tnode with index: " + `index` + ".  The text will be discarded")
 			self.getEscapedString()
 		self.getTag("</t>")
 	#@-body
@@ -1342,7 +1342,7 @@ class fileCommands:
 				v.t.setVisited() # Indicate we wrote the body text.
 			else:
 				es("error writing file(bad vnode)!")
-				es("Try using the Save To command")
+				es("try using the Save To command")
 		#@-body
 		#@-node:1::<< Put tnode index if this vnode has body text >>
 
@@ -1500,7 +1500,7 @@ class fileCommands:
 		self.mFileName = fileName
 		self.outputFile = open(fileName, 'w')
 		if not self.outputFile:
-			es("Can not open " + fileName)
+			es("can not open " + fileName)
 			
 			#@<< delete backup file >>
 			#@+node:2::<< delete backup file >>

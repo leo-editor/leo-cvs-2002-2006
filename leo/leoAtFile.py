@@ -597,7 +597,7 @@ class atFile:
 	
 		if 0: # This is more irritating than useful.
 			if self.errors == 0:
-				es("----- Error reading @file " + self.targetFileName)
+				es("----- error reading @file " + self.targetFileName)
 		self.error(message)
 		self.root.setOrphan()
 		self.root.setDirty()
@@ -619,7 +619,7 @@ class atFile:
 	def updateCloneIndices(self,root,next):
 	
 		if root.isCloned():
-			self.error("Ignoring clone mark for " + root.headString())
+			self.error("ignoring clone mark for " + root.headString())
 			root.t.setCloneIndex(0)
 		index = 0
 		# 12/17/01: increment each cloneIndex at most once.
@@ -646,7 +646,7 @@ class atFile:
 	def writeError(self,message):
 	
 		if self.errors == 0:
-			es("Errors writing: " + self.targetFileName)
+			es("errors writing: " + self.targetFileName)
 		self.error(message)
 		self.root.setOrphan()
 		self.root.setDirty()
@@ -994,7 +994,7 @@ class atFile:
 			v = v.threadNext()
 			
 		if partialFlag and not anyRead:
-			es("No @file nodes in the selected tree.")
+			es("no @file nodes in the selected tree")
 	#@-body
 	#@-node:4::readAll (Leo2)
 	#@+node:5::scanDoc
@@ -2175,17 +2175,17 @@ class atFile:
 					try: # Just delete the temp file.
 						os.remove(self.outputFileName)
 					except: pass
-					es("Unchanged: " + self.shortFileName)
+					es("unchanged: " + self.shortFileName)
 				else:
 					try: # Replace target file with temp file.
 						os.remove(self.targetFileName)
 						os.rename(self.outputFileName, self.targetFileName)
-						es("Writing: " + self.shortFileName)
+						es("writing: " + self.shortFileName)
 					except:
-						self.writeError("Rename failed: no file created! (file may be read-only)")
+						self.writeError("rename failed: no file created! (file may be read-only)")
 			else:
 				os.rename(self.outputFileName, self.targetFileName)
-				es("Creating: " + self.targetFileName)
+				es("creating: " + self.targetFileName)
 			#@-body
 			#@-node:4::<< Replace the target with the temp file if different >>
 	#@-body
@@ -2233,7 +2233,7 @@ class atFile:
 				v = v.nodeAfterTree()
 			else: v = v.threadNext()
 		if partialFlag and not written:
-			es("No @file nodes in the selected tree.")
+			es("no @file nodes in the selected tree")
 	#@-body
 	#@-node:10::writeAll
 	#@-node:6::Writing

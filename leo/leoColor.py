@@ -833,12 +833,7 @@ class colorizer:
 		flag = self.useSyntaxColoring(v)
 		language = self.scanColorDirectives(v)
 		return flag,language
-		
-		if 0:
-			if self.useSyntaxColoring(v):
-				return self.scanColorDirectives(v)
-			else:
-				return plain_text_language
+
 	#@-body
 	#@-node:11:C=6:updateSyntaxColorer
 	#@+node:12::useSyntaxColoring

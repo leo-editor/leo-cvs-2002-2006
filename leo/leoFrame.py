@@ -400,9 +400,9 @@ class LeoFrame:
 		#@-node:2::<< create the find submenu >>
 
 		editMenu.add_command(label="Set Font...",
-			accelerator="Shift+Alt+T",command=self.OnFontPanel,state="disabled") #
+			accelerator="Shift+Alt+T",command=self.OnFontPanel)
 		editMenu.add_command(label="Set Colors...",
-			accelerator="Shift+Alt+S",command=self.OnSyntaxColoring,state="disabled") #
+			accelerator="Shift+Alt+S",command=self.OnSyntaxColoring)
 		
 		label = choose(c.tree.colorizer.showInvisibles,"Hide Invisibles","Show Invisibles")
 		editMenu.add_command(label=label,command=self.OnViewAllCharacters,
@@ -1764,49 +1764,139 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:8::OnEditHeadline
-	#@+node:9::OnFontPanel (set font)
+	#@+node:9:C=30:OnFontPanel
 	#@+body
 	def OnFontPanel(self,event=None):
+		
+		frame = self ; c = frame.commands ; Tk = Tkinter
+		
+		
+		#@<< Create the font dialog >>
+		#@+node:1::<< Create the font dialog >>
+		#@+body
+		top = Tk.Toplevel(app().root)
+		top.title("Select a font")
+		
+		# Create the outer frames
+		outer = Tk.Frame(top)
+		outer.pack(fill="both",expand=1,padx=2,pady=2)
+		
+		w,ff = create_labeled_frame(outer)
+		w.pack(fill="both",expand=1,padx=2,pady=2)
+		
+		# Create a frame containing the grid of inner boxes.
+		g = Tk.Frame(ff)
+		g.grid()
+		
+		# Create the inner frames of the grid.
+		family = Tk.Frame(g)
+		family.grid(row=1,col=1)
+		
+		style = Tk.Frame(g)
+		style.grid(row=1,col=2)
+		
+		buttons = Tk.Frame(g)
+		buttons.grid(row=1,col=3)
+		
+		size = Tk.Frame(g)
+		size.grid(row=2,col=1,columnspan=3,sticky="news")
+		
+		sample = Tk.Frame(g)
+		sample.grid(row=3,col=1,columnspan=3,sticky="news")
+		
+		# Create the Family pane.
+		w,f = create_labeled_frame(family,caption="Family")
+		w.pack(padx=2)
+		
+		b = Tk.Listbox(f,height=7,width=12)
+		b.pack(padx=2)
+		
+		# Create the Style frame.
+		w,f = create_labeled_frame(style,caption="Style")
+		w.pack(padx=2)
+		
+		styles = Tk.Frame(f)
+		styles.pack()
+		i = 1
+		for name in ("Bold","Italic","Underline","OverStrike"):
+			b = Tk.Checkbutton(styles,text=name)
+			b.pack(anchor="w",pady=1)
+			i += 1
+		
+		# Create the column of buttons.
+		buttonFrame = Tk.Frame(buttons)
+		buttonFrame.pack(padx=2)
+		
+		b = Tk.Button(buttonFrame,width=7,text="OK")
+		b.pack(side="top")
+		b = Tk.Button(buttonFrame,width=7,text="Cancel")
+		b.pack(side="top",fill="y",expand=1,pady=10)
+		b = Tk.Button(buttonFrame,width=7,text="Apply")
+		b.pack(side="bottom")
+		
+		
+		#@<< create the size pane >>
+		#@+node:1::<< create the size pane >>
+		#@+body
+		w,f = create_labeled_frame(size,caption="Size")
+		w.pack(padx=2,fill="both",expand=1)
+		
+		sizes = Tk.Frame(f)
+		f.grid(sticky="news")
+		
+		size8 = Tk.Radiobutton(f,text="8")
+		size8.grid(row=1,column=0,sticky="w")
+		size10 = Tk.Radiobutton(f,text="10")
+		size10.grid(row=2,column=0,sticky="w")
+		
+		size12 = Tk.Radiobutton(f,text="12")
+		size12.grid(row=1,column=1,sticky="w")
+		size14 = Tk.Radiobutton(f,text="14")
+		size14.grid(row=2,column=1,sticky="w")
+		
+		size18 = Tk.Radiobutton(f,text="18")
+		size18.grid(row=1,column=2,sticky="w")
+		size24 = Tk.Radiobutton(f,text="24")
+		size24.grid(row=2,column=2,sticky="w")
+		
+		sizeBox = Tk.Entry(f,width=12)
+		sizeBox.grid(row=1,rowspan=2,column=3,padx=10)
+		#@-body
+		#@-node:1::<< create the size pane >>
+
+		
+		# Create the sample pane.
+		w,f  = create_labeled_frame(sample,caption="Sample",pady=2)
+		w.pack(side="top",fill="both",expand=1,padx=2,pady=2)
+		color = f.cget("bg")
+		e = Tk.Entry(f,bd=0,bg=color)
+		e.insert(0, "Sample Text Here (May be edited)") 
+		e.pack(fill="x",expand=1,padx=5,pady=5)
+		#@-body
+		#@-node:1::<< Create the font dialog >>
+
+		
+		# This must be done _after_ the dialog has been built!
+		center_dialog(top)
+		top.resizable(0,0)
 	
-		self.notYet("Font Panel")
-		return "break" # inhibit further command processing
+		## To do: set body text font, size based on dialog
 	
-		data = SetInitialFont(self.body.GetFont())
-		data.SetColour(self.body.GetForegroundColour())
-	
-		d = wxFontDialog (self, data)
-		if wxPlatform != "__WXGTK__": # Causes problems on GTK+.
-			dialog.CentreOnScreen()
-	
-		if d.ShowModal() != wxID_OK:
-			return "break" # inhibit further command processing
-		retData = d.GetFontData()
-		font = retData.GetChosenFont()
-		color = retData.GetColour()
-	
-		# On Linux, SetFont apparently clears the text control's text string!
-		if wxPlatform == "__WXGTK__":
-			contents = self.body.GetValue()
-			self.body.SetFont ( font )
-			self.body.SetForegroundColour(color)
-			self.body.SetValue(contents)
-		else:
-			self.body.SetFont ( font )
-			self.body.SetForegroundColour(color)
-	
-		self.Refresh()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:9::OnFontPanel (set font)
-	#@+node:10::OnSyntaxColoring (rewrite)
+	#@-node:9:C=30:OnFontPanel
+	#@+node:10:C=31:OnSyntaxColoring
 	#@+body
 	def OnSyntaxColoring(self,event=None):
+		
+		frame = self ; c = frame.commands
+		
+		trace()
 	
-		self.notYet("Syntax Coloring")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:10::OnSyntaxColoring (rewrite)
-	#@+node:11:C=30:OnViewAllCharacters
+	#@-node:10:C=31:OnSyntaxColoring
+	#@+node:11:C=32:OnViewAllCharacters
 	#@+body
 	def OnViewAllCharacters (self, event=None):
 	
@@ -1822,8 +1912,8 @@ class LeoFrame:
 		c.tree.recolor_now(v)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:11:C=30:OnViewAllCharacters
-	#@+node:12:C=31:OnPreferences
+	#@-node:11:C=32:OnViewAllCharacters
+	#@+node:12:C=33:OnPreferences
 	#@+body
 	def OnPreferences(self,event=None):
 		
@@ -1836,7 +1926,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:12:C=31:OnPreferences
+	#@-node:12:C=33:OnPreferences
 	#@-node:1::Edit top level
 	#@+node:2::Edit Body submenu
 	#@+node:1::OnConvertBlanks & OnConvertAllBlanks
@@ -2159,14 +2249,14 @@ class LeoFrame:
 	#@-node:17::OnExpandToLevel9
 	#@-node:2::Expand/Contract
 	#@+node:3::Move/Select
-	#@+node:1:C=32:OnMoveDownwn
+	#@+node:1:C=34:OnMoveDownwn
 	#@+body
 	def OnMoveDown(self,event=None):
 	
 		self.commands.moveOutlineDown()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=32:OnMoveDownwn
+	#@-node:1:C=34:OnMoveDownwn
 	#@+node:2::OnMoveLeft
 	#@+body
 	def OnMoveLeft(self,event=None):
@@ -2308,7 +2398,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnEqualSizedPanes
-	#@+node:2:C=33:OnToggleActivePane
+	#@+node:2:C=35:OnToggleActivePane
 	#@+body
 	def OnToggleActivePane (self,event=None):
 	
@@ -2319,14 +2409,14 @@ class LeoFrame:
 			self.body.focus_force()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2:C=33:OnToggleActivePane
-	#@+node:3:C=34:OnToggleSplitDirection
+	#@-node:2:C=35:OnToggleActivePane
+	#@+node:3:C=36:OnToggleSplitDirection
 	#@+body
 	# The key invariant: self.splitVerticalFlag tells the alignment of the main splitter.
 	
 	def OnToggleSplitDirection(self,event=None):
 		# Abbreviations.
-		frame = self ; c = frame.commands
+		frame = self
 		bar1 = self.bar1 ; bar2 = self.bar2
 		split1Pane1,split1Pane2 = self.split1Pane1,self.split1Pane2
 		split2Pane1,split2Pane2 = self.split2Pane1,self.split2Pane2
@@ -2347,8 +2437,8 @@ class LeoFrame:
 		self.resizePanesToRatio(ratio)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:3:C=34:OnToggleSplitDirection
-	#@+node:4:C=35:OnCascade
+	#@-node:3:C=36:OnToggleSplitDirection
+	#@+node:4:C=37:OnCascade
 	#@+body
 	def OnCascade(self,event=None):
 		
@@ -2372,7 +2462,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 
 	#@-body
-	#@-node:4:C=35:OnCascade
+	#@-node:4:C=37:OnCascade
 	#@+node:5::OnMinimizeAll
 	#@+body
 	def OnMinimizeAll(self,event=None):
@@ -2389,7 +2479,7 @@ class LeoFrame:
 			frame.top.iconify()
 	#@-body
 	#@-node:5::OnMinimizeAll
-	#@+node:6:C=36:OnOpenPythonWindow
+	#@+node:6:C=38:OnOpenPythonWindow
 	#@+body
 	def OnOpenPythonWindow(self,event=None):
 	
@@ -2407,10 +2497,10 @@ class LeoFrame:
 			es("Please add \Python2x\Tools\idle to sys.paths")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=36:OnOpenPythonWindow
+	#@-node:6:C=38:OnOpenPythonWindow
 	#@-node:4::Window Menu
 	#@+node:5::Help Menu
-	#@+node:1:C=37:OnAbout (version number)
+	#@+node:1:C=39:OnAbout (version number)
 	#@+body
 	def OnAbout(self,event=None):
 	
@@ -2427,7 +2517,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=37:OnAbout (version number)
+	#@-node:1:C=39:OnAbout (version number)
 	#@+node:2::OnLeoDocumentation
 	#@+body
 	def OnLeoDocumentation (self,event=None):
@@ -2443,7 +2533,7 @@ class LeoFrame:
 	#@-node:2::OnLeoDocumentation
 	#@-node:5::Help Menu
 	#@-node:14:C=14:Menu Command Handlers
-	#@+node:15:C=38:Splitter stuff
+	#@+node:15:C=40:Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -2699,7 +2789,7 @@ class LeoFrame:
 		self.log.configure(bd=border)
 	#@-body
 	#@-node:9::reconfigurePanes (use config bar_width)
-	#@-node:15:C=38:Splitter stuff
+	#@-node:15:C=40:Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py
