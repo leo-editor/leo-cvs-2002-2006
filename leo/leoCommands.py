@@ -2011,6 +2011,7 @@ class Commands:
 	
 		c = self ; v = c.currentVnode()
 		if not v or not v.next(): return
+		last = v.lastChild() # EKR: 3/19/03
 		# Make sure all the moves will be valid.
 		child = v.next()
 		while child:
@@ -2021,11 +2022,9 @@ class Commands:
 		if 1: # update range...
 			c.mInhibitOnTreeChanged = true
 			c.endEditing()
-			last = None
 			while v.next():
 				child = v.next()
 				child.moveToNthChildOf(v,v.numberOfChildren())
-				last = child # For undo.
 			v.expand()
 			c.selectVnode(v)
 			v.setDirty()
@@ -2210,15 +2209,15 @@ class Commands:
 		c = self
 		v = c.currentVnode()
 		if not v or not v.hasChildren(): return
+		last = v.lastChild() # EKR: 3/19/03
 		c.beginUpdate()
 		if 1: # inside update...
 			c.endEditing()
-			after = v ; last = None
+			after = v
 			while v.hasChildren():
 				child = v.firstChild()
 				child.moveAfter(after)
 				after = child
-				last = child # for undo.
 			v.setDirty()
 			c.setChanged(true)
 			c.selectVnode(v)

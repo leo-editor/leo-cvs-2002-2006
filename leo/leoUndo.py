@@ -999,20 +999,23 @@ class undoer:
 	def undoDemote (self):
 	
 		u = self ; c = u.commands
-		ins = u.v
+		ins = v = u.v
 		last = u.lastChild
-		child = u.v.firstChild()
-		assert(child and last)
+		child = v.firstChild()
+		assert(child)
 		c.beginUpdate()
-		while 1:
-			save_next = child.next()
+		# 3/19/03: do not undemote children up to last.
+		if last:
+			while child and child != last:
+				child = child.next()
+			if child:
+				child = child.next()
+		while child:
+			next = child.next()
 			child.moveAfter(ins)
 			ins = child
-			u.lastChild = child
-			child = save_next
-			assert(ins == last or child)
-			if ins == last: break
-		c.selectVnode(u.v)
+			child = next
+		c.selectVnode(v)
 		c.endUpdate()
 	#@-body
 	#@-node:2::undoDemote
@@ -1026,15 +1029,13 @@ class undoer:
 		assert(v1)
 		last = u.lastChild
 		next = v.next()
-		assert(next and last)
+		assert(next)
 		c.beginUpdate()
-		while 1:
+		while next:
 			v = next
-			assert(v)
 			next = v.next()
 			n = v1.numberOfChildren()
 			v.moveToNthChildOf(v1,n)
-			u.lastChild = v
 			if v == last: break
 		c.selectVnode(v1)
 		c.endUpdate()
