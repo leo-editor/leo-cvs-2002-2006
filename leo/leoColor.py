@@ -47,10 +47,11 @@ default_colors_dict = {
 #@+body
 leoKeywords = (
 	"@","@c","@code","@color","@comment","@cweb",
-	"@delims","@doc","@first","@header","@ignore",
+	"@delims","@doc","@end_raw",
+	"@first","@header","@ignore",
 	"@language","@last",
 	"@nocolor","@noheader","@noweb","@others",
-	"@pagewidth","@path","@quiet","@root",
+	"@pagewidth","@path","@quiet","@raw","@root",
 	"@silent","@tabwidth","@terse",
 	"@unit","@verbose")
 #@-body

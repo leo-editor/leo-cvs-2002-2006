@@ -42,6 +42,8 @@ class atFile:
 	cDirective		=  6 # @c<space> or @c<newline>
 	othersDirective	=  7 # at-others
 	miscDirective	=  8 # All other directives
+	rawDirective = 9 # @raw
+	endRawDirective = 10 # @end_raw
 	
 	# The kind of sentinel line.
 	noSentinel		=  9 # Not a sentinel
@@ -140,6 +142,9 @@ class atFile:
 		
 		# Support of output_newline option
 		self.output_newline = getOutputNewline()
+		
+		# Support of @raw
+		self.raw = false # true: in @raw mode
 		#@-body
 		#@-node:1::<< initialize atFile ivars >>
 	#@-body
@@ -637,7 +642,9 @@ class atFile:
 			("@c",atFile.cDirective),
 			("@code",atFile.codeDirective),
 			("@doc",atFile.docDirective),
-			("@others",atFile.othersDirective))
+			("@end_raw",atFile.endRawDirective),
+			("@others",atFile.othersDirective),
+			("@raw",atFile.rawDirective))
 	
 		# This code rarely gets executed, so simple code suffices.
 		if i+1 >= n or match(s,i,"@ ") or match(s,i,"@\t") or match(s,i,"@\n"):
@@ -2066,12 +2073,12 @@ class atFile:
 			leading_nl = (s[i] == body_newline) # 9/27/02: look ahead before outputting newline.
 			if leading_nl:
 				i = skip_nl(s,i)
+				self.onl() # 10/15/02: simpler to do it here.
 			
 			j,delta = skip_leading_ws_with_indent(s,i,self.tab_width)
 			kind1 = self.directiveKind(s,i)
 			kind2 = self.directiveKind(s,j)
 			if kind1 == atFile.othersDirective or kind2 == atFile.othersDirective:
-				if leading_nl: self.onl() # 9/27/02
 				
 				#@<< handle @others >>
 				#@+node:1::<< handle @others >>
@@ -2092,19 +2099,39 @@ class atFile:
 				#@-body
 				#@-node:1::<< handle @others >>
 
+			elif kind1 == atFile.rawDirective:
+				
+				#@<< handle @raw >>
+				#@+node:2::<< handle @raw >>
+				#@+body
+				self.raw = true
+				self.putSentinel("@@raw")
+				i = skip_line(s,i)
+				#@-body
+				#@-node:2::<< handle @raw >>
+
+			elif kind1 == atFile.endRawDirective:
+				
+				#@<< handle @end_raw >>
+				#@+node:3::<< handle @end_raw >>
+				#@+body
+				self.raw = false
+				self.putSentinel("@@end_raw")
+				i = skip_line(s,i)
+				#@-body
+				#@-node:3::<< handle @end_raw >>
+
 			elif kind1 == atFile.noDirective:
-				if leading_nl: self.onl() # 9/27/02
 				
 				#@<< put @verbatim sentinel if necessary >>
-				#@+node:2::<< put @verbatim sentinel if necessary >>
+				#@+node:4::<< put @verbatim sentinel if necessary >>
 				#@+body
 				if match (s,i,self.startSentinelComment + '@'):
 					self.putSentinel("verbatim")
 				#@-body
-				#@-node:2::<< put @verbatim sentinel if necessary >>
+				#@-node:4::<< put @verbatim sentinel if necessary >>
 
 			else:
-				if leading_nl: self.onl() # 9/27/02
 				break # all other directives terminate the code part.
 			
 			#@-body
@@ -2114,7 +2141,8 @@ class atFile:
 			#@<< put the line >>
 			#@+node:2::<< put the line >>
 			#@+body
-			self.putIndent(self.indent)
+			if not self.raw:
+				self.putIndent(self.indent)
 			
 			newlineSeen = false
 			while i < len(s) and not newlineSeen:
@@ -2123,7 +2151,7 @@ class atFile:
 					break
 				elif ch == body_ignored_newline:
 					i += 1
-				elif ch == '<':
+				elif ch == '<' and not self.raw:
 					
 					#@<< put possible section reference >>
 					#@+node:1::<< put possible section reference >>
