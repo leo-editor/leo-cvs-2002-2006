@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2860" clone_windows="0"/>
 <globals body_outline_ratio="0.463110102157">
-	<global_window_position top="32" left="228" height="881" width="866"/>
+	<global_window_position top="36" left="354" height="881" width="866"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -521,12 +521,37 @@
 <v t="ekr.20040409142108"><vh>firstChild</vh></v>
 <v t="ekr.20040409140343.1"><vh>last</vh></v>
 </v>
-<v t="ekr.20040419105536" a="ETV" tnodeList="ekr.20040419105536,ekr.20040419105536.1,ekr.20040419105536.2"><vh>@file c:\prog\test\perlLineNumbersTest.txt</vh>
+<v t="ekr.20040419105536" tnodeList="ekr.20040419105536,ekr.20040419105536.1,ekr.20040419105536.2"><vh>@file c:\prog\test\perlLineNumbersTest.txt</vh>
 <v t="ekr.20040419105536.1"><vh>one</vh></v>
 <v t="ekr.20040419105536.2"><vh>two</vh></v>
 </v>
+<v t="EKR.20040422095741"><vh>.</vh></v>
+<v t="EKR.20040424065452" a="TV"><vh>Compare script</vh></v>
 </vnodes>
 <tnodes>
+<t tx="EKR.20040422095741"></t>
+<t tx="EKR.20040424065452">import leoGlobals as g
+p1 = r"c:\prog\leoMenu(1).py"
+p2 = r"c:\prog\leoMenu(2).py"
+
+f1 = open(p1,"rb") ; f2 = open(p2,"rb")
+lines1 = f1.readlines()
+lines2 = f2.readlines()
+f1.close() ; f2.close()
+
+f1 = open(p1,"rb") ; f2 = open(p2,"rb")
+text1 = f1.read()
+text2 = f2.read()
+f1.close() ; f2.close()
+
+cr1 = text1.count('\r')
+cr2 = text2.count('\r')
+
+print '-'*20
+print "lines ",len(lines1),len(lines2)
+print "chars ",len(text1),len(text2)
+print "non-cr",len(text1)-cr1,len(text2)-cr2
+print "cr    ",cr1,cr2</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
