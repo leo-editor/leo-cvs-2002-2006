@@ -1593,30 +1593,7 @@ class LeoFrame:
 					old_c=self,new_c=frame.commands,fileName=fileName)==None:
 					frame.commands.fileCommands.open(file,fileName) # closes file.
 				frame.openDirectory=os.path.dirname(fileName)
-				
-				#@<< make fileName the most recent file of frame >>
-				#@+node:1::<< make fileName the most recent file of frame >>
-				#@+body
-				# Update the recent files list in all windows.
-				normFileName = os.path.normcase(fileName)
-				
-				for frame in app().windowList:
-					# Remove all versions of the file name.
-					for name in frame.recentFiles:
-						name2 = os.path.normcase(name)
-						name2 = os.path.normpath(name2)
-						if normFileName == name2:
-							frame.recentFiles.remove(name)
-					frame.recentFiles.insert(0,fileName)
-					# Recreate the Recent Files menu.
-					frame.createRecentFilesMenuItems()
-					
-				# Update the config file.
-				app().config.setRecentFiles(frame.recentFiles)
-				app().config.update()
-				#@-body
-				#@-node:1::<< make fileName the most recent file of frame >>
-
+				frame.updateRecentFiles(fileName)
 				handleLeoHook("open2",
 					old_c=self,new_c=frame.commands,fileName=fileName)
 				return true, frame
@@ -1673,6 +1650,7 @@ class LeoFrame:
 			self.title = self.mFileName
 			self.top.title(self.mFileName)
 			c.fileCommands.save(self.mFileName)
+			self.updateRecentFiles(self.mFileName)
 	#@-body
 	#@-node:6::OnSave
 	#@+node:7::OnSaveAs
@@ -1695,6 +1673,7 @@ class LeoFrame:
 			self.title = self.mFileName
 			self.top.title(self.mFileName)
 			self.commands.fileCommands.saveAs(self.mFileName)
+			self.updateRecentFiles(self.mFileName)
 	
 	#@-body
 	#@-node:7::OnSaveAs
@@ -1716,6 +1695,7 @@ class LeoFrame:
 		if len(fileName) > 0:
 			fileName = ensure_extension(fileName, ".leo")
 			self.commands.fileCommands.saveTo(fileName)
+			self.updateRecentFiles(self.mFileName)
 	
 	#@-body
 	#@-node:8::OnSaveTo
@@ -1766,6 +1746,29 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:10::frame.OnQuit
+	#@+node:11::frame.updateRecentFiles
+	#@+body
+	def updateRecentFiles (self, fileName):
+		
+		# Update the recent files list in all windows.
+		normFileName = os.path.normcase(fileName)
+		
+		for frame in app().windowList:
+			# Remove all versions of the file name.
+			for name in frame.recentFiles:
+				name2 = os.path.normcase(name)
+				name2 = os.path.normpath(name2)
+				if normFileName == name2:
+					frame.recentFiles.remove(name)
+			frame.recentFiles.insert(0,fileName)
+			# Recreate the Recent Files menu.
+			frame.createRecentFilesMenuItems()
+			
+		# Update the config file.
+		app().config.setRecentFiles(frame.recentFiles)
+		app().config.update()
+	#@-body
+	#@-node:11::frame.updateRecentFiles
 	#@-node:1::top level
 	#@+node:2::Recent Files submenu
 	#@+node:1::frame.OpenWithFileName
@@ -1803,30 +1806,7 @@ class LeoFrame:
 					old_c=self,new_c=frame.commands,fileName=fileName)==None:
 					frame.commands.fileCommands.open(file,fileName) # closes file.
 				frame.openDirectory=os.path.dirname(fileName)
-				
-				#@<< make fileName the most recent file of frame >>
-				#@+node:1::<< make fileName the most recent file of frame >>
-				#@+body
-				# Update the recent files list in all windows.
-				normFileName = os.path.normcase(fileName)
-				
-				for frame in app().windowList:
-					# Remove all versions of the file name.
-					for name in frame.recentFiles:
-						name2 = os.path.normcase(name)
-						name2 = os.path.normpath(name2)
-						if normFileName == name2:
-							frame.recentFiles.remove(name)
-					frame.recentFiles.insert(0,fileName)
-					# Recreate the Recent Files menu.
-					frame.createRecentFilesMenuItems()
-					
-				# Update the config file.
-				app().config.setRecentFiles(frame.recentFiles)
-				app().config.update()
-				#@-body
-				#@-node:1::<< make fileName the most recent file of frame >>
-
+				frame.updateRecentFiles(fileName)
 				handleLeoHook("open2",
 					old_c=self,new_c=frame.commands,fileName=fileName)
 				return true, frame

@@ -3333,6 +3333,7 @@ class atFile:
 	def writeAll(self,v,partialFlag):
 	
 		self.initIvars()
+		writtenFiles = [] # List of files that might be written again.
 		# Kludge: look at whole tree if forceFlag is false;
 		if partialFlag: after = v.nodeAfterTree()
 		else: after = None
@@ -3355,39 +3356,47 @@ class atFile:
 		#@-body
 		#@-node:1::<< Clear all orphan bits >>
 
-		written = false
 		while v and v != after:
 			# trace(`v`)
-			if v.isAtSilentFileNode(): # @ignore not recognised in @silentfile nodes.
-				if v.isDirty() or partialFlag:
-					self.silentWrite(v)
-					written = true
-				v = v.nodeAfterTree()
-			elif v.isAtIgnoreNode():
-				v = v.nodeAfterTree()
-			elif v.isAtRawFileNode():
-				if v.isDirty() or partialFlag:
-					self.rawWrite(v)
-					written = true
-				v = v.nodeAfterTree()
-			elif v.isAtNoSentinelsFileNode():
-				if v.isDirty() or partialFlag:
-					self.write(v,nosentinels=true)
-					written = true
-				v = v.nodeAfterTree()
-			elif v.isAtFileNode():
-				if v.isDirty() or partialFlag:
-					self.write(v)
-					written = true
-				else:
+			if v.isAnyAtFileNode() or v.isAtIgnoreNode():
+				
+				#@<< handle v's tree >>
+				#@+node:2::<< handle v's tree >>
+				#@+body
+				# This code is a little tricky: @ignore not recognised in @silentfile nodes.
+				if v.isDirty() or partialFlag or v.t in writtenFiles:
+					if v.isAtSilentFileNode():
+						self.silentWrite(v)
+					elif v.isAtIgnoreNode():
+						pass
+					elif v.isAtRawFileNode():
+						self.rawWrite(v)
+					elif v.isAtNoSentinelsFileNode():
+						self.write(v,nosentinels=true)
+					elif v.isAtFileNode():
+						self.write(v)
+				
+					if not v.isAtIgnoreNode():
+						writtenFiles.append(v.t)
+				
+				elif v.isAtFileNode():
 					self.checkForLeoCustomize(v)
+					
+				
+				
+				
+				#@-body
+				#@-node:2::<< handle v's tree >>
+
 				v = v.nodeAfterTree()
-			else: v = v.threadNext()
+			else:
+				v = v.threadNext()
 		if partialFlag: # This is the Write @file Nodes command.
-			if written:
+			if len(writtenFiles) > 0:
 				es("finished")
 			else:
 				es("no @file or similar nodes in the selected tree")
+	
 	#@-body
 	#@-node:17::atFile.writeAll
 	#@-node:6::Writing

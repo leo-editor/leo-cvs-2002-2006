@@ -743,7 +743,18 @@ class vnode:
 	
 	#@-body
 	#@-node:3::isAt/../Node
-	#@+node:4::isAtIgnoreNode
+	#@+node:4::isAnyAtFileNode
+	#@+body
+	def isAnyAtFileNode (self):
+		
+		return (
+			self.isAtFileNode() or
+			self.isAtNoSentinelsFileNode() or
+			self.isAtRawFileNode() or
+			self.isAtSilentFileNode())
+	#@-body
+	#@-node:4::isAnyAtFileNode
+	#@+node:5::isAtIgnoreNode
 	#@+body
 	#@+at
 	#  Returns true if the receiver contains @ignore in its body at the start 
@@ -757,8 +768,8 @@ class vnode:
 		flag, i = is_special(self.t.bodyString, 0, "@ignore")
 		return flag
 	#@-body
-	#@-node:4::isAtIgnoreNode
-	#@+node:5::isAtOthersNode
+	#@-node:5::isAtIgnoreNode
+	#@+node:6::isAtOthersNode
 	#@+body
 	#@+at
 	#  Returns true if the receiver contains @others in its body at the start 
@@ -772,8 +783,8 @@ class vnode:
 		flag, i = is_special(self.t.bodyString,0,"@others")
 		return flag
 	#@-body
-	#@-node:5::isAtOthersNode
-	#@+node:6::matchHeadline
+	#@-node:6::isAtOthersNode
+	#@+node:7::matchHeadline
 	#@+body
 	#@+at
 	#  Returns true if the headline matches the pattern ignoring whitespace 
@@ -796,7 +807,7 @@ class vnode:
 		# ignore characters in the headline following the match
 		return p == h[0:len(p)]
 	#@-body
-	#@-node:6::matchHeadline
+	#@-node:7::matchHeadline
 	#@-node:8::Comparisons (vnode)
 	#@+node:9::File Conversion (vnode)
 	#@+node:1::convertTreeToString
@@ -1350,7 +1361,7 @@ class vnode:
 		self.statusBits &= ~ self.clonedBit
 	#@-body
 	#@-node:3::clearClonedBit
-	#@+node:4::clearDirty & clearDirtyJoined
+	#@+node:4::clearDirty & clearDirtyJoined (redundant code)
 	#@+body
 	def clearDirty (self):
 	
@@ -1359,17 +1370,18 @@ class vnode:
 	
 	def clearDirtyJoined (self):
 	
+		# trace()
 		v = self ; c = v.commands
 		c.beginUpdate()
-		if 1: # update range
-			v.t.clearDirty()
-			v2 = v.getJoinList()
-			while v2 and v2 != self:
-				v2.t.clearDirty()
-				v2 = v2.getJoinList()
+		v.t.clearDirty()
+		# Redundant: for all v2 v's join list v2.t == v.t !
+		#v2 = v.getJoinList()
+		#while v2 and v2 != self: 
+		#	v2.t.clearDirty()
+		#	v2 = v2.getJoinList()
 		c.endUpdate() # recomputes all icons
 	#@-body
-	#@-node:4::clearDirty & clearDirtyJoined
+	#@-node:4::clearDirty & clearDirtyJoined (redundant code)
 	#@+node:5::clearMarked
 	#@+body
 	def clearMarked (self):
@@ -1432,6 +1444,9 @@ class vnode:
 	# redraw_flag to the caller.
 	# 
 	# This marks v dirty and all cloned nodes in v's tree.
+	# 
+	# 2/1/03: I don't see how this can possibly be correct.
+	# Why is it needed?? If it is needed, what about undo??
 
 	#@-at
 	#@@c
@@ -1482,12 +1497,11 @@ class vnode:
 		redraw_flag = false
 		c.beginUpdate()
 		while v:
-			if not v.isDirty() and (
-				v.isAtFileNode() or v.isAtRawFileNode() or v.isAtNoSentinelsFileNode()):
+			if not v.isDirty() and v.isAnyAtFileNode():
 				redraw_flag = true
 				v.t.setDirty() # Do not call v.setDirty here!
 			v = v.parent()
-		c.endUpdate(redraw_flag) # A crucial optimization!
+		c.endUpdate(redraw_flag) # A crucial optimization: does nothing if inside nested begin/endUpdate.
 		return redraw_flag # Allow caller to do the same optimization.
 	#@-body
 	#@-node:12::setAncestorAtFileNodeDirty
@@ -1505,14 +1519,15 @@ class vnode:
 			self.statusBits &= ~ self.clonedBit
 	#@-body
 	#@-node:13::setClonedBit & initClonedBit
-	#@+node:14::setDirty, setDirtyDeleted & initDirtyBit
+	#@+node:14::setDirty, setDirtyDeleted & initDirtyBit (redundant code)
 	#@+body
 	#@+at
 	#  v.setDirty now ensures that all cloned nodes are marked dirty and that 
 	# all ancestor @file nodes are marked dirty.  It is much safer to do it 
 	# this way.
 	# 
-	# v.setDirtyDeleted is used only when a node is deleted.
+	# v.setDirtyDeleted is used only when a node is deleted.  (And why is it 
+	# even needed????)
 
 	#@-at
 	#@@c
@@ -1530,10 +1545,13 @@ class vnode:
 		if v.setAncestorAtFileNodeDirty():
 			changed = true
 		v2 = v.getJoinList()
-		while v2 and v2 != v: 
-			if not v2.t.isDirty():
-				v2.t.setDirty()
-				changed = true
+		while v2 and v2 != v:
+			assert(v2.t.isDirty())
+			# Redundant: for all v2 v's join list v2.t == v.t !
+			#if not v2.t.isDirty():
+			#	v2.t.setDirty()
+			#	changed = true
+	
 			# Again, must always be called.
 			if v2.setAncestorAtFileNodeDirty():
 				changed = true
@@ -1542,6 +1560,11 @@ class vnode:
 		return changed
 		
 	def setDirtyDeleted (self):
+		
+		self.setDirty()
+		return
+		
+		## This code is bizarre and unnecessary.
 	
 		v = self ; c = v.commands
 		# trace(`v`)
@@ -1554,10 +1577,13 @@ class vnode:
 		if v.setAncestorsOfClonedNodesInTreeDirty():
 			changed = true
 		v2 = v.getJoinList()
-		while v2 and v2 != v: 
-			if not v2.t.isDirty():
-				v2.t.setDirty()
-				changed = true
+		while v2 and v2 != v:
+			assert(v2.t.isDirty())
+			# Redundant: for all v2 v's join list v2.t == v.t !
+			#if not v2.t.isDirty():
+			#	v2.t.setDirty()
+			#	changed = true
+	
 			# Again, must always be called.
 			if v2.setAncestorsOfClonedNodesInTreeDirty():
 				changed = true
@@ -1568,7 +1594,7 @@ class vnode:
 	def initDirtyBit (self):
 		self.t.setDirty()
 	#@-body
-	#@-node:14::setDirty, setDirtyDeleted & initDirtyBit
+	#@-node:14::setDirty, setDirtyDeleted & initDirtyBit (redundant code)
 	#@+node:15::setMarked & initMarkedBit
 	#@+body
 	def setMarked (self):

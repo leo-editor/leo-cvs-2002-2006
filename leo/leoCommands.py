@@ -1141,87 +1141,7 @@ class Commands:
 	#@-node:10::Enabling Menu Items (Commands)
 	#@+node:11::Expand & Contract
 	#@+node:1::Commands
-	#@+node:1::No longer used
-	#@+body
-	#@+at
-	#  Making the expand/contract routines local to the selected nodes 
-	# eliminates the need for these routines.
-
-	#@-at
-	#@-body
-	#@+node:1::contractAllSubheads
-	#@+body
-	# Contracts all offspring of the current node.
-	
-	def contractAllSubheads (self):
-	
-		c = self ;v = c.currentVnode()
-		if not v: return
-	
-		child = v.firstChild()
-		c.beginUpdate()
-		while child:
-			c.contractSubtree(child)
-			child = child.next()
-		c.endUpdate()
-		c.selectVnode(v) # Needed?
-		c.expansionLevel = 0
-	#@-body
-	#@-node:1::contractAllSubheads
-	#@+node:2::contractSubheads
-	#@+body
-	# Contracts the children of the current node.
-	
-	def contractSubheads (self):
-	
-		c = self ; v = c.currentVnode()
-		if not v: return
-		
-		# trace(`v`)
-	
-		child = v.firstChild()
-		c.beginUpdate()
-		while child:
-			child.contract()
-			child = child.next()
-		c.endUpdate()
-		c.selectVnode(v) # Needed?
-		c.expansionLevel = 0
-	#@-body
-	#@-node:2::contractSubheads
-	#@+node:3::expandAllHeadlines
-	#@+body
-	def expandAllHeadlines(self):
-	
-		c = self ; v = root = c.rootVnode()
-		c.beginUpdate()
-		while v:
-			c.expandSubtree(v)
-			v = v.next()
-		c.selectVnode(root)
-		c.endUpdate()
-		c.expansionLevel = 0 # Reset expansion level.
-	#@-body
-	#@-node:3::expandAllHeadlines
-	#@+node:4::expandSubheads
-	#@+body
-	def expandSubheads (self):
-	
-		c = self ; v = c.currentVnode()
-		if not v: return
-	
-		child = v.firstChild()
-		c.beginUpdate()
-		v.expand()
-		while child:
-			child.expand()
-			child = child.next()
-		c.selectVnode(v)
-		c.endUpdate()
-	#@-body
-	#@-node:4::expandSubheads
-	#@-node:1::No longer used
-	#@+node:2::contractAllHeadlines
+	#@+node:1::contractAllHeadlines
 	#@+body
 	def contractAllHeadlines (self):
 	
@@ -1240,8 +1160,8 @@ class Commands:
 		c.endUpdate()
 		c.expansionLevel = 1 # Reset expansion level.
 	#@-body
-	#@-node:2::contractAllHeadlines
-	#@+node:3::contractNode
+	#@-node:1::contractAllHeadlines
+	#@+node:2::contractNode
 	#@+body
 	def contractNode (self):
 		
@@ -1251,8 +1171,8 @@ class Commands:
 		v.contract()
 		c.endUpdate()
 	#@-body
-	#@-node:3::contractNode
-	#@+node:4::contractParent
+	#@-node:2::contractNode
+	#@+node:3::contractParent
 	#@+body
 	def contractParent (self):
 		
@@ -1265,8 +1185,8 @@ class Commands:
 		parent.contract()
 		c.endUpdate()
 	#@-body
-	#@-node:4::contractParent
-	#@+node:5::expandAllSubheads
+	#@-node:3::contractParent
+	#@+node:4::expandAllSubheads
 	#@+body
 	def expandAllSubheads (self):
 	
@@ -1282,8 +1202,8 @@ class Commands:
 		c.selectVnode(v)
 		c.endUpdate()
 	#@-body
-	#@-node:5::expandAllSubheads
-	#@+node:6::expandLevel1..9
+	#@-node:4::expandAllSubheads
+	#@+node:5::expandLevel1..9
 	#@+body
 	def expandLevel1 (self): self.expandToLevel(1)
 	def expandLevel2 (self): self.expandToLevel(2)
@@ -1296,8 +1216,8 @@ class Commands:
 	def expandLevel9 (self): self.expandToLevel(9)
 	
 	#@-body
-	#@-node:6::expandLevel1..9
-	#@+node:7::expandNextLevel
+	#@-node:5::expandLevel1..9
+	#@+node:6::expandNextLevel
 	#@+body
 	def expandNextLevel (self):
 	
@@ -1311,8 +1231,8 @@ class Commands:
 		self.expandToLevel(c.expansionLevel + 1)
 	
 	#@-body
-	#@-node:7::expandNextLevel
-	#@+node:8::expandNode
+	#@-node:6::expandNextLevel
+	#@+node:7::expandNode
 	#@+body
 	def expandNode (self):
 		
@@ -1323,8 +1243,8 @@ class Commands:
 		c.endUpdate()
 	
 	#@-body
-	#@-node:8::expandNode
-	#@+node:9::expandPrevLevel
+	#@-node:7::expandNode
+	#@+node:8::expandPrevLevel
 	#@+body
 	def expandPrevLevel (self):
 	
@@ -1338,41 +1258,10 @@ class Commands:
 		self.expandToLevel(max(1,c.expansionLevel - 1))
 	
 	#@-body
-	#@-node:9::expandPrevLevel
+	#@-node:8::expandPrevLevel
 	#@-node:1::Commands
 	#@+node:2::Utilities
-	#@+node:1::no longer used
-	#@+node:1::expandVnode
-	#@+body
-	def expandVnode (self,v):
-	
-		v.expand()
-	#@-body
-	#@-node:1::expandVnode
-	#@+node:2::expandTreeToLevelFromLevel
-	#@+body
-	def expandTreeToLevelFromLevel (self,v,toLevel,fromLevel):
-	
-		if toLevel <= fromLevel: return
-		c = self
-		while v:
-			# Expand this node.
-			v.expand()
-			# Recursively expand lower levels.
-			c.expandTreeToLevelFromLevel(v.firstChild(),toLevel,fromLevel + 1)
-			v = v.next()
-	#@-body
-	#@-node:2::expandTreeToLevelFromLevel
-	#@+node:3::contractVnode
-	#@+body
-	def contractVnode (self,v):
-	
-		v.contract()
-		# self.tree.redraw()
-	#@-body
-	#@-node:3::contractVnode
-	#@-node:1::no longer used
-	#@+node:2::contractSubtree
+	#@+node:1::contractSubtree
 	#@+body
 	def contractSubtree (self,v):
 	
@@ -1381,8 +1270,8 @@ class Commands:
 			v.contract()
 			v = v.threadNext()
 	#@-body
-	#@-node:2::contractSubtree
-	#@+node:3::expandSubtree
+	#@-node:1::contractSubtree
+	#@+node:2::expandSubtree
 	#@+body
 	def expandSubtree (self,v):
 	
@@ -1393,8 +1282,8 @@ class Commands:
 			v = v.threadNext()
 		c.tree.redraw()
 	#@-body
-	#@-node:3::expandSubtree
-	#@+node:4::expandToLevel
+	#@-node:2::expandSubtree
+	#@+node:3::expandToLevel
 	#@+body
 	def expandToLevel (self,level):
 	
@@ -1421,7 +1310,7 @@ class Commands:
 		c.expansionNode = c.currentVnode()
 		c.endUpdate()
 	#@-body
-	#@-node:4::expandToLevel
+	#@-node:3::expandToLevel
 	#@-node:2::Utilities
 	#@-node:11::Expand & Contract
 	#@+node:12::Getters & Setters
