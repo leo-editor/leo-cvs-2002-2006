@@ -2790,7 +2790,7 @@
 </v>
 <v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
-<v t="dthein.20040108213304" a="V"><vh>reformatParagraphsTests</vh>
+<v t="dthein.20040108213304" a="E"><vh>reformatParagraphsTests</vh>
 <v t="dthein.20040108213304.1"><vh>testNoTrailingNewline</vh>
 <v t="dthein.20040108213304.2"><vh>before</vh></v>
 <v t="dthein.20040108213304.3"><vh>after</vh></v>
@@ -2843,8 +2843,8 @@
 <v t="dthein.20040110062310.1"><vh>before</vh></v>
 <v t="dthein.20040110062310.2"><vh>after</vh></v>
 </v>
-<v t="dthein.20040121204705"><vh>testWithLeadingWSOnEmptyLines</vh>
-<v t="dthein.20040121204705.1"><vh>before</vh></v>
+<v t="dthein.20040121204705" a="E"><vh>testWithLeadingWSOnEmptyLines</vh>
+<v t="dthein.20040121204705.1" a="V"><vh>before</vh></v>
 <v t="dthein.20040121204705.2"><vh>after</vh></v>
 </v>
 </v>
@@ -3275,8 +3275,7 @@ paragraph.
      number 3.  It is the third item in the list.
   
 This paragraph ends the test.  It is the "final"
-paragraph.
-</t>
+paragraph.</t>
 <t tx="dthein.20040121204705.2">This paragraph leads of this test. It is
 the "lead" paragraph.
   
