@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1514" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1544" clone_windows="0"/>
 <globals body_outline_ratio="0.42888165038002174">
-	<global_window_position top="42" left="186" height="921" width="957"/>
+	<global_window_position top="10" left="246" height="921" width="951"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -14,12 +14,8 @@
 <vnodes>
 <v t="edream.110203113231"><vh>Diary</vh>
 <v t="ekr.20040119102021"><vh>2004</vh>
-<v t="ekr.20040312102949" a="E"><vh>March</vh>
-<v t="ekr.20040314110639"><vh>3/14 Improved hoist plugin</vh></v>
-<v t="ekr.20040312103324" a="E"><vh>3/12</vh>
-<v t="ekr.20040312103324.1"><vh>Replaced v by p in argument to scanDirectives</vh></v>
-<v t="ekr.20040312102949.1"><vh>Changed app() to app everywhere</vh></v>
-</v>
+<v t="ekr.20040325075338"><vh>March 2004</vh>
+<v t="ekr.20040325075338.1"><vh>3/25: revised for 4.2 code base</vh></v>
 </v>
 <v t="ekr.20040201061422"><vh>February 2004</vh>
 <v t="ekr.20040226104623"><vh>2/26 Inserted @language python in all plugins</vh></v>
@@ -997,12 +993,12 @@
 </v>
 <v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
 <v t="edream.031217101015"><vh>Contributed scripts</vh>
-<v t="edream.110203113231.619" a="E"><vh>From Bernhard Mulder</vh>
-<v t="edream.110203113231.620" a="E" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
+<v t="edream.110203113231.619"><vh>From Bernhard Mulder</vh>
+<v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
 <v t="edream.110203113231.622"><vh>filesize</vh></v>
 <v t="edream.110203113231.623"><vh>format</vh></v>
-<v t="edream.110203113231.624" a="E"><vh>class TreeItem</vh>
+<v t="edream.110203113231.624"><vh>class TreeItem</vh>
 <v t="edream.110203113231.625"><vh>__init__</vh></v>
 <v t="edream.110203113231.626"><vh>format_directory</vh></v>
 <v t="edream.110203113231.627"><vh>format_file</vh></v>
@@ -1052,14 +1048,14 @@
 <v t="edream.110203113231.666"><vh>leotree</vh></v>
 </v>
 </v>
-<v t="edream.031217101015.1" a="E"><vh>From RodrigoB</vh>
+<v t="edream.031217101015.1"><vh>From RodrigoB</vh>
 <v t="edream.120703082844" tnodeList="edream.120703082844,edream.120703082844.1,edream.120703082844.2"><vh>@file mod_updown.py</vh>
 <v t="edream.120703082844.1"><vh>0nStart2</vh></v>
 <v t="edream.120703082844.2"><vh>OnBodyKey</vh></v>
 </v>
 </v>
 </v>
-<v t="edream.110203113231.667" a="E"><vh>Commands</vh>
+<v t="edream.110203113231.667"><vh>Commands</vh>
 <v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
 <v t="edream.110203113231.669" tnodeList="edream.110203113231.669,edream.110203113231.670,edream.110203113231.671,edream.110203113231.672,edream.110203113231.673,edream.110203113231.674,edream.110203113231.675,edream.110203113231.676"><vh>@file import_cisco_config.py</vh>
 <v t="edream.110203113231.670"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
@@ -1125,9 +1121,9 @@
 <v t="edream.110203113231.720" tnodeList="edream.110203113231.720,edream.110203113231.721"><vh>@file outline_export.py</vh>
 <v t="edream.110203113231.721"><vh>newMoreHead</vh></v>
 </v>
-<v t="edream.110203113231.722" a="E"><vh>mod_autosave</vh>
-<v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
-<v t="edream.110203113231.724" a="E" tnodeList="edream.110203113231.724,edream.110203113231.725,edream.110203113231.726"><vh>@file mod_autosave.py</vh>
+<v t="edream.110203113231.722"><vh>mod_autosave</vh>
+<v t="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
+<v t="edream.110203113231.724" tnodeList="edream.110203113231.724,edream.110203113231.725,edream.110203113231.726"><vh>@file mod_autosave.py</vh>
 <v t="edream.110203113231.725"><vh>applyConfiguration</vh></v>
 <v t="edream.110203113231.726"><vh>autosave</vh></v>
 </v>
@@ -1158,8 +1154,8 @@
 <v t="edream.110203113231.743"><vh>scanPluginDirectives</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.744" a="E"><vh>Drawing, graphics &amp; styled text</vh>
-<v t="edream.110403140857" a="E"><vh>Wiki plugin 1.4 (color_markup)(requires add-directives plugin)</vh>
+<v t="edream.110203113231.744"><vh>Drawing, graphics &amp; styled text</vh>
+<v t="edream.110403140857"><vh>Wiki plugin 1.4 (color_markup)(requires add-directives plugin)</vh>
 <v t="edream.110403140857.1"><vh>Plugin documentation</vh>
 <v t="edream.110403140857.2"><vh>Installation</vh></v>
 <v t="edream.110403140857.3"><vh>Use</vh>
@@ -1170,10 +1166,10 @@
 </v>
 <v t="edream.110403140857.7"><vh>Release notes</vh></v>
 </v>
-<v t="edream.110403140857.8" a="E" tnodeList="edream.110403140857.8,edream.110403140857.9,edream.110403140857.10,edream.110403140857.11,edream.110403140857.12,edream.110403140857.13,edream.110403140857.14,edream.110403140857.15,edream.110403140857.16,edream.110403140857.17,edream.110403140857.18,edream.110403140857.20,edream.110403140857.21,edream.110403140857.22,edream.110403140857.23,edream.110403140857.24,edream.110403140857.25,edream.110403140857.26,edream.110403140857.27,edream.110403140857.28"><vh>@file color_markup.py</vh>
+<v t="edream.110403140857.8" tnodeList="edream.110403140857.8,edream.110403140857.9,edream.110403140857.10,edream.110403140857.11,edream.110403140857.12,edream.110403140857.13,edream.110403140857.14,edream.110403140857.15,edream.110403140857.16,edream.110403140857.17,edream.110403140857.18,edream.110403140857.20,edream.110403140857.21,edream.110403140857.22,edream.110403140857.23,edream.110403140857.24,edream.110403140857.25,edream.110403140857.26,edream.110403140857.27,edream.110403140857.28"><vh>@file color_markup.py</vh>
 <v t="edream.110403140857.9"><vh>initAnyMarkup</vh></v>
 <v t="edream.110403140857.10"><vh>colorWikiMarkup</vh></v>
-<v t="edream.110403140857.11" a="E"><vh>doWikiText</vh>
+<v t="edream.110403140857.11"><vh>doWikiText</vh>
 <v t="edream.110403140857.12"><vh>&lt;&lt; set first to a tuple describing the first tag to be handled &gt;&gt;</vh></v>
 <v t="edream.110403140857.13"><vh>&lt;&lt; handle the tag using n1,n2,delim1,delim2 &gt;&gt;</vh>
 <v t="edream.110403140857.14"><vh>&lt;&lt; parse and handle color field &gt;&gt;</vh></v>
@@ -1198,16 +1194,16 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.753" a="E" tnodeList="edream.110203113231.753,edream.110203113231.754,edream.110203113231.755,edream.110203113231.756,edream.110203113231.757"><vh>@file image.py</vh>
-<v t="edream.110203113231.754" a="E"><vh>onSelect</vh>
+<v t="edream.110203113231.753" tnodeList="edream.110203113231.753,edream.110203113231.754,edream.110203113231.755,edream.110203113231.756,edream.110203113231.757"><vh>@file image.py</vh>
+<v t="edream.110203113231.754"><vh>onSelect</vh>
 <v t="edream.110203113231.755"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203113231.756" a="E"><vh>onUnselect</vh>
+<v t="edream.110203113231.756"><vh>onUnselect</vh>
 <v t="edream.110203113231.757"><vh>&lt;&lt; Unselect Image &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.758" a="E" tnodeList="edream.110203113231.758,edream.110203113231.759,edream.110203113231.760,edream.110203113231.761,edream.110203113231.762,edream.110203113231.763,edream.110203113231.764,edream.110203113231.766,edream.110203113231.767,edream.110203113231.768,edream.110203113231.769,edream.110203113231.770,edream.110203113231.771,edream.110203113231.772,edream.110203113231.773,edream.110203113231.774,edream.110203113231.775,edream.110203113231.776,edream.110203113231.777,edream.110203113231.778,edream.110203113231.779,edream.110203113231.780,edream.110203113231.781,edream.110203113231.782,edream.110203113231.783,edream.110203113231.784,edream.110203113231.785,edream.110203113231.786,edream.110203113231.787,edream.110203113231.788,edream.110203113231.789"><vh>@file nav_buttons.py</vh>
-<v t="edream.110203113231.759" a="E"><vh>class commanderInfoClass</vh>
+<v t="edream.110203113231.758" tnodeList="edream.110203113231.758,edream.110203113231.759,edream.110203113231.760,edream.110203113231.761,edream.110203113231.762,edream.110203113231.763,edream.110203113231.764,edream.110203113231.766,edream.110203113231.767,edream.110203113231.768,edream.110203113231.769,edream.110203113231.770,edream.110203113231.771,edream.110203113231.772,edream.110203113231.773,edream.110203113231.774,edream.110203113231.775,edream.110203113231.776,edream.110203113231.777,edream.110203113231.778,edream.110203113231.779,edream.110203113231.780,edream.110203113231.781,edream.110203113231.782,edream.110203113231.783,edream.110203113231.784,edream.110203113231.785,edream.110203113231.786,edream.110203113231.787,edream.110203113231.788,edream.110203113231.789"><vh>@file nav_buttons.py</vh>
+<v t="edream.110203113231.759"><vh>class commanderInfoClass</vh>
 <v t="edream.110203113231.760"><vh>__init__ (commanderInfoClass)</vh></v>
 <v t="edream.110203113231.761"><vh>addWidgets</vh>
 <v t="edream.110203113231.762"><vh>&lt;&lt; define callbacks &gt;&gt;</vh></v>
@@ -1247,12 +1243,12 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.790" a="E"><vh>External editors &amp; Open With</vh>
+<v t="edream.110203113231.790"><vh>External editors &amp; Open With</vh>
 <v t="edream.120303095057.1" tnodeList="edream.120303095057.1,edream.120303095910,edream.120303095910.1"><vh>@file mod_tempfname.py</vh>
 <v t="edream.120303095910"><vh>onStart</vh></v>
 <v t="edream.120303095910.1"><vh>openWithTempFilePath</vh></v>
 </v>
-<v t="edream.110203113231.791" a="E" tnodeList="edream.110203113231.791,edream.110203113231.792,edream.110203113231.793,edream.110203113231.794,edream.110203113231.795,edream.110203113231.796"><vh>@file open_with.py</vh>
+<v t="edream.110203113231.791" tnodeList="edream.110203113231.791,edream.110203113231.792,edream.110203113231.793,edream.110203113231.794,edream.110203113231.795,edream.110203113231.796"><vh>@file open_with.py</vh>
 <v t="edream.110203113231.792"><vh>on_idle</vh>
 <v t="edream.110203113231.793"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
 <v t="edream.110203113231.794"><vh>&lt;&lt; set s to the file text &gt;&gt;</vh></v>
@@ -1262,27 +1258,27 @@
 <v t="edream.110203113231.796"><vh>&lt;&lt; create the Open With menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.799" a="E" tnodeList="edream.110203113231.799,edream.110203113231.800"><vh>@file vim.py</vh>
+<v t="edream.110203113231.799" tnodeList="edream.110203113231.799,edream.110203113231.800"><vh>@file vim.py</vh>
 <v t="edream.110203113231.800"><vh>open_in_vim</vh></v>
 </v>
 <v t="edream.110203113231.797" tnodeList="edream.110203113231.797"><vh>@file xemacs.py</vh></v>
-<v t="edream.110203113231.803" a="E"><vh>Word export</vh>
-<v t="edream.110203113231.804" a="E" tnodeList="edream.110203113231.804,edream.110203113231.805,edream.110203113231.806,edream.110203113231.807,edream.110203113231.808,edream.110203113231.809"><vh>@file word_export.py</vh>
+<v t="edream.110203113231.803"><vh>Word export</vh>
+<v t="edream.110203113231.804" tnodeList="edream.110203113231.804,edream.110203113231.805,edream.110203113231.806,edream.110203113231.807,edream.110203113231.808,edream.110203113231.809"><vh>@file word_export.py</vh>
 <v t="edream.110203113231.805"><vh>getConfiguration</vh></v>
 <v t="edream.110203113231.806"><vh>getWordConnection</vh></v>
 <v t="edream.110203113231.807"><vh>doPara</vh></v>
 <v t="edream.110203113231.808"><vh>writeNodeAndTree</vh></v>
 <v t="edream.110203113231.809"><vh>cmd_Export</vh></v>
 </v>
-<v t="edream.110203113231.810" tnodeList="edream.110203113231.810"><vh>@file-nosent word_export.ini</vh></v>
+<v t="edream.110203113231.810"><vh>@file-nosent word_export.ini</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.811" a="E"><vh>Files</vh>
+<v t="edream.110203113231.811"><vh>Files</vh>
 <v t="edream.110203113231.812" tnodeList="edream.110203113231.812,edream.110203113231.813,edream.110203113231.814"><vh>@file empty_leo_file.py</vh>
 <v t="edream.110203113231.813"><vh>&lt;&lt; define minimal .leo file &gt;&gt;</vh></v>
 <v t="edream.110203113231.814"><vh>onOpen</vh></v>
 </v>
-<v t="edream.110203113231.815" a="E" tnodeList="edream.110203113231.815,edream.110203113231.816,edream.110203113231.817,edream.110203113231.818,edream.110203113231.819,edream.110203113231.820,edream.110203113231.821,edream.110203113231.822"><vh>@file open_shell.py</vh>
+<v t="edream.110203113231.815" tnodeList="edream.110203113231.815,edream.110203113231.816,edream.110203113231.817,edream.110203113231.818,edream.110203113231.819,edream.110203113231.820,edream.110203113231.821,edream.110203113231.822"><vh>@file open_shell.py</vh>
 <v t="edream.110203113231.816"><vh>&lt;&lt; about the open shell plugin &gt;&gt;</vh></v>
 <v t="edream.110203113231.817"><vh>load_menu</vh></v>
 <v t="edream.110203113231.818"><vh>_getpath</vh></v>
@@ -1305,9 +1301,9 @@
 <v t="edream.110203113231.830"><vh>onOpen</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.831" a="E"><vh>Menus</vh>
-<v t="edream.110203113231.832" a="E"><vh> Plugins menu</vh>
-<v t="edream.110203113231.833" a="E" tnodeList="edream.110203113231.833,edream.110203113231.834,edream.110203113231.835,edream.110203113231.836,edream.110203113231.837,edream.110203113231.838,edream.110203113231.839,edream.110203113231.840,edream.110203113231.841,edream.110203113231.842,edream.110203113231.843,edream.110203113231.844,edream.110203113231.845,edream.110203113231.846,edream.110203113231.847,edream.110203113231.848,edream.110203113231.849,edream.110203113231.850,edream.110203113231.851,edream.110203113231.852,edream.110203113231.853,edream.110203113231.854,edream.110203113231.855"><vh>@file plugins_menu.py</vh>
+<v t="edream.110203113231.831"><vh>Menus</vh>
+<v t="edream.110203113231.832"><vh> Plugins menu</vh>
+<v t="edream.110203113231.833" tnodeList="edream.110203113231.833,edream.110203113231.834,edream.110203113231.835,edream.110203113231.836,edream.110203113231.837,edream.110203113231.838,edream.110203113231.839,edream.110203113231.840,edream.110203113231.841,edream.110203113231.842,edream.110203113231.843,edream.110203113231.844,edream.110203113231.845,edream.110203113231.846,edream.110203113231.847,edream.110203113231.848,edream.110203113231.849,edream.110203113231.850,edream.110203113231.851,edream.110203113231.852,edream.110203113231.853,edream.110203113231.854,edream.110203113231.855"><vh>@file plugins_menu.py</vh>
 <v t="edream.110203113231.834"><vh>class Plugin</vh>
 <v t="edream.110203113231.835"><vh>__init__</vh>
 <v t="edream.110203113231.836"><vh>&lt;&lt; Check if this can be configured &gt;&gt;</vh></v>
@@ -1329,7 +1325,7 @@
 <v t="edream.110203113231.848"><vh>Event Handlers</vh></v>
 <v t="edream.110203113231.849"><vh>writeConfiguration</vh></v>
 </v>
-<v t="edream.110203113231.850" a="E"><vh>class PluginAbout</vh>
+<v t="edream.110203113231.850"><vh>class PluginAbout</vh>
 <v t="edream.110203113231.851"><vh>__init__</vh>
 <v t="edream.110203113231.852"><vh>&lt;&lt; Create the contents of the about box &gt;&gt;</vh></v>
 <v t="edream.110203113231.853"><vh>&lt;&lt; Create the close button &gt;&gt;</vh></v>
@@ -1339,10 +1335,10 @@
 <v t="edream.110203113231.855"><vh>&lt;&lt; add items to the plugins menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.856" a="E" tnodeList="edream.110203113231.856,edream.110203113231.857,edream.110203113231.858,edream.110203113231.859,edream.110203113231.860,edream.110203113231.861,edream.110203113231.862"><vh>@file pluginsTest.py</vh>
+<v t="edream.110203113231.856" tnodeList="edream.110203113231.856,edream.110203113231.857,edream.110203113231.858,edream.110203113231.859,edream.110203113231.860,edream.110203113231.861,edream.110203113231.862"><vh>@file pluginsTest.py</vh>
 <v t="edream.110203113231.857"><vh>applyConfiguration</vh></v>
 <v t="edream.110203113231.858"><vh>cmd_fn1/2/3</vh></v>
-<v t="edream.110203113231.859" a="E"><vh>onSelect</vh>
+<v t="edream.110203113231.859"><vh>onSelect</vh>
 <v t="edream.110203113231.860"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203113231.861"><vh>onUnselect</vh>
@@ -1355,7 +1351,7 @@
 <v t="edream.110203113231.866"><vh> Initial suggestion from Paul Paterson</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.867" a="E" tnodeList="edream.110203113231.867,edream.110203113231.868,edream.110203113231.869,edream.110203113231.870,edream.110203113231.871"><vh>@file scripts_menu.py</vh>
+<v t="edream.110203113231.867" tnodeList="edream.110203113231.867,edream.110203113231.868,edream.110203113231.869,edream.110203113231.870,edream.110203113231.871"><vh>@file scripts_menu.py</vh>
 <v t="edream.110203113231.868"><vh>createScriptsMenu</vh>
 <v t="edream.110203113231.869"><vh>&lt;&lt; Return if no scripts exist anywhere &gt;&gt;</vh></v>
 <v t="edream.110203113231.870"><vh>&lt;&lt; Create top-level entries for every script in top_scripts &gt;&gt;</vh></v>
@@ -1363,7 +1359,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.872" a="E"><vh>New kinds of nodes</vh>
+<v t="edream.110203113231.872"><vh>New kinds of nodes</vh>
 <v t="edream.110203113231.873" tnodeList="edream.110203113231.873,edream.110203113231.874,edream.110203113231.875"><vh>@file at_folder.py</vh>
 <v t="edream.110203113231.874"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
 <v t="edream.110203113231.875"><vh>sync_node_to_folder</vh></v>
@@ -1400,7 +1396,7 @@
 <v t="edream.110203113231.899"><vh>on_select1</vh></v>
 <v t="edream.110203113231.900"><vh>on_select2</vh></v>
 </v>
-<v t="edream.111803100242" a="E" tnodeList="edream.111803100242,edream.111803100242.1,edream.111803100242.2,edream.111803100242.3,edream.111803100242.4,edream.111803100242.5,edream.111803100242.6,edream.111803100242.7,edream.111803100242.8"><vh>@file rst.py</vh>
+<v t="edream.111803100242" tnodeList="edream.111803100242,edream.111803100242.1,edream.111803100242.2,edream.111803100242.3,edream.111803100242.4,edream.111803100242.5,edream.111803100242.6,edream.111803100242.7,edream.111803100242.8"><vh>@file rst.py</vh>
 <v t="edream.111803100242.1"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
 <v t="edream.111803100242.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
 <v t="edream.111803100242.3"><vh>onIconDoubleClick</vh>
@@ -1420,15 +1416,15 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.915" a="E"><vh>Overriding functions, methods &amp; classes</vh>
-<v t="edream.110203113231.916" a="E" tnodeList="edream.110203113231.916,edream.110203113231.917,edream.110203113231.918"><vh>@file __overrideClasses.py</vh>
+<v t="edream.110203113231.915"><vh>Overriding functions, methods &amp; classes</vh>
+<v t="edream.110203113231.916" tnodeList="edream.110203113231.916,edream.110203113231.917,edream.110203113231.918"><vh>@file __overrideClasses.py</vh>
 <v t="edream.110203113231.917"><vh>&lt;&lt; override the LeoFrame class &gt;&gt;</vh></v>
 <v t="edream.110203113231.918"><vh>&lt;&lt; override methods of the LeoApp class &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203113231.919" tnodeList="edream.110203113231.919,edream.110203113231.920"><vh>@file override_commands.py</vh>
 <v t="edream.110203113231.920"><vh>onCommand</vh></v>
 </v>
-<v t="edream.110203113231.921" a="E" tnodeList="edream.110203113231.921,edream.110203113231.922,edream.110203113231.923"><vh>@file redefine_put.py</vh>
+<v t="edream.110203113231.921" tnodeList="edream.110203113231.921,edream.110203113231.922,edream.110203113231.923"><vh>@file redefine_put.py</vh>
 <v t="edream.110203113231.922"><vh>onStart</vh></v>
 <v t="edream.110203113231.923"><vh>newPut and newPutNl</vh></v>
 </v>
@@ -1440,17 +1436,17 @@
 <v t="edream.110203113231.929"><vh>newEs, etc.</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.930" a="E"><vh>Spell Checking</vh>
+<v t="edream.110203113231.930"><vh>Spell Checking</vh>
 <v t="edream.110203113231.931"><vh>@silentfile mod_spelling.txt</vh></v>
 <v t="edream.110203113231.932" tnodeList="edream.110203113231.932"><vh>@silentfile mod_spelling.ini</vh></v>
-<v t="edream.110203113231.933" a="E" tnodeList="edream.110203113231.933,edream.110203113231.935,edream.110203113231.936,edream.110203113231.937,edream.110203113231.938,edream.110203113231.940,edream.110203113231.941,edream.110203113231.942,edream.110203113231.943,edream.110203113231.944,edream.110203113231.945,edream.110203113231.946,edream.110203113231.947,edream.110203113231.948,edream.110203113231.950,edream.110203113231.951,edream.110203113231.952,edream.110203113231.953,edream.110203113231.954,edream.110703030027,edream.110203113231.955,edream.110203113231.956,edream.110203113231.957,edream.110203113231.959,edream.110203113231.960,edream.110203113231.961,edream.110203113231.962,edream.110203113231.963,edream.110203113231.964,edream.110203113231.966,edream.110203113231.967,edream.110203113231.968,edream.110203113231.969,edream.110203113231.970,edream.110203113231.972,edream.110203113231.973,edream.110203113231.974,edream.110203113231.975,edream.110203113231.976,edream.110203113231.977,edream.110203113231.978,edream.110203113231.979,edream.110203113231.980,edream.110203113231.981"><vh>@file mod_spelling.py</vh>
+<v t="edream.110203113231.933" tnodeList="edream.110203113231.933,edream.110203113231.935,edream.110203113231.936,edream.110203113231.937,edream.110203113231.938,edream.110203113231.940,edream.110203113231.941,edream.110203113231.942,edream.110203113231.943,edream.110203113231.944,edream.110203113231.945,edream.110203113231.946,edream.110203113231.947,edream.110203113231.948,edream.110203113231.950,edream.110203113231.951,edream.110203113231.952,edream.110203113231.953,edream.110203113231.954,edream.110703030027,edream.110203113231.955,edream.110203113231.956,edream.110203113231.957,edream.110203113231.959,edream.110203113231.960,edream.110203113231.961,edream.110203113231.962,edream.110203113231.963,edream.110203113231.964,edream.110203113231.966,edream.110203113231.967,edream.110203113231.968,edream.110203113231.969,edream.110203113231.970,edream.110203113231.972,edream.110203113231.973,edream.110203113231.974,edream.110203113231.975,edream.110203113231.976,edream.110203113231.977,edream.110203113231.978,edream.110203113231.979,edream.110203113231.980,edream.110203113231.981"><vh>@file mod_spelling.py</vh>
 <v t="edream.110203113231.934"><vh>Functions</vh>
 <v t="edream.110203113231.935"><vh>createSpellMenu</vh></v>
 <v t="edream.110203113231.936"><vh>onSelect</vh></v>
 <v t="edream.110203113231.937"><vh>onCommand</vh></v>
 </v>
-<v t="edream.110203113231.938" a="E"><vh>class Aspell</vh>
-<v t="edream.110203113231.939" a="E"><vh>Birth &amp; death</vh>
+<v t="edream.110203113231.938"><vh>class Aspell</vh>
+<v t="edream.110203113231.939"><vh>Birth &amp; death</vh>
 <v t="edream.110203113231.940"><vh>__init__</vh></v>
 <v t="edream.110203113231.941"><vh>getAspellDirectory</vh></v>
 </v>
@@ -1462,8 +1458,8 @@
 <v t="edream.110203113231.946"><vh>processWord</vh></v>
 <v t="edream.110203113231.947"><vh>updateDictionary</vh></v>
 </v>
-<v t="edream.110203113231.948" a="E"><vh>class spellDialog</vh>
-<v t="edream.110203113231.949" a="E"><vh>Birth &amp; death</vh>
+<v t="edream.110203113231.948"><vh>class spellDialog</vh>
+<v t="edream.110203113231.949"><vh>Birth &amp; death</vh>
 <v t="edream.110203113231.950"><vh>spell.__init__</vh>
 <v t="edream.110203113231.951"><vh>&lt;&lt; set self.dictionary &gt;&gt;</vh></v>
 </v>
@@ -1533,7 +1529,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107092135" a="TV"><vh>New plugins:  very cool</vh>
+<v t="ekr.20040107092135" a="E"><vh>New plugins:  very cool</vh>
 <v t="ekr.20040109080300"><vh> Changes made by EKR</vh></v>
 <v t="ekr.20040111053758"><vh> Description of rst2 by Steve Zatz</vh></v>
 <v t="ekr.20040118081748" tnodeList="ekr.20040118081748,ekr.20040118081748.1,ekr.20040118081748.2,ekr.20040118081748.3,ekr.20040118081748.4,ekr.20040118081748.5,ekr.20040118081748.6,ekr.20040118081748.7,ekr.20040118081748.8"><vh>@file rst2.py</vh>
@@ -1584,7 +1580,7 @@
 </v>
 </v>
 <v t="ekr.20040119044414"><vh>Minimal http plugin</vh>
-<v t="ekr.20040119044414.1" a="E" tnodeList="ekr.20040119044414.1,ekr.20040119102021.3,ekr.20040119044414.3,ekr.20040119044414.5,ekr.20040119044414.6,ekr.20040119044414.7,ekr.20040119044414.8,ekr.20040119044414.9,ekr.20040119044414.10,ekr.20040119044414.11,ekr.20040119044414.12,ekr.20040119044414.13,ekr.20040119044414.14,ekr.20040119044414.17,ekr.20040119044414.15,ekr.20040119044414.16,ekr.20040119044414.18,ekr.20040119044414.19,ekr.20040119044414.20,ekr.20040119044414.22,ekr.20040119044414.23,ekr.20040119044414.24,ekr.20040119044414.25,ekr.20040119044414.26,ekr.20040119044414.27,ekr.20040119044414.28,ekr.20040119044414.29,ekr.20040119044414.30,ekr.20040119044414.31,ekr.20040119044414.32,ekr.20040119044414.33,ekr.20040119044414.34,ekr.20040119044414.35,ekr.20040119044414.36,ekr.20040119044414.37,ekr.20040119044414.38,ekr.20040119044414.39,ekr.20040119044414.40,ekr.20040119044414.41,ekr.20040119064609,ekr.20040119064609.1,ekr.20040119064609.2,ekr.20040119044414.42,ekr.20040119044414.43,ekr.20040119044414.45,ekr.20040119044414.46"><vh>@file mod_http.py</vh>
+<v t="ekr.20040119044414.1" tnodeList="ekr.20040119044414.1,ekr.20040119102021.3,ekr.20040119044414.3,ekr.20040119044414.5,ekr.20040119044414.6,ekr.20040119044414.7,ekr.20040119044414.8,ekr.20040119044414.9,ekr.20040119044414.10,ekr.20040119044414.11,ekr.20040119044414.12,ekr.20040119044414.13,ekr.20040119044414.14,ekr.20040119044414.17,ekr.20040119044414.15,ekr.20040119044414.16,ekr.20040119044414.18,ekr.20040119044414.19,ekr.20040119044414.20,ekr.20040119044414.22,ekr.20040119044414.23,ekr.20040119044414.24,ekr.20040119044414.25,ekr.20040119044414.26,ekr.20040119044414.27,ekr.20040119044414.28,ekr.20040119044414.29,ekr.20040119044414.30,ekr.20040119044414.31,ekr.20040119044414.32,ekr.20040119044414.33,ekr.20040119044414.34,ekr.20040119044414.35,ekr.20040119044414.36,ekr.20040119044414.37,ekr.20040119044414.38,ekr.20040119044414.39,ekr.20040119044414.40,ekr.20040119044414.41,ekr.20040119064609,ekr.20040119064609.1,ekr.20040119064609.2,ekr.20040119044414.42,ekr.20040119044414.43,ekr.20040119044414.45,ekr.20040119044414.46"><vh>@file mod_http.py</vh>
 <v t="ekr.20040119102021.3"><vh>&lt;&lt; how to use this plugin &gt;&gt;</vh></v>
 <v t="ekr.20040119044414.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20040119044414.5"><vh>class delayedSocketStream</vh>
@@ -1598,14 +1594,14 @@
 <v t="ekr.20040119044414.12"><vh>class escaped_StringIO</vh>
 <v t="ekr.20040119044414.13"><vh>write_escaped</vh></v>
 </v>
-<v t="ekr.20040119044414.14" a="E"><vh>class RequestHandler</vh>
+<v t="ekr.20040119044414.14"><vh>class RequestHandler</vh>
 <v t="ekr.20040119044414.17"><vh>__init__</vh></v>
 <v t="ekr.20040119044414.15"><vh>copyfile</vh></v>
 <v t="ekr.20040119044414.16"><vh>log_message</vh></v>
 <v t="ekr.20040119044414.18"><vh>collect_incoming_data</vh></v>
 <v t="ekr.20040119044414.19"><vh>prepare_POST</vh></v>
 <v t="ekr.20040119044414.20"><vh>handle_post_data</vh></v>
-<v t="ekr.20040119044414.21" a="E"><vh>Leo specific code</vh>
+<v t="ekr.20040119044414.21"><vh>Leo specific code</vh>
 <v t="ekr.20040119044414.22"><vh>add_leo_links</vh></v>
 <v t="ekr.20040119044414.23"><vh>create_href</vh></v>
 <v t="ekr.20040119044414.24"><vh>create_leo_reference</vh></v>
@@ -1642,7 +1638,7 @@
 </v>
 <v t="ekr.20040119044414.48" tnodeList="ekr.20040119044414.48"><vh>@file mod_http.ini</vh></v>
 </v>
-<v t="ekr.20040127111517" tnodeList="ekr.20040127111517,ekr.20040127111023,ekr.20040127111023.1,ekr.20040127111023.2,ekr.20040127111023.3,ekr.20040127111023.4,ekr.20040127113621.5,ekr.20040127120834,ekr.20040127113621.6,ekr.20040127113621.7,ekr.20040127113621.8,ekr.20040127113621.9,ekr.20040127113621.10,ekr.20040127114616"><vh>@file-noref newButtons.py</vh>
+<v t="ekr.20040127111517"><vh>@file-noref newButtons.py</vh>
 <v t="ekr.20040127111023"><vh>Helper classes</vh>
 <v t="ekr.20040127111023.1"><vh>class FlatOptionMenu</vh></v>
 <v t="ekr.20040127111023.2"><vh>class Node</vh></v>
@@ -1660,8 +1656,8 @@
 <v t="ekr.20040127114616"><vh>main code</vh></v>
 </v>
 <v t="ekr.20040201060959" tnodeList="ekr.20040201060959"><vh>@file status_line.py</vh></v>
-<v t="ekr.20040211080148" tnodeList="ekr.20040211080148,ekr.20040211080148.1,ekr.20040211080148.2,ekr.20040211080148.3,ekr.20040211080148.4,ekr.20040211080148.5,ekr.20040211080148.6"><vh>@file hoist.py</vh>
-<v t="ekr.20040211080148.1" a="E"><vh>class HoistButtons</vh>
+<v t="ekr.20040211080148" a="V" tnodeList="ekr.20040211080148,ekr.20040211080148.1,ekr.20040211080148.2,ekr.20040211080148.3,ekr.20040211080148.4,ekr.20040211080148.5,ekr.20040211080148.6"><vh>@file hoist.py</vh>
+<v t="ekr.20040211080148.1"><vh>class HoistButtons</vh>
 <v t="ekr.20040211080148.2"><vh>_getSizer</vh></v>
 <v t="ekr.20040211080148.3"><vh>addWidgets</vh></v>
 <v t="ekr.20040211080148.4"><vh>doHoistOn</vh></v>
@@ -1683,6 +1679,53 @@
 <v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
 </v>
 <v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="ekr.20040317155851"><vh>Suggestions for improvement</vh>
+<v t="ekr.20040317155817"><vh>@url http://komodo.nique.net/~grayrest/leoUIproposal.txt</vh></v>
+</v>
+<v t="ekr.20040320072156"><vh>Word completion</vh>
+<v t="ekr.20040320075528"><vh>Documentation</vh></v>
+<v t="ekr.20040320075528.1"><vh>Code notes</vh></v>
+<v t="ekr.20040320121631"><vh>Changes made</vh></v>
+<v t="ekr.20040320072156.1" a="M" tnodeList="ekr.20040320072156.1,ekr.20040320072156.2,ekr.20040320072156.4,ekr.20040320072156.5,ekr.20040320072156.6,ekr.20040320072156.7,ekr.20040320072156.8,ekr.20040320072156.9,ekr.20040320072156.10,ekr.20040320072156.11,ekr.20040320072156.12,ekr.20040320072156.13,ekr.20040320072156.14,ekr.20040320072156.15,ekr.20040320072156.16,ekr.20040320072156.17,ekr.20040320072156.18,ekr.20040320072156.19"><vh>@file extender.py</vh>
+<v t="ekr.20040320072156.2"><vh>class Splitter</vh>
+<v t="ekr.20040320072156.4"><vh>__init__</vh></v>
+<v t="ekr.20040320072156.5"><vh>split</vh></v>
+</v>
+<v t="ekr.20040320072156.6"><vh>class ReSplitter</vh>
+<v t="ekr.20040320072156.7"><vh>__init__</vh></v>
+<v t="ekr.20040320072156.8"><vh>split</vh></v>
+</v>
+<v t="ekr.20040320072156.9" a="M"><vh>class Extender</vh>
+<v t="ekr.20040320072156.10"><vh>__init__</vh></v>
+<v t="ekr.20040320072156.11"><vh>feed</vh></v>
+<v t="ekr.20040320072156.12"><vh>learn</vh></v>
+<v t="ekr.20040320072156.13"><vh>suggestions</vh></v>
+<v t="ekr.20040320072156.14"><vh>suggestfrom</vh></v>
+</v>
+<v t="ekr.20040320072156.15"><vh>class DottedExtender</vh>
+<v t="ekr.20040320072156.16"><vh>__init__</vh></v>
+</v>
+<v t="ekr.20040320072156.17"><vh>class WordExtender</vh>
+<v t="ekr.20040320072156.18"><vh>__init__</vh></v>
+</v>
+<v t="ekr.20040320072156.19"><vh>test</vh></v>
+</v>
+<v t="ekr.20040320072156.20" a="M" tnodeList="ekr.20040320072156.20,ekr.20040320072156.21,ekr.20040320072156.22,ekr.20040320072156.23,ekr.20040320072156.24,ekr.20040320072156.25,ekr.20040320072156.26,ekr.20040320072156.27"><vh>@file wordcompleter.py</vh>
+<v t="ekr.20040320072156.21"><vh>class WordCompleter</vh>
+<v t="ekr.20040320072156.22"><vh>__init__</vh></v>
+<v t="ekr.20040320072156.23"><vh>addKeyBinding</vh></v>
+<v t="ekr.20040320072156.24"><vh>createWordList</vh></v>
+<v t="ekr.20040320072156.25" a="M"><vh>suggestWords</vh></v>
+</v>
+<v t="ekr.20040320072156.26"><vh>class DottedCompleter</vh></v>
+<v t="ekr.20040320072156.27"><vh>class SimpleCompleter</vh></v>
+</v>
+</v>
+<v t="ekr.20040320091826"><vh>(problem with dot)</vh>
+<v t="ekr.20040320072156.23"><vh>addKeyBinding</vh></v>
+<v t="ekr.20040320072156.14"><vh>suggestfrom</vh></v>
+<v t="ekr.20040320072156.13"><vh>suggestions</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="edream.031216103123">@nocolor
@@ -15805,6 +15848,7 @@ plugin_signon(__name__)</t>
 	nodenavigator.py
 	searchbox.py
 	# newButtons.py
+	# wordcompleter.py
 
 # New from Bernhard Mulder
 	# mod_http.py
@@ -17817,7 +17861,7 @@ if Tkinter:
 
 # By Davide Salomoni.
 
-__version__ = "0.2" # Color mod by EKR.
+__version__ = "0.2" # Color, enable/disable mods by EKR.
 
 from leoPlugins import *
 from leoGlobals import *
@@ -17863,30 +17907,35 @@ if Tkinter:
 	self.c = keywords['c'] 
 	toolbar = self.c.frame.iconFrame
 	# Button De-Hoist
-	self.hoistOff = Tkinter.Button(
-		self._getSizer(toolbar, 25, 70),
-		text="De-Hoist", command=self.doHoistOff)
+	self.hoistOff = Tkinter.Button(self._getSizer(toolbar, 25, 70), text="De-Hoist", command=self.doHoistOff)
 	self.hoistOff.pack(side="right", fill="both", expand=1)
 	# Button Hoist
-	self.hoistOn = Tkinter.Button(
-		self._getSizer(toolbar, 25, 70),
-		text="Hoist", command=self.doHoistOn)
+	self.hoistOn = Tkinter.Button(self._getSizer(toolbar, 25, 70), text="Hoist", command=self.doHoistOn)
 	self.hoistOn.pack(side="left", fill="both", expand=1)
 	self.bgColor = self.hoistOn["background"]
-	self.activeBgColor = self.hoistOn["activebackground"]</t>
+	self.activeBgColor = self.hoistOn["activebackground"]
+</t>
 <t tx="ekr.20040211080148.4">def doHoistOn(self, *args, **keys):
+
 	self.c.hoist()
 </t>
 <t tx="ekr.20040211080148.5">def doHoistOff(self, *args, **keys):
+
 	self.c.dehoist()
 </t>
 <t tx="ekr.20040211080148.6">def onIdle(self, tag, keywords):
 	
 	c = self.c
-
+	
 	if not hasattr(c,"hoistStack"):
 		return
 	
+	state = choose(c.canHoist(),"normal","disabled")
+	self.hoistOn.config(state=state)
+	
+	state = choose(c.canDehoist(),"normal","disabled")
+	self.hoistOff.config(state=state)
+
 	if len(c.hoistStack) &gt; 0:
 		self.hoistOn.config(bg=activeHoistColor)
 		self.hoistOn.config(activebackground=activeHoistColor)
@@ -17894,20 +17943,384 @@ if Tkinter:
 	else:
 		self.hoistOn.config(bg=self.bgColor)
 		self.hoistOn.config(activebackground=self.activeBgColor)
-		self.hoistOn.config(text="Hoist")
-		
-	# EKR: dim/undim buttons as appropriate.
-	state = choose(c.canHoist(),"normal","disabled")
-	self.hoistOn.config(state=state)
-	
-	state = choose(c.canDehoist(),"normal","disabled")
-	self.hoistOff.config(state=state)</t>
+		self.hoistOn.config(text="Hoist")</t>
 <t tx="ekr.20040226104623">- Except @file-nosent.
 </t>
-<t tx="ekr.20040312102949"></t>
-<t tx="ekr.20040312102949.1"></t>
-<t tx="ekr.20040312103324"></t>
-<t tx="ekr.20040312103324.1"></t>
-<t tx="ekr.20040314110639">The buttons are now inactivated if the corresponding command is not enabled.</t>
+<t tx="ekr.20040317155817"></t>
+<t tx="ekr.20040317155851"></t>
+<t tx="ekr.20040320072156"></t>
+<t tx="ekr.20040320072156.1">import leoGlobals as g
+
+import re
+
+@others
+
+if __name__ == "__main__":
+	test()</t>
+<t tx="ekr.20040320072156.2">class Splitter(object):
+
+	"""Split text into base/extension parts"""
+
+	@others
+</t>
+<t tx="ekr.20040320072156.4">def __init__(self):
+
+	"""Initialise the Splitter instance"""
+</t>
+<t tx="ekr.20040320072156.5">def split(self, text):
+
+	"""Return a list of the base/extension pairs from a block of text"""
+
+	raise NotImplementedError("Must override split method")
+</t>
+<t tx="ekr.20040320072156.6">class ReSplitter(Splitter):
+
+	@others
+</t>
+<t tx="ekr.20040320072156.7">def __init__(self, base, extension, *args):
+
+	"""Initialise the ReSplitter instance"""
+
+	self._base = re.compile(base,*args)
+	self._extension = re.compile(extension,*args)
+</t>
+<t tx="ekr.20040320072156.8">def split(self,text):
+
+	"""Split the text"""
+
+	# g.trace(len(text))
+
+	results = []
+	if not text: # EKR
+		return results
+
+	for base in self._base.finditer(text):
+		ext = self._extension.match(text[base.end():])
+		if ext:
+			results.append((base.groups()[0],
+							ext.groups()[0]))
+
+	# g.trace("done")
+	return results
+</t>
+<t tx="ekr.20040320072156.9">class Extender(object):
+
+	"""Learn about text strings and suggest ways to extend a string"""
+
+	@others
+</t>
+<t tx="ekr.20040320072156.10">def __init__(self, splitter):
+
+	"""Initialise the Extender instance"""
+
+	self._buffer = "" # The stream of characters to learn
+	self._memory = {} # The store of all we have learnt
+	self._splitter = splitter
+	self.size = 0
+</t>
+<t tx="ekr.20040320072156.11">def feed(self, text):
+
+	"""Learn from some text"""
+
+	# g.trace(len(text))
+
+	for base,extension in self._splitter.split(text):
+
+		self.learn(base,extension)
+</t>
+<t tx="ekr.20040320072156.12">def learn(self, stem, extender):
+
+	"""Learn the relationship between the stem and the extender"""
+
+	# g.trace(stem,extender)
+
+	self._memory.setdefault(stem, {})
+	self._memory[stem][extender] = self._memory[stem].get(extender, 0)+1
+	self.size = len(self._memory)
+</t>
+<t tx="ekr.20040320072156.13">def suggestions(self, base, start=None, number=None):
+
+	"""Return a list of suggestions in order of most to least likely
+
+	If specified, start indicates the initial characters of the match.
+
+	By default we return all the possible suggestions but this can be
+	limited by setting the number to return."""
+
+	# g.trace()
+
+	if start:
+		allmatched = self.suggestions(base)
+		result = [item for item in allmatched if item.startswith(start)]
+	else:
+		try:
+			items = self._memory[base]
+		except KeyError:
+			return []
+		else:
+			values = [(value, key) for key, value in items.iteritems()]
+			values.sort()
+			values.reverse()
+			result = [key for value, key in values]
+
+	if number is None:
+		return result
+	else:
+		return result[:number]
+</t>
+<t tx="ekr.20040320072156.14">def suggestfrom(self,text,number=None):
+
+	"""Find suggestions from a block of text
+
+	This method returns the base string and a list of alternatives
+	for how the base might be extended."""
+
+	# Add some characters to the text so that the end will match
+	trytext = "  " + text + "DDD"
+	matches = self._splitter.split(trytext)
+	
+	g.trace(text,number,matches)
+
+	# Make sure the last one is a match
+	if not matches:
+		return None, []
+
+	base,ext = matches[-1]
+	if not ext.endswith("DDD"):
+		return text, []
+
+	# Remove the dummy part
+	ext = ext[:-3]
+	if not ext:
+		ext = None
+		base_text = text
+	else:
+		base_text = text[:-len(ext)]
+
+	suggestions = self.suggestions(base,ext,number)
+	g.trace(base_text,len(suggestions))
+	return base_text, suggestions
+</t>
+<t tx="ekr.20040320072156.15">class DottedExtender(Extender):
+
+	"""An extender based around dotted names"""
+
+	@others
+</t>
+<t tx="ekr.20040320072156.16">def __init__(self):
+
+	"""Initialise the DottedExtender instance"""
+
+	super(DottedExtender, self).__init__(
+		ReSplitter("(\w+?)\.", "(\w+)"))
+</t>
+<t tx="ekr.20040320072156.17">class WordExtender(Extender):
+
+	"""An extender based on simple words"""
+
+	@others
+</t>
+<t tx="ekr.20040320072156.18">def __init__(self):
+
+	"""Initialise the WordExtender instance"""
+
+	super(WordExtender, self).__init__(
+		ReSplitter("^|\s()", "(\w+)"))
+</t>
+<t tx="ekr.20040320072156.19">def test():
+
+	import sys
+	text = file(sys.argv[-1], "r").read()
+
+	e = DottedExtender()
+	e.feed(text)
+
+	w = WordExtender()
+	w.feed(text)
+</t>
+<t tx="ekr.20040320072156.20">"""Plugin to add word completion to the edit pane"""
+
+import leoGlobals as g
+
+try: import Tkinter as Tk
+except: Tk = None
+
+import extender
+
+@others
+
+if Tk:
+	from leoPlugins import registerHandler,plugin_signon
+
+	__version__ = "0.2" # Converted to @file by EKR.
+	__name__ = "Word Completer"
+
+	plugin_signon("wordcompleter")
+
+	s = "Starting word completer"
+	g.trace(s) ; g.es(s,color="purple")
+
+	completer1 = DottedCompleter()
+	completer2 = SimpleCompleter()
+
+	#registerHandler("start2", completer.addKeyBinding)
+	registerHandler("open2", completer1.createWordList)
+	registerHandler("open2", completer2.createWordList)
+</t>
+<t tx="ekr.20040320072156.21">class WordCompleter:
+
+	"""A class to help in suggesting words"""
+
+	keybinding = None # Override this 
+	extender_class = None # Override this
+
+	@others</t>
+<t tx="ekr.20040320072156.22">def __init__(self):
+
+	"""Initialise the WordCompleter instance"""
+
+	self.extender = self.extender_class()
+	self.extender.feed("self.this self.that self.other")
+	self.previous = [] # Previous suggestions
+</t>
+<t tx="ekr.20040320072156.23">def addKeyBinding(self, tag, keywords):
+
+	"""Add key bindings to intercept the hot key"""
+
+	c = g.top()
+
+	c.frame.body.bodyCtrl.bind(self.keybinding,self.suggestWords)
+
+	c.frame.body.bodyCtrl.bind(".", self.suggestWords)
+</t>
+<t tx="ekr.20040320072156.24">def createWordList(self, tag, keywords):
+
+	"""Initialize the list of words to use"""
+
+	# g.trace(tag,keywords)
+
+	v = g.top().rootVnode()
+	while v:
+		self.extender.feed(v.bodyString())
+		v = v.threadNext()
+
+	self.addKeyBinding(tag,keywords)
+</t>
+<t tx="ekr.20040320072156.25">def suggestWords(self, event):
+
+	"""Suggest words to be inserted at the cursor"""
+
+	# g.trace(self)
+
+	# Find text on this line before the insertion point
+	c = g.top()
+	insert = c.frame.body.getInsertionPoint()
+	thisline = insert.split(".")[0]
+	start = "%s.0" % (thisline, )
+	text = c.frame.body.getTextRange(start, insert)
+	# If the user pressed '.' then this isn't in the text yet so we
+	# manually add it - *** This doesn't work!
+	if event.char == ".":
+		text += "."
+		dotted = 1
+	else:
+		dotted = 0
+	# Find suggestions
+	base,suggestions = self.extender.suggestfrom(text)
+	#import pdb; pdb.set_trace()
+
+	if suggestions: # 3/30/04
+		# Delete back from the current position to the start of the suggestion
+		dot = "%s.%s" % (thisline,len(base))
+		oldtext = c.frame.body.getTextRange(dot, insert)
+		c.frame.body.deleteRange(dot, insert)
+		# If the current text is the suggestion then we are cycling
+		# through the possibilities
+		if oldtext == suggestions[0] and self.previous:
+			word = self.previous.pop(0)
+		else:
+			word = suggestions[0]
+			self.previous = suggestions[1:]
+		# Insert suggestion
+		if dotted:
+			word = "." + word
+		c.frame.body.insertAtInsertPoint(word)
+
+	return dotted
+</t>
+<t tx="ekr.20040320072156.26">class DottedCompleter(WordCompleter):
+
+	"""Completer to complete dotted.names"""
+
+	keybinding = "&lt;F4&gt;"
+	extender_class = extender.DottedExtender
+
+	# No methods.
+</t>
+<t tx="ekr.20040320072156.27">class SimpleCompleter(WordCompleter):
+
+	"""A completer which works on any word in a text stream"""
+
+	keybinding = "&lt;F5&gt;"
+	extender_class = extender.WordExtender
+
+	# No methods
+</t>
+<t tx="ekr.20040320075528">@nocolor
+
+This plugin implements a word completion scheme for Leo. In the body pane you
+have two new options,
+
+* F4 - complete a dotted word (eg type "self." followed F4 will cycle through
+the methods and attributes of an object)
+
+* F5 - complete a stand alone word (eg type "imp" followed by F5 will cycle
+though some standard words ... import etc)
+
+Pressing F4 with a partial match (eg "os.pa") will cycle through the methods
+begining with "pa".
+
+The plugin works by scanning the Leo file to look for words and objects. Hence
+you will only get things that have been referencing in the Leo file already.
+The scanning currently takes place at file load so any new things you add wont
+get added to the list until you reload.
+
+If there is more than one word suggestions then repeatedly pressing F4/F5 will
+cycle through them. The order is from the most to the least used so the most
+frequently used words should appear first. Once you reach the end it stops.</t>
+<t tx="ekr.20040320075528.1">@nocolor
+
+Why two keys? I tried the get the "dotted completion" to work when you press
+the "." key but I couldn't stop the "." appearing in the body as well. The code
+is all there so if someone knows the trick then you can just enable this by
+adding and appropriate &lt;bind&gt;.
+
+The completion is "python style", ie it doesn't try to know anything about the
+source - it just looks for likely looking combinations. For other languages
+(php, java etc) you could be smarter. If you feel inclined then you can create
+a custom completer by subclassing the basic class used (Extender) and adding
+another WordCompleter class.</t>
+<t tx="ekr.20040320091826">v.body</t>
+<t tx="ekr.20040320121631">@nocolor
+
+Changes made:
+
+EKR: 3/20/04
+
+- Converted to @file.
+	- Used @others where possible.
+	- Removed unused sections.
+- Coverted to "import leoGlobals as g" style.
+	- Used g.trace rather than most calls to es.
+
+- Fixed bug in split.
+- Fixed bug in suggestWords
+
+I don't understand the code yet, but already I love this plugin!</t>
+<t tx="ekr.20040325075338"></t>
+<t tx="ekr.20040325075338.1">- Changed app() to app.
+- Changed scanDirectives(c,v=whatever) to scanDirectives(c,p=whatever)
+
+This is a reversion somehow.  I need to rerun the script that converts to the "import leoGlobals as g"  code style.</t>
 </tnodes>
 </leo_file>
