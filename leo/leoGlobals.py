@@ -832,9 +832,13 @@ def oldDump(s):
 #@+node:4::es_error
 #@+body
 def es_error (s):
-
-	color = app().config.getWindowPref("log_error_color")
-	es(s,color=color)
+	
+	config = app().config
+	if config: # May not exist during initialization.
+		color = config.getWindowPref("log_error_color")
+		es(s,color=color)
+	else:
+		es(s)
 #@-body
 #@-node:4::es_error
 #@+node:5::es_exception
