@@ -3016,19 +3016,23 @@ class baseCommands:
                 #@nonl
                 #@-node:ekr.20040712150530:<< print dots >>
                 #@nl
-            
-            # Unlike scanDirectives, scanForAtLanguage ignores @comment.
-            if g.scanForAtLanguage(c,p) == "python":
     
-                c.checkPythonNode(p)
+            if g.scanForAtLanguage(c,p) == "python":
+                # Ignore @ignore for unit tests.
+                if unittest or not g.scanForAtIgnore(c,p):
+                    c.checkPythonNode(p)
                 
-        g.es("Check complete",color="blue")
+        if not unittest:
+            g.es("Check complete",color="blue")
     #@nonl
     #@-node:ekr.20040712045933.2:checkAllPythonCode
     #@+node:ekr.20040712045933.1:checkPythonCode
     def checkPythonCode (self,unittest=False):
         
         c = self ; count = 0
+        
+        if unittest:
+            g.app.unitTestDict["checkPythonCode"] = "ok"
         
         for p in c.currentPosition().self_and_subtree_iter():
             
@@ -3045,15 +3049,22 @@ class baseCommands:
                 #@-node:ekr.20040712150822:<< print dots >>
                 #@nl
     
-            # Unlike scanDirectives, scanForAtLanguage ignores @comment.
             if g.scanForAtLanguage(c,p) == "python":
-                c.checkPythonNode(p)
-                
-        g.es("Check complete",color="blue")
+                # Ignore @ignore for unit tests.
+                if unittest or not g.scanForAtIgnore(c,p):
+                    try:
+                        c.checkPythonNode(p,unittest)
+                    except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                        g.app.unitTestDict["checkPythonCode"] = "error"
+                    except:
+                        g.app.unitTestDict["checkPythonCode"] = "surprise"
+    
+        if not unittest:
+            g.es("Check complete",color="blue")
     #@nonl
     #@-node:ekr.20040712045933.1:checkPythonCode
     #@+node:ekr.20040712045933.3:checkPythonNode
-    def checkPythonNode (self,p):
+    def checkPythonNode (self,p,unittest=False):
     
         c = self
         
@@ -3064,19 +3075,22 @@ class baseCommands:
         try:
             compiler.parse(body + '\n')
         except SyntaxError:
-            g.es("Syntax error in: %s" % h,color="blue")
-            g.es_exception(full=False,color="black")
-            p.setMarked()
-            
-        c.tabNannyNode(p,h,body)
+            if unittest:
+                raise
+            else:
+                g.es("Syntax error in: %s" % h,color="blue")
+                g.es_exception(full=False,color="black")
+                p.setMarked()
+    
+        c.tabNannyNode(p,h,body,unittest)
     #@nonl
     #@-node:ekr.20040712045933.3:checkPythonNode
     #@+node:ekr.20040711135244.18:tabNannyNode
-    def tabNannyNode (self,p,headline,body):
+    # This code is based on tabnanny.check.
     
-        """Check indentation using tabnanny.process_tokens."""
+    def tabNannyNode (self,p,headline,body,unittest=False):
     
-        # This code is based on tabnanny.check.
+        """Check indentation using tabnanny."""
     
         try:
             # readline = g.readLinesGenerator(body).next
@@ -3084,29 +3098,29 @@ class baseCommands:
             tabnanny.process_tokens(tokenize.generate_tokens(readline))
     
         except tokenize.TokenError, msg:
-            g.es("Token error in %s" % headline,color="blue")
-            g.es(str(msg))
-            p.setMarked()
-            return
+            if unittest:
+                raise
+            else:
+                g.es("Token error in %s" % headline,color="blue")
+                g.es(str(msg))
+                p.setMarked()
     
         except tabnanny.NannyNag, nag:
-            badline = nag.get_lineno()
-            line    = nag.get_line()
-            message = nag.get_msg()
-    
-            g.es("Indentation error in %s, line %d" % (headline, badline),color="blue")
-            g.es(message)
-            g.es("offending line:\n%s" % repr(str(line))[1:-1])
-            p.setMarked()
-            return
+            if unittest:
+                raise
+            else:
+                badline = nag.get_lineno()
+                line    = nag.get_line()
+                message = nag.get_msg()
+                g.es("Indentation error in %s, line %d" % (headline, badline),color="blue")
+                g.es(message)
+                g.es("offending line:\n%s" % repr(str(line))[1:-1])
+                p.setMarked()
             
         except:
             g.trace("unexpected exception")
             g.es_exception()
-            return
-            
-        # g.es("Indentation OK: %s" % headline,color="blue")
-    #@nonl
+            if unittest: raise
     #@-node:ekr.20040711135244.18:tabNannyNode
     #@-node:ekr.20040712144216:Check Outline commands & allies
     #@+node:ekr.20040711135959.1:Pretty Print commands
@@ -3126,11 +3140,16 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20040712053025:prettyPrintAllPythonCode
     #@+node:ekr.20040712053025.1:prettyPrintPythonCode
-    def prettyPrintPythonCode (self,dump=False):
+    def prettyPrintPythonCode (self,p=None,dump=False):
     
-        c = self ; pp = c.prettyPrinter(c)
+        c = self
         
-        for p in c.currentPosition().self_and_subtree_iter():
+        if p: root = p.copy()
+        else: root = c.currentPosition();
+        
+        pp = c.prettyPrinter(c)
+        
+        for p in root.self_and_subtree_iter():
             
             # Unlike scanDirectives, scanForAtLanguage ignores @comment.
             if g.scanForAtLanguage(c,p) == "python":
@@ -3156,6 +3175,7 @@ class baseCommands:
             self.bracketLevel = 0
             self.c = c
             self.p = c.currentPosition()
+            self.prevName = None
         #@nonl
         #@-node:ekr.20040711135244.6:__init__
         #@+node:ekr.20040713093048:clear
@@ -3270,6 +3290,9 @@ class baseCommands:
                 self.putOperator(val)
             elif name == "name":
                 a.append("%s " % val)
+                if self.prevName == "def": # A personal idiosyncracy.
+                    a.append(' ') # Retain the blank before '('.
+                self.prevName = val
             elif name in ("comment","string","number"):
                 a.append(val)
             elif name == "errortoken":
