@@ -39,7 +39,7 @@
 <v t="T19" a="C"><vh>How to associate leo.py with .leo files (Windows only)</vh></v>
 <v t="T20" a="C"><vh>Quick start</vh></v>
 </v>
-<v><vh>Latest version</vh>
+<v a="E"><vh>Latest version</vh>
 <v t="T21" a="C"><vh>leo.py 3.5</vh>
 <v t="T22"><vh>Bug fixes</vh>
 <v t="T23"><vh>Called cf.flush in leoConfig.update</vh></v>
@@ -398,7 +398,7 @@
 </v>
 </v>
 </v>
-<v t="T276" a="E"><vh>Users Guide</vh>
+<v t="T276" a="V"><vh>Users Guide</vh>
 <v t="T277"><vh>An overview of Leo</vh></v>
 <v t="T278"><vh>Front material</vh>
 <v t="T279"><vh>Title Page &amp; Summary</vh></v>
@@ -431,7 +431,7 @@
 <v t="T19" a="C"><vh>How to associate leo.py with .leo files (Windows only)</vh></v>
 <v t="T20" a="C"><vh>Quick start</vh></v>
 </v>
-<v t="T294" a="E"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
+<v t="T294"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
 <v t="T295" a="C"><vh>Cloning headlines</vh>
 <v t="T296"><vh>read me</vh></v>
 <v t="T297" a="C"><vh>a</vh>
@@ -491,7 +491,7 @@
 <v t="T309"><vh>Resizing panes</vh></v>
 <v t="T310"><vh>Undoing operations</vh></v>
 </v>
-<v t="T311" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T311"><vh>Chapter 4: Writing Programs in Leo</vh>
 <v t="T312" a="M"><vh>Overview</vh></v>
 <v t="T313" a="M"><vh>Sections and section references</vh></v>
 <v t="T314"><vh>Organizing @file trees.</vh>
@@ -822,7 +822,7 @@
 </v>
 </v>
 </v>
-<v t="T500" a="E"><vh>Appendices</vh>
+<v t="T500"><vh>Appendices</vh>
 <v t="T42" a="C"><vh>Code hidden in leo.py</vh>
 <v t="T43"><vh>c2py.py</vh></v>
 <v t="T44"><vh>disStats.py</vh></v>
@@ -832,7 +832,7 @@
 <v t="T48"><vh>Tree code</vh></v>
 </v>
 <v t="T501"><vh>Converting @root trees to @file trees</vh></v>
-<v t="T502" a="E"><vh>Directives</vh>
+<v t="T502"><vh>Directives</vh>
 <v t="T503"><vh>@c and @code</vh></v>
 <v t="T504"><vh>@chapter (Macintosh only)</vh></v>
 <v t="T505"><vh>@color</vh></v>
@@ -848,7 +848,7 @@
 <v t="T515"><vh>@noweb</vh></v>
 <v t="T516"><vh>@others (valid only in @file trees)</vh></v>
 <v t="T517"><vh>@pagewidth</vh></v>
-<v t="T518" a="MV"><vh>@path</vh></v>
+<v t="T518" a="M"><vh>@path</vh></v>
 <v t="T519"><vh>@root  (not valid in @file trees)</vh></v>
 <v t="T520"><vh>@section (Macintosh only)</vh></v>
 <v t="T521"><vh>@silent (not valid in @file trees)</vh></v>
@@ -953,7 +953,7 @@
 </v>
 </v>
 </v>
-<v t="T591" a="E"><vh>Glossary</vh>
+<v t="T591"><vh>Glossary</vh>
 <v t="T592"><vh>@file node, @others node, @root node, etc.</vh></v>
 <v t="T593"><vh>@file tree, @others tree, @root tree, etc.</vh></v>
 <v t="T594"><vh>Body pane</vh></v>
@@ -4314,7 +4314,7 @@ The essentials of writing programs in Leo are as follows:
 <t tx="T313">@nocolor
 There are two kinds of sections: code sections and doc sections.  Code sections start with the @c directive.  Within @file trees, the entire body text of a node is a code section by default, so the @c directive can be omitted if there are no doc sections in the body pane.  Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
 
-The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaining of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.
+The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaning of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.
 
 Code sections may contain section references of the form &lt;&lt;section name&gt;&gt;. That is, a section reference is any sequence of characters except newlines enclosed in &lt;&lt; and &gt;&gt;. Leo ignores whitespace and case inside section names, so the following are equivalent:
 @color
@@ -4325,7 +4325,7 @@ Code sections may contain section references of the form &lt;&lt;section name&gt
 @nocolor
 Leo underlines section names whose definitions are not found in any descendent.  Such sections are always invalid in @file trees, and may be valid in @root trees provided that the section is defined somewhere else.
 
-Paired &lt;&lt; and &gt;&gt; characters on the same line always denote a section name, even within comments are strings.  That is, &lt;&lt; and &gt;&gt; characters that do not delimit a section name must be placed on separate lines.  If &lt;&lt; and &gt;&gt; are not paired on a line, they are treated as literal &lt;&lt; and &gt;&gt; characters.
+Paired &lt;&lt; and &gt;&gt; characters on the same line always denote a section name, even within comments and strings.  That is, &lt;&lt; and &gt;&gt; characters that do not delimit a section name must be placed on separate lines.  If &lt;&lt; and &gt;&gt; are not paired on a line, they are treated as literal &lt;&lt; and &gt;&gt; characters.
 
 Body text may contain zero or more sections in any order.  A code section is named if the node's headline starts with &lt;&lt;section name&gt;&gt;.  Otherwise, the code section is unnamed.  Body text that contains no @ or @c directive is considered to be a single unnamed code section. @ and @c directives terminate any previous section. For example,
 
@@ -4376,11 +4376,11 @@ The choice of using doc parts or comments is a matter of style.  Doc parts are c
 
 Minor note 1: For historical reasons, the @code directive is a synonym for the @c directive and the @doc directive is a synonym for @ directive. Only the @c, @code, @ and @doc directives terminate sections.
 
-Minor note 2: A line has the form:
+Minor note 2: A line of the form:
 	
 @ %def identifiers
 
-terminates the previous code section and indicates that the preceding code section defines the list of identifiers.  This list contains identifiers separated by whitespace; any sequence of non-white characters may be an identifier.</t>
+terminates the previous code section and indicates that the preceding code section defines the list of identifiers.  This list contains identifiers separated by whitespace; any sequence of non-white characters may be an identifier.  This construction is used in traditional noweb programming to generate indices.</t>
 <t tx="T314">Lets see how to organize typical outlines.  The only rules we must follow are:
 
 - All nodes containing body text must be referenced.
@@ -4603,11 +4603,11 @@ However, @root trees are more flexible than @file trees:
 - @c directives are optional at the start of body text in @file trees only.
 Body text without markup is ignored in @root trees; it creates unnamed code sections in @file trees.</t>
 <t tx="T340">@nocolor
-Just as with @file trees, @root may contain kinds of sections: code sections and doc sections.  Code sections start with section definition lines (see below) or the @c directive.  Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
+Just as with @file trees, @root trees may contain kinds of sections: code sections and doc sections.  Code sections start with section definition lines (see below) or the @c directive.  Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
 
-The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaining of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.
+The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaning of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.
 
-Body text in @root trees contain zero or more sections in any order.  The @ directive (an @ followed by whitespace or a newline) starts a doc section.  The @c directive is starts a named code section if the node's headline starts with &lt;&lt;section name&gt;&gt;.  Otherwise, the @c directive is invalid.
+Body text in @root trees contain zero or more sections in any order. The @c directive starts a named code section if the node's headline starts with &lt;&lt;section name&gt;&gt;.  Otherwise, the @c directive is invalid.
 
 Section definition lines of the form:
 
@@ -7546,7 +7546,7 @@ Outlines are composed of headlines representing data.  The combination of a head
 <t tx="T625">To move all children of a node left in an outline so that they become siblings of the node.</t>
 <t tx="T626">The first node of the entire outline.  In the PC version of Leo several nodes may be siblings of the root.</t>
 <t tx="T627">The portion of the outline in which a section definition is known. By default the scope of a section definition is the smallest subtree containing both the section and a node containing an @root directive. The @unit directive declares that the subtree containing the @unit directive is the scope for all sections defined in that tree.</t>
-<t tx="T628">A synonym for part or chunk.  A named fragment of code that can be incorporated into other code by referring to the section name.
+<t tx="T628">A fragment of text that can be incorporated into derived files.  A syntactic unit of body text.
 
 There are two kinds of sections: code sections and doc sections. Sections are defined in slightly different ways in @file in @root trees (that's the difference between the two kinds of trees.)
 
