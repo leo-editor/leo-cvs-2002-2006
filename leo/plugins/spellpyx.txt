@@ -17,6 +17,7 @@ CashRegister
 CheckVersion
 ClassType
 ConfigParser
+Configurator
 Ctrl
 DEBUG_LEAK
 DEBUG_SAVEALL
@@ -31,6 +32,7 @@ EOL_SPAN
 EXCLUDE_MATCH
 Esc
 FAQ_
+Fetherston's
 FilterHoist
 FrameMaker
 Fredrik
@@ -99,6 +101,7 @@ PRN
 PY_COMPILED
 PY_SOURCE
 PageMaker
+Pmw
 Prefs
 Prepass
 Pychecker
@@ -110,6 +113,7 @@ REM_
 Radiobutton
 Rebecca
 Ries
+RodrigoB's
 SProvide
 STL
 SWEB
@@ -127,6 +131,7 @@ TestCase
 TestSuite
 TextTestRunner
 Textpad
+Tix
 Tk
 Tkinter
 Tobler
@@ -185,8 +190,10 @@ _chapter8
 _commander_
 _complete_
 _cweb_
+_derived_
 _directives_
 _does_
+_easiest_
 _easily_
 _every_
 _firstChild
@@ -195,7 +202,9 @@ _frames_
 _higher_
 _how_
 _huge_
+_in
 _inside_
+_is_
 _less_
 _lot_
 _much_
@@ -213,6 +222,7 @@ _only_
 _original_
 _outside_
 _parent
+_parse_
 _particular_
 _position_
 _positions_
@@ -220,12 +230,15 @@ _previous_
 _provided_
 _same_
 _sentinels_
+_settings
 _single_
 _tnode_
 _toc
+_using
 _valid_
 _vnode_
 _what_
+_will_
 _within_
 _without_
 aClass
@@ -257,6 +270,7 @@ allStatements
 all_tnodes_iter
 all_vnodes_iter
 allow_clone_drags
+apply_
 aren`t
 arg
 args
@@ -458,6 +472,7 @@ delims
 delta2
 destroySelf
 df
+dialog_
 dicts
 dir
 dir1
@@ -823,10 +838,12 @@ leoPrefs
 leoProfile
 leoProjects
 leoScripts
+leoSettings
 leoTangle
 leoTest
 leoTests
 leoTkinterGui
+leoTkinterTree
 leoToDo
 leoTree
 leoUndo
@@ -904,6 +921,7 @@ match_c_word
 match_word
 maxcolor
 mbcs
+megawidget
 memq
 menu1
 menuName
@@ -1031,6 +1049,7 @@ outlineToCweb
 outlineToNoweb
 outliner
 outliners
+outlines_
 outputList
 outputPath
 output_newline
@@ -1066,6 +1085,7 @@ perlpod
 php
 pickleable
 plugin
+plugin_manager
 plugin_signon
 plugins
 pluginsList
@@ -1250,6 +1270,7 @@ set_lang
 set_language
 set_trace
 setq
+settingsRoot
 sharedNodes
 shortDescription
 shortFileName
@@ -1417,6 +1438,7 @@ tp
 traceDrawing
 tracePositions
 trace_gc
+trees_
 tx
 txt
 typeList

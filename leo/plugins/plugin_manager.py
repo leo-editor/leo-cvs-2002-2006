@@ -93,16 +93,22 @@ USE_PRIORITY = False # True: show non-functional priority field.
 
 #@+others
 #@+node:pap.20041006185727:topLevelMenu
+# This is called from plugins_menu plugin.
+
 def topLevelMenu():
     """Manage the plugins"""
     dlg = ManagerDialog() 
 #@nonl
 #@-node:pap.20041006185727:topLevelMenu
 #@+node:pap.20041006193459:Error Classes
-class InvalidPlugin(Exception): """The plugin is invalid"""
-class InvalidCollection(Exception): """The plugin collection is invalid"""
-class InvalidManager(Exception): """The enable manager is invalid"""
-#@nonl
+class InvalidPlugin(Exception):
+    """The plugin is invalid"""
+    
+class InvalidCollection(Exception):
+    """The plugin collection is invalid"""
+    
+class InvalidManager(Exception):
+    """The enable manager is invalid"""
 #@-node:pap.20041006193459:Error Classes
 #@+node:pap.20041009140132:UI
 #@+node:pap.20041008224318:class PluginView
@@ -768,7 +774,6 @@ class Plugin:
     #@nonl
     #@-node:pap.20041006185727.1:__init__
     #@+node:pap.20041006193013:initFrom
-    
     def initFrom(self, location):
         """Initialize the plugin from the specified location"""
         #

@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7097" clone_windows="0"/>
-<globals body_outline_ratio="0.550499445061">
-	<global_window_position top="25" left="343" height="901" width="868"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7141" clone_windows="0"/>
+<globals body_outline_ratio="0.426193118757">
+	<global_window_position top="30" left="355" height="901" width="855"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences>
-</preferences>
-<find_panel_settings>
-	<find_string></find_string>
-	<change_string></change_string>
-</find_panel_settings>
+<preferences/>
+<find_panel_settings/>
 <vnodes>
 <v t="EKR.20040430162943"><vh>Notes</vh>
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
-<v t="EKR.20040429143933"
-marks="ekr.20040701152235.15,ekr.20040701152235.16,ekr.20031218072017.1863,ekr.20040711135244.10,"><vh>@thin leoProjects.txt</vh></v>
+<v t="EKR.20040429143933" a="M"
+marks="ekr.20040701152235.15,ekr.20040701152235.16,EKR.20040424154804,ekr.20031218072017.1733,EKR.20040424154804,ekr.20031218072017.1733,ekr.20031218072017.1863,ekr.20040711135244.10,EKR.20040424154804,ekr.20031218072017.1733,ekr.20031218072017.2865,"><vh>@thin leoProjects.txt</vh></v>
 </v>
-<v t="EKR.20040519090151.2" a="TV"><vh>To do</vh>
-<v t="ekr.20040117181936" a="E"
+<v t="EKR.20040519090151.2"><vh>To do</vh>
+<v t="ekr.20040117181936"
 marks="ekr.20040831092540,ekr.20031218072017.1863,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
+<v t="ekr.20041113115748"><vh>@button spellpyx</vh></v>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
 <v t="ekr.20040629121554"><vh>getBuildNumber</vh></v>
 <v t="ekr.20040629121554.1"><vh>getSignOnLine (Contains hard-coded version info)</vh></v>
@@ -73,7 +71,8 @@ marks="ekr.20031218072017.1863,"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.3858"><vh>@thin leoTkinterDialog.py</vh></v>
 <v t="ekr.20031218072017.3897"><vh>@thin leoTkinterFind.py</vh></v>
 <v t="ekr.20031218072017.3909"><vh>@thin leoTkinterFontPanel.py</vh></v>
-<v t="ekr.20031218072017.3939"><vh>@thin leoTkinterFrame.py</vh></v>
+<v t="ekr.20031218072017.3939"
+marks="EKR.20040424154804,ekr.20031218072017.1733,"><vh>@thin leoTkinterFrame.py</vh></v>
 <v t="ekr.20031218072017.4047"><vh>@thin leoTkinterGui.py</vh></v>
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
@@ -84,7 +83,7 @@ marks="ekr.20031218072017.1863,"><vh>@thin leoFileCommands.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040430162943"></t>
-<t tx="EKR.20040519090151.2">@ The present code is almost useless if there is a crash in Leo's core (instead of the script itself).</t>
+<t tx="EKR.20040519090151.2"></t>
 <t tx="EKR.20040519090151.3"></t>
 <t tx="ekr.20031218072017.2406">@language python
 @tabwidth -4
@@ -185,7 +184,7 @@ def findTopLevelNode(headline):
 </t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.171 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.173 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self
@@ -198,5 +197,21 @@ def findTopLevelNode(headline):
     g.es(signon)
     g.es("Python %d.%d.%d, Tk %s, %s" % (n1,n2,n3,tkLevel,sys.platform))
     g.enl()</t>
+<t tx="ekr.20041113115748">import leoGlobals as g
+import leoPlugins
+
+def check():
+    import spellpyx
+    spellpyx.spellFrame.checkSpelling()
+
+if leoPlugins.isLoaded("spellpyx"):
+    check()
+else:
+    result = leoPlugins.loadOnePlugin("spellpyx")
+    if result is None:
+        g.es("can not load spellpyx plugin",color="blue")
+    else:
+        g.es("loaded spellpxy plugin",color="blue")
+        check()</t>
 </tnodes>
 </leo_file>

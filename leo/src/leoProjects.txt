@@ -16223,6 +16223,47 @@ Changed these hooks:
 "show-popup-menu",
 #@nonl
 #@-node:ekr.20041112062558:Added p=p param to all hooks containing v=v
+#@+node:ekr.20041022083005:(More flexible plugin manager)
+# See @button Configurator in test.leo for the motivating example.
+#@nonl
+#@+node:ekr.20041114113029:getPluginModule
+def getPluginModule (moduleName):
+    
+    global loadedModules
+    
+    return loadedModules.get(moduleName)
+#@nonl
+#@-node:ekr.20041114113029:getPluginModule
+#@+node:ekr.20041113113140:loadOnePlugin
+def loadOnePlugin (moduleOrFileName, verbose=False):
+    
+    global loadedModules
+    
+    if moduleOrFileName [-3:] == ".py":
+        moduleName = moduleOrFileName [:-3]
+    else:
+        moduleName = moduleOrFileName
+
+    if isLoaded(moduleName):
+        module = loadedModules.get(moduleName)
+        return module
+
+    plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
+    moduleName = g.toUnicode(moduleName,g.app.tkEncoding)
+    result = g.importFromPath(moduleName,plugins_path)
+    if result:
+        loadedModules[moduleName] = result
+    
+    if verbose:
+        if result is None:
+            g.es("can not load %s plugin" % moduleName,color="blue")
+        else:
+            g.es("loaded %s plugin" % moduleName,color="blue")
+    
+    return result
+#@nonl
+#@-node:ekr.20041113113140:loadOnePlugin
+#@-node:ekr.20041022083005:(More flexible plugin manager)
 #@-node:ekr.20040929081120:4.2.1 projects
 #@-all
 #@nonl

@@ -450,7 +450,7 @@ New commands:
     - Open user leoSettings.leo
 #@nonl
 #@-node:ekr.20041115110846:New strategy
-#@+node:ekr.20041115165553:@settigns trees
+#@+node:ekr.20041115165553:@settings trees prototype
 @nocolor
 
 @settings outlines are "source code"
@@ -1492,7 +1492,7 @@ The color of name in << name >> when name is undefined.
 #@-node:ekr.20041115165553.9:@page Colors
 #@-node:ekr.20041115165553.2:Syntax coloring options
 #@-node:ekr.20041115165553.1:@settings
-#@-node:ekr.20041115165553:@settigns trees
+#@-node:ekr.20041115165553:@settings trees prototype
 #@+node:ekr.20041115094721:To do
 @killcolor
 
