@@ -143,7 +143,7 @@ def updateNodes():
     fg, bg = COLD_FG, "white" 
      
     while 1: 
-        time.sleep(REFRESH) 
+        time.sleep(REFRESH) # Sleep for indicated number of seconds.
         # 
         lock.acquire() 
         # 
