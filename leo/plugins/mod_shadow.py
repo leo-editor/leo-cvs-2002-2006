@@ -1,13 +1,14 @@
 #@+leo-ver=4-thin
 #@+node:bwmulder.20041017125718:@thin mod_shadow.py
 #@@language python
-
 #@+others
 #@+node:bwmulder.20041017125718.1:docstring
 """
-THIS PLUGIN IS NOT YET WORKING!
+THIS PLUGIN IS NOT SUFFICIENTLY TESTED.
 
-DON'T USE IT!
+PLEASE USE WITH CAUTION.
+
+THIS PLUGIN CURRENTLY ONLY WORKS WITH Leo-4.2
 
 By Bernhard Mulder
 
@@ -19,18 +20,22 @@ The hookup with LEO is not satisfactory. I am missing suitable hooks for impleme
 an input / output filter, and the read / write functions
 are too big to overwrite.
 
-The goToLineNumber has been copied from 4.1, with the
+The goToLineNumber has been copied from 4.2, with the
 insertions marked by bwm:.
 
 I do not know how to avoid the code duplication.
 
-To start using this plugin, check the standalone
-script sentinel.py.
-   
-As soon as you modify a file, the plugin will update
-your files in the usual place.
-
-The plugin has special code to deal with 0 length derived files.
+To start using this plugin:
+    - Go to the directories where the sources are.
+    - Create a subfolder called Leo.
+    - Copy the files into the subfolder.
+    - Replace the files with files of length 0.
+        (actually: <= 2, so that on Windows you can say: @echo.>filename)
+    - Enable this plugin.
+    - Start Leo.
+    
+    After the start, Leo will copy the files from the Leo subfolder to the old location
+    after removing all sentinels.
 """
 #@-node:bwmulder.20041017125718.1:docstring
 #@+node:bwmulder.20041017130018:imports
@@ -304,7 +309,7 @@ def marker_from_extension(filename):
       root, ext = os.path.splitext(root)
    if ext in ('.h', '.c'):
       marker = "//@"
-   elif ext in (".py", ".cfg", ".bat", ".ksh"):
+   elif ext in (".py", ".cfg", ".bat", ".ksh", ".txt"):
       marker = '#' + '@'
    else:
       assert 0, "extension %s not handled by this plugin" % ext
@@ -818,6 +823,7 @@ class sentinel_squasher:
 #@-node:bwmulder.20041017125718.21:class sentinel_squasher
 #@-node:bwmulder.20041018233934.1:plugin core
 #@+node:bwmulder.20041018233934.2:interface
+#@+node:bwmulder.20041019071205:plugin specific functions
 #@+node:bwmulder.20041017125718.27:putInHooks
 # Is this the canonical way to overwrite code?
 def putInHooks():
@@ -830,19 +836,18 @@ def putInHooks():
     goToLineNumber and messageCommment are
     replaced.
     """
+    
+    # 1. Overwriting existing Leo methods
     setattr(atFile, 'read', read)
-    setattr(atFile, 'openRead', openRead)
-    setattr(atFile, 'check_for_shadow_file', check_for_shadow_file)
-   # setattr(fileCommands, 'write_Leo_file', write_Leo_file)
-    setattr(fileCommands, 'openWrite', openWrite)
-    setattr(fileCommands, 'check_for_shadow_file', check_for_shadow_file)
+    setattr(newDerivedFile, 'openWriteFile', openWriteFile)
     setattr(newDerivedFile, 'replaceTargetFileIfDifferent', replaceTargetFileIfDifferent)
     setattr(leoCommands.Commands, 'goToLineNumber', goToLineNumber)
-    setattr(newDerivedFile, 'check_for_shadow_file', check_for_shadow_file)
-    setattr(newDerivedFile, 'openWriteFile', openWriteFile)
-    setattr(newDerivedFile, 'openWrite', openWrite)
     setattr(leoImport.leoImportCommands, 'massageComment', massageComment)
-#@nonl
+        
+    # 2. Additional methods of this plugin.
+    setattr(atFile, 'openRead', openRead)
+    setattr(newDerivedFile, 'openWrite', openWrite)
+    setattr(leoCommands.Commands, 'gotoLineNumberOpen', gotoLineNumberOpen)
 #@-node:bwmulder.20041017125718.27:putInHooks
 #@+node:bwmulder.20041017125718.26:applyConfiguration
 def applyConfiguration(config=None):
@@ -887,7 +892,98 @@ def check_for_shadow_file(self, filename):
     
 #@nonl
 #@-node:bwmulder.20041017184636:check_for_shadow_file
-#@-node:bwmulder.20041018233934.2:interface
+#@-node:bwmulder.20041019071205:plugin specific functions
+#@+node:bwmulder.20041019071909:additional core functions
+#@+node:bwmulder.20041017135327:openRead
+def openRead(self, filename, rb):
+    """
+    Replaces the standard open for reads.
+    Checks and handles shadow files:
+        if the length of the real file is zero:
+            update the real file from the shadow file.
+        else:
+            update the shadow file from the real file.
+    """
+    try:
+        dir, simplename = os.path.split(filename)
+        shadow_filename = os.path.join(dir, 'LEO', simplename)
+        if os.path.exists(shadow_filename):
+            file_to_read_from = shadow_filename
+            if os.path.exists(filename) and os.path.getsize(filename) <= 2:
+                es("Copy %s to %s without sentinels" % (shadow_filename, filename))
+                push_file(sourcefilename=shadow_filename, targetfilename=filename)
+            else:
+                sq = sentinel_squasher()
+                g.es("reading %s instead of %s" %  (shadow_filename, filename), color="orange")
+                sq.pull_source(sourcefile = shadow_filename, targetfile=filename)
+        else:
+            file_to_read_from = filename
+        return open(file_to_read_from, 'rb')
+    except:
+        # Make sure failures to open a file generate clear messages.
+        g.es_exception()
+        raise
+#@nonl
+#@-node:bwmulder.20041017135327:openRead
+#@+node:bwmulder.20041017131319:openWrite
+def openWrite(self, filename, wb):
+    """
+    Replaces the standard open for writes:
+        - Check if filename designates a file
+          which has a shadow file.
+          If so, write to the shadow file,
+          and update the real file after the close.
+    """
+    dir, simplename = os.path.split(filename)
+    rootname, ext = os.path.splitext(simplename)
+    assert ext == '.tmp'
+    shadow_filename = os.path.join(dir, 'LEO', rootname)
+    if os.path.exists(shadow_filename):
+        self.writing_to_shadow_directory = True
+        self.shadow_filename = shadow_filename
+        g.es("Updating shadow file", color="orange")
+        file_to_use = os.path.join(dir, 'LEO', simplename)
+    else:
+        file_to_use = filename
+        self.writing_to_shadow_directory = False
+    return open(file_to_use, 'wb')
+#@-node:bwmulder.20041017131319:openWrite
+#@+node:bwmulder.20041018075528:gotoLineNumberOpen
+def gotoLineNumberOpen(self, filename):
+    try:
+        dir, simplename = os.path.split(filename)
+        shadow_filename = os.path.join(dir, 'LEO', simplename)
+        if os.path.exists(shadow_filename):
+            lines = file(shadow_filename).readlines()
+            self.line_mapping = push_filter_mapping(lines, marker_from_extension(simplename))
+        else:
+            self.line_mapping = {}
+            lines = file(filename).readlines()
+        return lines
+    except:
+        # Make sure failures to open a file generate clear messages.
+        g.es_exception()
+        raise
+#@nonl
+#@-node:bwmulder.20041018075528:gotoLineNumberOpen
+#@-node:bwmulder.20041019071909:additional core functions
+#@+node:bwmulder.20041019071205.1:Leo overwrites
+#@+node:bwmulder.20041019071205.2:reading
+#@+doc
+# The only change we need here is to replace the standard open with openRead.
+# 
+# OpenRead checks if the current file has a shadow file.
+# 
+#     If so, it checks if the 'real' file is of zero length.
+# 
+#         If the 'real' file is of zero length, it synchronizes the 'real' 
+# file with the
+#         shadow file.
+#     If there is a shadow file, it returns a file descriptor for this file, 
+# instead of
+#     the 'real' file.
+# 
+#@-doc
 #@+node:bwmulder.20041017131310:top_df.read
 # The caller has enclosed this code in beginUpdate/endUpdate.
 
@@ -938,6 +1034,7 @@ def read(self,root,importFileName=None,thinFile=False):
             #@nl
         else: return False
     except:
+        g.es_exception()
         at.error("Can not open: " + '"@file ' + fn + '"')
         root.setDirty()
         return False
@@ -1037,12 +1134,27 @@ def read(self,root,importFileName=None,thinFile=False):
     return df.errors == 0
 #@nonl
 #@-node:bwmulder.20041017131310:top_df.read
+#@-node:bwmulder.20041019071205.2:reading
+#@+node:bwmulder.20041019071205.3:writing
+#@+doc
+# Just like for reading, we redirect the writing to the shadow file, if
+# one is there.
+# 
+# Writing is slightly more complicated by the fact
+# that Leo writes the information first to a
+# temporary file, before renaming the temporary file
+# to the real filename.
+# 
+# We must therefore patch in two places:
+#     - When the temporary file is written (openWriteFile)
+#     - When Leo renames the file (replaceTargetFileIfDifferent).
+#@-doc
+#@nonl
 #@+node:bwmulder.20041017135227:atFile.openWriteFile (used by both old and new code)
 # Open files.  Set root.orphan and root.dirty flags and return on errors.
 
 def openWriteFile (self,root,toString):
     
-    print "bwms version of openWriteFile:"
     self.toStringFlag = toString
     self.errors = 0 # Bug fix: 6/25/04.
     self.root = root # Bug fix: 7/30/04: needed by error logic.
@@ -1106,279 +1218,6 @@ def openWriteFile (self,root,toString):
     return valid
 #@nonl
 #@-node:bwmulder.20041017135227:atFile.openWriteFile (used by both old and new code)
-#@+node:bwmulder.20041018163332:write_Leo_file
-def write_Leo_file(self,fileName,outlineOnlyFlag):
-
-    c = self.c ; config = g.app.config
-
-    self.assignFileIndices()
-    if not outlineOnlyFlag:
-        #@        << write all @file nodes >>
-        #@+node:bwmulder.20041018163332.1:<< write all @file nodes >>
-        try:
-            # Write all @file nodes and set orphan bits.
-            c.atFileCommands.writeAll()
-        except:
-            g.es_error("exception writing derived files")
-            g.es_exception()
-            return False
-        #@nonl
-        #@-node:bwmulder.20041018163332.1:<< write all @file nodes >>
-        #@nl
-    #@    << return if the .leo file is read-only >>
-    #@+node:bwmulder.20041018163332.2:<< return if the .leo file is read-only >>
-    # self.read_only is not valid for Save As and Save To commands.
-    
-    if g.os_path_exists(fileName):
-        try:
-            if not os.access(fileName,os.W_OK):
-                g.es("can not create: read only: " + fileName,color="red")
-                return False
-        except:
-            pass # os.access() may not exist on all platforms.
-    #@nonl
-    #@-node:bwmulder.20041018163332.2:<< return if the .leo file is read-only >>
-    #@nl
-    try:
-        #@        << create backup file >>
-        #@+node:bwmulder.20041018163332.3:<< create backup file >>
-        # rename fileName to fileName.bak if fileName exists.
-        if g.os_path_exists(fileName):
-            try:
-                backupName = g.os_path_join(g.app.loadDir,fileName)
-                backupName = fileName + ".bak"
-                if g.os_path_exists(backupName):
-                    os.unlink(backupName)
-                # os.rename(fileName,backupName)
-                g.utils_rename(fileName,backupName)
-            except OSError:
-                if self.read_only:
-                    g.es("read only",color="red")
-                else:
-                    g.es("exception creating backup file: " + backupName)
-                    g.es_exception()
-                return False
-            except:
-                g.es("exception creating backup file: " + backupName)
-                g.es_exception()
-                backupName = None
-                return False
-        else:
-            backupName = None
-        #@nonl
-        #@-node:bwmulder.20041018163332.3:<< create backup file >>
-        #@nl
-        self.mFileName = fileName
-        #@        << create the output file >>
-        #@+node:bwmulder.20041018163332.4:<< create the output file >>
-        self.outputFile = self.openWrite(fileName, 'wb') # 9/18/02 # bwm
-        if not self.outputFile:
-            g.es("can not open " + fileName)
-            #@    << delete backup file >>
-            #@+node:bwmulder.20041018163332.5:<< delete backup file >>
-            if backupName and g.os_path_exists(backupName):
-                try:
-                    os.unlink(backupName)
-                except OSError:
-                    if self.read_only:
-                        g.es("read only",color="red")
-                    else:
-                        g.es("exception deleting backup file:" + backupName)
-                        g.es_exception()
-                    return False
-                except:
-                    g.es("exception deleting backup file:" + backupName)
-                    g.es_exception()
-                    return False
-            #@-node:bwmulder.20041018163332.5:<< delete backup file >>
-            #@nl
-            return False
-        #@nonl
-        #@-node:bwmulder.20041018163332.4:<< create the output file >>
-        #@nl
-        #@        << update leoConfig.txt >>
-        #@+node:bwmulder.20041018163332.6:<< update leoConfig.txt >>
-        c.setIvarsFromFind()
-        config.setConfigFindIvars(c)
-        c.setIvarsFromPrefs()
-        config.setCommandsIvars(c)
-        config.update()
-        #@nonl
-        #@-node:bwmulder.20041018163332.6:<< update leoConfig.txt >>
-        #@nl
-        #@        << put the .leo file >>
-        #@+node:bwmulder.20041018163332.7:<< put the .leo file >>
-        self.putProlog()
-        self.putHeader()
-        self.putGlobals()
-        self.putPrefs()
-        self.putFindSettings()
-        #start = g.getTime()
-        self.putVnodes()
-        #start = g.printDiffTime("vnodes ",start)
-        self.putTnodes()
-        #start = g.printDiffTime("tnodes ",start)
-        self.putPostlog()
-        #@nonl
-        #@-node:bwmulder.20041018163332.7:<< put the .leo file >>
-        #@nl
-    except:
-        #@        << report the exception >>
-        #@+node:bwmulder.20041018163332.8:<< report the exception >>
-        g.es("exception writing: " + fileName)
-        g.es_exception() 
-        if self.outputFile:
-            try:
-                self.outputFile.close()
-                self.outputFile = None
-            except:
-                g.es("exception closing: " + fileName)
-                g.es_exception()
-        #@nonl
-        #@-node:bwmulder.20041018163332.8:<< report the exception >>
-        #@nl
-        #@        << erase filename and rename backupName to fileName >>
-        #@+node:bwmulder.20041018163332.9:<< erase filename and rename backupName to fileName >>
-        g.es("error writing " + fileName)
-        
-        if fileName and g.os_path_exists(fileName):
-            try:
-                os.unlink(fileName)
-            except OSError:
-                if self.read_only:
-                    g.es("read only",color="red")
-                else:
-                    g.es("exception deleting: " + fileName)
-                    g.es_exception()
-            except:
-                g.es("exception deleting: " + fileName)
-                g.es_exception()
-                
-        if backupName:
-            g.es("restoring " + fileName + " from " + backupName)
-            try:
-                g.utils_rename(backupName, fileName)
-            except OSError:
-                if self.read_only:
-                    g.es("read only",color="red")
-                else:
-                    g.es("exception renaming " + backupName + " to " + fileName)
-                    g.es_exception()
-            except:
-                g.es("exception renaming " + backupName + " to " + fileName)
-                g.es_exception()
-        #@nonl
-        #@-node:bwmulder.20041018163332.9:<< erase filename and rename backupName to fileName >>
-        #@nl
-        return False
-    if self.outputFile:
-        #@        << close the output file >>
-        #@+node:bwmulder.20041018163332.10:<< close the output file >>
-        try:
-            self.outputFile.close()
-            self.outputFile = None
-        except:
-            g.es("exception closing: " + fileName)
-            g.es_exception()
-        #@nonl
-        #@-node:bwmulder.20041018163332.10:<< close the output file >>
-        #@nl
-        #@        << delete backup file >>
-        #@+middle:bwmulder.20041018163332.4:<< create the output file >>
-        #@+node:bwmulder.20041018163332.5:<< delete backup file >>
-        if backupName and g.os_path_exists(backupName):
-            try:
-                os.unlink(backupName)
-            except OSError:
-                if self.read_only:
-                    g.es("read only",color="red")
-                else:
-                    g.es("exception deleting backup file:" + backupName)
-                    g.es_exception()
-                return False
-            except:
-                g.es("exception deleting backup file:" + backupName)
-                g.es_exception()
-                return False
-        #@-node:bwmulder.20041018163332.5:<< delete backup file >>
-        #@-middle:bwmulder.20041018163332.4:<< create the output file >>
-        #@nl
-        return True
-    else: # This probably will never happen because errors should raise exceptions.
-        #@        << erase filename and rename backupName to fileName >>
-        #@+node:bwmulder.20041018163332.9:<< erase filename and rename backupName to fileName >>
-        g.es("error writing " + fileName)
-        
-        if fileName and g.os_path_exists(fileName):
-            try:
-                os.unlink(fileName)
-            except OSError:
-                if self.read_only:
-                    g.es("read only",color="red")
-                else:
-                    g.es("exception deleting: " + fileName)
-                    g.es_exception()
-            except:
-                g.es("exception deleting: " + fileName)
-                g.es_exception()
-                
-        if backupName:
-            g.es("restoring " + fileName + " from " + backupName)
-            try:
-                g.utils_rename(backupName, fileName)
-            except OSError:
-                if self.read_only:
-                    g.es("read only",color="red")
-                else:
-                    g.es("exception renaming " + backupName + " to " + fileName)
-                    g.es_exception()
-            except:
-                g.es("exception renaming " + backupName + " to " + fileName)
-                g.es_exception()
-        #@nonl
-        #@-node:bwmulder.20041018163332.9:<< erase filename and rename backupName to fileName >>
-        #@nl
-        return False
-        
-write_LEO_file = write_Leo_file # For compatibility with old plugins.
-#@nonl
-#@-node:bwmulder.20041018163332:write_Leo_file
-#@+node:bwmulder.20041017135327:openRead
-def openRead(self, filename, rb):
-    """
-    Replaces the standard open for reads.
-    """
-    shadow_filename, file_is_zero = self.check_for_shadow_file(filename)
-    if shadow_filename:
-        if file_is_zero:
-            es("Copy %s to %s without sentinels" % (shadow_filename, filename))
-            push_file(sourcefilename=shadow_filename, targetfilename=filename)
-        else:
-            sq = sentinel_squasher()
-            g.es("reading %s instead of %s" %  (shadow_filename, filename), color="orange")
-            sq.pull_source(sourcefile = shadow_filename, targetfile=filename)
-        return open(shadow_filename, 'rb')
-    else:
-        return open(filename, 'rb')
-#@nonl
-#@-node:bwmulder.20041017135327:openRead
-#@+node:bwmulder.20041017131319:openWrite
-def openWrite(self, filename, wb):
-    """
-    Replaces the standard open for writes:
-        - Check if filename designates a file
-          which has a shadow file.
-          If so, write to the shadow file,
-          and update the real file after the close.
-    """
-    shadow_filename, file_is_zero = self.check_for_shadow_file(filename)
-    if shadow_filename:
-        g.es("Writing to %s instead of %s" %  (shadow_filename, filename), color="orange")
-        file_to_use = shadow_filename
-    else:
-        file_to_use = filename
-    return open(file_to_use, 'wb')
-#@-node:bwmulder.20041017131319:openWrite
 #@+node:bwmulder.20041018224835:atFile.replaceTargetFileIfDifferent
 def replaceTargetFileIfDifferent (self):
     
@@ -1386,17 +1225,12 @@ def replaceTargetFileIfDifferent (self):
     
     self.fileChangedFlag = False
     # Check if we are dealing with a shadow file
-    dir, shortfilename = os.path.split(self.targetFileName)
-    shadow_filename = os.path.join(dir, 'LEO', shortfilename)
     try:
         targetFileName = self.targetFileName
         outputFileName = self.outputFileName
-        if os.path.exists(shadow_filename):
-            self.targetFileName = shadow_filename
-            self.outputFileName = shadow_filename + '.tmp'
-            is_shadowfile = True
-        else:
-            is_shadowfile = False
+        if self.writing_to_shadow_directory:
+            self.targetFileName = self.shadow_filename
+            self.outputFileName = self.shadow_filename + '.tmp'
         if g.os_path_exists(self.targetFileName):
             if self.compareFilesIgnoringLineEndings(
                 self.outputFileName,self.targetFileName):
@@ -1448,8 +1282,9 @@ def replaceTargetFileIfDifferent (self):
                 #@nonl
                 #@-node:bwmulder.20041018224835.2:<< replace the target file with the output file >>
                 #@nl
-                g.es("Updating %s with %s" % (targetFileName, shadow_filename), color='orange')
-                push_file(shadow_filename, targetFileName)
+                if self.writing_to_shadow_directory:
+                    g.es("Updating %s with %s" % (targetFileName, self.shadow_filename), color='orange')
+                    push_file(self.shadow_filename, targetFileName)
         else:
             #@            << rename the output file to be the target file >>
             #@+node:bwmulder.20041018224835.3:<< rename the output file to be the target file >>
@@ -1465,10 +1300,18 @@ def replaceTargetFileIfDifferent (self):
             #@-node:bwmulder.20041018224835.3:<< rename the output file to be the target file >>
             #@nl
     finally:
+        # not sure if that is needed or not
         self.targetFileName = targetFileName
         self.outputFileName = outputFileName
 #@nonl
 #@-node:bwmulder.20041018224835:atFile.replaceTargetFileIfDifferent
+#@-node:bwmulder.20041019071205.3:writing
+#@+node:bwmulder.20041019071205.4:goto Linenumber
+#@+doc
+# For gotoLineNumber we must map the line number in the shadow file to the 
+# line number in the
+# non-shadow file.
+#@-doc
 #@+node:bwmulder.20041017221549:goToLineNumber & allies
 def goToLineNumber (self,root=None,lines=None,n=None):
 
@@ -1512,9 +1355,7 @@ def goToLineNumber (self,root=None,lines=None,n=None):
         
         try:
         #    file=open(fileName) # bwm
-            file, line_mapping = gotoLineNumberOpen(filename)
-            lines = file.readlines()
-            file.close()
+            lines = self.gotoLineNumberOpen(fileName)
         except:
             g.es("not found: " + fileName)
             return
@@ -1532,11 +1373,12 @@ def goToLineNumber (self,root=None,lines=None,n=None):
         #@nl
         #@        <<Adjust line number for mapping>>
         #@+node:bwmulder.20041018075929:<<Adjust line number for mapping>>
-        if line_mapping:
+        if self.line_mapping:
             try:
-                n = line_mapping[n]
+                n = self.line_mapping[n]
             except:
                 g.es("In real file: line %s not found: " % n, color="red")
+            self.line_mapping = None
                 
             
             
@@ -1890,6 +1732,7 @@ def skipToMatchingNodeSentinel (self,lines,n,delim):
 #@nonl
 #@-node:bwmulder.20041017221549.19:skipToMatchingNodeSentinel
 #@-node:bwmulder.20041017221549:goToLineNumber & allies
+#@-node:bwmulder.20041019071205.4:goto Linenumber
 #@+node:bwmulder.20041017125718.33:massageComment
 def massageComment (self,s):
 
@@ -1897,15 +1740,8 @@ def massageComment (self,s):
 
 	return s
 #@-node:bwmulder.20041017125718.33:massageComment
-#@+node:bwmulder.20041018075528:gotoLineNumberOpen
-def gotoLineNumberOpen(self, filename):
-    shadow_filename, file_is_zero = self.check_for_shadow_file(filename)
-    if shadow_filename:
-        mapping = push_filter_mapping(lines, marker_from_extension(leo_subfolder_filename))
-    else:
-        mapping = {}
-    return open(filename), mapping
-#@-node:bwmulder.20041018075528:gotoLineNumberOpen
+#@-node:bwmulder.20041019071205.1:Leo overwrites
+#@-node:bwmulder.20041018233934.2:interface
 #@+node:bwmulder.20041017125718.39:stop_testing
 testing = False
 
@@ -1925,12 +1761,12 @@ def stop_testing():
 applyConfiguration()
 
 if active:
-   print "Hooks put into Leo..."
    putInHooks()
    # Register the handlers...
    # ?leoPlugins.registerHandler("idle", autosave)
    __version__ = "0.1"
-   g.es("Plugin enabled: Use a LEO subfolder for files with LEO sentinels",color="orange")
+   print "Shadow plugin enabled"
+   g.es("Shadow plugin enabled: Use a LEO subfolder for files with LEO sentinels",color="orange")
    
 #@nonl
 #@-node:bwmulder.20041017125718:@thin mod_shadow.py
