@@ -1734,7 +1734,18 @@ def get_line_after (s,i):
 
 #@-body
 #@-node:14::get_line & get_line_after
-#@+node:15::printBindings
+#@+node:15::pause
+#@+body
+def pause (s):
+	
+	print s
+	
+	i = 0
+	while i < 1000000L:
+		i += 1
+#@-body
+#@-node:15::pause
+#@+node:16::printBindings
 #@+body
 def print_bindings (name,window):
 
@@ -1744,8 +1755,8 @@ def print_bindings (name,window):
 	for b in bindings:
 		print b
 #@-body
-#@-node:15::printBindings
-#@+node:16::printGlobals
+#@-node:16::printBindings
+#@+node:17::printGlobals
 #@+body
 def printGlobals(message=None):
 	
@@ -1760,8 +1771,8 @@ def printGlobals(message=None):
 	for glob in globs:
 		print glob
 #@-body
-#@-node:16::printGlobals
-#@+node:17::printLeoModules
+#@-node:17::printGlobals
+#@+node:18::printLeoModules
 #@+body
 def printLeoModules(message=None):
 	
@@ -1780,7 +1791,7 @@ def printLeoModules(message=None):
 		print m,
 	print
 #@-body
-#@-node:17::printLeoModules
+#@-node:18::printLeoModules
 #@-node:4::Debugging, Dumping, Timing, Tracing & Sherlock
 #@+node:5::Hooks & plugins
 #@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler

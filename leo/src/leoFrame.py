@@ -19,7 +19,7 @@ class LeoFrame:
 
 	#@+others
 	#@+node:1::Birth & Death
-	#@+node:1::frame.__init__
+	#@+node:1::f.__init__
 	#@+body
 	def __init__(self, title = None):
 	
@@ -172,16 +172,16 @@ class LeoFrame:
 		c.visitedList = []
 		doHook("after-create-leo-frame",c=c)
 	#@-body
-	#@-node:1::frame.__init__
-	#@+node:2::frame.__repr__
+	#@-node:1::f.__init__
+	#@+node:2::f.__repr__
 	#@+body
 	def __repr__ (self):
 	
 		return "leoFrame: " + self.title
 	
 	#@-body
-	#@-node:2::frame.__repr__
-	#@+node:3::frame.destroy
+	#@-node:2::f.__repr__
+	#@+node:3::f.destroy
 	#@+body
 	def destroy (self):
 	
@@ -194,8 +194,8 @@ class LeoFrame:
 		self.top.destroy() # Actually close the window.
 		self.top = None
 	#@-body
-	#@-node:3::frame.destroy
-	#@+node:4::frame.setWindowTitle
+	#@-node:3::f.destroy
+	#@+node:4::f.setWindowTitle
 	#@+body
 	def setWindowTitle (self,fileName):
 		
@@ -206,8 +206,8 @@ class LeoFrame:
 			title = fn
 		return title
 	#@-body
-	#@-node:4::frame.setWindowTitle
-	#@+node:5::sectionList.createLeoFrame
+	#@-node:4::f.setWindowTitle
+	#@+node:5::f.createLeoFrame
 	#@+body
 	def createLeoFrame (self,top):
 	
@@ -283,9 +283,9 @@ class LeoFrame:
 		# Bind mouse wheel event to canvas
 		if sys.platform != "win32": # Works on 98, crashes on XP.
 			self.canvas.bind("<MouseWheel>", self.OnMouseWheel)
-		
-		tree['yscrollcommand'] = treeBar.set
-		treeBar['command'] = tree.yview
+			
+		tree['yscrollcommand'] = self.setCallback
+		treeBar['command']     = self.yviewCallback
 		
 		treeBar.pack(side="right", fill="y")
 		if scrolls: 
@@ -333,7 +333,7 @@ class LeoFrame:
 		self.putStatusLine("Welcome to Leo")
 	
 	#@-body
-	#@-node:5::sectionList.createLeoFrame
+	#@-node:5::f.createLeoFrame
 	#@-node:1::Birth & Death
 	#@+node:2::Configuration
 	#@+node:1::f.configureBar
@@ -536,7 +536,37 @@ class LeoFrame:
 	#@-body
 	#@-node:8::reconfigurePanes (use config bar_width)
 	#@-node:2::Configuration
-	#@+node:3::Event handlers (Frame)
+	#@+node:3::Scrolling callbacks (frame)
+	#@+body
+	def setCallback (self,*args,**keys):
+		
+		"""Callback to adjust the scrollbar.
+		
+		Args is a tuple of two floats describing the fraction of the visible area."""
+	
+		# if self.tree.trace: print "setCallback:",self.tree.redrawCount,`args`
+	
+		apply(self.treeBar.set,args,keys)
+	
+		if self.tree.allocateOnlyVisibleNodes:
+			self.tree.setVisibleArea(args)
+			
+	def yviewCallback (self,*args,**keys):
+		
+		"""Tell the canvas to scroll"""
+		
+		# if self.tree.trace: print "vyiewCallback",`args`,`keys`
+	
+		if self.tree.allocateOnlyVisibleNodes:
+			self.tree.allocateNodesBeforeScrolling(args)
+	
+		apply(self.canvas.yview,args,keys)
+		
+		
+	
+	#@-body
+	#@-node:3::Scrolling callbacks (frame)
+	#@+node:4::Event handlers (Frame)
 	#@+node:1::frame.OnCloseLeoEvent
 	#@+body
 	# Called from quit logic and when user closes the window.
@@ -779,8 +809,8 @@ class LeoFrame:
 		return "break"
 	#@-body
 	#@-node:10::OnMouseWheel (Tomaz Ficko)
-	#@-node:3::Event handlers (Frame)
-	#@+node:4::Icon area: convenience routines
+	#@-node:4::Event handlers (Frame)
+	#@+node:5::Icon area: convenience routines
 	#@+node:1::createIconBar
 	#@+body
 	def createIconBar (self):
@@ -895,8 +925,8 @@ class LeoFrame:
 		return None
 	#@-body
 	#@-node:5::addIconButton
-	#@-node:4::Icon area: convenience routines
-	#@+node:5::frame.longFileName & shortFileName
+	#@-node:5::Icon area: convenience routines
+	#@+node:6::f.longFileName & shortFileName
 	#@+body
 	def longFileName (self):
 		return self.mFileName
@@ -904,8 +934,8 @@ class LeoFrame:
 	def shortFileName (self):
 		return shortFileName(self.mFileName)
 	#@-body
-	#@-node:5::frame.longFileName & shortFileName
-	#@+node:6::frame.put, putnl
+	#@-node:6::f.longFileName & shortFileName
+	#@+node:7::f.put, putnl
 	#@+body
 	# All output to the log stream eventually comes here.
 	
@@ -947,8 +977,8 @@ class LeoFrame:
 			print "Null log"
 			print
 	#@-body
-	#@-node:6::frame.put, putnl
-	#@+node:7::getFocus
+	#@-node:7::f.put, putnl
+	#@+node:8::getFocus
 	#@+body
 	# Returns the frame that has focus, or body if None.
 	
@@ -960,8 +990,8 @@ class LeoFrame:
 		else:
 			return self.body
 	#@-body
-	#@-node:7::getFocus
-	#@+node:8::Menus
+	#@-node:8::getFocus
+	#@+node:9::Menus
 	#@+node:1::canonicalizeShortcut
 	#@+body
 	#@+at
@@ -4622,16 +4652,16 @@ class LeoFrame:
 	#@-body
 	#@-node:5::updateOutlineMenu
 	#@-node:9::Menu enablers (Frame)
-	#@-node:8::Menus
-	#@+node:9::notYet
+	#@-node:9::Menus
+	#@+node:10::notYet
 	#@+body
 	def notYet(self,name):
 	
 		es(name + " not ready yet")
 	
 	#@-body
-	#@-node:9::notYet
-	#@+node:10::Splitter stuff
+	#@-node:10::notYet
+	#@+node:11::Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -4662,8 +4692,10 @@ class LeoFrame:
 		
 		if verticalFlag == self.splitVerticalFlag:
 			bar.bind("<B1-Motion>", self.onDragMainSplitBar)
+	
 		else:
 			bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
+	
 	#@-body
 	#@-node:2::bindBar
 	#@+node:3::createLeoSplitter
@@ -4762,7 +4794,7 @@ class LeoFrame:
 	#@+body
 	def onDragMainSplitBar (self, event):
 		self.onDragSplitterBar(event,self.splitVerticalFlag)
-		
+	
 	def onDragSecondarySplitBar (self, event):
 		self.onDragSplitterBar(event,not self.splitVerticalFlag)
 	
@@ -4814,8 +4846,8 @@ class LeoFrame:
 			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 	#@-body
 	#@-node:8::placeSplitter
-	#@-node:10::Splitter stuff
-	#@+node:11::Status line: convenience routines
+	#@-node:11::Splitter stuff
+	#@+node:12::Status line: convenience routines
 	#@+body
 	#@@tabwidth 4
 	#@-body
@@ -4907,7 +4939,7 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:4::updateStatusRowCol()
-	#@-node:11::Status line: convenience routines
+	#@-node:12::Status line: convenience routines
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

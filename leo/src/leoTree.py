@@ -156,12 +156,26 @@ class leoTree:
 		#                     behavior better on Linux
 		# Context menu
 		self.popupMenu = None
+		
+		# Incremental redraws:
+		self.allocateOnlyVisibleNodes = true # true: enable incremental redraws.
+		self.trace = false # true enabling of various traces.
+		self.prevMoveToFrac = None
+		self.visibleArea = None
+		self.expandedVisibleArea = None
+		
+		self.allocatedNodes = 0 # A crucial statistic.
+			# Incremental drawing allocates visible nodes at most twice.
+			# Non-incremetal drawing allocates all visible nodes once.
+			
+		if self.allocateOnlyVisibleNodes:
+			self.commands.frame.bar1.bind("<B1-ButtonRelease>", self.redraw)
 	#@-body
 	#@-node:1::tree.__init__
 	#@+node:2::tree.deleteBindings
 	#@+body
-	# This code is when redrawing the screen to delete the old bindings.
-	# 4/20/03: I now realize that calling this from __del__ was useless: __del__ would never be called!
+	# This code is called when redrawing the screen to delete the old bindings.
+	# 4/20/03: Calling this from __del__ was useless: __del__ would never be called!
 	
 	def deleteBindings (self):
 		
@@ -246,14 +260,74 @@ class leoTree:
 	#@-at
 	#@-body
 	#@-node:1::About drawing and updating
-	#@+node:2::beginUpdate
+	#@+node:2::allocateNodes
+	#@+body
+	def allocateNodes(self,where,lines):
+		
+		"""Allocate Tk widgets in nodes that will become visible as the result of an upcoming scroll"""
+		
+		assert(where in ("above","below"))
+	
+		# print "allocateNodes: %d lines %s visible area" % (lines,where)
+		
+		# Expand the visible area: a little extra delta is safer.
+		delta = lines * (self.line_height + 4)
+		y1,y2 = self.visibleArea
+	
+		if where == "below":
+			y2 += delta
+		else:
+			y1 = max(0.0,y1-delta)
+	
+		self.expandedVisibleArea=y1,y2
+		# print "expandedArea:   %5.1f %5.1f" % (y1,y2)
+		
+		# Allocate all nodes in expanded visible area.
+		self.updatedNodeCount = 0
+		self.updateTree(self.rootVnode,root_left,root_top,0,0)
+		# if self.updatedNodeCount: print "updatedNodeCount:", self.updatedNodeCount
+	
+	#@-body
+	#@-node:2::allocateNodes
+	#@+node:3::allocateNodesBeforeScrolling
+	#@+body
+	def allocateNodesBeforeScrolling (self, args):
+		
+		"""Calculate the nodes that will become visible as the result of an upcoming scroll.
+	
+		args is the tuple passed to the Tk.Canvas.yview method"""
+	
+		if not self.allocateOnlyVisibleNodes: return
+	
+		# print "allocateNodesBeforeScrolling:",self.redrawCount,`args`
+	
+		assert(self.visibleArea)
+		assert(len(args)==2 or len(args)==3)
+		kind = args[0] ; n = args[1]
+		lines = 2 # Update by 2 lines to account for rounding.
+		if len(args) == 2:
+			assert(kind=="moveto")
+			frac1,frac2 = args
+			if float(n) != frac1:
+				where = choose(n<frac1,"above","below")
+				self.allocateNodes(where=where,lines=lines)
+		else:
+			assert(kind=="scroll")
+			linesPerPage = self.canvas.winfo_height()/self.line_height + 2
+			n = int(n) ; assert(abs(n)==1)
+			where = choose(n == 1,"below","above")
+			lines = choose(args[2] == "pages",linesPerPage,lines)
+			self.allocateNodes(where=where,lines=lines)
+	#@-body
+	#@-node:3::allocateNodesBeforeScrolling
+	#@+node:4::beginUpdate
 	#@+body
 	def beginUpdate (self):
 	
 		self.updateCount += 1
 	#@-body
-	#@-node:2::beginUpdate
-	#@+node:3::drawBox (tag_bind)
+	#@-node:4::beginUpdate
+	#@+node:5::drawBox (tag_bind)
 	#@+body
 	def drawBox (self,v,x,y):
 		
@@ -265,23 +339,24 @@ class leoTree:
 		iconname = choose(v.isExpanded(),"minusnode.gif", "plusnode.gif")
 		
 		image = self.getIconImage(iconname)
-		id = self.canvas.create_image(x,y,image=image)
-		if 0: # don't create a reference to this!
-			v.box_id = id
+	
+		v.box_id = id = self.canvas.create_image(x,y,image=image)
+	
 		id1 = self.canvas.tag_bind(id, "<1>", v.OnBoxClick)
 		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
 		
 		if self.recycleBindings:
 			self.tagBindings.append((id,id1,"<1>"),)
 			self.tagBindings.append((id,id2,"<Double-1>"),)
+	
 	#@-body
-	#@-node:3::drawBox (tag_bind)
-	#@+node:4::drawIcon (tag_bind))
+	#@-node:5::drawBox (tag_bind)
+	#@+node:6::drawIcon (tag_bind)
 	#@+body
 	# Draws icon for v at x,y
 	
 	def drawIcon(self,v,x,y):
-		
+	
 		hook_val = doHook("draw-outline-icon",tree=self,v=v,x=x,y=y)
 		if hook_val != None: return hook_val
 	
@@ -299,9 +374,8 @@ class leoTree:
 	
 		# Get the image
 		image = self.getIconImage(imagename + ".GIF")
-		id = self.canvas.create_image(x,y,anchor="nw",image=image)
-		if 1: # 6/15/02: this reference is now cleared in v.__del__
-			v.icon_id = id
+		v.icon_id = id = self.canvas.create_image(x,y,anchor="nw",image=image)
+	
 		id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
 		id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
 		id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick) # 2/8/03
@@ -312,9 +386,10 @@ class leoTree:
 	
 		return 0 # dummy icon height
 	
+	
 	#@-body
-	#@-node:4::drawIcon (tag_bind))
-	#@+node:5::drawNode
+	#@-node:6::drawIcon (tag_bind)
+	#@+node:7::drawNode, updateNode
 	#@+body
 	def drawNode(self,v,x,y):
 	
@@ -324,16 +399,44 @@ class leoTree:
 		if hook_val != None: return hook_val
 	
 		self.canvas.create_line(x, y+7, x+box_width, y+7,tag="lines",fill="gray50") # stipple="gray25")
+	
+		if self.inVisibleArea(y):
+			return self.force_draw_node(v,x,y)
+		elif v.edit_text:
+			# Delete the Tk. Widget so a later scroll will recreate it.
+			# If we don't do this: the update code would be much slower!
+			# if self.trace: print "deleting:",v.cleanHeadString()
+			v.edit_text.destroy()
+			v.edit_text = None
+			v.edit_text_id = None
+			return self.line_height
+		else:
+			return self.line_height
+		
+	def updateNode (self,v,x,y):
+		
+		"""Draw a node that may have become visible as a result of a scrolling operation"""
+	
+		if self.inExpandedVisibleArea(y):
+			# This check is a major optimization.
+			if not v.edit_text:
+				return self.force_draw_node(v,x,y)
+			else:
+				return self.line_height
+	
+		return self.line_height
+		
+	def force_draw_node(self,v,x,y):
+	
+		self.allocatedNodes += 1
 		if v.firstChild():
 			self.drawBox(v,x,y)
-	
 		icon_height = self.drawIcon(v,x+box_width,y)
 		text_height = self.drawText(v,x+box_width+icon_width,y)
 		return max(icon_height, text_height)
-	
 	#@-body
-	#@-node:5::drawNode
-	#@+node:6::drawText (bind)
+	#@-node:7::drawNode, updateNode
+	#@+node:8::drawText (bind)
 	#@+body
 	# draws text for v at x,y
 	
@@ -343,8 +446,7 @@ class leoTree:
 		if hook_val != None: return hook_val
 		
 		x += text_indent
-		if v.edit_text: # self.canvas.delete("all") may already have done this, but do it anyway.
-			v.edit_text.destroy()
+	
 		v.edit_text = t = Tkinter.Text(self.canvas,
 			font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 	
@@ -373,15 +475,13 @@ class leoTree:
 			self.bindings.append((t,id2,"<3>"),)
 			self.bindings.append((t,id3,"<Key>"),)
 			self.bindings.append((t,id4,"<Control-t>"),)
-		id = self.canvas.create_window(x,y,anchor="nw",window=t)
-		if 0: # don't create this reference!
-			v.edit_text_id = id
+		v.edit_text_id = id = self.canvas.create_window(x,y,anchor="nw",window=t)
 		self.canvas.tag_lower(id)
 	
 		return self.line_height
 	#@-body
-	#@-node:6::drawText (bind)
-	#@+node:7::drawTree
+	#@-node:8::drawText (bind)
+	#@+node:9::drawTree
 	#@+body
 	def drawTree(self,v,x,y,h,level):
 		
@@ -414,8 +514,8 @@ class leoTree:
 
 		return y
 	#@-body
-	#@-node:7::drawTree
-	#@+node:8::endUpdate
+	#@-node:9::drawTree
+	#@+node:10::endUpdate
 	#@+body
 	def endUpdate (self, flag=true):
 	
@@ -424,8 +524,8 @@ class leoTree:
 		if flag and self.updateCount == 0:
 			self.redraw()
 	#@-body
-	#@-node:8::endUpdate
-	#@+node:9::headWidth
+	#@-node:10::endUpdate
+	#@+node:11::headWidth
 	#@+body
 	#@+at
 	#  Returns the proper width of the entry widget for the headline. This has 
@@ -438,8 +538,31 @@ class leoTree:
 	
 		return max(10,5 + len(v.headString()))
 	#@-body
-	#@-node:9::headWidth
-	#@+node:10::lastVisible
+	#@-node:11::headWidth
+	#@+node:12::inVisibleArea & inExpandedVisibleArea
+	#@+body
+	def inVisibleArea (self,y1):
+		
+		if self.allocateOnlyVisibleNodes:
+			if self.visibleArea:
+				vis1,vis2 = self.visibleArea
+				y2 = y1 + self.line_height
+				return y2 >= vis1 and y1 <= vis2
+			else: return false
+		else:
+			return true # This forces all nodes to be allocated on all redraws.
+			
+	def inExpandedVisibleArea (self,y1):
+		
+		if self.expandedVisibleArea:
+			vis1,vis2 = self.expandedVisibleArea
+			y2 = y1 + self.line_height
+			return y2 >= vis1 and y1 <= vis2
+		else:
+			return false
+	#@-body
+	#@-node:12::inVisibleArea & inExpandedVisibleArea
+	#@+node:13::lastVisible
 	#@+body
 	# Returns the last visible node of the screen.
 	
@@ -457,8 +580,79 @@ class leoTree:
 				v = v.threadNext()
 		return last
 	#@-body
-	#@-node:10::lastVisible
-	#@+node:11::setLineHeight
+	#@-node:13::lastVisible
+	#@+node:14::redraw , force_redraw, redraw_now, idle_redraw, idle_second_redraw
+	#@+body
+	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
+	# This _is_ useful when a flag is passed to c.endUpdate.
+	def redraw (self,event=None):
+		if self.updateCount == 0 and not self.redrawScheduled:
+			# stat() # print "tree.redraw"
+			self.redrawScheduled = true
+			self.canvas.after_idle(self.idle_redraw)
+			
+	# Schedules a redraw even if inside beginUpdate/endUpdate
+	def force_redraw (self):
+		# print "tree.force_redraw"
+		if not self.redrawScheduled:
+			self.redrawScheduled = true
+			self.canvas.after_idle(self.idle_redraw)
+			
+	# Redraws immediately: used by Find so a redraw doesn't mess up selections.
+	# It is up to the caller to ensure that no other redraws are pending.
+	def redraw_now (self):
+	
+		# print "tree.redraw_now: ", self.redrawScheduled
+		self.idle_redraw()
+	
+	def idle_redraw (self):
+	
+		frame = self.commands.frame
+		if frame not in app().windowList or app().quitting:
+			return
+	
+		self.expandAllAncestors(self.currentVnode)
+		oldcursor = self.canvas['cursor']
+		self.canvas['cursor'] = "watch"
+		self.allocatedNodes = 0
+		if not doHook("redraw-entire-outline",c=self.commands):
+			# Erase and redraw the entire tree.
+			self.topVnode = None
+			self.deleteBindings()
+			self.canvas.delete("all")
+			self.setVisibleAreaToFullCanvas()
+			self.drawTree(self.rootVnode,root_left,root_top,0,0)
+			# Set up the scroll region after the tree has been redrawn.
+			x0, y0, x1, y1 = self.canvas.bbox("all")
+			self.canvas.configure(scrollregion=(0, 0, x1, y1))
+			# Do a scrolling operation after the scrollbar is redrawn
+			self.canvas.after_idle(self.idle_scrollTo)
+			if self.trace:
+				self.redrawCount += 1
+				print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
+	
+		self.canvas['cursor'] = oldcursor
+	
+		# if self.recycleBindings: collectGarbage()
+	
+		self.redrawScheduled = false
+		
+	def idle_second_redraw (self):
+			
+		# Erase and redraw the entire tree the SECOND time.
+		# This ensures that all visible nodes are allocated.
+		self.topVnode = None
+		args = self.canvas.yview()
+		self.setVisibleArea(args)
+		self.deleteBindings()
+		self.canvas.delete("all")
+		self.drawTree(self.rootVnode,root_left,root_top,0,0)
+		
+		if self.trace:
+			print "idle_second_redraw allocated:",self.redrawCount, self.allocatedNodes
+	#@-body
+	#@-node:14::redraw , force_redraw, redraw_now, idle_redraw, idle_second_redraw
+	#@+node:15::setLineHeight
 	#@+body
 	def setLineHeight (self,font):
 		
@@ -472,8 +666,44 @@ class leoTree:
 			es("exception setting outline line height")
 			es_exception()
 	#@-body
-	#@-node:11::setLineHeight
-	#@+node:12::tree.getFont,setFont,setFontFromConfig
+	#@-node:15::setLineHeight
+	#@+node:16::setVisibleArea
+	#@+body
+	def setVisibleArea (self,args):
+	
+		r1,r2 = args
+		r1,r2 = float(r1),float(r2)
+		# print "scroll ratios:",r1,r2
+	
+		try:
+			s = self.canvas.cget("scrollregion")
+			x1,y1,x2,y2 = scanf(s,"%d %d %d %d")
+			x1,y1,x2,y2 = int(x1),int(y1),int(x2),int(y2)
+		except:
+			self.visibleArea = None
+			return
+			
+		scroll_h = y2-y1
+		# print "height of scrollregion:", scroll_h
+	
+		vy1 = y1 + (scroll_h*r1)
+		vy2 = y1 + (scroll_h*r2)
+		self.visibleArea = vy1,vy2
+		# print "setVisibleArea: %5.1f %5.1f" % (vy1,vy2)
+	
+	#@-body
+	#@-node:16::setVisibleArea
+	#@+node:17::setVisibleAreaToFullCanvas
+	#@+body
+	def setVisibleAreaToFullCanvas(self):
+		
+		if self.visibleArea:
+			y1,y2 = self.visibleArea
+			y2 = max(y2,y1 + self.canvas.winfo_height())
+			self.visibleArea = y1,y2
+	#@-body
+	#@-node:17::setVisibleAreaToFullCanvas
+	#@+node:18::tree.getFont,setFont,setFontFromConfig
 	#@+body
 	def getFont (self):
 	
@@ -500,8 +730,8 @@ class leoTree:
 	
 		self.setFont(font)
 	#@-body
-	#@-node:12::tree.getFont,setFont,setFontFromConfig
-	#@+node:13::tree.getIconImage
+	#@-node:18::tree.getFont,setFont,setFontFromConfig
+	#@+node:19::tree.getIconImage
 	#@+body
 	def getIconImage (self, name):
 	
@@ -527,8 +757,8 @@ class leoTree:
 			es_exception()
 			return None
 	#@-body
-	#@-node:13::tree.getIconImage
-	#@+node:14::tree.idle_scrollTo
+	#@-node:19::tree.getIconImage
+	#@+node:20::tree.idle_scrollTo
 	#@+body
 	#@+at
 	#  This scrolls the canvas so that v is in view.  This is done at idle 
@@ -562,14 +792,25 @@ class leoTree:
 		# 2/2/03: new logic for scrolling up.
 		frac =  max(min(frac,1.0),0.0)
 		frac2 = max(min(frac2,1.0),0.0)
+	
 		if frac <= lo:
-			self.canvas.yview("moveto",frac)
-		elif frac2 + (hi - lo) >= hi: 
-			self.canvas.yview("moveto",frac2)
+			if self.prevMoveToFrac != frac:
+				self.prevMoveToFrac = frac
+				self.canvas.yview("moveto",frac)
+		elif frac2 + (hi - lo) >= hi:
+			if self.prevMoveToFrac != frac2:
+				self.prevMoveToFrac = frac2
+				self.canvas.yview("moveto",frac2)
+				
+		if self.allocateOnlyVisibleNodes:
+			self.canvas.after_idle(self.idle_second_redraw)
+	
 		# print "%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi)
+	
+	
 	#@-body
-	#@-node:14::tree.idle_scrollTo
-	#@+node:15::tree.numberOfVisibleNodes
+	#@-node:20::tree.idle_scrollTo
+	#@+node:21::tree.numberOfVisibleNodes
 	#@+body
 	def numberOfVisibleNodes(self):
 		
@@ -579,8 +820,8 @@ class leoTree:
 			v = v.visNext()
 		return n
 	#@-body
-	#@-node:15::tree.numberOfVisibleNodes
-	#@+node:16::tree.recolor, recolor_now, recolor_range
+	#@-node:21::tree.numberOfVisibleNodes
+	#@+node:22::tree.recolor, recolor_now, recolor_range
 	#@+body
 	def recolor(self,v,incremental=0):
 	
@@ -601,56 +842,25 @@ class leoTree:
 		body = self.commands.frame.body
 		self.colorizer.recolor_range(v,body,leading,trailing)
 	#@-body
-	#@-node:16::tree.recolor, recolor_now, recolor_range
-	#@+node:17::tree.redraw , force_redraw, redraw_now
+	#@-node:22::tree.recolor, recolor_now, recolor_range
+	#@+node:23::tree.updateTree
 	#@+body
-	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
-	# This _is_ useful when a flag is passed to c.endUpdate.
-	def redraw (self):
-		if self.updateCount == 0 and not self.redrawScheduled:
-			# stat() # print "tree.redraw"
-			self.redrawScheduled = true
-			self.canvas.after_idle(self.idle_redraw)
-			
-	# Schedules a redraw even if inside beginUpdate/endUpdate
-	def force_redraw (self):
-		# print "tree.force_redraw"
-		if not self.redrawScheduled:
-			self.redrawScheduled = true
-			self.canvas.after_idle(self.idle_redraw)
-			
-	# Redraws immediately: used by Find so a redraw doesn't mess up selections.
-	# It is up to the caller to ensure that no other redraws are pending.
-	def redraw_now (self):
+	def updateTree (self,v,x,y,h,level):
 	
-		# print "tree.redraw_now: ", self.redrawScheduled
-		self.idle_redraw()
+		yfirst = ylast = y
+		if level==0: yfirst += 10
+		while v:
+			# trace(`x` + ", " + `y` + ", " + `v`)
+			h = self.updateNode(v,x,y)
+			y += h ; ylast = y
+			if v.isExpanded() and v.firstChild():
+				y = self.updateTree(v.firstChild(),x+child_indent,y,h,level+1)
+			v = v.next()
+		return y
 	
-	def idle_redraw (self):
-	
-		self.redrawScheduled = false
-		frame = self.commands.frame
-		if frame in app().windowList and app().quitting == false:
-			# self.redrawCount += 1 ; trace(`self.redrawCount`)
-			self.expandAllAncestors(self.currentVnode)
-			# Erase and redraw the entire tree.
-			oldcursor = self.canvas['cursor']
-			self.canvas['cursor'] = "watch"
-			self.deleteBindings()
-			self.canvas.delete("all")
-			if not doHook("redraw-entire-outline",c=self.commands):
-				self.drawTree(self.rootVnode,root_left,root_top,0,0)
-			self.canvas['cursor'] = oldcursor
-			# Set up the scroll region.
-			x0, y0, x1, y1 = self.canvas.bbox("all")
-			self.canvas.configure(scrollregion=(0, 0, x1, y1))
-			# Schedule a scrolling operation after the scrollbar is redrawn
-			self.canvas.after_idle(self.idle_scrollTo)
-			if self.recycleBindings:
-				collectGarbage()
 	#@-body
-	#@-node:17::tree.redraw , force_redraw, redraw_now
-	#@+node:18::tree.yoffset
+	#@-node:23::tree.updateTree
+	#@+node:24::tree.yoffset
 	#@+body
 	#@+at
 	#  We can't just return icony because the tree hasn't been redrawn yet.  
@@ -686,7 +896,7 @@ class leoTree:
 			v = v.next()
 		return h, false
 	#@-body
-	#@-node:18::tree.yoffset
+	#@-node:24::tree.yoffset
 	#@-node:4::Drawing
 	#@+node:5::Event handers (tree)
 	#@+body
@@ -1596,7 +1806,8 @@ class leoTree:
 	
 	def select (self,v,updateBeadList=true):
 		
-		# trace(`v`)
+		# if self.trace: print "tree.select",`v`
+	
 		
 		#@<< define vars and stop editing >>
 		#@+node:1::<< define vars and stop editing >>

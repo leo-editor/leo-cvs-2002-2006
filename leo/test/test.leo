@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1"><vh>Previous tests</vh>
+<v t="T1" a="V"><vh>Previous tests</vh>
 <v t="T2"><vh>Coloring Test</vh>
 <v t="T3"><vh>Colorizing Test</vh></v>
 <v t="T4"><vh>Color test without images</vh></v>
@@ -41,7 +41,7 @@
 </v>
 <v t="T23"><vh>Test of recent sections &amp; clones</vh>
 <v t="T24" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T25" a="CE"><vh>hyper link test</vh>
+<v t="T25" a="C"><vh>hyper link test</vh>
 <v t="T24" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
 <v t="T26"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
 </v>
@@ -52,14 +52,14 @@
 </v>
 <v t="T27"><vh>Copy/Clones test</vh>
 <v t="T28" a="C"><vh>a Å</vh>
-<v t="T29" a="CE"><vh>b</vh>
+<v t="T29" a="C"><vh>b</vh>
 <v t="T30"><vh>c</vh></v>
 </v>
 <v t="T29" a="C"><vh>b</vh>
 <v t="T30"><vh>c</vh></v>
 </v>
 </v>
-<v t="T28" a="CE"><vh>a Å</vh>
+<v t="T28" a="C"><vh>a Å</vh>
 <v t="T29" a="C"><vh>b</vh>
 <v t="T30"><vh>c</vh></v>
 </v>
@@ -83,7 +83,7 @@
 <v t="T39"><vh>timeit (in 2.3b1)</vh></v>
 <v t="T40"><vh>Use xml.sax</vh></v>
 <v t="T41"><vh>Screenshots</vh></v>
-<v t="T42" a="V"><vh>Assingment tests</vh></v>
+<v t="T42"><vh>Assignment tests</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1"></t>

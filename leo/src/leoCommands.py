@@ -1145,15 +1145,18 @@ class Commands:
 		c = self ; current = c.currentVnode()
 		v = c.rootVnode()
 		c.beginUpdate()
+	
 		while v:
 			c.contractSubtree(v)
 			v = v.next()
+	
 		if not current.isVisible():
 			# 1/31/03: Select the topmost ancestor of the presently selected node.
 			v = current
 			while v and v.parent():
 				v = v.parent()
 			c.selectVnode(v)
+	
 		c.endUpdate()
 		c.expansionLevel = 1 # Reset expansion level.
 	#@-body
@@ -2346,6 +2349,8 @@ class Commands:
 	#@-node:1::updateSyntaxColorer
 	#@-node:16::Syntax coloring interface
 	#@-others
+
+
 #@-body
 #@-node:0::@file leoCommands.py
 #@-leo
