@@ -3252,14 +3252,16 @@ class baseCommands:
         #@+node:ekr.20040711135244.9:put
         def put (self,s,strip=True):
             
+            """Put s to self.array, and strip trailing whitespace if strip is True."""
+            
             if self.array and strip:
                 prev = self.array[-1]
                 if len(self.array) == 1:
                     if prev.rstrip():
-                        # We aren't stripping all leading whitespace.
+                        # Stripping trailing whitespace doesn't strip leading whitespace.
                         self.array[-1] = prev.rstrip()
                 else:
-                    # The previous entry isn't leading whitespace.
+                    # The previous entry isn't leading whitespace, so we can strip whitespace.
                     self.array[-1] = prev.rstrip()
         
             self.array.append(s)
@@ -3271,9 +3273,9 @@ class baseCommands:
             a = self.array
             t1,t2,t3,t4,t5 = token5tuple
             srow,scol = t3 ; erow,ecol = t4
-            line = t5 # str(t5) # May fail
+            line = t5
             name = token.tok_name[t1].lower()
-            val = t2 # str(t2) # May fail
+            val = t2
             startLine = self.line != srow
             self.line = srow
         
@@ -3281,10 +3283,11 @@ class baseCommands:
                 ws = line[0:scol]
                 if ws: a.append(ws)
         
+            # g.trace(name,repr(val))
             if name in ("nl","newline","endmarker"):
                 if name in ("nl","newline"):
                     a.append('\n')
-                self.lines.append(''.join(self.array))
+                self.lines.append(''.join(a))
                 self.array = []
             elif name == "op":
                 self.putOperator(val)
@@ -3293,8 +3296,16 @@ class baseCommands:
                 if self.prevName == "def": # A personal idiosyncracy.
                     a.append(' ') # Retain the blank before '('.
                 self.prevName = val
-            elif name in ("comment","string","number"):
+            elif name == "number":
                 a.append(val)
+            elif name in ("comment","string"):
+                # These may span lines, so duplicate the end-of-line logic.
+                lines = g.splitLines(val)
+                for line in lines:
+                    a.append(line)
+                    if line and line[-1] == '\n':
+                        self.lines.append(''.join(a))
+                        self.array = []
             elif name == "errortoken":
                 a.append(val)
                 if val == '@':
