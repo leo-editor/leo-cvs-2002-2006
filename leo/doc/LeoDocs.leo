@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2911" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2933" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="33" left="211" height="836" width="833"/>
+	<global_window_position top="128" left="363" height="836" width="833"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0">
+<preferences>
 </preferences>
 <find_panel_settings>
 	<find_string></find_string>
@@ -62,7 +62,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -82,20 +82,37 @@
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="edream.110203163054.64" a=""><vh>4.1 alpha 1</vh>
-<v t="edream.110303182719" a="E"><vh>New config settings</vh></v>
-<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="edream.110603185805" a="V"><vh>4.1 beta 1</vh>
+<v t="edream.110603190404"><vh>Fixed bugs</vh>
+<v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bug</vh></v>
+<v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
+<v t="edream.110603190322.11"><vh>Fixed first node-only find bug</vh></v>
+<v t="edream.110603190322.3"><vh>Fixed bug in idle_body_key</vh></v>
+</v>
+<v t="edream.110603192009"><vh>Improved format of .leo files</vh>
+<v t="edream.110603190322.9"><vh>Leo now ignores unknown prefs and find prefs</vh></v>
+<v t="edream.110603190322.10"><vh>Leo now writes node_only find prefs</vh></v>
+<v t="edream.110603190125.1"><vh>.leo files are now cvs-friendly</vh></v>
+</v>
+<v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
+<v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
+<v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
+<v t="edream.110603190322.6" a="E"><vh>Added script search/change</vh></v>
 <v t="edream.110303182253.3"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
+</v>
+<v t="edream.110303182719"><vh>New config settings</vh></v>
+<v t="edream.110603190234.1"><vh>New scripts &amp; code-level features</vh>
+<v t="edream.110603190322.2"><vh>Create initScriptFind</vh></v>
+<v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
+<v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
+<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
+</v>
 </v>
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
 </v>
-<v t="edream.110203163054.117"><vh>leo.py versions</vh>
-<v t="edream.110203163054.64" a=""><vh>4.1 alpha 1</vh>
-<v t="edream.110303182719"><vh>New config settings</vh></v>
-<v t="edream.110303182253.39"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
-<v t="edream.110303182253.3"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
-</v>
+<v t="edream.110203163054.117" a="E"><vh>leo.py versions</vh>
+<v t="edream.110203163054.64"><vh>4.1 alpha 1</vh></v>
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
 <v t="edream.110203163054.67"><vh>4.0 final</vh>
 <v t="edream.110203163054.68"><vh>4.0 beta 4</vh></v>
@@ -912,7 +929,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.735" a="E"><vh>Users Guide</vh>
+<v t="edream.110203163054.735"><vh>Users Guide</vh>
 <v t="edream.110203163054.736"><vh>An overview of Leo</vh></v>
 <v t="edream.110203163054.737"><vh>Front material</vh>
 <v t="edream.110203163054.738"><vh>Title Page &amp; Summary</vh></v>
@@ -1072,7 +1089,7 @@
 <v t="edream.110203163054.384" a=""><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.818" a="E"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="edream.110203163054.818"><vh>Chapter 5: Using Leo's Commands</vh>
 <v t="edream.110203163054.819"><vh> The File Menu</vh>
 <v t="edream.110203163054.820" a="M"><vh>Loading, Saving and Reverting Files</vh></v>
 <v t="edream.110203163054.821"><vh>Communicating with external editors</vh>
@@ -1120,11 +1137,11 @@
 <v t="edream.110203163054.852"><vh>LaTex keywords</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.853" a="E"><vh> The Outline Menu</vh>
+<v t="edream.110203163054.853"><vh> The Outline Menu</vh>
 <v t="edream.110203163054.854"><vh> Creating and deleting headlines</vh></v>
 <v t="edream.110203163054.855"><vh> Cutting, pasting and deleting headlines</vh></v>
 <v t="edream.110203163054.856"><vh> Expanding and contracting headlines</vh></v>
-<v t="edream.110203163054.857" a="V"><vh> Moving, sorting and reorganizing headlines</vh></v>
+<v t="edream.110203163054.857"><vh> Moving, sorting and reorganizing headlines</vh></v>
 <v t="edream.110203163054.858"><vh> Marking headlines</vh></v>
 <v t="edream.110203163054.755" a=""><vh>Cloning headlines</vh>
 <v t="edream.110203163054.756"><vh>read me</vh></v>
@@ -24701,5 +24718,77 @@ Still to do:
 
 The use_gnx setting in leoConfig.txt determines whether uses gnx's (cvs friendly) or ints.  No version of Leo before 4.1 can read .leo files containing gnx.   Only gnx's are immutable.  Leo recomputes all non-gnx indices from scratch whenever writing a .leo file. It is possible to convert between 3.x and 4.1 file formats by changing the use_gnx setting.
 </t>
+<t tx="edream.110603185805">Leo 4.1 beta 1                   November 7, 2003
+
+This is the first official release of the reorganized 4.1 code base.  The code appears solid, and has not been widely tested.  Please use caution when using this code.
+
+Highlights of 4.1:
+-----------------
+
+* Leo 4.1 includes several new commands:
+  - script-based find/change commands: very powerful and flexible.
+  - Hoist &amp; DeHoist commands for viewing parts of an outline.
+  - Check Outline command finds user clone mistakes.
+* New configuration settings:
+  - use_gnx specifies whether .leo files use integers as indices:
+    use_gnx = 0 makes .leo files compatible with previous versions of Leo.
+    use_gnx = 1 makes .leo files cvs-friendly
+  - config_encoding specifies the encoding of leoConfig.txt.
+* Several significant code-level changes:
+  - The 4.1 code base has been reorganized to support gui plugins.
+    An example wx_gui plugin is partly functional.
+  - Created a flexible framework for creating &amp; running regression tests.
+    This framework takes full advantage of outlines to organize tests.
+  - app.forceShutdown now works when called from plugins.
+- Fixed several long-standing bugs.  More fixes are coming.</t>
+<t tx="edream.110603190125.1">Leo 4.1 uses immutable gnx's (id:timestamp:n) by default to associate tnodes with vnodes in .leo files.  This makes Leo as cvs friendly as possible.  From now on .leo files will be checked in to cvs with the -ko (text/keywords off) option.</t>
+<t tx="edream.110603190125.3">The file test.leo in the test directory contains real regression tests for syntax coloring.   Regression testing scripts create regression tests dynamically from data in Leo's outline.  Very cool, very easy, very general.  In particular, regression tests may use temporary nodes in test.leo rather than creating separate Tk windows for testing.</t>
+<t tx="edream.110603190125.4">The 4.1 code base has been reorganized to support gui's other than tkinter.  Leo's src directory contains several new source files.
+
+The __wx_gui.py plugin is uses the newly reoganized code.  At present it is only partly functional.</t>
+<t tx="edream.110603190234.1"></t>
+<t tx="edream.110603190322.2">A useful little utility to set up script-find/change.</t>
+<t tx="edream.110603190322.3">This involved fixing a bug in idle_body_key so that the oldText param is honored if present.</t>
+<t tx="edream.110603190322.6">Yes, we really do need script-based find/change.  The reason is that the find panel (and the associated find commands) is really the only good place to allow the user to do an interactive search.  Without this feature, all interactive find/change scripts would have to duplicate all the work of the find/change commands.
+
+Still to do: help scripts do undo.
+
+Conventions enforced by Leo:
+
+- The app.searchDict ivar can be used for communication between find &amp; change scripts.
+- app.searchDict["type"] contains either "find", "change", "findAll" or "changeAll".
+- The Find All command executes the find script only once unless the script sets
+  app.searchDict["Continue"] = True  (similarly for the change all command.
+- The Find Then Change command executes the find command followed by the change command.
+- The Change Script command supports undo if app.searchDict has the following entry after the script executes:
+	{ "v" : v, "oldText" : oldText, "newText" : s }
+	A "keys" key is an optional keyword dict to be passed to setUndoParams.
+
+Leo actually doesn't do much:
+
+- Leo doesn't clear app.searchDict.
+	- However, a _script_ can
+		a) init itself and
+		b) bring up the find window (Eureka!)
+- The find script is repsonsible for traversing the tree.
+- The find script is responsible for highlighting the found text
+  or otherwise indicating to the change script what the found text was.
+  For example, the re find script can set app.searchDict["m"] to the match object.
+- The find script must communicate with the change script.  Leo does nothing.
+- The change script must change the text, usually by using v.setBodyStringOrPane.</t>
+<t tx="edream.110603190322.8">Undoing Change All cleared the body pane.
+
+The fix was simple: call setUndoParams instead of setUndoTypingParams in batchChange.</t>
+<t tx="edream.110603190322.9"></t>
+<t tx="edream.110603190322.10"></t>
+<t tx="edream.110603190322.11">The node-only option wasn't working due to a bug in createFrame.
+
+There still may be a problem with the interaction between Node-only,Change All and Undo.</t>
+<t tx="edream.110603190322.13">The fix was to open files with 'rb' instead of 'r'.  This probably should be done in more places.</t>
+<t tx="edream.110603190322.14">This command checks for unused tnodeLists and checks the topology of all clones.</t>
+<t tx="edream.110603190322.15">Hoisting itself is easy.  The biggest challenge was preventing moves outside the hoisted area, which would too confusing.</t>
+<t tx="edream.110603190404"></t>
+<t tx="edream.110603192009"></t>
+<t tx="edream.110603192009.1"></t>
 </tnodes>
 </leo_file>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1039" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1258" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="54" left="337" height="828" width="846"/>
+	<global_window_position top="109" left="140" height="828" width="846"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0">
+<preferences>
 </preferences>
 <find_panel_settings>
 	<find_string></find_string>
@@ -800,8 +800,262 @@
 </v>
 </v>
 </v>
+<v t="edream.110603185221"><vh>Python debugger code for study</vh>
+<v t="edream.110603185221.1"><vh>In python23\Lib</vh>
+<v t="edream.110603185221.2"><vh>bdb.py</vh>
+<v t="edream.110603185221.3" a="E"><vh>class BdbQuit (Exception)</vh></v>
+<v t="edream.110603185221.4"><vh>class Bdb</vh>
+<v t="edream.110603185221.5"><vh>__init__</vh></v>
+<v t="edream.110603185221.6"><vh>canonic</vh></v>
+<v t="edream.110603185221.7"><vh>reset</vh></v>
+<v t="edream.110603185221.8"><vh>trace_dispatch</vh></v>
+<v t="edream.110603185221.9"><vh>dispatch_line</vh></v>
+<v t="edream.110603185221.10"><vh>dispatch_call</vh></v>
+<v t="edream.110603185221.11"><vh>dispatch_return</vh></v>
+<v t="edream.110603185221.12"><vh>dispatch_exception</vh></v>
+<v t="edream.110603185221.13"><vh>stop_here</vh></v>
+<v t="edream.110603185221.14"><vh>break_here</vh></v>
+<v t="edream.110603185221.15"><vh>do_clear</vh></v>
+<v t="edream.110603185221.16"><vh>break_anywhere</vh></v>
+<v t="edream.110603185221.17"><vh>user_xxx (overridden in subclasses)</vh>
+<v t="edream.110603185221.18"><vh>user_call</vh></v>
+<v t="edream.110603185221.19"><vh>user_line</vh></v>
+<v t="edream.110603185221.20"><vh>user_return</vh></v>
+<v t="edream.110603185221.21"><vh>user_exception</vh></v>
 </v>
-<v t="edream.110203113231.618" a="E"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110603185221.22"><vh>set_xxx (called by subclasses)</vh>
+<v t="edream.110603185221.23"><vh>set_step</vh></v>
+<v t="edream.110603185221.24"><vh>set_next</vh></v>
+<v t="edream.110603185221.25"><vh>set_return</vh></v>
+<v t="edream.110603185221.26"><vh>set_trace</vh></v>
+<v t="edream.110603185221.27"><vh>set_continue</vh></v>
+<v t="edream.110603185221.28"><vh>set_quit</vh></v>
+</v>
+<v t="edream.110603185221.29"><vh>breakpoint methods (called by subclasses)</vh>
+<v t="edream.110603185221.30"><vh>set_break</vh></v>
+<v t="edream.110603185221.31"><vh>clear_break</vh></v>
+<v t="edream.110603185221.32"><vh>clear_bpbynumber</vh></v>
+<v t="edream.110603185221.33"><vh>clear_all_file_breaks</vh></v>
+<v t="edream.110603185221.34"><vh>clear_all_breaks</vh></v>
+<v t="edream.110603185221.35"><vh>get_break</vh></v>
+<v t="edream.110603185221.36"><vh>get_breaks</vh></v>
+<v t="edream.110603185221.37"><vh>get_file_breaks</vh></v>
+<v t="edream.110603185221.38"><vh>get_all_breaks</vh></v>
+</v>
+<v t="edream.110603185221.39"><vh>stack methods (called by subclasses)</vh>
+<v t="edream.110603185221.40"><vh>get_stack</vh></v>
+<v t="edream.110603185221.41"><vh>format_stack_entry</vh></v>
+</v>
+<v t="edream.110603185221.42"><vh>run methods</vh>
+<v t="edream.110603185221.43"><vh>run</vh></v>
+<v t="edream.110603185221.44"><vh>runeval</vh></v>
+<v t="edream.110603185221.45"><vh>runctx</vh></v>
+<v t="edream.110603185221.46"><vh>runcall</vh></v>
+</v>
+</v>
+<v t="edream.110603185221.47"><vh>set_trace</vh></v>
+<v t="edream.110603185221.48"><vh>class Breakpoint</vh>
+<v t="edream.110603185221.49"><vh>&lt;&lt; class Breakpoint declarations &gt;&gt;</vh></v>
+<v t="edream.110603185221.50"><vh>__init__</vh></v>
+<v t="edream.110603185221.51"><vh>deleteMe</vh></v>
+<v t="edream.110603185221.52"><vh>enable</vh></v>
+<v t="edream.110603185221.53"><vh>disable</vh></v>
+<v t="edream.110603185221.54"><vh>bpprint</vh></v>
+</v>
+<v t="edream.110603185221.55"><vh>effective</vh>
+<v t="edream.110603185221.56"><vh>&lt;&lt; handle unconditional breakpoint &gt;&gt;</vh></v>
+<v t="edream.110603185221.57"><vh>&lt;&lt; handle conditional breakpoint &gt;&gt;</vh></v>
+</v>
+<v t="edream.110603185221.58"><vh>Testing...</vh>
+<v t="edream.110603185221.59"><vh>class Tdb</vh>
+<v t="edream.110603185221.60"><vh>user_call</vh></v>
+<v t="edream.110603185221.61"><vh>user_line</vh></v>
+<v t="edream.110603185221.62"><vh>user_return</vh></v>
+<v t="edream.110603185221.63"><vh>user_exception</vh></v>
+</v>
+<v t="edream.110603185221.64"><vh>foo</vh></v>
+<v t="edream.110603185221.65"><vh>bar</vh></v>
+<v t="edream.110603185221.66"><vh>test</vh></v>
+</v>
+</v>
+<v t="edream.110603185221.67"><vh>pdb.py</vh>
+<v t="edream.110603185221.68"><vh>&lt;&lt; pdb declarations &gt;&gt;</vh></v>
+<v t="edream.110603185221.69"><vh>find_function</vh></v>
+<v t="edream.110603185221.70"><vh>class Pdb</vh>
+<v t="edream.110603185221.71"><vh>__init__</vh></v>
+<v t="edream.110603185221.72"><vh>reset</vh></v>
+<v t="edream.110603185221.73"><vh>forget</vh></v>
+<v t="edream.110603185221.74"><vh>setup</vh></v>
+<v t="edream.110603185221.75"><vh>execRcLines</vh></v>
+<v t="edream.110603185221.76"><vh>user_call</vh></v>
+<v t="edream.110603185221.77"><vh>user_line</vh></v>
+<v t="edream.110603185221.78"><vh>user_return</vh></v>
+<v t="edream.110603185221.79"><vh>user_exception</vh></v>
+<v t="edream.110603185221.80"><vh>interaction</vh></v>
+<v t="edream.110603185221.81"><vh>default</vh></v>
+<v t="edream.110603185221.82"><vh>precmd</vh></v>
+<v t="edream.110603185221.83"><vh>do_break</vh></v>
+<v t="edream.110603185221.84"><vh>defaultFile</vh></v>
+<v t="edream.110603185221.85"><vh>do_tbreak</vh></v>
+<v t="edream.110603185221.86"><vh>lineinfo</vh></v>
+<v t="edream.110603185221.87"><vh>checkline</vh></v>
+<v t="edream.110603185221.88"><vh>do_enable</vh></v>
+<v t="edream.110603185221.89"><vh>do_disable</vh></v>
+<v t="edream.110603185221.90"><vh>do_condition</vh></v>
+<v t="edream.110603185221.91"><vh>do_ignore</vh></v>
+<v t="edream.110603185221.92"><vh>do_clear</vh></v>
+<v t="edream.110603185221.93"><vh>do_where</vh></v>
+<v t="edream.110603185221.94"><vh>do_up</vh></v>
+<v t="edream.110603185221.95"><vh>do_down</vh></v>
+<v t="edream.110603185221.96"><vh>do_step</vh></v>
+<v t="edream.110603185221.97"><vh>do_next</vh></v>
+<v t="edream.110603185221.98"><vh>do_return</vh></v>
+<v t="edream.110603185221.99"><vh>do_continue</vh></v>
+<v t="edream.110603185221.100"><vh>do_jump</vh></v>
+<v t="edream.110603185221.101"><vh>do_debug</vh></v>
+<v t="edream.110603185221.102"><vh>do_quit</vh></v>
+<v t="edream.110603185221.103"><vh>do_EOF</vh></v>
+<v t="edream.110603185221.104"><vh>do_args</vh></v>
+<v t="edream.110603185221.105"><vh>do_retval</vh></v>
+<v t="edream.110603185221.106"><vh>_getval</vh></v>
+<v t="edream.110603185221.107"><vh>do_p</vh></v>
+<v t="edream.110603185221.108"><vh>do_pp</vh></v>
+<v t="edream.110603185221.109"><vh>do_list</vh></v>
+<v t="edream.110603185221.110"><vh>do_whatis</vh></v>
+<v t="edream.110603185221.111"><vh>do_alias</vh></v>
+<v t="edream.110603185221.112"><vh>do_unalias</vh></v>
+<v t="edream.110603185221.113"><vh>print_stack_trace</vh></v>
+<v t="edream.110603185221.114"><vh>print_stack_entry</vh></v>
+<v t="edream.110603185221.115"><vh>help_help</vh></v>
+<v t="edream.110603185221.116"><vh>help_h</vh></v>
+<v t="edream.110603185221.117"><vh>help_where</vh></v>
+<v t="edream.110603185221.118"><vh>help_w</vh></v>
+<v t="edream.110603185221.119"><vh>help_down</vh></v>
+<v t="edream.110603185221.120"><vh>help_d</vh></v>
+<v t="edream.110603185221.121"><vh>help_up</vh></v>
+<v t="edream.110603185221.122"><vh>help_u</vh></v>
+<v t="edream.110603185221.123"><vh>help_break</vh></v>
+<v t="edream.110603185221.124"><vh>help_b</vh></v>
+<v t="edream.110603185221.125"><vh>help_clear</vh></v>
+<v t="edream.110603185221.126"><vh>help_cl</vh></v>
+<v t="edream.110603185221.127"><vh>help_tbreak</vh></v>
+<v t="edream.110603185221.128"><vh>help_enable</vh></v>
+<v t="edream.110603185221.129"><vh>help_disable</vh></v>
+<v t="edream.110603185221.130"><vh>help_ignore</vh></v>
+<v t="edream.110603185221.131"><vh>help_condition</vh></v>
+<v t="edream.110603185221.132"><vh>help_step</vh></v>
+<v t="edream.110603185221.133"><vh>help_s</vh></v>
+<v t="edream.110603185221.134"><vh>help_next</vh></v>
+<v t="edream.110603185221.135"><vh>help_n</vh></v>
+<v t="edream.110603185221.136"><vh>help_return</vh></v>
+<v t="edream.110603185221.137"><vh>help_r</vh></v>
+<v t="edream.110603185221.138"><vh>help_continue</vh></v>
+<v t="edream.110603185221.139"><vh>help_cont</vh></v>
+<v t="edream.110603185221.140"><vh>help_c</vh></v>
+<v t="edream.110603185221.141"><vh>help_jump</vh></v>
+<v t="edream.110603185221.142"><vh>help_j</vh></v>
+<v t="edream.110603185221.143"><vh>help_debug</vh></v>
+<v t="edream.110603185221.144"><vh>help_list</vh></v>
+<v t="edream.110603185221.145"><vh>help_l</vh></v>
+<v t="edream.110603185221.146"><vh>help_args</vh></v>
+<v t="edream.110603185221.147"><vh>help_a</vh></v>
+<v t="edream.110603185221.148"><vh>help_p</vh></v>
+<v t="edream.110603185221.149"><vh>help_pp</vh></v>
+<v t="edream.110603185221.150"><vh>help_exec</vh></v>
+<v t="edream.110603185221.151"><vh>help_quit</vh></v>
+<v t="edream.110603185221.152"><vh>help_q</vh></v>
+<v t="edream.110603185221.153"><vh>help_whatis</vh></v>
+<v t="edream.110603185221.154"><vh>help_EOF</vh></v>
+<v t="edream.110603185221.155"><vh>help_alias</vh></v>
+<v t="edream.110603185221.156"><vh>help_unalias</vh></v>
+<v t="edream.110603185221.157"><vh>help_pdb</vh></v>
+<v t="edream.110603185221.158"><vh>lookupmodule</vh></v>
+</v>
+<v t="edream.110603185221.159"><vh>Interface functions...</vh>
+<v t="edream.110603185221.160"><vh>run</vh></v>
+<v t="edream.110603185221.161"><vh>runeval</vh></v>
+<v t="edream.110603185221.162"><vh>runctx</vh></v>
+<v t="edream.110603185221.163"><vh>runcall</vh></v>
+<v t="edream.110603185221.164"><vh>set_trace</vh></v>
+<v t="edream.110603185221.165"><vh>post_mortem</vh></v>
+<v t="edream.110603185221.166"><vh>pm</vh></v>
+<v t="edream.110603185221.167"><vh>test</vh></v>
+<v t="edream.110603185221.168"><vh>help</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110603185221.169"><vh>python23\Lib\idlelib\Debugger.py</vh>
+<v t="edream.110603185221.170" a="E"><vh>class Idb (Bdb)</vh>
+<v t="edream.110603185221.171"><vh>__init__</vh></v>
+<v t="edream.110603185221.172"><vh>user_line</vh></v>
+<v t="edream.110603185221.173"><vh>Idb.user_exception</vh></v>
+<v t="edream.110603185221.174"><vh>Idb.in_rpc_code</vh></v>
+<v t="edream.110603185221.175"><vh>Idb.__frame2message</vh></v>
+</v>
+<v t="edream.110603185221.176"><vh>class Debugger </vh>
+<v t="edream.110603185221.177"><vh>__init__</vh></v>
+<v t="edream.110603185221.178"><vh>run</vh></v>
+<v t="edream.110603185221.179"><vh>close</vh></v>
+<v t="edream.110603185221.180"><vh>make_gui (creates frame &amp; binds buttons.</vh>
+<v t="edream.110603185221.181"><vh>&lt;&lt; create the buttons &gt;&gt;</vh></v>
+<v t="edream.110603185221.182"><vh>&lt;&lt; create top widget &amp; bindings &gt;&gt;</vh></v>
+</v>
+<v t="edream.110603185221.183"><vh>interaction</vh></v>
+<v t="edream.110603185221.184" a="M"><vh>Debugger.sync_source_line</vh></v>
+<v t="edream.110603185221.185" a="M"><vh>Debugger.__frame2fileline</vh></v>
+<v t="edream.110603185221.186"><vh>Button handlers: these call the corresponding idb functions</vh>
+<v t="edream.110603185221.187"><vh>cont</vh></v>
+<v t="edream.110603185221.188"><vh>step</vh></v>
+<v t="edream.110603185221.189"><vh>next</vh></v>
+<v t="edream.110603185221.190"><vh>ret</vh></v>
+<v t="edream.110603185221.191"><vh>quit</vh></v>
+</v>
+<v t="edream.110603185221.192"><vh>Checkbox handlers</vh>
+<v t="edream.110603185221.193"><vh>show_stack</vh></v>
+<v t="edream.110603185221.194"><vh>show_source</vh></v>
+<v t="edream.110603185221.195"><vh>show_frame</vh></v>
+<v t="edream.110603185221.196"><vh>show_locals</vh></v>
+<v t="edream.110603185221.197"><vh>show_globals</vh></v>
+<v t="edream.110603185221.198"><vh>show_variables</vh></v>
+</v>
+<v t="edream.110603185221.199"><vh>Breakpoint handlers</vh>
+<v t="edream.110603185221.200"><vh>set_breakpoint_here</vh></v>
+<v t="edream.110603185221.201"><vh>clear_breakpoint_here</vh></v>
+<v t="edream.110603185221.202"><vh>clear_file_breaks</vh></v>
+<v t="edream.110603185221.203"><vh>load_breakpoints</vh></v>
+</v>
+</v>
+<v t="edream.110603185221.204"><vh>class StackViewer</vh>
+<v t="edream.110603185221.205"><vh>__init__</vh></v>
+<v t="edream.110603185221.206"><vh>load_stack</vh></v>
+<v t="edream.110603185221.207"><vh>popup_event</vh></v>
+<v t="edream.110603185221.208"><vh>fill_menu</vh></v>
+<v t="edream.110603185221.209"><vh>on_select</vh></v>
+<v t="edream.110603185221.210"><vh>on_double</vh></v>
+<v t="edream.110603185221.211"><vh>goto_source_line</vh></v>
+<v t="edream.110603185221.212"><vh>show_stack_frame</vh></v>
+<v t="edream.110603185221.213"><vh>show_source</vh></v>
+</v>
+<v t="edream.110603185221.214"><vh>class NamespaceViewer</vh>
+<v t="edream.110603185221.215"><vh>__init__</vh></v>
+<v t="edream.110603185221.216"><vh>load_dict</vh></v>
+<v t="edream.110603185221.217"><vh>close</vh></v>
+</v>
+</v>
+<v t="edream.110603185221.218" a="E"><vh>Most important routines</vh>
+<v t="edream.110603185221.170" a="E"><vh>class Idb (Bdb)</vh>
+<v t="edream.110603185221.171"><vh>__init__</vh></v>
+<v t="edream.110603185221.172"><vh>user_line</vh></v>
+<v t="edream.110603185221.173"><vh>Idb.user_exception</vh></v>
+<v t="edream.110603185221.174"><vh>Idb.in_rpc_code</vh></v>
+<v t="edream.110603185221.175"><vh>Idb.__frame2message</vh></v>
+</v>
+<v t="edream.110603185221.184"><vh>Debugger.sync_source_line</vh></v>
+<v t="edream.110603185221.185"><vh>Debugger.__frame2fileline</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.618" a="EV"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -956,9 +1210,9 @@
 <v t="edream.110203113231.743"><vh>scanPluginDirectives</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.744" a="E"><vh>Drawing, graphics &amp; styled text</vh>
-<v t="edream.110403140857" a="E"><vh>Wiki plugin 1.4 (color_markup)(requires add-directives plugin)</vh>
-<v t="edream.110403140857.1" a="E"><vh>Plugin documentation</vh>
+<v t="edream.110203113231.744"><vh>Drawing, graphics &amp; styled text</vh>
+<v t="edream.110403140857"><vh>Wiki plugin 1.4 (color_markup)(requires add-directives plugin)</vh>
+<v t="edream.110403140857.1"><vh>Plugin documentation</vh>
 <v t="edream.110403140857.2"><vh>Installation</vh></v>
 <v t="edream.110403140857.3"><vh>Use</vh>
 <v t="edream.110403140857.4"><vh>Supported markups</vh></v>
@@ -968,7 +1222,7 @@
 </v>
 <v t="edream.110403140857.7"><vh>Release notes</vh></v>
 </v>
-<v t="edream.110403140857.8" a="E" tnodeList="edream.110403140857.8,edream.110403140857.9,edream.110403140857.10,edream.110403140857.11,edream.110403140857.12,edream.110403140857.13,edream.110403140857.14,edream.110403140857.15,edream.110403140857.16,edream.110403140857.17,edream.110403140857.18,edream.110403140857.20,edream.110403140857.21,edream.110403140857.22,edream.110403140857.23,edream.110403140857.24,edream.110403140857.25,edream.110403140857.26,edream.110403140857.27,edream.110403140857.28"><vh>@file color_markup.py</vh>
+<v t="edream.110403140857.8" tnodeList="edream.110403140857.8,edream.110403140857.9,edream.110403140857.10,edream.110403140857.11,edream.110403140857.12,edream.110403140857.13,edream.110403140857.14,edream.110403140857.15,edream.110403140857.16,edream.110403140857.17,edream.110403140857.18,edream.110403140857.20,edream.110403140857.21,edream.110403140857.22,edream.110403140857.23,edream.110403140857.24,edream.110403140857.25,edream.110403140857.26,edream.110403140857.27,edream.110403140857.28"><vh>@file color_markup.py</vh>
 <v t="edream.110403140857.9"><vh>initAnyMarkup</vh></v>
 <v t="edream.110403140857.10"><vh>colorWikiMarkup</vh></v>
 <v t="edream.110403140857.11"><vh>doWikiText</vh>
@@ -978,18 +1232,18 @@
 </v>
 </v>
 <v t="edream.110403140857.15"><vh>insertWikiPicture</vh></v>
-<v t="edream.110403140857.16" a="MV"><vh>onBodykey1 (not ready)</vh></v>
-<v t="edream.110403140857.17" a="E"><vh>onBodydclick1 &amp; allies</vh>
+<v t="edream.110403140857.16" a="M"><vh>onBodykey1 (not ready)</vh></v>
+<v t="edream.110403140857.17"><vh>onBodydclick1 &amp; allies</vh>
 <v t="edream.110403140857.18"><vh>getUrl</vh></v>
 </v>
-<v t="edream.110403140857.19" a="E"><vh>Menu handling</vh>
+<v t="edream.110403140857.19"><vh>Menu handling</vh>
 <v t="edream.110403140857.20"><vh>createWikiMenu</vh></v>
 <v t="edream.110403140857.21"><vh>doWikiBold</vh></v>
 <v t="edream.110403140857.22"><vh>doWikiItalic</vh></v>
 <v t="edream.110403140857.23"><vh>doWikiColor</vh></v>
 <v t="edream.110403140857.24"><vh>doWikiChooseColor</vh></v>
 <v t="edream.110403140857.25" a="M"><vh>doWikiPicture (not ready)</vh></v>
-<v t="edream.110403140857.26" a="E"><vh>insertWikiMarkup</vh>
+<v t="edream.110403140857.26"><vh>insertWikiMarkup</vh>
 <v t="edream.110403140857.27"><vh>&lt;&lt; apply markup to selection &gt;&gt;</vh></v>
 <v t="edream.110403140857.28"><vh>&lt;&lt; handle no selection &gt;&gt;</vh></v>
 </v>
@@ -997,7 +1251,7 @@
 </v>
 </v>
 <v t="edream.110203113231.753" tnodeList="edream.110203113231.753,edream.110203113231.754,edream.110203113231.755,edream.110203113231.756,edream.110203113231.757"><vh>@file image.py</vh>
-<v t="edream.110203113231.754" a="E"><vh>onSelect</vh>
+<v t="edream.110203113231.754"><vh>onSelect</vh>
 <v t="edream.110203113231.755"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203113231.756"><vh>onUnselect</vh>
@@ -1141,7 +1395,7 @@
 <v t="edream.110203113231.856"><vh>@file test.py</vh>
 <v t="edream.110203113231.857"><vh>applyConfiguration</vh></v>
 <v t="edream.110203113231.858"><vh>cmd_fn1/2/3</vh></v>
-<v t="edream.110203113231.859" a="E"><vh>onSelect</vh>
+<v t="edream.110203113231.859"><vh>onSelect</vh>
 <v t="edream.110203113231.860"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203113231.861"><vh>onUnselect</vh>
@@ -1219,7 +1473,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.915" a="E"><vh>Overriding functions, methods &amp; classes</vh>
+<v t="edream.110203113231.915"><vh>Overriding functions, methods &amp; classes</vh>
 <v t="edream.110203113231.916" tnodeList="edream.110203113231.916,edream.110203113231.917,edream.110203113231.918"><vh>@file __overrideClasses.py</vh>
 <v t="edream.110203113231.917"><vh>&lt;&lt; override the LeoFrame class &gt;&gt;</vh></v>
 <v t="edream.110203113231.918"><vh>&lt;&lt; override methods of the LeoApp class &gt;&gt;</vh></v>
@@ -1232,17 +1486,17 @@
 <v t="edream.110203113231.923"><vh>newPut and newPutNl</vh></v>
 </v>
 <v t="edream.110203113231.924" tnodeList="edream.110203113231.924"><vh>@file redirect_to_log.py</vh></v>
-<v t="edream.110203113231.925" a="E" tnodeList="edream.110203113231.925,edream.110203113231.926,edream.110203113231.927,edream.110203113231.928,edream.110203113231.929"><vh>@file script_io_to_body.py</vh>
+<v t="edream.110203113231.925" tnodeList="edream.110203113231.925,edream.110203113231.926,edream.110203113231.927,edream.110203113231.928,edream.110203113231.929"><vh>@file script_io_to_body.py</vh>
 <v t="edream.110203113231.926"><vh>onStart</vh></v>
 <v t="edream.110203113231.927"><vh>newExecuteScript</vh></v>
 <v t="edream.110203113231.928"><vh>newPut and newPutNl</vh></v>
 <v t="edream.110203113231.929"><vh>newEs, etc.</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.930" a="E"><vh>Spell Checking</vh>
+<v t="edream.110203113231.930"><vh>Spell Checking</vh>
 <v t="edream.110203113231.931"><vh>@silentfile mod_spelling.txt</vh></v>
 <v t="edream.110203113231.932" tnodeList="edream.110203113231.932"><vh>@file mod_spelling.ini</vh></v>
-<v t="edream.110203113231.933" a="EM" tnodeList="edream.110203113231.933,edream.110203113231.935,edream.110203113231.936,edream.110203113231.937,edream.110203113231.938,edream.110203113231.940,edream.110203113231.941,edream.110203113231.942,edream.110203113231.943,edream.110203113231.944,edream.110203113231.945,edream.110203113231.946,edream.110203113231.947,edream.110203113231.948,edream.110203113231.950,edream.110203113231.951,edream.110203113231.952,edream.110203113231.953,edream.110203113231.954,edream.110203113231.955,edream.110203113231.956,edream.110203113231.957,edream.110203113231.959,edream.110203113231.960,edream.110203113231.961,edream.110203113231.962,edream.110203113231.963,edream.110203113231.964,edream.110203113231.966,edream.110203113231.967,edream.110203113231.968,edream.110203113231.969,edream.110203113231.970,edream.110203113231.972,edream.110203113231.973,edream.110203113231.974,edream.110203113231.975,edream.110203113231.976,edream.110203113231.977,edream.110203113231.978,edream.110203113231.979,edream.110203113231.980,edream.110203113231.981"><vh>@file mod_spelling.py</vh>
+<v t="edream.110203113231.933" a="M" tnodeList="edream.110203113231.933,edream.110203113231.935,edream.110203113231.936,edream.110203113231.937,edream.110203113231.938,edream.110203113231.940,edream.110203113231.941,edream.110203113231.942,edream.110203113231.943,edream.110203113231.944,edream.110203113231.945,edream.110203113231.946,edream.110203113231.947,edream.110203113231.948,edream.110203113231.950,edream.110203113231.951,edream.110203113231.952,edream.110203113231.953,edream.110203113231.954,edream.110203113231.955,edream.110203113231.956,edream.110203113231.957,edream.110203113231.959,edream.110203113231.960,edream.110203113231.961,edream.110203113231.962,edream.110203113231.963,edream.110203113231.964,edream.110203113231.966,edream.110203113231.967,edream.110203113231.968,edream.110203113231.969,edream.110203113231.970,edream.110203113231.972,edream.110203113231.973,edream.110203113231.974,edream.110203113231.975,edream.110203113231.976,edream.110203113231.977,edream.110203113231.978,edream.110203113231.979,edream.110203113231.980,edream.110203113231.981"><vh>@file mod_spelling.py</vh>
 <v t="edream.110203113231.934"><vh>Functions</vh>
 <v t="edream.110203113231.935"><vh>createSpellMenu</vh></v>
 <v t="edream.110203113231.936"><vh>onSelect</vh></v>
@@ -1261,7 +1515,7 @@
 <v t="edream.110203113231.946"><vh>processWord</vh></v>
 <v t="edream.110203113231.947"><vh>updateDictionary</vh></v>
 </v>
-<v t="edream.110203113231.948" a="E"><vh>class spellDialog</vh>
+<v t="edream.110203113231.948"><vh>class spellDialog</vh>
 <v t="edream.110203113231.949"><vh>Birth &amp; death</vh>
 <v t="edream.110203113231.950"><vh>spell.__init__</vh>
 <v t="edream.110203113231.951"><vh>&lt;&lt; set self.dictionary &gt;&gt;</vh></v>
@@ -1282,14 +1536,14 @@
 <v t="edream.110203113231.963"><vh>onHideButton</vh></v>
 <v t="edream.110203113231.964"><vh>onRedoButton &amp; onUndoButton</vh></v>
 </v>
-<v t="edream.110203113231.965" a="E"><vh>Commands</vh>
+<v t="edream.110203113231.965"><vh>Commands</vh>
 <v t="edream.110203113231.966"><vh>add</vh></v>
 <v t="edream.110203113231.967"><vh>change</vh></v>
 <v t="edream.110203113231.968"><vh>checkSpelling</vh></v>
 <v t="edream.110203113231.969"><vh>find</vh></v>
 <v t="edream.110203113231.970"><vh>ignore</vh></v>
 </v>
-<v t="edream.110203113231.971" a="E"><vh>Helpers</vh>
+<v t="edream.110203113231.971"><vh>Helpers</vh>
 <v t="edream.110203113231.972"><vh>closePipes</vh></v>
 <v t="edream.110203113231.973"><vh>fillbox</vh></v>
 <v t="edream.110203113231.974"><vh>findNextMisspelledWord</vh>
@@ -13702,5 +13956,2132 @@ setTextSelection(body, newPos, newPos)
 newSel = body.getTextSelection()
 c.frame.onBodyChanged(v,"Typing",oldSel=oldSel,newSel=newSel)
 </t>
+<t tx="edream.110603185221">@language python
+@ignore</t>
+<t tx="edream.110603185221.1"></t>
+<t tx="edream.110603185221.2">"""Debugger basics"""
+
+import os,sys,types
+
+__all__ = ["BdbQuit","Bdb","Breakpoint"]
+
+@others</t>
+<t tx="edream.110603185221.3">class BdbQuit(Exception):
+	"""Exception to give up completely"""
+</t>
+<t tx="edream.110603185221.4">class Bdb:
+	
+	"""Generic Python debugger base class.
+
+This class takes care of details of the trace facility;
+a derived class should implement user interaction.
+The standard debugger class (pdb.Pdb) is an example.
+"""
+
+	@others</t>
+<t tx="edream.110603185221.5">def __init__(self):
+
+    self.breaks = {}
+    self.fncache = {}
+</t>
+<t tx="edream.110603185221.6">def canonic(self, filename):
+    if filename == "&lt;" + filename[1:-1] + "&gt;":
+        return filename
+    canonic = self.fncache.get(filename)
+    if not canonic:
+        canonic = os.path.abspath(filename)
+        canonic = os.path.normcase(canonic)
+        self.fncache[filename] = canonic
+    return canonic
+</t>
+<t tx="edream.110603185221.7">def reset(self):
+    import linecache
+    linecache.checkcache()
+    self.botframe = None
+    self.stopframe = None
+    self.returnframe = None
+    self.quitting = 0
+</t>
+<t tx="edream.110603185221.8">def trace_dispatch(self, frame, event, arg):
+    if self.quitting:
+        return # None
+    if event == 'line':
+        return self.dispatch_line(frame)
+    if event == 'call':
+        return self.dispatch_call(frame, arg)
+    if event == 'return':
+        return self.dispatch_return(frame, arg)
+    if event == 'exception':
+        return self.dispatch_exception(frame, arg)
+    print 'bdb.Bdb.dispatch: unknown debugging event:', `event`
+    return self.trace_dispatch
+</t>
+<t tx="edream.110603185221.9">def dispatch_line(self, frame):
+    if self.stop_here(frame) or self.break_here(frame):
+        self.user_line(frame)
+        if self.quitting: raise BdbQuit
+    return self.trace_dispatch
+</t>
+<t tx="edream.110603185221.10">def dispatch_call(self, frame, arg):
+    # XXX 'arg' is no longer used
+    if self.botframe is None:
+        # First call of dispatch since reset()
+        self.botframe = frame.f_back # (CT) Note that this may also be None!
+        return self.trace_dispatch
+    if not (self.stop_here(frame) or self.break_anywhere(frame)):
+        # No need to trace this function
+        return # None
+    self.user_call(frame, arg)
+    if self.quitting: raise BdbQuit
+    return self.trace_dispatch
+</t>
+<t tx="edream.110603185221.11">def dispatch_return(self, frame, arg):
+    if self.stop_here(frame) or frame == self.returnframe:
+        self.user_return(frame, arg)
+        if self.quitting: raise BdbQuit
+    return self.trace_dispatch
+</t>
+<t tx="edream.110603185221.12">def dispatch_exception(self, frame, arg):
+    if self.stop_here(frame):
+        self.user_exception(frame, arg)
+        if self.quitting: raise BdbQuit
+    return self.trace_dispatch
+</t>
+<t tx="edream.110603185221.13"># Normally derived classes don't override the following
+# methods, but they may if they want to redefine the
+# definition of stopping and breakpoints.
+
+def stop_here(self, frame):
+    # (CT) stopframe may now also be None, see dispatch_call.
+    # (CT) the former test for None is therefore removed from here.
+    if frame is self.stopframe:
+        return True
+    while frame is not None and frame is not self.stopframe:
+        if frame is self.botframe:
+            return True
+        frame = frame.f_back
+    return False
+</t>
+<t tx="edream.110603185221.14">def break_here(self, frame):
+
+    filename = self.canonic(frame.f_code.co_filename)
+    if not filename in self.breaks:
+        return False
+    lineno = frame.f_lineno
+    if not lineno in self.breaks[filename]:
+        return False
+    # flag says ok to delete temp. bp
+    (bp, flag) = effective(filename, lineno, frame)
+    if bp:
+        self.currentbp = bp.number
+        if (flag and bp.temporary):
+            self.do_clear(str(bp.number))
+        return True
+    else:
+        return False
+</t>
+<t tx="edream.110603185221.15">def do_clear(self, arg):
+    raise NotImplementedError, "subclass of bdb must implement do_clear()"
+</t>
+<t tx="edream.110603185221.16">def break_anywhere(self, frame):
+    return self.breaks.has_key(
+        self.canonic(frame.f_code.co_filename))
+</t>
+<t tx="edream.110603185221.17"># Derived classes should override the user_* methods to gain control.</t>
+<t tx="edream.110603185221.18">def user_call(self, frame, argument_list):
+    """This method is called when there is the remote possibility
+    that we ever need to stop in this function."""
+    pass
+</t>
+<t tx="edream.110603185221.19">def user_line(self, frame):
+    """This method is called when we stop or break at this line."""
+    pass
+</t>
+<t tx="edream.110603185221.20">def user_return(self, frame, return_value):
+    """This method is called when a return trap is set here."""
+    pass
+</t>
+<t tx="edream.110603185221.21">def user_exception(self, frame, (exc_type, exc_value, exc_traceback)):
+    """This method is called if an exception occurs,
+    but only if we are to stop at or just below this level."""
+    pass
+</t>
+<t tx="edream.110603185221.22"># Derived classes and clients can call the following methods
+# to affect the stepping state.</t>
+<t tx="edream.110603185221.23">def set_step(self):
+    """Stop after one line of code."""
+    self.stopframe = None
+    self.returnframe = None
+    self.quitting = 0
+</t>
+<t tx="edream.110603185221.24">def set_next(self, frame):
+    """Stop on the next line in or below the given frame."""
+    self.stopframe = frame
+    self.returnframe = None
+    self.quitting = 0
+</t>
+<t tx="edream.110603185221.25">def set_return(self, frame):
+    """Stop when returning from the given frame."""
+    self.stopframe = frame.f_back
+    self.returnframe = frame
+    self.quitting = 0
+</t>
+<t tx="edream.110603185221.26">def set_trace(self):
+    """Start debugging from here."""
+    frame = sys._getframe().f_back
+    self.reset()
+    while frame:
+        frame.f_trace = self.trace_dispatch
+        self.botframe = frame
+        frame = frame.f_back
+    self.set_step()
+    sys.settrace(self.trace_dispatch)
+</t>
+<t tx="edream.110603185221.27">def set_continue(self):
+    # Don't stop except at breakpoints or when finished
+    self.stopframe = self.botframe
+    self.returnframe = None
+    self.quitting = 0
+    if not self.breaks:
+        # no breakpoints; run without debugger overhead
+        sys.settrace(None)
+        frame = sys._getframe().f_back
+        while frame and frame is not self.botframe:
+            del frame.f_trace
+            frame = frame.f_back
+</t>
+<t tx="edream.110603185221.28">def set_quit(self):
+    self.stopframe = self.botframe
+    self.returnframe = None
+    self.quitting = 1
+    sys.settrace(None)
+</t>
+<t tx="edream.110603185221.29"># Derived classes and clients can call the following methods
+# to manipulate breakpoints.  These methods return an
+# error message is something went wrong, None if all is well.
+</t>
+<t tx="edream.110603185221.30"># Set_break prints out the breakpoint line and file:lineno.
+# Call self.get_*break*() to see the breakpoints or better
+# for bp in Breakpoint.bpbynumber: if bp: bp.bpprint().
+
+def set_break(self, filename, lineno, temporary=0, cond = None):
+    filename = self.canonic(filename)
+    import linecache # Import as late as possible
+    line = linecache.getline(filename, lineno)
+    if not line:
+        return 'Line %s:%d does not exist' % (filename,
+                               lineno)
+    if not filename in self.breaks:
+        self.breaks[filename] = []
+    list = self.breaks[filename]
+    if not lineno in list:
+        list.append(lineno)
+    bp = Breakpoint(filename, lineno, temporary, cond)
+</t>
+<t tx="edream.110603185221.31">def clear_break(self, filename, lineno):
+    filename = self.canonic(filename)
+    if not filename in self.breaks:
+        return 'There are no breakpoints in %s' % filename
+    if lineno not in self.breaks[filename]:
+        return 'There is no breakpoint at %s:%d' % (filename,
+                                lineno)
+    # If there's only one bp in the list for that file,line
+    # pair, then remove the breaks entry
+    for bp in Breakpoint.bplist[filename, lineno][:]:
+        bp.deleteMe()
+    if not Breakpoint.bplist.has_key((filename, lineno)):
+        self.breaks[filename].remove(lineno)
+    if not self.breaks[filename]:
+        del self.breaks[filename]
+</t>
+<t tx="edream.110603185221.32">def clear_bpbynumber(self, arg):
+    try:
+        number = int(arg)
+    except:
+        return 'Non-numeric breakpoint number (%s)' % arg
+    try:
+        bp = Breakpoint.bpbynumber[number]
+    except IndexError:
+        return 'Breakpoint number (%d) out of range' % number
+    if not bp:
+        return 'Breakpoint (%d) already deleted' % number
+    self.clear_break(bp.file, bp.line)
+</t>
+<t tx="edream.110603185221.33">def clear_all_file_breaks(self, filename):
+    filename = self.canonic(filename)
+    if not filename in self.breaks:
+        return 'There are no breakpoints in %s' % filename
+    for line in self.breaks[filename]:
+        blist = Breakpoint.bplist[filename, line]
+        for bp in blist:
+            bp.deleteMe()
+    del self.breaks[filename]
+</t>
+<t tx="edream.110603185221.34">def clear_all_breaks(self):
+    if not self.breaks:
+        return 'There are no breakpoints'
+    for bp in Breakpoint.bpbynumber:
+        if bp:
+            bp.deleteMe()
+    self.breaks = {}
+</t>
+<t tx="edream.110603185221.35">def get_break(self, filename, lineno):
+    filename = self.canonic(filename)
+    return filename in self.breaks and \
+        lineno in self.breaks[filename]
+</t>
+<t tx="edream.110603185221.36">def get_breaks(self, filename, lineno):
+    filename = self.canonic(filename)
+    return filename in self.breaks and \
+        lineno in self.breaks[filename] and \
+        Breakpoint.bplist[filename, lineno] or []
+</t>
+<t tx="edream.110603185221.37">def get_file_breaks(self, filename):
+    filename = self.canonic(filename)
+    if filename in self.breaks:
+        return self.breaks[filename]
+    else:
+        return []
+</t>
+<t tx="edream.110603185221.38">def get_all_breaks(self):
+    return self.breaks
+</t>
+<t tx="edream.110603185221.39"></t>
+<t tx="edream.110603185221.40"># Derived classes and clients can call the following method
+# to get a data structure representing a stack trace.
+
+def get_stack(self, f, t):
+    stack = []
+    if t and t.tb_frame is f:
+        t = t.tb_next
+    while f is not None:
+        stack.append((f, f.f_lineno))
+        if f is self.botframe:
+            break
+        f = f.f_back
+    stack.reverse()
+    i = max(0, len(stack) - 1)
+    while t is not None:
+        stack.append((t.tb_frame, t.tb_lineno))
+        t = t.tb_next
+    return stack, i
+</t>
+<t tx="edream.110603185221.41">#
+
+def format_stack_entry(self, frame_lineno, lprefix=': '):
+    import linecache, repr
+    frame, lineno = frame_lineno
+    filename = self.canonic(frame.f_code.co_filename)
+    s = filename + '(' + `lineno` + ')'
+    if frame.f_code.co_name:
+        s = s + frame.f_code.co_name
+    else:
+        s = s + "&lt;lambda&gt;"
+    if '__args__' in frame.f_locals:
+        args = frame.f_locals['__args__']
+    else:
+        args = None
+    if args:
+        s = s + repr.repr(args)
+    else:
+        s = s + '()'
+    if '__return__' in frame.f_locals:
+        rv = frame.f_locals['__return__']
+        s = s + '-&gt;'
+        s = s + repr.repr(rv)
+    line = linecache.getline(filename, lineno)
+    if line: s = s + lprefix + line.strip()
+    return s
+</t>
+<t tx="edream.110603185221.42"># The following two methods can be called by clients to use
+# a debugger to debug a statement, given as a string.
+
+</t>
+<t tx="edream.110603185221.43">def run(self, cmd, globals=None, locals=None):
+    if globals is None:
+        import __main__
+        globals = __main__.__dict__
+    if locals is None:
+        locals = globals
+    self.reset()
+    sys.settrace(self.trace_dispatch)
+    if not isinstance(cmd, types.CodeType):
+        cmd = cmd+'\n'
+    try:
+        try:
+            exec cmd in globals, locals
+        except BdbQuit:
+            pass
+    finally:
+        self.quitting = 1
+        sys.settrace(None)
+</t>
+<t tx="edream.110603185221.44">def runeval(self, expr, globals=None, locals=None):
+    if globals is None:
+        import __main__
+        globals = __main__.__dict__
+    if locals is None:
+        locals = globals
+    self.reset()
+    sys.settrace(self.trace_dispatch)
+    if not isinstance(expr, types.CodeType):
+        expr = expr+'\n'
+    try:
+        try:
+            return eval(expr, globals, locals)
+        except BdbQuit:
+            pass
+    finally:
+        self.quitting = 1
+        sys.settrace(None)
+</t>
+<t tx="edream.110603185221.45">def runctx(self, cmd, globals, locals):
+    # B/W compatibility
+    self.run(cmd, globals, locals)
+</t>
+<t tx="edream.110603185221.46"># This method is more useful to debug a single function call.
+
+def runcall(self, func, *args):
+    self.reset()
+    sys.settrace(self.trace_dispatch)
+    res = None
+    try:
+        try:
+            res = func(*args)
+        except BdbQuit:
+            pass
+    finally:
+        self.quitting = 1
+        sys.settrace(None)
+    return res
+</t>
+<t tx="edream.110603185221.47">def set_trace():
+    Bdb().set_trace()</t>
+<t tx="edream.110603185221.48">class Breakpoint:
+	
+	"""Breakpoint class
+
+Implements temporary breakpoints, ignore counts, disabling and
+(re)-enabling, and conditionals.
+
+Breakpoints are indexed by number through bpbynumber and by
+the file,line tuple using bplist.  The former points to a
+single instance of class Breakpoint.  The latter points to a
+list of such instances since there may be more than one
+breakpoint per line.
+
+"""
+	&lt;&lt; class Breakpoint declarations &gt;&gt;
+
+	@others
+</t>
+<t tx="edream.110603185221.49"># XXX Keeping state in the class is a mistake -- this means
+# you cannot have more than one active Bdb instance.
+
+next = 1        # Next bp to be assigned
+bplist = {}     # indexed by (file, lineno) tuple
+bpbynumber = [None] # Each entry is None or an instance of Bpt
+            # index 0 is unused, except for marking an
+            # effective break .... see effective()</t>
+<t tx="edream.110603185221.50">def __init__(self, file, line, temporary=0, cond = None):
+
+    self.file = file    # This better be in canonical form!
+    self.line = line
+    self.temporary = temporary
+    self.cond = cond
+    self.enabled = 1
+    self.ignore = 0
+    self.hits = 0
+    self.number = Breakpoint.next
+    Breakpoint.next = Breakpoint.next + 1
+
+    # Build the two lists
+    self.bpbynumber.append(self)
+    if self.bplist.has_key((file, line)):
+        self.bplist[file, line].append(self)
+    else:
+        self.bplist[file, line] = [self]</t>
+<t tx="edream.110603185221.51">def deleteMe(self):
+    index = (self.file, self.line)
+    self.bpbynumber[self.number] = None   # No longer in list
+    self.bplist[index].remove(self)
+    if not self.bplist[index]:
+        # No more bp for this f:l combo
+        del self.bplist[index]
+</t>
+<t tx="edream.110603185221.52">def enable(self):
+    self.enabled = 1
+</t>
+<t tx="edream.110603185221.53">def disable(self):
+    self.enabled = 0
+</t>
+<t tx="edream.110603185221.54">def bpprint(self):
+    if self.temporary:
+        disp = 'del  '
+    else:
+        disp = 'keep '
+    if self.enabled:
+        disp = disp + 'yes'
+    else:
+        disp = disp + 'no '
+    print '%-4dbreakpoint    %s at %s:%d' % (self.number, disp,
+                         self.file, self.line)
+    if self.cond:
+        print '\tstop only if %s' % (self.cond,)
+    if self.ignore:
+        print '\tignore next %d hits' % (self.ignore)
+    if (self.hits):
+        if (self.hits &gt; 1): ss = 's'
+        else: ss = ''
+        print ('\tbreakpoint already hit %d time%s' %
+               (self.hits, ss))
+</t>
+<t tx="edream.110603185221.55"># Determines if there is an effective (active) breakpoint at this
+# line of code.  Returns breakpoint number or 0 if none.
+
+def effective(file, line, frame):
+    """Determine which breakpoint for this file:line is to be acted upon.
+
+    Called only if we know there is a bpt at this
+    location.  Returns breakpoint that was triggered and a flag
+    that indicates if it is ok to delete a temporary bp.
+
+    """
+    possibles = Breakpoint.bplist[file,line]
+    for i in range(0, len(possibles)):
+        b = possibles[i]
+        if b.enabled == 0:
+            continue
+        # Count every hit when bp is enabled
+        b.hits = b.hits + 1
+        if not b.cond:
+			&lt;&lt; handle unconditional breakpoint &gt;&gt;
+        else:
+            &lt;&lt; handle conditional breakpoint &gt;&gt;
+    return (None, None)</t>
+<t tx="edream.110603185221.56">if b.ignore &gt; 0:
+	# Ignoring: go on to next.
+    b.ignore = b.ignore -1
+    continue
+else:
+    # Break.
+	# Return breakpoint and marker that's ok to delete if temporary.
+    return (b,1)</t>
+<t tx="edream.110603185221.57"># Ignore count applies only to those bpt hits where the condition evaluates to true.
+
+try:
+    val = eval(b.cond, frame.f_globals,
+           frame.f_locals)
+    if val:
+        if b.ignore &gt; 0:
+            b.ignore = b.ignore -1
+        else:
+            return (b,1)
+except:
+    # The most conservative thing is to stop on breakpoint regardless of ignore count.
+    # Don't delete temporary, as another hint to user.
+    return (b,0)</t>
+<t tx="edream.110603185221.58"># -------------------- testing --------------------</t>
+<t tx="edream.110603185221.59">class Tdb(Bdb):
+	@others
+</t>
+<t tx="edream.110603185221.60">def user_call(self, frame, args):
+    name = frame.f_code.co_name
+    if not name: name = '???'
+    print '+++ call', name, args
+</t>
+<t tx="edream.110603185221.61">def user_line(self, frame):
+    import linecache
+    name = frame.f_code.co_name
+    if not name: name = '???'
+    fn = self.canonic(frame.f_code.co_filename)
+    line = linecache.getline(fn, frame.f_lineno)
+    print '+++', fn, frame.f_lineno, name, ':', line.strip()
+</t>
+<t tx="edream.110603185221.62">def user_return(self, frame, retval):
+    print '+++ return', retval
+</t>
+<t tx="edream.110603185221.63">def user_exception(self, frame, exc_stuff):
+    print '+++ exception', exc_stuff
+    self.set_continue()
+</t>
+<t tx="edream.110603185221.64">def foo(n):
+    print 'foo(', n, ')'
+    x = bar(n*10)
+    print 'bar returned', x
+</t>
+<t tx="edream.110603185221.65">def bar(a):
+    print 'bar(', a, ')'
+    return a/2
+</t>
+<t tx="edream.110603185221.66">def test():
+    t = Tdb()
+    t.run('import bdb; bdb.foo(10)')
+</t>
+<t tx="edream.110603185221.67">#! /usr/bin/env python
+
+"""A Python debugger."""
+
+# (See pdb.doc for documentation.)
+
+import sys
+import linecache
+import cmd
+import bdb
+from repr import Repr
+import os
+import re
+import pprint
+
+&lt;&lt; pdb declarations &gt;&gt;
+
+@others
+
+mainmodule = ''
+mainpyfile = ''
+
+# When invoked as main program, invoke the debugger on a script
+if __name__=='__main__':
+    if not sys.argv[1:]:
+        print "usage: pdb.py scriptfile [arg] ..."
+        sys.exit(2)
+
+    mainpyfile = filename = sys.argv[1]     # Get script filename
+    if not os.path.exists(filename):
+        print 'Error:', `filename`, 'does not exist'
+        sys.exit(1)
+    mainmodule = os.path.basename(filename)
+    del sys.argv[0]         # Hide "pdb.py" from argument list
+
+    # Insert script directory in front of module search path
+    sys.path.insert(0, os.path.dirname(filename))
+
+    run('execfile(' + `filename` + ')')</t>
+<t tx="edream.110603185221.68"># Create a custom safe Repr instance and increase its maxstring.
+# The default of 30 truncates error messages too easily.
+
+_repr = Repr()
+_repr.maxstring = 200
+_saferepr = _repr.repr
+
+__all__ = ["run", "pm", "Pdb", "runeval", "runctx", "runcall", "set_trace",
+           "post_mortem", "help"]</t>
+<t tx="edream.110603185221.69">def find_function(funcname, filename):
+    cre = re.compile(r'def\s+%s\s*[(]' % funcname)
+    try:
+        fp = open(filename)
+    except IOError:
+        return None
+    # consumer of this info expects the first line to be 1
+    lineno = 1
+    answer = None
+    while 1:
+        line = fp.readline()
+        if line == '':
+            break
+        if cre.match(line):
+            answer = funcname, filename, lineno
+            break
+        lineno = lineno + 1
+    fp.close()
+    return answer
+</t>
+<t tx="edream.110603185221.70"># Interaction prompt line will separate file and call info from code
+# text using value of line_prefix string.  A newline and arrow may
+# be to your liking.  You can set it once pdb is imported using the
+# command "pdb.line_prefix = '\n% '".
+
+# line_prefix = ': '    # Use this to get the old situation back
+line_prefix = '\n-&gt; '   # Probably a better default
+
+class Pdb(bdb.Bdb, cmd.Cmd):
+	@others</t>
+<t tx="edream.110603185221.71">def __init__(self):
+
+    bdb.Bdb.__init__(self)
+    cmd.Cmd.__init__(self)
+    self.prompt = '(Pdb) '
+    self.aliases = {}
+    # Try to load readline if it exists
+    try:
+        import readline
+    except ImportError:
+        pass
+
+    # Read $HOME/.pdbrc and ./.pdbrc
+    self.rcLines = []
+    if 'HOME' in os.environ:
+        envHome = os.environ['HOME']
+        try:
+            rcFile = open(os.path.join(envHome, ".pdbrc"))
+        except IOError:
+            pass
+        else:
+            for line in rcFile.readlines():
+                self.rcLines.append(line)
+            rcFile.close()
+    try:
+        rcFile = open(".pdbrc")
+    except IOError:
+        pass
+    else:
+        for line in rcFile.readlines():
+            self.rcLines.append(line)
+        rcFile.close()
+</t>
+<t tx="edream.110603185221.72">def reset(self):
+    bdb.Bdb.reset(self)
+    self.forget()
+</t>
+<t tx="edream.110603185221.73">def forget(self):
+    self.lineno = None
+    self.stack = []
+    self.curindex = 0
+    self.curframe = None
+</t>
+<t tx="edream.110603185221.74">def setup(self, f, t):
+    self.forget()
+    self.stack, self.curindex = self.get_stack(f, t)
+    self.curframe = self.stack[self.curindex][0]
+    self.execRcLines()
+</t>
+<t tx="edream.110603185221.75"># Can be executed earlier than 'setup' if desired
+def execRcLines(self):
+    if self.rcLines:
+        # Make local copy because of recursion
+        rcLines = self.rcLines
+        # executed only once
+        self.rcLines = []
+        for line in rcLines:
+            line = line[:-1]
+            if len(line) &gt; 0 and line[0] != '#':
+                self.onecmd(line)
+</t>
+<t tx="edream.110603185221.76"># Override Bdb methods
+
+def user_call(self, frame, argument_list):
+    """This method is called when there is the remote possibility
+    that we ever need to stop in this function."""
+    if self.stop_here(frame):
+        print '--Call--'
+        self.interaction(frame, None)
+</t>
+<t tx="edream.110603185221.77">def user_line(self, frame):
+    """This function is called when we stop or break at this line."""
+    self.interaction(frame, None)
+</t>
+<t tx="edream.110603185221.78">def user_return(self, frame, return_value):
+    """This function is called when a return trap is set here."""
+    frame.f_locals['__return__'] = return_value
+    print '--Return--'
+    self.interaction(frame, None)
+</t>
+<t tx="edream.110603185221.79">def user_exception(self, frame, (exc_type, exc_value, exc_traceback)):
+    """This function is called if an exception occurs,
+    but only if we are to stop at or just below this level."""
+    frame.f_locals['__exception__'] = exc_type, exc_value
+    if type(exc_type) == type(''):
+        exc_type_name = exc_type
+    else: exc_type_name = exc_type.__name__
+    print exc_type_name + ':', _saferepr(exc_value)
+    self.interaction(frame, exc_traceback)
+</t>
+<t tx="edream.110603185221.80"># General interaction function
+
+def interaction(self, frame, traceback):
+    self.setup(frame, traceback)
+    self.print_stack_entry(self.stack[self.curindex])
+    self.cmdloop()
+    self.forget()
+</t>
+<t tx="edream.110603185221.81">def default(self, line):
+    if line[:1] == '!': line = line[1:]
+    locals = self.curframe.f_locals
+    globals = self.curframe.f_globals
+    try:
+        code = compile(line + '\n', '&lt;stdin&gt;', 'single')
+        exec code in globals, locals
+    except:
+        t, v = sys.exc_info()[:2]
+        if type(t) == type(''):
+            exc_type_name = t
+        else: exc_type_name = t.__name__
+        print '***', exc_type_name + ':', v
+</t>
+<t tx="edream.110603185221.82">def precmd(self, line):
+    """Handle alias expansion and ';;' separator."""
+    if not line.strip():
+        return line
+    args = line.split()
+    while args[0] in self.aliases:
+        line = self.aliases[args[0]]
+        ii = 1
+        for tmpArg in args[1:]:
+            line = line.replace("%" + str(ii),
+                                  tmpArg)
+            ii = ii + 1
+        line = line.replace("%*", ' '.join(args[1:]))
+        args = line.split()
+    # split into ';;' separated commands
+    # unless it's an alias command
+    if args[0] != 'alias':
+        marker = line.find(';;')
+        if marker &gt;= 0:
+            # queue up everything after marker
+            next = line[marker+2:].lstrip()
+            self.cmdqueue.append(next)
+            line = line[:marker].rstrip()
+    return line
+</t>
+<t tx="edream.110603185221.83"># Command definitions, called by cmdloop()
+# The argument is the remaining string on the command line
+# Return true to exit from the command loop
+
+do_h = cmd.Cmd.do_help
+
+def do_break(self, arg, temporary = 0):
+    # break [ ([filename:]lineno | function) [, "condition"] ]
+    if not arg:
+        if self.breaks:  # There's at least one
+            print "Num Type         Disp Enb   Where"
+            for bp in bdb.Breakpoint.bpbynumber:
+                if bp:
+                    bp.bpprint()
+        return
+    # parse arguments; comma has lowest precedence
+    # and cannot occur in filename
+    filename = None
+    lineno = None
+    cond = None
+    comma = arg.find(',')
+    if comma &gt; 0:
+        # parse stuff after comma: "condition"
+        cond = arg[comma+1:].lstrip()
+        arg = arg[:comma].rstrip()
+    # parse stuff before comma: [filename:]lineno | function
+    colon = arg.rfind(':')
+    if colon &gt;= 0:
+        filename = arg[:colon].rstrip()
+        f = self.lookupmodule(filename)
+        if not f:
+            print '*** ', `filename`,
+            print 'not found from sys.path'
+            return
+        else:
+            filename = f
+        arg = arg[colon+1:].lstrip()
+        try:
+            lineno = int(arg)
+        except ValueError, msg:
+            print '*** Bad lineno:', arg
+            return
+    else:
+        # no colon; can be lineno or function
+        try:
+            lineno = int(arg)
+        except ValueError:
+            try:
+                func = eval(arg,
+                            self.curframe.f_globals,
+                            self.curframe.f_locals)
+            except:
+                func = arg
+            try:
+                if hasattr(func, 'im_func'):
+                    func = func.im_func
+                code = func.func_code
+                lineno = code.co_firstlineno
+                filename = code.co_filename
+            except:
+                # last thing to try
+                (ok, filename, ln) = self.lineinfo(arg)
+                if not ok:
+                    print '*** The specified object',
+                    print `arg`,
+                    print 'is not a function'
+                    print ('or was not found '
+                           'along sys.path.')
+                    return
+                lineno = int(ln)
+    if not filename:
+        filename = self.defaultFile()
+    # Check for reasonable breakpoint
+    line = self.checkline(filename, lineno)
+    if line:
+        # now set the break point
+        err = self.set_break(filename, line, temporary, cond)
+        if err: print '***', err
+        else:
+            bp = self.get_breaks(filename, line)[-1]
+            print "Breakpoint %d at %s:%d" % (bp.number,
+                                              bp.file,
+                                              bp.line)
+</t>
+<t tx="edream.110603185221.84"># To be overridden in derived debuggers
+def defaultFile(self):
+    """Produce a reasonable default."""
+    filename = self.curframe.f_code.co_filename
+    if filename == '&lt;string&gt;' and mainpyfile:
+        filename = mainpyfile
+    return filename
+</t>
+<t tx="edream.110603185221.85">do_b = do_break
+
+def do_tbreak(self, arg):
+    self.do_break(arg, 1)
+</t>
+<t tx="edream.110603185221.86">def lineinfo(self, identifier):
+    failed = (None, None, None)
+    # Input is identifier, may be in single quotes
+    idstring = identifier.split("'")
+    if len(idstring) == 1:
+        # not in single quotes
+        id = idstring[0].strip()
+    elif len(idstring) == 3:
+        # quoted
+        id = idstring[1].strip()
+    else:
+        return failed
+    if id == '': return failed
+    parts = id.split('.')
+    # Protection for derived debuggers
+    if parts[0] == 'self':
+        del parts[0]
+        if len(parts) == 0:
+            return failed
+    # Best first guess at file to look at
+    fname = self.defaultFile()
+    if len(parts) == 1:
+        item = parts[0]
+    else:
+        # More than one part.
+        # First is module, second is method/class
+        f = self.lookupmodule(parts[0])
+        if f:
+            fname = f
+        item = parts[1]
+    answer = find_function(item, fname)
+    return answer or failed
+</t>
+<t tx="edream.110603185221.87">def checkline(self, filename, lineno):
+    """Return line number of first line at or after input
+    argument such that if the input points to a 'def', the
+    returned line number is the first
+    non-blank/non-comment line to follow.  If the input
+    points to a blank or comment line, return 0.  At end
+    of file, also return 0."""
+
+    line = linecache.getline(filename, lineno)
+    if not line:
+        print 'End of file'
+        return 0
+    line = line.strip()
+    # Don't allow setting breakpoint at a blank line
+    if (not line or (line[0] == '#') or
+         (line[:3] == '"""') or line[:3] == "'''"):
+        print '*** Blank or comment'
+        return 0
+    # When a file is read in and a breakpoint is at
+    # the 'def' statement, the system stops there at
+    # code parse time.  We don't want that, so all breakpoints
+    # set at 'def' statements are moved one line onward
+    if line[:3] == 'def':
+        instr = ''
+        brackets = 0
+        while 1:
+            skipone = 0
+            for c in line:
+                if instr:
+                    if skipone:
+                        skipone = 0
+                    elif c == '\\':
+                        skipone = 1
+                    elif c == instr:
+                        instr = ''
+                elif c == '#':
+                    break
+                elif c in ('"',"'"):
+                    instr = c
+                elif c in ('(','{','['):
+                    brackets = brackets + 1
+                elif c in (')','}',']'):
+                    brackets = brackets - 1
+            lineno = lineno+1
+            line = linecache.getline(filename, lineno)
+            if not line:
+                print 'end of file'
+                return 0
+            line = line.strip()
+            if not line: continue   # Blank line
+            if brackets &lt;= 0 and line[0] not in ('#','"',"'"):
+                break
+    return lineno
+</t>
+<t tx="edream.110603185221.88">def do_enable(self, arg):
+    args = arg.split()
+    for i in args:
+        try:
+            i = int(i)
+        except ValueError:
+            print 'Breakpoint index %r is not a number' % i
+            continue
+
+        if not (0 &lt;= i &lt; len(bdb.Breakpoint.bpbynumber)):
+            print 'No breakpoint numbered', i
+            continue
+
+        bp = bdb.Breakpoint.bpbynumber[i]
+        if bp:
+            bp.enable()
+</t>
+<t tx="edream.110603185221.89">def do_disable(self, arg):
+    args = arg.split()
+    for i in args:
+        try:
+            i = int(i)
+        except ValueError:
+            print 'Breakpoint index %r is not a number' % i
+            continue
+
+        if not (0 &lt;= i &lt; len(bdb.Breakpoint.bpbynumber)):
+            print 'No breakpoint numbered', i
+            continue
+
+        bp = bdb.Breakpoint.bpbynumber[i]
+        if bp:
+            bp.disable()
+</t>
+<t tx="edream.110603185221.90">def do_condition(self, arg):
+    # arg is breakpoint number and condition
+    args = arg.split(' ', 1)
+    bpnum = int(args[0].strip())
+    try:
+        cond = args[1]
+    except:
+        cond = None
+    bp = bdb.Breakpoint.bpbynumber[bpnum]
+    if bp:
+        bp.cond = cond
+        if not cond:
+            print 'Breakpoint', bpnum,
+            print 'is now unconditional.'
+</t>
+<t tx="edream.110603185221.91">def do_ignore(self,arg):
+    """arg is bp number followed by ignore count."""
+    args = arg.split()
+    bpnum = int(args[0].strip())
+    try:
+        count = int(args[1].strip())
+    except:
+        count = 0
+    bp = bdb.Breakpoint.bpbynumber[bpnum]
+    if bp:
+        bp.ignore = count
+        if count &gt; 0:
+            reply = 'Will ignore next '
+            if count &gt; 1:
+                reply = reply + '%d crossings' % count
+            else:
+                reply = reply + '1 crossing'
+            print reply + ' of breakpoint %d.' % bpnum
+        else:
+            print 'Will stop next time breakpoint',
+            print bpnum, 'is reached.'
+</t>
+<t tx="edream.110603185221.92">def do_clear(self, arg):
+    """Three possibilities, tried in this order:
+    clear -&gt; clear all breaks, ask for confirmation
+    clear file:lineno -&gt; clear all breaks at file:lineno
+    clear bpno bpno ... -&gt; clear breakpoints by number"""
+    if not arg:
+        try:
+            reply = raw_input('Clear all breaks? ')
+        except EOFError:
+            reply = 'no'
+        reply = reply.strip().lower()
+        if reply in ('y', 'yes'):
+            self.clear_all_breaks()
+        return
+    if ':' in arg:
+        # Make sure it works for "clear C:\foo\bar.py:12"
+        i = arg.rfind(':')
+        filename = arg[:i]
+        arg = arg[i+1:]
+        try:
+            lineno = int(arg)
+        except:
+            err = "Invalid line number (%s)" % arg
+        else:
+            err = self.clear_break(filename, lineno)
+        if err: print '***', err
+        return
+    numberlist = arg.split()
+    for i in numberlist:
+        err = self.clear_bpbynumber(i)
+        if err:
+            print '***', err
+        else:
+            print 'Deleted breakpoint %s ' % (i,)
+</t>
+<t tx="edream.110603185221.93">do_cl = do_clear # 'c' is already an abbreviation for 'continue'
+
+def do_where(self, arg):
+    self.print_stack_trace()
+</t>
+<t tx="edream.110603185221.94">do_w = do_where
+do_bt = do_where
+
+def do_up(self, arg):
+    if self.curindex == 0:
+        print '*** Oldest frame'
+    else:
+        self.curindex = self.curindex - 1
+        self.curframe = self.stack[self.curindex][0]
+        self.print_stack_entry(self.stack[self.curindex])
+        self.lineno = None
+</t>
+<t tx="edream.110603185221.95">do_u = do_up
+
+def do_down(self, arg):
+    if self.curindex + 1 == len(self.stack):
+        print '*** Newest frame'
+    else:
+        self.curindex = self.curindex + 1
+        self.curframe = self.stack[self.curindex][0]
+        self.print_stack_entry(self.stack[self.curindex])
+        self.lineno = None
+</t>
+<t tx="edream.110603185221.96">do_d = do_down
+
+def do_step(self, arg):
+    self.set_step()
+    return 1
+</t>
+<t tx="edream.110603185221.97">do_s = do_step
+
+def do_next(self, arg):
+    self.set_next(self.curframe)
+    return 1
+</t>
+<t tx="edream.110603185221.98">do_n = do_next
+
+def do_return(self, arg):
+    self.set_return(self.curframe)
+    return 1
+</t>
+<t tx="edream.110603185221.99">do_r = do_return
+
+def do_continue(self, arg):
+    self.set_continue()
+    return 1
+</t>
+<t tx="edream.110603185221.100">do_c = do_cont = do_continue
+
+def do_jump(self, arg):
+    if self.curindex + 1 != len(self.stack):
+        print "*** You can only jump within the bottom frame"
+        return
+    try:
+        arg = int(arg)
+    except ValueError:
+        print "*** The 'jump' command requires a line number."
+    else:
+        try:
+            # Do the jump, fix up our copy of the stack, and display the
+            # new position
+            self.curframe.f_lineno = arg
+            self.stack[self.curindex] = self.stack[self.curindex][0], arg
+            self.print_stack_entry(self.stack[self.curindex])
+        except ValueError, e:
+            print '*** Jump failed:', e
+</t>
+<t tx="edream.110603185221.101">do_j = do_jump
+
+def do_debug(self, arg):
+    sys.settrace(None)
+    globals = self.curframe.f_globals
+    locals = self.curframe.f_locals
+    p = Pdb()
+    p.prompt = "(%s) " % self.prompt.strip()
+    print "ENTERING RECURSIVE DEBUGGER"
+    sys.call_tracing(p.run, (arg, globals, locals))
+    print "LEAVING RECURSIVE DEBUGGER"
+    sys.settrace(self.trace_dispatch)
+    self.lastcmd = p.lastcmd
+</t>
+<t tx="edream.110603185221.102">def do_quit(self, arg):
+    self.set_quit()
+    return 1
+</t>
+<t tx="edream.110603185221.103">do_q = do_quit
+do_exit = do_quit
+
+def do_EOF(self, arg):
+    print
+    self.set_quit()
+    return 1
+</t>
+<t tx="edream.110603185221.104">def do_args(self, arg):
+    f = self.curframe
+    co = f.f_code
+    dict = f.f_locals
+    n = co.co_argcount
+    if co.co_flags &amp; 4: n = n+1
+    if co.co_flags &amp; 8: n = n+1
+    for i in range(n):
+        name = co.co_varnames[i]
+        print name, '=',
+        if name in dict: print dict[name]
+        else: print "*** undefined ***"
+</t>
+<t tx="edream.110603185221.105">do_a = do_args
+
+def do_retval(self, arg):
+    if '__return__' in self.curframe.f_locals:
+        print self.curframe.f_locals['__return__']
+    else:
+        print '*** Not yet returned!'
+</t>
+<t tx="edream.110603185221.106">do_rv = do_retval
+
+def _getval(self, arg):
+    try:
+        return eval(arg, self.curframe.f_globals,
+                    self.curframe.f_locals)
+    except:
+        t, v = sys.exc_info()[:2]
+        if isinstance(t, str):
+            exc_type_name = t
+        else: exc_type_name = t.__name__
+        print '***', exc_type_name + ':', `v`
+        raise
+</t>
+<t tx="edream.110603185221.107">def do_p(self, arg):
+    try:
+        print repr(self._getval(arg))
+    except:
+        pass
+</t>
+<t tx="edream.110603185221.108">def do_pp(self, arg):
+    try:
+        pprint.pprint(self._getval(arg))
+    except:
+        pass
+</t>
+<t tx="edream.110603185221.109">def do_list(self, arg):
+    self.lastcmd = 'list'
+    last = None
+    if arg:
+        try:
+            x = eval(arg, {}, {})
+            if type(x) == type(()):
+                first, last = x
+                first = int(first)
+                last = int(last)
+                if last &lt; first:
+                    # Assume it's a count
+                    last = first + last
+            else:
+                first = max(1, int(x) - 5)
+        except:
+            print '*** Error in argument:', `arg`
+            return
+    elif self.lineno is None:
+        first = max(1, self.curframe.f_lineno - 5)
+    else:
+        first = self.lineno + 1
+    if last is None:
+        last = first + 10
+    filename = self.curframe.f_code.co_filename
+    breaklist = self.get_file_breaks(filename)
+    try:
+        for lineno in range(first, last+1):
+            line = linecache.getline(filename, lineno)
+            if not line:
+                print '[EOF]'
+                break
+            else:
+                s = `lineno`.rjust(3)
+                if len(s) &lt; 4: s = s + ' '
+                if lineno in breaklist: s = s + 'B'
+                else: s = s + ' '
+                if lineno == self.curframe.f_lineno:
+                    s = s + '-&gt;'
+                print s + '\t' + line,
+                self.lineno = lineno
+    except KeyboardInterrupt:
+        pass
+</t>
+<t tx="edream.110603185221.110">do_l = do_list
+
+def do_whatis(self, arg):
+    try:
+        value = eval(arg, self.curframe.f_globals,
+                        self.curframe.f_locals)
+    except:
+        t, v = sys.exc_info()[:2]
+        if type(t) == type(''):
+            exc_type_name = t
+        else: exc_type_name = t.__name__
+        print '***', exc_type_name + ':', `v`
+        return
+    code = None
+    # Is it a function?
+    try: code = value.func_code
+    except: pass
+    if code:
+        print 'Function', code.co_name
+        return
+    # Is it an instance method?
+    try: code = value.im_func.func_code
+    except: pass
+    if code:
+        print 'Method', code.co_name
+        return
+    # None of the above...
+    print type(value)
+</t>
+<t tx="edream.110603185221.111">def do_alias(self, arg):
+    args = arg.split()
+    if len(args) == 0:
+        keys = self.aliases.keys()
+        keys.sort()
+        for alias in keys:
+            print "%s = %s" % (alias, self.aliases[alias])
+        return
+    if args[0] in self.aliases and len(args) == 1:
+        print "%s = %s" % (args[0], self.aliases[args[0]])
+    else:
+        self.aliases[args[0]] = ' '.join(args[1:])
+</t>
+<t tx="edream.110603185221.112">def do_unalias(self, arg):
+    args = arg.split()
+    if len(args) == 0: return
+    if args[0] in self.aliases:
+        del self.aliases[args[0]]
+</t>
+<t tx="edream.110603185221.113"># Print a traceback starting at the top stack frame.
+# The most recently entered frame is printed last;
+# this is different from dbx and gdb, but consistent with
+# the Python interpreter's stack trace.
+# It is also consistent with the up/down commands (which are
+# compatible with dbx and gdb: up moves towards 'main()'
+# and down moves towards the most recent stack frame).
+
+def print_stack_trace(self):
+    try:
+        for frame_lineno in self.stack:
+            self.print_stack_entry(frame_lineno)
+    except KeyboardInterrupt:
+        pass
+</t>
+<t tx="edream.110603185221.114">def print_stack_entry(self, frame_lineno, prompt_prefix=line_prefix):
+    frame, lineno = frame_lineno
+    if frame is self.curframe:
+        print '&gt;',
+    else:
+        print ' ',
+    print self.format_stack_entry(frame_lineno, prompt_prefix)
+</t>
+<t tx="edream.110603185221.115"># Help methods (derived from pdb.doc)
+
+def help_help(self):
+    self.help_h()
+</t>
+<t tx="edream.110603185221.116">def help_h(self):
+    print """h(elp)
+Without argument, print the list of available commands.
+With a command name as argument, print help about that command
+"help pdb" pipes the full documentation file to the $PAGER
+"help exec" gives help on the ! command"""
+</t>
+<t tx="edream.110603185221.117">def help_where(self):
+    self.help_w()
+</t>
+<t tx="edream.110603185221.118">def help_w(self):
+    print """w(here)
+Print a stack trace, with the most recent frame at the bottom.
+An arrow indicates the "current frame", which determines the
+context of most commands.  'bt' is an alias for this command."""
+</t>
+<t tx="edream.110603185221.119">help_bt = help_w
+
+def help_down(self):
+    self.help_d()
+</t>
+<t tx="edream.110603185221.120">def help_d(self):
+    print """d(own)
+Move the current frame one level down in the stack trace
+(to an older frame)."""
+</t>
+<t tx="edream.110603185221.121">def help_up(self):
+    self.help_u()
+</t>
+<t tx="edream.110603185221.122">def help_u(self):
+    print """u(p)
+Move the current frame one level up in the stack trace
+(to a newer frame)."""
+</t>
+<t tx="edream.110603185221.123">def help_break(self):
+    self.help_b()
+</t>
+<t tx="edream.110603185221.124">def help_b(self):
+    print """b(reak) ([file:]lineno | function) [, condition]
+With a line number argument, set a break there in the current
+file.  With a function name, set a break at first executable line
+of that function.  Without argument, list all breaks.  If a second
+argument is present, it is a string specifying an expression
+which must evaluate to true before the breakpoint is honored.
+
+The line number may be prefixed with a filename and a colon,
+to specify a breakpoint in another file (probably one that
+hasn't been loaded yet).  The file is searched for on sys.path;
+the .py suffix may be omitted."""
+</t>
+<t tx="edream.110603185221.125">def help_clear(self):
+    self.help_cl()
+</t>
+<t tx="edream.110603185221.126">def help_cl(self):
+    print "cl(ear) filename:lineno"
+    print """cl(ear) [bpnumber [bpnumber...]]
+With a space separated list of breakpoint numbers, clear
+those breakpoints.  Without argument, clear all breaks (but
+first ask confirmation).  With a filename:lineno argument,
+clear all breaks at that line in that file.
+
+Note that the argument is different from previous versions of
+the debugger (in python distributions 1.5.1 and before) where
+a linenumber was used instead of either filename:lineno or
+breakpoint numbers."""
+</t>
+<t tx="edream.110603185221.127">def help_tbreak(self):
+    print """tbreak  same arguments as break, but breakpoint is
+removed when first hit."""
+</t>
+<t tx="edream.110603185221.128">def help_enable(self):
+    print """enable bpnumber [bpnumber ...]
+Enables the breakpoints given as a space separated list of
+bp numbers."""
+</t>
+<t tx="edream.110603185221.129">def help_disable(self):
+    print """disable bpnumber [bpnumber ...]
+Disables the breakpoints given as a space separated list of
+bp numbers."""
+</t>
+<t tx="edream.110603185221.130">def help_ignore(self):
+    print """ignore bpnumber count
+Sets the ignore count for the given breakpoint number.  A breakpoint
+becomes active when the ignore count is zero.  When non-zero, the
+count is decremented each time the breakpoint is reached and the
+breakpoint is not disabled and any associated condition evaluates
+to true."""
+</t>
+<t tx="edream.110603185221.131">def help_condition(self):
+    print """condition bpnumber str_condition
+str_condition is a string specifying an expression which
+must evaluate to true before the breakpoint is honored.
+If str_condition is absent, any existing condition is removed;
+i.e., the breakpoint is made unconditional."""
+</t>
+<t tx="edream.110603185221.132">def help_step(self):
+    self.help_s()
+</t>
+<t tx="edream.110603185221.133">def help_s(self):
+    print """s(tep)
+Execute the current line, stop at the first possible occasion
+(either in a function that is called or in the current function)."""
+</t>
+<t tx="edream.110603185221.134">def help_next(self):
+    self.help_n()
+</t>
+<t tx="edream.110603185221.135">def help_n(self):
+    print """n(ext)
+Continue execution until the next line in the current function
+is reached or it returns."""
+</t>
+<t tx="edream.110603185221.136">def help_return(self):
+    self.help_r()
+</t>
+<t tx="edream.110603185221.137">def help_r(self):
+    print """r(eturn)
+Continue execution until the current function returns."""
+</t>
+<t tx="edream.110603185221.138">def help_continue(self):
+    self.help_c()
+</t>
+<t tx="edream.110603185221.139">def help_cont(self):
+    self.help_c()
+</t>
+<t tx="edream.110603185221.140">def help_c(self):
+    print """c(ont(inue))
+Continue execution, only stop when a breakpoint is encountered."""
+</t>
+<t tx="edream.110603185221.141">def help_jump(self):
+    self.help_j()
+</t>
+<t tx="edream.110603185221.142">def help_j(self):
+    print """j(ump) lineno
+Set the next line that will be executed."""
+</t>
+<t tx="edream.110603185221.143">def help_debug(self):
+    print """debug code
+Enter a recursive debugger that steps through the code argument
+(which is an arbitrary expression or statement to be executed
+in the current environment)."""
+</t>
+<t tx="edream.110603185221.144">def help_list(self):
+    self.help_l()
+</t>
+<t tx="edream.110603185221.145">def help_l(self):
+    print """l(ist) [first [,last]]
+List source code for the current file.
+Without arguments, list 11 lines around the current line
+or continue the previous listing.
+With one argument, list 11 lines starting at that line.
+With two arguments, list the given range;
+if the second argument is less than the first, it is a count."""
+</t>
+<t tx="edream.110603185221.146">def help_args(self):
+    self.help_a()
+</t>
+<t tx="edream.110603185221.147">def help_a(self):
+    print """a(rgs)
+Print the arguments of the current function."""
+</t>
+<t tx="edream.110603185221.148">def help_p(self):
+    print """p expression
+Print the value of the expression."""
+</t>
+<t tx="edream.110603185221.149">def help_pp(self):
+    print """pp expression
+Pretty-print the value of the expression."""
+</t>
+<t tx="edream.110603185221.150">def help_exec(self):
+    print """(!) statement
+Execute the (one-line) statement in the context of
+the current stack frame.
+The exclamation point can be omitted unless the first word
+of the statement resembles a debugger command.
+To assign to a global variable you must always prefix the
+command with a 'global' command, e.g.:
+(Pdb) global list_options; list_options = ['-l']
+(Pdb)"""
+</t>
+<t tx="edream.110603185221.151">def help_quit(self):
+    self.help_q()
+</t>
+<t tx="edream.110603185221.152">def help_q(self):
+    print """q(uit) or exit - Quit from the debugger.
+The program being executed is aborted."""
+</t>
+<t tx="edream.110603185221.153">help_exit = help_q
+
+def help_whatis(self):
+    print """whatis arg
+Prints the type of the argument."""
+</t>
+<t tx="edream.110603185221.154">def help_EOF(self):
+    print """EOF
+Handles the receipt of EOF as a command."""
+</t>
+<t tx="edream.110603185221.155">def help_alias(self):
+    print """alias [name [command [parameter parameter ...] ]]
+Creates an alias called 'name' the executes 'command'.  The command
+must *not* be enclosed in quotes.  Replaceable parameters are
+indicated by %1, %2, and so on, while %* is replaced by all the
+parameters.  If no command is given, the current alias for name
+is shown. If no name is given, all aliases are listed.
+
+Aliases may be nested and can contain anything that can be
+legally typed at the pdb prompt.  Note!  You *can* override
+internal pdb commands with aliases!  Those internal commands
+are then hidden until the alias is removed.  Aliasing is recursively
+applied to the first word of the command line; all other words
+in the line are left alone.
+
+Some useful aliases (especially when placed in the .pdbrc file) are:
+
+#Print instance variables (usage "pi classInst")
+alias pi for k in %1.__dict__.keys(): print "%1.",k,"=",%1.__dict__[k]
+
+#Print instance variables in self
+alias ps pi self
+"""
+</t>
+<t tx="edream.110603185221.156">def help_unalias(self):
+    print """unalias name
+Deletes the specified alias."""
+</t>
+<t tx="edream.110603185221.157">def help_pdb(self):
+    help()
+</t>
+<t tx="edream.110603185221.158">def lookupmodule(self, filename):
+
+    """Helper function for break/clear parsing -- may be overridden."""
+
+    root, ext = os.path.splitext(filename)
+    if ext == '':
+        filename = filename + '.py'
+    if os.path.isabs(filename):
+        return filename
+    for dirname in sys.path:
+        while os.path.islink(dirname):
+            dirname = os.readlink(dirname)
+        fullname = os.path.join(dirname, filename)
+        if os.path.exists(fullname):
+            return fullname
+    return None
+</t>
+<t tx="edream.110603185221.159"></t>
+<t tx="edream.110603185221.160"># Simplified interface
+
+def run(statement, globals=None, locals=None):
+    Pdb().run(statement, globals, locals)
+</t>
+<t tx="edream.110603185221.161">def runeval(expression, globals=None, locals=None):
+    return Pdb().runeval(expression, globals, locals)
+</t>
+<t tx="edream.110603185221.162">def runctx(statement, globals, locals):
+    # B/W compatibility
+    run(statement, globals, locals)
+</t>
+<t tx="edream.110603185221.163">def runcall(*args):
+    return Pdb().runcall(*args)
+</t>
+<t tx="edream.110603185221.164">def set_trace():
+    Pdb().set_trace()
+</t>
+<t tx="edream.110603185221.165"># Post-Mortem interface
+
+def post_mortem(t):
+    p = Pdb()
+    p.reset()
+    while t.tb_next is not None:
+        t = t.tb_next
+    p.interaction(t.tb_frame, t)
+</t>
+<t tx="edream.110603185221.166">def pm():
+    post_mortem(sys.last_traceback)
+</t>
+<t tx="edream.110603185221.167"># Main program for testing
+
+TESTCMD = 'import x; x.main()'
+
+def test():
+    run(TESTCMD)</t>
+<t tx="edream.110603185221.168"># print help
+def help():
+
+    for dirname in sys.path:
+        fullname = os.path.join(dirname, 'pdb.doc')
+        if os.path.exists(fullname):
+            sts = os.system('${PAGER-more} '+fullname)
+            if sts: print '*** Pager exit status:', sts
+            break
+    else:
+        print 'Sorry, can\'t find the help file "pdb.doc"',
+        print 'along the Python search path'</t>
+<t tx="edream.110603185221.169">import bdb,os,types
+
+from Tkinter import *
+from WindowList import ListedToplevel
+from ScrolledList import ScrolledList
+
+@others</t>
+<t tx="edream.110603185221.170">class Idb(bdb.Bdb):
+	@others
+</t>
+<t tx="edream.110603185221.171">def __init__(self, gui):
+
+    self.gui = gui
+    bdb.Bdb.__init__(self)</t>
+<t tx="edream.110603185221.172">def user_line(self, frame):
+	
+    if self.in_rpc_code(frame):
+        self.set_step()
+        return
+
+    message = self.__frame2message(frame)
+    self.gui.interaction(message, frame)</t>
+<t tx="edream.110603185221.173">def user_exception(self, frame, info):
+
+    if self.in_rpc_code(frame):
+        self.set_step()
+        return
+
+    message = self.__frame2message(frame)
+    self.gui.interaction(message, frame, info)</t>
+<t tx="edream.110603185221.174">def in_rpc_code(self, frame):
+
+    if frame.f_code.co_filename.count('rpc.py'):
+        return True
+    else:
+        prev_frame = frame.f_back
+        if prev_frame.f_code.co_filename.count('Debugger.py'):
+            # Test will catch both Debugger.py and RemoteDebugger.py
+            return False
+        return self.in_rpc_code(prev_frame)</t>
+<t tx="edream.110603185221.175">def __frame2message(self, frame):
+
+    code = frame.f_code
+    filename = code.co_filename
+    lineno = frame.f_lineno
+    basename = os.path.basename(filename)
+	
+    message = "%s:%s" % (basename, lineno)
+    if code.co_name != "?":
+        message = "%s: %s()" % (message, code.co_name)
+
+    return message</t>
+<t tx="edream.110603185221.176">class Debugger:
+	
+	vstack = vsource = vlocals = vglobals = None
+
+	@others
+</t>
+<t tx="edream.110603185221.177">def __init__(self, pyshell, idb=None):
+
+    if idb is None:
+        idb = Idb(self)
+    self.pyshell = pyshell
+    self.idb = idb
+    self.frame = None
+    self.make_gui()
+    self.interacting = 0
+</t>
+<t tx="edream.110603185221.178">def run(self, *args):
+    try:
+        self.interacting = 1
+        return self.idb.run(*args)
+    finally:
+        self.interacting = 0
+</t>
+<t tx="edream.110603185221.179">def close(self, event=None):
+
+    if self.interacting:
+        self.top.bell()
+        return
+
+    if self.stackviewer:
+        self.stackviewer.close(); self.stackviewer = None
+
+    # Clean up pyshell if user clicked debugger control close widget.
+    # (Causes a harmless extra cycle through close_debugger() if user
+    # toggled debugger from pyshell Debug menu)
+    self.pyshell.close_debugger()
+
+    # Now close the debugger control window....
+    self.top.destroy()</t>
+<t tx="edream.110603185221.180">def make_gui(self):
+
+    pyshell = self.pyshell
+    self.flist = pyshell.flist
+	&lt;&lt; create top widget &amp; bindings &gt;&gt;
+    self.bframe = bframe = Frame(top)
+    self.bframe.pack(anchor="w")
+    self.buttons = bl = []
+    &lt;&lt; create the buttons &gt;&gt;
+    self.cframe = cframe = Frame(bframe)
+    self.cframe.pack(side="left")
+    #
+    if not self.vstack:
+        self.__class__.vstack = BooleanVar(top)
+        self.vstack.set(1)
+    self.bstack = Checkbutton(cframe,
+        text="Stack", command=self.show_stack, variable=self.vstack)
+    self.bstack.grid(row=0, column=0)
+    if not self.vsource:
+        self.__class__.vsource = BooleanVar(top)
+    self.bsource = Checkbutton(cframe,
+        text="Source", command=self.show_source, variable=self.vsource)
+    self.bsource.grid(row=0, column=1)
+    if not self.vlocals:
+        self.__class__.vlocals = BooleanVar(top)
+        self.vlocals.set(1)
+    self.blocals = Checkbutton(cframe,
+        text="Locals", command=self.show_locals, variable=self.vlocals)
+    self.blocals.grid(row=1, column=0)
+    if not self.vglobals:
+        self.__class__.vglobals = BooleanVar(top)
+    self.bglobals = Checkbutton(cframe,
+        text="Globals", command=self.show_globals, variable=self.vglobals)
+    self.bglobals.grid(row=1, column=1)
+    #
+    self.status = Label(top, anchor="w")
+    self.status.pack(anchor="w")
+    self.error = Label(top, anchor="w")
+    self.error.pack(anchor="w", fill="x")
+    self.errorbg = self.error.cget("background")
+    #
+    self.fstack = Frame(top, height=1)
+    self.fstack.pack(expand=1, fill="both")
+    self.flocals = Frame(top)
+    self.flocals.pack(expand=1, fill="both")
+    self.fglobals = Frame(top, height=1)
+    self.fglobals.pack(expand=1, fill="both")
+    #
+    if self.vstack.get():
+        self.show_stack()
+    if self.vlocals.get():
+        self.show_locals()
+    if self.vglobals.get():
+        self.show_globals()</t>
+<t tx="edream.110603185221.181">self.bcont = b = Button(bframe, text="Go", command=self.cont)
+bl.append(b)
+self.bstep = b = Button(bframe, text="Step", command=self.step)
+bl.append(b)
+self.bnext = b = Button(bframe, text="Over", command=self.next)
+bl.append(b)
+self.bret = b = Button(bframe, text="Out", command=self.ret)
+bl.append(b)
+self.bret = b = Button(bframe, text="Quit", command=self.quit)
+bl.append(b)
+
+for b in bl:
+    b.configure(state="disabled")
+    b.pack(side="left")</t>
+<t tx="edream.110603185221.182">self.root = root = pyshell.root
+self.top = top =ListedToplevel(root)
+self.top.wm_title("Debug Control")
+self.top.wm_iconname("Debug")
+top.wm_protocol("WM_DELETE_WINDOW", self.close)
+self.top.bind("&lt;Escape&gt;", self.close)</t>
+<t tx="edream.110603185221.183">def interaction(self, message, frame, info=None):
+    self.frame = frame
+    self.status.configure(text=message)
+    #
+    if info:
+        type, value, tb = info
+        try:
+            m1 = type.__name__
+        except AttributeError:
+            m1 = "%s" % str(type)
+        if value is not None:
+            try:
+                m1 = "%s: %s" % (m1, str(value))
+            except:
+                pass
+        bg = "yellow"
+    else:
+        m1 = ""
+        tb = None
+        bg = self.errorbg
+    self.error.configure(text=m1, background=bg)
+    #
+    sv = self.stackviewer
+    if sv:
+        stack, i = self.idb.get_stack(self.frame, tb)
+        sv.load_stack(stack, i)
+    #
+    self.show_variables(1)
+    #
+    if self.vsource.get():
+        self.sync_source_line()
+    #
+    for b in self.buttons:
+        b.configure(state="normal")
+    #
+    self.top.tkraise()
+    self.root.mainloop()
+    #
+    for b in self.buttons:
+        b.configure(state="disabled")
+    self.status.configure(text="")
+    self.error.configure(text="", background=self.errorbg)
+    self.frame = None
+</t>
+<t tx="edream.110603185221.184">def sync_source_line(self):
+
+    frame = self.frame
+    if not frame:
+        return
+
+    filename, lineno = self.__frame2fileline(frame)
+    if filename[:1] + filename[-1:] != "&lt;&gt;" and os.path.exists(filename):
+        self.flist.gotofileline(filename, lineno)</t>
+<t tx="edream.110603185221.185">def __frame2fileline(self, frame):
+
+    code = frame.f_code
+    filename = code.co_filename
+    lineno = frame.f_lineno
+    return filename, lineno</t>
+<t tx="edream.110603185221.186"></t>
+<t tx="edream.110603185221.187">def cont(self):
+    self.idb.set_continue()
+    self.root.quit()
+</t>
+<t tx="edream.110603185221.188">def step(self):
+    self.idb.set_step()
+    self.root.quit()
+</t>
+<t tx="edream.110603185221.189">def next(self):
+
+    self.idb.set_next(self.frame)
+    self.root.quit()
+</t>
+<t tx="edream.110603185221.190">def ret(self):
+    self.idb.set_return(self.frame)
+    self.root.quit()
+</t>
+<t tx="edream.110603185221.191">def quit(self):
+    self.idb.set_quit()
+    self.root.quit()
+</t>
+<t tx="edream.110603185221.192"></t>
+<t tx="edream.110603185221.193">stackviewer = None
+
+def show_stack(self):
+
+    if not self.stackviewer and self.vstack.get():
+        self.stackviewer = sv = StackViewer(self.fstack, self.flist, self)
+        if self.frame:
+            stack, i = self.idb.get_stack(self.frame, None)
+            sv.load_stack(stack, i)
+    else:
+        sv = self.stackviewer
+        if sv and not self.vstack.get():
+            self.stackviewer = None
+            sv.close()
+        self.fstack['height'] = 1
+</t>
+<t tx="edream.110603185221.194">def show_source(self):
+
+    if self.vsource.get():
+        self.sync_source_line()
+</t>
+<t tx="edream.110603185221.195">def show_frame(self, (frame, lineno)):
+    self.frame = frame
+    self.show_variables()
+</t>
+<t tx="edream.110603185221.196">localsviewer = None
+globalsviewer = None
+
+def show_locals(self):
+    lv = self.localsviewer
+    if self.vlocals.get():
+        if not lv:
+            self.localsviewer = NamespaceViewer(self.flocals, "Locals")
+    else:
+        if lv:
+            self.localsviewer = None
+            lv.close()
+            self.flocals['height'] = 1
+    self.show_variables()
+</t>
+<t tx="edream.110603185221.197">def show_globals(self):
+
+    gv = self.globalsviewer
+    if self.vglobals.get():
+        if not gv:
+            self.globalsviewer = NamespaceViewer(self.fglobals, "Globals")
+    else:
+        if gv:
+            self.globalsviewer = None
+            gv.close()
+            self.fglobals['height'] = 1
+    self.show_variables()
+</t>
+<t tx="edream.110603185221.198">def show_variables(self, force=0):
+
+    lv = self.localsviewer
+    gv = self.globalsviewer
+    frame = self.frame
+    if not frame:
+        ldict = gdict = None
+    else:
+        ldict = frame.f_locals
+        gdict = frame.f_globals
+        if lv and gv and ldict is gdict:
+            ldict = None
+    if lv:
+        lv.load_dict(ldict, force, self.pyshell.interp.rpcclt)
+    if gv:
+        gv.load_dict(gdict, force, self.pyshell.interp.rpcclt)
+</t>
+<t tx="edream.110603185221.199"># - Not bound in this class.
+# - Just call corresponding idb class.</t>
+<t tx="edream.110603185221.200">def set_breakpoint_here(self, filename, lineno):
+
+    self.idb.set_break(filename, lineno)
+</t>
+<t tx="edream.110603185221.201">def clear_breakpoint_here(self, filename, lineno):
+    self.idb.clear_break(filename, lineno)
+</t>
+<t tx="edream.110603185221.202">def clear_file_breaks(self, filename):
+	
+    self.idb.clear_all_file_breaks(filename)
+
+</t>
+<t tx="edream.110603185221.203">def load_breakpoints(self):
+
+    "Load PyShellEditorWindow breakpoints into subprocess debugger"
+    pyshell_edit_windows = self.pyshell.flist.inversedict.keys()
+    for editwin in pyshell_edit_windows:
+        filename = editwin.io.filename
+        try:
+            for lineno in editwin.breakpoints:
+                self.set_breakpoint_here(filename, lineno)
+        except AttributeError:
+            continue
+</t>
+<t tx="edream.110603185221.204">
+class StackViewer(ScrolledList):
+	@others
+</t>
+<t tx="edream.110603185221.205">def __init__(self, master, flist, gui):
+    ScrolledList.__init__(self, master, width=80)
+    self.flist = flist
+    self.gui = gui
+    self.stack = []
+</t>
+<t tx="edream.110603185221.206">def load_stack(self, stack, index=None):
+    self.stack = stack
+    self.clear()
+    for i in range(len(stack)):
+        frame, lineno = stack[i]
+        try:
+            modname = frame.f_globals["__name__"]
+        except:
+            modname = "?"
+        code = frame.f_code
+        filename = code.co_filename
+        funcname = code.co_name
+        import linecache
+        sourceline = linecache.getline(filename, lineno)
+        import string
+        sourceline = string.strip(sourceline)
+        if funcname in ("?", "", None):
+            item = "%s, line %d: %s" % (modname, lineno, sourceline)
+        else:
+            item = "%s.%s(), line %d: %s" % (modname, funcname,
+                                             lineno, sourceline)
+        if i == index:
+            item = "&gt; " + item
+        self.append(item)
+    if index is not None:
+        self.select(index)
+</t>
+<t tx="edream.110603185221.207">def popup_event(self, event):
+    "override base method"
+    if self.stack:
+        return ScrolledList.popup_event(self, event)
+</t>
+<t tx="edream.110603185221.208">def fill_menu(self):
+    "override base method"
+    menu = self.menu
+    menu.add_command(label="Go to source line",
+                     command=self.goto_source_line)
+    menu.add_command(label="Show stack frame",
+                     command=self.show_stack_frame)
+</t>
+<t tx="edream.110603185221.209">def on_select(self, index):
+    "override base method"
+    if 0 &lt;= index &lt; len(self.stack):
+        self.gui.show_frame(self.stack[index])
+</t>
+<t tx="edream.110603185221.210">def on_double(self, index):
+    "override base method"
+    self.show_source(index)
+</t>
+<t tx="edream.110603185221.211">def goto_source_line(self):
+    index = self.listbox.index("active")
+    self.show_source(index)
+</t>
+<t tx="edream.110603185221.212">def show_stack_frame(self):
+    index = self.listbox.index("active")
+    if 0 &lt;= index &lt; len(self.stack):
+        self.gui.show_frame(self.stack[index])
+</t>
+<t tx="edream.110603185221.213">def show_source(self, index):
+    if not (0 &lt;= index &lt; len(self.stack)):
+        return
+    frame, lineno = self.stack[index]
+    code = frame.f_code
+    filename = code.co_filename
+    if os.path.isfile(filename):
+        edit = self.flist.open(filename)
+        if edit:
+            edit.gotoline(lineno)
+</t>
+<t tx="edream.110603185221.214">
+
+class NamespaceViewer:
+	@others
+</t>
+<t tx="edream.110603185221.215">def __init__(self, master, title, dict=None):
+    width = 0
+    height = 40
+    if dict:
+        height = 20*len(dict) # XXX 20 == observed height of Entry widget
+    self.master = master
+    self.title = title
+    import repr
+    self.repr = repr.Repr()
+    self.repr.maxstring = 60
+    self.repr.maxother = 60
+    self.frame = frame = Frame(master)
+    self.frame.pack(expand=1, fill="both")
+    self.label = Label(frame, text=title, borderwidth=2, relief="groove")
+    self.label.pack(fill="x")
+    self.vbar = vbar = Scrollbar(frame, name="vbar")
+    vbar.pack(side="right", fill="y")
+    self.canvas = canvas = Canvas(frame,
+                                  height=min(300, max(40, height)),
+                                  scrollregion=(0, 0, width, height))
+    canvas.pack(side="left", fill="both", expand=1)
+    vbar["command"] = canvas.yview
+    canvas["yscrollcommand"] = vbar.set
+    self.subframe = subframe = Frame(canvas)
+    self.sfid = canvas.create_window(0, 0, window=subframe, anchor="nw")
+    self.load_dict(dict)
+</t>
+<t tx="edream.110603185221.216">dict = -1
+
+def load_dict(self, dict, force=0, rpc_client=None):
+    if dict is self.dict and not force:
+        return
+    subframe = self.subframe
+    frame = self.frame
+    for c in subframe.children.values():
+        c.destroy()
+    self.dict = None
+    if not dict:
+        l = Label(subframe, text="None")
+        l.grid(row=0, column=0)
+    else:
+        names = dict.keys()
+        names.sort()
+        row = 0
+        for name in names:
+            value = dict[name]
+            svalue = self.repr.repr(value) # repr(value)
+            # Strip extra quotes caused by calling repr on the (already)
+            # repr'd value sent across the RPC interface:
+            if rpc_client:
+                svalue = svalue[1:-1]
+            l = Label(subframe, text=name)
+            l.grid(row=row, column=0, sticky="nw")
+            l = Entry(subframe, width=0, borderwidth=0)
+            l.insert(0, svalue)
+            l.grid(row=row, column=1, sticky="nw")
+            row = row+1
+    self.dict = dict
+    # XXX Could we use a &lt;Configure&gt; callback for the following?
+    subframe.update_idletasks() # Alas!
+    width = subframe.winfo_reqwidth()
+    height = subframe.winfo_reqheight()
+    canvas = self.canvas
+    self.canvas["scrollregion"] = (0, 0, width, height)
+    if height &gt; 300:
+        canvas["height"] = 300
+        frame.pack(expand=1)
+    else:
+        canvas["height"] = height
+        frame.pack(expand=0)
+</t>
+<t tx="edream.110603185221.217">def close(self):
+    self.frame.destroy()
+</t>
+<t tx="edream.110603185221.218"># The key idea: Idb and bdb use the stack frame to get the source line.</t>
 </tnodes>
 </leo_file>

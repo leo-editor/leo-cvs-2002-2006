@@ -15,6 +15,7 @@
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.110203160744.1"><vh>November 2003</vh>
 <v t="edream.110603060339"><vh>11/6</vh>
+<v t="edream.110603185434"><vh>Create initScriptFind</vh></v>
 <v t="edream.110603063616"><vh>Added support for undo</vh></v>
 <v t="edream.110603060339.1"><vh>Yes, a script change checkbox IS a good idea</vh></v>
 </v>
@@ -540,36 +541,6 @@
 </v>
 <v t="edream.110203160744.419"><vh> To do...</vh>
 <v t="edream.110203160744.420"><vh>To do: 4.2</vh>
-<v t="edream.110203160744.2421"><vh>Fix bugs</vh>
-<v t="edream.110403185937"><vh>Important file problems 3</vh>
-<v t="edream.110203160744.2441"><vh>Continuation problem</vh></v>
-<v t="edream.110203160744.2446"><vh>Extract bugs</vh>
-<v t="edream.110203160744.2447"><vh>Reports</vh>
-<v t="edream.110203160744.2448"><vh>Leading slashes are removed</vh></v>
-<v t="edream.110203160744.2449"><vh>Extract Section is enabled when it should not be</vh></v>
-<v t="edream.110203160744.2450"><vh>Documentation problem</vh></v>
-<v t="edream.110203160744.2451"><vh>Doesn't check for complete section name</vh></v>
-</v>
-</v>
-<v t="edream.110203160744.2456"><vh>Import problems</vh></v>
-</v>
-<v t="edream.110203160744.2439"><vh>Use pywin extensions to fix cut/paste bugs</vh>
-<v t="edream.110203160744.2440"><vh>Automatic select &amp; Paste bug</vh></v>
-</v>
-<v t="edream.110403185937.1"><vh>Fix bugs 3</vh>
-<v t="edream.110203160744.2442"><vh>(Fix Window positioning bugs)</vh>
-<v t="edream.110203160744.2443"><vh>Report 1: settings not in leoConfig.leo</vh></v>
-<v t="edream.110203160744.2444"><vh>Remember log/tree splitter position</vh></v>
-<v t="edream.110203160744.2445"><vh>Report 2: Find in status area</vh></v>
-</v>
-<v t="edream.110203160744.2452"><vh>(tab bug)</vh>
-<v t="edream.110203160744.2453"><vh>Report</vh></v>
-<v t="edream.110203160744.2454"><vh>Minimal test</vh></v>
-<v t="edream.110203160744.2455"><vh>Test File for Non Expanding Tabs</vh></v>
-</v>
-<v t="edream.110203160744.2457"><vh>Scroll improvement</vh></v>
-</v>
-</v>
 <v t="edream.110203160744.425"><vh>Best minor improvements</vh>
 <v t="edream.110203160744.426"><vh>Use @file extension by default if no @language</vh></v>
 <v t="edream.110203160744.427"><vh>Secondary icons: use for marks?</vh></v>
@@ -821,9 +792,10 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2412" a="M"><vh>To do: 4.1 beta 1</vh>
-<v t="edream.110203160744.424"><vh>(Search selected text only) TO DO</vh></v>
-<v t="edream.110203160744.3805"><vh>(Make sure that finishPaste nodes never have join lists)</vh>
+<v t="edream.110403112538"><vh>To do: 4.1 beta 2</vh>
+<v t="edream.110203160744.424" a="M"><vh>(Search selected text only) TO DO</vh></v>
+<v t="edream.110203160744.2421"><vh>Fix bugs</vh>
+<v t="edream.110203160744.3805" a="M"><vh>(Make sure that finishPaste nodes never have join lists)</vh>
 <v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
 <v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
 <v t="edream.110203160744.1555" a=""><vh>getTnode</vh>
@@ -842,8 +814,39 @@
 <v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110403112538"><vh>To do: 4.1 beta 2</vh>
-<v t="edream.110503061633.2" a="M"><vh>Create base find class</vh>
+<v t="edream.110403185937"><vh>Important file problems 3</vh>
+<v t="edream.110203160744.2441"><vh>Continuation problem</vh></v>
+<v t="edream.110203160744.2446"><vh>Extract bugs</vh>
+<v t="edream.110203160744.2447"><vh>Reports</vh>
+<v t="edream.110203160744.2448"><vh>Leading slashes are removed</vh></v>
+<v t="edream.110203160744.2449"><vh>Extract Section is enabled when it should not be</vh></v>
+<v t="edream.110203160744.2450"><vh>Documentation problem</vh></v>
+<v t="edream.110203160744.2451"><vh>Doesn't check for complete section name</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.2456"><vh>Import problems</vh></v>
+</v>
+<v t="edream.110203160744.2439"><vh>Use pywin extensions to fix cut/paste bugs</vh>
+<v t="edream.110203160744.2440"><vh>Automatic select &amp; Paste bug</vh></v>
+</v>
+<v t="edream.110403185937.1"><vh>Fix bugs 3</vh>
+<v t="edream.110203160744.2442"><vh>(Fix Window positioning bugs)</vh>
+<v t="edream.110203160744.2443"><vh>Report 1: settings not in leoConfig.leo</vh></v>
+<v t="edream.110203160744.2444"><vh>Remember log/tree splitter position</vh></v>
+<v t="edream.110203160744.2445"><vh>Report 2: Find in status area</vh></v>
+</v>
+<v t="edream.110203160744.2452"><vh>(tab bug)</vh>
+<v t="edream.110203160744.2453"><vh>Report</vh></v>
+<v t="edream.110203160744.2454"><vh>Minimal test</vh></v>
+<v t="edream.110203160744.2455"><vh>Test File for Non Expanding Tabs</vh></v>
+</v>
+<v t="edream.110203160744.2457"><vh>Scroll improvement</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.2420"><vh>Support Unicode file names (see other to-do list)</vh></v>
+<v t="edream.110303152216.2"><vh>gui &amp; plugin stuff</vh>
+<v t="edream.110503104603"><vh>Move createMenuBar to leoFrame class in leoFrame.py</vh></v>
+<v t="edream.110503061633.2"><vh>Create base find class</vh>
 <v t="edream.110203160744.2186" a=""><vh>find.createFrame</vh>
 <v t="edream.110203160744.2187"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
 <v t="edream.110203160744.2188"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh></v>
@@ -862,9 +865,6 @@
 </v>
 <v t="edream.110203160744.2346" a=""><vh>findNextMatch</vh></v>
 </v>
-<v t="edream.110503104603"><vh>Move createMenuBar to leoFrame class in leoFrame.py</vh></v>
-<v t="edream.110203160744.2420"><vh>Support Unicode file names (see other to-do list)</vh></v>
-<v t="edream.110303152216.2"><vh>gui &amp; plugin stuff</vh>
 <v t="edream.110203160744.2419"><vh>Improve how plugins are loaded</vh></v>
 <v t="edream.110203163105.2"><vh>Test all file dialogs</vh></v>
 <v t="edream.110203160744.2415"><vh>Revise mod_spelling.py to use the new c.body methods</vh></v>
@@ -872,8 +872,7 @@
 </v>
 <v t="edream.110503100058"><vh>Add option to allow incremental screen redraws? And shared tnodes?</vh></v>
 </v>
-</v>
-<v t="edream.110203160744.601"><vh>(Project Views)</vh>
+<v t="edream.110203160744.601" a="V"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
 <v t="edream.110203160744.603"><vh>(Translation problems)</vh>
 <v t="edream.110203160744.604"><vh> Report</vh></v>
@@ -6573,7 +6572,7 @@
 <v t="edream.110203160744.3106"><vh>skip_leading_ws_with_indent</vh></v>
 </v>
 </v>
-<v t="edream.110603105919" a=""><vh>Script utils</vh>
+<v t="edream.110603105919"><vh>Script utils</vh>
 <v t="edream.110603105919.1"><vh>initScriptFind</vh></v>
 </v>
 <v t="edream.110203160744.1479" a=""><vh>Unicode utils...</vh>
@@ -8300,9 +8299,6 @@
 </v>
 </v>
 </v>
-</v>
-<v t="edream.110603105919" a="E"><vh>Script utils</vh>
-<v t="edream.110603105919.1" a="V"><vh>initScriptFind</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -13379,14 +13375,14 @@ October:
 
 - 1 week: (done) finish 4.0
 - 1 week: fix all bugs
-- 1 week: abstract all gui code into leoGui.py
+- 1 week: (done) abstract all gui code into leoGui.py
 - 1 week: move all data from view classes into commanders.
 
 November &amp; December
 
 - 1 week: (done) Create wxPython gui plugin to test new gui code.
-- 1 week: finish Find panel: (must be redesigned for gui project)
-- 1-2 weeks: Replace leoConfig.leo with new Settings panel.
+- 1 week: (done) finish Find panel: (must be redesigned for gui project)
+- 1-2 weeks: (not this year) Replace leoConfig.leo with new Settings panel.
 
 Notes:
 
@@ -40768,16 +40764,6 @@ def setDict (self,name,val,dict):
 		
 getStringFromDict = getFromDict
 </t>
-<t tx="edream.110203160744.2412">@nocolor
-
-** What does the scripts menu do ???
-
-- Better tests of Undo Change All
-
-* Convert all plugins to 4.1 architecture.
-	- use tk spelling for body routines.
-
-- More check in CheckOutline command</t>
 <t tx="edream.110203160744.2415"></t>
 <t tx="edream.110203160744.2418"></t>
 <t tx="edream.110203160744.2419">@nocolor
@@ -60094,7 +60080,16 @@ elif undoType == "De-Hoist":
 
 - These commands eat one too many characters.
 - The selection is not set properly afterwards.</t>
-<t tx="edream.110403112538"></t>
+<t tx="edream.110403112538">@nocolor
+
+** What does the scripts menu do ???
+
+- Better tests of Undo Change All
+
+* Convert all plugins to 4.1 architecture.
+	- use tk spelling for body routines.
+
+- More checks in CheckOutline command</t>
 <t tx="edream.110403150047">def OnCheckOutline (self,event=None):
 	
 	self.commands.checkOutline()</t>
@@ -60286,5 +60281,6 @@ Leo will execute a "default change script" when the Script Change checkbox is ch
 	c.change_text = change_v.bodyString().strip()
 	app.findFrame.init(c)
 	c.frame.OnFindPanel()</t>
+<t tx="edream.110603185434">A useful little utility to set up script-find/change.</t>
 </tnodes>
 </leo_file>
