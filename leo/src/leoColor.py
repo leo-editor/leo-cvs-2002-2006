@@ -1656,6 +1656,7 @@ class baseColorizer:
 			#@-body
 			#@-node:5::<< update state ivars >>
 
+			return "ok" # for testing.
 		except:
 			
 			#@<< set state ivars to "unknown" >>
@@ -1667,7 +1668,12 @@ class baseColorizer:
 			#@-body
 			#@-node:6::<< set state ivars to "unknown" >>
 
-			es_exception()
+			if self.commands:
+				es_exception()
+			else:
+				import traceback
+				traceback.print_exc()
+			return "error" # for testing.
 	#@-body
 	#@-node:5::colorizeAnyLanguage & allies
 	#@+node:6::colorizeLine & allies
@@ -2352,6 +2358,9 @@ class baseColorizer:
 		"""
 	
 		c = self.commands
+		if c == None:
+			return # self.commands may be None for testing.
+	
 		language = c.target_language
 		self.language = language # 2/2/03
 		self.comment_string = None

@@ -457,7 +457,11 @@ class baseVnode:
 	def __init__ (self,commands,t):
 	
 		a = app()
-		assert(t and commands)
+		assert(t)
+		
+		# commands may be None for testing.
+		# assert(commands)
+	
 		
 		#@<< initialize vnode data members >>
 		#@+node:1::<< initialize vnode data members >>

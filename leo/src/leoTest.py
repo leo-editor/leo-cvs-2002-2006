@@ -1,43 +1,354 @@
 #@+leo
 #@+node:0::@file leoTest.py
 #@+body
-"""Perform unit testing on Leo itself"""
+"""Unit tests for Leo"""
+
+from leoGlobals import *
+import unittest
 
 
 #@+at
-#  This module defines classes and scripts for testing Leo.
+#  Run the unit tests from the "Leo Unit Tests" node in test/test.leo, like this:
 # 
-# - This module will be moved into the 3.11 code base in order to generate 
-# reference files in the ../test/ref folder.
+# - update the tests here
+# - save this file (LeoPy.leo)
+# - rerun the tests immediately in test.leo using the Execute Script command.
+# 
+# The reload(leoTest) statement
 
 #@-at
 #@@c
 
 
-import unittest
-from leoGlobals import *
+#@+others
+#@+node:1::@url http://pyunit.sourceforge.net/pyunit.html
+#@-node:1::@url http://pyunit.sourceforge.net/pyunit.html
+#@+node:2::tests of leoColor.py
+#@+body
+#@+at
+#  Changes made to get unit tests to work:
+# 
+# - vnodes now allow commands to be None.
+# - colorizer now allows commands to be None.
+# 
+
+#@-at
+#@@c
+
+import leoColor,leoCommands,leoFrame,leoNodes
+import Tkinter
+Tk = Tkinter
 
 
 #@+others
-#@+node:1::test outline operations
+#@+node:1::class colorTests
+#@+body
+class colorTests(unittest.TestCase):
+	
+
+	#@+others
+	#@+node:1::color
+	#@+body
+	def color (self,language,text):
+		
+		self.text = text
+		self.body.insert("1.0",text)
+		self.colorizer.language = language
+		#if language == "python":
+		#	raise ValueError
+		# print "color",language
+		# import traceback ; traceback.print_stack()
+		val = self.colorizer.colorizeAnyLanguage(self.v,self.body)
+		assert(val=="ok")
+	#@-body
+	#@-node:1::color
+	#@+node:2::setUp
+	#@+body
+	def setUp(self):
+	
+		#self.frame = frame = leoFrame.LeoFrame()
+		#self.commands = c = leoCommands.Commands(frame)
+		
+		c = None
+		self.t = t = leoNodes.tnode()
+		self.v = leoNodes.vnode(c,t)
+		self.body = Tk.Text()
+		self.colorizer = leoColor.colorizer(c)
+		self.colorizer.incremental = false
+	#@-body
+	#@-node:2::setUp
+	#@+node:3::tearDown
+	#@+body
+	def tearDown (self):
+		
+		self.body.destroy()
+		#self.frame.top.destroy()
+		#self.frame = None
+		self.colorizer = None
+		self.body = None
+		self.t = self.v = None
+	#@-body
+	#@-node:3::tearDown
+	#@+node:4::testC
+	#@+body
+	def testC (self):
+		
+		"""Test coloring for C."""
+		
+		self.color("c","""abc""")
+	#@-body
+	#@-node:4::testC
+	#@+node:5::testPython
+	#@+body
+	def testPython(self):
+		
+		"""Test coloring for python."""
+	
+		self.color("python","""abc""")
+	#@-body
+	#@-node:5::testPython
+	#@+node:6::testHTML
+	#@+body
+	def testHTML(self):
+		
+		"""Test coloring for HTML."""
+		
+		self.color("html","""abc""")
+	#@-body
+	#@-node:6::testHTML
+	#@-others
+#@-body
+#@-node:1::class colorTests
+#@-others
+
+
+
+#@-body
+#@-node:2::tests of leoColor.py
+#@+node:3::Other stuff
+#@+node:1::tests of leoNodes.py
 #@+body
 import leoNodes
+#@-body
+#@+node:1::class cloneTests
+#@+body
+class cloneTests(unittest.TestCase):
+	
+	"""tests of cloning and inserts and deletes involving clones"""
+	
 
-class LeoNodeError(Exception): pass
+	#@+others
+	#@+node:1::testCone
+	#@+body
+	def testCone(self):
+		pass
+	
+	#@-body
+	#@-node:1::testCone
+	#@+node:2::testMoveIntoClone
+	#@+body
+	def testMoveIntoClone(self):
+		pass
+	
+	#@-body
+	#@-node:2::testMoveIntoClone
+	#@+node:3::testMoveOutOfClone
+	#@+body
+	def testMoveOutOfClone(self):
+		pass
+	
+	#@-body
+	#@-node:3::testMoveOutOfClone
+	#@+node:4::testInsertInsideClone
+	#@+body
+	def testInsertInsideClone(self):
+		pass
+	
+	#@-body
+	#@-node:4::testInsertInsideClone
+	#@+node:5::testDeleteInsideClone
+	#@+body
+	def testDeleteInsideClone(self):
+		pass
+	
+	#@-body
+	#@-node:5::testDeleteInsideClone
+	#@+node:6::testInsertInsideClone
+	#@+body
+	def testInsertInsideClone(self):
+		pass
+		
+	
+	#@-body
+	#@-node:6::testInsertInsideClone
+	#@+node:7::testDeleteInsideClone
+	#@+body
+	def testDeleteInsideClone(self):
+		pass
+	
+	#@-body
+	#@-node:7::testDeleteInsideClone
+	#@-others
+#@-body
+#@-node:1::class cloneTests
+#@+node:2::class LeoNodeError
+#@+body
+class leoNodeError(Exception):
+	pass
+	
 
 
-#@<< test functions >>
-#@+node:1::<< test functions >>
+#@-body
+#@-node:2::class LeoNodeError
+#@+node:3::class moveTests
+#@+body
+class moveTests(unittest.TestCase):
+	
+	"""test that moves work properly, especially when clones are involved"""
+	
+	pass # no tests yet.
+
+#@-body
+#@-node:3::class moveTests
+#@+node:4::class nodeSanityTests
+#@+body
+class nodeSanityTests(unittest.TestCase):
+
+	"""Tests that links, joinLists and related getters are consistent"""
+	
+
+	#@+others
+	#@+node:1::testNextBackLinks
+	#@+body
+	def testNextBackLinks(self):
+		
+		"""Sanity checks for v.mNext and v.mBack"""
+		pass
+	
+	#@-body
+	#@-node:1::testNextBackLinks
+	#@+node:2::testParentChildLinks
+	#@+body
+	def testParentChildLinks(self):
+		
+		"""Sanity checks for v.mParent and v.mFirstChild"""
+		pass
+	
+	#@-body
+	#@-node:2::testParentChildLinks
+	#@+node:3::testJoinLists
+	#@+body
+	def testJoinLists(self):
+		
+		"""Sanity checks for join lists"""
+		pass
+	#@-body
+	#@-node:3::testJoinLists
+	#@+node:4::testThreadNextBack
+	#@+body
+	def testThreadNextBack(self):
+		
+		"""Sanity checks for v.threadNext() and v.threadBack()"""
+		pass
+	
+	#@-body
+	#@-node:4::testThreadNextBack
+	#@+node:5::testNextBack
+	#@+body
+	def testNextBack(self):
+		
+		"""Sanity checks for v.vext() and v.vack()"""
+		pass
+	
+	#@-body
+	#@-node:5::testNextBack
+	#@+node:6::testVisNextBack
+	#@+body
+	def testVisNextBack(self):
+		
+		"""Sanity checks for v.visNext() and v.visBack()"""
+		pass
+	
+	#@-body
+	#@-node:6::testVisNextBack
+	#@+node:7::testFirstChildParent
+	#@+body
+	def testFirstChildParent(self):
+		
+		"""Sanity checks for v.firstChild() and v.parent()"""
+		pass
+	
+	#@-body
+	#@-node:7::testFirstChildParent
+	#@-others
+#@-body
+#@-node:4::class nodeSanityTests
+#@+node:5::class statusBitsChecks
+#@+body
+class statusBitsChecks(unittest.TestCase):
+	
+	"""Tests that status bits are handled properly"""
+	
+
+	#@+others
+	#@+node:1::testDirtyBits
+	#@+body
+	def testDirtyBits(self):
+		
+		"""Test that dirty bits are set, especially in anscestor nodes and cloned nodes"""
+		pass
+	
+	#@-body
+	#@-node:1::testDirtyBits
+	#@-others
+#@-body
+#@-node:5::class statusBitsChecks
+#@+node:6::class undoTests
+#@+body
+class undoTests(unittest.TestCase):
+	
+	"""test that undo works properly, especially when clones are involved"""
+	
+
+	#@+others
+	#@+node:1::testUndoMoveLeft
+	#@+body
+	def testUndoMoveLeft(self):
+		pass
+	
+	#@-body
+	#@-node:1::testUndoMoveLeft
+	#@+node:2::testRedoMoveLeft
+	#@+body
+	def testRedoMoveLeft(self):
+		pass
+	#@-body
+	#@-node:2::testRedoMoveLeft
+	#@-others
+#@-body
+#@-node:6::class undoTests
+#@-node:1::tests of leoNodes.py
+#@+node:2::class outlineConsistencyTests
+#@+body
+class LeoOutlineError(Exception):
+	pass
+
+class outlineConsistencyTests(unittest.TestCase):
+	
+	"""test the consistency of .leo files"""
+
+	pass # No tests yet.
+
+#@-body
+#@-node:2::class outlineConsistencyTests
+#@+node:3::functions
 #@+body
 #@+at
 #  These functions set up trees for testing and compare the result of a test 
 # with the expected result.
 
 #@-at
-#@@c
-
-
-#@+others
+#@-body
 #@+node:1::numberOfNodesInOutline, numberOfClonesInOutline
 #@+body
 def numberOfNodesInOutline (root):
@@ -113,225 +424,18 @@ def validateOutline (root):
 	pass
 #@-body
 #@-node:7::validateOutline
-#@-others
-#@-body
-#@-node:1::<< test functions >>
-
-
-# Create before/after snapshots of operations:  How?????
-
-class cloneCheck(unittest.TestCase):
-	"""test cloning and inserts and deletes involving clones"""
-	
-	#@<< clone test cases >>
-	#@+node:2::<< clone test cases >>
-	#@+body
-	#@+others
-	#@+node:1::testCone
-	#@+body
-	def testCone(self):
-		pass
-	
-	#@-body
-	#@-node:1::testCone
-	#@+node:2::testMoveIntoClone
-	#@+body
-	def testMoveIntoClone(self):
-		pass
-	
-	#@-body
-	#@-node:2::testMoveIntoClone
-	#@+node:3::testMoveOutOfClone
-	#@+body
-	def testMoveOutOfClone(self):
-		pass
-	
-	#@-body
-	#@-node:3::testMoveOutOfClone
-	#@+node:4::testInsertInsideClone
-	#@+body
-	def testInsertInsideClone(self):
-		pass
-	
-	#@-body
-	#@-node:4::testInsertInsideClone
-	#@+node:5::testDeleteInsideClone
-	#@+body
-	def testDeleteInsideClone(self):
-		pass
-	
-	#@-body
-	#@-node:5::testDeleteInsideClone
-	#@+node:6::testInsertInsideClone
-	#@+body
-	def testInsertInsideClone(self):
-		pass
-		
-	
-	#@-body
-	#@-node:6::testInsertInsideClone
-	#@+node:7::testDeleteInsideClone
-	#@+body
-	def testDeleteInsideClone(self):
-		pass
-	
-	#@-body
-	#@-node:7::testDeleteInsideClone
-	#@-others
-	
-	#@-body
-	#@-node:2::<< clone test cases >>
-
-
-class moveCheck(unittest.TestCase):
-	"""test that moves work properly, especially when clones are involved"""
-	
-	#@<< move test cases >>
-	#@+node:3::<< move test cases >>
-	#@+body
-	pass # no tests yet
-	#@-body
-	#@-node:3::<< move test cases >>
-
-	
-class undoCheck(unittest.TestCase):
-	"""test that undo works properly, especially when clones are involved"""
-	
-	#@<< undo test cases >>
-	#@+node:4::<< undo test cases >>
-	#@+body
-	#@+others
-	#@+node:1::testUndoMoveLeft
-	#@+body
-	def testUndoMoveLeft(self):
-		pass
-	
-	#@-body
-	#@-node:1::testUndoMoveLeft
-	#@+node:2::testRedoMoveLeft
-	#@+body
-	def testRedoMoveLeft(self):
-		pass
-	#@-body
-	#@-node:2::testRedoMoveLeft
-	#@-others
-	
-	#@-body
-	#@-node:4::<< undo test cases >>
-
-	
-class sanityCheck(unittest.TestCase):
-	"""Tests that links, joinLists and related getters are consistent"""
-	
-	#@<< sanity checks >>
-	#@+node:5::<< sanity checks >>
-	#@+body
-	#@+others
-	#@+node:1::testNextBackLinks
-	#@+body
-	def testNextBackLinks(self):
-		
-		"""Sanity checks for v.mNext and v.mBack"""
-		pass
-	
-	#@-body
-	#@-node:1::testNextBackLinks
-	#@+node:2::testParentChildLinks
-	#@+body
-	def testParentChildLinks(self):
-		
-		"""Sanity checks for v.mParent and v.mFirstChild"""
-		pass
-	
-	#@-body
-	#@-node:2::testParentChildLinks
-	#@+node:3::testJoinLists
-	#@+body
-	def testJoinLists(self):
-		
-		"""Sanity checks for join lists"""
-		pass
-	#@-body
-	#@-node:3::testJoinLists
-	#@+node:4::testThreadNextBack
-	#@+body
-	def testThreadNextBack(self):
-		
-		"""Sanity checks for v.threadNext() and v.threadBack()"""
-		pass
-	
-	#@-body
-	#@-node:4::testThreadNextBack
-	#@+node:5::testNextBack
-	#@+body
-	def testNextBack(self):
-		
-		"""Sanity checks for v.vext() and v.vack()"""
-		pass
-	
-	#@-body
-	#@-node:5::testNextBack
-	#@+node:6::testVisNextBack
-	#@+body
-	def testVisNextBack(self):
-		
-		"""Sanity checks for v.visNext() and v.visBack()"""
-		pass
-	
-	#@-body
-	#@-node:6::testVisNextBack
-	#@+node:7::testFirstChildParent
-	#@+body
-	def testFirstChildParent(self):
-		
-		"""Sanity checks for v.firstChild() and v.parent()"""
-		pass
-	
-	#@-body
-	#@-node:7::testFirstChildParent
-	#@-others
-	
-	#@-body
-	#@-node:5::<< sanity checks >>
-
-	
-class statusBitsCheck(unittest.TestCase):
-	"""Tests that status bits are handled properly"""
-	
-	#@<< status bits checks >>
-	#@+node:6::<< status bits checks >>
-	#@+body
-	#@+others
-	#@+node:1::testDirtyBits
-	#@+body
-	def testDirtyBits(self):
-		
-		"""Test that dirty bits are set, especially in anscestor nodes and cloned nodes"""
-		pass
-	
-	#@-body
-	#@-node:1::testDirtyBits
-	#@-others
-	
-	#@-body
-	#@-node:6::<< status bits checks >>
-
-
-#@-body
-#@-node:1::test outline operations
-#@+node:2::check consistency of Leo files
+#@-node:3::functions
+#@+node:4::Scripts for checking clones
 #@+body
-import unittest
-
-class LeoOutlineError(Exception): pass
-
-class outlineCheck(unittest.TestCase):
-	"""test the consistency of .leo files"""
-	pass
-
+if 0:
+	checkForMismatchedJoinedNodes()
+	
+	print createTopologyList(c=top(),root=top().currentVnode().parent(),useHeadlines=false)
+	
+	checkTopologiesOfLinkedNodes()
+	
+	checkForPossiblyBrokenLinks()
 #@-body
-#@-node:2::check consistency of Leo files
-#@+node:3::Scripts for checking clones
 #@+node:1::checkForMismatchedJoinedNodes
 #@+body
 def checkForMismatchedJoinedNodes (c=None):
@@ -415,19 +519,9 @@ def checkTopologiesOfLinkedNodes(c=None):
 #@-at
 #@-body
 #@-node:4::checkLinksOfNodesWithSameTopologies (to do)
-#@-node:3::Scripts for checking clones
+#@-node:4::Scripts for checking clones
+#@-node:3::Other stuff
 #@-others
-
-
-if 0:
-	checkForMismatchedJoinedNodes()
-	
-	print createTopologyList(c=top(),root=top().currentVnode().parent(),useHeadlines=false)
-	
-	checkTopologiesOfLinkedNodes()
-	
-	checkForPossiblyBrokenLinks()
-
 #@-body
 #@-node:0::@file leoTest.py
 #@-leo
