@@ -494,9 +494,12 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	def clearStatusLine (self):
 		
 		t = self.statusText
+		if not t: return
+		
 		t.configure(state="normal")
 		t.delete("1.0","end")
 		t.configure(state="disabled")
+	#@nonl
 	#@-node:clearStatusLine
 	#@+node:putStatusLine
 	def putStatusLine (self,s,color=None):
@@ -529,6 +532,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
 		gui = app.gui
+		if not lab: return
 		
 		# New for Python 2.3: may be called during shutdown.
 		if app.killed:
@@ -986,11 +990,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Cut"))
+		
+		frame = self ; c = frame.c ; v = c.currentVnode()
 	
-		if 0: # Make sure the event sticks.
-			frame = self ; c = frame.c ; v = c.currentVnode()
-			frame.body.forceFullRecolor()
-			frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+		if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+			frame.tree.onHeadChanged(v)
 	
 	
 	
@@ -1025,14 +1029,15 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		frame.body.onBodyWillChange(v,"Paste")
 		
 	def OnPasteFromMenu (self):
+		
+		frame = self ; c = frame.c ; v = c.currentVnode()
 	
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Paste"))
 		
-		if 0: # Make sure the event sticks.
-			frame = self ; c = frame.c ; v = c.currentVnode()
-			frame.body.forceFullRecolor()
-			frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+		if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+			frame.tree.onHeadChanged(v)
+	#@nonl
 	#@-node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+node:endEditLabelCommand
 	def endEditLabelCommand (self):
