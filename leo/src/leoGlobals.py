@@ -486,7 +486,7 @@ def scanDirectives(c,p=None):
 
 	if c == None or g.top() == None:
 		return {} # For unit tests.
-	if p == None:
+	if p is None:
 		p = c.currentPosition()
 
 	#@	<< Set local vars >>
