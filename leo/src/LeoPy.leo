@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4475" clone_windows="0"/>
-<globals body_outline_ratio="0.580357142857">
-	<global_window_position top="12" left="223" height="896" width="951"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4479" clone_windows="0"/>
+<globals body_outline_ratio="0.577008928571">
+	<global_window_position top="12" left="217" height="896" width="901"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -4527,10 +4527,7 @@
 <v t="ekr.20040310062332.5" a="M"><vh>p.unlink</vh></v>
 </v>
 <v t="ekr.20040303175026"><vh>p.Moving, Inserting, Deleting, Cloning, Sorting (position) </vh>
-<v t="ekr.20040303175026.2"><vh>p.doDelete</vh>
-<v t="ekr.20040409162703"><vh>&lt;&lt; Alter all _parent links of children of this node &gt;&gt;</vh></v>
-<v t="ekr.20040409162703.1"><vh>&lt;&lt; remove all deleted nodes from their vnodeList's &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20040303175026.2"><vh>p.doDelete</vh></v>
 <v t="ekr.20040303175026.3"><vh>p.insertAfter</vh></v>
 <v t="ekr.20040303175026.4"><vh>p.insertAsLastChild</vh></v>
 <v t="ekr.20040303175026.5"><vh>p.insertAsNthChild</vh></v>
@@ -5507,7 +5504,7 @@
 </v>
 <v t="ekr.20031218072017.3341"><vh>class vnode</vh>
 <v t="ekr.20031218072017.951"><vh>&lt;&lt; vnode constants &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3342"><vh>Birth &amp; death</vh>
+<v t="ekr.20031218072017.3342" a="E"><vh>Birth &amp; death</vh>
 <v t="ekr.20031218072017.3343"><vh>v.__cmp__ (not used)</vh></v>
 <v t="ekr.20031218072017.3344"><vh>v.__init__</vh>
 <v t="ekr.20031218072017.1968"><vh>&lt;&lt; initialize vnode data members &gt;&gt;</vh></v>
@@ -5684,10 +5681,7 @@
 </v>
 </v>
 <v t="ekr.20040303175026"><vh>p.Moving, Inserting, Deleting, Cloning, Sorting (position) </vh>
-<v t="ekr.20040303175026.2"><vh>p.doDelete</vh>
-<v t="ekr.20040409162703"><vh>&lt;&lt; Alter all _parent links of children of this node &gt;&gt;</vh></v>
-<v t="ekr.20040409162703.1"><vh>&lt;&lt; remove all deleted nodes from their vnodeList's &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20040303175026.2"><vh>p.doDelete</vh></v>
 <v t="ekr.20040303175026.3"><vh>p.insertAfter</vh></v>
 <v t="ekr.20040303175026.4"><vh>p.insertAsLastChild</vh></v>
 <v t="ekr.20040303175026.5"><vh>p.insertAsNthChild</vh></v>
@@ -5723,6 +5717,11 @@
 <v t="ekr.20040117171654"><vh>p.copy</vh></v>
 <v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
 <v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040409203454"><vh>p.restoreLinksInTree/Suibtree</vh></v>
+<v t="ekr.20040409203454.1" a="E"><vh>p.deleteLinksInTree &amp; allies</vh>
+<v t="ekr.20040410170806"><vh>p.deleteLinksInSubtree</vh></v>
+<v t="ekr.20040410170806.1"><vh>p.adjustParentLinksInSubtree</vh></v>
 </v>
 </v>
 <v t="ekr.20040310062332"><vh>p.Link/Unlink methods</vh>
@@ -6044,7 +6043,7 @@
 <v t="ekr.20040327103735"><vh>Email to Fred Drake re 4.1 final</vh></v>
 <v t="ekr.20040323195916.1"><vh>Tests</vh></v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -8682,7 +8681,7 @@
 <v t="ekr.20031218072017.3105"><vh>alert</vh></v>
 <v t="ekr.20031218072017.3106"><vh>angleBrackets &amp; virtual_event_name</vh></v>
 <v t="ekr.20031218072017.3107"><vh>callerName</vh></v>
-<v t="ekr.20031218072017.3108"><vh>Dumps</vh>
+<v t="ekr.20031218072017.3108" a="E"><vh>Dumps</vh>
 <v t="ekr.20031218072017.3109"><vh>dump</vh></v>
 <v t="ekr.20031218072017.3110"><vh>es_error</vh></v>
 <v t="ekr.20031218072017.3111"><vh>es_event_exception</vh></v>
@@ -8848,7 +8847,7 @@
 <v t="ekr.20031218072017.3205"><vh>skip_leading_ws_with_indent</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20040312145256,ekr.20040328055931,ekr.20031218072017.3347,ekr.20031218072017.3350,ekr.20031218072017.3348,ekr.20040326031436,ekr.20040325073709,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20040306214240,ekr.20031218072017.3406,ekr.20031218072017.3409,ekr.20040303212445,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20040307085922,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3366,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20040323100443,ekr.20040301071824,ekr.20031218072017.3419,ekr.20031218072017.3421,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.3422,ekr.20031218072017.3438,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20031218072017.3397,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3385,ekr.20040315032144,ekr.20031218072017.3402,ekr.20040315042106,ekr.20031218072017.3404,ekr.20031218072017.3358,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20031218072017.890,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040325142015,ekr.20040117170612,ekr.20040117173448,ekr.20040301205720,ekr.20040310153624,ekr.20040306211032,ekr.20040306212151,ekr.20040306220230,ekr.20040306214401,ekr.20040306220230.1,ekr.20040323160302,ekr.20040326064330,ekr.20040306214240.3,ekr.20040306212636.1,ekr.20040307104131.3,ekr.20040306215548,ekr.20031218072017.915,ekr.20040227212621,ekr.20040227224946,ekr.20040307104131.1,ekr.20040306215056,ekr.20040307104131.2,ekr.20040117162509.16,ekr.20031218072017.4146,ekr.20040227214711,ekr.20040306220634.9,ekr.20040306220634.8,ekr.20040306220634.29,ekr.20040306220634.31,ekr.20040315034158,ekr.20040315032503,ekr.20040305223522,ekr.20040305222924.1,ekr.20040305223225,ekr.20040315031445,ekr.20040312015705,ekr.20040306220634.17,ekr.20031218072017.3388,ekr.20040311113514,ekr.20040303163717,ekr.20040318125934,ekr.20040303214038,ekr.20040303163330,ekr.20040315023430,ekr.20040315023430.1,ekr.20040315023430.2,ekr.20040315023430.3,ekr.20040305162628.1,ekr.20040305171133,ekr.20040305171133.1,ekr.20040305171133.3,ekr.20040305173559,ekr.20040305173559.1,ekr.20040305173559.2,ekr.20040305172211.1,ekr.20040305172211.2,ekr.20040305172211.3,ekr.20040305172855,ekr.20040305172855.1,ekr.20040305172855.2,ekr.20040305173343,ekr.20040305173343.1,ekr.20040305173343.2,ekr.20040303175026.2,ekr.20040409162703,ekr.20040409162703.1,ekr.20040303175026.3,ekr.20040303175026.4,ekr.20040303175026.5,ekr.20040303175026.6,ekr.20040303175026.8,ekr.20040303175026.9,ekr.20040303175026.10,ekr.20040306060312,ekr.20040303175026.11,ekr.20040303175026.12,ekr.20040303175026.13,ekr.20040303175026.14,ekr.20040303175026.15,ekr.20040303175026.16,ekr.20040303175026.18,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941,ekr.20040117171654,ekr.20040228060340,ekr.20040228060340.1,ekr.20040310062332,ekr.20040310062332.1,ekr.20040310062332.2,ekr.20040310062332.3,ekr.20040310062332.4,ekr.20040310062332.5"><vh>@file leoNodes.py</vh>
+<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20040312145256,ekr.20040328055931,ekr.20031218072017.3347,ekr.20031218072017.3350,ekr.20031218072017.3348,ekr.20040326031436,ekr.20040325073709,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20040306214240,ekr.20031218072017.3406,ekr.20031218072017.3409,ekr.20040303212445,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20040307085922,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3366,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20040323100443,ekr.20040301071824,ekr.20031218072017.3419,ekr.20031218072017.3421,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.3422,ekr.20031218072017.3438,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20031218072017.3397,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3385,ekr.20040315032144,ekr.20031218072017.3402,ekr.20040315042106,ekr.20031218072017.3404,ekr.20031218072017.3358,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20031218072017.890,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040325142015,ekr.20040117170612,ekr.20040117173448,ekr.20040301205720,ekr.20040310153624,ekr.20040306211032,ekr.20040306212151,ekr.20040306220230,ekr.20040306214401,ekr.20040306220230.1,ekr.20040323160302,ekr.20040326064330,ekr.20040306214240.3,ekr.20040306212636.1,ekr.20040307104131.3,ekr.20040306215548,ekr.20031218072017.915,ekr.20040227212621,ekr.20040227224946,ekr.20040307104131.1,ekr.20040306215056,ekr.20040307104131.2,ekr.20040117162509.16,ekr.20031218072017.4146,ekr.20040227214711,ekr.20040306220634.9,ekr.20040306220634.8,ekr.20040306220634.29,ekr.20040306220634.31,ekr.20040315034158,ekr.20040315032503,ekr.20040305223522,ekr.20040305222924.1,ekr.20040305223225,ekr.20040315031445,ekr.20040312015705,ekr.20040306220634.17,ekr.20031218072017.3388,ekr.20040311113514,ekr.20040303163717,ekr.20040318125934,ekr.20040303214038,ekr.20040303163330,ekr.20040315023430,ekr.20040315023430.1,ekr.20040315023430.2,ekr.20040315023430.3,ekr.20040305162628.1,ekr.20040305171133,ekr.20040305171133.1,ekr.20040305171133.3,ekr.20040305173559,ekr.20040305173559.1,ekr.20040305173559.2,ekr.20040305172211.1,ekr.20040305172211.2,ekr.20040305172211.3,ekr.20040305172855,ekr.20040305172855.1,ekr.20040305172855.2,ekr.20040305173343,ekr.20040305173343.1,ekr.20040305173343.2,ekr.20040303175026.2,ekr.20040303175026.3,ekr.20040303175026.4,ekr.20040303175026.5,ekr.20040303175026.6,ekr.20040303175026.8,ekr.20040303175026.9,ekr.20040303175026.10,ekr.20040306060312,ekr.20040303175026.11,ekr.20040303175026.12,ekr.20040303175026.13,ekr.20040303175026.14,ekr.20040303175026.15,ekr.20040303175026.16,ekr.20040303175026.18,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941,ekr.20040117171654,ekr.20040228060340,ekr.20040228060340.1,ekr.20040409203454,ekr.20040409203454.1,ekr.20040410170806,ekr.20040410170806.1,ekr.20040310062332,ekr.20040310062332.1,ekr.20040310062332.2,ekr.20040310062332.3,ekr.20040310062332.4,ekr.20040310062332.5"><vh>@file leoNodes.py</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2412"><vh>&lt;&lt; About the vnode and tnode classes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3321"><vh>class tnode</vh>
@@ -8883,7 +8882,7 @@
 </v>
 <v t="ekr.20031218072017.3341"><vh>class vnode</vh>
 <v t="ekr.20031218072017.951"><vh>&lt;&lt; vnode constants &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3342"><vh>Birth &amp; death</vh>
+<v t="ekr.20031218072017.3342" a="E"><vh>Birth &amp; death</vh>
 <v t="ekr.20031218072017.3343"><vh>v.__cmp__ (not used)</vh></v>
 <v t="ekr.20031218072017.3344"><vh>v.__init__</vh>
 <v t="ekr.20031218072017.1968"><vh>&lt;&lt; initialize vnode data members &gt;&gt;</vh></v>
@@ -9070,10 +9069,7 @@
 </v>
 </v>
 <v t="ekr.20040303175026"><vh>p.Moving, Inserting, Deleting, Cloning, Sorting (position) </vh>
-<v t="ekr.20040303175026.2"><vh>p.doDelete</vh>
-<v t="ekr.20040409162703"><vh>&lt;&lt; Alter all _parent links of children of this node &gt;&gt;</vh></v>
-<v t="ekr.20040409162703.1"><vh>&lt;&lt; remove all deleted nodes from their vnodeList's &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20040303175026.2"><vh>p.doDelete</vh></v>
 <v t="ekr.20040303175026.3"><vh>p.insertAfter</vh></v>
 <v t="ekr.20040303175026.4"><vh>p.insertAsLastChild</vh></v>
 <v t="ekr.20040303175026.5"><vh>p.insertAsNthChild</vh></v>
@@ -9109,6 +9105,11 @@
 <v t="ekr.20040117171654"><vh>p.copy</vh></v>
 <v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
 <v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040409203454"><vh>p.restoreLinksInTree/Suibtree</vh></v>
+<v t="ekr.20040409203454.1" a="E"><vh>p.deleteLinksInTree &amp; allies</vh>
+<v t="ekr.20040410170806"><vh>p.deleteLinksInSubtree</vh></v>
+<v t="ekr.20040410170806.1"><vh>p.adjustParentLinksInSubtree</vh></v>
 </v>
 </v>
 <v t="ekr.20040310062332"><vh>p.Link/Unlink methods</vh>
@@ -9328,7 +9329,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040408041921"><vh>Notes re new @file code</vh></v>
 <v t="ekr.20040409083211" a="E"><vh>(Fixed problems deleting cloned nodes &amp; trees)</vh>
 <v t="ekr.20040409083211.1"><vh>tracebacks</vh></v>
 <v t="ekr.20040409160021"><vh>Notes</vh></v>
@@ -9342,8 +9342,8 @@
 <v t="ekr.20031218072017.1866"><vh>&lt;&lt; Write the head text &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.1193"><vh>c.deleteOutline</vh></v>
-<v t="ekr.20031218072017.2072" a="E"><vh>c.checkOutline</vh>
-<v t="ekr.20040314062338" a="TV"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
+<v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
 <v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
 <v t="ekr.20040323155951"><vh>&lt;&lt; do full tests &gt;&gt;</vh>
 <v t="ekr.20040314035615"><vh>assert consistency of threadNext &amp; threadBack links</vh></v>
@@ -9358,7 +9358,8 @@
 <v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20040409130322.2" a="E"><vh>position methods ...</vh>
+<v t="ekr.20040312145256"><vh>v.dump</vh></v>
+<v t="ekr.20040409130322.2"><vh>position methods ...</vh>
 <v t="ekr.20040310062332"><vh>p.Link/Unlink methods</vh>
 <v t="ekr.20040310062332.1"><vh>p.invalidOutline</vh></v>
 <v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
@@ -9366,14 +9367,22 @@
 <v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
 <v t="ekr.20040310062332.5" a="M"><vh>p.unlink</vh></v>
 </v>
-<v t="ekr.20040303175026.2" a="M"><vh>p.doDelete</vh>
-<v t="ekr.20040409162703"><vh>&lt;&lt; Alter all _parent links of children of this node &gt;&gt;</vh></v>
-<v t="ekr.20040409162703.1"><vh>&lt;&lt; remove all deleted nodes from their vnodeList's &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20040303175026.2" a="M"><vh>p.doDelete</vh></v>
 <v t="ekr.20031218072017.4146"><vh>p.lastVisible &amp; oldLastVisible</vh></v>
 <v t="ekr.20040310153624"><vh>p.dump</vh></v>
+<v t="ekr.20040228094013.1" a="E"><vh>p.utils...</vh>
+<v t="ekr.20040117171654"><vh>p.copy</vh></v>
+<v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
+<v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040409163052"><vh>Undo</vh>
+<v t="ekr.20040409203454"><vh>p.restoreLinksInTree/Suibtree</vh></v>
+<v t="ekr.20040409203454.1" a="E"><vh>p.deleteLinksInTree &amp; allies</vh>
+<v t="ekr.20040410170806"><vh>p.deleteLinksInSubtree</vh></v>
+<v t="ekr.20040410170806.1"><vh>p.adjustParentLinksInSubtree</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040409163052" a="E"><vh>Undo</vh>
 <v t="ekr.20031218072017.2034"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2041"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
 </v>
@@ -31378,7 +31387,7 @@ def hoist(self):
 	else:
 		u.p.linkAsRoot()
 
-	c.selectVnode(p)</t>
+	c.selectVnode(u.p)</t>
 <t tx="ekr.20031218072017.2032">elif redoType == "Delete Node" or redoType == "Cut Node":
 
 	c.selectVnode(u.p)
@@ -31404,10 +31413,7 @@ elif redoType == "De-Hoist":
 		u.p.linkAsRoot()
 		
 	# Restore all vnodeLists (and thus all clone marks).
-	for p2 in u.p.self_and_subtree_iter():
-		vnodeList = p2.v.t.vnodeList
-		if p2.v not in vnodeList:
-			vnodeList.append(p2.v)
+	u.p.restoreLinksInTree()
 
 	c.selectVnode(u.p)</t>
 <t tx="ekr.20031218072017.2035">elif redoType in ["Drag","Move Down","Move Left","Move Right","Move Up"]:
@@ -31564,10 +31570,7 @@ elif undoType == "Delete Node" or undoType == "Cut Node":
 		u.p.linkAsRoot()
 		
 	# Restore all vnodeLists (and thus all clone marks).
-	for p2 in u.p.self_and_subtree_iter():
-		vnodeList = p2.v.t.vnodeList
-		if p2.v not in vnodeList:
-			vnodeList.append(p2.v)
+	u.p.restoreLinksInTree()
 
 	c.selectVnode(u.p)</t>
 <t tx="ekr.20031218072017.2042">elif undoType == "Hoist":
@@ -32026,6 +32029,12 @@ can it?
 	c = self ; count = 1 ; errors = 0 ; full = true
 	if full and not unittest:
 		g.es("all tests enabled: this may take awhile",color="blue")
+		
+	if not unittest:
+		if 0: # Dump all nodes in the outline.
+			p = c.rootPosition()
+			for p in p.allNodes_iter():
+				p.dump()
 
 	try:
 		p = c.rootPosition()
@@ -59607,30 +59616,31 @@ Therefore, the Commands class never needs to worry about extra calls to tree.red
 
 2.  The tree.redraw() method deletes all old canvas items and recomputes all data, including v.iconVal.  This means that v.doDelete need not actually delete vnodes for them to disappear from the screen.  Indeed, vnode are never actually deleted, only unlinked.  It would be valid for "dependent" vnodes to be deleted, but there really is no need to do so.
 </t>
-<t tx="ekr.20031218072017.4146"># Returns the last visible node of the screen.
-
-def oldLastVisible(self):
-	p = self
-	p = p.c.rootPosition()
+<t tx="ekr.20031218072017.4146">def oldLastVisible(self):
+	"""Move to the last visible node of the entire tree."""
+	p = self.c.rootPosition()
 	assert(p.isVisible())
 	last = p.copy()
 	while 1:
+		if g.app.debug: g.trace(last)
 		p.moveToVisNext()
 		if not p: return last
 		last = p.copy()
 		
 def lastVisible(self):
 	"""Move to the last visible node of the entire tree."""
-	p = self
-	p = p.c.rootPosition()
+	p = self.c.rootPosition()
 	# Move to the last top-level node.
 	while p.hasNext():
+		if g.app.debug: g.trace(p)
 		p.moveToNext()
 	assert(p.isVisible())
 	# Move to the last visible child.
 	while p.hasChildren() and p.isExpanded():
+		if g.app.debug: g.trace(p)
 		p.moveToLastChild()
 	assert(p.isVisible())
+	if g.app.debug: g.trace(p)
 	return p</t>
 <t tx="ekr.20031218072017.4147">def getIconImage (self, name):
 
@@ -63189,7 +63199,7 @@ def canHoist(self):
 
 def doDelete (self,newPosition):
 
-	"""Unlinks p.v from the outline.  May be undone.
+	"""Deletes position p from the outline.  May be undone.
 
 	Returns newPosition."""
 
@@ -63198,18 +63208,11 @@ def doDelete (self,newPosition):
 	assert(newPosition != p)
 	p.setDirty() # Mark @file nodes dirty!
 	p.unlink()
-	
-	
-	# 4/8/02: Alter all _parent links in children of this node.
-	# This needs to be done only when deleting a node.
-	vnodeList = p.v.t.vnodeList
-	if vnodeList:
-		&lt;&lt; Alter all _parent links of children of this node &gt;&gt;
-	&lt;&lt; remove all deleted nodes from their vnodeList's &gt;&gt;
-
+	p.deleteLinksInTree()
 	c.selectVnode(newPosition)
 	
 	return newPosition
+
 </t>
 <t tx="ekr.20040303175026.3">def insertAfter (self,t=None):
 
@@ -64542,6 +64545,9 @@ def dump (self,label=""):
 
 	if label:
 		print '-'*10,label,v
+	else:
+		print "self    ",v.dumpLink(v)
+		print "len(vnodeList)",len(v.t.vnodeList)
 	print "_back   ",v.dumpLink(v._back)
 	print "_next   ",v.dumpLink(v._next)
 	print "_parent ",v.dumpLink(v._parent)
@@ -64639,16 +64645,20 @@ elif verbose:
 	print s
 	g.es(s,color="red")</t>
 <t tx="ekr.20040314061426"></t>
-<t tx="ekr.20040314062338">p1 = p.oldLastVisible()
-p2 = p.lastVisible()
+<t tx="ekr.20040314062338">if 0:
+	g.app.debug = true
 
-if p1 != p2:
-	print "oldLastVisible",p1
-	print "   lastVisible",p2
-
-assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
-assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
-</t>
+	p1 = p.oldLastVisible()
+	p2 = p.lastVisible()
+	
+	if p1 != p2:
+		print "oldLastVisible",p1
+		print "   lastVisible",p2
+	
+	assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
+	assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
+	
+	g.app.debug = false</t>
 <t tx="ekr.20040314074041"></t>
 <t tx="ekr.20040314092716">if nextToLast: # 2/2/03: compute approximate line height.
 	lineHeight = h2 - self.yoffset(nextToLast)
@@ -66681,28 +66691,6 @@ The solution is for the execute script command always to redraw the screen.</t>
 <t tx="ekr.20040403121321">@nocolor
 
 These did not harm the actual data.</t>
-<t tx="ekr.20040408041921">@nocolor
-
-- @file-thin can't have any essential info in .leo file.
-	- order info _might_ be in .leo file, but user should not rely on it.
-	- good style: don't rely on order of nodes in @file-thin trees.
-	- order resolution algorithm:
-		- list of named sections. (order unknown)
-		- list of @others (unnamed) sections.  (order known)
-		- place named sections in _assumed_ or _recreated. order
-		- place unnamed sections in known order.
-
-- Allow @unit to affect @file trees.
-	- Creates 2-pass write algorithm.
-		- Definitions may appear anywhere in @unit tree.
-		- Must write sentinels "all the way up".
-		- The user is responsible for keeping all files in @unit tree in synch.
-			*** This may not be possible in a cvs environment.
-			*** That is the _user's_ problem, not Leo's.
-	- Do _not_ allow &lt;&lt;x&gt;&gt;= definitions: all definitions must follow @file style.
-
-- Deprecate @root trees.
-	- Create script to convert @root to new-style @file.</t>
 <t tx="ekr.20040408042209"></t>
 <t tx="ekr.20040409074345">@nocolor
 
@@ -66829,21 +66817,67 @@ Rather than mess with unlink, I put the new code in p.doDelete.
 While I was at it, I improved the p.dump method.
 
 By luck I realized that unlinking a tree leaves most vnodeLists unchanged.  They must be cleared by doDelete and restored in the corresponding undo/redo methods.</t>
-<t tx="ekr.20040409162703">assert(p.v not in vnodeList)
-parent = vnodeList[0]
-child = p.v.t._firstChild
-while child:
-	if child._parent == p.v:
-		child._parent = parent
-	child = child._next</t>
-<t tx="ekr.20040409162703.1">for p2 in p.self_and_subtree_iter():
-	vnodeList = p2.v.t.vnodeList
-	if p2.v in vnodeList:
-		g.trace("removing",p2.v)
-		vnodeList.remove(p2.v)
-		assert(p2.v not in vnodeList)</t>
 <t tx="ekr.20040409163052"></t>
 <t tx="ekr.20040409164648"></t>
 <t tx="ekr.20040409164648.1"></t>
+<t tx="ekr.20040409203454">def restoreLinksInTree (self):
+
+	"""Restore and otherwise adjust links when undoing a delete node operation."""
+	
+	root = p = self
+
+	if p.v not in p.v.t.vnodeList:
+		p.v.t.vnodeList.append(p.v)
+		
+	for p in root.children_iter():
+		p.restoreLinksInSubtree()
+		
+def restoreLinksInSubtree (self):
+	
+	p = self
+
+	if p.v not in p.v.t.vnodeList:
+		p.v.t.vnodeList.append(p.v)</t>
+<t tx="ekr.20040409203454.1">def deleteLinksInTree (self):
+	
+	"""Delete and otherwise adjust links when deleting node."""
+	
+	root = self
+	
+	# The root has been unlinked.
+	assert(root.v not in root.v.t.vnodeList)
+	
+	for p in root.children_iter():
+		p.deleteLinksInSubtree()
+		
+	for p in root.children_iter():
+		p.adjustParentLinksInSubtree(parent=root)</t>
+<t tx="ekr.20040410170806">def deleteLinksInSubtree (self):
+
+	root = p = self
+
+	# Delete p.v from the vnodeList
+	if p.v in p.v.t.vnodeList:
+		p.v.t.vnodeList.remove(p.v)
+		assert(p.v not in p.v.t.vnodeList)
+
+	if len(p.v.t.vnodeList) &gt; 0:
+		# This node is shared by other nodes. Don't delete anything more.
+		# g.trace("stopping deletes at",p)
+		return
+	else:
+		for p in root.children_iter():
+			p.deleteLinksInSubtree()</t>
+<t tx="ekr.20040410170806.1">def adjustParentLinksInSubtree (self,parent):
+	
+	root = p = self
+	
+	assert(parent)
+	
+	if p.v._parent and parent.v.t.vnodeList and p.v._parent not in parent.v.t.vnodeList:
+		p.v._parent = parent.v.t.vnodeList[0]
+		
+	for p in root.children_iter():
+		p.adjustParentLinksInSubtree(parent=root)</t>
 </tnodes>
 </leo_file>
