@@ -2635,10 +2635,15 @@ class atFile:
 							traceback.print_exc()
 						es("unchanged: " + self.shortFileName)
 					else:
+						try: # 10/3/02: retain the access mode of the previous file.
+							mode = os.access(self.targetFileName)
+						except:  # does not exist on all platforms.
+							mode = None
 						try: # Replace target file with temp file.
 							os.remove(self.targetFileName)
-							# os.rename(self.outputFileName, self.targetFileName)
 							utils_rename(self.outputFileName, self.targetFileName)
+							if mode: # 10/3/02: retain the access mode of the previous file.
+								os.chmod(self.targetFileName,mode)
 							es("writing: " + self.shortFileName)
 						except:
 							self.writeError("exception removing and renaming:" + self.outputFileName +

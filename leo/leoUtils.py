@@ -1575,10 +1575,15 @@ def update_file_if_changed(file_name,temp_name):
 			except: pass
 			es("unchanged: " + file_name)
 		else:
+			try: # 10/3/02: retain the access mode of the previous file.
+				mode = os.access(file_name) # does not exist on all platforms.
+			except:
+				mode = None
 			try: # Replace file with temp file.
 				os.remove(file_name)
-				# os.rename(temp_name, file_name)
 				utils_rename(temp_name, file_name)
+				if mode: # 10/3/02: retain the access mode of the previous file.
+					os.chmod(file_name,mode)
 				es("***updating: " + file_name)
 			except:
 				es("Rename failed: no file created!")

@@ -1537,7 +1537,6 @@ class tangleCommands:
 				#@<< Erase the temporary file >>
 				#@+node:4::<< Erase the temporary file >>
 				#@+body
-
 				try: # Just delete the temp file.
 					os.remove(temp_name)
 				except: pass
