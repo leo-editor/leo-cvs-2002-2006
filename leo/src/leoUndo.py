@@ -757,7 +757,7 @@ class baseUndoer:
                 func()
                 if u.updateSetChangedFlag:
                     c.setChanged(True)
-                    if u.p: u.p.setDirty()
+                    if u.p: u.p.setDirty(setDescendentsDirty=False)
         c.endUpdate(u.redrawFlag)
     
         u.redoing = False
@@ -993,7 +993,7 @@ class baseUndoer:
                 func()
                 if u.updateSetChangedFlag:
                     c.setChanged(True)
-                    if u.p: u.p.setDirty()
+                    if u.p: u.p.setDirty(setDescendentsDirty=False)
         c.endUpdate(u.redrawFlag)
     
         u.undoing = False
