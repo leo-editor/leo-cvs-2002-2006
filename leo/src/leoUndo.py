@@ -1048,7 +1048,7 @@ class baseUndoer:
 	# 	< < make arbitrary changes to v's tree > >
 	# 	c.undoer.setUndoParams("Op Name",v,select=current,oldTree=v_copy)
 	# 
-	# This way is far more elegant than calling v.destroyDependents and v.createDependents.
+	# This way is more elegant than calling v.destroyDependents and v.createDependents.
 	# Yes, entire trees are copied, but in the most general case that is necessary.
 
 	#@-at
