@@ -1839,16 +1839,19 @@ class baseFileCommands:
     #@nonl
     #@-node:EKR.20040526202501:putUnknownAttributes
     #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-    def putVnode (self,p):
+    def putVnode (self,p,ignored):
     
         """Write a <v> element corresponding to a vnode."""
     
         fc = self ; c = fc.c ; v = p.v
         isThin = p.isAtThinFileNode()
         isIgnore = False
-        for p2 in p.self_and_parents_iter():
-            if p2.isAtIgnoreNode():
-                isIgnore = True ; break
+        if 1: # New in 4.2 b3: use ignored argument to compute this without leaking positions.
+            ignored = ignored or p.isAtIgnoreNode()
+        else:
+            for p2 in p.self_and_parents_iter():
+                if p2.isAtIgnoreNode():
+                    isIgnore = True ; break
         isOrphan = p.isOrphan()
         forceWrite = isIgnore or not isThin or (isThin and isOrphan)
     
@@ -1956,7 +1959,7 @@ class baseFileCommands:
                 # This optimization eliminates all "recursive" copies.
                 p.moveToFirstChild()
                 while 1:
-                    fc.putVnode(p)
+                    fc.putVnode(p,ignored)
                     if p.hasNext(): p.moveToNext()
                     else:           break
                 p.moveToParent()
@@ -1979,10 +1982,10 @@ class baseFileCommands:
         self.topPosition     = c.topPosition()
     
         if self.usingClipboard:
-            self.putVnode(self.currentPosition) # Write only current tree.
+            self.putVnode(self.currentPosition,ignored=False) # Write only current tree.
         else:
             for p in c.rootPosition().self_and_siblings_iter():
-                self.putVnode(p) # Write the next top-level node.
+                self.putVnode(p,ignored=False) # Write the next top-level node.
     
         self.put("</vnodes>") ; self.put_nl()
     #@nonl
