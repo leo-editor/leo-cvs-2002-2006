@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="54" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="57" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="79" left="314" height="75" width="127"/>
+	<global_window_position top="36" left="344" height="75" width="97"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -97,10 +97,11 @@
 <v t="T52"><vh>Test askYesNo</vh></v>
 <v t="T53"><vh>Test askYesNoCancel</vh></v>
 </v>
-<v a="E"><vh>Expand/Contract Tests</vh>
-<v a="V"><vh>a</vh></v>
+<v t="T54" a="E"><vh>Expand/Contract Tests</vh>
+<v t="T55"><vh>a</vh></v>
 </v>
-<v t="T54"><vh>v.edit_text() tests</vh></v>
+<v t="T56"><vh>v.edit_text() tests</vh></v>
+<v t="T57" a="V"><vh>alloc tests</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1"></t>
@@ -471,6 +472,48 @@ if 1: # passed
 		yesMessage = "Outline",
 		noMessage = "File",
 		defaultButton = "Cancel").run(modal=1)</t>
-<t tx="T54">Test of something.</t>
+<t tx="T54"></t>
+<t tx="T55"></t>
+<t tx="T56">Test of something.</t>
+<t tx="T57">import gc,Tkinter
+
+# gc.set_debug(gc.DEBUG_STATS)
+
+lastObjectCount = 0
+
+def printGarbage(s):
+	global lastObjectCount
+	n  = len(gc.garbage)
+	n2 = len(gc.get_objects())
+	fmt = "%8s garbage: %d, objects:%+6d =%6d"
+	print fmt % (s,n,n2-lastObjectCount,n2)
+	lastObjectCount = n2
+
+gc.collect()
+printGarbage("start 1")
+# Create a canvas widget for experimentation.
+top = Tkinter.Tk()
+frame = Tkinter.Frame(top) ; frame.pack()
+canvas = Tkinter.Canvas(frame) ; canvas.pack()
+# Allocate and (try to) deallocate widgets in the canvas.
+x,y = 10,10
+printGarbage("start 2")
+for i in xrange(5):
+	t = Tkinter.Text(canvas)
+	canvas.create_window(x,y,window=t)
+	y += 40
+	printGarbage(" loop 1")
+	t.destroy()
+	canvas.delete("all")
+	gc.collect() # Nuts...
+	printGarbage(" loop 2")
+# See when objects are really freed.
+top.destroy()
+printGarbage("end 1") # Huh ???
+gc.collect()
+printGarbage("end 2")
+top = frame = canvas = None
+gc.collect()
+printGarbage("end 3")</t>
 </tnodes>
 </leo_file>

@@ -3,6 +3,7 @@
 #@+body
 #@@language python
 
+import leoDialog
 from leoGlobals import *
 import string,Tkinter
 

@@ -11,7 +11,7 @@
 #  The find and change commands are tricky; there are many details that must 
 # be handled properly. This documentation describes the leo.py code. Previous 
 # versions of Leo used an inferior scheme.  The following principles govern 
-# the LeoFind class:
+# the leoFind class:
 # 
 # 1.	Find and Change commands initialize themselves using only the state of 
 # the present Leo window. In particular, the Find class must not save internal 
@@ -57,16 +57,72 @@
 
 
 from leoGlobals import *
-import sys,Tkinter,types
+import leoDialog
+import string,sys,Tkinter,types
+Tk=Tkinter
 
-class LeoFind:
+
+#@+others
+#@+node:2::class leoFindBase
+#@+body
+class leoFindBase (leoDialog.leoDialog):
+	
 
 	#@+others
-	#@+node:2::find.__init__ (creates find panel)
+	#@+node:1::findBase.__init__
+	#@+body
+	def __init__(self,title,resizeable=false):
+	
+		leoDialog.leoDialog.__init__(self,title,resizeable)
+		self.createTopFrame()
+		self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
+	#@-body
+	#@-node:1::findBase.__init__
+	#@+node:2::onCloseWindow
+	#@+body
+	def onCloseWindow(self):
+	
+		self.top.withdraw()
+	#@-body
+	#@-node:2::onCloseWindow
+	#@+node:3::resetWrap
+	#@+body
+	def resetWrap (self,event=None):
+	
+		self.wrapVnode = None
+		self.onlyVnode = None
+	#@-body
+	#@-node:3::resetWrap
+	#@+node:4::OnReturnKey (no longer used)
+	#@+body
+	def OnReturnKey (self,event):
+		
+		# Remove the newly inserted newline from the search & change strings.
+		for text in (self.find_text,self.change_text):
+			ch = text.get("insert - 1c")
+			if ch in ('\r','\n'):
+				text.delete("insert - 1c")
+	
+		# Do the default command.
+		self.findNextCommand(top())
+		return "break"
+	#@-body
+	#@-node:4::OnReturnKey (no longer used)
+	#@-others
+#@-body
+#@-node:2::class leoFindBase
+#@+node:3::class leoFind
+#@+body
+class leoFind (leoFindBase):
+	
+
+	#@+others
+	#@+node:1::find.__init__ (creates find panel)
 	#@+body
 	def __init__(self):
+		
+		leoFindBase.__init__(self,"Leo Find/Change",resizeable=false)
 	
-		Tk=Tkinter
 		
 		#@<< Initialize the leoFind ivars >>
 		#@+node:1::<< Initialize the leoFind ivars >>
@@ -115,17 +171,21 @@ class LeoFind:
 		#@-body
 		#@-node:1::<< Initialize the leoFind ivars >>
 
-		self.top = top = Tk.Toplevel()
-		top.title("Leo Find/Change")
-		top.resizable(0,0) # neither height or width is resizable.
-		# self.top.SetIcon("LeoIcon")
-	
+		
+		self.createFrame()
+	#@-body
+	#@-node:1::find.__init__ (creates find panel)
+	#@+node:2::find.createFrame
+	#@+body
+	def createFrame (self):
+		
 		# Create the find panel...
-		outer = Tk.Frame(top,relief="groove",bd=2)
+		outer = Tk.Frame(self.frame,relief="groove",bd=2)
 		outer.pack(padx=2,pady=2)
+	
 		
 		#@<< Create the Find and Change panes >>
-		#@+node:2::<< Create the Find and Change panes >>
+		#@+node:1::<< Create the Find and Change panes >>
 		#@+body
 		fc = Tk.Frame(outer, bd="1m")
 		fc.pack(anchor="n", fill="x", expand=1)
@@ -158,11 +218,11 @@ class LeoFind:
 		ctxt.pack(side="right", expand=1, fill="both")
 		ftxt.pack(side="right", expand=1, fill="both")
 		#@-body
-		#@-node:2::<< Create the Find and Change panes >>
+		#@-node:1::<< Create the Find and Change panes >>
 
 		
 		#@<< Create four columns of radio and checkboxes >>
-		#@+node:3::<< Create four columns of radio and checkboxes >>
+		#@+node:2::<< Create four columns of radio and checkboxes >>
 		#@+body
 		columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
 		columnsFrame.pack(anchor="e",expand=1,padx="7m",pady="2m") # Don't fill.
@@ -212,11 +272,11 @@ class LeoFind:
 				box.bind("<1>", self.resetWrap)
 				if var == None: box.configure(state="disabled")
 		#@-body
-		#@-node:3::<< Create four columns of radio and checkboxes >>
+		#@-node:2::<< Create four columns of radio and checkboxes >>
 
 		
 		#@<< Create two rows of buttons >>
-		#@+node:4::<< Create two rows of buttons >>
+		#@+node:3::<< Create two rows of buttons >>
 		#@+body
 		# Create the button panes
 		buttons  = Tk.Frame(outer,bd=1)
@@ -242,21 +302,16 @@ class LeoFind:
 		changeFindButton.pack(pady="1m",          side="left",expand=1)
 		changeAllButton.pack (pady="1m",padx="25m",side="right")
 		#@-body
-		#@-node:4::<< Create two rows of buttons >>
+		#@-node:3::<< Create two rows of buttons >>
 
-		self.top.protocol("WM_DELETE_WINDOW", self.OnCloseFindEvent)
+		
 		self.find_text.bind  ("<1>", self.resetWrap)
 		self.change_text.bind("<1>", self.resetWrap)
 		self.find_text.bind  ("<Key>", self.resetWrap)
 		self.change_text.bind("<Key>", self.resetWrap)
-		
-		if 0: # Allow returns in the expanded Find/Change text panes.
-			self.top.bind("<Return>", self.OnReturnKey)
-			
-		center_dialog(top)
 	
 	#@-body
-	#@-node:2::find.__init__ (creates find panel)
+	#@-node:2::find.createFrame
 	#@+node:3::find.init
 	#@+body
 	def init (self,c):
@@ -309,37 +364,7 @@ class LeoFind:
 		c.change_text = s
 	#@-body
 	#@-node:4::find.set_ivars
-	#@+node:5::resetWrap
-	#@+body
-	def resetWrap (self,event=None):
-	
-		self.wrapVnode = None
-		self.onlyVnode = None
-	#@-body
-	#@-node:5::resetWrap
-	#@+node:6::OnCloseFindEvent
-	#@+body
-	def OnCloseFindEvent(self):
-	
-		self.top.withdraw()
-	#@-body
-	#@-node:6::OnCloseFindEvent
-	#@+node:7::OnReturnKey (no longer used)
-	#@+body
-	def OnReturnKey (self,event):
-		
-		# Remove the newly inserted newline from the search & change strings.
-		for text in (self.find_text,self.change_text):
-			ch = text.get("insert - 1c")
-			if ch in ('\r','\n'):
-				text.delete("insert - 1c")
-	
-		# Do the default command.
-		self.findNextCommand(top())
-		return "break"
-	#@-body
-	#@-node:7::OnReturnKey (no longer used)
-	#@+node:8::Top Level Commands
+	#@+node:5::Top Level Commands
 	#@+node:1::changeButton
 	#@+body
 
@@ -464,8 +489,8 @@ class LeoFind:
 		c.setIvarsFromFind()
 	#@-body
 	#@-node:11::setup_command
-	#@-node:8::Top Level Commands
-	#@+node:9::Utilities
+	#@-node:5::Top Level Commands
+	#@+node:6::Utilities
 	#@+node:1::batchChange
 	#@+body
 	#@+at
@@ -1062,8 +1087,11 @@ class LeoFind:
 	#@-body
 	#@-node:9::showSuccess
 	#@-node:11::Initializing & finalizing & selecting
-	#@-node:9::Utilities
+	#@-node:6::Utilities
 	#@-others
+#@-body
+#@-node:3::class leoFind
+#@-others
 #@-body
 #@-node:0::@file leoFind.py
 #@-leo

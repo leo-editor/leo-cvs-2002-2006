@@ -204,23 +204,26 @@ headline_text_editing_selection_foreground_color = white
 
 [recent files]
 file3 = C:\Documents and Settings\default\My Documents\ekr.leo
-file2 = C:\prog\leoCVS\leo\test\test.leo
-file1 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file0 = C:\prog\oldCVS\leo\src\LeoPy.leo
-file6 = c:\prog\leoCvs\leo\config\leoConfig.leo
-file5 = C:\Documents and Settings\default\Desktop\LeoPy3.11.1.leo
-file4 = c:\prog\leoCvs\leo\doc\LeoDocs.leo
+file2 = c:\prog\leoCVS\leo\config\leoConfig.leo
+file1 = C:\prog\leoCVS\leo\test\test.leo
+file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
+file7 = C:\prog\leoCVS\leo\test\test2.leo
+file6 = C:\Documents and Settings\default\Desktop\newplugin\mod_read_dir_outline.leo
+file5 = C:\Documents and Settings\default\Desktop\Leo Stuff\SpellChecker\spellchecker.leo
+file4 = C:\Documents and Settings\default\Desktop\Leo Stuff\PLUGINS\SpellChecker\spellchecker.leo
+file9 = c:\prog\leoCvs\leo\doc\LeoDocs.leo
+file8 = C:\prog\oldCVS\leo\src\LeoPy.leo
 
 [find/change options]
 mark_changes = 0
 ignore_case = 0
 reverse = 0
 whole_word = 1
-search_headline = 1
+search_headline = 0
 batch = 0
 node_only = 0
-search_body = 0
-find_string = setAllJoinLinks
+search_body = 1
+find_string = recycleBindings
 pattern_match = 0
 wrap = 0
 mark_finds = 0

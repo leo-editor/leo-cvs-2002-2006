@@ -6,7 +6,7 @@
 
 #@@language python
 
-import exceptions,os,re,string,sys,time,types,Tkinter
+import exceptions,os,re,string,sys,time,Tkinter,traceback,types
 
 
 #@<< define general constants >>
@@ -3398,33 +3398,85 @@ class Bunch:
 #@-node:11::class Bunch
 #@+node:12::collectGarbage & printGarbage
 #@+body
+lastObjectCount = 0
+lastObjectList = []
+debugGC = false
+
 # gc may not exist everywhere.
 try: 
 	import gc
-	# gc.set_debug(gc.DEBUG_LEAK | gc.DEBUG_STATS)
-except:pass
+	if debugGC:
+		gc.set_debug(
+			gc.DEBUG_STATS |# prints statistics.
+			# gc.DEBUG_LEAK | # Same as all below.
+			gc.DEBUG_COLLECTABLE |
+			gc.DEBUG_UNCOLLECTABLE |
+			gc.DEBUG_INSTANCES |
+			gc.DEBUG_OBJECTS |
+			gc.DEBUG_SAVEALL)
+except:
+	traceback.print_exc()
 
+
+#@+others
+#@+node:1::collectGarbage
+#@+body
 def collectGarbage():
 	
-	return ## This just slows everything down.
-	try:
-		gc.collect()
-		print "garbage: %d, objects: %d" % (len(gc.garbage),len(gc.get_objects()))
-	except: pass # es_exception()
+	if debugGC: # This just slows everything down.
+		try: gc.collect()
+		except: pass
+		
+		if 0: # This doesn't work
+			
+			#@<< print new objects >>
+			#@+node:1::<< print new objects >>
+			#@+body
 
-lastObjectCount = 0
-
+			global lastObjectList
+			
+			gc.disable()
+			objects = gc.get_objects()[:]
+			gc.enable()
+			
+			if lastObjectList:
+				for o in objects: # This can fail!
+					if o not in lastObjectList:
+						print id(o)
+						
+			lastObjectList = objects
+			#@-body
+			#@-node:1::<< print new objects >>
+#@-body
+#@-node:1::collectGarbage
+#@+node:2::printGarbage
+#@+body
 def printGarbage(message=""):
 	
 	global lastObjectCount
-	n = len(gc.garbage)
-	n2 = len(gc.get_objects())
-	print message, "garbage: %d, objects: %+5d =%7d" % (n,n2-lastObjectCount,n2)
-	if n > 0:
-		for g in gc.garbage:
-			print `g`
-	lastObjectCount = n2
-	# gc.collect()
+	try:
+		n = len(gc.garbage)
+		n2 = len(gc.get_objects())
+		if n:
+			print message, "garbage: %d, objects: %+5d =%7d" % (n,n2-lastObjectCount,n2)
+		else:
+			print message, "objects: %+5d =%7d" % (n2-lastObjectCount,n2)
+			
+		if 0: # We may use the gc.DEBUG_STATS to do this.
+			if n:
+				print '-' * 30
+				garbage = gc.garbage[:]
+				for g in garbage:
+					# gc.get_referrers(*objs) 
+					print `g`
+		lastObjectCount = n2
+	except:
+		traceback.print_exc()
+#@-body
+#@-node:2::printGarbage
+#@-others
+
+
 #@-body
 #@-node:12::collectGarbage & printGarbage
 #@+node:13::executeScript

@@ -17,6 +17,7 @@ class LeoApp:
 		# These ivars are the global vars of this program.
 		self.commandName = None # The name of the command being executed.
 		self.config = None # The leoConfig instance.
+		self.globalWindows = []
 		self.hookError = false # true: suppress further calls to hooks.
 		self.hookFunction = None # Application wide hook function.
 		self.idle_imported = false # true: we have done an import idle
@@ -42,12 +43,10 @@ class LeoApp:
 		self.use_gnx = false # true: enable 4.x code.
 		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 	
-		if 0: # app() is not accessible during shutdown!
-			self.printDel = false # true: enable prints in __del__ routines
-	
 		# Global panels.  Destroyed when Leo ends.
 		self.findFrame = None
 		self.pythonFrame = None
+		self.spellFrame = None
 		
 		
 		#@<< Define global constants >>
@@ -117,9 +116,11 @@ class LeoApp:
 	#@+node:2::app.destroyAllGlobalWindows
 	#@+body
 	def destroyAllGlobalWindows (self):
-	
-		if self.findFrame:
-			self.findFrame.top.destroy()
+		
+		for w in self.globalWindows:
+			w.top.destroy()
+			
+		self.globalWindows = []
 			
 		doHook("destroy-all-global-windows")
 	
@@ -260,9 +261,9 @@ class LeoApp:
 
 	
 		# Create the global windows
-		self.findFrame = leoFind.LeoFind()
+		self.findFrame = leoFind.leoFind()
 		self.findFrame.top.withdraw()
-		attachLeoIcon(self.findFrame.top)
+		self.globalWindows.append(self.findFrame)
 	
 		return true # all went well.
 	#@-body

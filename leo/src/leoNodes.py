@@ -1372,11 +1372,6 @@ class vnode:
 		
 		self.iconVal = -1 # The icon index.  -1 forces an update of icon.
 		self.iconx, self.icony = 0,0 # Coords of icon so icon can be redrawn separately.
-		
-		# Tk widgets & widget references.
-		# We would like to keep these to a minimum.
-		if 0: # Now replaced by getter.
-			self.edit_text = None
 		#@-body
 		#@-node:1::<< initialize vnode data members >>
 

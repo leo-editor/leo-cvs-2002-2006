@@ -4644,15 +4644,7 @@ class LeoFrame:
 	#@-node:5::updateOutlineMenu
 	#@-node:9::Menu enablers (Frame)
 	#@-node:9::Menus
-	#@+node:10::notYet
-	#@+body
-	def notYet(self,name):
-	
-		es(name + " not ready yet")
-	
-	#@-body
-	#@-node:10::notYet
-	#@+node:11::Splitter stuff
+	#@+node:10::Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -4837,8 +4829,8 @@ class LeoFrame:
 			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 	#@-body
 	#@-node:8::placeSplitter
-	#@-node:11::Splitter stuff
-	#@+node:12::Status line: convenience routines
+	#@-node:10::Splitter stuff
+	#@+node:11::Status line: convenience routines
 	#@+body
 	#@@tabwidth 4
 	#@-body
@@ -4858,7 +4850,7 @@ class LeoFrame:
 		self.statusLabel.pack(side="left",padx=1)
 		
 		bg = statusFrame.cget("background")
-		self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove") # Text panes are much more flexible.
+		self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
 		self.statusText.pack(side="left",expand=1,fill="x")
 		
 		def idleStatusUpdateCallback(tag,keywords):
@@ -4866,6 +4858,7 @@ class LeoFrame:
 			if c: c.frame.updateStatusRowCol()
 		
 		# Register an idle-time handler to update the row and column indicators.
+		enableIdleTimeHook(idleTimeDelay=10) # 10 ms is more responsive.
 		leoPlugins.registerHandler("idle",idleStatusUpdateCallback)
 	
 	#@-body
@@ -4910,8 +4903,6 @@ class LeoFrame:
 	#@-node:3::putStatusLine
 	#@+node:4::updateStatusRowCol()
 	#@+body
-	# This is a hook routine, so it must have the tag and keyword arguments.
-	
 	def updateStatusRowCol (self):
 		
 		c = self.commands ; body = self.body ; lab = self.statusLabel
@@ -4930,7 +4921,7 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:4::updateStatusRowCol()
-	#@-node:12::Status line: convenience routines
+	#@-node:11::Status line: convenience routines
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

@@ -131,11 +131,11 @@ class leoTree:
 		self.setFontFromConfig()
 		
 		# Recycling bindings.
-		self.recycleBindings = true # true: remember bindings and unbind them explicitly.
 		self.bindings = [] # List of bindings to be unbound when redrawing.
 		self.tagBindings = [] # List of tag bindings to be unbound when redrawing.
 		self.icon_id_dict = {} # New in 4.0: keys are icon id's, values are vnodes.
 		self.edit_text_dict = {} # New in 4.0: keys vnodes, values are edit_text (Tk.Text widgets)
+		self.widgets = [] # Widgets that must be destroyed when redrawing.
 	
 		# Controlling redraws
 		self.updateCount = 0 # self.redraw does nothing unless this is zero.
@@ -175,45 +175,44 @@ class leoTree:
 	#@-node:1::tree.__init__
 	#@+node:2::tree.deleteBindings
 	#@+body
-	#@+at
-	#  This code is called when redrawing the screen to delete the old bindings.
-	# Calling this from __del__ was useless: __del__ would never be called!
-	# 
-	# idle_redraw will call self.canvas.delete("all") just after we return,
-	# so this routine does _not_ have to delete the widgets themselves.
-
-	#@-at
-	#@@c
-
 	def deleteBindings (self):
 		
 		"""Delete all tree bindings and all references to tree widgets."""
 		
 		# print "deleteBindings: %d, %d" % (len(self.tagBindings),len(self.bindings))
+	
+		count = 0
+		# Unbind all the tag bindings.
+		for id,id2,binding in self.tagBindings:
+			self.canvas.tag_unbind(id,binding,id2)
+			count += 1
+		self.tagBindings = []
+		# Unbind all the text bindings.
+		for t,id,binding in self.bindings:
+			t.unbind(binding,id)
+			count += 1
+		self.bindings = []
+		# print("bindings freed:"+`count`)
+	#@-body
+	#@-node:2::tree.deleteBindings
+	#@+node:3::tree.deleteWidgets
+	#@+body
+	# canvas.delete("all") does _not_ delete the Tkinter objects associated with those objects!
+	
+	def deleteWidgets (self):
+		
+		"""Delete all widgets in the canvas"""
 		
 		self.icon_id_dict = {} # Delete all references to icons.
 		self.edit_text_dict = {} # Delete all references to Tk.Edit widgets.
-		
-		if self.recycleBindings:
-			count = 0
-			# Unbind all the tag bindings.
-			for id,id2,binding in self.tagBindings:
-				self.canvas.tag_unbind(id,binding,id2)
-				count += 1
-			self.tagBindings = []
-			# Unbind all the text bindings.
-			for t,id,binding in self.bindings:
-				t.unbind(binding,id)
-				count += 1
-			self.bindings = []
-			# print("bindings freed:"+`count`)
-		else:
-			self.tagBindings = []
-			self.bindings = []
-	
+			
+		# Fixes a _huge_ memory leak.
+		for w in self.widgets:
+			w.destroy() 
+		self.widgets = []
 	#@-body
-	#@-node:2::tree.deleteBindings
-	#@+node:3::tree.destroy
+	#@-node:3::tree.deleteWidgets
+	#@+node:4::tree.destroy
 	#@+body
 	def destroy (self):
 	
@@ -234,7 +233,7 @@ class leoTree:
 		self.rootVnode = None
 		self.topVnode = None
 	#@-body
-	#@-node:3::tree.destroy
+	#@-node:4::tree.destroy
 	#@-node:3::Birth & death
 	#@+node:4::Drawing
 	#@+node:1::About drawing and updating
@@ -291,9 +290,9 @@ class leoTree:
 		id1 = self.canvas.tag_bind(id, "<1>", v.OnBoxClick)
 		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
 		
-		if self.recycleBindings:
-			self.tagBindings.append((id,id1,"<1>"),)
-			self.tagBindings.append((id,id2,"<Double-1>"),)
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
 	
 	#@-body
 	#@-node:3::drawBox (tag_bind)
@@ -326,10 +325,11 @@ class leoTree:
 		id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
 		id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
 		id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick)
-		if self.recycleBindings:
-			self.tagBindings.append((id,id1,"<1>"),)
-			self.tagBindings.append((id,id2,"<Double-1>"),)
-			self.tagBindings.append((id,id3,"<3>"),)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+		self.tagBindings.append((id,id3,"<3>"),)
 	
 		return 0 # dummy icon height
 	
@@ -376,6 +376,9 @@ class leoTree:
 		t = Tkinter.Text(self.canvas,
 			font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 		self.edit_text_dict[v] = t # Remember which text widget belongs to v.
+		
+		# Remember the widget so deleteBindings can delete it.
+		self.widgets.append(t) # Fixes a _huge_ memory leak.
 	
 		t.insert("end", v.headString())
 		
@@ -389,6 +392,7 @@ class leoTree:
 		#@-body
 		#@-node:1::<< configure the text depending on state >>
 
+	
 		id1 = t.bind("<1>", v.OnHeadlineClick)
 		id2 = t.bind("<3>", v.OnHeadlineRightClick) # 9/11/02.
 		if 0: # 6/15/02: Bill Drissel objects to this binding.
@@ -398,11 +402,11 @@ class leoTree:
 			# 10/16/02: Stamp out the erroneous control-t binding.
 			
 		# Remember the bindings so deleteBindings can delete them.
-		if self.recycleBindings:
-			self.bindings.append((t,id1,"<1>"),)
-			self.bindings.append((t,id2,"<3>"),)
-			self.bindings.append((t,id3,"<Key>"),)
-			self.bindings.append((t,id4,"<Control-t>"),)
+		self.bindings.append((t,id1,"<1>"),)
+		self.bindings.append((t,id2,"<3>"),)
+		self.bindings.append((t,id3,"<Key>"),)
+		self.bindings.append((t,id4,"<Control-t>"),)
+	
 		id = self.canvas.create_window(x,y,anchor="nw",window=t)
 		self.canvas.tag_lower(id)
 	
@@ -548,6 +552,8 @@ class leoTree:
 			self.topVnode = None
 			self.deleteBindings()
 			self.canvas.delete("all")
+			self.deleteWidgets()
+			# printGarbage("redraw")
 			self.setVisibleAreaToFullCanvas()
 			self.drawTree(self.rootVnode,root_left,root_top,0,0)
 			# Set up the scroll region after the tree has been redrawn.
@@ -558,7 +564,8 @@ class leoTree:
 			if self.trace:
 				self.redrawCount += 1
 				print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
-			collectGarbage()
+			# collectGarbage()
+			doHook("after_redraw-outline")
 	
 		self.canvas['cursor'] = oldcursor
 		self.redrawScheduled = false
