@@ -717,6 +717,16 @@ def callerName (n=1):
         g.es_exception()
         return "<no caller name>"
 #@-node:ekr.20031218072017.3107:callerName
+#@+node:ekr.20041105091148:pdb
+def pdb ():
+    
+    """Fall into pdb."""
+    
+    import pdb
+    
+    pdb.set_trace()
+#@nonl
+#@-node:ekr.20041105091148:pdb
 #@+node:ekr.20031218072017.3108:Dumps
 #@+node:ekr.20031218072017.3109:dump
 def dump(s):
@@ -774,54 +784,21 @@ def es_event_exception (eventName,full=False):
 def es_exception (full=True,c=None,color="red"):
     
     typ,val,tb = sys.exc_info()
+    
+    full = full or g.app.debugSwitch > 0
 
-    if full:
-        lines = traceback.format_exception(typ,val,tb)
-    else:
-        lines = traceback.format_exception_only(typ,val)
+    if full: lines = traceback.format_exception(typ,val,tb)
+    else:    lines = traceback.format_exception_only(typ,val)
         
-    if 1:
-        fileName,n = g.getLastTracebackFileAndLineNumber()
-    else:
-        # old, kludgy code...
-        #@        << look for lines containing a specific message >>
-        #@+node:ekr.20040731211839:<< look for lines containing a specific message >>
-        errList = traceback.format_exception(typ,val,tb)
-        
-        print ; print "es_exception (format_exception)"
-        for item in errList:
-            print item
-        # Strip cruft lines.
-        s1 = "Traceback (most recent call last):"
-        s2 = "exec script in {}"
-        lines = []
-        for line in errList[-4:]:
-            if n is None:
-                tag = 'File "<string>", line'
-                i = line.find(tag)
-                if i > -1:
-                    #@            << compute n from the line >>
-                    #@+node:EKR.20040612223431:<< compute n from the line >>
-                    i += len(tag)
-                    j = line.find(',',i)
-                    if j > i: n = line[i:j]
-                    else:     n = line[i:].strip()
-                    # g.trace(n)
-                    try: n = int(n)
-                    except (TypeError,ValueError): n = None
-                    #@nonl
-                    #@-node:EKR.20040612223431:<< compute n from the line >>
-                    #@nl
-            if not g.match(line,0,s1) and line.find(s2) == -1:
-                lines.append(line)
-        #@nonl
-        #@-node:ekr.20040731211839:<< look for lines containing a specific message >>
-        #@nl
+    fileName,n = g.getLastTracebackFileAndLineNumber()
 
     for line in lines:
         g.es_error(line,color=color)
         if not g.stdErrIsRedirected():
             print line
+            
+    if g.app.debugSwitch > 1:
+        import pdb ; pdb.set_trace()
 
     return fileName,n
 #@nonl
@@ -4077,13 +4054,7 @@ def getScript (c,p,useSelectedText=True):
     
         if s.strip():
             g.app.scriptDict["script1"]=s
-            # df = c.atFileCommands.new_df
             at = c.atFileCommands
-            if 0: # now done in 
-                # Force Python comment delims.
-                at.scanAllDirectives(p,scripting=True)
-                at.startSentinelComment = "#"
-                at.endSentinelComment = None
             at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
             script = at.stringOutput
             assert(p)
