@@ -7,6 +7,7 @@ import unittest
 
 import leoColor,leoCommands,leoFrame,leoNodes
 import Tkinter
+import os,sys
 Tk = Tkinter
 
 #@+others
@@ -81,7 +82,7 @@ class testUtils:
 		return vList
 	#@nonl
 	#@-node:findChildrenOf & findSubnodesOf
-	#@+node:findNodeInRootTree & findNodeInTree
+	#@+node:findNodeInRootTree, findNodeInTree, findNodeAnywhere
 	def findRootNode (self,v):
 	
 		"""Return the root of v's tree."""
@@ -97,8 +98,18 @@ class testUtils:
 			if v.headString().strip() == headline.strip():
 				return v
 			v = v.threadNext()
-			
-	#@-node:findNodeInRootTree & findNodeInTree
+		return None
+	
+	def findNodeAnywhere(self,c,headline):
+		
+		v = c.rootVnode()
+		while v:
+			if v.headString().strip() == headline.strip():
+				return v
+			v = v.threadNext()
+		return None
+	#@nonl
+	#@-node:findNodeInRootTree, findNodeInTree, findNodeAnywhere
 	#@+node:numberOfNodesInOutline, numberOfClonesInOutline
 	def numberOfNodesInOutline (self,root):
 		
@@ -319,9 +330,8 @@ class colorTestCase(unittest.TestCase):
 	#@+node:color
 	def color (self):
 		
-		c = self.c ; body = c.frame.body
-		colorizer = c.frame.tree.colorizer
-		val = colorizer.colorize(self.temp_v,body,incremental=false)
+		c = self.c
+		val = c.frame.tree.colorizer.colorize(self.temp_v,incremental=false)
 		assert(val=="ok")
 	#@nonl
 	#@-node:color
@@ -480,7 +490,7 @@ class outlineTestCase(unittest.TestCase):
 	#@nonl
 	#@-node:__init__
 	#@+node:outlineCommand
-	def editBody (self):
+	def outlineCommand (self):
 	
 		# Compute the result in temp_v.bodyString()
 		commandName = self.parent.headString()
@@ -519,6 +529,74 @@ class outlineTestCase(unittest.TestCase):
 	#@-others
 #@nonl
 #@-node:class outlineTestCase
+#@+node: makeOutlineSuite
+def makeTestLeoFilesSuite(testParentHeadline):
+	
+	"""Create a colorizer test for every descendant of testParentHeadline.."""
+	
+	u = testUtils() ; c = top()
+	
+	vList = u.findChildrenOf(testParentHeadline)
+
+	# Create the suite and add all test cases.
+	suite = unittest.makeSuite(unittest.TestCase)
+	for v in vList:
+		test = leoFileTestCase(c,v.headString().strip())
+		suite.addTest(test)
+
+	return suite
+#@-node: makeOutlineSuite
+#@+node:class leoFileTestCase
+class leoFileTestCase(unittest.TestCase):
+	
+	"""Data-driven unit tests to test .leo files."""
+	
+	#@	@+others
+	#@+node:__init__
+	def __init__ (self,c,fileName):
+		
+		# Init the base class.
+		unittest.TestCase.__init__(self)
+	
+		self.old_c = c
+		self.c = None # set by setUp.
+		self.fileName = fileName
+		self.openFrames = app.windowList[:]
+	#@nonl
+	#@-node:__init__
+	#@+node:runTest
+	def runTest(self):
+		
+		"""Run the Check Outline command."""
+	
+		errors = self.c.checkOutline()
+		assert(errors == 0)
+	#@nonl
+	#@-node:runTest
+	#@+node:setUp
+	def setUp(self):
+	
+		"""Open the .leo file."""
+	
+		c = self.old_c ; fileName = self.fileName
+		assert(os.path.exists(fileName))
+		ok, frame = openWithFileName(fileName,c)
+		assert(ok)
+		self.c = frame.commands
+	#@-node:setUp
+	#@+node:tearDown
+	def tearDown (self):
+	
+		"""Close the .leo file if it was not already open."""
+	
+		frame = self.c.frame
+		if frame not in self.openFrames:
+			app.closeLeoWindow(frame)
+	#@nonl
+	#@-node:tearDown
+	#@-others
+#@nonl
+#@-node:class leoFileTestCase
 #@-others
 #@nonl
 #@-node:@file leoTest.py

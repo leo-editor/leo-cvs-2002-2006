@@ -277,17 +277,6 @@ class baseTnode:
 		return self.bodyString and len(self.bodyString) > 0
 	#@nonl
 	#@-node:hasBody
-	#@+node:loadBodyPaneFromTnode
-	def loadBodyPaneFromTnode(self, body):
-	
-		s = self.bodyString
-		if s and len(s) > 0:
-			body.delete(1,"end")
-			body.insert(1,s)
-		else:
-			body.delete(1,"end")
-	#@nonl
-	#@-node:loadBodyPaneFromTnode
 	#@+node:isDirty
 	def isDirty (self):
 	
@@ -408,16 +397,12 @@ class baseVnode:
 	#@nonl
 	#@-node:v.__cmp__ (not used)
 	#@+node:v.__init__
-	def __init__ (self,commands,t):
+	def __init__ (self,c,t):
 	
 		assert(t)
-		
-		# commands may be None for testing.
-		# assert(commands)
-	
 		#@	<< initialize vnode data members >>
 		#@+node:<< initialize vnode data members >>
-		self.commands = commands # The commander for this vnode.
+		self.c = c # The commander for this vnode.
 		self.t = t # The tnode, i.e., the body text.
 		self.statusBits = 0 # status bits
 		
@@ -821,14 +806,14 @@ class baseVnode:
 	
 	def currentVnode (self):
 	
-		return self.commands.frame.currentVnode()
+		return self.c.frame.currentVnode()
 	#@nonl
 	#@-node:currentVnode (vnode)
 	#@+node:edit_text
 	def edit_text (self):
 	
 		v = self
-		return self.commands.frame.getEditTextDict(v)
+		return self.c.frame.getEditTextDict(v)
 	#@nonl
 	#@-node:edit_text
 	#@+node:findRoot
@@ -836,7 +821,7 @@ class baseVnode:
 	
 	def findRoot (self):
 	
-		return self.commands.frame.rootVnode()
+		return self.c.frame.rootVnode()
 	#@-node:findRoot
 	#@+node:headString & cleanHeadString
 	def headString (self):
@@ -881,7 +866,7 @@ class baseVnode:
 		
 		"""Return true if v exists in c's tree"""
 		
-		v = self ; c = v.commands
+		v = self ; c = v.c
 		
 		# This code must be fast.
 		root = c.rootVnode()
@@ -912,14 +897,13 @@ class baseVnode:
 	#@+node:setBodyStringOrPane & setBodyTextOrPane
 	def setBodyStringOrPane (self,s,encoding="utf-8"):
 	
-		v = self ; c = v.commands
+		v = self ; c = v.c
 		if not c or not v: return
 		
 		s = toUnicode(s,encoding)
 		if v == c.currentVnode():
 			# This code destoys all tags, so we must recolor.
-			c.frame.bodyCtrl.delete("1.0","end")
-			c.frame.bodyCtrl.insert("1.0",s) # Replace the body text with s.
+			c.frame.body.setSelectionAreas(s,None,None)
 			c.recolor()
 			
 		# Keep the body text in the tnode up-to-date.
@@ -949,7 +933,7 @@ class baseVnode:
 	
 	def setHeadStringOrHeadline (self,s,encoding="utf-8"):
 	
-		c = self.commands
+		c = self.c
 		c.endEditing()
 		self.setHeadString(s,encoding)
 	#@-node:setHeadStringOrHeadline
@@ -973,12 +957,12 @@ class baseVnode:
 	
 	def clearAllVisited (self):
 		
-		self.commands.clearAllVisited()
+		self.c.clearAllVisited()
 	#@-node:clearAllVisited
 	#@+node:clearAllVisitedInTree
 	def clearAllVisitedInTree (self):
 	
-		v = self ; c = v.commands
+		v = self ; c = v.c
 		after = v.nodeAfterTree()
 		
 		c.beginUpdate()
@@ -1003,7 +987,7 @@ class baseVnode:
 	def clearDirtyJoined (self):
 	
 		# trace()
-		v = self ; c = v.commands
+		v = self ; c = v.c
 		c.beginUpdate()
 		v.t.clearDirty()
 		c.endUpdate() # recomputes all icons
@@ -1013,7 +997,7 @@ class baseVnode:
 	def clearMarked (self):
 	
 		self.statusBits &= ~ self.markedBit
-		doHook("clear-mark",c=self.commands,v=self)
+		doHook("clear-mark",c=self.c,v=self)
 	#@nonl
 	#@-node:clearMarked
 	#@+node:clearOrphan
@@ -1112,7 +1096,7 @@ class baseVnode:
 	def setAncestorAtFileNodeDirty(self):
 	
 		# Look up the tree for an ancestor @file node.
-		v = self ; c = v.commands
+		v = self ; c = v.c
 		redraw_flag = false
 		c.beginUpdate()
 		while v:
@@ -1149,7 +1133,7 @@ class baseVnode:
 	
 	def setDirty (self):
 	
-		v = self ; c = v.commands
+		v = self ; c = v.c
 		# trace(`v`)
 		changed = false
 		c.beginUpdate()
@@ -1180,7 +1164,7 @@ class baseVnode:
 	def setMarked (self):
 	
 		self.statusBits |= self.markedBit
-		doHook("set-mark",c=self.commands,v=self)
+		doHook("set-mark",c=self.c,v=self)
 	
 	def initMarkedBit (self):
 	
@@ -1391,7 +1375,7 @@ class baseVnode:
 	
 		"""Unlinks the receiver, but does not destroy it. May be undone"""
 	
-		v = self ; c = v.commands
+		v = self ; c = v.c
 		v.setDirty() # 1/30/02: mark @file nodes dirty!
 		v.destroyDependents()
 		v.unjoinTree()
@@ -1410,7 +1394,7 @@ class baseVnode:
 	
 		if not t:
 			t = tnode(headString="NewHeadline")
-		v = vnode(self.commands,t)
+		v = vnode(self.c,t)
 		v.iconVal = 0
 		v.linkAfter(self)
 		return v
@@ -1436,7 +1420,7 @@ class baseVnode:
 		# trace(`n` + `self`)
 		if not t:
 			t = tnode(headString="NewHeadline")
-		v = vnode(self.commands,t)
+		v = vnode(self.c,t)
 		v.iconVal = 0
 		v.linkAsNthChild(self,n)
 		return v
@@ -1534,7 +1518,7 @@ class baseVnode:
 	#@@c
 	def linkAsRoot(self, oldRoot = None):
 	
-		v = self ; c = v.commands
+		v = self ; c = v.c
 		# stat() ; # trace(`v`)
 		# Bug fix 3/16/02:
 		# Clear all links except the child link.
@@ -1555,7 +1539,7 @@ class baseVnode:
 	
 		"""Moves the receiver after a"""
 	
-		v = self ; c = self.commands
+		v = self ; c = self.c
 		v.destroyDependents()
 		v.unlink()
 		v.linkAfter(a)
@@ -1573,7 +1557,7 @@ class baseVnode:
 	
 		"""Moves the receiver to the nth child of p"""
 	
-		v = self ; c = self.commands
+		v = self ; c = self.c
 	
 		v.destroyDependents()
 		v.unlink()
@@ -1668,7 +1652,7 @@ class baseVnode:
 		but the new vnodes are _not_ joined to the old nodes.
 		That is, the new vnodes v do not appear on v.t.joinList."""
 		
-		c = self.commands ; old_v = self
+		c = self.c ; old_v = self
 		
 		# trace(self)
 		
@@ -1695,7 +1679,7 @@ class baseVnode:
 		
 		"""Return a copy of self with all new tnodes"""
 		
-		c = self.commands
+		c = self.c
 		# trace(`self`)
 		
 		# Create the root node.
@@ -1893,12 +1877,12 @@ class baseVnode:
 		
 		The mFistChild link is not affected in the receiver."""
 	
-		v = self ; c = v.commands
+		v = self ; c = v.c
 	
 		# stat() # trace(`v.mParent`+", child:"+`v.mFirstChild`+", back:"+`v.mBack`+", next:"+`v.mNext`)
 		
 		# Special case the root
-		if v == c.frame.rootVnode():
+		if v == c.rootVnode():
 			if not v.mNext: return # Should never happen.
 			c.frame.setRootVnode(v.mNext)
 	

@@ -7,7 +7,9 @@
 
 from leoGlobals import *
 import leoGui
-import leoTkinterColorPanels,leoTkinterDialog,leoTkinterFind,leoTkinterFrame
+import leoTkinterColorPanels,leoTkinterComparePanel,leoTkinterDialog
+import leoTkinterFind,leoTkinterFontPanel,leoTkinterFrame
+import leoTkinterPrefs
 import tkFont,Tkinter,tkFileDialog
 
 Tk = Tkinter
@@ -19,12 +21,10 @@ class tkinterGui(leoGui.leoGui):
 	#@	@+others
 	#@+node: tkinterGui.__init__
 	def __init__ (self):
-		
-		# trace("tkinterGui")
-		
+	
 		# Initialize the base class.
 		leoGui.leoGui.__init__(self,"tkinter")
-		
+	
 		self.bitmap_name = None
 		self.bitmap = None
 	#@nonl
@@ -94,25 +94,21 @@ class tkinterGui(leoGui.leoGui):
 	#@nonl
 	#@-node:createGlobalWindows
 	#@+node:destroySelf
-	if 0:
-		def destroySelf (self,frame):
-			trace()
-			self.top.destroy()
+	def destroySelf (self):
+	
+		if 0: # Works in Python 2.1 and 2.2.  Leaves Python window open.
+			self.root.destroy()
+			
+		else: # Works in Python 2.3.  Closes Python window.
+			self.root.quit()
 	#@nonl
 	#@-node:destroySelf
-	#@+node:destroy
-	if 0:
-		def destroy(self,widget):
-			trace()
-			widget.destroy()
-	#@nonl
-	#@-node:destroy
-	#@+node:finishCreate
+	#@+node:finishCreate (not used: must be present)
 	def finishCreate (self):
 		
 		pass
 		
-	#@-node:finishCreate
+	#@-node:finishCreate (not used: must be present)
 	#@+node:killGui (not used)
 	def killGui(self,exitFlag=true):
 		
@@ -138,52 +134,7 @@ class tkinterGui(leoGui.leoGui):
 		self.root.mainloop()
 	#@nonl
 	#@-node:runMainLoop
-	#@+node:getFontFromParams
-	def getFontFromParams(self,family,size,slant,weight):
-		
-		family_name = family
-		
-		try:
-			font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
-			#print family_name,family,size,slant,weight
-			#print "actual_name:",font.cget("family")
-			return font
-		except:
-			es("exception setting font from " + `family_name`)
-			es("family,size,slant,weight:"+
-				`family`+':'+`size`+':'+`slant`+':'+`weight`)
-			es_exception()
-			return app.config.defaultFont
-	#@nonl
-	#@-node:getFontFromParams
-	#@+node:Clipboard (leoTkinterGui)
-	def replaceClipboardWith (self,s):
-	
-		self.root.clipboard_clear()
-		self.root.clipboard_append(s)
-		
-	def getTextFromClibboard (self):
-		
-		try:
-			return self.root.selection_get(selection="CLIPBOARD")
-		except:
-			return None
-	#@nonl
-	#@-node:Clipboard (leoTkinterGui)
-	#@+node:Idle Time (leoTkinterGui)
-	def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
-		
-		# trace(idleTimeHookHandler)
-		if self.root:
-			self.root.after_idle(idleTimeHookHandler,*args,**keys)
-			
-	def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
-		
-		if self.root:
-			app.root.after(app.idleTimeDelay,idleTimeHookHandler)
-	#@nonl
-	#@-node:Idle Time (leoTkinterGui)
-	#@+node:Creating and running tkinter dialogs
+	#@+node:app.gui.Tkinter dialogs
 	def runAboutLeoDialog(self,version,copyright,url,email):
 		"""Create and run a Tkinter About Leo dialog."""
 		d = leoTkinterDialog.tkinterAboutLeo(version,copyright,url,email)
@@ -210,14 +161,14 @@ class tkinterGui(leoGui.leoGui):
 		return d.run(modal=true)
 	
 	def runAskYesNoCancelDialog(self,title,
-		message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes",modal=true):
+		message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
 		"""Create and run an askYesNoCancel dialog ."""
 		d = leoTkinterDialog.tkinterAskYesNoCancel(
 			title,message,noMessage,defaultButton)
-	 	return d.run(modal=modal)
+	 	return d.run(modal=true)
 	#@nonl
-	#@-node:Creating and running tkinter dialogs
-	#@+node:Creating and running tkinter file dialogs
+	#@-node:app.gui.Tkinter dialogs
+	#@+node:app.gui.Tkinter file dialogs
 	def runOpenFileDialog(self,title,filetypes,defaultextension):
 	
 		"""Create and run an Tkinter open file dialog ."""
@@ -237,85 +188,169 @@ class tkinterGui(leoGui.leoGui):
 			filetypes=filetypes,
 			defaultextension=defaultextension)
 	#@nonl
-	#@-node:Creating and running tkinter file dialogs
-	#@+node:Creating and running tkinter panels
-	def createFindPanel(self):
+	#@-node:app.gui.Tkinter file dialogs
+	#@+node:app.gui.Tkinter panels
+	def createColorPanel(self,c):
+		"""Create a Tkinter color picker panel."""
+		return leoTkinterColorPanels.leoTkinterColorPanel(c)
+		
+	def createComparePanel(self,c):
+		"""Create a Tkinter color picker panel."""
+		return leoTkinterComparePanel.leoTkinterComparePanel(c)
+	
+	def createFindPanel(self): # The find panel is global, so no c param.
 		"""Create a hidden Tkinter find panel."""
 		panel = leoTkinterFind.leoTkinterFind()
 		panel.top.withdraw()
 		return panel
+	
+	def createFontPanel(self,c):
+		"""Create a Tkinter font panel."""
+		return leoTkinterFontPanel.leoTkinterFontPanel(c)
 		
-	def runColorPanel(self,c):
-		"""Create and run a Tkinter color picker panel."""
-		panel = leoTkinterColorPanels.leoTkinterColorPanel(c)
-		panel.run()
-		
-	def runColorNamePanel(self,colorPanel,name,color):
-		"""Create and run a Tkinter color name picker panel."""
-		panel = leoTkinterColorPanels.leoTkinterColorNamePanel(colorPanel,name,color)
-		panel.run(name,color)
-		
-	def showColorPanel(self,colorPanel):
-		"""Show a Tkinter color panel."""
-		# Not used at present.
-		colorPanel.top.deiconify()
-		colorPanel.top.lift()
-	#@nonl
-	#@-node:Creating and running tkinter panels
-	#@+node:Creating Frames
-	def newColorFrame(self,commander):
-		"""Create a colorFrame."""
-		pass # To do
-	
-	def newColorNameFrame(self,commander):
-		"""Create a colorNameFrame."""
-		pass # To do
-	
-	def newCompareFrame(self,commander):
-		"""Create a compareFrame."""
-		pass # To do
-	
-	def newFindFrame(self,commander):
-		"""Create a findFrame."""
-		pass # To do
-	
-	def newFontFrame(self,commander):
-		"""Create a fontFrame."""
-		pass # To do
-	
-	def newLeoFrame(self,title):
-		"""Create a view frame for the Leo main window."""
+	def createLeoFrame(self,title):
+		"""Create a new Leo frame."""
 		return leoTkinterFrame.leoTkinterFrame(title)
 	
-	def newPrefsFrame(self,commander):
-		"""Create a prefsFrame."""
-		pass # To do
+	def createPrefsPanel(self,c):
+		"""Create a Tkinter find panel."""
+		return leoTkinterPrefs.leoTkinterPrefs(c)
 	#@nonl
-	#@-node:Creating Frames
-	#@+node:Focus (leoTkinterGui)
-	def force_focus(self,commands,widget):
-		
-		"""Set the focus of the widget in the given commander if it needs to be changed."""
-		
-		focus = commands.frame.top.focus_displayof()
-		if focus != widget:
-			widget.focus_force() # Apparently it is not a good idea to call focus_force.
+	#@-node:app.gui.Tkinter panels
+	#@+node:replaceClipboardWith
+	def replaceClipboardWith (self,s):
 	
+		self.root.clipboard_clear()
+		self.root.clipboard_append(s)
+		
+	#@-node:replaceClipboardWith
+	#@+node:getTextFromClibboard
+	def getTextFromClibboard (self):
+		
+		try:
+			return self.root.selection_get(selection="CLIPBOARD")
+		except:
+			return None
+	#@nonl
+	#@-node:getTextFromClibboard
+	#@+node:get_window_info
+	# WARNING: Call this routine _after_ creating a dialog.
+	# (This routine inhibits the grid and pack geometry managers.)
+	
+	def get_window_info (self,top):
+		
+		top.update_idletasks() # Required to get proper info.
+	
+		# Get the information about top and the screen.
+		geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
+		dim,x,y = string.split(geom,'+')
+		w,h = string.split(dim,'x')
+		w,h,x,y = int(w),int(h),int(x),int(y)
+		
+		return w,h,x,y
+	#@nonl
+	#@-node:get_window_info
+	#@+node:center_dialog
+	#@+at
+	# Center the dialog on the screen.
+	# WARNING: Call this routine _after_ creating a dialog.
+	# (This routine inhibits the grid and pack geometry managers.)
+	#@-at
+	#@@c
+	
+	def center_dialog(self,top):
+	
+		sw = top.winfo_screenwidth()
+		sh = top.winfo_screenheight()
+		w,h,x,y = self.get_window_info(top)
+		
+		# Set the new window coordinates, leaving w and h unchanged.
+		x = (sw - w)/2
+		y = (sh - h)/2
+		top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+		
+		return w,h,x,y
+	#@nonl
+	#@-node:center_dialog
+	#@+node:create_labeled_frame
+	# Returns frames w and f.
+	# Typically the caller would pack w into other frames, and pack content into f.
+	
+	def create_labeled_frame (self,parent,
+		caption=None,relief="groove",bd=2,padx=0,pady=0):
+		
+		Tk = Tkinter
+		# Create w, the master frame.
+		w = Tk.Frame(parent)
+		w.grid(sticky="news")
+		
+		# Configure w as a grid with 5 rows and columns.
+		# The middle of this grid will contain f, the expandable content area.
+		w.columnconfigure(1,minsize=bd)
+		w.columnconfigure(2,minsize=padx)
+		w.columnconfigure(3,weight=1)
+		w.columnconfigure(4,minsize=padx)
+		w.columnconfigure(5,minsize=bd)
+		
+		w.rowconfigure(1,minsize=bd)
+		w.rowconfigure(2,minsize=pady)
+		w.rowconfigure(3,weight=1)
+		w.rowconfigure(4,minsize=pady)
+		w.rowconfigure(5,minsize=bd)
+	
+		# Create the border spanning all rows and columns.
+		border = Tk.Frame(w,bd=bd,relief=relief) # padx=padx,pady=pady)
+		border.grid(row=1,column=1,rowspan=5,columnspan=5,sticky="news")
+		
+		# Create the content frame, f, in the center of the grid.
+		f = Tk.Frame(w,bd=bd)
+		f.grid(row=3,column=3,sticky="news")
+		
+		# Add the caption.
+		if caption and len(caption) > 0:
+			caption = Tk.Label(parent,text=caption,highlightthickness=0,bd=0)
+			caption.tkraise(w)
+			caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
+	
+		return w,f
+	#@nonl
+	#@-node:create_labeled_frame
+	#@+node:get_focus
 	def get_focus(self,frame):
 		
 		"""Returns the widget that has focus, or body if None."""
 	
 		return frame.top.focus_displayof()
 		
-	def set_focus(self,commands,widget):
+	#@-node:get_focus
+	#@+node:set_focus
+	def set_focus(self,c,widget):
 		
 		"""Set the focus of the widget in the given commander if it needs to be changed."""
 		
-		focus = commands.frame.top.focus_displayof()
+		focus = c.frame.top.focus_displayof()
 		if focus != widget:
 			widget.focus_set()
 	#@nonl
-	#@-node:Focus (leoTkinterGui)
+	#@-node:set_focus
+	#@+node:getFontFromParams
+	def getFontFromParams(self,family,size,slant,weight):
+		
+		family_name = family
+		
+		try:
+			font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
+			#print family_name,family,size,slant,weight
+			#print "actual_name:",font.cget("family")
+			return font
+		except:
+			es("exception setting font from " + `family_name`)
+			es("family,size,slant,weight:"+
+				`family`+':'+`size`+':'+`slant`+':'+`weight`)
+			es_exception()
+			return app.config.defaultFont
+	#@nonl
+	#@-node:getFontFromParams
 	#@+node:attachLeoIcon & createLeoIcon
 	def attachLeoIcon (self,w):
 		
@@ -404,85 +439,179 @@ class tkinterGui(leoGui.leoGui):
 			return None
 	#@nonl
 	#@-node:createLeoIcon
-	#@+node:get_window_info
-	# WARNING: Call this routine _after_ creating a dialog.
-	# (This routine inhibits the grid and pack geometry managers.)
-	
-	def get_window_info (self,top):
+	#@+node:setIdleTimeHook
+	def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
 		
-		top.update_idletasks() # Required to get proper info.
-	
-		# Get the information about top and the screen.
-		geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
-		dim,x,y = string.split(geom,'+')
-		w,h = string.split(dim,'x')
-		w,h,x,y = int(w),int(h),int(x),int(y)
+		# trace(idleTimeHookHandler)
+		if self.root:
+			self.root.after_idle(idleTimeHookHandler,*args,**keys)
+			
+	#@-node:setIdleTimeHook
+	#@+node:setIdleTimeHookAfterDelay
+	def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
 		
-		return w,h,x,y
+		if self.root:
+			app.root.after(app.idleTimeDelay,idleTimeHookHandler)
 	#@nonl
-	#@-node:get_window_info
-	#@+node:center_dialog
-	# Center the dialog on the screen.
-	# WARNING: Call this routine _after_ creating a dialog.
-	# (This routine inhibits the grid and pack geometry managers.)
+	#@-node:setIdleTimeHookAfterDelay
+	#@+node:firstIndex
+	def firstIndex (self):
 	
-	def center_dialog(self,top):
-	
-		sw = top.winfo_screenwidth()
-		sh = top.winfo_screenheight()
-		w,h,x,y = get_window_info(top)
-		
-		# Set the new window coordinates, leaving w and h unchanged.
-		x = (sw - w)/2
-		y = (sh - h)/2
-		top.geometry("%dx%d%+d%+d" % (w,h,x,y))
-		
-		return w,h,x,y
+		return "1.0"
 	#@nonl
-	#@-node:center_dialog
-	#@+node:create_labeled_frame
-	# Returns frames w and f.
-	# Typically the caller would pack w into other frames, and pack content into f.
+	#@-node:firstIndex
+	#@+node:lastIndex
+	def lastIndex (self):
 	
-	def create_labeled_frame (self,parent,
-		caption=None,relief="groove",bd=2,padx=0,pady=0):
-		
-		Tk = Tkinter
-		# Create w, the master frame.
-		w = Tk.Frame(parent)
-		w.grid(sticky="news")
-		
-		# Configure w as a grid with 5 rows and columns.
-		# The middle of this grid will contain f, the expandable content area.
-		w.columnconfigure(1,minsize=bd)
-		w.columnconfigure(2,minsize=padx)
-		w.columnconfigure(3,weight=1)
-		w.columnconfigure(4,minsize=padx)
-		w.columnconfigure(5,minsize=bd)
-		
-		w.rowconfigure(1,minsize=bd)
-		w.rowconfigure(2,minsize=pady)
-		w.rowconfigure(3,weight=1)
-		w.rowconfigure(4,minsize=pady)
-		w.rowconfigure(5,minsize=bd)
-	
-		# Create the border spanning all rows and columns.
-		border = Tk.Frame(w,bd=bd,relief=relief) # padx=padx,pady=pady)
-		border.grid(row=1,column=1,rowspan=5,columnspan=5,sticky="news")
-		
-		# Create the content frame, f, in the center of the grid.
-		f = Tk.Frame(w,bd=bd)
-		f.grid(row=3,column=3,sticky="news")
-		
-		# Add the caption.
-		if caption and len(caption) > 0:
-			caption = Tk.Label(parent,text=caption,highlightthickness=0,bd=0)
-			caption.tkraise(w)
-			caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
-	
-		return w,f
+		return "end"
 	#@nonl
-	#@-node:create_labeled_frame
+	#@-node:lastIndex
+	#@+node:moveIndexBackward
+	def moveIndexBackward(self,index,n):
+	
+		return "%s-%dc" % (index,n)
+	#@-node:moveIndexBackward
+	#@+node:moveIndexForward
+	def moveIndexForward(self,index,n):
+	
+		return "%s+%dc" % (index,n)
+	#@nonl
+	#@-node:moveIndexForward
+	#@+node:compareIndices
+	def compareIndices (self,t,n1,rel,n2):
+		return t.compare(n1,rel,n2)
+	#@nonl
+	#@-node:compareIndices
+	#@+node:getindex
+	def getindex(self,text,index):
+		
+		"""Convert string index of the form line.col into a tuple of two ints."""
+		
+		return tuple(map(int,string.split(text.index(index), ".")))
+	#@nonl
+	#@-node:getindex
+	#@+node:getInsertPoint
+	def getInsertPoint(self,t):
+	
+		return t.index("insert")
+	#@nonl
+	#@-node:getInsertPoint
+	#@+node:setInsertPoint
+	def setInsertPoint (self,t,pos):
+	
+		return t.mark_set("insert",pos)
+	#@nonl
+	#@-node:setInsertPoint
+	#@+node:getSelectionRange
+	def getSelectionRange (self,t):
+	
+		return t.tag_ranges("sel")
+	#@nonl
+	#@-node:getSelectionRange
+	#@+node:getTextSelection
+	def getTextSelection (self,t):
+		
+		"""Return a tuple representing the selected range of t, a Tk.Text widget.
+		
+		Return a tuple giving the insertion point if no range of text is selected."""
+	
+		# To get the current selection
+		sel = t.tag_ranges("sel")  ## Do not remove:  remove entire routine instead!!
+		if len(sel) == 2:
+			return sel
+		else:
+			# 7/1/03: Return the insertion point if there is no selected text.
+			insert = t.index("insert")
+			return insert,insert
+	#@nonl
+	#@-node:getTextSelection
+	#@+node:setSelectionRange
+	def setSelectionRange(self,t,n1,n2):
+	
+		return app.gui.setTextSelection(t,n1,n2)
+	#@nonl
+	#@-node:setSelectionRange
+	#@+node:setSelectionRangeWithLength
+	def setSelectionRangeWithLength(self,t,start,length):
+		
+		return app.gui.setTextSelection(t,start,start + "+" + `length` + "c")
+	#@-node:setSelectionRangeWithLength
+	#@+node:setTextSelection
+	def setTextSelection (self,t,start,end):
+		
+		"""tk gui: set the selection range in Tk.Text widget t."""
+	
+		if not start or not end:
+			return
+	
+		if t.compare(start, ">", end):
+			start,end = end,start
+			
+		t.tag_remove("sel","1.0",start)
+		t.tag_add("sel",start,end)
+		t.tag_remove("sel",end,"end")
+		t.mark_set("insert",end)
+	#@nonl
+	#@-node:setTextSelection
+	#@+node:getAllText
+	def getAllText (self,t):
+		
+		"""Return all the text of Tk.Text t converted to unicode."""
+		
+		s = t.get("1.0","end")
+		if s is None:
+			return u""
+		else:
+			return toUnicode(s,app.tkEncoding)
+	#@nonl
+	#@-node:getAllText
+	#@+node:getCharAfterIndex
+	def getCharAfterIndex (self,t,index):
+		
+		if t.compare(index + "+1c",">=","end"):
+			return None
+		else:
+			ch = t.get(index + "+1c")
+			return toUnicode(ch,app.tkEncoding)
+	#@nonl
+	#@-node:getCharAfterIndex
+	#@+node:getCharAtIndex
+	def getCharAtIndex (self,t,index):
+		ch = t.get(index)
+		return toUnicode(ch,app.tkEncoding)
+	#@nonl
+	#@-node:getCharAtIndex
+	#@+node:getCharBeforeIndex
+	def getCharBeforeIndex (self,t,index):
+		
+		index = t.index(index)
+		if index == "1.0":
+			return None
+		else:
+			ch = t.get(index + "-1c")
+			return toUnicode(ch,app.tkEncoding)
+	#@nonl
+	#@-node:getCharBeforeIndex
+	#@+node:getLineContainingIndex
+	def getLineContainingIndex (self,t,index):
+	
+		line = t.get(index + " linestart", index + " lineend")
+		return toUnicode(line,app.tkEncoding)
+	#@nonl
+	#@-node:getLineContainingIndex
+	#@+node:replaceSelectionRangeWithText
+	def replaceSelectionRangeWithText (self,t,start,end,text):
+	
+		t.delete(start,end)
+		t.insert(start,text)
+	#@nonl
+	#@-node:replaceSelectionRangeWithText
+	#@+node:makeIndexVisible
+	def makeIndexVisible(self,t,index):
+	
+		return t.see(index)
+	#@nonl
+	#@-node:makeIndexVisible
 	#@-others
 #@nonl
 #@-node:@file leoTkinterGui.py

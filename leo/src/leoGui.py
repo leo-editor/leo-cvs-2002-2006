@@ -11,11 +11,7 @@ Leo's core calls this class to allocate all gui objects.
 Plugins may define their own gui classes by setting app.gui."""
 
 from leoGlobals import *
-import leoCommands
-import os,sys,traceback
 
-#@+others
-#@+node:class leoGui
 class leoGui:
 	
 	"""The base class of all gui classes.
@@ -23,44 +19,12 @@ class leoGui:
 	Subclasses are expected to override all do-nothing methods of this class."""
 	
 	#@	@+others
-	#@+node:leoGui.__init__
-	def __init__ (self,guiName):
-		
-		# trace("leoGui",guiName)
-		
-		self.leoIcon = None
-		self.mGuiName = guiName
-		self.mainLoop = None
-		self.root = None
-	#@nonl
-	#@-node:leoGui.__init__
-	#@+node:guiName
-	def guiName(self):
-		
-		try:
-			return self.mGuiName
-		except:
-			return "invalid gui name"
-	#@nonl
-	#@-node:guiName
-	#@+node:oops
-	def oops (self):
-		
-		print "leoGui oops", callerName(2), "should be overridden in subclass"
-	#@nonl
-	#@-node:oops
-	#@+node:interface to Leo's core
-	#@+at 
-	#@nonl
-	# Leo's core code calls these routine to create commanders and the 
-	# corresponding frame objects.
-	#@-at
-	#@nonl
-	#@-node:interface to Leo's core
-	#@+node: newLeoCommanderAndFrame
+	#@+node:newLeoCommanderAndFrame (gui-independent)
 	def newLeoCommanderAndFrame(self,fileName):
 		
 		"""Create a commander and its view frame for the Leo main window."""
+		
+		import leoCommands
 		
 		if not fileName: fileName = ""
 		#@	<< compute the window title >>
@@ -80,12 +44,12 @@ class leoGui:
 		#@nl
 	
 		# Create an unfinished frame to pass to the commanders.
-		frame = app.gui.newLeoFrame(title)
+		frame = app.gui.createLeoFrame(title)
 		
 		# Create the commander and its subcommanders.
 		c = leoCommands.Commands(frame,fileName)
 		
-		# Finish creating the frame (kludge: sets c.bodyCtrl so it can create the outline.)
+		# Finish creating the frame
 		frame.finishCreate(c)
 		c.log = c.frame.log # Kludge: should replace c.log by abstract log routines.
 		
@@ -95,20 +59,126 @@ class leoGui:
 		doHook("after-create-leo-frame",c=c)
 		return c,frame
 	#@nonl
-	#@-node: newLeoCommanderAndFrame
+	#@-node:newLeoCommanderAndFrame (gui-independent)
+	#@+node:createRootWindow
+	def createRootWindow(self):
+	
+		"""Create the hidden root window for the gui.
+		
+		Nothing needs to be done if the root window need not exist."""
+	
+		self.oops()
+	#@nonl
+	#@-node:createRootWindow
 	#@+node:destroySelf
 	def destroySelf (self,frame):
 	
 		self.oops()
 	#@nonl
 	#@-node:destroySelf
-	#@+node:destroy
-	def destroy (self,widget):
+	#@+node:finishCreate
+	def finishCreate (self):
+	
+		"""Do any remaining chores after the root window has been created."""
 	
 		self.oops()
 	#@nonl
-	#@-node:destroy
-	#@+node:base-class methods: overridden in subclasses
+	#@-node:finishCreate
+	#@+node:killGui
+	def killGui(self,exitFlag=true):
+	
+		"""Destroy the gui.
+		
+		The entire Leo application should terminate if exitFlag is true."""
+	
+		self.oops()
+	#@nonl
+	#@-node:killGui
+	#@+node:recreateRootWindow
+	def recreateRootWindow(self):
+	
+		"""Create the hidden root window of the gui
+	    after a previous gui has terminated with killGui(false)."""
+	
+		self.oops()
+	#@nonl
+	#@-node:recreateRootWindow
+	#@+node:runMainLoop
+	def runMainLoop(self):
+	
+		"""Run the gui's main loop."""
+	
+		self.oops()
+	#@nonl
+	#@-node:runMainLoop
+	#@+node:app.gui dialogs
+	def runAboutLeoDialog(self,version,copyright,url,email):
+		"""Create and run a Tkinter About Leo dialog."""
+		self.oops()
+		
+	def runAskLeoIDDialog(self):
+		"""Create and run a dialog to get app.LeoID."""
+		self.oops()
+	
+	def runAskOkDialog(self,title,message=None,text="Ok"):
+		"""Create and run a Tkinter an askOK dialog ."""
+		self.oops()
+	
+	def runAskOkCancelNumberDialog(self,title,message):
+		"""Create and run askOkCancelNumber dialog ."""
+		self.oops()
+	
+	def runAskYesNoDialog(self,title,message=None):
+		"""Create and run an askYesNo dialog."""
+		self.oops()
+	
+	def runAskYesNoCancelDialog(self,title,
+		message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
+		"""Create and run an askYesNoCancel dialog ."""
+		self.oops()
+	#@nonl
+	#@-node:app.gui dialogs
+	#@+node:app.gui file dialogs
+	def runOpenFileDialog(self,title,filetypes,defaultextension):
+	
+		"""Create and run an Tkinter open file dialog ."""
+	
+		self.oops()
+	
+	def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
+	
+		"""Create and run an Tkinter save file dialog ."""
+		
+		self.oops()
+	#@nonl
+	#@-node:app.gui file dialogs
+	#@+node:app.gui panels
+	def createColorPanel(self,c):
+		"""Create Color panel."""
+		self.oops()
+		
+	def createComparePanel(self,c):
+		"""Create Compare panel."""
+		self.oops()
+		
+	def createFindPanel(self):
+		"""Create a hidden Find panel."""
+		self.oops()
+	
+	def createFontPanel(self,c):
+		"""Create a Font panel."""
+		self.oops()
+		
+	def createLeoFrame(self,title):
+		"""Create a new Leo frame."""
+		self.oops()
+		
+	def createPrefsPanel(self,c):
+		"""Create a Prefs panel."""
+		self.oops()
+	#@nonl
+	#@-node:app.gui panels
+	#@+node:app.gui utils
 	#@+at 
 	#@nonl
 	# Subclasses are expected to subclass all of the following methods.
@@ -121,117 +191,16 @@ class leoGui:
 	# of its subcommanders.
 	#@-at
 	#@nonl
-	#@-node:base-class methods: overridden in subclasses
-	#@+node:Birth, death & rebirth
-	def createRootWindow(self):
-		"""Create the hidden root window for the gui.
-		
-		Nothing needs to be done if the root window need not exist."""
-		self.oops()
-		
-	def finishCreate (self):
-		"""Do any remaining chores after the root window has been created."""
-		self.oops()
-	
-	def killGui(self,exitFlag=true):
-		"""Destroy the gui.
-		
-		The entire Leo application should terminate if exitFlag is true."""
-		self.oops()
-	
-	def recreateRootWindow(self):
-		"""Create the hidden root window of the gui
-	    after a previous gui has terminated with killGui(false)."""
-		self.oops()
-	#@-node:Birth, death & rebirth
+	#@-node:app.gui utils
 	#@+node:Clipboard
-	def replaceClipboardWith (self,s): self.oops()
-	def getTextFromClibboard (self):   self.oops()
-	#@nonl
+	def replaceClipboardWith (self,s):
+		
+		self.oops()
+	
+	def getTextFromClibboard (self):
+		
+		self.oops()
 	#@-node:Clipboard
-	#@+node:Creating and running dialogs (leoGui)
-	def runAboutLeoDialog(self,version,copyright,url,email):
-		"""Create and run an About Leo dialog."""
-		self.oops()
-		
-	def runAskLeoIDDialog(self,version,copyright,url,email):
-		"""Create and run a dialog to get app.LeoID."""
-		self.oops()
-	
-	def runAskOkDialog(self,title,message=None,text="Ok"):
-		"""Create and run an askOK dialog ."""
-		self.oops()
-	
-	def runAskOkCancelNumberDialog(self,title,message):
-		"""Create and run an askOkCancelNumber dialog ."""
-		self.oops()
-	
-	def runAskYesNoDialog(self,title,message=None):
-		"""Create and run an askYesNo dialog."""
-		self.oops()
-	
-	def runAskYesNoCancelDialog(self,title,
-		message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
-		"""Create and run an askYesNoCancel dialog ."""
-		self.oops()
-		
-	def runOpenFileDialog(self,title,filetypes,defaultextension):
-		"""Create and run an open file dialog ."""
-		self.oops()
-		
-	def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
-		"""Create and run an open file dialog ."""
-		self.oops()
-	#@nonl
-	#@-node:Creating and running dialogs (leoGui)
-	#@+node:Creating and running panels (leoGui)
-	def createFindPanel(self):
-		"""Create a hidden find panel."""
-		self.oops()
-	
-	def runColorPanel(self):
-		"""Create and run an About Leo dialog."""
-		self.oops()
-		
-	def runColorNamePanel(self,colorPanel,name,color):
-		"""Create and run an About Leo dialog."""
-		self.oops()
-		
-	def showColorPanel(self,colorPanel):
-		"""Show a color panel."""
-		self.oops()
-	#@nonl
-	#@-node:Creating and running panels (leoGui)
-	#@+node:Creating frames
-	def newColorFrame(self,commander):
-		"""Create a colorFrame."""
-		self.oops()
-	
-	def newColorNameFrame(self,commander):
-		"""Create a colorNameFrame."""
-		self.oops()
-	
-	def newCompareFrame(self,commander):
-		"""Create a compareFrame."""
-		self.oops()
-	
-	def newFindFrame(self,commander):
-		"""Create a findFrame."""
-		self.oops()
-	
-	def newFontFrame(self,commander):
-		"""Create a fontFrame."""
-		self.oops()
-	
-	def newLeoFrame(self,title):
-		"""Create a view frame for the Leo main window."""
-		self.oops()
-	
-	def newPrefsFrame(self,commander):
-		"""Create a prefsFrame."""
-		self.oops()
-	#@nonl
-	#@-node:Creating frames
 	#@+node:Dialog utils
 	def attachLeoIcon (self,window):
 		"""Attach the Leo icon to a window."""
@@ -249,21 +218,30 @@ class leoGui:
 		"""Return the window information."""
 		self.oops()
 	#@-node:Dialog utils
-	#@+node:Focus (leoGui)
+	#@+node:Focus
 	def get_focus(self,frame):
+	
 		"""Return the widget that has focus, or the body widget if None."""
+	
 		self.oops()
 			
 	def set_focus(self,commander,widget):
+	
 		"""Set the focus of the widget in the given commander if it needs to be changed."""
-		self.oops()
-		
-	def force_focus(self,commander,widget):
-		"""Set the focus of the widget in the given commander if it needs to be changed."""
+	
 		self.oops()
 	#@nonl
-	#@-node:Focus (leoGui)
-	#@+node:Idle time (leoGui)
+	#@-node:Focus
+	#@+node:Index
+	def firstIndex (self):
+	
+		self.oops()
+		
+	def lastIndex (self):
+	
+		self.oops()
+	#@-node:Index
+	#@+node:Idle time
 	def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
 		
 		self.oops()
@@ -271,18 +249,35 @@ class leoGui:
 	def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
 		
 		self.oops()
-	#@-node:Idle time (leoGui)
-	#@+node:runMainLoop
-	def runMainLoop(self):
-	
-		"""Run the gui's main loop."""
-		self.oops()
+	#@-node:Idle time
+	#@+node:guiName
+	def guiName(self):
+		
+		try:
+			return self.mGuiName
+		except:
+			return "invalid gui name"
 	#@nonl
-	#@-node:runMainLoop
+	#@-node:guiName
+	#@+node:leoGui.__init__
+	def __init__ (self,guiName):
+		
+		# trace("leoGui",guiName)
+		
+		self.leoIcon = None
+		self.mGuiName = guiName
+		self.mainLoop = None
+		self.root = None
+		self.utils = None
+	#@nonl
+	#@-node:leoGui.__init__
+	#@+node:oops
+	def oops (self):
+		
+		print "leoGui oops", callerName(2), "should be overridden in subclass"
+	#@nonl
+	#@-node:oops
 	#@-others
-#@nonl
-#@-node:class leoGui
-#@-others
 #@nonl
 #@-node:@file leoGui.py
 #@-leo

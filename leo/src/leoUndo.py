@@ -61,9 +61,9 @@ class baseUndoer:
 	"""The base class of the undoer class."""
 	#@	@+others
 	#@+node:undo.__init__ & clearIvars
-	def __init__ (self,commands):
+	def __init__ (self,c):
 		
-		u = self ; u.commands = commands
+		u = self ; u.c = c
 		
 		# Ivars to transition to new undo scheme...
 		
@@ -106,17 +106,6 @@ class baseUndoer:
 	def clearUndoState (self):
 		
 		u = self
-		
-		if 0: # Bug fix: 12/16/02: setUndo/Redo type needs the old values.
-			u.redoMenuLabel = "Can't Redo" 
-			u.undoMenuLabel = "Can't Undo"
-		
-		if 0: # Wrong: set realLabel only when calling setMenuLabel.
-			realLabel = app.getRealMenuName("Can't Redo")
-			u.realRedoMenuLabel = realLabel.replace("&","")
-			realLabel = app.getRealMenuName("Can't Undo")
-			u.realUndoMenuLabel = realLabel.replace("&","")
-			
 		u.setRedoType("Can't Redo")
 		u.setUndoType("Can't Undo")
 		u.beads = [] # List of undo nodes.
@@ -140,11 +129,11 @@ class baseUndoer:
 	#@+node:enableMenuItems
 	def enableMenuItems (self):
 	
-		u = self ; c = u.commands
-		menu = c.frame.getMenu("Edit")
-	
-		enableMenu(menu,u.redoMenuLabel,u.canRedo())
-		enableMenu(menu,u.undoMenuLabel,u.canUndo())
+		u = self ; frame = u.c.frame
+		
+		menu = frame.menu.getMenu("Edit")
+		frame.menu.enableMenu(menu,u.redoMenuLabel,u.canRedo())
+		frame.menu.enableMenu(menu,u.undoMenuLabel,u.canUndo())
 	#@-node:enableMenuItems
 	#@+node:getBead, peekBead, setBead
 	def getBead (self,n):
@@ -227,34 +216,34 @@ class baseUndoer:
 	#@+node:setRedoType, setUndoType
 	# These routines update both the ivar and the menu label.
 	def setRedoType (self,type):
-		u = self ; c = u.commands
-		menu = c.frame.getMenu("Edit")
+		u = self ; frame = u.c.frame
+		menu = frame.menu.getMenu("Edit")
 		name = u.redoMenuName(type)
 		if name != u.redoMenuLabel:
 			# Update menu using old name.
-			realLabel = app.getRealMenuName(name)
+			realLabel = frame.menu.getRealMenuName(name)
 			if realLabel == name:
 				underline=choose(match(name,0,"Can't"),-1,0)
 			else:
 				underline = realLabel.find("&")
 			realLabel = realLabel.replace("&","")
-			setMenuLabel(menu,u.realRedoMenuLabel,realLabel,underline=underline)
+			frame.menu.setMenuLabel(menu,u.realRedoMenuLabel,realLabel,underline=underline)
 			u.redoMenuLabel = name
 			u.realRedoMenuLabel = realLabel
 	
 	def setUndoType (self,type):
-		u = self ; c = u.commands
-		menu = c.frame.getMenu("Edit")
+		u = self ; frame = u.c.frame
+		menu = frame.menu.getMenu("Edit")
 		name = u.undoMenuName(type)
 		if name != u.undoMenuLabel:
 			# Update menu using old name.
-			realLabel = app.getRealMenuName(name)
+			realLabel = frame.menu.getRealMenuName(name)
 			if realLabel == name:
 				underline=choose(match(name,0,"Can't"),-1,0)
 			else:
 				underline = realLabel.find("&")
 			realLabel = realLabel.replace("&","")
-			setMenuLabel(menu,u.realUndoMenuLabel,realLabel,underline=underline)
+			frame.menu.setMenuLabel(menu,u.realUndoMenuLabel,realLabel,underline=underline)
 			u.undoType = type
 			u.undoMenuLabel = name
 			u.realUndoMenuLabel = realLabel
@@ -313,7 +302,7 @@ class baseUndoer:
 		
 		# trace(undo_type,v,"old:",oldText,"new:",newText)
 	
-		u = self ; c = u.commands
+		u = self ; c = u.c
 		if u.redoing or u.undoing: return None
 		if undo_type == None:
 			return None
@@ -445,7 +434,7 @@ class baseUndoer:
 		if oldYview:
 			u.yview = oldYview
 		else:
-			u.yview = c.frame.bodyCtrl.yview()
+			u.yview = c.frame.body.getYScrollPosition()
 		# Push params on undo stack, clearing all forward entries.
 		u.bead += 1
 		d = u.setBead(u.bead)
@@ -481,7 +470,7 @@ class baseUndoer:
 	def redo (self):
 		
 		# clear_stats() ; stat()
-		u = self ; c = u.commands
+		u = self ; c = u.c
 		if not u.canRedo(): return
 		if not u.getBead(u.bead+1): return
 		current = c.currentVnode()
@@ -605,9 +594,9 @@ class baseUndoer:
 				u.v = self.undoReplace(u.v,u.oldTree,u.newTree,u.newText)
 				c.selectVnode(u.v) # Does full recolor.
 				if u.newSel:
-					start,end=u.newSel
-					setTextSelection(c.frame.bodyCtrl,start,end)
+					c.frame.body.setTextSelection(u.newSel)
 				redrawFlag = redoType in ("Extract","Extract Names","Extract Section","Read @file Nodes")
+			#@nonl
 			#@-node:<< redo replace cases >>
 			#@nl
 			#@		<< redo sort cases >>
@@ -649,11 +638,9 @@ class baseUndoer:
 					tag="redo",undoType=redoType)
 				
 				if u.newSel:
-					start,end=u.newSel
-					setTextSelection (c.frame.bodyCtrl,start,end)
+					c.frame.body.setTextSelection(u.newSel)
 				if u.yview:
-					first,last=u.yview
-					c.bodyCtrl.yview("moveto",first)
+					c.body.setYScrollPosition(u.yview)
 				redrawFlag = (current != u.v)
 					
 			elif redoType == "Change All":
@@ -708,7 +695,7 @@ class baseUndoer:
 	def undo (self):
 		
 		# clear_stats() ; # stat()
-		u = self ; c = u.commands
+		u = self ; c = u.c
 		if not u.canUndo(): return
 		if not u.getBead(u.bead): return
 		current = c.currentVnode()
@@ -841,8 +828,7 @@ class baseUndoer:
 				u.v = self.undoReplace(u.v,u.newTree,u.oldTree,u.oldText)
 				c.selectVnode(u.v) # Does full recolor.
 				if u.oldSel:
-					start,end=u.oldSel
-					setTextSelection(c.frame.bodyCtrl,start,end)
+					c.frame.body.setTextSelection(u.oldSel)
 				redrawFlag = true
 			#@nonl
 			#@-node:<< undo replace cases >>
@@ -904,11 +890,9 @@ class baseUndoer:
 					u.oldNewlines,u.newNewlines,
 					tag="undo",undoType=undoType)
 				if u.oldSel:
-					start,end=u.oldSel
-					setTextSelection (c.frame.bodyCtrl,start,end)
+					c.frame.body.setTextSelection(u.oldSel)
 				if u.yview:
-					first,last=u.yview
-					c.bodyCtrl.yview("moveto",first)
+					c.body.setYScrollPosition(u.yview)
 				redrawFlag = (current != u.v)
 					
 			elif undoType == "Change All":
@@ -978,7 +962,7 @@ class baseUndoer:
 	#@+node:findSharedVnode
 	def findSharedVnode (self,target):
 	
-		u = self ; c = u.commands ; v = c.rootVnode()
+		u = self ; c = u.c ; v = c.rootVnode()
 		while v:
 			if v != target and v.t == target.t:
 				return v
@@ -990,7 +974,7 @@ class baseUndoer:
 	# undoes the previous demote operation.
 	def undoDemote (self):
 	
-		u = self ; c = u.commands
+		u = self ; c = u.c
 		ins = v = u.v
 		last = u.lastChild
 		child = v.firstChild()
@@ -1015,7 +999,7 @@ class baseUndoer:
 	# Undoes the previous promote operation.
 	def undoPromote (self):
 	
-		u = self ; c = u.commands
+		u = self ; c = u.c
 		v = v1 = u.v
 		assert(v1)
 		last = u.lastChild
@@ -1076,7 +1060,7 @@ class baseUndoer:
 		assert(new_bodies != None)
 		assert(old_bodies != None)
 	
-		u = self ; c = u.commands
+		u = self ; c = u.c
 		joinList = new_v.t.joinList[:]
 		result = None
 		for v in joinList:
@@ -1127,7 +1111,7 @@ class baseUndoer:
 		tag="undo", # "undo" or "redo"
 		undoType=None):
 	
-		u = self ; c = u.commands
+		u = self ; c = u.c
 		assert(v == c.currentVnode())
 	
 		#@	<< Incrementally update the Tk.Text widget >>
@@ -1137,30 +1121,29 @@ class baseUndoer:
 		new_mid_len = len(newMidLines)
 		# Maybe this could be simplified, and it is good to treat the "end" with care.
 		if trailing == 0:
-			c.frame.bodyCtrl.delete(str(1+leading)+".0","end")
+			c.frame.body.deleteLine(leading)
 			if leading > 0:
-				c.frame.bodyCtrl.insert("end",'\n')
-			c.frame.bodyCtrl.insert("end",mid_text)
+				c.frame.body.insertAtEnd('\n')
+			c.frame.body.insertAtEnd(mid_text)
 		else:
 			if new_mid_len > 0:
-				c.frame.bodyCtrl.delete(str(1+leading)+".0",
-					str(leading+new_mid_len)+".0 lineend")
+				c.frame.body.deleteLines(leading,new_mid_len)
 			elif leading > 0:
-				c.frame.bodyCtrl.insert(str(1+leading)+".0",'\n')
-			c.frame.bodyCtrl.insert(str(1+leading)+".0",mid_text)
+				c.frame.body.insertAtStartOfLine(leading,'\n')
+			c.frame.body.insertAtStartOfLine(leading,mid_text)
 		# Try to end the Tk.Text widget with oldNewlines newlines.
 		# This may be off by one, and we don't care because
 		# we never use body text to compute undo results!
-		s = c.frame.bodyCtrl.get("1.0","end")
-		s = toUnicode(s,app.tkEncoding) # 2/25/03
+		s = c.frame.body.getAllText()
 		newlines = 0 ; i = len(s) - 1
 		while i >= 0 and s[i] == '\n':
 			newlines += 1 ; i -= 1
 		while newlines > oldNewlines:
-			c.frame.bodyCtrl.delete("end-1c")
+			c.frame.body.deleteLastChar()
 			newlines -= 1
 		if oldNewlines > newlines:
-			c.frame.bodyCtrl.insert("end",'\n'*(oldNewlines-newlines))
+			c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
+		#@nonl
 		#@-node:<< Incrementally update the Tk.Text widget >>
 		#@nl
 		#@	<< Compute the result using v's body text >>
@@ -1196,8 +1179,7 @@ class baseUndoer:
 		#trace("new:"+`v.bodyString()`)
 		#@	<< Get textResult from the Tk.Text widget >>
 		#@+node:<< Get textResult from the Tk.Text widget >>
-		textResult = c.frame.bodyCtrl.get("1.0","end")
-		textResult = toUnicode(textResult,app.tkEncoding) # 2/25/03
+		textResult = c.frame.body.getAllText()
 		
 		if textResult != result:
 			# Remove the newline from textResult if that is the only difference.
@@ -1224,11 +1206,12 @@ class baseUndoer:
 				#@nl
 			# trace("non-incremental undo")
 			v.setBodyStringOrPane(result)
+	#@nonl
 	#@-node:undoRedoText
 	#@+node:undoSortChildren
 	def undoSortChildren (self):
 	
-		u = self ; c = u.commands ; v = u.v
+		u = self ; c = u.c ; v = u.v
 		assert(v)
 		c.beginUpdate()
 		if 1: # inside update...
@@ -1245,7 +1228,7 @@ class baseUndoer:
 	#@+node:undoSortSiblings
 	def undoSortSiblings (self):
 		
-		u = self ; c = u.commands ; v = u.v
+		u = self ; c = u.c ; v = u.v
 		parent = v.parent()
 		assert(v and parent)
 		c.beginUpdate()
@@ -1263,7 +1246,7 @@ class baseUndoer:
 	#@+node:undoSortTopLevel
 	def undoSortTopLevel (self):
 		
-		u = self ; c = u.commands
+		u = self ; c = u.c
 		root = c.rootVnode()
 		
 		c.beginUpdate()

@@ -152,8 +152,11 @@ class baseColorizer:
 	#a single vertical line and \Vert produces a double vertical line
 	#Marcus A. Martin.
 	
+	latex_special_keyword_characters = "@(){}%"
+	
 	latex_keywords = (
 		#special keyworlds
+		"\\%", # 11/9/03
 		"\\@", "\\(", "\\)", "\\{", "\\}",
 		#A
 		"\\acute", "\\addcontentsline", "\\addtocontents", "\\addtocounter", "\\address",
@@ -523,9 +526,9 @@ class baseColorizer:
 		print "disabling all syntax coloring"
 		self.enabled=false
 	
-	def __init__(self, commands):
+	def __init__(self,c):
 	
-		self.commands = self.c = commands
+		self.c = c
 		self.count = 0 # how many times this has been called.
 		self.use_hyperlinks = false # true: use hyperlinks and underline "live" links.
 		self.enabled = true # true: syntax coloring enabled
@@ -699,27 +702,32 @@ class baseColorizer:
 	#@+node:colorize & recolor_range
 	# The main colorizer entry point.
 	
-	def colorize(self,v,body,incremental=false):
+	def colorize(self,v,incremental=false):
 	
 		if self.enabled:
-			# print "colorize:incremental",incremental
+			# trace("incremental",incremental)
 			self.incremental=incremental
 			self.updateSyntaxColorer(v)
-			return self.colorizeAnyLanguage(v,body)
+			return self.colorizeAnyLanguage(v)
+		else:
+			return "ok" # For unit testing.
 			
 	# Called from incremental undo code.
 	# Colorizes the lines between the leading and trailing lines.
 			
-	def recolor_range(self,v,body,leading,trailing):
+	def recolor_range(self,v,leading,trailing):
 		
 		if self.enabled:
-			# print "recolor_range:leading,trailing",leading,trailing
+			# trace("leading,trailing",leading,trailing)
 			self.incremental=true
 			self.updateSyntaxColorer(v)
-			return self.colorizeAnyLanguage(v,body,leading=leading,trailing=trailing)
+			return self.colorizeAnyLanguage(v,leading=leading,trailing=trailing)
+		else:
+			return "ok" # For unit testing.
+	#@nonl
 	#@-node:colorize & recolor_range
 	#@+node:colorizeAnyLanguage & allies
-	def colorizeAnyLanguage (self,v,body,leading=None,trailing=None):
+	def colorizeAnyLanguage (self,v,leading=None,trailing=None):
 		
 		"""Color the body pane either incrementally or non-incrementally"""
 		
@@ -763,9 +771,9 @@ class baseColorizer:
 				color = choose(option_color,option_color,default_color)
 				# Must use foreground, not fg.
 				try:
-					self.body.configureColor(name, foreground=color)
+					self.body.tag_configure(name, foreground=color)
 				except: # Recover after a user error.
-					self.body.configureColor(name, foreground=default_color)
+					self.body.tag_configure(name, foreground=default_color)
 			
 			underline_undefined = config.getBoolColorsPref("underline_undefined_section_names")
 			use_hyperlinks      = config.getBoolColorsPref("use_hyperlinks")
@@ -773,14 +781,14 @@ class baseColorizer:
 			
 			# underline=var doesn't seem to work.
 			if 0: # use_hyperlinks: # Use the same coloring, even when hyperlinks are in effect.
-				self.body.configureColor("link",underline=1) # defined
-				self.body.configureColor("name",underline=0) # undefined
+				self.body.tag_configure("link",underline=1) # defined
+				self.body.tag_configure("name",underline=0) # undefined
 			else:
-				self.body.configureColor("link",underline=0)
+				self.body.tag_configure("link",underline=0)
 				if underline_undefined:
-					self.body.configureColor("name",underline=1)
+					self.body.tag_configure("name",underline=1)
 				else:
-					self.body.configureColor("name",underline=0)
+					self.body.tag_configure("name",underline=0)
 					
 			# 8/4/02: we only create tags for whitespace when showing invisibles.
 			if self.showInvisibles:
@@ -790,33 +798,33 @@ class baseColorizer:
 					option_color = config.getColorsPref(option_name)
 					color = choose(option_color,option_color,default_color)
 					try:
-						self.body.configureColor(name,background=color)
+						self.body.tag_configure(name,background=color)
 					except: # Recover after a user error.
-						self.body.configureColor(name,background=default_color)
+						self.body.tag_configure(name,background=default_color)
 				
 			# 11/15/02: Colors for latex characters.  Should be user options...
 			
 			if 1: # Alas, the selection doesn't show if a background color is specified.
-				self.body.configureColor("latexModeBackground",foreground="black")
-				self.body.configureColor("latexModeKeyword",foreground="blue")
-				self.body.configureColor("latexBackground",foreground="black")
-				self.body.configureColor("latexKeyword",foreground="blue")
+				self.body.tag_configure("latexModeBackground",foreground="black")
+				self.body.tag_configure("latexModeKeyword",foreground="blue")
+				self.body.tag_configure("latexBackground",foreground="black")
+				self.body.tag_configure("latexKeyword",foreground="blue")
 			else: # Looks cool, and good for debugging.
-				self.body.configureColor("latexModeBackground",foreground="black",background="seashell1")
-				self.body.configureColor("latexModeKeyword",foreground="blue",background="seashell1")
-				self.body.configureColor("latexBackground",foreground="black",background="white")
-				self.body.configureColor("latexKeyword",foreground="blue",background="white")
+				self.body.tag_configure("latexModeBackground",foreground="black",background="seashell1")
+				self.body.tag_configure("latexModeKeyword",foreground="blue",background="seashell1")
+				self.body.tag_configure("latexBackground",foreground="black",background="white")
+				self.body.tag_configure("latexKeyword",foreground="blue",background="white")
 				
 			# Tags for wiki coloring.
 			if self.showInvisibles:
-				self.body.configureColor("elide",background="yellow")
+				self.body.tag_configure("elide",background="yellow")
 			else:
-				self.body.configureColor("elide",elide="1")
-			self.body.configureColor("bold",font=self.bold_font)
-			self.body.configureColor("italic",font=self.italic_font)
-			self.body.configureColor("bolditalic",font=self.bolditalic_font)
+				self.body.tag_configure("elide",elide="1")
+			self.body.tag_configure("bold",font=self.bold_font)
+			self.body.tag_configure("italic",font=self.italic_font)
+			self.body.tag_configure("bolditalic",font=self.bolditalic_font)
 			for name in self.color_tags_list:
-				self.body.configureColor(name,foreground=name)
+				self.body.tag_configure(name,foreground=name)
 			#@nonl
 			#@-node:<< configure tags >>
 			#@nl
@@ -1172,12 +1180,12 @@ class baseColorizer:
 			#@nonl
 			#@-node:<< set state ivars to "unknown" >>
 			#@nl
-			if self.commands:
+			if self.c:
 				es_exception()
 			else:
 				import traceback
 				traceback.print_exc()
-			return "error" # for testing.
+			return "error" # for unit testing.
 	#@nonl
 	#@-node:colorizeAnyLanguage & allies
 	#@+node:colorizeLine & allies
@@ -1313,7 +1321,7 @@ class baseColorizer:
 			
 			if word in ["@c","@code","@unit","@root","@root-code","@root-doc","@color","@nocolor"]:
 				# End of the doc part.
-				self.body.uncolorRange("docPart",self.index(i),self.index(j)) # 10/27/03
+				self.body.tag_remove("docPart",self.index(i),self.index(j)) # 10/27/03
 				self.tag("leoKeyword",i,j)
 				i = j ; state = "normal"
 			else:
@@ -1452,7 +1460,7 @@ class baseColorizer:
 				#@	<< handle possible latex keyword >>
 				#@+node:<< handle possible latex keyword >>
 				if match(s,i,"\\"):
-					j = self.skip_id(s,i+1)
+					j = self.skip_id(s,i+1,chars=self.latex_special_keyword_characters) # 11/9/03
 					word = s[i:j]
 					if word in self.latex_keywords:
 						self.tag("latexKeyword",i,j)
@@ -1699,7 +1707,9 @@ class baseColorizer:
 			#@-node:<< handle normal character >>
 			#@nl
 	
-		assert(self.progress < i)
+		if 0: # This can fail harmlessly when using wxPython plugin.  Don't know exactly why.
+			trace(self.progress,i,state)
+			assert(self.progress < i)
 		return i,state
 	#@-node:doNormalState
 	#@+node:doNowebSecRef
@@ -1727,13 +1737,13 @@ class baseColorizer:
 					# Create the tag name.
 					tagName = "hyper" + `self.hyperCount`
 					self.hyperCount += 1
-					self.body.removeColor(tagName)
+					self.body.tag_delete(tagName)
 					self.tag(tagName,i+2,j)
 					
 					ref.tagName = tagName
-					self.body.bindColor(tagName,"<Control-1>",ref.OnHyperLinkControlClick)
-					self.body.bindColor(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
-					self.body.bindColor(tagName,"<Any-Leave>",ref.OnHyperLinkLeave)
+					self.body.tag_bind(tagName,"<Control-1>",ref.OnHyperLinkControlClick)
+					self.body.tag_bind(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
+					self.body.tag_bind(tagName,"<Any-Leave>",ref.OnHyperLinkLeave)
 					#@nonl
 					#@-node:<< set the hyperlink >>
 					#@nl
@@ -1748,21 +1758,21 @@ class baseColorizer:
 	#@+node:removeAllTags & removeTagsFromLines
 	def removeAllTags (self):
 		
-		# Warning: the following DOES NOT WORK: self.body.removeColor(self.tags)
+		# Warning: the following DOES NOT WORK: self.body.tag_delete(self.tags)
 		for tag in self.tags:
-			self.body.removeColor(tag) # 10/27/03
+			self.body.tag_delete(tag) # 10/27/03
 	
 		for tag in self.color_tags_list:
-			self.body.removeColor(tag) # 10/27/03
+			self.body.tag_delete(tag) # 10/27/03
 		
 	def removeTagsFromLine (self):
 		
 		# print "removeTagsFromLine",self.line_index
 		for tag in self.tags:
-			self.body.uncolorRange(tag,self.index(0),self.index("end")) # 10/27/03
+			self.body.tag_remove(tag,self.index(0),self.index("end")) # 10/27/03
 			
 		for tag in self.color_tags_list:
-			self.body.uncolorRange(tag,self.index(0),self.index("end")) # 10/27/03
+			self.body.tag_remove(tag,self.index(0),self.index("end")) # 10/27/03
 	#@nonl
 	#@-node:removeAllTags & removeTagsFromLines
 	#@+node:scanColorDirectives
@@ -1772,9 +1782,9 @@ class baseColorizer:
 		setting corresponding colorizer ivars.
 		"""
 	
-		c = self.commands
+		c = self.c
 		if c == None:
-			return # self.commands may be None for testing.
+			return # self.c may be None for testing.
 	
 		language = c.target_language
 		self.language = language # 2/2/03
@@ -1819,17 +1829,18 @@ class baseColorizer:
 		return self.language # For use by external routines.
 	#@-node:scanColorDirectives
 	#@+node:color.schedule & idle_colorize
-	def schedule(self,v,body,incremental=0):
+	# At present these are not used.
+	
+	def schedule(self,v,incremental=0):
 	
 		if self.enabled:
 			self.incremental=incremental
-			app.gui.setIdleTimeHook(self.idle_colorize,v,body)
+			app.gui.setIdleTimeHook(self.idle_colorize,v)
 			
-	def idle_colorize(self,v,body):
+	def idle_colorize(self,v):
 	
-		# trace(v)
-		if v and body and self.enabled:
-			self.colorize(v,body,self.incremental)
+		if v and self.enabled:
+			self.colorize(v,self.incremental)
 	#@nonl
 	#@-node:color.schedule & idle_colorize
 	#@+node:getCwebWord
@@ -1916,11 +1927,11 @@ class baseColorizer:
 	#@+node:index & tag
 	def index (self,i):
 		
-		return self.body.convertRowColumnToIndex(self.line_index,i) # 10/27/03
+		return self.body.convertRowColumnToIndex(self.line_index,i)
 			
 	def tag (self,name,i,j):
 	
-		self.body.colorRange(name,self.index(i),self.index(j)) # 10/27/03
+		self.body.tag_add(name,self.index(i),self.index(j))
 	#@nonl
 	#@-node:index & tag
 	#@+node:setFirstLineState

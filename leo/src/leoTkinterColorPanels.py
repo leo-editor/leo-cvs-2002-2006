@@ -2,23 +2,13 @@
 #@+node:@file leoTkinterColorPanels.py
 from leoGlobals import *
 
+import leoColorPanel
 import string,Tkinter,tkColorChooser
 
-#@<< define color panel data >>
-#@+node:<< define color panel data >>
-colorPanelData = (
-	#Dialog name,                option name,         default color),
-	("Brackets",          "section_name_brackets_color", "blue"),
-	("Comments",          "comment_color",               "red"),
-	("CWEB section names","cweb_section_name_color",     "red"),
-	("Directives",        "directive_color",             "blue"),
-	("Doc parts",         "doc_part_color",              "red"),
-	("Keywords" ,         "keyword_color",               "blue"),
-	("Leo Keywords",      "leo_keyword_color",           "blue"),
-	("Section Names",     "section_name_color",          "red"),
-	("Strings",           "string_color",   "#00aa00"), # Used by IDLE.
-	("Undefined Names",   "undefined_section_name_color","red") )
+Tk = Tkinter
 
+#@<< define gui-dependent color panel data >>
+#@+node:<< define gui-dependent color panel data >>
 colorNamesList = (
 	"gray60", "gray70", "gray80", "gray85", "gray90", "gray95",
 	"snow1", "snow2", "snow3", "snow4", "seashell1", "seashell2",
@@ -82,7 +72,7 @@ colorNamesList = (
 	"purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
 	"MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
 	"thistle4" )
-#@-node:<< define color panel data >>
+#@-node:<< define gui-dependent color panel data >>
 #@nl
 
 #@+others
@@ -93,12 +83,15 @@ class leoTkinterColorNamePanel:
 	
 	#@	@+others
 	#@+node:namePanel.__init__
-	def __init__ (self, colorPanel, name, color):
+	def __init__ (self,colorPanel,name,color):
 		
+		# No need for a base class.
 		self.colorPanel = colorPanel
 		self.name = name
 		self.color = color
 		self.revertColor = color
+		
+		self.createFrame(name,color)
 	#@nonl
 	#@-node:namePanel.__init__
 	#@+node:getSelection
@@ -122,14 +115,15 @@ class leoTkinterColorNamePanel:
 		return color
 	#@nonl
 	#@-node:getSelection
-	#@+node:run
-	def run (self,name,color):
+	#@+node:createFrame
+	def createFrame (self,name,color):
 		
 		assert(name==self.name)
 		assert(color==self.color)
 		self.revertColor = color
 		
-		Tk = Tkinter
+		Tk = Tkinter ; gui = app.gui
+	
 		self.top = top = Tk.Toplevel(app.root)
 		top.title("Color names for " + '"' + name + '"')
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
@@ -184,14 +178,14 @@ class leoTkinterColorNamePanel:
 		#@nl
 		self.select(color)
 		
-		center_dialog(top) # Do this _after_ building the dialog!
+		gui.center_dialog(top) # Do this _after_ building the dialog!
 		# top.resizable(0,0)
 		
 		# This must be a modal dialog.
 		top.grab_set()
 		top.focus_set() # Get all keystrokes.
 	#@nonl
-	#@-node:run
+	#@-node:createFrame
 	#@+node:onOk, onCancel, onRevert, OnApply
 	def onApply (self,event=None):
 		self.color = color = self.getSelection()
@@ -233,7 +227,7 @@ class leoTkinterColorNamePanel:
 	#@-others
 #@-node:class leoTkinterColorNamePanel
 #@+node:class leoTkinterColorPanel
-class leoTkinterColorPanel:
+class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 	
 	"""A class to create and run a Tkinter color panel."""
 
@@ -241,33 +235,35 @@ class leoTkinterColorPanel:
 	#@+node:colorPanel.__init__
 	def __init__ (self,c):
 		
-		self.commands = c
-		self.frame = c.frame
-		# Set by run.
-		self.top = None
-		# Options provisionally set by callback.
+		"""Create a tkinter color panel."""
+		
+		# Init the base class
+		leoColorPanel.leoColorPanel.__init__(self,c)
+		
+		# For communication with callbacks.
 		self.changed_options = []
-		# For communication with callback.
 		self.buttons = {}
 		self.nameButtons = {}
 		self.option_names = {}
-		# Save colors for revert.  onOk alters this.
-		self.revertColors = {}
-		config = app.config
-		for name,option_name,default_color in colorPanelData:
-			self.revertColors[option_name] = config.getColorsPref(option_name)
+	
+		self.createFrame()
 	#@nonl
 	#@-node:colorPanel.__init__
-	#@+node:run (color panel)
-	def run (self):
+	#@+node:bringToFront
+	def bringToFront(self):
 		
-		c = self.commands ; Tk = Tkinter
-		config = app.config
+		self.top.deiconify()
+		self.top.lift()
+	#@-node:bringToFront
+	#@+node:createFrame (color panel)
+	def createFrame (self):
+		
+		c = self.c ; config = app.config ; gui = app.gui
 		
 		self.top = top = Tk.Toplevel(app.root)
 		top.title("Syntax colors for " + c.frame.shortFileName()) # DS, 10/28/03
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
-		attachLeoIcon(top)
+		gui.attachLeoIcon(top)
 	
 		#@	<< create color panel >>
 		#@+node:<< create color panel >>
@@ -275,7 +271,7 @@ class leoTkinterColorPanel:
 		outer.pack(anchor="n",pady=2,ipady=1,expand=1,fill="x")
 		
 		# Create all the rows.
-		for name,option_name,default_color in colorPanelData:
+		for name,option_name,default_color in self.colorPanelData:
 			# Get the color.
 			option_color = config.getColorsPref(option_name)
 			color = choose(option_color,option_color,default_color)
@@ -318,16 +314,11 @@ class leoTkinterColorPanel:
 		#@nonl
 		#@-node:<< create color panel >>
 		#@nl
-		center_dialog(top) # Do this _after_ building the dialog!
+	
+		gui.center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0)
-		
-		# We are associated with a commander, so
-		# There is no need to make this a modal dialog.
-		if 0:
-			top.grab_set() # Make the dialog a modal dialog.
-			top.focus_set() # Get all keystrokes.
 	#@nonl
-	#@-node:run (color panel)
+	#@-node:createFrame (color panel)
 	#@+node:showColorPicker
 	def showColorPicker (self,name):
 		
@@ -340,8 +331,11 @@ class leoTkinterColorPanel:
 	#@-node:showColorPicker
 	#@+node:showColorName
 	def showColorName (self,name,color):
-	
-		app.gui.runColorNamePanel(self,name,color)
+		
+		"""Bring up a tkinter color name panel."""
+		
+		# No need to use an app gui routine: this is all Tk code.
+		leoTkinterColorNamePanel(self,name,color)
 	#@nonl
 	#@-node:showColorName
 	#@+node:colorPanel.onOk, onCancel, onRevert
@@ -355,7 +349,7 @@ class leoTkinterColorPanel:
 		if 1: # Hide the window, preserving its position.
 			self.top.withdraw()
 		else: # works.
-			self.commands.frame.colorPanel = None
+			self.c.frame.colorPanel = None
 			self.top.destroy()
 		
 	def onCancel (self):
@@ -363,7 +357,7 @@ class leoTkinterColorPanel:
 		if 1: # Hide the window, preserving its position.
 			self.top.withdraw()
 		else: # works.
-			self.commands.frame.colorPanel = None
+			self.c.frame.colorPanel = None
 			self.top.destroy()
 		
 	def onRevert (self):
@@ -379,7 +373,7 @@ class leoTkinterColorPanel:
 			b = self.nameButtons[name]
 			b.configure(text=`old_val`)
 		self.changed_options = []
-		self.commands.recolor()
+		self.c.recolor()
 	#@nonl
 	#@-node:colorPanel.onOk, onCancel, onRevert
 	#@+node:update
@@ -395,7 +389,10 @@ class leoTkinterColorPanel:
 		
 		# Put the new color name or value in the name button.
 		b = self.nameButtons[name]
-		b.configure(text=str(val))
+		if type(val) == "" or type(val) == u"":
+			b.configure(text=val) # Prevents unwanted quotes in the name.
+		else:
+			b.configure(text=str(val))
 		
 		# Save the changed option names for revert and cancel.
 		if name not in self.changed_options:
@@ -403,7 +400,7 @@ class leoTkinterColorPanel:
 	
 		# Set the new value and recolor.
 		config.setColorsPref(option_name,val)
-		self.commands.recolor()
+		self.c.recolor()
 	#@nonl
 	#@-node:update
 	#@-others

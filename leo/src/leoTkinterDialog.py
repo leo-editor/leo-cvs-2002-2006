@@ -65,7 +65,7 @@ class leoTkinterDialog:
 		
 		"""Center any leoTkinterDialog."""
 		
-		center_dialog(self.top)
+		app.gui.center_dialog(self.top)
 	#@-node:center
 	#@+node:createButtons
 	def createButtons (self,buttons):
@@ -113,8 +113,6 @@ class leoTkinterDialog:
 		self.root = app.root
 	
 		self.top = Tk.Toplevel(self.root)
-		attachLeoIcon(self.top)
-	
 		self.top.title(self.title)
 	
 		if not self.resizeable:
@@ -122,6 +120,12 @@ class leoTkinterDialog:
 	
 		self.frame = Tk.Frame(self.top)
 		self.frame.pack(side="top",expand=1,fill="both")
+		
+		# Do this at idle time.
+		def callback(top=self.top):
+			app.gui.attachLeoIcon(self.top)
+		
+		self.top.after_idle(callback)
 	#@nonl
 	#@-node:createTopFrame
 	#@+node:run
@@ -287,7 +291,7 @@ class tkinterAskLeoID (leoTkinterDialog):
 			"Please enter an id that identifies you uniquely.\n" +
 			"Your cvs login name is a good choice.\n\n" +
 			"Your id must contain only letters and numbers\n" +
-			"and must be at least 4 characters in length.")
+			"and must be at least 3 characters in length.")
 		self.createFrame(message)
 		self.focus_widget = self.id_entry
 	
@@ -325,7 +329,7 @@ class tkinterAskLeoID (leoTkinterDialog):
 		"""Handle clicks in the Leo Id close button."""
 	
 		s = self.id_entry.get().strip()
-		if len(s) < 4:  # Require at least 4 characters in an id.
+		if len(s) < 3:  # Require at least 3 characters in an id.
 			return
 	
 		self.answer = app.leoID = s
@@ -354,17 +358,17 @@ class tkinterAskLeoID (leoTkinterDialog):
 		#@nonl
 		#@-node:<< eliminate invalid characters >>
 		#@nl
-		#@	<< enable the ok button if there are 4 or more valid characters >>
-		#@+node:<< enable the ok button if there are 4 or more valid characters >>
+		#@	<< enable the ok button if there are 3 or more valid characters >>
+		#@+node:<< enable the ok button if there are 3 or more valid characters >>
 		e = self.id_entry
 		b = self.ok_button
 		
-		if len(e.get().strip()) >= 4:
+		if len(e.get().strip()) >= 3:
 			b.configure(state="normal")
 		else:
 			b.configure(state="disabled")
 		#@nonl
-		#@-node:<< enable the ok button if there are 4 or more valid characters >>
+		#@-node:<< enable the ok button if there are 3 or more valid characters >>
 		#@nl
 		
 		ch = event.char.lower()

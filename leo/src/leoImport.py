@@ -53,9 +53,9 @@ class baseLeoImportCommands:
 	"""The base class for Leo's import commands."""
 	#@	@+others
 	#@+node:import.__init__
-	def __init__ (self,commands):
+	def __init__ (self,c):
 	
-		self.commands = commands
+		self.c = c
 		
 		# Set by ImportFilesFommand.
 		self.treeType = "@file" # "@root" or "@file"
@@ -78,7 +78,7 @@ class baseLeoImportCommands:
 	#@+node:createOutline
 	def createOutline (self,fileName,parent):
 	
-		c = self.commands ; current = c.currentVnode()
+		c = self.c ; current = c.currentVnode()
 		junk, self.fileName = os.path.split(fileName) # junk/fileName
 		self.methodName,ext = os.path.splitext(self.fileName) # methodName.fileType
 		
@@ -139,7 +139,7 @@ class baseLeoImportCommands:
 	#@+node:importDerivedFiles
 	def importDerivedFiles (self,parent,fileName):
 		
-		c = self.commands ; at = c.atFileCommands
+		c = self.c ; at = c.atFileCommands
 		current = c.currentVnode()
 		
 		c.beginUpdate()
@@ -154,7 +154,7 @@ class baseLeoImportCommands:
 	#@+node:importFilesCommand
 	def importFilesCommand (self,files,treeType):
 	
-		c = self.commands
+		c = self.c
 		if c == None: return
 		v = current = c.currentVnode()
 		if current == None: return
@@ -210,7 +210,7 @@ class baseLeoImportCommands:
 	
 	def convertMoreStringsToOutlineAfter (self,strings,firstVnode):
 	
-		c = self.commands
+		c = self.c
 		if len(strings) == 0: return None
 		if not self.stringsAreValidMoreFile(strings): return None
 		c.beginUpdate()
@@ -303,7 +303,7 @@ class baseLeoImportCommands:
 	# On entry,files contains at most one file to convert.
 	def importFlattenedOutline (self,files):
 	
-		c = self.commands ; current = c.currentVnode()
+		c = self.c ; current = c.currentVnode()
 		if current == None: return
 		if len(files) < 1: return
 		self.setEncoding()
@@ -386,7 +386,7 @@ class baseLeoImportCommands:
 	#@+node:createOutlineFromWeb
 	def createOutlineFromWeb (self,path,parent):
 	
-		c = self.commands ; current = c.currentVnode()
+		c = self.c ; current = c.currentVnode()
 		junk, fileName = os.path.split(path)
 		# Create the top-level headline.
 		v = parent.insertAsLastChild()
@@ -403,7 +403,7 @@ class baseLeoImportCommands:
 	#@+node:importWebCommand
 	def importWebCommand (self,files,webType):
 	
-		c = self.commands ; current = c.currentVnode()
+		c = self.c ; current = c.currentVnode()
 		if current == None: return
 		if len(files) < 1: return
 		self.webType = webType
@@ -1195,7 +1195,7 @@ class baseLeoImportCommands:
 	
 		#@	<< define scanCText vars >>
 		#@+node:<< define scanCText vars >>
-		c = self.commands
+		c = self.c
 		include_seen = method_seen = false
 		methodKind = choose(self.fileType==".c","functions","methods")
 		lparen = None   # Non-null if '(' seen at outer level.
@@ -1500,7 +1500,7 @@ class baseLeoImportCommands:
 	#@+node:scanElispText & allies
 	def scanElispText(self,s,v):
 		
-		c = self.commands
+		c = self.c
 		v.appendStringToBody("@ignore\n@language elisp\n")
 		i = 0 ; start = 0
 		while i < len(s):
@@ -2024,7 +2024,7 @@ class baseLeoImportCommands:
 	def convertCodePartToWeb (self,s,i,v,result):
 	
 		# trace(get_line(s,i))
-		c = self.commands ; nl = self.output_newline
+		c = self.c ; nl = self.output_newline
 		lb = choose(self.webType=="cweb","@<","<<")
 		rb = choose(self.webType=="cweb","@>",">>")
 		h = string.strip(v.headString())
@@ -2295,7 +2295,7 @@ class baseLeoImportCommands:
 	#@+node:exportHeadlines
 	def exportHeadlines (self,fileName):
 		
-		c = self.commands ; v = c.currentVnode()
+		c = self.c ; v = c.currentVnode()
 		nl = self.output_newline
 		if not v: return
 		self.setEncoding()
@@ -2319,7 +2319,7 @@ class baseLeoImportCommands:
 	#@+node:flattenOutline
 	def flattenOutline (self,fileName):
 	
-		c = self.commands ; v = c.currentVnode()
+		c = self.c ; v = c.currentVnode()
 		nl = self.output_newline
 		if not v: return
 		self.setEncoding()
@@ -2348,7 +2348,7 @@ class baseLeoImportCommands:
 	#@+node:outlineToWeb
 	def outlineToWeb (self,fileName,webType):
 	
-		c = self.commands ; v = c.currentVnode()
+		c = self.c ; v = c.currentVnode()
 		nl = self.output_newline
 		if v == None: return
 		self.setEncoding()
@@ -2522,7 +2522,7 @@ class baseLeoImportCommands:
 	#@+node:weave
 	def weave (self,filename):
 		
-		c = self.commands ; v = c.currentVnode()
+		c = self.c ; v = c.currentVnode()
 		nl = self.output_newline
 		if not v: return
 		self.setEncoding()
@@ -2601,7 +2601,7 @@ class baseLeoImportCommands:
 	
 	def getLeadingIndent (self,s,i):
 	
-		c = self.commands
+		c = self.c
 		i = find_line_start(s,i)
 		while i < len(s):
 			# trace(`get_line(s,i)`)
@@ -2647,7 +2647,7 @@ class baseLeoImportCommands:
 		
 		# trace(`s`)
 		# trace(`get_line(s,0)`)
-		c = self.commands
+		c = self.c
 		if self.treeType == "@file":
 			if self.fileType == ".py": # 7/31/02: was "py"
 				return self.undentBody(s)
@@ -2767,7 +2767,7 @@ class baseLeoImportCommands:
 	def setEncoding (self):
 		
 		# scanDirectives checks the encoding: may return None.
-		dict = scanDirectives(self.commands)
+		dict = scanDirectives(self.c)
 		encoding = dict.get("encoding")
 		if encoding and isValidEncoding(encoding):
 			self.encoding = encoding
@@ -2876,7 +2876,7 @@ class baseLeoImportCommands:
 	def undentBody (self,s):
 	
 		# trace(`s`)
-		c = self.commands
+		c = self.c
 		i = 0 ; result = ""
 		# Copy an @code line as is.
 		if match(s,i,"@code"):

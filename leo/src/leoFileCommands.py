@@ -32,11 +32,11 @@ class baseFileCommands:
 	"""A base class for the fileCommands subcommander."""
 	#@	@+others
 	#@+node:leoFileCommands._init_
-	def __init__(self,commands):
+	def __init__(self,c):
 	
 		# trace("__init__", "fileCommands.__init__")
-		self.commands = commands
-		self.frame = commands.frame
+		self.c = c
+		self.frame = c.frame
 		self.initIvars()
 	
 	def initIvars(self):
@@ -82,7 +82,7 @@ class baseFileCommands:
 	def createVnode(self,parent,back,tref,headline,attrDict):
 		
 		# trace(`headline` + ", parent:" + `parent` + ", back:" + `back`)
-		v = None ; c = self.commands
+		v = None ; c = self.c
 		# Shared tnodes are placed in the file even if empty.
 		if tref == -1:
 			t = leoNodes.tnode()
@@ -121,7 +121,7 @@ class baseFileCommands:
 	# This method finishes pasting the outline from the clipboard.
 	def finishPaste(self):
 	
-		c=self.commands
+		c = self.c
 		current = c.currentVnode()
 		after = current.nodeAfterTree()
 		c.beginUpdate()
@@ -361,7 +361,7 @@ class baseFileCommands:
 	#@+node:getFindPanelSettings
 	def getFindPanelSettings (self):
 	
-		c = self.commands ; config = app.config ; findFrame = app.findFrame
+		c = self.c ; config = app.config ; findFrame = app.findFrame
 		#@	<< Set defaults of all flags >>
 		#@+node:<< Set defaults of all flags >>
 		if app.gui.guiName() == "tkinter":
@@ -385,6 +385,7 @@ class baseFileCommands:
 				elif self.matchTag("script_search="): c.script_search_flag = self.getDqBool() # 11/05/03
 				elif self.matchTag("search_headline="): c.search_headline_flag = self.getDqBool()
 				elif self.matchTag("search_body="): c.search_body_flag = self.getDqBool()
+				elif self.matchTag("selection_only="): c.selection_only_flag = self.getDqBool() # 11/9/03
 				elif self.matchTag("suboutline_only="): c.suboutline_only_flag = self.getDqBool()
 				elif self.matchTag("whole_word="): c.whole_word_flag = self.getDqBool()
 				elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
@@ -440,9 +441,9 @@ class baseFileCommands:
 	#@+node:getLeoFile (calls setAllJoinLinks, initAllCloneBits)
 	# The caller should enclose this in begin/endUpdate.
 	
-	def getLeoFile (self,frame,fileName,atFileNodesFlag=true):
+	def getLeoFile (self,fileName,atFileNodesFlag=true):
 	
-		c=self.commands
+		c = self.c
 		c.setChanged(false) # 10/1/03: May be set when reading @file nodes.
 		#@	<< warn on read-only files >>
 		#@+node:<< warn on read-only files >>
@@ -583,7 +584,7 @@ class baseFileCommands:
 	#@+node:getPrefs
 	def getPrefs (self):
 	
-		c = self.commands ; config = app.config
+		c = self.c ; config = app.config
 		
 		if self.getOpenTag("<preferences"):
 			return
@@ -742,7 +743,7 @@ class baseFileCommands:
 	def getVnode (self,parent,back):
 	
 		# trace("parent:" + `parent` + ", back:" + `back`)
-		c = self.commands
+		c = self.c
 		setCurrent = setExpanded = setMarked = setOrphan = setTop = false
 		tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {}
 		# we have already matched <v.
@@ -839,7 +840,7 @@ class baseFileCommands:
 	#@+node:getVnodes
 	def getVnodes (self):
 	
-		c=self.commands
+		c = self.c
 		if  self.usingClipboard:
 			# Paste after the current vnode.
 			back = c.currentVnode() ; parent = back.parent()
@@ -868,7 +869,7 @@ class baseFileCommands:
 	
 	def getXmlStylesheetTag (self):
 		
-		c = self.commands
+		c = self.c
 		tag = "<?xml-stylesheet "
 	
 		if self.matchTag(tag):
@@ -945,7 +946,7 @@ class baseFileCommands:
 	#@+node:readAtFileNodes
 	def readAtFileNodes (self):
 	
-		c = self.commands ; current = c.currentVnode()
+		c = self.c ; current = c.currentVnode()
 		c.atFileCommands.readAll(current,partialFlag=true)
 		self.setAllJoinLinks(current) # 5/3/03
 		c.initAllCloneBits() # 5/3/03
@@ -959,7 +960,7 @@ class baseFileCommands:
 	#@+node:fileCommands.readOutlineOnly
 	def readOutlineOnly (self,file,fileName):
 	
-		c=self.commands
+		c = self.c
 		# Read the entire file into the buffer
 		self.fileBuffer = file.read() ; file.close()
 		self.fileIndex = 0
@@ -983,7 +984,7 @@ class baseFileCommands:
 		#@-node:<< Set the default directory >> in fileCommands.readOutlineOnly
 		#@nl
 		c.beginUpdate()
-		ok, ratio = self.getLeoFile(self.frame,fileName,atFileNodesFlag=false)
+		ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=false)
 		c.endUpdate()
 		c.frame.deiconify()
 		vflag,junk,secondary_ratio = self.frame.initialRatios()
@@ -1001,7 +1002,7 @@ class baseFileCommands:
 	#@+node:fileCommands.open
 	def open(self,file,fileName):
 	
-		c=self.commands
+		c = self.c
 		# Read the entire file into the buffer
 		self.fileBuffer = file.read() ; file.close()
 		self.fileIndex = 0
@@ -1025,7 +1026,7 @@ class baseFileCommands:
 		#@-node:<< Set the default directory >> in fileCommands.readOutlineOnly
 		#@nl
 		c.beginUpdate()
-		ok, ratio = self.getLeoFile(self.frame,fileName,atFileNodesFlag=true)
+		ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=true)
 		#@	<< Make the top node visible >>
 		#@+node:<< Make the top node visible >>
 		if 0: # This can't be done directly.
@@ -1055,7 +1056,7 @@ class baseFileCommands:
 					v.t.joinList.append(v)
 				v = v.threadNext()
 		else: # Update everything.
-			v = self.commands.rootVnode()
+			v = self.c.rootVnode()
 			while v:
 				# trace(v,v.t)
 				if v not in v.t.joinList:
@@ -1079,7 +1080,7 @@ class baseFileCommands:
 		
 		"""Assign a file index to all tnodes"""
 		
-		c=self.commands ; nodeIndices = app.nodeIndices
+		c = self.c ; nodeIndices = app.nodeIndices
 		root = c.rootVnode() # 4.1: Always assign all indices.
 		nodeIndices.setTimestamp() # This call is fairly expensive.
 		
@@ -1171,7 +1172,7 @@ class baseFileCommands:
 		tnodes = 0
 		#@	<< count the number of tnodes >>
 		#@+node:<< count the number of tnodes >>
-		c=self.commands
+		c = self.c
 		c.clearAllVisited()
 		
 		# Count the vnode and tnodes.
@@ -1211,7 +1212,7 @@ class baseFileCommands:
 	#@+node:putFindSettings
 	def putFindSettings (self):
 	
-		c = self.commands ; config = app.config
+		c = self.c ; config = app.config
 	
 		self.put("<find_panel_settings")
 		
@@ -1260,7 +1261,7 @@ class baseFileCommands:
 	#@+node:fileCommands.putGlobals (changed for 4.0)
 	def putGlobals (self):
 	
-		c=self.commands
+		c = self.c
 		self.put("<globals")
 		#@	<< put the body/outline ratio >>
 		#@+node:<< put the body/outline ratio >>
@@ -1342,7 +1343,7 @@ class baseFileCommands:
 	#@+node:putPrefs
 	def putPrefs (self):
 	
-		c = self.commands ; config = app.config
+		c = self.c ; config = app.config
 	
 		self.put("<preferences")
 		
@@ -1395,7 +1396,7 @@ class baseFileCommands:
 	#@+node:putProlog
 	def putProlog (self):
 	
-		c = self.commands ; config = app.config
+		c = self.c ; config = app.config
 	
 		#@	<< Put the <?xml...?> line >>
 		#@+node:<< Put the <?xml...?> line >>
@@ -1491,7 +1492,7 @@ class baseFileCommands:
 		
 		"""Puts all tnodes as required for copy or save commands"""
 	
-		c=self.commands
+		c = self.c
 		if self.usingClipboard: # write the current tree.
 			v = c.currentVnode() ; after = v.nodeAfterTree()
 		else: # write everything
@@ -1532,7 +1533,7 @@ class baseFileCommands:
 	
 	def putVnode (self,v,topVnode):
 	
-		fc = self ; c = fc.commands
+		fc = self ; c = fc.c
 		fc.put("<v")
 		#@	<< Put tnode index >>
 		#@+node:<< Put tnode index >>
@@ -1615,7 +1616,7 @@ class baseFileCommands:
 	#@@c
 	def putVnodes (self):
 	
-		c=self.commands
+		c = self.c
 		c.clearAllVisited()
 	
 		self.put("<vnodes>") ; self.put_nl()
@@ -1636,7 +1637,7 @@ class baseFileCommands:
 	#@+node:save
 	def save(self,fileName):
 	
-		c = self.commands ; v = c.currentVnode()
+		c = self.c ; v = c.currentVnode()
 	
 		if not doHook("save1",c=c,v=v,fileName=fileName):
 			c.beginUpdate()
@@ -1656,7 +1657,7 @@ class baseFileCommands:
 	#@+node:saveAs
 	def saveAs(self,fileName):
 	
-		c = self.commands ; v = c.currentVnode()
+		c = self.c ; v = c.currentVnode()
 	
 		if not doHook("save1",c=c,v=v,fileName=fileName):
 			c.beginUpdate()
@@ -1672,7 +1673,7 @@ class baseFileCommands:
 	#@+node:saveTo
 	def saveTo (self,fileName):
 	
-		c = self.commands ; v = c.currentVnode()
+		c = self.c ; v = c.currentVnode()
 	
 		if not doHook("save1",c=c,v=v,fileName=fileName):
 			c.beginUpdate()
@@ -1689,7 +1690,7 @@ class baseFileCommands:
 		
 		"""Set c.openDirectory for new files for the benefit of leoAtFile.scanAllDirectives."""
 		
-		c = self.commands
+		c = self.c
 	
 		if not c.openDirectory or len(c.openDirectory) == 0:
 			dir = os.path.dirname(fileName)
@@ -1702,7 +1703,7 @@ class baseFileCommands:
 	#@+node:write_LEO_file
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
-		c=self.commands ; config = app.config
+		c = self.c ; config = app.config
 	
 		if not outlineOnlyFlag:
 			try:
@@ -1851,7 +1852,7 @@ class baseFileCommands:
 	#@+node:writeAtFileNodes
 	def writeAtFileNodes (self):
 		
-		c = self.commands
+		c = self.c
 	
 		changedFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=true)
 		assert(changedFiles != None)
@@ -1865,7 +1866,7 @@ class baseFileCommands:
 	
 		"""The Write Dirty @file Nodes command"""
 		
-		c = self.commands
+		c = self.c
 	
 		changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
 		
@@ -1878,7 +1879,7 @@ class baseFileCommands:
 	#@+node:writeMissingAtFileNodes
 	def writeMissingAtFileNodes (self):
 	
-		c = self.commands ; v = c.currentVnode()
+		c = self.c ; v = c.currentVnode()
 	
 		if v:
 			at = c.atFileCommands
@@ -1892,7 +1893,7 @@ class baseFileCommands:
 	#@+node:writeOutlineOnly
 	def writeOutlineOnly (self):
 	
-		c=self.commands
+		c = self.c
 		c.endEditing()
 		self.compactFileIndices()
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag

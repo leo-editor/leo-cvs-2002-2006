@@ -35,7 +35,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 #@nl
 
 from leoGlobals import *
-import leoApp,leoConfig,leoFrame,leoNodes
+import leoApp,leoConfig,leoNodes
 import os,string,sys,traceback
 
 #@+others
@@ -70,7 +70,7 @@ def run(fileName=None,*args,**keywords):
 	app.writeWaitingLog()
 	v = c.currentVnode()
 	doHook("start2",c=c,v=v,fileName=fileName)
-	frame.commands.redraw()
+	frame.c.redraw()
 	frame.body.setFocus()
 	app.initing = false # "idle" hooks may now call app.forceShutdown.
 	app.gui.runMainLoop()
@@ -105,7 +105,11 @@ def computeLoadDir():
 	try:
 		import leo
 		path = os.path.abspath(leo.__file__)
-		path = toUnicode(path,"mbcs") # 10/20/03
+		# 11/07/03: "mbcs" exists only on Windows.
+		if sys.platform=="win32":
+			path = toUnicode(path,"mbcs")
+		else:
+			path = toUnicode(path,app.tkEncoding)
 		if path:
 			loadDir = os.path.dirname(path)
 		else:
@@ -138,7 +142,7 @@ def createFrame (fileName):
 			ok, frame = openWithFileName(fileName) # 7/13/03: the global routine.
 			if ok:
 				# print fileName
-				return frame.commands,frame
+				return frame.c,frame
 	
 	# Create a new frame & indicate it is the startup window.
 	c,frame = app.gui.newLeoCommanderAndFrame(fileName=None)

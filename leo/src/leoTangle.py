@@ -358,9 +358,9 @@ class baseTangleCommands:
 	"""The base class for Leo's tangle and untangle commands."""
 	#@	@+others
 	#@+node:tangle.__init__
-	def __init__ (self,commands):
+	def __init__ (self,c):
 	
-		self.commands = commands
+		self.c = c
 		self.init_ivars()
 	#@nonl
 	#@-node:tangle.__init__
@@ -369,7 +369,7 @@ class baseTangleCommands:
 	
 	def init_ivars(self):
 	
-		c = self.commands
+		c = self.c
 		#@	<< init tangle ivars >>
 		#@+node:<< init tangle ivars >>
 		# Various flags and counts...
@@ -466,7 +466,7 @@ class baseTangleCommands:
 	
 	def init_directive_ivars (self):
 	
-		c = self.commands
+		c = self.c
 		#@	<< init directive ivars >>
 		#@+node:<< init directive ivars >> (tangle)
 		if 0: # not used in this version of Leo
@@ -570,7 +570,7 @@ class baseTangleCommands:
 	#@+node:initTangleCommand
 	def initTangleCommand (self):
 	
-		c = self.commands
+		c = self.c
 		c.endEditing()
 		
 		es("Tangling...")
@@ -582,7 +582,7 @@ class baseTangleCommands:
 	#@+node:initUntangleCommand
 	def initUntangleCommand (self):
 	
-		c = self.commands
+		c = self.c
 		c.endEditing()
 		
 		es("Untangling...")
@@ -594,7 +594,7 @@ class baseTangleCommands:
 	#@+node:tangle
 	def tangle(self):
 	
-		c = self.commands ; v = c.currentVnode()
+		c = self.c ; v = c.currentVnode()
 		self.initTangleCommand()
 		self.tangleTree(v,report_errors)
 		es("Tangle complete")
@@ -603,7 +603,7 @@ class baseTangleCommands:
 	#@+node:tangleAll
 	def tangleAll(self):
 	
-		c = self.commands ; v = c.rootVnode()
+		c = self.c ; v = c.rootVnode()
 		self.initTangleCommand()
 		has_roots = false
 	
@@ -625,7 +625,7 @@ class baseTangleCommands:
 	#@+node:tangleMarked
 	def tangleMarked(self):
 	
-		c = self.commands ; v = c.rootVnode()
+		c = self.c ; v = c.rootVnode()
 		c.clearAllVisited() # No roots have been tangled yet.
 		self.initTangleCommand()
 		any_marked = false
@@ -748,7 +748,7 @@ class baseTangleCommands:
 	#@+node:untangle
 	def untangle(self):
 	
-		c = self.commands ; v = c.currentVnode()
+		c = self.c ; v = c.currentVnode()
 		self.initUntangleCommand()
 		
 		c.beginUpdate()
@@ -760,7 +760,7 @@ class baseTangleCommands:
 	#@+node:untangleAll
 	def untangleAll(self):
 	
-		c = self.commands ; v = c.rootVnode()
+		c = self.c ; v = c.rootVnode()
 		self.initUntangleCommand()
 		has_roots = false
 	
@@ -782,7 +782,7 @@ class baseTangleCommands:
 	#@+node:untangleMarked
 	def untangleMarked(self):
 	
-		c = self.commands ; v = c.rootVnode()
+		c = self.c ; v = c.rootVnode()
 		self.initUntangleCommand()
 		marked_flag = false
 	
@@ -906,7 +906,7 @@ class baseTangleCommands:
 	def untangleTree(self,v,report_flag):
 	
 		# trace(`v`)
-		c = self.commands
+		c = self.c
 		any_root_flag = false
 		afterEntireTree = v.nodeAfterTree()
 		# Initialize these globals here: they can't be cleared later.
@@ -1393,7 +1393,7 @@ class baseTangleCommands:
 	
 	def put_all_roots(self):
 	
-		c = self.commands ; outline_name = c.mFileName
+		c = self.c ; outline_name = c.mFileName
 	
 		for section in self.root_list:
 		
@@ -2367,7 +2367,7 @@ class baseTangleCommands:
 	
 	def massage_block_comment (self,s):
 	
-		c = self.commands
+		c = self.c
 		newlines = 0  # Consecutive newlines seen.
 		i = skip_blank_lines(s,0)
 		# Copy the first line and set n
@@ -2743,7 +2743,7 @@ class baseTangleCommands:
 	
 	def scan_derived_file (self,s):
 	
-		c = self.commands
+		c = self.c
 		self.def_stack = []
 		#@	<< set the private global matching vars >>
 		#@+node:<< set the private global matching vars >>
@@ -3064,7 +3064,7 @@ class baseTangleCommands:
 	
 	def update_current_vnode (self,s):
 	
-		c = self.commands ; v = self.v
+		c = self.c ; v = self.v
 		assert(self.v)
 		v.setBodyStringOrPane(s)
 	
@@ -3554,7 +3554,7 @@ class baseTangleCommands:
 		setting corresponding tangle ivars and globals.
 		"""
 	
-		c = self.commands
+		c = self.c
 		# trace(`v`)
 		old = {} ; print_mode_changed = false
 		self.init_directive_ivars()

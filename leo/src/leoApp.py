@@ -132,7 +132,7 @@ class LeoApp:
 		
 		Return false if the user veto's the close."""
 		
-		app = self ; c = frame.commands
+		app = self ; c = frame.c
 	
 		if c.changed:
 			veto = frame.promptForSave()
@@ -158,18 +158,17 @@ class LeoApp:
 		return true # The window has been closed.
 	#@-node:app.closeLeoWindow
 	#@+node:app.createTkGui
-	def createTkGui (self,fileName = None):
+	def createTkGui (self,fileName=None): # Do NOT omit fileName param: it is used in plugin code.
 		
 		"""A convenience routines for plugins to create the default Tk gui class."""
 		
 		app = self
-		if 0:
-			if fileName:
-				s = "creating default tkinterGui from " + shortFileName(fileName)
-			trace(s) ; es(s, color = "red")
 		app.gui = leoTkinterGui.tkinterGui()
 		app.root = app.gui.createRootWindow()
 		app.gui.finishCreate()
+		
+		if fileName:
+			print "Tk gui created in", shortFileName(fileName)
 	#@nonl
 	#@-node:app.createTkGui
 	#@+node:app.destroyAllGlobalWindows
@@ -258,7 +257,8 @@ class LeoApp:
 		
 		if self.afterHandler != None:
 			# print "finishQuit: cancelling",self.afterHandler
-			self.root.after_cancel(self.afterHandler)
+			if app.gui.guiName == "tkinter":
+				self.root.after_cancel(self.afterHandler)
 			self.afterHandler = None
 	
 		# Wait until everything is quiet before really quitting.
@@ -267,12 +267,8 @@ class LeoApp:
 		self.destroyAllGlobalWindows()
 		
 		self.destroyAllOpenWithFiles()
-	
-		if 0: # Works in Python 2.1 and 2.2.  Leaves Python window open.
-			self.root.destroy()
-			
-		else: # Works in Python 2.3.  Closes Python window.
-			self.root.quit()
+		
+		app.gui.destroySelf()
 	#@nonl
 	#@-node:app.finishQuit
 	#@+node:app.forceShutdown
@@ -291,24 +287,6 @@ class LeoApp:
 		self.finishQuit()
 	#@nonl
 	#@-node:app.forceShutdown
-	#@+node:app.get/setRealMenuName & setRealMenuNamesFromTable
-	# Returns the translation of a menu name or an item name.
-	
-	def getRealMenuName (self,menuName):
-		
-		cmn = canonicalizeTranslatedMenuName(menuName)
-		return self.realMenuNameDict.get(cmn,menuName)
-		
-	def setRealMenuName (self,untrans,trans):
-		
-		cmn = canonicalizeTranslatedMenuName(untrans)
-		self.realMenuNameDict[cmn] = trans
-	
-	def setRealMenuNamesFromTable (self,table):
-	
-		for untrans,trans in table:
-			self.setRealMenuName(untrans,trans)
-	#@-node:app.get/setRealMenuName & setRealMenuNamesFromTable
 	#@+node:app.onQuit
 	def onQuit (self):
 		
@@ -359,6 +337,7 @@ class LeoApp:
 	#@+node:app.setLeoID
 	def setLeoID (self):
 		
+		app = self
 		tag = ".leoID.txt"
 		loadDir = app.loadDir
 		configDir = app.config.configDir

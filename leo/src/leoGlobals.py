@@ -294,20 +294,6 @@ class Bunch:
 		
 		
 #@-node:class Bunch
-#@+node:computeWindowTitle
-def computeWindowTitle (fileName):
-
-	if fileName == None:
-		return "untitled"
-	else:
-		path,fn = os.path.split(fileName)
-		if path:
-			title = fn + " in " + path
-		else:
-			title = fn
-		return title
-#@nonl
-#@-node:computeWindowTitle
 #@+node:set_delims_from_language
 # Returns a tuple (single,start,end) of comment delims
 
@@ -758,7 +744,7 @@ def openWithFileName(fileName,old_c=None):
 	# If the file is already open just bring its window to the front.
 	list = app.windowList
 	for frame in list:
-		fn = os.path.normcase(frame.commands.mFileName)
+		fn = os.path.normcase(frame.c.mFileName)
 		fn = os.path.normpath(fn)
 		fn = toUnicode(fn,app.tkEncoding) # 10/20/03
 		if fileName == fn:
@@ -778,13 +764,13 @@ def openWithFileName(fileName,old_c=None):
 				old_c=old_c,new_c=c,fileName=fileName):
 				app.setLog(frame.log,"OpenWithFileName") # 5/12/03
 				app.lockLog() # 6/30/03
-				frame.commands.fileCommands.open(file,fileName) # closes file.
+				frame.c.fileCommands.open(file,fileName) # closes file.
 				app.unlockLog() # 6/30/03
 			frame.openDirectory=os.path.dirname(fileName)
 			frame.openDirectory = toUnicode(frame.openDirectory,app.tkEncoding) # 10/20/03
-			frame.updateRecentFiles(fileName)
+			frame.c.updateRecentFiles(fileName)
 			doHook("open2",
-				old_c=old_c,new_c=frame.commands,fileName=fileName)
+				old_c=old_c,new_c=frame.c,fileName=fileName)
 			return true, frame
 		else:
 			es("can not open: " + fileName,color="red")
@@ -877,6 +863,20 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	return result
 #@nonl
 #@-node:wrap_lines
+#@+node:computeWindowTitle
+def computeWindowTitle (fileName):
+
+	if fileName == None:
+		return "untitled"
+	else:
+		path,fn = os.path.split(fileName)
+		if path:
+			title = fn + " in " + path
+		else:
+			title = fn
+		return title
+#@nonl
+#@-node:computeWindowTitle
 #@+node:create_temp_name
 # Returns a temporary file name.
 
@@ -1660,7 +1660,7 @@ def executeScript (name):
 		file.close()
 
 #@-node:executeScript
-#@+node:File utils (unicode filenames)
+#@+node:File utils (unicode filenames)  **** Rename to os_path_xxx
 #@+at 
 # 
 # - Probably should use app.fnEncoding = "mbcs" for Windows.
@@ -1668,7 +1668,7 @@ def executeScript (name):
 # - Probably only works for Python 2.3
 # 
 #@-at
-#@-node:File utils (unicode filenames)
+#@-node:File utils (unicode filenames)  **** Rename to os_path_xxx
 #@+node:fn_norm
 def fn_norm(arg,encoding=None):
 
@@ -1796,107 +1796,6 @@ def printGcRefs (verbose=true):
 #@-node:printGcRefs
 #@-others
 #@-node:Garbage Collection
-#@+node:Dialog utils...
-def attachLeoIcon (w):
-	"""Attach the Leo icon to window w."""
-	return app.gui.attachLeoIcon(w)
-	
-def center_dialog(dialog):
-	"""Center the dialog."""
-	return app.gui.center_dialog(dialog)
-	
-def create_labeled_frame (parent,caption=None,relief="groove",bd=2,padx=0,pady=0):
-	"""Create a labeled frame."""
-	return app.gui.create_labeled_frame(parent,caption,relief,bd,padx,pady)
-	
-def get_window_info (window):
-	"""Return the window information."""
-	return app.gui.get_window_info(window)
-#@nonl
-#@-node:Dialog utils...
-#@+node:Focus (leoGlobals)
-# These convenience routines just call the corresponding method of the app.gui class.
-# Note: at present these are not called from Leo's core.
-
-def get_focus(frame):
-	"""Return the widget that has focus, or the body widget if None."""
-	return app.gui.get_focus(frame)
-	
-def set_focus(commands,widget):
-	"""Set the focus of the widget in the given commander if it needs to be changed."""
-	return app.gui.set_focus(commands,widget)
-	
-def force_focus(commands,widget):
-	"""Set the focus of the widget in the given commander if it needs to be changed."""
-	return app.gui.force_focus(commands,widget)
-#@-node:Focus (leoGlobals)
-#@+node:canonicalizeMenuName & cononicalizeTranslatedMenuName
-def canonicalizeMenuName (name):
-	
-	name = name.lower() ; newname = ""
-	for ch in name:
-		# if ch not in (' ','\t','\n','\r','&'):
-		if ch in string.ascii_letters:
-			newname = newname+ch
-	return newname
-	
-def canonicalizeTranslatedMenuName (name):
-	
-	name = name.lower() ; newname = ""
-	for ch in name:
-		if ch not in (' ','\t','\n','\r','&'):
-		# if ch in string.ascii_letters:
-			newname = newname+ch
-	return newname
-#@-node:canonicalizeMenuName & cononicalizeTranslatedMenuName
-#@+node:enableMenu & disableMenu & setMenuLabel
-# 11/17/02: Fail gracefully if the item name does not exist.
-def enableMenu (menu,name,val):
-	state = choose(val,"normal","disabled")
-	try:
-		menu.entryconfig(name,state=state)
-	except:
-		try:
-			realName = app.getRealMenuName(name)
-			realName = realName.replace("&","")
-			menu.entryconfig(realName,state=state)
-		except:
-			print "enableMenu menu,name,val:",menu,name,val
-			es_exception()
-			pass
-
-def disableMenu (menu,name):
-	try:
-		menu.entryconfig(name,state="disabled")
-	except: 
-		try:
-			realName = app.getRealMenuName(name)
-			realName = realName.replace("&","")
-			menu.entryconfig(realName,state="disabled")
-		except:
-			print "disableMenu menu,name:",menu,name
-			es_exception()
-			pass
-
-def setMenuLabel (menu,name,label,underline=-1):
-	try:
-		if type(name) == type(0):
-			# "name" is actually an index into the menu.
-			menu.entryconfig(name,label=label,underline=underline)
-		else:
-			# Bug fix: 2/16/03: use translated name.
-			realName = app.getRealMenuName(name)
-			realName = realName.replace("&","")
-			# Bug fix: 3/25/03" use tranlasted label.
-			label = app.getRealMenuName(label)
-			label = label.replace("&","")
-			menu.entryconfig(realName,label=label,underline=underline)
-	except:
-		print "setMenuLabel menu,name,label:",menu,name,label
-		es_exception()
-		pass
-#@nonl
-#@-node:enableMenu & disableMenu & setMenuLabel
 #@+node:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+at 
 #@nonl
@@ -2067,9 +1966,9 @@ def makeDict(**keys):
 	return keys
 #@nonl
 #@-node:makeDict
-#@+node:Most common functions
+#@+node:Most common functions...
 # These are guaranteed always to exist for scripts.
-#@-node:Most common functions
+#@-node:Most common functions...
 #@+node:app & leoProxy
 class leoProxy:
 	
@@ -2144,8 +2043,8 @@ def es(s,*args,**keys):
 #@+node:top
 #@+at 
 #@nonl
-# frame.doCommand and frame.OnMenuClick now set app.log, so top() will be 
-# reliable after any command is executed.
+# c.doCommand and frame.OnMenuClick now set app.log, so top() will be reliable 
+# after any command is executed.
 # 
 # Note 1: The value of top() may change during a new or open command, which 
 # may change the routine used to execute the "command1" and "command2" hooks.  
@@ -2169,14 +2068,6 @@ def windows():
 	return app.windowList
 #@nonl
 #@-node:windows
-#@+node:getindex
-def getindex(text, index):
-	
-	"""Convert string index of the form line.col into a tuple of two ints."""
-	
-	return tuple(map(int,string.split(text.index(index), ".")))
-#@nonl
-#@-node:getindex
 #@+node:scanAtFileOptions
 def scanAtFileOptions (h,err_flag=false):
 	
@@ -2315,8 +2206,8 @@ if 0: # testing
 #@nonl
 # These scanners all call scanError() directly or indirectly, so they will 
 # call es() if they find an error.  scanError() also bumps 
-# commands.tangleCommands.errors, which is harmless if we aren't tangling, and 
-# useful if we are.
+# c.tangleCommands.errors, which is harmless if we aren't tangling, and useful 
+# if we are.
 # 
 # These routines are called by the Import routines and the Tangle routines.
 #@-at
@@ -2708,8 +2599,7 @@ def find_on_line(s,i,pattern):
 #@+node:is_c_id
 def is_c_id(ch):
 
-	return ch in string.ascii_letters or ch in string.digits or ch == '_'
-#@nonl
+	return ch and (ch in string.ascii_letters or ch in string.digits or ch == '_')
 #@-node:is_c_id
 #@+node:is_nl
 def is_nl(s,i):
@@ -2963,185 +2853,6 @@ def joinLines (aList):
 	return ''.join(aList)
 #@nonl
 #@-node:splitLines & joinLines
-#@+node:getindex
-def getindex(text, index):
-	
-	"""Convert string index of the form line.col into a tuple of two ints."""
-	
-	return tuple(map(int,string.split(text.index(index), ".")))
-#@nonl
-#@-node:getindex
-#@+node:getAllText
-def getAllText (t):
-	
-	"""Return all the text of Tk.Text t converted to unicode."""
-	
-	s = t.get("1.0","end")
-	if s is None: s = u""
-	return toUnicode(s,app.tkEncoding)
-#@nonl
-#@-node:getAllText
-#@+node:getTextSelection
-def getTextSelection (t):
-	
-	"""Return a tuple representing the selected range of t, a Tk.Text widget.
-	
-	Return a tuple giving the insertion point if no range of text is selected."""
-
-	# To get the current selection
-	sel = t.tag_ranges("sel")
-	if len(sel) == 2:
-		return sel
-	else:
-		# 7/1/03: Return the insertion point if there is no selected text.
-		insert = t.index("insert")
-		return insert,insert
-#@nonl
-#@-node:getTextSelection
-#@+node:setTextSelection
-#@+at 
-#@nonl
-# t is a Tk.Text widget.  start and end are positions.  Selects from start to 
-# end.
-#@-at
-#@@c
-
-def setTextSelection (t,start,end): 
-
-	if not start or not end:
-		return
-
-	if t.compare(start, ">", end):
-		start,end = end,start
-		
-	t.tag_remove("sel","1.0",start)
-	t.tag_add("sel",start,end)
-	t.tag_remove("sel",end,"end")
-	t.mark_set("insert",end)
-#@nonl
-#@-node:setTextSelection
-#@+node:computeLeadingWhitespace
-# Returns optimized whitespace corresponding to width with the indicated tab_width.
-
-def computeLeadingWhitespace (width, tab_width):
-
-	if width <= 0:
-		return ""
-	if tab_width > 1:
-		tabs   = width / tab_width
-		blanks = width % tab_width
-		return ('\t' * tabs) + (' ' * blanks)
-	else: # 7/3/02: negative tab width always gets converted to blanks.
-		return (' ' * width)
-#@nonl
-#@-node:computeLeadingWhitespace
-#@+node:computeWidth
-# Returns the width of s, assuming s starts a line, with indicated tab_width.
-
-def computeWidth (s, tab_width):
-		
-	w = 0
-	for ch in s:
-		if ch == '\t':
-			w += (abs(tab_width) - (w % abs(tab_width)))
-		else:
-			w += 1
-	return w
-#@nonl
-#@-node:computeWidth
-#@+node:get_leading_ws
-def get_leading_ws(s):
-	
-	"""Returns the leading whitespace of 's'."""
-
-	i = 0 ; n = len(s)
-	while i < n and s[i] in (' ','\t'):
-		i += 1
-	return s[0:i]
-#@-node:get_leading_ws
-#@+node:optimizeLeadingWhitespace
-# Optimize leading whitespace in s with the given tab_width.
-
-def optimizeLeadingWhitespace (line,tab_width):
-
-	i, width = skip_leading_ws_with_indent(line,0,tab_width)
-	s = computeLeadingWhitespace(width,tab_width) + line[i:]
-	return s
-#@nonl
-#@-node:optimizeLeadingWhitespace
-#@+node:removeLeadingWhitespace
-# Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
-
-def removeLeadingWhitespace (s,first_ws,tab_width):
-
-	j = 0 ; ws = 0
-	for ch in s:
-		if ws >= first_ws:
-			break
-		elif ch == ' ':
-			j += 1 ; ws += 1
-		elif ch == '\t':
-			j += 1 ; ws += (abs(tab_width) - (ws % abs(tab_width)))
-		else: break
-	if j > 0:
-		s = s[j:]
-	return s
-#@nonl
-#@-node:removeLeadingWhitespace
-#@+node:removeTrailingWs
-# Warning: string.rstrip also removes newlines!
-
-def removeTrailingWs(s):
-
-	j = len(s)-1
-	while j >= 0 and (s[j] == ' ' or s[j] == '\t'):
-		j -= 1
-	return s[:j+1]
-#@-node:removeTrailingWs
-#@+node:skip_leading_ws
-# Skips leading up to width leading whitespace.
-
-def skip_leading_ws(s,i,ws,tab_width):
-
-	count = 0
-	while count < ws and i < len(s):
-		ch = s[i]
-		if ch == ' ':
-			count += 1
-			i += 1
-		elif ch == '\t':
-			count += (abs(tab_width) - (count % abs(tab_width)))
-			i += 1
-		else: break
-
-	return i
-#@nonl
-#@-node:skip_leading_ws
-#@+node:skip_leading_ws_with_indent
-#@+at 
-#@nonl
-# Skips leading whitespace and returns (i, indent), where i points after the 
-# whitespace and indent is the width of the whitespace, assuming tab_width 
-# wide tabs.
-#@-at
-#@@c
-
-def skip_leading_ws_with_indent(s,i,tab_width):
-
-	count = 0 ; n = len(s)
-	while i < n:
-		ch = s[i]
-		if ch == ' ':
-			count += 1
-			i += 1
-		elif ch == '\t':
-			count += (abs(tab_width) - (count % abs(tab_width)))
-			i += 1
-		else: break
-
-	return i, count
-#@nonl
-#@-node:skip_leading_ws_with_indent
 #@+node:initScriptFind
 def initScriptFind(findHeadline,changeHeadline,firstNode=None):
 	
@@ -3288,6 +2999,128 @@ except:
 		#@-node:<< define getpreferredencoding for *nix >>
 		#@nl
 #@-node:getpreferredencoding from 2.3a2
+#@+node:computeLeadingWhitespace
+# Returns optimized whitespace corresponding to width with the indicated tab_width.
+
+def computeLeadingWhitespace (width, tab_width):
+
+	if width <= 0:
+		return ""
+	if tab_width > 1:
+		tabs   = width / tab_width
+		blanks = width % tab_width
+		return ('\t' * tabs) + (' ' * blanks)
+	else: # 7/3/02: negative tab width always gets converted to blanks.
+		return (' ' * width)
+#@nonl
+#@-node:computeLeadingWhitespace
+#@+node:computeWidth
+# Returns the width of s, assuming s starts a line, with indicated tab_width.
+
+def computeWidth (s, tab_width):
+		
+	w = 0
+	for ch in s:
+		if ch == '\t':
+			w += (abs(tab_width) - (w % abs(tab_width)))
+		else:
+			w += 1
+	return w
+#@nonl
+#@-node:computeWidth
+#@+node:get_leading_ws
+def get_leading_ws(s):
+	
+	"""Returns the leading whitespace of 's'."""
+
+	i = 0 ; n = len(s)
+	while i < n and s[i] in (' ','\t'):
+		i += 1
+	return s[0:i]
+#@-node:get_leading_ws
+#@+node:optimizeLeadingWhitespace
+# Optimize leading whitespace in s with the given tab_width.
+
+def optimizeLeadingWhitespace (line,tab_width):
+
+	i, width = skip_leading_ws_with_indent(line,0,tab_width)
+	s = computeLeadingWhitespace(width,tab_width) + line[i:]
+	return s
+#@nonl
+#@-node:optimizeLeadingWhitespace
+#@+node:removeLeadingWhitespace
+# Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
+
+def removeLeadingWhitespace (s,first_ws,tab_width):
+
+	j = 0 ; ws = 0
+	for ch in s:
+		if ws >= first_ws:
+			break
+		elif ch == ' ':
+			j += 1 ; ws += 1
+		elif ch == '\t':
+			j += 1 ; ws += (abs(tab_width) - (ws % abs(tab_width)))
+		else: break
+	if j > 0:
+		s = s[j:]
+	return s
+#@nonl
+#@-node:removeLeadingWhitespace
+#@+node:removeTrailingWs
+# Warning: string.rstrip also removes newlines!
+
+def removeTrailingWs(s):
+
+	j = len(s)-1
+	while j >= 0 and (s[j] == ' ' or s[j] == '\t'):
+		j -= 1
+	return s[:j+1]
+#@-node:removeTrailingWs
+#@+node:skip_leading_ws
+# Skips leading up to width leading whitespace.
+
+def skip_leading_ws(s,i,ws,tab_width):
+
+	count = 0
+	while count < ws and i < len(s):
+		ch = s[i]
+		if ch == ' ':
+			count += 1
+			i += 1
+		elif ch == '\t':
+			count += (abs(tab_width) - (count % abs(tab_width)))
+			i += 1
+		else: break
+
+	return i
+#@nonl
+#@-node:skip_leading_ws
+#@+node:skip_leading_ws_with_indent
+#@+at 
+#@nonl
+# Skips leading whitespace and returns (i, indent), where i points after the 
+# whitespace and indent is the width of the whitespace, assuming tab_width 
+# wide tabs.
+#@-at
+#@@c
+
+def skip_leading_ws_with_indent(s,i,tab_width):
+
+	count = 0 ; n = len(s)
+	while i < n:
+		ch = s[i]
+		if ch == ' ':
+			count += 1
+			i += 1
+		elif ch == '\t':
+			count += (abs(tab_width) - (count % abs(tab_width)))
+			i += 1
+		else: break
+
+	return i, count
+#@nonl
+#@-node:skip_leading_ws_with_indent
 #@-others
 #@nonl
 #@-node:@file leoGlobals.py

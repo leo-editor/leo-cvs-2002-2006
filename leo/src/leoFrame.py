@@ -5,6 +5,8 @@
 These classes should be overridden to create frames for a particular gui."""
 
 from leoGlobals import *
+import leoCompare,leoFontPanel,leoNodes,leoPrefs
+import os,string,sys,time,traceback
 
 #@+others
 #@+node:class leoBody
@@ -17,79 +19,26 @@ class leoBody:
 	def __init__ (self,frame,parentFrame):
 	
 		self.frame = frame
-		self.c = frame.commands
+		self.c = frame.c
 	
 		self.bodyCtrl = self.createControl(frame,parentFrame)
 		self.setBodyFontFromConfig()
 	#@nonl
 	#@-node:leoBody.__init__
-	#@+node:leoBody.createControl
-	def createControl (self,frame,parentFrame):
-		
+	#@+node:Must be overriden in subclasses
+	def createBindings (self,frame):
 		self.oops()
-	#@nonl
-	#@-node:leoBody.createControl
-	#@+node:Body abstractions
-	# The corresponding routines in the derived class is called from Leo's core.
 	
-	# Bounding box...
-	def getBoundingBox (self,index): self.oops()
-	
-	# Colorizer tags...
-	def bindColor (self,tagName,event,callback):   self.oops()
-	def colorRange (self,tagName,index1,index2):   self.oops()
-	def configureColor (self,colorName,**keys):    self.oops()
-	def removeColor(self,tagName):                 self.oops()
-	def uncolorRange (self,tagName,index1,index2): self.oops()
-	
-	# Focus...
-	def hasFocus (self): self.oops()
-	def setFocus (self): self.oops()
-	
-	# Font...
-	def setBodyFontFromConfig(self): self.oops()
-	
-	# Getting & setting text...
-	# (These routines replace most of the former insert/delete and index routines)
-	def getAllText (self):                         self.oops()
-	def getInsertLines (self):                     self.oops()
-	def getSelectionAreas (self):                  self.oops()
-	def getSelectionLines (self):                  self.oops()
-	def setSelectionAreas (self,before,sel,after): self.oops() # A very powerful routine.
-	
-	# Idle-time callback.
-	def scheduleIdleTimeRoutine (self,function,*args,**keys): self.oops()
-	
-	# Indices...
-	def convertXYToIndex (self,x,y):               self.oops()
-	def convertRowColumnToIndex (self,row,column): self.oops()
-	def getImageIndex (self,image):                self.oops()
-	
-	# Height & width info...
-	def getBodyPaneHeight (self): self.oops()
-	def getBodyPaneWidth (self):  self.oops()
-	
-	# Selection & insertion point...
-	def getInsertionPoint (self):       self.oops()
-	def getTextSelection (self):        self.oops()
-	def selectAllText (self):           self.oops()
-	def setInsertionPoint (self,index): self.oops()
-	def setTextSelection (self,i,j):    self.oops()
-	
-	# Visibility & scrolling...
-	def makeIndexVisible (self,index):     self.oops()
-	def setFirstVisibleIndex (self,index): self.oops()
-	def getFirstVisibleIndex (self):       self.oops()
-	def scrollUp (self):                   self.oops()
-	def scrollDown (self):                 self.oops()
-	
-	#@-node:Body abstractions
-	#@+node:leoBody.oops
+	def createControl (self,frame,parentFrame):
+		self.oops()
+		
+	def setBodyFontFromConfig (self):
+		self.oops()
+		
 	def oops (self):
-	
 		print "leoBody oops:", callerName(2), "should be overridden in subclass"
 	#@nonl
-	#@-node:leoBody.oops
+	#@-node:Must be overriden in subclasses
 	#@-others
 #@nonl
 #@-node:class leoBody
@@ -98,29 +47,119 @@ class leoFrame:
 	
 	"""The base class for all Leo windows."""
 	
-	#@	@+others
-	#@+node:leoFrame abstractions
-	def getMenu (self,name): self.oops()
-	#@nonl
-	#@-node:leoFrame abstractions
-	#@+node:leoFrame.oops
-	def oops (self):
+	instances = 0
 	
-		print "leoFrame oops:", callerName(2), "should be overridden in subclass"
+	#@	@+others
+	#@+node: leoFrame.__init__
+	def __init__ (self):
+		
+		# Objects attached to this frame.
+		self.menu = None
+		self.keys = None
+		self.colorPanel = None 
+		self.fontPanel = None 
+		self.prefsPanel = None
+		self.comparePanel = None
+	
+		# Gui-independent data
+		self.es_newlines = 0 # newline count for this log stream
+		self.openDirectory = ""
+		self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
+		self.saved=false # True if ever saved
+		self.splitVerticalFlag,self.ratio,self.secondary_ratio = self.initialRatios()
+		self.startupWindow=false # True if initially opened window
+		self.stylesheet = None # The contents of <?xml-stylesheet...?> line.
+	
+		# Colors of log pane.
+		self.statusColorTags = [] # list of color names used as tags in status window.
+	
+		# Previous row and column shown in the status area.
+		self.lastStatusRow = self.lastStatusCol = 0
+		self.tab_width = 0 # The tab width in effect in this pane.
 	#@nonl
-	#@-node:leoFrame.oops
+	#@-node: leoFrame.__init__
+	#@+node:gui-dependent commands (must be defined  in subclasses)
+	# Gui-dependent commands in the Edit menu...
+	def OnCopy  (self,event=None): self.oops()
+	def OnCut   (self,event=None): self.oops()
+	def OnPaste (self,event=None): self.oops()
+	
+	def OnCutFromMenu  (self):     self.oops()
+	def OnCopyFromMenu (self):     self.oops()
+	def OnPasteFromMenu (self):    self.oops()
+	
+	def insertHeadlineTime (self): self.oops()
+	
+	# Gui-dependent commands in the Window menu...
+	def cascade(self):              self.oops()
+	def equalSizedPanes(self):      self.oops()
+	def hideLogWindow (self):       self.oops()
+	def minimizeAll(self):          self.oops()
+	def toggleSplitDirection(self): self.oops()
+	#@nonl
+	#@-node:gui-dependent commands (must be defined  in subclasses)
+	#@+node:longFileName & shortFileName
+	def longFileName (self):
+	
+		return self.c.mFileName
+		
+	def shortFileName (self):
+	
+		return shortFileName(self.c.mFileName)
+	#@nonl
+	#@-node:longFileName & shortFileName
+	#@+node:oops
+	def oops(self):
+		
+		print "leoFrame oops:", callerName(2), "should be overridden in subclass"
+	#@-node:oops
+	#@+node:promptForSave
+	def promptForSave (self):
+		
+		"""Prompt the user to save changes.
+		
+		Return true if the user vetos the quit or save operation."""
+		
+		c = self.c
+		name = choose(c.mFileName,c.mFileName,self.title)
+		type = choose(app.quitting, "quitting?", "closing?")
+	
+		answer = app.gui.runAskYesNoCancelDialog(
+			"Confirm",
+			'Save changes to %s before %s' % (name,type))
+			
+		# print answer	
+		if answer == "cancel":
+			return true # Veto.
+		elif answer == "no":
+			return false # Don't save and don't veto.
+		else:
+			if not c.mFileName:
+				#@			<< Put up a file save dialog to set mFileName >>
+				#@+node:<< Put up a file save dialog to set mFileName >>
+				# Make sure we never pass None to the ctor.
+				if not c.mFileName:
+					c.mFileName = ""
+				
+				c.mFileName = app.gui.runSaveFileDialog(
+					initialfile = c.mFileName,
+					title="Save",
+					filetypes=[("Leo files", "*.leo")],
+					defaultextension=".leo")
+				#@nonl
+				#@-node:<< Put up a file save dialog to set mFileName >>
+				#@nl
+			if c.mFileName:
+				# print "saving", c.mFileName
+				c.fileCommands.save(c.mFileName)
+				return false # Don't veto.
+			else:
+				return true # Veto.
+	#@nonl
+	#@-node:promptForSave
 	#@-others
 #@nonl
 #@-node:class leoFrame
-#@+node:class leoKeys (not used yet)
-class leoKeys:
-	
-	"""The base class for key bindings in Leo windows."""
-	
-	#@	@+others
-	#@-others
-#@nonl
-#@-node:class leoKeys (not used yet)
 #@+node:class leoLog
 class leoLog:
 	
@@ -188,16 +227,10 @@ class leoLog:
 	#@-others
 #@nonl
 #@-node:class leoLog
-#@+node:class leoMenus (not used yet)
-class leoMenus:
-	
-	"""The base class for menus in Leo windows."""
-	
-	#@	@+others
-	#@-others
-#@nonl
-#@-node:class leoMenus (not used yet)
 #@+node:class leoTree
+# This would be useful if we removed all the tree redirection routines.
+# However, those routines are pretty ingrained into Leo...
+
 class leoTree:
 	
 	"""The base class for the outline pane in Leo windows."""

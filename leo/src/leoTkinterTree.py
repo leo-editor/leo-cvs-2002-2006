@@ -110,13 +110,13 @@ class baseLeoTkinterTree:
 	callbacksInjected = false
 	#@	@+others
 	#@+node:tree.__init__
-	def __init__(self,commands,frame,canvas):
+	def __init__(self,c,frame,canvas):
 	
 		# Objects associated with this tree.
-		self.commands = commands
+		self.c = c
 		self.canvas = canvas
 		self.frame = frame
-		self.colorizer = leoColor.colorizer(commands)
+		self.colorizer = leoColor.colorizer(c)
 		
 		# State info.
 		self.rootVnode = None
@@ -235,7 +235,7 @@ class baseLeoTkinterTree:
 		
 			# trace()
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				if not doHook("boxclick1",c=c,v=v,event=event):
 					c.frame.tree.OnBoxClick(v)
 				doHook("boxclick2",c=c,v=v,event=event)
@@ -250,7 +250,7 @@ class baseLeoTkinterTree:
 		
 			# trace()
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				if c.frame.dragging():
 					if not doHook("dragging1",c=c,v=v,event=event):
 						c.frame.tree.OnDrag(v,event)
@@ -271,7 +271,7 @@ class baseLeoTkinterTree:
 			# trace()
 		
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				# 7/10/03: Always call frame.OnEndDrag, regardless of state.
 				if not doHook("enddrag1",c=c,v=v,event=event):
 					c.frame.tree.OnEndDrag(v,event)
@@ -285,7 +285,7 @@ class baseLeoTkinterTree:
 			"""Callback injected into vnode class."""
 			#trace()
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				if not doHook("headclick1",c=c,v=v,event=event):
 					c.frame.tree.OnActivate(v)
 				doHook("headclick2",c=c,v=v,event=event)
@@ -296,7 +296,7 @@ class baseLeoTkinterTree:
 			"""Callback injected into vnode class."""
 			#trace()
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				if not doHook("headrclick1",c=c,v=v,event=event):
 					c.frame.tree.OnActivate(v)
 					c.frame.tree.OnPopup(self,event)
@@ -312,12 +312,12 @@ class baseLeoTkinterTree:
 		
 			# trace()
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				if not doHook("hypercclick1",c=c,v=v,event=event):
 					c.beginUpdate()
 					c.selectVnode(v)
 					c.endUpdate()
-					c.bodyCtrl.mark_set("insert","1.0")
+					c.frame.bodyCtrl.mark_set("insert","1.0")
 				doHook("hypercclick2",c=c,v=v,event=event)
 			except:
 				es_event_exception("hypercclick")
@@ -329,7 +329,7 @@ class baseLeoTkinterTree:
 			"""Callback injected into vnode class."""
 		
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				if not doHook("headkey1",c=c,v=v,event=event):
 					c.frame.tree.OnHeadlineKey(v,event)
 				doHook("headkey2",c=c,v=v,event=event)
@@ -343,10 +343,10 @@ class baseLeoTkinterTree:
 			"""Callback injected into vnode class."""
 		
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				if not doHook("hyperenter1",c=c,v=v,event=event):
 					if 0: # This works, and isn't very useful.
-						c.bodyCtrl.tag_config(v.tagName,background="green")
+						c.frame.bodyCtrl.tag_config(v.tagName,background="green")
 				doHook("hyperenter2",c=c,v=v,event=event)
 			except:
 				es_event_exception("hyperenter")
@@ -358,10 +358,10 @@ class baseLeoTkinterTree:
 			"""Callback injected into vnode class."""
 		
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				if not doHook("hyperleave1",c=c,v=v,event=event):
 					if 0: # This works, and isn't very useful.
-						c.bodyCtrl.tag_config(v.tagName,background="white")
+						c.frame.bodyCtrl.tag_config(v.tagName,background="white")
 				doHook("hyperleave2",c=c,v=v,event=event)
 			except:
 				es_event_exception("hyperleave")
@@ -373,7 +373,7 @@ class baseLeoTkinterTree:
 			"""Callback injected into vnode class."""
 		
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				if not doHook("iconclick1",c=c,v=v,event=event):
 					c.frame.tree.OnIconClick(v,event)
 				doHook("iconclick2",c=c,v=v,event=event)
@@ -385,7 +385,7 @@ class baseLeoTkinterTree:
 			"""Callback injected into vnode class."""
 		
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				if not doHook("iconrclick1",c=c,v=v,event=event):
 					c.frame.tree.OnIconRightClick(v,event)
 				doHook("iconrclick2",c=c,v=v,event=event)
@@ -398,7 +398,7 @@ class baseLeoTkinterTree:
 			"""Callback injected into vnode class."""
 		
 			try:
-				v = self ; c = v.commands
+				v = self ; c = v.c
 				if not doHook("icondclick1",c=c,v=v,event=event):
 					c.frame.tree.OnIconDoubleClick(self)
 				doHook("icondclick2",c=c,v=v,event=event)
@@ -472,7 +472,7 @@ class baseLeoTkinterTree:
 			#@+node:<< define onBoxClickCallback >>
 			def onBoxClickCallback(event,tree=tree,v=v):
 				try:
-					c = v.commands
+					c = v.c
 					if not doHook("boxclick1",c=c,v=v,event=event):
 						tree.OnBoxClick(v)
 					doHook("boxclick2",c=c,v=v,event=event)
@@ -531,7 +531,7 @@ class baseLeoTkinterTree:
 			#@+node:<< define icon click callbacks >>
 			def onIconClickCallback(event,tree=tree,v=v):
 				try:
-					c = v.commands
+					c = v.c
 					if not doHook("iconclick1",c=c,v=v,event=event):
 						tree.OnIconClick(v,event)
 					doHook("iconclick2",c=c,v=v,event=event)
@@ -540,7 +540,7 @@ class baseLeoTkinterTree:
 					
 			def onIconDoubleClickCallback(event,tree=tree,v=v):
 				try:
-					c = v.commands
+					c = v.c
 					if not doHook("icondclick1",c=c,v=v,event=event):
 						tree.OnIconDoubleClick(self)
 					doHook("icondclick2",c=c,v=v,event=event)
@@ -549,7 +549,7 @@ class baseLeoTkinterTree:
 				
 			def onIconRightClickCallback(event,tree=tree,v=v):
 				try:
-					c = v.commands
+					c = v.c
 					if not doHook("iconrclick1",c=c,v=v,event=event):
 						tree.OnIconRightClick(v,event)
 					doHook("iconrclick2",c=c,v=v,event=event)
@@ -608,7 +608,7 @@ class baseLeoTkinterTree:
 		
 		self.redrawScheduled = false # 7/10/03: Always do this here.
 	
-		frame = self.commands.frame
+		frame = self.c.frame
 		if frame not in app.windowList or app.quitting:
 			# trace("no frame")
 			return
@@ -624,7 +624,7 @@ class baseLeoTkinterTree:
 		oldcursor = self.canvas['cursor']
 		self.canvas['cursor'] = "watch"
 		self.allocatedNodes = 0
-		if not doHook("redraw-entire-outline",c=self.commands):
+		if not doHook("redraw-entire-outline",c=self.c):
 			# Erase and redraw the entire tree.
 			self.topVnode = None
 			self.deleteBindings()
@@ -641,7 +641,7 @@ class baseLeoTkinterTree:
 			if self.trace:
 				self.redrawCount += 1
 				print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
-			doHook("after_redraw-outline",c=self.commands)
+			doHook("after_redraw-outline",c=self.c)
 	
 		self.canvas['cursor'] = oldcursor
 	#@nonl
@@ -724,7 +724,7 @@ class baseLeoTkinterTree:
 			#@+node:<< define the headline click callbacks >>
 			def onHeadlineClickCallback(event,tree=tree,v=v):
 				try:
-					c = v.commands
+					c = v.c
 					if not doHook("headclick1",c=c,v=v,event=event):
 						tree.OnActivate(v)
 					doHook("headclick2",c=c,v=v,event=event)
@@ -733,7 +733,7 @@ class baseLeoTkinterTree:
 				
 			def onHeadlineRightClickCallback(event,tree=tree,v=v):
 				try:
-					c = v.commands
+					c = v.c
 					if not doHook("headrclick1",c=c,v=v,event=event):
 						tree.OnActivate(v)
 						tree.OnPopup(v,event)
@@ -768,7 +768,7 @@ class baseLeoTkinterTree:
 		
 		"""Draws the top-level tree, taking into account the hoist state."""
 		
-		c = self.frame.commands
+		c = self.c
 		
 		if c.hoistStack:
 			v = c.hoistStack[-1]
@@ -945,7 +945,7 @@ class baseLeoTkinterTree:
 	
 	def idle_scrollTo(self,v=None):
 	
-		frame = self.commands.frame
+		frame = self.c.frame
 		last = self.lastVisible()
 		nextToLast = last.visBack()
 		# print 'v,last',`v`,`last`
@@ -996,23 +996,19 @@ class baseLeoTkinterTree:
 	#@-node:tree.numberOfVisibleNodes
 	#@+node:tree.recolor, recolor_now, recolor_range
 	def recolor(self,v,incremental=0):
-	
-		body = self.commands.frame.bodyCtrl
 		
 		if 0: # Do immediately
-			self.colorizer.colorize(v,body,incremental)
+			self.colorizer.colorize(v,incremental)
 		else: # Do at idle time
-			self.colorizer.schedule(v,body,incremental)
+			self.colorizer.schedule(v,incremental)
 	
 	def recolor_now(self,v,incremental=0):
 	
-		body = self.commands.frame.bodyCtrl
-		self.colorizer.colorize(v,body,incremental)
+		self.colorizer.colorize(v,incremental)
 		
 	def recolor_range(self,v,leading,trailing):
 	
-		body = self.commands.frame.bodyCtrl
-		self.colorizer.recolor_range(v,body,leading,trailing)
+		self.colorizer.recolor_range(v,leading,trailing)
 	#@nonl
 	#@-node:tree.recolor, recolor_now, recolor_range
 	#@+node:tree.yoffset
@@ -1062,25 +1058,25 @@ class baseLeoTkinterTree:
 	def OnActivate (self,v,event=None):
 	
 		try:
-			c = self.commands
+			c = self.c
 			#@		<< activate this window >>
 			#@+node:<< activate this window >>
-			c = self.commands
+			c = self.c ; gui = app.gui
 			
 			if v == self.currentVnode:
 				if self.active:
 					self.editLabel(v)
 				else:
 					self.undimEditLabel()
-					set_focus(c,self.canvas) # Essential for proper editing.
+					gui.set_focus(c,self.canvas) # Essential for proper editing.
 			else:
 				self.select(v)
 				if v.t.insertSpot != None: # 9/1/02
-					c.bodyCtrl.mark_set("insert",v.t.insertSpot)
-					c.bodyCtrl.see(v.t.insertSpot)
+					c.frame.bodyCtrl.mark_set("insert",v.t.insertSpot)
+					c.frame.bodyCtrl.see(v.t.insertSpot)
 				else:
-					c.bodyCtrl.mark_set("insert","1.0")
-				set_focus(c,c.bodyCtrl)
+					c.frame.bodyCtrl.mark_set("insert","1.0")
+				gui.set_focus(c,c.frame.bodyCtrl)
 			
 			self.active = true
 			#@nonl
@@ -1096,7 +1092,7 @@ class baseLeoTkinterTree:
 	def OnBoxClick (self,v):
 	
 		# Note: "boxclick" hooks handled by vnode callback routine.
-		c = self.commands
+		c = self.c ; gui = app.gui
 	
 		if v.isExpanded():
 			v.contract()
@@ -1105,7 +1101,7 @@ class baseLeoTkinterTree:
 	
 		self.active = true
 		self.select(v)
-		set_focus(c,c.bodyCtrl) # 7/12/03
+		gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
 		self.redraw()
 	#@nonl
 	#@-node:OnBoxClick
@@ -1114,8 +1110,8 @@ class baseLeoTkinterTree:
 		
 		"""Deactivate the tree pane, dimming any headline being edited."""
 	
-		c = self.commands
-		focus = get_focus(c.frame)
+		c = self.c
+		focus = app.gui.get_focus(c.frame)
 	
 		# Bug fix: 7/13/03: Only do this as needed.
 		# Doing this on every click would interfere with the double-clicking.
@@ -1167,7 +1163,7 @@ class baseLeoTkinterTree:
 			if ch: trace(ch,ord(ch))
 			else: trace(`ch`)
 	
-		c = self.commands
+		c = self.c
 		if not c or not v or v != c.currentVnode():
 			return "break"
 		if doHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType):
@@ -1244,7 +1240,7 @@ class baseLeoTkinterTree:
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
 			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
 				# Get the previous line.
-				s=c.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+				s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
 				# Add the leading whitespace to the present line.
 				junk,width = skip_leading_ws_with_indent(s,0,c.tab_width)
 				if s and len(s) > 0 and s[-1]==':':
@@ -1267,7 +1263,7 @@ class baseLeoTkinterTree:
 					# end patch by David McNab
 				ws = computeLeadingWhitespace (width,c.tab_width)
 				if ws and len(ws) > 0:
-					c.bodyCtrl.insert("insert", ws)
+					c.frame.bodyCtrl.insert("insert", ws)
 					removeTrailing = false # bug fix: 11/18
 			#@nonl
 			#@-node:<< Do auto indent >> (David McNab)
@@ -1279,20 +1275,20 @@ class baseLeoTkinterTree:
 			if undoType != "Change":
 				
 				# Get the characters preceeding the tab.
-				prev=c.bodyCtrl.get("insert linestart","insert -1c")
+				prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
 				
 				if 1: # 6/26/03: Convert tab no matter where it is.
 			
 					w = computeWidth(prev,c.tab_width)
 					w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
 					# print "prev w:" + `w` + ", prev chars:" + `prev`
-					c.bodyCtrl.delete("insert -1c")
-					c.bodyCtrl.insert("insert",' ' * w2)
+					c.frame.bodyCtrl.delete("insert -1c")
+					c.frame.bodyCtrl.insert("insert",' ' * w2)
 				
 				else: # Convert only leading tabs.
 				
 					# Get the characters preceeding the tab.
-					prev=c.bodyCtrl.get("insert linestart","insert -1c")
+					prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
 			
 					# Do nothing if there are non-whitespace in prev:
 					all_ws = true
@@ -1303,8 +1299,8 @@ class baseLeoTkinterTree:
 						w = computeWidth(prev,c.tab_width)
 						w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
 						# print "prev w:" + `w` + ", prev chars:" + `prev`
-						c.bodyCtrl.delete("insert -1c")
-						c.bodyCtrl.insert("insert",' ' * w2)
+						c.frame.bodyCtrl.delete("insert -1c")
+						c.frame.bodyCtrl.insert("insert",' ' * w2)
 			#@nonl
 			#@-node:<< convert tab to blanks >>
 			#@nl
@@ -1321,7 +1317,7 @@ class baseLeoTkinterTree:
 			newText = s
 			c.undoer.setUndoTypingParams(v,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
 		v.t.setTnodeText(s)
-		v.t.insertSpot = c.bodyCtrl.index("insert")
+		v.t.insertSpot = c.body.getInsertionPoint()
 		#@	<< recolor the body >>
 		#@+node:<< recolor the body >>
 		# if self.forceFullRecolorFlag: trace(undoType,"full recolor")
@@ -1366,7 +1362,7 @@ class baseLeoTkinterTree:
 		
 		"""Handle a change to the body pane."""
 		
-		c = self.commands
+		c = self.c
 		if not v:
 			v = c.currentVnode()
 	
@@ -1380,7 +1376,7 @@ class baseLeoTkinterTree:
 		
 		"""Handle any key press event in the body pane."""
 	
-		c = self.commands ; v = c.currentVnode() ; ch = event.char
+		c = self.c ; v = c.currentVnode() ; ch = event.char
 		oldSel = c.body.getTextSelection()
 	
 		if 0:
@@ -1388,7 +1384,7 @@ class baseLeoTkinterTree:
 			if ch and len(ch)>0: print "%4d %s" % (self.keyCount,repr(ch))
 			
 		# We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
-		self.commands.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
+		self.c.frame.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
 	#@nonl
 	#@-node:OnBodyKey
 	#@+node:onBodyWillChange
@@ -1398,13 +1394,13 @@ class baseLeoTkinterTree:
 		
 		"""Queue the body changed idle handler."""
 		
-		c = self.commands
+		c = self.c
 		if not v: v = c.currentVnode()
 		if not oldSel:
 			oldSel = c.body.getTextSelection()
 			
 		#trace()
-		self.commands.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
+		self.c.frame.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
 	
 	#@-node:onBodyWillChange
 	#@-others
@@ -1420,7 +1416,7 @@ class baseLeoTkinterTree:
 			assert(v == self.drag_v)
 			
 			canvas = self.canvas
-			frame = self.commands.frame
+			frame = self.c.frame
 			
 			if event:
 				x,y = event.x,event.y
@@ -1481,7 +1477,7 @@ class baseLeoTkinterTree:
 		# Note: "drag" hooks handled by vnode callback routine.
 		# trace(event)
 		
-		c = self.commands
+		c = self.c
 		assert(v == self.drag_v)
 	
 		if not event:
@@ -1518,7 +1514,7 @@ class baseLeoTkinterTree:
 			return
 	
 		assert(v == self.drag_v)
-		c = self.commands ; canvas = self.canvas ; config = app.config
+		c = self.c ; canvas = self.canvas ; config = app.config
 	
 		if event:
 			#@		<< set vdrag, childFlag >>
@@ -1580,7 +1576,7 @@ class baseLeoTkinterTree:
 		
 		"""Handle a change to headline text."""
 	
-		self.commands.bodyCtrl.after_idle(self.idle_head_key,v)
+		self.c.frame.bodyCtrl.after_idle(self.idle_head_key,v)
 	
 	
 	#@-node:onHeadChanged
@@ -1590,7 +1586,7 @@ class baseLeoTkinterTree:
 		"""Handle a key event in a headline."""
 	
 		ch = event.char
-		self.commands.bodyCtrl.after_idle(self.idle_head_key,v,ch)
+		self.c.frame.bodyCtrl.after_idle(self.idle_head_key,v,ch)
 	
 	#@-node:OnHeadlineKey
 	#@+node:idle_head_key
@@ -1598,7 +1594,7 @@ class baseLeoTkinterTree:
 		
 		"""Update headline text at idle time."""
 	
-		c = self.commands
+		c = self.c
 		if not v or not v.edit_text() or v != c.currentVnode():
 			return "break"
 		if doHook("headkey1",c=c,v=v,ch=ch):
@@ -1719,7 +1715,7 @@ class baseLeoTkinterTree:
 					#@+node:<< define drag callbacks >>
 					def onDragCallback(event,tree=tree,v=v):
 						try:
-							c = v.commands
+							c = v.c
 							if tree.dragging:
 								if not doHook("dragging1",c=c,v=v,event=event):
 									tree.OnDrag(v,event)
@@ -1733,7 +1729,7 @@ class baseLeoTkinterTree:
 							
 					def onEndDragCallback(event,tree=tree,v=v):
 						try:
-							c = v.commands
+							c = v.c
 							if not doHook("enddrag1",c=c,v=v,event=event):
 								tree.OnEndDrag(v,event)
 							doHook("enddrag2",c=c,v=v,event=event)
@@ -1760,7 +1756,7 @@ class baseLeoTkinterTree:
 	
 		# Note: "icondclick" hooks handled by vnode callback routine.
 	
-		c = self.commands
+		c = self.c
 		s = v.headString().strip()
 		if match_word(s,0,"@url"):
 			if not doHook("@url1",c=c,v=v):
@@ -1842,7 +1838,7 @@ class baseLeoTkinterTree:
 		# Note: "headrclick" hooks handled by vnode callback routine.
 	
 		if event != None:
-			c = self.commands
+			c = self.c
 			if not doHook("create-popup-menu",c=c,v=v,event=event):
 				self.createPopupMenu(event)
 			if not doHook("enable-popup-menu-items",c=c,v=v,event=event):
@@ -1879,7 +1875,7 @@ class baseLeoTkinterTree:
 	#@+node:createPopupMenu
 	def createPopupMenu (self,event):
 		
-		c = self.commands ; frame = c.frame
+		c = self.c ; frame = c.frame
 		
 		# If we are going to recreate it, we had better destroy it.
 		if self.popupMenu:
@@ -1890,9 +1886,9 @@ class baseLeoTkinterTree:
 		
 		# Add the Open With entries if they exist.
 		if app.openWithTable:
-			frame.createMenuEntries(menu,app.openWithTable,openWith=1)
+			frame.menu.createMenuEntries(menu,app.openWithTable,openWith=1)
 			table = (("-",None,None),)
-			frame.createMenuEntries(menu,table)
+			frame.menu.createMenuEntries(menu,table)
 			
 		#@	<< Create the menu table >>
 		#@+node:<< Create the menu table >>
@@ -1919,7 +1915,7 @@ class baseLeoTkinterTree:
 		#@nonl
 		#@-node:<< Create the menu table >>
 		#@nl
-		frame.createMenuEntries(menu,table)
+		frame.menu.createMenuEntries(menu,table)
 	#@nonl
 	#@-node:createPopupMenu
 	#@+node:enablePopupMenuItems
@@ -1927,7 +1923,7 @@ class baseLeoTkinterTree:
 		
 		"""Enable and disable items in the popup menu."""
 		
-		c = self.commands ; menu = self.popupMenu
+		c = self.c ; menu = self.popupMenu
 	
 		#@	<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
 		#@+node:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
@@ -1972,7 +1968,7 @@ class baseLeoTkinterTree:
 		
 		"""Show a popup menu."""
 		
-		c = self.commands ; menu = self.popupMenu
+		c = self.c ; menu = self.popupMenu ; gui = app.gui
 	
 		if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
 			menu.bind("<FocusOut>",self.OnPopupFocusLost)
@@ -1981,7 +1977,7 @@ class baseLeoTkinterTree:
 	
 		# Make certain we have focus so we know when we lose it.
 		# I think this is OK for all OSes.
-		set_focus(c,menu)
+		gui.set_focus(c,menu)
 	#@nonl
 	#@-node:showPopupMenu
 	#@+node:allocateNodes
@@ -2101,24 +2097,6 @@ class baseLeoTkinterTree:
 			v = v.next()
 		return y
 	#@-node:tree.updateTree
-	#@+node:abortEditLabelCommand
-	def abortEditLabelCommand (self):
-		
-		v = self.currentVnode
-		# trace(v)
-		if self.revertHeadline and v.edit_text() and v == self.editVnode:
-			
-			# trace(`self.revertHeadline`)
-			v.edit_text().delete("1.0","end")
-			v.edit_text().insert("end",self.revertHeadline)
-			self.idle_head_key(v) # Must be done immediately.
-			self.revertHeadline = None
-			self.select(v)
-			if v and len(v.t.joinList) > 0:
-				# 3/26/03: changed redraw_now to force_redraw.
-				self.force_redraw() # force a redraw of joined headlines.
-	#@nonl
-	#@-node:abortEditLabelCommand
 	#@+node:dimEditLabel, undimEditLabel
 	# Convenience methods so the caller doesn't have to know the present edit node.
 	
@@ -2152,12 +2130,12 @@ class baseLeoTkinterTree:
 			self.revertHeadline = v.headString()
 	#@nonl
 	#@-node:editLabel
-	#@+node:endEditLabel & endEditLabelCommand
+	#@+node:endEditLabel
 	# End editing for self.editText
 	
 	def endEditLabel (self):
 	
-		c = self.commands ; v = self.editVnode
+		c = self.c ; v = self.editVnode ; gui = app.gui
 		# trace(v)
 		if v and v.edit_text():
 			self.setUnselectedLabelState(v)
@@ -2165,20 +2143,9 @@ class baseLeoTkinterTree:
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
 			# 3/26/03: changed redraw_now to force_redraw.
 			self.force_redraw() # force a redraw of joined and ancestor headlines.
-		set_focus(c,c.bodyCtrl) # 10/14/02
-			
-	def endEditLabelCommand (self):
-	
-		c = self.commands ; v = self.editVnode
-		# trace(v)
-		if v and v.edit_text():
-			self.select(v)
-		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-			# 3/26/03: changed redraw_now to force_redraw.
-			self.force_redraw() # force a redraw of joined headlines.
-		set_focus(c,c.bodyCtrl) # 10/14/02
+		gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02
 	#@nonl
-	#@-node:endEditLabel & endEditLabelCommand
+	#@-node:endEditLabel
 	#@+node:tree.expandAllAncestors
 	def expandAllAncestors (self,v):
 	
@@ -2197,7 +2164,7 @@ class baseLeoTkinterTree:
 	
 	def scanForTabWidth (self, v):
 		
-		c = self.commands ; w = c.tab_width
+		c = self.c ; w = c.tab_width
 	
 		while v:
 			s = v.t.bodyString
@@ -2225,7 +2192,7 @@ class baseLeoTkinterTree:
 	
 		#@	<< define vars and stop editing >>
 		#@+node:<< define vars and stop editing >>
-		c = self.commands ; frame = c.frame ; body = frame.bodyCtrl
+		c = self.c ; frame = c.frame ; body = frame.bodyCtrl
 		old_v = c.currentVnode()
 		
 		# Unselect any previous selected but unedited label.
@@ -2241,7 +2208,7 @@ class baseLeoTkinterTree:
 			#@+node:<< unselect the old node >>
 			# Remember the position of the scrollbar before making any changes.
 			yview=body.yview()
-			insertSpot = c.bodyCtrl.index("insert")
+			insertSpot = c.body.getInsertionPoint()
 			
 			# Remember the old body text
 			old_body = body.get("1.0","end")
@@ -2276,10 +2243,10 @@ class baseLeoTkinterTree:
 				body.yview("moveto",first)
 			
 			if v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
-				c.bodyCtrl.mark_set("insert",v.t.insertSpot)
-				c.bodyCtrl.see(v.t.insertSpot)
+				c.frame.bodyCtrl.mark_set("insert",v.t.insertSpot)
+				c.frame.bodyCtrl.see(v.t.insertSpot)
 			else:
-				c.bodyCtrl.mark_set("insert","1.0")
+				c.frame.bodyCtrl.mark_set("insert","1.0")
 			#@nonl
 			#@-node:<< select the new node >>
 			#@nl
@@ -2323,7 +2290,7 @@ class baseLeoTkinterTree:
 		self.currentVnode = v
 		self.setSelectedLabelState(v)
 		self.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
-		set_focus(c,c.bodyCtrl)
+		app.gui.set_focus(c,c.frame.bodyCtrl)
 		#@-node:<< set the current node and redraw >>
 		#@nl
 		doHook("select2",c=c,new_v=v,old_v=old_v)
@@ -2359,7 +2326,7 @@ class baseLeoTkinterTree:
 			#@nl
 			v.edit_text().tag_remove("sel","1.0","end")
 			v.edit_text().tag_add("sel","1.0","end")
-			set_focus(self.commands,v.edit_text())
+			app.gui.set_focus(self.c,v.edit_text())
 	
 	def setDisabledLabelState (self,v): # selected, disabled
 		if v and v.edit_text():
@@ -2412,7 +2379,7 @@ class baseLeoTkinterTree:
 	def OnDownKey (self,event=None): return self.moveUpDown("down")
 	
 	def moveUpDown (self,upOrDown):
-		c = self.commands ; body = c.frame.bodyCtrl
+		c = self.c ; body = c.frame.bodyCtrl
 		# Make the insertion cursor visible so bbox won't return an empty list.
 		body.see("insert")
 		# Find the coordinates of the cursor and set the new height.

@@ -83,14 +83,14 @@ class baseAtFile:
 	#@+node:<< class baseAtFile methods >>
 	#@+others
 	#@+node:atFile.__init__ & initIvars
-	def __init__(self,theCommander):
+	def __init__(self,c):
 		
-		self.commands = theCommander
-		self.fileCommands = self.commands.fileCommands
+		self.c = c
+		self.fileCommands = self.c.fileCommands
 		
 		# Create subcommanders to handler old and new format derived files.
-		self.old_df = oldDerivedFile(theCommander)
-		self.new_df = newDerivedFile(theCommander)
+		self.old_df = oldDerivedFile(c)
+		self.new_df = newDerivedFile(c)
 		
 		self.initIvars()
 		
@@ -119,7 +119,7 @@ class baseAtFile:
 		
 		"""Scan vnodes, looking for @file nodes to read."""
 	
-		at = self ; c = at.commands
+		at = self ; c = at.c
 		c.endEditing() # Capture the current headline.
 		anyRead = false
 		at.initIvars()
@@ -162,7 +162,7 @@ class baseAtFile:
 		
 		"""Common read logic for any derived file."""
 		
-		at = self ; c = at.commands
+		at = self ; c = at.c
 		at.errors = 0
 		at.scanDefaultDirectory(root)
 		if at.errors: return
@@ -269,7 +269,7 @@ class baseAtFile:
 							print ; print "changed: " + v.headString()
 							print ; print "new:",`s`
 							print ; print "old:",`v.bodyString()`
-						v.setBodyStringOrPane(s) # Sets v and v.commands dirty.
+						v.setBodyStringOrPane(s) # Sets v and v.c dirty.
 						v.setMarked()
 					v = v.threadNext()
 				#@nonl
@@ -293,7 +293,7 @@ class baseAtFile:
 		
 		"""Set default_directory ivar by looking for @path directives."""
 	
-		at = self ; c = at.commands
+		at = self ; c = at.c
 		at.default_directory = None
 		#@	<< Set path from @file node >>
 		#@+node:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
@@ -552,7 +552,7 @@ class baseAtFile:
 		
 		"""Write @file nodes in all or part of the outline"""
 	
-		at = self ; c = at.commands
+		at = self ; c = at.c
 		write_new = not app.config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
 		df.initIvars()
@@ -786,10 +786,10 @@ class baseOldDerivedFile:
 	#@+node:<< class baseOldDerivedFile methods >>
 	#@+others
 	#@+node: old_df.__init__& initIvars
-	def __init__(self,theCommander):
+	def __init__(self,c):
 	
-		self.commands = theCommander # The commander for the current window.
-		self.fileCommands = self.commands.fileCommands
+		self.c = c # The commander for the current window.
+		self.fileCommands = self.c.fileCommands
 	
 		self.initIvars()
 	
@@ -868,11 +868,11 @@ class baseOldDerivedFile:
 		at = self
 	
 		if at.importRootSeen:
-			v = at.root.insertAsLastChild()
+			v = root.insertAsLastChild()
 			v.initHeadString(headline)
 		else:
 			# Put the text into the already-existing root node.
-			v = at.root
+			v = root
 			at.importRootSeen = true
 			
 		v.t.setVisited() # Suppress warning about unvisited node.
@@ -989,7 +989,7 @@ class baseOldDerivedFile:
 		assert(n > 0)
 		
 		if at.importing:
-			return at.createImportedNode(at.root,at.commands,headline)
+			return at.createImportedNode(at.root,at.c,headline)
 	
 		# Create any needed dummy children.
 		dummies = n - parent.numberOfChildren() - 1
@@ -2024,11 +2024,11 @@ class baseOldDerivedFile:
 		setting corresponding atFile ivars.
 		"""
 	
-		c = self.commands
+		c = self.c
 		#@	<< Set ivars >>
 		#@+node:<< Set ivars >>
-		self.page_width = self.commands.page_width
-		self.tab_width  = self.commands.tab_width
+		self.page_width = self.c.page_width
+		self.tab_width  = self.c.tab_width
 		
 		self.default_directory = None # 8/2: will be set later.
 		
@@ -2261,7 +2261,7 @@ class baseOldDerivedFile:
 	
 		if self.trace: trace("old_df",root)
 		
-		c = self.commands ; self.root = root
+		c = self.c ; self.root = root
 		self.errors = 0
 		self.sentinels = true # 10/1/03
 		c.endEditing() # Capture the current headline.
@@ -2374,7 +2374,7 @@ class baseOldDerivedFile:
 	
 		if self.trace: trace("old_df",root)
 	
-		c = self.commands ; self.root = root
+		c = self.c ; self.root = root
 		self.errors = 0
 		c.endEditing() # Capture the current headline.
 		try:
@@ -2423,7 +2423,7 @@ class baseOldDerivedFile:
 			if self.trace: trace("removing tnodeList for " + `root`)
 			delattr(root,"tnodeList")
 	
-		c = self.commands
+		c = self.c
 		self.sentinels = not nosentinels
 		#@	<< initialize >>
 		#@+node:<< initialize >>
@@ -3361,14 +3361,14 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@+node:<< class baseNewDerivedFile methods >>
 	#@+others
 	#@+node:newDerivedFile.__init__
-	def __init__(self,theCommander):
+	def __init__(self,c):
 		
 		"""Ctor for 4.x atFile class."""
 		
 		at = self
 	
 		# Initialize the base class.
-		oldDerivedFile.__init__(self,theCommander) 
+		oldDerivedFile.__init__(self,c) 
 	
 		# For 4.x reading & writing...
 		at.inCode = true
@@ -3454,7 +3454,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at = self
 	
 		if at.importing:
-			v = at.createImportedNode(at.root,at.commands,headline)
+			v = at.createImportedNode(at.root,at.c,headline)
 			return v.t
 	
 		if not hasattr(at.root,"tnodeList"):
@@ -4291,7 +4291,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		"""Write a 4.x derived file."""
 		
-		at = self ; c = at.commands
+		at = self ; c = at.c
 		if at.trace: trace("new_df",root)
 	
 		at.sentinels = not nosentinels
@@ -4437,7 +4437,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at = self
 		if at.trace: trace("new_df",root)
 	
-		c = at.commands ; at.root = root
+		c = at.c ; at.root = root
 		at.errors = 0
 		at.root.tnodeList = [] # 9/26/03: after beta 1 release.
 		at.sentinels = true # 10/1/03
@@ -4604,7 +4604,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			elif kind == miscDirective:
 				at.putDirective(s,i)
 			else:
-				assert(not "unknown directive")
+				assert(0) # Unknown directive.
 			#@nonl
 			#@-node:<< handle line at s[i]  >>
 			#@nl

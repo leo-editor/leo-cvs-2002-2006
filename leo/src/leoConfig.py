@@ -266,7 +266,7 @@ class baseConfig:
 		return self.recentFiles
 	
 	def setRecentFiles (self,files):
-		
+	
 		self.recentFiles = files
 	#@-node:get/setRecentFiles
 	#@+node:get/setWindowPrefs
@@ -351,7 +351,6 @@ class baseConfig:
 	def setCommandsFindIvars (self,c):
 		
 		if app.gui.guiName() != "tkinter":
-			trace()
 			return
 	
 		config = self ; findFrame = app.findFrame
@@ -430,7 +429,7 @@ class baseConfig:
 		findFrame = app.findFrame
 	
 		# N.B.: separate c.ivars are much more convenient than a dict.
-		for s in findFrame.intKeys:
+		for s in findFrame.intKeys: # These _are_ gui-independent.
 			val = getattr(c,s+"_flag")
 			self.setFindPref(s,val)
 			# trace(s,val)
@@ -467,6 +466,7 @@ class baseConfig:
 		self.setFindPref("script_search",`c.script_search_flag`)
 		self.setFindPref("search_body",`c.search_body_flag`)
 		self.setFindPref("search_headline",`c.search_headline_flag`)
+		self.setFindPref("selection_only",`c.selection_only_flag`) # 11/9/03
 		self.setFindPref("suboutline_only",`c.suboutline_only_flag`)
 		self.setFindPref("wrap",`c.wrap_flag`)
 		self.setFindPref("whole_word",`c.whole_word_flag`)
@@ -577,7 +577,7 @@ class baseConfig:
 			
 			app.use_gnx = self.initBooleanConfigParam(
 				"use_gnx",app.use_gnx)
-			trace("app.use_gnx",app.use_gnx)
+			# trace("app.use_gnx",app.use_gnx)
 				
 			self.use_plugins = self.initBooleanConfigParam(
 				"use_plugins",self.use_plugins)

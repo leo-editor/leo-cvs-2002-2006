@@ -5,6 +5,7 @@
 from leoGlobals import *
 
 import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
+import tempfile
 
 class baseCommands:
 	"""The base class for Leo's main commander."""
@@ -29,6 +30,9 @@ class baseCommands:
 	
 		#@	<< initialize ivars >>
 		#@+node:<< initialize ivars >>
+		# Created later.
+		self.body = self.log = None
+		
 		# per-document info...
 		self.hookFunction = None
 		self.openDirectory = None # 7/2/02
@@ -60,6 +64,8 @@ class baseCommands:
 		
 		# 4.1: for hoist/dehoist commands.
 		self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects only drawing routines.
+		
+		self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
 		#@nonl
 		#@-node:<< initialize ivars >>
 		#@nl
@@ -83,7 +89,7 @@ class baseCommands:
 	def setIvarsFromFind (self):
 	
 		c = self ; find = app.findFrame
-		if find:
+		if find != None:
 			find.set_ivars(c)
 	#@-node:c.setIvarsFromFind
 	#@+node:c.setIvarsFromPrefs
@@ -101,142 +107,1456 @@ class baseCommands:
 		pass
 	#@nonl
 	#@-node:c.setIvarsFromPrefs
-	#@+node:c.checkOutline
-	def checkOutline (self):
-		
-		"""Report any possible clone errors in the outline.
-		
-		Remove any unused tnodeLists."""
-		
-		c = self ; v = c.rootVnode()
-		
-		checkTopologyOfAllClones(c,verbose=false)
-		
-		nodes = 0
-		while v:
-			nodes += 1
-			if hasattr(v,"tnodeList") and not v.isAnyAtFileNode():
-				s = "deleting tnodeList for " + `v`
-				print s ; es(s,color="blue")
-				delattr(v,"tnodeList")
-	
-			v = v.threadNext()
-	
-		es("%d nodes checked" % nodes)
-	#@nonl
-	#@-node:c.checkOutline
-	#@+node:cutOutline
-	def cutOutline(self):
-	
-		c = self
-		if c.canDeleteHeadline():
-			c.copyOutline()
-			c.deleteHeadline("Cut Node")
-			c.recolor()
-	#@nonl
-	#@-node:cutOutline
-	#@+node:copyOutline
-	def copyOutline(self):
-	
-		# Copying an outline has no undo consequences.
-		c = self
-		c.endEditing()
-		c.fileCommands.assignFileIndices()
-		s = c.fileCommands.putLeoOutline()
-		app.gui.replaceClipboardWith(s)
-	#@nonl
-	#@-node:copyOutline
-	#@+node:pasteOutline
+	#@+node: doCommand
 	#@+at 
 	#@nonl
-	# To cut and paste between apps, just copy into an empty body first, then 
-	# copy to Leo's clipboard.
+	# Executes the given command, invoking hooks and catching exceptions.
+	# Command handlers no longer need to return "break".  Yippee!
+	# 
+	# The code assumes that the "command1" hook has completely handled the 
+	# command if doHook("command1") returns false.  This provides a very 
+	# simple mechanism for overriding commands.
 	#@-at
 	#@@c
 	
-	def pasteOutline(self):
+	def doCommand (self,command,label,event=None):
+		
+		# A horrible kludge: set app.log to cover for a possibly missing activate event.
+		app.setLog(self.log,"doCommand")
 	
-		c = self ; current = c.currentVnode()
-		
-		s = app.gui.getTextFromClibboard()
-		
-		if 0: # old code
+		if label == "cantredo": label = "redo"
+		if label == "cantundo": label = "undo"
+		app.commandName = label
+		c = self ; v = c.currentVnode()
+		if not doHook("command1",c=c,v=v,label=label):
 			try:
-				s = app.root.selection_get(selection="CLIPBOARD")
+				command()
 			except:
-				s = None # This should never happen.
+				es("exception executing command")
+				print "exception executing command"
+				es_exception()
+		
+		doHook("command2",c=c,v=v,label=label)
+				
+		return "break" # Inhibit all other handlers.
+	#@nonl
+	#@-node: doCommand
+	#@+node: version & signon stuff
+	def getBuildNumber(self):
+		c = self
+		return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"
 	
-		if not s or not c.canPasteOutline(s):
-			return # This should never happen.
+	def getSignOnLine (self):
+		c = self
+		return "Leo 4.1 beta 2, build %s, November 8, 2003" % c.getBuildNumber()
+		
+	def initVersion (self):
+		c = self
+		c.ver = "$Revision$" # CVS will update this.
+		
+	def signOnWithVersion (self):
 	
-		isLeo = match(s,0,app.prolog_prefix_string)
+		c = self
+		color = app.config.getWindowPref("log_error_color")
+		signon = c.getSignOnLine()
+		n1,n2,n3,junk,junk=sys.version_info
+		tkLevel = c.frame.top.getvar("tk_patchLevel")
+		
+		es("Leo Log Window...",color=color)
+		es(signon)
+		es("Python %d.%d.%d, Tk %s" % (n1,n2,n3,tkLevel))
+		enl()
+	#@nonl
+	#@-node: version & signon stuff
+	#@+node:c.dragAfter
+	def dragAfter(self,v,after):
 	
-		# trace(`s`)
-		if isLeo:
-			v = c.fileCommands.getLeoOutline(s)
-		else:
-			v = c.importCommands.convertMoreStringToOutlineAfter(s,current)
-		if v:
+		# es("dragAfter")
+		c = self
+		if not c.checkMoveWithParentWithWarning(v,after.parent(),true): return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.beginUpdate()
+		if 1: # inside update...
 			c.endEditing()
-			c.beginUpdate()
-			if 1: # inside update...
-				v.createDependents()# To handle effects of clones.
-				c.validateOutline()
-				c.selectVnode(v)
-				v.setDirty()
-				c.setChanged(true)
-				# paste as first child if back is expanded.
-				back = v.back()
-				if back and back.isExpanded():
-					v.moveToNthChildOf(back,0)
-				c.undoer.setUndoParams("Paste Node",v)
-			c.endUpdate()
-			c.recolor()
+			v.setDirty()
+			v.moveAfter(after)
+			c.undoer.setUndoParams("Drag",v,
+				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			v.setDirty()
+			c.selectVnode(v)
+			c.setChanged(true)
+			c.initJoinedCloneBits(v) # 10/8/03
+		c.endUpdate()
+		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
+	#@nonl
+	#@-node:c.dragAfter
+	#@+node:c.dragCloneToNthChildOf (changed in 3.11.1)
+	def dragCloneToNthChildOf (self,v,parent,n):
+	
+		c = self
+		c.beginUpdate()
+		# trace("v,parent,n:"+v.headString()+","+parent.headString()+","+`n`)
+		clone = v.clone(v) # Creates clone & dependents, does not set undo.
+		if not c.checkMoveWithParentWithWarning(clone,parent,true):
+			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+			c.endUpdate(false) # Nothing has changed.
+			return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.endEditing()
+		clone.setDirty()
+		clone.moveToNthChildOf(parent,n)
+		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
+		c.undoer.setUndoParams("Drag & Clone",clone,
+			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+		clone.setDirty()
+		c.selectVnode(clone)
+		c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+	#@nonl
+	#@-node:c.dragCloneToNthChildOf (changed in 3.11.1)
+	#@+node:c.dragToNthChildOf
+	def dragToNthChildOf(self,v,parent,n):
+	
+		# es("dragToNthChildOf")
+		c = self
+		if not c.checkMoveWithParentWithWarning(v,parent,true): return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.beginUpdate()
+		if 1: # inside update...
+			c.endEditing()
+			v.setDirty()
+			v.moveToNthChildOf(parent,n)
+			c.undoer.setUndoParams("Drag",v,
+				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			v.setDirty()
+			c.selectVnode(v)
+			c.setChanged(true)
+			c.initJoinedCloneBits(v) # 10/8/03
+		c.endUpdate()
+		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
+	#@nonl
+	#@-node:c.dragToNthChildOf
+	#@+node:c.dragCloneAfter (changed in 3.11.1)
+	def dragCloneAfter (self,v,after):
+	
+		c = self
+		c.beginUpdate()
+		clone = v.clone(v) # Creates clone & dependents, does not set undo.
+		# trace("v,after:"+v.headString()+","+after.headString())
+		if not c.checkMoveWithParentWithWarning(clone,after.parent(),true):
+			trace("invalid clone move")
+			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+			c.endUpdate(false) # Nothing has changed.
+			return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.endEditing()
+		clone.setDirty()
+		clone.moveAfter(after)
+		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
+		c.undoer.setUndoParams("Drag & Clone",clone,
+			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+		clone.setDirty()
+		c.selectVnode(clone)
+		c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+	#@nonl
+	#@-node:c.dragCloneAfter (changed in 3.11.1)
+	#@+node:new
+	def new (self):
+	
+		c,frame = app.gui.newLeoCommanderAndFrame(fileName=None)
+		
+		# 5/16/03: Needed for hooks.
+		doHook("new",old_c=self,new_c=c)
+		
+		# Use the config params to set the size and location of the window.
+		frame.setInitialWindowGeometry()
+		frame.deiconify()
+		frame.lift()
+		frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
+		
+		c.beginUpdate()
+		if 1: # within update
+			t = leoNodes.tnode()
+			v = leoNodes.vnode(c,t)
+			v.initHeadString("NewHeadline")
+			v.moveToRoot()
+			c.editVnode(v)
+		c.endUpdate()
+	
+		frame.body.setFocus()
+	#@nonl
+	#@-node:new
+	#@+node:open
+	def open(self):
+	
+		c = self
+		#@	<< Set closeFlag if the only open window is empty >>
+		#@+node:<< Set closeFlag if the only open window is empty >>
+		#@+at 
+		#@nonl
+		# If this is the only open window was opened when the app started, and 
+		# the window has never been written to or saved, then we will 
+		# automatically close that window if this open command completes 
+		# successfully.
+		#@-at
+		#@@c
+			
+		closeFlag = (
+			c.frame.startupWindow==true and # The window was open on startup
+			c.changed==false and c.frame.saved==false and # The window has never been changed
+			app.numberOfWindows == 1) # Only one untitled window has ever been opened
+		#@-node:<< Set closeFlag if the only open window is empty >>
+		#@nl
+	
+		fileName = app.gui.runOpenFileDialog(
+			title="Open",
+			filetypes=[("Leo files", "*.leo"), ("All files", "*.*")],
+			defaultextension=".leo")
+	
+		if fileName and len(fileName) > 0:
+			ok, frame = c.OpenWithFileName(fileName)
+			if ok and closeFlag:
+				app.destroyWindow(c.frame)
+	#@nonl
+	#@-node:open
+	#@+node:openWith and allies
+	#@+at 
+	#@nonl
+	# This routine handles the items in the Open With... menu.
+	# These items can only be created by createOpenWithMenuFromTable().
+	# Typically this would be done from the "open2" hook.
+	#@-at
+	#@@c
+	
+	def openWith(self,data=None):
+		
+		c = self ; v = c.currentVnode()
+		if not data or len(data) != 3: return # 6/22/03
+		try:
+			# print "OnOpenWith:",`data`
+			openType,arg,ext=data
+			if not doHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext):
+				#@			<< set ext based on the present language >>
+				#@+node:<< set ext based on the present language >>
+				if not ext:
+					dict = scanDirectives(c)
+					language = dict.get("language")
+					ext = app.language_extension_dict.get(language)
+					# print language,ext
+					if ext == None:
+						ext = "txt"
+					
+				if ext[0] != ".":
+					ext = "."+ext
+					
+				# print "ext",`ext`
+				#@nonl
+				#@-node:<< set ext based on the present language >>
+				#@nl
+				#@			<< create or reopen temp file, testing for conflicting changes >>
+				#@+node:<< create or reopen temp file, testing for conflicting changes >>
+				dict = None ; path = None
+				#@<< set dict and path if a temp file already refers to v.t >>
+				#@+node:<<set dict and path if a temp file already refers to v.t >>
+				searchPath = c.openWithTempFilePath(v,ext)
+				
+				if os.path.exists(searchPath):
+					for dict in app.openWithFiles:
+						if v.t == dict.get("v") and searchPath == dict.get("path"):
+							path = searchPath
+							break
+				#@-node:<<set dict and path if a temp file already refers to v.t >>
+				#@nl
+				if path:
+					#@	<< create or recreate temp file as needed >>
+					#@+node:<< create or recreate temp file as needed >>
+					#@+at 
+					#@nonl
+					# We test for changes in both v and the temp file:
+					# 
+					# - If only v's body text has changed, we recreate the 
+					# temp file.
+					# - If only the temp file has changed, do nothing here.
+					# - If both have changed we must prompt the user to see 
+					# which code to use.
+					#@-at
+					#@@c
+					
+					encoding = dict.get("encoding")
+					old_body = dict.get("body")
+					new_body = v.bodyString()
+					new_body = toEncodedString(new_body,encoding,reportErrors=true)
+					
+					old_time = dict.get("time")
+					try:
+						new_time=os.path.getmtime(path)
+					except:
+						new_time=None
+						
+					body_changed = old_body != new_body
+					temp_changed = old_time != new_time
+					
+					if body_changed and temp_changed:
+						#@	<< Raise dialog about conflict and set result >>
+						#@+node:<< Raise dialog about conflict and set result >>
+						message = (
+							"Conflicting changes in outline and temp file\n\n" +
+							"Do you want to use the code in the outline or the temp file?\n\n")
+						
+						result = app.gui.runAskYesNoCancelDialog(
+							"Conflict!", message,
+							yesMessage = "Outline",
+							noMessage = "File",
+							defaultButton = "Cancel")
+						#@nonl
+						#@-node:<< Raise dialog about conflict and set result >>
+						#@nl
+						if result == "cancel": return
+						rewrite = result == "outline"
+					else:
+						rewrite = body_changed
+							
+					if rewrite:
+						path = c.createOpenWithTempFile(v,ext)
+					else:
+						es("reopening: " + shortFileName(path),color="blue")
+					#@nonl
+					#@-node:<< create or recreate temp file as needed >>
+					#@nl
+				else:
+					path = c.createOpenWithTempFile(v,ext)
+				
+				if not path:
+					return # An error has occured.
+				#@nonl
+				#@-node:<< create or reopen temp file, testing for conflicting changes >>
+				#@nl
+				#@			<< execute a command to open path in external editor >>
+				#@+node:<< execute a command to open path in external editor >>
+				try:
+					if arg == None: arg = ""
+					shortPath = path # shortFileName(path)
+					if openType == "os.system":
+						command  = "os.system("+arg+shortPath+")"
+						os.system(arg+path)
+					elif openType == "os.startfile":
+						command    = "os.startfile("+arg+shortPath+")"
+						os.startfile(arg+path)
+					elif openType == "exec":
+						command    = "exec("+arg+shortPath+")"
+						exec arg+path in {} # 12/11/02
+					elif openType == "os.spawnl":
+						filename = os.path.basename(arg)
+						command = "os.spawnl("+arg+","+filename+','+ shortPath+")"
+						apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
+					elif openType == "os.spawnv":
+						filename = os.path.basename(arg)
+						command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
+						apply(os.spawnl,(os.P_NOWAIT,arg,(filename,path)))
+					else:
+						command="bad command:"+str(openType)
+					# This seems a bit redundant.
+					# es(command)
+				except:
+					es("exception executing: "+command)
+					es_exception()
+				#@nonl
+				#@-node:<< execute a command to open path in external editor >>
+				#@nl
+			doHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
+		except:
+			es("exception in OnOpenWith")
+			es_exception()
+	
+		return "break"
+	#@nonl
+	#@-node:openWith and allies
+	#@+node:createOpenWithTempFile
+	def createOpenWithTempFile (self, v, ext):
+		
+		c = self
+		path = c.openWithTempFilePath(v,ext)
+		try:
+			if os.path.exists(path):
+				es("recreating:  " + shortFileName(path),color="red")
+			else:
+				es("creating:  " + shortFileName(path),color="blue")
+			file = open(path,"w")
+			# 3/7/03: convert s to whatever encoding is in effect.
+			s = v.bodyString()
+			dict = scanDirectives(c,v=v)
+			encoding = dict.get("encoding",None)
+			if encoding == None:
+				encoding = app.config.default_derived_file_encoding
+			s = toEncodedString(s,encoding,reportErrors=true) 
+			file.write(s)
+			file.flush()
+			file.close()
+			try:    time=os.path.getmtime(path)
+			except: time=None
+			# es("time: " + str(time))
+			# 4/22/03: add body and encoding entries to dict for later comparisons.
+			dict = {"body":s, "c":c, "encoding":encoding, "f":file, "path":path, "time":time, "v":v}
+			#@		<< remove previous entry from app.openWithFiles if it exists >>
+			#@+node:<< remove previous entry from app.openWithFiles if it exists >>
+			for d in app.openWithFiles[:]: # 6/30/03
+				v2 = d.get("v")
+				if v.t == v2.t:
+					print "removing previous entry in app.openWithFiles for",v
+					app.openWithFiles.remove(d)
+			#@nonl
+			#@-node:<< remove previous entry from app.openWithFiles if it exists >>
+	#@afterref
+ # 4/22/03
+			app.openWithFiles.append(dict)
+			return path
+		except:
+			file = None
+			es("exception creating temp file",color="red")
+			es_exception()
+			return None
+	#@nonl
+	#@-node:createOpenWithTempFile
+	#@+node:openWithTempFilePath
+	def openWithTempFilePath (self,v,ext):
+		
+		"""Return the path to the temp file corresponding to v and ext."""
+	
+		name = "LeoTemp_" + str(id(v.t)) + '_' + sanitize_filename(v.headString()) + ext
+		name = toUnicode(name,app.tkEncoding) # 10/20/03
+	
+		td = os.path.abspath(tempfile.gettempdir())
+		path = os.path.join(td,name)
+		path = toUnicode(path,app.tkEncoding) # 10/20/03
+		
+		# print "openWithTempFilePath",path
+		return path
+	#@nonl
+	#@-node:openWithTempFilePath
+	#@+node:OpenWithFileName
+	def OpenWithFileName(self,fileName):
+		
+		c = self
+		return openWithFileName(fileName,c)
+	#@nonl
+	#@-node:OpenWithFileName
+	#@+node:close
+	def close(self):
+		
+		"""Handle the File-Close command."""
+	
+		app.closeLeoWindow(self.frame)
+	#@nonl
+	#@-node:close
+	#@+node:save
+	def save(self):
+	
+		c = self
+		
+		# Make sure we never pass None to the ctor.
+		if not c.mFileName:
+			c.frame.title = ""
+			c.mFileName = ""
+	
+		if c.mFileName != "":
+			c.fileCommands.save(c.mFileName)
+			c.setChanged(false)
+			return
+	
+		fileName = app.gui.runSaveFileDialog(
+			initialfile = c.mFileName,
+			title="Save",
+			filetypes=[("Leo files", "*.leo")],
+			defaultextension=".leo")
+	
+		if fileName:
+			# 7/2/02: don't change mFileName until the dialog has suceeded.
+			c.mFileName = ensure_extension(fileName, ".leo")
+			c.frame.title = c.mFileName
+			c.frame.setTitle(computeWindowTitle(c.mFileName))
+			c.fileCommands.save(c.mFileName)
+			c.updateRecentFiles(c.mFileName)
+	#@nonl
+	#@-node:save
+	#@+node:saveAs
+	def saveAs(self):
+		
+		c = self
+	
+		# Make sure we never pass None to the ctor.
+		if not c.mFileName:
+			c.frame.title = ""
+	
+		fileName = app.gui.runSaveFileDialog(
+			initialfile = c.mFileName,
+			title="Save As",
+			filetypes=[("Leo files", "*.leo")],
+			defaultextension=".leo")
+	
+		if fileName:
+			# 7/2/02: don't change mFileName until the dialog has suceeded.
+			c.mFileName = ensure_extension(fileName, ".leo")
+			c.frame.title = c.mFileName
+			c.frame.setTitle(computeWindowTitle(c.mFileName))
+			c.fileCommands.saveAs(c.mFileName)
+			c.updateRecentFiles(c.mFileName)
+	#@nonl
+	#@-node:saveAs
+	#@+node:saveTo
+	def saveTo(self):
+		
+		c = self
+	
+		# Make sure we never pass None to the ctor.
+		if not c.mFileName:
+			c.frame.title = ""
+	
+		# set local fileName, _not_ c.mFileName
+		fileName = app.gui.runSaveFileDialog(
+			initialfile = c.mFileName,
+			title="Save To",
+			filetypes=[("Leo files", "*.leo")],
+			defaultextension=".leo")
+	
+		if fileName:
+			fileName = ensure_extension(fileName, ".leo")
+			c.fileCommands.saveTo(fileName)
+			c.updateRecentFiles(c.mFileName)
+	#@nonl
+	#@-node:saveTo
+	#@+node:revert
+	def revert(self):
+		
+		c = self
+	
+		# Make sure the user wants to Revert.
+		if not c.mFileName:
+			return
+			
+		reply = app.gui.runAskYesNoDialog("Revert",
+			"Revert to previous version of " + c.mFileName + "?")
+	
+		if reply=="no":
+			return
+	
+		# Kludge: rename this frame so OpenWithFileName won't think it is open.
+		fileName = c.mFileName ; c.mFileName = ""
+	
+		# Create a new frame before deleting this frame.
+		ok, frame = c.OpenWithFileName(fileName)
+		if ok:
+			frame.deiconify()
+			app.destroyWindow(c.frame)
 		else:
-			es("The clipboard is not a valid " + choose(isLeo,"Leo","MORE") + " file")
-	#@nonl
-	#@-node:pasteOutline
-	#@+node:beginUpdate
-	def beginUpdate(self):
-	
-		self.frame.beginUpdate()
+			c.mFileName = fileName
+	#@-node:revert
+	#@+node:clearRecentFiles
+	def clearRecentFiles (self):
 		
-	BeginUpdate = beginUpdate # Compatibility with old scripts
-	#@nonl
-	#@-node:beginUpdate
-	#@+node:bringToFront
-	def bringToFront(self):
+		"""Clear the recent files list, then add the present file."""
 	
-		self.frame.deiconify()
-	
-	BringToFront = bringToFront # Compatibility with old scripts
-	#@nonl
-	#@-node:bringToFront
-	#@+node:endUpdate
-	def endUpdate(self, flag=true):
+		c = self ; f = c.frame
 		
-		self.frame.endUpdate(flag)
+		recentFilesMenu = f.menu.getMenu("Recent Files...")
+		f.menu.delete_range(recentFilesMenu,0,len(c.recentFiles))
 		
-	EndUpdate = endUpdate # Compatibility with old scripts
+		c.recentFiles = []
+		f.menu.createRecentFilesMenuItems()
+		c.updateRecentFiles(c.mFileName)
 	#@nonl
-	#@-node:endUpdate
-	#@+node:recolor
-	def recolor(self):
-	
-		self.frame.recolor(self.frame.currentVnode())
-	#@nonl
-	#@-node:recolor
-	#@+node:redraw & repaint
-	def redraw(self):
-	
-		self.frame.redraw()
+	#@-node:clearRecentFiles
+	#@+node:openRecentFile
+	def openRecentFile(self,name=None):
 		
-	# Compatibility with old scripts
-	Redraw = redraw 
-	repaint = redraw
-	Repaint = redraw
+		c = self ; v = c.currentVnode()
+		#@	<< Set closeFlag if the only open window is empty >>
+		#@+node:<< Set closeFlag if the only open window is empty >>
+		#@+at 
+		#@nonl
+		# If this is the only open window was opened when the app started, and 
+		# the window has never been written to or saved, then we will 
+		# automatically close that window if this open command completes 
+		# successfully.
+		#@-at
+		#@@c
+			
+		closeFlag = (
+			c.frame.startupWindow==true and # The window was open on startup
+			c.changed==false and c.saved==false and # The window has never been changed
+			app.numberOfWindows == 1) # Only one untitled window has ever been opened
+		#@nonl
+		#@-node:<< Set closeFlag if the only open window is empty >>
+		#@nl
+		if not name:
+			return
+	
+		fileName = name
+		if not doHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag):
+			ok, frame = self.OpenWithFileName(fileName)
+			if ok and closeFlag:
+				app.destroyWindow(self)
+				app.setLog(frame.log,"openRecentFile") # Sets the log stream for es()
+	
+		doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
 	#@nonl
-	#@-node:redraw & repaint
+	#@-node:openRecentFile
+	#@+node:updateRecentFiles
+	def updateRecentFiles (self,fileName):
+		
+		if not fileName or len(fileName) == 0:
+			return
+		
+		# Update the recent files list in all windows.
+		normFileName = fn_norm(fileName)
+		for frame in app.windowList:
+			c = frame.c
+			# Remove all versions of the file name.
+			for name in c.recentFiles:
+				if normFileName == fn_norm(name):
+					c.recentFiles.remove(name)
+			c.recentFiles.insert(0,fileName)
+			# Recreate the Recent Files menu.
+			frame.menu.createRecentFilesMenuItems()
+			
+		# Update the config file.
+		app.config.setRecentFiles(self.recentFiles) # Use self, _not_ c.
+		app.config.update()
+	#@nonl
+	#@-node:updateRecentFiles
+	#@+node:readOutlineOnly
+	def readOutlineOnly (self):
+	
+		fileName = app.gui.runOpenFileDialog(
+			title="Read Outline Only",
+			filetypes=[("Leo files", "*.leo"), ("All files", "*.*")],
+			defaultextension=".leo")
+	
+		if not fileName:
+			return
+	
+		try:
+			file = open(fileName,'r')
+			c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+			frame.deiconify()
+			frame.lift()
+			app.root.update() # Force a screen redraw immediately.
+			c.fileCommands.readOutlineOnly(file,fileName) # closes file.
+		except:
+			es("can not open:" + fileName)
+	#@nonl
+	#@-node:readOutlineOnly
+	#@+node:readAtFileNodes
+	def readAtFileNodes (self):
+	
+		c = self ; v = c.currentVnode()
+	
+		# Create copy for undo.
+		v_copy = c.undoer.saveTree(v)
+		oldText = c.body.getAllText()
+		oldSel = c.body.getTextSelection()
+	
+		c.fileCommands.readAtFileNodes()
+	
+		newText = c.body.getAllText()
+		newSel = c.body.getTextSelection()
+	
+		c.undoer.setUndoParams("Read @file Nodes",
+			v,select=v,oldTree=v_copy,
+			oldText=oldText,newText=newText,
+			oldSel=oldSel,newSel=newSel)
+	#@nonl
+	#@-node:readAtFileNodes
+	#@+node:importDerivedFile
+	def importDerivedFile (self):
+		
+		"""Create a new outline from a 4.0 derived file."""
+		
+		frame = self ; c = frame.c ; v = c.currentVnode()
+		
+		if v.isAtFileNode():
+			fileName = v.atFileNodeName()
+			c.importCommands.importDerivedFiles(v,fileName)
+		else:
+			es("not an @file node",color="blue")
+	#@nonl
+	#@-node:importDerivedFile
+	#@+node:writeNew/OldDerivedFiles
+	def writeNewDerivedFiles (self):
+		
+		c = self
+		c.atFileCommands.writeNewDerivedFiles()
+		es("auto-saving outline",color="blue")
+		self.OnSave() # Must be done to preserve tnodeList.
+		
+	def writeOldDerivedFiles (self):
+		
+		c = self
+		c.atFileCommands.writeOldDerivedFiles()
+		es("auto-saving outline",color="blue")
+		self.OnSave() # Must be done to clear tnodeList.
+	#@nonl
+	#@-node:writeNew/OldDerivedFiles
+	#@+node:tangleAll
+	def tangleAll(self):
+		
+		c = self
+		c.tangleCommands.tangleAll()
+	#@-node:tangleAll
+	#@+node:tangleMarked
+	def tangleMarked(self):
+	
+		c = self
+		c.tangleCommands.tangleMarked()
+	#@-node:tangleMarked
+	#@+node:tangle
+	def tangle (self):
+	
+		c = self
+		c.tangleCommands.tangle()
+	#@nonl
+	#@-node:tangle
+	#@+node:untangleAll
+	def untangleAll(self):
+	
+		c = self
+		c.tangleCommands.untangleAll()
+		c.undoer.clearUndoState()
+	#@-node:untangleAll
+	#@+node:untangleMarked
+	def untangleMarked(self):
+	
+		c = self
+		c.tangleCommands.untangleMarked()
+		c.undoer.clearUndoState()
+	#@-node:untangleMarked
+	#@+node:untangle
+	def untangle(self):
+	
+		c = self
+		c.tangleCommands.untangle()
+		c.undoer.clearUndoState()
+	#@-node:untangle
+	#@+node:exportHeadlines
+	def exportHeadlines (self):
+	
+		filetypes = [("Text files", "*.txt"),("All files", "*")]
+	
+		fileName = app.gui.runSaveFileDialog(
+			initialfile="headlines.txt",
+			title="Export Headlines",
+			filetypes=filetypes,
+			defaultextension=".txt")
+	
+		if fileName and len(fileName) > 0:
+			self.c.importCommands.exportHeadlines(fileName)
+	
+	#@-node:exportHeadlines
+	#@+node:flattenOutline
+	def flattenOutline (self):
+	
+		filetypes = [("Text files", "*.txt"),("All files", "*")]
+	
+		fileName = app.gui.runSaveFileDialog(
+			initialfile="flat.txt",
+			title="Flatten Outline",
+			filetypes=filetypes,
+			defaultextension=".txt")
+	
+		if fileName and len(fileName) > 0:
+			c = self
+			c.importCommands.flattenOutline(fileName)
+	
+	#@-node:flattenOutline
+	#@+node:importAtRoot
+	def importAtRoot (self):
+		
+		types = [
+			("All files","*.*"),
+			("C/C++ files","*.c"),
+			("C/C++ files","*.cpp"),
+			("C/C++ files","*.h"),
+			("C/C++ files","*.hpp"),
+			("Java files","*.java"),
+			("Pascal files","*.pas"),
+			("Python files","*.py") ]
+	
+		fileName = app.gui.runOpenFileDialog(
+			title="Import To @root",
+			filetypes=types,
+			defaultextension=".py")
+	
+		if fileName and len(fileName) > 0:
+			c = self
+			paths = [fileName] # alas, askopenfilename returns only a single name.
+			c.importCommands.importFilesCommand (paths,"@root")
+	
+	#@-node:importAtRoot
+	#@+node:importAtFile
+	def importAtFile (self):
+	
+		types = [
+			("All files","*.*"),
+			("C/C++ files","*.c"),
+			("C/C++ files","*.cpp"),
+			("C/C++ files","*.h"),
+			("C/C++ files","*.hpp"),
+			("Java files","*.java"),
+			("Pascal files","*.pas"),
+			("Python files","*.py") ]
+	
+		fileName = app.gui.runOpenFileDialog(
+			title="Import To @file",
+			filetypes=types,
+			defaultextension=".py")
+	
+		if fileName and len(fileName) > 0:
+			c = self
+			paths = [fileName] # alas, askopenfilename returns only a single name.
+			c.importCommands.importFilesCommand (paths,"@file")
+	
+	#@-node:importAtFile
+	#@+node:importCWEBFiles
+	def importCWEBFiles (self):
+		
+		filetypes = [
+			("CWEB files", "*.w"),
+			("Text files", "*.txt"),
+			("All files", "*.*")]
+	
+		fileName = app.gui.runOpenFileDialog(
+			title="Import CWEB Files",
+			filetypes=filetypes,
+			defaultextension=".w")
+	
+		if fileName and len(fileName) > 0:
+			c = self
+			paths = [fileName] # alas, askopenfilename returns only a single name.
+			c.importCommands.importWebCommand(paths,"cweb")
+	#@-node:importCWEBFiles
+	#@+node:importFlattenedOutline
+	def importFlattenedOutline (self):
+		
+		types = [("Text files","*.txt"), ("All files","*.*")]
+	
+		fileName = app.gui.runOpenFileDialog(
+			title="Import MORE Text",
+			filetypes=types,
+			defaultextension=".py")
+	
+		if fileName and len(fileName) > 0:
+			c = self
+			paths = [fileName] # alas, askopenfilename returns only a single name.
+			c.importCommands.importFlattenedOutline(paths)
+	#@-node:importFlattenedOutline
+	#@+node:importNowebFiles
+	def importNowebFiles (self):
+	
+		filetypes = [
+			("Noweb files", "*.nw"),
+			("Text files", "*.txt"),
+			("All files", "*.*")]
+	
+		fileName = app.gui.runOpenFileDialog(
+			title="Import Noweb Files",
+			filetypes=filetypes,
+			defaultextension=".nw")
+	
+		if fileName and len(fileName) > 0:
+			c = self
+			paths = [fileName] # alas, askopenfilename returns only a single name.
+			c.importCommands.importWebCommand(paths,"noweb")
+	
+	#@-node:importNowebFiles
+	#@+node:outlineToCWEB
+	def outlineToCWEB (self):
+	
+		filetypes=[
+			("CWEB files", "*.w"),
+			("Text files", "*.txt"),
+			("All files", "*")]
+	
+		fileName = app.gui.runSaveFileDialog(
+			initialfile="cweb.w",
+			title="Outline To CWEB",
+			filetypes=filetypes,
+			defaultextension=".w")
+	
+		if fileName and len(fileName) > 0:
+			c = self
+			c.importCommands.outlineToWeb(fileName,"cweb")
+	
+	#@-node:outlineToCWEB
+	#@+node:outlineToNoweb
+	def outlineToNoweb (self):
+		
+		filetypes=[
+			("Noweb files", "*.nw"),
+			("Text files", "*.txt"),
+			("All files", "*")]
+	
+		fileName = app.gui.runSaveFileDialog(
+			initialfile=self.outlineToNowebDefaultFileName,
+			title="Outline To Noweb",
+			filetypes=filetypes,
+			defaultextension=".nw")
+	
+		if fileName and len(fileName) > 0:
+			c = self
+			c.importCommands.outlineToWeb(fileName,"noweb")
+			self.outlineToNowebDefaultFileName = fileName
+	
+	#@-node:outlineToNoweb
+	#@+node:removeSentinels
+	def removeSentinels (self):
+		
+		types = [
+			("All files","*.*"),
+			("C/C++ files","*.c"),
+			("C/C++ files","*.cpp"),
+			("C/C++ files","*.h"),
+			("C/C++ files","*.hpp"),
+			("Java files","*.java"),
+			("Pascal files","*.pas"),
+			("Python files","*.py") ]
+	
+		fileName = app.gui.runOpenFileDialog(
+			title="Remove Sentinels",
+			filetypes=types,
+			defaultextension=".py")
+	
+		if fileName and len(fileName) > 0:
+			c = self
+			# alas, askopenfilename returns only a single name.
+			c.importCommands.removeSentinelsCommand (fileName)
+	#@-node:removeSentinels
+	#@+node:weave
+	def weave (self):
+	
+		filetypes = [("Text files", "*.txt"),("All files", "*")]
+	
+		fileName = app.gui.runSaveFileDialog(
+			initialfile="weave.txt",
+			title="Weave",
+			filetypes=filetypes,
+			defaultextension=".txt")
+	
+		if fileName and len(fileName) > 0:
+			c = self
+			c.importCommands.weave(fileName)
+	#@-node:weave
+	#@+node:delete
+	def delete(self):
+	
+		c = self ; v = c.currentVnode()
+	
+		if c.body.hasTextSelection():
+			oldSel = c.body.getTextSelection()
+			c.body.deleteTextSelection()
+			c.frame.onBodyChanged(v,"Delete",oldSel=oldSel)
+	#@nonl
+	#@-node:delete
+	#@+node:executeScript
+	#@+at 
+	#@nonl
+	# This executes body text as a Python script.  We execute the selected 
+	# text, or the entire body text if no text is selected.
+	#@-at
+	#@@c
+	
+	def executeScript(self,v=None):
+		
+		c = self ; s = None
+		if v == None:
+			v = c.currentVnode()
+	
+		#@	<< get script into s >>
+		#@+node:<< get script into s >>
+		# Assume any selected body text is a script.
+		
+		start,end = c.body.getTextSelection()
+		
+		if start and end and start != end:
+			s = c.body.getSelectedText()
+		else:
+			s = c.body.getAllText()
+		if s:
+			s = s.strip()
+		#@nonl
+		#@-node:<< get script into s >>
+		#@nl
+		#@	<< redirect output if redirect_execute_script_output_to_log_pane >>
+		#@+node:<< redirect output if redirect_execute_script_output_to_log_pane >>
+		if app.config.redirect_execute_script_output_to_log_pane:
+		
+			from leoGlobals import redirectStdout,redirectStderr
+			redirectStdout() # Redirect stdout
+			redirectStderr() # Redirect stderr
+		#@nonl
+		#@-node:<< redirect output if redirect_execute_script_output_to_log_pane >>
+		#@nl
+	
+		if s:
+			s += '\n' # Make sure we end the script properly.
+			try:
+				exec s in {} # Use {} to get a pristine environment!
+			except:
+				es("exception executing script")
+				es_exception(full=false)
+		else:
+			es("no script selected")
+	#@nonl
+	#@-node:executeScript
+	#@+node:goToLineNumber & allies
+	def goToLineNumber (self):
+	
+		c = self ; v = c.currentVnode()
+		#@	<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
+		#@+node:<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
+		# Search the present node first.
+		j = v.t.joinList
+		if v in j:
+			j.remove(v)
+		j.insert(0,v)
+		
+		# 10/15/03: search joined nodes if first search fails.
+		root = None ; fileName = None
+		for v in j:
+			while v and not fileName:
+				if v.isAtFileNode():
+					fileName = v.atFileNodeName()
+				elif v.isAtSilentFileNode():
+					fileName = v.atSilentFileNodeName()
+				elif v.isAtRawFileNode():
+					fileName = v.atRawFileNodeName()
+				else:
+					v = v.parent()
+			if fileName:
+				root = v
+				# trace("root,fileName",root,fileName)
+				break # Bug fix: 10/25/03
+		if not root:
+			es("Go to line number: ancestor must be @file node", color="blue")
+			return
+		#@nonl
+		#@-node:<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
+		#@nl
+		#@	<< read the file into lines >>
+		#@+node:<< read the file into lines >> in OnGoToLineNumber
+		# 1/26/03: calculate the full path.
+		d = scanDirectives(c)
+		path = d.get("path")
+		fileName = os.path.join(path,fileName)
+		fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
+		
+		try:
+			file=open(fileName)
+			lines = file.readlines()
+			file.close()
+		except:
+			es("not found: " + fileName)
+			return
+			
+		#@-node:<< read the file into lines >> in OnGoToLineNumber
+		#@nl
+		#@	<< get n, the line number, from a dialog >>
+		#@+node:<< get n, the line number, from a dialog >>
+		n = app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
+		if n == -1:
+			return
+		#@nonl
+		#@-node:<< get n, the line number, from a dialog >>
+		#@nl
+		# trace("n:"+`n`)
+		if n==1:
+			v = root ; n2 = 1 ; found = true
+		elif n >= len(lines):
+			v = root ; found = false
+			n2 = v.bodyString().count('\n')
+		elif root.isAtSilentFileNode():
+			#@		<< count outline lines, setting v,n2,found >>
+			#@+node:<< count outline lines, setting v,n2,found >> (@file-nosent only)
+			v = lastv = root ; after = root.nodeAfterTree()
+			prev = 0 ; found = false
+			while v and v != after:
+				lastv = v
+				s = v.bodyString()
+				lines = s.count('\n')
+				if len(s) > 0 and s[-1] != '\n':
+					lines += 1
+				# print lines,prev,v
+				if prev + lines >= n:
+					found = true ; break
+				prev += lines
+				v = v.threadNext()
+			
+			v = lastv
+			n2 = max(1,n-prev)
+			#@nonl
+			#@-node:<< count outline lines, setting v,n2,found >> (@file-nosent only)
+			#@nl
+		else:
+			vnodeName,childIndex,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
+			found = true
+			if not vnodeName:
+				es("invalid derived file: " + fileName)
+				return
+			#@		<< set v to the node given by vnodeName and childIndex or n >>
+			#@+node:<< set v to the node given by vnodeName and childIndex or n >>
+			after = root.nodeAfterTree()
+			
+			if childIndex == -1:
+				#@	<< 4.x: scan for the node using tnodeList and n >>
+				#@+node:<< 4.x: scan for the node using tnodeList and n >>
+				# This is about the best that can be done without replicating the entire atFile write logic.
+				
+				ok = true
+				
+				if not hasattr(root,"tnodeList"):
+					s = "no child index for " + root.headString()
+					print s ; es(s, color="red")
+					ok = false
+				
+				if ok:
+					tnodeList = root.tnodeList
+					#@	<< set tnodeIndex to the number of +node sentinels before line n >>
+					#@+node:<< set tnodeIndex to the number of +node sentinels before line n >>
+					tnodeIndex = -1 # Don't count the @file node.
+					scanned = 0 # count of lines scanned.
+					
+					for s in lines:
+						if scanned >= n:
+							break
+						i = skip_ws(s,0)
+						if match(s,i,delim):
+							i += len(delim)
+							if match(s,i,"+node"):
+								# trace(tnodeIndex,s.rstrip())
+								tnodeIndex += 1
+						scanned += 1
+					#@nonl
+					#@-node:<< set tnodeIndex to the number of +node sentinels before line n >>
+					#@nl
+					tnodeIndex = max(0,tnodeIndex)
+					#@	<< set v to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+					#@+node:<< set v to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+					#@+at 
+					#@nonl
+					# We use the tnodeList to find a _tnode_ corresponding to 
+					# the proper node, so the user will for sure be editing 
+					# the proper text, even if several nodes happen to have 
+					# the same headline.  This is really all that we need.
+					# 
+					# However, this code has no good way of distinguishing 
+					# between different cloned vnodes in the file: they all 
+					# have the same tnode.  So this code just picks v = 
+					# t.joinList[0] and leaves it at that.
+					# 
+					# The only way to do better is to scan the outline, 
+					# replicating the write logic to determine which vnode 
+					# created the given line.  That's way too difficult, and 
+					# it would create an unwanted dependency in this code.
+					#@-at
+					#@@c
+					
+					# trace("tnodeIndex",tnodeIndex)
+					if tnodeIndex < len(tnodeList):
+						t = tnodeList[tnodeIndex]
+						# Find the first vnode whose tnode is t.
+						v = root
+						while v and v != after:
+							if v.t == t:
+								break
+							v = v.threadNext()
+						if not v:
+							s = "tnode not found for " + vnodeName
+							print s ; es(s, color="red") ; ok = false
+						elif v.headString().strip() != vnodeName:
+							s = "Mismatched vnodeName\nExpecting: %s\n got: %s" % (v.headString(),vnodeName)
+							print s ; es(s, color="red") ; ok = false
+					else:
+						s = "Invalid computed tnodeIndex: %d" % tnodeIndex
+						print s ; es(s, color = "red") ; ok = false
+					#@nonl
+					#@-node:<< set v to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+					#@nl
+							
+				if not ok:
+					# Fall back to the old logic.
+					#@	<< set v to the first node whose headline matches vnodeName >>
+					#@+node:<< set v to the first node whose headline matches vnodeName >>
+					v = root
+					while v and v != after:
+						if v.matchHeadline(vnodeName):
+							break
+						v = v.threadNext()
+					
+					if not v or v == after:
+						s = "not found: " + vnodeName
+						print s ; es(s, color="red")
+						return
+					#@nonl
+					#@-node:<< set v to the first node whose headline matches vnodeName >>
+					#@nl
+				#@nonl
+				#@-node:<< 4.x: scan for the node using tnodeList and n >>
+				#@nl
+			else:
+				#@	<< 3.x: scan for the node with the given childIndex >>
+				#@+node:<< 3.x: scan for the node with the given childIndex >>
+				v = root
+				while v and v != after:
+					if v.matchHeadline(vnodeName):
+						if childIndex <= 0 or v.childIndex() + 1 == childIndex:
+							break
+					v = v.threadNext()
+				
+				if not v or v == after:
+					es("not found: " + vnodeName, color="red")
+					return
+				#@nonl
+				#@-node:<< 3.x: scan for the node with the given childIndex >>
+				#@nl
+			#@nonl
+			#@-node:<< set v to the node given by vnodeName and childIndex or n >>
+			#@nl
+		#@	<< select v and make it visible >>
+		#@+node:<< select v and make it visible >>
+		c.beginUpdate()
+		c.frame.expandAllAncestors(v)
+		c.selectVnode(v)
+		c.endUpdate()
+		#@nonl
+		#@-node:<< select v and make it visible >>
+		#@nl
+		#@	<< put the cursor on line n2 of the body text >>
+		#@+node:<< put the cursor on line n2 of the body text >>
+		if found:
+			c.frame.body.setInsertPointToStartOfLine(n2-1)
+		else:
+			c.frame.body.setInsertionPointToEnd()
+			es("%d lines" % len(lines), color="blue")
+		
+		c.frame.body.makeInsertPointVisible()
+		#@nonl
+		#@-node:<< put the cursor on line n2 of the body text >>
+		#@nl
+	#@nonl
+	#@-node:goToLineNumber & allies
+	#@+node:convertLineToVnodeNameIndexLine
+	#@+at 
+	#@nonl
+	# We count "real" lines in the derived files, ignoring all sentinels that 
+	# do not arise from source lines.  When the indicated line is found, we 
+	# scan backwards for an @+body line, get the vnode's name from that line 
+	# and set v to the indicated vnode.  This will fail if vnode names have 
+	# been changed, and that can't be helped.
+	# 
+	# Returns (vnodeName,offset)
+	# 
+	# vnodeName: the name found in the previous @+body sentinel.
+	# offset: the offset within v of the desired line.
+	#@-at
+	#@@c
+	
+	def convertLineToVnodeNameIndexLine (self,lines,n,root):
+		
+		"""Convert a line number n to a vnode name, child index and line number."""
+		
+		childIndex = 0 ; newDerivedFile = false
+		#@	<< set delim, leoLine from the @+leo line >>
+		#@+node:<< set delim, leoLine from the @+leo line >>
+		# Find the @+leo line.
+		tag = "@+leo"
+		i = 0 
+		while i < len(lines) and lines[i].find(tag)==-1:
+			i += 1
+		leoLine = i # Index of the line containing the leo sentinel
+		# trace("leoLine:"+`leoLine`)
+		
+		delim = None # All sentinels start with this.
+		if leoLine < len(lines):
+			# The opening comment delim is the initial non-whitespace.
+			s = lines[leoLine]
+			i = skip_ws(s,0)
+			j = s.find(tag)
+			newDerivedFile = match(s,j,"@+leo-ver=4")
+			delim = s[i:j]
+			if len(delim)==0:
+				delim=None
+			else:
+				delim += '@'
+		#@nonl
+		#@-node:<< set delim, leoLine from the @+leo line >>
+		#@nl
+		if not delim:
+			es("bad @+leo sentinel")
+			return None,None,None,None
+		#@	<< scan back to @+node, setting offset,nodeSentinelLine >>
+		#@+node:<< scan back to  @+node, setting offset,nodeSentinelLine >>
+		offset = 0 # This is essentially the Tk line number.
+		nodeSentinelLine = -1
+		line = n - 1
+		while line >= 0:
+			s = lines[line]
+			# trace(`s`)
+			i = skip_ws(s,0)
+			if match(s,i,delim):
+				#@		<< handle delim while scanning backward >>
+				#@+node:<< handle delim while scanning backward >>
+				if line == n:
+					es("line "+str(n)+" is a sentinel line")
+				i += len(delim)
+				
+				if match(s,i,"-node"):
+					# The end of a nested section.
+					line = self.skipToMatchingNodeSentinel(lines,line,delim)
+				elif match(s,i,"+node"):
+					nodeSentinelLine = line
+					break
+				elif match(s,i,"<<") or match(s,i,"@first"):
+					offset += 1 # Count these as a "real" lines.
+				#@nonl
+				#@-node:<< handle delim while scanning backward >>
+				#@nl
+			else:
+				offset += 1 # Assume the line is real.  A dubious assumption.
+			line -= 1
+		#@nonl
+		#@-node:<< scan back to  @+node, setting offset,nodeSentinelLine >>
+		#@nl
+		if nodeSentinelLine == -1:
+			# The line precedes the first @+node sentinel
+			# trace("before first line")
+			return root.headString(),0,1,delim # 10/13/03
+		s = lines[nodeSentinelLine]
+		# trace(s)
+		#@	<< set vnodeName and childIndex from s >>
+		#@+node:<< set vnodeName and childIndex from s >>
+		if newDerivedFile:
+			# vnode name is everything following the first ':'
+			# childIndex is -1 as a flag for later code.
+			i = s.find(':')
+			if i > -1: vnodeName = s[i+1:].strip()
+			else: vnodeName = None
+			childIndex = -1
+		else:
+			# vnode name is everything following the third ':'
+			i = 0 ; colons = 0
+			while i < len(s) and colons < 3:
+				if s[i] == ':':
+					colons += 1
+					if colons == 1 and i+1 < len(s) and s[i+1] in string.digits:
+						junk,childIndex = skip_long(s,i+1)
+				i += 1
+			vnodeName = s[i:].strip()
+			
+		# trace("vnodeName:",vnodeName)
+		if not vnodeName:
+			vnodeName = None
+			es("bad @+node sentinel")
+		#@-node:<< set vnodeName and childIndex from s >>
+		#@nl
+		# trace("childIndex,offset",childIndex,offset,vnodeName)
+		return vnodeName,childIndex,offset,delim
+	#@nonl
+	#@-node:convertLineToVnodeNameIndexLine
+	#@+node:skipToMatchingNodeSentinel
+	def skipToMatchingNodeSentinel (self,lines,n,delim):
+		
+		s = lines[n]
+		i = skip_ws(s,0)
+		assert(match(s,i,delim))
+		i += len(delim)
+		if match(s,i,"+node"):
+			start="+node" ; end="-node" ; delta=1
+		else:
+			assert(match(s,i,"-node"))
+			start="-node" ; end="+node" ; delta=-1
+		# Scan to matching @+-node delim.
+		n += delta ; level = 0
+		while 0 <= n < len(lines):
+			s = lines[n] ; i = skip_ws(s,0)
+			if match(s,i,delim):
+				i += len(delim)
+				if match(s,i,start):
+					level += 1
+				elif match(s,i,end):
+					if level == 0: break
+					else: level -= 1
+			n += delta # bug fix: 1/30/02
+			
+		# trace(n)
+		return n
+	#@nonl
+	#@-node:skipToMatchingNodeSentinel
+	#@+node:fontPanel
+	def fontPanel(self):
+		
+		c = self ; frame = c.frame
+	
+		if not frame.fontPanel:
+			frame.fontPanel = app.gui.createFontPanel(c)
+			
+		frame.fontPanel.bringToFront()
+	#@nonl
+	#@-node:fontPanel
+	#@+node:colorPanel
+	def colorPanel(self):
+		
+		c = self ; frame = c.frame
+	
+		if not frame.colorPanel:
+			frame.colorPanel = app.gui.createColorPanel(c)
+			
+		frame.colorPanel.bringToFront()
+	#@nonl
+	#@-node:colorPanel
+	#@+node:viewAllCharacters
+	def viewAllCharacters (self, event=None):
+	
+		c = self ; frame = c.frame ; v = c.currentVnode()
+	
+		colorizer = frame.getColorizer()
+		colorizer.showInvisibles = choose(colorizer.showInvisibles,0,1)
+	
+		# It is much easier to change the menu name here than in the menu updater.
+		menu = frame.menu.getMenu("Edit")
+		if colorizer.showInvisibles:
+			frame.menu.setMenuLabel(menu,"Show Invisibles","Hide Invisibles")
+		else:
+			frame.menu.setMenuLabel(menu,"Hide Invisibles","Show Invisibles")
+	
+		c.frame.recolor_now(v)
+	#@nonl
+	#@-node:viewAllCharacters
+	#@+node:preferences
+	def preferences(self):
+		
+		"""Show the Preferences Panel, creating it if necessary."""
+		
+		c = self ; frame = c.frame
+	
+		if not frame.prefsPanel:
+			frame.prefsPanel = prefs = app.gui.createPrefsPanel(c)
+			
+		frame.prefsPanel.bringToFront()
+	#@nonl
+	#@-node:preferences
 	#@+node:convertAllBlanks
 	def convertAllBlanks (self):
 		
@@ -602,6 +1922,75 @@ class baseCommands:
 	
 		return head,result,tail # string, list, string
 	#@-node:findBoundParagraph
+	#@+node:findMatchingBracket
+	def findMatchingBracket (self):
+		
+		c = self
+		brackets = "()[]{}<>"
+		ch1 = c.body.getCharBeforeInsertPoint()
+		ch2 = c.body.getCharAtInsertPoint()
+	
+		# Prefer to match the character to the left of the cursor.
+		if ch1 in brackets:
+			ch = ch1 ; index = c.body.getBeforeInsertionPoint()
+		elif ch2 in brackets:
+			ch = ch2 ; index = c.body.getInsertionPoint()
+		else:
+			return
+		
+		index2 = self.findSingleMatchingBracket(ch,index)
+		if index2:
+			if c.body.compareIndices(index,"<=",index2):
+				adj_index = c.body.adjustIndex(index2,1)
+				c.body.setTextSelection(index,adj_index)
+			else:
+				adj_index = c.body.adjustIndex(index,1)
+				c.body.setTextSelection(index2,adj_index)
+			adj_index = c.body.adjustIndex(index2,1)
+			c.body.setInsertionPoint(adj_index)
+			c.body.makeIndexVisible(adj_index)
+		else:
+			es("unmatched " + `ch`)
+	#@nonl
+	#@-node:findMatchingBracket
+	#@+node:findMatchingBracket
+	# To do: replace comments with blanks before scanning.
+	# Test  unmatched())
+	def findSingleMatchingBracket(self,ch,index):
+		
+		c = self
+		open_brackets  = "([{<" ; close_brackets = ")]}>"
+		brackets = open_brackets + close_brackets
+		matching_brackets = close_brackets + open_brackets
+		forward = ch in open_brackets
+		# Find the character matching the initial bracket.
+		for n in xrange(len(brackets)):
+			if ch == brackets[n]:
+				match_ch = matching_brackets[n]
+				break
+		level = 0
+		while 1:
+			if forward and c.body.compareIndices(index,">=","end"):
+				# trace("not found")
+				return None
+			ch2 = c.body.getCharAtIndex(index)
+			if ch2 == ch:
+				level += 1 #; trace(level,index)
+			if ch2 == match_ch:
+				level -= 1 #; trace(level,index)
+				if level <= 0:
+					return index
+			if not forward and c.body.compareIndices(index,"<=","1.0"):
+				# trace("not found")
+				return None
+			adj = choose(forward,1,-1)
+			index = c.body.adjustIndex(index,adj)
+		return 0 # unreachable: keeps pychecker happy.
+	# Test  (
+	# ([(x){y}]))
+	# Test  ((x)(unmatched
+	#@nonl
+	#@-node:findMatchingBracket
 	#@+node:getBodyLines
 	def getBodyLines (self):
 	
@@ -634,6 +2023,45 @@ class baseCommands:
 			c.updateBodyPane(head,result,tail,"Indent",oldSel,oldYview)
 	#@nonl
 	#@-node:indentBody
+	#@+node:insertBodyTime & allies
+	def insertBodyTime (self):
+		
+		c = self ; v = c.currentVnode()
+		
+		oldSel = c.body.getTextSelection()
+		c.body.deleteTextSelection() # Works if nothing is selected.
+		s = self.getTime(body=true)
+		c.frame.body.insertAtInsertPoint(s)
+		c.frame.onBodyChanged(v,"Typing",oldSel=oldSel)
+	#@nonl
+	#@-node:insertBodyTime & allies
+	#@+node:getTime
+	def getTime (self,body=true):
+	
+		config = app.config
+		default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
+		
+		# Try to get the format string from leoConfig.txt.
+		if body:
+			format = config.getWindowPref("body_time_format_string")
+			gmt = config.getBoolWindowPref("body_gmt_time")
+		else:
+			format = config.getWindowPref("headline_time_format_string")
+			gmt = config.getBoolWindowPref("headline_gmt_time")
+	
+		if format == None:
+			format = default_format
+	
+		try:
+			if gmt:
+				s = time.strftime(format,time.gmtime())
+			else:
+				s = time.strftime(format,time.localtime())
+		except:
+			es_exception() # Probably a bad format string in leoConfig.txt.
+			s = time.strftime(default_format,time.gmtime())
+		return s
+	#@-node:getTime
 	#@+node:reformatParagraph
 	def reformatParagraph(self):
 	
@@ -754,360 +2182,457 @@ class baseCommands:
 		c.recolor()
 	#@nonl
 	#@-node:updateBodyPane (handles undo)
-	#@+node:canContractAllHeadlines
-	def canContractAllHeadlines (self):
+	#@+node:editHeadline
+	def editHeadline(self):
 	
-		c = self ; v = c.rootVnode()
-		if not v: return false
-		while v:
-			if v.isExpanded():
-				return true
-			v = v.threadNext()
-		return false
+		tree = self.frame.tree
+		tree.editLabel(tree.currentVnode)
 	#@nonl
-	#@-node:canContractAllHeadlines
-	#@+node:canContractAllSubheads
-	def canContractAllSubheads (self):
-	
-		c = self
-		v = c.currentVnode()
-		if not v: return false
-		next = v.nodeAfterTree()
-		v = v.threadNext()
-		while v and v != next:
-			if v.isExpanded():
-				return true
-			v = v.threadNext()
-		return false
-	#@nonl
-	#@-node:canContractAllSubheads
-	#@+node:canContractParent
-	def canContractParent (self):
-	
-		c = self ; v = c.currentVnode()
-		return v.parent() != None
-	#@nonl
-	#@-node:canContractParent
-	#@+node:canContractSubheads
-	def canContractSubheads (self):
-	
-		c = self ; v = c.currentVnode()
-		if not v: return false
-		v = v.firstChild()
-		while v:
-			if v.isExpanded():
-				return true
-			v = v.next()
-		return false
-	#@nonl
-	#@-node:canContractSubheads
-	#@+node:canCutOutline & canDeleteHeadline
-	def canDeleteHeadline (self):
-	
-		c = self ; v = c.currentVnode()
-		if not v: return false
-		if v.parent(): # v is below the top level.
-			return true
-		else: # v is at the top level.  We can not delete the last node.
-			return v.threadBack() or v.next()
-	
-	canCutOutline = canDeleteHeadline
-	#@nonl
-	#@-node:canCutOutline & canDeleteHeadline
-	#@+node:canDemote
-	def canDemote (self):
-	
-		c = self
-		v = c.currentVnode()
-		if not v: return false
-		return v.next() != None
-	#@nonl
-	#@-node:canDemote
-	#@+node:canExpandAllHeadlines
-	def canExpandAllHeadlines (self):
-	
-		c = self ; v = c.rootVnode()
-		if not v: return false
-		while v:
-			if not v.isExpanded():
-				return true
-			v = v.threadNext()
-		return false
-	#@nonl
-	#@-node:canExpandAllHeadlines
-	#@+node:canExpandAllSubheads
-	def canExpandAllSubheads (self):
-	
-		c = self
-		v = c.currentVnode()
-		if not v: return false
-		next = v.nodeAfterTree()
-		v = v.threadNext()
-		while v and v != next:
-			if not v.isExpanded():
-				return true
-			v = v.threadNext()
-		return false
-	#@nonl
-	#@-node:canExpandAllSubheads
-	#@+node:canExpandSubheads
-	def canExpandSubheads (self):
-	
-		c = self ; v = c.currentVnode()
-		if not v: return false
-		v = v.firstChild()
-		while v:
-			if not v.isExpanded():
-				return true
-			v = v.next()
-		return false
-	#@nonl
-	#@-node:canExpandSubheads
-	#@+node:canExtract, canExtractSection & canExtractSectionNames
-	def canExtract (self):
-	
-		c = self
-		if c.bodyCtrl:
-			i, j = c.body.getTextSelection()
-			return i and j and c.bodyCtrl.compare(i, "!=", j)
-		else:
-			return false
-	
-	canExtractSection = canExtract
-	canExtractSectionNames = canExtract
-	#@nonl
-	#@-node:canExtract, canExtractSection & canExtractSectionNames
-	#@+node:canFindMatchingBracket
-	def canFindMatchingBracket (self):
+	#@-node:editHeadline
+	#@+node:toggleAngleBrackets
+	def toggleAngleBrackets (self):
 		
-		c = self ; body = c.bodyCtrl
-		brackets = "()[]{}"
-		c1 = body.get("insert -1c")
-		c2 = body.get("insert")
-		# Bug fix: 2/11/03
-		return (c1 and c1 in brackets) or (c2 and c2 in brackets)
-	#@nonl
-	#@-node:canFindMatchingBracket
-	#@+node:canGoToNextDirtyHeadline
-	def canGoToNextDirtyHeadline (self):
-	
-		c = self ; current = c.currentVnode()
-		if not current: return false
-	
-		v = c.rootVnode()
-		while v:
-			if v.isDirty()and v != current:
-				return true
-			v = v.threadNext()
-		return false
-	#@nonl
-	#@-node:canGoToNextDirtyHeadline
-	#@+node:canGoToNextMarkedHeadline
-	def canGoToNextMarkedHeadline (self):
-	
-		c = self ; current = c.currentVnode()
-		if not current: return false
-	
-		v = c.rootVnode()
-		while v:
-			if v.isMarked()and v != current:
-				return true
-			v = v.threadNext()
-		return false
-	#@nonl
-	#@-node:canGoToNextMarkedHeadline
-	#@+node:canMarkChangedHeadline
-	def canMarkChangedHeadlines (self):
-	
-		c = self ; v = c.rootVnode()
-		while v:
-			if v.isDirty():
-				return true
-			v = v.threadNext()
-		return false
-	#@nonl
-	#@-node:canMarkChangedHeadline
-	#@+node:canMarkChangedRoots
-	def canMarkChangedRoots (self):
-	
-		c = self ; v = c.rootVnode()
-		while v:
-			if v.isDirty():
-				return true
-			v = v.threadNext()
-		return false
-	#@nonl
-	#@-node:canMarkChangedRoots
-	#@+node:canMoveOutlineDown (changed for hoist)
-	def canMoveOutlineDown (self):
+		c = self ; v = c.currentVnode()
+		s = v.headString().strip()
+		if (s[0:2] == "<<"
+			or s[-2:] == ">>"): # Must be on separate line.
+			if s[0:2] == "<<": s = s[2:]
+			if s[-2:] == ">>": s = s[:-2]
+			s = s.strip()
+		else:
+			s = angleBrackets(' ' + s + ' ')
+		
+		c.frame.editLabel(v)
+		if v.edit_text():
+			v.edit_text().delete("1.0","end")
+			v.edit_text().insert("1.0",s)
+			c.frame.onHeadChanged(v)
+	#@-node:toggleAngleBrackets
+	#@+node:findPanel
+	def findPanel(self):
 	
 		c = self
-		if 1: # The permissive way
-			current = c.currentVnode()
-			if not current: return false
-			v = current.visNext()
-			while v and current.isAncestorOf(v):
-				v = v.visNext()
-				
+	
+		find = app.findFrame
+		find.bringToFront()
+		find.c = self
+	#@-node:findPanel
+	#@+node:findNext
+	def findNext(self):
+	
+		c = self
+		app.findFrame.findNextCommand(c)
+	#@-node:findNext
+	#@+node:findPrevious
+	def findPrevious(self):
+	
+		c = self
+		app.findFrame.findPreviousCommand(c)
+	#@-node:findPrevious
+	#@+node:replace
+	def replace(self):
+	
+		c = self
+		app.findFrame.changeCommand(c)
+	#@-node:replace
+	#@+node:replaceThenFind
+	def replaceThenFind(self):
+	
+		c = self
+		app.findFrame.changeThenFindCommand(c)
+	#@-node:replaceThenFind
+	#@+node:cutOutline
+	def cutOutline(self):
+	
+		c = self
+		if c.canDeleteHeadline():
+			c.copyOutline()
+			c.deleteHeadline("Cut Node")
+			c.recolor()
+	#@nonl
+	#@-node:cutOutline
+	#@+node:copyOutline
+	def copyOutline(self):
+	
+		# Copying an outline has no undo consequences.
+		c = self
+		c.endEditing()
+		c.fileCommands.assignFileIndices()
+		s = c.fileCommands.putLeoOutline()
+		app.gui.replaceClipboardWith(s)
+	#@nonl
+	#@-node:copyOutline
+	#@+node:pasteOutline
+	#@+at 
+	#@nonl
+	# To cut and paste between apps, just copy into an empty body first, then 
+	# copy to Leo's clipboard.
+	#@-at
+	#@@c
+	
+	def pasteOutline(self):
+	
+		c = self ; current = c.currentVnode()
+		
+		s = app.gui.getTextFromClibboard()
+		
+		if 0: # old code
+			try:
+				s = app.root.selection_get(selection="CLIPBOARD")
+			except:
+				s = None # This should never happen.
+	
+		if not s or not c.canPasteOutline(s):
+			return # This should never happen.
+	
+		isLeo = match(s,0,app.prolog_prefix_string)
+	
+		# trace(`s`)
+		if isLeo:
+			v = c.fileCommands.getLeoOutline(s)
+		else:
+			v = c.importCommands.convertMoreStringToOutlineAfter(s,current)
+		if v:
+			c.endEditing()
+			c.beginUpdate()
+			if 1: # inside update...
+				v.createDependents()# To handle effects of clones.
+				c.validateOutline()
+				c.selectVnode(v)
+				v.setDirty()
+				c.setChanged(true)
+				# paste as first child if back is expanded.
+				back = v.back()
+				if back and back.isExpanded():
+					v.moveToNthChildOf(back,0)
+				c.undoer.setUndoParams("Paste Node",v)
+			c.endUpdate()
+			c.recolor()
+		else:
+			es("The clipboard is not a valid " + choose(isLeo,"Leo","MORE") + " file")
+	#@nonl
+	#@-node:pasteOutline
+	#@+node:c.checkOutline
+	def checkOutline (self):
+		
+		"""Report any possible clone errors in the outline.
+		
+		Remove any unused tnodeLists."""
+		
+		c = self ; v = c.rootVnode()
+		
+		checkTopologyOfAllClones(c,verbose=false)
+		
+		nodes = 0 ; errors = 0
+		while v:
+			nodes += 1
+			if hasattr(v,"tnodeList") and not v.isAnyAtFileNode():
+				s = "deleting tnodeList for " + `v`
+				print s ; es(s,color="blue")
+				delattr(v,"tnodeList")
+				errors += 1
+	
+			v = v.threadNext()
+	
+		es("%d nodes checked" % nodes)
+		return errors
+	#@nonl
+	#@-node:c.checkOutline
+	#@+node:Hoist & dehoist & enablers
+	def dehoist(self):
+	
+		c = self ; v = c.currentVnode()
+		if v and c.canDehoist():
+			c.undoer.setUndoParams("De-Hoist",v)
+			c.hoistStack.pop()
+			v.contract()
+			c.redraw()
+			c.frame.clearStatusLine()
 			if c.hoistStack:
 				h = c.hoistStack[-1]
-				return v and v != h and h.isAncestorOf(v)
+				c.frame.putStatusLine("Hoist: " + h.headString())
 			else:
-				return v != None
-		else: # The MORE way.
-			return c.currentVnode().next() != None
-	#@nonl
-	#@-node:canMoveOutlineDown (changed for hoist)
-	#@+node:canMoveOutlineLeft (changed for hoist)
-	def canMoveOutlineLeft (self):
+				c.frame.putStatusLine("No hoist")
+	
+	def hoist(self):
 	
 		c = self ; v = c.currentVnode()
-		if c.hoistStack:
-			h = c.hoistStack[-1]
-			if v and v.parent():
-				p = v.parent()
-				return p != h and h.isAncestorOf(p)
-			else:
-				return false
-		else:
-			return v and v.parent()
-	#@nonl
-	#@-node:canMoveOutlineLeft (changed for hoist)
-	#@+node:canMoveOutlineRight (changed for hoist)
-	def canMoveOutlineRight (self):
+		if v and c.canHoist():
+			c.undoer.setUndoParams("Hoist",v)
+			c.hoistStack.append(v)
+			v.expand()
+			c.redraw()
+			c.frame.clearStatusLine()
+			c.frame.putStatusLine("Hoist: " + v.headString())
 	
-		c = self ; v = c.currentVnode()
-		if c.hoistStack:
-			h = c.hoistStack[-1]
-			return v and v.back() and v != h
-		else:
-			return v and v.back()
-	#@nonl
-	#@-node:canMoveOutlineRight (changed for hoist)
-	#@+node:canMoveOutlineUp (changed for hoist)
-	def canMoveOutlineUp (self):
-	
-		c = self ; v = c.currentVnode()
-		if 1: # The permissive way.
-			if c.hoistStack:
-				h = c.hoistStack[-1] ; vback = v.visBack()
-				return v and vback and h != v and h.isAncestorOf(vback)
-			else:
-				return v and v.visBack()
-		else: # The MORE way.
-			return v and v.back()
-	#@nonl
-	#@-node:canMoveOutlineUp (changed for hoist)
-	#@+node:canPasteOutline
-	def canPasteOutline (self,s=None):
-	
-		c = self
-		if s == None:
-			s = app.gui.getTextFromClibboard()
-		if not s:
-			return false
-	
-		# trace(s)
-		if match(s,0,app.prolog_prefix_string):
-			return true
-		elif len(s) > 0:
-			return c.importCommands.stringIsValidMoreFile(s)
-		else:
-			return false
-	#@nonl
-	#@-node:canPasteOutline
-	#@+node:canPromote
-	def canPromote (self):
-	
-		c = self ; v = c.currentVnode()
-		return v and v.hasChildren()
-	#@nonl
-	#@-node:canPromote
-	#@+node:canRevert
-	def canRevert (self):
-	
-		# c.mFileName will be "untitled" for unsaved files.
-		c = self
-		return (c.frame and c.mFileName and c.isChanged())
-	#@nonl
-	#@-node:canRevert
-	#@+node:canSelect....
-	# 7/29/02: The shortcuts for these commands are now unique.
-	
-	def canSelectThreadBack (self):
-		v = self.currentVnode()
-		return v and v.threadBack()
+	def canDehoist(self):
 		
-	def canSelectThreadNext (self):
-		v = self.currentVnode()
-		return v and v.threadNext()
-	
-	def canSelectVisBack (self):
-		v = self.currentVnode()
-		return v and v.visBack()
-		
-	def canSelectVisNext (self):
-		v = self.currentVnode()
-		return v and v.visNext()
-	#@nonl
-	#@-node:canSelect....
-	#@+node:canShiftBodyLeft/Right
-	def canShiftBodyLeft (self):
-	
-		c = self
-		if c.bodyCtrl:
-			s = c.bodyCtrl.GetValue()
-			return len(s) > 0
-		else:
-			return false
+		return len(self.hoistStack) > 0
 			
-	def canShiftBodyRight (self):
-	
-		c = self
-		if c.bodyCtrl:
-			s = c.bodyCtrl.GetValue()
-			return len(s) > 0
+	def canHoist(self):
+		
+		c = self ; v = c.currentVnode()
+		if v == c.rootVnode():
+			return v.next() != None
+		elif not c.hoistStack:
+			return true
 		else:
-			return false
+			return c.hoistStack[-1] != v
 	#@nonl
-	#@-node:canShiftBodyLeft/Right
-	#@+node:canSortChildren, canSortSiblings
-	def canSortChildren (self):
+	#@-node:Hoist & dehoist & enablers
+	#@+node:c.checkMoveWithParentWithWarning
+	# Returns false if any node of tree is a clone of parent or any of parents ancestors.
 	
-		c = self ; v = c.currentVnode()
-		return v and v.hasChildren()
+	def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
+	
+		clone_message = "Illegal move or drag: no clone may contain a clone of itself"
+		drag_message  = "Illegal drag: Can't drag a node into its own tree"
+	
+		# 10/25/02: Create dictionaries for faster checking.
+		parents = {} ; clones = {}
+		while parent:
+			parents [parent.t] = parent.t
+			if parent.isCloned():
+				clones [parent.t] = parent.t
+			parent = parent.parent()
 		
-	def canSortSiblings (self):
-	
-		c = self ; v = c.currentVnode()
-		return v.next() or v.back()
-	#@nonl
-	#@-node:canSortChildren, canSortSiblings
-	#@+node:canUndo & canRedo
-	def canUndo (self):
-	
-		c = self
-		return c.undoer.canUndo()
-		
-	def canRedo (self):
-	
-		c = self
-		return c.undoer.canRedo()
-	#@nonl
-	#@-node:canUndo & canRedo
-	#@+node:canUnmarkAll
-	# Returns true if any node is marked.
-	
-	def canUnmarkAll (self):
-	
-		c = self ; v = c.rootVnode()
-		while v:
-			if v.isMarked():
-				return true
+		# 10/25/02: Scan the tree only once.
+		v = root ; next = root.nodeAfterTree()
+		while v and v != next:
+			ct = clones.get(v.t)
+			if ct != None and ct == v.t:
+				if warningFlag:
+					alert(clone_message)
+				return false
 			v = v.threadNext()
-		return false
+	
+		pt = parents.get(root.t)
+		if pt == None:
+			return true
+		else:
+			if warningFlag:
+				alert(drag_message)
+			return false
+	#@-node:c.checkMoveWithParentWithWarning
+	#@+node:c.deleteHeadline
+	# Deletes the current vnode and dependent nodes. Does nothing if the outline would become empty.
+	
+	def deleteHeadline (self,op_name="Delete Outline"):
+	
+		c = self ; v = c.currentVnode()
+		if not v: return
+		vBack = v.visBack()
+		# Bug fix: 1/18/00: if vBack is NULL we are at the top level,
+		# the next node should be v.next(), _not_ v.visNext();
+		if vBack: newNode = vBack
+		else: newNode = v.next()
+		if not newNode: return
+		c.endEditing()# Make sure we capture the headline for Undo.
+		c.beginUpdate()
+		v.setDirtyDeleted() # 8/3/02: Mark @file nodes dirty for all clones in subtree.
+		# Reinsert v after back, or as the first child of parent, or as the root.
+		c.undoer.setUndoParams(op_name,v,select=newNode)
+		v.doDelete(newNode) # doDelete destroys dependents.
+		c.setChanged(true)
+		c.endUpdate()
+		c.validateOutline()
 	#@nonl
-	#@-node:canUnmarkAll
+	#@-node:c.deleteHeadline
+	#@+node:c.insertHeadline
+	# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
+	
+	def insertHeadline (self,op_name="Insert Outline"):
+	
+		c = self ; current = c.currentVnode()
+		if not current: return
+	
+		c.beginUpdate()
+		if 1: # inside update...
+			if current.hasChildren() and current.isExpanded():
+				v = current.insertAsNthChild(0)
+			else:
+				v = current.insertAfter()
+			c.undoer.setUndoParams(op_name,v,select=current)
+			v.createDependents() # To handle effects of clones.
+			c.selectVnode(v)
+			c.editVnode(v)
+			v.setDirty() # Essential in Leo2.
+			c.setChanged(true)
+		c.endUpdate()
+	#@nonl
+	#@-node:c.insertHeadline
+	#@+node:c.clone
+	def clone (self):
+	
+		c = self ; v = c.currentVnode()
+		if not v: return
+		c.beginUpdate()
+		clone = v.clone(v)
+		c.initAllCloneBitsInTree(v) # 10/14/03
+		clone.setDirty() # essential in Leo2
+		c.setChanged(true)
+		if c.validateOutline():
+			c.selectVnode(clone)
+			c.undoer.setUndoParams("Clone",clone)
+		c.endUpdate() # updates all icons
+	#@nonl
+	#@-node:c.clone
+	#@+node:initAllCloneBits & initAllCloneBitsInTree
+	def initAllCloneBits (self):
+		
+		"""Initialize all clone bits in the entire outline"""
+	
+		c=self
+		c.clearAllVisited()
+		v = self.rootVnode()
+		c.beginUpdate()
+		while v:
+			if not v.t.isVisited():
+				v.t.setVisited() # Inhibit visits to all joined nodes.
+				c.initJoinedCloneBits(v)
+			v = v.threadNext()
+		c.endUpdate()
+		
+	def initAllCloneBitsInTree (self,v):
+		
+		"""Initialize all clone bits in the v's subtree"""
+	
+		c=self
+		v.clearAllVisitedInTree()
+		after = v.nodeAfterTree()
+		c.beginUpdate()
+		while v and v != after:
+			if not v.t.isVisited():
+				v.t.setVisited() # Inhibit visits to all joined nodes.
+				c.initJoinedCloneBits(v)
+			v = v.threadNext()
+		c.endUpdate()
+	#@nonl
+	#@-node:initAllCloneBits & initAllCloneBitsInTree
+	#@+node:c.initJoinedClonedBits (changed in 3.11.1)
+	# Initializes all clone bits in the all nodes joined to v.
+	
+	def initJoinedCloneBits (self,v):
+		
+		if 0:
+			if not self.loading:
+				trace(len(v.t.joinList),v)
+	
+		c = self
+		c.beginUpdate()
+		mark = v.shouldBeClone()
+		if mark:
+			# Set clone bit in v and all joined nodes.
+			v.setClonedBit()
+			for v2 in v.t.joinList:
+				v2.setClonedBit()
+		else:
+			# Set clone bit in v and all joined nodes.
+			v.clearClonedBit()
+			for v2 in v.t.joinList:
+				v2.clearClonedBit()
+		c.endUpdate()
+	#@-node:c.initJoinedClonedBits (changed in 3.11.1)
+	#@+node:validateOutline
+	# Makes sure all nodes are valid.
+	
+	def validateOutline (self):
+	
+		c = self ; root = c.rootVnode()
+		if root:
+			return root.validateOutlineWithParent(None)
+		else:
+			return true
+	#@nonl
+	#@-node:validateOutline
+	#@+node:c.sortChildren, sortSiblings
+	def sortChildren(self):
+	
+		c = self ; v = c.currentVnode()
+		if not v or not v.hasChildren(): return
+		#@	<< Set the undo info for sortChildren >>
+		#@+node:<< Set the undo info for sortChildren >>
+		# Get the present list of children.
+		children = []
+		child = v.firstChild()
+		while child:
+			children.append(child)
+			child = child.next()
+		c.undoer.setUndoParams("Sort Children",v,sort=children)
+		#@nonl
+		#@-node:<< Set the undo info for sortChildren >>
+		#@nl
+		c.beginUpdate()
+		c.endEditing()
+		v.sortChildren()
+		v.setDirty()
+		c.setChanged(true)
+		c.endUpdate()
+		
+	def sortSiblings (self):
+		
+		c = self ; v = c.currentVnode()
+		if not v: return
+		parent = v.parent()
+		if not parent:
+			c.sortTopLevel()
+		else:
+			#@		<< Set the undo info for sortSiblings >>
+			#@+node:<< Set the undo info for sortSiblings >>
+			# Get the present list of siblings.
+			sibs = []
+			sib = parent.firstChild()
+			while sib:
+				sibs.append(sib)
+				sib = sib.next()
+			c.undoer.setUndoParams("Sort Siblings",v,sort=sibs)
+			#@nonl
+			#@-node:<< Set the undo info for sortSiblings >>
+			#@nl
+			c.beginUpdate()
+			c.endEditing()
+			parent.sortChildren()
+			parent.setDirty()
+			c.setChanged(true)
+			c.endUpdate()
+	#@nonl
+	#@-node:c.sortChildren, sortSiblings
+	#@+node:c.sortTopLevel
+	def sortTopLevel (self):
+		
+		# Create a list of vnode, headline tuples
+		c = self ; v = root = c.rootVnode()
+		if not v: return
+		#@	<< Set the undo info for sortTopLevel >>
+		#@+node:<< Set the undo info for sortTopLevel >>
+		# Get the present list of children.
+		sibs = []
+		sib = c.rootVnode()
+		while sib:
+			sibs.append(sib)
+			sib = sib.next()
+		c.undoer.setUndoParams("Sort Top Level",v,sort=sibs)
+		#@nonl
+		#@-node:<< Set the undo info for sortTopLevel >>
+		#@nl
+		pairs = []
+		while v:
+			pairs.append((v.headString().lower(), v))
+			v = v.next()
+		# Sort the list on the headlines.
+		pairs.sort()
+		sortedNodes = pairs
+		# Move the nodes
+		c.beginUpdate()
+		h,v = sortedNodes[0]
+		if v != root:
+			v.moveToRoot(oldRoot=root)
+		for h,next in sortedNodes[1:]:
+			next.moveAfter(v)
+			v = next
+		c.endUpdate()
+	#@nonl
+	#@-node:c.sortTopLevel
 	#@+node:contractAllHeadlines
 	def contractAllHeadlines (self):
 	
@@ -1273,321 +2798,6 @@ class baseCommands:
 		c.endUpdate()
 	#@nonl
 	#@-node:expandToLevel
-	#@+node:c.currentVnode
-	# Compatibility with scripts
-	
-	def currentVnode (self):
-	
-		return self.frame.currentVnode()
-	#@-node:c.currentVnode
-	#@+node:clearAllMarked
-	def clearAllMarked (self):
-	
-		c = self ; v = c.rootVnode()
-		while v:
-			v.clearMarked()
-			v = v.threadNext()
-	#@nonl
-	#@-node:clearAllMarked
-	#@+node:clearAllVisited
-	def clearAllVisited (self):
-	
-		c = self ; v = c.rootVnode()
-		c.beginUpdate()
-		while v:
-			# tick("clearAllVisited loop")
-			v.clearVisited()
-			if v.t:
-				v.t.clearVisited()
-			v = v.threadNext()
-		c.endUpdate(false) # never redraw the tree.
-	#@nonl
-	#@-node:clearAllVisited
-	#@+node:fileName
-	# Compatibility with scripts
-	
-	def fileName (self):
-	
-		return self.mFileName
-	#@-node:fileName
-	#@+node:isChanged
-	def isChanged (self):
-	
-		return self.changed
-	#@nonl
-	#@-node:isChanged
-	#@+node:rootVnode
-	# Compatibility with scripts
-	
-	def rootVnode (self):
-	
-		return self.frame.rootVnode()
-	#@-node:rootVnode
-	#@+node:c.setChanged
-	def setChanged (self,changedFlag):
-	
-		c = self
-		if not c.frame: return
-		# Clear all dirty bits _before_ setting the caption.
-		# 9/15/01 Clear all dirty bits except orphaned @file nodes
-		if not changedFlag:
-			# trace("clearing all dirty bits")
-			v = c.rootVnode()
-			while v:
-				if v.isDirty() and not (v.isAtFileNode() or v.isAtRawFileNode()):
-					v.clearDirtyJoined()
-				v = v.threadNext()
-		# Update all derived changed markers.
-		c.changed = changedFlag
-		s = c.frame.getTitle()
-		if len(s) > 2 and not c.loading: # don't update while loading.
-			if changedFlag:
-				# import traceback ; traceback.print_stack()
-				if s [0] != '*': c.frame.setTitle("* " + s)
-			else:
-				if s[0:2]=="* ": c.frame.setTitle(s[2:])
-	#@nonl
-	#@-node:c.setChanged
-	#@+node:c.Hoist & dehoist & enablers
-	def dehoist(self):
-	
-		c = self ; v = c.currentVnode()
-		if v and c.canDehoist():
-			c.undoer.setUndoParams("De-Hoist",v)
-			c.hoistStack.pop()
-			v.contract()
-			c.redraw()
-			c.frame.clearStatusLine()
-			if c.hoistStack:
-				h = c.hoistStack[-1]
-				c.frame.putStatusLine("Hoist: " + h.headString())
-			else:
-				c.frame.putStatusLine("No hoist")
-	
-	def hoist(self):
-	
-		c = self ; v = c.currentVnode()
-		if v and c.canHoist():
-			c.undoer.setUndoParams("Hoist",v)
-			c.hoistStack.append(v)
-			v.expand()
-			c.redraw()
-			c.frame.clearStatusLine()
-			c.frame.putStatusLine("Hoist: " + v.headString())
-	
-	def canDehoist(self):
-		
-		return len(self.hoistStack) > 0
-			
-	def canHoist(self):
-		
-		c = self ; v = c.currentVnode()
-		if v == c.rootVnode():
-			return v.next() != None
-		elif not c.hoistStack:
-			return true
-		else:
-			return c.hoistStack[-1] != v
-	#@nonl
-	#@-node:c.Hoist & dehoist & enablers
-	#@+node:c.checkMoveWithParentWithWarning
-	# Returns false if any node of tree is a clone of parent or any of parents ancestors.
-	
-	def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
-	
-		clone_message = "Illegal move or drag: no clone may contain a clone of itself"
-		drag_message  = "Illegal drag: Can't drag a node into its own tree"
-	
-		# 10/25/02: Create dictionaries for faster checking.
-		parents = {} ; clones = {}
-		while parent:
-			parents [parent.t] = parent.t
-			if parent.isCloned():
-				clones [parent.t] = parent.t
-			parent = parent.parent()
-		
-		# 10/25/02: Scan the tree only once.
-		v = root ; next = root.nodeAfterTree()
-		while v and v != next:
-			ct = clones.get(v.t)
-			if ct != None and ct == v.t:
-				if warningFlag:
-					alert(clone_message)
-				return false
-			v = v.threadNext()
-	
-		pt = parents.get(root.t)
-		if pt == None:
-			return true
-		else:
-			if warningFlag:
-				alert(drag_message)
-			return false
-	#@-node:c.checkMoveWithParentWithWarning
-	#@+node:c.deleteHeadline
-	# Deletes the current vnode and dependent nodes. Does nothing if the outline would become empty.
-	
-	def deleteHeadline (self,op_name="Delete Outline"):
-	
-		c = self ; v = c.currentVnode()
-		if not v: return
-		vBack = v.visBack()
-		# Bug fix: 1/18/00: if vBack is NULL we are at the top level,
-		# the next node should be v.next(), _not_ v.visNext();
-		if vBack: newNode = vBack
-		else: newNode = v.next()
-		if not newNode: return
-		c.endEditing()# Make sure we capture the headline for Undo.
-		c.beginUpdate()
-		v.setDirtyDeleted() # 8/3/02: Mark @file nodes dirty for all clones in subtree.
-		# Reinsert v after back, or as the first child of parent, or as the root.
-		c.undoer.setUndoParams(op_name,v,select=newNode)
-		v.doDelete(newNode) # doDelete destroys dependents.
-		c.setChanged(true)
-		c.endUpdate()
-		c.validateOutline()
-	#@nonl
-	#@-node:c.deleteHeadline
-	#@+node:c.insertHeadline
-	# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
-	
-	def insertHeadline (self,op_name="Insert Outline"):
-	
-		c = self ; current = c.currentVnode()
-		if not current: return
-	
-		c.beginUpdate()
-		if 1: # inside update...
-			if current.hasChildren() and current.isExpanded():
-				v = current.insertAsNthChild(0)
-			else:
-				v = current.insertAfter()
-			c.undoer.setUndoParams(op_name,v,select=current)
-			v.createDependents() # To handle effects of clones.
-			c.selectVnode(v)
-			c.editVnode(v)
-			v.setDirty() # Essential in Leo2.
-			c.setChanged(true)
-		c.endUpdate()
-	#@nonl
-	#@-node:c.insertHeadline
-	#@+node:c.clone
-	def clone (self):
-	
-		c = self ; v = c.currentVnode()
-		if not v: return
-		c.beginUpdate()
-		clone = v.clone(v)
-		c.initAllCloneBitsInTree(v) # 10/14/03
-		clone.setDirty() # essential in Leo2
-		c.setChanged(true)
-		if c.validateOutline():
-			c.selectVnode(clone)
-			c.undoer.setUndoParams("Clone",clone)
-		c.endUpdate() # updates all icons
-	#@nonl
-	#@-node:c.clone
-	#@+node:initAllCloneBits & initAllCloneBitsInTree
-	def initAllCloneBits (self):
-		
-		"""Initialize all clone bits in the entire outline"""
-	
-		c=self
-		c.clearAllVisited()
-		v = self.frame.rootVnode()
-		c.beginUpdate()
-		while v:
-			if not v.t.isVisited():
-				v.t.setVisited() # Inhibit visits to all joined nodes.
-				c.initJoinedCloneBits(v)
-			v = v.threadNext()
-		c.endUpdate()
-		
-	def initAllCloneBitsInTree (self,v):
-		
-		"""Initialize all clone bits in the v's subtree"""
-	
-		c=self
-		v.clearAllVisitedInTree()
-		after = v.nodeAfterTree()
-		c.beginUpdate()
-		while v and v != after:
-			if not v.t.isVisited():
-				v.t.setVisited() # Inhibit visits to all joined nodes.
-				c.initJoinedCloneBits(v)
-			v = v.threadNext()
-		c.endUpdate()
-	#@nonl
-	#@-node:initAllCloneBits & initAllCloneBitsInTree
-	#@+node:c.initJoinedClonedBits (changed in 3.11.1)
-	# Initializes all clone bits in the all nodes joined to v.
-	
-	def initJoinedCloneBits (self,v):
-		
-		if 0:
-			if not self.loading:
-				trace(len(v.t.joinList),v)
-	
-		c = self
-		c.beginUpdate()
-		mark = v.shouldBeClone()
-		if mark:
-			# Set clone bit in v and all joined nodes.
-			v.setClonedBit()
-			for v2 in v.t.joinList:
-				v2.setClonedBit()
-		else:
-			# Set clone bit in v and all joined nodes.
-			v.clearClonedBit()
-			for v2 in v.t.joinList:
-				v2.clearClonedBit()
-		c.endUpdate()
-	#@-node:c.initJoinedClonedBits (changed in 3.11.1)
-	#@+node:validateOutline
-	# Makes sure all nodes are valid.
-	
-	def validateOutline (self):
-	
-		c = self ; root = c.rootVnode()
-		if root:
-			return root.validateOutlineWithParent(None)
-		else:
-			return true
-	#@nonl
-	#@-node:validateOutline
-	#@+node:goToNextDirtyHeadline
-	def goToNextDirtyHeadline (self):
-	
-		c = self ; current = c.currentVnode()
-		if not current: return
-	
-		v = current.threadNext()
-		while v and not v.isDirty():
-			v = v.threadNext()
-		if not v:
-			v = c.rootVnode()
-			while v and not v.isDirty():
-				v = v.threadNext()
-		if v:
-			c.selectVnode(v)
-	#@nonl
-	#@-node:goToNextDirtyHeadline
-	#@+node:goToNextMarkedHeadline
-	def goToNextMarkedHeadline(self):
-	
-		c = self ; current = c.currentVnode()
-		if not current: return
-	
-		v = current.threadNext()
-		while v and not v.isMarked():
-			v = v.threadNext()
-		if v:
-			c.beginUpdate()
-			c.endEditing()
-			c.selectVnode(v)
-			c.endUpdate()
-	#@nonl
-	#@-node:goToNextMarkedHeadline
 	#@+node:goToNextClone
 	def goToNextClone(self):
 	
@@ -1612,6 +2822,139 @@ class baseCommands:
 			c.endUpdate()
 	#@nonl
 	#@-node:goToNextClone
+	#@+node:goToNextMarkedHeadline
+	def goToNextMarkedHeadline(self):
+	
+		c = self ; current = c.currentVnode()
+		if not current: return
+	
+		v = current.threadNext()
+		while v and not v.isMarked():
+			v = v.threadNext()
+		if v:
+			c.beginUpdate()
+			c.endEditing()
+			c.selectVnode(v)
+			c.endUpdate()
+	#@nonl
+	#@-node:goToNextMarkedHeadline
+	#@+node:goToNextDirtyHeadline
+	def goToNextDirtyHeadline (self):
+	
+		c = self ; current = c.currentVnode()
+		if not current: return
+	
+		v = current.threadNext()
+		while v and not v.isDirty():
+			v = v.threadNext()
+		if not v:
+			v = c.rootVnode()
+			while v and not v.isDirty():
+				v = v.threadNext()
+		if v:
+			c.selectVnode(v)
+	#@nonl
+	#@-node:goToNextDirtyHeadline
+	#@+node:goPrevVisitedNode
+	def goPrevVisitedNode(self):
+		
+		c = self
+	
+		while c.beadPointer > 0:
+			c.beadPointer -= 1
+			v = c.beadList[c.beadPointer]
+			if v.exists(c):
+				c.beginUpdate()
+				c.frame.expandAllAncestors(v)
+				c.selectVnode(v,updateBeadList=false)
+				c.endUpdate()
+				c.frame.idle_scrollTo(v)
+				return
+	#@-node:goPrevVisitedNode
+	#@+node:goNextVisitedNode
+	def goNextVisitedNode(self):
+		
+		c = self
+	
+		while c.beadPointer + 1 < len(c.beadList):
+			c.beadPointer += 1
+			v = c.beadList[c.beadPointer]
+			if v.exists(c):
+				c.beginUpdate()
+				c.frame.expandAllAncestors(v)
+				c.selectVnode(v,updateBeadList=false)
+				c.endUpdate()
+				c.frame.idle_scrollTo(v)
+				return
+	#@nonl
+	#@-node:goNextVisitedNode
+	#@+node:goToFirstNode
+	def goToFirstNode(self):
+		
+		c = self
+		v = c.rootVnode()
+		if v:
+			c.beginUpdate()
+			c.selectVnode(v)
+			c.endUpdate()
+	#@nonl
+	#@-node:goToFirstNode
+	#@+node:goToLastNode
+	def goToLastNode(self):
+		
+		c = self
+		v = c.rootVnode()
+		while v and v.threadNext():
+			v = v.threadNext()
+		if v:
+			c.beginUpdate()
+			c.frame.expandAllAncestors(v)
+			c.selectVnode(v)
+			c.endUpdate()
+	
+	#@-node:goToLastNode
+	#@+node:goToNextClone
+	def goToNextClone(self):
+	
+		self.c.goToNextClone()
+	#@-node:goToNextClone
+	#@+node:goToNextSibling
+	def goToNextSibling(self):
+		
+		c = self
+		v = c.currentVnode()
+		if not v: return
+		next = v.next()
+		if next:
+			c.beginUpdate()
+			c.selectVnode(next)
+			c.endUpdate()
+	#@nonl
+	#@-node:goToNextSibling
+	#@+node:goToParent
+	def goToParent(self):
+		
+		c = self
+		v = c.currentVnode()
+		if not v: return
+		p = v.parent()
+		if p:
+			c.beginUpdate()
+			c.selectVnode(p)
+			c.endUpdate()
+	#@-node:goToParent
+	#@+node:goToPrevSibling
+	def goToPrevSibling(self):
+		
+		c = self
+		v = c.currentVnode()
+		if not v: return
+		back = v.back()
+		if back:
+			c.beginUpdate()
+			c.selectVnode(back)
+			c.endUpdate()
+	#@-node:goToPrevSibling
 	#@+node:markChangedHeadlines
 	def markChangedHeadlines (self):
 	
@@ -1733,172 +3076,6 @@ class baseCommands:
 		c.endUpdate()
 	#@nonl
 	#@-node:unmarkAll
-	#@+node:c.dragAfter
-	def dragAfter(self,v,after):
-	
-		# es("dragAfter")
-		c = self
-		if not c.checkMoveWithParentWithWarning(v,after.parent(),true): return
-		# Remember both the before state and the after state for undo/redo
-		oldBack = v.back()
-		oldParent = v.parent()
-		oldN = v.childIndex()
-		c.beginUpdate()
-		if 1: # inside update...
-			c.endEditing()
-			v.setDirty()
-			v.moveAfter(after)
-			c.undoer.setUndoParams("Drag",v,
-				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			v.setDirty()
-			c.selectVnode(v)
-			c.setChanged(true)
-			c.initJoinedCloneBits(v) # 10/8/03
-		c.endUpdate()
-		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
-	#@nonl
-	#@-node:c.dragAfter
-	#@+node:c.dragCloneToNthChildOf (changed in 3.11.1)
-	def dragCloneToNthChildOf (self,v,parent,n):
-	
-		c = self
-		c.beginUpdate()
-		# trace("v,parent,n:"+v.headString()+","+parent.headString()+","+`n`)
-		clone = v.clone(v) # Creates clone & dependents, does not set undo.
-		if not c.checkMoveWithParentWithWarning(clone,parent,true):
-			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
-			c.endUpdate(false) # Nothing has changed.
-			return
-		# Remember both the before state and the after state for undo/redo
-		oldBack = v.back()
-		oldParent = v.parent()
-		oldN = v.childIndex()
-		c.endEditing()
-		clone.setDirty()
-		clone.moveToNthChildOf(parent,n)
-		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
-		c.undoer.setUndoParams("Drag & Clone",clone,
-			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-		clone.setDirty()
-		c.selectVnode(clone)
-		c.setChanged(true)
-		c.endUpdate()
-		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
-	#@nonl
-	#@-node:c.dragCloneToNthChildOf (changed in 3.11.1)
-	#@+node:c.dragToNthChildOf
-	def dragToNthChildOf(self,v,parent,n):
-	
-		# es("dragToNthChildOf")
-		c = self
-		if not c.checkMoveWithParentWithWarning(v,parent,true): return
-		# Remember both the before state and the after state for undo/redo
-		oldBack = v.back()
-		oldParent = v.parent()
-		oldN = v.childIndex()
-		c.beginUpdate()
-		if 1: # inside update...
-			c.endEditing()
-			v.setDirty()
-			v.moveToNthChildOf(parent,n)
-			c.undoer.setUndoParams("Drag",v,
-				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			v.setDirty()
-			c.selectVnode(v)
-			c.setChanged(true)
-			c.initJoinedCloneBits(v) # 10/8/03
-		c.endUpdate()
-		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
-	#@nonl
-	#@-node:c.dragToNthChildOf
-	#@+node:c.sortChildren, sortSiblings
-	def sortChildren(self):
-	
-		c = self ; v = c.currentVnode()
-		if not v or not v.hasChildren(): return
-		#@	<< Set the undo info for sortChildren >>
-		#@+node:<< Set the undo info for sortChildren >>
-		# Get the present list of children.
-		children = []
-		child = v.firstChild()
-		while child:
-			children.append(child)
-			child = child.next()
-		c.undoer.setUndoParams("Sort Children",v,sort=children)
-		#@nonl
-		#@-node:<< Set the undo info for sortChildren >>
-		#@nl
-		c.beginUpdate()
-		c.endEditing()
-		v.sortChildren()
-		v.setDirty()
-		c.setChanged(true)
-		c.endUpdate()
-		
-	def sortSiblings (self):
-		
-		c = self ; v = c.currentVnode()
-		if not v: return
-		parent = v.parent()
-		if not parent:
-			c.sortTopLevel()
-		else:
-			#@		<< Set the undo info for sortSiblings >>
-			#@+node:<< Set the undo info for sortSiblings >>
-			# Get the present list of siblings.
-			sibs = []
-			sib = parent.firstChild()
-			while sib:
-				sibs.append(sib)
-				sib = sib.next()
-			c.undoer.setUndoParams("Sort Siblings",v,sort=sibs)
-			#@nonl
-			#@-node:<< Set the undo info for sortSiblings >>
-			#@nl
-			c.beginUpdate()
-			c.endEditing()
-			parent.sortChildren()
-			parent.setDirty()
-			c.setChanged(true)
-			c.endUpdate()
-	#@nonl
-	#@-node:c.sortChildren, sortSiblings
-	#@+node:c.sortTopLevel
-	def sortTopLevel (self):
-		
-		# Create a list of vnode, headline tuples
-		c = self ; v = root = c.rootVnode()
-		if not v: return
-		#@	<< Set the undo info for sortTopLevel >>
-		#@+node:<< Set the undo info for sortTopLevel >>
-		# Get the present list of children.
-		sibs = []
-		sib = c.rootVnode()
-		while sib:
-			sibs.append(sib)
-			sib = sib.next()
-		c.undoer.setUndoParams("Sort Top Level",v,sort=sibs)
-		#@nonl
-		#@-node:<< Set the undo info for sortTopLevel >>
-		#@nl
-		pairs = []
-		while v:
-			pairs.append((v.headString().lower(), v))
-			v = v.next()
-		# Sort the list on the headlines.
-		pairs.sort()
-		sortedNodes = pairs
-		# Move the nodes
-		c.beginUpdate()
-		h,v = sortedNodes[0]
-		if v != root:
-			v.moveToRoot(oldRoot=root)
-		for h,next in sortedNodes[1:]:
-			next.moveAfter(v)
-			v = next
-		c.endUpdate()
-	#@nonl
-	#@-node:c.sortTopLevel
 	#@+node:demote
 	def demote(self):
 	
@@ -2078,7 +3255,7 @@ class baseCommands:
 			
 			if not back2:
 				# v will be the new root node
-				v.moveToRoot(c.frame.rootVnode()) # 3/16/02, 5/17/02
+				v.moveToRoot(c.rootVnode()) # 3/16/02, 5/17/02
 				c.undoer.setUndoParams("Move Up",v,
 					oldBack=oldBack,oldParent=oldParent,oldN=oldN)
 			elif back2.hasChildren() and back2.isExpanded():
@@ -2124,35 +3301,738 @@ class baseCommands:
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@nonl
 	#@-node:promote
-	#@+node:c.dragCloneAfter (changed in 3.11.1)
-	def dragCloneAfter (self,v,after):
+	#@+node:openCompareWindow
+	def openCompareWindow (self):
+		
+		c = self ; frame = c.frame
+		
+		if not frame.comparePanel:
+			frame.comparePanel = app.gui.createComparePanel(c)
+	
+		frame.comparePanel.bringToFront()
+	#@nonl
+	#@-node:openCompareWindow
+	#@+node:openPythonWindow (Dave Hein)
+	def openPythonWindow(self):
+	
+		if sys.platform == "linux2":
+			#@		<< open idle in Linux >>
+			#@+node:<< open idle in Linux >>
+			# 09-SEP-2002 DHEIN: Open Python window under linux
+			
+			try:
+				pathToLeo = os.path.join(app.loadDir,"leo.py")
+				sys.argv = [pathToLeo]
+				from idlelib import idle
+				if app.idle_imported:
+					reload(idle)
+				app.idle_imported = true
+			except:
+				try:
+					es("idlelib could not be imported.")
+					es("Probably IDLE is not installed.")
+					es("Run Tools/idle/setup.py to build idlelib.")
+					es("Can not import idle")
+					es_exception() # This can fail!!
+				except: pass
+			#@-node:<< open idle in Linux >>
+			#@nl
+		else:
+			#@		<< open idle in Windows >>
+			#@+node:<< open idle in Windows >>
+			# Initialize argv: the -t option sets the title of the Idle interp window.
+			sys.argv = ["leo","-t","leo"]
+			
+			ok = false
+			#@<< Try to open idle in pre-Python 2.3 systems>>
+			#@+node:<< Try to open idle in pre-Python 2.3 systems>>
+			try:
+				executable_dir = os.path.dirname(sys.executable)
+				idle_dir = os.path.join(executable_dir,"Tools","idle")
+				idle_dir = toUnicode(idle_dir,app.tkEncoding) # 10/20/03
+			
+				if idle_dir not in sys.path:
+					sys.path.append(idle_dir)
+			
+				import PyShell
+					
+				if app.idle_imported:
+					reload(idle)
+					app.idle_imported = true
+					
+				if 1: # Mostly works, but causes problems when opening other .leo files.
+					PyShell.main()
+				else: # Doesn't work: destroys all of Leo when Idle closes.
+					self.leoPyShellMain()
+				ok = true
+			except:
+				ok = false
+				# es_exception()
+			#@nonl
+			#@-node:<< Try to open idle in pre-Python 2.3 systems>>
+			#@nl
+			
+			if not ok:
+				#@	<< Try to open idle in Python 2.3 systems >>
+				#@+node:<< Try to open idle in Python 2.3 systems >>
+				try:
+					idle_dir = None
+					
+					import idlelib.PyShell
+				
+					if app.idle_imported:
+						reload(idle)
+						app.idle_imported = true
+						
+					idlelib.PyShell.main()
+					ok = true
+				
+				except:
+					ok = false
+					es_exception()
+				#@nonl
+				#@-node:<< Try to open idle in Python 2.3 systems >>
+				#@nl
+			
+			if not ok:
+				es("Can not import idle")
+				if idle_dir and idle_dir not in sys.path:
+					es("Please add '%s' to sys.path" % idle_dir)
+			#@nonl
+			#@-node:<< open idle in Windows >>
+			#@nl
+	#@-node:openPythonWindow (Dave Hein)
+	#@+node:leoPyShellMain
+	#@+at 
+	#@nonl
+	# The key parts of Pyshell.main(), but using Leo's root window instead of 
+	# a new Tk root window.
+	# 
+	# This does _not_ work.  Using Leo's root window means that Idle will shut 
+	# down Leo without warning when the Idle window is closed!
+	#@-at
+	#@@c
+	
+	def leoPyShellMain(self):
+		
+		import PyShell
+		root = app.root
+		PyShell.fixwordbreaks(root)
+		flist = PyShell.PyShellFileList(root)
+		shell = PyShell.PyShell(flist)
+		flist.pyshell = shell
+		shell.begin()
+	#@nonl
+	#@-node:leoPyShellMain
+	#@+node:about (version number & date)
+	def about(self):
+		
+		c = self
+		
+		# Don't use triple-quoted strings or continued strings here.
+		# Doing so would add unwanted leading tabs.
+		version = c.getSignOnLine() + "\n\n"
+		copyright = (
+			"Copyright 1999-2003 by Edward K. Ream\n" +
+			"All Rights Reserved\n" +
+			"Leo is distributed under the Python License")
+		url = "http://webpages.charter.net/edreamleo/front.html"
+		email = "edreamleo@charter.net"
+	
+		app.gui.runAboutLeoDialog(version,copyright,url,email)
+	#@nonl
+	#@-node:about (version number & date)
+	#@+node:leoDocumentation
+	def leoDocumentation (self):
+	
+		fileName = os.path.join(app.loadDir,"..","doc","LeoDocs.leo")
+		fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
+	
+		try:
+			self.OpenWithFileName(fileName)
+		except:
+			es("not found: LeoDocs.leo")
+	#@-node:leoDocumentation
+	#@+node:leoHome
+	def leoHome (self):
+		
+		import webbrowser
+	
+		url = "http://webpages.charter.net/edreamleo/front.html"
+		try:
+			webbrowser.open_new(url)
+		except:
+			es("not found: " + url)
+	#@nonl
+	#@-node:leoHome
+	#@+node:leoHelp
+	def leoHelp (self):
+		
+		file = os.path.join(app.loadDir,"..","doc","sbooks.chm")
+		file = toUnicode(file,app.tkEncoding) # 10/20/03
+	
+		if os.path.exists(file):
+			os.startfile(file)
+		else:	
+			answer = app.gui.runAskYesNoDialog(
+				"Download Tutorial?",
+				"Download tutorial (sbooks.chm) from SourceForge?")
+	
+			if answer == "yes":
+				try:
+					if 0: # Download directly.  (showProgressBar needs a lot of work)
+						url = "http://umn.dl.sourceforge.net/sourceforge/leo/sbooks.chm"
+						import urllib
+						self.scale = None
+						urllib.urlretrieve(url,file,self.showProgressBar)
+						if self.scale:
+							self.scale.destroy()
+							self.scale = None
+					else:
+						url = "http://prdownloads.sourceforge.net/leo/sbooks.chm?download"
+						import webbrowser
+						os.chdir(app.loadDir)
+						webbrowser.open_new(url)
+				except:
+					es("exception dowloading sbooks.chm")
+					es_exception()
+	#@nonl
+	#@-node:leoHelp
+	#@+node:showProgressBar
+	def showProgressBar (self,count,size,total):
+	
+		# trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
+		if self.scale == None:
+			#@		<< create the scale widget >>
+			#@+node:<< create the scale widget >>
+			Tk = Tkinter
+			top = Tk.Toplevel()
+			top.title("Download progress")
+			self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
+			scale.pack()
+			top.lift()
+			#@nonl
+			#@-node:<< create the scale widget >>
+			#@nl
+		self.scale.set(count*size)
+		self.scale.update_idletasks()
+	#@nonl
+	#@-node:showProgressBar
+	#@+node:leoTutorial (version number)
+	def leoTutorial (self):
+		
+		import webbrowser
+	
+		if 1: # new url
+			url = "http://www.3dtree.com/ev/e/sbooks/leo/sbframetoc_ie.htm"
+		else:
+			url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
+		try:
+			webbrowser.open_new(url)
+		except:
+			es("not found: " + url)
+	#@nonl
+	#@-node:leoTutorial (version number)
+	#@+node:leoConfig
+	def leoConfig (self):
+	
+		# 4/21/03 new code suggested by fBechmann@web.de
+		loadDir = app.loadDir
+		configDir = app.config.configDir
+	
+		# Look in configDir first.
+		fileName = os.path.join(configDir, "leoConfig.leo")
+		fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
+	
+		ok, frame = self.OpenWithFileName(fileName)
+		if not ok:
+			if configDir == loadDir:
+				es("leoConfig.leo not found in " + loadDir)
+			else:
+				# Look in loadDir second.
+				fileName = os.path.join(loadDir,"leoConfig.leo")
+				fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
+	
+				ok, frame = self.OpenWithFileName(fileName)
+				if not ok:
+					es("leoConfig.leo not found in " + configDir + " or " + loadDir)
+	#@nonl
+	#@-node:leoConfig
+	#@+node:applyConfig
+	def applyConfig (self):
 	
 		c = self
-		c.beginUpdate()
-		clone = v.clone(v) # Creates clone & dependents, does not set undo.
-		# trace("v,after:"+v.headString()+","+after.headString())
-		if not c.checkMoveWithParentWithWarning(clone,after.parent(),true):
-			trace("invalid clone move")
-			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
-			c.endUpdate(false) # Nothing has changed.
-			return
-		# Remember both the before state and the after state for undo/redo
-		oldBack = v.back()
-		oldParent = v.parent()
-		oldN = v.childIndex()
-		c.endEditing()
-		clone.setDirty()
-		clone.moveAfter(after)
-		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
-		c.undoer.setUndoParams("Drag & Clone",clone,
-			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-		clone.setDirty()
-		c.selectVnode(clone)
-		c.setChanged(true)
-		c.endUpdate()
-		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+		app.config.init()
+		c.frame.reconfigureFromConfig()
 	#@nonl
-	#@-node:c.dragCloneAfter (changed in 3.11.1)
+	#@-node:applyConfig
+	#@+node:beginUpdate
+	def beginUpdate(self):
+	
+		self.frame.beginUpdate()
+		
+	BeginUpdate = beginUpdate # Compatibility with old scripts
+	#@nonl
+	#@-node:beginUpdate
+	#@+node:bringToFront
+	def bringToFront(self):
+	
+		self.frame.deiconify()
+	
+	BringToFront = bringToFront # Compatibility with old scripts
+	#@nonl
+	#@-node:bringToFront
+	#@+node:endUpdate
+	def endUpdate(self, flag=true):
+		
+		self.frame.endUpdate(flag)
+		
+	EndUpdate = endUpdate # Compatibility with old scripts
+	#@nonl
+	#@-node:endUpdate
+	#@+node:recolor
+	def recolor(self):
+	
+		self.frame.recolor(self.frame.currentVnode())
+	#@nonl
+	#@-node:recolor
+	#@+node:redraw & repaint
+	def redraw(self):
+	
+		self.frame.redraw()
+		
+	# Compatibility with old scripts
+	Redraw = redraw 
+	repaint = redraw
+	Repaint = redraw
+	#@nonl
+	#@-node:redraw & repaint
+	#@+node:canContractAllHeadlines
+	def canContractAllHeadlines (self):
+	
+		c = self ; v = c.rootVnode()
+		if not v: return false
+		while v:
+			if v.isExpanded():
+				return true
+			v = v.threadNext()
+		return false
+	#@nonl
+	#@-node:canContractAllHeadlines
+	#@+node:canContractAllSubheads
+	def canContractAllSubheads (self):
+	
+		c = self
+		v = c.currentVnode()
+		if not v: return false
+		next = v.nodeAfterTree()
+		v = v.threadNext()
+		while v and v != next:
+			if v.isExpanded():
+				return true
+			v = v.threadNext()
+		return false
+	#@nonl
+	#@-node:canContractAllSubheads
+	#@+node:canContractParent
+	def canContractParent (self):
+	
+		c = self ; v = c.currentVnode()
+		return v.parent() != None
+	#@nonl
+	#@-node:canContractParent
+	#@+node:canContractSubheads
+	def canContractSubheads (self):
+	
+		c = self ; v = c.currentVnode()
+		if not v: return false
+		v = v.firstChild()
+		while v:
+			if v.isExpanded():
+				return true
+			v = v.next()
+		return false
+	#@nonl
+	#@-node:canContractSubheads
+	#@+node:canCutOutline & canDeleteHeadline
+	def canDeleteHeadline (self):
+	
+		c = self ; v = c.currentVnode()
+		if not v: return false
+		if v.parent(): # v is below the top level.
+			return true
+		else: # v is at the top level.  We can not delete the last node.
+			return v.threadBack() or v.next()
+	
+	canCutOutline = canDeleteHeadline
+	#@nonl
+	#@-node:canCutOutline & canDeleteHeadline
+	#@+node:canDemote
+	def canDemote (self):
+	
+		c = self
+		v = c.currentVnode()
+		if not v: return false
+		return v.next() != None
+	#@nonl
+	#@-node:canDemote
+	#@+node:canExpandAllHeadlines
+	def canExpandAllHeadlines (self):
+	
+		c = self ; v = c.rootVnode()
+		if not v: return false
+		while v:
+			if not v.isExpanded():
+				return true
+			v = v.threadNext()
+		return false
+	#@nonl
+	#@-node:canExpandAllHeadlines
+	#@+node:canExpandAllSubheads
+	def canExpandAllSubheads (self):
+	
+		c = self
+		v = c.currentVnode()
+		if not v: return false
+		next = v.nodeAfterTree()
+		v = v.threadNext()
+		while v and v != next:
+			if not v.isExpanded():
+				return true
+			v = v.threadNext()
+		return false
+	#@nonl
+	#@-node:canExpandAllSubheads
+	#@+node:canExpandSubheads
+	def canExpandSubheads (self):
+	
+		c = self ; v = c.currentVnode()
+		if not v: return false
+		v = v.firstChild()
+		while v:
+			if not v.isExpanded():
+				return true
+			v = v.next()
+		return false
+	#@nonl
+	#@-node:canExpandSubheads
+	#@+node:canExtract, canExtractSection & canExtractSectionNames
+	def canExtract (self):
+	
+		c = self
+		if c.body:
+			return c.body.hasTextSelection()
+		else:
+			return false
+	
+	canExtractSection = canExtract
+	canExtractSectionNames = canExtract
+	#@nonl
+	#@-node:canExtract, canExtractSection & canExtractSectionNames
+	#@+node:canFindMatchingBracket
+	def canFindMatchingBracket (self):
+		
+		c = self ; brackets = "()[]{}"
+		c1 = c.frame.body.getCharAtInsertPoint()
+		c2 = c.frame.body.getCharBeforeInsertPoint()
+		return (c1 and c1 in brackets) or (c2 and c2 in brackets)
+	#@nonl
+	#@-node:canFindMatchingBracket
+	#@+node:canGoToNextDirtyHeadline
+	def canGoToNextDirtyHeadline (self):
+	
+		c = self ; current = c.currentVnode()
+		if not current: return false
+	
+		v = c.rootVnode()
+		while v:
+			if v.isDirty()and v != current:
+				return true
+			v = v.threadNext()
+		return false
+	#@nonl
+	#@-node:canGoToNextDirtyHeadline
+	#@+node:canGoToNextMarkedHeadline
+	def canGoToNextMarkedHeadline (self):
+	
+		c = self ; current = c.currentVnode()
+		if not current: return false
+	
+		v = c.rootVnode()
+		while v:
+			if v.isMarked()and v != current:
+				return true
+			v = v.threadNext()
+		return false
+	#@nonl
+	#@-node:canGoToNextMarkedHeadline
+	#@+node:canMarkChangedHeadline
+	def canMarkChangedHeadlines (self):
+	
+		c = self ; v = c.rootVnode()
+		while v:
+			if v.isDirty():
+				return true
+			v = v.threadNext()
+		return false
+	#@nonl
+	#@-node:canMarkChangedHeadline
+	#@+node:canMarkChangedRoots
+	def canMarkChangedRoots (self):
+	
+		c = self ; v = c.rootVnode()
+		while v:
+			if v.isDirty():
+				return true
+			v = v.threadNext()
+		return false
+	#@nonl
+	#@-node:canMarkChangedRoots
+	#@+node:canMoveOutlineDown (changed for hoist)
+	def canMoveOutlineDown (self):
+	
+		c = self
+		if 1: # The permissive way
+			current = c.currentVnode()
+			if not current: return false
+			v = current.visNext()
+			while v and current.isAncestorOf(v):
+				v = v.visNext()
+				
+			if c.hoistStack:
+				h = c.hoistStack[-1]
+				return v and v != h and h.isAncestorOf(v)
+			else:
+				return v != None
+		else: # The MORE way.
+			return c.currentVnode().next() != None
+	#@nonl
+	#@-node:canMoveOutlineDown (changed for hoist)
+	#@+node:canMoveOutlineLeft (changed for hoist)
+	def canMoveOutlineLeft (self):
+	
+		c = self ; v = c.currentVnode()
+		if c.hoistStack:
+			h = c.hoistStack[-1]
+			if v and v.parent():
+				p = v.parent()
+				return p != h and h.isAncestorOf(p)
+			else:
+				return false
+		else:
+			return v and v.parent()
+	#@nonl
+	#@-node:canMoveOutlineLeft (changed for hoist)
+	#@+node:canMoveOutlineRight (changed for hoist)
+	def canMoveOutlineRight (self):
+	
+		c = self ; v = c.currentVnode()
+		if c.hoistStack:
+			h = c.hoistStack[-1]
+			return v and v.back() and v != h
+		else:
+			return v and v.back()
+	#@nonl
+	#@-node:canMoveOutlineRight (changed for hoist)
+	#@+node:canMoveOutlineUp (changed for hoist)
+	def canMoveOutlineUp (self):
+	
+		c = self ; v = c.currentVnode()
+		if 1: # The permissive way.
+			if c.hoistStack:
+				h = c.hoistStack[-1] ; vback = v.visBack()
+				return v and vback and h != v and h.isAncestorOf(vback)
+			else:
+				return v and v.visBack()
+		else: # The MORE way.
+			return v and v.back()
+	#@nonl
+	#@-node:canMoveOutlineUp (changed for hoist)
+	#@+node:canPasteOutline
+	def canPasteOutline (self,s=None):
+	
+		c = self
+		if s == None:
+			s = app.gui.getTextFromClibboard()
+		if not s:
+			return false
+	
+		# trace(s)
+		if match(s,0,app.prolog_prefix_string):
+			return true
+		elif len(s) > 0:
+			return c.importCommands.stringIsValidMoreFile(s)
+		else:
+			return false
+	#@nonl
+	#@-node:canPasteOutline
+	#@+node:canPromote
+	def canPromote (self):
+	
+		c = self ; v = c.currentVnode()
+		return v and v.hasChildren()
+	#@nonl
+	#@-node:canPromote
+	#@+node:canRevert
+	def canRevert (self):
+	
+		# c.mFileName will be "untitled" for unsaved files.
+		c = self
+		return (c.frame and c.mFileName and c.isChanged())
+	#@nonl
+	#@-node:canRevert
+	#@+node:canSelect....
+	# 7/29/02: The shortcuts for these commands are now unique.
+	
+	def canSelectThreadBack (self):
+		v = self.currentVnode()
+		return v and v.threadBack()
+		
+	def canSelectThreadNext (self):
+		v = self.currentVnode()
+		return v and v.threadNext()
+	
+	def canSelectVisBack (self):
+		v = self.currentVnode()
+		return v and v.visBack()
+		
+	def canSelectVisNext (self):
+		v = self.currentVnode()
+		return v and v.visNext()
+	#@nonl
+	#@-node:canSelect....
+	#@+node:canShiftBodyLeft/Right
+	def canShiftBodyLeft (self):
+	
+		c = self
+		if c.body:
+			s = c.body.getAllText()
+			return s and len(s) > 0
+		else:
+			return false
+			
+	def canShiftBodyRight (self):
+	
+		c = self
+		if c.body:
+			s = c.body.getAllText()
+			return s and len(s) > 0
+		else:
+			return false
+	#@nonl
+	#@-node:canShiftBodyLeft/Right
+	#@+node:canSortChildren, canSortSiblings
+	def canSortChildren (self):
+	
+		c = self ; v = c.currentVnode()
+		return v and v.hasChildren()
+		
+	def canSortSiblings (self):
+	
+		c = self ; v = c.currentVnode()
+		return v.next() or v.back()
+	#@nonl
+	#@-node:canSortChildren, canSortSiblings
+	#@+node:canUndo & canRedo
+	def canUndo (self):
+	
+		c = self
+		return c.undoer.canUndo()
+		
+	def canRedo (self):
+	
+		c = self
+		return c.undoer.canRedo()
+	#@nonl
+	#@-node:canUndo & canRedo
+	#@+node:canUnmarkAll
+	# Returns true if any node is marked.
+	
+	def canUnmarkAll (self):
+	
+		c = self ; v = c.rootVnode()
+		while v:
+			if v.isMarked():
+				return true
+			v = v.threadNext()
+		return false
+	#@nonl
+	#@-node:canUnmarkAll
+	#@+node:c.currentVnode
+	# Compatibility with scripts
+	
+	def currentVnode (self):
+	
+		return self.frame.currentVnode()
+	#@-node:c.currentVnode
+	#@+node:clearAllMarked
+	def clearAllMarked (self):
+	
+		c = self ; v = c.rootVnode()
+		while v:
+			v.clearMarked()
+			v = v.threadNext()
+	#@nonl
+	#@-node:clearAllMarked
+	#@+node:clearAllVisited
+	def clearAllVisited (self):
+	
+		c = self ; v = c.rootVnode()
+		c.beginUpdate()
+		while v:
+			# tick("clearAllVisited loop")
+			v.clearVisited()
+			if v.t:
+				v.t.clearVisited()
+			v = v.threadNext()
+		c.endUpdate(false) # never redraw the tree.
+	#@nonl
+	#@-node:clearAllVisited
+	#@+node:fileName
+	# Compatibility with scripts
+	
+	def fileName (self):
+	
+		return self.mFileName
+	#@-node:fileName
+	#@+node:isChanged
+	def isChanged (self):
+	
+		return self.changed
+	#@nonl
+	#@-node:isChanged
+	#@+node:rootVnode
+	# Compatibility with scripts
+	
+	def rootVnode (self):
+	
+		return self.frame.rootVnode()
+	#@-node:rootVnode
+	#@+node:c.setChanged
+	def setChanged (self,changedFlag):
+	
+		c = self
+		if not c.frame: return
+		# Clear all dirty bits _before_ setting the caption.
+		# 9/15/01 Clear all dirty bits except orphaned @file nodes
+		if not changedFlag:
+			# trace("clearing all dirty bits")
+			v = c.rootVnode()
+			while v:
+				if v.isDirty() and not (v.isAtFileNode() or v.isAtRawFileNode()):
+					v.clearDirtyJoined()
+				v = v.threadNext()
+		# Update all derived changed markers.
+		c.changed = changedFlag
+		s = c.frame.getTitle()
+		if len(s) > 2 and not c.loading: # don't update while loading.
+			if changedFlag:
+				# import traceback ; traceback.print_stack()
+				if s [0] != '*': c.frame.setTitle("* " + s)
+			else:
+				if s[0:2]=="* ": c.frame.setTitle(s[2:])
+	#@nonl
+	#@-node:c.setChanged
 	#@+node:editVnode (calls tree.editLabel)
 	# Selects v: sets the focus to v and edits v.
 	
