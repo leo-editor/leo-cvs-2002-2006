@@ -1651,7 +1651,17 @@ class fileCommands:
 			at.writeAll(v,true) # partialFlag
 	#@-body
 	#@-node:9::writeAtFileNodes
-	#@+node:10::writeOutlineOnly
+	#@+node:10::writeMissingAtFileNodes
+	#@+body
+	def writeMissingAtFileNodes (self):
+	
+		c = self.commands ; v = c.currentVnode()
+		if v:
+			at = c.atFileCommands
+			at.writeMissing(v)
+	#@-body
+	#@-node:10::writeMissingAtFileNodes
+	#@+node:11::writeOutlineOnly
 	#@+body
 	def writeOutlineOnly (self):
 	
@@ -1660,8 +1670,8 @@ class fileCommands:
 		self.compactFileIndices()
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
 	#@-body
-	#@-node:10::writeOutlineOnly
-	#@+node:11::write_LEO_file
+	#@-node:11::writeOutlineOnly
+	#@+node:12::write_LEO_file
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
@@ -1827,7 +1837,7 @@ class fileCommands:
 
 			return false
 	#@-body
-	#@-node:11::write_LEO_file
+	#@-node:12::write_LEO_file
 	#@-node:3::Writing
 	#@-others
 #@-body

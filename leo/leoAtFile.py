@@ -2127,7 +2127,722 @@ class atFile:
 	#@-node:10::scanText
 	#@-node:5::Reading
 	#@+node:6::Writing
-	#@+node:1::os, onl, etc. (leoAtFile)
+	#@+node:1::atFile.checkForLeoCustomize
+	#@+body
+	def checkForLeoCustomize (self,v=None):
+	
+		import leoDialog
+		d = leoDialog.leoDialog()
+		if v:
+			if v.atFileNodeName() == "customizeLeo.py":
+				d.askOk("Security Alert!",
+					"@ignore not in effect for @node customizeLeo.py!")
+			return None
+		else:
+			fn = os.path.basename(self.targetFileName)
+			if fn == "customizeLeo.py":
+				result = d.askYesNo("Security Alert!",
+					"You are about to create or change customizeLeo.py.\n" +
+					"Are you sure you trust the code in this file?")
+				if result!="yes":
+					es("not written: customizeLeo.py")
+					return false
+			return true
+	#@-body
+	#@-node:1::atFile.checkForLeoCustomize
+	#@+node:2::atFile.closeWriteFile
+	#@+body
+	def closeWriteFile (self):
+		
+		if self.outputFile:
+			if self.suppress_newlines and self.newline_pending:
+				self.newline_pending = false
+				self.onl() # Make sure file ends with a newline.
+			self.outputFile.flush()
+			self.outputFile.close()
+			self.outputFile = None
+	
+	#@-body
+	#@-node:2::atFile.closeWriteFile
+	#@+node:3::atFile.handleWriteException
+	#@+body
+	def handleWriteException (self,root=None):
+		
+		es("exception writing:" + self.targetFileName)
+		es_exception()
+		
+		if self.outputFile:
+			self.outputFile.flush()
+			self.outputFile.close()
+			self.outputFile = None
+		
+		if self.outputFileName != None:
+			try: # Just delete the temp file.
+				os.remove(self.outputFileName)
+			except:
+				es("exception deleting:" + self.outputFileName)
+				es_exception()
+	
+		if root:
+			# Make sure we try to rewrite this file.
+			root.setOrphan()
+			root.setDirty()
+	#@-body
+	#@-node:3::atFile.handleWriteException
+	#@+node:4::atFile.openWriteFile (assert)
+	#@+body
+	# Open files.  Set root.orphan and root.dirty flags and return on errors.
+	
+	def openWriteFile (self,root):
+	
+		try:
+			self.scanAllDirectives(root)
+			valid = self.errors == 0
+		except:
+			es("exception in atFile.scanAllDirectives")
+			es_exception()
+			valid = false
+		
+		if valid:
+			try:
+				fn = self.targetFileName
+				self.shortFileName = fn # name to use in status messages.
+				self.targetFileName = os.path.join(self.default_directory,fn)
+				self.targetFileName = os.path.normpath(self.targetFileName)
+				path = os.path.dirname(self.targetFileName)
+				if path and len(path) > 0:
+					valid = os.path.exists(path)
+					if not valid:
+						self.writeError("path does not exist: " + path)
+				else:
+					valid = false
+			except:
+				es("exception creating path:" + fn)
+				es_exception()
+				valid = false
+		
+		if valid:
+			if os.path.exists(self.targetFileName):
+				try:
+					read_only = not os.access(self.targetFileName,os.W_OK)
+					if read_only:
+						es("read only: " + self.targetFileName)
+						valid = false
+				except:
+					pass # os.access() may not exist on all platforms.
+			
+		if valid:
+			try:
+				self.outputFileName = self.targetFileName + ".tmp"
+				self.outputFile = open(self.outputFileName,'wb')
+				valid = self.outputFile != None
+				if not valid:
+					self.writeError("can not open " + self.outputFileName)
+			except:
+				es("exception opening:" + self.outputFileName)
+				es_exception()
+				valid = false
+		
+		if not valid:
+			root.setOrphan()
+			root.setDirty()
+		
+		return valid
+	#@-body
+	#@-node:4::atFile.openWriteFile (assert)
+	#@+node:5::atFile.rawWrite
+	#@+body
+	def rawWrite(self,root):
+	
+		# trace(`root`)
+		c = self.commands ; self.root = root
+		self.errors = 0
+		c.endEditing() # Capture the current headline.
+		try:
+			self.targetFileName = root.atRawFileNodeName()
+			ok = self.openWriteFile(root)
+			if not ok: return
+			next = root.nodeAfterTree()
+			
+			#@<< write root's tree >>
+			#@+node:1::<< write root's tree >>
+			#@+body
+			next = root.nodeAfterTree()
+			self.updateCloneIndices(root, next)
+			
+			
+			#@<< put all @first lines in root >>
+			#@+node:1::<< put all @first lines in root >>
+			#@+body
+			#@+at
+			#  Write any @first lines.  These lines are also converted to 
+			# @verbatim lines, so the read logic simply ignores lines 
+			# preceding the @+leo sentinel.
+
+			#@-at
+			#@@c
+
+			s = root.t.bodyString
+			tag = "@first"
+			i = 0
+			while match(s,i,tag):
+				i += len(tag)
+				i = skip_ws(s,i)
+				j = i
+				i = skip_to_end_of_line(s,i)
+				# 21-SEP-2002 DTHEIN: write @first line, whether empty or not
+				line = s[j:i]
+				self.os(line) ; self.onl()
+				i = skip_nl(s,i)
+			#@-body
+			#@-node:1::<< put all @first lines in root >>
+
+			self.putOpenLeoSentinel("@+leo")
+			
+			#@<< put optional @comment sentinel lines >>
+			#@+node:2::<< put optional @comment sentinel lines >>
+			#@+body
+			s2 = app().config.output_initial_comment
+			if s2:
+				lines = string.split(s2,"\\n")
+				for line in lines:
+					line = line.replace("@date",time.asctime())
+					if len(line)> 0:
+						self.putSentinel("@comment " + line)
+			
+			#@-body
+			#@-node:2::<< put optional @comment sentinel lines >>
+
+			
+			v = root
+			while v and v != next:
+				
+				#@<< Write v's node >>
+				#@+node:3::<< Write v's node >>
+				#@+body
+				self.putOpenNodeSentinel(v)
+					
+				s = v.bodyString()
+				if s and len(s) > 0:
+					self.putSentinel("@+body")
+					if self.newline_pending:
+						self.newline_pending = false
+						self.onl()
+					self.outputFile.write(s)
+					self.putSentinel("@-body")
+					
+				self.putCloseNodeSentinel(v)
+				
+				#@-body
+				#@-node:3::<< Write v's node >>
+
+				v = v.threadNext()
+			
+			self.putSentinel("@-leo")
+			
+			#@<< put all @last lines in root >>
+			#@+node:4::<< put all @last lines in root >>
+			#@+body
+			#@+at
+			#  Write any @last lines.  These lines are also converted to 
+			# @verbatim lines, so the read logic simply ignores lines 
+			# following the @-leo sentinel.
+
+			#@-at
+			#@@c
+
+			tag = "@last"
+			lines = string.split(root.t.bodyString,'\n')
+			n = len(lines) ; j = k = n - 1
+			# Don't write an empty last line.
+			if j >= 0 and len(lines[j])==0:
+				j = k = n - 2
+			# Scan backwards for @last directives.
+			while j >= 0:
+				line = lines[j]
+				if match(line,0,tag): j -= 1
+				else: break
+			# Write the @last lines.
+			for line in lines[j+1:k+1]:
+				i = len(tag) ; i = skip_ws(line,i)
+				self.os(line[i:]) ; self.onl()
+			#@-body
+			#@-node:4::<< put all @last lines in root >>
+			#@-body
+			#@-node:1::<< write root's tree >>
+
+			self.closeWriteFile()
+			self.replaceTargetFileIfDifferent()
+			root.clearOrphan() ; root.clearDirty()
+		except:
+			self.handleWriteException(root)
+	#@-body
+	#@-node:5::atFile.rawWrite
+	#@+node:6::atFile.replaceTargetFileIfDifferent
+	#@+body
+	def replaceTargetFileIfDifferent (self):
+		
+		assert(self.outputFile == None)
+		
+		if os.path.exists(self.targetFileName):
+			if filecmp.cmp(self.outputFileName,self.targetFileName):
+				
+				#@<< delete the output file >>
+				#@+node:1::<< delete the output file >>
+				#@+body
+				try: # Just delete the temp file.
+					os.remove(self.outputFileName)
+				except:
+					es("exception deleting:" + self.outputFileName)
+					es_exception()
+				
+				es("unchanged: " + self.shortFileName)
+				#@-body
+				#@-node:1::<< delete the output file >>
+
+			else:
+				if self.checkForLeoCustomize() == false:
+					return
+				
+				#@<< replace the target file with the output file >>
+				#@+node:2::<< replace the target file with the output file >>
+				#@+body
+				try:
+					# 10/6/02: retain the access mode of the previous file,
+					# removing any setuid, setgid, and sticky bits.
+					mode = (os.stat(self.targetFileName))[0] & 0777
+				except:
+					mode = None
+				
+				try: # Replace target file with temp file.
+					os.remove(self.targetFileName)
+					utils_rename(self.outputFileName,self.targetFileName)
+					if mode: # 10/3/02: retain the access mode of the previous file.
+						os.chmod(self.targetFileName,mode)
+					es("writing: " + self.shortFileName)
+				except:
+					self.writeError("exception removing and renaming:" + self.outputFileName +
+						" to " + self.targetFileName)
+					es_exception()
+				#@-body
+				#@-node:2::<< replace the target file with the output file >>
+
+				
+		elif self.checkForLeoCustomize() == false:
+			return
+		else:
+			
+			#@<< rename the output file to be the target file >>
+			#@+node:3::<< rename the output file to be the target file >>
+			#@+body
+			try:
+				utils_rename(self.outputFileName,self.targetFileName)
+				es("creating: " + self.targetFileName)
+			except:
+				self.writeError("exception renaming:" + self.outputFileName +
+					" to " + self.targetFileName)
+				es_exception()
+			#@-body
+			#@-node:3::<< rename the output file to be the target file >>
+
+	
+	#@-body
+	#@-node:6::atFile.replaceTargetFileIfDifferent
+	#@+node:7::atFile.silentWrite
+	#@+body
+	def silentWrite(self,root):
+	
+		# trace(`root`)
+		c = self.commands ; self.root = root
+		self.errors = 0
+		c.endEditing() # Capture the current headline.
+		try:
+			self.targetFileName = root.atSilentFileNodeName()
+			ok = self.openWriteFile(root)
+			if not ok: return
+			next = root.nodeAfterTree()
+			v = root
+			while v and v != next:
+				
+				#@<< Write v's headline if it starts with @@ >>
+				#@+node:1::<< Write v's headline if it starts with @@ >>
+				#@+body
+				s = v.headString()
+				if match(s,0,"@@"):
+					s = s[2:]
+					if s and len(s) > 0:
+						self.outputFile.write(s)
+				
+				#@-body
+				#@-node:1::<< Write v's headline if it starts with @@ >>
+
+				
+				#@<< Write v's body >>
+				#@+node:2::<< Write v's body >>
+				#@+body
+				s = v.bodyString()
+				if s and len(s) > 0:
+					self.outputFile.write(s)
+				#@-body
+				#@-node:2::<< Write v's body >>
+
+				v = v.threadNext()
+			self.closeWriteFile()
+			self.replaceTargetFileIfDifferent()
+			root.clearOrphan() ; root.clearDirty()
+		except:
+			self.handleWriteException(root)
+	#@-body
+	#@-node:7::atFile.silentWrite
+	#@+node:8::atFile.write
+	#@+body
+	# This is the entry point to the write code.  root should be an @file vnode.
+	
+	def write(self,root,nosentinels=false):
+	
+		c = self.commands
+		self.sentinels = not nosentinels
+		
+		#@<< initialize >>
+		#@+node:1::<< initialize >>
+		#@+body
+		self.errors = 0 # 9/26/02
+		c.setIvarsFromPrefs()
+		self.root = root
+		self.raw = false
+		c.endEditing() # Capture the current headline.
+		
+		#@-body
+		#@-node:1::<< initialize >>
+
+		try:
+			
+			#@<< open the file; return on error >>
+			#@+node:2::<< open the file; return on error >>
+			#@+body
+			if nosentinels:
+				self.targetFileName = root.atNoSentinelsFileNodeName()
+			else:
+				self.targetFileName = root.atFileNodeName()
+			ok = self.openWriteFile(root)
+			if not ok: return
+			#@-body
+			#@-node:2::<< open the file; return on error >>
+
+			
+			#@<< write then entire @file tree >>
+			#@+node:3::<< write then entire @file tree >>
+			#@+body
+			# unvisited nodes will be orphans, except in cweb trees.
+			root.clearVisitedInTree()
+			next = root.nodeAfterTree()
+			self.updateCloneIndices(root, next)
+			
+			
+			#@<< put all @first lines in root >>
+			#@+node:1::<< put all @first lines in root >>
+			#@+body
+			#@+at
+			#  Write any @first lines.  These lines are also converted to 
+			# @verbatim lines, so the read logic simply ignores lines 
+			# preceding the @+leo sentinel.
+
+			#@-at
+			#@@c
+
+			s = root.t.bodyString
+			tag = "@first"
+			i = 0
+			while match(s,i,tag):
+				i += len(tag)
+				i = skip_ws(s,i)
+				j = i
+				i = skip_to_end_of_line(s,i)
+				# 21-SEP-2002 DTHEIN: write @first line, whether empty or not
+				line = s[j:i]
+				self.os(line) ; self.onl()
+				i = skip_nl(s,i)
+			#@-body
+			#@-node:1::<< put all @first lines in root >>
+
+			self.putOpenLeoSentinel("@+leo")
+			
+			#@<< put optional @comment sentinel lines >>
+			#@+node:2::<< put optional @comment sentinel lines >>
+			#@+body
+			s2 = app().config.output_initial_comment
+			if s2:
+				lines = string.split(s2,"\\n")
+				for line in lines:
+					line = line.replace("@date",time.asctime())
+					if len(line)> 0:
+						self.putSentinel("@comment " + line)
+			#@-body
+			#@-node:2::<< put optional @comment sentinel lines >>
+
+			
+			self.putOpenNodeSentinel(root)
+			self.putBodyPart(root)
+			self.putCloseNodeSentinel(root)
+			
+			root.setVisited()
+			self.putSentinel("@-leo")
+			
+			#@<< put all @last lines in root >>
+			#@+node:3::<< put all @last lines in root >>
+			#@+body
+			#@+at
+			#  Write any @last lines.  These lines are also converted to 
+			# @verbatim lines, so the read logic simply ignores lines 
+			# following the @-leo sentinel.
+
+			#@-at
+			#@@c
+
+			tag = "@last"
+			lines = string.split(root.t.bodyString,'\n')
+			n = len(lines) ; j = k = n - 1
+			# Don't write an empty last line.
+			if j >= 0 and len(lines[j])==0:
+				j = k = n - 2
+			# Scan backwards for @last directives.
+			while j >= 0:
+				line = lines[j]
+				if match(line,0,tag): j -= 1
+				else: break
+			# Write the @last lines.
+			for line in lines[j+1:k+1]:
+				i = len(tag) ; i = skip_ws(line,i)
+				self.os(line[i:]) ; self.onl()
+			#@-body
+			#@-node:3::<< put all @last lines in root >>
+			#@-body
+			#@-node:3::<< write then entire @file tree >>
+
+			self.closeWriteFile()
+			
+			#@<< warn about @ignored and orphans >>
+			#@+node:4::<< Warn about @ignored and orphans  >>
+			#@+body
+			# 10/26/02: Always warn, even when language=="cweb"
+			
+			next = root.nodeAfterTree()
+			v = root
+			while v and v != next:
+				if not v.isVisited():
+					self.writeError("Orphan node:  " + v.headString())
+				if v.isAtIgnoreNode():
+					self.writeError("@ignore node: " + v.headString())
+				v = v.threadNext()
+			
+			#@-body
+			#@-node:4::<< Warn about @ignored and orphans  >>
+
+			
+			#@<< finish writing >>
+			#@+node:5::<< finish writing >>
+			#@+body
+			#@+at
+			#  We set the orphan and dirty flags if there are problems writing 
+			# the file to force Commands::write_LEO_file to write the tree to 
+			# the .leo file.
+
+			#@-at
+			#@@c
+
+			if self.errors > 0 or self.root.isOrphan():
+				root.setOrphan()
+				root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
+				os.remove(self.outputFileName) # Delete the temp file.
+				es("Not written: " + self.outputFileName)
+			else:
+				root.clearOrphan()
+				root.clearDirty()
+				self.replaceTargetFileIfDifferent()
+			#@-body
+			#@-node:5::<< finish writing >>
+
+		except:
+			self.handleWriteException()
+	#@-body
+	#@-node:8::atFile.write
+	#@+node:9::atFile.writeAll
+	#@+body
+	#@+at
+	#  This method scans all vnodes, calling write for every @file node 
+	# found.  If partialFlag is true we write all @file nodes in the selected 
+	# outline.  Otherwise we write @file nodes in the entire outline.
+
+	#@-at
+	#@@c
+	def writeAll(self,v,partialFlag):
+	
+		self.initIvars()
+		writtenFiles = [] # List of files that might be written again.
+		# Kludge: look at whole tree if forceFlag is false;
+		if partialFlag: after = v.nodeAfterTree()
+		else: after = None
+		
+		#@<< Clear all orphan bits >>
+		#@+node:1::<< Clear all orphan bits >>
+		#@+body
+		#@+at
+		#  We must clear these bits because they may have been set on a 
+		# previous write.  Calls to atFile::write may set the orphan bits in 
+		# @file nodes.  If so, write_LEO_file will write the entire @file tree.
+
+		#@-at
+		#@@c
+
+		v2 = v
+		while v2 and v2 != after:
+			v2.clearOrphan()
+			v2 = v2.threadNext()
+		#@-body
+		#@-node:1::<< Clear all orphan bits >>
+
+		while v and v != after:
+			# trace(`v`)
+			if v.isAnyAtFileNode() or v.isAtIgnoreNode():
+				
+				#@<< handle v's tree >>
+				#@+node:2::<< handle v's tree >>
+				#@+body
+				# This code is a little tricky: @ignore not recognised in @silentfile nodes.
+				if v.isDirty() or partialFlag or v.t in writtenFiles:
+					if v.isAtSilentFileNode():
+						self.silentWrite(v)
+					elif v.isAtIgnoreNode():
+						pass
+					elif v.isAtRawFileNode():
+						self.rawWrite(v)
+					elif v.isAtNoSentinelsFileNode():
+						self.write(v,nosentinels=true)
+					elif v.isAtFileNode():
+						self.write(v)
+				
+					if not v.isAtIgnoreNode():
+						writtenFiles.append(v.t)
+				
+				elif v.isAtFileNode():
+					self.checkForLeoCustomize(v)
+					
+				
+				
+				
+				#@-body
+				#@-node:2::<< handle v's tree >>
+
+				v = v.nodeAfterTree()
+			else:
+				v = v.threadNext()
+		if partialFlag: # This is the Write @file Nodes command.
+			if len(writtenFiles) > 0:
+				es("finished")
+			else:
+				es("no @file or similar nodes in the selected tree")
+	
+	#@-body
+	#@-node:9::atFile.writeAll
+	#@+node:10::atFile.writeMissing
+	#@+body
+	def writeMissing(self,v):
+	
+		self.initIvars()
+		writtenFiles = false
+		after = v.nodeAfterTree()
+		while v and v != after:
+			if v.isAtSilentFileNode() or (
+				v.isAnyAtFileNode() and not v.isAtIgnoreNode()):
+				missing = false ; valid = true
+				self.targetFileName = v.anyAtFileNodeName()
+				
+				#@<< set missing if the file does not exist >>
+				#@+node:1::<< set missing if the file does not exist >>
+				#@+body
+				# This is similar, but not the same as, the logic in openWriteFile.
+				
+				valid = self.targetFileName and len(self.targetFileName) > 0
+				
+				if valid:
+					try:
+						# Creates missing directives if option is enabled.
+						self.scanAllDirectives(v)
+						valid = self.errors == 0
+					except:
+						es("exception in atFile.scanAllDirectives")
+						es_exception()
+						valid = false
+				
+				if valid:
+					try:
+						fn = self.targetFileName
+						self.shortFileName = fn # name to use in status messages.
+						self.targetFileName = os.path.join(self.default_directory,fn)
+						self.targetFileName = os.path.normpath(self.targetFileName)
+						path = self.targetFileName # Look for the full name, not just the directory.
+						valid = path and len(path) > 0
+						if valid:
+							missing = not os.path.exists(path)
+					except:
+						es("exception creating path:" + fn)
+						es_exception()
+						valid = false
+				#@-body
+				#@-node:1::<< set missing if the file does not exist >>
+
+				if valid and missing:
+					if not v.isAtFileNode() or self.checkForLeoCustomize():
+						
+						#@<< create self.outputFile >>
+						#@+node:2::<< create self.outputFile >>
+						#@+body
+						try:
+							self.outputFileName = self.targetFileName + ".tmp"
+							self.outputFile = open(self.outputFileName,'wb')
+							if self.outputFile == None:
+								self.writeError("can not open " + self.outputFileName)
+						except:
+							es("exception opening:" + self.outputFileName)
+							es_exception()
+							self.outputFile = None
+						
+						#@-body
+						#@-node:2::<< create self.outputFile >>
+
+						if self.outputFile:
+							
+							#@<< write the @file node >>
+							#@+node:3::<< write the @file node >>
+							#@+body
+							if v.isAtSilentFileNode():
+								self.silentWrite(v)
+							elif v.isAtRawFileNode():
+								self.rawWrite(v)
+							elif v.isAtNoSentinelsFileNode():
+								self.write(v,nosentinels=true)
+							elif v.isAtFileNode():
+								self.write(v)
+							else: assert(0)
+							
+							writtenFiles = true
+							
+							#@-body
+							#@-node:3::<< write the @file node >>
+
+				v = v.nodeAfterTree()
+			elif v.isAtIgnoreNode():
+				v = v.nodeAfterTree()
+			else:
+				v = v.threadNext()
+		
+		if writtenFiles > 0:
+			es("finished")
+		else:
+			es("no missing @file node in the selected tree")
+	#@-body
+	#@-node:10::atFile.writeMissing
+	#@+node:11::os, onl, etc. (leoAtFile)
 	#@+body
 	def oblank(self):
 		self.os(' ')
@@ -2155,8 +2870,8 @@ class atFile:
 	def otabs(self,n):
 		self.os('\t' * abs(n))
 	#@-body
-	#@-node:1::os, onl, etc. (leoAtFile)
-	#@+node:2::putBodyPart (removes trailing lines)
+	#@-node:11::os, onl, etc. (leoAtFile)
+	#@+node:12::putBodyPart (removes trailing lines)
 	#@+body
 	#@+at
 	#  We generate the body part only if it contains something besides 
@@ -2277,8 +2992,8 @@ class atFile:
 
 		self.putSentinel("@-body")
 	#@-body
-	#@-node:2::putBodyPart (removes trailing lines)
-	#@+node:3::putCodePart & allies
+	#@-node:12::putBodyPart (removes trailing lines)
+	#@+node:13::putCodePart & allies
 	#@+body
 	#@+at
 	#  This method expands a code part, terminated by any at-directive except 
@@ -2594,8 +3309,8 @@ class atFile:
 		return i,newlineSeen
 	#@-body
 	#@-node:7::putRef
-	#@-node:3::putCodePart & allies
-	#@+node:4::putDirective  (handles @delims)
+	#@-node:13::putCodePart & allies
+	#@+node:14::putDirective  (handles @delims)
 	#@+body
 	# This method outputs s, a directive or reference, in a sentinel.
 	
@@ -2639,30 +3354,8 @@ class atFile:
 		i = skip_line(s,k)
 		return i
 	#@-body
-	#@-node:4::putDirective  (handles @delims)
-	#@+node:5::putEmptyDirective (Dave Hein)
-	#@+body
-	# 14-SEP-2002 DTHEIN
-	# added for use by putBodyPart()
-	
-	# This method outputs the directive without the parameter text
-	def putEmptyDirective(self,s,i):
-	
-		assert(i < len(s) and s[i] == '@')
-		
-		endOfLine = s.find('\n',i)
-		# 21-SEP-2002 DTHEIN: if no '\n' then just use line length
-		if endOfLine == -1:
-			endOfLine = len(s)
-		token = s[i:endOfLine].split()
-		directive = token[0]
-		self.putSentinel("@" + directive)
-	
-		i = skip_line(s,i)
-		return i
-	#@-body
-	#@-node:5::putEmptyDirective (Dave Hein)
-	#@+node:6::putDoc
+	#@-node:14::putDirective  (handles @delims)
+	#@+node:15::putDoc
 	#@+body
 	#@+at
 	#  This method outputs a doc section terminated by @code or end-of-text.  
@@ -2691,8 +3384,8 @@ class atFile:
 		self.putSentinel("@-" + tag)
 		return j
 	#@-body
-	#@-node:6::putDoc
-	#@+node:7::putDocPart
+	#@-node:15::putDoc
+	#@+node:16::putDocPart
 	#@+body
 	# Puts a comment part in comments.
 	# Note: this routine is _never_ called in cweb mode,
@@ -2763,8 +3456,30 @@ class atFile:
 			self.os(self.endSentinelComment)
 			self.onl() # Note: no trailing whitespace.
 	#@-body
-	#@-node:7::putDocPart
-	#@+node:8::putIndent
+	#@-node:16::putDocPart
+	#@+node:17::putEmptyDirective (Dave Hein)
+	#@+body
+	# 14-SEP-2002 DTHEIN
+	# added for use by putBodyPart()
+	
+	# This method outputs the directive without the parameter text
+	def putEmptyDirective(self,s,i):
+	
+		assert(i < len(s) and s[i] == '@')
+		
+		endOfLine = s.find('\n',i)
+		# 21-SEP-2002 DTHEIN: if no '\n' then just use line length
+		if endOfLine == -1:
+			endOfLine = len(s)
+		token = s[i:endOfLine].split()
+		directive = token[0]
+		self.putSentinel("@" + directive)
+	
+		i = skip_line(s,i)
+		return i
+	#@-body
+	#@-node:17::putEmptyDirective (Dave Hein)
+	#@+node:18::putIndent
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 	
@@ -2780,625 +3495,7 @@ class atFile:
 		else:
 			self.oblanks(n)
 	#@-body
-	#@-node:8::putIndent
-	#@+node:9::atFile.checkForLeoCustomize
-	#@+body
-	def checkForLeoCustomize (self,v=None):
-	
-		import leoDialog
-		d = leoDialog.leoDialog()
-		if v:
-			if v.atFileNodeName() == "customizeLeo.py":
-				d.askOk("Security Alert!",
-					"@ignore not in effect for @node customizeLeo.py!")
-			return None
-		else:
-			fn = os.path.basename(self.targetFileName)
-			if fn == "customizeLeo.py":
-				result = d.askYesNo("Security Alert!",
-					"You are about to create or change customizeLeo.py.\n" +
-					"Are you sure you trust the code in this file?")
-				if result!="yes":
-					es("not written: customizeLeo.py")
-					return false
-			return true
-	#@-body
-	#@-node:9::atFile.checkForLeoCustomize
-	#@+node:10::atFile.closeWriteFile
-	#@+body
-	def closeWriteFile (self):
-		
-		if self.outputFile:
-			if self.suppress_newlines and self.newline_pending:
-				self.newline_pending = false
-				self.onl() # Make sure file ends with a newline.
-			self.outputFile.flush()
-			self.outputFile.close()
-			self.outputFile = None
-	
-	#@-body
-	#@-node:10::atFile.closeWriteFile
-	#@+node:11::atFile.handleWriteException
-	#@+body
-	def handleWriteException (self,root=None):
-		
-		es("exception writing:" + self.targetFileName)
-		es_exception()
-		
-		if self.outputFile:
-			self.outputFile.flush()
-			self.outputFile.close()
-			self.outputFile = None
-		
-		if self.outputFileName != None:
-			try: # Just delete the temp file.
-				os.remove(self.outputFileName)
-			except:
-				es("exception deleting:" + self.outputFileName)
-				es_exception()
-	
-		if root:
-			# Make sure we try to rewrite this file.
-			root.setOrphan()
-			root.setDirty()
-	#@-body
-	#@-node:11::atFile.handleWriteException
-	#@+node:12::atFile.openWriteFile (assert)
-	#@+body
-	# Open files.  Set root.orphan and root.dirty flags and return on errors.
-	
-	def openWriteFile (self,root):
-	
-		try:
-			self.scanAllDirectives(root)
-			valid = self.errors == 0
-		except:
-			es("exception in atFile.scanAllDirectives")
-			es_exception()
-			valid = false
-		
-		if valid:
-			try:
-				fn = self.targetFileName
-				self.shortFileName = fn # name to use in status messages.
-				self.targetFileName = os.path.join(self.default_directory,fn)
-				self.targetFileName = os.path.normpath(self.targetFileName)
-				path = os.path.dirname(self.targetFileName)
-				if path and len(path) > 0:
-					valid = os.path.exists(path)
-					if not valid:
-						self.writeError("path does not exist: " + path)
-				else:
-					valid = false
-			except:
-				es("exception creating path:" + fn)
-				es_exception()
-				valid = false
-		
-		if valid:
-			if os.path.exists(self.targetFileName):
-				try:
-					read_only = not os.access(self.targetFileName,os.W_OK)
-					if read_only:
-						es("read only: " + self.targetFileName)
-						valid = false
-				except:
-					pass # os.access() may not exist on all platforms.
-			
-		if valid:
-			try:
-				self.outputFileName = self.targetFileName + ".tmp"
-				self.outputFile = open(self.outputFileName,'wb')
-				valid = self.outputFile != None
-				if not valid:
-					self.writeError("can not open " + self.outputFileName)
-			except:
-				es("exception opening:" + self.outputFileName)
-				es_exception()
-				valid = false
-		
-		if not valid:
-			root.setOrphan()
-			root.setDirty()
-		
-		return valid
-	
-	#@-body
-	#@-node:12::atFile.openWriteFile (assert)
-	#@+node:13::atFile.replaceTargetFileIfDifferent
-	#@+body
-	def replaceTargetFileIfDifferent (self):
-		
-		assert(self.outputFile == None)
-		
-		if os.path.exists(self.targetFileName):
-			if filecmp.cmp(self.outputFileName,self.targetFileName):
-				
-				#@<< delete the output file >>
-				#@+node:1::<< delete the output file >>
-				#@+body
-				try: # Just delete the temp file.
-					os.remove(self.outputFileName)
-				except:
-					es("exception deleting:" + self.outputFileName)
-					es_exception()
-				
-				es("unchanged: " + self.shortFileName)
-				#@-body
-				#@-node:1::<< delete the output file >>
-
-			else:
-				if self.checkForLeoCustomize() == false:
-					return
-				
-				#@<< replace the target file with the output file >>
-				#@+node:2::<< replace the target file with the output file >>
-				#@+body
-				try:
-					# 10/6/02: retain the access mode of the previous file,
-					# removing any setuid, setgid, and sticky bits.
-					mode = (os.stat(self.targetFileName))[0] & 0777
-				except:
-					mode = None
-				
-				try: # Replace target file with temp file.
-					os.remove(self.targetFileName)
-					utils_rename(self.outputFileName,self.targetFileName)
-					if mode: # 10/3/02: retain the access mode of the previous file.
-						os.chmod(self.targetFileName,mode)
-					es("writing: " + self.shortFileName)
-				except:
-					self.writeError("exception removing and renaming:" + self.outputFileName +
-						" to " + self.targetFileName)
-					es_exception()
-				#@-body
-				#@-node:2::<< replace the target file with the output file >>
-
-				
-		elif self.checkForLeoCustomize() == false:
-			return
-		else:
-			
-			#@<< rename the output file to be the target file >>
-			#@+node:3::<< rename the output file to be the target file >>
-			#@+body
-			try:
-				utils_rename(self.outputFileName,self.targetFileName)
-				es("creating: " + self.targetFileName)
-			except:
-				self.writeError("exception renaming:" + self.outputFileName +
-					" to " + self.targetFileName)
-				es_exception()
-			#@-body
-			#@-node:3::<< rename the output file to be the target file >>
-
-	
-	#@-body
-	#@-node:13::atFile.replaceTargetFileIfDifferent
-	#@+node:14::atFile.write
-	#@+body
-	# This is the entry point to the write code.  root should be an @file vnode.
-	
-	def write(self,root,nosentinels=false):
-	
-		c = self.commands
-		self.sentinels = not nosentinels
-		
-		#@<< initialize >>
-		#@+node:1::<< initialize >>
-		#@+body
-		self.errors = 0 # 9/26/02
-		c.setIvarsFromPrefs()
-		self.root = root
-		self.raw = false
-		c.endEditing() # Capture the current headline.
-		
-		#@-body
-		#@-node:1::<< initialize >>
-
-		try:
-			
-			#@<< open the file; return on error >>
-			#@+node:2::<< open the file; return on error >>
-			#@+body
-			if nosentinels:
-				self.targetFileName = root.atNoSentinelsFileNodeName()
-			else:
-				self.targetFileName = root.atFileNodeName()
-			ok = self.openWriteFile(root)
-			if not ok: return
-			#@-body
-			#@-node:2::<< open the file; return on error >>
-
-			
-			#@<< write then entire @file tree >>
-			#@+node:3::<< write then entire @file tree >>
-			#@+body
-			# unvisited nodes will be orphans, except in cweb trees.
-			root.clearVisitedInTree()
-			next = root.nodeAfterTree()
-			self.updateCloneIndices(root, next)
-			
-			
-			#@<< put all @first lines in root >>
-			#@+node:1::<< put all @first lines in root >>
-			#@+body
-			#@+at
-			#  Write any @first lines.  These lines are also converted to 
-			# @verbatim lines, so the read logic simply ignores lines 
-			# preceding the @+leo sentinel.
-
-			#@-at
-			#@@c
-
-			s = root.t.bodyString
-			tag = "@first"
-			i = 0
-			while match(s,i,tag):
-				i += len(tag)
-				i = skip_ws(s,i)
-				j = i
-				i = skip_to_end_of_line(s,i)
-				# 21-SEP-2002 DTHEIN: write @first line, whether empty or not
-				line = s[j:i]
-				self.os(line) ; self.onl()
-				i = skip_nl(s,i)
-			#@-body
-			#@-node:1::<< put all @first lines in root >>
-
-			self.putOpenLeoSentinel("@+leo")
-			
-			#@<< put optional @comment sentinel lines >>
-			#@+node:2::<< put optional @comment sentinel lines >>
-			#@+body
-			s2 = app().config.output_initial_comment
-			if s2:
-				lines = string.split(s2,"\\n")
-				for line in lines:
-					line = line.replace("@date",time.asctime())
-					if len(line)> 0:
-						self.putSentinel("@comment " + line)
-			#@-body
-			#@-node:2::<< put optional @comment sentinel lines >>
-
-			
-			self.putOpenNodeSentinel(root)
-			self.putBodyPart(root)
-			self.putCloseNodeSentinel(root)
-			
-			root.setVisited()
-			self.putSentinel("@-leo")
-			
-			#@<< put all @last lines in root >>
-			#@+node:3::<< put all @last lines in root >>
-			#@+body
-			#@+at
-			#  Write any @last lines.  These lines are also converted to 
-			# @verbatim lines, so the read logic simply ignores lines 
-			# following the @-leo sentinel.
-
-			#@-at
-			#@@c
-
-			tag = "@last"
-			lines = string.split(root.t.bodyString,'\n')
-			n = len(lines) ; j = k = n - 1
-			# Don't write an empty last line.
-			if j >= 0 and len(lines[j])==0:
-				j = k = n - 2
-			# Scan backwards for @last directives.
-			while j >= 0:
-				line = lines[j]
-				if match(line,0,tag): j -= 1
-				else: break
-			# Write the @last lines.
-			for line in lines[j+1:k+1]:
-				i = len(tag) ; i = skip_ws(line,i)
-				self.os(line[i:]) ; self.onl()
-			#@-body
-			#@-node:3::<< put all @last lines in root >>
-			#@-body
-			#@-node:3::<< write then entire @file tree >>
-
-			self.closeWriteFile()
-			
-			#@<< warn about @ignored and orphans >>
-			#@+node:4::<< Warn about @ignored and orphans  >>
-			#@+body
-			# 10/26/02: Always warn, even when language=="cweb"
-			
-			next = root.nodeAfterTree()
-			v = root
-			while v and v != next:
-				if not v.isVisited():
-					self.writeError("Orphan node:  " + v.headString())
-				if v.isAtIgnoreNode():
-					self.writeError("@ignore node: " + v.headString())
-				v = v.threadNext()
-			
-			#@-body
-			#@-node:4::<< Warn about @ignored and orphans  >>
-
-			
-			#@<< finish writing >>
-			#@+node:5::<< finish writing >>
-			#@+body
-			#@+at
-			#  We set the orphan and dirty flags if there are problems writing 
-			# the file to force Commands::write_LEO_file to write the tree to 
-			# the .leo file.
-
-			#@-at
-			#@@c
-
-			if self.errors > 0 or self.root.isOrphan():
-				root.setOrphan()
-				root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
-				os.remove(self.outputFileName) # Delete the temp file.
-				es("Not written: " + self.outputFileName)
-			else:
-				root.clearOrphan()
-				root.clearDirty()
-				self.replaceTargetFileIfDifferent()
-			#@-body
-			#@-node:5::<< finish writing >>
-
-		except:
-			self.handleWriteException()
-	#@-body
-	#@-node:14::atFile.write
-	#@+node:15::atFile.rawWrite
-	#@+body
-	def rawWrite(self,root):
-	
-		# trace(`root`)
-		c = self.commands ; self.root = root
-		self.errors = 0
-		c.endEditing() # Capture the current headline.
-		try:
-			self.targetFileName = root.atRawFileNodeName()
-			ok = self.openWriteFile(root)
-			if not ok: return
-			next = root.nodeAfterTree()
-			
-			#@<< write root's tree >>
-			#@+node:1::<< write root's tree >>
-			#@+body
-			next = root.nodeAfterTree()
-			self.updateCloneIndices(root, next)
-			
-			
-			#@<< put all @first lines in root >>
-			#@+node:1::<< put all @first lines in root >>
-			#@+body
-			#@+at
-			#  Write any @first lines.  These lines are also converted to 
-			# @verbatim lines, so the read logic simply ignores lines 
-			# preceding the @+leo sentinel.
-
-			#@-at
-			#@@c
-
-			s = root.t.bodyString
-			tag = "@first"
-			i = 0
-			while match(s,i,tag):
-				i += len(tag)
-				i = skip_ws(s,i)
-				j = i
-				i = skip_to_end_of_line(s,i)
-				# 21-SEP-2002 DTHEIN: write @first line, whether empty or not
-				line = s[j:i]
-				self.os(line) ; self.onl()
-				i = skip_nl(s,i)
-			#@-body
-			#@-node:1::<< put all @first lines in root >>
-
-			self.putOpenLeoSentinel("@+leo")
-			
-			#@<< put optional @comment sentinel lines >>
-			#@+node:2::<< put optional @comment sentinel lines >>
-			#@+body
-			s2 = app().config.output_initial_comment
-			if s2:
-				lines = string.split(s2,"\\n")
-				for line in lines:
-					line = line.replace("@date",time.asctime())
-					if len(line)> 0:
-						self.putSentinel("@comment " + line)
-			
-			#@-body
-			#@-node:2::<< put optional @comment sentinel lines >>
-
-			
-			v = root
-			while v and v != next:
-				
-				#@<< Write v's node >>
-				#@+node:3::<< Write v's node >>
-				#@+body
-				self.putOpenNodeSentinel(v)
-					
-				s = v.bodyString()
-				if s and len(s) > 0:
-					self.putSentinel("@+body")
-					if self.newline_pending:
-						self.newline_pending = false
-						self.onl()
-					self.outputFile.write(s)
-					self.putSentinel("@-body")
-					
-				self.putCloseNodeSentinel(v)
-				
-				#@-body
-				#@-node:3::<< Write v's node >>
-
-				v = v.threadNext()
-			
-			self.putSentinel("@-leo")
-			
-			#@<< put all @last lines in root >>
-			#@+node:4::<< put all @last lines in root >>
-			#@+body
-			#@+at
-			#  Write any @last lines.  These lines are also converted to 
-			# @verbatim lines, so the read logic simply ignores lines 
-			# following the @-leo sentinel.
-
-			#@-at
-			#@@c
-
-			tag = "@last"
-			lines = string.split(root.t.bodyString,'\n')
-			n = len(lines) ; j = k = n - 1
-			# Don't write an empty last line.
-			if j >= 0 and len(lines[j])==0:
-				j = k = n - 2
-			# Scan backwards for @last directives.
-			while j >= 0:
-				line = lines[j]
-				if match(line,0,tag): j -= 1
-				else: break
-			# Write the @last lines.
-			for line in lines[j+1:k+1]:
-				i = len(tag) ; i = skip_ws(line,i)
-				self.os(line[i:]) ; self.onl()
-			#@-body
-			#@-node:4::<< put all @last lines in root >>
-			#@-body
-			#@-node:1::<< write root's tree >>
-
-			self.closeWriteFile()
-			self.replaceTargetFileIfDifferent()
-			root.clearOrphan() ; root.clearDirty()
-		except:
-			self.handleWriteException(root)
-	#@-body
-	#@-node:15::atFile.rawWrite
-	#@+node:16::atFile.silentWrite
-	#@+body
-	def silentWrite(self,root):
-	
-		# trace(`root`)
-		c = self.commands ; self.root = root
-		self.errors = 0
-		c.endEditing() # Capture the current headline.
-		try:
-			self.targetFileName = root.atSilentFileNodeName()
-			ok = self.openWriteFile(root)
-			if not ok: return
-			next = root.nodeAfterTree()
-			v = root
-			while v and v != next:
-				
-				#@<< Write v's headline if it starts with @@ >>
-				#@+node:1::<< Write v's headline if it starts with @@ >>
-				#@+body
-				s = v.headString()
-				if match(s,0,"@@"):
-					s = s[2:]
-					if s and len(s) > 0:
-						self.outputFile.write(s)
-				
-				#@-body
-				#@-node:1::<< Write v's headline if it starts with @@ >>
-
-				
-				#@<< Write v's body >>
-				#@+node:2::<< Write v's body >>
-				#@+body
-				s = v.bodyString()
-				if s and len(s) > 0:
-					self.outputFile.write(s)
-				#@-body
-				#@-node:2::<< Write v's body >>
-
-				v = v.threadNext()
-			self.closeWriteFile()
-			self.replaceTargetFileIfDifferent()
-			root.clearOrphan() ; root.clearDirty()
-		except:
-			self.handleWriteException(root)
-	#@-body
-	#@-node:16::atFile.silentWrite
-	#@+node:17::atFile.writeAll
-	#@+body
-	#@+at
-	#  This method scans all vnodes, calling write for every @file node 
-	# found.  If partialFlag is true we write all @file nodes in the selected 
-	# outline.  Otherwise we write @file nodes in the entire outline.
-
-	#@-at
-	#@@c
-	def writeAll(self,v,partialFlag):
-	
-		self.initIvars()
-		writtenFiles = [] # List of files that might be written again.
-		# Kludge: look at whole tree if forceFlag is false;
-		if partialFlag: after = v.nodeAfterTree()
-		else: after = None
-		
-		#@<< Clear all orphan bits >>
-		#@+node:1::<< Clear all orphan bits >>
-		#@+body
-		#@+at
-		#  We must clear these bits because they may have been set on a 
-		# previous write.  Calls to atFile::write may set the orphan bits in 
-		# @file nodes.  If so, write_LEO_file will write the entire @file tree.
-
-		#@-at
-		#@@c
-
-		v2 = v
-		while v2 and v2 != after:
-			v2.clearOrphan()
-			v2 = v2.threadNext()
-		#@-body
-		#@-node:1::<< Clear all orphan bits >>
-
-		while v and v != after:
-			# trace(`v`)
-			if v.isAnyAtFileNode() or v.isAtIgnoreNode():
-				
-				#@<< handle v's tree >>
-				#@+node:2::<< handle v's tree >>
-				#@+body
-				# This code is a little tricky: @ignore not recognised in @silentfile nodes.
-				if v.isDirty() or partialFlag or v.t in writtenFiles:
-					if v.isAtSilentFileNode():
-						self.silentWrite(v)
-					elif v.isAtIgnoreNode():
-						pass
-					elif v.isAtRawFileNode():
-						self.rawWrite(v)
-					elif v.isAtNoSentinelsFileNode():
-						self.write(v,nosentinels=true)
-					elif v.isAtFileNode():
-						self.write(v)
-				
-					if not v.isAtIgnoreNode():
-						writtenFiles.append(v.t)
-				
-				elif v.isAtFileNode():
-					self.checkForLeoCustomize(v)
-					
-				
-				
-				
-				#@-body
-				#@-node:2::<< handle v's tree >>
-
-				v = v.nodeAfterTree()
-			else:
-				v = v.threadNext()
-		if partialFlag: # This is the Write @file Nodes command.
-			if len(writtenFiles) > 0:
-				es("finished")
-			else:
-				es("no @file or similar nodes in the selected tree")
-	
-	#@-body
-	#@-node:17::atFile.writeAll
+	#@-node:18::putIndent
 	#@-node:6::Writing
 	#@+node:7::Testing
 	#@+node:1::scanAll

@@ -785,17 +785,31 @@ class vnode:
 	
 	#@-body
 	#@-node:3::isAt/../Node
-	#@+node:4::isAnyAtFileNode
+	#@+node:4::isAnyAtFileNode & isAnyAtFileNodeName
 	#@+body
 	def isAnyAtFileNode (self):
-		
+	
 		return (
 			self.isAtFileNode() or
 			self.isAtNoSentinelsFileNode() or
 			self.isAtRawFileNode() or
 			self.isAtSilentFileNode())
+			
+	def anyAtFileNodeName (self):
+	
+		if self.isAtFileNode():
+			return self.atFileNodeName()
+		elif self.isAtNoSentinelsFileNode():
+			return self.atNoSentinelsFileNodeName()
+		elif self.isAtRawFileNode():
+			return self.atRawFileNodeName()
+		elif self.isAtSilentFileNode():
+			return self.atSilentFileNodeName()
+		else:
+			return ""
+	
 	#@-body
-	#@-node:4::isAnyAtFileNode
+	#@-node:4::isAnyAtFileNode & isAnyAtFileNodeName
 	#@+node:5::isAtIgnoreNode
 	#@+body
 	#@+at

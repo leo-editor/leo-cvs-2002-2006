@@ -880,6 +880,8 @@ class LeoFrame:
 		table = (
 			("&Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
 			("Read @file &Nodes",None,self.OnReadAtFileNodes),
+			("-",None,None),
+			("Write &Missing @file Nodes",None,self.OnWriteMissingAtFileNodes),
 			("Write &Outline Only",None,self.OnWriteOutlineOnly),
 			("&Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes))
 		
@@ -1974,22 +1976,30 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:2::OnReadAtFileNodes
-	#@+node:3::OnWriteOutlineOnly
+	#@+node:3::OnWriteMissingAtFileNodes
+	#@+body
+	def OnWriteMissingAtFileNodes (self,event=None):
+	
+		self.commands.fileCommands.writeMissingAtFileNodes()
+	
+	#@-body
+	#@-node:3::OnWriteMissingAtFileNodes
+	#@+node:4::OnWriteOutlineOnly
 	#@+body
 	def OnWriteOutlineOnly (self,event=None):
 	
 		self.commands.fileCommands.writeOutlineOnly()
 	
 	#@-body
-	#@-node:3::OnWriteOutlineOnly
-	#@+node:4::OnWriteAtFileNodes
+	#@-node:4::OnWriteOutlineOnly
+	#@+node:5::OnWriteAtFileNodes
 	#@+body
 	def OnWriteAtFileNodes (self,event=None):
 	
 		self.commands.fileCommands.writeAtFileNodes()
 	
 	#@-body
-	#@-node:4::OnWriteAtFileNodes
+	#@-node:5::OnWriteAtFileNodes
 	#@-node:3::Read/Write submenu
 	#@+node:4::Tangle submenu
 	#@+node:1::OnTangleAll
