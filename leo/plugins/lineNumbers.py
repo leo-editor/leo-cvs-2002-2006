@@ -15,17 +15,40 @@
 #@-at
 #@@c
 
+#@<< imports >>
+#@+node:ekr.20050105150253:<< imports >>
 import leoGlobals as g
 import leoPlugins
 
 import leoAtFile
 import re
+#@nonl
+#@-node:ekr.20050105150253:<< imports >>
+#@nl
+__version__ = "0.3"
+#@<< version history >>
+#@+node:ekr.20050105150253.1:<< version history >>
+#@@killcolor
+#@+at
+# 
+# 0.1 Mark Ng
+#     - Original code
+# 0.2 EKR:
+#     - Convert to new coding conventions.
+# 0.3 EKR:
+#     - Changed leoAtFile.newDerivedFile to leoAtFile.atFile when overriding 
+# methods.
+#       This is required because of changes in 4.3 to Leo's core code.
+#@-at
+#@nonl
+#@-node:ekr.20050105150253.1:<< version history >>
+#@nl
 
 linere = re.compile("^#line 1 \".*\"$")
 
 #@+others
 #@+node:ekr.20040419105219.1:writing derived files
-oldOpenNodeSentinel = leoAtFile.newDerivedFile.putOpenNodeSentinel
+oldOpenNodeSentinel = leoAtFile.atFile.putOpenNodeSentinel
 
 def putLineNumberDirective(self,v,inAtAll=False,inAtOthers=False,middle=False):
 
@@ -36,11 +59,11 @@ def putLineNumberDirective(self,v,inAtAll=False,inAtOthers=False,middle=False):
         self.putSentinel(line)
         
 g.funcToMethod(putLineNumberDirective,	
-    leoAtFile.newDerivedFile,"putOpenNodeSentinel")
+    leoAtFile.atFile,"putOpenNodeSentinel")
 #@nonl
 #@-node:ekr.20040419105219.1:writing derived files
 #@+node:ekr.20040419105219.2:reading derived files
-readNormalLine = leoAtFile.newDerivedFile.readNormalLine
+readNormalLine = leoAtFile.atFile.readNormalLine
 
 def skipLineNumberDirective(self, s, i):
 
@@ -50,17 +73,12 @@ def skipLineNumberDirective(self, s, i):
         readNormalLine(self,s,i)
 
 g.funcToMethod(skipLineNumberDirective,
-    leoAtFile.newDerivedFile,"readNormalLine")
+    leoAtFile.atFile,"readNormalLine")
 #@nonl
 #@-node:ekr.20040419105219.2:reading derived files
 #@-others
 
 if not g.app.unitTesting:
-
-    __version__ = "0.2"
-        # 0.1: Mark Ng
-        # 0.2: EKR: Convert to new coding conventions.
-    
     g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040419105219:@thin lineNumbers.py

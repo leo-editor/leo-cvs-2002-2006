@@ -30,7 +30,7 @@ Warnings:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.64"
+__version__ = "0.65"
 #@<< version history >>
 #@+node:ekr.20041103051117:<< version history >>
 #@@killcolor
@@ -74,6 +74,10 @@ __version__ = "0.64"
 # .63 EKR: Added long docstring.
 # 
 # .64 fixed cloneWalk and PDF Convertor.
+# 
+# .65 EKR: added new keyword args to newGetLeoFile and newOpen.
+#     - This is needed because of changes to the corresponding method's in 
+# Leo's core.
 #@-at
 #@nonl
 #@-node:ekr.20041103051117:<< version history >>
@@ -122,6 +126,10 @@ pbodies = {}
 
 #@-node:mork.20040926105355.2:<< globals >>
 #@nl
+
+# Solve problems with string.atoi...
+import string
+string.atoi = int
 
 #@+others
 #@+node:mork.20040927092626:class Chapter
@@ -327,7 +335,7 @@ def constructTree( frame , notebook, name ):
     canvas = frame.createCanvas( None )
     frame.canvas =  canvas
     frame.tree = leoTkinterTree.leoTkinterTree( frame.c ,frame, frame.canvas)
-    frame.tree.setTreeColorsFromConfig()
+    frame.tree.setColorFromConfig()
     indx = notebook.index( notebook.pagenames()[ -1 ] )
     tab = notebook.tab( indx )
     tnum = str( len( notebook.pagenames() ) ) 
@@ -860,8 +868,9 @@ def walkChapters( c = None, ignorelist = [], chapname = False):
 #@+node:mork.20040930091035.1:opening
 #@+others
 #@+node:mork.20040926105355.28:newGetLeoFile
-olGetLeoFile =  leoFileCommands.fileCommands.getLeoFile
-def newGetLeoFile( self, fileName, atFileNodesFlag = True ):
+oldGetLeoFile =  leoFileCommands.fileCommands.getLeoFile
+
+def newGetLeoFile(self, fileName,readAtFileNodesFlag=True ):
     if iscStringIO:
         def dontSetReadOnly( self, name, value ):
             if name == 'read_only': return
@@ -870,16 +879,20 @@ def newGetLeoFile( self, fileName, atFileNodesFlag = True ):
                 self.__dict__[ name ] = value
         self.read_only = False
         self.__class__.__setattr__ = dontSetReadOnly
-    rt = olGetLeoFile( self, fileName, atFileNodesFlag )
+    rt = oldGetLeoFile(self,fileName,readAtFileNodesFlag)
     if iscStringIO:
         del self.__class__.__setattr__       
     return rt
+#@nonl
 #@-node:mork.20040926105355.28:newGetLeoFile
 #@+node:mork.20040926105355.29:newOpen
-olOpen = leoFileCommands.fileCommands.open
-def newOpen( self,file,fileName ):
+oldOpen = leoFileCommands.fileCommands.open
+
+def newOpen( self,file,fileName,readAtFileNodesFlag=True):
+
     global iscStringIO
-    c = self.c 
+    c = self.c
+    
     if zipfile.is_zipfile( fileName ):
         iscStringIO = True
         chapters = openChaptersFile( fileName )
@@ -888,7 +901,9 @@ def newOpen( self,file,fileName ):
         g.es( "Finished Reading Chapters", color = 'blue' )
         iscStringIO = False
         return True
-    return olOpen( self, file, fileName )    
+
+    return oldOpen(self,file,fileName,readAtFileNodesFlag)
+#@nonl
 #@-node:mork.20040926105355.29:newOpen
 #@+node:mork.20040926105355.9:openChaptersFile
 def openChaptersFile( fileName ):

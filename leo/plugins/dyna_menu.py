@@ -71,7 +71,7 @@ except ImportError:
 
 k = g.os_path_split(g.app.loadDir)[0]
 #this should fix the slashes and lower cases' it on win9x
-k = g.os_path_norm(g.os_path_abspath(g.os_path_join(k, "plugins")))
+k = g.os_path_normpath(g.os_path_abspath(g.os_path_join(k, "plugins")))
 
 #path being unicode can affect less than py2.3
 if sys.version_info[:2] < (2, 3):
@@ -885,7 +885,7 @@ def dynaB_fileinfo(c= None, fname= None):
 
     def normit(fn): 
         #seems redundant till you get a weird join it fixes
-        return g.os_path_norm(fn)
+        return g.os_path_normpath(fn)
 
     if fname is None:
         fname = c.frame.body.getSelectedText()
