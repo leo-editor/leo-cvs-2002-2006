@@ -545,10 +545,14 @@ class Commands:
 			tail = c.body.get(j,"end")
 		else: # Convert the entire text.
 			i = "1.0" ; endSel = j = "end" ; head = tail = ""
+			endSel = c.body.index(j + "- 1 chars")
 			trailingNewline = ""
-		lines = c.body.get(i,endSel)
-		lines = string.split(lines, '\n')
-		lines[-1] += trailingNewline # DTHEIN: add newline if needed
+		if i == endSel:
+			head = tail = None ; lines = []
+		else:
+			lines = c.body.get(i,endSel)
+			lines = string.split(lines, '\n')
+			lines[-1] += trailingNewline # DTHEIN: add newline if needed
 		return head, lines, tail
 
 	#@-body
