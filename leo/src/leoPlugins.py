@@ -20,6 +20,7 @@ After startup:
 #@@pagewidth 80
 
 import leoGlobals as g
+import glob
 
 handlers = {}
 loadedModules = {} # Keys are module names, values are modules.
@@ -128,10 +129,9 @@ def isLoaded (name):
 #@nonl
 #@-node:ekr.20041001160216:isLoaded
 #@+node:ekr.20031218072017.3440:loadHandlers
-def loadHandlers(loadAllFlag=False):
+def loadHandlers():
 
     """Load all enabled plugins from the plugins directory"""
-    import glob
 
     plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
     manager_path = g.os_path_join(plugins_path,"pluginsManager.txt")
@@ -139,35 +139,42 @@ def loadHandlers(loadAllFlag=False):
     files = glob.glob(g.os_path_join(plugins_path,"*.py"))
     files = [g.os_path_abspath(theFile) for theFile in files]
 
-    if loadAllFlag:
-        files.sort()
-        enabled_files = files
-    else:
-        #@        << set enabled_files from pluginsManager.txt >>
-        #@+node:ekr.20031218072017.3441:<< set enabled_files from pluginsManager.txt >>
-        if not g.os_path_exists(manager_path):
-            return
+    #@    << set enabled_files from pluginsManager.txt >>
+    #@+node:ekr.20031218072017.3441:<< set enabled_files from pluginsManager.txt >>
+    if not g.os_path_exists(manager_path):
+        return
         
-        enabled_files = []
-        try:
-            theFile = open(manager_path)
-            lines = theFile.readlines()
-            for s in lines:
-                s = s.strip()
-                if s and not g.match(s,0,"#"):
-                    path = g.os_path_join(plugins_path,s)
-                    if path not in enabled_files:
+    # New in 4.3: The first reference to a plugin in pluginsManager.txt controls.
+    enabled_files = []
+    disabled_files = []
+    try:
+        theFile = open(manager_path)
+        lines = theFile.readlines()
+        for s in lines:
+            s = s.strip()
+            if s:
+                if g.match(s,0,"#"):
+                    s = s[1:].strip()
+                    # Kludge: ignore comment lines containing a blank or not ending in '.py'.
+                    if s and s.find(' ') == -1 and s[-3:] == '.py':
+                        path = g.os_path_abspath(g.os_path_join(plugins_path,s))
+                        if path not in enabled_files and path not in disabled_files:
+                            # print 'disabled',path
+                            disabled_files.append(path)
+                else:
+                    path = g.os_path_abspath(g.os_path_join(plugins_path,s))
+                    if path not in enabled_files and path not in disabled_files:
+                        # print 'enbled',path
                         enabled_files.append(path)
-            theFile.close()
-        except IOError:
-            g.es("Can not open: " + manager_path)
-            # Don't import leoTest initially.  It causes problems.
-            import leoTest ; leoTest.fail()
-            return
-        #@nonl
-        #@-node:ekr.20031218072017.3441:<< set enabled_files from pluginsManager.txt >>
-        #@nl
-        enabled_files = [g.os_path_abspath(theFile) for theFile in enabled_files]
+        theFile.close()
+    except IOError:
+        g.es("Can not open: " + manager_path)
+        # Don't import leoTest initially.  It causes problems.
+        import leoTest ; leoTest.fail()
+        return
+    #@nonl
+    #@-node:ekr.20031218072017.3441:<< set enabled_files from pluginsManager.txt >>
+    #@nl
     
     # Load plugins in the order they appear in the enabled_files list.
     if files and enabled_files:
@@ -176,7 +183,7 @@ def loadHandlers(loadAllFlag=False):
                 loadOnePlugin(theFile)
                 
     # Note: g.plugin_signon adds module names to g.app.loadedPlugins 
-    if g.app.loadedPlugins and not loadAllFlag:
+    if g.app.loadedPlugins:
         g.es("%d plugins loaded" % (len(g.app.loadedPlugins)), color="blue")
 #@nonl
 #@-node:ekr.20031218072017.3440:loadHandlers
