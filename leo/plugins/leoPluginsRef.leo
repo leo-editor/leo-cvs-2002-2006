@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2398" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2404" clone_windows="0"/>
 <globals body_outline_ratio="0.464712269273">
-	<global_window_position top="12" left="368" height="921" width="869"/>
+	<global_window_position top="13" left="285" height="921" width="869"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -149,12 +149,13 @@
 </v>
 <v t="edream.110403140857.7"><vh>Release notes</vh></v>
 </v>
-<v t="edream.110403140857.8" a="M"><vh>@thin color_markup.py</vh></v>
+<v t="edream.110403140857.8"><vh>@thin color_markup.py</vh></v>
 </v>
 </v>
 <v t="ekr.20040722134535"><vh>Experimental plugins</vh>
 <v t="EKR.20040609213754"><vh>@thin Configurator.py</vh></v>
 <v t="ekr.20040722142445"><vh>@thin editAttributes.py</vh></v>
+<v t="ekr.20040828122150"><vh>@thin pie_menus.py</vh></v>
 <v t="ekr.20040331153923"><vh>@thin scheduler.py</vh></v>
 <v t="ekr.20040201060959"><vh>@thin status_line.py</vh></v>
 <v t="EKR.20040517080250"><vh>http plugin</vh>
@@ -478,7 +479,6 @@
 <v t="EKR.20040517075715"><vh>External editors &amp; Open With</vh>
 <v t="EKR.20040517080049.4"><vh>@thin open_shell.py</vh></v>
 <v t="EKR.20040517075715.4"><vh>@thin open_with.py</vh></v>
-<v t="EKR.20040422094618"><vh>@thin startfile.py</vh></v>
 <v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
 <v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
 <v t="EKR.20040517075715.13"><vh>Word export</vh>
@@ -492,7 +492,7 @@
 <v t="EKR.20040517075715.1"><vh>@thin mod_tempfname.py</vh></v>
 <v t="ekr.20040331151007"><vh>@thin niceNosent.py</vh></v>
 </v>
-<v t="EKR.20040517080555"><vh>Menus</vh>
+<v t="EKR.20040517080555"><vh>Menus &amp; translations</vh>
 <v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
 <v t="EKR.20040517080555.2"><vh>@thin plugins_menu.py</vh></v>
 <v t="EKR.20040517080555.25"><vh>@thin pluginsTest.py</vh></v>
@@ -504,6 +504,7 @@
 </v>
 <v t="EKR.20040517080202.3"><vh>@thin french_fm.py</vh></v>
 <v t="EKR.20040517080555.36"><vh>@thin scripts_menu.py</vh></v>
+<v t="ekr.20040828105233"><vh>@thin chinese_menu.py</vh></v>
 </v>
 <v t="edream.110203113231.872"><vh>New kinds of nodes</vh>
 <v t="edream.110203113231.873"><vh>@thin at_folder.py</vh></v>
@@ -531,6 +532,7 @@
 </v>
 <v t="ekr.20040331071319"><vh>@thin rst2.py</vh></v>
 </v>
+<v t="ekr.20040828103325"><vh>@thin startfile.py</vh></v>
 </v>
 <v t="edream.110203113231.930"><vh>Spell Checking</vh>
 <v t="ekr.20040809165421"><vh>Read me or suffer</vh></v>
@@ -613,15 +615,15 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040517090508" a="EM"><vh>Enable plugins by changing pluginsManager.txt</vh>
-<v t="edream.120603093808" a="ETV"><vh>@thin pluginsManager.txt</vh></v>
+<v t="EKR.20040517090508" a="TV"><vh>Enable plugins by changing pluginsManager.txt</vh>
+<v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
 <v t="ekr.20040725171859"><vh>To do...</vh>
 <v t="ekr.20040809110900"><vh>Tested</vh></v>
 <v t="ekr.20040809110900.1"><vh>To be tested</vh></v>
+<v t="ekr.20040722134333.1"><vh>To do: install latest xemacs plugin</vh></v>
 <v t="ekr.20040722115324"><vh>To do: a configurable pretty printer plugin</vh></v>
-<v t="ekr.20040722134333.1" a="M"><vh>To do: install latest xemacs</vh></v>
-<v t="ekr.20040809071339"><vh>Fix bugs</vh>
+<v t="ekr.20040809071339"><vh>Fix bugs 5</vh>
 <v t="ekr.20040809071339.1"><vh>nodenavagator problems</vh>
 <v t="ekr.20040809071339.2"><vh>Report</vh></v>
 <v t="ekr.20040809071339.3"><vh>(Limit size of c.visitedList and marks list in nodenavagator)</vh>
@@ -629,46 +631,8 @@
 </v>
 </v>
 <v t="ekr.20040809105722"><vh>searchbox bug</vh></v>
-<v t="ekr.20040809105722.1"><vh>rst bug</vh></v>
-<v t="ekr.20040809071339.53"><vh>RsT plugin should say where files get written</vh></v>
+<v t="ekr.20040809105722.1"><vh>rst bugs</vh></v>
 <v t="ekr.20040809071339.7"><vh>(Fix problems with nmarks plugin)</vh></v>
-<v t="ekr.20040809071339.9"><vh>Install calltips plugin</vh>
-<v t="ekr.20040809071339.10"><vh>Request</vh></v>
-<v t="ekr.20040809071339.11"><vh>CallTips.py</vh>
-<v t="ekr.20040809071339.12"><vh>class CallTips</vh>
-<v t="ekr.20040809071339.13"><vh>__init__</vh></v>
-<v t="ekr.20040809071339.14"><vh>close</vh></v>
-<v t="ekr.20040809071339.15"><vh>_make_tk_calltip_window</vh></v>
-<v t="ekr.20040809071339.16"><vh>_remove_calltip_window</vh></v>
-<v t="ekr.20040809071339.17"><vh>paren_open_event</vh></v>
-<v t="ekr.20040809071339.18"><vh>paren_close_event</vh></v>
-<v t="ekr.20040809071339.19"><vh>check_calltip_cancel_event</vh></v>
-<v t="ekr.20040809071339.20"><vh>calltip_cancel_event</vh></v>
-<v t="ekr.20040809071339.21"><vh>get_name_at_cursor</vh></v>
-<v t="ekr.20040809071339.22"><vh>fetch_tip</vh></v>
-<v t="ekr.20040809071339.23"><vh>get_entity</vh></v>
-</v>
-<v t="ekr.20040809071339.24"><vh>_find_constructor</vh></v>
-<v t="ekr.20040809071339.25"><vh>get_arg_text</vh></v>
-<v t="ekr.20040809071339.26"><vh>t1</vh></v>
-</v>
-<v t="ekr.20040809071339.27"><vh>CallTipWindow.py</vh>
-<v t="ekr.20040809071339.28"><vh>class CallTip</vh>
-<v t="ekr.20040809071339.29"><vh>__init__</vh></v>
-<v t="ekr.20040809071339.30"><vh>showtip</vh>
-<v t="ekr.20040809071339.31"><vh>&lt;&lt; remove the border &gt;&gt;</vh></v>
-<v t="ekr.20040809071339.32"><vh>&lt;&lt; Mac-specific code &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040809071339.33"><vh>hidetip</vh></v>
-</v>
-<v t="ekr.20040809071339.34"><vh>class container (test code)</vh>
-<v t="ekr.20040809071339.35"><vh>__init__</vh></v>
-<v t="ekr.20040809071339.36"><vh>calltip_show</vh></v>
-<v t="ekr.20040809071339.37"><vh>calltip_hide</vh></v>
-</v>
-<v t="ekr.20040809071339.38"><vh>main</vh></v>
-</v>
-</v>
 <v t="ekr.20040809071339.4"><vh>Don't specify font in buttons on the Mac</vh></v>
 </v>
 </v>
@@ -7085,356 +7049,6 @@ is one simple way.
 <t tx="ekr.20040809071339.4"></t>
 <t tx="ekr.20040809071339.7"># Doesn't become active until a node is marked.
 # Node isn't necessarily visible in outine pane when selected.</t>
-<t tx="ekr.20040809071339.9"></t>
-<t tx="ekr.20040809071339.10">@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=2460535
-By: nobody
-
-See CallTipWindow.py in IDLE 1.0.2
-
-Fairly simple implementation - uses a new toplevel window without a border.
-
-Read the comments in the code for potential drawbacks on some platforms.
-
-Regards, Myles.</t>
-<t tx="ekr.20040809071339.11">"""CallTips.py - An IDLE Extension to Jog Your Memory
-
-Call Tips are floating windows which display function, class, and method
-parameter and docstring information when you type an opening parenthesis, and
-which disappear when you type a closing parenthesis.
-
-Future plans include extending the functionality to include class attributes.
-
-"""
-
-import sys
-import string
-import types
-
-import CallTipWindow
-
-import __main__
-
-@others
-</t>
-<t tx="ekr.20040809071339.12">class CallTips:
-    menudefs = [ ]
-    
-@others
-
-</t>
-<t tx="ekr.20040809071339.13">def __init__(self, editwin=None):
-
-    if editwin == None:  # subprocess and test
-        self.editwin = None
-        return
-
-    self.editwin = editwin
-    self.text = editwin.text
-    self.calltip = None
-    self._make_calltip_window = self._make_tk_calltip_window</t>
-<t tx="ekr.20040809071339.14">def close(self):
-
-    self._make_calltip_window = None
-</t>
-<t tx="ekr.20040809071339.15">def _make_tk_calltip_window(self):
-    
-    # See __init__ for usage
-    return CallTipWindow.CallTip(self.text)</t>
-<t tx="ekr.20040809071339.16">def _remove_calltip_window(self):
-
-    if self.calltip:
-        self.calltip.hidetip()
-        self.calltip = None</t>
-<t tx="ekr.20040809071339.17">def paren_open_event(self, event):
-
-    self._remove_calltip_window()
-    name = self.get_name_at_cursor()
-    arg_text = self.fetch_tip(name)
-    if arg_text:
-        self.calltip_start = self.text.index("insert")
-        self.calltip = self._make_calltip_window()
-        self.calltip.showtip(arg_text)
-    return "" #so the event is handled normally.</t>
-<t tx="ekr.20040809071339.18">def paren_close_event(self, event):
-
-    # Now just hides, but later we should check if other
-    # paren'd expressions remain open.
-    self._remove_calltip_window()
-
-    return "" #so the event is handled normally.
-</t>
-<t tx="ekr.20040809071339.19">def check_calltip_cancel_event(self, event):
-
-    if self.calltip:
-        # If we have moved before the start of the calltip,
-        # or off the calltip line, then cancel the tip.
-        # (Later need to be smarter about multi-line, etc)
-        if self.text.compare("insert", "&lt;=", self.calltip_start) or \
-           self.text.compare("insert", "&gt;", self.calltip_start
-                             + " lineend"):
-            self._remove_calltip_window()
-
-    return "" #so the event is handled normally.
-</t>
-<t tx="ekr.20040809071339.20">def calltip_cancel_event(self, event):
-
-    self._remove_calltip_window()
-
-    return "" #so the event is handled normally.
-</t>
-<t tx="ekr.20040809071339.21">__IDCHARS = "._" + string.ascii_letters + string.digits
-
-def get_name_at_cursor(self):
-    idchars = self.__IDCHARS
-    str = self.text.get("insert linestart", "insert")
-    i = len(str)
-    while i and str[i-1] in idchars:
-        i -= 1
-    return str[i:]
-</t>
-<t tx="ekr.20040809071339.22">def fetch_tip(self, name):
-
-    """Return the argument list and docstring of a function or class
-
-    If there is a Python subprocess, get the calltip there.  Otherwise,
-    either fetch_tip() is running in the subprocess itself or it was called
-    in an IDLE EditorWindow before any script had been run.
-
-    The subprocess environment is that of the most recently run script.  If
-    two unrelated modules are being edited some calltips in the current
-    module may be inoperative if the module was not the last to run.
-
-    """
-    try:
-        rpcclt = self.editwin.flist.pyshell.interp.rpcclt
-    except:
-        rpcclt = None
-    if rpcclt:
-        return rpcclt.remotecall("exec", "get_the_calltip",
-                                 (name,), {})
-    else:
-        entity = self.get_entity(name)
-        return get_arg_text(entity)</t>
-<t tx="ekr.20040809071339.23">def get_entity(self, name):
-
-    "Lookup name in a namespace spanning sys.modules and __main.dict__"
-    if name:
-        namespace = sys.modules.copy()
-        namespace.update(__main__.__dict__)
-        try:
-            return eval(name, namespace)
-        except:
-            return None</t>
-<t tx="ekr.20040809071339.24">def _find_constructor(class_ob):
-    
-    # Given a class object, return a function object used for the
-    # constructor (ie, __init__() ) or None if we can't find one.
-    
-    try:
-        return class_ob.__init__.im_func
-    except AttributeError:
-        for base in class_ob.__bases__:
-            rc = _find_constructor(base)
-            if rc is not None: return rc
-    return None
-
-</t>
-<t tx="ekr.20040809071339.25">def get_arg_text(ob):
-    "Get a string describing the arguments for the given object"
-    argText = ""
-    if ob is not None:
-        argOffset = 0
-        if type(ob)==types.ClassType:
-            # Look for the highest __init__ in the class chain.
-            fob = _find_constructor(ob)
-            if fob is None:
-                fob = lambda: None
-            else:
-                argOffset = 1
-        elif type(ob)==types.MethodType:
-            # bit of a hack for methods - turn it into a function
-            # but we drop the "self" param.
-            fob = ob.im_func
-            argOffset = 1
-        else:
-            fob = ob
-        # Try and build one for Python defined functions
-        if type(fob) in [types.FunctionType, types.LambdaType]:
-            try:
-                realArgs = fob.func_code.co_varnames[argOffset:fob.func_code.co_argcount]
-                defaults = fob.func_defaults or []
-                defaults = list(map(lambda name: "=%s" % name, defaults))
-                defaults = [""] * (len(realArgs)-len(defaults)) + defaults
-                items = map(lambda arg, dflt: arg+dflt, realArgs, defaults)
-                if fob.func_code.co_flags &amp; 0x4:
-                    items.append("...")
-                if fob.func_code.co_flags &amp; 0x8:
-                    items.append("***")
-                argText = ", ".join(items)
-                argText = "(%s)" % argText
-            except:
-                pass
-        # See if we can use the docstring
-        doc = getattr(ob, "__doc__", "")
-        if doc:
-            doc = doc.lstrip()
-            pos = doc.find("\n")
-            if pos &lt; 0 or pos &gt; 70:
-                pos = 70
-            if argText:
-                argText += "\n"
-            argText += doc[:pos]
-    return argText
-</t>
-<t tx="ekr.20040809071339.26">#################################################
-#
-# Test code
-#
-if __name__=='__main__':
-
-    def t1(): "()"
-    def t2(a, b=None): "(a, b=None)"
-    def t3(a, *args): "(a, ...)"
-    def t4(*args): "(...)"
-    def t5(a, *args): "(a, ...)"
-    def t6(a, b=None, *args, **kw): "(a, b=None, ..., ***)"
-
-    class TC:
-        "(a=None, ...)"
-        def __init__(self, a=None, *b): "(a=None, ...)"
-        def t1(self): "()"
-        def t2(self, a, b=None): "(a, b=None)"
-        def t3(self, a, *args): "(a, ...)"
-        def t4(self, *args): "(...)"
-        def t5(self, a, *args): "(a, ...)"
-        def t6(self, a, b=None, *args, **kw): "(a, b=None, ..., ***)"
-
-    def test(tests):
-        ct = CallTips()
-        failed=[]
-        for t in tests:
-            expected = t.__doc__ + "\n" + t.__doc__
-            name = t.__name__
-            arg_text = ct.fetch_tip(name)
-            if arg_text != expected:
-                failed.append(t)
-                print "%s - expected %s, but got %s" % (t, expected,
-                                                        get_arg_text(entity))
-        print "%d of %d tests failed" % (len(failed), len(tests))
-
-    tc = TC()
-    tests = (t1, t2, t3, t4, t5, t6,
-             TC, tc.t1, tc.t2, tc.t3, tc.t4, tc.t5, tc.t6)
-
-    test(tests)
-</t>
-<t tx="ekr.20040809071339.27">"""A CallTip window class for Tkinter/IDLE.
-
-After ToolTip.py, which uses ideas gleaned from PySol
-Used by the CallTips IDLE extension.
-
-"""
-
-import Tkinter as Tk
-import leoGlobals as g
-
-@others
-
-if 1:
-    main()</t>
-<t tx="ekr.20040809071339.28">class CallTip:
-
-@others
-</t>
-<t tx="ekr.20040809071339.29">def __init__(self,widget):
-
-    self.widget = widget
-    self.tipwindow = None
-    self.id = None
-    self.x = self.y = 0</t>
-<t tx="ekr.20040809071339.30">def showtip (self,text):
-
-    """ Display text in calltip window"""
-
-    if self.tipwindow or not text: return
-
-    # truncate overly long calltip
-    if len(text) &gt;= 79: text = text[:75] + ' ...'
-    self.text = text
-
-    self.widget.see("insert")
-    x,y,cx,cy = self.widget.bbox("insert")
-    x = x + self.widget.winfo_rootx() + 2
-    y = y + cy + self.widget.winfo_rooty()
-    self.tipwindow = tw = Tk.Toplevel(self.widget)
-
-    &lt;&lt; remove the border &gt;&gt;
-    tw.wm_geometry("+%d+%d" % (x, y))
-    &lt;&lt; Mac-specific code &gt;&gt;
-
-    label = Tk.Label(tw,text=text, justify="left",
-        background="#ffffe0",relief="solid",borderwidth=1,
-        font=self.widget['font'])
-
-    label.pack()</t>
-<t tx="ekr.20040809071339.31">@
-The following command has two effects:
-- It removes the calltip window border (good)
-- Causes (at least on Linux) the calltip to show as a top level window,
-  burning through any other window dragged over it.
-  Also, shows on all viewports!
-@c
-
-tw.wm_overrideredirect(1)</t>
-<t tx="ekr.20040809071339.32">@
-This command is only needed and available on Tk &gt;= 8.4.0 for OSX.
-Without it, call tips intrude on the typing process by grabbing the focus.
-@c
-
-try:
-    tw.tk.call("::tk::unsupported::MacWindowStyle",
-        "style",tw._w,"help","noActivates")
-except Tk.TclError:
-    pass</t>
-<t tx="ekr.20040809071339.33">def hidetip(self):
-
-    tw = self.tipwindow
-    self.tipwindow = None
-    if tw:
-        tw.destroy()</t>
-<t tx="ekr.20040809071339.34">class container: # Conceptually an editor_window
-
-@others</t>
-<t tx="ekr.20040809071339.35">def __init__(self):
-
-    root = Tk.Tk()
-    text = self.text = Tk.Text(root)
-    text.pack(side="left", fill="both", expand=1)
-    text.insert("insert","string.split")
-    root.update()
-    self.calltip = CallTip(text)
-
-    text.event_add(g.virtual_event_name("calltip-show"),"(")
-    text.event_add(g.virtual_event_name("calltip-hide"),")")
-
-    text.bind(g.virtual_event_name("calltip-show"),self.calltip_show)
-    text.bind(g.virtual_event_name("calltip-hide"),self.calltip_hide)
-
-    text.focus_set()
-    root.mainloop()</t>
-<t tx="ekr.20040809071339.36">def calltip_show(self, event):
-
-    self.calltip.showtip("Hello world")</t>
-<t tx="ekr.20040809071339.37">def calltip_hide(self, event):
-
-    self.calltip.hidetip()</t>
-<t tx="ekr.20040809071339.38">def main():
-
-    # Test code
-    c=container()</t>
-<t tx="ekr.20040809071339.53"></t>
 <t tx="ekr.20040809105722">@killcolor
 
 http://sourceforge.net/forum/message.php?msg_id=2629405
@@ -7473,6 +7087,7 @@ also the print in the rst2 plugin describing
 the conversions it makes are lost to the console. should be g.es() to the log
 window.</t>
 <t tx="ekr.20040809110900">add_directives.py
+chineses_menu.py
 color_markup.py
 image.py
 rClick.py
@@ -7487,6 +7102,7 @@ rowcol.py
 rst2.py
 searchbox.py
 spellpyx.py
+startfile.py
 trace_keys.py
 vim.py</t>
 <t tx="ekr.20040809110900.1">arrows.py
@@ -7502,7 +7118,7 @@ newButtons.py
 niceNosent.py
 open_shell.py
 scripts_menu.py
-startfile.py
+
 word_export.py
 
 # others...
@@ -7524,7 +7140,7 @@ Written by Paul Paterson and 'e'.
 @language python
 @tabwidth -4
 
-visibleInitially = True # True: open spell dialog initially.
+visibleInitially = False # True: open spell dialog initially.
 
 # Specify the path to the top-level Aspell directory.
 # This directory should contain aspell.pyd.

@@ -34,7 +34,7 @@
 # Handles autocompletion when the user types '.' or '(' characters.
     # FIXME: Thread doesn't shut down properly.  Causes unit tests to fail.
     # autocompleter.py
-    
+
 # Allows coloring of wiki-style markup.
     # NOTE: requires add_directives.py plugin.
     color_markup.py
@@ -82,6 +82,9 @@
 # New from Bernhard Mulder
     # mod_http.py
     
+# Draws pie menus on mouse movements in the outline pane.
+    # pie_menus.py
+    
 # schedule commands for later execution."""
     # scheduler.py
     
@@ -126,7 +129,7 @@
 
 # Traduit les menus en Français.
     # french_fm.py
-
+    
 # Creates the plugins menu.
     plugins_menu.py
     
