@@ -1586,20 +1586,8 @@ class baseFileCommands:
 		if not doHook("save1",c=c,v=v,fileName=fileName):
 			c.beginUpdate()
 			c.endEditing()# Set the current headline text.
-			self.compactFileIndices() # 1/14/02: always recompute file indices
-			
-			#@<< Set the default directory for new files >>
-			#@+node:1::<< Set the default directory for new files >>
-			#@+body
-			# 8/13/02: Set c.openDirectory for new files for the benefit of leoAtFile.scanAllDirectives.
-			
-			if not c.openDirectory or len(c.openDirectory) == 0:
-				dir = os.path.dirname(fileName)
-				if len(dir) > 0 and os.path.isabs(dir) and os.path.exists(dir):
-					c.openDirectory = dir
-			#@-body
-			#@-node:1::<< Set the default directory for new files >>
-
+			self.compactFileIndices()
+			self.setDefaultDirectoryForNewFiles(fileName)
 			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
 				es("saved: " + shortFileName(fileName))
@@ -1620,11 +1608,13 @@ class baseFileCommands:
 			c.beginUpdate()
 			c.endEditing() # Set the current headline text.
 			self.compactFileIndices()
+			self.setDefaultDirectoryForNewFiles(fileName)
 			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
 				es("saved: " + shortFileName(fileName))
 			c.endUpdate()
 		doHook("save2",c=c,v=v,fileName=fileName)
+	
 	#@-body
 	#@-node:5::saveAs
 	#@+node:6::saveTo
@@ -1637,6 +1627,7 @@ class baseFileCommands:
 			c.beginUpdate()
 			c.endEditing()# Set the current headline text.
 			self.compactFileIndices()
+			self.setDefaultDirectoryForNewFiles(fileName)
 			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
 				es("saved: " + shortFileName(fileName))
 			c.endUpdate()
@@ -1644,7 +1635,21 @@ class baseFileCommands:
 	
 	#@-body
 	#@-node:6::saveTo
-	#@+node:7::xmlEscape
+	#@+node:7::setDefaultDirectoryForNewFiles
+	#@+body
+	def setDefaultDirectoryForNewFiles (self,fileName):
+		
+		"""Set c.openDirectory for new files for the benefit of leoAtFile.scanAllDirectives."""
+		
+		c = self.commands
+	
+		if not c.openDirectory or len(c.openDirectory) == 0:
+			dir = os.path.dirname(fileName)
+			if len(dir) > 0 and os.path.isabs(dir) and os.path.exists(dir):
+				c.openDirectory = dir
+	#@-body
+	#@-node:7::setDefaultDirectoryForNewFiles
+	#@+node:8::xmlEscape
 	#@+body
 	# Surprisingly, this is a time critical routine.
 	
@@ -1657,15 +1662,15 @@ class baseFileCommands:
 		s = string.replace(s, '>', "&gt;")
 		return s
 	#@-body
-	#@-node:7::xmlEscape
-	#@+node:8::writeAtFileNodes
+	#@-node:8::xmlEscape
+	#@+node:9::writeAtFileNodes
 	#@+body
 	def writeAtFileNodes (self):
 	
 		self.commands.atFileCommands.writeAll(writeAtFileNodesFlag=true)
 	#@-body
-	#@-node:8::writeAtFileNodes
-	#@+node:9::writeDirtyAtFileNodes
+	#@-node:9::writeAtFileNodes
+	#@+node:10::writeDirtyAtFileNodes
 	#@+body
 	def writeDirtyAtFileNodes (self): # fileCommands
 	
@@ -1673,8 +1678,8 @@ class baseFileCommands:
 	
 		self.commands.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
 	#@-body
-	#@-node:9::writeDirtyAtFileNodes
-	#@+node:10::writeMissingAtFileNodes
+	#@-node:10::writeDirtyAtFileNodes
+	#@+node:11::writeMissingAtFileNodes
 	#@+body
 	def writeMissingAtFileNodes (self):
 	
@@ -1683,8 +1688,8 @@ class baseFileCommands:
 			at = c.atFileCommands
 			at.writeMissing(v)
 	#@-body
-	#@-node:10::writeMissingAtFileNodes
-	#@+node:11::writeOutlineOnly
+	#@-node:11::writeMissingAtFileNodes
+	#@+node:12::writeOutlineOnly
 	#@+body
 	def writeOutlineOnly (self):
 	
@@ -1693,8 +1698,8 @@ class baseFileCommands:
 		self.compactFileIndices()
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
 	#@-body
-	#@-node:11::writeOutlineOnly
-	#@+node:12::write_LEO_file
+	#@-node:12::writeOutlineOnly
+	#@+node:13::write_LEO_file
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
@@ -1860,7 +1865,7 @@ class baseFileCommands:
 
 			return false
 	#@-body
-	#@-node:12::write_LEO_file
+	#@-node:13::write_LEO_file
 	#@-node:3::Writing
 	#@-others
 
