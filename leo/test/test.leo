@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6599" clone_windows="0"/>
 <globals body_outline_ratio="0.494382022472">
-	<global_window_position top="66" left="37" height="680" width="800"/>
+	<global_window_position top="65" left="265" height="565" width="673"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -969,7 +969,7 @@
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1559,6 +1559,7 @@
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
+<v t="ekr.20050206090416" a="TV"><vh>@test open non-existent non-ascii directory</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -13398,5 +13399,14 @@ print 'hello'
 #assert c.redirect_execute_script_output_to_log_pane is True
 #assert c.config.redirect_execute_script_output_to_log_pane is True
 </t>
+<t tx="ekr.20050206090416">import leoGlobals as g
+c = g.top()
+
+file = g.toUnicode('±≤≥¥∂','utf-8')
+print g.toEncodedString(file,'utf-8')
+
+ok,frame = g.openWithFileName(file,c)
+
+assert not ok and not frame</t>
 </tnodes>
 </leo_file>
