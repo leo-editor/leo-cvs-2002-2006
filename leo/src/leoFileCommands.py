@@ -1881,8 +1881,8 @@ class baseFileCommands:
         
         if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
             # Almost 30% of the entire writing time came from here!!!
-            if p.equal(self.topPosition):     attr += "T" # was a bottleneck
-            if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+            if p.equal(self.topPosition):   attr += "T" # was a bottleneck
+            if c.isCurrentPosition(p):      attr += "V" # was a bottleneck
         
         if attr: fc.put(' a="%s"' % attr)
         #@nonl
