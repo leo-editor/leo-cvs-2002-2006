@@ -96,7 +96,7 @@ class LeoFrame:
 			# Verdana is good looking, but not fixed size.
 			# Courier is fixed size, not great looking.
 			# A light selectbackground value is needed to make syntax coloring look good.
-		font = tkFont.Font(family="Courier",size=9)
+		font = tkFont.Font(family="Courier",size=12)
 		tabw = font.measure("    ")
 		self.body = body = Tk.Text(split1Pane2,name='body',bd=2,bg="white",relief="flat",
 			setgrid=1,font=font,tabs=tabw,wrap="word",selectbackground="Gray80")

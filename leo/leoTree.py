@@ -192,7 +192,10 @@ class leoTree:
 	
 		y += 7 # draw the box at x, y+7
 	
-		iconname = choose(v.isExpanded(), "Icons\\minusnode.GIF", "Icons\\plusnode.GIF")
+		minus_node = os.path.join("Icons", "minusnode.gif")
+		plus_node = os.path.join("Icons", "plusnode.gif")
+		iconname = choose(v.isExpanded(), minus_node, plus_node)
+
 		image = self.getIconImage(iconname)
 		id = self.canvas.create_image(x,y,image=image)
 		if 0: # don't create a reference to this!
