@@ -526,7 +526,8 @@
 <v t="ekr.20040419105536.2"><vh>two</vh></v>
 </v>
 <v t="EKR.20040422095741"><vh>.</vh></v>
-<v t="EKR.20040424065452" a="TV"><vh>Compare script</vh></v>
+<v t="EKR.20040424065452"><vh>Compare script</vh></v>
+<v t="EKR.20040424091411" a="TV"><vh>Compare script using text mode to ignore newlines</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040422095741"></t>
@@ -552,6 +553,17 @@ print "lines ",len(lines1),len(lines2)
 print "chars ",len(text1),len(text2)
 print "non-cr",len(text1)-cr1,len(text2)-cr2
 print "cr    ",cr1,cr2</t>
+<t tx="EKR.20040424091411">import leoGlobals as g
+p1 = r"c:\prog\leoMenu(1).py"
+p2 = r"c:\prog\leoMenu(2).py"
+
+f1 = open(p1,"rb") ; f2 = open(p2,"rb")
+g.es("equal (raw mode)",f1.read()==f2.read())
+f1.close() ; f2.close()
+
+f1 = open(p1) ; f2 = open(p2)
+g.es("equal (text mode)",f1.read()==f2.read())
+f1.close() ; f2.close()</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -4171,9 +4183,7 @@ else: # Doesn't work
 suppressionRegexs = {}</t>
 <t tx="ekr.20040414082422.2"></t>
 <t tx="ekr.20040414082806"></t>
-<t tx="ekr.20040419105536">@ignore
-
-@language perl
+<t tx="ekr.20040419105536">@language perl
 
 @others</t>
 <t tx="ekr.20040419105536.1">line 1</t>

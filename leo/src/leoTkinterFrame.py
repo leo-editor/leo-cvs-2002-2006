@@ -499,6 +499,29 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		t.configure(state="disabled")
 	#@nonl
 	#@-node:clearStatusLine
+	#@+node:enable/disableStatusLine & isEnabled
+	def disableStatusLine (self):
+		
+		t = self.statusText
+		if t:
+			t.configure(state="disabled",background="gray")
+		
+	def enableStatusLine (self):
+		
+		t = self.statusText
+		if t:
+			t.configure(state="normal",background="pink")
+			t.focus_set()
+			
+	def statusLineIsEnabled(self):
+		t = self.statusText
+		if t:
+			state = t.cget("state")
+			return state == "normal"
+		else:
+			return false
+	#@nonl
+	#@-node:enable/disableStatusLine & isEnabled
 	#@+node:putStatusLine
 	def putStatusLine (self,s,color=None):
 		
@@ -525,6 +548,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		t.configure(state="disabled")
 	#@nonl
 	#@-node:putStatusLine
+	#@+node:setFocusStatusLine
+	def setFocusStatusLine (self):
+		
+		t = self.statusText
+		if t:
+			t.focus_set()
+	#@nonl
+	#@-node:setFocusStatusLine
 	#@+node:updateStatusRowCol
 	def updateStatusRowCol (self):
 		
