@@ -1927,7 +1927,7 @@ class baseCommands:
 		while i < len(tail_lines):
 			line = tail_lines[i]
 			if len(line) == 0 or line.isspace() or line[0] == '@':
-				trailingNL = line[0] == u'\n' or line[0] == '@' # DTHEIN 18-JAN-2004
+				trailingNL = line.endswith(u'\n') or line.startswith(u'@') # DTHEIN 21-JAN-2004
 				break
 			i += 1
 			

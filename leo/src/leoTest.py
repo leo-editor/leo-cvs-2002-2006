@@ -532,6 +532,7 @@ def makeReformatParagraphSuite():
 	suite.addTest(reformatParagraphTestCase("testMultiParagraph"))
 	suite.addTest(reformatParagraphTestCase("testMultiParagraphWithList"))
 	suite.addTest(reformatParagraphTestCase("testDirectiveBreaksParagraph"))
+	suite.addTest(reformatParagraphTestCase("testWithLeadingWSOnEmptyLines"))
 	return suite
 	#	suite = reformatParagraphTestCase().suite();
 	#return suite
@@ -736,6 +737,37 @@ class reformatParagraphTestCase(unittest.TestCase):
 		# Compare the computed result to the reference result.
 		self.checkText()
 	#@-node:testDirectiveBreaksParagraph
+	#@+node:testWithLeadingWSOnEmptyLines
+	# DTHEIN 2004.01.11: Added method
+	def testWithLeadingWSOnEmptyLines(self):
+		
+		# Locate the test data
+		#
+		self.getCaseDataNodes("testWithLeadingWSOnEmptyLines")
+		
+		# Setup the temp node
+		#
+		self.copyBeforeToTemp()
+		
+		# reformat the paragraph and check insertion cursor position
+		#
+		self.c.reformatParagraph()
+		self.checkPosition(4,0)
+		
+		# Keep going, in the same manner
+		#
+		self.c.reformatParagraph()
+		self.checkPosition(7,0)
+		self.c.reformatParagraph()
+		self.checkPosition(10,0)
+		self.c.reformatParagraph()
+		self.checkPosition(13,0)
+		self.c.reformatParagraph()
+		self.checkPosition(14,18)
+		
+		# Compare the computed result to the reference result.
+		self.checkText()
+	#@-node:testWithLeadingWSOnEmptyLines
 	#@+node:singleParagraphTest
 	# DTHEIN 2004.01.11: Added method
 	def singleParagraphTest(self,caseName,finalRow,finalCol):
