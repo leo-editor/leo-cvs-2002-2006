@@ -1464,36 +1464,86 @@ class LeoFrame:
 			#@<< set path to the full pathname of a temp file using ext >>
 			#@+node:2::<< set path to the full pathname of a temp file using ext >>
 			#@+body
-			file = None
-			open_with_file_num = 0
-			while file == None:
-				a.openWithFileNum += 1 # 1/24/03
-				name = "LeoTemp_" + sanitize_filename(v.headString())
-				if open_with_file_num:
-					name += '_' + str(a.openWithFileNum)
-				name += ext
+			#@+at
+			#  1/26/03.  Experimental new code creates only one temp file for 
+			# each node, reopening previously created temp files if they 
+			# already exists.
+			# 
+			# Warning: this is not a complete solution to the problem of 
+			# editing multiple copies of a node: temp files will typically 
+			# have different file extensions for different editors.
+
+			#@-at
+			#@@c
+
+			if 1: # new code.
+				
+				#@<< new code >>
+				#@+node:1::<< new code >>
+				#@+body
+				name = "LeoTemp_" + sanitize_filename(v.headString()) + ext
 				td = os.path.abspath(tempfile.gettempdir())
 				path = os.path.join(td,name)
-				if not os.path.exists(path):
+				# If the path exists we will simply try to reopen it.
+				if os.path.exists(path):
+					es("reopening: " + shortFileName(path))
+				else:
 					try:
 						file = open(path,"w")
 						file.write(v.bodyString())
 						file.flush()
 						file.close()
-						try:
-							time=os.path.getmtime(path)
-						except:
-							time=None
-						es("creating: " + path)
-						es("time: " + str(time))
+						try:    time=os.path.getmtime(path)
+						except: time=None
+						es("creating:  " + shortFileName(path))
+						# es("time: " + str(time))
 						dict = {"c":c, "v":v, "f":file, "path":path, "time":time}
 						a.openWithFiles.append(dict)
 					except:
 						file = None
 						es("exception opening temp file")
 						es_exception()
-				open_with_file_num += 1
-			if not file: return
+						return
+				#@-body
+				#@-node:1::<< new code >>
+
+			else:
+				
+				#@<< old code >>
+				#@+node:2::<< old code >>
+				#@+body
+				file = None
+				open_with_file_num = 0
+				if 1: # while file == None:
+					a.openWithFileNum += 1 # 1/24/03
+					name = "LeoTemp_" + sanitize_filename(v.headString())
+					if open_with_file_num:
+						name += '_' + str(a.openWithFileNum)
+					name += ext
+					td = os.path.abspath(tempfile.gettempdir())
+					path = os.path.join(td,name)
+					if not os.path.exists(path):
+						try:
+							file = open(path,"w")
+							file.write(v.bodyString())
+							file.flush()
+							file.close()
+							try:
+								time=os.path.getmtime(path)
+							except:
+								time=None
+							es("creating: " + path)
+							es("time: " + str(time))
+							dict = {"c":c, "v":v, "f":file, "path":path, "time":time}
+							a.openWithFiles.append(dict)
+						except:
+							file = None
+							es("exception opening temp file")
+							es_exception()
+					open_with_file_num += 1
+				if not file: return
+				#@-body
+				#@-node:2::<< old code >>
 			#@-body
 			#@-node:2::<< set path to the full pathname of a temp file using ext >>
 
@@ -1503,26 +1553,28 @@ class LeoFrame:
 			#@+body
 			try:
 				if arg == None: arg = ""
+				shortPath = path # shortFileName(path)
 				if openType == "os.system":
-					command  = "os.system("+arg+path+")"
+					command  = "os.system("+arg+shortPath+")"
 					os.system(arg+path)
 				elif openType == "os.startfile":
-					command    = "os.startfile("+arg+path+")"
+					command    = "os.startfile("+arg+shortPath+")"
 					os.startfile(arg+path)
 				elif openType == "exec":
-					command    = "exec("+arg+path+")"
+					command    = "exec("+arg+shortPath+")"
 					exec arg+path in {} # 12/11/02
 				elif openType == "os.spawnl":
 					filename = os.path.basename(arg)
-					command = "os.spawnl("+arg+","+filename+','+ path+")"
+					command = "os.spawnl("+arg+","+filename+','+ shortPath+")"
 					apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
 				elif openType == "os.spawnv":
 					filename = os.path.basename(arg)
-					command = "os.spawnv("+arg+",("+filename+','+ path+"))"
+					command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
 					apply(os.spawnl,(os.P_NOWAIT,arg,(filename,path)))
 				else:
 					command="bad command:"+str(openType)
-				es(command)
+				# This seems a bit redundant.
+				# es(command)
 			except:
 				es("exception executing: "+command)
 				es_exception()
