@@ -703,7 +703,7 @@ def scanDirectives(c,v=None):
 
 #@-node:scanDirectives (utils)
 #@+node:openWithFileName
-def openWithFileName(fileName,old_c):
+def openWithFileName(fileName,old_c,enableLog=true):
 	
 	"""Create a Leo Frame for the indicated fileName if the file exists."""
 
@@ -738,6 +738,7 @@ def openWithFileName(fileName,old_c):
 		file = open(fileName,'rb')
 		if file:
 			c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+			frame.log.enable(enableLog)
 			if not doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
 				app.setLog(frame.log,"openWithFileName")
 				app.lockLog()
