@@ -85,7 +85,7 @@ class baseLeoFrame:
 		return self.ver[10:-1] # Strip off "$Reversion" and the trailing "$"
 	
 	def getSignOnLine (self):
-		return "Leo 4.0 beta 3 build %s, October 7, 2003" % self.getBuildNumber()
+		return "Leo 4.0 beta 3 build %s, October 9, 2003" % self.getBuildNumber()
 		
 	def initVersion (self):
 		self.ver = "$Revision$" # CVS will update this.
@@ -346,8 +346,8 @@ class baseLeoFrame:
 				#@			<< Put up a file save dialog to set mFileName >>
 				#@+node:<< Put up a file save dialog to set mFileName >>
 				# Make sure we never pass None to the ctor.
-				if not c.title:
-					self.title = ""
+				if not c.mFileName:
+					c.mFileName = ""
 					
 				c.mFileName = tkFileDialog.asksaveasfilename(
 					initialfile = c.mFileName,

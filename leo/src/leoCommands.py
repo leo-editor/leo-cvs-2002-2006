@@ -1423,6 +1423,10 @@ class baseCommands:
 	# Initializes all clone bits in the all nodes joined to v.
 	
 	def initJoinedCloneBits (self,v):
+		
+		if 0:
+			if not self.loading:
+				trace(len(v.t.joinList),v)
 	
 		c = self
 		c.beginUpdate()
@@ -1649,6 +1653,7 @@ class baseCommands:
 			v.setDirty()
 			c.selectVnode(v)
 			c.setChanged(true)
+			c.initJoinedCloneBits(v) # 10/8/03
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@nonl
@@ -1701,6 +1706,7 @@ class baseCommands:
 			v.setDirty()
 			c.selectVnode(v)
 			c.setChanged(true)
+			c.initJoinedCloneBits(v) # 10/8/03
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@nonl
@@ -1872,6 +1878,7 @@ class baseCommands:
 			v.setDirty() # This second call is essential.
 			c.selectVnode(v)# 4/23/01
 			c.setChanged(true)
+			c.initJoinedCloneBits(v) # 10/8/03
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@nonl
@@ -1899,6 +1906,7 @@ class baseCommands:
 			v.setDirty()
 			c.selectVnode(v)
 			c.setChanged(true)
+			c.initJoinedCloneBits(v) # 10/8/03
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 		# print_stats()
@@ -1977,6 +1985,7 @@ class baseCommands:
 			v.setDirty()
 			c.selectVnode(v)
 			c.setChanged(true)
+			c.initJoinedCloneBits(v) # 10/8/03
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@nonl
