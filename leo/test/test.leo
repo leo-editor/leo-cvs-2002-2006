@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6672" clone_windows="0"/>
 <globals body_outline_ratio="0.521970705726">
-	<global_window_position top="91" left="302" height="676" width="879"/>
+	<global_window_position top="100" left="224" height="676" width="879"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -32,8 +32,7 @@
 <v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
 <v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
 </v>
-<v t="EKR.20040623200709" annotate="7d71002e"
-expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709" annotate="7d71002e"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -181,13 +180,13 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 <v t="EKR.20040608095146.1"><vh>@file login_process.cfm</vh></v>
 <v t="EKR.20040531110157"><vh>at-file thin tests</vh>
 <v t="EKR.20040520104329"><vh>@thin thinCloneTest.txt</vh></v>
-<v t="EKR.20040524050419" a="E"><vh>@file fatGrandChildTest.txt</vh>
-<v t="EKR.20040524050419.1" a="E"><vh>Organizer node</vh>
+<v t="EKR.20040524050419"><vh>@file fatGrandChildTest.txt</vh>
+<v t="EKR.20040524050419.1"><vh>Organizer node</vh>
 <v t="EKR.20040524050419.2"><vh>&lt;&lt; defined in grandchild &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="EKR.20040524050438"><vh>@thin grandChildTest.txt</vh></v>
-<v t="EKR.20040525083635" a="E"><vh>@file orphanMessageTest.txt</vh>
+<v t="EKR.20040525083635"><vh>@file orphanMessageTest.txt</vh>
 <v t="EKR.20040525083635.1"><vh>orphan</vh></v>
 </v>
 </v>
@@ -232,7 +231,7 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 </v>
 </v>
 </v>
-<v t="EKR.20040627103732" a="E"><vh>Test of writing descendent uA's</vh>
+<v t="EKR.20040627103732"><vh>Test of writing descendent uA's</vh>
 <v t="EKR.20040627121836"><vh>print all tnode attributes</vh></v>
 <v t="EKR.20040627103902"><vh>Test of user icons</vh></v>
 <v t="EKR.20040627103801"><vh>@thin uaTest.txt</vh></v>
@@ -597,7 +596,7 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
 </v>
-<v t="ekr.20040312021734" a="E" annotate="7d71002e"><vh>Scripts</vh>
+<v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1011,7 +1010,7 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050219071503"><vh>Test of createMenuItemsFromTable</vh></v>
 <v t="ekr.20050219073752.1"><vh>Add a menu item after Open With</vh></v>
 </v>
-<v t="ekr.20050310082013" a="TV"><vh>AutoIt script from e</vh></v>
+<v t="ekr.20050310082013"><vh>AutoIt script from e</vh></v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
@@ -1023,7 +1022,7 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 <v t="ekr.20050210180937"><vh>@button jython</vh></v>
 </v>
-<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1129,7 +1128,7 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20041130092210" a="E"><vh>Batch mode tests</vh>
+<v t="ekr.20041130092210"><vh>Batch mode tests</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
@@ -1143,11 +1142,11 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050105084757.1"><vh>@test g.utils_remove</vh></v>
 <v t="ekr.20050105091547"><vh>@test g.utils_rename</vh></v>
 </v>
-<v t="ekr.20040712101754.7" a="E"><vh>Import/Export tests</vh>
+<v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10" a="E"><vh>importTests</vh>
-<v t="ekr.20040712101754.11" a="E"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.10"><vh>importTests</vh>
+<v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
 </v>
@@ -1170,8 +1169,8 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20040712101754.15"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.24" a="E"><vh>exportTests</vh>
-<v t="ekr.20040712101754.25" a="E"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.24"><vh>exportTests</vh>
+<v t="ekr.20040712101754.25"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.26"><vh>exportHeadlines</vh>
 <v t="ekr.20040712101754.27"><vh>dialog</vh></v>
 </v>
@@ -1196,9 +1195,9 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050105095743"><vh>@test atFile.replaceTargetFileIfDifferent (identical)</vh></v>
 <v t="ekr.20050105100227"><vh>@test atFile.replaceTargetFileIfDifferent (no target file)</vh></v>
 </v>
-<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
-<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38" a="E"><vh>editBodyTests</vh>
+<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.40"><vh>extractSection</vh>
 <v t="ekr.20040712101754.41"><vh>before</vh></v>
@@ -1219,9 +1218,9 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.53" a="E"><vh>@suite Reformat Paragraph Tests</vh>
+<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
 <v t="ekr.20040712101754.54"><vh>What I did</vh></v>
-<v t="ekr.20040712101754.55" a="E"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
 <v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
 <v t="ekr.20040712101754.58"><vh>before</vh></v>
@@ -1686,15 +1685,15 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 </v>
 <v t="ekr.20050225110104" annotate="7d71002e"><vh>How to do this test</vh>
 <v t="ekr.20050225080606" annotate="55ae37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353039363137323633363836353734373937303635373130383238363830323666373130393638303736323735326571002e"><vh>@thin deletedNodeTest.py</vh></v>
-<v t="ekr.20050225110307" a="E" annotate="7d71002e"><vh>b</vh></v>
+<v t="ekr.20050225110307" annotate="7d71002e"><vh>b</vh></v>
 </v>
 <v t="ekr.20050225161940" annotate="7d71002e"><vh>Move executeFile into core</vh>
 <v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
-<v t="ekr.20050225162123" a="E" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@thin executeFileTest.py</vh></v>
-<v t="ekr.20050225161940.2" a="E" annotate="7d71002e"><vh>Script</vh>
+<v t="ekr.20050225162123" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@thin executeFileTest.py</vh></v>
+<v t="ekr.20050225161940.2" annotate="7d71002e"><vh>Script</vh>
 <v t="ekr.20050225161940.3" annotate="7d71002e"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
 <v t="ekr.20050225171553" annotate="7d71002e"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20050225161940.5" a="E" annotate="7d71002e"><vh>getAtFileName</vh></v>
+<v t="ekr.20050225161940.5" annotate="7d71002e"><vh>getAtFileName</vh></v>
 <v t="ekr.20050225161940.4" annotate="7d71002e"><vh>executeFile</vh>
 <v t="ekr.20050225164423"><vh>&lt;&lt; define subprocess_wrapper &gt;&gt;</vh></v>
 </v>
@@ -2323,7 +2322,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2478,7 +2477,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -2943,7 +2942,6 @@ except:
 <t tx="ekr.20040707081532.1"># You can run all tests by selecting the Unit Test headline.
 
 import leoTest
-reload(leoTest)
 
 leoTest.doTests(all=False)</t>
 <t tx="ekr.20040707104245"></t>
@@ -2994,7 +2992,6 @@ for line in g.splitLines(expected):
 print '-' * 20</t>
 <t tx="ekr.20040707141957.12">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 c = g.top() ; p = c.currentPosition()
 
@@ -3013,7 +3010,6 @@ Line 1
 last line 1: no newline</t>
 <t tx="ekr.20040708135624">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 c = g.top() ; p = c.currentPosition()
 u = leoTest.testUtils()
@@ -3129,7 +3125,6 @@ else:
 <t tx="ekr.20040711044029.1">import leoGlobals as g
 import leoTest
 import glob
-reload(leoTest)
 
 c = g.top()
 
@@ -3208,28 +3203,24 @@ All other approaches quickly get deeply involved with Leo's internals...</t>
 @tabwidth -4</t>
 <t tx="ekr.20040712101754.3">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 path = g.os_path_join(g.app.loadDir,"..","test","test.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040712101754.4">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 path = g.os_path_join(g.app.loadDir,"..","src","LeoPy.leo")
 leoTest.runLeoTest(path)
 </t>
 <t tx="ekr.20040712101754.5">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 path = g.os_path_join(g.app.loadDir,"..","plugins","leoPlugins.leo")
 leoTest.runLeoTest(path)
 </t>
 <t tx="ekr.20040712101754.6">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 path = g.os_path_join(g.app.loadDir,"..","doc","LeoDocs.leo")
 leoTest.runLeoTest(path)
@@ -3240,7 +3231,7 @@ leoTest.runLeoTest(path)
 
 import leoGlobals as g
 import unittest
-import leoTest ; reload(leoTest)
+import leoTest
 
 @others
 
@@ -3252,7 +3243,7 @@ g.app.scriptDict['suite'] = suite</t>
 import leoGlobals as g
 
 import unittest
-import leoTest ; reload(leoTest)
+import leoTest
 
 @others
 
@@ -3300,7 +3291,7 @@ test\\unittest\\output\\outlineToCweb.txt</t>
 <t tx="ekr.20040712101754.37"># Create unit tests in g.app.scriptDict["suite"]
 
 import leoGlobals as g
-import leoTest ; reload(leoTest)
+import leoTest
 
 suite = leoTest.makeEditBodySuite()
 
@@ -3356,7 +3347,7 @@ line 4</t>
 <t tx="ekr.20040712101754.53"># Create unit tests in g.app.scriptDict["suite"]
 
 import leoGlobals as g
-import leoTest ; reload(leoTest)
+import leoTest
 
 suite = leoTest.makeReformatParagraphSuite()
 
@@ -3730,7 +3721,6 @@ for t in c.all_unique_tnodes_iter():
 <t tx="ekr.20040712101754.102">@color</t>
 <t tx="ekr.20040712101754.103">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 c = g.top() ; p = c.currentPosition()
 
@@ -3749,7 +3739,6 @@ Line 1
 last line 1: no newline</t>
 <t tx="ekr.20040712101754.106">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 c = g.top() ; p = c.currentPosition()
 
@@ -3769,7 +3758,6 @@ last line 1: newline
 </t>
 <t tx="ekr.20040712101754.109">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 c = g.top() ; p = c.currentPosition()
 
@@ -5479,7 +5467,6 @@ c.redraw()</t>
 <t tx="ekr.20040712101754.220"></t>
 <t tx="ekr.20040712101754.221">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 c = g.top() ; p = c.currentPosition()
 u = leoTest.testUtils()
@@ -5513,7 +5500,7 @@ c.checkOutline()</t>
 
 import leoGlobals as g
 import unittest
-import leoTest ; reload(leoTest)
+import leoTest
 
 @others
 
@@ -5630,7 +5617,7 @@ g.app.scriptDict['suite'] = suite</t>
 
 import leoGlobals as g
 import unittest
-import leoTest ; reload(leoTest)
+import leoTest
 
 @others
 
@@ -5669,7 +5656,7 @@ assert errors == 0, "Check Outline reported %d errors" % errors</t>
 import doctest
 import unittest
 import leoTest
-reload(leoTest)
+
 c = g.top()
 
 createUnitTest = True
@@ -5693,7 +5680,7 @@ if suite:
 <t tx="ekr.20040712101754.274">import leoGlobals as g
 import unittest
 import leoTest
-reload(leoTest)
+
 import sys
 
 c = g.top()
@@ -5728,7 +5715,6 @@ assert result=="ok", "checkPythonCode returns: %s" % result</t>
 
 import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 c = g.top() ; p = c.currentPosition()
 u = leoTest.testUtils()
@@ -9197,7 +9183,8 @@ c.importCommands.importFilesCommand (names,"@file",
 @tabwidth -4
 
 import leoGlobals as g
-import leoTest ; reload(leoTest)
+import leoTest
+
 c = g.top() ; p = c.currentPosition()
 
 assert leoTest.runPerfectImportTest(c,p,testing=False,verbose=False)
@@ -9260,7 +9247,8 @@ This should be the last line (no newline following!)
 @tabwidth -4
 
 import leoGlobals as g
-import leoTest ; reload(leoTest)
+import leoTest
+
 c = g.top() ; p = c.currentPosition()
 
 assert leoTest.runPerfectImportTest(c,p,testing=False,verbose=False)
@@ -9319,7 +9307,8 @@ This should be the last line (no newline following!)
 @tabwidth -4
 
 import leoGlobals as g
-import leoTest ; reload(leoTest)
+import leoTest
+
 c = g.top() ; p = c.currentPosition()
 u = leoTest.testUtils()
 
@@ -9435,7 +9424,8 @@ Line 0
 @tabwidth -4
 
 import leoGlobals as g
-import leoTest ; reload(leoTest)
+import leoTest
+
 c = g.top() ; p = c.currentPosition()
 u = leoTest.testUtils()
 
@@ -9574,7 +9564,6 @@ try:
 except OverflowError:
     pass</t>
 <t tx="ekr.20040721145258.1">import leoTest
-reload(leoTest)
 
 leoTest.runGc(disable=True)</t>
 <t tx="ekr.20040721153143">@language python</t>
@@ -9667,14 +9656,12 @@ if 0:
     body.bindtags(btags)</t>
 <t tx="ekr.20040730181601">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040730181610">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile2.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
@@ -9729,14 +9716,12 @@ finally:
 <t tx="ekr.20040802071519.1">after</t>
 <t tx="ekr.20040803090901">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 path = g.os_path_join(g.app.loadDir,"..","dist","leoDist.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040803091512">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 c = g.top() ; u = leoTest.testUtils()
 
@@ -9830,7 +9815,6 @@ for file in ("install","uninstall"):
     checkLinuxLineEndings(g.os_path_join(g.app.loadDir,"..",file))</t>
 <t tx="ekr.20040831104758">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile3.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
@@ -10101,7 +10085,6 @@ for s in g.app.loadedPlugins:
 <t tx="ekr.20041001194357"># You can run all tests by selecting the Unit Test headline.
 
 import leoTest
-reload(leoTest)
 
 leoTest.doTests(all=False)</t>
 <t tx="ekr.20041001203411"></t>
@@ -10580,7 +10563,6 @@ line 3
 """</t>
 <t tx="ekr.20041020100733">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 c = g.top() ; p = c.currentPosition()
 
@@ -10601,7 +10583,6 @@ last line</t>
 <t tx="ekr.20041020100918.1">unnamed node line 1</t>
 <t tx="ekr.20041021062800">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 c = g.top() ; p = c.currentPosition()
 
@@ -10638,7 +10619,6 @@ unnamed node line 1
 </t>
 <t tx="ekr.20041021065844">import leoGlobals as g
 import leoTest
-reload(leoTest)
 
 c = g.top() ; p = c.currentPosition()
 
@@ -13318,7 +13298,6 @@ g.doHook("select3",     c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)</t>
 import leoGlobals as g
 import unittest
 import leoTest
-reload(leoTest)
 
 c = g.top()
 
