@@ -93,7 +93,7 @@ def setDefaultParams():
 	pats = (
 		("create_nonexistent_directories = 1","create_nonexistent_directories = 0"),
 		("read_only = 1","read_only = 0"),
-		("use_customizeLeo_dot_py = 1","use_customizeLeo_dot_py = 0"))
+		("use_plugins = 1","use_plugins = 0"))
 
 	replacePatterns("leoConfig.leo",pats)
 	replacePatterns("leoConfig.txt",pats)
@@ -105,8 +105,7 @@ def unsetDefaultParams():
 
 	print "unsetDefaultParams"
 	
-	pats = (
-		("use_customizeLeo_dot_py = 0","use_customizeLeo_dot_py = 1"),)
+	pats = (("use_plugins = 0","use_plugins = 1"),)
 
 	replacePatterns("leoConfig.leo",pats)
 	replacePatterns("leoConfig.txt",pats)

@@ -25,8 +25,9 @@ This version of Leo contains a very large number of improvements.  The highlight
 	- Improved syntax coloring for html and xml.
 	- Leo scrolls partially visible headlines into full view.
 	- Added "Replace tabs with spaces" checkbox in Prefs panel.
+	- Added install script for Linux.
 - New settings in leoConfig.leo/.txt.
-	- Colors for Show Invisibibles command and body_insertion_cursor
+	- Colors for Show Invisibles command and body_insertion_cursor
 	- Settings affecting when control-drags start.
 	- Defaults for unicode (see above).
 - Many other bug fixes and improvements.
@@ -54,9 +55,9 @@ This version of Leo corrects bugs, improves Leo's documentation and adds many ne
   @file-nosent = @nosentinelsfile ; @file-noref = @rawfile.
 - Leo now supports navigation of menus using underlined menus.
 - Added an easy way to replace any Leo method by a function.
-  The code in customizeLeo.py can now override part of Leo's code!
+  Hooks can now override part of Leo's code!
 - Added routines to redirect stderr and stdout to Leo's log pane.
-  These routines can be called from customizeLeo.py.
+  These routines can be called from hooks.
 - Added "event1" and "event2" hooks for customize event handling.
 - Improved Leo's window icon, and improved how that icon is loaded.
 - Added contributed code to support @read-only nodes.
@@ -114,7 +115,7 @@ Many major improvements have been made to Leo, all made as the result of user re
 - Leo can now read, remember and write <?xml-stylesheet...?> lines,
   under control of the new stylesheet option.
 - The new output_newline option specifies the line endings used when writing files.
-- The new output_initial_comment option secifies the text to appear
+- The new output_initial_comment option specifies the text to appear
   in an @comment sentinel at the start of each derived file.
 - New commands in the help menu make it much easier to change configuration options.
 - Dozens of minor improvements and bug fixes.
