@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="72" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="75" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="63" left="468" height="734" width="662"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -120,7 +120,12 @@
 <v t="T71"><vh>Umlaut in headline ë</vh></v>
 </v>
 </v>
-<v t="T72" a="V"><vh>reformatParagraph test</vh></v>
+<v t="T72"><vh>reformatParagraph test</vh></v>
+<v t="T73" a="E"><vh>Read @file nodes</vh>
+<v t="T74" a="EV"><vh>@file c:\prog\test\atFileTest.txt</vh>
+<v t="T75"><vh>Node 1</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -619,5 +624,10 @@ to be able to recreate a chunk of
 text in your head or on paper, and perhaps verbally.
 
 The steps might be as follows:</t>
+<t tx="T73">@ignore</t>
+<t tx="T74">@nocolor
+This is a test file
+@others</t>
+<t tx="T75">Node one text.  changed 2.</t>
 </tnodes>
 </leo_file>
