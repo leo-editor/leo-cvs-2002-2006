@@ -704,7 +704,7 @@ class baseLeoComparePanel:
 	#@+node:run
 	def run (self):
 	
-		c = self.commands ; cmp = self.cmp ; Tk = Tkinter
+		Tk = Tkinter
 		self.top = top = Tk.Toplevel(app.root)
 		top.title("Leo Compare files and directories")
 		top.protocol("WM_DELETE_WINDOW", self.onClose)

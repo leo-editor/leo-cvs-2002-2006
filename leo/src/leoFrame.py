@@ -2089,17 +2089,16 @@ class baseLeoFrame:
 	#@+node:OnWriteNew/OldDerivedFiles
 	def OnWriteNewDerivedFiles (self,event=None):
 		
-		c = self.commands ; v = c.currentVnode()
+		c = self.commands
 	
-		c.atFileCommands.writeNewDerivedFiles(v)
+		c.atFileCommands.writeNewDerivedFiles()
 		es("auto-saving outline",color="blue")
 		self.OnSave() # Must be done to preserve tnodeList.
 		
 	def OnWriteOldDerivedFiles (self,event=None):
 		
-		c = self.commands ; v = c.currentVnode()
-	
-		c.atFileCommands.writeOldDerivedFiles(v)
+		c = self.commands
+		c.atFileCommands.writeOldDerivedFiles()
 		es("auto-saving outline",color="blue")
 		self.OnSave() # Must be done to clear tnodeList.
 	#@nonl

@@ -29,23 +29,15 @@ assert(false!=None)
 
 gApp = None # Used the leoProxy class below.
 
+# Visible externally so plugins may add to the list of directives.
+
+globalDirectiveList = [
+	"color", "comment", "encoding", "header", "ignore",
+	"language", "lineending", "nocolor", "noheader", "nowrap",
+	"pagewidth", "path", "quiet", "root", "silent",
+	"tabwidth", "terse", "unit", "verbose", "wrap"]
+
 #@+others
-#@+node:leoProxy
-class leoProxy:
-	
-	"""A proxy for the gApp object that can be created before gApp itself.
-	
-	After gApp is created, both app.x and app().x refer to gApp.x."""
-
-	def __getattr__(self,attr):
-
-		return getattr(gApp,attr)
-		
-	def __call__(self):
-		
-		return gApp
-#@nonl
-#@-node:leoProxy
 #@+node:createTopologyList
 def createTopologyList (c=None,root=None,useHeadlines=false):
 	
@@ -385,17 +377,8 @@ def findReference(name,root):
 #@nonl
 # The caller passes [root_node] or None as the second arg.  This allows us to 
 # distinguish between None and [None].
-# 
-# 5/17/03: globalDirectiveList is now visible externally so plugins may add to 
-# the list of directives.
 #@-at
 #@@c
-
-globalDirectiveList = [
-	"color", "comment", "encoding", "header", "ignore",
-	"language", "lineending", "nocolor", "noheader", "nowrap",
-	"pagewidth", "path", "quiet", "root", "silent",
-	"tabwidth", "terse", "unit", "verbose", "wrap"]
 
 def get_directives_dict(s,root=None):
 	
@@ -1996,19 +1979,25 @@ def makeDict(**keys):
 #@+node:Most common functions
 # These are guaranteed always to exist for scripts.
 #@-node:Most common functions
-#@+node:app
-if 0:
+#@+node:app & leoProxy
+class leoProxy:
 	
-	def app():
+	"""A proxy for the gApp object that can be created before gApp itself.
+	
+	After gApp is created, both app.x and app().x refer to gApp.x."""
 
-		"""Return the singleton application object."""
+	def __getattr__(self,attr):
+
+		return getattr(gApp,attr)
 		
-		trace("unexpected call")
-	
-		global gApp # "global" makes sense only within functions!
+	def __call__(self):
+		
 		return gApp
+		
+# The code can use app.x and app().x to refer to ivars of the leoApp class.
+app = leoProxy()
 #@nonl
-#@-node:app
+#@-node:app & leoProxy
 #@+node:choose
 def choose(cond, a, b): # warning: evaluates all arguments
 
@@ -3234,9 +3223,6 @@ except:
 		#@nl
 #@-node:getpreferredencoding from 2.3a2
 #@-others
-
-# The code can use app.x and app().x to refer to ivars of the leoApp class.
-app = leoProxy()
 #@nonl
 #@-node:@file leoGlobals.py
 #@-leo

@@ -7220,8 +7220,6 @@ if 0: # Register the handlers...
 from leoPlugins import *
 from leoGlobals import *
 
-count = 0
-
 def printIdleRefs(tag,keywords):
 	printGcRefs(verbose=false)
 
@@ -7242,6 +7240,9 @@ if 0:
 	registerHandler("command2", printIdleRefs)
 
 if 0: # Register the handlers...
+
+	count = 0 # For Pychecker: don't define this unless we are using this module.
+
 	if 1: # Very effective.
 		registerHandler("idle", printIdleGC)
 	else: # Very precise.

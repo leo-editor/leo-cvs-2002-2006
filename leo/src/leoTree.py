@@ -1476,11 +1476,11 @@ class baseLeoTree:
 		if event != None:
 			c = self.commands
 			if not doHook("create-popup-menu",c=c,v=v,event=event):
-				self.createPopupMenu(v,event)
+				self.createPopupMenu(event)
 			if not doHook("enable-popup-menu-items",c=c,v=v,event=event):
 				self.enablePopupMenuItems(v,event)
 			if not doHook("show-popup-menu",c=c,v=v,event=event):
-				self.showPopupMenu(v,event)
+				self.showPopupMenu(event)
 	
 		return "break"
 	#@nonl
@@ -1509,7 +1509,7 @@ class baseLeoTree:
 		
 	#@-node:OnPopupFocusLost
 	#@+node:createPopupMenu
-	def createPopupMenu (self,v,event):
+	def createPopupMenu (self,event):
 		
 		c = self.commands ; frame = c.frame
 		
@@ -1600,7 +1600,7 @@ class baseLeoTree:
 	#@nonl
 	#@-node:enablePopupMenuItems
 	#@+node:showPopupMenu
-	def showPopupMenu (self,v,event):
+	def showPopupMenu (self,event):
 		
 		"""Show a popup menu."""
 		

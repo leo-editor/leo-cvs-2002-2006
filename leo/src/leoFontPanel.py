@@ -152,7 +152,6 @@ class baseLeoFontPanel:
 	#@+node:onCancel
 	def onCancel (self):
 	
-		c = self.commands
 		self.onRevert()
 		self.showSettings()
 		self.hide()

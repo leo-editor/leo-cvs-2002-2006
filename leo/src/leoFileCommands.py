@@ -810,8 +810,6 @@ class baseFileCommands:
 	# Parses the encoding string, and sets self.leo_file_encoding.
 	
 	def getXmlVersionTag (self):
-		
-		config = app.config
 	
 		self.getTag(app.prolog_prefix_string)
 		encoding = self.getDqString()

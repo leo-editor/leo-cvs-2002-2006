@@ -670,15 +670,15 @@ class baseAtFile:
 	#@nonl
 	#@-node:top_df.write, rawWrite, silentWrite
 	#@+node:top_df.writeOld/NewDerivedFiles
-	def writeOldDerivedFiles (self,v):
+	def writeOldDerivedFiles (self):
 		
-		self.writeDerivedFiles(v,write_old=true)
+		self.writeDerivedFiles(write_old=true)
 	
-	def writeNewDerivedFiles (self,v,nosentinels=false):
+	def writeNewDerivedFiles (self):
 	
-		self.writeDerivedFiles(v,write_old=false)
+		self.writeDerivedFiles(write_old=false)
 		
-	def writeDerivedFiles (self,v,write_old):
+	def writeDerivedFiles (self,write_old):
 		
 		config = app.config
 		old = config.write_old_format_derived_files
@@ -1217,17 +1217,9 @@ class baseOldDerivedFile:
 	#@nonl
 	#@-node:scanDoc
 	#@+node:scanText
-	#@+at 
-	#@nonl
-	# This method is the read code.
-	# 
-	# scanText reads lines from the file until the given ending sentinel is 
-	# found, and warns if any other ending sentinel is found instead.  It 
-	# calls itself recursively to handle most nested sentinels.
-	# 
-	#@-at
-	#@@c
 	def scanText (self,file,v,out,endSentinelKind,nextLine=None):
+		
+		"""Scan a 3.x derived file recursively."""
 	
 		lastLines = [] # The lines after @-leo
 		lineIndent = 0 ; linep = 0 # Changed only for sentinels.
@@ -1359,10 +1351,6 @@ class baseOldDerivedFile:
 				child_out = [] ; child = v # Do not change out or v!
 				oldIndent = self.indent ; self.indent = lineIndent
 				self.scanText(file,child,child_out,endBody)
-				
-				if 0:
-					if child.isOrphan():
-						self.readError("Replacing body text of orphan: " + child.headString())
 				
 				# Set the body, removing cursed newlines.
 				# This must be done here, not in the @+node logic.
@@ -2262,6 +2250,7 @@ class baseOldDerivedFile:
 		
 		c = self.commands ; self.root = root
 		self.errors = 0
+		self.sentinels = true # 10/1/03
 		c.endEditing() # Capture the current headline.
 		try:
 			self.targetFileName = root.atRawFileNodeName()
@@ -2576,7 +2565,7 @@ class baseOldDerivedFile:
 	#@+node:atFile.handleWriteException
 	def handleWriteException (self,root=None):
 		
-		es("exception writing:" + self.targetFileName)
+		es("exception writing:" + self.targetFileName,color="red")
 		es_exception()
 		
 		if self.outputFile:
@@ -2588,7 +2577,7 @@ class baseOldDerivedFile:
 			try: # Just delete the temp file.
 				os.remove(self.outputFileName)
 			except:
-				es("exception deleting:" + self.outputFileName)
+				es("exception deleting:" + self.outputFileName,color="red")
 				es_exception()
 	
 		if root:
@@ -2606,10 +2595,10 @@ class baseOldDerivedFile:
 			self.scanAllDirectives(root)
 			valid = self.errors == 0
 		except:
-			es("exception in atFile.scanAllDirectives")
+			self.writeError("exception in atFile.scanAllDirectives")
 			es_exception()
 			valid = false
-		
+	
 		if valid:
 			try:
 				fn = self.targetFileName
@@ -2617,34 +2606,29 @@ class baseOldDerivedFile:
 				self.targetFileName = os.path.join(self.default_directory,fn)
 				self.targetFileName = os.path.normpath(self.targetFileName)
 				path = os.path.dirname(self.targetFileName)
-				if path and len(path) > 0:
-					valid = os.path.exists(path)
-					if not valid:
-						self.writeError("path does not exist: " + path)
-				else:
+				if not path or not os.path.exists(path):
+					self.writeError("path does not exist: " + path)
 					valid = false
 			except:
-				es("exception creating path:" + fn)
+				self.writeError("exception creating path:" + fn)
 				es_exception()
 				valid = false
-		
-		if valid:
-			if os.path.exists(self.targetFileName):
-				try:
-					read_only = not os.access(self.targetFileName,os.W_OK)
-					if read_only:
-						es("read only: " + self.targetFileName)
-						valid = false
-				except:
-					pass # os.access() may not exist on all platforms.
+	
+		if valid and os.path.exists(self.targetFileName):
+			try:
+				if not os.access(self.targetFileName,os.W_OK):
+					self.writeError("read only: " + self.targetFileName)
+					valid = false
+			except:
+				pass # os.access() may not exist on all platforms.
 			
 		if valid:
 			try:
 				self.outputFileName = self.targetFileName + ".tmp"
 				self.outputFile = open(self.outputFileName,'wb')
-				valid = self.outputFile != None
-				if not valid:
+				if self.outputFile is None:
 					self.writeError("can not open " + self.outputFileName)
+					valid = false
 			except:
 				es("exception opening:" + self.outputFileName)
 				es_exception()
@@ -3390,7 +3374,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.tnodeList = [] ; at.tnodeListIndex = 0
 		at.t = None ; at.tStack = []
 	
-		# The dispatch dictionary used by scanText.
+		# The dispatch dictionary used by scanText4.
 		at.dispatch_dict = {
 			# Plain line.
 			noSentinel: at.readNormalLine,
@@ -3432,7 +3416,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		# Scan the 4.x file.
 		at.scanAllDirectives(root)
 		at.tnodeListIndex = 0
-		lastLines = at.scanText(file,root)
+		lastLines = at.scanText4(file,root)
 		root.t.setVisited() # Disable warning about set nodes.
 		
 		# Handle first and last lines.
@@ -3492,14 +3476,14 @@ class baseNewDerivedFile(oldDerivedFile):
 			trace(at.tnodeListIndex,len(at.root.tnodeList))
 			return None
 	#@-node:findChild
-	#@+node:scanText & allies
-	def scanText (self,file,v):
+	#@+node:scanText4 & allies
+	def scanText4 (self,file,v):
 		
-		"""The new 4.x read code.."""
+		"""Scan a 4.x derived file non-recursively."""
 	
 		at = self
-		#@	<< init ivars for scanText >>
-		#@+node:<< init ivars for scanText >>
+		#@	<< init ivars for scanText4 >>
+		#@+node:<< init ivars for scanText4 >>
 		# Unstacked ivars...
 		at.done = false
 		at.inCode = true
@@ -3519,7 +3503,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			else:
 				trace("no tnodeList",v)
 		#@nonl
-		#@-node:<< init ivars for scanText >>
+		#@-node:<< init ivars for scanText4 >>
 		#@nl
 		while at.errors == 0 and not at.done:
 			s = at.readLine(file)
@@ -3547,7 +3531,7 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		return at.lastLines
 	#@nonl
-	#@-node:scanText & allies
+	#@-node:scanText4 & allies
 	#@+node:readNormalLine
 	def readNormalLine (self,s,i):
 	
@@ -4076,7 +4060,7 @@ class baseNewDerivedFile(oldDerivedFile):
 				# The @ws sentinel contributs the _delta_ of the whitespace that precedes it.
 				at.putIndent(at.indent) ; at.os(s[i:j]) # Put the whitespace, preserving its spelling.
 				oldIndent = at.indent ; at.indent = 0 # Put the @ws sentinel with no more leading whitespace.
-				at.putSentinel("@ws",putLeadingNewlineFlag=false)
+				at.putSentinel("@ws")
 				at.indent = oldIndent
 		else:
 			at.os(s[k:j]) ; at.onl()
@@ -4125,7 +4109,7 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@+node:putSentinel (applies cweb hack)
 	# This method outputs all sentinels.
 	
-	def putSentinel(self,s,putLeadingNewlineFlag=false):
+	def putSentinel(self,s):
 	
 		"Write a sentinel whose text is s, applying the CWEB hack if needed."
 		
@@ -4134,8 +4118,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		if not at.sentinels:
 			return # Handle @file-nosent
 	
-		if putLeadingNewlineFlag:
-			at.onl()
 		at.putIndent(at.indent)
 		at.os(at.startSentinelComment)
 		#@	<< apply the cweb hack to s >>
@@ -4386,7 +4368,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.handleWriteException()
 	#@nonl
 	#@-node:new_df.write
-	#@+node:new_df.rawWrite (needs testing)
+	#@+node:new_df.rawWrite
 	def rawWrite(self,root):
 	
 		at = self
@@ -4395,16 +4377,14 @@ class baseNewDerivedFile(oldDerivedFile):
 		c = at.commands ; at.root = root
 		at.errors = 0
 		at.root.tnodeList = [] # 9/26/03: after beta 1 release.
+		at.sentinels = true # 10/1/03
 		c.endEditing() # Capture the current headline.
 		try:
 			at.targetFileName = root.atRawFileNodeName()
 			ok = at.openWriteFile(root)
 			if not ok: return
-			next = root.nodeAfterTree()
 			#@		<< write root's tree >>
 			#@+node:<< write root's tree >>
-			next = root.nodeAfterTree()
-			
 			#@<< put all @first lines in root >>
 			#@+node:<< put all @first lines in root >>
 			#@+at 
@@ -4430,7 +4410,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@nonl
 			#@-node:<< put all @first lines in root >>
 			#@nl
-			at.putOpenLeoSentinel("@+leo-ver=4") # 9/26/03: after beta 1 release.
+			at.putOpenLeoSentinel("@+leo-ver=4")
 			#@<< put optional @comment sentinel lines >>
 			#@+node:<< put optional @comment sentinel lines >>
 			s2 = app.config.output_initial_comment
@@ -4443,6 +4423,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@-node:<< put optional @comment sentinel lines >>
 			#@nl
 			
+			next = root.nodeAfterTree()
 			v = root
 			while v and v != next:
 				#@	<< Write v's node >>
@@ -4451,7 +4432,6 @@ class baseNewDerivedFile(oldDerivedFile):
 				
 				s = v.bodyString()
 				if s and len(s) > 0:
-					
 					s = toEncodedString(s,at.encoding,reportErrors=true) # 3/7/03
 					at.outputStringWithLineEndings(s)
 					
@@ -4498,7 +4478,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		except:
 			at.handleWriteException(root)
 	#@nonl
-	#@-node:new_df.rawWrite (needs testing)
+	#@-node:new_df.rawWrite
 	#@+node:putBody
 	def putBody(self,v):
 		

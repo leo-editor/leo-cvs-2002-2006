@@ -991,7 +991,6 @@ class baseLeoImportCommands:
 		scan_start = 0
 		class_start = 0
 		function_start = 0
-		c = self.commands
 		i = 0
 		class_body = ""
 		class_node = ""

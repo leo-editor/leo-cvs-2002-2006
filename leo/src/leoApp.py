@@ -151,8 +151,9 @@ class LeoApp:
 	#@+node:app.createTkGui
 	def createTkGui (self):
 		
-		app = self
+		"""A convenience routines for plugins to create the default Tk gui class."""
 		
+		app = self
 		app.gui = leoGui.tkinterGui()
 		app.root = app.gui.createRootWindow()
 	#@nonl
@@ -221,7 +222,7 @@ class LeoApp:
 		for v in vList:
 			clearAllIvars(v)
 		
-		vList = [] ; tList = [] # Remove these references immediately.
+		vList = [] ; tDict = {} # Remove these references immediately.
 		#@nonl
 		#@-node:<< clear all vnodes and tnodes in the tree>>
 		#@nl
@@ -352,80 +353,6 @@ class LeoApp:
 	
 	
 	#@-node:app.onQuit
-	#@+node:app.setLeoID (not used)
-	def setLeoID (self):
-		
-		tag = ".leoID.txt"
-		loadDir = app.loadDir
-		configDir = app.config.configDir
-		#@	<< return if we can set self.leoID from sys.leoID >>
-		#@+node:<< return if we can set self.leoID from sys.leoID>>
-		# This would be set by in Python's sitecustomize.py file.
-		try:
-			app.leoID = sys.leoID
-			es("leoID = " + app.leoID, color="blue")
-			return
-		except:
-			app.leoID = None
-		#@nonl
-		#@-node:<< return if we can set self.leoID from sys.leoID>>
-		#@nl
-		#@	<< return if we can set self.leoID from "leoID.txt" >>
-		#@+node:<< return if we can set self.leoID from "leoID.txt" >>
-		for dir in (configDir,loadDir):
-			try:
-				fn = os.path.join(dir, tag)
-				f = open(fn,'r')
-				if f:
-					s = f.readline()
-					f.close()
-					if s and len(s) > 0:
-						app.leoID = s
-						es("leoID = " + app.leoID, color="blue")
-						return
-					else:
-						es("empty " + tag + " in " + dir, color = "red")
-			except:
-				app.leoID = None
-				
-		if configDir == loadDir:
-			es(tag + " not found in " + loadDir, color="red")
-		else:
-			es(tag + " not found in " + configDir + " or " + loadDir, color="red")
-		
-		#@-node:<< return if we can set self.leoID from "leoID.txt" >>
-		#@nl
-		#@	<< put up a dialog requiring a valid id >>
-		#@+node:<< put up a dialog requiring a valid id >>
-		app.leoID = leoDialog.askLeoID().run(modal=true)
-		
-		es("leoID = " + `app.leoID`, color="blue")
-		#@nonl
-		#@-node:<< put up a dialog requiring a valid id >>
-		#@nl
-		#@	<< attempt to create leoID.txt >>
-		#@+node:<< attempt to create leoID.txt >>
-		for dir in (configDir,loadDir):
-			try:
-				# Look in configDir first.
-				fn = os.path.join(dir, tag)
-				f = open(fn,'w')
-				if f:
-					f.write(app.leoID)
-					f.close()
-					es("created leoID.txt in " + dir, color="red")
-					return
-			except: pass
-			
-		if configDir == loadDir:
-			es("can not create leoID.txt in " + loadDir, color="red")
-		else:
-			es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
-		
-		#@-node:<< attempt to create leoID.txt >>
-		#@nl
-	#@nonl
-	#@-node:app.setLeoID (not used)
 	#@+node:app.setLog, lockLog, unlocklog
 	def setLog (self,log,tag=""):
 		"""set the frame to which log messages will go"""
