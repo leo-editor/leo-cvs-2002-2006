@@ -35,9 +35,9 @@
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
-<v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
+<v t="ekr.20041119034357.3" a="E"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
-<v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
+<v t="ekr.20041119034357.13" a="TV"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041119034357.7"><vh>.leo file options</vh>
 <v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
 <v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
@@ -132,7 +132,7 @@
 <v t="ekr.20041119034357.21" a="E"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
-<v t="ekr.20041119034357.24" a="TV"><vh>@shortcuts Control</vh></v>
+<v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
 <v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
 <v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
 <v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
@@ -255,8 +255,14 @@ Note 3: This field must be empty for compatibility with older versions of Leo.</
 <t tx="ekr.20041119034357.12"></t>
 <t tx="ekr.20041119034357.13">True: Leo loads plugins on startup.
 
-Warning: Naive or hostile hooks may execute HOSTILE CODE contained in .leo files. See further warnings in LeoDocs.leo.
-</t>
+Warnings:
+
+- This is a global option ONLY. It can only be set in the leoSettings.leo files
+that Leo reads during startup. Changing this option in other Leo files will have
+NO effect.
+
+- When this option is enabled, plugins could potentially execute HOSTILE CODE
+contained in Leo files. See further warnings in LeoDocs.leo.</t>
 <t tx="ekr.20041119034357.14">This option affects how Leo treats body text in @root trees.
 
 True:    Body text in @root trees start in doc mode.
