@@ -17,47 +17,52 @@
 #@-at
 #@@c
 
-# Icon area: order is important.
-mod_scripting.py
-hoist.py
-
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
+word_export.py
+#open_shell.py
+plugin_manager.py
+
+# Several plugins depend on TabbedLog.
+TabbedLog.py
+
+# Icon area: order is important.
+mod_scripting.py
+#hoist.py
+
 spellpyx.py
-nodenavigator.py
+#nodenavigator.py
 rst2.py
 #searchbox.py
-xemacs.py
+#xemacs.py
 open_with.py
 #nav_buttons.py
 base64Packager.py
 #EditAttributes.py
 #groupOperations.py
-multifile.py
+#multifile.py
 #xsltWithNodes.py
 #cleo.py
-mod_read_dir_outline.py
+#mod_read_dir_outline.py
 #footprints.py
 #mod_labels.py
 #trace_tags.py
 #Library.py
-ConceptualSort.py
-macros.py
-scheduler.py
+#ConceptualSort.py
+#macros.py
+#scheduler.py
 #templates.py
-dyna_menu.py
-arrows.py
-autocompleter.py
+#dyna_menu.py
+#arrows.py
+#autocompleter.py
 #nodebar.py
-UASearch.py
-URLloader.py
-read_only_nodes.py
+#UASearch.py
+#URLloader.py
+#read_only_nodes.py
 color_markup.py
-import_cisco_config.py
-table.py
-TabbedLog.py
-plugin_manager.py
-
+#import_cisco_config.py
+#table.py
 UNL.py
+#@nonl
 #@-node:edream.120603093808:@thin pluginsManager.txt
 #@-leo
