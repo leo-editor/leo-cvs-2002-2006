@@ -20,8 +20,9 @@ visibleInitially = False # True: open spell dialog initially.
 # This directory should contain aspell.pyd.
 # Change this path in setup.py if you recompile the pyd.
 aspell_dir = r'c:/Aspell'
+ini_file_name = __name__ + ".ini"
 
-__version__ = "0.6"
+__version__ = "0.7"
 #@<< version history >>
 #@+node:ekr.20040915052810:<< version history >>
 #@+at
@@ -37,6 +38,8 @@ __version__ = "0.6"
 # 0.6 EKR: Hacked findNextWord so contractions are handled properly.
 #     tcl_wordchars defines the characters in a word, but I don't know how to 
 # set this.
+# 0.7 EKR: Uses spellpyx.ini and spellpyx.txt instead of mode_spelling.ini and 
+# mod_spelling.txt.
 #@-at
 #@nonl
 #@-node:ekr.20040915052810:<< version history >>
@@ -147,11 +150,11 @@ if Tk and aspell and not g.app.unitTesting:
         #@+node:ekr.20040809151600.13:getAspellDirectory
         def getAspellDirectory(self):
         
-            """Get the directory containing aspell.exe from mod_spelling.ini"""
+            """Get the directory containing aspell.exe from the .ini file"""
         
             try:
                 fileName = os.path.join(
-                        g.app.loadDir, "../", "plugins", "mod_spelling.ini")
+                        g.app.loadDir, "../", "plugins",ini_file_name)
                 config = ConfigParser.ConfigParser()
                 config.read(fileName)
                 return config.get("main", "aspell_dir")
@@ -261,10 +264,10 @@ if Tk and aspell and not g.app.unitTesting:
         #@+node:ekr.20040809151600.20:getLocalDictionary
         def getLocalDictionary(self):
             
-            """Get the dictionaries containing words not in the standard dictionary from mod_spelling.ini"""
+            """Get the dictionaries containing words not in the standard dictionary from the .ini file."""
         
             try:
-                fileName = os.path.join(g.app.loadDir,"../","plugins","mod_spelling.ini")
+                fileName = os.path.join(g.app.loadDir,"../","plugins",ini_file_name)
                 config = ConfigParser.ConfigParser()
                 config.read(fileName)
                 return config.get("main","local_leo_dictionary",None)
@@ -275,10 +278,10 @@ if Tk and aspell and not g.app.unitTesting:
         #@-node:ekr.20040809151600.20:getLocalDictionary
         #@+node:ekr.20040809151600.21:getLocalLanguageCode
         def getLocalLanguageCode(self, defaultLanguageCode):
-            """Get the dictionaries containing words not in the standard dictionary from mod_spelling.ini"""
+            """Get the dictionaries containing words not in the standard dictionary from the .ini file."""
         
             try:
-                fileName = os.path.join(g.app.loadDir,"../","plugins","mod_spelling.ini")
+                fileName = os.path.join(g.app.loadDir,"../","plugins",ini_file_name)
                 config = ConfigParser.ConfigParser()
                 config.read(fileName)
                 return config.get("main", "local_language_code", defaultLanguageCode)
