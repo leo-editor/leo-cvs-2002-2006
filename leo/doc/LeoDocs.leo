@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3813" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3822" clone_windows="0"/>
 <globals body_outline_ratio="0.444976076555">
-	<global_window_position top="35" left="284" height="836" width="832"/>
+	<global_window_position top="63" left="296" height="836" width="832"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1655,12 +1655,13 @@
 <v t="edream.110203163054.1157"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050"><vh>FAQ</vh>
+<v t="edream.110203163054.1050" a="E"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
 <v t="edream.110203163054.1054"><vh>Why should I use clones?</vh></v>
 <v t="edream.110203163054.1055"><vh>Which should I use: @root trees or @file trees?</vh></v>
+<v t="ekr.20040411074926"><vh>How can I use Leo to develop Leo (or plugins) ?</vh></v>
 </v>
 <v t="edream.110203163054.1056"><vh>Unicode and special characters</vh>
 <v t="edream.110203163054.1057"><vh>Some characters in derived files look funny. What can I do?</vh></v>
@@ -1742,7 +1743,7 @@
 <v t="edream.120903151103"><vh>Importing files</vh>
 <v t="edream.120903151103.1"><vh>How can I import many files at once?</vh></v>
 </v>
-<v t="edream.110203163054.1071"><vh>Other topics</vh>
+<v t="edream.110203163054.1071" a="E"><vh>Other topics</vh>
 <v t="edream.110203163054.1072"><vh>How can I cut and paste nodes between different copies of Leo</vh></v>
 <v t="edream.110203163054.1073"><vh>How can I add support in Leo for a new language?</vh>
 <v t="edream.110203163054.1074"><vh>code</vh>
@@ -1791,6 +1792,7 @@
 </v>
 </v>
 <v t="edream.110203163054.1108"><vh>How can I create a template .leo file?</vh></v>
+<v t="ekr.20040411074926" a="TV"><vh>How can I use Leo to develop Leo (or plugins) ?</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.1158"><vh>Sample Code</vh>
@@ -1864,23 +1866,23 @@
 </v>
 </v>
 <v t="ekr.20040403175746" a="E"><vh>Scripting chapter using the rst plugin</vh>
-<v t="ekr.20040403171740" a="ETV"><vh>@rst scripting.html</vh>
-<v t="ekr.20040403183229"><vh>Overview</vh>
+<v t="ekr.20040403171740" a="E"><vh>@rst scripting.html</vh>
+<v t="ekr.20040403183229" a="E"><vh>Overview</vh>
 <v t="ekr.20040403183229.1"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403175011"><vh>g.top(): the commander of the top window</vh>
+<v t="ekr.20040403175011" a="E"><vh>g.top(): the commander of the top window</vh>
 <v t="ekr.20040403175011.1"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.3"><vh>g.es(): write to the log pane</vh>
+<v t="ekr.20040403173920.3" a="E"><vh>g.es(): write to the log pane</vh>
 <v t="ekr.20040403175257"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403175157.1"><vh>app.windowList: the list of all open frames</vh>
+<v t="ekr.20040403175157.1" a="E"><vh>app.windowList: the list of all open frames</vh>
 <v t="ekr.20040403175157.2"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.6"><vh>Getting and setting headline and body text</vh>
+<v t="ekr.20040403173920.6" a="E"><vh>Getting and setting headline and body text</vh>
 <v t="ekr.20040403180217"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.9"><vh>Traversing outlines</vh>
+<v t="ekr.20040403173920.9" a="E"><vh>Traversing outlines</vh>
 <v t="ekr.20040403183934" a="E"><vh>@rst</vh>
 <v t="ekr.20040403173920.10" a="E"><vh>c.allNodes_iter</vh>
 <v t="ekr.20040403185643"><vh>@rst</vh></v>
@@ -1902,13 +1904,13 @@
 <v t="ekr.20040403173920.17" a="E"><vh>Updating the screen</vh>
 <v t="ekr.20040403183934.1"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.18"><vh>Invoking commands from scripts</vh>
+<v t="ekr.20040403173920.18" a="E"><vh>Invoking commands from scripts</vh>
 <v t="ekr.20040403183934.2"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.19"><vh>Getting and setting preferences</vh>
+<v t="ekr.20040403173920.19" a="E"><vh>Getting and setting preferences</vh>
 <v t="ekr.20040403183934.3"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.21"><vh>Functions for finding and changing text from scripts</vh>
+<v t="ekr.20040403173920.21" a="E"><vh>Functions for finding and changing text from scripts</vh>
 <v t="ekr.20040403184306.1" a="E"><vh>@rst</vh>
 <v t="ekr.20040403191729" a="E"><vh>g.findAll</vh>
 <v t="ekr.20040403173920.22" a="E"><vh>@rst</vh></v>
@@ -1918,17 +1920,17 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040403173920.24"><vh>Running Leo in batch mode</vh>
+<v t="ekr.20040403173920.24" a="E"><vh>Running Leo in batch mode</vh>
 <v t="ekr.20040403184306.2"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.25"><vh>Functions defined in leoGlobals.py</vh>
+<v t="ekr.20040403173920.25" a="E"><vh>Functions defined in leoGlobals.py</vh>
 <v t="ekr.20040403184306.3"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.5"><vh>Redirecting output from scripts</vh>
+<v t="ekr.20040403173920.5" a="E"><vh>Redirecting output from scripts</vh>
 <v t="ekr.20040403183718"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.26" a="E"><vh>Summary of the vnode and position classes</vh>
-<v t="ekr.20040403184306.4"><vh>@rst</vh>
+<v t="ekr.20040403184306.4" a="E"><vh>@rst</vh>
 <v t="ekr.20040403173920.27" a="E"><vh>Getters</vh>
 <v t="ekr.20040403192653"><vh>@rst</vh></v>
 </v>
@@ -1938,9 +1940,6 @@
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20040403203116"><vh>Test</vh>
-<v t="ekr.20040403203116.1"><vh>@rst</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -11947,13 +11946,19 @@ for p in c.allNodes_iter():
 
 g.es("%8s" % "positions",positions)
 g.es("%8s" % "vnodes",len(tnodes.keys()))</t>
-<t tx="ekr.20040403171740">####################################
-Chapter 7: Scripting Leo with Python
-####################################
+<t tx="ekr.20040403171740">##########################################
+|leo| Chapter 7: Scripting Leo with Python
+##########################################
 
 This chapter documents scripting for Leo using Python.
 
-.. contents::</t>
+.. contents::
+
+.. _front:                http://webpages.charter.net/edreamleo/front.html
+
+.. |leo|   image:: leo.gif
+	:target: front_
+</t>
 <t tx="ekr.20040403173920.3"></t>
 <t tx="ekr.20040403173920.5"></t>
 <t tx="ekr.20040403173920.6"></t>
@@ -11970,40 +11975,44 @@ This chapter documents scripting for Leo using Python.
 <t tx="ekr.20040403173920.22">@ignore
 @wrap
 
-The findall function returns a list of tuples (v,pos) describing matches in c's entire tree::
+The findall function returns a list of tuples (v,pos) describing matches in c's entire tree.
 
-	import leoGlobals as g
-	import leoFindScript
-	c = g.top()
-	
-	pattern="import leoGlobals as g"
-	result = leoFindScript.findAll(c,pattern,bodyFlag=1)
-	
-	g.es("%-3d instances of: '%s'...\n" % (len(result),pattern),color="purple")
-	
-	for v,pos in result:
-		body = v.bodyString()
-		g.es('\n%-4d %s' % (pos,v.headString()))
-		g.es(g.get_line_after(body,pos))</t>
+.. code-block:: Python
+
+    import leoGlobals as g
+    import leoFindScript
+    c = g.top()
+
+    pattern="import leoGlobals as g"
+    result = leoFindScript.findAll(c,pattern,bodyFlag=1)
+    
+    g.es("%-3d instances of: '%s'...\n" % (len(result),pattern),color="purple")
+    
+    for v,pos in result:
+        body = v.bodyString()
+        g.es('\n%-4d %s' % (pos,v.headString()))
+        g.es(g.get_line_after(body,pos))</t>
 <t tx="ekr.20040403173920.23">@ignore
 @wrap
 
 The reFindall function returns a list of tuples (v,mo,pos),
 where mo is a "Match Object".
-The reFlags argument are flags to re.search()::
+The reFlags argument are flags to re.search().
 
-	import leoGlobals as g
-	import leoFindScript
-	c = g.top()
-	
-	pattern="from .* import"
-	result = leoFindScript.reFindAll(c,pattern,bodyFlag=1,reFlags=None)
-	
-	g.es("%-3d instances of: '%s'...\n" % (len(result),pattern),color="purple")
-	for v,mo,pos in result:
-		body = v.bodyString()
-		g.es('\n%-4d %s' % (pos,v.headString()))
-		g.es(g.get_line_after(body,pos))</t>
+.. code-block:: Python
+
+    import leoGlobals as g
+    import leoFindScript
+    c = g.top()
+
+    pattern="from .* import"
+    result = leoFindScript.reFindAll(c,pattern,bodyFlag=1,reFlags=None)
+
+    g.es("%-3d instances of: '%s'...\n" % (len(result),pattern),color="purple")
+    for v,mo,pos in result:
+        body = v.bodyString()
+        g.es('\n%-4d %s' % (pos,v.headString()))
+        g.es(g.get_line_after(body,pos))</t>
 <t tx="ekr.20040403173920.24"></t>
 <t tx="ekr.20040403173920.25"></t>
 <t tx="ekr.20040403173920.26"></t>
@@ -12011,82 +12020,100 @@ The reFlags argument are flags to re.search()::
 <t tx="ekr.20040403173920.28"></t>
 <t tx="ekr.20040403175011"></t>
 <t tx="ekr.20040403175011.1">@ignore
+@nocolor
 @wrap
 
-The g.top() function returns the Commands object of the top Leo window::
+The g.top() function returns the Commands object of the top Leo window:
 
-	import leoGlobals as g
-	c = g.top()
-	g.es(c)
-	g.es(c.rootPosition())</t>
+.. code-block:: Python
+
+    import leoGlobals as g
+    c = g.top()
+    g.es(c)
+    g.es(c.rootPosition())</t>
 <t tx="ekr.20040403175157.1"></t>
 <t tx="ekr.20040403175157.2">@ignore
 @wrap
 
 The windowlist attribute of the application instance contains the list of the
 frames of all open windows. The commands ivar of the frame gives the commander
-for that frame. Execute this code now with the Execute Script command::
+for that frame. Execute this code now with the Execute Script command.
 
-	import leoGlobals as g
-	windows = g.app.windowList # get the list of all open frames.
-	g.es("windows...")
-	for f in windows:
-		c = f.c # c is f's commander
-		g.es(f)
-		g.es(f.shortFileName())
-		g.es(c)
-		g.es(c.rootPosition())</t>
+.. code-block:: Python
+
+    import leoGlobals as g
+    windows = g.app.windowList # get the list of all open frames.
+    g.es("windows...")
+    for f in windows:
+        c = f.c # c is f's commander
+        g.es(f)
+        g.es(f.shortFileName())
+        g.es(c)
+        g.es(c.rootPosition())</t>
 <t tx="ekr.20040403175257">@ignore
 @wrap
 
-The g.es method prints its arguments to the log pane::
+The g.es method prints its arguments to the log pane.
 
-	import leoGlobals as g
-	g.es("Hello world")
+.. code-block:: Python
 
-g.es converts non-string arguments using repr::
-	
-	g.es("Hello","world")
+    import leoGlobals as g
+    g.es("Hello world")
 
-g.es prints multiple arguments separated by commas::
+g.es converts non-string arguments using repr.
 
-	g.es(g.top())</t>
+.. code-block:: Python
+
+    g.es("Hello","world")
+
+g.es prints multiple arguments separated by commas.
+
+.. code-block:: Python
+
+    g.es(g.top())</t>
 <t tx="ekr.20040403175746">@nocolor
 
 Double-click the @rst scripting.html node to generate the file</t>
 <t tx="ekr.20040403180217">@ignore
 @wrap
 
-Here is how to access the data of a Leo window::
+Here is how to access the data of a Leo window.
 
-	import leoGlobals as g
-	c = g.top()
-	p = c.currentPosition() # get the current position.
-	g.es(p)
-	g.es("head:",p.headString())
-	g.es("body:",p.bodyString())
+.. code-block:: Python
 
-The following show how to access data at a given position::
+    import leoGlobals as g
+    c = g.top()
+    p = c.currentPosition() # get the current position.
+    g.es(p)
+    g.es("head:",p.headString())
+    g.es("body:",p.bodyString())
 
-	import leoGlobals as g
-	c = g.top()
-	p = c.currentPosition()
-	body = p.bodyString()
-	head = p.headString()
-	p.setBodyStringOrPane(body)     # set body text of p to body.
-	p.setHeadStringOrHeadline(head) # set headline text of p to head.
+The following show how to access data at a given position.
+
+.. code-block:: Python
+
+    import leoGlobals as g
+    c = g.top()
+    p = c.currentPosition()
+    body = p.bodyString()
+    head = p.headString()
+    p.setBodyStringOrPane(body)     # set body text of p to body.
+    p.setHeadStringOrHeadline(head) # set headline text of p to head.
 
 BTW, these methods will work whether or not p is the current position.</t>
 <t tx="ekr.20040403183229"></t>
 <t tx="ekr.20040403183229.1">@ignore
+@nocolor
 @wrap
 
 This chapter describes only the most useful functions, classes and methods in leo.py.  However, keep in mind the following: **Your scripts have complete access to all of Leo's source code.**  Therefore, the most complete documentation for scripting is Leo's source code itself, that is, the file LeoPy.leo.  In particular, see the node called "Overview of the Code", the first child of the node called "Code".
 
-Leo's source code is a collection of classes, along with utility functions in leoGlobals.py.  The preferred way of accessing the functions and data in leoGlobals.py is as follows::
+Leo's source code is a collection of classes, along with utility functions in leoGlobals.py.  The preferred way of accessing the functions and data in leoGlobals.py is as follows.
 
-	import leoGlobals as g
-	from leoGlobals import true,false
+.. code-block:: Python
+
+    import leoGlobals as g
+    from leoGlobals import true,false
 
 After these imports you may call function x in leoGlobals with g.x()
 
@@ -12110,13 +12137,13 @@ A **tnode** represents the actual data in a vnode, including headline and body t
 
 Leo updates **joined vnodes** together.  Cloned nodes are joined, as are corresponding nodes in the subtrees of cloned nodes.
 
-**New in Leo 4.2**: Cloned vnodes use a *single* subtree to represent their common decendent trees.
+*New in Leo 4.2*: Cloned vnodes use a *single* subtree to represent their common decendent trees.
 A **shared subtree** is a tree of vnodes shared by multiple cloned nodes.  Therefore, all joined nodes are represented by the *same* vnode.  Thus, in version 4.2 vnodes no longer represent a unique location on the screen, nor do vnodes represent a particular position in a traversal of a tree.
 
-**New in Leo 4.2**: A **position** object represents the location of a particular node in a tree traversal or on the screen.  By convention, any variable named p or p1 or p2 refers to a position.  For any position p, p.v is the vnode at that position and p.v.t is the tnode at that position.
+*New in Leo 4.2*: A **position** object represents the location of a particular node in a tree traversal or on the screen.  By convention, any variable named p or p1 or p2 refers to a position.  For any position p, p.v is the vnode at that position and p.v.t is the tnode at that position.
 
 Leo's code uses position objects very much like vnodes were used in pre-4.2 versions of Leo.  In particular:
-	
+
 - In Leo 4.2 the c.currentVnode and c.rootVnode methods return _positions_, not vnodes.
 - position objects support all the common vnode methods that were used in scripts prior to Leo 4.2.
 
@@ -12125,43 +12152,47 @@ As a result, most scripts written before Leo 4.2 will continue to work in Leo 4.
 <t tx="ekr.20040403183718">@ignore
 @wrap
 
-leoGlobal.py defines 6 convenience methods for redirecting stdout and stderr::
+leoGlobal.py defines 6 convenience methods for redirecting stdout and stderr.
 
-	g.redirectStderr() # Redirect stderr to the current log pane.
-	g.redirectStdout() # Redirect stdout to the current log pane.
-	g.restoreStderr()  # Restores stderr so it prints to the console window.
-	g.restoreStdout()  # Restores stdout so it prints to the console window.
-	g.stdErrIsRedirected() # Returns true if the stderr stream is redirected to the log pane.
-	g.stdOutIsRedirected() # Returns true if the stdout stream is redirected to the log pane.
+.. code-block:: Python
+
+    g.redirectStderr() # Redirect stderr to the current log pane.
+    g.redirectStdout() # Redirect stdout to the current log pane.
+    g.restoreStderr()  # Restores stderr so it prints to the console window.
+    g.restoreStdout()  # Restores stdout so it prints to the console window.
+    g.stdErrIsRedirected() # Returns true if the stderr stream is redirected to the log pane.
+    g.stdOutIsRedirected() # Returns true if the stdout stream is redirected to the log pane.
 
 Calls need _not_ be paired. Redundant calls are ignored and the last call made
 controls where output for each stream goes.
 
-Note: you must execute Leo in a console window to see non-redirected output from the print statement::
+Note: you must execute Leo in a console window to see non-redirected output from the print statement.
 
-	import leoGlobals as g
-	print "stdout isRedirected:", g.stdOutIsRedirected()
-	print "stderr isRedirected:", g.stdErrIsRedirected()
-	
-	g.redirectStderr()
-	print "stdout isRedirected:", g.stdOutIsRedirected()
-	print "stderr isRedirected:", g.stdErrIsRedirected()
-	
-	g.redirectStdout()
-	print "stdout isRedirected:", g.stdOutIsRedirected()
-	print "stderr isRedirected:", g.stdErrIsRedirected()
-	
-	g.restoreStderr()
-	print "stdout isRedirected:", g.stdOutIsRedirected()
-	print "stderr isRedirected:", g.stdErrIsRedirected()
-	
-	g.restoreStdout()
-	print "stdout isRedirected:", g.stdOutIsRedirected()
-	print "stderr isRedirected:", g.stdErrIsRedirected()</t>
+.. code-block:: Python
+
+    import leoGlobals as g
+    print "stdout isRedirected:", g.stdOutIsRedirected()
+    print "stderr isRedirected:", g.stdErrIsRedirected()
+
+    g.redirectStderr()
+    print "stdout isRedirected:", g.stdOutIsRedirected()
+    print "stderr isRedirected:", g.stdErrIsRedirected()
+
+    g.redirectStdout()
+    print "stdout isRedirected:", g.stdOutIsRedirected()
+    print "stderr isRedirected:", g.stdErrIsRedirected()
+
+    g.restoreStderr()
+    print "stdout isRedirected:", g.stdOutIsRedirected()
+    print "stderr isRedirected:", g.stdErrIsRedirected()
+
+    g.restoreStdout()
+    print "stdout isRedirected:", g.stdOutIsRedirected()
+    print "stderr isRedirected:", g.stdErrIsRedirected()</t>
 <t tx="ekr.20040403183934">@ignore
 @wrap
 
-**New in Leo 4.2**.  The preferred way to traverse an outline is with an iterator.
+*New in Leo 4.2*.  The preferred way to traverse an outline is with an iterator.
 
 Iterators are defined only by the position class;
 vnodes can not have iterators because vnodes may appear in multiple places in an outline.
@@ -12177,81 +12208,95 @@ These methods can be nested; each c.beginUpdate() must have a corresponding c.en
 c.endUpdate takes an optional parameter.  If this parameter is false, no redrawing is done.  This can sometimes be useful; inner code can tell other code whether redrawing is actually required.
 
 c.redraw() forces an update of the entire screen.
-c.endUpdate() calls c.redraw() as needed::
+c.endUpdate() calls c.redraw() as needed.
 
-	import leoGlobals as g
-	from leoGlobals import true,false
-	c = g.top()
+.. code-block:: Python
 
-	# Force a screen redraw
-	c.redraw()
+    import leoGlobals as g
+    from leoGlobals import true,false
+    c = g.top()
 
-	# Typical way to redraw the screen:
-	c.beginUpdate()
-	...code that alters the screen...
-	c.endUpdate()
+    # Force a screen redraw
+    c.redraw()
 
-	# Typical way to conditionally redraw the screen:
-	c.beginUpdate()
-	...code sets flag if the screen needs redrawing.
-	flag = true
-	c.endUpdate(flag)s
-	</t>
+    # Typical way to redraw the screen:
+    c.beginUpdate()
+    ...code that alters the screen...
+    c.endUpdate()
+
+    # Typical way to conditionally redraw the screen:
+    c.beginUpdate()
+    ...code sets flag if the screen needs redrawing.
+    flag = true
+    c.endUpdate(flag)s
+    </t>
 <t tx="ekr.20040403183934.2">@ignore
 @wrap
 
 Leo dispatches commands using c.doCommand,
 which calls the "command1" and "command2" hook routines for the given label.
-c.doCommand catches all exceptions thrown by the command::
+c.doCommand catches all exceptions thrown by the command.
 
-	import leoGlobals as g
-	c = g.top()
-	c.doCommand(c.markHeadline,label="markheadline")
+.. code-block:: Python
 
-You can also call command handlers directly so that hooks will not be called::
+    import leoGlobals as g
+    c = g.top()
+    c.doCommand(c.markHeadline,label="markheadline")
 
-	import leoGlobals as g
-	c = g.top()
-	c.markHeadline()</t>
+You can also call command handlers directly so that hooks will not be called.
+
+.. code-block:: Python
+
+    import leoGlobals as g
+    c = g.top()
+    c.markHeadline()</t>
 <t tx="ekr.20040403183934.3">@ignore
 @wrap
 
-Each commander maintains its own preferences.  Your scripts can get the following ivars::
+Each commander maintains its own preferences.  Your scripts can get the following ivars.
 
-	c.output_doc_flag
-	c.page_width
-	c.tab_width
-	c.tangle_batch_flag
-	c.tangle_directory
-	c.target_language
-	c.untangle_batch_flag
-	c.use_header_flag
-	
+.. code-block:: Python
+
+    c.output_doc_flag
+    c.page_width
+    c.tab_width
+    c.tangle_batch_flag
+    c.tangle_directory
+    c.target_language
+    c.untangle_batch_flag
+    c.use_header_flag
+
 leoPrefs.leoPrefs.ivars is a list of the _names_ of these ivars.
 
-Your script may get the values of thse ivars as follows::
+Your script may get the values of thse ivars as follows.
 
-	import leoPrefs
-	import leoGlobals as g
-	c = g.top()
-	g.es("Prefs ivars...\n",color="purple")
-	for ivar in leoPrefs.leoPrefs.ivars:
-		exec("val=c."+ivar) # do val = c.ivar
-		g.es("c."+ivar,val)
+.. code-block:: Python
 
-Your script may update the prefs panel as follows::
+    import leoPrefs
+    import leoGlobals as g
+    c = g.top()
+    g.es("Prefs ivars...\n",color="purple")
+    for ivar in leoPrefs.leoPrefs.ivars:
+        exec("val=c."+ivar) # do val = c.ivar
+        g.es("c."+ivar,val)
 
-	import leoPrefs
-	import leoGlobals as g
-	c = g.top()
-	c.tab_width = 4 # Change this and see what happens.
-	if c.frame.prefsPanel:
-		c.frame.prefsPanel.init(c)
-		c.frame.prefsPanel.setWidgets()
+Your script may update the prefs panel as follows.
 
-If your script sets c.tab_width your script may call f.setTabWidth to redraw the screen::
-	
-	c.frame.setTabWidth(c.tab_width)</t>
+.. code-block:: Python
+
+    import leoPrefs
+    import leoGlobals as g
+    c = g.top()
+    c.tab_width = 4 # Change this and see what happens.
+    if c.frame.prefsPanel:
+        c.frame.prefsPanel.init(c)
+        c.frame.prefsPanel.setWidgets()
+
+If your script sets c.tab_width your script may call f.setTabWidth to redraw the screen.
+
+.. code-block:: Python
+
+    c.frame.setTabWidth(c.tab_width)</t>
 <t tx="ekr.20040403184306.1">@ignore
 @wrap
 
@@ -12269,31 +12314,35 @@ By default, Leo sends all output to Leo's log pane to the console window.  Scrip
 Scripts in the scriptFile may execute any of Leo's commands except the Edit Body and Edit Headline commands.
 Those commands require interaction with the user.
 
-For example, the following batch script reads a Leo file and prints all the headlines in that file::
+For example, the following batch script reads a Leo file and prints all the headlines in that file.
 
-	import leoGlobals as g
-	
-	path = r"c:\prog\leoCVS\leo\test\test.leo"
-	
-	g.app.log.disable() # disable reading messages while opening the file
-	flag,newFrame = g.openWithFileName(path,None)
-	g.app.log.enable() # re-enable the log.
-	
-	for p in newFrame.c.allNodes_iter():
-		g.es(g.toEncodedString(p.headString(),"utf-8"))
+.. code-block:: Python
+
+    import leoGlobals as g
+    
+    path = r"c:\prog\leoCVS\leo\test\test.leo"
+    
+    g.app.log.disable() # disable reading messages while opening the file
+    flag,newFrame = g.openWithFileName(path,None)
+    g.app.log.enable() # re-enable the log.
+    
+    for p in newFrame.c.allNodes_iter():
+        g.es(g.toEncodedString(p.headString(),"utf-8"))
 </t>
 <t tx="ekr.20040403184306.3">@ignore
 @wrap
 
-leoGlobals.py contains many "utility" functions and other names.  The following script prints all the names defined in leoGlobals.py::
+leoGlobals.py contains many "utility" functions and other names.  The following script prints all the names defined in leoGlobals.py.
 
-	import leoGlobals as g
-	
-	g.es("Names defined in leoGlobals.py",color="purple")
-	names = g.__dict__.keys()
-	names.sort()
-	for name in names:
-		g.es(name)</t>
+.. code-block:: Python
+
+    import leoGlobals as g
+    
+    g.es("Names defined in leoGlobals.py",color="purple")
+    names = g.__dict__.keys()
+    names.sort()
+    for name in names:
+        g.es(name)</t>
 <t tx="ekr.20040403184306.4">@ignore
 @wrap
 
@@ -12305,166 +12354,223 @@ For a complete list, see the @file leoNodes.py tree of LeoPy.leo.
 @wrap
 
 The c.allNodes_iter iterator returns a list of all positions in the outline.
-This script makes a list of all the nodes in an outline::
+This script makes a list of all the nodes in an outline.
 
-	import leoGlobals as g
-	c = g.top()
-	nodes = [p for p in c.allNodes_iter()]
-	g.es("This outline contains %d nodes" % len(nodes))
+.. code-block:: Python
 
-Here is one way to count the nodes of an outline::
+    import leoGlobals as g
+    c = g.top()
+    nodes = [p for p in c.allNodes_iter()]
+    g.es("This outline contains %d nodes" % len(nodes))
 
-	import leoGlobals as g
-	c = g.top()
-	count = 0
-	for p in c.allNodes_iter():
-		count += 1
-	g.es("This outline contains %d nodes" % count)
+Here is one way to count the nodes of an outline.
 
-Here is one way to count the *distinct* vnodes of an outline::
+.. code-block:: Python
 
-	import leoGlobals as g
-	c = g.top()
-	positions = 0 ; tnodes = {}
-	for p in c.allNodes_iter():
-		positions += 1
-		if not tnodes.get(p.v.t):
-			tnodes[p.v.t] = p.v.t
-	g.es("%8s" % "positions",positions)
-	g.es("%8s" % "vnodes",len(tnodes.keys()))</t>
+    import leoGlobals as g
+    c = g.top()
+    count = 0
+    for p in c.allNodes_iter():
+        count += 1
+    g.es("This outline contains %d nodes" % count)
+
+Here is one way to count the *distinct* vnodes of an outline.
+
+.. code-block:: Python
+
+    import leoGlobals as g
+    c = g.top()
+    positions = 0 ; tnodes = {}
+    for p in c.allNodes_iter():
+        positions += 1
+        if not tnodes.get(p.v.t):
+            tnodes[p.v.t] = p.v.t
+    g.es("%8s" % "positions",positions)
+    g.es("%8s" % "vnodes",len(tnodes.keys()))</t>
 <t tx="ekr.20040403185803">@ignore
 @wrap
 
-The p.children_iter iterator returns a list of all children of position p::
+The p.children_iter iterator returns a list of all children of position p.
 
-	import leoGlobals as g
-	c = g.top()
-	p = c.currentPosition()
-	parent = p.parent()
-	g.es("children of %s" % parent.headString(),color="purple")
-	for p in parent.children_iter():
-		g.es(p.headString())</t>
+.. code-block:: Python
+
+    import leoGlobals as g
+    c = g.top()
+    p = c.currentPosition()
+    parent = p.parent()
+    g.es("children of %s" % parent.headString(),color="purple")
+    for p in parent.children_iter():
+        g.es(p.headString())</t>
 <t tx="ekr.20040403185803.1">@ignore
 @wrap
 
-The p.parents_iter iterator returns a list of all parents of position p, excluding p::
+The p.parents_iter iterator returns a list of all parents of position p, excluding p.
 
-	import leoGlobals as g
-	c = g.top()
-	current = c.currentPosition()
-	g.es("inclusive parents of %s" % current.headString(),color="purple")
-	for p in current.self_and_parents_iter():
-		g.es(p.headString())
+.. code-block:: Python
 
-The p.self_and_parents_iter iterator returns a list of all parents of position p, including p::
+    import leoGlobals as g
+    c = g.top()
+    current = c.currentPosition()
+    g.es("inclusive parents of %s" % current.headString(),color="purple")
+    for p in current.self_and_parents_iter():
+        g.es(p.headString())
 
-	import leoGlobals as g
-	c = g.top()
-	current = c.currentPosition()
-	g.es("exclusive of %s" % current.headString(),color="purple")
-	for p in current.parents_iter():
-		g.es(p.headString())</t>
+The p.self_and_parents_iter iterator returns a list of all parents of position p, including p.
+
+.. code-block:: Python
+
+    import leoGlobals as g
+    c = g.top()
+    current = c.currentPosition()
+    g.es("exclusive of %s" % current.headString(),color="purple")
+    for p in current.parents_iter():
+        g.es(p.headString())</t>
 <t tx="ekr.20040403185803.2">@ignore
 @wrap
 
-The p.siblings_iter iterator returns a list of all siblings of position p::
+The p.siblings_iter iterator returns a list of all siblings of position p.
 
-	import leoGlobals as g
-	c = g.top()
-	current = c.currentPosition()
-	g.es("all siblings of %s" % current.headString(),color="purple")
-	for p in current.self_and_siblings_iter():
-		g.es(p.headString())
+.. code-block:: Python
 
-The p.following_siblings_iter iterator returns a list of all siblings that follow position p::
+    import leoGlobals as g
+    c = g.top()
+    current = c.currentPosition()
+    g.es("all siblings of %s" % current.headString(),color="purple")
+    for p in current.self_and_siblings_iter():
+        g.es(p.headString())
 
-	import leoGlobals as g
-	c = g.top()
-	current = c.currentPosition()
-	g.es("following siblings of %s" % current.headString(),color="purple")
-	for p in current.following_siblings_iter():
-		g.es(p.headString())</t>
+The p.following_siblings_iter iterator returns a list of all siblings that follow position p.
+
+.. code-block:: Python
+
+    import leoGlobals as g
+    c = g.top()
+    current = c.currentPosition()
+    g.es("following siblings of %s" % current.headString(),color="purple")
+    for p in current.following_siblings_iter():
+        g.es(p.headString())</t>
 <t tx="ekr.20040403185803.3">@ignore
 @wrap
 
-The p.subtree_iter iterator returns a list of all positions in p's subtree, excluding p::
+The p.subtree_iter iterator returns a list of all positions in p's subtree, excluding p.
 
-	import leoGlobals as g
-	c = g.top()
-	p = c.currentPosition()
-	parent = p.parent()
-	g.es("inclusive subtree of %s" % parent.headString(),color="purple")
-	for p in parent.self_and_subtree_iter():
-		g.es(p.headString())
+.. code-block:: Python
 
-The p.self_and_subtree_iter iterator returns a list of all positions in p's subtree, including p::
+    import leoGlobals as g
+    c = g.top()
+    p = c.currentPosition()
+    parent = p.parent()
+    g.es("inclusive subtree of %s" % parent.headString(),color="purple")
+    for p in parent.self_and_subtree_iter():
+        g.es(p.headString())
 
-	import leoGlobals as g
-	c = g.top()
-	p = c.currentPosition()
-	parent = p.parent()
-	g.es("exclusive subtree of %s" % parent.headString(),color="purple")
-	for p in parent.subtree_iter():
-		g.es(p.headString())</t>
+The p.self_and_subtree_iter iterator returns a list of all positions in p's subtree, including p.
+
+.. code-block:: Python
+
+    import leoGlobals as g
+    c = g.top()
+    p = c.currentPosition()
+    parent = p.parent()
+    g.es("exclusive subtree of %s" % parent.headString(),color="purple")
+    for p in parent.subtree_iter():
+        g.es(p.headString())</t>
 <t tx="ekr.20040403191729"></t>
 <t tx="ekr.20040403191729.1"></t>
 <t tx="ekr.20040403192653">@ignore
+@nocolor
 @wrap
 
 This section lists the most useful ivars and methods for getting information from vnodes or positions.
-Returning commanders::
+Returning commanders.
 
-	p.c # The commander for p.
-	
-Returning strings::
+.. code-block:: Python
 
-	p.bodyString() # the body string of p.
-	p.headString() # the headline string of p.
-	
-Returning ints::
+    p.c # The commander for p.
+    
+Returning strings.
 
-	p.childIndex()
-	p.numberOfChildren()
-	p.level()
-	
-Returning bools representing property bits::
+.. code-block:: Python
 
-	p.hasChildren()
-	p.isAncestorOf(v2) # true if v2 is a child, grandchild, etc. of p.
-	p.isCloned()
-	p.isDirty()
-	p.isExpanded()
-	p.isMarked()
-	p.isVisible()
-	p.isVisited()</t>
+    p.bodyString() # the body string of p.
+    p.headString() # the headline string of p.
+    
+Returning ints.
+
+.. code-block:: Python
+
+    p.childIndex()
+    p.numberOfChildren()
+    p.level()
+    
+Returning bools representing property bits.
+
+.. code-block:: Python
+
+    p.hasChildren()
+    p.isAncestorOf(v2) # true if v2 is a child, grandchild, etc. of p.
+    p.isCloned()
+    p.isDirty()
+    p.isExpanded()
+    p.isMarked()
+    p.isVisible()
+    p.isVisited()</t>
 <t tx="ekr.20040403192653.1">@ignore
 @wrap
 
 This section lists the most useful methods for setting data or properties of positions.
 
-These work whether or not p is the presently selected position::
+These work whether or not p is the presently selected position.
 
-	p.setBodyTextOrPane(s)       # Sets the body text of p.
-	p.setHeadStringOrHeadline(s) # Sets the headline text of p.
+.. code-block:: Python
 
-Moving nodes::
+    p.setBodyTextOrPane(s)       # Sets the body text of p.
+    p.setHeadStringOrHeadline(s) # Sets the headline text of p.
 
-	p.moveAfter(v2)  # move p after v2
-	p.moveToNthChildOf(v2,n)  # move p to the n'th child of v2
-	p.moveToRoot()  #  make p the root position
+Moving nodes.
+
+.. code-block:: Python
+
+    p.moveAfter(v2)           # move p after v2
+    p.moveToNthChildOf(v2,n)  # move p to the n'th child of v2
+    p.moveToRoot()            #  make p the root position
 
 The "visited bit" may be used by commands or scripts for any purpose.
-Many commands use this bits for tree traversal, so these bits do not persist::
+Many commands use this bits for tree traversal, so these bits do not persist.
 
-	c.clearAllVisited() # Clears all visited bits in c's tree.
-	p.clearVisited()
-	p.setVisited()</t>
-<t tx="ekr.20040403203116"># This is a comment.
-import leoGlobals as g
-</t>
-<t tx="ekr.20040403203116.1">@ignore
-@wrap
+.. code-block:: Python
 
-These are test comments.</t>
+    c.clearAllVisited() # Clears all visited bits in c's tree.
+    p.clearVisited()
+    p.setVisited()
+
+-----------
+
+|leo|</t>
+<t tx="ekr.20040411074926">There is a trick that makes it very easy to develop Leo using Leo itself.  The trick is to create a workflow that separates editing from testing.
+
+Putting test code in LeoPy.leo would waste a lot of time.  To run tests I would have to exit Leo and reload LeoPy. A much quicker way is to put all test code in a test.leo file.  So to  change and test code, I do the following:
+
+1. Save LeoPy.leo but do NOT exit Leo. 
+
+2. Quit the copy of Leo running test.leo, then reload test.leo.
+
+3. Run test scripts from test.leo.
+
+That's all. Python will recompile any changed .py files in the new copy of Leo.
+
+BTW, I create a batch file called t.bat that runs test.leo, so to the "edit-reload-test" cycle is just:
+
+1. Control-S (to save the .leo file)
+2. t (to run load test.leo)
+3. Control-E (to run the test script)
+
+The benefits of the new workflow:
+
+1.  test.leo loads  _much_ more quickly than LeoPy.leo does.  This new approach can increase the speed of the edit-reload-test cycle by more than a factor of 10.  Hitting Control-S, t, Control-E takes about 5 seconds.
+
+2. LeoPy.leo runs with the _old_ code, so it is much easier to fix syntax errors or exceptions in the _new_ code: just fix the problem and save LeoPy.leo _without_ closing LeoPy.leo., then restart test.leo. Tests are run on new code; editing is done on old, stable code.
+
+3. test.leo is the perfect place to develop test.  I can create and organize those tests and when I am done, test.leo is a log of my work.</t>
 </tnodes>
 </leo_file>
