@@ -115,13 +115,13 @@ This is a time-critical routine.
 #@+node:ekr.20040325183515:Fix three major performance bugs
 1. Reduced copies of positions in drawTree.
 
-Allocated copies in drawTree rather than in drawBox, drawIcon and drawText.  This reduces the numbef of copies by one third.
+Allocated copies in drawTree rather than in drawBox, drawIcon and drawText.  This reduces the number of copies by one third.
 
 2. Eliminated extraneous positions in fileCommands read logic.
 
 This was due to calling v.setMarked rather than v.initMarked, which calls c.doHook.  I don't know why this allocates so many positions, and it does.
 
-3. Speeded up fileCommands write logic by 30% (or more?)
+3. Sped up fileCommands write logic by 30% (or more?)
 
 This was a weird one.  p.__cmp__ is up to 10 times slower than p.equal.  I don't think there is any recursive code in p.__cmp__, and I suppose there might be...
 #@nonl
@@ -137,7 +137,7 @@ This was a weird one.  p.__cmp__ is up to 10 times slower than p.equal.  I don't
 #@+node:ekr.20040314103312.1:Added asserts when g.app.debug is true
 These assert that the old or simple ways of computing positions and levels are equivalent to the optimized ways.
 
-These assertions significantly slow down moves.  This shows that the optimized code truely is essential.
+These assertions significantly slow down moves.  This shows that the optimized code truly is essential.
 #@nonl
 #@-node:ekr.20040314103312.1:Added asserts when g.app.debug is true
 #@+node:ekr.20040314103312.2:HUGE AHA: greatly simplified p.nodeAfter and p.threadNext
@@ -152,9 +152,9 @@ The code set a _next field to a position instead of a vnode.
 Changes since the last cvs update:
 	
 - Disables changes if not a complete word.
-- Disables changes if preceeded by prefix:
+- Disables changes if preceded by prefix:
 	- Running this script twice is now safe.
-- Disables changes if preceeded by "def " or "."
+- Disables changes if preceded by "def " or "."
 - Added replace parameter for safety.
 #@-node:ekr.20040308151706:Fixed and tested the script to replace x by g.x
 #@+node:ekr.20040312101356:Added c.allNodes_iter
@@ -184,7 +184,7 @@ This allows the user to choose a "safe mode".  It is off by default.
 #@+node:ekr.20040309045533:3/9 All calls to tag_bind must use a copy of position
 #@-node:ekr.20040309045533:3/9 All calls to tag_bind must use a copy of position
 #@+node:ekr.20040306223950:3/6 Realized that position proxies are now efficient
-We _can_ make the Leo compatible with old scipts !!!
+We _can_ make the Leo compatible with old scripts !!!
 
 1. Iterators replace most calls to next(), threadNext() etc., so any _other_ calls to there routines do _not_ have to be efficient:
 
@@ -286,7 +286,7 @@ This is correct and more accurate.
 #@-node:ekr.20040129154656:1/29
 #@+node:ekr.20040126115428:1/26
 #@+node:ekr.20040126131801:Properly handle exceptions in commands
-c.doCommand calls tree.redrawAfterException on exceptions.  This works because doCommand is itself _not_ contained in any begin/endUpdate pair, so setting elf.updateCount = 0 in tree.redrawAfterException will work.
+c.doCommand calls tree.redrawAfterException on exceptions.  This works because doCommand is itself _not_ contained in any begin/endUpdate pair, so setting self.updateCount = 0 in tree.redrawAfterException will work.
 #@nonl
 #@-node:ekr.20040126131801:Properly handle exceptions in commands
 #@+node:ekr.20040126121604:Eliminated control-v bug on various platforms

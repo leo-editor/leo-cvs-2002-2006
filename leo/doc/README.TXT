@@ -1,6 +1,6 @@
-Leo 4.2 beta 3          September 14, 2004
+Leo 4.2 Release Candidate 1       September 14, 2004
 
-Leo 4.2 Release Candidate 1 is now available at http://sourceforge.net/projects/leo/
+Leo 4.2 rc1 is now available at http://sourceforge.net/projects/leo/
 
 This version fixes a number of minor bugs and adds several new features. See
 leoDocs.leo for full details.

@@ -1,7 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040623200709:@thin ../src/leoTest.py
 """
-
+ 
 Classes used for Leo's unit testing.
 
 Run the unit tests in test.leo using the Execute Script command.
