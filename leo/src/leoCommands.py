@@ -131,7 +131,6 @@ class baseCommands:
     
         c = self
         if c.mFileName:
-            # return hash(c.mFileName)
             return g.os_path_abspath(c.mFileName).lower()
         else:
             return 0
@@ -5160,13 +5159,20 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20040803140033.1:setCurrentPosition
     #@-node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
-    #@+node:ekr.20031218072017.2986:c.fileName
+    #@+node:ekr.20031218072017.2986:c.fileName & shortFileName
     # Compatibility with scripts
     
     def fileName (self):
     
         return self.mFileName
-    #@-node:ekr.20031218072017.2986:c.fileName
+    
+    def shortFileName (self):
+        
+        return g.shortFileName(self.mFileName)
+    
+    shortFilename = shortFileName
+    #@nonl
+    #@-node:ekr.20031218072017.2986:c.fileName & shortFileName
     #@+node:ekr.20031218072017.2987:c.isChanged
     def isChanged (self):
     
