@@ -1235,6 +1235,7 @@ class baseVnode:
 		c.beginUpdate()
 		while v:
 			if not v.isDirty() and v.isAnyAtFileNode():
+				# trace(v)
 				redraw_flag = true
 				v.t.setDirty() # Do not call v.setDirty here!
 			v = v.parent()
@@ -1261,9 +1262,6 @@ class baseVnode:
 	# v.setDirty now ensures that all cloned nodes are marked dirty and that 
 	# all ancestor @file nodes are marked dirty.  It is much safer to do it 
 	# this way.
-	# 
-	# v.setDirtyDeleted is used only when a node is deleted.  (And why is it 
-	# even needed????)
 	#@-at
 	#@@c
 	
@@ -1289,30 +1287,8 @@ class baseVnode:
 		return changed
 		
 	def setDirtyDeleted (self):
-		
 		self.setDirty()
 		return
-		
-		## This code is bizarre and unnecessary.
-	
-		v = self ; c = v.commands
-		# trace(`v`)
-		changed = false
-		c.beginUpdate()
-		if not v.t.isDirty():
-			v.t.setDirty()
-			changed = true
-		# This must _always_ be called, even if v is already dirty.
-		if v.setAncestorsOfClonedNodesInTreeDirty():
-			changed = true
-		for v2 in v.t.joinList:
-			if v2 != v:
-				assert(v2.t.isDirty())
-				# Again, must always be called.
-				if v2.setAncestorsOfClonedNodesInTreeDirty():
-					changed = true
-		c.endUpdate(changed)
-		return changed
 	
 	def initDirtyBit (self):
 		self.t.setDirty()

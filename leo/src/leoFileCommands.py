@@ -397,6 +397,7 @@ class baseFileCommands:
 	def getLeoFile (self,frame,fileName,atFileNodesFlag=true):
 	
 		c=self.commands
+		c.setChanged(false) # 10/1/03: May be set when reading @file nodes.
 		#@	<< warn on read-only files >>
 		#@+node:<< warn on read-only files >>
 		try:
@@ -416,9 +417,9 @@ class baseFileCommands:
 		self.mFileName = frame.mFileName
 		self.tnodesDict = {}
 		ok = true
+		c.tree.initing = true # Disable changes in endEditLabel
+		c.loading = true # disable c.changed
 		try:
-			c.tree.initing = true # inhibit endEditLabel from marking the file changed.
-			## import time ; start = time.clock()
 			#@		<< scan all the xml elements >>
 			#@+node:<< scan all the xml elements >>
 			self.getXmlVersionTag()
@@ -440,7 +441,6 @@ class baseFileCommands:
 			#@nonl
 			#@-node:<< scan all the xml elements >>
 			#@nl
-			## print "read time" + "%6.3f" % (time.clock()-start)
 		except BadLeoFile, message:
 			#@		<< raise an alert >>
 			#@+node:<< raise an alert >>
@@ -460,6 +460,8 @@ class baseFileCommands:
 			c.tree.currentVnode = c.tree.rootVnode
 		c.selectVnode(c.tree.currentVnode) # load body pane
 		c.tree.initing = false # Enable changes in endEditLabel
+		c.loading = false # reenable c.changed
+		c.setChanged(c.changed) # Refresh the changed marker.
 		self.tnodesDict = {}
 		return ok, self.ratio
 	#@nonl
@@ -903,7 +905,6 @@ class baseFileCommands:
 		ok, ratio = self.getLeoFile(self.frame,fileName,atFileNodesFlag=false)
 		c.endUpdate()
 		c.frame.top.deiconify()
-		c.setChanged(false)
 		vflag,junk,secondary_ratio = self.frame.initialRatios()
 		c.frame.resizePanesToRatio(ratio,secondary_ratio)
 		# This should be done after the pane size has been set.
@@ -921,7 +922,6 @@ class baseFileCommands:
 	
 		c=self.commands
 		# Read the entire file into the buffer
-		# t = getTime()
 		self.fileBuffer = file.read() ; file.close()
 		self.fileIndex = 0
 		#@	<< Set the default directory >>
@@ -941,22 +941,21 @@ class baseFileCommands:
 		#@nonl
 		#@-node:<< Set the default directory >>
 		#@nl
-		# esDiffTime("open:read all", t)
-	
 		c.beginUpdate()
-		if 1: # inside update...
-			c.loading = true # disable c.changed
-			ok, ratio = self.getLeoFile(self.frame,fileName,atFileNodesFlag=true)
-			c.loading = false # reenable c.changed
-			c.setChanged(false)
-			if 0: # This can't be done directly.
-				# This should be done after the pane size has been set.
-				top = c.tree.topVnode
-				if top: c.tree.scrollTo(top)
+		ok, ratio = self.getLeoFile(self.frame,fileName,atFileNodesFlag=true)
+		#@	<< Make the top node visible >>
+		#@+node:<< Make the top node visible >>
+		if 0: # This can't be done directly.
+		
+			# This should be done after the pane size has been set.
+			top = c.tree.topVnode
+			if top: c.tree.scrollTo(top)
+		#@nonl
+		#@-node:<< Make the top node visible >>
+		#@nl
 		c.endUpdate()
 		# delete the file buffer
 		self.fileBuffer = ""
-		# esDiffTime("open: exit",t)
 		return ok
 	#@nonl
 	#@-node:fileCommands.open

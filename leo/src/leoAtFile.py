@@ -257,6 +257,7 @@ class baseAtFile:
 			at.error("Unexpected exception while reading derived file")
 			es_exception()
 		file.close()
+		root.clearDirty() # May be set dirty below.
 		after = root.nodeAfterTree()
 		#@	<< warn about non-empty unvisited nodes >>
 		#@+node:<< warn about non-empty unvisited nodes >>
@@ -285,8 +286,8 @@ class baseAtFile:
 							print ; print "changed: " + v.headString()
 							print ; print "new:",`s`
 							print ; print "old:",`v.bodyString()`
-						v.setBodyStringOrPane(s)
-						v.setDirty()
+						v.setBodyStringOrPane(s) # Sets v and v.commands dirty.
+						v.setMarked()
 					v = v.threadNext()
 				#@nonl
 				#@-node:<< copy all tempBodyStrings to tnodes >>
@@ -301,7 +302,6 @@ class baseAtFile:
 		#@nonl
 		#@-node:<< delete all tempBodyStrings >>
 		#@nl
-		root.clearDirty()
 		return df.errors == 0
 	#@nonl
 	#@-node:top_df.read

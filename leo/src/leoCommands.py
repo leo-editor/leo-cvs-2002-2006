@@ -1295,6 +1295,7 @@ class baseCommands:
 		# Clear all dirty bits _before_ setting the caption.
 		# 9/15/01 Clear all dirty bits except orphaned @file nodes
 		if not changedFlag:
+			# trace("clearing all dirty bits")
 			v = c.rootVnode()
 			while v:
 				if v.isDirty() and not (v.isAtFileNode() or v.isAtRawFileNode()):
