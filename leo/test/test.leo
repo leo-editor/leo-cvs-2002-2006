@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6604" clone_windows="0"/>
 <globals body_outline_ratio="0.440677966102">
-	<global_window_position top="44" left="219" height="772" width="1007"/>
+	<global_window_position top="53" left="165" height="621" width="814"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -969,7 +969,7 @@
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 <v t="ekr.20050210180937"><vh>@button jython</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1573,7 +1573,7 @@
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
-<v t="ekr.20050210180034"><vh>jython script</vh></v>
+<v t="ekr.20050210180034" a="TV"><vh>jython script</vh></v>
 <v t="ekr.20050211121701"><vh>Develop &amp; test g.removeExtraLws</vh>
 <v t="ekr.20050211121701.1"><vh>g.removeExtraLws</vh></v>
 <v t="ekr.20050211121701.2"><vh>test_g_removeExtraLws</vh></v>
@@ -2198,7 +2198,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a6805680668044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0268084afdffffff75652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2353,7 +2353,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d71092868035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a6802680368044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0268084afdffffff75652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10896,7 +10896,8 @@ if not spellpyx or not spellFrame:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo</t>
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo
+/Users/edream/leoCVS/leo/test/test.leo</t>
 <t tx="ekr.20041124144944">import os
 import sys
 for s in sys.path:
@@ -13564,9 +13565,17 @@ for button in buttons:
 w.pack()
 w.show()</t>
 <t tx="ekr.20050210180937"># **** Change these as needed ***
-jython = r'C:\Jython-21\jython.bat'
+import os, sys
+
 tempFileName = g.os_path_abspath(
     g.os_path_join(g.app.testDir,'jythonScript.py'))
+
+if sys.platform == 'win32':
+    jython = r'C:\Jython-21\jython.bat'
+    command = '%s "%s"' % (jython,tempFileName) 
+else:
+    jython = r'cd ~/jython-2.1 ; ./jython'
+    command = '%s "%s" &amp;' % (jython,tempFileName)
 
 script = g.getScript(c,p).strip()
 if not script:
@@ -13576,9 +13585,9 @@ else:
     f = file(tempFileName,'w')
     f.write(script + '\n')
     f.close()
-    command = '%s "%s"' % (jython,tempFileName)
     print command
-    import os ; os.system(command)</t>
+    os.system(command)
+</t>
 <t tx="ekr.20050211121701">@others
 
 test_g_removeExtraLws()</t>
