@@ -1225,11 +1225,12 @@ class baseOldDerivedFile:
 		#@nl
 	#@nonl
 	#@-node:scanDoc
-	#@+node:scanText
+	#@+node:scanText (3.x)
 	def scanText (self,file,v,out,endSentinelKind,nextLine=None):
 		
 		"""Scan a 3.x derived file recursively."""
 	
+		at = self # 12/18/03
 		lastLines = [] # The lines after @-leo
 		lineIndent = 0 ; linep = 0 # Changed only for sentinels.
 		while 1:
@@ -1683,7 +1684,7 @@ class baseOldDerivedFile:
 		assert(len(s)==0 and nextLine==None) # We get here only if readline fails.
 		return lastLines # We get here only if there are problems.
 	#@nonl
-	#@-node:scanText
+	#@-node:scanText (3.x)
 	#@+node:nodeSentinelText
 	# 4/5/03: config.write_clone_indices no longer used.
 	
