@@ -214,9 +214,10 @@ class leoGui:
 		
 		self.oops()
 	
-	def getTextFromClibboard (self):
+	def getTextFromClipboard (self):
 		
 		self.oops()
+	#@nonl
 	#@-node:Clipboard
 	#@+node:Dialog utils
 	def attachLeoIcon (self,window):

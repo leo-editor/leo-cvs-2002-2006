@@ -2286,7 +2286,7 @@ class baseCommands:
 	
 		c = self ; current = c.currentVnode()
 		
-		s = app.gui.getTextFromClibboard()
+		s = app.gui.getTextFromClipboard()
 		
 		if 0: # old code
 			try:
@@ -3914,7 +3914,7 @@ class baseCommands:
 	
 		c = self
 		if s == None:
-			s = app.gui.getTextFromClibboard()
+			s = app.gui.getTextFromClipboard()
 		if not s:
 			return false
 	
