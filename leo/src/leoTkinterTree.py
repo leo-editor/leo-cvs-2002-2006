@@ -1437,9 +1437,8 @@ class leoTkinterTree (leoFrame.leoTree):
 	def onHeadChanged (self,p):
 		
 		"""Handle a change to headline text."""
-	
+		
 		self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
-	#@nonl
 	#@-node:ekr.20031218072017.1333:onHeadChanged
 	#@+node:ekr.20031218072017.1334:OnHeadlineKey
 	def OnHeadlineKey (self,p,event):
@@ -1449,12 +1448,13 @@ class leoTkinterTree (leoFrame.leoTree):
 		ch = event.char
 		self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
 	
+	
 	#@-node:ekr.20031218072017.1334:OnHeadlineKey
 	#@+node:ekr.20031218072017.1335:idle_head_key
 	def idle_head_key (self,p,ch=None):
 		
 		"""Update headline text at idle time."""
-	
+		
 		c = self.c ; v = p.v
 	
 		if not p or not p.edit_text() or p != c.currentPosition():
@@ -1489,6 +1489,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		done = ch and (ch == '\r' or ch == '\n')
 		if not changed and not done:
 			return "break"
+	
 		if changed:
 			c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
 		index = edit_text.index("insert")
@@ -1538,7 +1539,6 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		g.doHook("headkey2",c=c,p=p,ch=ch)
 		return "break"
-	#@nonl
 	#@-node:ekr.20031218072017.1335:idle_head_key
 	#@-others
 	#@nonl

@@ -4528,6 +4528,169 @@ Note the work-around/patch in the followup post at the bottom of that page. Comm
 #@+node:ekr.20031218072017.673:Tk bugs
 The following bugs can not be fixed because they are Tk bugs.
 #@nonl
+#@+node:EKR.20040523192553:(Crash when pasting large text into headlines)
+#@+node:EKR.20040606104355:Report
+@nocolor
+
+From: <eltronic@juno.com>
+To: <edreamleo@charter.net>
+Sent: Sunday, May 23, 2004 9:36 AM
+Subject: fatal bug in Leo headline handling
+
+
+> found a fatal bug in Leo headline handling.
+> not sure if anyone reported before,
+> an oversize string can crash python 2.3.3
+> 
+> 
+> the text was about 4500 bytes. nothing but text.
+> opened the  leo again, copy a large page of text,
+> insert headline, paste, fatal error in python.
+> 
+> I have by mistake pasted whatever node xml was in 
+> the copy buffer into a headline w/o problem.
+> but that was just dumb luck. just verified,
+> had the node been large enough it crashes.
+> 
+> Leo 4.1 final, py2.3.3 win98
+> PYTHON caused an invalid page fault in
+> module TK84.DLL at 0167:1022b74f.
+> 
+> Leo 4.1 final, py2.2 win98
+> paste a 15k node copy into headline. no problem.
+> 
+> this is the first repeatable hard crash I've stumbled on
+> and thought it best to report it privately.
+> I can think of no advantage to allowing a headline 
+> of this size anyway. think of the tooltip that would create!
+> 
+> there are latent bugs in the selectall and delete from 
+> the edit menu related to headline as well on the todo list.
+> reported many times. 
+> covert destruction of the selected body text.
+> use of virtual events, with out proper focus to headline.
+> 
+> without myself being able to supply a patch, I'll guess,
+> the virtual event paste called can as well point 
+> to a function that checks the size before pasting.
+> or simply sets the headline directly with 
+> g.app.gui.getTextFromClipboard()[:1024]
+> 
+> 
+> e
+#@-node:EKR.20040606104355:Report
+#@+node:EKR.20040610093947:This looks like a Tk bug
+#@-node:EKR.20040610093947:This looks like a Tk bug
+#@+node:ekr.20031218072017.1332:headline key handlers (tree)
+@ The <Key> event generates the event before the headline text is changed(!), so we register an idle-event handler to do the work later.
+@c
+
+@others
+#@nonl
+#@+node:ekr.20031218072017.1333:onHeadChanged
+def onHeadChanged (self,p):
+	
+	"""Handle a change to headline text."""
+	
+	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
+#@-node:ekr.20031218072017.1333:onHeadChanged
+#@+node:ekr.20031218072017.1334:OnHeadlineKey
+def OnHeadlineKey (self,p,event):
+	
+	"""Handle a key event in a headline."""
+
+	ch = event.char
+	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
+
+
+#@-node:ekr.20031218072017.1334:OnHeadlineKey
+#@+node:ekr.20031218072017.1335:idle_head_key
+def idle_head_key (self,p,ch=None):
+	
+	"""Update headline text at idle time."""
+	
+	c = self.c ; v = p.v
+
+	if not p or not p.edit_text() or p != c.currentPosition():
+		return "break"
+		
+	edit_text = p.edit_text()
+
+	if g.doHook("headkey1",c=c,p=p,ch=ch):
+		return "break" # The hook claims to have handled the event.
+
+	<< set s to the widget text >>
+	<< set head to vnode text >>
+	changed = s != head
+	done = ch and (ch == '\r' or ch == '\n')
+	if not changed and not done:
+		return "break"
+
+	if changed:
+		c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
+	index = edit_text.index("insert")
+	if changed:
+		<< update v and all nodes joined to v >>
+	<< reconfigure v and all nodes joined to v >>
+	<< update the screen >>
+
+	g.doHook("headkey2",c=c,p=p,ch=ch)
+	return "break"
+#@+node:ekr.20031218072017.1336:<< set s to the widget text >>
+s = edit_text.get("1.0","end")
+s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
+
+if not s:
+	s = u""
+s = s.replace('\n','')
+s = s.replace('\r','')
+# g.trace(s)
+#@-node:ekr.20031218072017.1336:<< set s to the widget text >>
+#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
+head = p.headString()
+if head == None:
+	head = u""
+head = g.toUnicode(head,"utf-8")
+#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
+#@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
+c.beginUpdate()
+if 1: # update...
+	# Update changed bit.
+	if not c.changed:
+		c.setChanged(true)
+	# Update all dirty bits.
+	p.setDirty()
+	# Update v.
+	v.initHeadString(s)
+	edit_text.delete("1.0","end")
+	edit_text.insert("end",s)
+	edit_text.mark_set("insert",index)
+c.endUpdate(false) # do not redraw now.
+#@nonl
+#@-node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
+#@+node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
+# Reconfigure v's headline.
+if done:
+	self.setDisabledLabelState(p)
+
+edit_text.configure(width=self.headWidth(v))
+#@nonl
+#@-node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
+#@+node:ekr.20031218072017.1340:<< update the screen >>
+if done:
+	c.beginUpdate()
+	self.endEditLabel()
+	c.endUpdate()
+
+elif changed:
+	# update v immediately.  Joined nodes are redrawn later by endEditLabel.
+	# Redrawing the whole screen now messes up the cursor in the headline.
+	self.drawIcon(p) # just redraw the icon.
+#@nonl
+#@-node:ekr.20031218072017.1340:<< update the screen >>
+#@-node:ekr.20031218072017.1335:idle_head_key
+#@-node:ekr.20031218072017.1332:headline key handlers (tree)
+#@-node:EKR.20040523192553:(Crash when pasting large text into headlines)
 #@+node:ekr.20031218072017.674:Caps lock affects keyboard shortcuts on Windows
 Using leo under Windows, the keyboard shortcuts seem to use the "Caps Lock" state in determining the shift state when executing a shortcut.   For example, if the caps-lock key is on, then Ctrl-X is interpreted as Shift-Ctrl-X and cuts a node rather than selected text, and Shift-Ctrl-X is interpreted as Ctrl-X and cuts text.
 #@-node:ekr.20031218072017.674:Caps lock affects keyboard shortcuts on Windows

@@ -836,9 +836,8 @@ def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
 def onHeadChanged (self,p):
 	
 	"""Handle a change to headline text."""
-
+	
 	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
-#@nonl
 #@-node:ekr.20031218072017.1333:onHeadChanged
 #@+node:ekr.20031218072017.1334:OnHeadlineKey
 def OnHeadlineKey (self,p,event):
@@ -848,12 +847,13 @@ def OnHeadlineKey (self,p,event):
 	ch = event.char
 	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
 
+
 #@-node:ekr.20031218072017.1334:OnHeadlineKey
 #@+node:ekr.20031218072017.1335:idle_head_key
 def idle_head_key (self,p,ch=None):
 	
 	"""Update headline text at idle time."""
-
+	
 	c = self.c ; v = p.v
 
 	if not p or not p.edit_text() or p != c.currentPosition():
@@ -870,6 +870,7 @@ def idle_head_key (self,p,ch=None):
 	done = ch and (ch == '\r' or ch == '\n')
 	if not changed and not done:
 		return "break"
+
 	if changed:
 		c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
 	index = edit_text.index("insert")
@@ -880,7 +881,6 @@ def idle_head_key (self,p,ch=None):
 
 	g.doHook("headkey2",c=c,p=p,ch=ch)
 	return "break"
-#@nonl
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
 s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
@@ -1979,7 +1979,7 @@ if dict.has_key("tabwidth"):
 #@+node:ekr.20031218072017.1377:scanColorDirectives
 def scanColorDirectives(self,p):
 	
-	"""Scan position p and p's ancestors looking for @color and @nocolor directives,
+	"""Scan position p and p's ancestors looking for @comment, @language and @root directives,
 	setting corresponding colorizer ivars.
 	"""
 
@@ -8378,9 +8378,8 @@ childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
 def onHeadChanged (self,p):
 	
 	"""Handle a change to headline text."""
-
+	
 	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
-#@nonl
 #@-node:ekr.20031218072017.1333:onHeadChanged
 #@+node:ekr.20031218072017.1334:OnHeadlineKey
 def OnHeadlineKey (self,p,event):
@@ -8390,12 +8389,13 @@ def OnHeadlineKey (self,p,event):
 	ch = event.char
 	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
 
+
 #@-node:ekr.20031218072017.1334:OnHeadlineKey
 #@+node:ekr.20031218072017.1335:idle_head_key
 def idle_head_key (self,p,ch=None):
 	
 	"""Update headline text at idle time."""
-
+	
 	c = self.c ; v = p.v
 
 	if not p or not p.edit_text() or p != c.currentPosition():
@@ -8412,6 +8412,7 @@ def idle_head_key (self,p,ch=None):
 	done = ch and (ch == '\r' or ch == '\n')
 	if not changed and not done:
 		return "break"
+
 	if changed:
 		c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
 	index = edit_text.index("insert")
@@ -8422,7 +8423,6 @@ def idle_head_key (self,p,ch=None):
 
 	g.doHook("headkey2",c=c,p=p,ch=ch)
 	return "break"
-#@nonl
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
 s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
@@ -15421,13 +15421,17 @@ def useSyntaxColoring (self,p):
 	"""Return true unless p is unambiguously under the control of @nocolor."""
 	
 	p = p.copy() ; first = p.copy()
-	val = true
+	val = true ; self.killFlag = false
 	for p in p.self_and_parents_iter():
 		# g.trace(p)
 		s = p.v.t.bodyString
 		dict = g.get_directives_dict(s)
 		no_color = dict.has_key("nocolor")
 		color = dict.has_key("color")
+		kill_color = dict.has_key("killcolor")
+		# A killcolor anywhere disables coloring.
+		if kill_color:
+			val = false ; self.killFlag = true ; break
 		# A color anywhere in the target enables coloring.
 		if color and p == first:
 			val = true ; break
@@ -15451,7 +15455,7 @@ def updateSyntaxColorer (self,p):
 #@+node:ekr.20031218072017.1377:scanColorDirectives
 def scanColorDirectives(self,p):
 	
-	"""Scan position p and p's ancestors looking for @color and @nocolor directives,
+	"""Scan position p and p's ancestors looking for @comment, @language and @root directives,
 	setting corresponding colorizer ivars.
 	"""
 
@@ -21725,7 +21729,7 @@ def setEditPosition(self,p):
 def idle_head_key (self,p,ch=None):
 	
 	"""Update headline text at idle time."""
-
+	
 	c = self.c ; v = p.v
 
 	if not p or not p.edit_text() or p != c.currentPosition():
@@ -21742,6 +21746,7 @@ def idle_head_key (self,p,ch=None):
 	done = ch and (ch == '\r' or ch == '\n')
 	if not changed and not done:
 		return "break"
+
 	if changed:
 		c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
 	index = edit_text.index("insert")
@@ -21752,7 +21757,6 @@ def idle_head_key (self,p,ch=None):
 
 	g.doHook("headkey2",c=c,p=p,ch=ch)
 	return "break"
-#@nonl
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
 s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
@@ -39961,6 +39965,120 @@ Here is what I did:
 Leo seemed to do a reasonable job with the Import.
 #@-node:EKR.20040610082623.1:Reply
 #@-node:EKR.20040521084602:(Checked PHP import bug: works for me)
+#@+node:EKR.20040610082855:(Fixed crasher in openRecentFile)
+#@+node:EKR.20040610082855.1:Report
+@nocolor
+
+By: Davide Salomoni - dsalomoni
+ 4.2a3: traceback loading a recent file   
+2004-06-09 08:08  
+
+ I just downloaded the latest cvs code. I launched leo, opened a few files (among them leoPluginsRef.leo) and exited. Then I re-launched leo and selected File->Recent Files->leoPluginsRef.leo
+
+The file loaded, and I got the following traceback:
+
+Exception in Tkinter callback
+Traceback (most recent call last):
+File "/localstore/computer/local/lib/python2.3/lib-tk/Tkinter.py", line 1345, in __call__
+return self.func(*args)
+File "/localstore/computer/davides/Test/leo/leo/src/leoMenu.py", line 1128, in callback
+c.openRecentFile(name)
+File "/localstore/computer/davides/Test/leo/leo/src/leoCommands.py", line 676, in openRecentFile
+g.doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
+File "/localstore/computer/davides/Test/leo/leo/src/leoGlobals.py", line 1790, in doHook
+elif c and c.hookFunction:
+AttributeError: Commands instance has no attribute 'hookFunction'
+
+(leo cvs, python 2.3.3, tk 8.3.3, linux)
+
+Davide
+
+----
+
+The fix was to set c = frame.c in openRecentFile after destroying the original commander.
+#@-node:EKR.20040610082855.1:Report
+#@+node:ekr.20031218072017.2081:openRecentFile
+def openRecentFile(self,name=None):
+	
+	if not name: return
+
+	c = self ; v = c.currentVnode()
+	<< Set closeFlag if the only open window is empty >>
+	
+	fileName = name
+	if not g.doHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag):
+		ok, frame = g.openWithFileName(fileName,c)
+		if ok and closeFlag:
+			g.app.destroyWindow(c.frame) # 12/12/03
+			g.app.setLog(frame.log,"openRecentFile") # Sets the log stream for g.es()
+			c = frame.c # 6/10/04: Switch to the new commander so the "recentfiles2" hook doesn't crash.
+
+	g.doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
+#@+node:ekr.20031218072017.2082:<< Set closeFlag if the only open window is empty >>
+@ If this is the only open window was opened when the app started, and the window has never been written to or saved, then we will automatically close that window if this open command completes successfully.
+@c
+	
+closeFlag = (
+	c.frame.startupWindow==true and # The window was open on startup
+	c.changed==false and c.frame.saved==false and # The window has never been changed
+	g.app.numberOfWindows == 1) # Only one untitled window has ever been opened
+#@nonl
+#@-node:ekr.20031218072017.2082:<< Set closeFlag if the only open window is empty >>
+#@-node:ekr.20031218072017.2081:openRecentFile
+#@+node:ekr.20031218072017.1596:g.doHook
+@ This global function calls a hook routine.  Hooks are identified by the tag param.
+Returns the value returned by the hook routine, or None if the there is an exception.
+
+We look for a hook routine in three places:
+1. g.top().hookFunction
+2. app.hookFunction
+3. leoPlugins.doPlugins()
+We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
+@c
+
+def doHook(tag,*args,**keywords):
+	
+	if g.app.killed or g.app.hookError:
+		return None
+	
+	# New in 4.2.  We call the idle-time handlers for all open windows.
+	c = keywords.get("c")
+	
+	if 0: # Don't use trace here!
+		if tag != "idle":
+			print "doHook",tag,c
+
+	if not g.app.config.use_plugins:
+		if tag == "start1":
+			g.es("Plugins disabled: use_plugins is 0",color="blue")
+		return None
+	elif c and c.hookFunction:
+		try:
+			return c.hookFunction(tag,keywords)
+		except:
+			g.es("exception in c.hookFunction for " + c.frame.getTitle())
+	elif g.app.hookFunction:
+		try:
+			return g.app.hookFunction(tag,keywords)
+		except:
+			g.es("exception in app.hookFunction")
+	else:
+		import leoPlugins
+		try:
+			g.app.hookFunction = leoPlugins.doPlugins
+			return app.hookFunction(tag,keywords)
+		except:
+			g.app.hookFunction = None
+			g.es("exception in plugin")
+
+	# Handle all exceptions.
+	g.es_exception()
+	g.app.hookError = true # Supress this function.
+	g.app.idleTimeHook = false # Supress idle-time hook
+	return None # No return value
+#@nonl
+#@-node:ekr.20031218072017.1596:g.doHook
+#@-node:EKR.20040610082855:(Fixed crasher in openRecentFile)
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
