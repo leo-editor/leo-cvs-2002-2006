@@ -311,15 +311,12 @@ def set_delims_from_string(s):
 #@-node:2::set_delims_from_string
 #@+node:3::set_language
 #@+body
-#@+at
-#   Scans the @language directive that appears at s[i].
-# 
-# Returns (language, delim1, delim2, delim3)
-
-#@-at
-#@@c
-
 def set_language(s,i,issue_errors_flag=false):
+	
+	"""Scan the @language directive that appears at s[i:].
+
+	Returns (language, delim1, delim2, delim3)
+	"""
 
 	a = app()
 	tag = "@language"
@@ -343,7 +340,29 @@ def set_language(s,i,issue_errors_flag=false):
 #@-body
 #@-node:3::set_language
 #@-node:1::@language and @comment directives (leoUtils)
-#@+node:2::get_directives_dict
+#@+node:2::findReference
+#@+body
+#@+at
+#  We search the descendents of v looking for the definition node matching name.
+# There should be exactly one such node (descendents of other definition nodes 
+# are not searched).
+
+#@-at
+#@@c
+
+def findReference(name,root):
+
+	after = root.nodeAfterTree()
+	v = root.firstChild()
+	while v and v != after:
+		if v.matchHeadline(name) and not v.isAtIgnoreNode():
+			return v
+		v = v.threadNext()
+	return None
+
+#@-body
+#@-node:2::findReference
+#@+node:3::get_directives_dict
 #@+body
 #@+at
 #  Scans root for @directives and returns a dict containing pointers to the 
@@ -369,7 +388,7 @@ def get_directives_dict(s,root=None):
 			# EKR: rewritten 10/10/02
 			directiveList = (
 				"color", "comment", "encoding", "header", "ignore",
-				"language", "nocolor", "noheader",
+				"language", "lineending", "nocolor", "noheader",
 				"pagewidth", "path", "quiet", "root", "silent",
 				"tabwidth", "terse", "unit", "verbose")
 			
@@ -410,14 +429,128 @@ def get_directives_dict(s,root=None):
 		i = skip_line(s,i)
 	return dict
 #@-body
-#@-node:2::get_directives_dict
-#@+node:3::scanDirectives (utils)
+#@-node:3::get_directives_dict
+#@+node:4::getOutputNewline
+#@+body
+def getOutputNewline (lineending = None):
+	
+	"""Convert the name of a line ending to the line ending itself.
+	Use the output_newline configuration option if no lineending is given.
+	"""
+	
+	if lineending:
+		s = lineending
+	else:
+		s = app().config.output_newline
+	s = string.lower(s)
+	if s in ( "nl","lf","platform"): s = '\n'
+	elif s == "cr": s = '\r'
+	elif s == "crlf": s = "\r\n"
+	else: s = '\n' # Default for erroneous values.
+	return s
+#@-body
+#@-node:4::getOutputNewline
+#@+node:5::scanAtEncodingDirective
+#@+body
+def scanAtEncodingDirective(s,dict):
+	
+	"""Scan the @encoding directive at s[dict["encoding"]:].
+
+	Returns the encoding name or None if the encoding name is invalid.
+	"""
+
+	k = dict["encoding"]
+	i = skip_to_end_of_line(s,k)
+	j = len("@encoding")
+	encoding = s[k+j:i].strip()
+	if isValidEncoding(encoding):
+		# trace(encoding)
+		return encoding
+	else:
+		es("invalid @encoding:"+encoding,color="red")
+		return None
+#@-body
+#@-node:5::scanAtEncodingDirective
+#@+node:6::scanAtLineendingDirective
+#@+body
+def scanAtLineendingDirective(s,dict):
+	
+	"""Scan the @lineending directive at s[dict["lineending"]:].
+
+	Returns the actual lineending or None if the name of the lineending is invalid.
+	"""
+
+	k = dict["lineending"]
+	i = skip_to_end_of_line(s,k)
+	j = len("@lineending")
+	j = skip_ws(s,j)
+	e = s[k+j:i].strip()
+
+	if e in ("cr","crlf","lf","nl","platform"):
+		lineending = getOutputNewline(e)
+		# trace(`e`,`lineending`)
+		return lineending
+	else:
+		es("invalid @lineending directive:"+e,color="red")
+		return None
+
+#@-body
+#@-node:6::scanAtLineendingDirective
+#@+node:7::scanAtPagewidthDirective
+#@+body
+def scanAtPagewidthDirective(s,dict,issue_error_flag=false):
+	
+	"""Scan the @pagewidth directive at s[dict["pagewidth"]:].
+
+	Returns the value of the width or None if the width is invalid.
+	"""
+	
+	k = dict["pagewidth"]
+	j = i = k + len("@pagewidth")
+	i, val = skip_long(s,i)
+	if val != None and val > 0:
+		# trace(val)
+		return val
+	else:
+		if issue_error_flag:
+			j = skip_to_end_of_line(s,k)
+			es("ignoring " + s[k:j],color="red")
+		return None
+
+#@-body
+#@-node:7::scanAtPagewidthDirective
+#@+node:8::scanAtTabwidthDirective
+#@+body
+def scanAtTabwidthDirective(s,dict,issue_error_flag=false):
+	
+	"""Scan the @tabwidth directive at s[dict["tabwidth"]:].
+
+	Returns the value of the width or None if the width is invalid.
+	"""
+	
+	k = dict["tabwidth"]
+	j = i = k + len("@tabwidth")
+	i, val = skip_long(s, i)
+	if val != None and val != 0:
+		# trace(`val`)
+		return val
+	else:
+		if issue_error_flag:
+			i = skip_to_end_of_line(s,k)
+			es("Ignoring " + s[k:i],color="red")
+		return None
+
+
+#@-body
+#@-node:8::scanAtTabwidthDirective
+#@+node:9::scanDirectives (utils)
 #@+body
 #@+at
 #  A general-purpose routine that scans v and its ancestors for directives.  
 # It returns a dict containing the settings in effect as the result of the 
-# @comment, @language, @pagewidth, @path and @tabwidth directives.  This code 
-# does not check on the existence of paths, and issues no error messages.
+# @comment, @language, @lineending, @pagewidth, @path and @tabwidth 
+# directives.  This code does not check on the existence of paths, and issues 
+# no error messages.
 # 
 # Perhaps this routine should be the basis of atFile.scanAllDirectives and 
 # tangle.scanAllDirectives, but I am loath to make any further to these two 
@@ -428,6 +561,11 @@ def get_directives_dict(s,root=None):
 #@@c
 
 def scanDirectives(c,v=None):
+	
+	"""Scan vnode v and v's ancestors looking for directives.
+
+	Returns a dict containing the results, including defaults.
+	"""
 
 	if v == None: v = c.currentVnode()
 	
@@ -442,6 +580,7 @@ def scanDirectives(c,v=None):
 	delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 	path = None
 	encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
+	lineending = getOutputNewline() # 4/24/03 initialize from config settings.
 	
 	#@-body
 	#@-node:1::<< Set local vars >>
@@ -474,37 +613,41 @@ def scanDirectives(c,v=None):
 		#@+body
 		if not old.has_key("encoding") and dict.has_key("encoding"):
 			
-			k = dict["encoding"]
-			j = len("@encoding")
-			i = skip_to_end_of_line(s,k)
-			e = s[k+j:i].strip()
-			# trace("encoding",e)
-		
-			if isValidEncoding(e):
+			e = scanAtEncodingDirective(s,dict)
+			if e:
 				encoding = e
-			else:
-				es("invalid @encoding:", e)
 		
 		#@-body
 		#@-node:3::<< Test for @encoding >>
 
 		
+		#@<< Test for @lineending >>
+		#@+node:4::<< Test for @lineending >>
+		#@+body
+		if not old.has_key("lineending") and dict.has_key("lineending"):
+			
+			e = scanAtLineendingDirective(s,dict)
+			if e:
+				lineending = e
+		
+		#@-body
+		#@-node:4::<< Test for @lineending >>
+
+		
 		#@<< Test for @pagewidth >>
-		#@+node:4::<< Test for @pagewidth >>
+		#@+node:5::<< Test for @pagewidth >>
 		#@+body
 		if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
-		
-			k = dict["pagewidth"]
-			j = i = k + len("@pagewidth")
-			i, val = skip_long(s,i)
-			if val != None and val > 0:
-				page_width = val
+			
+			w = scanAtPagewidthDirective(s,dict)
+			if w and w > 0:
+				page_width = w
 		#@-body
-		#@-node:4::<< Test for @pagewidth >>
+		#@-node:5::<< Test for @pagewidth >>
 
 		
 		#@<< Test for @path >>
-		#@+node:5::<< Test for @path >>
+		#@+node:6::<< Test for @path >>
 		#@+body
 		if not path and not old.has_key("path") and dict.has_key("path"):
 		
@@ -533,21 +676,21 @@ def scanDirectives(c,v=None):
 				base = getBaseDirectory() # returns "" on error.
 				path = os.path.join(base,path)
 		#@-body
-		#@-node:5::<< Test for @path >>
+		#@-node:6::<< Test for @path >>
 
 		
 		#@<< Test for @tabwidth >>
-		#@+node:6::<< Test for @tabwidth >>
+		#@+node:7::<< Test for @tabwidth >>
 		#@+body
 		if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+			
+			w = scanAtTabwidthDirective(s,dict)
+			if w and w > 0:
+				tab_width = w
 		
-			k = dict["tabwidth"]
-			j = i = k + len("@tabwidth")
-			i, val = skip_long(s, i)
-			if val != None and val != 0:
-				tab_width = val
+		
 		#@-body
-		#@-node:6::<< Test for @tabwidth >>
+		#@-node:7::<< Test for @tabwidth >>
 
 		old.update(dict)
 		v = v.parent()
@@ -557,34 +700,13 @@ def scanDirectives(c,v=None):
 		"delims"    : (delim1,delim2,delim3),
 		"encoding"  : encoding,
 		"language"  : language,
+		"lineending": lineending,
 		"pagewidth" : page_width,
 		"path"      : path,
 		"tabwidth"  : tab_width }
 
 #@-body
-#@-node:3::scanDirectives (utils)
-#@+node:4::findReference
-#@+body
-#@+at
-#  We search the descendents of v looking for the definition node matching name.
-# There should be exactly one such node (descendents of other definition nodes 
-# are not searched).
-
-#@-at
-#@@c
-
-def findReference(name,root):
-
-	after = root.nodeAfterTree()
-	v = root.firstChild()
-	while v and v != after:
-		if v.matchHeadline(name) and not v.isAtIgnoreNode():
-			return v
-		v = v.threadNext()
-	return None
-
-#@-body
-#@-node:4::findReference
+#@-node:9::scanDirectives (utils)
 #@-node:2::Directive utils...
 #@+node:3::Menus...
 #@+node:1::canonicalizeMenuName & cononicalizeTranslatedMenuName
@@ -1209,8 +1331,7 @@ def esDiffTime(message, start):
 	return time.clock()
 #@-body
 #@-node:14::Timing
-#@-node:5::Dumping, Timing, Tracing & Sherlock
-#@+node:6::Files & Directories...
+#@+node:15::Files & Directories...
 #@+node:1::create_temp_name
 #@+body
 # Returns a temporary file name.
@@ -1257,21 +1378,7 @@ def getBaseDirectory():
 
 #@-body
 #@-node:3::getBaseDirectory
-#@+node:4::getUserNewline
-#@+body
-def getOutputNewline ():
-	
-	s = app().config.output_newline
-	s = string.lower(s)
-	if s == "nl" or s == "lf": s = '\n'
-	elif s == "cr": s = '\r'
-	elif s == "crlf": s = "\r\n"
-	else: s = '\n'
-	return s
-
-#@-body
-#@-node:4::getUserNewline
-#@+node:5::makeAllNonExistentDirectories
+#@+node:4::makeAllNonExistentDirectories
 #@+body
 #@+at
 #  This is a generalization of os.makedir.
@@ -1310,8 +1417,8 @@ def makeAllNonExistentDirectories (dir):
 				return None
 	return dir1 # All have been created.
 #@-body
-#@-node:5::makeAllNonExistentDirectories
-#@+node:6::readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:4::makeAllNonExistentDirectories
+#@+node:5::readlineForceUnixNewline (Steven P. Schaefer)
 #@+body
 #@+at
 #  Stephen P. Schaefer 9/7/2002
@@ -1331,8 +1438,8 @@ def readlineForceUnixNewline(f):
 	return s
 
 #@-body
-#@-node:6::readlineForceUnixNewline (Steven P. Schaefer)
-#@+node:7::redirecting stderr and stdout
+#@-node:5::readlineForceUnixNewline (Steven P. Schaefer)
+#@+node:6::redirecting stderr and stdout
 #@+body
 class redirectClass:
 	
@@ -1443,8 +1550,8 @@ if 0: # Test code: may be safely and conveniently executed in the child node.
 	#@-body
 	#@-node:3::<< test code >>
 #@-body
-#@-node:7::redirecting stderr and stdout
-#@+node:8::sanitize_filename
+#@-node:6::redirecting stderr and stdout
+#@+node:7::sanitize_filename
 #@+body
 #@+at
 #  This prepares string s to be a valid file name:
@@ -1475,15 +1582,15 @@ def sanitize_filename(s):
 	result = result.strip()
 	return result [:128]
 #@-body
-#@-node:8::sanitize_filename
-#@+node:9::shortFileName
+#@-node:7::sanitize_filename
+#@+node:8::shortFileName
 #@+body
 def shortFileName (fileName):
 	
 	return os.path.basename(fileName)
 #@-body
-#@-node:9::shortFileName
-#@+node:10::update_file_if_changed
+#@-node:8::shortFileName
+#@+node:9::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1529,8 +1636,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
 #@-body
-#@-node:10::update_file_if_changed
-#@+node:11::utils_rename
+#@-node:9::update_file_if_changed
+#@+node:10::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1552,9 +1659,10 @@ def utils_rename(src,dst):
 		from distutils.file_util import move_file
 		move_file(src,dst)
 #@-body
-#@-node:11::utils_rename
-#@-node:6::Files & Directories...
-#@+node:7::Hooks
+#@-node:10::utils_rename
+#@-node:15::Files & Directories...
+#@-node:5::Dumping, Timing, Tracing & Sherlock
+#@+node:6::Hooks
 #@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+body
 #@+at
@@ -1654,8 +1762,8 @@ def issueHookWarning ():
 			es("use_plugins = 0")
 #@-body
 #@-node:3::issueHookWarning
-#@-node:7::Hooks
-#@+node:8::Lists...
+#@-node:6::Hooks
+#@+node:7::Lists...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -1688,8 +1796,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:8::Lists...
-#@+node:9::Most common functions
+#@-node:7::Lists...
+#@+node:8::Most common functions
 #@+body
 # These are guaranteed always to exist for scripts.
 
@@ -1804,8 +1912,8 @@ def windows():
 	return app().windowList
 #@-body
 #@-node:6::windows
-#@-node:9::Most common functions
-#@+node:10::Scanning, selection & whitespace...
+#@-node:8::Most common functions
+#@+node:9::Scanning, selection & whitespace...
 #@+node:1::scanAtFileOptions
 #@+body
 def scanAtFileOptions (h,err_flag=false):
@@ -2522,9 +2630,11 @@ def skip_to_end_of_line (s,i):
 #@-node:14::skip_line, skip_to_end_of_line
 #@+node:15::skip_long
 #@+body
-# returns (i, val) or (i, None) if s[i] does not point at a number.
-
 def skip_long(s,i):
+	
+	"""Scan s[i:] for a valid int.
+	Return (i, val) or (i, None) if s[i] does not point at a number.
+	"""
 
 	digits = string.digits
 	val = 0
@@ -2538,8 +2648,12 @@ def skip_long(s,i):
 		i +=1
 	while i < n and s[i] in digits:
 		i += 1
-	val = int(s[j:i])
-	return i, val
+	try: # 4/24/03: There may be no digits, which would raise an exception.
+		val = int(s[j:i])
+		return i, val
+	except:
+		return i,None
+
 #@-body
 #@-node:15::skip_long
 #@+node:16::skip_matching_delims
@@ -2869,8 +2983,8 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 #@-body
 #@-node:8::skip_leading_ws_with_indent
 #@-node:8::Whitespace...
-#@-node:10::Scanning, selection & whitespace...
-#@+node:11::Startup & initialization...
+#@-node:9::Scanning, selection & whitespace...
+#@+node:10::Startup & initialization...
 #@+node:1::CheckVersion (Dave Hein)
 #@+body
 #@+at
@@ -3021,8 +3135,8 @@ def unloadAll():
 
 #@-body
 #@-node:2::unloadAll
-#@-node:11::Startup & initialization...
-#@+node:12::Unicode utils...
+#@-node:10::Startup & initialization...
+#@+node:11::Unicode utils...
 #@+node:1::isValidEncoding
 #@+body
 def isValidEncoding (encoding):
@@ -3138,7 +3252,7 @@ except:
 		#@-node:2::<< define getpreferredencoding for *nix >>
 #@-body
 #@-node:4::getpreferredencoding from 2.3a2
-#@-node:12::Unicode utils...
+#@-node:11::Unicode utils...
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

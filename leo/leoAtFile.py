@@ -2169,10 +2169,7 @@ class atFile:
 	#@+node:1::atFile.scanAllDirectives (calls writeError on errors)
 	#@+body
 	#@+at
-	#  This code scans the node v and all of v's ancestors looking for 
-	# directives.  If found, the corresponding Tangle/Untangle globals are set.
-	# 
-	# Once a directive is seen, no other related directives in nodes further 
+	#  Once a directive is seen, no other related directives in nodes further 
 	# up the tree have any effect.  For example, if an @color directive is 
 	# seen in node v, no @color or @nocolor directives are examined in any 
 	# ancestor of v.
@@ -2184,6 +2181,10 @@ class atFile:
 	#@@c
 
 	def scanAllDirectives(self,v):
+		
+		"""Scan vnode v and v's ancestors looking for directives,
+		setting corresponding atFile ivars.
+		"""
 	
 		c = self.commands
 		
@@ -2199,6 +2200,7 @@ class atFile:
 		self.language = c.target_language
 		
 		self.encoding = app().config.default_derived_file_encoding
+		self.output_newline = getOutputNewline() # 4/24/03: initialize from config settings.
 		#@-body
 		#@-node:1::<< Set ivars >>
 
@@ -2238,7 +2240,7 @@ class atFile:
 			dict = get_directives_dict(s)
 			
 			#@<< Test for @path >>
-			#@+node:6::<< Test for @path >>
+			#@+node:7::<< Test for @path >>
 			#@+body
 			# We set the current director to a path so future writes will go to that directory.
 			
@@ -2292,7 +2294,7 @@ class atFile:
 				else:
 					self.error("ignoring empty @path")
 			#@-body
-			#@-node:6::<< Test for @path >>
+			#@-node:7::<< Test for @path >>
 
 			
 			#@<< Test for @encoding >>
@@ -2300,16 +2302,9 @@ class atFile:
 			#@+body
 			if not old.has_key("encoding") and dict.has_key("encoding"):
 				
-				k = dict["encoding"]
-				j = len("@encoding")
-				i = skip_to_end_of_line(s,k)
-				encoding = s[k+j:i].strip()
-				# trace("encoding:",encoding)
-				if isValidEncoding(encoding):
-					self.encoding = encoding
-				else:
-					es("invalid @encoding:", encoding)
-			
+				e = scanAtEncodingDirective(s,dict)
+				if e:
+					self.encoding = e
 			#@-body
 			#@-node:4::<< Test for @encoding >>
 
@@ -2344,45 +2339,49 @@ class atFile:
 			#@-node:5::<< Test for @header and @noheader >>
 
 			
+			#@<< Test for @lineending >>
+			#@+node:6::<< Test for @lineending >>
+			#@+body
+			if not old.has_key("lineending") and dict.has_key("lineending"):
+				
+				lineending = scanAtLineendingDirective(s,dict)
+				if lineending:
+					self.output_newline = lineending
+			
+			#@-body
+			#@-node:6::<< Test for @lineending >>
+
+			
 			#@<< Test for @pagewidth >>
-			#@+node:7::<< Test for @pagewidth >>
+			#@+node:8::<< Test for @pagewidth >>
 			#@+body
 			if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
-			
-				k = dict["pagewidth"]
-				j = i = k + len("@pagewidth")
-				i, val = skip_long(s,i)
-				if val != None and val > 0:
-					self.page_width = val
-				else:
-					i = skip_to_end_of_line(s,i)
-					self.error("Ignoring " + s[k:i])
+				
+				w = scanAtPagewidthDirective(s,dict,issue_error_flag=true)
+				if w and w > 0:
+					self.page_width = w
 			#@-body
-			#@-node:7::<< Test for @pagewidth >>
+			#@-node:8::<< Test for @pagewidth >>
 
 			
 			#@<< Test for @tabwidth >>
-			#@+node:8::<< Test for @tabwidth >>
+			#@+node:9::<< Test for @tabwidth >>
 			#@+body
 			if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+				
+				w = scanAtTabwidthDirective(s,dict,issue_error_flag=true)
+				if w and w != 0:
+					self.tab_width = w
 			
-				k = dict["tabwidth"]
-				j = i = k + len("@tabwidth")
-				i, val = skip_long(s, i)
-				if val != None and val != 0:
-					self.tab_width = val
-				else:
-					i = skip_to_end_of_line(s,i)
-					self.error("Ignoring " + s[k:i])
 			
 			#@-body
-			#@-node:8::<< Test for @tabwidth >>
+			#@-node:9::<< Test for @tabwidth >>
 
 			old.update(dict)
 			v = v.parent()
 		
 		#@<< Set current directory >>
-		#@+node:9::<< Set current directory >>
+		#@+node:10::<< Set current directory >>
 		#@+body
 		# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 		
@@ -2402,11 +2401,11 @@ class atFile:
 			self.error("No absolute directory specified anywhere.")
 			self.default_directory = ""
 		#@-body
-		#@-node:9::<< Set current directory >>
+		#@-node:10::<< Set current directory >>
 
 		
 		#@<< Set comment Strings from delims >>
-		#@+node:10::<< Set comment Strings from delims >>
+		#@+node:11::<< Set comment Strings from delims >>
 		#@+body
 		# Use single-line comments if we have a choice.
 		# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
@@ -2424,7 +2423,7 @@ class atFile:
 			self.startSentinelComment = "#" # This should never happen!
 			self.endSentinelComment = ""
 		#@-body
-		#@-node:10::<< Set comment Strings from delims >>
+		#@-node:11::<< Set comment Strings from delims >>
 	#@-body
 	#@-node:1::atFile.scanAllDirectives (calls writeError on errors)
 	#@+node:2::directiveKind

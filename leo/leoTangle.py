@@ -556,6 +556,7 @@ class tangleCommands:
 		# support @first directive
 		self.first_lines = ""
 		self.encoding = app().config.default_derived_file_encoding # 2/21/03
+		self.output_newline = getOutputNewline() # 4/24/03: initialize from config settings.
 		#@-body
 		#@-node:3::<< init directive ivars >> (tangle)
 	#@-body
@@ -3849,11 +3850,7 @@ class tangleCommands:
 	#@+node:17::tangle.scanAllDirectives
 	#@+body
 	#@+at
-	#  This code scans the node v and all its ancestors looking for 
-	# directives.  If found,the corresponding globals are set for use by 
-	# Tangle, Untangle and syntax coloring.
-	# 
-	# Once a directive is seen, related directives in ancesors have no 
+	#  Once a directive is seen, related directives in ancesors have no 
 	# effect.  For example, if an @color directive is seen in node x, no 
 	# @color or @nocolor directives are examined in any ancestor of x.
 
@@ -3861,6 +3858,10 @@ class tangleCommands:
 	#@@c
 
 	def scanAllDirectives(self,v,require_path_flag,issue_error_flag):
+		
+		"""Scan vnode v and v's ancestors looking for directives,
+		setting corresponding tangle ivars and globals.
+		"""
 	
 		c = self.commands
 		# trace(`v`)
@@ -3952,23 +3953,29 @@ class tangleCommands:
 			#@+body
 			if not old.has_key("encoding") and dict.has_key("encoding"):
 				
-				k = dict["encoding"]
-				j = len("@encoding")
-				i = skip_to_end_of_line(s,k) # 4/4/03
-				e = s[k+j:i].strip()
-				# trace("encoding:",e)
-			
-				if isValidEncoding(e):
-					self.encoding = e # 4/4/03
-				else:
-					es("invalid @encoding:" + e)
+				e = scanAtEncodingDirective(s,dict)
+				if e:
+					self.encoding = e
 			
 			#@-body
 			#@-node:3::<< Test for @encoding >>
 
 			
+			#@<< Test for @lineending >>
+			#@+node:4::<< Test for @lineending >>
+			#@+body
+			if not old.has_key("lineending") and dict.has_key("lineending"):
+				
+				lineending = scanAtLineendingDirective(s,dict)
+				if lineending:
+					self.output_newline = lineending
+			
+			#@-body
+			#@-node:4::<< Test for @lineending >>
+
+			
 			#@<< Test for print modes directives >>
-			#@+node:4::<< Test for print modes directives >>
+			#@+node:5::<< Test for print modes directives >>
 			#@+body
 			#@+at
 			#  It is valid to have more than one of these directives in the 
@@ -3985,11 +3992,11 @@ class tangleCommands:
 						break
 			
 			#@-body
-			#@-node:4::<< Test for print modes directives >>
+			#@-node:5::<< Test for print modes directives >>
 
 			
 			#@<< Test for @path >>
-			#@+node:5::<< Test for @path >>
+			#@+node:6::<< Test for @path >>
 			#@+body
 			if require_path_flag and not old.has_key("path") and dict.has_key("path"):
 			
@@ -4048,29 +4055,23 @@ class tangleCommands:
 					self.error("ignoring empty @path")
 			
 			#@-body
-			#@-node:5::<< Test for @path >>
+			#@-node:6::<< Test for @path >>
 
 			
 			#@<< Test for @pagewidth >>
-			#@+node:6::<< Test for @pagewidth >>
+			#@+node:7::<< Test for @pagewidth >>
 			#@+body
 			if not old.has_key("pagewidth") and dict.has_key("pagewidth"):
-			
-				i = dict["pagewidth"]
-				i, val = skip_long(s,i+10) # Point past @pagewidth
-				if val != None and val > 0:
-					self.page_width = val
-				else:
-					if issue_error_flag:
-						j = skip_to_end_of_line(s,i)
-						es("ignoring " + s[i:j])
-			
+				
+				w = scanAtPagewidthDirective(s,dict,issue_error_flag)
+				if w and w > 0:
+					self.page_width = w
 			#@-body
-			#@-node:6::<< Test for @pagewidth >>
+			#@-node:7::<< Test for @pagewidth >>
 
 			
 			#@<< Test for @root >>
-			#@+node:7::<< Test for @root >>
+			#@+node:8::<< Test for @root >>
 			#@+body
 			#@+at
 			#  10/27/02: new code:  self.root may not be defined here, so any 
@@ -4086,29 +4087,24 @@ class tangleCommands:
 				# i += len("@root")
 				self.setRootFromText(s[i:],issue_error_flag)
 			#@-body
-			#@-node:7::<< Test for @root >>
+			#@-node:8::<< Test for @root >>
 
 			
 			#@<< Test for @tabwidth >>
-			#@+node:8::<< Test for @tabwidth >>
+			#@+node:9::<< Test for @tabwidth >>
 			#@+body
 			if not old.has_key("tabwidth") and dict.has_key("tabwidth"):
-			
-				i = dict["tabwidth"] # 7/18/02 (!)
-				i, val = skip_long(s,i+9) # Point past @tabwidth.
-				if val != None and val != 0:
-					self.tab_width = val
-				else:
-					if issue_error_flag:
-						j = skip_to_end_of_line(s,i)
-						es("ignoring " + s[i:j])
+				
+				w = scanAtTabwidthDirective(s,dict,issue_error_flag=true)
+				if w and w != 0:
+					self.tab_width = w
 			
 			#@-body
-			#@-node:8::<< Test for @tabwidth >>
+			#@-node:9::<< Test for @tabwidth >>
 
 			
 			#@<< Test for @header and @noheader >>
-			#@+node:9::<< Test for @header and @noheader >>
+			#@+node:10::<< Test for @header and @noheader >>
 			#@+body
 			if old.has_key("header") or old.has_key("noheader"):
 				pass # Do nothing more.
@@ -4124,13 +4120,13 @@ class tangleCommands:
 				self.use_header_flag = false
 			
 			#@-body
-			#@-node:9::<< Test for @header and @noheader >>
+			#@-node:10::<< Test for @header and @noheader >>
 
 			old.update(dict)
 			v = v.parent()
 		
 		#@<< Set self.tangle_directory >>
-		#@+node:10::<< Set self.tangle_directory >>
+		#@+node:11::<< Set self.tangle_directory >>
 		#@+body
 		#@+at
 		#  This code sets self.tangle_directory if it has not already been set 
@@ -4191,7 +4187,7 @@ class tangleCommands:
 			self.pathError("No absolute directory specified by @root, @path or Preferences.")
 		
 		#@-body
-		#@-node:10::<< Set self.tangle_directory >>
+		#@-node:11::<< Set self.tangle_directory >>
 	#@-body
 	#@-node:17::tangle.scanAllDirectives
 	#@+node:18::token_type

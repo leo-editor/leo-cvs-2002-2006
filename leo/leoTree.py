@@ -1599,17 +1599,10 @@ class leoTree:
 			#@+node:1::<< set w and break on @tabwidth >>
 			#@+body
 			if dict.has_key("tabwidth"):
-			
-				k = dict["tabwidth"]
-				i = k + len("@tabwidth")
-				i, val = skip_long(s, i)
-				if val != None and val != 0:
+				
+				val = scanAtTabwidthDirective(s,dict,issue_error_flag=false)
+				if val and val != 0:
 					w = val
-					break
-				else:
-					if 0: # silently ignore this.
-						i = skip_to_end_of_line(s,i)
-						es("Ignoring " + s[k:i])
 			#@-body
 			#@-node:1::<< set w and break on @tabwidth >>
 

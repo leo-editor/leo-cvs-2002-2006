@@ -40,7 +40,7 @@ leoKeywords = (
 	"@","@c","@code","@color","@comment",
 	"@delims","@doc","@encoding","@end_raw",
 	"@first","@header","@ignore",
-	"@language","@last",
+	"@language","@last","@lineending",
 	"@nocolor","@noheader","@others",
 	"@pagewidth","@path","@quiet","@raw","@root","@root-code","@root-doc",
 	"@silent","@tabwidth","@terse",
@@ -2054,14 +2054,11 @@ class colorizer:
 	#@-node:4::colorizeAnyLanguage & allies
 	#@+node:5::scanColorDirectives
 	#@+body
-	#@+at
-	#  This code scans the node v and all of v's ancestors looking for @color 
-	# and @nocolor directives.
-
-	#@-at
-	#@@c
-
 	def scanColorDirectives(self,v):
+		
+		"""Scan vnode v and v's ancestors looking for @color and @nocolor directives,
+		setting corresponding colorizer ivars.
+		"""
 	
 		c = self.commands
 		language = c.target_language
