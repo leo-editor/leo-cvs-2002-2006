@@ -38,14 +38,13 @@ class baseLeoImportCommands:
 	def createOutline (self,fileName,parent):
 	
 		c = self.c ; current = c.currentVnode()
-		junk, self.fileName = g.os_path_split(fileName) # junk/fileName
-		self.methodName,ext = g.os_path_splitext(self.fileName) # methodName.fileType
-		# g.trace(ext,fileName)
+		junk,self.fileName = g.os_path_split(fileName)
+		self.methodName,ext = g.os_path_splitext(self.fileName)
+		g.trace(fileName)
 		self.fileType = ext
 		self.setEncoding()
 		# g.trace(self.fileName,self.fileType)
 		# All file types except the following just get copied to the parent node.
-		# Note: we should _not_ import header files using this code.
 		ext = ext.lower()
 		appendFileFlag = ext not in (
 			".c", ".cpp", ".cxx", ".el", ".java", ".pas", ".py", ".pyw", ".php")
@@ -67,9 +66,9 @@ class baseLeoImportCommands:
 		v = parent.insertAsLastChild()
 		c.undoer.setUndoParams("Import",v,select=current)
 		if self.treeType == "@file":
-			v.initHeadString("@file " + self.fileName)
+			v.initHeadString("@file " + fileName)
 		else:
-			v.initHeadString(self.fileName)
+			v.initHeadString(fileName)
 			
 		self.rootLine = g.choose(self.treeType=="@file","","@root-code "+self.fileName+'\n')
 	
@@ -1038,11 +1037,6 @@ class baseLeoImportCommands:
 		
 		s.strip() # Remove inadvertent whitespace.
 		
-		#if (
-		#	not s.startswith("<?php")
-		#	or not (s.endswith("?>") or s.endswith("?>\n") or s.endswith("?>\r\n")
-		#):
-		
 		if (
 			not (
 				s.startswith("<?P") or
@@ -1287,7 +1281,8 @@ class baseLeoImportCommands:
 				i += 1 # skip the '='
 				function_start = None # We can't be in a function.
 				lparen = None   # We have not seen an argument list yet.
-				if g.match(s,i,'='):
+				i = g.skip_ws(s,i) # 6/9/04
+				if g.match(s,i,'{'):
 					i = g.skip_braces(s,i)
 				#@nonl
 				#@-node:ekr.20031218072017.3261:<< handle equal sign in C>>
@@ -1463,6 +1458,7 @@ class baseLeoImportCommands:
 					i = g.skip_typedef(s,i)
 					# lparen = None ;  # This can appear in an argument list.
 				elif g.match_c_word(s,i,"namespace"):
+					g.trace("namespace")
 					#@	<< create children for the namespace >>
 					#@+node:ekr.20031218072017.3258:<< create children for the namespace >>
 					#@+at 
@@ -1488,6 +1484,7 @@ class baseLeoImportCommands:
 					# Skip the '{'
 					i = g.skip_ws_and_nl(s,i)
 					if g.match(s,i,'{') and namespace_name_start:
+						# g.trace(s[i],s[namespace_name_start:namespace_name_end+1])
 						inner_ip = i + 1
 						i = g.skip_braces(s,i)
 						if g.match(s,i,'}'):
@@ -1496,7 +1493,7 @@ class baseLeoImportCommands:
 								parent.appendStringToBody(s[scan_start:inner_ip])
 							# Save and change self.moduleName to namespaceName
 							savedMethodName = self.methodName
-							namespaceName = s[namespace_name_start:namespace_name_end]
+							namespaceName = s[namespace_name_start:namespace_name_end+1]
 							self.methodName = "namespace " + namespaceName
 							# Recursively call this function .
 							self.scanCText(s[inner_ip:],parent)
@@ -1529,7 +1526,6 @@ class baseLeoImportCommands:
 					#@nonl
 					#@-node:ekr.20031218072017.3259:<< test for operator keyword >>
 					#@nl
-				#@nonl
 				#@-node:ekr.20031218072017.3257:<< handle id, class, typedef, struct, union, namespace >>
 				#@nl
 			else: i += 1

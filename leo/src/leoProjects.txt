@@ -36825,14 +36825,13 @@ What I did:
 def createOutline (self,fileName,parent):
 
 	c = self.c ; current = c.currentVnode()
-	junk, self.fileName = g.os_path_split(fileName) # junk/fileName
-	self.methodName,ext = g.os_path_splitext(self.fileName) # methodName.fileType
-	# g.trace(ext,fileName)
+	junk,self.fileName = g.os_path_split(fileName)
+	self.methodName,ext = g.os_path_splitext(self.fileName)
+	g.trace(fileName)
 	self.fileType = ext
 	self.setEncoding()
 	# g.trace(self.fileName,self.fileType)
 	# All file types except the following just get copied to the parent node.
-	# Note: we should _not_ import header files using this code.
 	ext = ext.lower()
 	appendFileFlag = ext not in (
 		".c", ".cpp", ".cxx", ".el", ".java", ".pas", ".py", ".pyw", ".php")
@@ -36841,9 +36840,9 @@ def createOutline (self,fileName,parent):
 	v = parent.insertAsLastChild()
 	c.undoer.setUndoParams("Import",v,select=current)
 	if self.treeType == "@file":
-		v.initHeadString("@file " + self.fileName)
+		v.initHeadString("@file " + fileName)
 	else:
-		v.initHeadString(self.fileName)
+		v.initHeadString(fileName)
 		
 	self.rootLine = g.choose(self.treeType=="@file","","@root-code "+self.fileName+'\n')
 
@@ -38849,6 +38848,1119 @@ childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
 #@-node:ekr.20031218072017.1777:tree.OnEndDrag
 #@-node:EKR.20040608110312:Dragging
 #@-node:ekr.20031218072017.859:(Experimented with clone dragging)
+#@+node:EKR.20040609090913:(Fixed Open With bug)
+#@+node:EKR.20040609090913.1:Traceback
+@nocolor
+
+File "/home/ng/mob/lib/leo-4.2-a3/src/leoCommands.py", line 334, in openWith
+if v.t == dict.get("v") and searchPath == dict.get("path"):
+
+File "/home/ng/mob/lib/leo-4.2-a3/src/leoNodes.py", line 1537, in __cmp__
+if p1.v != p2.v or p1.stack != p2.stack:
+
+AttributeError: 'tnode' object has no attribute 'v'
+#@-node:EKR.20040609090913.1:Traceback
+#@+node:ekr.20031218072017.2823:openWith and allies
+def openWith(self,data=None):
+
+	"""This routine handles the items in the Open With... menu.
+
+	These items can only be created by createOpenWithMenuFromTable().
+	Typically this would be done from the "open2" hook."""
+	
+	c = self ; v = c.currentVnode()
+	if not data or len(data) != 3: return # 6/22/03
+	try:
+		openType,arg,ext=data
+		if not g.doHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext):
+			<< set ext based on the present language >>
+			<< create or reopen temp file, testing for conflicting changes >>
+			<< execute a command to open path in external editor >>
+		g.doHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
+	except:
+		g.es("exception in openWith")
+		g.es_exception()
+
+	return "break"
+#@nonl
+#@+node:ekr.20031218072017.2824:<< set ext based on the present language >>
+if not ext:
+	dict = g.scanDirectives(c)
+	language = dict.get("language")
+	ext = g.app.language_extension_dict.get(language)
+	# print language,ext
+	if ext == None:
+		ext = "txt"
+	
+if ext[0] != ".":
+	ext = "."+ext
+	
+# print "ext",ext
+#@nonl
+#@-node:ekr.20031218072017.2824:<< set ext based on the present language >>
+#@+node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
+dict = None ; path = None
+<< set dict and path if a temp file already refers to v.t >>
+if path:
+	<< create or recreate temp file as needed >>
+else:
+	path = c.createOpenWithTempFile(v,ext)
+
+if not path:
+	return # An error has occured.
+#@nonl
+#@+node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to v.t >>
+searchPath = c.openWithTempFilePath(v,ext)
+
+if g.os_path_exists(searchPath):
+	for dict in g.app.openWithFiles:
+		if v == dict.get("v") and searchPath == dict.get("path"):
+			path = searchPath
+			break
+#@-node:ekr.20031218072017.2826:<<set dict and path if a temp file already refers to v.t >>
+#@+node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+@ We test for changes in both v and the temp file:
+
+- If only v's body text has changed, we recreate the temp file.
+- If only the temp file has changed, do nothing here.
+- If both have changed we must prompt the user to see which code to use.
+@c
+
+encoding = dict.get("encoding")
+old_body = dict.get("body")
+new_body = v.bodyString()
+new_body = g.toEncodedString(new_body,encoding,reportErrors=true)
+
+old_time = dict.get("time")
+try:
+	new_time = g.os_path_getmtime(path)
+except:
+	new_time = None
+	
+body_changed = old_body != new_body
+temp_changed = old_time != new_time
+
+if body_changed and temp_changed:
+	<< Raise dialog about conflict and set result >>
+	if result == "cancel": return
+	rewrite = result == "outline"
+else:
+	rewrite = body_changed
+		
+if rewrite:
+	path = c.createOpenWithTempFile(v,ext)
+else:
+	g.es("reopening: " + g.shortFileName(path),color="blue")
+#@nonl
+#@+node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+message = (
+	"Conflicting changes in outline and temp file\n\n" +
+	"Do you want to use the code in the outline or the temp file?\n\n")
+
+result = g.app.gui.runAskYesNoCancelDialog(
+	"Conflict!", message,
+	yesMessage = "Outline",
+	noMessage = "File",
+	defaultButton = "Cancel")
+#@nonl
+#@-node:ekr.20031218072017.2828:<< Raise dialog about conflict and set result >>
+#@-node:ekr.20031218072017.2827:<< create or recreate temp file as needed >>
+#@-node:ekr.20031218072017.2825:<< create or reopen temp file, testing for conflicting changes >>
+#@+node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+try:
+	if arg == None: arg = ""
+	shortPath = path # g.shortFileName(path)
+	if openType == "os.system":
+		command  = "os.system("+arg+shortPath+")"
+		os.system(arg+path)
+	elif openType == "os.startfile":
+		command    = "os.startfile("+arg+shortPath+")"
+		os.startfile(arg+path)
+	elif openType == "exec":
+		command    = "exec("+arg+shortPath+")"
+		exec arg+path in {} # 12/11/02
+	elif openType == "os.spawnl":
+		filename = g.os_path_basename(arg)
+		command = "os.spawnl("+arg+","+filename+','+ shortPath+")"
+		apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
+	elif openType == "os.spawnv":
+		filename = g.os_path_basename(arg)
+		command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
+		apply(os.spawnl,(os.P_NOWAIT,arg,(filename,path)))
+	else:
+		command="bad command:"+str(openType)
+	# This seems a bit redundant.
+	# g.es(command)
+except:
+	g.es("exception executing: "+command)
+	g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
+#@+node:ekr.20031218072017.2830:createOpenWithTempFile
+def createOpenWithTempFile (self, v, ext):
+	
+	c = self
+	path = c.openWithTempFilePath(v,ext)
+	try:
+		if g.os_path_exists(path):
+			g.es("recreating:  " + g.shortFileName(path),color="red")
+		else:
+			g.es("creating:  " + g.shortFileName(path),color="blue")
+		file = open(path,"w")
+		# 3/7/03: convert s to whatever encoding is in effect.
+		s = v.bodyString()
+		dict = g.scanDirectives(c,p=v)
+		encoding = dict.get("encoding",None)
+		if encoding == None:
+			encoding = g.app.config.default_derived_file_encoding
+		s = g.toEncodedString(s,encoding,reportErrors=true) 
+		file.write(s)
+		file.flush()
+		file.close()
+		try:    time = g.os_path_getmtime(path)
+		except: time = None
+		# g.es("time: " + str(time))
+		# 4/22/03: add body and encoding entries to dict for later comparisons.
+		dict = {"body":s, "c":c, "encoding":encoding, "f":file, "path":path, "time":time, "v":v}
+		<< remove previous entry from app.openWithFiles if it exists >> # 4/22/03
+		g.app.openWithFiles.append(dict)
+		return path
+	except:
+		file = None
+		g.es("exception creating temp file",color="red")
+		g.es_exception()
+		return None
+#@nonl
+#@+node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+for d in g.app.openWithFiles[:]: # 6/30/03
+	v2 = d.get("v")
+	if v.t == v2.t:
+		print "removing previous entry in g.app.openWithFiles for",v
+		g.app.openWithFiles.remove(d)
+#@nonl
+#@-node:ekr.20031218072017.2831:<< remove previous entry from app.openWithFiles if it exists >>
+#@-node:ekr.20031218072017.2830:createOpenWithTempFile
+#@+node:ekr.20031218072017.2832:openWithTempFilePath
+def openWithTempFilePath (self,v,ext):
+	
+	"""Return the path to the temp file corresponding to v and ext."""
+
+	name = "LeoTemp_" + str(id(v.t)) + '_' + g.sanitize_filename(v.headString()) + ext
+	name = g.toUnicode(name,g.app.tkEncoding) # 10/20/03
+
+	td = g.os_path_abspath(tempfile.gettempdir())
+	path = g.os_path_join(td,name)
+	
+	# print "openWithTempFilePath",path
+	return path
+#@nonl
+#@-node:ekr.20031218072017.2832:openWithTempFilePath
+#@-node:ekr.20031218072017.2823:openWith and allies
+#@-node:EKR.20040609090913:(Fixed Open With bug)
+#@+node:ekr.20040322074056:(Fixed Go To Line Number command)
+#@+node:EKR.20040604155223.1:top_df.parseLeoSentinel
+def parseLeoSentinel (self,s):
+	
+	at = self
+	new_df = false ; valid = true ; n = len(s)
+	encoding_tag = "-encoding="
+	version_tag = "-ver="
+	tag = "@+leo"
+	thin_tag = "-thin"
+	<< set the opening comment delim >>
+	<< make sure we have @+leo >>
+	<< read optional version param >>
+	<< read optional thin param >>
+	<< read optional encoding param >>
+	<< set the closing comment delim >>
+	return valid,new_df,start,end
+#@nonl
+#@+node:EKR.20040604155223:<< set the opening comment delim >>
+# s contains the tag
+i = j = g.skip_ws(s,0)
+
+# The opening comment delim is the initial non-tag
+while i < n and not g.match(s,i,tag) and not g.is_nl(s,i):
+	i += 1
+
+if j < i:
+	start = s[j:i]
+else:
+	valid = false
+#@nonl
+#@-node:EKR.20040604155223:<< set the opening comment delim >>
+#@+node:ekr.20031218072017.2635:<< make sure we have @+leo >>
+@ REM hack: leading whitespace is significant before the @+leo.  We do this so that sentinelKind need not skip whitespace following self.startSentinelComment.  This is correct: we want to be as restrictive as possible about what is recognized as a sentinel.  This minimizes false matches.
+@c
+
+if 0: # Make leading whitespace significant.
+	i = g.skip_ws(s,i)
+
+if g.match(s,i,tag):
+	i += len(tag)
+else: valid = false
+#@nonl
+#@-node:ekr.20031218072017.2635:<< make sure we have @+leo >>
+#@+node:ekr.20031218072017.2636:<< read optional version param >>
+new_df = g.match(s,i,version_tag)
+
+if new_df:
+	# Skip to the next minus sign or end-of-line
+	i += len(version_tag)
+	j = i
+	while i < len(s) and not g.is_nl(s,i) and s[i] != '-':
+		i += 1
+
+	if j < i:
+		pass # version = s[j:i]
+	else:
+		valid = false
+#@-node:ekr.20031218072017.2636:<< read optional version param >>
+#@+node:EKR.20040503105354:<< read optional thin param >>
+if g.match(s,i,thin_tag):
+	i += len(tag)
+#@nonl
+#@-node:EKR.20040503105354:<< read optional thin param >>
+#@+node:ekr.20031218072017.2637:<< read optional encoding param >>
+# Set the default encoding
+at.encoding = g.app.config.default_derived_file_encoding
+
+if g.match(s,i,encoding_tag):
+	# Read optional encoding param, e.g., -encoding=utf-8,
+	i += len(encoding_tag)
+	# Skip to the next end of the field.
+	j = s.find(",.",i)
+	if j > -1:
+		# The encoding field was written by 4.2 or after:
+		encoding = s[i:j]
+		i = j + 1 # 6/8/04
+	else:
+		# The encoding field was written before 4.2.
+		j = s.find('.',i)
+		if j > -1:
+			encoding = s[i:j]
+			i = j + 1 # 6/8/04
+		else:
+			encoding = None
+	# g.trace("encoding:",encoding)
+	if encoding:
+		if g.isValidEncoding(encoding):
+			at.encoding = encoding
+		else:
+			print "bad encoding in derived file:",encoding
+			g.es("bad encoding in derived file:",encoding)
+	else:
+		valid = false
+#@-node:ekr.20031218072017.2637:<< read optional encoding param >>
+#@+node:ekr.20031218072017.2638:<< set the closing comment delim >>
+# The closing comment delim is the trailing non-whitespace.
+i = j = g.skip_ws(s,i)
+while i < n and not g.is_ws(s[i]) and not g.is_nl(s,i):
+	i += 1
+end = s[j:i]
+#@nonl
+#@-node:ekr.20031218072017.2638:<< set the closing comment delim >>
+#@-node:EKR.20040604155223.1:top_df.parseLeoSentinel
+#@+node:ekr.20031218072017.2864:goToLineNumber & allies
+def goToLineNumber (self):
+
+	c = self ; p = c.currentPosition()
+	<< set root to the nearest ancestor @file node >>
+	<< read the file into lines >>
+	<< get n, the line number, from a dialog >>
+	if n==1:
+		p = root ; n2 = 1 ; found = true
+	elif n >= len(lines):
+		p = root ; found = false
+		n2 = p.bodyString().count('\n')
+	elif root.isAtAsisFileNode():
+		<< count outline lines, setting p,n2,found >>
+	else:
+		vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
+		found = true
+		if not vnodeName:
+			g.es("invalid derived file: " + fileName)
+			return
+		<< set p to the node given by vnodeName and gnx or childIndex or n >>
+	<< select p and make it visible >>
+	<< put the cursor on line n2 of the body text >>
+#@nonl
+#@+node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
+fileName = None
+for p in p.self_and_parents_iter():
+	fileName = p.anyAtFileNodeName()
+	if fileName: break
+
+# New in 4.2: Search the entire tree for joined nodes.
+if not fileName:
+	p1 = c.currentPosition()
+	for p in c.all_positions_iter():
+		if p.v.t == p1.v.t and p != p1:
+			# Found a joined position.
+			for p in p.self_and_parents_iter():
+				fileName = p.anyAtFileNodeName()
+				if fileName: break
+		if fileName: break
+	
+if fileName:
+	# g.trace(fileName,p)
+	root = p.copy()
+else:
+	g.es("Go to line number: ancestor must be @file node", color="blue")
+	return
+#@nonl
+#@-node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
+#@+node:ekr.20031218072017.2866:<< read the file into lines >>
+# 1/26/03: calculate the full path.
+d = g.scanDirectives(c)
+path = d.get("path")
+
+fileName = g.os_path_join(path,fileName)
+
+try:
+	file=open(fileName)
+	lines = file.readlines()
+	file.close()
+except:
+	g.es("not found: " + fileName)
+	return
+	
+#@-node:ekr.20031218072017.2866:<< read the file into lines >>
+#@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
+n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
+if n == -1:
+	return
+#@nonl
+#@-node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
+#@+node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
+p = lastv = root
+prev = 0 ; found = false
+for p in p.self_and_subtree_iter():
+	lastv = p.copy()
+	s = p.bodyString()
+	lines = s.count('\n')
+	if len(s) > 0 and s[-1] != '\n':
+		lines += 1
+	# print lines,prev,p
+	if prev + lines >= n:
+		found = true ; break
+	prev += lines
+
+p = lastv
+n2 = max(1,n-prev)
+#@nonl
+#@-node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
+#@+node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and gnx or childIndex or n >>
+if gnx:
+	<< 4.2: get node from gnx >>
+elif childIndex == -1:
+	<< 4.x: scan for the node using tnodeList and n >>
+else:
+	<< 3.x: scan for the node with the given childIndex >>
+#@nonl
+#@+node:EKR.20040609110138:<< 4.2: get node from gnx >>
+found = false
+gnx = g.app.nodeIndices.scanGnx(gnx,0)
+
+# g.trace(vnodeName)
+# g.trace(gnx)
+
+for p in root.self_and_subtree_iter():
+	if p.matchHeadline(vnodeName):
+		# g.trace(p.v.t.fileIndex)
+		if p.v.t.fileIndex == gnx:
+			found = true ; break
+
+if not found:
+	g.es("not found: " + vnodeName, color="red")
+	return
+#@nonl
+#@-node:EKR.20040609110138:<< 4.2: get node from gnx >>
+#@+node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
+# This is about the best that can be done without replicating the entire atFile write logic.
+
+ok = true
+
+if not hasattr(root.v.t,"tnodeList"):
+	s = "no child index for " + root.headString()
+	print s ; g.es(s, color="red")
+	ok = false
+
+if ok:
+	tnodeList = root.v.t.tnodeList
+	<< set tnodeIndex to the number of +node sentinels before line n >>
+	tnodeIndex = max(0,tnodeIndex)
+	<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+			
+if not ok:
+	# Fall back to the old logic.
+	<< set p to the first node whose headline matches vnodeName >>
+#@nonl
+#@+node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
+tnodeIndex = -1 # Don't count the @file node.
+scanned = 0 # count of lines scanned.
+
+for s in lines:
+	if scanned >= n:
+		break
+	i = g.skip_ws(s,0)
+	if g.match(s,i,delim):
+		i += len(delim)
+		if g.match(s,i,"+node"):
+			# g.trace(tnodeIndex,s.rstrip())
+			tnodeIndex += 1
+	scanned += 1
+#@nonl
+#@-node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
+#@+node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+@ We use the tnodeList to find a _tnode_ corresponding to the proper node, so the user will for sure be editing the proper text, even if several nodes happen to have the same headline.  This is really all that we need.
+
+However, this code has no good way of distinguishing between different cloned vnodes in the file: they all have the same tnode.  So this code just picks p = t.vnodeList[0] and leaves it at that.
+
+The only way to do better is to scan the outline, replicating the write logic to determine which vnode created the given line.  That's way too difficult, and it would create an unwanted dependency in this code.
+@c
+
+# g.trace("tnodeIndex",tnodeIndex)
+if tnodeIndex < len(tnodeList):
+	t = tnodeList[tnodeIndex]
+	# Find the first vnode whose tnode is t.
+	found = false
+	for p in root.self_and_subtree_iter():
+		if p.v.t == t:
+			found = true ; break
+	if not found:
+		s = "tnode not found for " + vnodeName
+		print s ; g.es(s, color="red") ; ok = false
+	elif p.headString().strip() != vnodeName:
+		if 0: # Apparently this error doesn't prevent a later scan for working properly.
+			s = "Mismatched vnodeName\nExpecting: %s\n got: %s" % (p.headString(),vnodeName)
+			print s ; g.es(s, color="red")
+		ok = false
+else:
+	s = "Invalid computed tnodeIndex: %d" % tnodeIndex
+	print s ; g.es(s, color = "red") ; ok = false
+#@nonl
+#@-node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+#@+node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
+found = false
+for p in root.self_and_subtree_iter():
+	if p.matchHeadline(vnodeName):
+		found = true ; break
+
+if not found:
+	s = "not found: " + vnodeName
+	print s ; g.es(s, color="red")
+	return
+#@nonl
+#@-node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
+#@-node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
+#@+node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
+found = false
+for p in root.self_and_subtree_iter():
+	if p.matchHeadline(vnodeName):
+		if childIndex <= 0 or p.childIndex() + 1 == childIndex:
+			found = true ; break
+
+if not found:
+	g.es("not found: " + vnodeName, color="red")
+	return
+#@nonl
+#@-node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
+#@-node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and gnx or childIndex or n >>
+#@+node:ekr.20031218072017.2875:<< select p and make it visible >>
+c.beginUpdate()
+c.frame.tree.expandAllAncestors(p)
+c.selectVnode(p)
+c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2875:<< select p and make it visible >>
+#@+node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
+if found:
+	c.frame.body.setInsertPointToStartOfLine(n2-1)
+else:
+	c.frame.body.setInsertionPointToEnd()
+	g.es("%d lines" % len(lines), color="blue")
+
+c.frame.body.makeInsertPointVisible()
+#@nonl
+#@-node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
+#@+node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
+@ We count "real" lines in the derived files, ignoring all sentinels that do not arise from source lines.  When the indicated line is found, we scan backwards for an @+body line, get the vnode's name from that line and set p to the indicated vnode.  This will fail if vnode names have been changed, and that can't be helped.
+
+Returns (vnodeName,offset)
+
+vnodeName: the name found in the previous @+body sentinel.
+offset: the offset within p of the desired line.
+@c
+
+def convertLineToVnodeNameIndexLine (self,lines,n,root):
+	
+	"""Convert a line number n to a vnode name, (child index or gnx) and line number."""
+	
+	c = self ; at = c.atFileCommands
+	childIndex = 0 ; gnx = None ; newDerivedFile = false
+	thinFile = root.isAtThinFileNode()
+	<< set delim, leoLine from the @+leo line >>
+	if not delim:
+		g.es("bad @+leo sentinel")
+		return None,None,None,None,None
+	<< scan back to @+node, setting offset,nodeSentinelLine >>
+	if nodeSentinelLine == -1:
+		# The line precedes the first @+node sentinel
+		# g.trace("before first line")
+		return root.headString(),0,1,delim # 10/13/03
+	s = lines[nodeSentinelLine]
+	# g.trace(s)
+	<< set vnodeName and (childIndex or gnx) from s >>
+	# g.trace("childIndex,offset",childIndex,offset,vnodeName)
+	return vnodeName,childIndex,gnx,offset,delim
+#@+node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
+# Find the @+leo line.
+tag = "@+leo"
+i = 0 
+while i < len(lines) and lines[i].find(tag)==-1:
+	i += 1
+leoLine = i # Index of the line containing the leo sentinel
+
+if leoLine < len(lines):
+	s = lines[leoLine]
+	valid,newDerivedFile,start,end = at.parseLeoSentinel(s)
+	if valid: delim = start + '@'
+	else:     delim = None
+else:
+	delim = None
+#@-node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
+#@+node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
+offset = 0 # This is essentially the Tk line number.
+nodeSentinelLine = -1
+line = n - 1
+while line >= 0:
+	s = lines[line]
+	# g.trace(s)
+	i = g.skip_ws(s,0)
+	if g.match(s,i,delim):
+		<< handle delim while scanning backward >>
+	else:
+		offset += 1 # Assume the line is real.  A dubious assumption.
+	line -= 1
+#@nonl
+#@+node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
+if line == n:
+	g.es("line "+str(n)+" is a sentinel line")
+i += len(delim)
+
+if g.match(s,i,"-node"):
+	# The end of a nested section.
+	line = self.skipToMatchingNodeSentinel(lines,line,delim)
+elif g.match(s,i,"+node"):
+	nodeSentinelLine = line
+	break
+elif g.match(s,i,"<<") or g.match(s,i,"@first"):
+	offset += 1 # Count these as a "real" lines.
+#@nonl
+#@-node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
+#@-node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
+#@+node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
+if newDerivedFile:
+	i = 0
+	if thinFile:
+		# gnx is lies between the first and second ':':
+		i = s.find(':',i)
+		if i > 0:
+			i += 1
+			j = s.find(':',i)
+			if j > 0:
+				gnx = s[i:j]
+			else: i = len(s)
+		else: i = len(s)
+	# vnode name is everything following the first or second':'
+	# childIndex is -1 as a flag for later code.
+	i = s.find(':',i)
+	if i > -1: vnodeName = s[i+1:].strip()
+	else: vnodeName = None
+	childIndex = -1
+else:
+	# vnode name is everything following the third ':'
+	i = 0 ; colons = 0
+	while i < len(s) and colons < 3:
+		if s[i] == ':':
+			colons += 1
+			if colons == 1 and i+1 < len(s) and s[i+1] in string.digits:
+				junk,childIndex = g.skip_long(s,i+1)
+		i += 1
+	vnodeName = s[i:].strip()
+	
+# g.trace("gnx",gnx,"vnodeName:",vnodeName)
+if not vnodeName:
+	vnodeName = None
+	g.es("bad @+node sentinel")
+#@nonl
+#@-node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
+#@-node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
+#@+node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
+def skipToMatchingNodeSentinel (self,lines,n,delim):
+	
+	s = lines[n]
+	i = g.skip_ws(s,0)
+	assert(g.match(s,i,delim))
+	i += len(delim)
+	if g.match(s,i,"+node"):
+		start="+node" ; end="-node" ; delta=1
+	else:
+		assert(g.match(s,i,"-node"))
+		start="-node" ; end="+node" ; delta=-1
+	# Scan to matching @+-node delim.
+	n += delta ; level = 0
+	while 0 <= n < len(lines):
+		s = lines[n] ; i = g.skip_ws(s,0)
+		if g.match(s,i,delim):
+			i += len(delim)
+			if g.match(s,i,start):
+				level += 1
+			elif g.match(s,i,end):
+				if level == 0: break
+				else: level -= 1
+		n += delta
+		
+	# g.trace(n)
+	return n
+#@nonl
+#@-node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
+#@-node:ekr.20031218072017.2864:goToLineNumber & allies
+#@-node:ekr.20040322074056:(Fixed Go To Line Number command)
+#@+node:EKR.20040609160237:(Fixed crash when importing Borland wstring.cpp)
+# namespace not handled very well.
+#@nonl
+#@+node:EKR.20040609160237.1:Traceback
+@nocolor
+
+Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoCommands.py", line 143, in doCommand
+    command()
+  File "C:\prog\leoCVS\leo\src\leoCommands.py", line 924, in importAtFile
+    c.importCommands.importFilesCommand (paths,"@file")
+  File "C:\prog\leoCVS\leo\src\leoImport.py", line 148, in importFilesCommand
+    v = self.createOutline(fileName,current)
+  File "C:\prog\leoCVS\leo\src\leoImport.py", line 82, in createOutline
+    self.scanCText(s,v)
+  File "C:\prog\leoCVS\leo\src\leoImport.py", line 1502, in scanCText
+    self.scanCText(s[inner_ip:],parent)
+  File "C:\prog\leoCVS\leo\src\leoImport.py", line 1291, in scanCText
+    i = g.skip_braces(s,i)
+  File "C:\prog\leoCVS\leo\src\leoGlobals.py", line 2877, in skip_braces
+    assert(g.match(s,i,'{'))
+AssertionError
+#@-node:EKR.20040609160237.1:Traceback
+#@+node:ekr.20031218072017.3160:skip_braces
+@ This code is called only from the import logic, so we are allowed to try some tricks.  In particular, we assume all braces are matched in #if blocks.
+@c
+
+def skip_braces(s,i):
+
+	"""Skips from the opening to the matching brace.
+	
+	If no matching is found i is set to len(s)"""
+
+	# start = g.get_line(s,i)
+	assert(g.match(s,i,'{'))
+	level = 0 ; n = len(s)
+	while i < n:
+		c = s[i]
+		if c == '{':
+			level += 1 ; i += 1
+		elif c == '}':
+			level -= 1
+			if level <= 0: return i
+			i += 1
+		elif c == '\'' or c == '"': i = g.skip_string(s,i)
+		elif g.match(s,i,'//'): i = g.skip_to_end_of_line(s,i)
+		elif g.match(s,i,'/*'): i = g.skip_block_comment(s,i)
+		# 7/29/02: be more careful handling conditional code.
+		elif g.match_word(s,i,"#if") or g.match_word(s,i,"#ifdef") or g.match_word(s,i,"#ifndef"):
+			i,delta = g.skip_pp_if(s,i)
+			level += delta
+		else: i += 1
+	return i
+#@-node:ekr.20031218072017.3160:skip_braces
+#@+node:ekr.20031218072017.3250:scanCText
+# Creates a child of parent for each C function definition seen.
+
+def scanCText (self,s,parent):
+
+	<< define scanCText vars >>
+	while i < len(s):
+		# line = g.get_line(s,i) ; g.trace(line)
+		ch = s[i]
+		# These cases skip tokens.
+		if ch == '/':
+			<< handle possible C comments >>
+		elif ch == '"' or ch == '\'':
+			i = g.skip_string(s,i)
+		# These cases help determine where functions start.
+		elif ch == '=':
+			<< handle equal sign in C >>
+		elif ch == '(':
+			<< handle open paren in C >>
+		elif ch == ';':
+			<< handle semicolon in C >>
+		# These cases and the default case can create child nodes.
+		elif ch == '#':
+			<< handle # sign >>
+		elif ch == '{':
+			<< handle open curly bracket in C >>
+		elif g.is_c_id(ch):
+			<< handle id, class, typedef, struct, union, namespace >>
+		else: i += 1
+	<< Append any unused text to the parent's body text >>
+#@nonl
+#@+node:ekr.20031218072017.3251:<< define scanCText vars >>
+c = self.c
+include_seen = method_seen = false
+methodKind = g.choose(self.fileType==".c","functions","methods")
+lparen = None   # Non-null if '(' seen at outer level.
+scan_start = function_start = 0
+name = None
+i = 0
+#@nonl
+#@-node:ekr.20031218072017.3251:<< define scanCText vars >>
+#@+node:ekr.20031218072017.3260:<< handle possible C comments >>
+if g.match(s,i,"//"):
+	i = g.skip_line(s,i)
+elif g.match(s,i,"/*"):
+	i = g.skip_block_comment(s,i)
+else:
+	i += 1
+#@nonl
+#@-node:ekr.20031218072017.3260:<< handle possible C comments >>
+#@+node:ekr.20031218072017.3261:<< handle equal sign in C>>
+@ We can not be seeing a function definition when we find an equal sign at the top level. Equal signs inside parentheses are handled by the open paren logic.
+@c
+
+i += 1 # skip the '='
+function_start = None # We can't be in a function.
+lparen = None   # We have not seen an argument list yet.
+i = g.skip_ws(s,i) # 6/9/04
+if g.match(s,i,'{'):
+	i = g.skip_braces(s,i)
+#@nonl
+#@-node:ekr.20031218072017.3261:<< handle equal sign in C>>
+#@+node:ekr.20031218072017.3262:<< handle open paren in C >>
+lparen = i
+# This will skip any equal signs inside the paren.
+i = g.skip_parens(s,i)
+if g.match(s,i,')'):
+	i += 1
+	i = g.skip_ws_and_nl(s,i)
+	if g.match(s,i,';'):
+		lparen = None # not a function definition.
+else: lparen = None
+#@nonl
+#@-node:ekr.20031218072017.3262:<< handle open paren in C >>
+#@+node:ekr.20031218072017.3263:<< handle semicolon in C >>
+@ A semicolon signals the end of a declaration, thereby potentially starting the _next_ function defintion.   Declarations end a function definition unless we have already seen a parenthesis, in which case we are seeing an old-style function definition.
+@c
+
+i += 1 # skip the semicolon.
+if lparen == None:
+	function_start = i + 1 # The semicolon ends the declaration.
+#@nonl
+#@-node:ekr.20031218072017.3263:<< handle semicolon in C >>
+#@+node:ekr.20031218072017.3252:<< handle # sign >>
+# if statements may contain function definitions.
+i += 1  # Skip the '#'
+if not include_seen and g.match_c_word(s,i,"include"):
+	include_seen = true
+	<< create a child node for all #include statements >>
+else:
+	j = i
+	i = g.skip_pp_directive(s,i)
+#@nonl
+#@+node:ekr.20031218072017.3253:<< create a child node for all #include statements >>
+# Scan back to the start of the line.
+include_start = i = g.find_line_start(s,i)
+
+# Scan to the next line that is neither blank nor and #include.
+i = g.skip_pp_directive(s,i)
+i = g.skip_nl(s,i)
+include_end = i
+while i < len(s):
+	i = g.skip_ws_and_nl(s,i)
+	if g.match_c_word(s,i,"#include"):
+		i = g.skip_pp_directive(s,i)
+		i = g.skip_nl(s,i)
+		include_end = i
+	elif i + 2 < len(s) and s[i] == '\\':
+		# Handle possible comment.
+		if s[i+1] == '\\':
+			i = g.skip_to_end_of_line(s,i)
+		elif s[i+1] == '*':
+			i = g.skip_block_comment(s,i + 2)
+		else:
+			i = include_end ; break
+	else:
+		i = include_end ; break
+		
+
+headline = g.angleBrackets(" " + self.methodName + " #includes ")
+body = s[include_start:include_end]
+body = self.undentBody(body)
+prefix = g.choose(self.treeType == "@file","","@code\n\n")
+self.createHeadline(parent,prefix + body,headline)
+parent.appendStringToBody("@ignore\n" + self.rootLine + "@language c\n")
+
+# Append any previous text to the parent's body.
+save_ip = i ; i = scan_start
+while i < include_start and g.is_ws_or_nl(s,i):
+	i += 1
+if i < include_start:
+	parent.appendStringToBody(s[i:include_start])
+scan_start = function_start = i = save_ip
+# Append the headline to the parent's body.
+parent.appendStringToBody(headline + "\n")
+#@nonl
+#@-node:ekr.20031218072017.3253:<< create a child node for all #include statements >>
+#@-node:ekr.20031218072017.3252:<< handle # sign >>
+#@+node:ekr.20031218072017.3254:<< handle open curly bracket in C >> (scans function)
+j = i = g.skip_braces(s,i) # Skip all inner blocks.
+
+# This may fail if #if's contain unmatched curly braces.
+if (g.match(s,i,'}') and lparen and name and function_start):
+	# Point i _after_ the last character of the function.
+	i += 1
+	if g.is_nl(s,i):
+		i = g.skip_nl(s,i)
+	function_end = i
+	if method_seen:
+		# Include everything after the last function.
+		function_start = scan_start 
+	else:
+		<< create a declaration node >>
+		<< append C function/method reference to parent node >>
+	headline = name
+	body = s[function_start:function_end]
+	body = self.massageBody(body,"functions")
+	self.createHeadline(parent,body,headline)
+	
+	method_seen = true
+	scan_start = function_start = i # Set the start of the _next_ function.
+	lparen = None
+else:
+	i += 1
+#@nonl
+#@+node:ekr.20031218072017.3255:<< create a declaration node >>
+save_ip = i
+i = scan_start
+while i < function_start and g.is_ws_or_nl(s,i):
+	i += 1
+if i < function_start:
+	headline = g.angleBrackets(" " + self.methodName + " declarations ")
+	# Append the headline to the parent's body.
+	parent.appendStringToBody(headline + "\n")
+	decls = s[scan_start:function_start]
+	decls = self.undentBody(decls)
+	if self.treeType == "@file":
+		body = decls
+	else:
+		body = "@code\n\n" + decls
+	self.createHeadline(parent,body,headline)
+i = save_ip
+scan_start = i
+#@nonl
+#@-node:ekr.20031218072017.3255:<< create a declaration node >>
+#@+node:ekr.20031218072017.3256:<< append C function/method reference to parent node >>
+if self.treeType == "@file":
+	parent.appendStringToBody("@others\n")
+else:
+	cweb = c.target_language == "cweb"
+	lb = g.choose(cweb,"@<","<<")
+	rb = g.choose(cweb,"@>",">>")
+	parent.appendStringToBody(
+		lb + " " + self.methodName + " " + methodKind + " " + rb + "\n")
+#@nonl
+#@-node:ekr.20031218072017.3256:<< append C function/method reference to parent node >>
+#@-node:ekr.20031218072017.3254:<< handle open curly bracket in C >> (scans function)
+#@+node:ekr.20031218072017.3257:<< handle id, class, typedef, struct, union, namespace >>
+if g.match_c_word(s,i,"typedef"):
+	i = g.skip_typedef(s,i)
+	lparen = None
+elif g.match_c_word(s,i,"struct"):
+	i = g.skip_typedef(s,i)
+	# lparen = None ;  # This can appear in an argument list.
+elif g.match_c_word(s,i,"union"):
+	i = g.skip_typedef(s,i)
+	# lparen = None ;  # This can appear in an argument list.
+elif g.match_c_word(s,i,"namespace"):
+	g.trace("namespace")
+	<< create children for the namespace >>
+# elif g.match_c_word(s,i,"class"):
+	# < < create children for the class > >
+else:
+	# Remember the last name before an open parenthesis.
+	if lparen == None:
+		j = i ; i = g.skip_c_id(s,i) ; name = s[j:i]
+	else:
+		i = g.skip_c_id(s,i)
+	<< test for operator keyword >>
+#@+node:ekr.20031218072017.3258:<< create children for the namespace >>
+@ Namesspaces change the self.moduleName and recursively call self function with a text covering only the range of the namespace. This effectively changes the definition line of any created child nodes. The namespace is written to the top level.
+@c
+
+# skip the "namespace" keyword.
+i += len("namespace")
+i = g.skip_ws_and_nl(s,i)
+# Skip the namespace name.
+namespace_name_start = i
+namespace_name_end = None
+if i < len(s) and g.is_c_id(s[i]):
+	i = g.skip_c_id(s,i)
+	namespace_name_end = i - 1
+else: namespace_name_start = None
+# Skip the '{'
+i = g.skip_ws_and_nl(s,i)
+if g.match(s,i,'{') and namespace_name_start:
+	# g.trace(s[i],s[namespace_name_start:namespace_name_end+1])
+	inner_ip = i + 1
+	i = g.skip_braces(s,i)
+	if g.match(s,i,'}'):
+		# Append everything so far to the body.
+		if inner_ip > scan_start:
+			parent.appendStringToBody(s[scan_start:inner_ip])
+		# Save and change self.moduleName to namespaceName
+		savedMethodName = self.methodName
+		namespaceName = s[namespace_name_start:namespace_name_end+1]
+		self.methodName = "namespace " + namespaceName
+		# Recursively call this function .
+		self.scanCText(s[inner_ip:],parent)
+		# Restore self.moduleName and continue scanning.
+		self.methodName = savedMethodName
+		scan_start = function_start = i
+#@nonl
+#@-node:ekr.20031218072017.3258:<< create children for the namespace >>
+#@+node:ekr.20031218072017.3259:<< test for operator keyword >>
+# We treat a C++ a construct such as operator + as a function name.
+if g.match(name,0,"operator"):
+	j = i
+	i = g.skip_ws(s,i) # Don't allow newline in headline.
+	if (i < len(s) and not g.is_c_id(s[i]) and
+		s[i]!=' ' and s[i]!='\n' and s[i]!='\r'):
+		while (i < len(s) and not g.is_c_id(s[i]) and
+			s[i]!=' ' and s[i]!='\n' and s[i] != '\r'):
+			i += 1
+		name = s[j:i] # extend the name.
+#@nonl
+#@-node:ekr.20031218072017.3259:<< test for operator keyword >>
+#@-node:ekr.20031218072017.3257:<< handle id, class, typedef, struct, union, namespace >>
+#@+node:ekr.20031218072017.3264:<< Append any unused text to the parent's body text >>
+# Used by C, Java and Pascal parsers.
+# Do nothing if only whitespace is left.
+
+i = g.skip_ws_and_nl(s,scan_start)
+if i < len(s):
+	parent.appendStringToBody(s[scan_start:])
+#@nonl
+#@-node:ekr.20031218072017.3264:<< Append any unused text to the parent's body text >>
+#@-node:ekr.20031218072017.3250:scanCText
+#@-node:EKR.20040609160237:(Fixed crash when importing Borland wstring.cpp)
+#@+node:ekr.20040329094003.3:(Import now creates absolute path)
+#@+node:ekr.20031218072017.3210:createOutline
+def createOutline (self,fileName,parent):
+
+	c = self.c ; current = c.currentVnode()
+	junk,self.fileName = g.os_path_split(fileName)
+	self.methodName,ext = g.os_path_splitext(self.fileName)
+	g.trace(fileName)
+	self.fileType = ext
+	self.setEncoding()
+	# g.trace(self.fileName,self.fileType)
+	# All file types except the following just get copied to the parent node.
+	ext = ext.lower()
+	appendFileFlag = ext not in (
+		".c", ".cpp", ".cxx", ".el", ".java", ".pas", ".py", ".pyw", ".php")
+	<< Read file into s >>
+	# Create the top-level headline.
+	v = parent.insertAsLastChild()
+	c.undoer.setUndoParams("Import",v,select=current)
+	if self.treeType == "@file":
+		v.initHeadString("@file " + fileName)
+	else:
+		v.initHeadString(fileName)
+		
+	self.rootLine = g.choose(self.treeType=="@file","","@root-code "+self.fileName+'\n')
+
+	if appendFileFlag:
+		body = "@ignore\n"
+		if ext in (".html",".htm"): body += "@language html\n"
+		if ext in (".txt",".text"): body += "@nocolor\n"
+		v.setBodyStringOrPane(body + self.rootLine + s)
+	elif ext in (".c", ".cpp", ".cxx"):
+		self.scanCText(s,v)
+	elif ext == ".el":
+		self.scanElispText(s,v)
+	elif ext == ".java":
+		self.scanJavaText(s,v,true) #outer level
+	elif ext == ".pas":
+		self.scanPascalText(s,v)
+	elif ext in (".py", ".pyw"):
+		self.scanPythonText(s,v)
+	elif ext == ".php":
+		self.scanPHPText(s,v) # 08-SEP-2002 DTHEIN
+	else:
+		g.es("createOutline: can't happen")
+	return v
+#@nonl
+#@+node:ekr.20031218072017.3211:<< Read file into s >>
+try:
+	file = open(fileName)
+	s = file.read()
+	s = g.toUnicode(s,self.encoding)
+	file.close()
+except:
+	g.es("can not open " + fileName)
+	import leoTest ; leoTest.fail()
+	return None
+#@nonl
+#@-node:ekr.20031218072017.3211:<< Read file into s >>
+#@-node:ekr.20031218072017.3210:createOutline
+#@-node:ekr.20040329094003.3:(Import now creates absolute path)
+#@+node:EKR.20040521084602:(Checked PHP import bug: works for me)
+@nocolor
+#@nonl
+#@+node:EKR.20040610082623:Report
+"deech_99" <deech_99@yahoo.com> wrote in message news:c6m6hu$ncv$1@news.fas.harvard.edu...
+
+I coded a PHP program using noweb and have recently decided to convert it
+into a Leo program. The importing, however, seems to mess up the indenting
+of the latex documentation badly. In noweb format the documentation looks
+like this:
+
+%------------------------
+\subsection{Title}
+%------------------------
+contentcontentcontentconte
+ntcontent
+<<Code Chunk>>=
+codecodecodecode
+codecodecodecode
+@
+
+whereas in Leo, I get this:
+@%-----------------\subsection{Title} %---
+------contentcontentcontentcontentcontent
+content
+
+Does anyone understand why this happens?
+#@nonl
+#@-node:EKR.20040610082623:Report
+#@+node:EKR.20040610082623.1:Reply
+Here is what I did:
+
+- Created a file called nowebImportTest.nw containing the code you describe.
+
+- Used Leo's "Import noweb Files" command to import this file.
+
+Leo seemed to do a reasonable job with the Import.
+#@-node:EKR.20040610082623.1:Reply
+#@-node:EKR.20040521084602:(Checked PHP import bug: works for me)
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
