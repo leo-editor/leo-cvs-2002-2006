@@ -1253,6 +1253,70 @@
 <v t="edream.110203113231.789"><vh>synchNavButtons</vh></v>
 </v>
 </v>
+<v t="ekr.20040108095351" a="M" tnodeList="ekr.20040108095351,ekr.20040108095351.1,ekr.20040108100040,ekr.20040108095351.2,ekr.20040108095351.4"><vh>@file rowcol.py</vh>
+<v t="ekr.20040108095351.1"><vh>class rowColClass</vh>
+<v t="ekr.20040108100040"><vh>__init__</vh></v>
+<v t="ekr.20040108095351.2"><vh>addWidgets</vh></v>
+<v t="ekr.20040108095351.4"><vh>updateRowColWidget</vh></v>
+</v>
+</v>
+<v t="ekr.20040107092135.2" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
+<v t="ekr.20040108054555.14"><vh>&lt;&lt; vars &gt;&gt;</vh></v>
+<v t="ekr.20040107092135.3"><vh>class SearchBox</vh>
+<v t="ekr.20040108054555.4"><vh>_getSizer</vh></v>
+<v t="ekr.20040108054555.3"><vh>addWidgets</vh></v>
+<v t="ekr.20040107092135.5"><vh>doSearch</vh></v>
+<v t="ekr.20040107111307"><vh>onBackSpace</vh></v>
+<v t="ekr.20040108054555.5"><vh>onKey</vh></v>
+<v t="ekr.20040108054555.8"><vh>searchRecent</vh></v>
+<v t="ekr.20040108054555.7"><vh>updateRecentList</vh></v>
+</v>
+<v t="ekr.20040107092135.6"><vh>class QuickFind</vh>
+<v t="ekr.20040107092135.7"><vh>__init__</vh></v>
+<v t="ekr.20040107092135.8"><vh>set_ivars</vh></v>
+<v t="ekr.20040107103252"><vh>init_s_text</vh></v>
+<v t="ekr.20040107103339"><vh>gui_search</vh></v>
+</v>
+<v t="ekr.20040108060748"><vh>&lt;&lt; doc string &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040108062655" tnodeList="ekr.20040108062655,ekr.20040108062655.2,ekr.20040108062655.3,ekr.20040108062655.4,ekr.20040108062655.5,ekr.20040108091136,ekr.20040108062655.6"><vh>@file nodenavigator.py</vh>
+<v t="ekr.20040108062655.2"><vh>class Navigator</vh>
+<v t="ekr.20040108062655.3"><vh>addWidgets</vh></v>
+<v t="ekr.20040108062655.4"><vh>_getSizer</vh></v>
+<v t="ekr.20040108062655.5"><vh>onSelect</vh></v>
+<v t="ekr.20040108091136"><vh>updateRecent</vh></v>
+<v t="ekr.20040108062655.6"><vh>updateMarks</vh></v>
+</v>
+</v>
+<v t="ekr.20040127111517" tnodeList="ekr.20040127111517,ekr.20040127111023,ekr.20040127111023.1,ekr.20040127111023.2,ekr.20040127111023.3,ekr.20040127111023.4,ekr.20040127113621.5,ekr.20040127120834,ekr.20040127113621.6,ekr.20040127113621.7,ekr.20040127113621.8,ekr.20040127113621.9,ekr.20040127113621.10,ekr.20040127114616"><vh>@file-noref newButtons.py</vh>
+<v t="ekr.20040127111023"><vh>Helper classes</vh>
+<v t="ekr.20040127111023.1"><vh>class FlatOptionMenu</vh></v>
+<v t="ekr.20040127111023.2"><vh>class Node</vh></v>
+<v t="ekr.20040127111023.3"><vh>class NodeAdder</vh></v>
+<v t="ekr.20040127111023.4"><vh>class Helper</vh></v>
+</v>
+<v t="ekr.20040127113621.5"><vh>Modifiable classes to add buttons</vh>
+<v t="ekr.20040127120834"><vh>body text used by AddTestModule &amp; AddTestClass</vh></v>
+<v t="ekr.20040127113621.6"><vh>class AddTestModule</vh></v>
+<v t="ekr.20040127113621.7"><vh>class AddTestClass</vh></v>
+<v t="ekr.20040127113621.8"><vh>class AddTestMethod</vh></v>
+<v t="ekr.20040127113621.9"><vh>class AddClass</vh></v>
+<v t="ekr.20040127113621.10"><vh>class AddClassMethod</vh></v>
+</v>
+<v t="ekr.20040127114616"><vh>main code</vh></v>
+</v>
+<v t="ekr.20040205071616"><vh>mnplugins.py</vh>
+<v t="ekr.20040205071616.1"><vh>mnstamp</vh></v>
+<v t="ekr.20040205071616.2"><vh>mnOKstamp</vh></v>
+<v t="ekr.20040205071616.3"><vh>onStart</vh></v>
+<v t="ekr.20040205071616.4"><vh>setHeadOK</vh></v>
+<v t="ekr.20040205071616.5"><vh>insertBodystamp</vh></v>
+<v t="ekr.20040205071616.6"><vh>is_subnodesOK</vh></v>
+<v t="ekr.20040205071616.7"><vh>onRclick</vh></v>
+<v t="ekr.20040205071616.8"><vh>insertOKcmd</vh></v>
+<v t="ekr.20040205071616.9"><vh>insertUser</vh></v>
+<v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
+</v>
 </v>
 <v t="edream.110203113231.790"><vh>External editors &amp; Open With</vh>
 <v t="edream.120303095057.1" tnodeList="edream.120303095057.1,edream.120303095910,edream.120303095910.1"><vh>@file mod_tempfname.py</vh>
@@ -1306,6 +1370,65 @@
 <v t="edream.110203113231.826" tnodeList="edream.110203113231.826,edream.110203113231.827"><vh>@file french_fm.py</vh>
 <v t="edream.110203113231.827"><vh>onMenu</vh></v>
 </v>
+</v>
+<v t="ekr.20040119044414"><vh>http plugin</vh>
+<v t="ekr.20040119044414.1" tnodeList="ekr.20040119044414.1,ekr.20040119102021.3,ekr.20040119044414.3,ekr.20040119044414.5,ekr.20040119044414.6,ekr.20040119044414.7,ekr.20040119044414.8,ekr.20040119044414.9,ekr.20040119044414.10,ekr.20040119044414.11,ekr.20040119044414.12,ekr.20040119044414.13,ekr.20040119044414.14,ekr.20040119044414.17,ekr.20040119044414.15,ekr.20040119044414.16,ekr.20040119044414.18,ekr.20040119044414.19,ekr.20040119044414.20,ekr.20040119044414.22,ekr.20040119044414.23,ekr.20040119044414.24,ekr.20040119044414.25,ekr.20040119044414.26,ekr.20040119044414.27,ekr.20040119044414.28,ekr.20040119044414.29,ekr.20040119044414.30,ekr.20040119044414.31,ekr.20040119044414.32,ekr.20040119044414.33,ekr.20040119044414.34,ekr.20040119044414.35,ekr.20040119044414.36,ekr.20040119044414.37,ekr.20040119044414.38,ekr.20040119044414.39,ekr.20040119044414.40,ekr.20040119044414.41,ekr.20040119064609,ekr.20040119064609.1,ekr.20040119064609.2,ekr.20040119044414.42,ekr.20040119044414.43,ekr.20040119044414.45,ekr.20040119044414.46"><vh>@file mod_http.py</vh>
+<v t="ekr.20040119102021.3"><vh>&lt;&lt; how to use this plugin &gt;&gt;</vh></v>
+<v t="ekr.20040119044414.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20040119044414.5"><vh>class delayedSocketStream</vh>
+<v t="ekr.20040119044414.6"><vh>__init__</vh></v>
+<v t="ekr.20040119044414.7"><vh>write</vh></v>
+<v t="ekr.20040119044414.8"><vh>initiate_sending</vh></v>
+<v t="ekr.20040119044414.9"><vh>handle_read</vh></v>
+<v t="ekr.20040119044414.10"><vh>writable</vh></v>
+</v>
+<v t="ekr.20040119044414.11"><vh>class nodeNotFound</vh></v>
+<v t="ekr.20040119044414.12"><vh>class escaped_StringIO</vh>
+<v t="ekr.20040119044414.13"><vh>write_escaped</vh></v>
+</v>
+<v t="ekr.20040119044414.14"><vh>class RequestHandler</vh>
+<v t="ekr.20040119044414.17"><vh>__init__</vh></v>
+<v t="ekr.20040119044414.15"><vh>copyfile</vh></v>
+<v t="ekr.20040119044414.16"><vh>log_message</vh></v>
+<v t="ekr.20040119044414.18"><vh>collect_incoming_data</vh></v>
+<v t="ekr.20040119044414.19"><vh>prepare_POST</vh></v>
+<v t="ekr.20040119044414.20"><vh>handle_post_data</vh></v>
+<v t="ekr.20040119044414.21"><vh>Leo specific code</vh>
+<v t="ekr.20040119044414.22"><vh>add_leo_links</vh></v>
+<v t="ekr.20040119044414.23"><vh>create_href</vh></v>
+<v t="ekr.20040119044414.24"><vh>create_leo_reference</vh></v>
+<v t="ekr.20040119044414.25"><vh>format_leo_node</vh></v>
+<v t="ekr.20040119044414.26"><vh>get_leo_nameparts</vh></v>
+<v t="ekr.20040119044414.27"><vh>get_leo_node</vh></v>
+<v t="ekr.20040119044414.28"><vh>get_leo_windowlist</vh></v>
+<v t="ekr.20040119044414.29"><vh>write_path</vh></v>
+<v t="ekr.20040119044414.30"><vh>send_head</vh></v>
+<v t="ekr.20040119044414.31"><vh>split_leo_path</vh></v>
+</v>
+<v t="ekr.20040119044414.32"><vh>do_GET</vh></v>
+<v t="ekr.20040119044414.33"><vh>do_POST</vh></v>
+<v t="ekr.20040119044414.34"><vh>query</vh></v>
+<v t="ekr.20040119044414.35"><vh>handle_data</vh></v>
+<v t="ekr.20040119044414.36"><vh>handle_request_line</vh></v>
+<v t="ekr.20040119044414.37"><vh>finish</vh></v>
+</v>
+<v t="ekr.20040119044414.38"><vh>class Server</vh>
+<v t="ekr.20040119044414.39"><vh>__init__</vh></v>
+<v t="ekr.20040119044414.40"><vh>handle_accept</vh></v>
+</v>
+<v t="ekr.20040119044414.41" a="M"><vh>poll</vh>
+<v t="ekr.20040119064609"><vh>&lt;&lt; try r, w, e = select.select &gt;&gt;</vh></v>
+<v t="ekr.20040119064609.1"><vh>&lt;&lt; asyncore.read(map.get(fd)) &gt;&gt;</vh></v>
+<v t="ekr.20040119064609.2"><vh>&lt;&lt; asyncore.write(map.get(fd)) &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040119044414.42"><vh>loop</vh></v>
+<v t="ekr.20040119044414.43"><vh>plugin_wrapper</vh></v>
+<v t="ekr.20040119044414.44"><vh>asynchore_overrides</vh>
+<v t="ekr.20040119044414.45"><vh>a_read</vh></v>
+</v>
+<v t="ekr.20040119044414.46"><vh>applyConfiguration</vh></v>
+</v>
+<v t="ekr.20040119044414.48" tnodeList="ekr.20040119044414.48"><vh>@file mod_http.ini</vh></v>
 </v>
 <v t="edream.110203113231.828"><vh>Key bindings</vh>
 <v t="edream.110203113231.829" tnodeList="edream.110203113231.829,edream.110203113231.830"><vh>@file arrows.py</vh>
@@ -1440,6 +1563,31 @@
 <v t="edream.110203113231.929"><vh>newEs, etc.</vh></v>
 </v>
 </v>
+<v t="edream.110203113231.982"><vh>Plugin manager (demo)</vh>
+<v t="edream.110203113231.983"><vh>Notes by Paul Paterson</vh></v>
+<v t="edream.110203113231.984" tnodeList="edream.110203113231.984,edream.110203113231.985,edream.110203113231.986,edream.110203113231.987,edream.110203113231.988,edream.110203113231.989,edream.110203113231.990,edream.110203113231.991,edream.110203113231.992,edream.110203113231.993"><vh>@file leopm_client.py</vh>
+<v t="edream.110203113231.985"><vh>class LeoPMClient</vh>
+<v t="edream.110203113231.986"><vh>__init__</vh></v>
+<v t="edream.110203113231.987"><vh>poll</vh></v>
+<v t="edream.110203113231.988"><vh>_getSelectedPluginName</vh></v>
+<v t="edream.110203113231.989"><vh>updateDetail</vh></v>
+<v t="edream.110203113231.990"><vh>downloadPlugin</vh></v>
+<v t="edream.110203113231.991"><vh>getPluginList</vh></v>
+<v t="edream.110203113231.992"><vh>initListbox</vh></v>
+<v t="edream.110203113231.993"><vh>getVersionOfFile</vh></v>
+</v>
+</v>
+<v t="edream.110203113231.994" tnodeList="edream.110203113231.994,edream.110203113231.995,edream.110203113231.995,edream.110203113231.996,edream.110203113231.997,edream.110203113231.998,edream.110203113231.999,edream.110203113231.1000,edream.110203113231.1001"><vh>@file leopm_server.py</vh>
+<v t="edream.110203113231.995"><vh>class LeoPM</vh>
+<v t="edream.110203113231.996"><vh>__init__</vh></v>
+<v t="edream.110203113231.997"><vh>getPluginNames</vh></v>
+<v t="edream.110203113231.998"><vh>getPluginDescription</vh></v>
+<v t="edream.110203113231.999"><vh>getPlugin</vh></v>
+<v t="edream.110203113231.1000"><vh>getPluginVersion</vh></v>
+<v t="edream.110203113231.1001"><vh>getPluginFilenames</vh></v>
+</v>
+</v>
+</v>
 <v t="edream.110203113231.930"><vh>Spell Checking</vh>
 <v t="edream.110203113231.931"><vh>@silentfile mod_spelling.txt</vh></v>
 <v t="edream.110203113231.932" tnodeList="edream.110203113231.932"><vh>@silentfile mod_spelling.ini</vh></v>
@@ -1507,161 +1655,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.982"><vh>Plugin manager (demo)</vh>
-<v t="edream.110203113231.983"><vh>Notes by Paul Paterson</vh></v>
-<v t="edream.110203113231.984" tnodeList="edream.110203113231.984,edream.110203113231.985,edream.110203113231.986,edream.110203113231.987,edream.110203113231.988,edream.110203113231.989,edream.110203113231.990,edream.110203113231.991,edream.110203113231.992,edream.110203113231.993"><vh>@file leopm_client.py</vh>
-<v t="edream.110203113231.985"><vh>class LeoPMClient</vh>
-<v t="edream.110203113231.986"><vh>__init__</vh></v>
-<v t="edream.110203113231.987"><vh>poll</vh></v>
-<v t="edream.110203113231.988"><vh>_getSelectedPluginName</vh></v>
-<v t="edream.110203113231.989"><vh>updateDetail</vh></v>
-<v t="edream.110203113231.990"><vh>downloadPlugin</vh></v>
-<v t="edream.110203113231.991"><vh>getPluginList</vh></v>
-<v t="edream.110203113231.992"><vh>initListbox</vh></v>
-<v t="edream.110203113231.993"><vh>getVersionOfFile</vh></v>
 </v>
-</v>
-<v t="edream.110203113231.994" tnodeList="edream.110203113231.994,edream.110203113231.995,edream.110203113231.995,edream.110203113231.996,edream.110203113231.997,edream.110203113231.998,edream.110203113231.999,edream.110203113231.1000,edream.110203113231.1001"><vh>@file leopm_server.py</vh>
-<v t="edream.110203113231.995"><vh>class LeoPM</vh>
-<v t="edream.110203113231.996"><vh>__init__</vh></v>
-<v t="edream.110203113231.997"><vh>getPluginNames</vh></v>
-<v t="edream.110203113231.998"><vh>getPluginDescription</vh></v>
-<v t="edream.110203113231.999"><vh>getPlugin</vh></v>
-<v t="edream.110203113231.1000"><vh>getPluginVersion</vh></v>
-<v t="edream.110203113231.1001"><vh>getPluginFilenames</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040107092135"><vh>New in 4.1</vh>
-<v t="ekr.20040109080300"><vh> Changes made by EKR</vh></v>
-<v t="ekr.20040111053758"><vh> Description of rst2 by Steve Zatz</vh></v>
-<v t="ekr.20040107092135.2" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
-<v t="ekr.20040108054555.14"><vh>&lt;&lt; vars &gt;&gt;</vh></v>
-<v t="ekr.20040107092135.3"><vh>class SearchBox</vh>
-<v t="ekr.20040108054555.4"><vh>_getSizer</vh></v>
-<v t="ekr.20040108054555.3"><vh>addWidgets</vh></v>
-<v t="ekr.20040107092135.5"><vh>doSearch</vh></v>
-<v t="ekr.20040107111307"><vh>onBackSpace</vh></v>
-<v t="ekr.20040108054555.5"><vh>onKey</vh></v>
-<v t="ekr.20040108054555.8"><vh>searchRecent</vh></v>
-<v t="ekr.20040108054555.7"><vh>updateRecentList</vh></v>
-</v>
-<v t="ekr.20040107092135.6"><vh>class QuickFind</vh>
-<v t="ekr.20040107092135.7"><vh>__init__</vh></v>
-<v t="ekr.20040107092135.8"><vh>set_ivars</vh></v>
-<v t="ekr.20040107103252"><vh>init_s_text</vh></v>
-<v t="ekr.20040107103339"><vh>gui_search</vh></v>
-</v>
-<v t="ekr.20040108060748"><vh>&lt;&lt; doc string &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040108062655" tnodeList="ekr.20040108062655,ekr.20040108062655.2,ekr.20040108062655.3,ekr.20040108062655.4,ekr.20040108062655.5,ekr.20040108091136,ekr.20040108062655.6"><vh>@file nodenavigator.py</vh>
-<v t="ekr.20040108062655.2"><vh>class Navigator</vh>
-<v t="ekr.20040108062655.3"><vh>addWidgets</vh></v>
-<v t="ekr.20040108062655.4"><vh>_getSizer</vh></v>
-<v t="ekr.20040108062655.5"><vh>onSelect</vh></v>
-<v t="ekr.20040108091136"><vh>updateRecent</vh></v>
-<v t="ekr.20040108062655.6"><vh>updateMarks</vh></v>
-</v>
-</v>
-<v t="ekr.20040108095351" a="M" tnodeList="ekr.20040108095351,ekr.20040108095351.1,ekr.20040108100040,ekr.20040108095351.2,ekr.20040108095351.4"><vh>@file rowcol.py</vh>
-<v t="ekr.20040108095351.1"><vh>class rowColClass</vh>
-<v t="ekr.20040108100040"><vh>__init__</vh></v>
-<v t="ekr.20040108095351.2"><vh>addWidgets</vh></v>
-<v t="ekr.20040108095351.4"><vh>updateRowColWidget</vh></v>
-</v>
-</v>
-<v t="ekr.20040119044414"><vh>Minimal http plugin</vh>
-<v t="ekr.20040119044414.1" tnodeList="ekr.20040119044414.1,ekr.20040119102021.3,ekr.20040119044414.3,ekr.20040119044414.5,ekr.20040119044414.6,ekr.20040119044414.7,ekr.20040119044414.8,ekr.20040119044414.9,ekr.20040119044414.10,ekr.20040119044414.11,ekr.20040119044414.12,ekr.20040119044414.13,ekr.20040119044414.14,ekr.20040119044414.17,ekr.20040119044414.15,ekr.20040119044414.16,ekr.20040119044414.18,ekr.20040119044414.19,ekr.20040119044414.20,ekr.20040119044414.22,ekr.20040119044414.23,ekr.20040119044414.24,ekr.20040119044414.25,ekr.20040119044414.26,ekr.20040119044414.27,ekr.20040119044414.28,ekr.20040119044414.29,ekr.20040119044414.30,ekr.20040119044414.31,ekr.20040119044414.32,ekr.20040119044414.33,ekr.20040119044414.34,ekr.20040119044414.35,ekr.20040119044414.36,ekr.20040119044414.37,ekr.20040119044414.38,ekr.20040119044414.39,ekr.20040119044414.40,ekr.20040119044414.41,ekr.20040119064609,ekr.20040119064609.1,ekr.20040119064609.2,ekr.20040119044414.42,ekr.20040119044414.43,ekr.20040119044414.45,ekr.20040119044414.46"><vh>@file mod_http.py</vh>
-<v t="ekr.20040119102021.3"><vh>&lt;&lt; how to use this plugin &gt;&gt;</vh></v>
-<v t="ekr.20040119044414.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20040119044414.5"><vh>class delayedSocketStream</vh>
-<v t="ekr.20040119044414.6"><vh>__init__</vh></v>
-<v t="ekr.20040119044414.7"><vh>write</vh></v>
-<v t="ekr.20040119044414.8"><vh>initiate_sending</vh></v>
-<v t="ekr.20040119044414.9"><vh>handle_read</vh></v>
-<v t="ekr.20040119044414.10"><vh>writable</vh></v>
-</v>
-<v t="ekr.20040119044414.11"><vh>class nodeNotFound</vh></v>
-<v t="ekr.20040119044414.12"><vh>class escaped_StringIO</vh>
-<v t="ekr.20040119044414.13"><vh>write_escaped</vh></v>
-</v>
-<v t="ekr.20040119044414.14"><vh>class RequestHandler</vh>
-<v t="ekr.20040119044414.17"><vh>__init__</vh></v>
-<v t="ekr.20040119044414.15"><vh>copyfile</vh></v>
-<v t="ekr.20040119044414.16"><vh>log_message</vh></v>
-<v t="ekr.20040119044414.18"><vh>collect_incoming_data</vh></v>
-<v t="ekr.20040119044414.19"><vh>prepare_POST</vh></v>
-<v t="ekr.20040119044414.20"><vh>handle_post_data</vh></v>
-<v t="ekr.20040119044414.21"><vh>Leo specific code</vh>
-<v t="ekr.20040119044414.22"><vh>add_leo_links</vh></v>
-<v t="ekr.20040119044414.23"><vh>create_href</vh></v>
-<v t="ekr.20040119044414.24"><vh>create_leo_reference</vh></v>
-<v t="ekr.20040119044414.25"><vh>format_leo_node</vh></v>
-<v t="ekr.20040119044414.26"><vh>get_leo_nameparts</vh></v>
-<v t="ekr.20040119044414.27"><vh>get_leo_node</vh></v>
-<v t="ekr.20040119044414.28"><vh>get_leo_windowlist</vh></v>
-<v t="ekr.20040119044414.29"><vh>write_path</vh></v>
-<v t="ekr.20040119044414.30"><vh>send_head</vh></v>
-<v t="ekr.20040119044414.31"><vh>split_leo_path</vh></v>
-</v>
-<v t="ekr.20040119044414.32"><vh>do_GET</vh></v>
-<v t="ekr.20040119044414.33"><vh>do_POST</vh></v>
-<v t="ekr.20040119044414.34"><vh>query</vh></v>
-<v t="ekr.20040119044414.35"><vh>handle_data</vh></v>
-<v t="ekr.20040119044414.36"><vh>handle_request_line</vh></v>
-<v t="ekr.20040119044414.37"><vh>finish</vh></v>
-</v>
-<v t="ekr.20040119044414.38"><vh>class Server</vh>
-<v t="ekr.20040119044414.39"><vh>__init__</vh></v>
-<v t="ekr.20040119044414.40"><vh>handle_accept</vh></v>
-</v>
-<v t="ekr.20040119044414.41" a="M"><vh>poll</vh>
-<v t="ekr.20040119064609"><vh>&lt;&lt; try r, w, e = select.select &gt;&gt;</vh></v>
-<v t="ekr.20040119064609.1"><vh>&lt;&lt; asyncore.read(map.get(fd)) &gt;&gt;</vh></v>
-<v t="ekr.20040119064609.2"><vh>&lt;&lt; asyncore.write(map.get(fd)) &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040119044414.42"><vh>loop</vh></v>
-<v t="ekr.20040119044414.43"><vh>plugin_wrapper</vh></v>
-<v t="ekr.20040119044414.44"><vh>asynchore_overrides</vh>
-<v t="ekr.20040119044414.45"><vh>a_read</vh></v>
-</v>
-<v t="ekr.20040119044414.46"><vh>applyConfiguration</vh></v>
-</v>
-<v t="ekr.20040119044414.48" tnodeList="ekr.20040119044414.48"><vh>@file mod_http.ini</vh></v>
-</v>
-<v t="ekr.20040127111517" tnodeList="ekr.20040127111517,ekr.20040127111023,ekr.20040127111023.1,ekr.20040127111023.2,ekr.20040127111023.3,ekr.20040127111023.4,ekr.20040127113621.5,ekr.20040127120834,ekr.20040127113621.6,ekr.20040127113621.7,ekr.20040127113621.8,ekr.20040127113621.9,ekr.20040127113621.10,ekr.20040127114616"><vh>@file-noref newButtons.py</vh>
-<v t="ekr.20040127111023"><vh>Helper classes</vh>
-<v t="ekr.20040127111023.1"><vh>class FlatOptionMenu</vh></v>
-<v t="ekr.20040127111023.2"><vh>class Node</vh></v>
-<v t="ekr.20040127111023.3"><vh>class NodeAdder</vh></v>
-<v t="ekr.20040127111023.4"><vh>class Helper</vh></v>
-</v>
-<v t="ekr.20040127113621.5"><vh>Modifiable classes to add buttons</vh>
-<v t="ekr.20040127120834"><vh>body text used by AddTestModule &amp; AddTestClass</vh></v>
-<v t="ekr.20040127113621.6"><vh>class AddTestModule</vh></v>
-<v t="ekr.20040127113621.7"><vh>class AddTestClass</vh></v>
-<v t="ekr.20040127113621.8"><vh>class AddTestMethod</vh></v>
-<v t="ekr.20040127113621.9"><vh>class AddClass</vh></v>
-<v t="ekr.20040127113621.10"><vh>class AddClassMethod</vh></v>
-</v>
-<v t="ekr.20040127114616"><vh>main code</vh></v>
-</v>
-<v t="ekr.20040201060959" tnodeList="ekr.20040201060959"><vh>@file status_line.py</vh></v>
-<v t="ekr.20040205071616"><vh>mnplugins.py</vh>
-<v t="ekr.20040205071616.1"><vh>mnstamp</vh></v>
-<v t="ekr.20040205071616.2"><vh>mnOKstamp</vh></v>
-<v t="ekr.20040205071616.3"><vh>onStart</vh></v>
-<v t="ekr.20040205071616.4"><vh>setHeadOK</vh></v>
-<v t="ekr.20040205071616.5"><vh>insertBodystamp</vh></v>
-<v t="ekr.20040205071616.6"><vh>is_subnodesOK</vh></v>
-<v t="ekr.20040205071616.7"><vh>onRclick</vh></v>
-<v t="ekr.20040205071616.8"><vh>insertOKcmd</vh></v>
-<v t="ekr.20040205071616.9"><vh>insertUser</vh></v>
-<v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.120603093808" a="MTV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 <v t="ekr.20040317155851"><vh>Suggestions for improvement</vh>
 <v t="ekr.20040317155817"><vh>@url http://komodo.nique.net/~grayrest/leoUIproposal.txt</vh></v>
 </v>
@@ -1923,7 +1918,7 @@
 <v t="ekr.20040422072343.3"><vh>rc_nl</vh></v>
 <v t="ekr.20040422072343.4"><vh>rc_selectAll</vh></v>
 <v t="ekr.20040422072343.5"><vh>rClickbinder</vh></v>
-<v t="ekr.20040422072343.6"><vh>rClicker</vh>
+<v t="ekr.20040422072343.6" a="E"><vh>rClicker</vh>
 <v t="ekr.20040422072343.7"><vh>&lt;&lt; define commandList for body &gt;&gt;</vh></v>
 <v t="ekr.20040422072343.8"><vh>&lt;&lt; add entries for context sensitive commands in body &gt;&gt;</vh>
 <v t="ekr.20040422073911"><vh>&lt;&lt; get text and word from the body text &gt;&gt;</vh></v>
@@ -1933,7 +1928,7 @@
 </v>
 <v t="ekr.20040422072343.16"><vh>&lt;&lt; define commandList for log pane &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040422072343.9"><vh>Utils for context sensitive commands</vh>
+<v t="ekr.20040422072343.9" a="E"><vh>Utils for context sensitive commands</vh>
 <v t="ekr.20040422072343.10"><vh>crop</vh></v>
 <v t="ekr.20040422072343.11"><vh>getword</vh></v>
 <v t="ekr.20040422072343.12"><vh>getdoc</vh></v>
@@ -1983,10 +1978,15 @@
 <v t="ekr.20040331071319.8"><vh>underline</vh></v>
 </v>
 </v>
-</v>
 <v t="ekr.20040419105219" tnodeList="ekr.20040419105219,ekr.20040419105219.1,ekr.20040419105219.2"><vh>@file lineNumbers.py</vh>
 <v t="ekr.20040419105219.1"><vh>writing derived files</vh></v>
 <v t="ekr.20040419105219.2"><vh>reading derived files</vh></v>
+</v>
+</v>
+<v t="ekr.20040201060959" a="E" tnodeList="ekr.20040201060959,EKR.20040424152057,EKR.20040424152057.1,EKR.20040424152057.2"><vh>@file status_line.py</vh>
+<v t="EKR.20040424152057"><vh>createStatusLine</vh></v>
+<v t="EKR.20040424152057.1" a="TV"><vh>createBindings (experimental, flakey and probably platform-dependent)</vh></v>
+<v t="EKR.20040424152057.2"><vh>doKey</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2076,6 +2076,81 @@ if dirfound:
 		g.es(filename+' - file not found in '+startdir)
 		# g.es_exception()
 os.chdir(thisdir) # restore the original current dir.</t>
+<t tx="EKR.20040424152057">def createStatusLine(tag,keywords):
+	
+	c = keywords.get("c")
+	c.frame.createStatusLine()
+	c.frame.putStatusLine("Welcome to Leo")
+	
+	if 1: # Experimental.
+		createBindings(c)</t>
+<t tx="EKR.20040424152057.1">@
+Alt_L,     Alt_R
+Caps_Lock, Shift_Lock
+Control_L, Control_R
+Meta_L,    Meta_R
+Shift_L,   Shift_R
+Super_L,   Super_R
+Hyper_L,   Hyper_R
+@c
+
+def createBindings(c):
+	
+	def altKeyCallback(event,c=c):      return doKey(c,event,"alt")
+	def controlKeyCallback(event,c=c):  return doKey(c,event,"control")
+	def escapeKeyCallback(event,c=c):   return doKey(c,event,"escape")
+	def keyCallback(event,c=c):         return doKey(c,event,"")
+	def metaKeyCallback(event,c=c):     return doKey(c,event,"meta")
+
+	if 1:
+		c.frame.top.bind("&lt;Key&gt;", keyCallback)
+		# For some reason this is needed.
+		c.frame.body.bodyCtrl.bind("&lt;Key-Escape&gt;",metaKeyCallback)
+		
+	if 0:  # Control-s generates two events.
+		c.frame.top.bind("&lt;Control-KeyRelease&gt;", controlKeyCallback)
+		
+	if 0:  # Control-s generates two events.
+		c.frame.top.bind("&lt;Control-KeyPress&gt;", controlKeyCallback)
+		
+	if 0: # These conflict with the XP.
+		c.frame.top.bind("&lt;Alt_L&gt;", altKeyCallback)
+		c.frame.top.bind("&lt;Alt_R&gt;", altKeyCallback)
+	
+	if 0: # Fires while control key is down.
+		c.frame.top.bind("&lt;Control_L&gt;", controlKeyCallback)
+		c.frame.top.bind("&lt;Control_R&gt;", controlKeyCallback)
+		
+	if 0:
+		c.frame.top.bind("&lt;Key-Control_L&gt;", controlKeyCallback)
+		c.frame.top.bind("&lt;Key-Control_R&gt;", controlKeyCallback)
+		
+	if 0: # Works, sort of, but always fires even if a control sequence has happened.
+		c.frame.top.bind("&lt;KeyRelease-Control_L&gt;", controlKeyCallback)
+		c.frame.top.bind("&lt;KeyRelease-Control_R&gt;", controlKeyCallback)</t>
+<t tx="EKR.20040424152057.2">def doKey(c,event,key):
+
+	if key not in ("meta","escape","control"):
+		return
+		
+	enabled = c.frame.statusLineIsEnabled()
+	
+	g.es(key,event.keycode,event.keysym)
+		
+	if enabled:
+		c.frame.disableStatusLine()
+	else:
+		c.frame.clearStatusLine()
+		c.frame.enableStatusLine()
+		
+	enabled = not enabled
+
+	if enabled:
+		c.frame.setFocusStatusLine()
+	else:
+		c.frame.body.bodyCtrl.focus_set()
+		
+	return "break" # disable further handling??</t>
 <t tx="edream.031216103123">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2336153
@@ -16110,9 +16185,9 @@ g.plugin_signon(__name__)</t>
 	# nav_buttons.py
 	plugins_menu.py
 	rowcol.py
-	# status_line.py
+	status_line.py
 	# word_export.py
-	xemacs.py
+	# xemacs.py
 	
 # Other plugins...
 	# open_shell.py
@@ -16220,7 +16295,6 @@ if Tk and g.app.gui.guiName() == "tkinter":
 		last_key = keycode
 	else:
 		last_key = None</t>
-<t tx="ekr.20040107092135">Most of these were written by Paul Paterson.  EKR added the Recent Menu.</t>
 <t tx="ekr.20040107092135.2">&lt;&lt; doc string &gt;&gt;
 
 @language python
@@ -16635,102 +16709,6 @@ def updateRowColWidget (self,*args,**keys):
 	
 	self.lastStatusRow, self.lastStatusCol = -1,-1
 	self.c = None # Will be set later.  Needed for idle handling.</t>
-<t tx="ekr.20040109080300">@nocolor
-
-1/9/04: nodenavigator.py
-
-- Call updateMarks and UpdateRecent during initialization.
-- Put the code that deletes menus in a try/except block.
-- Simplified defintion of callback routines: I don't like lambda.
-- Removed some old code.
-
-1/9/04: rowcol.py
-
-- Call updatedRowColWidget immediately from addWidgets.
-  This seems to be necessary to reserve the proper place in the icon area.
-
-2/1/04: status_line.py:
-
-Adds status line to bottom of Leo window</t>
-<t tx="ekr.20040111053758">@nocolor
-
-I now have a version of the plugin that produces HTML output that has syntax
-highlighted code using the SilverCity(http://silvercity.sourceforge.net) lexing
-package. However, since that requires someone to install not only docutils but
-SilverCity, I think it's fine to post the original rest2 plugin that I sent
-you. If there is any interest, I can always write a version that looks for the
-SilverCity package and uses it if it is present.
-
----------------------
-Sorry for the longish note but I believe that the application of Leo that I 
-describe below is important, and I wanted to make you aware of it.
-
-The end-result of this work is to use Leo+docutils to mix program code and 
-reST documentation in a way that I believe is very useful.  It builds upon 
-the work of the existing rst plugin.
-
-The basic approach is that any Leo node that contains program code that 
-needs documentation (in an ideal world it would be every node) has an 
-associated child node whose headline is simply '@rst', which, not 
-surprisingly, contains reST-style documentation.  While this means that a 
-typical program may have dozens (if not hundreds) of these @rst nodes, it 
-produces documentation that I think is as close as I have ever seen to 
-useful, easy-to-read documentation that is easy to create at the same time 
-as an application is being coded.
-
-There are several interelated aspects to this work.
-
-- The reST plugin (renamed rst2) was hacked to manage Leo outlines that 
-were a combination of normal code nodes and reSt nodes.
-
-- The plugin now recognizes a @rst directive (that has no associated file 
-name) in the headline of a node.
-
-- When it encounters such a @rst Headline node, it writes the contents of 
-the body of the @rst node's *parent* (which generally contains program code) 
-to the reST output file (HTML) and then adds the reST content that is 
-contained in the body of the @rst documentation node to the output HTML 
-file,
-
-- These @rst nodes are used in @file-nosent trees and the @rst nodes have an 
-@ignore directive (plus @nocolor directive and @wrap directives) so that 
-when the @file is updated the application code does not contain the 
-reST-style documentation contained in the body of the @rst nodes.  (This was 
-the reason I had asked you in the Leo Forum to allow @file-nosent trees to 
-work appropriately with @ignore nodes - Thank you for doing this right 
-away.)  There is no reason that the reST content couldn't be written to the 
-@file as documentation other than I personally believe in a volume of 
-documentation (including musings, failed ideas, questions, etc.) that is 
-probably best kept separate from the actual *.py files.
-
-- For pure convenience the plugin was also modified so that when you 
-double-click on a plain rst node (no associated filename) Leo opens both the 
-@rst documentation node and the parent node containing code in an external 
-editor *simultaneously*.  I happen to use Textpad and so the code is opened 
-with python syntax coloring in one Textpad window and right next to it is 
-the reST documentation.  This is really just a convenience but it makes it 
-much much easier to code and do documentation at the same time. (Note that 
-the plugin assumes that the python extension is '.tp' since that is what I 
-use with TextPad.)
-
----------------------------------------------------------------------
-So why is this a big deal? For the first time in my experience the 
-documentation process...
-
-1) is completely in sync with the process of code development
-2) allows the programmer to write as much documentation as he/she wants 
-without the programming code becoming unreadable because of what would be 
-considered excessive or intrusive documentation. (This applies whether 
-documentation is intended for external consumption or just so a solo 
-programmer can remember what he/she was thinking...)
-
-My conclusion is that Leo + reST/docutils provides the perfect platform for 
-optimal documentation.  I have never completely understood what is meant by 
-Literate Programming but in my mind this is practical Literate Programming.
-
-Frankly, I think this is all a minor miracle but maybe I've lost perspective.
-
-Steve Zatz</t>
 <t tx="ekr.20040119044414"></t>
 <t tx="ekr.20040119044414.1">"""
 A minimal http plugin for LEO, based on AsyncHttpServer.py.
@@ -17693,12 +17671,9 @@ from leoGlobals import true,false
 try: import Tkinter as Tk
 except ImportError: Tk = None
 
-if Tk: # Register the handlers...
+@others
 
-	def createStatusLine(tag,keywords):
-		c = keywords.get("c")
-		c.frame.createStatusLine()
-		c.frame.putStatusLine("Welcome to Leo")
+if Tk: # Register the handlers...
 
 	if g.app.gui is None:
 		g.app.createTkGui(__file__)
@@ -23562,11 +23537,12 @@ if contextCommands:
 	if 1: # Both seem to work.
 
 		# Redirect stdout to a "file like object".
+		old_stdout = sys.stdout
 		sys.stdout = fo = g.fileLikeObject()
 		# Python's builtin help function writes to stdout.
 		help(str(thing))
 		# Restore original stdout.
-		sys.stdout = sys.__stdout__
+		sys.stdout = old_stdout
 		# Return what was written to fo.
 		return fo.get()
 

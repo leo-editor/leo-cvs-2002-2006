@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4507" clone_windows="0"/>
 <globals body_outline_ratio="0.441466854725">
-	<global_window_position top="27" left="175" height="709" width="919"/>
+	<global_window_position top="27" left="197" height="879" width="922"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1424,7 +1424,9 @@
 <v t="ekr.20031218072017.3960"><vh>Creating the status area</vh>
 <v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
 <v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
+<v t="EKR.20040424153344"><vh>enable/disableStatusLine &amp; isEnabled</vh></v>
 <v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
+<v t="EKR.20040424154804"><vh>setFocusStatusLine</vh></v>
 <v t="ekr.20031218072017.1733"><vh>updateStatusRowCol</vh></v>
 </v>
 <v t="ekr.20031218072017.1330"><vh>onBodyKey</vh>
@@ -3700,7 +3702,9 @@
 <v t="ekr.20031218072017.3960"><vh>Creating the status area</vh>
 <v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
 <v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
+<v t="EKR.20040424153344"><vh>enable/disableStatusLine &amp; isEnabled</vh></v>
 <v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
+<v t="EKR.20040424154804"><vh>setFocusStatusLine</vh></v>
 <v t="ekr.20031218072017.1733"><vh>updateStatusRowCol</vh></v>
 </v>
 </v>
@@ -5926,6 +5930,34 @@
 <v t="ekr.20031218072017.3903"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3905"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
 </v>
+</v>
+<v t="EKR.20040422131023"><vh>(Force update of log pane when reading derived files)</vh>
+<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
+<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.2"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
+<v t="EKR.20040423082910.3"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040422132037.1"><vh>(Use clover keys for Mac)</vh>
+<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
+<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
+<v t="ekr.20031218072017.2100"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2101"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040424151409"><vh>4/22</vh>
+<v t="EKR.20040424091902"><vh>(Ignore line endings when comparing derived files while writing)</vh>
+<v t="ekr.20031218072017.2023"><vh>atFile.replaceTargetFileIfDifferent</vh>
+<v t="ekr.20031218072017.2024"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2025"><vh>&lt;&lt; replace the target file with the output file &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2026"><vh>&lt;&lt; rename the output file to be the target file &gt;&gt;</vh></v>
+</v>
+<v t="EKR.20040424085407"><vh>atFile.compareFilesIgnoringLineEndings</vh></v>
 </v>
 </v>
 </v>
@@ -9192,8 +9224,6 @@
 </v>
 <v t="ekr.20031218072017.2243"><vh>class nullUndoer</vh></v>
 </v>
-</v>
-</v>
 <v t="ekr.20031218072017.3749" tnodeList="ekr.20031218072017.3749,ekr.20031218072017.3750,ekr.20031218072017.3751,ekr.20031218072017.3752,ekr.20031218072017.3753,ekr.20031218072017.839,ekr.20031218072017.3754,ekr.20031218072017.3755,ekr.20031218072017.3756,ekr.20031218072017.3757,ekr.20031218072017.3758,ekr.20031218072017.3759,ekr.20031218072017.3760,ekr.20031218072017.3761,ekr.20031218072017.3762,ekr.20031218072017.3763,ekr.20031218072017.3764,ekr.20031218072017.3765,ekr.20031218072017.3766,ekr.20031218072017.3767,ekr.20031218072017.3768,ekr.20031218072017.3769,ekr.20031218072017.3770,ekr.20031218072017.3771,ekr.20031218072017.3772,ekr.20031218072017.3773,ekr.20031218072017.3774,ekr.20031218072017.3775,ekr.20031218072017.3777,ekr.20031218072017.3778,ekr.20031218072017.836,ekr.20040130164211,ekr.20031218072017.3779,ekr.20040131171020,ekr.20040131171020.1,ekr.20040131171020.2,ekr.20040131171020.3,ekr.20040131171020.4,ekr.20031218072017.3780,ekr.20031218072017.3782,ekr.20031218072017.3783,ekr.20031218072017.2098,ekr.20031218072017.2102,ekr.20031218072017.2099,ekr.20031218072017.2100,ekr.20031218072017.2101,ekr.20031218072017.2103,ekr.20031218072017.1723,ekr.20031218072017.1724,ekr.20031218072017.1725,ekr.20031218072017.1726,ekr.20031218072017.1727,ekr.20031218072017.1728,ekr.20031218072017.1729,ekr.20031218072017.3784,ekr.20031218072017.3785,ekr.20031218072017.3790,ekr.20031218072017.3791,ekr.20031218072017.3792,ekr.20031218072017.3793,ekr.20031218072017.3794,ekr.20031218072017.3795,ekr.20031218072017.3796,ekr.20031218072017.3786,ekr.20031218072017.3787,ekr.20031218072017.3788,ekr.20031218072017.3789,ekr.20031218072017.3797,ekr.20031218072017.3798,ekr.20031218072017.3799,ekr.20031218072017.3800,ekr.20031218072017.3801,ekr.20031218072017.3802,ekr.20031218072017.3803,ekr.20031218072017.3804,ekr.20031218072017.2078,ekr.20031218072017.3805,ekr.20031218072017.3806,ekr.20031218072017.3807,ekr.20031218072017.3809,ekr.20031218072017.3810,ekr.20031218072017.3811"><vh>@file leoMenu.py</vh>
 <v t="ekr.20031218072017.3750"><vh>class leoMenu</vh>
 <v t="ekr.20031218072017.3751"><vh> leoMenu.__init__</vh></v>
@@ -9297,7 +9327,7 @@
 </v>
 <v t="ekr.20031218072017.3811"><vh>class nullMenu</vh></v>
 </v>
-<v t="ekr.20031218072017.3939" tnodeList="ekr.20031218072017.3939,ekr.20031218072017.3940,ekr.20031218072017.1801,ekr.20031218072017.1802,ekr.20031218072017.3942,ekr.20031218072017.3944,ekr.20031218072017.2176,ekr.20031218072017.2177,ekr.20031218072017.2178,ekr.20031218072017.2179,ekr.20031218072017.2180,ekr.20031218072017.3945,ekr.20031218072017.3946,ekr.20031218072017.3947,ekr.20031218072017.3948,ekr.20031218072017.3949,ekr.20031218072017.3950,ekr.20031218072017.3951,ekr.20031218072017.3952,ekr.20031218072017.3954,ekr.20031218072017.3955,ekr.20031218072017.3956,ekr.20031218072017.3957,ekr.20031218072017.3958,ekr.20031218072017.3959,ekr.20031218072017.3960,ekr.20031218072017.3961,ekr.20031218072017.3962,ekr.20031218072017.3963,ekr.20031218072017.1733,ekr.20031218072017.1975,ekr.20031218072017.1976,ekr.20031218072017.3965,ekr.20031218072017.1974,ekr.20031218072017.3966,ekr.20031218072017.3968,ekr.20031218072017.3969,ekr.20031218072017.2246,ekr.20031218072017.1625,ekr.20031218072017.722,ekr.20031218072017.1540,ekr.20031218072017.2307,ekr.20031218072017.3970,ekr.20031218072017.3972,ekr.20031218072017.3973,ekr.20031218072017.3974,ekr.20031218072017.3975,ekr.20031218072017.2253,ekr.20031218072017.3976,ekr.20031218072017.3977,ekr.20031218072017.3978,ekr.20031218072017.1803,ekr.20031218072017.3981,ekr.20031218072017.841,ekr.20031218072017.842,ekr.20031218072017.843,ekr.20031218072017.3982,ekr.20031218072017.3983,ekr.20031218072017.3985,ekr.20031218072017.3986,ekr.20031218072017.3987,ekr.20031218072017.3988,ekr.20031218072017.3989,ekr.20031218072017.3990,EKR.20040422130619,ekr.20031218072017.3992,ekr.20031218072017.3993,ekr.20031218072017.3994,ekr.20031218072017.998,ekr.20031218072017.3995,ekr.20031218072017.3996,ekr.20031218072017.2182,ekr.20031218072017.838,ekr.20031218072017.3998,ekr.20031218072017.2183,ekr.20031218072017.1320,ekr.20031218072017.1321,ekr.20031218072017.1322,ekr.20031218072017.1323,ekr.20031218072017.1324,ekr.20031218072017.1325,ekr.20031218072017.1326,ekr.20031218072017.1327,ekr.20031218072017.1328,ekr.20031218072017.1329,ekr.20031218072017.1330,ekr.20040105223536,ekr.20040105223536.1,ekr.20031218072017.1331,ekr.20031218072017.3999,ekr.20031218072017.4000,ekr.20031218072017.4001,ekr.20031218072017.4002,ekr.20031218072017.2184,ekr.20031218072017.4003,ekr.20031218072017.4004,ekr.20031218072017.4005,ekr.20031218072017.4007,ekr.20031218072017.4008,ekr.20031218072017.4009,ekr.20031218072017.4010,ekr.20031218072017.4011,ekr.20031218072017.4012,ekr.20031218072017.495,ekr.20031218072017.4014,ekr.20031218072017.4015,ekr.20031218072017.4016,ekr.20031218072017.4017,ekr.20031218072017.4019,ekr.20031218072017.4020,ekr.20031218072017.4021,ekr.20031218072017.4022,ekr.20031218072017.4023,ekr.20031218072017.4024,ekr.20031218072017.4026,ekr.20031218072017.4028,ekr.20031218072017.4029,ekr.20031218072017.4030,ekr.20031218072017.4031,ekr.20031218072017.2377,ekr.20031218072017.4032,ekr.20031218072017.4034,ekr.20031218072017.4035,ekr.20031218072017.4036,ekr.20031218072017.4037,ekr.20031218072017.4038,ekr.20031218072017.4039,ekr.20031218072017.4040,ekr.20031218072017.4041,ekr.20031218072017.4042,ekr.20031218072017.4043,ekr.20031218072017.4044,ekr.20031218072017.4045,ekr.20031218072017.1473,EKR.20040423082910,EKR.20040423082910.1,EKR.20040423082910.2,EKR.20040423082910.3,ekr.20031218072017.4046"><vh>@file leoTkinterFrame.py</vh>
+<v t="ekr.20031218072017.3939" tnodeList="ekr.20031218072017.3939,ekr.20031218072017.3940,ekr.20031218072017.1801,ekr.20031218072017.1802,ekr.20031218072017.3942,ekr.20031218072017.3944,ekr.20031218072017.2176,ekr.20031218072017.2177,ekr.20031218072017.2178,ekr.20031218072017.2179,ekr.20031218072017.2180,ekr.20031218072017.3945,ekr.20031218072017.3946,ekr.20031218072017.3947,ekr.20031218072017.3948,ekr.20031218072017.3949,ekr.20031218072017.3950,ekr.20031218072017.3951,ekr.20031218072017.3952,ekr.20031218072017.3954,ekr.20031218072017.3955,ekr.20031218072017.3956,ekr.20031218072017.3957,ekr.20031218072017.3958,ekr.20031218072017.3959,ekr.20031218072017.3960,ekr.20031218072017.3961,ekr.20031218072017.3962,EKR.20040424153344,ekr.20031218072017.3963,EKR.20040424154804,ekr.20031218072017.1733,ekr.20031218072017.1975,ekr.20031218072017.1976,ekr.20031218072017.3965,ekr.20031218072017.1974,ekr.20031218072017.3966,ekr.20031218072017.3968,ekr.20031218072017.3969,ekr.20031218072017.2246,ekr.20031218072017.1625,ekr.20031218072017.722,ekr.20031218072017.1540,ekr.20031218072017.2307,ekr.20031218072017.3970,ekr.20031218072017.3972,ekr.20031218072017.3973,ekr.20031218072017.3974,ekr.20031218072017.3975,ekr.20031218072017.2253,ekr.20031218072017.3976,ekr.20031218072017.3977,ekr.20031218072017.3978,ekr.20031218072017.1803,ekr.20031218072017.3981,ekr.20031218072017.841,ekr.20031218072017.842,ekr.20031218072017.843,ekr.20031218072017.3982,ekr.20031218072017.3983,ekr.20031218072017.3985,ekr.20031218072017.3986,ekr.20031218072017.3987,ekr.20031218072017.3988,ekr.20031218072017.3989,ekr.20031218072017.3990,EKR.20040422130619,ekr.20031218072017.3992,ekr.20031218072017.3993,ekr.20031218072017.3994,ekr.20031218072017.998,ekr.20031218072017.3995,ekr.20031218072017.3996,ekr.20031218072017.2182,ekr.20031218072017.838,ekr.20031218072017.3998,ekr.20031218072017.2183,ekr.20031218072017.1320,ekr.20031218072017.1321,ekr.20031218072017.1322,ekr.20031218072017.1323,ekr.20031218072017.1324,ekr.20031218072017.1325,ekr.20031218072017.1326,ekr.20031218072017.1327,ekr.20031218072017.1328,ekr.20031218072017.1329,ekr.20031218072017.1330,ekr.20040105223536,ekr.20040105223536.1,ekr.20031218072017.1331,ekr.20031218072017.3999,ekr.20031218072017.4000,ekr.20031218072017.4001,ekr.20031218072017.4002,ekr.20031218072017.2184,ekr.20031218072017.4003,ekr.20031218072017.4004,ekr.20031218072017.4005,ekr.20031218072017.4007,ekr.20031218072017.4008,ekr.20031218072017.4009,ekr.20031218072017.4010,ekr.20031218072017.4011,ekr.20031218072017.4012,ekr.20031218072017.495,ekr.20031218072017.4014,ekr.20031218072017.4015,ekr.20031218072017.4016,ekr.20031218072017.4017,ekr.20031218072017.4019,ekr.20031218072017.4020,ekr.20031218072017.4021,ekr.20031218072017.4022,ekr.20031218072017.4023,ekr.20031218072017.4024,ekr.20031218072017.4026,ekr.20031218072017.4028,ekr.20031218072017.4029,ekr.20031218072017.4030,ekr.20031218072017.4031,ekr.20031218072017.2377,ekr.20031218072017.4032,ekr.20031218072017.4034,ekr.20031218072017.4035,ekr.20031218072017.4036,ekr.20031218072017.4037,ekr.20031218072017.4038,ekr.20031218072017.4039,ekr.20031218072017.4040,ekr.20031218072017.4041,ekr.20031218072017.4042,ekr.20031218072017.4043,ekr.20031218072017.4044,ekr.20031218072017.4045,ekr.20031218072017.1473,EKR.20040423082910,EKR.20040423082910.1,EKR.20040423082910.2,EKR.20040423082910.3,ekr.20031218072017.4046"><vh>@file leoTkinterFrame.py</vh>
 <v t="ekr.20031218072017.3940"><vh>class leoTkinterFrame</vh>
 <v t="ekr.20031218072017.3941"><vh> frame.Birth &amp; Death</vh>
 <v t="ekr.20031218072017.1801"><vh>f.__init__</vh>
@@ -9334,7 +9364,9 @@
 <v t="ekr.20031218072017.3960"><vh>Creating the status area</vh>
 <v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
 <v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
+<v t="EKR.20040424153344"><vh>enable/disableStatusLine &amp; isEnabled</vh></v>
 <v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
+<v t="EKR.20040424154804"><vh>setFocusStatusLine</vh></v>
 <v t="ekr.20031218072017.1733"><vh>updateStatusRowCol</vh></v>
 </v>
 </v>
@@ -9491,32 +9523,68 @@
 <v t="ekr.20031218072017.4046"><vh>tkLog.setFontFromConfig</vh></v>
 </v>
 </v>
-<v t="EKR.20040422131023"><vh>(Force update of log pane when reading derived files)</vh>
-<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
-<v t="EKR.20040423082910"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
-<v t="EKR.20040423082910.1"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
-<v t="EKR.20040423082910.2"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
-<v t="EKR.20040423082910.3"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="EKR.20040422132037.1" a="M"><vh>(Use clover keys for Mac)</vh>
-<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
-<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
-<v t="ekr.20031218072017.2100"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2101"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
+<v t="EKR.20040424151321"><vh>(Status line experiments)</vh>
+<v t="ekr.20031218072017.3941"><vh> frame.Birth &amp; Death</vh>
+<v t="ekr.20031218072017.1801"><vh>f.__init__</vh>
+<v t="ekr.20031218072017.1802"><vh>&lt;&lt; set the leoTkinterFrame ivars &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3942"><vh>f.__repr__</vh></v>
+<v t="ekr.20031218072017.3943"><vh>Creating the frame</vh>
+<v t="ekr.20031218072017.3944"><vh>f.createCanvas</vh></v>
+<v t="ekr.20031218072017.2176"><vh>f.finishCreate</vh>
+<v t="ekr.20031218072017.2177"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2178"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
+<v t="ekr.20031218072017.2179"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2180"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3945"><vh>Creating the splitter</vh>
+<v t="ekr.20031218072017.3946"><vh>resizePanesToRatio</vh></v>
+<v t="ekr.20031218072017.3947"><vh>bindBar</vh></v>
+<v t="ekr.20031218072017.3948"><vh>createLeoSplitter</vh></v>
+<v t="ekr.20031218072017.3949"><vh>divideAnySplitter</vh></v>
+<v t="ekr.20031218072017.3950"><vh>divideLeoSplitter</vh></v>
+<v t="ekr.20031218072017.3951"><vh>onDrag...</vh></v>
+<v t="ekr.20031218072017.3952"><vh>placeSplitter</vh></v>
+</v>
+<v t="ekr.20031218072017.3953"><vh>Creating the icon area</vh>
+<v t="ekr.20031218072017.3954"><vh>createIconBar</vh></v>
+<v t="ekr.20031218072017.3955"><vh>hideIconBar</vh></v>
+<v t="ekr.20031218072017.3956"><vh>clearIconBar</vh></v>
+<v t="ekr.20031218072017.3957"><vh>showIconBar</vh></v>
+<v t="ekr.20031218072017.3958"><vh>addIconButton</vh>
+<v t="ekr.20031218072017.3959"><vh>&lt;&lt; create a picture &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="EKR.20040424091902" a="ETV"><vh>(Ignore line endings when comparing derived files while writing)</vh>
-<v t="ekr.20031218072017.2023"><vh>atFile.replaceTargetFileIfDifferent</vh>
-<v t="ekr.20031218072017.2024"><vh>&lt;&lt; delete the output file &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2025"><vh>&lt;&lt; replace the target file with the output file &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2026"><vh>&lt;&lt; rename the output file to be the target file &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3960"><vh>Creating the status area</vh>
+<v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
+<v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
+<v t="EKR.20040424153344"><vh>enable/disableStatusLine &amp; isEnabled</vh></v>
+<v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
+<v t="EKR.20040424154804"><vh>setFocusStatusLine</vh></v>
+<v t="ekr.20031218072017.1733"><vh>updateStatusRowCol</vh></v>
 </v>
-<v t="EKR.20040424085407"><vh>atFile.compareFilesIgnoringLineEndings</vh></v>
 </v>
+<v t="ekr.20031218072017.3964"><vh>Destroying the frame</vh>
+<v t="ekr.20031218072017.1975"><vh>destroyAllObjects</vh>
+<v t="ekr.20031218072017.1976"><vh>&lt;&lt; clear all vnodes and tnodes in the tree&gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3965"><vh>destroyAllPanels</vh></v>
+<v t="ekr.20031218072017.1974"><vh>destroySelf</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3960" a="E"><vh>Creating the status area</vh>
+<v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
+<v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
+<v t="EKR.20040424153344"><vh>enable/disableStatusLine &amp; isEnabled</vh></v>
+<v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
+<v t="EKR.20040424154804"><vh>setFocusStatusLine</vh></v>
+<v t="ekr.20031218072017.1733"><vh>updateStatusRowCol</vh></v>
+</v>
+</v>
+<v t="EKR.20040425130443" a="TV"><vh>(Clone bug)</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040422091601.1">@nocolor
@@ -9823,6 +9891,84 @@ def compareFilesIgnoringLineEndings (self,path1,path2):
 	except:
 		return false</t>
 <t tx="EKR.20040424091902"></t>
+<t tx="EKR.20040424151321"></t>
+<t tx="EKR.20040424151409"></t>
+<t tx="EKR.20040424153344">def disableStatusLine (self):
+	
+	t = self.statusText
+	if t:
+		t.configure(state="disabled",background="gray")
+	
+def enableStatusLine (self):
+	
+	t = self.statusText
+	if t:
+		t.configure(state="normal",background="pink")
+		t.focus_set()
+		
+def statusLineIsEnabled(self):
+	t = self.statusText
+	if t:
+		state = t.cget("state")
+		return state == "normal"
+	else:
+		return false</t>
+<t tx="EKR.20040424154804">def setFocusStatusLine (self):
+	
+	t = self.statusText
+	if t:
+		t.focus_set()</t>
+<t tx="EKR.20040425130443">@nocolor
+Open Discussion
+http://sourceforge.net/forum/forum.php?thread_id=1058570&amp;forum_id=10226
+
+By: Maxim Krikun - tws5
+ 4.2a1 problems   
+2004-04-16 07:16  
+
+ I'm using this alpha for two days, and had experienced certain strange behaviour. Probably this is related to the warning above. Anyway, here is a report:
+
+(1) Focus switch instead of moving node when moving clones
+
+Create the following tree (all nodes empty):
+
+ROOT
+..clone (1)
+..A
+....clone (2)
+..B
+....clone (3)
+
+If i sit in clone(3) and press Ctrl+U, the focus goes to clone(2). Next Ctrl+U sets focus to clone (1).
+
+If i sit in clone(1) and press Ctrl+D, i get (surprising)
+
+ROOT
+..clone
+..clone
+
+(2) _parent lost somewhere:
+
+in a new file, create 'ROOT' root node
+insert 'SUB' node (Ctrl+I)
+move right (Ctri+R)
+at this point ROOT collapses
+trying to move 'SUB' left (Ctrl+L) raises an exception:
+
+exception executing command
+Traceback (most recent call last):
+File "C:\maxim\leo\leo-4.2-a1\src\leoCommands.py", line 140, in doCommand
+command()
+File "C:\maxim\leo\leo-4.2-a1\src\leoCommands.py", line 3353, in moveOutlineLeft
+p.moveAfter(parent)
+File "C:\maxim\leo\leo-4.2-a1\src\leoNodes.py", line 2493, in moveAfter
+p.linkAfter(a)
+File "C:\maxim\leo\leo-4.2-a1\src\leoNodes.py", line 2987, in linkAfter
+p.v._parent = after.v._parent
+AttributeError: 'NoneType' object has no attribute '_parent'
+
+Also when sitting at "SUB" cannot move up with 'Alt+Up'  
+</t>
 <t tx="ekr.20031218072017">@ignore
 @nocolor
 
