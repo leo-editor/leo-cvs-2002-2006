@@ -1023,8 +1023,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     # On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
     
     def OnMouseWheel(self, event=None):
-        
-        g.trace()
     
         try:
             if event.delta < 1:
