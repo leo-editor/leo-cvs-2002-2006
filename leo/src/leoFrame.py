@@ -1244,7 +1244,8 @@ class baseLeoFrame:
 		self.recentFiles = app().config.getRecentFiles()
 		self.createRecentFilesMenuItems()
 		
-		
+		table = (("Clear Recent Files",None,self.OnClearRecentFiles),)
+		self.createMenuEntries(fileMenu,table)
 		#@-body
 		#@-node:2::<< create the recent files submenu >>
 
@@ -2179,7 +2180,22 @@ class baseLeoFrame:
 	#@-node:11::frame.updateRecentFiles
 	#@-node:1::top level
 	#@+node:2::Recent Files submenu & allies
-	#@+node:1::frame.OnOpenRecentFile
+	#@+node:1::OnClearRecentFiles
+	#@+body
+	def OnClearRecentFiles (self,event=None):
+		
+		"""Clear the recent files list, then add the present file."""
+		
+		f = self
+		
+		recentFilesMenu = f.getMenu("Recent Files...")
+		recentFilesMenu.delete(0,len(f.recentFiles))
+		f.recentFiles = []
+		f.createRecentFilesMenuItems()
+		f.updateRecentFiles(f.mFileName)
+	#@-body
+	#@-node:1::OnClearRecentFiles
+	#@+node:2::frame.OnOpenRecentFile
 	#@+body
 	def OnOpenRecentFile(self,name=None):
 		
@@ -2216,8 +2232,8 @@ class baseLeoFrame:
 	
 		doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
 	#@-body
-	#@-node:1::frame.OnOpenRecentFile
-	#@+node:2::createRecentFilesMenuItems
+	#@-node:2::frame.OnOpenRecentFile
+	#@+node:3::createRecentFilesMenuItems
 	#@+body
 	def createRecentFilesMenuItems (self):
 		
@@ -2227,11 +2243,11 @@ class baseLeoFrame:
 		i = 1
 		for name in f.recentFiles:
 			callback = lambda f=f,name=name:f.OnOpenRecentFile(name)
-			label = "%d %s" % (i,self.setWindowTitle(name)) # str(i)+" "+name
+			label = "%d %s" % (i,self.setWindowTitle(name))
 			recentFilesMenu.add_command(label=label,command=callback,underline=0)
 			i += 1
 	#@-body
-	#@-node:2::createRecentFilesMenuItems
+	#@-node:3::createRecentFilesMenuItems
 	#@-node:2::Recent Files submenu & allies
 	#@+node:3::Read/Write submenu
 	#@+node:1::fileCommands.OnReadOutlineOnly

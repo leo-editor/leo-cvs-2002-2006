@@ -73,7 +73,7 @@ class baseAtFile:
 	startAfterRef  = 70 # @afterref (4.0)
 	startNl        = 71 # @nl (4.0)
 	startNonl      = 72 # @nonl (4.0)
-	startWs        = 73 # @ws (4.0)
+	
 	#@-body
 	#@-node:1::<< atFile constants >>
 
@@ -247,7 +247,6 @@ class baseAtFile:
 	#@@c
 	def read(self,root,importFileName=None):
 	
-		# trace("old read")
 		c = self.commands
 		
 		#@<< set self.targetFileName >>

@@ -163,6 +163,7 @@ class baseConfig:
 		self.thin_at_file_trees = 0
 		self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
 		self.use_plugins = false # Should never be true here!
+		self.write_old_format_derived_files = false
 		#@-body
 		#@-node:3::<< initialize ivars that may be set by config options >>
 
@@ -607,6 +608,9 @@ class baseConfig:
 				
 			self.use_plugins = self.initBooleanConfigParam(
 				"use_plugins",self.use_plugins)
+				
+			self.write_old_format_derived_files = self.initBooleanConfigParam(
+				"write_old_format_derived_files",self.write_old_format_derived_files)
 			#@-body
 			#@-node:1::<< get config options >>
 

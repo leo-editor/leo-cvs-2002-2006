@@ -16,11 +16,11 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="EV"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
@@ -206,12 +206,16 @@ tk_encoding =
 #	2. locale.getdefaultlocale()[1] if it is exists.
 #	3. sys.getdefaultencoding()
 
-use_plugins = 0
+use_plugins = 1
 #	1: Leo enables plugins.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
 #	   See the warnings in LeoDocs.leo.
 #
-#   0: (The default) Leo disables all plugins.</t>
+#   0: (The default) Leo disables all plugins.
+
+write_old_format_derived_files = 0
+#	1: Write all derived files using pre-4.0 format.
+#	0: Write all derived files using 4.0 format.</t>
 <t tx="T5"># The list of files in the "Recent Files" menu at startup.
 
 [recent files]
