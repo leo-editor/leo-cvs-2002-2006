@@ -3349,7 +3349,6 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		# For 4.x reading & writing...
 		at.inCode = true
-		## at.nodeIndices = app.nodeIndices
 	
 		# For 4.x writing...
 		at.docKind = None
@@ -4376,7 +4375,9 @@ class baseNewDerivedFile(oldDerivedFile):
 			
 			#@-node:<< write then entire @file tree >> (4.x)
 			#@nl
-			if not scriptFile:
+			if scriptFile != None:
+				at.root.tnodeList = [] # 12/13/03
+			else:
 				at.closeWriteFile()
 				if not nosentinels:
 					#@				<< warn about @ignored and orphans >>
@@ -4420,6 +4421,7 @@ class baseNewDerivedFile(oldDerivedFile):
 				es("exception preprocessing script",color="blue")
 				es_exception(full=false)
 				scriptFile.clear()
+				at.root.tnodeList = [] # 12/13/03
 			else:
 				at.handleWriteException()
 	#@nonl
