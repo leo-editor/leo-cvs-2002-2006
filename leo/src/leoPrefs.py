@@ -114,7 +114,9 @@ class leoPrefs:
 		print ("leoPrefs oops:",
 			g.callerName(2),
 			"should be overridden in subclass")
-	#@nonl
+			
+	def setWidgets(self):
+		self.oops()
 	#@-node:Must be overridden in subclasses
 	#@+node:printIvars
 	def print_ivars (self):
