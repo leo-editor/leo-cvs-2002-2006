@@ -1756,12 +1756,22 @@ class baseCommands:
 		oldSel = body.getTextSelection()
 		#@	<< Set headline for extractSection >>
 		#@+node:<< Set headline for extractSection >>
-		while len(headline) > 0 and headline[0] == '/':
-			headline = headline[1:]
-		headline = string.strip(headline)
+		if 0: # I have no idea why this was being done.
+			while len(headline) > 0 and headline[0] == '/':
+				headline = headline[1:]
 		
-		# Make sure we have a @< or <<
-		if headline[0:2] != '<<' and headline[0:2] != '@<':
+		headline = headline.strip()
+		
+		if len(headline) < 5:
+			oops = true
+		else:
+			head1 = headline[0:2] == '<<'
+			head2 = headline[0:2] == '@<'
+			tail1 = headline[-2:] == '>>'
+			tail2 = headline[-2:] == '@>'
+			oops = not (head1 and tail1) and not (head2 and tail2)
+		
+		if oops:
 			es("Selected text should start with a section name",color="blue")
 			return
 		#@nonl
@@ -3780,14 +3790,25 @@ class baseCommands:
 	#@+node:canExtract, canExtractSection & canExtractSectionNames
 	def canExtract (self):
 	
-		c = self
-		if c.frame.body:
-			return c.frame.body.hasTextSelection()
-		else:
-			return false
-	
-	canExtractSection = canExtract
+		c = self ; body = c.frame.body
+		return body and body.hasTextSelection()
+		
 	canExtractSectionNames = canExtract
+			
+	def canExtractSection (self):
+	
+		c = self ; body = c.frame.body
+		if not body: return false
+		
+		s = body.getSelectedText()
+		if not s: return false
+	
+		line = get_line(s,0)
+		i1 = line.find("<<")
+		j1 = line.find(">>")
+		i2 = line.find("@<")
+		j2 = line.find("@>")
+		return -1 < i1 < j1 or -1 < i2 < j2
 	#@nonl
 	#@-node:canExtract, canExtractSection & canExtractSectionNames
 	#@+node:canFindMatchingBracket
