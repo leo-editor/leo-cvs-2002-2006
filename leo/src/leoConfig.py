@@ -150,9 +150,6 @@ class baseConfig:
     localOptionsDict = {}
     
     localOptionsList = []
-    
-    # Keys are type names.  Values are (basic_types,[values]) tuples.
-    types_dict = {}
         
     # Keys are setting names, values are type names.
     warningsDict = {} # Used by get() or allies.
@@ -363,40 +360,10 @@ class baseConfig:
             else:
                 g.trace("bad tuple",data)
                 return None,found
-                
-            if 0: # This is not reliable.
-                if dType != requestedType:
-                    ok = False
-                    #@                << set ok if we can translate one type into the other >>
-                    #@+node:ekr.20041122164849:<< set ok if we can translate one type into the other >>
-                    for toBeTranslatedType,otherType in (
-                        (requestedType,dType),(dType,requestedType)):
-                        data = self.types_dict.get(toBeTranslatedType)
-                        if data:
-                            transType,validValues = data
-                            ok = transType == otherType
-                            if ok:
-                                # g.trace("translated %12s to %s for %s" % (toBeTranslatedType,transType,setting))
-                                break
-                    #@nonl
-                    #@-node:ekr.20041122164849:<< set ok if we can translate one type into the other >>
-                    #@nl
-                    if not ok:
-                        #@                    << give warning the first time (setting,dType) is seen >>
-                        #@+node:ekr.20041122164849.1:<< give warning the first time (setting,dType) is seen >>
-                        wTypes = self.warningsDict.get(setting,[])
-                        if dType not in wTypes:
-                            wTypes.append(dType)
-                            self.warningsDict[setting] = wTypes
-                            g.trace("Requested type %s, got %s for setting %s" % (requestedType,dType,setting))
-                            # g.print_stack()
-                        #@nonl
-                        #@-node:ekr.20041122164849.1:<< give warning the first time (setting,dType) is seen >>
-                        #@nl
             if val not in (u'None',u'none','None','none','',None):
                 # g.trace(setting,val)
                 return val,found
-                
+    
         # Do NOT warn if not found here.  It may be in another dict.
         return None,found
     #@nonl
@@ -751,7 +718,7 @@ class parserBaseClass:
     
     control_types = [
         'font','if','ifgui','ifplatform','ignore','page',
-        'recentfiles','settings','shortcuts','type']
+        'recentfiles','settings','shortcuts']
     
     # Keys are settings names, values are (type,value) tuples.
     settingsDict = {}
@@ -784,7 +751,6 @@ class parserBaseClass:
             'recentfiles': self.doRecentFiles,
             'shortcuts':    self.doShortcuts,
             'string':       self.doString,
-            'type':         self.doType,
         }
     #@nonl
     #@-node:ekr.20041119204700: ctor
@@ -948,31 +914,6 @@ class parserBaseClass:
         self.set(kind,name,val)
     #@nonl
     #@-node:ekr.20041120094940.8:doString
-    #@+node:ekr.20041122095745:doType
-    def doType (self,p,kind,name,val):
-    
-        c = p.c ; d = g.app.config.types_dict
-    
-        name,theType,values = self.parseType(p)
-    
-        if name and theType:
-            data = d.get(name)
-            if data:
-                if len(data) == 2:
-                    path2 = None ; theType2,values2 = data
-                else:
-                    path2,theType2,values2 = data
-                if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path2):
-                    g.es("over-riding @type %s from %s" % (name,path2), color="red")
-            else:
-                # g.trace("defining @type %s = (%s,%s)" % (name,repr(theType),repr(values)))
-                pass
-            # N.B.  We can't use c here: it may not exist later.
-            d[name] = c.mFileName,theType,values
-        else:
-            g.es("invalid @type: %s" % (p.headString()), color="red")
-    #@nonl
-    #@-node:ekr.20041122095745:doType
     #@-node:ekr.20041120094940:kind handlers
     #@+node:ekr.20041124063257:munge
     def munge(self,s):
@@ -1095,43 +1036,6 @@ class parserBaseClass:
         return name,val
     #@nonl
     #@-node:ekr.20041120112043:parseShortcutLine
-    #@+node:ekr.20041122100810:parseType
-    def parseType (self,p):
-        
-        """Parse lines of the form:
-        @type name:type
-        @type name:type=values
-        """
-        s = p.headString().strip()
-        assert(g.match(s,0,'@type'))
-        # g.trace(s)
-        i = len('@type')
-        i = g.skip_ws(s,i)
-        j = g.skip_id(s,i)
-        name = s[i:j]
-        # g.trace(name)
-        if not name: return None,None,None
-        i = g.skip_ws(s,j)
-        if not g.match(s,i,':'): return None,None,None
-        i += 1
-        i = g.skip_ws(s,i)
-        j = g.skip_id(s,i,'-')
-        theType = s[i:j]
-        # g.trace(i,j,theType)
-        if not theType: return None,None,None
-        i = g.skip_ws(s,j)
-        if g.match(s,i,'='):
-            splitchar = ',' ; vals = s[i+1:]
-        else:
-            splitchar = '\n' ; vals = p.bodyString()
-        vals = vals.strip()
-        if vals: values = vals.split(splitchar)
-        else: values = []
-        values = [val.strip() for val in values]
-        # g.trace("%s %s %s" %(name,theType,values))
-        return name,theType,values
-    #@nonl
-    #@-node:ekr.20041122100810:parseType
     #@-node:ekr.20041213082558:parsers
     #@+node:ekr.20041120094940.9:set (settingsParser)
     def set (self,kind,name,val):
