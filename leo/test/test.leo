@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5846" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5848" clone_windows="0"/>
 <globals body_outline_ratio="0.465380249716">
-	<global_window_position top="39" left="646" height="881" width="611"/>
+	<global_window_position top="27" left="428" height="881" width="771"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -20,11 +20,288 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
+<v t="ekr.20040715105834" a="TV"><vh>Fun...</vh>
 <v t="EKR.20040626212434"><vh>Drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
 <v t="EKR.20040626212434.2"><vh>Lines &amp; arcs</vh></v>
 <v t="EKR.20040626213007"><vh>Paul Klee</vh></v>
 <v t="EKR.20040627150213"><vh>Complex functions</vh></v>
+</v>
+<v t="ekr.20040714055306"><vh>elispToPy</vh>
+<v t="ekr.20040715133744"><vh>To do</vh></v>
+<v t="ekr.20040713123617.1"><vh>e2pyScript</vh>
+<v t="ekr.20040713200238"><vh>Ref</vh>
+<v t="ekr.20040713131315" a="M"><vh>To do</vh>
+<v t="ekr.20040713133131" a="M"><vh>Tokens</vh></v>
+<v t="ekr.20040713133131.1" a="M"><vh>Statements</vh></v>
+<v t="ekr.20040713133131.2" a="M"><vh>Expressions</vh></v>
+</v>
+<v t="ekr.20040713130853"><vh>Docs</vh>
+<v t="ekr.20040713130853.1"><vh>What elisp2py does</vh></v>
+<v t="ekr.20040713130853.2"><vh>Theory of operation</vh></v>
+<v t="ekr.20040713130853.3"><vh>&lt;&lt; specify user types &gt;&gt;</vh></v>
+<v t="ekr.20040713130853.4"><vh>&lt;&lt; define testData &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040713144336"><vh>from c2py</vh>
+<v t="ekr.20040713130853.15"><vh>Top-level scripts</vh>
+<v t="ekr.20040713130853.16"><vh>convertCurrentTree</vh></v>
+<v t="ekr.20040713130853.17"><vh>convertLeoTree</vh></v>
+<v t="ekr.20040713130853.18"><vh>convertCFileToPython</vh></v>
+<v t="ekr.20040713130853.7"><vh>speedTest</vh></v>
+</v>
+<v t="ekr.20040713130853.19"><vh>Top Level</vh>
+<v t="ekr.20040713130853.20"><vh>convertCStringToPython</vh></v>
+<v t="ekr.20040713130853.21" a="M"><vh>OLDconvertCodeList</vh></v>
+<v t="ekr.20040713130853.22"><vh>convertDocList</vh></v>
+<v t="ekr.20040713130853.23"><vh>skipDocPart</vh></v>
+<v t="ekr.20040713130853.24"><vh>skipCodePart</vh></v>
+</v>
+<v t="ekr.20040713144926.1"><vh>Utils</vh>
+<v t="ekr.20040713130853.61"><vh>safeReplace</vh></v>
+<v t="ekr.20040713130853.43"><vh>match</vh></v>
+<v t="ekr.20040713130853.44"><vh>matchWord</vh></v>
+</v>
+<v t="ekr.20040713130853.27"><vh>convertLeadingBlanks</vh></v>
+<v t="ekr.20040713130853.28"><vh>findInList</vh></v>
+<v t="ekr.20040713130853.29"><vh>findInCode</vh></v>
+<v t="ekr.20040713130853.30"><vh>mungeAllFunctions</vh>
+<v t="ekr.20040713130853.31"><vh>handlePossibleFunctionHeader</vh></v>
+<v t="ekr.20040713130853.32"><vh>massageFunctionArgs</vh></v>
+<v t="ekr.20040713130853.33"><vh>massageFunctionHead (sets gClassName)</vh></v>
+<v t="ekr.20040713130853.34"><vh>massageFunctionBody</vh>
+<v t="ekr.20040713130853.35"><vh>massageIvars</vh></v>
+<v t="ekr.20040713130853.36"><vh>removeCasts</vh></v>
+<v t="ekr.20040713130853.37"><vh>removeTypeNames</vh></v>
+</v>
+</v>
+<v t="ekr.20040713130853.38"><vh>handleAllKeywords</vh>
+<v t="ekr.20040713130853.39"><vh>handleKeyword</vh></v>
+</v>
+<v t="ekr.20040713130853.40"><vh>isWs and isWOrNl</vh></v>
+<v t="ekr.20040713130853.41"><vh>isSectionDef</vh></v>
+<v t="ekr.20040713130853.42"><vh>isStringOrComment</vh></v>
+<v t="ekr.20040713130853.45"><vh>prevNonWsChar and prevNonWsOrNlChar</vh></v>
+<v t="ekr.20040713144926.2"><vh>remove</vh>
+<v t="ekr.20040713130853.46"><vh>removeAllCComments</vh></v>
+<v t="ekr.20040713130853.47"><vh>removeAllCSentinels</vh></v>
+<v t="ekr.20040713130853.48"><vh>removeAllPythonComments</vh></v>
+<v t="ekr.20040713130853.49"><vh>removeAllPythonSentinels</vh></v>
+<v t="ekr.20040713130853.50"><vh>removeAtRoot</vh></v>
+<v t="ekr.20040713130853.51"><vh>removeBlankLines</vh></v>
+<v t="ekr.20040713130853.52"><vh>removeExcessWs</vh>
+<v t="ekr.20040713130853.53"><vh>removeExessWsFromLine</vh></v>
+</v>
+<v t="ekr.20040713130853.54"><vh>removeLeadingAtCode</vh></v>
+<v t="ekr.20040713130853.55"><vh>removeMatchingBrackets</vh></v>
+<v t="ekr.20040713130853.56"><vh>removeSemicolonsAtEndOfLines</vh></v>
+<v t="ekr.20040713130853.57"><vh>removeTrailingWs</vh></v>
+</v>
+<v t="ekr.20040713144926.3"><vh>replace...</vh>
+<v t="ekr.20040713130853.58"><vh>replace</vh></v>
+<v t="ekr.20040713130853.59"><vh>replaceComments</vh></v>
+<v t="ekr.20040713130853.60"><vh>replaceSectionDefs</vh></v>
+</v>
+<v t="ekr.20040713144926.4"><vh>skip...</vh>
+<v t="ekr.20040713130853.62"><vh>skipCBlockComment</vh></v>
+<v t="ekr.20040713130853.63"><vh>skipPastLine</vh></v>
+<v t="ekr.20040713130853.64"><vh>skipPastWord</vh></v>
+<v t="ekr.20040713130853.65"><vh>skipString</vh></v>
+<v t="ekr.20040713130853.66"><vh>skipStringOrComment</vh></v>
+<v t="ekr.20040713130853.68"><vh>skipWs and skipWsAndNl</vh></v>
+</v>
+</v>
+<v t="ekr.20040713150856.1"><vh>g.scanning...</vh>
+<v t="ekr.20040713150856.8"><vh>Scanners: calling scanError</vh>
+<v t="ekr.20040713150856.9"><vh>skip_block_comment</vh></v>
+<v t="ekr.20040713150856.10"><vh>skip_braces</vh></v>
+<v t="ekr.20040713150856.12"><vh>skip_parens</vh></v>
+<v t="ekr.20040713150856.13"><vh>skip_pascal_begin_end</vh></v>
+<v t="ekr.20040713150856.14"><vh>skip_pascal_block_comment</vh></v>
+<v t="ekr.20040713150856.15"><vh>skip_pascal_string : called by tangle</vh></v>
+<v t="ekr.20040713150856.20"><vh>skip_python_string</vh></v>
+<v t="ekr.20040713150856.21"><vh>skip_string : called by tangle</vh></v>
+<v t="ekr.20040713150856.22"><vh>skip_to_semicolon</vh></v>
+</v>
+<v t="ekr.20040713150856.24"><vh>Scanners: no error messages</vh>
+<v t="ekr.20040713150856.25"><vh>escaped</vh></v>
+<v t="ekr.20040713150856.26"><vh>find_line_start</vh></v>
+<v t="ekr.20040713150856.27"><vh>find_on_line</vh></v>
+<v t="ekr.20040713150856.28"><vh>is_c_id</vh></v>
+<v t="ekr.20040713150856.29"><vh>is_nl</vh></v>
+<v t="ekr.20040713150856.30"><vh>is_special</vh></v>
+<v t="ekr.20040713150856.31"><vh>is_ws &amp; is_ws_or_nl</vh></v>
+<v t="ekr.20040713150856.32"><vh>match</vh></v>
+<v t="ekr.20040713150856.33"><vh>match_c_word</vh></v>
+<v t="ekr.20040713150856.34"><vh>match_ignoring_case</vh></v>
+<v t="ekr.20040713150856.35"><vh>match_word</vh></v>
+<v t="ekr.20040713150856.36"><vh>skip_blank_lines</vh></v>
+<v t="ekr.20040713150856.37"><vh>skip_c_id</vh></v>
+<v t="ekr.20040713150856.38"><vh>skip_id</vh></v>
+<v t="ekr.20040713150856.39"><vh>skip_line, skip_to_end_of_line</vh></v>
+<v t="ekr.20040713150856.40"><vh>skip_long</vh></v>
+<v t="ekr.20040713150856.41"><vh>skip_matching_delims</vh></v>
+<v t="ekr.20040713150856.42"><vh>skip_nl</vh></v>
+<v t="ekr.20040713150856.43"><vh>skip_non_ws</vh></v>
+<v t="ekr.20040713150856.44"><vh>skip_pascal_braces</vh></v>
+<v t="ekr.20040713150856.45"><vh>skip_to_char</vh></v>
+<v t="ekr.20040713150856.46"><vh>skip_ws, skip_ws_and_nl</vh></v>
+</v>
+<v t="ekr.20040713150856.47"><vh>splitLines &amp; joinLines</vh></v>
+</v>
+<v t="ekr.20040713205718"><vh>createIndentedBlock NOT USED</vh>
+<v t="ekr.20040714074445"><vh>&lt;&lt; insert nl and ws tokens &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040713131350" a="E"><vh>-input-</vh>
+<v t="ekr.20040715071555"><vh>igrep-read-file-name</vh></v>
+</v>
+<v t="ekr.20040713132127.1"><vh>igrep.el</vh>
+<v t="ekr.20040713132127.2"><vh>provide</vh></v>
+<v t="ekr.20040713132127.3"><vh>const igrep-version</vh></v>
+<v t="ekr.20040713132127.4"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.5"><vh>var igrep-options</vh></v>
+<v t="ekr.20040713132127.6"><vh>put</vh></v>
+<v t="ekr.20040713132127.7"><vh>var igrep-read-options</vh></v>
+<v t="ekr.20040713132127.8"><vh>put</vh></v>
+<v t="ekr.20040713132127.9"><vh>var igrep-read-multiple-files</vh></v>
+<v t="ekr.20040713132127.10"><vh>put</vh></v>
+<v t="ekr.20040713132127.11"><vh>var igrep-expression-default</vh></v>
+<v t="ekr.20040713132127.12"><vh>put</vh></v>
+<v t="ekr.20040713132127.13"><vh>var igrep-files-default</vh></v>
+<v t="ekr.20040713132127.14"><vh>put</vh></v>
+<v t="ekr.20040713132127.15"><vh>var igrep-verbose-prompts</vh></v>
+<v t="ekr.20040713132127.16"><vh>put</vh></v>
+<v t="ekr.20040713132127.17"><vh>var igrep-insert-default-key</vh></v>
+<v t="ekr.20040713132127.18"><vh>put</vh></v>
+<v t="ekr.20040713132127.19"><vh>var igrep-save-buffers</vh></v>
+<v t="ekr.20040713132127.20"><vh>put</vh></v>
+<v t="ekr.20040713132127.21"><vh>var igrep-null-device</vh></v>
+<v t="ekr.20040713132127.22"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.23"><vh>var igrep-program</vh></v>
+<v t="ekr.20040713132127.24" a="M"><vh>var igrep-expression-option</vh></v>
+<v t="ekr.20040713132127.25"><vh>var igrep-program-table</vh></v>
+<v t="ekr.20040713132127.26"><vh>var igrep-use-zgrep</vh></v>
+<v t="ekr.20040713132127.27"><vh>var igrep-find</vh></v>
+<v t="ekr.20040713132127.28"><vh>var igrep-find-program</vh></v>
+<v t="ekr.20040713132127.29"><vh>var igrep-find-prune-clause</vh></v>
+<v t="ekr.20040713132127.30"><vh>var igrep-find-file-clause</vh></v>
+<v t="ekr.20040713132127.31"><vh>var igrep-find-use-xargs</vh></v>
+<v t="ekr.20040713132127.32"><vh>var igrep-program-default</vh></v>
+<v t="ekr.20040713132127.33"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.34"><vh>var igrep-expression-history</vh></v>
+<v t="ekr.20040713132127.35"><vh>var igrep-files-history</vh></v>
+<v t="ekr.20040713132127.36"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.37"><vh>igrep-insinuate</vh></v>
+<v t="ekr.20040713132127.38"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.39"><vh>igrep</vh></v>
+<v t="ekr.20040713132127.40"><vh>defmacro</vh></v>
+<v t="ekr.20040713132127.41"><vh>igrep-find</vh></v>
+<v t="ekr.20040713132127.42"><vh>defmacro</vh></v>
+<v t="ekr.20040713132127.43"><vh>igrep-visited-files</vh></v>
+<v t="ekr.20040713132127.44"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.45"><vh>dired-do-igrep</vh></v>
+<v t="ekr.20040713132127.46"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.47"><vh>dired-do-igrep-find</vh></v>
+<v t="ekr.20040713132127.48"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.49"><vh>Buffer-menu-igrep</vh></v>
+<v t="ekr.20040713132127.50"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.51"><vh>igrep-dired-file-current-word</vh></v>
+<v t="ekr.20040713132127.52"><vh>igrep-buffer-file-name-pattern</vh></v>
+<v t="ekr.20040713132127.53"><vh>igrep-dired-directory-file-pattern</vh></v>
+<v t="ekr.20040713132127.54"><vh>defsubst</vh></v>
+<v t="ekr.20040713132127.55"><vh>igrep-format-find-command</vh></v>
+<v t="ekr.20040713132127.56"><vh>defmacro</vh></v>
+<v t="ekr.20040713132127.57"><vh>igrep-default-expression</vh></v>
+<v t="ekr.20040713132127.58"><vh>igrep-default-files</vh></v>
+<v t="ekr.20040713132127.59"><vh>defsubst</vh></v>
+<v t="ekr.20040713132127.60"><vh>igrep-read-args</vh></v>
+<v t="ekr.20040713132127.61"><vh>igrep-read-program</vh></v>
+<v t="ekr.20040713132127.62"><vh>igrep-read-options</vh></v>
+<v t="ekr.20040713132127.63"><vh>igrep-read-expression</vh></v>
+<v t="ekr.20040713132127.64"><vh>igrep-insert-default-expression</vh></v>
+<v t="ekr.20040713132127.65"><vh>igrep-insert-default-files</vh></v>
+<v t="ekr.20040713132127.66"><vh>defsubst</vh></v>
+<v t="ekr.20040713132127.67"><vh>igrep-read-files</vh></v>
+<v t="ekr.20040713132127.68"><vh>igrep-read-file-name</vh></v>
+<v t="ekr.20040713132127.69"><vh>unnamed data</vh></v>
+</v>
+</v>
+<v t="ekr.20040713130853.8" tnodeList="ekr.20040713130853.8,ekr.20040715093804,ekr.20040715073230,ekr.20040715082059,ekr.20040714095247,ekr.20040713150037,ekr.20040713150037.1,ekr.20040714170021,ekr.20040713150712,ekr.20040713173923,ekr.20040713174349,ekr.20040713180208,ekr.20040713164604,ekr.20040715080216,ekr.20040715080738,ekr.20040715081031,ekr.20040715080738.1,ekr.20040713144036,ekr.20040713144036.1,ekr.20040714061625,ekr.20040714061625.1,ekr.20040714061625.2,ekr.20040715090957,ekr.20040713152809,ekr.20040713193437,ekr.20040713161629.1,ekr.20040713152318,ekr.20040713151556.1,ekr.20040713160302,ekr.20040714060941,ekr.20040714053807.1,ekr.20040714054620.1,ekr.20040713150314.1,ekr.20040713144926,ekr.20040713154118,ekr.20040713211010,ekr.20040714082939,ekr.20040714155341,ekr.20040714154314,ekr.20040714091940.1,ekr.20040714222507,ekr.20040715081425,ekr.20040715075914,ekr.20040714072448,ekr.20040715090957.2,ekr.20040715071350,ekr.20040715125453,ekr.20040715120001,ekr.20040715120001.1,ekr.20040715120001.2,ekr.20040715093122,ekr.20040715120001.3,ekr.20040715121456,ekr.20040715091409,ekr.20040715120001.4,ekr.20040715120001.5,ekr.20040715084435,ekr.20040715120001.7,ekr.20040715120001.8,ekr.20040715090957.1,ekr.20040715075845,ekr.20040715120001.9"><vh>@file ../src/elisp2py.py</vh>
+<v t="ekr.20040715093804"><vh>Utility functions</vh>
+<v t="ekr.20040715073230"><vh>isList &amp; isToken</vh></v>
+<v t="ekr.20040715082059"><vh>printHeading</vh></v>
+<v t="ekr.20040714095247"><vh>parseTreeToString</vh></v>
+</v>
+<v t="ekr.20040713150037"><vh>class tok</vh>
+<v t="ekr.20040713150037.1" a="E"><vh>tok.__init__</vh></v>
+<v t="ekr.20040714170021"><vh>tok.isParseTok</vh></v>
+<v t="ekr.20040713150712"><vh>tok.copy</vh></v>
+<v t="ekr.20040713173923"><vh>tok.match</vh></v>
+<v t="ekr.20040713174349"><vh>tok.dump</vh></v>
+<v t="ekr.20040713180208" a="E"><vh>tok.toString &amp; allies</vh>
+<v t="ekr.20040713164604"><vh>tok.wsToString</vh></v>
+</v>
+</v>
+<v t="ekr.20040715080216"><vh>class lineClass</vh>
+<v t="ekr.20040715080738"><vh>line.__init__</vh></v>
+<v t="ekr.20040715081031"><vh>line.add</vh></v>
+<v t="ekr.20040715080738.1"><vh>line.toString</vh></v>
+</v>
+<v t="ekr.20040713144036"><vh>class elisp2pyClass</vh>
+<v t="ekr.20040713144036.1"><vh>e.__init__</vh>
+<v t="ekr.20040714061625"><vh>&lt;&lt; define elisp constants &gt;&gt;</vh></v>
+<v t="ekr.20040714061625.2"><vh>&lt;&lt; define elisp functions &gt;&gt;</vh></v>
+<v t="ekr.20040714061625.1"><vh>&lt;&lt; define elisp statements &gt;&gt;</vh></v>
+<v t="ekr.20040715090957"><vh>&lt;&lt; define code gen dispatch table &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040713152809"><vh>Utils</vh>
+<v t="ekr.20040713193437"><vh>deleteTokens</vh></v>
+<v t="ekr.20040713161629.1" a="E"><vh>dump</vh></v>
+<v t="ekr.20040713152318"><vh>error &amp; warning</vh></v>
+<v t="ekr.20040713151556.1"><vh>findMatchingBracket</vh></v>
+<v t="ekr.20040713160302"><vh>findTokens</vh></v>
+<v t="ekr.20040714060941"><vh>isMatchingBracket</vh></v>
+<v t="ekr.20040714053807.1"><vh>isStatement</vh></v>
+<v t="ekr.20040714054620.1"><vh>matchTokens</vh></v>
+<v t="ekr.20040713150314.1"><vh>replaceAll (not used yet)</vh></v>
+<v t="ekr.20040713144926"><vh>tokenize &amp; allies</vh>
+<v t="ekr.20040713154118"><vh>skipString</vh></v>
+</v>
+</v>
+<v t="ekr.20040713211010"><vh>convert (main line)</vh></v>
+<v t="ekr.20040714082939"><vh>Parser &amp; allies</vh>
+<v t="ekr.20040714155341"><vh>parse</vh>
+<v t="ekr.20040714154314"><vh>&lt;&lt; give error message about mismatched parens &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040714091940.1" a="E"><vh>block</vh></v>
+</v>
+<v t="ekr.20040714222507"><vh>Code gen</vh>
+<v t="ekr.20040715081425"><vh>dumpCodeList</vh></v>
+<v t="ekr.20040715075914"><vh>newCodeLine</vh></v>
+<v t="ekr.20040714072448"><vh>removeBlankLines</vh></v>
+</v>
+<v t="ekr.20040715090957.2"><vh>gen_xxx</vh>
+<v t="ekr.20040715071350" a="E"><vh>gen</vh></v>
+<v t="ekr.20040715125453"><vh>gen_computed_function</vh></v>
+<v t="ekr.20040715120001"><vh>gen_cond</vh></v>
+<v t="ekr.20040715120001.1"><vh>gen_defconst</vh></v>
+<v t="ekr.20040715120001.2"><vh>gen_defsubst</vh></v>
+<v t="ekr.20040715093122"><vh>gen_defun</vh></v>
+<v t="ekr.20040715120001.3"><vh>gen_defvar</vh></v>
+<v t="ekr.20040715121456"><vh>gen_expression</vh></v>
+<v t="ekr.20040715091409"><vh>gen_function</vh></v>
+<v t="ekr.20040715120001.4"><vh>gen_if</vh></v>
+<v t="ekr.20040715120001.5"><vh>gen_let, gen_let_star</vh></v>
+<v t="ekr.20040715084435" a="EM"><vh>gen_list</vh></v>
+<v t="ekr.20040715120001.7"><vh>gen_prog, gen_prog1, gen_progn</vh></v>
+<v t="ekr.20040715120001.8" a="E"><vh>gen_set &amp; gen_setq</vh></v>
+<v t="ekr.20040715090957.1"><vh>gen_statement</vh></v>
+<v t="ekr.20040715075845"><vh>gen_token</vh></v>
+<v t="ekr.20040715120001.9" a="E"><vh>gen_unless, gen_when, gen_while</vh></v>
+</v>
+</v>
+</v>
+</v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
@@ -350,64 +627,6 @@
 <v t="ekr.20040317173327"><vh>Delete user icons</vh></v>
 <v t="ekr.20040317101155"><vh>Test of user icons</vh>
 <v t="ekr.20040317185041"><vh>&lt;&lt; define event callbacks &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040708215319"><vh>To do...</vh>
-<v t="EKR.20040608095146"><vh>Perfect import stuff...</vh>
-<v t="EKR.20040504083716.44"><vh>perfect import unit tests</vh>
-<v t="EKR.20040504083716.45"><vh>@   file test_sentinels.py</vh>
-<v t="EKR.20040504083716.47"><vh>class sentinel_test</vh>
-<v t="EKR.20040504083716.48"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.49"><vh>setup_inputfile</vh></v>
-<v t="EKR.20040504083716.50"><vh>setup_configfile</vh></v>
-</v>
-<v t="EKR.20040504083716.51"><vh>insert tests</vh>
-<v t="EKR.20040504083716.52"><vh>class insert_test</vh>
-<v t="EKR.20040504083716.53"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.54"><vh>runTest</vh></v>
-</v>
-</v>
-<v t="EKR.20040504083716.55"><vh>replacement tests</vh>
-<v t="EKR.20040504083716.56"><vh>class replace_test</vh>
-<v t="EKR.20040504083716.57"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.58"><vh>runTest</vh></v>
-</v>
-<v t="EKR.20040504083716.59"><vh>class replace_test2</vh>
-<v t="EKR.20040504083716.60"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.61"><vh>runTest</vh></v>
-</v>
-<v t="EKR.20040504083716.62"><vh>class replace_test3</vh>
-<v t="EKR.20040504083716.63"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.64"><vh>runTest</vh></v>
-</v>
-<v t="EKR.20040504083716.65"><vh>class replace_test4</vh>
-<v t="EKR.20040504083716.66"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.67"><vh>runTest</vh></v>
-</v>
-</v>
-<v t="EKR.20040504083716.68"><vh>regression tests</vh>
-<v t="EKR.20040504083716.69"><vh>class regression_test_1</vh>
-<v t="EKR.20040504083716.70"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.71"><vh>runTest</vh></v>
-</v>
-</v>
-<v t="EKR.20040504083716.72"><vh>main</vh></v>
-</v>
-<v t="EKR.20040504083716.73"><vh>not used</vh>
-<v t="EKR.20040504083716.74"><vh>@file testtesting.ini</vh></v>
-<v t="EKR.20040504083716.75"><vh>tests to write</vh>
-<v t="EKR.20040504083716.76"><vh>Insert tests.</vh></v>
-<v t="EKR.20040504083716.77"><vh>deletion tests.</vh></v>
-<v t="EKR.20040504083716.78"><vh>Creation of backup files.</vh></v>
-</v>
-</v>
-</v>
-<v t="EKR.20040504083716"><vh>Mulder Update script</vh>
-<v t="EKR.20040504083716.39"><vh>sync</vh>
-<v t="EKR.20040504153320"><vh>&lt;&lt; compute sourcetime and targettime &gt;&gt;</vh></v>
-<v t="EKR.20040504153320.1"><vh>&lt;&lt; compute operation &gt;&gt;</vh></v>
-</v>
 </v>
 </v>
 </v>
@@ -809,268 +1028,67 @@
 <v t="ekr.20040707071542.1"><vh>Do all @tests</vh></v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="EKR.20040612095237"><vh>Tests of new commands TO DO</vh>
+<v t="ekr.20040715105926"><vh>To do:</vh>
+<v t="EKR.20040608095146"><vh>Perfect import stuff...</vh>
+<v t="EKR.20040504083716.44"><vh>perfect import unit tests</vh>
+<v t="EKR.20040504083716.45"><vh>@   file test_sentinels.py</vh>
+<v t="EKR.20040504083716.47"><vh>class sentinel_test</vh>
+<v t="EKR.20040504083716.48"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.49"><vh>setup_inputfile</vh></v>
+<v t="EKR.20040504083716.50"><vh>setup_configfile</vh></v>
+</v>
+<v t="EKR.20040504083716.51"><vh>insert tests</vh>
+<v t="EKR.20040504083716.52"><vh>class insert_test</vh>
+<v t="EKR.20040504083716.53"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.54"><vh>runTest</vh></v>
+</v>
+</v>
+<v t="EKR.20040504083716.55"><vh>replacement tests</vh>
+<v t="EKR.20040504083716.56"><vh>class replace_test</vh>
+<v t="EKR.20040504083716.57"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.58"><vh>runTest</vh></v>
+</v>
+<v t="EKR.20040504083716.59"><vh>class replace_test2</vh>
+<v t="EKR.20040504083716.60"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.61"><vh>runTest</vh></v>
+</v>
+<v t="EKR.20040504083716.62"><vh>class replace_test3</vh>
+<v t="EKR.20040504083716.63"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.64"><vh>runTest</vh></v>
+</v>
+<v t="EKR.20040504083716.65"><vh>class replace_test4</vh>
+<v t="EKR.20040504083716.66"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.67"><vh>runTest</vh></v>
+</v>
+</v>
+<v t="EKR.20040504083716.68"><vh>regression tests</vh>
+<v t="EKR.20040504083716.69"><vh>class regression_test_1</vh>
+<v t="EKR.20040504083716.70"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.71"><vh>runTest</vh></v>
+</v>
+</v>
+<v t="EKR.20040504083716.72"><vh>main</vh></v>
+</v>
+<v t="EKR.20040504083716.73"><vh>not used</vh>
+<v t="EKR.20040504083716.74"><vh>@file testtesting.ini</vh></v>
+<v t="EKR.20040504083716.75"><vh>tests to write</vh>
+<v t="EKR.20040504083716.76"><vh>Insert tests.</vh></v>
+<v t="EKR.20040504083716.77"><vh>deletion tests.</vh></v>
+<v t="EKR.20040504083716.78"><vh>Creation of backup files.</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040504083716"><vh>Mulder Update script</vh>
+<v t="EKR.20040504083716.39"><vh>sync</vh>
+<v t="EKR.20040504153320"><vh>&lt;&lt; compute sourcetime and targettime &gt;&gt;</vh></v>
+<v t="EKR.20040504153320.1"><vh>&lt;&lt; compute operation &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040612095237" a="E"><vh>Tests of new commands</vh>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
 <v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
 </v>
-<v t="ekr.20040714055306" a="E"><vh>elispToPy</vh>
-<v t="ekr.20040713123617.1" a="M"><vh>doElisp2py</vh>
-<v t="ekr.20040713200238"><vh>Ref</vh>
-<v t="ekr.20040713131315" a="M"><vh>To do</vh>
-<v t="ekr.20040713133131" a="M"><vh>Tokens</vh></v>
-<v t="ekr.20040713133131.1" a="M"><vh>Statements</vh></v>
-<v t="ekr.20040713133131.2" a="M"><vh>Expressions</vh></v>
-</v>
-<v t="ekr.20040713130853"><vh>Docs</vh>
-<v t="ekr.20040713130853.1"><vh>What elisp2py does</vh></v>
-<v t="ekr.20040713130853.2"><vh>Theory of operation</vh></v>
-<v t="ekr.20040713130853.3"><vh>&lt;&lt; specify user types &gt;&gt;</vh></v>
-<v t="ekr.20040713130853.4"><vh>&lt;&lt; define testData &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040713144336"><vh>from c2py</vh>
-<v t="ekr.20040713130853.15"><vh>Top-level scripts</vh>
-<v t="ekr.20040713130853.16"><vh>convertCurrentTree</vh></v>
-<v t="ekr.20040713130853.17"><vh>convertLeoTree</vh></v>
-<v t="ekr.20040713130853.18"><vh>convertCFileToPython</vh></v>
-<v t="ekr.20040713130853.7"><vh>speedTest</vh></v>
-</v>
-<v t="ekr.20040713130853.19"><vh>Top Level</vh>
-<v t="ekr.20040713130853.20"><vh>convertCStringToPython</vh></v>
-<v t="ekr.20040713130853.21" a="M"><vh>OLDconvertCodeList</vh></v>
-<v t="ekr.20040713130853.22"><vh>convertDocList</vh></v>
-<v t="ekr.20040713130853.23"><vh>skipDocPart</vh></v>
-<v t="ekr.20040713130853.24"><vh>skipCodePart</vh></v>
-</v>
-<v t="ekr.20040713144926.1"><vh>Utils</vh>
-<v t="ekr.20040713130853.61"><vh>safeReplace</vh></v>
-<v t="ekr.20040713130853.43"><vh>match</vh></v>
-<v t="ekr.20040713130853.44"><vh>matchWord</vh></v>
-</v>
-<v t="ekr.20040713130853.27"><vh>convertLeadingBlanks</vh></v>
-<v t="ekr.20040713130853.28"><vh>findInList</vh></v>
-<v t="ekr.20040713130853.29"><vh>findInCode</vh></v>
-<v t="ekr.20040713130853.30"><vh>mungeAllFunctions</vh>
-<v t="ekr.20040713130853.31"><vh>handlePossibleFunctionHeader</vh></v>
-<v t="ekr.20040713130853.32"><vh>massageFunctionArgs</vh></v>
-<v t="ekr.20040713130853.33"><vh>massageFunctionHead (sets gClassName)</vh></v>
-<v t="ekr.20040713130853.34"><vh>massageFunctionBody</vh>
-<v t="ekr.20040713130853.35"><vh>massageIvars</vh></v>
-<v t="ekr.20040713130853.36"><vh>removeCasts</vh></v>
-<v t="ekr.20040713130853.37"><vh>removeTypeNames</vh></v>
-</v>
-</v>
-<v t="ekr.20040713130853.38"><vh>handleAllKeywords</vh>
-<v t="ekr.20040713130853.39"><vh>handleKeyword</vh></v>
-</v>
-<v t="ekr.20040713130853.40"><vh>isWs and isWOrNl</vh></v>
-<v t="ekr.20040713130853.41"><vh>isSectionDef</vh></v>
-<v t="ekr.20040713130853.42"><vh>isStringOrComment</vh></v>
-<v t="ekr.20040713130853.45"><vh>prevNonWsChar and prevNonWsOrNlChar</vh></v>
-<v t="ekr.20040713144926.2"><vh>remove</vh>
-<v t="ekr.20040713130853.46"><vh>removeAllCComments</vh></v>
-<v t="ekr.20040713130853.47"><vh>removeAllCSentinels</vh></v>
-<v t="ekr.20040713130853.48"><vh>removeAllPythonComments</vh></v>
-<v t="ekr.20040713130853.49"><vh>removeAllPythonSentinels</vh></v>
-<v t="ekr.20040713130853.50"><vh>removeAtRoot</vh></v>
-<v t="ekr.20040713130853.51"><vh>removeBlankLines</vh></v>
-<v t="ekr.20040713130853.52"><vh>removeExcessWs</vh>
-<v t="ekr.20040713130853.53"><vh>removeExessWsFromLine</vh></v>
-</v>
-<v t="ekr.20040713130853.54"><vh>removeLeadingAtCode</vh></v>
-<v t="ekr.20040713130853.55"><vh>removeMatchingBrackets</vh></v>
-<v t="ekr.20040713130853.56"><vh>removeSemicolonsAtEndOfLines</vh></v>
-<v t="ekr.20040713130853.57"><vh>removeTrailingWs</vh></v>
-</v>
-<v t="ekr.20040713144926.3"><vh>replace...</vh>
-<v t="ekr.20040713130853.58"><vh>replace</vh></v>
-<v t="ekr.20040713130853.59"><vh>replaceComments</vh></v>
-<v t="ekr.20040713130853.60"><vh>replaceSectionDefs</vh></v>
-</v>
-<v t="ekr.20040713144926.4"><vh>skip...</vh>
-<v t="ekr.20040713130853.62"><vh>skipCBlockComment</vh></v>
-<v t="ekr.20040713130853.63"><vh>skipPastLine</vh></v>
-<v t="ekr.20040713130853.64"><vh>skipPastWord</vh></v>
-<v t="ekr.20040713130853.65"><vh>skipString</vh></v>
-<v t="ekr.20040713130853.66"><vh>skipStringOrComment</vh></v>
-<v t="ekr.20040713130853.68"><vh>skipWs and skipWsAndNl</vh></v>
-</v>
-</v>
-<v t="ekr.20040713150856.1"><vh>g.scanning...</vh>
-<v t="ekr.20040713150856.8"><vh>Scanners: calling scanError</vh>
-<v t="ekr.20040713150856.9"><vh>skip_block_comment</vh></v>
-<v t="ekr.20040713150856.10"><vh>skip_braces</vh></v>
-<v t="ekr.20040713150856.12"><vh>skip_parens</vh></v>
-<v t="ekr.20040713150856.13"><vh>skip_pascal_begin_end</vh></v>
-<v t="ekr.20040713150856.14"><vh>skip_pascal_block_comment</vh></v>
-<v t="ekr.20040713150856.15"><vh>skip_pascal_string : called by tangle</vh></v>
-<v t="ekr.20040713150856.20"><vh>skip_python_string</vh></v>
-<v t="ekr.20040713150856.21"><vh>skip_string : called by tangle</vh></v>
-<v t="ekr.20040713150856.22"><vh>skip_to_semicolon</vh></v>
-</v>
-<v t="ekr.20040713150856.24"><vh>Scanners: no error messages</vh>
-<v t="ekr.20040713150856.25"><vh>escaped</vh></v>
-<v t="ekr.20040713150856.26"><vh>find_line_start</vh></v>
-<v t="ekr.20040713150856.27"><vh>find_on_line</vh></v>
-<v t="ekr.20040713150856.28"><vh>is_c_id</vh></v>
-<v t="ekr.20040713150856.29"><vh>is_nl</vh></v>
-<v t="ekr.20040713150856.30"><vh>is_special</vh></v>
-<v t="ekr.20040713150856.31"><vh>is_ws &amp; is_ws_or_nl</vh></v>
-<v t="ekr.20040713150856.32"><vh>match</vh></v>
-<v t="ekr.20040713150856.33"><vh>match_c_word</vh></v>
-<v t="ekr.20040713150856.34"><vh>match_ignoring_case</vh></v>
-<v t="ekr.20040713150856.35"><vh>match_word</vh></v>
-<v t="ekr.20040713150856.36"><vh>skip_blank_lines</vh></v>
-<v t="ekr.20040713150856.37"><vh>skip_c_id</vh></v>
-<v t="ekr.20040713150856.38"><vh>skip_id</vh></v>
-<v t="ekr.20040713150856.39"><vh>skip_line, skip_to_end_of_line</vh></v>
-<v t="ekr.20040713150856.40"><vh>skip_long</vh></v>
-<v t="ekr.20040713150856.41"><vh>skip_matching_delims</vh></v>
-<v t="ekr.20040713150856.42"><vh>skip_nl</vh></v>
-<v t="ekr.20040713150856.43"><vh>skip_non_ws</vh></v>
-<v t="ekr.20040713150856.44"><vh>skip_pascal_braces</vh></v>
-<v t="ekr.20040713150856.45"><vh>skip_to_char</vh></v>
-<v t="ekr.20040713150856.46"><vh>skip_ws, skip_ws_and_nl</vh></v>
-</v>
-<v t="ekr.20040713150856.47"><vh>splitLines &amp; joinLines</vh></v>
-</v>
-<v t="ekr.20040714151314"><vh>Parser: no longer used</vh>
-<v t="ekr.20040714082939.2"><vh>parse_cond</vh></v>
-<v t="ekr.20040714084550"><vh>parse_def</vh></v>
-<v t="ekr.20040714082939.1"><vh>parse_if</vh></v>
-<v t="ekr.20040714082939.3"><vh>parse_let</vh></v>
-<v t="ekr.20040714085204.1"><vh>parse_loop</vh></v>
-<v t="ekr.20040714084550.1"><vh>parse_prog</vh></v>
-<v t="ekr.20040714085754"><vh>parse_set</vh></v>
-<v t="ekr.20040714085204"><vh>&lt;&lt; parse block into tree &gt;&gt; (no longer used)</vh></v>
-</v>
-</v>
-<v t="ekr.20040713131350"><vh>-before-</vh>
-<v t="ekr.20040713132127.1"><vh>igrep.el</vh>
-<v t="ekr.20040713132127.2"><vh>provide</vh></v>
-<v t="ekr.20040713132127.3"><vh>const igrep-version</vh></v>
-<v t="ekr.20040713132127.4"><vh>unnamed data</vh></v>
-<v t="ekr.20040713132127.5"><vh>var igrep-options</vh></v>
-<v t="ekr.20040713132127.6"><vh>put</vh></v>
-<v t="ekr.20040713132127.7"><vh>var igrep-read-options</vh></v>
-<v t="ekr.20040713132127.8"><vh>put</vh></v>
-<v t="ekr.20040713132127.9"><vh>var igrep-read-multiple-files</vh></v>
-<v t="ekr.20040713132127.10"><vh>put</vh></v>
-<v t="ekr.20040713132127.11"><vh>var igrep-expression-default</vh></v>
-<v t="ekr.20040713132127.12"><vh>put</vh></v>
-<v t="ekr.20040713132127.13"><vh>var igrep-files-default</vh></v>
-<v t="ekr.20040713132127.14"><vh>put</vh></v>
-<v t="ekr.20040713132127.15"><vh>var igrep-verbose-prompts</vh></v>
-<v t="ekr.20040713132127.16"><vh>put</vh></v>
-<v t="ekr.20040713132127.17"><vh>var igrep-insert-default-key</vh></v>
-<v t="ekr.20040713132127.18"><vh>put</vh></v>
-<v t="ekr.20040713132127.19"><vh>var igrep-save-buffers</vh></v>
-<v t="ekr.20040713132127.20"><vh>put</vh></v>
-<v t="ekr.20040713132127.21"><vh>var igrep-null-device</vh></v>
-<v t="ekr.20040713132127.22"><vh>unnamed data</vh></v>
-<v t="ekr.20040713132127.23"><vh>var igrep-program</vh></v>
-<v t="ekr.20040713132127.24" a="M"><vh>var igrep-expression-option</vh></v>
-<v t="ekr.20040713132127.25"><vh>var igrep-program-table</vh></v>
-<v t="ekr.20040713132127.26"><vh>var igrep-use-zgrep</vh></v>
-<v t="ekr.20040713132127.27"><vh>var igrep-find</vh></v>
-<v t="ekr.20040713132127.28"><vh>var igrep-find-program</vh></v>
-<v t="ekr.20040713132127.29"><vh>var igrep-find-prune-clause</vh></v>
-<v t="ekr.20040713132127.30"><vh>var igrep-find-file-clause</vh></v>
-<v t="ekr.20040713132127.31"><vh>var igrep-find-use-xargs</vh></v>
-<v t="ekr.20040713132127.32"><vh>var igrep-program-default</vh></v>
-<v t="ekr.20040713132127.33"><vh>unnamed data</vh></v>
-<v t="ekr.20040713132127.34"><vh>var igrep-expression-history</vh></v>
-<v t="ekr.20040713132127.35"><vh>var igrep-files-history</vh></v>
-<v t="ekr.20040713132127.36"><vh>unnamed data</vh></v>
-<v t="ekr.20040713132127.37"><vh>igrep-insinuate</vh></v>
-<v t="ekr.20040713132127.38"><vh>unnamed data</vh></v>
-<v t="ekr.20040713132127.39"><vh>igrep</vh></v>
-<v t="ekr.20040713132127.40"><vh>defmacro</vh></v>
-<v t="ekr.20040713132127.41"><vh>igrep-find</vh></v>
-<v t="ekr.20040713132127.42"><vh>defmacro</vh></v>
-<v t="ekr.20040713132127.43"><vh>igrep-visited-files</vh></v>
-<v t="ekr.20040713132127.44"><vh>unnamed data</vh></v>
-<v t="ekr.20040713132127.45"><vh>dired-do-igrep</vh></v>
-<v t="ekr.20040713132127.46"><vh>unnamed data</vh></v>
-<v t="ekr.20040713132127.47"><vh>dired-do-igrep-find</vh></v>
-<v t="ekr.20040713132127.48"><vh>unnamed data</vh></v>
-<v t="ekr.20040713132127.49"><vh>Buffer-menu-igrep</vh></v>
-<v t="ekr.20040713132127.50"><vh>unnamed data</vh></v>
-<v t="ekr.20040713132127.51"><vh>igrep-dired-file-current-word</vh></v>
-<v t="ekr.20040713132127.52"><vh>igrep-buffer-file-name-pattern</vh></v>
-<v t="ekr.20040713132127.53"><vh>igrep-dired-directory-file-pattern</vh></v>
-<v t="ekr.20040713132127.54"><vh>defsubst</vh></v>
-<v t="ekr.20040713132127.55"><vh>igrep-format-find-command</vh></v>
-<v t="ekr.20040713132127.56"><vh>defmacro</vh></v>
-<v t="ekr.20040713132127.57"><vh>igrep-default-expression</vh></v>
-<v t="ekr.20040713132127.58"><vh>igrep-default-files</vh></v>
-<v t="ekr.20040713132127.59"><vh>defsubst</vh></v>
-<v t="ekr.20040713132127.60"><vh>igrep-read-args</vh></v>
-<v t="ekr.20040713132127.61"><vh>igrep-read-program</vh></v>
-<v t="ekr.20040713132127.62"><vh>igrep-read-options</vh></v>
-<v t="ekr.20040713132127.63"><vh>igrep-read-expression</vh></v>
-<v t="ekr.20040713132127.64"><vh>igrep-insert-default-expression</vh></v>
-<v t="ekr.20040713132127.65"><vh>igrep-insert-default-files</vh></v>
-<v t="ekr.20040713132127.66"><vh>defsubst</vh></v>
-<v t="ekr.20040713132127.67"><vh>igrep-read-files</vh></v>
-<v t="ekr.20040713132127.68"><vh>igrep-read-file-name</vh></v>
-<v t="ekr.20040713132127.69"><vh>unnamed data</vh></v>
-</v>
-</v>
-<v t="ekr.20040713131350.1"><vh>-after-</vh></v>
-</v>
-<v t="ekr.20040713130853.8" a="E" tnodeList="ekr.20040713130853.8,ekr.20040713150037,ekr.20040713150037.1,ekr.20040714170021,ekr.20040713150712,ekr.20040713173923,ekr.20040713174349,ekr.20040713180208,ekr.20040713164604,ekr.20040714095247,ekr.20040713144036,ekr.20040713144036.1,ekr.20040714061625,ekr.20040714061625.1,ekr.20040714061625.2,ekr.20040713152809,ekr.20040713193437,ekr.20040713161629.1,ekr.20040713194021,ekr.20040713152318,ekr.20040713151556.1,ekr.20040713160302,ekr.20040714060941,ekr.20040714053807.1,ekr.20040714054620.1,ekr.20040713150314.1,ekr.20040713144926,ekr.20040713154118,ekr.20040713200126,ekr.20040713211010,ekr.20040713161629.2,ekr.20040713205718,ekr.20040714074445,ekr.20040714074445,ekr.20040714072448,ekr.20040714082939,ekr.20040714155341,ekr.20040714154314,ekr.20040714091940.1"><vh>@file ../src/elisp2py.py</vh>
-<v t="ekr.20040713150037"><vh>class tok</vh>
-<v t="ekr.20040713150037.1" a="E"><vh>tok.__init__</vh></v>
-<v t="ekr.20040714170021"><vh>tok.isParseTok</vh></v>
-<v t="ekr.20040713150712"><vh>tok.copy</vh></v>
-<v t="ekr.20040713173923"><vh>tok.match</vh></v>
-<v t="ekr.20040713174349"><vh>tok.dump</vh></v>
-<v t="ekr.20040713180208" a="E"><vh>tok.toString &amp; allies</vh>
-<v t="ekr.20040713164604"><vh>tok.wsToString</vh></v>
-<v t="ekr.20040714095247"><vh>tok.parseTreeToString</vh></v>
-</v>
-</v>
-<v t="ekr.20040713144036" a="E"><vh>class elisp2pyClass</vh>
-<v t="ekr.20040713144036.1"><vh>e.__init__</vh>
-<v t="ekr.20040714061625"><vh>&lt;&lt; define elisp constants &gt;&gt;</vh></v>
-<v t="ekr.20040714061625.2"><vh>&lt;&lt; define elisp functions &gt;&gt;</vh></v>
-<v t="ekr.20040714061625.1"><vh>&lt;&lt; define elisp statements &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040713152809"><vh>Utils</vh>
-<v t="ekr.20040713193437"><vh>deleteTokens</vh></v>
-<v t="ekr.20040713161629.1"><vh>dump</vh>
-<v t="ekr.20040713194021"><vh>&lt;&lt; print headline &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040713152318"><vh>error &amp; warning</vh></v>
-<v t="ekr.20040713151556.1"><vh>findMatchingBracket</vh></v>
-<v t="ekr.20040713160302"><vh>findTokens</vh></v>
-<v t="ekr.20040714060941"><vh>isMatchingBracket</vh></v>
-<v t="ekr.20040714053807.1"><vh>isStatement</vh></v>
-<v t="ekr.20040714054620.1"><vh>matchTokens</vh></v>
-<v t="ekr.20040713150314.1"><vh>replaceAll (not used yet)</vh></v>
-<v t="ekr.20040713144926"><vh>tokenize &amp; allies</vh>
-<v t="ekr.20040713154118"><vh>skipString</vh></v>
-</v>
-</v>
-<v t="ekr.20040713200126"><vh>Converters</vh>
-<v t="ekr.20040713211010"><vh>convert (main line)</vh></v>
-<v t="ekr.20040713161629.2" a="M"><vh>createPythonIndentation</vh></v>
-<v t="ekr.20040713205718"><vh>createIndentedBlock</vh>
-<v t="ekr.20040714074445"><vh>&lt;&lt; insert nl and ws tokens &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040714072448"><vh>removeBlankLines</vh></v>
-</v>
-<v t="ekr.20040714082939" a="E"><vh>Parser &amp; allies</vh>
-<v t="ekr.20040714155341" a="TV"><vh>parse</vh>
-<v t="ekr.20040714154314"><vh>&lt;&lt; give error message about mismatched parens &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040714091940.1" a="E"><vh>block</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040714161324" a="E"><vh>ref</vh>
-<v t="ekr.20040713132127.68"><vh>igrep-read-file-name</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2841,7 +2859,6 @@ for descendent in descendents: print descendent.headString()</t>
 </t>
 <t tx="ekr.20040708210442"></t>
 <t tx="ekr.20040708210636"></t>
-<t tx="ekr.20040708215319"></t>
 <t tx="ekr.20040710125250">@language plain
 
 The first idea was to use Python's imp module to simulate an import from a file.  This does not work well because imp expects a file, not a StringIO object.
@@ -5688,13 +5705,19 @@ reload(elisp2py)
 
 c = g.top() ; p = c.currentPosition()
 u = leoTest.testUtils()
-before = u.findNodeInTree(p,"-before-")
+before = u.findNodeInTree(p,"-input-")
 
-print '=' * 60
-for p in before.self_and_subtree_iter():
+print ; print '*' * 80
+
+for p in before.subtree_iter():
     e = elisp2py.elisp2pyClass(c,p)
     e.convert()
-    e.dump(e.tokens,verbose=3)</t>
+    if 0:
+        e.dump(e.tokens,heading="Tokens",verbose=2)
+    if 1:
+        e.dump(e.parseTree,heading="Parse Tree",verbose=2)
+    if 0:
+        e.dumpCodeList(e.codeList,heading="Code List")</t>
 <t tx="ekr.20040713123828.1">@ This is a test of stuff.in doc parts.
 
          I wonder what will happen.
@@ -6783,7 +6806,6 @@ indentation level depends on def, if, while, etc., not on parens.
 
 </t>
 <t tx="ekr.20040713131350">@language elisp</t>
-<t tx="ekr.20040713131350.1">@language elisp</t>
 <t tx="ekr.20040713132127.1">@ignore
 @language elisp
 </t>
@@ -7905,7 +7927,9 @@ if (&lt; emacs-major-version 20) "\C-c\C-e")  -&gt; if &lt;cond&gt;: &lt;val&gt;
     &lt;&lt; define elisp functions &gt;&gt;
     
     self.allStatements = list(self.statements)
-    self.allStatements.extend(self.functions)</t>
+    self.allStatements.extend(self.functions)
+    
+    &lt;&lt; define code gen dispatch table &gt;&gt;</t>
 <t tx="ekr.20040713144336"></t>
 <t tx="ekr.20040713144926">def tokenize (self,s):
     
@@ -8426,47 +8450,29 @@ def warning (self,message):
             i += 1
 
     return None,None # Not found</t>
-<t tx="ekr.20040713161629.1">def dump (self,tokens,verbose=2,tag=None):
+<t tx="ekr.20040713161629.1">def dump (self,tokens,verbose=2,heading=""):
     
     e = self ; p = e.p ; v2 = verbose &gt;= 2
     
     if verbose == 0:
         return
-    elif verbose == 1:
+    
+    if heading: printHeading(heading,char='=',len=60)
+    else:       printHeading(p.headString())
+    
+    if verbose == 1:
         vals = [tok.val for tok in tokens]
         s = ''.join(vals)
         s = g.toEncodedString(s,g.app.tkEncoding)
         print s
     elif verbose in (2,3):
-        &lt;&lt; print headline &gt;&gt;
+       
         if verbose == 2:
             for tok in tokens:
                 print tok.toString(verbose=verbose),
         else:
             for tok in tokens:
                 print tok.toString(verbose=verbose)</t>
-<t tx="ekr.20040713161629.2">def createPythonIndentation (self,tokens,level=0):
-    
-    e = self ; p = e.p
-    i = 0
-    while i &lt; len(tokens):
-        if e.isStatement(tokens,i):
-            # e.dump(tokens[i:i+2])
-            j = e.findMatchingBracket(tokens,i)
-            if j is not None:
-                assert e.isMatchingBracket(tokens,i,j)
-                # Strip off the matching brackets
-                newTokens = e.createIndentedBlock(tokens[i+1:j],level+1)
-                if newTokens:
-                    # Recursively handle all inner statements.
-                    newTokens = e.createPythonIndentation(newTokens,level+1)
-                    tokens[i:j+1] = newTokens
-                    assert not e.isStatement(tokens,i)
-                    i = j # No need to rescan.
-        else:
-            i += 1
-
-    return tokens</t>
 <t tx="ekr.20040713164604">def wsToString (self,ws):
     
     allBlanks = True
@@ -8521,7 +8527,7 @@ def warning (self,message):
     val = g.toEncodedString(val,g.app.tkEncoding)
     
     if tok.isParseTok():
-        parseTree = tok.parseTreeToString(tok.parseTree)
+        parseTree = parseTreeToString(tok.parseTree)
         if tok.val == "TREE":
             return "%s"% (parseTree)
         else:
@@ -8530,7 +8536,7 @@ def warning (self,message):
     elif verbose == 2:
         if len(tok.kind) == 1:    return tok.kind
         elif tok.kind=="form-feed": return "\nform-feed\n"
-        elif tok.kind=="comment":   return "&lt;comment&gt;"
+        elif tok.kind=="comment":   return "&lt;comment&gt;\n"
         elif tok.kind=="string":    return "&lt;string&gt;"
         else:                       return val
     
@@ -8544,15 +8550,6 @@ def warning (self,message):
 <t tx="ekr.20040713193437">def deleteTokens (self,tokens,delToken):
             
     return [tok for tok in tokens if not tok.match(delToken)]</t>
-<t tx="ekr.20040713194021">print
-print ; print '-' * 40
-if tag:
-    print tag
-else:
-    print p.headString()
-print '-' * 40
-print</t>
-<t tx="ekr.20040713200126"></t>
 <t tx="ekr.20040713200238">@language elisp</t>
 <t tx="ekr.20040713205718">def createIndentedBlock (self,tokens,level):
     
@@ -8581,10 +8578,14 @@ print</t>
     e.tokens = e.tokenize(p.bodyString())
     e.tokens = e.deleteTokens(e.tokens,tok("ws"))
     e.tokens = e.deleteTokens(e.tokens,tok('\n'))
-    e.tokens = e.parse(e.tokens)
+    disposableTokens = e.tokens[:]
+    e.parseTree = e.parse(disposableTokens)
 
-    if 0: # Old code: superceded by parser.
-        e.tokens = e.createPythonIndentation(e.tokens)
+    e.codeList = [] ; e.indent = 0
+    e.codeLine = lineClass(0) # The line being accumulated.
+    e.gen(e.parseTree)
+
+    if 0: # Old code
         e.tokens = e.removeBlankLines(e.tokens)</t>
 <t tx="ekr.20040714053807.1">def isStatement (self,tokens,i):
     
@@ -8668,84 +8669,6 @@ nl = tok('\n','\n')
 tokens.insert(i,nl)
 tokens.insert(i+1,ws)</t>
 <t tx="ekr.20040714082939"></t>
-<t tx="ekr.20040714082939.1">def parse_if (self,tokens,statement):
-    
-    e = self
-    
-    i = 0 ; blocks = []
-    while 1:
-        i,block = e.block(tokens,i+1)
-        if i is None: break
-        else: blocks.append(block)
-        
-    tree = tok(statement,blocks)
-    return tree
-    
-    
-    cond_block,then_block,else_block = None,None,None
-    # e.dump(tokens,tag=statement)
-    
-    i,cond_block = e.block(tokens,1)
-    if i is not None:
-        i,then_block = e.block(tokens,i+1)
-        if i is not None:
-            i,else_block = e.block(tokens,i+1)
-            
-    if cond_block and then_block:
-        tree = tok("if",[cond_block,then_block,else_block])
-    else:
-        tree = None
-        
-    return tree</t>
-<t tx="ekr.20040714082939.2">def parse_cond (self,tokens,statement):
-    
-    e = self
-    
-    e.dump(tokens,tag=statement)</t>
-<t tx="ekr.20040714082939.3">def parse_let (self,tokens,statement):
-    
-    e = self
-    
-    e.dump(tokens,tag=statement)</t>
-<t tx="ekr.20040714084550">def parse_def (self,tokens,statement):
-    
-    e = self
-    
-    e.dump(tokens,tag=statement)</t>
-<t tx="ekr.20040714084550.1">def parse_prog (self,tokens,statement):
-    
-    e = self
-    
-    e.dump(tokens,tag=statement)</t>
-<t tx="ekr.20040714085204">if statement == "cond":
-    tree = e.parse_cond(block,statement)
-
-elif statement in ("defconst","defun","defsubst","defvar"):
-    tree = e.parse_def(block,statement)
-
-elif statement == "if":
-    tree = e.parse_if(block,statement)
-
-elif statement in ("let","let*"):
-    tree = e.parse_let(block,statement)
-
-elif statement in ("set","setq"):
-    tree = e.parse_set(block,statement)
-
-elif statement in ("unless","when","while"):
-    tree = e.parse_loop(block,statement)
-
-else: tree = None</t>
-<t tx="ekr.20040714085204.1">def parse_loop (self,tokens,statement):
-    
-    e = self
-    
-    e.dump(tokens,tag=statement)</t>
-<t tx="ekr.20040714085754">def parse_set (self,tokens,statement):
-    
-    e = self
-    
-    e.dump(tokens,tag=statement)</t>
 <t tx="ekr.20040714091940.1">def block (self,tokens):
     
     """Parse a block of tokens."""
@@ -8770,28 +8693,32 @@ else: tree = None</t>
             i += 1
 
     return result</t>
-<t tx="ekr.20040714095247">def parseTreeToString (self,parseTree,level=0):
+<t tx="ekr.20040714095247">def parseTreeToString (parseTree,level=0,verbose=2):
 
-    dummy_tok = tok("dummy_tok")
     result = [] ; levelSpaces = ' '*2*level
+    indent = False
 
     if parseTree is None:
         result.append("None")
 
-    if type(parseTree) == type(dummy_tok):
-        result.append(parseTree.toString(verbose=2)+' ')
+    if isToken(parseTree):
+        s = parseTree.toString(verbose=2)
+        if s: result.append(s + ' ')
 
-    elif type(parseTree) == type([]):
-        result.append('\n%s[' % levelSpaces)
+    elif isList(parseTree):
+        if verbose &gt;= 2:
+            result.append('\n%s[' % levelSpaces)
+        else:
+            result.append('[')
         for item in parseTree:
-            result.append(self.parseTreeToString(item,level+1))
+            s = parseTreeToString(item,level+1,verbose=verbose)
+            if s: result.append(s)
         result.append(']')
 
     else:
         result.append("unknown type in parseTreeToString")
         
     return ''.join(result)</t>
-<t tx="ekr.20040714151314"></t>
 <t tx="ekr.20040714154314">if fTok:
     e.error("No (%s has no matching ')'" % fTok.kind)
 else:
@@ -8822,11 +8749,332 @@ else:
         i = i + 1 
             
     return tokens</t>
-<t tx="ekr.20040714161324">@language elisp</t>
 <t tx="ekr.20040714170021">def isParseTok (self):
     
     tok = self
     
     return type(tok.parseTree) == type([])</t>
+<t tx="ekr.20040714222507"></t>
+<t tx="ekr.20040715071350">def gen(self,object):
+    
+    """The top-level code generator.
+    
+    May be called recursively to generate inner parts of the tree."""
+    
+    e = self
+
+    if isToken(object):
+        t = object
+        if t.kind == "TREE":
+            e.gen(t.parseTree)
+        else:
+            e.gen_token(t,outerList=None)
+        
+    elif isList(object):
+        e.gen_list(object)
+            
+    else:
+        print "unknown object in parse tree:", repr(object)</t>
+<t tx="ekr.20040715071555">(defun igrep-read-file-name (prompt
+  &amp;optional directory default existing initial history)
+  "Just like `read-file-name', but with optional HISTORY.
+Also: convert DIRECTORY to DIRECTORY/* file name pattern."
+  (if igrep-insert-default-key
+      (define-key minibuffer-local-completion-map igrep-insert-default-key
+	'igrep-insert-default-files))
+  (let ((file-name
+	 (if history
+	     (let ((file-name-history (symbol-value history)))
+	       (prog1 (read-file-name prompt directory default existing initial)
+		 (set history file-name-history)))
+	   (read-file-name prompt directory default existing initial))))
+    (if (and (not (string-equal file-name ""))
+	     (file-directory-p file-name))
+	(expand-file-name "*" file-name)
+      file-name)))</t>
+<t tx="ekr.20040715073230">def isList (object):
+    
+    return type(object) == type([])
+
+def isToken (object):
+    
+    return isinstance(object,tok)</t>
+<t tx="ekr.20040715075845">def gen_token (self,t,outerList=None):
+    
+    e = self
+    
+    g.trace(t.kind,t.val)
+    
+    if 0: # Not yet.
+
+        if t.kind == 'id' and t.val in e.allStatements:
+            
+            g.trace(t.toString())
+            
+            line = e.newCodeLine()
+            line.add(t.val)
+            
+            # Only TREE tokens have parse trees.
+            # We are _inside_ a parse tree.</t>
+<t tx="ekr.20040715075914">def newCodeLine (self):
+    
+    e = self
+    
+    if e.codeLine:
+        e.codeList.append(e.codeLine)
+        
+    e.codeLine = line = lineClass(e.indent) # Create a new line object.
+    
+    return line</t>
+<t tx="ekr.20040715080216">class lineClass:
+    
+    """Represents a code line being accumulated."""
+    
+    @others</t>
+<t tx="ekr.20040715080738">def __init__ (self,indent):
+        
+        self.parts = []
+        self.indent = indent</t>
+<t tx="ekr.20040715080738.1">def toString (self):
+    
+    line = self
+    
+    theList = [str(part) + ' ' for part in self.parts]
+    
+    return ' ' * 2 * self.indent + ''.join(theList)</t>
+<t tx="ekr.20040715081031">def add (self,s):
+    
+    self.parts.append(s)</t>
+<t tx="ekr.20040715081425">def dumpCodeList (self,codeList,heading=""):
+    
+    printHeading(heading,char='=',len=60)
+    
+    for line in codeList:
+        
+        print line.toString()</t>
+<t tx="ekr.20040715082059">def printHeading (s,char='-',len=20):
+    
+    banner = char * len
+
+    print
+    print banner
+    print s
+    print banner
+    print</t>
+<t tx="ekr.20040715084435">def gen_list (self,theList):
+    
+    e = self
+    
+    assert(isList(theList))
+    if not theList:
+        return
+        
+    item1 = theList[0]
+
+    if isToken(item1):
+        # The normal case looks like a function call: "(id args)"
+        # Handle all args here.
+        t = item1
+        if t.kind == "TREE":
+            e.gen(t.parseTree)
+        elif t.kind == 'id':
+            e.gen_statement(t,theList[1:])
+        else:
+            g.trace("unexpected token",t.kind,t.val)
+            name = None
+            e.gen_function(name,theList)
+    elif isList(item1):
+        # The first item is a list.
+        for arg in theList:
+            e.gen(arg)
+                
+    else: g.trace("unknown item",item1)</t>
+<t tx="ekr.20040715090957">self.code_gen_dispatch_dict = {
+
+    "cond"      : self.gen_cond,     
+    "defconst"  : self.gen_defconst,
+    "defun"     : self.gen_defun,
+    "defsubst"  : self.gen_defsubst, 
+    "defvar"    : self.gen_defvar, 
+    "if"        : self.gen_if,
+    "let"       : self.gen_let, 
+    "let*"      : self.gen_let_star, 
+    "prog"      : self.gen_prog, 
+    "prog1"     : self.gen_prog1, 
+    "progn"     : self.gen_progn, 
+    "set"       : self.gen_set, 
+    "setq"      : self.gen_setq, 
+    "unless"    : self.gen_unless, 
+    "when"      : self.gen_when, 
+    "while"     : self.gen_while,
+}
+</t>
+<t tx="ekr.20040715090957.1">def gen_statement (self,t,args):
+    
+    e = self
+    
+    expr_names = (
+        "and","or","not",
+        "eq","ne","equal","gt","ge","lt","le",)
+    
+    assert(t.kind=='id')
+    
+    name = t.val # The name of the statement.
+    f = e.code_gen_dispatch_dict.get(name)
+
+    if f:
+        # Syntax-specific code generators.
+        f(args)
+    elif name in expr_names:
+        # We will try to simply expression.
+        e.gen_expression(args)
+    else:
+        # Generic code generator.
+        e.gen_function(name,args)</t>
+<t tx="ekr.20040715090957.2"></t>
+<t tx="ekr.20040715091409">def gen_function (self,name,args):
+    
+    e = self
+    g.trace(len(args),name)
+    for arg in args:
+        e.gen(arg)</t>
+<t tx="ekr.20040715093122">def gen_defun(self,args):
+    
+    e = self
+    
+    g.trace()
+    
+    if len(args) == 1:
+        print "def %s ():" % parseTreeToString(args[0])
+        
+    elif len(args) &gt;= 2:
+        
+        print "def %s (%s):" % (
+            parseTreeToString(args[0]),
+            parseTreeToString(args[1]).strip())
+            
+    e.indent += 1
+
+    for arg in args[2:]:
+        e.gen(arg)
+        
+    e.indent -= 1</t>
+<t tx="ekr.20040715093804"></t>
+<t tx="ekr.20040715105834"></t>
+<t tx="ekr.20040715105926"></t>
+<t tx="ekr.20040715120001">def gen_cond (self,t,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+</t>
+<t tx="ekr.20040715120001.1">def gen_defconst(self,t,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+</t>
+<t tx="ekr.20040715120001.2">def gen_defsubst(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+</t>
+<t tx="ekr.20040715120001.3">def gen_defvar(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+</t>
+<t tx="ekr.20040715120001.4">def gen_if(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+</t>
+<t tx="ekr.20040715120001.5">def gen_let(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+
+def gen_let_star(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+
+</t>
+<t tx="ekr.20040715120001.7">def gen_prog(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+    
+def gen_prog1(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+    
+def gen_progn(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)</t>
+<t tx="ekr.20040715120001.8">def gen_set(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+    
+def gen_setq(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)</t>
+<t tx="ekr.20040715120001.9">def gen_unless(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+    
+def gen_when(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+    
+def gen_while(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    e.gen_list(args)
+
+</t>
+<t tx="ekr.20040715121456">def gen_expression(self,args):
+    
+    e = self
+    g.trace(parseTreeToString(args))
+    
+    if isList(args):
+        for arg in args:
+            e.gen_expression(arg)
+    elif args:
+        e.gen(args)
+</t>
+<t tx="ekr.20040715125453">def gen_computed_function (self,args):
+    
+    e = self
+
+    g.trace()
+
+    for arg in args:
+        e.gen(arg)</t>
+<t tx="ekr.20040715133744">@killcolor
+
+Complete the code generators.  This involves handling all the special cases.
+
+Maybe someday.  For now, I can't bear to waste any more time on this project.</t>
 </tnodes>
 </leo_file>

@@ -11,6 +11,59 @@ gClassName = "" # The class name for the present function.  Used to modify ivars
 gIvars = [] # List of ivars to be converted to self.ivar
 
 #@+others
+#@+node:Utility functions
+#@+node:isList & isToken
+def isList (object):
+    
+    return type(object) == type([])
+
+def isToken (object):
+    
+    return isinstance(object,tok)
+#@nonl
+#@-node:isList & isToken
+#@+node:printHeading
+def printHeading (s,char='-',len=20):
+    
+    banner = char * len
+
+    print
+    print banner
+    print s
+    print banner
+    print
+#@nonl
+#@-node:printHeading
+#@+node:parseTreeToString
+def parseTreeToString (parseTree,level=0,verbose=2):
+
+    result = [] ; levelSpaces = ' '*2*level
+    indent = False
+
+    if parseTree is None:
+        result.append("None")
+
+    if isToken(parseTree):
+        s = parseTree.toString(verbose=2)
+        if s: result.append(s + ' ')
+
+    elif isList(parseTree):
+        if verbose >= 2:
+            result.append('\n%s[' % levelSpaces)
+        else:
+            result.append('[')
+        for item in parseTree:
+            s = parseTreeToString(item,level+1,verbose=verbose)
+            if s: result.append(s)
+        result.append(']')
+
+    else:
+        result.append("unknown type in parseTreeToString")
+        
+    return ''.join(result)
+#@nonl
+#@-node:parseTreeToString
+#@-node:Utility functions
 #@+node:class tok
 class tok:
     
@@ -77,7 +130,7 @@ class tok:
         val = g.toEncodedString(val,g.app.tkEncoding)
         
         if tok.isParseTok():
-            parseTree = tok.parseTreeToString(tok.parseTree)
+            parseTree = parseTreeToString(tok.parseTree)
             if tok.val == "TREE":
                 return "%s"% (parseTree)
             else:
@@ -86,7 +139,7 @@ class tok:
         elif verbose == 2:
             if len(tok.kind) == 1:    return tok.kind
             elif tok.kind=="form-feed": return "\nform-feed\n"
-            elif tok.kind=="comment":   return "<comment>"
+            elif tok.kind=="comment":   return "<comment>\n"
             elif tok.kind=="string":    return "<string>"
             else:                       return val
         
@@ -124,34 +177,42 @@ class tok:
             return ''.join(result)
     #@nonl
     #@-node:tok.wsToString
-    #@+node:tok.parseTreeToString
-    def parseTreeToString (self,parseTree,level=0):
-    
-        dummy_tok = tok("dummy_tok")
-        result = [] ; levelSpaces = ' '*2*level
-    
-        if parseTree is None:
-            result.append("None")
-    
-        if type(parseTree) == type(dummy_tok):
-            result.append(parseTree.toString(verbose=2)+' ')
-    
-        elif type(parseTree) == type([]):
-            result.append('\n%s[' % levelSpaces)
-            for item in parseTree:
-                result.append(self.parseTreeToString(item,level+1))
-            result.append(']')
-    
-        else:
-            result.append("unknown type in parseTreeToString")
-            
-        return ''.join(result)
-    #@nonl
-    #@-node:tok.parseTreeToString
     #@-node:tok.toString & allies
     #@-others
 #@nonl
 #@-node:class tok
+#@+node:class lineClass
+class lineClass:
+    
+    """Represents a code line being accumulated."""
+    
+    #@    @+others
+    #@+node:line.__init__
+    def __init__ (self,indent):
+            
+            self.parts = []
+            self.indent = indent
+    #@nonl
+    #@-node:line.__init__
+    #@+node:line.add
+    def add (self,s):
+        
+        self.parts.append(s)
+    #@nonl
+    #@-node:line.add
+    #@+node:line.toString
+    def toString (self):
+        
+        line = self
+        
+        theList = [str(part) + ' ' for part in self.parts]
+        
+        return ' ' * 2 * self.indent + ''.join(theList)
+    #@nonl
+    #@-node:line.toString
+    #@-others
+#@nonl
+#@-node:class lineClass
 #@+node:class elisp2pyClass
 class elisp2pyClass:
     
@@ -201,6 +262,30 @@ class elisp2pyClass:
         
         self.allStatements = list(self.statements)
         self.allStatements.extend(self.functions)
+        
+        #@    << define code gen dispatch table >>
+        #@+node:<< define code gen dispatch table >>
+        self.code_gen_dispatch_dict = {
+        
+            "cond"      : self.gen_cond,     
+            "defconst"  : self.gen_defconst,
+            "defun"     : self.gen_defun,
+            "defsubst"  : self.gen_defsubst, 
+            "defvar"    : self.gen_defvar, 
+            "if"        : self.gen_if,
+            "let"       : self.gen_let, 
+            "let*"      : self.gen_let_star, 
+            "prog"      : self.gen_prog, 
+            "prog1"     : self.gen_prog1, 
+            "progn"     : self.gen_progn, 
+            "set"       : self.gen_set, 
+            "setq"      : self.gen_setq, 
+            "unless"    : self.gen_unless, 
+            "when"      : self.gen_when, 
+            "while"     : self.gen_while,
+        }
+        #@-node:<< define code gen dispatch table >>
+        #@nl
     #@nonl
     #@-node:e.__init__
     #@+node:Utils
@@ -211,31 +296,23 @@ class elisp2pyClass:
     #@nonl
     #@-node:deleteTokens
     #@+node:dump
-    def dump (self,tokens,verbose=2,tag=None):
+    def dump (self,tokens,verbose=2,heading=""):
         
         e = self ; p = e.p ; v2 = verbose >= 2
         
         if verbose == 0:
             return
-        elif verbose == 1:
+        
+        if heading: printHeading(heading,char='=',len=60)
+        else:       printHeading(p.headString())
+        
+        if verbose == 1:
             vals = [tok.val for tok in tokens]
             s = ''.join(vals)
             s = g.toEncodedString(s,g.app.tkEncoding)
             print s
         elif verbose in (2,3):
-            #@        << print headline >>
-            #@+node:<< print headline >>
-            print
-            print ; print '-' * 40
-            if tag:
-                print tag
-            else:
-                print p.headString()
-            print '-' * 40
-            print
-            #@nonl
-            #@-node:<< print headline >>
-            #@nl
+           
             if verbose == 2:
                 for tok in tokens:
                     print tok.toString(verbose=verbose),
@@ -428,7 +505,6 @@ class elisp2pyClass:
     #@-node:skipString
     #@-node:tokenize & allies
     #@-node:Utils
-    #@+node:Converters
     #@+node:convert (main line)
     def convert (self):
         
@@ -437,99 +513,17 @@ class elisp2pyClass:
         e.tokens = e.tokenize(p.bodyString())
         e.tokens = e.deleteTokens(e.tokens,tok("ws"))
         e.tokens = e.deleteTokens(e.tokens,tok('\n'))
-        e.tokens = e.parse(e.tokens)
+        disposableTokens = e.tokens[:]
+        e.parseTree = e.parse(disposableTokens)
     
-        if 0: # Old code: superceded by parser.
-            e.tokens = e.createPythonIndentation(e.tokens)
+        e.codeList = [] ; e.indent = 0
+        e.codeLine = lineClass(0) # The line being accumulated.
+        e.gen(e.parseTree)
+    
+        if 0: # Old code
             e.tokens = e.removeBlankLines(e.tokens)
     #@nonl
     #@-node:convert (main line)
-    #@+node:createPythonIndentation
-    def createPythonIndentation (self,tokens,level=0):
-        
-        e = self ; p = e.p
-        i = 0
-        while i < len(tokens):
-            if e.isStatement(tokens,i):
-                # e.dump(tokens[i:i+2])
-                j = e.findMatchingBracket(tokens,i)
-                if j is not None:
-                    assert e.isMatchingBracket(tokens,i,j)
-                    # Strip off the matching brackets
-                    newTokens = e.createIndentedBlock(tokens[i+1:j],level+1)
-                    if newTokens:
-                        # Recursively handle all inner statements.
-                        newTokens = e.createPythonIndentation(newTokens,level+1)
-                        tokens[i:j+1] = newTokens
-                        assert not e.isStatement(tokens,i)
-                        i = j # No need to rescan.
-            else:
-                i += 1
-    
-        return tokens
-    #@nonl
-    #@-node:createPythonIndentation
-    #@+node:createIndentedBlock
-    def createIndentedBlock (self,tokens,level):
-        
-        e = self ; p = e.p ; level1 = level
-        
-        i = 0
-        while i < len(tokens):
-            t = tokens[i]
-            if t.kind == '(':
-                #@            << insert nl and ws tokens >>
-                #@+node:<< insert nl and ws tokens >>
-                ws = tok("ws",' '*e.tabwidth*level)
-                nl = tok('\n','\n')
-                tokens.insert(i,nl)
-                tokens.insert(i+1,ws)
-                #@nonl
-                #@-node:<< insert nl and ws tokens >>
-                #@nl
-                level += 1
-                i += 3
-            elif t.kind == ')':
-                level -= 1 ; i += 1
-            elif t.kind == "string" and level == level1:
-                #@            << insert nl and ws tokens >>
-                #@+node:<< insert nl and ws tokens >>
-                ws = tok("ws",' '*e.tabwidth*level)
-                nl = tok('\n','\n')
-                tokens.insert(i,nl)
-                tokens.insert(i+1,ws)
-                #@nonl
-                #@-node:<< insert nl and ws tokens >>
-                #@nl
-                i += 3
-            else:
-                i += 1
-    
-        return tokens
-    #@nonl
-    #@-node:createIndentedBlock
-    #@+node:removeBlankLines
-    def removeBlankLines (self,tokens):
-        
-        e = self
-        
-        i = 0
-        while i < len(tokens):
-            
-            if tokens[i].kind == '\n':
-                j = i ; i += 1
-                while i < len(tokens) and tokens[i].kind == "ws":
-                    i += 1
-                if i >= len(tokens) or tokens[i].kind == '\n':
-                    del tokens[j:i]
-                    i = j
-                else: i += 1
-            else: i += 1
-                
-        return tokens
-    #@nonl
-    #@-node:removeBlankLines
-    #@-node:Converters
     #@+node:Parser & allies
     #@+node:parse
     def parse (self,tokens,topLevel=True):
@@ -596,6 +590,312 @@ class elisp2pyClass:
     #@nonl
     #@-node:block
     #@-node:Parser & allies
+    #@+node:Code gen
+    #@+node:dumpCodeList
+    def dumpCodeList (self,codeList,heading=""):
+        
+        printHeading(heading,char='=',len=60)
+        
+        for line in codeList:
+            
+            print line.toString()
+    #@nonl
+    #@-node:dumpCodeList
+    #@+node:newCodeLine
+    def newCodeLine (self):
+        
+        e = self
+        
+        if e.codeLine:
+            e.codeList.append(e.codeLine)
+            
+        e.codeLine = line = lineClass(e.indent) # Create a new line object.
+        
+        return line
+    #@nonl
+    #@-node:newCodeLine
+    #@+node:removeBlankLines
+    def removeBlankLines (self,tokens):
+        
+        e = self
+        
+        i = 0
+        while i < len(tokens):
+            
+            if tokens[i].kind == '\n':
+                j = i ; i += 1
+                while i < len(tokens) and tokens[i].kind == "ws":
+                    i += 1
+                if i >= len(tokens) or tokens[i].kind == '\n':
+                    del tokens[j:i]
+                    i = j
+                else: i += 1
+            else: i += 1
+                
+        return tokens
+    #@nonl
+    #@-node:removeBlankLines
+    #@-node:Code gen
+    #@+node:gen_xxx
+    #@+node:gen
+    def gen(self,object):
+        
+        """The top-level code generator.
+        
+        May be called recursively to generate inner parts of the tree."""
+        
+        e = self
+    
+        if isToken(object):
+            t = object
+            if t.kind == "TREE":
+                e.gen(t.parseTree)
+            else:
+                e.gen_token(t,outerList=None)
+            
+        elif isList(object):
+            e.gen_list(object)
+                
+        else:
+            print "unknown object in parse tree:", repr(object)
+    #@nonl
+    #@-node:gen
+    #@+node:gen_computed_function
+    def gen_computed_function (self,args):
+        
+        e = self
+    
+        g.trace()
+    
+        for arg in args:
+            e.gen(arg)
+    #@nonl
+    #@-node:gen_computed_function
+    #@+node:gen_cond
+    def gen_cond (self,t,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+    #@-node:gen_cond
+    #@+node:gen_defconst
+    def gen_defconst(self,t,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+    #@-node:gen_defconst
+    #@+node:gen_defsubst
+    def gen_defsubst(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+    #@-node:gen_defsubst
+    #@+node:gen_defun
+    def gen_defun(self,args):
+        
+        e = self
+        
+        g.trace()
+        
+        if len(args) == 1:
+            print "def %s ():" % parseTreeToString(args[0])
+            
+        elif len(args) >= 2:
+            
+            print "def %s (%s):" % (
+                parseTreeToString(args[0]),
+                parseTreeToString(args[1]).strip())
+                
+        e.indent += 1
+    
+        for arg in args[2:]:
+            e.gen(arg)
+            
+        e.indent -= 1
+    #@nonl
+    #@-node:gen_defun
+    #@+node:gen_defvar
+    def gen_defvar(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+    #@-node:gen_defvar
+    #@+node:gen_expression
+    def gen_expression(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        
+        if isList(args):
+            for arg in args:
+                e.gen_expression(arg)
+        elif args:
+            e.gen(args)
+    #@-node:gen_expression
+    #@+node:gen_function
+    def gen_function (self,name,args):
+        
+        e = self
+        g.trace(len(args),name)
+        for arg in args:
+            e.gen(arg)
+    #@nonl
+    #@-node:gen_function
+    #@+node:gen_if
+    def gen_if(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+    #@-node:gen_if
+    #@+node:gen_let, gen_let_star
+    def gen_let(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+    
+    def gen_let_star(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+    
+    #@-node:gen_let, gen_let_star
+    #@+node:gen_list
+    def gen_list (self,theList):
+        
+        e = self
+        
+        assert(isList(theList))
+        if not theList:
+            return
+            
+        item1 = theList[0]
+    
+        if isToken(item1):
+            # The normal case looks like a function call: "(id args)"
+            # Handle all args here.
+            t = item1
+            if t.kind == "TREE":
+                e.gen(t.parseTree)
+            elif t.kind == 'id':
+                e.gen_statement(t,theList[1:])
+            else:
+                g.trace("unexpected token",t.kind,t.val)
+                name = None
+                e.gen_function(name,theList)
+        elif isList(item1):
+            # The first item is a list.
+            for arg in theList:
+                e.gen(arg)
+                    
+        else: g.trace("unknown item",item1)
+    #@nonl
+    #@-node:gen_list
+    #@+node:gen_prog, gen_prog1, gen_progn
+    def gen_prog(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+        
+    def gen_prog1(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+        
+    def gen_progn(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+    #@nonl
+    #@-node:gen_prog, gen_prog1, gen_progn
+    #@+node:gen_set & gen_setq
+    def gen_set(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+        
+    def gen_setq(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+    #@nonl
+    #@-node:gen_set & gen_setq
+    #@+node:gen_statement
+    def gen_statement (self,t,args):
+        
+        e = self
+        
+        expr_names = (
+            "and","or","not",
+            "eq","ne","equal","gt","ge","lt","le",)
+        
+        assert(t.kind=='id')
+        
+        name = t.val # The name of the statement.
+        f = e.code_gen_dispatch_dict.get(name)
+    
+        if f:
+            # Syntax-specific code generators.
+            f(args)
+        elif name in expr_names:
+            # We will try to simply expression.
+            e.gen_expression(args)
+        else:
+            # Generic code generator.
+            e.gen_function(name,args)
+    #@nonl
+    #@-node:gen_statement
+    #@+node:gen_token
+    def gen_token (self,t,outerList=None):
+        
+        e = self
+        
+        g.trace(t.kind,t.val)
+        
+        if 0: # Not yet.
+    
+            if t.kind == 'id' and t.val in e.allStatements:
+                
+                g.trace(t.toString())
+                
+                line = e.newCodeLine()
+                line.add(t.val)
+                
+                # Only TREE tokens have parse trees.
+                # We are _inside_ a parse tree.
+    #@nonl
+    #@-node:gen_token
+    #@+node:gen_unless, gen_when, gen_while
+    def gen_unless(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+        
+    def gen_when(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+        
+    def gen_while(self,args):
+        
+        e = self
+        g.trace(parseTreeToString(args))
+        e.gen_list(args)
+    
+    #@-node:gen_unless, gen_when, gen_while
+    #@-node:gen_xxx
     #@-others
 #@nonl
 #@-node:class elisp2pyClass
