@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1419" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="39" left="254" height="856" width="795"/>
+	<global_window_position top="27" left="308" height="856" width="795"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,7 +12,8 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203113231" a="V"><vh>Diary</vh>
+<v t="edream.110203113231"><vh>Diary</vh>
+<v t="edream.111903105454"><vh>11/19 Moved all "protected" @others inside "if tkinter" statement</vh></v>
 <v t="edream.111803100856"><vh>11/18 Added new version of rst plugin from Timo Honkasalo</vh></v>
 <v t="edream.111603130528"><vh>11/17</vh></v>
 <v t="edream.110703035301"><vh>11/7</vh></v>
@@ -30,7 +31,7 @@
 <v t="edream.110203113231.10"><vh>(Settings menu)</vh>
 <v t="edream.110203113231.11"><vh>To do</vh></v>
 <v t="edream.110203113231.12"><vh>Design of Settings menu</vh></v>
-<v t="edream.110203113231.13"><vh>@file settings_menu.py</vh>
+<v t="edream.110203113231.13" tnodeList="edream.110203113231.13,edream.110203113231.14"><vh>@file settings_menu.py</vh>
 <v t="edream.110203113231.14"><vh>createSettingsMenu</vh></v>
 </v>
 </v>
@@ -1006,8 +1007,8 @@
 <v t="edream.110203113231.666"><vh>leotree</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.667"><vh>Commands</vh>
-<v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
+<v t="edream.110203113231.667" a="E"><vh>Commands</vh>
+<v t="edream.110203113231.668" a="E"><vh> Importing Cisco configuration files</vh>
 <v t="edream.110203113231.669" tnodeList="edream.110203113231.669,edream.110203113231.670,edream.110203113231.671,edream.110203113231.672,edream.110203113231.673,edream.110203113231.674,edream.110203113231.675,edream.110203113231.676"><vh>@file import_cisco_config.py</vh>
 <v t="edream.110203113231.670"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
 <v t="edream.110203113231.671"><vh>create_import_cisco_menu</vh></v>
@@ -1105,9 +1106,9 @@
 <v t="edream.110203113231.743"><vh>scanPluginDirectives</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.744"><vh>Drawing, graphics &amp; styled text</vh>
-<v t="edream.110403140857"><vh>Wiki plugin 1.4 (color_markup)(requires add-directives plugin)</vh>
-<v t="edream.110403140857.1"><vh>Plugin documentation</vh>
+<v t="edream.110203113231.744" a="E"><vh>Drawing, graphics &amp; styled text</vh>
+<v t="edream.110403140857" a="E"><vh>Wiki plugin 1.4 (color_markup)(requires add-directives plugin)</vh>
+<v t="edream.110403140857.1" a="E"><vh>Plugin documentation</vh>
 <v t="edream.110403140857.2"><vh>Installation</vh></v>
 <v t="edream.110403140857.3"><vh>Use</vh>
 <v t="edream.110403140857.4"><vh>Supported markups</vh></v>
@@ -1117,7 +1118,7 @@
 </v>
 <v t="edream.110403140857.7"><vh>Release notes</vh></v>
 </v>
-<v t="edream.110403140857.8" tnodeList="edream.110403140857.8,edream.110403140857.9,edream.110403140857.10,edream.110403140857.11,edream.110403140857.12,edream.110403140857.13,edream.110403140857.14,edream.110403140857.15,edream.110403140857.16,edream.110403140857.17,edream.110403140857.18,edream.110403140857.20,edream.110403140857.21,edream.110403140857.22,edream.110403140857.23,edream.110403140857.24,edream.110403140857.25,edream.110403140857.26,edream.110403140857.27,edream.110403140857.28"><vh>@file color_markup.py</vh>
+<v t="edream.110403140857.8" a="E" tnodeList="edream.110403140857.8,edream.110403140857.9,edream.110403140857.10,edream.110403140857.11,edream.110403140857.12,edream.110403140857.13,edream.110403140857.14,edream.110403140857.15,edream.110403140857.16,edream.110403140857.17,edream.110403140857.18,edream.110403140857.20,edream.110403140857.21,edream.110403140857.22,edream.110403140857.23,edream.110403140857.24,edream.110403140857.25,edream.110403140857.26,edream.110403140857.27,edream.110403140857.28"><vh>@file color_markup.py</vh>
 <v t="edream.110403140857.9"><vh>initAnyMarkup</vh></v>
 <v t="edream.110403140857.10"><vh>colorWikiMarkup</vh></v>
 <v t="edream.110403140857.11"><vh>doWikiText</vh>
@@ -1145,16 +1146,16 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.753" tnodeList="edream.110203113231.753,edream.110203113231.754,edream.110203113231.755,edream.110203113231.756,edream.110203113231.757"><vh>@file image.py</vh>
-<v t="edream.110203113231.754"><vh>onSelect</vh>
+<v t="edream.110203113231.753" a="E" tnodeList="edream.110203113231.753,edream.110203113231.754,edream.110203113231.755,edream.110203113231.756,edream.110203113231.757"><vh>@file image.py</vh>
+<v t="edream.110203113231.754" a="E"><vh>onSelect</vh>
 <v t="edream.110203113231.755"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203113231.756"><vh>onUnselect</vh>
 <v t="edream.110203113231.757"><vh>&lt;&lt; Unselect Image &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.758" tnodeList="edream.110203113231.758,edream.110203113231.759,edream.110203113231.760,edream.110203113231.761,edream.110203113231.762,edream.110203113231.763,edream.110203113231.764,edream.110203113231.766,edream.110203113231.767,edream.110203113231.768,edream.110203113231.769,edream.110203113231.770,edream.110203113231.771,edream.110203113231.772,edream.110203113231.773,edream.110203113231.774,edream.110203113231.775,edream.110203113231.776,edream.110203113231.777,edream.110203113231.778,edream.110203113231.779,edream.110203113231.780,edream.110203113231.781,edream.110203113231.782,edream.110203113231.783,edream.110203113231.784,edream.110203113231.785,edream.110203113231.786,edream.110203113231.787,edream.110203113231.788,edream.110203113231.789"><vh>@file nav_buttons.py</vh>
-<v t="edream.110203113231.759"><vh>class commanderInfoClass</vh>
+<v t="edream.110203113231.758" a="E" tnodeList="edream.110203113231.758,edream.110203113231.759,edream.110203113231.760,edream.110203113231.761,edream.110203113231.762,edream.110203113231.763,edream.110203113231.764,edream.110203113231.766,edream.110203113231.767,edream.110203113231.768,edream.110203113231.769,edream.110203113231.770,edream.110203113231.771,edream.110203113231.772,edream.110203113231.773,edream.110203113231.774,edream.110203113231.775,edream.110203113231.776,edream.110203113231.777,edream.110203113231.778,edream.110203113231.779,edream.110203113231.780,edream.110203113231.781,edream.110203113231.782,edream.110203113231.783,edream.110203113231.784,edream.110203113231.785,edream.110203113231.786,edream.110203113231.787,edream.110203113231.788,edream.110203113231.789"><vh>@file nav_buttons.py</vh>
+<v t="edream.110203113231.759" a="E"><vh>class commanderInfoClass</vh>
 <v t="edream.110203113231.760"><vh>__init__ (commanderInfoClass)</vh></v>
 <v t="edream.110203113231.761"><vh>addWidgets</vh>
 <v t="edream.110203113231.762"><vh>&lt;&lt; define callbacks &gt;&gt;</vh></v>
@@ -1194,7 +1195,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.790"><vh>External editors &amp; Open With</vh>
+<v t="edream.110203113231.790" a="E"><vh>External editors &amp; Open With</vh>
 <v t="edream.110203113231.791" tnodeList="edream.110203113231.791,edream.110203113231.792,edream.110203113231.793,edream.110203113231.794,edream.110203113231.795,edream.110203113231.796"><vh>@file open_with.py</vh>
 <v t="edream.110203113231.792"><vh>on_idle</vh>
 <v t="edream.110203113231.793"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
@@ -1243,13 +1244,13 @@
 <v t="edream.110203113231.827"><vh>onMenu</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.828"><vh>Key bindings</vh>
+<v t="edream.110203113231.828" a="E"><vh>Key bindings</vh>
 <v t="edream.110203113231.829" tnodeList="edream.110203113231.829,edream.110203113231.830"><vh>@file arrows.py</vh>
 <v t="edream.110203113231.830"><vh>onOpen</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.831"><vh>Menus</vh>
-<v t="edream.110203113231.832"><vh> Plugins menu</vh>
+<v t="edream.110203113231.831" a="E"><vh>Menus</vh>
+<v t="edream.110203113231.832" a="E"><vh> Plugins menu</vh>
 <v t="edream.110203113231.833" tnodeList="edream.110203113231.833,edream.110203113231.834,edream.110203113231.835,edream.110203113231.836,edream.110203113231.837,edream.110203113231.838,edream.110203113231.839,edream.110203113231.840,edream.110203113231.841,edream.110203113231.842,edream.110203113231.843,edream.110203113231.844,edream.110203113231.845,edream.110203113231.846,edream.110203113231.847,edream.110203113231.848,edream.110203113231.849,edream.110203113231.850,edream.110203113231.851,edream.110203113231.852,edream.110203113231.853,edream.110203113231.854,edream.110203113231.855"><vh>@file plugins_menu.py</vh>
 <v t="edream.110203113231.834"><vh>class Plugin</vh>
 <v t="edream.110203113231.835"><vh>__init__</vh>
@@ -1282,10 +1283,10 @@
 <v t="edream.110203113231.855"><vh>&lt;&lt; add items to the plugins menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.856"><vh>@file test.py</vh>
+<v t="edream.110203113231.856" a="E"><vh>@file test.py</vh>
 <v t="edream.110203113231.857"><vh>applyConfiguration</vh></v>
 <v t="edream.110203113231.858"><vh>cmd_fn1/2/3</vh></v>
-<v t="edream.110203113231.859"><vh>onSelect</vh>
+<v t="edream.110203113231.859" a="E"><vh>onSelect</vh>
 <v t="edream.110203113231.860"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203113231.861"><vh>onUnselect</vh>
@@ -1306,7 +1307,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.872"><vh>New kinds of nodes</vh>
+<v t="edream.110203113231.872" a="E"><vh>New kinds of nodes</vh>
 <v t="edream.110203113231.873" tnodeList="edream.110203113231.873,edream.110203113231.874,edream.110203113231.875"><vh>@file at_folder.py</vh>
 <v t="edream.110203113231.874"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
 <v t="edream.110203113231.875"><vh>sync_node_to_folder</vh></v>
@@ -1363,7 +1364,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.915"><vh>Overriding functions, methods &amp; classes</vh>
+<v t="edream.110203113231.915" a="E"><vh>Overriding functions, methods &amp; classes</vh>
 <v t="edream.110203113231.916" tnodeList="edream.110203113231.916,edream.110203113231.917,edream.110203113231.918"><vh>@file __overrideClasses.py</vh>
 <v t="edream.110203113231.917"><vh>&lt;&lt; override the LeoFrame class &gt;&gt;</vh></v>
 <v t="edream.110203113231.918"><vh>&lt;&lt; override methods of the LeoApp class &gt;&gt;</vh></v>
@@ -1383,7 +1384,7 @@
 <v t="edream.110203113231.929"><vh>newEs, etc.</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.930"><vh>Spell Checking</vh>
+<v t="edream.110203113231.930" a="E"><vh>Spell Checking</vh>
 <v t="edream.110203113231.931"><vh>@silentfile mod_spelling.txt</vh></v>
 <v t="edream.110203113231.932" tnodeList="edream.110203113231.932"><vh>@silentfile mod_spelling.ini</vh></v>
 <v t="edream.110203113231.933" tnodeList="edream.110203113231.933,edream.110203113231.935,edream.110203113231.936,edream.110203113231.937,edream.110203113231.938,edream.110203113231.940,edream.110203113231.941,edream.110203113231.942,edream.110203113231.943,edream.110203113231.944,edream.110203113231.945,edream.110203113231.946,edream.110203113231.947,edream.110203113231.948,edream.110203113231.950,edream.110203113231.951,edream.110203113231.952,edream.110203113231.953,edream.110203113231.954,edream.110703030027,edream.110203113231.955,edream.110203113231.956,edream.110203113231.957,edream.110203113231.959,edream.110203113231.960,edream.110203113231.961,edream.110203113231.962,edream.110203113231.963,edream.110203113231.964,edream.110203113231.966,edream.110203113231.967,edream.110203113231.968,edream.110203113231.969,edream.110203113231.970,edream.110203113231.972,edream.110203113231.973,edream.110203113231.974,edream.110203113231.975,edream.110203113231.976,edream.110203113231.977,edream.110203113231.978,edream.110203113231.979,edream.110203113231.980,edream.110203113231.981"><vh>@file mod_spelling.py</vh>
@@ -1450,9 +1451,9 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.982"><vh>Plugin manager (demo)</vh>
+<v t="edream.110203113231.982" a="E"><vh>Plugin manager (demo)</vh>
 <v t="edream.110203113231.983"><vh>Notes by Paul Paterson</vh></v>
-<v t="edream.110203113231.984" tnodeList="edream.110203113231.984,edream.110203113231.985,edream.110203113231.986,edream.110203113231.987,edream.110203113231.988,edream.110203113231.989,edream.110203113231.990,edream.110203113231.991,edream.110203113231.992,edream.110203113231.993"><vh>@file leopm_client.py</vh>
+<v t="edream.110203113231.984" a="V" tnodeList="edream.110203113231.984,edream.110203113231.985,edream.110203113231.986,edream.110203113231.987,edream.110203113231.988,edream.110203113231.989,edream.110203113231.990,edream.110203113231.991,edream.110203113231.992,edream.110203113231.993"><vh>@file leopm_client.py</vh>
 <v t="edream.110203113231.985"><vh>class LeoPMClient</vh>
 <v t="edream.110203113231.986"><vh>__init__</vh></v>
 <v t="edream.110203113231.987"><vh>poll</vh></v>
@@ -1877,9 +1878,12 @@ child = parent</t>
 from leoPlugins import *
 from leoGlobals import *
 
-import leoApp,leoAtFile,leoDialog,leoFileCommands,leoFrame,leoNodes
+try:  import Tkinter
+except: Tkinter = None
 
-if 0: # Register the handlers...
+import leoApp,leoAtFile,leoTkinterDialog,leoFileCommands,leoFrame,leoNodes
+
+if Tkinter and 0: # Register the handlers...
 
 	settingsMenu = None
 
@@ -5270,9 +5274,9 @@ from leoGlobals import *
 &lt;&lt; imports for wx plugin &gt;&gt;
 &lt;&lt; constants for wx plugin &gt;&gt;
 
-@others
-
 if wx and 0: # Enable the plugin (only if wxPython has been imported)...
+
+	@others
 
 	if app.gui is None:
 		&lt;&lt; Set app.gui &gt;&gt;
@@ -6725,9 +6729,10 @@ try:    import tkFileDialog
 except: tkFileDialog = None
 
 &lt;&lt; about this plugin &gt;&gt;
-@others
 
 if tkFileDialog and 0:
+	
+	@others
 	
 	if app.gui is None:
 		app.createTkGui(__file__)
@@ -7709,9 +7714,9 @@ try:    import Tkinter
 except: Tkinter = None
 import os
 
-@others
-
 if Tkinter and 1: # Register the handlers...
+
+	@others
 
 	if app.gui is None:
 		app.createTkGui(__file__)
@@ -7788,11 +7793,11 @@ Tk = Tkinter
 
 import os
 
-@others
-	
-globalInfo = globalInfoClass()
-
 if Tkinter and 1: # Register the handlers...
+
+	@others
+	
+	globalInfo = globalInfoClass()
 
 	if app.gui is None:
 		app.createTkGui(__file__)
@@ -8210,9 +8215,12 @@ for v in c.visitedList:
 from leoPlugins import *
 from leoGlobals import *
 
-@others
+try:    import Tkinter
+except: Tkinter = None
 
-if 1: # Register the handlers...
+if Tkinter and 1: # Register the handlers...
+
+	@others
 
 	if app.gui is None:
 		app.createTkGui(__file__)
@@ -8895,9 +8903,9 @@ from leoGlobals import *
 try:    import Tkinter
 except: Tkinter = None
 
-@others
-
 if Tkinter and 0: # Register the handlers...
+
+	@others
 
 	if app.gui is None:
 		app.createTkGui(__file__)
@@ -8944,9 +8952,9 @@ try:    import Tkinter
 except: Tkinter = None
 Tk = Tkinter
 
-@others
-
 if Tkinter and 1: # Register the handlers...
+
+	@others
 
 	if app.gui is None:
 		app.createTkGui(__file__)
@@ -9200,9 +9208,9 @@ except: Tkinter = None
 
 import os
 
-@others
-
 if Tkinter and 0: # Register the handlers...
+
+	@others
 
 	if app.gui is None:
 		app.createTkGui(__file__)
@@ -9503,9 +9511,9 @@ from htmllib import HTMLParser
 try:    import tkFileDialog
 except: tkFileDialog = None
 
-@others
-
 if tkFileDialog and 0: # Register the handlers...
+
+	@others
 
 	if app.gui is None:
 		app().createTkGui(__file__)
@@ -10084,9 +10092,9 @@ from leoGlobals import *
 try:    import Tkinter
 except: Tkinter = None
 
-@others
-
 if Tkinter and 0: # Register the handlers...
+
+	@others
 
 	if app.gui is None:
 		app.createTkGui(__file__)
@@ -10222,9 +10230,9 @@ Tk = Tkinter
 
 import ConfigParser,os,popen2,re,sys,traceback
 
-@others
-
 if Tkinter and 0: # Register the handlers...
+
+	@others
 
 	if app.gui is None:
 		app.createTkGui(__file__)
@@ -10945,23 +10953,31 @@ to query the plug-ins on the server, find version numbers, help information and
 to download the actual source. In the future it might be possible to upload
 plug-ins as well."""
 
-from Tkinter import *
-import os,re,xmlrpclib
+try:
+	import Tkinter
+	from Tkinter import *
+	import os,re,xmlrpclib
+except:
+	Tkinter = None
+	
+Tk = Tkinter
 
-__version__ = "0.1"
+if Tk and 0:
 
-PORT = 8001 # The port the server is listening on
-HOST = "http://localhost:%d" % PORT
-ROOTDIR = r"c:\temp" # Where the plugins will end up
-
-@others
-
-if __name__ == "__main__":
-    server = xmlrpclib.ServerProxy(HOST)
-    root = Tk()
-    client = LeoPMClient(root, server, ROOTDIR)
-    root.mainloop()
-</t>
+	__version__ = "0.1"
+	
+	PORT = 8001 # The port the server is listening on
+	HOST = "http://localhost:%d" % PORT
+	ROOTDIR = r"c:\temp" # Where the plugins will end up
+	
+	@others
+	
+	if __name__ == "__main__":
+		server = xmlrpclib.ServerProxy(HOST)
+		root = Tk()
+		client = LeoPMClient(root, server, ROOTDIR)
+		root.mainloop()
+	</t>
 <t tx="edream.110203113231.985">class LeoPMClient:
 	
 	"""The client to talk to the LeoPM server"""
@@ -11254,9 +11270,9 @@ except: Tkinter = None
 import string  # zfill does not exist in Python 2.2.1
 import tkColorChooser
 
-@others
-
 if Tkinter and 1: # Register the handlers...
+
+	@others
 
 	if app.gui is None:
 		app.createTkGui(__file__)
@@ -15237,5 +15253,6 @@ def underline(h,level):
 	str = """#=+*^~"'`-:&gt;&lt;_"""[level]
 	return str*max(len(h),4)+'\n'</t>
 <t tx="edream.111803100856"></t>
+<t tx="edream.111903105454"></t>
 </tnodes>
 </leo_file>

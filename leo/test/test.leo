@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2171" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2173" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="107" left="128" height="728" width="960"/>
+	<global_window_position top="107" left="101" height="728" width="987"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,8 +12,8 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203161858" a="E"><vh>Distribution checklist</vh>
-<v t="edream.110203161858.1" a="V"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+<v t="edream.110203161858"><vh>Distribution checklist</vh>
+<v t="edream.110203161858.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
 <v t="edream.110203161858.2"><vh>Notes</vh>
 <v t="edream.110203161858.3"><vh>Quote from Alex Martelli</vh></v>
@@ -26,7 +26,7 @@
 <v t="edream.110203161858.108"><vh>Singleton sequences</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.5" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
+<v t="edream.110203161858.5" a="V" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="edream.110203161858.6"><vh>Tests...</vh>
 <v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
 <v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
@@ -129,7 +129,7 @@
 <v t="edream.110203161858.102"><vh>show (puts at bottom)</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.111" a="E"><vh>Test Files...</vh>
+<v t="edream.110203161858.111"><vh>Test Files...</vh>
 <v t="edream.110203161858.18" a=""><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
 <v t="edream.110203161858.112" tnodeList="edream.110203161858.112,edream.110203161858.113,edream.110203161858.113"><vh>@file c:\prog\test\atRawTest.txt</vh>
 <v t="edream.110203161858.113"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
@@ -2694,6 +2694,15 @@
 <v t="edream.111803061704"><vh>Distribution checklist for 4.1 beta 3</vh>
 <v t="edream.111803061704.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
+<v t="edream.111803110909"><vh>Problem with duplicated nodes</vh>
+<v t="edream.111803110909.1" tnodeList="edream.111803110909.1,edream.111803110909.2"><vh>@file c:\prog\test\ref.txt</vh>
+<v t="edream.111803110909.2"><vh>&lt;&lt; rhs &gt;&gt;</vh></v>
+<v t="edream.111803110909.3"><vh>&lt;&lt; rhe &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.111903103216"><vh>Distribution checklist for 4.1 beta 4</vh>
+<v t="edream.111903103216.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203161858">@color
@@ -2915,8 +2924,11 @@ unusedNames = [
 	'tag', 'args', 'keys', 'keywords']
 
 # list of strings: ignore warnings generated from these modules
-blacklist = [ 'leoGlobals', 'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
-
+blacklist = [
+	# 'leoGlobals',
+	'leoConfig',
+	'leoFrame', 'leoMenu', 'leoGui', # Base classes have lots of unused params.
+	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
 
 # list of strings: ignore global variables not used if name is one of
 variablesToIgnore = [ '__all__', '__version__', '__copyright__', ]
@@ -2974,7 +2986,12 @@ checkImplicitReturns = 1
 #       { 'module1': 'no-namedargs maxlines=0',
 #	  'module2.my_func': 'argsused',
 #	  'module3.my_class': 'no-initreturn', }
-suppressions = {}
+if 1:
+	suppressions = {}
+else: # Doesn't work
+	suppressions = {
+		'leoFrame' : 'argumentsUsed=0',
+		'leoGui' : 'argumentsUsed=0' }
 
 # dict: suppress warnings where keys can be regular expressions
 suppressionRegexs = {}</t>
@@ -34173,5 +34190,92 @@ Announcements
 	- Announce to comp.lang.python
 	- Announce to comp.programming.literate</t>
 <t tx="edream.111803061704.1"></t>
+<t tx="edream.111803110909">Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2286887
+By: nobody
+
+If I have the following in the body text of some node
+
+&lt;&lt; rhs &gt;&gt; October &lt;&lt; rhe &gt;&gt;
+
+and the outline has as children of the node
+
+node
+   - &lt;&lt; rhs &gt;&gt;
+   - &lt;&lt; rhe &gt;&gt;
+
+4.0 and 4.1b2 give me the following error when trying to write the node to a
+file:
+
+errors writing: /filename
+Orphan node:  &lt;&lt; rhe &gt;&gt;
+
+This use of &lt;&lt; &gt;&gt; nodes worked prior to 4.0.
+
+Thanks,
+
+Steve
+</t>
+<t tx="edream.111803110909.1">@ignore
+
+# If I have the following in the body text of some node
+
+before
+&lt;&lt; rhs &gt;&gt; October &lt;&lt; rhe &gt;&gt;
+after</t>
+<t tx="edream.111803110909.2">rhs line</t>
+<t tx="edream.111803110909.3">rhe line</t>
+<t tx="edream.111903103216">@color
+
+# **** Run this from test.leo ****
+
+# Run pychecker from idle.
+if 1:
+	import pychecker.checker
+	import leo
+@nocolor
+Documentation
+	- Update readme.txt
+	- Update LeoDocs.leo
+	- Update web site.
+Version numbers
+	- Update version number in Help menu.
+	- Update version number in setup.py (@ignore'd!!)
+	** Make sure the top-level directory has no spaces in its name.
+@color
+
+if 1: # Save all files and tangle leoConfig.leo
+	from leoGlobals import importFromPath
+	preSetup = importFromPath("preSetup","c:\prog\leoCvs\leo")
+	preSetup.setup()
+
+if 1: # Replace config settings and create .zip file.
+	import os
+	os.system(r"c:\python22\python c:\prog\leoCvs\leo\setup.py sdist --formats=zip")
+
+@nocolor
+Create and test leosetup.exe.
+	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
+	- Test created leosetup.exe file.
+	- test the files created in c:\program files\leo
+
+@color
+# **** Scan all folders &amp; files before uploading.
+@nocolor
+
+Create Release on SourceForge
+
+Uploads
+    - Upload leodocs.zip
+	- Upload leosetup.exe
+	- Upload leo-x-y.zip
+	- Upload sbook.chm if it has been changed.
+Announcements
+	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
+	- Announce to Leo's SourceForce site.
+	- Announce to comp.lang.python
+	- Announce to comp.programming.literate
+	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
+<t tx="edream.111903103216.1"></t>
 </tnodes>
 </leo_file>
