@@ -67,6 +67,55 @@ import urlparse
 sockets_to_close = []
 
 #@+others
+#@+node:bwmulder.20050322132919:rst_related
+#@+node:bwmulder.20050322134325:reconstruct_html_from_attrs
+def reconstruct_html_from_attrs(attrs, how_much_to_ignore=0):
+    """
+    Given an attribute, reconstruct the html for this node.
+    """
+    result = []
+    stack = attrs
+    while stack:
+        result.append(stack[0])
+        stack = stack[2]
+    result.reverse()
+    result = result[how_much_to_ignore:]
+    result.extend(attrs[3:])
+    stack = attrs
+    for i in range(how_much_to_ignore):
+        stack = stack[2]
+    while stack:
+        result.append(stack[1])
+        stack = stack[2]
+    return result
+#@nonl
+#@-node:bwmulder.20050322134325:reconstruct_html_from_attrs
+#@+node:bwmulder.20050322132919.2:get_http_attribute
+def get_http_attribute(p):
+    vnode = p.v
+    if hasattr(vnode, 'unknownAttributes'):
+        return vnode.unknownAttributes.get(rst_http_attributename, None)
+    return None
+
+#@-node:bwmulder.20050322132919.2:get_http_attribute
+#@+node:bwmulder.20050322133050:set_http_attribute
+def set_http_attribute(p, value):
+    vnode = p.v
+    if hasattr(vnode, 'unknownAttributes'):
+        vnode.unknownAttributes[rst_http_attributename] = value
+    else:
+        vnode.unknownAttributes = {rst_http_attributename: value}
+
+#@-node:bwmulder.20050322133050:set_http_attribute
+#@+node:bwmulder.20050322135114:node_reference
+def node_reference(vnode):
+    """
+    Use by the rst2 plugin.
+    """
+    return leo_interface().node_reference(vnode)
+#@nonl
+#@-node:bwmulder.20050322135114:node_reference
+#@-node:bwmulder.20050322132919:rst_related
 #@+node:EKR.20040517080250.4:class delayedSocketStream
 class delayedSocketStream(asyncore.dispatcher_with_send):
     #@    @+others
@@ -235,7 +284,7 @@ class leo_interface(object):
         """
         Create a reference to 'node' in 'window', displaying 'text'
         """
-        href = self.create_leo_reference(window, node)
+        href = self.create_leo_h_reference(window, node)
         self.create_href(href, text, f)
     #@-node:EKR.20040517080250.23:create_leo_reference
     #@+node:EKR.20040517080250.24:format_leo_node
@@ -249,8 +298,10 @@ class leo_interface(object):
         if node is not None:
             headString = node.headString()
             bodyString = node.bodyString()
+            format_info = get_http_attribute(node)
         else:
             headString, bodyString = "Top level", ""
+            format_info = None
         f = escaped_StringIO()
         write, write_escaped = f.write, f.write_escaped
         write("<title>")
@@ -262,7 +313,12 @@ class leo_interface(object):
         self.write_path(node, f)
         write("<hr>\n") # horizontal rule
         # f.write('<span style="font-family: monospace;">')
-        write_escaped(bodyString)
+        if format_info:
+            html_lines = reconstruct_html_from_attrs(format_info, 3)
+            for line in html_lines:
+                write(line) 
+        else:
+            write_escaped(bodyString)
         # f.write("</span>\n")
         return f
     #@nonl
@@ -373,7 +429,7 @@ class leo_interface(object):
         
         return self.create_leo_h_reference(window, vnode)
     #@-node:bwmulder.20050319135316:node_reference
-    #@+node:EKR.20040517080250.29:send_head
+    #@+node:bwmulder.20050322224921:send_head
     def send_head(self):
         """Common code for GET and HEAD commands.
     
@@ -411,7 +467,7 @@ class leo_interface(object):
             traceback.print_exc()
             raise
     
-    #@-node:EKR.20040517080250.29:send_head
+    #@-node:bwmulder.20050322224921:send_head
     #@+node:EKR.20040517080250.30:split_leo_path
     def split_leo_path(self, path):
         """
@@ -450,9 +506,10 @@ class leo_interface(object):
 #@-node:EKR.20040517080250.20:class leo_interface
 #@+node:EKR.20040517080250.13:class RequestHandler
 class RequestHandler(
-    asynchat.async_chat,
-    SimpleHTTPServer.SimpleHTTPRequestHandler,
-    leo_interface):
+    leo_interface
+    ,asynchat.async_chat,
+    SimpleHTTPServer.SimpleHTTPRequestHandler
+    ):
     #@    @+others
     #@+node:EKR.20040517080250.14:__init__
     def __init__(self,conn,addr,server):
@@ -744,7 +801,7 @@ def applyConfiguration(config=None):
 
     """Called when the user presses the "Apply" button on the Properties form"""
 
-    global timeout, port, active
+    global timeout, port, active, rst_http_attributename
 
     if config is None:
         fileName = os.path.join(g.app.loadDir,"../","plugins","mod_http.ini")
@@ -754,16 +811,9 @@ def applyConfiguration(config=None):
     timeout = config.getint("Main", "timeout") / 1000.0
     port = config.getint("Main", "port")
     active = config.getboolean("Main", "active")
+    rst_http_attributename = config.get("Main", "rst_http_attributename")
 #@nonl
 #@-node:EKR.20040517080250.48:applyConfiguration
-#@+node:bwmulder.20050319134314:node_reference
-def node_reference(vnode):
-    """
-    Use by the rst2 plugin.
-    """
-    return leo_interface().node_reference(vnode)
-#@nonl
-#@-node:bwmulder.20050319134314:node_reference
 #@-others
 
 applyConfiguration()

@@ -21,6 +21,7 @@ from HTMLParser import HTMLParser
 from pprint import pprint
 try:
     import mod_http
+    from mod_http import set_http_attribute, get_http_attribute, reconstruct_html_from_attrs
 except:
     mod_http = None
 
@@ -524,23 +525,6 @@ class link_anchor_parser(HTMLParser):
     #@-others
 #@nonl
 #@-node:bwmulder.20050319181934:link_anchor_parser
-#@+node:bwmulder.20050319152217:get_http_attribute
-def get_http_attribute(p):
-    vnode = p.v
-    if hasattr(vnode, 'unknownAttributes'):
-        return vnode.unknownAttributes.get(config.rst_http_attributename, None)
-    return None
-
-#@-node:bwmulder.20050319152217:get_http_attribute
-#@+node:bwmulder.20050319152319:set_http_attribute
-def set_http_attribute(p, value):
-    vnode = p.v
-    if hasattr(vnode, 'unknownAttributes'):
-        vnode.unknownAttributes[config.rst_http_attributename] = value
-    else:
-        vnode.unknownAttributes = {config.rst_http_attributename: value}
-
-#@-node:bwmulder.20050319152319:set_http_attribute
 #@+node:bwmulder.20050319152820.1:http_attribute_iter
 def http_attribute_iter():
     for p in config.http_map.values():
@@ -786,25 +770,6 @@ def set_initial_http_attributes(filename):
         line = f.readline()
 
 #@-node:bwmulder.20050319131813:set_initial_http_attributes
-#@+node:bwmulder.20050319200049:reconstruct_html_from_attrs
-def reconstruct_html_from_attrs(attrs):
-    """
-    Given an attribute, reconstruct the html for this node.
-    """
-    result = []
-    stack = attrs
-    while stack:
-        result.append(stack[0])
-        stack = stack[2]
-    result.reverse()
-    result.extend(attrs[3:])
-    stack = attrs
-    while stack:
-        result.append(stack[1])
-        stack = stack[2]
-    return result
-#@nonl
-#@-node:bwmulder.20050319200049:reconstruct_html_from_attrs
 #@+node:bwmulder.20050319131813.1:relocate_references
 def relocate_references():
     anchor_map = find_anchors()
