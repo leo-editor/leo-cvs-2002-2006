@@ -2172,27 +2172,51 @@ class LeoFrame:
 			es("no script selected")
 	#@-body
 	#@-node:7::OnExecuteScript
-	#@+node:8::OnGoToLineNumber
+	#@+node:8::OnGoToLineNumber & allies
 	#@+body
 	def OnGoToLineNumber (self,event=None):
 	
-		c = self.commands ; v = c.currentVnode()
-		body = c.frame.body
+		c = self.commands
 		
-		#@<< find the @file node or return >>
-		#@+node:1::<< find the @file node or return >>
+		#@<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
+		#@+node:1::<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
 		#@+body
-		while v and not v.isAtFileNode():
-			v = v.parent()
-		if not v:
-			es("no @file node found")
-			return
+		v = c.currentVnode()
+		fileName = None
+		while v and not fileName:
+			if v.isAtFileNode():
+				fileName = v.atFileNodeName()
+			elif v.isAtSilentFileNode():
+				fileName = v.atSilentFileNodeName()
+			elif v.isAtRawFileNode():
+				fileName = v.atRawFileNodeName()
+			else:
+				v = v.parent()
+		
+		root = v
+		if not root:
+			es("no @file node found") ; return
 		#@-body
-		#@-node:1::<< find the @file node or return >>
+		#@-node:1::<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
 
 		
-		#@<< create a dialog to get n >>
-		#@+node:2::<< create a dialog to get n >>
+		#@<< read the file into lines >>
+		#@+node:2::<< read the file into lines >>
+		#@+body
+		try:
+			f=open(fileName)
+		except:
+			es("not found: " + fileName)
+			return
+			
+		lines = f.readlines()
+		f.close()
+		#@-body
+		#@-node:2::<< read the file into lines >>
+
+		
+		#@<< get n, the line number, from a dialog >>
+		#@+node:3::<< get n, the line number, from a dialog >>
 		#@+body
 		import leoDialog
 		
@@ -2200,35 +2224,232 @@ class LeoFrame:
 		n = d.askOkCancelNumber("Enter Line Number","Line number:")
 		if n == -1:
 			return
+		n0 = n = max(n,1)
 		#@-body
-		#@-node:2::<< create a dialog to get n >>
+		#@-node:3::<< get n, the line number, from a dialog >>
 
-		n = max(n,1)
-		after = v.nodeAfterTree()
-		prev = 0 ; lastv = root = v ; found = false
-		while v and v != after:
-			lastv = v
-			s = v.bodyString()
-			lines = s.count('\n')
-			if len(s) > 0 and s[-1] != '\n':
-				lines += 1
-			# print `lines`,`prev`,`v`
-			if prev + lines >= n:
-				found = true ; break
-			prev += lines
-			v = v.threadNext()
-		c.beginUpdate()
-		c.tree.expandAllAncestors(lastv)
-		c.selectVnode(lastv)
-		c.endUpdate()
-		# Put the cursor line n-prev of the body text.
-		if found:
-			body.mark_set("insert",str(n-prev)+".0 linestart")
+		# trace("n:"+`n`)
+		if n==1:
+			v = root ; n2 = 1 ; found = true
+		elif n >= len(lines):
+			v = root.lastNode()
+			n2 = v.bodyString().count('\n')
+			found = false
+		elif root.isAtSilentFileNode():
+			
+			#@<< count outline lines, setting v,n2,found >>
+			#@+node:4::<< count outline lines, setting v,n2,found >>
+			#@+body
+			v = lastv = root
+			prev = 0 ; found = false
+			while v and v != after:
+				lastv = v
+				s = v.bodyString()
+				lines = s.count('\n')
+				if len(s) > 0 and s[-1] != '\n':
+					lines += 1
+				# print `lines`,`prev`,`v`
+				if prev + lines >= n:
+					found = true ; break
+				prev += lines
+				v = v.threadNext()
+			
+			v = lastv
+			n2 = max(1,n-prev)
+			#@-body
+			#@-node:4::<< count outline lines, setting v,n2,found >>
+
 		else:
-			body.mark_set("insert","end-1line")
-			es(root.headString() + " has " + str(prev) + " lines.")
+			# To do: choose a "suitable line" for searching.
+			vnodeName,n2 = self.convertLineToVnodeAndLine(lines,n,root)
+			found = true
+			if not vnodeName:
+				es("invalid derived file: " + fileName)
+				return
+			
+			#@<< set v to the node whose headline is vnodeName >>
+			#@+node:5::<< set v to the node whose headline is vnodeName >>
+			#@+body
+			after = root.nodeAfterTree()
+			
+			while v and v != after and not v.matchHeadline(vnodeName):
+				v = v.threadNext()
+			
+			if not v or v == after:
+				es("vnode not found in outline: " + vnodeName)
+				return
+			#@-body
+			#@-node:5::<< set v to the node whose headline is vnodeName >>
+
+		# To do: search for the "suitable line".
+		
+		#@<< select v and make it visible >>
+		#@+node:6::<< select v and make it visible >>
+		#@+body
+		c.beginUpdate()
+		c.tree.expandAllAncestors(v)
+		c.selectVnode(v)
+		c.endUpdate()
+		#@-body
+		#@-node:6::<< select v and make it visible >>
+
+		
+		#@<< put the cursor on line n2 of the body text >>
+		#@+node:7::<< put the cursor on line n2 of the body text >>
+		#@+body
+		if found:
+			c.frame.body.mark_set("insert",str(n2)+".0 linestart")
+		else:
+			c.frame.body.mark_set("insert","end-1line")
+			es(root.headString() + " has " + `len(lines)` + " lines.")
+		#@-body
+		#@-node:7::<< put the cursor on line n2 of the body text >>
 	#@-body
-	#@-node:8::OnGoToLineNumber
+	#@+node:8::convertLineToVnodeAndLine
+	#@+body
+	#@+at
+	#  This routine converts a line number, n, in a derived file to a vnode 
+	# and offset within the vnode
+	# 
+	# We count "real" lines in the derived files, ignoring all sentinels that 
+	# do not arise from source lines.  When the indicated line is found, we 
+	# scan backwards for an @+body line, get the vnode's name from that line 
+	# and set v to the indicated vnode.  This will fail if vnode names have 
+	# been changed, and that can't be helped.
+	# 
+	# Returns vnodeName,n2,found
+	# vnodeName: the name found in the previous @+body sentinel.
+	# offset: the offset within v of the desired line.
+
+	#@-at
+	#@@c
+
+	def convertLineToVnodeAndLine (self,lines,n,root):
+		
+		
+		#@<< set delim, leoLine from the @+leo line >>
+		#@+node:1::<< set delim, leoLine from the @+leo line >>
+		#@+body
+		# Find the @+leo line.
+		tag = "@+leo"
+		i = 0 
+		while i < len(lines) and lines[i].find(tag)==-1:
+			i += 1
+		leoLine = i # Index of the line containing the leo sentinel
+		# trace("leoLine:"+`leoLine`)
+		
+		delim = None # All sentinels start with this.
+		if leoLine < len(lines):
+			# The opening comment delim is the initial non-whitespace.
+			s = lines[leoLine]
+			i = skip_ws(s,0)
+			j = s.find(tag)
+			delim = s[i:j]
+			if len(delim)==0:
+				delim=None
+			else:
+				delim += '@'
+		#@-body
+		#@-node:1::<< set delim, leoLine from the @+leo line >>
+
+		if not delim:
+			es("bad @+leo sentinel")
+			return None,None
+		
+		#@<< scan back to @+node, setting offset,nodeSentinelLine >>
+		#@+node:2::<< scan back to  @+node, setting offset,nodeSentinelLine >>
+		#@+body
+		offset = 0 # This is essentially the tk line number.
+		nodeSentinelLine = -1
+		line = n - 1
+		while line >= 0:
+			s = lines[line]
+			# trace(`s`)
+			i = skip_ws(s,0)
+			if match(s,i,delim):
+				
+				#@<< handle delim while scanning backward >>
+				#@+node:1::<< handle delim while scanning backward >>
+				#@+body
+				if line == n:
+					es("line "+str(n)+" is a sentinel line")
+				i += len(delim)
+				
+				if match(s,i,"-node"):
+					# The end of a nested section.
+					line = self.skipToMatchingNodeSentinel(lines,line,delim)
+				elif match(s,i,"+node"):
+					nodeSentinelLine = line
+					break
+				elif match(s,i,"<<") or match(s,i,"@first"):
+					offset += 1 # Count these as a "real" lines.
+				#@-body
+				#@-node:1::<< handle delim while scanning backward >>
+
+			else:
+				offset += 1 # Assume the line is real.  A dubious assumption.
+			line -= 1
+		#@-body
+		#@-node:2::<< scan back to  @+node, setting offset,nodeSentinelLine >>
+
+		if nodeSentinelLine == -1:
+			# The line precedes the first @+node sentinel
+			return root.headString(),1
+		s = lines[nodeSentinelLine]
+		
+		#@<< set vnodeName from s >>
+		#@+node:3::<< set vnodeName from s >>
+		#@+body
+		# vnode name is everything following the third ':'
+		
+		# trace("last body:"+`s`)
+		vnodeName = None
+		i = 0 ; colons = 0
+		while i < len(s) and colons < 3:
+			if s[i] == ':': colons += 1
+			i += 1
+		vnodeName = s[i:].strip()
+		# trace("vnodeName:"+`vnodeName`)
+		
+		if len(vnodeName) == 0:
+			vnodeName = None
+		if not vnodeName:
+			es("bad @+node sentinel")
+		#@-body
+		#@-node:3::<< set vnodeName from s >>
+
+		return vnodeName,offset
+	#@-body
+	#@-node:8::convertLineToVnodeAndLine
+	#@+node:9::skipToMatchingSentinel
+	#@+body
+	def skipToMatchingNodeSentinel (self,lines,n,delim):
+		
+		s = lines[n]
+		i = skip_ws(s,0)
+		assert(match(s,i,delim))
+		i += len(delim)
+		if match(s,i,"+node"):
+			start="+node" ; end="-node" ; delta=1
+		else:
+			assert(match(s,i,"-node"))
+			start="-node" ; end="+node" ; delta=-1
+		# Scan to matching @+-node delim.
+		n += delta ; level = 0
+		while 0 <= n < len(lines):
+			s = lines[n] ; i = skip_ws(s,0)
+			if match(s,i,delim):
+				i += len(delim)
+				if match(s,i,start):
+					level += 1
+				elif match(s,i,end):
+					if level == 0: return n
+					else: level -= 1
+			n += 1
+		return n
+	#@-body
+	#@-node:9::skipToMatchingSentinel
+	#@-node:8::OnGoToLineNumber & allies
 	#@+node:9::OnSelectAll
 	#@+body
 	def OnSelectAll(self,event=None):

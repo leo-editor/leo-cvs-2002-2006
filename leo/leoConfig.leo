@@ -20,16 +20,16 @@
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
-<v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
+<v t="T10" a="V"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
-<v t="T16" a="V"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
+<v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
@@ -444,6 +444,7 @@ SortSiblings     = Alt-A
 MarkChangedItems = Alt+C
 GoToNextChanged  = Alt+D
 ExecuteScript    = Alt+E
+GoToLineNumber   = Alt+G
 GoToNextMarked   = Alt+M
 OpenPythonWindow = Alt+P
 MarkChangedRoots = Alt+R
