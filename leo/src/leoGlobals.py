@@ -4354,6 +4354,57 @@ def computeWindowTitle (fileName):
         return title
 #@nonl
 #@-node:ekr.20031218072017.3103:g.computeWindowTitle
+#@+node:ekr.20050314140957:g.convertPythonIndexToRowCol  & tests
+def convertPythonIndexToRowCol (s,i):
+    
+    '''Convert index i into string s into zero-based row/col indices.'''
+    
+    if not s or i == 0:
+        return 0,0
+    else:
+        i = min(i,len(s)-1)
+        # works regardless of what s[i] is
+        row = s.count('\n',0,i) # Don't include i
+        if row == 0:
+            return row,i
+        else:
+            prevNl = s.rfind('\n',0,i) # Don't include i
+            # assert prevNl > -1
+            return row,i-prevNl-1
+#@nonl
+#@+node:ekr.20050314140957.1:bruteForceConvertPythonIndexToRowCol
+def bruteForceConvertPythonIndexToRowCol (s,i):
+        
+    lines = g.splitLines(s)
+    row,total = 0,0
+    for line in lines:
+        n = len(line)
+        if i < total + n:
+            break
+        else:
+            total += n
+            row += 1
+    return row, i-total
+#@nonl
+#@-node:ekr.20050314140957.1:bruteForceConvertPythonIndexToRowCol
+#@+node:ekr.20050314140957.2:test_g_convertPythonIndexToRowCol
+def test_g_convertPythonIndexToRowCol ():
+    
+    s = '\nabc\n\npdq\nxy'
+
+    for i in xrange(len(s)+1): # Test one-too-large case.
+        try: ch = s[i]
+        except IndexError: ch = '**'
+        rowCol_1 = g.convertPythonIndexToRowCol(s,i)
+        rowCol_2 = g.bruteForceConvertPythonIndexToRowCol(s,i)
+        if g.app.unitTesting:
+            assert i == len(s) or rowCol_1 == rowCol_2
+        else:
+            print '%2d %4s %5s' % (i,repr(ch),rowCol_1==rowCol_2),
+            print rowCol_1,rowCol_2
+#@nonl
+#@-node:ekr.20050314140957.2:test_g_convertPythonIndexToRowCol
+#@-node:ekr.20050314140957:g.convertPythonIndexToRowCol  & tests
 #@+node:ekr.20031218072017.3138:g.executeScript
 def executeScript (name):
     
