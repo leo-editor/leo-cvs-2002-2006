@@ -1603,6 +1603,7 @@ class leoTree:
 				val = scanAtTabwidthDirective(s,dict,issue_error_flag=false)
 				if val and val != 0:
 					w = val
+					break
 			#@-body
 			#@-node:1::<< set w and break on @tabwidth >>
 
