@@ -22,6 +22,7 @@
 
 import leoGlobals as g
 import leoPlugins
+import os
 
 # This command is used to communicate with the vim server. If you use gvim
 # you can leave the command as is, you do not need to change it to "gvim ..."
@@ -32,23 +33,24 @@ _vim_cmd = "vim --servername LEO "
 
 #@+others
 #@+node:EKR.20040517075715.11:open_in_vim
-def open_in_vim (tag,keywords):
-    if not g.top():
-        return
+def open_in_vim (tag,keywords,val=None):
+    
+    c = g.top()
+    if not c: return
+    p = keywords.get("p")
+    if not p: return
+    v = p.v
 
-    v=keywords['v']
     # Find dictionary with infos about this node
     this=filter(lambda x: id(x['v'])==id(v), g.app.openWithFiles)
     
     # Retrieve the name of the temporary file (if any).
-    if this != []:
-        path=this[0]['path']
-    else:
-        path=''
-    
+    if this != []:  path=this[0]['path']
+    else:           path=''
+
     # if the body has changed we need to open a new 
     # temp file containing the new body in vim
-    if  not os.path.exists(path) or \
+    if  not g.os_path_exists(path) or \
         not hasattr(v,'OpenWithOldBody') or \
         v.bodyString!=v.OpenWithOldBody:
         # if there is an old temp file we need to delete it,
@@ -69,17 +71,24 @@ def open_in_vim (tag,keywords):
         # if the changes to the current buffer were not saved, vim will
         # notify the user of that fact at this point
         os.system(_vim_cmd+"--remote-send '<C-\\><C-N>:e "+path+"<CR>'")
+        
+    return val
 #@-node:EKR.20040517075715.11:open_in_vim
 #@-others
 
 if not g.app.unitTesting:
+    
+    # print "vim plugin installed"
 
     # Register the handlers...
-    leoPlugins.registerHandler("iconclick2", open_in_vim)
+    if 1: # Open on double click
+        leoPlugins.registerHandler("icondclick2", open_in_vim)
+    else: # Open on single click: interferes with dragging.
+        leoPlugins.registerHandler("iconclick2", open_in_vim,val=True)
     
     # if you want to start a (g)vim server when leo is started
     # uncomment this line:
-    # os.system("gvim --servername LEO")
+    # os.system(_vim_cmd)
     
     __version__ = "1.4" # Set version for the plugin handler.
     g.plugin_signon(__name__)
