@@ -920,40 +920,83 @@ def file_date (theFile,format=None):
 #@-node:ekr.20031218072017.1317:file/module/plugin_date
 #@+node:ekr.20031218072017.3121:redirecting stderr and stdout
 class redirectClass:
+    
+    """A class to redirect stdout and stderr."""
+
     #@    << redirectClass methods >>
     #@+node:ekr.20031218072017.1656:<< redirectClass methods >>
-    # To redirect stdout a class only needs to implement a write(self,s) method.
+    #@+others
+    #@+node:ekr.20041012082437:redirectClass.__init__
     def __init__ (self):
+        
         self.old = None
-        
+    #@nonl
+    #@-node:ekr.20041012082437:redirectClass.__init__
+    #@+node:ekr.20041012082437.1:isRedirected
     def isRedirected (self):
-        return self.old != None
-        
-    def flush(self, *args):
-        return # 6/14/03:  For LeoN: just for compatibility.
     
+        return self.old != None
+    #@nonl
+    #@-node:ekr.20041012082437.1:isRedirected
+    #@+node:ekr.20041012082437.2:flush
+    # For LeoN: just for compatibility.
+    
+    def flush(self, *args):
+        return 
+    
+    #@-node:ekr.20041012082437.2:flush
+    #@+node:ekr.20041012091252:rawPrint
+    def rawPrint (self,s):
+    
+        if self.old:
+            self.old.write(s+'\n')
+        else:
+            print s
+    #@nonl
+    #@-node:ekr.20041012091252:rawPrint
+    #@+node:ekr.20041012082437.3:redirect
     def redirect (self,stdout=1):
+    
         import sys
+    
+        if g.app.batchMode:
+            # Redirection is futile in batch mode.
+            return
+    
         if not self.old:
             if stdout:
                 self.old,sys.stdout = sys.stdout,self
             else:
                 self.old,sys.stderr = sys.stderr,self
-    
+    #@nonl
+    #@-node:ekr.20041012082437.3:redirect
+    #@+node:ekr.20041012082437.4:undirect
     def undirect (self,stdout=1):
+    
         import sys
+    
         if self.old:
             if stdout:
                 sys.stdout,self.old = self.old,None
             else:
                 sys.stderr,self.old = self.old,None
-    
+    #@nonl
+    #@-node:ekr.20041012082437.4:undirect
+    #@+node:ekr.20041012082437.5:write
     def write(self,s):
-        # g.trace(s)
+    
         if self.old:
-            if app.log: app.log.put(s)
-            else: self.old.write(s)
-        else: print s # Typically will not happen.
+            if app.log:
+                app.log.put(s+'\n')
+            else:
+                self.old.write(s+'\n')
+        else:
+            # Can happen when g.batchMode is True.
+            print s
+    #@nonl
+    #@-node:ekr.20041012082437.5:write
+    #@-others
+    #@nonl
     #@-node:ekr.20031218072017.1656:<< redirectClass methods >>
     #@nl
 
@@ -963,6 +1006,8 @@ redirectStdOutObj = redirectClass()
 
 #@<< define convenience methods for redirecting streams >>
 #@+node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
+#@+others
+#@+node:ekr.20041012090942:redirectStderr & redirectStdout
 # Redirect streams to the current log window.
 def redirectStderr():
     global redirectStdErrObj
@@ -971,7 +1016,9 @@ def redirectStderr():
 def redirectStdout():
     global redirectStdOutObj
     redirectStdOutObj.redirect()
-
+#@nonl
+#@-node:ekr.20041012090942:redirectStderr & redirectStdout
+#@+node:ekr.20041012090942.1:restoreStderr & restoreStdout
 # Restore standard streams.
 def restoreStderr():
     global redirectStdErrObj
@@ -980,7 +1027,9 @@ def restoreStderr():
 def restoreStdout():
     global redirectStdOutObj
     redirectStdOutObj.undirect()
-        
+#@nonl
+#@-node:ekr.20041012090942.1:restoreStderr & restoreStdout
+#@+node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
 def stdErrIsRedirected():
     global redirectStdErrObj
     return redirectStdErrObj.isRedirected()
@@ -989,12 +1038,27 @@ def stdOutIsRedirected():
     global redirectStdOutObj
     return redirectStdOutObj.isRedirected()
 #@nonl
+#@-node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
+#@+node:ekr.20041012090942.3:rawPrint
+# Send output to original stdout.
+
+def rawPrint(s):
+
+    global redirectStdOutObj
+
+    redirectStdOutObj.rawPrint(s)
+#@nonl
+#@-node:ekr.20041012090942.3:rawPrint
+#@-others
+#@nonl
 #@-node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
 #@nl
 
-if 0: # Test code: may be safely and conveniently executed in the child node.
+if 0: # Test code: may be executed in the child node.
     #@    << test code >>
     #@+node:ekr.20031218072017.3123:<< test code >>
+    import leoGlobals as g
+    
     print "stdout isRedirected:", g.stdOutIsRedirected()
     print "stderr isRedirected:", g.stdErrIsRedirected()
     

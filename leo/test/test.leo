@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5987" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6001" clone_windows="0"/>
 <globals body_outline_ratio="0.365740740741">
 	<global_window_position top="21" left="277" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -719,7 +719,7 @@
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
@@ -1050,7 +1050,9 @@
 </v>
 <v t="ekr.20040712101754.184"><vh>@test consistency of p.v.t.vnodeList &amp; v.parents for cloned nodes</vh></v>
 <v t="ekr.20040712101754.185"><vh>@test that cloned nodes actually share subtrees</vh></v>
-<v t="ekr.20040712101754.186"><vh>@test batch mode</vh></v>
+<v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
+<v t="ekr.20041012084201"><vh>removeFile</vh></v>
+</v>
 </v>
 <v t="ekr.20040712101754.187"><vh>Position tests...</vh>
 <v t="ekr.20040712101754.188"><vh>@test p.iters and v.iters</vh>
@@ -1195,6 +1197,29 @@
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 </v>
+<v t="ekr.20041011160953"><vh>Test of xsltWithNodes plugin</vh>
+<v t="ekr.20041011160953.1"><vh>stylesheet</vh>
+<v t="ekr.20041011161235"><vh>The actual stylesheet</vh></v>
+</v>
+<v t="ekr.20041011160953.2"><vh>From xsltWithNodes.py</vh>
+<v t="ekr.20041011160953.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20041011160953.4"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20041011160953.5"><vh>NewHeadline</vh></v>
+<v t="ekr.20041011160953.6"><vh>setStyleNode</vh></v>
+<v t="ekr.20041011160953.7"><vh>processDocumentNode</vh></v>
+<v t="ekr.20041011160953.8"><vh>addXSLTNode</vh></v>
+<v t="ekr.20041011160953.9"><vh>addXSLTemplate</vh></v>
+<v t="ekr.20041011160953.10"><vh>getStream</vh></v>
+<v t="ekr.20041011160953.11"><vh>jumpToStyleNode</vh></v>
+<v t="ekr.20041011160953.12"><vh>styleNodeSelected</vh></v>
+<v t="ekr.20041011160953.13"><vh>addMenu</vh></v>
+<v t="ekr.20041011160953.14"><vh>NewHeadline</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
+<v t="ekr.20041012084201"><vh>removeFile</vh></v>
+</v>
+<v t="ekr.20041012091500" a="TV"><vh>@test g.rawPrint</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1848,7 +1873,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -1979,7 +2004,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -4646,15 +4671,19 @@ test_file  = g.os_path_join(test_path,"createdFile.txt")
 
 command = r"%s %s -script %s" % (python_interp,leo_file,batch_file)
 
-if os.path.exists(test_file):
-    if verbose: print "@test batch mode: deleting",test_file
-    os.remove(test_file)
-else:
-    if verbose: print "@test batch mode: not found:",test_file
+@others
 
+removeFile(test_file,verbose)
 os.system(command)
 
-assert(os.path.exists(test_file))</t>
+try:
+    g.redirectStdout()
+    removeFile(test_file,verbose)
+    os.system(command)
+finally:
+    g.restoreStdout()
+    
+assert(g.os_path_exists(test_file))</t>
 <t tx="ekr.20040712101754.187"></t>
 <t tx="ekr.20040712101754.188">import leoNodes
 import leoGlobals as g
@@ -9423,7 +9452,7 @@ def checkLinuxLineEndings(filename):
     for ch in s:
         if ch == '\r': cr += 1
         if ch == '\n': nl += 1
-    assert cr == 0, "cr: %d, nl: %d" % (cr,nl)
+    assert cr == 0, "Bad Linux line ending in %s: cr: %d, nl: %d" % (cr,nl,filename)
 
 for file in ("install","uninstall"):
     checkLinuxLineEndings(g.os_path_join(g.app.loadDir,"..",file))</t>
@@ -9814,5 +9843,202 @@ c.atFileCommands.read(root,thinFile=True,fromString=s)</t>
 #@-leo
 </t>
 <t tx="ekr.20041004100940"></t>
+<t tx="ekr.20041011160953"></t>
+<t tx="ekr.20041011160953.1">@language html</t>
+<t tx="ekr.20041011160953.2">"""Adds XSLT-Node Command submen item to the Outline menu.
+
+This menu contains the following items:
+    
+- Set StyleSheet Node:
+    - Selects the current node as the xsl stylesheet the plugin will use.
+
+- Process Node with Stylesheet Node:
+    - Processes the current node as an xml document,
+      resolving section references and Leo directives.
+    - Creates a sibling containing the results.
+
+Requires 4Suite 1.0a3 or better, downloadable from http://4Suite.org.
+"""
+
+@language python
+
+&lt;&lt; imports &gt;&gt;
+__version__ = "0.2"
+&lt;&lt; version history &gt;&gt;
+new_at_file = True
+
+stylenodes = weakref.WeakKeyDictionary()
+haveseen = weakref.WeakKeyDictionary()
+
+@others
+
+if Ft and Tk:
+    leoPlugins.registerHandler(('start2','open2',"new"),addMenu)
+    g.plugin_signon(__name__)</t>
+<t tx="ekr.20041011160953.3">import leoGlobals as g
+import leoNodes
+import leoPlugins
+
+try:
+    import Ft
+    from Ft.Xml import InputSource 
+    from Ft.Xml.Xslt.Processor import Processor
+except ImportError:
+    Ft = g.cantImport("Ft")
+
+try:
+    import Tkinter as Tk
+except ImportError:
+    Tk = g.cantImport("Tk")
+
+import weakref 
+import cStringIO 
+
+</t>
+<t tx="ekr.20041011160953.4">@
+
+0.1: Original code.
+
+0.2 EKR: Converted to outline.</t>
+<t tx="ekr.20041011160953.5"></t>
+<t tx="ekr.20041011160953.6">def setStyleNode (c):
+
+    stylenodes[c] = c.currentPosition()</t>
+<t tx="ekr.20041011160953.7">def processDocumentNode (c):
+    
+    c.beginUpdate()
+    try:
+        if not styleNodeSelected(c):return
+        proc = Processor()
+        stylenode = stylenodes[c]
+        pos = c.currentPosition()
+        c.selectPosition(stylenode)
+        sIO = getStream(c)
+        hstring = str(stylenode.headString())
+        if hstring=="":hstring = "no headline"
+        stylesource = InputSource.DefaultFactory.fromStream(sIO,uri=hstring)
+        proc.appendStylesheet(stylesource)
+        c.selectPosition(pos)
+        xmlnode = pos.v.t
+        xIO = getStream(c)
+        xhead = str(xmlnode.headString)
+        if xhead=="":xhead = "no headline"
+        xmlsource = InputSource.DefaultFactory.fromStream(xIO,uri=xhead)
+        result = proc.run(xmlsource)
+        nhline = "xsl:transform of "+str(xmlnode.headString)
+        tnode = leoNodes.tnode(result,nhline)
+        pos.insertAfter(tnode)
+        
+    except Exception, x:
+        g.es('exception '+str(x))
+    c.endUpdate()</t>
+<t tx="ekr.20041011160953.8">def addXSLTNode (c):
+    
+    pos = c.currentPosition()
+    
+    #body = '''&lt;?xml version="1.0"?&gt;'''
+   # body = '''&lt;?xml version="1.0"?&gt;
+#&lt;xsl:transform xmlns:xsl="http:///www.w3.org/1999/XSL/Transform" version="1.0"&gt;'''
+
+    body = '''&lt;?xml version="1.0"?&gt;
+&lt;xsl:transform xmlns:xsl="http:///www.w3.org/1999/XSL/Transform" version="1.0"&gt;    
+&lt;/xsl:transform&gt;'''
+
+    tnode = leoNodes.tnode(body,"xslt stylesheet")
+    c.beginUpdate()
+    pos.insertAfter(tnode)
+    c.endUpdate()
+</t>
+<t tx="ekr.20041011160953.9">def addXSLTemplate (c):
+
+    bodyCtrl = c.frame.bodyCtrl
+    template = '''&lt;xsl:template match=""&gt;'''
+    template = '''&lt;xsl:template match=""&gt;
+&lt;/xsl:template&gt;'''
+
+    bodyCtrl.insert('insert',template)
+    bodyCtrl.event_generate('&lt;Key&gt;')
+    bodyCtrl.update_idletasks()</t>
+<t tx="ekr.20041011160953.10">def getStream (c):
+
+    at = c.atFileCommands
+    pos = c.currentPosition()
+    cS = cStringIO.StringIO()
+    
+    if new_at_file: # 4.3 code base.
+        at.toStringFlag = True
+        # at.outputFile = cS 
+        at.writeOpenFile(pos,nosentinels=True,toString=True)
+        # at.outputFile = None 
+        # at.toStringFlag = False 
+
+    else: # 4.2 code base
+        at.new_df.toStringFlag = True
+        at.new_df.outputFile = cS
+        at.new_df.writeOpenFile(pos,nosentinels=True,toString=True)
+        at.new_df.outputFile = None
+        at.new_df.toStringFlag = False
+
+    cS.seek(0)
+    return cS</t>
+<t tx="ekr.20041011160953.11">def jumpToStyleNode (c):
+
+    if not styleNodeSelected(c):return
+    pos = stylenodes[c]
+
+    c.beginUpdate()
+    c.selectPosition(pos)
+    c.endUpdate()</t>
+<t tx="ekr.20041011160953.12">def styleNodeSelected (c):
+
+    if not stylenodes.has_key(c):
+        g.es("No Style Node selected")
+        return False
+
+    return True</t>
+<t tx="ekr.20041011160953.13">def addMenu (tag,keywords):
+    c = g.top()
+    if haveseen.has_key(c): return
+    haveseen[c] = None 
+    menu = c.frame.menu 
+    menu = menu.getMenu('Outline')
+    xmen = Tk.Menu(menu,tearoff=False)
+    xmen.add_command(
+        label="Set Stylesheet Node",
+        command=lambda c=c:setStyleNode(c))
+    xmen.add_command(
+        label="Jump To Style Node",
+        command=lambda c=c:jumpToStyleNode(c))
+    xmen.add_command(
+        label="Process Node with Stylesheet Node",
+        command=lambda c=c:processDocumentNode(c))
+    xmen.add_separator()
+    xmen.add_command(
+        label="Create Stylesheet Node",
+        command=lambda c=c:addXSLTNode(c))
+    xmen.add_command(
+        label="Insert &lt;xsl:template&gt; elements",
+        command=lambda c=c:addXSLTemplate(c))
+    menu.add_cascade(
+        menu=xmen,
+        label="XSLT-Node Commands")</t>
+<t tx="ekr.20041011160953.14"></t>
+<t tx="ekr.20041011161235">&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"&gt;</t>
+<t tx="ekr.20041012084201">def removeFile(path,verbose):
+
+    if os.path.exists(test_file):
+        if verbose:
+            print "@test batch mode: deleting",test_file
+        os.remove(test_file)
+    else:
+        if verbose:
+            print "@test batch mode: not found:",test_file
+</t>
+<t tx="ekr.20041012091500">import leoGlobals as g
+
+g.rawPrint("Test of g.rawPrint")
+g.redirectStdout()
+g.rawPrint("Test of g.rawPrint")
+g.restoreStdout()</t>
 </tnodes>
 </leo_file>

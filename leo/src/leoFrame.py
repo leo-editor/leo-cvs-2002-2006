@@ -594,8 +594,10 @@ class leoLog:
         self.enabled = True
         self.newlines = 0
     
+        # Note: self.logCtrl is None for nullLog's.
         self.logCtrl = self.createControl(parentFrame)
         self.setFontFromConfig()
+    #@nonl
     #@-node:ekr.20031218072017.3695:leoLog.__init__
     #@+node:ekr.20031218072017.3696:leoLog.configure
     def configure (self,*args,**keys):
@@ -1351,34 +1353,42 @@ class nullFrame (leoFrame):
 #@+node:ekr.20031218072017.2232:class nullLog
 class nullLog (leoLog):
     
+    #@    @+others
+    #@+node:ekr.20041012083237:nullLog.__init__
     def __init__ (self,frame=None,parentFrame=None):
-        
-        leoLog.__init__(self,frame,parentFrame) # Init the base class.
-        
-        if 0: # No longer needed: use base enable/disable methods.
-            if g.app.batchMode:
-                if g.app.log: self.enabled = g.app.log.enabled
-                else:         self.enabled = True
-                g.app.log = self
-            else:
-                self.enabled = True
-        # g.trace("nullLog",self.enabled)
-        
+            
+        # Init the base class.
+        leoLog.__init__(self,frame,parentFrame)
+    #@nonl
+    #@-node:ekr.20041012083237:nullLog.__init__
+    #@+node:ekr.20041012083237.1:createControl
     def createControl (self,parentFrame):
-        pass
         
+        return None
+    #@nonl
+    #@-node:ekr.20041012083237.1:createControl
+    #@+node:ekr.20041012083237.2:oops
     def oops(self):
+    
         g.trace("nullLog:", g.callerName(2))
         
+    #@-node:ekr.20041012083237.2:oops
+    #@+node:ekr.20041012083237.3:put and putnl
     def put (self,s,color=None):
         if self.enabled:
-            print s
-
+            g.rawPrint(s)
+    
     def putnl (self):
-        pass
-        
+        if self.enabled:
+            g.rawPrint("")
+    #@nonl
+    #@-node:ekr.20041012083237.3:put and putnl
+    #@+node:ekr.20041012083237.4:setFontFromConfig
     def setFontFromConfig (self):
         pass
+    #@nonl
+    #@-node:ekr.20041012083237.4:setFontFromConfig
+    #@-others
 #@nonl
 #@-node:ekr.20031218072017.2232:class nullLog
 #@+node:ekr.20031218072017.2233:class nullTree
