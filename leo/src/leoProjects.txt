@@ -14574,6 +14574,7 @@ def set (self,p,kind,name,val):
     d = self.settingsDict
     bunch = d.get(key)
     if bunch:
+        # g.trace(key,bunch.val,bunch.path)
         path = bunch.path
         if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
             g.es("over-riding setting: %s from %s" % (name,path))
@@ -14720,6 +14721,7 @@ def set (self,p,kind,name,val):
     d = self.settingsDict
     bunch = d.get(key)
     if bunch:
+        # g.trace(key,bunch.val,bunch.path)
         path = bunch.path
         if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
             g.es("over-riding setting: %s from %s" % (name,path))
@@ -15205,6 +15207,7 @@ def set (self,p,kind,name,val):
     d = self.settingsDict
     bunch = d.get(key)
     if bunch:
+        # g.trace(key,bunch.val,bunch.path)
         path = bunch.path
         if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
             g.es("over-riding setting: %s from %s" % (name,path))
@@ -15790,6 +15793,7 @@ def set (self,p,kind,name,val):
     d = self.settingsDict
     bunch = d.get(key)
     if bunch:
+        # g.trace(key,bunch.val,bunch.path)
         path = bunch.path
         if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
             g.es("over-riding setting: %s from %s" % (name,path))
@@ -16459,7 +16463,7 @@ def doHook(tag,*args,**keywords):
 
     if not g.app.config.use_plugins:
         if tag == "start1":
-            s = "Plugins disabled: use_plugins is 0"
+            s = "Plugins disabled: use_plugins is 0 in a leoSettings.leo file."
             print s ; g.es(s,color="blue")
         return None
 
@@ -17728,6 +17732,7 @@ def set (self,p,kind,name,val):
     d = self.settingsDict
     bunch = d.get(key)
     if bunch:
+        # g.trace(key,bunch.val,bunch.path)
         path = bunch.path
         if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
             g.es("over-riding setting: %s from %s" % (name,path))
@@ -17846,6 +17851,7 @@ def set (self,p,kind,name,val):
     d = self.settingsDict
     bunch = d.get(key)
     if bunch:
+        # g.trace(key,bunch.val,bunch.path)
         path = bunch.path
         if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
             g.es("over-riding setting: %s from %s" % (name,path))
@@ -18531,6 +18537,7 @@ def set (self,p,kind,name,val):
     d = self.settingsDict
     bunch = d.get(key)
     if bunch:
+        # g.trace(key,bunch.val,bunch.path)
         path = bunch.path
         if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
             g.es("over-riding setting: %s from %s" % (name,path))
@@ -20901,6 +20908,7 @@ def set (self,p,kind,name,val):
     d = self.settingsDict
     bunch = d.get(key)
     if bunch:
+        # g.trace(key,bunch.val,bunch.path)
         path = bunch.path
         if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
             g.es("over-riding setting: %s from %s" % (name,path))
@@ -21127,11 +21135,11 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
 C:\Documents and Settings\Ed\My Documents\ekr.leo
-c:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\test\test.leo
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
 C:\prog\leoCVS\leo\config\leoSettings.leo
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
+c:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\Leo Stuff\oldLeoFiles.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
@@ -21329,19 +21337,22 @@ def updateOneNode (self,c,data):
     munge = g.app.config.munge
     name = name.strip() ; kind = munge(kind.strip())
 
-    # Root 1 is the root of the dialog's outline.
+    # Root1 is the root of the dialog's outline.
     p1 = p
-    root1 = self.findSettingsRoot(p1).copy()
+    root1 = self.findSettingsRoot(p1.copy())
     c1 = root1.c
     
-    # Root is the root of the settings outline in the file.
+    # Root2 is the root of the settings outline in the file.
     root2 = g.app.config.settingsRoot(c) # c is NOT self.c
-    # g.trace(root2.c.mFileName)
-    p2 = self.findCorrespondingNode(root1,root2,p1)
+    #g.trace(root2.c.mFileName)
+    p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
     if p2:
         c2 = p2.c ; filename = c2.mFileName
     else:
-        g.trace("can't happen: can't find node in",root2.c.mFileName)
+        g.trace("can't happen: can't find node in root2:",root2.c.mFileName)
+        g.trace('root1',root1)
+        g.trace('root2',root2)
+        g.trace('p1',p1)
         c2 = None ; filename = None
 
     # Update the outline in the dialog and the target file.
@@ -26517,7 +26528,7 @@ def doHook(tag,*args,**keywords):
 
     if not g.app.config.use_plugins:
         if tag == "start1":
-            s = "Plugins disabled: use_plugins is 0"
+            s = "Plugins disabled: use_plugins is 0 in a leoSettings.leo file."
             print s ; g.es(s,color="blue")
         return None
 
@@ -26601,7 +26612,7 @@ def doHook(tag,*args,**keywords):
 
     if not g.app.config.use_plugins:
         if tag == "start1":
-            s = "Plugins disabled: use_plugins is 0"
+            s = "Plugins disabled: use_plugins is 0 in a leoSettings.leo file."
             print s ; g.es(s,color="blue")
         return None
 
@@ -30756,6 +30767,145 @@ Apparantly pychecker was confused by the complexity of the code in settingsContr
 Created replaceBodyWithDialog and createStandAloneDialog helpers, and this eliminated the warnings(!)
 #@nonl
 #@-node:ekr.20050212155600:Rewrote ctor of settingsController to eliminate pychecker warnings
+#@+node:ekr.20050213065340:(Fixed can't happen message in updateOneNode)
+#@+node:ekr.20050213072437:What I did
+@killcolor
+
+The problem was with a change I made in createSettingsTree in response to a pychecker complaint.
+This change altered the local settings tree...
+
+In spite of what pychecker may say, last_p IS defined properly when it is used.
+#@nonl
+#@-node:ekr.20050213072437:What I did
+#@+node:ekr.20041225063637.67:updateOneNode & helper
+def updateOneNode (self,c,data):
+    
+    """Update the node in c corresponding to p = data[0]."""
+    
+    p,name,kind,oldVal,val = data
+    munge = g.app.config.munge
+    name = name.strip() ; kind = munge(kind.strip())
+
+    # Root1 is the root of the dialog's outline.
+    p1 = p
+    root1 = self.findSettingsRoot(p1.copy())
+    c1 = root1.c
+    
+    # Root2 is the root of the settings outline in the file.
+    root2 = g.app.config.settingsRoot(c) # c is NOT self.c
+    #g.trace(root2.c.mFileName)
+    p2 = self.findCorrespondingNode(root1.copy(),root2.copy(),p1.copy())
+    if p2:
+        c2 = p2.c ; filename = c2.mFileName
+    else:
+        g.trace("can't happen: can't find node in root2:",root2.c.mFileName)
+        g.trace('root1',root1)
+        g.trace('root2',root2)
+        g.trace('p1',p1)
+        c2 = None ; filename = None
+
+    # Update the outline in the dialog and the target file.
+    for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
+        if p:
+            # g.trace("updating %s in %s" % (name,where))
+            if kind in ('shortcuts','recentfiles'):
+                # Put the values in the body.
+                p.initHeadString("@%s %s" % (kind,name))
+                body = '\n'.join(val)
+                p.setBodyStringOrPane(body)
+            elif kind == 'font':
+                body = self.computeBodyFromFontDict(p,val)
+                p.setBodyStringOrPane(body)
+            else:
+                # Put everything in the headline.
+                p.initHeadString("@%s %s = %s" % (kind,name,val))
+#@nonl
+#@+node:ekr.20041225063637.68:computeBodyFromFontDict
+def computeBodyFromFontDict(self,p,d):
+
+    lines = []
+    comments = d.get('comments')
+    if comments:
+        comment_lines = g.splitLines(comments)
+        comment_lines = ["# %s" % (line) for line in comment_lines]
+        lines.extend(comment_lines)
+        lines.extend('\n\n')
+        
+    for key in ('family','size','slant','weight'):
+        data = d.get(key)
+        if data:
+            name,val = data
+            if val in (None,'<none>'):
+                val = "None"
+            line = "%s = %s\n" % (name,val)
+            lines.extend(line)
+
+    body = ''.join(lines)
+    return body
+#@nonl
+#@-node:ekr.20041225063637.68:computeBodyFromFontDict
+#@-node:ekr.20041225063637.67:updateOneNode & helper
+#@+node:ekr.20041225063637.56:findCorrespondingNode
+def findCorrespondingNode (self,root1,root2,p1):
+    
+    """Return the node corresponding to p1 (in root1) in the root2's tree."""
+    
+    if p1 == root1: return root2
+
+    # Go up tree 1, computing child indices.
+    childIndices = []
+    for p in p1.self_and_parents_iter():
+        #g.trace(p)
+        if p == root1: break
+        childIndices.append(p.childIndex())
+        
+    childIndices.reverse()
+    # g.trace(childIndices)
+    
+    # Go down tree 2, moving to the n'th child.
+    p2 = root2.copy()
+    for n in childIndices:
+        # g.trace(p2)
+        p2.moveToNthChild(n)
+
+    # g.trace(p2)
+    return p2
+#@nonl
+#@-node:ekr.20041225063637.56:findCorrespondingNode
+#@-node:ekr.20050213065340:(Fixed can't happen message in updateOneNode)
+#@+node:ekr.20050213072437.1:(Note: local setting for use_plugins can not overriding global setting)
+@nocolor
+
+It is surprisingly difficult to give a warning that only the global setting applies.
+
+I added some more documentation to the setting in leoSettings.leo and removed the confusing entry from test.leo.
+
+@color
+#@nonl
+#@+node:ekr.20041120094940.9:set (parseBaseClass)
+# p used in subclasses, not here.
+
+def set (self,p,kind,name,val):
+    
+    """Init the setting for name to val."""
+    
+    c = self.c ; key = self.munge(name)
+    # g.trace("settingsParser %10s %15s %s" %(kind,val,name))
+    d = self.settingsDict
+    bunch = d.get(key)
+    if bunch:
+        # g.trace(key,bunch.val,bunch.path)
+        path = bunch.path
+        if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
+            g.es("over-riding setting: %s from %s" % (name,path))
+
+    # N.B.  We can't use c here: it may be destroyed!
+    d[key] = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
+    
+    # g.trace('parserBaseClass',g.shortFileName(c.mFileName),key,val)
+#@nonl
+#@-node:ekr.20041120094940.9:set (parseBaseClass)
+#@-node:ekr.20050213072437.1:(Note: local setting for use_plugins can not overriding global setting)
 #@-node:ekr.20050125203059.1:Bugs
 #@+node:ekr.20050125203059.2:New features...
 #@+node:ekr.20050125170349:(Added new undo granularities & undo_granularity setting)
