@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5714" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5844" clone_windows="0"/>
 <globals body_outline_ratio="0.5561861521">
-	<global_window_position top="30" left="285" height="881" width="856"/>
+	<global_window_position top="31" left="296" height="881" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -414,7 +414,7 @@
 <v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.1"><vh>File Tests</vh>
 <v t="ekr.20040712101754.2"><vh>Test Leo files...</vh>
 <v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
@@ -716,7 +716,9 @@
 <v t="ekr.20040712101754.212"><vh>@test vnode list</vh></v>
 </v>
 <v t="ekr.20040713070526"><vh>@test Pretty Print command</vh>
-<v t="ekr.20040713070526.1"><vh>data</vh></v>
+<v t="ekr.20040713123617"><vh>tempNode</vh></v>
+<v t="ekr.20040713071919"><vh>before</vh></v>
+<v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
 <v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
@@ -811,9 +813,238 @@
 <v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
 </v>
 <v t="ekr.20040712101813"><vh>checkCode</vh></v>
-<v t="ekr.20040713071919"><vh>data for Pretty Print</vh></v>
-<v t="ekr.20040713070526" a="ETV"><vh>@test Pretty Print command</vh>
-<v t="ekr.20040713070526.1"><vh>data</vh></v>
+<v t="ekr.20040713070526"><vh>@test Pretty Print command</vh>
+<v t="ekr.20040713123617"><vh>tempNode</vh></v>
+<v t="ekr.20040713071919"><vh>before</vh></v>
+<v t="ekr.20040713123828.1"><vh>after</vh></v>
+</v>
+<v t="ekr.20040713123617.1" a="EM"><vh>elisp2Python script</vh>
+<v t="ekr.20040713200238" a="E"><vh>Ref</vh>
+<v t="ekr.20040713131315"><vh>To do</vh>
+<v t="ekr.20040713133131"><vh>Tokens</vh></v>
+<v t="ekr.20040713133131.1"><vh>Statements</vh></v>
+<v t="ekr.20040713133131.2"><vh>Expressions</vh></v>
+</v>
+<v t="ekr.20040713130853"><vh>Docs</vh>
+<v t="ekr.20040713130853.1"><vh>What elisp2py does</vh></v>
+<v t="ekr.20040713130853.2"><vh>Theory of operation</vh></v>
+<v t="ekr.20040713130853.3"><vh>&lt;&lt; specify user types &gt;&gt;</vh></v>
+<v t="ekr.20040713130853.4"><vh>&lt;&lt; define testData &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040713144336"><vh>from c2py</vh>
+<v t="ekr.20040713130853.15"><vh>Top-level scripts</vh>
+<v t="ekr.20040713130853.16"><vh>convertCurrentTree</vh></v>
+<v t="ekr.20040713130853.17"><vh>convertLeoTree</vh></v>
+<v t="ekr.20040713130853.18"><vh>convertCFileToPython</vh></v>
+<v t="ekr.20040713130853.7"><vh>speedTest</vh></v>
+</v>
+<v t="ekr.20040713130853.19"><vh>Top Level</vh>
+<v t="ekr.20040713130853.20"><vh>convertCStringToPython</vh></v>
+<v t="ekr.20040713130853.21" a="M"><vh>OLDconvertCodeList</vh></v>
+<v t="ekr.20040713130853.22"><vh>convertDocList</vh></v>
+<v t="ekr.20040713130853.23"><vh>skipDocPart</vh></v>
+<v t="ekr.20040713130853.24"><vh>skipCodePart</vh></v>
+</v>
+<v t="ekr.20040713144926.1"><vh>Utils</vh>
+<v t="ekr.20040713130853.61"><vh>safeReplace</vh></v>
+<v t="ekr.20040713130853.43"><vh>match</vh></v>
+<v t="ekr.20040713130853.44"><vh>matchWord</vh></v>
+</v>
+<v t="ekr.20040713130853.27"><vh>convertLeadingBlanks</vh></v>
+<v t="ekr.20040713130853.28"><vh>findInList</vh></v>
+<v t="ekr.20040713130853.29"><vh>findInCode</vh></v>
+<v t="ekr.20040713130853.30"><vh>mungeAllFunctions</vh>
+<v t="ekr.20040713130853.31"><vh>handlePossibleFunctionHeader</vh></v>
+<v t="ekr.20040713130853.32"><vh>massageFunctionArgs</vh></v>
+<v t="ekr.20040713130853.33"><vh>massageFunctionHead (sets gClassName)</vh></v>
+<v t="ekr.20040713130853.34"><vh>massageFunctionBody</vh>
+<v t="ekr.20040713130853.35" a="E"><vh>massageIvars</vh></v>
+<v t="ekr.20040713130853.36"><vh>removeCasts</vh></v>
+<v t="ekr.20040713130853.37"><vh>removeTypeNames</vh></v>
+</v>
+</v>
+<v t="ekr.20040713130853.38"><vh>handleAllKeywords</vh>
+<v t="ekr.20040713130853.39"><vh>handleKeyword</vh></v>
+</v>
+<v t="ekr.20040713130853.40"><vh>isWs and isWOrNl</vh></v>
+<v t="ekr.20040713130853.41"><vh>isSectionDef</vh></v>
+<v t="ekr.20040713130853.42"><vh>isStringOrComment</vh></v>
+<v t="ekr.20040713130853.45"><vh>prevNonWsChar and prevNonWsOrNlChar</vh></v>
+<v t="ekr.20040713144926.2"><vh>remove</vh>
+<v t="ekr.20040713130853.46"><vh>removeAllCComments</vh></v>
+<v t="ekr.20040713130853.47"><vh>removeAllCSentinels</vh></v>
+<v t="ekr.20040713130853.48"><vh>removeAllPythonComments</vh></v>
+<v t="ekr.20040713130853.49"><vh>removeAllPythonSentinels</vh></v>
+<v t="ekr.20040713130853.50"><vh>removeAtRoot</vh></v>
+<v t="ekr.20040713130853.51"><vh>removeBlankLines</vh></v>
+<v t="ekr.20040713130853.52"><vh>removeExcessWs</vh>
+<v t="ekr.20040713130853.53"><vh>removeExessWsFromLine</vh></v>
+</v>
+<v t="ekr.20040713130853.54"><vh>removeLeadingAtCode</vh></v>
+<v t="ekr.20040713130853.55"><vh>removeMatchingBrackets</vh></v>
+<v t="ekr.20040713130853.56"><vh>removeSemicolonsAtEndOfLines</vh></v>
+<v t="ekr.20040713130853.57"><vh>removeTrailingWs</vh></v>
+</v>
+<v t="ekr.20040713144926.3"><vh>replace...</vh>
+<v t="ekr.20040713130853.58"><vh>replace</vh></v>
+<v t="ekr.20040713130853.59"><vh>replaceComments</vh></v>
+<v t="ekr.20040713130853.60"><vh>replaceSectionDefs</vh></v>
+</v>
+<v t="ekr.20040713144926.4"><vh>skip...</vh>
+<v t="ekr.20040713130853.62"><vh>skipCBlockComment</vh></v>
+<v t="ekr.20040713130853.63"><vh>skipPastLine</vh></v>
+<v t="ekr.20040713130853.64"><vh>skipPastWord</vh></v>
+<v t="ekr.20040713130853.65"><vh>skipString</vh></v>
+<v t="ekr.20040713130853.66"><vh>skipStringOrComment</vh></v>
+<v t="ekr.20040713130853.68"><vh>skipWs and skipWsAndNl</vh></v>
+</v>
+</v>
+<v t="ekr.20040713150856.1"><vh>g.scanning...</vh>
+<v t="ekr.20040713150856.8"><vh>Scanners: calling scanError</vh>
+<v t="ekr.20040713150856.9"><vh>skip_block_comment</vh></v>
+<v t="ekr.20040713150856.10"><vh>skip_braces</vh></v>
+<v t="ekr.20040713150856.12"><vh>skip_parens</vh></v>
+<v t="ekr.20040713150856.13"><vh>skip_pascal_begin_end</vh></v>
+<v t="ekr.20040713150856.14"><vh>skip_pascal_block_comment</vh></v>
+<v t="ekr.20040713150856.15"><vh>skip_pascal_string : called by tangle</vh></v>
+<v t="ekr.20040713150856.20"><vh>skip_python_string</vh></v>
+<v t="ekr.20040713150856.21"><vh>skip_string : called by tangle</vh></v>
+<v t="ekr.20040713150856.22"><vh>skip_to_semicolon</vh></v>
+</v>
+<v t="ekr.20040713150856.24"><vh>Scanners: no error messages</vh>
+<v t="ekr.20040713150856.25"><vh>escaped</vh></v>
+<v t="ekr.20040713150856.26"><vh>find_line_start</vh></v>
+<v t="ekr.20040713150856.27"><vh>find_on_line</vh></v>
+<v t="ekr.20040713150856.28"><vh>is_c_id</vh></v>
+<v t="ekr.20040713150856.29"><vh>is_nl</vh></v>
+<v t="ekr.20040713150856.30"><vh>is_special</vh></v>
+<v t="ekr.20040713150856.31"><vh>is_ws &amp; is_ws_or_nl</vh></v>
+<v t="ekr.20040713150856.32"><vh>match</vh></v>
+<v t="ekr.20040713150856.33"><vh>match_c_word</vh></v>
+<v t="ekr.20040713150856.34"><vh>match_ignoring_case</vh></v>
+<v t="ekr.20040713150856.35"><vh>match_word</vh></v>
+<v t="ekr.20040713150856.36"><vh>skip_blank_lines</vh></v>
+<v t="ekr.20040713150856.37"><vh>skip_c_id</vh></v>
+<v t="ekr.20040713150856.38"><vh>skip_id</vh></v>
+<v t="ekr.20040713150856.39"><vh>skip_line, skip_to_end_of_line</vh></v>
+<v t="ekr.20040713150856.40" a="E"><vh>skip_long</vh></v>
+<v t="ekr.20040713150856.41"><vh>skip_matching_delims</vh></v>
+<v t="ekr.20040713150856.42"><vh>skip_nl</vh></v>
+<v t="ekr.20040713150856.43"><vh>skip_non_ws</vh></v>
+<v t="ekr.20040713150856.44"><vh>skip_pascal_braces</vh></v>
+<v t="ekr.20040713150856.45"><vh>skip_to_char</vh></v>
+<v t="ekr.20040713150856.46"><vh>skip_ws, skip_ws_and_nl</vh></v>
+</v>
+<v t="ekr.20040713150856.47"><vh>splitLines &amp; joinLines</vh></v>
+</v>
+</v>
+<v t="ekr.20040713131350"><vh>-before-</vh>
+<v t="ekr.20040713132127.1"><vh>igrep.el</vh>
+<v t="ekr.20040713132127.2"><vh>provide</vh></v>
+<v t="ekr.20040713132127.3"><vh>const igrep-version</vh></v>
+<v t="ekr.20040713132127.4"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.5"><vh>var igrep-options</vh></v>
+<v t="ekr.20040713132127.6"><vh>put</vh></v>
+<v t="ekr.20040713132127.7"><vh>var igrep-read-options</vh></v>
+<v t="ekr.20040713132127.8"><vh>put</vh></v>
+<v t="ekr.20040713132127.9"><vh>var igrep-read-multiple-files</vh></v>
+<v t="ekr.20040713132127.10"><vh>put</vh></v>
+<v t="ekr.20040713132127.11"><vh>var igrep-expression-default</vh></v>
+<v t="ekr.20040713132127.12"><vh>put</vh></v>
+<v t="ekr.20040713132127.13"><vh>var igrep-files-default</vh></v>
+<v t="ekr.20040713132127.14"><vh>put</vh></v>
+<v t="ekr.20040713132127.15"><vh>var igrep-verbose-prompts</vh></v>
+<v t="ekr.20040713132127.16"><vh>put</vh></v>
+<v t="ekr.20040713132127.17"><vh>var igrep-insert-default-key</vh></v>
+<v t="ekr.20040713132127.18"><vh>put</vh></v>
+<v t="ekr.20040713132127.19"><vh>var igrep-save-buffers</vh></v>
+<v t="ekr.20040713132127.20"><vh>put</vh></v>
+<v t="ekr.20040713132127.21"><vh>var igrep-null-device</vh></v>
+<v t="ekr.20040713132127.22"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.23"><vh>var igrep-program</vh></v>
+<v t="ekr.20040713132127.24" a="M"><vh>var igrep-expression-option</vh></v>
+<v t="ekr.20040713132127.25"><vh>var igrep-program-table</vh></v>
+<v t="ekr.20040713132127.26"><vh>var igrep-use-zgrep</vh></v>
+<v t="ekr.20040713132127.27"><vh>var igrep-find</vh></v>
+<v t="ekr.20040713132127.28"><vh>var igrep-find-program</vh></v>
+<v t="ekr.20040713132127.29"><vh>var igrep-find-prune-clause</vh></v>
+<v t="ekr.20040713132127.30"><vh>var igrep-find-file-clause</vh></v>
+<v t="ekr.20040713132127.31"><vh>var igrep-find-use-xargs</vh></v>
+<v t="ekr.20040713132127.32"><vh>var igrep-program-default</vh></v>
+<v t="ekr.20040713132127.33"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.34"><vh>var igrep-expression-history</vh></v>
+<v t="ekr.20040713132127.35"><vh>var igrep-files-history</vh></v>
+<v t="ekr.20040713132127.36"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.37"><vh>igrep-insinuate</vh></v>
+<v t="ekr.20040713132127.38"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.39"><vh>igrep</vh></v>
+<v t="ekr.20040713132127.40"><vh>defmacro</vh></v>
+<v t="ekr.20040713132127.41"><vh>igrep-find</vh></v>
+<v t="ekr.20040713132127.42"><vh>defmacro</vh></v>
+<v t="ekr.20040713132127.43"><vh>igrep-visited-files</vh></v>
+<v t="ekr.20040713132127.44"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.45"><vh>dired-do-igrep</vh></v>
+<v t="ekr.20040713132127.46"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.47"><vh>dired-do-igrep-find</vh></v>
+<v t="ekr.20040713132127.48"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.49"><vh>Buffer-menu-igrep</vh></v>
+<v t="ekr.20040713132127.50"><vh>unnamed data</vh></v>
+<v t="ekr.20040713132127.51"><vh>igrep-dired-file-current-word</vh></v>
+<v t="ekr.20040713132127.52"><vh>igrep-buffer-file-name-pattern</vh></v>
+<v t="ekr.20040713132127.53"><vh>igrep-dired-directory-file-pattern</vh></v>
+<v t="ekr.20040713132127.54"><vh>defsubst</vh></v>
+<v t="ekr.20040713132127.55"><vh>igrep-format-find-command</vh></v>
+<v t="ekr.20040713132127.56"><vh>defmacro</vh></v>
+<v t="ekr.20040713132127.57"><vh>igrep-default-expression</vh></v>
+<v t="ekr.20040713132127.58"><vh>igrep-default-files</vh></v>
+<v t="ekr.20040713132127.59"><vh>defsubst</vh></v>
+<v t="ekr.20040713132127.60"><vh>igrep-read-args</vh></v>
+<v t="ekr.20040713132127.61"><vh>igrep-read-program</vh></v>
+<v t="ekr.20040713132127.62"><vh>igrep-read-options</vh></v>
+<v t="ekr.20040713132127.63"><vh>igrep-read-expression</vh></v>
+<v t="ekr.20040713132127.64"><vh>igrep-insert-default-expression</vh></v>
+<v t="ekr.20040713132127.65"><vh>igrep-insert-default-files</vh></v>
+<v t="ekr.20040713132127.66"><vh>defsubst</vh></v>
+<v t="ekr.20040713132127.67"><vh>igrep-read-files</vh></v>
+<v t="ekr.20040713132127.68"><vh>igrep-read-file-name</vh></v>
+<v t="ekr.20040713132127.69"><vh>unnamed data</vh></v>
+</v>
+</v>
+<v t="ekr.20040713131350.1"><vh>-after-</vh></v>
+<v t="ekr.20040713130853.8" a="E" tnodeList="ekr.20040713130853.8,ekr.20040713150037,ekr.20040713150037.1,ekr.20040713150712,ekr.20040713173923,ekr.20040713174349,ekr.20040713164604,ekr.20040713180208,ekr.20040713144036,ekr.20040713144036.1,ekr.20040713152809,ekr.20040713193437,ekr.20040713161629.1,ekr.20040713194021,ekr.20040713152318,ekr.20040713151556.1,ekr.20040713160302,ekr.20040713150314.1,ekr.20040713144926,ekr.20040713154118,ekr.20040713200126,ekr.20040713211010,ekr.20040713161629.2,ekr.20040713205718,ekr.20040713155152,ekr.20040713155152.1"><vh>@file ../src/elisp2py.py</vh>
+<v t="ekr.20040713150037"><vh>class tok</vh>
+<v t="ekr.20040713150037.1" a="E"><vh>tok.__init__</vh></v>
+<v t="ekr.20040713150712"><vh>tok.copy</vh></v>
+<v t="ekr.20040713173923"><vh>tok.match</vh></v>
+<v t="ekr.20040713174349"><vh>tok.dump</vh></v>
+<v t="ekr.20040713164604"><vh>tok.dumpWs</vh></v>
+<v t="ekr.20040713180208"><vh>tok.toString</vh></v>
+</v>
+<v t="ekr.20040713144036" a="E"><vh>class elisp2pyClass</vh>
+<v t="ekr.20040713144036.1"><vh>e.__init__</vh></v>
+<v t="ekr.20040713152809"><vh>Utils</vh>
+<v t="ekr.20040713193437"><vh>deleteTokens</vh></v>
+<v t="ekr.20040713161629.1"><vh>dump</vh>
+<v t="ekr.20040713194021"><vh>&lt;&lt; print headline &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040713152318"><vh>error &amp; warning</vh></v>
+<v t="ekr.20040713151556.1"><vh>findMatchingBracket</vh></v>
+<v t="ekr.20040713160302"><vh>findTokens</vh></v>
+<v t="ekr.20040713150314.1"><vh>replaceAll (not used yet)</vh></v>
+<v t="ekr.20040713144926"><vh>tokenize &amp; allies</vh>
+<v t="ekr.20040713154118"><vh>skipString</vh></v>
+</v>
+</v>
+<v t="ekr.20040713200126" a="E"><vh>Converters</vh>
+<v t="ekr.20040713211010"><vh>convert (main line)</vh></v>
+<v t="ekr.20040713161629.2" a="MTV"><vh>createPythonIndentation</vh></v>
+<v t="ekr.20040713205718"><vh>createIndentedBlock</vh></v>
+<v t="ekr.20040713155152"><vh>handleAllKeywords (old)</vh>
+<v t="ekr.20040713155152.1"><vh>handleKeyword</vh></v>
+</v>
+</v>
+</v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -5369,9 +5600,12 @@ c = g.top()
 c.checkAllPythonCode()</t>
 <t tx="ekr.20040713070526">@language python 
 
-import leoGlobals as g 
+import leoGlobals as g
+import leoTest
+reload(leoTest)
 
-c = g.top()
+c = g.top() ; p = c.currentPosition()
+u = leoTest.testUtils()
 
 dump = False 
 all = False 
@@ -5379,24 +5613,14 @@ all = False
 if all:
     c.prettyPrintAllPythonCode(dump=dump)
 else:
-    c.prettyPrintPythonCode(dump=dump)
-    
-c.redraw()</t>
-<t tx="ekr.20040713070526.1">@ This is a test of stuff.in doc parts.
-
-         I wonder what will happen.
-@c 
-
-def spam(self):
-    
-    if a==3:
-        print "Ä á Û"
-        
-class eggs:
-    
-    """ A typical doc string """
-    
-    @others </t>
+    # Warning: at present the before and after text is unprotected:
+    # Running Pretty Print on these nodes will negate the value of the test.
+    temp = u.findNodeInTree(p,"tempNode")
+    before = u.findNodeInTree(p,"before")
+    after = u.findNodeInTree(p,"after")
+    temp.scriptSetBodyString(before.bodyString())
+    c.prettyPrintPythonCode(p=temp,dump=dump)
+    assert temp.bodyString() == after.bodyString()</t>
 <t tx="ekr.20040713071919">@ This is    a test of stuff.in doc parts.
 
          I wonder           what will happen.
@@ -5412,5 +5636,2981 @@ class eggs:
     """ A typical doc string """
     
     @others</t>
+<t tx="ekr.20040713123617">@ This is a test of stuff.in doc parts.
+
+         I wonder what will happen.
+@c 
+
+def spam (self):
+    
+    if a==3:
+        print "Ä á Û"
+        
+class eggs:
+    
+    """ A typical doc string """
+    
+    @others </t>
+<t tx="ekr.20040713123617.1">@language python
+@tabwidth -4
+
+import leoGlobals as g
+import elisp2py
+import leoTest
+reload(leoTest)
+reload(elisp2py)
+
+c = g.top() ; p = c.currentPosition()
+u = leoTest.testUtils()
+before = u.findNodeInTree(p,"-before-")
+
+print '=' * 60
+for p in before.self_and_subtree_iter():
+    e = elisp2py.elisp2pyClass(c,p)
+    e.convert()</t>
+<t tx="ekr.20040713123828.1">@ This is a test of stuff.in doc parts.
+
+         I wonder what will happen.
+@c 
+
+def spam (self):
+    
+    if a==3:
+        print "Ä á Û"
+        
+class eggs:
+    
+    """ A typical doc string """
+    
+    @others </t>
+<t tx="ekr.20040713130853"></t>
+<t tx="ekr.20040713130853.1">@ elisp2py converts elisp text into python text.  The conversion is not complete.  Nevertheless, elisp2py eliminates much of the tedious text manipulation that would otherwise be required.
+
+The following is a list of the translations performed by c2py.  These transformations are controlled by convertCodeList().
+
+I.  Prepass
+
+These translations happen before removing all curly braces.
+
+Suppose we are translating:
+
+    aTypeSpec aClass::aMethod(t1 v1,...,tn vn)
+    {
+        body
+    }
+
+1. Translates the function prototype, i.e., translates:
+
+    aTypeSpec aClass::aMethod(t1 v1,...,tn vn)
+to:
+    def aMethod(v1,...vn):
+
+As a special case, c2py translates:
+
+    aTypeSpec aClass::aClass(t1 v1,...,tn vn)
+to:
+    aClass.__init__(t1 v1,...,tn vn)
+
+Yes, I know, aClass.__init__ isn't proper Python, but retaining the class name is useful.
+
+2. Let t denote any member of typeList or classList.
+
+    a) Removes all casts of the form (t) or (t*) or (t**), etc.
+    b) Converts t x, t *x, t **x, etc. to x.
+    c) Converts x = new t(...) to x = t(...)
+    d) For all i in ivarsDict[aClass] converts this -&gt; i to self.i
+    e) For all i in ivarsDict[aClass] converts i to self.i
+
+3. Converts &lt; &lt; x &gt; &gt; = to @c.  This Leo-specific translation is not done when translating files.
+
+II.  Main Pass
+
+This pass does the following simple translations everywhere except in comments and strings.
+
+Changes all -&gt; to .
+Changes all this.self to self (This corrects problems during the prepass.)
+Removes all curly braces
+Changes all #if to if
+Changes all else if to elif
+Changes all #else to else:
+Changes all else to else:
+Removes all #endif
+Changes all &amp;&amp; to and
+Changes all || to or
+Changes all TRUE to True
+Changes all FALSE to False
+Changes all NULL to None
+Changes all this to self
+Changes all @code to @c.  This Leo-specific translation is not done when translating files.
+
+III.  Complex Pass
+
+This pass attempts more complex translations.
+
+Converts if ( x ) to if x:
+Converts elif ( x ) to elif x:
+Converts while ( x ) to while x:
+Converts for ( x ; y ; z ) to for x SEMI y SEMI z:
+
+remove all semicolons.
+
+IV.  Final Pass
+
+This pass completes the translation.
+
+Removes all semicolons.
+Removes @c if it starts the text.  This Leo-specific translation is not done when translating files.
+Removes all blank lines.
+Removes excess whitespace from all lines, leaving leading whitespace unchanged.
+Replaces C/C++ comments by Python comments.
+Removes trailing whitespace from all lines.
+</t>
+<t tx="ekr.20040713130853.2">@ Strategy and Performance
+
+The speed of elisp2py is unimportant.  We don't care about the memory used because we translate only small pieces of text at a time.
+
+We can do body[i:j] = x, regardless of len(x).  We can also do del body[i:j] to delete characters.
+
+We scan repeatedly through the text.  Using many passes greatly simplifies the code and does not slow down elisp2py significantly.
+
+The script does not scan within strings or comments.  The idiom to handle such scans is the following:
+
+def someScan(body):
+    i = 0
+    while i &lt; body(len):
+        if isStringOrComment(body,i):
+            i = skipStringOrComment(body,i)
+        elif &lt;&lt; found what we are looking for ? &gt;&gt; :
+            &lt;&lt; convert what we are looking for, setting i &gt;&gt;
+        else: i += 1
+
+That's about all there is to it.
+</t>
+<t tx="ekr.20040713130853.3">@ Please change the following lists so they contain the types and classes used by your program.
+
+c2py removes all type definitions correctly; it converts
+    new aType(...)
+to
+    aType(...)
+@c
+
+classList = [
+    "vnode", "tnode", "Commands",
+    "wxString", "wxTreeCtrl", "wxTextCtrl", "wxSplitterWindow" ]
+    
+typeList = ["char", "void", "short", "long", "int", "double", "float"]
+
+@ Please change ivarsDict so it represents the instance variables (ivars) used by your program's classes.
+
+ivarsDict is a dictionary used to translate ivar i of class c to self.i.  It also translates this-&gt;i to self.i.
+@c
+    
+ivarsDict = {
+    "atFile": [ "mCommands", "mErrors", "mStructureErrors",
+        "mTargetFileName", "mOutputFileName", "mOutputStream",
+        "mStartSentinelComment", "mEndSentinelComment", "mRoot"],
+
+    "vnode": ["mCommands", "mJoinList", "mIconVal", "mTreeID", "mT", "mStatusBits"],
+
+    "tnode": ["mBodyString", "mBodyRTF", "mJoinHead", "mStatusBits", "mFileIndex",
+        "mSelectionStart", "mSelectionLength", "mCloneIndex"],
+        
+    "LeoFrame": ["mNextFrame", "mPrevFrame", "mCommands"],
+
+    "Commands": [
+        # public
+        "mCurrentVnode", "mLeoFrame", "mInhibitOnTreeChanged", "mMaxTnodeIndex",
+        "mTreeCtrl", "mBodyCtrl", "mFirstWindowAndNeverSaved",
+        #private
+        "mTabWidth", "mChanged", "mOutlineExpansionLevel", "mUsingClipboard",
+        "mFileName", "mMemoryInputStream", "mMemoryOutputStream", "mFileInputStream",
+        "mInputFile", "mFileOutputStream", "mFileSize", "mTopVnode", "mTagList",
+        "mMaxVnodeTag",
+        "mUndoType", "mUndoVnode", "mUndoParent", "mUndoBack", "mUndoN",
+        "mUndoDVnodes", "mUndoLastChild", "mUndoablyDeletedVnode" ]}</t>
+<t tx="ekr.20040713130853.4">testData = [ "\n@doc\n\
+This is a doc part: format, whilest, {};-&gt;.\n\
+&lt;&lt;\
+section def&gt;&gt;=\n\
+LeoFrame::LeoFrame(vnode *v, char *s, int i)\n\
+{\n\
+    // test ; {} /* */.\n\
+    #if 0 //comment\n\
+        if(gLeoFrameList)gLeoFrameList -&gt; mPrevFrame = this ;\n\
+        else\n\
+            this -&gt; mNextFrame = gLeoFrameList ;\n\
+    #else\n\
+        \n\
+        vnode *v = new vnode(a,b);\n\
+        Commands *commander = (Commands) NULL ; // after cast\n\
+        this -&gt; mPrevFrame = NULL ;\n\
+    #endif\n\
+    if (a==b)\n\
+        a = 2;\n\
+    else if (a ==c)\n\
+        a = 3;\n\
+    else return; \n\
+    /* Block comment test:\n\
+        if(2):while(1): end.*/\n\
+    for(int i = 1; i &lt; limit; ++i){\n\
+        mVisible = FALSE ;\n\
+        mOnTop = TRUE ;\n\
+    }\n\
+    // trailing ws.	 \n\
+    mCommands = new Commands(this, mTreeCtrl, mTextCtrl) ;\n\
+    gActiveFrame = this ;\n\
+}\n\
+    ", "&lt;&lt;" +
+"vnode methods &gt;&gt;=\n\
+\n\
+void vnode::OnCopyNode(wxCommandEvent&amp; WXUNUSED(event))\n\
+{\n\
+    mCommands -&gt; copyOutline();\n\
+}\n\
+\n@doc\n\
+another doc part if, then, else, -&gt; \n&lt;&lt;" +
+"vnode methods &gt;&gt;=\n\
+void vnode::OnPasteNode(wxCommandEvent&amp; WXUNUSED(event))\n\
+{\n\
+    mCommands -&gt; pasteOutline();\n\
+}\n" ]</t>
+<t tx="ekr.20040713130853.7">def speedTest(passes):
+
+    import time
+    file = r"c:\prog\LeoPy\LeoPy.leo"
+    f=open(file)
+    if not f:
+        print "not found: ", file
+        return
+    s=f.read()
+    f.close()
+    print "file:", file, " size:", len(s), " passes:", passes
+    print "speedTest start"
+    time1 = time.clock()
+    p = passes
+    while p &gt; 0:
+        n = len(s) ; i = 0 ; lines = 0
+        while -1 &lt; i &lt; n:
+            if s[i] == '\n':
+                lines += 1 ; i += 1
+            else:
+                i = s.find('\n',i) # _much_ faster than list-based-find.
+            continue
+            # match is about 9 times slower than simple test.
+            if s[i]=='\n': # match(s,i,'\n'): # 
+                i += 1
+            else:
+                i += 1
+        p -= 1
+    time2 = time.clock()
+    print "lines:", lines
+    print "speedTest done:"
+    print "elapsed time:", time2-time1
+    print "time/pass:", (time2-time1)/passes</t>
+<t tx="ekr.20040713130853.8">import leoGlobals as g
+import string
+
+tabWidth = 4 # how many blanks in a tab.
+printFlag = False
+doLeoTranslations,dontDoLeoTranslations = True,False
+
+gClassName = "" # The class name for the present function.  Used to modify ivars.
+gIvars = [] # List of ivars to be converted to self.ivar
+
+@others
+</t>
+<t tx="ekr.20040713130853.15">@ We separate the processing into two parts, 1) a leo-aware driver that iterates over @file trees and 2) a text-based part that processes one or more files or strings.
+</t>
+<t tx="ekr.20040713130853.16">def convertCurrentTree():
+
+    import c2py
+    import leo
+    import leoGlobals
+    c=leoGlobals.top()
+    v = c.currentVnode()
+    c2py.convertLeoTree(v,c)</t>
+<t tx="ekr.20040713130853.17">def convertLeoTree(v,c):
+
+    after=v.nodeAfterTree()
+    while v and v != after:
+        s=v.bodyString()
+        print "converting:", v.headString()
+        s=convertCStringToPython(s, doLeoTranslations )
+        v.setBodyStringOrPane(s)
+        v=v.threadNext()
+    c.Repaint() # for backward compatibility.
+    print "end of c2py"</t>
+<t tx="ekr.20040713130853.18">def convertCFileToPython(file):
+
+    f=open(file, 'r')
+    if not f: return
+    s = f.read()
+    f.close();
+    f=open(file + ".py", 'w')
+    if not f: return
+    s = convertCStringToPython(s, dontDoLeoTranslations )
+    f.write(s)
+    f.close()</t>
+<t tx="ekr.20040713130853.19"></t>
+<t tx="ekr.20040713130853.20">def convertCStringToPython(s, leoFlag):
+
+    # print "convertCStringToPython:start\n", s
+    firstPart = True
+    codeList = stringToList(s)
+    
+    if not leoFlag:
+        convertCodeList(codeList, firstPart, dontDoLeoTranslations)
+        return listToString(codeList)
+
+    outputList = []
+    i = 0
+    while i &lt; len(codeList):
+        j = skipCodePart(codeList,i)
+        if j &gt; i:
+            code = codeList[i:j]
+            convertCodeList(code, firstPart, doLeoTranslations)
+            i = j
+            #print "-----code:", listToString(code)
+            for item in code:
+                outputList.append(item)
+        firstPart = False # don't remove @c from here on.
+        j = skipDocPart(codeList,i)
+        if j &gt; i:
+            doc = codeList[i:j]
+            convertDocList(doc)
+            #print "-----doc:", listToString(doc)
+            i = j
+            for item in doc:
+                outputList.append(item)
+    
+    result = listToString(outputList)
+    global printFlag
+    if printFlag: print "-----:\n", result
+    return result</t>
+<t tx="ekr.20040713130853.21">def OLDconvert(self,list, firstPart, leoFlag):
+    #first
+    convertLeadingBlanks(list)
+    if leoFlag:
+        replaceSectionDefs(list)
+    mungeAllFunctions(list)
+    #next
+    safeReplace(list, " -&gt; ", '.')
+    safeReplace(list, "-&gt;", '.')
+    safeReplace(list, " . ", '.')
+    safeReplace(list, "this.self", "self")
+    safeReplace(list, "{", None)
+    safeReplace(list, "}", None)
+    safeReplace(list, "#if", "if")
+    safeReplace(list, "#else", "else")
+    safeReplace(list, "#endif", None)
+    safeReplace(list, "else if", "elif")
+    safeReplace(list, "else", "else:")
+    safeReplace(list, "&amp;&amp;", "and")
+    safeReplace(list, "||", "or")
+    safeReplace(list, "TRUE", "True")
+    safeReplace(list, "FALSE", "False")
+    safeReplace(list, "NULL", "None")
+    safeReplace(list, "this", "self")
+    safeReplace(list, "try", "try:")
+    safeReplace(list, "catch", "except:")
+    if leoFlag:
+        safeReplace(list, "@code", "@c")
+    #next
+    handleAllKeywords(list)
+    # after processing for keywords
+    removeSemicolonsAtEndOfLines(list)
+    #last
+    if firstPart and leoFlag: removeLeadingAtCode(list)
+    removeBlankLines(list)
+    removeExcessWs(list)
+    # your taste may vary: in Python I don't like extra whitespace
+    safeReplace(list, " :", ":") 
+    safeReplace(list, ", ", ",")
+    safeReplace(list, " ,", ",")
+    safeReplace(list, " (", "(")
+    safeReplace(list, "( ", "(")
+    safeReplace(list, " )", ")")
+    safeReplace(list, ") ", ")")
+    replaceComments(list) # should follow all calls to safeReplace
+    removeTrailingWs(list)
+    safeReplace(list, "\t ", "\t") # happens when deleting declarations.</t>
+<t tx="ekr.20040713130853.22">def convertDocList(docList):
+
+    # print "convertDocList:", docList
+    if matchWord(docList, 0, "@doc"):
+        i = skipWs(docList, 4)
+        if match(docList, i, "\n"):
+            i += 1
+        docList[0:i] = list("@ ")</t>
+<t tx="ekr.20040713130853.23">def skipDocPart(list, i):
+    
+    # print "skipDocPart", i
+    while i &lt; len(list):
+        if matchWord(list, i, "@code") or matchWord(list, i, "@c"):
+            break
+        elif isSectionDef(list,i):
+            break
+        else: i = skipPastLine(list, i)
+    return i</t>
+<t tx="ekr.20040713130853.24">def skipCodePart(codeList, i):
+    
+    # print "skipCodePart", i
+    if matchWord(codeList, i, "@doc") or matchWord(codeList, i, "@"):
+        return i
+    while i &lt; len(codeList):
+        if match(codeList, i, "//"):
+            i = skipPastLine(codeList,i)
+        elif match(codeList, i, "/*"):
+            i = skipCBlockComment(codeList,i)
+        elif match(codeList, i, '"') or match(codeList, i, "'"):
+            i = skipString(codeList,i)
+        elif match(codeList, i, "\n"):
+            i += 1
+            if matchWord(codeList, i, "@doc") or matchWord(codeList, i, "@"):
+                break
+        else: i += 1
+    return i</t>
+<t tx="ekr.20040713130853.27">def convertLeadingBlanks(list):
+
+    global tabWidth
+    if tabWidth &lt; 2: return
+    i = 0
+    while i &lt; len(list):
+        n = 0
+        while i &lt; len(list) and list[i] == ' ':
+            n += 1 ; i += 1
+            if n == tabWidth:
+                list[i-tabWidth:i] = ['\t']
+                i = i - tabWidth + 1
+                n = 0
+        i = skipPastLine(list, i)</t>
+<t tx="ekr.20040713130853.28">def findInList(list, i, findStringOrList):
+
+    findList = stringToList(findStringOrList)
+    
+    while i &lt; len(list):
+        if match(list, i, findList): return i
+        else: i += 1
+    return -1</t>
+<t tx="ekr.20040713130853.29">def findInCode(codeList, i, findStringOrList):
+
+    findList = stringToList(findStringOrList)
+    
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif match(codeList, i, findList):
+            return i
+        else: i += 1
+    return -1</t>
+<t tx="ekr.20040713130853.30"># We scan for a '{' at the top level that is preceeded by ')'
+# @code and &lt; &lt; x &gt; &gt; = have been replaced by @c
+def mungeAllFunctions(codeList):
+
+    prevSemi = 0 # Previous semicolon: header contains all previous text
+    i = 0
+    firstOpen = None
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+            prevSemi = i
+        elif match(codeList, i, '('):
+            if not firstOpen:
+                firstOpen = i
+            i += 1
+        elif match(codeList, i, '#'):
+            i = skipPastLine(codeList, i)
+            prevSemi = i
+        elif match(codeList, i, ';'):
+            i += 1
+            prevSemi = i
+        elif matchWord(codeList, i, "@code"):
+            i += 5
+            prevSemi = i # restart the scan
+        elif matchWord(codeList, i, "@c"):
+            i += 2 ; prevSemi = i # restart the scan
+        elif match(codeList, i, "{"):
+            i = handlePossibleFunctionHeader(codeList,i,prevSemi,firstOpen)
+            prevSemi = i ; firstOpen = None # restart the scan
+        else: i += 1</t>
+<t tx="ekr.20040713130853.31"># converts function header lines from c++ format to python format.
+# That is, converts
+# x1..nn w::y ( t1 z1,..tn zn) {
+# to
+# def y (z1,..zn): {
+
+def handlePossibleFunctionHeader(codeList, i, prevSemi, firstOpen):
+
+    assert(match(codeList,i,"{"))
+    prevSemi = skipWsAndNl(codeList, prevSemi)
+    close = prevNonWsOrNlChar(codeList, i)
+    if close &lt; 0 or codeList[close] != ')':
+        return 1 + skipToMatchingBracket(codeList, i)
+    if not firstOpen:
+        return 1 + skipToMatchingBracket(codeList, i)
+    close2 = skipToMatchingBracket(codeList, firstOpen)
+    if close2 != close:
+        return 1 + skipToMatchingBracket(codeList, i)
+    open = firstOpen
+    assert(codeList[open]=='(')
+    head = codeList[prevSemi:open]
+    # do nothing if the head starts with "if", "for" or "while"
+    k = skipWs(head,0)
+    if k &gt;= len(head) or not head[k] in string.letters:
+        return 1 + skipToMatchingBracket(codeList, i)
+    kk = skipPastWord(head,k)
+    if kk &gt; k:
+        headString = listToString(head[k:kk])
+        # C keywords that might be followed by '{'
+        # print "headString:", headString
+        if headString in [ "class", "do", "for", "if", "struct", "switch", "while"]:
+            return 1 + skipToMatchingBracket(codeList, i)
+    args = codeList[open:close+1]
+    k = 1 + skipToMatchingBracket(codeList,i)
+    body = codeList[i:k]
+    #print "head:", listToString(head)
+    #print "args:", listToString(args)
+    #print "body:", listToString(body)
+    #print "tot: ", listToString(codeList[prevSemi:k])
+    head = massageFunctionHead(head)
+    args = massageFunctionArgs(args)
+    body = massageFunctionBody(body)
+    #print "head2:", listToString(head)
+    #print "args2:", listToString(args)
+    #print "body2:", listToString(body)
+    #print "tot2: ", listToString(codeList[prevSemi:k])
+    result = []
+    for item in head:
+        result.append(item)
+    for item in args:
+        result.append(item)
+    for item in body:
+        result.append(item)
+    codeList[prevSemi:k] = result
+    return k</t>
+<t tx="ekr.20040713130853.32">def massageFunctionArgs(args):
+    global gClassName
+    assert(args[0]=='(')
+    assert(args[-1]==')')
+
+    result = ['('] ; lastWord = []
+    if gClassName:
+        for item in list("self,"): result.append(item) #can put extra comma
+
+    i = 1
+    while i &lt; len(args):
+        i = skipWsAndNl(args, i)
+        c = args[i]
+        if c in string.letters:
+            j = skipPastWord(args,i)
+            lastWord = args[i:j]
+            i = j
+        elif c == ',' or c == ')':
+            for item in lastWord:
+                result.append(item)
+            if lastWord != [] and c == ',':
+                result.append(',')
+            lastWord = []
+            i += 1
+        else: i += 1
+    if result[-1] == ',':
+        del result[-1]
+    result.append(')')
+    result.append(':')
+    # print "new args:", listToString(result)
+    return result</t>
+<t tx="ekr.20040713130853.33">def massageFunctionHead(head):
+
+    # print "head:", listToString(head)
+    result = []
+    prevWord = []
+    global gClassName ; gClassName = []
+    i = 0
+    while i &lt; len(head):
+        i = skipWsAndNl(head, i)
+        if i &lt; len(head) and head[i] in string.letters:
+            result = []
+            j = skipPastWord(head,i)
+            prevWord = head[i:j]
+            i = j
+            # look for ::word2
+            i = skipWs(head,i)
+            if match(head,i,"::"):
+                # Set the global to the class name.
+                gClassName = listToString(prevWord)
+                # print "class name:", gClassName
+                i = skipWs(head, i+2)
+                if i &lt; len(head) and (head[i]=='~' or head[i] in string.letters):
+                    j = skipPastWord(head,i)
+                    if head[i:j] == prevWord:
+                        for item in list("__init__"): result.append(item)
+                    elif head[i]=='~' and head[i+1:j] == prevWord:
+                        for item in list("__del__"): result.append(item)
+                    else:
+                        # for item in "::": result.append(item)
+                        for item in head[i:j]: result.append(item)
+                    i = j
+            else:
+                for item in prevWord:result.append(item)
+        else: i += 1
+        
+    finalResult = list("def ")
+    for item in result: finalResult.append(item)
+    # print "new head:", listToString(finalResult)
+    return finalResult</t>
+<t tx="ekr.20040713130853.34">def massageFunctionBody(body):
+
+    body = massageIvars(body)
+    body = removeCasts(body)
+    body = removeTypeNames(body)
+    return body</t>
+<t tx="ekr.20040713130853.35">def massageIvars(body):
+
+    if gClassName and ivarsDict.has_key(gClassName):
+        ivars = ivarsDict [ gClassName ]
+    else:
+        ivars = []
+    # print "key:ivars=", gClassName, ':', `ivars`
+
+    i = 0
+    while i &lt; len(body):
+        if isStringOrComment(body,i):
+            i = skipStringOrComment(body,i)
+        elif body[i] in string.letters:
+            j = skipPastWord(body,i)
+            word = listToString(body[i:j])
+            # print "looking up:", word
+            if word in ivars:
+                # replace word by self.word
+                # print "replacing", word, " by self.", word
+                word = "self." + word
+                word = list(word)
+                body[i:j] = word
+                delta = len(word)-(j-i)
+                i = j + delta
+            else: i = j
+        else: i += 1
+    return body</t>
+<t tx="ekr.20040713130853.36">def removeCasts(body):
+
+    i = 0
+    while i &lt; len(body):
+        if isStringOrComment(body,i):
+            i = skipStringOrComment(body,i)
+        elif match(body, i, '('):
+            start = i
+            i = skipWs(body, i+1)
+            if body[i] in string.letters:
+                j = skipPastWord(body,i)
+                word = listToString(body[i:j])
+                i = j
+                if word in classList or word in typeList:
+                    i = skipWs(body, i)
+                    while match(body,i,'*'):
+                        i += 1
+                    i = skipWs(body, i)
+                    if match(body,i,')'):
+                        i += 1
+                        # print "removing cast:", listToString(body[start:i])
+                        del body[start:i]
+                        i = start
+        else: i += 1
+    return body</t>
+<t tx="ekr.20040713130853.37"># Do _not_ remove type names when preceeded by new.
+
+def removeTypeNames(body):
+
+    i = 0
+    while i &lt; len(body):
+        if isStringOrComment(body,i):
+            i = skipStringOrComment(body,i)
+        elif matchWord(body, i, "new"):
+            i = skipPastWord(body,i)
+            i = skipWs(body,i)
+            # don't remove what follows new.
+            if body[i] in string.letters:
+                i = skipPastWord(body,i)
+        elif body[i] in string.letters:
+            j = skipPastWord(body,i)
+            word = listToString(body[i:j])
+            if word in classList or word in typeList:
+                k = skipWs(body, j)
+                while match(body,k,'*'):
+                    k += 1 ; j = k
+                # print "Deleting type name:", listToString(body[i:j])
+                del body[i:j]
+            else:
+                i = j
+        else: i += 1
+    return body</t>
+<t tx="ekr.20040713130853.38"># converts if ( x ) to if x:
+# converts while ( x ) to while x:
+def handleAllKeywords(codeList):
+
+    # print "handAllKeywords:", listToString(codeList)
+    i = 0
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif ( matchWord(codeList,i,"if") or
+            matchWord(codeList,i,"while") or
+            matchWord(codeList,i,"for") or
+            matchWord(codeList,i,"elif") ):
+            i = handleKeyword(codeList,i)
+        else:
+            i += 1
+    # print "handAllKeywords2:", listToString(codeList)</t>
+<t tx="ekr.20040713130853.39">def handleKeyword(codeList,i):
+
+    isFor = False
+    if (matchWord(codeList,i,"if")):
+        i += 2
+    elif (matchWord(codeList,i,"elif")):
+        i += 4
+    elif (matchWord(codeList,i,"while")):
+        i += 5
+    elif (matchWord(codeList,i,"for")):
+        i += 3
+        isFor = True
+    else: assert(0)
+    # Make sure one space follows the keyword
+    k = i
+    i = skipWs(codeList,i)
+    if k == i:
+        c = codeList[i]
+        codeList[i:i+1] = [ ' ', c ]
+        i += 1
+    # Remove '(' and matching ')' and add a ':'
+    if codeList[i] == "(":
+        j = removeMatchingBrackets(codeList,i)
+        if j &gt; i and j &lt; len(codeList):
+            c = codeList[j]
+            codeList[j:j+1] = [":", " ", c]
+            j = j + 2
+        return j
+    return i</t>
+<t tx="ekr.20040713130853.40">def isWs(c):
+    return c == ' ' or c == '\t'
+    
+def isWsOrNl(c):
+    return c == ' ' or c == '\t' or c == '\n'</t>
+<t tx="ekr.20040713130853.41"># returns the ending index if i points to &lt; &lt; x &gt; &gt; =
+def isSectionDef(list, i):
+
+    i = skipWs(list,i)
+    if not match(list,i,"&lt;&lt;"): return False
+    while i &lt; len(list) and list[i] != '\n':
+        if match(list,i,"&gt;&gt;="): return i+3
+        else: i += 1
+    return False</t>
+<t tx="ekr.20040713130853.42">def isStringOrComment(list, i):
+
+    return match(list,i,"'") or match(list,i,'"') or match(list,i,"//") or match(list,i,"/*")</t>
+<t tx="ekr.20040713130853.43"># returns True if findList matches starting at codeList[i]
+
+def match (codeList, i, findStringOrList):
+
+    findList = stringToList(findStringOrList)
+    n = len(findList)
+    j = 0
+    while i+j &lt; len(codeList) and j &lt; len(findList):
+        if codeList[i+j] != findList[j]:
+            return False
+        else:
+            j += 1
+            if j == n:
+                return i+j
+    return False</t>
+<t tx="ekr.20040713130853.44">def matchWord (codeList, i, findStringOrList):
+
+    j = match(codeList,i,findStringOrList)
+    if not j:
+        return False
+    elif j &gt;= len(codeList):
+        return True
+    else:
+        c = codeList[j]
+        return not (c in string.letters or c in string.digits or c == '_')</t>
+<t tx="ekr.20040713130853.45">def prevNonWsChar(list, i):
+
+    i -= 1
+    while i &gt;= 0 and isWs(list[i]):
+        i -= 1
+    return i
+
+def prevNonWsOrNlChar(list, i):
+
+    i -= 1
+    while i &gt;= 0 and isWsOrNl(list[i]):
+        i -= 1
+    return i</t>
+<t tx="ekr.20040713130853.46">def removeAllCComments(list, delim):
+
+    i = 0
+    while i &lt; len(list):
+        if match(list,i,"'") or match(list,i,'"'):
+            i = skipString(list,i)
+        elif match(list,i,"//"):
+            j = skipPastLine(list,i)
+            print "deleting single line comment:", listToString(list[i:j])
+            del list[i:j]
+        elif match(list,i,"/*"):
+            j = skipCBlockComment(list,i)
+            print "deleting block comment:", listToString(list[i:j])
+            del list[i:j]
+        else:
+            i += 1</t>
+<t tx="ekr.20040713130853.47">def removeAllCSentinels(list, delim):
+
+    i = 0
+    while i &lt; len(list):
+        if match(list,i,"'") or match(list,i,'"'):
+            # string starts a line.
+            i = skipString(list,i)
+            i = skipPastLine(list,i)
+        elif match(list,i,"/*"):
+            # block comment starts a line
+            i = skipCBlockComment(list,i)
+            i = skipPastLine(line,i)
+        elif match(list,i,"//@"):
+            j = skipPastLine(list,i)
+            print "deleting sentinel:", listToString(list[i:j])
+            del list[i:j]
+        else:
+            i = skipPastLine(list,i)</t>
+<t tx="ekr.20040713130853.48">def removeAllPythonComments(list, delim):
+
+    i = 0
+    while i &lt; len(list):
+        if match(list,i,"'") or match(list,i,'"'):
+            i = skipString(list,i)
+        elif match(list,i,"#"):
+            j = skipPastLine(list,i)
+            print "deleting comment:", listToString(list[i:j])
+            del list[i:j]
+        else:
+            i += 1</t>
+<t tx="ekr.20040713130853.49">def removeAllPythonSentinels(list, delim):
+
+    i = 0
+    while i &lt; len(list):
+        if match(list,i,"'") or match(list,i,'"'):
+            # string starts a line.
+            i = skipString(list,i)
+            i = skipPastLine(list,i)
+        elif match(list,i,"#@"):
+            j = skipPastLine(list,i)
+            print "deleting sentinel:", listToString(list[i:j])
+            del list[i:j]
+        else:
+            i = skipPastLine(list,i)</t>
+<t tx="ekr.20040713130853.50">def removeAtRoot (codeList):
+
+    i = skipWs(codeList, 0)
+    if matchWord(codeList,i,"@root"):
+        j = skipPastLine(codeList,i)
+        del codeList[i:j]
+
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif match(codeList,i,"\n"):
+            i = skipWs(codeList, i+1)
+            if matchWord (codeList,i,"@root"):
+                j = skipPastLine(codeList,i)
+                del codeList[i:j]
+        else: i += 1
+</t>
+<t tx="ekr.20040713130853.51">def removeBlankLines(codeList):
+
+    i = 0
+    while i &lt; len(codeList):
+        j = i
+        while j &lt; len(codeList) and (codeList[j]==" " or codeList[j]=="\t"):
+            j += 1
+        if j== len(codeList) or codeList[j] == '\n':
+            del codeList[i:j+1]
+        else:
+            oldi = i
+            i = skipPastLine(codeList,i)</t>
+<t tx="ekr.20040713130853.52">def removeExcessWs(codeList):
+
+    i = 0
+    i = removeExcessWsFromLine(codeList,i)
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif match(codeList,i,'\n'):
+            i += 1
+            i = removeExcessWsFromLine(codeList,i)
+        else: i += 1</t>
+<t tx="ekr.20040713130853.53">def removeExcessWsFromLine(codeList,i):
+
+    assert(i==0 or codeList[i-1] == '\n')
+    i = skipWs(codeList,i)
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i): break # safe
+        elif match(codeList, i, '\n'): break
+        elif match(codeList, i, ' ') or match(codeList, i, '\t'):
+            # Replace all whitespace by one blank.
+            k = i
+            i = skipWs(codeList,i)
+            codeList[k:i] = [' ']
+            i = k + 1 # make sure we don't go past a newline!
+        else: i += 1
+    return i</t>
+<t tx="ekr.20040713130853.54">def removeLeadingAtCode(codeList):
+
+    i = skipWsAndNl(codeList,0)
+    if matchWord(codeList,i,"@code"):
+        i = skipWsAndNl(codeList,5)
+        del codeList[0:i]
+    elif matchWord(codeList,i,"@c"):
+        i = skipWsAndNl(codeList,2)
+        del codeList[0:i]</t>
+<t tx="ekr.20040713130853.55">def removeMatchingBrackets(codeList, i):
+
+    j = skipToMatchingBracket(codeList, i)
+    if j &gt; i and j &lt; len(codeList):
+        # print "del brackets:", listToString(codeList[i:j+1])
+        c = codeList[j]
+        if c == ')' or c == ']' or c == '}':
+            del codeList[j:j+1]
+            del codeList[i:i+1]
+            # print "returning:", listToString(codeList[i:j])
+            return j - 1
+        else: return j + 1
+    else: return j</t>
+<t tx="ekr.20040713130853.56">def removeSemicolonsAtEndOfLines(list):
+
+    i = 0
+    while i &lt; len(list):
+        if isStringOrComment(list,i):
+            i = skipStringOrComment(list,i)
+        elif list[i] == ';':
+            j = skipWs(list,i+1)
+            if j &gt;= len(list) or match(list,j,'\n') or match(list,j,'#') or match(list,j,"//"):
+                del list[i]
+            else: i += 1
+        else: i += 1</t>
+<t tx="ekr.20040713130853.57">def removeTrailingWs(list):
+
+    i = 0
+    while i &lt; len(list):
+        if isWs(list[i]):
+            j = i
+            i = skipWs(list,i)
+            assert(j &lt; i)
+            if i &gt;= len(list) or list[i] == '\n':
+                # print "removing trailing ws:", `i-j`
+                del list[j:i]
+                i = j
+        else: i += 1</t>
+<t tx="ekr.20040713130853.58"># Replaces all occurances of findString by changeString.
+# Deletes all occurances if change is None
+def replace(codeList, findString, changeString):
+
+    if len(findString)==0: return
+    findList = stringToList(findString)
+    changeList = stringToList(changeString)
+
+    i = 0
+    while i &lt; len(codeList):
+        if match(codeList, i, findList):
+            codeList[i:i+len(findList)] = changeList
+            i += len(changeList)
+        else: i += 1</t>
+<t tx="ekr.20040713130853.59"># For Leo we expect few block comments; doc parts are much more common.
+
+def replaceComments(codeList):
+
+    i = 0
+    if match(codeList, i, "//"):
+        codeList[0:2] = ['#']
+    while i &lt; len(codeList):
+        if match(codeList, i, "//"):
+            codeList[i:i+2] = ['#']
+            i = skipPastLine(codeList,i)
+        elif match(codeList, i, "/*"):
+            j = skipCBlockComment(codeList,i)
+            del codeList[j-2:j]
+            codeList[i:i+2] = ['#']
+            j -= 2 ; k = i ; delta = -1
+            while k &lt; j + delta :
+                if codeList[k]=='\n':
+                    codeList[k:k+1] = ['\n', '#', ' ']
+                    delta += 2 ; k += 3 # progress!
+                else: k += 1
+            i = j + delta
+        elif match(codeList, i, '"') or match(codeList, i, "'"):
+            i = skipString(codeList,i)
+        else: i += 1</t>
+<t tx="ekr.20040713130853.60"># Replaces &lt; &lt; x &gt; &gt; = by @c (at the start of lines).
+def replaceSectionDefs(codeList):
+
+    i = 0
+    j = isSectionDef(codeList,i)
+    if j &gt; 0: codeList[i:j] = list("@c ")
+
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif match(codeList,i,"\n"):
+            i += 1
+            j = isSectionDef(codeList,i)
+            if j &gt; i: codeList[i:j] = list("@c ")
+        else: i += 1</t>
+<t tx="ekr.20040713130853.61"># Replaces occurances of findString by changeString outside of C comments and strings.
+# Deletes all occurances if change is None.
+def safeReplace(codeList, findString, changeString):
+
+    if len(findString)==0: return
+    findList = stringToList(findString)
+    changeList = stringToList(changeString)
+    i = 0
+    if findList[0] in string.letters: #use matchWord
+        while i &lt; len(codeList):
+            if isStringOrComment(codeList,i):
+                i = skipStringOrComment(codeList,i)
+            elif matchWord(codeList, i, findList):
+                codeList[i:i+len(findList)] = changeList
+                i += len(changeList)
+            else: i += 1
+    else: #use match
+        while i &lt; len(codeList):
+            if match(codeList, i, findList):
+                codeList[i:i+len(findList)] = changeList
+                i += len(changeList)
+            else: i += 1</t>
+<t tx="ekr.20040713130853.62">def skipCBlockComment(codeList, i):
+
+    assert(match(codeList, i, "/*"))
+    i += 2
+
+    while i &lt; len(codeList):
+        if match(codeList, i, "*/"): return i + 2
+        else: i += 1
+    return i</t>
+<t tx="ekr.20040713130853.63">def skipPastLine(codeList, i):
+
+    while i &lt; len(codeList) and codeList[i] != '\n':
+        i += 1
+    if i &lt; len(codeList) and codeList[i] == '\n':
+        i += 1
+    return i</t>
+<t tx="ekr.20040713130853.64">def skipPastWord(list, i):
+
+    assert(list[i] in string.letters or list[i]=='~')
+    
+    # Kludge: this helps recognize dtors.
+    if list[i]=='~':
+        i += 1
+    
+    while i &lt; len(list) and (
+        list[i] in string.letters or
+        list[i] in string.digits or
+        list[i]=='_'):
+        i += 1
+    return i</t>
+<t tx="ekr.20040713130853.65">def skipString(codeList, i):
+
+    delim = codeList[i] # handle either single or double-quoted strings
+    assert(delim == '"' or delim == "'")
+    i += 1
+
+    while i &lt; len(codeList):
+        if codeList[i] == delim: return i + 1
+        elif codeList[i] == '\\': i += 2
+        else: i += 1
+    return i</t>
+<t tx="ekr.20040713130853.66">def skipStringOrComment(list,i):
+
+    if match(list,i,"'") or match(list,i,'"'):
+        return skipString(list,i)
+    if match(list, i, "//"):
+        return skipPastLine(list,i)
+    elif match(list, i, "/*"):
+        return skipCBlockComment(list,i)
+    else: assert(0)</t>
+<t tx="ekr.20040713130853.68">def skipWs(list, i):
+
+    while i &lt; len(list):
+        c = list[i]
+        if c == ' ' or c == '\t':
+            i += 1
+        else: break
+    return i
+    
+def skipWsAndNl(list, i):
+
+    while i &lt; len(list):
+        c = list[i]
+        if c == ' ' or c == '\t' or c == '\n':
+            i += 1
+        else: break
+    return i</t>
+<t tx="ekr.20040713131315">@killcolor
+
+
+indentation level depends on def, if, while, etc., not on parens.
+
+</t>
+<t tx="ekr.20040713131350"></t>
+<t tx="ekr.20040713131350.1"></t>
+<t tx="ekr.20040713132127.1">@ignore
+@language elisp
+</t>
+<t tx="ekr.20040713132127.2">;;; -*-unibyte: t;-*-
+
+;;;; igrep.el --- An improved interface to `grep` and `find`.
+
+;;; SCCS @(#)igrep.el	2.95
+
+;;; Description:
+;;; 
+;;; The `igrep' command is like `grep' except that it takes three
+;;; required arguments (PROGRAM, EXPRESSION, and FILES) and an optional
+;;; argument (OPTIONS) instead of just one argument (COMMAND).  The
+;;; analogous `egrep' and `fgrep' commands are also defined for
+;;; convenience.
+;;; 
+;;; The `igrep-find' command is like `igrep' except that it uses `find`
+;;; to recursively `grep` a directory.  The analogous `egrep-find' and
+;;; `fgrep-find' commands are also defined for convenience.
+;;; 
+;;; When called interactively, `igrep' and `igrep-find' (and their
+;;; analogues) provide defaults for the EXPRESSION and FILES arguments
+;;; based on the current word and the visited file name (if the
+;;; `igrep-expression-default' and `igrep-files-default' options are
+;;; set, respectively).  The `igrep-insert-default-key' option allows
+;;; the default value to be inserted into the minibuffer for editing;
+;;; since Emacs 20 provides that via the minibuffer history, it's only
+;;; enabled for older versions by default. Other options that control
+;;; the user interface are `igrep-read-options', `igrep-read-multiple-files',
+;;; `igrep-verbose-prompts', and `igrep-save-buffers'.
+;;; 
+;;; Besides the basic `igrep-program' and `igrep-find-program' global
+;;; variables, other variables control the syntax of the `grep` and
+;;; `find` shell commands that are executed: `igrep-options',
+;;; `igrep-expression-option', `igrep-find-prune-clause',
+;;; `igrep-find-file-clause', and `igrep-find-use-xargs'.
+;;; 
+;;; The `igrep-use-zgrep' user option controls whether the corresponding
+;;; GNU (gzip) "zPROGRAM" script is used, to `grep` compressed files.
+;;; Special minibuffer history lists are maintained for the EXPRESSION
+;;; and FILES arguments.
+;;; 
+;;; The `agrep' and `agrep-find' commands are interfaces to the
+;;; approximate `grep` utility, which is distributed with the `glimpse'
+;;; indexing and query tool (available from
+;;; &lt;URL:http://glimpse.cs.arizona.edu:1994/&gt;).
+;;; 
+;;; `grep' itself can be advised to provide the `igrep' interface when
+;;; it is invoked interactively (so that when it's called
+;;; programmatically, it still uses the original argument list), via the
+;;; `igrep-insinuate' command.  `igrep-insinuate' also defines
+;;; `grep-find' as an alias for `igrep-find', `dired-do-grep' and
+;;; `dired-do-grep-find' as aliases for `dired-do-igrep' and
+;;; `dired-do-igrep-find', and `Buffer-menu-grep' as an alias for
+;;; `Buffer-menu-igrep'.
+;;; 
+;;; When run interactively from Dired mode, the various `igrep' commands
+;;; provide defaults for the EXPRESSION and FILES arguments that are
+;;; based on the visited directory (including any inserted
+;;; subdirectories) and the current file.  The alternative
+;;; `dired-do-igrep' and `dired-do-igrep-find' commands respect the
+;;; `dired-do-*' command conventions: a prefix argument is interpreted
+;;; as the number of succeeding files to `grep`, otherwise all the
+;;; marked files are `grep`ed.
+;;; 
+;;; The `igrep-visited-files' command provides a simple way to `grep`
+;;; just those files that are being visited in buffers.  The
+;;; `Buffer-menu-igrep' command does the same thing, for buffers marked
+;;; for selection in Buffer Menu mode.
+
+;;; Copyright:
+;;; 
+;;; Copyright © 1994-1998,2000-2002 Kevin Rodgers
+;;; 
+;;; This program is free software; you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation; either version 2 of the License, or
+;;; at your option) any later version.
+;;; 
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;; 
+;;; You should have received a copy of the GNU General Public License
+;;; along with this program; if not, write to the Free Software
+;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+;;; 
+;;; Neither my former nor current employer (Martin Marietta and
+;;; Information Handling Services, respectively) has disclaimed any
+;;; copyright interest in igrep.el.
+;;; 
+;;; Kevin Rodgers &lt;kevinr@ihs.com&gt;          Lead Software Engineer
+;;; Information Handling Services           Electronic Systems Development
+;;; 15 Inverness Way East, M/S A201         GO BUFFS!
+;;; Englewood CO 80112-5776 USA             1+ (303) 397-2807[voice]/-2244[fax]
+
+;;; Installation:
+;;; 
+;;; 1. Put this file in a directory that is a member of load-path, and
+;;;    byte-compile it (e.g. with `M-x byte-compile-file') for better
+;;;    performance.  You can ignore any warnings about references to free
+;;;    variables and "not known to be defined" functions.
+;;; 2. Put these forms in default.el or ~/.emacs:
+;;;    (autoload 'igrep "igrep"
+;;;       "*Run `grep` PROGRAM to match EXPRESSION in FILES..." t)
+;;;    (autoload 'igrep-find "igrep"
+;;;       "*Run `grep` via `find`..." t)
+;;;    (autoload 'igrep-visited-files "igrep"
+;;;       "*Run `grep` ... on all visited files." t)
+;;;    (autoload 'dired-do-igrep "igrep"
+;;;       "*Run `grep` on the marked (or next prefix ARG) files." t)
+;;;    (autoload 'dired-do-igrep-find "igrep"
+;;;       "*Run `grep` via `find` on the marked (or next prefix ARG) directories." t)
+;;;    (autoload 'Buffer-menu-igrep "igrep"
+;;;      "*Run `grep` on the files visited in buffers marked with '&gt;'." t)
+;;;    (autoload 'igrep-insinuate "igrep"
+;;;      "Define `grep' aliases for the corresponding `igrep' commands." t)
+;;; 2. a. For completeness, you can add these forms as well:
+;;;    (autoload 'grep "igrep"
+;;;       "*Run `grep` PROGRAM to match EXPRESSION in FILES..." t)
+;;;    (autoload 'egrep "igrep"
+;;;       "*Run `egrep`..." t)
+;;;    (autoload 'fgrep "igrep"
+;;;       "*Run `fgrep`..." t)
+;;;    (autoload 'agrep "igrep"
+;;;       "*Run `agrep`..." t)
+;;;    (autoload 'grep-find "igrep"
+;;;       "*Run `grep` via `find`..." t)
+;;;    (autoload 'egrep-find "igrep"
+;;;       "*Run `egrep` via `find`..." t)
+;;;    (autoload 'fgrep-find "igrep"
+;;;       "*Run `fgrep` via `find`..." t)
+;;;    (autoload 'agrep-find "igrep"
+;;;       "*Run `agrep` via `find`..." t)
+;;; 3. If you are running Windows 95/NT, you should install findutils
+;;;    and grep from release 17.1 (or higher) of the Cygnus GNU-Win32
+;;;    distribution.  See &lt;URL:http://www.cygnus.com/misc/gnu-win32/&gt;.
+
+;;; Usage:
+;;; 
+;;; These igrep commands accept 1, 2, or 3 `C-u' prefix arguments:
+;;; 	M-x igrep		M-x igrep-find
+;;; 	M-x  grep		M-x  grep-find	[after `M-x igrep-insinuate']
+;;; 	M-x egrep		M-x egrep-find
+;;; 	M-x fgrep		M-x fgrep-find
+;;; 	M-x agrep		M-x agrep-find
+;;; 
+;;; These igrep commands accept a single `C-u' prefix argument:
+;;; 	M-x igrep-visited-files
+;;; 	M-x Buffer-menu-igrep	[in the *Buffer List* buffer]
+;;; 
+;;; These igrep commands interpret a prefix argument like the Emacs
+;;; `dired-do-*' commands:
+;;; 	M-x dired-do-igrep	M-x dired-do-igrep-find
+;;; 	M-x  dired-do-grep	M-x  dired-do-grep-find	[after `M-x
+;;; 							 igrep-insinuate']
+;;; 
+;;; These Emacs commands can be used after any igrep command:
+;;; 	C-x ` (M-x next-error)
+;;; 	C-c C-c (M-x compile-goto-error)	[in the *igrep* buffer]
+
+;;; Customization examples:
+;;; 
+;;; To ignore case by default:
+;;; 	(setq igrep-options "-i")
+;;; To search subdirectories by default:
+;;; 	(setq igrep-find t)
+;;; To search files with the GNU (gzip) zgrep script:
+;;; 	(setq igrep-use-zgrep t)
+;;; or define new igrep commands (this works for zegrep and zfgrep as well):
+;;; 	(igrep-define zgrep)		; M-x zgrep
+;;; 	(igrep-find-define zgrep)	; M-x zgrep-find
+;;; To search "*.[ch]" files by default in C mode:
+;;; 	(put 'igrep-files-default 'c-mode
+;;; 	     (lambda () "*.[ch]"))
+;;; To disable the default search expression and/or files pattern,
+;;; except for specific modes:
+;;; 	(setq igrep-expression-default 'ignore)
+;;; 	(setq igrep-files-default 'ignore)
+;;; To avoid exceeding some shells' limit on command argument length
+;;; (this only searches files in the current directory):
+;;; 	(setq igrep-find t
+;;; 	      igrep-find-prune-clause "-type d \\! -name .")
+
+;;; To do:
+;;; 
+;;; 1. Replace igrep-options with a table that maps igrep-program
+;;;    to the appropriate options.
+;;; 2. Generalize support for the -prune find clause (e.g. -fstype nfs).
+;;; 3. Provide support for `glimpse`.
+;;; 4. Add a menu interface.
+;;; 5. Port to Emacs 20 (custom).
+
+;;; Emacs Lisp Archive Entry:
+;;; Filename: igrep.el
+;;; Author: Kevin Rodgers &lt;kevinr@ihs.com&gt;
+;;; Version: 2.95
+;;; Description: An improved interface to `grep` and `find`.
+;;; Keywords: search
+;;; Last-Updated: 02/04/22
+
+
+;;; Package interface:
+
+(provide 'igrep)
+
+(require 'compile)			; compile-internal, grep-regexp-alist,
+					; grep-null-device
+
+(eval-when-compile
+  (require 'dired)			; dired-directory,
+					; dired-get-filename,
+					; dired-current-directory,
+					; dired-get-marked-files,
+					; dired-mark-get-files
+  (or (featurep 'ange-ftp)
+      (featurep 'efs)
+      (condition-case nil
+	  (load-library "ange-ftp")	; ange-ftp-ftp-name
+	(error nil))
+      (condition-case nil
+	  (load-library "efs")		; efs-ftp-path
+	(error nil)))
+  )
+
+</t>
+<t tx="ekr.20040713132127.3">(defconst igrep-version "2.95"
+  "Version of igrep.el")</t>
+<t tx="ekr.20040713132127.4">
+
+
+;;; User options:
+
+</t>
+<t tx="ekr.20040713132127.5">(defvar igrep-options nil
+
+  "*The options passed by `\\[igrep]' to `igrep-program', or nil.
+
+`-n' will automatically be passed to `igrep-program', to generate the
+output expected by `\\[next-error]' and `\\[compile-goto-error]'.
+`-e' will automatically be passed to `igrep-program', if it supports
+that option.")</t>
+<t tx="ekr.20040713132127.6">
+(put 'igrep-options 'variable-interactive
+     "xOptions (\"-xyz\" or nil): ")
+
+</t>
+<t tx="ekr.20040713132127.7">(defvar igrep-read-options nil
+  "*If non-nil, `\\[igrep]' always prompts for options;
+otherwise, it only prompts when 1 or 3 `C-u's are given as a prefix arg.")</t>
+<t tx="ekr.20040713132127.8">
+(put 'igrep-read-options 'variable-interactive
+     "XAlways prompt for options? (t or nil): ")
+
+</t>
+<t tx="ekr.20040713132127.9">(defvar igrep-read-multiple-files nil
+  "*If non-nil, `\\[igrep]' always prompts for multiple-files;
+otherwise, it only prompts when 2 or 3 `C-u's are given as a prefix arg.")</t>
+<t tx="ekr.20040713132127.10">
+(put 'igrep-read-multiple-files 'variable-interactive
+     "XAlways prompt for multiple files? (t or nil): ")
+
+</t>
+<t tx="ekr.20040713132127.11">(defvar igrep-expression-default 'current-word
+  "*If non-nil, a function that returns a default EXPRESSION for `\\[igrep]'.
+The function is called with no arguments and should return a string (or nil).
+
+A different function can be specified for any particular mode by specifying
+a value for that `major-mode' property; for example:
+	(put 'igrep-expression-default 'dired-mode
+	     'igrep-dired-file-current-word)")</t>
+<t tx="ekr.20040713132127.12">
+(put 'igrep-expression-default 'variable-interactive
+     "SProvide a default expression? (function or nil): ")
+(put 'igrep-expression-default 'dired-mode
+     'igrep-dired-file-current-word)
+
+</t>
+<t tx="ekr.20040713132127.13">(defvar igrep-files-default 'igrep-buffer-file-name-pattern
+  "*If non-nil, a function that returns the default FILES for `\\[igrep]'.
+The function is called with no arguments and should return a string,
+or a list of strings (or nil).
+
+A different function can be specified for any particular mode by specifying
+a value for that `major-mode' property; for example:
+	(put 'igrep-files-default 'dired-mode
+	     'igrep-dired-directory-file-pattern)")</t>
+<t tx="ekr.20040713132127.14">
+(put 'igrep-files-default 'variable-interactive
+     "SProvide a default file pattern? (function or nil): ")
+(put 'igrep-files-default 'dired-mode
+     'igrep-dired-directory-file-pattern)
+
+</t>
+<t tx="ekr.20040713132127.15">(defvar igrep-verbose-prompts t
+  "*If t, `\\[igrep]' prompts for arguments verbosely;
+if not t but non-nil, `\\[igrep]' prompts for arguments semi-verbosely;
+if nil, `\\[igrep]' prompts for arguments tersely.")</t>
+<t tx="ekr.20040713132127.16">
+(put 'igrep-verbose-prompts 'variable-interactive
+     "XPrompt verbosely? (t, 'semi, or nil): ")
+
+</t>
+<t tx="ekr.20040713132127.17">(defvar igrep-insert-default-key
+  (if (&lt; emacs-major-version 20) "\C-c\C-e")
+  "*The key used to insert the default argument in the minibuffer.
+In Emacs 20, the default is available via the minibuffer history \
+(\\&lt;minibuffer-local-map&gt;\\[next-history-element]).")</t>
+<t tx="ekr.20040713132127.18">
+(put 'igrep-insert-default-key 'variable-interactive
+     "kSet key to insert the default `\\[igrep]' argument in the minibuffer: ")
+
+</t>
+<t tx="ekr.20040713132127.19">(defvar igrep-save-buffers 'query
+  "*If t, `\\[igrep]' first saves each modified file buffer;
+if not t but non-nil, `\\[igrep]' offers to save each modified file buffer.")</t>
+<t tx="ekr.20040713132127.20">
+(put 'igrep-save-buffers 'variable-interactive
+     "XSave modified buffers? (t, 'query, or nil): ")
+
+
+;;; User variables:
+
+</t>
+<t tx="ekr.20040713132127.21">(defvar igrep-null-device
+  (cond ((boundp 'grep-null-device) grep-null-device) ; Emacs 19
+	((boundp 'null-device) null-device)))</t>
+<t tx="ekr.20040713132127.22"> ; Emacs 20
+
+</t>
+<t tx="ekr.20040713132127.23">(defvar igrep-program "grep"
+  "The default program run by `\\[igrep]' and `\\[igrep-find]'.
+It must accept a `grep` expression argument and one or more file names, plus
+the \"-n\" option.
+If nil, `\\[igrep]' prompts for the program to run.")</t>
+<t tx="ekr.20040713132127.24">(defvar igrep-expression-option
+  (if (equal (call-process igrep-program nil nil nil
+			   "-e" "foo" igrep-null-device)
+	     1)
+      "-e")
+  "If non-nil, the option used to specify the EXPRESSION argument to `\\[igrep]',
+to protect an initial `-' from option processing.")</t>
+<t tx="ekr.20040713132127.25">(defvar igrep-program-table		; referenced by igrep-use-zgrep
+  (let ((exec-directories exec-path)
+	(program-obarray (make-vector 11 0)))
+    (while exec-directories
+      (if (and (car exec-directories)
+	       (file-directory-p (car exec-directories))
+	       (file-readable-p (car exec-directories)))
+	  (let ((grep-programs
+		 (directory-files (car exec-directories)
+				  nil "grep\\(\\.exe\\)?\\'")))
+	    (while grep-programs
+	      ;; Check `(file-executable-p (car grep-programs))'?
+	      (if (save-match-data
+		    (string-match "\\.exe\\'" (car grep-programs)))
+		  (intern (substring (car grep-programs) 0 -4) program-obarray)
+		(intern (car grep-programs) program-obarray))
+	      (setq grep-programs (cdr grep-programs)))))
+      (setq exec-directories (cdr exec-directories)))
+    program-obarray)
+  "An obarray of available `grep` programs, passed by `igrep-read-program'
+to `completing-read' when `igrep-program' is nil.")</t>
+<t tx="ekr.20040713132127.26">(defvar igrep-use-zgrep
+  (if (intern-soft "zgrep" igrep-program-table)
+      'files)
+  "If t, `\\[igrep]' searches files using the GNU (gzip) `zPROGRAM` script;
+If not t but non-nil, `\\[igrep]' searches compressed FILES using `zPROGRAM`;
+if nil, `\\[igrep]' searches files with `PROGRAM`.")</t>
+<t tx="ekr.20040713132127.27">(defvar igrep-find nil
+  "If non-nil, `\\[igrep]' searches directories using `find`.
+See `igrep-find'.")</t>
+<t tx="ekr.20040713132127.28">(defvar igrep-find-program "find"
+  "The program run by `\\[igrep-find]'.")</t>
+<t tx="ekr.20040713132127.29">(defvar igrep-find-prune-clause
+  (if (equal (call-process igrep-find-program nil nil nil
+			   igrep-null-device "-prune")
+	     0)
+      (format "-type d %s -name RCS -o -name CVS -o -name SCCS %s"
+	      (shell-quote-argument "(")
+	      (shell-quote-argument ")")))
+  "The `find` clause used to prune directories, or nil;
+see `igrep-find'.")</t>
+<t tx="ekr.20040713132127.30">(defvar igrep-find-file-clause
+  (format "-type f %s -name %s %s -name %s %s -name %s" ; -type l
+	  (shell-quote-argument "!")
+	  (shell-quote-argument "*~")	; Emacs backup
+	  (shell-quote-argument "!")
+	  (shell-quote-argument "*,v")	; RCS file
+	  (shell-quote-argument "!")
+	  (shell-quote-argument "s.*"))	; SCCS file
+  "The `find` clause used to filter files passed to `grep`, or nil;
+see `igrep-find'.")</t>
+<t tx="ekr.20040713132127.31">(defvar igrep-find-use-xargs
+  (if (equal (call-process igrep-find-program nil nil nil
+			   igrep-null-device "-print0")
+	     0)
+      'gnu)
+  "If `gnu', `\\[igrep-find]' executes
+	`find ... -print0 | xargs -0 -e grep ...`;
+if not `gnu' but non-nil, `\\[igrep-find]' executes
+	`find ... -print | xargs -e grep ...`;
+if nil, `\\[igrep-find]' executes
+	`find ... -exec grep ...`.")</t>
+<t tx="ekr.20040713132127.32">(defvar igrep-program-default "grep"
+  "The default `grep` program, passed by `igrep-read-program'
+to `completing-read' when `igrep-program' is nil.")</t>
+<t tx="ekr.20040713132127.33">
+
+
+;;; Internal variables:
+
+</t>
+<t tx="ekr.20040713132127.34">(defvar igrep-expression-history '()
+  "The minibuffer history list for `\\[igrep]'s EXPRESSION argument.")</t>
+<t tx="ekr.20040713132127.35">(defvar igrep-files-history '()
+  "The minibuffer history list for `\\[igrep]'s FILES argument.")</t>
+<t tx="ekr.20040713132127.36">
+
+
+;;; Commands:
+
+;;;###autoload
+</t>
+<t tx="ekr.20040713132127.37">(defun igrep-insinuate (&amp;optional override)
+  "Define `grep' aliases for the corresponding `igrep' commands.
+With a prefix arg, override the current `grep` command definitions."
+  (interactive "P")
+  (if override
+      (defalias 'grep 'igrep)
+    (defadvice grep (around igrep-interactive first (&amp;rest command-args)
+			    activate)
+      "If called interactively, use the `\\[igrep]' interface instead,
+where COMMAND-ARGS is (PROGRAM EXPRESSION FILES [OPTIONS]);
+if called programmatically, COMMAND-ARGS is still (COMMAND)."
+      (interactive (igrep-read-args))
+      (if (interactive-p)
+	  (apply 'igrep command-args)
+	ad-do-it)))
+  (if (or (not (fboundp 'grep-find))
+	  override)
+      (defalias 'grep-find 'igrep-find))
+  (if (or (not (fboundp 'dired-do-grep))
+	  override)
+      (defalias 'dired-do-grep 'dired-do-igrep))
+  (if (or (not (fboundp 'dired-do-grep-find))
+	  override)
+      (defalias 'dired-do-grep-find 'dired-do-igrep-find))
+  (if (or (not (fboundp 'Buffer-menu-grep))
+	  override)
+      (defalias 'Buffer-menu-grep 'Buffer-menu-igrep)))</t>
+<t tx="ekr.20040713132127.38">
+
+;;;###autoload
+</t>
+<t tx="ekr.20040713132127.39">(defun igrep (program expression files &amp;optional options)
+  "*Run `grep` PROGRAM to match EXPRESSION in FILES.
+The output is displayed in the *igrep* buffer, which `\\[next-error]' and
+`\\[compile-goto-error]' parse to find each line of matched text.
+
+PROGRAM may be nil, in which case it defaults to `igrep-program'.
+
+EXPRESSION is automatically quoted by `shell-quote-argument'.
+
+FILES is either a file name pattern (expanded by the shell named by
+`shell-file-name') or a list of file name patterns.
+
+Optional OPTIONS is also passed to PROGRAM; it defaults to `igrep-options'.
+
+If a prefix argument \
+\(`\\[universal-argument]') \
+is given when called interactively,
+or if `igrep-read-options' is set, OPTIONS is read from the minibuffer.
+
+If two prefix arguments \
+\(`\\[universal-argument] \\[universal-argument]') \
+are given when called interactively,
+or if `igrep-read-multiple-files' is set, FILES is read from the minibuffer
+multiple times.
+
+If three prefix arguments \
+\(`\\[universal-argument] \\[universal-argument] \\[universal-argument]') \
+are given when called interactively,
+or if `igrep-read-options' and `igrep-read-multiple-files' are set,
+OPTIONS is read and FILES is read multiple times.
+
+If `igrep-find' is non-nil, the directory or directories
+containing FILES is recursively searched for files whose name matches
+the file name component of FILES (and whose contents match EXPRESSION)."
+  (interactive
+   (igrep-read-args))
+  (if (null program)
+      (setq program (or igrep-program "grep")))
+  (if (null options)
+      (setq options igrep-options))
+  (if (not (listp files))		; (stringp files)
+      (setq files (list files)))
+  (if (and (member ?~ (mapcar 'string-to-char files))
+	   (save-match-data
+	     (string-match "\\`[rj]?sh\\(\\.exe\\)?\\'"
+			   (file-name-nondirectory shell-file-name))))
+      ;; (restricted, job-control, or standard) Bourne shell doesn't expand ~:
+      (setq files
+	    (mapcar 'expand-file-name files)))
+  (let* ((use-zgrep (cond ((eq igrep-use-zgrep t))
+			  (igrep-use-zgrep
+			   (let ((files files)
+				 (compressed-p nil))
+			     (while (and files (not compressed-p))
+			       (if (save-match-data
+				     (string-match "\\.g?[zZ]\\'" (car files)))
+				   (setq compressed-p t))
+			       (setq files (cdr files)))
+			     compressed-p))
+			  (t nil)))
+	 (command (format "%s -n %s %s %s %s %s"
+			  (if (and use-zgrep
+				   (save-match-data
+				     (not (string-match "\\`z" program))))
+			      (setq program (concat "z" program))
+			    program)
+			  (or options "")
+			  (or igrep-expression-option
+			      (progn
+				(if (save-match-data
+				      (string-match "\\`-" expression))
+				    (setq expression (concat "\\" expression)))
+				""))
+			  (shell-quote-argument expression)
+			  (if igrep-find
+			      (if igrep-find-use-xargs
+				  ""
+				(shell-quote-argument "{}"))
+			    (mapconcat (lambda (file)
+					 (let ((dir (file-name-directory file)))
+					   (if dir
+					       (expand-file-name
+						(file-name-nondirectory file)
+						(shell-quote-argument dir))
+					     file)))
+				       files " "))
+			  igrep-null-device)))
+    (if igrep-find
+	(setq command
+	      (igrep-format-find-command command files)))
+    (cond ((eq igrep-save-buffers t) (save-some-buffers t))
+	  (igrep-save-buffers (save-some-buffers)))
+    (compile-internal command (format "No more %s matches" program)
+		      "igrep" nil grep-regexp-alist)))</t>
+<t tx="ekr.20040713132127.40">
+
+;; Analogue commands:
+
+(defmacro igrep-define (analogue-command &amp;rest igrep-bindings)
+  "Define ANALOGUE-COMMAND as an `igrep' analogue command.
+Optional (VARIABLE VALUE) arguments specify temporary bindings for the command."
+;;;  (interactive "SCommand: ") ; C-u =&gt; read bindings?
+  (let ((analogue-program (symbol-name analogue-command)))
+    `(defun ,analogue-command (&amp;rest igrep-args)
+       ,(format "*Run `%s` via `\\[igrep]'.
+All arguments (including prefix arguments, when called interactively)
+are handled by `igrep'."
+		analogue-program)
+       (interactive
+	(let ((igrep-program (if igrep-program ,analogue-program))
+	      (igrep-program-default ,analogue-program))
+	  (igrep-read-args)))
+       (let (,@ igrep-bindings)
+	 (apply 'igrep
+		(cond ((interactive-p) (car igrep-args))
+		      ((car igrep-args))
+		      (t ,analogue-program))
+		(cdr igrep-args))))))
+
+(igrep-define egrep)
+(igrep-define fgrep)
+(igrep-define agrep
+  (igrep-use-zgrep nil)
+  (igrep-expression-option "-e"))
+
+
+;; Recursive (`find`) commands:
+
+;;;###autoload
+</t>
+<t tx="ekr.20040713132127.41">(defun igrep-find (&amp;rest igrep-args)
+  "*Run `grep` via `find`; see `igrep' and `igrep-find'.
+All arguments (including prefix arguments, when called interactively)
+are handled by `igrep'."
+  (interactive
+   (let ((igrep-find t))
+     (igrep-read-args)))
+  (let ((igrep-find t))
+    (apply 'igrep igrep-args)))</t>
+<t tx="ekr.20040713132127.42">
+
+;; Analogue recursive (`find`) commands:
+
+(defmacro igrep-find-define (analogue-command &amp;rest igrep-bindings)
+  "Define ANALOGUE-COMMAND-find as an `igrep' analogue `find` command.
+Optional (VARIABLE VALUE) arguments specify temporary bindings for the command."
+;;;  (interactive "SCommand: ") ; C-u =&gt; read bindings?
+  (let ((analogue-program (symbol-name analogue-command)))
+    (setq analogue-command
+	  (intern (format "%s-find" analogue-command)))
+    `(defun ,analogue-command (&amp;rest igrep-args)
+       ,(format "*Run `%s` via `\\[igrep-find]'.
+All arguments (including prefix arguments, when called interactively)
+are handled by `igrep'."
+		analogue-program)
+       (interactive
+	(let ((igrep-program (if igrep-program ,analogue-program))
+	      (igrep-program-default ,analogue-program)
+	      (igrep-find t))
+	  (igrep-read-args)))
+       (let (,@ igrep-bindings)
+	 (apply 'igrep-find
+		(cond ((interactive-p) (car igrep-args))
+		      ((car igrep-args))
+		      (t ,analogue-program))
+		(cdr igrep-args))))))
+
+(igrep-find-define egrep)
+(igrep-find-define fgrep)
+(igrep-find-define agrep
+  (igrep-use-zgrep nil)
+  (igrep-expression-option "-e"))
+
+;;;###autoload
+</t>
+<t tx="ekr.20040713132127.43">(defun igrep-visited-files (program expression &amp;optional options)
+  "*Run `grep` PROGRAM to match EXPRESSION (with optional OPTIONS) \
+on all visited files.
+See `\\[igrep]'."
+  (interactive
+   (let ((igrep-args (igrep-read-args 'no-files)))
+     ;; Delete FILES:
+     (setcdr (nthcdr 1 igrep-args) (nthcdr 3 igrep-args))
+     igrep-args))
+  (igrep program expression
+	 (let ((directory-abbrev-alist
+		(cons (cons (regexp-quote (expand-file-name default-directory))
+			    "./")	; or even ""
+		      directory-abbrev-alist)))
+	   (mapcar 'abbreviate-file-name
+		   (apply 'nconc
+			  (mapcar (lambda (buffer)
+				    (let ((file (buffer-file-name buffer)))
+				      (if (and file
+					       (cond ((featurep 'ange-ftp)
+						      (not (ange-ftp-ftp-name file)))
+						     ((featurep 'efs)
+						      (not (efs-ftp-path file)))
+						     (t t))
+					       ;; (file-exists-p file)
+					       )
+					  (list file))))
+				  (buffer-list)))))
+	 options))</t>
+<t tx="ekr.20040713132127.44">
+
+
+;; Dired commands:
+
+;;;###autoload
+</t>
+<t tx="ekr.20040713132127.45">(defun dired-do-igrep (program expression &amp;optional options arg)
+  "*Run `grep` on the marked (or next prefix ARG) files.
+See `\\[igrep]'."
+  (interactive
+   (let ((igrep-args
+	  (let ((current-prefix-arg nil))
+	    (igrep-read-args t))))
+     ;; Delete FILES:
+     (setcdr (nthcdr 1 igrep-args) (nthcdr 3 igrep-args))
+     ;; Append ARG:
+     (nconc igrep-args (list current-prefix-arg))))
+  (igrep program
+	 expression
+	 (funcall (cond ((fboundp 'dired-get-marked-files) ; GNU Emacs
+			 'dired-get-marked-files)
+			((fboundp 'dired-mark-get-files) ; XEmacs
+			 'dired-mark-get-files))
+		  t arg)
+	 options))</t>
+<t tx="ekr.20040713132127.46">
+
+
+
+;; Dired recursive (`find`) commands:
+
+;;;###autoload
+</t>
+<t tx="ekr.20040713132127.47">(defun dired-do-igrep-find (program expression &amp;optional options arg)
+  "*Run `grep` on the marked (or next prefix ARG) directories.
+See `\\[igrep]'."
+  (interactive
+   (let ((igrep-args
+	  (let ((current-prefix-arg nil)
+		(igrep-find t))
+	    (igrep-read-args t))))
+     ;; Delete FILES:
+     (setcdr (nthcdr 1 igrep-args) (nthcdr 3 igrep-args))
+     ;; Append ARG:
+     (nconc igrep-args (list current-prefix-arg))))
+  (let ((igrep-find t))
+    (dired-do-igrep program expression options arg)))</t>
+<t tx="ekr.20040713132127.48">
+
+
+
+;; Buffer menu commands:
+
+;;;###autoload
+</t>
+<t tx="ekr.20040713132127.49">(defun Buffer-menu-igrep (program expression &amp;optional options)
+  "*Run `grep` on the files visited in buffers marked with '&gt;'.
+See `\\[igrep]'."
+  (interactive
+   (let ((igrep-args (igrep-read-args 'no-files)))
+     ;; Delete FILES:
+     (setcdr (nthcdr 1 igrep-args) (nthcdr 3 igrep-args))
+     igrep-args))
+  ;; See Buffer-menu-select:
+  (let ((marked-files '())
+	marked-buffer
+	file)
+    (goto-char (point-min))
+    (while (search-forward "\n&gt;" nil t)
+      (setq marked-buffer (Buffer-menu-buffer t)
+	    file (buffer-file-name marked-buffer))
+      (if (and file
+	       ;; local:
+	       (cond ((featurep 'ange-ftp)
+		      (not (ange-ftp-ftp-name file)))
+		     ((featurep 'efs)
+		      (not (efs-ftp-path file)))
+		     (t t)))
+	  (setq marked-files (cons file marked-files)))
+;;;    (let ((buffer-read-only nil))
+;;;      (delete-char -1)
+;;;      (insert ?\ ))
+      )
+    (setq marked-files (nreverse marked-files))
+    (igrep program expression
+	   (let ((directory-abbrev-alist
+		  (cons (cons (regexp-quote (expand-file-name default-directory))
+			      "./")	; or even ""
+			directory-abbrev-alist)))
+	     (mapcar 'abbreviate-file-name marked-files))
+	   options)))</t>
+<t tx="ekr.20040713132127.50">
+
+
+;;; User functions:
+
+</t>
+<t tx="ekr.20040713132127.51">(defun igrep-dired-file-current-word ()
+  "Return the current word in the file on this line, if it is visible;
+else, return the file name on this line, if there is one;
+otherwise, return the current word."
+  (let* ((dired-file
+	  (dired-get-filename t t))
+	 (dired-file-buffer
+	  (if dired-file
+	      (get-file-buffer (expand-file-name dired-file))))
+	 (dired-file-buffer-window
+	  (if dired-file-buffer
+	      (get-buffer-window dired-file-buffer))))
+    (cond (dired-file-buffer-window (save-excursion
+				      (set-buffer dired-file-buffer)
+				      (current-word)))
+	  (dired-file)
+	  (t (current-word)))))</t>
+<t tx="ekr.20040713132127.52">(defun igrep-buffer-file-name-pattern ()
+  "Return a shell file name pattern based on `buffer-file-name', or \"*\"."
+  ;; (Based on other-possibly-interesting-files in ~/as-is/unix.el, by
+  ;; Wolfgang Rupprecht &lt;wolfgang@mgm.mit.edu&gt;.)
+  (if buffer-file-name
+      (let ((file-name (file-name-nondirectory buffer-file-name)))
+	(concat "*"
+		(save-match-data
+		  (if (string-match "\\.[^.]+\\(\\.g?[zZ]\\)?\\'"
+				    file-name)
+		      (substring file-name (match-beginning 0)
+				 (match-end 0))))))
+    "*"))</t>
+<t tx="ekr.20040713132127.53">(defun igrep-dired-directory-file-pattern ()
+"Return a shell file name pattern based on `dired-directory', or \"*\"."
+  (cond ((stringp dired-directory)
+	 (if (file-directory-p dired-directory)
+	     "*"
+	   (file-name-nondirectory dired-directory))) ; wildcard
+	((consp dired-directory)	; (DIR FILE ...)
+	 (mapconcat 'identity (cdr dired-directory) " "))))</t>
+<t tx="ekr.20040713132127.54">
+
+
+;;; Utilities:
+
+(defsubst igrep-file-directory (name)
+  "Return the directory component of NAME, or \".\" if it has no
+directory component."
+  (directory-file-name (or (file-name-directory name)
+			   (file-name-as-directory "."))))
+
+(defsubst igrep-file-pattern (name)
+  "Return the file component of NAME, or \"*\" if it has no file component."
+  (let ((pattern (file-name-nondirectory name)))
+       (if (string= pattern "")
+	   "*"
+	 pattern)))
+
+</t>
+<t tx="ekr.20040713132127.55">(defun igrep-format-find-command (command files)
+  "Format `grep` COMMAND to be invoked via `find` on FILES."
+  (let ((directories '())
+	(patterns '()))
+    (while files
+      (let ((dir (igrep-file-directory (car files)))
+	    (pat (igrep-file-pattern (car files))))
+	(if (and (not (string= dir "."))
+		 (file-symlink-p dir))
+	    (setq dir (concat dir "/.")))
+	(if (not (member dir directories))
+	    (setq directories (cons dir directories)))
+	(cond ((equal pat "*")
+	       (setq patterns t))
+	      ((and (listp patterns)
+		    (not (member pat patterns)))
+	       (setq patterns (cons pat patterns)))))
+      (setq files (cdr files)))
+    (format (cond ((eq igrep-find-use-xargs 'gnu)
+		   ;; | \\\n
+		   "%s %s %s %s %s -print0 | xargs -0 -e %s")
+		  (igrep-find-use-xargs
+		   ;; | \\\n
+		   "%s %s %s %s %s -print | xargs -e %s")
+		  (t
+		   "%s %s %s %s %s -exec %s %s"))
+	    igrep-find-program
+	    (mapconcat 'shell-quote-argument (nreverse directories)
+		       " ")
+	    (if igrep-find-prune-clause
+		(format "%s -prune -o" igrep-find-prune-clause)
+	      "")
+	    (or igrep-find-file-clause "")
+	    (if (listp patterns)
+		(if (cdr patterns)	; (&gt; (length patterns) 1)
+		    (format "%s %s %s"
+			    (shell-quote-argument "(")
+			    (mapconcat (lambda (pat)
+					 (format "-name %s"
+						 (shell-quote-argument pat)))
+				       (nreverse patterns)
+				       " -o ")
+			    (shell-quote-argument ")"))
+		  (format "-name %s" (shell-quote-argument (car patterns))))
+	      "")
+	    command
+	    (shell-quote-argument ";")
+	    )))</t>
+<t tx="ekr.20040713132127.56">
+
+(defmacro igrep-default-arg (variable)
+  "Return the default arg based on VARIABLE."
+  `(if ,variable
+       (cond ((get (quote ,variable) major-mode)
+	      (funcall (get (quote ,variable) major-mode)))
+	     (t (funcall ,variable)))))
+
+</t>
+<t tx="ekr.20040713132127.57">(defun igrep-default-expression ()
+  (igrep-default-arg igrep-expression-default))</t>
+<t tx="ekr.20040713132127.58">(defun igrep-default-files ()
+  (let* ((dired-subdirectory (if (eq major-mode 'dired-mode)
+				 (dired-current-directory t)))
+	 (default-files (igrep-default-arg igrep-files-default)))
+    (if (not (listp default-files))	; stringp
+	(setq default-files (list default-files)))
+    (if dired-subdirectory
+	(mapcar (lambda (file)
+		  (concat dired-subdirectory file))
+		default-files)
+      default-files)))</t>
+<t tx="ekr.20040713132127.59">
+
+(defsubst igrep-prefix (prefix string &amp;rest strings)
+  "If PREFIX is non-nil or any STRINGS are specified, concatenate them
+before and after STRING; otherwise, return the STRING."
+  (if (or prefix strings)
+      (apply 'concat prefix string strings)
+    string))
+
+</t>
+<t tx="ekr.20040713132127.60">(defun igrep-read-args (&amp;optional no-files)
+  "Read and return a list: (PROGRAM EXPRESSION FILES OPTIONS).
+If NO-FILES is non-nil, then FILES is not read and nil is returned
+in its place."
+  (let* ((pre-prefix (if (and igrep-find (eq igrep-verbose-prompts t))
+			 "[find] "))
+	 (program
+	  (igrep-read-program pre-prefix))
+	 (prefix (if (and program (eq igrep-verbose-prompts t))
+		     (igrep-prefix pre-prefix program " ")
+		   pre-prefix))
+	 (options
+	  (igrep-read-options prefix))
+	 (post-prefix (if (and options (eq igrep-verbose-prompts t))
+			    (igrep-prefix prefix options " ")
+			  prefix)))
+    (list program
+	  (igrep-read-expression post-prefix)
+	  (if (not no-files)
+	      (igrep-read-files post-prefix))
+	  options)))</t>
+<t tx="ekr.20040713132127.61">(defun igrep-read-program (&amp;optional prompt-prefix)
+  "If `igrep-program' is nil, read and return a program name from the
+minibuffer; otherwise, return `igrep-program'.
+Optional PROMPT-PREFIX is prepended to the \"Program: \" prompt."
+  (or igrep-program
+      (let ((prompt "Program: "))
+	(completing-read (igrep-prefix prompt-prefix prompt) igrep-program-table
+			 nil t igrep-program-default))))</t>
+<t tx="ekr.20040713132127.62">(defun igrep-read-options (&amp;optional prompt-prefix)
+  "If `current-prefix-arg' is '(4) or '(64), read and return an options
+string from the minibuffer; otherwise, return `igrep-options'.
+Optional PROMPT-PREFIX is prepended to the \"Options: \" prompt."
+  (if (or igrep-read-options
+	  (and (consp current-prefix-arg)
+	       (memq (prefix-numeric-value current-prefix-arg)
+		     '(4 64))))
+      (let ((prompt "Options: "))
+	(read-string (igrep-prefix prompt-prefix prompt)
+		     (or igrep-options "-")))
+    igrep-options))</t>
+<t tx="ekr.20040713132127.63">(defun igrep-read-expression (&amp;optional prompt-prefix)
+  "Read and return a `grep` expression string from the minibuffer.
+Optional PROMPT-PREFIX is prepended to the \"Expression: \" prompt."
+  (if igrep-insert-default-key
+      (define-key minibuffer-local-map igrep-insert-default-key
+	'igrep-insert-default-expression))
+  (let* ((default-expression (igrep-default-expression))
+	 (prompt (igrep-prefix prompt-prefix
+			       (if default-expression
+				   (format "Expression [default: %s]: "
+					   default-expression)
+				 "Expression: ")))
+	 (expression (cond ((and (featurep 'xemacs) (emacs-version&gt;= 21 4))
+			    (read-from-minibuffer prompt
+						  nil nil nil
+						  'igrep-expression-history
+						  nil ; ABBREV-TABLE
+						  default-expression))
+			   ((and (not (featurep 'xemacs))
+				 (&gt;= emacs-major-version 20))
+			    (read-from-minibuffer prompt
+						  nil nil nil
+						  'igrep-expression-history
+						  default-expression))
+			   (t
+			    (read-from-minibuffer prompt
+						  nil nil nil
+						  'igrep-expression-history)))))
+    (if (equal expression "")
+	(progn
+	  (or (equal default-expression (car igrep-expression-history))
+	      (setq igrep-expression-history
+		    (cons default-expression igrep-expression-history)))
+	  default-expression)
+      expression)))</t>
+<t tx="ekr.20040713132127.64">(defun igrep-insert-default-expression (&amp;optional clear-minibuffer)
+  "*Insert the default expression in the minibuffer.
+If a prefix argument is specified, clear the minibuffer contents first."
+  (interactive "P")
+  (if clear-minibuffer
+      (delete-region (if (fboundp 'minibuffer-prompt-end) ; Emacs 21
+			 (minibuffer-prompt-end)
+		       (point-min))
+		     (point-max)))
+  (insert (or (save-excursion
+		(set-buffer (window-buffer minibuffer-scroll-window))
+		(igrep-default-expression))
+	      "")))</t>
+<t tx="ekr.20040713132127.65">(defun igrep-insert-default-files (&amp;optional clear-minibuffer)
+  "*Insert the default files in the minibuffer.
+If a prefix argument is specified, clear the minibuffer contents first."
+  (interactive "P")
+  (if clear-minibuffer
+      (delete-region (if (fboundp 'minibuffer-prompt-end) ; Emacs 21
+			 (minibuffer-prompt-end)
+		       (point-min))
+		     (point-max)))
+  (insert (mapconcat 'identity
+		     (save-excursion
+		       (set-buffer (window-buffer minibuffer-scroll-window))
+		       (igrep-default-files))
+		     " ")))</t>
+<t tx="ekr.20040713132127.66">
+
+(defsubst igrep-default-key (command &amp;optional keymap key)
+  "Return the key bound to COMMAND in KEYMAP, preferably KEY."
+  (if (null keymap)
+      (setq keymap (current-global-map)))
+  (if (and key
+	   (eq (lookup-key keymap key) command))
+      key
+    (where-is-internal command keymap t)))
+
+</t>
+<t tx="ekr.20040713132127.67">(defun igrep-read-files (&amp;optional prompt-prefix)
+  "Read and return a file name pattern from the minibuffer.
+If `current-prefix-arg' is '(16) or '(64), read multiple file name
+patterns and return them in a list.  Optional PROMPT-PREFIX is
+prepended to the \"File(s): \" prompt."
+  (let* ((default-files (igrep-default-files))
+	 (default-files-string (mapconcat 'identity default-files " "))
+	 (insert-default-directory nil)	; use relative path names
+	 (file (igrep-read-file-name
+		(igrep-prefix prompt-prefix
+			      (if default-files
+				  (format "File(s) [default: %s]: "
+					  default-files-string)
+				"File(s): "))
+		nil default-files-string nil nil
+		'igrep-files-history))
+	 (files (cond ((equal file default-files-string)
+		       (setq file default-files))
+		      ((not (listp file))
+		       (setq file (list file))))))
+    (if (or igrep-read-multiple-files
+	    (and (consp current-prefix-arg)
+		 (memq (prefix-numeric-value current-prefix-arg)
+		       '(16 64))))
+	(let ((prompt
+	       (igrep-prefix prompt-prefix
+			     (if igrep-verbose-prompts
+				 (format "File(s): [Type `%s' when done] "
+					 (key-description
+					  (igrep-default-key 'exit-minibuffer
+							     minibuffer-local-completion-map
+							     "\r")))
+			       "File(s): "))))
+	  (while (not (string= (setq file
+				     (igrep-read-file-name prompt
+							   nil "" nil nil
+							   'igrep-files-history))
+			       ""))
+	    (setq files (cons file files)))
+	  (nreverse files))
+      files)))</t>
+<t tx="ekr.20040713132127.68">(defun igrep-read-file-name (prompt
+  &amp;optional directory default existing initial history)
+  "Just like `read-file-name', but with optional HISTORY.
+Also: convert DIRECTORY to DIRECTORY/* file name pattern."
+  (if igrep-insert-default-key
+      (define-key minibuffer-local-completion-map igrep-insert-default-key
+	'igrep-insert-default-files))
+  (let ((file-name
+	 (if history
+	     (let ((file-name-history (symbol-value history)))
+	       (prog1 (read-file-name prompt directory default existing initial)
+		 (set history file-name-history)))
+	   (read-file-name prompt directory default existing initial))))
+    (if (and (not (string-equal file-name ""))
+	     (file-directory-p file-name))
+	(expand-file-name "*" file-name)
+      file-name)))</t>
+<t tx="ekr.20040713132127.69">
+
+;;; Local Variables:
+;;; eval: (put 'igrep-define 'lisp-indent-hook 1)
+;;; eval: (put 'igrep-find-define 'lisp-indent-hook 1)
+;;; End:
+
+;;;; igrep.el ends here
+</t>
+<t tx="ekr.20040713133131">; -&gt; #
+
+'x --&gt; x (??)
+
+"multilline comment" --&gt; """multilline comment"""
+
+strip parens from cond, etc.</t>
+<t tx="ekr.20040713133131.1">defFun -&gt; def
+
+lambda -&gt; ?
+
+cond -&gt; if, elif, ... else
+
+prog, progn -&gt; while
+
+defvar x y --&gt; x = y  (or self.x = y) ??</t>
+<t tx="ekr.20040713133131.2">(if (equal (call-process igrep-program nil nil nil
+			   "-e" "foo" igrep-null-device)
+	     1)
+      "-e")
+
+if (&lt; emacs-major-version 20) "\C-c\C-e")  -&gt; if &lt;cond&gt;: &lt;val&gt;
+
+(&lt; a b) --&gt; a &lt; b
+
+(x args) --&gt; x(args)</t>
+<t tx="ekr.20040713144036">class elisp2pyClass:
+    
+    """A class to convert elisp programs into Python syntax."""
+    
+    @others</t>
+<t tx="ekr.20040713144036.1">def __init__ (self,c,p,*args,**keys):
+    
+    self.c = c
+    self.p = p
+
+    self.statementLevel = 0</t>
+<t tx="ekr.20040713144336"></t>
+<t tx="ekr.20040713144926">def tokenize (self,s):
+    
+    e = self
+    name1 = string.letters + '_'
+    result = []
+    if not s.strip():
+        return result
+
+    i = 0 ; n = len(s) ; progress = -1
+    while i &lt; n:
+        assert(i &gt; progress)
+        progress = i
+        ch = s[i]
+        if ch == '\r':
+            i += 1
+        elif ch in "@'()[]{}&lt;&gt;\n": # Handle single-quote here?
+            result.append(tok(ch,ch))
+            i += 1
+        elif ch in "\ \t":
+            j = g.skip_ws(s,i) # Doesn't handle ff, so ff loops.
+            ws = s[i:j]
+            result.append(tok("ws",ws))
+            i = j
+        elif ch == '\f':
+            result.append(tok("form-feed",'\f'))
+            i += 1
+        elif ch == '"':
+            j = e.skipString(s,i)
+            val = s[i:j]
+            result.append(tok("string",val))
+            i = j
+        elif ch in name1:
+            j = g.skip_id(s,i,chars='-') # '-' valid in elisp.
+            val = s[i:j]
+            result.append(tok("id",val))
+            i = j
+        elif ch in string.digits:
+            j,value = g.skip_long(s,i)
+            val = s[i:j]
+            result.append(tok("number",val))
+            i = j
+        elif ch == ';':
+            j = g.skip_to_end_of_line(s,i)
+            val = s[i:j]
+            result.append(tok("comment",val))
+            i = j
+        else:
+            result.append(tok("misc",ch))
+            i += 1
+            
+    return result</t>
+<t tx="ekr.20040713144926.1"></t>
+<t tx="ekr.20040713144926.2"></t>
+<t tx="ekr.20040713144926.3"></t>
+<t tx="ekr.20040713144926.4"></t>
+<t tx="ekr.20040713150037">class tok:
+    
+    """ A class representing an elisp or python token"""
+    
+    @others</t>
+<t tx="ekr.20040713150037.1">def __init__ (self,kind,val=""):
+    
+    self.kind = kind
+    self.val = val</t>
+<t tx="ekr.20040713150314.1">def replaceAll (self,tokens,findKind,changeTok):
+    
+    self = e
+
+    result = []
+    for token in tokens:
+        if token.kind == findKind:
+            result.append(changeTok.copy())
+        else:
+            result.append(token)</t>
+<t tx="ekr.20040713150712">def copy (self,token):
+    
+    return tok(self.kind,self.val)</t>
+<t tx="ekr.20040713150856.1"></t>
+<t tx="ekr.20040713150856.8">@ These scanners all call g.scanError() directly or indirectly, so they will call g.es() if they find an error.  g.scanError() also bumps c.tangleCommands.errors, which is harmless if we aren't tangling, and useful if we are.
+
+These routines are called by the Import routines and the Tangle routines.
+</t>
+<t tx="ekr.20040713150856.9"># Scans past a block comment (an old_style C comment).
+
+def skip_block_comment (s,i):
+
+    assert(g.match(s,i,"/*"))
+    j = i ; i += 2 ; n = len(s)
+    
+    k = string.find(s,"*/",i)
+    if k == -1:
+        g.scanError("Run on block comment: " + s[j:i])
+        return n
+    else: return k + 2</t>
+<t tx="ekr.20040713150856.10">@ This code is called only from the import logic, so we are allowed to try some tricks.  In particular, we assume all braces are matched in #if blocks.
+@c
+
+def skip_braces(s,i):
+
+    """Skips from the opening to the matching brace.
+    
+    If no matching is found i is set to len(s)"""
+
+    # start = g.get_line(s,i)
+    assert(g.match(s,i,'{'))
+    level = 0 ; n = len(s)
+    while i &lt; n:
+        c = s[i]
+        if c == '{':
+            level += 1 ; i += 1
+        elif c == '}':
+            level -= 1
+            if level &lt;= 0: return i
+            i += 1
+        elif c == '\'' or c == '"': i = g.skip_string(s,i)
+        elif g.match(s,i,'//'): i = g.skip_to_end_of_line(s,i)
+        elif g.match(s,i,'/*'): i = g.skip_block_comment(s,i)
+        # 7/29/02: be more careful handling conditional code.
+        elif g.match_word(s,i,"#if") or g.match_word(s,i,"#ifdef") or g.match_word(s,i,"#ifndef"):
+            i,delta = g.skip_pp_if(s,i)
+            level += delta
+        else: i += 1
+    return i
+</t>
+<t tx="ekr.20040713150856.12">def skip_parens(s,i):
+
+    """Skips from the opening ( to the matching ).
+    
+    If no matching is found i is set to len(s)"""
+
+    level = 0 ; n = len(s)
+    assert(g.match(s,i,'('))
+    while i &lt; n:
+        c = s[i]
+        if c == '(':
+            level += 1 ; i += 1
+        elif c == ')':
+            level -= 1
+            if level &lt;= 0:  return i
+            i += 1
+        elif c == '\'' or c == '"': i = g.skip_string(s,i)
+        elif g.match(s,i,"//"): i = g.skip_to_end_of_line(s,i)
+        elif g.match(s,i,"/*"): i = g.skip_block_comment(s,i)
+        else: i += 1
+    return i</t>
+<t tx="ekr.20040713150856.13">def skip_pascal_begin_end(s,i):
+
+    """Skips from begin to matching end.
+    If found, i points to the end. Otherwise, i &gt;= len(s)
+    The end keyword matches begin, case, class, record, and try."""
+
+    assert(g.match_c_word(s,i,"begin"))
+    level = 1 ; i = g.skip_c_id(s,i) # Skip the opening begin.
+    while i &lt; len(s):
+        ch = s[i]
+        if ch =='{' : i = g.skip_pascal_braces(s,i)
+        elif ch =='"' or ch == '\'': i = g.skip_pascal_string(s,i)
+        elif g.match(s,i,"//"): i = g.skip_line(s,i)
+        elif g.match(s,i,"(*"): i = g.skip_pascal_block_comment(s,i)
+        elif g.match_c_word(s,i,"end"):
+            level -= 1 ;
+            if level == 0:
+                # lines = s[i1:i+3] ; g.trace('\n' + lines + '\n')
+                return i
+            else: i = g.skip_c_id(s,i)
+        elif g.is_c_id(ch):
+            j = i ; i = g.skip_c_id(s,i) ; name = s[j:i]
+            if name in ["begin", "case", "class", "record", "try"]:
+                level += 1
+        else: i += 1
+    return i
+</t>
+<t tx="ekr.20040713150856.14"># Scans past a pascal comment delimited by (* and *).
+
+def skip_pascal_block_comment(s,i):
+    
+    j = i
+    assert(g.match(s,i,"(*"))
+    i = string.find(s,"*)",i)
+    if i &gt; -1: return i + 2
+    else:
+        g.scanError("Run on comment" + s[j:i])
+        return len(s)</t>
+<t tx="ekr.20040713150856.15">def skip_pascal_string(s,i):
+
+    j = i ; delim = s[i] ; i += 1
+    assert(delim == '"' or delim == '\'')
+
+    while i &lt; len(s):
+        if s[i] == delim:
+            return i + 1
+        else: i += 1
+
+    g.scanError("Run on string: " + s[j:i])
+    return i</t>
+<t tx="ekr.20040713150856.20">def skip_python_string(s,i):
+
+    if g.match(s,i,"'''") or g.match(s,i,'"""'):
+        j = i ; delim = s[i]*3 ; i += 3
+        k = string.find(s,delim,i)
+        if k &gt; -1: return k+3
+        g.scanError("Run on triple quoted string: " + s[j:i])
+        return len(s)
+    else:
+        return g.skip_string(s,i)</t>
+<t tx="ekr.20040713150856.21">def skip_string(s,i):
+    
+    j = i ; delim = s[i] ; i += 1
+    assert(delim == '"' or delim == '\'')
+    
+    n = len(s)
+    while i &lt; n and s[i] != delim:
+        if s[i] == '\\' : i += 2
+        else: i += 1
+
+    if i &gt;= n:
+        g.scanError("Run on string: " + s[j:i])
+    elif s[i] == delim:
+        i += 1
+
+    # g.trace(s[j:i])
+    return i
+</t>
+<t tx="ekr.20040713150856.22"># Skips to the next semicolon that is not in a comment or a string.
+
+def skip_to_semicolon(s,i):
+
+    n = len(s)
+    while i &lt; n:
+        c = s[i]
+        if c == ';': return i
+        elif c == '\'' or c == '"' : i = g.skip_string(s,i)
+        elif g.match(s,i,"//"): i = g.skip_to_end_of_line(s,i)
+        elif g.match(s,i,"/*"): i = g.skip_block_comment(s,i)
+        else: i += 1
+    return i</t>
+<t tx="ekr.20040713150856.24"></t>
+<t tx="ekr.20040713150856.25"># Returns True if s[i] is preceded by an odd number of backslashes.
+
+def escaped(s,i):
+
+    count = 0
+    while i-1 &gt;= 0 and s[i-1] == '\\':
+        count += 1
+        i -= 1
+    return (count%2) == 1</t>
+<t tx="ekr.20040713150856.26">def find_line_start(s,i):
+
+    # bug fix: 11/2/02: change i to i+1 in rfind
+    i = string.rfind(s,'\n',0,i+1) # Finds the highest index in the range.
+    if i == -1: return 0
+    else: return i + 1</t>
+<t tx="ekr.20040713150856.27">def find_on_line(s,i,pattern):
+
+    # j = g.skip_line(s,i) ; g.trace(s[i:j])
+    j = string.find(s,'\n',i)
+    if j == -1: j = len(s)
+    k = string.find(s,pattern,i,j)
+    if k &gt; -1: return k
+    else: return None</t>
+<t tx="ekr.20040713150856.28">def is_c_id(ch):
+
+    return ch and (ch in string.ascii_letters or ch in string.digits or ch == '_')
+</t>
+<t tx="ekr.20040713150856.29">def is_nl(s,i):
+
+    return i &lt; len(s) and (s[i] == '\n' or s[i] == '\r')</t>
+<t tx="ekr.20040713150856.30"># We no longer require that the directive appear befor any @c directive or section definition.
+
+def is_special(s,i,directive):
+
+    """Return True if the body text contains the @ directive."""
+
+    # j = g.skip_line(s,i) ; g.trace(s[i:j],':',directive)
+    assert (directive and directive [0] == '@' )
+
+    # 10/23/02: all directives except @others must start the line.
+    skip_flag = directive in ("@others","@all")
+    while i &lt; len(s):
+        if g.match_word(s,i,directive):
+            return True, i
+        else:
+            i = g.skip_line(s,i)
+            if skip_flag:
+                i = g.skip_ws(s,i)
+    return False, -1</t>
+<t tx="ekr.20040713150856.31">def is_ws(c):
+
+    return c == '\t' or c == ' '
+    
+def is_ws_or_nl(s,i):
+
+    return g.is_nl(s,i) or (i &lt; len(s) and g.is_ws(s[i]))</t>
+<t tx="ekr.20040713150856.32"># Warning: this code makes no assumptions about what follows pattern.
+
+def match(s,i,pattern):
+
+    return s and pattern and string.find(s,pattern,i,i+len(pattern)) == i</t>
+<t tx="ekr.20040713150856.33">def match_c_word (s,i,name):
+
+    if name == None: return False
+    n = len(name)
+    if n == 0: return False
+    return name == s[i:i+n] and (i+n == len(s) or not g.is_c_id(s[i+n]))</t>
+<t tx="ekr.20040713150856.34">def match_ignoring_case(s1,s2):
+
+    if s1 == None or s2 == None: return False
+    return string.lower(s1) == string.lower(s2)</t>
+<t tx="ekr.20040713150856.35">def match_word(s,i,pattern):
+
+    if pattern == None: return False
+    j = len(pattern)
+    if j == 0: return False
+    if string.find(s,pattern,i,i+j) != i:
+        return False
+    if i+j &gt;= len(s):
+        return True
+    c = s[i+j]
+    return not (c in string.ascii_letters or c in string.digits or c == '_')</t>
+<t tx="ekr.20040713150856.36">def skip_blank_lines(s,i):
+
+    while i &lt; len(s):
+        if g.is_nl(s,i) :
+            i = g.skip_nl(s,i)
+        elif g.is_ws(s[i]):
+            j = g.skip_ws(s,i)
+            if g.is_nl(s,j):
+                i = j
+            else: break
+        else: break
+    return i</t>
+<t tx="ekr.20040713150856.37">def skip_c_id(s,i):
+
+    n = len(s)
+    while i &lt; n:
+        c = s[i]
+        if c in string.ascii_letters or c in string.digits or c == '_':
+            i += 1
+        else: break
+    return i</t>
+<t tx="ekr.20040713150856.38">def skip_id(s,i,chars=None):
+
+    n = len(s)
+    while i &lt; n:
+        ch = s[i]
+        if ch in string.ascii_letters or ch in string.digits or ch == '_':
+            i += 1
+        elif chars and ch in chars:
+            i += 1
+        else: break
+    return i
+</t>
+<t tx="ekr.20040713150856.39">@ These methods skip to the next newline, regardless of whether the newline may be preceeded by a backslash. Consequently, they should be used only when we know that we are not in a preprocessor directive or string.
+@c
+
+def skip_line (s,i):
+
+    i = string.find(s,'\n',i)
+    if i == -1: return len(s)
+    else: return i + 1
+        
+def skip_to_end_of_line (s,i):
+
+    i = string.find(s,'\n',i)
+    if i == -1: return len(s)
+    else: return i</t>
+<t tx="ekr.20040713150856.40">def skip_long(s,i):
+    
+    """Scan s[i:] for a valid int.
+    Return (i, val) or (i, None) if s[i] does not point at a number.
+    """
+
+    digits = string.digits
+    val = 0
+    i = g.skip_ws(s,i)
+    n = len(s)
+    if i &gt;= n or s[i] not in "+-" + digits:
+        return i, None
+    # Rewritten: 7/18/02.
+    j = i
+    if s[i] in '+-':    # whr allow sign if first digit
+        i +=1
+    while i &lt; n and s[i] in digits:
+        i += 1
+    try: # 4/24/03: There may be no digits, which would raise an exception.
+        val = int(s[j:i])
+        return i, val
+    except:
+        return i,None
+</t>
+<t tx="ekr.20040713150856.41">def skip_matching_delims(s,i,delim1,delim2):
+    
+    assert(g.match(s,i,delim1))
+
+    i += len(delim1)
+    k = string.find(s,delim2,i)
+    if k == -1:
+        return len(s)
+    else:
+        return k + len(delim2)</t>
+<t tx="ekr.20040713150856.42"># We need this function because different systems have different end-of-line conventions.
+
+def skip_nl (s,i):
+
+    """Skips a single "logical" end-of-line character."""
+
+    if g.match(s,i,"\r\n"): return i + 2
+    elif g.match(s,i,'\n') or g.match(s,i,'\r'): return i + 1
+    else: return i</t>
+<t tx="ekr.20040713150856.43">def skip_non_ws (s,i):
+
+    n = len(s)
+    while i &lt; n and not g.is_ws(s[i]):
+        i += 1
+    return i</t>
+<t tx="ekr.20040713150856.44"># Skips from the opening { to the matching }.
+
+def skip_pascal_braces(s,i):
+
+    # No constructs are recognized inside Pascal block comments!
+    k = string.find(s,'}',i)
+    if i == -1: return len(s)
+    else: return k</t>
+<t tx="ekr.20040713150856.45">def skip_to_char(s,i,ch):
+    
+    j = string.find(s,ch,i)
+    if j == -1:
+        return len(s),s[i:]
+    else:
+        return j,s[i:j]
+</t>
+<t tx="ekr.20040713150856.46">def skip_ws(s,i):
+
+    n = len(s)
+    while i &lt; n and g.is_ws(s[i]):
+        i += 1
+    return i
+    
+def skip_ws_and_nl(s,i):
+
+    n = len(s)
+    while i &lt; n and (g.is_ws(s[i]) or g.is_nl(s,i)):
+        i += 1
+    return i</t>
+<t tx="ekr.20040713150856.47">def splitLines (s):
+    
+    """Split s into lines, preserving the number of lines and the ending of the last line."""
+    
+    if s:
+        return s.splitlines(True) # This is a Python string function!
+    else:
+        return []
+
+def joinLines (aList):
+    
+    return ''.join(aList)</t>
+<t tx="ekr.20040713151556.1">def findMatchingBracket(self,tokens,i):
+
+    tok = tokens[i] ; i += 1
+    ch1 = tok.kind
+    assert ch1 in "({["
+   
+    if   ch1 == '(': delim = ')'
+    elif ch1 == '{': delim = '}'
+    else:            delim = ']'
+
+    level = 0
+    while i &lt; len(tokens):
+        tok = tokens[i]
+        i += 1
+        if tok.kind == ch1:
+            level += 1
+        elif tok.kind == delim:
+            level -= 1
+            if level == 0: return i-1
+
+    self.warning("%s not matched by %s", ch1,delim)
+    return None</t>
+<t tx="ekr.20040713152318">def warning (self,message):
+    
+    print "Error:", message
+
+def warning (self,message):
+    
+    print "Warning:", message
+</t>
+<t tx="ekr.20040713152809"></t>
+<t tx="ekr.20040713154118">def skipString(self,s,i):
+
+    # Skip the opening double quote.
+    i1 = i
+    ch = s[i]
+    i += 1
+    assert(ch == '"')
+
+    while i &lt; len(s):
+        ch = s[i]
+        i += 1
+        if ch == '"': return i
+        elif ch == '\\': i += 1
+
+    self.warning("run-on elisp string:", g.get_line(s[i1:]))
+    return i</t>
+<t tx="ekr.20040713155152"># converts if ( x ) to if x:
+# converts while ( x ) to while x:
+def handleAllKeywords(codeList):
+
+    # print "handAllKeywords:", listToString(codeList)
+    i = 0
+    while i &lt; len(codeList):
+        if isStringOrComment(codeList,i):
+            i = skipStringOrComment(codeList,i)
+        elif ( matchWord(codeList,i,"if") or
+            matchWord(codeList,i,"while") or
+            matchWord(codeList,i,"for") or
+            matchWord(codeList,i,"elif") ):
+            i = handleKeyword(codeList,i)
+        else:
+            i += 1
+    # print "handAllKeywords2:", listToString(codeList)</t>
+<t tx="ekr.20040713155152.1">def handleKeyword(codeList,i):
+
+    isFor = False
+    if (matchWord(codeList,i,"if")):
+        i += 2
+    elif (matchWord(codeList,i,"elif")):
+        i += 4
+    elif (matchWord(codeList,i,"while")):
+        i += 5
+    elif (matchWord(codeList,i,"for")):
+        i += 3
+        isFor = True
+    else: assert(0)
+    # Make sure one space follows the keyword
+    k = i
+    i = skipWs(codeList,i)
+    if k == i:
+        c = codeList[i]
+        codeList[i:i+1] = [ ' ', c ]
+        i += 1
+    # Remove '(' and matching ')' and add a ':'
+    if codeList[i] == "(":
+        j = removeMatchingBrackets(codeList,i)
+        if j &gt; i and j &lt; len(codeList):
+            c = codeList[j]
+            codeList[j:j+1] = [":", " ", c]
+            j = j + 2
+        return j
+    return i</t>
+<t tx="ekr.20040713160302">def findTokens(self,tokens,i,fTokens):
+
+    progress = i-1
+    while i &lt; len(tokens):
+        assert progress &lt; i
+        progress = i
+
+        found = True
+        for j in xrange(len(fTokens)):
+            tok = tokens[i+j]
+            ftok = fTokens[j]
+            if not tok.match(ftok):
+                found = False; break
+        if found: return i,i+j
+        else: i += 1
+
+    return None,None # Not found</t>
+<t tx="ekr.20040713161629.1">def dump (self,tokens,verbose=1):
+    
+    e = self ; p = e.p ; v2 = verbose &gt;= 2
+    
+    if verbose == 0:
+        return
+    elif verbose == 1:
+        vals = [tok.val for tok in tokens]
+        s = ''.join(vals)
+        s = g.toEncodedString(s,g.app.tkEncoding)
+        print s
+    elif verbose in (2,3):
+        &lt;&lt; print headline &gt;&gt;
+        if verbose == 2:
+            for tok in tokens:
+                print tok.toString(verbose=verbose),
+        else:
+            for tok in tokens:
+                print tok.toString(verbose=verbose)</t>
+<t tx="ekr.20040713161629.2">def createPythonIndentation (self,tokens):
+    
+    e = self ; p = e.p
+
+    # Whitespace has been deleted.
+    findToks = [tok('('),tok("id","defun"),tok("id"),tok("(")] 
+    
+    i = 0 ; progress = -1
+    while i &lt; len(tokens):
+        assert(progress &lt; i)
+        progress = i
+        i,j = e.findTokens(tokens,i,findToks)
+        if i is not None:
+            s = [str(tokens[k].toString()) for k in xrange(i,j+1)]
+            print "found:",' '.join(s)
+            k = e.findMatchingBracket(tokens,i)
+            if k is None:
+                print "No matching bracket!"
+                 i = j + 1
+            else:
+                # print "found matching bracket",k,str(tokens[k].toString())
+                e.statementLevel += 1
+                e.createIndentedBlock(tokens[1:k])
+                e.statementLevel -= 1
+                ### This isn't right: we will have to replace the token list and start again.
+                i = k + 1
+        else:
+            break</t>
+<t tx="ekr.20040713164604">def dumpWs (self,ws):
+    
+    result = ["&lt;"]
+    for ch in ws:
+        if ch == ' ':
+            result.append(" ")
+        elif ch == '\t':
+            result.append("tab")
+        elif ch == '\f':
+            result.append("feed")
+        else:
+            result.append("&lt;%s&gt;" % repr(ch)) # should never happen.
+    
+    result.append("&gt;")
+    return ''.join(result)</t>
+<t tx="ekr.20040713173923">def match (self,tok2):
+    
+    tok1 = self
+    
+    val = (
+        tok2 is not None and
+        tok1.kind == tok2.kind and
+        (not tok1.val or not tok2.val or (tok1.val == tok2.val)))
+        
+    if 0:
+        if tok1.kind==tok2.kind:
+            g.trace(val,tok1.kind,repr(tok1.val),tok2.kind)
+        
+    return val</t>
+<t tx="ekr.20040713174349">def dump (self,verbose=2):
+    
+    tok = self
+
+    if verbose == 2:
+        print tok.toString(verbose=verbose)
+    else:
+        print tok.toString(verbose=verbose),
+    
+    return ##
+    
+    if verbose == 2:
+        val = g.toEncodedString(tok.val,g.app.tkEncoding)
+        if   tok.kind == '\n':      print "%9s:" % "newline"
+        elif tok.kind=="form-feed": print "%9s:" % "form-feed"
+        elif len(tok.kind)==1:      print "%9s:" % tok.kind
+        elif tok.kind == "ws":
+                print "%9s: %s" % (tok.kind,self.dumpWs(tok.val))
+        else:   print "%9s: &lt;%s&gt;" % (tok.kind, val)
+
+    else:
+        val = g.toEncodedString(tok.val,g.app.tkEncoding)
+        if tok.kind == '\n':        print
+        elif len(tok.kind) == 1:    print tok.kind,
+        elif tok.kind=="form-feed":
+            print ; print "form-feed" ; print
+        else: print val,</t>
+<t tx="ekr.20040713180208">def toString (self,verbose=2):
+    
+    tok = self
+    
+    if verbose &lt; 2:
+        return
+    
+    val = tok.val or ""
+    val = g.toEncodedString(val,g.app.tkEncoding)
+    
+    if verbose == 2:
+        if len(tok.kind) == 1:      return tok.kind
+        elif tok.kind=="form-feed": return "\nform-feed\n"
+        else:                       return val
+    
+    elif verbose == 3:
+        if   tok.kind == '\n':      return "%9s:" % "newline"
+        elif tok.kind=="form-feed": return "%9s:" % "form-feed"
+        elif len(tok.kind)==1:      return "%9s:" % tok.kind
+        elif tok.kind == "ws":
+                return "%9s: %s" % (tok.kind,self.dumpWs(val))
+        else:   return "%9s: &lt;%s&gt;" % (tok.kind,val)
+</t>
+<t tx="ekr.20040713193437">def deleteTokens (self,tokens,delToken):
+            
+    return [tok for tok in tokens if not tok.match(delToken)]</t>
+<t tx="ekr.20040713194021">print
+print ; print '-' * 40
+print p.headString()
+print '-' * 40
+print</t>
+<t tx="ekr.20040713200126"></t>
+<t tx="ekr.20040713200238"></t>
+<t tx="ekr.20040713205718">def createIndentedBlock (self,tokens):
+    
+    return ## not ready yet.
+    
+    e = self ; p = e.p
+
+    # Whitespace has been deleted.
+    findToks = [tok('('),tok("id","defun"),tok("id"),tok("(")] 
+    
+    i = 0 ; progress = -1
+    while i &lt; len(tokens):
+        assert(progress &lt; i)
+        progress = i
+        i,j = e.findTokens(tokens,i,findToks)
+        if i is not None:
+            s = [str(tokens[k].toString()) for k in xrange(i,j+1)]
+            print "found:",' '.join(s)
+            k = e.findMatchingBracket(tokens,i)
+            if k is None: print "No matching bracket!"
+            else:
+                # print "found matching bracket",k,str(tokens[k].toString())
+                e.statementLevel += 1
+                e.createIndentedBlock(tokens[1:k])
+                e.statementLevel -= 1
+            i = j + 1
+        else:
+            break</t>
+<t tx="ekr.20040713211010">def convert (self):
+    
+    e = self ; p = e.p
+
+    e.tokens = e.tokenize(p.bodyString())
+    e.tokens = e.deleteTokens(e.tokens,tok("ws"))
+    e.tokens = e.deleteTokens(e.tokens,tok('\n'))
+    # e.dump(e.tokens,verbose=3)
+    e.createPythonIndentation(e.tokens)</t>
 </tnodes>
 </leo_file>
