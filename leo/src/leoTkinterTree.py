@@ -24,7 +24,7 @@ from leoGlobals import true,false
 
 import leoFrame
 import Tkinter,tkFont
-import os,string,types
+import os,string,sys,types
 
 #@<< about drawing >>
 #@+node:<< About drawing >>
@@ -190,8 +190,8 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		import leoNodes
 		
-		#@	<< define tkinter callbacks to be injected in the vnode class >>
-		#@+node:<< define tkinter callbacks to be injected in the vnode class >>
+		#@	<< define tkinter callbacks to be injected in the position class >>
+		#@+node:<< define tkinter callbacks to be injected in the position class >>
 		# N.B. These vnode methods are entitled to know about details of the leoTkinterTree class.
 		
 		#@+others
@@ -204,9 +204,9 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 			try:
 				p = self ; c = p.c
-				if not g.doHook("boxclick1",c=c,v=p,event=event):
+				if not g.doHook("boxclick1",c=c,p=p,event=event):
 					c.frame.tree.OnBoxClick(p)
-				g.doHook("boxclick2",c=c,v=p,event=event)
+				g.doHook("boxclick2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("boxclick")
 		#@nonl
@@ -217,15 +217,15 @@ class leoTkinterTree (leoFrame.leoTree):
 			"""Callback injected into vnode or position class."""
 		
 			try:
-				v = self ; c = v.c
+				p = self ; c = p.c
 				if c.frame.tree.dragging():
-					if not g.doHook("dragging1",c=c,v=v,event=event):
-						c.frame.tree.OnDrag(v,event)
-					g.doHook("dragging2",c=c,v=v,event=event)
+					if not g.doHook("dragging1",c=c,p=p,event=event):
+						c.frame.tree.OnDrag(p,event)
+					g.doHook("dragging2",c=c,p=p,event=event)
 				else:
-					if not g.doHook("drag1",c=c,v=v,event=event):
-						c.frame.tree.OnDrag(v,event)
-					g.doHook("drag2",c=c,v=v,event=event)
+					if not g.doHook("drag1",c=c,p=p,event=event):
+						c.frame.tree.OnDrag(p,event)
+					g.doHook("drag2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("drag")
 		#@nonl
@@ -238,11 +238,11 @@ class leoTkinterTree (leoFrame.leoTree):
 			# g.trace()
 		
 			try:
-				v = self ; c = v.c
+				p = self ; c = p.c
 				# 7/10/03: Always call frame.OnEndDrag, regardless of state.
-				if not g.doHook("enddrag1",c=c,v=v,event=event):
-					c.frame.tree.OnEndDrag(v,event)
-				g.doHook("enddrag2",c=c,v=v,event=event)
+				if not g.doHook("enddrag1",c=c,p=p,event=event):
+					c.frame.tree.OnEndDrag(p,event)
+				g.doHook("enddrag2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("enddrag")
 		#@nonl
@@ -251,24 +251,27 @@ class leoTkinterTree (leoFrame.leoTree):
 		def OnHeadlineClick(self,event=None):
 			"""Callback injected into vnode or position class."""
 			try:
-				v = self ; c = v.c
-				if not g.doHook("headclick1",c=c,v=v,event=event):
-					c.frame.tree.OnActivate(v)
-				g.doHook("headclick2",c=c,v=v,event=event)
+				p = self ; c = p.c
+				if not g.doHook("headclick1",c=c,p=p,event=event):
+					c.frame.tree.OnActivate(p)
+				g.doHook("headclick2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("headclick")
 			
 		def OnHeadlineRightClick(self,event=None):
+		
 			"""Callback injected into vnode or position class."""
+		
 			#g.trace()
 			try:
-				v = self ; c = v.c
-				if not g.doHook("headrclick1",c=c,v=v,event=event):
-					c.frame.tree.OnActivate(v)
+				p = self ; c = p.c
+				if not g.doHook("headrclick1",c=c,p=p,event=event):
+					c.frame.tree.OnActivate(p)
 					c.frame.tree.OnPopup(self,event)
-				g.doHook("headrclick2",c=c,v=v,event=event)
+				g.doHook("headrclick2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("headrclick")
+		#@nonl
 		#@-node:OnHeadlineClick & OnHeadlineRightClick
 		#@+node:OnHyperLinkControlClick
 		def OnHyperLinkControlClick (self,event):
@@ -277,13 +280,13 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 			# g.trace()
 			try:
-				v = self ; c = v.c
-				if not g.doHook("hypercclick1",c=c,v=v,event=event):
+				p = self ; c = p.c
+				if not g.doHook("hypercclick1",c=c,p=p,event=event):
 					c.beginUpdate()
-					c.selectVnode(v)
+					c.selectVnode(p)
 					c.endUpdate()
 					c.frame.bodyCtrl.mark_set("insert","1.0")
-				g.doHook("hypercclick2",c=c,v=v,event=event)
+				g.doHook("hypercclick2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("hypercclick")
 		#@nonl
@@ -294,10 +297,10 @@ class leoTkinterTree (leoFrame.leoTree):
 			"""Callback injected into vnode or position class."""
 		
 			try:
-				v = self ; c = v.c
-				if not g.doHook("headkey1",c=c,v=v,event=event):
-					c.frame.tree.OnHeadlineKey(v,event)
-				g.doHook("headkey2",c=c,v=v,event=event)
+				p = self ; c = p.c
+				if not g.doHook("headkey1",c=c,p=p,event=event):
+					c.frame.tree.OnHeadlineKey(p,event)
+				g.doHook("headkey2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("headkey")
 		#@nonl
@@ -308,11 +311,11 @@ class leoTkinterTree (leoFrame.leoTree):
 			"""Callback injected into vnode or position class."""
 		
 			try:
-				v = self ; c = v.c
-				if not g.doHook("hyperenter1",c=c,v=v,event=event):
+				p = self ; c = p.c
+				if not g.doHook("hyperenter1",c=c,p=p,event=event):
 					if 0: # This works, and isn't very useful.
-						c.frame.bodyCtrl.tag_config(v.tagName,background="green")
-				g.doHook("hyperenter2",c=c,v=v,event=event)
+						c.frame.bodyCtrl.tag_config(p.tagName,background="green")
+				g.doHook("hyperenter2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("hyperenter")
 		#@nonl
@@ -323,11 +326,11 @@ class leoTkinterTree (leoFrame.leoTree):
 			"""Callback injected into vnode or position class."""
 		
 			try:
-				v = self ; c = v.c
-				if not g.doHook("hyperleave1",c=c,v=v,event=event):
+				p = self ; c = p.c
+				if not g.doHook("hyperleave1",c=c,p=p,event=event):
 					if 0: # This works, and isn't very useful.
-						c.frame.bodyCtrl.tag_config(v.tagName,background="white")
-				g.doHook("hyperleave2",c=c,v=v,event=event)
+						c.frame.bodyCtrl.tag_config(p.tagName,background="white")
+				g.doHook("hyperleave2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("hyperleave")
 		#@nonl
@@ -338,10 +341,10 @@ class leoTkinterTree (leoFrame.leoTree):
 			"""Callback injected into vnode or position class."""
 		
 			try:
-				v = self ; c = v.c
-				if not g.doHook("iconclick1",c=c,v=v,event=event):
-					c.frame.tree.OnIconClick(v,event)
-				g.doHook("iconclick2",c=c,v=v,event=event)
+				p = self ; c = p.c
+				if not g.doHook("iconclick1",c=c,p=p,event=event):
+					c.frame.tree.OnIconClick(p,event)
+				g.doHook("iconclick2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("iconclick")
 			
@@ -350,10 +353,10 @@ class leoTkinterTree (leoFrame.leoTree):
 			"""Callback injected into vnode or position class."""
 		
 			try:
-				v = self ; c = v.c
-				if not g.doHook("iconrclick1",c=c,v=v,event=event):
-					c.frame.tree.OnIconRightClick(v,event)
-				g.doHook("iconrclick2",c=c,v=v,event=event)
+				p = self ; c = p.c
+				if not g.doHook("iconrclick1",c=c,p=p,event=event):
+					c.frame.tree.OnIconRightClick(p,event)
+				g.doHook("iconrclick2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("iconrclick")
 		#@-node:OnIconClick & OnIconRightClick
@@ -363,16 +366,16 @@ class leoTkinterTree (leoFrame.leoTree):
 			"""Callback injected into vnode or position class."""
 		
 			try:
-				v = self ; c = v.c
-				if not g.doHook("icondclick1",c=c,v=v,event=event):
+				p = self ; c = p.c
+				if not g.doHook("icondclick1",c=c,p=p,event=event):
 					c.frame.tree.OnIconDoubleClick(self)
-				g.doHook("icondclick2",c=c,v=v,event=event)
+				g.doHook("icondclick2",c=c,p=p,event=event)
 			except:
 				g.es_event_exception("icondclick")
 		#@-node:OnIconDoubleClick
 		#@-others
 		#@nonl
-		#@-node:<< define tkinter callbacks to be injected in the vnode class >>
+		#@-node:<< define tkinter callbacks to be injected in the position class >>
 		#@nl
 	
 		for f in (
@@ -769,7 +772,8 @@ class leoTkinterTree (leoFrame.leoTree):
 		# We must make copies for drawText and drawBox and drawIcon,
 		# So making copies here actually reduces the total number of copies.
 		### This will change for incremental redraw.
-		for p in p.self_and_siblings_iter(copy=true):
+		p = p.copy()
+		while p: # Do not use iterator.
 			h,w = self.drawNode(p,x,y)
 			y += h ; ylast = y
 			if p.isExpanded() and p.hasFirstChild():
@@ -777,7 +781,7 @@ class leoTkinterTree (leoFrame.leoTree):
 				y,w2 = self.drawTree(p.firstChild(),x+child_indent+w,y,h,level+1)
 				x += w2 ; w += w2
 			if hoistFlag: break
-	
+			else:         p = p.next()
 		#@	<< draw vertical line >>
 		#@+node:<< draw vertical line >>
 		id = self.canvas.create_line(
@@ -1334,7 +1338,7 @@ class leoTkinterTree (leoFrame.leoTree):
 					self.controlDrag = c.frame.controlKeyIsDown
 	
 			if vdrag and vdrag != p:
-				if self.controlDrag: # Clone v and move the clone.
+				if self.controlDrag: # Clone p and move the clone.
 					if childFlag:
 						c.dragCloneToNthChildOf(p,vdrag,0)
 					else:
@@ -1346,7 +1350,7 @@ class leoTkinterTree (leoFrame.leoTree):
 						c.dragAfter(p,vdrag)
 			else:
 				if p and self.dragging():
-					pass # g.es("not dragged: " + v.headString())
+					pass # g.es("not dragged: " + p.headString())
 				if 0: # Don't undo the scrolling we just did!
 					self.idle_scrollTo(p)
 		
@@ -1400,7 +1404,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			
 		edit_text = p.edit_text()
 	
-		if g.doHook("headkey1",c=c,v=v,ch=ch):
+		if g.doHook("headkey1",c=c,p=p,ch=ch):
 			return "break" # The hook claims to have handled the event.
 	
 		#@	<< set s to the widget text >>
@@ -1417,7 +1421,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		#@nl
 		#@	<< set head to vnode text >>
 		#@+node:<< set head to vnode text >>
-		head = v.headString()
+		head = p.headString()
 		if head == None:
 			head = u""
 		head = g.toUnicode(head,"utf-8")
@@ -1474,7 +1478,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		#@-node:<< update the screen >>
 		#@nl
 	
-		g.doHook("headkey2",c=c,v=v,ch=ch)
+		g.doHook("headkey2",c=c,p=p,ch=ch)
 		return "break"
 	#@nonl
 	#@-node:idle_head_key
@@ -1520,11 +1524,11 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		if event != None:
 			c = self.c
-			if not g.doHook("create-popup-menu",c=c,v=v,event=event):
+			if not g.doHook("create-popup-menu",c=c,p=p,event=event):
 				self.createPopupMenu(event)
-			if not g.doHook("enable-popup-menu-items",c=c,v=v,event=event):
-				self.enablePopupMenuItems(v,event)
-			if not g.doHook("show-popup-menu",c=c,v=v,event=event):
+			if not g.doHook("enable-popup-menu-items",c=c,p=p,event=event):
+				self.enablePopupMenuItems(p,event)
+			if not g.doHook("show-popup-menu",c=c,p=p,event=event):
 				self.showPopupMenu(event)
 	
 		return "break"
@@ -1618,9 +1622,9 @@ class leoTkinterTree (leoFrame.leoTree):
 			if isAtFile and isAtRoot:
 				break
 			if (v2.isAtFileNode() or
-				v2.isAtRawFileNode() or
-				v2.isAtSilentFileNode() or
-				v2.isAtNoSentinelsFileNode()
+				v2.isAtNorefFileNode() or
+				v2.isAtAsisFileNode() or
+				v2.isAtNoSentFileNode()
 			):
 				isAtFile = true
 				
