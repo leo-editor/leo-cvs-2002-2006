@@ -276,7 +276,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             self.c = c
             
             self.iconFrame = Tk.Frame(
-                parentFrame,height="5m",bd=2,relief="groove")
+                parentFrame,height="5m",bd=2,relief="groove") # ,background='blue')
             self.parentFrame = parentFrame
             self.visible = False
         #@nonl
@@ -365,7 +365,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         #@-node:ekr.20031218072017.3956:clear
         #@+node:ekr.20041223114821:getFrame
         def getFrame (self):
-            
+        
             return self.iconFrame
         #@nonl
         #@-node:ekr.20041223114821:getFrame
@@ -493,7 +493,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.iconFrame = iconBar.iconFrame
         
         self.iconBar = self.componentClass(c,
-            self.iconBarComponentName,outerFrame,
+            self.iconBarComponentName,iconBar.iconFrame,
             iconBar,iconBar.pack,iconBar.unpack)
         
         self.iconBar.show()
