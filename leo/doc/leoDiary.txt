@@ -1,0 +1,330 @@
+#@+leo-ver=4
+#@+node:ekr.20031218072017:@file-thin ../doc/leoDiary.txt
+#@@nocolor
+
+Older diary entries are in LeoDocs.leo.
+
+#@+others
+#@+node:ekr.20040105070023:2004
+#@+node:ekr.20040305161150:March 2004
+Otherwise the tree-drawing code will change the position!
+#@nonl
+#@+node:ekr.20040330115950:4/30
+#@+node:ekr.20040330094441:Convert all plugins to g. style
+What I did:
+
+1. Converted the following ivars by hand:
+
+app -> g.app
+globalDirectiveList -> g.globalDirectiveList
+
+2.  Replaced Tkinter by tk:
+
+try: import Tkinter as Tk
+except ImportError: Tk = None
+
+3. Replaced "from leoPlugins import *" by import leoPlugins.
+	- Replaced registerHandler by leoPlugins.registerHandler.
+#@nonl
+#@-node:ekr.20040330094441:Convert all plugins to g. style
+#@+node:ekr.20040330040746:Modified g. conversion script so it can be run anywhere
+#@@nocolor 
+
+Create the list of functions in leoGlobals.py.
+	OR:  create the list by importing leoGlobals.py and looking at g.__dict__
+Put this list in the script.
+#@nonl
+#@-node:ekr.20040330040746:Modified g. conversion script so it can be run anywhere
+#@-node:ekr.20040330115950:4/30
+#@+node:ekr.20040327132739:4/27
+#@+node:ekr.20040327105838:Added unit tests for batch mode
+#@-node:ekr.20040327105838:Added unit tests for batch mode
+#@+node:ekr.20040327132739.1:Added useNullUndoer option to nullFrame class
+#@-node:ekr.20040327132739.1:Added useNullUndoer option to nullFrame class
+#@-node:ekr.20040327132739:4/27
+#@+node:ekr.20040326033226:4/26
+#@+node:ekr.20040326132938.1:Removed v.iterators
+#@-node:ekr.20040326132938.1:Removed v.iterators
+#@+node:ekr.20040326112724:Disambiguted clones while selecting
+See notes in project.  This was very clever code.
+#@nonl
+#@-node:ekr.20040326112724:Disambiguted clones while selecting
+#@+node:ekr.20040326113316:Added code to restore top and current positions
+- created convertStackToPosition.
+- created getExistingVnode.
+- Major hack to getVnode.
+#@-node:ekr.20040326113316:Added code to restore top and current positions
+#@+node:ekr.20040326114236:Fixed bug in find.changeSelection
+Moved a call to c.frame.tree.drawIcon(v) so that the icon will, in fact, be redrawn.
+
+This was apparently an old bug.
+#@nonl
+#@-node:ekr.20040326114236:Fixed bug in find.changeSelection
+#@+node:ekr.20040326114236.1:Converted vnodes, tnodes and positions to new-style classes
+This requires Python 2.2, as does iterators.
+#@nonl
+#@-node:ekr.20040326114236.1:Converted vnodes, tnodes and positions to new-style classes
+#@+node:ekr.20040326040442:Removed verbose option from setAllAncestorAtFileNodesDirty
+The setDirty logic is now about as clean as it can be.
+#@nonl
+#@-node:ekr.20040326040442:Removed verbose option from setAllAncestorAtFileNodesDirty
+#@+node:ekr.20040325203859.6:Eliminated calls to p.__cmp__(None)
+- Changed readAll so it uses c.nullPosition by default.
+- Test p is None in scanDirectives.
+
+These two changes _might_ be enough to ensure the arg to p.__cmp__ is always a position in Leo's _core_.  However, user code is a different matter!
+
+The coding style is to use: "if p is None:" rather than "if p == None:".  However, there is no way to enforce that style, so I have left the test against None in p.__cmp__.
+
+Use the p.equal method when speed is crucial.
+#@nonl
+#@-node:ekr.20040325203859.6:Eliminated calls to p.__cmp__(None)
+#@+node:ekr.20040326033226.1:Converted vnode,tnode,position classes to new-style classes
+#@-node:ekr.20040326033226.1:Converted vnode,tnode,position classes to new-style classes
+#@+node:ekr.20040326033226.2:Improved the speed of isAnyAtFileNode
+This is a time-critical routine.
+#@nonl
+#@-node:ekr.20040326033226.2:Improved the speed of isAnyAtFileNode
+#@-node:ekr.20040326033226:4/26
+#@+node:ekr.20040325095227:4/25 Released 4.2 a1
+#@+node:ekr.20040325183515:Fix three major performance bugs
+1. Reduced copies of positions in drawTree.
+
+Allocated copies in drawTree rather than in drawBox, drawIcon and drawText.  This reduces the numbef of copies by one third.
+
+2. Eliminated extraneous positions in fileCommands read logic.
+
+This was due to calling v.setMarked rather than v.initMarked, which calls c.doHook.  I don't know why this allocates so many positions, and it does.
+
+3. Speeded up fileCommands write logic by 30% (or more?)
+
+This was a weird one.  p.__cmp__ is up to 10 times slower than p.equal.  I don't think there is any recursive code in p.__cmp__, and I suppose there might be...
+#@nonl
+#@-node:ekr.20040325183515:Fix three major performance bugs
+#@+node:ekr.20040318150305:Removed all  back quotes
+#@-node:ekr.20040318150305:Removed all  back quotes
+#@-node:ekr.20040325095227:4/25 Released 4.2 a1
+#@+node:ekr.20040322112731:3/22
+#@+node:ekr.20040322112731.1:Replaced joinList by vnodeList
+#@-node:ekr.20040322112731.1:Replaced joinList by vnodeList
+#@-node:ekr.20040322112731:3/22
+#@+node:ekr.20040314103312:3/14
+#@+node:ekr.20040314103312.1:Added asserts when g.app.debug is true
+These assert that the old or simple ways of computing positions and levels are equivalent to the optimized ways.
+
+These assertions significantly slow down moves.  This shows that the optimized code truely is essential.
+#@nonl
+#@-node:ekr.20040314103312.1:Added asserts when g.app.debug is true
+#@+node:ekr.20040314103312.2:HUGE AHA: greatly simplified p.nodeAfter and p.threadNext
+#@-node:ekr.20040314103312.2:HUGE AHA: greatly simplified p.nodeAfter and p.threadNext
+#@-node:ekr.20040314103312:3/14
+#@+node:ekr.20040312073921:3/12
+#@+node:ekr.20040312152117:Fixed nasty bug in p.linkAsRoot
+The code set a _next field to a position instead of a vnode.
+#@nonl
+#@-node:ekr.20040312152117:Fixed nasty bug in p.linkAsRoot
+#@+node:ekr.20040308151706:Fixed and tested the script to replace x by g.x
+Changes since the last cvs update:
+	
+- Disables changes if not a complete word.
+- Disables changes if preceeded by prefix:
+	- Running this script twice is now safe.
+- Disables changes if preceeded by "def " or "."
+- Added replace parameter for safety.
+#@-node:ekr.20040308151706:Fixed and tested the script to replace x by g.x
+#@+node:ekr.20040312101356:Added c.allNodes_iter
+#@-node:ekr.20040312101356:Added c.allNodes_iter
+#@+node:ekr.20040312073921.1:Replaced porv by p
+#@-node:ekr.20040312073921.1:Replaced porv by p
+#@+node:ekr.20040312073921.2:Removed g.sharedNodes ivar and related code
+Removed all code governed by "if not g.sharedNodes".
+#@-node:ekr.20040312073921.2:Removed g.sharedNodes ivar and related code
+#@-node:ekr.20040312073921:3/12
+#@+node:ekr.20040311080500:3/11
+#@+node:ekr.20040311110432.1:Got Save To command working
+I started the transition to "pure" position code.
+
+That is, I started eliminating code in "not g.sharedNodes" parts.  I did this because doing things "both ways" doesn't make any sense: much easier to change code.
+#@nonl
+#@-node:ekr.20040311110432.1:Got Save To command working
+#@+node:ekr.20040311080500.1:Added new iters
+self_and_siblings_iter()
+self_and_parents_iter()
+#@-node:ekr.20040311080500.1:Added new iters
+#@+node:ekr.20040311075229:Added copy param to all position iterators
+This allows the user to choose a "safe mode".  It is off by default.
+#@nonl
+#@-node:ekr.20040311075229:Added copy param to all position iterators
+#@-node:ekr.20040311080500:3/11
+#@+node:ekr.20040309045533:3/9 All calls to tag_bind must use a copy of position
+#@-node:ekr.20040309045533:3/9 All calls to tag_bind must use a copy of position
+#@+node:ekr.20040306223950:3/6 Realized that position proxies are now efficient
+We _can_ make the Leo compatible with old scipts !!!
+
+1. Iterators replace most calls to next(), threadNext() etc., so any _other_ calls to there routines do _not_ have to be efficient:
+
+2. In other words, iterators are the place to "optimize" tree traversals.
+
+3. I added proxies to the position class so that p.x() is valid almost anywhere that v.x() is valid.
+
+The only exceptions is that the v.linkX and v.unlink routines should only be called explicitly from the position class.
+
+4.  I shall define porv.setCurrentVnode() and porv.currentVnode () in terms of porv.setCurrentPosition and porv.currentPosition.
+
+This will deal with positions or vnodes as appropriate.
+
+5. Added t ivar to position class:  self.t = self.v.t
+
+Therefore, almost all code should continue to work!
+#@-node:ekr.20040306223950:3/6 Realized that position proxies are now efficient
+#@+node:ekr.20040305161150.1:3/4 Realized that iterators make the position class safe
+#@-node:ekr.20040305161150.1:3/4 Realized that iterators make the position class safe
+#@+node:ekr.20040305162910:3/5
+#@+node:ekr.20040305162910.1:Replaced x by g.x for all x in leoGlobals
+#@-node:ekr.20040305162910.1:Replaced x by g.x for all x in leoGlobals
+#@+node:ekr.20040305162910.2:Replaced app proxy class from leoGlobals by app global var
+#@-node:ekr.20040305162910.2:Replaced app proxy class from leoGlobals by app global var
+#@+node:ekr.20040305161150.2:Replaced true,false by True,False
+#@-node:ekr.20040305161150.2:Replaced true,false by True,False
+#@-node:ekr.20040305162910:3/5
+#@-node:ekr.20040305161150:March 2004
+#@+node:ekr.20040201113342:February 2004
+#@+node:ekr.20040216153243:2/16
+#@+node:ekr.20040212085815:Restored Toggle Angle Bracket command (without shortcut)
+Changed leoConfig.leo, and the popup menu.
+
+By: sbeards ( Scott Beardsley ) 
+ BUG: Toggle brackets via Ctrl+B   
+2004-02-11 17:21  
+
+The ToggleAngleBrackets keyboard command (Ctrl+B) doesn't seem to be working at all. 
+#@nonl
+#@-node:ekr.20040212085815:Restored Toggle Angle Bracket command (without shortcut)
+#@+node:ekr.20040216153659:Changed Undo/Redo messages
+Changed Undo/Redo messages:
+
+- Insert Outline to Insert Node.
+- Delete Outline to Delete Node.
+- Clone to Clone Node.
+
+This is a real code change: it affects the undo/redo logic.
+
+BTW, some way should be found to translate these (and all other text as well!!).
+#@nonl
+#@-node:ekr.20040216153659:Changed Undo/Redo messages
+#@-node:ekr.20040216153243:2/16
+#@+node:ekr.20040201113342.1:2/1
+#@+node:ekr.20040201113342.2:Fixed bugs in Script-Find/change and improved documentation
+#@-node:ekr.20040201113342.2:Fixed bugs in Script-Find/change and improved documentation
+#@-node:ekr.20040201113342.1:2/1
+#@-node:ekr.20040201113342:February 2004
+#@+node:ekr.20040105070023.1:January 2004
+
+#@+node:ekr.20040130183451:1/30
+#@+node:ekr.20040130160615:Added script to look for blanks preceding tabs in leading whitespace
+#@-node:ekr.20040130160615:Added script to look for blanks preceding tabs in leading whitespace
+#@+node:ekr.20040130112427:Fixed several bugs
+- Fixed Dan Winkler's bug with CashRegister.ss.
+
+- Possibly fixed the "Zope Sprint" bug.
+
+- Ensure trailing newline in scripts.
+
+- Fixed indent problem in leoTkinterGui.py.
+
+- Fixed several problems in the Convert All Blanks/Tabs commands.
+
+- Give shorter message when saving a read-only file fails.
+  This is a bit of a kludge.  Only time will tell if it works acceptably.
+
+- Leo no longer writes "empty" attributes like a="".  This arose because Leo no longer writes cloned attributes.
+
+- Added some code to save and restore the "top" vnode, but this really is useless at present: the "top" vnode is a function of the scroll state, and that is a Tk-dependent value.  The only proper way of computing the top node would be to look at the scroll state, and this I don't care to do now.
+
+#@-node:ekr.20040130112427:Fixed several bugs
+#@-node:ekr.20040130183451:1/30
+#@+node:ekr.20040129154656:1/29
+#@+node:ekr.20040129154656.1:Only mark ancestor @file nodes dirty when creating,moving,changing nodes
+This is correct and more accurate.
+
+- Created v.setAllAncestorAtFileNodesDirty.
+
+- Call v.setAllAncestorAtFileNodesDirty instead of v.setDirty.
+
+- "Duplicate" calls to v.setAllAncestorAtFileNodesDirty are needed just as with v.setDirty.
+
+- This change affects drags, moves, clones, insert, delete, sorting.
+#@nonl
+#@-node:ekr.20040129154656.1:Only mark ancestor @file nodes dirty when creating,moving,changing nodes
+#@+node:ekr.20040129133809:fixed bugs: see 4.1 rc4 projects for details
+#@-node:ekr.20040129133809:fixed bugs: see 4.1 rc4 projects for details
+#@-node:ekr.20040129154656:1/29
+#@+node:ekr.20040126115428:1/26
+#@+node:ekr.20040126131801:Properly handle exceptions in commands
+c.doCommand calls tree.redrawAfterException on exceptions.  This works because doCommand is itself _not_ contained in any begin/endUpdate pair, so setting elf.updateCount = 0 in tree.redrawAfterException will work.
+#@nonl
+#@-node:ekr.20040126131801:Properly handle exceptions in commands
+#@+node:ekr.20040126121604:Eliminated control-v bug on various platforms
+Changed:
+
+if sys.platform not in ("linux1","linux2"):
+
+to:
+
+if sys.platform not in ("darwin",freebsd4","freebsd5","linux1","linux2"):
+
+in:
+
+< < set bind_shortcut and menu_shortcut using accel > >
+#@nonl
+#@-node:ekr.20040126121604:Eliminated control-v bug on various platforms
+#@+node:ekr.20040126115428.1:Added Dave Hein's Reformat Paragraph code.
+#@-node:ekr.20040126115428.1:Added Dave Hein's Reformat Paragraph code.
+#@+node:ekr.20040126115428.2:Fixed Move Up bug involving clones
+The fix was to insert code to test for a special case.
+
+I wonder what this code would look like in the shared-tnode world?
+#@-node:ekr.20040126115428.2:Fixed Move Up bug involving clones
+#@-node:ekr.20040126115428:1/26
+#@+node:ekr.20040108131321:1/8
+#@+node:ekr.20040108153420:Esc hides the Find panel
+#@-node:ekr.20040108153420:Esc hides the Find panel
+#@+node:ekr.20040108153420.1:Return in Find panel simuatest the Find button
+This is so handy.
+#@nonl
+#@-node:ekr.20040108153420.1:Return in Find panel simuatest the Find button
+#@+node:ekr.20040108141927:Fixed huge performance bug in cut/copy nodes.
+#@-node:ekr.20040108141927:Fixed huge performance bug in cut/copy nodes.
+#@+node:ekr.20040108134357:Improved sample code for batch mode in LeoDocs.leo
+#@-node:ekr.20040108134357:Improved sample code for batch mode in LeoDocs.leo
+#@+node:ekr.20040108133440:Removed a complex assert in colorizer
+The assertion
+
+assert(i == new_len)
+
+in < < initialize new states > > has caused no end of troubles.  The new code eliminates the assertion by brute force.  It has never been clear why the assert has failed, and it does so rarely.  However, the very worst that can happen is that some lines aren't colored properly, so it's not a big deal.
+#@nonl
+#@-node:ekr.20040108133440:Removed a complex assert in colorizer
+#@+node:ekr.20040108131321.1:Change file extenstion for LaTeX files from .latext to .tex
+#@-node:ekr.20040108131321.1:Change file extenstion for LaTeX files from .latext to .tex
+#@-node:ekr.20040108131321:1/8
+#@+node:ekr.20040106095934:1/6 Enable drawing after exceptions
+Created tree.enableDrawingAfterException and called it in es_exception.
+#@nonl
+#@-node:ekr.20040106095934:1/6 Enable drawing after exceptions
+#@+node:ekr.20040105070023.2:1/5
+#@+node:ekr.20040105070023.3:Import now creates @root-code
+#@-node:ekr.20040105070023.3:Import now creates @root-code
+#@+node:ekr.20040105115534:Added sys.platform to signon message in log pane
+#@-node:ekr.20040105115534:Added sys.platform to signon message in log pane
+#@+node:ekr.20040105115534.1:Added test/test.leo to all distributions
+#@-node:ekr.20040105115534.1:Added test/test.leo to all distributions
+#@+node:ekr.20040105121411:Added LP link to Leo's site
+#@-node:ekr.20040105121411:Added LP link to Leo's site
+#@-node:ekr.20040105070023.2:1/5
+#@-node:ekr.20040105070023.1:January 2004
+#@-node:ekr.20040105070023:2004
+#@-others
+#@nonl
+#@-node:ekr.20031218072017:@file-thin ../doc/leoDiary.txt
+#@-leo
