@@ -341,6 +341,10 @@ class baseConfig:
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
 	def setCommandsFindIvars (self,c):
+		
+		if app.gui.guiName() != "tkinter":
+			trace()
+			return
 	
 		config = self ; findFrame = app.findFrame
 	

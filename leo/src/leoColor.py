@@ -1038,19 +1038,22 @@ class baseColorizer:
 			"body_text_font_family", "body_text_font_size",
 			"body_text_font_slant",  "body_text_font_weight")
 		
-		self.bold_font.configure(weight="bold")
+		if self.bold_font:
+			self.bold_font.configure(weight="bold")
 		
 		self.italic_font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
 			"body_text_font_slant",  "body_text_font_weight")
 			
-		self.italic_font.configure(slant="italic")
-			
+		if self.italic_font:
+			self.italic_font.configure(slant="italic")
+		
 		self.bolditalic_font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
 			"body_text_font_slant",  "body_text_font_weight")
 			
-		self.bolditalic_font.configure(weight="bold",slant="italic")
+		if self.bolditalic_font:
+			self.bolditalic_font.configure(weight="bold",slant="italic")
 		
 		self.color_tags_list = []
 		self.image_references = []

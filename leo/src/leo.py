@@ -115,6 +115,8 @@ def createFrame (fileName):
 	
 	"""Create a LeoFrame during Leo's startup process."""
 	
+	# trace(fileName)
+	
 	# Try to create a frame for the file.
 	if fileName:
 		fileName = os.path.join(os.getcwd(),fileName)

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="751" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="759" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="36" left="245" height="828" width="861"/>
+	<global_window_position top="48" left="394" height="828" width="861"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -473,457 +473,474 @@
 </v>
 </v>
 <v t="T347" a="E"><vh>In progress</vh>
-<v t="T348"><vh>To do</vh></v>
-<v t="T349" a="EV" tnodeList="349,350,351,353,355,356,357,358,359,360,361,362,363,364,365,367,368,369,371,372,373,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,396,394,395,397,398,399,400,401,402,403,404,411,412,413,414,415,416,417,418,405,406,407,408,409,410,419,420,421,422,423,424,425,426,427,428,429,352"><vh>@file __wx_gui.py</vh>
-<v t="T350"><vh>&lt;&lt; imports for wx plugin &gt;&gt;</vh></v>
-<v t="T351"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
-<v t="T352" a="M"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
-<v t="T353" a="E"><vh>wxGui class</vh>
-<v t="T354" a="E"><vh>Birth &amp; death</vh>
-<v t="T355"><vh>wxGui.__init__</vh></v>
-<v t="T356" a="M"><vh>createRootWindow &amp; allies</vh>
-<v t="T357"><vh>setDefaultIcon</vh></v>
-<v t="T358"><vh>setEncoding</vh></v>
-<v t="T359"><vh>getDefaultConfigFont</vh></v>
-<v t="T360"><vh>createGlobalWindows</vh></v>
+<v t="T348" tnodeList="348,349,350,352,354,355,356,357,358,359,360,361,362,363,364,366,367,369,370,371,372,374,375,376,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,403,401,402,404,405,406,407,408,409,410,411,418,419,420,421,422,423,424,425,412,413,414,415,416,417,426,427,428,429,430,431,432,433,434,435,436,351"><vh>@file __wx_gui.py</vh>
+<v t="T349"><vh>&lt;&lt; imports for wx plugin &gt;&gt;</vh></v>
+<v t="T350"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
+<v t="T351" a="CM"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
+<v t="T352"><vh>wxGui class</vh>
+<v t="T353" a="E"><vh>Birth &amp; death</vh>
+<v t="T354"><vh>wxGui.__init__</vh></v>
+<v t="T355" a="CM"><vh>createRootWindow &amp; allies</vh>
+<v t="T356"><vh>setDefaultIcon</vh></v>
+<v t="T357"><vh>setEncoding</vh></v>
+<v t="T358"><vh>getDefaultConfigFont</vh></v>
+<v t="T359"><vh>createGlobalWindows</vh></v>
 </v>
-<v t="T361"><vh>destroy</vh></v>
-<v t="T362"><vh>finishCreate</vh></v>
-<v t="T363"><vh>killGui (not used)</vh></v>
-<v t="T364"><vh>recreateRootWindow (not used)</vh></v>
-<v t="T365"><vh>runMainLoop</vh></v>
+<v t="T360"><vh>destroy</vh></v>
+<v t="T361"><vh>finishCreate</vh></v>
+<v t="T362"><vh>killGui (not used)</vh></v>
+<v t="T363"><vh>recreateRootWindow (not used)</vh></v>
+<v t="T364"><vh>runMainLoop</vh></v>
 </v>
-<v t="T366"><vh>Called by leoConfig</vh>
-<v t="T367"><vh>getFontFromParams</vh></v>
+<v t="T365"><vh>Called by leoConfig</vh>
+<v t="T366"><vh>getFontFromParams</vh></v>
 </v>
-<v t="T368"><vh>Creating and running dialogs</vh></v>
-<v t="T369"><vh>Creating Frames</vh></v>
-<v t="T370" a="M"><vh>Focus utils</vh>
-<v t="T371"><vh>get_focus</vh></v>
-<v t="T372"><vh>set_focus</vh></v>
-<v t="T373"><vh>force_focus</vh></v>
+<v t="T367"><vh>Dialogs</vh></v>
+<v t="T368"><vh>Frames</vh>
+<v t="T369"><vh>newLeoFrame</vh></v>
+<v t="T370"><vh>other frames...</vh></v>
+<v t="T371"><vh>destroyLeoFrame</vh></v>
+<v t="T372"><vh>destroy</vh></v>
 </v>
-<v t="T374" a="M"><vh>Dialog &amp; Icon utils</vh>
-<v t="T375"><vh>attachLeoIcon &amp; createLeoIcon</vh>
-<v t="T376"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
-<v t="T377"><vh>createLeoIcon</vh></v>
+<v t="T373" a="M"><vh>Focus</vh>
+<v t="T374"><vh>get_focus</vh></v>
+<v t="T375"><vh>set_focus</vh></v>
+<v t="T376"><vh>force_focus</vh></v>
 </v>
-<v t="T378"><vh>get_window_info</vh></v>
-<v t="T379"><vh>center_dialog</vh></v>
-<v t="T380"><vh>create_labeled_frame</vh></v>
+<v t="T377" a="M"><vh>Dialog &amp; Icon utils</vh>
+<v t="T378"><vh>attachLeoIcon &amp; createLeoIcon</vh>
+<v t="T379"><vh>&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;</vh></v>
+<v t="T380"><vh>createLeoIcon</vh></v>
 </v>
-</v>
-<v t="T381"><vh>wxLeoApp class</vh>
-<v t="T382"><vh>OnInit</vh></v>
-</v>
-<v t="T383"><vh>wxLeoFrame class</vh>
-<v t="T384"><vh>__init__</vh></v>
-<v t="T385"><vh>createMenus (old code: explicit id's)</vh>
-<v t="T386"><vh>&lt;&lt; Create the File menu &gt;&gt;</vh>
-<v t="T387"><vh>&lt;&lt; Create the initial items of the file menu &gt;&gt;</vh></v>
-<v t="T388"><vh>&lt;&lt; Create the Read/Write submenu &gt;&gt;</vh></v>
-<v t="T389"><vh>&lt;&lt; Create the Tangle submenu &gt;&gt;</vh></v>
-<v t="T390"><vh>&lt;&lt; Create the Untangle submenu &gt;&gt;</vh></v>
-<v t="T391"><vh>&lt;&lt; Create the Import Files submenu &gt;&gt;</vh></v>
-</v>
-<v t="T392"><vh>&lt;&lt; Create the Edit menu &gt;&gt;</vh>
-<v t="T393"><vh>&lt;&lt; Create the initial items of the Edit menu &gt;&gt;</vh></v>
-<v t="T394"><vh>&lt;&lt; Create the Find submenu &gt;&gt;</vh></v>
-<v t="T395"><vh>&lt;&lt; Create the final items of the Edit menu &gt;&gt;</vh></v>
-<v t="T396"><vh>&lt;&lt; Create the Edit Body submenu &gt;&gt;</vh></v>
-</v>
-<v t="T397"><vh>&lt;&lt; Create the Outline menu &gt;&gt;</vh>
-<v t="T398"><vh>&lt;&lt; Create the initial items of the Outline menu &gt;&gt;</vh></v>
-<v t="T399"><vh>&lt;&lt; Create the Expand/Contract submenu &gt;&gt;</vh></v>
-<v t="T400"><vh>&lt;&lt; Create the Move/Select submenu &gt;&gt;</vh></v>
-<v t="T401"><vh>&lt;&lt; Create the Mark/Go To submenu &gt;&gt;</vh></v>
-</v>
-<v t="T402"><vh>&lt;&lt; Create the Window menu &gt;&gt;</vh></v>
-<v t="T403"><vh>&lt;&lt; Create the Help menu &gt;&gt;</vh></v>
-</v>
-<v t="T404" a="E"><vh>createMenuBar</vh>
-<v t="T405"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
-<v t="T406"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
-<v t="T407"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
-<v t="T408"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
-<v t="T409"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
-<v t="T410"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
-</v>
-<v t="T411"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
-<v t="T412"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
-<v t="T413"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
-<v t="T414"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
-<v t="T415"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
-<v t="T416"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
-<v t="T417"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
-<v t="T418"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
-</v>
-<v t="T419"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
-<v t="T420"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
-<v t="T421"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
-<v t="T422"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
-<v t="T423"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
-<v t="T424"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
-</v>
-<v t="T425"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
-<v t="T426"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
-</v>
-<v t="T427"><vh>createNewMenu</vh></v>
-<v t="T428"><vh>createMenuEntries</vh></v>
-<v t="T429"><vh>OnAbout</vh></v>
+<v t="T381"><vh>get_window_info</vh></v>
+<v t="T382"><vh>center_dialog</vh></v>
+<v t="T383"><vh>create_labeled_frame</vh></v>
 </v>
 </v>
-<v t="T430"><vh>(other wxStuff)</vh>
-<v t="T431"><vh>wxTests</vh>
-<v t="T432"><vh>@file c:\prog\test\wxTest.py</vh></v>
+<v t="T384"><vh>wxLeoApp class</vh>
+<v t="T385"><vh>OnInit</vh></v>
 </v>
-<v t="T433"><vh>old wxLeo code (imported C++ code)</vh>
-<v t="T434"><vh>alert.cpp</vh>
-<v t="T435"><vh>alert</vh></v>
-<v t="T436"><vh>assertFailedDialog</vh></v>
+<v t="T386" a="E"><vh>wxLeoFrame class</vh>
+<v t="T387"><vh>__init__</vh></v>
+<v t="T388"><vh>dummys</vh></v>
+<v t="T389"><vh>Interface with the commander</vh></v>
+<v t="T390"><vh>Interface with the tree class</vh></v>
+<v t="T391"><vh>finishCreate</vh></v>
+<v t="T392"><vh>createMenus (old code: explicit id's)</vh>
+<v t="T393"><vh>&lt;&lt; Create the File menu &gt;&gt;</vh>
+<v t="T394"><vh>&lt;&lt; Create the initial items of the file menu &gt;&gt;</vh></v>
+<v t="T395"><vh>&lt;&lt; Create the Read/Write submenu &gt;&gt;</vh></v>
+<v t="T396"><vh>&lt;&lt; Create the Tangle submenu &gt;&gt;</vh></v>
+<v t="T397"><vh>&lt;&lt; Create the Untangle submenu &gt;&gt;</vh></v>
+<v t="T398"><vh>&lt;&lt; Create the Import Files submenu &gt;&gt;</vh></v>
 </v>
-<v t="T437"><vh>FindPanel.cpp</vh>
-<v t="T438"><vh>&lt;&lt; FindPanel declarations &gt;&gt;</vh></v>
-<v t="T439"><vh>BEGIN_EVENT_TABLE</vh></v>
-<v t="T440"><vh>ctor</vh></v>
-<v t="T441"><vh>OnActivateFindFrame</vh></v>
-<v t="T442"><vh>OnSetFocus</vh></v>
-<v t="T443"><vh>OnCloseFindFrame</vh></v>
-<v t="T444"><vh>OnChangeButton</vh></v>
-<v t="T445"><vh>OnChangeAllButton</vh></v>
-<v t="T446"><vh>OnChangeThenFindButton</vh></v>
-<v t="T447"><vh>OnFindButton</vh></v>
-<v t="T448"><vh>OnFindAllButton</vh></v>
-<v t="T449"><vh>OnBatchCheckBox</vh></v>
-<v t="T450"><vh>OnIgnoreCaseCheckBox</vh></v>
-<v t="T451"><vh>OnMarkChangesCheckBox</vh></v>
-<v t="T452"><vh>OnMarkFindsCheckBox</vh></v>
-<v t="T453"><vh>OnPatternMatchCheckBox</vh></v>
-<v t="T454"><vh>OnReverseCheckBox</vh></v>
-<v t="T455"><vh>OnSearchBodyTextCheckBox</vh></v>
-<v t="T456"><vh>OnSearchHeadlineCheckBox</vh></v>
-<v t="T457"><vh>OnSuboutlineOnlyCheckBox</vh></v>
-<v t="T458"><vh>OnWrapAroundCheckBox</vh></v>
-<v t="T459"><vh>OnWholeWordCheckBox</vh></v>
-<v t="T460"><vh>OnChangeText</vh></v>
-<v t="T461"><vh>OnFindText</vh></v>
-<v t="T462"><vh>set_check_boxes</vh></v>
-<v t="T463"><vh>FindPanel</vh></v>
+<v t="T399"><vh>&lt;&lt; Create the Edit menu &gt;&gt;</vh>
+<v t="T400"><vh>&lt;&lt; Create the initial items of the Edit menu &gt;&gt;</vh></v>
+<v t="T401"><vh>&lt;&lt; Create the Find submenu &gt;&gt;</vh></v>
+<v t="T402"><vh>&lt;&lt; Create the final items of the Edit menu &gt;&gt;</vh></v>
+<v t="T403"><vh>&lt;&lt; Create the Edit Body submenu &gt;&gt;</vh></v>
 </v>
-<v t="T464"><vh>LeoApp.cpp</vh>
-<v t="T465"><vh>Event table</vh></v>
-<v t="T466"><vh>OnInit</vh>
-<v t="T467"><vh>&lt;&lt; Switch to the other running copy of Leo if one is already open &gt;&gt;</vh></v>
-<v t="T468"><vh>&lt;&lt; Set gAppDirectory &gt;&gt;</vh></v>
-<v t="T469"><vh>&lt;&lt; Open a file when double-clicking an icon &gt;&gt;</vh></v>
-<v t="T470"><vh>&lt;&lt; Create a frame and link it into the global frame list &gt;&gt;</vh></v>
-<v t="T471"><vh>&lt;&lt; Initialize Sherlock &gt;&gt;</vh></v>
-<v t="T472"><vh>&lt;&lt; Dump the command line &gt;&gt;</vh></v>
+<v t="T404"><vh>&lt;&lt; Create the Outline menu &gt;&gt;</vh>
+<v t="T405"><vh>&lt;&lt; Create the initial items of the Outline menu &gt;&gt;</vh></v>
+<v t="T406"><vh>&lt;&lt; Create the Expand/Contract submenu &gt;&gt;</vh></v>
+<v t="T407"><vh>&lt;&lt; Create the Move/Select submenu &gt;&gt;</vh></v>
+<v t="T408"><vh>&lt;&lt; Create the Mark/Go To submenu &gt;&gt;</vh></v>
 </v>
-<v t="T473"><vh>OnExit</vh></v>
-<v t="T474"><vh>init_args</vh></v>
-<v t="T475"><vh>wxFindAppPath</vh></v>
-<v t="T476"><vh>log_open</vh></v>
-<v t="T477"><vh>put_cstring_to_log_window</vh></v>
+<v t="T409"><vh>&lt;&lt; Create the Window menu &gt;&gt;</vh></v>
+<v t="T410"><vh>&lt;&lt; Create the Help menu &gt;&gt;</vh></v>
 </v>
-<v t="T478"><vh>LeoFrame.cpp</vh>
-<v t="T479"><vh>BEGIN_EVENT_TABLE</vh>
-<v t="T480"><vh>&lt;&lt; Declare menu events &gt;&gt;</vh></v>
+<v t="T411"><vh>createMenuBar</vh>
+<v t="T412"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
+<v t="T413"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
+<v t="T414"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
+<v t="T415"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
+<v t="T416"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
+<v t="T417"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
 </v>
-<v t="T481"><vh>ctor</vh>
-<v t="T482"><vh>&lt;&lt; Initialize the private vars &gt;&gt;</vh></v>
-<v t="T483"><vh>&lt;&lt; Initialize the argument settings &gt;&gt;</vh></v>
-<v t="T484"><vh>&lt;&lt; Create the splitter windows &gt;&gt;</vh></v>
-<v t="T485"><vh>&lt;&lt; Create the accelerator table &gt;&gt;</vh></v>
-<v t="T486"><vh>&lt;&lt; Create the status bar &gt;&gt;</vh></v>
-<v t="T487"><vh>&lt;&lt; Set the window Icon &gt;&gt;</vh></v>
-<v t="T488"><vh>&lt;&lt; Set the caret blink rate &gt;&gt;</vh></v>
-<v t="T489"><vh>&lt;&lt; Add root node to the tree view &gt;&gt;</vh></v>
+<v t="T418"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
+<v t="T419"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
+<v t="T420"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
+<v t="T421"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
+<v t="T422"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
+<v t="T423"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
+<v t="T424"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
+<v t="T425"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
 </v>
-<v t="T490"><vh>createMenus</vh></v>
-<v t="T491"><vh>SetUntitledNumber</vh></v>
-<v t="T492"><vh>putToLog</vh></v>
-<v t="T493"><vh>getLogText</vh></v>
-<v t="T494"><vh>event handlers</vh>
-<v t="T495"><vh>onActivate</vh></v>
-<v t="T496"><vh>OnSetFocus</vh></v>
-<v t="T497"><vh>onResize</vh></v>
-<v t="T498"><vh>onBodyTextUpdated</vh></v>
-<v t="T499"><vh>onCloseLeoFrame</vh></v>
-<v t="T500"><vh>onTreeChanged</vh></v>
-<v t="T501"><vh>onTreeChanging</vh></v>
-<v t="T502"><vh>onTreeKeyDown</vh></v>
-<v t="T503"><vh>onTreeBeginDrag</vh></v>
-<v t="T504"><vh>onTreeEndDrag</vh></v>
-<v t="T505"><vh>onTreeBeginLabelEdit</vh></v>
-<v t="T506"><vh>onTreeEndLabelEdit</vh></v>
-<v t="T507"><vh>updateJoinedHeadlines</vh></v>
-<v t="T508"><vh>OnUpdateRevert</vh></v>
-<v t="T509"><vh>OnNew</vh></v>
-<v t="T510"><vh>OnOpen</vh></v>
-<v t="T511"><vh>OpenWithFileName</vh></v>
-<v t="T512"><vh>OnClose</vh></v>
-<v t="T513"><vh>OnSave</vh></v>
-<v t="T514"><vh>OnSaveAs</vh></v>
-<v t="T515"><vh>OnSaveTo</vh></v>
-<v t="T516"><vh>OnRevert</vh></v>
-<v t="T517"><vh>OnPageSetup</vh></v>
-<v t="T518"><vh>OnPrint</vh></v>
-<v t="T519"><vh>OnTangleSubmenu</vh></v>
-<v t="T520"><vh>OnUntangleSubmenu</vh></v>
-<v t="T521"><vh>OnImportExportSubmenu</vh></v>
-<v t="T522"><vh>OnQuit</vh></v>
-<v t="T523"><vh>OnReadOutlineOnly</vh></v>
-<v t="T524"><vh>readOutlineOnly</vh></v>
-<v t="T525"><vh>OnReadAtFileNodes</vh></v>
-<v t="T526"><vh>OnWriteOutlineOnly</vh></v>
-<v t="T527"><vh>OnWriteAtFileNodes</vh></v>
-<v t="T528"><vh>OnTangleAll</vh></v>
-<v t="T529"><vh>OnTangleMarked</vh></v>
-<v t="T530"><vh>OnTangle</vh></v>
-<v t="T531"><vh>OnUntangleAll</vh></v>
-<v t="T532"><vh>OnUntangleMarked</vh></v>
-<v t="T533"><vh>OnUntangle</vh></v>
-<v t="T534"><vh>OnImportFiles</vh></v>
-<v t="T535"><vh>OnImportCWEBFiles</vh></v>
-<v t="T536"><vh>OnImportNowebFiles</vh></v>
-<v t="T537"><vh>OnImportMoreText</vh></v>
-<v t="T538"><vh>OnFlattenOutline</vh></v>
-<v t="T539"><vh>OnUpdateCopy</vh></v>
-<v t="T540"><vh>OnUpdateCut</vh></v>
-<v t="T541"><vh>OnUpdateDelete</vh></v>
-<v t="T542"><vh>OnUpdateExtract</vh></v>
-<v t="T543"><vh>OnUpdateExtractNames</vh></v>
-<v t="T544"><vh>OnUpdateExtractSection</vh></v>
-<v t="T545"><vh>OnUpdateFind</vh></v>
-<v t="T546"><vh>OnUpdatePaste</vh></v>
-<v t="T547"><vh>OnUpdateRedo</vh></v>
-<v t="T548"><vh>OnUpdateReplace</vh></v>
-<v t="T549"><vh>OnUpdateSelectAll</vh></v>
-<v t="T550"><vh>OnUpdateUndo</vh></v>
-<v t="T551"><vh>hasSelection</vh></v>
-<v t="T552"><vh>OnUndo</vh></v>
-<v t="T553"><vh>OnRedo</vh></v>
-<v t="T554"><vh>OnCut</vh></v>
-<v t="T555"><vh>OnCopy</vh></v>
-<v t="T556"><vh>OnPaste</vh></v>
-<v t="T557"><vh>OnDelete</vh></v>
-<v t="T558"><vh>OnSelectAll</vh></v>
-<v t="T559"><vh>OnEditHeadline</vh></v>
-<v t="T560"><vh>OnFontPanel</vh></v>
-<v t="T561"><vh>OnSyntaxColoring</vh></v>
-<v t="T562"><vh>OnPreferences</vh></v>
-<v t="T563"><vh>OnConvertBlanks</vh></v>
-<v t="T564"><vh>OnExtractSection</vh></v>
-<v t="T565"><vh>OnExtractNames</vh></v>
-<v t="T566"><vh>OnExtract</vh></v>
-<v t="T567"><vh>OnFindPanel</vh></v>
-<v t="T568"><vh>OnFindNext</vh></v>
-<v t="T569"><vh>OnFindPrevious</vh></v>
-<v t="T570"><vh>OnReplace</vh></v>
-<v t="T571"><vh>OnReplaceThenFind</vh></v>
-<v t="T572"><vh>OnUpdateCutNode</vh></v>
-<v t="T573"><vh>OnUpdateDeleteNode</vh></v>
-<v t="T574"><vh>OnUpdatePasteNode</vh></v>
-<v t="T575"><vh>OnUpdateSortNode</vh></v>
-<v t="T576"><vh>OnUpdateExpandAll</vh></v>
-<v t="T577"><vh>OnUpdateExpandAllChildren</vh></v>
-<v t="T578"><vh>OnUpdateExpandChildren</vh></v>
-<v t="T579"><vh>OnUpdateContractAll</vh></v>
-<v t="T580"><vh>OnUpdateContractAllChildren</vh></v>
-<v t="T581"><vh>OnUpdateContractChildren</vh></v>
-<v t="T582"><vh>OnUpdateMoveDown</vh></v>
-<v t="T583"><vh>OnUpdateMoveLeft</vh></v>
-<v t="T584"><vh>OnUpdateMoveRight</vh></v>
-<v t="T585"><vh>OnUpdateMoveUp</vh></v>
-<v t="T586"><vh>OnUpdatePromote</vh></v>
-<v t="T587"><vh>OnUpdateDemote</vh></v>
-<v t="T588"><vh>OnUpdateGoPrevVisible</vh></v>
-<v t="T589"><vh>OnUpdateGoNextVisible</vh></v>
-<v t="T590"><vh>OnUpdateGoBack</vh></v>
-<v t="T591"><vh>OnUpdateGoNext</vh></v>
-<v t="T592"><vh>OnUpdateMark</vh></v>
-<v t="T593"><vh>OnUpdateMarkSubheads</vh></v>
-<v t="T594"><vh>OnUpdateMarkChangedItems</vh></v>
-<v t="T595"><vh>OnUpdateMarkChangedRoots</vh></v>
-<v t="T596"><vh>OnUpdateGoToNextMarked</vh></v>
-<v t="T597"><vh>OnUpdateGoToNextChanged</vh></v>
-<v t="T598"><vh>OnCutNode</vh></v>
-<v t="T599"><vh>OnCopyNode</vh></v>
-<v t="T600"><vh>OnPasteNode</vh></v>
-<v t="T601"><vh>OnDeleteNode</vh></v>
-<v t="T602"><vh>OnInsertNode</vh></v>
-<v t="T603"><vh>OnCloneNode</vh></v>
-<v t="T604"><vh>OnSortNode</vh></v>
-<v t="T605"><vh>OnExpandAll</vh></v>
-<v t="T606"><vh>OnExpandAllChildren</vh></v>
-<v t="T607"><vh>OnExpandChildren</vh></v>
-<v t="T608"><vh>OnContractAll</vh></v>
-<v t="T609"><vh>OnContractAllChildren</vh></v>
-<v t="T610"><vh>OnContractChildren</vh></v>
-<v t="T611"><vh>OnExpandNextLevel</vh></v>
-<v t="T612"><vh>OnExpandToLevel1</vh></v>
-<v t="T613"><vh>OnExpandToLevel2</vh></v>
-<v t="T614"><vh>OnExpandToLevel3</vh></v>
-<v t="T615"><vh>OnExpandToLevel4</vh></v>
-<v t="T616"><vh>OnExpandToLevel5</vh></v>
-<v t="T617"><vh>OnExpandToLevel6</vh></v>
-<v t="T618"><vh>OnExpandToLevel7</vh></v>
-<v t="T619"><vh>OnExpandToLevel8</vh></v>
-<v t="T620"><vh>OnExpandToLevel9</vh></v>
-<v t="T621"><vh>OnMoveDown</vh></v>
-<v t="T622"><vh>OnMoveLeft</vh></v>
-<v t="T623"><vh>OnMoveRight</vh></v>
-<v t="T624"><vh>OnMoveUp</vh></v>
-<v t="T625"><vh>OnPromote</vh></v>
-<v t="T626"><vh>OnDemote</vh></v>
-<v t="T627"><vh>OnGoPrevVisible</vh></v>
-<v t="T628"><vh>OnGoNextVisible</vh></v>
-<v t="T629"><vh>OnGoBack</vh></v>
-<v t="T630"><vh>OnGoNext</vh></v>
-<v t="T631"><vh>OnMark</vh></v>
-<v t="T632"><vh>OnMarkSubheads</vh></v>
-<v t="T633"><vh>OnMarkChangedItems</vh></v>
-<v t="T634"><vh>OnMarkChangedRoots</vh></v>
-<v t="T635"><vh>OnMarkAllAtFileNodesDirty</vh></v>
-<v t="T636"><vh>OnMarkAtFileNodesDirty</vh></v>
-<v t="T637"><vh>OnUnmarkAll</vh></v>
-<v t="T638"><vh>OnGoToNextMarked</vh></v>
-<v t="T639"><vh>OnGoToNextChanged</vh></v>
-<v t="T640"><vh>OnEqualSizedPanes</vh></v>
-<v t="T641"><vh>OnToggleActivePane</vh></v>
-<v t="T642"><vh>OnChangeDirection</vh></v>
-<v t="T643"><vh>OnCascade</vh></v>
-<v t="T644"><vh>OnMinimizeAll</vh></v>
-<v t="T645"><vh>OnOpenPythonWindow</vh></v>
-<v t="T646"><vh>OnRecentWindows</vh></v>
-<v t="T647"><vh>OnAbout</vh></v>
+<v t="T426"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
+<v t="T427"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
+<v t="T428"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
+<v t="T429"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
+<v t="T430"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
+<v t="T431"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
+</v>
+<v t="T432"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
+<v t="T433"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
+</v>
+<v t="T434"><vh>createNewMenu</vh></v>
+<v t="T435"><vh>createMenuEntries</vh></v>
+<v t="T436"><vh>OnAbout</vh></v>
 </v>
 </v>
-<v t="T648"><vh>LeoPrefs.cpp</vh>
-<v t="T649"><vh>&lt;&lt; LeoPrefs declarations &gt;&gt;</vh></v>
-<v t="T650"><vh>BEGIN_EVENT_TABLE</vh></v>
-<v t="T651"><vh>ctor</vh></v>
-<v t="T652"><vh>initialize</vh></v>
-<v t="T653"><vh>targetToLanguage</vh></v>
-<v t="T654"><vh>languageToTarget</vh></v>
-<v t="T655"><vh>OnActivatePrefsFrame</vh></v>
-<v t="T656"><vh>OnClosePrefsFrame</vh></v>
-<v t="T657"><vh>OnPageWidthText</vh></v>
-<v t="T658"><vh>OnDoneBatCheckBox</vh></v>
-<v t="T659"><vh>OnUnBatCheckBox</vh></v>
-<v t="T660"><vh>OnTangleDirectoryText</vh></v>
-<v t="T661"><vh>OnHeaderCheckBox</vh></v>
-<v t="T662"><vh>OnDocChunksCheckBox</vh></v>
-<v t="T663"><vh>OnTargetLanguageRadioBox</vh></v>
-<v t="T664"><vh>PrefsPanel</vh></v>
+<v t="T437" a="E"><vh>(other wxStuff)</vh>
+<v t="T438" a="EV"><vh>wxTests</vh>
+<v t="T439"><vh>@file c:\prog\test\wxTest.py</vh></v>
+</v>
+<v t="T440" a="E"><vh>old wxLeo code (imported C++ code)</vh>
+<v t="T441"><vh>alert.cpp</vh>
+<v t="T442"><vh>alert</vh></v>
+<v t="T443"><vh>assertFailedDialog</vh></v>
+</v>
+<v t="T444"><vh>FindPanel.cpp</vh>
+<v t="T445"><vh>&lt;&lt; FindPanel declarations &gt;&gt;</vh></v>
+<v t="T446"><vh>BEGIN_EVENT_TABLE</vh></v>
+<v t="T447"><vh>ctor</vh></v>
+<v t="T448"><vh>OnActivateFindFrame</vh></v>
+<v t="T449"><vh>OnSetFocus</vh></v>
+<v t="T450"><vh>OnCloseFindFrame</vh></v>
+<v t="T451"><vh>OnChangeButton</vh></v>
+<v t="T452"><vh>OnChangeAllButton</vh></v>
+<v t="T453"><vh>OnChangeThenFindButton</vh></v>
+<v t="T454"><vh>OnFindButton</vh></v>
+<v t="T455"><vh>OnFindAllButton</vh></v>
+<v t="T456"><vh>OnBatchCheckBox</vh></v>
+<v t="T457"><vh>OnIgnoreCaseCheckBox</vh></v>
+<v t="T458"><vh>OnMarkChangesCheckBox</vh></v>
+<v t="T459"><vh>OnMarkFindsCheckBox</vh></v>
+<v t="T460"><vh>OnPatternMatchCheckBox</vh></v>
+<v t="T461"><vh>OnReverseCheckBox</vh></v>
+<v t="T462"><vh>OnSearchBodyTextCheckBox</vh></v>
+<v t="T463"><vh>OnSearchHeadlineCheckBox</vh></v>
+<v t="T464"><vh>OnSuboutlineOnlyCheckBox</vh></v>
+<v t="T465"><vh>OnWrapAroundCheckBox</vh></v>
+<v t="T466"><vh>OnWholeWordCheckBox</vh></v>
+<v t="T467"><vh>OnChangeText</vh></v>
+<v t="T468"><vh>OnFindText</vh></v>
+<v t="T469"><vh>set_check_boxes</vh></v>
+<v t="T470"><vh>FindPanel</vh></v>
+</v>
+<v t="T471"><vh>LeoApp.cpp</vh>
+<v t="T472"><vh>Event table</vh></v>
+<v t="T473"><vh>OnInit</vh>
+<v t="T474"><vh>&lt;&lt; Switch to the other running copy of Leo if one is already open &gt;&gt;</vh></v>
+<v t="T475"><vh>&lt;&lt; Set gAppDirectory &gt;&gt;</vh></v>
+<v t="T476"><vh>&lt;&lt; Open a file when double-clicking an icon &gt;&gt;</vh></v>
+<v t="T477"><vh>&lt;&lt; Create a frame and link it into the global frame list &gt;&gt;</vh></v>
+<v t="T478"><vh>&lt;&lt; Initialize Sherlock &gt;&gt;</vh></v>
+<v t="T479"><vh>&lt;&lt; Dump the command line &gt;&gt;</vh></v>
+</v>
+<v t="T480"><vh>OnExit</vh></v>
+<v t="T481"><vh>init_args</vh></v>
+<v t="T482"><vh>wxFindAppPath</vh></v>
+<v t="T483"><vh>log_open</vh></v>
+<v t="T484"><vh>put_cstring_to_log_window</vh></v>
+</v>
+<v t="T485"><vh>LeoFrame.cpp</vh>
+<v t="T486"><vh>BEGIN_EVENT_TABLE</vh>
+<v t="T487"><vh>&lt;&lt; Declare menu events &gt;&gt;</vh></v>
+</v>
+<v t="T488"><vh>ctor</vh>
+<v t="T489"><vh>&lt;&lt; Initialize the private vars &gt;&gt;</vh></v>
+<v t="T490"><vh>&lt;&lt; Initialize the argument settings &gt;&gt;</vh></v>
+<v t="T491"><vh>&lt;&lt; Create the splitter windows &gt;&gt;</vh></v>
+<v t="T492"><vh>&lt;&lt; Create the accelerator table &gt;&gt;</vh></v>
+<v t="T493"><vh>&lt;&lt; Create the status bar &gt;&gt;</vh></v>
+<v t="T494"><vh>&lt;&lt; Set the window Icon &gt;&gt;</vh></v>
+<v t="T495"><vh>&lt;&lt; Set the caret blink rate &gt;&gt;</vh></v>
+<v t="T496"><vh>&lt;&lt; Add root node to the tree view &gt;&gt;</vh></v>
+</v>
+<v t="T497"><vh>createMenus</vh></v>
+<v t="T498"><vh>SetUntitledNumber</vh></v>
+<v t="T499"><vh>putToLog</vh></v>
+<v t="T500"><vh>getLogText</vh></v>
+<v t="T501"><vh>event handlers</vh>
+<v t="T502"><vh>onActivate</vh></v>
+<v t="T503"><vh>OnSetFocus</vh></v>
+<v t="T504"><vh>onResize</vh></v>
+<v t="T505"><vh>onBodyTextUpdated</vh></v>
+<v t="T506"><vh>onCloseLeoFrame</vh></v>
+<v t="T507"><vh>onTreeChanged</vh></v>
+<v t="T508"><vh>onTreeChanging</vh></v>
+<v t="T509"><vh>onTreeKeyDown</vh></v>
+<v t="T510"><vh>onTreeBeginDrag</vh></v>
+<v t="T511"><vh>onTreeEndDrag</vh></v>
+<v t="T512"><vh>onTreeBeginLabelEdit</vh></v>
+<v t="T513"><vh>onTreeEndLabelEdit</vh></v>
+<v t="T514"><vh>updateJoinedHeadlines</vh></v>
+<v t="T515"><vh>OnUpdateRevert</vh></v>
+<v t="T516"><vh>OnNew</vh></v>
+<v t="T517"><vh>OnOpen</vh></v>
+<v t="T518"><vh>OpenWithFileName</vh></v>
+<v t="T519"><vh>OnClose</vh></v>
+<v t="T520"><vh>OnSave</vh></v>
+<v t="T521"><vh>OnSaveAs</vh></v>
+<v t="T522"><vh>OnSaveTo</vh></v>
+<v t="T523"><vh>OnRevert</vh></v>
+<v t="T524"><vh>OnPageSetup</vh></v>
+<v t="T525"><vh>OnPrint</vh></v>
+<v t="T526"><vh>OnTangleSubmenu</vh></v>
+<v t="T527"><vh>OnUntangleSubmenu</vh></v>
+<v t="T528"><vh>OnImportExportSubmenu</vh></v>
+<v t="T529"><vh>OnQuit</vh></v>
+<v t="T530"><vh>OnReadOutlineOnly</vh></v>
+<v t="T531"><vh>readOutlineOnly</vh></v>
+<v t="T532"><vh>OnReadAtFileNodes</vh></v>
+<v t="T533"><vh>OnWriteOutlineOnly</vh></v>
+<v t="T534"><vh>OnWriteAtFileNodes</vh></v>
+<v t="T535"><vh>OnTangleAll</vh></v>
+<v t="T536"><vh>OnTangleMarked</vh></v>
+<v t="T537"><vh>OnTangle</vh></v>
+<v t="T538"><vh>OnUntangleAll</vh></v>
+<v t="T539"><vh>OnUntangleMarked</vh></v>
+<v t="T540"><vh>OnUntangle</vh></v>
+<v t="T541"><vh>OnImportFiles</vh></v>
+<v t="T542"><vh>OnImportCWEBFiles</vh></v>
+<v t="T543"><vh>OnImportNowebFiles</vh></v>
+<v t="T544"><vh>OnImportMoreText</vh></v>
+<v t="T545"><vh>OnFlattenOutline</vh></v>
+<v t="T546"><vh>OnUpdateCopy</vh></v>
+<v t="T547"><vh>OnUpdateCut</vh></v>
+<v t="T548"><vh>OnUpdateDelete</vh></v>
+<v t="T549"><vh>OnUpdateExtract</vh></v>
+<v t="T550"><vh>OnUpdateExtractNames</vh></v>
+<v t="T551"><vh>OnUpdateExtractSection</vh></v>
+<v t="T552"><vh>OnUpdateFind</vh></v>
+<v t="T553"><vh>OnUpdatePaste</vh></v>
+<v t="T554"><vh>OnUpdateRedo</vh></v>
+<v t="T555"><vh>OnUpdateReplace</vh></v>
+<v t="T556"><vh>OnUpdateSelectAll</vh></v>
+<v t="T557"><vh>OnUpdateUndo</vh></v>
+<v t="T558"><vh>hasSelection</vh></v>
+<v t="T559"><vh>OnUndo</vh></v>
+<v t="T560"><vh>OnRedo</vh></v>
+<v t="T561"><vh>OnCut</vh></v>
+<v t="T562"><vh>OnCopy</vh></v>
+<v t="T563"><vh>OnPaste</vh></v>
+<v t="T564"><vh>OnDelete</vh></v>
+<v t="T565"><vh>OnSelectAll</vh></v>
+<v t="T566"><vh>OnEditHeadline</vh></v>
+<v t="T567"><vh>OnFontPanel</vh></v>
+<v t="T568"><vh>OnSyntaxColoring</vh></v>
+<v t="T569"><vh>OnPreferences</vh></v>
+<v t="T570"><vh>OnConvertBlanks</vh></v>
+<v t="T571"><vh>OnExtractSection</vh></v>
+<v t="T572"><vh>OnExtractNames</vh></v>
+<v t="T573"><vh>OnExtract</vh></v>
+<v t="T574"><vh>OnFindPanel</vh></v>
+<v t="T575"><vh>OnFindNext</vh></v>
+<v t="T576"><vh>OnFindPrevious</vh></v>
+<v t="T577"><vh>OnReplace</vh></v>
+<v t="T578"><vh>OnReplaceThenFind</vh></v>
+<v t="T579"><vh>OnUpdateCutNode</vh></v>
+<v t="T580"><vh>OnUpdateDeleteNode</vh></v>
+<v t="T581"><vh>OnUpdatePasteNode</vh></v>
+<v t="T582"><vh>OnUpdateSortNode</vh></v>
+<v t="T583"><vh>OnUpdateExpandAll</vh></v>
+<v t="T584"><vh>OnUpdateExpandAllChildren</vh></v>
+<v t="T585"><vh>OnUpdateExpandChildren</vh></v>
+<v t="T586"><vh>OnUpdateContractAll</vh></v>
+<v t="T587"><vh>OnUpdateContractAllChildren</vh></v>
+<v t="T588"><vh>OnUpdateContractChildren</vh></v>
+<v t="T589"><vh>OnUpdateMoveDown</vh></v>
+<v t="T590"><vh>OnUpdateMoveLeft</vh></v>
+<v t="T591"><vh>OnUpdateMoveRight</vh></v>
+<v t="T592"><vh>OnUpdateMoveUp</vh></v>
+<v t="T593"><vh>OnUpdatePromote</vh></v>
+<v t="T594"><vh>OnUpdateDemote</vh></v>
+<v t="T595"><vh>OnUpdateGoPrevVisible</vh></v>
+<v t="T596"><vh>OnUpdateGoNextVisible</vh></v>
+<v t="T597"><vh>OnUpdateGoBack</vh></v>
+<v t="T598"><vh>OnUpdateGoNext</vh></v>
+<v t="T599"><vh>OnUpdateMark</vh></v>
+<v t="T600"><vh>OnUpdateMarkSubheads</vh></v>
+<v t="T601"><vh>OnUpdateMarkChangedItems</vh></v>
+<v t="T602"><vh>OnUpdateMarkChangedRoots</vh></v>
+<v t="T603"><vh>OnUpdateGoToNextMarked</vh></v>
+<v t="T604"><vh>OnUpdateGoToNextChanged</vh></v>
+<v t="T605"><vh>OnCutNode</vh></v>
+<v t="T606"><vh>OnCopyNode</vh></v>
+<v t="T607"><vh>OnPasteNode</vh></v>
+<v t="T608"><vh>OnDeleteNode</vh></v>
+<v t="T609"><vh>OnInsertNode</vh></v>
+<v t="T610"><vh>OnCloneNode</vh></v>
+<v t="T611"><vh>OnSortNode</vh></v>
+<v t="T612"><vh>OnExpandAll</vh></v>
+<v t="T613"><vh>OnExpandAllChildren</vh></v>
+<v t="T614"><vh>OnExpandChildren</vh></v>
+<v t="T615"><vh>OnContractAll</vh></v>
+<v t="T616"><vh>OnContractAllChildren</vh></v>
+<v t="T617"><vh>OnContractChildren</vh></v>
+<v t="T618"><vh>OnExpandNextLevel</vh></v>
+<v t="T619"><vh>OnExpandToLevel1</vh></v>
+<v t="T620"><vh>OnExpandToLevel2</vh></v>
+<v t="T621"><vh>OnExpandToLevel3</vh></v>
+<v t="T622"><vh>OnExpandToLevel4</vh></v>
+<v t="T623"><vh>OnExpandToLevel5</vh></v>
+<v t="T624"><vh>OnExpandToLevel6</vh></v>
+<v t="T625"><vh>OnExpandToLevel7</vh></v>
+<v t="T626"><vh>OnExpandToLevel8</vh></v>
+<v t="T627"><vh>OnExpandToLevel9</vh></v>
+<v t="T628"><vh>OnMoveDown</vh></v>
+<v t="T629"><vh>OnMoveLeft</vh></v>
+<v t="T630"><vh>OnMoveRight</vh></v>
+<v t="T631"><vh>OnMoveUp</vh></v>
+<v t="T632"><vh>OnPromote</vh></v>
+<v t="T633"><vh>OnDemote</vh></v>
+<v t="T634"><vh>OnGoPrevVisible</vh></v>
+<v t="T635"><vh>OnGoNextVisible</vh></v>
+<v t="T636"><vh>OnGoBack</vh></v>
+<v t="T637"><vh>OnGoNext</vh></v>
+<v t="T638"><vh>OnMark</vh></v>
+<v t="T639"><vh>OnMarkSubheads</vh></v>
+<v t="T640"><vh>OnMarkChangedItems</vh></v>
+<v t="T641"><vh>OnMarkChangedRoots</vh></v>
+<v t="T642"><vh>OnMarkAllAtFileNodesDirty</vh></v>
+<v t="T643"><vh>OnMarkAtFileNodesDirty</vh></v>
+<v t="T644"><vh>OnUnmarkAll</vh></v>
+<v t="T645"><vh>OnGoToNextMarked</vh></v>
+<v t="T646"><vh>OnGoToNextChanged</vh></v>
+<v t="T647"><vh>OnEqualSizedPanes</vh></v>
+<v t="T648"><vh>OnToggleActivePane</vh></v>
+<v t="T649"><vh>OnChangeDirection</vh></v>
+<v t="T650"><vh>OnCascade</vh></v>
+<v t="T651"><vh>OnMinimizeAll</vh></v>
+<v t="T652"><vh>OnOpenPythonWindow</vh></v>
+<v t="T653"><vh>OnRecentWindows</vh></v>
+<v t="T654"><vh>OnAbout</vh></v>
 </v>
 </v>
-<v t="T665"><vh>wxPython docs: local @urls</vh>
-<v t="T666"><vh>@url file:///C:/prog/wxDocs/wx26.htm#classref</vh></v>
-<v t="T667"><vh>@url file:c:\prog\wxDocs\index.htm</vh></v>
-<v t="T668"><vh>@url file:///C:\Python22\Lib\site-packages\wxPython\docs\wxPythonManual.html</vh></v>
-<v t="T669"><vh>app, color, icon, sizer, xmlresource</vh>
-<v t="T670"><vh>@url file:///C:/prog/wxDocs/wx30.htm#wxapp</vh></v>
-<v t="T671"><vh>@url file:///C:/prog/wxDocs/wx63.htm#wxcolour</vh></v>
-<v t="T672"><vh>@url file:///C:/prog/wxDocs/wx216.htm#wxicon</vh></v>
-<v t="T673"><vh>@url file:///C:/prog/wxDocs/wx343.htm#wxsizer</vh></v>
-<v t="T674"><vh>@url file:///C:/prog/wxDocs/wx418.htm#wxxmlresource</vh></v>
-</v>
-<v t="T675"><vh>dialog, frame, panel, splitter,window</vh>
-<v t="T676"><vh>@url file:///C:/prog/wxDocs/wx109.htm#wxdialog</vh></v>
-<v t="T677"><vh>@url file:///C:/prog/wxDocs/wx163.htm#wxframe</vh></v>
-<v t="T678"><vh>@url file:///C:/prog/wxDocs/wx291.htm#wxpanel</vh></v>
-<v t="T679"><vh>@url file:///C:/prog/wxDocs/wx357.htm#wxsplitterwindow</vh></v>
-<v t="T680"><vh>@url file:///C:/prog/wxDocs/wx411.htm#wxwindow</vh></v>
-</v>
-<v t="T681"><vh>events</vh>
-<v t="T682"><vh>@url file:///C:/prog/wxDocs/wx130.htm#wxevent</vh></v>
-<v t="T683"><vh>@url file:///C:/prog/wxDocs/wx264.htm#wxmenuevent</vh></v>
-<v t="T684"><vh>@url file:///C:/prog/wxDocs/wx356.htm#wxsplitterevent</vh></v>
-<v t="T685"><vh>@url file:///C:/prog/wxDocs/wx400.htm#wxtreeevent</vh></v>
-</v>
-<v t="T686"><vh>menu</vh>
-<v t="T687"><vh>@url file:///C:/prog/wxDocs/wx262.htm#wxmenu</vh></v>
-<v t="T688"><vh>@url file:///C:/prog/wxDocs/wx263.htm#wxmenubar</vh></v>
-<v t="T689"><vh>@url file:///C:/prog/wxDocs/wx265.htm#wxmenuitem</vh></v>
-</v>
-<v t="T690"><vh>tree</vh>
-<v t="T691"><vh>@url file:///C:/prog/wxDocs/wx399.htm#wxtreectrl</vh></v>
-<v t="T692"><vh>@url file:///C:/prog/wxDocs/wx401.htm#wxtreeitemdata</vh></v>
-</v>
-<v t="T693"><vh>widgets</vh>
-<v t="T694"><vh>@url file:///C:/prog/wxDocs/wx46.htm#wxbutton</vh></v>
-<v t="T695"><vh>@url file:///C:/prog/wxDocs/wx52.htm#wxcheckbox</vh></v>
-<v t="T696"><vh>@url file:///C:/prog/wxDocs/wx212.htm#wxhtmlwindow</vh></v>
-<v t="T697"><vh>@url file:///C:/prog/wxDocs/wx357.htm#wxsplitterwindow</vh></v>
-<v t="T698"><vh>@url file:///C:/prog/wxDocs/wx381.htm#wxtextctrl</vh></v>
-</v>
-<v t="T699"><vh>wx Questions</vh></v>
+<v t="T655"><vh>LeoPrefs.cpp</vh>
+<v t="T656"><vh>&lt;&lt; LeoPrefs declarations &gt;&gt;</vh></v>
+<v t="T657"><vh>BEGIN_EVENT_TABLE</vh></v>
+<v t="T658"><vh>ctor</vh></v>
+<v t="T659"><vh>initialize</vh></v>
+<v t="T660"><vh>targetToLanguage</vh></v>
+<v t="T661"><vh>languageToTarget</vh></v>
+<v t="T662"><vh>OnActivatePrefsFrame</vh></v>
+<v t="T663"><vh>OnClosePrefsFrame</vh></v>
+<v t="T664"><vh>OnPageWidthText</vh></v>
+<v t="T665"><vh>OnDoneBatCheckBox</vh></v>
+<v t="T666"><vh>OnUnBatCheckBox</vh></v>
+<v t="T667"><vh>OnTangleDirectoryText</vh></v>
+<v t="T668"><vh>OnHeaderCheckBox</vh></v>
+<v t="T669"><vh>OnDocChunksCheckBox</vh></v>
+<v t="T670"><vh>OnTargetLanguageRadioBox</vh></v>
+<v t="T671"><vh>PrefsPanel</vh></v>
 </v>
 </v>
-<v t="T700"><vh>Leo wx prototype</vh>
-<v t="T701" a="M" tnodeList="701,702,703,704,705,706,707,708,709,710,711,712,713,714,715,718,716,717,719,720,721,722,723,724,725,726,733,734,735,736,737,738,739,740,727,728,729,730,731,732,741,742,743,744,745,746,747,748,749,750,751"><vh>@file c:\prog\test\wxLeo.py</vh>
-<v t="T702"><vh>const</vh></v>
-<v t="T703"><vh>leoApp class</vh>
-<v t="T704"><vh>OnInit</vh></v>
+<v t="T672"><vh>wxPython docs: local @urls</vh>
+<v t="T673"><vh>@url file:///C:/prog/wxDocs/wx26.htm#classref</vh></v>
+<v t="T674"><vh>@url file:c:\prog\wxDocs\index.htm</vh></v>
+<v t="T675"><vh>@url file:///C:\Python22\Lib\site-packages\wxPython\docs\wxPythonManual.html</vh></v>
+<v t="T676"><vh>app, color, icon, sizer, xmlresource</vh>
+<v t="T677"><vh>@url file:///C:/prog/wxDocs/wx30.htm#wxapp</vh></v>
+<v t="T678"><vh>@url file:///C:/prog/wxDocs/wx63.htm#wxcolour</vh></v>
+<v t="T679"><vh>@url file:///C:/prog/wxDocs/wx216.htm#wxicon</vh></v>
+<v t="T680"><vh>@url file:///C:/prog/wxDocs/wx343.htm#wxsizer</vh></v>
+<v t="T681"><vh>@url file:///C:/prog/wxDocs/wx418.htm#wxxmlresource</vh></v>
 </v>
-<v t="T705"><vh>leoFrame class</vh>
-<v t="T706"><vh>__init__</vh></v>
-<v t="T707"><vh>createMenus (old code: explicit id's)</vh>
-<v t="T708"><vh>&lt;&lt; Create the File menu &gt;&gt;</vh>
-<v t="T709"><vh>&lt;&lt; Create the initial items of the file menu &gt;&gt;</vh></v>
-<v t="T710"><vh>&lt;&lt; Create the Read/Write submenu &gt;&gt;</vh></v>
-<v t="T711"><vh>&lt;&lt; Create the Tangle submenu &gt;&gt;</vh></v>
-<v t="T712"><vh>&lt;&lt; Create the Untangle submenu &gt;&gt;</vh></v>
-<v t="T713"><vh>&lt;&lt; Create the Import Files submenu &gt;&gt;</vh></v>
+<v t="T682"><vh>dialog, frame, panel, splitter,window</vh>
+<v t="T683"><vh>@url file:///C:/prog/wxDocs/wx109.htm#wxdialog</vh></v>
+<v t="T684"><vh>@url file:///C:/prog/wxDocs/wx163.htm#wxframe</vh></v>
+<v t="T685"><vh>@url file:///C:/prog/wxDocs/wx291.htm#wxpanel</vh></v>
+<v t="T686"><vh>@url file:///C:/prog/wxDocs/wx357.htm#wxsplitterwindow</vh></v>
+<v t="T687"><vh>@url file:///C:/prog/wxDocs/wx411.htm#wxwindow</vh></v>
 </v>
-<v t="T714"><vh>&lt;&lt; Create the Edit menu &gt;&gt;</vh>
-<v t="T715"><vh>&lt;&lt; Create the initial items of the Edit menu &gt;&gt;</vh></v>
-<v t="T716"><vh>&lt;&lt; Create the Find submenu &gt;&gt;</vh></v>
-<v t="T717"><vh>&lt;&lt; Create the final items of the Edit menu &gt;&gt;</vh></v>
-<v t="T718"><vh>&lt;&lt; Create the Edit Body submenu &gt;&gt;</vh></v>
+<v t="T688"><vh>events</vh>
+<v t="T689"><vh>@url file:///C:/prog/wxDocs/wx130.htm#wxevent</vh></v>
+<v t="T690"><vh>@url file:///C:/prog/wxDocs/wx264.htm#wxmenuevent</vh></v>
+<v t="T691"><vh>@url file:///C:/prog/wxDocs/wx356.htm#wxsplitterevent</vh></v>
+<v t="T692"><vh>@url file:///C:/prog/wxDocs/wx400.htm#wxtreeevent</vh></v>
 </v>
-<v t="T719"><vh>&lt;&lt; Create the Outline menu &gt;&gt;</vh>
-<v t="T720"><vh>&lt;&lt; Create the initial items of the Outline menu &gt;&gt;</vh></v>
-<v t="T721"><vh>&lt;&lt; Create the Expand/Contract submenu &gt;&gt;</vh></v>
-<v t="T722"><vh>&lt;&lt; Create the Move/Select submenu &gt;&gt;</vh></v>
-<v t="T723"><vh>&lt;&lt; Create the Mark/Go To submenu &gt;&gt;</vh></v>
+<v t="T693"><vh>menu</vh>
+<v t="T694"><vh>@url file:///C:/prog/wxDocs/wx262.htm#wxmenu</vh></v>
+<v t="T695"><vh>@url file:///C:/prog/wxDocs/wx263.htm#wxmenubar</vh></v>
+<v t="T696"><vh>@url file:///C:/prog/wxDocs/wx265.htm#wxmenuitem</vh></v>
 </v>
-<v t="T724"><vh>&lt;&lt; Create the Window menu &gt;&gt;</vh></v>
-<v t="T725"><vh>&lt;&lt; Create the Help menu &gt;&gt;</vh></v>
+<v t="T697"><vh>tree</vh>
+<v t="T698"><vh>@url file:///C:/prog/wxDocs/wx399.htm#wxtreectrl</vh></v>
+<v t="T699"><vh>@url file:///C:/prog/wxDocs/wx401.htm#wxtreeitemdata</vh></v>
 </v>
-<v t="T726"><vh>createMenuBar</vh>
-<v t="T727"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
-<v t="T728"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
-<v t="T729"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
-<v t="T730"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
-<v t="T731"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
-<v t="T732"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
+<v t="T700"><vh>widgets</vh>
+<v t="T701"><vh>@url file:///C:/prog/wxDocs/wx46.htm#wxbutton</vh></v>
+<v t="T702"><vh>@url file:///C:/prog/wxDocs/wx52.htm#wxcheckbox</vh></v>
+<v t="T703"><vh>@url file:///C:/prog/wxDocs/wx212.htm#wxhtmlwindow</vh></v>
+<v t="T704"><vh>@url file:///C:/prog/wxDocs/wx357.htm#wxsplitterwindow</vh></v>
+<v t="T705"><vh>@url file:///C:/prog/wxDocs/wx381.htm#wxtextctrl</vh></v>
 </v>
-<v t="T733"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
-<v t="T734"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
-<v t="T735"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
-<v t="T736"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
-<v t="T737"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
-<v t="T738"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
-<v t="T739"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
-<v t="T740"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
+<v t="T706"><vh>wx Questions</vh></v>
 </v>
-<v t="T741"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
-<v t="T742"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
-<v t="T743"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
-<v t="T744"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
-<v t="T745"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
-<v t="T746"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
 </v>
-<v t="T747"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
-<v t="T748"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
+<v t="T707" a="E"><vh>Leo wx prototype script</vh>
+<v t="T708" a="M" tnodeList="708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,725,723,724,726,727,728,729,730,731,732,733,740,741,742,743,744,745,746,747,734,735,736,737,738,739,748,749,750,751,752,753,754,755,756,757,758"><vh>@file c:\prog\test\wxLeo.py</vh>
+<v t="T709"><vh>const</vh></v>
+<v t="T710"><vh>leoApp class</vh>
+<v t="T711"><vh>OnInit</vh></v>
 </v>
-<v t="T749"><vh>createNewMenu</vh></v>
-<v t="T750"><vh>createMenuEntries</vh></v>
-<v t="T751"><vh>OnAbout</vh></v>
+<v t="T712"><vh>leoFrame class</vh>
+<v t="T713"><vh>__init__</vh></v>
+<v t="T714" a="E"><vh>createMenus (old code: explicit id's)</vh>
+<v t="T715"><vh>&lt;&lt; Create the File menu &gt;&gt;</vh>
+<v t="T716"><vh>&lt;&lt; Create the initial items of the file menu &gt;&gt;</vh></v>
+<v t="T717"><vh>&lt;&lt; Create the Read/Write submenu &gt;&gt;</vh></v>
+<v t="T718"><vh>&lt;&lt; Create the Tangle submenu &gt;&gt;</vh></v>
+<v t="T719"><vh>&lt;&lt; Create the Untangle submenu &gt;&gt;</vh></v>
+<v t="T720"><vh>&lt;&lt; Create the Import Files submenu &gt;&gt;</vh></v>
 </v>
+<v t="T721"><vh>&lt;&lt; Create the Edit menu &gt;&gt;</vh>
+<v t="T722"><vh>&lt;&lt; Create the initial items of the Edit menu &gt;&gt;</vh></v>
+<v t="T723"><vh>&lt;&lt; Create the Find submenu &gt;&gt;</vh></v>
+<v t="T724"><vh>&lt;&lt; Create the final items of the Edit menu &gt;&gt;</vh></v>
+<v t="T725"><vh>&lt;&lt; Create the Edit Body submenu &gt;&gt;</vh></v>
+</v>
+<v t="T726"><vh>&lt;&lt; Create the Outline menu &gt;&gt;</vh>
+<v t="T727"><vh>&lt;&lt; Create the initial items of the Outline menu &gt;&gt;</vh></v>
+<v t="T728"><vh>&lt;&lt; Create the Expand/Contract submenu &gt;&gt;</vh></v>
+<v t="T729"><vh>&lt;&lt; Create the Move/Select submenu &gt;&gt;</vh></v>
+<v t="T730"><vh>&lt;&lt; Create the Mark/Go To submenu &gt;&gt;</vh></v>
+</v>
+<v t="T731"><vh>&lt;&lt; Create the Window menu &gt;&gt;</vh></v>
+<v t="T732"><vh>&lt;&lt; Create the Help menu &gt;&gt;</vh></v>
+</v>
+<v t="T733" a="E"><vh>createMenuBar</vh>
+<v t="T734"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
+<v t="T735"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
+<v t="T736"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
+<v t="T737"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
+<v t="T738"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
+<v t="T739"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
+</v>
+<v t="T740"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
+<v t="T741"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
+<v t="T742"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
+<v t="T743"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
+<v t="T744"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
+<v t="T745"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
+<v t="T746"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
+<v t="T747"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
+</v>
+<v t="T748"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
+<v t="T749"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
+<v t="T750"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
+<v t="T751"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
+<v t="T752"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
+<v t="T753"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
+</v>
+<v t="T754"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
+<v t="T755"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
+</v>
+<v t="T756"><vh>createNewMenu</vh></v>
+<v t="T757"><vh>createMenuEntries</vh></v>
+<v t="T758"><vh>OnAbout</vh></v>
+</v>
+</v>
+</v>
+<v t="T759" a="E"><vh>(Startup issues)</vh>
+<v t="T351" a="C"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
+<v t="T355" a="C"><vh>createRootWindow &amp; allies</vh>
+<v t="T356"><vh>setDefaultIcon</vh></v>
+<v t="T357"><vh>setEncoding</vh></v>
+<v t="T358"><vh>getDefaultConfigFont</vh></v>
+<v t="T359"><vh>createGlobalWindows</vh></v>
 </v>
 </v>
 </v>
@@ -6036,14 +6053,11 @@ def getPluginNames(self):
 	
     """Return a list of the files needed by a plugin"""
     return ("%s1.py" % name, "%s2.py" % name)</t>
-<t tx="T347"></t>
-<t tx="T348">- Disable the stupid wx console window.
-
-- Convert code to wx:
-	- Rewrite Focus utils.
-	- Rewrite Dialog &amp; Icon utils.
-	- Rewrite getFontFromParams</t>
-<t tx="T349">@first # -*- coding: utf-8 -*-
+<t tx="T347">To do:
+	
+- Complete all stubs.
+- Add event handlers.</t>
+<t tx="T348">@first # -*- coding: utf-8 -*-
 
 """A plugin to use wxPython as Leo's gui."""
 
@@ -6052,9 +6066,8 @@ from leoGlobals import *
 
 &lt;&lt; imports for wx plugin &gt;&gt;
 &lt;&lt; constants for wx plugin &gt;&gt;
-@others
 
-# To do: replace all tk routines with do-nothing routines ??
+@others
 
 if 0: # Register the handlers...
 
@@ -6066,11 +6079,11 @@ if 0: # Register the handlers...
 	else:
 		s = "Can't install wxPython gui: previous gui installed"
 		print s ; es(s,color="red")</t>
-<t tx="T350">import leoCommands,leoFind,leoFrame,leoGui,leoTree
+<t tx="T349">import leoCommands,leoFind,leoFrame,leoGui,leoTree
 import os,sys,traceback
 
 from wxPython import wx</t>
-<t tx="T351">true  = 1==1
+<t tx="T350">true  = 1==1
 false = 1==0
 
 cSplitterWindow = 101
@@ -6100,22 +6113,22 @@ def const(name):
 		global const_lastVal
 		const_lastVal += 1
 		return const_lastVal</t>
-<t tx="T352">app.gui = wxGui()
+<t tx="T351">app.gui = wxGui()
 app.root = app.gui.createRootWindow()
 app.gui.finishCreate()
 
-if 1: # Running this here works.
+if 0: # Running this here works.
 	app.gui.runMainLoop()
 	app.gui = None 
 else:
 	# We must define replacements for gui routines for the rest of the run code.
 	# At present, this crashes, and the tracebacks disappear in the wx console window.
 	pass</t>
-<t tx="T353">class wxGui(leoGui.leoGui):
+<t tx="T352">class wxGui(leoGui.leoGui):
 	
 	@others</t>
-<t tx="T354"></t>
-<t tx="T355">def __init__ (self):
+<t tx="T353"></t>
+<t tx="T354">def __init__ (self):
 	
 	trace("wxGui")
 	
@@ -6127,14 +6140,16 @@ else:
 		
 	self.bitmap_name = None
 	self.bitmap = None</t>
-<t tx="T356">def createRootWindow(self):
+<t tx="T355">def createRootWindow(self):
 
 	trace("wxGui")
-	self.wxApp = wxLeoApp() # This redirects stdout &amp; stderr to stupid console.
+	self.wxApp = wxLeoApp(None) # This redirects stdout &amp; stderr to stupid console.
+	self.wxFrame = None
 	
-	self.wxFrame = wxLeoFrame()
-	self.wxApp.SetTopWindow(self.wxFrame)
-	self.wxFrame.Show(true)
+	if 0:
+		self.wxFrame = wxLeoFrame()
+		self.wxApp.SetTopWindow(self.wxFrame)
+		self.wxFrame.Show(true)
 	
 	if 0: # Not ready yet.
 		self.setDefaultIcon()
@@ -6143,7 +6158,7 @@ else:
 		self.createGlobalWindows()
 
 	return self.wxFrame</t>
-<t tx="T357">def setDefaultIcon(self):
+<t tx="T356">def setDefaultIcon(self):
 	
 	"""Set the icon to be used in all Leo windows.
 	
@@ -6167,7 +6182,7 @@ else:
 	except:
 		print "exception setting bitmap"
 		traceback.print_exc()</t>
-<t tx="T358">@ According to Martin v. Löwis, getdefaultlocale() is broken, and cannot be fixed. The workaround is to copy the getpreferredencoding() function from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
+<t tx="T357">@ According to Martin v. Löwis, getdefaultlocale() is broken, and cannot be fixed. The workaround is to copy the getpreferredencoding() function from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
 @c
 
 def setEncoding (self):
@@ -6187,7 +6202,7 @@ def setEncoding (self):
 			trace("ignoring invalid " + src + " encoding: " + `encoding`)
 			
 	# trace(app.tkEncoding)</t>
-<t tx="T359">def getDefaultConfigFont(self,config):
+<t tx="T358">def getDefaultConfigFont(self,config):
 	
 	"""Get the default font from a new text widget."""
 
@@ -6196,43 +6211,46 @@ def setEncoding (self):
 	font = tkFont.Font(font=fn)
 	config.defaultFont = font
 	config.defaultFontFamily = font.cget("family")</t>
-<t tx="T360">def createGlobalWindows (self):
+<t tx="T359">def createGlobalWindows (self):
 	
 	"""Create the global windows for the application."""
 	
 	app.findFrame = leoFind.leoFind()
 	app.findFrame.top.withdraw()
 	app.globalWindows.append(app.findFrame)</t>
-<t tx="T361">def destroy(self,widget):
+<t tx="T360">def destroy(self,widget):
 	
 	pass # wx code not ready yet.</t>
-<t tx="T362">def finishCreate (self):
+<t tx="T361">def finishCreate (self):
 
 	pass
 	
 </t>
-<t tx="T363">def killGui(self,exitFlag=true):
+<t tx="T362">def killGui(self,exitFlag=true):
 	
 	"""Destroy a gui and terminate Leo if exitFlag is true."""
 
 	pass # Not ready yet.
 
 </t>
-<t tx="T364">def recreateRootWindow(self):
+<t tx="T363">def recreateRootWindow(self):
 	"""A do-nothing base class to create the hidden root window of a gui
 
 	after a previous gui has terminated with killGui(false)."""
 	pass
 
 </t>
-<t tx="T365">def runMainLoop(self):
+<t tx="T364">def runMainLoop(self):
 
 	"""Run tkinter's main loop."""
 	
-	# trace("wxGui")
-	self.wxApp.MainLoop()</t>
-<t tx="T366"></t>
-<t tx="T367">def getFontFromParams(self,family,size,slant,weight):
+	trace("wxGui")
+	self.wxApp.MainLoop()
+	trace("done")</t>
+<t tx="T365"></t>
+<t tx="T366">def getFontFromParams(self,family,size,slant,weight):
+	
+	trace(app.config.defaultFont)
 	
 	return app.config.defaultFont ##
 	
@@ -6249,7 +6267,7 @@ def setEncoding (self):
 			`family`+':'+`size`+':'+`slant`+':'+`weight`)
 		es_exception()
 		return app.config.defaultFont</t>
-<t tx="T368">def newAboutLeoDialog(self,commander):
+<t tx="T367">def newAboutLeoDialog(self,commander):
 	"""A do-nothing base class to create an About Leo dialog."""
 	pass
 
@@ -6272,7 +6290,19 @@ def newAskYesNoDialog(self,commander):
 def newAskYesNoCancelDialg(self,commander):
 	"""A do-nothing base class to create an askYesNoCancel dialog ."""
 	pass</t>
-<t tx="T369">def newColorFrame(self,commander):
+<t tx="T368"></t>
+<t tx="T369">def newLeoFrame(self,title):
+	
+	"""Create a view frame for the Leo main window."""
+	
+	trace()
+	self.wxFrame = wxLeoFrame(title)
+	self.wxApp.SetTopWindow(self.wxFrame)
+	self.wxFrame.Show(true)
+	if not app.root:
+		app.root = self.wxFrame
+	return self.wxFrame</t>
+<t tx="T370">def newColorFrame(self,commander):
 	"""Create a colorFrame."""
 	pass # To do
 
@@ -6292,32 +6322,34 @@ def newFontFrame(self,commander):
 	"""Create a fontFrame."""
 	pass # To do
 
-def newLeoFrame(self,commander,title):
-	"""Create a view frame for the Leo main window."""
-	trace()
-	return leoFrame.LeoFrame(commander,title)
-
 def newPrefsFrame(self,commander):
 	"""Create a prefsFrame."""
 	pass # To do</t>
-<t tx="T370"></t>
-<t tx="T371">def get_focus(self,top):
+<t tx="T371">def destroyLeoFrame (self,frame):
+
+	trace(frame.title)
+	frame.Close()</t>
+<t tx="T372">def destroy (self,widget):
+	
+	trace()</t>
+<t tx="T373"></t>
+<t tx="T374">def get_focus(self,top):
 	
 	"""Returns the widget that has focus, or body if None."""
 
 	pass # wx code not ready yet.</t>
-<t tx="T372">def set_focus(self,commands,widget):
+<t tx="T375">def set_focus(self,commands,widget):
 	
 	"""Set the focus of the widget in the given commander if it needs to be changed."""
 	
 	pass # wx code not ready yet.</t>
-<t tx="T373">def force_focus(self,commands,widget):
+<t tx="T376">def force_focus(self,commands,widget):
 	
 	"""Set the focus of the widget in the given commander if it needs to be changed."""
 	
 	pass # wx code not ready yet.</t>
-<t tx="T374"></t>
-<t tx="T375">def attachLeoIcon (self,w):
+<t tx="T377"></t>
+<t tx="T378">def attachLeoIcon (self,w):
 	
 	"""Try to attach a Leo icon to the Leo Window.
 	
@@ -6337,7 +6369,7 @@ def newPrefsFrame(self,commander):
 		except:
 			# traceback.print_exc()
 			self.leoIcon = None</t>
-<t tx="T376">@ This code requires Fredrik Lundh's PIL and tkIcon packages:
+<t tx="T379">@ This code requires Fredrik Lundh's PIL and tkIcon packages:
 
 Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
 Download tkIcon from http://www.effbot.org/downloads/#tkIcon
@@ -6361,7 +6393,7 @@ if not self.leoIcon:
 		self.leoIcon = self.createLeoIcon(icon_image)
 	else: # Assumes 64x64
 		self.leoIcon = tkIcon.Icon(icon_image)</t>
-<t tx="T377"># This code is adapted from tkIcon.__init__
+<t tx="T380"># This code is adapted from tkIcon.__init__
 # Unlike the tkIcon code, this code does _not_ resize the icon file.
 
 def createLeoIcon (self,icon):
@@ -6390,7 +6422,7 @@ def createLeoIcon (self,icon):
 		return _tkicon.new(i.size, c, m)
 	except:
 		return None</t>
-<t tx="T378"># WARNING: Call this routine _after_ creating a dialog.
+<t tx="T381"># WARNING: Call this routine _after_ creating a dialog.
 # (This routine inhibits the grid and pack geometry managers.)
 
 def get_window_info (self,top):
@@ -6404,7 +6436,7 @@ def get_window_info (self,top):
 	w,h,x,y = int(w),int(h),int(x),int(y)
 	
 	return w,h,x,y</t>
-<t tx="T379"># Center the dialog on the screen.
+<t tx="T382"># Center the dialog on the screen.
 # WARNING: Call this routine _after_ creating a dialog.
 # (This routine inhibits the grid and pack geometry managers.)
 
@@ -6420,7 +6452,7 @@ def center_dialog(self,top):
 	top.geometry("%dx%d%+d%+d" % (w,h,x,y))
 	
 	return w,h,x,y</t>
-<t tx="T380"># Returns frames w and f.
+<t tx="T383"># Returns frames w and f.
 # Typically the caller would pack w into other frames, and pack content into f.
 
 def create_labeled_frame (self,parent,
@@ -6460,22 +6492,27 @@ def create_labeled_frame (self,parent,
 		caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
 
 	return w,f</t>
-<t tx="T381">class wxLeoApp (wx.wxApp):
+<t tx="T384">class wxLeoApp (wx.wxApp):
 	
 	@others
 </t>
-<t tx="T382">def OnInit(self):
+<t tx="T385">def OnInit(self):
 
 	return true</t>
-<t tx="T383">class wxLeoFrame(wx.wxFrame):
+<t tx="T386">class wxLeoFrame(wx.wxFrame):
 	@others</t>
-<t tx="T384">def __init__ (self):
+<t tx="T387">def __init__ (self,title):
 	
-	wx.wxFrame.__init__(self, None, -1, "leoFrame")
+	# trace("wxLeoFrame",title)
+	self.title = title
+	self.ratio = None
+	self.secondary_ratio = None
+
+	wx.wxFrame.__init__(self, None, -1, title)
 		# wx.wxDefaultPosition, wx.wxDefaultSize,
 		#wx.wxSUNKEN_BORDER,
 		#wx.wxNO_3D # hangs.
-		#"leoFrame")
+		#title)
 
 	#self.outerPanel = wx.wxPanel(self,-1)
 	
@@ -6490,9 +6527,10 @@ def create_labeled_frame (self,parent,
 		wx.wxDefaultPosition, wx.wxDefaultSize,
 		wx.wxSP_NOBORDER)
 		
-	# No effect.
-	self.splitter1.SetForegroundColour(wx.wxRED)
-	self.splitter1.SetBackgroundColour(wx.wxRED)
+	# No effect, except to create a red flash.
+	if 0:
+		self.splitter1.SetForegroundColour(wx.wxRED)
+		self.splitter1.SetBackgroundColour(wx.wxRED)
 
 	self.splitter2 = wx.wxSplitterWindow(self.splitter1, -1,
 		wx.wxDefaultPosition, wx.wxDefaultSize,
@@ -6516,7 +6554,97 @@ def create_labeled_frame (self,parent,
 	# Attach the controls to the splitter.
 	self.splitter1.SplitHorizontally(self.splitter2, self.body, 0)
 	self.splitter2.SplitVertically(self.tree, self.log, width/2)</t>
-<t tx="T385">def createMenus(self):
+<t tx="T388">def after_idle(*args): trace()
+
+def createOpenWithMenuFromTable (self,table): trace()
+def getMenu (self,name): trace(name)
+def resizePanesToRatio(self,ratio1,ratio2): trace(ratio1,ratio2)
+def setInitialWindowGeometry (self): trace()
+def setTopGeometry(self,geom): trace(geom)
+def updateRecentFiles(self,fileName): trace(fileName)
+
+# Wrappers for tk calls...
+def deiconify (self): trace()
+def lift (self): trace()
+def update (self): trace()
+
+def put (self,s,color=None): print s
+def putnl (self): print
+</t>
+<t tx="T389">def getTitle (self):
+	return self.title</t>
+<t tx="T390"># Coloring...
+def getColorizer(self):           trace() # return self.tree.colorizer
+def recolor_now(self,v):          trace() #  return self.tree.recolor_now(v)
+def recolor_range(self,v,leading,trailing):  trace() #  return self.tree.recolor_range(v,leading,trailing)
+def recolor(self,v):              trace() #  return self.tree.recolor(v)
+def updateSyntaxColorer(self,v):  trace() #  return self.tree.colorizer.updateSyntaxColorer(v)
+
+# Drawing.
+def beginUpdate(self):         trace() #  return self.tree.beginUpdate()
+def endUpdate(self,flag=true): trace() #  return self.tree.endUpdate(flag)
+def drawIcon(self,v,x,y):      trace() #  return self.tree.drawIcon(v,x,y)
+def redraw(self):              trace() #  return self.tree.redraw()
+def redraw_now(self):          trace() #  return self.tree.redraw_now()
+
+# Editing...
+def editLabel(self,v):           trace() #  return self.tree.editLabel(v)
+def editVnode(self):             trace() #  return self.tree.editVnode  
+def endEditLabel(self):          trace() #  return self.tree.endEditLabel()
+def setEditVnode(self,v):        trace() #  self.tree.editVnode = v
+def setNormalLabelState(self,v): trace() #  return self.tree.setNormalLabelState(v)
+
+# Focus...
+def focus_get(self): trace() #  return self.tree.canvas.focus_get()
+
+# Fonts...
+def getFont(self): return self.tree.getFont()
+def setFont(self,font): return self.tree.setFont(font)  
+
+# Scrolling... 
+def scrollTo(self,v):  trace() #  return self.tree.scrollTo(v)
+def idle_scrollTo(self,v):  trace() #  return self.tree.idle_scrollTo(v)
+
+# Selecting...
+def select(self,v,updateBeadList=true):  trace() #  return self.tree.select(v,updateBeadList)
+
+# Getters and setters...
+def currentVnode(self):        trace() #  return self.tree.currentVnode
+def dragging(self):            trace() #  return self.tree.dragging
+def rootVnode(self):           trace() #  return self.tree.rootVnode
+def topVnode(self):            trace() #  return self.tree.topVnode
+def setCurrentVnode(self,v):   trace() #  self.tree.currentVnode = v
+def setRootVnode(self,v):      trace() #  	self.tree.rootVnode = v
+def setTreeIniting(self,flag): trace() #  self.tree.initing = flag
+
+# vnode callbacks: to be removed.
+if 1: # No longer needed if the tree class injects the vnode callbacks.
+	def OnBoxClick(self,v):              trace() #  return self.tree.OnBoxClick(v)
+	def OnIconClick(self,v,event):       trace() #  return self.tree.OnIconClick(v,event)
+	def OnIconDoubleClick(self,v,event): trace() #  return self.tree.OnIconDoubleClick(v,event)
+	def OnIconRightClick(self,v,event):  trace() #  return self.tree.OnIconRightClick(v,event)
+	def OnDrag(self,v,event):            trace() #  return self.tree.OnDrag(v,event)
+	def OnEndDrag(self,v,event):         trace() #  return self.tree.OnEndDrag(v,event)
+	def OnPopup(self,v,event):           trace() #  return self.tree.OnPopup(v,event)
+# OnHeadlineClick
+# OnHeadlineRightClick
+def OnActivateHeadline(self,v): trace() #  return self.tree.OnActivate(v)
+
+# Notifications. Can these be folded into convenience routines??
+def onBodyChanged(self,*args,**keys): trace() #  return self.tree.onBodyChanged(*args,**keys)
+def onHeadChanged(self,*args,**keys): trace() #  return self.tree.onHeadChanged(*args,**keys)
+def OnHeadlineKey(self,v,event):      trace() #  return self.tree.OnHeadlineKey(v,event)
+def idle_head_key(self,v):            trace() #  return self.tree.idle_head_key(v)
+
+# Others...
+def expandAllAncestors(self,v): trace() #  return self.tree.expandAllAncestors(v)
+def getEditTextDict(self,v):    trace() #  return self.tree.edit_text_dict.get(v)</t>
+<t tx="T391">def finishCreate (self,commander):
+	
+	self.commands = commander
+	self.commands.body = self.body
+	trace(commander)</t>
+<t tx="T392">def createMenus(self):
 
 	menuBar = wx.wxMenuBar()
 	if 0: # Constants not defined yet.
@@ -6533,7 +6661,7 @@ def create_labeled_frame (self,parent,
 		
 	menuBar.Append(helpMenu, "&amp;Help")
 	self.SetMenuBar(menuBar)  # attach the menu bar to the frame</t>
-<t tx="T386">fileMenu = wx.wxMenu()
+<t tx="T393">fileMenu = wx.wxMenu()
 &lt;&lt; Create the initial items of the file menu &gt;&gt;
 &lt;&lt; Create the Read/Write submenu &gt;&gt;
 &lt;&lt; Create the Tangle submenu &gt;&gt;
@@ -6543,7 +6671,7 @@ def create_labeled_frame (self,parent,
 fileMenu.AppendSeparator()
 
 fileMenu.Append(cQuitMenuItem, "E&amp;xit\tCtrl-Q", "Quit Leo")</t>
-<t tx="T387">fileMenu.Append ( cNewMenuItem, "&amp;New\tCtrl-N",
+<t tx="T394">fileMenu.Append ( cNewMenuItem, "&amp;New\tCtrl-N",
 	"Open new Leo window" )
 fileMenu.Append ( cOpenMenuItem,
 	"&amp;Open\tCtrl-O", "Open Leo file")
@@ -6573,7 +6701,7 @@ fileMenu.Enable(cPrintMenuItem, FALSE)
 fileMenu.Enable(cPageSetupMenuItem, FALSE)
 
 fileMenu.AppendSeparator()</t>
-<t tx="T388">readWriteMenu = wx.wxMenu()
+<t tx="T395">readWriteMenu = wx.wxMenu()
 
 readWriteMenu.Append (cReadOutlineOnlyMenuItem,
 	"Read Outline Only", "Read outline only")
@@ -6585,7 +6713,7 @@ readWriteMenu.Append (cWriteAtFileNodesMenuItem,
 	"Write @file Nodes", "Write @file nodes")
 
 fileMenu.Append(cReadWriteSubmenuItem, "Read/Write...", readWriteMenu, "")</t>
-<t tx="T389">tangleMenu = wx.wxMenu()
+<t tx="T396">tangleMenu = wx.wxMenu()
 
 tangleMenu.Append (cTangleAllMenuItem,
 	"Tangle &amp;All\tShift-Ctrl-A", "Tangle all roots")
@@ -6598,7 +6726,7 @@ fileMenu.Append(cTangleSubmenuItem, "&amp;Tangle...", tangleMenu, "")
 
 # Doesn't work either.
 fileMenu.SetHelpString(cTangleSubmenuItem, "Tangle commands...")</t>
-<t tx="T390">untangleMenu = wx.wxMenu()
+<t tx="T397">untangleMenu = wx.wxMenu()
 
 untangleMenu.Append (cUntangleAllMenuItem,
 	"Untangle &amp;All", "Tangle all roots")
@@ -6608,7 +6736,7 @@ untangleMenu.Append (cUntangleMenuItem,
 	"&amp;Untangle\tShift-Ctrl-U", "Tangle selected headline")
 
 fileMenu.Append(cUntangleSubmenuItem, "&amp;Untangle...", untangleMenu, "")</t>
-<t tx="T391">importMenu = wx.wxMenu()
+<t tx="T398">importMenu = wx.wxMenu()
 
 importMenu.Append (cImportFilesMenuItem,
 	"Import Files\tShift-Ctrl-F", "Convert source files to outline" )
@@ -6626,12 +6754,12 @@ importMenu.Append (cFlattenOutlineMenuItem,
 
 fileMenu.Append(cImportExportSubmenuItem,
 	"&amp;Import Files...", importMenu, "Import commands")</t>
-<t tx="T392">editMenu = wx.wxMenu()
+<t tx="T399">editMenu = wx.wxMenu()
 &lt;&lt; Create the initial items of the Edit menu &gt;&gt;
 &lt;&lt; Create the Edit Body submenu &gt;&gt;
 &lt;&lt; Create the Find submenu &gt;&gt;
 &lt;&lt; Create the final items of the Edit menu &gt;&gt;</t>
-<t tx="T393">editMenu.Append ( cUndoMenuItem, "&amp;Undo\tCtrl-Z", "Undo last operation" )
+<t tx="T400">editMenu.Append ( cUndoMenuItem, "&amp;Undo\tCtrl-Z", "Undo last operation" )
 
 if 0: #ifndef __WXGTK__ # For now, neither tree nor text controls support Redo.
 	editMenu.Append ( cRedoMenuItem,
@@ -6654,7 +6782,7 @@ editMenu.AppendSeparator()
 
 editMenu.Append ( cEditHeadlineMenuItem,
 	"Edit &amp;Headline\tShift-Ctrl-H", "Edit headline text" )</t>
-<t tx="T394">findMenu = wx.wxMenu()
+<t tx="T401">findMenu = wx.wxMenu()
 
 findMenu.Append ( cFindPanelMenuItem,
 	"&amp;Find Panel\tCtrl-F", "Open Find panel" )
@@ -6682,7 +6810,7 @@ else:
 
 editMenu.Append( cFindSubmenuItem,
 	"&amp;Find...", findMenu, "")</t>
-<t tx="T395">editMenu.Append ( cFontPanelMenuItem,
+<t tx="T402">editMenu.Append ( cFontPanelMenuItem,
 	"&amp;Font Panel\tAlt-Shift-T", "Open Font panel" )
 
 editMenu.Append ( cSyntaxColoringMenuItem,
@@ -6694,7 +6822,7 @@ editMenu.AppendSeparator()
 
 editMenu.Append ( cPreferencesMenuItem,
 	"Preferences\tCtrl-Y", "Open Preferences panel" )</t>
-<t tx="T396">editBodyMenu = wx.wxMenu()
+<t tx="T403">editBodyMenu = wx.wxMenu()
 
 editBodyMenu.Append ( cExtractSectionMenuItem,
 	"&amp;Extract Section\tShift-Ctrl-E",
@@ -6709,13 +6837,13 @@ editBodyMenu.Append ( cConvertBlanksMenuItem,
 	"&amp;Convert Blanks\tShift-Ctrl-B", "Convert blanks" )
 
 editMenu.Append(cEditBodySubmenuItem, "&amp;Edit Body...", editBodyMenu, "")</t>
-<t tx="T397">outlineMenu = wx.wxMenu()
+<t tx="T404">outlineMenu = wx.wxMenu()
 &lt;&lt; Create the initial items of the Outline menu &gt;&gt;
 &lt;&lt; Create the Expand/Contract submenu &gt;&gt;
 &lt;&lt; Create the Move/Select submenu &gt;&gt;
 &lt;&lt; Create the Mark/Go To submenu &gt;&gt;
 </t>
-<t tx="T398">outlineMenu.Append ( cCutNodeMenuItem,
+<t tx="T405">outlineMenu.Append ( cCutNodeMenuItem,
 	"Cu&amp;t Node\tShift-Ctrl-X", "Cut node")
 outlineMenu.Append ( cCopyNodeMenuItem,
 	"&amp;Copy Node\tShift-Ctrl-C", "Copy node" )
@@ -6737,7 +6865,7 @@ outlineMenu.Append ( cSortNodeMenuItem,
 	"&amp;Sort Node", "Sort node's childdren" )
 
 outlineMenu.AppendSeparator()</t>
-<t tx="T399">expandContractMenu = wx.wxMenu()
+<t tx="T406">expandContractMenu = wx.wxMenu()
 
 expandContractMenu.Append ( cExpandAllChildrenMenuItem,
 	"Expand All Children", "Expand node fully" )
@@ -6776,7 +6904,7 @@ expandContractMenu.Append ( cExpandAllMenuItem,
 
 outlineMenu.Append(cExpandContractSubmenuItem,
 	"Expand/Contract...", expandContractMenu, "")</t>
-<t tx="T400">moveSelectMenu = wx.wxMenu()
+<t tx="T407">moveSelectMenu = wx.wxMenu()
 
 moveSelectMenu.Append ( cMoveDownMenuItem,
 	"Move &amp;Down\tCtrl-D", "Move node down" )
@@ -6818,7 +6946,7 @@ moveSelectMenu.Append ( cGoNextMenuItem,
 
 outlineMenu.Append(cMoveSelectSubmenuItem,
 	"Move/&amp;Select...", moveSelectMenu, "")</t>
-<t tx="T401">markGoToMenu = wx.wxMenu()
+<t tx="T408">markGoToMenu = wx.wxMenu()
 
 markGoToMenu.Append ( cMarkMenuItem,
 	"&amp;Mark\tCtrl-M", "Mark node" )
@@ -6844,7 +6972,7 @@ markGoToMenu.Append ( cGoToNextChangedMenuItem,
 
 outlineMenu.Append(cMarkGotoSubmenuItem,
 	"&amp;Mark/Go To...", markGoToMenu, "")</t>
-<t tx="T402">windowMenu = wx.wxMenu()
+<t tx="T409">windowMenu = wx.wxMenu()
 
 if 0: #ifdef __WXGTK__  # Control-E conflicts with shift-control-E
 
@@ -6882,12 +7010,12 @@ if 0: # Not ready yet: use wxFileHistory
 
 	windowMenu.Append ( cRecentWindowsMenuItem,
 		"Recent Windows", "List of recent windows")</t>
-<t tx="T403">helpMenu = wx.wxMenu()
+<t tx="T410">helpMenu = wx.wxMenu()
 
 helpMenu.Append(cAboutLeoMenuItem,
 	"&amp;About Leo...",
 	"Show about dialog")</t>
-<t tx="T404">def createMenuBar(self):
+<t tx="T411">def createMenuBar(self):
 	
 	menuBar = wx.wxMenuBar()
 	
@@ -6910,14 +7038,14 @@ helpMenu.Append(cAboutLeoMenuItem,
 	self.SetMenuBar(menuBar)  # attach the menu bar to the frame
 	
 	# app().menuWarningsGiven = true</t>
-<t tx="T405">editMenu = self.createNewMenu("&amp;Edit")
+<t tx="T412">editMenu = self.createNewMenu("&amp;Edit")
 &lt;&lt; create the first top-level edit entries &gt;&gt;
 &lt;&lt; create the edit body submenu &gt;&gt;
 &lt;&lt; create the edit headline submenu &gt;&gt;
 &lt;&lt; create the find submenu &gt;&gt;
 &lt;&lt; create the last top-level edit entries &gt;&gt;
 </t>
-<t tx="T406">table = (
+<t tx="T413">table = (
 	("Can't Undo","Ctrl+Z",self.OnUndo), # &amp;U reserved for Undo
 	("Can't Redo","Shift+Ctrl+Z",self.OnRedo), # &amp;R reserved for Redo
 	("-",None,None),
@@ -6930,7 +7058,7 @@ helpMenu.Append(cAboutLeoMenuItem,
 
 self.createMenuEntries(editMenu,table)
 </t>
-<t tx="T407">editBodyMenu = self.createNewMenu("Edit &amp;Body...","Edit")
+<t tx="T414">editBodyMenu = self.createNewMenu("Edit &amp;Body...","Edit")
 
 table = (
 	("Extract &amp;Section","Shift+Ctrl+E",self.OnExtractSection),
@@ -6951,7 +7079,7 @@ table = (
 self.createMenuEntries(editBodyMenu,table)
 
 </t>
-<t tx="T408">editHeadlineMenu = self.createNewMenu("Edit &amp;Headline...","Edit")
+<t tx="T415">editHeadlineMenu = self.createNewMenu("Edit &amp;Headline...","Edit")
 
 table = (
 	("Edit &amp;Headline","Ctrl+H",self.OnEditHeadline),
@@ -6965,7 +7093,7 @@ table = (
 self.createMenuEntries(editHeadlineMenu,table)
 
 </t>
-<t tx="T409">findMenu = self.createNewMenu("&amp;Find...","Edit")
+<t tx="T416">findMenu = self.createNewMenu("&amp;Find...","Edit")
 
 table = (
 	("&amp;Find Panel","Ctrl+F",self.OnFindPanel),
@@ -6977,7 +7105,7 @@ table = (
 
 self.createMenuEntries(findMenu,table)
 </t>
-<t tx="T410">label = choose(c.tree.colorizer.showInvisibles,"Hide In&amp;visibles","Show In&amp;visibles")
+<t tx="T417">label = choose(c.tree.colorizer.showInvisibles,"Hide In&amp;visibles","Show In&amp;visibles")
 
 table = (
 	("&amp;Go To Line Number","Alt+G",self.OnGoToLineNumber),
@@ -6989,7 +7117,7 @@ table = (
 	("Prefere&amp;nces","Ctrl+Y",self.OnPreferences))
 
 self.createMenuEntries(editMenu,table)</t>
-<t tx="T411">fileMenu = self.createNewMenu("&amp;File")
+<t tx="T418">fileMenu = self.createNewMenu("&amp;File")
 &lt;&lt; create the top-level file entries &gt;&gt;
 &lt;&lt; create the recent files submenu &gt;&gt;
 fileMenu.add_separator()
@@ -7004,7 +7132,7 @@ exitTable = (("E&amp;xit","Ctrl-Q",self.OnQuit),)
 self.createMenuEntries(fileMenu,exitTable)
 
 </t>
-<t tx="T412">@ leo.py will probably never have a Print command.  Instead, export text files that may be formatted and printed as desired.
+<t tx="T419">@ leo.py will probably never have a Print command.  Instead, export text files that may be formatted and printed as desired.
 @c
 
 table = (
@@ -7023,12 +7151,12 @@ table = (
 	("Save To",None,self.OnSaveTo), # &amp;Tangle
 	("Re&amp;vert To Saved",None,self.OnRevert)) # &amp;Read/Write
 self.createMenuEntries(fileMenu,table)</t>
-<t tx="T413">recentFilesMenu = self.createNewMenu("Recent &amp;Files...","File")
+<t tx="T420">recentFilesMenu = self.createNewMenu("Recent &amp;Files...","File")
 self.recentFiles = app().config.getRecentFiles()
 self.createRecentFilesMenuItems()
 
 </t>
-<t tx="T414">readWriteMenu = self.createNewMenu("&amp;Read/Write...","File")
+<t tx="T421">readWriteMenu = self.createNewMenu("&amp;Read/Write...","File")
 
 table = [
 		("&amp;Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
@@ -7040,7 +7168,7 @@ table = [
 		("&amp;Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes)]
 
 self.createMenuEntries(readWriteMenu,table)</t>
-<t tx="T415">tangleMenu = self.createNewMenu("&amp;Tangle...","File")
+<t tx="T422">tangleMenu = self.createNewMenu("&amp;Tangle...","File")
 
 table = (
 	("Tangle &amp;All","Shift+Ctrl+A",self.OnTangleAll),
@@ -7050,7 +7178,7 @@ table = (
 self.createMenuEntries(tangleMenu,table)
 
 </t>
-<t tx="T416">untangleMenu = self.createNewMenu("&amp;Untangle...","File")
+<t tx="T423">untangleMenu = self.createNewMenu("&amp;Untangle...","File")
 
 table = (
 	("Untangle &amp;All",None,self.OnUntangleAll),
@@ -7060,7 +7188,7 @@ table = (
 self.createMenuEntries(untangleMenu,table)
 
 </t>
-<t tx="T417">importMenu = self.createNewMenu("&amp;Import...","File")
+<t tx="T424">importMenu = self.createNewMenu("&amp;Import...","File")
 
 table = (
 	("Import To @&amp;file","Shift+Ctrl+F",self.OnImportAtFile),
@@ -7072,7 +7200,7 @@ table = (
 self.createMenuEntries(importMenu,table)
 
 </t>
-<t tx="T418">exportMenu = self.createNewMenu("&amp;Export...","File")
+<t tx="T425">exportMenu = self.createNewMenu("&amp;Export...","File")
 
 table = [
 	("Export &amp;Headlines",None,self.OnExportHeadlines),
@@ -7084,13 +7212,13 @@ table = [
 
 self.createMenuEntries(exportMenu,table)
 </t>
-<t tx="T419">outlineMenu = self.createNewMenu("&amp;Outline")
+<t tx="T426">outlineMenu = self.createNewMenu("&amp;Outline")
 &lt;&lt; create top-level outline menu &gt;&gt;
 &lt;&lt; create expand/contract submenu &gt;&gt;
 &lt;&lt; create move submenu &gt;&gt;
 &lt;&lt; create mark submenu &gt;&gt;
 &lt;&lt; create goto submenu &gt;&gt;</t>
-<t tx="T420">table = (
+<t tx="T427">table = (
 	("C&amp;ut Node","Shift+Ctrl+X",self.OnCutNode),
 	("C&amp;opy Node","Shift+Ctrl+C",self.OnCopyNode),
 	("&amp;Paste Node","Shift+Ctrl+V",self.OnPasteNode),
@@ -7103,7 +7231,7 @@ self.createMenuEntries(exportMenu,table)
 	("-",None,None))
 
 self.createMenuEntries(outlineMenu,table)</t>
-<t tx="T421">expandMenu = self.createNewMenu("&amp;Expand/Contract...","Outline")
+<t tx="T428">expandMenu = self.createNewMenu("&amp;Expand/Contract...","Outline")
 
 table = (
 	("&amp;Contract All","Alt+-",self.OnContractAll),
@@ -7128,7 +7256,7 @@ table = (
 
 
 self.createMenuEntries(expandMenu,table)</t>
-<t tx="T422">moveSelectMenu = self.createNewMenu("&amp;Move...","Outline")
+<t tx="T429">moveSelectMenu = self.createNewMenu("&amp;Move...","Outline")
 
 table = (
 	("Move &amp;Down", "Ctrl+D",self.OnMoveDown),
@@ -7141,7 +7269,7 @@ table = (
 	
 self.createMenuEntries(moveSelectMenu,table)
 </t>
-<t tx="T423">markMenu = self.createNewMenu("M&amp;ark/Unmark...","Outline")
+<t tx="T430">markMenu = self.createNewMenu("M&amp;ark/Unmark...","Outline")
 
 table = (
 	("&amp;Mark","Ctrl-M",self.OnMark),
@@ -7153,7 +7281,7 @@ table = (
 	
 self.createMenuEntries(markMenu,table)
 </t>
-<t tx="T424">gotoMenu = self.createNewMenu("&amp;Go To...","Outline")
+<t tx="T431">gotoMenu = self.createNewMenu("&amp;Go To...","Outline")
 
 table = (
 	("Go Back",None,self.OnGoPrevVisitedNode), # Usually use buttons for this.
@@ -7176,7 +7304,7 @@ table = (
 	
 self.createMenuEntries(gotoMenu,table)
 </t>
-<t tx="T425">windowMenu = self.createNewMenu("&amp;Window")
+<t tx="T432">windowMenu = self.createNewMenu("&amp;Window")
 
 table = (
 	("&amp;Equal Sized Panes","Ctrl-E",self.OnEqualSizedPanes),
@@ -7191,7 +7319,7 @@ table = (
 
 self.createMenuEntries(windowMenu,table)
 </t>
-<t tx="T426">helpMenu = self.createNewMenu("&amp;Help")
+<t tx="T433">helpMenu = self.createNewMenu("&amp;Help")
 
 table = (
 	("&amp;About Leo...",None,self.OnAbout),)
@@ -7214,10 +7342,10 @@ if 0: # not ready yet.
 		("Apply &amp;Settings",None,self.OnApplyConfig))
 
 	self.createMenuEntries(helpMenu,table)</t>
-<t tx="T427">def createNewMenu(self,name):
+<t tx="T434">def createNewMenu(self,name):
 	
 	return wx.wxMenu()</t>
-<t tx="T428">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
+<t tx="T435">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
 
 Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
 @c
@@ -7235,10 +7363,10 @@ def createMenuEntries (self,menu,table,openWith=0):
 			def generalCommand(event=None,label=label):
 				print "generalCommand",label # ,event
 			wx.EVT_MENU(self,id,generalCommand)</t>
-<t tx="T429">def OnAbout (self,event=None):
+<t tx="T436">def OnAbout (self,event=None):
 	
 	trace()</t>
-<t tx="T430">@ignore
+<t tx="T437">@ignore
 
 @ This code will soon become a plugin replaces Tk widgets with wxPython widgets.
 
@@ -7249,7 +7377,7 @@ To do:
 - Override all of Leo's classes that contain Tk code, replacing Tk code with equivalent wxWindows code.
 
 This will include the LeoDialog, LeoFrame and leoTree classes, and many others.  In particular, the colorizer will have to be rewritten.</t>
-<t tx="T431"># Executing the following script executes some example wxWindows code.
+<t tx="T438"># Executing the following script executes some example wxWindows code.
 # Just do the Execute Script command from here.
 # For this to work the path to wxTest.py must be in sys.path.
 
@@ -7257,9 +7385,15 @@ This will include the LeoDialog, LeoFrame and leoTree classes, and many others. 
 # Thereafter only the reload takes effect, so only one window gets created.
 # The purpose of reload is so you can change the code without restarting Leo.
 
-import wxTest
-reload(wxTest)</t>
-<t tx="T432">from wxPython.wx import *
+if 1:
+	import wxTest
+	reload(wxTest)
+else:
+	try:
+		reload(wxTest)
+	except:
+		import wxTest</t>
+<t tx="T439">from wxPython.wx import *
 
 class Form1(wxPanel):
     def __init__(self, parent, id):
@@ -7372,15 +7506,15 @@ nb.AddPage(form1, "Absolute Positionning")
 nb.AddPage(form2, "Sizers")
 frame.Show(True)
 app.MainLoop()</t>
-<t tx="T433">@language c
+<t tx="T440">@language c
 
 @ For reference only: I have deleted the C++ cruft such as importing .h files.
 
 To do:
 - convert wxWindows code to wxPython code.
 - move the wxPython code to the wx plugin that doesn't exist yet.</t>
-<t tx="T434">@others</t>
-<t tx="T435">void alert ( const char * message )
+<t tx="T441">@others</t>
+<t tx="T442">void alert ( const char * message )
 {
 	wxMessageDialog * d = new wxMessageDialog( (wxWindow*) NULL,
 		message,
@@ -7392,7 +7526,7 @@ To do:
 	delete d;
 }
 </t>
-<t tx="T436">void assertFailedDialog ( const char * message )
+<t tx="T443">void assertFailedDialog ( const char * message )
 {
 	wxMessageDialog * d = new wxMessageDialog( (wxWindow*) NULL,
 		message,
@@ -7404,11 +7538,11 @@ To do:
 	delete d;
 }
 </t>
-<t tx="T437">&lt;&lt; FindPanel declarations &gt;&gt;
+<t tx="T444">&lt;&lt; FindPanel declarations &gt;&gt;
 
 @others
 </t>
-<t tx="T438">// &lt;&lt; FindPanel public globals &gt;&gt;
+<t tx="T445">// &lt;&lt; FindPanel public globals &gt;&gt;
 bool reset_search_flag ;
 bool batch_flag ;
 bool wrap_flag ;
@@ -7424,7 +7558,7 @@ bool reverse_flag ;
 wxString find_text ("")  ;
 wxString change_text ("") ;
 </t>
-<t tx="T439">BEGIN_EVENT_TABLE(FindFrame, wxFrame)
+<t tx="T446">BEGIN_EVENT_TABLE(FindFrame, wxFrame)
 
 	#ifdef __WXMSW__ // Activate events exist only on windows.
 		EVT_ACTIVATE( FindFrame::OnActivateFindFrame )
@@ -7456,7 +7590,7 @@ wxString change_text ("") ;
 	EVT_TEXT ( cChangeTextCtrl, FindFrame::OnChangeText )
 
 END_EVENT_TABLE()</t>
-<t tx="T440">FindFrame::FindFrame()
+<t tx="T447">FindFrame::FindFrame()
 
 	: wxFrame((wxFrame *)NULL, -1, "Leo Find/Change",
 		wxPoint(50, 50), wxDefaultSize,
@@ -7482,7 +7616,7 @@ END_EVENT_TABLE()</t>
 		mFindPanel -&gt; mFindText -&gt; SetFocus();
 }
 </t>
-<t tx="T441">@ &lt;&lt; FindPanel methods &gt;&gt; (2 of 23)
+<t tx="T448">@ &lt;&lt; FindPanel methods &gt;&gt; (2 of 23)
 @c
 
 #ifdef __WXMSW__ // This event exists only on Windows.
@@ -7499,7 +7633,7 @@ void FindFrame::OnActivateFindFrame(wxActivateEvent&amp; event)
 	}
 }
 </t>
-<t tx="T442">
+<t tx="T449">
 #else
 
 void FindFrame::OnSetFocus (wxFocusEvent&amp; WXUNUSED(event))
@@ -7512,7 +7646,7 @@ void FindFrame::OnSetFocus (wxFocusEvent&amp; WXUNUSED(event))
 	c -&gt; SetSelection ( 0, s.Length() ) ;
 }
 </t>
-<t tx="T443">
+<t tx="T450">
 #endif
 // &lt;&lt; FindPanel methods &gt;&gt; (3 of 23)
 /*
@@ -7539,7 +7673,7 @@ void FindFrame::OnCloseFindFrame(wxCloseEvent&amp; event)
 	}
 }
 </t>
-<t tx="T444">@ &lt;&lt; FindPanel methods &gt;&gt; (4 of 23)
+<t tx="T451">@ &lt;&lt; FindPanel methods &gt;&gt; (4 of 23)
 @c
 
 void FindFrame::OnChangeButton (wxCommandEvent&amp; WXUNUSED(event))
@@ -7548,7 +7682,7 @@ void FindFrame::OnChangeButton (wxCommandEvent&amp; WXUNUSED(event))
 		gActiveFrame -&gt; mCommands -&gt; doChangeButton() ;
 }
 </t>
-<t tx="T445">@ &lt;&lt; FindPanel methods &gt;&gt; (5 of 23)
+<t tx="T452">@ &lt;&lt; FindPanel methods &gt;&gt; (5 of 23)
 @c
 
 void FindFrame::OnChangeAllButton (wxCommandEvent&amp; WXUNUSED(event))
@@ -7557,7 +7691,7 @@ void FindFrame::OnChangeAllButton (wxCommandEvent&amp; WXUNUSED(event))
 		gActiveFrame -&gt; mCommands -&gt; doChangeAllButton() ;
 }
 </t>
-<t tx="T446">@ &lt;&lt; FindPanel methods &gt;&gt; (6 of 23)
+<t tx="T453">@ &lt;&lt; FindPanel methods &gt;&gt; (6 of 23)
 @c
 
 void FindFrame::OnChangeThenFindButton (wxCommandEvent&amp; WXUNUSED(event))
@@ -7566,7 +7700,7 @@ void FindFrame::OnChangeThenFindButton (wxCommandEvent&amp; WXUNUSED(event))
 		gActiveFrame -&gt; mCommands -&gt; doChangeThenFindButton() ;
 }
 </t>
-<t tx="T447">@ &lt;&lt; FindPanel methods &gt;&gt; (7 of 23)
+<t tx="T454">@ &lt;&lt; FindPanel methods &gt;&gt; (7 of 23)
 @c
 
 void FindFrame::OnFindButton (wxCommandEvent&amp; WXUNUSED(event))
@@ -7576,7 +7710,7 @@ void FindFrame::OnFindButton (wxCommandEvent&amp; WXUNUSED(event))
 		gActiveFrame -&gt; mCommands -&gt; doFindButton() ;
 }
 </t>
-<t tx="T448">@ &lt;&lt; FindPanel methods &gt;&gt; (8 of 23)
+<t tx="T455">@ &lt;&lt; FindPanel methods &gt;&gt; (8 of 23)
 @c
 
 void FindFrame::OnFindAllButton (wxCommandEvent&amp; WXUNUSED(event))
@@ -7585,7 +7719,7 @@ void FindFrame::OnFindAllButton (wxCommandEvent&amp; WXUNUSED(event))
 		gActiveFrame -&gt; mCommands -&gt; doFindAllButton() ;
 }
 </t>
-<t tx="T449">@ &lt;&lt; FindPanel methods &gt;&gt; (9 of 23)
+<t tx="T456">@ &lt;&lt; FindPanel methods &gt;&gt; (9 of 23)
 @c
 
 void FindFrame::OnBatchCheckBox (wxCommandEvent&amp; event)
@@ -7594,7 +7728,7 @@ void FindFrame::OnBatchCheckBox (wxCommandEvent&amp; event)
 	batch_flag = box -&gt; GetValue();
 }
 </t>
-<t tx="T450">@ &lt;&lt; FindPanel methods &gt;&gt; (10 of 23)
+<t tx="T457">@ &lt;&lt; FindPanel methods &gt;&gt; (10 of 23)
 @c
 
 void FindFrame::OnIgnoreCaseCheckBox (wxCommandEvent&amp; event)
@@ -7605,7 +7739,7 @@ void FindFrame::OnIgnoreCaseCheckBox (wxCommandEvent&amp; event)
 		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
 }
 </t>
-<t tx="T451">@ &lt;&lt; FindPanel methods &gt;&gt; (11 of 23)
+<t tx="T458">@ &lt;&lt; FindPanel methods &gt;&gt; (11 of 23)
 @c
 
 void FindFrame::OnMarkChangesCheckBox (wxCommandEvent&amp; event)
@@ -7614,7 +7748,7 @@ void FindFrame::OnMarkChangesCheckBox (wxCommandEvent&amp; event)
 	mark_changes_flag = box -&gt; GetValue();
 }
 </t>
-<t tx="T452">@ &lt;&lt; FindPanel methods &gt;&gt; (12 of 23)
+<t tx="T459">@ &lt;&lt; FindPanel methods &gt;&gt; (12 of 23)
 @c
 
 void FindFrame::OnMarkFindsCheckBox (wxCommandEvent&amp; event)
@@ -7623,7 +7757,7 @@ void FindFrame::OnMarkFindsCheckBox (wxCommandEvent&amp; event)
 	mark_finds_flag = box -&gt; GetValue();
 }
 </t>
-<t tx="T453">@ &lt;&lt; FindPanel methods &gt;&gt; (13 of 23)
+<t tx="T460">@ &lt;&lt; FindPanel methods &gt;&gt; (13 of 23)
 @c
 
 void FindFrame::OnPatternMatchCheckBox (wxCommandEvent&amp; event)
@@ -7634,7 +7768,7 @@ void FindFrame::OnPatternMatchCheckBox (wxCommandEvent&amp; event)
 		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
 }
 </t>
-<t tx="T454">@ &lt;&lt; FindPanel methods &gt;&gt; (14 of 23)
+<t tx="T461">@ &lt;&lt; FindPanel methods &gt;&gt; (14 of 23)
 @c
 
 void FindFrame::OnReverseCheckBox (wxCommandEvent&amp; event)
@@ -7643,7 +7777,7 @@ void FindFrame::OnReverseCheckBox (wxCommandEvent&amp; event)
 	reverse_flag = box -&gt; GetValue();
 }
 </t>
-<t tx="T455">@ &lt;&lt; FindPanel methods &gt;&gt; (15 of 23)
+<t tx="T462">@ &lt;&lt; FindPanel methods &gt;&gt; (15 of 23)
 @c
 
 void FindFrame::OnSearchBodyTextCheckBox (wxCommandEvent&amp; event)
@@ -7654,7 +7788,7 @@ void FindFrame::OnSearchBodyTextCheckBox (wxCommandEvent&amp; event)
 		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
 }
 </t>
-<t tx="T456">@ &lt;&lt; FindPanel methods &gt;&gt; (16 of 23)
+<t tx="T463">@ &lt;&lt; FindPanel methods &gt;&gt; (16 of 23)
 @c
 
 void FindFrame::OnSearchHeadlineCheckBox (wxCommandEvent&amp; event)
@@ -7663,7 +7797,7 @@ void FindFrame::OnSearchHeadlineCheckBox (wxCommandEvent&amp; event)
 	search_headline_flag = box -&gt; GetValue();
 }
 </t>
-<t tx="T457">@ &lt;&lt; FindPanel methods &gt;&gt; (17 of 23)
+<t tx="T464">@ &lt;&lt; FindPanel methods &gt;&gt; (17 of 23)
 @c
 
 void FindFrame::OnSuboutlineOnlyCheckBox (wxCommandEvent&amp; event)
@@ -7672,7 +7806,7 @@ void FindFrame::OnSuboutlineOnlyCheckBox (wxCommandEvent&amp; event)
 	suboutline_only_flag = box -&gt; GetValue();
 }
 </t>
-<t tx="T458">@ &lt;&lt; FindPanel methods &gt;&gt; (18 of 23)
+<t tx="T465">@ &lt;&lt; FindPanel methods &gt;&gt; (18 of 23)
 @c
 
 void FindFrame::OnWrapAroundCheckBox (wxCommandEvent&amp; event)
@@ -7681,7 +7815,7 @@ void FindFrame::OnWrapAroundCheckBox (wxCommandEvent&amp; event)
 	wrap_flag = box -&gt; GetValue();
 }
 </t>
-<t tx="T459">@ &lt;&lt; FindPanel methods &gt;&gt; (19 of 23)
+<t tx="T466">@ &lt;&lt; FindPanel methods &gt;&gt; (19 of 23)
 @c
 
 void FindFrame::OnWholeWordCheckBox (wxCommandEvent&amp; event)
@@ -7692,7 +7826,7 @@ void FindFrame::OnWholeWordCheckBox (wxCommandEvent&amp; event)
 		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
 }
 </t>
-<t tx="T460">@ &lt;&lt; FindPanel methods &gt;&gt; (20 of 23)
+<t tx="T467">@ &lt;&lt; FindPanel methods &gt;&gt; (20 of 23)
 @c
 
 void FindFrame::OnChangeText (wxCommandEvent&amp; event)
@@ -7703,7 +7837,7 @@ void FindFrame::OnChangeText (wxCommandEvent&amp; event)
 		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
 }
 </t>
-<t tx="T461">@ &lt;&lt; FindPanel methods &gt;&gt; (21 of 23)
+<t tx="T468">@ &lt;&lt; FindPanel methods &gt;&gt; (21 of 23)
 @c
 
 void FindFrame::OnFindText (wxCommandEvent&amp; event)
@@ -7714,7 +7848,7 @@ void FindFrame::OnFindText (wxCommandEvent&amp; event)
 		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
 }
 </t>
-<t tx="T462">@ &lt;&lt; FindPanel methods &gt;&gt; (22 of 23)
+<t tx="T469">@ &lt;&lt; FindPanel methods &gt;&gt; (22 of 23)
 @c
 
 void FindFrame::set_check_boxes ( void )
@@ -7735,7 +7869,7 @@ void FindFrame::set_check_boxes ( void )
 	mFindPanel -&gt; mChangeText -&gt; SetValue(change_text);
 }
 </t>
-<t tx="T463">@ &lt;&lt; FindPanel methods &gt;&gt; (23 of 23)
+<t tx="T470">@ &lt;&lt; FindPanel methods &gt;&gt; (23 of 23)
 @c
 
 FindPanel::FindPanel(wxFrame *frame)
@@ -7953,14 +8087,14 @@ FindPanel::FindPanel(wxFrame *frame)
 	// -- end -- &lt;&lt; Create the find controls &gt;&gt;
 }
 </t>
-<t tx="T464">@others
+<t tx="T471">@others
 </t>
-<t tx="T465">BEGIN_EVENT_TABLE( LeoApp, wxApp)
+<t tx="T472">BEGIN_EVENT_TABLE( LeoApp, wxApp)
 
 // EVT_EXIT ( LeoApp::OnExit )
 
 END_EVENT_TABLE()</t>
-<t tx="T466">bool LeoApp::OnInit()
+<t tx="T473">bool LeoApp::OnInit()
 {
 	long argc = wxTheApp -&gt; argc ;
 	long filesLoaded = 0 ;
@@ -7979,7 +8113,7 @@ END_EVENT_TABLE()</t>
 	TRACEP("assert_test", assert(0));
 	return TRUE;
 }</t>
-<t tx="T467">#if 0 //// Not yet: compiles, but lpCmdLine is a dummy !!!!
+<t tx="T474">#if 0 //// Not yet: compiles, but lpCmdLine is a dummy !!!!
 
 	LPSTR lpCmdLine = NULL ;  //// Was param to main routine...
 
@@ -8007,14 +8141,14 @@ END_EVENT_TABLE()</t>
 		return 0; ////
 	}
 #endif //// not yet</t>
-<t tx="T468">wxString cwd = ::wxGetCwd();
+<t tx="T475">wxString cwd = ::wxGetCwd();
 gAppDirectory = wxFindAppPath( cwd ) ;
 
 // Make sure the directory does not end with a directory separator.
 size_t len = gAppDirectory.Length() ;
 if ( len &gt; 0 &amp;&amp; gAppDirectory.Last() == wxFILE_SEP_PATH)
 	gAppDirectory = gAppDirectory.Truncate(len - 1);</t>
-<t tx="T469">gIniting = TRUE ; // Disable error message if file not found.
+<t tx="T476">gIniting = TRUE ; // Disable error message if file not found.
 
 for ( int i = 1 ; i &lt; argc ; ++ i ) {
 	wxString arg = wxTheApp -&gt; argv[i] ;
@@ -8023,7 +8157,7 @@ for ( int i = 1 ; i &lt; argc ; ++ i ) {
 }
 
 gIniting = FALSE ;</t>
-<t tx="T470">LeoFrame *frame = new LeoFrame();
+<t tx="T477">LeoFrame *frame = new LeoFrame();
 
 ++gNumberOfUntitledWindows ;
 frame -&gt; SetTitle("untitled");
@@ -8038,7 +8172,7 @@ assert(v);
 frame -&gt; mCommands -&gt; setCurrentVnode ( v ) ;
 frame -&gt; mCommands -&gt; editVnode( v ) ;
 frame -&gt; mCommands -&gt; mFirstWindowAndNeverSaved = TRUE ;</t>
-<t tx="T471">#ifdef SHERLOCK
+<t tx="T478">#ifdef SHERLOCK
 	gIniting = TRUE ; // Disable auto open of window during signon.
 		SL_INIT () ;
 		wxString path("./LeoArgs");
@@ -8052,14 +8186,14 @@ frame -&gt; mCommands -&gt; mFirstWindowAndNeverSaved = TRUE ;</t>
 		}
 	gIniting = FALSE ;
 #endif</t>
-<t tx="T472">TRACEP("dump_argv", 
+<t tx="T479">TRACEP("dump_argv", 
 	ecnl(); es("argc: "); elong(argc); enl();
 	for ( int i = 0 ; i &lt;= argc ; ++ i ) {
 		wxString arg = wxTheApp -&gt; argv[i] ;
 		es("argv["); elong(i); es("]: "); es(arg.c_str()); enl();
 	}
 );</t>
-<t tx="T473">@ &lt;&lt; LeoApp methods &gt;&gt; (2 of 2)
+<t tx="T480">@ &lt;&lt; LeoApp methods &gt;&gt; (2 of 2)
 @c
 
 int LeoApp::OnExit()
@@ -8067,7 +8201,7 @@ int LeoApp::OnExit()
 	return TRUE ;
 }
 </t>
-<t tx="T474">@ Initialize the argv vector from a file. This routine is declared in sl.h. init_arg_parse is defined in sl.c.
+<t tx="T481">@ Initialize the argv vector from a file. This routine is declared in sl.h. init_arg_parse is defined in sl.c.
 @c
 
 void init_args ( int *argc, char ***argvp, char *file_name )
@@ -8094,7 +8228,7 @@ void init_args ( int *argc, char ***argvp, char *file_name )
 	*argc = init_arg_parse ( argvp, file_buf ) ;
 }
 </t>
-<t tx="T475">@ &lt;&lt; LeoApp functions &gt;&gt; (2 of 2)
+<t tx="T482">@ &lt;&lt; LeoApp functions &gt;&gt; (2 of 2)
 Returns the absolute path containing this app, or an empty string if the path can not be determined.  cwd should be the current working directory at startup, _not_ the present current working directory.
 @c
 
@@ -8128,7 +8262,7 @@ wxString wxFindAppPath(wxString&amp; cwd)
 			return wxPathOnly(s) ;
 }
 </t>
-<t tx="T476">@ -- end -- &lt;&lt; LeoApp functions &gt;&gt;
+<t tx="T483">@ -- end -- &lt;&lt; LeoApp functions &gt;&gt;
 @c
 
 #include "LIBes.h"
@@ -8142,7 +8276,7 @@ void log_open ( const char * filename )
 	#endif
 }
 </t>
-<t tx="T477">@ &lt;&lt; log bridge functions &gt;&gt; (2 of 2)
+<t tx="T484">@ &lt;&lt; log bridge functions &gt;&gt; (2 of 2)
 @c
 
 void put_cstring_to_log_window ( const char * s )
@@ -8152,8 +8286,8 @@ void put_cstring_to_log_window ( const char * s )
 	//// else this -&gt; bufferLogMessage(s) ;
 }
 </t>
-<t tx="T478">@others</t>
-<t tx="T479">BEGIN_EVENT_TABLE(LeoFrame, wxFrame)
+<t tx="T485">@others</t>
+<t tx="T486">BEGIN_EVENT_TABLE(LeoFrame, wxFrame)
 
 @ The following commands are processed by default event handlers in wxTextCtrl:
 wxID_CUT, wxID_COPY, wxID_PASTE, wxID_UNDO, wxID_REDO.
@@ -8189,7 +8323,7 @@ EVT_TREE_END_LABEL_EDIT(cTreeCtrl, LeoFrame::onTreeEndLabelEdit)
 &lt;&lt; Declare menu events &gt;&gt;
 
 END_EVENT_TABLE()</t>
-<t tx="T480">// Menu enablers...
+<t tx="T487">// Menu enablers...
 EVT_UPDATE_UI(cRevertMenuItem, LeoFrame::OnUpdateRevert )
 
 // Command handlers...
@@ -8389,7 +8523,7 @@ EVT_MENU(cOpenPythonWindowMenuItem,LeoFrame::OnOpenPythonWindow)
 EVT_MENU(cRecentWindowsMenuItem,LeoFrame::OnRecentWindows)
 
 EVT_MENU(cAboutLeoMenuItem, LeoFrame::OnAbout)</t>
-<t tx="T481">LeoFrame::LeoFrame()
+<t tx="T488">LeoFrame::LeoFrame()
 	: wxFrame((wxFrame *)NULL, -1, "LeoWX", wxDefaultPosition, wxSize(550, 600)),
 	mFileName ( "" ),
 	mDefaultDirectory ( "" ),
@@ -8417,11 +8551,11 @@ EVT_MENU(cAboutLeoMenuItem, LeoFrame::OnAbout)</t>
 	mIniting = FALSE ; // allow resize events.
 	es("Leo Log Window...\n\n");
 }</t>
-<t tx="T482">mTextChanging = 0 ;
+<t tx="T489">mTextChanging = 0 ;
 mCopying = 0 ;
 mDraggedItem =  0L ;
 mReverting = FALSE ;</t>
-<t tx="T483">mOutputDocFlag = TRUE ;
+<t tx="T490">mOutputDocFlag = TRUE ;
 mTangleBatchFlag = FALSE ;
 mUntangleBatchFlag = FALSE ;
 mUseHeaderFlag = TRUE ;
@@ -8429,7 +8563,7 @@ mPageWidth = 132 ;
 mTabWidth = 4;
 mPresentLanguage = c_language ;
 mTargetLanguage = c_language ;</t>
-<t tx="T484">mSplitter1 = new wxSplitterWindow(this, cSplitterWindow,
+<t tx="T491">mSplitter1 = new wxSplitterWindow(this, cSplitterWindow,
 	wxDefaultPosition,  wxDefaultSize,
 	wxSP_BORDER | wxSP_3D, 
 	"splitterWindow");
@@ -8520,7 +8654,7 @@ mBodyCtrl -&gt; SetFont ( font ) ;
 // Attach the controls to the splitter.
 mSplitter1 -&gt; SplitHorizontally(mSplitter2, mBodyCtrl, 0);
 mSplitter2 -&gt; SplitVertically(mTreeCtrl, mLogCtrl, width/2);</t>
-<t tx="T485">#ifdef __WXGTK__ // Windows version handles shortcuts properly
+<t tx="T492">#ifdef __WXGTK__ // Windows version handles shortcuts properly
 
 enum {
 	// &lt;&lt; accelerator constants &gt;&gt;
@@ -8646,19 +8780,19 @@ mTreeCtrl -&gt; SetAcceleratorTable(accel);
 mSplitter1 -&gt; SetAcceleratorTable(accel);
 
 #endif</t>
-<t tx="T486">CreateStatusBar(2);
+<t tx="T493">CreateStatusBar(2);
 SetStatusText("");</t>
-<t tx="T487">#ifdef __WXMSW__
+<t tx="T494">#ifdef __WXMSW__
   this -&gt;SetIcon(wxIcon("LeoIcon"));
 #endif</t>
-<t tx="T488">/*
+<t tx="T495">/*
 	Blinking happens on Windows without a problem.  Furthermore, setting the rate here affects _all_ windows.
 */
 #ifdef __WXGTK__ // Doesn't seem to work.
 	wxCaret * caret = mBodyCtrl -&gt; GetCaret();
 	caret -&gt; SetBlinkTime (500) ;
 #endif</t>
-<t tx="T489">wxTreeItemId root = mTreeCtrl -&gt; AddRoot( "untitled" ) ;
+<t tx="T496">wxTreeItemId root = mTreeCtrl -&gt; AddRoot( "untitled" ) ;
 tnode *t = new tnode() ;
 vnode *v = new vnode( mCommands, t );
 v -&gt; setTreeID ( root ) ;
@@ -8679,7 +8813,7 @@ v -&gt; setIconVal(0);
 	mTreeCtrl -&gt; SetItemImage(root, 0, wxTreeItemIcon_Expanded);
 	mTreeCtrl -&gt; SetItemImage(root, 0, wxTreeItemIcon_SelectedExpanded);
 #endif</t>
-<t tx="T490">@ &lt;&lt; LeoFrame methods &gt;&gt; (2 of 157)
+<t tx="T497">@ &lt;&lt; LeoFrame methods &gt;&gt; (2 of 157)
 @c
 
 void LeoFrame::createMenus ( void )
@@ -9076,7 +9210,7 @@ void LeoFrame::createMenus ( void )
 	SetMenuBar(menuBar);  // attach the menu bar to the frame
 }
 </t>
-<t tx="T491">@ &lt;&lt; LeoFrame methods &gt;&gt; (3 of 157)
+<t tx="T498">@ &lt;&lt; LeoFrame methods &gt;&gt; (3 of 157)
 @c
 
 void LeoFrame::SetUntitledNumber ( long n )
@@ -9087,7 +9221,7 @@ void LeoFrame::SetUntitledNumber ( long n )
 	this -&gt; SetTitle(s) ;
 }
 </t>
-<t tx="T492">@ &lt;&lt; LeoFrame methods &gt;&gt; (4 of 157)
+<t tx="T499">@ &lt;&lt; LeoFrame methods &gt;&gt; (4 of 157)
 @c
 
 void LeoFrame::putToLog ( const char * s )
@@ -9095,7 +9229,7 @@ void LeoFrame::putToLog ( const char * s )
 	mLogCtrl -&gt; AppendText(s);
 }
 </t>
-<t tx="T493">@ &lt;&lt; LeoFrame methods &gt;&gt; (5 of 157)
+<t tx="T500">@ &lt;&lt; LeoFrame methods &gt;&gt; (5 of 157)
 @c
 
 wxString LeoFrame::getLogText ( void )
@@ -9103,8 +9237,8 @@ wxString LeoFrame::getLogText ( void )
 	return mLogCtrl -&gt; GetValue();
 }
 </t>
-<t tx="T494"></t>
-<t tx="T495">@ &lt;&lt; LeoFrame methods &gt;&gt; (6 of 157)
+<t tx="T501"></t>
+<t tx="T502">@ &lt;&lt; LeoFrame methods &gt;&gt; (6 of 157)
 @c
 
 #ifdef __WXMSW__
@@ -9118,7 +9252,7 @@ void LeoFrame::onActivate(wxActivateEvent &amp;event)
 	}
 }
 </t>
-<t tx="T496">
+<t tx="T503">
 #else
 
 void LeoFrame::OnSetFocus(wxFocusEvent&amp; WXUNUSED(event))
@@ -9128,7 +9262,7 @@ void LeoFrame::OnSetFocus(wxFocusEvent&amp; WXUNUSED(event))
 		this -&gt; mCommands -&gt; checkAllFileDates();
 }
 </t>
-<t tx="T497">
+<t tx="T504">
 #endif
 // &lt;&lt; LeoFrame methods &gt;&gt; (7 of 157)
 void LeoFrame::onResize(wxSizeEvent&amp; WXUNUSED(event))
@@ -9156,7 +9290,7 @@ void LeoFrame::onResize(wxSizeEvent&amp; WXUNUSED(event))
 		mSplitter2 -&gt; SetSashPosition((3*h)/5, TRUE);
 }
 </t>
-<t tx="T498">@ &lt;&lt; LeoFrame methods &gt;&gt; (8 of 157)
+<t tx="T505">@ &lt;&lt; LeoFrame methods &gt;&gt; (8 of 157)
 @c
 
 static long sDisableTextUpdates = 0 ;
@@ -9225,7 +9359,7 @@ void LeoFrame::onBodyTextUpdated(wxCommandEvent&amp; WXUNUSED(event))
 	-- mTextChanging ;
 }
 </t>
-<t tx="T499">@ &lt;&lt; LeoFrame methods &gt;&gt; (9 of 157)
+<t tx="T506">@ &lt;&lt; LeoFrame methods &gt;&gt; (9 of 157)
 @c
 
 void LeoFrame::onCloseLeoFrame(wxCloseEvent&amp; event)
@@ -9348,7 +9482,7 @@ void LeoFrame::onCloseLeoFrame(wxCloseEvent&amp; event)
 	this -&gt; Destroy();
 }
 </t>
-<t tx="T500">@ &lt;&lt; LeoFrame methods &gt;&gt; (10 of 157)
+<t tx="T507">@ &lt;&lt; LeoFrame methods &gt;&gt; (10 of 157)
 @c
 
 void LeoFrame::onTreeChanged(wxTreeEvent&amp; event)
@@ -9408,7 +9542,7 @@ void LeoFrame::onTreeChanged(wxTreeEvent&amp; event)
 	// -- end -- &lt;&lt; Put the new text into the body pane &gt;&gt;
 }
 </t>
-<t tx="T501">@ &lt;&lt; LeoFrame methods &gt;&gt; (11 of 157)
+<t tx="T508">@ &lt;&lt; LeoFrame methods &gt;&gt; (11 of 157)
 @c
 
 void LeoFrame::onTreeChanging(wxTreeEvent&amp; WXUNUSED(event))
@@ -9418,7 +9552,7 @@ void LeoFrame::onTreeChanging(wxTreeEvent&amp; WXUNUSED(event))
 	assert(mCopying == 0);
 }
 </t>
-<t tx="T502">@ &lt;&lt; LeoFrame methods &gt;&gt; (12 of 157)
+<t tx="T509">@ &lt;&lt; LeoFrame methods &gt;&gt; (12 of 157)
 @c
 
 void LeoFrame::onTreeKeyDown(wxTreeEvent&amp; WXUNUSED(event))
@@ -9426,7 +9560,7 @@ void LeoFrame::onTreeKeyDown(wxTreeEvent&amp; WXUNUSED(event))
 
 }
 </t>
-<t tx="T503">@ &lt;&lt; LeoFrame methods &gt;&gt; (13 of 157)
+<t tx="T510">@ &lt;&lt; LeoFrame methods &gt;&gt; (13 of 157)
 @c
 
 void LeoFrame::onTreeBeginDrag(wxTreeEvent&amp; event)
@@ -9438,7 +9572,7 @@ void LeoFrame::onTreeBeginDrag(wxTreeEvent&amp; event)
 	}
 }
 </t>
-<t tx="T504">@ &lt;&lt; LeoFrame methods &gt;&gt; (14 of 157)
+<t tx="T511">@ &lt;&lt; LeoFrame methods &gt;&gt; (14 of 157)
 @c
 
 void LeoFrame::onTreeEndDrag(wxTreeEvent&amp; event)
@@ -9504,7 +9638,7 @@ void LeoFrame::onTreeEndDrag(wxTreeEvent&amp; event)
 	mCommands -&gt; setChanged(TRUE);
 }
 </t>
-<t tx="T505">@ &lt;&lt; LeoFrame methods &gt;&gt; (15 of 157)
+<t tx="T512">@ &lt;&lt; LeoFrame methods &gt;&gt; (15 of 157)
 Editing will not be allowed if this routine does not exist.
 @c
 
@@ -9513,7 +9647,7 @@ void LeoFrame::onTreeBeginLabelEdit(wxTreeEvent&amp; WXUNUSED(event))
 	// Doing nothing is is enough to enable the edit.
 }
 </t>
-<t tx="T506">@ &lt;&lt; LeoFrame methods &gt;&gt; (16 of 157)
+<t tx="T513">@ &lt;&lt; LeoFrame methods &gt;&gt; (16 of 157)
 Editing will not be allowed if this routine does not exist.
 @c
 
@@ -9537,7 +9671,7 @@ void LeoFrame::onTreeEndLabelEdit(wxTreeEvent&amp; event)
 		j -&gt; setHeadString(s);
 }
 </t>
-<t tx="T507">@ &lt;&lt; LeoFrame methods &gt;&gt; (17 of 157)
+<t tx="T514">@ &lt;&lt; LeoFrame methods &gt;&gt; (17 of 157)
 This updates the text of joined _headlines_, not body text.
 @c
 
@@ -9560,7 +9694,7 @@ void LeoFrame::updateJoinedHeadlines ( wxString text, vnode * v )
 	-- guard ;
 }
 </t>
-<t tx="T508">
+<t tx="T515">
 #endif
 // &lt;&lt; LeoFrame methods &gt;&gt; (18 of 157)
 void LeoFrame::OnUpdateRevert( wxUpdateUIEvent &amp;event )
@@ -9568,7 +9702,7 @@ void LeoFrame::OnUpdateRevert( wxUpdateUIEvent &amp;event )
 	event.Enable(mCommands -&gt; canRevert()) ;
 }
 </t>
-<t tx="T509">@ &lt;&lt; LeoFrame methods &gt;&gt; (19 of 157)
+<t tx="T516">@ &lt;&lt; LeoFrame methods &gt;&gt; (19 of 157)
 @c
 
 void LeoFrame::OnNew(wxCommandEvent&amp; WXUNUSED(event))
@@ -9589,7 +9723,7 @@ void LeoFrame::OnNew(wxCommandEvent&amp; WXUNUSED(event))
 	frame -&gt; mCommands -&gt; editVnode( v ) ;
 }
 </t>
-<t tx="T510">@ &lt;&lt; LeoFrame methods &gt;&gt; (20 of 157)
+<t tx="T517">@ &lt;&lt; LeoFrame methods &gt;&gt; (20 of 157)
 @c
 
 void LeoFrame::OnOpen(wxCommandEvent&amp; WXUNUSED(event))
@@ -9612,7 +9746,7 @@ void LeoFrame::OnOpen(wxCommandEvent&amp; WXUNUSED(event))
 	}
 }
 </t>
-<t tx="T511">@ &lt;&lt; LeoFrame methods &gt;&gt; (21 of 157)
+<t tx="T518">@ &lt;&lt; LeoFrame methods &gt;&gt; (21 of 157)
 @c
 
 LeoFrame * LeoFrame::OpenWithFileName( wxString fileName )
@@ -9676,7 +9810,7 @@ LeoFrame * LeoFrame::OpenWithFileName( wxString fileName )
 	}
 }
 </t>
-<t tx="T512">@ &lt;&lt; LeoFrame methods &gt;&gt; (22 of 157)
+<t tx="T519">@ &lt;&lt; LeoFrame methods &gt;&gt; (22 of 157)
 @c
 
 void LeoFrame::OnClose(wxCommandEvent&amp; WXUNUSED(event))
@@ -9685,7 +9819,7 @@ void LeoFrame::OnClose(wxCommandEvent&amp; WXUNUSED(event))
 	this -&gt; Close();
 }
 </t>
-<t tx="T513">@ &lt;&lt; LeoFrame methods &gt;&gt; (23 of 157)
+<t tx="T520">@ &lt;&lt; LeoFrame methods &gt;&gt; (23 of 157)
 @c
 
 void LeoFrame::OnSave(wxCommandEvent&amp; WXUNUSED(event))
@@ -9710,7 +9844,7 @@ void LeoFrame::OnSave(wxCommandEvent&amp; WXUNUSED(event))
 	else mCommands -&gt; save ( mFileName ) ;
 }
 </t>
-<t tx="T514">@ &lt;&lt; LeoFrame methods &gt;&gt; (24 of 157)
+<t tx="T521">@ &lt;&lt; LeoFrame methods &gt;&gt; (24 of 157)
 @c
 
 void LeoFrame::OnSaveAs(wxCommandEvent&amp; WXUNUSED(event))
@@ -9732,7 +9866,7 @@ void LeoFrame::OnSaveAs(wxCommandEvent&amp; WXUNUSED(event))
 	}
 }
 </t>
-<t tx="T515">@ &lt;&lt; LeoFrame methods &gt;&gt; (25 of 157)
+<t tx="T522">@ &lt;&lt; LeoFrame methods &gt;&gt; (25 of 157)
 @c
 
 void LeoFrame::OnSaveTo(wxCommandEvent&amp; WXUNUSED(event))
@@ -9752,7 +9886,7 @@ void LeoFrame::OnSaveTo(wxCommandEvent&amp; WXUNUSED(event))
 	}
 }
 </t>
-<t tx="T516">@ &lt;&lt; LeoFrame methods &gt;&gt; (26 of 157)
+<t tx="T523">@ &lt;&lt; LeoFrame methods &gt;&gt; (26 of 157)
 @c
 
 void LeoFrame::OnRevert(wxCommandEvent&amp; WXUNUSED(event))
@@ -9780,7 +9914,7 @@ void LeoFrame::OnRevert(wxCommandEvent&amp; WXUNUSED(event))
 	frame -&gt; Show(TRUE);
 }
 </t>
-<t tx="T517">@ &lt;&lt; LeoFrame methods &gt;&gt; (27 of 157)
+<t tx="T524">@ &lt;&lt; LeoFrame methods &gt;&gt; (27 of 157)
 @c
 
 void LeoFrame::OnPageSetup(wxCommandEvent&amp; WXUNUSED(event))
@@ -9788,7 +9922,7 @@ void LeoFrame::OnPageSetup(wxCommandEvent&amp; WXUNUSED(event))
 	////
 }
 </t>
-<t tx="T518">@ &lt;&lt; LeoFrame methods &gt;&gt; (28 of 157)
+<t tx="T525">@ &lt;&lt; LeoFrame methods &gt;&gt; (28 of 157)
 @c
 
 void LeoFrame::OnPrint(wxCommandEvent&amp; WXUNUSED(event))
@@ -9796,7 +9930,7 @@ void LeoFrame::OnPrint(wxCommandEvent&amp; WXUNUSED(event))
 	////
 }
 </t>
-<t tx="T519">@ &lt;&lt; LeoFrame methods &gt;&gt; (29 of 157)
+<t tx="T526">@ &lt;&lt; LeoFrame methods &gt;&gt; (29 of 157)
 @c
 
 void LeoFrame::OnTangleSubmenu(wxCommandEvent&amp; WXUNUSED(event))
@@ -9804,7 +9938,7 @@ void LeoFrame::OnTangleSubmenu(wxCommandEvent&amp; WXUNUSED(event))
 
 }
 </t>
-<t tx="T520">@ &lt;&lt; LeoFrame methods &gt;&gt; (30 of 157)
+<t tx="T527">@ &lt;&lt; LeoFrame methods &gt;&gt; (30 of 157)
 @c
 
 void LeoFrame::OnUntangleSubmenu(wxCommandEvent&amp; WXUNUSED(event))
@@ -9812,7 +9946,7 @@ void LeoFrame::OnUntangleSubmenu(wxCommandEvent&amp; WXUNUSED(event))
 
 }
 </t>
-<t tx="T521">@ &lt;&lt; LeoFrame methods &gt;&gt; (31 of 157)
+<t tx="T528">@ &lt;&lt; LeoFrame methods &gt;&gt; (31 of 157)
 @c
 
 void LeoFrame::OnImportExportSubmenu(wxCommandEvent&amp; WXUNUSED(event))
@@ -9820,7 +9954,7 @@ void LeoFrame::OnImportExportSubmenu(wxCommandEvent&amp; WXUNUSED(event))
 
 }
 </t>
-<t tx="T522">@ &lt;&lt; LeoFrame methods &gt;&gt; (32 of 157)
+<t tx="T529">@ &lt;&lt; LeoFrame methods &gt;&gt; (32 of 157)
 @c
 
 void LeoFrame::OnQuit(wxCommandEvent&amp; WXUNUSED(event))
@@ -9835,7 +9969,7 @@ void LeoFrame::OnQuit(wxCommandEvent&amp; WXUNUSED(event))
 	gQuitting = FALSE ;
 }
 </t>
-<t tx="T523">@ &lt;&lt; LeoFrame methods &gt;&gt; (33 of 157)
+<t tx="T530">@ &lt;&lt; LeoFrame methods &gt;&gt; (33 of 157)
 @c
 
 void LeoFrame::OnReadOutlineOnly(wxCommandEvent&amp; WXUNUSED(event))
@@ -9858,7 +9992,7 @@ void LeoFrame::OnReadOutlineOnly(wxCommandEvent&amp; WXUNUSED(event))
 	}
 }
 </t>
-<t tx="T524">@ &lt;&lt; LeoFrame methods &gt;&gt; (34 of 157)
+<t tx="T531">@ &lt;&lt; LeoFrame methods &gt;&gt; (34 of 157)
 @c
 
 void LeoFrame::readOutlineOnly ( wxString fileName )
@@ -9896,7 +10030,7 @@ void LeoFrame::readOutlineOnly ( wxString fileName )
 	}
 }
 </t>
-<t tx="T525">@ &lt;&lt; LeoFrame methods &gt;&gt; (35 of 157)
+<t tx="T532">@ &lt;&lt; LeoFrame methods &gt;&gt; (35 of 157)
 @c
 
 void LeoFrame::OnReadAtFileNodes(wxCommandEvent&amp; WXUNUSED(event))
@@ -9904,7 +10038,7 @@ void LeoFrame::OnReadAtFileNodes(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; readAtFileNodes();
 }
 </t>
-<t tx="T526">@ &lt;&lt; LeoFrame methods &gt;&gt; (36 of 157)
+<t tx="T533">@ &lt;&lt; LeoFrame methods &gt;&gt; (36 of 157)
 @c
 
 void LeoFrame::OnWriteOutlineOnly(wxCommandEvent&amp; WXUNUSED(event))
@@ -9912,7 +10046,7 @@ void LeoFrame::OnWriteOutlineOnly(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; writeOutlineOnly();
 }
 </t>
-<t tx="T527">@ &lt;&lt; LeoFrame methods &gt;&gt; (37 of 157)
+<t tx="T534">@ &lt;&lt; LeoFrame methods &gt;&gt; (37 of 157)
 @c
 
 void LeoFrame::OnWriteAtFileNodes(wxCommandEvent&amp; WXUNUSED(event))
@@ -9920,7 +10054,7 @@ void LeoFrame::OnWriteAtFileNodes(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; writeAtFileNodes();
 }
 </t>
-<t tx="T528">@ &lt;&lt; LeoFrame methods &gt;&gt; (38 of 157)
+<t tx="T535">@ &lt;&lt; LeoFrame methods &gt;&gt; (38 of 157)
 @c
 
 void LeoFrame::OnTangleAll(wxCommandEvent&amp; WXUNUSED(event))
@@ -9928,7 +10062,7 @@ void LeoFrame::OnTangleAll(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; tangleAll();
 }
 </t>
-<t tx="T529">@ &lt;&lt; LeoFrame methods &gt;&gt; (39 of 157)
+<t tx="T536">@ &lt;&lt; LeoFrame methods &gt;&gt; (39 of 157)
 @c
 
 void LeoFrame::OnTangleMarked(wxCommandEvent&amp; WXUNUSED(event))
@@ -9936,7 +10070,7 @@ void LeoFrame::OnTangleMarked(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; tangleMarked();
 }
 </t>
-<t tx="T530">@ &lt;&lt; LeoFrame methods &gt;&gt; (40 of 157)
+<t tx="T537">@ &lt;&lt; LeoFrame methods &gt;&gt; (40 of 157)
 @c
 
 void LeoFrame::OnTangle(wxCommandEvent&amp; WXUNUSED(event))
@@ -9944,7 +10078,7 @@ void LeoFrame::OnTangle(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; tangle();
 }
 </t>
-<t tx="T531">@ &lt;&lt; LeoFrame methods &gt;&gt; (41 of 157)
+<t tx="T538">@ &lt;&lt; LeoFrame methods &gt;&gt; (41 of 157)
 @c
 
 void LeoFrame::OnUntangleAll(wxCommandEvent&amp; WXUNUSED(event))
@@ -9952,7 +10086,7 @@ void LeoFrame::OnUntangleAll(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; untangleAll();
 }
 </t>
-<t tx="T532">@ &lt;&lt; LeoFrame methods &gt;&gt; (42 of 157)
+<t tx="T539">@ &lt;&lt; LeoFrame methods &gt;&gt; (42 of 157)
 @c
 
 void LeoFrame::OnUntangleMarked(wxCommandEvent&amp; WXUNUSED(event))
@@ -9960,7 +10094,7 @@ void LeoFrame::OnUntangleMarked(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; untangleMarked();
 }
 </t>
-<t tx="T533">@ &lt;&lt; LeoFrame methods &gt;&gt; (43 of 157)
+<t tx="T540">@ &lt;&lt; LeoFrame methods &gt;&gt; (43 of 157)
 @c
 
 void LeoFrame::OnUntangle(wxCommandEvent&amp; WXUNUSED(event))
@@ -9968,7 +10102,7 @@ void LeoFrame::OnUntangle(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; untangle();
 }
 </t>
-<t tx="T534">@ &lt;&lt; LeoFrame methods &gt;&gt; (44 of 157)
+<t tx="T541">@ &lt;&lt; LeoFrame methods &gt;&gt; (44 of 157)
 @c
 
 void LeoFrame::OnImportFiles(wxCommandEvent&amp; WXUNUSED(event))
@@ -9989,7 +10123,7 @@ void LeoFrame::OnImportFiles(wxCommandEvent&amp; WXUNUSED(event))
 	}
 }
 </t>
-<t tx="T535">@ &lt;&lt; LeoFrame methods &gt;&gt; (45 of 157)
+<t tx="T542">@ &lt;&lt; LeoFrame methods &gt;&gt; (45 of 157)
 @c
 
 void LeoFrame::OnImportCWEBFiles(wxCommandEvent&amp; WXUNUSED(event))
@@ -10010,7 +10144,7 @@ void LeoFrame::OnImportCWEBFiles(wxCommandEvent&amp; WXUNUSED(event))
 	}
 }
 </t>
-<t tx="T536">@ &lt;&lt; LeoFrame methods &gt;&gt; (46 of 157)
+<t tx="T543">@ &lt;&lt; LeoFrame methods &gt;&gt; (46 of 157)
 @c
 
 void LeoFrame::OnImportNowebFiles(wxCommandEvent&amp; WXUNUSED(event))
@@ -10018,7 +10152,7 @@ void LeoFrame::OnImportNowebFiles(wxCommandEvent&amp; WXUNUSED(event))
 	////
 }
 </t>
-<t tx="T537">@ &lt;&lt; LeoFrame methods &gt;&gt; (47 of 157)
+<t tx="T544">@ &lt;&lt; LeoFrame methods &gt;&gt; (47 of 157)
 @c
 
 void LeoFrame::OnImportMoreText(wxCommandEvent&amp; WXUNUSED(event))
@@ -10039,7 +10173,7 @@ void LeoFrame::OnImportMoreText(wxCommandEvent&amp; WXUNUSED(event))
 	}
 }
 </t>
-<t tx="T538">@ &lt;&lt; LeoFrame methods &gt;&gt; (48 of 157)
+<t tx="T545">@ &lt;&lt; LeoFrame methods &gt;&gt; (48 of 157)
 @c
 
 void LeoFrame::OnFlattenOutline(wxCommandEvent&amp; WXUNUSED(event))
@@ -10060,7 +10194,7 @@ void LeoFrame::OnFlattenOutline(wxCommandEvent&amp; WXUNUSED(event))
 	}
 }
 </t>
-<t tx="T539">@ &lt;&lt; LeoFrame methods &gt;&gt; (49 of 157)
+<t tx="T546">@ &lt;&lt; LeoFrame methods &gt;&gt; (49 of 157)
 @c
 
 void LeoFrame::OnUpdateCopy ( wxUpdateUIEvent&amp; event )
@@ -10075,7 +10209,7 @@ void LeoFrame::OnUpdateCopy ( wxUpdateUIEvent&amp; event )
 		event.Enable( FALSE ) ;
 }
 </t>
-<t tx="T540">@ &lt;&lt; LeoFrame methods &gt;&gt; (50 of 157)
+<t tx="T547">@ &lt;&lt; LeoFrame methods &gt;&gt; (50 of 157)
 @c
 
 void LeoFrame::OnUpdateCut ( wxUpdateUIEvent&amp; event )
@@ -10090,7 +10224,7 @@ void LeoFrame::OnUpdateCut ( wxUpdateUIEvent&amp; event )
 		event.Enable( FALSE ) ;
 }
 </t>
-<t tx="T541">@ &lt;&lt; LeoFrame methods &gt;&gt; (51 of 157)
+<t tx="T548">@ &lt;&lt; LeoFrame methods &gt;&gt; (51 of 157)
 @c
 
 void LeoFrame::OnUpdateDelete ( wxUpdateUIEvent&amp; event )
@@ -10098,7 +10232,7 @@ void LeoFrame::OnUpdateDelete ( wxUpdateUIEvent&amp; event )
 	event.Enable( mBodyCtrl &amp;&amp; mBodyCtrl -&gt; CanCut( ) ) ;
 }
 </t>
-<t tx="T542">@ &lt;&lt; LeoFrame methods &gt;&gt; (52 of 157)
+<t tx="T549">@ &lt;&lt; LeoFrame methods &gt;&gt; (52 of 157)
 @c
 
 void LeoFrame::OnUpdateExtract ( wxUpdateUIEvent&amp; event )
@@ -10106,7 +10240,7 @@ void LeoFrame::OnUpdateExtract ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canExtract() ) ;
 }
 </t>
-<t tx="T543">@ &lt;&lt; LeoFrame methods &gt;&gt; (53 of 157)
+<t tx="T550">@ &lt;&lt; LeoFrame methods &gt;&gt; (53 of 157)
 @c
 
 void LeoFrame::OnUpdateExtractNames ( wxUpdateUIEvent&amp; event )
@@ -10114,7 +10248,7 @@ void LeoFrame::OnUpdateExtractNames ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canExtractSectionNames() ) ;
 }
 </t>
-<t tx="T544">@ &lt;&lt; LeoFrame methods &gt;&gt; (54 of 157)
+<t tx="T551">@ &lt;&lt; LeoFrame methods &gt;&gt; (54 of 157)
 @c
 
 void LeoFrame::OnUpdateExtractSection ( wxUpdateUIEvent&amp; event )
@@ -10122,7 +10256,7 @@ void LeoFrame::OnUpdateExtractSection ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canExtractSection() ) ;
 }
 </t>
-<t tx="T545">@ &lt;&lt; LeoFrame methods &gt;&gt; (55 of 157)
+<t tx="T552">@ &lt;&lt; LeoFrame methods &gt;&gt; (55 of 157)
 @c
 
 void LeoFrame::OnUpdateFind ( wxUpdateUIEvent&amp; event )
@@ -10130,7 +10264,7 @@ void LeoFrame::OnUpdateFind ( wxUpdateUIEvent&amp; event )
 	event.Enable( find_text . Length() &gt; 0 ) ;
 }
 </t>
-<t tx="T546">@ &lt;&lt; LeoFrame methods &gt;&gt; (56 of 157)
+<t tx="T553">@ &lt;&lt; LeoFrame methods &gt;&gt; (56 of 157)
 @c
 
 void LeoFrame::OnUpdatePaste ( wxUpdateUIEvent&amp; event )
@@ -10149,7 +10283,7 @@ void LeoFrame::OnUpdatePaste ( wxUpdateUIEvent&amp; event )
 	#endif
 }
 </t>
-<t tx="T547">@ &lt;&lt; LeoFrame methods &gt;&gt; (57 of 157)
+<t tx="T554">@ &lt;&lt; LeoFrame methods &gt;&gt; (57 of 157)
 @c
 
 void LeoFrame::OnUpdateRedo ( wxUpdateUIEvent&amp; event )
@@ -10167,7 +10301,7 @@ void LeoFrame::OnUpdateRedo ( wxUpdateUIEvent&amp; event )
 	event.Enable( enabled ) ;
 }
 </t>
-<t tx="T548">@ &lt;&lt; LeoFrame methods &gt;&gt; (58 of 157)
+<t tx="T555">@ &lt;&lt; LeoFrame methods &gt;&gt; (58 of 157)
 @c
 
 void LeoFrame::OnUpdateReplace ( wxUpdateUIEvent&amp; event )
@@ -10175,7 +10309,7 @@ void LeoFrame::OnUpdateReplace ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; changeIsEnabled() ) ;
 }
 </t>
-<t tx="T549">@ &lt;&lt; LeoFrame methods &gt;&gt; (59 of 157)
+<t tx="T556">@ &lt;&lt; LeoFrame methods &gt;&gt; (59 of 157)
 @c
 
 void LeoFrame::OnUpdateSelectAll ( wxUpdateUIEvent&amp; event )
@@ -10185,7 +10319,7 @@ void LeoFrame::OnUpdateSelectAll ( wxUpdateUIEvent&amp; event )
 	event.Enable( w &amp;&amp; ( w == mBodyCtrl || w == mLogCtrl ) ) ;
 }
 </t>
-<t tx="T550">@ &lt;&lt; LeoFrame methods &gt;&gt; (60 of 157)
+<t tx="T557">@ &lt;&lt; LeoFrame methods &gt;&gt; (60 of 157)
 @c
 
 void LeoFrame::OnUpdateUndo ( wxUpdateUIEvent&amp; event )
@@ -10208,7 +10342,7 @@ void LeoFrame::OnUpdateUndo ( wxUpdateUIEvent&amp; event )
 	event.Enable( enabled ) ;
 }
 </t>
-<t tx="T551">@ &lt;&lt; LeoFrame methods &gt;&gt; (61 of 157)
+<t tx="T558">@ &lt;&lt; LeoFrame methods &gt;&gt; (61 of 157)
 @c
 
 bool LeoFrame::hasSelection ( void )
@@ -10246,7 +10380,7 @@ bool LeoFrame::hasSelection ( void )
 
 }
 </t>
-<t tx="T552">@ &lt;&lt; LeoFrame methods &gt;&gt; (62 of 157)
+<t tx="T559">@ &lt;&lt; LeoFrame methods &gt;&gt; (62 of 157)
 @c
 
 void LeoFrame::OnUndo(wxCommandEvent&amp; WXUNUSED(event))
@@ -10265,7 +10399,7 @@ void LeoFrame::OnUndo(wxCommandEvent&amp; WXUNUSED(event))
 
 }
 </t>
-<t tx="T553">@ &lt;&lt; LeoFrame methods &gt;&gt; (63 of 157)
+<t tx="T560">@ &lt;&lt; LeoFrame methods &gt;&gt; (63 of 157)
 @c
 
 void LeoFrame::OnRedo(wxCommandEvent&amp; WXUNUSED(event))
@@ -10279,7 +10413,7 @@ void LeoFrame::OnRedo(wxCommandEvent&amp; WXUNUSED(event))
 
 }
 </t>
-<t tx="T554">@ &lt;&lt; LeoFrame methods &gt;&gt; (64 of 157)
+<t tx="T561">@ &lt;&lt; LeoFrame methods &gt;&gt; (64 of 157)
 @c
 
 void LeoFrame::OnCut(wxCommandEvent&amp; WXUNUSED(event))
@@ -10292,7 +10426,7 @@ void LeoFrame::OnCut(wxCommandEvent&amp; WXUNUSED(event))
 		mLogCtrl-&gt; Cut( ) ;
 }
 </t>
-<t tx="T555">@ &lt;&lt; LeoFrame methods &gt;&gt; (65 of 157)
+<t tx="T562">@ &lt;&lt; LeoFrame methods &gt;&gt; (65 of 157)
 @c
 
 void LeoFrame::OnCopy(wxCommandEvent&amp; WXUNUSED(event))
@@ -10305,7 +10439,7 @@ void LeoFrame::OnCopy(wxCommandEvent&amp; WXUNUSED(event))
 		mLogCtrl-&gt; Copy( ) ;
 }
 </t>
-<t tx="T556">@ &lt;&lt; LeoFrame methods &gt;&gt; (66 of 157)
+<t tx="T563">@ &lt;&lt; LeoFrame methods &gt;&gt; (66 of 157)
 @c
 
 void LeoFrame::OnPaste(wxCommandEvent&amp; WXUNUSED(event))
@@ -10318,7 +10452,7 @@ void LeoFrame::OnPaste(wxCommandEvent&amp; WXUNUSED(event))
 		mLogCtrl-&gt; Paste( ) ;
 }
 </t>
-<t tx="T557">@ &lt;&lt; LeoFrame methods &gt;&gt; (67 of 157)
+<t tx="T564">@ &lt;&lt; LeoFrame methods &gt;&gt; (67 of 157)
 @c
 
 void LeoFrame::OnDelete(wxCommandEvent&amp; WXUNUSED(event))
@@ -10333,7 +10467,7 @@ void LeoFrame::OnDelete(wxCommandEvent&amp; WXUNUSED(event))
 	}
 }
 </t>
-<t tx="T558">@ &lt;&lt; LeoFrame methods &gt;&gt; (68 of 157)
+<t tx="T565">@ &lt;&lt; LeoFrame methods &gt;&gt; (68 of 157)
 @c
 
 void LeoFrame::OnSelectAll(wxCommandEvent&amp; WXUNUSED(event))
@@ -10350,7 +10484,7 @@ void LeoFrame::OnSelectAll(wxCommandEvent&amp; WXUNUSED(event))
 	}
 }
 </t>
-<t tx="T559">@ &lt;&lt; LeoFrame methods &gt;&gt; (69 of 157)
+<t tx="T566">@ &lt;&lt; LeoFrame methods &gt;&gt; (69 of 157)
 @c
 
 void LeoFrame::OnEditHeadline(wxCommandEvent&amp; WXUNUSED(event))
@@ -10362,7 +10496,7 @@ void LeoFrame::OnEditHeadline(wxCommandEvent&amp; WXUNUSED(event))
 #endif
 }
 </t>
-<t tx="T560">@ &lt;&lt; LeoFrame methods &gt;&gt; (70 of 157)
+<t tx="T567">@ &lt;&lt; LeoFrame methods &gt;&gt; (70 of 157)
 @c
 
 void LeoFrame::OnFontPanel(wxCommandEvent&amp; WXUNUSED(event))
@@ -10405,7 +10539,7 @@ void LeoFrame::OnFontPanel(wxCommandEvent&amp; WXUNUSED(event))
 	);
 }
 </t>
-<t tx="T561">@ &lt;&lt; LeoFrame methods &gt;&gt; (71 of 157)
+<t tx="T568">@ &lt;&lt; LeoFrame methods &gt;&gt; (71 of 157)
 @c
 
 void LeoFrame::OnSyntaxColoring(wxCommandEvent&amp; WXUNUSED(event))
@@ -10413,7 +10547,7 @@ void LeoFrame::OnSyntaxColoring(wxCommandEvent&amp; WXUNUSED(event))
 	////
 }
 </t>
-<t tx="T562">@ &lt;&lt; LeoFrame methods &gt;&gt; (72 of 157)
+<t tx="T569">@ &lt;&lt; LeoFrame methods &gt;&gt; (72 of 157)
 @c
 
 void LeoFrame::OnPreferences(wxCommandEvent&amp; WXUNUSED(event))
@@ -10428,7 +10562,7 @@ void LeoFrame::OnPreferences(wxCommandEvent&amp; WXUNUSED(event))
 	gPrefsFrame -&gt; Raise();
 }
 </t>
-<t tx="T563">@ &lt;&lt; LeoFrame methods &gt;&gt; (73 of 157)
+<t tx="T570">@ &lt;&lt; LeoFrame methods &gt;&gt; (73 of 157)
 @c
 
 void LeoFrame::OnConvertBlanks(wxCommandEvent&amp; WXUNUSED(event))
@@ -10436,7 +10570,7 @@ void LeoFrame::OnConvertBlanks(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; convertBlanks();
 }
 </t>
-<t tx="T564">@ &lt;&lt; LeoFrame methods &gt;&gt; (74 of 157)
+<t tx="T571">@ &lt;&lt; LeoFrame methods &gt;&gt; (74 of 157)
 @c
 
 void LeoFrame::OnExtractSection(wxCommandEvent&amp; WXUNUSED(event))
@@ -10444,7 +10578,7 @@ void LeoFrame::OnExtractSection(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; extractSection();
 }
 </t>
-<t tx="T565">@ &lt;&lt; LeoFrame methods &gt;&gt; (75 of 157)
+<t tx="T572">@ &lt;&lt; LeoFrame methods &gt;&gt; (75 of 157)
 @c
 
 void LeoFrame::OnExtractNames(wxCommandEvent&amp; WXUNUSED(event))
@@ -10452,7 +10586,7 @@ void LeoFrame::OnExtractNames(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; extractSectionNames();
 }
 </t>
-<t tx="T566">@ &lt;&lt; LeoFrame methods &gt;&gt; (76 of 157)
+<t tx="T573">@ &lt;&lt; LeoFrame methods &gt;&gt; (76 of 157)
 @c
 
 void LeoFrame::OnExtract(wxCommandEvent&amp; WXUNUSED(event))
@@ -10460,7 +10594,7 @@ void LeoFrame::OnExtract(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; extract();
 }
 </t>
-<t tx="T567">@ &lt;&lt; LeoFrame methods &gt;&gt; (77 of 157)
+<t tx="T574">@ &lt;&lt; LeoFrame methods &gt;&gt; (77 of 157)
 @c
 
 void LeoFrame::OnFindPanel(wxCommandEvent&amp; WXUNUSED(event))
@@ -10473,7 +10607,7 @@ void LeoFrame::OnFindPanel(wxCommandEvent&amp; WXUNUSED(event))
 	gFindFrame -&gt; Raise();
 }
 </t>
-<t tx="T568">@ &lt;&lt; LeoFrame methods &gt;&gt; (78 of 157)
+<t tx="T575">@ &lt;&lt; LeoFrame methods &gt;&gt; (78 of 157)
 @c
 
 void LeoFrame::OnFindNext(wxCommandEvent&amp; WXUNUSED(event))
@@ -10481,7 +10615,7 @@ void LeoFrame::OnFindNext(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; doFindNextCommand();
 }
 </t>
-<t tx="T569">@ &lt;&lt; LeoFrame methods &gt;&gt; (79 of 157)
+<t tx="T576">@ &lt;&lt; LeoFrame methods &gt;&gt; (79 of 157)
 @c
 
 void LeoFrame::OnFindPrevious(wxCommandEvent&amp; WXUNUSED(event))
@@ -10489,7 +10623,7 @@ void LeoFrame::OnFindPrevious(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; doFindPreviousCommand();
 }
 </t>
-<t tx="T570">@ &lt;&lt; LeoFrame methods &gt;&gt; (80 of 157)
+<t tx="T577">@ &lt;&lt; LeoFrame methods &gt;&gt; (80 of 157)
 @c
 
 void LeoFrame::OnReplace(wxCommandEvent&amp; WXUNUSED(event))
@@ -10497,7 +10631,7 @@ void LeoFrame::OnReplace(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; doChangeCommand();
 }
 </t>
-<t tx="T571">@ &lt;&lt; LeoFrame methods &gt;&gt; (81 of 157)
+<t tx="T578">@ &lt;&lt; LeoFrame methods &gt;&gt; (81 of 157)
 @c
 
 void LeoFrame::OnReplaceThenFind(wxCommandEvent&amp; WXUNUSED(event))
@@ -10505,7 +10639,7 @@ void LeoFrame::OnReplaceThenFind(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; doChangeThenFindCommand();
 }
 </t>
-<t tx="T572">@ &lt;&lt; LeoFrame methods &gt;&gt; (82 of 157)
+<t tx="T579">@ &lt;&lt; LeoFrame methods &gt;&gt; (82 of 157)
 @c
 
 void LeoFrame::OnUpdateCutNode ( wxUpdateUIEvent&amp; event )
@@ -10513,7 +10647,7 @@ void LeoFrame::OnUpdateCutNode ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canCutOutline() ) ;
 }
 </t>
-<t tx="T573">@ &lt;&lt; LeoFrame methods &gt;&gt; (83 of 157)
+<t tx="T580">@ &lt;&lt; LeoFrame methods &gt;&gt; (83 of 157)
 @c
 
 void LeoFrame::OnUpdateDeleteNode ( wxUpdateUIEvent&amp; event )
@@ -10521,7 +10655,7 @@ void LeoFrame::OnUpdateDeleteNode ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canDeleteHeadline() ) ;
 }
 </t>
-<t tx="T574">@ &lt;&lt; LeoFrame methods &gt;&gt; (84 of 157)
+<t tx="T581">@ &lt;&lt; LeoFrame methods &gt;&gt; (84 of 157)
 @c
 
 void LeoFrame::OnUpdatePasteNode ( wxUpdateUIEvent&amp; event )
@@ -10529,7 +10663,7 @@ void LeoFrame::OnUpdatePasteNode ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canPasteOutline() ) ;
 }
 </t>
-<t tx="T575">@ &lt;&lt; LeoFrame methods &gt;&gt; (85 of 157)
+<t tx="T582">@ &lt;&lt; LeoFrame methods &gt;&gt; (85 of 157)
 @c
 
 void LeoFrame::OnUpdateSortNode ( wxUpdateUIEvent&amp; event )
@@ -10537,7 +10671,7 @@ void LeoFrame::OnUpdateSortNode ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canSort() ) ;
 }
 </t>
-<t tx="T576">@ &lt;&lt; LeoFrame methods &gt;&gt; (86 of 157)
+<t tx="T583">@ &lt;&lt; LeoFrame methods &gt;&gt; (86 of 157)
 @c
 
 void LeoFrame::OnUpdateExpandAll ( wxUpdateUIEvent&amp; event )
@@ -10545,7 +10679,7 @@ void LeoFrame::OnUpdateExpandAll ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canExpandAllHeadlines() ) ;
 }
 </t>
-<t tx="T577">@ &lt;&lt; LeoFrame methods &gt;&gt; (87 of 157)
+<t tx="T584">@ &lt;&lt; LeoFrame methods &gt;&gt; (87 of 157)
 @c
 
 void LeoFrame::OnUpdateExpandAllChildren ( wxUpdateUIEvent&amp; event )
@@ -10553,7 +10687,7 @@ void LeoFrame::OnUpdateExpandAllChildren ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canExpandAllSubheads() ) ;
 }
 </t>
-<t tx="T578">@ &lt;&lt; LeoFrame methods &gt;&gt; (88 of 157)
+<t tx="T585">@ &lt;&lt; LeoFrame methods &gt;&gt; (88 of 157)
 @c
 
 void LeoFrame::OnUpdateExpandChildren ( wxUpdateUIEvent&amp; event )
@@ -10561,7 +10695,7 @@ void LeoFrame::OnUpdateExpandChildren ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canExpandAllSubheads() ) ;
 }
 </t>
-<t tx="T579">@ &lt;&lt; LeoFrame methods &gt;&gt; (89 of 157)
+<t tx="T586">@ &lt;&lt; LeoFrame methods &gt;&gt; (89 of 157)
 @c
 
 void LeoFrame::OnUpdateContractAll ( wxUpdateUIEvent&amp; event )
@@ -10569,7 +10703,7 @@ void LeoFrame::OnUpdateContractAll ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canContractAllHeadlines() ) ;
 }
 </t>
-<t tx="T580">@ &lt;&lt; LeoFrame methods &gt;&gt; (90 of 157)
+<t tx="T587">@ &lt;&lt; LeoFrame methods &gt;&gt; (90 of 157)
 @c
 
 void LeoFrame::OnUpdateContractAllChildren ( wxUpdateUIEvent&amp; event )
@@ -10577,7 +10711,7 @@ void LeoFrame::OnUpdateContractAllChildren ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canContractAllSubheads() ) ;
 }
 </t>
-<t tx="T581">@ &lt;&lt; LeoFrame methods &gt;&gt; (91 of 157)
+<t tx="T588">@ &lt;&lt; LeoFrame methods &gt;&gt; (91 of 157)
 @c
 
 void LeoFrame::OnUpdateContractChildren ( wxUpdateUIEvent&amp; event )
@@ -10585,7 +10719,7 @@ void LeoFrame::OnUpdateContractChildren ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canContractSubheads() ) ;
 }
 </t>
-<t tx="T582">@ &lt;&lt; LeoFrame methods &gt;&gt; (92 of 157)
+<t tx="T589">@ &lt;&lt; LeoFrame methods &gt;&gt; (92 of 157)
 @c
 
 void LeoFrame::OnUpdateMoveDown ( wxUpdateUIEvent&amp; event )
@@ -10593,7 +10727,7 @@ void LeoFrame::OnUpdateMoveDown ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canMoveOutlineDown() ) ;
 }
 </t>
-<t tx="T583">@ &lt;&lt; LeoFrame methods &gt;&gt; (93 of 157)
+<t tx="T590">@ &lt;&lt; LeoFrame methods &gt;&gt; (93 of 157)
 @c
 
 void LeoFrame::OnUpdateMoveLeft ( wxUpdateUIEvent&amp; event )
@@ -10601,7 +10735,7 @@ void LeoFrame::OnUpdateMoveLeft ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canMoveOutlineLeft() ) ;
 }
 </t>
-<t tx="T584">@ &lt;&lt; LeoFrame methods &gt;&gt; (94 of 157)
+<t tx="T591">@ &lt;&lt; LeoFrame methods &gt;&gt; (94 of 157)
 @c
 
 void LeoFrame::OnUpdateMoveRight ( wxUpdateUIEvent&amp; event )
@@ -10609,7 +10743,7 @@ void LeoFrame::OnUpdateMoveRight ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canMoveOutlineRight() ) ;
 }
 </t>
-<t tx="T585">@ &lt;&lt; LeoFrame methods &gt;&gt; (95 of 157)
+<t tx="T592">@ &lt;&lt; LeoFrame methods &gt;&gt; (95 of 157)
 @c
 
 void LeoFrame::OnUpdateMoveUp ( wxUpdateUIEvent&amp; event )
@@ -10617,7 +10751,7 @@ void LeoFrame::OnUpdateMoveUp ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canMoveOutlineUp() ) ;
 }
 </t>
-<t tx="T586">@ &lt;&lt; LeoFrame methods &gt;&gt; (96 of 157)
+<t tx="T593">@ &lt;&lt; LeoFrame methods &gt;&gt; (96 of 157)
 @c
 
 void LeoFrame::OnUpdatePromote ( wxUpdateUIEvent&amp; event )
@@ -10625,7 +10759,7 @@ void LeoFrame::OnUpdatePromote ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canPromote() ) ;
 }
 </t>
-<t tx="T587">@ &lt;&lt; LeoFrame methods &gt;&gt; (97 of 157)
+<t tx="T594">@ &lt;&lt; LeoFrame methods &gt;&gt; (97 of 157)
 @c
 
 void LeoFrame::OnUpdateDemote ( wxUpdateUIEvent&amp; event )
@@ -10633,7 +10767,7 @@ void LeoFrame::OnUpdateDemote ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canDemote() ) ;
 }
 </t>
-<t tx="T588">@ &lt;&lt; LeoFrame methods &gt;&gt; (98 of 157)
+<t tx="T595">@ &lt;&lt; LeoFrame methods &gt;&gt; (98 of 157)
 @c
 
 void LeoFrame::OnUpdateGoPrevVisible ( wxUpdateUIEvent&amp; event )
@@ -10641,7 +10775,7 @@ void LeoFrame::OnUpdateGoPrevVisible ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canSelectVisBack() ) ;
 }
 </t>
-<t tx="T589">@ &lt;&lt; LeoFrame methods &gt;&gt; (99 of 157)
+<t tx="T596">@ &lt;&lt; LeoFrame methods &gt;&gt; (99 of 157)
 @c
 
 void LeoFrame::OnUpdateGoNextVisible ( wxUpdateUIEvent&amp; event )
@@ -10649,7 +10783,7 @@ void LeoFrame::OnUpdateGoNextVisible ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canSelectVisNext() ) ;
 }
 </t>
-<t tx="T590">@ &lt;&lt; LeoFrame methods &gt;&gt; (100 of 157)
+<t tx="T597">@ &lt;&lt; LeoFrame methods &gt;&gt; (100 of 157)
 @c
 
 void LeoFrame::OnUpdateGoBack ( wxUpdateUIEvent&amp; event )
@@ -10657,7 +10791,7 @@ void LeoFrame::OnUpdateGoBack ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canSelectThreadBack() ) ;
 }
 </t>
-<t tx="T591">@ &lt;&lt; LeoFrame methods &gt;&gt; (101 of 157)
+<t tx="T598">@ &lt;&lt; LeoFrame methods &gt;&gt; (101 of 157)
 @c
 
 void LeoFrame::OnUpdateGoNext ( wxUpdateUIEvent&amp; event )
@@ -10665,7 +10799,7 @@ void LeoFrame::OnUpdateGoNext ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canSelectThreadNext() ) ;
 }
 </t>
-<t tx="T592">@ &lt;&lt; LeoFrame methods &gt;&gt; (102 of 157)
+<t tx="T599">@ &lt;&lt; LeoFrame methods &gt;&gt; (102 of 157)
 @c
 
 void LeoFrame::OnUpdateMark ( wxUpdateUIEvent&amp; event )
@@ -10674,7 +10808,7 @@ void LeoFrame::OnUpdateMark ( wxUpdateUIEvent&amp; event )
 	event.SetText( ( v &amp;&amp; v-&gt;isMarked()) ? "Unmark" : "Mark") ;
 }
 </t>
-<t tx="T593">@ &lt;&lt; LeoFrame methods &gt;&gt; (103 of 157)
+<t tx="T600">@ &lt;&lt; LeoFrame methods &gt;&gt; (103 of 157)
 @c
 
 void LeoFrame::OnUpdateMarkSubheads ( wxUpdateUIEvent&amp; event )
@@ -10683,7 +10817,7 @@ void LeoFrame::OnUpdateMarkSubheads ( wxUpdateUIEvent&amp; event )
 	event.Enable( v &amp;&amp; v -&gt; hasChildren() ) ;
 }
 </t>
-<t tx="T594">@ &lt;&lt; LeoFrame methods &gt;&gt; (104 of 157)
+<t tx="T601">@ &lt;&lt; LeoFrame methods &gt;&gt; (104 of 157)
 @c
 
 void LeoFrame::OnUpdateMarkChangedItems ( wxUpdateUIEvent&amp; event )
@@ -10691,7 +10825,7 @@ void LeoFrame::OnUpdateMarkChangedItems ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canMarkChangedHeadlines() ) ;
 }
 </t>
-<t tx="T595">@ &lt;&lt; LeoFrame methods &gt;&gt; (105 of 157)
+<t tx="T602">@ &lt;&lt; LeoFrame methods &gt;&gt; (105 of 157)
 @c
 
 void LeoFrame::OnUpdateMarkChangedRoots ( wxUpdateUIEvent&amp; event )
@@ -10699,7 +10833,7 @@ void LeoFrame::OnUpdateMarkChangedRoots ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canMarkChangedRoots() ) ;
 }
 </t>
-<t tx="T596">@ &lt;&lt; LeoFrame methods &gt;&gt; (106 of 157)
+<t tx="T603">@ &lt;&lt; LeoFrame methods &gt;&gt; (106 of 157)
 @c
 
 void LeoFrame::OnUpdateGoToNextMarked ( wxUpdateUIEvent&amp; event )
@@ -10707,7 +10841,7 @@ void LeoFrame::OnUpdateGoToNextMarked ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canGoToNextMarkedHeadline() ) ;
 }
 </t>
-<t tx="T597">@ &lt;&lt; LeoFrame methods &gt;&gt; (107 of 157)
+<t tx="T604">@ &lt;&lt; LeoFrame methods &gt;&gt; (107 of 157)
 @c
 
 void LeoFrame::OnUpdateGoToNextChanged ( wxUpdateUIEvent&amp; event )
@@ -10715,7 +10849,7 @@ void LeoFrame::OnUpdateGoToNextChanged ( wxUpdateUIEvent&amp; event )
 	event.Enable( mCommands -&gt; canGoToNextDirtyHeadline() ) ;
 }
 </t>
-<t tx="T598">@ &lt;&lt; LeoFrame methods &gt;&gt; (108 of 157)
+<t tx="T605">@ &lt;&lt; LeoFrame methods &gt;&gt; (108 of 157)
 @c
 
 void LeoFrame::OnCutNode(wxCommandEvent&amp; WXUNUSED(event))
@@ -10723,7 +10857,7 @@ void LeoFrame::OnCutNode(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; cutOutline();
 }
 </t>
-<t tx="T599">@ &lt;&lt; LeoFrame methods &gt;&gt; (109 of 157)
+<t tx="T606">@ &lt;&lt; LeoFrame methods &gt;&gt; (109 of 157)
 @c
 
 void LeoFrame::OnCopyNode(wxCommandEvent&amp; WXUNUSED(event))
@@ -10731,7 +10865,7 @@ void LeoFrame::OnCopyNode(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; copyOutline();
 }
 </t>
-<t tx="T600">@ &lt;&lt; LeoFrame methods &gt;&gt; (110 of 157)
+<t tx="T607">@ &lt;&lt; LeoFrame methods &gt;&gt; (110 of 157)
 @c
 
 void LeoFrame::OnPasteNode(wxCommandEvent&amp; WXUNUSED(event))
@@ -10739,7 +10873,7 @@ void LeoFrame::OnPasteNode(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; pasteOutline();
 }
 </t>
-<t tx="T601">@ &lt;&lt; LeoFrame methods &gt;&gt; (111 of 157)
+<t tx="T608">@ &lt;&lt; LeoFrame methods &gt;&gt; (111 of 157)
 @c
 
 void LeoFrame::OnDeleteNode(wxCommandEvent&amp; WXUNUSED(event))
@@ -10747,7 +10881,7 @@ void LeoFrame::OnDeleteNode(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; deleteHeadline();
 }
 </t>
-<t tx="T602">@ &lt;&lt; LeoFrame methods &gt;&gt; (112 of 157)
+<t tx="T609">@ &lt;&lt; LeoFrame methods &gt;&gt; (112 of 157)
 @c
 
 void LeoFrame::OnInsertNode(wxCommandEvent&amp; WXUNUSED(event))
@@ -10755,7 +10889,7 @@ void LeoFrame::OnInsertNode(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; insertHeadline();
 }
 </t>
-<t tx="T603">@ &lt;&lt; LeoFrame methods &gt;&gt; (113 of 157)
+<t tx="T610">@ &lt;&lt; LeoFrame methods &gt;&gt; (113 of 157)
 @c
 
 void LeoFrame::OnCloneNode(wxCommandEvent&amp; WXUNUSED(event))
@@ -10763,7 +10897,7 @@ void LeoFrame::OnCloneNode(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; clone();
 }
 </t>
-<t tx="T604">@ &lt;&lt; LeoFrame methods &gt;&gt; (114 of 157)
+<t tx="T611">@ &lt;&lt; LeoFrame methods &gt;&gt; (114 of 157)
 @c
 
 void LeoFrame::OnSortNode(wxCommandEvent&amp; WXUNUSED(event))
@@ -10771,7 +10905,7 @@ void LeoFrame::OnSortNode(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; sort();
 }
 </t>
-<t tx="T605">@ &lt;&lt; LeoFrame methods &gt;&gt; (115 of 157)
+<t tx="T612">@ &lt;&lt; LeoFrame methods &gt;&gt; (115 of 157)
 @c
 
 void LeoFrame::OnExpandAll(wxCommandEvent&amp; WXUNUSED(event))
@@ -10779,7 +10913,7 @@ void LeoFrame::OnExpandAll(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandAllHeadlines();
 }
 </t>
-<t tx="T606">@ &lt;&lt; LeoFrame methods &gt;&gt; (116 of 157)
+<t tx="T613">@ &lt;&lt; LeoFrame methods &gt;&gt; (116 of 157)
 @c
 
 void LeoFrame::OnExpandAllChildren(wxCommandEvent&amp; WXUNUSED(event))
@@ -10787,7 +10921,7 @@ void LeoFrame::OnExpandAllChildren(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandAllSubheads();
 }
 </t>
-<t tx="T607">@ &lt;&lt; LeoFrame methods &gt;&gt; (117 of 157)
+<t tx="T614">@ &lt;&lt; LeoFrame methods &gt;&gt; (117 of 157)
 @c
 
 void LeoFrame::OnExpandChildren(wxCommandEvent&amp; WXUNUSED(event))
@@ -10795,7 +10929,7 @@ void LeoFrame::OnExpandChildren(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandSubheads();
 }
 </t>
-<t tx="T608">@ &lt;&lt; LeoFrame methods &gt;&gt; (118 of 157)
+<t tx="T615">@ &lt;&lt; LeoFrame methods &gt;&gt; (118 of 157)
 @c
 
 void LeoFrame::OnContractAll(wxCommandEvent&amp; WXUNUSED(event))
@@ -10803,7 +10937,7 @@ void LeoFrame::OnContractAll(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; contractAllHeadlines();
 }
 </t>
-<t tx="T609">@ &lt;&lt; LeoFrame methods &gt;&gt; (119 of 157)
+<t tx="T616">@ &lt;&lt; LeoFrame methods &gt;&gt; (119 of 157)
 @c
 
 void LeoFrame::OnContractAllChildren(wxCommandEvent&amp; WXUNUSED(event))
@@ -10811,7 +10945,7 @@ void LeoFrame::OnContractAllChildren(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; contractAllSubheads();
 }
 </t>
-<t tx="T610">@ &lt;&lt; LeoFrame methods &gt;&gt; (120 of 157)
+<t tx="T617">@ &lt;&lt; LeoFrame methods &gt;&gt; (120 of 157)
 @c
 
 void LeoFrame::OnContractChildren(wxCommandEvent&amp; WXUNUSED(event))
@@ -10819,7 +10953,7 @@ void LeoFrame::OnContractChildren(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; contractSubheads();
 }
 </t>
-<t tx="T611">@ &lt;&lt; LeoFrame methods &gt;&gt; (121 of 157)
+<t tx="T618">@ &lt;&lt; LeoFrame methods &gt;&gt; (121 of 157)
 @c
 
 void LeoFrame::OnExpandNextLevel(wxCommandEvent&amp; WXUNUSED(event))
@@ -10827,7 +10961,7 @@ void LeoFrame::OnExpandNextLevel(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandNextLevel();
 }
 </t>
-<t tx="T612">@ &lt;&lt; LeoFrame methods &gt;&gt; (122 of 157)
+<t tx="T619">@ &lt;&lt; LeoFrame methods &gt;&gt; (122 of 157)
 @c
 
 void LeoFrame::OnExpandToLevel1(wxCommandEvent&amp; WXUNUSED(event))
@@ -10835,7 +10969,7 @@ void LeoFrame::OnExpandToLevel1(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandLevel1();
 }
 </t>
-<t tx="T613">@ &lt;&lt; LeoFrame methods &gt;&gt; (123 of 157)
+<t tx="T620">@ &lt;&lt; LeoFrame methods &gt;&gt; (123 of 157)
 @c
 
 void LeoFrame::OnExpandToLevel2(wxCommandEvent&amp; WXUNUSED(event))
@@ -10843,7 +10977,7 @@ void LeoFrame::OnExpandToLevel2(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandLevel2();
 }
 </t>
-<t tx="T614">@ &lt;&lt; LeoFrame methods &gt;&gt; (124 of 157)
+<t tx="T621">@ &lt;&lt; LeoFrame methods &gt;&gt; (124 of 157)
 @c
 
 void LeoFrame::OnExpandToLevel3(wxCommandEvent&amp; WXUNUSED(event))
@@ -10851,7 +10985,7 @@ void LeoFrame::OnExpandToLevel3(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandLevel3();
 }
 </t>
-<t tx="T615">@ &lt;&lt; LeoFrame methods &gt;&gt; (125 of 157)
+<t tx="T622">@ &lt;&lt; LeoFrame methods &gt;&gt; (125 of 157)
 @c
 
 void LeoFrame::OnExpandToLevel4(wxCommandEvent&amp; WXUNUSED(event))
@@ -10859,7 +10993,7 @@ void LeoFrame::OnExpandToLevel4(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandLevel4();
 }
 </t>
-<t tx="T616">@ &lt;&lt; LeoFrame methods &gt;&gt; (126 of 157)
+<t tx="T623">@ &lt;&lt; LeoFrame methods &gt;&gt; (126 of 157)
 @c
 
 void LeoFrame::OnExpandToLevel5(wxCommandEvent&amp; WXUNUSED(event))
@@ -10867,7 +11001,7 @@ void LeoFrame::OnExpandToLevel5(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandLevel5();
 }
 </t>
-<t tx="T617">@ &lt;&lt; LeoFrame methods &gt;&gt; (127 of 157)
+<t tx="T624">@ &lt;&lt; LeoFrame methods &gt;&gt; (127 of 157)
 @c
 
 void LeoFrame::OnExpandToLevel6(wxCommandEvent&amp; WXUNUSED(event))
@@ -10875,7 +11009,7 @@ void LeoFrame::OnExpandToLevel6(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandLevel6();
 }
 </t>
-<t tx="T618">@ &lt;&lt; LeoFrame methods &gt;&gt; (128 of 157)
+<t tx="T625">@ &lt;&lt; LeoFrame methods &gt;&gt; (128 of 157)
 @c
 
 void LeoFrame::OnExpandToLevel7(wxCommandEvent&amp; WXUNUSED(event))
@@ -10883,7 +11017,7 @@ void LeoFrame::OnExpandToLevel7(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandLevel7();
 }
 </t>
-<t tx="T619">@ &lt;&lt; LeoFrame methods &gt;&gt; (129 of 157)
+<t tx="T626">@ &lt;&lt; LeoFrame methods &gt;&gt; (129 of 157)
 @c
 
 void LeoFrame::OnExpandToLevel8(wxCommandEvent&amp; WXUNUSED(event))
@@ -10891,7 +11025,7 @@ void LeoFrame::OnExpandToLevel8(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandLevel8();
 }
 </t>
-<t tx="T620">@ &lt;&lt; LeoFrame methods &gt;&gt; (130 of 157)
+<t tx="T627">@ &lt;&lt; LeoFrame methods &gt;&gt; (130 of 157)
 @c
 
 void LeoFrame::OnExpandToLevel9(wxCommandEvent&amp; WXUNUSED(event))
@@ -10899,7 +11033,7 @@ void LeoFrame::OnExpandToLevel9(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; expandLevel9();
 }
 </t>
-<t tx="T621">@ &lt;&lt; LeoFrame methods &gt;&gt; (131 of 157)
+<t tx="T628">@ &lt;&lt; LeoFrame methods &gt;&gt; (131 of 157)
 @c
 
 void LeoFrame::OnMoveDown(wxCommandEvent&amp; WXUNUSED(event))
@@ -10907,7 +11041,7 @@ void LeoFrame::OnMoveDown(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; moveOutlineDown();
 }
 </t>
-<t tx="T622">@ &lt;&lt; LeoFrame methods &gt;&gt; (132 of 157)
+<t tx="T629">@ &lt;&lt; LeoFrame methods &gt;&gt; (132 of 157)
 @c
 
 void LeoFrame::OnMoveLeft(wxCommandEvent&amp; WXUNUSED(event))
@@ -10915,7 +11049,7 @@ void LeoFrame::OnMoveLeft(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; moveOutlineLeft();
 }
 </t>
-<t tx="T623">@ &lt;&lt; LeoFrame methods &gt;&gt; (133 of 157)
+<t tx="T630">@ &lt;&lt; LeoFrame methods &gt;&gt; (133 of 157)
 @c
 
 void LeoFrame::OnMoveRight(wxCommandEvent&amp; WXUNUSED(event))
@@ -10923,7 +11057,7 @@ void LeoFrame::OnMoveRight(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; moveOutlineRight();
 }
 </t>
-<t tx="T624">@ &lt;&lt; LeoFrame methods &gt;&gt; (134 of 157)
+<t tx="T631">@ &lt;&lt; LeoFrame methods &gt;&gt; (134 of 157)
 @c
 
 void LeoFrame::OnMoveUp(wxCommandEvent&amp; WXUNUSED(event))
@@ -10931,7 +11065,7 @@ void LeoFrame::OnMoveUp(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; moveOutlineUp();
 }
 </t>
-<t tx="T625">@ &lt;&lt; LeoFrame methods &gt;&gt; (135 of 157)
+<t tx="T632">@ &lt;&lt; LeoFrame methods &gt;&gt; (135 of 157)
 @c
 
 void LeoFrame::OnPromote(wxCommandEvent&amp; WXUNUSED(event))
@@ -10939,7 +11073,7 @@ void LeoFrame::OnPromote(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; promote();
 }
 </t>
-<t tx="T626">@ &lt;&lt; LeoFrame methods &gt;&gt; (136 of 157)
+<t tx="T633">@ &lt;&lt; LeoFrame methods &gt;&gt; (136 of 157)
 @c
 
 void LeoFrame::OnDemote(wxCommandEvent&amp; WXUNUSED(event))
@@ -10947,7 +11081,7 @@ void LeoFrame::OnDemote(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; demote();
 }
 </t>
-<t tx="T627">@ &lt;&lt; LeoFrame methods &gt;&gt; (137 of 157)
+<t tx="T634">@ &lt;&lt; LeoFrame methods &gt;&gt; (137 of 157)
 @c
 
 void LeoFrame::OnGoPrevVisible(wxCommandEvent&amp; WXUNUSED(event))
@@ -10955,7 +11089,7 @@ void LeoFrame::OnGoPrevVisible(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; moveOutlineUp();
 }
 </t>
-<t tx="T628">@ &lt;&lt; LeoFrame methods &gt;&gt; (138 of 157)
+<t tx="T635">@ &lt;&lt; LeoFrame methods &gt;&gt; (138 of 157)
 @c
 
 void LeoFrame::OnGoNextVisible(wxCommandEvent&amp; WXUNUSED(event))
@@ -10963,7 +11097,7 @@ void LeoFrame::OnGoNextVisible(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; selectVisNext();
 }
 </t>
-<t tx="T629">@ &lt;&lt; LeoFrame methods &gt;&gt; (139 of 157)
+<t tx="T636">@ &lt;&lt; LeoFrame methods &gt;&gt; (139 of 157)
 @c
 
 void LeoFrame::OnGoBack(wxCommandEvent&amp; WXUNUSED(event))
@@ -10971,7 +11105,7 @@ void LeoFrame::OnGoBack(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; selectThreadBack();
 }
 </t>
-<t tx="T630">@ &lt;&lt; LeoFrame methods &gt;&gt; (140 of 157)
+<t tx="T637">@ &lt;&lt; LeoFrame methods &gt;&gt; (140 of 157)
 @c
 
 void LeoFrame::OnGoNext(wxCommandEvent&amp; WXUNUSED(event))
@@ -10979,7 +11113,7 @@ void LeoFrame::OnGoNext(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; selectThreadNext();
 }
 </t>
-<t tx="T631">@ &lt;&lt; LeoFrame methods &gt;&gt; (141 of 157)
+<t tx="T638">@ &lt;&lt; LeoFrame methods &gt;&gt; (141 of 157)
 @c
 
 void LeoFrame::OnMark(wxCommandEvent&amp; WXUNUSED(event))
@@ -10987,7 +11121,7 @@ void LeoFrame::OnMark(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; markHeadline();
 }
 </t>
-<t tx="T632">@ &lt;&lt; LeoFrame methods &gt;&gt; (142 of 157)
+<t tx="T639">@ &lt;&lt; LeoFrame methods &gt;&gt; (142 of 157)
 @c
 
 void LeoFrame::OnMarkSubheads(wxCommandEvent&amp; WXUNUSED(event))
@@ -10995,7 +11129,7 @@ void LeoFrame::OnMarkSubheads(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; markSubheads();
 }
 </t>
-<t tx="T633">@ &lt;&lt; LeoFrame methods &gt;&gt; (143 of 157)
+<t tx="T640">@ &lt;&lt; LeoFrame methods &gt;&gt; (143 of 157)
 @c
 
 void LeoFrame::OnMarkChangedItems(wxCommandEvent&amp; WXUNUSED(event))
@@ -11003,7 +11137,7 @@ void LeoFrame::OnMarkChangedItems(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; markChangedHeadlines();
 }
 </t>
-<t tx="T634">@ &lt;&lt; LeoFrame methods &gt;&gt; (144 of 157)
+<t tx="T641">@ &lt;&lt; LeoFrame methods &gt;&gt; (144 of 157)
 @c
 
 void LeoFrame::OnMarkChangedRoots(wxCommandEvent&amp; WXUNUSED(event))
@@ -11011,7 +11145,7 @@ void LeoFrame::OnMarkChangedRoots(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; markChangedRoots();
 }
 </t>
-<t tx="T635">@ &lt;&lt; LeoFrame methods &gt;&gt; (145 of 157)
+<t tx="T642">@ &lt;&lt; LeoFrame methods &gt;&gt; (145 of 157)
 @c
 
 void LeoFrame::OnMarkAllAtFileNodesDirty(wxCommandEvent&amp; WXUNUSED(event))
@@ -11019,7 +11153,7 @@ void LeoFrame::OnMarkAllAtFileNodesDirty(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; markAllAtFileNodesDirty();
 }
 </t>
-<t tx="T636">@ &lt;&lt; LeoFrame methods &gt;&gt; (146 of 157)
+<t tx="T643">@ &lt;&lt; LeoFrame methods &gt;&gt; (146 of 157)
 @c
 
 void LeoFrame::OnMarkAtFileNodesDirty(wxCommandEvent&amp; WXUNUSED(event))
@@ -11027,7 +11161,7 @@ void LeoFrame::OnMarkAtFileNodesDirty(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; markAtFileNodesDirty();
 }
 </t>
-<t tx="T637">@ &lt;&lt; LeoFrame methods &gt;&gt; (147 of 157)
+<t tx="T644">@ &lt;&lt; LeoFrame methods &gt;&gt; (147 of 157)
 @c
 
 void LeoFrame::OnUnmarkAll(wxCommandEvent&amp; WXUNUSED(event))
@@ -11035,7 +11169,7 @@ void LeoFrame::OnUnmarkAll(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; unmarkAll();
 }
 </t>
-<t tx="T638">@ &lt;&lt; LeoFrame methods &gt;&gt; (148 of 157)
+<t tx="T645">@ &lt;&lt; LeoFrame methods &gt;&gt; (148 of 157)
 @c
 
 void LeoFrame::OnGoToNextMarked(wxCommandEvent&amp; WXUNUSED(event))
@@ -11043,7 +11177,7 @@ void LeoFrame::OnGoToNextMarked(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; goToNextMarkedHeadline();
 }
 </t>
-<t tx="T639">@ &lt;&lt; LeoFrame methods &gt;&gt; (149 of 157)
+<t tx="T646">@ &lt;&lt; LeoFrame methods &gt;&gt; (149 of 157)
 @c
 
 void LeoFrame::OnGoToNextChanged(wxCommandEvent&amp; WXUNUSED(event))
@@ -11051,7 +11185,7 @@ void LeoFrame::OnGoToNextChanged(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; goToNextDirtyHeadline();
 }
 </t>
-<t tx="T640">@ &lt;&lt; LeoFrame methods &gt;&gt; (150 of 157)
+<t tx="T647">@ &lt;&lt; LeoFrame methods &gt;&gt; (150 of 157)
 @c
 
 void LeoFrame::OnEqualSizedPanes(wxCommandEvent&amp; WXUNUSED(event))
@@ -11059,7 +11193,7 @@ void LeoFrame::OnEqualSizedPanes(wxCommandEvent&amp; WXUNUSED(event))
 	mCommands -&gt; equalSizedPanes();
 }
 </t>
-<t tx="T641">@ &lt;&lt; LeoFrame methods &gt;&gt; (151 of 157)
+<t tx="T648">@ &lt;&lt; LeoFrame methods &gt;&gt; (151 of 157)
 @c
 
 void LeoFrame::OnToggleActivePane(wxCommandEvent&amp; WXUNUSED(event))
@@ -11072,7 +11206,7 @@ void LeoFrame::OnToggleActivePane(wxCommandEvent&amp; WXUNUSED(event))
 		mTreeCtrl -&gt; SetFocus();
 }
 </t>
-<t tx="T642">@ &lt;&lt; LeoFrame methods &gt;&gt; (152 of 157)
+<t tx="T649">@ &lt;&lt; LeoFrame methods &gt;&gt; (152 of 157)
 @c
 
 void LeoFrame::OnChangeDirection(wxCommandEvent&amp; WXUNUSED(event))
@@ -11089,7 +11223,7 @@ void LeoFrame::OnChangeDirection(wxCommandEvent&amp; WXUNUSED(event))
 	mBodyCtrl -&gt; SetFocus();
 }
 </t>
-<t tx="T643">@ &lt;&lt; LeoFrame methods &gt;&gt; (153 of 157)
+<t tx="T650">@ &lt;&lt; LeoFrame methods &gt;&gt; (153 of 157)
 @c
 
 void LeoFrame::OnCascade(wxCommandEvent&amp; WXUNUSED(event))
@@ -11107,7 +11241,7 @@ void LeoFrame::OnCascade(wxCommandEvent&amp; WXUNUSED(event))
 	}
 }
 </t>
-<t tx="T644">@ &lt;&lt; LeoFrame methods &gt;&gt; (154 of 157)
+<t tx="T651">@ &lt;&lt; LeoFrame methods &gt;&gt; (154 of 157)
 @c
 
 void LeoFrame::OnMinimizeAll(wxCommandEvent&amp; WXUNUSED(event))
@@ -11124,7 +11258,7 @@ void LeoFrame::OnMinimizeAll(wxCommandEvent&amp; WXUNUSED(event))
 
 }
 </t>
-<t tx="T645">@ &lt;&lt; LeoFrame methods &gt;&gt; (155 of 157)
+<t tx="T652">@ &lt;&lt; LeoFrame methods &gt;&gt; (155 of 157)
 @c
 
 #ifdef __WXMSW__
@@ -11141,14 +11275,14 @@ void LeoFrame::OnOpenPythonWindow(wxCommandEvent&amp; WXUNUSED(event))
 	gPythonFrame -&gt; Show(TRUE);
 }
 </t>
-<t tx="T646">#endif // __WXMSW__
+<t tx="T653">#endif // __WXMSW__
 // &lt;&lt; LeoFrame methods &gt;&gt; (156 of 157)
 void LeoFrame::OnRecentWindows(wxCommandEvent&amp; WXUNUSED(event))
 {
 	//// Not ready yet.
 }
 </t>
-<t tx="T647">@ &lt;&lt; LeoFrame methods &gt;&gt; (157 of 157)
+<t tx="T654">@ &lt;&lt; LeoFrame methods &gt;&gt; (157 of 157)
 @c
 
 void LeoFrame::OnAbout(wxCommandEvent&amp; WXUNUSED(event))
@@ -11165,11 +11299,11 @@ Leo is distributed under the Python License";
 		this);
 }
 </t>
-<t tx="T648">&lt;&lt; LeoPrefs declarations &gt;&gt;
+<t tx="T655">&lt;&lt; LeoPrefs declarations &gt;&gt;
 
 @others
 </t>
-<t tx="T649">// &lt;&lt; LeoPrefs private constants &gt;&gt;
+<t tx="T656">// &lt;&lt; LeoPrefs private constants &gt;&gt;
 /*
 	These must match the order of items in the wxRadioBox.
 	These are _not_ the same as vars in args.h.
@@ -11187,7 +11321,7 @@ enum {
 	bad_last_target
 } ;
 </t>
-<t tx="T650">BEGIN_EVENT_TABLE(PrefsFrame, wxFrame)
+<t tx="T657">BEGIN_EVENT_TABLE(PrefsFrame, wxFrame)
 
 	EVT_ACTIVATE ( PrefsFrame::OnActivatePrefsFrame)
 	EVT_CLOSE( PrefsFrame::OnClosePrefsFrame)
@@ -11210,7 +11344,7 @@ END_EVENT_TABLE()
 BEGIN_EVENT_TABLE(PrefsPanel, wxPanel)
 
 END_EVENT_TABLE()</t>
-<t tx="T651">PrefsFrame::PrefsFrame()
+<t tx="T658">PrefsFrame::PrefsFrame()
 
 	: wxFrame((wxFrame *)NULL, -1, "Leo Preferences",
 		wxPoint(50, 50), wxDefaultSize,
@@ -11232,7 +11366,7 @@ END_EVENT_TABLE()</t>
 	#endif
 }
 </t>
-<t tx="T652">@ &lt;&lt; LeoPrefs methods &gt;&gt; (2 of 14)
+<t tx="T659">@ &lt;&lt; LeoPrefs methods &gt;&gt; (2 of 14)
 @c
 
 void PrefsFrame::initialize( void )
@@ -11276,7 +11410,7 @@ void PrefsFrame::initialize( void )
 	}
 }
 </t>
-<t tx="T653">@ &lt;&lt; LeoPrefs methods &gt;&gt; (3 of 14)
+<t tx="T660">@ &lt;&lt; LeoPrefs methods &gt;&gt; (3 of 14)
 @c
 
 long PrefsFrame::targetToLanguage ( long target )
@@ -11295,7 +11429,7 @@ long PrefsFrame::targetToLanguage ( long target )
 	}
 }
 </t>
-<t tx="T654">@ &lt;&lt; LeoPrefs methods &gt;&gt; (4 of 14)
+<t tx="T661">@ &lt;&lt; LeoPrefs methods &gt;&gt; (4 of 14)
 @c
 
 long PrefsFrame::languageToTarget ( long language )
@@ -11314,7 +11448,7 @@ long PrefsFrame::languageToTarget ( long language )
 	}
 }
 </t>
-<t tx="T655">@ &lt;&lt; LeoPrefs methods &gt;&gt; (5 of 14)
+<t tx="T662">@ &lt;&lt; LeoPrefs methods &gt;&gt; (5 of 14)
 @c
 
 void PrefsFrame::OnActivatePrefsFrame(wxActivateEvent&amp; event)
@@ -11323,7 +11457,7 @@ void PrefsFrame::OnActivatePrefsFrame(wxActivateEvent&amp; event)
 		gPrefsFrame -&gt; initialize();
 }
 </t>
-<t tx="T656">@ &lt;&lt; LeoPrefs methods &gt;&gt; (6 of 14)
+<t tx="T663">@ &lt;&lt; LeoPrefs methods &gt;&gt; (6 of 14)
 This is an event handler function called when the user has tried to close a frame or dialog box. It is called via the  wxWindow::Close function, so that the application can also invoke the handler programmatically.  You should check whether the application is forcing the deletion of the window using CanVeto. If CanVeto returns FALSE, it is  not possible to skip window deletion; destroy the window using wxWindow::Destroy. If not, it is up to you whether you respond  by destroying the window.  If you don't destroy the window, you should call wxCloseEvent::Veto to let the calling code know that you did not destroy the  window. This allows the wxWindow::Close function to return TRUE or FALSE depending on whether the close instruction was  honoured or not.
 @c
 
@@ -11339,7 +11473,7 @@ void PrefsFrame::OnClosePrefsFrame(wxCloseEvent&amp; event)
 	}
 }
 </t>
-<t tx="T657">@ &lt;&lt; LeoPrefs methods &gt;&gt; (7 of 14)
+<t tx="T664">@ &lt;&lt; LeoPrefs methods &gt;&gt; (7 of 14)
 @c
 
 void PrefsFrame::OnPageWidthText (wxCommandEvent&amp; event)
@@ -11354,7 +11488,7 @@ void PrefsFrame::OnPageWidthText (wxCommandEvent&amp; event)
 	}
 }
 </t>
-<t tx="T658">@ &lt;&lt; LeoPrefs methods &gt;&gt; (8 of 14)
+<t tx="T665">@ &lt;&lt; LeoPrefs methods &gt;&gt; (8 of 14)
 @c
 
 void PrefsFrame::OnDoneBatCheckBox (wxCommandEvent&amp; event)
@@ -11364,7 +11498,7 @@ void PrefsFrame::OnDoneBatCheckBox (wxCommandEvent&amp; event)
 	if ( gActiveFrame ) gActiveFrame -&gt; mTangleBatchFlag = arg_tangle_batch ;
 }
 </t>
-<t tx="T659">@ &lt;&lt; LeoPrefs methods &gt;&gt; (9 of 14)
+<t tx="T666">@ &lt;&lt; LeoPrefs methods &gt;&gt; (9 of 14)
 @c
 
 void PrefsFrame::OnUnBatCheckBox (wxCommandEvent&amp; event)
@@ -11374,7 +11508,7 @@ void PrefsFrame::OnUnBatCheckBox (wxCommandEvent&amp; event)
 	if ( gActiveFrame ) gActiveFrame -&gt; mUntangleBatchFlag = arg_untangle_batch ;
 }
 </t>
-<t tx="T660">@ &lt;&lt; LeoPrefs methods &gt;&gt; (10 of 14)
+<t tx="T667">@ &lt;&lt; LeoPrefs methods &gt;&gt; (10 of 14)
 @c
 
 void PrefsFrame::OnTangleDirectoryText (wxCommandEvent&amp; event)
@@ -11390,7 +11524,7 @@ void PrefsFrame::OnTangleDirectoryText (wxCommandEvent&amp; event)
 	}
 }
 </t>
-<t tx="T661">@ &lt;&lt; LeoPrefs methods &gt;&gt; (11 of 14)
+<t tx="T668">@ &lt;&lt; LeoPrefs methods &gt;&gt; (11 of 14)
 @c
 
 void PrefsFrame::OnHeaderCheckBox (wxCommandEvent&amp; event)
@@ -11400,7 +11534,7 @@ void PrefsFrame::OnHeaderCheckBox (wxCommandEvent&amp; event)
 	if ( gActiveFrame ) gActiveFrame -&gt; mUseHeaderFlag = arg_use_header_flag ;
 }
 </t>
-<t tx="T662">@ &lt;&lt; LeoPrefs methods &gt;&gt; (12 of 14)
+<t tx="T669">@ &lt;&lt; LeoPrefs methods &gt;&gt; (12 of 14)
 @c
 
 void PrefsFrame::OnDocChunksCheckBox (wxCommandEvent&amp; event)
@@ -11410,7 +11544,7 @@ void PrefsFrame::OnDocChunksCheckBox (wxCommandEvent&amp; event)
 	if ( gActiveFrame ) gActiveFrame -&gt; mOutputDocFlag = arg_output_doc_flag ;
 }
 </t>
-<t tx="T663">@ &lt;&lt; LeoPrefs methods &gt;&gt; (13 of 14)
+<t tx="T670">@ &lt;&lt; LeoPrefs methods &gt;&gt; (13 of 14)
 @c
 
 void PrefsFrame::OnTargetLanguageRadioBox (wxCommandEvent&amp; event)
@@ -11440,7 +11574,7 @@ void PrefsFrame::OnTargetLanguageRadioBox (wxCommandEvent&amp; event)
 	}
 }
 </t>
-<t tx="T664">@ &lt;&lt; LeoPrefs methods &gt;&gt; (14 of 14)
+<t tx="T671">@ &lt;&lt; LeoPrefs methods &gt;&gt; (14 of 14)
 @c
 
 PrefsPanel::PrefsPanel(wxFrame *frame)
@@ -11551,15 +11685,8 @@ PrefsPanel::PrefsPanel(wxFrame *frame)
 	// -- end -- &lt;&lt; Create the preferences controls &gt;&gt;
 }
 </t>
-<t tx="T665">@ You may have to change the paths to the wxWindows docs by hand:  find/change doesn't work in headlines.
+<t tx="T672">@ You may have to change the paths to the wxWindows docs by hand:  find/change doesn't work in headlines.
 </t>
-<t tx="T666"></t>
-<t tx="T667"></t>
-<t tx="T668"></t>
-<t tx="T669"></t>
-<t tx="T670"></t>
-<t tx="T671"></t>
-<t tx="T672"></t>
 <t tx="T673"></t>
 <t tx="T674"></t>
 <t tx="T675"></t>
@@ -11586,12 +11713,19 @@ PrefsPanel::PrefsPanel(wxFrame *frame)
 <t tx="T696"></t>
 <t tx="T697"></t>
 <t tx="T698"></t>
-<t tx="T699">Will I ever have to use wxArray, wxList, wxStream, wxString.
+<t tx="T699"></t>
+<t tx="T700"></t>
+<t tx="T701"></t>
+<t tx="T702"></t>
+<t tx="T703"></t>
+<t tx="T704"></t>
+<t tx="T705"></t>
+<t tx="T706">Will I ever have to use wxArray, wxList, wxStream, wxString.
 
 In particular, can I use Python strings instead of wxStrings?
 
 Can I create multiple windows without using the wxDoc classes?</t>
-<t tx="T700"># Executing the following script creates a wxWindows prototype of Leo.
+<t tx="T707"># Executing the following script creates a wxWindows prototype of Leo.
 # Just do the Execute Script command from here.
 # For this to work the path to wxLeo.py must be in sys.path.
 
@@ -11606,7 +11740,7 @@ Can I create multiple windows without using the wxDoc classes?</t>
 import wxLeo
 reload(wxLeo)
 </t>
-<t tx="T701">from wxPython import wx
+<t tx="T708">from wxPython import wx
 
 true  = 1==1
 false = 1==0
@@ -11634,7 +11768,7 @@ app.MainLoop()
 
 
 </t>
-<t tx="T702">const_dict = {}
+<t tx="T709">const_dict = {}
 const_lastVal = 100
 	
 def const(name):
@@ -11650,16 +11784,16 @@ def const(name):
 		global const_lastVal
 		const_lastVal += 1
 		return const_lastVal</t>
-<t tx="T703">class leoApp (wx.wxApp):
+<t tx="T710">class leoApp (wx.wxApp):
 	
 	@others
 </t>
-<t tx="T704">def OnInit(self):
+<t tx="T711">def OnInit(self):
 	# print "leoApp:OnInit"
 	return true</t>
-<t tx="T705">class leoFrame(wx.wxFrame):
+<t tx="T712">class leoFrame(wx.wxFrame):
 	@others</t>
-<t tx="T706">def __init__ (self):
+<t tx="T713">def __init__ (self):
 	
 	wx.wxFrame.__init__(self, None, -1, "leoFrame")
 		# wx.wxDefaultPosition, wx.wxDefaultSize,
@@ -11680,9 +11814,10 @@ def const(name):
 		wx.wxDefaultPosition, wx.wxDefaultSize,
 		wx.wxSP_NOBORDER)
 		
-	# No effect.
-	self.splitter1.SetForegroundColour(wx.wxRED)
-	self.splitter1.SetBackgroundColour(wx.wxRED)
+	# No effect, except to create a red flash.
+	if 0:
+		self.splitter1.SetForegroundColour(wx.wxRED)
+		self.splitter1.SetBackgroundColour(wx.wxRED)
 
 	self.splitter2 = wx.wxSplitterWindow(self.splitter1, -1,
 		wx.wxDefaultPosition, wx.wxDefaultSize,
@@ -11706,7 +11841,7 @@ def const(name):
 	# Attach the controls to the splitter.
 	self.splitter1.SplitHorizontally(self.splitter2, self.body, 0)
 	self.splitter2.SplitVertically(self.tree, self.log, width/2)</t>
-<t tx="T707">def createMenus(self):
+<t tx="T714">def createMenus(self):
 
 	menuBar = wx.wxMenuBar()
 	if 0: # Constants not defined yet.
@@ -11723,7 +11858,7 @@ def const(name):
 		
 	menuBar.Append(helpMenu, "&amp;Help")
 	self.SetMenuBar(menuBar)  # attach the menu bar to the frame</t>
-<t tx="T708">fileMenu = wx.wxMenu()
+<t tx="T715">fileMenu = wx.wxMenu()
 &lt;&lt; Create the initial items of the file menu &gt;&gt;
 &lt;&lt; Create the Read/Write submenu &gt;&gt;
 &lt;&lt; Create the Tangle submenu &gt;&gt;
@@ -11733,7 +11868,7 @@ def const(name):
 fileMenu.AppendSeparator()
 
 fileMenu.Append(cQuitMenuItem, "E&amp;xit\tCtrl-Q", "Quit Leo")</t>
-<t tx="T709">fileMenu.Append ( cNewMenuItem, "&amp;New\tCtrl-N",
+<t tx="T716">fileMenu.Append ( cNewMenuItem, "&amp;New\tCtrl-N",
 	"Open new Leo window" )
 fileMenu.Append ( cOpenMenuItem,
 	"&amp;Open\tCtrl-O", "Open Leo file")
@@ -11763,7 +11898,7 @@ fileMenu.Enable(cPrintMenuItem, FALSE)
 fileMenu.Enable(cPageSetupMenuItem, FALSE)
 
 fileMenu.AppendSeparator()</t>
-<t tx="T710">readWriteMenu = wx.wxMenu()
+<t tx="T717">readWriteMenu = wx.wxMenu()
 
 readWriteMenu.Append (cReadOutlineOnlyMenuItem,
 	"Read Outline Only", "Read outline only")
@@ -11775,7 +11910,7 @@ readWriteMenu.Append (cWriteAtFileNodesMenuItem,
 	"Write @file Nodes", "Write @file nodes")
 
 fileMenu.Append(cReadWriteSubmenuItem, "Read/Write...", readWriteMenu, "")</t>
-<t tx="T711">tangleMenu = wx.wxMenu()
+<t tx="T718">tangleMenu = wx.wxMenu()
 
 tangleMenu.Append (cTangleAllMenuItem,
 	"Tangle &amp;All\tShift-Ctrl-A", "Tangle all roots")
@@ -11788,7 +11923,7 @@ fileMenu.Append(cTangleSubmenuItem, "&amp;Tangle...", tangleMenu, "")
 
 # Doesn't work either.
 fileMenu.SetHelpString(cTangleSubmenuItem, "Tangle commands...")</t>
-<t tx="T712">untangleMenu = wx.wxMenu()
+<t tx="T719">untangleMenu = wx.wxMenu()
 
 untangleMenu.Append (cUntangleAllMenuItem,
 	"Untangle &amp;All", "Tangle all roots")
@@ -11798,7 +11933,7 @@ untangleMenu.Append (cUntangleMenuItem,
 	"&amp;Untangle\tShift-Ctrl-U", "Tangle selected headline")
 
 fileMenu.Append(cUntangleSubmenuItem, "&amp;Untangle...", untangleMenu, "")</t>
-<t tx="T713">importMenu = wx.wxMenu()
+<t tx="T720">importMenu = wx.wxMenu()
 
 importMenu.Append (cImportFilesMenuItem,
 	"Import Files\tShift-Ctrl-F", "Convert source files to outline" )
@@ -11816,12 +11951,12 @@ importMenu.Append (cFlattenOutlineMenuItem,
 
 fileMenu.Append(cImportExportSubmenuItem,
 	"&amp;Import Files...", importMenu, "Import commands")</t>
-<t tx="T714">editMenu = wx.wxMenu()
+<t tx="T721">editMenu = wx.wxMenu()
 &lt;&lt; Create the initial items of the Edit menu &gt;&gt;
 &lt;&lt; Create the Edit Body submenu &gt;&gt;
 &lt;&lt; Create the Find submenu &gt;&gt;
 &lt;&lt; Create the final items of the Edit menu &gt;&gt;</t>
-<t tx="T715">editMenu.Append ( cUndoMenuItem, "&amp;Undo\tCtrl-Z", "Undo last operation" )
+<t tx="T722">editMenu.Append ( cUndoMenuItem, "&amp;Undo\tCtrl-Z", "Undo last operation" )
 
 if 0: #ifndef __WXGTK__ # For now, neither tree nor text controls support Redo.
 	editMenu.Append ( cRedoMenuItem,
@@ -11844,7 +11979,7 @@ editMenu.AppendSeparator()
 
 editMenu.Append ( cEditHeadlineMenuItem,
 	"Edit &amp;Headline\tShift-Ctrl-H", "Edit headline text" )</t>
-<t tx="T716">findMenu = wx.wxMenu()
+<t tx="T723">findMenu = wx.wxMenu()
 
 findMenu.Append ( cFindPanelMenuItem,
 	"&amp;Find Panel\tCtrl-F", "Open Find panel" )
@@ -11872,7 +12007,7 @@ else:
 
 editMenu.Append( cFindSubmenuItem,
 	"&amp;Find...", findMenu, "")</t>
-<t tx="T717">editMenu.Append ( cFontPanelMenuItem,
+<t tx="T724">editMenu.Append ( cFontPanelMenuItem,
 	"&amp;Font Panel\tAlt-Shift-T", "Open Font panel" )
 
 editMenu.Append ( cSyntaxColoringMenuItem,
@@ -11884,7 +12019,7 @@ editMenu.AppendSeparator()
 
 editMenu.Append ( cPreferencesMenuItem,
 	"Preferences\tCtrl-Y", "Open Preferences panel" )</t>
-<t tx="T718">editBodyMenu = wx.wxMenu()
+<t tx="T725">editBodyMenu = wx.wxMenu()
 
 editBodyMenu.Append ( cExtractSectionMenuItem,
 	"&amp;Extract Section\tShift-Ctrl-E",
@@ -11899,13 +12034,13 @@ editBodyMenu.Append ( cConvertBlanksMenuItem,
 	"&amp;Convert Blanks\tShift-Ctrl-B", "Convert blanks" )
 
 editMenu.Append(cEditBodySubmenuItem, "&amp;Edit Body...", editBodyMenu, "")</t>
-<t tx="T719">outlineMenu = wx.wxMenu()
+<t tx="T726">outlineMenu = wx.wxMenu()
 &lt;&lt; Create the initial items of the Outline menu &gt;&gt;
 &lt;&lt; Create the Expand/Contract submenu &gt;&gt;
 &lt;&lt; Create the Move/Select submenu &gt;&gt;
 &lt;&lt; Create the Mark/Go To submenu &gt;&gt;
 </t>
-<t tx="T720">outlineMenu.Append ( cCutNodeMenuItem,
+<t tx="T727">outlineMenu.Append ( cCutNodeMenuItem,
 	"Cu&amp;t Node\tShift-Ctrl-X", "Cut node")
 outlineMenu.Append ( cCopyNodeMenuItem,
 	"&amp;Copy Node\tShift-Ctrl-C", "Copy node" )
@@ -11927,7 +12062,7 @@ outlineMenu.Append ( cSortNodeMenuItem,
 	"&amp;Sort Node", "Sort node's childdren" )
 
 outlineMenu.AppendSeparator()</t>
-<t tx="T721">expandContractMenu = wx.wxMenu()
+<t tx="T728">expandContractMenu = wx.wxMenu()
 
 expandContractMenu.Append ( cExpandAllChildrenMenuItem,
 	"Expand All Children", "Expand node fully" )
@@ -11966,7 +12101,7 @@ expandContractMenu.Append ( cExpandAllMenuItem,
 
 outlineMenu.Append(cExpandContractSubmenuItem,
 	"Expand/Contract...", expandContractMenu, "")</t>
-<t tx="T722">moveSelectMenu = wx.wxMenu()
+<t tx="T729">moveSelectMenu = wx.wxMenu()
 
 moveSelectMenu.Append ( cMoveDownMenuItem,
 	"Move &amp;Down\tCtrl-D", "Move node down" )
@@ -12008,7 +12143,7 @@ moveSelectMenu.Append ( cGoNextMenuItem,
 
 outlineMenu.Append(cMoveSelectSubmenuItem,
 	"Move/&amp;Select...", moveSelectMenu, "")</t>
-<t tx="T723">markGoToMenu = wx.wxMenu()
+<t tx="T730">markGoToMenu = wx.wxMenu()
 
 markGoToMenu.Append ( cMarkMenuItem,
 	"&amp;Mark\tCtrl-M", "Mark node" )
@@ -12034,7 +12169,7 @@ markGoToMenu.Append ( cGoToNextChangedMenuItem,
 
 outlineMenu.Append(cMarkGotoSubmenuItem,
 	"&amp;Mark/Go To...", markGoToMenu, "")</t>
-<t tx="T724">windowMenu = wx.wxMenu()
+<t tx="T731">windowMenu = wx.wxMenu()
 
 if 0: #ifdef __WXGTK__  # Control-E conflicts with shift-control-E
 
@@ -12072,12 +12207,12 @@ if 0: # Not ready yet: use wxFileHistory
 
 	windowMenu.Append ( cRecentWindowsMenuItem,
 		"Recent Windows", "List of recent windows")</t>
-<t tx="T725">helpMenu = wx.wxMenu()
+<t tx="T732">helpMenu = wx.wxMenu()
 
 helpMenu.Append(cAboutLeoMenuItem,
 	"&amp;About Leo...",
 	"Show about dialog")</t>
-<t tx="T726">def createMenuBar(self):
+<t tx="T733">def createMenuBar(self):
 	
 	menuBar = wx.wxMenuBar()
 	
@@ -12100,14 +12235,14 @@ helpMenu.Append(cAboutLeoMenuItem,
 	self.SetMenuBar(menuBar)  # attach the menu bar to the frame
 	
 	# app().menuWarningsGiven = true</t>
-<t tx="T727">editMenu = self.createNewMenu("&amp;Edit")
+<t tx="T734">editMenu = self.createNewMenu("&amp;Edit")
 &lt;&lt; create the first top-level edit entries &gt;&gt;
 &lt;&lt; create the edit body submenu &gt;&gt;
 &lt;&lt; create the edit headline submenu &gt;&gt;
 &lt;&lt; create the find submenu &gt;&gt;
 &lt;&lt; create the last top-level edit entries &gt;&gt;
 </t>
-<t tx="T728">table = (
+<t tx="T735">table = (
 	("Can't Undo","Ctrl+Z",self.OnUndo), # &amp;U reserved for Undo
 	("Can't Redo","Shift+Ctrl+Z",self.OnRedo), # &amp;R reserved for Redo
 	("-",None,None),
@@ -12120,7 +12255,7 @@ helpMenu.Append(cAboutLeoMenuItem,
 
 self.createMenuEntries(editMenu,table)
 </t>
-<t tx="T729">editBodyMenu = self.createNewMenu("Edit &amp;Body...","Edit")
+<t tx="T736">editBodyMenu = self.createNewMenu("Edit &amp;Body...","Edit")
 
 table = (
 	("Extract &amp;Section","Shift+Ctrl+E",self.OnExtractSection),
@@ -12141,7 +12276,7 @@ table = (
 self.createMenuEntries(editBodyMenu,table)
 
 </t>
-<t tx="T730">editHeadlineMenu = self.createNewMenu("Edit &amp;Headline...","Edit")
+<t tx="T737">editHeadlineMenu = self.createNewMenu("Edit &amp;Headline...","Edit")
 
 table = (
 	("Edit &amp;Headline","Ctrl+H",self.OnEditHeadline),
@@ -12155,7 +12290,7 @@ table = (
 self.createMenuEntries(editHeadlineMenu,table)
 
 </t>
-<t tx="T731">findMenu = self.createNewMenu("&amp;Find...","Edit")
+<t tx="T738">findMenu = self.createNewMenu("&amp;Find...","Edit")
 
 table = (
 	("&amp;Find Panel","Ctrl+F",self.OnFindPanel),
@@ -12167,7 +12302,7 @@ table = (
 
 self.createMenuEntries(findMenu,table)
 </t>
-<t tx="T732">label = choose(c.tree.colorizer.showInvisibles,"Hide In&amp;visibles","Show In&amp;visibles")
+<t tx="T739">label = choose(c.tree.colorizer.showInvisibles,"Hide In&amp;visibles","Show In&amp;visibles")
 
 table = (
 	("&amp;Go To Line Number","Alt+G",self.OnGoToLineNumber),
@@ -12179,7 +12314,7 @@ table = (
 	("Prefere&amp;nces","Ctrl+Y",self.OnPreferences))
 
 self.createMenuEntries(editMenu,table)</t>
-<t tx="T733">fileMenu = self.createNewMenu("&amp;File")
+<t tx="T740">fileMenu = self.createNewMenu("&amp;File")
 &lt;&lt; create the top-level file entries &gt;&gt;
 &lt;&lt; create the recent files submenu &gt;&gt;
 fileMenu.add_separator()
@@ -12194,7 +12329,7 @@ exitTable = (("E&amp;xit","Ctrl-Q",self.OnQuit),)
 self.createMenuEntries(fileMenu,exitTable)
 
 </t>
-<t tx="T734">@ leo.py will probably never have a Print command.  Instead, export text files that may be formatted and printed as desired.
+<t tx="T741">@ leo.py will probably never have a Print command.  Instead, export text files that may be formatted and printed as desired.
 @c
 
 table = (
@@ -12213,12 +12348,12 @@ table = (
 	("Save To",None,self.OnSaveTo), # &amp;Tangle
 	("Re&amp;vert To Saved",None,self.OnRevert)) # &amp;Read/Write
 self.createMenuEntries(fileMenu,table)</t>
-<t tx="T735">recentFilesMenu = self.createNewMenu("Recent &amp;Files...","File")
+<t tx="T742">recentFilesMenu = self.createNewMenu("Recent &amp;Files...","File")
 self.recentFiles = app().config.getRecentFiles()
 self.createRecentFilesMenuItems()
 
 </t>
-<t tx="T736">readWriteMenu = self.createNewMenu("&amp;Read/Write...","File")
+<t tx="T743">readWriteMenu = self.createNewMenu("&amp;Read/Write...","File")
 
 table = [
 		("&amp;Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
@@ -12230,7 +12365,7 @@ table = [
 		("&amp;Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes)]
 
 self.createMenuEntries(readWriteMenu,table)</t>
-<t tx="T737">tangleMenu = self.createNewMenu("&amp;Tangle...","File")
+<t tx="T744">tangleMenu = self.createNewMenu("&amp;Tangle...","File")
 
 table = (
 	("Tangle &amp;All","Shift+Ctrl+A",self.OnTangleAll),
@@ -12240,7 +12375,7 @@ table = (
 self.createMenuEntries(tangleMenu,table)
 
 </t>
-<t tx="T738">untangleMenu = self.createNewMenu("&amp;Untangle...","File")
+<t tx="T745">untangleMenu = self.createNewMenu("&amp;Untangle...","File")
 
 table = (
 	("Untangle &amp;All",None,self.OnUntangleAll),
@@ -12250,7 +12385,7 @@ table = (
 self.createMenuEntries(untangleMenu,table)
 
 </t>
-<t tx="T739">importMenu = self.createNewMenu("&amp;Import...","File")
+<t tx="T746">importMenu = self.createNewMenu("&amp;Import...","File")
 
 table = (
 	("Import To @&amp;file","Shift+Ctrl+F",self.OnImportAtFile),
@@ -12262,7 +12397,7 @@ table = (
 self.createMenuEntries(importMenu,table)
 
 </t>
-<t tx="T740">exportMenu = self.createNewMenu("&amp;Export...","File")
+<t tx="T747">exportMenu = self.createNewMenu("&amp;Export...","File")
 
 table = [
 	("Export &amp;Headlines",None,self.OnExportHeadlines),
@@ -12274,13 +12409,13 @@ table = [
 
 self.createMenuEntries(exportMenu,table)
 </t>
-<t tx="T741">outlineMenu = self.createNewMenu("&amp;Outline")
+<t tx="T748">outlineMenu = self.createNewMenu("&amp;Outline")
 &lt;&lt; create top-level outline menu &gt;&gt;
 &lt;&lt; create expand/contract submenu &gt;&gt;
 &lt;&lt; create move submenu &gt;&gt;
 &lt;&lt; create mark submenu &gt;&gt;
 &lt;&lt; create goto submenu &gt;&gt;</t>
-<t tx="T742">table = (
+<t tx="T749">table = (
 	("C&amp;ut Node","Shift+Ctrl+X",self.OnCutNode),
 	("C&amp;opy Node","Shift+Ctrl+C",self.OnCopyNode),
 	("&amp;Paste Node","Shift+Ctrl+V",self.OnPasteNode),
@@ -12293,7 +12428,7 @@ self.createMenuEntries(exportMenu,table)
 	("-",None,None))
 
 self.createMenuEntries(outlineMenu,table)</t>
-<t tx="T743">expandMenu = self.createNewMenu("&amp;Expand/Contract...","Outline")
+<t tx="T750">expandMenu = self.createNewMenu("&amp;Expand/Contract...","Outline")
 
 table = (
 	("&amp;Contract All","Alt+-",self.OnContractAll),
@@ -12318,7 +12453,7 @@ table = (
 
 
 self.createMenuEntries(expandMenu,table)</t>
-<t tx="T744">moveSelectMenu = self.createNewMenu("&amp;Move...","Outline")
+<t tx="T751">moveSelectMenu = self.createNewMenu("&amp;Move...","Outline")
 
 table = (
 	("Move &amp;Down", "Ctrl+D",self.OnMoveDown),
@@ -12331,7 +12466,7 @@ table = (
 	
 self.createMenuEntries(moveSelectMenu,table)
 </t>
-<t tx="T745">markMenu = self.createNewMenu("M&amp;ark/Unmark...","Outline")
+<t tx="T752">markMenu = self.createNewMenu("M&amp;ark/Unmark...","Outline")
 
 table = (
 	("&amp;Mark","Ctrl-M",self.OnMark),
@@ -12343,7 +12478,7 @@ table = (
 	
 self.createMenuEntries(markMenu,table)
 </t>
-<t tx="T746">gotoMenu = self.createNewMenu("&amp;Go To...","Outline")
+<t tx="T753">gotoMenu = self.createNewMenu("&amp;Go To...","Outline")
 
 table = (
 	("Go Back",None,self.OnGoPrevVisitedNode), # Usually use buttons for this.
@@ -12366,7 +12501,7 @@ table = (
 	
 self.createMenuEntries(gotoMenu,table)
 </t>
-<t tx="T747">windowMenu = self.createNewMenu("&amp;Window")
+<t tx="T754">windowMenu = self.createNewMenu("&amp;Window")
 
 table = (
 	("&amp;Equal Sized Panes","Ctrl-E",self.OnEqualSizedPanes),
@@ -12381,7 +12516,7 @@ table = (
 
 self.createMenuEntries(windowMenu,table)
 </t>
-<t tx="T748">helpMenu = self.createNewMenu("&amp;Help")
+<t tx="T755">helpMenu = self.createNewMenu("&amp;Help")
 
 table = (
 	("&amp;About Leo...",None,self.OnAbout),)
@@ -12404,10 +12539,10 @@ if 0: # not ready yet.
 		("Apply &amp;Settings",None,self.OnApplyConfig))
 
 	self.createMenuEntries(helpMenu,table)</t>
-<t tx="T749">def createNewMenu(self,name):
+<t tx="T756">def createNewMenu(self,name):
 	
 	return wx.wxMenu()</t>
-<t tx="T750">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
+<t tx="T757">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
 
 Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
 @c
@@ -12425,8 +12560,9 @@ def createMenuEntries (self,menu,table,openWith=0):
 			def generalCommand(event=None,label=label):
 				print "generalCommand",label # ,event
 			wx.EVT_MENU(self,id,generalCommand)</t>
-<t tx="T751">def OnAbout (self,event=None):
+<t tx="T758">def OnAbout (self,event=None):
 	
 	print "OnAbout" # ,event</t>
+<t tx="T759"></t>
 </tnodes>
 </leo_file>

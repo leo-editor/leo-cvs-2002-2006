@@ -140,7 +140,7 @@ class LeoApp:
 		if app.windowList:
 			# Pick a window to activate so we can set the log.
 			w = app.windowList[0]
-			w.top.deiconify()
+			w.deiconify()
 			w.top.lift()
 			app.setLog(w)
 		else:

@@ -44,7 +44,7 @@ class leoGui:
 	#@+node:oops
 	def oops (self):
 		
-		print callerName(), "should be overridden in subclass"
+		print "oops", callerName(2), "should be overridden in subclass"
 	#@nonl
 	#@-node:oops
 	#@+node:interface to Leo's core
@@ -78,7 +78,10 @@ class leoGui:
 		#@nl
 	
 		# Create an unfinished frame to pass to the commanders.
-		frame = leoFrame.LeoFrame(title)
+		if 1:
+			frame = app.gui.newLeoFrame(title)
+		else:
+			frame = leoFrame.LeoFrame(title)
 		
 		# Create the commander and its subcommanders.
 		c = leoCommands.Commands(frame,fileName)
@@ -94,6 +97,17 @@ class leoGui:
 		return c,frame
 	#@nonl
 	#@-node: newLeoCommanderAndFrame
+	#@+node:destroyLeoFrame
+	def destroyLeoFrame (self,frame):
+	
+		self.oops()
+	#@nonl
+	#@-node:destroyLeoFrame
+	#@+node:destroy
+	def destroy (self,widget):
+		self.oops()
+	#@nonl
+	#@-node:destroy
 	#@+node:base-class methods: overridden in subclasses
 	#@+at 
 	#@nonl
@@ -158,7 +172,7 @@ class leoGui:
 		"""Create a fontFrame."""
 		self.oops()
 	
-	def newLeoFrame(self,commander):
+	def newLeoFrame(self,title):
 		"""Create a view frame for the Leo main window."""
 		self.oops()
 	
@@ -339,6 +353,12 @@ class tkinterGui(leoGui):
 		app.globalWindows.append(app.findFrame)
 	#@nonl
 	#@-node:createGlobalWindows
+	#@+node:destroyLeoFrame
+	def destroyLeoFrame (self,frame):
+	
+		self.destroy(frame)
+	#@nonl
+	#@-node:destroyLeoFrame
 	#@+node:destroy
 	def destroy(self,widget):
 		
@@ -441,10 +461,9 @@ class tkinterGui(leoGui):
 		"""Create a fontFrame."""
 		pass # To do
 	
-	def newLeoFrame(self,commander,title):
+	def newLeoFrame(self,title):
 		"""Create a view frame for the Leo main window."""
-		trace()
-		return leoFrame.LeoFrame(commander,title)
+		return leoFrame.LeoFrame(title)
 	
 	def newPrefsFrame(self,commander):
 		"""Create a prefsFrame."""

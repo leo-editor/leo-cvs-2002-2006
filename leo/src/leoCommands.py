@@ -177,7 +177,7 @@ class baseCommands:
 	#@+node:bringToFront
 	def bringToFront(self):
 	
-		self.frame.top.deiconify()
+		self.frame.deiconify()
 	
 	BringToFront = bringToFront # Compatibility with old scripts
 	#@nonl
@@ -1296,7 +1296,7 @@ class baseCommands:
 				v = v.threadNext()
 		# Update all derived changed markers.
 		c.changed = changedFlag
-		s = c.frame.top.title()
+		s = c.frame.getTitle() # s = c.frame.top.title()
 		if len(s) > 2 and not c.loading: # don't update while loading.
 			if changedFlag:
 				# import traceback ; traceback.print_stack()

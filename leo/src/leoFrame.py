@@ -582,6 +582,23 @@ class baseLeoFrame:
 		self.log.configure(bd=border)
 	#@nonl
 	#@-node:reconfigurePanes (use config bar_width)
+	#@+node:The interface with frame internals
+	def getTitle (self):
+		return self.top.title()
+		
+	def setTopGeometry(self,geom):
+		self.top.geometry(geom)
+		
+	def deiconify (self):
+		self.top.deiconify()
+		
+	def lift (self):
+		self.top.lift()
+		
+	def update (self):
+		self.top.update()
+	#@nonl
+	#@-node:The interface with frame internals
 	#@+node:The interface with the tree class
 	# Coloring...
 	def getColorizer(self): return self.tree.colorizer
@@ -1986,7 +2003,7 @@ class baseLeoFrame:
 		# Create a new frame before deleting this frame.
 		ok, frame = self.OpenWithFileName(fileName)
 		if ok:
-			frame.top.deiconify()
+			frame.deiconify()
 			app.destroyWindow(self)
 		else:
 			c.mFileName = fileName
@@ -2108,8 +2125,8 @@ class baseLeoFrame:
 		try:
 			file = open(fileName,'r')
 			c,frame = app.gui.newLeoCommanderAndFrame(fileName)
-			frame.top.deiconify()
-			frame.top.lift()
+			frame.deiconify()
+			frame.lift()
 			app.root.update() # Force a screen redraw immediately.
 			c.fileCommands.readOutlineOnly(file,fileName) # closes file.
 		except:
@@ -3456,7 +3473,8 @@ class baseLeoFrame:
 			w,h = string.split(dim,'x')
 			w,h = int(w),int(h)
 			# Set new x,y and old w,h
-			frame.top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+			geom = "%dx%d%+d%+d" % (w,h,x,y)
+			frame.setTopGeometry(geom) # frame.top.geometry("%dx%d%+d%+d" % (w,h,x,y))
 			# Compute the new offsets.
 			x += 30 ; y += 30
 			if x > 200:

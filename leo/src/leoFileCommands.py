@@ -323,9 +323,11 @@ class baseFileCommands:
 		c = self.commands ; config = app.config ; findFrame = app.findFrame
 		#@	<< Set defaults of all flags >>
 		#@+node:<< Set defaults of all flags >>
-		for var in findFrame.intKeys:
-			attr = "%s_flag" % (var)
-			setattr(c,attr,false)
+		if app.gui.guiName() == "tkinter":
+		
+			for var in findFrame.intKeys:
+				attr = "%s_flag" % (var)
+				setattr(c,attr,false)
 		#@-node:<< Set defaults of all flags >>
 		#@nl
 		if not self.getOpenTag("<find_panel_settings"):
@@ -359,7 +361,8 @@ class baseFileCommands:
 		# Override .leo file's preferences if settings are in leoConfig.txt.
 		config.setCommandsFindIvars(c)
 		# Update the settings immediately.
-		app.findFrame.init(c)
+		if app.gui.guiName() == "tkinter":
+			app.findFrame.init(c)
 	#@nonl
 	#@-node:getFindPanelSettings
 	#@+node:getGlobals (changed for 4.0)
@@ -378,11 +381,11 @@ class baseFileCommands:
 		# Bug fix: 7/15/02: use max, not min!!!
 		y = max(y,0) ; x = max(x,0)
 		geom = "%dx%d%+d%+d" % (w,h,x,y)
-		self.frame.top.geometry(geom)
+		self.frame.setTopGeometry(geom) ## self.frame.top.geometry(geom)
 		# 7/15/02: Redraw the window before writing into it.
-		self.frame.top.deiconify()
-		self.frame.top.lift()
-		self.frame.top.update()
+		self.frame.deiconify()
+		self.frame.lift()
+		self.frame.update()
 	
 		self.getTag("<global_log_window_position")
 		self.getPosition() ;
@@ -905,7 +908,7 @@ class baseFileCommands:
 		c.beginUpdate()
 		ok, ratio = self.getLeoFile(self.frame,fileName,atFileNodesFlag=false)
 		c.endUpdate()
-		c.frame.top.deiconify()
+		c.frame.deiconify()
 		vflag,junk,secondary_ratio = self.frame.initialRatios()
 		c.frame.resizePanesToRatio(ratio,secondary_ratio)
 		# This should be done after the pane size has been set.

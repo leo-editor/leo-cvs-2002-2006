@@ -725,7 +725,7 @@ def openWithFileName(fileName,old_c=None):
 		fn = os.path.normcase(frame.commands.mFileName)
 		fn = os.path.normpath(fn)
 		if fileName == fn:
-			frame.top.deiconify()
+			frame.deiconify()
 			app.setLog(frame,"OpenWithFileName")
 			# es("This window already open")
 			return true, frame
@@ -748,13 +748,13 @@ def openWithFileName(fileName,old_c=None):
 				old_c=old_c,new_c=frame.commands,fileName=fileName)
 			return true, frame
 		else:
-			es("can not open" + fileName)
+			es("can not open: " + fileName,color="red")
 			return false, None
 	except:
-		es("exceptions opening" + fileName)
+		es("exceptions opening: " + fileName,color="red")
 		es_exception()
+		if frame: app.gui.destroyLeoFrame(frame)
 		return false, None
-#@nonl
 #@-node:openWithFileName (leoGlobals)
 #@+node:wrap_lines
 #@+at 
