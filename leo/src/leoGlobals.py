@@ -1118,12 +1118,12 @@ def init_trace(args,echo=1):
 #@-node:ekr.20031218072017.3132:init_trace
 #@+node:ekr.20031218072017.2317:trace
 # Convert all args to strings.
-# Print if tracing for the presently executing function has been enabled.
 
 def trace (*args,**keys):
     
     callers = keys.get("callers",False)
     newline = keys.get("newline",True)
+    align =   keys.get("align",0)
 
     s = ""
     for arg in args:
@@ -1148,6 +1148,11 @@ def trace (*args,**keys):
     if callers:
         traceback.print_stack()
         
+    if align != 0 and len(name) < abs(align):
+        pad = ' ' * (abs(align) - len(name))
+        if align > 0: name = name + pad
+        else:         name = pad + name
+
     if newline:
         print name + ": " + message
     else:
