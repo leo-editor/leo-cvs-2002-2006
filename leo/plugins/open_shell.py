@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517080049.4:@file-thin open_shell.py
+#@+node:EKR.20040517080049.4:@thin open_shell.py
 """Opens up cmd and explorer window to same directory 
 as @file nodes or children ..."""
 
@@ -120,5 +120,5 @@ leoPlugins.registerHandler("after-create-leo-frame", load_menu)
 __version__ = "1.4"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:EKR.20040517080049.4:@file-thin open_shell.py
+#@-node:EKR.20040517080049.4:@thin open_shell.py
 #@-leo

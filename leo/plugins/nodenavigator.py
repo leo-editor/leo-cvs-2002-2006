@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040108062655:@file-thin nodenavigator.py
+#@+node:ekr.20040108062655:@thin nodenavigator.py
 """Add a quick node navigators to the toolbar in Leo 
 
 Adds a node navigator to the toolbar. The navigator allows quick
@@ -141,5 +141,5 @@ if Tk:
         leoPlugins.registerHandler("select2",nav.updateRecent)
         g.plugin_signon("nodenavigator")
 #@nonl
-#@-node:ekr.20040108062655:@file-thin nodenavigator.py
+#@-node:ekr.20040108062655:@thin nodenavigator.py
 #@-leo

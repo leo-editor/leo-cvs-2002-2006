@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.741:@file-thin add_directives.py
+#@+node:edream.110203113231.741:@thin add_directives.py
 """Support new @direcives"""
 
 #@@language python
@@ -60,5 +60,5 @@ leoPlugins.registerHandler("scan-directives",scanPluginDirectives)
 __version__ = "1.1"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.741:@file-thin add_directives.py
+#@-node:edream.110203113231.741:@thin add_directives.py
 #@-leo

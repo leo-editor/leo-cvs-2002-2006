@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.925:@file-thin script_io_to_body.py
+#@+node:edream.110203113231.925:@thin script_io_to_body.py
 """Send output from the Execute Script command to the end of the body pane"""
 
 #@@language python
@@ -130,5 +130,5 @@ if Tk: # Register the handlers...
         __version__ = "1.3" # Contains Tk-specific code.
         g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.925:@file-thin script_io_to_body.py
+#@-node:edream.110203113231.925:@thin script_io_to_body.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.724:@file-thin mod_autosave.py
+#@+node:edream.110203113231.724:@thin mod_autosave.py
 """Autosave the Leo document every so often"""
 
 #@@language python
@@ -62,5 +62,5 @@ leoPlugins.registerHandler("idle", autosave)
 __version__ = "0.2"
 g.es("auto save enabled",color="orange")
 #@nonl
-#@-node:edream.110203113231.724:@file-thin mod_autosave.py
+#@-node:edream.110203113231.724:@thin mod_autosave.py
 #@-leo

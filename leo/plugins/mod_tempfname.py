@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517075715.1:@file-thin mod_tempfname.py
+#@+node:EKR.20040517075715.1:@thin mod_tempfname.py
 """Replace Commands.openWithTempFilePath so Leo opens temporary
 files with a filename that begins with the headline text, and
 located in a "username_Leo" subdirectory of the temporary
@@ -56,5 +56,5 @@ leoPlugins.registerHandler("start2", onStart)
 __version__ = "1.3"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:EKR.20040517075715.1:@file-thin mod_tempfname.py
+#@-node:EKR.20040517075715.1:@thin mod_tempfname.py
 #@-leo

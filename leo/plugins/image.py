@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.753:@file-thin image.py
+#@+node:edream.110203113231.753:@thin image.py
 """Handle images in body text"""
 
 #@@language python
@@ -93,5 +93,5 @@ if Tk: # Register the handlers...
         __version__ = "1.2" # Set version for the plugin handler.
         g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.753:@file-thin image.py
+#@-node:edream.110203113231.753:@thin image.py
 #@-leo

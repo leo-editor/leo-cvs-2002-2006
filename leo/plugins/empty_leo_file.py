@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517080049.1:@file-thin empty_leo_file.py
+#@+node:EKR.20040517080049.1:@thin empty_leo_file.py
 """Open any empty file as a minimal .leo file"""
 
 #@@language python
@@ -56,5 +56,5 @@ leoPlugins.registerHandler("open1", onOpen)
 __version__ = "1.2"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:EKR.20040517080049.1:@file-thin empty_leo_file.py
+#@-node:EKR.20040517080049.1:@thin empty_leo_file.py
 #@-leo

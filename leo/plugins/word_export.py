@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517075715.14:@file-thin word_export.py
+#@+node:EKR.20040517075715.14:@thin word_export.py
 """Exports an outline to a word document.
 
 Make sure word is running with an open (empty) document.
@@ -126,5 +126,5 @@ if client: # Register the handlers...
 
     g.plugin_signon("word_export")
 #@nonl
-#@-node:EKR.20040517075715.14:@file-thin word_export.py
+#@-node:EKR.20040517075715.14:@thin word_export.py
 #@-leo

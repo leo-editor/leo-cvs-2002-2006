@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.738:@file-thin trace_tags.py
+#@+node:edream.110203113231.738:@thin trace_tags.py
 """Trace most comment events, but not key, drag or idle events"""
 
 #@@language python
@@ -55,5 +55,5 @@ leoPlugins.registerHandler("all", trace_tags)
 __version__ = "1.2" # Set version for the plugin handler.
 g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.738:@file-thin trace_tags.py
+#@-node:edream.110203113231.738:@thin trace_tags.py
 #@-leo

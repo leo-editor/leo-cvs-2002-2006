@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.720:@file-thin outline_export.py
+#@+node:edream.110203113231.720:@thin outline_export.py
 """Modify the way exported outlines are displayed"""
 
 #@@language python
@@ -41,5 +41,5 @@ leoPlugins.registerHandler("start2", onStart)
 __version__ = "1.2" # Set version for the plugin handler.
 g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.720:@file-thin outline_export.py
+#@-node:edream.110203113231.720:@thin outline_export.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040331071319:@file-thin rst2.py
+#@+node:ekr.20040331071319:@thin rst2.py
 """A plugin to generate HTML or LaTeX files from reStructured Text
 embedded in Leo outlines.
 
@@ -287,5 +287,5 @@ leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
 __version__ = "2.1"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:ekr.20040331071319:@file-thin rst2.py
+#@-node:ekr.20040331071319:@thin rst2.py
 #@-leo

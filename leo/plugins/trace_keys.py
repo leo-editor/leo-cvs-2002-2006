@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.736:@file-thin trace_keys.py
+#@+node:edream.110203113231.736:@thin trace_keys.py
 """Trace keystrokes in the outline and body panes"""
 
 #@@language python
@@ -25,5 +25,5 @@ leoPlugins.registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
 __version__ = "1.2"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.736:@file-thin trace_keys.py
+#@-node:edream.110203113231.736:@thin trace_keys.py
 #@-leo

@@ -122,6 +122,7 @@ def scanText (txt):
                 a, b = pieces2[0], pieces2[1]
                 if calltips.has_key(lang):
                     if calltips[lang].has_key(a):
+                        # EKR: this has been known to throw a KeyError.
                         calltips[lang][a].add(z)
                     else:
                         from sets import Set 
@@ -343,6 +344,7 @@ def add_item (event,c,body,colorizer):
         f = Tk.Frame(c)
         ww = list(watchwords[txt])
         ww.sort()
+        
         b = Pmw.ScrolledListBox(f,items=tuple(ww),hscrollmode='none')
         c.sl = b.component('listbox')
         c.sl.configure(selectbackground='#FFE7C6',selectforeground='blue')
@@ -350,7 +352,9 @@ def add_item (event,c,body,colorizer):
         vsb.configure(background='#FFE7C6',width=10)
         h = b.component('hull')
         height = len(ww)
+        
         if height>5:height = 5
+        
         c.sl.configure(background='white',foreground='blue',height=height)
         b.pack()
         calculatePlace(body,c.sl,c,f)
@@ -362,12 +366,20 @@ def add_item (event,c,body,colorizer):
     elif event.char=='(':
         #@        << handle '(' character >>
         #@+node:ekr.20040722112432.3:<< handle '(' character >>
-        language = colorizer.language 
+        language = colorizer.language
+        
         if calltips.has_key(language):
+        
+            if 0: #
+                g.trace(txt)
+                keys = calltips[language].keys()
+                keys.sort()
+                for key in keys:
+                    print key
+        
             if calltips[language].has_key(txt):
                 c.on = True 
-                ct = Tk.Label(c,background='lightyellow',
-                foreground='black')
+                ct = Tk.Label(c,background='lightyellow',foreground='black')
                 s = list(calltips[language][txt])
                 t = '\n'.join(s)
                 ct.configure(text=t)
@@ -404,7 +416,7 @@ def calculatePlace (body,cwidg,c,f):
         x = 1
         y = 1
 
-    rwidth = cwidg.winfo_reqwidth()
+    rwidth  = cwidg.winfo_reqwidth()
     rheight = cwidg.winfo_reqheight()
 
     if body.winfo_width()<x+rwidth:
@@ -413,7 +425,7 @@ def calculatePlace (body,cwidg,c,f):
     if y>body.winfo_height()/2:
         h2 = rheight 
         h3 = h2+lwh 
-        y = y-h3
+        y  = y-h3
 
     c.i = c.create_window(x,y,window=f,anchor='nw')
 #@nonl
@@ -460,7 +472,7 @@ olCreateControl = leoTkinterFrame.leoTkinterBody.createControl
 
 if Tk and Pmw and sets:
     leoTkinterFrame.leoTkinterBody.createControl = newCreateControl 
-    leoPlugins.registerHandler(('start2','open2'),initialScan)
+    leoPlugins.registerHandler('open2',initialScan) # EKR: We _must_ remove the start2 hook!
     __version__ = ".150"
     print "autocompleter v%s installed" % __version__
     g.plugin_signon(__name__)

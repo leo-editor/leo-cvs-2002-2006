@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.873:@file-thin at_folder.py
+#@+node:edream.110203113231.873:@thin at_folder.py
 """Synchronize @folder nodes with folders"""
 
 #@@language python
@@ -73,5 +73,5 @@ leoPlugins.registerHandler("select1", onSelect)
 __version__ = "1.2" # Set version for the plugin handler.
 g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.873:@file-thin at_folder.py
+#@-node:edream.110203113231.873:@thin at_folder.py
 #@-leo

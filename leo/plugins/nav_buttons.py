@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.758:@file-thin nav_buttons.py
+#@+node:edream.110203113231.758:@thin nav_buttons.py
 """Adds navigation buttons to icon bar"""
 
 #@@language python
@@ -496,5 +496,5 @@ if Tk: # Register the handlers...
         __version__ = "1.2"
         g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.758:@file-thin nav_buttons.py
+#@-node:edream.110203113231.758:@thin nav_buttons.py
 #@-leo

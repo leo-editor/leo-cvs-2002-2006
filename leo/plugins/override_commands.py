@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.919:@file-thin override_commands.py
+#@+node:edream.110203113231.919:@thin override_commands.py
 """Override the Equal Sized Pane command"""
 
 #@@language python
@@ -25,5 +25,5 @@ leoPlugins.registerHandler("command1", onCommand)
 __version__ = "1.2"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.919:@file-thin override_commands.py
+#@-node:edream.110203113231.919:@thin override_commands.py
 #@-leo

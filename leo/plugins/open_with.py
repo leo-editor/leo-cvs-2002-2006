@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517075715.4:@file-thin open_with.py
+#@+node:EKR.20040517075715.4:@thin open_with.py
 """Create menu for Open With command and handle the resulting commands"""
 
 #@@language python
@@ -141,5 +141,5 @@ if Tk: # Register the handlers...
     
         __version__ = "1.4" # Set version for the plugin handler.
         g.plugin_signon(__name__)
-#@-node:EKR.20040517075715.4:@file-thin open_with.py
+#@-node:EKR.20040517075715.4:@thin open_with.py
 #@-leo

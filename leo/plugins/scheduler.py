@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040331153923:@file-thin scheduler.py
+#@+node:ekr.20040331153923:@thin scheduler.py
 """A plugin to schedule commands for later execution."""
 
 #@<< about this plugin >>
@@ -361,5 +361,5 @@ if Tk:
     leoPlugins.registerHandler(('start2','open2','new'),addScheduleMenu)
     g.plugin_signon(__name__)
 #@nonl
-#@-node:ekr.20040331153923:@file-thin scheduler.py
+#@-node:ekr.20040331153923:@thin scheduler.py
 #@-leo

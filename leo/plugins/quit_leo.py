@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.734:@file-thin quit_leo.py
+#@+node:edream.110203113231.734:@thin quit_leo.py
 """A plugin showing how to force Leo to quit."""
 
 #@@language python
@@ -27,5 +27,5 @@ if 1: # Force a shutdown at any other time, even "idle" time.
     __version__ = "1.2"
     g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.734:@file-thin quit_leo.py
+#@-node:edream.110203113231.734:@thin quit_leo.py
 #@-leo

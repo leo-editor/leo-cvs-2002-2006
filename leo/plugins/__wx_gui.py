@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.302:@file-thin __wx_gui.py
+#@+node:edream.110203113231.302:@thin __wx_gui.py
 #@@first
 
 """A plugin to use wxPython as Leo's gui."""
@@ -3457,5 +3457,5 @@ if wx: # Enable the plugin (only if wxPython has been imported)...
         s = "Can't install wxPython gui: previous gui installed"
         print s ; es(s,color="red")
 #@nonl
-#@-node:edream.110203113231.302:@file-thin __wx_gui.py
+#@-node:edream.110203113231.302:@thin __wx_gui.py
 #@-leo

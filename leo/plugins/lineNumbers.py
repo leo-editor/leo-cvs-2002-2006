@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040419105219:@file-thin lineNumbers.py
+#@+node:ekr.20040419105219:@thin lineNumbers.py
 """Adds #line directives in perl and perlpod programs."""
 
 #@+at 
@@ -61,5 +61,5 @@ __version__ = "0.2"
 
 g.plugin_signon(__name__)
 #@nonl
-#@-node:ekr.20040419105219:@file-thin lineNumbers.py
+#@-node:ekr.20040419105219:@thin lineNumbers.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040422094618:@file-thin startfile.py
+#@+node:EKR.20040422094618:@thin startfile.py
 """Lauches (starts) a file with the name of the headline on double-clicking it.
 Uses the @folder path if the headline is under an @folder headline.
 Otherwise the path is relative to the Leo file.
@@ -113,5 +113,5 @@ g.plugin_signon(__name__)
 def unitTest ():
     pass
 #@nonl
-#@-node:EKR.20040422094618:@file-thin startfile.py
+#@-node:EKR.20040422094618:@thin startfile.py
 #@-leo

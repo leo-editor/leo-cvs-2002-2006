@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110403140857.8:@file-thin color_markup.py
+#@+node:edream.110403140857.8:@thin color_markup.py
 """Handle coloring for markup in doc parts and Python triple-double-quoted strings"""
 
 #@@language python
@@ -405,5 +405,5 @@ if Tk: # Register the handlers...
     
         __version__ = "1.4" # DS: 10/29/03.  EKR: 11/4/03: mods for 4.1.
         g.plugin_signon(__name__)
-#@-node:edream.110403140857.8:@file-thin color_markup.py
+#@-node:edream.110403140857.8:@thin color_markup.py
 #@-leo

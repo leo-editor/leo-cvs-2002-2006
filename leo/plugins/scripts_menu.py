@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517080555.36:@file-thin scripts_menu.py
+#@+node:EKR.20040517080555.36:@thin scripts_menu.py
 """Create a Scripts menu for LeoPy.leo"""
 
 #@@language python
@@ -86,5 +86,5 @@ leoPlugins.registerHandler("create-optional-menus",createScriptsMenu)
 __version__ = "1.4"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:EKR.20040517080555.36:@file-thin scripts_menu.py
+#@-node:EKR.20040517080555.36:@thin scripts_menu.py
 #@-leo

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #@+leo-ver=4-thin
-#@+node:EKR.20040517080202.3:@file-thin french_fm.py
+#@+node:EKR.20040517080202.3:@thin french_fm.py
 #@@first
 
 """traduit les menus en Français"""
@@ -176,5 +176,5 @@ leoPlugins.registerHandler("menu1", onMenu)
 
 __version__ = "1.4" # Set version for the plugin handler.
 g.plugin_signon(__name__)
-#@-node:EKR.20040517080202.3:@file-thin french_fm.py
+#@-node:EKR.20040517080202.3:@thin french_fm.py
 #@-leo

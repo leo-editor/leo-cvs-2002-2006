@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040108095351:@file-thin rowcol.py
+#@+node:ekr.20040108095351:@thin rowcol.py
 """Add row/column indicators to the toolbar."""
 
 #@@language python
@@ -92,5 +92,5 @@ if Tk:
         leoPlugins.registerHandler("idle",rowCol.updateRowColWidget) 
         g.plugin_signon("rowcol")
 #@nonl
-#@-node:ekr.20040108095351:@file-thin rowcol.py
+#@-node:ekr.20040108095351:@thin rowcol.py
 #@-leo

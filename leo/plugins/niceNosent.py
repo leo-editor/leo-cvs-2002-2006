@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040331151007:@file-thin niceNosent.py
+#@+node:ekr.20040331151007:@thin niceNosent.py
 """Edit @file-nosent nodes: make sure there is a newline at the end
 of each subnode, replace all tabs with spaces and add a newline before
 class and functions in the derived file."""
@@ -87,5 +87,5 @@ leoPlugins.registerHandler("save2",onPostSave)
 __version__ = "0.1"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:ekr.20040331151007:@file-thin niceNosent.py
+#@-node:ekr.20040331151007:@thin niceNosent.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517075715.10:@file-thin vim.py
+#@+node:EKR.20040517075715.10:@thin vim.py
 """vim handler"""
 
 #@@language python
@@ -81,5 +81,5 @@ leoPlugins.registerHandler("iconclick2", open_in_vim)
 
 __version__ = "1.4" # Set version for the plugin handler.
 g.plugin_signon(__name__)
-#@-node:EKR.20040517075715.10:@file-thin vim.py
+#@-node:EKR.20040517075715.10:@thin vim.py
 #@-leo

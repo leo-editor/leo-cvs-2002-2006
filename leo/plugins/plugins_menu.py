@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517080555.2:@file-thin plugins_menu.py
+#@+node:EKR.20040517080555.2:@thin plugins_menu.py
 """Create a Plugins menu"""
 
 #@@language python
@@ -340,5 +340,5 @@ if Tk: # Register the handlers...
         __version__ = "1.2"
         g.plugin_signon(__name__)
 #@nonl
-#@-node:EKR.20040517080555.2:@file-thin plugins_menu.py
+#@-node:EKR.20040517080555.2:@thin plugins_menu.py
 #@-leo

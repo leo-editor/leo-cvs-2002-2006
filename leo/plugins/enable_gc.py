@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.732:@file-thin enable_gc.py
+#@+node:edream.110203113231.732:@thin enable_gc.py
 """Enable debugging for garbage collector"""
 
 #@@language python
@@ -26,5 +26,5 @@ leoPlugins.registerHandler("start2", onStart)
 __version__ = "1.2"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.732:@file-thin enable_gc.py
+#@-node:edream.110203113231.732:@thin enable_gc.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.669:@file-thin import_cisco_config.py
+#@+node:edream.110203113231.669:@thin import_cisco_config.py
 """Import cisco configuration files"""
 
 #@@language python
@@ -227,5 +227,5 @@ if tkFileDialog:
 
         __version__ = "1.3" 
         g.plugin_signon(__name__)
-#@-node:edream.110203113231.669:@file-thin import_cisco_config.py
+#@-node:edream.110203113231.669:@thin import_cisco_config.py
 #@-leo

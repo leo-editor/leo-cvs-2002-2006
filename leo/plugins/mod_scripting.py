@@ -17,15 +17,13 @@ except: Tk = None
 #@-node:EKR.20040613215415:<< mod_scripting imports >>
 #@nl
 
-# To do:
-#   - @script, @addScriptButton nodes.
-#   - (maybe) @addAllScriptButtons.
-
 data = {} # Global data: contains one dict for each commander.
 buttons = 0 # Total number of buttons created.
+
 bindLate = True
-    # True:  bind script when script is executed.
-    # False: bind script when button is created.
+    # True (recommended) bind script when script is executed.
+    #               Allows you to change the script after creating the script button.
+    # False:        Bind script when button is created.
 
 #@+others
 #@+node:EKR.20040613215415.2:createButtons

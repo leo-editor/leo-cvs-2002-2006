@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.921:@file-thin redefine_put.py
+#@+node:edream.110203113231.921:@thin redefine_put.py
 """Redefine the "put" and "put_nl" methods"""
 
 #@@language python
@@ -69,5 +69,5 @@ if Tk: # Register the handlers...
     __version__ = "1.2"
     g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.921:@file-thin redefine_put.py
+#@-node:edream.110203113231.921:@thin redefine_put.py
 #@-leo

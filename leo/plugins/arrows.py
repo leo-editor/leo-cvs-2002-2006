@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517080517.1:@file-thin arrows.py
+#@+node:EKR.20040517080517.1:@thin arrows.py
 """Rebind up/down arrow keys"""
 
 #@@language python
@@ -44,5 +44,5 @@ if Tk: # Register the handlers...
         __version__ = "1.3"
         g.plugin_signon(__name__)
 #@nonl
-#@-node:EKR.20040517080517.1:@file-thin arrows.py
+#@-node:EKR.20040517080517.1:@thin arrows.py
 #@-leo

@@ -1,64 +1,167 @@
 #@+leo-ver=4-thin
-#@+node:edream.120603093808:@file-thin pluginsManager.txt
-#@@language python
+#@+node:edream.120603093808:@thin pluginsManager.txt
+#@@comment #
 #@@tabwidth -4
 
 # Leo enables only those plugins whose filenames appear here.
 # Leo loads plugins in the order they appear in this file.
 # File names may be indented as desired.
 
-# PRE_ALPHA QUALITY: MAY BE DANGEROUS
-	# __wx_gui.py
+#@+others
+#@+node:ekr.20040722122459.4:Commands &  directives
+# Allows plugins to add their own directives.
+    add_directives.py
+    
+# Automatically executes Save commands every so often.
+    # mod_autosave.py
+    
+# Timestamp all save operations to show when they occur.
+    # mod_timestamp.py
+#@nonl
+#@-node:ekr.20040722122459.4:Commands &  directives
+#@+node:ekr.20040722122459:Debugging & testing
+# Traces all keystrokes.
 
-# Debugging plugins...
 	# trace_keys.py
+    
+# A plugin to test Leo's shutdown logic.
+
 	# quit_leo.py
+#@nonl
+#@-node:ekr.20040722122459:Debugging & testing
+#@+node:ekr.20040722122459.3:Enhance the body pane
+# Rebind up/down arrow keys
+    # arrows.py
 
-# "official" plugins...
-	add_directives.py
-	# mod_autosave.py
-	open_with.py
-	color_markup.py
-	image.py
-	# nav_buttons.py
-	plugins_menu.py
-	# rowcol.py
-	status_line.py
-	word_export.py
-	# xemacs.py
-	
-# Other plugins...
-	# open_shell.py
+# Handles autocompletion when the user types '.' or '(' characters.
+    # FIXME: Thread doesn't shut down properly.  Causes unit tests to fail.
+    # autocompleter.py
+    
+# Allows coloring of wiki-style markup.
+    # NOTE: requires add_directives.py plugin.
+    color_markup.py
 
-# New from Steve Zatz
-	# ** requires docutils: http://docutils.sourceforge.net/
-	# ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
-	rst2.py
+# Allows images within body panes.
+    image.py
+    
+# Checks spelling while you type.
 
-# New from Paul Paterson.
-	nodenavigator.py
-	searchbox.py
-	# newButtons.py
-	# wordcompleter.py
-	# mod_spelling.py
-	
+    # Is this the latest version??
+    # mod_spelling.py
+    
+# newButtons.py
+    
+# Allows right clicks in the body pane.
+    rClick.py
+#@nonl
+#@-node:ekr.20040722122459.3:Enhance the body pane
+#@+node:ekr.20040722122459.2:Enhance the icon or status areas
+# Creates Hoist and De-Hoist buttons.
+	hoist.py
+
+# Adds "run Script" and "scriptButton" buttons to the icon area.
+    # Highly recommended for all Python programmers.
+    mod_scripting.py
+    
+# Automatically add nodes for common tasks.
+    # newButtons.py
+
+# Creates "Recent" and "Marks" popups in the icon area.
+    nodenavigator.py
+
+# Adds nav buttons to icon area:
+    # Superceded by nodenavigator.py
+    # nav_buttons.py
+    
+# Creates a search box and a "go" button in the icon area.
+    searchbox.py
+
+# Creates row-column indicators in the status area.
+    # rowcol.py
+#@nonl
+#@-node:ekr.20040722122459.2:Enhance the icon or status areas
+#@+node:ekr.20040722121404:Experimental plugins
+# PRE_ALPHA QUALITY: MAY BE DANGEROUS
+
+	# __wx_gui.py
+    
+# The original inspirations for mod_scripting.py 
+    # dyna_menu.py
+    
 # New from Bernhard Mulder
 	# mod_http.py
+    
+# schedule commands for later execution."""
+    # scheduler.py
+    
+# An plugin to create an Emacs-like status line.
+# Not ready yet: probably interferes with auto-completion
+    # status_line.py
+    
+# New from Paul Paterson.
 	
-# New from Davide Salomoni
-	hoist.py
 	
-# New or improved in 4.2
-    autocompleter.py
-	# startfile.py
+	# wordcompleter.py
+#@nonl
+#@-node:ekr.20040722121404:Experimental plugins
+#@+node:ekr.20040722134535.1:External editors & Open With
+# Opens a windows shell.
+	# open_shell.py
+
+# Creates the Open With menu.
+    open_with.py
+    
+# Launches (starts) a file with the name of the headline on double-clicking it.
+    # startfile.py
+    
+# vim handler.
+    # vim.py
+    
+# Allows you to export text to Word using the Plugins:Word Export:Export menu item.
+    # word_export.py
+#@nonl
+#@-node:ekr.20040722134535.1:External editors & Open With
+#@+node:ekr.20040722140105:Files
+# Replaces Commands.openWithTempFilePath so Leo opens temporary files with a
+# filename that begins with the headline text, and located in a "username_Leo"
+# subdirectory of the temporary directory. The "LeoTemp" prefix is omitted. This
+# makes it easier to see which temporary file is related to which outline node.
+    # mod_tempfname.py
+#@nonl
+#@-node:ekr.20040722140105:Files
+#@+node:ekr.20040722135618:Menus
+# Traduit les menus en Français.
+    # french_fm.py
+
+# Creates the plugins menu.
+    plugins_menu.py
+    
+# Creates a scripts menu.
+    # scripts_menu.py
+#@nonl
+#@-node:ekr.20040722135618:Menus
+#@+node:ekr.20040722140829:New nodes
+# The predecessor to rst2.py
+    # rst.py
+
+# A plugin to create output files from restructured text.
+    # Double-click @rst nodes to process the restructured text.
+	# ** requires docutils: http://docutils.sourceforge.net/
+	# ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
+    # See also, rst3.py
+	rst2.py
+#@nonl
+#@-node:ekr.20040722140829:New nodes
+#@+node:ekr.20040722121404.1:Other plugins
+# Adds #line directives in perl and perlpod programs.
 	# lineNumbers.py
-	rClick.py
+    
 	# niceNosent.py
 	# scheduler.py
 	# fastgotonode.py
-	# xemacs_a.py
-    # dyna_menu.py
-    mod_scripting.py
 #@nonl
-#@-node:edream.120603093808:@file-thin pluginsManager.txt
+#@-node:ekr.20040722121404.1:Other plugins
+#@-others
+#@nonl
+#@-node:edream.120603093808:@thin pluginsManager.txt
 #@-leo

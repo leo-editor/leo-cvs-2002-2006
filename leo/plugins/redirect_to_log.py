@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.924:@file-thin redirect_to_log.py
+#@+node:edream.110203113231.924:@thin redirect_to_log.py
 """Send all output to the log pane"""
 
 #@@language python
@@ -18,5 +18,5 @@ leoPlugins.registerHandler("start2", onStart)
 __version__ = "1.3"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.924:@file-thin redirect_to_log.py
+#@-node:edream.110203113231.924:@thin redirect_to_log.py
 #@-leo

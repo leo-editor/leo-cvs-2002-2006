@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.111803100242:@file-thin rst.py
+#@+node:edream.111803100242:@thin rst.py
 """If a headline starts with @rst <filename>, double-clicking on it will 
 write a file in outline order, with the headlines converted to reStructuredText 
 section headings.
@@ -216,5 +216,5 @@ leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
 __version__ = "1.5" # Set version for the plugin handler.
 g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.111803100242:@file-thin rst.py
+#@-node:edream.111803100242:@thin rst.py
 #@-leo

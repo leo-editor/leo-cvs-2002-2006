@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040331072607:@file-thin hoist.py
+#@+node:ekr.20040331072607:@thin hoist.py
 """Add Hoist/De-Hoist buttons to the toolbar.
 """
 
@@ -135,5 +135,5 @@ if Tk:
         leoPlugins.registerHandler("after-create-leo-frame", hoist.addWidgets)
         leoPlugins.registerHandler("idle", hoist.onIdle)
         g.plugin_signon(__name__)
-#@-node:ekr.20040331072607:@file-thin hoist.py
+#@-node:ekr.20040331072607:@thin hoist.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517080250.1:@file-thin mod_http.py
+#@+node:EKR.20040517080250.1:@thin mod_http.py
 """
 A minimal http plugin for LEO, based on AsyncHttpServer.py.
 
@@ -732,5 +732,5 @@ if active:
     leoPlugins.registerHandler("idle", plugin_wrapper)
     
     g.es("http serving enabled on port %s, version %s" % (port, __version__), color="purple")
-#@-node:EKR.20040517080250.1:@file-thin mod_http.py
+#@-node:EKR.20040517080250.1:@thin mod_http.py
 #@-leo

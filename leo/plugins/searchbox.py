@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040107092135.2:@file-thin searchbox.py
+#@+node:ekr.20040107092135.2:@thin searchbox.py
 #@<< doc string >>
 #@+node:ekr.20040108060748:<< doc string >>
 """Add a quick search to the toolbar in Leo
@@ -248,5 +248,5 @@ if Tk:
         leoPlugins.registerHandler("after-create-leo-frame", search.addWidgets)
         g.plugin_signon(__name__)
 #@nonl
-#@-node:ekr.20040107092135.2:@file-thin searchbox.py
+#@-node:ekr.20040107092135.2:@thin searchbox.py
 #@-leo

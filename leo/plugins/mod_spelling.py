@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.933:@file-thin mod_spelling.py
+#@+node:edream.110203113231.933:@thin mod_spelling.py
 """Spell Checker Plugin
 
 - Perfoms spell checking on nodes within a Leo document.
@@ -832,5 +832,5 @@ if Tk: # Register the handlers...
         __version__ = "0.4.0" # EKR: 11/12/03: modified to use new leoTkinterFind class.
         g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.933:@file-thin mod_spelling.py
+#@-node:edream.110203113231.933:@thin mod_spelling.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517080555.25:@file-thin pluginsTest.py
+#@+node:EKR.20040517080555.25:@thin pluginsTest.py
 """Test file for Plugins menu protocols"""
 
 #@@language python
@@ -115,5 +115,5 @@ if Tk: # Register the handlers...
         __version__ = "1.1"
         g.plugin_signon(__name__)
 #@nonl
-#@-node:EKR.20040517080555.25:@file-thin pluginsTest.py
+#@-node:EKR.20040517080555.25:@thin pluginsTest.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040422072343:@file-thin rClick.py
+#@+node:ekr.20040422072343:@thin rClick.py
 """Create a context menu when right-clicking in the body pane."""
 
 # Send bug reports to
@@ -355,5 +355,5 @@ if Tk:
         leoPlugins.registerHandler("bodyrclick1",rClicker)
         g.plugin_signon(__name__)
 #@nonl
-#@-node:ekr.20040422072343:@file-thin rClick.py
+#@-node:ekr.20040422072343:@thin rClick.py
 #@-leo

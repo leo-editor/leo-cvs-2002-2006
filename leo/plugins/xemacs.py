@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040517075715.12:@file-thin xemacs.py
+#@+node:EKR.20040517075715.12:@thin xemacs.py
 """emacs handler"""
 
 #@@language python
@@ -24,5 +24,5 @@ else: # Edit when selecting any node. That's a bit much for my taste.
 __version__ = "1.4"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:EKR.20040517075715.12:@file-thin xemacs.py
+#@-node:EKR.20040517075715.12:@thin xemacs.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.876:@file-thin read_only_nodes.py
+#@+node:edream.110203113231.876:@thin read_only_nodes.py
 """Inhibit changes to @read-only nodes"""
 
 #@@language python
@@ -456,5 +456,5 @@ if tkFileDialog: # Register the handlers...
         __version__ = "1.5" # Set version for the plugin handler.
         g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.876:@file-thin read_only_nodes.py
+#@-node:edream.110203113231.876:@thin read_only_nodes.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231.735:@file-thin trace_gc.py
+#@+node:edream.110203113231.735:@thin trace_gc.py
 """Trace changes to objects at idle time"""
 
 #@@language python
@@ -38,5 +38,5 @@ if 0: # Another idea.
 __version__ = "1.3"
 g.plugin_signon(__name__)
 #@nonl
-#@-node:edream.110203113231.735:@file-thin trace_gc.py
+#@-node:edream.110203113231.735:@thin trace_gc.py
 #@-leo

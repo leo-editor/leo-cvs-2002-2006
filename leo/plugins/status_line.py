@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040201060959:@file-thin status_line.py
+#@+node:ekr.20040201060959:@thin status_line.py
 """Adds status line to Leo window."""
 
 #@@language python
@@ -79,7 +79,7 @@ def doKey(c,event,key):
         
     enabled = c.frame.statusLineIsEnabled()
     
-    g.es(key,event.keycode,event.keysym)
+    # g.es(key,event.keycode,event.keysym)
         
     if enabled:
         c.frame.disableStatusLine()
@@ -109,5 +109,5 @@ if Tk: # Register the handlers...
         __version__ = "0.1"
         g.plugin_signon(__name__)
 #@nonl
-#@-node:ekr.20040201060959:@file-thin status_line.py
+#@-node:ekr.20040201060959:@thin status_line.py
 #@-leo
