@@ -675,7 +675,9 @@ class colorizer:
 		#@+body
 		# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
 		
-		if self.comment_string: # 8/11/02
+		if language == plain_text_language: # 9/12/02
+			delim1,delim2,delim3 = None,None,None
+		elif self.comment_string: # 8/11/02
 			delim1,delim2,delim3 = set_delims_from_string(self.comment_string)
 		else:
 			delim1,delim2,delim3 = set_delims_from_language(language)
