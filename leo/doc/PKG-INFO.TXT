@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: leo
-Version: 4.0a1
+Version: 4.0a2
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://personalpages.tds.net/~edream/front.html
 Author: Edward K. Ream
