@@ -320,7 +320,7 @@ class atFile:
         #@-node:ekr.20041005105605.16:<< init ivars for writing >>>
         #@nl
         
-        self.scanAllDirectives(root)
+        self.scanAllDirectives(root,scripting=scriptWrite) # 2/22/04
         if scriptWrite:
             # Force Python comment delims for g.getScript.
             self.startSentinelComment = "#"
