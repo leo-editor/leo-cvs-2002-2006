@@ -33,7 +33,106 @@ assert(false!=None)
 
 
 #@+others
-#@+node:2::Commands, Dialogs, Directives, & Menus...
+#@+node:2::Checking Leo Files...
+#@+node:1::createTopologyList
+#@+body
+def createTopologyList (c=None,root=None,useHeadlines=false):
+	
+	"""Creates a list describing a node and all its descendents"""
+	
+	if not c: c = top()
+	if not root: root = c.rootVnode()
+	v = root
+	if useHeadlines:
+		aList = [(v.numberOfChildren(),v.headString()),]
+	else:
+		aList = [v.numberOfChildren()]
+	child = v.firstChild()
+	while child:
+		aList.append(createTopologyList(c,child,useHeadlines))
+		child = child.next()
+	return aList
+#@-body
+#@-node:1::createTopologyList
+#@+node:2::checkClones2Links
+#@+body
+def checkClones2Links (c=None,verbose=false):
+	
+	if not c: c = top()
+	
+	c.clearAllVisited()
+	v = c.rootVnode()
+	
+	#@<< clear statistics >>
+	#@+node:1::<< clear statistics >>
+	#@+body
+	targetsInDerivedFiles = []
+	multipleTargetsInDerivedFiles = []
+	clonesInNoDerivedFiles = []
+	clonedAtFileNodes = []
+	
+	#@-body
+	#@-node:1::<< clear statistics >>
+
+	while v:
+		if v.isCloned() and not v.t.isVisited():
+			v.t.setVisited()
+			
+			#@<< handle each item in v's join list >>
+			#@+node:3::<< handle each item in v's join list >>
+			#@+body
+			if v.isAnyAtFileNode():
+				clonedAtFileNodes.append(v)
+			else:
+				anchors = 0 ; targets = 0
+				for j in v.t.joinList:
+					
+					# See if j should be an anchor: i.e., whether it is in any @file node.
+					p = j ; isAnchor = false
+					while p:
+						if p.isAnyAtFileNode():
+							isAnchor = true
+							break
+						p = p.parent()
+					if isAnchor: anchors += 1
+					else: targets += 1
+			
+				if anchors == 1:
+					targetsInDerivedFiles.append(v)
+				elif anchors > 1:
+					multipleTargetsInDerivedFiles.append(v)
+				else:
+					clonesInNoDerivedFiles.append(v)
+			#@-body
+			#@-node:3::<< handle each item in v's join list >>
+
+		v = v.threadNext()
+				
+	
+	#@<< print statistics >>
+	#@+node:2::<< print statistics >>
+	#@+body
+	for name, theList in (
+		("targetsInDerivedFiles:", targetsInDerivedFiles),
+		("multipleTargetsInDerivedFiles:", multipleTargetsInDerivedFiles),
+		("clonesInNoDerivedFiles:", clonesInNoDerivedFiles),
+		("clonedAtFileNodes:", clonedAtFileNodes)):
+	
+		print ; print name, len(theList)
+	
+		if verbose:
+			headlines = []
+			for v in theList:
+				headlines.append(v.cleanHeadString())
+			headlines.sort()
+			for h in headlines:
+				print h
+	#@-body
+	#@-node:2::<< print statistics >>
+#@-body
+#@-node:2::checkClones2Links
+#@-node:2::Checking Leo Files...
+#@+node:3::Commands, Dialogs, Directives, & Menus...
 #@+node:1::Dialog utils...
 #@+node:1::attachLeoIcon & allies
 #@+body
@@ -881,8 +980,8 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	return result
 #@-body
 #@-node:5::wrap_lines
-#@-node:2::Commands, Dialogs, Directives, & Menus...
-#@+node:3::Debugging, Dumping, Timing, Tracing & Sherlock
+#@-node:3::Commands, Dialogs, Directives, & Menus...
+#@+node:4::Debugging, Dumping, Timing, Tracing & Sherlock
 #@+node:1::Files & Directories...
 #@+node:1::create_temp_name
 #@+body
@@ -1495,27 +1594,7 @@ def callerName (n=1):
 
 #@-body
 #@-node:7::callerName
-#@+node:8::g.createTopologyList
-#@+body
-def createTopologyList (c=None,root=None,useHeadlines=false):
-	
-	"""Creates a list describing a node and all its descendents"""
-	
-	if not c: c = top()
-	if not root: root = c.rootVnode()
-	v = root
-	if useHeadlines:
-		aList = [(v.numberOfChildren(),v.headString()),]
-	else:
-		aList = [v.numberOfChildren()]
-	child = v.firstChild()
-	while child:
-		aList.append(createTopologyList(c,child,useHeadlines))
-		child = child.next()
-	return aList
-#@-body
-#@-node:8::g.createTopologyList
-#@+node:9::dump
+#@+node:8::dump
 #@+body
 def dump(s):
 	
@@ -1537,8 +1616,8 @@ def oldDump(s):
 		else: out += i
 	return out
 #@-body
-#@-node:9::dump
-#@+node:10::es_error
+#@-node:8::dump
+#@+node:9::es_error
 #@+body
 def es_error (s):
 	
@@ -1549,8 +1628,8 @@ def es_error (s):
 	else:
 		es(s)
 #@-body
-#@-node:10::es_error
-#@+node:11::es_event_exception
+#@-node:9::es_error
+#@+node:10::es_event_exception
 #@+body
 def es_event_exception (eventName,full=false):
 
@@ -1565,8 +1644,8 @@ def es_event_exception (eventName,full=false):
 		es(i)
 	traceback.print_exc()
 #@-body
-#@-node:11::es_event_exception
-#@+node:12::es_exception
+#@-node:10::es_event_exception
+#@+node:11::es_exception
 #@+body
 def es_exception (full=false):
 
@@ -1580,8 +1659,8 @@ def es_exception (full=false):
 		es_error(i)
 	traceback.print_exc()
 #@-body
-#@-node:12::es_exception
-#@+node:13::file/module/plugin_date
+#@-node:11::es_exception
+#@+node:12::file/module/plugin_date
 #@+body
 def module_date (mod,format=None):
 	file = os.path.join(app().loadDir,mod.__file__)
@@ -1605,8 +1684,8 @@ def file_date (file,format=None):
 	return ""
 
 #@-body
-#@-node:13::file/module/plugin_date
-#@+node:14::funcToMethod
+#@-node:12::file/module/plugin_date
+#@+node:13::funcToMethod
 #@+body
 #@+at
 #  The following is taken from page 188 of the Python Cookbook.
@@ -1629,8 +1708,8 @@ def funcToMethod(f,theClass,name=None):
 	setattr(theClass,name or f.__name__,f)
 	trace(`name`)
 #@-body
-#@-node:14::funcToMethod
-#@+node:15::get_line & get_line_after
+#@-node:13::funcToMethod
+#@+node:14::get_line & get_line_after
 #@+body
 # Very useful for tracing.
 
@@ -1654,8 +1733,8 @@ def get_line_after (s,i):
 	return nl + s[i:k]
 
 #@-body
-#@-node:15::get_line & get_line_after
-#@+node:16::printBindings
+#@-node:14::get_line & get_line_after
+#@+node:15::printBindings
 #@+body
 def print_bindings (name,window):
 
@@ -1665,8 +1744,8 @@ def print_bindings (name,window):
 	for b in bindings:
 		print b
 #@-body
-#@-node:16::printBindings
-#@+node:17::printGlobals
+#@-node:15::printBindings
+#@+node:16::printGlobals
 #@+body
 def printGlobals(message=None):
 	
@@ -1681,8 +1760,8 @@ def printGlobals(message=None):
 	for glob in globs:
 		print glob
 #@-body
-#@-node:17::printGlobals
-#@+node:18::printLeoModules
+#@-node:16::printGlobals
+#@+node:17::printLeoModules
 #@+body
 def printLeoModules(message=None):
 	
@@ -1701,9 +1780,9 @@ def printLeoModules(message=None):
 		print m,
 	print
 #@-body
-#@-node:18::printLeoModules
-#@-node:3::Debugging, Dumping, Timing, Tracing & Sherlock
-#@+node:4::Hooks & plugins
+#@-node:17::printLeoModules
+#@-node:4::Debugging, Dumping, Timing, Tracing & Sherlock
+#@+node:5::Hooks & plugins
 #@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+body
 #@+at
@@ -1802,8 +1881,8 @@ def plugin_signon(module_name):
 
 #@-body
 #@-node:3::plugin_signon
-#@-node:4::Hooks & plugins
-#@+node:5::Lists...
+#@-node:5::Hooks & plugins
+#@+node:6::Lists...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -1836,8 +1915,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:5::Lists...
-#@+node:6::Most common functions
+#@-node:6::Lists...
+#@+node:7::Most common functions
 #@+body
 # These are guaranteed always to exist for scripts.
 
@@ -1953,8 +2032,8 @@ def windows():
 	return app().windowList
 #@-body
 #@-node:6::windows
-#@-node:6::Most common functions
-#@+node:7::Scanning, selection & whitespace...
+#@-node:7::Most common functions
+#@+node:8::Scanning, selection & whitespace...
 #@+node:1::getindex
 #@+body
 def getindex(text, index):
@@ -3028,8 +3107,8 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 #@-body
 #@-node:8::skip_leading_ws_with_indent
 #@-node:9::Whitespace...
-#@-node:7::Scanning, selection & whitespace...
-#@+node:8::Unicode utils...
+#@-node:8::Scanning, selection & whitespace...
+#@+node:9::Unicode utils...
 #@+node:1::isValidEncoding
 #@+body
 def isValidEncoding (encoding):
@@ -3156,8 +3235,8 @@ except:
 
 #@-body
 #@-node:4::getpreferredencoding from 2.3a2
-#@-node:8::Unicode utils...
-#@+node:9::CheckVersion (Dave Hein)
+#@-node:9::Unicode utils...
+#@+node:10::CheckVersion (Dave Hein)
 #@+body
 #@+at
 # 
@@ -3272,8 +3351,8 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 	raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
 
 #@-body
-#@-node:9::CheckVersion (Dave Hein)
-#@+node:10::class Bunch
+#@-node:10::CheckVersion (Dave Hein)
+#@+node:11::class Bunch
 #@+body
 # From The Python Cookbook.
 
@@ -3301,8 +3380,8 @@ class Bunch:
 		
 
 #@-body
-#@-node:10::class Bunch
-#@+node:11::collectGarbage
+#@-node:11::class Bunch
+#@+node:12::collectGarbage
 #@+body
 def collectGarbage():
 	
@@ -3316,8 +3395,8 @@ def collectGarbage():
 			pass
 
 #@-body
-#@-node:11::collectGarbage
-#@+node:12::executeScript
+#@-node:12::collectGarbage
+#@+node:13::executeScript
 #@+body
 def executeScript (name):
 	
@@ -3340,8 +3419,8 @@ def executeScript (name):
 
 
 #@-body
-#@-node:12::executeScript
-#@+node:13::importFromPath
+#@-node:13::executeScript
+#@+node:14::importFromPath
 #@+body
 def importFromPath (name,path):
 	
@@ -3366,7 +3445,7 @@ def importFromPath (name,path):
 	return module
 
 #@-body
-#@-node:13::importFromPath
+#@-node:14::importFromPath
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

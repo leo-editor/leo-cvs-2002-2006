@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="34" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="35" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="69" left="263" height="75" width="114"/>
+	<global_window_position top="78" left="89" height="75" width="114"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -40,17 +40,17 @@
 </v>
 <v t="T22"><vh>Test of recent sections &amp; clones</vh>
 <v t="T23" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T24" a="CE"><vh>Hyper link test</vh>
+<v t="T24" a="CE"><vh>hyper link test</vh>
 <v t="T23" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
 <v t="T25"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
 </v>
-<v t="T24" a="C"><vh>Hyper link test</vh>
+<v t="T24" a="C"><vh>hyper link test</vh>
 <v t="T23" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
 <v t="T25"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T26"><vh>Copy/Clones test</vh>
-<v t="T27" a="C"><vh>a</vh>
+<v t="T26" a="E"><vh>Copy/Clones test</vh>
+<v t="T27" a="C"><vh>a Å</vh>
 <v t="T28" a="CE"><vh>b</vh>
 <v t="T29"><vh>c</vh></v>
 </v>
@@ -58,7 +58,7 @@
 <v t="T29"><vh>c</vh></v>
 </v>
 </v>
-<v t="T27" a="CE"><vh>a</vh>
+<v t="T27" a="CE"><vh>a Å</vh>
 <v t="T28" a="C"><vh>b</vh>
 <v t="T29"><vh>c</vh></v>
 </v>
@@ -68,12 +68,13 @@
 </v>
 </v>
 <v t="T30"><vh>@lineending and @encoding tests</vh></v>
-<v t="T31" a="E"><vh>@file test.py</vh>
-<v t="T32" a="V"><vh>Outer</vh>
+<v t="T31" a="V"><vh>@file test.py</vh>
+<v t="T32"><vh>Outer</vh>
 <v t="T33"><vh>A2</vh></v>
 <v t="T34"><vh>B</vh></v>
 </v>
 </v>
+<v t="T35"><vh>Check clones links</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@markup wiki</t>
@@ -239,5 +240,8 @@ a
 <t tx="T32"></t>
 <t tx="T33">node A Text</t>
 <t tx="T34">node B text</t>
+<t tx="T35">from leoGlobals import *
+
+checkClones2Links(verbose=true)</t>
 </tnodes>
 </leo_file>

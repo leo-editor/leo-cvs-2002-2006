@@ -176,139 +176,7 @@ class atFile:
 	
 	#@-body
 	#@-node:2::atFile.__init__& initIvars
-	#@+node:3::class nodeIndices
-	#@+body
-	# Indices are Python dicts containing 'id','loc','time' and 'n' keys.
-	
-	import time
-	
-	class nodeIndices:
-
-		#@+others
-		#@+node:1::nodeIndices.__init__
-		#@+body
-		def __init__ (self):
-			
-			"""ctor for nodeIndices class"""
-			
-			self.userId = app().leoID # 5/1/03: This never changes.
-			self.defaultId = app().leoID # This probably will change.
-			self.lastIndex = None
-			self.timeString = None
-		#@-body
-		#@-node:1::nodeIndices.__init__
-		#@+node:2::areEqual
-		#@+body
-		def areEqual (self,gnx1,gnx2):
-			
-			"""Return True if all fields of gnx1 and gnx2 are equal"""
-		
-			id1,time1,n1 = gnx1
-			id2,time2,n2 = gnx2
-			return id1==id2 and time1==time2 and n1==n2
-		#@-body
-		#@-node:2::areEqual
-		#@+node:3::get/setDefaultId
-		#@+body
-		# These are used by the fileCommands read/write code.
-		
-		def getDefaultId (self):
-			
-			"""Return the id to be used by default in all gnx's"""
-			return self.defaultId
-			
-		def setDefaultId (self,id):
-			
-			"""Set the id to be used by default in all gnx's"""
-			self.defaultId = id
-		
-		#@-body
-		#@-node:3::get/setDefaultId
-		#@+node:4::getNewIndex
-		#@+body
-		def getNewIndex (self):
-			
-			"""Create a new gnx using self.timeString and self.lastIndex"""
-			
-			id = self.userId # Bug fix 5/1/03: always use the user's id for new ids!
-			t = self.timeString
-			assert(t)
-			n = None
-		
-			# Set n if id and time match the previous index.
-			last = self.lastIndex
-			if last:
-				lastId,lastTime,lastN = last
-				if id==lastId and t==lastTime:
-					if lastN == None: n = 1
-					else: n = lastN + 1
-		
-			d = (id,t,n)
-			self.lastIndex = d
-			trace(d)
-			return d
-		#@-body
-		#@-node:4::getNewIndex
-		#@+node:5::scanGnx
-		#@+body
-		def scanGnx (self,s,i):
-			
-			"""Create a gnx from its string representation"""
-		
-			if len(s) > 0 and s[-1] == '\n':
-				s = s[:-1]
-		
-			id,t,n=None,None,None
-			i,id = skip_to_char(s,i,'.')
-			if match(s,i,'.'):
-				i,t = skip_to_char(s,i+1,'.')
-				if match(s,i,'.'):
-					i,n = skip_to_char(s,i+1,'.')
-			# Use self.defaultId for missing id entries.
-			if id == None or len(id) == 0:
-				id = self.defaultId
-			# Convert n to int.
-			if n:
-				try: n = int(n)
-				except: pass
-			d = (id,t,n)
-		
-			return d
-		#@-body
-		#@-node:5::scanGnx
-		#@+node:6::setTimeString
-		#@+body
-		def setTimestamp (self):
-		
-			"""Set the timestamp string to be used by getNewIndex until further notice"""
-		
-			self.timeString = time.strftime(
-				"%m%d%y%H%M%S",  # compact timestamp is best
-				time.localtime())
-		#@-body
-		#@-node:6::setTimeString
-		#@+node:7::toString
-		#@+body
-		def toString (self,index,removeDefaultId=false):
-			
-			"""Convert a gnx (a tuple) to its string representation"""
-		
-			id,t,n = index
-		
-			if removeDefaultId and id == self.defaultId:
-				id = ""
-		
-			if n == None:
-				return "%s.%s" % (id,t)
-			else:
-				return "%s.%s.%d" % (id,t,n)
-		#@-body
-		#@-node:7::toString
-		#@-others
-	
-	#@-body
-	#@-node:3::class nodeIndices
-	#@+node:4::Reading
+	#@+node:3::Reading
 	#@+node:1::completeFirstDirectives (Dave Hein)
 	#@+body
 	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
@@ -1777,8 +1645,8 @@ class atFile:
 	#@-body
 	#@-node:2::atFile.read
 	#@-node:11::Top level
-	#@-node:4::Reading
-	#@+node:5::Sentinels
+	#@-node:3::Reading
+	#@+node:4::Sentinels
 	#@+node:1::nodeSentinelText
 	#@+body
 	# 4/5/03: config.write_clone_indices no longer used.
@@ -2085,8 +1953,8 @@ class atFile:
 	
 	#@-body
 	#@-node:11::skipSentinelStart
-	#@-node:5::Sentinels
-	#@+node:6::Testing
+	#@-node:4::Sentinels
+	#@+node:5::Testing
 	#@+node:1::scanAll
 	#@+body
 	def scanAll (self):
@@ -2144,8 +2012,8 @@ class atFile:
 	
 	#@-body
 	#@-node:2::scanFile
-	#@-node:6::Testing
-	#@+node:7::Utilites
+	#@-node:5::Testing
+	#@+node:6::Utilites
 	#@+node:1::atFile.scanAllDirectives (calls writeError on errors)
 	#@+body
 	#@+at
@@ -2503,8 +2371,8 @@ class atFile:
 		self.root.setDirty()
 	#@-body
 	#@-node:6::writeError
-	#@-node:7::Utilites
-	#@+node:8::Writing
+	#@-node:6::Utilites
+	#@+node:7::Writing
 	#@+node:1::Top level
 	#@+node:1::atFile.rawWrite
 	#@+body
@@ -3890,7 +3758,7 @@ class atFile:
 	#@-body
 	#@-node:4::putIndent
 	#@-node:6::Utils
-	#@-node:8::Writing
+	#@-node:7::Writing
 	#@-others
 
 

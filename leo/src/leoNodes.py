@@ -1046,7 +1046,7 @@ class vnode:
 	
 	#@-body
 	#@-node:5::findRoot
-	#@+node:6::headString
+	#@+node:6::headString & cleanHeadString
 	#@+body
 	def headString (self):
 	
@@ -1054,10 +1054,14 @@ class vnode:
 			return self.t.headString
 		else:
 			return ""
-	
-	
+			
+	def cleanHeadString (self):
+		
+		s = self.headString()
+		s = toEncodedString(s,"ascii") # Replaces non-ascii characters by '?'
+		return s
 	#@-body
-	#@-node:6::headString
+	#@-node:6::headString & cleanHeadString
 	#@+node:7::isAncestorOf
 	#@+body
 	def isAncestorOf (self, v):
@@ -1158,145 +1162,6 @@ class vnode:
 	#@-body
 	#@-node:10::status
 	#@-node:9::Status Bits
-	#@+node:10::Structure Links
-	#@+node:1::back
-	#@+body
-	# Compatibility routine for scripts
-	
-	def back (self):
-	
-		return self.mBack
-	#@-body
-	#@-node:1::back
-	#@+node:2::lastNode
-	#@+body
-	def lastNode (self):
-	
-		v = self
-		level = self.level()
-		result = None
-	
-		while v:
-			result = v
-			v = v.threadNext()
-			if not v or v.level() <= level:
-				break
-	
-		return result
-	#@-body
-	#@-node:2::lastNode
-	#@+node:3::level
-	#@+body
-	#@+at
-	#  This function returns the indentation level of the receiver. The root 
-	# nodes have level 0, their children have level 1, and so on.
-
-	#@-at
-	#@@c
-
-	def level (self):
-	
-		level = 0 ; parent = self.parent()
-		while parent:
-			level += 1
-			parent = parent.parent()
-		return level
-	#@-body
-	#@-node:3::level
-	#@+node:4::next
-	#@+body
-	# Compatibility routine for scripts
-	
-	def next (self):
-	
-		return self.mNext
-	#@-body
-	#@-node:4::next
-	#@+node:5::nodeAfterTree
-	#@+body
-	# Returns the vnode following the tree whose root is the receiver.
-	
-	def nodeAfterTree (self):
-	
-		next = self.next()
-		p = self.parent()
-	
-		while not next and p:
-			next = p.next()
-			p = p.parent()
-	
-		return next
-	#@-body
-	#@-node:5::nodeAfterTree
-	#@+node:6::parent
-	#@+body
-	# Compatibility routine for scripts
-	
-	def parent (self):
-	
-		return self.mParent
-	#@-body
-	#@-node:6::parent
-	#@+node:7::threadBack
-	#@+body
-	# Returns the previous element of the outline, or None if at the start of the outline.
-	
-	def threadBack (self):
-	
-		back = self.back()
-		if back:
-			lastChild = back.lastChild()
-			if lastChild:
-				return lastChild.lastNode()
-			else:
-				return back
-		else:
-			return self.parent()
-	#@-body
-	#@-node:7::threadBack
-	#@+node:8::threadNext
-	#@+body
-	def threadNext (self):
-	
-		"""Returns node following the receiver in "threadNext" order.
-		This should be called whenever v's links change"""
-	
-		# stat()
-		v = self
-		if v.firstChild():
-			return v.firstChild()
-		elif v.next():
-			return v.next()
-		else:
-			p = v.parent()
-			while p:
-				if p.next():
-					return p.next()
-				p = p.parent()
-			return None
-	#@-body
-	#@-node:8::threadNext
-	#@+node:9::visBack
-	#@+body
-	def visBack (self):
-	
-		v = self.threadBack()
-		while v and not v.isVisible():
-			v = v.threadBack()
-		return v
-	#@-body
-	#@-node:9::visBack
-	#@+node:10::visNext
-	#@+body
-	def visNext (self):
-	
-		v = self.threadNext()
-		while v and not v.isVisible():
-			v = v.threadNext()
-		return v
-	#@-body
-	#@-node:10::visNext
-	#@-node:10::Structure Links
 	#@-node:9::Getters
 	#@+node:10::Setters
 	#@+node:1::Head and body text
@@ -1712,7 +1577,145 @@ class vnode:
 	#@-body
 	#@-node:6::trimTrailingLines
 	#@-node:10::Setters
-	#@+node:11::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
+	#@+node:11::Tree Traversal (vnode)
+	#@+node:1::back
+	#@+body
+	# Compatibility routine for scripts
+	
+	def back (self):
+	
+		return self.mBack
+	#@-body
+	#@-node:1::back
+	#@+node:2::lastNode
+	#@+body
+	def lastNode (self):
+	
+		v = self
+		level = self.level()
+		result = None
+	
+		while v:
+			result = v
+			v = v.threadNext()
+			if not v or v.level() <= level:
+				break
+	
+		return result
+	#@-body
+	#@-node:2::lastNode
+	#@+node:3::level
+	#@+body
+	#@+at
+	#  This function returns the indentation level of the receiver. The root 
+	# nodes have level 0, their children have level 1, and so on.
+
+	#@-at
+	#@@c
+
+	def level (self):
+	
+		level = 0 ; parent = self.parent()
+		while parent:
+			level += 1
+			parent = parent.parent()
+		return level
+	#@-body
+	#@-node:3::level
+	#@+node:4::next
+	#@+body
+	# Compatibility routine for scripts
+	
+	def next (self):
+	
+		return self.mNext
+	#@-body
+	#@-node:4::next
+	#@+node:5::nodeAfterTree
+	#@+body
+	# Returns the vnode following the tree whose root is the receiver.
+	
+	def nodeAfterTree (self):
+	
+		next = self.next()
+		p = self.parent()
+	
+		while not next and p:
+			next = p.next()
+			p = p.parent()
+	
+		return next
+	#@-body
+	#@-node:5::nodeAfterTree
+	#@+node:6::parent
+	#@+body
+	# Compatibility routine for scripts
+	
+	def parent (self):
+	
+		return self.mParent
+	#@-body
+	#@-node:6::parent
+	#@+node:7::threadBack
+	#@+body
+	def threadBack (self):
+		
+		"""Returns the previous element of the outline, or None if at the start of the outline"""
+	
+		back = self.back()
+		if back:
+			lastChild = back.lastChild()
+			if lastChild:
+				return lastChild.lastNode()
+			else:
+				return back
+		else:
+			return self.parent()
+	#@-body
+	#@-node:7::threadBack
+	#@+node:8::threadNext
+	#@+body
+	def threadNext (self):
+	
+		"""Returns node following the receiver in "threadNext" order"""
+	
+		# stat()
+		v = self
+		if v.firstChild():
+			return v.firstChild()
+		elif v.next():
+			return v.next()
+		else:
+			p = v.parent()
+			while p:
+				if p.next():
+					return p.next()
+				p = p.parent()
+			return None
+	#@-body
+	#@-node:8::threadNext
+	#@+node:9::visBack
+	#@+body
+	def visBack (self):
+	
+		v = self.threadBack()
+		while v and not v.isVisible():
+			v = v.threadBack()
+		return v
+	#@-body
+	#@-node:9::visBack
+	#@+node:10::visNext
+	#@+body
+	def visNext (self):
+	
+		v = self.threadNext()
+		while v and not v.isVisible():
+			v = v.threadNext()
+		return v
+	#@-body
+	#@-node:10::visNext
+	#@-node:11::Tree Traversal (vnode)
+	#@+node:12::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
 	#@+node:1::Entry Points (vnode)
 	#@+node:1::doDelete
 	#@+body
@@ -2354,7 +2357,7 @@ class vnode:
 	#@-body
 	#@-node:13::unjoinTree (changed for 4.0)
 	#@-node:3::Private helper functions
-	#@-node:11::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
+	#@-node:12::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
 	#@-others
 #@-body
 #@-node:4::class vnode
@@ -2489,6 +2492,450 @@ class nodeIndices:
 	#@-others
 #@-body
 #@-node:5::class nodeIndices
+#@+node:6::class position
+#@+body
+debug_positions = true # Enable debugging code in position class
+
+class position:
+	
+	"""A class representing a position in a tree traversal"""
+	
+	
+	#@<< about the position class >>
+	#@+node:1::<< about the position class >>
+	#@+body
+	#@+at
+	#  This class provides tree traversal methods that operate on positions, 
+	# not vnodes.  Positions encapsulate the notion of present position within 
+	# a traversal.
+	# 
+	# In particular, positions allow the notion of the parent of a shared 
+	# vnode (an anchor vnode) to have meaning.
+	# 
+	# A simple picture guides the coding of these routines.  Think of an 
+	# anchor vnode and all link vnodes that point to it as conceptually the 
+	# _same_ vnode.  All these vnodes are in a "bag".  Each link vnode defines 
+	# back, next and parent links for a particular position in the traversal.  
+	# The associated anchor vnode defines the firstChild link for all traversals.
+	# 
+	# With this picture firmly in mind, writing the traversal routines is 
+	# straightforward.  Indeed, the routines in this class parallel the 
+	# related routines in the vnode class:
+	# 
+	# - p.push() moves from a link vnode to an anchor vnode _within the same bag_.
+	# 
+	# - p.pop()  moves from an anchor vnode to a link vnode _within the same bag_.
+	# 
+	# - The push and pop routines contain asserts ensuring that anchor nodes 
+	# are never link nodes, and link nodes are never anchor nodes.  Therefore, 
+	# only a single call to push or pop is ever needed to get to the vnode 
+	# that contains the desired parent, firstChild, back or next link.
+	# 
+	# - the p.next, p.back, p.parent and p.firstChild routines make all the 
+	# nodes in the "bag" appear to be the same node.  That is, they access the 
+	# corresponding ivar in the appropriate vnode, depending on the operation 
+	# and the state of the traversal.  This is done by calling the push and 
+	# pop routines as needed.
+	# 
+	# - The other position traversal are exactly like corresponding vnode 
+	# routines.  In fact, the only difference between these routines and the 
+	# corresponding vnode routines are the _value_ of self.  So we could 
+	# actually use the _same_ vnode routines!  I haven't chosen to do so, and 
+	# I might change my mind :-)
+
+	#@-at
+	#@-body
+	#@-node:1::<< about the position class >>
+
+
+	#@+others
+	#@+node:2::position.__init__
+	#@+body
+	#@+at
+	#   vnodes have two new fields:
+	# 
+	# - link: a pointer to a shared subtree of vnodes if the vnode is a link node.
+	# - links: a list of link nodes pointing at the vnode if the vnode is an 
+	# anchor node.
+	# 
+	# Note: we can always get the current commander from v, so we don't need a 
+	# similar field here.
+	# 
+
+	#@-at
+	#@@c
+
+	def __init__ (self,v,parents=[]):
+	
+		"""Create a new position"""
+		
+		self.v = v
+		self.parents = parents
+	#@-body
+	#@-node:2::position.__init__
+	#@+node:3::copy
+	#@+body
+	def copy (self):
+		
+		"""Return a copy of a position"""
+		
+		return position(self.v,self.parents[:])
+	#@-body
+	#@-node:3::copy
+	#@+node:4::Moving within bags
+	#@+body
+	#@+at
+	#  The push and pop methods move within a bag, altering a position in 
+	# place rather than returning a copy.
+
+	#@-at
+	#@-body
+	#@+node:1::push
+	#@+body
+	def push (self,v):
+		
+		"""Move from a link node to its target node"""
+		
+		p = self
+		
+		if debug_positions: # debugging.
+	
+			# v is a link node.
+			assert(v.link)
+			
+			# v actually points at a target node.
+			target = v.link
+			assert(target.links)
+		
+			# Target nodes are never link nodes.
+			assert(not target.link)
+	
+		p.parents.append(p.v)
+		p.v = v
+		return p
+	#@-body
+	#@-node:1::push
+	#@+node:2::pop
+	#@+body
+	def pop (self):
+		
+		"""Move from a target node to the link node on top of the parents stack"""
+	
+		linkv = p.parents.pop()
+		p.v = linkv
+		assert(linkv)
+		
+		if debug_positions: # debugging.
+	
+			# linkv is in fact a link node.
+			assert(linkv.link)
+			
+			# Link nodes are never target nodes.
+			assert(not linkv.links)
+			
+			# linkv links to a target node.
+			target = linkv.link
+			assert(target.links)
+	
+			# Target nodes are never link nodes.
+			assert(not target.link)
+		
+			# The links are consistent.
+			assert(linkv in target.links)
+	
+		return p
+	#@-body
+	#@-node:2::pop
+	#@-node:4::Moving within bags
+	#@+node:5::Links
+	#@+body
+	#@+at
+	#  The following may be called with a position anywhere inside or outside 
+	# a bag.
+
+	#@-at
+	#@-body
+	#@+node:1::p.back
+	#@+body
+	def back (self):
+		
+		"""Return the position of the previous sibling, or None"""
+	
+		p = self
+	
+		if p.v.links:
+			p.pop()
+	
+		# We are not in an target.
+		assert(not p.v.links)
+	
+		back = p.v.back()
+		if back:
+			p = p.copy()
+			p.v = back
+			return p
+		else:
+			return None
+	#@-body
+	#@-node:1::p.back
+	#@+node:2::p.next
+	#@+body
+	def next (self):
+		
+		"""Return the position of the next sibling, or None"""
+		
+		p = self
+		if p.v.links:
+			p.pop()
+	
+		# We are not in an target.
+		assert(not p.v.links)
+	
+		next = p.v.next()
+		if next:
+			p = p.copy()
+			p.v = next
+			return p
+		else:
+			return None
+	#@-body
+	#@-node:2::p.next
+	#@+node:3::p.parent
+	#@+body
+	def parent (self):
+		
+		"""Return the position to the parent, or None"""
+		
+		p = self
+	
+		if p.v.links:
+			p.pop()
+	
+		# We are not in an target.
+		assert(not p.v.links)
+		
+		parent = p.v.parent()
+		if parent:
+			p = p.copy()
+			p.v = parent
+			return p
+		else:
+			return None
+	#@-body
+	#@-node:3::p.parent
+	#@+node:4::p.firstChild
+	#@+body
+	def firstChild (self):
+		
+		"""Return the position of the first child, or None"""
+		
+		p = self
+	
+		if p.v.link:
+			p.push() 
+	
+		# We are not in a link node.
+		assert(not p.v.link)
+		
+		firstChild = p.v.firstChild()
+		if firstChild:
+			p = p.copy()
+			p.v = firstChild
+			return p
+		else:
+			return None
+	#@-body
+	#@-node:4::p.firstChild
+	#@-node:5::Links
+	#@+node:6::Getters
+	#@+node:1::p.isExpanded
+	#@+body
+	def isExpanded (self):
+		
+		"""Return true if a position's vnode is expanded"""
+		
+		if p.v.links:
+			p = p.pop()
+			
+		return p.v.isExpanded()
+	#@-body
+	#@-node:1::p.isExpanded
+	#@+node:2::p.isVisible
+	#@+body
+	def isVisible (self):
+		
+		"""Returns true if all parent positions are expanded"""
+		
+		p = self
+	
+		p = self.parent()
+		while p:
+			if not p.isExpanded():
+				return false
+			p = p.parent()
+		return true
+	#@-body
+	#@-node:2::p.isVisible
+	#@+node:3::p.level
+	#@+body
+	def level (self):
+		
+		"""Return the indentation of the receiving position
+		
+		Top-level positioins have level 0, their children have level 1, and so on.
+		"""
+	
+		level = 0
+		parent = self.parent()
+	
+		while parent:
+			level += 1
+			parent = parent.parent()
+	
+		return level
+	#@-body
+	#@-node:3::p.level
+	#@-node:6::Getters
+	#@+node:7::Traversals
+	#@+body
+	#@+at
+	#  The code for these routines is really the same as  the code for the 
+	# corresponding vnode methods.
+	# 
+	# In fact, the only difference between these routines and the 
+	# corresponding vnode routines is the _value_ of self.  Therefore, we 
+	# could use exactly the same code, and assign p.next = v.next, etc. in the 
+	# ctor !
+	# 
+	# I have chosen to do this in the interests of clarity:  this code uses p 
+	# = self; the vnode code uses v = self.
+	# 
+	# Also, p.nodeAfterTree is a bit more efficient than v.nodeAfterTree; that 
+	# might be important because p.back, p.next, p.parent and p.firstChild are 
+	# slower than the corresponding vnode methods.
+
+	#@-at
+	#@-body
+	#@+node:1::p.threadBack
+	#@+body
+	def threadBack (self):
+		
+		"""Returns the threadBack position"""
+	
+		p = self
+		
+		back = p.back()
+		if back:
+			lastChild = back.lastChild()
+			if lastChild:
+				return lastChild.lastNode()
+			else:
+				return back
+		else:
+			return p.parent()
+	
+	#@-body
+	#@-node:1::p.threadBack
+	#@+node:2::p.threadNext
+	#@+body
+	def threadNext (self):
+		
+		"""Returns the threadNext position"""
+	
+		p = self
+		
+		firstChild = p.firstChild()
+		if firstChild:
+			return firstChild
+			
+		next = p.next()
+		if next:
+			return next
+		
+		p = p.parent()
+		while p:
+			next = p.next()
+			if next:
+				return next
+			p = p.parent()
+	
+		return None
+	
+	#@-body
+	#@-node:2::p.threadNext
+	#@+node:3::p.visBack
+	#@+body
+	def visBack (self):
+		
+		"""Returns the visBack position"""
+		
+		p = self
+	
+		p = p.threadBack()
+		while p and not p.isVisible():
+			p = p.threadBack()
+		return p
+	#@-body
+	#@-node:3::p.visBack
+	#@+node:4::p.visNext
+	#@+body
+	def visNext (self):
+		
+		"""Returns the visBack position"""
+	
+		p = self
+	
+		p = p.threadNext()
+		while p and not p.isVisible():
+			p = p.threadNext()
+		return p
+	#@-body
+	#@-node:4::p.visNext
+	#@+node:5::p.nodeAfterTree
+	#@+body
+	def nodeAfterTree (self):
+		
+		"""Returns the position following the tree whose root position is given"""
+		
+		p = self
+		
+		# This is a bit more efficient code than the corresponding vnode code.
+	
+		while 1:
+			next = p.next()
+			if next:
+				return next
+	
+			p = p.parent()
+			if not p:
+				return None
+	#@-body
+	#@-node:5::p.nodeAfterTree
+	#@+node:6::p.lastNode
+	#@+body
+	def lastNode (self):
+		
+		"""Return the last position of the receiving position"""
+	
+		p = self
+		level = p.level()
+		result = None
+	
+		while p:
+			result = p
+			p = p.threadNext()
+			if not p or p.level() <= level:
+				break
+	
+		return result
+	#@-body
+	#@-node:6::p.lastNode
+	#@-node:7::Traversals
+	#@-others
+
+
+#@-body
+#@-node:6::class position
 #@-others
 #@-body
 #@-node:0::@file leoNodes.py

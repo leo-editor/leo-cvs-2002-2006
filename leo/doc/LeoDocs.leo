@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1523" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1535" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="51" left="444" height="76" width="111"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="V"><vh>Short summary</vh></v>
+<v t="T1"><vh>Short summary</vh></v>
 <v t="T2"><vh>About Leo's panes and icons (for newbies)</vh>
 <v t="T3"><vh>This node contains text</vh></v>
 <v t="T4" a="M"><vh>This headline is marked</vh></v>
@@ -60,7 +60,7 @@
 <v t="T43"><vh>Dan Winkler 1</vh></v>
 <v t="T44"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="T45" a="E"><vh>Release Notes</vh>
+<v t="T45"><vh>Release Notes</vh>
 <v t="T46"><vh>Warnings</vh></v>
 <v t="T47"><vh>Installation notes</vh>
 <v t="T48" a="C"><vh>System requirements</vh></v>
@@ -863,7 +863,7 @@
 </v>
 </v>
 </v>
-<v t="T612" a="E"><vh>Users Guide</vh>
+<v t="T612"><vh>Users Guide</vh>
 <v t="T613"><vh>An overview of Leo</vh></v>
 <v t="T614"><vh>Front material</vh>
 <v t="T615"><vh>Title Page &amp; Summary</vh></v>
@@ -2185,6 +2185,23 @@
 </v>
 <v t="T1522"><vh>tk is the future of Leo</vh></v>
 <v t="T1523"><vh>Why I like Python</vh></v>
+</v>
+<v t="T1524" a="V"><vh>Leaps</vh>
+<v t="T1525"><vh>100's administering Leaps (and LeoCon)</vh>
+<v t="T1526"><vh>Leap 102: LeoCon 1</vh></v>
+</v>
+<v t="T1527"><vh>200's single-user Leo</vh>
+<v t="T1528"><vh>Leap 201. Prototype link nodes and vxnodes</vh></v>
+<v t="T1529"><vh>Leap 202. Create cvs-friendly file format for derived files</vh></v>
+<v t="T1530"><vh>Leap 203. Use Python Mega Widgets</vh></v>
+<v t="T1531"><vh>Leap 204: Add spell-checker</vh></v>
+</v>
+<v t="T1532"><vh>300's LeoN and beyond</vh>
+<v t="T1533"><vh>Leap 301: Use central server</vh></v>
+<v t="T1534"><vh>Leap 302: Produce a plugin for a Resolve CVS Conflicts command</vh>
+<v t="T1535"><vh>Comments by Josef</vh></v>
+</v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -18132,5 +18149,74 @@ The only hope of making Leo all it can be is to use the best possible tools.  I 
 
 Edward K. Ream
 October 25, 2001</t>
+<t tx="T1524">@nocolor
+
+I would like to set up a system for planning, discussing and implementing major additions to Leo. Python has
+PEP's (Python Enhancement Proposals). I'd like to start something similar called Leap's (Leo Enhancement
+&amp; Advancement Proposals).</t>
+<t tx="T1525">100 Series: Leaps that apply to the Leap process itself. 
+
+Leap 101: How to administer Leaps. 
+
+- Assigned to nobody. 
+- No formality needed yet. </t>
+<t tx="T1526">
+
+- Assigned to nobody. 
+- Create, plan, promote &amp; administer a gathering of Leo enthusiasts. 
+- Part of the planning would be to create a date and setting for the conferences. </t>
+<t tx="T1527"></t>
+<t tx="T1528">- Assigned to EKR.
+- Remove tnodes as a fundamental part of Leo. 
+- Represent clones as link nodes and target nodes. 
+- Create vxnodes as needed. (Some new thoughts about this are coming). 
+
+</t>
+<t tx="T1529">- Assigned to EKR.
+- Sentinels are immutable, with mutable information following on separate lines. 
+- We could create such a file format without Leap 201. 
+- Leap 201, if implemented, will imply changes to this Leap. 
+
+</t>
+<t tx="T1530">- Assigned to EKR.
+- More flexible and more powerful than present hand-drawn code. 
+- Ideally, it would be a path to anygui. 
+- No firm commitment to this Leap: it depends on further study. 
+
+</t>
+<t tx="T1531">- Assigned to EKR and Paul Paterson.</t>
+<t tx="T1532"></t>
+<t tx="T1533">Produce a plugin (with related design) that allows people to share all or part of .leo files via a
+central server. 
+
+- Assigned to nobody. 
+- This plugin need _not_ address itself to issues raised in Leap 302: it is a prototype for experimentation. The
+initial aim of this Leap would be to produce a starting point design that would be incorporated into this Leap
+for review. 
+
+</t>
+<t tx="T1534">- Assigned to nobody 
+- This plugin need _not_ address itself to issues raised in Leap 301: it is a prototype for experimentation. The
+initial aim of this Leap would be to produce a starting point design that would be incorporated into this Leap
+for review.</t>
+<t tx="T1535">Open Discussion
+
+ RE: Status report: ten breakthroughs
+2003-05-30 12:50  
+About merging / CVS etc: 
+
+Perhaps it helps to think about the big picture a bit, I mean about what do we really want / is practical. 
+
+CVS is a de-facto standard on the internet for collaboration, so being compatible is highly desirable. Unfortunately CVS has a series of shortcomings, particularly for Leo. 
+
+CVS merges on a line-by-line basis, so interdependencies of code are ignored (I think all other tools I know of do the same). Now, I believe this is ok for large sets of files, where mutiple changes to the same function or file are rare. Using CVS to merge only single Leo nodes (body text) would be rather silly though: Mostly these texts are short (a page or so) and one single function (or less). Multiple changes in such a codde snipped are likely to be interdependent, and I would rather like to look at the different texts rather than have them merged automatically. 
+
+On the other hand, I don't mind if the versioning or merging tool at hand allows me to update any nodes I did not touch myself. So rather than CVS-like merging, I would like to see which nodes are being affected by the change, then have it done automatically for thouse nodes I don't worry about, but by hand (or interactively) for thouse I changed myself too, or for thouse I worry about, because they are related to my own changes. 
+
+In other words, I would like to see a merge tool, that understands versions, can tell me which nodes in a Leo file have changed, remembers which changes I made myself, and gives me the choice, tree branch by tree branch, to automatically accept the changes, or screen them interactively. 
+
+I think Leo should have such a tool built-in. 
+
+- Josef</t>
 </tnodes>
 </leo_file>

@@ -2292,56 +2292,7 @@ class LeoFrame:
 	#@-node:11::frame.updateRecentFiles
 	#@-node:1::top level
 	#@+node:2::Recent Files submenu
-	#@+node:1::frame.OpenWithFileName
-	#@+body
-	def OpenWithFileName(self, fileName):
-	
-		if not fileName or len(fileName) == 0:
-			return false, None
-	
-		# Create a full normalized path name.
-		# Display the file name with case intact.
-		fileName = os.path.join(os.getcwd(), fileName)
-		fileName = os.path.normpath(fileName)
-		oldFileName = fileName 
-		fileName = os.path.normcase(fileName)
-	
-		# If the file is already open just bring its window to the front.
-		list = app().windowList
-		for frame in list:
-			fn = os.path.normcase(frame.mFileName)
-			fn = os.path.normpath(fn)
-			if fileName == fn:
-				frame.top.deiconify()
-				app().log = frame
-				# es("This window already open")
-				return true, frame
-				
-		fileName = oldFileName # Use the idiosyncratic file name.
-	
-		try:
-			file = open(fileName,'r')
-			if file:
-				frame = LeoFrame(fileName)
-				if not doHook("open1",
-					old_c=self,new_c=frame.commands,fileName=fileName):
-					app().log = frame # 5/12/03
-					frame.commands.fileCommands.open(file,fileName) # closes file.
-				frame.openDirectory=os.path.dirname(fileName)
-				frame.updateRecentFiles(fileName)
-				doHook("open2",
-					old_c=self,new_c=frame.commands,fileName=fileName)
-				return true, frame
-			else:
-				es("can not open" + fileName)
-				return false, None
-		except:
-			es("exceptions opening" + fileName)
-			es_exception()
-			return false, None
-	#@-body
-	#@-node:1::frame.OpenWithFileName
-	#@+node:2::frame.OnOpenRecentFile
+	#@+node:1::frame.OnOpenRecentFile
 	#@+body
 	def OnOpenRecentFile(self,name=None):
 		
@@ -2378,7 +2329,7 @@ class LeoFrame:
 				app().log = frame # Sets the log stream for es()
 		doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
 	#@-body
-	#@-node:2::frame.OnOpenRecentFile
+	#@-node:1::frame.OnOpenRecentFile
 	#@-node:2::Recent Files submenu
 	#@+node:3::Read/Write submenu
 	#@+node:1::fileCommands.OnReadOutlineOnly
@@ -3832,26 +3783,7 @@ class LeoFrame:
 	#@-node:10::OnGoNext
 	#@-node:3::Move/Select
 	#@+node:4::Mark/Goto
-	#@+node:1::recentButtonCallback
-	#@+body
-	def recentButtonCallback(self,event=None):
-		
-		c = self.c ; d = self.recentSectionsDialog
-		
-		if d:
-			d.top.deiconify()
-			d.fillbox()
-		else:
-			# Create and run the dialog.]
-			title = "Recent Nodes"
-			label = "Recent nodes: " + shortFileName(c.frame.mFileName)
-			d = leoDialog.recentSectionsDialog(c,self.nav_buttons,title,label)
-			self.recentSectionsDialog = d
-			d.root.wait_window(d.top)
-	
-	#@-body
-	#@-node:1::recentButtonCallback
-	#@+node:2::OnGoPrevVisitedNode
+	#@+node:1::OnGoPrevVisitedNode
 	#@+body
 	def OnGoPrevVisitedNode(self,event=None):
 		
@@ -3869,8 +3801,8 @@ class LeoFrame:
 				return
 	
 	#@-body
-	#@-node:2::OnGoPrevVisitedNode
-	#@+node:3::OnGoNextVisitedNode
+	#@-node:1::OnGoPrevVisitedNode
+	#@+node:2::OnGoNextVisitedNode
 	#@+body
 	def OnGoNextVisitedNode(self,event=None):
 		
@@ -3887,8 +3819,8 @@ class LeoFrame:
 				c.tree.idle_scrollTo(v)
 				return
 	#@-body
-	#@-node:3::OnGoNextVisitedNode
-	#@+node:4::OnGoToFirstNode
+	#@-node:2::OnGoNextVisitedNode
+	#@+node:3::OnGoToFirstNode
 	#@+body
 	def OnGoToFirstNode(self,event=None):
 		
@@ -3899,8 +3831,8 @@ class LeoFrame:
 			c.selectVnode(v)
 			c.endUpdate()
 	#@-body
-	#@-node:4::OnGoToFirstNode
-	#@+node:5::OnGoToLastNode
+	#@-node:3::OnGoToFirstNode
+	#@+node:4::OnGoToLastNode
 	#@+body
 	def OnGoToLastNode(self,event=None):
 		
@@ -3915,32 +3847,32 @@ class LeoFrame:
 			c.endUpdate()
 	
 	#@-body
-	#@-node:5::OnGoToLastNode
-	#@+node:6::OnGoToNextChanged
+	#@-node:4::OnGoToLastNode
+	#@+node:5::OnGoToNextChanged
 	#@+body
 	def OnGoToNextChanged(self,event=None):
 	
 		self.commands.goToNextDirtyHeadline()
 	
 	#@-body
-	#@-node:6::OnGoToNextChanged
-	#@+node:7::OnGoToNextClone
+	#@-node:5::OnGoToNextChanged
+	#@+node:6::OnGoToNextClone
 	#@+body
 	def OnGoToNextClone(self,event=None):
 	
 		self.commands.goToNextClone()
 	
 	#@-body
-	#@-node:7::OnGoToNextClone
-	#@+node:8::OnGoToNextMarked
+	#@-node:6::OnGoToNextClone
+	#@+node:7::OnGoToNextMarked
 	#@+body
 	def OnGoToNextMarked(self,event=None):
 	
 		self.commands.goToNextMarkedHeadline()
 	
 	#@-body
-	#@-node:8::OnGoToNextMarked
-	#@+node:9::OnGoToNextSibling
+	#@-node:7::OnGoToNextMarked
+	#@+node:8::OnGoToNextSibling
 	#@+body
 	def OnGoToNextSibling(self,event=None):
 		
@@ -3953,8 +3885,8 @@ class LeoFrame:
 			c.selectVnode(next)
 			c.endUpdate()
 	#@-body
-	#@-node:9::OnGoToNextSibling
-	#@+node:10::OnGoToParent
+	#@-node:8::OnGoToNextSibling
+	#@+node:9::OnGoToParent
 	#@+body
 	def OnGoToParent(self,event=None):
 		
@@ -3968,8 +3900,8 @@ class LeoFrame:
 			c.endUpdate()
 	
 	#@-body
-	#@-node:10::OnGoToParent
-	#@+node:11::OnGoToPrevSibling
+	#@-node:9::OnGoToParent
+	#@+node:10::OnGoToPrevSibling
 	#@+body
 	def OnGoToPrevSibling(self,event=None):
 		
@@ -3983,55 +3915,55 @@ class LeoFrame:
 			c.endUpdate()
 	
 	#@-body
-	#@-node:11::OnGoToPrevSibling
-	#@+node:12::OnMark
+	#@-node:10::OnGoToPrevSibling
+	#@+node:11::OnMark
 	#@+body
 	def OnMark(self,event=None):
 	
 		self.commands.markHeadline()
 	
 	#@-body
-	#@-node:12::OnMark
-	#@+node:13::OnMarkChangedItems
+	#@-node:11::OnMark
+	#@+node:12::OnMarkChangedItems
 	#@+body
 	def OnMarkChangedItems(self,event=None):
 	
 		self.commands.markChangedHeadlines()
 	
 	#@-body
-	#@-node:13::OnMarkChangedItems
-	#@+node:14::OnMarkChangedRoots
+	#@-node:12::OnMarkChangedItems
+	#@+node:13::OnMarkChangedRoots
 	#@+body
 	def OnMarkChangedRoots(self,event=None):
 	
 		self.commands.markChangedRoots()
 	
 	#@-body
-	#@-node:14::OnMarkChangedRoots
-	#@+node:15::OnMarkClones
+	#@-node:13::OnMarkChangedRoots
+	#@+node:14::OnMarkClones
 	#@+body
 	def OnMarkClones(self,event=None):
 	
 		self.commands.markClones()
 	
 	#@-body
-	#@-node:15::OnMarkClones
-	#@+node:16::OnMarkSubheads
+	#@-node:14::OnMarkClones
+	#@+node:15::OnMarkSubheads
 	#@+body
 	def OnMarkSubheads(self,event=None):
 	
 		self.commands.markSubheads()
 	
 	#@-body
-	#@-node:16::OnMarkSubheads
-	#@+node:17::OnUnmarkAll
+	#@-node:15::OnMarkSubheads
+	#@+node:16::OnUnmarkAll
 	#@+body
 	def OnUnmarkAll(self,event=None):
 	
 		self.commands.unmarkAll()
 	
 	#@-body
-	#@-node:17::OnUnmarkAll
+	#@-node:16::OnUnmarkAll
 	#@-node:4::Mark/Goto
 	#@-node:3::Outline Menu
 	#@+node:4::Window Menu
