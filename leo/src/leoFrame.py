@@ -2139,7 +2139,7 @@ class baseLeoFrame:
 		c = self.commands ; v = c.currentVnode()
 	
 		# Create copy for undo.
-		v_copy = v.copyTree()
+		v_copy = c.undoer.saveTree(v)
 		oldText = getAllText(c.body)
 		oldSel = getTextSelection(c.body)
 	
