@@ -6,12 +6,116 @@
 
 from leoGlobals import *
 from leoUtils import *
-import os, sys, traceback, ConfigParser
+import exceptions, os, sys, traceback, ConfigParser
+
+
+#@<< Define names of settings >>
+#@+node:1::<< Define names of settings >>
+#@+body
+#@+at
+#  Used only by open.  Update just writes whatever is in the various dicts.
+
+#@-at
+#@@c
+
+# Config section... (Not used in the code)
+
+boolConfigNames = ( "read_only" )
+stringConfigNames = ( "xml_version_string" )
+
+# Find section...
+boolFindNames = (
+	"batch",
+	"ignore_case",
+	"mark_changes",
+	"mark_finds",
+	"pattern_match",
+	"reverse",
+	"search_body",
+	"search_headline",
+	"suboutline_only",
+	"whole_word", "wrap" )
+
+stringFindNames = (
+	"change_string",
+	"find_string" )
+
+# Prefs section...
+boolPrefsNames = (
+	"output_doc_chunks",
+	"run_tangle_done.py",
+	"run_untangle_done.py",
+	"tangle_outputs_header" )
+	
+intPrefsNames = (
+	"page_width",
+	"tab_width" )
+
+stringPrefsNames = (
+	"default_tangle_directory",
+	"default_target_language" )
+	
+# Syntax coloring section...
+boolColoringNames = (
+	"color_directives_in_plain_text",
+	"underline_undefined_section_names" )
+	
+stringColoringNames = (
+	# Tk color values also allowed.
+	"comment_color",
+	"cweb_section_name_color",
+	"directive_color",
+	"doc_part_color",
+	"keyword_color",
+	"leo_keyword_color",
+	"section_name_color",
+	"section_name_brackets_color",
+	"string_color",
+	"undefined_section_name_color" )
+	
+# Window section...
+boolWindowNames = ( "body_pane_wraps" )
+
+intWindowNames = (
+	"additional_body_text_border ",
+	"body_text_font_size",
+	"headline_text_font_size",
+	"log_text_font_size" )
+
+floatWindowNames = (
+	"initial_vertical_ratio",
+	"initial_horizontal_ratio" )
+	
+stringWindowNames = (
+	"body_text_font_family",
+	"body_text_font_slant",
+	"body_text_font_weight",
+	
+	"headline_text_font_family",
+	"headline_text_font_slant",
+	"headline_text_font_weight",
+
+	"initial_splitter_orientation", # "horizontal" or "vertical"
+	"initial_window_height",
+	"initial_window_left",
+	"initial_window_top",
+	"initial_window_width",
+	
+	"log_text_font_family",
+	"log_text_font_slant",
+	"log_text_font_weight",
+	
+	"split_bar_color",
+	"split_bar_relief",
+	"split_bar_width" )
+#@-body
+#@-node:1::<< Define names of settings >>
+
 
 class config:
 
 	#@+others
-	#@+node:1:C=1:config.__init__
+	#@+node:2:C=1:config.__init__
 	#@+body
 	def __init__ (self):
 		
@@ -22,115 +126,125 @@ class config:
 			self.configDir = app().loadDir
 		self.configFileName = os.path.join(self.configDir,"leoConfig.txt")
 		
-		#@<< define constants >>
-		#@+node:1::<< define constants >>
+		#@<< initialize constant ivars >>
+		#@+node:1::<< initialize constant ivars >>
 		#@+body
 		# Language names.
 		self.languageNameDict = {
-			c_language: "C", cweb_language: "CWEB",
-			html_language: "HTML", java_language: "Java",
-			pascal_language: "Pascal", perl_language: "Perl",
-			perlpod_language: "PerlPod", plain_text_language: "Plain",
+			c_language: "C",
+			cweb_language: "CWEB",
+			html_language: "HTML",
+			java_language: "Java",
+			pascal_language: "Pascal",
+			perl_language: "Perl",
+			perlpod_language: "PerlPod",
+			plain_text_language: "Plain",
 			python_language: "Python" }
+		
 		# Names of sections.
 		self.configSection = "config options"
-		self.findSection = "find/change prefs"
-		self.fontSection = "font prefs"
-		self.prefsSection = "prefs panel"
+		self.findSection = "find/change options"
+		self.prefsSection = "prefs panel options"
 		self.recentFilesSection = "recent files"
-		self.syntaxColoringSection = "syntax coloring prefs"
+		self.colorsSection = "syntax coloring options"
+		self.windowSection = "window options"
 		#@-body
-		#@-node:1::<< define constants >>
+		#@-node:1::<< initialize constant ivars >>
 
-		# Settings in each section.
+	
+		# Initialize settings in each section.
+		self.config = None # The current instance of ConfigParser
 		self.read_only = false
 		self.xml_version_string = None
 		self.findDict = {}
-		self.fontDict = {}
 		self.prefsDict = {}
 		self.recentFiles = []
-		self.syntaxColoringDict = {}
+		self.colorsDict = {}
+		self.windowDict = {}
+	
 		# Initialize the ivars from the config file.
 		self.open()
 	#@-body
-	#@-node:1:C=1:config.__init__
-	#@+node:2::get/setFindPref
+	#@-node:2:C=1:config.__init__
+	#@+node:3::get...FromDict & setDict
 	#@+body
-	# We don't read or write keys whose value is "ignore"
+	def getBoolFromDict (self,name,dict):
+		val = self.getIntFromDict(name,dict)
+		if val and val != None and val != 0: val = 1
+		return val
 	
-	def getIntFindPref (self,name):
-		val = self.getFindPref(name)
+	def getFloatFromDict (self,name,dict):
+		val = self.getFromDict(name,dict)
 		if val:
-			try: val = int(val)
+			try: val = float(val)
 			except: val = None
 		return val
 	
-	def getFindPref (self,name):
-	
-		if name in self.findDict:
-			val = self.findDict[name]
-			if val == "ignore":
-				val = None
-			# print "get",`name`,`val`
-			return val
-		else:
-			return None
-	
-	def setFindPref (self,name,val):
-	
-		# print "set",`name`, `val`
-		if name in self.findDict:
-			old_val = self.findDict[name]
-			if old_val != "ignore":
-				self.findDict [name] = val
-		else:
-			self.findDict [name] = val
-	#@-body
-	#@-node:2::get/setFindPref
-	#@+node:3::get/setFont (todo)
-	#@+body
-	def getFont (self, fontDict):
-		
-		pass
-		
-	def setFont (self):
-		
-		pass
-	#@-body
-	#@-node:3::get/setFont (todo)
-	#@+node:4::get/setPref
-	#@+body
-	# We don't read or write keys whose value is "ignore"
-	
-	def getIntPref (self,name):
-		val = self.getPref(name)
-		if val:
-			try: val = int(val)
-			except: val = None
-		return val
-	
-	def getPref (self,name):
-	
-		if name in self.prefsDict:
-			val = self.prefsDict[name]
+	def getFromDict (self,name,dict):
+		if name in dict:
+			val = dict[name]
 			if val == "ignore":
 				val = None
 			return val
 		else:
 			return None
 	
-	def setPref (self,name,val):
+	def getIntFromDict (self,name,dict):
+		val = self.getFromDict(name,dict)
+		if val:
+			try: val = int(val)
+			except: val = None
+		return val
+	
+	def setDict (self,name,val,dict):
 	
 		# print `name`, `val`
-		if name in self.prefsDict:
-			old_val = self.prefsDict[name]
+		if name in dict:
+			old_val = dict [name]
 			if old_val != "ignore":
-				self.prefsDict [name] = val
+				dict [name] = val
 		else:
-			self.prefsDict [name] = val
+			dict [name] = val
+			
+	getStringFromDict = getFromDict
 	#@-body
-	#@-node:4::get/setPref
-	#@+node:5:C=2:get/setRecentFiles
+	#@-node:3::get...FromDict & setDict
+	#@+node:4::get/setFindPref (test)
+	#@+body
+	def getBoolFindPref (self,name):
+		return self.getIntFromDict(name,self.findDict)
+	
+	# Basic getters and setters.
+	
+	def getFindPref (self,name):
+		return self.getFromDict(name,self.findDict)
+	
+	def setFindPref (self,name,val):
+		self.setDict(name,val,self.findDict)
+		
+	getStringFindPref = getFindPref
+	#@-body
+	#@-node:4::get/setFindPref (test)
+	#@+node:5::get/setPref (test)
+	#@+body
+	def getBoolPref (self,name):
+		return self.getBoolFromDict(name,self.prefsDict)
+	
+	def getIntPref (self,name):
+		return self.getIntFromDict(name,self.prefsDict)
+		
+	# Basic getters and setters.
+	
+	def getPref (self,name):
+		return self.getFromDict(name,self.prefsDict)
+	
+	def setPref (self,name,val):
+		self.setDict(name,val,self.prefsDict)
+		
+	getStringPref = getPref
+	#@-body
+	#@-node:5::get/setPref (test)
+	#@+node:6:C=2:get/setRecentFiles
 	#@+body
 	def getRecentFiles (self):
 		
@@ -141,23 +255,51 @@ class config:
 		self.recentFiles = files
 
 	#@-body
-	#@-node:5:C=2:get/setRecentFiles
-	#@+node:6::get/setSyntaxColors (todo)
+	#@-node:6:C=2:get/setRecentFiles
+	#@+node:7::get/setColors (test)
 	#@+body
-	def getSyntaxColors (self):
+	def getBoolColorsPref (self,name):
+		return self.getBoolFromDict(name,self.colorsDict)
 		
-		pass
+	# Basic getters and setters.
+	
+	def getColorsPref (self,name):
+		return self.getFromDict(name,self.colorsDict)
+	
+	def setColorsPref (self,name,val):
+		self.setDict(name,val,self.colorsDict)
 		
-	def setSyntaxColors (self, colorsDict):
-		
-		pass
+	getStringColorsPref = getColorsPref
 	#@-body
-	#@-node:6::get/setSyntaxColors (todo)
-	#@+node:7::open
+	#@-node:7::get/setColors (test)
+	#@+node:8::get/setWindowPrefs(test)
+	#@+body
+	def getBoolWindowPref (self,name):
+		return self.getBoolFromDict(name,self.windowDict)
+		
+	def getFloatWindowPref (self,name):
+		return self.getIntFromDict(name,self.windowDict)
+		
+	def getIntWindowPref (self,name):
+		return self.getIntFromDict(name,self.windowDict)
+		
+	# Basic getters and setters.
+	
+	def getWindowPref (self,name):
+		return self.getFromDict(name,self.windowDict)
+	
+	def setWindowPref (self,name,val):
+		self.setDict(name,val,self.windowDict)
+		
+	getStringWindowPref = getWindowPref
+	#@-body
+	#@-node:8::get/setWindowPrefs(test)
+	#@+node:9::open
 	#@+body
 	def open (self):
 		
 		config = ConfigParser.ConfigParser()
+		self.config = config
 		try:
 			cf = open(self.configFileName)
 			config.readfp(cf)
@@ -194,36 +336,18 @@ class config:
 			#@-node:2::<< get recent files >>
 
 			
+			
 			#@<< get prefs >>
 			#@+node:3::<< get prefs >>
 			#@+body
-			# Names of prefsSection prefs
-			boolPrefsNames = [
-				"output_doc_chunks",
-				"run_tangle_done.py","run_untangle_done.py",
-				"tangle_outputs_header" ]
-					
-			for name in ["page_width","tab_width"]:
-				try:
-					val = config.getint(self.prefsSection, name)
-					self.prefsDict[name] = val
-				except: pass # not an error.
-				
-			stringPrefsDict = [
-				"default_tangle_directory",
-				"default_target_language"]
+			section = self.prefsSection
+			dict = self.prefsDict
 			
-			for name in stringPrefsDict:
-				try:
-					val = config.get(self.prefsSection, name)
-					self.prefsDict[name] = val
-				except: pass # not an error.
-				
-			for name in boolPrefsNames:
-				try:
-					val = config.getboolean(self.prefsSection, name)
-					self.prefsDict[name] = val
-				except: pass # not an error.
+			self.setAllDicts(dict,section,
+				bools=boolPrefsNames,
+				ints=intPrefsNames,
+				strings=stringPrefsNames)
+
 			#@-body
 			#@-node:3::<< get prefs >>
 
@@ -231,54 +355,84 @@ class config:
 			#@<< get find prefs >>
 			#@+node:4::<< get find prefs >>
 			#@+body
-			# Names of find/change prefs
-			boolFindNames = [
-					"batch", "ignore_case",
-					"mark_changes", "mark_finds",
-					"pattern_match", "reverse",
-					"search_body", "search_headline",
-					"suboutline_only",
-					"whole_word", "wrap" ]
+			section = self.findSection
+			dict = self.findDict
 			
-			for name in ["change_string", "find_string" ]:
-				try:
-					val = config.get(self.findSection, name)
-					self.findDict[name] = val
-				except: pass # not an error.
-				
-			for name in boolFindNames:
-				try:
-					val = config.getboolean(self.findSection, name)
-					self.findDict[name] = val
-				except: pass # not an error.
+			self.setAllDicts(dict,section,
+				bools=boolFindNames,
+				strings=stringFindNames)
+
 			#@-body
 			#@-node:4::<< get find prefs >>
 
 			
-			#@<< get font prefs >>
-			#@+node:5::<< get font prefs >>
+			#@<< get syntax coloring prefs >>
+			#@+node:5::<< get syntax coloring prefs >>
 			#@+body
-			# Not yet.
+			section = self.colorsSection
+			dict = self.colorsDict
+			
+			self.setAllDicts(dict,section,
+				bools=boolColoringNames,
+				strings=stringColoringNames)
 			#@-body
-			#@-node:5::<< get font prefs >>
+			#@-node:5::<< get syntax coloring prefs >>
 
 			
-			#@<< get syntax coloring prefs >>
-			#@+node:6::<< get syntax coloring prefs >>
+			#@<< get window prefs >>
+			#@+node:6::<< get window prefs >>
 			#@+body
-			# Not yet.
+			section = self.windowSection
+			dict = self.windowDict
+			
+			self.setAllDicts(dict,section,
+				bools=boolWindowNames, floats=floatWindowNames,
+				ints=intWindowNames, strings=stringWindowNames)
 			#@-body
-			#@-node:6::<< get syntax coloring prefs >>
+			#@-node:6::<< get window prefs >>
 
 			# print `self.recentFiles`
-			# print `self.prefsDict`
+			if 0:
+				print "\n\nprefsDict:\n\n"  + `self.prefsDict`
+				print "\n\nfindDict:\n\n"   + `self.findDict` 
+				print "\n\ncolorsDict:\n\n" + `self.colorsDict`
+				print "\n\nwindowDict:\n\n" + `self.windowDict`
 			cf.close()
-		except:
+		except exceptions.IOError:
+			traceback.print_exc()
 			# es("Can not open " + self.configFileName)
 			pass
+		except:
+			traceback.print_exc()
+			pass
+		self.config = None
 	#@-body
-	#@-node:7::open
-	#@+node:8::setCommandsFindIvars
+	#@-node:9::open
+	#@+node:10::setAllDicts
+	#@+body
+	def setAllDicts (self, dict, section,
+		bools=(),floats=(),ints=(),strings=()):
+			
+		config = self.config
+		assert(config)
+			
+		for name in bools:
+			try: dict[name] = config.getboolean(section,name)
+			except: pass
+		for name in ints:
+			try: dict[name] = config.getint(section,name)
+			except: pass
+		for name in floats:
+			try: dict[name] = config.getfloat(section,name)
+			except: pass
+		for name in strings:
+			try: dict[name] = config.get(section,name)
+			except: pass
+			
+		# print "setAllDicts:" + `dict`
+	#@-body
+	#@-node:10::setAllDicts
+	#@+node:11::setCommandsFindIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -290,51 +444,51 @@ class config:
 		#@<< set find ivars >>
 		#@+node:1::<< set find ivars >>
 		#@+body
-		val = config.getIntFindPref("batch")
+		val = config.getBoolFindPref("batch")
 		if val: c.batch_flag = val
 		
-		val = config.getIntFindPref("wrap")
+		val = config.getBoolFindPref("wrap")
 		if val: c.wrap_flag = val
 		
-		val = config.getIntFindPref("whole_word")
+		val = config.getBoolFindPref("whole_word")
 		if val: c.whole_word_flag = val
 		
-		val = config.getIntFindPref("ignore_case")
+		val = config.getBoolFindPref("ignore_case")
 		if val: c.ignore_case_flag = val
 		
-		val = config.getIntFindPref("pattern_match")
+		val = config.getBoolFindPref("pattern_match")
 		if val: c.pattern_match_flag = val
 		
-		val = config.getIntFindPref("search_headline")
+		val = config.getBoolFindPref("search_headline")
 		if val: c.search_headline_flag = val
 		
-		val = config.getIntFindPref("search_body")
+		val = config.getBoolFindPref("search_body")
 		if val: c.search_body_flag = val
 		
-		val = config.getIntFindPref("suboutline_only")
+		val = config.getBoolFindPref("suboutline_only")
 		if val: c.suboutline_only_flag = val
 		
-		val = config.getIntFindPref("mark_changes")
+		val = config.getBoolFindPref("mark_changes")
 		if val: c.mark_changes_flag = val
 		
-		val = config.getIntFindPref("mark_finds")
+		val = config.getBoolFindPref("mark_finds")
 		if val: c.mark_finds_flag = val
 		
-		val = config.getIntFindPref("reverse")
+		val = config.getBoolFindPref("reverse")
 		if val: c.reverse_flag = val
 		
-		val = config.getFindPref("change_string")
+		val = config.getStringFindPref("change_string")
 		if val: c.change_text = val
 		
-		val = config.getFindPref("find_string")
+		val = config.getStringFindPref("find_string")
 		if val: c.find_text = val
 		#@-body
 		#@-node:1::<< set find ivars >>
 
 		app().findFrame.init(c)
 	#@-body
-	#@-node:8::setCommandsFindIvars
-	#@+node:9::setCommandsIvars
+	#@-node:11::setCommandsFindIvars
+	#@+node:12::setCommandsIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -384,8 +538,8 @@ class config:
 		#@-body
 		#@-node:1::<< set prefs ivars >>
 	#@-body
-	#@-node:9::setCommandsIvars
-	#@+node:10::setConfigFindIvars
+	#@-node:12::setCommandsIvars
+	#@+node:13::setConfigFindIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -408,8 +562,8 @@ class config:
 		self.setFindPref("find_string",c.find_text)
 
 	#@-body
-	#@-node:10::setConfigFindIvars
-	#@+node:11::setConfigIvars
+	#@-node:13::setConfigFindIvars
+	#@+node:14::setConfigIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -445,8 +599,8 @@ class config:
 		self.setFindPref("find_string",c.find_text)
 
 	#@-body
-	#@-node:11::setConfigIvars
-	#@+node:12::update
+	#@-node:14::setConfigIvars
+	#@+node:15::update
 	#@+body
 	# Rewrites the entire config file from ivars.
 	# This is called when a .leo file is written and when the preferences panel changes.
@@ -462,6 +616,7 @@ class config:
 			return
 		
 		config = ConfigParser.ConfigParser()
+		self.config = config
 		try:
 			cf = open(self.configFileName,"w")
 			config.readfp(cf)
@@ -507,38 +662,20 @@ class config:
 			#@-body
 			#@-node:3::<< write prefs section >>
 
-			
-			#@<< write find/change section >>
-			#@+node:4::<< write find/change section >>
-			#@+body
-			self.update_section(config,self.findSection,self.findDict)
-			#@-body
-			#@-node:4::<< write find/change section >>
-
-			
-			#@<< write font section >>
-			#@+node:5::<< write font section >>
-			#@+body
-			self.update_section(config,self.fontSection,self.fontDict)
-			#@-body
-			#@-node:5::<< write font section >>
-
-			
-			#@<< write syntax coloring section >>
-			#@+node:6::<< write syntax coloring section >>
-			#@+body
-			self.update_section(config,self.syntaxColoringSection,self.syntaxColoringDict)
-			#@-body
-			#@-node:6::<< write syntax coloring section >>
-
+			self.update_section(config,
+				self.findSection,self.findDict)
+			self.update_section(config,
+				self.colorsSection,self.colorsDict)
+			self.update_section(config,
+				self.windowSection,self.windowDict)
 			config.write(cf)
 			cf.close()
 		except:
-			# traceback.print_exc() 
-			pass
+			traceback.print_exc()
+		self.config = None
 	#@-body
-	#@-node:12::update
-	#@+node:13::update_section
+	#@-node:15::update
+	#@+node:16::update_section
 	#@+body
 	def update_section (self,config,section,dict):
 		
@@ -552,7 +689,7 @@ class config:
 			val = dict [name]
 			config.set(section,name,val)
 	#@-body
-	#@-node:13::update_section
+	#@-node:16::update_section
 	#@-others
 #@-body
 #@-node:0::@file leoConfig.py

@@ -1,44 +1,64 @@
 # leoConfig.txt: configuration file for Leo.
-# 7/8/2002 by Edward K. Ream
-
+# 7/11/2002 by Edward K. Ream
+#
 # Leo looks for this file using the directory in sys.leo_config_directory.
-# (You would typically set this attribute in sitecustomize.py).
-# If sys.leo_config_directory does not exist,
-# Leo attempts to load this file from the directory from which Leo was loaded.
-
+# 	(You would typically set this attribute in sitecustomize.py).
+# 	If sys.leo_config_directory does not exist,
+#	 Leo attempts to load this file from the directory from which Leo was loaded.
+#
 # Settings in this file override settings in all .leo files.
-# Leo does not write settings to the <preferences> and <find_panel_settings>
-# elements of .leo files that exist in this file.
+# 	Leo does not write settings to the <preferences> and <find_panel_settings>
+# 	elements of .leo files that exist in this file.
+#
+# Leo uses Python's ConfigParser module to parse this file,
+# with all of ConfigParser's features (and bugs!).
+#
+# 	Comments start with a pound character in the leftmost column.
+# 	You may specify booleans as 0/1, no/yes, false/true, off/on (case insensitive).
+# 	These get converted to 0/1 if the file is not read_only
+#
 
-# Leo uses Python's ConfigParser module, so this file has all the features
-# (and bugs!) of the ConfigParser module.
+# WARNING: !! Do not place anything except comments before here !!
 
-# Comments start with a pound character.
-# You may specify booleans as 0/1, no/yes, false/true, off/on (case insensitive).
-# These get converted to 0/1 if the file is not read_only
-
-# WARNING: Do not place any options before the [config options] section.
+# -----------------------------------------------------------------------------
+# General configuration options
 
 [config options]
 
-# WARNING: Clearing the read_only attribute will cause Leo to remove
-# all comments and alter order of attributes when rewriting this file!!
-
 read_only = 1
+#	WARNING: Clearing the read_only attribute will cause Leo to remove
+#	all comments and alter order of attributes when rewriting this file!!
+
 xml_version_string = ISO-8859-1
+#	The version used at the start of .leo files.
+#	Use UTF-8 to make files compatible with older versions of Leo.
+
+
+# -----------------------------------------------------------------------------
+# The list of files in the "Recent Files" menu at startup.
 
 [recent files]
 
-# The list of files initially in the "Recent Files" menu.
 file1 = c:\prog\leocvs\leo\leopy.leo
 file0 = c:\prog\leocvs\leo\leodocs.leo
+#	Paths to recent files.
+#	Valid option names: file0 through file9.
 
-[find/change prefs]
 
-# These are the initial settings of the Find/Change panel.
+# -----------------------------------------------------------------------------
+# The initial settings of the Find/Change panel.
+
+[find/change options]
 
 change_string = 
+# 	The change string (without the quotes unless quotes are part of the string).
+
 find_string = 
+# 	The find string (without the quotes unless quotes are part of the string).
+
+#
+# The following are all 0/1 settings for checkboxes in the Find/Change panel.
+#
 
 batch = 0
 ignore_case = 0
@@ -52,53 +72,196 @@ suboutline_only = 0
 whole_word = 1
 wrap = 0
 
-[prefs panel]
 
-# These are the initial settings of the Preferences panel.
-# Default Tangle Directory is deprecated.
+# -----------------------------------------------------------------------------
+# The initial settings of the Preferences panel.
+
+[prefs panel options]
 
 default_tangle_directory = 
-default_target_language = Python
+# 	(Deprecated)
+# 	The default directory used if no directory specified
+# 	in @path, @root or @file directives.
 
-# Negative tab widths cause tabs to be converted to blanks.
+default_target_language = Python
+# 	The default language if no @language or @comment is in effect.
 
 tab_width = 4
+# 	The width of tabs on the screen.
+# 	This setting is also used when writing doc parts.
+# 	Valid values: A nonzero positive or negative integer.
+# 	Negative tab widths cause Leo to convert tabs to blanks when typing.
+
 page_width = 132
+# 	The page width for wrapping doc parts in derived files.
+# 	Valid values: any nonzero positive integer.
 
 output_doc_chunks = 1
+# 	1/0: Explicit Tangle commands output doc parts.
+
 tangle_outputs_header = 1
+# 	1/0: Explicit Tangle commands output file header.
 
 run_tangle_done.py = 0
+# 	1/0: Run tangle_done.py after explitic Tangle commands.
+
 run_untangle_done.py = 0
+# 	1/0: Run tangle_done.py after explicit Unangle commands.
 
-[leo window options]
 
-# These are the initial settings of newly opened windows.
-# Good values here are needed to make Toggle Split Direction convenient.
-# Defaults are shown.
+# -----------------------------------------------------------------------------
+# Syntax coloring options and colors.
 
-# Size in inches.  Other valid Tk formats are converted to this format when writing this file.
+[syntax coloring options]
+
+color_directives_in_plain_text = 1
+# 	1/0: Color Leo directives for @language plain
+
+underline_undefined_section_names = 1:
+# 	1/0: Undeline undefined section names
+
+
+# The following may be any valid Tk color name or color value.
+# 	For example, #00aa00 is the dark green used by IDLE.
+# 	For Tk color names see: http://www.tcl.tk/man/tcl8.3/TkCmd/colors.htm
+# 	These names are case sensitive, for example: BlanchedAlmond
+
+comment_color = red
+# The color of comments in code parts.
+
+cweb_section_name_color = DarkRed
+# The color of name in @<name@>
+
+directive_color = blue
+	# The color of C/C++ preprocessor directive lines.
+
+doc_part_color = red
+#	The color of text in doc parts.
+
+keyword_color = blue
+#	The color of keywords of the present language.
+#	For example, the color of "if", "try" and "except" in Python.
+
+leo_keyword_color = blue
+#	The color of Leo keywords
+#	For example, the color of @ignore, @color, etc.
+
+section_name_color = red
+#	The color of name in <<name>> when name is defined.
+
+section_name_brackets = blue
+#	The color of << and >> in <<name>>
+
+string_color = #00aa00
+#	The color of strings and their delimiters.
+
+undefined_section_name_color = red
+#	The color of name in <<name>> when name is undefined.
+
+
+
+# -----------------------------------------------------------------------------
+# Options that affect the appearance of windows.
+# Many of these options use Tk pixel units.  Examples:
+#
+#	  5      5 pixels
+#	 10c    10 centimeters
+#	  8i     8 inches
+#	 30m    30 millimeters
+#	300p   300 points (1/72 inch)
+#
+# See also: http://www.tcl.tk/man/tcl8.3/TkLib/GetPixels.htm
+
+[window options]
+
+body_pane_wraps = 1
+#	0/1: Wrap body text if 1.
+
+additional_body_text_border = 0
+#	Additional border in body text pane, in Tk pixel units.
+
+
+# The following options affect text in the body, outline and log panes...
+
+
+body_text_font_family = Courier
+#	Font family for body text.
+
+body_text_font_size = 9
+#	Size of body text. Must be an integer. Default is system default size.
+#	12 may be better for Linux.
+
+body_text_font_slant = roman
+#	The Tk -slant setting: roman, italic.  Default is roman.
+
+body_text_font_weight = normal
+#	The Tk -weight setting: normal or bold.  Default is normal.
+
+
+headline_text_font_family =
+#	Font family for headline text.
+
+headline_text_font_size =
+#	Size of headline text. Must be an integer. Default is system default size.
+
+headline_text_font_slant = roman
+#	The Tk -slant setting: roman, italic. Default is roman.
+
+headline_text_font_weight = normal
+#	The Tk -weight setting: normal or bold.  Default is normal.
+
+
+log_text_font_family =
+#	Font family for text in the log pane.
+
+log_text_font_size =
+#	Size of text in the log pane. Must be an integer. Default is system default size.
+
+log_text_font_slant = roman
+#	The Tk -slant setting: roman, italic. Default is roman.
+
+log_text_font_weight = normal
+#	The Tk -weight setting: normal or bold.  Default is normal.
+
+
+# The following options affect all windows when they first appear...
+
+
+initial_window_height = 7i
+#	Height of window, in Tk pixel units.
+	
 initial_window_width = 8i
-initial_window_height = 6i
+#	Width window, in Tk pixel units.
 
-bar_color = LightSteelBlue2
-bar_relief = raised
-bar_width = 7
+initial_window_left = 10
+#	Distance from left of screen of window, in Tk pixel units.
 
-# valid values are horizontal or vertical
+initial_window_top = 10
+#	Distance from top of screen of window, in Tk pixel units.
+
 initial_splitter_orientation = vertical
+#	vertical: body pane below outline and log panes.
+#	horizontal: body pane to left of outline and log panes.
 
-# Ratio of tree pane to body pane when spitting pane vertically.
 initial_vertical_ratio = 0.5
+#	tree pane/body pane size when spitting pane vertically.
+#	Valid values: 0.0 to 1.0.
 
-# Ratio of tree pane to body pane when spitting pane horizontally.
 initial_horizontal_ratio = 0.3
+#	tree pane/body pane size when spitting pane horizontally.
+#	Valid values: 0.0 to 1.0.
 
-[font prefs]
 
-# This section is not functional yet.
+# The following options affect the bar that separates panes in the Leo window...
 
-[syntax coloring prefs]
 
-# This section is not functional yet.
+split_bar_color = LightSteelBlue2
+#	The color of the split bar.
+#	Valid values: Tk color names or Tk color values.
 
+split_bar_relief = raised
+#	The Tk -relief option for the split bar.
+#	Valid values: raised, sunken, flat, ridge, solid, groove.
+	
+split_bar_width = 7
+#	The width of the split bar, in Tk pixel units.

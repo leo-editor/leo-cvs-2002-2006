@@ -1573,7 +1573,7 @@ class fileCommands:
 			self.putPostlog()
 			# raise BadLeoFile # testing
 		except:
-			# traceback.print_exc() 
+			traceback.print_exc() 
 			if self.outputFile:
 				self.outputFile.close()
 				self.outputFile = None
