@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6435" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6446" clone_windows="0"/>
 <globals body_outline_ratio="0.59649122807">
-	<global_window_position top="24" left="175" height="855" width="907"/>
+	<global_window_position top="12" left="326" height="855" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041121151002"><vh>@settings</vh>
+<v t="ekr.20041121151002" a="E"><vh>@settings</vh>
 <v t="ekr.20041121151002.1"><vh>@recent-files</vh></v>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
+<v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
+<v t="ekr.20041213075902"><vh>@font log font</vh></v>
 </v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
@@ -1433,16 +1435,18 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="TV"><vh>Pmw dialog</vh>
-<v t="ekr.20041130085400"><vh>Status: read me</vh>
-<v t="ekr.20041130095005"><vh>bugs, etc</vh></v>
-<v t="ekr.20041130085943"><vh>buttons</vh></v>
-<v t="ekr.20041130085943.1"><vh>putting settings into effect</vh></v>
-<v t="ekr.20041130085400.2" a="M"><vh>fonts</vh></v>
-<v t="ekr.20041130085400.3" a="M"><vh>types</vh></v>
+<v t="ekr.20041213074603" a="E"><vh>Settings dialog To do</vh>
+<v t="ekr.20041213172250" a="TV"><vh>Support @strings and @ints NOW</vh></v>
+<v t="ekr.20041130085400.2" a="M"><vh>Finish font stuff</vh></v>
+<v t="ekr.20041130085943.1"><vh>Put settings into effect immediately</vh></v>
+<v t="ekr.20041211053412"><vh>Fix recent files problems</vh></v>
+<v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
+<v t="ekr.20041211053412.2"><vh>Support new buttons</vh></v>
+<v t="ekr.20041211053539.1"><vh>Copy expansion state when writing @settings trees</vh></v>
+<v t="ekr.20041213115848"><vh>Later or never...</vh></v>
 </v>
-<v t="ekr.20041127231319"><vh>To do</vh></v>
-<v t="ekr.20041128225703"><vh>Notes</vh></v>
+<v t="ekr.20041125145818.1" a="EM"><vh>Settings dialog</vh>
+<v t="ekr.20041213090929"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041126110158"><vh> ctor</vh>
 <v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
@@ -1453,10 +1457,11 @@
 <v t="ekr.20041126133120"><vh>&lt;&lt; put a Text widget in the comment pane &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041128225703.1"><vh>center</vh></v>
-<v t="ekr.20041126153101.1"><vh>createSettingsTree</vh>
+<v t="ekr.20041126153101.1"><vh>createSettingsTree &amp; helpers</vh>
 <v t="ekr.20041127055009.1"><vh>&lt;&lt; create a node p for  kind &amp; root2 &gt;&gt;</vh>
 <v t="ekr.20041127081146"><vh>&lt;&lt; add entry for p to filesInfoDict &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20041127090307"><vh>rootNodeComments</vh></v>
 </v>
 <v t="ekr.20041127112925"><vh>createWidgets &amp; helpers</vh>
 <v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
@@ -1467,9 +1472,18 @@
 <v t="ekr.20041128062902.1"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
-<v t="ekr.20041127134208.4"><vh>createFont  (finish)</vh></v>
-<v t="ekr.20041127134208.5"><vh>createInt</vh></v>
 <v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
+<v t="ekr.20041127134208.4"><vh>createFont  &amp; helpers</vh>
+<v t="ekr.20041213090401.1" a="E"><vh>createColorPicker</vh>
+<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
+<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213113433"><vh>&lt;&lt; create callback and bind it to widgets &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041213091111"><vh>updateFontDict</vh></v>
+</v>
+<v t="ekr.20041127134208.5"><vh>createInt</vh></v>
 <v t="ekr.20041127134208.7"><vh>createPath</vh></v>
 <v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
 <v t="ekr.20041127134208.9"><vh>createRecentFiles (finish)</vh></v>
@@ -1488,7 +1502,6 @@
 <v t="ekr.20041130061955.1"><vh>getters...</vh>
 <v t="ekr.20041129175112"><vh>findCorrespondingNode</vh></v>
 <v t="ekr.20041129095748"><vh>findSettingsRoot</vh></v>
-<v t="ekr.20041127090307"><vh>rootNodeComments</vh></v>
 <v t="ekr.20041126142253.1"><vh>settingsPosition</vh></v>
 </v>
 <v t="ekr.20041130061955.2"><vh>redrawing...</vh>
@@ -1496,9 +1509,9 @@
 <v t="ekr.20041127092231"><vh>updateComments</vh></v>
 <v t="ekr.20041127155541"><vh>updateSetterLabel</vh></v>
 </v>
-<v t="ekr.20041128042051" a="E"><vh>value handlers...</vh>
+<v t="ekr.20041128042051"><vh>value handlers...</vh>
 <v t="ekr.20041128042051.1"><vh>initValue</vh></v>
-<v t="ekr.20041128081018.1" a="E"><vh>writeChangedVars &amp; helpers</vh>
+<v t="ekr.20041128081018.1"><vh>writeChangedVars &amp; helpers</vh>
 <v t="ekr.20041130062919"><vh>updateConfig</vh></v>
 <v t="ekr.20041129113302" a="M"><vh>updateOneNode</vh></v>
 <v t="ekr.20041129095748.1"><vh>writeChangedList</vh>
@@ -1541,28 +1554,41 @@
 <v t="ekr.20041127102844.1"><vh>ctor</vh></v>
 <v t="ekr.20041127110245"><vh>set</vh></v>
 <v t="ekr.20041127103503"><vh>visitNode</vh></v>
-<v t="ekr.20041127103503.1"><vh>kind handlers</vh>
+<v t="ekr.20041127103503.1" a="E"><vh>kind handlers</vh>
 <v t="ekr.20041127111750"><vh>Not used</vh>
 <v t="ekr.20041127103503.2"><vh>doBool</vh></v>
 <v t="ekr.20041127103503.3"><vh>doColor</vh></v>
+<v t="ekr.20041127103503.7"><vh>doDirectory &amp; doPath</vh></v>
 <v t="ekr.20041127103503.11"><vh>doFloat</vh></v>
-<v t="ekr.20041127103503.8"><vh>doFont</vh></v>
 <v t="ekr.20041127103503.4"><vh>doIf</vh></v>
 <v t="ekr.20041127103503.5"><vh>doIfGui</vh></v>
 <v t="ekr.20041127103503.6"><vh>doIfPlatform</vh></v>
 <v t="ekr.20041127103503.9"><vh>doIgnore</vh></v>
 <v t="ekr.20041127103503.10"><vh>doInt</vh></v>
+<v t="ekr.20041127103503.13"><vh>doRatio</vh></v>
 <v t="ekr.20041127103503.14"><vh>doRecentFiles</vh></v>
 <v t="ekr.20041127103503.15"><vh>doShortcut</vh></v>
 <v t="ekr.20041127103503.17"><vh>doString</vh></v>
 </v>
-<v t="ekr.20041127103503.7"><vh>doDirectory &amp; doPath</vh></v>
-<v t="ekr.20041127103503.13"><vh>doRatio</vh></v>
+<v t="ekr.20041127103503.8"><vh>doFont</vh></v>
 <v t="ekr.20041127103503.12"><vh>doPage</vh></v>
 <v t="ekr.20041127103503.16"><vh>doRecentFiles &amp; doBodyPaneList</vh></v>
 <v t="ekr.20041127113719"><vh>doShortcuts</vh></v>
 <v t="ekr.20041127103503.18"><vh>doType</vh></v>
 </v>
+</v>
+</v>
+<v t="ekr.20041213085122"><vh>Font stuff</vh>
+<v t="ekr.20041127103503.8"><vh>doFont</vh></v>
+<v t="ekr.20041127134208.4" a="E"><vh>createFont  &amp; helpers</vh>
+<v t="ekr.20041213090401.1" a="E"><vh>createColorPicker</vh>
+<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
+<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213113433"><vh>&lt;&lt; create callback and bind it to widgets &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041213091111"><vh>updateFontDict</vh></v>
 </v>
 </v>
 </vnodes>
@@ -2185,7 +2211,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2316,7 +2342,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -11199,7 +11225,7 @@ Bigger projects:
     top.grab_set() # Make the dialog a modal dialog.
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
-<t tx="ekr.20041121151002"></t>
+<t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\doc\leodocs.leo
 C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\plugins\leoplugins.leo</t>
@@ -12398,17 +12424,7 @@ else: # Use plain click.
 <t tx="ekr.20041125145818"></t>
 <t tx="ekr.20041125145818.1">"""Create a Pmw settings dialog by subclassing leoTkinterTree."""
 
-import leoGlobals as g
-import leoConfig
-import leoNodes
-import tkColorChooser
-import leoTkinterColorPanels
-import leoTkinterTree
-
-import Pmw
-import Tkinter as Tk
-
-import sys
+&lt;&lt; imports &gt;&gt;
 
 @others
 
@@ -12601,6 +12617,8 @@ for fileName in fileNames:
     self.modal = False
     self.setterLabel = None
     self.suppressComments = None # position for which to suppress comments.
+    self.alterComments = None # position for which to alter comments.
+    self.alteredCommentsString = None
     self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
 
     self._settingsPosition = p = self.createSettingsTree()
@@ -12798,6 +12816,7 @@ if root2:
     root2.copyTreeFromSelfTo(p)  # replace p by root2.
 
 self.copyExpansionState(root2,p)
+p.expand() # Always expand the top-level node
 
 &lt;&lt; add entry for p to filesInfoDict &gt;&gt;
 
@@ -12850,21 +12869,25 @@ last_p = p</t>
     
     c = self.c ; fileName = g.shortFileName(c.mFileName)
     
-    s = """
-    
-    This tree shows Leo's global and home settings, as well as the local settings in %s.
-    
-    """ % (fileName)
+    s = """This tree shows Leo's global and home settings, as well as the local settings in %s."""\
+        % (fileName)
     
     return s</t>
 <t tx="ekr.20041127092231">def updateComments (self,p):
 
     self.commentWidget.clear()
     
-    if p != self.suppressComments:
-        self.commentWidget.setvalue(p.bodyString())
-        
-    self.suppressComments = None</t>
+    if not p or p == self.suppressComments:
+        comments = ''
+    elif p == self.alterComments:
+        comments = self.alteredCommentsString
+    else:
+        comments = p.bodyString()
+    
+    self.commentWidget.setvalue(comments)
+
+    self.suppressComments = None
+    self.alterComments = None</t>
 <t tx="ekr.20041127102844">class parserClass (leoConfig.parserBaseClass):
     
     @others</t>
@@ -12879,13 +12902,14 @@ last_p = p</t>
         'bool':         self.set,
         'color':        self.set,
         'directory':    self.doDirectory,
-        'font':         self.set,
-        'if':           None,
+        'font':         self.doFont,
+        'if':           self.doIf,
         'ifgui':        None,
         'ifplatform':   None,
         'ignore':       None,
         'int':          self.set,
         'float':        self.set,
+        'font':         self.doFont,
         'path':         self.doPath,
         'page':         self.doPage,
         'ratio':        self.set,
@@ -12934,8 +12958,9 @@ last_p = p</t>
     
 doPath = doDirectory</t>
 <t tx="ekr.20041127103503.8">def doFont (self,p,kind,name,val):
-    
-     self.set(p,kind,name,val)</t>
+
+    d = self.parseFont(p)
+    self.set(p,kind,name,d)</t>
 <t tx="ekr.20041127103503.9">def doIgnore(self,p,kind,name,val):
 
    pass # do nothing</t>
@@ -12994,7 +13019,9 @@ doRecentFiles = doBodyPaneList
 <t tx="ekr.20041127110245">def set (self,p,kind,name,val):
     
     self.widgets.append((p.copy(),kind,name,val),)</t>
-<t tx="ekr.20041127111750">if 0:
+<t tx="ekr.20041127111750"># Almost all the work is done by parseHeadline.
+
+if 0:
     @others</t>
 <t tx="ekr.20041127112806">def printWidgets (self,widgets):
 
@@ -13116,15 +13143,18 @@ self.setterLabel = sc.component('label')
     self.createString(parent,p,kind,name,val)</t>
 <t tx="ekr.20041127134208.4">def createFont (self,parent,p,kind,name,val):
     
-    # Inits the Entry widget.
-    var = Tk.StringVar()
-    var.set(val)
+    """Create a font picker.  val is a dict containing the specified values."""
+    
+    d = val
+    # g.trace(g.dictToString(d))
+    self.alterComments = p.copy()
+    self.alteredCommentsString = d.get('comments')
 
     f = Tk.Frame(parent) # No need to pack.
-    Tk.Label(f,text=name).pack(side='top')
+    self.createColorPicker(f,d)
 
-    self.sc.create_window(15, self.h,anchor='w',window = f)
-    self.h += 50</t>
+    self.sc.create_window(15,self.h,anchor='w',window = f)
+    self.h += 30</t>
 <t tx="ekr.20041127134208.5">def createInt (self,parent,p,kind,name,val):
 
     # Inits the entry widget.
@@ -13137,7 +13167,7 @@ self.setterLabel = sc.component('label')
 
     def intCallback():
         val2 = var.get()
-        g.trace(name,val2)
+        # g.trace(name,val2)
         try:
             int(val2)
             return val2
@@ -13263,40 +13293,12 @@ self.setterLabel = sc.component('label')
 
         h = p.headString().strip() or ''
 
-        for name in ('@page','@ignore','@'):
+        for name in ('@page','@font','@ignore','@'):
             if g.match(h,0,name):
                 h = h[len(name):].strip()
                 break
     
         self.setterLabel.configure(text=h)</t>
-<t tx="ekr.20041127231319">@
-@killcolor
-
-- Crashes when selecting colors.
-
-- Color changes are written properly, but do not take effect until next reload.
-
-(done) Expand dialog tree to match underlying @settings tree.
-
-- Finish font stuff.
-    This is important:  it will determine how much type machinery is needed.
-
-- Fix recent files problems:
-    - Make recent files an extensible list.
-        At present there is no way to add entries from the dialog.
-    - The recent-files entry is updated properly, but it doesn't "take".
-
-- (maybe) Copy expansion state when updating @settings tree.
-
-* Fix bug: findSettingsRoot doesn't work if no summary node.
-    - May be a problem with copying positions.
-
-- Support new buttons:
-    - (maybe) Refresh recreates and redraws dialog's outline.
-    - Check button checks for duplicate shortcuts, bad settings, etc.
-
-- (last) Move code into Leo's core.
-    - move findCorrespondingNode into leoNodes class.</t>
 <t tx="ekr.20041128042051">@ These keep track of the original and changed values of all items in the present setter pane.</t>
 <t tx="ekr.20041128042051.1">def initValue (self,p,name,kind,val,getValueCallback):
     
@@ -13442,15 +13444,6 @@ bar = paneFrame2.component('separator-%d' % i)
 bar.configure(background='LightSteelBlue2')
 handle = paneFrame2.component('handle-%d' % i)
 handle.configure(background='SteelBlue2')</t>
-<t tx="ekr.20041128225703">@
-@killcolor
-
-** Aha: non-modal dialog is more convenient for user.
-    - Code must check for changed tree in underlying outline.
-
-** Possibility: don't use separate dialog at all.
-    - However, we would still need a different outline.
-    - If changes to the outline were allowed in the dialog it would be sorta like old clone windows.</t>
 <t tx="ekr.20041128225703.1">def center(self):
     
     top = self.top
@@ -13631,57 +13624,24 @@ print ; print</t>
             c.setRecentFiles(val)
         else:
             g.app.config.set(c,name,kind,val)</t>
-<t tx="ekr.20041130085400">@
-@killcolor
+<t tx="ekr.20041130085400.2">The present font logic works only for Tk font specs.  The same is true of the color picker.
 
-Big picture: this prototype is complete and functional. See child nodes for details.</t>
-<t tx="ekr.20041130085400.2">@
+- Use Pmw.EntryField to get size.
 
-The dialog does not support a Font picker yet.  Creating the picker in the gui will not be difficult.
+* On startup, handle @font nodes correctly.
 
-Some way must be chosen to specify fonts in text.  This will probably be something in body text that looks like a dict:
-
-family: blah
-size: 18
-weight: normal
-slant: normal
-
-The parser will convert this to a true dict.</t>
-<t tx="ekr.20041130085400.3">@
-
-Leo needs one more standard type, say @strings.  This type will replace all user-defined types.  The body text will contain a list of valid strings.  The picker will show a combo box, as is done presently in the color name picker.
-
-I plan to remove all the machinery to support most user-types.  This was not a great idea.  Indeed, the dialog defines all the types that really matter, namely all the types for which the dialog can create a picker.  Anything beyond this is basically a delusion of no real utility.</t>
-<t tx="ekr.20041130085943">@
-
-All buttons are functional except the refresh and check buttons.
-
-- The refresh button would be easy to do, but it will be moot if the dialog gets injected into the main Leo window.
-
-- The check button is more complex, but conceptually straightforward.
-
-- For testing I like to have the window close button funtional.  In production code it should be disabled because it is not clear whether is should equivalent to OK or Cancel.
-
-To disable this button, in onAnyButton change:
-
-if name in (None,"OK","Cancel"):
-
-to:
-
-if name in ("OK","Cancel"):</t>
-<t tx="ekr.20041130085943.1">@
-
-Leo updates settings files, including the open file if that is appropriate, when the user presses the OK, Apply or Revert buttons.
+* Update body text of @font nodes in revert/ok/apply logic.
+    Recreate the text from the fontDict.</t>
+<t tx="ekr.20041130085943.1">Leo updates settings files, including the open file if that is appropriate, when the user presses the OK, Apply or Revert buttons.
 
 g.app.config.set does not do anything yet, so settings don't go into effect. This will probably be very easy to fix.
 
 Completing g.app.config.set  will put all drawing settings into effect immediately.  Some settings are more difficult to put into effect.
 
-A general way to put settings into effect would be good, but may not be easy.</t>
-<t tx="ekr.20041130092210"></t>
-<t tx="ekr.20041130095005">@
+A general way to put settings into effect would be good, but may not be easy.
 
-A number of bugs remain, but that's not too important in a prototype.  See the To do list...</t>
+- Color changes are written properly, but do not take effect until next reload.</t>
+<t tx="ekr.20041130092210"></t>
 <t tx="ekr.20041130191836">def copyExpansionState(self,p1,p2):
  
     # Don't depend on p.nodeAfterTree, etc.
@@ -13695,5 +13655,152 @@ A number of bugs remain, but that's not too important in a prototype.  See the T
             self.copyExpansionState(child1,child2)
             child1 = child1.next()
             child2 = child2.next()</t>
+<t tx="ekr.20041211044607"></t>
+<t tx="ekr.20041211053412">@
+
+- Make recent files an extensible list.
+    At present there is no way to add entries from the dialog.
+
+- The recent-files entry is updated properly, but it doesn't "take".
+
+</t>
+<t tx="ekr.20041211053412.1">@
+
+May be a problem with copying positions.</t>
+<t tx="ekr.20041211053412.2">@
+
+- Refresh recreates and redraws dialog's outline.  
+
+- Check button checks for duplicate shortcuts, bad settings, etc.
+
+- For testing I like to have the window close button funtional.  In production code it should be disabled because it is not clear whether is should equivalent to OK or Cancel.
+
+To disable this button, in onAnyButton change:
+
+if name in (None,"OK","Cancel"):
+
+to:
+
+if name in ("OK","Cancel"):</t>
+<t tx="ekr.20041211053539.1">@
+
+</t>
+<t tx="ekr.20041213074603">@killcolor
+
+- Don't show @page in outline.</t>
+<t tx="ekr.20041213075902"># The font for the log pane. Default is default font for Tk.Text widgets.
+# Tk translates invalid font names to another font in a system-dependent way.
+#
+# Default size is 12 for Linux, 8 otherwise.
+
+log_text_font_family = None
+log_text_font_size = None
+log_text_font_slant = roman
+log_text_font_weight = normal</t>
+<t tx="ekr.20041213085122"></t>
+<t tx="ekr.20041213090401.1">def createColorPicker (self,f,d):
+    
+    widgets = {}
+    
+    &lt;&lt; create the family option menu &gt;&gt;
+    &lt;&lt; create the size entry &gt;&gt;
+    &lt;&lt; create the weight option menu &gt;&gt;
+    &lt;&lt; create the slant option menu &gt;&gt;
+    if 0:
+        &lt;&lt; create callback and bind it to widgets &gt;&gt;</t>
+<t tx="ekr.20041213090401.4">names = tkFont.families()
+names = list(names)
+names.sort()
+names.insert(0,'&lt;none&gt;')
+
+try:
+    family = d.get('family')
+    initialitem = names.index(family)
+except ValueError:
+    initialitem = 0
+
+familyMenu = Pmw.OptionMenu(f,
+    labelpos="we",label_text="Family:",
+    items=names,initialitem=initialitem)
+familyMenu.pack(side="left",padx=2)
+
+familyButton = familyMenu.component('menubutton')
+familyButton.configure(width=20)
+
+
+</t>
+<t tx="ekr.20041213090401.5">try:
+    weight = d.get('weight')
+    initialitem = names.index(weight)
+except ValueError:
+    initialitem = 0
+
+weightMenu = Pmw.OptionMenu(f,
+    labelpos="we",label_text="Weight:",
+    items=["normal","bold"],initialitem=initialitem)
+weightMenu.pack(side="left",padx=2)
+
+weightButton = weightMenu.component('menubutton')
+weightButton.configure(width=7) # Constant width is good enough.</t>
+<t tx="ekr.20041213090929">import leoGlobals as g
+import leoConfig
+import leoNodes
+import leoTkinterColorPanels
+import leoTkinterTree
+
+import Pmw
+
+import Tkinter as Tk
+import tkColorChooser
+import tkFont
+
+import sys</t>
+<t tx="ekr.20041213091111">def updateFontDict (self,optionMenu,slantVar,weightVar,sizeEntry,d):
+    
+    # Wait til idle time to get the entry widget's values.
+    
+    family = optionMenu.getvalue()
+    size = sizeEntry.get()
+    slant = slantVar.get()
+    weight = weightVar.get()
+
+    g.trace(family,size,slant,weight)</t>
+<t tx="ekr.20041213113433">def callback (event=None):
+    self.updateFontDict(familyMenu,weightMenu,slantMenu,sizeEntry,d)
+
+if 0:
+    # Maybe this should be done in the Apply,Ok,Revert logic.
+    for widget in (familyButton,weightButton,slantButton):
+        widget.configure(command=callback)
+    
+    sizeEntry.bind("&lt;Key&gt;",callback)</t>
+<t tx="ekr.20041213115848">- (last) Move code into Leo's core.
+    - move findCorrespondingNode into leoNodes class.
+
+** Don't use separate dialog at all??
+    - However, we would still need a different outline.
+    - If changes to the outline were allowed in the dialog it would be sorta like old clone windows.</t>
+<t tx="ekr.20041213163519">Tk.Label(f,text="Size:").pack(side="left")
+
+sizeEntry = Tk.Entry(f,width=4)
+sizeEntry.pack(side="left")</t>
+<t tx="ekr.20041213163519.1">try:
+    slant = d.get('slant')
+    initialitem = names.index(slant)
+except ValueError:
+    initialitem = 0
+
+slantMenu = Pmw.OptionMenu(f,
+    labelpos="we",label_text="Slant:",
+    items=["normal","italic"],initialitem=initialitem)
+
+slantMenu.pack(side="left",padx=2)
+
+slantButton = slantMenu.component('menubutton')
+slantButton.configure(width=7)</t>
+<t tx="ekr.20041213172250">@strings[x,y,z] name = val
+@ints[n1,n2,...] name = val
+
+This is required</t>
 </tnodes>
 </leo_file>
