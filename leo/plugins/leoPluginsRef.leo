@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2988" clone_windows="0"/>
-<globals body_outline_ratio="0.526939655172">
-	<global_window_position top="18" left="298" height="928" width="834"/>
+<globals body_outline_ratio="0.390086206897">
+	<global_window_position top="28" left="424" height="928" width="834"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -183,7 +183,6 @@
 </v>
 </v>
 <v t="ekr.20040916073636"><vh>@thin ConceptualSort.py</vh></v>
-<v t="ekr.20040722115324"><vh>Create a configurable pretty printer plugin</vh></v>
 <v t="ekr.20040918165144.1"><vh>Draw config dialog</vh></v>
 <v t="ekr.20040918165144.2"><vh>Parse jEdit description files</vh></v>
 <v t="ekr.20040918165144.3"><vh>Convert to Python indices</vh></v>
@@ -201,7 +200,7 @@
 <v t="ekr.20040918165427.5"><vh>Leo to docbook xml plugin: Leo2AsciiDoc</vh></v>
 <v t="ekr.20040918165427.6"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
-<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
@@ -654,7 +653,7 @@ marks="ekr.20040915052810,"><vh>@thin spellpyx.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20040929104807"><vh>4.3 prototype plugins</vh>
+<v t="ekr.20040929104807" a="TV"><vh>4.3 prototype plugins</vh>
 <v t="ekr.20041017043108"><vh>To do: improve g.cantImport</vh></v>
 <v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
 <v t="ekr.20041011102931"><vh>@thin xsltWithNodes.py</vh></v>
@@ -674,6 +673,8 @@ marks="ekr.20040915052810,"><vh>@thin spellpyx.py</vh></v>
 <v t="ekr.20040915144649.17"><vh>Patch1</vh></v>
 <v t="ekr.20040915144649.18"><vh>Patch2</vh></v>
 </v>
+<v t="mork.20041022090036.1"><vh>@thin templates.py</vh></v>
+<v t="mork.20041022155742.1"><vh>@thin nodebar.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -6932,7 +6933,7 @@ The latter two style sheets are imported at the end of the default.css.
 <t tx="ekr.20040409051841"></t>
 <t tx="ekr.20040409051841.1">As stated earlier, you must put an @ignore directive in any @rst node (except the root @rst node) whose rST text you want to contribute to the output.  This strange-looking convention allows you to embed documentation in @file-nosent trees *without* that documentation being included in the file derived from the @file-nosent tree.
 
-For example, consider the following outline, in which all the @rst nodes (except the root @rst node) contain @others directives::
+For example, consider the following outline, in which all the @rst nodes (except the root @rst node) contain @ignore directives::
 
     @rst spamDocs.html
         @file-nosent spam.py
@@ -7027,7 +7028,6 @@ Currently the script works for C and python files. It looks at the
 file extension to determine if C or python type annotations are
 used. Maybe this information can be centralized.
 </t>
-<t tx="ekr.20040722115324"></t>
 <t tx="ekr.20040722134535"></t>
 <t tx="ekr.20040722135402"></t>
 <t tx="ekr.20040722135402.1"></t>
