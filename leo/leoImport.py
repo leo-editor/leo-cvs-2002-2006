@@ -77,7 +77,7 @@ class leoImportCommands:
 		
 		# Used by Importers.
 		self.web_st = []
-		self.encoding = "utf-8"
+		self.encoding = app().tkEncoding # 2/25/03: was "utf-8"
 	
 	#@-body
 	#@-node:1::import.__init__
@@ -2406,6 +2406,7 @@ class leoImportCommands:
 				file.write(head + nl)
 				body = v.moreBody() # Inserts escapes.
 				if len(body) > 0:
+					body = toEncodedString(body,self.encoding,reportErrors=true)
 					file.write(body + nl)
 				v = v.threadNext()
 			file.close()
@@ -2607,7 +2608,7 @@ class leoImportCommands:
 	#@+body
 	def weave (self,filename):
 		
-		c = self.commands ; v = c.currentVnode()
+		c = self.commands ; v = c.currentVnode() ; a = app()
 		nl = self.output_newline
 		if not v: return
 		self.setEncoding()
@@ -2658,6 +2659,7 @@ class leoImportCommands:
 				#@-node:2::<< write the context of v to f >>
 
 				f.write("-" * 60) ; f.write(nl)
+				s = toEncodedString(s,self.encoding,reportErrors=true) # 2/25/03
 				f.write(string.rstrip(s) + nl)
 			v = v.threadNext()
 		f.flush()
@@ -2872,9 +2874,15 @@ class leoImportCommands:
 	#@+body
 	def setEncoding (self):
 		
-		# scanDirectives checks the encoding.
+		# scanDirectives checks the encoding: may return None.
 		dict = scanDirectives(self.commands)
-		self.encoding = dict.get("encoding","utf-8")
+		encoding = dict.get("encoding")
+		if encoding and isValidEncoding(encoding):
+			self.encoding = encoding
+		else:
+			self.encoding = app().tkEncoding # 2/25/03
+	
+		print self.encoding
 	
 	#@-body
 	#@-node:8::setEncoding

@@ -36,6 +36,7 @@ class LeoApp:
 		self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
 		self.root = root # The hidden main window
 		self.trace_list = [] # "Sherlock" argument list for tracing().
+		self.tkEncoding = "utf-8" # Set by finishCreate
 		self.unicodeErrorGiven = false # true: suppres unicode tracebacks.
 		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 	
@@ -125,6 +126,7 @@ class LeoApp:
 	
 	def finishCreate(self):
 	
+		import locale,sys
 		
 		#@<< return false if not v2.1 or above >>
 		#@+node:1::<< return false if not v2.1 or above >>
@@ -218,6 +220,24 @@ class LeoApp:
 		#@-node:3::<< set the default Leo icon >>
 
 		self.config = leoConfig.config()
+		
+		#@<< set app.tkEncoding >>
+		#@+node:4::<< set app.tkEncoding >>
+		#@+body
+		for (encoding,src) in (
+			(self.config.tkEncoding,"config"),
+			(locale.getdefaultlocale()[1],"locale"),
+			(sys.getdefaultencoding(),"sys"),
+			("utf-8","default")):
+		
+			if encoding and len(encoding) > 0:
+				self.tkEncoding = encoding
+				print self.tkEncoding,src
+				break
+		
+		#@-body
+		#@-node:4::<< set app.tkEncoding >>
+
 		
 		# Create the global windows
 		self.findFrame = leoFind.LeoFind()

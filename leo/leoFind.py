@@ -260,11 +260,11 @@ class LeoFind:
 			exec("c.%s_flag = self.%s_flag.get()" % (var,var))
 	
 		s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
-		s = toUnicode(s,sys.getdefaultencoding()) # 2/19/03
+		s = toUnicode(s,app().tkEncoding) # 2/25/03
 		c.find_text = s
 	
 		s = self.change_text.get("1.0","end - 1c") # Remove trailing newline
-		s = toUnicode(s,sys.getdefaultencoding()) # 2/19/03
+		s = toUnicode(s,app().tkEncoding) # 2/25/03
 		c.change_text = s
 	
 	#@-body

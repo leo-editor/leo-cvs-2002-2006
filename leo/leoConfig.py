@@ -158,6 +158,7 @@ class config:
 		self.remove_sentinels_extension = ".txt"
 		self.save_clears_undo_buffer = false
 		self.stylesheet = None
+		self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
 		self.use_plugins = 0 # Should _never_ be 1 here!
 		
 		if 1: # To be deleted
@@ -594,6 +595,15 @@ class config:
 				
 			self.stylesheet = self.initConfigParam(
 				"stylesheet",self.stylesheet)
+				
+			encoding = self.initConfigParam(
+				"tk_encoding",self.tkEncoding)
+				
+			if encoding: # May be None.
+				if isValidEncoding(encoding):
+					self.tkEncoding = encoding
+				else:
+					es("bad tk_encoding: " + encoding)
 			
 			self.use_relative_node_indices = self.initBooleanConfigParam(
 				"use_relative_node_indices",self.use_relative_node_indices)
@@ -607,7 +617,6 @@ class config:
 			
 			self.write_clone_indices = self.initBooleanConfigParam(
 				"write_clone_indices",self.write_clone_indices)
-			
 			#@-body
 			#@-node:1::<< get config options >>
 

@@ -427,7 +427,7 @@ def scanDirectives(c,v=None):
 	language = c.target_language
 	delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 	path = None
-	encoding = "utf-8" # 1/21/03
+	encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
 	
 	#@-body
 	#@-node:1::<< Set local vars >>
