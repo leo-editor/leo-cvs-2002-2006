@@ -212,6 +212,8 @@ class baseAtFile:
 		es("reading: " + root.headString())
 		firstLines,read_new = at.scanHeader(file,fileName)
 		df = choose(read_new,at.new_df,at.old_df)
+		# trace(choose(df==at.new_df,"new","old"))
+		# import traceback ; traceback.print_stack()
 		#@	<< copy ivars to df >>
 		#@+node:<< copy ivars to df >>
 		df.importing = importFileName != None
@@ -234,6 +236,10 @@ class baseAtFile:
 		#@nl
 		root.clearVisitedInTree()
 		try:
+			# 1/28/04: Don't set comment delims when importing.
+			# 1/28/04: Call scanAllDirectives here, not in readOpenFile.
+			importing = importFileName is not None
+			df.scanAllDirectives(root,importing=importing)
 			df.readOpenFile(root,file,firstLines)
 		except:
 			at.error("Unexpected exception while reading derived file")
@@ -529,6 +535,7 @@ class baseAtFile:
 		#@nl
 		if not valid:
 			at.error("Bad @+leo sentinel in " + fileName)
+		# trace("start,end",at.startSentinelComment,at.endSentinelComment)
 		return firstLines, new_df
 	#@nonl
 	#@-node:top_df.scanHeader
@@ -882,7 +889,6 @@ class baseOldDerivedFile:
 		if at.trace: trace("old_df",root)
 	
 		# Scan the file buffer
-		at.scanAllDirectives(root)
 		lastLines = at.scanText(file,root,[],endLeo)
 		root.t.setVisited() # Disable warning about set nodes.
 	
@@ -2006,7 +2012,7 @@ class baseOldDerivedFile:
 	#@-at
 	#@@c
 	
-	def scanAllDirectives(self,v,scripting=false):
+	def scanAllDirectives(self,v,scripting=false,importing=false):
 		
 		"""Scan vnode v and v's ancestors looking for directives,
 		setting corresponding atFile ivars.
@@ -2196,26 +2202,27 @@ class baseOldDerivedFile:
 		#@nonl
 		#@-node:<< Set current directory >>
 		#@nl
-		#@	<< Set comment Strings from delims >>
-		#@+node:<< Set comment Strings from delims >>
-		# Use single-line comments if we have a choice.
-		# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
-		if delim1:
-			self.startSentinelComment = delim1
-			self.endSentinelComment = "" # Must not be None.
-		elif delim2 and delim3:
-			self.startSentinelComment = delim2
-			self.endSentinelComment = delim3
-		else: # Emergency!
-			# assert(0)
-			es("Unknown language: using Python comment delimiters")
-			es("c.target_language:"+`c.target_language`)
-			es("delim1,delim2,delim3:" + `delim1`+":"+`delim2`+":"+`delim3`)
-			self.startSentinelComment = "#" # This should never happen!
-			self.endSentinelComment = ""
-		#@nonl
-		#@-node:<< Set comment Strings from delims >>
-		#@nl
+		if not importing:
+			#@		<< Set comment Strings from delims >>
+			#@+node:<< Set comment Strings from delims >>
+			# Use single-line comments if we have a choice.
+			# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
+			if delim1:
+				self.startSentinelComment = delim1
+				self.endSentinelComment = "" # Must not be None.
+			elif delim2 and delim3:
+				self.startSentinelComment = delim2
+				self.endSentinelComment = delim3
+			else: # Emergency!
+				# assert(0)
+				es("Unknown language: using Python comment delimiters")
+				es("c.target_language:"+`c.target_language`)
+				es("delim1,delim2,delim3:" + `delim1`+":"+`delim2`+":"+`delim3`)
+				self.startSentinelComment = "#" # This should never happen!
+				self.endSentinelComment = ""
+			#@nonl
+			#@-node:<< Set comment Strings from delims >>
+			#@nl
 	#@nonl
 	#@-node:scanAllDirectives
 	#@+node:skipIndent
@@ -2435,7 +2442,7 @@ class baseOldDerivedFile:
 			#@nonl
 			#@-node:<< open the file; return on error >>
 			#@nl
-			root.clearVisitedInTree()
+			root.clearAllVisitedInTree() # 1/28/04: clear both vnode and tnode bits.
 			#@		<< write then entire @file tree >>
 			#@+node:<< write then entire @file tree >> (3.x)
 			next = root.nodeAfterTree()
@@ -2513,20 +2520,7 @@ class baseOldDerivedFile:
 			#@nl
 			self.closeWriteFile()
 			if not nosentinels:
-				#@			<< warn about @ignored and orphans >>
-				#@+node:<< Warn about @ignored and orphans  >>
-				# 10/26/02: Always warn, even when language=="cweb"
-				
-				next = root.nodeAfterTree()
-				v = root
-				while v and v != next:
-					if not v.isVisited():
-						self.writeError("Orphan node:  " + v.headString())
-					if v.isAtIgnoreNode():
-						self.writeError("@ignore node: " + v.headString())
-					v = v.threadNext()
-				#@-node:<< Warn about @ignored and orphans  >>
-				#@nl
+				self.warnAboutOrphandAndIgnoredNodes()
 			#@		<< finish writing >>
 			#@+node:<< finish writing >>
 			#@+at 
@@ -2735,6 +2729,23 @@ class baseOldDerivedFile:
 		self.os(s.replace('\n',self.output_newline))
 	#@nonl
 	#@-node:atFile.outputStringWithLineEndings
+	#@+node:atFile.warnAboutOrpanAndIgnoredNodes
+	def warnAboutOrphandAndIgnoredNodes (self):
+		
+		# 10/26/02: Always warn, even when language=="cweb"
+		at = self ; root = at.root
+		next = root.nodeAfterTree()
+		v = root
+		while v and v != next:
+			if not v.t.isVisited(): # 1/24/04: check tnode bit, not vnode bit.
+				at.writeError("Orphan node:  " + v.headString())
+				if v.isCloned() and v.parent():
+					es("parent node: " + v.parent().headString(),color="blue")
+			if v.isAtIgnoreNode():
+				at.writeError("@ignore node: " + v.headString())
+			v = v.threadNext()
+	#@nonl
+	#@-node:atFile.warnAboutOrpanAndIgnoredNodes
 	#@+node:putBodyPart (3.x)
 	def putBodyPart(self,v):
 		
@@ -3409,7 +3420,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		if at.trace: trace("new_df",root)
 	
 		# Scan the 4.x file.
-		at.scanAllDirectives(root)
 		at.tnodeListIndex = 0
 		lastLines = at.scanText4(file,root)
 		root.t.setVisited() # Disable warning about set nodes.
@@ -4306,7 +4316,7 @@ class baseNewDerivedFile(oldDerivedFile):
 				return
 			#@-node:<< open the file; return on error >>
 			#@nl
-			root.clearVisitedInTree()
+			root.clearAllVisitedInTree() # 1/28/04: clear both vnode and tnode bits.
 			#@		<< write then entire @file tree >>
 			#@+node:<< write then entire @file tree >> (4.x)
 			# unvisited nodes will be orphans, except in cweb trees.
@@ -4381,20 +4391,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			else:
 				at.closeWriteFile()
 				if not nosentinels:
-					#@				<< warn about @ignored and orphans >>
-					#@+node:<< Warn about @ignored and orphans  >>
-					# 10/26/02: Always warn, even when language=="cweb"
-					
-					next = root.nodeAfterTree()
-					v = root
-					while v and v != next:
-						if not v.t.isVisited(): # 1/24/04: check tnode bit, not vnode bit.
-							at.writeError("Orphan node:  " + v.headString())
-						if v.isAtIgnoreNode():
-							at.writeError("@ignore node: " + v.headString())
-						v = v.threadNext()
-					#@-node:<< Warn about @ignored and orphans  >>
-					#@nl
+					at.warnAboutOrphandAndIgnoredNodes()
 				#@			<< finish writing >>
 				#@+node:<< finish writing >>
 				#@+at 
