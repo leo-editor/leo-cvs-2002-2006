@@ -159,7 +159,7 @@ def createBindings (self,frame):
 #@+node:EKR.20040605182632.7:moveSelItem
 def moveSelItem (event,canvas):
 	
-	g.trace(event)
+	# g.trace(event)
 
 	i = canvas.sl.curselection()
 	if len(i) == 0:
@@ -213,7 +213,7 @@ def select (event,canvas,body):
 #@+node:EKR.20040605182632.9:remove
 def remove (event,canvas,body,scrllistbx):
 	
-	g.trace(event)
+	# g.trace(event)
 
 	if event.keysym in ("Alt_L", "Alt_R"):
 		return None
@@ -232,6 +232,7 @@ def remove (event,canvas,body,scrllistbx):
 		body.update_idletasks()
 	finally:
 		unbind(canvas, body)
+#@nonl
 #@-node:EKR.20040605182632.9:remove
 #@+node:EKR.20040605182632.10:add_item
 def add_item (event,canvas,body,colorizer):
@@ -557,7 +558,7 @@ if Tk and Pmw:
 
 	leoPlugins.registerHandler('open2',initialScan)
 
-	__version__ = ".126" # Mods made by EKR.
+	__version__ = ".126a" # Mods made by EKR.
 	__name__ = 'autocompleter'
 	g.plugin_signon(__name__)
 #@nonl
