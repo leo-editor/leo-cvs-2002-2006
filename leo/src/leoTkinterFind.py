@@ -119,8 +119,9 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		radioLists[2] = [
 			(self.dict["radio-search-scope"],"Entire Outline","entire-outine"),
 			(self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
-			(self.dict["radio-search-scope"],"Node Only","node-only"),    
-			(self.dict["radio-search-scope"],"Selection Only","selection-only")] # 11/9/03
+			(self.dict["radio-search-scope"],"Node Only","node-only"),
+			# I don't know what selection-only is supposed to do.
+			(self.dict["radio-search-scope"],"Selection Only",None)] #,"selection-only")]
 		checkLists[2] = []
 		checkLists[3] = [
 			("Search Headline Text", self.dict["search_headline"]),
@@ -138,7 +139,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 				box = Tk.Checkbutton(columns[i],anchor="w",text=name,variable=var)
 				box.pack(fill="x")
 				box.bind("<1>", self.resetWrap)
-				if var == None: box.configure(state="disabled")
+				if var is None: box.configure(state="disabled")
+		#@nonl
 		#@-node:ekr.20031218072017.3903:<< Create four columns of radio and checkboxes >>
 		#@nl
 		#@	<< Create two rows of buttons >>
