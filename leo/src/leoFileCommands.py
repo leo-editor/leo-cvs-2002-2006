@@ -1551,7 +1551,8 @@ class baseFileCommands:
 		#@nonl
 		#@-node:<< Put attribute bits >>
 		#@nl
-		if hasattr(v,"tnodeList") and len(v.tnodeList) > 0:
+		# 12/13/03 Write tnodeList only for @file nodes.
+		if hasattr(v,"tnodeList") and len(v.tnodeList) > 0 and v.isAnyAtFileNode():
 			fc.putTnodeList(v) # New in 4.0
 		if hasattr(v,"unknownAttributes"): # New in 4.0
 			#@		<< put unknown vnode attributes >>
