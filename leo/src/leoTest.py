@@ -350,11 +350,13 @@ class testUtils:
     #@-node:ekr.20040717070500:writeNodeToString
     #@-node:ekr.20040716073021:testUtils.writeNode/sToNode
     #@+node:ekr.20040716092802:testUtils.compareIgnoringNodeNames
-    def compareIgnoringNodeNames (self,s1,s2,marker,verbose=False):
+    def compareIgnoringNodeNames (self,s1,s2,delims,verbose=False):
         
         # Compare text containing sentinels, but ignore differences in @+-nodes.
         
-        if marker[-1] == '@': marker = marker[:-1]
+        ## if marker[-1] == '@': marker = marker[:-1]
+        
+        delim1,delim2,delim3 = delims
         
         lines1 = g.splitLines(s1)
         lines2 = g.splitLines(s2)
@@ -371,20 +373,20 @@ class testUtils:
                 n1 = g.skip_ws(line1,0)
                 n2 = g.skip_ws(line2,0)
                 if (
-                    not g.match(line1,n1,marker) or
-                    not g.match(line2,n2,marker)
+                    not g.match(line1,n1,delim1) or
+                    not g.match(line2,n2,delim1)
                 ):
                     if verbose: g.trace("Mismatched non-sentinel lines")
                     return False
-                n1 += len(marker)
-                n2 += len(marker)
+                n1 += len(delim1)
+                n2 += len(delim1)
                 if g.match(line1,n1,"@+node") and g.match(line2,n2,"@+node"):
                     continue
                 if g.match(line1,n1,"@-node") and g.match(line2,n2,"@-node"):
                     continue
                 else:
                     if verbose:
-                        g.trace("Mismatched sentinel lines",marker)
+                        g.trace("Mismatched sentinel lines",delim1)
                         g.trace("line1:",repr(line1))
                         g.trace("line2:",repr(line2))
                     return False
@@ -1189,14 +1191,14 @@ def runPerfectImportTest(c,p,
     u.writeNodesToNode(c,input_ins,out_after_sent,sentinels=True)
     
     mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
-    marker = mu.marker_from_extension("foo.py")
+    delims = g.comment_delims_from_extension("foo.py")
     
     fat_lines = g.splitLines(output_sent.bodyString())
-    i_lines,mapping = mu.create_mapping(fat_lines,marker)
+    i_lines,mapping = mu.create_mapping(fat_lines,delims)
     if input_ins.hasChildren():
         # Get the lines by stripping sentinels from -output-after-sent node.
         lines = g.splitLines(out_after_sent.bodyString()) 
-        j_lines = mu.removeSentinelsFromLines(lines,marker)
+        j_lines = mu.removeSentinelsFromLines(lines,delims)
     else:
         j_lines = g.splitLines(input_ins.bodyString()) 
     
@@ -1215,14 +1217,14 @@ def runPerfectImportTest(c,p,
         sList = []
         for s in (result.bodyString(),out_after_sent.bodyString()):
             lines = g.splitLines(s)
-            lines = mu.removeSentinelsFromLines(lines,marker)
+            lines = mu.removeSentinelsFromLines(lines,delims)
             sList.append(''.join(lines))
         return sList[0] == sList[1]
     else:
         return u.compareIgnoringNodeNames(
             result.bodyString(),
             out_after_sent.bodyString(),
-            marker,verbose=True)
+            delims,verbose=True)
 #@nonl
 #@-node:ekr.20040716140617.1:runPerfectImportTest
 #@-node:ekr.20040716140617:Perfect Import test code (leoTest.py)
