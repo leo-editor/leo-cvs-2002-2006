@@ -144,7 +144,6 @@ class LeoApp:
 		#@-node:3::<< set the default Leo icon >>
 
 		self.config = leoConfig.config()
-		self.init_modules = sys.modules.keys()
 		
 		# Create the global windows
 		self.findFrame = leoFind.LeoFind()
