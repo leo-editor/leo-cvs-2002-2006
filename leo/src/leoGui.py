@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3719:@file-thin leoGui.py
+#@+node:ekr.20031218072017.3719:@thin leoGui.py
 #@@first
 
 """A module containing the base leoGui class.
@@ -519,5 +519,5 @@ class unitTestGui(leoGui):
 #@-node:ekr.20031218072017.3742:class unitTestGui
 #@-others
 #@nonl
-#@-node:ekr.20031218072017.3719:@file-thin leoGui.py
+#@-node:ekr.20031218072017.3719:@thin leoGui.py
 #@-leo

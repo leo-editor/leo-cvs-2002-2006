@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3652:@file-thin leoFontPanel.py
+#@+node:ekr.20031218072017.3652:@thin leoFontPanel.py
 #@@language python
 
 import leoGlobals as g
@@ -35,5 +35,5 @@ class leoFontPanel:
 	#@-node:ekr.20031218072017.3654:Must be overridden in subclasses
 	#@-others
 #@nonl
-#@-node:ekr.20031218072017.3652:@file-thin leoFontPanel.py
+#@-node:ekr.20031218072017.3652:@thin leoFontPanel.py
 #@-leo

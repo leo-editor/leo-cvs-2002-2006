@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.2608:@file-thin leoApp.py
+#@+node:ekr.20031218072017.2608:@thin leoApp.py
 #@@first
 
 #@@language python
@@ -436,5 +436,5 @@ class LeoApp:
 			self.logWaiting = []
 	#@-node:ekr.20031218072017.2619:app.writeWaitingLog
 	#@-others
-#@-node:ekr.20031218072017.2608:@file-thin leoApp.py
+#@-node:ekr.20031218072017.2608:@thin leoApp.py
 #@-leo

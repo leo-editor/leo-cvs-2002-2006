@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.2794:@file-thin leoColor.py
+#@+node:ekr.20031218072017.2794:@thin leoColor.py
 """Syntax coloring routines for Leo."""
 
 #@@language python
@@ -2176,5 +2176,5 @@ class nullColorizer (colorizer):
 #@-node:ekr.20031218072017.2218:class nullColorizer
 #@-others
 #@nonl
-#@-node:ekr.20031218072017.2794:@file-thin leoColor.py
+#@-node:ekr.20031218072017.2794:@thin leoColor.py
 #@-leo

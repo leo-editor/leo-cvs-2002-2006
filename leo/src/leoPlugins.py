@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3439:@file-thin leoPlugins.py
+#@+node:ekr.20031218072017.3439:@thin leoPlugins.py
 """Install and run Leo plugins.
 
 On startup:
@@ -157,5 +157,5 @@ def registerOneExclusiveHandler(tag, fn):
 #@-node:ekr.20031218072017.3444:registerExclusiveHandler
 #@-others
 #@nonl
-#@-node:ekr.20031218072017.3439:@file-thin leoPlugins.py
+#@-node:ekr.20031218072017.3439:@thin leoPlugins.py
 #@-leo

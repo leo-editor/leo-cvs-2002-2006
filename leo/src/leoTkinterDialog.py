@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3858:@file-thin leoTkinterDialog.py
+#@+node:ekr.20031218072017.3858:@thin leoTkinterDialog.py
 #@@language python
 
 import leoGlobals as g
@@ -754,5 +754,5 @@ class tkinterListBoxDialog (leoTkinterDialog):
 #@-node:ekr.20031218072017.3889:class tkinterListboxDialog
 #@-others
 #@nonl
-#@-node:ekr.20031218072017.3858:@file-thin leoTkinterDialog.py
+#@-node:ekr.20031218072017.3858:@thin leoTkinterDialog.py
 #@-leo

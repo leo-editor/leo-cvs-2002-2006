@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3897:@file-thin leoTkinterFind.py
+#@+node:ekr.20031218072017.3897:@thin leoTkinterFind.py
 import leoGlobals as g
 from leoGlobals import true,false
 
@@ -293,5 +293,5 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 	#@-node:ekr.20031218072017.3908:Tkinter wrappers (leoTkinterFind)
 	#@-others
 #@nonl
-#@-node:ekr.20031218072017.3897:@file-thin leoTkinterFind.py
+#@-node:ekr.20031218072017.3897:@thin leoTkinterFind.py
 #@-leo

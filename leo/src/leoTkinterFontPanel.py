@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3909:@file-thin leoTkinterFontPanel.py
+#@+node:ekr.20031218072017.3909:@thin leoTkinterFontPanel.py
 #@@language python
 
 import leoGlobals as g
@@ -510,5 +510,5 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 	#@-node:ekr.20031218072017.3930:Helpers
 	#@-others
 #@nonl
-#@-node:ekr.20031218072017.3909:@file-thin leoTkinterFontPanel.py
+#@-node:ekr.20031218072017.3909:@thin leoTkinterFontPanel.py
 #@-leo

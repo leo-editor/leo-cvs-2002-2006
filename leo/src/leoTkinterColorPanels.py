@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3822:@file-thin leoTkinterColorPanels.py
+#@+node:ekr.20031218072017.3822:@thin leoTkinterColorPanels.py
 import leoGlobals as g
 from leoGlobals import true,false
 
@@ -409,5 +409,5 @@ class leoTkinterColorPanel (leoColorPanel.leoColorPanel):
 #@-node:ekr.20031218072017.3831:class leoTkinterColorPanel
 #@-others
 #@nonl
-#@-node:ekr.20031218072017.3822:@file-thin leoTkinterColorPanels.py
+#@-node:ekr.20031218072017.3822:@thin leoTkinterColorPanels.py
 #@-leo

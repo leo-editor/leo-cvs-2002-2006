@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3206:@file-thin leoImport.py
+#@+node:ekr.20031218072017.3206:@thin leoImport.py
 #@@language python
 
 import leoGlobals as g
@@ -2925,5 +2925,5 @@ class leoImportCommands (baseLeoImportCommands):
 	"""A class that implements Leo's import commands."""
 	pass
 #@nonl
-#@-node:ekr.20031218072017.3206:@file-thin leoImport.py
+#@-node:ekr.20031218072017.3206:@thin leoImport.py
 #@-leo

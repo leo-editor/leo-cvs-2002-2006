@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3052:@file-thin leoFind.py
+#@+node:ekr.20031218072017.3052:@thin leoFind.py
 #@@language python
 
 import leoGlobals as g
@@ -922,6 +922,7 @@ class leoFind:
 	
 		c = self.c ; v = self.v ; gui = g.app.gui
 		
+		# g.trace()
 		c.frame.bringToFront() # Needed on the Mac
 	
 		c.beginUpdate()
@@ -938,17 +939,15 @@ class leoFind:
 		c.endUpdate(false) # Do not draw again!
 	
 		t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
-		# g.trace(self.in_headline,t)
+		
 		insert = g.choose(c.reverse_flag,pos,newpos)
+		# g.trace(pos,newpos,t)
 		gui.setInsertPoint(t,insert)
 		gui.setSelectionRange(t,pos,newpos)
-		if not self.in_headline:
-			gui.makeIndexVisible(t,insert)
+		gui.makeIndexVisible(t,insert)
 		gui.set_focus(c,t)
 		if c.wrap_flag and not self.wrapVnode:
 			self.wrapVnode = self.v
-		
-	#@nonl
 	#@-node:ekr.20031218072017.3091:showSuccess
 	#@-node:ekr.20031218072017.3082:Initing & finalizing
 	#@+node:ekr.20031218072017.3092:Must be overridden in subclasses
@@ -968,5 +967,5 @@ class leoFind:
 	#@-node:ekr.20031218072017.3092:Must be overridden in subclasses
 	#@-others
 #@nonl
-#@-node:ekr.20031218072017.3052:@file-thin leoFind.py
+#@-node:ekr.20031218072017.3052:@thin leoFind.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.2810:@file-thin leoCommands.py
+#@+node:ekr.20031218072017.2810:@thin leoCommands.py
 #@@language python
 
 import leoGlobals as g
@@ -4513,5 +4513,5 @@ class Commands (baseCommands):
 	"""A class that implements most of Leo's commands."""
 	pass
 #@nonl
-#@-node:ekr.20031218072017.2810:@file-thin leoCommands.py
+#@-node:ekr.20031218072017.2810:@thin leoCommands.py
 #@-leo

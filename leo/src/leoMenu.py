@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3749:@file-thin leoMenu.py
+#@+node:ekr.20031218072017.3749:@thin leoMenu.py
 """Gui-independent menu handling for Leo."""
 
 import leoGlobals as g
@@ -1251,5 +1251,5 @@ class nullMenu(leoMenu):
 #@-node:ekr.20031218072017.3811:class nullMenu
 #@-others
 #@nonl
-#@-node:ekr.20031218072017.3749:@file-thin leoMenu.py
+#@-node:ekr.20031218072017.3749:@thin leoMenu.py
 #@-leo

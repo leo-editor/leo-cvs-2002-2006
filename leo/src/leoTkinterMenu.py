@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.4100:@file-thin leoTkinterMenu.py
+#@+node:ekr.20031218072017.4100:@thin leoTkinterMenu.py
 """Tkinter menu handling for Leo."""
 
 import leoGlobals as g
@@ -249,5 +249,5 @@ class leoTkinterMenu (leoMenu.leoMenu):
 	#@-node:ekr.20031218072017.4103:Tkinter menu bindings
 	#@-others
 #@nonl
-#@-node:ekr.20031218072017.4100:@file-thin leoTkinterMenu.py
+#@-node:ekr.20031218072017.4100:@thin leoTkinterMenu.py
 #@-leo

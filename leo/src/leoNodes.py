@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3320:@file-thin leoNodes.py
+#@+node:ekr.20031218072017.3320:@thin leoNodes.py
 #@@language python
 
 #@<< About the vnode and tnode classes >>
@@ -523,15 +523,14 @@ class baseVnode (object):
 			type,name = self.afterHeadlineFileTypeName("@file")
 			if type and name: return name
 			else:             return ""
-		elif g.match(h,0,"@nosentinelsfile"):
-			return self.afterHeadlineMatch("@nosentinelsfile")
-		elif g.match(h,0,"@rawfile"):
-			return self.afterHeadlineMatch("@rawfile")
-		elif g.match(h,0,"@silentfile"):
-			return self.afterHeadlineMatch("@silentfile")
-		elif g.match(h,0,"@thinfile"):
-			return self.afterHeadlineMatch("@thinfile")
 		else:
+			# New, shorter names are now preferred.
+			names = [
+				"@thin", "@asis", "@noref", "@nosent",
+				"@thinfile", "@silentfile", "@rawfile", "@nosentinelsfile" ]
+			for name in names:
+				if g.match(h,0,name):
+					return self.afterHeadlineMatch(name)
 			return ""
 	#@nonl
 	#@-node:ekr.20031218072017.3350:anyAtFileNodeName
@@ -556,7 +555,7 @@ class baseVnode (object):
 		return self.afterHeadlineMatch("@silentfile")
 		
 	def atThinFileNodeName (self):
-		return self.afterHeadlineMatch("@thinfile")
+		return self.afterHeadlineMatch("@thinfile") or self.afterHeadlineMatch("@thin")
 		
 	# New names, less confusing
 	atNoSentFileNodeName  = atNoSentinelsFileNodeName
@@ -3215,5 +3214,5 @@ class position (object):
 #@-node:ekr.20031218072017.889:class position
 #@-others
 #@nonl
-#@-node:ekr.20031218072017.3320:@file-thin leoNodes.py
+#@-node:ekr.20031218072017.3320:@thin leoNodes.py
 #@-leo

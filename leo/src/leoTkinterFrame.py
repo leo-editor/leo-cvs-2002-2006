@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3939:@file-thin leoTkinterFrame.py
+#@+node:ekr.20031218072017.3939:@thin leoTkinterFrame.py
 #@@first
 
 # To do: Use config params for window height, width and bar color, relief and width.
@@ -2467,5 +2467,5 @@ class leoTkinterLog (leoFrame.leoLog):
 #@nonl
 #@-node:ekr.20031218072017.4039:class leoTkinterLog
 #@-others
-#@-node:ekr.20031218072017.3939:@file-thin leoTkinterFrame.py
+#@-node:ekr.20031218072017.3939:@thin leoTkinterFrame.py
 #@-leo

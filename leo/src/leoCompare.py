@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3630:@file-thin leoCompare.py
+#@+node:ekr.20031218072017.3630:@thin leoCompare.py
 #@@language python
 
 """Leo's base compare class."""
@@ -533,5 +533,5 @@ class leoCompare (baseLeoCompare):
 #@-node:ekr.20031218072017.3633:class leoCompare
 #@-others
 #@nonl
-#@-node:ekr.20031218072017.3630:@file-thin leoCompare.py
+#@-node:ekr.20031218072017.3630:@thin leoCompare.py
 #@-leo

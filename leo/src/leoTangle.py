@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3446:@file-thin leoTangle.py
+#@+node:ekr.20031218072017.3446:@thin leoTangle.py
 #@@language python
 
 # Tangle and Untangle.
@@ -3892,5 +3892,5 @@ class tangleCommands (baseTangleCommands):
 #@-node:ekr.20031218072017.3465:class tangleCommands methods
 #@-others
 #@nonl
-#@-node:ekr.20031218072017.3446:@file-thin leoTangle.py
+#@-node:ekr.20031218072017.3446:@thin leoTangle.py
 #@-leo

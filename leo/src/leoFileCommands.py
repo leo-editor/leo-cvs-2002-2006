@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3018:@file-thin leoFileCommands.py
+#@+node:ekr.20031218072017.3018:@thin leoFileCommands.py
 #@@language python
 
 import leoGlobals as g
@@ -2082,5 +2082,5 @@ class baseFileCommands:
 class fileCommands (baseFileCommands):
 	"""A class creating the fileCommands subcommander."""
 	pass
-#@-node:ekr.20031218072017.3018:@file-thin leoFileCommands.py
+#@-node:ekr.20031218072017.3018:@thin leoFileCommands.py
 #@-leo

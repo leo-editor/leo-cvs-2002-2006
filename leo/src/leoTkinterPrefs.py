@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.4122:@file-thin leoTkinterPrefs.py
+#@+node:ekr.20031218072017.4122:@thin leoTkinterPrefs.py
 #@@language python
 
 import leoGlobals as g
@@ -334,5 +334,5 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 	#@-node:ekr.20031218072017.4132:Event handlers
 	#@-others
 #@nonl
-#@-node:ekr.20031218072017.4122:@file-thin leoTkinterPrefs.py
+#@-node:ekr.20031218072017.4122:@thin leoTkinterPrefs.py
 #@-leo

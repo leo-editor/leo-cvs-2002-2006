@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:EKR.20040429143933:@file-thin leoProjects.txt
+#@+node:EKR.20040429143933:@thin leoProjects.txt
 #@+at 
 #@nonl
 # This part of the tree shows views of the outline related to specific 
@@ -2940,14 +2940,21 @@ def force_redraw (self):
 #@nonl
 #@-node:ekr.20031218072017.1013:force_redraw
 #@+node:ekr.20031218072017.1014:redraw_now
-# Redraws immediately: used by Find so a redraw doesn't mess up selections.
-# It is up to the caller to ensure that no other redraws are pending.
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
 
 def redraw_now (self,scroll=true):
 	
 	# g.trace()
-
+	
+	# Bug fix: 4/24/04: cancel any pending redraw "by hand".
+	# Make _sure_ that no other redraws take place after this.
+	self.disableRedraw = true
+	self.canvas.update_idletasks()
+	self.disableRedraw = false
+		
+	# Now do the actual redraw.
 	self.idle_redraw(scroll=scroll)
+#@nonl
 #@-node:ekr.20031218072017.1014:redraw_now
 #@+node:ekr.20031218072017.1015:idle_redraw
 def idle_redraw (self,scroll=true):
@@ -4355,15 +4362,14 @@ def anyAtFileNodeName (self):
 		type,name = self.afterHeadlineFileTypeName("@file")
 		if type and name: return name
 		else:             return ""
-	elif g.match(h,0,"@nosentinelsfile"):
-		return self.afterHeadlineMatch("@nosentinelsfile")
-	elif g.match(h,0,"@rawfile"):
-		return self.afterHeadlineMatch("@rawfile")
-	elif g.match(h,0,"@silentfile"):
-		return self.afterHeadlineMatch("@silentfile")
-	elif g.match(h,0,"@thinfile"):
-		return self.afterHeadlineMatch("@thinfile")
 	else:
+		# New, shorter names are now preferred.
+		names = [
+			"@thin", "@asis", "@noref", "@nosent",
+			"@thinfile", "@silentfile", "@rawfile", "@nosentinelsfile" ]
+		for name in names:
+			if g.match(h,0,name):
+				return self.afterHeadlineMatch(name)
 		return ""
 #@nonl
 #@-node:ekr.20031218072017.3350:anyAtFileNodeName
@@ -4384,7 +4390,7 @@ def atSilentFileNodeName (self):
 	return self.afterHeadlineMatch("@silentfile")
 	
 def atThinFileNodeName (self):
-	return self.afterHeadlineMatch("@thinfile")
+	return self.afterHeadlineMatch("@thinfile") or self.afterHeadlineMatch("@thin")
 	
 # New names, less confusing
 atNoSentFileNodeName  = atNoSentinelsFileNodeName
@@ -10673,8 +10679,8 @@ def drawTopTree (self):
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
 	# g.trace(g.app.copies) ; g.app.copies = 0
+	# g.trace()
 	# import traceback ; traceback.print_stack()
-#@nonl
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
@@ -10940,8 +10946,8 @@ def drawTopTree (self):
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
 	# g.trace(g.app.copies) ; g.app.copies = 0
+	# g.trace()
 	# import traceback ; traceback.print_stack()
-#@nonl
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
@@ -16427,8 +16433,8 @@ def drawTopTree (self):
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
 	# g.trace(g.app.copies) ; g.app.copies = 0
+	# g.trace()
 	# import traceback ; traceback.print_stack()
-#@nonl
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
@@ -18945,8 +18951,8 @@ def drawTopTree (self):
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
 	# g.trace(g.app.copies) ; g.app.copies = 0
+	# g.trace()
 	# import traceback ; traceback.print_stack()
-#@nonl
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
@@ -20195,8 +20201,8 @@ def drawTopTree (self):
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
 	# g.trace(g.app.copies) ; g.app.copies = 0
+	# g.trace()
 	# import traceback ; traceback.print_stack()
-#@nonl
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1553:getLeoFile
 # The caller should enclose this in begin/endUpdate.
@@ -20529,14 +20535,21 @@ def force_redraw (self):
 #@nonl
 #@-node:ekr.20031218072017.1013:force_redraw
 #@+node:ekr.20031218072017.1014:redraw_now
-# Redraws immediately: used by Find so a redraw doesn't mess up selections.
-# It is up to the caller to ensure that no other redraws are pending.
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
 
 def redraw_now (self,scroll=true):
 	
 	# g.trace()
-
+	
+	# Bug fix: 4/24/04: cancel any pending redraw "by hand".
+	# Make _sure_ that no other redraws take place after this.
+	self.disableRedraw = true
+	self.canvas.update_idletasks()
+	self.disableRedraw = false
+		
+	# Now do the actual redraw.
 	self.idle_redraw(scroll=scroll)
+#@nonl
 #@-node:ekr.20031218072017.1014:redraw_now
 #@+node:ekr.20031218072017.1015:idle_redraw
 def idle_redraw (self,scroll=true):
@@ -22323,8 +22336,8 @@ def drawTopTree (self):
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
 	# g.trace(g.app.copies) ; g.app.copies = 0
+	# g.trace()
 	# import traceback ; traceback.print_stack()
-#@nonl
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
@@ -23040,15 +23053,14 @@ def anyAtFileNodeName (self):
 		type,name = self.afterHeadlineFileTypeName("@file")
 		if type and name: return name
 		else:             return ""
-	elif g.match(h,0,"@nosentinelsfile"):
-		return self.afterHeadlineMatch("@nosentinelsfile")
-	elif g.match(h,0,"@rawfile"):
-		return self.afterHeadlineMatch("@rawfile")
-	elif g.match(h,0,"@silentfile"):
-		return self.afterHeadlineMatch("@silentfile")
-	elif g.match(h,0,"@thinfile"):
-		return self.afterHeadlineMatch("@thinfile")
 	else:
+		# New, shorter names are now preferred.
+		names = [
+			"@thin", "@asis", "@noref", "@nosent",
+			"@thinfile", "@silentfile", "@rawfile", "@nosentinelsfile" ]
+		for name in names:
+			if g.match(h,0,name):
+				return self.afterHeadlineMatch(name)
 		return ""
 #@nonl
 #@-node:ekr.20031218072017.3350:anyAtFileNodeName
@@ -23069,7 +23081,7 @@ def atSilentFileNodeName (self):
 	return self.afterHeadlineMatch("@silentfile")
 	
 def atThinFileNodeName (self):
-	return self.afterHeadlineMatch("@thinfile")
+	return self.afterHeadlineMatch("@thinfile") or self.afterHeadlineMatch("@thin")
 	
 # New names, less confusing
 atNoSentFileNodeName  = atNoSentinelsFileNodeName
@@ -23275,15 +23287,14 @@ def anyAtFileNodeName (self):
 		type,name = self.afterHeadlineFileTypeName("@file")
 		if type and name: return name
 		else:             return ""
-	elif g.match(h,0,"@nosentinelsfile"):
-		return self.afterHeadlineMatch("@nosentinelsfile")
-	elif g.match(h,0,"@rawfile"):
-		return self.afterHeadlineMatch("@rawfile")
-	elif g.match(h,0,"@silentfile"):
-		return self.afterHeadlineMatch("@silentfile")
-	elif g.match(h,0,"@thinfile"):
-		return self.afterHeadlineMatch("@thinfile")
 	else:
+		# New, shorter names are now preferred.
+		names = [
+			"@thin", "@asis", "@noref", "@nosent",
+			"@thinfile", "@silentfile", "@rawfile", "@nosentinelsfile" ]
+		for name in names:
+			if g.match(h,0,name):
+				return self.afterHeadlineMatch(name)
 		return ""
 #@nonl
 #@-node:ekr.20031218072017.3350:anyAtFileNodeName
@@ -23304,7 +23315,7 @@ def atSilentFileNodeName (self):
 	return self.afterHeadlineMatch("@silentfile")
 	
 def atThinFileNodeName (self):
-	return self.afterHeadlineMatch("@thinfile")
+	return self.afterHeadlineMatch("@thinfile") or self.afterHeadlineMatch("@thin")
 	
 # New names, less confusing
 atNoSentFileNodeName  = atNoSentinelsFileNodeName
@@ -23612,8 +23623,8 @@ def drawTopTree (self):
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
 	# g.trace(g.app.copies) ; g.app.copies = 0
+	# g.trace()
 	# import traceback ; traceback.print_stack()
-#@nonl
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@-node:ekr.20040331074940:(Fixed bug in hoist)
 #@-node:ekr.20040331080343:3/31
@@ -27338,6 +27349,7 @@ def showSuccess(self,pos,newpos):
 
 	c = self.c ; v = self.v ; gui = g.app.gui
 	
+	# g.trace()
 	c.frame.bringToFront() # Needed on the Mac
 
 	c.beginUpdate()
@@ -27354,17 +27366,15 @@ def showSuccess(self,pos,newpos):
 	c.endUpdate(false) # Do not draw again!
 
 	t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
-	# g.trace(self.in_headline,t)
+	
 	insert = g.choose(c.reverse_flag,pos,newpos)
+	# g.trace(pos,newpos,t)
 	gui.setInsertPoint(t,insert)
 	gui.setSelectionRange(t,pos,newpos)
-	if not self.in_headline:
-		gui.makeIndexVisible(t,insert)
+	gui.makeIndexVisible(t,insert)
 	gui.set_focus(c,t)
 	if c.wrap_flag and not self.wrapVnode:
 		self.wrapVnode = self.v
-	
-#@nonl
 #@-node:ekr.20031218072017.3091:showSuccess
 #@-node:ekr.20031218072017.3082:Initing & finalizing
 #@+node:ekr.20031218072017.3902:find.createFrame
@@ -28449,15 +28459,14 @@ def anyAtFileNodeName (self):
 		type,name = self.afterHeadlineFileTypeName("@file")
 		if type and name: return name
 		else:             return ""
-	elif g.match(h,0,"@nosentinelsfile"):
-		return self.afterHeadlineMatch("@nosentinelsfile")
-	elif g.match(h,0,"@rawfile"):
-		return self.afterHeadlineMatch("@rawfile")
-	elif g.match(h,0,"@silentfile"):
-		return self.afterHeadlineMatch("@silentfile")
-	elif g.match(h,0,"@thinfile"):
-		return self.afterHeadlineMatch("@thinfile")
 	else:
+		# New, shorter names are now preferred.
+		names = [
+			"@thin", "@asis", "@noref", "@nosent",
+			"@thinfile", "@silentfile", "@rawfile", "@nosentinelsfile" ]
+		for name in names:
+			if g.match(h,0,name):
+				return self.afterHeadlineMatch(name)
 		return ""
 #@nonl
 #@-node:ekr.20031218072017.3350:anyAtFileNodeName
@@ -28478,7 +28487,7 @@ def atSilentFileNodeName (self):
 	return self.afterHeadlineMatch("@silentfile")
 	
 def atThinFileNodeName (self):
-	return self.afterHeadlineMatch("@thinfile")
+	return self.afterHeadlineMatch("@thinfile") or self.afterHeadlineMatch("@thin")
 	
 # New names, less confusing
 atNoSentFileNodeName  = atNoSentinelsFileNodeName
@@ -33661,6 +33670,231 @@ def popSentinelStack (self,expectedKind):
 #@-node:ekr.20031218072017.2784:badEndSentinel, push/popSentinelStack
 #@-node:ekr.20031218072017.2758:scanText4 & allies
 #@-node:EKR.20040524050229:( @+-middle sentinels:  allow sections to be defined in grandchildren)
+#@+node:EKR.20040524152405:(Fixed change headline bug)
+#@+node:EKR.20040524164424:Notes
+@nocolor
+
+1. It took me some time to realize that Leo uses plain Text widgets in the tree, _not_ canvas text widgets.
+
+2. The fix therefore was to make redraw_now cancel any pending redraw so that the selection doesn't get destroyed by another redraw.
+#@nonl
+#@-node:EKR.20040524164424:Notes
+#@+node:ekr.20031218072017.3091:showSuccess
+def showSuccess(self,pos,newpos):
+
+	"""Displays the final result.
+
+	Returns self.dummy_vnode, v.edit_text() or c.frame.bodyCtrl with
+	"insert" and "sel" points set properly."""
+
+	c = self.c ; v = self.v ; gui = g.app.gui
+	
+	# g.trace()
+	c.frame.bringToFront() # Needed on the Mac
+
+	c.beginUpdate()
+	if 1: # range of update...
+		c.selectVnode(v)
+		c.frame.tree.redraw_now() # Redraw now so selections are not destroyed.
+		# Select the found vnode again after redraw.
+		if self.in_headline:
+			c.editPosition(v)
+			c.frame.tree.setNormalLabelState(v)
+			assert(v.edit_text())
+		else:
+			c.selectVnode(v)
+	c.endUpdate(false) # Do not draw again!
+
+	t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
+	
+	insert = g.choose(c.reverse_flag,pos,newpos)
+	# g.trace(pos,newpos,t)
+	gui.setInsertPoint(t,insert)
+	gui.setSelectionRange(t,pos,newpos)
+	gui.makeIndexVisible(t,insert)
+	gui.set_focus(c,t)
+	if c.wrap_flag and not self.wrapVnode:
+		self.wrapVnode = self.v
+#@-node:ekr.20031218072017.3091:showSuccess
+#@+node:ekr.20031218072017.1014:redraw_now
+# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
+
+def redraw_now (self,scroll=true):
+	
+	# g.trace()
+	
+	# Bug fix: 4/24/04: cancel any pending redraw "by hand".
+	# Make _sure_ that no other redraws take place after this.
+	self.disableRedraw = true
+	self.canvas.update_idletasks()
+	self.disableRedraw = false
+		
+	# Now do the actual redraw.
+	self.idle_redraw(scroll=scroll)
+#@nonl
+#@-node:ekr.20031218072017.1014:redraw_now
+#@-node:EKR.20040524152405:(Fixed change headline bug)
+#@+node:EKR.20040520075421.4:(Allow @thin as an abbreviation for @file-thin)
+# While I was at it, I added @asis, @noref, @nosent.
+#@nonl
+#@+node:ekr.20031218072017.3346:v.Comparisons
+#@+node:ekr.20040328055931:afterHeadlineFileTypeName
+def afterHeadlineFileTypeName(self,s):
+	
+	h = self.headString()
+
+	if s != "@file" and g.match_word(h,0,s):
+		# No options are valid.
+		return s,string.strip(h[len(s):])
+
+	elif g.match(h,0,"@file"):
+		i,atFileType,junk = g.scanAtFileOptions(h)
+		return atFileType,h[i:].strip()
+
+	else:
+		return None,None
+#@nonl
+#@-node:ekr.20040328055931:afterHeadlineFileTypeName
+#@+node:ekr.20031218072017.3347:afterHeadlineMatch
+def afterHeadlineMatch(self,s):
+	
+	atFileType,fileName = self.afterHeadlineFileTypeName(s)
+	if s == atFileType:
+		return fileName
+	else:
+		return ""
+#@nonl
+#@-node:ekr.20031218072017.3347:afterHeadlineMatch
+#@+node:ekr.20031218072017.3350:anyAtFileNodeName
+def anyAtFileNodeName (self):
+	
+	"""Return the file name following an @file node or an empty string."""
+	
+	# New in 4.2: do the fastest possible tests.
+	h = self.headString()
+
+	if g.match(h,0,"@file"):
+		type,name = self.afterHeadlineFileTypeName("@file")
+		if type and name: return name
+		else:             return ""
+	else:
+		# New, shorter names are now preferred.
+		names = [
+			"@thin", "@asis", "@noref", "@nosent",
+			"@thinfile", "@silentfile", "@rawfile", "@nosentinelsfile" ]
+		for name in names:
+			if g.match(h,0,name):
+				return self.afterHeadlineMatch(name)
+		return ""
+#@nonl
+#@-node:ekr.20031218072017.3350:anyAtFileNodeName
+#@+node:ekr.20031218072017.3348:at...FileNodeName
+@ Returns the filename following @file or @rawfile, in the receivers's headline, or the empty string if the receiver is not an @file node.
+@c
+
+def atFileNodeName (self):
+	return self.afterHeadlineMatch("@file")
+
+def atNoSentinelsFileNodeName (self):
+	return self.afterHeadlineMatch("@nosentinelsfile")
+
+def atRawFileNodeName (self):
+	return self.afterHeadlineMatch("@rawfile")
+	
+def atSilentFileNodeName (self):
+	return self.afterHeadlineMatch("@silentfile")
+	
+def atThinFileNodeName (self):
+	return self.afterHeadlineMatch("@thinfile") or self.afterHeadlineMatch("@thin")
+	
+# New names, less confusing
+atNoSentFileNodeName  = atNoSentinelsFileNodeName
+atNorefFileNodeName   = atRawFileNodeName
+atAsisFileNodeName     = atSilentFileNodeName
+#@nonl
+#@-node:ekr.20031218072017.3348:at...FileNodeName
+#@+node:EKR.20040430152000:isAtAllNode
+def isAtAllNode (self):
+
+	"""Returns true if the receiver contains @others in its body at the start of a line."""
+
+	flag, i = g.is_special(self.t.bodyString,0,"@all")
+	return flag
+#@nonl
+#@-node:EKR.20040430152000:isAtAllNode
+#@+node:ekr.20040326031436:isAnyAtFileNode
+def isAnyAtFileNode (self):
+	
+	"""Return true if v is any kind of @file or related node."""
+	
+	# This routine should be as fast as possible.
+	# It is called once for every vnode when writing a file.
+
+	h = self.headString()
+	return h and h[0] == '@' and self.anyAtFileNodeName()
+#@nonl
+#@-node:ekr.20040326031436:isAnyAtFileNode
+#@+node:ekr.20040325073709:isAt...FileNode
+def isAtFileNode (self):
+	return g.choose(self.atFileNodeName(),true,false)
+	
+def isAtNoSentinelsFileNode (self):
+	return g.choose(self.atNoSentinelsFileNodeName(),true,false)
+
+def isAtRawFileNode (self): # @file-noref
+	return g.choose(self.atRawFileNodeName(),true,false)
+
+def isAtSilentFileNode (self): # @file-asis
+	return g.choose(self.atSilentFileNodeName(),true,false)
+
+def isAtThinFileNode (self):
+	return g.choose(self.atThinFileNodeName(),true,false)
+	
+# New names, less confusing:
+isAtNoSentFileNode = isAtNoSentinelsFileNode
+isAtNorefFileNode  = isAtRawFileNode
+isAtAsisFileNode   = isAtSilentFileNode
+#@nonl
+#@-node:ekr.20040325073709:isAt...FileNode
+#@+node:ekr.20031218072017.3351:isAtIgnoreNode
+def isAtIgnoreNode (self):
+
+	"""Returns true if the receiver contains @ignore in its body at the start of a line."""
+
+	flag, i = g.is_special(self.t.bodyString, 0, "@ignore")
+	return flag
+#@nonl
+#@-node:ekr.20031218072017.3351:isAtIgnoreNode
+#@+node:ekr.20031218072017.3352:isAtOthersNode
+def isAtOthersNode (self):
+
+	"""Returns true if the receiver contains @others in its body at the start of a line."""
+
+	flag, i = g.is_special(self.t.bodyString,0,"@others")
+	return flag
+#@nonl
+#@-node:ekr.20031218072017.3352:isAtOthersNode
+#@+node:ekr.20031218072017.3353:matchHeadline
+def matchHeadline (self,pattern):
+
+	"""Returns true if the headline matches the pattern ignoring whitespace and case.
+	
+	The headline may contain characters following the successfully matched pattern."""
+
+	h = string.lower(self.headString())
+	h = string.replace(h,' ','')
+	h = string.replace(h,'\t','')
+
+	s = string.lower(pattern)
+	s = string.replace(s,' ','')
+	s = string.replace(s,'\t','')
+
+	# ignore characters in the headline following the match
+	return s == h[0:len(s)]
+#@nonl
+#@-node:ekr.20031218072017.3353:matchHeadline
+#@-node:ekr.20031218072017.3346:v.Comparisons
+#@-node:EKR.20040520075421.4:(Allow @thin as an abbreviation for @file-thin)
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@+node:EKR.20040512081330:In progress
@@ -35534,5 +35768,5 @@ Günther
 #@-node:EKR.20040512081330:In progress
 #@-all
 #@nonl
-#@-node:EKR.20040429143933:@file-thin leoProjects.txt
+#@-node:EKR.20040429143933:@thin leoProjects.txt
 #@-leo

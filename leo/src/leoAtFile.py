@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.2620:@file-thin leoAtFile.py 
+#@+node:ekr.20031218072017.2620:@thin leoAtFile.py 
 """Classes to read and write @file nodes."""
 
 #@@language python
@@ -5612,5 +5612,5 @@ class baseNewDerivedFile(oldDerivedFile):
 
 class newDerivedFile(baseNewDerivedFile):
 	pass # May be overridden in plugins.
-#@-node:ekr.20031218072017.2620:@file-thin leoAtFile.py 
+#@-node:ekr.20031218072017.2620:@thin leoAtFile.py 
 #@-leo

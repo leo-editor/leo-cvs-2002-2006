@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3812:@file-thin leoPrefs.py
+#@+node:ekr.20031218072017.3812:@thin leoPrefs.py
 #@@language python
 
 import leoGlobals as g
@@ -131,5 +131,5 @@ class leoPrefs:
 	#@-node:ekr.20031218072017.3820:printIvars
 	#@-others
 #@nonl
-#@-node:ekr.20031218072017.3812:@file-thin leoPrefs.py
+#@-node:ekr.20031218072017.3812:@thin leoPrefs.py
 #@-leo

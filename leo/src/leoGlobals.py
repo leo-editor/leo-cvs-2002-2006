@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3093:@file-thin leoGlobals.py
+#@+node:ekr.20031218072017.3093:@thin leoGlobals.py
 #@@first
 
 """Global constants, variables and utility functions used throughout Leo."""
@@ -3773,5 +3773,5 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 #@-node:ekr.20031218072017.3197:Whitespace...
 #@-others
 #@nonl
-#@-node:ekr.20031218072017.3093:@file-thin leoGlobals.py
+#@-node:ekr.20031218072017.3093:@thin leoGlobals.py
 #@-leo

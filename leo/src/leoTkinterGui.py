@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.4047:@file-thin leoTkinterGui.py
+#@+node:ekr.20031218072017.4047:@thin leoTkinterGui.py
 #@@first
 
 """Leo's Tkinter Gui module."""
@@ -694,5 +694,5 @@ class tkinterGui(leoGui.leoGui):
 	#@-node:ekr.20031218072017.4059:app.gui.Tkinter.utils
 	#@-others
 #@nonl
-#@-node:ekr.20031218072017.4047:@file-thin leoTkinterGui.py
+#@-node:ekr.20031218072017.4047:@thin leoTkinterGui.py
 #@-leo

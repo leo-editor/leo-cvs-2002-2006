@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3603:@file-thin leoUndo.py
+#@+node:ekr.20031218072017.3603:@thin leoUndo.py
 #@@language python
 
 # Undo manager for leo.py.
@@ -1293,5 +1293,5 @@ class nullUndoer (undoer):
 #@-node:ekr.20031218072017.2243:class nullUndoer
 #@-others
 #@nonl
-#@-node:ekr.20031218072017.3603:@file-thin leoUndo.py
+#@-node:ekr.20031218072017.3603:@thin leoUndo.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3838:@file-thin leoTkinterComparePanel.py
+#@+node:ekr.20031218072017.3838:@thin leoTkinterComparePanel.py
 #@@language python
 
 """Leo's base compare class."""
@@ -471,5 +471,5 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 	#@-node:ekr.20031218072017.3853:Event handlers...
 	#@-others
 #@nonl
-#@-node:ekr.20031218072017.3838:@file-thin leoTkinterComparePanel.py
+#@-node:ekr.20031218072017.3838:@thin leoTkinterComparePanel.py
 #@-leo

@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040303062846.2:@file-thin ../src/leoTest.py
+#@+node:ekr.20040303062846.2:@thin ../src/leoTest.py
 """
 
 Unit tests for Leo.
@@ -1581,5 +1581,5 @@ class reformatParagraphTestCase(unittest.TestCase):
 #@-node:ekr.20040303062846.82:class reformatParagraphTestCase
 #@-node:ekr.20040303062846.80:Reformat Paragraph tests
 #@-others
-#@-node:ekr.20040303062846.2:@file-thin ../src/leoTest.py
+#@-node:ekr.20040303062846.2:@thin ../src/leoTest.py
 #@-leo

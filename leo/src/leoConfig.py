@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017.3001:@file-thin leoConfig.py
+#@+node:ekr.20031218072017.3001:@thin leoConfig.py
 #@@language python
 
 import leoGlobals as g
@@ -760,5 +760,5 @@ class config (baseConfig):
 	"""A class to manage configuration settings."""
 	pass
 #@nonl
-#@-node:ekr.20031218072017.3001:@file-thin leoConfig.py
+#@-node:ekr.20031218072017.3001:@thin leoConfig.py
 #@-leo
