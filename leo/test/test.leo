@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4098" clone_windows="0"/>
-<globals body_outline_ratio="0.463110102157">
-	<global_window_position top="10" left="308" height="881" width="861"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4188" clone_windows="0"/>
+<globals body_outline_ratio="0.427922814983">
+	<global_window_position top="35" left="370" height="881" width="861"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -350,6 +350,27 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040414082806"><vh>Clone test</vh>
+<v t="ekr.20040409140301"><vh>clone test</vh>
+<v t="ekr.20040409140301.1"><vh>b</vh>
+<v t="ekr.20040409140301.2"><vh>c</vh>
+<v t="ekr.20040409142108"><vh>firstChild</vh></v>
+<v t="ekr.20040409142108.1"><vh>secondChild</vh></v>
+</v>
+<v t="ekr.20040409142028"><vh>sibling</vh></v>
+</v>
+<v t="ekr.20040409140301.3"><vh>a</vh></v>
+</v>
+<v t="ekr.20040409140343"><vh>d</vh>
+<v t="ekr.20040409140301.2"><vh>c</vh>
+<v t="ekr.20040409142108"><vh>firstChild</vh></v>
+<v t="ekr.20040409142108.1"><vh>secondChild</vh></v>
+</v>
+<v t="ekr.20040409142028.1"><vh>sibling 2</vh></v>
+</v>
+<v t="ekr.20040409142108"><vh>firstChild</vh></v>
+<v t="ekr.20040409140343.1"><vh>last</vh></v>
+</v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
@@ -383,27 +404,6 @@
 <v t="ekr.20040402074431"><vh>putNormalToken</vh></v>
 <v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
 </v>
-</v>
-<v t="ekr.20040414082806" a="TV"><vh>Clone test</vh>
-<v t="ekr.20040409140301"><vh>clone test</vh>
-<v t="ekr.20040409140301.1"><vh>b</vh>
-<v t="ekr.20040409140301.2"><vh>c</vh>
-<v t="ekr.20040409142108"><vh>firstChild</vh></v>
-<v t="ekr.20040409142108.1"><vh>secondChild</vh></v>
-</v>
-<v t="ekr.20040409142028"><vh>sibling</vh></v>
-</v>
-<v t="ekr.20040409140301.3"><vh>a</vh></v>
-</v>
-<v t="ekr.20040409140343"><vh>d</vh>
-<v t="ekr.20040409140301.2"><vh>c</vh>
-<v t="ekr.20040409142108"><vh>firstChild</vh></v>
-<v t="ekr.20040409142108.1"><vh>secondChild</vh></v>
-</v>
-<v t="ekr.20040409142028.1"><vh>sibling 2</vh></v>
-</v>
-<v t="ekr.20040409142108"><vh>firstChild</vh></v>
-<v t="ekr.20040409140343.1"><vh>last</vh></v>
 </v>
 <v t="EKR.20040430160416"><vh>Tests: for unit tests</vh>
 <v t="EKR.20040430160416.1"><vh>jEdit modes Colorizer tests (bugs here)</vh>
@@ -462,6 +462,60 @@
 <v t="EKR.20040430162649.23"><vh>(double @root bug)</vh>
 <v t="EKR.20040430162649.24"><vh>Assert fails</vh></v>
 <v t="EKR.20040430162649.25"><vh>double at-root test (assert fails)</vh></v>
+</v>
+</v>
+<v t="EKR.20040504083716.44" a="E"><vh>perfect import unit tests</vh>
+<v t="EKR.20040504083716.45"><vh>@   file test_sentinels.py</vh>
+<v t="EKR.20040504083716.47"><vh>class sentinel_test</vh>
+<v t="EKR.20040504083716.48"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.49"><vh>setup_inputfile</vh></v>
+<v t="EKR.20040504083716.50"><vh>setup_configfile</vh></v>
+</v>
+<v t="EKR.20040504083716.51"><vh>insert tests</vh>
+<v t="EKR.20040504083716.52"><vh>class insert_test</vh>
+<v t="EKR.20040504083716.53"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.54"><vh>runTest</vh></v>
+</v>
+</v>
+<v t="EKR.20040504083716.55"><vh>replacement tests</vh>
+<v t="EKR.20040504083716.56"><vh>class replace_test</vh>
+<v t="EKR.20040504083716.57"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.58"><vh>runTest</vh></v>
+</v>
+<v t="EKR.20040504083716.59"><vh>class replace_test2</vh>
+<v t="EKR.20040504083716.60"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.61"><vh>runTest</vh></v>
+</v>
+<v t="EKR.20040504083716.62"><vh>class replace_test3</vh>
+<v t="EKR.20040504083716.63"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.64"><vh>runTest</vh></v>
+</v>
+<v t="EKR.20040504083716.65"><vh>class replace_test4</vh>
+<v t="EKR.20040504083716.66"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.67"><vh>runTest</vh></v>
+</v>
+</v>
+<v t="EKR.20040504083716.68"><vh>regression tests</vh>
+<v t="EKR.20040504083716.69"><vh>class regression_test_1</vh>
+<v t="EKR.20040504083716.70"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.71"><vh>runTest</vh></v>
+</v>
+</v>
+<v t="EKR.20040504083716.72"><vh>main</vh></v>
+</v>
+<v t="EKR.20040504083716.73"><vh>not used</vh>
+<v t="EKR.20040504083716.74" tnodeList="EKR.20040504083716.74"><vh>@file testtesting.ini</vh></v>
+<v t="EKR.20040504083716.75"><vh>tests to write</vh>
+<v t="EKR.20040504083716.76"><vh>Insert tests.</vh></v>
+<v t="EKR.20040504083716.77"><vh>deletion tests.</vh></v>
+<v t="EKR.20040504083716.78"><vh>Creation of backup files.</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040504083716" a="E"><vh>Mulder Update script</vh>
+<v t="EKR.20040504083716.39" a="ETV"><vh>sync</vh>
+<v t="EKR.20040504153320"><vh>&lt;&lt; compute sourcetime and targettime &gt;&gt;</vh></v>
+<v t="EKR.20040504153320.1"><vh>&lt;&lt; compute operation &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1114,6 +1168,518 @@ AssertionError
 @root a.txt 
 some text 
 @ </t>
+<t tx="EKR.20040504083716">@language python
+
+import leoGlobals as g
+from leoGlobals import true,false
+
+import shutil
+
+testing = true
+
+sourcedir=r"c:/prog/test/perfectImport"
+targetdir=r"c:/prog/test/perfectImport/leo"
+s1 = g.os_path_join(sourcedir,"leoAtFile.py")
+t1 = g.os_path_join(targetdir,"leoAtFile.py")
+files = [(s1,t1)]
+
+@others
+
+print ; print '-' * 20
+
+sync(files) # push or pull, depending on date.
+</t>
+<t tx="EKR.20040504083716.39">def sync(files):
+	
+	"""Do a pull or a push, depending on the date of the files."""
+	
+	none, push, pull = 'None', 'push', 'pull'
+	mu = g.mulderUpdateAlgorithm()
+
+	for sourcefilename, targetfilename in files:
+		&lt;&lt; compute sourcetime and targettime &gt;&gt;
+		&lt;&lt; compute operation &gt;&gt;
+		if operation == push:
+			if testing: print push, sourcefilename, targetfilename
+			strippedLines = mu.removeSentinelsFromFile(sourcefilename)
+			mu.write_if_changed(strippedLines,sourcefilename,targetfilename)
+			mu.copy_time(sourcefilename,targetfilename)
+		elif operation == pull:
+			if testing: print pull, sourcefilename, targetfilename
+			if sourcetime:
+				mu.propagateDiffsToSentinelsFile(sourcefilename,targetfilename)
+				mu.copy_time(targetfilename,sourcefilename)
+			else:
+				shutil.copy2(targetfilename,sourcefilename)</t>
+<t tx="EKR.20040504083716.44"># This is some basic testing.
+
+@ignore</t>
+<t tx="EKR.20040504083716.45">@others</t>
+<t tx="EKR.20040504083716.47">class sentinel_test(TestCase):
+	@others</t>
+<t tx="EKR.20040504083716.48">def setUp(self):
+	self.prefix = ["#@+leo-ver=4\n",
+"#@+node:@file sentinel.py\n",
+"#@@language python\n"]
+	self.postfix = ["#@-node:@file sentinel.py\n",
+"#@-leo\n"]
+</t>
+<t tx="EKR.20040504083716.49">def setup_inputfile(self, input):
+	classname = self.__class__.__name__
+	self.input_filename = os.path.join('test/s_%s.txt' % classname)
+	self.output_filename = os.path.join('test/d_%s.txt' % classname)
+	outfile = file(self.input_filename, "w")
+	for line in input:
+		outfile.write(line)
+	outfile.close()
+	
+	
+ 
+</t>
+<t tx="EKR.20040504083716.50">def setup_configfile(self):
+	self.configfilename = "test/sentinel.cfg"
+	outfile = file(self.configfilename, "w")
+	outfile.write("[sentinel]\n")
+	outfile.write("\ns1=%s\n" % self.input_filename)
+	outfile.write("\nd1=%s\n" % self.output_filename)
+	outfile.close()
+
+</t>
+<t tx="EKR.20040504083716.51"></t>
+<t tx="EKR.20040504083716.52">class insert_test(sentinel_test):
+	@others</t>
+<t tx="EKR.20040504083716.53">def setUp(self):
+	sentinel_test.setUp(self)
+	self.setup_inputfile(self.prefix + 
+["Proof of concept implementation of sentinel free Leo files.\n",
+"We try to insert a line after here\n",
+"This should be after the inserted line\n",
+"This should be the last line in the file\n"]
+ + self.postfix)
+
+	# here are the same lines, without sentinels
+	self.lines = ["Proof of concept implementation of sentinel free Leo files.\n",
+	 "We try to insert a line after here\n",
+	 "This should be after the inserted line\n",
+	 "This should be the last line in the file\n"]
+	self.setup_configfile()
+</t>
+<t tx="EKR.20040504083716.54">def runTest(self):
+	"""
+	
+	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+	
+	"""
+	
+	# First, produce the sentinel free output.
+	sentinel.main(self.configfilename, "push")
+	
+	# Verify this first step.
+	assert os.path.exists(self.output_filename)
+	assert file(self.output_filename).readlines() == self.lines
+	
+	# then insert one line in the sentinel free output.
+	lines = self.lines
+	lines[2:2] = ["This is an inserted line\n"]
+	outfile = file(self.output_filename, "w")
+	for line in lines:
+		outfile.write(line)
+	outfile.close()
+	
+	# get the sources back.
+	sentinel.main(self.configfilename, "pull")
+	
+	# re-generate the output.
+	sentinel.main(self.configfilename, "push")
+	
+	# and check for equality.
+	assert file(self.output_filename).readlines() == lines
+	
+	
+	
+	
+	
+	
+
+
+
+</t>
+<t tx="EKR.20040504083716.55"></t>
+<t tx="EKR.20040504083716.56">class replace_test(sentinel_test):
+	"""
+	Replace a single line.
+	"""
+	@others</t>
+<t tx="EKR.20040504083716.57">def setUp(self):
+	sentinel_test.setUp(self)
+	self.lines = [
+	 "Proof of concept implementation of sentinel free Leo files.\n",
+	 "This line should be replaced\n",
+	 "This should be the last line in the file\n"]
+	self.setup_inputfile(self.prefix + self.lines + self.postfix)
+
+	# here are the same lines, without sentinels
+	self.setup_configfile()
+</t>
+<t tx="EKR.20040504083716.58">def runTest(self):
+	"""
+	
+	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+	
+	"""
+	
+	# First, produce the sentinel free output.
+	sentinel.main(self.configfilename, "push")
+	
+	# Verify this first step.
+	assert os.path.exists(self.output_filename)
+	assert file(self.output_filename).readlines() == self.lines
+	
+	# then insert one line in the sentinel free output.
+	lines = self.lines
+	lines[2:2] = ["This is a replaced line\n"]
+	outfile = file(self.output_filename, "w")
+	for line in lines:
+		outfile.write(line)
+	outfile.close()
+	
+	# get the sources back.
+	sentinel.main(self.configfilename, "pull")
+	
+	# re-generate the output.
+	sentinel.main(self.configfilename, "push")
+	
+	# and check for equality.
+	assert file(self.output_filename).readlines() == lines
+	
+	
+	
+	
+	
+	
+
+
+
+</t>
+<t tx="EKR.20040504083716.59">class replace_test2(sentinel_test):
+	"""
+	Replace two lines.
+	"""
+	@others</t>
+<t tx="EKR.20040504083716.60">def setUp(self):
+	sentinel_test.setUp(self)
+	self.lines = [
+	"Line 0\n",    #0
+"   Line 1\n",    #1
+"   Line 2.\n",   #2
+"   Line 3.\n",   #3
+"   Line 4\n",    #4
+"\n", #5
+" We have two subclasses:\n", #6
+"   single_clss represents a (condition, register) =&gt; (expression_number, linenumber) mapping.\n", #7
+"   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mapping.\n", #8
+"\n", #9
+" Line 10\n", #10
+" Line 11\n" #11
+]
+	self.setup_inputfile(self.prefix + self.lines + self.postfix)
+
+	# here are the same lines, without sentinels
+	self.setup_configfile()
+</t>
+<t tx="EKR.20040504083716.61">def runTest(self):
+	"""
+	
+	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+	
+	"""
+	
+	# First, produce the sentinel free output.
+	sentinel.main(self.configfilename, "push")
+	
+	# Verify this first step.
+	assert os.path.exists(self.output_filename)
+	assert file(self.output_filename).readlines() == self.lines
+	
+	# then insert two lines in the sentinel free output.
+	lines = self.lines
+	lines[7:9] = ["   single_class represents a (condition, register) =&gt; (expression_number, linenumber) mapping.\n", #7
+					  "   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mappings.\n", #8
+					 ]
+	outfile = file(self.output_filename, "w")
+	for line in lines:
+		outfile.write(line)
+	outfile.close()
+	
+	# get the sources back.
+	sentinel.main(self.configfilename, "pull")
+	
+	# re-generate the output.
+	sentinel.main(self.configfilename, "push")
+	
+	# and check for equality.
+	assert file(self.output_filename).readlines() == lines
+	
+	
+	
+	
+	
+	
+
+
+
+</t>
+<t tx="EKR.20040504083716.62">class replace_test3(sentinel_test):
+	"""
+	Replace the lines of a whole node.
+	"""
+	@others</t>
+<t tx="EKR.20040504083716.63">def setUp(self):
+	sentinel_test.setUp(self)
+	self.lines = [
+	"#@+node:main\n",
+	"node 1: line 1\n", # 1
+	"node 1: line 2\n", # 2
+	"#@-node:main\n",
+	"#@-others\n",
+	"node 2: line 3\n", # 3
+	"node 2: line 4\n", # 4
+	"#@-node:@file sentinel.py\n",
+	]
+	self.setup_inputfile(self.prefix + self.lines + self.postfix)
+
+	# here are the same lines, without sentinels
+	self.setup_configfile()
+</t>
+<t tx="EKR.20040504083716.64">def runTest(self):
+	"""
+	
+	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+	
+	"""
+	
+	# First, produce the sentinel free output.
+	sentinel.main(self.configfilename, "push")
+	
+	# Verify this first step.
+	assert os.path.exists(self.output_filename)
+	filtered_lines = sentinel.push_filter_lines(self.lines)[0]
+	assert file(self.output_filename).readlines() == filtered_lines
+	
+	# then insert one line in the sentinel free output.
+	filtered_lines [2:4] = [   "These lines should be totally different\n",
+	"and be replaced across sentinel blocks,\n",
+
+					 ]
+	outfile = file(self.output_filename, "w")
+	for line in filtered_lines:
+		outfile.write(line)
+	outfile.close()
+	
+	# get the sources back.
+	sentinel.main(self.configfilename, "pull")
+	
+	# re-generate the output.
+	sentinel.main(self.configfilename, "push")
+	
+	# and check for equality.
+	assert file(self.output_filename).readlines() == filtered_lines
+	
+	
+	
+	
+	
+	
+
+
+
+</t>
+<t tx="EKR.20040504083716.65">class replace_test4(sentinel_test):
+	"""
+	Replace the lines of a whole node.
+	"""
+	@others</t>
+<t tx="EKR.20040504083716.66">def setUp(self):
+	sentinel_test.setUp(self)
+	self.lines = [
+	"#@+node:main\n",
+	"node 1: line 1\n", # 1
+	"node 1: line 2\n", # 2
+	"#@-node:main\n",
+	"#@-others\n",
+	"node 2: line 3\n", # 3
+	"node 2: line 4\n", # 4
+	"#@-node:@file sentinel.py\n",
+	]
+	self.setup_inputfile(self.prefix + self.lines + self.postfix)
+
+	# here are the same lines, without sentinels
+	self.setup_configfile()
+</t>
+<t tx="EKR.20040504083716.67">def runTest(self):
+	"""
+	
+	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+	
+	"""
+	
+	# First, produce the sentinel free output.
+	sentinel.main(self.configfilename, "push")
+	
+	# Verify this first step.
+	assert os.path.exists(self.output_filename)
+	filtered_lines = sentinel.push_filter_lines(self.lines)[0]
+	assert file(self.output_filename).readlines() == filtered_lines
+	
+	# then insert one line in the sentinel free output.
+	filtered_lines [1:3] = [   "These lines should be totally different\n",
+	"and be replaced across sentinel blocks,\n",
+
+					 ]
+	outfile = file(self.output_filename, "w")
+	for line in filtered_lines:
+		outfile.write(line)
+	outfile.close()
+	
+	# get the sources back.
+	sentinel.main(self.configfilename, "pull")
+	
+	# re-generate the output.
+	sentinel.main(self.configfilename, "push")
+	
+	# and check for equality.
+	assert file(self.output_filename).readlines() == filtered_lines
+	
+	
+	
+	
+	
+	
+
+
+
+</t>
+<t tx="EKR.20040504083716.68">@doc
+these are tests representing errors which I encountered during the development of the code.</t>
+<t tx="EKR.20040504083716.69">class regression_test_1(sentinel_test):
+	"""
+	Replace a single line.
+	"""
+	@others</t>
+<t tx="EKR.20040504083716.70">def setUp(self):
+	self.lines = [
+"#@+leo-ver=4\n",
+"#@+node:@file driver.py\n",
+"#@@language python\n",
+"#@+others\n",
+"#@+node:imports\n",
+"# Analyse an IA64 assembly file:\n",
+"#   1. Identify basic blocks.\n",
+"#   2. Track the contents of registers symbolically.\n",
+"import os, sys, cmp_globals\n",
+"\n",
+"#@-node:imports\n",
+"#@+node:process_file\n",
+"def process_file(infile, pyname_full, configfile, firststep, laststep):\n",
+"   \n",
+"      proc()\n",
+"#@nonl\n",
+"#@-node:process_file\n",
+"#@-others\n",
+"#@-node:@file driver.py\n",
+"#@-leo\n"
+]
+	self.setup_inputfile(self.lines)
+
+	# here are the same lines, without sentinels
+	self.setup_configfile()
+</t>
+<t tx="EKR.20040504083716.71">def runTest(self):
+	"""
+	
+	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+	
+	"""
+	
+	# First, produce the sentinel free output.
+	sentinel.main(self.configfilename, "push")
+	
+	# Verify this first step.
+	assert os.path.exists(self.output_filename)
+	assert file(self.output_filename).readlines() == sentinel.push_filter_lines(self.lines)[0]
+		
+	# get the sources back.
+	sentinel.main(self.configfilename, "pull")
+	
+	# Now check that the source has not been changed.
+	assert file(self.input_filename).readlines() == self.lines   
+	
+	
+	
+	
+	
+
+
+
+</t>
+<t tx="EKR.20040504083716.72">if __name__ == '__main__':
+	#fileName = os.path.join(os.getcwd(),"testing.ini")
+	#config = ConfigParser.ConfigParser()
+	#config.read(fileName)
+	#main = "Main"
+	#leodir = config.get(main, "leodir")
+	#test_to_run = config.get(main, "test_to_run")
+	test_to_run = 'all'
+	
+	if os.path.exists("test"):
+		shutil.rmtree("test")
+	os.mkdir("test")
+	suite = TestSuite()
+	if test_to_run == 'all':
+		for testclass in (
+			insert_test,
+			replace_test,
+			replace_test2,
+			replace_test3,
+			regression_test_1,         
+		):
+			suite.addTest(testclass())
+	else:
+		suite.addTest(globals()[test_to_run]())
+	testrunner = TextTestRunner()
+	testrunner.run(suite)
+ </t>
+<t tx="EKR.20040504083716.73">@ignore</t>
+<t tx="EKR.20040504083716.74">[Main]
+test_to_run = all
+# use all to run all tests.
+
+cleanup = True
+# Set to true if you want all files deleted.
+
+leodir = C:/bwm/ftptoot/Cleo-4.1-beta-5</t>
+<t tx="EKR.20040504083716.75"></t>
+<t tx="EKR.20040504083716.76"></t>
+<t tx="EKR.20040504083716.77"></t>
+<t tx="EKR.20040504083716.78"></t>
+<t tx="EKR.20040504153320">sourcetime = targettime = None
+
+if g.os_path_exists(sourcefilename):
+	sourcetime = g.os_path_getmtime(sourcefilename)
+
+if g.os_path_exists(targetfilename):
+	targettime = g.os_path_getmtime(targetfilename)</t>
+<t tx="EKR.20040504153320.1">operation = None
+if sourcetime:
+	if targettime:
+		if sourcetime &gt; targettime:
+			operation = push
+		elif sourcetime &lt; targettime:
+			operation = pull
+	else:
+		operation = push
+elif targettime:
+	operation = pull</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>

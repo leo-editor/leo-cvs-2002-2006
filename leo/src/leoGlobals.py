@@ -2171,6 +2171,486 @@ def toUnicodeFileEncoding(path,encoding):
 #@nonl
 #@-node:ekr.20031218072017.2160:toUnicodeFileEncoding
 #@-node:ekr.20031218072017.2145:os.path wrappers (leoGlobals.py)
+#@+node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
+import difflib,shutil
+
+class mulderUpdateAlgorithm:
+	
+	"""A class to update derived files using
+	diffs in files without sentinels."""
+	
+	#@	@+others
+	#@+node:EKR.20040504150046.3:__init__
+	def __init__ (self):
+		
+		self.testing = false
+		self.do_backups = false
+	#@nonl
+	#@-node:EKR.20040504150046.3:__init__
+	#@+node:EKR.20040504150046.9:copy_sentinels
+	#@+at 
+	#@nonl
+	# This script retains _all_ sentinels.  If lines are replaced, or deleted,
+	# we restore deleted sentinel lines by checking for gaps in the mapping.
+	#@-at
+	#@@c
+	
+	def copy_sentinels (self,write_lines,fat_lines,fat_pos,mapping,startline,endline):
+		"""
+		
+		Copy sentinel lines from fat_lines to write_lines.
+	
+		Copy all sentinels _after_ the current reader postion up to,
+		but not including, mapping[endline].
+	
+		"""
+	
+		j_last = mapping[startline]
+		i = startline + 1
+		while i <= endline:
+			j = mapping[i]
+			if j_last + 1 != j:
+				fat_pos = j_last + 1
+				# Copy the deleted sentinels that comprise the gap.
+				while fat_pos < j:
+					line = fat_lines[fat_pos]
+					write_lines.append(line)
+					if self.testing: print "Copy sentinel:",fat_pos,line,
+					fat_pos += 1
+			j_last = j ; i += 1
+	
+		fat_pos = mapping[endline]
+		return fat_pos
+	#@nonl
+	#@-node:EKR.20040504150046.9:copy_sentinels
+	#@+node:EKR.20040504155109:copy_time
+	def copy_time(self,sourcefilename,targetfilename):
+		
+		"""
+		Set the target file's modification time to
+		that of the source file.
+		"""
+	
+		st = os.stat(sourcefilename)
+		if hasattr(os, 'utime'):
+			os.utime(targetfilename, (st.st_atime, st.st_mtime))
+		elif hasattr(os, 'mtime'):
+			os.mtime(targetfilename, st.st_mtime)
+		else:
+			g.trace("Can not set modification time")
+	#@nonl
+	#@-node:EKR.20040504155109:copy_time
+	#@+node:EKR.20040504150046.6:create_mapping
+	def create_mapping (self,lines,marker):
+		"""
+	
+		'lines' is a list of lines of a file with sentinels.
+	 
+		Returns:
+	
+		result: lines with all sentinels removed.
+	
+		mapping: a list such that result[mapping[i]] == lines[i]
+		for all i in range(len(result))
+	
+		"""
+	
+		mapping = [] ; result = []
+		for i in xrange(len(lines)):
+			line = lines[i]
+			if not self.is_sentinel(line,marker):
+				result.append(line)
+				mapping.append(i)
+	
+		# Create a last mapping entry for copy_sentinels.
+		mapping.append(i)
+	
+		return result, mapping
+	#@nonl
+	#@-node:EKR.20040504150046.6:create_mapping
+	#@+node:EKR.20040504154039:is_sentinel NOT CORRECT
+	def is_sentinel (self,line,marker):
+		
+		"""
+		Check if line starts with a sentinel comment.
+		"""
+		
+		return line.lstrip().startswith(marker)
+	#@-node:EKR.20040504154039:is_sentinel NOT CORRECT
+	#@+node:EKR.20040504150046.4:marker_from_extension
+	def marker_from_extension(self,filename):
+		"""
+		Tries to guess the sentinel leadin
+		comment from the filename extension.
+		
+		This code should probably be shared
+		with the main Leo code.
+		"""
+		root, ext = os.path.splitext(filename)
+		if ext == '.tmp':
+			root, ext = os.path.splitext(root)
+		if ext in ('.h', '.c'):
+			marker = "//@"
+		elif ext in (".py", ".cfg", ".bat", ".ksh"):
+			marker = "#@"
+		else:
+			g.trace("unknown extension %s" % ext)
+			marker = None
+	
+		return marker
+	#@nonl
+	#@-node:EKR.20040504150046.4:marker_from_extension
+	#@+node:EKR.20040505080156:Get or remove sentinel lines
+	# These routines originally were part of push_filter & push_filter_lines.
+	#@nonl
+	#@+node:EKR.20040505081121:separateSentinelsFromFile/Lines
+	def separateSentinelsFromFile (self,filename):
+		
+		"""Separate the lines of the file into a tuple of two lists,
+		containing the sentinel and non-sentinel lines of the file."""
+		
+		lines = file(filename).readlines()
+		marker = self.marker_from_extension(filename)
+		
+		return self.separateSentinelsFromLines(lines,marker)
+		
+	def separateSentinelsFromLines (self,lines,marker):
+		
+		"""Separate lines (a list of lines) into a tuple of two lists,
+		containing the sentinel and non-sentinel lines of the original list."""
+		
+		strippedLines = self.removeSentinelsFromLines(lines,marker)
+		sentinelLines = self.getSentinelsFromLines(lines,marker)
+		
+		return strippedLines,sentinelLines
+	#@nonl
+	#@-node:EKR.20040505081121:separateSentinelsFromFile/Lines
+	#@+node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
+	def removeSentinelsFromFile (self,filename):
+		
+		"""Return a copy of file with all sentinels removed."""
+		
+		lines = file(filename).readlines()
+		marker = self.marker_from_extension(filename)
+		
+		return removeSentinelsFromLines(lines,marker)
+		
+	def removeSentinelsFromLines (self,lines,marker):
+	
+		"""Return a copy of lines with all sentinels removed."""
+		
+		return [line for line in lines if not self.is_sentinel(line,marker)]
+	#@nonl
+	#@-node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
+	#@+node:EKR.20040505080156.3:getSentinelsFromFile/Lines
+	def getSentinelsFromFile (self,filename,marker):
+		
+		"""Returns all sentinels lines in a file."""
+		
+		lines = file(filename).readlines()
+		marker = self.marker_from_extension(filename)
+	
+		return getSentinelsFromLines(lines,marker)
+		
+	def getSentinelsFromLines (self,lines,marker):
+		
+		"""Returns all sentinels lines in lines."""
+		
+		return [line for line in lines if self.is_sentinel(line,marker)]
+	#@nonl
+	#@-node:EKR.20040505080156.3:getSentinelsFromFile/Lines
+	#@-node:EKR.20040505080156:Get or remove sentinel lines
+	#@+node:EKR.20040504150046.10:propagateDiffsToSentinelsFile (was pull_source)
+	def propagateDiffsToSentinelsFile(self,sourcefilename,targetfilename):
+		
+		#@	<< init propagateDiffsToSentinelsFile vars >>
+		#@+node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
+		# Get the sentinel comment marker.
+		marker = self.marker_from_extension(sourcefilename)
+		if not marker:
+			return
+		
+		try:
+			# Create the readers.
+			sfile = file(sourcefilename)
+			tfile = file(targetfilename)
+			
+			fat_lines = sfile.readlines() # Contains sentinels.
+			j_lines   = tfile.readlines() # No sentinels.
+			
+			i_lines,mapping = self.create_mapping(fat_lines,marker)
+			
+			sfile.close()
+			tfile.close()
+		except:
+			g.es_exception("can not open files")
+			return
+		#@nonl
+		#@-node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
+		#@nl
+		
+		write_lines = self.propagateDiffsToSentinelsLines(
+			i_lines,j_lines,fat_lines,mapping)
+			
+		# Update _source_ file if it is not the same as write_lines.
+		written = self.write_if_changed(write_lines,targetfilename,sourcefilename)
+		if written:
+			#@		<< paranoia check>>
+			#@+node:EKR.20040504150046.12:<<paranoia check>>
+			# Check that 'push' will re-create the changed file.
+			strippedLines,sentinel_lines = self.separateSentinelsFromFile(sourcefilename)
+			
+			if strippedLines != j_lines:
+				self.report_mismatch(strippedLines, j_lines,
+					"Propagating diffs did not work as expected",
+					"Content of sourcefile:",
+					"Content of modified file:")
+			
+			# Check that no sentinels got lost.
+			fat_sentinel_lines = self.getSentinelsFromLines(fat_lines,marker)
+			
+			if sentinel_lines != fat_sentinel_lines:
+				self.report_mismatch(sentinel_lines,fat_sentinel_lines,
+					"Propagating diffs modified sentinel lines:",
+					"Current sentinel lines:",
+					"Old sentinel lines:")
+			#@nonl
+			#@-node:EKR.20040504150046.12:<<paranoia check>>
+			#@nl
+	#@nonl
+	#@-node:EKR.20040504150046.10:propagateDiffsToSentinelsFile (was pull_source)
+	#@+node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
+	def propagateDiffsToSentinelsLines (self,i_lines,j_lines,fat_lines,mapping):
+		
+		"""Compare the 'i_lines' with 'j_lines' and propagate the diffs back into
+		'write_lines' making sure that all sentinels of 'fat_lines' are copied.
+	
+		i/j_lines have no sentinels.  fat_lines does."""
+	
+		#@	<< init propagateDiffsToSentinelsLines vars >>
+		#@+node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
+		# Indices into i_lines, j_lines & fat_lines.
+		i_pos = j_pos = fat_pos = 0
+		
+		# These vars check that all ranges returned by get_opcodes() are contiguous.
+		i2_old = j2_old = -1
+		
+		# Create the output lines.
+		write_lines = []
+		
+		matcher = difflib.SequenceMatcher(None,i_lines,j_lines)
+		
+		testing = self.testing
+		#@nonl
+		#@-node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
+		#@nl
+		#@	<< copy the sentinels at the beginning of the file >>
+		#@+node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
+		while fat_pos < mapping[0]:
+			line = fat_lines[fat_pos]
+			write_lines.append(line)
+			if testing: print "copy initial line",fat_pos,line,
+			fat_pos += 1
+		#@nonl
+		#@-node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
+		#@nl
+		for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+			if testing:
+				print ; print "Opcode",tag,i1,i2,j1,j2 ; print
+			#@		<< update and check the loop invariant >>
+			#@+node:EKR.20040504145804.4:<< update and check the loop invariant>>
+			# We need the ranges returned by get_opcodes to completely cover the source lines being compared.
+			# We also need the ranges not to overlap.
+			
+			assert(i2_old in (-1,i1))
+			assert(j2_old in (-1,j1))
+			
+			i2_old = i2 ; j2_old = j2
+			
+			# Check the loop invariants.
+			assert i_pos == i1
+			assert j_pos == j1
+			assert fat_pos == mapping[i1]
+			
+			if 0: # not yet.
+				if testing: # A bit costly.
+					t_sourcelines,t_sentinel_lines = push_filter_lines(write_lines, marker)
+					# Check that we have all the modifications so far.
+					assert t_sourcelines == j_lines[:j1],"t_sourcelines == j_lines[:j1]"
+					# Check that we kept all sentinels so far.
+					assert t_sentinel_lines == push_filter_lines(fat_lines[:fat_pos], marker)[1]
+			#@nonl
+			#@-node:EKR.20040504145804.4:<< update and check the loop invariant>>
+			#@nl
+			if tag == 'equal':
+				#@			<< handle 'equal' tag >>
+				#@+node:EKR.20040504145804.5:<< handle 'equal' tag >>
+				# Copy the lines, including sentinels.
+				while fat_pos <= mapping[i2-1]:
+					line = fat_lines[fat_pos]
+					if 0: # too verbose.
+						if testing: print "Equal: copying ", line,
+					write_lines.append(line)
+					fat_pos += 1
+				
+				if testing:
+					print "Equal: synch i", i_pos,i2
+					print "Equal: synch j", j_pos,j2
+				
+				i_pos = i2
+				j_pos = j2
+				
+				# Copy the sentinels which might follow the lines.       
+				fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i2-1,i2)
+				#@nonl
+				#@-node:EKR.20040504145804.5:<< handle 'equal' tag >>
+				#@nl
+			elif tag == 'replace':
+				#@			<< handle 'replace' tag >>
+				#@+node:EKR.20040504145804.6:<< handle 'replace' tag >>
+				#@+at 
+				#@nonl
+				# Replace lines that may span sentinels.
+				# 
+				# For now, we put all the new contents after the first 
+				# sentinel.
+				# 
+				# A more complex approach: run the difflib across the 
+				# different lines and try to
+				# construct a mapping changed line => orignal line.
+				#@-at
+				#@@c
+				
+				while j_pos < j2:
+					line = j_lines[j_pos]
+					if testing: print "Replace:", line,
+					write_lines.append(line)
+					j_pos += 1
+					
+				i_pos = i2
+				
+				# Copy the sentinels which might be between the changed code.         
+				fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
+				#@nonl
+				#@-node:EKR.20040504145804.6:<< handle 'replace' tag >>
+				#@nl
+			elif tag == 'delete':
+				#@			<< handle 'delete' tag >>
+				#@+node:EKR.20040504145804.7:<< handle 'delete' tag >>
+				if testing:
+					print "delete: i",i_pos,i1
+					print "delete: j",j_pos,j1
+				
+				j_pos = j2
+				i_pos = i2
+				
+				# Restore any deleted sentinels.
+				fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
+				#@nonl
+				#@-node:EKR.20040504145804.7:<< handle 'delete' tag >>
+				#@nl
+			elif tag == 'insert':
+				#@			<< handle 'insert' tag >>
+				#@+node:EKR.20040504145804.8:<< handle 'insert' tag >>
+				while j_pos < j2:
+					line = j_lines[j_pos]
+					if testing: print "Insert:", line,
+					write_lines.append(line)
+					j_pos += 1
+				
+				# The input streams are already in synch.
+				#@nonl
+				#@-node:EKR.20040504145804.8:<< handle 'insert' tag >>
+				#@nl
+			else: assert 0,"bad tag"
+		#@	<< copy the sentinels at the end of the file >>
+		#@+node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
+		while fat_pos < len(fat_lines):
+			line = fat_lines[fat_pos]
+			write_lines.append(line)
+			if testing: print "Append last line",line
+			fat_pos += 1
+		#@nonl
+		#@-node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
+		#@nl
+		return write_lines
+	#@-node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
+	#@+node:EKR.20040504150046.5:report_mismatch
+	def report_mismatch (self,lines1,lines2,message,lines1_message,lines2_message):
+	
+		"""
+		Generate a report when something goes wrong.
+		"""
+	
+		print '='*20
+		print message
+		
+		if 0:
+			print lines1_message
+			print '-'*20
+			for line in lines1:
+			  print line,
+			 
+			print '='*20
+		
+			print lines2_message
+			print '-'*20
+			for line in lines2:
+				print line,
+	#@nonl
+	#@-node:EKR.20040504150046.5:report_mismatch
+	#@+node:EKR.20040504160820:write_if_changed
+	def write_if_changed(self,lines,sourcefilename,targetfilename):
+		"""
+		
+		Replaces target file if it is not the same as 'lines',
+		and makes the modification date of target file the same as the source file.
+		
+		Optionally backs up the overwritten file.
+	
+		"""
+		
+		copy = not os.path.exists(targetfilename) or lines != file(targetfilename).readlines()
+			
+		if self.testing:
+			if copy:
+				print "Writing",targetfilename,"without sentinals"
+			else:
+				print "Files are identical"
+	
+		if copy:
+			if self.do_backups:
+				#@			<< make backup file >>
+				#@+node:EKR.20040504160820.1:<< make backup file >>
+				if os.path.exists(targetfilename):
+					count = 0
+					backupname = "%s.~%s~" % (targetfilename,count)
+					while os.path.exists(backupname):
+						count += 1
+						backupname = "%s.~%s~" % (targetfilename,count)
+					os.rename(targetfilename, backupname)
+					if testing:
+						print "backup file in ", backupname
+				#@nonl
+				#@-node:EKR.20040504160820.1:<< make backup file >>
+				#@nl
+			outfile = open(targetfilename, "w")
+			for line in lines:
+				outfile.write(line)
+			outfile.close()
+			self.copy_time(sourcefilename,targetfilename)
+		return copy
+	#@-node:EKR.20040504160820:write_if_changed
+	#@-others
+	
+def doMulderUpdateAlgorithm(sourcefilename,targetfilename):
+
+	mu = mulderUpdateAlgorithm()
+
+	mu.pull_source(sourcefilename,targetfilename)
+	mu.copy_time(targetfilename,sourcefilename)
+#@nonl
+#@-node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
 #@+node:ekr.20031218072017.3151:Scanning...
 #@+node:ekr.20031218072017.3152:g.scanAtFileOptions
 def scanAtFileOptions (h,err_flag=false):
