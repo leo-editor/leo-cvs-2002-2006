@@ -169,9 +169,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		self.reconfigurePanes()
 		self.body.setFontFromConfig()
 		
-		# Create the status line.
-		self.createStatusLine()
-		self.putStatusLine("Welcome to Leo")
+		if 0: # No longer done automatically.
+		
+			# Create the status line.
+			self.createStatusLine()
+			self.putStatusLine("Welcome to Leo")
 		#@nonl
 		#@-node:<< create all the subframes >>
 		#@nl
