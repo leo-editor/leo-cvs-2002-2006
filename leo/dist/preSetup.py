@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #@+leo-ver=4-thin
-#@+node:EKR.20040519082027.20:@file-thin preSetup.py
+#@+node:EKR.20040519082027.20:@thin preSetup.py
 #@@first
 
 """ Preprocess before executing setup.py. """
@@ -54,5 +54,5 @@ def setup():
 	tangleLeoConfigDotLeo()
 	print "preSetup complete"
 #@nonl
-#@-node:EKR.20040519082027.20:@file-thin preSetup.py
+#@-node:EKR.20040519082027.20:@thin preSetup.py
 #@-leo

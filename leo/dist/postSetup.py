@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #@+leo-ver=4-thin
-#@+node:EKR.20040519082027.29:@file-thin postSetup.py
+#@+node:EKR.20040519082027.29:@thin postSetup.py
 #@@first
 
 """ Postprocess after executing setup.py """
@@ -55,5 +55,5 @@ def setup():
 		unsetDefaultParams()
 	print "postSetup complete"
 #@nonl
-#@-node:EKR.20040519082027.29:@file-thin postSetup.py
+#@-node:EKR.20040519082027.29:@thin postSetup.py
 #@-leo

@@ -72,8 +72,8 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040519080201.1"><vh>Distribution checklist</vh>
-<v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
+<v t="EKR.20040519080201.1" a="E"><vh>Distribution checklist</vh>
+<v t="EKR.20040519080201.2" a="TV" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
 <v t="EKR.20040519090846"><vh>Distribution files</vh>
@@ -95,7 +95,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040519082027" a="TV"><vh>Distribution scripts</vh>
+<v t="EKR.20040519082027" a="E"><vh>Distribution scripts</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt; (no spaces in file names)</vh></v>
 <v t="EKR.20040519083717"><vh>@file-thin leo.nsi</vh></v>
 <v t="EKR.20040519082027.20"><vh>@file-thin preSetup.py</vh></v>
@@ -380,7 +380,7 @@ if 1: # Replace config settings and create .zip file.
 	os.chdir(r"c:\prog\leoCvs\leo")
 	os.system(r"c:\python22\python c:\prog\leoCvs\leo\dist\createLeoDist.py sdist --formats=zip")</t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4.2-a2-test",
+version="4.2-a4",
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",

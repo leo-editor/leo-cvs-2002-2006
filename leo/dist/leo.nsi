@@ -1,5 +1,5 @@
 ;@+leo-ver=4-thin
-;@+node:EKR.20040519083717:@file-thin leo.nsi
+;@+node:EKR.20040519083717:@thin leo.nsi
 ;@@comment ;
 
 ; NSIS Script for Leo
@@ -327,5 +327,5 @@ SectionEnd ; end of uninstall section
 
 ; eof
 ;@nonl
-;@-node:EKR.20040519083717:@file-thin leo.nsi
+;@-node:EKR.20040519083717:@thin leo.nsi
 ;@-leo
