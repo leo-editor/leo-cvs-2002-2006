@@ -498,7 +498,7 @@ class baseFileCommands:
 			#@nl
 			ok = false
 	
-		c.frame.tree.redraw_now()
+		c.frame.tree.redraw_now(scroll=false)
 		
 		if ok and atFileNodesFlag:
 			c.atFileCommands.readAll(c.rootVnode(),partialFlag=false)
@@ -1534,7 +1534,7 @@ class baseFileCommands:
 		# Write tnodeList only for @file nodes.
 		# New in 4.2: tnode list is in tnode.
 		
-		if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0: ### and v.isAnyAtFileNode():
+		if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 			fc.putTnodeList(v) # New in 4.0
 		
 		if hasattr(v,"unknownAttributes"): # New in 4.0
@@ -1570,7 +1570,7 @@ class baseFileCommands:
 		#@nl
 	
 		# New in 4.2: don't write child nodes of @file-thin trees.
-		if p.hasChildren(): ### and not p.isAtThinFileNode():
+		if p.hasChildren() and not p.isAtThinFileNode():
 			fc.put_nl()
 			# This optimization eliminates all "recursive" copies.
 			p.moveToFirstChild()
@@ -1778,23 +1778,17 @@ class baseFileCommands:
 			#@nl
 			#@		<< put the .leo file >>
 			#@+node:<< put the .leo file >>
-			start = g.getTime()
+			# start = g.getTime()
 			self.putProlog()
 			self.putHeader()
 			self.putGlobals()
 			self.putPrefs()
 			self.putFindSettings()
-			
-			start = g.printDiffTime("headers",start)
-			
+			# start = g.printDiffTime("headers",start)
 			self.putVnodes()
-			
-			start = g.printDiffTime("vnodes ",start)
-			
+			# start = g.printDiffTime("vnodes ",start)
 			self.putTnodes()
-			
-			start = g.printDiffTime("tnodes ",start)
-			
+			# start = g.printDiffTime("tnodes ",start)
 			self.putPostlog()
 			#@nonl
 			#@-node:<< put the .leo file >>
