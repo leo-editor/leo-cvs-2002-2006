@@ -59,7 +59,7 @@ class baseCommands:
         
         # Global options
         self.page_width = 132
-        self.tab_width = 4
+        self.tab_width = -4
         self.tangle_batch_flag = False
         self.untangle_batch_flag = False
         # Default Tangle options
@@ -1839,7 +1839,7 @@ class baseCommands:
             return
     
         d = g.scanDirectives(c,p) # Support @tab_width directive properly.
-        tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+        tab_width = d.get("tabwidth",c.tab_width)
         head,lines,tail,oldSel,oldYview = self.getBodyLines()
         result = [] ; changed = False
         for line in lines:
@@ -2191,7 +2191,7 @@ class baseCommands:
             return
     
         d = g.scanDirectives(c,p) # Support @tab_width directive properly.
-        tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+        tab_width = d.get("tabwidth",c.tab_width)
         head,lines,tail,oldSel,oldYview = self.getBodyLines()
         result = [] ; changed = False
         for line in lines:

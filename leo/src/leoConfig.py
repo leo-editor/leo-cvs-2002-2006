@@ -36,7 +36,7 @@ class baseConfig:
         "whole_word" : 1,
         # Prefs panel.
         "default_target_language" : "Python",
-        "tab_width" : 4,
+        "tab_width" : -4,
         "page_width" : 132,
         "output_doc_chunks" : 1,
         "tangle_outputs_header" : 1,

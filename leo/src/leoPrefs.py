@@ -11,7 +11,7 @@ class leoPrefs:
     #@+node:ekr.20031218072017.3813:<< define leoPrefs constants >>
     # Constants used for defaults when leoConfig.txt can not be read.
     default_page_width = 132
-    default_tab_width = 4
+    default_tab_width = -4
     default_target_language = "python"
     
     # Corresponding ivars in the Commands class and this class.
