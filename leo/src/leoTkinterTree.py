@@ -1463,15 +1463,38 @@ class leoTkinterTree (leoFrame.leoTree):
             return "break"
             
         edit_text = p.edit_text()
+        index = edit_text.index("insert")
     
         if g.doHook("headkey1",c=c,p=p,ch=ch):
             return "break" # The hook claims to have handled the event.
-    
+            
+        #@    << set head to vnode text >>
+        #@+node:ekr.20031218072017.1337:<< set head to vnode text >>
+        head = p.headString()
+        if head == None:
+            head = u""
+        head = g.toUnicode(head,"utf-8")
+        #@nonl
+        #@-node:ekr.20031218072017.1337:<< set head to vnode text >>
+        #@nl
+        done = ch in ('\r','\n')
+        if done:
+            #@        << set the widget text to head >>
+            #@+node:EKR.20040614075003:<< set the widget text to head >>
+            edit_text.delete("1.0","end")
+            edit_text.insert("end",head)
+            edit_text.mark_set("insert",index)
+            #@nonl
+            #@-node:EKR.20040614075003:<< set the widget text to head >>
+            #@nl
         #@    << set s to the widget text >>
         #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
         s = edit_text.get("1.0","end")
         
-        if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+        # Don't truncate if the user is hitting return.
+        # That should just end editing.
+        if 1:
+            # Truncate headline text to workaround Tk problems...
             # Another kludge: remove one or two trailing newlines before warning of truncation.
             if s and s[-1] == '\n': s = s[:-1]
             if s and s[-1] == '\n': s = s[:-1]
@@ -1484,7 +1507,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 g.es("Truncating headline to 250 characters",color="blue")
                 s = s[:250]
         
-        s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
+        s = g.toUnicode(s,g.app.tkEncoding)
         
         if not s:
             s = u""
@@ -1495,23 +1518,9 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nonl
         #@-node:ekr.20031218072017.1336:<< set s to the widget text >>
         #@nl
-        #@    << set head to vnode text >>
-        #@+node:ekr.20031218072017.1337:<< set head to vnode text >>
-        head = p.headString()
-        if head == None:
-            head = u""
-        head = g.toUnicode(head,"utf-8")
-        #@-node:ekr.20031218072017.1337:<< set head to vnode text >>
-        #@nl
         changed = s != head
-        done = ch and (ch == '\r' or ch == '\n')
-        if not changed and not done:
-            return "break"
-    
         if changed:
             c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-        index = edit_text.index("insert")
-        if changed:
             #@        << update v and all nodes joined to v >>
             #@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
             c.beginUpdate()
@@ -1530,34 +1539,35 @@ class leoTkinterTree (leoFrame.leoTree):
             #@nonl
             #@-node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
             #@nl
-        #@    << reconfigure v and all nodes joined to v >>
-        #@+node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
-        # Reconfigure v's headline.
-        if done:
-            self.setDisabledLabelState(p)
-        
-        edit_text.configure(width=self.headWidth(v))
-        #@nonl
-        #@-node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
-        #@nl
-        #@    << update the screen >>
-        #@+node:ekr.20031218072017.1340:<< update the screen >>
-        if done:
-            c.beginUpdate()
-            self.endEditLabel()
-            c.endUpdate()
-        
-        elif changed:
-            # update v immediately.  Joined nodes are redrawn later by endEditLabel.
-            # Redrawing the whole screen now messes up the cursor in the headline.
-            self.drawIcon(p) # just redraw the icon.
-        #@nonl
-        #@-node:ekr.20031218072017.1340:<< update the screen >>
-        #@nl
+        if done or changed:
+            #@        << reconfigure v and all nodes joined to v >>
+            #@+node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
+            # Reconfigure v's headline.
+            if done:
+                self.setDisabledLabelState(p)
+            
+            edit_text.configure(width=self.headWidth(v))
+            #@nonl
+            #@-node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
+            #@nl
+            #@        << update the screen >>
+            #@+node:ekr.20031218072017.1340:<< update the screen >>
+            if done:
+                c.beginUpdate()
+                self.endEditLabel()
+                c.endUpdate()
+            
+            elif changed:
+                # Update v immediately.  Joined nodes are redrawn later by endEditLabel.
+                # Redrawing the whole screen now messes up the cursor in the headline.
+                self.drawIcon(p) # just redraw the icon.
+            #@nonl
+            #@-node:ekr.20031218072017.1340:<< update the screen >>
+            #@nl
     
         g.doHook("headkey2",c=c,p=p,ch=ch)
         return "break"
-    
+    #@nonl
     #@-node:ekr.20031218072017.1335:idle_head_key
     #@-others
     #@nonl
