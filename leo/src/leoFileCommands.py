@@ -351,6 +351,7 @@ class baseFileCommands:
 		i = self.fileIndex
 		self.fileIndex = j = string.find(self.fileBuffer,'<',i)
 		if j == -1:
+			print self.fileBuffer[i:]
 			raise BadLeoFile("unterminated escaped string")
 		else:
 			# Allocates memory
@@ -368,25 +369,27 @@ class baseFileCommands:
 			for var in findFrame.intKeys:
 				attr = "%s_flag" % (var)
 				setattr(c,attr,false)
+				# trace(attr)
 		#@-node:<< Set defaults of all flags >>
 		#@nl
 		if not self.getOpenTag("<find_panel_settings"):
 			while 1:
 				if   self.matchTag("batch="): c.batch_flag = self.getDqBool()
-				elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
-				elif self.matchTag("whole_word="): c.whole_word_flag = self.getDqBool()
 				elif self.matchTag("ignore_case="): c.ignore_case_flag = self.getDqBool()
+				elif self.matchTag("mark_changes="): c.mark_changes_flag = self.getDqBool()
+				elif self.matchTag("mark_finds="): c.mark_finds_flag = self.getDqBool()
+				elif self.matchTag("node_only="): c.node_only_flag = self.getDqBool()
 				elif self.matchTag("pattern_match="): c.pattern_match_flag = self.getDqBool()
+				elif self.matchTag("reverse="): c.reverse_flag = self.getDqBool()
+				elif self.matchTag("script_change="): c.script_change_flag = self.getDqBool() # 11/05/03
+				elif self.matchTag("script_search="): c.script_search_flag = self.getDqBool() # 11/05/03
 				elif self.matchTag("search_headline="): c.search_headline_flag = self.getDqBool()
 				elif self.matchTag("search_body="): c.search_body_flag = self.getDqBool()
 				elif self.matchTag("suboutline_only="): c.suboutline_only_flag = self.getDqBool()
-				elif self.matchTag("mark_changes="): c.mark_changes_flag = self.getDqBool()
-				elif self.matchTag("mark_finds="): c.mark_finds_flag = self.getDqBool()
-				elif self.matchTag("reverse="): c.reverse_flag = self.getDqBool()
-				elif self.matchTag("node_only="): c.node_only_flag = self.getDqBool()
-				else: break
-						
-			self.getTag(">")
+				elif self.matchTag("whole_word="): c.whole_word_flag = self.getDqBool()
+				elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
+				elif self.matchTag(">"): break
+				else: self.getUnknownTag() # New in 4.1: ignore all other tags.
 			#
 			self.getTag("<find_string>")
 			c.find_text = self.getEscapedString()
@@ -487,7 +490,7 @@ class baseFileCommands:
 			#@+node:<< raise an alert >>
 			# All other exceptions are Leo bugs.
 			
-			# es_exception()
+			es_exception()
 			alert(self.mFileName + " is not a valid Leo file: " + `message`)
 			#@nonl
 			#@-node:<< raise an alert >>
@@ -585,49 +588,34 @@ class baseFileCommands:
 		if self.getOpenTag("<preferences"):
 			return
 	
+		table = (
+			("allow_rich_text",None,None), # Ignored.
+			("tab_width","tab_width",self.getLong),
+			("page_width","page_width",self.getLong),
+			("tangle_bat","tangle_batch_flag",self.getBool),
+			("untangle_bat","untangle_batch_flag",self.getBool),
+			("output_doc_chunks","output_doc_flag",self.getBool),
+			("noweb_flag",None,None), # Ignored.
+			("extended_noweb_flag",None,None), # Ignored.
+			("defaultTargetLanguage","target_language",self.getTargetLanguage),
+			("use_header_flag","use_header_flag",self.getBool))
+		
 		while 1:
-			if self.matchTag("allow_rich_text="):
-				self.getDquote() ; self.getBool() ; self.getDquote() #ignored
-			elif self.matchTag("tab_width="):
-				self.getDquote() ; c.tab_width = self.getLong() ; self.getDquote()
-			elif self.matchTag("page_width="):
-				self.getDquote() ; c.page_width = self.getLong() ; self.getDquote()
-			elif self.matchTag("tangle_bat="):
-				self.getDquote() ; c.tangle_batch_flag = self.getBool() ; self.getDquote()
-			elif self.matchTag("untangle_bat="):
-				self.getDquote() ; c.untangle_batch_flag = self.getBool() ; self.getDquote()
-			# New in version 0.10
-			elif self.matchTag("output_doc_chunks="):
-				self.getDquote() ; c.output_doc_flag = self.getBool() ; self.getDquote()
-			elif self.matchTag("noweb_flag="):
-				# New in version 0.19: Ignore this flag.
-				self.getDquote() ; self.getBool() ; self.getDquote()
-			elif self.matchTag("extended_noweb_flag="):
-				# New in version 0.19: Ignore this flag.
-				self.getDquote() ; self.getBool() ; self.getDquote()
-			elif self.matchTag("defaultTargetLanguage="):
-				# New in version 0.15
-				self.getDquote()
-				#@			<< check for syntax coloring prefs >>
-				#@+node:<< check for syntax coloring prefs >> (getPrefs)
-				# Must match longer tags before short prefixes.
-				
-				language = "c" # default
-				
-				for name in app.language_delims_dict.keys():
-					if self.matchTagWordIgnoringCase(name):
-						language = name.replace("/","") # 10/18/03
-						self.getDquote()
-						break
-				
-				c.target_language = language
-				#@nonl
-				#@-node:<< check for syntax coloring prefs >> (getPrefs)
-				#@nl
-			elif self.matchTag("use_header_flag="):
-				self.getDquote() ; c.use_header_flag = self.getBool() ; self.getDquote()
-			else: break
-		self.getTag(">")
+			found = false
+			for tag,var,f in table:
+				if self.matchTag("%s=" % tag):
+					if var:
+						self.getDquote() ; val = f() ; self.getDquote()
+						setattr(c,var,val)
+					else:
+						self.getDqString()
+					found = true ; break
+			if not found:
+				if self.matchTag(">"):
+					break
+				else: # New in 4.1: ignore all other tags.
+					self.getUnknownTag()
+	
 		while 1:
 			if self.matchTag("<defaultDirectory>"):
 				# New in version 0.16.
@@ -646,6 +634,19 @@ class baseFileCommands:
 			config.setCommandsIvars(c)
 	#@nonl
 	#@-node:getPrefs
+	#@+node:getTargetLanguage
+	def getTargetLanguage (self):
+		
+		# Must match longer tags before short prefixes.
+		for name in app.language_delims_dict.keys():
+			if self.matchTagWordIgnoringCase(name):
+				language = name.replace("/","")
+				self.getDquote()
+				return language
+				
+		return "c" # default
+	#@nonl
+	#@-node:getTargetLanguage
 	#@+node:getSize
 	def getSize (self):
 	
@@ -1344,7 +1345,9 @@ class baseFileCommands:
 		c = self.commands ; config = app.config
 	
 		self.put("<preferences")
-		self.put(" allow_rich_text=") ; self.put_dquoted_bool(0) # no longer used
+		
+		if 0:
+			self.put(" allow_rich_text=") ; self.put_dquoted_bool(0) # no longer used
 		
 		#@	<< put prefs that may exist in leoConfig.txt >>
 		#@+node:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
@@ -1358,13 +1361,14 @@ class baseFileCommands:
 		if config.configsExist and not config.read_only: # 8/6/02
 			pass # config.update has already been called.
 		else:
-			self.put(" tab_width=") ; self.put_in_dquotes(`c.tab_width`)
+			self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
+			self.put(" node_only=") ; self.put_dquoted_bool(c.node_only_flag)
+			self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
 			self.put(" page_width=") ; self.put_in_dquotes(`c.page_width`)
+			self.put(" tab_width=") ; self.put_in_dquotes(`c.tab_width`)
 			self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
 			self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
-			self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
 			self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
-			self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language) # 10/11/02: fix reversion.
 		
 		self.put(">") ; self.put_nl()
 		# New in version 0.16
