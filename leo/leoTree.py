@@ -716,9 +716,9 @@ class leoTree:
 	#@-body
 	#@+node:1::OnActivate
 	#@+body
-	def OnActivate (self,v):
+	def OnActivate (self,v,event=None):
 		
-		if handleLeoHook("event1",kind="activate",v=v) == None:
+		if handleLeoHook("event1",kind="activate",v=v,event=event) == None:
 			
 			#@<< activate this window >>
 			#@+node:1::<< activate this window >>
@@ -746,7 +746,7 @@ class leoTree:
 			#@-body
 			#@-node:1::<< activate this window >>
 
-		handleLeoHook("event2",kind="activate",v=v)
+		handleLeoHook("event2",kind="activate",v=v,event=event)
 	
 	#@-body
 	#@-node:1::OnActivate
@@ -769,13 +769,13 @@ class leoTree:
 	#@-node:2::OnBoxClick
 	#@+node:3::OnDeactivate
 	#@+body
-	def OnDeactivate (self, event=None):
+	def OnDeactivate (self,event=None):
 	
-		if handleLeoHook("event1",kind="deactivate") == None:
+		if handleLeoHook("event1",kind="deactivate",event=event) == None:
 			self.endEditLabel()
 			self.dimEditLabel()
 			self.active = false
-		handleLeoHook("event2",kind="deactivate")
+		handleLeoHook("event2",kind="deactivate",event=event)
 	
 	#@-body
 	#@-node:3::OnDeactivate

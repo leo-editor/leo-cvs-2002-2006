@@ -558,17 +558,17 @@ class vnode:
 	
 	def OnBoxClick(self,event=None):
 	
-		if handleLeoHook("event1",kind="boxClick",v=self) == None:
+		if handleLeoHook("event1",kind="boxClick",v=self,event=event) == None:
 			self.commands.tree.OnBoxClick(self)
-		handleLeoHook("event2",kind="boxClick",v=self)
+		handleLeoHook("event2",kind="boxClick",v=self,event=event)
 		
 	# Called when the icon is double-clicked.
 		
 	def OnIconDoubleClick(self,event=None):
 	
-		if handleLeoHook("event1",kind="iconDoubleClick",v=self) == None:
+		if handleLeoHook("event1",kind="iconDoubleClick",v=self,event=event) == None:
 			self.commands.tree.OnIconDoubleClick(self)
-		handleLeoHook("event2",kind="iconDoubleClick",v=self)
+		handleLeoHook("event2",kind="iconDoubleClick",v=self,event=event)
 	
 	#@-body
 	#@-node:1::OnBoxClick, OnIconDoubleClick
@@ -576,9 +576,9 @@ class vnode:
 	#@+body
 	def OnDrag(self,event=None):
 		
-		if handleLeoHook("event1",kind="drag",v=self) == None:
+		if handleLeoHook("event1",kind="drag",v=self,event=event) == None:
 			self.commands.tree.OnDrag(self,event)
-		handleLeoHook("event2",kind="drag",v=self)
+		handleLeoHook("event2",kind="drag",v=self,event=event)
 	
 	
 	#@-body
@@ -587,9 +587,9 @@ class vnode:
 	#@+body
 	def OnEndDrag(self,event=None):
 		
-		if handleLeoHook("event1",kind="endDrag",v=self) == None:
+		if handleLeoHook("event1",kind="endDrag",v=self,event=event) == None:
 			self.commands.tree.OnEndDrag(self,event)
-		handleLeoHook("event2",kind="endDrag",v=self)
+		handleLeoHook("event2",kind="endDrag",v=self,event=event)
 	
 	
 	#@-body
@@ -598,27 +598,27 @@ class vnode:
 	#@+body
 	def OnHeadlineClick(self,event=None):
 	
-		if handleLeoHook("event1",kind="headClick",v=self) == None:
+		if handleLeoHook("event1",kind="headClick",v=self,event=event) == None:
 			self.commands.tree.OnActivate(self)
-		handleLeoHook("event2",kind="headClick",v=self)
+		handleLeoHook("event2",kind="headClick",v=self,event=event)
 		
 	def OnHeadlinePopup(self,event=None):
 	
-		if handleLeoHook("event1",kind="headPopup",v=self) == None:
+		if handleLeoHook("event1",kind="headPopup",v=self,event=event) == None:
 			self.commands.tree.OnActivate(self)
 			self.commands.tree.OnPopup(self,event)
-		handleLeoHook("event2",kind="headPopup",v=self)
+		handleLeoHook("event2",kind="headPopup",v=self,event=event)
 	
 	
 	#@-body
 	#@-node:4::OnHeadlineClick & OnHeadlinePopup
 	#@+node:5::OnHeadlineKey
 	#@+body
-	def OnHeadlineKey (self,event):
+	def OnHeadlineKey (self,event=None):
 	
-		if handleLeoHook("event1",kind="headKey",v=self) == None:
+		if handleLeoHook("event1",kind="headKey",v=self,event=event) == None:
 			self.commands.tree.OnHeadlineKey(self,event)
-		handleLeoHook("event2",kind="headKey",v=self)
+		handleLeoHook("event2",kind="headKey",v=self,event=event)
 	
 	#@-body
 	#@-node:5::OnHeadlineKey
@@ -628,37 +628,37 @@ class vnode:
 	
 		c = self.commands ; v = self
 		
-		if handleLeoHook("event1",kind="hyperLinkControlClick",v=self) == None:
+		if handleLeoHook("event1",kind="hyperLinkControlClick",v=self,event=event) == None:
 			c.beginUpdate()
 			c.selectVnode(v)
 			c.endUpdate()
 			c.body.mark_set("insert","1.0")
-		handleLeoHook("event2",kind="hyperLinkControlClick",v=self)
+		handleLeoHook("event2",kind="hyperLinkControlClick",v=self,event=event)
 	
 	
 	#@-body
 	#@-node:6::OnHyperLinkControlClick
 	#@+node:7::OnHyperLinkEnter
 	#@+body
-	def OnHyperLinkEnter (self,event):
+	def OnHyperLinkEnter (self,event=None):
 	
 		if 0: # This works, and isn't very useful.
-			if handleLeoHook("event1",kind="hyperLinkEnter",v=self) == None:
+			if handleLeoHook("event1",kind="hyperLinkEnter",v=self,event=event) == None:
 				c = self.commands ; v = self
 				c.body.tag_config(v.tagName,background="green")
-			handleLeoHook("event2",kind="hyperLinkEnter",v=self)
+			handleLeoHook("event2",kind="hyperLinkEnter",v=self,event=event)
 	
 	#@-body
 	#@-node:7::OnHyperLinkEnter
 	#@+node:8::OnHyperLinkLeave
 	#@+body
-	def OnHyperLinkLeave (self,event):
+	def OnHyperLinkLeave (self,event=None):
 	
 		if 0: # This works, and isn't very useful.
-			if handleLeoHook("event1",kind="hyperLinkLeave",v=self) == None:
+			if handleLeoHook("event1",kind="hyperLinkLeave",v=self,event=event) == None:
 				c = self.commands ; v = self
 				c.body.tag_config(v.tagName,background="white")
-			handleLeoHook("event2",kind="hyperLinkLeave",v=self)
+			handleLeoHook("event2",kind="hyperLinkLeave",v=self,event=event)
 	
 	#@-body
 	#@-node:8::OnHyperLinkLeave
@@ -666,9 +666,9 @@ class vnode:
 	#@+body
 	def OnIconClick(self,event=None):
 		
-		if handleLeoHook("event1",kind="iconClick",v=self) == None:
+		if handleLeoHook("event1",kind="iconClick",v=self,event=event) == None:
 			self.commands.tree.OnIconClick(self,event)
-		handleLeoHook("event2",kind="iconClick",v=self)
+		handleLeoHook("event2",kind="iconClick",v=self,event=event)
 	
 	#@-body
 	#@-node:9::OnIconClick

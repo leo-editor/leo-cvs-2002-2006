@@ -181,13 +181,14 @@ use_customizeLeo_dot_py = 1
 #
 #   - Setting use_configureLeo_dot_py = 1 enables user code that could,
 #     if not well thought out, create SECURITY ISSUES.
-#     See the warnings in the @file configureLeo.py node in LeoPy.py.
+#     See the warnings in the @file customizeLeo.py node in LeoPy.py.
 #	- Neither leoConfigure.leo nor leoConfigure.txt
-#	  should EVER be distributed with use_configureLeo_dot_py = 1
+#	  should be distributed with use_configureLeo_dot_py = 1
 #     Please report such distributions to me, Edward K. Ream.
-#   - Distributing any copy of configureLeo.py should be considered a HOSTILE ACT.
-#	  Please report anyone that distributes configureLeo.py to me.
-#	  At no time should an authentic Leo distribution ever contain configureLeo.py.
+#     However, CVS uploads _may_ have use_configureLeo_dot_py = 1
+#   - Distributing any copy of customizeLeo.py should be considered a HOSTILE ACT.
+#	  Please report anyone that distributes customizeLeo.py to me.
+#	  At no time should an authentic Leo distribution ever contain customizeLeo.py.
 #	  Please report any such distributions to me.
 
 use_relative_node_indices = 0
