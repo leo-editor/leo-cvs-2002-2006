@@ -1936,7 +1936,8 @@ class baseCommands:
 			pairs.append((v.headString().lower(), v))
 			v = v.next()
 		# Sort the list on the headlines.
-		sortedNodes = sortSequence(pairs,0)
+		pairs.sort()
+		sortedNodes = pairs
 		# Move the nodes
 		c.beginUpdate()
 		h,v = sortedNodes[0]

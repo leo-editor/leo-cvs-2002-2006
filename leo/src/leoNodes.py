@@ -1888,7 +1888,7 @@ class baseVnode:
 	#@+body
 	def sortChildren (self):
 	
-		# Create a list of vnode, headline tuples
+		# Create a list of (headline,vnode) tuples
 		v = self ; pairs = []
 		child = v.firstChild()
 		if not child: return
@@ -1896,10 +1896,10 @@ class baseVnode:
 			pairs.append((string.lower(child.headString()), child))
 			child = child.next()
 		# Sort the list on the headlines.
-		sortedChildren = sortSequence(pairs,0)
+		pairs.sort()
 		# Move the children.
 		index = 0
-		for headline,child in sortedChildren:
+		for headline,child in pairs:
 			child.moveToNthChildOf(v,index)
 			index += 1
 	#@-body
