@@ -203,6 +203,7 @@ def completeFileName (fileName):
     return fileName
 #@nonl
 #@-node:ekr.20041124083125:completeFileName (leo.py)
+#@+node:ekr.20050304072744:compute directories...
 #@+node:ekr.20041117155521:computeGlobalConfigDir
 def computeGlobalConfigDir():
     
@@ -289,6 +290,7 @@ def computeLoadDir():
         return None
 #@nonl
 #@-node:ekr.20031218072017.1937:computeLoadDir
+#@-node:ekr.20050304072744:compute directories...
 #@+node:ekr.20041117151301.1:startupEncoding
 def startupEncoding ():
     
