@@ -200,6 +200,8 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
 
     if isLoaded(moduleName):
         module = loadedModules.get(moduleName)
+        if verbose:
+            print 'plugin %s already loaded' % moduleName
         return module
 
     plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")

@@ -4357,6 +4357,7 @@ def importFromPath (name,path,pluginName=None,verbose=False):
         
     if not module:
         g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+
     return module
 #@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath

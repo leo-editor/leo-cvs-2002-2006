@@ -1800,6 +1800,7 @@ def importFromPath (name,path,pluginName=None,verbose=False):
         
     if not module:
         g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+
     return module
 #@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath
@@ -25432,6 +25433,7 @@ def importFromPath (name,path,pluginName=None,verbose=False):
         
     if not module:
         g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+
     return module
 #@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath
@@ -27377,6 +27379,8 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
 
     if isLoaded(moduleName):
         module = loadedModules.get(moduleName)
+        if verbose:
+            print 'plugin %s already loaded' % moduleName
         return module
 
     plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
@@ -27512,6 +27516,7 @@ def importFromPath (name,path,pluginName=None,verbose=False):
         
     if not module:
         g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+
     return module
 #@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath

@@ -1100,6 +1100,10 @@ def getTargetLanguage (self):
 #@-node:ekr.20031218072017.2063:getTargetLanguage
 #@-node:ekr.20031218072017.2062:getPrefs
 #@-node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
+#@+node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
+# These should always be available.
+#@nonl
+#@-node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
 #@-node:ekr.20050123144622:Config
 #@+node:ekr.20050119072551.1:Docs
 #@+node:ekr.20050110094511.1:Improve docs as suggested by JasonC.

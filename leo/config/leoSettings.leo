@@ -67,7 +67,7 @@
 </v>
 <v t="ekr.20041119034357.16"><vh>@page Compare panel options</vh>
 <v t="ekr.20041119034357.17"><vh>files &amp; directories</vh>
-<v t="ekr.20041119043902"><vh>@path compare_file_1 = None</vh></v>
+<v t="ekr.20041119043902"><vh>@path compare_file_1 = </vh></v>
 <v t="ekr.20041119043902.1"><vh>@path compare_file_2 = None</vh></v>
 <v t="ekr.20041119043902.2"><vh>@path output_file = None</vh></v>
 <v t="ekr.20041119043902.3"><vh>@bool append_output_to_output_file = False</vh></v>
