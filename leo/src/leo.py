@@ -141,6 +141,8 @@ def run(fileName=None,*args,**keywords):
     #@nonl
     #@-node:ekr.20040411081633:<< start psycho >>
     #@nl
+    # New in 4.3: clear g.app.initing _before_ creating the frame.
+    g.app.initing = False # "idle" hooks may now call g.app.forceShutdown.
     # Create the main frame.  Show it and all queued messages.
     c,frame = createFrame(fileName)
     if not frame: return
@@ -152,7 +154,6 @@ def run(fileName=None,*args,**keywords):
     g.enableIdleTimeHook()
     frame.tree.redraw()
     frame.body.setFocus()
-    g.app.initing = False # "idle" hooks may now call g.app.forceShutdown.
     g.app.gui.runMainLoop()
 #@nonl
 #@+node:ekr.20031218072017.1936:isValidPython
@@ -318,11 +319,13 @@ def createFrame (fileName):
             if ok:
                 return frame.c,frame
     
-    # Create a new frame & indicate it is the startup window.
+    # Create a _new_ frame & indicate it is the startup window.
     c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
     frame.setInitialWindowGeometry()
     frame.startupWindow = True
-    
+    # 3/2/05: Call the 'new' hook for compatibility with plugins.
+    g.doHook("new",old_c=None,new_c=c)
+
     # Report the failure to open the file.
     if fileName:
         g.es("File not found: " + fileName)
