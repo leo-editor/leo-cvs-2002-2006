@@ -104,7 +104,7 @@ rowcol.py
 # newButtons.py
     
 # Allows right clicks in the body pane.
-    # rClick.py
+#rClick.py
     
 # Sends output from the Execute Script command to the end of the body pane.
     # script_io_to_body.py
@@ -132,7 +132,7 @@ rowcol.py
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040915073259.3:Enhance windows
 # Adds tabs to Leo outline.
-    #chapters.py
+#chapters.py
 
 # Maximizes all new windows. (Windows platform only).
     # maximizeNewWindows.py

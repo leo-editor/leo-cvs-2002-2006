@@ -17,10 +17,10 @@ include config/leoSettings.leo
 
 # New in Leo 4.3:
 # 1. createLeoDist.py is distributed in dist directory.
-#   - The distribution script temporarily copies createLeoDist.py to the leo directory.
+#    The distribution script temporarily copies createLeoDist.py to the leo directory.
 # 2. Distribute leoDist.leo, not leoDistRef.leo.
-# 3. .pycheckrc is created and distributed in dist directory.
-#   (The user should move it to the home directory if he/she wants to use it.)
+# 3. .pycheckrc is distributed in dist directory.
+#    Move it to the home directory if you want to use it.
 
 include dist/createLeoDist.py
 include dist/leo-4-2.nsi
@@ -28,18 +28,18 @@ include dist/leo-4-3.nsi
 include dist/leoDist.leo
 include dist/.pycheckrc
 
-# New in Leo 4.3: the preSetup/Postsetup files are not used.
-# include dist/preSetup.py
-# include dist/postSetup.py
+include doc/LeoDiary.leo
+include doc/LeoDiary.txt
 
 include doc/LeoDocs.leo
-include doc/LeoDiary.leo
 include doc/leoNotes.txt
 include doc/leoToDo.txt
+
 include doc/README.TXT
 include doc/INSTALL.TXT
 include doc/PKG-INFO.TXT
 include doc/LICENSE.TXT
+
 include doc/default.css
 include doc/leo_rst.css
 include doc/silver_city.css
@@ -48,21 +48,20 @@ include extensions/__init__.py
 
 include Icons/*.*
 
-include plugins/*.*
-exclude plugins/leoPluginsRef.leo
-exclude plugins/*.pyc
 include plugins/aspell.pyd
+include plugins/leoPlugins.leo
+include plugins/*.ini
+include plugins/*.txt
+include plugins/*.py
 
-include src/LeoPy.leo
-# Exclude LeoPyRef.leo.
+include scripts/leoScripts.txt
+include scripts/*.py
+
 include src/__init__.py
+include src/LeoPy.leo
 include src/leo*.py
 include src/leoProjects.txt
 include src/oldLeoProjects.leo
-
-include scripts/leoScripts.txt
-include scripts/tangle_done.py
-include scripts/untangle_done.py
 
 include test/__init__.py
 include test/test.leo

@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="11734" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="13" left="34" height="860" width="988"/>
+	<global_window_position top="13" left="34" height="860" width="1102"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1230,7 +1230,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1254,15 +1254,15 @@
 <v t="EKR.20040524104904.19"><vh>Outlines generate derived files</vh></v>
 <v t="EKR.20040524104904.20"><vh>A recommended workflow for using Leo</vh></v>
 </v>
-<v t="EKR.20040524104904.21"><vh>Chapter 2: Installing Leo</vh>
+<v t="EKR.20040524104904.21" a="E"><vh>Chapter 2: Installing Leo</vh>
 <v t="EKR.20040524104904.22"><vh>System requirements</vh></v>
 <v t="EKR.20040524104904.23"><vh>How to install leo.py on Windows</vh></v>
 <v t="EKR.20040524104904.24"><vh>How to associate leo.py with .leo files on Windows</vh></v>
-<v t="EKR.20040524104904.25"><vh>Quick start</vh>
+<v t="EKR.20040524104904.25" a="E"><vh>Quick start</vh>
 <v t="EKR.20040524104904.50"><vh>Overview</vh></v>
 <v t="EKR.20040524104904.51"><vh>Sections and section references</vh></v>
-<v t="EKR.20040524104904.52"><vh>Organizing @file trees.</vh>
-<v t="EKR.20040524104904.53"><vh>Examples</vh>
+<v t="EKR.20040524104904.52" a="E"><vh>Organizing @file trees.</vh>
+<v t="EKR.20040524104904.53" a="TV"><vh>Examples</vh>
 <v t="EKR.20040524104904.54"><vh>@file f.c</vh>
 <v t="EKR.20040524104904.55"><vh>&lt;&lt; constants &gt;&gt;</vh></v>
 <v t="EKR.20040524104904.56"><vh>&lt;&lt; declarations &gt;&gt;</vh></v>
@@ -2932,7 +2932,9 @@ When reading an outline, Leo recreates @file trees from derived files. In partic
 Some examples should make all this much clearer.  See the children of this node.
 
 The @ignore directive is not valid in @file trees because derived files contain primary data.  The .leo file also contains a copy of the information in the @file tree, but this information is used for backup and error recovery. As a result, everything in an @file trees must correspond to information the derived file and the @ignore directive may not appear in @file trees.</t>
-<t tx="EKR.20040524104904.53">@file f.c shows how to create a C file.
+<t tx="EKR.20040524104904.53">@ignore
+
+@file f.c shows how to create a C file.
 
 @file classX.py shows how to create a single Python class.
 
