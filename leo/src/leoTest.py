@@ -44,6 +44,10 @@ except ImportError: gc = None
 #@-node:EKR.20040623200709.2:<< leoTest imports >>
 #@nl
 
+import leoPlugins
+newAtFile = leoPlugins.isLoaded("___proto_atFile")
+# print "leoTest.py:newAtFile", newAtFile
+
 #@+others
 #@+node:ekr.20040721114839:Support @profile, @suite, @profile, @timer
 #@+node:ekr.20040707071542.2:isSuiteNode and isTestNode
@@ -534,7 +538,8 @@ class testUtils:
     
         """Return an atFile.write of the input tree to a string."""
     
-        df = c.atFileCommands.new_df
+        if newAtFile:   df = c.atFileCommands
+        else:           df = c.atFileCommands.new_df
         nodeIndices = g.app.nodeIndices
     
         # Assign input.v.t.fileIndex
@@ -627,7 +632,8 @@ def runLeoTest(path,verbose=False,full=False):
         g.app.gui = old_gui
         if frame and frame.c != c:
             g.app.closeLeoWindow(frame.c.frame)
-        g.app.unitTesting = True
+        g.app.unitTesting = False
+        c.frame.top.update()
 
     if not ok: raise
 #@nonl
@@ -661,7 +667,10 @@ def runAtFileTest(c,p):
         # at.asisWrite(child1,toString=toString)
     else:
         at.write(child1,thinFile=thinFile,nosentinels=nosentinels,toString=True)
-        result = g.toUnicode(at.new_df.stringOutput,"ascii")
+        if newAtFile:
+            result = g.toUnicode(at.stringOutput,"ascii")
+        else:
+            result = g.toUnicode(at.new_df.stringOutput,"ascii")
     try:
         assert(result == expected)
     except AssertionError:
