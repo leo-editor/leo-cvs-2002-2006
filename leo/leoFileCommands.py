@@ -822,7 +822,7 @@ class fileCommands:
 		#@-node:1:C=10:<< Set the default directory >>
 
 		c.beginUpdate()
-		ok, ratio = self.getLeoFile(self.frame, false) # readAtFileNodes
+		ok, ratio = self.getLeoFile(self.frame,fileName,false) # readAtFileNodes
 		c.endUpdate()
 		c.frame.top.deiconify()
 		c.setChanged(false)
