@@ -3982,7 +3982,7 @@ class fileLikeObject:
 #@nonl
 #@-node:ekr.20040331083824.1:g.fileLikeObject
 #@+node:EKR.20040614071102.1:g.getScript
-def getScript (c,p,oneNodeOnly=False):
+def getScript (c,p,oneNodeOnly=False,useSelectedText=True):
 
     if not p: p = c.currentPosition()
     old_body = p.bodyString()
@@ -3991,7 +3991,7 @@ def getScript (c,p,oneNodeOnly=False):
         script = None
         # 7/7/04: Allow p not to be the present position.
         if p == c.currentPosition():
-            if c.frame.body.hasTextSelection():
+            if useSelectedText and c.frame.body.hasTextSelection():
                 # Temporarily replace v's body text with just the selected text.
                 s = c.frame.body.getSelectedText()
                 p.v.setTnodeText(s)

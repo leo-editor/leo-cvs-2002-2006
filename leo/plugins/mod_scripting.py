@@ -57,6 +57,8 @@ def createButtons (tag, keys):
     def execCommand (event=None,c=c):
         
         p = c.currentPosition()
+        
+        # 4.2.1: Always get the full body text of p, regardless of what text is selected.
         c.executeScript(p)
     #@nonl
     #@-node:EKR.20040618091543.1:execCommand
@@ -66,7 +68,9 @@ def createButtons (tag, keys):
         # Create permanent bindings for callbacks.
         global buttons ; buttons += 1
         p = c.currentPosition()
-        script = g.getScript(c,p)
+        if not script:
+            # New in 4.2.1: always use the entire body string.
+            script = g.getScript(c,p,useSelectedText=False)
         h = p.headString().strip()
         buttonName = key = "Script %d" % buttons
         text = h
@@ -83,13 +87,13 @@ def createButtons (tag, keys):
             global bindLate
             
             if script is None: script = ""
-            # g.trace(bindLate,len(script))
             
             # N.B. p and script are bound at the time this callback is created.
             c.frame.clearStatusLine()
             c.frame.putStatusLine("Executing %s..." % statusMessage)
             if bindLate:
-                script = g.getScript(c,p)
+                # New in 4.2.1: always use the entire body string.
+                script = g.getScript(c,p,useSelectedText=False)
             if script:
                 try:
                     exec script.strip() + '\n' in {}
