@@ -1132,8 +1132,9 @@ class baseLeoFrame:
 		self.recentFiles = app.config.getRecentFiles()
 		self.createRecentFilesMenuItems()
 		
-		table = (("Clear Recent Files",None,self.OnClearRecentFiles),)
-		self.createMenuEntries(fileMenu,table)
+		if 0: # now in Recent Files menu.
+			table = (("Clear Recent Files",None,self.OnClearRecentFiles),)
+			self.createMenuEntries(fileMenu,table)
 		#@nonl
 		#@-node:<< create the recent files submenu >>
 		#@nl
@@ -1995,11 +1996,21 @@ class baseLeoFrame:
 		
 		f = self
 		recentFilesMenu = f.getMenu("Recent Files...")
-		recentFilesMenu.delete(0,len(f.recentFiles))
-		i = 1
+		
+		# Delete all previous entries.
+		recentFilesMenu.delete(0,len(f.recentFiles)+2)
+		
+		# Create the first two entries.
+		table = (
+			("Clear Recent Files",None,self.OnClearRecentFiles),
+			("-",None,None))
+		self.createMenuEntries(recentFilesMenu,table)
+		
+		# Create all the other entries.
+		i = 3
 		for name in f.recentFiles:
 			callback = lambda f=f,name=name:f.OnOpenRecentFile(name)
-			label = "%d %s" % (i,self.setWindowTitle(name))
+			label = "%d %s" % (i-2,self.setWindowTitle(name))
 			recentFilesMenu.add_command(label=label,command=callback,underline=0)
 			i += 1
 	#@nonl
