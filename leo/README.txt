@@ -1,5 +1,36 @@
 Important note: See INSTALL.TXT for installation instructions.
 
+leo.py 3.11 beta 1                       February 16, 2003
+
+This version of Leo contains a very large number of improvements.  The highlights:
+
+** Leo supports unicode properly.  This solves a lot of problems.
+	- New @encoding directives specifies encoding for derived files.
+	- New settings specify default encodings for .leo and derived files.
+	- Derived files specify encodings used to create them.
+** A new plugin architecture for customizing Leo. (A major improvement.)
+- New commands:
+	- Toggle Angle Brackets.
+	- Insert Time/Date (in headline or body text).
+	- Go To First/Last Node, Parent, Next/Previous Sibling.
+	- Write Missing @file Nodes.
+	- Expand/Contract Node.
+- Improved commands:
+	- Expand/Contract commands now operate on the selected tree.
+	  ( A major improvement)
+	- Sort Siblings command can now sort top-level nodes.
+	- Leo now allows multiple writes of cloned nodes.
+	  (Useful when different @path directives are in effect.)
+- Other improvements:
+	- Improved syntax coloring for html and xml.
+	- Leo scrolls partially visible headlines into full view.
+	- Added "Replace tabs with spaces" checkbox in Prefs panel.
+- New settings in leoConfig.leo/.txt.
+	- Colors for Show Invisibibles command and body_insertion_cursor
+	- Settings affecting when control-drags start.
+	- Defaults for unicode (see above).
+- Many other bug fixes and improvements.
+
 leo.py 3.10                             December 14, 2002
 
 This version of Leo corrects bugs, improves Leo's documentation and adds many new features:

@@ -3699,9 +3699,9 @@ class LeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.10, Build " + build + ", December 14, 2002\n\n"
+		version = "leo.py 3.11 beta 1, Build " + build + ", February 16, 2003\n\n"
 		copyright = (
-			"Copyright 1999-2002 by Edward K. Ream\n" +
+			"Copyright 1999-2003 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
 			"Leo is distributed under the Python License")
 		url = "http://personalpages.tds.net/~edream/front.html"

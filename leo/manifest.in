@@ -17,6 +17,7 @@ include INSTALL.TXT
 include PKG-INFO.TXT
 include LICENSE.TXT
 include Icons/*.*
+include plugins/mod_open_with.py
 include leo.rc
 include leo.res
 include manifest.in

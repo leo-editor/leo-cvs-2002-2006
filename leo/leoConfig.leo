@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="95" height="25" width="96"/>
+	<global_window_position top="-5" left="139" height="25" width="95"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -96,7 +96,7 @@ at_root_bodies_start_in_doc_mode = 1
 #	0: Body text in @root trees start in code mode.
 #      (This way makes @root trees more compatible with @file trees.)
 
-create_nonexistent_directories = 1
+create_nonexistent_directories = 0
 #	1: Leo attempts to create directories if they do not exist.
 #	0: Leo never attempts to create directories
 #	This option applies to directories specified in filenames in
@@ -188,23 +188,15 @@ stylesheet =
 
 use_customizeLeo_dot_py = 1
 
-#	1: Leo calls code "hooks" in customizeLeo.py.
+#	1: Leo enables plugins.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
-#   0: (The default) Leo calls NO hooks in customizeLeo.py.
+#   0: (The default) Leo disables all plugins.
 #
 #	Very important SECURITY WARNINGS:
 #
-#   - Setting use_configureLeo_dot_py = 1 enables user code that could,
+#   - Setting use_configureLeo_dot_py = 1 enables plugin code that could,
 #     if not well thought out, create SECURITY ISSUES.
 #     See the warnings in the @file customizeLeo.py node in LeoPy.py.
-#	- Neither leoConfigure.leo nor leoConfigure.txt
-#	  should be distributed with use_configureLeo_dot_py = 1
-#     Please report such distributions to me, Edward K. Ream.
-#     However, CVS uploads _may_ have use_configureLeo_dot_py = 1
-#   - Distributing any copy of customizeLeo.py should be considered a HOSTILE ACT.
-#	  Please report anyone that distributes customizeLeo.py to me.
-#	  At no time should an authentic Leo distribution ever contain customizeLeo.py.
-#	  Please report any such distributions to me.
 
 use_relative_node_indices = 0
 #	No longer used.

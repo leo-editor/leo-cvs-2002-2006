@@ -37,8 +37,8 @@ def loadHandlers():
 	try: # Make sure we restore sys.path.
 		files = glob.glob(os.path.join("plugins","mod_*.py"))
 		if len(files) > 0:
-			es("Loading plugins...")
-			sys.path = [os.path.join(os.getcwd(),"plugins")]
+			es("Loading plugins:")
+			sys.path.append(os.path.join(os.getcwd(),"plugins"))
 			for file in files:
 				try:
 					fn = shortFileName(file)
@@ -49,6 +49,7 @@ def loadHandlers():
 					es_exception()
 	finally:
 		sys.path = oldpath
+
 
 #@-body
 #@-node:1::loadHandlers
