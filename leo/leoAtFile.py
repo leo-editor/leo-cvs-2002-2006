@@ -2129,25 +2129,25 @@ class atFile:
 	#@+node:6::Writing
 	#@+node:1::atFile.checkForLeoCustomize
 	#@+body
+	# Check file given by v, or self.targetFileName if v == None.
+	
 	def checkForLeoCustomize (self,v=None):
 	
-		import leoDialog
-		d = leoDialog.leoDialog()
-		if v:
-			if v.atFileNodeName() == "customizeLeo.py":
-				d.askOk("Security Alert!",
-					"@ignore not in effect for @node customizeLeo.py!")
-			return None
-		else:
-			fn = os.path.basename(self.targetFileName)
-			if fn == "customizeLeo.py":
-				result = d.askYesNo("Security Alert!",
-					"You are about to create or change customizeLeo.py.\n" +
-					"Are you sure you trust the code in this file?")
-				if result!="yes":
-					es("not written: customizeLeo.py")
-					return false
+		if v: fn = v.atFileNodeName()
+		else: fn = self.targetFileName
+		if not fn: return
+		
+		fn = os.path.basename(fn)
+	
+		if shortFileName(fn) != "customizeLeo.py":
 			return true
+		elif app().config.use_customizeLeo_dot_py:
+			return true
+		else:
+			es("customizeLeo.py not written:")
+			es("use_customizeLeo_dot_py = 0")
+			return false
+	
 	#@-body
 	#@-node:1::atFile.checkForLeoCustomize
 	#@+node:2::atFile.closeWriteFile
@@ -2792,7 +2792,7 @@ class atFile:
 				#@-node:1::<< set missing if the file does not exist >>
 
 				if valid and missing:
-					if not v.isAtFileNode() or self.checkForLeoCustomize():
+					if not v.isAtFileNode() or self.checkForLeoCustomize(v):
 						
 						#@<< create self.outputFile >>
 						#@+node:2::<< create self.outputFile >>

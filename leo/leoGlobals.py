@@ -1538,7 +1538,7 @@ def issueHookWarning ():
 	if not app().config.use_customizeLeo_dot_py:
 		try:
 			from customizeLeo import customizeLeo
-			es("ignoring customizeLeo.py:")
+			es("customizeLeo.py not loaded:")
 			es("use_customizeLeo_dot_py = 0")
 		except:
 			pass # customizeLeo.py not found: no warning needed.

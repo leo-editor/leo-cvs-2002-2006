@@ -2,18 +2,14 @@
 #@+node:0::@file customizeLeo.py
 #@+body
 #@+at
-#  Note: The parent of this node contains an @ignore directive.  To write this 
-# file, put a space in front of the @ignore.  Remove the space after writing.
-# 
-# Leo calls customizeLeo() at various times during execution.  Leo catches all 
-# exceptions in this code, so it is safe to hack away on this code.
+#  Leo calls customizeLeo() at various times during execution.  Leo catches 
+# all exceptions in this code, so it is safe to hack away on this code.
 # 
 # The code in customizeLeo() corresponding to each tag is known as the "hook" 
 # routine for that tag.
 # The keywords argument is a Python dictionary containing information unique 
-# to each hook.  For example,
-# keywords["label"] indicates the kind of command for "command1" and 
-# "command2" hooks.
+# to each hook.  For example, keywords["label"] indicates the kind of command 
+# for "command1" and "command2" hooks.
 # 
 # For some hooks, returning anything other than None "overrides" Leo's default action.
 # 
@@ -35,7 +31,7 @@ tagCount = 0
 #@+others
 #@+node:1::customizeLeo
 #@+body
-def customizeLeo(tag,keywords):
+def customizeLeo(tag,keywords): 
 
 	
 	
@@ -48,7 +44,7 @@ def customizeLeo(tag,keywords):
 	if tag == "start2":
 		# Announce the presence of this file.
 		es("customizeLeo loaded. ",newline=false)
-		es("EKR 2/8/03")
+		es("EKR 2/11/03")
 	
 	#@-body
 	#@-node:1::<< sign on (a security precaution) >>
