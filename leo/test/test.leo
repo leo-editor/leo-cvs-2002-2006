@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6518" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6523" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="85" left="320" height="804" width="943"/>
+	<global_window_position top="51" left="198" height="804" width="943"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -25,7 +25,7 @@
 <v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
 <v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
 </v>
-<v t="ekr.20041218141525"><vh>@page Fonts</vh>
+<v t="ekr.20041218141525" a="E"><vh>@page Fonts</vh>
 <v t="ekr.20041218141525.1"><vh>@font log font</vh></v>
 <v t="ekr.20041218141525.2"><vh>@font body text font</vh></v>
 <v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
@@ -343,9 +343,6 @@
 <v t="ekr.20040909103024.1"><vh>@file c:\prog\test\perlLineNumbers.txt</vh>
 <v t="ekr.20040909103024.2"><vh>TestNode</vh></v>
 </v>
-</v>
-<v t="ekr.20040909122141" tnodeList="ekr.20040909122141,ekr.20040909122141.1"><vh>@nosent c:\prog\test\niceNosentTest.txt</vh>
-<v t="ekr.20040909122141.1"><vh>spam</vh></v>
 </v>
 <v t="ekr.20040909123122"><vh>@rst c:\prog\test\rstTest.txt</vh>
 <v t="ekr.20040909123122.1"><vh>node 1</vh>
@@ -927,8 +924,8 @@
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
-<v t="ekr.20040723064143.1"><vh>To do...</vh>
+<v t="EKR.20040619133116" a="ETV"><vh>Unit testing...</vh>
+<v t="ekr.20040723064143.1" a="M"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
@@ -998,6 +995,19 @@
 <v t="ekr.20040712101754.260"><vh>findTests</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20050105080048"><vh>New unit tests</vh>
+<v t="ekr.20050105080048.1" a="E"><vh>@test official frame ivars</vh></v>
+<v t="ekr.20050105082500" a="E"><vh>@test official commander ivars</vh></v>
+<v t="ekr.20050105084757"><vh>@test official g.app directories</vh></v>
+<v t="ekr.20050105090632"><vh>@test official g.app ivars</vh></v>
+<v t="ekr.20050105084757.1"><vh>@test g.utils_remove</vh></v>
+<v t="ekr.20050105091547"><vh>@test g.utils_rename</vh></v>
+<v t="ekr.20050105093136"><vh>@test atFile.remove</vh></v>
+<v t="ekr.20050105093524"><vh>@test atFile.rename</vh></v>
+<v t="ekr.20050105094311"><vh>@test atFile.replaceTargetFileIfDifferent (different)</vh></v>
+<v t="ekr.20050105095743"><vh>@test atFile.replaceTargetFileIfDifferent (identical)</vh></v>
+<v t="ekr.20050105100227"><vh>@test atFile.replaceTargetFileIfDifferent (no target file)</vh></v>
 </v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
@@ -1465,6 +1475,9 @@
 </v>
 </v>
 <v t="ekr.20041225051445"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
+</v>
+<v t="ekr.20040909122141" tnodeList="ekr.20040909122141,ekr.20040909122141.1"><vh>@nosent c:\prog\test\niceNosentTest.txt</vh>
+<v t="ekr.20040909122141.1"><vh>spam</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2086,7 +2099,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2217,7 +2230,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -9803,7 +9816,7 @@ for line in lines:
 @others</t>
 <t tx="ekr.20040909103024.2">#line 1 "node:ekr.20040909103024.2:TestNode (c:\prog\test\perlLineNumbers.txt)"
 test</t>
-<t tx="ekr.20040909122141">@ignore
+<t tx="ekr.20040909122141">#@ignore
 
 @language python 
 
@@ -10881,11 +10894,11 @@ if spellpyx:
     if spellFrame:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\test\test.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo</t>
+C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -12398,5 +12411,302 @@ def doIndent (self):
 
 # EqualSizedPanes = Ctrl+E
 # ExecuteScript = Alt+Ctrl+E</t>
+<t tx="ekr.20050105080048"></t>
+<t tx="ekr.20050105080048.1">import leoGlobals as g
+c = g.top()
+f = c.frame
+
+assert(f.c==c)
+assert(c.frame==f)
+
+if g.app.gui.guiName() == 'tkinter':
+    ivars = (
+        'bar1','bar2',
+        'body','bodyBar','bodyCtrl','bodyXBar',
+        'canvas',
+        'f1','f2',
+        'iconBar','iconFrame',
+        'log','outerFrame',
+        'statusLine','statusFrame','statusLabel','statusText',
+        'title','top','tree','treeBar',
+    )
+else: ivars = ()
+
+for ivar in ivars:
+    assert hasattr(f,ivar), 'missing frame ivar: %s' % ivar
+    val = getattr(f,ivar)
+    assert val is not None,'null frame ivar: %s'% ivar
+    
+# These do not have to be initied.
+for ivar in ('findPanel',):
+    assert hasattr(f,ivar), 'missing frame ivar: %s' % ivar</t>
+<t tx="ekr.20050105082500">import leoGlobals as g
+c = g.top()
+f = c.frame
+
+assert(f.c==c)
+assert(c.frame==f)
+
+ivars = (
+    # Subcommanders...
+    'atFileCommands','fileCommands','importCommands','tangleCommands','undoer',
+    # Positions...
+    '_currentPosition','_rootPosition','_topPosition',
+    # Data structures...
+    'beadList','beadPointer','hoistStack','recentFiles','visitedList',
+    # Args...
+    'output_doc_flag','page_width','tab_width',
+    'tangle_directory','tangle_errors','tangle_batch_flag','target_language',
+    'untangle_batch_flag','use_header_flag',
+    # Others...
+    'mFileName',
+)
+
+for ivar in ivars:
+    assert hasattr(c,ivar), 'missing commander ivar: %s' % ivar
+    val = getattr(c,ivar)
+    assert val is not None,'null commander ivar: %s'% ivar</t>
+<t tx="ekr.20050105084757">import leoGlobals as g
+
+ivars = (
+    'extensionsDir','globalConfigDir',
+    'homeDir','loadDir','testDir'
+)
+
+for ivar in ivars:
+    assert hasattr(g.app,ivar), 'missing g.app directory: %s' % ivar
+    val = getattr(g.app,ivar)
+    assert val is not None, 'null g.app directory: %s'% ivar
+    assert g.os_path_exists(g.os_path_abspath(val)), 'non-existent g.app directory: %s' % ivar</t>
+<t tx="ekr.20050105084757.1">import leoGlobals as g
+import os
+
+exists = g.os_path_exists
+
+path = g.os_path_join(g.app.testDir,'xyzzy')
+if exists(path):
+    os.remove(path)
+    
+assert not exists(path)
+assert not g.utils_remove(path,verbose=False)
+
+f = file(path,'w')
+f.write('test')
+f.close()
+
+assert exists(path)
+assert g.utils_remove(path,verbose=True)
+assert not exists(path)</t>
+<t tx="ekr.20050105090632">import leoGlobals as g
+
+ivars = (
+    # These are non-official and might be removed...
+        # 'afterHandler','count','positions',
+        # 'menuWarningsGiven','unicodeErrorGiven',
+    'batchMode','config',
+    'debug','debugSwitch','disableSave',
+    'gui','hasOpenWithMenu','hookError','hookFunction',
+    'idle_imported','idleTimeDelay','idleTimeHook','initing','killed',
+    'leoID','loadedPlugins','log','logIsLocked','logWaiting',
+    'nodeIndices','numberOfWindows',
+    'openWithFiles','openWithFileNum','openWithTable',
+    'quitting','realMenuNameDict','searchDict','scriptDict',
+    'trace','tracePositions','trace_list','tkEncoding',
+    'unitTestDict','unitTesting','use_psyco','windowList',
+)
+
+for ivar in ivars:
+    assert hasattr(g.app,ivar), 'missing app ivar: %s' % ivar
+    val = getattr(g.app,ivar)
+    assert val is not None, 'null app ivar: %s'% ivar
+    
+# These do not have to be initied.
+for ivar in ('commandName','root',):
+    assert hasattr(g.app,ivar), 'missing app ivar: %s' % ivar</t>
+<t tx="ekr.20050105091547">import leoGlobals as g
+import os
+
+exists = g.os_path_exists
+path = g.os_path_join(g.app.testDir,'xyzzy')
+path2 = g.os_path_join(g.app.testDir,'xyzzy2')
+
+# Create both paths.
+for p in (path,path2):
+    if exists(p):
+        os.remove(p)
+    assert not exists(p)
+    f = file(p,'w')
+    f.write('test %s' % p)
+    f.close()
+    assert exists(p)
+
+assert g.utils_rename(path,path2,verbose=True)
+assert exists(path2)
+f = file(path2)
+s = f.read()
+f.close()
+# print 'Contents of %s: %s' % (path2,s)
+assert s == 'test %s' % path
+os.remove(path2)
+assert not exists(path)</t>
+<t tx="ekr.20050105093136">import leoGlobals as g
+import os
+
+c = g.top() ; at = c.atFileCommands
+
+exists = g.os_path_exists
+
+path = g.os_path_join(g.app.testDir,'xyzzy')
+if exists(path):
+    os.remove(path)
+    
+assert not exists(path)
+assert not at.remove(path,verbose=False)
+
+f = file(path,'w')
+f.write('test')
+f.close()
+
+assert exists(path)
+assert at.remove(path)
+assert not exists(path)</t>
+<t tx="ekr.20050105093524">import leoGlobals as g
+import os
+
+c = g.top() ; at = c.atFileCommands
+
+exists = g.os_path_exists
+path = g.os_path_join(g.app.testDir,'xyzzy')
+path2 = g.os_path_join(g.app.testDir,'xyzzy2')
+
+# Create both paths.
+for p in (path,path2):
+    if exists(p):
+        os.remove(p)
+    assert not exists(p)
+    f = file(p,'w')
+    f.write('test %s' % p)
+    f.close()
+    assert exists(p)
+
+assert at.rename(path,path2,verbose=True)
+assert exists(path2)
+f = file(path2)
+s = f.read()
+f.close()
+# print 'Contents of %s: %s' % (path2,s)
+assert s == 'test %s' % path
+os.remove(path2)
+assert not exists(path)</t>
+<t tx="ekr.20050105094311">import leoGlobals as g
+import os
+
+c = g.top() ; at = c.atFileCommands
+
+exists = g.os_path_exists
+
+at.outputFileName = g.os_path_join(g.app.testDir,'xyzzy1')
+at.targetFileName = g.os_path_join(g.app.testDir,'xyzzy2')
+
+# Create both paths (different contents)
+for p in (at.outputFileName,at.targetFileName):
+    if exists(p):
+        os.remove(p)
+    assert not exists(p)
+    f = file(p,'w')
+    s = 'test %s' % p
+    # print repr(p),repr(s)
+    f.write(s)
+    f.close()
+    assert exists(p) # , '%s does not exist' % repr(p)
+
+at.toString = False # Set by execute script stuff.
+at.shortFileName = at.targetFileName
+assert at.replaceTargetFileIfDifferent(), 'replaceTargetFileIfDifferent returns False'
+if 0:
+    print '%s exists %s' % (at.outputFileName,exists(at.outputFileName))
+    print '%s exists %s' % (at.targetFileName,exists(at.targetFileName))
+assert not exists(at.outputFileName), 'oops, output file exists'
+assert exists(at.targetFileName), 'oops, target file does not exist'
+f = file(at.targetFileName)
+s = f.read()
+f.close()
+# print 'Contents of %s: %s' % (at.targetFileName,s)
+assert s == 'test %s' % at.outputFileName, 'unexpected contents of target file'
+os.remove(at.targetFileName)</t>
+<t tx="ekr.20050105095743">import leoGlobals as g
+import os
+
+c = g.top() ; at = c.atFileCommands
+
+exists = g.os_path_exists
+
+at.outputFileName = g.os_path_join(g.app.testDir,'xyzzy1')
+at.targetFileName = g.os_path_join(g.app.testDir,'xyzzy2')
+
+# Create both paths (identical contents)
+for p in (at.outputFileName,at.targetFileName):
+    if exists(p):
+        os.remove(p)
+    assert not exists(p)
+    f = file(p,'w')
+    s = 'test %s' % at.outputFileName
+    # print repr(p),repr(s)
+    f.write(s)
+    f.close()
+    assert exists(p)
+
+at.toString = False # Set by execute script stuff.
+at.shortFileName = at.targetFileName
+assert not at.replaceTargetFileIfDifferent(), 'replaceTargetFileIfDifferent returns True'
+if 0:
+    print '%s exists %s' % (at.outputFileName,exists(at.outputFileName))
+    print '%s exists %s' % (at.targetFileName,exists(at.targetFileName))
+assert not exists(at.outputFileName), 'oops, output file exists'
+assert exists(at.targetFileName), 'oops, target file does not exist'
+f = file(at.targetFileName)
+s = f.read()
+f.close()
+# print 'Contents of %s: %s' % (at.targetFileName,s)
+assert s == 'test %s' % at.outputFileName, 'unexpected contents of target file'
+os.remove(at.targetFileName)</t>
+<t tx="ekr.20050105100227">import leoGlobals as g
+import os
+
+c = g.top() ; at = c.atFileCommands
+
+exists = g.os_path_exists
+
+at.outputFileName = g.os_path_join(g.app.testDir,'xyzzy1')
+at.targetFileName = g.os_path_join(g.app.testDir,'xyzzy2')
+
+# Remove both files, then create only the output file
+for p in (at.outputFileName,at.targetFileName):
+    if exists(p):
+        os.remove(p)
+        
+for p in (at.outputFileName,):
+    assert not exists(p)
+    f = file(p,'w')
+    s = 'test %s' % at.outputFileName
+    # print repr(p),repr(s)
+    f.write(s)
+    f.close()
+    assert exists(p)
+
+at.toString = False # Set by execute script stuff.
+at.shortFileName = at.targetFileName
+assert not at.replaceTargetFileIfDifferent(), 'replaceTargetFileIfDifferent returns True'
+if 0:
+    print '%s exists %s' % (at.outputFileName,exists(at.outputFileName))
+    print '%s exists %s' % (at.targetFileName,exists(at.targetFileName))
+assert not exists(at.outputFileName), 'oops, output file exists'
+assert exists(at.targetFileName), 'oops, target file does not exist'
+f = file(at.targetFileName)
+s = f.read()
+f.close()
+# print 'Contents of %s: %s' % (at.targetFileName,s)
+assert s == 'test %s' % at.outputFileName, 'unexpected contents of target file'
+os.remove(at.targetFileName)</t>
 </tnodes>
 </leo_file>
