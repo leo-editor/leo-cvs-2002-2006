@@ -2549,7 +2549,8 @@ class baseLeoFrame:
 		
 		# Search the present node first.
 		j = v.t.joinList
-		j.remove(v)
+		if v in j:
+			j.remove(v)
 		j.insert(0,v)
 		
 		# 10/15/03: search joined nodes if first search fails.
