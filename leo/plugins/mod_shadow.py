@@ -5,14 +5,15 @@
 #@<<docstring>>
 #@+node:bwmulder.20041017125718.1:<< docstring >>
 """
-WAITING FOR PLUGIN UNIT TEST ENVIRONMENT, SO THAT I CAN
-ADD UNIT TESTS.
-
 Use a subfolder for files with Leo comments.
 
 Adapted for post 4.2 (cvs versoin).
 
-This code has not been testing much. Please use with caution.
+I have not yet written unit tests for this plugin. Please use with
+caution.
+
+I have seen some messages when updating from external
+sources, which I have not yet analysed.
 
 This plugin allows you to use Leo with files which contain no
 Leo comments, and still have information flow in both directions:
@@ -20,7 +21,7 @@ from the file into Leo, and from Leo into the file.
 
 To start using this plugin:
     - Go to the directories where the sources are.
-    - Create a subfolder called Leo.
+    - Create a subfolder called Leo (or whatever you have set shodow_subdir to).
     - Copy the files into the subfolder.
     - Replace the files with files of length 0.
         (actually: <= 2, so that on Windows you can say: @echo.>filename)
