@@ -217,7 +217,7 @@ class baseCommands:
 			defaultextension=".leo")
 	
 		if fileName and len(fileName) > 0:
-			ok, frame = c.OpenWithFileName(fileName)
+			ok, frame = openWithFileName(fileName,c)
 			if ok and closeFlag:
 				app.destroyWindow(c.frame)
 	#@nonl
@@ -431,13 +431,6 @@ class baseCommands:
 		return path
 	#@nonl
 	#@-node:openWithTempFilePath
-	#@+node:OpenWithFileName
-	def OpenWithFileName(self,fileName):
-		
-		c = self
-		return openWithFileName(fileName,c)
-	#@nonl
-	#@-node:OpenWithFileName
 	#@+node:close
 	def close(self):
 		
@@ -537,11 +530,11 @@ class baseCommands:
 		if reply=="no":
 			return
 	
-		# Kludge: rename this frame so OpenWithFileName won't think it is open.
+		# Kludge: rename this frame so openWithFileName won't think it is open.
 		fileName = c.mFileName ; c.mFileName = ""
 	
 		# Create a new frame before deleting this frame.
-		ok, frame = c.OpenWithFileName(fileName)
+		ok, frame = openWithFileName(fileName,c)
 		if ok:
 			frame.deiconify()
 			app.destroyWindow(c.frame)
@@ -566,6 +559,8 @@ class baseCommands:
 	#@+node:openRecentFile
 	def openRecentFile(self,name=None):
 		
+		if not name: return
+	
 		c = self ; v = c.currentVnode()
 		#@	<< Set closeFlag if the only open window is empty >>
 		#@+node:<< Set closeFlag if the only open window is empty >>
@@ -585,12 +580,10 @@ class baseCommands:
 		#@nonl
 		#@-node:<< Set closeFlag if the only open window is empty >>
 		#@nl
-		if not name:
-			return
-	
+		
 		fileName = name
 		if not doHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag):
-			ok, frame = self.OpenWithFileName(fileName)
+			ok, frame = openWithFileName(fileName,c)
 			if ok and closeFlag:
 				app.destroyWindow(self)
 				app.setLog(frame.log,"openRecentFile") # Sets the log stream for es()
@@ -1600,14 +1593,16 @@ class baseCommands:
 		
 		if app.batchMode:
 			c.notValidInBatchMode("Convert Blanks")
-			return
+			return false
 	
-		head,lines,tail,oldSel,oldYview = c.getBodyLines()
+		head,lines,tail,oldSel,oldYview = c.getBodyLines(expandSelection=true)
 		result = [] ; changed = false
 	
-		# DTHEIN 3-NOV-2002: use the relative @tabwidth, not the global one
+		# Use the relative @tabwidth, not the global one.
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
+		if not tabWidth: return false
+	
 		for line in lines:
 			s = optimizeLeadingWhitespace(line,tabWidth)
 			if s != line: changed = true
@@ -1617,7 +1612,6 @@ class baseCommands:
 			result = string.join(result,'\n')
 			undoType = choose(setUndoParams,"Convert Blanks",None)
 			c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-			body.selectAllText()
 	
 		return changed
 	#@nonl
@@ -1629,14 +1623,16 @@ class baseCommands:
 		
 		if app.batchMode:
 			c.notValidInBatchMode("Convert Tabs")
-			return
+			return false
 	
-		head,lines,tail,oldSel,oldYview = self.getBodyLines()
+		head,lines,tail,oldSel,oldYview = self.getBodyLines(expandSelection=true)
 		result = [] ; changed = false
 		
-		# DTHEIN 3-NOV-2002: use the relative @tabwidth, not the global one
+		# Use the relative @tabwidth, not the global one.
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
+		if not tabWidth: return false
+	
 		for line in lines:
 			i,w = skip_leading_ws_with_indent(line,0,tabWidth)
 			s = computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
@@ -1647,10 +1643,8 @@ class baseCommands:
 			result = string.join(result,'\n')
 			undoType = choose(setUndoParams,"Convert Tabs",None)
 			c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-			body.selectAllText()
 			
 		return changed
-	#@nonl
 	#@-node:convertTabs
 	#@+node:createLastChildNode
 	def createLastChildNode (self,parent,headline,body):
@@ -1684,6 +1678,7 @@ class baseCommands:
 			s = computeLeadingWhitespace(width-abs(c.tab_width),c.tab_width) + line[i:]
 			if s != line: changed = true
 			result.append(s)
+	
 		if changed:
 			result = string.join(result,'\n')
 			c.updateBodyPane(head,result,tail,"Undent",oldSel,oldYview)
@@ -1981,17 +1976,20 @@ class baseCommands:
 	#@nonl
 	#@-node:findMatchingBracket
 	#@+node:getBodyLines
-	def getBodyLines (self):
+	def getBodyLines (self,expandSelection=false):
 	
 		c = self ; body = c.frame.body
 		oldVview = body.getYScrollPosition()
 		oldSel   = body.getTextSelection()
-		head,lines,tail = body.getSelectionLines()
 	
-		if not lines:
+		if expandSelection: # 12/3/03
 			lines = body.getAllText()
+			head = tail = None
+		else:
+			# Note: lines is the entire line containing the insert point if no selection.
+			head,lines,tail = body.getSelectionLines()
 	
-		lines = string.split(lines,'\n')  ## Why don't we use splitLines ???
+		lines = string.split(lines,'\n') # It would be better to use splitLines.
 	
 		return head,lines,tail,oldSel,oldVview
 	#@nonl
@@ -2163,8 +2161,10 @@ class baseCommands:
 	
 		# Update the text and notify the event handler.
 		body.setSelectionAreas(head,middle,tail)
+	
 		if setSel:
 			body.setTextSelection(oldSel)
+	
 		body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
 	
 		# Update the changed mark and icon.
@@ -2214,7 +2214,7 @@ class baseCommands:
 		else:
 			s = angleBrackets(' ' + s + ' ')
 		
-		c.frame.editLabel(v)
+		c.frame.tree.editLabel(v)
 		if v.edit_text():
 			v.edit_text().delete("1.0","end")
 			v.edit_text().insert("1.0",s)
@@ -3450,11 +3450,13 @@ class baseCommands:
 	#@-node:about (version number & date)
 	#@+node:leoDocumentation
 	def leoDocumentation (self):
+		
+		c = self
 	
 		fileName = os_path_join(app.loadDir,"..","doc","LeoDocs.leo")
 	
 		try:
-			self.OpenWithFileName(fileName)
+			openWithFileName(fileName,c)
 		except:
 			es("not found: LeoDocs.leo")
 	#@-node:leoDocumentation
@@ -3489,13 +3491,14 @@ class baseCommands:
 	def leoConfig (self):
 	
 		# 4/21/03 new code suggested by fBechmann@web.de
+		c = self
 		loadDir = app.loadDir
 		configDir = app.config.configDir
 	
 		# Look in configDir first.
 		fileName = os_path_join(configDir, "leoConfig.leo")
 	
-		ok, frame = self.OpenWithFileName(fileName)
+		ok, frame = openWithFileName(fileName,c)
 		if not ok:
 			if configDir == loadDir:
 				es("leoConfig.leo not found in " + loadDir)
@@ -3503,7 +3506,7 @@ class baseCommands:
 				# Look in loadDir second.
 				fileName = os_path_join(loadDir,"leoConfig.leo")
 	
-				ok, frame = self.OpenWithFileName(fileName)
+				ok, frame = openWithFileName(fileName,c)
 				if not ok:
 					es("leoConfig.leo not found in " + configDir + " or " + loadDir)
 	#@nonl
