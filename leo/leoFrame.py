@@ -1514,7 +1514,7 @@ class LeoFrame:
 	#@-body
 	#@-node:3::OnUntangle
 	#@-node:5::Untangle submenu
-	#@+node:6:C=24:Import&Export submenu
+	#@+node:6::Import&Export submenu
 	#@+node:1::OnFlattenOutline
 	#@+body
 	def OnFlattenOutline (self,event=None):
@@ -1704,7 +1704,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:9::OnRemoveSentinels
-	#@-node:6:C=24:Import&Export submenu
+	#@-node:6::Import&Export submenu
 	#@-node:1::File Menu
 	#@+node:2::Edit Menu (change to handle log pane too)
 	#@+node:1::Edit top level
@@ -1724,7 +1724,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:2::OnRedo
-	#@+node:3:C=25:frame.OnCut, OnCutFrom Menu
+	#@+node:3:C=24:frame.OnCut, OnCutFrom Menu
 	#@+body
 	def OnCut (self,event=None):
 	
@@ -1743,8 +1743,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Cut"))
 	#@-body
-	#@-node:3:C=25:frame.OnCut, OnCutFrom Menu
-	#@+node:4:C=26:frame.OnCopy, OnCopyFromMenu
+	#@-node:3:C=24:frame.OnCut, OnCutFrom Menu
+	#@+node:4:C=25:frame.OnCopy, OnCopyFromMenu
 	#@+body
 	def OnCopy (self,event=None):
 	
@@ -1762,8 +1762,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Copy"))
 	#@-body
-	#@-node:4:C=26:frame.OnCopy, OnCopyFromMenu
-	#@+node:5:C=27:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@-node:4:C=25:frame.OnCopy, OnCopyFromMenu
+	#@+node:5:C=26:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+body
 	def OnPaste (self,event=None):
 	
@@ -1783,8 +1783,8 @@ class LeoFrame:
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Paste"))
 	#@-body
-	#@-node:5:C=27:frame.OnPaste, OnPasteNode, OnPasteFromMenu
-	#@+node:6:C=28:OnDelete
+	#@-node:5:C=26:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@+node:6:C=27:OnDelete
 	#@+body
 	def OnDelete(self,event=None):
 	
@@ -1795,15 +1795,15 @@ class LeoFrame:
 			c.tree.onBodyChanged(v,"Delete")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=28:OnDelete
-	#@+node:7:C=29:OnSelectAll
+	#@-node:6:C=27:OnDelete
+	#@+node:7:C=28:OnSelectAll
 	#@+body
 	def OnSelectAll(self,event=None):
 	
 		setTextSelection(self.body,"1.0","end")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7:C=29:OnSelectAll
+	#@-node:7:C=28:OnSelectAll
 	#@+node:8::OnEditHeadline
 	#@+body
 	def OnEditHeadline(self,event=None):
@@ -1855,7 +1855,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:10::OnSyntaxColoring (rewrite)
-	#@+node:11:C=30:OnViewAllCharacters
+	#@+node:11:C=29:OnViewAllCharacters
 	#@+body
 	def OnViewAllCharacters (self, event=None):
 	
@@ -1871,8 +1871,8 @@ class LeoFrame:
 		c.tree.recolor_now(v)
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:11:C=30:OnViewAllCharacters
-	#@+node:12:C=31:OnPreferences
+	#@-node:11:C=29:OnViewAllCharacters
+	#@+node:12:C=30:OnPreferences
 	#@+body
 	def OnPreferences(self,event=None):
 		
@@ -1885,7 +1885,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:12:C=31:OnPreferences
+	#@-node:12:C=30:OnPreferences
 	#@-node:1::Edit top level
 	#@+node:2::Edit Body submenu
 	#@+node:1::OnConvertBlanks & OnConvertAllBlanks
@@ -2208,14 +2208,14 @@ class LeoFrame:
 	#@-node:17::OnExpandToLevel9
 	#@-node:2::Expand/Contract
 	#@+node:3::Move/Select
-	#@+node:1:C=32:OnMoveDownwn
+	#@+node:1:C=31:OnMoveDownwn
 	#@+body
 	def OnMoveDown(self,event=None):
 	
 		self.commands.moveOutlineDown()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=32:OnMoveDownwn
+	#@-node:1:C=31:OnMoveDownwn
 	#@+node:2::OnMoveLeft
 	#@+body
 	def OnMoveLeft(self,event=None):
@@ -2357,7 +2357,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:1::OnEqualSizedPanes
-	#@+node:2:C=33:OnToggleActivePane
+	#@+node:2:C=32:OnToggleActivePane
 	#@+body
 	def OnToggleActivePane (self,event=None):
 	
@@ -2368,7 +2368,7 @@ class LeoFrame:
 			self.body.focus_force()
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2:C=33:OnToggleActivePane
+	#@-node:2:C=32:OnToggleActivePane
 	#@+node:3::OnToggleSplitDirection
 	#@+body
 	def OnToggleSplitDirection(self,event=None):
@@ -2382,7 +2382,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:3::OnToggleSplitDirection
-	#@+node:4:C=34:OnCascade
+	#@+node:4:C=33:OnCascade
 	#@+body
 	def OnCascade(self,event=None):
 		
@@ -2406,7 +2406,7 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 
 	#@-body
-	#@-node:4:C=34:OnCascade
+	#@-node:4:C=33:OnCascade
 	#@+node:5::OnMinimizeAll
 	#@+body
 	def OnMinimizeAll(self,event=None):
@@ -2423,7 +2423,7 @@ class LeoFrame:
 			frame.top.iconify()
 	#@-body
 	#@-node:5::OnMinimizeAll
-	#@+node:6:C=35:OnOpenPythonWindow
+	#@+node:6:C=34:OnOpenPythonWindow
 	#@+body
 	def OnOpenPythonWindow(self,event=None):
 	
@@ -2441,10 +2441,10 @@ class LeoFrame:
 			es("Please add \Python2x\Tools\idle to sys.paths")
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6:C=35:OnOpenPythonWindow
+	#@-node:6:C=34:OnOpenPythonWindow
 	#@-node:4::Window Menu
 	#@+node:5::Help Menu
-	#@+node:1:C=36:OnAbout (version number)
+	#@+node:1:C=35:OnAbout (version number)
 	#@+body
 	def OnAbout(self,event=None):
 	
@@ -2453,7 +2453,7 @@ class LeoFrame:
 		tkMessageBox.showinfo(
 			"About Leo",
 			"Leo in Python/Tk\n" +
-			"Version 2.4, June 20, 2002\n\n" +
+			"Version 2.5, July 7, 2002\n\n" +
 	
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
@@ -2461,7 +2461,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1:C=36:OnAbout (version number)
+	#@-node:1:C=35:OnAbout (version number)
 	#@+node:2::OnLeoDocumentation
 	#@+body
 	def OnLeoDocumentation (self,event=None):

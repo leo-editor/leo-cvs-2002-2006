@@ -1166,7 +1166,7 @@ def shortFileName (fileName):
 	return tail
 #@-body
 #@-node:15::shortFileName
-#@+node:16:C=7:sortSequence
+#@+node:16::sortSequence
 #@+body
 #@+at
 #  sequence is a sequence of items, each of which is a sequence containing at least n elements.
@@ -1201,7 +1201,7 @@ def sortSequence (sequence, n):
 #@-at
 #@@c
 #@-body
-#@-node:16:C=7:sortSequence
+#@-node:16::sortSequence
 #@+node:17::Timing
 #@+body
 #@+at
@@ -1218,7 +1218,7 @@ def esDiffTime(message, start):
 	return time.clock()
 #@-body
 #@-node:17::Timing
-#@+node:18:C=8:Tk.Text selection (utils)
+#@+node:18:C=7:Tk.Text selection (utils)
 #@+node:1::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
@@ -1246,7 +1246,7 @@ def getSelectedText (t):
 		return None
 #@-body
 #@-node:2::getSelectedText
-#@+node:3:C=9:setTextSelection
+#@+node:3:C=8:setTextSelection
 #@+body
 #@+at
 #  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
@@ -1266,8 +1266,8 @@ def setTextSelection (t,start,end):
 	t.tag_remove("sel",end,"end")
 	t.mark_set("insert",end)
 #@-body
-#@-node:3:C=9:setTextSelection
-#@-node:18:C=8:Tk.Text selection (utils)
+#@-node:3:C=8:setTextSelection
+#@-node:18:C=7:Tk.Text selection (utils)
 #@+node:19::update_file_if_changed
 #@+body
 #@+at
