@@ -184,7 +184,8 @@ class baseLeoImportCommands:
                 #@            << Link a new vnode v into the outline >>
                 #@+node:ekr.20031218072017.3216:<< Link a new vnode v into the outline >>
                 assert(level >= 0)
-                if not lastVnode:
+                if lastVnode is None:
+                    # g.trace(firstVnode)
                     theRoot = v = firstVnode.insertAfter()
                 elif level == lastLevel:
                     v = lastVnode.insertAfter()
