@@ -20,7 +20,7 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="ekr.20040303062846.2" a="TV"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20040303062846.2"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040303063549"><vh>Unit Tests (Tests must be run from inside this tree!)</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
@@ -390,7 +390,7 @@
 <v t="EKR.20040517074600.13"><vh>Print default font</vh></v>
 </v>
 </v>
-<v t="EKR.20040531110157"><vh>at-file thin tests</vh>
+<v t="EKR.20040531110157" a="E"><vh>at-file thin tests</vh>
 <v t="EKR.20040520104329"><vh>@thin c:\prog\test\thinCloneTest.txt</vh></v>
 <v t="EKR.20040524050419" tnodeList="EKR.20040524050419,EKR.20040524050419.1,EKR.20040524050419.2"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
 <v t="EKR.20040524050419.1"><vh>Organizer node</vh>
@@ -403,7 +403,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
+<v t="ekr.20040402043516" a="E"><vh>A pretty printer for Leo</vh>
 <v t="ekr.20040402043516.1"><vh>leoReadlines</vh></v>
 <v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
 <v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
@@ -566,7 +566,7 @@
 <v t="EKR.20040523112430.8"><vh>f</vh></v>
 </v>
 </v>
-<v t="EKR.20040608095146"><vh>Recent tests</vh>
+<v t="EKR.20040608095146" a="TV"><vh>Recent tests</vh>
 <v t="EKR.20040504083716.44"><vh>perfect import unit tests</vh>
 <v t="EKR.20040504083716.45"><vh>@   file test_sentinels.py</vh>
 <v t="EKR.20040504083716.47"><vh>class sentinel_test</vh>
@@ -642,7 +642,6 @@
 <v t="EKR.20040608092841"><vh>test of indent/undent with negative tab width</vh></v>
 <v t="EKR.20040608095146.1" a="M" tnodeList="EKR.20040608095146.1"><vh>@file login_process.cfm</vh></v>
 </v>
-<v t="EKR.20040608105916"><vh>Tests of clone dragging</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2162,7 +2161,6 @@ change the value of the session.allowin value ---&gt;
 
 &lt;cflocation url="#session.location#"&gt;
 </t>
-<t tx="EKR.20040608105916"></t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
