@@ -2807,6 +2807,8 @@ class baseCommands:
         Remove any unused tnodeLists."""
         
         c = self ; count = 1 ; errors = 0
+        isTkinter = g.app.gui and g.app.gui.guiName() == "tkinter"
+    
         if full and not unittest:
             g.es("all tests enabled: this may take awhile",color="blue")
     
@@ -2953,6 +2955,17 @@ class baseCommands:
                             assert len(vnodeList) == 1, "len(vnodeList) == 1"
                     #@nonl
                     #@-node:ekr.20040314043623:assert consistency of vnodeList
+                    #@+node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
+                    # Not a great test.  Only tests visible nodes.
+                    # Also, will fail if recent changes to cloned nodes haven't been committed.
+                    
+                    if isTkinter:
+                        t = p.edit_text()
+                        if t:
+                            s = t.get("1.0","end")
+                            assert(p.headString().strip() == s.strip())
+                    #@nonl
+                    #@-node:ekr.20040731053740:assert that p.headString() matches p.edit_text.get
                     #@-others
                     #@nonl
                     #@-node:ekr.20040323155951:<< do full tests >>
