@@ -44,7 +44,7 @@ class config:
 	stringCompareNames = (
 		"compare_file_1",
 		"compare_file_2",
-		"limit_directory_search_extenstion",
+		"limit_directory_search_extension",
 		"output_file" )
 	
 	# Find section...
@@ -159,7 +159,7 @@ class config:
 		"ignore_leading_whitespace" : 0,
 		"ignore_sentinel_lines" : 0,
 		"limit_count" : 9,
-		"limit_directory_search_extenstion" : None,
+		"limit_directory_search_extension" : None,
 		"make_whitespace_visible" : 0,
 		"output_file" : None,
 		"print_both_lines_for_matches" : 0,

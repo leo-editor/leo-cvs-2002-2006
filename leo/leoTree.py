@@ -429,7 +429,7 @@ class leoTree:
 			self.iconimages[name] = image
 			return image
 		except:
-			es("Can not load: " + fullname)
+			es("Exception loading: " + fullname)
 			es("dir:" + `dir` + ", file:" + `file` + ", ext:" + `ext`)
 			traceback.print_exc()
 			return None

@@ -752,7 +752,7 @@ class atFile:
 			try:
 				file = open(fn,'r')
 			except:
-				self.readError("Can not open: " + `root.headString()`)
+				self.readError("Can not open: " + '"' + root.headString() + '"')
 		#@-body
 		#@-node:1::<< open file >>
 
@@ -2040,9 +2040,9 @@ class atFile:
 		c = self.commands
 		w = self.tab_width
 		if w > 1:
-			quotient,remainder = divmod(n, w) 
-			self.otabs(quotient) 
-			self.oblanks(remainder) 
+			q,r = divmod(n,w) 
+			self.otabs(q) 
+			self.oblanks(r)
 		else:
 			self.oblanks(n)
 	#@-body

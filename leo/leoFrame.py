@@ -951,9 +951,11 @@ class LeoFrame:
 	
 	def OnBodyDoubleClick (self,event=None):
 	
+		if event: # 8/4/02: prevent wandering insertion point.
+			index = "@%d,%d" % (event.x, event.y) # Find where we clicked
 		body = self.body
-		start = body.index("insert wordstart")
-		end = body.index("insert wordend")
+		start = body.index(index + " wordstart")
+		end = body.index(index + " wordend")
 		setTextSelection(self.body,start,end)
 		return "break" # Inhibit all further event processing.
 	#@-body
@@ -2583,7 +2585,7 @@ class LeoFrame:
 		bodyBar.pack(side="right", fill="y")
 		
 		if wrap == "none":
-			self.bodyXBar = bodyXBar = Tk.Scrollbar(
+			bodyXBar = Tk.Scrollbar(
 				split1Pane2,name='bodyXBar',orient="horizontal")
 			body['xscrollcommand'] = bodyXBar.set
 			bodyXBar['command'] = body.xview

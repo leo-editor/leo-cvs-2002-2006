@@ -78,7 +78,7 @@ append_output_to_output_file = 0
 # ----- Options related to directory compares.
 #	These options has no effect when comparing files.
 
-limit_directory_search_extenstion = .py
+limit_directory_search_extension = .py
 #	Limit directory searches to files with the given file extension.
 # 	Examples:
 #		None	Compare all files when comparing directories.

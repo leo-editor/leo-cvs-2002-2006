@@ -417,7 +417,7 @@ class leoCompare:
 			f = open(name,'r')
 			return f
 		except:
-			self.show("can not open:" + `name`)
+			self.show("can not open:" + '"' + name + '"')
 			return None
 	#@-body
 	#@-node:1::doOpen
@@ -683,7 +683,7 @@ class leoComparePanel:
 		b = config.getBoolComparePref("append_output_to_output_file")
 		self.appendOutputVar.set(b)
 	
-		ext = config.getComparePref("limit_directory_search_extenstion")
+		ext = config.getComparePref("limit_directory_search_extension")
 		b = ext and len(ext) > 0
 		b = choose(b and b != 0,1,0)
 		self.limitToExtensionVar.set(b)

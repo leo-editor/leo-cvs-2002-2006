@@ -1601,9 +1601,9 @@ class tangleCommands:
 		w = self.tab_width
 	
 		if w > 1:
-			quotient,remainder = divmod(n, w) 
-			self.otabs(quotient) 
-			self.oblanks(remainder) 
+			q,r = divmod(n,w) 
+			self.otabs(q) 
+			self.oblanks(r) 
 		else:
 			self.oblanks(n)
 
@@ -3611,7 +3611,7 @@ class tangleCommands:
 						# trace("@path dir:" + `dir`)
 					elif issue_error_flag and not self.path_warning_given:
 						self.path_warning_given = true # supress future warnings
-						self.error("Invalid directory: " + `s[i:j]`)
+						self.error("Invalid directory: " + '"' + s[i:j] + '"')
 				elif issue_error_flag and not self.path_warning_given:
 					self.path_warning_given = true # supress future warnings
 					self.error("Empty @path")

@@ -658,7 +658,6 @@ class colorizer:
 					elif s[i] == delim:
 						i += 1
 					
-					# print "continueString3", `s[j:i]`
 					body.tag_add("string", index(n,j), index(n,i))
 					state = choose(continueFlag, continueCommentState, normalState)
 					#@-body
@@ -1321,7 +1320,7 @@ class leoColorNamePanel:
 		config = app().config
 	
 		self.top = top = Tk.Toplevel(app().root)
-		top.title("Color names for " + `name`)
+		top.title("Color names for " + '"' + name + '"')
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
 	
 		
