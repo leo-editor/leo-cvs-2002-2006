@@ -643,7 +643,7 @@ class atFile:
 		self.root.setDirty()
 	#@-body
 	#@-node:5::readError
-	#@+node:6::updateCloneIndices
+	#@+node:6:C=7:updateCloneIndices
 	#@+body
 	#@+at
 	#  The new Leo2 computes clone indices differently from the old Leo2:
@@ -659,7 +659,8 @@ class atFile:
 	def updateCloneIndices(self,root,next):
 	
 		if root.isCloned():
-			self.error("ignoring clone mark for " + root.headString())
+			if 0: # 9/26/02: Silently allow this.  Everything appears to work.
+				self.error("ignoring clone mark for " + root.headString())
 			root.t.setCloneIndex(0)
 		index = 0
 		# 12/17/01: increment each cloneIndex at most once.
@@ -680,7 +681,7 @@ class atFile:
 		# Make sure the root's clone index is zero.
 		root.t.setCloneIndex(0)
 	#@-body
-	#@-node:6::updateCloneIndices
+	#@-node:6:C=7:updateCloneIndices
 	#@+node:7::writeError
 	#@+body
 	def writeError(self,message):
@@ -788,7 +789,7 @@ class atFile:
 			self.readError("cloned nodes have different topologies")
 	#@-body
 	#@-node:2::joinTrees
-	#@+node:3:C=7:atFile.read
+	#@+node:3:C=8:atFile.read
 	#@+body
 	#@+at
 	#  This is the entry point to the read code.  The root vnode should be an 
@@ -1038,8 +1039,8 @@ class atFile:
 		# esDiffTime("read: exit", t1)
 		return self.errors == 0
 	#@-body
-	#@-node:3:C=7:atFile.read
-	#@+node:4::readAll (Leo2)
+	#@-node:3:C=8:atFile.read
+	#@+node:4:C=9:readAll (Leo2)
 	#@+body
 	#@+at
 	#  This method scans all vnodes, calling read for every @file node found.  
@@ -1065,6 +1066,8 @@ class atFile:
 		v = root
 		if partialFlag: after = v.nodeAfterTree()
 		else: after = None
+		if 0:
+			c.clearAllVisited() # 9/26/02: don't read cloned nodes twice.
 		while v and v != after:
 			if v.isAtIgnoreNode():
 				v = v.nodeAfterTree()
@@ -1093,7 +1096,7 @@ class atFile:
 		if partialFlag and not anyRead:
 			es("no @file nodes in the selected tree")
 	#@-body
-	#@-node:4::readAll (Leo2)
+	#@-node:4:C=9:readAll (Leo2)
 	#@+node:5::scanDoc
 	#@+body
 	# Scans the doc part and appends the text out.
@@ -1212,7 +1215,7 @@ class atFile:
 		#@-node:6::<< Remove a closing block delim from out >>
 	#@-body
 	#@-node:5::scanDoc
-	#@+node:6:C=8:scanHeader
+	#@+node:6:C=10:scanHeader
 	#@+body
 	#@+at
 	#  This method sets self.startSentinelComment and self.endSentinelComment 
@@ -1271,7 +1274,7 @@ class atFile:
 		return firstLines
 
 	#@-body
-	#@-node:6:C=8:scanHeader
+	#@-node:6:C=10:scanHeader
 	#@+node:7::completeFirstDirectives (Dave Hein)
 	#@+body
 	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
@@ -1334,7 +1337,7 @@ class atFile:
 
 	#@-body
 	#@-node:8::completeLastDirectives (Dave Hein)
-	#@+node:9:C=9:scanText
+	#@+node:9:C=11:scanText
 	#@+body
 	#@+at
 	#  This method is the heart of the new read code.  It reads lines from the 
@@ -1588,7 +1591,7 @@ class atFile:
 				
 				#@<< scan @+node >>
 				#@+node:6::start sentinels
-				#@+node:5:C=10:<< scan @+node >> (new read code)
+				#@+node:5:C=12:<< scan @+node >> (new read code)
 				#@+body
 				assert(match(s,i,"+node:"))
 				i += 6
@@ -1681,7 +1684,7 @@ class atFile:
 					# if cloneIndex > 0: trace("clone index:" + `cloneIndex` + ", " + `child`)
 					self.scanText(file,child,out,atFile.endNode)
 				#@-body
-				#@-node:5:C=10:<< scan @+node >> (new read code)
+				#@-node:5:C=12:<< scan @+node >> (new read code)
 				#@-node:6::start sentinels
 
 			elif kind == atFile.startOthers:
@@ -1805,10 +1808,10 @@ class atFile:
 	#@-node:6::start sentinels
 	#@+node:7::unpaired sentinels
 	#@-node:7::unpaired sentinels
-	#@-node:9:C=9:scanText
+	#@-node:9:C=11:scanText
 	#@-node:5::Reading
 	#@+node:6::Writing
-	#@+node:1:C=11:os, onl, etc. (leoAtFile)
+	#@+node:1:C=13:os, onl, etc. (leoAtFile)
 	#@+body
 	def oblank(self):
 		self.os(' ')
@@ -1839,7 +1842,7 @@ class atFile:
 	def otabs(self,n):
 		self.os('\t' * abs(n))
 	#@-body
-	#@-node:1:C=11:os, onl, etc. (leoAtFile)
+	#@-node:1:C=13:os, onl, etc. (leoAtFile)
 	#@+node:2::putBody
 	#@+body
 	#@+at
@@ -1977,7 +1980,7 @@ class atFile:
 		self.putSentinel("@-body")
 	#@-body
 	#@-node:3::putBodyPart (removes trailing lines)
-	#@+node:4:C=12:putCodePart & allies
+	#@+node:4:C=14:putCodePart & allies
 	#@+body
 	#@+at
 	#  This method expands a code part, terminated by any at-directive except 
@@ -2094,7 +2097,7 @@ class atFile:
 			return false, -1
 	#@-body
 	#@-node:3::isSectionName
-	#@+node:4:C=13:inAtOthers
+	#@+node:4:C=15:inAtOthers
 	#@+body
 	#@+at
 	#  Returns true if v should be included in the expansion of the at-others 
@@ -2121,8 +2124,8 @@ class atFile:
 		else: # old & reliable code
 			return not v.isAtIgnoreNode() and not v.isAtOthersNode()
 	#@-body
-	#@-node:4:C=13:inAtOthers
-	#@+node:5:C=14:putAtOthers
+	#@-node:4:C=15:inAtOthers
+	#@+node:5:C=16:putAtOthers
 	#@+body
 	#@+at
 	#  The at-others directive is recognized only at the start of the line.  
@@ -2142,8 +2145,8 @@ class atFile:
 		self.putSentinel("@-others")
 		self.indent -= delta
 	#@-body
-	#@-node:5:C=14:putAtOthers
-	#@+node:6:C=15:putAtOthersChild
+	#@-node:5:C=16:putAtOthers
+	#@+node:6:C=17:putAtOthersChild
 	#@+body
 	def putAtOthersChild(self,v):
 	
@@ -2162,7 +2165,7 @@ class atFile:
 	
 		self.putCloseNodeSentinel(v)
 	#@-body
-	#@-node:6:C=15:putAtOthersChild
+	#@-node:6:C=17:putAtOthersChild
 	#@+node:7::putRef
 	#@+body
 	def putRef (self,name,v,s,i,delta):
@@ -2184,7 +2187,7 @@ class atFile:
 				"\n\treferenced from: " + v.headString())
 	#@-body
 	#@-node:7::putRef
-	#@-node:4:C=12:putCodePart & allies
+	#@-node:4:C=14:putCodePart & allies
 	#@+node:5::putDirective  (handles @delims)
 	#@+body
 	# This method outputs s, a directive or reference, in a sentinel.
@@ -2280,7 +2283,7 @@ class atFile:
 		return j
 	#@-body
 	#@-node:7::putDoc
-	#@+node:8:C=16:putDocPart
+	#@+node:8:C=18:putDocPart
 	#@+body
 	# Puts a comment part in comments.
 	
@@ -2349,8 +2352,8 @@ class atFile:
 			self.os(self.endSentinelComment)
 			self.onl() # Note: no trailing whitespace.
 	#@-body
-	#@-node:8:C=16:putDocPart
-	#@+node:9:C=17:putIndent
+	#@-node:8:C=18:putDocPart
+	#@+node:9:C=19:putIndent
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 	
@@ -2365,8 +2368,8 @@ class atFile:
 		else:
 			self.oblanks(n)
 	#@-body
-	#@-node:9:C=17:putIndent
-	#@+node:10:C=18:atFile.write
+	#@-node:9:C=19:putIndent
+	#@+node:10:C=20:atFile.write
 	#@+body
 	#@+at
 	#  This is the entry point to the write code.  root should be an @file 
@@ -2377,7 +2380,9 @@ class atFile:
 	#@@c
 	def write(self,root):
 	
+		# trace(`root`)
 		c = self.commands
+		self.errors = 0 # 9/26/02
 		c.setIvarsFromPrefs()
 		self.root = root
 		c.endEditing() # Capture the current headline.
@@ -2447,7 +2452,7 @@ class atFile:
 			self.updateCloneIndices(root, next)
 			
 			#@<< put all @first lines in root >>
-			#@+node:2:C=19:<< put all @first lines in root >>
+			#@+node:2:C=21:<< put all @first lines in root >>
 			#@+body
 			#@+at
 			#  Write any @first lines.  These lines are also converted to 
@@ -2470,7 +2475,7 @@ class atFile:
 				self.os(line) ; self.onl()
 				i = skip_nl(s,i)
 			#@-body
-			#@-node:2:C=19:<< put all @first lines in root >>
+			#@-node:2:C=21:<< put all @first lines in root >>
 
 			if 1: # write the entire file
 				self.putOpenLeoSentinel("@+leo")
@@ -2481,7 +2486,7 @@ class atFile:
 				self.putSentinel("@-leo")
 				
 				#@<< put all @last lines in root >>
-				#@+node:6:C=21:<< put all @last lines in root >>
+				#@+node:6:C=23:<< put all @last lines in root >>
 				#@+body
 				#@+at
 				#  Write any @last lines.  These lines are also converted to 
@@ -2507,7 +2512,7 @@ class atFile:
 					i = len(tag) ; i = skip_ws(line,i)
 					self.os(line[i:]) ; self.onl()
 				#@-body
-				#@-node:6:C=21:<< put all @last lines in root >>
+				#@-node:6:C=23:<< put all @last lines in root >>
 
 			if self.outputFile:
 				if self.suppress_newlines and self.newline_pending:
@@ -2535,12 +2540,13 @@ class atFile:
 				root.setOrphan()
 				root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
 				os.remove(self.outputFileName) # Delete the temp file.
+				es("Not written: " + self.outputFileName)
 			else:
 				root.clearOrphan()
 				root.clearDirty()
 				
 				#@<< Replace the target with the temp file if different >>
-				#@+node:4:C=20:<< Replace the target with the temp file if different >>
+				#@+node:4:C=22:<< Replace the target with the temp file if different >>
 				#@+body
 				assert(self.outputFile == None)
 				
@@ -2572,7 +2578,7 @@ class atFile:
 							" to " + self.targetFileName)
 						traceback.print_exc()
 				#@-body
-				#@-node:4:C=20:<< Replace the target with the temp file if different >>
+				#@-node:4:C=22:<< Replace the target with the temp file if different >>
 
 		except:
 			
@@ -2595,7 +2601,7 @@ class atFile:
 			#@-body
 			#@-node:5::<< handle all exceptions during the write >>
 	#@-body
-	#@-node:10:C=18:atFile.write
+	#@-node:10:C=20:atFile.write
 	#@+node:11::writeAll
 	#@+body
 	#@+at
