@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4463" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4466" clone_windows="0"/>
 <globals body_outline_ratio="0.4888392857142857">
-	<global_window_position top="27" left="240" height="896" width="944"/>
+	<global_window_position top="21" left="176" height="896" width="944"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1282,16 +1282,6 @@
 </v>
 <v t="ekr.20031218072017.868"><vh>(Control-T switches letters in headlines)</vh></v>
 </v>
-<v t="ekr.20031218072017.869"><vh>  Tests</vh>
-<v t="ekr.20031218072017.870"><vh> Open With...</vh>
-<v t="ekr.20031218072017.871"><vh>(hook to check for conflicting Open With changes)</vh>
-<v t="ekr.20031218072017.872"><vh> Request</vh></v>
-<v t="ekr.20031218072017.873"><vh> Test</vh>
-<v t="ekr.20031218072017.874"><vh>@file c:\prog\test\conflictText.txt</vh></v>
-</v>
-</v>
-</v>
-</v>
 <v t="ekr.20031218072017.875"><vh> Abandoned &amp; Unfinished projects</vh>
 <v t="ekr.20031218072017.876"><vh>Abandoned projects</vh>
 <v t="ekr.20031218072017.953"><vh>(Precompute mThreadNext, and maybe mThreadBack)</vh>
@@ -1436,6 +1426,7 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040323164902"><vh> Projects by type...</vh>
 <v t="ekr.20031218072017.1061"><vh> Command projects...</vh>
 <v t="ekr.20031218072017.1062"><vh> File menu</vh>
 <v t="ekr.20031218072017.1063"><vh>Open With</vh>
@@ -1856,24 +1847,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2164"><vh>(Adding batch-script logic to startup code)</vh>
-<v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
-<v t="ekr.20031218072017.1935"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
-<v t="ekr.20031218072017.1937"><vh>computeLoadDir</vh></v>
-<v t="ekr.20031218072017.1624"><vh>createFrame (leo.py)</vh></v>
-<v t="ekr.20031218072017.1938"><vh>createNullGuiWithScript (leo.py)</vh></v>
-<v t="ekr.20031218072017.1939"><vh>getBatchScript</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.1313"><vh>(Convenience routines for hooks)</vh>
-<v t="ekr.20031218072017.1314"><vh>Convenience routines that enable and disable the "idle" hook</vh>
-<v t="ekr.20031218072017.1315"><vh>enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler</vh></v>
-</v>
-<v t="ekr.20031218072017.1316"><vh>Menu Convenience Routines (frame)</vh></v>
-<v t="ekr.20031218072017.1317"><vh>file/module/plugin_date</vh></v>
-<v t="ekr.20031218072017.1318"><vh>plugin_signon</vh></v>
-</v>
 <v t="ekr.20031218072017.1319"><vh>(Key handlers)</vh>
 <v t="ekr.20031218072017.1320"><vh>body key handlers</vh>
 <v t="ekr.20031218072017.1321"><vh>idle_body_key</vh>
@@ -2278,6 +2251,8 @@
 <v t="ekr.20031218072017.1532"><vh>About getdefaultlocale</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20040323164902.1"><vh>Projects by version number...</vh>
 <v t="ekr.20031218072017.1533"><vh>3.x projects...</vh>
 <v t="ekr.20031218072017.1534"><vh>3.11.1 projects</vh>
 <v t="ekr.20031218072017.1535"><vh>(Control-dragging bug)</vh>
@@ -3197,12 +3172,17 @@
 <v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
 <v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
 <v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040313151511"><vh>&lt;&lt; assert that simple and complex position methods are equivalent &gt;&gt;</vh></v>
-<v t="ekr.20040314035615"><vh>&lt;&lt; assert consistency of threadNext &amp; threadBack links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.1"><vh>&lt;&lt; assert consistency of next and back links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.2"><vh>&lt;&lt; assert consistency of parent and chiild links &gt;&gt;</vh></v>
-<v t="ekr.20040314043623"><vh>&lt;&lt; assert consistency of vnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040314043900"><vh>&lt;&lt; print summary message &gt;&gt;</vh></v>
+<v t="ekr.20040323155951"><vh>&lt;&lt; do full tests &gt;&gt;</vh>
+<v t="ekr.20040313151511"><vh>assert that simple and complex position methods are equivalent</vh></v>
+<v t="ekr.20040314035615"><vh>assert consistency of threadNext &amp; threadBack links</vh></v>
+<v t="ekr.20040314035615.1"><vh>assert consistency of next and back links</vh></v>
+<v t="ekr.20040314035615.2"><vh>assert consistency of parent and chiild links</vh></v>
+<v t="ekr.20040323155951.1"><vh>assert consistency of directParents and parent</vh></v>
+<v t="ekr.20040323161837"><vh>assert consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040323162707"><vh>assert that clones actually share subtrees</vh></v>
+<v t="ekr.20040314043623"><vh>assert consistency of vnodeList</vh></v>
+</v>
+<v t="ekr.20040314043900"><vh>&lt;&lt;print summary message &gt;&gt;</vh></v>
 <v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
 </v>
 </v>
@@ -3797,12 +3777,17 @@
 <v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
 <v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
 <v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040313151511"><vh>&lt;&lt; assert that simple and complex position methods are equivalent &gt;&gt;</vh></v>
-<v t="ekr.20040314035615"><vh>&lt;&lt; assert consistency of threadNext &amp; threadBack links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.1"><vh>&lt;&lt; assert consistency of next and back links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.2"><vh>&lt;&lt; assert consistency of parent and chiild links &gt;&gt;</vh></v>
-<v t="ekr.20040314043623"><vh>&lt;&lt; assert consistency of vnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040314043900"><vh>&lt;&lt; print summary message &gt;&gt;</vh></v>
+<v t="ekr.20040323155951"><vh>&lt;&lt; do full tests &gt;&gt;</vh>
+<v t="ekr.20040313151511"><vh>assert that simple and complex position methods are equivalent</vh></v>
+<v t="ekr.20040314035615"><vh>assert consistency of threadNext &amp; threadBack links</vh></v>
+<v t="ekr.20040314035615.1"><vh>assert consistency of next and back links</vh></v>
+<v t="ekr.20040314035615.2"><vh>assert consistency of parent and chiild links</vh></v>
+<v t="ekr.20040323155951.1"><vh>assert consistency of directParents and parent</vh></v>
+<v t="ekr.20040323161837"><vh>assert consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040323162707"><vh>assert that clones actually share subtrees</vh></v>
+<v t="ekr.20040314043623"><vh>assert consistency of vnodeList</vh></v>
+</v>
+<v t="ekr.20040314043900"><vh>&lt;&lt;print summary message &gt;&gt;</vh></v>
 <v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2140"><vh>executeScript</vh>
@@ -4602,6 +4587,7 @@
 <v t="ekr.20040213090726"><vh>Encoding bug in derived files...</vh></v>
 </v>
 </v>
+</v>
 <v t="ekr.20040107064101.1"><vh>4.2 Projects</vh>
 <v t="ekr.20040105210752"><vh>(Keystrokes)</vh>
 <v t="ekr.20040105214540"><vh>Notes</vh></v>
@@ -4713,7 +4699,7 @@
 </v>
 </v>
 <v t="ekr.20040310062415.1"><vh>(Revised p.link/unlink routines)</vh>
-<v t="ekr.20040310062332"><vh>p.Link/Unlink methods (position)</vh>
+<v t="ekr.20040310062332"><vh>p.Link/Unlink methods</vh>
 <v t="ekr.20040310062332.1"><vh>p.invalidOutline</vh></v>
 <v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
 <v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
@@ -4885,12 +4871,17 @@
 <v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
 <v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
 <v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040313151511"><vh>&lt;&lt; assert that simple and complex position methods are equivalent &gt;&gt;</vh></v>
-<v t="ekr.20040314035615"><vh>&lt;&lt; assert consistency of threadNext &amp; threadBack links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.1"><vh>&lt;&lt; assert consistency of next and back links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.2"><vh>&lt;&lt; assert consistency of parent and chiild links &gt;&gt;</vh></v>
-<v t="ekr.20040314043623"><vh>&lt;&lt; assert consistency of vnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040314043900"><vh>&lt;&lt; print summary message &gt;&gt;</vh></v>
+<v t="ekr.20040323155951"><vh>&lt;&lt; do full tests &gt;&gt;</vh>
+<v t="ekr.20040313151511"><vh>assert that simple and complex position methods are equivalent</vh></v>
+<v t="ekr.20040314035615"><vh>assert consistency of threadNext &amp; threadBack links</vh></v>
+<v t="ekr.20040314035615.1"><vh>assert consistency of next and back links</vh></v>
+<v t="ekr.20040314035615.2"><vh>assert consistency of parent and chiild links</vh></v>
+<v t="ekr.20040323155951.1"><vh>assert consistency of directParents and parent</vh></v>
+<v t="ekr.20040323161837"><vh>assert consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040323162707"><vh>assert that clones actually share subtrees</vh></v>
+<v t="ekr.20040314043623"><vh>assert consistency of vnodeList</vh></v>
+</v>
+<v t="ekr.20040314043900"><vh>&lt;&lt;print summary message &gt;&gt;</vh></v>
 <v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
 </v>
 </v>
@@ -4903,12 +4894,17 @@
 <v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
 <v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
 <v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040313151511"><vh>&lt;&lt; assert that simple and complex position methods are equivalent &gt;&gt;</vh></v>
-<v t="ekr.20040314035615"><vh>&lt;&lt; assert consistency of threadNext &amp; threadBack links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.1"><vh>&lt;&lt; assert consistency of next and back links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.2"><vh>&lt;&lt; assert consistency of parent and chiild links &gt;&gt;</vh></v>
-<v t="ekr.20040314043623"><vh>&lt;&lt; assert consistency of vnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040314043900"><vh>&lt;&lt; print summary message &gt;&gt;</vh></v>
+<v t="ekr.20040323155951"><vh>&lt;&lt; do full tests &gt;&gt;</vh>
+<v t="ekr.20040313151511"><vh>assert that simple and complex position methods are equivalent</vh></v>
+<v t="ekr.20040314035615"><vh>assert consistency of threadNext &amp; threadBack links</vh></v>
+<v t="ekr.20040314035615.1"><vh>assert consistency of next and back links</vh></v>
+<v t="ekr.20040314035615.2"><vh>assert consistency of parent and chiild links</vh></v>
+<v t="ekr.20040323155951.1"><vh>assert consistency of directParents and parent</vh></v>
+<v t="ekr.20040323161837"><vh>assert consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040323162707"><vh>assert that clones actually share subtrees</vh></v>
+<v t="ekr.20040314043623"><vh>assert consistency of vnodeList</vh></v>
+</v>
+<v t="ekr.20040314043900"><vh>&lt;&lt;print summary message &gt;&gt;</vh></v>
 <v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040313083810"><vh>commands stuff... </vh>
@@ -4926,7 +4922,7 @@
 </v>
 </v>
 <v t="ekr.20040313083810.2"><vh>position stuff...</vh>
-<v t="ekr.20040310062332"><vh>p.Link/Unlink methods (position)</vh>
+<v t="ekr.20040310062332"><vh>p.Link/Unlink methods</vh>
 <v t="ekr.20040310062332.1"><vh>p.invalidOutline</vh></v>
 <v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
 <v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
@@ -5039,7 +5035,6 @@
 <v t="ekr.20031218072017.2789"><vh>putOpenLeoSentinel 4.x</vh></v>
 <v t="ekr.20031218072017.2695"><vh>putOpenLeoSentinel 3.x</vh></v>
 </v>
-<v t="ekr.20040318150556"><vh>(Script to count number of nodes)</vh></v>
 <v t="ekr.20040312092455.2"><vh>(Enable and test atFile read logic)</vh>
 <v t="ekr.20031218072017.2759"><vh>&lt;&lt; init ivars for scanText4 &gt;&gt;</vh></v>
 <v t="ekr.20040316075317"><vh>reading...</vh>
@@ -5280,19 +5275,6 @@
 <v t="ekr.20040322115523"><vh>getGoToFileName</vh></v>
 </v>
 </v>
-<v t="ekr.20040322123611"><vh>(Speed up Check Outline or add progress indicator)</vh>
-<v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
-<v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
-<v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040313151511"><vh>&lt;&lt; assert that simple and complex position methods are equivalent &gt;&gt;</vh></v>
-<v t="ekr.20040314035615"><vh>&lt;&lt; assert consistency of threadNext &amp; threadBack links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.1"><vh>&lt;&lt; assert consistency of next and back links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.2"><vh>&lt;&lt; assert consistency of parent and chiild links &gt;&gt;</vh></v>
-<v t="ekr.20040314043623"><vh>&lt;&lt; assert consistency of vnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040314043900"><vh>&lt;&lt; print summary message &gt;&gt;</vh></v>
-<v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
-</v>
-</v>
 <v t="ekr.20040323072005"><vh>(Fixed select headline bug)</vh>
 <v t="ekr.20031218072017.3716"><vh>Getters/Setters (tree)</vh></v>
 <v t="ekr.20031218072017.4157"><vh>Selecting &amp; editing (tree)</vh>
@@ -5315,13 +5297,75 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040322121338.1"><vh>(Fixed bug in setAllAncestorAtFileNodesDirty)</vh>
+<v t="ekr.20040323073825"><vh>Notes</vh></v>
+<v t="ekr.20040323090654"><vh>mini test: check consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040305162628"><vh>p.Dirty bits (contains script)</vh>
+<v t="ekr.20040311113514"><vh>p.clearDirty</vh></v>
+<v t="ekr.20040303163717"><vh>p.isDirty</vh></v>
+<v t="ekr.20040318125934"><vh>findAllPotentiallyDirtyNodes</vh></v>
+<v t="ekr.20040303214038" a="M"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
+<v t="ekr.20040303163330"><vh>p.setDirty</vh></v>
+</v>
+<v t="ekr.20031218072017.1771"><vh>moveOutlineRight</vh></v>
+</v>
+<v t="ekr.20040323090456.2"><vh>(Removed v.parents field)</vh>
+<v t="ekr.20040227212621"><vh>p.hasX </vh>
+<v t="ekr.20040227224946"><vh>hasThreadNext (the only complex hasX method)</vh></v>
+</v>
+<v t="ekr.20031218072017.1968"><vh>&lt;&lt; initialize vnode data members &gt;&gt;</vh></v>
+<v t="ekr.20040318125934"><vh>findAllPotentiallyDirtyNodes</vh></v>
+<v t="ekr.20040301071824"><vh>v.Link/Unlink/Insert methods (used by file read logic)</vh>
+<v t="ekr.20031218072017.3419"><vh>v.insertAfter</vh></v>
+<v t="ekr.20031218072017.3421"><vh>v.insertAsNthChild</vh></v>
+<v t="ekr.20031218072017.2355"><vh>v.linkAfter</vh></v>
+<v t="ekr.20031218072017.3425"><vh>v.linkAsNthChild</vh></v>
+<v t="ekr.20031218072017.3426"><vh>v.linkAsRoot</vh></v>
+<v t="ekr.20031218072017.3422"><vh>v.moveToRoot</vh></v>
+<v t="ekr.20031218072017.3438"><vh>v.unlink</vh></v>
+</v>
+<v t="ekr.20040323100443"><vh>v.parents (new method in 4.2)</vh></v>
+<v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
+<v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.937"><vh>p.moveToParent (pops stack when multiple parents)</vh></v>
+<v t="ekr.20040310062332"><vh>p.Link/Unlink methods</vh>
+<v t="ekr.20040310062332.1"><vh>p.invalidOutline</vh></v>
+<v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
+<v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
+<v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
+<v t="ekr.20040310062332.5"><vh>p.unlink</vh></v>
+</v>
+<v t="ekr.20031218072017.1860" a="M"><vh>createVnode (changed for 4.2)</vh>
+<v t="ekr.20031218072017.1861"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040322123611"><vh>(Check Outline command)</vh>
+<v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
+<v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
+<v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
+<v t="ekr.20040323155951"><vh>&lt;&lt; do full tests &gt;&gt;</vh>
+<v t="ekr.20040313151511"><vh>assert that simple and complex position methods are equivalent</vh></v>
+<v t="ekr.20040314035615"><vh>assert consistency of threadNext &amp; threadBack links</vh></v>
+<v t="ekr.20040314035615.1"><vh>assert consistency of next and back links</vh></v>
+<v t="ekr.20040314035615.2"><vh>assert consistency of parent and chiild links</vh></v>
+<v t="ekr.20040323155951.1"><vh>assert consistency of directParents and parent</vh></v>
+<v t="ekr.20040323161837"><vh>assert consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040323162707"><vh>assert that clones actually share subtrees</vh></v>
+<v t="ekr.20040314043623"><vh>assert consistency of vnodeList</vh></v>
+</v>
+<v t="ekr.20040314043900"><vh>&lt;&lt;print summary message &gt;&gt;</vh></v>
+<v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 </v>
 <v t="ekr.20040228154544"><vh>(Transition to 4.2)</vh>
-<v t="ekr.20040318134209"><vh>TO DO NOW</vh></v>
-<v t="ekr.20040321104014"><vh>  Big picture</vh></v>
-<v t="ekr.20040117170612"><vh>p.__getattr__  (used only for p.t) ON (must be ON if use_plugins)</vh></v>
 <v t="ekr.20040117181936"><vh>To do</vh>
+<v t="ekr.20040323090456"><vh>Break position links at app.shutdown code?</vh></v>
+<v t="ekr.20040323090456.1"><vh>Clean up isAnyAtFileNode</vh></v>
+<v t="ekr.20040323084434"><vh>Add granularity setting for undo</vh></v>
+<v t="ekr.20040323084434.1"><vh>redraw is being called too many times</vh></v>
 <v t="ekr.20040318150305"><vh>Remove back quotes</vh></v>
 <v t="ekr.20040318150305.1"><vh>Add unchanged message when saving .leo file doesn't change it.</vh></v>
 <v t="ekr.20040315073818" a="M"><vh>create find-script to complete transition</vh></v>
@@ -5350,7 +5394,9 @@
 <v t="ekr.20040310092400"><vh>Allow &lt;/leo_header&gt;</vh></v>
 <v t="ekr.20040310092400.1"><vh>Use calltips in outline pane</vh></v>
 </v>
+<v t="ekr.20040321104014"><vh>  Big picture</vh></v>
 </v>
+<v t="ekr.20040117170612"><vh>p.__getattr__  (used only for p.t) ON (must be ON if use_plugins)</vh></v>
 <v t="ekr.20040301192211"><vh>What I did</vh>
 <v t="ekr.20040311124726"><vh>Features of 4.2</vh></v>
 <v t="ekr.20040302083805"><vh>Added app.sharedNodes and app.disableSave</vh></v>
@@ -5416,11 +5462,12 @@
 <v t="ekr.20031218072017.3376"><vh>isVisited</vh></v>
 <v t="ekr.20031218072017.3377"><vh>status</vh></v>
 </v>
-<v t="ekr.20031218072017.3378"><vh>bodyString</vh></v>
+<v t="ekr.20031218072017.3378"><vh>v.bodyString</vh></v>
 <v t="ekr.20031218072017.3379"><vh>v.currentVnode (and c.currentPosition 4.2)</vh></v>
-<v t="ekr.20031218072017.3380"><vh>edit_text</vh></v>
+<v t="ekr.20031218072017.3380"><vh>v.edit_text</vh></v>
 <v t="ekr.20031218072017.3381"><vh>v.findRoot (4.2)</vh></v>
-<v t="ekr.20031218072017.1581"><vh>headString &amp; cleanHeadString</vh></v>
+<v t="ekr.20031218072017.1581"><vh>v.headString &amp; v.cleanHeadString</vh></v>
+<v t="ekr.20040323100443"><vh>v.parents (new method in 4.2)</vh></v>
 </v>
 <v t="ekr.20040307073708"><vh>Iterators (vnode)</vh>
 <v t="ekr.20040309041436.1"><vh>Defined in 4.2</vh>
@@ -5478,11 +5525,12 @@
 <v t="ekr.20031218072017.890"><vh>&lt;&lt; about the position class &gt;&gt;</vh></v>
 <v t="ekr.20040306212636"><vh>Getters</vh>
 <v t="ekr.20040306210951"><vh> vnode proxies</vh>
-<v t="ekr.20040306211032"><vh>Comparisons (position)</vh></v>
-<v t="ekr.20040306212151"><vh>Extra Attributes</vh></v>
-<v t="ekr.20040306220230"><vh>Headline &amp; body strings</vh></v>
-<v t="ekr.20040306214401"><vh>Status bits</vh></v>
+<v t="ekr.20040306211032"><vh>p.Comparisons</vh></v>
+<v t="ekr.20040306212151"><vh>p.Extra Attributes</vh></v>
+<v t="ekr.20040306220230"><vh>p.Headline &amp; body strings</vh></v>
+<v t="ekr.20040306214401"><vh>p.Status bits</vh></v>
 <v t="ekr.20040306220230.1"><vh>p.edit_text</vh></v>
+<v t="ekr.20040323160302"><vh>p.directParents</vh></v>
 </v>
 <v t="ekr.20040306214240.2"><vh>children</vh>
 <v t="ekr.20040306214240.3"><vh>p.hasChildren</vh></v>
@@ -5596,7 +5644,7 @@
 <v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20040310062332"><vh>p.Link/Unlink methods (position)</vh>
+<v t="ekr.20040310062332"><vh>p.Link/Unlink methods</vh>
 <v t="ekr.20040310062332.1"><vh>p.invalidOutline</vh></v>
 <v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
 <v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
@@ -5693,6 +5741,7 @@
 </v>
 <v t="ekr.20031218072017.2429"><vh>Count pages</vh></v>
 <v t="ekr.20040321064134"><vh>Count separate nodes (tnodes)</vh></v>
+<v t="ekr.20040318150556"><vh>Count total, visible nodes</vh></v>
 <v t="ekr.20031218072017.2428"><vh>Find script to change OnX to x in body (didn't quite work :-)</vh></v>
 <v t="ekr.20031218072017.2427"><vh>Find scripts to change OnX to x in headline</vh></v>
 </v>
@@ -7949,7 +7998,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2810" tnodeList="ekr.20031218072017.2810,ekr.20031218072017.2812,ekr.20031218072017.2813,ekr.20031218072017.2814,ekr.20031218072017.2815,ekr.20031218072017.2816,ekr.20031218072017.2817,ekr.20031218072017.2582,ekr.20040312090934,ekr.20031218072017.1623,ekr.20031218072017.2821,ekr.20031218072017.2822,ekr.20031218072017.2823,ekr.20031218072017.2824,ekr.20031218072017.2825,ekr.20031218072017.2826,ekr.20031218072017.2827,ekr.20031218072017.2828,ekr.20031218072017.2829,ekr.20031218072017.2830,ekr.20031218072017.2831,ekr.20031218072017.2832,ekr.20031218072017.2833,ekr.20031218072017.2834,ekr.20031218072017.2835,ekr.20031218072017.2836,ekr.20031218072017.2837,ekr.20031218072017.2080,ekr.20031218072017.2081,ekr.20031218072017.2082,ekr.20031218072017.2083,ekr.20031218072017.2839,ekr.20031218072017.1839,ekr.20031218072017.1809,ekr.20031218072017.2014,ekr.20031218072017.2842,ekr.20031218072017.2843,ekr.20031218072017.2844,ekr.20031218072017.2846,ekr.20031218072017.2847,ekr.20031218072017.2848,ekr.20031218072017.2850,ekr.20031218072017.2851,ekr.20031218072017.2852,ekr.20031218072017.2853,ekr.20031218072017.2854,ekr.20031218072017.2855,ekr.20031218072017.2856,ekr.20031218072017.2857,ekr.20031218072017.2858,ekr.20031218072017.2859,ekr.20031218072017.2860,ekr.20031218072017.2863,ekr.20031218072017.2140,ekr.20031218072017.2141,ekr.20031218072017.2142,ekr.20031218072017.2143,ekr.20031218072017.2864,ekr.20031218072017.2865,ekr.20031218072017.2866,ekr.20031218072017.2867,ekr.20031218072017.2868,ekr.20031218072017.2869,ekr.20031218072017.2870,ekr.20031218072017.2871,ekr.20031218072017.2872,ekr.20031218072017.2873,ekr.20031218072017.2874,ekr.20031218072017.2875,ekr.20031218072017.2876,ekr.20031218072017.2877,ekr.20031218072017.2878,ekr.20031218072017.2879,ekr.20031218072017.2880,ekr.20031218072017.2881,ekr.20031218072017.2882,ekr.20040322115523,ekr.20031218072017.2088,ekr.20031218072017.2090,ekr.20031218072017.2883,ekr.20031218072017.2086,ekr.20031218072017.1704,ekr.20031218072017.1705,ekr.20031218072017.1821,ekr.20031218072017.1822,ekr.20031218072017.1823,ekr.20031218072017.1824,ekr.20031218072017.1706,ekr.20031218072017.1707,ekr.20031218072017.1708,ekr.20031218072017.1709,ekr.20031218072017.1710,ekr.20031218072017.1711,ekr.20031218072017.1825,ekr.20031218072017.1826,ekr.20031218072017.1827,ekr.20031218072017.1828,ekr.20031218072017.1829,ekr.20031218072017.1830,ekr.20031218072017.1831,ekr.20031218072017.1832,ekr.20031218072017.1833,ekr.20031218072017.1834,ekr.20031218072017.1835,ekr.20031218072017.1836,ekr.20031218072017.1837,ekr.20031218072017.1838,ekr.20031218072017.2886,ekr.20031218072017.2290,ekr.20031218072017.2888,ekr.20031218072017.2889,ekr.20031218072017.2890,ekr.20031218072017.2891,ekr.20031218072017.2892,ekr.20031218072017.2893,ekr.20031218072017.1549,ekr.20031218072017.1550,ekr.20031218072017.1551,ekr.20031218072017.2072,ekr.20040314062338,ekr.20040313150633,ekr.20040313151511,ekr.20040314035615,ekr.20040314035615.1,ekr.20040314035615.2,ekr.20040314043623,ekr.20040314044652,ekr.20040314043900,ekr.20031218072017.2028,ekr.20031218072017.1760,ekr.20031218072017.1193,ekr.20031218072017.1761,ekr.20031218072017.1762,ekr.20031218072017.1765,ekr.20031218072017.1188,ekr.20031218072017.1189,ekr.20031218072017.1190,ekr.20031218072017.2896,ekr.20031218072017.2897,ekr.20031218072017.2900,ekr.20031218072017.2901,ekr.20031218072017.2902,ekr.20031218072017.2903,ekr.20031218072017.2904,ekr.20031218072017.2905,ekr.20031218072017.2906,ekr.20031218072017.2907,ekr.20031218072017.2908,ekr.20031218072017.2910,ekr.20031218072017.2911,ekr.20031218072017.2912,ekr.20031218072017.1628,ekr.20031218072017.1627,ekr.20031218072017.2914,ekr.20031218072017.2915,ekr.20031218072017.2916,ekr.20031218072017.2917,ekr.20031218072017.2918,ekr.20031218072017.2919,ekr.20031218072017.2920,ekr.20031218072017.2921,ekr.20031218072017.2923,ekr.20031218072017.2924,ekr.20031218072017.2925,ekr.20031218072017.2926,ekr.20031218072017.2927,ekr.20031218072017.2928,ekr.20031218072017.2929,ekr.20031218072017.2930,ekr.20031218072017.1767,ekr.20031218072017.1768,ekr.20031218072017.1769,ekr.20031218072017.1770,ekr.20031218072017.1771,ekr.20031218072017.1772,ekr.20031218072017.1773,ekr.20031218072017.1774,ekr.20031218072017.2092,ekr.20031218072017.2932,ekr.20031218072017.2933,ekr.20031218072017.2934,ekr.20031218072017.2936,ekr.20031218072017.2935,ekr.20031218072017.2937,ekr.20031218072017.2939,ekr.20031218072017.2940,ekr.20031218072017.2941,ekr.20031218072017.2942,ekr.20031218072017.2943,ekr.20031218072017.2944,ekr.20031218072017.2353,ekr.20031218072017.2946,ekr.20031218072017.2947,ekr.20031218072017.2948,ekr.20031218072017.2950,ekr.20031218072017.2951,ekr.20031218072017.2952,ekr.20031218072017.2953,ekr.20031218072017.2954,ekr.20040131170659,ekr.20031218072017.2956,ekr.20031218072017.2957,ekr.20031218072017.2958,ekr.20031218072017.2959,ekr.20031218072017.2960,ekr.20031218072017.2961,ekr.20031218072017.2962,ekr.20031218072017.2963,ekr.20031218072017.2964,ekr.20031218072017.2287,ekr.20031218072017.2965,ekr.20031218072017.2966,ekr.20031218072017.2967,ekr.20040303165342,ekr.20031218072017.2968,ekr.20031218072017.2969,ekr.20031218072017.2970,ekr.20031218072017.2971,ekr.20031218072017.2972,ekr.20031218072017.2973,ekr.20031218072017.2974,ekr.20031218072017.2975,ekr.20031218072017.2976,ekr.20031218072017.2977,ekr.20031218072017.2978,ekr.20031218072017.2979,ekr.20031218072017.2980,ekr.20031218072017.2981,ekr.20031218072017.2983,ekr.20031218072017.2984,ekr.20031218072017.2985,ekr.20031218072017.2986,ekr.20031218072017.2987,ekr.20031218072017.2988,ekr.20040311173238,ekr.20031218072017.2989,ekr.20040311094927,ekr.20031218072017.2991,ekr.20031218072017.2992,ekr.20031218072017.2993,ekr.20031218072017.2994,ekr.20031218072017.2995,ekr.20031218072017.2996,ekr.20031218072017.2997,ekr.20031218072017.2998,ekr.20031218072017.2999,ekr.20031218072017.3000"><vh>@file leoCommands.py</vh>
+<v t="ekr.20031218072017.2810" tnodeList="ekr.20031218072017.2810,ekr.20031218072017.2812,ekr.20031218072017.2813,ekr.20031218072017.2814,ekr.20031218072017.2815,ekr.20031218072017.2816,ekr.20031218072017.2817,ekr.20031218072017.2582,ekr.20040312090934,ekr.20031218072017.1623,ekr.20031218072017.2821,ekr.20031218072017.2822,ekr.20031218072017.2823,ekr.20031218072017.2824,ekr.20031218072017.2825,ekr.20031218072017.2826,ekr.20031218072017.2827,ekr.20031218072017.2828,ekr.20031218072017.2829,ekr.20031218072017.2830,ekr.20031218072017.2831,ekr.20031218072017.2832,ekr.20031218072017.2833,ekr.20031218072017.2834,ekr.20031218072017.2835,ekr.20031218072017.2836,ekr.20031218072017.2837,ekr.20031218072017.2080,ekr.20031218072017.2081,ekr.20031218072017.2082,ekr.20031218072017.2083,ekr.20031218072017.2839,ekr.20031218072017.1839,ekr.20031218072017.1809,ekr.20031218072017.2014,ekr.20031218072017.2842,ekr.20031218072017.2843,ekr.20031218072017.2844,ekr.20031218072017.2846,ekr.20031218072017.2847,ekr.20031218072017.2848,ekr.20031218072017.2850,ekr.20031218072017.2851,ekr.20031218072017.2852,ekr.20031218072017.2853,ekr.20031218072017.2854,ekr.20031218072017.2855,ekr.20031218072017.2856,ekr.20031218072017.2857,ekr.20031218072017.2858,ekr.20031218072017.2859,ekr.20031218072017.2860,ekr.20031218072017.2863,ekr.20031218072017.2140,ekr.20031218072017.2141,ekr.20031218072017.2142,ekr.20031218072017.2143,ekr.20031218072017.2864,ekr.20031218072017.2865,ekr.20031218072017.2866,ekr.20031218072017.2867,ekr.20031218072017.2868,ekr.20031218072017.2869,ekr.20031218072017.2870,ekr.20031218072017.2871,ekr.20031218072017.2872,ekr.20031218072017.2873,ekr.20031218072017.2874,ekr.20031218072017.2875,ekr.20031218072017.2876,ekr.20031218072017.2877,ekr.20031218072017.2878,ekr.20031218072017.2879,ekr.20031218072017.2880,ekr.20031218072017.2881,ekr.20031218072017.2882,ekr.20040322115523,ekr.20031218072017.2088,ekr.20031218072017.2090,ekr.20031218072017.2883,ekr.20031218072017.2086,ekr.20031218072017.1704,ekr.20031218072017.1705,ekr.20031218072017.1821,ekr.20031218072017.1822,ekr.20031218072017.1823,ekr.20031218072017.1824,ekr.20031218072017.1706,ekr.20031218072017.1707,ekr.20031218072017.1708,ekr.20031218072017.1709,ekr.20031218072017.1710,ekr.20031218072017.1711,ekr.20031218072017.1825,ekr.20031218072017.1826,ekr.20031218072017.1827,ekr.20031218072017.1828,ekr.20031218072017.1829,ekr.20031218072017.1830,ekr.20031218072017.1831,ekr.20031218072017.1832,ekr.20031218072017.1833,ekr.20031218072017.1834,ekr.20031218072017.1835,ekr.20031218072017.1836,ekr.20031218072017.1837,ekr.20031218072017.1838,ekr.20031218072017.2886,ekr.20031218072017.2290,ekr.20031218072017.2888,ekr.20031218072017.2889,ekr.20031218072017.2890,ekr.20031218072017.2891,ekr.20031218072017.2892,ekr.20031218072017.2893,ekr.20031218072017.1549,ekr.20031218072017.1550,ekr.20031218072017.1551,ekr.20031218072017.2072,ekr.20040314062338,ekr.20040313150633,ekr.20040323155951,ekr.20040313151511,ekr.20040314035615,ekr.20040314035615.1,ekr.20040314035615.2,ekr.20040323155951.1,ekr.20040323161837,ekr.20040323162707,ekr.20040314043623,ekr.20040314044652,ekr.20040314043900,ekr.20031218072017.2028,ekr.20031218072017.1760,ekr.20031218072017.1193,ekr.20031218072017.1761,ekr.20031218072017.1762,ekr.20031218072017.1765,ekr.20031218072017.1188,ekr.20031218072017.1189,ekr.20031218072017.1190,ekr.20031218072017.2896,ekr.20031218072017.2897,ekr.20031218072017.2900,ekr.20031218072017.2901,ekr.20031218072017.2902,ekr.20031218072017.2903,ekr.20031218072017.2904,ekr.20031218072017.2905,ekr.20031218072017.2906,ekr.20031218072017.2907,ekr.20031218072017.2908,ekr.20031218072017.2910,ekr.20031218072017.2911,ekr.20031218072017.2912,ekr.20031218072017.1628,ekr.20031218072017.1627,ekr.20031218072017.2914,ekr.20031218072017.2915,ekr.20031218072017.2916,ekr.20031218072017.2917,ekr.20031218072017.2918,ekr.20031218072017.2919,ekr.20031218072017.2920,ekr.20031218072017.2921,ekr.20031218072017.2923,ekr.20031218072017.2924,ekr.20031218072017.2925,ekr.20031218072017.2926,ekr.20031218072017.2927,ekr.20031218072017.2928,ekr.20031218072017.2929,ekr.20031218072017.2930,ekr.20031218072017.1767,ekr.20031218072017.1768,ekr.20031218072017.1769,ekr.20031218072017.1770,ekr.20031218072017.1771,ekr.20031218072017.1772,ekr.20031218072017.1773,ekr.20031218072017.1774,ekr.20031218072017.2092,ekr.20031218072017.2932,ekr.20031218072017.2933,ekr.20031218072017.2934,ekr.20031218072017.2936,ekr.20031218072017.2935,ekr.20031218072017.2937,ekr.20031218072017.2939,ekr.20031218072017.2940,ekr.20031218072017.2941,ekr.20031218072017.2942,ekr.20031218072017.2943,ekr.20031218072017.2944,ekr.20031218072017.2353,ekr.20031218072017.2946,ekr.20031218072017.2947,ekr.20031218072017.2948,ekr.20031218072017.2950,ekr.20031218072017.2951,ekr.20031218072017.2952,ekr.20031218072017.2953,ekr.20031218072017.2954,ekr.20040131170659,ekr.20031218072017.2956,ekr.20031218072017.2957,ekr.20031218072017.2958,ekr.20031218072017.2959,ekr.20031218072017.2960,ekr.20031218072017.2961,ekr.20031218072017.2962,ekr.20031218072017.2963,ekr.20031218072017.2964,ekr.20031218072017.2287,ekr.20031218072017.2965,ekr.20031218072017.2966,ekr.20031218072017.2967,ekr.20040303165342,ekr.20031218072017.2968,ekr.20031218072017.2969,ekr.20031218072017.2970,ekr.20031218072017.2971,ekr.20031218072017.2972,ekr.20031218072017.2973,ekr.20031218072017.2974,ekr.20031218072017.2975,ekr.20031218072017.2976,ekr.20031218072017.2977,ekr.20031218072017.2978,ekr.20031218072017.2979,ekr.20031218072017.2980,ekr.20031218072017.2981,ekr.20031218072017.2983,ekr.20031218072017.2984,ekr.20031218072017.2985,ekr.20031218072017.2986,ekr.20031218072017.2987,ekr.20031218072017.2988,ekr.20040311173238,ekr.20031218072017.2989,ekr.20040311094927,ekr.20031218072017.2991,ekr.20031218072017.2992,ekr.20031218072017.2993,ekr.20031218072017.2994,ekr.20031218072017.2995,ekr.20031218072017.2996,ekr.20031218072017.2997,ekr.20031218072017.2998,ekr.20031218072017.2999,ekr.20031218072017.3000"><vh>@file leoCommands.py</vh>
 <v t="ekr.20031218072017.2811"><vh> c.Birth &amp; death</vh>
 <v t="ekr.20031218072017.2812"><vh>c.__init__, initIvars</vh>
 <v t="ekr.20031218072017.2813"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
@@ -8125,12 +8174,17 @@
 <v t="ekr.20031218072017.2072"><vh>c.checkOutline</vh>
 <v t="ekr.20040314062338"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
 <v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040313151511"><vh>&lt;&lt; assert that simple and complex position methods are equivalent &gt;&gt;</vh></v>
-<v t="ekr.20040314035615"><vh>&lt;&lt; assert consistency of threadNext &amp; threadBack links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.1"><vh>&lt;&lt; assert consistency of next and back links &gt;&gt;</vh></v>
-<v t="ekr.20040314035615.2"><vh>&lt;&lt; assert consistency of parent and chiild links &gt;&gt;</vh></v>
-<v t="ekr.20040314043623"><vh>&lt;&lt; assert consistency of vnodeList &gt;&gt;</vh></v>
-<v t="ekr.20040314043900"><vh>&lt;&lt; print summary message &gt;&gt;</vh></v>
+<v t="ekr.20040323155951"><vh>&lt;&lt; do full tests &gt;&gt;</vh>
+<v t="ekr.20040313151511"><vh>assert that simple and complex position methods are equivalent</vh></v>
+<v t="ekr.20040314035615"><vh>assert consistency of threadNext &amp; threadBack links</vh></v>
+<v t="ekr.20040314035615.1"><vh>assert consistency of next and back links</vh></v>
+<v t="ekr.20040314035615.2"><vh>assert consistency of parent and chiild links</vh></v>
+<v t="ekr.20040323155951.1"><vh>assert consistency of directParents and parent</vh></v>
+<v t="ekr.20040323161837"><vh>assert consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040323162707"><vh>assert that clones actually share subtrees</vh></v>
+<v t="ekr.20040314043623"><vh>assert consistency of vnodeList</vh></v>
+</v>
+<v t="ekr.20040314043900"><vh>&lt;&lt;print summary message &gt;&gt;</vh></v>
 <v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2028"><vh>Hoist &amp; dehoist &amp; enablers</vh></v>
@@ -8414,7 +8468,7 @@
 <v t="ekr.20031218072017.3051"><vh>xmlEscape</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20040312145256,ekr.20031218072017.3347,ekr.20031218072017.3348,ekr.20031218072017.3349,ekr.20031218072017.3350,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20040306214240,ekr.20031218072017.3406,ekr.20031218072017.3409,ekr.20040307085922,ekr.20031218072017.3366,ekr.20031218072017.3361,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3375,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20040307073708,ekr.20040307073708.7,ekr.20040307073708.8,ekr.20040307073708.9,ekr.20040307073708.13,ekr.20040307073708.14,ekr.20040307073708.15,ekr.20040301071824,ekr.20031218072017.3419,ekr.20031218072017.3421,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.3422,ekr.20031218072017.3438,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20031218072017.3397,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3385,ekr.20040315032144,ekr.20031218072017.3402,ekr.20040315042106,ekr.20031218072017.3404,ekr.20031218072017.3358,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20031218072017.890,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040117170612,ekr.20040117173448,ekr.20040301205720,ekr.20040310153624,ekr.20040306211032,ekr.20040306212151,ekr.20040306220230,ekr.20040306214401,ekr.20040306220230.1,ekr.20040306214240.3,ekr.20040303212445,ekr.20040306212636.1,ekr.20040307104131.3,ekr.20040306215548,ekr.20031218072017.915,ekr.20040227212621,ekr.20040227224946,ekr.20040307104131.1,ekr.20040306215056,ekr.20040307104131.2,ekr.20040117162509.16,ekr.20031218072017.4146,ekr.20040227214711,ekr.20040306220634.9,ekr.20040306220634.8,ekr.20040306220634.29,ekr.20040306220634.31,ekr.20040315034158,ekr.20040315032503,ekr.20040305223522,ekr.20040305222924.1,ekr.20040305223225,ekr.20040315031445,ekr.20040312015705,ekr.20040306220634.17,ekr.20031218072017.3388,ekr.20040305162628,ekr.20040311113514,ekr.20040303163717,ekr.20040318125934,ekr.20040303214038,ekr.20040303163330,ekr.20040315023430,ekr.20040315023430.1,ekr.20040315023430.2,ekr.20040315023430.3,ekr.20040305162628.1,ekr.20040305171133,ekr.20040305171133.1,ekr.20040305171133.3,ekr.20040305173559,ekr.20040305173559.1,ekr.20040305173559.2,ekr.20040305172211.1,ekr.20040305172211.2,ekr.20040305172211.3,ekr.20040305172855,ekr.20040305172855.1,ekr.20040305172855.2,ekr.20040305173343,ekr.20040305173343.1,ekr.20040305173343.2,ekr.20040303175026.2,ekr.20040303175026.3,ekr.20040303175026.4,ekr.20040303175026.5,ekr.20040303175026.6,ekr.20040303175026.8,ekr.20040303175026.9,ekr.20040303175026.10,ekr.20040306060312,ekr.20040303175026.11,ekr.20040303175026.12,ekr.20040303175026.13,ekr.20040303175026.14,ekr.20040303175026.15,ekr.20040303175026.16,ekr.20040303175026.18,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941,ekr.20040117171654,ekr.20040228060340,ekr.20040228060340.1,ekr.20040310062332,ekr.20040310062332.1,ekr.20040310062332.2,ekr.20040310062332.3,ekr.20040310062332.4,ekr.20040310062332.5"><vh>@file leoNodes.py</vh>
+<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20040312145256,ekr.20031218072017.3347,ekr.20031218072017.3348,ekr.20031218072017.3349,ekr.20031218072017.3350,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20040306214240,ekr.20031218072017.3406,ekr.20031218072017.3409,ekr.20040307085922,ekr.20031218072017.3366,ekr.20031218072017.3361,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3375,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20040323100443,ekr.20040307073708,ekr.20040307073708.7,ekr.20040307073708.8,ekr.20040307073708.9,ekr.20040307073708.13,ekr.20040307073708.14,ekr.20040307073708.15,ekr.20040301071824,ekr.20031218072017.3419,ekr.20031218072017.3421,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.3422,ekr.20031218072017.3438,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20031218072017.3397,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3385,ekr.20040315032144,ekr.20031218072017.3402,ekr.20040315042106,ekr.20031218072017.3404,ekr.20031218072017.3358,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20031218072017.890,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040117170612,ekr.20040117173448,ekr.20040301205720,ekr.20040310153624,ekr.20040306211032,ekr.20040306212151,ekr.20040306220230,ekr.20040306214401,ekr.20040306220230.1,ekr.20040323160302,ekr.20040306214240.3,ekr.20040303212445,ekr.20040306212636.1,ekr.20040307104131.3,ekr.20040306215548,ekr.20031218072017.915,ekr.20040227212621,ekr.20040227224946,ekr.20040307104131.1,ekr.20040306215056,ekr.20040307104131.2,ekr.20040117162509.16,ekr.20031218072017.4146,ekr.20040227214711,ekr.20040306220634.9,ekr.20040306220634.8,ekr.20040306220634.29,ekr.20040306220634.31,ekr.20040315034158,ekr.20040315032503,ekr.20040305223522,ekr.20040305222924.1,ekr.20040305223225,ekr.20040315031445,ekr.20040312015705,ekr.20040306220634.17,ekr.20031218072017.3388,ekr.20040305162628,ekr.20040311113514,ekr.20040303163717,ekr.20040318125934,ekr.20040303214038,ekr.20040303163330,ekr.20040315023430,ekr.20040315023430.1,ekr.20040315023430.2,ekr.20040315023430.3,ekr.20040305162628.1,ekr.20040305171133,ekr.20040305171133.1,ekr.20040305171133.3,ekr.20040305173559,ekr.20040305173559.1,ekr.20040305173559.2,ekr.20040305172211.1,ekr.20040305172211.2,ekr.20040305172211.3,ekr.20040305172855,ekr.20040305172855.1,ekr.20040305172855.2,ekr.20040305173343,ekr.20040305173343.1,ekr.20040305173343.2,ekr.20040303175026.2,ekr.20040303175026.3,ekr.20040303175026.4,ekr.20040303175026.5,ekr.20040303175026.6,ekr.20040303175026.8,ekr.20040303175026.9,ekr.20040303175026.10,ekr.20040306060312,ekr.20040303175026.11,ekr.20040303175026.12,ekr.20040303175026.13,ekr.20040303175026.14,ekr.20040303175026.15,ekr.20040303175026.16,ekr.20040303175026.18,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941,ekr.20040117171654,ekr.20040228060340,ekr.20040228060340.1,ekr.20040310062332,ekr.20040310062332.1,ekr.20040310062332.2,ekr.20040310062332.3,ekr.20040310062332.4,ekr.20040310062332.5"><vh>@file leoNodes.py</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2412"><vh>&lt;&lt; About the vnode and tnode classes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3321"><vh>class tnode</vh>
@@ -8492,11 +8546,12 @@
 <v t="ekr.20031218072017.3376"><vh>isVisited</vh></v>
 <v t="ekr.20031218072017.3377"><vh>status</vh></v>
 </v>
-<v t="ekr.20031218072017.3378"><vh>bodyString</vh></v>
+<v t="ekr.20031218072017.3378"><vh>v.bodyString</vh></v>
 <v t="ekr.20031218072017.3379"><vh>v.currentVnode (and c.currentPosition 4.2)</vh></v>
-<v t="ekr.20031218072017.3380"><vh>edit_text</vh></v>
+<v t="ekr.20031218072017.3380"><vh>v.edit_text</vh></v>
 <v t="ekr.20031218072017.3381"><vh>v.findRoot (4.2)</vh></v>
-<v t="ekr.20031218072017.1581"><vh>headString &amp; cleanHeadString</vh></v>
+<v t="ekr.20031218072017.1581"><vh>v.headString &amp; v.cleanHeadString</vh></v>
+<v t="ekr.20040323100443"><vh>v.parents (new method in 4.2)</vh></v>
 </v>
 <v t="ekr.20040307073708"><vh>Iterators (vnode)</vh>
 <v t="ekr.20040309041436.1"><vh>Defined in 4.2</vh>
@@ -8564,11 +8619,12 @@
 <v t="ekr.20031218072017.890"><vh>&lt;&lt; about the position class &gt;&gt;</vh></v>
 <v t="ekr.20040306212636"><vh>Getters</vh>
 <v t="ekr.20040306210951"><vh> vnode proxies</vh>
-<v t="ekr.20040306211032"><vh>Comparisons (position)</vh></v>
-<v t="ekr.20040306212151"><vh>Extra Attributes</vh></v>
-<v t="ekr.20040306220230"><vh>Headline &amp; body strings</vh></v>
-<v t="ekr.20040306214401"><vh>Status bits</vh></v>
+<v t="ekr.20040306211032"><vh>p.Comparisons</vh></v>
+<v t="ekr.20040306212151"><vh>p.Extra Attributes</vh></v>
+<v t="ekr.20040306220230"><vh>p.Headline &amp; body strings</vh></v>
+<v t="ekr.20040306214401"><vh>p.Status bits</vh></v>
 <v t="ekr.20040306220230.1"><vh>p.edit_text</vh></v>
+<v t="ekr.20040323160302"><vh>p.directParents</vh></v>
 </v>
 <v t="ekr.20040306214240.2"><vh>children</vh>
 <v t="ekr.20040306214240.3"><vh>p.hasChildren</vh></v>
@@ -8682,7 +8738,7 @@
 <v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20040310062332"><vh>p.Link/Unlink methods (position)</vh>
+<v t="ekr.20040310062332"><vh>p.Link/Unlink methods</vh>
 <v t="ekr.20040310062332.1"><vh>p.invalidOutline</vh></v>
 <v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
 <v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
@@ -8907,7 +8963,7 @@
 <v t="ekr.20031218072017.3352"><vh>isAtOthersNode</vh></v>
 <v t="ekr.20031218072017.3353"><vh>matchHeadline</vh></v>
 </v>
-<v t="ekr.20040306211032"><vh>Comparisons (position)</vh></v>
+<v t="ekr.20040306211032"><vh>p.Comparisons</vh></v>
 </v>
 <v t="ekr.20040321064134.2"><vh>Writing...</vh>
 <v t="ekr.20031218072017.2720"><vh>atFile.openWriteFile</vh></v>
@@ -8955,20 +9011,7 @@
 <v t="ekr.20040321064134.5"><vh>createNextChild (thin)</vh></v>
 </v>
 </v>
-<v t="ekr.20040322121338.1" a="TV"><vh>(Fix bug in setAllAncestorAtFileNodesDirty)</vh>
-<v t="ekr.20040323031725"><vh>To do: Clean up isAnyAtFileNode</vh></v>
-<v t="ekr.20040323073825"><vh>Notes</vh></v>
-<v t="ekr.20040323022416"><vh>mini test: check consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
-<v t="ekr.20040323031226"><vh>mini test: check ...</vh></v>
-<v t="ekr.20040323021757"><vh>To do</vh></v>
-<v t="ekr.20040305162628"><vh>p.Dirty bits (contains script)</vh>
-<v t="ekr.20040311113514"><vh>p.clearDirty</vh></v>
-<v t="ekr.20040303163717"><vh>p.isDirty</vh></v>
-<v t="ekr.20040318125934"><vh>findAllPotentiallyDirtyNodes</vh></v>
-<v t="ekr.20040303214038" a="M"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
-<v t="ekr.20040303163330"><vh>p.setDirty</vh></v>
-</v>
-</v>
+<v t="ekr.20040323084605" a="V"><vh>(Speed up menu enablers)</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20031218072017">@ignore
@@ -16328,34 +16371,6 @@ duplicate shortcut: Alt+Shift+S &lt;Alt-S&gt; Go To Next &amp;Sibling</t>
 Well, everthing gets bound, but the old binding in the headline also has effect!  The fix is to bind to a workaround callback, OnControlT, which returns "break".  This has the effect of stamping out all other bindings.  Alas, it also means that Control-T can have no effect in headlines.
 
 It looks like this is another Tk bug.  Nothing seems to reset the control-T binding.  Not bind("Control-T",""), not bind_all, not bind_class.</t>
-<t tx="ekr.20031218072017.869"></t>
-<t tx="ekr.20031218072017.870"></t>
-<t tx="ekr.20031218072017.871"> @ignore
-@nocolor
-	
-idle-time hook that checks for dirty @file nodes that have been modified in an external editor since the last check.
-
-@color
-
-</t>
-<t tx="ekr.20031218072017.872">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=1847050
-By: bwmulder
-
-Maybe Leo could re-check the file system at each save. For each file, there are three possibilities:
-
-[snip]
-
-2. the file has been modified since the last check.
-
-In this case, there was an external edit. If there was also a change within
-leo, then we have a conflict which the user has to resolve somehow. Otherwise,
-leo might offer the user to read the file and accept the internal edit.
-
-[snip]</t>
-<t tx="ekr.20031218072017.873"></t>
-<t tx="ekr.20031218072017.874">test 1ab23 4bcdfghbe</t>
 <t tx="ekr.20031218072017.875"></t>
 <t tx="ekr.20031218072017.876"></t>
 <t tx="ekr.20031218072017.889"># Warning: this code implies substantial changes to code that uses them, both core and scripts.
@@ -16579,14 +16594,14 @@ def moveToLastNode (self): # Huge improvement for 4.2.
 	
 	p = self
 
-	if p.v._parent:
+	if p.v._parent and len(p.v._parent.t.vnodeList) == 1:
 		p.v = p.v._parent
 	elif p.stack:
 		p.v = p.stack.pop()
 		# g.trace("pop",p.v,p)
 	else:
 		p.v = None
-		
+
 	return p</t>
 <t tx="ekr.20031218072017.938">def moveToThreadBack (self):
 	
@@ -21985,18 +22000,6 @@ def putEmptyDirective(self,s,i):
 			self.oblanks(r)
 		else:
 			self.oblanks(n)</t>
-<t tx="ekr.20031218072017.1313">@nocolor
-
-The following sections contain convenience routines that hooks may call to create menus and to schedule events.
-
-@color
-
-@ignore
-
-</t>
-<t tx="ekr.20031218072017.1314">@ When the "idle" hook is enabled, Leo will call the "idle" hook periodically.
-
-You scripts should call only enableIdleTimeHook and disableIdleTimeHook.  The idleTimeHookHandler is used to dispatch the "idle" hook.  Your code should not call it directly.</t>
 <t tx="ekr.20031218072017.1315">@ Enables the "idle" hook.
 After enableIdleTimeHook is called, Leo will call the "idle" hook
 approximately every idleTimeDelay milliseconds.
@@ -22030,7 +22033,6 @@ def idleTimeHookHandler(*args,**keys):
 		app.afterHandler = idleTimeHookHandler
 	else:
 		app.afterHandler = None</t>
-<t tx="ekr.20031218072017.1316"></t>
 <t tx="ekr.20031218072017.1317">def module_date (mod,format=None):
 	file = g.os_path_join(app.loadDir,mod.__file__)
 	root,ext = g.os_path_splitext(file) 
@@ -23052,7 +23054,7 @@ def findReference(name,root):
 		if p.matchHeadline(name) and not p.isAtIgnoreNode():
 			return p
 
-	g.trace("not found:",name,root)
+	# g.trace("not found:",name,root)
 	return root.c.nullPosition()</t>
 <t tx="ekr.20031218072017.1386">def getOutputNewline (lineending = None):
 	
@@ -29759,7 +29761,6 @@ not in range(128)
 <t tx="ekr.20031218072017.1860">def createVnode (self,parent,back,tref,headline,attrDict):
 	
 	# g.trace(headline)
-	# g.trace(headline," parent: ",parent," back: ",back)
 	v = None ; c = self.c
 	# Shared tnodes are placed in the file even if empty.
 	if tref == -1:
@@ -29775,18 +29776,11 @@ not in range(128)
 	else: # create a root vnode
 		v = leoNodes.vnode(c,t)
 		v.moveToRoot()
-		
-	if parent and parent not in v.parents: # 3/23/04
-		v.parents.append(parent) 
 
-	if v not in v.t.vnodeList: # 3/23/04
+	if v not in v.t.vnodeList:
 		v.t.vnodeList.append(v) # New in 4.2.
+
 	skip = len(v.t.vnodeList) &gt; 1
-	if skip:
-		for child in v.children_iter():
-			if v not in child.parents: # 3/18/04
-				child.parents.append(v)
-			child._parent = None
 
 	v.initHeadString(headline,encoding=self.leo_file_encoding)
 	&lt;&lt; handle unknown vnode attributes &gt;&gt;
@@ -31168,9 +31162,7 @@ self.t = t # The tnode.
 self.statusBits = 0 # status bits
 
 # Structure links.
-self._parent = self._next = self._back = None
-
-self.parents = [] # List of vnodes that are parents of this node.</t>
+self._parent = self._next = self._back = None</t>
 <t tx="ekr.20031218072017.1969">@nocolor
 
 @color</t>
@@ -32670,7 +32662,7 @@ can it?
 	Remove any unused tnodeLists."""
 	
 	c = self ; count = 1 ; errors = 0 ; full = true
-	if full:
+	if full and not unittest:
 		g.es("all tests enabled: this may take awhile",color="blue")
 
 	try:
@@ -32681,17 +32673,14 @@ can it?
 			&lt;&lt; remove unused tnodeList &gt;&gt;
 			if not unittest: # this would be very slow.
 				if full: # For testing only.
-					&lt;&lt; assert that simple and complex position methods are equivalent &gt;&gt;
-					&lt;&lt; assert consistency of threadNext &amp; threadBack links &gt;&gt;
-					&lt;&lt; assert consistency of next and back links &gt;&gt;
-					&lt;&lt; assert consistency of parent and chiild links &gt;&gt;
-					&lt;&lt; assert consistency of vnodeList &gt;&gt;
+					&lt;&lt; do full tests &gt;&gt;
 			# assert false, "checkFailed" # check of checkFailed itself.
 	except AssertionError,message:
 		errors += 1
 		&lt;&lt; give test failed message &gt;&gt;
 	&lt;&lt; print summary message &gt;&gt;
-	return errors</t>
+	return errors
+</t>
 <t tx="ekr.20031218072017.2073"></t>
 <t tx="ekr.20031218072017.2074"></t>
 <t tx="ekr.20031218072017.2075"></t>
@@ -33844,7 +33833,6 @@ and
 j = max(0,old_len - trailing_lines)
 
 It seems as though j could not have beeen too big, so perhaps it was too small??</t>
-<t tx="ekr.20031218072017.2164"></t>
 <t tx="ekr.20031218072017.2165">@ notes:
 	
 - Do not use the font panel when testing!
@@ -36162,8 +36150,6 @@ def moveAfter (self,a):
 	"""Link self after v."""
 	
 	self._parent = v._parent
-	self.parents = v.parents[:] # 3/18/04
-
 	self._back = v
 	self._next = v._next
 	v._next = self
@@ -42203,7 +42189,7 @@ if s:
 
 def openWriteFile (self,root):
 	
-	g.trace(root)
+	# g.trace(root)
 
 	try:
 		self.scanAllDirectives(root)
@@ -51276,9 +51262,7 @@ def clone (self,back):
 		v._next = prev._next
 		prev._next = v
 		if v._next:
-			v._next._back = v
-			
-	v.parents = pv.t.vnodeList[:] # 3/18/04</t>
+			v._next._back = v</t>
 <t tx="ekr.20031218072017.3426">def linkAsRoot(self, oldRoot = None):
 	
 	"""Link a vnode as the root node and set the root _position_."""
@@ -51289,7 +51273,6 @@ def clone (self,back):
 	v._parent = None
 	v._back = None
 	v._next = oldRoot
-	v.parents = []
 
 	# Link in the rest of the tree only when oldRoot != None.
 	# Otherwise, we are calling this routine from init code and
@@ -51511,7 +51494,7 @@ def shouldBeClone (self):
 
 	# Clear the links in this node.
 	v._parent = v._next = v._back = None
-	v.parents = []</t>
+	# v.parentsList = []</t>
 <t tx="ekr.20031218072017.3439">"""Install and run Leo plugins.
 
 On startup:
@@ -62027,19 +62010,7 @@ def __nonzero__ ( self):
 	"""Return true if a position is valid."""
 
 	return self.v is not None</t>
-<t tx="ekr.20040117181936">@nocolor
-
-- (done) Disable all write logic.
-- (done) Test all position code.
-- (done) Get drag working.
-- (done) Get all menu enablers working
-- (done) Get insert/delete/clone working.
-- (done) Get write logic working.
-- (done) Get copy/paste nodes working.
-- (done) Get find command working.
-- (done) Get undo/redo working.
-- (done) Get read logic working.
-- (passes unit tests) Get import/export working.</t>
+<t tx="ekr.20040117181936">@nocolor</t>
 <t tx="ekr.20040118090055">https://sourceforge.net/forum/message.php?msg_id=2380238
 By: dthein
 
@@ -64706,16 +64677,14 @@ Tom
 <t tx="ekr.20040227211451"></t>
 <t tx="ekr.20040227212621">def hasBack(self):
 	return self.v and self.v._back
-	
 
-	
 hasFirstChild = hasChildren
 	
 def hasNext(self):
 	return self.v and self.v._next
 	
 def hasParent(self):
-	return self.v and (self.v._parent or len(self.stack) &gt; 0)
+	return self.v and self.v._parent is not None
 	
 def hasThreadBack(self):
 	return self.hasParent() or self.hasBack() # Much cheaper than computing the actual value.
@@ -64849,7 +64818,7 @@ def vParentWithStack(self,v,stack,n):
 
 	if not v:
 		return None,n
-	elif v._parent:
+	elif v._parent and len(v._parent.t.vnodeList) == 1:
 		return v._parent,n # don't change stack.
 	elif stack and n &gt;= 0:
 		return self.stack[n],n-1 # simulate popping the stack.
@@ -64897,7 +64866,23 @@ def vParent(self):
 <t tx="ekr.20040301192211">@nocolor
 
 
-</t>
+- (done) Disable all write logic.
+- (done) Test all position code.
+- (done) Get drag working.
+- (done) Get all menu enablers working
+- (done) Get insert/delete/clone working.
+- (done) Get write logic working.
+- (done) Get copy/paste nodes working.
+- (done) Get find command working.
+- (done) Get undo/redo working.
+- (done) Get read logic working.
+- (passes unit tests) Get import/export working.
+
+- (done) Fix bug in createVnode:
+	- Don't add parent to v.parents if it is already in the list.
+	- This was a bad bug.
+
+- (done) unit test to check p.v.parents</t>
 <t tx="ekr.20040301201418"># WARNING: this only works if not g.sharedNodes.
 
 def convertTreeToSharedNodes(self):
@@ -65323,7 +65308,7 @@ elif childIndex &lt; 0:
 		v = v._next
 		n += 1
 	assert(false)</t>
-<t tx="ekr.20040303214038">def setAllAncestorAtFileNodesDirty (self):
+<t tx="ekr.20040303214038">def setAllAncestorAtFileNodesDirty (self,verbose=false):
 
 	p = self ; c = p.c
 	changed = false
@@ -65331,10 +65316,14 @@ elif childIndex &lt; 0:
 	# Calculate all nodes that are joined to v or parents of such nodes.
 	nodes = p.findAllPotentiallyDirtyNodes()
 	
+	if verbose:
+		g.trace(nodes)
+	
 	c.beginUpdate()
 	if 1: # update...
 		for v in nodes:
-			# g.trace(v.isAnyAtFileNode(),v.t.isDirty(),v)
+			if verbose:
+				g.trace(v.isAnyAtFileNode(),v.t.isDirty(),v)
 			if v.isAnyAtFileNode() and not v.t.isDirty():
 				changed = true
 				v.t.setDirty() # Do not call v.setDirty here!
@@ -66165,12 +66154,6 @@ So. Clones saved the day. I'm even more convinced that Leo is brilliant. Thanks 
 	# Add v to it's tnode's vnodeList.
 	if p.v not in p.v.t.vnodeList:
 		p.v.t.vnodeList.append(p.v)
-
-	# Clear parent links in all children if this is a clone.
-	if len(p.v.t.vnodeList) &gt; 1:
-		# g.trace('*'*20,"clearing parent link in children") 
-		for child in p.children_iter():
-			child.v._parent = None
 	
 	p.v._back = after.v
 	p.v._next = after.v._next
@@ -66190,27 +66173,18 @@ So. Clones saved the day. I'm even more convinced that Leo is brilliant. Thanks 
 	"""Links self as the n'th child of vnode pv"""
 	
 	# g.trace(self,parent,n)
-
 	p = self
 
 	# Recreate the stack using the parent.
 	p.stack = parent.stack[:] 
 	if parent.isCloned():
-		# g.trace("push",parent.v)
 		p.stack.append(parent.v)
-		p.v_parent = None # **** bug fix ****
-	else:
-		p.v._parent = parent.v
+
+	p.v._parent = parent.v
 
 	# Add v to it's tnode's vnodeList.
 	if p.v not in p.v.t.vnodeList:
 		p.v.t.vnodeList.append(p.v)
-		
-	# Clear parent links in all children if this is a clone.
-	if len(p.v.t.vnodeList) &gt; 1:
-		# g.trace('*'*20,"clearing parent link in children") 
-		for child in p.children_iter():
-			child.v._parent = None
 
 	if n == 0:
 		child1 = parent.v.t._firstChild
@@ -66262,9 +66236,9 @@ So. Clones saved the day. I'm even more convinced that Leo is brilliant. Thanks 
 </t>
 <t tx="ekr.20040310062332.5">def unlink (self):
 
-	"""Unlinks the receiver from the tree before moving or deleting.
+	"""Unlinks a position p from the tree before moving or deleting.
 	
-	The mFistChild link is not affected in the receiver."""
+	The p.v._fistChild link does NOT change."""
 
 	p = self ; v = p.v ; parent = p.parent()
 
@@ -66279,15 +66253,12 @@ So. Clones saved the day. I'm even more convinced that Leo is brilliant. Thanks 
 	vnodeList = v.t.vnodeList
 	if v in vnodeList:
 		vnodeList.remove(v)
-
-	# New in 4.2: Set the parent links in all children if this is the penultimate clone.
-	if len(vnodeList) == 1:
-		# g.trace('*'*20,"setting parent link in children") 
-		for child in p.children_iter():
-			child._parent = parent
 	
 	if parent and parent.v.t._firstChild == v:
 		parent.v.t._firstChild = v._next
+		
+	# Do NOT alter the links in any child nodes.
+	# Unlinking a node unlinks its entire subtree.
 
 	# Clear the links in other nodes.
 	if v._back: v._back._next = v._next
@@ -66591,12 +66562,15 @@ for v in vnodeList:
 	else:
 		assert not v.isCloned(), "not v.isCloned"
 		assert len(vnodeList) == 1, "len(vnodeList) == 1"</t>
-<t tx="ekr.20040314043900">s = "%d nodes checked, %d errors" % (count,errors)
+<t tx="ekr.20040314043900">if full:
+	print
+	g.enl()
+
+s = "%d nodes checked, %d errors" % (count,errors)
 if errors or verbose:
 	print s ; g.es(s,color="red")
 elif verbose:
-	g.es(s,color="green")
-</t>
+	g.es(s,color="green")</t>
 <t tx="ekr.20040314044652">if errors == 1:
 	s = "test failed: %s %s" % (message,repr(p))
 	print s
@@ -67051,7 +67025,7 @@ At first, disabling the call to recolor_now in select speeded things up.  Now it
 	# Start with all nodes in the vnodeList.
 	nodes = []
 	newNodes = p.v.t.vnodeList[:]
-	
+
 	# Add nodes until no more are added.
 	while newNodes:
 		# g.trace(len(newNodes))
@@ -67061,39 +67035,13 @@ At first, disabling the call to recolor_now in select speeded things up.  Now it
 			for v2 in v.t.vnodeList:
 				if v2 not in nodes and v2 not in addedNodes:
 					addedNodes.append(v2)
-				# v2.parents only exists if v2._parent is None.
-				if v2._parent and v2._parent not in addedNodes:
-					addedNodes.append(v2._parent)
-				for v3 in v2.parents: 
+				for v3 in v2.directParents(): # 3/23/04
 					if v3 not in nodes and v3 not in addedNodes:
 						addedNodes.append(v3)
 		newNodes = addedNodes[:]
 
-	# g.trace(len(nodes))
-	return nodes
-
-</t>
-<t tx="ekr.20040318134209">@nocolor
-
-CHANGES
-	- Don't clear v._parent field when more than one parent.
-		- use v._parent.t.vnodeList instead of v.parents.
-		- add v.parents() method: change v.parents to v.parentList
-	- Look at windows delete code.
-		- Break position links?
-	- The menu-enabling code is too slow: only scan the file once!
-
-TESTS
-	- Unit tests for v.parents.
-		- Test consistency of v.parents, v._parent.t.vnodeList
-	- "integrated" consistency checks in redraw code:
-
-BUGS
-	- redraw is being called too many times (in select, probably)
-	- Headline clicks are not handled properly (another select problem?)
-	- Typing creates lots of positions.
-		- Improve typing undo code.
-</t>
+	# g.trace(nodes)
+	return nodes</t>
 <t tx="ekr.20040318150305"></t>
 <t tx="ekr.20040318150305.1"></t>
 <t tx="ekr.20040318150556">import leoGlobals as g
@@ -67223,11 +67171,13 @@ def findNodeAtTopLevel(headline):
 			return p.copy()
 	return c.nullPosition()</t>
 <t tx="ekr.20040321095547"></t>
-<t tx="ekr.20040321104014">4.2 will optimize all aspects of Leo's core:
+<t tx="ekr.20040321104014">@nocolor
+
+4.2 will optimize all aspects of Leo's core:
 
 - Shared tree represent clones.
 - Drawing code uses minimum number of Tk widgets
-- Undo minimizes typing info.
+- Add granularity to undo minimizes typing info.
 	- User can choose granularity:
 		- character (present) very expensive.
 		- word
@@ -67272,27 +67222,42 @@ Another change:  the tnodeList is a part of tnodes in 4.2.</t>
 	
 	self.canvas.after_idle(scrollToCallback)</t>
 <t tx="ekr.20040322123611"></t>
-<t tx="ekr.20040323021757">@nocolor
+<t tx="ekr.20040323072005"># The fix was to call endEditLabel from editLabel only if are in a different node.
+# That is possible now that tree.editPosition() is available.</t>
+<t tx="ekr.20040323073825">@nocolor
 
-- (done) Fix bug in createVnode:
-	- Don't add parent to v.parents if it is already in the list.
-	- This was a bad bug.
+Moving a node right so that it becomes a child of an @file-thin node doesn't work.
 
-- (done) unit test to check p.v.parents
+The fix was in findAllPotentiallyDirtyNodes:
+	- v.parents is only used if v._parent is None.
+	- Added a code to add v._parent to the list of nodes.</t>
+<t tx="ekr.20040323084434"></t>
+<t tx="ekr.20040323084434.1">in select, probably</t>
+<t tx="ekr.20040323084605">Only scan the file once!</t>
+<t tx="ekr.20040323090456"></t>
+<t tx="ekr.20040323090456.1"></t>
+<t tx="ekr.20040323090456.2">@nocolor
 
-** get rid of v.parents field!!
-	- Don't clear _parents link.
-	- Look at len(_parent.v.t.vnodeList) to see if should pop stack.
-	- Create p.allParents and v.allParents
-	- Use v.allParents in findAllPotentiallyDirtyNodes.</t>
-<t tx="ekr.20040323022416">import leoGlobals as g
+- (done) Rename v.parents to v.parentsList
+- (done) Don't clear _parents link.
+- (done) Look at len(_parent.v.t.vnodeList) to see if should pop stack.
+- (done) Create v.directParents()
+- (done) Use v.directParents in findAllPotentiallyDirtyNodes.
+- (done) Created tests to make sure clones actually share subtrees.
+	- Full unit tests now pass.
+
+@color
+
+</t>
+<t tx="ekr.20040323090654">import leoGlobals as g
 from leoGlobals import true,false
 c = g.top()
 
 print '-'*20
-ok = true
+ok = true ; count = 0
 for p in c.allNodes_iter():
 	if p.isCloned():
+		count += 1
 		parents = p.v.t.vnodeList
 		for child in p.children_iter():
 			vparents = child.v.parents
@@ -67315,17 +67280,52 @@ for p in c.allNodes_iter():
 				break
 		if not ok: break
 	if not ok: break
-print "done"</t>
-<t tx="ekr.20040323031226">import leoGlobals as g
-from leoGlobals import true,false
-c = g.top()
+s = "checked %d cloned positions" % count
+print s ; g.es(s)</t>
+<t tx="ekr.20040323100443">def directParents (self):
+	
+	"""(New in 4.2) Return a list of all direct parent vnodes of a vnode.
+	
+	This is NOT the same as the list of ancestors of the vnode."""
+	
+	v = self
+	
+	if v._parent:
+		return v._parent.t.vnodeList
+	else:
+		return []</t>
+<t tx="ekr.20040323155951">if count % 100 == 0:
+	g.es('.',newline=false)
+if count % 2000 == 0:
+	g.enl()
 
-print '-'*20</t>
-<t tx="ekr.20040323031725"></t>
-<t tx="ekr.20040323072005"># The fix was to call endEditLabel from editLabel only if are in a different node.
-# That is possible now that tree.editPosition() is available.</t>
-<t tx="ekr.20040323073825">@nocolor
-
-Moving a node right so that it becomes a child of an @file-thin node doesn't work.</t>
+@others
+</t>
+<t tx="ekr.20040323155951.1">if p.hasParent():
+	t = p.parent().v.t
+	for v in p.directParents():
+		assert(v.t == t)</t>
+<t tx="ekr.20040323160302">def directParents (self):
+	
+	return self.v.directParents()
+</t>
+<t tx="ekr.20040323161837">if p.isCloned():
+	parents = p.v.t.vnodeList
+	for child in p.children_iter():
+		vparents = child.directParents()
+		assert(len(parents) == len(vparents))
+		for parent in parents:
+			assert(parent in vparents)
+		for parent in vparents:
+			assert(parent in parents)</t>
+<t tx="ekr.20040323162707">if p.isCloned() and p.hasChildren():
+	childv = p.firstChild().v
+	assert(childv == p.v.t._firstChild)
+	assert(id(childv) == id(p.v.t._firstChild))
+	for v in p.v.t.vnodeList:
+		assert(v.t._firstChild == childv)
+		assert(id(v.t._firstChild) == id(childv))</t>
+<t tx="ekr.20040323164902"></t>
+<t tx="ekr.20040323164902.1"></t>
 </tnodes>
 </leo_file>
